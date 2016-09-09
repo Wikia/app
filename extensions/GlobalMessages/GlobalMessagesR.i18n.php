@@ -9437,6 +9437,7 @@ og den seneste version af $2 er gendannet.',
 );
 
 $messages['de'] = array(
+	'realmap-deprecated-info' => 'Die realen Weltkarten wurden von Wikia eingestellt. Weitere Informationen dazu findest du hier: $1',
 	'returnto' => 'Zurück zur Seite $1.',
 	'redirectedfrom' => '(Weitergeleitet von $1)',
 	'redirectpagesub' => 'Weiterleitung',
@@ -11268,6 +11269,7 @@ Paĝoj en [[Special:Watchlist|via atentaro]] estas '''grasaj'''.",
 );
 
 $messages['es'] = array(
+	'realmap-deprecated-info' => 'Mapas del mundo real han sido descontinuados por Wikia. Para obtener más información, revisa: $1',
 	'returnto' => 'Volver a $1.',
 	'redirectedfrom' => '(Redirigido desde $1)',
 	'redirectpagesub' => 'Página redirigida',
@@ -13215,6 +13217,7 @@ Síður á [[Special:Watchlist|tínum eftiransingarlista]] eru skrivaðar við '
 );
 
 $messages['fr'] = array(
+	'realmap-deprecated-info' => 'Les cartes du monde réel ont été retirées par Wikia. Pour plus d’informations, voir : $1',
 	'returnto' => 'Revenir à la page $1.',
 	'redirectedfrom' => '(Redirigé depuis $1)',
 	'redirectpagesub' => 'Page de redirection',
@@ -19806,6 +19809,7 @@ Síður á [[Special:Watchlist|vaktlistanum þínum]] eru '''feitletraðar'''.",
 );
 
 $messages['it'] = array(
+	'realmap-deprecated-info' => 'Le mappe del mondo reale sono state interrotte da Wikia. Per ulteriori informazioni, vedere: $1',
 	'returnto' => 'Torna a $1.',
 	'redirectedfrom' => '(Reindirizzamento da <b>$1</b>)',
 	'redirectpagesub' => 'Pagina di reindirizzamento',
@@ -20330,6 +20334,7 @@ Le pagine contenute nella propria lista degli [[Special:Watchlist|Osservati spec
 );
 
 $messages['ja'] = array(
+	'realmap-deprecated-info' => '実際の場所を表示するマップの作成および提供はWikiaにて廃止されました。詳しくはこちらをご覧ください: $1',
 	'returnto' => '$1に戻る。',
 	'redirectedfrom' => '（$1から転送）',
 	'redirectpagesub' => '転送ページ',
@@ -33774,6 +33779,7 @@ $messages['pih'] = array(
 );
 
 $messages['pl'] = array(
+	'realmap-deprecated-info' => 'Funkcja tworzenia map rzeczywistych miejsc została wycofana przez Wikię. Aby uzyskać więcej informacji zobacz: $1',
 	'returnto' => 'Wróć do strony $1.',
 	'redirectedfrom' => '(Przekierowano z $1)',
 	'redirectpagesub' => 'Strona przekierowująca',
@@ -35289,6 +35295,7 @@ As suas [[Special:Watchlist|páginas vigiadas]] aparecem a '''negrito'''.",
 );
 
 $messages['pt-br'] = array(
+	'realmap-deprecated-info' => 'Os mapas do mundo foram suspensos pela Wikia. Para obter mais informações, consulte: $1',
 	'returnto' => 'Retornar para $1.',
 	'redirectedfrom' => '(Redirecionado de $1)',
 	'redirectpagesub' => 'Página de redirecionamento',
@@ -36768,6 +36775,7 @@ turnate rete a l'urtema versione da $2.",
 );
 
 $messages['ru'] = array(
+	'realmap-deprecated-info' => 'Создание физических карт мира больше не поддерживается на Викия. Узнайте больше здесь: $1',
 	'returnto' => 'Возврат к странице $1.',
 	'redirectedfrom' => '(перенаправлено с «$1»)',
 	'redirectpagesub' => 'Страница-перенаправление',
@@ -48542,6 +48550,7 @@ Pagina's die op [[Special:Watchlist|je volglieste]] staen wòdde '''vet''' weerg
 );
 
 $messages['zh-hans'] = array(
+	'realmap-deprecated-info' => 'Wikia已经不再支持世界地图功能。详情请参见: $1',
 	'returnto' => '返回到$1。',
 	'redirectedfrom' => '（重定向自$1）',
 	'redirectpagesub' => '重定向页',
@@ -49090,6 +49099,7 @@ $messages['zh-my'] = array(
 );
 
 $messages['zh-tw'] = array(
+	'realmap-deprecated-info' => 'Wikia已經不再支援世界地圖功能。 有關更多資訊，請參見: $1',
 	'red-link-title' => '$1 (頁面不存在)',
 	'readonlytext' => '資料庫目前禁止輸入新內容及更改，
 這很可能是由於資料庫正在維修，之後即可復原。
