@@ -318,15 +318,13 @@
       for (var i = 0; i < len; i++) {
         // wikia change - start
         suggestion = this.suggestions[i];
-        div = $(
-          (
-            me.selectedIndex === i ?
-            '<' + suggestionWrapperElement + ' class="' + this.options.selectedClass + '"' :
-            '<' + suggestionWrapperElement
-          )
-          + ' title="' + $.htmlentities(suggestion) + '">' + f($.htmlentities(suggestion), this.data[i], $.htmlentities(v))
-          + '</' + suggestionWrapperElement + '>'
-        );
+        div = $('<' + suggestionWrapperElement + '>')
+            .attr('title', $.htmlentities(suggestion))
+            .html(f($.htmlentities(suggestion), this.data[i], $.htmlentities(v)));
+
+        if (me.selectedIndex === i) {
+          div.addClass(this.options.selectedClass);
+        }
         // wikia change - end
         div.mouseover((function(xi) { return function() { me.activate(xi); }; })(i));
         // wikia change - start
