@@ -21,7 +21,10 @@ $(function() {
 				),
 				globalNavMutationObserver = new MutationObserver(function(mutations) {
 					mutations.forEach(function(mutation) {
-						if (mutation.type === 'attributes' && mutation.attributeName === 'class' && mutation.target.classList.contains('bfaa-pinned')) {
+						if (
+							mutation.type === 'attributes' && mutation.attributeName === 'class' &&
+							mutation.target.classList.contains('bfaa-pinned')
+						) {
 							headroom.offset = globalNavigation.get(0).offsetTop + globalNavigationHeight;
 							globalNavMutationObserver.disconnect();
 						}

@@ -224,7 +224,7 @@
 			if (!notificationWrapper.hasClass('float')) {
 				notificationWrapper.addClass('float');
 
-				// check if element has no inline top style
+				// if element has no inline top style let's put it to make sure container is positioned correctly
 				if (!notificationWrapper.prop('style').top) {
 					notificationWrapper.css('top', headerBottom);
 				}
