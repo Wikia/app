@@ -110,28 +110,28 @@ define('ext.wikia.adEngine.slotTweaker', [
 		}
 	}
 
-	function onReady(slotName, callback) {
-		var iframe = doc.getElementById(slotName).querySelector('div:not(.hidden) > div[id*="_container_"] iframe'),
-			fallbackId;
+	function getRecoveredIframe(slotName) {
+		var fallbackId = win._sp_.getElementId(document.querySelectorAll('div[id="' + slotName + '"] div')[1].id);
+		return doc.getElementById(fallbackId).querySelector('div:not(.hidden) > div[id*="_container_"] iframe');
+	}
 
-		if (!iframe && !window._sp_) {
+	function onReady(slotName, callback) {
+		var iframe = doc.getElementById(slotName).querySelector('div:not(.hidden) > div[id*="_container_"] iframe');
+
+		if (!iframe && !win._sp_) {
 			log('onIframeReady - iframe does not exist', 'debug', logGroup);
 			return;
 		}
 
-		if (!iframe && !!window._sp_) {
+		if (!iframe && !!win._sp_) {
 			log('onIframeReady - trying fallback iframe', 'debug', logGroup);
-
-			fallbackId = window._sp_.getElementId(document.querySelectorAll('div[id="' + slotName + '"] div')[1].id);
-			iframe = doc.getElementById(fallbackId).querySelector('div:not(.hidden) > div[id*="_container_"] iframe');
+			iframe = getRecoveredIframe(slotName);
 
 			if (!iframe) {
 				log('onIframeReady - fallback iframe does not exist', 'debug', logGroup);
 				return;
 			}
 		}
-
-
 
 		if (iframe.contentWindow.document.readyState === 'complete') {
 			callback(iframe);
@@ -142,8 +142,22 @@ define('ext.wikia.adEngine.slotTweaker', [
 		}
 	}
 
+	function getRecoveredProviderContainer(providerContainer) {
+		var element = document.getElementById(win._sp_.getElementId(providerContainer.childNodes[0].id));
+		return element.parentNode || null;
+	}
+
 	function makeResponsive(slotName, aspectRatio) {
 		var providerContainer = doc.getElementById(slotName).lastElementChild;
+
+		if (!!win._sp_.getElementId) {
+
+			var recoveredProviderContainer = getRecoveredProviderContainer(providerContainer);
+
+			if (recoveredProviderContainer) {
+				providerContainer = recoveredProviderContainer;
+			}
+		}
 
 		log(['makeResponsive', slotName, aspectRatio], 'info', logGroup);
 
