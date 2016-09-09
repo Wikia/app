@@ -60,7 +60,8 @@ class DesignSystemGlobalNavigationService extends WikiaService {
 
 	private function getData() {
 		return $this->sendRequest( 'DesignSystemApi', 'getNavigation', [
-			'wikiId' => $this->wg->CityId,
+			'id' => $this->wg->CityId,
+			'product' => 'wikis',
 			'lang' => $this->wg->Lang->getCode()
 		] )->getData();
 	}
