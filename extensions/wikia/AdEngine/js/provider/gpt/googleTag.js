@@ -124,7 +124,6 @@ define('ext.wikia.adEngine.provider.gpt.googleTag', [
 	};
 
 	GoogleTag.prototype.addSlot = function (adElement) {
-		console.log('bogna', 'calling addSlot', adElement.getSlotName(), window.googletag.getSlots());
 		var sizes = adElement.getSizes(),
 			slot;
 
@@ -136,6 +135,10 @@ define('ext.wikia.adEngine.provider.gpt.googleTag', [
 			slot = window.googletag.defineSlot(adElement.getSlotPath(), sizes, adElement.getId());
 		} else {
 			slot = window.googletag.defineOutOfPageSlot(adElement.getSlotPath(), adElement.getId());
+		}
+
+		if (!slot) {
+			console.log('bogna', 'problem with adding slot:', adElement.getSlotName(), window.googletag.getSlots());
 		}
 
 		slot.addService(pubAds);
@@ -174,6 +177,7 @@ define('ext.wikia.adEngine.provider.gpt.googleTag', [
 			}
 		});
 
+		console.log('bogna', 'about to destroy slots', slotsToDestroy);
 		if (slotsToDestroy.length) {
 			log(['destroySlots', slotsNames], 'debug', logGroup);
 			success = window.googletag.destroySlots(slotsToDestroy);
