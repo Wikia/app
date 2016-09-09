@@ -9,10 +9,6 @@ li {
 	padding-top: 20px;
 }
 
-li a {
-	font-size: 14px;
-}
-
 td h3:not(:first-child) {
 	margin-top: 50px;
 }

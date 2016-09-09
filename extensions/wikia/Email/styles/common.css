@@ -1,5 +1,5 @@
 /**
- * Include this file in all templates to maintain consistant common styles
+ * Include this file in all templates to maintain consistent common styles
  */
 
 * {
@@ -20,7 +20,6 @@ sub, sup {
 }
 
 p {
-	font-size: 14px;
 	line-height: 22px;
 	margin: 0 0 18px 0;
 	padding: 0;
