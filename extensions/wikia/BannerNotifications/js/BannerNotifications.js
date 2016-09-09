@@ -175,7 +175,7 @@
 			$pageContainer = $('#content');
 		} else {
 			$pageContainer = $('.WikiaPageContentWrapper');
-			headerHeight = $('#globalNavigation').height();
+			headerHeight = $('#globalNavigation').outerHeight(true);
 			require(['wikia.onScroll'], function (onScroll) {
 				onScroll.bind(handleScrolling);
 			});
@@ -221,9 +221,9 @@
 		containerTop = $pageContainer[0].getBoundingClientRect().top;
 
 		if (containerTop < headerHeight) {
-			notificationWrapper.addClass('float');
+			notificationWrapper.addClass('float').css('top', headerHeight);
 		} else {
-			notificationWrapper.removeClass('float');
+			notificationWrapper.removeClass('float').css('top', '');
 		}
 	}
 
