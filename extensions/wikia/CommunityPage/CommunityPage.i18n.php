@@ -290,7 +290,7 @@ $messages['de'] = array(
 	'communitypage-todo-module-page-name' => 'ToDo-Liste der Community',
 	'communitypage-todo-module-heading' => 'Aufgabenliste der Community',
 	'communitypage-todo-module-edit-list' => 'Liste bearbeiten',
-	'communitypage-todo-module-description' => 'In diesem Bereich können Admins Seiten vorschlagen, an denen gearbeitet werden sollte und somit neue Beitragende bei ihrem Start unterstützen. (Admins: denkt bitte daran, detailliert zu beschreiben, was bearbeitet werden sollte).',
+	'communitypage-todo-module-description' => 'In diesem Bereich können Admins Seiten vorschlagen, an denen gearbeitet werden sollte und somit neue Autoren bei ihrem Start unterstützen. (Admins: denkt bitte daran, detailliert zu beschreiben, was bearbeitet werden sollte).',
 	'communitypage-todo-module-zero-state' => 'Möchtest du gerne erfahren, wie du etwas zu dieser Community beitragen kannst? Kontaktiere einen Admin und bitte ihn, hier Anregungen einzutragen.',
 	'communitypage-todo-module-zero-state-contact-admin' => 'Kontaktiere einen Admin',
 	'communitypage-help-module-edit-page-name' => 'Bearbeiten',
@@ -323,6 +323,7 @@ $messages['de'] = array(
 	'communitypage-deadendpages-hightitle' => 'Auf diesen Seiten bitte noch Links einfügen',
 	'communitypage-deadendpages-mediumdescription' => 'Bitte auf diesen Seiten noch Links einfügen. Gut verlinkte Artikel können deinen Lesern noch mehr Informationen zu dem Thema vermitteln und außerdem das Suchmaschinenranking verbessern.',
 	'communitypage-deadendpages-highdescription' => 'Füge Links wichtigen Namen oder Worten hinzu, die in den ersten Sätzen der Seite genannt werden.',
+	'communitypage-entry-button' => 'Leg los',
 );
 
 $messages['es'] = array(
@@ -477,7 +478,7 @@ $messages['fr'] = array(
 	'communitypage-contributions' => '$1 {{PLURAL:$1|contribution|contributions}}',
 	'communitypage-admins' => 'Administrateurs',
 	'communitypage-other-admins' => 'Autres administrateurs',
-	'communitypage-recently-joined' => 'Nouveaux contributeurs récents',
+	'communitypage-recently-joined' => 'Nouveaux contributeurs',
 	'communitypage-recent-activity' => "Voir toute l'activité récente",
 	'communitypage-all-members' => 'Tous les membres',
 	'communitypage-view-all-members' => 'Voir tous les contributeurs',
@@ -498,9 +499,9 @@ $messages['fr'] = array(
 	'communitypage-no-members' => "Cette communauté n'a aucun membre.",
 	'communitypage-help-us-grow' => "Aidez-nous à développer '''{{SITENAME}}''' !",
 	'communitypage-new' => 'Nouveau',
-	'communitypage-popularpages-title' => 'Veuillez relire ces pages',
+	'communitypage-popularpages-title' => 'Pages tendance',
 	'communitypage-popularpages-edittext' => 'Lecture et correction',
-	'communitypage-uncategorizedpages-title' => 'Veuillez ajouter des catégories sur ces pages',
+	'communitypage-uncategorizedpages-title' => 'Pages sans catégories',
 	'communitypage-uncategorizedpages-edittext' => 'Ajouter des catégories',
 	'communitypage-wantedpages-title' => 'Pages demandées',
 	'communitypage-wantedpages-description' => "Il y a des liens vers ces pages, mais ces dernières n'existent pas ! Créez un article ou utilisez-le comme redirection vers le bon article afin d'aider les lecteurs à naviguer sur votre wiki.",
@@ -508,7 +509,7 @@ $messages['fr'] = array(
 	'communitypage-noofviews' => '$1 vues',
 	'communitypage-full-list' => 'Voir la liste complète',
 	'communitypage-modal-tab-all-contribution-header' => 'Dernière contribution',
-	'communitypage-deadendpages-title' => 'Veuillez ajouter des liens sur ces pages',
+	'communitypage-deadendpages-title' => 'Pages sans liens',
 	'communitypage-deadendpages-edittext' => 'Ajouter des liens',
 	'communitypage-view-more' => 'Voir plus',
 	'communitypage-policy-module-link-page-name' => 'Aide:Règlement de la communauté',
@@ -549,25 +550,26 @@ $messages['fr'] = array(
 	'communitypage-first-edit-get-started' => 'Continuer',
 	'communitypage-first-edit-maybe-later' => 'Une prochaine fois',
 	'communitypage-popularpages-description' => "Ces pages plaisent à vos lecteurs ! Assurez-vous qu'elles sont parfaites et contiennent des informations et images mises à jour.",
-	'communitypage-uncategorizedpages-description' => 'Ajoutez des catégories à cette page. Une bonne catégorisation est cruciale pour bien organiser le wiki !',
-	'communitypage-deadendpages-description' => "Ces pages devraient contenir des liens vers d'autres articles de votre wiki. Les articles contenant beaucoup de liens permettent aux lecteurs de découvrir des informations sur votre thème et d'améliorer les résultats de recherche.",
+	'communitypage-uncategorizedpages-description' => 'Ajoutez des catégories à ces pages. Une bonne catégorisation est cruciale pour bien organiser le wiki !',
+	'communitypage-deadendpages-description' => "Ces pages devraient contenir des liens vers d'autres articles de votre wiki. Les articles contenant des liens pertinents permettent aux lecteurs de découvrir des informations sur votre thème et d'améliorer les résultats de recherche.",
 	'communitypage-popularpages-mediumtitle' => 'Pages that need proofreading',
-	'communitypage-popularpages-hightitle' => 'Please proofread these pages',
-	'communitypage-popularpages-mediumdescription' => 'Please proofread these pages and fix typos, grammatical mistakes or factual errors.',
-	'communitypage-popularpages-highdescription' => 'Make sure there are no typos, grammatical mistakes or factual errors.',
-	'communitypage-uncategorizedpages-mediumtitle' => 'Pages that need categories',
-	'communitypage-uncategorizedpages-hightitle' => 'Please add categories to these pages',
-	'communitypage-uncategorizedpages-mediumdescription' => 'Help us organize this wiki by adding categories to these pages!',
-	'communitypage-uncategorizedpages-highdescription' => 'These pages currently have zero categories and need one or more added. Examples of categories include “Characters” or “Items” or “Locations.”',
-	'communitypage-wantedpages-mediumtitle' => 'Pages that need to be created',
-	'communitypage-wantedpages-hightitle' => 'Please create these pages',
-	'communitypage-wantedpages-mediumdescription' => "There are links pointing to these pages, but they don't exist! Please create them. Write a few sentences to get it started!",
-	'communitypage-wantedpages-highdescription' => 'Write a few sentences to get it started.',
-	'communitypage-wantedpages-edittext' => 'Create page',
-	'communitypage-deadendpages-mediumtitle' => 'Pages that need links',
-	'communitypage-deadendpages-hightitle' => 'Please add links to these pages',
-	'communitypage-deadendpages-mediumdescription' => 'Please add links to these pages. Well-linked articles help readers discover more information about your topic and improve search engine rankings.',
-	'communitypage-deadendpages-highdescription' => 'Add links to any important names or words that appear in the first few sentences on these pages.',
+	'communitypage-popularpages-hightitle' => 'Veuillez relire ces pages',
+	'communitypage-popularpages-mediumdescription' => 'Veuillez relire ces pages et corriger les fautes de frappe, erreurs grammaticales ou erreurs factuelles.',
+	'communitypage-popularpages-highdescription' => 'Assurez-vous qu’il n’y a pas de fautes de frappe, erreurs grammaticales ou erreurs factuelles.',
+	'communitypage-uncategorizedpages-mediumtitle' => 'Pages nécessitant des catégories',
+	'communitypage-uncategorizedpages-hightitle' => 'Veuillez ajouter des catégories sur ces pages',
+	'communitypage-uncategorizedpages-mediumdescription' => 'Aidez-nous à organiser ce wiki en ajoutant des catégories sur ces pages !',
+	'communitypage-uncategorizedpages-highdescription' => "Actuellement, ces pages n'ont aucunes catégories et ont besoin que vous en ajoutiez au moins une. Ces catégories peuvent être « Personnages », « Objets » ou « Lieux », par exemple.",
+	'communitypage-wantedpages-mediumtitle' => 'Pages qui doivent être créées',
+	'communitypage-wantedpages-hightitle' => 'Veuillez créer ces pages',
+	'communitypage-wantedpages-mediumdescription' => 'Des liens pointent vers ces pages, mais elles n’existent pas ! Veuillez les créer. Commencez par écrire quelques phrases !',
+	'communitypage-wantedpages-highdescription' => 'Écrivez quelques phrases pour commencer.',
+	'communitypage-wantedpages-edittext' => 'Créer la page',
+	'communitypage-deadendpages-mediumtitle' => 'Pages nécessitant des liens',
+	'communitypage-deadendpages-hightitle' => 'Veuillez ajouter des liens sur ces pages',
+	'communitypage-deadendpages-mediumdescription' => "Veuillez ajouter des liens sur ces pages. Les articles contenant des liens pertinents permettent aux lecteurs de découvrir des informations sur votre thème et d'améliorer les résultats de recherche.",
+	'communitypage-deadendpages-highdescription' => 'Ajoutez des liens aux noms ou mots importants qui apparaissent dans les premières phrases de ces pages.',
+	'communitypage-entry-button' => 'Commencer',
 );
 
 $messages['it'] = array(
@@ -690,6 +692,7 @@ $messages['it'] = array(
 	'communitypage-deadendpages-hightitle' => 'Per favore, aggiungi dei collegamenti a queste pagine',
 	'communitypage-deadendpages-mediumdescription' => 'Per favore, aggiungi dei collegamenti a queste pagine. Articoli ben collegati tra di loro tramite link aiutano i lettori a scoprire più informazioni sul tuo argomento e migliorano la classificazione nei motori di ricerca.',
 	'communitypage-deadendpages-highdescription' => 'Aggiungi i link ai nomi o alle parole importanti che appaiono nelle prime frasi di queste pagine.',
+	'communitypage-entry-button' => 'Inizia adesso',
 );
 
 $messages['ja'] = array(
@@ -812,6 +815,7 @@ $messages['ja'] = array(
 	'communitypage-deadendpages-hightitle' => 'Please add links to these pages',
 	'communitypage-deadendpages-mediumdescription' => 'Please add links to these pages. Well-linked articles help readers discover more information about your topic and improve search engine rankings.',
 	'communitypage-deadendpages-highdescription' => 'Add links to any important names or words that appear in the first few sentences on these pages.',
+	'communitypage-entry-button' => 'コミュニティ・ページ',
 );
 
 $messages['nl'] = array(
@@ -934,6 +938,7 @@ $messages['nl'] = array(
 	'communitypage-deadendpages-hightitle' => 'Please add links to these pages',
 	'communitypage-deadendpages-mediumdescription' => "Voeg wat links toe aan deze pagina's. Goed verbonden artikels helpen om lezers meer informatie over je onderwerp te laten ontdekken en om je rang in zoekmachines te verbeteren.",
 	'communitypage-deadendpages-highdescription' => "Links toevoegen aan belangrijke namen of woorden die voorkomen in de eerste paar zinnen van deze pagina's.",
+	'communitypage-entry-button' => 'Community-pagina',
 );
 
 $messages['pl'] = array(
@@ -1056,6 +1061,7 @@ $messages['pl'] = array(
 	'communitypage-deadendpages-hightitle' => 'Proszę, dodaj linki do tych stron',
 	'communitypage-deadendpages-mediumdescription' => 'Dodaj linki do tych stron. Odnośniki pomiędzy artykułami ułatwiają czytelnikom odnalezienie informacji na dany temat oraz poprawiają wyniki w wyszukiwarkach.',
 	'communitypage-deadendpages-highdescription' => 'Dodaj linki do ważnych nazw i słów, które pojawiają się w kilku pierwszych zdaniach na tych stronach.',
+	'communitypage-entry-button' => 'Strona społeczności',
 );
 
 $messages['pt'] = array(
@@ -1178,6 +1184,7 @@ $messages['pt'] = array(
 	'communitypage-deadendpages-hightitle' => 'Por favor, adicione links a estas páginas',
 	'communitypage-deadendpages-mediumdescription' => 'Estas páginas devem conter links para outros artigos em sua wikia. Artigos bem conectados ajudam os leitores a descobrir mais informações sobre o seu tema e a melhorar os resultados da busca.',
 	'communitypage-deadendpages-highdescription' => 'Adicione links para nomes ou palavras importantes que aparecem nas primeiras frases nestas páginas.',
+	'communitypage-entry-button' => 'Começar',
 );
 
 $messages['ru'] = array(
@@ -1258,7 +1265,7 @@ $messages['ru'] = array(
 	'communitypage-entrypoint-modal-connect-title' => 'Общайтесь',
 	'communitypage-entrypoint-modal-connect-text' => 'Делитесь своими идеями и мыслями с другими участниками $1.',
 	'communitypage-entrypoint-modal-explore-title' => 'Исследуйте',
-	'communitypage-entrypoint-modal-explore-text' => 'Станьте частью чего-то большего. Сообщество $1 — это лишь один среди 360 000 википроектов на Викия.',
+	'communitypage-entrypoint-modal-explore-text' => 'Станьте частью чего-то большего. $1 — это лишь один среди 360 000 википроектов на Викия.',
 	'communitypage-entrypoint-modal-button-text' => 'Присоединиться',
 	'communitypage-entrypoint-modal-video-button-text' => 'Смотреть видео',
 	'communitypage-anon-contrib-header' => '$1 или $2. Начните редактировать на этой вики и получите свой рейтинг!',
@@ -1300,6 +1307,7 @@ $messages['ru'] = array(
 	'communitypage-deadendpages-hightitle' => 'Please add links to these pages',
 	'communitypage-deadendpages-mediumdescription' => 'Пожалуйста, добавьте ссылки на эти страницы.  Статьи с корректными ссылками помогут читателям найти больше интересующей их информации, а также повысят позиции вашей вики в поисковой выдаче.',
 	'communitypage-deadendpages-highdescription' => 'Добавьте ссылки для важных названий или слов, которые часто повторяются в первых предложениях на этих страницах.',
+	'communitypage-entry-button' => 'Страница сообщества',
 );
 
 $messages['zh-hans'] = array(
@@ -1422,6 +1430,7 @@ $messages['zh-hans'] = array(
 	'communitypage-deadendpages-hightitle' => 'Please add links to these pages',
 	'communitypage-deadendpages-mediumdescription' => 'Please add links to these pages. Well-linked articles help readers discover more information about your topic and improve search engine rankings.',
 	'communitypage-deadendpages-highdescription' => 'Add links to any important names or words that appear in the first few sentences on these pages.',
+	'communitypage-entry-button' => '社区页面',
 );
 
 $messages['zh-hant'] = array(
@@ -1544,5 +1553,6 @@ $messages['zh-hant'] = array(
 	'communitypage-deadendpages-hightitle' => 'Please add links to these pages',
 	'communitypage-deadendpages-mediumdescription' => 'Please add links to these pages. Well-linked articles help readers discover more information about your topic and improve search engine rankings.',
 	'communitypage-deadendpages-highdescription' => 'Add links to any important names or words that appear in the first few sentences on these pages.',
+	'communitypage-entry-button' => '社區頁面',
 );
 
