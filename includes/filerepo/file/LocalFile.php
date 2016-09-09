@@ -5,6 +5,7 @@
  * @file
  * @ingroup FileAbstraction
  */
+use Wikia\Util\PerformanceProfilers\UsernameUseProfiler;
 
 /**
  * Bump this number when serialized cache records may be incompatible.
@@ -1061,6 +1062,7 @@ class LocalFile extends File {
 				#throw new MWException( "Empty oi_archive_name. Database and storage out of sync?" );
 				Wikia::logBacktrace(__METHOD__ . "::oi_archive_name - [{$this->getName()}]"); // Wikia change (BAC-1068)
 			}
+			$usernameUseProfiler = new UsernameUseProfiler( __CLASS__, __METHOD__ );
 			$reupload = true;
 			# Collision, this is an update of a file
 			# Insert previous contents into oldimage
@@ -1106,6 +1108,8 @@ class LocalFile extends File {
 				array( 'img_name' => $this->getName() ),
 				__METHOD__
 			);
+
+			$usernameUseProfiler->end();
 		}
 
 		$descTitle = $this->getTitle();
@@ -1980,6 +1984,7 @@ class LocalFileRestoreBatch {
 	 */
 	function execute() {
 		global $wgLang;
+		$usernameUseProfiler = new UsernameUseProfiler( __CLASS__, __METHOD__ );
 
 		if ( !$this->all && !$this->ids ) {
 			// Do nothing
@@ -2200,7 +2205,7 @@ class LocalFileRestoreBatch {
 		}
 
 		$this->file->unlock();
-
+		$usernameUseProfiler->end();
 		return $status;
 	}
 

@@ -31,6 +31,8 @@
  *
  * @ingroup API
  */
+use Wikia\Util\PerformanceProfilers\UsernameUseProfiler;
+
 class ApiQueryFilearchive extends ApiQueryBase {
 
 	public function __construct( $query, $moduleName ) {
@@ -43,6 +45,9 @@ class ApiQueryFilearchive extends ApiQueryBase {
 		if ( !$user->isAllowed( 'deletedhistory' ) ) {
 			$this->dieUsage( 'You don\'t have permission to view deleted file information', 'permissiondenied' );
 		}
+
+		$usernameUseProfiler = new UsernameUseProfiler( __CLASS__, __METHOD__ );
+		$user_text_is_used = false;
 
 		$db = $this->getDB();
 
@@ -144,17 +149,7 @@ class ApiQueryFilearchive extends ApiQueryBase {
 				$file['timestamp'] = wfTimestamp( TS_ISO_8601, $row->fa_timestamp );
 			}
 			if ( $fld_user ) {
-				/**
-				 * Check, how often is this code executed. Scope: the following if block.
-				 *
-				 * @author Mix
-				 * @see SUS-810
-				 */
-				Wikia\Logger\WikiaLogger::instance()->debugSampled(
-					0.01,
-					'SUS-810',
-					[ 'method' => __METHOD__, 'exception' => new Exception() ]
-				);
+				$user_text_is_used = true;
 				$file['userid'] = $row->fa_user;
 				$file['user'] = $row->fa_user_text;
 			}
@@ -211,6 +206,9 @@ class ApiQueryFilearchive extends ApiQueryBase {
 		}
 
 		$result->setIndexedTagName_internal( array( 'query', $this->getModuleName() ), 'fa' );
+		if ( $user_text_is_used ) {
+			$usernameUseProfiler->end();
+		}
 	}
 
 	public function getAllowedParams() {

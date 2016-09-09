@@ -162,6 +162,13 @@ class WikiFactoryTest extends WikiaBaseTest {
 				'url' => 'http://gta.wikia.com/wiki/test/test/test',
 				'expected' => 'http://gta.wikia-staging.com/wiki/test/test/test'
 			],
+			// @see PLATFORM-2400
+			[
+				'env' => WIKIA_ENV_STAGING,
+				'forcedEnv' => null,
+				'url' => 'http://gta.wikia-staging.com/wiki/test/test/test',
+				'expected' => 'http://gta.wikia-staging.com/wiki/test/test/test'
+			],
 			[
 				'env' => WIKIA_ENV_DEV,
 				'forcedEnv' => null,

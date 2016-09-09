@@ -1,7 +1,13 @@
 require([
 	'jquery',
 	'wikia.tracker',
-], function ($, tracker) {
+	'wikia.ui.factory',
+	'wikia.mustache',
+	'wikia.window',
+	'wikia.throbber',
+	'embeddablediscussions.templates.mustache',
+	'EmbeddableDiscussionsSharing'
+], function ($, tracker, uiFactory, mustache, window, throbber, templates, sharing) {
 	'use strict';
 
 	var track = tracker.buildTrackingFunction({
@@ -10,14 +16,119 @@ require([
 		trackingMethod: 'analytics'
 	});
 
-	$(function() {
+	function openModal(link, title) {
+		// Track impression
+		track({
+			action: tracker.ACTIONS.IMPRESSION,
+			label: 'embeddable-discussions-share-modal-loaded',
+		});
+
+		uiFactory.init(['modal']).then(function (uiModal) {
+			var modalConfig = {
+				vars: {
+					classes: ['embeddable-discussions-share-modal'],
+					content: '',
+					id: 'EmbeddableDiscussionsShareModal',
+					size: 'small',
+				}
+			};
+
+			uiModal.createComponent(modalConfig, function (modal) {
+				modal.$content
+					.html(mustache.render(templates.ShareModal, {
+						heading: $.msg('embeddable-discussions-share-heading'),
+						icons: sharing.getData(mw.config.get('wgUserLanguage'), link, title),
+						close: $.msg('embeddable-discussions-cancel-button'),
+					}));
+
+				modal.show();
+
+				$('.embeddable-discussions-sharemodal-cancel-button').on('click', function(event) {
+					modal.trigger('close', event);
+					event.preventDefault();
+				});
+			});
+		});
+	}
+
+	function processData(threads, baseUrl, upvoteUrl) {
+		var ret = [],
+			i,
+			thread,
+			userData;
+
+		for (i in threads) {
+			thread = threads[i];
+			userData = thread._embedded.userData[0];
+
+			ret.push({
+				author: thread.createdBy.name,
+				authorAvatar: thread.createdBy.avatarUrl,
+				commentCount: thread.postCount,
+				content: thread.rawContent,
+				createdAt: $.timeago(new Date(thread.creationDate.epochSecond * 1000)),
+				forumName: $.msg( 'embeddable-discussions-forum-name', thread.forumName),
+				id: thread.id,
+				firstPostId: thread.firstPostId,
+				index: i,
+				link: '/d/p/' + thread.id,
+				shareUrl: baseUrl + 'd/p/' + thread.id,
+				upvoteUrl: upvoteUrl + thread.firstPostId,
+				title: thread.title,
+				upvoteCount: thread.upvoteCount,
+				hasUpvoted: userData.hasUpvoted,
+			});
+		}
+
+		return ret;
+	}
+
+	function performRequest($elem) {
+		var requestUrl = $elem.attr('data-requestUrl'),
+			requestData = JSON.parse($elem.attr('data-requestData'));
+
+		$.ajax({
+			type: 'GET',
+			url: requestUrl,
+			xhrFields: {
+				withCredentials: true
+			},
+		}).done(function (data) {
+			var threads = processData(data._embedded.threads, requestData.baseUrl, requestData.upvoteRequestUrl);
+
+			$elem.html(mustache.render(templates.DiscussionThreads, {
+				threads: threads,
+				columnsDetailsClass: requestData.columnsDetailsClass,
+				replyText: $.msg('embeddable-discussions-reply'),
+				shareText: $.msg('embeddable-discussions-share'),
+				showAll: $.msg('embeddable-discussions-show-all'),
+				upvoteText: $.msg('embeddable-discussions-upvote'),
+				zeroText: $.msg('embeddable-discussions-zero'),
+				zeroTextDetail: $.msg('embeddable-discussions-zero-detail'),
+			}));
+		}).fail(function () {
+			throbber.hide($elem);
+			$elem.html($.msg('embeddable-discussions-error-loading'));
+		});
+	}
+
+	function loadData() {
+		var $threads = $('.embeddable-discussions-threads');
+		throbber.show($threads);
+
+		$.each($threads, function() {
+			performRequest($(this));
+		});
+	}
+
+	$(function () {
 		// Track impression
 		track({
 			action: tracker.ACTIONS.IMPRESSION,
 			label: 'embeddable-discussions-loaded',
 		});
 
-		$('.upvote').click(function(event) {
+		$('.embeddable-discussions-module').on('click', '.upvote', function(event) {
 			var upvoteUrl = event.currentTarget.getAttribute('data-url'),
 			  hasUpvoted = event.currentTarget.getAttribute('data-hasUpvoted') === '1',
 			  $svg = $($(event.currentTarget).children()[0]),
@@ -44,5 +155,17 @@ require([
 
 			event.preventDefault();
 		});
+
+		$('.embeddable-discussions-module').on('click', '.share', function(event) {
+			openModal(event.currentTarget.getAttribute('data-link'), event.currentTarget.getAttribute('data-title'));
+			event.preventDefault();
+		});
+
+		// Hook to load after VE edit completes (no page reload)
+		mw.hook('postEdit').add(function () {
+			loadData();
+		});
+
+		loadData();
 	});
 });

@@ -1,4 +1,6 @@
 <?php
+use Wikia\Util\PerformanceProfilers\UsernameUseProfiler;
+
 /**
  * Backend functions for suppressing and unsuppressing all references to a given user,
  * used when blocking with HideUser enabled.  This was spun out of SpecialBlockip.php
@@ -34,6 +36,7 @@ class RevisionDeleteUser {
 	 * @return bool
 	 */
 	private static function setUsernameBitfields( $name, $userId, $op, $dbw ) {
+		$usernameUseProfiler = new UsernameUseProfiler( __CLASS__, __METHOD__ );
 		if( $op !== '|' && $op !== '&' ){
 			return false; // sanity check
 		}
@@ -108,17 +111,6 @@ class RevisionDeleteUser {
 			array( 'oi_user_text' => $name ),
 			__METHOD__
 		);
-		/**
-		 * Check, how often is this code executed. Scope: the following if block.
-		 *
-		 * @author Mix
-		 * @see SUS-810
-		 */
-		Wikia\Logger\WikiaLogger::instance()->debugSampled(
-			0.01,
-			'SUS-810',
-			[ 'method' => __METHOD__, 'exception' => new Exception() ]
-		);
 		# Hide name from deleted images
 		$dbw->update(
 			'filearchive',
@@ -127,6 +119,7 @@ class RevisionDeleteUser {
 			__METHOD__
 		);
 		# Done!
+		$usernameUseProfiler->end();
 		return true;
 	}
 

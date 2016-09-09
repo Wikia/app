@@ -101,7 +101,7 @@ class SitemapPage extends UnlistedSpecialPage {
 
 		$this->mTitle = SpecialPage::getTitleFor( 'Sitemap', $subpage );
 		$this->getNamespacesList();
-		if ( $this->mType == 'namespace' ) {
+		if ( $this->mType == 'namespace' && in_array( $this->mNamespace, $this->mNamespaces ) ) {
 			$wgOut->disable();
 
 			header( 'Content-type: application/x-gzip' );
@@ -156,6 +156,8 @@ class SitemapPage extends UnlistedSpecialPage {
 				'ORDER BY' => 'page_namespace',
 			]
 		);
+
+		$this->mNamespaces = [];
 
 		while ( $row = $dbr->fetchObject( $res ) ) {
 			$this->mNamespaces[] = $row->page_namespace;

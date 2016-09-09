@@ -134,6 +134,7 @@ class SpecialPageFactory {
 		// Unlisted / redirects
 		'Blankpage'                 => 'SpecialBlankpage',
 		'Blockme'                   => 'SpecialBlockme',
+		'Diff'                      => 'SpecialDiff',
 		'Emailuser'                 => 'SpecialEmailUser',
 		'JavaScriptTest'            => 'SpecialJavaScriptTest',
 		'Movepage'                  => 'MovePageForm',

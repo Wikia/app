@@ -77,8 +77,5 @@
 				<span><?= ( wfMessage( 'global-navigation-create-wiki' )->escaped() ); ?></span>
 			</a>
 		</div>
-		<? if ( $isGameStarLogoEnabled ): ?>
-			<a class="gamestar-logo" href="http://gamestar.de/"></a>
-		<? endif; ?>
 	</div>
 </nav>

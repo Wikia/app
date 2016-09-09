@@ -51,10 +51,10 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 	 */
 	function pushAd(slot, slotPath, slotTargetingData, extra) {
 		extra = extra || {};
-		var count,
-			element,
+		var element,
 			recoverableSlots = extra.recoverableSlots || [],
-			shouldPushRecoverableAd = recoveryHelper.isBlocking() && recoveryHelper.isRecoverable(slot.name, recoverableSlots),
+			shouldPushRecoverableAd = recoveryHelper.isBlocking() &&
+				recoveryHelper.isRecoverable(slot.name, recoverableSlots),
 			shouldPush = !recoveryHelper.isBlocking() || shouldPushRecoverableAd,
 			uapId = uapContext.getUapId();
 
@@ -72,18 +72,8 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 				slotTweaker.show(slot.name);
 			});
 		}
-		if (scrollHandler) {
-			count = scrollHandler.getReloadedViewCount(slot.name);
-			if (count !== null) {
-				slotTargetingData.rv = count.toString();
-			}
-		}
-		if (shouldPushRecoverableAd) {
-			slotTargetingData.src = 'rec';
-		}
 
-		slotTargetingData.wsi = slotTargeting.getWikiaSlotId(slot.name, slotTargetingData.src);
-		slotTargetingData.uap = uapId ? uapId.toString() : 'none';
+		setAdditionalTargeting(slotTargetingData);
 
 		element = new AdElement(slot.name, slotPath, slotTargetingData);
 
@@ -92,6 +82,22 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 			slot.container.appendChild(element.getNode());
 
 			googleApi.addSlot(element);
+		}
+
+		function setAdditionalTargeting(slotTargetingData) {
+			if (scrollHandler) {
+				var count = scrollHandler.getReloadedViewCount(slot.name);
+				if (count !== null) {
+					slotTargetingData.rv = count.toString();
+				}
+			}
+
+			if (shouldPushRecoverableAd) {
+				slotTargetingData.src = 'rec';
+			}
+
+			slotTargetingData.wsi = slotTargeting.getWikiaSlotId(slot.name, slotTargetingData.src);
+			slotTargetingData.uap = uapId ? uapId.toString() : 'none';
 		}
 
 		function onAdLoadCallback(slotElementId, gptEvent, iframe) {

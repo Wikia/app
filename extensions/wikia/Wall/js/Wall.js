@@ -584,7 +584,8 @@
 					mode: mode,
 					msgid: id,
 					username: this.username,
-					formdata: formdata
+					formdata: formdata,
+					token: mw.user.tokens.get('editToken')
 				},
 				callback: this.proxy(function (data) {
 					if (data.status) {
@@ -618,7 +619,8 @@
 				data: {
 					msgid: id,
 					newState: newState,
-					formdata: formdata
+					formdata: formdata,
+					token: mw.user.tokens.get('editToken')
 				},
 				callback: this.proxy(function (json) {
 					if (json.status) {
@@ -865,7 +867,8 @@
 										data: {
 											destinationBoardId: moveThreadModal.$content
 												.find('.destinationBoardId option:selected').val(),
-											rootMessageId: id
+											rootMessageId: id,
+											token: mw.user.tokens.get('editToken')
 										},
 										callback: function (json) {
 											if (json.status === 'ok') {

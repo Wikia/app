@@ -2147,7 +2147,7 @@ class User {
 	 *
 	 * @return bool
 	 */
-	public function setPassword( $str ) {
+	public function setPassword( $str, $forceLogout=true ) {
 		global $wgAuth;
 
 		if( $str !== null ) {
@@ -2174,6 +2174,7 @@ class User {
 		}
 
 		$this->setInternalPassword( $str );
+		wfRunHooks( 'UserSetPassword', [ $this->getId(), $forceLogout ] );
 
 		return true;
 	}

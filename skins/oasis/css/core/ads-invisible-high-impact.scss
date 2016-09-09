@@ -26,14 +26,25 @@ $z-high-impact: $zTop + 2;
 		width: 100%;
 	}
 
+	.top-bar {
+		background-color: rgba(0,0,0,0.5);
+		left: 0;
+		position: absolute;
+		top: 0;
+		width: 100%;
+		//This is needed to make sure that close button is always displayed above ad
+		//ad can take the whole space of interstitial if too big creative is targeted
+		//- it shouldn't happen but it protects users from being not able to close interstitial
+		z-index: $z-high-impact;
+	}
+
 	.close {
 		background-color: $color-black;
 		cursor: pointer;
-		display: block;
+		display: inline-block;
+		float: right;
 		padding: 7px 7px;
-		position: absolute;
-		right: 0;
-		top: 0;
+		position: relative;
 
 		&:hover {
 			background-color: #333;
@@ -45,7 +56,6 @@ $z-high-impact: $zTop + 2;
 			background-position: center center;
 			background-size: 16px 16px;
 			display: block;
-			float: right;
 			height: 16px;
 			outline: none;
 			width: 16px;
@@ -54,12 +64,10 @@ $z-high-impact: $zTop + 2;
 
 	.label {
 		color: $color-text-light;
-		display: block;
+		display: inline-block;
 		font-size: 17px;
-		left: 0;
 		padding: 5px 10px;
-		position: absolute;
-		top: 0;
+		position: relative;
 	}
 }
 

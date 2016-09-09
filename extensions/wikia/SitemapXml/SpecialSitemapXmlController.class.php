@@ -116,7 +116,6 @@ class SpecialSitemapXmlController extends WikiaSpecialPageController {
 			__METHOD__,
 			[
 				'ORDER BY' => 'page_id',
-				'USE INDEX' => 'PRIMARY',
 				'LIMIT' => 15000,
 			]
 		);

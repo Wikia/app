@@ -19,18 +19,22 @@ class EmbeddableDiscussionsController {
 		return true;
 	}
 
-	public static function onBeforePageDisplay( \OutputPage $out, \Skin $skin ) {
+	public static function onBeforePageDisplay() {
 		\Wikia::addAssetsToOutput( 'embeddable_discussions_js' );
 		\Wikia::addAssetsToOutput( 'embeddable_discussions_scss' );
+
+		JSMessages::enqueuePackage( 'EmbeddableDiscussions', JSMessages::EXTERNAL );
+
 		return true;
 	}
 
-	public static function render( $input, array $args, Parser $parser, PPFrame $frame ) {
+	public static function render( $input, array $args ) {
 		global $wgCityId;
 
-		$showLatest = empty( $args['mostrecent'] ) ? false : filter_var( $args['mostrecent'], FILTER_VALIDATE_BOOLEAN );
+		$showLatest = !empty( $args['mostrecent'] ) && filter_var( $args['mostrecent'], FILTER_VALIDATE_BOOLEAN );
 		$itemCount = empty( $args['size'] ) ? self::ITEMS_DEFAULT : intval( $args['size'] );
 		$columns = empty( $args['columns'] ) ? self::COLUMNS_DEFAULT : intval( $args['columns'] );
+		$category = empty( $args['category'] ) ? '' :  $args['category'];
 
 		if ( $itemCount > self::ITEMS_MAX ) {
 			$itemCount = self::ITEMS_MAX;
@@ -53,37 +57,48 @@ class EmbeddableDiscussionsController {
 		if ( F::app()->checkSkin( 'wikiamobile' ) ) {
 			// In Mercury, discussions are rendered client side as an Ember component
 			$modelData = [
-				'show' => $showLatest ? 'latest' : 'trending',
-				'itemCount' => $itemCount,
+				'mercuryComponentAttrs' => json_encode( [
+					'category' => ( new DiscussionsThreadModel( $wgCityId ) )->getCategoryId( $category ),
+					'show' => $showLatest ? 'latest' : 'trending',
+					'itemCount' => $itemCount,
+				] ),
+				'loading' => wfMessage( 'embeddable-discussions-loading' )->plain()
 			];
 
-			// In mercury, discussions app is rendered client side
-			$html = $templateEngine->clearData()
+			// In mercury, discussions app is rendered client side in an Ember container
+			return $templateEngine->clearData()
 				->setData( $modelData )
 				->render( 'DiscussionThreadMobile.mustache' );
-
-			return $html;
 		} else {
-			$modelData = ( new DiscussionsThreadModel( $wgCityId ) )->getData( $showLatest, $itemCount );
+			$modelData = ( new DiscussionsThreadModel( $wgCityId ) )->getData( $showLatest, $itemCount, $category );
 
-			$modelData['columns'] = $columns;
+			$modelData['requestData'] = json_encode( [
+				'baseUrl' => $modelData['baseUrl'],
+				'category' => $category,
+				'columns' => $columns,
+				'columnsDetailsClass' => $columns === 2 ? 'embeddable-discussions-post-detail-columns' : '',
+				'showLatest' => $showLatest,
+				'upvoteRequestUrl' => $modelData['upvoteRequestUrl'],
+			] );
+
+			if ( $showLatest && $category ) {
+				$heading = wfMessage( 'embeddable-discussions-show-latest-in-category', $category )->plain();
+			} else if ( $showLatest ) {
+				$heading = wfMessage( 'embeddable-discussions-show-latest' )->plain();
+			} else if ( $category ) {
+				$heading = wfMessage( 'embeddable-discussions-show-trending-in-category', $category )->plain();
+			} else {
+				$heading = wfMessage( 'embeddable-discussions-show-trending' )->plain();
+			}
+
 			$modelData['columnsWrapperClass'] = $columns === 2 ? 'embeddable-discussions-threads-columns' : '';
-			$modelData['columnsDetailsClass'] = $columns === 2 ? 'embeddable-discussions-post-detail-columns' : '';
-			$modelData['heading'] = $showLatest ? wfMessage( 'embeddable-discussions-show-latest' )->plain() :
-				wfMessage( 'embeddable-discussions-show-trending' )->plain();
-			$modelData['replyText'] = wfMessage( 'embeddable-discussions-reply' )->plain();
-			$modelData['shareText'] = wfMessage( 'embeddable-discussions-share' )->plain();
+			$modelData['heading'] = $heading;
 			$modelData['showAll'] = wfMessage( 'embeddable-discussions-show-all' )->plain();
-			$modelData['showLatest'] = $showLatest;
-			$modelData['upvoteText'] = wfMessage( 'embeddable-discussions-upvote' )->plain();
-			$modelData['zeroText'] = wfMessage( 'embeddable-discussions-zero' )->plain();
-			$modelData['zeroTextDetail'] = wfMessage( 'embeddable-discussions-zero-detail' )->plain();
+			$modelData['loading'] = wfMessage( 'embeddable-discussions-loading' )->plain();
 
-			$html = $templateEngine->clearData()
+			return $templateEngine->clearData()
 				->setData( $modelData )
-				->render( 'DiscussionThread.mustache' );
-
-			return $html;
+				->render( 'DiscussionThreadDesktop.mustache' );
 		}
 	}
 }

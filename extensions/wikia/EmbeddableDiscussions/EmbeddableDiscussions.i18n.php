@@ -7,10 +7,16 @@ $messages['en'] = array(
 	'embeddable-discussions-share' => 'Share',
 	'embeddable-discussions-show-trending' => 'Trending Discussions',
 	'embeddable-discussions-show-latest' => 'Latest Discussions',
+	'embeddable-discussions-show-trending-in-category' => 'Trending discussions in $1',
+	'embeddable-discussions-show-latest-in-category' => 'Recent discussions in $1',
 	'embeddable-discussions-show-all' => 'View All →',
 	'embeddable-discussions-zero' => 'No posts yet.',
 	'embeddable-discussions-zero-detail' => 'Get the discussion started, create the first post now!',
 	'embeddable-discussions-forum-name' => 'In $1',
+	'embeddable-discussions-share-heading' => 'Share Post',
+	'embeddable-discussions-loading' => 'Loading Discussions...',
+	'embeddable-discussions-error-loading' => 'Error loading discussions',
+	'embeddable-discussions-cancel-button' => 'Cancel',
 );
 
 $messages['qqq'] = array(
@@ -19,22 +25,34 @@ $messages['qqq'] = array(
 	'embeddable-discussions-share' => 'Text to show for Share button',
 	'embeddable-discussions-show-trending' => 'Module heading when showing trending discussions',
 	'embeddable-discussions-show-latest' => 'Module heading when showing latest discussions',
+	'embeddable-discussions-show-trending-in-category' => 'Module heading when showing trending discussions in a specific category',
+	'embeddable-discussions-show-latest-in-category' => 'Module heading when showing latest discussions in a specific category',
 	'embeddable-discussions-show-all' => 'Link for showing all discussions (followed by arrow)',
 	'embeddable-discussions-zero' => 'Text for zero state (heading) when there are no discussion posts',
 	'embeddable-discussions-zero-detail' => 'Text for zero state (second line) when there are no discussion posts',
 	'embeddable-discussions-forum-name' => 'Show which forum a post belongs to. Forum name filled in from $1',
+	'embeddable-discussions-share-heading' => 'Heading text for share post modal',
+	'embeddable-discussions-loading' => 'Text to show when loading discussions cards (used on mobile only)',
+	'embeddable-discussions-error-loading' => 'Error message to show if loading of discussions items failed',
+	'embeddable-discussions-cancel-button' => 'Text for Share modal cancel button',
 );
 
 $messages['de'] = array(
 	'embeddable-discussions-upvote' => 'Abstimmen',
 	'embeddable-discussions-reply' => 'Antworten',
 	'embeddable-discussions-share' => 'Teilen',
-	'embeddable-discussions-show-trending' => 'Diskussionen im Trend',
+	'embeddable-discussions-show-trending' => 'Beliebte Diskussionen',
 	'embeddable-discussions-show-latest' => 'Neueste Diskussionen',
 	'embeddable-discussions-show-all' => 'Alle anzeigen',
 	'embeddable-discussions-zero' => 'Es gibt noch keine Beiträge.',
 	'embeddable-discussions-zero-detail' => 'Erstelle einen Beitrag und starte eine neue Diskussion!',
 	'embeddable-discussions-forum-name' => 'In $1',
+	'embeddable-discussions-loading' => 'Diskussionen werden geladen...',
+	'embeddable-discussions-show-trending-in-category' => 'Beliebte Diskussionen in $1',
+	'embeddable-discussions-show-latest-in-category' => 'Neueste Diskussionen in $1',
+	'embeddable-discussions-share-heading' => 'Beitrag Teilen',
+	'embeddable-discussions-error-loading' => 'Fehler beim Laden von Diskussionen',
+	'embeddable-discussions-cancel-button' => 'Abbrechen',
 );
 
 $messages['es'] = array(
@@ -47,6 +65,12 @@ $messages['es'] = array(
 	'embeddable-discussions-zero' => 'No hay entradas todavía.',
 	'embeddable-discussions-zero-detail' => '¡Empieza la discusión, crea la primera entrada ahora!',
 	'embeddable-discussions-forum-name' => 'En $1',
+	'embeddable-discussions-loading' => 'Cargando discusiones...',
+	'embeddable-discussions-show-trending-in-category' => 'Discusiones en tendencia en $1',
+	'embeddable-discussions-show-latest-in-category' => 'Discusiones recientes en $1',
+	'embeddable-discussions-share-heading' => 'Compartir',
+	'embeddable-discussions-error-loading' => 'Error al cargar discusiones',
+	'embeddable-discussions-cancel-button' => 'Cancelar',
 );
 
 $messages['fr'] = array(
@@ -59,6 +83,12 @@ $messages['fr'] = array(
 	'embeddable-discussions-zero' => 'Pas encore de publications.',
 	'embeddable-discussions-zero-detail' => 'Lancez la discussion en créant une publication maintenant !',
 	'embeddable-discussions-forum-name' => 'Dans 1 $',
+	'embeddable-discussions-loading' => 'Chargement de Discussions...',
+	'embeddable-discussions-show-trending-in-category' => 'Discussions tendance dans $1',
+	'embeddable-discussions-show-latest-in-category' => 'Discussions récentes dans $1',
+	'embeddable-discussions-share-heading' => 'Partagez la publication',
+	'embeddable-discussions-error-loading' => 'Une erreur est survenue lors du chargement des discussions',
+	'embeddable-discussions-cancel-button' => 'Annuler',
 );
 
 $messages['it'] = array(
@@ -71,6 +101,12 @@ $messages['it'] = array(
 	'embeddable-discussions-zero' => 'Ancora nessun post.',
 	'embeddable-discussions-zero-detail' => 'Iniziare la discussione, crea adesso il primo post!',
 	'embeddable-discussions-forum-name' => 'In $1',
+	'embeddable-discussions-loading' => 'Caricamento delle discussioni...',
+	'embeddable-discussions-show-trending-in-category' => 'Discussioni popolari in $1',
+	'embeddable-discussions-show-latest-in-category' => 'Discussioni recenti in $1',
+	'embeddable-discussions-share-heading' => 'Condividi post',
+	'embeddable-discussions-error-loading' => 'Errore nel caricamento delle discussioni',
+	'embeddable-discussions-cancel-button' => 'Annulla',
 );
 
 $messages['ja'] = array(
@@ -81,8 +117,14 @@ $messages['ja'] = array(
 	'embeddable-discussions-show-latest' => '最新のトーク',
 	'embeddable-discussions-show-all' => 'すべて表示 →',
 	'embeddable-discussions-zero' => 'まだ投稿はありません。',
-	'embeddable-discussions-zero-detail' => '最初の投稿を作成してトークを始めてみよう！',
+	'embeddable-discussions-zero-detail' => '最初の投稿を作成してトークに参加してみよう！',
 	'embeddable-discussions-forum-name' => '$1内',
+	'embeddable-discussions-loading' => 'トークをロードしています...',
+	'embeddable-discussions-show-trending-in-category' => '$1に関する人気のトーク',
+	'embeddable-discussions-show-latest-in-category' => '$1に関する最近のトーク',
+	'embeddable-discussions-share-heading' => '投稿を共有する',
+	'embeddable-discussions-error-loading' => 'トークの読み込みでエラーが発生しました',
+	'embeddable-discussions-cancel-button' => 'キャンセル',
 );
 
 $messages['pl'] = array(
@@ -94,7 +136,13 @@ $messages['pl'] = array(
 	'embeddable-discussions-show-all' => 'Zobacz wszystkie →',
 	'embeddable-discussions-zero' => 'Nie ma jeszcze postów.',
 	'embeddable-discussions-zero-detail' => 'Rozpocznij dyskusję, napisz pierwszy post!',
-	'embeddable-discussions-forum-name' => 'Na $1',
+	'embeddable-discussions-forum-name' => 'Na forum $1',
+	'embeddable-discussions-loading' => 'Ładuję Dyskusje...',
+	'embeddable-discussions-show-trending-in-category' => 'Popularne dyskusje w $1',
+	'embeddable-discussions-show-latest-in-category' => 'Najnowsze dyskusje w $1',
+	'embeddable-discussions-share-heading' => 'Udostępnij post',
+	'embeddable-discussions-error-loading' => 'Wystąpił błąd w trakcie ładowania dyskusji',
+	'embeddable-discussions-cancel-button' => 'Anuluj',
 );
 
 $messages['pt'] = array(
@@ -107,6 +155,12 @@ $messages['pt'] = array(
 	'embeddable-discussions-zero' => 'Ainda não há posts.',
 	'embeddable-discussions-zero-detail' => 'Inicie a discussão criando o primeiro post agora!',
 	'embeddable-discussions-forum-name' => 'Em $1',
+	'embeddable-discussions-loading' => 'Carregando discussões...',
+	'embeddable-discussions-show-trending-in-category' => 'Discussões em alta em $1',
+	'embeddable-discussions-show-latest-in-category' => 'Discussões recentes em $1',
+	'embeddable-discussions-share-heading' => 'Compartilhar post',
+	'embeddable-discussions-error-loading' => 'Erro no carregamento das discussões',
+	'embeddable-discussions-cancel-button' => 'Cancelar',
 );
 
 $messages['ru'] = array(
@@ -119,6 +173,12 @@ $messages['ru'] = array(
 	'embeddable-discussions-zero' => 'Сообщений пока нет.',
 	'embeddable-discussions-zero-detail' => 'Начните обсуждение, опубликуйте первое сообщение!',
 	'embeddable-discussions-forum-name' => 'В $1',
+	'embeddable-discussions-loading' => 'Загрузка обсуждений...',
+	'embeddable-discussions-show-trending-in-category' => 'Популярные обсуждения в категории «$1»',
+	'embeddable-discussions-show-latest-in-category' => 'Последние обсуждения в категории «$1»',
+	'embeddable-discussions-share-heading' => 'Поделиться записью',
+	'embeddable-discussions-error-loading' => 'Ошибка при загрузке обсуждений',
+	'embeddable-discussions-cancel-button' => 'Отмена',
 );
 
 $messages['zh-hans'] = array(
@@ -131,6 +191,12 @@ $messages['zh-hans'] = array(
 	'embeddable-discussions-zero' => '还没有任何帖子。',
 	'embeddable-discussions-zero-detail' => '赶快发起讨论，现在就创建第一个帖子吧！',
 	'embeddable-discussions-forum-name' => '在$1中',
+	'embeddable-discussions-loading' => '正在加载讨论版...',
+	'embeddable-discussions-show-trending-in-category' => '$1中的热门讨论',
+	'embeddable-discussions-show-latest-in-category' => '$1中的最新讨论',
+	'embeddable-discussions-share-heading' => '分享帖子',
+	'embeddable-discussions-error-loading' => '讨论加载错误',
+	'embeddable-discussions-cancel-button' => '取消',
 );
 
 $messages['zh-hant'] = array(
@@ -143,5 +209,11 @@ $messages['zh-hant'] = array(
 	'embeddable-discussions-zero' => '沒有發佈任何文章。',
 	'embeddable-discussions-zero-detail' => '趕快發起討論，現在就去創建第一篇文章吧！',
 	'embeddable-discussions-forum-name' => '在$1中',
+	'embeddable-discussions-loading' => '正在載入討論版...',
+	'embeddable-discussions-show-trending-in-category' => '$1中的熱門討論',
+	'embeddable-discussions-show-latest-in-category' => '$1中的最近討論',
+	'embeddable-discussions-share-heading' => '分享話題',
+	'embeddable-discussions-error-loading' => '載入討論時出錯',
+	'embeddable-discussions-cancel-button' => '取消',
 );
 
