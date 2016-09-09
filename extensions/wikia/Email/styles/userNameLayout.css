@@ -17,14 +17,6 @@
 	border-bottom: 1px solid #e6ebf2;
 }
 
-.greeting p:last-child {
-	font-weight: bold;
-}
-
 .message {
 	margin: 20px 0;
-}
-
-.message p {
-	font-weight: bold;
 }
