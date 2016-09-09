@@ -1,10 +1,22 @@
 @import '../bower_components/design-system/base/colors';
 
 // Platform-specific styles for DesignSystem integration
+$global-navigation-z-index: 5000101;
+$global-navigation-height: 55px;
+
+.wds-global-navigation-wrapper {
+	height: $global-navigation-height;
+}
 
 .wds-global-navigation {
-	position: relative;
-	z-index: 4;
+	position: fixed;
+	top: 0;
+	width: 100%;
+	z-index: $global-navigation-z-index;
+
+	&.bfaa-pinned {
+		position: relative;
+	}
 
 	a:hover {
 		text-decoration: none;
@@ -28,6 +40,11 @@
 		position: static;
 		right: 0;
 		top: auto;
+	}
+
+	.ve & {
+		position: absolute;
+		z-index: $global-navigation-z-index - 1;
 	}
 
 	&__search-suggestions {

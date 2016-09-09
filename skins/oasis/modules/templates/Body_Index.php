@@ -18,8 +18,8 @@
 
 <div id="ad-skin" class="wikia-ad noprint"></div>
 
-<?= $app->renderView( 'Ad', 'Top' ) ?>
 <?= ( !empty( $wg->EnableDesignSystem ) ) ? $app->renderView( 'DesignSystemGlobalNavigationService', 'index' ) : $app->renderView( 'GlobalNavigation', 'index' ); ?>
+<?= $app->renderView( 'Ad', 'Top' ) ?>
 <?= empty( $wg->EnableEBS ) ? '' : $app->renderView( 'EmergencyBroadcastSystem', 'index' ); ?>
 
 <?= $app->renderView('AdEmptyContainer', 'Index', ['slotName' => 'TOP_LEADERBOARD_AB']); ?>

@@ -2087,9 +2087,11 @@ $config['design_system_js'] = [
 	'type' => AssetsManager::TYPE_JS,
 	'skin' => [ 'oasis' ],
 	'assets' => [
-		'//extensions/wikia/DesignSystem/scripts/DesignSystemAuthenticationMenu.js',
-		'//extensions/wikia/DesignSystem/scripts/DesignSystemDropdowns.js',
+		'//resources/wikia/modules/scrollToLink.js',
 		'//extensions/wikia/DesignSystem/scripts/DesignSystemTracking.js',
+		'//extensions/wikia/DesignSystem/scripts/DesignSystemDropdowns.js',
+		'//extensions/wikia/DesignSystem/scripts/DesignSystemGlobalNavigationScrollToLink.js',
+		'//extensions/wikia/DesignSystem/scripts/DesignSystemAuthenticationMenu.js',
 		'//extensions/wikia/DesignSystem/scripts/DesignSystemGlobalNavigationSearch.js',
 		'//extensions/wikia/DesignSystem/scripts/DesignSystemGlobalNavigationSearchSuggestions.js',
 	],

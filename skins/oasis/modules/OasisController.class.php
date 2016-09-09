@@ -3,6 +3,7 @@
 class OasisController extends WikiaController {
 
 	private static $extraBodyClasses = [];
+	private static $extraHtmlClasses = [];
 	private static $bodyParametersArray = [];
 	private static $skinAssetGroups = [];
 
@@ -17,6 +18,19 @@ class OasisController extends WikiaController {
 
 		if(!in_array($className,self::$extraBodyClasses)) {
 			self::$extraBodyClasses[] = $className;
+			return true;
+		}
+		return false;
+	}
+
+	/**
+	 * Add extra CSS classes to <html> tag
+	 * @param $className string class name
+	 * @return bool - true if class name was added, false if class name was already present
+	 */
+	public static function addHtmlClass( $className ) {
+		if ( !in_array( $className, self::$extraHtmlClasses ) ) {
+			self::$extraHtmlClasses[] = $className;
 			return true;
 		}
 		return false;
@@ -195,6 +209,7 @@ class OasisController extends WikiaController {
 		$bodyClasses[] = $skin->getBodyClassForCommunity();
 
 		$this->bodyClasses = $bodyClasses;
+		$this->htmlClasses = self::$extraHtmlClasses;
 
 		if (is_array($scssPackages)) {
 			foreach ($scssPackages as $package) {
