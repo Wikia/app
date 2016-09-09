@@ -13217,7 +13217,7 @@ Síður á [[Special:Watchlist|tínum eftiransingarlista]] eru skrivaðar við '
 );
 
 $messages['fr'] = array(
-	'realmap-deprecated-info' => 'Les cartes du monde réel ont été retirées par Wikia. Pour plus d’informations, voir : $1',
+	'realmap-deprecated-info' => 'Les cartes du monde réel ont été retirées par Wikia. Pour plus d’informations, voir: $1',
 	'returnto' => 'Revenir à la page $1.',
 	'redirectedfrom' => '(Redirigé depuis $1)',
 	'redirectpagesub' => 'Page de redirection',
