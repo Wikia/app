@@ -2098,14 +2098,6 @@ $config['design_system_js'] = [
 	],
 ];
 
-$config['headroom_css'] = [
-	'type' => AssetsManager::TYPE_CSS,
-	'skin' => [ 'oasis' ],
-	'assets' => [
-		'//resources/wikia/libraries/headroom/headroom.css',
-	],
-];
-
 /** CorporateFooter extension */
 $config['corporate_footer_js'] = [
 	'type' => AssetsManager::TYPE_JS,
@@ -3052,7 +3044,7 @@ $config['design_system_css'] = [
 	'type' => AssetsManager::TYPE_CSS,
 	'skin' => [ 'oasis' ],
 	'assets' => [
-		'#group_headroom_css',
+		'//resources/wikia/libraries/headroom/headroom.css',
 		'//extensions/wikia/DesignSystem/bower_components/design-system/dist/css/styles.css',
 	],
 ];
