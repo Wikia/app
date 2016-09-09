@@ -109,6 +109,7 @@ define('ext.createNewWiki.builder', ['ext.createNewWiki.helper', 'wikia.tracker'
 		$('#Description').placeholder();
 		$themWikiWrapper.find('nav .next').click(onThemeNavNextClick);
 		wikiVertical.on('change', onWikiVerticalChange);
+		$descWikiWrapper.bind('change', onIntendedForKidsCheckboxChange);
 	}
 
 	function onThemeNavNextClick() {
@@ -235,7 +236,20 @@ define('ext.createNewWiki.builder', ['ext.createNewWiki.helper', 'wikia.tracker'
 				duplicate.attr('checked', false);
 				hiddenDuplicate = duplicate.parent().hide();
 			}
+			$descWikiWrapper.find('label input[type="checkbox"]').change(onCategorySelection);
 		}
+	}
+
+	function onCategorySelection() {
+		track({
+			label: 'category-select'
+		});
+	}
+
+	function onIntendedForKidsCheckboxChange() {
+		track({
+			label: 'intended-for-kids'
+		});
 	}
 
 	function onNavBackClick() {
