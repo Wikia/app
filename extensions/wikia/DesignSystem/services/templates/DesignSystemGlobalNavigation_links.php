@@ -20,7 +20,7 @@
 			) ?>
 		</div>
 		<div class="wds-dropdown__content wds-global-navigation__dropdown-content <?= $dropdownRightAligned ? 'wds-is-right-aligned' : ''; ?>">
-			<ul class="wds-list">
+			<ul class="wds-list wds-is-linked">
 				<?php foreach ( $model['links'] as $link ): ?>
 					<li><?= $app->renderView(
 							'DesignSystemGlobalNavigationService',
