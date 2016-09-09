@@ -69,10 +69,10 @@ require(
 				initSuggestions();
 
 				$searchInput.bind({
-					'suggestShow': function () {
+					suggestShow: function () {
 						$searchInputWrapper.addClass('wds-is-active');
 					},
-					'suggestHide': function () {
+					suggestHide: function () {
 						$searchInputWrapper.removeClass('wds-is-active');
 					}
 				});
