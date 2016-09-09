@@ -97,7 +97,6 @@ class CreateNewWikiController extends WikiaController {
 			'descriptionplaceholder' => wfMessage( 'cnw-desc-placeholder' )->escaped(),
 			'cnw-error-general' => wfMessage( 'cnw-error-general' )->parse(),
 			'cnw-error-general-heading' => wfMessage( 'cnw-error-general-heading' )->escaped(),
-			'cnw-keys' => $keys
 		);
 
 		// theme designer application theme settings
