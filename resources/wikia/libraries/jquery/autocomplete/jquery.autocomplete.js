@@ -55,9 +55,9 @@
       selectedClass: 'selected',
       appendTo: 'body',
       /* Wikia changes */
-	  fnContainerMarkup: function (mainContainerId, autocompleteElId, containerClass, width) {
-		return '<div id="' + mainContainerId + '" class="' + containerClass + '" style="position:absolute;"><div class="autocomplete-w1"><div class="autocomplete" id="' + autocompleteElId + '" style="display:none; width:' + width + ';"></div></div></div>';
-	  },
+      fnContainerMarkup: function (mainContainerId, autocompleteElId, containerClass, width) {
+        return '<div id="' + mainContainerId + '" class="' + containerClass + '" style="position:absolute;"><div class="autocomplete-w1"><div class="autocomplete" id="' + autocompleteElId + '" style="display:none; width:' + width + ';"></div></div></div>';
+      },
       suggestionWrapperElement: 'div',
       queryParamName: 'query',
       fnPreprocessResults: null,
