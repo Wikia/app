@@ -36,6 +36,15 @@
 			$(ThemeDesigner.link).remove();
 			ThemeDesigner.link = link;
 		});
+
+		require(['wikia.tracker'], function(tracker) {
+			tracker.track({
+				action: tracker.ACTIONS.CLICK,
+				category: 'create-new-wiki',
+				trackingMethod: 'analytics',
+				label: 'theme-select'
+			});
+		})
 	};
 
 	/**
