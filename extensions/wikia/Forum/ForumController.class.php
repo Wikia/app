@@ -438,9 +438,13 @@ class ForumController extends WallBaseController {
 	}
 
 	private function getBoardId() {
-		$boardId = $this->wall->getId();
+		$title = $this->request->getVal( 'title', $this->app->wg->Title );
+		$wall = $this->getWallForIndexPage( $title );
+		if (empty ($wall) ) {
+			return null;
+		}
 		/** @var ForumBoard $board */
-		$board = ForumBoard::newFromId( $boardId );
+		$board = ForumBoard::newFromId( $wall->getId() );
 		if ( !empty( $board ) && $board->exists() ) {
 			return $board->getId();
 		} else {
