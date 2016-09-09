@@ -15,6 +15,7 @@ define('ext.wikia.adEngine.provider.gpt.googleTag', [
 		slots = {},
 	//slot name => [google slots]
 		slotsMap = {},
+		adUnitsSlotsMap = {},
 		slotQueue = [],
 		pageLevelParams,
 		pubAds;
@@ -31,7 +32,7 @@ define('ext.wikia.adEngine.provider.gpt.googleTag', [
 		for (id in registeredCallbacks) {
 			if (registeredCallbacks.hasOwnProperty(id)) {
 				if (registeredCallbacks[id] && event.slot && event.slot === slots[id]) {
-					log(['dispatchEvent', event, 'Launching registered callback'], 'debug', logGroup);
+					log(['dispatchEvent', event, id, 'Launching registered callback'], 'debug', logGroup);
 					registeredCallbacks[id](event);
 					return;
 				}
@@ -125,33 +126,26 @@ define('ext.wikia.adEngine.provider.gpt.googleTag', [
 
 	GoogleTag.prototype.addSlot = function (adElement) {
 		var sizes = adElement.getSizes(),
-			slot;
+			slot = slots[adElement.getSlotPath()];
 
 		log(['addSlot', adElement], 'debug', logGroup);
 
 		adElement.setPageLevelParams(pageLevelParams);
-
-		if (sizes) {
-			slot = window.googletag.defineSlot(adElement.getSlotPath(), sizes, adElement.getId());
-		} else {
-			slot = window.googletag.defineOutOfPageSlot(adElement.getSlotPath(), adElement.getId());
-		}
-
 		if (!slot) {
-			console.log('bogna', 'problem with adding slot:', adElement.getSlotName(), window.googletag.getSlots());
+			if (sizes) {
+				slot = window.googletag.defineSlot(adElement.getSlotPath(), sizes, adElement.getId());
+			} else {
+				slot = window.googletag.defineOutOfPageSlot(adElement.getSlotPath(), adElement.getId());
+			}
+			slot.addService(pubAds);
+			window.googletag.display(adElement.getId());
+			slots[adElement.getSlotPath()] = slot;
 		}
-
-		slot.addService(pubAds);
-		window.googletag.display(adElement.getId());
-		slots[adElement.getId()] = slot;
 
 		adElement.configureSlot(slot);
 		slotQueue.push(slot);
 
-		if (!slotsMap[adElement.getSlotName()]) {
-			slotsMap[adElement.getSlotName()] = [];
-		}
-		slotsMap[adElement.getSlotName()].push(slot);
+		adUnitsSlotsMap[slot.getAdUnitPath()] = adElement.getSlotName();
 
 		return slot;
 	};
@@ -169,15 +163,16 @@ define('ext.wikia.adEngine.provider.gpt.googleTag', [
 	};
 
 	GoogleTag.prototype.destroySlots = function (slotsNames) {
-		var slotsToDestroy = [], success;
+		var slotsToDestroy = [], success, allSlots = window.googletag.getSlots();
 
-		slotsNames.forEach(function (slotName) {
-			if (slotsMap[slotName]) {
-				slotsToDestroy = slotsToDestroy.concat(slotsMap[slotName]);
-			}
+		slotsNames.forEach(function(slotName) {
+			allSlots.forEach(function(slot) {
+				if (adUnitsSlotsMap[slot.getAdUnitPath()] === slotName) {
+					slotsToDestroy.push(slot);
+				}
+			});
 		});
 
-		console.log('bogna', 'about to destroy slots', slotsToDestroy);
 		if (slotsToDestroy.length) {
 			log(['destroySlots', slotsNames], 'debug', logGroup);
 			success = window.googletag.destroySlots(slotsToDestroy);
@@ -186,11 +181,14 @@ define('ext.wikia.adEngine.provider.gpt.googleTag', [
 				log(['destroySlots', slotsNames, 'failed'], 'error', logGroup);
 			}
 		}
+
+		slotsToDestroy.forEach(function(slot) {
+			slots[slot.getAdUnitPath()] = undefined;
+		})
 	};
 
 	GoogleTag.prototype.newPageView = function () {
 		slotsMap = {};
-		slots = {};
 
 		adLogicPageViewCounter.increment();
 		window.googletag.pubads().updateCorrelator();

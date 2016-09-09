@@ -139,7 +139,7 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 
 		log(['pushAd', slot.name], 'info', logGroup);
 		if (!slotTargetingData.flushOnly) {
-			googleApi.registerCallback(element.getId(), gptCallback);
+			googleApi.registerCallback(element.getSlotPath(), gptCallback);
 			googleApi.push(queueAd);
 		}
 
