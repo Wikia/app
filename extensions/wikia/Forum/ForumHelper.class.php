@@ -35,9 +35,9 @@ class ForumHelper {
 	 * @return bool
 	 */
 	public static function areForumsArchivedAndDiscussionsEnabled() {
-		global $wgArchiveWikiForums, $wgEnableDiscussion;
+		global $wgArchiveWikiForums, $wgEnableDiscussions;
 
-		return $wgArchiveWikiForums && $wgEnableDiscussion;
+		return $wgArchiveWikiForums && $wgEnableDiscussions;
 	}
 
 	public static function redirectToDiscussions( OutputPage $out, WikiaResponse $response ) {
