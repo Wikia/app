@@ -106,6 +106,8 @@ define('ext.wikia.adEngine.lookup.rubicon.rubiconVulcan', [
 	function getSlotParams(slotName) {
 		var parameters = {};
 
+		parameters[rubiconVideoTierKey] = slots[slotName].sizeId + '_tierNONE';
+
 		log(['getSlotParams', slotName, parameters], 'debug', logGroup);
 		if (priceMap[slotName]) {
 			parameters[rubiconVideoTierKey] = priceMap[slotName];
