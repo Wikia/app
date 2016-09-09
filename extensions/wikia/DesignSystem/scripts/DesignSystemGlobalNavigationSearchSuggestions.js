@@ -26,6 +26,13 @@ require(
 								replace(/\$1/, valueEncoded).
 								replace(encodeURIComponent('/'), '/');
 
+						window.Wikia.Tracker.track({
+							eventName: 'search_start_suggest',
+							sterm: valueEncoded,
+							rver: 0,
+							trackingMethod: 'internal'
+						});
+
 						// Respect modifier keys to allow opening in a new window (BugId:29401)
 						if (event.button === 1 || event.metaKey || event.ctrlKey) {
 							window.open(location);
@@ -33,12 +40,12 @@ require(
 							// Prevents hiding the container
 							return false;
 						} else {
-							(window.Wikia.Tracker.buildTrackingFunction({
+							window.Wikia.Tracker.track({
 								action: Wikia.Tracker.ACTIONS.CLICK,
 								category: 'navigation',
 								trackingMethod: 'analytics',
 								label: 'global-navigation-search-suggestion'
-							}))();
+							});
 
 							window.location.href = location;
 						}
