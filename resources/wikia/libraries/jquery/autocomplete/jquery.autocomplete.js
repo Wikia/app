@@ -138,7 +138,7 @@
     },
 
     fixPosition: function() {
-      // Wikia change - setPosition option
+      // Wikia change start - setPosition option added
       if (this.options.setPosition) {
         var offset = this.el.offset();
         var parentOffset = $(this.options.appendTo).offset();
@@ -147,6 +147,7 @@
           el.css({ right: this.options.positionRight });
         }
       }
+    // Wikia change end
     },
 
     enableKillerFn: function() {
