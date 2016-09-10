@@ -33,7 +33,7 @@ function wfMakeSignatureCommon($href, $title, $iurl=null) {
 	global $wgExtensionsPath, $wgBlankImgUrl;
 
 	if( empty($iurl) ) {
-		$iurl = $wgExtensionsPath . '/wikia/StaffSig/images/WikiaStaff.png';
+		$iurl = $wgExtensionsPath . '/wikia/StaffSig/images/StaffSignature.png';
 	}
 
 	return '<a href="'. $href .'" title="'. $title . '" class="staffSigLink"><img src="'. $wgBlankImgUrl .'" style="background-image: url('. $iurl .')" alt="@Wikia" class="staffSig" width="41" height="12" /></a>';
