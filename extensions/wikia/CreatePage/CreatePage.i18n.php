@@ -6,7 +6,7 @@
 $messages = array();
 
 $messages['en'] = array(
-	'createpage-desc' => 'Allows to create a new page using Wikia\'s WYSIWYG editor',
+	'createpage-desc' => 'Allows to create a new page using Fandom\'s WYSIWYG editor',
 	'createpage-sp-title' => 'Create a new page',
 	'createpage_title' => 'Create a new page',
 	'createpage_title_caption' => 'Title',
@@ -46,7 +46,7 @@ Write the first section of your page here.
 
 Write the second section of your page here.', // Doesn't include video placeholder, and is overridden on messages wiki
 
-	'createpage-with-video' => '[[File:Placeholder|video|right|300px]] [[File:Placeholder|right|300px]] 
+	'createpage-with-video' => '[[File:Placeholder|video|right|300px]] [[File:Placeholder|right|300px]]
 Write the first paragraph of your page here.
 
 ==Section heading==
@@ -56,7 +56,7 @@ Write the first section of your page here.
 ==Section heading==
 
 Write the second section of your page here.', // Does include video placeholder, and is overridden on messages wiki
-	'createpage-ve-body' => 'The article <b>$1</b> does not yet exist on this wikia. You can help out by adding a few sentences.',
+	'createpage-ve-body' => 'The article <b>$1</b> does not yet exist on this Fandom. You can help out by adding a few sentences.',
 	'createpage-button-cancel' => 'Cancel',
 );
 
@@ -2120,7 +2120,7 @@ $messages['sv'] = array(
 	'createpage_empty_title_error' => 'Rubrik krävs',
 	'createpage_empty_article_body_error' => 'Text på sidan krävs',
 	'createpage_invalid_title_error' => 'Ogiltig rubrik',
-	'createpage_article_already_exists' => 'En sida med det namnet finns redan. 
+	'createpage_article_already_exists' => 'En sida med det namnet finns redan.
 Välj ett annat namn.',
 	'createpage_spam' => 'Tyvärr, din redigering kunde inte sparas',
 	'createpage_cant_edit' => 'Kunde inte utföra redigering',
@@ -2135,7 +2135,7 @@ Välj ett annat namn.',
 Använd en annan rubrik.',
 	'createpage-error-article-exists' => 'En sida med den rubriken finns redan.
 Du kan gå till <a href="$1">$2</a>, eller byta namn på din sida',
-	'createpage-error-article-spam' => 'Tyvärr stoppades den rubriken av vårt spamfilter. 
+	'createpage-error-article-spam' => 'Tyvärr stoppades den rubriken av vårt spamfilter.
 Använd en annan titel.',
 	'createpage-error-article-blocked' => 'Tyvärr kan du inte skapa den sidan just nu.',
 	'tog-createpagedefaultblank' => 'Använd en tom sida som standard för att skapa en ny sida',
@@ -2279,7 +2279,7 @@ $messages['tt-cyrl'] = array(
 	'createpage-error-empty-title' => 'Зинһар өчен, мәкаләгезнең исемен языгыз',
 	'createpage-error-invalid-title' => 'Кызганычка, мәкалә өчен мондый исем тыелган.
 Зинһар өчен, башка исем кулланыгыз.',
-	'createpage-error-article-exists' => 'Мондый исемле мәкалә бар инде. 
+	'createpage-error-article-exists' => 'Мондый исемле мәкалә бар инде.
 Сез <a href="$1">$2</a> сәхифәсенә күчә аласыз, яки мәкаләнең исемен үзгәртергә мөмкин.',
 	'createpage-error-article-spam' => 'Кызганычка, мәкалә исеме безнең спам-фильтр тарафыннан тыелды.
 Зинһар өчен, башка исем кулланыгыз.',
@@ -2504,7 +2504,7 @@ $messages['zh-hant'] = array(
 	'createpage_empty_title_error' => '需要標題',
 	'createpage_empty_article_body_error' => '需要頁面文本',
 	'createpage_invalid_title_error' => '無效的標題',
-	'createpage_article_already_exists' => '已存在具有該名稱的頁面。 
+	'createpage_article_already_exists' => '已存在具有該名稱的頁面。
 請選擇不同的名稱。',
 	'createpage_spam' => '抱歉，你的編輯無法儲存',
 	'createpage_cant_edit' => '不能執行編輯',

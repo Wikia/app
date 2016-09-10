@@ -27,7 +27,7 @@ $messages['en'] = [
 	'content-review-special-restore' => 'Restore',
 	'content-review-special-guidelines' => 'Before reviewing a piece of a code, please ensure that you are familiar with the [[w:c:dev:Help:JavaScript review guidelines|Help:JavaScript review guidelines]].
 
-	To view an archive of completed reviews for a single wikia click on its name in the Wiki Name column.',
+        To view an archive of completed reviews for a single community click on its name in the Wiki Name column.',
 	'content-review-special-archive-back-link' => '< Back to Special:ContentReview',
 
 	'content-review-diff-approve' => 'Approve',

@@ -11,9 +11,9 @@ $messages['en'] = array(
 	'hero-image-edit-btn' => 'Edit',
 	'hero-image-discard-btn' => 'Discard',
 	'hero-image-publish-btn' => 'Publish',
-	'hero-image-default-title' => "Your wikia's name",
+	'hero-image-default-title' => "Your community's name",
 	'hero-image-save-image' => 'Your cover image will be used to promote your page in search results and in other promotional areas.',
-	'hero-image-default-description' => 'Add a summary that will promote your wikia in searches and on hubs.',
+	'hero-image-default-description' => 'Add a summary that will promote your community in searches.',
 	'hero-image-error' => 'Error',
 	'hero-image-unknown-error' => 'Unknown error occured.',
 );
@@ -234,9 +234,9 @@ $messages['vi'] = array(
 	'hero-image-edit-btn' => 'Edit',
 	'hero-image-discard-btn' => 'Discard',
 	'hero-image-publish-btn' => 'Publish',
-	'hero-image-default-title' => "Your wikia's name",
+	'hero-image-default-title' => "Your community's name",
 	'hero-image-save-image' => 'Your cover image will be used to promote your page in search results and in other promotional areas.',
-	'hero-image-default-description' => 'Add a summary that will promote your wikia in searches and on hubs.',
+	'hero-image-default-description' => 'Add a summary that will promote your community in searches.',
 	'hero-image-error' => 'Error',
 	'hero-image-unknown-error' => 'Unknown error occured.',
 );

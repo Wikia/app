@@ -8,7 +8,7 @@
 $messages = array();
 
 $messages['en'] = array(
-	'wikiahome-desc' => 'WikiaHomePage',
+	'wikiahome-desc' => 'FandomHomePage',
 	'wikiahome-page-header-heading' => 'Create. Collaborate. Be Original.',
 	'wikiahome-page-header-heading-mobile' => 'Create.
 Collaborate.
@@ -18,7 +18,7 @@ Be Original.',
 	'wikiahome-page-header-create-wiki-button-destination' => 'http://www.wikia.com/Special:CreateWiki',
 
 	'wikiahome-visualisation-remix-mixitup' => 'Welcome to the Social Universe for Fans, by Fans!',
-	'wikiahome-visualisation-remix-mixituptext' => 'There are thousands of communities on Wikia. Find yours.',
+	'wikiahome-visualisation-remix-mixituptext' => 'There are tens of thousands of communities on Fandom. Find yours.',
 	'wikiahome-visualisation-remix-button' => 'Refresh',
 
 	'wikiahome-hubs-slot-more-in-heading' => 'More in $1',
@@ -32,7 +32,7 @@ Be Original.',
 
 	'wikiahome-hubs-videogames-heading' => 'Video Games',
 	'wikiahome-hubs-videogames-url' => 'http://www.wikia.com/Video_Games',
-	'wikiahome-hubs-videogames-creative' => 'Wikia is where it all starts when it comes to the world of video games.  Prepare to lose yourself.',
+	'wikiahome-hubs-videogames-creative' => 'Fandom is where it all starts when it comes to the world of video games.  Prepare to lose yourself.',
 	'wikiahome-hubs-videogames-more-heading' => 'More in Video Games',
 	'wikiahome-hubs-videogames-more-list' => '
 *[http://www.wikia.com/Video_Games Game Guides]
@@ -40,14 +40,12 @@ Be Original.',
 *[http://gaming.wikia.com/wiki/Encyclopedia_Gamia Encylopedia Gamia]',
 
 	'wikiahome-hubs-entertainment-heading' => 'Entertainment',
-	'wikiahome-hubs-entertainment-url' => 'http://www.wikia.com/Entertainment',
+	'wikiahome-hubs-entertainment-url' => 'http://fandom.wikia.com/movies',
 	'wikiahome-hubs-entertainment-creative' => 'Look no further for your daily dose of entertainment buzz straight from the communities who know.',
 	'wikiahome-hubs-entertainment-more-heading' => 'More in Entertainment',
 	'wikiahome-hubs-entertainment-more-list' => '
-*[http://www.wikia.com/Movie Movies]
-*[http://www.wikia.com/TV Television]
-*[http://www.wikia.com/Music Music]
-*[http://www.wikia.com/Entertainment Trending]',
+*[http://fandom.wikia.com/movies Movies]
+*[http://fandom.wikia.com/TV Television]',
 
 	'wikiahome-hubs-lifestyle-heading' => 'Lifestyle, News & Culture',
 	'wikiahome-hubs-lifestyle-url' => 'http://www.wikia.com/Lifestyle',
@@ -59,12 +57,12 @@ Be Original.',
 *[http://www.wikia.com/Sports Sports]
 *[http://www.wikia.com/Lifestyle Featured]',
 
-	'wikiahome-community-column1-heading' => 'Wikia University',
-	'wikiahome-community-column1-link' => 'http://community.wikia.com/wiki/Wikia_University',
-	'wikiahome-community-column1-creative' => 'Everything you need to start and grow your community on Wikia from tips and tools to news and access to really helpful people.',
-	'wikiahome-community-column2-heading' => 'Fan Fueled by Wikia',
+	'wikiahome-community-column1-heading' => 'Fandom University',
+	'wikiahome-community-column1-link' => 'http://community.wikia.com/wiki/Fandom_University',
+	'wikiahome-community-column1-creative' => 'Everything you need to start and grow your community on Fandom from tips and tools to news and access to really helpful people.',
+	'wikiahome-community-column2-heading' => 'Fan Fueled by Fandom',
 	'wikiahome-community-column2-link' => 'http://www.wikia.com/Mobile',
-	'wikiahome-community-column2-creative' => 'Wikia Proudly Introduces its First Official Mobile Apps: My Wikia and Game Guides. Each app is designed to Assemble Over 20 Million Pages of Rich, Dynamic Content Authored by Wikia Communities in a Modern, Streamlined Experience. Download [[Mobile|here]].',
+	'wikiahome-community-column2-creative' => 'Fandom Proudly Introduces its First Official Mobile Apps. Each app is designed to Assemble Over 20 Million Pages of Rich, Dynamic Content Authored by Fandom Communities in a Modern, Streamlined Experience. Download [[Mobile|here]].',
 	'wikiahome-community-column3-heading' => 'Join the Fans',
 	'wikiahome-community-social-twitter' => 'Twitter',
 	'wikiahome-community-social-facebook' => 'Facebook',
@@ -278,7 +276,7 @@ Soyez original.',
 	'wikiahome-community-social-twitter' => 'Twitter',
 	'wikiahome-community-social-facebook' => 'Facebook',
 	'wikiahome-community-social-googleplus' => '',
-	
+
 	'wikiahome-preview-stats-videos' => "'''1''' {{PLURAL:$1|vidéo|vidéos}}",
 
 	'wikiahome-preview-description-heading' => '$1',
@@ -329,7 +327,7 @@ Bądź oryginalny.',
 *[http://www.wikia.com/Movie Filmy]
 *[http://www.wikia.com/TV Telewizja]
 *[http://www.wikia.com/Music Muzyka]
-*[http://www.wikia.com/Entertainment Trendy]',
+*[http://fandom.wikia.com/movies Trendy]',
 
 	'wikiahome-hubs-lifestyle-heading' => 'Lifestyle, Nowości i Kultura',
 	'wikiahome-hubs-lifestyle-url' => 'http://pl.wikia.com/Lifestyle',
@@ -454,7 +452,7 @@ $messages['qqq'] = array(
 
 	'wikia-home-page-preview' => 'The text on preview button; when you click the button you\'ll be presented with more detailed information about a wiki; the button is visible when you hover on a wiki image',
 	'wikia-home-page-visit' => 'The text on visit button; when you click the button you\'ll be redirected to chosen wiki; the button is visible when you hover on a wiki image',
-	
+
 	'wikia-home-parse-source-empty-exception' => 'An exception text when an attempt of loading wikis from message fails because the data is empty',
 	'wikia-home-parse-vertical-invalid-data' => 'An exception text when an attempt of loading wikis from message fails because the vertical data is invalid',
 	'wikia-home-parse-wiki-too-few-parameters' => 'An exception text when an attempt of loading wikis from message fails because the wiki data is invalid',
@@ -490,7 +488,7 @@ $messages['qqq'] = array(
 
 	'wikiahome-preview-stats-wam-empty-label' => 'Label for WAM score placeholder, when this Wiki is not included in WAM Index',
 	'wikiahome-preview-stats-wam' => "WAM Score label, 1st parameter is score - please bold it with wikitext",
-	
+
 	'wikiahome-preview-stats-page' => "Number of pages on a wiki. Could be singular or plural.  Please bold the number via wikitext or html.",
 	'wikiahome-preview-stats-photos' => "Number of photos on a wiki. Could be singular or plural.  Please bold the number via wikitext or html.",
 	'wikiahome-preview-stats-videos' => "Number of videos on a wiki. Could be singular or plural.  Please bold the number via wikitext or html.",
@@ -503,6 +501,6 @@ $messages['qqq'] = array(
 	'wikiahome-preview-go-to-wiki-label' => 'Generic link label that navigates to a wiki.',
 	'wikiahome-preview-error' => 'Interstitial error',
 	'wikiahome-preview-user-member-since' => 'Member since date',
-	
+
 	'wikiahome-import-script-no-description' => 'This message should be used only when an edge case occurs and there is no wiki description on wikis list used in importing process. This message will be place in wiki description in Interstitial if original description is not provided.',
 );

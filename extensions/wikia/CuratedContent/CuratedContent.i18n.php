@@ -2,9 +2,9 @@
 $messages = array();
 
 $messages['en'] = array(
-	'wikiacuratedcontent-desc' => 'Wikia Curated Content mobile app modules',
-	'wikiacuratedcontent-preview-description' => 'This is just a preview of how pages would look like in a Wikia Curated Content application.',
-	'wikiacuratedcontent-content-title' => 'Wikia Curated Content managment tool',
+	'wikiacuratedcontent-desc' => 'Fandom Curated Content mobile app modules',
+	'wikiacuratedcontent-preview-description' => 'This is just a preview of how pages would look like in a Fandom Curated Content application.',
+	'wikiacuratedcontent-content-title' => 'Fandom Curated Content managment tool',
 	'wikiacuratedcontent-content-item' => 'Item',
 	'wikiacuratedcontent-content-section' => 'Item Section (optional)',
 	'wikiacuratedcontent-content-name' => 'Curated Content Name',
@@ -418,7 +418,7 @@ $messages['nb'] = array(
 
 $messages['nl'] = array(
 	'wikiacuratedcontent-desc' => 'Door Wikia samengestelde mobiele app modules',
-	'wikiacuratedcontent-preview-description' => 'This is just a preview of how pages would look like in a Wikia Curated Content application.',
+	'wikiacuratedcontent-preview-description' => 'This is just a preview of how pages would look like in a Fandom Curated Content application.',
 	'wikiacuratedcontent-content-title' => 'Door Wikia samengestelde inhoud beheer-tool',
 	'wikiacuratedcontent-content-save' => 'Opslaan',
 	'wikiacuratedcontent-content-required-entry' => 'Item is vereist',

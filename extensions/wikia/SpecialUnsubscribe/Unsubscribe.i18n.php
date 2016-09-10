@@ -36,7 +36,7 @@ $messages['en'] = array(
 	'unsubscribe-working-done' => 'Complete.',
 
 	#preferences changes
-	'unsubscribe-preferences-toggle' => 'Unsubscribe from all emails from Wikia (deselect this to access the options below)',
+	'unsubscribe-preferences-toggle' => 'Unsubscribe from all emails from Fandom (deselect this to access the options below)',
 	'unsubscribe-preferences-notice' => 'Emails have been disabled for your account. Visit the User Profile tab to re-enable them.',
 );
 

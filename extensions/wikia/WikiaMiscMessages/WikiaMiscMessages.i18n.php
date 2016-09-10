@@ -4,11 +4,11 @@ $messages = array();
 
 $messages['en'] = array(
 	'autocreatewiki-welcomebody-HTML' => '<p>Hello $2,<br /><br />
-The Wikia you created is now available at <a href="$1">$1</a>.  We hope to see you editing there soon!<br /><br />
-We have added some information and tips on your <a href="$5">user talk Page</a> to help you get started. If you have any questions, just reply to this e-mail or browse our help pages at <a href="http://help.wikia.com/">Wikia Help</a>.<br /><br />
+The wiki you created is now available at <a href="$1">$1</a>.  We hope to see you editing there soon!<br /><br />
+We have added some information and tips on your <a href="$5">user talk Page</a> to help you get started. If you have any questions, just reply to this e-mail or browse our help pages at <a href="http://help.wikia.com/">Fandom Help</a>.<br /><br />
 Good luck with the project,<br /><br />
 <a href="http://community.wikia.com/wiki/User:$4">$3</a><br />
-Wikia Community Team<br /></p>',
+Fandom Community Team<br /></p>',
 	'confirmemail_body-HTML' => '<p>Hello $2,<br /><br />
 Thank you for registering with Wikia.<br /><br />
 Please activate your new account by <a href="$3">confirming your e-mail address here</a>.<br /><br /><br />
@@ -31,7 +31,7 @@ $PAGESUMMARY<br /><br />
 Please visit and edit often...<br /><br />
 {{SITENAME}}<br /><hr />
 <ul>
-<li><a href="http://www.wikia.com">Check out our featured wikis!</a></li>
+<li><a href="http://www.wikia.com">Check out the latest Fandom articles</a></li>
 <li>Want to control which e-mails you receive? Go to <a href="{{fullurl:{{ns:special}}:Preferences}}">User Preferences</a></li>
 </ul></p>',
 	'enotif_body_article_comment-HTML' => '<p>Dear $WATCHINGUSERNAME,<br /><br />
@@ -58,7 +58,7 @@ $PAGESUMMARY<br /><br />
 Please visit and edit often...<br /><br />
 {{SITENAME}}<br /><hr />
 <ul>
-<li>Check out our featured wikis! <a href="http://www.wikia.com">Visit Them Here!</a></li>
+<li>Check out the latest Fandom articles! <a href="http://fandom.wikia.com/">View Them Here!</a></li>
 <li>Want to control which e-mails you receive? Go to: <a href="{{fullurl:{{ns:special}}:Preferences}}"> User Preferences</a></li>
 </ul></p>',
 	'enotif_body_move-HTML' => '<p>Dear $WATCHINGUSERNAME,<br /><br />
@@ -68,7 +68,7 @@ $PAGESUMMARY<br /><br />
 Please visit and edit often...<br /><br />
 {{SITENAME}}<br /><hr />
 <ul>
-<li>Check out our featured wikis! <a href="http://www.wikia.com">Visit Them Here!</a></li>
+<li>Check out the latest Fandom articles! <a href="http://fandom.wikia.com/">View Them Here!</a></li>
 <li>Want to control which e-mails you receive? Go to: <a href="{{fullurl:{{ns:special}}:Preferences}}">User Preferences</a></li>
 </ul></p>',
 	'enotif_body_prl_chn-HTML' => '<p>Dear $WATCHINGUSERNAME,<br /><br />
@@ -78,7 +78,7 @@ For a list of recent problem reports, see <a href="{{fullurl:{{ns:special}}:Prob
 Please visit and edit often...<br /><br />
 {{SITENAME}}<br /><hr />
 <ul>
-<li>Check out our featured wikis! <a href="http://www.wikia.com">Visit Them Here!</a></li>
+<li>Check out the latest Fandom articles! <a href="http://fandom.wikia.com/">View Them Here!</a></li>
 <li>Want to control which e-mails you receive? Go to: <a href="{{fullurl:{{ns:special}}:Preferences}}">User Preferences</a></li>
 </ul></p>',
 	'enotif_body_prl_rep-HTML' => '<p>Dear $WATCHINGUSERNAME,<br /><br />
@@ -88,7 +88,7 @@ For a list of recent problem reports, see <a href="{{fullurl:{{ns:special}}:Prob
 Please visit and edit often...<br /><br />
 {{SITENAME}}<br /><hr />
 <ul>
-<li>Check out our featured wikis! <a href="http://www.wikia.com">Visit Them Here!</a></li>
+<li>Check out the latest Fandom articles! <a href="http://fandom.wikia.com/">View Them Here!</a></li>
 <li>Want to control which e-mails you receive? Go to: <a href="{{fullurl:{{ns:special}}:Preferences}}">User Preferences</a></li>
 </ul></p>',
 	'enotif_body_protect-HTML' => '<p>Dear $WATCHINGUSERNAME,<br /><br />
@@ -98,7 +98,7 @@ $PAGESUMMARY<br /><br />
 Please visit and edit often...<br /><br />
 {{SITENAME}}<br /><hr />
 <ul>
-<li>Check out our featured wikis! <a href="http://www.wikia.com">Visit Them Here!</a></li>
+<li>Check out the latest Fandom articles! <a href="http://fandom.wikia.com/">View Them Here!</a></li>
 <li>Want to control which e-mails you receive? Go to: <a href="{{fullurl:{{ns:special}}:Preferences}}">User Preferences</a></li>
 </ul></p>',
 	'enotif_body_restore-HTML' => '<p>Dear $WATCHINGUSERNAME,<br /><br />
@@ -108,7 +108,7 @@ $PAGESUMMARY<br /><br />
 Please visit and edit often...<br /><br />
 {{SITENAME}}<br /><hr />
 <ul>
-<li>Check out our featured wikis! <a href="http://www.wikia.com">Visit Them Here!</a></li>
+<li>Check out the latest Fandom articles! <a href="http://fandom.wikia.com/">View Them Here!</a></li>
 <li>Want to control which e-mails you receive? Go to: <a href="{{fullurl:{{ns:special}}:Preferences}}"> User Preferences</a></li>
 </ul></p>',
 	'enotif_body_rights-HTML' => '<p>Dear $WATCHINGUSERNAME,<br /><br />
@@ -128,7 +128,7 @@ $PAGESUMMARY<br /><br />
 Please visit and edit often...<br /><br />
 {{SITENAME}}<br /><hr />
 <ul>
-<li>Check out our featured wikis! <a href="http://www.wikia.com">Visit Them Here!</a></li>
+<li>Check out the latest Fandom articles! <a href="http://fandom.wikia.com/">View Them Here!</a></li>
 <li>Want to control which e-mails you receive? Go to: <a href="{{fullurl:{{ns:special}}:Preferences}}">User Preferences</a></li>
 </ul></p>',
 	'enotif_body_upload-HTML' => '<p>Dear $WATCHINGUSERNAME,<br /><br />
@@ -163,17 +163,12 @@ Wikia<br /><hr />
 The login password for user "$2" is now "$3".<br /><br />
 If you did not request a new password, don’t worry. The replacement password has been sent only to you at this e-mail address. Your account is secure and you can continue to use your old password.<br /><br />
 Thanks,<br /><br />
-The Wikia Community Team<br /><br />
+The Fandom Community Team<br /><br />
 www.wikia.com<br /><hr />
 <ul>
 <li>To change your preferences or password, go to: <a href="http://community.wikia.com/wiki/Special:Preferences">User Preferences</a>.</li>
 <li>This password reminder was requested from the following address: $1.</li>
 </ul></p>',
-	'reconfirmemail_body-HTML' => '<p>Hello $2,<br /><br />
-Thank you for updating the e-mail address for your Wikia account. Please confirm this is the correct e-mail address by <a href="$3">clicking here</a>.<br /><br /><br />
-We look forward to seeing you on Wikia!<br /><br />
-The Wikia Community Team<br />
-www.wikia.com<br /></p>',
 );
 
 $messages['nl-informal'] = array(

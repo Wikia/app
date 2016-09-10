@@ -64,7 +64,7 @@ Try it out!',
 	'myhome-hot-spots-number-of-editors' => 'editors',
 
 	'myhome-log-in' => "<center>The My Home feature is only available if you're logged in.<br /><br /><big>'''[{{fullurl:Special:Signup|$1}} Please log in to see this page!]'''</big></center>",
-	'myhome-switch-to-monaco' => "The WikiActivity feature is only available if you're using the Wikia skin.
+	'myhome-switch-to-monaco' => "The Wiki Activity feature is only available if you're using the Fandom skin.
 If you'd like to see My Home, please visit '''[[Special:Preferences|your Preferences]]''' to change your skin.",
 
 	'myhome-namespace-blog' => 'Blog',

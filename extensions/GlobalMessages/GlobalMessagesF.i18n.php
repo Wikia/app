@@ -198,12 +198,12 @@ Otherwise, you can use the easy form below. Your comment will be added to the pa
 	'forum-url' => 'Forum:Index',
 	'footer_MediaWiki' => '[http://www.mediawiki.org/ MediaWiki]',
 	'footer_License' => '[http://www.gnu.org/copyleft/fdl.html GFDL]',
-	'footer_About_Wikia' => '[http://www.wikia.com/wiki/About_Wikia About Wikia]',
-	'footer_Contact_Wikia' => '[http://www.wikia.com/wiki/Contact_us Contact Wikia]',
+	'footer_About_Wikia' => '[http://fandom.wikia.com/About About Fandom]',
+	'footer_Contact_Wikia' => '[http://fandom.wikia.com/contact Contact Fandom]',
 	'footer_Terms_of_use' => '[http://www.wikia.com/wiki/Terms_of_use Terms of use]',
-	'footer_Advertise_on_Wikia' => '[http://www.wikia.com/wiki/Advertising Advertise on Wikia]',
+	'footer_Advertise_on_Wikia' => '[http://www.wikia.com/mediakit Advertise on Fandom]',
 	'fast-adv' => 'Advertisement',
-	'feed-watom' => 'Wikia Atom',
+	'feed-watom' => 'Fandom Atom',
 );
 
 $messages['qqq'] = array(

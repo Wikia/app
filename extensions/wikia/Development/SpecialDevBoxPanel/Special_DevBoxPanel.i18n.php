@@ -7,7 +7,7 @@ $messages['en'] = [
 	"devbox-title" => "Dev-Box Panel",
 	"devbox-panel-not-enabled" => "The Dev Box Panel is currently <strong>disabled</strong>. It is only available on development environments.<br /><br />" .
 		"To enable this panel please add this line to LocalSettings.php:<br /><strong><code>\$wgDevelEnvironment = true;</code></strong>",
-	"devbox-intro" => "This panel is designed to help manage your dev-box (i.e. on Wikia servers, <strong>not intended for local installations</strong>).<br />Since this special page is only designed for dev-boxes, it is recommended NOT to use this on other types of servers.<br />",
+	"devbox-intro" => "This panel is designed to help manage your dev-box (i.e. on Fandom servers, <strong>not intended for local installations</strong>).<br />Since this special page is only designed for dev-boxes, it is recommended NOT to use this on other types of servers.<br />",
 
 	"devbox-heading-vital" => "Vital Settings",
 	"devbox-setting-name" => "Setting Name",

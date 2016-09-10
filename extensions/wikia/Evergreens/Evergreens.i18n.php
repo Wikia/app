@@ -18,5 +18,5 @@ $messages['qqq'] = [
  * English.
  */
 $messages['en'] = [
-	'evergreens-desc' => 'Logging entry point for the Wikia Evergreens extension for Google Chrome. Wikia Evergreens is a stale page cache detection and reporting tool.',
+	'evergreens-desc' => 'Logging entry point for the Fandom Evergreens extension for Google Chrome. Fandom Evergreens is a stale page cache detection and reporting tool.',
 ];

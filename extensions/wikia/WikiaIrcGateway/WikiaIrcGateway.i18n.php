@@ -5,19 +5,19 @@ $messages['en'] = array(
 	'ircgate-desc' => 'Lets users insert IRC login form on any page',
 	'ircgate-username' => 'Username:',
 	'ircgate-channel'  => 'Channel:',
-	'ircgate-channellist' => '* #wikia
+	'ircgate-channellist' => '* #Fandom
 *group: International
-* #wikia-de
-* #wikia-es
-* #wikia-fi
-* #wikia-ja
-* #wikia-pl
-* #wikia-pt
-* #wikia-ru
+* #Fandom-de
+* #Fandom-es
+* #Fandom-fi
+* #Fandom-ja
+* #Fandom-pl
+* #Fandom-pt
+* #Fandom-ru
 *group-end
 *group: Off topic
-* #wikia-social
-* #wikia-overflow
+* #Fandom-social
+* #Fandom-overflow
 *group-end'
 );
 

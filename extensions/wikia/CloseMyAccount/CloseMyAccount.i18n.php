@@ -14,12 +14,12 @@ $messages = array();
 $messages['en'] = array(
 	'closemyaccount' => 'Close My Account',
 	'closemyaccount-desc' => 'Allows users to close their own accounts.',
-	'closemyaccount-intro-text' => "We are sorry {{GENDER:$2|you}} want to disable your account. Wikia has many communities on all sorts of subjects and we'd love for you to stick around and find the one that's right for you. If you are having a local problem with your wikia, please don't hesitate to contact your [[Special:ListUsers/sysop|local admins]] for help and advice.
+	'closemyaccount-intro-text' => "We are sorry {{GENDER:$2|you}} want to disable your account. Fandom has many communities on all sorts of subjects and we'd love for you to stick around and find the one that's right for you. If you are having a local problem with your community, please don't hesitate to contact your [[Special:ListUsers/sysop|local admins]] for help and advice.
 
 If you have decided you definitely want to disable your account please be aware:
-* Wikia does not have the ability to fully remove accounts, but we can disable them. This will ensure the account is locked and can't be used.
-* This process is NOT reversible after $1 {{PLURAL:$1|day has|days have}} passed, and you will have to create a new account if you wish to rejoin Wikia.
-* This process will not remove your contributions from a given Wikia community, as these contributions belong to the community as a whole.
+* Fandom does not have the ability to fully remove accounts, but we can disable them. This will ensure the account is locked and can't be used.
+* This process is NOT reversible after $1 {{PLURAL:$1|day has|days have}} passed, and you will have to create a new account if you wish to rejoin Fandom.
+* This process will not remove your contributions from a given Fandom community, as these contributions belong to the community as a whole.
 
 If you need any more information on what an account disable actually does, you can visit our [[Help:Close_my_account|help page on disabling your account]]. If you are sure you want to close your account, please click the button below.
 
@@ -27,11 +27,11 @@ Please note you will have $1 {{PLURAL:$1|day|days}} after making this request to
 	'closemyaccount-unconfirmed-email' => 'Warning: You do not have a confirmed email address associated with this account. You will not be able to reactivate your account within the waiting period without one. Please consider setting an email address in [[Special:Preferences|your preferences]] before proceeding.',
 	'closemyaccount-logged-in-as' => 'You are logged in as {{GENDER:$1|$1}}. [[Special:UserLogout|Not you?]]',
 	'closemyaccount-current-email' => '{{GENDER:$2|Your}} email is set to $1. [[Special:Preferences|Do you wish to change it?]]',
-	'closemyaccount-confirm' => '{{GENDER:$1|I}} have read the [[Help:Close_my_account|help page on closing your account]] and confirm that I want to disable my Wikia account.',
+	'closemyaccount-confirm' => '{{GENDER:$1|I}} have read the [[Help:Close_my_account|help page on closing your account]] and confirm that I want to disable my Fandom account.',
 	'closemyaccount-button-text' => 'Close my account',
 	'closemyaccount-reactivate-button-text' => 'Reactivate my account',
 	'closemyaccount-reactivate-page-title' => 'Reactivate my account',
-	'closemyaccount-reactivate-intro' => '{{GENDER:$2|You}} have previously requested that we close your account. You still have $1 {{PLURAL:$1|day|days}} left until your account is closed. If you still wish to close your account, simply go back to browsing Wikia. However, if you would like to reactivate your account, please click the button below and follow the instructions in the email.
+	'closemyaccount-reactivate-intro' => '{{GENDER:$2|You}} have previously requested that we close your account. You still have $1 {{PLURAL:$1|day|days}} left until your account is closed. If you still wish to close your account, simply go back to browsing Fandom. However, if you would like to reactivate your account, please click the button below and follow the instructions in the email.
 
 Would you like to reactivate your account?',
 	'closemyaccount-reactivate-requested' => 'An email has been sent to the address you had set for your account. Please click the link in the email to reactivate your account.',
@@ -41,13 +41,13 @@ Would you like to reactivate your account?',
 	'closemyaccount-reactivate-error-not-scheduled' => 'Account is not scheduled for closure.',
 	'closemyaccount-reactivate-error-invalid-code' => '{{GENDER:$1|You}} appear to have used a confirmation code that has expired. Please check your email for a newer code you may have requested, or try requesting a new code by [[Special:UserLogin|logging in]] to the account you want to reactivate and following the instructions.',
 	'closemyaccount-reactivate-error-empty-code' => 'A confirmation code needed to reactivate your account has not been provided. If you have requested your account be reactivated, please click the link in the email sent to you. Otherwise, [[Special:UserLogin|login]] to the account you want to reactivate in order to request a confirmation code.',
-	'closemyaccount-reactivate-error-disabled' => 'This account has already been disabled. Please [[Special:Contact|contact Wikia]] if you have any questions.',
-	'closemyaccount-reactivate-error-failed' => 'An error occurred while attempting to reactivate this account. Please try again or [[Special:Contact|contact Wikia]] if the issue persists.',
+	'closemyaccount-reactivate-error-disabled' => 'This account has already been disabled. Please [[Special:Contact|contact Fandom]] if you have any questions.',
+	'closemyaccount-reactivate-error-failed' => 'An error occurred while attempting to reactivate this account. Please try again or [[Special:Contact|contact Fandom]] if the issue persists.',
 	'closemyaccount-reactivate-success' => 'Your account has been reactivated.',
 	'closemyaccount-scheduled' => 'Your account has been successfully scheduled to be closed.
 
 Please note you will have $1 {{PLURAL:$1|day|days}} from now to reactivate your account by [[Special:UserLogin|logging in]] and following the instructions you will see. After this waiting period, your account will be closed permanently and cannot be restored.',
-	'closemyaccount-scheduled-failed' => 'An error occurred while attempting to schedule this account to be closed. Please [[Special:CloseMyAccount|try again]] or [[Special:Contact|contact Wikia]] if the issue persists.',
+	'closemyaccount-scheduled-failed' => 'An error occurred while attempting to schedule this account to be closed. Please [[Special:CloseMyAccount|try again]] or [[Special:Contact|contact Fandom]] if the issue persists.',
 );
 
 /**
@@ -363,7 +363,7 @@ $messages['pt'] = array(
 	'closemyaccount-desc' => 'Permite que os usuários fechem suas próprias contas.',
 	'closemyaccount-intro-text' => 'Lamentamos que {{GENDER:$2|você}} queira desativar sua conta. A Wikia tem muitas comunidades sobre todos os tipos de assuntos e nós gostaríamos que você ficasse por aqui para encontrar o que é certo para você. Se você estiver tendo um problema local com sua wikia, não hesite em contatar seu [[Special: ListUsers| sysop|administrador local]] para ajuda e conselhos.
 
-Se você decidiu definitivamente desativar sua conta, por favor, esteja ciente: 
+Se você decidiu definitivamente desativar sua conta, por favor, esteja ciente:
 * A Wikia não tem a capacidade de remover completamente as contas, mas pode desativá-las. Isto garantirá que a conta está bloqueada e não pode ser usada.
  * Este processo NÃO é reversível após $1 {{PLURAL:$1|dia|dias}, e você terá que criar uma nova conta se quiser se juntar a Wikia.
  * Este processo não removerá suas contribuições de uma determinada comunidade Wikia, pois essas contribuições pertencem à comunidade como um todo.

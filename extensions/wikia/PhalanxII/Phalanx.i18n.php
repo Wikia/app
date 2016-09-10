@@ -92,22 +92,22 @@ Note: works only on Answers-type wiks.',
 	'phalanx-help-type-email' => 'This filter prevents account creation using a blocked email address.',
 
 	#block reason overrides, when no block reason was inputed (original usage)
-	'phalanx-user-block-reason-ip' => 'This IP address is prevented from editing across the entire Wikia network due to vandalism or other disruption by you or by someone who shares your IP address.
-If you believe this is in error, please [[Special:Contact|contact Wikia]].',
-	'phalanx-user-block-reason-exact' => 'This username or IP address is prevented from editing across the entire Wikia network due to vandalism or other disruption.
-If you believe this is in error, please [[Special:Contact|contact Wikia]].',
-	'phalanx-user-block-reason-similar' => 'This username is prevented from editing across the entire Wikia network due to vandalism or other disruption by a user with a similar name.
-Please [[Special:Contact|contact Wikia]] about the problem.',
+	'phalanx-user-block-reason-ip' => 'This IP address is prevented from editing across the entire Fandom network due to vandalism or other disruption by you or by someone who shares your IP address.
+If you believe this is in error, please [[Special:Contact|contact Fandom]].',
+	'phalanx-user-block-reason-exact' => 'This username or IP address is prevented from editing across the entire Fandom network due to vandalism or other disruption.
+If you believe this is in error, please [[Special:Contact|contact Fandom]].',
+	'phalanx-user-block-reason-similar' => 'This username is prevented from editing across the entire Fandom network due to vandalism or other disruption by a user with a similar name.
+Please [[Special:Contact|contact Fandom]] about the problem.',
 	'phalanx-user-block-new-account' => 'Username is not available for registration. Please choose another one.',
 	'phalanx-email-block-new-account' => 'We can not complete your registration at this time.',
 
 	#block reason overrides, worded to add the block reason
-	'phalanx-user-block-withreason-ip' => 'This IP address is prevented from editing across the entire Wikia network due to vandalism or other disruption by you or by someone who shares your IP address.
-If you believe this is in error, please [[Special:Contact|contact Wikia]].<br />The blocker also gave this additional reason: $1.',
-	'phalanx-user-block-withreason-exact' => 'This username or IP address is prevented from editing across the entire Wikia network due to vandalism or other disruption.
-If you believe this is in error, please [[Special:Contact|contact Wikia]].<br />The blocker also gave this additional reason: $1.',
-	'phalanx-user-block-withreason-similar' => 'This username is prevented from editing across the entire Wikia network due to vandalism or other disruption by a user with a similar name.
-Please [[Special:Contact|contact Wikia]] about the problem.<br />The blocker also gave this additional reason: $1.',
+	'phalanx-user-block-withreason-ip' => 'This IP address is prevented from editing across the entire Fandom network due to vandalism or other disruption by you or by someone who shares your IP address.
+If you believe this is in error, please [[Special:Contact|contact Fandom]].<br />The blocker also gave this additional reason: $1.',
+	'phalanx-user-block-withreason-exact' => 'This username or IP address is prevented from editing across the entire Fandom network due to vandalism or other disruption.
+If you believe this is in error, please [[Special:Contact|contact Fandom]].<br />The blocker also gave this additional reason: $1.',
+	'phalanx-user-block-withreason-similar' => 'This username is prevented from editing across the entire Fandom network due to vandalism or other disruption by a user with a similar name.
+Please [[Special:Contact|contact Fandom]] about the problem.<br />The blocker also gave this additional reason: $1.',
 
 	'phalanx-title-move-summary' => 'The reason you entered contained a blocked phrase.',
 	'phalanx-content-spam-summary' => "The text was found in the page's summary.",
@@ -159,7 +159,7 @@ Please [[Special:Contact|contact Wikia]] about the problem.<br />The blocker als
 	'phalanx-section-type-account-creation' => 'Account creation',
 	'phalanx-section-type-wiki-creation' => 'Wiki creation',
 	'phalanx-section-type-questions' => 'Questions',
-	'phalanx-sp-contributions-blocked-globally' => 'This user is currently blocked across the Wikia network.',
+	'phalanx-sp-contributions-blocked-globally' => 'This user is currently blocked across the Fandom network.',
 );
 
 /** Message documentation (Message documentation)

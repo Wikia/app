@@ -5,34 +5,33 @@ $messages = array();
 $messages['en'] = array(
 	'corporate-footer-desc' => 'Corporate Footer',
 	'wikiahome-footer-wikiainc' => '===Wikia, Inc.===
-*[http://www.wikia.com/About_Us About Us]
-*[http://www.wikia.com/Special:Contact Contact Wikia]
+*[http://fandom.wikia.com/About About]
+*[http://www.wikia.com/Special:Contact Contact Fandom]
 *[http://www.wikia.com/Careers Careers]
-*[http://www.wikia.com/Press Press]
+*[http://fandom.wikia.com/press Press]
 __NOEDITSECTION__',
 	'wikiahome-footer-get-started-heading' => '===Get Started===
 __NOEDITSECTION__',
 	'wikiahome-footer-get-started-creative' => 'Find your community,<br />start something epic.',
 	'wikiahome-footer-get-started-button' => 'http://www.wikia.com/Special:CreateNewWiki', // FIXME: why is this in a message?! -- we need to pass there Wikia "button" class
 	'wikiahome-footer-follow-us' => '===Follow Us===
-*[http://community.wikia.com/wiki/Blog:Wikia_Staff_Blog Wikia Blog]
-*[http://www.facebook.com/Wikia Facebook]
-*[http://www.twitter.com/Wikia Twitter]
+*[http://community.wikia.com/wiki/Blog:Wikia_Staff_Blog Staff Blog]
+*[http://www.facebook.com/getfandom Facebook]
+*[http://www.twitter.com/getfandom Twitter]
 __NOEDITSECTION__',
 	'wikiahome-footer-community' => '===Community===
 *[http://www.community.wikia.com Community Central]
 *[http://community.wikia.com/wiki/Admin_Central:Main_Page Founders & Admins]
 *[http://www.wikia.com/Special:Contact Contact Support]$1
-*[http://www.wikia.com/Stars Wikia Stars]
 *[http://help.wikia.com/wiki/Help:Contents Help]
 __NOEDITSECTION__',
-	'wikiahome-footer-everywhere' => '===Wikia Everywhere===
-*[http://www.wikia.com/Mobile Wikia Mobile]
+	'wikiahome-footer-everywhere' => '===Fandom Everywhere===
+*[http://www.wikia.com/Mobile Mobile]
 *[http://www.wikia.com/Mobile/GameGuides Video Game Apps]
 *[http://api.wikia.com/wiki/Wikia_API_Wiki API]
 __NOEDITSECTION__',
 	'wikiahome-footer-partner' => "===Partner===
-*[http://www.mediakit.wikia.com Media kit]
+*[http://www.wikia.com/mediakit Advertise with us]
 *'''[http://mediakit.wikia.com/wiki/Contact Advertise with us]'''
 __NOEDITSECTION__",
 	'wikiahome-footer-community-wam' =>'*[$1 WAM Score]',

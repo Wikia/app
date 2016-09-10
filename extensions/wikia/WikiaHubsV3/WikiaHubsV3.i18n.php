@@ -9,9 +9,9 @@ $messages = array();
 
 $messages['en'] = array(
 	// general
-	'wikiahubs-v3-desc' => 'Wikia Hubs v3',
+	'wikiahubs-v3-desc' => 'Fandom Hubs v3',
 	'wikiahubs-v3-button-cancel' => 'Cancel',
-	'wikiahubs-search-placeholder' => 'Search Wikia',
+	'wikiahubs-search-placeholder' => 'Search Fandom',
 
 	// suggest article
 	'wikiahubs-v3-suggest-article-header' => 'Suggest an Article',
@@ -26,7 +26,7 @@ $messages['en'] = array(
 	//WAM
 	'wikiahubs-v3-wam-header' => 'WAM Score',
 	'wikiahubs-v3-wam-see-full-wam-ranking' => 'Read more about WAM',
-	'wikiahubs-v3-wam-top-wikis-headline' => 'Top Wikia $1 Communities',
+	'wikiahubs-v3-wam-top-wikis-headline' => 'Top Fandom $1 Communities',
 	'wikiahubs-v3-wam-rank' => 'Rank',
 	'wikiahubs-v3-wam-score' => 'WAM Score',
 	'wikiahubs-v3-wam-wiki-url' => "Name",
@@ -47,8 +47,8 @@ $messages['en'] = array(
 	'wikiahubs-v3-popular-videos' => 'Popular videos',
 
 	// social icons
-	'wikiahubs-v3-social-twitter-link' => 'https://twitter.com/Wikia',
-	'wikiahubs-v3-social-facebook-link' => 'http://www.facebook.com/Wikia',
+	'wikiahubs-v3-social-twitter-link' => 'https://twitter.com/getfandom',
+	'wikiahubs-v3-social-facebook-link' => 'https://twitter.com/getfandom',
 	'wikiahubs-v3-social-googleplus-link' => 'http://gplus.to/wikia',
 );
 
@@ -258,8 +258,8 @@ $messages['ja'] = array(
 	'wikiahubs-v3-popular-videos' => 'ポピュラービデオ',
 
 	// social icons
-	'wikiahubs-v3-social-twitter-link' => 'https://twitter.com/Wikia',
-	'wikiahubs-v3-social-facebook-link' => 'http://www.facebook.com/Wikia',
+	'wikiahubs-v3-social-twitter-link' => 'https://twitter.com/getfandom',
+	'wikiahubs-v3-social-facebook-link' => 'https://twitter.com/getfandom',
 	'wikiahubs-v3-social-googleplus-link' => 'http://gplus.to/wikia',
 );
 

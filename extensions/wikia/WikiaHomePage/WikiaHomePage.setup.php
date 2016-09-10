@@ -15,11 +15,11 @@ $dir = dirname(__FILE__) . '/';
 $wgExtensionCredits['other'][] = array(
 	'name'				=> 'WikiaHomePage',
 	'author'			=> array(
-		'Andrzej "nAndy" Łukaszewski', 
-		'Hyun Lim', 
-		'Marcin Maciejewski', 
-		'Saipetch Kongkatong', 
-		'Sebastian Marzjan', 
+		'Andrzej "nAndy" Łukaszewski',
+		'Hyun Lim',
+		'Marcin Maciejewski',
+		'Saipetch Kongkatong',
+		'Sebastian Marzjan',
 		'Damian Jóźwiak'
 	),
 	'descriptionmsg'	=> 'wikiahome-desc',

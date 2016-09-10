@@ -2,7 +2,7 @@
 $messages = [];
 
 $messages['en'] = [
-	'polldaddy-tag-desc' => 'Polldaddy widget integration for the Wikia platform',
+	'polldaddy-tag-desc' => 'Polldaddy widget integration for the Fandom platform',
 	'polldaddy-tag-could-not-render' => 'Failed to render the Polldaddy widget. Please check if all required parameters are in place.',
 ];
 

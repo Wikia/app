@@ -37,14 +37,14 @@ $messages['en'] = array(
 	'passwordtooshort' => 'Passwords must be at least {{PLURAL:$1|1 character|$1 characters}}.',
 	'password-name-match' => 'Your password must be different from your username.',
 	'password-login-forbidden' => 'The use of this username and password has been forbidden.',
-	'passwordremindertitle' => 'Password reminder from Wikia',
+	'passwordremindertitle' => 'Password reminder from Fandom',
 	'passwordremindertext' => 'Hi,
 The login password for user "$2" is now "$3".
 If you did not request a new password, don’t worry. The replacement password has been sent only to you at this email address. Your account is secure and you can continue to use your old password.
 
 Thanks,
 
-The Wikia Community Team
+The Fandom Community Team
 
 www.wikia.com
 ___________________________________________________________
@@ -254,10 +254,10 @@ The latest log entry is provided below for reference:",
 	'patrol-log-diff' => 'revision $1',
 	'prefs-help-mailmesg' => 'E-mail',
 	'prefs-help-blurmesg' => 'Blurry word',
-	'prefs-help-terms' => "By creating an account, you agree to the {{#NewWindowLink: homepage:Terms of use | Wikia's Terms of Use}}",
+	'prefs-help-terms' => "By creating an account, you agree to the {{#NewWindowLink: homepage:Terms of use | Wikia, Inc's Terms of Use}}",
 	'prefs-help-birthday' => 'Why do I need to provide this?',
 	'prefs-help-birthmesg' => 'Why do I need to provide my birthday?',
-	'prefs-help-birthinfo' => 'Wikia requires all users to provide their real date of birth as both a safety precaution and as a means of preserving the integrity of the site while complying with federal regulations.',
+	'prefs-help-birthinfo' => 'Fandom requires all users to provide their real date of birth as both a safety precaution and as a means of preserving the integrity of the site while complying with federal regulations.',
 	'popular-articles' => 'Popular Pages',
 	'popular-wikis' => 'Popular Wikis',
 	'preferences_s' => 'Preferences',
@@ -20173,7 +20173,7 @@ $messages['kri'] = array(
 	'portal-url' => 'Project:Mitin-ples fo yuza-dem',
 	'privacy' => 'Polisi fo Praivesi',
 	'privacypage' => 'Project:Polisi fo praivesi',
-	'pagetitle-view-mainpage' => ' 
+	'pagetitle-view-mainpage' => '
 {{SAITNEM}}',
 	'preview' => 'Privyu',
 	'permissionserrorstext-withaction' => 'Yu no get pamishon fo $2, bikoz {{PLURAL:$1|rizin|rizin-dem}}:',
@@ -21376,7 +21376,7 @@ $messages['lez'] = array(
 	'page-rss-feed' => '"$1" РСС Xуьрек',
 	'page-atom-feed' => '"$1" Атом-зул',
 	'preview' => 'Сифтедин килигун',
-	'previewnote' => "'''Рикlел хуьх хьи, им анжах сифтедин килигун я.'''  
+	'previewnote' => "'''Рикlел хуьх хьи, им анжах сифтедин килигун я.'''
 Куь дегишунар гьеле хвенвач!",
 	'permissionserrorstext-withaction' => 'Квез и {{PLURAL:$1|себебдалди|себебралди}} $2 йиз ихтияр авайд туш:',
 	'post-expand-template-inclusion-warning' => "'''Дикъет:''' Кутазвай чешнейрин кьадар гзаф чIехи я.
@@ -25620,7 +25620,7 @@ $messages['mzn'] = array(
 	'protectedpagetext' => 'این صفحه دچی‌ین وسّه زلفین بزه بیّه.',
 	'protectedinterface' => 'این صفحه ارائه‌دهندهٔ متنی واسط کارور این نرم‌افزار هسته و به منظور پیشگیری از خرابکاری زلفین بزه‌بیّه.',
 	'preview' => 'پیش نمایش',
-	'previewnote' => 'شِمه یاد بوئه که اینتا اتا پیش‌نمایِش هسه. 
+	'previewnote' => 'شِمه یاد بوئه که اینتا اتا پیش‌نمایِش هسه.
  شِمه دگاردسته‌ئون جانـَکِته که و‌نه، ونه اِسا ذخیره‌بیّـِن دوکمه ره بَزنین!',
 	'permissionserrorstext-withaction' => 'ته اجازهٔ $2 ره به {{PLURAL:$1|دلیل|دلایل}} رو به رو ندانی:',
 	'previousrevision' => '→ پیشی دگاردسته‌ئون',
@@ -32197,7 +32197,7 @@ yer auld password.',
 	'permissionserrors' => 'Richts Errors',
 	'permissionserrorstext' => 'Ye dinnae hae the richts tae dae that, acause o the followin {{PLURAL:$1|grund|grunds}}:',
 	'permissionserrorstext-withaction' => 'Ye dinna hae the richts tae $2, for the follaein {{PLURAL:$1|reason|reasons}}:',
-	'post-expand-template-inclusion-warning' => "'''Wairnin:''' Template include size is tae lairge. 
+	'post-expand-template-inclusion-warning' => "'''Wairnin:''' Template include size is tae lairge.
 Some templates wull nae be included.",
 	'post-expand-template-inclusion-category' => 'Pages whaur template include size is exceeded',
 	'post-expand-template-argument-warning' => 'Tak tent: This page hauds at least the ae template argument that haes an ower muckle expansion size.
@@ -32229,7 +32229,7 @@ Thae arguments hae been left oot.',
 	'prefs-memberingroups' => 'Member o {{PLURAL:$1|group|groups}}:',
 	'prefs-help-realname' => 'Rael name is optional an gin ye chuise tae provide it this will be uised tae gie ye attreibution for yer wark.',
 	'prefs-help-email' => 'E-mail is optional, bit is needed fur password resets, shuid ye forget yer password.',
-	'prefs-help-email-others' => "Ye kin an choose tae let others contact ye by e-mail thro' a link oan yer uiser or collogue  page. 
+	'prefs-help-email-others' => "Ye kin an choose tae let others contact ye by e-mail thro' a link oan yer uiser or collogue  page.
 Yer e-mail address insae revealed whin ither uisers contact ye.",
 	'prefs-help-email-required' => 'Yer e-mail address is needit.',
 	'prefs-diffs' => 'Diffs',
@@ -40292,7 +40292,7 @@ $messages['xmf'] = array(
 	'protect_expiry_invalid' => 'ვადაშ გიშულაშ თარიღ რე ჩილათირ',
 	'protect_expiry_old' => 'ვადაშ გიშულაშ თარიღ რე ულირ ბორჯის',
 	'protect-text' => "'''$1''' ხასილაშო თხილუაშ დონეშ ძირაფა დო თირაფა შეგილებუნა თაქ.",
-	'protect-locked-access' => "თქვა ვა გიღუნა ხასილაშ თხილუაშ დონეშ თირუაშ ალობა. 
+	'protect-locked-access' => "თქვა ვა გიღუნა ხასილაშ თხილუაშ დონეშ თირუაშ ალობა.
 ათაქ რე '''$1''' ხასილაშ ასეიან გენწყილობეფ.",
 	'protect-cascadeon' => 'ათე ხასილა ასე თხილერ რე, თიშენ ნამდა თენა მიშულირ რე {{PLURAL:$1|ხასილაშა, ნამდგასით|ხასილეფშა, ნამდგეფსით}} ჩართულ აფუ კასკადურ თხილუა.
 თქვა შეგილეუნა დოთირუათ ათე ხასილაშ თხილუაშ დონე, მარა თეს გავლენა ვაღვენუ კასკადურ თხილუაშა.',

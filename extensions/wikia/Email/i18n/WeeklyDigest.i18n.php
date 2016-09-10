@@ -2,8 +2,8 @@
 $messages = array();
 
 $messages['en'] = array(
-	'emailext-weeklydigest-subject' => "See what's new on your favorite Wikia pages this week",
-	'emailext-weeklydigest-summary' => 'Since your last visit, Wikia Community members have made improvements to pages that you follow.',
+	'emailext-weeklydigest-subject' => "See what's new on your favorite fandoms this week",
+	'emailext-weeklydigest-summary' => 'Since your last visit, Fandom users have made changes to pages that you follow. Check them out:',
 );
 
 $messages['qqq'] = array(
@@ -37,7 +37,7 @@ $messages['ja'] = array(
 );
 
 $messages['nl'] = array(
-	'emailext-weeklydigest-subject' => "See what's new on your favorite Wikia pages this week",
+	'emailext-weeklydigest-subject' => "See what's new on your favorite fandoms this week",
 	'emailext-weeklydigest-summary' => "Since you're last visit, Wikia Community members have made improvements to pages that you follow.",
 );
 

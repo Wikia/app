@@ -120,7 +120,7 @@ $messages['en'] = [
 	'chat-chatbanchange-log-entry' => 'changed ban settings for $1 with an expiry time of $2, ends $3',
 	'chat-contributions-ban-notice' => '{{GENDER:$1|This user}} is currently banned from chat. The latest chat ban log entry is provided below for reference:',
 
-	'chat-browser-is-notsupported' => '	Your browser is not supported. For the best experience, use a <a href="http://community.wikia.com/wiki/Help:Supported_browsers">newer browser</a>.',
+	'chat-browser-is-notsupported' => 'Your browser is not supported. For the best experience, use a <a href="http://community.wikia.com/wiki/Help:Supported_browsers">newer browser</a>.',
 	'chat-checkuser-join-action' => 'Joined Chat',
 
 	'chat-status-away' => 'Away',

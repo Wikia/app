@@ -8,7 +8,7 @@
 $messages = array();
 
 $messages['en'] = array(
-	'wikiabar-desc' => 'WikiaBar extension',
+	'wikiabar-desc' => 'FandomBar extension',
 	'wikiabar-validation-message-too-long' => '$1 is too long',
 	'wikiabar-validation-wrong-element-count' => 'Wrong element count',
 	'wikiabar-tooltip' => 'Collapse',

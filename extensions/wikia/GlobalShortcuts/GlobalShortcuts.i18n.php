@@ -3,7 +3,7 @@ $messages = array();
 
 $messages['en'] = array(
 	'global-shortcuts-description' => '
-Improve your browsing and editing experience using shortcut keys on Wikia.
+Improve your browsing and editing experience using shortcut keys on Fandom.
 
 This extension provides some key shortcuts and an actions explorer to help users navigate to important pages or perform certain actions.
 ',
@@ -11,9 +11,9 @@ This extension provides some key shortcuts and an actions explorer to help users
 	'global-shortcuts-caption-keyboard-shortcuts-help' => 'Keyboard shortcuts help',
 	'global-shortcuts-caption-open-discussions' => 'Open discussions',
 	'global-shortcuts-caption-search-for-a-page' => 'Search for a page',
-	'global-shortcuts-caption-start-a-new-wikia' => 'Start a new wikia',
+	'global-shortcuts-caption-start-a-new-wikia' => 'Start a new wiki',
 	'global-shortcuts-category-current-page' => 'Current page',
-	'global-shortcuts-category-current-wikia' => 'Current wikia',
+	'global-shortcuts-category-current-wikia' => 'Current community',
 	'global-shortcuts-category-global' => 'Global',
 	'global-shortcuts-category-help' => 'Help',
 	'global-shortcuts-category-other' => 'Other',
@@ -36,7 +36,7 @@ $messages['qqq'] = array(
 	'global-shortcuts-caption-start-a-new-wikia' => 'This shortcut redirects to the page where You create a new wiki.',
 	'global-shortcuts-category-current-page' => 'Name of category that contains actions related to currently opened page e.g. history.',
 	'global-shortcuts-category-current-wikia' => 'Name of a category that contains actions related to the currently opened wikia, such as search for a page.',
-	'global-shortcuts-category-global' => 'Name of a category that contains global actions such as "Start a new wikia".',
+	'global-shortcuts-category-global' => 'Name of a category that contains global actions such as "Start a new wiki".',
 	'global-shortcuts-category-help' => 'Name of a category in actions explorer that contains actions list and keyboard shortcuts help.',
 	'global-shortcuts-category-other' => "Name of a category in actions explorer that contains actions list and keyboard shortcuts that don't fit into other categories.",
 	'global-shortcuts-key-or' => 'It is related to two possible different keyboard shorcuts, so the user uses one shortcut OR another one.',

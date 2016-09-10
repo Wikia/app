@@ -2,25 +2,25 @@
 $messages = array();
 
 $messages['en'] = array(
-	'global-navigation-desc' => "Wikia's Global Navigation",
-	'global-navigation-create-wiki' => 'Start a wikia',
+	'global-navigation-desc' => "Fandom's Global Navigation",
+	'global-navigation-create-wiki' => 'Start a community',
 	'global-navigation-register' => 'Register',
 	'global-navigation-sign-in' => 'Sign In',
 	'global-navigation-account-navigation-options' => '$1 or $2',
 	'global-navigation-community-link' => 'http://community.wikia.com',
 	'global-navigation-community-link-label' => 'Community Central',
 	'global-navigation-explore-wikia-link' => 'http://www.wikia.com/explore',
-	'global-navigation-explore-wikia-link-label' => 'Explore Wikia',
+	'global-navigation-explore-wikia-link-label' => 'Explore Fandom',
 	'global-navigation-explore-wikia-mercury-link-label' => 'Top Communities',
 	'global-navigation-wam-link' => 'http://www.wikia.com/WAM',
 	'global-navigation-menu-hubs' => '*http://fandom.wikia.com/games|Games|games
 *http://fandom.wikia.com/movies|Movies|movies
 *http://fandom.wikia.com/tv|TV|tv',
-	'global-navigation-wam-link-label' => 'Trending Wikias',
+	'global-navigation-wam-link-label' => 'Trending wikis',
 	'global-navigation-local-search-placeholder' => 'Search within $1...',
 	'global-navigation-search-wikia' => 'Search $1...',
-	'global-navigation-local-search' => 'Search this wikia',
-	'global-navigation-global-search' => 'Search all of Wikia',
+	'global-navigation-local-search' => 'Search this community',
+	'global-navigation-global-search' => 'Search all of Fandom',
 	'global-navigation-home-of-fandom' => 'The Home of Fandom',
 );
 
@@ -31,14 +31,14 @@ $messages['qqq'] = array(
 	'global-navigation-sign-in' => 'Text on the link that shows sign-in modal',
 	'global-navigation-account-navigation-options' => 'Sentence that says to register or sign-in, $1 is an anchor with "global-navigation-register" title, $2 is an anchor with "global-navigation-sign-in" title',
 	'global-navigation-menu-hubs' => 'Global Navigation Hubs/Links Menu structure - For example see English translation.',
-	'global-navigation-wam-link-label' => 'Label for "Trending Wikias" link to WAM in Global Navigation',
+	'global-navigation-wam-link-label' => 'Label for "Trending wikis" link to WAM in Global Navigation',
 	'global-navigation-community-link' => 'Link to Community Central in Global Navigation',
 	'global-navigation-community-link-label' => 'Label for Community Central link in Global Navigation',
 	'global-navigation-local-search-placeholder' => 'Placeholder in search input in global nav',
 	'global-navigation-local-search' => 'Local search value in search dropdown',
 	'global-navigation-global-search' => 'Local search value in search dropdown',
 	'global-navigation-search-wikia' => 'Placeholder inside search input in Global Navigation',
-	'global-navigation-explore-wikia-link-label' => 'Label for "Explore Wikia" link in Global Navigation which is also entry point to dropdown',
+	'global-navigation-explore-wikia-link-label' => 'Label for "Explore Fandom" link in Global Navigation which is also entry point to dropdown',
 );
 
 $messages['de'] = array(
@@ -155,19 +155,19 @@ $messages['ja'] = array(
 );
 
 $messages['nl'] = array(
-	'global-navigation-desc' => "Wikia's Global Navigation",
-	'global-navigation-create-wiki' => 'Start a wikia',
+	'global-navigation-desc' => "Fandom's Global Navigation",
+	'global-navigation-create-wiki' => 'Start a community',
 	'global-navigation-register' => 'Register',
 	'global-navigation-sign-in' => 'Sign In',
 	'global-navigation-account-navigation-options' => '$1 or $2',
 	'global-navigation-community-link' => 'http://community.wikia.com',
 	'global-navigation-local-search-placeholder' => 'Search within $1...',
-	'global-navigation-local-search' => 'Search this wikia',
-	'global-navigation-global-search' => 'Search all of Wikia',
+	'global-navigation-local-search' => 'Search this community',
+	'global-navigation-global-search' => 'Search all of Fandom',
 	'global-navigation-community-link-label' => 'Community Central',
 	'global-navigation-explore-wikia-link' => '#',
-	'global-navigation-explore-wikia-link-label' => 'Explore Wikia',
-	'global-navigation-wam-link-label' => 'Trending Wikias',
+	'global-navigation-explore-wikia-link-label' => 'Explore Fandom',
+	'global-navigation-wam-link-label' => 'Trending wikis',
 	'global-navigation-search-wikia' => 'Search $1...',
 	'global-navigation-home-of-fandom' => 'The Home of Fandom',
 	'global-navigation-menu-hubs' => '*http://gameshub.wikia.com/wiki/Games_Hub|Games|games

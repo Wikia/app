@@ -3,7 +3,7 @@
 $messages = array();
 
 $messages['en'] = array(
-	'wikiastats-desc' => 'WikiaStats',
+	'wikiastats-desc' => 'WikiStats',
 	'wikiastats-heading' => 'Collaboration in action',
 	'wikiastats-visitors' => 'Monthly visitors',
 	'wikiastats-visitors-tooltip' => 'Monthly Visitors is based on Quantcast\'s Global "People" metric which is composed of online and mobile web.',

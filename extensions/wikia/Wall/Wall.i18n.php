@@ -218,9 +218,9 @@ The original post and your summary will still appear in the wiki's history.",
 
 	'wall-whatlinkshere-wall-line' => '[[$1|$2]] on [[$3|$4\'s wall]]',
 
-	'wall-message-not-found' => 'This message could not be found. If you see this error, please contact Wikia at [[Special:Contact]] and provide as much detail as possible about how this bug can be reproduced. Thank you!',
+	'wall-message-not-found' => 'This message could not be found. If you see this error, please contact Fandom at [[Special:Contact]] and provide as much detail as possible about how this bug can be reproduced. Thank you!',
 
-	'wall-message-staff-text' => 'This user is a member of Wikia staff',
+	'wall-message-staff-text' => 'This user is a member of Fandom staff',
 
 	'wall-ipballowusertalk' => "Allow this user to post on their own Message Wall while blocked",
 	'wall-ipbwatchuser' => "Watch this user's profile and follow their Message Wall",

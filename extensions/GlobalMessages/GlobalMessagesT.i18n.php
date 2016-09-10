@@ -205,10 +205,10 @@ You can view its source',
 	'tags-edit' => 'edit',
 	'tags-hitcount' => '$1 {{PLURAL:$1|change|changes}}',
 	'title' => 'Title',
-	'tagline-url-interwiki' => 'From [[wikia:c:$1|{{SITENAME}}]], a [[wikia:|Wikia]] wiki.',
+	'tagline-url-interwiki' => 'From [[wikia:c:$1|{{SITENAME}}]], a [[wikia:|Fandom]] wiki.',
 	'tog-skinoverwrite' => '<b>See custom wikis</b> (recommended)<br>Some wiki administrators take a lot of time to customize the look of their wikis. Check the box above to see their wikis with full customization.',
 	'tog-searchsuggest' => 'Show suggests in search box',
-	'tagline-url' => 'From [{{SERVER}} {{SITENAME}}], a [http://www.wikia.com Wikia] wiki.',
+	'tagline-url' => 'From [{{SERVER}} {{SITENAME}}], a [http://www.wikia.com Fandom] wiki.',
 	'tabbedsearchsolr' => 'Tabbed search',
 	'tabbedsearchcse' => 'Tabbed search (Google custom search)',
 	'this_wiki' => 'this wiki',
@@ -228,7 +228,7 @@ You can view its source',
 	'tog-showAds' => '<b>Show all advertisements</b><br/>Select this option to see pages as logged-out users see them.<br/><br/>',
 	'tog-enablerichtext' => 'Enable Rich Text Editing',
 	'tog-hidepersonalachievements' => "Hide my achievements on my user page when I visit it and don't notify me of earned badges",
-	'tog-marketingallowed' => 'Send me information about Wikia news and events ',
+	'tog-marketingallowed' => 'Send me information about Fandom news and events ',
 	'tog-enableuserjs' => 'Enable personal JavaScript ([[Help:Personal_CSS_and_JS#JavaScript|Learn more]])',
 );
 
@@ -8712,7 +8712,7 @@ Zur Information folgt der aktuelle Logbucheintrag:",
 	'tog-showAds' => '<b>Show all advertisements</b><br/>Select this option to see pages as logged-out users see them.<br/><br/>',
 	'tog-enablerichtext' => 'Enable Rich Text Editing',
 	'tog-hidepersonalachievements' => "Hide my achievements on my user page when I visit it and don't notify me of earned badges",
-	'tog-marketingallowed' => 'Send me information about Wikia news and events ',
+	'tog-marketingallowed' => 'Send me information about Fandom news and events ',
 );
 
 $messages['de-ch'] = array(
@@ -10167,7 +10167,7 @@ Permite añadir una razón al resumen de edición.',
 	'tog-showAds' => '<b>Show all advertisements</b><br/>Select this option to see pages as logged-out users see them.<br/><br/>',
 	'tog-enablerichtext' => 'Enable Rich Text Editing',
 	'tog-hidepersonalachievements' => "Hide my achievements on my user page when I visit it and don't notify me of earned badges",
-	'tog-marketingallowed' => 'Send me information about Wikia news and events ',
+	'tog-marketingallowed' => 'Send me information about Fandom news and events ',
 );
 
 $messages['et'] = array(
@@ -11688,7 +11688,7 @@ Permet de rétablir la version précédente et d’ajouter un motif dans la boî
 	'tog-showAds' => '<b>Show all advertisements</b><br/>Select this option to see pages as logged-out users see them.<br/><br/>',
 	'tog-enablerichtext' => 'Enable Rich Text Editing',
 	'tog-hidepersonalachievements' => "Hide my achievements on my user page when I visit it and don't notify me of earned badges",
-	'tog-marketingallowed' => 'Send me information about Wikia news and events ',
+	'tog-marketingallowed' => 'Send me information about Fandom news and events ',
 );
 
 $messages['frc'] = array(
@@ -17792,7 +17792,7 @@ L'ultimo elemento del registro è riportato di seguito per informazione:",
 	'tog-showAds' => '<b>Show all advertisements</b><br/>Select this option to see pages as logged-out users see them.<br/><br/>',
 	'tog-enablerichtext' => 'Enable Rich Text Editing',
 	'tog-hidepersonalachievements' => "Hide my achievements on my user page when I visit it and don't notify me of earned badges",
-	'tog-marketingallowed' => 'Send me information about Wikia news and events ',
+	'tog-marketingallowed' => 'Send me information about Fandom news and events ',
 );
 
 $messages['iu'] = array(
@@ -18209,7 +18209,7 @@ $messages['ja'] = array(
 	'tog-showAds' => '<b>Show all advertisements</b><br/>Select this option to see pages as logged-out users see them.<br/><br/>',
 	'tog-enablerichtext' => 'Enable Rich Text Editing',
 	'tog-hidepersonalachievements' => "Hide my achievements on my user page when I visit it and don't notify me of earned badges",
-	'tog-marketingallowed' => 'Send me information about Wikia news and events ',
+	'tog-marketingallowed' => 'Send me information about Fandom news and events ',
 );
 
 $messages['jam'] = array(
@@ -28909,7 +28909,7 @@ Combineer de overlegpagina's handmatig.'''",
 	'tog-showAds' => '<b>Show all advertisements</b><br/>Select this option to see pages as logged-out users see them.<br/><br/>',
 	'tog-enablerichtext' => 'Enable Rich Text Editing',
 	'tog-hidepersonalachievements' => "Hide my achievements on my user page when I visit it and don't notify me of earned badges",
-	'tog-marketingallowed' => 'Send me information about Wikia news and events ',
+	'tog-marketingallowed' => 'Send me information about Fandom news and events ',
 	'tog-enableuserjs' => 'Enable personal JavaScript ([[Help:Personal_CSS_and_JS#JavaScript|Learn more]])',
 );
 
@@ -30848,7 +30848,7 @@ Pozwala na wpisanie powodu w opisie zmian.',
 	'this_discussion' => 'This discussion',
 	'tog-showAds' => '<b>Show all advertisements</b><br/>Select this option to see pages as logged-out users see them.<br/><br/>',
 	'tog-hidepersonalachievements' => "Hide my achievements on my user page when I visit it and don't notify me of earned badges",
-	'tog-marketingallowed' => 'Send me information about Wikia news and events ',
+	'tog-marketingallowed' => 'Send me information about Fandom news and events ',
 );
 
 $messages['pms'] = array(
@@ -31105,7 +31105,7 @@ $messages['pnb'] = array(
 	'thisisdeleted' => '$1 ویکھو یا واپس لاؤ',
 	'titleprotected' => 'اس ناں نوں [[User:$1|$1]] نئیں بناسکدا۔
 اس دی وجہ اے دسی گئی اے: "\'\'$2\'\'"۔',
-	'throttled-mailpassword' => 'اک کنجی بارے سنیعہ پہلے ای پیجیا جاچکیا اے، پچھلے {{PLURAL:$1|کینٹہ|$1 کینٹے}} چ۔ 
+	'throttled-mailpassword' => 'اک کنجی بارے سنیعہ پہلے ای پیجیا جاچکیا اے، پچھلے {{PLURAL:$1|کینٹہ|$1 کینٹے}} چ۔
 کوئی غلط کم ہون توں پہلے صرف اک کنجی سنیغہ {{PLURAL:$1|کینٹہ|$1 کینٹے}} پیجیا جائیکا۔',
 	'token_suffix_mismatch' => "'''تواڈی لکھت نئیں منی گئی کیوں جے تواڈے بندے نے پنکچوایشن کیریکٹر لکھت ٹوکن چ رلاۓ.'''
 ایس تبدیلی نوں لکھت چ خرابی نوں روکن لئی روکیا گیا اے۔.
@@ -31906,7 +31906,7 @@ Permite colocar uma justificativa no sumário da edição.',
 	'tog-showAds' => '<b>Show all advertisements</b><br/>Select this option to see pages as logged-out users see them.<br/><br/>',
 	'tog-enablerichtext' => 'Enable Rich Text Editing',
 	'tog-hidepersonalachievements' => "Hide my achievements on my user page when I visit it and don't notify me of earned badges",
-	'tog-marketingallowed' => 'Send me information about Wikia news and events ',
+	'tog-marketingallowed' => 'Send me information about Fandom news and events ',
 );
 
 $messages['pt-br'] = array(
@@ -33463,7 +33463,7 @@ $messages['ru'] = array(
 	'tog-showAds' => '<b>Show all advertisements</b><br/>Select this option to see pages as logged-out users see them.<br/><br/>',
 	'tog-enablerichtext' => 'Enable Rich Text Editing',
 	'tog-hidepersonalachievements' => "Hide my achievements on my user page when I visit it and don't notify me of earned badges",
-	'tog-marketingallowed' => 'Send me information about Wikia news and events ',
+	'tog-marketingallowed' => 'Send me information about Fandom news and events ',
 );
 
 $messages['rue'] = array(
@@ -43262,7 +43262,7 @@ $messages['xmf'] = array(
 	'templatesusedpreview' => '{{PLURAL:$1|თანგი|თანგეფი}} ნამუთ თე გჷწოთოლორაფას რე გიმორინაფილი',
 	'template-protected' => '(თხილერი)',
 	'template-semiprotected' => '(გვერდო თხილერი)',
-	'talkexists' => "'''ხასილაქ გინოღალირქ იყ’უ, მარა სხუნუაშ ხასილაქ ვეგნიღინუ, თიშენ ნამდა თინა უკვე არსებენს ახალ ჯოხოთ. 
+	'talkexists' => "'''ხასილაქ გინოღალირქ იყ’უ, მარა სხუნუაშ ხასილაქ ვეგნიღინუ, თიშენ ნამდა თინა უკვე არსებენს ახალ ჯოხოთ.
 ქორთხინთ, აკორტყუათ თინეფ მანუალურო.'''",
 	'thumbnail-more' => 'მორდი',
 	'thumbnail_error' => 'ესკიზიშ ქიმინუაშ ჩილათა: $1',
@@ -43276,7 +43276,7 @@ $messages['xmf'] = array(
 	'tooltip-ca-talk' => 'დინორეშ ხასილაშ სხუნუა',
 	'tooltip-ca-edit' => 'თქვა შეილებნა თე ხასილაშ რედაქტირაფა. რთხინთ, გეუნჭირით გიწოთოლორაფაშ კონჭის სოიშახ ხასილას ჩუანდათინ',
 	'tooltip-ca-addsection' => 'ქიდიჭყით ახალ სექცია',
-	'tooltip-ca-viewsource' => 'ხასილა თხილერ რე. 
+	'tooltip-ca-viewsource' => 'ხასილა თხილერ რე.
 შეგილებუნა ძირათ თეშ წყუ.',
 	'tooltip-ca-history' => 'თე ხასილაშა მიშაღალირ თირაფეფ',
 	'tooltip-ca-protect' => 'ხასილაშ თხილუა',
@@ -44236,7 +44236,7 @@ $messages['zh-hans'] = array(
 	'tog-showAds' => '<b>Show all advertisements</b><br/>Select this option to see pages as logged-out users see them.<br/><br/>',
 	'tog-enablerichtext' => 'Enable Rich Text Editing',
 	'tog-hidepersonalachievements' => "Hide my achievements on my user page when I visit it and don't notify me of earned badges",
-	'tog-marketingallowed' => 'Send me information about Wikia news and events ',
+	'tog-marketingallowed' => 'Send me information about Fandom news and events ',
 );
 
 $messages['zh-hant'] = array(
@@ -44457,7 +44457,7 @@ $messages['zh-hant'] = array(
 	'tog-showAds' => '<b>Show all advertisements</b><br/>Select this option to see pages as logged-out users see them.<br/><br/>',
 	'tog-enablerichtext' => 'Enable Rich Text Editing',
 	'tog-hidepersonalachievements' => "Hide my achievements on my user page when I visit it and don't notify me of earned badges",
-	'tog-marketingallowed' => 'Send me information about Wikia news and events ',
+	'tog-marketingallowed' => 'Send me information about Fandom news and events ',
 );
 
 $messages['zh-hk'] = array(

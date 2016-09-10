@@ -6,7 +6,7 @@
 $messages = [];
 
 $messages['en'] = [
-	'multiwikifinder-desc' => 'Staff tool to search for a specific title across Wikia ',
+	'multiwikifinder-desc' => 'Staff tool to search for a specific title across Fandom',
 	'multidelete-desc' => 'Special Multi Wiki Delete',
 	'multiedit-desc' => 'Special Multi Wiki Edit',
 
@@ -118,7 +118,7 @@ $messages['en'] = [
 	'multiwikienterpagename' => 'Enter a pagename:',
 	'multiwikirecords' => '$1 {{PLURAL:$1|wiki|wikis}} found',
 	'multiwikifinder-redirect' => 'redirect',
-	'action-multiwikifinder' => 'search for a specific title across Wikia',
+	'action-multiwikifinder' => 'search for a specific title across Fandom',
 	'right-multidelete' => 'Delete many pages at one Wikia, or one page on many Wikia',
 	'right-multiwikifinder' => 'Find pages on many Wikia',
 	'right-multiwikiedit' => 'Edit a page on many wikis at once',
@@ -154,7 +154,7 @@ $messages['qqq'] = [
 	'multidelete_reason' => 'none',
 	'multidelete_all_wikis' => '{{Identical|All wikis}}',
 	'multidelete_success_subtitle' => '{{Identical|For $1}}',
-	'multidelete_split_results' => 'If number of articles to run the script on exceeds a maximum number, user receives a message informing them that the script will be split up into a number of tasks. 
+	'multidelete_split_results' => 'If number of articles to run the script on exceeds a maximum number, user receives a message informing them that the script will be split up into a number of tasks.
 Parameters:
 * $1 is the number of tasks the script has been split into
 * $2 is the number of articles included per task',

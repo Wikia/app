@@ -90,15 +90,17 @@ $messages['en'] = array(
 
 	//watchlist emails
 	'toplists-email-subject' => 'A Top 10 list has been changed',
-	'toplists-email-body' => "Hello from Wikia!
+	'toplists-email-body' => "Hello from Fandom!
 
-The list <a href=\"$1\">$2</a> on Wikia has been changed.
+The list <a href=\"$1\">$2</a> on Fandom has been changed.
 
  $3
 
-Head to Wikia to check out the changes! $1
+Head to Fandom to check out the changes! $1
 
-- Wikia\n\nYou can <a href=\"$4\">unsubscribe</a> from changes to the list.",
+- Fandom
+
+You can <a href=\"$4\">unsubscribe</a> from changes to the list.",
 
 	//time
 	'toplists-seconds' => '$1 {{PLURAL:$1|second|seconds}}',
@@ -116,7 +118,7 @@ Head to Wikia to check out the changes! $1
 	'toplists-create-heading' => '<em>New!</em> Create Your Own Top Ten',
 	'toplists-create-button-msg' => 'Create a list',
 
-	'toplists-oasis-only' => 'Creating and editing Top 10 lists is not available in Monobook. If you would like to use this feature, please switch your preference to the Wikia skin.',
+	'toplists-oasis-only' => 'Creating and editing Top 10 lists is not available in Monobook. If you would like to use this feature, please switch your preference to the Fandom skin.',
 );
 
 /** Message documentation (Message documentation)
@@ -2567,15 +2569,15 @@ $messages['tl'] = array(
 	'toplists-list-item-voted' => 'Nakaboto na',
 	'toplists-createpage-dialog-label' => 'Talaan ng Pinakamataas na 10',
 	'toplists-email-subject' => 'Binago ang isang talaan ng Pinakamataas na 10',
-	'toplists-email-body' => 'Kumusta mula sa Wikia! 
+	'toplists-email-body' => 'Kumusta mula sa Wikia!
 
-Ang talaang <a href="$1">$2</a> sa Wikia ay nabago. 
+Ang talaang <a href="$1">$2</a> sa Wikia ay nabago.
 
- $3 
+ $3
 
-Tumungo sa Wikia upang suriin ang mga pagbabago! $1 
+Tumungo sa Wikia upang suriin ang mga pagbabago! $1
 
- - Wikia 
+ - Wikia
 
  Maaari kang <a href="$4">huwag tumanggap</a> ng mga pagbabago sa talaan.',
 	'toplists-seconds' => '$1 {{PLURAL:$1|segundo|mga segundo}}',

@@ -7,7 +7,7 @@ $messages["en"] = [
 	"adengine-exitstitial-redirecting" => "Your browser will redirect you to the page you requested in a few seconds.",
 	"adengine-exitstitial-go-back" => "Want to go back?",
 	"adengine-exitstitial-button" => "Skip this Ad",
-	"adengine-desc" => "Wikia's Ad Engine",
+	"adengine-desc" => "Fandom's Ad Engine",
 ];
 
 $messages["qqq"] = [
@@ -129,7 +129,7 @@ $messages["es"] = [
 	"adengine-exitstitial-redirecting" => "Tu navegador te redirigirá a la página que solicitaste en unos segundos.",
 	"adengine-exitstitial-go-back" => "¿Quieres regresar?",
 	"adengine-exitstitial-button" => "Saltar este anuncio",
-	"adengine-desc" => "Wikia's Ad Engine",
+	"adengine-desc" => "Fandom's Ad Engine",
 ];
 
 $messages["et"] = [
@@ -256,7 +256,7 @@ $messages["ja"] = [
 	"adengine-exitstitial-title-template" => "You're leaving $1…",
 	"adengine-exitstitial-redirecting" => "Your browser will redirect you to the page you requested in a few seconds.",
 	"adengine-exitstitial-go-back" => "Want to go back?",
-	"adengine-desc" => "Wikia's Ad Engine",
+	"adengine-desc" => "Fandom's Ad Engine",
 ];
 
 $messages["ka"] = [
@@ -428,7 +428,7 @@ $messages["pt"] = [
 	"adengine-exitstitial-redirecting" => "Seu navegador irá redirecioná-lo à página que você requisitou em alguns segundos.",
 	"adengine-exitstitial-go-back" => "Deseja voltar?",
 	"adengine-exitstitial-button" => "Pular este anúncio",
-	"adengine-desc" => "Wikia's Ad Engine",
+	"adengine-desc" => "Fandom's Ad Engine",
 ];
 
 $messages["pt-br"] = [
@@ -454,7 +454,7 @@ $messages["ru"] = [
 	"adengine-exitstitial-redirecting" => "Ваш браузер перенаправит вас на запрошенную страницу через несколько секунд.",
 	"adengine-exitstitial-go-back" => "Хотите вернуться?",
 	"adengine-exitstitial-button" => "Пропустить это объявление",
-	"adengine-desc" => "Wikia's Ad Engine",
+	"adengine-desc" => "Fandom's Ad Engine",
 ];
 
 $messages["sco"] = [

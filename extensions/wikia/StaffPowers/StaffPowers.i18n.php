@@ -13,7 +13,7 @@ $messages = [];
  */
 $messages['en'] = [
 	'staffpowers-desc' => 'Gives Staff various superpowers like unblockable.',
-	'staffpowers-ipblock-abort' => 'Blocking Wikia Staff, Wikia Helpers, or members of our Volunteer Spam Task Force user team (VSTF) is not possible. Please use the [[Special:Contact|contact form]] to report any issues or problems with our staff.',
+	'staffpowers-ipblock-abort' => 'Blocking Fandom Staff, Fandom Helpers, or members of our Volunteer Spam Task Force user team (VSTF) is not possible. Please use the [[Special:Contact|contact form]] to report any issues or problems with our staff.',
 	'right-unblockable' => 'Cannot be blocked',
 ];
 

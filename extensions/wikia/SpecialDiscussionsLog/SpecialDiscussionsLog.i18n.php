@@ -3,7 +3,7 @@ $messages = array();
 
 $messages['en'] = array(
 	'discussionslog' => 'Discussions Users Log',
-	'discussionslog-desc' => "Wikia's Discussion users log extension",
+	'discussionslog-desc' => "Fandom's Discussion users log extension",
 	'discussionslog-pagetitle' => "Mobile app users' discussion logs",
 	'discussionslog-page-title' => 'Discussions user activity logs',
 	'discussionslog-contributions-link-title' => 'Discussion IP history',
@@ -217,7 +217,7 @@ $messages['ja'] = array(
 
 $messages['nl'] = array(
 	'discussionslog' => 'Discussions Users Log',
-	'discussionslog-desc' => "Wikia's Discussion users log extension",
+	'discussionslog-desc' => "Fandom's Discussion users log extension",
 	'discussionslog-pagetitle' => "Mobile app users' discussion logs",
 	'discussionslog-contributions-link-title' => 'Discussion IP history',
 	'discussionslog-username-label' => 'Username: ',

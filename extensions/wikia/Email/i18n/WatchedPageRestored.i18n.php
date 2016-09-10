@@ -4,7 +4,7 @@ $messages = array();
 $messages['en'] = array(
 	'emailext-watchedpage-article-restored-subject' => '$1 on {{SITENAME}} has been restored by $2.',
 	'emailext-watchedpage-article-restored-summary' => '$2 on {{SITENAME}} has been restored. Check it out!',
-	'emailext-watchedpage-article-restored-button-text' => 'See Article',
+	'emailext-watchedpage-article-restored-button-text' => 'Go to page',
 );
 
 $messages['qqq'] = array(
@@ -46,7 +46,7 @@ $messages['ja'] = array(
 $messages['nl'] = array(
 	'emailext-watchedpage-article-restored-subject' => '$1 on {{SITENAME}} has been restored by $2.',
 	'emailext-watchedpage-article-restored-summary' => '$2 on {{SITENAME}} has been restored. Check it out!',
-	'emailext-watchedpage-article-restored-button-text' => 'See Article',
+	'emailext-watchedpage-article-restored-button-text' => 'Go to page',
 );
 
 $messages['pl'] = array(

@@ -8,7 +8,7 @@ $messages = [];
 
 $messages['en'] = [
 	'skinchooser-desc' => 'Allows users to choose skins in their preferences',
-	'new-look' => 'Wikia',
+	'new-look' => 'Fandom',
 	'site-layout' => 'Site Layouts',
 	'right-setadminskin' => 'Set the wiki\'s default skin',
 ];
@@ -28,7 +28,7 @@ $messages['ar'] = [
  * @author Y-M D
  */
 $messages['br'] = [
-	'new-look' => 'Wikia',
+	'new-look' => 'Fandom',
 ];
 
 /** Catalan (català)
@@ -36,7 +36,7 @@ $messages['br'] = [
  */
 $messages['ca'] = [
 	'skinchooser-desc' => "Permet als usuaris triar l'aparença del wiki en les seves preferències",
-	'new-look' => 'Wikia',
+	'new-look' => 'Fandom',
 	'site-layout' => 'Dissenys del lloc',
 ];
 
@@ -46,7 +46,7 @@ $messages['ca'] = [
  */
 $messages['cs'] = [
 	'skinchooser-desc' => 'Umnožňuje uživatelům zvolit vzhled v předvolbách',
-	'new-look' => 'Wikia',
+	'new-look' => 'Fandom',
 	'site-layout' => 'Rozložení webu',
 ];
 
@@ -57,7 +57,7 @@ $messages['cs'] = [
  */
 $messages['de'] = [
 	'skinchooser-desc' => 'Ermöglicht Benutzern in ihren Einstellungen Skins zu wählen',
-	'new-look' => 'Wikia',
+	'new-look' => 'Fandom',
 	'site-layout' => 'Seitenlayouts',
 ];
 
@@ -67,7 +67,7 @@ $messages['de'] = [
  */
 $messages['es'] = [
 	'skinchooser-desc' => 'Permite a los usuarios escoger la apariencia del wiki en sus preferencias',
-	'new-look' => 'Wikia',
+	'new-look' => 'Fandom',
 	'site-layout' => 'Diseños del sitio',
 ];
 
@@ -86,7 +86,7 @@ $messages['fa'] = [
  */
 $messages['fi'] = [
 	'skinchooser-desc' => 'Mahdollistaa ulkoasun valinnan käyttäjän asetuksissa',
-	'new-look' => 'Wikia',
+	'new-look' => 'Fandom',
 	'site-layout' => 'Sivuston ulkoasut',
 ];
 
@@ -95,7 +95,7 @@ $messages['fi'] = [
  */
 $messages['fo'] = [
 	'skinchooser-desc' => 'Loyvir brúkarum at velja útsjónd í innstillingum teirra',
-	'new-look' => 'Wikia',
+	'new-look' => 'Fandom',
 	'site-layout' => 'Síðuuppsetan',
 ];
 
@@ -107,7 +107,7 @@ $messages['fo'] = [
  */
 $messages['fr'] = [
 	'skinchooser-desc' => 'Permet aux utilisateurs de choisir des habillages dans leurs préférences',
-	'new-look' => 'Wikia',
+	'new-look' => 'Fandom',
 	'site-layout' => 'Apparences du site',
 ];
 
@@ -116,7 +116,7 @@ $messages['fr'] = [
  */
 $messages['gl'] = [
 	'skinchooser-desc' => 'Permite aos usuarios seleccionar a aparencia nas súas preferencias',
-	'new-look' => 'Wikia',
+	'new-look' => 'Fandom',
 	'site-layout' => 'Deseño do sitio',
 ];
 
@@ -126,7 +126,7 @@ $messages['gl'] = [
  */
 $messages['hu'] = [
 	'skinchooser-desc' => 'Lehetővé teszi a felhasználóknak a felület kiválasztását beállításaik között',
-	'new-look' => 'Wikia',
+	'new-look' => 'Fandom',
 	'site-layout' => 'Oldalelrendezések',
 ];
 
@@ -135,7 +135,7 @@ $messages['hu'] = [
  */
 $messages['ia'] = [
 	'skinchooser-desc' => 'Permitte al usatores de seliger apparentias in lor preferentias',
-	'new-look' => 'Wikia',
+	'new-look' => 'Fandom',
 	'site-layout' => 'Designos del sito',
 ];
 
@@ -145,7 +145,7 @@ $messages['ia'] = [
  */
 $messages['it'] = [
 	'skinchooser-desc' => 'Consente agli utenti di scegliere la skin nelle loro preferenze',
-	'new-look' => 'Wikia',
+	'new-look' => 'Fandom',
 	'site-layout' => 'Layout del sito',
 ];
 
@@ -195,7 +195,7 @@ $messages['mk'] = [
  */
 $messages['ms'] = [
 	'skinchooser-desc' => 'Membolehkan pengguna memilih kulit pada keutamaan mereka',
-	'new-look' => 'Wikia',
+	'new-look' => 'Fandom',
 	'site-layout' => 'Tataletak Tapak',
 ];
 
@@ -204,7 +204,7 @@ $messages['ms'] = [
  */
 $messages['nb'] = [
 	'skinchooser-desc' => 'Lar brukere velge utseende i innstillingene sine',
-	'new-look' => 'Wikia',
+	'new-look' => 'Fandom',
 	'site-layout' => 'Sideoppsett',
 ];
 
@@ -213,7 +213,7 @@ $messages['nb'] = [
  */
 $messages['nl'] = [
 	'skinchooser-desc' => 'Maakt het mogelijk voor gebruikers in hun voorkeuren een vormgeving te kiezen',
-	'new-look' => 'Wikia',
+	'new-look' => 'Fandom',
 	'site-layout' => 'Sitevormgevingen',
 ];
 
@@ -222,7 +222,7 @@ $messages['nl'] = [
  */
 $messages['oc'] = [
 	'skinchooser-desc' => "Permet als utilizaires de causir d'abilhatges dins lors preferéncias",
-	'new-look' => 'Wikia',
+	'new-look' => 'Fandom',
 	'site-layout' => 'Aparéncias del site',
 ];
 
@@ -232,7 +232,7 @@ $messages['oc'] = [
  */
 $messages['pl'] = [
 	'skinchooser-desc' => 'Pozwala użytkownikom wybrać skórkę w swoich preferencjach',
-	'new-look' => 'Wikia',
+	'new-look' => 'Fandom',
 	'site-layout' => 'Skórka',
 ];
 
@@ -242,7 +242,7 @@ $messages['pl'] = [
  */
 $messages['pms'] = [
 	'skinchooser-desc' => "A përmët a j'utent ëd serne dle pel ant ij Sò Gust",
-	'new-look' => 'Wikia',
+	'new-look' => 'Fandom',
 	'site-layout' => 'Presentassion dël sit',
 ];
 
@@ -259,7 +259,7 @@ $messages['ps'] = [
  */
 $messages['pt'] = [
 	'skinchooser-desc' => 'Permite que os utilizadores escolham temas nas suas preferências',
-	'new-look' => 'Wikia',
+	'new-look' => 'Fandom',
 	'site-layout' => 'Composições do Site',
 ];
 
@@ -270,7 +270,7 @@ $messages['pt'] = [
  */
 $messages['pt-br'] = [
 	'skinchooser-desc' => 'Permite que os utilizadores escolham temas nas suas preferências',
-	'new-look' => 'Wikia',
+	'new-look' => 'Fandom',
 	'site-layout' => 'Composições do Site',
 ];
 
@@ -306,7 +306,7 @@ $messages['sr-ec'] = [
  */
 $messages['sv'] = [
 	'skinchooser-desc' => 'Tillåter användare att välja utseende i deras inställningar',
-	'new-look' => 'Wikia',
+	'new-look' => 'Fandom',
 	'site-layout' => 'Layouter för webbplatsen',
 ];
 
@@ -315,7 +315,7 @@ $messages['sv'] = [
  */
 $messages['tl'] = [
 	'skinchooser-desc' => 'Nagpapahintulot sa mga tagagamit na pumili ng mga pabalat sa loob ng kanilang mga nais',
-	'new-look' => 'Wikia',
+	'new-look' => 'Fandom',
 	'site-layout' => 'Mga Latag ng Pook',
 ];
 
@@ -323,7 +323,7 @@ $messages['tl'] = [
  * @author Sucsuzz
  */
 $messages['tr'] = [
-	'new-look' => 'Wikia',
+	'new-look' => 'Fandom',
 ];
 
 /** Ukrainian (українська)
@@ -331,7 +331,7 @@ $messages['tr'] = [
  */
 $messages['uk'] = [
 	'skinchooser-desc' => 'Дозволяє користувачам вибирати скіни в налаштуваннях',
-	'new-look' => 'Wikia',
+	'new-look' => 'Fandom',
 	'site-layout' => 'Оформлення сайту',
 ];
 
@@ -348,7 +348,7 @@ $messages['uz'] = [
  */
 $messages['vi'] = [
 	'skinchooser-desc' => 'Cho phép người dùng lựa chọn giao diện trong sở thích của họ',
-	'new-look' => 'Wikia',
+	'new-look' => 'Fandom',
 	'site-layout' => 'Bố trí trang web',
 ];
 
@@ -357,6 +357,6 @@ $messages['vi'] = [
  */
 $messages['zh-hans'] = [
 	'skinchooser-desc' => '用户可依自身偏好选择皮肤',
-	'new-look' => 'Wikia',
+	'new-look' => 'Fandom',
 	'site-layout' => '网站布局',
 ];

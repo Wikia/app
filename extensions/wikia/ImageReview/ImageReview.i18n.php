@@ -4,7 +4,7 @@ $messages = [];
 
 $messages['en'] = [
 	'imagereview-desc' => 'Internal tool to help review images post-upload and remove Terms of Use violations',
-	'imagereview-reason' => "Violation of Wikia's [[wikia:Terms of Use|Terms of Use]]",
+	'imagereview-reason' => "Violation of Fandom's [[wikia:Terms of Use|Terms of Use]]",
 	'imagereview-header' => 'Images awaiting review',
 	'imagereview-header-questionable' => 'Questionable images awaiting staff review',
 	'imagereview-header-rejected' => 'Rejected images awaiting staff review',

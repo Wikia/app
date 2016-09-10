@@ -9,15 +9,15 @@
 $messages = array();
 
 $messages['en'] = array(
-	'promote-desc' => 'SpecialPromote page is enable for admins to add information about their wiki. After review of those informations it can show up on wikia.com',
+	'promote-desc' => 'SpecialPromote page is enable for admins to add information about their wiki. After review of those informations it can show up on Fandom.com',
 	'promote' => 'Promote',
 
 	'promote-title' => 'Promote',
-	'promote-introduction-header' => 'Promote your wiki on wikia.com',
+	'promote-introduction-header' => 'Promote your wiki on Fandom.com',
 	'promote-nocorp-introduction-header' => 'Promote $1',
 
-	'promote-introduction-copy' => "This page allows you to promote your wiki by making it eligible to appear on [http://www.wikia.com wikia.com]! Add images and a summary to introduce your wiki to visitors on Wikia's main page. Find more tips [http://help.wikia.com/wiki/Help:Promote here].",
-	'promote-nocorp-introduction-copy' => "Add images and a summary to let visitors know what this wiki is all about and encourage them to visit. We'll use this information to promote your wiki in search results, Wikia mobile apps, and more. Find more tips on how to use this tool [http://community.wikia.com/wiki/Help:Promote here].",
+	'promote-introduction-copy' => "This page allows you to promote your wiki by making it eligible to appear on [http://www.wikia.com Fandom.com]! Add images and a summary to introduce your wiki to visitors on Fandom's main page. Find more tips [http://help.wikia.com/wiki/Help:Promote here].",
+	'promote-nocorp-introduction-copy' => "Add images and a summary to let visitors know what this wiki is all about and encourage them to visit. We'll use this information to promote your wiki in search results, Fandom mobile apps, and more. Find more tips on how to use this tool [http://community.wikia.com/wiki/Help:Promote here].",
 
 	'promote-description' => 'Description',
 	'promote-description-header' => 'Headline',
@@ -28,7 +28,7 @@ $messages['en'] = array(
 
 	'promote-upload' => 'Add Images',
 	'promote-upload-main-photo-header' => 'Main Image',
-	'promote-upload-main-photo-explanation' => "This image defines your wiki. It will be the main image we use to represent your wiki on wikia.com so make sure it's a great one! Don't forget, you can always update this image so it's current and most represents your wiki.",
+	'promote-upload-main-photo-explanation' => "This image defines your wiki. It will be the main image we use to represent your wiki on Fandom.com so make sure it's a great one! Don't forget, you can always update this image so it's current and most represents your wiki.",
 	'promote-nocorp-upload-main-photo-explanation' => "This will be the main image we use to represent your wiki, so make sure it's a great one! This image can always be updated later so it stays current.",
 	'promote-upload-additional-photos-header' => 'Additional Images',
 	'promote-upload-additional-photos-explanation' => 'Adding more images makes your wiki look more interesting and engaging to potential visitors.You can add up to nine images here, and we strongly recommend you hit the limit!',
@@ -65,12 +65,12 @@ $messages['en'] = array(
 	'promote-image-in-review' => 'In review',
 
 	'promote-statusbar-icon' => 'Status',
-	'promote-statusbar-inreview' => 'Some of your images are currently in review and will appear on [http://www.wikia.com wikia.com] after they\'re approved.  This can take 2-4 business days, so we\'ll update you here when we\'re done.',
-	'promote-statusbar-approved' => 'Woohoo! $1 is promoted on [http://www.wikia.com wikia.com]!',
+	'promote-statusbar-inreview' => 'Some of your images are currently in review and will appear on [http://www.wikia.com Fandom.com] after they\'re approved.  This can take 2-4 business days, so we\'ll update you here when we\'re done.',
+	'promote-statusbar-approved' => 'Woohoo! $1 is promoted on [http://www.wikia.com Fandom.com]!',
 	'promote-statusbar-rejected' => 'One or more of your images was not approved. [[Special:Contact|Find out why]]',
 	'promote-statusbar-auto-approved' => 'Woohoo! $1 is being promoted!',
 
-	'promote-error-oasis-only' => 'This page is not supported under your skin. Please [[Special:Preferences|switch to the Wikia skin]] to access this feature.',
+	'promote-error-oasis-only' => 'This page is not supported under your skin. Please [[Special:Preferences|switch to the Fandom skin]] to access this feature.',
 
 	//message included in auto-uploaded image's description fb#45624
 	'wikiahome-image-auto-uploaded-comment' => 'Auto-generated image to be used on http://wikia.com/ – stay tuned for more info on the Staff Blog: http://community.wikia.com/wiki/Blog:Wikia_Staff_Blog',

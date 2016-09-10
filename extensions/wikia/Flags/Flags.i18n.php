@@ -37,7 +37,7 @@ $messages['en'] = array(
 	'flags-special-list-header-target' => 'Target',
 	'flags-special-list-header-parameters' => 'Parameters',
 	'flags-special-list-header-actions' => 'Actions',
-	'flags-special-video' => '[[File:Wikia_Flags|250px|right|See Wikia Flags in action!]]',
+	'flags-special-video' => '[[File:Wikia_Flags|250px|right|See Fandom Flags in action!]]',
 	'flags-edit-flags-button-text' => 'Edit flags',
 	'flags-edit-form-more-info' => 'More info >',
 	'flags-edit-modal-cancel-button-text' => 'Cancel',
@@ -53,7 +53,7 @@ $1
 
 
 
-This error has already been reported to the technical team. Please feel free to use [[Special:Contact]] to get in contact with Wikia support team if you continue to see this issue.',
+This error has already been reported to the technical team. Please feel free to use [[Special:Contact]] to get in contact with Fandom support team if you continue to see this issue.',
 	'flags-edit-modal-post-exception' => 'Unfortunately, we are not able to complete the process due to the following error:
 
 
@@ -62,7 +62,7 @@ $1
 
 
 
-This error has already been reported to the technical team. Please feel free to use [[Special:Contact]] to get in contact with Wikia support team if you continue to see this issue.',
+This error has already been reported to the technical team. Please feel free to use [[Special:Contact]] to get in contact with Fandom support team if you continue to see this issue.',
 	'flags-groups-spoiler' => 'Spoiler',
 	'flags-groups-disambig' => 'Disambiguation',
 	'flags-groups-canon' => 'Canon',
@@ -622,7 +622,7 @@ $messages['nl'] = array(
 	'flags-special-list-header-target' => 'Target',
 	'flags-special-list-header-parameters' => 'Parameters',
 	'flags-special-list-header-actions' => 'Actions',
-	'flags-special-video' => '[[File:Wikia_Flags|250px|right|See Wikia Flags in action!]]',
+	'flags-special-video' => '[[File:Wikia_Flags|250px|right|See Fandom Flags in action!]]',
 	'flags-edit-flags-button-text' => 'Edit flags',
 	'flags-edit-form-more-info' => 'More info >',
 	'flags-edit-modal-cancel-button-text' => 'Cancel',
@@ -638,7 +638,7 @@ $1
 
 
 
-This error has already been reported to the technical team. Please feel free to use [[Special:Contact]] to get in contact with Wikia support team if you continue to see this issue.',
+This error has already been reported to the technical team. Please feel free to use [[Special:Contact]] to get in contact with Fandom support team if you continue to see this issue.',
 	'flags-edit-modal-post-exception' => 'Unfortunately, we are not able to complete the process due to the following error:
 
 
@@ -647,7 +647,7 @@ $1
 
 
 
-This error has already been reported to the technical team. Please feel free to use [[Special:Contact]] to get in contact with Wikia support team if you continue to see this issue.',
+This error has already been reported to the technical team. Please feel free to use [[Special:Contact]] to get in contact with Fandom support team if you continue to see this issue.',
 	'flags-groups-spoiler' => 'Spoiler',
 	'flags-groups-disambig' => 'Disambiguation',
 	'flags-groups-canon' => 'Canon',

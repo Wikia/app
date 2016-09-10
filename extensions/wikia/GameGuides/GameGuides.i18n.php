@@ -3,14 +3,14 @@
 $messages = [];
 
 $messages['en'] = [
-	'wikiagameguides-desc' => 'Wikia Game Guides mobile app modules',
+	'wikiagameguides-desc' => 'Fandom Game Guides mobile app modules',
 
 	//Preview page
-	'wikiagameguides-preview-description' => 'This is just a preview of how pages would look like in a Wikia Game Guides application.',
+	'wikiagameguides-preview-description' => 'This is just a preview of how pages would look like in a Fandom Game Guides application.',
 
 	//Content Managment tool
 	'wikiagameguides-content-have-been-deprecated-by' => 'Game Guides content management tool have been deprecated. Please use <a href="$1">$2</a> instead.',
-	'wikiagameguides-content-title' => 'Wikia Game Guides content managment tool',
+	'wikiagameguides-content-title' => 'Fandom Game Guides content managment tool',
 	'wikiagameguides-content-category' => 'Category',
 	'wikiagameguides-content-tag' => 'Category Tag (optional)',
 	'wikiagameguides-content-name' => 'Game Guide Name (optional)',
@@ -34,7 +34,7 @@ $messages['en'] = [
 	'wikiagameguides-sponsored-description-title' => 'Second input is for Video Title',
 	'wikiagameguides-sponsored-description-url' => 'Third input is for Video URL',
 
-	'wikiagameguides-sponsored-title' => 'Wikia Game Guides Sponsored Videos Tool',
+	'wikiagameguides-sponsored-title' => 'Fandom Game Guides Sponsored Videos Tool',
 	'wikiagameguides-sponsored-add-video' => 'Add video',
 	'wikiagameguides-sponsored-add-language' => 'Add Language',
 
@@ -91,7 +91,7 @@ $messages['qqq'] = [
 	'wikiagameguides-sponsored-description-title' => 'Message describing a purpose and usage of the tool',
 	'wikiagameguides-sponsored-description-url' => 'Message describing a purpose and usage of the tool',
 
-	'wikiagameguides-sponsored-title' => 'Title of Wikia Game Guides Sponsored Videos Tool page',
+	'wikiagameguides-sponsored-title' => 'Title of Fandom Game Guides Sponsored Videos Tool page',
 	'wikiagameguides-sponsored-add-video' => 'Message on an add a video button',
 	'wikiagameguides-sponsored-add-language' => 'Message on an add a language button',
 

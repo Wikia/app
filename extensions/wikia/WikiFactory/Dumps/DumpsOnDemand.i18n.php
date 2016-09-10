@@ -9,7 +9,7 @@ $messages = [];
 
 $messages['en'] = [
 	'dump-database' => 'Database dumps',
-	'dump-database-info' => 'Database dumps can be used as a personal backup (Wikia produces separate backups of all wikis automatically) or for maintenance bots',
+	'dump-database-info' => 'Database dumps can be used as a personal backup (Fandom produces separate backups of all wikis automatically) or for maintenance bots',
 	'dump-database-curr-pages' => 'Current pages',
 	'dump-database-curr-pages-info' => '(This version is usually best for bot use)',
 	'dump-database-full-pages' => 'Current pages and history',

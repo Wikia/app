@@ -9,7 +9,7 @@ $messages = [];
  * English (en)
  */
 $messages['en'] = [
-	'brf-desc' => 'The extension provides a simple interface for re-running local rename jobs after an uncompleted rename process. Simply by providing an old name, a new name and a user ID number you can move remaining revisions on all wikias the user has contributed at.',
+	'brf-desc' => 'The extension provides a simple interface for re-running local rename jobs after an uncompleted rename process. Simply by providing an old name, a new name and a user ID number you can move remaining revisions on all communities the user has contributed at.',
 	'brf-title' => 'Broken Rename Fix',
 	'brf-label-user-id' => 'ID number:',
 	'brf-label-old-name' => 'Old username:',

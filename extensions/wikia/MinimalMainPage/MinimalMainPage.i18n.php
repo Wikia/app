@@ -8,7 +8,7 @@
 $messages = array();
 
 $messages['en'] = array(
-	'minimalmainpage-desc' => 'The Minimal Main Page extension removes much of the default Wikia skin found on a Main Page. This can be used to allow more room for special-purpose wikis to have a very-custom promotional homepage.',
+	'minimalmainpage-desc' => 'The Minimal Main Page extension removes much of the default Fandom skin found on a Main Page. This can be used to allow more room for special-purpose wikis to have a very-custom promotional homepage.',
 );
 
 $messages['qqq'] = array(
