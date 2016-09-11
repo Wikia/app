@@ -2,26 +2,31 @@
 $messages = array();
 
 $messages['en'] = array(
-	'global-navigation-desc' => "Wikia's Global Navigation",
-	'global-navigation-create-wiki' => 'Start a wikia',
-	'global-navigation-register' => 'Register',
-	'global-navigation-sign-in' => 'Sign In',
 	'global-navigation-account-navigation-options' => '$1 or $2',
 	'global-navigation-community-link' => 'http://community.wikia.com',
 	'global-navigation-community-link-label' => 'Community Central',
+	'global-navigation-create-wiki' => 'Start a wikia',
+	'global-navigation-desc' => "Wikia's Global Navigation",
 	'global-navigation-explore-wikia-link' => 'http://www.wikia.com/explore',
 	'global-navigation-explore-wikia-link-label' => 'Explore Wikia',
+	'global-navigation-explore-wikis-link' => 'http://www.wikia.com/explore',
+	'global-navigation-explore-wikis-link-label' => 'Explore Wikis',
 	'global-navigation-explore-wikia-mercury-link-label' => 'Top Communities',
-	'global-navigation-wam-link' => 'http://www.wikia.com/WAM',
+	'global-navigation-global-search' => 'Search all of Wikia',
+	'global-navigation-home-of-fandom' => 'The Home of Fandom',
+	'global-navigation-local-search' => 'Search this wikia',
+	'global-navigation-local-search-placeholder' => 'Search within $1...',
 	'global-navigation-menu-hubs' => '*http://fandom.wikia.com/games|Games|games
 *http://fandom.wikia.com/movies|Movies|movies
 *http://fandom.wikia.com/tv|TV|tv',
-	'global-navigation-wam-link-label' => 'Trending Wikias',
-	'global-navigation-local-search-placeholder' => 'Search within $1...',
+	'global-navigation-register' => 'Register',
 	'global-navigation-search-wikia' => 'Search $1...',
-	'global-navigation-local-search' => 'Search this wikia',
-	'global-navigation-global-search' => 'Search all of Wikia',
-	'global-navigation-home-of-fandom' => 'The Home of Fandom',
+	'global-navigation-sign-in' => 'Sign In',
+	'global-navigation-wam-link' => 'http://www.wikia.com/WAM',
+	'global-navigation-wam-link-label' => 'Trending Wikias',
+	'global-navigation-wikis-label' => 'Wikis',
+	'global-navigation-fandom-university-link-label' => 'Fandom University',
+	'global-navigation-fandom-university-link' => 'http://community.wikia.com/wiki/Wikia_University',
 );
 
 $messages['qqq'] = array(
