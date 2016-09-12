@@ -134,7 +134,7 @@ class GlobalNavigationHelper {
 			'text' => $fandomUniversityLabel->plain(),
 			'textEscaped' => $fandomUniversityLabel->escaped(),
 			'href' => wfMessage('global-navigation-fandom-university-link')->plain(),
-			'trackingLabel' => 'top-communities',
+			'trackingLabel' => 'fandom-university',
 		];
 
 		return [
