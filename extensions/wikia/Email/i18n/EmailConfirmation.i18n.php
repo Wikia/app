@@ -17,7 +17,7 @@ $messages['en'] = array(
 	'emailext-emailconfirmation-changed-summary' => 'Please click the link below to confirm your change of email address on Wikia, so you can keep getting everything to fuel your fandom.',
 	'emailext-emailconfirmation-changed-footer-1' => "You'll continue to receive email at your old email address until you confirm this one.",
 	'emailext-emailconfirmation-changed-footer-2' => 'See you in the fan universe!',
-	'emailext-emailconfirmation-community-team' => 'The Fandom Community Team',
+	'emailext-emailconfirmation-community-team' => 'The Wikia Community Team',
 	'emailext-emailconfirmation-button-text' => 'Confirm Now',
 );
 
