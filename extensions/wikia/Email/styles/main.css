@@ -25,8 +25,8 @@ body {
 
 .main-content {
 	background-color: #fff;
-	border-bottom: 1px solid #c5ced9;
-	border-top: 1px solid #c5ced9;
+	border: 1px solid #d7d7d7;
+	border-bottom: 0;
 	padding-top: 50px;
 	padding-bottom: 80px;
 }
