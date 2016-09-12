@@ -4,8 +4,12 @@ $messages = array();
 $messages['en'] = array(
 	'emailext-emailconfirmation-subject' => 'Confirm your email and get started on Wikia!',
 	'emailext-emailconfirmation-summary' => 'You’re SO CLOSE! Click the link below to confirm your email address and get started on Wikia:',
-	'emailext-emailconfirmation-footer-1' => 'Why confirm your email, you ask? You’ll get the latest updates on any of the topics you follow, messages from your fellow fans, and lots more delivered to the comfort of your inbox.  You can also create your very own wikias and get other special permissions exclusive to fully confirmed members.',
-	'emailext-emailconfirmation-footer-2' => 'Can’t wait to see you in the community!',
+	'emailext-emailconfirmation-footer-1' => 'Why confirm your email, you ask? For starters, we need to make sure you’re a real person. The added bonuses:',
+	'emailext-emailconfirmation-footer-list-1' => 'The ability to create a custom profile',
+	'emailext-emailconfirmation-footer-list-2' => 'Receive alerts from communities and discussions',
+	'emailext-emailconfirmation-footer-list-3' => 'Add photos and videos to your community',
+	'emailext-emailconfirmation-footer-list-4' => 'Become a member of your favorite Fandom communities',
+	'emailext-emailconfirmation-footer-2' => 'Can’t wait to see you on Fandom!',
 	'emailext-emailconfirmation-reminder-subject' => 'Confirm your email and lock down your $1 username!',
 	'emailext-emailconfirmation-reminder-summary' => "It's been a few days, but it looks like you haven't confirmed your account on Wikia yet. We can’t wait for you to fully dive into the Wikia universe! Just click the confirmation link below and you’ll be good to go:",
 	'emailext-emailconfirmation-reminder-footer-1' => "If you don't confirm within 23 days your username, $1, will become available again. So hurry! No one else should have that name but you!",
@@ -13,7 +17,7 @@ $messages['en'] = array(
 	'emailext-emailconfirmation-changed-summary' => 'Please click the link below to confirm your change of email address on Wikia, so you can keep getting everything to fuel your fandom.',
 	'emailext-emailconfirmation-changed-footer-1' => "You'll continue to receive email at your old email address until you confirm this one.",
 	'emailext-emailconfirmation-changed-footer-2' => 'See you in the fan universe!',
-	'emailext-emailconfirmation-community-team' => 'The Wikia Community Team',
+	'emailext-emailconfirmation-community-team' => 'The Fandom Community Team',
 	'emailext-emailconfirmation-button-text' => 'Confirm Now',
 );
 
