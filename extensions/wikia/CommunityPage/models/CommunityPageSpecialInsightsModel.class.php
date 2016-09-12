@@ -37,7 +37,7 @@ class CommunityPageSpecialInsightsModel {
 			'fulllist' => wfMessage( 'communitypage-full-list' )->text()
 		];
 
-		foreach ( self::INSIGHTS_MODULES as $insight => $config ) {
+		foreach ( static::INSIGHTS_MODULES as $insight => $config ) {
 			$module = $this->getInsightModule( $insight, $config );
 			if ( !empty( $module ) ) {
 				$modules['modules'][] = $module;
@@ -57,8 +57,8 @@ class CommunityPageSpecialInsightsModel {
 	private function getInsightModule( $type, $config ) {
 		$insightPages = $this->insightsService->getInsightPages(
 			$type,
-			self::INSIGHTS_MODULE_ITEMS,
-			$config[self::INSIGHTS_CONFIG_SORT_TYPE_KEY]
+			static::INSIGHTS_MODULE_ITEMS,
+			$config[static::INSIGHTS_CONFIG_SORT_TYPE_KEY]
 		);
 
 		if ( empty( $insightPages['pages'] ) ) {
@@ -75,12 +75,12 @@ class CommunityPageSpecialInsightsModel {
 		$insightPages['type'] = $type;
 		$insightPages['title'] = wfMessage( 'communitypage-' . $type . '-title' )->text();
 
-		if ( $insightPages['count'] > self::INSIGHTS_MODULE_ITEMS ) {
+		if ( $insightPages['count'] > static::INSIGHTS_MODULE_ITEMS ) {
 			$insightPages['fulllistlink'] = SpecialPage::getTitleFor( 'Insights', $type )
-				->getLocalURL( $this->getSortingParam( $config[self::INSIGHTS_CONFIG_SORT_TYPE_KEY] ) );
+				->getLocalURL( $this->getSortingParam( $config[static::INSIGHTS_CONFIG_SORT_TYPE_KEY] ) );
 		}
 
-		$insightPages = $this->addLastRevision( $insightPages, $config[self::INSIGHTS_CONFIG_PAGEVIEWS_KEY] );
+		$insightPages = $this->addLastRevision( $insightPages, $config[static::INSIGHTS_CONFIG_PAGEVIEWS_KEY] );
 
 		return $insightPages;
 	}
