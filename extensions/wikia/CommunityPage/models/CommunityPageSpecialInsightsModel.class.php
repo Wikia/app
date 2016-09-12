@@ -70,15 +70,10 @@ class CommunityPageSpecialInsightsModel {
 		 *
 		 * communitypage-popularpages-title'
 		 * communitypage-uncategorizedpages-title'
-		 * communitypage-wantedpages-title'
 		 * communitypage-deadendpages-title'
-		 * communitypage-wantedpages-description'
 		 */
 		$insightPages['type'] = $type;
 		$insightPages['title'] = wfMessage( 'communitypage-' . $type . '-title' )->text();
-		$insightPages['description'] =  $type === 'wantedpages' ?
-			wfMessage( 'communitypage-wantedpages-description' )->text() :
-			null;
 
 		if ( $insightPages['count'] > self::INSIGHTS_MODULE_ITEMS ) {
 			$insightPages['fulllistlink'] = SpecialPage::getTitleFor( 'Insights', $type )
