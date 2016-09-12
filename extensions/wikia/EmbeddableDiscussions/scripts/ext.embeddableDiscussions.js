@@ -161,6 +161,13 @@ require([
 			event.preventDefault();
 		});
 
+		$('.embeddable-discussions-module').on('click', '.embeddable-discussions-side-spaced', function(event) {
+			if (!$(event.target).is('.avatar-username')) {
+				window.location.href = event.currentTarget.getAttribute('data-url');
+				event.preventDefault();
+			}
+		});
+
 		// Hook to load after VE edit completes (no page reload)
 		mw.hook('postEdit').add(function () {
 			loadData();
