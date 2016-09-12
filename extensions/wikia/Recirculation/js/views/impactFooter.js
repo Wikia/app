@@ -10,19 +10,21 @@ define('ext.wikia.recirculation.views.impactFooter', [
 		options = {};
 
 	function render(data) {
-		var renderData = {};
-		renderData.title = data.title;
-		if (data.fandom) {
-			renderData.items = organizeItems(data);
-		} else {
-			renderData.items = orgItems(data.items);
-		}
+		var renderData = {},
+			structuredData = structureData(data.items);
 
-		if (data.discussions) {
-			renderData.discussions = discussionsData;
+		renderData.title = data.title;
+		renderData.items = structuredData.items;
+
+		if (structuredData.discussions) {
+			renderData.discussions = {
+				posts: structuredData.discussions
+			};
 		}
 
 		renderData.i18n = {
+			discussionsTitle: $.msg('recirculation-discussion-title'),
+			discussionsLinkText: $.msg('recirculation-discussion-link-text'),
 			discussionsNew: $.msg('recirculation-discussions-new'),
 			discussionsPosts: $.msg('recirculation-discussions-posts'),
 			discussionsReplies: $.msg('recirculation-discussions-replies'),
@@ -76,7 +78,7 @@ define('ext.wikia.recirculation.views.impactFooter', [
 		return items;
 	}
 
-	function orgItems(items) {
+	function structureData(items) {
 		var fandom = items.filter(function(element) {
 			return element.source === 'fandom';
 		});
@@ -85,18 +87,30 @@ define('ext.wikia.recirculation.views.impactFooter', [
 			return element.source === 'wiki';
 		});
 
+		var discussions = items.filter(function(element) {
+			return element.source === 'discussions';
+		});
+
 		items = [];
 
-		items.push(fandom.shift());
+		if (fandom.length > 0) {
+			items.push(fandom.shift());
+		}
+
 		items = items.concat(wiki.splice(0, 2));
 		items = items.concat(fandom);
 		items = items.concat(wiki);
 
 		items.forEach(function(item, index) {
-			items[index].index = index;
+			if (items[index]) {
+				items[index].index = index;
+			}
 		});
 
-		return items;
+		return {
+			items: items,
+			discussions: discussions
+		};
 
 	}
 

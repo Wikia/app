@@ -137,6 +137,7 @@ $recirculation-discussion-avatar-size: 30px;
 		border-radius: $recirculation-discussion-avatar-size / 2;
 		box-sizing: border-box;
 		height: $recirculation-discussion-avatar-size;
+		overflow: hidden;
 		width: $recirculation-discussion-avatar-size;
 	}
 }

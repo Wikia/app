@@ -40,7 +40,7 @@ class RecirculationController extends WikiaController {
 
 		if ( RecirculationHooks::canShowDiscussions( $cityId ) ) {
 			$discussionsDataService = new DiscussionsDataService( $cityId );
-			$posts = $discussionsDataService->getPosts();
+			$posts = $discussionsDataService->getData( 'posts' )['posts'];
 
 			if ( count( $posts ) > 0 ) {
 				$discussionsUrl = "/d/f/$cityId/trending";

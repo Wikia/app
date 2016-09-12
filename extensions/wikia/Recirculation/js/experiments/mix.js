@@ -24,18 +24,31 @@ require([
 	var experimentName = 'RECIRCULATION_MIX',
 		logGroup = 'ext.wikia.recirculation.experiments.mix',
 		group = abTest.getGroup(experimentName),
-		views = {};
+		views = {},
+		saved = {}
+		savedOptions = {};
 
 	recircExperiment.forEach(function(experiment, index) {
-		var helperString = 'ext.wikia.recirculation.helpers.' + experiment.helper;
-
 		views[experiment.placement] = views[experiment.placement] || [];
 
-		require([helperString], function (helper) {
-			var promise = helper(experiment.options).loadData();
+		if (experiment.helper) {
+			var helperString = 'ext.wikia.recirculation.helpers.' + experiment.helper;
 
-			views[experiment.placement].push(promise);
-		});
+			require([helperString], function (helper) {
+				var promise = helper(experiment.options).loadData();
+
+				views[experiment.placement].push(promise);
+
+				if (experiment.id) {
+					saved[experiment.id] = promise;
+				}
+			});
+		}
+
+		if (experiment.source) {
+			views[experiment.placement].push(experiment.source);
+			savedOptions[experiment.source] = experiment.options;
+		}
 	});
 
 	$.each(views, function (key, value) {
@@ -44,11 +57,23 @@ require([
 		require([viewString], function (view) {
 			$.when.apply($, value)
 				.then(function () {
-					var args = Array.prototype.slice.call(arguments),
-						data = {
+					var args = Array.prototype.slice.call(arguments);
+
+					$.each(args, function(index, item) {
+						if (typeof item === 'string') {
+							saved[item].then(function(data) {
+								data.items = data.items.slice(savedOptions[item].offset);
+								args[index] = data;
+							});
+						}
+					});
+
+					var data = {
 							title: args[0].title,
 							items: []
 						};
+
+
 
 					args.forEach(function (promise, index) {
 						data.items = data.items.concat(promise.items);

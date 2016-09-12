@@ -10,10 +10,12 @@ define('ext.wikia.recirculation.helpers.data', [
 		options = options || {};
 
 		function loadData() {
-			if (options.type === 'articles') {
-				return loadArticles().then(function(articles) {
-					return { items: articles };
-				});
+			switch(options.type) {
+				case 'articles':
+				default:
+					return loadArticles().then(function(articles) {
+						return { items: articles };
+					});
 			}
 
 

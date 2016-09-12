@@ -1,7 +1,7 @@
 <?php
 
 class RecirculationApiController extends WikiaApiController {
-	const ALLOWED_TYPES = ['recent_popular', 'vertical', 'community', 'curated', 'hero', 'category', 'latest'];
+	const ALLOWED_TYPES = ['recent_popular', 'vertical', 'community', 'curated', 'hero', 'category', 'latest', 'posts', 'meta', 'all'];
 	const FANDOM_LIMIT = 5;
 
 	/**
@@ -90,6 +90,24 @@ class RecirculationApiController extends WikiaApiController {
 			'fandom' => $fandom,
 			'discussions' => $discussionsData,
 		] );
+	}
+
+	public function getDiscussions() {
+		$this->cors->setHeaders($this->response);
+
+		$cityId = $this->getParamCityId();
+		$type = $this->getParamType();
+
+		if ( !RecirculationHooks::canShowDiscussions( $cityId ) ) {
+			return;
+		}
+
+		$dataService = new DiscussionsDataService( $cityId );
+
+		$data = $dataService->getData( $type );
+
+		$this->response->setCacheValidity( WikiaResponse::CACHE_VERY_SHORT );
+		$this->response->setData( $data );
 	}
 
 	private function getParamCityId() {

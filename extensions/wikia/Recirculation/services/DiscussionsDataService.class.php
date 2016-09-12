@@ -22,8 +22,8 @@ class DiscussionsDataService {
 		$this->server = WikiFactory::getVarValueByName( 'wgServer', $this->cityId );
 	}
 
-	public function getData() {
-		$memcKey = wfMemcKey( __METHOD__, $this->cityId, self::MCACHE_VER );
+	public function getData( $type ) {
+		$memcKey = wfMemcKey( __METHOD__, $this->cityId, $type, self::MCACHE_VER );
 
 		$rawData = WikiaDataAccess::cache(
 			$memcKey,
@@ -33,7 +33,13 @@ class DiscussionsDataService {
 			}
 		);
 
-		$data = $this->formatData($rawData);
+		if ($type === 'posts') {
+			$data = $this->getPosts( $rawData );
+		} elseif ( $type === 'meta' ) {
+			$data = $this->getMeta( $rawData );
+		} else {
+			$data = $this->formatData( $rawData );
+		}
 
 		return $data;
 	}
@@ -42,10 +48,50 @@ class DiscussionsDataService {
 	 * Get posts for discussions
 	 * @return an array of posts
 	 */
-	public function getPosts() {
-		$data = $this->getData();
+	private function getPosts( $rawData ) {
+		$data = [
+			'posts' => []
+		];
 
-		return $data['posts'];
+		$rawPosts = $rawData['_embedded']['doc:threads'];
+
+		if ( is_array( $rawPosts ) && count( $rawPosts ) > 0 ) {
+			foreach ( $rawPosts as $key => $value ) {
+				$data['posts'][] = $this->buildPost( $value, $key );
+			}
+		}
+
+		return $data;
+	}
+
+	private function getMeta( $rawData ) {
+		$data = [];
+		$siteId = $rawData['siteId'];
+
+		$data['discussionsUrl'] = $this->server . '/d/f';
+		$data['postCount'] = $rawData['threadCount'];
+		$data['headerImage'] = $this->headerImage( $siteId );
+
+		return $data;
+	}
+
+	private function formatData( $rawData ) {
+		$data = [];
+		$siteId = $rawData['siteId'];
+
+		$rawPosts = $rawData['_embedded']['doc:threads'];
+		$data['discussionsUrl'] = $this->server . '/d/f';
+		$data['postCount'] = $rawData['threadCount'];
+		$data['posts'] = [];
+		$data['headerImage'] = $this->headerImage( $siteId );
+
+		if ( is_array( $rawPosts ) && count( $rawPosts ) > 0 ) {
+			foreach ( $rawPosts as $key => $value ) {
+				$data['posts'][] = $this->buildPost( $value, $key );
+			}
+		}
+
+		return $data;
 	}
 
 	/**
@@ -65,7 +111,7 @@ class DiscussionsDataService {
 	}
 
 	/**
-	 * Build a complete url to the parsely API
+	 * Build a complete url to the discussions API
 	 * @param string $endpoint
 	 * @param array $options
 	 * @return string
@@ -86,37 +132,22 @@ class DiscussionsDataService {
 
 	private function buildPost( $rawPost, $index ) {
 		global $wgContLang;
-		$post = [];
-		$post['author'] = $rawPost['createdBy']['name'];
-		$post['authorAvatar'] = $rawPost['createdBy']['avatarUrl'];
-		$post['content'] = wfShortenText($rawPost['_embedded']['firstPost'][0]['rawContent'], 120);
-		$post['upvoteCount'] = $rawPost['upvoteCount'];
-		$post['commentCount'] = $rawPost['postCount'];
-		$post['createdAt'] = wfTimestamp( TS_ISO_8601, $rawPost['creationDate']['epochSecond'] );
-		$post['link'] = $this->server . '/d/p/' . $rawPost['id'];
-		$post['source'] = 'discussions';
-		$post['index'] = $index;
 
-		return $post;
-	}
+		$meta = [];
+		$meta['authorAvatar'] = $rawPost['createdBy']['avatarUrl'];
+		$meta['upvoteCount'] = $rawPost['upvoteCount'];
+		$meta['commentCount'] = $rawPost['postCount'];
 
-	private function formatData( $rawData ) {
-		$data = [];
-		$siteId = $rawData['siteId'];
-
-		$rawPosts = $rawData['_embedded']['doc:threads'];
-		$data['discussionsUrl'] = $this->server . '/d/f/' .$siteId. '/trending';
-		$data['postCount'] = $rawData['threadCount'];
-		$data['posts'] = [];
-		$data['headerImage'] = $this->headerImage( $siteId );
-
-		if ( is_array( $rawPosts ) && count( $rawPosts ) > 0 ) {
-			foreach ( $rawPosts as $key => $value ) {
-				$data['posts'][] = $this->buildPost( $value, $key );
-			}
-		}
-
-		return $data;
+		return new RecirculationContent([
+			'url' => $this->server . '/d/p/' . $rawPost['id'],
+			'index' => $index,
+			'title' =>  wfShortenText($rawPost['_embedded']['firstPost'][0]['rawContent'], 120),
+			'pub_date' => wfTimestamp( TS_ISO_8601, $rawPost['creationDate']['epochSecond'] ),
+			'author' => $rawPost['createdBy']['name'],
+			'source' => 'discussions',
+			'isVideo' => false,
+			'meta' => $meta,
+		]);
 	}
 
 	/**
