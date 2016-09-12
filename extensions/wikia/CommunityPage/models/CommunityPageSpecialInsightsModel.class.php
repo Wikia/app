@@ -80,9 +80,7 @@ class CommunityPageSpecialInsightsModel {
 				->getLocalURL( $this->getSortingParam( $config[static::INSIGHTS_CONFIG_SORT_TYPE_KEY] ) );
 		}
 
-		$insightPages = $this->addLastRevision( $insightPages, $config[static::INSIGHTS_CONFIG_PAGEVIEWS_KEY] );
-
-		return $insightPages;
+		return $this->addLastRevision( $insightPages, $config[static::INSIGHTS_CONFIG_PAGEVIEWS_KEY] );
 	}
 
 	/**
