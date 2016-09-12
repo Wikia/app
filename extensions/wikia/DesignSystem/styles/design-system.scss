@@ -19,6 +19,10 @@ $global-navigation-height: 55px;
 		position: relative;
 	}
 
+	&.headroom--unpinned {
+		box-shadow: none;
+	}
+
 	a:hover {
 		text-decoration: none;
 	}
