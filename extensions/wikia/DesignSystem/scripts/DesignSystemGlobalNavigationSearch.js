@@ -10,7 +10,9 @@ $(function ($) {
 	function activateSearch() {
 		if (!$globalNav.hasClass(activeSearchClass)) {
 			$globalNav.addClass(activeSearchClass);
-			$searchInput.attr('placeholder', $searchInput.data('active-placeholder'));
+			$searchInput
+				.attr('placeholder', $searchInput.data('active-placeholder'))
+				.trigger('wds-search-active');
 		}
 	}
 
@@ -28,7 +30,9 @@ $(function ($) {
 
 	$globalNav.find('.wds-global-navigation__search-close').on('click', function () {
 		$globalNav.removeClass(activeSearchClass);
-		$searchInput.attr('placeholder', placeholderText);
+		$searchInput
+			.attr('placeholder', placeholderText)
+			.trigger('wds-search-not-active');
 		$searchSubmit.prop('disabled', true);
 	});
 

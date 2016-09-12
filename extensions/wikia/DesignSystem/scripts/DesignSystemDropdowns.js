@@ -8,7 +8,6 @@ $(function ($) {
 
 		if ($clickedToggle.length) {
 			$clickedDropdown.toggleClass('wds-is-active');
-			$clickedDropdown.closest('.wds-global-navigation').toggleClass('wds-dropdown-is-open');
 
 			if ($clickedDropdown.hasClass('wds-is-active')) {
 				$clickedDropdown.trigger('wds-dropdown-open');
