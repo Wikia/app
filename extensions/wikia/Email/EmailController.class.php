@@ -221,14 +221,6 @@ abstract class EmailController extends \WikiaController {
 	}
 
 	/**
-	 * Whether to show a TM next to the tagline in this country
-	 * At some point we may want to return the symbol instead of a bool
-	 */
-	protected function getUseTrademark() {
-		return $this->targetLang == 'en';
-	}
-
-	/**
 	 * Returns the address for the recipient of this email
 	 *
 	 * @return \MailAddress
@@ -276,8 +268,6 @@ abstract class EmailController extends \WikiaController {
 				'content' => $this->getContent(),
 				'footerMessages' => $this->getFooterMessages(),
 				'marketingFooter' => $this->marketingFooter,
-				'tagline' => $this->getTagline(),
-				'useTrademark' => $this->getUseTrademark(),
 				'socialMessages' => $this->getSocialMessages(),
 				'icons' => ImageHelper::getIconInfo(),
 				'disableInit' => true,
@@ -384,14 +374,6 @@ abstract class EmailController extends \WikiaController {
 			$this->getMessage( 'emailext-unsubscribe', $this->getUnsubscribeLink() )
 				->parse(),
 		];
-	}
-
-	/**
-	 * Tagline text that appears in the email footer
-	 * @return String
-	 */
-	protected function getTagline() {
-		return $this->getMessage( 'emailext-fans-tagline' )->text();
 	}
 
 	/**
