@@ -21,10 +21,11 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 	}
 
 	public function index() {
+		global $wgSitename, $wgWikiTopic;
+
 		$this->specialPage->setHeaders();
 		$this->getOutput()->setPageTitle( $this->msg( 'communitypage-title' )->plain() );
 		$this->addAssets();
-
 		$this->wg->SuppressPageHeader = true;
 		$this->wg->SuppressFooter = true;
 
@@ -34,7 +35,7 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 		$this->response->setValues( [
 			'heroImageUrl' => $this->getHeroImageUrl(),
 			'inviteFriendsText' => $this->msg( 'communitypage-invite-friends' )->plain(),
-			'headerWelcomeMsg' => $this->msg( 'communitypage-tasks-header-welcome' )->parse(),
+			'headerWelcomeMsg' => $this->msg( 'communitypage-tasks-header-welcome', $wgWikiTopic ?? $wgSitename )->parse(),
 			'adminWelcomeMsg' => $this->msg( 'communitypage-admin-welcome-message' )->text(),
 			'pageListEmptyText' => $this->msg( 'communitypage-page-list-empty' )->plain(),
 			'pageTitle' => $this->msg( 'communitypage-title' )->plain(),
