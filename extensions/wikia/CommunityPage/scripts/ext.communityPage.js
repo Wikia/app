@@ -123,9 +123,9 @@ require([
 
 				tab.cachedData = mustache.render(templates[tab.template], response);
 				$deferred.resolve(tab.cachedData);
-			}, function (error) {
+			}, function () {
 				$deferred.resolve(mustache.render(templates.loadingError, {
-					loadingError: $.msg('communitypage-modal-tab-loadingerror'),
+					loadingError: $.msg('communitypage-modal-tab-loadingerror')
 				}));
 			});
 		}
@@ -249,10 +249,10 @@ require([
 			handleClick(event, 'community-page-todo-list-module');
 		});
 
-		$('.community-page-todo-list-module-content').on('mousedown touchstart', 'a', function (event) {
+		$('.community-page-todo-list-module-content').on('mousedown touchstart', 'a', function () {
 			track({
 				category: 'community-page-todo-list-module',
-				label: 'community-page-todo-list-module-content',
+				label: 'community-page-todo-list-module-content'
 			});
 		});
 	}
