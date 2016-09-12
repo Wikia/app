@@ -7,6 +7,8 @@ $messages['en'] = array(
 	'global-navigation-community-link-label' => 'Community Central',
 	'global-navigation-create-wiki' => 'Start a wikia',
 	'global-navigation-desc' => "Wikia's Global Navigation",
+	//TODO: These messages will be removed with: XW-1943
+	//NOTE: bellow messages are different! Wikia and Wikis!
 	'global-navigation-explore-wikia-link' => 'http://www.wikia.com/explore',
 	'global-navigation-explore-wikia-link-label' => 'Explore Wikia',
 	'global-navigation-explore-wikis-link' => 'http://www.wikia.com/explore',
