@@ -95,6 +95,7 @@ define('WikiWelcome', ['wikia.ui.factory', 'wikia.loader', 'wikia.tracker'], fun
 		modalWrapper.find('button.createpage').bind('click', onCreatePageButtonClick);
 		modalWrapper.find('.help > a').bind('click', onCommCentralLinkClick);
 		modalWrapper.find('header a.close').bind('click', onModalClose);
+		modalWrapper.bind('click', onModalWrapperClick);
 		$('#blackout_WikiWelcomeModal').bind('click', onModalClose);
 	}
 
@@ -104,19 +105,23 @@ define('WikiWelcome', ['wikia.ui.factory', 'wikia.loader', 'wikia.tracker'], fun
 		});
 	}
 
-	function onCommCentralLinkClick(e){
+	function onCommCentralLinkClick(){
 		track({
 			label: 'welcome-modal-community-central'
 		});
-		window.location.href = e.target.href;
-		e.preventDefault();
-		return false;
 	}
 
-	function onModalClose(){
-		track({
-			label: 'welcome-modal-close'
-		});
+	function onModalWrapperClick(e) {
+		// to prevent tracking the modal closing event when clicking within modal area
+		e.originalEvent.preventCloseTracking = true;
+	}
+
+	function onModalClose(e){
+		if(!e.originalEvent.preventCloseTracking) {
+			track({
+				label: 'welcome-modal-close'
+			});
+		}
 	}
 
 	return {
