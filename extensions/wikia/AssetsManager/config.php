@@ -2108,6 +2108,7 @@ $config['design_system_user_js'] = [
 	'assets' => [
 		'//resources/wikia/libraries/headroom/headroom.js',
 		'//extensions/wikia/DesignSystem/scripts/DesignSystemGlobalNavigationHeadroom.js',
+		'//extensions/wikia/DesignSystem/scripts/DesignSystemGlobalNavigationNotifications.js'
 	],
 ];
 
@@ -3058,6 +3059,7 @@ $config['design_system_user_scss'] = [
 	'skin' => [ 'oasis' ],
 	'assets' => [
 		'//resources/wikia/libraries/headroom/headroom.scss',
+		'//extensions/wikia/GlobalNavigation/styles/GlobalNavigationNotifications.scss'
 	],
 ];
 
