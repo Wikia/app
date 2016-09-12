@@ -9,11 +9,13 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.appnexusPlacements', [
 		logGroup = 'ext.wikia.adEngine.lookup.prebid.adapters.appnexusPlacements';
 
 	function getPlacement(skin) {
-		if (placementsMap && placementsMap[skin] && placementsMap[skin][zoneParams.getVertical()]) {
-			return placementsMap[skin][zoneParams.getVertical()];
+		var vertical = zoneParams.getVertical();
+
+		if (placementsMap && placementsMap[skin] && placementsMap[skin][vertical]) {
+			return placementsMap[skin][vertical];
 		} else {
 			log([
-					'getPlacement', skin,
+					'getPlacement', skin, vertical,
 					'wgAdDriverAppNexusBidderPlacementsConfig variable not set or not configured correctly'
 				], 'error', logGroup
 			);
