@@ -171,7 +171,7 @@
 	 */
 	function init() {
 		$header = $('#globalNavigation');
-		
+
 		if (window.skin === 'monobook') {
 			$pageContainer = $('#content');
 		} else {
