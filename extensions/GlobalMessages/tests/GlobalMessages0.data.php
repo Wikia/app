@@ -149,8 +149,8 @@ In general, Fandom does not review nor do we endorse the content of this or any 
 'emailext-emailconfirmation-changed-summary' => 'Please click the link below to confirm your change of email address on Fandom, so you can keep getting everything to fuel your fandom.',
 // 48 --------------------------------------------------------------------------
 'emailext-emailconfirmation-community-team' => 'The Fandom Community Team',
-// 49 --------------------------------------------------------------------------
-'emailext-emailconfirmation-footer-2' => 'Can\'t wait to see you in the community!',
+// 49 -REMOVED / SOCIAL TEAM ---------------------------------------------------
+// 'emailext-emailconfirmation-footer-2' => 'Can\'t wait to see you in the community!',
 // 50 --------------------------------------------------------------------------
 'emailext-emailconfirmation-reminder-summary' => 'It\'s been a few days, but it looks like you haven\'t confirmed your account on Fandom yet. We can\'t wait for you to fully dive into the Fandom universe! Just click the confirmation link below and you\'ll be good to go:',
 // 51 IS A DUPLICATE OF 50 -----------------------------------------------------
