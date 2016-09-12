@@ -46,18 +46,16 @@ table {
 	font-weight: bold;
 	height: auto;
 	line-height: 14px;
+	margin: 15px 0 30px;
 	padding: 16px 18px;
 	text-transform: uppercase;
 }
 
 tr.avatar > td {
 	padding-bottom: 15px;
+	padding-top: 20px;
 }
 
 td.widest {
 	width: 100%;
-}
-
-.content-footer-messages {
-	padding-top: 70px;
 }
