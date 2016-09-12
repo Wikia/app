@@ -218,7 +218,7 @@
 
 		// get the position of the wrapper element relative to the top of the viewport
 		containerTop = $pageContainer.get(0).getBoundingClientRect().top;
-		headerBottom = $header.get(0).getBoundingClientRect().bottom;
+		headerBottom = $header.length > 0 ? $header.get(0).getBoundingClientRect().bottom : 0;
 
 		if (containerTop < headerBottom) {
 			if (!notificationWrapper.hasClass('float')) {
