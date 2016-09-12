@@ -230,18 +230,9 @@ require([
 			handleClick(event, 'community-page-contribution-module');
 		});
 
-		// Track clicks in the Recent Activity module
-		$('.recent-activity-module').on('mousedown touchstart', 'a', function (event) {
-			handleClick(event, 'community-page-recent-activity-module');
-		});
-
 		// Track clicks in the Help module
 		$('.help-module').on('mousedown touchstart', 'a', function (event) {
 			handleClick(event, 'community-page-help-module');
-		});
-
-		$('.community-policy-module').on('mousedown touchstart', 'a', function (event) {
-			handleClick(event, 'community-page-community-policy-module');
 		});
 
 		// Track clicks in the Insights modules
