@@ -492,11 +492,11 @@ $config['user_signup_js'] = [
 
 /**
  * For logged in users in oasis
- * @todo Remove this and clean up references UC-228
  */
 $config['oasis_user_js'] = [
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => [
+		'#group_design_system_user_js',
 		'//extensions/wikia/EmergencyBroadcastSystem/js/EmergencyBroadcastSystem.js',
 	],
 ];
@@ -2088,12 +2088,19 @@ $config['design_system_js'] = [
 	'skin' => [ 'oasis' ],
 	'assets' => [
 		'//resources/wikia/modules/scrollToLink.js',
-		'//resources/wikia/libraries/headroom/headroom.js',
 		'//extensions/wikia/DesignSystem/scripts/DesignSystemTracking.js',
 		'//extensions/wikia/DesignSystem/scripts/DesignSystemDropdowns.js',
 		'//extensions/wikia/DesignSystem/scripts/DesignSystemGlobalNavigationScrollToLink.js',
 		'//extensions/wikia/DesignSystem/scripts/DesignSystemAuthenticationMenu.js',
 		'//extensions/wikia/DesignSystem/scripts/DesignSystemGlobalNavigationSearch.js',
+	],
+];
+
+$config['design_system_user_js'] = [
+	'type' => AssetsManager::TYPE_JS,
+	'skin' => [ 'oasis' ],
+	'assets' => [
+		'//resources/wikia/libraries/headroom/headroom.js',
 		'//extensions/wikia/DesignSystem/scripts/DesignSystemGlobalNavigationHeadroom.js',
 	],
 ];
@@ -3044,8 +3051,15 @@ $config['design_system_css'] = [
 	'type' => AssetsManager::TYPE_CSS,
 	'skin' => [ 'oasis' ],
 	'assets' => [
-		'//resources/wikia/libraries/headroom/headroom.css',
 		'//extensions/wikia/DesignSystem/bower_components/design-system/dist/css/styles.css',
+	],
+];
+
+$config['design_system_user_scss'] = [
+	'type' => AssetsManager::TYPE_SCSS,
+	'skin' => [ 'oasis' ],
+	'assets' => [
+		'//resources/wikia/libraries/headroom/headroom.scss',
 	],
 ];
 
