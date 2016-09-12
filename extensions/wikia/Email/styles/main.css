@@ -48,19 +48,6 @@ body {
 	max-width: 600px;
 }
 
-.hubs {
-	text-align: center;
-	padding-right: 15%;
-	padding-left: 15%;
-	padding-bottom: 5px;
-}
-
-.hubs a {
-	display: inline-block;
-	font-size: 14px;
-	padding: 0 6px 15px;
-}
-
 .hub-icon {
 	display: block;
 	margin: 0 auto 5px;

@@ -278,7 +278,6 @@ abstract class EmailController extends \WikiaController {
 				'marketingFooter' => $this->marketingFooter,
 				'tagline' => $this->getTagline(),
 				'useTrademark' => $this->getUseTrademark(),
-				'hubsMessages' => $this->getHubsMessages(),
 				'socialMessages' => $this->getSocialMessages(),
 				'icons' => ImageHelper::getIconInfo(),
 				'disableInit' => true,
@@ -393,30 +392,6 @@ abstract class EmailController extends \WikiaController {
 	 */
 	protected function getTagline() {
 		return $this->getMessage( 'emailext-fans-tagline' )->text();
-	}
-
-	/**
-	 * Get localized strings for hubs names and their URLs
-	 * @return array
-	 * @throws \MWException
-	 */
-	protected function getHubsMessages() {
-		return [
-			'tv' => $this->getMessage( 'oasis-label-wiki-vertical-id-1' )->text(),
-			'tvURL' => $this->getMessage( 'oasis-label-wiki-vertical-id-1-link' )->text(),
-			'videoGames' => $this->getMessage( 'oasis-label-wiki-vertical-id-2' )->text(),
-			'videoGamesURL' => $this->getMessage( 'oasis-label-wiki-vertical-id-2-link' )->text(),
-			'books' => $this->getMessage( 'oasis-label-wiki-vertical-id-3' )->text(),
-			'booksURL' => $this->getMessage( 'oasis-label-wiki-vertical-id-3-link' )->text(),
-			'comics' => $this->getMessage( 'oasis-label-wiki-vertical-id-4' )->text(),
-			'comicsURL' => $this->getMessage( 'oasis-label-wiki-vertical-id-4-link' )->text(),
-			'lifestyle' => $this->getMessage( 'oasis-label-wiki-vertical-id-5' )->text(),
-			'lifestyleURL' => $this->getMessage( 'oasis-label-wiki-vertical-id-5-link' )->text(),
-			'music' => $this->getMessage( 'oasis-label-wiki-vertical-id-6' )->text(),
-			'musicURL' => $this->getMessage( 'oasis-label-wiki-vertical-id-6-link' )->text(),
-			'movies' => $this->getMessage( 'oasis-label-wiki-vertical-id-7' )->text(),
-			'moviesURL' => $this->getMessage( 'oasis-label-wiki-vertical-id-7-link' )->text(),
-		];
 	}
 
 	/**
