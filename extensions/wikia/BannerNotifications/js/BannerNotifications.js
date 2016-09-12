@@ -24,7 +24,7 @@
 		classes = Object.keys(types).join(' '),
 		closeImageSource = window.stylepath + '/oasis/images/icon_close.png',
 		$pageContainer,
-		$header = $('#globalNavigation'),
+		$header,
 		modal,
 		template = '<div class="banner-notification">' +
 			'<button class="close wikia-chiclet-button"><img></button>' +
@@ -170,6 +170,8 @@
 	 * Called once to instantiate this feature
 	 */
 	function init() {
+		$header = $('#globalNavigation');
+		
 		if (window.skin === 'monobook') {
 			$pageContainer = $('#content');
 		} else {
