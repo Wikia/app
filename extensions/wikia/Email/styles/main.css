@@ -71,6 +71,7 @@ body {
 }
 
 .fine-print, .fine-print * {
+	color: #fff;
 	font-size: 10px;
 	line-height: 20px;
 	margin-bottom: 0;
