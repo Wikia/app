@@ -361,6 +361,7 @@ $wgAutoloadClasses['PortableInfoboxBuilderService'] = $IP . '/extensions/wikia/P
 $wgAutoloadClasses['PortableInfoboxBuilderHelper'] = $IP . '/extensions/wikia/PortableInfoboxBuilder/services/PortableInfoboxBuilderHelper.class.php';
 $wgAutoloadClasses['TemplateClassificationService'] = $IP . '/includes/wikia/services/TemplateClassificationService.class.php';
 $wgAutoloadClasses['CommunityDataService'] = $IP . '/includes/wikia/services/CommunityDataService.class.php';
+$wgAutoloadClasses['InspectletService'] = $IP . '/includes/wikia/services/InspectletService.class.php';
 
 // services hooks
 $wgHooks['ArticleEditUpdates'][] = 'MediaQueryService::onArticleEditUpdates';
@@ -376,6 +377,8 @@ $wgAutoloadClasses['WikiaCollectionsModel'] = "{$IP}/includes/wikia/models/Wikia
 $wgAutoloadClasses['WikiaCorporateModel'] = "{$IP}/includes/wikia/models/WikiaCorporateModel.class.php";
 $wgAutoloadClasses['MySQLKeyValueModel'] = "{$IP}/includes/wikia/models/MySQLKeyValueModel.class.php";
 $wgAutoloadClasses['DesignSystemGlobalFooterModel'] = "{$IP}/includes/wikia/models/DesignSystemGlobalFooterModel.class.php";
+$wgAutoloadClasses['DesignSystemGlobalNavigationModel'] = "{$IP}/includes/wikia/models/DesignSystemGlobalNavigationModel.class.php";
+$wgAutoloadClasses['DesignSystemSharedLinks'] = "{$IP}/includes/wikia/models/DesignSystemSharedLinks.class.php";
 
 // modules
 $wgAutoloadClasses['OasisController'] = $IP.'/skins/oasis/modules/OasisController.class.php';
@@ -766,6 +769,7 @@ $wgSwiftSyncDB = 'swift_sync';
 $wgSharedKeyPrefix = "wikicities"; // default value for shared key prefix, @see wfSharedMemcKey
 $wgWikiaMailerDB = 'wikia_mailer';
 $wgRevisionUpvotesDB = 'revision_upvotes';
+$wgPortabilityDB = 'portability_db';
 $wgForceMasterDatabase = false;  // true only during wiki creation process
 
 $wgAutoloadClasses['LBFactory_Wikia'] = "$IP/includes/wikia/LBFactory_Wikia.php";
@@ -1211,6 +1215,12 @@ $wgEnableNielsen = false;
 $wgNielsenApid = 'FIXME';
 
 /**
+ * @name $wgEnableUbisoft
+ * Enables Ubisoft
+ */
+$wgEnableUbisoft = false;
+
+/**
  * @name $wgEnableAmazonMatch
  * Enables AmazonMatch new integration (id=3115)
  */
@@ -1278,6 +1288,19 @@ $wgAdDriverRubiconFastlaneProviderCountries = null;
 $wgAdDriverRubiconFastlaneProviderSkipTier = 0;
 
 /**
+ * @name $wgAdDriverEnableRubiconVulcan
+ * Enables Rubicon Vulcan
+ */
+$wgAdDriverEnableRubiconVulcan = true;
+
+/**
+ * @name $wgAdDriverRubiconVulcanCountries
+ * Enables RubiconVulcan in these countries (given wgAdDriverEnableRubiconVulcan is also true).
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ */
+$wgAdDriverRubiconVulcanCountries = null;
+
+/**
  * @name $wgAdDriverPrebidBidderCountries
  * List of countries where prebid bidding platform is enabled.
  * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
@@ -1290,6 +1313,13 @@ $wgAdDriverPrebidBidderCountries = null;
  * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
  */
 $wgAdDriverAppNexusBidderCountries = null;
+
+/**
+ * @name $wgAdDriverIndexExchangeBidderCountries
+ * List of countries where indexExchange bidding platform is enabled.
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ */
+$wgAdDriverIndexExchangeBidderCountries = null;
 
 /**
  * @name $wgAdDriverOverridePrefootersCountries
@@ -1824,9 +1854,20 @@ $wgAdDriverHighImpact2SlotCountries = null;
  * @name $wgAdDriverMobileTransitionInterstitialCountries
  * Enables Mercury Interstitial inside INVISIBLE_HIGH_IMPACT_2 on transition.
  * Works only when $wgAdDriverHighImpact2SlotCountries is set to true/current geo.
+ * Don't combine with $wgAdDriverMobileFloorAdhesionCountries
  * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
  */
 $wgAdDriverMobileTransitionInterstitialCountries = null;
+
+
+/**
+ * @name $wgAdDriverMobileFloorAdhesionCountries
+ * Enables Mercury FloorAdhesion inside INVISIBLE_HIGH_IMPACT_2 on transition.
+ * Works only when $wgAdDriverHighImpact2SlotCountries is set to true/current geo.
+ * Don't combine with $wgAdDriverMobileTransitionInterstitialCountries
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ */
+$wgAdDriverMobileFloorAdhesionCountries = null;
 
 /**
  * @name $wgAdDriverIncontentLeaderboardSlotCountries
@@ -1910,3 +1951,5 @@ $wgReviveSpotlightsCountries = null;
  * It should be always included even if recovery is disabled as we use Recovery classes outside the module
  */
 include_once("$IP/extensions/wikia/ARecoveryEngine/ARecoveryEngine.setup.php");
+
+require_once "$IP/extensions/wikia/ImageReview/ImageReviewEvents.setup.php";

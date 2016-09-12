@@ -45,10 +45,13 @@ class OasisController extends WikiaController {
 		$this->openXBidder = null;
 		$this->prebid = null;
 		$this->rubiconFastlane = null;
+		$this->rubiconVulcan = null;
+		$this->sourcePoint = null;
 		$this->dynamicYield = null;
 		$this->ivw2 = null;
 		$this->ivw3 = null;
 		$this->krux = null;
+		$this->ubisoft = null;
 
 		wfProfileOut(__METHOD__);
 	}
@@ -239,11 +242,13 @@ class OasisController extends WikiaController {
 			$this->openXBidder = AnalyticsEngine::track('OpenXBidder', AnalyticsEngine::EVENT_PAGEVIEW);
 			$this->prebid = AnalyticsEngine::track('Prebid', AnalyticsEngine::EVENT_PAGEVIEW);
 			$this->rubiconFastlane = AnalyticsEngine::track('RubiconFastlane', AnalyticsEngine::EVENT_PAGEVIEW);
+			$this->rubiconVulcan = AnalyticsEngine::track('RubiconVulcan', AnalyticsEngine::EVENT_PAGEVIEW);
 			$this->sourcePoint = ARecoveryModule::getSourcePointBootstrapCode();
 			$this->dynamicYield = AnalyticsEngine::track('DynamicYield', AnalyticsEngine::EVENT_PAGEVIEW);
 			$this->ivw2 = AnalyticsEngine::track('IVW2', AnalyticsEngine::EVENT_PAGEVIEW);
 			$this->ivw3 = AnalyticsEngine::track('IVW3', AnalyticsEngine::EVENT_PAGEVIEW);
 			$this->krux = AnalyticsEngine::track('Krux', AnalyticsEngine::EVENT_PAGEVIEW);
+			$this->ubisoft = AnalyticsEngine::track('Ubisoft', AnalyticsEngine::EVENT_PAGEVIEW);
 		}
 
 		wfProfileOut(__METHOD__);
