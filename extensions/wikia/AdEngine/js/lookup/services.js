@@ -14,15 +14,17 @@ define('ext.wikia.adEngine.lookup.services', [
 	require.optional('ext.wikia.adEngine.lookup.prebid'),
 	require.optional('ext.wikia.adEngine.lookup.amazonMatch'),
 	require.optional('ext.wikia.adEngine.lookup.openXBidder'),
-	require.optional('ext.wikia.adEngine.lookup.rubiconFastlane')
-], function (log, prebid, amazonMatch, oxBidder, rubiconFastlane) {
+	require.optional('ext.wikia.adEngine.lookup.rubicon.rubiconFastlane'),
+	require.optional('ext.wikia.adEngine.lookup.rubicon.rubiconVulcan')
+], function (log, prebid, amazonMatch, oxBidder, rubiconFastlane, rubiconVulcan) {
 	'use strict';
 	var logGroup = 'ext.wikia.adEngine.lookup.services',
 		bidders = [
 			amazonMatch,
 			oxBidder,
 			rubiconFastlane,
-			prebid
+			prebid,
+			rubiconVulcan
 		];
 
 	function addParameters(providerName, slotName, slotTargeting) {

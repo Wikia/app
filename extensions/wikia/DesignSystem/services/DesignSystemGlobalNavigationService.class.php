@@ -58,9 +58,14 @@ class DesignSystemGlobalNavigationService extends WikiaService {
 		$this->setVal( 'href', $href );
 	}
 
+	public function search() {
+		$this->setVal( 'model', $this->getVal( 'model' ) );
+	}
+
 	private function getData() {
 		return $this->sendRequest( 'DesignSystemApi', 'getNavigation', [
-			'wikiId' => $this->wg->CityId,
+			'id' => $this->wg->CityId,
+			'product' => 'wikis',
 			'lang' => $this->wg->Lang->getCode()
 		] )->getData();
 	}

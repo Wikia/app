@@ -2,6 +2,9 @@
 @import 'skins/shared/mixins/flexbox';
 
 $social-icon-size: 26px;
+$button-color: $color-page;
+$button-hover-color: darken($color-page, 20%);
+$button-text-color: $color-buttons;
 
 $facebook-icon: '/extensions/wikia/EmbeddableDiscussions/images/social/facebook.svg';
 $facebook-icon-active: '/extensions/wikia/EmbeddableDiscussions/images/social/facebook-active.svg';
@@ -43,9 +46,33 @@ $wykop-icon-active: '/extensions/wikia/EmbeddableDiscussions/images/social/wykop
 	}
 
 	> section {
-		padding: 30px 0 20px;
+		padding: 24px 0 0;
 		text-align: center;
 		width: 100%;
+	}
+
+	&.small {
+		width: 350px;
+	}
+
+	.embeddable-discussions-sharemodal-cancel-button {
+		background: $button-color;
+		color: $button-text-color;
+		display: inline-block;
+		float: right;
+		font-size: 12px;
+		font-weight: bold;
+		height: 46px;
+		line-height: 46px;
+		margin: 6px 6px 6px 0;
+		padding: 0 20px;
+		text-decoration: none;
+		text-transform: uppercase;
+
+		&:hover, &:active {
+			background-color: $button-hover-color;
+			text-decoration: none;
+		}
 	}
 
 	.embeddable-discussions-sharemodal-heading {
@@ -59,12 +86,14 @@ $wykop-icon-active: '/extensions/wikia/EmbeddableDiscussions/images/social/wykop
 		@include align-items(center);
 		@include justify-content(center);
 
-		padding-top: 20px;
+		border-bottom: 2px solid $color-page-border-subtle;
+		padding: 20px 0 24px;
 	}
 
 	.embeddable-discussions-sharemodal-icon {
 		height: $social-icon-size;
 		margin: 3px;
+		padding-right: 10px;
 		width: $social-icon-size;
 	}
 
