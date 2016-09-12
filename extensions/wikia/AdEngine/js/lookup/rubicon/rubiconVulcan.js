@@ -142,6 +142,8 @@ define('ext.wikia.adEngine.lookup.rubicon.rubiconVulcan', [
 
 				log(['VAST ad', slotName, cpm, tier, vastUrl], 'debug', logGroup);
 				priceMap[slotName] = tier;
+			} else {
+				priceMap[slotName] = slots[slotName].sizeId + '_tier0000';
 			}
 		});
 	}

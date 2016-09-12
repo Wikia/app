@@ -76,12 +76,14 @@ describe('ext.wikia.adEngine.lookup.rubicon.rubiconVulcan', function () {
 				skin: 'oasis'
 			},
 			tiers: [],
-			vulcanResponse: {},
+			vulcanResponse: null,
 			win: {
 				rubicontag: {
 					video: {
 						run: function (onResponse) {
-							onResponse();
+							if (mocks.vulcanResponse !== null) {
+								onResponse();
+							}
 						},
 						defineSlot: function () {
 							return mocks.slot;
@@ -192,10 +194,21 @@ describe('ext.wikia.adEngine.lookup.rubicon.rubiconVulcan', function () {
 		});
 	});
 
-	it('Returns tierNONE when there is no ad', function () {
+	it('Returns tier0000 when there is no ad', function () {
 		var vulcan = getVulcan();
 
 		mocks.vulcanResponse.status = 'no ads';
+		vulcan.call();
+
+		expect(vulcan.getSlotParams('INCONTENT_LEADERBOARD')).toEqual({
+			'rpfl_video': '203_tier0000'
+		});
+	});
+
+	it('Returns tierNONE when there is no response', function () {
+		var vulcan = getVulcan();
+
+		mocks.vulcanResponse = null;
 		vulcan.call();
 
 		expect(vulcan.getSlotParams('INCONTENT_LEADERBOARD')).toEqual({
