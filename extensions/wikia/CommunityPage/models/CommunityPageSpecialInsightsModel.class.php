@@ -1,7 +1,7 @@
 <?php
 
 class CommunityPageSpecialInsightsModel {
-	const INSIGHTS_MODULE_ITEMS = 5;
+	const INSIGHTS_MODULE_ITEMS = 3;
 	const INSIGHTS_CONFIG_SORT_TYPE_KEY = 'sortingType';
 	const INSIGHTS_CONFIG_PAGEVIEWS_KEY = 'displayPageviews';
 	const INSIGHTS_MODULES = [
@@ -16,11 +16,7 @@ class CommunityPageSpecialInsightsModel {
 		'uncategorizedpages' => [
 			self::INSIGHTS_CONFIG_SORT_TYPE_KEY => 'pv7',
 			self::INSIGHTS_CONFIG_PAGEVIEWS_KEY => false
-		],
-		'wantedpages' => [
-			self::INSIGHTS_CONFIG_SORT_TYPE_KEY => false,
-			self::INSIGHTS_CONFIG_PAGEVIEWS_KEY => false
-		],
+		]
 	];
 
 	private $insightsService;
