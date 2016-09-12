@@ -389,6 +389,10 @@ abstract class EmailController extends \WikiaController {
 			'twitter-link' => $this->getMessage( 'oasis-social-twitter-link' )->text(),
 			'youtube' => $this->getMessage( 'oasis-social-youtube' )->text(),
 			'youtube-link' => $this->getMessage( 'oasis-social-youtube-link' )->text(),
+			'reddit' => $this->getMessage( 'oasis-social-reddit' )->text(),
+			'reddit-link' => $this->getMessage( 'oasis-social-reddit-link' )->text(),
+			'instagram' => $this->getMessage( 'oasis-social-instagram' )->text(),
+			'instagram-link' => $this->getMessage( 'oasis-social-instagram-link' )->text(),
 		];
 	}
 

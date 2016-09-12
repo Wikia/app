@@ -189,6 +189,10 @@ $messages['en'] = array(
 	'oasis-social-twitter-link' => 'https://twitter.com/wikia',
 	'oasis-social-youtube' => 'YouTube',
 	'oasis-social-youtube-link' => 'https://www.youtube.com/user/wikia',
+	'oasis-social-reddit' => 'Reddit',
+	'oasis-social-reddit-link' => 'https://www.reddit.com/r/wikia',
+	'oasis-social-instagram' => 'Instagram',
+	'oasis-social-instagram-link' => 'https://www.instagram.com/getfandom/',
 );
 
 /** Message documentation (Message documentation)
