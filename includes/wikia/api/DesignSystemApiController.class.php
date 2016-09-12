@@ -22,7 +22,11 @@ class DesignSystemApiController extends WikiaApiController {
 		$params = $this->getRequestParameters();
 
 		$this->setResponseData(
-			( new DesignSystemGlobalNavigationModel( $params[ 'wikiId' ], $params[ 'lang' ] ) )->getData() );
+			( new DesignSystemGlobalNavigationModel(
+				$params[static::PARAM_PRODUCT],
+				$params[static::PARAM_ID],
+				$params[static::PARAM_LANG]
+			) )->getData() );
 
 		$this->addCachingHeaders();
 	}

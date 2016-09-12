@@ -105,7 +105,7 @@
 
 .banner-notifications-wrapper {
 	margin: 0 auto;
-	position: relative;
+	transition: top 200ms linear;
 	width: 958px;
 	z-index: $zTop + 1;
 
@@ -113,13 +113,6 @@
 		left: 50%;
 		margin-left: -515px;
 		position: fixed;
-	}
-
-	// global nav doesn't scroll with the page when the page is small
-	@media #{$breakpoint-not-supported} {
-		&.float {
-			top: 0;
-		}
 	}
 }
 
