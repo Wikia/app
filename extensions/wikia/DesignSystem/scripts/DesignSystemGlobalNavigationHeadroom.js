@@ -12,7 +12,15 @@ $(function() {
 						$('.banner-notifications-wrapper').css('top', globalNavigationHeight);
 					},
 					onUnpin: function() {
-						$('.banner-notifications-wrapper').css('top', 0);
+						if (
+							globalNavigation.hasClass('wds-dropdown-is-open') ||
+							globalNavigation.hasClass('wds-search-is-active')
+						) {
+							// don't allow to unpin global nav when dropdown is open or search is active
+							$(this.elem).addClass(this.classes.pinned).removeClass(this.classes.unpinned);
+						} else {
+							$('.banner-notifications-wrapper').css('top', 0);
+						}
 
 					}
 				},
@@ -35,14 +43,6 @@ $(function() {
 			headroom.init();
 
 			globalNavMutationObserver.observe(globalNavigation.get(0), { attributes: true });
-
-			globalNavigation
-				.on('wds-dropdown-open wds-search-active', function () {
-					headroom.destroy();
-				})
-				.on('wds-dropdown-close wds-search-not-active', function() {
-					headroom.init();
-				});
 		});
 	}
 });
