@@ -2,8 +2,8 @@
 
 class EnableDiscussionsController extends \WikiaController {
 
-	const ENABLE_DISCUSSIONS_NAV = 'wgEnableDiscussionNavigation';
-	const ENABLE_DISCUSSIONS = 'wgEnableDiscussion';
+	const ENABLE_DISCUSSIONS_NAV = 'wgEnableDiscussionsNavigation';
+	const ENABLE_DISCUSSIONS = 'wgEnableDiscussions';
 	const ENABLE_FORUMS = 'wgEnableForumExt';
 
 	const P_SITE_ID = 'siteId';
