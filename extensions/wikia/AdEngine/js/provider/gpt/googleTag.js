@@ -11,17 +11,13 @@ define('ext.wikia.adEngine.provider.gpt.googleTag', [
 
 	var logGroup = 'ext.wikia.adEngine.provider.gpt.googleTag',
 		registeredCallbacks = {},
-	//slot id (adUnit) => google slot
+		//slot id (adUnit) => google slot
 		slots = {},
-	//slot id (adUnit) => slot name
-		adUnitsSlotsMap = {},
+		//slot id (adUnit) => slot name
+		slotIdsMap = {},
 		slotQueue = [],
 		pageLevelParams,
-		pubAds;
-
-	function GoogleTag() {
-		this.initialized = false;
-	}
+		initialized = false;
 
 	function dispatchEvent(event) {
 		var id;
@@ -41,23 +37,25 @@ define('ext.wikia.adEngine.provider.gpt.googleTag', [
 		log(['dispatchEvent', event, 'No callback registered for this slot render ended event'], 'error', logGroup);
 	}
 
-	GoogleTag.prototype.enableServices = function () {
-		log(['enableServices', 'push'], 'info', logGroup);
-		this.push(function () {
-			pubAds = window.googletag.pubads();
+	function push(callback) {
+		window.googletag.cmd.push(callback);
+	}
 
-			pubAds.collapseEmptyDivs();
-			pubAds.enableSingleRequest();
-			pubAds.disableInitialLoad(); // manually request ads using refresh
-			pubAds.addEventListener('slotRenderEnded', dispatchEvent);
+	function enableServices() {
+		log(['enableServices', 'push'], 'info', logGroup);
+		push(function () {
+			window.googletag.pubads().collapseEmptyDivs();
+			window.googletag.pubads().enableSingleRequest();
+			window.googletag.pubads().disableInitialLoad(); // manually request ads using refresh
+			window.googletag.pubads().addEventListener('slotRenderEnded', dispatchEvent);
 
 			window.googletag.enableServices();
 
 			log(['enableServices', 'push', 'done'], 'debug', logGroup);
 		});
-	};
+	}
 
-	GoogleTag.prototype.init = function () {
+	function init() {
 		log('init', 'debug', logGroup);
 
 		var gads = doc.createElement('script'),
@@ -73,17 +71,17 @@ define('ext.wikia.adEngine.provider.gpt.googleTag', [
 			node.parentNode.insertBefore(gads, node);
 		}
 
-		this.initialized = true;
-		this.enableServices();
-	};
+		initialized = true;
+		enableServices();
+	}
 
-	GoogleTag.prototype.isInitialized = function () {
-		log(['isInitialized', this.initialized], 'debug', logGroup);
-		return this.initialized;
-	};
+	function isInitialized() {
+		log(['isInitialized', initialized], 'debug', logGroup);
+		return initialized;
+	}
 
-	GoogleTag.prototype.setPageLevelParams = function (params) {
-		this.push(function () {
+	function setPageLevelParams(params) {
+		push(function () {
 			var name,
 				value;
 
@@ -93,103 +91,110 @@ define('ext.wikia.adEngine.provider.gpt.googleTag', [
 					value = pageLevelParams[name];
 					if (value) {
 						log(['setPageLevelParams', 'pubAds.setTargeting', name, value], 'debug', logGroup);
-						pubAds.setTargeting(name, value);
+						window.googletag.pubads().setTargeting(name, value);
 					}
 				}
 			}
 		});
-	};
+	}
 
-	GoogleTag.prototype.push = function (callback) {
-		window.googletag.cmd.push(callback);
-	};
-
-	GoogleTag.prototype.flush = function () {
-		if (!this.isInitialized()) {
+	function flush() {
+		if (!isInitialized()) {
 			log(['flush', 'done', 'No slots to flush'], 'info', logGroup);
 			return;
 		}
 
-		this.push(function () {
+		push(function () {
 			log(['flush', 'start'], 'info', logGroup);
 
 			log(['flush', 'refresh', slotQueue], 'debug', logGroup);
 			if (slotQueue.length) {
-				pubAds.refresh(slotQueue, {changeCorrelator: false});
+				window.googletag.pubads().refresh(slotQueue, {changeCorrelator: false});
 				slotQueue = [];
 			}
 
 			log(['flush', 'done'], 'info', logGroup);
 		});
-	};
+	}
 
-	GoogleTag.prototype.addSlot = function (adElement) {
+	function addSlot(adElement) {
 		var sizes = adElement.getSizes(),
-			slot = slots[adElement.getSlotPath()];
+			slot = slots[adElement.getId()],
+			slotId = adElement.getId();
 
 		log(['addSlot', adElement], 'debug', logGroup);
 
 		adElement.setPageLevelParams(pageLevelParams);
 		if (!slot) {
 			if (sizes) {
-				slot = window.googletag.defineSlot(adElement.getSlotPath(), sizes, adElement.getId());
+				slot = window.googletag.defineSlot(adElement.getSlotPath(), sizes, slotId);
 			} else {
-				slot = window.googletag.defineOutOfPageSlot(adElement.getSlotPath(), adElement.getId());
+				slot = window.googletag.defineOutOfPageSlot(adElement.getSlotPath(), slotId);
 			}
 			slot.addService(pubAds);
-			window.googletag.display(adElement.getId());
-			slots[adElement.getSlotPath()] = slot;
+			window.googletag.display(slotId);
+			slots[slotId] = slot;
+			slotIdsMap[slotId] = adElement.getSlotName();
 		}
 
 		adElement.configureSlot(slot);
 		slotQueue.push(slot);
 
-		adUnitsSlotsMap[slot.getAdUnitPath()] = adElement.getSlotName();
-
 		return slot;
-	};
+	}
 
-	GoogleTag.prototype.registerCallback = function (id, callback) {
+	function registerCallback(id, callback) {
 		log(['registerCallback', id], 'info', logGroup);
 		registeredCallbacks[id] = callback;
-	};
+	}
 
-	GoogleTag.prototype.onAdLoad = function (slotName, element, gptEvent, onAdLoadCallback) {
+	function onAdLoad(slotName, element, gptEvent, onAdLoadCallback) {
 		log(['onAdLoad', slotName], 'info', logGroup);
 		var iframe = element.getNode().querySelector('div[id*="_container_"] iframe');
 
 		onAdLoadCallback(element.getId(), gptEvent, iframe);
-	};
+	}
 
-	GoogleTag.prototype.destroySlots = function (slotsNames) {
+	function destroySlots(slotsNames) {
 		var slotsToDestroy = [], success, allSlots = window.googletag.getSlots();
 
 		slotsNames.forEach(function (slotName) {
 			allSlots.forEach(function (slot) {
-				if (adUnitsSlotsMap[slot.getAdUnitPath()] === slotName) {
+				if (slotIdsMap[slot.getSlotElementId()] === slotName) {
 					slotsToDestroy.push(slot);
 				}
 			});
 		});
 
 		if (slotsToDestroy.length) {
-			log(['destroySlots', slotsNames], 'debug', logGroup);
-			success = window.googletag.destroySlots(slotsToDestroy);
+			push(function () {
+				log(['destroySlots', slotsNames], 'debug', logGroup);
+				success = window.googletag.destroySlots(slotsToDestroy);
 
-			if (!success) {
-				log(['destroySlots', slotsNames, 'failed'], 'error', logGroup);
-			}
+				if (!success) {
+					log(['destroySlots', slotsNames, 'failed'], 'error', logGroup);
+				}
+
+				slotsToDestroy.forEach(function (slot) {
+					slots[slot.getSlotElementId()] = undefined;
+				});
+			});
 		}
+	}
 
-		slotsToDestroy.forEach(function (slot) {
-			slots[slot.getAdUnitPath()] = undefined;
-		});
-	};
-
-	GoogleTag.prototype.newPageView = function () {
+	function newPageView() {
 		adLogicPageViewCounter.increment();
 		window.googletag.pubads().updateCorrelator();
-	};
+	}
 
-	return GoogleTag;
+	return {
+		init: init,
+		addSlot: addSlot,
+		onAdLoad: onAdLoad,
+		isInitialized: isInitialized,
+		setPageLevelParams: setPageLevelParams,
+		registerCallback: registerCallback,
+		push: push,
+		flush: flush
+	};
 });
