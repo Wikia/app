@@ -106,7 +106,7 @@ class GlobalNavigationHelper {
 		$exploreWikisLabel = wfMessage( 'global-navigation-explore-wikis-link-label');
 		$wikisLabel = wfMessage( 'global-navigation-wikis-label');
 
-		if ( $wgLang->getCode() === self::DEFAULT_LANG ) {
+		if ( $wgLang->getCode() === static::DEFAULT_LANG ) {
 			$hubsNodes = (new NavigationModel(true /* useSharedMemcKey */))->getTree(
 				NavigationModel::TYPE_MESSAGE,
 				'global-navigation-menu-hubs',
