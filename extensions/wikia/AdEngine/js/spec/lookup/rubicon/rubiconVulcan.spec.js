@@ -69,22 +69,21 @@ describe('ext.wikia.adEngine.lookup.rubicon.rubiconVulcan', function () {
 			slot: {
 				id: 'INCONTENT_LEADERBOARD',
 				getBestCpm: function () {
-					return {
-						cpm: 16.2343446,
-						status: 'ok',
-						type: 'vast'
-					};
+					return mocks.vulcanResponse;
 				}
 			},
 			targeting: {
 				skin: 'oasis'
 			},
 			tiers: [],
+			vulcanResponse: null,
 			win: {
 				rubicontag: {
 					video: {
 						run: function (onResponse) {
-							onResponse();
+							if (mocks.vulcanResponse !== null) {
+								onResponse();
+							}
 						},
 						defineSlot: function () {
 							return mocks.slot;
@@ -118,6 +117,14 @@ describe('ext.wikia.adEngine.lookup.rubicon.rubiconVulcan', function () {
 			mocks.win
 		);
 	}
+
+	beforeEach(function () {
+		mocks.vulcanResponse = {
+			cpm: 16.2343446,
+			status: 'ok',
+			type: 'vast'
+		};
+	});
 
 	function assertRequestParam(call, param) {
 		expect(Object.keys(call).indexOf(param)).not.toEqual(-1);
@@ -165,7 +172,7 @@ describe('ext.wikia.adEngine.lookup.rubicon.rubiconVulcan', function () {
 		assertRequestParam(defineSlotsCalls.argsFor(0)[1], 'tg_i.src');
 	});
 
-	it('Returns proper tier format based on response', function () {
+	it('Has response and returns proper tier format based on it', function () {
 		var vulcan = getVulcan();
 
 		vulcan.call();
@@ -174,5 +181,46 @@ describe('ext.wikia.adEngine.lookup.rubicon.rubiconVulcan', function () {
 		expect(vulcan.getSlotParams('INCONTENT_LEADERBOARD')).toEqual({
 			'rpfl_video': '203_tier1600'
 		});
+	});
+
+	it('Returns proper tier format based on response', function () {
+		var vulcan = getVulcan();
+
+		mocks.vulcanResponse.cpm = 0.23;
+		vulcan.call();
+
+		expect(vulcan.getSlotParams('INCONTENT_LEADERBOARD')).toEqual({
+			'rpfl_video': '203_tier0020'
+		});
+	});
+
+	it('Returns tier0000 when there is no ad', function () {
+		var vulcan = getVulcan();
+
+		mocks.vulcanResponse.status = 'no ads';
+		vulcan.call();
+
+		expect(vulcan.getSlotParams('INCONTENT_LEADERBOARD')).toEqual({
+			'rpfl_video': '203_tier0000'
+		});
+	});
+
+	it('Returns tierNONE when there is no response', function () {
+		var vulcan = getVulcan();
+
+		mocks.vulcanResponse = null;
+		vulcan.call();
+
+		expect(vulcan.getSlotParams('INCONTENT_LEADERBOARD')).toEqual({
+			'rpfl_video': '203_tierNONE'
+		});
+	});
+
+	it('Returns empty params for not supported slot', function () {
+		var vulcan = getVulcan();
+
+		vulcan.call();
+
+		expect(vulcan.getSlotParams('TOP_LEADERBOARD')).toEqual({});
 	});
 });
