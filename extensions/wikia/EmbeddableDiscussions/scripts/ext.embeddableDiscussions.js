@@ -169,6 +169,9 @@ require([
 			loadData();
 		});
 
-		loadData();
+		// Hook for loading data on page load
+		mw.hook('wikipage.content').add(function () {
+			loadData();
+		});
 	});
 });
