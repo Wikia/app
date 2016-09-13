@@ -152,10 +152,24 @@ define('ext.wikia.adEngine.slotTweaker', [
 	}
 
 	function moveStylesToInline(element) {
+		var computedStyles,
+			styleName = "";
+
 		if (!isElement(element)) {
 			return;
 		}
-		element.style.cssText = document.defaultView.getComputedStyle(element, '').cssText;
+
+		computedStyles = document.defaultView.getComputedStyle(element, '');
+
+		if (typeof win.CSS2Properties !== 'undefined' && computedStyles instanceof win.CSS2Properties) {
+			// Hack for Firefox
+			for (var i = 0; i < computedStyles.length; i++) {
+				styleName = computedStyles[i];
+				element.style[styleName] = computedStyles[styleName];
+			}
+		} else if (typeof win.CSSStyleDeclaration !== 'undefined' && computedStyles instanceof win.CSSStyleDeclaration) {
+			element.style.cssText = computedStyles.cssText;
+		}
 	}
 
 	function recursiveMoveStylesToInline(element) {
