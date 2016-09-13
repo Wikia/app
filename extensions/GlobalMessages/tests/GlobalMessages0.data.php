@@ -279,8 +279,8 @@ In general, Fandom does not review nor do we endorse the content of this or any 
 'emailext-usernamechange-summary' => 'Your username change on Fandom is complete.',
 // 113 -------------------------------------------------------------------------
 'emailext-watchedpage-article-restored-button-text' => 'Go to page',
-// 114 -------------------------------------------------------------------------
-'emailext-watchedpage-article-unprotected' => '[$1 $2] on [http://localhost MediaWiki] has been unprotected.',
+// 114 REMOVED / SOCIAL TEAM ---------------------------------------------------
+// 'emailext-watchedpage-article-unprotected' => '[$1 $2] on [http://localhost MediaWiki] has been unprotected.',
 // 115 -------------------------------------------------------------------------
 'emailext-watchedpage-diff-button-text' => 'Go to page',
 // 116 -------------------------------------------------------------------------
