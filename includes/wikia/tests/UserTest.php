@@ -184,12 +184,12 @@ class UserTest extends WikiaBaseTest {
 	}
 
 	public function testGetUsernameShouldReturnProvidedNameIfFallbackUsernameServiceIsInUse(){
-		$this->mockGlobalVariable( 'wgUsernameService', 'FallbackUsernameService' );
+		$this->mockGlobalVariable( 'wgLookupUsername', false );
 		$this->assertEquals( 'someName', User::getUsername( 123, 'someName' ) );
 	}
 
 	public function testGetUsernameShouldReturnNameFromWhoIsIfMediawikiUsernameServiceIsInUse() {
-		$this->mockGlobalVariable( 'wgUsernameService', 'MediawikiUsernameService' );
+		$this->mockGlobalVariable( 'wgLookupUsername', true );
 		$this->mockStaticMethod( 'User', 'whoIs', 'NameFromUserTable' );
 		$this->assertEquals( 'NameFromUserTable', User::getUsername( 123, 'notFromUserTableName' ) );
 	}
