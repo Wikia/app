@@ -3,14 +3,13 @@
 class ArchiveWikiForumHooks {
 
     /**
-     * show the info box for old forums
+     * Show the notification informing the user that wiki forums have been disabled
      * @param Article $article
      * @param $outputDone
      * @param $useParserCache
      * @return bool
      */
-
-    static public function onArticleViewHeader( &$article, &$outputDone, &$useParserCache ) {
+    public static function onArticleViewHeader( &$article, &$outputDone, &$useParserCache ) {
         $title = $article->getTitle();
         if ( self::isForumNS( $title->getNamespace() ) ) {
             $app = F::app();
@@ -30,14 +29,13 @@ class ArchiveWikiForumHooks {
      * @param $skin
      * @return bool
      */
-
-    static public function onPageHeaderIndexAfterActionButtonPrepared( $response, $ns, $skin ) {
+    public static function onPageHeaderIndexAfterActionButtonPrepared( $response, $ns, $skin ) {
         $app = F::app();
         $title = $app->wg->Title;
 
         if ( self::isForumNS( $title->getNamespace() ) ) {
             if ( !static::canEditOldForum( $app->wg->User ) ) {
-                $action = [ 'class' => '', 'text' => wfMessage( 'viewsource' )->escaped(), 'href' => $title->getLocalUrl( [ 'action' => 'edit' ] ), 'id' => 'ca-viewsource', 'primary' => 1 ];
+                $action = [ 'class' => '', 'text' => wfMessage( 'viewsource' )->escaped(), 'href' => $title->getLocalURL( [ 'action' => 'edit' ] ), 'id' => 'ca-viewsource', 'primary' => 1 ];
                 $response->setVal( 'actionImage', MenuButtonController::LOCK_ICON );
                 $response->setVal( 'action', $action );
                 return false;
@@ -47,24 +45,13 @@ class ArchiveWikiForumHooks {
     }
 
     /**
-     * helper function for onGetUserPermissionsErrors/onPageHeaderIndexAfterActionButtonPrepared
+     * @param Title $title
      * @param User $user
-     * @return
+     * @param $action
+     * @param $result
+     * @return bool
      */
-
-    static public function canEditOldForum( $user ) {
-        return $user->isAllowed( 'forumoldedit' );
-    }
-
-    /**
-     * @brief Block any attempts of editing anything in NS_FORUM namespace
-     *
-     * @return true
-     *
-     * @author Tomasz Odrobny
-     **/
-
-    static function onGetUserPermissionsErrors( Title &$title, User &$user, $action, &$result ) {
+    public static function onGetUserPermissionsErrors( Title &$title, User &$user, $action, &$result ) {
         if ( $action == 'read' ) {
             return true;
         }
@@ -79,7 +66,15 @@ class ArchiveWikiForumHooks {
         return true;
     }
 
-    private static function isForumNS($namespace ) {
+    /**
+     * @param User $user
+     * @return bool
+     */
+    private static function canEditOldForum( User $user ) {
+        return $user->isAllowed( 'forumoldedit' );
+    }
+
+    private static function isForumNS( $namespace ) {
         return $namespace == NS_FORUM || $namespace == NS_FORUM_TALK;
     }
 }
