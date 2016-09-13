@@ -8,7 +8,7 @@ body {
 }
 
 .main-wrapper {
-	background-color: #e6ebf2;
+	background-color: #f6f6f6;
 }
 
 .content {
@@ -25,8 +25,8 @@ body {
 
 .main-content {
 	background-color: #fff;
-	border-bottom: 1px solid #c5ced9;
-	border-top: 1px solid #c5ced9;
+	border: 1px solid #d7d7d7;
+	border-bottom: 0;
 	padding-top: 50px;
 	padding-bottom: 80px;
 }
@@ -42,22 +42,44 @@ body {
 }
 
 .footer {
+	background-color: #39424d;
 	padding-left: 0;
 	padding-right: 0;
 	max-width: 600px;
 }
 
-.hubs {
-	text-align: center;
-	padding-right: 15%;
-	padding-left: 15%;
-	padding-bottom: 5px;
+.fandom-bar {
+	height: 5px;
+	padding: 0;
+	width: 100%;
 }
 
-.hubs a {
+.fandom-bar div {
 	display: inline-block;
-	font-size: 14px;
-	padding: 0 6px 15px;
+	height: 100%;
+	margin: 0;
+	padding: 0;
+	width: 20%;
+}
+
+.fandom-color-1 {
+	background-color: #39414e;
+}
+
+.fandom-color-2 {
+	background-color: #92d300;
+}
+
+.fandom-color-3 {
+	background-color: #00d4bf;
+}
+
+.fandom-color-4 {
+	background-color: #00b6e2;
+}
+
+.fandom-color-5 {
+	background-color: #656d77;
 }
 
 .hub-icon {
@@ -65,11 +87,16 @@ body {
 	margin: 0 auto 5px;
 }
 
+.social-links {
+	margin-top: 40px;
+}
+
 .social-links img {
 	padding: 0 10px;
 }
 
 .fine-print, .fine-print * {
+	color: #fff;
 	font-size: 10px;
 	line-height: 20px;
 	margin-bottom: 0;
