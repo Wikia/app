@@ -30,11 +30,11 @@ class InsightsSorting {
 	}
 
 	public static function getDefaultSorting() {
-		return self::INSIGHTS_DEFAULT_SORTING;
+		return static::INSIGHTS_DEFAULT_SORTING;
 	}
 
 	public static function getSortingTypes() {
-		return self::$sorting;
+		return static::$sorting;
 	}
 
 	/**
@@ -44,7 +44,7 @@ class InsightsSorting {
 	 * @return array
 	 */
 	public function getSortedData( $articleData, $params ) {
-		if ( isset( $params['sort'] ) && isset( self::$sorting[ $params['sort'] ] ) ) {
+		if ( isset( $params['sort'] ) && isset( static::$sorting[ $params['sort'] ] ) ) {
 			$this->data = $this->insightsCache->get( $params['sort'] );
 		} else {
 			$this->getData( $articleData );
@@ -54,7 +54,7 @@ class InsightsSorting {
 	}
 
 	public function createSortingArrays( $sortingData ) {
-		foreach ( self::$sorting as $key => $item ) {
+		foreach ( static::$sorting as $key => $item ) {
 			if ( isset( $sortingData[$key] ) ) {
 				$this->createSortingArray( $sortingData[ $key ], $key );
 			}
@@ -69,10 +69,10 @@ class InsightsSorting {
 	 * @param string $key Memcache key
 	 */
 	public function createSortingArray( $sortingArray, $key ) {
-		if ( isset( self::$sorting[ $key ]['sortFunction'] ) ) {
-			usort( $sortingArray, self::$sorting[ $key ]['sortFunction'] );
+		if ( isset( static::$sorting[ $key ]['sortFunction'] ) ) {
+			usort( $sortingArray, static::$sorting[ $key ]['sortFunction'] );
 		} else {
-			arsort( $sortingArray, self::$sorting[ $key ]['sortType'] );
+			arsort( $sortingArray, static::$sorting[ $key ]['sortType'] );
 		}
 
 		$this->insightsCache->set( $key, array_keys( $sortingArray ) );
@@ -80,7 +80,7 @@ class InsightsSorting {
 
 	private function getData( $articlesData ) {
 		if ( $this->config->showPageViews() ) {
-			$this->data = $this->insightsCache->get( self::INSIGHTS_DEFAULT_SORTING );
+			$this->data = $this->insightsCache->get( static::INSIGHTS_DEFAULT_SORTING );
 		} else {
 			$this->data = array_keys( $articlesData );
 		}
