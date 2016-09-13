@@ -55,9 +55,9 @@ class ImageHelper {
 	public static function getIconInfo() {
 		$info = [];
 
-		foreach ( self::$icons as $icon ) {
+		foreach ( self::$icons as $key => $icon ) {
 			$fileInfo = self::getFileInfo( $icon['name'] . '.' . $icon['extension'] );
-			$info[$icon['name']] = $fileInfo;
+			$info[$key] = $fileInfo;
 		}
 
 		return $info;
