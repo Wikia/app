@@ -14,7 +14,7 @@ class ImageHelper {
 
 	static public $icons = [
 		'FandomLogoHeader' => [
-			'name' => 'Hero-logo-1x',
+			'name' => 'Hero-Logo-1x',
 			'extension' => 'png'
 		],
 		'FandomLogoFooter' => [
