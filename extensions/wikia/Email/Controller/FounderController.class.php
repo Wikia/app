@@ -568,7 +568,7 @@ class FounderTipsThreeDaysController extends FounderTipsController {
 	}
 
 	/**
-	 * @template founderTips
+	 * @template digestLayout
 	 */
 	public function body() {
 		$this->response->setData( [
@@ -576,10 +576,10 @@ class FounderTipsThreeDaysController extends FounderTipsController {
 			'summary' => $this->getMessage( 'emailext-founder-3-days-summary', $this->wikiUrl, $this->wikiName )->parse(),
 			'extendedSummary' => $this->getMessage( 'emailext-founder-3-days-extended-summary' )->text(),
 			'details' => $this->getDetailsList(),
+			'hasContentFooterMessages' => true,
 			'contentFooterMessages' => [
 				$this->getMessage( 'emailext-founder-3-days-need-help', $this->wikiName )->parse(),
-				$this->getMessage( 'emailext-founder-3-days-great-work' )->text(),
-				$this->getMessage( 'emailext-emailconfirmation-community-team' )->text(),
+				$this->getMessage( 'emailext-founder-3-days-great-work' )->text()
 			],
 			'signatureIcon' => $this->findSignatureIcon(),
 			'signature' => $this->createEmailSignature()
@@ -595,19 +595,19 @@ class FounderTipsThreeDaysController extends FounderTipsController {
 		$themeDesignerUrl = \GlobalTitle::newFromText( "ThemeDesigner", NS_SPECIAL, $this->wikiId )->getFullURL();
 		return [
 			[
-				"iconSrc" => Email\ImageHelper::getFileUrl( "Add_photo.png" ),
+				"iconSrc" => Email\ImageHelper::getFileUrl( "AddVideos.png" ),
 				"iconLink" => \GlobalTitle::newFromText( "Videos", NS_SPECIAL, $this->wikiId )->getFullURL(),
 				"detailsHeader" => $this->getMessage( "emailext-founder-3-days-add-videos-header" )->text(),
 				"details" => $this->getMessage( "emailext-founder-3-days-add-videos-details" )->text()
 			],
 			[
-				"iconSrc" => Email\ImageHelper::getFileUrl( "Update-theme.png" ),
+				"iconSrc" => Email\ImageHelper::getFileUrl( "UpdateYourTheme.png" ),
 				"iconLink" => $themeDesignerUrl,
 				"detailsHeader" => $this->getMessage( "emailext-founder-3-days-update-theme-header" )->text(),
 				"details" => $this->getMessage( "emailext-founder-3-days-update-theme-details", $themeDesignerUrl )->parse()
 			],
 			[
-				"iconSrc" => Email\ImageHelper::getFileUrl( "Get-inspired.png" ),
+				"iconSrc" => Email\ImageHelper::getFileUrl( "StartADiscussion.png" ),
 				"iconLink" => \WAMService::WAM_LINK,
 				"detailsHeader" => $this->getMessage( "emailext-founder-3-days-wam-header" )->text(),
 				"details" => $this->getMessage( "emailext-founder-3-days-wam-details", \WAMService::WAM_LINK )->parse()

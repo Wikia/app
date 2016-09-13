@@ -1,8 +1,8 @@
-.greeting {
+.digest-layout-container {
 	text-align: center;
 }
 
-.digest-layout-container {
+.digest-layout-details {
 	margin: 0 auto;
 	width: 375px;
 }
