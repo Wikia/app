@@ -144,7 +144,11 @@ define('ext.wikia.adEngine.slotTweaker', [
 
 	function getRecoveredProviderContainer(providerContainer) {
 		var element = document.getElementById(win._sp_.getElementId(providerContainer.childNodes[0].id));
-		return element.parentNode || null;
+		if (element && element.parentNode) {
+			return element.parentNode;
+		} else {
+			return null;
+		}
 	}
 
 	function isElement(obj) {
