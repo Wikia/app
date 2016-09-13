@@ -177,7 +177,7 @@ class MyHome {
 			return true;
 		}
 
-		//user must be logged in and have redirect enabled;
+		//user must be logged in and have redirect enabled
 		//this is not used for Corporate Sites where Wikia Visualization is enabled
 		if( empty($wgEnableWikiaHomePageExt) ) {
 			$title = UserService::getMainPage();
