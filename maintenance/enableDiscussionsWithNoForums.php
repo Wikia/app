@@ -11,7 +11,7 @@ use Swagger\Client\ApiException;
 use Swagger\Client\Discussion\Api\SitesApi;
 use Wikia\DependencyInjection\Injector;
 use Wikia\Service\Swagger\ApiProvider;
-require_once( dirname( __FILE__ ) . '/Maintenance.php' );
+require_once( __DIR__ . '/Maintenance.php' );
 
 class EnableDiscussionsWithNoForums extends Maintenance {
 
@@ -31,7 +31,9 @@ class EnableDiscussionsWithNoForums extends Maintenance {
 			$this->error( 'Unable to read from input file, exiting', true );
 		}
 
-		while ( !empty( $wikiId = fgets( $fh ) )) {
+		$schwartzToken = F::app()->wg->TheSchwartzSecretToken;
+
+		while ( !empty( $wikiId = fgets( $fh ) ) ) {
 			$dbw = wfGetDB( DB_MASTER, [], $wikiId );
 			$row = $dbw->selectRow(
 				[ 'comments_index', 'page' ],
@@ -48,7 +50,7 @@ class EnableDiscussionsWithNoForums extends Maintenance {
 				[ 'page' => [ 'LEFT JOIN', [ 'page_id=comment_id' ] ] ]
 			);
 
-			$totalThreads = intval($row->cnt);
+			$totalThreads = intval( $row->cnt );
 
 			if ( $totalThreads > 0 ) {
 				$this->error( "$wikiId has $totalThreads forum threads. Skipping!" );
@@ -63,7 +65,7 @@ class EnableDiscussionsWithNoForums extends Maintenance {
 				]
 			);
 			try {
-				$this->getDiscussionsSitesApi()->createSite( $site, F::app()->wg->TheSchwartzSecretToken );
+				$this->getDiscussionsSitesApi()->createSite( $site, $schwartzToken );
 			} catch ( ApiException $e ) {
 				$this->error(
 					'Creating site caused an error (siteId: ' . $wikiId . ',  error: ' . $e->getMessage() . ')'
