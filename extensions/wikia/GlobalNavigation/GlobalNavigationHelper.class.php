@@ -101,11 +101,12 @@ class GlobalNavigationHelper {
 
 		$exploreDropdownLinks = [];
 
-		$WAMLinkLabel = wfMessage( 'global-navigation-wam-link-label' );
+		$fandomUniversityLabel = wfMessage( 'global-navigation-fandom-university-link-label' );
 		$CommunityLinkLabel = wfMessage( 'global-navigation-community-link-label');
-		$exploreWikiaLabel = wfMessage( 'global-navigation-explore-wikia-link-label');
+		$exploreWikisLabel = wfMessage( 'global-navigation-explore-wikis-link-label');
+		$wikisLabel = wfMessage( 'global-navigation-wikis-label');
 
-		if ( $wgLang->getCode() === self::DEFAULT_LANG ) {
+		if ( $wgLang->getCode() === static::DEFAULT_LANG ) {
 			$hubsNodes = (new NavigationModel(true /* useSharedMemcKey */))->getTree(
 				NavigationModel::TYPE_MESSAGE,
 				'global-navigation-menu-hubs',
@@ -115,15 +116,13 @@ class GlobalNavigationHelper {
 			$hubsNodes = [];
 		}
 
-		// Link to WAM - Top Communities
 		$exploreDropdownLinks[] = [
-			'text' => $WAMLinkLabel->plain(),
-			'textEscaped' => $WAMLinkLabel->escaped(),
-			'href' => $this->getWAMLinkForLang( $wgLang->getCode() ),
-			'trackingLabel' => 'top-communities',
+			'text' => $exploreWikisLabel->plain(),
+			'textEscaped' => $exploreWikisLabel->escaped(),
+			'href' => wfMessage('global-navigation-explore-wikis-link')->plain(),
+			'trackingLabel' => 'explore-wikis',
 		];
 
-		//Link to Community Central
 		$exploreDropdownLinks[] = [
 			'text' => $CommunityLinkLabel->plain(),
 			'textEscaped' => $CommunityLinkLabel->escaped(),
@@ -131,14 +130,21 @@ class GlobalNavigationHelper {
 			'trackingLabel' => 'community-central',
 		];
 
+		$exploreDropdownLinks[] = [
+			'text' => $fandomUniversityLabel->plain(),
+			'textEscaped' => $fandomUniversityLabel->escaped(),
+			'href' => wfMessage('global-navigation-fandom-university-link')->plain(),
+			'trackingLabel' => 'fandom-university',
+		];
+
 		return [
 			'hubs' => $hubsNodes,
 			'exploreDropdown' => $exploreDropdownLinks,
 			'exploreWikia' => [
-				'text' => $exploreWikiaLabel->plain(),
-				'textEscaped' => $exploreWikiaLabel->escaped(),
-				'href' => wfMessage('global-navigation-explore-wikia-link')->plain(),
-				'trackingLabel' => 'explore-wikia',
+				'text' => $wikisLabel->plain(),
+				'textEscaped' => $wikisLabel->escaped(),
+				'href' => '#',
+				'trackingLabel' => 'wikis',
 			]
 		];
 	}

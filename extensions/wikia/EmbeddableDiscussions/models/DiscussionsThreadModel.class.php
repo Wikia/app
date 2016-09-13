@@ -75,10 +75,10 @@ class DiscussionsThreadModel {
 		global $wgDevelEnvironment;
 
 		if ( empty( $wgDevelEnvironment ) ) {
-			return self::DISCUSSIONS_API_BASE . "$this->cityId/votes/post/";
+			return "/$this->cityId/votes/post/";
 		}
 
-		return self::DISCUSSIONS_API_BASE_DEV . "$this->cityId/votes/post/";
+		return "/$this->cityId/votes/post/";
 	}
 
 	private function getBaseUrl() {
@@ -93,10 +93,17 @@ class DiscussionsThreadModel {
 
 	public function getData( $showLatest, $limit, $category ) {
 		$sortKey = $showLatest ? self::SORT_LATEST_LINK : self::SORT_TRENDING_LINK;
+		$categoryId = $this->getCategoryId( $category );
+
+		if ( $categoryId ) {
+			$discussionsUrl = "/d/f?catId=$categoryId&sort=$sortKey";
+		} else {
+			$discussionsUrl = "/d/f?sort=$sortKey";
+		}
 
 		return [
 			'siteId' => $this->cityId,
-			'discussionsUrl' => "/d/f?sort=$sortKey",
+			'discussionsUrl' => $discussionsUrl,
 			'requestUrl' => $this->getRequestUrl( $showLatest, $limit, $category ),
 			'baseUrl' => $this->getBaseUrl(),
 			'upvoteRequestUrl' => $this->getUpvoteRequestUrl(),
