@@ -75,10 +75,10 @@ class DiscussionsThreadModel {
 		global $wgDevelEnvironment;
 
 		if ( empty( $wgDevelEnvironment ) ) {
-			return self::DISCUSSIONS_API_BASE . "$this->cityId/votes/post/";
+			return "/$this->cityId/votes/post/";
 		}
 
-		return self::DISCUSSIONS_API_BASE_DEV . "$this->cityId/votes/post/";
+		return "/$this->cityId/votes/post/";
 	}
 
 	private function getBaseUrl() {

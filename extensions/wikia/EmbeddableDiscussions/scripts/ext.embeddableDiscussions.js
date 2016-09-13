@@ -129,10 +129,13 @@ require([
 		});
 
 		$('.embeddable-discussions-module').on('click', '.upvote', function(event) {
-			var upvoteUrl = event.currentTarget.getAttribute('data-url'),
-			  hasUpvoted = event.currentTarget.getAttribute('data-hasUpvoted') === '1',
-			  $svg = $($(event.currentTarget).children()[0]),
-			  verb = hasUpvoted ? 'DELETE' : 'POST';
+			var isDev = mw.config.get('wgDevelEnvironment'),
+				upvoteUrl =
+					(isDev ? 'https://services.wikia-dev.com/discussion' : 'https://services.wikia.com/discussion') +
+					event.currentTarget.getAttribute('href'),
+				hasUpvoted = event.currentTarget.getAttribute('data-hasUpvoted') === '1',
+				$svg = $($(event.currentTarget).children()[0]),
+				verb = hasUpvoted ? 'DELETE' : 'POST';
 
 			if (!mw.user.anonymous()) {
 				if (hasUpvoted) {
