@@ -28,8 +28,8 @@
 	}
 
 	.community-page-insights-module-header {
-		@include flexbox();
 		@include align-items(center);
+		@include flexbox();
 
 		background: $color-buttons;
 		color: $color-button-text;
