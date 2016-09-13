@@ -15,6 +15,7 @@ $messages['en'] = array(
 	'emailext-founder-digest-edits-description' => 'Happy community members make happy wikias. Make sure to thank those who contribute so they feel the love!',
 	'emailext-founder-digest-users-header' => '$1 New Wikians',
 	'emailext-founder-digest-users-description' => 'Welcome new people to your wikia! Get them involved in the great fan community you created.',
+	'emailext-founder-digest-signature' => 'The Fandom Community Team'
 );
 
 $messages['qqq'] = array(
@@ -31,6 +32,7 @@ $messages['qqq'] = array(
 	'emailext-founder-digest-edits-description' => 'Description text for the number-of-edits header',
 	'emailext-founder-digest-users-header' => 'Header text for number of new users. $1 is the number of new users joined.',
 	'emailext-founder-digest-users-description' => 'Description text for the number-of-users header',
+	'emailext-founder-digest-signature' => 'The signature for this email'
 );
 
 $messages['de'] = array(

@@ -1,23 +1,20 @@
-<table class="detailsTable">
-	<tr>
-		<td>
-			<div class="detailsIcon">
-				{{# iconLink}}<a href="{{iconLink}}">{{/iconLink}}
-				<img src="{{iconSrc}}" style="float: left">
+<tr>
+	<td>
+		{{# iconLink}}<a href="{{iconLink}}">{{/iconLink}}
+		<img class="digest-details-icon" src="{{iconSrc}}">
+		{{# iconLink}}</a>{{/ iconLink}}
+	</td>
+</tr>
+<tr>
+	<td>
+		{{# detailsHeader}}
+			<p class="digest-details-header">
+				{{# iconLink}}<a href="{{iconLink}}">{{/ iconLink}}
+				{{detailsHeader}}
 				{{# iconLink}}</a>{{/ iconLink}}
-			</div>
-		</td>
-		<td>
-			<div>
-				{{# detailsHeader}}
-					<p>
-						{{# iconLink}}<a href="{{iconLink}}">{{/ iconLink}}
-						<strong>{{detailsHeader}}</strong>
-						{{# iconLink}}</a>{{/ iconLink}}
-					</p>
-				{{/ detailsHeader}}
-				<p>{{{details}}}</p>
-			</div>
-		</td>
-	</tr>
-</table>
+			</p>
+		{{/ detailsHeader}}
+		<p>{{{details}}}</p>
+	</td>
+</tr>
+

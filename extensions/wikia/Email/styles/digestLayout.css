@@ -1,23 +1,27 @@
-.content-footer-messages p:not(:first-child) {
-	margin: 0;
+.greeting {
+	text-align: center;
 }
 
-.detailsIcon {
-	margin-right: 20px;
+.digest-layout-container {
+	margin: 0 auto;
+	width: 375px;
 }
 
-.detailsTable {
-	margin-bottom: 40px;
+.digest-layout-container td {
+	text-align: center;
 }
 
-.detailsTable p {
-	margin: 0;
+.digest-details-icon, .signature-icon {
+	height: 40px;
+	margin: 20px 0 10px;
+	width: 40px;
 }
 
-.detailsTable td {
-	vertical-align: top;
+.digest-details-header {
+	font-weight: bold;
+	margin-bottom: 0;
 }
 
-td div.content-footer-messages {
-	padding-top: 30px;
+.signature {
+	font-weight: bold;
 }

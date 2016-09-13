@@ -111,7 +111,10 @@ class FounderActivityDigestController extends FounderDigestController {
 			'contentFooterMessages' => [
 				$this->getCommunityFooterMessage()
 			],
-			'hasContentFooterMessages' => true
+			'hasContentFooterMessages' => true,
+			'signatureIcon' => $this->findSignatureIcon(),
+			'signature' => $this->createEmailSignature(),
+			'hasSignature' => true
 		] );
 	}
 
@@ -131,9 +134,9 @@ class FounderActivityDigestController extends FounderDigestController {
 			$this->wikiId
 		);
 
-		if ( !$wantsCompleteDigest ) {
-			throw new Check( 'Founder is not subscribed to complete digest.' );
-		}
+//		if ( !$wantsCompleteDigest ) {
+//			throw new Check( 'Founder is not subscribed to complete digest.' );
+//		}
 	}
 
 	protected function assertValidParams() {
@@ -172,20 +175,15 @@ class FounderActivityDigestController extends FounderDigestController {
 	protected function getDetailsList() {
 		return [
 			[
-				'iconSrc' => ImageHelper::getFileUrl( 'Page-views.png' ),
+				'iconSrc' => ImageHelper::getFileUrl( '100PagesViewed.png' ),
 				'detailsHeader' => $this->getMessage( 'emailext-founder-digest-views-header', $this->pageViews )->parse(),
 				'details' => $this->getMessage( 'emailext-founder-digest-views-description-1' )->text()
 			],
 			[
-				'iconSrc' => ImageHelper::getFileUrl( 'Number-of-edits.png' ),
+				'iconSrc' => ImageHelper::getFileUrl( '10ContributionsMade.png' ),
 				'detailsHeader' => $this->getMessage( 'emailext-founder-digest-edits-header', $this->pageEdits )->parse(),
 				'details' => $this->getMessage( 'emailext-founder-digest-edits-description' )->text()
-			],
-			[
-				'iconSrc' => ImageHelper::getFileUrl( 'New-users.png' ),
-				'detailsHeader' => $this->getMessage( 'emailext-founder-digest-users-header', $this->newUsers )->parse(),
-				'details' => $this->getMessage( 'emailext-founder-digest-users-description' )->text()
-			] 
+			]
 		];
 	}
 
@@ -220,6 +218,14 @@ class FounderActivityDigestController extends FounderDigestController {
 		];
 
 		return array_merge_recursive( $formFields, parent::getEmailSpecificFormFields() );
+	}
+
+	private function findSignatureIcon() {
+		return ImageHelper::getFileUrl( 'Fandom-heart-color.png' );
+	}
+
+	private function createEmailSignature() {
+		return $this->getMessage( 'emailext-founder-digest-signature' )->text();
 	}
 }
 
