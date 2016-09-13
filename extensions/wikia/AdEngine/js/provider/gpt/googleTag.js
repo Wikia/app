@@ -162,7 +162,9 @@ define('ext.wikia.adEngine.provider.gpt.googleTag', [
 			slotsToDestroy = allSlots;
 		} else {
 			allSlots.forEach(function (slot) {
-				if (slotsNames.indexOf(slot.getTargeting('pos')) > -1) {
+				// google returns array
+				// - in our case it has always one element and this element is the one we are interested in
+				if (slotsNames.indexOf(slot.getTargeting('pos')[0]) > -1) {
 					slotsToDestroy.push(slot);
 				}
 			});
@@ -183,8 +185,7 @@ define('ext.wikia.adEngine.provider.gpt.googleTag', [
 		}
 	}
 
-	function newPageView() {
-		adLogicPageViewCounter.increment();
+	function updateCorrelator() {
 		push(function() {
 			window.googletag.pubads().updateCorrelator();
 		});
@@ -196,10 +197,10 @@ define('ext.wikia.adEngine.provider.gpt.googleTag', [
 		flush: flush,
 		init: init,
 		isInitialized: isInitialized,
-		newPageView: newPageView,
 		onAdLoad: onAdLoad,
 		push: push,
 		registerCallback: registerCallback,
-		setPageLevelParams: setPageLevelParams
+		setPageLevelParams: setPageLevelParams,
+		updateCorrelator: updateCorrelator
 	};
 });
