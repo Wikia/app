@@ -4837,7 +4837,7 @@ class User {
 	 * @param $right String Right to query
 	 * @return String Localized description of the right
 	 */
-	public static function getRightDescription( $right ) {
+    public static function getRightDescription( $right ) {
 		$key = "right-$right";
 		$msg = wfMessage( $key );
 		return $msg->isBlank() ? $right : $msg->text();
@@ -4855,10 +4855,10 @@ class User {
 	 */
 	public static function getUsername( $userId, $name ) {
 		global $wgEnableUsernameLookup;
-		// if anon or we don't want to do a lookup, return the provided name
-		if( $userId == 0 || !$wgEnableUsernameLookup ){
-			return $name;
-		}
-		return static::whoIs($userId);
-	}
+		// we only want to perform the lookup if it's enabled and the user is not an anon
+		if( $wgEnableUsernameLookup && $userId != 0 ) {
+            return static::whoIs($userId);
+        }
+        return $name;
+    }
 }
