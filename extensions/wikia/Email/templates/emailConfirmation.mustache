@@ -5,5 +5,21 @@
 			{{> button}}
 		</td>
 	</tr>
-	{{> contentFooterMessages}}
+		<tr>
+			<td colspan="2">
+				<div class="content-footer-messages">
+					<p>{{contentFooterMessageTop}}</p>
+					<p>
+						<ul class="with-spacing">
+							{{#contentFooterList}}
+								<li>{{.}}</li>
+							{{/contentFooterList}}
+						</ul>
+					</p>
+					{{#contentFooterMessagesBottom}}
+						<p>{{{.}}}</p>
+					{{/contentFooterMessagesBottom}}
+				</div>
+			</td>
+		</tr>
 </table>

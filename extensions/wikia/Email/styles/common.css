@@ -29,13 +29,22 @@ img {
 	border: 0;
 }
 
+table {
+	border-spacing: 0;
+	border-collapse: separate;
+}
+
+tr.avatar > td {
+	padding-bottom: 15px;
+	padding-top: 20px;
+}
+
 td {
 	padding: 0;
 }
 
-table {
-	border-spacing: 0;
-	border-collapse: separate;
+td.widest {
+	width: 100%;
 }
 
 .button {
@@ -51,11 +60,21 @@ table {
 	text-transform: uppercase;
 }
 
-tr.avatar > td {
-	padding-bottom: 15px;
-	padding-top: 20px;
+ul {
+	margin: 0;
+	padding: 0;
 }
 
-td.widest {
-	width: 100%;
+ul.with-spacing {
+	margin: 20px 0;
+	padding-left: 20px;
+}
+
+li {
+	line-height: 22px;
+	margin: 0;
+}
+
+.content-footer-messages p:last-of-type {
+	font-weight: bold;
 }

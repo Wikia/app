@@ -6,16 +6,9 @@ h3 {
 }
 
 li {
-	line-height: 22px;
 	list-style: none;
-	margin: 0;
 }
 
 td h3:not(:first-child) {
 	margin-top: 20px;
-}
-
-ul {
-	padding: 0;
-	margin: 0;
 }
