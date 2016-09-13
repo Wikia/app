@@ -147,6 +147,24 @@ define('ext.wikia.adEngine.slotTweaker', [
 		return element.parentNode || null;
 	}
 
+	function isElement(obj) {
+		return obj instanceof HTMLElement;
+	}
+
+	function moveStylesToInline(element) {
+		if (!isElement(element)) {
+			return;
+		}
+		element.style.cssText = document.defaultView.getComputedStyle(element, '').cssText;
+	}
+
+	function recursiveMoveStylesToInline(element) {
+		for (var i = 0; i < element.childNodes.length; i++) {
+			recursiveMoveStylesToInline(element.childNodes[i]);
+		}
+		moveStylesToInline(element);
+	}
+
 	function makeResponsive(slotName, aspectRatio) {
 		var providerContainer = doc.getElementById(slotName).lastElementChild;
 
@@ -214,8 +232,10 @@ define('ext.wikia.adEngine.slotTweaker', [
 		hide: hide,
 		isTopLeaderboard: isTopLeaderboard,
 		makeResponsive: makeResponsive,
+		recursiveMoveStylesToInline: recursiveMoveStylesToInline,
 		onReady: onReady,
 		removeDefaultHeight: removeDefaultHeight,
+		removeClass: removeClass,
 		removeTopButtonIfNeeded: removeTopButtonIfNeeded,
 		show: show
 	};

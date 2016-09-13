@@ -108,6 +108,14 @@ define('ext.wikia.adEngine.template.bfaa', [
 		}
 	};
 
+	function tweakAdSlot(adContainer) {
+		var className = 'tmpHeader';
+
+		adContainer.className += ' ' + className;
+		slotTweaker.recursiveMoveStylesToInline(adContainer);
+		slotTweaker.removeClass(adContainer, className);
+	}
+
 	function show(params) {
 		var handler,
 			skin = adContext.getContext().targeting.skin;
@@ -135,6 +143,8 @@ define('ext.wikia.adEngine.template.bfaa', [
 		slotTweaker.onReady(params.slotName, function (iframe) {
 			handler.show(iframe, params.aspectRatio);
 			wrapper.style.opacity = '';
+
+			tweakAdSlot(iframe.parentNode.parentNode.parentNode.parentNode);
 		});
 
 		log(['show', params.uap], 'info', logGroup);
