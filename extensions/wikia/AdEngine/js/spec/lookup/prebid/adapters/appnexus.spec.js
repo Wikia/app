@@ -7,11 +7,17 @@ describe('ext.wikia.adEngine.lookup.prebid.adapters.appnexus', function () {
 		},
 		geo: {
 			isProperGeo: jasmine.createSpy('isProperGeo')
+		},
+		appNexusPlacements: {
+			getPlacement: function () {
+				return '123';
+			}
 		}
 	};
 
 	function getAppNexus() {
 		return modules['ext.wikia.adEngine.lookup.prebid.adapters.appnexus'](
+			mocks.appNexusPlacements,
 			mocks.geo,
 			mocks.instantGlobals
 		);
@@ -38,7 +44,7 @@ describe('ext.wikia.adEngine.lookup.prebid.adapters.appnexus', function () {
 				{
 					bidder: 'appnexus',
 					params: {
-						placementId: '5823300'
+						placementId: '123'
 					}
 				}
 			]
