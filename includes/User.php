@@ -4847,16 +4847,16 @@ class User {
 	/**
 	 * We want to use one source for username.
 	 * This function will perform the lookup if
-     * $wgLookupUsername is true
+     * $wgEnableUsernameLookup is true
 	 *
 	 * @param $userId int userId
 	 * @param $name string anon username
 	 * @return string
 	 */
 	public static function getUsername( $userId, $name ) {
-		global $wgLookupUsername;
+		global $wgEnableUsernameLookup;
 		// if anon or we don't want to do a lookup, return the provided name
-		if( $userId == 0 || !$wgLookupUsername ){
+		if( $userId == 0 || !$wgEnableUsernameLookup ){
 			return $name;
 		}
 		return static::whoIs($userId);
