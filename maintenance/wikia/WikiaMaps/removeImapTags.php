@@ -18,6 +18,8 @@ class RemoveImapTags extends Maintenance {
 	private $mapsClientConfig;
 	private $slaveDBConfig;
 
+	private $imapSearchRegexp = "/<imap\s+map\-id\=[\'\"]?(\d{1,})[\'\"]?\s*(>\s*<\s*\/\s*imap|\/)\s*>/";
+
 
 	public function __construct() {
 		parent::__construct();
@@ -70,9 +72,8 @@ class RemoveImapTags extends Maintenance {
 		if ( $article instanceof Article && $article->getID() ) {
 			$results = null;
 			$articleContent = $article->getContent();
-			$imapSearchRegexp = "/<imap.*map\-id\=['\"](\d{1,})['\"].*(<\/imap|\/)>/";
 
-			$noOfFoundTags = preg_match_all($imapSearchRegexp, $articleContent, $results);
+			$noOfFoundTags = preg_match_all($this->imapSearchRegexp, $articleContent, $results);
 
 			if( $noOfFoundTags === 0 ) {
 				return false;
