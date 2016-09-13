@@ -3,9 +3,6 @@ class UserService extends Service {
 
 	const CACHE_EXPIRATION = 86400;//1 day
 
-	private static $userCache;
-	private static $userCacheMapping;
-
 	public static function getNameFromUrl($url) {
 		$out = false;
 
