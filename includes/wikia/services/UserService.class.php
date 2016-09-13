@@ -28,6 +28,7 @@ class UserService extends Service {
 		global $wgUser;
 
 		$title = Title::newMainPage();
+
 		if( $wgUser->isLoggedIn() ) {
 			$value = $wgUser->getGlobalPreference(UserPreferencesV2::LANDING_PAGE_PROP_NAME);
 			switch($value) {

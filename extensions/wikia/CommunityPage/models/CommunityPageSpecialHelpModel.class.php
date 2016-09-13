@@ -31,6 +31,6 @@ class CommunityPageSpecialHelpModel {
 			return $title->getFullURL();
  		}
 
- 		return '';
+ 		return UserService::getMainPage()->getLocalURL();
  	}
 }
