@@ -1,10 +1,21 @@
 @import 'skins/shared/color';
 @import 'skins/shared/mixins/flexbox';
 
+$content-spacing: 18px;
+$content-spacing-large: 24px;
+$element-size: 48px;
+$font-size-small: 12px;
+$font-size-regular: 14px;
+$icon-size: 18px;
+
 .community-page-insights-module {
-	margin-bottom: 34px;
-	width: 239px;
+	@include flexbox();
+	@include flex-direction(column);
+
+	background-color: $color-page;
 	border: 1px solid $color-page-border-subtle;
+	margin-bottom: $content-spacing;
+	width: 239px;
 
 	.community-page-insights-module-article-data {
 		color: $color-links;
@@ -19,10 +30,10 @@
 
 		color: $color-buttons;
 		display: block;
-		font-size: 12px;
+		font-size: $font-size-small;
 		font-weight: bold;
-		line-height: 48px;
-		margin-right: 24px;
+		line-height: $element-size;
+		margin-right: $content-spacing-large;
 		text-align: right;
 		text-transform: uppercase;
 	}
@@ -33,11 +44,11 @@
 
 		background: $color-buttons;
 		color: $color-button-text;
-		font-size: 14px;
+		font-size: $font-size-regular;
 		font-weight: bold;
 		line-height: 16px;
-		margin: 0 0 24px;
-		padding: 18px;
+		margin: 0 0 $content-spacing-large;
+		padding: $content-spacing;
 		text-transform: uppercase;
 	}
 
@@ -47,27 +58,29 @@
 	}
 
 	.community-page-insights-module-help {
-		height: 48px;
-		width: 48px;
+		height: $element-size;
+		width: $element-size;
 	}
 
 	.community-page-insights-module-help-icon {
 		fill: $color-page-border-subtle;
-		height: 18px;
+		height: $icon-size;
 		margin: 15px;
-		width: 18px;
+		width: $icon-size;
 	}
 
 	.community-page-insights-module-list {
+		@include flex-grow(1);
+
 		list-style: none;
 		margin: 0;
-		padding: 0 18px;
+		padding: 0 $content-spacing;
 	}
 
 	.community-page-insights-module-list-item {
 		@include flexbox();
 
 		align-items: center;
-		margin-bottom: 24px;
+		margin-bottom: $content-spacing-large;
 	}
 }
