@@ -4,7 +4,7 @@ class EmbeddableDiscussionsController {
 	const TAG_NAME = 'discussions';
 	const ITEMS_DEFAULT = 5;
 	const ITEMS_MIN = 3;
-	const ITEMS_MAX = 8;
+	const ITEMS_MAX = 6;
 	const COLUMNS_DEFAULT = 1;
 	const COLUMNS_MIN = 1;
 	const COLUMNS_MAX = 2;
@@ -28,6 +28,62 @@ class EmbeddableDiscussionsController {
 		return true;
 	}
 
+	/**
+	 * Checks arguments for errors.
+	 * @param array $args
+	 * @oaram errorMessage Return parameter with the proper error message to show. Disregard if return is false
+	 * @return true if ok, false if error
+	 */
+	private static function checkArguments( array $args, $modelData, &$errorMessage ) {
+		// mostrecent must be bool
+		if ( array_key_exists( 'mostrecent', $args ) && $args['mostrecent'] !== 'true' && $args['mostrecent'] !== 'false' ) {
+			$errorMessage = wfMessage( 'embeddable-discussions-parameter-error', 'mostrecent' )->plain() .
+				wfMessage( 'embeddable-discussions-parameter-error-boolean' )->plain();
+
+			return false;
+		}
+
+		// size must be integer in range
+		if ( array_key_exists( 'size', $args ) ) {
+			$size = $args['size'];
+
+			$errorMessage = wfMessage( 'embeddable-discussions-parameter-error', 'size' )->plain() .
+				wfMessage( 'embeddable-discussions-parameter-error-range',
+					self::ITEMS_MIN , self::ITEMS_MAX )->plain();
+
+			if ( !ctype_digit( $size ) ) {
+				return false;
+			} else if ( intval( $size ) > self::ITEMS_MAX || intval( $size ) < self::ITEMS_MIN ) {
+				return false;
+			}
+		}
+
+		// columns must be integer in range
+		if ( array_key_exists( 'columns', $args ) ) {
+			$columns = $args['columns'];
+
+			$errorMessage = wfMessage( 'embeddable-discussions-parameter-error', 'columns' )->plain() .
+				wfMessage( 'embeddable-discussions-parameter-error-range',
+					self::COLUMNS_MIN , self::COLUMNS_MAX )->plain();
+
+			if ( !ctype_digit( $columns ) ) {
+				return false;
+			} else if ( intval( $columns ) > self::COLUMNS_MAX || intval( $columns ) < self::COLUMNS_MIN ) {
+				return false;
+			}
+		}
+
+		// category must be a valid category
+		if ( $modelData['invalidCategory'] ) {
+			$errorMessage = wfMessage( 'embeddable-discussions-parameter-error', $args['category'] )->plain() .
+				wfMessage( 'embeddable-discussions-parameter-error-category' )->plain();
+
+			return false;
+		}
+
+		return true;
+	}
+
 	public static function render( $input, array $args ) {
 		global $wgCityId;
 
@@ -36,29 +92,22 @@ class EmbeddableDiscussionsController {
 		$columns = empty( $args['columns'] ) ? self::COLUMNS_DEFAULT : intval( $args['columns'] );
 		$category = empty( $args['category'] ) ? '' :  $args['category'];
 
-		if ( $itemCount > self::ITEMS_MAX ) {
-			$itemCount = self::ITEMS_MAX;
-		}
-
-		if ( $itemCount < self::ITEMS_MIN ) {
-			$itemCount = self::ITEMS_MIN;
-		}
-
-		if ( $columns < self::COLUMNS_MIN ) {
-			$columns = self::COLUMNS_MIN;
-		}
-
-		if ( $columns > self::COLUMNS_MAX ) {
-			$columns = self::COLUMNS_MAX;
-		}
-
 		$templateEngine = ( new Wikia\Template\MustacheEngine )->setPrefix( __DIR__ . '/templates' );
+		$modelData = ( new DiscussionsThreadModel( $wgCityId ) )->getData( $showLatest, $itemCount, $category );
+
+		if ( !self::checkArguments( $args, $modelData, $errorMessage ) ) {
+			return $templateEngine->clearData()
+				->setData( [
+					'errorMessage' => $errorMessage,
+				] )
+				->render( 'DiscussionError.mustache' );
+		}
 
 		if ( F::app()->checkSkin( 'wikiamobile' ) ) {
 			// In Mercury, discussions are rendered client side as an Ember component
 			$modelData = [
 				'mercuryComponentAttrs' => json_encode( [
-					'category' => ( new DiscussionsThreadModel( $wgCityId ) )->getCategoryId( $category ),
+					'category' => $modelData['categoryId'],
 					'show' => $showLatest ? 'latest' : 'trending',
 					'itemCount' => $itemCount,
 				] ),
@@ -70,8 +119,6 @@ class EmbeddableDiscussionsController {
 				->setData( $modelData )
 				->render( 'DiscussionThreadMobile.mustache' );
 		} else {
-			$modelData = ( new DiscussionsThreadModel( $wgCityId ) )->getData( $showLatest, $itemCount, $category );
-
 			$modelData['requestData'] = json_encode( [
 				'category' => $category,
 				'columns' => $columns,
