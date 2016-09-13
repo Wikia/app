@@ -2,10 +2,17 @@ describe('ext.wikia.adEngine.lookup.prebid.adapters.appnexusPlacements', functio
 	'use strict';
 
 	var mocks = {
-		adLogicZoneParams: {
-			getVertical: function () {
+		adContext: {
+			getContext: function () {
+				return mocks.context;
 			}
-		}, instantGlobals: {
+		},
+		context: {
+			targeting: {
+				mappedVerticalName: ''
+			}
+		},
+		instantGlobals: {
 			dev: {
 				wgAdDriverAppNexusBidderPlacementsConfig: {
 					mercury: {
@@ -79,12 +86,10 @@ describe('ext.wikia.adEngine.lookup.prebid.adapters.appnexusPlacements', functio
 	];
 
 	function getModule(vertical, env) {
-		mocks.adLogicZoneParams.getVertical = function () {
-			return vertical;
-		};
+		mocks.context.targeting.mappedVerticalName = vertical;
 
 		return modules['ext.wikia.adEngine.lookup.prebid.adapters.appnexusPlacements'](
-			mocks.adLogicZoneParams,
+			mocks.adContext,
 			mocks.instantGlobals[env]
 		);
 	}

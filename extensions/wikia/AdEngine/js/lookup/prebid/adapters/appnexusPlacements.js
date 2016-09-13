@@ -1,15 +1,16 @@
 define('ext.wikia.adEngine.lookup.prebid.adapters.appnexusPlacements', [
-	'ext.wikia.adEngine.utils.adLogicZoneParams',
+	'ext.wikia.adEngine.adContext',
 	'wikia.instantGlobals',
 	'wikia.log'
-], function (zoneParams, instantGlobals, log) {
+], function (adContext, instantGlobals, log) {
 	'use strict';
 
-	var placementsMap = instantGlobals.wgAdDriverAppNexusBidderPlacementsConfig,
-		logGroup = 'ext.wikia.adEngine.lookup.prebid.adapters.appnexusPlacements';
+	var context = adContext.getContext(),
+		logGroup = 'ext.wikia.adEngine.lookup.prebid.adapters.appnexusPlacements',
+		placementsMap = instantGlobals.wgAdDriverAppNexusBidderPlacementsConfig;
 
 	function getPlacement(skin) {
-		var vertical = zoneParams.getVertical();
+		var vertical = context.targeting.mappedVerticalName;
 
 		if (placementsMap && placementsMap[skin] && placementsMap[skin][vertical]) {
 			return placementsMap[skin][vertical];
