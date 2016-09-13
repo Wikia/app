@@ -24,6 +24,10 @@
 }
 
 .CommunityPageMainContent {
+	@include flexbox();
+	@include flex-wrap(wrap);
+	@include justify-content(space-around);
+
 	box-sizing: inherit;
 	float: left;
 	padding-right: 34px;

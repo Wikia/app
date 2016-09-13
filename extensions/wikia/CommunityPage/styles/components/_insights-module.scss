@@ -1,77 +1,73 @@
 @import 'skins/shared/color';
-@import 'skins/oasis/css/core/breakpoints-variables';
 @import 'skins/shared/mixins/flexbox';
-
-$item-icon-size: 34px;
-$item-icon-margin-right: 6px;
-$item-data-width: calc(70% - #{$item-icon-size + $item-icon-margin-right});
-$item-link-width: 30%;
-
-$edit-icon: '/extensions/wikia/CommunityPage/images/edit-pen.svg';
-
-@if $is-dark-wiki {
-	$edit-icon: '/extensions/wikia/CommunityPage/images/edit-pen-dark.svg';
-}
 
 .community-page-insights-module {
 	margin-bottom: 34px;
+	width: 239px;
+	border: 1px solid $color-page-border-subtle;
 
 	.community-page-insights-module-header {
-		font-size: 24px;
+		@include flexbox();
+		@include align-items(center);
+
+		background: $color-buttons;
+		color: $color-button-text;
+		font-size: 14px;
 		font-weight: bold;
-		line-height: 28px;
-		margin: 0 0 12px;
+		line-height: 16px;
+		margin: 0 0 24px;
+		padding: 18px;
+		text-transform: uppercase;
+	}
+
+	.community-page-insights-module-header-icon {
+		fill: $color-buttons;
+		margin-right: 12px;
 	}
 
 	.community-page-insights-module-list {
 		list-style: none;
 		margin: 0;
+		padding: 0 18px;
 	}
 
 	.community-page-insights-module-list-item {
 		@include flexbox();
 
 		align-items: center;
-		border-bottom: 1px solid $color-page-border-subtle;
-		padding: 20px;
-	}
-
-	.community-page-insights-module-edit-icon {
-		background: url($edit-icon) no-repeat;
-		height: $item-icon-size;
-		margin-right: $item-icon-margin-right;
-		width: 24px;
+		margin-bottom: 24px;
 	}
 
 	.community-page-insights-module-article-data {
 		color: $color-links;
-		overflow: hidden;
-		text-overflow: ellipsis;
-		white-space: nowrap;
-		width: $item-data-width;
 	}
 
-	.community-page-insights-module-metadata {
-		color: $color-alternate-text;
+	.community-page-insights-module-footer {
+		@include flexbox();
+	}
+
+	.community-page-insights-module-help {
+		width: 48px;
+		height: 48px;
+	}
+
+	.community-page-insights-module-help-icon {
+		fill: $color-page-border-subtle;
+		height: 18px;
+		margin: 15px;
+		width: 18px;
+	}
+
+	.community-page-insights-module-full-list-link {
+		@include flex-grow(1);
+
+		color: $color-buttons;
 		font-size: 12px;
-
-		.communitypage-user-link {
-			display: inline-block;
-			max-width: 140px;
-			overflow: hidden;
-			text-overflow: ellipsis;
-			vertical-align: bottom;
-		}
-	}
-
-	.community-page-insights-module-edit-link {
+		font-weight: bold;
+		display: block;
+		line-height: 48px;
+		margin-right: 24px;
 		text-align: right;
-		width: $item-link-width;
-	}
-}
-
-@media #{$breakpoint-below-small-plus} {
-	.community-page-insights-module {
-		margin: 0 34px 34px;
+		text-transform: uppercase;
 	}
 }
