@@ -1,6 +1,6 @@
 <?php
 
-class ArchiveWikiForumController extends WallBaseController {
+class ArchiveWikiForumController extends WikiaController {
 
     // Constants which map to method names. Useful for renderView calls
     // F:app()->renderView( 'className', 'methodName' );
@@ -13,7 +13,19 @@ class ArchiveWikiForumController extends WallBaseController {
     public function archivedForumNotification() {
         $this->response->addAsset( 'extensions/wikia/ArchiveWikiForum/css/archivedForumNotification.scss' );
 
-        $forumTitle = SpecialPage::getTitleFor( 'Forum' );
-        $this->response->setVal( 'forumUrl',  $forumTitle->getLocalURL() );
+        global $wgEnableForumExt;
+        if ( !empty( $wgEnableForumExt ) ) {
+            $forumTitle = SpecialPage::getTitleFor( 'Forum' );
+            $messageKey = 'archive-wiki-forums-button-to-new-forums';
+            $url = $forumTitle->getLocalURL();
+        } else {
+            $messageKey = 'archive-wiki-forums-button-to-discussions';
+            $url = '/d/f';
+        }
+
+        $this->response->setValues( [
+            'messageKey' => $messageKey,
+            'url' => $url
+        ] );
     }
 }
