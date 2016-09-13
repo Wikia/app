@@ -53,6 +53,10 @@ body {
 	margin: 0 auto 5px;
 }
 
+.social-links {
+	margin-top: 40px;
+}
+
 .social-links img {
 	padding: 0 10px;
 }

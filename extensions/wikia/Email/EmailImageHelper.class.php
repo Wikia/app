@@ -13,35 +13,35 @@ class ImageHelper {
 	const ICON_CACHE_TTL = 86400;
 
 	static public $icons = [
-		'FandomLogoHeader‎' => [
+		'FandomLogoHeader' => [
 			'name' => 'Hero-logo-1x',
 			'extension' => 'png'
 		],
-		'FandomLogoFooter‎' => [
+		'FandomLogoFooter' => [
 			'name' => 'Fandom-logo-footer',
 			'extension' => 'png'
 		],
-		'Wikia‎' => [
+		'Wikia' => [
 			'name' => 'Wikia',
 			'extension' => 'gif'
 		],
-		'Twitter‎' => [
+		'Twitter' => [
 			'name' => 'Twitter_Footer',
 			'extension' => 'png'
 		],
-		'Facebook‎' => [
+		'Facebook' => [
 			'name' => 'Facebook_Footer',
 			'extension' => 'png'
 		],
-		'YouTube‎' => [
-			'name' => 'YouTube_Footer',
+		'YouTube' => [
+			'name' => 'Youtube_Footer',
 			'extension' => 'png'
 		],
-		'Reddit‎' => [
+		'Reddit' => [
 			'name' => 'Reddit_Footer',
 			'extension' => 'png'
 		],
-		'Instagram‎' => [
+		'Instagram' => [
 			'name' => 'Instagram_Footer',
 			'extension' => 'png'
 		],
