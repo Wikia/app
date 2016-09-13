@@ -2,8 +2,6 @@
 
 class ArchiveWikiForumController extends WikiaController {
 
-    // Constants which map to method names. Useful for renderView calls
-    // F:app()->renderView( 'className', 'methodName' );
     const ARCHIVED_FORUM_NOTIFICATION = "archivedForumNotification";
 
     /**
