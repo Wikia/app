@@ -6,6 +6,7 @@ use Email;
 use Email\Check;
 use Email\ControllerException;
 use Email\EmailController;
+use Email\ImageHelper;
 use Wikia\Logger;
 
 class FounderEditController extends EmailController {
@@ -470,7 +471,7 @@ class FounderTipsController extends EmailController {
 	}
 
 	/**
-	 * @template founderTips
+	 * @template digestLayout
 	 */
 	public function body() {
 		$this->response->setData( [
@@ -478,11 +479,13 @@ class FounderTipsController extends EmailController {
 			'summary' => $this->getMessage( 'emailext-founder-newly-created-summary', $this->wikiUrl, $this->wikiName )->parse(),
 			'extendedSummary' => $this->getMessage( 'emailext-founder-newly-created-summary-extended' )->text(),
 			'details' => $this->getDetailsList(),
+			'hasContentFooterMessages' => true,
 			'contentFooterMessages' => [
 				$this->getMessage( 'emailext-founder-visit-community', $this->wikiUrl, $this->wikiName )->parse(),
-				$this->getMessage( 'emailext-founder-happy-wikia-building' )->text(),
-				$this->getMessage( 'emailext-emailconfirmation-community-team' )->text(),
+				$this->getMessage( 'emailext-founder-happy-wikia-building' )->text()
 			],
+			'signatureIcon' => $this->findSignatureIcon(),
+			'signature' => $this->createEmailSignature()
 		] );
 	}
 
@@ -494,25 +497,25 @@ class FounderTipsController extends EmailController {
 	protected function getDetailsList() {
 		return [
 			[
-				"iconSrc" => Email\ImageHelper::getFileUrl( "Add_page.png" ),
+				"iconSrc" => Email\ImageHelper::getFileUrl( "AddPages.png" ),
 				"iconLink" => \GlobalTitle::newFromText( "CreatePage", NS_SPECIAL, $this->wikiId )->getFullURL( [ "modal" => "AddPage" ] ),
 				"detailsHeader" => $this->getMessage( "emailext-founder-add-pages-header" )->text(),
 				"details" => $this->getMessage( "emailext-founder-add-pages-details" )->text()
 			],
 			[
-				"iconSrc" => Email\ImageHelper::getFileUrl( "Add_photo.png" ),
+				"iconSrc" => Email\ImageHelper::getFileUrl( "PhotosVideos.png" ),
 				"iconLink" => \GlobalTitle::newFromText( "Images", NS_SPECIAL, $this->wikiId )->getFullURL( [ "modal" => "UploadImage" ] ),
 				"detailsHeader" => $this->getMessage( "emailext-founder-add-photos-header" )->text(),
 				"details" => $this->getMessage( "emailext-founder-add-photos-details" )->text()
 			],
 			[
-				"iconSrc" => Email\ImageHelper::getFileUrl( "Customize.png" ),
+				"iconSrc" => Email\ImageHelper::getFileUrl( "CustomizeIt.png" ),
 				"iconLink" => \GlobalTitle::newFromText( wfMessage( "mainpage" )->text(), NS_MAIN, $this->wikiId )->getFullURL( [ "action" => "edit" ] ),
 				"detailsHeader" => $this->getMessage( "emailext-founder-customize-header" )->text(),
 				"details" => $this->getMessage( "emailext-founder-customize-details" )->text()
 			],
 			[
-				"iconSrc" => Email\ImageHelper::getFileUrl( "Share.png" ),
+				"iconSrc" => Email\ImageHelper::getFileUrl( "ShareIt.png" ),
 				"detailsHeader" => $this->getMessage( "emailext-founder-share-header" )->text(),
 				"details" => $this->getMessage( "emailext-founder-share-details" )->text()
 			]
@@ -548,6 +551,14 @@ class FounderTipsController extends EmailController {
 
 		return array_merge_recursive( $formFields, parent::getEmailSpecificFormFields() );
 	}
+
+	protected function findSignatureIcon() {
+		return ImageHelper::getFileUrl( 'Fandom-heart-color.png' );
+	}
+
+	protected function createEmailSignature() {
+		return $this->getMessage( 'emailext-emailconfirmation-community-team' )->text();
+	}
 }
 
 class FounderTipsThreeDaysController extends FounderTipsController {
@@ -570,6 +581,8 @@ class FounderTipsThreeDaysController extends FounderTipsController {
 				$this->getMessage( 'emailext-founder-3-days-great-work' )->text(),
 				$this->getMessage( 'emailext-emailconfirmation-community-team' )->text(),
 			],
+			'signatureIcon' => $this->findSignatureIcon(),
+			'signature' => $this->createEmailSignature()
 		] );
 	}
 
