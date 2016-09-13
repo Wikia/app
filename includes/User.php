@@ -4859,6 +4859,6 @@ class User {
 		if( $userId == 0 || !$wgLookupUsername ){
 			return $name;
 		}
-		return self::whoIs($userId);
+		return static::whoIs($userId);
 	}
 }
