@@ -4,7 +4,7 @@ describe('ext.wikia.adEngine.provider.gpt.googleTag', function () {
 
 	function noop() { return undefined; }
 
-	var googleApi,
+	var googleTag,
 		mocks = {
 			callback: noop,
 			element: {
@@ -66,14 +66,14 @@ describe('ext.wikia.adEngine.provider.gpt.googleTag', function () {
 		};
 
 	beforeEach(function () {
-		var GoogleTag = modules['ext.wikia.adEngine.provider.gpt.googleTag'](
+		googleTag = modules['ext.wikia.adEngine.provider.gpt.googleTag'](
 			mocks.recoveryHelper,
 			mocks.adLogicPageViewCounter,
 			document,
 			mocks.log,
 			mocks.window
 		);
-		googleApi = new GoogleTag();
+
 		mocks.elementSizes = [[300, 250]];
 	});
 
@@ -84,9 +84,9 @@ describe('ext.wikia.adEngine.provider.gpt.googleTag', function () {
 		spyOn(mocks.pubads, 'addEventListener');
 		spyOn(mocks.window.googletag, 'enableServices');
 
-		googleApi.init();
+		googleTag.init();
 
-		expect(googleApi.isInitialized()).toBe(true);
+		expect(googleTag.isInitialized()).toBe(true);
 		expect(mocks.pubads.collapseEmptyDivs).toHaveBeenCalled();
 		expect(mocks.pubads.enableSingleRequest).toHaveBeenCalled();
 		expect(mocks.pubads.disableInitialLoad).toHaveBeenCalled();
@@ -96,9 +96,9 @@ describe('ext.wikia.adEngine.provider.gpt.googleTag', function () {
 
 	it('Push should call googletag cmd method', function () {
 		spyOn(mocks.window.googletag.cmd, 'push');
-		googleApi.init();
+		googleTag.init();
 
-		googleApi.push(noop);
+		googleTag.push(noop);
 
 		expect(mocks.window.googletag.cmd.push).toHaveBeenCalled();
 	});
@@ -106,26 +106,26 @@ describe('ext.wikia.adEngine.provider.gpt.googleTag', function () {
 	it('Cannot flush without initialization', function () {
 		spyOn(mocks.window.googletag.cmd, 'push');
 
-		googleApi.flush();
+		googleTag.flush();
 
 		expect(mocks.window.googletag.cmd.push).not.toHaveBeenCalled();
 	});
 
 	it('Flush with empty slots queue should not refresh pubads', function () {
 		spyOn(mocks.pubads, 'refresh');
-		googleApi.init();
+		googleTag.init();
 
-		googleApi.flush();
+		googleTag.flush();
 
 		expect(mocks.pubads.refresh).not.toHaveBeenCalled();
 	});
 
 	it('Flush with not empty slots queue should refresh pubads', function () {
 		spyOn(mocks.pubads, 'refresh');
-		googleApi.init();
-		googleApi.addSlot(mocks.element);
+		googleTag.init();
+		googleTag.addSlot(mocks.element);
 
-		googleApi.flush();
+		googleTag.flush();
 
 		expect(mocks.pubads.refresh).toHaveBeenCalled();
 	});
@@ -134,9 +134,9 @@ describe('ext.wikia.adEngine.provider.gpt.googleTag', function () {
 		spyOn(mocks.window.googletag, 'defineSlot').and.callThrough();
 		spyOn(mocks.window.googletag, 'defineOutOfPageSlot').and.callThrough();
 		mocks.elementSizes = null;
-		googleApi.init();
+		googleTag.init();
 
-		googleApi.addSlot(mocks.element);
+		googleTag.addSlot(mocks.element);
 
 		expect(mocks.window.googletag.defineSlot).not.toHaveBeenCalled();
 		expect(mocks.window.googletag.defineOutOfPageSlot).toHaveBeenCalled();
@@ -145,9 +145,9 @@ describe('ext.wikia.adEngine.provider.gpt.googleTag', function () {
 	it('Define regular slot when element sizes are defined', function () {
 		spyOn(mocks.window.googletag, 'defineSlot').and.callThrough();
 		spyOn(mocks.window.googletag, 'defineOutOfPageSlot').and.callThrough();
-		googleApi.init();
+		googleTag.init();
 
-		googleApi.addSlot(mocks.element);
+		googleTag.addSlot(mocks.element);
 
 		expect(mocks.window.googletag.defineSlot).toHaveBeenCalled();
 		expect(mocks.window.googletag.defineOutOfPageSlot).not.toHaveBeenCalled();
@@ -155,9 +155,9 @@ describe('ext.wikia.adEngine.provider.gpt.googleTag', function () {
 
 	it('Set page targeting params using pubads', function () {
 		spyOn(mocks.pubads, 'setTargeting');
-		googleApi.init();
+		googleTag.init();
 
-		googleApi.setPageLevelParams({
+		googleTag.setPageLevelParams({
 			foo: 7,
 			bar: 6
 		});
@@ -167,7 +167,7 @@ describe('ext.wikia.adEngine.provider.gpt.googleTag', function () {
 
 	it('onAdCallback call given callback', function () {
 		spyOn(mocks, 'callback');
-		googleApi.onAdLoad('TOP_LEADERBOARD', mocks.element, {}, mocks.callback);
+		googleTag.onAdLoad('TOP_LEADERBOARD', mocks.element, {}, mocks.callback);
 
 		expect(mocks.callback).toHaveBeenCalled();
 	});
