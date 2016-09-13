@@ -6,6 +6,27 @@
 	width: 239px;
 	border: 1px solid $color-page-border-subtle;
 
+	.community-page-insights-module-article-data {
+		color: $color-links;
+	}
+
+	.community-page-insights-module-footer {
+		@include flexbox();
+	}
+
+	.community-page-insights-module-full-list-link {
+		@include flex-grow(1);
+
+		color: $color-buttons;
+		display: block;
+		font-size: 12px;
+		font-weight: bold;
+		line-height: 48px;
+		margin-right: 24px;
+		text-align: right;
+		text-transform: uppercase;
+	}
+
 	.community-page-insights-module-header {
 		@include flexbox();
 		@include align-items(center);
@@ -25,6 +46,18 @@
 		margin-right: 12px;
 	}
 
+	.community-page-insights-module-help {
+		height: 48px;
+		width: 48px;
+	}
+
+	.community-page-insights-module-help-icon {
+		fill: $color-page-border-subtle;
+		height: 18px;
+		margin: 15px;
+		width: 18px;
+	}
+
 	.community-page-insights-module-list {
 		list-style: none;
 		margin: 0;
@@ -36,38 +69,5 @@
 
 		align-items: center;
 		margin-bottom: 24px;
-	}
-
-	.community-page-insights-module-article-data {
-		color: $color-links;
-	}
-
-	.community-page-insights-module-footer {
-		@include flexbox();
-	}
-
-	.community-page-insights-module-help {
-		width: 48px;
-		height: 48px;
-	}
-
-	.community-page-insights-module-help-icon {
-		fill: $color-page-border-subtle;
-		height: 18px;
-		margin: 15px;
-		width: 18px;
-	}
-
-	.community-page-insights-module-full-list-link {
-		@include flex-grow(1);
-
-		color: $color-buttons;
-		font-size: 12px;
-		font-weight: bold;
-		display: block;
-		line-height: 48px;
-		margin-right: 24px;
-		text-align: right;
-		text-transform: uppercase;
 	}
 }
