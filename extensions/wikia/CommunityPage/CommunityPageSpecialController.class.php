@@ -37,7 +37,6 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 			'inviteFriendsText' => $this->msg( 'communitypage-invite-friends' )->plain(),
 			'headerWelcomeMsg' => $this->msg( 'communitypage-tasks-header-welcome', $wgWikiTopic ?? $wgSitename )->parse(),
 			'subheaderWelcomeMsg' => $this->msg( 'communitypage-subheader-welcome' )->text(),
-			'adminWelcomeMsg' => $this->msg( 'communitypage-admin-welcome-message' )->text(),
 			'pageListEmptyText' => $this->msg( 'communitypage-page-list-empty' )->plain(),
 			'pageTitle' => $this->msg( 'communitypage-title' )->plain(),
 			'topContributors' => $this->sendRequest(

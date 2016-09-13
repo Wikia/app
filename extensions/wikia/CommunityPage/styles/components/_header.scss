@@ -4,6 +4,7 @@
 $hero-image-pattern: '/extensions/wikia/CommunityPage/images/hero_image_pattern.png';
 $hero-image-height: 200px;
 $hero-image-background: rgba(0,0,0,0.35);
+$page-margin: 30px;
 
 @if $is-dark-wiki {
 	$hero-image-pattern: '/extensions/wikia/CommunityPage/images/hero_image_pattern_dark.png';
@@ -16,10 +17,10 @@ $hero-image-background: rgba(0,0,0,0.35);
 	background-color: $hero-image-background;
 	height: $hero-image-height;
 	justify-content: center;
-	left: -30px;
+	left: -$page-margin;
 	position: relative;
 	text-align: center;
-	width: calc(100% + 60px);
+	width: calc(100% + 2 * #{$page-margin});
 
 	&.community-page-header-cover {
 		background-position: center;
@@ -52,7 +53,7 @@ $hero-image-background: rgba(0,0,0,0.35);
 		margin:	0;
 	}
 
-	h1.community-page-subheading {
+	h3.community-page-subheading {
 		color: $color-white;
 		font-size: 24px;
 		line-height: 32px;
