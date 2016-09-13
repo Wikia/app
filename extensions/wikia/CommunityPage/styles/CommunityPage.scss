@@ -30,12 +30,8 @@
 	width: calc(100% - 320px);
 }
 
-.WikiaArticle {
-	overflow: visible;
-
-	.community-page-top-contributors h2 {
-		margin-top: 0;
-	}
+.WikiaArticle .community-page-top-contributors h2 {
+	margin-top: 0;
 }
 
 @media #{$breakpoint-below-small-plus} {
