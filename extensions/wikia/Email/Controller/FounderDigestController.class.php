@@ -134,9 +134,9 @@ class FounderActivityDigestController extends FounderDigestController {
 			$this->wikiId
 		);
 
-//		if ( !$wantsCompleteDigest ) {
-//			throw new Check( 'Founder is not subscribed to complete digest.' );
-//		}
+		if ( !$wantsCompleteDigest ) {
+			throw new Check( 'Founder is not subscribed to complete digest.' );
+		}
 	}
 
 	protected function assertValidParams() {
