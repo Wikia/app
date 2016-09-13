@@ -16,6 +16,9 @@ define('ext.wikia.adEngine.provider.gpt.googleTag', [
 		pageLevelParams,
 		initialized = false;
 
+	window.googletag = window.googletag || {};
+	window.googletag.cmd = window.googletag.cmd || [];
+
 	function dispatchEvent(event) {
 		var id;
 
@@ -58,8 +61,6 @@ define('ext.wikia.adEngine.provider.gpt.googleTag', [
 		var gads = doc.createElement('script'),
 			node = doc.getElementsByTagName('script')[0];
 
-		window.googletag = window.googletag || {};
-		window.googletag.cmd = window.googletag.cmd || [];
 		if (!window.googletag.apiReady && !helper.isBlocking()) {
 			gads.async = true;
 			gads.type = 'text/javascript';
@@ -184,7 +185,9 @@ define('ext.wikia.adEngine.provider.gpt.googleTag', [
 
 	function newPageView() {
 		adLogicPageViewCounter.increment();
-		window.googletag.pubads().updateCorrelator();
+		push(function() {
+			window.googletag.pubads().updateCorrelator();
+		});
 	}
 
 	return {
