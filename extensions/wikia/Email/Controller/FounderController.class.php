@@ -624,7 +624,7 @@ class FounderTipsTenDaysController extends FounderTipsController {
 	}
 
 	/**
-	 * @template founderTips
+	 * @template digestLayout
 	 */
 	public function body() {
 		$this->response->setData( [
@@ -632,10 +632,12 @@ class FounderTipsTenDaysController extends FounderTipsController {
 			'summary' => $this->getMessage( 'emailext-founder-10-days-summary', $this->wikiUrl, $this->wikiName )->parse(),
 			'extendedSummary' => $this->getMessage( 'emailext-founder-10-days-extended-summary' )->text(),
 			'details' => $this->getDetailsList(),
+			'hasContentFooterMessages' => true,
 			'contentFooterMessages' => [
-				$this->getMessage( 'emailext-founder-10-days-email-what-next' )->text(),
-				$this->getMessage( 'emailext-emailconfirmation-community-team' )->text(),
+				$this->getMessage( 'emailext-founder-10-days-email-what-next' )->text()
 			],
+			'signatureIcon' => $this->findSignatureIcon(),
+			'signature' => $this->createEmailSignature()
 		] );
 	}
 
@@ -647,17 +649,17 @@ class FounderTipsTenDaysController extends FounderTipsController {
 	protected function getDetailsList() {
 		return [
 			[
-				"iconSrc" => Email\ImageHelper::getFileUrl( "Share.png" ),
+				"iconSrc" => Email\ImageHelper::getFileUrl( "SharingIsCaring.png" ),
 				"detailsHeader" => $this->getMessage( "emailext-founder-10-days-sharing-header" )->text(),
 				"details" => $this->getMessage( "emailext-founder-10-days-sharing-details" )->text()
 			],
 			[
-				"iconSrc" => Email\ImageHelper::getFileUrl( "Power-of-email.png" ),
+				"iconSrc" => Email\ImageHelper::getFileUrl( "Email.png" ),
 				"detailsHeader" => $this->getMessage( "emailext-founder-10-days-email-power-header" )->text(),
 				"details" => $this->getMessage( "emailext-founder-10-days-email-power-details" )->text()
 			],
 			[
-				"iconSrc" => Email\ImageHelper::getFileUrl( "Get-with-google.png" ),
+				"iconSrc" => Email\ImageHelper::getFileUrl( "GetWithGoogle.png" ),
 				"iconLink" => $this->getMessage( "emailext-founder-get-with-google" )->text(),
 				"detailsHeader" => $this->getMessage( "emailext-founder-10-days-email-google-header" )->text(),
 				"details" => $this->getMessage( "emailext-founder-10-days-email-google-details" )->text()
