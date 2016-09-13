@@ -155,6 +155,24 @@ describe('ext.wikia.adEngine.provider.gpt.googleTag', function () {
 		expect(mocks.pubads.refresh).toHaveBeenCalled();
 	});
 
+	it('Display is not called on already added slots', function () {
+		spyOn(mocks.window.googletag, 'display');
+		spyOn(mocks.googleSlots, 'getSlot').and.returnValue(mocks.allSlots[0]);
+		googleTag.init();
+
+		googleTag.addSlot(mocks.element);
+		expect(mocks.window.googletag.display.calls.count()).toEqual(0);
+	});
+
+	it('Display is called on not added slots', function () {
+		spyOn(mocks.window.googletag, 'display');
+		spyOn(mocks.googleSlots, 'getSlot').and.returnValue(undefined);
+		googleTag.init();
+
+		googleTag.addSlot(mocks.element);
+		expect(mocks.window.googletag.display.calls.count()).toEqual(1);
+	});
+
 	it('Define out of page slot when element sizes are not defined', function () {
 		spyOn(mocks.window.googletag, 'defineSlot').and.callThrough();
 		spyOn(mocks.window.googletag, 'defineOutOfPageSlot').and.callThrough();
