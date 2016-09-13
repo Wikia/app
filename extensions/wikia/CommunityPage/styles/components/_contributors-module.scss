@@ -7,7 +7,7 @@
 .contributors-module {
 	.avatar-container {
 		display: inline-block;
-		margin: $avatar-margin;
+		margin: 0 6px 0 0;
 		vertical-align: middle;
 	}
 
@@ -24,6 +24,10 @@
 
 		&:first-of-type {
 			margin-top: 0;
+		}
+
+		.top-contributors {
+			margin-left: 0 !important;
 		}
 	}
 

@@ -9,6 +9,7 @@
 @import 'components/header';
 @import 'components/avatar';
 @import 'components/list';
+@import 'components/admins-module';
 @import 'components/contributors-module';
 @import 'components/modal';
 @import 'components/insights-module';
@@ -17,7 +18,7 @@
 
 .CommunityPageContainer {
 	box-sizing: border-box;
-	padding: 34px 50px;
+	padding: 0;
 	width: 100%;
 }
 
@@ -33,10 +34,6 @@
 }
 
 @media #{$breakpoint-below-small-plus} {
-	.CommunityPageContainer {
-		padding: 34px 0;
-	}
-
 	.CommunityPageMainContent {
 		padding-right: 0;
 		width: 100%;

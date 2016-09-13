@@ -1,0 +1,42 @@
+.admins-module {
+	background-color: white;
+	text-align: center;
+
+	.admins {
+		margin-right: 20px;
+		display: flex;
+		font-size: 12px;
+		justify-content: space-between;
+	}
+
+	.admins-text {
+		font-size: 14px;
+		padding: 12px 18px 30px 18px;
+	}
+
+	.admins-view-all {
+		font-size: 12px;
+		font-weight: bold;
+		text-transform: uppercase;
+		color: $color-buttons;
+
+		&:hover {
+			text-decoration: none;
+		}
+	}
+}
+
+.community-page-admins-module-section-title {
+	font-size: 18px;
+	font-weight: bold;
+	padding: 20px 0;
+}
+
+.community-page-admin-item {
+	display: inline-block;
+
+	.avatar-container {
+		height: 48px;
+		width: 48px;
+	}
+}
