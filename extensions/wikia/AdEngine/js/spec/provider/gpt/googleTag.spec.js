@@ -70,15 +70,15 @@ describe('ext.wikia.adEngine.provider.gpt.googleTag', function () {
 			allSlots: [
 				{
 					getTargeting: function () {
-						return 'TOP_LEADERBOARD'
+						return ['TOP_LEADERBOARD']
 					}
 				}, {
 					getTargeting: function () {
-						return 'TOP_RIGHT_BOXAD'
+						return ['TOP_RIGHT_BOXAD']
 					}
 				}, {
 					getTargeting: function () {
-						return 'INVISIBLE_HIGH_IMPACT'
+						return ['INVISIBLE_HIGH_IMPACT']
 					}
 				}
 			],
