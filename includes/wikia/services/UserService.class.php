@@ -21,6 +21,28 @@ class UserService extends Service {
 	}
 
 	/**
+	 * get main page for current user respecting user preferences
+	 * @return Title
+	 */
+	public static function getMainPage() {
+		global $wgUser;
+
+		$title = Title::newMainPage();
+		if( $wgUser->isLoggedIn() ) {
+			$value = $wgUser->getGlobalPreference(UserPreferencesV2::LANDING_PAGE_PROP_NAME);
+			switch($value) {
+				case UserPreferencesV2::LANDING_PAGE_WIKI_ACTIVITY:
+					$title = SpecialPage::getTitleFor('WikiActivity');
+					break;
+				case UserPreferencesV2::LANDING_PAGE_RECENT_CHANGES:
+					$title = SpecialPage::getTitleFor('RecentChanges');
+					break;
+			}
+		}
+		return $title;
+	}
+
+	/**
 	 * Method for acquiring the list of users from database as User class objects.
 	 *
 	 * @param $ids array|string list of ids or names for users, should be specified as

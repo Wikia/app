@@ -179,16 +179,8 @@ class MyHome {
 
 		//user must be logged in and have redirect enabled;
 		//this is not used for Corporate Sites where Wikia Visualization is enabled
-		if( $wgUser->isLoggedIn() && empty($wgEnableWikiaHomePageExt) ) {
-			$value = $wgUser->getGlobalPreference(UserPreferencesV2::LANDING_PAGE_PROP_NAME);
-			switch($value) {
-				case UserPreferencesV2::LANDING_PAGE_WIKI_ACTIVITY:
-					$title = SpecialPage::getTitleFor('WikiActivity');
-					break;
-				case UserPreferencesV2::LANDING_PAGE_RECENT_CHANGES:
-					$title = SpecialPage::getTitleFor('RecentChanges');
-					break;
-			}
+		if( empty($wgEnableWikiaHomePageExt) ) {
+			$title = UserService::getMainPage();
 		}
 
 		wfProfileOut(__METHOD__);
