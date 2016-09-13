@@ -17,15 +17,10 @@ $edit-icon: '/extensions/wikia/CommunityPage/images/edit-pen.svg';
 	margin-bottom: 34px;
 
 	.community-page-insights-module-header {
-		float: left;
 		font-size: 24px;
 		font-weight: bold;
 		line-height: 28px;
 		margin: 0 0 12px;
-	}
-
-	.community-page-insights-module-description {
-		clear: both;
 	}
 
 	.community-page-insights-module-list {
@@ -36,8 +31,8 @@ $edit-icon: '/extensions/wikia/CommunityPage/images/edit-pen.svg';
 	.community-page-insights-module-list-item {
 		@include flexbox();
 
-		border-bottom: 1px solid $color-page-border-subtle;
 		align-items: center;
+		border-bottom: 1px solid $color-page-border-subtle;
 		padding: 20px;
 	}
 
@@ -52,8 +47,8 @@ $edit-icon: '/extensions/wikia/CommunityPage/images/edit-pen.svg';
 		color: $color-links;
 		overflow: hidden;
 		text-overflow: ellipsis;
-		width: $item-data-width;
 		white-space: nowrap;
+		width: $item-data-width;
 	}
 
 	.community-page-insights-module-metadata {
