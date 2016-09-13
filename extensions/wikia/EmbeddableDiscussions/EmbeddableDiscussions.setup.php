@@ -24,4 +24,13 @@ $wgExtensionMessagesFiles['EmbeddableDiscussions'] = __DIR__ . '/EmbeddableDiscu
 // messages exported to JS
 JSMessages::registerPackage( 'EmbeddableDiscussions', [
 	'embeddable-discussions-share-heading',
+	'embeddable-discussions-reply',
+	'embeddable-discussions-share',
+	'embeddable-discussions-show-all',
+	'embeddable-discussions-upvote',
+	'embeddable-discussions-zero',
+	'embeddable-discussions-zero-detail',
+	'embeddable-discussions-forum-name',
+	'embeddable-discussions-error-loading',
+	'embeddable-discussions-cancel-button',
 ] );

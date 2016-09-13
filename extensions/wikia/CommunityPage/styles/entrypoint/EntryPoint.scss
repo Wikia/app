@@ -65,20 +65,6 @@ $logo-url: $logo-url-light;
 		}
 	}
 
-	.community-page-entry-point-new {
-		background: $color-buttons;
-		color: $color-button-text;
-		font-size: 10px;
-		height: 17px;
-		left: 0;
-		line-height: 17px;
-		padding: 0 9px;
-		position: absolute;
-		text-align: center;
-		text-transform: uppercase;
-		top: 0;
-	}
-
 	.community-page-entry-point-description {
 		white-space: pre-line; // Respect linebreaks
 
