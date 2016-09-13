@@ -7,7 +7,7 @@
 		?>
 			<li data-theme="<?= $k ?>">
 				<label><?= ucfirst($k) ?></label>
-				<img src="<?= $wg->StylePath ?>/oasis/images/themes/<?= $k ?>_preview.jpg">
+				<img src="<?= $wg->StylePath ?>/oasis/images/themes/<?= $k ?>_preview.png">
 			</li>
 		<?php
 		}
