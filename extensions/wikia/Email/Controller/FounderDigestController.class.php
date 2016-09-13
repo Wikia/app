@@ -78,6 +78,14 @@ abstract class FounderDigestController extends EmailController {
 
 		return array_merge_recursive( $formFields, parent::getEmailSpecificFormFields() );
 	}
+
+	protected function findSignatureIcon() {
+		return ImageHelper::getFileUrl( 'Fandom-heart-color.png' );
+	}
+
+	protected function createEmailSignature() {
+		return $this->getMessage( 'emailext-founder-digest-signature' )->text();
+	}
 }
 
 class FounderActivityDigestController extends FounderDigestController {
@@ -113,8 +121,7 @@ class FounderActivityDigestController extends FounderDigestController {
 			],
 			'hasContentFooterMessages' => true,
 			'signatureIcon' => $this->findSignatureIcon(),
-			'signature' => $this->createEmailSignature(),
-			'hasSignature' => true
+			'signature' => $this->createEmailSignature()
 		] );
 	}
 
@@ -219,14 +226,6 @@ class FounderActivityDigestController extends FounderDigestController {
 
 		return array_merge_recursive( $formFields, parent::getEmailSpecificFormFields() );
 	}
-
-	private function findSignatureIcon() {
-		return ImageHelper::getFileUrl( 'Fandom-heart-color.png' );
-	}
-
-	private function createEmailSignature() {
-		return $this->getMessage( 'emailext-founder-digest-signature' )->text();
-	}
 }
 
 class FounderPageViewsDigestController extends FounderDigestController {
@@ -245,7 +244,9 @@ class FounderPageViewsDigestController extends FounderDigestController {
 			'buttonText' => $this->getButtonText(),
 			'buttonLink' => $this->getButtonLink(),
 			'details' => $this->getDetailsList(),
-			'hasContentFooterMessages' => false
+			'hasContentFooterMessages' => false,
+			'signatureIcon' => $this->findSignatureIcon(),
+			'signature' => $this->createEmailSignature()
 		] );
 	}
 
@@ -296,7 +297,7 @@ class FounderPageViewsDigestController extends FounderDigestController {
 	protected function getDetailsList() {
 		return [
 			[
-				'iconSrc' => ImageHelper::getFileUrl( 'Page-views.png' ),
+				'iconSrc' => ImageHelper::getFileUrl( '100PagesViewed.png' ),
 				'detailsHeader' => $this->getMessage( 'emailext-founder-digest-views-header', $this->pageViews )->parse(),
 				'details' => $this->getMessage( 'emailext-founder-digest-views-description-2' )->text()
 			] 
