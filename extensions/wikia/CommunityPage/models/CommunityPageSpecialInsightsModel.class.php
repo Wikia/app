@@ -6,15 +6,15 @@ class CommunityPageSpecialInsightsModel {
 	const INSIGHTS_CONFIG_PAGEVIEWS_KEY = 'displayPageviews';
 	const INSIGHTS_MODULES = [
 		'popularpages' => [
-			self::INSIGHTS_CONFIG_SORT_TYPE_KEY => 'pvDiff',
+			self::INSIGHTS_CONFIG_SORT_TYPE_KEY => 'random',
 			self::INSIGHTS_CONFIG_PAGEVIEWS_KEY => true
 		],
 		'deadendpages' => [
-			self::INSIGHTS_CONFIG_SORT_TYPE_KEY => 'pv7',
+			self::INSIGHTS_CONFIG_SORT_TYPE_KEY => 'random',
 			self::INSIGHTS_CONFIG_PAGEVIEWS_KEY => false
 		],
 		'uncategorizedpages' => [
-			self::INSIGHTS_CONFIG_SORT_TYPE_KEY => 'pv7',
+			self::INSIGHTS_CONFIG_SORT_TYPE_KEY => 'random',
 			self::INSIGHTS_CONFIG_PAGEVIEWS_KEY => false
 		]
 	];

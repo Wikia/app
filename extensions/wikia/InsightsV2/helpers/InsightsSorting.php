@@ -18,6 +18,9 @@ class InsightsSorting {
 		'pvDiff' => [
 			'sortType' => SORT_NUMERIC,
 			'metadata' => 'pv7',
+		],
+		'random' => [
+			'sortType' =>  null
 		]
 	];
 
