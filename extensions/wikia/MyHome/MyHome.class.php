@@ -180,7 +180,7 @@ class MyHome {
 		//user must be logged in and have redirect enabled
 		//this is not used for Corporate Sites where Wikia Visualization is enabled
 		if( empty($wgEnableWikiaHomePageExt) ) {
-			$title = UserService::getMainPage();
+			$title = UserService::getMainPage($wgUser);
 		}
 
 		wfProfileOut(__METHOD__);

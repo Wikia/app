@@ -19,15 +19,14 @@ class UserService extends Service {
 
 	/**
 	 * get main page for current user respecting user preferences
+	 * @param User $user
 	 * @return Title
 	 */
-	public static function getMainPage() {
-		global $wgUser;
-
+	public static function getMainPage(User $user) {
 		$title = Title::newMainPage();
 
-		if( $wgUser->isLoggedIn() ) {
-			$value = $wgUser->getGlobalPreference(UserPreferencesV2::LANDING_PAGE_PROP_NAME);
+		if( $user->isLoggedIn() ) {
+			$value = $user->getGlobalPreference(UserPreferencesV2::LANDING_PAGE_PROP_NAME);
 			switch($value) {
 				case UserPreferencesV2::LANDING_PAGE_WIKI_ACTIVITY:
 					$title = SpecialPage::getTitleFor('WikiActivity');

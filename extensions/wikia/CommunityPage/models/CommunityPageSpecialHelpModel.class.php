@@ -22,6 +22,8 @@ class CommunityPageSpecialHelpModel {
 	}
 
 	private function getPolicyLink() {
+		global $wgUser;
+
 		$title = Title::newFromText(
 			wfMessage( 'communitypage-policy-module-link-page-name' )->inContentLanguage()->plain(),
  			NS_MAIN
@@ -31,6 +33,6 @@ class CommunityPageSpecialHelpModel {
 			return $title->getFullURL();
  		}
 
- 		return UserService::getMainPage()->getLocalURL();
+ 		return UserService::getMainPage($wgUser)->getLocalURL();
  	}
 }
