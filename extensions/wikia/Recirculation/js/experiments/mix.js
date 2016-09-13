@@ -25,7 +25,7 @@ require([
 		logGroup = 'ext.wikia.recirculation.experiments.mix',
 		group = abTest.getGroup(experimentName),
 		views = {},
-		saved = {}
+		saved = {},
 		savedOptions = {};
 
 	recircExperiment.forEach(function(experiment, index) {
