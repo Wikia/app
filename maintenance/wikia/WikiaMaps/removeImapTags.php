@@ -35,7 +35,7 @@ class RemoveImapTags extends Maintenance {
 	}
 
 	static public function isDryRun() {
-		return self::$dryRun;
+		return static::$dryRun;
 	}
 
 	static public function isNaturalNumber( $int ) {
@@ -111,7 +111,7 @@ class RemoveImapTags extends Maintenance {
 			$newContent = str_replace( $stringWithTagToRemove, "", $oldContent );
 
 			$this->output( sprintf( 'Trying to edit article #%d', $articleId ) . PHP_EOL );
-			if( !self::isDryRun() ) {
+			if( !static::isDryRun() ) {
 				$result = $article->doEdit(
 					$newContent,
 					wfMessage(
@@ -138,7 +138,7 @@ class RemoveImapTags extends Maintenance {
 	}
 
 	public function isValidTilesSetId( $tilesSetId ) {
-		if ( !self::isNaturalNumber( $tilesSetId ) ) {
+		if ( !static::isNaturalNumber( $tilesSetId ) ) {
 			return false;
 		}
 
@@ -158,12 +158,12 @@ class RemoveImapTags extends Maintenance {
 		$this->slaveDBConfig = $this->app->wg->IntMapFullConfig['db']['prod']['slave'][0];
 		$this->maps = new WikiaMaps( $this->mapsClientConfig );
 
-		self::$dryRun = $this->hasOption( 'dry-run' );
+		static::$dryRun = $this->hasOption( 'dry-run' );
 
 		$cityId = $this->app->wg->CityId;
 		$tilesSetId = $this->getOption( 'tiles-set-id' );
 
-		if ( self::isDryRun() ) {
+		if ( static::isDryRun() ) {
 			$this->output( 'Mode: test run' . PHP_EOL );
 		} else {
 			$this->output( 'Mode: normal run' . PHP_EOL );
@@ -173,7 +173,7 @@ class RemoveImapTags extends Maintenance {
 			$this->error( 'Invalid tiles-set-id. Try again.' . PHP_EOL, 1 );
 		}
 
-		$mapsUsingTheTileset = self::getMapsIdsUsingTileset( $cityId, $tilesSetId );
+		$mapsUsingTheTileset = static::getMapsIdsUsingTileset( $cityId, $tilesSetId );
 		$mapsUsingTheTilesetCount = count($mapsUsingTheTileset);
 		$this->output( sprintf( "Found %d maps using the tiles's set #%d", $mapsUsingTheTilesetCount, $tilesSetId ) . PHP_EOL );
 
@@ -181,7 +181,7 @@ class RemoveImapTags extends Maintenance {
 			$this->output( 'No maps found.' . PHP_EOL );
 		}
 
-		$articlesUsingImap = self::getArticlesIdsUsingImap( $cityId );
+		$articlesUsingImap = static::getArticlesIdsUsingImap( $cityId );
 		$articlesUsingImapCount = count( $articlesUsingImap );
 		$this->output( sprintf( "Found %d articles using <imap/>", $articlesUsingImapCount ) . PHP_EOL );
 
