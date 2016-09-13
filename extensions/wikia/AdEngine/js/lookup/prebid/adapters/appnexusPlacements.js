@@ -5,12 +5,11 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.appnexusPlacements', [
 ], function (adContext, instantGlobals, log) {
 	'use strict';
 
-	var context = adContext.getContext(),
-		logGroup = 'ext.wikia.adEngine.lookup.prebid.adapters.appnexusPlacements',
+	var logGroup = 'ext.wikia.adEngine.lookup.prebid.adapters.appnexusPlacements',
 		placementsMap = instantGlobals.wgAdDriverAppNexusBidderPlacementsConfig;
 
 	function getPlacement(skin) {
-		var vertical = context.targeting.mappedVerticalName;
+		var vertical = adContext.getContext().targeting.mappedVerticalName;
 
 		if (placementsMap && placementsMap[skin] && placementsMap[skin][vertical]) {
 			return placementsMap[skin][vertical];
