@@ -77,3 +77,7 @@ li {
 .content-footer-messages p:last-of-type {
 	font-weight: bold;
 }
+
+.signature {
+	font-weight: bold;
+}

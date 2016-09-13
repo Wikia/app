@@ -1,3 +1,7 @@
+.greeting {
+	margin-bottom: 30px;
+}
+
 .avatar-wrapper {
 	margin: 20px 0;
 	padding-right: 30px;
@@ -13,10 +17,15 @@
 }
 
 .border {
-	border-top: 1px solid #e6ebf2;
-	border-bottom: 1px solid #e6ebf2;
+	border-top: 1px solid #00b7e0;
+	border-bottom: 1px solid #00b7e0;
 }
 
-.message {
-	margin: 20px 0;
+.username-layout-links {
+	margin-top: 35px;
+	margin-bottom: 20px;
+}
+
+.username-layout-links a {
+	display: block;
 }
