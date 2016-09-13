@@ -1,20 +1,17 @@
 /*global define*/
 /*jshint maxlen:125, camelcase:false, maxdepth:7*/
 define('ext.wikia.adEngine.provider.gpt.googleTag', [
+	'ext.wikia.adEngine.provider.gpt.googleSlots',
 	'ext.wikia.aRecoveryEngine.recovery.helper',
 	'ext.wikia.adEngine.adLogicPageViewCounter',
 	'wikia.document',
 	'wikia.log',
 	'wikia.window'
-], function (helper, adLogicPageViewCounter, doc, log, window) {
+], function (googleSlots, helper, adLogicPageViewCounter, doc, log, window) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.provider.gpt.googleTag',
 		registeredCallbacks = {},
-		//slot id (adUnit) => google slot
-		slots = {},
-		//slot id (adUnit) => slot name
-		slotIdsMap = {},
 		slotQueue = [],
 		pageLevelParams,
 		initialized = false;
@@ -26,7 +23,7 @@ define('ext.wikia.adEngine.provider.gpt.googleTag', [
 
 		for (id in registeredCallbacks) {
 			if (registeredCallbacks.hasOwnProperty(id) &&
-				registeredCallbacks[id] && event.slot && event.slot === slots[id]
+				registeredCallbacks[id] && event.slot && event.slot === googleSlots.getSlot(id)
 			) {
 				log(['dispatchEvent', event, id, 'Launching registered callback'], 'debug', logGroup);
 				registeredCallbacks[id](event);
@@ -119,8 +116,8 @@ define('ext.wikia.adEngine.provider.gpt.googleTag', [
 
 	function addSlot(adElement) {
 		var sizes = adElement.getSizes(),
-			slot = slots[adElement.getId()],
-			slotId = adElement.getId();
+			slotId = adElement.getId(),
+			slot = googleSlots.getSlot(slotId);
 
 		log(['addSlot', adElement], 'debug', logGroup);
 
@@ -133,8 +130,7 @@ define('ext.wikia.adEngine.provider.gpt.googleTag', [
 			}
 			slot.addService(window.googletag.pubads());
 			window.googletag.display(slotId);
-			slots[slotId] = slot;
-			slotIdsMap[slotId] = adElement.getSlotName();
+			googleSlots.addSlot(slot);
 		}
 
 		adElement.configureSlot(slot);
@@ -162,40 +158,26 @@ define('ext.wikia.adEngine.provider.gpt.googleTag', [
 
 		// when nothing passed - destroy all slots
 		if (!slotsNames) {
-			push(function () {
-				log(['destroySlots', allSlots], 'debug', logGroup);
-				success = window.googletag.destroySlots();
-
-				if (!success) {
-					log(['destroySlots', allSlots, 'failed'], 'error', logGroup);
-				}
-
-				allSlots.forEach(function (slot) {
-					slots[slot.getSlotElementId()] = undefined;
-				});
-			});
-		}
-
-		slotsNames.forEach(function (slotName) {
+			slotsToDestroy = allSlots;
+		} else {
 			allSlots.forEach(function (slot) {
-				if (slotIdsMap[slot.getSlotElementId()] === slotName) {
+				if (slotsNames.indexOf(slot.getTargeting('pos')) > -1) {
 					slotsToDestroy.push(slot);
 				}
 			});
-		});
+		}
 
+		// this one protects us from removing all slots if slotsToDestroy is an empty array
 		if (slotsToDestroy.length) {
 			push(function () {
-				log(['destroySlots', slotsNames], 'debug', logGroup);
+				log(['destroySlots', slotsNames, slotsToDestroy], 'debug', logGroup);
 				success = window.googletag.destroySlots(slotsToDestroy);
 
 				if (!success) {
-					log(['destroySlots', slotsNames, 'failed'], 'error', logGroup);
+					log(['destroySlots', slotsNames, slotsToDestroy, 'failed'], 'error', logGroup);
 				}
 
-				slotsToDestroy.forEach(function (slot) {
-					slots[slot.getSlotElementId()] = undefined;
-				});
+				googleSlots.removeSlots(slotsToDestroy);
 			});
 		}
 	}

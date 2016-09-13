@@ -2,7 +2,9 @@
 describe('ext.wikia.adEngine.provider.gpt.googleTag', function () {
 	'use strict';
 
-	function noop() { return undefined; }
+	function noop() {
+		return undefined;
+	}
 
 	var googleTag,
 		mocks = {
@@ -60,13 +62,36 @@ describe('ext.wikia.adEngine.provider.gpt.googleTag', function () {
 						return {
 							addService: noop
 						};
+					},
+					destroySlots: noop,
+					getSlots: noop
+				}
+			},
+			allSlots: [
+				{
+					getTargeting: function () {
+						return 'TOP_LEADERBOARD'
+					}
+				}, {
+					getTargeting: function () {
+						return 'TOP_RIGHT_BOXAD'
+					}
+				}, {
+					getTargeting: function () {
+						return 'INVISIBLE_HIGH_IMPACT'
 					}
 				}
+			],
+			googleSlots: {
+				addSlot: noop,
+				getSlot: noop,
+				removeSlots: noop
 			}
 		};
 
 	beforeEach(function () {
 		googleTag = modules['ext.wikia.adEngine.provider.gpt.googleTag'](
+			mocks.googleSlots,
 			mocks.recoveryHelper,
 			mocks.adLogicPageViewCounter,
 			document,
@@ -170,5 +195,32 @@ describe('ext.wikia.adEngine.provider.gpt.googleTag', function () {
 		googleTag.onAdLoad('TOP_LEADERBOARD', mocks.element, {}, mocks.callback);
 
 		expect(mocks.callback).toHaveBeenCalled();
+	});
+
+	it('destroySlots destroys all slots when nothing passed', function () {
+		spyOn(mocks.window.googletag, 'destroySlots');
+		spyOn(mocks.window.googletag, 'getSlots').and.returnValue(mocks.allSlots);
+
+		googleTag.destroySlots();
+
+		expect(mocks.window.googletag.destroySlots).toHaveBeenCalledWith(mocks.allSlots);
+	});
+
+	it('destroySlots destroys only passed slot', function () {
+		spyOn(mocks.window.googletag, 'destroySlots');
+		spyOn(mocks.window.googletag, 'getSlots').and.returnValue(mocks.allSlots);
+
+		googleTag.destroySlots(['TOP_LEADERBOARD']);
+
+		expect(mocks.window.googletag.destroySlots).toHaveBeenCalledWith([mocks.allSlots[0]]);
+	});
+
+	it('destroySlots doesn\'t destroy slot if incorrect slot name is passed', function () {
+		spyOn(mocks.window.googletag, 'destroySlots');
+		spyOn(mocks.window.googletag, 'getSlots').and.returnValue(mocks.allSlots);
+
+		googleTag.destroySlots(['foo']);
+
+		expect(mocks.window.googletag.destroySlots).not.toHaveBeenCalled();
 	});
 });
