@@ -124,7 +124,7 @@ class ChatBanData
 		/* initial values for result */
 		$data = [
 			'cnt'      => 0,
-			'sColumns' => implode( ",", array_keys( $this->orderOptions ) ),
+			'sColumns' => 'timestamp,target,expires,blockedBy,reason',
 			'data'     => [ ],
 		];
 
