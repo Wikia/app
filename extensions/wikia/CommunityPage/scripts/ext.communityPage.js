@@ -48,11 +48,6 @@ require([
 			event.preventDefault();
 			openCommunityModal(tabs.TAB_ADMINS);
 		});
-
-		$('#viewAllMembers').click(function (event) {
-			event.preventDefault();
-			openCommunityModal(tabs.TAB_ALL);
-		});
 	}
 
 	function getUiModalInstance() {
