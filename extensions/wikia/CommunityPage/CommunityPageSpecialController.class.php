@@ -365,6 +365,8 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 
 		return array_merge( $data, [
 			'showEditLink' => $user->isAllowed( 'editinterface' ),
+			'editIcon' => DesignSystemHelper::getSvg('wds-icons-pencil',
+				'community-page-todo-list-module-edit-icon'),
 			'isZeroState' => !$data[ 'haveContent' ],
 			'heading' => $this->msg( 'communitypage-todo-module-heading' )->text(),
 			'editList' => $this->msg( 'communitypage-todo-module-edit-list' )->text(),

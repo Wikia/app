@@ -1,82 +1,85 @@
 @import 'skins/shared/color';
-@import 'skins/oasis/css/core/breakpoints-variables';
 @import 'skins/shared/mixins/flexbox';
+@import 'extensions/wikia/DesignSystem/bower_components/design-system/base/typography';
 
-$item-icon-size: 34px;
-$item-icon-margin-right: 6px;
-$item-data-width: calc(70% - #{$item-icon-size + $item-icon-margin-right});
-$item-link-width: 30%;
-
-$edit-icon: '/extensions/wikia/CommunityPage/images/edit-pen.svg';
-
-@if $is-dark-wiki {
-	$edit-icon: '/extensions/wikia/CommunityPage/images/edit-pen-dark.svg';
-}
+$card-footer-size: 48px;
+$content-spacing-small: 12px;
+$content-spacing-small-plus: 15px;
+$content-spacing-regular: 18px;
+$content-spacing-large: 24px;
+$module-width: 239px;
 
 .community-page-insights-module {
-	margin-bottom: 34px;
+	@include flexbox();
+	@include flex-direction(column);
 
-	.community-page-insights-module-header {
-		float: left;
-		font-size: 24px;
-		font-weight: bold;
-		line-height: 28px;
-		margin: 0 0 12px;
-	}
-
-	.community-page-insights-module-description {
-		clear: both;
-	}
-
-	.community-page-insights-module-list {
-		list-style: none;
-		margin: 0;
-	}
-
-	.community-page-insights-module-list-item {
-		@include flexbox();
-
-		border-bottom: 1px solid $color-page-border-subtle;
-		align-items: center;
-		padding: 20px;
-	}
-
-	.community-page-insights-module-edit-icon {
-		background: url($edit-icon) no-repeat;
-		height: $item-icon-size;
-		margin-right: $item-icon-margin-right;
-		width: 24px;
-	}
+	background-color: $color-page;
+	border: 1px solid $color-page-border-subtle;
+	margin-bottom: $content-spacing-regular;
+	margin-right: $content-spacing-small;
+	width: $module-width;
 
 	.community-page-insights-module-article-data {
 		color: $color-links;
-		overflow: hidden;
-		text-overflow: ellipsis;
-		width: $item-data-width;
-		white-space: nowrap;
 	}
 
-	.community-page-insights-module-metadata {
-		color: $color-alternate-text;
-		font-size: 12px;
-
-		.communitypage-user-link {
-			display: inline-block;
-			max-width: 140px;
-			overflow: hidden;
-			text-overflow: ellipsis;
-			vertical-align: bottom;
-		}
+	.community-page-insights-module-footer {
+		@include flexbox();
 	}
 
-	.community-page-insights-module-edit-link {
+	.community-page-insights-module-full-list-link {
+		@include flex-grow(1);
+
+		color: $color-buttons;
+		display: block;
+		font-size: $typescale-size-minus-2;
+		font-weight: bold;
+		line-height: $typescale-size-plus-6;
+		margin-right: $content-spacing-large;
 		text-align: right;
-		width: $item-link-width;
+		text-transform: uppercase;
 	}
-}
 
-@media #{$breakpoint-below-small-plus} {
-	.community-page-insights-module {
-		margin: 0 34px 34px;
+	.community-page-insights-module-header {
+		@include align-items(center);
+		@include flexbox();
+
+		background: $color-buttons;
+		color: $color-button-text;
+		font-size: $typescale-size-minus-1;
+		font-weight: bold;
+		line-height: $typescale-size-base;
+		margin: 0 0 $content-spacing-large;
+		padding: $content-spacing-regular;
+		text-transform: uppercase;
+	}
+
+	.community-page-insights-module-header-icon {
+		fill: $color-buttons;
+		margin-right: $content-spacing-small;
+	}
+
+	.community-page-insights-module-help {
+		height: $card-footer-size;
+		width: $card-footer-size;
+	}
+
+	.community-page-insights-module-help-icon {
+		fill: $color-page-border-subtle;
+		margin: $content-spacing-small-plus $content-spacing-small;
+	}
+
+	.community-page-insights-module-list {
+		@include flex-grow(1);
+
+		font-size: $typescale-size-base;
+		padding: 0 $content-spacing-regular;
+	}
+
+	.community-page-insights-module-list-item {
+		@include align-items(center);
+		@include flexbox();
+
+		margin-bottom: $content-spacing-large;
 	}
 }
