@@ -77,9 +77,9 @@ $module-width: 239px;
 	}
 
 	.community-page-insights-module-list-item {
+		@include align-items(center);
 		@include flexbox();
 
-		align-items: center;
 		margin-bottom: $content-spacing-large;
 	}
 }
