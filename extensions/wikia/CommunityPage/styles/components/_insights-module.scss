@@ -1,14 +1,13 @@
 @import 'skins/shared/color';
 @import 'skins/shared/mixins/flexbox';
+@import 'extensions/wikia/DesignSystem/bower_components/design-system/base/typography';
 
 $content-spacing-small: 12px;
+$content-spacing-small-plus: 15px;
 $content-spacing-regular: 18px;
 $content-spacing-large: 24px;
 $element-size: 48px;
-$font-size-small: 12px;
-$font-size-regular: 14px;
-$font-size-big: 16px;
-$icon-size: 18px;
+$module-width: 239px;
 
 .community-page-insights-module {
 	@include flexbox();
@@ -18,7 +17,7 @@ $icon-size: 18px;
 	border: 1px solid $color-page-border-subtle;
 	margin-bottom: $content-spacing-regular;
 	margin-right: $content-spacing-small;
-	width: 239px;
+	width: $module-width;
 
 	.community-page-insights-module-article-data {
 		color: $color-links;
@@ -33,9 +32,9 @@ $icon-size: 18px;
 
 		color: $color-buttons;
 		display: block;
-		font-size: $font-size-small;
+		font-size: $typescale-size-minus-2;
 		font-weight: bold;
-		line-height: $element-size;
+		line-height: $typescale-size-plus-6;
 		margin-right: $content-spacing-large;
 		text-align: right;
 		text-transform: uppercase;
@@ -47,9 +46,9 @@ $icon-size: 18px;
 
 		background: $color-buttons;
 		color: $color-button-text;
-		font-size: $font-size-regular;
+		font-size: $typescale-size-minus-1;
 		font-weight: bold;
-		line-height: 16px;
+		line-height: $typescale-size-base;
 		margin: 0 0 $content-spacing-large;
 		padding: $content-spacing-regular;
 		text-transform: uppercase;
@@ -67,15 +66,13 @@ $icon-size: 18px;
 
 	.community-page-insights-module-help-icon {
 		fill: $color-page-border-subtle;
-		height: $icon-size;
-		margin: 15px;
-		width: $icon-size;
+		margin: $content-spacing-small-plus $content-spacing-small;
 	}
 
 	.community-page-insights-module-list {
 		@include flex-grow(1);
 
-		font-size: $font-size-big;
+		font-size: $typescale-size-base;
 		list-style: none;
 		margin: 0;
 		padding: 0 $content-spacing-regular;
