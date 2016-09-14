@@ -4,7 +4,6 @@
 $hero-image-pattern: '/extensions/wikia/CommunityPage/images/hero_image_pattern.png';
 $hero-image-height: 200px;
 $hero-image-background: rgba(0,0,0,0.35);
-$page-margin: 30px;
 
 @if $is-dark-wiki {
 	$hero-image-pattern: '/extensions/wikia/CommunityPage/images/hero_image_pattern_dark.png';
@@ -17,10 +16,8 @@ $page-margin: 30px;
 	background-color: $hero-image-background;
 	height: $hero-image-height;
 	justify-content: center;
-	left: -$page-margin;
 	position: relative;
 	text-align: center;
-	width: calc(100% + 2 * #{$page-margin});
 
 	&.community-page-header-cover {
 		background-position: center;
@@ -64,3 +61,32 @@ $page-margin: 30px;
 		font-size: 24px;
 	}
 }
+
+@media #{$breakpoint-large-up} {
+	.community-page-header {
+		left: -$padding-width-large;
+		width: calc(100% + 2 * #{$padding-width-large});
+	}
+}
+
+@media #{$breakpoint-medium-only} {
+	.community-page-header {
+		left: -$padding-width-medium;
+		width: calc(100% + 2 * #{$padding-width-medium});
+	}
+}
+
+@media #{$breakpoint-small-plus} {
+	.community-page-header {
+		left: -$padding-width-small-plus;
+		width: calc(100% + 2 * #{$padding-width-small-plus});
+	}
+}
+
+@media #{$breakpoint-below-small-plus} {
+	.community-page-header {
+		left: -$padding-width-small;
+		width: calc(100% + 2 * #{$padding-width-small});
+	}
+}
+
