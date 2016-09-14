@@ -1,4 +1,7 @@
 @import 'skins/shared/mixins/flexbox';
+@import 'extensions/wikia/DesignSystem/bower_components/design-system/base/typography';
+
+$content-spacing-xlarge: 20px;
 
 .community-page-cards-module-block {
 	@include flexbox();
@@ -6,4 +9,7 @@
 }
 
 .community-page-cards-module-header {
+	font-size: $typescale-size-plus-2;
+	font-weight: bold;
+	margin-bottom: $content-spacing-xlarge;
 }
