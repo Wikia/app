@@ -274,6 +274,13 @@ class ForumController extends WallBaseController {
 	}
 
 	public function threadMessage() {
+		if ( ForumHelper::isForum() &&
+		     DiscussionsHelper::areForumsArchivedAndDiscussionsEnabled()
+		) {
+			$this->redirectToDiscussions();
+
+			return true;
+		}
 		parent::message();
 	}
 
