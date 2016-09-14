@@ -52,7 +52,8 @@ class EmailConfirmationController extends EmailController {
 			'buttonText' => $this->getButtonText(),
 			'contentFooterMessageTop' => $this->getContentFooterMessageTop(),
 			'contentFooterList' => $this->createContentFooterList(),
-			'contentFooterMessagesBottom' => $this->getContentFooterMessagesBottom()
+			'contentFooterMessagesBottom' => $this->getContentFooterMessagesBottom(),
+			'signature' => $this->getMessage( 'emailext-emailconfirmation-community-team' )->text()
 		] );
 	}
 
@@ -78,18 +79,6 @@ class EmailConfirmationController extends EmailController {
 	}
 
 	private function getContentFooterMessagesBottom() {
-		$commonFooterMessage = $this->getCommonFooterMessages();
-		$emailSpecificFooterMessages = $this->getEmailSpecificFooterMessages();
-		return array_merge( $emailSpecificFooterMessages, $commonFooterMessage );
-	}
-
-	private function getCommonFooterMessages() {
-		return [
-			$this->getMessage( 'emailext-emailconfirmation-community-team' )->text()
-		];
-	}
-
-	protected function getEmailSpecificFooterMessages() {
 		return [
 			$this->getMessage( 'emailext-emailconfirmation-footer-2' )->text()
 		];
