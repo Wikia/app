@@ -14,7 +14,7 @@ class CommunityPageSpecialRecentActivityModel {
 			$userName = $activity['user_name'];
 
 			if ( User::isIp( $userName ) ) {
-				$userName = wfMessage( 'oasis-anon-user' )->plain();
+				$userName = wfMessage( 'oasis-anon-user' )->text();
 			}
 
 			$changeTypeString = $this->getChangeTypeMessage( $activity['changetype'] );
@@ -22,7 +22,7 @@ class CommunityPageSpecialRecentActivityModel {
 			$pageLink = $this->getPageLink( $activity['page_title'], $activity['page_url'] );
 
 			$changeMessage = wfMessage( 'communitypage-activity',
-				$userProfileLink, $changeTypeString, $pageLink )->plain();
+				$userProfileLink, $changeTypeString, $pageLink )->text();
 
 			$recentActivity[] = [
 				'timeAgo' => $activity['time_ago'],
@@ -37,8 +37,8 @@ class CommunityPageSpecialRecentActivityModel {
 		$title = SpecialPage::getTitleFor( 'WikiActivity' );
 
 		return [
-			'activityHeading' => wfMessage( 'communitypage-recent-activity-header' )->plain(),
-			'moreActivityText' => wfMessage( 'communitypage-recent-activity' )->plain(),
+			'activityHeading' => wfMessage( 'communitypage-recent-activity-header' )->text(),
+			'moreActivityText' => wfMessage( 'communitypage-recent-activity' )->text(),
 			'moreActivityLink' => $title->getCanonicalURL(),
 			'activity' => $recentActivity,
 		];
