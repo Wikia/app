@@ -16,6 +16,7 @@
 @import 'components/insights-module';
 @import 'components/recently-joined';
 @import 'components/todo-list-module';
+@import 'components/cards-module';
 
 .CommunityPageContainer {
 	box-sizing: border-box;
@@ -24,9 +25,6 @@
 }
 
 .CommunityPageMainContent {
-	@include flexbox();
-	@include flex-wrap(wrap);
-
 	box-sizing: inherit;
 	float: left;
 	padding-right: 34px;

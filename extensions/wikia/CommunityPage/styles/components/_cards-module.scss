@@ -1,0 +1,9 @@
+@import 'skins/shared/mixins/flexbox';
+
+.community-page-cards-module-block {
+	@include flexbox();
+	@include flex-wrap(wrap);
+}
+
+.community-page-cards-module-header {
+}
