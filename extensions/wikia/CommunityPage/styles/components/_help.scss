@@ -32,12 +32,9 @@
 		padding-top: 18px;
 
 		svg {
+			fill: $color-links;
 			height: 18px;
 			width: 18px;
-
-			path {
-				fill: $color-links;
-			}
 		}
 
 		.community-page-help-module-policy-title {

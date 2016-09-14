@@ -11,7 +11,7 @@ class CommunityPageSpecialHelpModel {
 			'editPageLink' => $this->getHelpPageLink( 'communitypage-help-module-edit-page-name' ),
 			'addLinksPageLink' => $this->getHelpPageLink( 'communitypage-help-module-add-link-name' ),
 			'addNewPageLink' => $this->getHelpPageLink( 'communitypage-help-module-new-page-name' ),
-			'communityPolicyIcon' => file_get_contents( 'extensions/wikia/CommunityPage/images/help_community_policy.svg' )
+			'communityPolicyIcon' => DesignSystemHelper::getSvg( 'wds-icons-clipboard-small' )
 		];
 	}
 
