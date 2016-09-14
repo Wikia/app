@@ -73,7 +73,6 @@ class ChatBanData
 			'target'    => 'cbu_user_id %s',
 			'expires'   => 'end_date %s',
 			'blockedBy' => 'cbu_admin_user_id %s',
-			'reason'    => 'reason %s',
 		];
 
 		if ( $load == 1 ) {

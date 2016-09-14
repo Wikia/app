@@ -48,7 +48,7 @@ require(['wikia.nirvana'], function (nirvana) {
 
             var columns = refData["sColumns"].split(',');
             var order = columns[refData["iSortCol_0"]] + ":" + refData["sSortDir_0"];
-            console.log(order);
+
             var requestData = {
                 username: $('#lu_search').val(),
                 limit: refData["iDisplayLength"],

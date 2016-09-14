@@ -228,7 +228,8 @@ function ChatAjax() {
 		$json = json_encode( $data );
 	}
 	$response = new AjaxResponse( $json );
-	$response->setCacheDuration( 0 ); // don't cache any of these requests
+	// don't cache any of these requests
+	$response->setCacheDuration( 0 );
 	$response->setContentType( 'application/json; charset=utf-8' );
 
 	wfProfileOut( __METHOD__ );
