@@ -1,45 +1,59 @@
 @import 'skins/shared/color';
 @import 'skins/oasis/css/core/breakpoints-variables';
 @import 'variables';
+@import 'extensions/wikia/DesignSystem/bower_components/design-system/base/colors';
+@import 'extensions/wikia/DesignSystem/bower_components/design-system/base/typography';
+
+$community-page-rail-background-color: mix($color-page, #000, 96%);
+@if $is-dark-wiki {
+	$community-page-rail-background-color: mix($color-page, #FFF, 96%);
+}
+$community-page-rail-width: 266px;
+$community-page-rail-width-small: 256px;
+$community-page-rail-module-width: 210px;
+$community-page-rail-spacing-small: 14px;
+$community-page-rail-spacing: 16px;
+$community-page-rail-large: 18px;
+$community-page-rail-xlarge: 20px;
 
 @media #{$breakpoint-small-only} {
-	width: 256px;
+	width: $community-page-rail-width-small;
 }
 
 .community-page-rail {
-	background-color: #f6f6f6;
+	background-color: $community-page-rail-background-color;
 	display: inline-block;
 	float: right;
-	padding: 80px 0 20px;
-	width: 266px;
+	padding: 80px 0 $community-page-rail-xlarge;
+	width: $community-page-rail-width;
 
 	.module {
 		box-sizing: border-box;
-		font-size: 16px;
+		font-size: $typescale-size-base;
 		line-height: $module-default-line-height;
 		margin: 0 auto 33px;
-		width: 210px;
+		width: $community-page-rail-module-width;
+	}
 
-		.community-page-module-section-title {
-			border-bottom: 1px #ccc solid;
-			color: #4a4a4a;
-			font-size: 18px;
-			font-weight: bold;
-			line-height: $module-default-line-height;
-			margin-bottom: 14px;
-			padding: 0 0 14px;
-		}
+	.community-page-module-section-title {
+		border-bottom: 1px $color-page-border solid;
+		color: $color-text;;
+		font-size: $typescale-size-plus-1;
+		font-weight: bold;
+		line-height: $module-default-line-height;
+		margin-bottom: $community-page-rail-spacing-small;
+		padding: 0 0 $community-page-rail-spacing-small;
+	}
 
-		.community-page-subtle {
-			color: $color-alternate-text;
-			display: block;
-			font-size: 12px;
-		}
+	.community-page-subtle {
+		color: $color-alternate-text;
+		display: block;
+		font-size: $typescale-size-minus-2;
 	}
 
 	.module-box {
-		background-color: $color-white;
-		padding: 21px 18px 15px;
+		background-color: $color-page;
+		padding: $community-page-rail-xlarge $community-page-rail-large $community-page-rail-spacing;
 		text-align: center;
 
 		.community-page-module-section-title {

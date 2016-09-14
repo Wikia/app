@@ -1,19 +1,24 @@
+@import 'extensions/wikia/DesignSystem/bower_components/design-system/base/typography';
+
+$admins-module-icon-size: 48px;
+$admins-module-margin: 20px;
+
 .admins-module {
 	.admins {
-		display: flex;
-		font-size: 12px;
-		justify-content: space-between;
-		margin-right: 20px;
+		@include flexbox();
+		@include justify-content(space-between);
+		font-size: $typescale-size-minus-2;
+		margin-right: $admins-module-margin;
 	}
 
 	.admins-text {
-		font-size: 14px;
+		font-size: $typescale-size-minus-1;
 		padding: 12px 18px 30px;
 	}
 
 	.admins-view-all {
 		color: $color-buttons;
-		font-size: 12px;
+		font-size: $typescale-size-minus-2;
 		font-weight: bold;
 		text-transform: uppercase;
 
@@ -27,7 +32,7 @@
 	display: inline-block;
 
 	.avatar-container {
-		height: 48px;
-		width: 48px;
+		height: $admins-module-icon-size;
+		width: $admins-module-icon-size;
 	}
 }
