@@ -19,16 +19,16 @@ class ForumController extends WallBaseController {
 	}
 
 	public function board() {
-		$ns = $this->wg->Title->getNamespace();
 
 		if ( ForumHelper::isForum() &&
 		     DiscussionsHelper::areForumsArchivedAndDiscussionsEnabled()
 		) {
-			$this->redirectToDiscussions( $ns );
+			$this->redirectToDiscussions();
 
 			return false;
 		}
 
+		$ns = $this->wg->Title->getNamespace();
 		if ( $ns == NS_WIKIA_FORUM_TOPIC_BOARD ) {
 			$topicTitle = $this->getTopicTitle();
 
@@ -152,6 +152,13 @@ class ForumController extends WallBaseController {
 
 	public function boardThread() {
 		wfProfileIn( __METHOD__ );
+
+		if ( ForumHelper::isForum() &&
+		     DiscussionsHelper::areForumsArchivedAndDiscussionsEnabled()
+		) {
+			$this->redirectToDiscussions();
+			wfProfileOut( __METHOD__ );
+		}
 
 		$wallMessage = $this->getWallMessage();
 		if ( !( $wallMessage instanceof WallMessage ) ) {
@@ -413,7 +420,8 @@ class ForumController extends WallBaseController {
 		return true;
 	}
 
-	private function redirectToDiscussions( $namespace ) {
+	private function redirectToDiscussions() {
+		$namespace = $this->app->wg->Title->getNamespace();
 		if ( $namespace == NS_WIKIA_FORUM_TOPIC_BOARD ) {
 			$categoryId = $this->getTopicBoardId();
 			DiscussionsHelper::redirectToDiscussionsCategory( $this->wg->out, $this->getResponse(),
@@ -457,6 +465,7 @@ class ForumController extends WallBaseController {
 
 	private function getPostId() {
 		$title = Title::newFromID( $this->app->wg->Title->getText() );
+
 		return $title->getArticleID();
 	}
 
