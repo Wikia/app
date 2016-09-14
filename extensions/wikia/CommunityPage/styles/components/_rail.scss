@@ -6,7 +6,7 @@
 
 $community-page-rail-background-color: mix($color-page, #000, 96%);
 @if $is-dark-wiki {
-	$community-page-rail-background-color: mix($color-page, #FFF, 96%);
+	$community-page-rail-background-color: mix($color-page, $color-white, 96%);
 }
 $community-page-rail-width: 266px;
 $community-page-rail-width-small: 256px;
