@@ -54,34 +54,32 @@ require([
 	$.each(views, function (key, value) {
 		var viewString = 'ext.wikia.recirculation.views.' + key;
 
-		require([viewString], function (view) {
+		require([viewString], function (viewFactory) {
 			$.when.apply($, value)
 				.then(function () {
-					var args = Array.prototype.slice.call(arguments);
-
-					$.each(args, function(index, item) {
-						if (typeof item === 'string') {
-							saved[item].then(function(data) {
-								data.items = data.items.slice(savedOptions[item].offset);
-								args[index] = data;
-							});
-						}
-					});
-
-					var data = {
-							title: args[0].title,
+					var view = viewFactory(),
+						args = Array.prototype.slice.call(arguments),
+						data = {
+							title: '',
 							items: []
 						};
 
+					args.forEach(function (result, index) {
+						if (typeof result === 'string') {
+							saved[result].then(function(savedData) {
+								savedData.items = savedData.items.slice(savedOptions[result].offset);
+								data.items = data.items.concat(savedData.items);
+							});
+						} else {
+							data.items = data.items.concat(result.items);
+						}
 
-
-					args.forEach(function (promise, index) {
-						data.items = data.items.concat(promise.items);
 					});
 
 					data.items = utils.ditherResults(data.items, 4);
 
-					view().render(data);
+					view.render(data)
+						.then(view.setupTracking(experimentName));
 				});
 		});
 	});
