@@ -91,7 +91,7 @@ $search-buttons-transition-duration: 50ms;
 	&__search-close {
 		display: block;
 		opacity: 0;
-		padding-right: 9px;
+		padding-right: 8px;
 		transition: all $search-buttons-transition-duration;
 	}
 
@@ -102,6 +102,7 @@ $search-buttons-transition-duration: 50ms;
 
 		&__search-input-wrapper {
 			margin-right: 0;
+			min-height: 28px;
 		}
 
 		&__link,
@@ -116,7 +117,7 @@ $search-buttons-transition-duration: 50ms;
 		&__search-submit {
 			border-width: 1px;
 			max-width: 100%;
-			padding: 2px 8px;
+			padding: 4px 8px;
 			transition-delay: $search-transition-duration - $search-buttons-transition-duration;
 		}
 
