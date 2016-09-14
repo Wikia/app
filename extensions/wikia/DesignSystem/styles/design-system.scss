@@ -86,11 +86,13 @@ $search-buttons-transition-duration: 50ms;
 		padding-left: 0;
 		padding-right: 0;
 		transition: all $search-buttons-transition-duration;
+		z-index: 2;
 	}
 
 	&__search-close {
 		display: block;
 		opacity: 0;
+		padding-right: 9px;
 		transition: all $search-buttons-transition-duration;
 	}
 
@@ -114,7 +116,6 @@ $search-buttons-transition-duration: 50ms;
 
 		&__search-submit {
 			border-width: 1px;
-			margin-left: 15px;
 			max-width: 100%;
 			padding-left: 9px;
 			padding-right: 9px;
