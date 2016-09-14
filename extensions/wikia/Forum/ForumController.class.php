@@ -21,7 +21,9 @@ class ForumController extends WallBaseController {
 	public function board() {
 		$ns = $this->wg->Title->getNamespace();
 
-		if ( ForumHelper::isForum() && ForumHelper::areForumsArchivedAndDiscussionsEnabled() ) {
+		if ( ForumHelper::isForum() &&
+		     DiscussionsHelper::areForumsArchivedAndDiscussionsEnabled()
+		) {
 			$this->redirectToDiscussions( $ns );
 
 			return false;
@@ -352,16 +354,16 @@ class ForumController extends WallBaseController {
 	}
 
 	public function forumRelatedThreads() {
-		$title = Title::newFromId( $this->app->wg->Title->getText() );
+		$title = Title::newFromID( $this->app->wg->Title->getText() );
 		$this->response->setVal( 'showModule', false );
 		if ( !empty( $title ) && $title->getNamespace() == NS_WIKIA_FORUM_BOARD_THREAD ) {
 
 			$rp = new WallRelatedPages();
-			$out = $rp->getMessageRelatetMessageIds( [ $title->getArticleId() ] );
+			$out = $rp->getMessageRelatetMessageIds( [ $title->getArticleID() ] );
 			$messages = [];
 			$count = 0;
 			foreach ( $out as $key => $val ) {
-				if ( $title->getArticleId() == $val['comment_id'] ) {
+				if ( $title->getArticleID() == $val['comment_id'] ) {
 					continue;
 				}
 
@@ -406,7 +408,7 @@ class ForumController extends WallBaseController {
 		$this->response->addAsset( 'extensions/wikia/Forum/css/ForumOld.scss' );
 
 		$forumTitle = SpecialPage::getTitleFor( 'Forum' );
-		$this->forumUrl = $forumTitle->getLocalUrl();
+		$this->forumUrl = $forumTitle->getLocalURL();
 
 		return true;
 	}
@@ -414,17 +416,18 @@ class ForumController extends WallBaseController {
 	private function redirectToDiscussions( $namespace ) {
 		if ( $namespace == NS_WIKIA_FORUM_TOPIC_BOARD ) {
 			$categoryId = $this->getTopicBoardId();
-			ForumHelper::redirectToDiscussionsCategory( $this->wg->out, $this->getResponse(),
+			DiscussionsHelper::redirectToDiscussionsCategory( $this->wg->out, $this->getResponse(),
 				$categoryId );
 		}
 		if ( $namespace == NS_WIKIA_FORUM_BOARD ) {
 			$categoryId = $this->getBoardId();
-			ForumHelper::redirectToDiscussionsCategory( $this->wg->out, $this->getResponse(),
+			DiscussionsHelper::redirectToDiscussionsCategory( $this->wg->out, $this->getResponse(),
 				$categoryId );
 		}
 		if ( $namespace == NS_WIKIA_FORUM_BOARD_THREAD ) {
 			$postId = $this->getPostId();
-			ForumHelper::redirectToDiscussionsPost( $this->wg->out, $this->getResponse(), $postId );
+			DiscussionsHelper::redirectToDiscussionsPost( $this->wg->out, $this->getResponse(),
+				$postId );
 		}
 	}
 
@@ -440,7 +443,7 @@ class ForumController extends WallBaseController {
 	private function getBoardId() {
 		$title = $this->request->getVal( 'title', $this->app->wg->Title );
 		$wall = $this->getWallForIndexPage( $title );
-		if (empty ($wall) ) {
+		if ( empty ( $wall ) ) {
 			return null;
 		}
 		/** @var ForumBoard $board */
@@ -453,7 +456,8 @@ class ForumController extends WallBaseController {
 	}
 
 	private function getPostId() {
-		return null;
+		$title = Title::newFromID( $this->app->wg->Title->getText() );
+		return $title->getArticleID();
 	}
 
 }

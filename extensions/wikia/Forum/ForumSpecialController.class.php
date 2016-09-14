@@ -30,8 +30,8 @@ class ForumSpecialController extends WikiaSpecialPageController {
 	public function index() {
 		wfProfileIn( __METHOD__ );
 
-		if ( ForumHelper::areForumsArchivedAndDiscussionsEnabled() ) {
-			ForumHelper::redirectToDiscussions($this->wg->out, $this->getResponse());
+		if ( DiscussionsHelper::areForumsArchivedAndDiscussionsEnabled() ) {
+			DiscussionsHelper::redirectToDiscussions($this->wg->out, $this->getResponse());
 			wfProfileOut( __METHOD__ );
 
 			return;
