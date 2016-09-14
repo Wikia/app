@@ -94,8 +94,9 @@ $search-buttons-transition-duration: 50ms;
 
 	&__search-close {
 		display: block;
+		max-width: 0;
 		opacity: 0;
-		padding-right: 8px;
+		padding: 0;
 		transition: all $search-buttons-transition-duration;
 	}
 
@@ -114,6 +115,7 @@ $search-buttons-transition-duration: 50ms;
 			display: flex;
 			flex-grow: 0;
 			font-size: 0;
+			max-width: 0;
 			padding: 0;
 		}
 
@@ -125,7 +127,9 @@ $search-buttons-transition-duration: 50ms;
 		}
 
 		&__search-close {
+			max-width: 24px;
 			opacity: 1;
+			padding-right: 8px;
 			transition-delay: $search-transition-duration - $search-buttons-transition-duration;
 		}
 	}
