@@ -104,6 +104,10 @@ class CakeRelatedContentService {
 								'url' => $content->getUrl(),
 								'thumbnail' => $content->getImage(),
 								'title' => $this->formatTitle($content),
+								'publishDate' => $content->getModified(),
+								'isVideo' => false,
+								'meta' => $content->getContentMetadata(),
+								'source' => $this->getRecirculationContentType($content->getContentType()),
 							] );
 					}
 
@@ -146,6 +150,20 @@ class CakeRelatedContentService {
 		}
 
 		return $content->getTitle();
+	}
+
+	private function getRecirculationContentType($contentType) {
+		switch ($contentType) {
+			case "Discussion Thread":
+				return "discussions";
+			case "Fandom Article":
+				return "fandom";
+			case "Wiki Article":
+				return "wiki";
+			default:
+				return "undefined";
+		}
+
 	}
 
 	private function onValidWiki() {
