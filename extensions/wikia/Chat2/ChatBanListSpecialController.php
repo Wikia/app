@@ -39,7 +39,6 @@ class ChatBanListSpecialController extends WikiaSpecialPageController
 		$loop = $this->request->getVal( 'loop' );
 		$order = $this->request->getVal( 'order' );
 
-
 		/*
 		 * initial values for response
 		 */
@@ -57,8 +56,7 @@ class ChatBanListSpecialController extends WikiaSpecialPageController
 			$data->setUserName( $username );
 			$data->setLimit( $limit );
 			$data->setOffset( $offset );
-			$orders = explode( "|", $order );
-			$data->setOrder( $orders );
+			$data->setOrder( $order );
 			$records = $data->loadData();
 		}
 

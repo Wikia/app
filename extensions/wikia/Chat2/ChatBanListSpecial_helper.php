@@ -69,11 +69,11 @@ class ChatBanData
 		$this->skin = RequestContext::getMain()->getskin();
 
 		$this->orderOptions = [
-			'timestamp' => [ 'start_date %s' ],
-			'target'    => [ 'cbu_user_id %s' ],
-			'expires'   => [ 'end_date %s' ],
-			'blockedBy' => [ 'cbu_admin_user_id %s' ],
-			'reason'    => [ 'reason %s' ],
+			'timestamp' => 'start_date %s',
+			'target'    => 'cbu_user_id %s',
+			'expires'   => 'end_date %s',
+			'blockedBy' => 'cbu_admin_user_id %s',
+			'reason'    => 'reason %s',
 		];
 
 		if ( $load == 1 ) {
@@ -93,9 +93,10 @@ class ChatBanData
 
 	function setOffset( $offset = 0 ) { $this->offset = $offset; }
 
-	function setOrder( $orders = [ ] ) {
-		if ( empty( $orders ) || !is_array( $orders ) ) {
-			$orders = [ Listusers::DEF_ORDER ];
+	function setOrder( $order = '' ) {
+		if ( empty( $order ) ) {
+			// default order
+			$order = 'timestamp:desc';
 		}
 
 		$validSortDirections = [
@@ -103,18 +104,9 @@ class ChatBanData
 			'desc',
 		];
 
-		# order by
-		$this->order = [ ];
-		foreach ( $orders as $order ) {
-			list ( $orderName, $orderDesc ) = explode( ":", $order );
-			if ( isset( $this->orderOptions[ $orderName ] ) && in_array( $orderDesc, $validSortDirections ) ) {
-				foreach ( $this->orderOptions[ $orderName ] as $orderStr ) {
-					$this->order[] = sprintf( $orderStr, $orderDesc );
-				}
-			}
-		}
-		if ( empty( $this->order ) ) {
-			$this->order[] = 'start_date DESC';
+		list ( $orderName, $orderDesc ) = explode( ":", $order );
+		if ( isset( $this->orderOptions[ $orderName ] ) && in_array( $orderDesc, $validSortDirections ) ) {
+			$this->order = sprintf( $this->orderOptions[ $orderName ], $orderDesc );
 		}
 	}
 
@@ -137,10 +129,9 @@ class ChatBanData
 			'data'     => [ ],
 		];
 
-		$orderBy = implode( ",", $this->order );
 		$subMemkey = [
 			'O' . $this->offset,
-			'O' . $orderBy,
+			'O' . $this->order,
 			'L' . $this->limit,
 			'U' . $this->userName,
 		];
@@ -193,7 +184,7 @@ class ChatBanData
 					$where,
 					__METHOD__,
 					[
-						'ORDER BY' => $orderBy,
+						'ORDER BY' => $this->order,
 						'LIMIT'    => $this->limit,
 						'OFFSET'   => intval( $this->offset ),
 					]
