@@ -19,13 +19,12 @@ class ForumController extends WallBaseController {
 	}
 
 	public function board() {
-
 		if ( ForumHelper::isForum() &&
 		     DiscussionsHelper::areForumsArchivedAndDiscussionsEnabled()
 		) {
 			$this->redirectToDiscussions();
 
-			return false;
+			return true;
 		}
 
 		$ns = $this->wg->Title->getNamespace();
@@ -113,7 +112,7 @@ class ForumController extends WallBaseController {
 		if ( $title->getNamespace() == NS_WIKIA_FORUM_TOPIC_BOARD ) {
 			$topicTitle = $this->getTopicTitle();
 			if ( !empty( $topicTitle ) ) {
-				$wall = Wall::newFromRelatedPages( $title, $topicTitle->getArticleId() );
+				$wall = Wall::newFromRelatedPages( $title, $topicTitle->getArticleID() );
 				$this->response->setVal( 'topicText', $topicTitle->getPrefixedText() );
 				$wall->disableCache();
 			} else {
@@ -206,7 +205,7 @@ class ForumController extends WallBaseController {
 			$displayname2 = '';
 			$url =
 				Title::newFromText( $name, $this->wg->EnableWallExt ? NS_USER_WALL : NS_USER_TALK )
-					->getFullUrl();
+					->getFullURL();
 		}
 
 		$this->response->setVal( 'username', $name );
@@ -226,7 +225,7 @@ class ForumController extends WallBaseController {
 			$path = [];
 			$path[] = [
 				'title' => wfMessage( 'forum-forum-title' )->escaped(),
-				'url' => $indexPage->getFullUrl(),
+				'url' => $indexPage->getFullURL(),
 			];
 
 			$path[] = [ 'title' => wfMessage( 'forum-board-topics' )->escaped() ];
@@ -361,6 +360,14 @@ class ForumController extends WallBaseController {
 	}
 
 	public function forumRelatedThreads() {
+		if ( ForumHelper::isForum() &&
+		     DiscussionsHelper::areForumsArchivedAndDiscussionsEnabled()
+		) {
+			$this->redirectToDiscussions();
+
+			return;
+		}
+
 		$title = Title::newFromID( $this->app->wg->Title->getText() );
 		$this->response->setVal( 'showModule', false );
 		if ( !empty( $title ) && $title->getNamespace() == NS_WIKIA_FORUM_BOARD_THREAD ) {
