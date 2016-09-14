@@ -48,6 +48,10 @@ body {
 	max-width: 600px;
 }
 
+.fotter a {
+	color: #fff;
+}
+
 .fandom-bar {
 	height: 5px;
 	padding: 0;
