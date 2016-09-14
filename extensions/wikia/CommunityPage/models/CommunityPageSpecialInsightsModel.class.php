@@ -75,7 +75,7 @@ class CommunityPageSpecialInsightsModel {
 
 		if ( $insightPages[ 'count' ] > static::INSIGHTS_MODULE_ITEMS ) {
 			$insightPages[ 'fulllistlink' ] = SpecialPage::getTitleFor( 'Insights', $type )
-				->getLocalURL( [ 'sort' => static::RANDOM_SORTING_TYPE ] );
+				->getLocalURL();
 		}
 
 		return $this->addEditLinks( $insightPages );
