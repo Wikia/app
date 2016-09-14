@@ -82,7 +82,7 @@ define('ext.wikia.recirculation.views.impactFooter', [
 					$discussionHeader.css('background-image', 'url(' + data.value + ')');
 				}
 			}).fail(function () {
-				// Silent fail. It's alright to shwo the discussions header without an image
+				// Silent fail. It's alright to show the discussions header without an image
 			});
 		}
 	}
