@@ -79,6 +79,10 @@ $search-buttons-transition-duration: 50ms;
 		transition: all $search-transition-duration ease;
 	}
 
+	&__search-input-wrapper {
+		min-height: 28px;
+	}
+
 	&__search-submit {
 		border-width: 0;
 		display: block;
@@ -102,7 +106,6 @@ $search-buttons-transition-duration: 50ms;
 
 		&__search-input-wrapper {
 			margin-right: 0;
-			min-height: 28px;
 		}
 
 		&__link,
