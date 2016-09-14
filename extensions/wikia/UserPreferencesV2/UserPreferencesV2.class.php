@@ -20,7 +20,7 @@ class UserPreferencesV2 {
 	 * @return Bool
 	 */
 	static public function onGetPreferences( $user, &$defaultPreferences ) {
-		global $wgEnableWallExt, $wgEnableDiscussions, $wgOut, $wgScriptPath, $wgServer, $wgUser, $wgAuth;
+		global $wgEnableWallExt, $wgOut, $wgScriptPath, $wgServer, $wgUser, $wgAuth;
 
 		// add javascript
 		// TODO: use $wgExtensionsPath instead
