@@ -125,7 +125,8 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 		// Add details to top admins
 		$topAdminsTemplateData[ CommunityPageSpecialTopAdminsFormatter::TOP_ADMINS_LIST ] =
 			$this->getContributorsDetails(
-				$topAdminsTemplateData[ CommunityPageSpecialTopAdminsFormatter::TOP_ADMINS_LIST ]
+				$topAdminsTemplateData[ CommunityPageSpecialTopAdminsFormatter::TOP_ADMINS_LIST ],
+				AvatarService::AVATAR_SIZE_MEDIUM
 			);
 
 		$templateMessages = [
@@ -255,13 +256,13 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 	 * @param array $contributors List of contributors containing userId and contributions for each user
 	 * @return array
 	 */
-	private function getContributorsDetails( $contributors ) {
+	private function getContributorsDetails( $contributors, $avatarSize = AvatarService::AVATAR_SIZE_SMALL_PLUS ) {
 		$count = 0;
 
-		return array_map( function ( $contributor ) use ( &$count ) {
+		return array_map( function ( $contributor ) use ( &$count, $avatarSize ) {
 			$user = User::newFromId( $contributor[ 'userId' ] );
 			$userName = $user->getName();
-			$avatar = AvatarService::renderAvatar( $userName, AvatarService::AVATAR_SIZE_SMALL_PLUS );
+			$avatar = AvatarService::renderAvatar( $userName, $avatarSize );
 			$count += 1;
 
 			if ( User::isIp( $userName ) ) {
