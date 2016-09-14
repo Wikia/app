@@ -62,31 +62,32 @@ $hero-image-background: rgba(0,0,0,0.35);
 	}
 }
 
+@mixin header-image($marginSize) {
+	left: -$marginSize;
+	width: calc(100% + 2 * #{$marginSize});
+}
+
 @media #{$breakpoint-large-up} {
 	.community-page-header {
-		left: -$padding-width-large;
-		width: calc(100% + 2 * #{$padding-width-large});
+		@include header-image($padding-width-large);
 	}
 }
 
 @media #{$breakpoint-medium-only} {
 	.community-page-header {
-		left: -$padding-width-medium;
-		width: calc(100% + 2 * #{$padding-width-medium});
+		@include header-image($padding-width-medium);
 	}
 }
 
 @media #{$breakpoint-small-plus} {
 	.community-page-header {
-		left: -$padding-width-small-plus;
-		width: calc(100% + 2 * #{$padding-width-small-plus});
+		@include header-image($padding-width-small-plus);
 	}
 }
 
 @media #{$breakpoint-below-small-plus} {
 	.community-page-header {
-		left: -$padding-width-small;
-		width: calc(100% + 2 * #{$padding-width-small});
+		@include header-image($padding-width-small);
 	}
 }
 
