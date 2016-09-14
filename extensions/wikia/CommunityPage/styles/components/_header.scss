@@ -1,20 +1,16 @@
 @import 'skins/shared/color';
 @import 'skins/shared/mixins/flexbox';
 
-$hero-image-pattern: '/extensions/wikia/CommunityPage/images/hero_image_pattern.png';
+$hero-image-url: '/extensions/wikia/CommunityPage/images/fandom_heart.svg';
 $hero-image-height: 200px;
-$hero-image-background: rgba(0,0,0,0.35);
-
-@if $is-dark-wiki {
-	$hero-image-pattern: '/extensions/wikia/CommunityPage/images/hero_image_pattern_dark.png';
-	$hero-image-background: rgba(0,0,0,0);
-}
+$hero-image-background: $color-slate-gray;
 
 .community-page-header {
 	@include flexbox();
 	align-items: center;
-	background: url($hero-image-pattern);
+	background: url($hero-image-url) center no-repeat;
 	background-color: $hero-image-background;
+	background-size: 100px 100px;
 	height: $hero-image-height;
 	justify-content: center;
 	text-align: center;
@@ -25,7 +21,7 @@ $hero-image-background: rgba(0,0,0,0.35);
 	}
 
 	&.community-page-header-cover:before {
-		background-color: rgba(0,0,0,0.35);
+		background-color: rgba(0, 0, 0, 0.35);
 		content: '';
 		height: $hero-image-height;
 		left: 0;
