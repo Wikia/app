@@ -25,6 +25,7 @@ define('ext.wikia.recirculation.views.rail', [
 				}
 
 				$('#RECIRCULATION_RAIL').html($html);
+				curated.setupTracking($html);
 
 				return $html;
 			});
