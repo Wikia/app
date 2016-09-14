@@ -4,18 +4,22 @@ class CommunityPageSpecialInsightsModel {
 	const INSIGHTS_MODULE_ITEMS = 3;
 	const INSIGHTS_CONFIG_SORT_TYPE_KEY = 'sortingType';
 	const INSIGHTS_CONFIG_PAGEVIEWS_KEY = 'displayPageviews';
+	const INSIGHTS_ICON = 'icon';
 	const INSIGHTS_MODULES = [
 		'popularpages' => [
 			self::INSIGHTS_CONFIG_SORT_TYPE_KEY => 'random',
-			self::INSIGHTS_CONFIG_PAGEVIEWS_KEY => true
+			self::INSIGHTS_CONFIG_PAGEVIEWS_KEY => true,
+			self::INSIGHTS_ICON => 'proof-read'
 		],
 		'deadendpages' => [
 			self::INSIGHTS_CONFIG_SORT_TYPE_KEY => 'random',
-			self::INSIGHTS_CONFIG_PAGEVIEWS_KEY => false
+			self::INSIGHTS_CONFIG_PAGEVIEWS_KEY => false,
+			self::INSIGHTS_ICON => 'add-link'
 		],
 		'uncategorizedpages' => [
 			self::INSIGHTS_CONFIG_SORT_TYPE_KEY => 'random',
-			self::INSIGHTS_CONFIG_PAGEVIEWS_KEY => false
+			self::INSIGHTS_CONFIG_PAGEVIEWS_KEY => false,
+			self::INSIGHTS_ICON => 'add-category'
 		]
 	];
 
@@ -73,6 +77,7 @@ class CommunityPageSpecialInsightsModel {
 		 * communitypage-deadendpages-title'
 		 */
 		$insightPages[ 'type' ] = $type;
+		$insightPages[ 'icon' ] = $config[ static::INSIGHTS_ICON ];
 		$insightPages[ 'title' ] = wfMessage( 'communitypage-' . $type . '-title' )->text();
 		$insightPages[ 'helpicon' ] = DesignSystemHelper::getSvg(
 			'wds-icons-question', 'community-page-insights-module-help-icon' );

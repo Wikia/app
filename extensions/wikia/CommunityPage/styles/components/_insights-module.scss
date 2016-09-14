@@ -6,6 +6,7 @@ $content-spacing-large: 24px;
 $element-size: 48px;
 $font-size-small: 12px;
 $font-size-regular: 14px;
+$font-size-big: 16px;
 $icon-size: 18px;
 
 .community-page-insights-module {
@@ -72,6 +73,7 @@ $icon-size: 18px;
 	.community-page-insights-module-list {
 		@include flex-grow(1);
 
+		font-size: $font-size-big;
 		list-style: none;
 		margin: 0;
 		padding: 0 $content-spacing;
