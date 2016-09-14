@@ -1,29 +1,16 @@
 /*global define*/
 define('ext.wikia.adEngine.slotTweaker', [
 	'wikia.log',
+	'wikia.browserDetect',
 	'wikia.document',
-	'wikia.window'
-], function (log, doc, win) {
+	'wikia.window',
+	'ext.wikia.adEngine.domElementTweaker'
+], function (log, browser, doc, win, DOMElementTweaker) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.slotTweaker',
 		defaultHeightClass = 'default-height',
-		rclass = /[\t\r\n]/g,
 		standardLeaderboardSizeClass = 'standard-leaderboard';
-
-	function removeClass(element, cls) {
-		var oldClasses,
-			newClasses = ' ' + element.className.replace(rclass, ' ') + ' ';
-
-		// Remove all instances of class in the className string
-		while (oldClasses !== newClasses) {
-			oldClasses = newClasses;
-			newClasses = oldClasses.replace(' ' + cls + ' ', ' ');
-		}
-
-		log(['removeClass ' + cls, element], 8, logGroup);
-		element.className = newClasses;
-	}
 
 	function hide(slotname, useInline) {
 		log('hide ' + slotname + ' using class hidden', 6, logGroup);
@@ -33,7 +20,7 @@ define('ext.wikia.adEngine.slotTweaker', [
 		if (slot && useInline) {
 			slot.style.display = 'none';
 		} else if (slot) {
-			removeClass(slot, 'hidden');
+			DOMElementTweaker.removeClass(slot, 'hidden');
 			slot.className += ' hidden';
 		}
 	}
@@ -44,7 +31,7 @@ define('ext.wikia.adEngine.slotTweaker', [
 		var slot = doc.getElementById(slotname);
 
 		if (slot) {
-			removeClass(slot, 'hidden');
+			DOMElementTweaker.removeClass(slot, 'hidden');
 		}
 	}
 
@@ -54,7 +41,7 @@ define('ext.wikia.adEngine.slotTweaker', [
 		log('removeDefaultHeight ' + slotname, 6, logGroup);
 
 		if (slot) {
-			removeClass(slot, defaultHeightClass);
+			DOMElementTweaker.removeClass(slot, defaultHeightClass);
 		}
 	}
 
@@ -151,36 +138,16 @@ define('ext.wikia.adEngine.slotTweaker', [
 		}
 	}
 
-	function isElement(obj) {
-		return obj instanceof HTMLElement;
-	}
+	function tweakRecoveredSlot(adContainer) {
+		var className = 'tmpHeader';
 
-	function moveStylesToInline(element) {
-		var computedStyles,
-			styleName = "";
-
-		if (!isElement(element)) {
+		if (browser.isIE() || browser.isEdge()) {
 			return;
 		}
 
-		computedStyles = document.defaultView.getComputedStyle(element, '');
-
-		if (typeof win.CSS2Properties !== 'undefined' && computedStyles instanceof win.CSS2Properties) {
-			// Hack for Firefox
-			for (var i = 0; i < computedStyles.length; i++) {
-				styleName = computedStyles[i];
-				element.style[styleName] = computedStyles[styleName];
-			}
-		} else if (typeof win.CSSStyleDeclaration !== 'undefined' && computedStyles instanceof win.CSSStyleDeclaration) {
-			element.style.cssText = computedStyles.cssText;
-		}
-	}
-
-	function recursiveMoveStylesToInline(element) {
-		for (var i = 0; i < element.childNodes.length; i++) {
-			recursiveMoveStylesToInline(element.childNodes[i]);
-		}
-		moveStylesToInline(element);
+		adContainer.className += ' ' + className;
+		DOMElementTweaker.recursiveMoveStylesToInline(adContainer);
+		DOMElementTweaker.removeClass(adContainer, className);
 	}
 
 	function makeResponsive(slotName, aspectRatio) {
@@ -250,11 +217,10 @@ define('ext.wikia.adEngine.slotTweaker', [
 		hide: hide,
 		isTopLeaderboard: isTopLeaderboard,
 		makeResponsive: makeResponsive,
-		recursiveMoveStylesToInline: recursiveMoveStylesToInline,
 		onReady: onReady,
 		removeDefaultHeight: removeDefaultHeight,
-		removeClass: removeClass,
 		removeTopButtonIfNeeded: removeTopButtonIfNeeded,
-		show: show
+		show: show,
+		tweakRecoveredSlot: tweakRecoveredSlot
 	};
 });

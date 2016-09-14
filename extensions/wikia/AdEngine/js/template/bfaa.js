@@ -6,7 +6,6 @@ define('ext.wikia.adEngine.template.bfaa', [
 	'ext.wikia.adEngine.slotTweaker',
 	'ext.wikia.adEngine.uapContext',
 	'ext.wikia.adEngine.utils.eventDispatcher',
-	'wikia.browserDetect',
 	'wikia.document',
 	'wikia.log',
 	'wikia.window',
@@ -18,7 +17,6 @@ define('ext.wikia.adEngine.template.bfaa', [
 	slotTweaker,
 	uapContext,
 	eventDispatcher,
-	browser,
 	doc,
 	log,
 	win,
@@ -110,18 +108,6 @@ define('ext.wikia.adEngine.template.bfaa', [
 		}
 	};
 
-	function tweakAdSlot(adContainer) {
-		var className = 'tmpHeader';
-
-		if (browser.isIE() || browser.isEdge()) {
-			return;
-		}
-
-		adContainer.className += ' ' + className;
-		slotTweaker.recursiveMoveStylesToInline(adContainer);
-		slotTweaker.removeClass(adContainer, className);
-	}
-
 	function show(params) {
 		var handler,
 			skin = adContext.getContext().targeting.skin;
@@ -150,7 +136,7 @@ define('ext.wikia.adEngine.template.bfaa', [
 			handler.show(iframe, params.aspectRatio);
 			wrapper.style.opacity = '';
 
-			tweakAdSlot(iframe.parentNode.parentNode.parentNode.parentNode);
+			slotTweaker.tweakRecoveredSlot(iframe.parentNode.parentNode.parentNode.parentNode);
 		});
 
 		log(['show', params.uap], 'info', logGroup);
