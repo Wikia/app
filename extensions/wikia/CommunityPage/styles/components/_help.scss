@@ -2,9 +2,13 @@
 @import 'extensions/wikia/DesignSystem/bower_components/design-system/base/colors';
 @import 'skins/shared/mixins/flexbox';
 
+$small-icon-size: 18px;
+$big-icon-size: 48px;
+$help-module-margin: 12px;
+
 .community-page-rail .help-module {
 	line-height: 2;
-	padding-bottom: 21px;
+	padding-bottom: 20px;
 
 	.community-page-module-section-title {
 		@include flexbox();
@@ -13,12 +17,12 @@
 
 		svg {
 			fill: $color-light-gray;
-			height: 48px;
-			width: 48px;
+			height: $big-icon-size;
+			width: $big-icon-size;
 		}
 
 		.community-page-help-module-title {
-			margin-left: 12px;
+			margin-left: $help-module-margin;
 		}
 	}
 
@@ -33,12 +37,12 @@
 
 		svg {
 			fill: $color-links;
-			height: 18px;
-			width: 18px;
+			height: $small-icon-size;
+			width: $small-icon-size;
 		}
 
 		.community-page-help-module-policy-title {
-			margin-left: 13px;
+			margin-left: $help-module-margin;
 		}
 	}
 }

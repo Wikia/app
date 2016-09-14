@@ -11,29 +11,30 @@ $community-page-rail-background-color: mix($color-page, #000, 96%);
 $community-page-rail-width: 266px;
 $community-page-rail-width-small: 256px;
 $community-page-rail-module-width: 210px;
+$community-page-rail-module-spacing: 35px;
 $community-page-rail-spacing-small: 14px;
 $community-page-rail-spacing: 16px;
-$community-page-rail-large: 18px;
-$community-page-rail-xlarge: 20px;
+$community-page-rail-spacing-large: 18px;
+$community-page-rail-spacing-xlarge: 20px;
 
 .community-page-rail {
 	background-color: $community-page-rail-background-color;
 	display: inline-block;
 	float: right;
-	padding: 80px 0 $community-page-rail-xlarge;
+	padding: $community-page-rail-spacing-xlarge * 4 0 $community-page-rail-spacing-xlarge;
 	width: $community-page-rail-width;
 
 	.module {
 		box-sizing: border-box;
 		font-size: $typescale-size-base;
 		line-height: $module-default-line-height;
-		margin: 0 auto 33px;
+		margin: 0 auto $community-page-rail-module-spacing;
 		width: $community-page-rail-module-width;
 	}
 
 	.community-page-module-section-title {
 		border-bottom: 1px $color-page-border solid;
-		color: $color-text;;
+		color: $color-text;
 		font-size: $typescale-size-plus-1;
 		font-weight: bold;
 		line-height: $module-default-line-height;
@@ -49,7 +50,7 @@ $community-page-rail-xlarge: 20px;
 
 	.module-box {
 		background-color: $color-page;
-		padding: $community-page-rail-xlarge $community-page-rail-large $community-page-rail-spacing;
+		padding: $community-page-rail-spacing-xlarge $community-page-rail-spacing-large $community-page-rail-spacing;
 
 		.community-page-module-section-title {
 			border: 0;

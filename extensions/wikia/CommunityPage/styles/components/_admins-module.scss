@@ -32,9 +32,11 @@ $admins-module-margin: 20px;
 }
 
 .community-page-admin-item {
-	display: inline-block;
+	margin: auto;
+	max-width: 50%;
 
 	.avatar-container {
+		display: inline-block;
 		height: $admins-module-icon-size;
 		width: $admins-module-icon-size;
 	}
