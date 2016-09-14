@@ -105,6 +105,7 @@ class CakeRelatedContentService {
 								'thumbnail' => $content->getImage(),
 								'title' => $this->formatTitle($content),
 								'publishDate' => $content->getModified(),
+								'author' => $this->getAuthor($content->getContentMetadata()),
 								'isVideo' => false,
 								'meta' => $content->getContentMetadata(),
 								'source' => $this->getRecirculationContentType($content->getContentType()),
@@ -150,6 +151,15 @@ class CakeRelatedContentService {
 		}
 
 		return $content->getTitle();
+	}
+
+	private function getAuthor($metadata) {
+		if (array_key_exists("authorName", $metadata)) {
+			return $metadata["authorName"];
+		} else {
+			return "";
+		}
+
 	}
 
 	private function getRecirculationContentType($contentType) {
