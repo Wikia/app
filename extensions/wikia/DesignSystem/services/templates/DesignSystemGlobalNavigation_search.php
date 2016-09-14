@@ -22,11 +22,11 @@
 				wfMessage( 'global-navigation-search-cancel' )->escaped()
 			) ?>
 		</button>
+		<button class="wds-button wds-global-navigation__search-submit" type="submit" data-tracking-label="global-navigation-search-submit">
+			<?= DesignSystemHelper::getSvg(
+				'wds-icons-arrow',
+				'wds-icon wds-icon-small wds-global-navigation__search-submit-icon'
+			) ?>
+		</button>
 	</div>
-	<button class="wds-button wds-global-navigation__search-submit" type="submit" data-tracking-label="global-navigation-search-submit">
-		<?= DesignSystemHelper::getSvg(
-			'wds-icons-arrow',
-			'wds-icon wds-icon-small wds-global-navigation__search-submit-icon'
-		) ?>
-	</button>
 </form>

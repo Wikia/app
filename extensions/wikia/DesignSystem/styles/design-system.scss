@@ -94,16 +94,17 @@ $search-buttons-transition-duration: 50ms;
 		transition: all $search-buttons-transition-duration;
 	}
 
-	&.wds-search-is-active {
-		.wds-global-navigation__search {
+	&.wds-search-is-active .wds-global-navigation {
+		&__search {
 			flex-grow: 2;
 		}
 
-		.wds-global-navigation__search-input-wrapper {
+		&__search-input-wrapper {
 			margin-right: 0;
 		}
 
-		.wds-global-navigation__link, .wds-global-navigation__wikis-menu {
+		&__link,
+		&__wikis-menu {
 			color: rgba($color-dark-blue-gray, 0);
 			display: flex;
 			flex-grow: 0;
@@ -111,7 +112,7 @@ $search-buttons-transition-duration: 50ms;
 			padding: 0;
 		}
 
-		.wds-global-navigation__search-submit {
+		&__search-submit {
 			border-width: 1px;
 			margin-left: 15px;
 			max-width: 100%;
@@ -120,7 +121,7 @@ $search-buttons-transition-duration: 50ms;
 			transition-delay: $search-transition-duration - $search-buttons-transition-duration;
 		}
 
-		.wds-global-navigation__search-close {
+		&__search-close {
 			opacity: 1;
 			transition-delay: $search-transition-duration - $search-buttons-transition-duration;
 		}
