@@ -2,12 +2,12 @@
 	<h3 class="community-page-insights-module-header">
 		<div class="community-page-insights-module-header-icon">
 			<svg width="48" height="48">
-				<use xlink:href="/extensions/wikia/CommunityPage/images/{{icon}}.svg#icon"></use>
+				<use xlink:href="/extensions/wikia/CommunityPage/images/{{{icon}}}.svg#icon"></use>
 			</svg>
 		</div>
 		{{title}}
 	</h3>
-	<ul class="community-page-insights-module-list">
+	<ul class="community-page-insights-module-list reset">
 		{{#pages}}
 			<li class="community-page-insights-module-list-item">
 				<span class="community-page-insights-module-article-data">
@@ -17,9 +17,11 @@
 		{{/pages}}
 	</ul>
 	<div class="community-page-insights-module-footer">
-		<div class="community-page-insights-module-help">
-			{{{helpicon}}}
-		</div>
+		{{#helplink}}
+			<div class="community-page-insights-module-help">
+				<a href="{{helplink}}">{{{helpicon}}}</a>
+			</div>
+		{{/helplink}}
 		{{#fulllistlink}}
 			<a class="community-page-insights-module-full-list-link" href="{{fulllistlink}}"
 			   data-tracking="view-full-list">

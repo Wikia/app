@@ -2,11 +2,11 @@
 @import 'skins/shared/mixins/flexbox';
 @import 'extensions/wikia/DesignSystem/bower_components/design-system/base/typography';
 
+$card-footer-size: 48px;
 $content-spacing-small: 12px;
 $content-spacing-small-plus: 15px;
 $content-spacing-regular: 18px;
 $content-spacing-large: 24px;
-$element-size: 48px;
 $module-width: 239px;
 
 .community-page-insights-module {
@@ -60,8 +60,8 @@ $module-width: 239px;
 	}
 
 	.community-page-insights-module-help {
-		height: $element-size;
-		width: $element-size;
+		height: $card-footer-size;
+		width: $card-footer-size;
 	}
 
 	.community-page-insights-module-help-icon {
@@ -73,8 +73,6 @@ $module-width: 239px;
 		@include flex-grow(1);
 
 		font-size: $typescale-size-base;
-		list-style: none;
-		margin: 0;
 		padding: 0 $content-spacing-regular;
 	}
 
