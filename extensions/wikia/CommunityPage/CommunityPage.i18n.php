@@ -39,6 +39,7 @@ $messages['en'] = array(
 	'communitypage-user-contributions' => '{{PLURAL:$1|contribution|contributions}}',
 	'communitypage-contributions' => '$1 {{PLURAL:$1|contribution|contributions}}',
 	'communitypage-admins' => 'Meet the Admins',
+	'communitypage-admins-welcome-text' => 'Ask us anything. We’d love to hear what brought you to {{SITENAME}}',
 	'communitypage-other-admins' => 'View all',
 	'communitypage-recently-joined' => 'Recent new contributors',
 	'communitypage-all-members' => 'All Members',

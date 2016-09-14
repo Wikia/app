@@ -134,6 +134,7 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 			'otherAdmins' => $this->msg( 'communitypage-other-admins' )->plain(),
 			'noAdminText' => $this->msg( 'communitypage-no-admins' )->plain(),
 			'noAdminContactText' => $this->msg( 'communitypage-no-admins-contact' )->plain(),
+			'adminsText' => $this->msg( 'communitypage-admins-welcome-text' )->text(),
 			'noAdminHref' => $this->msg( 'communitypage-communitycentral-link' )->inContentLanguage()->text(),
 		];
 		$this->response->setData( array_merge( $templateMessages, $topAdminsTemplateData ) );
