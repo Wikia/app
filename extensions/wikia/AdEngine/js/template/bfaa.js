@@ -6,6 +6,7 @@ define('ext.wikia.adEngine.template.bfaa', [
 	'ext.wikia.adEngine.slotTweaker',
 	'ext.wikia.adEngine.uapContext',
 	'ext.wikia.adEngine.utils.eventDispatcher',
+	'wikia.browserDetect',
 	'wikia.document',
 	'wikia.log',
 	'wikia.window',
@@ -17,6 +18,7 @@ define('ext.wikia.adEngine.template.bfaa', [
 	slotTweaker,
 	uapContext,
 	eventDispatcher,
+	browser,
 	doc,
 	log,
 	win,
@@ -110,6 +112,10 @@ define('ext.wikia.adEngine.template.bfaa', [
 
 	function tweakAdSlot(adContainer) {
 		var className = 'tmpHeader';
+
+		if (browser.isIE() || browser.isEdge()) {
+			return;
+		}
 
 		adContainer.className += ' ' + className;
 		slotTweaker.recursiveMoveStylesToInline(adContainer);
