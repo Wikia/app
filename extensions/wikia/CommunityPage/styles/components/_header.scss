@@ -12,8 +12,10 @@ $hero-image-background: rgba(0,0,0,0.35);
 
 .community-page-header {
 	@include flexbox();
+	align-items: center;
 	background: url($hero-image-pattern);
 	background-color: $hero-image-background;
+	display: flex;
 	height: $hero-image-height;
 	justify-content: center;
 	position: relative;
@@ -36,9 +38,8 @@ $hero-image-background: rgba(0,0,0,0.35);
 	}
 
 	.community-page-header-content {
-		position: relative;
-		top: 88px;
-		width: 75%;
+		margin-top: 60px;
+		width: 80%;
 		z-index: 0;
 	}
 
