@@ -16,10 +16,6 @@ $community-page-rail-spacing: 16px;
 $community-page-rail-large: 18px;
 $community-page-rail-xlarge: 20px;
 
-@media #{$breakpoint-small-only} {
-	width: $community-page-rail-width-small;
-}
-
 .community-page-rail {
 	background-color: $community-page-rail-background-color;
 	display: inline-block;
@@ -60,5 +56,11 @@ $community-page-rail-xlarge: 20px;
 			border: 0;
 			padding: 0;
 		}
+	}
+}
+
+@media #{$breakpoint-small-only} {
+	.community-page-rail {
+		width: $community-page-rail-width-small;
 	}
 }
