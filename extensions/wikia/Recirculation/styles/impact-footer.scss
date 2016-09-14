@@ -182,9 +182,11 @@ $recirculation-impact-footer-color-feature-overlay: rgba(0, 0, 0, .75);
 	}
 
 	.discussion-header {
+		background-position: center;
+		background-repeat: no-repeat;
 		color: $color-white;
 		font-size: 14px;
-		height: 165px;
+		height: 160px;
 		text-align: center;
 
 		h3 {
