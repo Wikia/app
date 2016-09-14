@@ -1,21 +1,47 @@
 @import 'skins/shared/color';
+@import 'extensions/wikia/DesignSystem/bower_components/design-system/base/colors';
+@import 'skins/shared/mixins/flexbox';
 
 .community-page-rail .help-module {
 	line-height: 2;
 	padding-bottom: 21px;
 
 	.community-page-module-section-title {
-		background: url('/extensions/wikia/CommunityPage/images/help_icon.svg') 0 50%/48px 48px no-repeat; /* inline */
-		line-height: 48px;
-		padding-left: 60px;
+		@include flexbox();
+
+		align-items: center;
+
+		svg {
+			fill: $color-light-gray;
+			height: 48px;
+			width: 48px;
+		}
+
+		.community-page-help-module-title {
+			margin-left: 12px;
+		}
 	}
 
 	.community-page-policy-link {
-		background: url('/extensions/wikia/CommunityPage/images/help_community_policy.svg') 0 100%/18px 18px no-repeat; /* inline */
+		@include flexbox();
+
+		align-items: center;
 		border-top: 1px solid $color-page-border;
-		display: block;
 		line-height: 1;
 		margin-top: 14px;
-		padding: 18px 0 0 31px;
+		padding-top: 18px;
+
+		svg {
+			height: 18px;
+			width: 18px;
+
+			path {
+				fill: $color-links;
+			}
+		}
+
+		.community-page-help-module-policy-title {
+			margin-left: 13px;
+		}
 	}
 }
