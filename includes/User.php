@@ -4842,4 +4842,22 @@ class User {
 		$msg = wfMessage( $key );
 		return $msg->isBlank() ? $right : $msg->text();
 	}
+
+
+	/**
+	 * We want to use one source for username.
+	 * This function will perform the lookup if
+	 * $wgEnableUsernameLookup is true
+	 *
+	 * @param $userId int userId
+	 * @param $name string anon username
+	 * @return string
+	 */
+	public static function getUsername( $userId, $name ) {
+		global $wgEnableUsernameLookup;
+		if( $wgEnableUsernameLookup && $userId != 0 ) {
+			return static::whoIs( $userId ) ?: $name;
+		}
+		return $name;
+	}
 }
