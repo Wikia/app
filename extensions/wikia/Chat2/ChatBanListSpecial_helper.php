@@ -13,25 +13,62 @@ class ChatBanData
 {
 	use PermissionsServiceAccessor;
 
-	private $mCityId;
-	private $mUserName;
-	private $mLimit;
-	private $mOffset;
-	private $mOrder;
-	private $mOrderOptions;
-	private $sk;
-	private $mDBh;
-	private $mTable;
+	/**
+	 * @var string
+	 */
+	private $cityId;
+
+	/**
+	 * @var string
+	 */
+	private $userName;
+
+	/**
+	 * @var int
+	 */
+	private $limit;
+
+	/**
+	 * @var int
+	 */
+	private $offset;
+
+	/**
+	 * @var string
+	 */
+	private $order;
+
+	/**
+	 * @var array
+	 */
+	private $orderOptions;
+
+	/**
+	 * @var Object
+	 */
+	private $skin;
+
+	/**
+	 * Database
+	 * @var string
+	 */
+	private $db;
+
+	/**
+	 * @var string
+	 */
+	private $table;
+
 
 	function __construct( $city_id, $load = 1 ) {
 		global $wgExternalDatawareDB;
 
-		$this->mCityId = $city_id;
-		$this->mDBh = $wgExternalDatawareDB;
-		$this->mTable = 'chat_ban_users';
-		$this->sk = RequestContext::getMain()->getSkin();
+		$this->cityId = $city_id;
+		$this->db = $wgExternalDatawareDB;
+		$this->table = 'chat_ban_users';
+		$this->skin = RequestContext::getMain()->getskin();
 
-		$this->mOrderOptions = [
+		$this->orderOptions = [
 			'timestamp' => [ 'start_date %s' ],
 			'target'    => [ 'cbu_user_id %s' ],
 			'expires'   => [ 'end_date %s' ],
@@ -50,13 +87,13 @@ class ChatBanData
 		$this->setOrder();
 	}
 
-	function setUserName( $username = '' ) { $this->mUserName = $username; }
+	function setUserName( $username = '' ) { $this->userName = $username; }
 
-	function setLimit( $limit = Listusers::DEF_LIMIT ) { $this->mLimit = $limit; }
+	function setLimit( $limit = Listusers::DEF_LIMIT ) { $this->limit = $limit; }
 
-	function setOffset( $offset = 0 ) { $this->mOffset = $offset; }
+	function setOffset( $offset = 0 ) { $this->offset = $offset; }
 
-	function setOrder( $orders = [] ) {
+	function setOrder( $orders = [ ] ) {
 		if ( empty( $orders ) || !is_array( $orders ) ) {
 			$orders = [ Listusers::DEF_ORDER ];
 		}
@@ -67,29 +104,27 @@ class ChatBanData
 		];
 
 		# order by
-		$this->mOrder = [];
-		if ( !empty( $orders ) ) {
-			foreach ( $orders as $order ) {
-				list ( $orderName, $orderDesc ) = explode( ":", $order );
-				if ( isset( $this->mOrderOptions[ $orderName ] ) && in_array( $orderDesc, $validSortDirections ) ) {
-					foreach ( $this->mOrderOptions[ $orderName ] as $orderStr ) {
-						$this->mOrder[] = sprintf( $orderStr, $orderDesc );
-					}
+		$this->order = [ ];
+		foreach ( $orders as $order ) {
+			list ( $orderName, $orderDesc ) = explode( ":", $order );
+			if ( isset( $this->orderOptions[ $orderName ] ) && in_array( $orderDesc, $validSortDirections ) ) {
+				foreach ( $this->orderOptions[ $orderName ] as $orderStr ) {
+					$this->order[] = sprintf( $orderStr, $orderDesc );
 				}
 			}
 		}
-		if ( empty( $this->mOrder ) ) {
-			$this->mOrder[] = 'start_date DESC';
+		if ( empty( $this->order ) ) {
+			$this->order[] = 'start_date DESC';
 		}
 	}
 
-	function getUserName() { return $this->mUserName; }
+	function getUserName() { return $this->userName; }
 
-	function getLimit() { return $this->mLimit; }
+	function getLimit() { return $this->limit; }
 
-	function getOffset() { return $this->mOffset; }
+	function getOffset() { return $this->offset; }
 
-	function getOrder() { return $this->mOrder; }
+	function getOrder() { return $this->order; }
 
 	public function loadData() {
 		global $wgMemc, $wgLang;
@@ -98,54 +133,55 @@ class ChatBanData
 		/* initial values for result */
 		$data = [
 			'cnt'      => 0,
-			'sColumns' => implode( ",", array_keys( $this->mOrderOptions ) ),
-			'data'     => [],
+			'sColumns' => implode( ",", array_keys( $this->orderOptions ) ),
+			'data'     => [ ],
 		];
 
-		$orderby = implode( ",", $this->mOrder );
+		$orderBy = implode( ",", $this->order );
 		$subMemkey = [
-			'O' . $this->mOffset,
-			'O' . $orderby,
-			'L' . $this->mLimit,
-			'U' . $this->mUserName,
+			'O' . $this->offset,
+			'O' . $orderBy,
+			'L' . $this->limit,
+			'U' . $this->userName,
 		];
 
-		$memkey = wfForeignMemcKey( $this->mCityId, null, "cbdata", md5( implode( ', ', $subMemkey ) ) );
+		$memkey = wfForeignMemcKey( $this->cityId, null, "cbdata", md5( implode( ', ', $subMemkey ) ) );
 		$cached = $wgMemc->get( $memkey );
 
 		if ( empty( $cached ) ) {
 			/* db handle */
-			$dbs = wfGetDB( DB_SLAVE, [], $this->mDBh );
+			$dbs = wfGetDB( DB_SLAVE, [ ], $this->db );
 
 			/* initial conditions for SQL query */
 			$where = [
-				'cbu_wiki_id' => $this->mCityId,
+				'cbu_wiki_id' => $this->cityId,
 				"cbu_user_id != ''",
 				"end_date > '" . wfTimestamp( TS_MW ) . "'",
 			];
 
 			/* filter: user name */
-			$user = User::newFromName( $this->mUserName );
-			if ( $user instanceof User ) {
-				$where[] = " cbu_user_id = " . $dbs->addQuotes( $user->getId() );
+			$userId = User::IdFromName( $this->userName );
+
+			if ( $userId !== null ) {
+				$where[] = " cbu_user_id = " . $dbs->addQuotes( $userId );
 			}
 
 			/* number of records */
-			$oRow = $dbs->selectRow(
-				$this->mTable,
+			$row = $dbs->selectRow(
+				$this->table,
 				[ 'count(0) as cnt' ],
 				$where,
 				__METHOD__
 			);
-			if ( is_object( $oRow ) ) {
-				$data['cnt'] = $oRow->cnt;
+			if ( is_object( $row ) ) {
+				$data['cnt'] = $row->cnt;
 			}
 
 			if ( $data['cnt'] > 0 ) {
 				/* select records */
 				$oRes = $dbs->select(
 					[
-						$this->mTable,
+						$this->table,
 					],
 					[
 						'start_date',
@@ -157,26 +193,26 @@ class ChatBanData
 					$where,
 					__METHOD__,
 					[
-						'ORDER BY' => $orderby,
-						'LIMIT'    => $this->mLimit,
-						'OFFSET'   => intval( $this->mOffset ),
+						'ORDER BY' => $orderBy,
+						'LIMIT'    => $this->limit,
+						'OFFSET'   => intval( $this->offset ),
 					]
 				);
 
-				$data['data'] = [];
-				while ( $oRow = $dbs->fetchObject( $oRes ) ) {
+				$data['data'] = [ ];
+				while ( $row = $dbs->fetchObject( $oRes ) ) {
 
-					$oUser = User::newFromId( $oRow->cbu_user_id );
-					$oAdmin = User::newFromId( $oRow->cbu_admin_user_id );
+					$user = User::newFromId( $row->cbu_user_id );
+					$admin = User::newFromId( $row->cbu_admin_user_id );
 
 					$data['data'][] = [
-						'timestamp'    => $wgLang->timeanddate( $oRow->start_date, true ),
-						'user'         => $this->sk->link( $oUser->getUserPage(), $oUser->getName() ),
-						'user_actions' => $this->getUserLinks( $oUser ),
-						'expires'      => $wgLang->formatExpiry( $oRow->end_date, true ),
-						'admin_user'   => $this->sk->link( $oAdmin->getUserPage(), $oAdmin->getName() ),
-						'admin_links'  => $this->getUserLinks( $oAdmin ),
-						'reason'       => Linker::commentBlock( $oRow->reason ),
+						'timestamp'    => $wgLang->timeanddate( $row->start_date, true ),
+						'user'         => $this->skin->link( $user->getUserPage(), $user->getName() ),
+						'user_actions' => $this->getUserLinks( $user ),
+						'expires'      => $wgLang->formatExpiry( $row->end_date, true ),
+						'admin_user'   => $this->skin->link( $admin->getUserPage(), $admin->getName() ),
+						'admin_links'  => $this->getUserLinks( $admin ),
+						'reason'       => Linker::commentBlock( $row->reason ),
 					];
 
 				}
@@ -195,15 +231,15 @@ class ChatBanData
 		return $data;
 	}
 
-	private function getUserLinks( $oUser ) {
+	private function getUserLinks( $user ) {
 		global $wgLang, $wgUser;
 
 		$userIsBlocked = $wgUser->isBlocked( true, false );
-		$this->sk = RequestContext::getMain()->getSkin();
-		$oEncUserName = urlencode( $oUser->getName() );
+		$this->skin = RequestContext::getMain()->getskin();
+		$oEncUserName = urlencode( $user->getName() );
 		$links = [
 			0 => "",
-			1 => $this->sk->link(
+			1 => $this->skin->link(
 				Title::newFromText( 'Contributions', NS_SPECIAL ),
 				$wgLang->ucfirst( wfMsg( 'contribslink' ) ),
 				"target={$oEncUserName}"
@@ -212,25 +248,25 @@ class ChatBanData
 
 		global $wgEnableWallExt;
 		if ( !empty( $wgEnableWallExt ) ) {
-			$oUTitle = Title::newFromText( $oUser->getName(), NS_USER_WALL );
+			$oUTitle = Title::newFromText( $user->getName(), NS_USER_WALL );
 			$msg = 'wall-message-wall-shorten';
 		} else {
-			$oUTitle = Title::newFromText( $oUser->getName(), NS_USER_TALK );
+			$oUTitle = Title::newFromText( $user->getName(), NS_USER_TALK );
 			$msg = 'talkpagelinktext';
 		}
 
 		if ( $oUTitle instanceof Title ) {
-			$links[0] = $this->sk->link( $oUTitle, $wgLang->ucfirst( wfMsg( $msg ) ) );
+			$links[0] = $this->skin->link( $oUTitle, $wgLang->ucfirst( wfMsg( $msg ) ) );
 		}
 
 		if ( $wgUser->isAllowed( 'block' ) && ( !$userIsBlocked ) ) {
-			$links[] = $this->sk->link(
-				Title::newFromText( "BlockIP/{$oUser->getName()}", NS_SPECIAL ),
+			$links[] = $this->skin->link(
+				Title::newFromText( "BlockIP/{$user->getName()}", NS_SPECIAL ),
 				$wgLang->ucfirst( wfMsg( 'blocklink' ) )
 			);
 		}
 		if ( $wgUser->isAllowed( 'userrights' ) && ( !$userIsBlocked ) ) {
-			$links[] = $this->sk->link(
+			$links[] = $this->skin->link(
 				Title::newFromText( 'UserRights', NS_SPECIAL ),
 				$wgLang->ucfirst( wfMsg( 'listgrouprights-rights' ) ),
 				"user={$oEncUserName}"
