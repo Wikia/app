@@ -36,6 +36,7 @@ class CommunityPageSpecialInsightsModel {
 	 */
 	public function getInsightsModules() {
 		$modules[ 'modules' ] = [ ];
+		$modules[ 'heading' ] = wfMessage( 'communitypage-cards-start' )->text();
 
 		$modules[ 'messages' ] = [
 			'fulllist' => wfMessage( 'communitypage-full-list' )->text()
