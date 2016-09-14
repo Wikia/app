@@ -16,6 +16,14 @@ require([
 		trackingMethod: 'analytics'
 	});
 
+	function getBaseUrl() {
+		if (mw.config.get('wgDevelEnvironment')) {
+			return 'https://services.wikia-dev.com/discussion';
+		}
+
+		return 'https://services.wikia.com/discussion';
+	}
+
 	function openModal(link, title) {
 		// Track impression
 		track({
@@ -72,7 +80,7 @@ require([
 				firstPostId: thread.firstPostId,
 				index: i,
 				link: '/d/p/' + thread.id,
-				shareUrl: baseUrl + 'd/p/' + thread.id,
+				shareUrl: 'http://' + window.location.hostname + '/d/p/' + thread.id,
 				upvoteUrl: upvoteUrl + thread.firstPostId,
 				title: thread.title,
 				upvoteCount: thread.upvoteCount,
@@ -84,7 +92,7 @@ require([
 	}
 
 	function performRequest($elem) {
-		var requestUrl = $elem.attr('data-requestUrl'),
+		var requestUrl = getBaseUrl() + $elem.attr('data-requestUrl'),
 			requestData = JSON.parse($elem.attr('data-requestData'));
 
 		$.ajax({
@@ -94,7 +102,7 @@ require([
 				withCredentials: true
 			},
 		}).done(function (data) {
-			var threads = processData(data._embedded.threads, requestData.baseUrl, requestData.upvoteRequestUrl);
+			var threads = processData(data._embedded.threads, requestData.upvoteRequestUrl);
 
 			$elem.html(mustache.render(templates.DiscussionThreads, {
 				threads: threads,
@@ -129,10 +137,7 @@ require([
 		});
 
 		$('.embeddable-discussions-module').on('click', '.upvote', function(event) {
-			var isDev = mw.config.get('wgDevelEnvironment'),
-				upvoteUrl =
-					(isDev ? 'https://services.wikia-dev.com/discussion' : 'https://services.wikia.com/discussion') +
-					event.currentTarget.getAttribute('href'),
+			var upvoteUrl = getBaseUrl() + event.currentTarget.getAttribute('href'),
 				hasUpvoted = event.currentTarget.getAttribute('data-hasUpvoted') === '1',
 				$svg = $($(event.currentTarget).children()[0]),
 				verb = hasUpvoted ? 'DELETE' : 'POST';
