@@ -9,6 +9,7 @@ $admins-module-margin: 20px;
 	.admins {
 		@include flexbox();
 		@include justify-content(space-between);
+
 		font-size: $typescale-size-minus-2;
 		margin-right: $admins-module-margin;
 	}

@@ -231,7 +231,7 @@ require([
 		});
 
 		// Track clicks in the Help module
-		$('.help-module').on('mousedown touchstart', 'a', function (event) {
+		$('.community-page-rail__help-module').on('mousedown touchstart', 'a', function (event) {
 			handleClick(event, 'community-page-help-module');
 		});
 
