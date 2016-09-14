@@ -37,6 +37,7 @@ define('ext.wikia.recirculation.views.impactFooter', [
 		return utils.renderTemplate('impactFooter.mustache', renderData).then(function($html) {
 			$('#WikiaFooter').html($html).find('.discussion-timestamp').timeago();
 			adjustFeatureItem($html);
+			renderDiscussionHeaderImage($html);
 
 			return $html;
 		});
@@ -63,19 +64,35 @@ define('ext.wikia.recirculation.views.impactFooter', [
 		$feature.css('margin-top', -move);
 	}
 
-	function organizeItems(data) {
-		var items = [];
+	function renderDiscussionHeaderImage($html) {
+		var $discussionHeader = $html.find('.discussion-header');
 
-		items.push(data.fandom.items.shift());
-		items = items.concat(data.articles.splice(0, 2));
-		items = items.concat(data.fandom.items);
-		items = items.concat(data.articles);
+		if ($discussionHeader.length > 0) {
+			var cityId = mw.config.get('wgCityId'),
+				requestUrl = servicesUrl() + '/site-attribute/site/' + cityId + '/attr/heroImage';
 
-		items.forEach(function(item, index) {
-			items[index].index = index;
-		});
+			$.ajax({
+				type: 'GET',
+				url: requestUrl,
+				xhrFields: {
+					withCredentials: true
+				},
+			}).done(function (data) {
+				if (data.value) {
+					$discussionHeader.css('background-image', 'url(' + data.value + ')');
+				}
+			}).fail(function () {
+				// Silent fail. It's alright to shwo the discussions header without an image
+			});
+		}
+	}
 
-		return items;
+	function servicesUrl() {
+		if (mw.config.get('wgDevelEnvironment')) {
+			return 'https://services.wikia-dev.com';
+		}
+
+		return 'https://services.wikia.com';
 	}
 
 	function structureData(items) {
