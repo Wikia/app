@@ -2,22 +2,19 @@
 define('ext.wikia.recirculation.views.rail', [
 	'jquery',
 	'wikia.window',
-	'wikia.log',
 	'wikia.abTest',
 	'ext.wikia.recirculation.tracker',
 	'ext.wikia.recirculation.utils',
 	'ext.wikia.recirculation.helpers.curatedContent'
-], function ($, w, log, abTest, tracker, utils, CuratedHelper) {
+], function ($, w, abTest, tracker, utils, CuratedHelper) {
 
 	var options = {};
 
 	function render(data) {
-		data.titleHtml = options.formatTitle ? formatTitle(data.title) : data.title;
-		data.group = abTest.getGroup('RECIRCULATION_PLACEMENT');
 		var curated = CuratedHelper();
 
 		return curated.injectContent(data)
-			.then(renderTemplate(options.template))
+			.then(renderTemplate('rail.mustache'))
 			.then(utils.waitForRail)
 			.then(function($html) {
 				if (options.before) {
@@ -48,11 +45,6 @@ define('ext.wikia.recirculation.views.rail', [
 
 			return $html;
 		};
-	}
-
-	// Format title for E3
-	function formatTitle(title) {
-		return title;
 	}
 
 	return function(config) {
