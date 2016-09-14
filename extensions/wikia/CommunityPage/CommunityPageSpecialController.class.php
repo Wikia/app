@@ -34,7 +34,7 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 		$this->response->setValues( [
 			'heroImageUrl' => $this->getHeroImageUrl(),
 			'inviteFriendsText' => $this->msg( 'communitypage-invite-friends' )->text(),
-			'headerWelcomeMsg' => $this->msg( 'communitypage-tasks-header-welcome' )->parse(),
+			'headerWelcomeMsg' => $this->msg( 'communitypage-tasks-header-welcome' )->plain(),
 			'adminWelcomeMsg' => $this->msg( 'communitypage-admin-welcome-message' )->text(),
 			'pageListEmptyText' => $this->msg( 'communitypage-page-list-empty' )->text(),
 			'pageTitle' => $this->msg( 'communitypage-title' )->text(),
@@ -369,7 +369,7 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 			'heading' => $this->msg( 'communitypage-todo-module-heading' )->text(),
 			'editList' => $this->msg( 'communitypage-todo-module-edit-list' )->text(),
 			'description' => $this->msg( 'communitypage-todo-module-description' )->text(),
-			'zeroStateText' => $this->msg( 'communitypage-todo-module-zero-state' )->text(),
+			'zeroStateText' => $this->msg( 'communitypage-todo-module-zero-state' )->plain(),
 		] );
 	}
 }
