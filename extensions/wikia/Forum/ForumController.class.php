@@ -19,22 +19,12 @@ class ForumController extends WallBaseController {
 	}
 
 	public function board() {
-
-		if ( ForumHelper::isForum() &&
-		     DiscussionsHelper::areForumsArchivedAndDiscussionsEnabled()
-		) {
-			$this->redirectToDiscussions();
-
-			return false;
-		}
-
 		$ns = $this->wg->Title->getNamespace();
+
 		if ( $ns == NS_WIKIA_FORUM_TOPIC_BOARD ) {
 			$topicTitle = $this->getTopicTitle();
-
 			if ( empty( $topicTitle ) || !$topicTitle->exists() ) {
 				$this->redirectToIndex();
-
 				return false;
 			}
 		}
@@ -59,12 +49,10 @@ class ForumController extends WallBaseController {
 		if ( $ns == NS_WIKIA_FORUM_TOPIC_BOARD ) {
 			$board = ForumBoard::getEmpty();
 
-			$this->response->setVal( 'activeThreads',
-				$board->getTotalActiveThreads( $this->wall->getRelatedPageId() ) );
+			$this->response->setVal( 'activeThreads', $board->getTotalActiveThreads( $this->wall->getRelatedPageId() ) );
 			$this->response->setVal( 'isTopicPage', true );
 
-			$this->app->wg->Out->setPageTitle( wfMessage( 'forum-board-topic-title',
-				$this->wg->title->getBaseText() )->plain() );
+			$this->app->wg->Out->setPageTitle( wfMessage( 'forum-board-topic-title', $this->wg->title->getBaseText() )->plain() );
 		} else {
 			$boardId = $this->wall->getId();
 			/** @var ForumBoard $board */
@@ -72,7 +60,6 @@ class ForumController extends WallBaseController {
 
 			if ( empty( $board ) ) {
 				$this->redirectToIndex();
-
 				return false;
 			}
 
@@ -81,8 +68,7 @@ class ForumController extends WallBaseController {
 
 			$this->description = $board->getDescription();
 
-			$this->app->wg->Out->setPageTitle( wfMessage( 'forum-board-title',
-				$this->wg->title->getBaseText() )->plain() );
+			$this->app->wg->Out->setPageTitle( wfMessage( 'forum-board-title', $this->wg->title->getBaseText() )->plain() );
 		}
 
 		$this->response->setVal( 'boardNamespace', NS_WIKIA_FORUM_BOARD );
@@ -101,7 +87,6 @@ class ForumController extends WallBaseController {
 	protected function getTopicTitle() {
 		$text = $this->wg->Title->getText();
 		$topicTitle = Title::newFromText( $text );
-
 		return $topicTitle;
 	}
 
@@ -134,18 +119,10 @@ class ForumController extends WallBaseController {
 
 			$list = $forum->getBoardList();
 
-			$this->destinationBoards = [
-				[
-					'value' => '',
-					'content' => wfMessage( 'forum-board-destination-empty' )->escaped(),
-				],
-			];
+			$this->destinationBoards = [ [ 'value' => '', 'content' => wfMessage( 'forum-board-destination-empty' )->escaped() ] ];
 
 			foreach ( $list as $value ) {
-				$this->destinationBoards[] = [
-					'value' => htmlspecialchars( $value['name'] ),
-					'content' => htmlspecialchars( $value['name'] ),
-				];
+				$this->destinationBoards[] = [ 'value' => htmlspecialchars( $value['name'] ), 'content' => htmlspecialchars( $value['name'] ) ];
 			}
 		}
 	}
@@ -153,29 +130,20 @@ class ForumController extends WallBaseController {
 	public function boardThread() {
 		wfProfileIn( __METHOD__ );
 
-		if ( ForumHelper::isForum() &&
-		     DiscussionsHelper::areForumsArchivedAndDiscussionsEnabled()
-		) {
-			$this->redirectToDiscussions();
-			wfProfileOut( __METHOD__ );
-		}
-
 		$wallMessage = $this->getWallMessage();
 		if ( !( $wallMessage instanceof WallMessage ) ) {
 			wfProfileOut( __METHOD__ );
 			$this->forward( __CLASS__, 'message_error' );
-
 			return true;
 		}
 
 		$this->response->setVal( 'id', $wallMessage->getId() );
 		$this->response->setVal( 'feedtitle', htmlspecialchars( $wallMessage->getMetaTitle() ) );
-		$this->response->setVal( 'isWatched',
-			$wallMessage->isWatched( $this->wg->User ) || $this->request->getVal( 'new', false ) );
+		$this->response->setVal( 'isWatched', $wallMessage->isWatched( $this->wg->User ) || $this->request->getVal( 'new', false ) );
 		$this->response->setVal( 'fullpageurl', $wallMessage->getMessagePageUrl() );
 		$this->response->setVal( 'kudosNumber', $wallMessage->getVoteCount() );
 
-		$replies = $this->getVal( 'replies', [] );
+		$replies = $this->getVal( 'replies', [ ] );
 		$repliesCount = count( $replies ) + 1;
 		$this->response->setVal( 'repliesNumber', $repliesCount );
 
@@ -204,9 +172,7 @@ class ForumController extends WallBaseController {
 		} else {
 			$displayname = $name;
 			$displayname2 = '';
-			$url =
-				Title::newFromText( $name, $this->wg->EnableWallExt ? NS_USER_WALL : NS_USER_TALK )
-					->getFullUrl();
+			$url = Title::newFromText( $name, $this->wg->EnableWallExt ? NS_USER_WALL : NS_USER_TALK )->getFullUrl();
 		}
 
 		$this->response->setVal( 'username', $name );
@@ -214,8 +180,7 @@ class ForumController extends WallBaseController {
 		$this->response->setVal( 'displayname2', $displayname2 );
 		$this->response->setVal( 'user_author_url', $url );
 		$this->response->setVal( 'iso_timestamp', $lastReply->getCreatTime( TS_ISO_8601 ) );
-		$this->response->setVal( 'fmt_timestamp',
-			$this->wg->Lang->timeanddate( $lastReply->getCreatTime( TS_MW ) ) );
+		$this->response->setVal( 'fmt_timestamp', $this->wg->Lang->timeanddate( $lastReply->getCreatTime( TS_MW ) ) );
 
 		wfProfileOut( __METHOD__ );
 	}
@@ -223,11 +188,8 @@ class ForumController extends WallBaseController {
 	public function breadCrumbs() {
 		if ( $this->app->wg->Title->getNamespace() == NS_WIKIA_FORUM_TOPIC_BOARD ) {
 			$indexPage = Title::newFromText( 'Forum', NS_SPECIAL );
-			$path = [];
-			$path[] = [
-				'title' => wfMessage( 'forum-forum-title' )->escaped(),
-				'url' => $indexPage->getFullUrl(),
-			];
+			$path = [ ];
+			$path[] = [ 'title' => wfMessage( 'forum-forum-title' )->escaped(), 'url' => $indexPage->getFullUrl() ];
 
 			$path[] = [ 'title' => wfMessage( 'forum-board-topics' )->escaped() ];
 
@@ -258,15 +220,13 @@ class ForumController extends WallBaseController {
 			$pageHeading = wfMessage( 'forum-board-title', $title->getText() )->escaped();
 			$board = ForumBoard::newFromTitle( $title );
 			$pageDescription = $board->getDescription();
-		} else {
-			if ( $nameSpace === NS_USER_WALL_MESSAGE ) {
-				$this->showStats = false;
-				$messageKey = $title->getText();
-				$message = WallMessage::newFromId( $messageKey );
-				if ( !empty( $message ) ) {
-					$message->load();
-					$pageHeading = $message->getMetaTitle();
-				}
+		} else if ( $nameSpace === NS_USER_WALL_MESSAGE ) {
+			$this->showStats = false;
+			$messageKey = $title->getText();
+			$message = WallMessage::newFromId( $messageKey );
+			if ( !empty( $message ) ) {
+				$message->load();
+				$pageHeading = $message->getMetaTitle();
 			}
 		}
 
@@ -292,18 +252,15 @@ class ForumController extends WallBaseController {
 
 	protected function addMiniEditorAssets() {
 		if ( $this->wg->EnableMiniEditorExtForWall && $this->app->checkSkin( 'oasis' ) ) {
-			$this->sendRequest( 'MiniEditor', 'loadAssets', [
-				'additionalAssets' => [
-					'forum_mini_editor_js',
-					'extensions/wikia/MiniEditor/css/Wall/Wall.scss',
-				],
-			] );
+			$this->sendRequest( 'MiniEditor', 'loadAssets',
+				[ 'additionalAssets' => [ 'forum_mini_editor_js', 'extensions/wikia/MiniEditor/css/Wall/Wall.scss' ] ]
+			);
 		}
 	}
 
 	// get sorting options
 	protected function getSortingOptionsText() {
-		switch ( $this->sortingType ) {
+		switch( $this->sortingType ) {
 			case 'history' :
 				// keys of sorting array are names of DOM elements' classes
 				// which are needed to click tracking
@@ -332,22 +289,17 @@ class ForumController extends WallBaseController {
 		$selected = $this->wg->request->getVal( 'sort' );
 
 		if ( empty( $selected ) ) {
-			$selected =
-				$this->app->wg->User->getGlobalPreference( 'forum_sort_' . $this->sortingType );
+			$selected = $this->app->wg->User->getGlobalPreference( 'forum_sort_' . $this->sortingType );
 		} else {
-			$selectedDB =
-				$this->app->wg->User->getGlobalPreference( 'forum_sort_' . $this->sortingType );
+			$selectedDB = $this->app->wg->User->getGlobalPreference( 'forum_sort_' . $this->sortingType );
 
 			if ( $selectedDB != $selected ) {
-				$this->app->wg->User->setGlobalPreference( 'forum_sort_' . $this->sortingType,
-					$selected );
+				$this->app->wg->User->setGlobalPreference( 'forum_sort_' . $this->sortingType, $selected );
 				$this->app->wg->User->saveSettings();
 			}
 		}
 
-		if ( empty( $selected ) ||
-		     !array_key_exists( $selected, $this->getSortingOptionsText() )
-		) {
+		if ( empty( $selected ) || !array_key_exists( $selected, $this->getSortingOptionsText() ) ) {
 			$selected = ( $this->sortingType === 'history' ) ? 'of' : 'nr';
 		}
 
@@ -361,16 +313,16 @@ class ForumController extends WallBaseController {
 	}
 
 	public function forumRelatedThreads() {
-		$title = Title::newFromID( $this->app->wg->Title->getText() );
+		$title = Title::newFromId( $this->app->wg->Title->getText() );
 		$this->response->setVal( 'showModule', false );
 		if ( !empty( $title ) && $title->getNamespace() == NS_WIKIA_FORUM_BOARD_THREAD ) {
 
 			$rp = new WallRelatedPages();
-			$out = $rp->getMessageRelatetMessageIds( [ $title->getArticleID() ] );
-			$messages = [];
+			$out = $rp->getMessageRelatetMessageIds( [ $title->getArticleId() ] );
+			$messages = [ ];
 			$count = 0;
 			foreach ( $out as $key => $val ) {
-				if ( $title->getArticleID() == $val['comment_id'] ) {
+				if ( $title->getArticleId() == $val['comment_id'] ) {
 					continue;
 				}
 
@@ -390,7 +342,7 @@ class ForumController extends WallBaseController {
 					}
 
 					$messages[] = $message;
-					$count ++;
+					$count++;
 					if ( $count == 5 ) {
 						break;
 					}
@@ -415,58 +367,8 @@ class ForumController extends WallBaseController {
 		$this->response->addAsset( 'extensions/wikia/Forum/css/ForumOld.scss' );
 
 		$forumTitle = SpecialPage::getTitleFor( 'Forum' );
-		$this->forumUrl = $forumTitle->getLocalURL();
-
+		$this->forumUrl = $forumTitle->getLocalUrl();
 		return true;
-	}
-
-	private function redirectToDiscussions() {
-		$namespace = $this->app->wg->Title->getNamespace();
-		if ( $namespace == NS_WIKIA_FORUM_TOPIC_BOARD ) {
-			$categoryId = $this->getTopicBoardId();
-			DiscussionsHelper::redirectToDiscussionsCategory( $this->wg->out, $this->getResponse(),
-				$categoryId );
-		}
-		if ( $namespace == NS_WIKIA_FORUM_BOARD ) {
-			$categoryId = $this->getBoardId();
-			DiscussionsHelper::redirectToDiscussionsCategory( $this->wg->out, $this->getResponse(),
-				$categoryId );
-		}
-		if ( $namespace == NS_WIKIA_FORUM_BOARD_THREAD ) {
-			$postId = $this->getPostId();
-			DiscussionsHelper::redirectToDiscussionsPost( $this->wg->out, $this->getResponse(),
-				$postId );
-		}
-	}
-
-	private function getTopicBoardId() {
-		$topicTitle = $this->getTopicTitle();
-		if ( !empty( $topicTitle ) && $topicTitle->exists() ) {
-			return $topicTitle->getArticleID();
-		} else {
-			return null;
-		}
-	}
-
-	private function getBoardId() {
-		$title = $this->request->getVal( 'title', $this->app->wg->Title );
-		$wall = $this->getWallForIndexPage( $title );
-		if ( empty ( $wall ) ) {
-			return null;
-		}
-		/** @var ForumBoard $board */
-		$board = ForumBoard::newFromId( $wall->getId() );
-		if ( !empty( $board ) && $board->exists() ) {
-			return $board->getId();
-		} else {
-			return null;
-		}
-	}
-
-	private function getPostId() {
-		$title = Title::newFromID( $this->app->wg->Title->getText() );
-
-		return $title->getArticleID();
 	}
 
 }

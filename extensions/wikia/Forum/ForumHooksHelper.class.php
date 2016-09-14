@@ -1,6 +1,38 @@
 <?php
 
 class ForumHooksHelper {
+
+	static public function discussionNavigationOverride(
+		$title, $wallMessage, &$path, &$response, &$request
+	) {
+		if ( ForumHelper::isForum() &&
+		     DiscussionsHelper::areForumsArchivedAndDiscussionsEnabled()
+		) {
+			$app = F::App();
+			self::redirectToDiscussions( $app->wg->Title, $app->wg->out, $response);
+		}
+
+		return true;
+	}
+
+	private static function redirectToDiscussions(
+		Title $title, OutputPage $out, WikiaResponse $response
+	) {
+		$namespace = $title->getNamespace();
+		$t = Title::newFromText( $title->getText() );
+		$id = $t->getArticleID();
+
+		if ( $namespace == NS_WIKIA_FORUM_TOPIC_BOARD ) {
+			DiscussionsHelper::redirectToDiscussionsCategory( $out, $response, $id );
+		}
+		if ( $namespace == NS_WIKIA_FORUM_BOARD ) {
+			DiscussionsHelper::redirectToDiscussionsCategory( $out, $response, $id );
+		}
+		if ( $namespace == NS_WIKIA_FORUM_BOARD_THREAD ) {
+			DiscussionsHelper::redirectToDiscussionsPost( $out, $response, $id );
+		}
+	}
+
 	/**
 	 * Render the alternative version of thread page
 	 * @param Title $title
