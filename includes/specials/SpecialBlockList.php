@@ -326,7 +326,7 @@ class BlockListPager extends TablePager {
 					$formatted = Linker::userLink( $value, $row->by_user_name );
 					$formatted .= Linker::userToolLinks( $value, $row->by_user_name );
 				} else {
-					$formatted = htmlspecialchars( $row->ipb_by_text ); // foreign user?
+					$formatted = htmlspecialchars( \User::getUsername( $row->ipb_by, $row->ipb_by_text ) ); // foreign user?
 				}
 				break;
 

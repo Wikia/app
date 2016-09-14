@@ -4856,7 +4856,16 @@ class User {
 	public static function getUsername( $userId, $name ) {
 		global $wgEnableUsernameLookup;
 		if( $wgEnableUsernameLookup && $userId != 0 ) {
-			return static::whoIs( $userId ) ?: $name;
+			$dbName = static::whoIs( $userId );
+			if( $dbName !== $name ) {
+				debug( "Default name different than lookup", [
+					"user_id" => $userId,
+					"db_name" => $dbName,
+					"default_name" => $name,
+					"caller" => debug_backtrace()[ 1 ][ "function" ]
+				] );
+			}
+			return $dbName ?: $name;
 		}
 		return $name;
 	}

@@ -162,7 +162,7 @@ class ApiQueryBlocks extends ApiQueryBase {
 				$block['userid'] = $row->ipb_user;
 			}
 			if ( $fld_by ) {
-				$block['by'] = $row->ipb_by_text;
+				$block['by'] = \User::getUsername( $row->ipb_by, $row->ipb_by_text );
 			}
 			if ( $fld_byid ) {
 				$block['byid'] = $row->ipb_by;
