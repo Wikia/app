@@ -13,38 +13,24 @@ class DiscussionsHelper {
 //		return $wgArchiveWikiForums && $wgEnableDiscussions;
 	}
 
-	public static function redirectToDiscussions( OutputPage $out, WikiaResponse $response ) {
-		self::clearBodyAndSetMaxCache( $out );
-		$response->redirect( '/d' );
+	public static function redirectToDiscussions() {
+		return '/d';
 	}
 
-	public static function redirectToDiscussionsCategory(
-		OutputPage $out, WikiaResponse $response, $categoryId
-	) {
+	public static function redirectToDiscussionsCategory( $categoryId ) {
 		if ( !empty( $categoryId ) ) {
-			self::clearBodyAndSetMaxCache( $out );
-			$response->redirect( '/d/f/' . $categoryId );
+			return '/d/f/' . $categoryId;
 		} else {
-			self::redirectToDiscussions( $out, $response );
+			return self::redirectToDiscussions();
 		}
 	}
 
-	public static function redirectToDiscussionsPost(
-		OutputPage $out, WikiaResponse $response, $postId
-	) {
+	public static function redirectToDiscussionsPost( $postId ) {
 		if ( !empty( $categoryId ) ) {
-			self::clearBodyAndSetMaxCache( $out );
-			$response->redirect( '/d/p/' . $postId );
+			return '/d/p/' . $postId;
 		} else {
-			self::redirectToDiscussions( $out, $response );
+			return self::redirectToDiscussions();
 		}
 	}
 
-	/**
-	 * @param OutputPage $out
-	 */
-	public static function clearBodyAndSetMaxCache( OutputPage $out ) {
-		$out->setArticleBodyOnly( true );
-		$out->setSquidMaxage( WikiaResponse::CACHE_LONG );
-	}
 }

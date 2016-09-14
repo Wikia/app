@@ -3,33 +3,35 @@
 class ForumHooksHelper {
 
 	static public function discussionNavigationOverride(
-		$title, $wallMessage, &$path, &$response, &$request
+		&$title, &$request, &$ignoreRedirect, &$target, Article &$article
 	) {
 		if ( ForumHelper::isForum() &&
 		     DiscussionsHelper::areForumsArchivedAndDiscussionsEnabled()
 		) {
-			self::redirectToDiscussions( $title, F::app()->wg->out, $response);
+			$ignoreRedirect = false;
+			$target = self::redirectToDiscussions( $title );
 		}
 
 		return true;
 	}
 
 	private static function redirectToDiscussions(
-		Title $title, OutputPage $out, WikiaResponse $response
+		Title $title
 	) {
 		$namespace = $title->getNamespace();
 		$t = Title::newFromText( $title->getText() );
 		$id = $t->getArticleID();
 
 		if ( $namespace == NS_WIKIA_FORUM_TOPIC_BOARD ) {
-			DiscussionsHelper::redirectToDiscussionsCategory( $out, $response, $id );
+			return DiscussionsHelper::redirectToDiscussionsCategory( $id );
 		}
 		if ( $namespace == NS_WIKIA_FORUM_BOARD ) {
-			DiscussionsHelper::redirectToDiscussionsCategory( $out, $response, $id );
+			return DiscussionsHelper::redirectToDiscussionsCategory( $id );
 		}
 		if ( $namespace == NS_WIKIA_FORUM_BOARD_THREAD ) {
-			DiscussionsHelper::redirectToDiscussionsPost( $out, $response, $id );
+			return DiscussionsHelper::redirectToDiscussionsPost( $id );
 		}
+		return null;
 	}
 
 	/**
