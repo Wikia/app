@@ -573,12 +573,11 @@ class FounderTipsThreeDaysController extends FounderTipsController {
 	public function body() {
 		$this->response->setData( [
 			'salutation' => $this->getSalutation(),
-			'summary' => $this->getMessage( 'emailext-founder-3-days-summary', $this->wikiUrl, $this->wikiName )->parse(),
-			'extendedSummary' => $this->getMessage( 'emailext-founder-3-days-extended-summary' )->text(),
+			'summary' => $this->getMessage( 'emailext-founder-3-days-extended-summary')->text(),
+			'extendedSummary' => $this->getMessage( 'emailext-founder-3-days-extended-summary-tips', $this->wikiUrl, $this->wikiName )->parse(),
 			'details' => $this->getDetailsList(),
 			'hasContentFooterMessages' => true,
 			'contentFooterMessages' => [
-				$this->getMessage( 'emailext-founder-3-days-need-help', $this->wikiName )->parse(),
 				$this->getMessage( 'emailext-founder-3-days-great-work' )->text()
 			],
 			'signatureIcon' => $this->findSignatureIcon(),
@@ -609,8 +608,8 @@ class FounderTipsThreeDaysController extends FounderTipsController {
 			[
 				"iconSrc" => Email\ImageHelper::getFileUrl( "StartADiscussion.png" ),
 				"iconLink" => \WAMService::WAM_LINK,
-				"detailsHeader" => $this->getMessage( "emailext-founder-3-days-wam-header" )->text(),
-				"details" => $this->getMessage( "emailext-founder-3-days-wam-details", \WAMService::WAM_LINK )->parse()
+				"detailsHeader" => $this->getMessage( "emailext-founder-3-days-discussion-header" )->text(),
+				"details" => $this->getMessage( "emailext-founder-3-days-discussion-details", \WAMService::WAM_LINK )->parse()
 			]
 		];
 	}
