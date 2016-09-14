@@ -4,6 +4,8 @@
 // Platform-specific styles for DesignSystem integration
 $global-navigation-z-index: 5000101;
 $global-navigation-height: 55px;
+$search-transition-duration: 300ms;
+$search-buttons-transition-duration: 50ms;
 
 .wds-global-navigation-wrapper {
 	height: $global-navigation-height;
@@ -67,6 +69,60 @@ $global-navigation-height: 55px;
 
 		.wds-is-selected a {
 			color: $color-link;
+		}
+	}
+
+	&__link,
+	&__wikis-menu {
+		max-width: 100%;
+		overflow: hidden;
+		transition: all $search-transition-duration ease;
+	}
+
+	&__search-submit {
+		border-width: 0;
+		display: block;
+		max-width: 0;
+		padding-left: 0;
+		padding-right: 0;
+		transition: all $search-buttons-transition-duration;
+	}
+
+	&__search-close {
+		display: block;
+		opacity: 0;
+		transition: all $search-buttons-transition-duration;
+	}
+
+	&.wds-search-is-active {
+		.wds-global-navigation__search {
+			flex-grow: 2;
+		}
+
+		.wds-global-navigation__search-input-wrapper {
+			margin-right: 0;
+		}
+
+		.wds-global-navigation__link, .wds-global-navigation__wikis-menu {
+			color: rgba($color-dark-blue-gray, 0);
+			display: flex;
+			flex-grow: 0;
+			font-size: 0;
+			padding: 0;
+		}
+
+		.wds-global-navigation__search-submit {
+			border-width: 1px;
+			margin-left: 15px;
+			max-width: 100%;
+			padding-left: 9px;
+			padding-right: 9px;
+			transition-delay: $search-transition-duration - $search-buttons-transition-duration;
+		}
+
+		.wds-global-navigation__search-close {
+			opacity: 1;
+			transition-delay: $search-transition-duration - $search-buttons-transition-duration;
 		}
 	}
 }
