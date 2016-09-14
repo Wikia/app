@@ -146,7 +146,7 @@ class CakeRelatedContentService {
 
 		if ($content->getContentType() == "Discussion Thread") {
 			return $wgContLang->truncate(
-					"[Discussions] {$content->getTitle()}",
+					$content->getTitle(),
 					self::DISCUSSION_THREAD_TITLE_MAX_LENGTH);
 		}
 
