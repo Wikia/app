@@ -225,6 +225,11 @@ require([
 			handleClick(event, 'community-page-contribution-module');
 		});
 
+		// Track clicks in admins view all link
+		$('.admins-module').on('mousedown touchstart', 'a', function (event) {
+			handleClick(event, 'community-page-admins-module');
+		});
+
 		// Track clicks in the Help module
 		$('.help-module').on('mousedown touchstart', 'a', function (event) {
 			handleClick(event, 'community-page-help-module');
