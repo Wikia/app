@@ -8,8 +8,7 @@ class ForumHooksHelper {
 		if ( ForumHelper::isForum() &&
 		     DiscussionsHelper::areForumsArchivedAndDiscussionsEnabled()
 		) {
-			$app = F::App();
-			self::redirectToDiscussions( $app->wg->Title, $app->wg->out, $response);
+			self::redirectToDiscussions( $title, F::app()->wg->out, $response);
 		}
 
 		return true;
