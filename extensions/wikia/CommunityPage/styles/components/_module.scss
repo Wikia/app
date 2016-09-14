@@ -2,38 +2,49 @@
 @import 'skins/oasis/css/core/breakpoints-variables';
 @import 'variables';
 
-.community-page-rail {
-	background-color: #f6f6f6;
-	display: inline-block;
-	padding: 80px 0 20px;
-	width: 266px;
-	float: right;
-}
-
 @media #{$breakpoint-small-only} {
 	width: 256px;
 }
 
-.community-page-rail .module {
-	font-size: 16px;
-	line-height: $module-default-line-height;
-	margin: auto;
-	width: 210px;
+.community-page-rail {
+	background-color: #f6f6f6;
+	display: inline-block;
+	float: right;
+	padding: 80px 0 20px;
+	width: 266px;
 
-	.community-page-contributors-module-section-title {
+	.module {
+		box-sizing: border-box;
+		font-size: 16px;
 		line-height: $module-default-line-height;
-		margin-bottom: 14px;
-		margin-top: 30px;
-		padding: 0 0 14px;
-		font-size: 18px;
-		font-weight: bold;
-		color: #4a4a4a;
-		border-bottom: 1px #cccccc solid;
+		margin: 0 auto 33px;
+		width: 210px;
+
+		.community-page-module-section-title {
+			border-bottom: 1px #ccc solid;
+			color: #4a4a4a;
+			font-size: 18px;
+			font-weight: bold;
+			line-height: $module-default-line-height;
+			margin-bottom: 14px;
+			padding: 0 0 14px;
+		}
+
+		.community-page-subtle {
+			color: $color-alternate-text;
+			display: block;
+			font-size: 12px;
+		}
 	}
 
-	.community-page-subtle {
-		color: $color-alternate-text;
-		display: block;
-		font-size: 12px;
+	.module-box {
+		background-color: $color-white;
+		padding: 21px 18px 15px;
+		text-align: center;
+
+		.community-page-module-section-title {
+			border: 0;
+			padding: 0;
+		}
 	}
 }
