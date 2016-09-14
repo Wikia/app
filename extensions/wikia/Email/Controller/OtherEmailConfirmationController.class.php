@@ -44,7 +44,8 @@ abstract class AbstractEmailConfirmationController extends EmailController {
 			'summary' => $this->getSummary(),
 			'buttonLink' => $this->confirmUrl,
 			'buttonText' => $this->getButtonText(),
-			'contentFooterMessages' => $this->getContentFooterMessages()
+			'contentFooterMessages' => $this->getEmailSpecificFooterMessages(),
+			'signature' => $this->getMessage( 'emailext-emailconfirmation-community-team' )->text()
 		] );
 	}
 
@@ -52,18 +53,6 @@ abstract class AbstractEmailConfirmationController extends EmailController {
 
 	protected function getButtonText() {
 		return $this->getMessage( 'emailext-emailconfirmation-button-text' )->text();
-	}
-
-	protected function getContentFooterMessages() {
-		$commonFooterMessage = $this->getCommonFooterMessages();
-		$emailSpecificFooterMessages = $this->getEmailSpecificFooterMessages();
-		return array_merge( $emailSpecificFooterMessages, $commonFooterMessage );
-	}
-
-	private function getCommonFooterMessages() {
-		return [
-			$this->getMessage( 'emailext-emailconfirmation-community-team' )->text()
-		];
 	}
 
 	abstract protected function getEmailSpecificFooterMessages();
