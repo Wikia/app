@@ -34,8 +34,9 @@ $hero-image-background: $color-slate-gray;
 	}
 
 	.community-page-header-content {
-		margin-top: 60px;
-		width: 80%;
+		bottom: 24px;
+		position: absolute;
+		width: 94%;
 		z-index: 0;
 	}
 
@@ -43,7 +44,7 @@ $hero-image-background: $color-slate-gray;
 		color: $color-white;
 		font-size: $typescale-size-plus-4;
 		font-weight: bold;
-		line-height: $line-height;
+		line-height: 1.1em;
 		margin:	0;
 	}
 
@@ -55,7 +56,7 @@ $hero-image-background: $color-slate-gray;
 		color: $color-white;
 		font-size: $typescale-size-plus-2;
 		line-height: $line-height;
-		margin: 0;
+		margin: 14px 0 0 0;
 	}
 }
 
