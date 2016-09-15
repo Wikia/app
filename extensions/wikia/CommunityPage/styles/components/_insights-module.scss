@@ -2,6 +2,7 @@
 @import 'skins/shared/mixins/flexbox';
 @import 'extensions/wikia/DesignSystem/bower_components/design-system/base/typography';
 
+$card-background-color: mix($color-page, #fff, 91%);
 $card-footer-size: 48px;
 $content-spacing-small: 12px;
 $content-spacing-small-plus: 15px;
@@ -13,8 +14,9 @@ $module-width: 239px;
 	@include flexbox();
 	@include flex-direction(column);
 
-	background-color: $color-page;
+	background-color: $card-background-color;
 	border: 1px solid $color-page-border-subtle;
+	color: $color-button-text;
 	margin-bottom: $content-spacing-regular;
 	margin-right: $content-spacing-small;
 	width: $module-width;
