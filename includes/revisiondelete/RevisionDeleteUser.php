@@ -1,4 +1,5 @@
 <?php
+use Wikia\Util\PerformanceProfilers\UsernameUseProfiler;
 
 /**
  * Backend functions for suppressing and unsuppressing all references to a given user,
@@ -35,6 +36,7 @@ class RevisionDeleteUser {
 	 * @return bool
 	 */
 	private static function setUsernameBitfields( $name, $userId, $op, $dbw ) {
+		$usernameUseProfiler = new UsernameUseProfiler( __CLASS__, __METHOD__ );
 		if( $op !== '|' && $op !== '&' ){
 			return false; // sanity check
 		}
@@ -117,6 +119,7 @@ class RevisionDeleteUser {
 			__METHOD__
 		);
 		# Done!
+		$usernameUseProfiler->end();
 		return true;
 	}
 

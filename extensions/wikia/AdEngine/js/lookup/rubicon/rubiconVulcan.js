@@ -106,8 +106,6 @@ define('ext.wikia.adEngine.lookup.rubicon.rubiconVulcan', [
 	function getSlotParams(slotName) {
 		var parameters = {};
 
-		parameters[rubiconVideoTierKey] = slots[slotName].sizeId + '_tierNONE';
-
 		log(['getSlotParams', slotName, parameters], 'debug', logGroup);
 		if (priceMap[slotName]) {
 			parameters[rubiconVideoTierKey] = priceMap[slotName];
@@ -142,8 +140,6 @@ define('ext.wikia.adEngine.lookup.rubicon.rubiconVulcan', [
 
 				log(['VAST ad', slotName, cpm, tier, vastUrl], 'debug', logGroup);
 				priceMap[slotName] = tier;
-			} else {
-				priceMap[slotName] = slots[slotName].sizeId + '_tier0000';
 			}
 		});
 	}

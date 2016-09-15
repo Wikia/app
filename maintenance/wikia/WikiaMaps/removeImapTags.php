@@ -18,8 +18,6 @@ class RemoveImapTags extends Maintenance {
 	private $mapsClientConfig;
 	private $slaveDBConfig;
 
-	private $imapSearchRegexp = "/<imap\s+.*map\-id\s*\=\s*[\'\"]?(\d{1,})[\'\"]?\s*.*(>\s*<\s*\/\s*imap|\/)\s*>/";
-
 
 	public function __construct() {
 		parent::__construct();
@@ -35,7 +33,7 @@ class RemoveImapTags extends Maintenance {
 	}
 
 	static public function isDryRun() {
-		return static::$dryRun;
+		return self::$dryRun;
 	}
 
 	static public function isNaturalNumber( $int ) {
@@ -72,8 +70,9 @@ class RemoveImapTags extends Maintenance {
 		if ( $article instanceof Article && $article->getID() ) {
 			$results = null;
 			$articleContent = $article->getContent();
+			$imapSearchRegexp = "/<imap.*map\-id\=['\"](\d{1,})['\"].*(<\/imap|\/)>/";
 
-			$noOfFoundTags = preg_match_all($this->imapSearchRegexp, $articleContent, $results);
+			$noOfFoundTags = preg_match_all($imapSearchRegexp, $articleContent, $results);
 
 			if( $noOfFoundTags === 0 ) {
 				return false;
@@ -111,7 +110,7 @@ class RemoveImapTags extends Maintenance {
 			$newContent = str_replace( $stringWithTagToRemove, "", $oldContent );
 
 			$this->output( sprintf( 'Trying to edit article #%d', $articleId ) . PHP_EOL );
-			if( !static::isDryRun() ) {
+			if( !self::isDryRun() ) {
 				$result = $article->doEdit(
 					$newContent,
 					wfMessage(
@@ -138,7 +137,7 @@ class RemoveImapTags extends Maintenance {
 	}
 
 	public function isValidTilesSetId( $tilesSetId ) {
-		if ( !static::isNaturalNumber( $tilesSetId ) ) {
+		if ( !self::isNaturalNumber( $tilesSetId ) ) {
 			return false;
 		}
 
@@ -158,12 +157,12 @@ class RemoveImapTags extends Maintenance {
 		$this->slaveDBConfig = $this->app->wg->IntMapFullConfig['db']['prod']['slave'][0];
 		$this->maps = new WikiaMaps( $this->mapsClientConfig );
 
-		static::$dryRun = $this->hasOption( 'dry-run' );
+		self::$dryRun = $this->hasOption( 'dry-run' );
 
 		$cityId = $this->app->wg->CityId;
 		$tilesSetId = $this->getOption( 'tiles-set-id' );
 
-		if ( static::isDryRun() ) {
+		if ( self::isDryRun() ) {
 			$this->output( 'Mode: test run' . PHP_EOL );
 		} else {
 			$this->output( 'Mode: normal run' . PHP_EOL );
@@ -173,7 +172,7 @@ class RemoveImapTags extends Maintenance {
 			$this->error( 'Invalid tiles-set-id. Try again.' . PHP_EOL, 1 );
 		}
 
-		$mapsUsingTheTileset = static::getMapsIdsUsingTileset( $cityId, $tilesSetId );
+		$mapsUsingTheTileset = self::getMapsIdsUsingTileset( $cityId, $tilesSetId );
 		$mapsUsingTheTilesetCount = count($mapsUsingTheTileset);
 		$this->output( sprintf( "Found %d maps using the tiles's set #%d", $mapsUsingTheTilesetCount, $tilesSetId ) . PHP_EOL );
 
@@ -181,7 +180,7 @@ class RemoveImapTags extends Maintenance {
 			$this->output( 'No maps found.' . PHP_EOL );
 		}
 
-		$articlesUsingImap = static::getArticlesIdsUsingImap( $cityId );
+		$articlesUsingImap = self::getArticlesIdsUsingImap( $cityId );
 		$articlesUsingImapCount = count( $articlesUsingImap );
 		$this->output( sprintf( "Found %d articles using <imap/>", $articlesUsingImapCount ) . PHP_EOL );
 

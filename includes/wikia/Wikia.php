@@ -295,8 +295,6 @@ class Wikia {
      * @return string fixed domain name
      */
 	static public function fixDomainName( $name, $language = false, $type = false ) {
-		global $wgWikiaBaseDomain;
-
 		if (empty( $name )) {
 			return $name;
 		}
@@ -312,15 +310,15 @@ class Wikia {
 					case "answers":
 						$domains = self::getAnswersDomains();
 						if ( $language && isset($domains[$language]) && !empty($domains[$language]) ) {
-							$name =  sprintf("%s.%s.%s", $name, $domains[$language], $wgWikiaBaseDomain);
+							$name =  sprintf("%s.%s.%s", $name, $domains[$language], "wikia.com");
 							$allowLang = false;
 						} else {
-							$name =  sprintf("%s.%s.%s", $name, $domains["default"], $wgWikiaBaseDomain);
+							$name =  sprintf("%s.%s.%s", $name, $domains["default"], "wikia.com");
 						}
 						break;
 
 					default:
-						$name = sprintf("%s.%s", $name, $wgWikiaBaseDomain);
+						$name = $name.".wikia.com";
 				}
 				if ( $language && $language != "en" && $allowLang ) {
 					$name = $language.".".$name;

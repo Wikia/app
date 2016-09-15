@@ -33,25 +33,6 @@ $font-size-large: 16px;
 		margin: 0;
 	}
 
-	a.embeddable-discussions-fill-div {
-		display: block;
-		height: 100%;
-		left: 0;
-		position: absolute;
-		text-decoration: none;
-		top: 0;
-		width: 100%;
-	}
-
-	.avatar-container {
-		position: relative;
-		z-index: 1;
-	}
-
-	.avatar-details {
-		z-index: 1;
-	}
-
 	.embeddable-discussions-forum {
 		color: $gray;
 		float: left;
@@ -181,7 +162,6 @@ $font-size-large: 16px;
 	.embeddable-discussions-side-spaced {
 		padding-left: 15px;
 		padding-right: 15px;
-		position: relative;
 	}
 
 	.embeddable-discussions-threads {

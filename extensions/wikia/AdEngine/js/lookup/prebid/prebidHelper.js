@@ -1,12 +1,11 @@
 define('ext.wikia.adEngine.lookup.prebid.prebidHelper', function() {
 	var adUnits = [];
 
-	function getAdapterAdUnits(adapter, skin) {
-		var getAdapterAdUnits = [],
-			slots = adapter.getSlots(skin);
+	function getAdapterAdUnits(adapter, slots) {
+		var getAdapterAdUnits = [];
 
 		Object.keys(slots).forEach(function(slotName) {
-			getAdapterAdUnits.push(adapter.prepareAdUnit(slotName, slots[slotName], skin));
+			getAdapterAdUnits.push(adapter.prepareAdUnit(slotName, slots[slotName]));
 		});
 
 		return getAdapterAdUnits;
@@ -21,7 +20,7 @@ define('ext.wikia.adEngine.lookup.prebid.prebidHelper', function() {
 	function setupAdUnits(adapters, skin) {
 		adapters.forEach(function (adapter) {
 			if (adapter && adapter.isEnabled()) {
-				addAdUnits(getAdapterAdUnits(adapter, skin));
+				addAdUnits(getAdapterAdUnits(adapter, adapter.getSlots(skin)));
 			}
 		});
 

@@ -39,7 +39,6 @@ class AdEngine2Hooks {
 	public static function onInstantGlobalsGetVariables( array &$vars )
 	{
 		$vars[] = 'wgAdDriverAppNexusBidderCountries';
-		$vars[] = 'wgAdDriverAppNexusBidderPlacementsConfig';
 		$vars[] = 'wgAdDriverDelayCountries';
 		$vars[] = 'wgAdDriverDelayTimeout';
 		$vars[] = 'wgAdDriverEvolve2Countries';

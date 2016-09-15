@@ -3,30 +3,25 @@ define('VisualEditorTourExperimentInit',
 	function ($, VETour, veTourConfig, abTest, tracker) {
 		'use strict';
 
-		var experimentName = 'contribution-experiments';
+		var experimentName = 'contribution-experiments',
+			freshlyRegisteredExperimentId = 5654433460,
+			usersWithoutEditExperimentId = 5735670451;
 
 		function init() {
-			var lang = mw.config.get('wgUserLanguage');
 			if (isEnabled()) {
 				clearEntrypointPopover();
-				(new VETour(veTourConfig[lang])).start();
+				(new VETour(veTourConfig)).start();
 			}
 		}
 
 		function isEnabled() {
-			var enable = isAllowedCommunity();
-			if (mw.config.get('wgUserName') != null) {
-				enable = enable && isUserLanguagePreferenceJapanese() && isUserwithoutedit();
-			}
-			return enable && !$.cookie('vetourdisabled');
+			return isExperimentVariation() &&
+				(isNewlyregistered() || isUserwithoutedit()) &&
+				!$.cookie('vetourdisabled');
 		}
 
 		function trackPublish() {
-			var enable = isAllowedCommunity();
-			if (mw.config.get('wgUserName') != null) {
-				enable = enable && isUserLanguagePreferenceJapanese() && isUserwithoutedit();
-			}
-			if (enable) {
+			if (isExperimentVariation() && (isNewlyregistered() || isUserwithoutedit())) {
 				tracker.trackVerboseSuccess(experimentName, 'publish');
 			}
 		}
@@ -35,17 +30,19 @@ define('VisualEditorTourExperimentInit',
 			$('#ca-ve-edit').popover('destroy');
 		}
 
-		function isAllowedCommunity() {
-			var allowedLanguages = ['ja'];
-			return allowedLanguages.indexOf(mw.config.get('wgContentLanguage')) > -1;
+		function isExperimentVariation() {
+			return window.optimizely && (
+					window.optimizely.variationNamesMap[freshlyRegisteredExperimentId] === 'VE-TOUR' ||
+					window.optimizely.variationNamesMap[usersWithoutEditExperimentId] === 'VE-TOUR'
+				);
+		}
+
+		function isNewlyregistered() {
+			return $.cookie('newlyregistered');
 		}
 
 		function isUserwithoutedit() {
 			return $.cookie('userwithoutedit');
-		}
-
-		function isUserLanguagePreferenceJapanese() {
-			return mw.config.get('wgUserLanguage') === 'ja';
 		}
 
 		return {

@@ -57,13 +57,11 @@ class RemoveImapTagsTests extends WikiaBaseTest {
 			],
 			[
 				pageContent => "<imap map-id=\"10\" ></imap >",
-				expectedResult => true,
-				mapId => 10
+				expectedResult => false
 			],
 			[
-				pageContent => "<imap map-id=\"11\" ></ imap>",
-				expectedResult => true,
-				mapId => 11
+				pageContent => "<imap map-id=\"11\" ></ imap> ",
+				expectedResult => false
 			],
 			[
 				pageContent => "<imap map-id=\"12\" ><imap> ",
@@ -81,16 +79,6 @@ class RemoveImapTagsTests extends WikiaBaseTest {
 				pageContent => "<imap></imap>",
 				expectedResult => false
 			],
-			[
-				pageContent => "<imap map-id=16/> </imap>",
-				expectedResult => true,
-				mapId => 16
-			],
-			[
-				pageContent => "<imap map-id=17 /></imap>",
-				expectedResult => true,
-				mapId => 17
-			],
 		];
 
 		foreach( $testCases as $testCase ) {
@@ -107,7 +95,7 @@ class RemoveImapTagsTests extends WikiaBaseTest {
 				$this->assertEquals( $testCase['mapId'], $foundTagsMapIds[0] );
 				$this->assertTrue( $actualResult );
 			} else {
-				$this->assertFalse( $actualResult, $testCase['pageContent'] );
+				$this->assertFalse( $actualResult );
 			}
 
 		}
