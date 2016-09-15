@@ -4,11 +4,9 @@ class DiscussionsRedirectHelper {
 	 * @return bool
 	 */
 	public static function areForumsArchivedAndDiscussionsEnabled() {
-		return true;
-//		global $wgArchiveWikiForums, $wgEnableDiscussions;
-//
-//
-//		return $wgArchiveWikiForums && $wgEnableDiscussions;
+		global $wgArchiveWikiForums, $wgEnableDiscussions;
+
+		return $wgArchiveWikiForums && $wgEnableDiscussions;
 	}
 
 	private static function discussionsUrl() {
