@@ -2,6 +2,8 @@
 
 $admins-module-icon-size: 48px;
 $admins-module-margin: 20px;
+$admins-module-text-padding-top: 14px;
+$admins-module-text-padding-bottom: 30px;
 
 .community-page-rail__admins-module {
 	text-align: center;
@@ -17,7 +19,7 @@ $admins-module-margin: 20px;
 	.admins-text {
 		font-size: $typescale-size-minus-1;
 		line-height: $line-height;
-		padding: 14px 0 30px;
+		padding: $admins-module-text-padding-top 0 $admins-module-text-padding-bottom;
 	}
 
 	.admins-view-all {

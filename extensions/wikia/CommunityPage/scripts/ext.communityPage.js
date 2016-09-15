@@ -220,7 +220,7 @@ require([
 	}
 
 	function initTracking() {
-		// Track clicks in contribution module
+		// Track clicks in contribution and recently joined modules
 		$('.contributors-module').on('mousedown touchstart', 'a', function (event) {
 			handleClick(event, 'community-page-contribution-module');
 		});

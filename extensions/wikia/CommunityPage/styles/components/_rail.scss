@@ -14,12 +14,13 @@ $community-page-rail-spacing-small: 14px;
 $community-page-rail-spacing: 16px;
 $community-page-rail-spacing-large: 18px;
 $community-page-rail-spacing-xlarge: 20px;
+$community-page-rail-spacing-xxlarge: 80px;
 
 .community-page-rail {
 	background-color: $community-page-rail-background-color;
 	display: inline-block;
 	float: right;
-	padding: $community-page-rail-spacing-xlarge * 4 0 $community-page-rail-spacing-xlarge;
+	padding: $community-page-rail-spacing-xxlarge 0 $community-page-rail-spacing-xlarge;
 
 	.module {
 		box-sizing: border-box;
