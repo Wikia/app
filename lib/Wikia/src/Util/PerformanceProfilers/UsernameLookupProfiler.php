@@ -15,7 +15,7 @@ use Wikia\Util\Statistics\BernoulliTrial;
  * See
  * @package Wikia\Util\PerformanceProfilers
  */
-class UsernameUseProfiler {
+class UsernameLookupProfiler {
 	use WikiaProfiler;
 
 	private static $shouldSampleRequest = null;
@@ -46,6 +46,10 @@ class UsernameUseProfiler {
 	private $shouldSample;
 
 	const EVENT_USERNAME_FROM_ID = 'username_from_id';
+
+	const ALWAYS_SEND_EVENT = 1.0;
+
+	const REQUEST_SAMPLING_RATE = 0.01;
 
 
 	/**
@@ -79,17 +83,19 @@ class UsernameUseProfiler {
 				static::EVENT_USERNAME_FROM_ID,
 				$this->startTime,
 				$context,
-				$this->sampling
+				static::ALWAYS_SEND_EVENT
 			);
 		}
 	}
 
 	public static function create( $class, $method ) {
+		// we want the profiler to send all events for a request,
+		// so we're sampling requests instead of the events
 		if ( static::$shouldSampleRequest === null ) {
-			$sampler = new BernoulliTrial( 0.01 );
+			$sampler = new BernoulliTrial( static::REQUEST_SAMPLING_RATE );
 			static::$shouldSampleRequest = $sampler->shouldSample();
 		}
 		$traceId = WikiaTracer::instance()->getTraceId();
-		return new UsernameUseProfiler( $class, $method, $traceId, static::$shouldSampleRequest );
+		return new UsernameLookupProfiler( $class, $method, $traceId, static::$shouldSampleRequest );
 	}
 }
