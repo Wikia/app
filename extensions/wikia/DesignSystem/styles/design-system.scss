@@ -1,12 +1,9 @@
 @import '/extensions/wikia/DesignSystem/bower_components/design-system/dist/css/styles.css';
 @import '../bower_components/design-system/base/colors';
-@import '../bower_components/design-system/base/breakpoints';
 
 // Platform-specific styles for DesignSystem integration
 $global-navigation-z-index: 5000101;
 $global-navigation-height: 55px;
-$search-transition-duration: 200ms;
-$search-buttons-transition-duration: 50ms;
 
 .wds-global-navigation-wrapper {
 	height: $global-navigation-height;
@@ -70,135 +67,6 @@ $search-buttons-transition-duration: 50ms;
 
 		.wds-is-selected a {
 			color: $color-link;
-		}
-	}
-
-	&__links-and-search {
-		display: flex;
-		flex: 4 1 auto;
-	}
-
-	&__link,
-	&__wikis-menu {
-		max-width: 100%;
-		overflow: hidden;
-		transition: all $search-transition-duration ease;
-	}
-
-	&__search-input-wrapper {
-		min-height: 28px;
-	}
-
-	&__search-submit {
-		border-width: 0;
-		display: block;
-		max-width: 0;
-		padding: 0;
-		transition: all $search-buttons-transition-duration;
-		z-index: 2;
-	}
-
-	&__search-label {
-		position: relative;
-
-		.wds-icon {
-			z-index: 1;
-		}
-	}
-
-	&__search-close {
-		display: block;
-		max-width: 0;
-		opacity: 0;
-		padding: 0;
-		transition: all $search-buttons-transition-duration;
-	}
-
-	&__search {
-		flex: 0 1 auto;
-		transition: all $search-transition-duration ease;
-	}
-
-	&__search-input {
-		box-sizing: border-box;
-		left: 0;
-		max-width: 100%;
-		padding-left: 20px;
-		position: absolute;
-		right: 0;
-		top: 3px;
-		transition: all $search-transition-duration ease;
-		width: auto;
-	}
-
-	&.wds-search-is-active .wds-global-navigation {
-		&__search {
-			flex-grow: 2;
-		}
-
-		&__search-input-wrapper {
-			margin-right: 0;
-		}
-
-		&__link,
-		&__wikis-menu {
-			color: rgba($color-dark-blue-gray, 0);
-			display: flex;
-			flex-grow: 0;
-			font-size: 0;
-			max-width: 0;
-			padding: 0;
-		}
-
-		&__search-input {
-			padding-left: 20px;
-		}
-
-		&__search-submit {
-			border-width: 1px;
-			max-width: 100%;
-			padding: 4px 8px;
-			transition-delay: $search-transition-duration - $search-buttons-transition-duration;
-		}
-
-		&__search-close {
-			max-width: 24px;
-			opacity: 1;
-			padding-right: 8px;
-			transition-delay: $search-transition-duration - $search-buttons-transition-duration;
-		}
-	}
-
-	@media #{$breakpoint-l-up} {
-		&__search {
-			flex-grow: 2;
-		}
-
-		&__search-input {
-			padding-left: 4px;
-			position: relative;
-			top: auto;
-		}
-
-		&.wds-search-is-active .wds-global-navigation {
-			&__search-input {
-				padding-left: 4px;
-			}
-		}
-	}
-}
-
-
-.wds-search-is-always-visible {
-	.wds-global-navigation__search-input {
-		padding-left: 4px;
-		position: relative;
-		top: auto;
-	}
-
-	&.wds-search-is-active .wds-global-navigation {
-		&__search-input {
-			padding-left: 4px;
 		}
 	}
 }
