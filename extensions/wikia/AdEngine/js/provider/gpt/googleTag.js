@@ -3,11 +3,10 @@
 define('ext.wikia.adEngine.provider.gpt.googleTag', [
 	'ext.wikia.adEngine.provider.gpt.googleSlots',
 	'ext.wikia.aRecoveryEngine.recovery.helper',
-	'ext.wikia.adEngine.adLogicPageViewCounter',
 	'wikia.document',
 	'wikia.log',
 	'wikia.window'
-], function (googleSlots, helper, adLogicPageViewCounter, doc, log, window) {
+], function (googleSlots, helper, doc, log, window) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.provider.gpt.googleTag',
@@ -162,15 +161,20 @@ define('ext.wikia.adEngine.provider.gpt.googleTag', [
 			slotsToDestroy = allSlots;
 		} else {
 			allSlots.forEach(function (slot) {
+				var slotsPositionTargeting = slot.getTargeting('pos');
+
 				// google returns array
 				// - in our case it has always one element and this element is the one we are interested in
-				if (slotsNames.indexOf(slot.getTargeting('pos')[0]) > -1) {
-					slotsToDestroy.push(slot);
+				if (!slotsPositionTargeting.length) {
+					log(['destroySlots', 'getTargeting doesn\'t return pos', slotsPositionTargeting, slot], 'error', logGroup);
+				} else {
+					if (slotsNames.indexOf(slotsPositionTargeting[0]) > -1) {
+						slotsToDestroy.push(slot);
+					}
 				}
 			});
 		}
 
-		// this one protects us from removing all slots if slotsToDestroy is an empty array
 		if (slotsToDestroy.length) {
 			push(function () {
 				log(['destroySlots', slotsNames, slotsToDestroy], 'debug', logGroup);
@@ -182,6 +186,8 @@ define('ext.wikia.adEngine.provider.gpt.googleTag', [
 
 				googleSlots.removeSlots(slotsToDestroy);
 			});
+		} else {
+			log(['destroySlots', 'no slots returned to destroy', allSlots, slotsNames], 'debug', logGroup);
 		}
 	}
 

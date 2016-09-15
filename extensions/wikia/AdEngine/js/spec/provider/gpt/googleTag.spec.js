@@ -27,7 +27,6 @@ describe('ext.wikia.adEngine.provider.gpt.googleTag', function () {
 			},
 			elementSizes: null,
 			log: noop,
-			adLogicPageViewCounter: noop,
 			pubads: {
 				collapseEmptyDivs: noop,
 				enableSingleRequest: noop,
@@ -93,7 +92,6 @@ describe('ext.wikia.adEngine.provider.gpt.googleTag', function () {
 		googleTag = modules['ext.wikia.adEngine.provider.gpt.googleTag'](
 			mocks.googleSlots,
 			mocks.recoveryHelper,
-			mocks.adLogicPageViewCounter,
 			document,
 			mocks.log,
 			mocks.window
