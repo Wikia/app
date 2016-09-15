@@ -15,7 +15,7 @@ $messages['en'] = [
 	'emailext-unsubscribe' => 'To unsubscribe from all Wikia emails, click [$1 here].',
 	'emailext-unfollow-text' => 'No longer interested in receiving these updates? Click [$1 here] to unfollow $2 on {{SITENAME}}.',
 	'emailext-salutation' => 'Hi $1,',
-	'emailext-wikia-home-url' => 'http://www.wikia.com',
+	'emailext-wikia-home-url' => 'http://www.wikia.com/explore',
 ];
 
 $messages['qqq'] = [
@@ -99,7 +99,7 @@ $messages['it'] = [
 	'group-translator-member' => 'Wikia Translator',
 	'group-translator' => 'Wikia Translators',
 	'grouppage-translator' => 'wikia:Help:Internationalization',
-	'emailext-wikia-home-url' => 'http://www.wikia.com',
+	'emailext-wikia-home-url' => 'http://www.wikia.com/explore',
 	'emailext-forumreply-unfollow-text' => "Non t'interessa più ricevere questi aggiornamenti? Clicca [$1 qui] per smettere di seguire [$2 questa discussione] su [{{SERVER}} {{SITENAME}}].",
 ];
 
