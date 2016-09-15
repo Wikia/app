@@ -5,16 +5,14 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 	const COMMUNITY_PAGE_BENEFITS_MODAL_IMAGE = 'Community-Page-Modal-Image.jpg';
 	const DEFAULT_TEMPLATE_ENGINE = \WikiaResponse::TEMPLATE_ENGINE_MUSTACHE;
 	const ALL_MEMBERS_LIMIT = 20;
-	const TOP_ADMINS_MODULE_LIMIT = self::DEFAULT_MODULES_MAX;
+	const TOP_ADMINS_MODULE_LIMIT = 3;
 	const TOP_CONTRIBUTORS_MODULE_LIMIT = 5;
 	const MODAL_IMAGE_HEIGHT = 700.0;
 	const MODAL_IMAGE_MIN_RATIO = 0.85;
+	const DEFAULT_MODULES_MAX = 3;
 
 	private $usersModel;
-
 	private $wikiModel;
-
-	const DEFAULT_MODULES_MAX = 3;
 
 	public function __construct() {
 		parent::__construct( 'Community' );
