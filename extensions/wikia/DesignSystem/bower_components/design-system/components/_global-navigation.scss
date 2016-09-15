@@ -299,6 +299,7 @@ $search-buttons-transition-duration: 50ms;
 	}
 
 	&__search-submit-icon {
+		display: block;
 		transform: rotate(180deg);
 	}
 
