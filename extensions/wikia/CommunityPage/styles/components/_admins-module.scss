@@ -38,6 +38,12 @@ $admins-module-text-padding-bottom: 30px;
 	margin: auto;
 	max-width: 50%;
 
+	.community-page-contributor-details {
+		overflow: hidden;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+	}
+
 	.avatar-container {
 		display: inline-block;
 		height: $admins-module-icon-size;
