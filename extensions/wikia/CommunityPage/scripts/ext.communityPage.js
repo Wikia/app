@@ -226,7 +226,7 @@ require([
 		});
 
 		// Track clicks in admins view all link
-		$('.admins-module').on('mousedown touchstart', 'a', function (event) {
+		$('.community-page-rail__admins-module').on('mousedown touchstart', 'a', function (event) {
 			handleClick(event, 'community-page-admins-module');
 		});
 
