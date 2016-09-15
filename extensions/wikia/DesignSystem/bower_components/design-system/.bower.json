@@ -11,11 +11,11 @@
     "reference-page/"
   ],
   "homepage": "https://github.com/Wikia/design-system",
-  "_release": "9effa4c9c6",
+  "_release": "644f16fc75",
   "_resolution": {
     "type": "branch",
     "branch": "XW-2018",
-    "commit": "9effa4c9c69bd0bf38cee9528e0fc72fe213e51d"
+    "commit": "644f16fc757fff8226886b7c3fa95d98975a0076"
   },
   "_source": "git://github.com/Wikia/design-system.git",
   "_target": "XW-2018",

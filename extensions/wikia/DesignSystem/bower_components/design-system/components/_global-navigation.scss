@@ -13,8 +13,8 @@ $search-buttons-transition-duration: 50ms;
 
 @mixin visible-search-input {
 	&__search-input {
-		position: relative;
 		padding: $search-input-padding;
+		position: relative;
 		top: auto;
 		width: 100%;
 	}
@@ -166,7 +166,8 @@ $search-buttons-transition-duration: 50ms;
 	&__wikis-menu {
 		max-width: 100%;
 		overflow: hidden;
-		transition: all $search-transition-duration ease;
+		transition-duration: $search-transition-duration;
+		transition-property: color, flex, font-size, max-width, padding;
 	}
 
 	&__link {
@@ -211,7 +212,8 @@ $search-buttons-transition-duration: 50ms;
 
 	&__search {
 		flex: 0 1 auto;
-		transition: all $search-transition-duration ease;
+		transition-duration: $search-transition-duration;
+		transition-property: flex;
 	}
 
 	&__search-input-wrapper {
@@ -258,7 +260,8 @@ $search-buttons-transition-duration: 50ms;
 		position: absolute;
 		right: 0;
 		top: 3px;
-		transition: all $search-transition-duration ease;
+		transition-duration: $search-transition-duration;
+		transition-property: width, padding;
 
 		&:focus {
 			outline: none;
@@ -281,7 +284,8 @@ $search-buttons-transition-duration: 50ms;
 		max-width: 0;
 		opacity: 0;
 		padding: 0;
-		transition: all $search-buttons-transition-duration;
+		transition-duration: $search-buttons-transition-duration;
+		transition-property: max-width, opacity, padding;
 		z-index: 2;
 	}
 
@@ -293,8 +297,10 @@ $search-buttons-transition-duration: 50ms;
 	&__search-submit {
 		border-width: 0;
 		max-width: 0;
+		overflow: hidden;
 		padding: 0;
-		transition: all $search-buttons-transition-duration;
+		transition-duration: $search-buttons-transition-duration;
+		transition-property: max-width, padding;
 		z-index: 2;
 	}
 
