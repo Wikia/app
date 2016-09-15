@@ -21,10 +21,11 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 	}
 
 	public function index() {
+		global $wgSitename, $wgWikiTopic;
+
 		$this->specialPage->setHeaders();
 		$this->getOutput()->setPageTitle( $this->msg( 'communitypage-title' )->plain() );
 		$this->addAssets();
-
 		$this->wg->SuppressPageHeader = true;
 		$this->wg->SuppressFooter = true;
 
@@ -34,14 +35,14 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 		$this->response->setValues( [
 			'heroImageUrl' => $this->getHeroImageUrl(),
 			'inviteFriendsText' => $this->msg( 'communitypage-invite-friends' )->plain(),
-			'headerWelcomeMsg' => $this->msg( 'communitypage-tasks-header-welcome' )->parse(),
+			'headerWelcomeMsg' => $this->msg( 'communitypage-tasks-header-welcome', $wgWikiTopic ?? $wgSitename )->parse(),
 			'adminWelcomeMsg' => $this->msg( 'communitypage-admin-welcome-message' )->text(),
 			'pageListEmptyText' => $this->msg( 'communitypage-page-list-empty' )->plain(),
 			'pageTitle' => $this->msg( 'communitypage-title' )->plain(),
 			'topContributors' => $this->sendRequest(
 				'CommunityPageSpecialController',
 				'getTopContributorsData',
-				[ 'limit' => self::TOP_CONTRIBUTORS_MODULE_LIMIT ]
+				[ 'limit' => static::TOP_CONTRIBUTORS_MODULE_LIMIT ]
 			)->getData(),
 			'topAdminsData' => $this->sendRequest( 'CommunityPageSpecialController', 'getTopAdminsData' )
 				->getData(),
@@ -305,7 +306,7 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 
 	private function getHeroImageUrl() {
 		$heroImageUrl = '';
-		$heroImage = Title::newFromText( self::COMMUNITY_PAGE_HERO_IMAGE, NS_FILE );
+		$heroImage = Title::newFromText( static::COMMUNITY_PAGE_HERO_IMAGE, NS_FILE );
 		if ( $heroImage instanceof Title && $heroImage->exists() ) {
 			$heroImageFile = wfFindFile( $heroImage );
 			if ( $heroImageFile instanceof File ) {
@@ -319,14 +320,14 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 	private function getBenefitsModalImageUrl() {
 		$url = '';
 		// we need variable to pass it by reference to helper
-		$title = self::COMMUNITY_PAGE_BENEFITS_MODAL_IMAGE;
+		$title = static::COMMUNITY_PAGE_BENEFITS_MODAL_IMAGE;
 		$modalFile = WikiaFileHelper::getFileFromTitle( $title );
-		if ( $modalFile && $modalFile->getHeight() >= self::MODAL_IMAGE_HEIGHT ) {
+		if ( $modalFile && $modalFile->getHeight() >= static::MODAL_IMAGE_HEIGHT ) {
 			$ratio = floatval( $modalFile->getWidth() ) / floatval( $modalFile->getHeight() );
-			if ( $ratio >= self::MODAL_IMAGE_MIN_RATIO ) {
+			if ( $ratio >= static::MODAL_IMAGE_MIN_RATIO ) {
 				// this transform will make image 700 height
 				$thumbnail = $modalFile->transform( [
-					'width' => round( $ratio * self::MODAL_IMAGE_HEIGHT )
+					'width' => round( $ratio * static::MODAL_IMAGE_HEIGHT )
 				] );
 				$url = $thumbnail ? $thumbnail->getUrl() : '';
 			}
