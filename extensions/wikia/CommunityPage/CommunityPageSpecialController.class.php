@@ -93,7 +93,7 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 
 		$this->response->setData( [
 			'admin' => $this->msg( 'communitypage-admin' )->plain(),
-			'topContribsHeaderText' => $this->msg( 'communitypage-top-contributors-week' )->plain(),
+			'topContributorsHeaderText' => $this->msg( 'communitypage-top-contributors-week' )->plain(),
 			'yourRankText' => $this->msg( 'communitypage-user-rank' )->plain(),
 			'userContributionsText' => $this->msg( 'communitypage-user-contributions' )
 				->numParams( $this->getLanguage()->formatNum( $currentUserContributionCount ) )

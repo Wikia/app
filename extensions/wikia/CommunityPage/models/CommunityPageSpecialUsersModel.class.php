@@ -274,7 +274,7 @@ class CommunityPageSpecialUsersModel {
 						$userName = $user->getName();
 
 						if ( $this->showMember( $user ) ) {
-							$avatar = AvatarService::renderAvatar( $userName );
+							$avatar = AvatarService::renderAvatar( $userName, AvatarService::AVATAR_SIZE_SMALL_PLUS );
 
 							$sqlData[] = [
 								'userId' => $row->wup_user,

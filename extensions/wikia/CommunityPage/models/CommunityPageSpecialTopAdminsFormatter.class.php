@@ -15,9 +15,9 @@ class CommunityPageSpecialTopAdminsFormatter {
 		$allAdminsCount = count( $allAdminsList );
 
 		return [
-			self::TOP_ADMINS_LIST => array_slice( $allAdminsList, 0, 2 ),
-			self::HAVE_OTHER_ADMINS => $allAdminsCount > self::TOP_ADMINS_MODULE_LIMIT,
-			self::ALL_ADMINS_COUNT => $allAdminsCount,
+			static::TOP_ADMINS_LIST => array_slice( $allAdminsList, 0, static::TOP_ADMINS_MODULE_LIMIT ),
+			static::HAVE_OTHER_ADMINS => $allAdminsCount > static::TOP_ADMINS_MODULE_LIMIT,
+			static::ALL_ADMINS_COUNT => $allAdminsCount,
 		];
 	}
 }

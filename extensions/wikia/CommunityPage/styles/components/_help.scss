@@ -5,10 +5,13 @@
 $small-icon-size: 18px;
 $big-icon-size: 48px;
 $help-module-margin: 12px;
+$help-module-padding-bottom: 20px;
+$policy-link-padding-top: 18px;
+$policy-link-margin-top: 14px;
 
 .community-page-rail__help-module {
 	line-height: 2;
-	padding-bottom: 20px;
+	padding-bottom: $help-module-padding-bottom;
 
 	.community-page-module-section-title {
 		@include flexbox();
@@ -28,8 +31,8 @@ $help-module-margin: 12px;
 		align-items: center;
 		border-top: 1px solid $color-page-border;
 		line-height: 1;
-		margin-top: 14px;
-		padding-top: 18px;
+		margin-top: $policy-link-margin-top;
+		padding-top: $policy-link-padding-top;
 
 		svg {
 			fill: $color-links;
