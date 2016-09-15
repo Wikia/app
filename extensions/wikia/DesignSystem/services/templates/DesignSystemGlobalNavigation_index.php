@@ -2,24 +2,26 @@
 	<div id="globalNavigation" class="wds-global-navigation <?= isset( $model['fandom_overview'] ) ? '' : ' wds-search-is-always-visible'; ?>">
 		<div class="wds-global-navigation__content-bar">
 			<?= $app->renderView( 'DesignSystemGlobalNavigationService', 'logo', [ 'model' => $model['logo'] ] ); ?>
-			<?php
-			if ( isset( $model['fandom_overview'] ) ):
-				foreach ( $model['fandom_overview']['links'] as $link ):
-			?>
-					<?= $app->renderView( 'DesignSystemGlobalNavigationService', 'linkBranded', [ 'model' => $link ] ); ?>
-			<?php
-				endforeach;
-			endif;
-			?>
-			<?= $app->renderView(
-				'DesignSystemGlobalNavigationService',
-				'links',
-				[
-					'model' => $model['wikis'],
-					'type' => 'wikis-menu'
-				]
-			); ?>
-			<?= $app->renderView( 'DesignSystemGlobalNavigationService', 'search', [ 'model' => $model['search'] ] ); ?>
+			<div class="wds-global-navigation__links-and-search">
+				<?php
+				if ( isset( $model['fandom_overview'] ) ):
+					foreach ( $model['fandom_overview']['links'] as $link ):
+				?>
+						<?= $app->renderView( 'DesignSystemGlobalNavigationService', 'linkBranded', [ 'model' => $link ] ); ?>
+				<?php
+					endforeach;
+				endif;
+				?>
+				<?= $app->renderView(
+					'DesignSystemGlobalNavigationService',
+					'links',
+					[
+						'model' => $model['wikis'],
+						'type' => 'wikis-menu'
+					]
+				); ?>
+				<?= $app->renderView( 'DesignSystemGlobalNavigationService', 'search', [ 'model' => $model['search'] ] ); ?>
+			</div>
 			<?php if ( isset( $model['user'] ) ): ?>
 				<?= $app->renderView(
 					'DesignSystemGlobalNavigationService',
