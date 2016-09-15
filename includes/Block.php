@@ -1,5 +1,4 @@
 <?php
-use Wikia\Util\PerformanceProfilers\UsernameUseProfiler;
 
 /**
  * Blocks and bans object
@@ -355,7 +354,6 @@ class Block {
 	 * @param $row ResultWrapper: a row from the ipblocks table
 	 */
 	protected function initFromRow( $row ) {
-		$usernameUseProfiler = new UsernameUseProfiler( __CLASS__, __METHOD__ );
 		$this->setTarget( $row->ipb_address );
 		if ( $row->ipb_by ) { // local user
 			$this->setBlocker( User::newFromID( $row->ipb_by ) );
@@ -383,7 +381,6 @@ class Block {
 		$this->prevents( 'createaccount', $row->ipb_create_account );
 		$this->prevents( 'sendemail', $row->ipb_block_email );
 		$this->prevents( 'editownusertalk', !$row->ipb_allow_usertalk );
-		$usernameUseProfiler->end();
 	}
 
 	/**
