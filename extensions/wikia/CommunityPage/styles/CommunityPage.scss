@@ -27,8 +27,7 @@
 .CommunityPageMainContent {
 	box-sizing: inherit;
 	float: left;
-	padding: 30px 34px 0 0;
-	width: calc(100% - #{$community-page-rail-width});
+	padding-top: 30px;
 }
 
 .WikiaArticle {
@@ -39,9 +38,27 @@
 	}
 }
 
+@media #{$breakpoint-large-up} {
+	.CommunityPageMainContent {
+		width: calc(100% - #{$community-page-rail-width} + #{$padding-width-large});
+
+	}
+}
+
+@media #{$breakpoint-medium-only} {
+	.CommunityPageMainContent {
+		width: calc(100% - #{$community-page-rail-width} + #{$padding-width-medium});
+	}
+}
+
+@media #{$breakpoint-small-plus} {
+	.CommunityPageMainContent {
+		width: calc(100% - #{$community-page-rail-width} + #{$padding-width-small-plus});
+	}
+}
+
 @media #{$breakpoint-below-small-plus} {
 	.CommunityPageMainContent {
-		padding-right: 0;
-		width: 100%;
+		width: calc(100% - #{$community-page-rail-width} + #{$padding-width-small});
 	}
 }

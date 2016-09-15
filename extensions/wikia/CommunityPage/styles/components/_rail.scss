@@ -56,3 +56,27 @@ $community-page-rail-spacing-xlarge: 20px;
 		}
 	}
 }
+
+@media #{$breakpoint-large-up} {
+	.community-page-rail {
+		margin-right: -$padding-width-large;
+	}
+}
+
+@media #{$breakpoint-medium-only} {
+	.community-page-rail {
+		margin-right: -$padding-width-medium;
+	}
+}
+
+@media #{$breakpoint-small-plus} {
+	.community-page-rail {
+		margin-right: -$padding-width-small-plus;
+	}
+}
+
+@media #{$breakpoint-below-small-plus} {
+	.community-page-rail {
+		margin-right: -$padding-width-small;
+	}
+}
