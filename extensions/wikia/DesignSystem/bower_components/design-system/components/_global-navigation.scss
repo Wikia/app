@@ -252,13 +252,14 @@ $search-buttons-transition-duration: 50ms;
 		// it requires us to put these values explicitly.
 		flex: 1 1 auto;
 		font-size: $typescale-size-minus-1;
+		// iPad Safari needs the height below to be set
+		height: 100%;
 		left: 0;
 		max-width: 100%;
 		padding: $search-input-padding;
 		padding-left: 20px;
 		position: absolute;
 		right: 0;
-		top: 3px;
 		transition-duration: $search-transition-duration;
 		transition-property: width, padding;
 
