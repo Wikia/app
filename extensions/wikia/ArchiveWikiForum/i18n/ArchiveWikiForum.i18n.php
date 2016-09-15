@@ -4,7 +4,8 @@ $messages = [];
 
 $messages['qqq'] = [
 	'archive-wiki-forums-notification-message' => 'Notification displayed on old archived forum pages.',
-	'archive-wiki-forums-button-to-new-forums' => 'Link to the new forums that appears at the top of old archived forum pages.'
+	'archive-wiki-forums-button-to-new-forums' => 'Link to the new forums that appears at the top of old archived forum pages.',
+	'archive-wiki-forums-button-to-discussions' => 'Link to Discussions that appears at the top of old archived forum pages.'
 ];
 
 $messages['en'] = [
