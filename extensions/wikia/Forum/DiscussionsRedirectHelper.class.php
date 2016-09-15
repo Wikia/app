@@ -31,10 +31,7 @@ class DiscussionsRedirectHelper {
 	}
 
 	private static function getDiscussionsUrl($namespace, $id) {
-		if ( $namespace == NS_WIKIA_FORUM_TOPIC_BOARD ) {
-			return DiscussionsRedirectHelper::categoryUrl( $id );
-		}
-		if ( $namespace == NS_WIKIA_FORUM_BOARD ) {
+		if ( $namespace == NS_WIKIA_FORUM_TOPIC_BOARD || NS_WIKIA_FORUM_BOARD ) {
 			return DiscussionsRedirectHelper::categoryUrl( $id );
 		}
 		if ( $namespace == NS_WIKIA_FORUM_BOARD_THREAD ) {
