@@ -3092,3 +3092,20 @@ $config['crosslink_module_scss'] = [
 		'//extensions/wikia/CrosslinkModule/styles/CrosslinkModule.scss',
 	],
 ];
+
+/* CrosslinkTag */
+$config['crosslink_tag_scss'] = [
+	'type' => AssetsManager::TYPE_SCSS,
+	'skin' => [ 'oasis' ],
+	'assets' => [
+		'//extensions/wikia/CrosslinkTag/styles/CrosslinkTag.scss',
+	],
+];
+
+$config['crosslink_tag_js'] = [
+	'type' => AssetsManager::TYPE_JS,
+	'skin' => [ 'oasis' ],
+	'assets' => [
+		'//extensions/wikia/CrosslinkTag/scripts/CrosslinkTag.js',
+	],
+];
