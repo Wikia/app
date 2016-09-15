@@ -4,8 +4,10 @@ $(function ($) {
 	var $globalNav = $('.wds-global-navigation'),
 		$searchInput = $globalNav.find('.wds-global-navigation__search-input'),
 		$searchSubmit = $globalNav.find('.wds-global-navigation__search-submit'),
+		$searchInputWrapper = $globalNav.find('.wds-global-navigation__search-input-wrapper'),
 		placeholderText = $searchInput.attr('placeholder'),
-		activeSearchClass = 'wds-search-is-active';
+		activeSearchClass = 'wds-search-is-active',
+		activeSearchSuggestionsCLass = 'wds-is-active';
 
 	function activateSearch() {
 		if (!$globalNav.hasClass(activeSearchClass)) {
@@ -28,6 +30,7 @@ $(function ($) {
 
 	$globalNav.find('.wds-global-navigation__search-close').on('click', function () {
 		$globalNav.removeClass(activeSearchClass);
+		$searchInputWrapper.removeClass(activeSearchSuggestionsCLass);
 		$searchInput.attr('placeholder', placeholderText);
 		$searchSubmit.prop('disabled', true);
 	});
