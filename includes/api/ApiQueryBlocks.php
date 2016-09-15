@@ -23,7 +23,6 @@
  *
  * @file
  */
-use Wikia\Util\PerformanceProfilers\UsernameUseProfiler;
 
 /**
  * Query module to enumerate all user blocks
@@ -43,7 +42,6 @@ class ApiQueryBlocks extends ApiQueryBase {
 
 	public function execute() {
 		global $wgContLang;
-		$usernameUseProfiler = UsernameUseProfiler::instance( __CLASS__, __METHOD__ );
 
 		$params = $this->extractRequestParams();
 		$this->requireMaxOneParameter( $params, 'users', 'ip' );
@@ -211,7 +209,6 @@ class ApiQueryBlocks extends ApiQueryBase {
 			}
 		}
 		$result->setIndexedTagName_internal( array( 'query', $this->getModuleName() ), 'block' );
-		$usernameUseProfiler->end();
 	}
 
 	protected function prepareUsername( $user ) {

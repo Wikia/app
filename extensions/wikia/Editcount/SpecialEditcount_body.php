@@ -1,5 +1,4 @@
 <?php
-use Wikia\Util\PerformanceProfilers\UsernameUseProfiler;
 
 if (!defined('MEDIAWIKI')) die();
 
@@ -171,7 +170,6 @@ class Editcount extends SpecialPage {
 	 */
 	function editsArchived( $uid ) {
 		global $wgMemc;
-		$usernameUseProfiler = UsernameUseProfiler::instance( __CLASS__, __METHOD__ );
 		$key = wfMemcKey( 'archivedCount', $uid );
 		$arcount = $wgMemc->get($key);
 
@@ -189,7 +187,6 @@ class Editcount extends SpecialPage {
 
 			$wgMemc->set( $key, $arcount, self::CACHE_TIME );
 		}
-		$usernameUseProfiler->end();
 
 		return $arcount;
 	}

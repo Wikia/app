@@ -23,7 +23,6 @@
  *
  * @file
  */
-use Wikia\Util\PerformanceProfilers\UsernameUseProfiler;
 
 /**
  * Query module to enumerate all registered users.
@@ -36,7 +35,6 @@ class ApiQueryAllUsers extends ApiQueryBase {
 	}
 
 	public function execute() {
-		$usernameUseProfiler = UsernameUseProfiler::instance( __CLASS__, __METHOD__ );
 		$db = $this->getDB();
 		$params = $this->extractRequestParams();
 
@@ -280,7 +278,6 @@ class ApiQueryAllUsers extends ApiQueryBase {
 		}
 
 		$result->setIndexedTagName_internal( array( 'query', $this->getModuleName() ), 'u' );
-		$usernameUseProfiler->end();
 	}
 
 	public function getCacheMode( $params ) {

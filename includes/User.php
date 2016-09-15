@@ -29,6 +29,7 @@ use Wikia\Service\User\Preferences\PreferenceService;
 use Wikia\Service\User\Permissions\PermissionsService;
 use Wikia\Util\Statistics\BernoulliTrial;
 use Wikia\Service\Helios\HeliosClient;
+use Wikia\Util\PerformanceProfilers\UsernameUseProfiler;
 
 /**
  * Int Number of characters in user_token field.
@@ -4855,20 +4856,22 @@ class User {
 	 */
 	public static function getUsername( $userId, $name ) {
 		global $wgEnableUsernameLookup;
-		
+		$caller = debug_backtrace()[1];
+		$callerFunction = $caller["class"]."::".$caller["function"];
+		$profiler = UsernameUseProfiler::create( $caller["class"], $callerFunction );
 		if( $wgEnableUsernameLookup && $userId != 0 ) {
 			$dbName = static::whoIs( $userId );
 			if( $dbName !== $name ) {
-				$caller = debug_backtrace()[1];
 				\Wikia\Logger\WikiaLogger::instance()->debug( "Default name different than lookup", [
 					"user_id" => $userId,
 					"username_db" => $dbName,
 					"username_default" => $name,
-					"caller" => $caller["class"]."::".$caller["function"]
+					"caller" => $callerFunction
 				] );
 			}
 			return $dbName ?: $name;
 		}
+		$profiler->end();
 		return $name;
 	}
 }

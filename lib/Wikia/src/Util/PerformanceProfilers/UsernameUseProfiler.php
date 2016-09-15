@@ -84,7 +84,7 @@ class UsernameUseProfiler {
 		}
 	}
 
-	public static function instance( $class, $method ) {
+	public static function create( $class, $method ) {
 		if ( static::$shouldSampleRequest === null ) {
 			static::$shouldSampleRequest = new BernoulliTrial( 0.01 ).shouldSample();
 		}
