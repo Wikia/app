@@ -278,7 +278,6 @@ $search-buttons-transition-duration: 50ms;
 	}
 
 	&__search-close {
-		display: block;
 		// Safari fix for bleeding search suggestions shadow
 		margin: 0;
 		max-width: 0;
@@ -380,7 +379,6 @@ $search-buttons-transition-duration: 50ms;
 	}
 
 	&.wds-search-is-active .wds-global-navigation {
-		//@include visible-search-input;
 		@include search-label-icon-default-hover-color;
 
 		&__link,
