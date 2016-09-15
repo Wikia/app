@@ -19,6 +19,8 @@
 @import 'components/cards-module';
 
 .CommunityPageContainer {
+	@include flexbox();
+
 	box-sizing: border-box;
 	padding: 0;
 	width: 100%;
@@ -26,7 +28,6 @@
 
 .CommunityPageMainContent {
 	box-sizing: inherit;
-	float: left;
 	padding-top: 30px;
 }
 
@@ -36,6 +37,10 @@
 	.community-page-top-contributors h2 {
 		margin-top: 0;
 	}
+}
+
+.WikiaArticleFooter {
+	padding: 0;
 }
 
 @media #{$breakpoint-large-up} {
