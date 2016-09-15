@@ -354,6 +354,10 @@ $search-buttons-transition-duration: 50ms;
 		display: none;
 	}
 
+	&:not(.wds-search-is-active) .wds-global-navigation__search-suggestions {
+		display: none;
+	}
+
 	&.wds-search-is-always-visible .wds-global-navigation {
 		@include visible-search-input;
 		@include search-label-icon-default-hover-color;
@@ -389,7 +393,7 @@ $search-buttons-transition-duration: 50ms;
 			max-width: 0;
 			padding: 0;
 		}
-		
+
 		&__wikis-menu .wds-icon {
 			display: none;
 		}
