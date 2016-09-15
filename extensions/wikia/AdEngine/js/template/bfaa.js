@@ -6,6 +6,7 @@ define('ext.wikia.adEngine.template.bfaa', [
 	'ext.wikia.adEngine.slotTweaker',
 	'ext.wikia.adEngine.uapContext',
 	'ext.wikia.adEngine.utils.eventDispatcher',
+	'ext.wikia.aRecoveryEngine.recovery.helper',
 	'wikia.document',
 	'wikia.log',
 	'wikia.window',
@@ -17,6 +18,7 @@ define('ext.wikia.adEngine.template.bfaa', [
 	slotTweaker,
 	uapContext,
 	eventDispatcher,
+	recoveryHelper,
 	doc,
 	log,
 	win,
@@ -136,7 +138,9 @@ define('ext.wikia.adEngine.template.bfaa', [
 			handler.show(iframe, params.aspectRatio);
 			wrapper.style.opacity = '';
 
-			slotTweaker.tweakRecoveredSlot(iframe.parentNode.parentNode.parentNode.parentNode);
+			if (recoveryHelper.isBlocking()) {
+				slotTweaker.tweakRecoveredSlot(iframe.parentNode.parentNode.parentNode.parentNode);
+			}
 		});
 
 		log(['show', params.uap], 'info', logGroup);

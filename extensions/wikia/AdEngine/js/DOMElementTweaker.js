@@ -6,7 +6,7 @@ define('ext.wikia.adEngine.domElementTweaker', [
 ], function (log, doc, win) {
 	'use strict';
 
-	var logGroup = 'ext.wikia.adEngine.slotTweaker',
+	var logGroup = 'ext.wikia.adEngine.domElementTweaker',
 		rclass = /[\t\r\n]/g;
 
 	function removeClass(element, cls) {
