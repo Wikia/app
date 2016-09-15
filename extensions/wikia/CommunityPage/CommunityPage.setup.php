@@ -5,9 +5,7 @@ $wgAutoloadClasses['CommunityPageSpecialTopAdminsFormatter'] = __DIR__ . '/model
 $wgAutoloadClasses['CommunityPageSpecialUsersModel'] =  __DIR__ . '/models/CommunityPageSpecialUsersModel.class.php';
 $wgAutoloadClasses['CommunityPageSpecialWikiModel'] =  __DIR__ . '/models/CommunityPageSpecialWikiModel.class.php';
 $wgAutoloadClasses['CommunityPageSpecialInsightsModel'] =  __DIR__ . '/models/CommunityPageSpecialInsightsModel.class.php';
-$wgAutoloadClasses['CommunityPageSpecialRecentActivityModel'] =  __DIR__ . '/models/CommunityPageSpecialRecentActivityModel.class.php';
 $wgAutoloadClasses['CommunityPageSpecialHelpModel'] =  __DIR__ . '/models/CommunityPageSpecialHelpModel.class.php';
-$wgAutoloadClasses['CommunityPageSpecialCommunityPolicyModel'] =  __DIR__ . '/models/CommunityPageSpecialCommunityPolicyModel.class.php';
 $wgAutoloadClasses['CommunityPageSpecialCommunityTodoListModel'] =  __DIR__ . '/models/CommunityPageSpecialCommunityTodoListModel.class.php';
 
 /* controller */

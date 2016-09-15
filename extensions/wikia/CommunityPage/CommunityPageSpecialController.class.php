@@ -5,7 +5,6 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 	const COMMUNITY_PAGE_BENEFITS_MODAL_IMAGE = 'Community-Page-Modal-Image.jpg';
 	const DEFAULT_TEMPLATE_ENGINE = \WikiaResponse::TEMPLATE_ENGINE_MUSTACHE;
 	const ALL_MEMBERS_LIMIT = 20;
-	const TOP_ADMINS_MODULE_LIMIT = 3;
 	const TOP_CONTRIBUTORS_MODULE_LIMIT = 5;
 	const MODAL_IMAGE_HEIGHT = 700.0;
 	const MODAL_IMAGE_MIN_RATIO = 0.85;
@@ -48,8 +47,6 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 				->getData(),
 			'recentlyJoined' => $this->sendRequest( 'CommunityPageSpecialController', 'getRecentlyJoinedData' )
 				->getData(),
-			'communityPolicyModule' => $this->getCommunityPolicyData(),
-			'recentActivityModule' => $this->getRecentActivityData(),
 			'insightsModules' => $this->getInsightsModulesData(),
 			'helpModule' => $this->getHelpModuleData(),
 			'communityTodoListModule' => $this->getCommunityTodoListData(),
@@ -97,7 +94,7 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 
 		$this->response->setData( [
 			'admin' => $this->msg( 'communitypage-admin' )->plain(),
-			'topContribsHeaderText' => $this->msg( 'communitypage-top-contributors-week' )->plain(),
+			'topContributorsHeaderText' => $this->msg( 'communitypage-top-contributors-week' )->plain(),
 			'yourRankText' => $this->msg( 'communitypage-user-rank' )->plain(),
 			'userContributionsText' => $this->msg( 'communitypage-user-contributions' )
 				->numParams( $this->getLanguage()->formatNum( $currentUserContributionCount ) )
@@ -128,7 +125,8 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 		// Add details to top admins
 		$topAdminsTemplateData[ CommunityPageSpecialTopAdminsFormatter::TOP_ADMINS_LIST ] =
 			$this->getContributorsDetails(
-				$topAdminsTemplateData[ CommunityPageSpecialTopAdminsFormatter::TOP_ADMINS_LIST ]
+				$topAdminsTemplateData[ CommunityPageSpecialTopAdminsFormatter::TOP_ADMINS_LIST ],
+				AvatarService::AVATAR_SIZE_MEDIUM
 			);
 
 		$templateMessages = [
@@ -136,6 +134,7 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 			'otherAdmins' => $this->msg( 'communitypage-other-admins' )->plain(),
 			'noAdminText' => $this->msg( 'communitypage-no-admins' )->plain(),
 			'noAdminContactText' => $this->msg( 'communitypage-no-admins-contact' )->plain(),
+			'adminsText' => $this->msg( 'communitypage-admins-welcome-text' )->text(),
 			'noAdminHref' => $this->msg( 'communitypage-communitycentral-link' )->inContentLanguage()->text(),
 		];
 		$this->response->setData( array_merge( $templateMessages, $topAdminsTemplateData ) );
@@ -169,7 +168,6 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 		$recentlyJoined = $this->usersModel->getRecentlyJoinedUsers();
 
 		$this->response->setData( [
-			'allMembers' => $this->msg( 'communitypage-view-all-members' )->plain(),
 			'recentlyJoinedHeaderText' => $this->msg( 'communitypage-recently-joined' )->plain(),
 			'members' => $recentlyJoined,
 			'haveNewMembers' => count( $recentlyJoined ) > 0,
@@ -202,24 +200,12 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 		] );
 	}
 
-	/**
-	 * Set context for recentActivityModule template. Needs to be passed through the index method in order to work.
-	 * @return array
-	 */
-	private function getRecentActivityData() {
-		return ( new CommunityPageSpecialRecentActivityModel() )->getData();
-	}
-
 	private function getHelpModuleData() {
 		return ( new CommunityPageSpecialHelpModel() )->getData();
 	}
 
 	private function getInsightsModulesData() {
 		return ( new CommunityPageSpecialInsightsModel() )->getInsightsModules();
-	}
-
-	private function getCommunityPolicyData() {
-		return ( new CommunityPageSpecialCommunityPolicyModel() )->getData();
 	}
 
 	public function getModalHeaderData() {
@@ -270,13 +256,13 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 	 * @param array $contributors List of contributors containing userId and contributions for each user
 	 * @return array
 	 */
-	private function getContributorsDetails( $contributors ) {
+	private function getContributorsDetails( $contributors, $avatarSize = AvatarService::AVATAR_SIZE_SMALL_PLUS ) {
 		$count = 0;
 
-		return array_map( function ( $contributor ) use ( &$count ) {
+		return array_map( function ( $contributor ) use ( &$count, $avatarSize ) {
 			$user = User::newFromId( $contributor[ 'userId' ] );
 			$userName = $user->getName();
-			$avatar = AvatarService::renderAvatar( $userName, AvatarService::AVATAR_SIZE_SMALL_PLUS );
+			$avatar = AvatarService::renderAvatar( $userName, $avatarSize );
 			$count += 1;
 
 			if ( User::isIp( $userName ) ) {
@@ -373,6 +359,8 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 
 		return array_merge( $data, [
 			'showEditLink' => $user->isAllowed( 'editinterface' ),
+			'editIcon' => DesignSystemHelper::getSvg('wds-icons-pencil',
+				'community-page-todo-list-module-edit-icon'),
 			'isZeroState' => !$data[ 'haveContent' ],
 			'heading' => $this->msg( 'communitypage-todo-module-heading' )->plain(),
 			'editList' => $this->msg( 'communitypage-todo-module-edit-list' )->plain(),
