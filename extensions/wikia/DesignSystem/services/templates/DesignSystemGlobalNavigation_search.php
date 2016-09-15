@@ -13,9 +13,7 @@
 					data-suggestions-param-name="<?= $model['module']['suggestions']['param-name'] ?>"
 				<?php endif; ?>
 				data-active-placeholder="<?= DesignSystemHelper::renderText( $model['module']['placeholder-active'] ); ?>"
-				placeholder="<?= DesignSystemHelper::renderText( $model['module']['placeholder-inactive'] ); ?>"
-				autocomplete="off"
-			/>
+				placeholder="<?= DesignSystemHelper::renderText( $model['module']['placeholder-inactive'] ); ?>"/>
 		</label>
 		<button class="wds-button wds-is-text wds-global-navigation__search-close" type="reset" data-tracking-label="global-navigation-search-close">
 			<?= DesignSystemHelper::getSvg(
