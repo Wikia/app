@@ -305,6 +305,8 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 	}
 
 	private function getHeroImageUrl() {
+		global $wgCityId;
+
 		$heroImageUrl = '';
 		$heroImage = Title::newFromText( static::COMMUNITY_PAGE_HERO_IMAGE, NS_FILE );
 		if ( $heroImage instanceof Title && $heroImage->exists() ) {
@@ -312,6 +314,11 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 			if ( $heroImageFile instanceof File ) {
 				$heroImageUrl = $heroImageFile->getUrl();
 			}
+		} else {
+			$heroImageUrl = ( new SiteAttributeService() )
+				->getApiClient()
+				->getAttribute($wgCityId, 'heroImage')
+				->getValue() ?? '';
 		}
 
 		return $heroImageUrl;
