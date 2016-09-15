@@ -1,5 +1,7 @@
 @import 'skins/shared/color';
 @import 'skins/shared/mixins/flexbox';
+@import 'skins/oasis/css/core/breakpoints-variables';
+@import 'extensions/wikia/DesignSystem/bower_components/design-system/base/typography';
 
 $hero-image-pattern: '/extensions/wikia/CommunityPage/images/hero_image_pattern.png';
 $hero-image-height: 200px;
@@ -12,11 +14,12 @@ $hero-image-background: rgba(0,0,0,0.35);
 
 .community-page-header {
 	@include flexbox();
+	@include justify-content(center);
 	align-items: center;
 	background: url($hero-image-pattern);
 	background-color: $hero-image-background;
 	height: $hero-image-height;
-	justify-content: center;
+	position: relative;
 	text-align: center;
 
 	&.community-page-header-cover {
@@ -36,31 +39,57 @@ $hero-image-background: rgba(0,0,0,0.35);
 	}
 
 	.community-page-header-content {
-		width: 75%;
+		margin-top: 60px;
+		width: 80%;
 		z-index: 0;
 	}
 
-	h1.community-page-heading {
+	h1.community-page-header-welcome-message {
 		color: $color-white;
-		font-size: 36px;
+		font-size: $typescale-size-plus-4;
 		font-weight: bold;
-		line-height: 48px;
+		line-height: $line-height;
+		margin:	0;
 	}
 
-	h1.community-page-heading:lang(ja) {
-		font-size: 24px;
+	h1.community-page-header-welcome-message:lang(ja) {
+		font-size: $typescale-size-plus-2;
+	}
+
+	h3.community-page-subheader-welcome-message {
+		color: $color-white;
+		font-size: $typescale-size-plus-2;
+		line-height: $line-height;
+		margin: 0;
+	}
+}
+
+@mixin header-image($marginSize) {
+	left: -$marginSize;
+	width: calc(100% + 2 * #{$marginSize});
+}
+
+@media #{$breakpoint-large-up} {
+	.community-page-header {
+		@include header-image($padding-width-large);
 	}
 }
 
-.community-page-admin-welcome-message {
-	align-items: center;
-	background-color: $color-unified-module-background;
-	display: flex;
-	justify-content: center;
-	text-align: center;
-
-	.community-page-admin-welcome-message-text {
-		margin: 30px 0;
-		max-width: 478px;
+@media #{$breakpoint-medium-only} {
+	.community-page-header {
+		@include header-image($padding-width-medium);
 	}
 }
+
+@media #{$breakpoint-small-plus} {
+	.community-page-header {
+		@include header-image($padding-width-small-plus);
+	}
+}
+
+@media #{$breakpoint-below-small-plus} {
+	.community-page-header {
+		@include header-image($padding-width-small);
+	}
+}
+

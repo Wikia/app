@@ -1,5 +1,6 @@
 @import 'skins/shared/color';
 @import 'extensions/wikia/DesignSystem/bower_components/design-system/base/colors';
+@import 'extensions/wikia/DesignSystem/bower_components/design-system/base/typography';
 @import 'skins/shared/mixins/flexbox';
 
 $small-icon-size: 18px;
@@ -9,8 +10,9 @@ $help-module-padding-bottom: 20px;
 $policy-link-padding-top: 18px;
 $policy-link-margin-top: 14px;
 
+$help-module-link-line-height: 2;
+
 .community-page-rail__help-module {
-	line-height: 2;
 	padding-bottom: $help-module-padding-bottom;
 
 	.community-page-module-section-title {
@@ -30,6 +32,7 @@ $policy-link-margin-top: 14px;
 
 		align-items: center;
 		border-top: 1px solid $color-page-border;
+		font-size: $typescale-size-minus-1;
 		line-height: 1;
 		margin-top: $policy-link-margin-top;
 		padding-top: $policy-link-padding-top;
@@ -48,4 +51,8 @@ $policy-link-margin-top: 14px;
 
 .community-page-rail__help-module-title {
 	margin-left: $help-module-margin;
+}
+
+.community-page-rail__help-module-links {
+	line-height: $help-module-link-line-height;
 }

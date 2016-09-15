@@ -67,7 +67,7 @@ class CommunityPageSpecialUsersModel {
 
 				$sqlData = ( new WikiaSQL() )
 					->SELECT( 'wup_user, wup_value' )
-					->FROM ( 'wikia_user_properties' )
+					->FROM( 'wikia_user_properties' )
 					->WHERE( 'wup_property' )->EQUAL_TO( 'editcountThisWeek' )
 					->AND_( 'wup_user' )->NOT_IN( $blacklistedIds )
 					->AND_( 'wup_value' )->GREATER_THAN( 0 )
@@ -92,6 +92,7 @@ class CommunityPageSpecialUsersModel {
 		);
 		return $data;
 	}
+
 	/**
 	 * Get all admins who have contributed in the last two years ordered by number of contributions
 	 * filter out bots
@@ -110,7 +111,7 @@ class CommunityPageSpecialUsersModel {
 				$adminIds = $this->getAdmins();
 
 				if ( !$adminIds ) {
-					return [];
+					return [ ];
 				}
 
 				$botIds = $this->getBotIds();
@@ -118,7 +119,7 @@ class CommunityPageSpecialUsersModel {
 
 				$sqlData = ( new WikiaSQL() )
 					->SELECT( 'rev_user_text, rev_user, MAX(rev_timestamp) AS latest_revision' )
-					->FROM ( 'revision FORCE INDEX (user_timestamp)' )
+					->FROM( 'revision FORCE INDEX (user_timestamp)' )
 					->WHERE( 'rev_user' )->NOT_EQUAL_TO( 0 )
 					->AND_( 'rev_user' )->IN( $adminIds )
 					->AND_( 'rev_user' )->NOT_IN( $botIds )
@@ -150,11 +151,11 @@ class CommunityPageSpecialUsersModel {
 			WikiaResponse::CACHE_LONG,
 			function () {
 				global $wgExternalSharedDB;
-				$db = wfGetDB( DB_SLAVE, [], $wgExternalSharedDB );
+				$db = wfGetDB( DB_SLAVE, [ ], $wgExternalSharedDB );
 
 				$sqlData = ( new WikiaSQL() )
 					->SELECT( 'ug_user' )
-					->FROM ( 'user_groups' )
+					->FROM( 'user_groups' )
 					->WHERE( 'ug_group' )->IN( [ 'bot', 'bot-global' ] )
 					->GROUP_BY( 'ug_user' )
 					->runLoop( $db, function ( &$sqlData, $row ) {
@@ -165,7 +166,7 @@ class CommunityPageSpecialUsersModel {
 			}
 		);
 
-		return $botIds ?: [];
+		return $botIds ?: [ ];
 	}
 
 	/**
@@ -180,7 +181,7 @@ class CommunityPageSpecialUsersModel {
 
 				$localBots = ( new WikiaSQL() )
 					->SELECT( 'ug_user' )
-					->FROM ( 'user_groups' )
+					->FROM( 'user_groups' )
 					->WHERE( 'ug_group' )->IN( [ 'bot', 'bot-global' ] )
 					->GROUP_BY( 'ug_user' )
 					->runLoop( $db, function ( &$localBots, $row ) {
@@ -193,7 +194,7 @@ class CommunityPageSpecialUsersModel {
 			}
 		);
 
-		return $botIds ?: [];
+		return $botIds ?: [ ];
 	}
 
 
@@ -206,11 +207,11 @@ class CommunityPageSpecialUsersModel {
 			WikiaResponse::CACHE_LONG,
 			function () {
 				global $wgExternalSharedDB;
-				$globalDb = wfGetDB( DB_SLAVE, [], $wgExternalSharedDB );
+				$globalDb = wfGetDB( DB_SLAVE, [ ], $wgExternalSharedDB );
 
 				$globalIds = ( new WikiaSQL() )
 					->SELECT( 'ug_user' )
-					->FROM ( 'user_groups' )
+					->FROM( 'user_groups' )
 					->WHERE( 'ug_group' )->IN( [ 'bot', 'bot-global', 'staff', 'util', 'helper', 'vstf' ] )
 					->GROUP_BY( 'ug_user' )
 					->runLoop( $globalDb, function ( &$globalIds, $row ) {
@@ -221,7 +222,7 @@ class CommunityPageSpecialUsersModel {
 
 				$localUsers = ( new WikiaSQL() )
 					->SELECT( 'ug_user' )
-					->FROM ( 'user_groups' )
+					->FROM( 'user_groups' )
 					->WHERE( 'ug_group' )->NOT_IN( [ 'bot' ] )
 					->GROUP_BY( 'ug_user' )
 					->runLoop( $localDb, function ( &$localUsers, $row ) {
@@ -307,9 +308,9 @@ class CommunityPageSpecialUsersModel {
 		$key = array_search( $currentUserId, array_column( $allContributorsData, 'userId' ) );
 
 		if ( $key !== false ) {
-			$data = $allContributorsData[$key];
-			$data['isCurrent'] = true;
-			unset( $allContributorsData[$key] );
+			$data = $allContributorsData[ $key ];
+			$data[ 'isCurrent' ] = true;
+			unset( $allContributorsData[ $key ] );
 			array_unshift( $allContributorsData, $data );
 		} else {
 			// Get current user's stats
@@ -319,18 +320,18 @@ class CommunityPageSpecialUsersModel {
 				AvatarService::AVATAR_SIZE_SMALL_PLUS
 			);
 
-			if ( $userInfo['lastRevision'] !== null ) {
+			if ( $userInfo[ 'lastRevision' ] !== null ) {
 				// Add current user on top of list
-				$avatar = AvatarService::renderAvatar( $userInfo['name'], AvatarService::AVATAR_SIZE_SMALL_PLUS );
+				$avatar = AvatarService::renderAvatar( $userInfo[ 'name' ], AvatarService::AVATAR_SIZE_SMALL_PLUS );
 
 				$data = [
 					'userId' => $currentUserId,
-					'latestRevision' => $userInfo['lastRevision'],
-					'userName' => $userInfo['name'],
+					'latestRevision' => $userInfo[ 'lastRevision' ],
+					'userName' => $userInfo[ 'name' ],
 					'isAdmin' => $this->isAdmin( $currentUserId, $this->getAdmins() ),
 					'isCurrent' => true,
 					'avatar' => $avatar,
-					'profilePage' => $userInfo['userPageUrl'],
+					'profilePage' => $userInfo[ 'userPageUrl' ],
 				];
 
 				array_unshift( $allContributorsData, $data );
@@ -355,7 +356,7 @@ class CommunityPageSpecialUsersModel {
 				self::logUserModelPerformanceData( 'query', 'all_contributors' );
 
 				$db = wfGetDB( DB_SLAVE );
-				$usersData = [];
+				$usersData = [ ];
 
 				$botIds = $this->getBotIds();
 				$dateTwoYearsAgo = date( 'Y-m-d', strtotime( '-2 years' ) );
@@ -441,7 +442,7 @@ class CommunityPageSpecialUsersModel {
 			];
 		}
 
-		return [];
+		return [ ];
 	}
 
 	/**
@@ -464,7 +465,7 @@ class CommunityPageSpecialUsersModel {
 					->FROM( 'revision' )
 					->AND_( 'rev_user' )->NOT_EQUAL_TO( 0 );
 
-				if ( ! empty($botIds) ) {
+				if ( !empty( $botIds ) ) {
 					$sqlData->AND_( 'rev_user' )->NOT_IN( $botIds );
 				}
 

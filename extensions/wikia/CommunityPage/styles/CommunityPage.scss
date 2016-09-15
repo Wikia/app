@@ -16,6 +16,7 @@
 @import 'components/recently-joined';
 @import 'components/todo-list-module';
 @import 'components/help';
+@import 'components/cards-module';
 
 .CommunityPageContainer {
 	box-sizing: border-box;
@@ -26,17 +27,38 @@
 .CommunityPageMainContent {
 	box-sizing: inherit;
 	float: left;
-	padding-right: 34px;
-	width: calc(100% - 320px);
+	padding-top: 30px;
 }
 
-.WikiaArticle .community-page-top-contributors h2 {
-	margin-top: 0;
+.WikiaArticle {
+	overflow: visible;
+
+	.community-page-top-contributors h2 {
+		margin-top: 0;
+	}
+}
+
+@media #{$breakpoint-large-up} {
+	.CommunityPageMainContent {
+		width: calc(100% - #{$community-page-rail-width-big} + #{$padding-width-large});
+
+	}
+}
+
+@media #{$breakpoint-medium-only} {
+	.CommunityPageMainContent {
+		width: calc(100% - #{$community-page-rail-width-big} + #{$padding-width-medium});
+	}
+}
+
+@media #{$breakpoint-small-plus} {
+	.CommunityPageMainContent {
+		width: calc(100% - #{$community-page-rail-width-big} + #{$padding-width-small-plus});
+	}
 }
 
 @media #{$breakpoint-below-small-plus} {
 	.CommunityPageMainContent {
-		padding-right: 0;
-		width: 100%;
+		width: calc(100% - #{$community-page-rail-width-small} + #{$padding-width-small});
 	}
 }

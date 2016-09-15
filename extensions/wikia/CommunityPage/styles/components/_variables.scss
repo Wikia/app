@@ -1,3 +1,5 @@
+@import 'skins/oasis/css/core/breakpoints-variables';
+
 // fonts
 $community-page-font-family: "HelveticaNeue", Helvetica, Arial, sans-serif;
 
@@ -10,3 +12,7 @@ $avatar-flex: 0 0 $avatar-size;
 $modal-horizontal-padding: 25px;
 $modal-top-padding: 18px;
 $modal-bottom-padding: 6px;
+
+//right rail
+$community-page-rail-width-small: 256px;
+$community-page-rail-width-big: 266px;
