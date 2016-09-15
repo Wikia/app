@@ -85,12 +85,24 @@ class Paginator {
 	}
 
 	/**
+	 * Get the currently active page
+	 *
+	 * This is guaranteed to be between 1 and at maximum $this->getPagesCount()
+	 * If $this->getPagesCount() is 0, this returns 1
+	 *
+	 * @return int
+	 */
+	public function getActivePage() {
+		return $this->activePage;
+	}
+
+	/**
 	 * Get the current page of the passed data
 	 *
 	 * @param array $data data to be paginated
 	 * @return array
 	 */
-	public function getCurrentPage( array $data ) {
+	public function getCurrentPageData( array $data ) {
 		$paginatedData = array_chunk( $data, $this->itemsPerPage );
 
 		$index = $this->activePage - 1;

@@ -68,11 +68,13 @@
 <?= $amazonMatch ?>
 <?= $openXBidder ?>
 <?= $prebid ?>
+<?= $rubiconVulcan ?>
 <?= $krux ?>
 <?= $dynamicYield ?>
 <?= $ivw3 ?>
 <?= $ivw2 ?>
 <?= $sourcePoint ?>
+<?= $ubisoft ?>
 <div class="WikiaSiteWrapper">
 	<?= $body ?>
 
