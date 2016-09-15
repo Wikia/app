@@ -14,7 +14,5 @@ $modal-top-padding: 18px;
 $modal-bottom-padding: 6px;
 
 //right rail
-$community-page-rail-width: 266px;
-@media #{$breakpoint-small-only} {
-	$community-page-rail-width: 256px;
-}
+$community-page-rail-width-small: 256px;
+$community-page-rail-width-big: 266px;

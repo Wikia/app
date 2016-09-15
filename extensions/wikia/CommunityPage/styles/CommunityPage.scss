@@ -40,25 +40,25 @@
 
 @media #{$breakpoint-large-up} {
 	.CommunityPageMainContent {
-		width: calc(100% - #{$community-page-rail-width} + #{$padding-width-large});
+		width: calc(100% - #{$community-page-rail-width-big} + #{$padding-width-large});
 
 	}
 }
 
 @media #{$breakpoint-medium-only} {
 	.CommunityPageMainContent {
-		width: calc(100% - #{$community-page-rail-width} + #{$padding-width-medium});
+		width: calc(100% - #{$community-page-rail-width-big} + #{$padding-width-medium});
 	}
 }
 
 @media #{$breakpoint-small-plus} {
 	.CommunityPageMainContent {
-		width: calc(100% - #{$community-page-rail-width} + #{$padding-width-small-plus});
+		width: calc(100% - #{$community-page-rail-width-big} + #{$padding-width-small-plus});
 	}
 }
 
 @media #{$breakpoint-below-small-plus} {
 	.CommunityPageMainContent {
-		width: calc(100% - #{$community-page-rail-width} + #{$padding-width-small});
+		width: calc(100% - #{$community-page-rail-width-small} + #{$padding-width-small});
 	}
 }
