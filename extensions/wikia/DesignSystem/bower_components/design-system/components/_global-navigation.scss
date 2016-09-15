@@ -165,7 +165,6 @@ $search-buttons-transition-duration: 50ms;
 	&__link,
 	&__wikis-menu {
 		max-width: 100%;
-		overflow: hidden;
 		transition-duration: $search-transition-duration;
 		transition-property: color, flex, font-size, max-width, padding;
 	}
@@ -388,6 +387,10 @@ $search-buttons-transition-duration: 50ms;
 			font-size: 0;
 			max-width: 0;
 			padding: 0;
+		}
+		
+		&__wikis-menu .wds-icon {
+			display: none;
 		}
 
 		&__search {
