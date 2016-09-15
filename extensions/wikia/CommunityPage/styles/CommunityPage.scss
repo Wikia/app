@@ -27,8 +27,8 @@
 .CommunityPageMainContent {
 	box-sizing: inherit;
 	float: left;
-	padding-right: 34px;
-	width: calc(100% - 320px);
+	padding: 30px 34px 0 0;
+	width: calc(100% - #{$community-page-rail-width});
 }
 
 .WikiaArticle .community-page-top-contributors h2 {
