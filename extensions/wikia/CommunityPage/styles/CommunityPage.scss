@@ -4,20 +4,22 @@
 
 // Components
 @import 'components/variables';
-@import 'components/module';
+@import 'components/rail';
 @import 'components/textborder';
 @import 'components/header';
 @import 'components/avatar';
 @import 'components/list';
+@import 'components/admins-module';
 @import 'components/contributors-module';
 @import 'components/modal';
 @import 'components/insights-module';
 @import 'components/recently-joined';
 @import 'components/todo-list-module';
+@import 'components/help';
 
 .CommunityPageContainer {
 	box-sizing: border-box;
-	padding: 34px 50px;
+	padding: 0;
 	width: 100%;
 }
 
@@ -33,10 +35,6 @@
 }
 
 @media #{$breakpoint-below-small-plus} {
-	.CommunityPageContainer {
-		padding: 34px 0;
-	}
-
 	.CommunityPageMainContent {
 		padding-right: 0;
 		width: 100%;

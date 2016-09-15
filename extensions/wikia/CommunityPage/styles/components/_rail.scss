@@ -1,0 +1,67 @@
+@import 'skins/shared/color';
+@import 'skins/oasis/css/core/breakpoints-variables';
+@import 'variables';
+@import 'extensions/wikia/DesignSystem/bower_components/design-system/base/colors';
+@import 'extensions/wikia/DesignSystem/bower_components/design-system/base/typography';
+
+$community-page-rail-background-color: mix($color-page, #000, 96%);
+@if $is-dark-wiki {
+	$community-page-rail-background-color: mix($color-page, $color-white, 96%);
+}
+$community-page-rail-width: 266px;
+$community-page-rail-width-small: 256px;
+$community-page-rail-module-width: 210px;
+$community-page-rail-module-spacing: 35px;
+$community-page-rail-spacing-small: 14px;
+$community-page-rail-spacing: 16px;
+$community-page-rail-spacing-large: 18px;
+$community-page-rail-spacing-xlarge: 20px;
+$community-page-rail-spacing-xxlarge: 80px;
+
+.community-page-rail {
+	background-color: $community-page-rail-background-color;
+	display: inline-block;
+	float: right;
+	padding: $community-page-rail-spacing-xxlarge 0 $community-page-rail-spacing-xlarge;
+	width: $community-page-rail-width;
+
+	.module {
+		box-sizing: border-box;
+		font-size: $typescale-size-base;
+		line-height: $module-default-line-height;
+		margin: 0 auto $community-page-rail-module-spacing;
+		width: $community-page-rail-module-width;
+	}
+
+	.community-page-module-section-title {
+		border-bottom: 1px $color-page-border solid;
+		color: $color-text;
+		font-size: $typescale-size-plus-1;
+		font-weight: bold;
+		line-height: $module-default-line-height;
+		margin-bottom: $community-page-rail-spacing-small;
+		padding-bottom: $community-page-rail-spacing-small;
+	}
+
+	.community-page-subtle {
+		color: $color-alternate-text;
+		display: block;
+		font-size: $typescale-size-minus-2;
+	}
+
+	.module-box {
+		background-color: $color-page;
+		padding: $community-page-rail-spacing-xlarge $community-page-rail-spacing-large $community-page-rail-spacing;
+
+		.community-page-module-section-title {
+			border: 0;
+			padding: 0;
+		}
+	}
+}
+
+@media #{$breakpoint-small-only} {
+	.community-page-rail {
+		width: $community-page-rail-width-small;
+	}
+}
