@@ -3,6 +3,9 @@
 ## Design System Reference Page
 https://rawgit.com/Wikia/design-system/master/reference-page/index.html
 
+### Confluence page
+https://wikia-inc.atlassian.net/wiki/display/DESYS/Design+System
+
 ###Developing
 
 1. Download repository
@@ -45,6 +48,21 @@ Tests are started on every push to the repo and if they fail on your branch you 
 1. Jenkins workspace where you can see screenshots before and after the change and their diffs.
 1. Jenkins job that will update the baseline on your branch. Run it when you're sure that the changes were correct.
 
+### Design System Rest API
+
+Some components, like the global navigation and footer, require a data source for items like link titles, urls, logo image references, etc. The data source is the design system rest API. It is currently built in MediaWiki but the plan is to turn it into a Java service. 
+
+#### Rest API Links
+* Example API requests: 
+ * [English global footer for wookipedia](http://www.wikia.com/api/v1/design-system/wikis/147/en/global-footer)
+ * [German global footer for fandom](http://www.wikia.com/api/v1/design-system/fandoms/1/de/global-navigation)
+* [API Tests Repo](https://github.com/Wikia/api-tests)
+ * [JSON schema](https://github.com/Wikia/api-tests/blob/master/apitests/DesignSystem/wds_schema.py)
+ * Make sure tests are passing when changes are made to the design system rest API ;)
+* [Example chef repo apache rewrites](https://github.com/Wikia/chef-repo/blob/ee56a97982b76cdc8d0c1543227492d3f252f10f/cookbooks/apache/templates/default/rewritesShort-fpm.conf.erb#L165)
+* Some MediaWiki files of interest: 
+ * [Footer model](https://github.com/Wikia/app/blob/8a5d246998f8dfc98f422eb30d345e29b9f78d82/includes/wikia/models/DesignSystemGlobalFooterModel.class.php)
+ * [API Controller](https://github.com/Wikia/app/blob/8a5d246998f8dfc98f422eb30d345e29b9f78d82/includes/wikia/api/DesignSystemApiController.class.php)
 
 ## Contributors
 See [contributors on GitHub](https://github.com/Wikia/design-system/graphs/contributors).

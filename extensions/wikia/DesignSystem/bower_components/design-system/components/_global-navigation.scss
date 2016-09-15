@@ -1,15 +1,21 @@
 $border-top-width: 6px;
 $nav-height: 49px;
+$wds-global-navigation-outer-height: $nav-height + $border-top-width;
+
 $nav-background-color: $color-white;
 
 $logo-width: 230px;
 $search-input-padding: 3px 4px;
 $notification-counter-size: 18px;
 
+$search-transition-duration: 200ms;
+$search-buttons-transition-duration: 50ms;
+
 @mixin visible-search-input {
 	&__search-input {
-		margin-left: 0;
+		position: relative;
 		padding: $search-input-padding;
+		top: auto;
 		width: 100%;
 	}
 }
@@ -151,6 +157,18 @@ $notification-counter-size: 18px;
 
 	// End of temporary styles
 
+	&__links-and-search {
+		display: flex;
+		flex: 4 1 auto;
+	}
+
+	&__link,
+	&__wikis-menu {
+		max-width: 100%;
+		overflow: hidden;
+		transition: all $search-transition-duration ease;
+	}
+
 	&__link {
 		// Safari doesn't set default flex values if we use `flex: 1;`
 		// it requires us to put these values explicitly.
@@ -191,12 +209,18 @@ $notification-counter-size: 18px;
 		flex: 0 1 auto;
 	}
 
+	&__search {
+		flex: 0 1 auto;
+		transition: all $search-transition-duration ease;
+	}
+
 	&__search-input-wrapper {
 		border: 0 solid $color-slate-gray;
 		display: flex;
 		// Safari doesn't set default flex values if we use `flex: 1;`
 		// it requires us to put these values explicitly.
 		flex: 1 1 auto;
+		min-height: 28px;
 	}
 
 	&__search-label {
@@ -206,11 +230,13 @@ $notification-counter-size: 18px;
 		// Safari doesn't set default flex values if we use `flex: 1;`
 		// it requires us to put these values explicitly.
 		flex: 1 1 auto;
+		position: relative;
 		z-index: 2;
 	}
 
 	&__search-label-icon {
 		cursor: pointer;
+		z-index: 1;
 
 		&:hover {
 			color: $color-link;
@@ -219,19 +245,20 @@ $notification-counter-size: 18px;
 
 	&__search-input {
 		border: 0;
+		box-sizing: border-box;
 		color: $color-dark-gray;
 		// Safari doesn't set default flex values if we use `flex: 1;`
 		// it requires us to put these values explicitly.
 		flex: 1 1 auto;
 		font-size: $typescale-size-minus-1;
-		// Safari doesn't trigger focus on input if it has `width: 0;`
-		margin-left: -1px;
-		// Firefox doesn't size input properly if our input
-		// has `width` set in `%` and is inside `flexbox`.
-		min-width: 0;
-		padding: 0;
-		// Safari doesn't trigger focus on input if it has `width 0;`
-		width: 1px;
+		left: 0;
+		max-width: 100%;
+		padding: $search-input-padding;
+		padding-left: 20px;
+		position: absolute;
+		right: 0;
+		top: 3px;
+		transition: all $search-transition-duration ease;
 
 		&:focus {
 			outline: none;
@@ -248,10 +275,13 @@ $notification-counter-size: 18px;
 	}
 
 	&__search-close {
-		display: none;
+		display: block;
 		// Safari fix for bleeding search suggestions shadow
 		margin: 0;
-		padding: 3px;
+		max-width: 0;
+		opacity: 0;
+		padding: 0;
+		transition: all $search-buttons-transition-duration;
 		z-index: 2;
 	}
 
@@ -261,12 +291,14 @@ $notification-counter-size: 18px;
 	}
 
 	&__search-submit {
-		display: none;
-		padding: 6px 9px;
+		border-width: 0;
+		max-width: 0;
+		padding: 0;
+		transition: all $search-buttons-transition-duration;
+		z-index: 2;
 	}
 
 	&__search-submit-icon {
-		display: block;
 		transform: rotate(180deg);
 	}
 
@@ -341,36 +373,51 @@ $notification-counter-size: 18px;
 	}
 
 	&.wds-search-is-active .wds-global-navigation {
-		@include visible-search-input;
+		//@include visible-search-input;
 		@include search-label-icon-default-hover-color;
 
 		&__link,
 		&__wikis-menu {
-			display: none;
+			color: rgba($color-dark-blue-gray, 0);
+			flex: 0 0 auto;
+			font-size: 0;
+			max-width: 0;
+			padding: 0;
 		}
 
 		&__search {
 			// Safari doesn't set default flex values if we use `flex: 1;`
 			// it requires us to put these values explicitly.
-			flex: 1 1 auto;
+			flex: 2 1 auto;
 		}
 
 		&__search-input-wrapper {
 			border-bottom-width: 1px;
-			margin-right: 15px;
 
 			&.wds-is-active {
 				border-bottom-color: $color-link;
 			}
 		}
 
+		&__search-input {
+			width: 100%;
+		}
+
 		&__search-input::placeholder {
 			color: $color-light-gray;
 		}
 
-		&__search-submit,
+		&__search-submit {
+			max-width: 100%;
+			padding: 5px 9px;
+			transition-delay: $search-transition-duration - $search-buttons-transition-duration;
+		}
+
 		&__search-close {
-			display: block;
+			max-width: 24px;
+			opacity: 1;
+			padding-right: 8px;
+			transition-delay: $search-transition-duration - $search-buttons-transition-duration;
 		}
 	}
 
