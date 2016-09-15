@@ -225,6 +225,11 @@ class ForumController extends WallBaseController {
 	}
 
 	public function header() {
+		if ( DiscussionsRedirectHelper::areForumsArchivedAndDiscussionsEnabled()
+		     && ForumHelper::isForum() ) {
+			DiscussionsRedirectHelper::redirect( $this->app->wg->Out, $this->response );
+			return;
+		}
 		$forum = new Forum();
 		$this->response->setVal( 'threads', $forum->getTotalThreads() );
 		$this->response->setVal( 'activeThreads', $forum->getTotalActiveThreads() );
