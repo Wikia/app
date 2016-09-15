@@ -3,16 +3,16 @@
 class ForumHooksHelper {
 
 	static public function discussionNavigationOverride(
-		&$title, &$request, &$ignoreRedirect, &$target, Article &$article
+		OutputPage $output, Page $page, Title $title, $user, $request, $wiki
 	) {
 		if ( ForumHelper::isForum() &&
 		     DiscussionsHelper::areForumsArchivedAndDiscussionsEnabled()
 		) {
-			$ignoreRedirect = false;
-			$target = self::redirectToDiscussions( $title );
+			$output->enableClientCache(true);
+			$output->redirect(self::redirectToDiscussions($title));
 		}
 
-		return true;
+		return false;
 	}
 
 	private static function redirectToDiscussions(

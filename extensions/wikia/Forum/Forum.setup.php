@@ -36,7 +36,7 @@ $wgExtensionMessagesFiles['ForumAliases'] = $dir . 'Forum.alias.php';
 $wgSpecialPages['Forum'] =  'ForumSpecialController';
 
 // hooks
-$wgHooks['InitializeArticleMaybeRedirect'][] = 'ForumHooksHelper::discussionNavigationOverride';
+$wgHooks['MediaWikiPerformAction'][] = 'ForumHooksHelper::discussionNavigationOverride';
 $wgHooks['AfterWallWikiActivityFilter'][] = 'ForumHooksHelper::onAfterWallWikiActivityFilter';
 $wgHooks['WallContributionsLine'][] = 'ForumHooksHelper::onWallContributionsLine';
 $wgHooks['getUserPermissionsErrors'][] = 'ForumHooksHelper::getUserPermissionsErrors';
