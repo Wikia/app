@@ -5,33 +5,14 @@ class ForumHooksHelper {
 	static public function discussionNavigationOverride(
 		OutputPage $output, Page $page, Title $title, $user, $request, $wiki
 	) {
-		if ( ForumHelper::isForum() &&
-		     DiscussionsHelper::areForumsArchivedAndDiscussionsEnabled()
-		) {
+		$forumTitle = DiscussionsHelper::getTitle($title);
+
+		if ( $forumTitle != null ) {
 			$output->enableClientCache(true);
-			$output->redirect(self::redirectToDiscussions($title));
+			$output->redirect(DiscussionsHelper::getDiscussionsUrl($title));
 		}
 
 		return false;
-	}
-
-	private static function redirectToDiscussions(
-		Title $title
-	) {
-		$namespace = $title->getNamespace();
-		$t = Title::newFromText( $title->getText() );
-		$id = $t->getArticleID();
-
-		if ( $namespace == NS_WIKIA_FORUM_TOPIC_BOARD ) {
-			return DiscussionsHelper::redirectToDiscussionsCategory( $id );
-		}
-		if ( $namespace == NS_WIKIA_FORUM_BOARD ) {
-			return DiscussionsHelper::redirectToDiscussionsCategory( $id );
-		}
-		if ( $namespace == NS_WIKIA_FORUM_BOARD_THREAD ) {
-			return DiscussionsHelper::redirectToDiscussionsPost( $id );
-		}
-		return null;
 	}
 
 	/**
