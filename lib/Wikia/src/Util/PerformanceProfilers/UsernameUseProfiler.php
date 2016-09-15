@@ -3,6 +3,7 @@
 namespace Wikia\Util\PerformanceProfilers;
 
 
+use Wikia\Tracer\WikiaTracer;
 use Wikia\Util\WikiaProfiler;
 use Wikia\Util\Statistics\BernoulliTrial;
 
@@ -23,10 +24,16 @@ class UsernameUseProfiler {
 	 * @var string
 	 */
 	private $class;
+
 	/**
 	 * @var string
 	 */
 	private $method;
+
+	/**
+	 * @var string
+	 */
+	private $traceId;
 
 	/**
 	 * @var integer
@@ -45,11 +52,13 @@ class UsernameUseProfiler {
 	 * UsernameUseProfiler constructor.
 	 * @param $class string
 	 * @param $method string
-	 * @param $sampling float
+	 * @param $traceId string
+	 * @param $shouldSample boolean
 	 */
-	private function __construct( $class, $method, $shouldSample ) {
+	private function __construct( $class, $method, $traceId, $shouldSample ) {
 		$this->class = $class;
 		$this->method = $method;
+		$this->traceId = $traceId;
 		$this->shouldSample = $shouldSample;
 		$this->start();
 	}
@@ -62,8 +71,9 @@ class UsernameUseProfiler {
 
 	public function end( $context = [] ) {
 		if( $this->shouldSample ) {
-			$context[ 'class' ] = $this->class;
-			$context[ 'method' ] = $this->method;
+			$context['class'] = $this->class;
+			$context['method'] = $this->method;
+			$context['trace_id'] = $this->traceId;
 
 			$this->endProfile(
 				static::EVENT_USERNAME_FROM_ID,
@@ -78,6 +88,7 @@ class UsernameUseProfiler {
 		if ( static::$shouldSampleRequest === null ) {
 			static::$shouldSampleRequest = new BernoulliTrial( 0.01 ).shouldSample();
 		}
-		return new UsernameUseProfiler( $class, $method, static::$shouldSampleRequest );
+		$traceId = WikiaTracer::instance().getTraceId();
+		return new UsernameUseProfiler( $class, $method, $traceId, static::$shouldSampleRequest );
 	}
 }
