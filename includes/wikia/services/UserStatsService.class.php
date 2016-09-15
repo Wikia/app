@@ -161,7 +161,7 @@ class UserStatsService extends WikiaModel {
 	 * @return Int Number of edits
 	 */
 	public function calculateEditCountWiki( $flags = 0 ) {
-		$usernameUseProfiler = new UsernameUseProfiler( __CLASS__, __METHOD__ );
+		$usernameUseProfiler = UsernameUseProfiler::instance( __CLASS__, __METHOD__ );
 		if ( !$this->validateUser() ) {
 			return 0;
 		}
@@ -210,7 +210,7 @@ class UserStatsService extends WikiaModel {
 		if ( !$this->validateUser() ) {
 			return 0;
 		}
-		$usernameUseProfiler = new UsernameUseProfiler( __CLASS__, __METHOD__ );
+		$usernameUseProfiler = UsernameUseProfiler::instance( __CLASS__, __METHOD__ );
 
 		$dbr = $this->getDatabase( $flags );
 

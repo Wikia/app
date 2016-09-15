@@ -46,7 +46,7 @@ class ApiQueryFilearchive extends ApiQueryBase {
 			$this->dieUsage( 'You don\'t have permission to view deleted file information', 'permissiondenied' );
 		}
 
-		$usernameUseProfiler = new UsernameUseProfiler( __CLASS__, __METHOD__ );
+		$usernameUseProfiler = UsernameUseProfiler::instance( __CLASS__, __METHOD__ );
 		$user_text_is_used = false;
 
 		$db = $this->getDB();

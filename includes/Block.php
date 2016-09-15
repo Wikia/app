@@ -355,7 +355,7 @@ class Block {
 	 * @param $row ResultWrapper: a row from the ipblocks table
 	 */
 	protected function initFromRow( $row ) {
-		$usernameUseProfiler = new UsernameUseProfiler( __CLASS__, __METHOD__ );
+		$usernameUseProfiler = UsernameUseProfiler::instance( __CLASS__, __METHOD__ );
 		$this->setTarget( $row->ipb_address );
 		if ( $row->ipb_by ) { // local user
 			$this->setBlocker( User::newFromID( $row->ipb_by ) );

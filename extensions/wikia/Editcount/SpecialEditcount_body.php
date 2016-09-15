@@ -171,7 +171,7 @@ class Editcount extends SpecialPage {
 	 */
 	function editsArchived( $uid ) {
 		global $wgMemc;
-		$usernameUseProfiler = new UsernameUseProfiler( __CLASS__, __METHOD__ );
+		$usernameUseProfiler = UsernameUseProfiler::instance( __CLASS__, __METHOD__ );
 		$key = wfMemcKey( 'archivedCount', $uid );
 		$arcount = $wgMemc->get($key);
 

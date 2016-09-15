@@ -244,7 +244,7 @@ class BlockListPager extends TablePager {
 	}
 
 	function formatValue( $name, $value ) {
-		$usernameUseProfiler = new UsernameUseProfiler( __CLASS__, __METHOD__ );
+		$usernameUseProfiler = UsernameUseProfiler::instance( __CLASS__, __METHOD__ );
 		static $msg = null;
 		if ( $msg === null ) {
 			$msg = array(

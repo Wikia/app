@@ -134,7 +134,7 @@ class DeletedContribsPager extends IndexPager {
 	 */
 	function formatRow( $row ) {
 		wfProfileIn( __METHOD__ );
-		$usernameUseProfiler = new UsernameUseProfiler( __CLASS__, __METHOD__ );
+		$usernameUseProfiler = UsernameUseProfiler::instance( __CLASS__, __METHOD__ );
 		$rev = new Revision( array(
 				'id'         => $row->ar_rev_id,
 				'comment'    => $row->ar_comment,

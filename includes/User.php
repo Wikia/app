@@ -4855,14 +4855,16 @@ class User {
 	 */
 	public static function getUsername( $userId, $name ) {
 		global $wgEnableUsernameLookup;
+		
 		if( $wgEnableUsernameLookup && $userId != 0 ) {
 			$dbName = static::whoIs( $userId );
 			if( $dbName !== $name ) {
-				debug( "Default name different than lookup", [
+				$caller = debug_backtrace()[1];
+				\Wikia\Logger\WikiaLogger::instance()->debug( "Default name different than lookup", [
 					"user_id" => $userId,
-					"db_name" => $dbName,
-					"default_name" => $name,
-					"caller" => debug_backtrace()[ 1 ][ "function" ]
+					"username_db" => $dbName,
+					"username_default" => $name,
+					"caller" => $caller["class"]."::".$caller["function"]
 				] );
 			}
 			return $dbName ?: $name;

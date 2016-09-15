@@ -43,7 +43,7 @@ class ApiQueryBlocks extends ApiQueryBase {
 
 	public function execute() {
 		global $wgContLang;
-		$usernameUseProfiler = new UsernameUseProfiler( __CLASS__, __METHOD__ );
+		$usernameUseProfiler = UsernameUseProfiler::instance( __CLASS__, __METHOD__ );
 
 		$params = $this->extractRequestParams();
 		$this->requireMaxOneParameter( $params, 'users', 'ip' );

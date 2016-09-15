@@ -77,7 +77,7 @@ class WikiaNoArticleLocalFile extends WikiaLocalFile {
 		);
 
 		if( $dbw->affectedRows() == 0 ) {
-			$usernameUseProfiler = new UsernameUseProfiler( __CLASS__, __METHOD__ );
+			$usernameUseProfiler = UsernameUseProfiler::instance( __CLASS__, __METHOD__ );
 			$reupload = true;
 
 			# Collision, this is an update of a file

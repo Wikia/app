@@ -36,7 +36,7 @@ class RevisionDeleteUser {
 	 * @return bool
 	 */
 	private static function setUsernameBitfields( $name, $userId, $op, $dbw ) {
-		$usernameUseProfiler = new UsernameUseProfiler( __CLASS__, __METHOD__ );
+		$usernameUseProfiler = UsernameUseProfiler::instance( __CLASS__, __METHOD__ );
 		if( $op !== '|' && $op !== '&' ){
 			return false; // sanity check
 		}

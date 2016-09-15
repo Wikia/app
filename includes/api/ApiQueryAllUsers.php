@@ -36,7 +36,7 @@ class ApiQueryAllUsers extends ApiQueryBase {
 	}
 
 	public function execute() {
-		$usernameUseProfiler = new UsernameUseProfiler( __CLASS__, __METHOD__ );
+		$usernameUseProfiler = UsernameUseProfiler::instance( __CLASS__, __METHOD__ );
 		$db = $this->getDB();
 		$params = $this->extractRequestParams();
 

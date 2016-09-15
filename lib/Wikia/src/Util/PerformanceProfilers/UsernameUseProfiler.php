@@ -4,6 +4,7 @@ namespace Wikia\Util\PerformanceProfilers;
 
 
 use Wikia\Util\WikiaProfiler;
+use Wikia\Util\Statistics\BernoulliTrial;
 
 /**
  * Class UsernameUseProfiler
@@ -15,6 +16,8 @@ use Wikia\Util\WikiaProfiler;
  */
 class UsernameUseProfiler {
 	use WikiaProfiler;
+
+	private static $shouldSampleRequest = null;
 
 	/**
 	 * @var string
@@ -31,9 +34,9 @@ class UsernameUseProfiler {
 	private $startTime;
 
 	/**
-	 * @var float
+	 * @var boolean
 	 */
-	private $sampling;
+	private $shouldSample;
 
 	const EVENT_USERNAME_FROM_ID = 'username_from_id';
 
@@ -44,26 +47,37 @@ class UsernameUseProfiler {
 	 * @param $method string
 	 * @param $sampling float
 	 */
-	public function __construct( $class, $method, $sampling = 0.01 ) {
+	private function __construct( $class, $method, $shouldSample ) {
 		$this->class = $class;
 		$this->method = $method;
-		$this->sampling = $sampling;
+		$this->shouldSample = $shouldSample;
 		$this->start();
 	}
 
-	public function start() {
-		$this->startTime = $this->startProfile();
+	private function start() {
+		if( $this->shouldSample ) {
+			$this->startTime = $this->startProfile();
+		}
 	}
 
 	public function end( $context = [] ) {
-		$context[ 'class' ] = $this->class;
-		$context[ 'method' ] = $this->method;
+		if( $this->shouldSample ) {
+			$context[ 'class' ] = $this->class;
+			$context[ 'method' ] = $this->method;
 
-		$this->endProfile(
-			static::EVENT_USERNAME_FROM_ID,
-			$this->startTime,
-			$context,
-			$this->sampling
-		);
+			$this->endProfile(
+				static::EVENT_USERNAME_FROM_ID,
+				$this->startTime,
+				$context,
+				$this->sampling
+			);
+		}
+	}
+
+	public static function instance( $class, $method ) {
+		if ( static::$shouldSampleRequest === null ) {
+			static::$shouldSampleRequest = new BernoulliTrial( 0.01 ).shouldSample();
+		}
+		return new UsernameUseProfiler( $class, $method, static::$shouldSampleRequest );
 	}
 }

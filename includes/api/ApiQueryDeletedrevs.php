@@ -42,7 +42,7 @@ class ApiQueryDeletedrevs extends ApiQueryBase {
 		if ( !$user->isAllowed( 'deletedhistory' ) ) {
 			$this->dieUsage( 'You don\'t have permission to view deleted revision information', 'permissiondenied' );
 		}
-		$usernameUseProfiler = new UsernameUseProfiler( __CLASS__, __METHOD__ );
+		$usernameUseProfiler = UsernameUseProfiler::instance( __CLASS__, __METHOD__ );
 
 		$db = $this->getDB();
 		$params = $this->extractRequestParams( false );
