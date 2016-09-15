@@ -23,6 +23,7 @@
  *
  * @file
  */
+use Wikia\Util\PerformanceProfilers\UsernameUseProfiler;
 
 /**
  * Query module to enumerate all deleted revisions.
@@ -41,6 +42,7 @@ class ApiQueryDeletedrevs extends ApiQueryBase {
 		if ( !$user->isAllowed( 'deletedhistory' ) ) {
 			$this->dieUsage( 'You don\'t have permission to view deleted revision information', 'permissiondenied' );
 		}
+		$usernameUseProfiler = new UsernameUseProfiler( __CLASS__, __METHOD__ );
 
 		$db = $this->getDB();
 		$params = $this->extractRequestParams( false );
@@ -278,6 +280,7 @@ class ApiQueryDeletedrevs extends ApiQueryBase {
 			}
 		}
 		$result->setIndexedTagName_internal( array( 'query', $this->getModuleName() ), 'page' );
+		$usernameUseProfiler->end();
 	}
 
 	public function getAllowedParams() {

@@ -20,6 +20,7 @@
  * @file
  * @ingroup SpecialPage
  */
+use Wikia\Util\PerformanceProfilers\UsernameUseProfiler;
 
 /**
  * Used to show archived pages and eventually restore them.
@@ -1086,6 +1087,7 @@ class SpecialUndelete extends SpecialPage {
 	}
 
 	private function showHistory() {
+		$usernameUseProfiler = new UsernameUseProfiler( __CLASS__, __METHOD__ );
 		$out = $this->getOutput();
 		if( $this->mAllowed ) {
 			$out->addModules( 'mediawiki.special.undelete' );
@@ -1238,6 +1240,7 @@ class SpecialUndelete extends SpecialPage {
 			$misc .= Xml::closeElement( 'form' );
 			$out->addHTML( $misc );
 		}
+		$usernameUseProfiler->end();
 		return true;
 	}
 

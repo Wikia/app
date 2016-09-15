@@ -24,7 +24,7 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 		global $wgSitename, $wgWikiTopic;
 
 		$this->specialPage->setHeaders();
-		$this->getOutput()->setPageTitle( $this->msg( 'communitypage-title' )->text() );
+		$this->getOutput()->setPageTitle( $this->msg( 'communitypage-title' )->plain() );
 		$this->addAssets();
 		$this->wg->SuppressPageHeader = true;
 		$this->wg->SuppressFooter = true;
@@ -84,25 +84,25 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 		$login = Html::element(
 			'a',
 			[ 'href' => 'https://www.wikia.com/signin?' . $query ],
-			$this->msg( 'communitypage-anon-login' )->text()
+			$this->msg( 'communitypage-anon-login' )->plain()
 		);
 
 		$register = Html::element(
 			'a',
 			[ 'href' => 'https://www.wikia.com/register?' . $query ],
-			$this->msg( 'communitypage-anon-register' )->text()
+			$this->msg( 'communitypage-anon-register' )->plain()
 		);
 
 		$anonText = $this->msg( 'communitypage-anon-contrib-header' )->rawParams( $login, $register )->escaped();
 
 		$this->response->setData( [
-			'admin' => $this->msg( 'communitypage-admin' )->text(),
-			'topContribsHeaderText' => $this->msg( 'communitypage-top-contributors-week' )->text(),
-			'yourRankText' => $this->msg( 'communitypage-user-rank' )->text(),
+			'admin' => $this->msg( 'communitypage-admin' )->plain(),
+			'topContribsHeaderText' => $this->msg( 'communitypage-top-contributors-week' )->plain(),
+			'yourRankText' => $this->msg( 'communitypage-user-rank' )->plain(),
 			'userContributionsText' => $this->msg( 'communitypage-user-contributions' )
 				->numParams( $this->getLanguage()->formatNum( $currentUserContributionCount ) )
 				->text(),
-			'noContribsText' => $this->msg( 'communitypage-no-contributions' )->text(),
+			'noContribsText' => $this->msg( 'communitypage-no-contributions' )->plain(),
 			'contributors' => $topContributorsDetails,
 			'userAvatar' => AvatarService::renderAvatar(
 				$this->getUser()->getName(),
@@ -132,10 +132,10 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 			);
 
 		$templateMessages = [
-			'topAdminsHeaderText' => $this->msg( 'communitypage-admins' )->text(),
-			'otherAdmins' => $this->msg( 'communitypage-other-admins' )->text(),
-			'noAdminText' => $this->msg( 'communitypage-no-admins' )->text(),
-			'noAdminContactText' => $this->msg( 'communitypage-no-admins-contact' )->text(),
+			'topAdminsHeaderText' => $this->msg( 'communitypage-admins' )->plain(),
+			'otherAdmins' => $this->msg( 'communitypage-other-admins' )->plain(),
+			'noAdminText' => $this->msg( 'communitypage-no-admins' )->plain(),
+			'noAdminContactText' => $this->msg( 'communitypage-no-admins-contact' )->plain(),
 			'noAdminHref' => $this->msg( 'communitypage-communitycentral-link' )->inContentLanguage()->text(),
 		];
 		$this->response->setData( array_merge( $templateMessages, $topAdminsTemplateData ) );
@@ -151,12 +151,12 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 		$allAdminsDetails = $this->getContributorsDetails( $allAdminsDetails );
 
 		$this->response->setData( [
-			'topAdminsHeaderText' => $this->msg( 'communitypage-admins' )->text(),
-			'allAdminsLegend' => $this->msg( 'communitypage-modal-tab-all-contribution-header' )->text(),
+			'topAdminsHeaderText' => $this->msg( 'communitypage-admins' )->plain(),
+			'allAdminsLegend' => $this->msg( 'communitypage-modal-tab-all-contribution-header' )->plain(),
 			'allAdminsList' => $allAdminsDetails,
 			'allAdminsCount' => $this->getLanguage()->formatNum( count( $allAdminsDetails ) ),
-			'noAdminText' => $this->msg( 'communitypage-no-admins' )->text(),
-			'noAdminContactText' => $this->msg( 'communitypage-no-admins-contact' )->text(),
+			'noAdminText' => $this->msg( 'communitypage-no-admins' )->plain(),
+			'noAdminContactText' => $this->msg( 'communitypage-no-admins-contact' )->plain(),
 			'noAdminHref' => $this->msg( 'communitypage-communitycentral-link' )->inContentLanguage()->text(),
 		] );
 	}
@@ -169,8 +169,8 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 		$recentlyJoined = $this->usersModel->getRecentlyJoinedUsers();
 
 		$this->response->setData( [
-			'allMembers' => $this->msg( 'communitypage-view-all-members' )->text(),
-			'recentlyJoinedHeaderText' => $this->msg( 'communitypage-recently-joined' )->text(),
+			'allMembers' => $this->msg( 'communitypage-view-all-members' )->plain(),
+			'recentlyJoinedHeaderText' => $this->msg( 'communitypage-recently-joined' )->plain(),
 			'members' => $recentlyJoined,
 			'haveNewMembers' => count( $recentlyJoined ) > 0,
 		] );
@@ -189,16 +189,16 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 		$membersCount = $this->usersModel->getMemberCount();
 
 		$this->response->setData( [
-			'allMembersHeaderText' => $this->msg( 'communitypage-all-members' )->text(),
-			'allContributorsLegend' => $this->msg( 'communitypage-modal-tab-all-contribution-header' )->text(),
-			'admin' => $this->msg( 'communitypage-admin' )->text(),
-			'joinedText' => $this->msg( 'communitypage-joined' )->text(),
-			'noMembersText' => $this->msg( 'communitypage-no-members' )->text(),
+			'allMembersHeaderText' => $this->msg( 'communitypage-all-members' )->plain(),
+			'allContributorsLegend' => $this->msg( 'communitypage-modal-tab-all-contribution-header' )->plain(),
+			'admin' => $this->msg( 'communitypage-admin' )->plain(),
+			'joinedText' => $this->msg( 'communitypage-joined' )->plain(),
+			'noMembersText' => $this->msg( 'communitypage-no-members' )->plain(),
 			'members' => $allMembers,
 			'membersCount' => $this->getLanguage()->formatNum( $membersCount ),
 			'haveMoreMembers' => $membersCount >= CommunityPageSpecialUsersModel::ALL_CONTRIBUTORS_MODAL_LIMIT,
 			'moreMembersLink' => $moreMembers->getCanonicalURL(),
-			'moreMembersText' => $this->msg( 'communitypage-view-more' )->text(),
+			'moreMembersText' => $this->msg( 'communitypage-view-more' )->plain(),
 		] );
 	}
 
@@ -226,20 +226,20 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 		$memberCount = $this->usersModel->getMemberCount();
 
 		$this->response->setData( [
-			'allText' => $this->msg( 'communitypage-modal-tab-all' )->text(),
+			'allText' => $this->msg( 'communitypage-modal-tab-all' )->plain(),
 			'allCount' => $this->getLanguage()->formatNum( $memberCount ),
-			'adminsText' => $this->msg( 'communitypage-modal-tab-admins' )->text(),
+			'adminsText' => $this->msg( 'communitypage-modal-tab-admins' )->plain(),
 			'allAdminsCount' => $this->getLanguage()->formatNum( count( $this->usersModel->getAllAdmins() ) ),
-			'leaderboardText' => $this->msg( 'communitypage-top-contributors-week' )->text(),
+			'leaderboardText' => $this->msg( 'communitypage-top-contributors-week' )->plain(),
 		] );
 	}
 
 	public function getFirstTimeEditorModalData() {
 		$this->response->setData( [
-			'headingText' => $this->msg( 'communitypage-first-edit-heading' )->text(),
-			'subheadingText' => $this->msg( 'communitypage-first-edit-subheading' )->text(),
-			'getStartedText' => $this->msg( 'communitypage-first-edit-get-started' )->text(),
-			'maybeLaterText' => $this->msg( 'communitypage-first-edit-maybe-later' )->text(),
+			'headingText' => $this->msg( 'communitypage-first-edit-heading' )->plain(),
+			'subheadingText' => $this->msg( 'communitypage-first-edit-subheading' )->plain(),
+			'getStartedText' => $this->msg( 'communitypage-first-edit-get-started' )->plain(),
+			'maybeLaterText' => $this->msg( 'communitypage-first-edit-maybe-later' )->plain(),
 			'getStartedLink' => $this->getTitle()->getCanonicalURL(),
 		] );
 	}
@@ -280,7 +280,7 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 			$count += 1;
 
 			if ( User::isIp( $userName ) ) {
-				$userName = $this->msg( 'oasis-anon-user' )->text();
+				$userName = $this->msg( 'oasis-anon-user' )->plain();
 			}
 
 			return [
@@ -374,9 +374,9 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 		return array_merge( $data, [
 			'showEditLink' => $user->isAllowed( 'editinterface' ),
 			'isZeroState' => !$data[ 'haveContent' ],
-			'heading' => $this->msg( 'communitypage-todo-module-heading' )->text(),
-			'editList' => $this->msg( 'communitypage-todo-module-edit-list' )->text(),
-			'description' => $this->msg( 'communitypage-todo-module-description' )->text(),
+			'heading' => $this->msg( 'communitypage-todo-module-heading' )->plain(),
+			'editList' => $this->msg( 'communitypage-todo-module-edit-list' )->plain(),
+			'description' => $this->msg( 'communitypage-todo-module-description' )->plain(),
 			'zeroStateText' => $this->msg( 'communitypage-todo-module-zero-state' )->plain(),
 		] );
 	}
