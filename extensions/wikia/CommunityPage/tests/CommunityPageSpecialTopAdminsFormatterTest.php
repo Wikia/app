@@ -12,7 +12,6 @@ class CommunityPageSpecialTopAdminsFormatterTest extends WikiaBaseTest {
 	 */
 	public function testAdminsDataFormat( $param, $expected, $expectedTopAdminsCount, $message ) {
 		$result = CommunityPageSpecialTopAdminsFormatter::prepareData( $param );
-		$this->assertEquals( $result['otherAdminsCount'], $expected['otherAdminsCount'], "$message 'otherAdminsCount' field doesn't match" );
 		$this->assertEquals( $result['haveOtherAdmins'], $expected['haveOtherAdmins'], "$message 'haveOtherAdmins' field doesn't match" );
 		$this->assertEquals( $result['allAdminsCount'], $expected['allAdminsCount'], "$message 'allAdminsCount' field doesn't match" );
 		// Check just the count as order is randomized
@@ -25,7 +24,6 @@ class CommunityPageSpecialTopAdminsFormatterTest extends WikiaBaseTest {
 			[
 				[ 'admin1', 'admin2', 'admin3', 'admin4' ],
 				[
-					'otherAdminsCount' => 2,
 					'haveOtherAdmins' => true,
 					'allAdminsCount' => 4,
 				],
@@ -35,7 +33,6 @@ class CommunityPageSpecialTopAdminsFormatterTest extends WikiaBaseTest {
 			[
 				[ 'admin1', 'admin2', 'admin3' ],
 				[
-					'otherAdminsCount' => 0,
 					'haveOtherAdmins' => false,
 					'allAdminsCount' => 3,
 				],
@@ -45,7 +42,6 @@ class CommunityPageSpecialTopAdminsFormatterTest extends WikiaBaseTest {
 			[
 				[ 'admin1', 'admin2' ],
 				[
-					'otherAdminsCount' => 0,
 					'haveOtherAdmins' => false,
 					'allAdminsCount' => 2,
 				],
@@ -55,7 +51,6 @@ class CommunityPageSpecialTopAdminsFormatterTest extends WikiaBaseTest {
 			[
 				[ 'admin1' ],
 				[
-					'otherAdminsCount' => 0,
 					'haveOtherAdmins' => false,
 					'allAdminsCount' => 1,
 				],
@@ -65,7 +60,6 @@ class CommunityPageSpecialTopAdminsFormatterTest extends WikiaBaseTest {
 			[
 				[],
 				[
-					'otherAdminsCount' => 0,
 					'haveOtherAdmins' => false,
 					'allAdminsCount' => 0,
 				],

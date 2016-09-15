@@ -11,7 +11,7 @@ $admins-module-margin: 20px;
 		@include justify-content(space-between);
 
 		font-size: $typescale-size-minus-2;
-		margin-right: $admins-module-margin;
+		margin: 0 $admins-module-margin;
 	}
 
 	.admins-text {

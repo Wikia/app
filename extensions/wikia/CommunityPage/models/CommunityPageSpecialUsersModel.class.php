@@ -11,8 +11,7 @@ class CommunityPageSpecialUsersModel {
 	const ALL_MEMBERS_MCACHE_KEY = 'community_page_all_members';
 	const ALL_MEMBERS_COUNT_MCACHE_KEY = 'community_page_all_members_count';
 	const RECENTLY_JOINED_MCACHE_KEY = 'community_page_recently_joined';
-	const MCACHE_VERSION = '1.3';
-	const RECENTLY_JOINED_USERS_AVATAR_SIZE = 24;
+	const MCACHE_VERSION = '1.4';
 
 	const ALL_CONTRIBUTORS_MODAL_LIMIT = 50;
 
@@ -275,7 +274,7 @@ class CommunityPageSpecialUsersModel {
 						$userName = $user->getName();
 
 						if ( $this->showMember( $user ) ) {
-							$avatar = AvatarService::renderAvatar( $userName, self::RECENTLY_JOINED_USERS_AVATAR_SIZE );
+							$avatar = AvatarService::renderAvatar( $userName );
 
 							$sqlData[] = [
 								'userId' => $row->wup_user,
