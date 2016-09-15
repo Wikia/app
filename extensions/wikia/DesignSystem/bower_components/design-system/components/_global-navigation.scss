@@ -216,12 +216,20 @@ $search-buttons-transition-duration: 50ms;
 	}
 
 	&__search-input-wrapper {
-		border: 0 solid $color-slate-gray;
+		border: {
+			bottom: 1px solid transparent;
+			left: 0;
+			right: 0;
+			top: 0;
+		};
+
 		display: flex;
 		// Safari doesn't set default flex values if we use `flex: 1;`
 		// it requires us to put these values explicitly.
 		flex: 1 1 auto;
 		min-height: 28px;
+		transition-duration: $search-transition-duration;
+		transition-property: border-color;
 	}
 
 	&__search-label {
@@ -271,6 +279,8 @@ $search-buttons-transition-duration: 50ms;
 		&::placeholder {
 			color: transparent;
 			opacity: 1;
+			transition-duration: $search-transition-duration;
+			transition-property: color;
 		}
 
 		&::-ms-clear {
@@ -379,7 +389,7 @@ $search-buttons-transition-duration: 50ms;
 		}
 
 		&__search-input-wrapper {
-			border-bottom-width: 1px;
+			border-bottom-color: $color-slate-gray;
 		}
 	}
 
@@ -406,7 +416,7 @@ $search-buttons-transition-duration: 50ms;
 		}
 
 		&__search-input-wrapper {
-			border-bottom-width: 1px;
+			border-bottom-color: $color-slate-gray;
 
 			&.wds-is-active {
 				border-bottom-color: $color-link;
