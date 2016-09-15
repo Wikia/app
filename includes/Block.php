@@ -1263,7 +1263,7 @@ class Block {
 		// Select the group name to show in the block message
 		if ( count( $groups ) ) {
 			$group = array_shift( $groups );
-			return wfMessage( "group-$group" )->plain();
+			return User::getGroupName( $group );
 		}
 
 		return '';
