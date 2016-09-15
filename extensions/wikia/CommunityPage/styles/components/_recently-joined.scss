@@ -1,6 +1,6 @@
 @import 'skins/shared/mixins/flexbox';
 
-$recently-joined-avatar-size: 24px;
+$recently-joined-avatar-size: 30px;
 
 .community-page-rail__recently-joined-module {
 	.members {
@@ -11,6 +11,7 @@ $recently-joined-avatar-size: 24px;
 
 	.avatar-container {
 		@include flex-basis($recently-joined-avatar-size);
+
 		height: $recently-joined-avatar-size;
 		margin: 0 13px 10px 0;
 	}
