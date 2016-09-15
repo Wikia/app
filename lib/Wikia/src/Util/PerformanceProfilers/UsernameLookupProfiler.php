@@ -8,7 +8,7 @@ use Wikia\Util\WikiaProfiler;
 use Wikia\Util\Statistics\BernoulliTrial;
 
 /**
- * Class UsernameUseProfiler
+ * Class UsernameLookupProfiler
  * This is helper class for provide information about how performance will change
  * if we load username from id instead using username from table with denormalized form.
  * See https://wikia-inc.atlassian.net/browse/SUS-953
