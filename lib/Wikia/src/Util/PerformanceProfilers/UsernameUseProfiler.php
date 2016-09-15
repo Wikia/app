@@ -86,9 +86,10 @@ class UsernameUseProfiler {
 
 	public static function create( $class, $method ) {
 		if ( static::$shouldSampleRequest === null ) {
-			static::$shouldSampleRequest = new BernoulliTrial( 0.01 ).shouldSample();
+			$sampler = new BernoulliTrial( 0.01 );
+			static::$shouldSampleRequest = $sampler->shouldSample();
 		}
-		$traceId = WikiaTracer::instance().getTraceId();
+		$traceId = WikiaTracer::instance()->getTraceId();
 		return new UsernameUseProfiler( $class, $method, $traceId, static::$shouldSampleRequest );
 	}
 }
