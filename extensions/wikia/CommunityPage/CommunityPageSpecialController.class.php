@@ -41,14 +41,12 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 			'topContributors' => $this->sendRequest(
 				'CommunityPageSpecialController',
 				'getTopContributorsData',
-				[ 'limit' => self::TOP_CONTRIBUTORS_MODULE_LIMIT ]
+				[ 'limit' => static::TOP_CONTRIBUTORS_MODULE_LIMIT ]
 			)->getData(),
 			'topAdminsData' => $this->sendRequest( 'CommunityPageSpecialController', 'getTopAdminsData' )
 				->getData(),
 			'recentlyJoined' => $this->sendRequest( 'CommunityPageSpecialController', 'getRecentlyJoinedData' )
 				->getData(),
-			'communityPolicyModule' => $this->getCommunityPolicyData(),
-			'recentActivityModule' => $this->getRecentActivityData(),
 			'insightsModules' => $this->getInsightsModulesData(),
 			'helpModule' => $this->getHelpModuleData(),
 			'communityTodoListModule' => $this->getCommunityTodoListData(),
@@ -127,7 +125,8 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 		// Add details to top admins
 		$topAdminsTemplateData[ CommunityPageSpecialTopAdminsFormatter::TOP_ADMINS_LIST ] =
 			$this->getContributorsDetails(
-				$topAdminsTemplateData[ CommunityPageSpecialTopAdminsFormatter::TOP_ADMINS_LIST ]
+				$topAdminsTemplateData[ CommunityPageSpecialTopAdminsFormatter::TOP_ADMINS_LIST ],
+				AvatarService::AVATAR_SIZE_MEDIUM
 			);
 
 		$templateMessages = [
@@ -135,6 +134,7 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 			'otherAdmins' => $this->msg( 'communitypage-other-admins' )->plain(),
 			'noAdminText' => $this->msg( 'communitypage-no-admins' )->plain(),
 			'noAdminContactText' => $this->msg( 'communitypage-no-admins-contact' )->plain(),
+			'adminsText' => $this->msg( 'communitypage-admins-welcome-text' )->text(),
 			'noAdminHref' => $this->msg( 'communitypage-communitycentral-link' )->inContentLanguage()->text(),
 		];
 		$this->response->setData( array_merge( $templateMessages, $topAdminsTemplateData ) );
@@ -168,7 +168,6 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 		$recentlyJoined = $this->usersModel->getRecentlyJoinedUsers();
 
 		$this->response->setData( [
-			'allMembers' => $this->msg( 'communitypage-view-all-members' )->plain(),
 			'recentlyJoinedHeaderText' => $this->msg( 'communitypage-recently-joined' )->plain(),
 			'members' => $recentlyJoined,
 			'haveNewMembers' => count( $recentlyJoined ) > 0,
@@ -201,24 +200,12 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 		] );
 	}
 
-	/**
-	 * Set context for recentActivityModule template. Needs to be passed through the index method in order to work.
-	 * @return array
-	 */
-	private function getRecentActivityData() {
-		return ( new CommunityPageSpecialRecentActivityModel() )->getData();
-	}
-
 	private function getHelpModuleData() {
 		return ( new CommunityPageSpecialHelpModel() )->getData();
 	}
 
 	private function getInsightsModulesData() {
 		return ( new CommunityPageSpecialInsightsModel() )->getInsightsModules();
-	}
-
-	private function getCommunityPolicyData() {
-		return ( new CommunityPageSpecialCommunityPolicyModel() )->getData();
 	}
 
 	public function getModalHeaderData() {
@@ -269,13 +256,13 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 	 * @param array $contributors List of contributors containing userId and contributions for each user
 	 * @return array
 	 */
-	private function getContributorsDetails( $contributors ) {
+	private function getContributorsDetails( $contributors, $avatarSize = AvatarService::AVATAR_SIZE_SMALL_PLUS ) {
 		$count = 0;
 
-		return array_map( function ( $contributor ) use ( &$count ) {
+		return array_map( function ( $contributor ) use ( &$count, $avatarSize ) {
 			$user = User::newFromId( $contributor[ 'userId' ] );
 			$userName = $user->getName();
-			$avatar = AvatarService::renderAvatar( $userName, AvatarService::AVATAR_SIZE_SMALL_PLUS );
+			$avatar = AvatarService::renderAvatar( $userName, $avatarSize );
 			$count += 1;
 
 			if ( User::isIp( $userName ) ) {
@@ -305,7 +292,7 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 
 	private function getHeroImageUrl() {
 		$heroImageUrl = '';
-		$heroImage = Title::newFromText( self::COMMUNITY_PAGE_HERO_IMAGE, NS_FILE );
+		$heroImage = Title::newFromText( static::COMMUNITY_PAGE_HERO_IMAGE, NS_FILE );
 		if ( $heroImage instanceof Title && $heroImage->exists() ) {
 			$heroImageFile = wfFindFile( $heroImage );
 			if ( $heroImageFile instanceof File ) {
@@ -319,14 +306,14 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 	private function getBenefitsModalImageUrl() {
 		$url = '';
 		// we need variable to pass it by reference to helper
-		$title = self::COMMUNITY_PAGE_BENEFITS_MODAL_IMAGE;
+		$title = static::COMMUNITY_PAGE_BENEFITS_MODAL_IMAGE;
 		$modalFile = WikiaFileHelper::getFileFromTitle( $title );
-		if ( $modalFile && $modalFile->getHeight() >= self::MODAL_IMAGE_HEIGHT ) {
+		if ( $modalFile && $modalFile->getHeight() >= static::MODAL_IMAGE_HEIGHT ) {
 			$ratio = floatval( $modalFile->getWidth() ) / floatval( $modalFile->getHeight() );
-			if ( $ratio >= self::MODAL_IMAGE_MIN_RATIO ) {
+			if ( $ratio >= static::MODAL_IMAGE_MIN_RATIO ) {
 				// this transform will make image 700 height
 				$thumbnail = $modalFile->transform( [
-					'width' => round( $ratio * self::MODAL_IMAGE_HEIGHT )
+					'width' => round( $ratio * static::MODAL_IMAGE_HEIGHT )
 				] );
 				$url = $thumbnail ? $thumbnail->getUrl() : '';
 			}
