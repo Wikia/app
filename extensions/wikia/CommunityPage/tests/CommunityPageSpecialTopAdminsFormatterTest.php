@@ -33,11 +33,11 @@ class CommunityPageSpecialTopAdminsFormatterTest extends WikiaBaseTest {
 			[
 				[ 'admin1', 'admin2', 'admin3' ],
 				[
-					'haveOtherAdmins' => false,
+					'haveOtherAdmins' => true,
 					'allAdminsCount' => 3,
 				],
-				3,
-				'For three users provided should return all three'
+				2,
+				'For three users provided should return first two and info on remaining number'
 			],
 			[
 				[ 'admin1', 'admin2' ],
