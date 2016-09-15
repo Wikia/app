@@ -25,6 +25,13 @@ $module-width: 239px;
 		color: $color-links;
 	}
 
+	.community-page-insights-module-description {
+		@include flex-grow(1);
+
+		font-size: $typescale-size-base;
+		padding: 0 $content-spacing-regular;
+	}
+
 	.community-page-insights-module-footer {
 		@include flexbox();
 	}

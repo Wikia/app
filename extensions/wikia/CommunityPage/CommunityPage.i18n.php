@@ -320,6 +320,7 @@ $messages['de'] = array(
 	'communitypage-cards-links' => 'Add links',
 	'communitypage-cards-categories' => 'Add categories',
 	'communitypage-cards-create-page' => 'Create a page',
+	'communitypage-cards-create-page-description' => 'Share your knowledge and add a new relevant article to this wiki.',
 	'communitypage-cards-other' => 'Other',
 	'communitypage-moderators' => 'Meet the moderators',
 );

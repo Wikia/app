@@ -5,7 +5,7 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 	const COMMUNITY_PAGE_BENEFITS_MODAL_IMAGE = 'Community-Page-Modal-Image.jpg';
 	const DEFAULT_TEMPLATE_ENGINE = \WikiaResponse::TEMPLATE_ENGINE_MUSTACHE;
 	const ALL_MEMBERS_LIMIT = 20;
-	const TOP_ADMINS_MODULE_LIMIT = 3;
+	const TOP_ADMINS_MODULE_LIMIT = self::DEFAULT_MODULES_MAX;
 	const TOP_CONTRIBUTORS_MODULE_LIMIT = 5;
 	const MODAL_IMAGE_HEIGHT = 700.0;
 	const MODAL_IMAGE_MIN_RATIO = 0.85;
@@ -13,6 +13,8 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 	private $usersModel;
 
 	private $wikiModel;
+
+	const DEFAULT_MODULES_MAX = 3;
 
 	public function __construct() {
 		parent::__construct( 'Community' );
@@ -31,6 +33,8 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 		// queue i18n messages for export to JS
 		JSMessages::enqueuePackage( 'CommunityPageSpecial', JSMessages::EXTERNAL );
 
+		$insightsModulesData = $this->getInsightsModulesData();
+		$defaultModulesLimit = max( 0, self::DEFAULT_MODULES_MAX - count( $insightsModulesData[ 'modules' ] ) );
 		$this->response->setValues( [
 			'heroImageUrl' => $this->getHeroImageUrl(),
 			'inviteFriendsText' => $this->msg( 'communitypage-invite-friends' )->plain(),
@@ -49,11 +53,12 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 				->getData(),
 			'communityPolicyModule' => $this->getCommunityPolicyData(),
 			'recentActivityModule' => $this->getRecentActivityData(),
-			'insightsModules' => $this->getInsightsModulesData(),
+			'insightsModules' => $insightsModulesData,
+			'defaultModules' => $this->getDefaultModules( $defaultModulesLimit ),
 			'helpModule' => $this->getHelpModuleData(),
 			'communityTodoListModule' => $this->getCommunityTodoListData(),
 			'contributorsModuleEnabled' => !$this->wg->CommunityPageDisableTopContributors,
-			'inspectlet' => (new InspectletService(InspectletService::COMMUNITY_PAGE))->getInspectletCode()
+			'inspectlet' => ( new InspectletService( InspectletService::COMMUNITY_PAGE ) )->getInspectletCode()
 		] );
 	}
 
@@ -217,6 +222,10 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 		return ( new CommunityPageSpecialInsightsModel() )->getInsightsModules();
 	}
 
+	private function getDefaultModules( $limit ) {
+		return ( new CommunityPageDefaultCardsModel() )->getData( $limit );
+	}
+
 	private function getCommunityPolicyData() {
 		return ( new CommunityPageSpecialCommunityPolicyModel() )->getData();
 	}
@@ -289,8 +298,8 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 					->numParams( $this->getLanguage()->formatNum( $contributor[ 'contributions' ] ?? 0 ) )->text(),
 				'profilePage' => $user->getUserPage()->getLocalURL(),
 				'count' => $count,
-				'isAdmin' => $contributor['isAdmin'] ?? false,
-				'timeAgo' => $contributor['timeAgo'] ?? null,
+				'isAdmin' => $contributor[ 'isAdmin' ] ?? false,
+				'timeAgo' => $contributor[ 'timeAgo' ] ?? null,
 			];
 		}, $contributors );
 	}
@@ -365,8 +374,8 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 
 		return array_merge( $data, [
 			'showEditLink' => $user->isAllowed( 'editinterface' ),
-			'editIcon' => DesignSystemHelper::getSvg('wds-icons-pencil',
-				'community-page-todo-list-module-edit-icon'),
+			'editIcon' => DesignSystemHelper::getSvg( 'wds-icons-pencil',
+				'community-page-todo-list-module-edit-icon' ),
 			'isZeroState' => !$data[ 'haveContent' ],
 			'heading' => $this->msg( 'communitypage-todo-module-heading' )->plain(),
 			'editList' => $this->msg( 'communitypage-todo-module-edit-list' )->plain(),

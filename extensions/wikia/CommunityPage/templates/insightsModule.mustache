@@ -7,15 +7,20 @@
 		</div>
 		{{title}}
 	</h3>
-	<ul class="community-page-insights-module-list reset">
-		{{#pages}}
+	{{#description}}
+		<div class="community-page-insights-module-description">
+			{{description}}
+		</div>
+	{{/description}}
+	{{#pages}}
+		<ul class="community-page-insights-module-list reset">
 			<li class="community-page-insights-module-list-item">
 				<span class="community-page-insights-module-article-data">
 					<a href="{{link.editlink}}" data-tracking="page-link">{{link.text}}</a>
 				</span>
 			</li>
-		{{/pages}}
-	</ul>
+		</ul>
+	{{/pages}}
 	<div class="community-page-insights-module-footer">
 		{{#helplink}}
 			<div class="community-page-insights-module-help">
@@ -28,5 +33,11 @@
 				{{insightsModules.messages.fulllist}}
 			</a>
 		{{/fulllistlink}}
+		{{#actionlink}}
+			<a class="community-page-insights-module-full-list-link" href="{{actionlink}}"
+			   data-tracking="action-link">
+				{{actiontext}}
+			</a>
+		{{/actionlink}}
 	</div>
 </section>
