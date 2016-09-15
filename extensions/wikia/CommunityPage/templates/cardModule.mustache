@@ -1,0 +1,43 @@
+<section class="community-page-card-module" data-tracking="community-page-insights-{{type}}">
+    <h3 class="community-page-card-module-header">
+        <div class="community-page-card-module-header-icon">
+            <svg width="48" height="48">
+                <use xlink:href="/extensions/wikia/CommunityPage/images/{{{icon}}}.svg#icon"></use>
+            </svg>
+        </div>
+        {{title}}
+    </h3>
+    {{#description}}
+        <div class="community-page-card-module-description">
+            {{description}}
+        </div>
+    {{/description}}
+    <ul class="community-page-card-module-list reset">
+        {{#pages}}
+            <li class="community-page-card-module-list-item">
+				<span class="community-page-card-module-article-data">
+					<a href="{{link.editlink}}" data-tracking="page-link">{{link.text}}</a>
+				</span>
+            </li>
+        {{/pages}}
+    </ul>
+    <div class="community-page-card-module-footer">
+        {{#helplink}}
+            <div class="community-page-card-module-help">
+                <a href="{{helplink}}">{{{helpicon}}}</a>
+            </div>
+        {{/helplink}}
+        {{#fulllistlink}}
+            <a class="community-page-card-module-full-list-link" href="{{fulllistlink}}"
+               data-tracking="view-full-list">
+                {{insightsModules.messages.fulllist}}
+            </a>
+        {{/fulllistlink}}
+        {{#actionlink}}
+            <a class="community-page-card-module-full-list-link" href="{{actionlink}}"
+               data-tracking="action-link">
+                {{actiontext}}
+            </a>
+        {{/actionlink}}
+    </div>
+</section>

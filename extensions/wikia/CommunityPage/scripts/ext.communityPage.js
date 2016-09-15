@@ -244,8 +244,8 @@ require([
 			handleClick(event, 'community-page-community-policy-module');
 		});
 
-		// Track clicks in the Insights modules
-		$('.community-page-insights-module').on('mousedown touchstart', 'a', function (event) {
+		// Track clicks in the cards modules
+		$('.community-page-card-module').on('mousedown touchstart', 'a', function (event) {
 			var category = event.delegateTarget.getAttribute('data-tracking');
 
 			if (category !== null && category.length > 0) {
