@@ -31,8 +31,6 @@
  *
  * @ingroup API
  */
-use Wikia\Util\PerformanceProfilers\UsernameUseProfiler;
-
 class ApiQueryFilearchive extends ApiQueryBase {
 
 	public function __construct( $query, $moduleName ) {
@@ -45,9 +43,6 @@ class ApiQueryFilearchive extends ApiQueryBase {
 		if ( !$user->isAllowed( 'deletedhistory' ) ) {
 			$this->dieUsage( 'You don\'t have permission to view deleted file information', 'permissiondenied' );
 		}
-
-		$usernameUseProfiler = new UsernameUseProfiler( __CLASS__, __METHOD__ );
-		$user_text_is_used = false;
 
 		$db = $this->getDB();
 
@@ -206,9 +201,6 @@ class ApiQueryFilearchive extends ApiQueryBase {
 		}
 
 		$result->setIndexedTagName_internal( array( 'query', $this->getModuleName() ), 'fa' );
-		if ( $user_text_is_used ) {
-			$usernameUseProfiler->end();
-		}
 	}
 
 	public function getAllowedParams() {
