@@ -164,7 +164,8 @@ function Ach_GetHTMLAfterBody($skin, &$html) {
 	global $wgOut, $wgTitle, $wgUser;
 
 	if($wgUser->isLoggedIn() && !($wgUser->getGlobalPreference( 'hidepersonalachievements' ))) {
-		if ($wgTitle->getNamespace() == NS_SPECIAL && array_shift(SpecialPageFactory::resolveAlias($wgTitle->getDBkey())) == 'MyHome') {
+		$spName = SpecialPageFactory::resolveAlias($wgTitle->getDBkey());
+		if ($wgTitle->getNamespace() == NS_SPECIAL && array_shift($spName) == 'MyHome') {
 			$awardingService = new AchAwardingService();
 			$awardingService->awardCustomNotInTrackBadge($wgUser, BADGE_WELCOME);
 		}
