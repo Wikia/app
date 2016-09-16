@@ -4,6 +4,7 @@ $admins-module-icon-size: 48px;
 $admins-module-text-padding: 14px;
 $admins-module-item-margin: 10px;
 $admins-module-item-width: 80px;
+$admins-view-all-padding: 18px;
 
 .community-page-admins-module {
 	text-align: center;
@@ -33,7 +34,7 @@ $admins-module-item-width: 80px;
 		display: block;
 		font-size: $typescale-size-minus-2;
 		font-weight: bold;
-		line-height: $typescale-size-plus-6;
+		padding: $admins-view-all-padding 0;
 		text-transform: uppercase;
 
 		&:hover {
