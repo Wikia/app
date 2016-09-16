@@ -1,8 +1,8 @@
 <section class="community-page-contributors-module-section">
 	<div class="community-page-module-section-title">{{topContributorsHeaderText}}</div>
-	<ul class="reset top-contributors">
+	<div class="top-contributors">
 		{{#contributors}}
-			<li class="community-page-contributors-list-item">
+			<div class="community-page-contributors-list-item">
 				<div class="avatar-container">
 					<a data-tracking="top-contributors-user-avatar" href="{{profilePage}}">{{{avatar}}}</a>
 				</div>
@@ -13,12 +13,12 @@
 					<a data-tracking="top-contributors-user" href="{{profilePage}}">{{userName}}</a>
 					<span class="community-page-subtle">{{contributionsText}}</span>
 				</div>
-			</li>
+			</div>
 		{{/contributors}}
 		{{^contributors}}
 			<div class="community-page-zero">
 				{{noContribsText}}
 			</div>
 		{{/contributors}}
-	</ul>
+	</div>
 </section>
