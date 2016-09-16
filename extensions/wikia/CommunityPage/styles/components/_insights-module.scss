@@ -49,12 +49,15 @@ $module-width: 239px;
 
 		background: $color-buttons;
 		color: $color-button-text;
-		font-size: $typescale-size-minus-1;
-		font-weight: bold;
-		line-height: $typescale-size-base;
 		margin: 0 0 $content-spacing-large;
 		padding: $content-spacing-regular;
-		text-transform: uppercase;
+
+		h3 {
+			font-size: $typescale-size-minus-1;
+			font-weight: bold;
+			line-height: $typescale-size-base;
+			text-transform: uppercase;
+		}
 	}
 
 	.community-page-insights-module-header-icon {
