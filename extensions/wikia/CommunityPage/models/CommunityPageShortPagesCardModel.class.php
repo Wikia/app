@@ -10,34 +10,30 @@ class CommunityPageShortPagesCardModel {
 	public function getData() {
 		$pages = $this->getPages();
 
-		if ( $pages ) {
-			return [
-				'modules' => [
-					[
-						'type' => 'expand-article',
-						'title' => wfMessage( 'communitypage-cards-expand-articles' )->text(),
-						'icon' => 'expand-article',
-						'pages' => $pages,
-						'fulllistlink' => ( count( $pages ) > static::SHORT_PAGES_LIMIT )
-							? SpecialPage::getTitleFor( 'Shortpages' )->getLocalURL()
-							: ''
-					]
-				]
-			];
-		}
+		return count( $pages ) > 0 ? [
+			[
+				'type' => 'expand-article',
+				'title' => wfMessage( 'communitypage-cards-expand-articles' )->text(),
+				'icon' => 'expand-article',
+				'pages' => array_slice( $pages, 0, static::SHORT_PAGES_LIMIT ),
+				'fulllistlink' => ( count( $pages ) > static::SHORT_PAGES_LIMIT )
+					? SpecialPage::getTitleFor( 'Shortpages' )->getLocalURL()
+					: ''
+			]
+		] : [ ];
 	}
 
 	/**
 	 * Extracts data from ShortPages special page
 	 */
 	private function getPages() {
-		$pages = [];
+		$pages = [ ];
 		foreach ( ( new ShortPagesPage() )->doQuery() as $obj ) {
-			$pages [] = $this->getPage( $obj->title );
+			$pages[] = $this->getPage( $obj->title );
 		}
 		shuffle( $pages );
 
-		return array_slice( $pages, 0, static::SHORT_PAGES_LIMIT );
+		return $pages;
 	}
 
 	private function getPage( $title ) {

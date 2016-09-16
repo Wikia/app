@@ -218,18 +218,20 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 	}
 
 	private function getCardModulesData() {
-		$insightsModules = ( new CommunityPageSpecialInsightsModel() )->getInsightsModules();
-
-		$cardModules[ 'modules' ] = array_merge(
-			$insightsModules[ 'modules' ],
-			( new CommunityPageShortPagesCardModel() )->getData()[ 'modules' ]
-		);
-
-		return $cardModules;
+		return [
+			'heading' => wfMessage( 'communitypage-cards-start' )->text(),
+			'messages' => [
+				'fulllist' => wfMessage( 'communitypage-full-list' )->text()
+			],
+			'modules' => array_merge(
+				( new CommunityPageSpecialInsightsModel() )->getInsightsModules(),
+				( new CommunityPageShortPagesCardModel() )->getData()
+			)
+		];
 	}
 
 	private function getDefaultModules( $limit ) {
-		return ( new CommunityPageDefaultCardsModel() )->getData( $limit );
+		return [ 'modules' => ( new CommunityPageDefaultCardsModel() )->getData( $limit ) ];
 	}
 
 	private function getCommunityPolicyData() {

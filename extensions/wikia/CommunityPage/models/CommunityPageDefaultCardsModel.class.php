@@ -8,7 +8,8 @@ class CommunityPageDefaultCardsModel {
 	 * @return array
 	 */
 	public function getData( $modulesLimit ) {
-		$result = [
+		// limit number of modules returned
+		return array_slice( [
 			[
 				'type' => 'createpage',
 				'title' => wfMessage( 'communitypage-cards-create-page' )->text(),
@@ -17,10 +18,6 @@ class CommunityPageDefaultCardsModel {
 				'actionlink' => SpecialPage::getTitleFor( 'CreatePage' )->getLocalURL(),
 				'actiontext' => wfMessage( 'communitypage-cards-create-page' )->text()
 			]
-		];
-		// limit number of modules returned
-		return [
-			'modules' => array_slice( $result, 0, $modulesLimit )
-		];
+		], 0, $modulesLimit );
 	}
 }
