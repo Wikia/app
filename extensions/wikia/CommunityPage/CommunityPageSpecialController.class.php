@@ -32,8 +32,8 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 		// queue i18n messages for export to JS
 		JSMessages::enqueuePackage( 'CommunityPageSpecial', JSMessages::EXTERNAL );
 
-		$insightsModulesData = $this->getCardModulesData();
-		$defaultModulesLimit = max( 0, self::DEFAULT_MODULES_MAX - count( $insightsModulesData[ 'modules' ] ) );
+		$cardModulesData = $this->getCardModulesData();
+		$defaultModulesLimit = max( 0, self::DEFAULT_MODULES_MAX - count( $cardModulesData[ 'modules' ] ) );
 		$this->response->setValues( [
 			'heroImageUrl' => $this->getHeroImageUrl(),
 			'inviteFriendsText' => $this->msg( 'communitypage-invite-friends' )->text(),
@@ -52,7 +52,7 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 				->getData(),
 			'recentlyJoined' => $this->sendRequest( 'CommunityPageSpecialController', 'getRecentlyJoinedData' )
 				->getData(),
-			'insightsModules' => $insightsModulesData,
+			'insightsModules' => $cardModulesData,
 			'defaultModules' => $this->getDefaultModules( $defaultModulesLimit ),
 			'helpModule' => $this->getHelpModuleData(),
 			'communityTodoListModule' => $this->getCommunityTodoListData(),
