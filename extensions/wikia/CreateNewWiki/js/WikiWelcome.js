@@ -93,9 +93,9 @@ define('WikiWelcome', ['wikia.ui.factory', 'wikia.loader', 'wikia.tracker'], fun
 	function bindEventHandlers(){
 		modalWrapper = $('#WikiWelcomeModal');
 		modalWrapper.find('button.createpage').bind('click', onCreatePageButtonClick);
-		modalWrapper.find('.help > a').bind('click', onCommCentralLinkClick);
+		modalWrapper.find('.help > a').bind('mousedown', onCommCentralLinkClick);
 		modalWrapper.find('header a.close').bind('click', onModalClose);
-		modalWrapper.bind('click', onModalWrapperClick);
+		modalWrapper.bind('click mousedown', onModalWrapperClick);
 		$('#blackout_WikiWelcomeModal').bind('click', onModalClose);
 	}
 
