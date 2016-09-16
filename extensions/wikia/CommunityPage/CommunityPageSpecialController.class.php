@@ -32,7 +32,7 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 		// queue i18n messages for export to JS
 		JSMessages::enqueuePackage( 'CommunityPageSpecial', JSMessages::EXTERNAL );
 
-		$insightsModulesData = $this->getInsightsModulesData();
+		$insightsModulesData = $this->getCardModulesData();
 		$defaultModulesLimit = max( 0, self::DEFAULT_MODULES_MAX - count( $insightsModulesData[ 'modules' ] ) );
 		$this->response->setValues( [
 			'heroImageUrl' => $this->getHeroImageUrl(),
@@ -217,8 +217,15 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 		return ( new CommunityPageSpecialHelpModel() )->getData();
 	}
 
-	private function getInsightsModulesData() {
-		return ( new CommunityPageSpecialInsightsModel() )->getInsightsModules();
+	private function getCardModulesData() {
+		$insightsModules = ( new CommunityPageSpecialInsightsModel() )->getInsightsModules();
+		print_r($insightsModules[ 'modules' ]);
+		$insightsModules[ 'modules' ] = array_merge(
+			$insightsModules[ 'modules' ],
+			( new CommunityPageShortPagesCardModel() )->getData()[ 'modules' ]
+		);
+
+		return $insightsModules;
 	}
 
 	private function getDefaultModules( $limit ) {
