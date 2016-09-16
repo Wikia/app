@@ -1,0 +1,60 @@
+@import 'extensions/wikia/DesignSystem/bower_components/design-system/base/typography';
+
+$admins-module-icon-size: 48px;
+$admins-module-text-padding: 14px;
+$admins-module-item-margin: 10px;
+$admins-module-item-width: 80px;
+
+.community-page-admins-module {
+	text-align: center;
+
+	.community-page-admins-list {
+		font-size: $typescale-size-minus-2;
+
+		.community-page-admin-item {
+			display: inline-block;
+			vertical-align: top;
+			width: $admins-module-item-width;
+
+			&:first-child {
+				margin-right: $admins-module-item-margin;
+			}
+		}
+	}
+
+	.community-page-admins-text {
+		font-size: $typescale-size-minus-1;
+		line-height: $line-height;
+		padding: $admins-module-text-padding 0;
+	}
+
+	.community-page-admins-view-all {
+		color: $color-buttons;
+		display: block;
+		font-size: $typescale-size-minus-2;
+		font-weight: bold;
+		line-height: $typescale-size-plus-6;
+		text-transform: uppercase;
+
+		&:hover {
+			text-decoration: none;
+		}
+	}
+
+	.community-page-admin-item {
+		margin: auto;
+		max-width: 50%;
+
+		.avatar-container {
+			display: inline-block;
+			height: $admins-module-icon-size;
+			width: $admins-module-icon-size;
+		}
+	}
+
+	.community-page-contributor-details {
+		overflow: hidden;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+	}
+}
