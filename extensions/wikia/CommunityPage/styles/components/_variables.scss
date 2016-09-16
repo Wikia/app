@@ -8,11 +8,24 @@ $module-default-line-height: 20px;
 $avatar-size: 30px;
 $avatar-flex: 0 0 $avatar-size;
 
+// spacing
+$content-spacing-xsmall: 10px;
+$content-spacing-small: 12px;
+$content-spacing-small-plus: 15px;
+$content-spacing-regular: 18px;
+$content-spacing-large: 24px;
+
 // other
 $modal-horizontal-padding: 25px;
 $modal-top-padding: 18px;
 $modal-bottom-padding: 6px;
 
-//right rail
-$community-page-rail-width-small: 256px;
+// right rail
+$community-page-rail-width-xsmall: 244px;
+$community-page-rail-width-small: 254px;
 $community-page-rail-width-big: 266px;
+$community-page-rail-width-xbig: 350px;
+
+// card sizes
+$community-page-card-module-width-small: 232px;
+$community-page-card-module-width-regular: 240px;
