@@ -41,6 +41,10 @@ $module-width: 239px;
 		margin-right: $content-spacing-large;
 		text-align: right;
 		text-transform: uppercase;
+
+		&:hover {
+			text-decoration: none;
+		}
 	}
 
 	.community-page-insights-module-header {
