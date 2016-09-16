@@ -12,7 +12,7 @@ $policy-link-margin-top: 14px;
 
 $help-module-link-line-height: 2;
 
-.community-page-rail__help-module {
+.community-page-rail-help-module {
 	padding-bottom: $help-module-padding-bottom;
 
 	.community-page-module-section-title {
@@ -43,16 +43,16 @@ $help-module-link-line-height: 2;
 			width: $small-icon-size;
 		}
 	}
-}
 
-.community-page-rail__help-module-policy-title {
-	margin-left: $help-module-margin;
-}
+	.community-page-help-module-policy-title {
+		margin-left: $help-module-margin;
+	}
 
-.community-page-rail__help-module-title {
-	margin-left: $help-module-margin;
-}
+	.community-page-help-module-title {
+		margin-left: $help-module-margin;
+	}
 
-.community-page-rail__help-module-links {
-	line-height: $help-module-link-line-height;
+	.community-page-help-module-links {
+		line-height: $help-module-link-line-height;
+	}
 }
