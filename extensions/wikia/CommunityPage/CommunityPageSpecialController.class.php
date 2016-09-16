@@ -219,12 +219,13 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 
 	private function getCardModulesData() {
 		$insightsModules = ( new CommunityPageSpecialInsightsModel() )->getInsightsModules();
-		$insightsModules[ 'modules' ] = array_merge(
+
+		$cardModules[ 'modules' ] = array_merge(
 			$insightsModules[ 'modules' ],
 			( new CommunityPageShortPagesCardModel() )->getData()[ 'modules' ]
 		);
 
-		return $insightsModules;
+		return $cardModules;
 	}
 
 	private function getDefaultModules( $limit ) {
