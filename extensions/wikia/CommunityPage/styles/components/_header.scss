@@ -15,7 +15,7 @@ $hero-image-background: rgba(0,0,0,0.35);
 .community-page-header {
 	@include flexbox();
 	@include justify-content(center);
-	align-items: center;
+	align-items: flex-end;
 	background: url($hero-image-pattern);
 	background-color: $hero-image-background;
 	height: $hero-image-height;
@@ -39,8 +39,7 @@ $hero-image-background: rgba(0,0,0,0.35);
 	}
 
 	.community-page-header-content {
-		bottom: 24px;
-		position: absolute;
+		padding-bottom: 20px;
 		width: 94%;
 		z-index: 0;
 	}
@@ -61,7 +60,7 @@ $hero-image-background: rgba(0,0,0,0.35);
 		color: $color-white;
 		font-size: $typescale-size-plus-2;
 		line-height: $line-height;
-		margin: 14px 0 0 0;
+		margin: 10px 0 0 0;
 	}
 }
 
