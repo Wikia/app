@@ -565,11 +565,15 @@ class WikiaSearchController extends WikiaSpecialPageController {
 	 * @return bool
 	 */
 	private function useGoSearch() {
-		$default = $this->getUser()->getGlobalPreference( 'enableGoSearch' ) ? '0' : 'Search';
-		// Support for Monobook's "Go" button and functionality
-		$fulltext = $this->getVal( 'fulltext', $this->getVal( 'go', $default ) );
+		$fulltext = $this->getVal( 'fulltext' );
 
-		return $fulltext === '0' || $fulltext === 'Go';
+		// For backwards compatibility ?fulltext=0 means use Go search
+		// and if fulltext is set and not equal to 0, it means that the
+		// user is trying to manually go to search and override their preference
+		// such as with Monobook's "Search" button
+		return $fulltext === '0' ||
+			$this->getVal( 'go' ) !== null ||
+			( $fulltext === null && $this->getUser()->getGlobalPreference( 'enableGoSearch' ) );
 	}
 
 	/**

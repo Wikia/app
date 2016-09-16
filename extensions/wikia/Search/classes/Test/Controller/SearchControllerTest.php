@@ -182,14 +182,13 @@ class SearchControllerTest extends Wikia\Search\Test\BaseTest {
 	 * @covers WikiaSearchController::handleArticleMatchTracking
 	 */
 	public function testArticleMatchTrackingWithMatch() {
-		$mockController = $this->searchController->setMethods( [ 'getVal', 'getUser' ] )->getMock();
+		$mockController = $this->searchController->setMethods( [ 'getVal' ] )->getMock();
 		$searchConfig = $this->getMock( 'Wikia\Search\Config', [ 'getQuery', 'getPage', 'hasArticleMatch', 'getArticleMatch' ] );
 		$mockQuery = $this->getMock( 'Wikia\Search\Query', [ 'getSanitizedQuery' ] );
 		$mockTitle = $this->getMockBuilder( 'Title' )
 		                  ->disableOriginalConstructor()
 		                  ->setMethods( [ 'getFullUrl' ] )
 		                  ->getMock();
-		$mockUser = $this->getMock( 'User', [ 'getGlobalPreference' ] );
 		$mockResponse = $this->getMock( 'WikiaResponse', [ 'redirect' ], [ 'html' ] );
 		$mockMatch = $this->getMockBuilder( 'Wikia\Search\Match\Article' )
 		                  ->disableOriginalConstructor()
@@ -232,18 +231,10 @@ class SearchControllerTest extends Wikia\Search\Test\BaseTest {
 			->expects( $this->any() )
 			->method( 'hasArticleMatch' )
 			->will( $this->returnValue( true ) );
-		$mockUser
-			->expects( $this->once() )
-			->method( 'getGlobalPreference' )
-			->will( $this->returnValue( false ) );
 		$mockController
 			->expects( $this->any() )
 			->method( 'getVal' )
 			->will( $this->returnValue( '0' ) );
-		$mockController
-			->expects( $this->once() )
-			->method( 'getUser' )
-			->will( $this->returnValue( $mockUser ) );
 		$mockRunHooks
 			->expects( $this->once() )
 			->method( 'wfRunHooks' );
@@ -342,14 +333,13 @@ class SearchControllerTest extends Wikia\Search\Test\BaseTest {
 	 * @covers WikiaSearchController::handleArticleMatchTracking
 	 */
 	public function testHandleArticleMatchTrackingWithoutGoSearch() {
-		$mockController = $this->searchController->setMethods( [ 'getVal', 'getUser' ] )->getMock();
+		$mockController = $this->searchController->setMethods( [ 'getVal' ] )->getMock();
 		$searchConfig = $this->getMock( 'Wikia\Search\Config', [ 'getQuery', 'getPage', 'hasArticleMatch', 'getArticleMatch' ] );
 		$mockQuery = $this->getMock( 'Wikia\Search\Query', [ 'getSanitizedQuery' ] );
 		$mockTitle = $this->getMockBuilder( 'Title' )
 		                  ->disableOriginalConstructor()
 		                  ->setMethods( [ 'getFullUrl' ] )
 		                  ->getMock();
-		$mockUser = $this->getMock( 'User', [ 'getGlobalPreference' ] );
 		$mockMatch = $this->getMockBuilder( 'Wikia\Search\Match\Article' )
 		                  ->disableOriginalConstructor()
 		                  ->setMethods( [ 'getId' ] )
@@ -395,18 +385,10 @@ class SearchControllerTest extends Wikia\Search\Test\BaseTest {
 			->expects( $this->any() )
 			->method( 'hasArticleMatch' )
 			->will( $this->returnValue( true ) );
-		$mockUser
-			->expects( $this->once() )
-			->method( 'getGlobalPreference' )
-			->will( $this->returnValue( false ) );
 		$mockController
 			->expects( $this->any() )
 			->method( 'getVal' )
 			->will( $this->returnValue( 'Search' ) );
-		$mockController
-			->expects( $this->once() )
-			->method( 'getUser' )
-			->will( $this->returnValue( $mockUser ) );
 
 		$responserefl = new ReflectionProperty( 'WikiaSearchController', 'response' );
 		$responserefl->setAccessible( true );
