@@ -8,17 +8,17 @@ class AchRankedUser {
 	private $mCurrentRanking;
 	private $mPreviousRanking;
 
-	function __construct(User $userObj, $score, $currentRanking = null, $previousRanking = null) {
-	    wfProfileIn(__METHOD__);
+	function __construct( User $userObj, $score, $currentRanking = null, $previousRanking = null ) {
+		wfProfileIn( __METHOD__ );
 
-	    $this->mUserId = $userObj->getID();
-	    $this->mUsername = $userObj->getName();
-	    $this->mScore = $score;
-	    $this->mUserPageUrl = $userObj->getUserPage()->getLocalURL();
-	    $this->mCurrentRanking = $currentRanking;
-	    $this->mPreviousRanking = $previousRanking;
+		$this->mUserId = $userObj->getID();
+		$this->mUsername = $userObj->getName();
+		$this->mScore = $score;
+		$this->mUserPageUrl = $userObj->getUserPage()->getLocalURL();
+		$this->mCurrentRanking = $currentRanking;
+		$this->mPreviousRanking = $previousRanking;
 
-	    wfProfileOut(__METHOD__);
+		wfProfileOut( __METHOD__ );
 	}
 
 	public function getId() {
@@ -38,10 +38,10 @@ class AchRankedUser {
 	}
 
 	public function getCurrentRanking() {
-	    return $this->mCurrentRanking;
+		return $this->mCurrentRanking;
 	}
 
 	public function getPreviousRanking() {
-	    return $this->mPreviousRanking;
+		return $this->mPreviousRanking;
 	}
 }

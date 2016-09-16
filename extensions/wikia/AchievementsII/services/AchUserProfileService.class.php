@@ -17,7 +17,7 @@ class AchUserProfileService {
 
 	public function __construct( $ownerUser = null ) {
 		global $wgUser, $wgTitle;
-		if ( !isset( $ownerUser ) ) {
+		if( !isset( $ownerUser ) ) {
 			$ownerUser = User::newFromName( UserPagesHeaderController::getUserName( $wgTitle, BodyController::getUserPagesNamespaces() ) );
 		}
 
@@ -40,7 +40,7 @@ class AchUserProfileService {
 	 * This should be part of the controller, not the model
 	 */
 	public function isVisible() {
-		if ( !isset( $this->visible ) ) {
+		if( !isset( $this->visible ) ) {
 			$this->visible =
 				// only on Oasis
 				in_array( strtolower( RequestContext::getMain()->getSkin()->getSkinName() ), array( 'oasis' ) )
@@ -55,7 +55,7 @@ class AchUserProfileService {
 	}
 
 	public function hasPersonalAnnotations() {
-		if ( !isset( $this->hasPersonalAnnotations ) ) {
+		if( !isset( $this->hasPersonalAnnotations ) ) {
 			$this->hasPersonalAnnotations =
 				// viewer users is a registered user
 				!$this->viewerUser->isAnon()
@@ -69,43 +69,43 @@ class AchUserProfileService {
 		return $this->hasPersonalAnnotations;
 	}
 
-    public function getHTML() {
+	public function getHTML() {
 		wfProfileIn( __METHOD__ );
 
-		if ( $this->isVisible() ) {
+		if( $this->isVisible() ) {
 			$ownerName = $this->ownerUser->getName();
 
 			$tmplData = array();
-			$tmplData['ownerBadges'] = $this->getBadgesAnnotated();;
-			$tmplData['challengesBadges'] = $this->getChallengesAnnotated();
-			$tmplData['title_no'] = wfMsg( 'achievements-profile-title-no', $ownerName );
-			$tmplData['title'] = wfMsgExt( 'achievements-profile-title', array( 'parsemag' ), $ownerName, $this->owner->getBadgesCount() );
-			$tmplData['title_challenges'] = wfMsg( 'achievements-profile-title-challenges', $ownerName );
-			$tmplData['leaderboard_url'] = Skin::makeSpecialUrl( "Leaderboard" );
+			$tmplData[ 'ownerBadges' ] = $this->getBadgesAnnotated();;
+			$tmplData[ 'challengesBadges' ] = $this->getChallengesAnnotated();
+			$tmplData[ 'title_no' ] = wfMsg( 'achievements-profile-title-no', $ownerName );
+			$tmplData[ 'title' ] = wfMsgExt( 'achievements-profile-title', array( 'parsemag' ), $ownerName, $this->owner->getBadgesCount() );
+			$tmplData[ 'title_challenges' ] = wfMsg( 'achievements-profile-title-challenges', $ownerName );
+			$tmplData[ 'leaderboard_url' ] = Skin::makeSpecialUrl( "Leaderboard" );
 
-			if ( $this->owner->getBadgesCount() > 0 ) {
+			if( $this->owner->getBadgesCount() > 0 ) {
 				$rankingService = new AchRankingService();
-				$tmplData['user_rank'] = $rankingService->getUserRankingPosition( $this->ownerUser );
+				$tmplData[ 'user_rank' ] = $rankingService->getUserRankingPosition( $this->ownerUser );
 			}
 
-			if ( $this->viewerUser->isAllowed( 'editinterface' ) ) {
-				$tmplData['customize_url'] = Skin::makeSpecialUrl( "AchievementsCustomize" );
+			if( $this->viewerUser->isAllowed( 'editinterface' ) ) {
+				$tmplData[ 'customize_url' ] = Skin::makeSpecialUrl( "AchievementsCustomize" );
 			}
 
-    		$template = new EasyTemplate( dirname( __FILE__ ).'/../templates' );
-    		$template->set_vars( $tmplData );
-    		$out = $template->render( 'ProfileBox' );
-    	} else {
-    		$out = '';
-    	}
+			$template = new EasyTemplate( dirname( __FILE__ ) . '/../templates' );
+			$template->set_vars( $tmplData );
+			$out = $template->render( 'ProfileBox' );
+		} else {
+			$out = '';
+		}
 
 		wfProfileOut( __METHOD__ );
-    	return $out;
-    }
+		return $out;
+	}
 
 	public function getBadgesAnnotated( $page = null ) {
 		wfProfileIn( __METHOD__ );
-		if ( is_null( $page ) ) {
+		if( is_null( $page ) ) {
 			$badges = $this->owner->getAllBadges();
 		} else {
 			$badges = $this->owner->getBadges( $page * self::BADGES_PER_PAGE, self::BADGES_PER_PAGE );
@@ -113,44 +113,44 @@ class AchUserProfileService {
 
 		$personalAnnotations = $this->hasPersonalAnnotations();
 		$viewerCounters = array();
-		if ( $personalAnnotations ) {
+		if( $personalAnnotations ) {
 			$viewerByType = $this->viewer->getBadgesByType();
 			$viewerCounters = $this->viewer->getCounters();
 		}
 		$list = array();
 		/** @var $badge AchBadge */
-		foreach ( $badges as $badge ) {
+		foreach( $badges as $badge ) {
 			$toGet = '';
-			if ( $personalAnnotations ) {
+			if( $personalAnnotations ) {
 				$typeId = $badge->getTypeId();
 				$lap = $badge->getLap();
-				if ( $badge->isInTrack() ) {
+				if( $badge->isInTrack() ) {
 					// in track
-					if ( !isset( $viewerByType[$typeId] ) || $lap < $viewerByType[$typeId]['max_lap'] ) {
-						if ( !isset( $viewerByType[$typeId] ) ) {
+					if( !isset( $viewerByType[ $typeId ] ) || $lap < $viewerByType[ $typeId ][ 'max_lap' ] ) {
+						if( !isset( $viewerByType[ $typeId ] ) ) {
 							$eventsCounter = 0;
-						} else if ( $typeId == BADGE_LOVE ) {
-							$eventsCounter = $viewerCounters[$typeId][COUNTERS_COUNTER];
-						} else if ( $typeId == BADGE_BLOGCOMMENT ) {
-							$eventsCounter = count( $viewerCounters[$typeId] );
+						} else if( $typeId == BADGE_LOVE ) {
+							$eventsCounter = $viewerCounters[ $typeId ][ COUNTERS_COUNTER ];
+						} else if( $typeId == BADGE_BLOGCOMMENT ) {
+							$eventsCounter = count( $viewerCounters[ $typeId ] );
 						} else {
-							$eventsCounter = $viewerCounters[$typeId];
+							$eventsCounter = $viewerCounters[ $typeId ];
 						}
 
 						$toGet = $badge->getToGet( AchConfig::getInstance()->getRequiredEvents( $typeId, $lap ) - $eventsCounter );
 					}
 				} else {
 					// not in track
-					if ( !isset( $viewerByType[$typeId] ) ) {
+					if( !isset( $viewerByType[ $typeId ] ) ) {
 						$toGet = $badge->getToGet();
 					}
 				}
 
 			}
-			$list[] = array( 
+			$list[] = array(
 				'badge' => $badge,
 				'to_get' => $toGet,
-			 );
+			);
 		}
 
 		wfProfileOut( __METHOD__ );
@@ -173,74 +173,74 @@ class AchUserProfileService {
 
 		// PLATINUM BADGES
 		foreach( $notInTrackCommunityPlatinum as $badge_type_id => $badge_config ) {
-			if ( $badge_config['enabled'] ) {
-				if ( !isset( $ownerByType[$badge_type_id] ) ) {
-					$challenges[$badge_type_id] = null;
+			if( $badge_config[ 'enabled' ] ) {
+				if( !isset( $ownerByType[ $badge_type_id ] ) ) {
+					$challenges[ $badge_type_id ] = null;
 				}
 			}
 		}
 
 		// IN TRACK BADGES ( only those for which user already has at least lap 0 )
-		foreach ( $ownerByType as $badge_type_id => $typeData ) {
+		foreach( $ownerByType as $badge_type_id => $typeData ) {
 			$badgeType = $achConfig->getBadgeType( $badge_type_id );
 
-			if ( $badgeType == BADGE_TYPE_INTRACKEDITPLUSCATEGORY ) {
-				if ( $achConfig->isEnabled( $badge_type_id ) ) {
-					$challenges[$badge_type_id] = $typeData['count'];
+			if( $badgeType == BADGE_TYPE_INTRACKEDITPLUSCATEGORY ) {
+				if( $achConfig->isEnabled( $badge_type_id ) ) {
+					$challenges[ $badge_type_id ] = $typeData[ 'count' ];
 				}
-			} else if ( $badgeType == BADGE_TYPE_INTRACKSTATIC ) {
-				if ( $inTrackStatic[$badge_type_id]['infinite'] ) {
-					$challenges[$badge_type_id] = $typeData['count'];
+			} else if( $badgeType == BADGE_TYPE_INTRACKSTATIC ) {
+				if( $inTrackStatic[ $badge_type_id ][ 'infinite' ] ) {
+					$challenges[ $badge_type_id ] = $typeData[ 'count' ];
 				} else {
-					if ( $typeData['count'] < count( $inTrackStatic[$badge_type_id]['laps'] ) ) {
-						$challenges[$badge_type_id] = $typeData['count'];
+					if( $typeData[ 'count' ] < count( $inTrackStatic[ $badge_type_id ][ 'laps' ] ) ) {
+						$challenges[ $badge_type_id ] = $typeData[ 'count' ];
 					}
 				}
 			}
 		}
 
 		$challengesOrder = array( BADGE_WELCOME, BADGE_INTRODUCTION, BADGE_EDIT, 0, BADGE_PICTURE, BADGE_SAYHI, BADGE_BLOGCOMMENT, BADGE_CATEGORY, BADGE_BLOGPOST, BADGE_LOVE );
-		foreach ( $challengesOrder as $badge_type_id ) {
-			if ( $badge_type_id == 0 ) {
-				foreach ( $inTrackEditPlusCategory as $badge_type_id_2 => $badge_config ) {
-					if ( $badge_config['enabled'] ) {
-						if ( !isset( $ownerByType[$badge_type_id_2] ) && !isset( $challenges[$badge_type_id_2] ) ) {
-							$challenges[$badge_type_id_2] = 0;
+		foreach( $challengesOrder as $badge_type_id ) {
+			if( $badge_type_id == 0 ) {
+				foreach( $inTrackEditPlusCategory as $badge_type_id_2 => $badge_config ) {
+					if( $badge_config[ 'enabled' ] ) {
+						if( !isset( $ownerByType[ $badge_type_id_2 ] ) && !isset( $challenges[ $badge_type_id_2 ] ) ) {
+							$challenges[ $badge_type_id_2 ] = 0;
 						}
 					}
 				}
-			} else if ( !isset( $ownerByType[$badge_type_id] ) && !isset( $challenges[$badge_type_id] ) ) {
-				$challenges[$badge_type_id] = $achConfig->isInTrack( $badge_type_id ) ? 0 : null;
+			} else if( !isset( $ownerByType[ $badge_type_id ] ) && !isset( $challenges[ $badge_type_id ] ) ) {
+				$challenges[ $badge_type_id ] = $achConfig->isInTrack( $badge_type_id ) ? 0 : null;
 			}
 		}
 
 		global $wgEnableAchievementsForSharing;
 
 		$challengesAnnotated = array();
-		foreach ( $challenges as $badge_type_id => $badge_lap ) {
-			if ( !$achConfig->shouldShow( $badge_type_id ) ) {
+		foreach( $challenges as $badge_type_id => $badge_lap ) {
+			if( !$achConfig->shouldShow( $badge_type_id ) ) {
 				continue;
 			}
 			$badge = new AchBadge( $badge_type_id, $badge_lap );
 
-			if ( $badge_lap === null ) {
+			if( $badge_lap === null ) {
 				$toGet = $badge->getToGet();
 			} else {
-				if ( !isset( $ownerCounters[$badge_type_id] ) ) {
+				if( !isset( $ownerCounters[ $badge_type_id ] ) ) {
 					$eventsCounter = 0;
-				} else if ( $badge_type_id == BADGE_LOVE ) {
-					$eventsCounter = $ownerCounters[$badge_type_id][COUNTERS_COUNTER];
-				} else if ( $badge_type_id == BADGE_BLOGCOMMENT ) {
-					$eventsCounter = count( $ownerCounters[$badge_type_id] );
+				} else if( $badge_type_id == BADGE_LOVE ) {
+					$eventsCounter = $ownerCounters[ $badge_type_id ][ COUNTERS_COUNTER ];
+				} else if( $badge_type_id == BADGE_BLOGCOMMENT ) {
+					$eventsCounter = count( $ownerCounters[ $badge_type_id ] );
 				} else {
-					$eventsCounter = $ownerCounters[$badge_type_id];
+					$eventsCounter = $ownerCounters[ $badge_type_id ];
 				}
 
 				$requiredEvents = $achConfig->getRequiredEvents( $badge_type_id, $badge_lap );
 				$toGet = $badge->getToGet( $requiredEvents );
-				if ( $badge_type_id != BADGE_SHARING ) {
+				if( $badge_type_id != BADGE_SHARING ) {
 					$toGet .= " ( {$eventsCounter}/{$requiredEvents} )";
-				} else if ( empty( $wgEnableAchievementsForSharing ) ){
+				} else if( empty( $wgEnableAchievementsForSharing ) ) {
 					continue;
 				}
 			}
