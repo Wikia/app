@@ -92,6 +92,7 @@ $card-footer-size: 48px;
 		@include flex-grow(1);
 
 		font-size: $typescale-size-base;
+		margin: 0;
 		padding: 0 $content-spacing-regular;
 	}
 
