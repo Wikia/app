@@ -133,7 +133,7 @@ class DesignSystemGlobalNavigationModel extends WikiaModel {
 			'type' => 'search',
 			'results' => [
 				'url' => $searchUrl,
-				'param-name' => 'query'
+				'param-name' => $this->product === static::PRODUCT_FANDOMS ? 's' : 'query'
 			],
 			'placeholder-inactive' => [
 				'type' => 'translatable-text',
