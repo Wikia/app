@@ -1,7 +1,8 @@
 @import 'extensions/wikia/DesignSystem/bower_components/design-system/base/typography';
 
 $admins-module-icon-size: 48px;
-$admins-module-margin: 20px;
+$admins-module-item-margin: 10px;
+$admins-module-item-width: 80px;
 $admins-module-text-padding-top: 14px;
 $admins-module-text-padding-bottom: 30px;
 
@@ -9,11 +10,17 @@ $admins-module-text-padding-bottom: 30px;
 	text-align: center;
 
 	.admins {
-		@include flexbox();
-		@include justify-content(space-between);
-
 		font-size: $typescale-size-minus-2;
-		margin: 0 $admins-module-margin;
+
+		.community-page-admin-item {
+			display: inline-block;
+			vertical-align: top;
+			width: $admins-module-item-width;
+
+			&:first-child {
+				margin-right: $admins-module-item-margin;
+			}
+		}
 	}
 
 	.admins-text {
