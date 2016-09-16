@@ -22,7 +22,7 @@ $community-page-rail-spacing-xxlarge: 72px;
 	display: block;
 	padding: $community-page-rail-spacing-xxlarge 0 $community-page-rail-spacing-xlarge;
 
-	.module {
+	.community-page-module {
 		box-sizing: border-box;
 		font-size: $typescale-size-base;
 		line-height: $module-default-line-height;
@@ -46,7 +46,7 @@ $community-page-rail-spacing-xxlarge: 72px;
 		font-size: $typescale-size-minus-2;
 	}
 
-	.module-box {
+	.community-page-module-box {
 		background-color: $color-page;
 		padding: $community-page-rail-spacing-xlarge $community-page-rail-spacing-large 0;
 

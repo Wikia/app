@@ -226,7 +226,7 @@ require([
 		});
 
 		// Track clicks in admins view all link
-		$('.community-page-rail__admins-module').on('mousedown touchstart', 'a', function (event) {
+		$('.community-page-admins-module').on('mousedown touchstart', 'a', function (event) {
 			handleClick(event, 'community-page-admins-module');
 		});
 
@@ -236,7 +236,7 @@ require([
 		});
 
 		// Track clicks in the Help module
-		$('.community-page-rail__help-module').on('mousedown touchstart', 'a', function (event) {
+		$('.community-page-help-module').on('mousedown touchstart', 'a', function (event) {
 			handleClick(event, 'community-page-help-module');
 		});
 
