@@ -6,8 +6,10 @@ class WikiService extends WikiaModel {
 		'sysop'
 	];
 
+	// groups related to content/discussion moderation (NOT chat moderation)
 	const MODERATOR_GROUPS = [
-		'chatmoderator'
+		'content-moderator',
+		'threadmoderator'
 	];
 
 	const WAM_DEFAULT_ITEM_LIMIT_PER_PAGE = 20;
@@ -88,9 +90,8 @@ class WikiService extends WikiaModel {
 			$memKey,
 			self::WIKI_ADMIN_IDS_CACHE_TTL,
 			function() use ( $wiki, $useMaster, $excludeBots, $limit ) {
-				$dbName = $wiki->city_dbname;
 				$dbType = $useMaster ? DB_MASTER : DB_SLAVE;
-				$db = wfGetDB( $dbType, [], $dbName );
+				$db = wfGetDB( $dbType, [], $wiki->city_dbname );
 
 				return self::getUserIdsFromDB( $db, $excludeBots, $limit, self::ADMIN_GROUPS );
 			}
@@ -102,7 +103,7 @@ class WikiService extends WikiaModel {
 	}
 
 	/**
-	 * get list of wiki chatmoderator ids
+	 * get list of wiki content/discussions moderator ids
 	 *
 	 * @param integer $wikiId - wiki Id (default: current wiki Id)
 	 * @param bool    $useMaster - flag that describes if we should use masted DB (default: false)
@@ -111,7 +112,7 @@ class WikiService extends WikiaModel {
 	 *
 	 * @return array of $userIds
 	 */
-	public function getWikiChatmoderatorIds( $wikiId = 0, $useMaster = false, $excludeBots = false, $limit = null ) {
+	public function getWikiModeratorIds( $wikiId = 0, $useMaster = false, $excludeBots = false, $limit = null ) {
 		$wikiId = empty( $wikiId ) ? $this->wg->CityId : $wikiId ;
 		$wiki = WikiFactory::getWikiById( $wikiId );
 
@@ -119,25 +120,20 @@ class WikiService extends WikiaModel {
 			return [];
 		}
 
-		$userIds = [];
-
 		// Get moderators
-		$memKey = wfSharedMemcKey( 'wiki_chatmoderator_ids', $wikiId, $excludeBots, $limit );
+		$memKey = wfSharedMemcKey( 'wiki_content_moderator_ids', $wikiId, $excludeBots, $limit );
 		$moderatorIds = WikiaDataAccess::cache(
 			$memKey,
 			self::WIKI_ADMIN_IDS_CACHE_TTL,
 			function() use ( $wiki, $useMaster, $excludeBots, $limit ) {
-				$dbName = $wiki->city_dbname;
 				$dbType = $useMaster ? DB_MASTER : DB_SLAVE;
-				$db = wfGetDB( $dbType, [], $dbName );
+				$db = wfGetDB( $dbType, [], $wiki->city_dbname );
 
 				return self::getUserIdsFromDB( $db, $excludeBots, $limit, self::MODERATOR_GROUPS );
 			}
 		);
 
-		$userIds = array_unique( array_merge( $userIds, $moderatorIds ) );
-
-		return $userIds;
+		return array_unique( $moderatorIds );
 	}
 
 	private static function getUserIdsFromDB( DatabaseBase $db, $excludeBots = false, $limit = null, $groups = self::ADMIN_GROUPS ) {

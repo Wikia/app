@@ -148,9 +148,9 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 	 * @return array
 	 */
 	public function getTopModeratorsData() {
-		$topModeratorsTemplateData['topModerators'] =
+		$topModeratorsData['topModerators'] =
 			$this->getContributorsDetails(
-				$this->usersModel->getChatModerators( self::TOP_MODERATORS_MODULE_LIMIT ),
+				$this->usersModel->getTopModerators( self::TOP_MODERATORS_MODULE_LIMIT ),
 				AvatarService::AVATAR_SIZE_MEDIUM
 			);
 
@@ -158,7 +158,11 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 			'topModeratorsHeaderText' => $this->msg( 'communitypage-moderators' )->plain(),
 			'noAdminContactText' => $this->msg( 'communitypage-no-admins-contact' )->plain(),
 		];
-		$this->response->setData( array_merge( $templateMessages, $topModeratorsTemplateData ) );
+		$moduleToggle = [
+			'topModeratorsModuleEnabled' => !empty($topModeratorsData['topModerators'])
+		];
+
+		$this->response->setData( array_merge( $templateMessages, $topModeratorsData, $moduleToggle ) );
 	}
 
 	/**

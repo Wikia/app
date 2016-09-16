@@ -145,20 +145,20 @@ class CommunityPageSpecialUsersModel {
 
 
 	/**
-	 * Get $limit chat moderators who have contributed most recently
+	 * Get $limit content/discussions moderators who have contributed most recently
 	 * filter out bots and admins
 	 *
 	 * @param $limit
 	 * @return array
 	 */
-	public function getChatModerators( $limit ) {
-		$data = WikiaDataAccess::cache(
+	public function getTopModerators( $limit ) {
+		return WikiaDataAccess::cache(
 			self::getMemcKey( [ self::MODERATORS_MCACHE_KEY, $limit ] ),
 			WikiaResponse::CACHE_STANDARD,
 			function () use ($limit) {
 				$db = wfGetDB( DB_SLAVE );
 
-				$moderatorIds = $this->wikiService->getWikiChatmoderatorIds( 0, false, true, null );
+				$moderatorIds = $this->wikiService->getWikiModeratorIds( 0, false, true, null );
 				$adminIds = $this->wikiService->getWikiAdminIds( 0, false, true, null, true );
 				$botIds = $this->getBotIds();
 				$dateTwoYearsAgo = date( 'Y-m-d', strtotime( '-2 years' ) );
@@ -166,24 +166,31 @@ class CommunityPageSpecialUsersModel {
 				$sqlData = ( new WikiaSQL() )
 					->SELECT( 'distinct rev_user' )
 					->FROM( 'revision' )
-					->WHERE( 'rev_user' )->NOT_EQUAL_TO( 0 )
-					->AND_( 'rev_user' )->NOT_IN( $moderatorIds )
-					->AND_( 'rev_user' )->NOT_IN( $adminIds )
-					->AND_( 'rev_user' )->NOT_IN( $botIds )
-					->AND_( 'rev_timestamp' )->GREATER_THAN( $dateTwoYearsAgo )
+					->WHERE( 'rev_user' )->NOT_EQUAL_TO( 0 );
+
+				if ( !empty( $moderatorIds ) ) {
+					$sqlData = $sqlData->AND_( 'rev_user' )->IN( $moderatorIds );
+				}
+
+				if ( !empty( $adminIds ) ) {
+					$sqlData = $sqlData->AND_( 'rev_user' )->NOT_IN( $adminIds );
+				}
+
+				if ( !empty( $botIds ) ) {
+					$sqlData = $sqlData->AND_( 'rev_user' )->NOT_IN( $botIds );
+				}
+
+				$sqlData = $sqlData->AND_( 'rev_timestamp' )->GREATER_THAN( $dateTwoYearsAgo )
 					->ORDER_BY( 'rev_timestamp DESC' )
 					->LIMIT( $limit );
 
-				$result = $sqlData->runLoop( $db, function ( &$result, $row ) {
+				return $sqlData->runLoop( $db, function ( &$result, $row ) {
 					$result[] = [
 						'userId' => $row->rev_user
 					];
 				} );
-
-				return $result;
 			}
 		);
-		return $data;
 	}
 
 	/**
