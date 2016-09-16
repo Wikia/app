@@ -18,7 +18,7 @@ class CommunityPageShortPagesCardModel {
 				'type' => 'expand-article',
 				'title' => wfMessage( 'communitypage-cards-expand-articles' )->text(),
 				'icon' => 'expand-article',
-				'pages' => array_map( [ __CLASS__, 'getPage' ], $pages),
+				'pages' => array_map( [ $this, 'getPage' ], $pages ),
 				'fulllistlink' => ( $pagesCount > static::SHORT_PAGES_LIMIT ) ?
 					SpecialPage::getTitleFor( 'Shortpages' )->getLocalURL() : ''
 			]
