@@ -6,6 +6,10 @@ class WikiService extends WikiaModel {
 		'sysop'
 	];
 
+	const MODERATOR_GROUPS = [
+		'chatmoderator'
+	];
+
 	const WAM_DEFAULT_ITEM_LIMIT_PER_PAGE = 20;
 	const IMAGE_HEIGHT_KEEP_ASPECT_RATIO = -1;
 	const TOPUSER_CACHE_VALID = 10800;
@@ -38,7 +42,7 @@ class WikiService extends WikiaModel {
 		1458396,
 		15510531,
 		24039613
-		/* Abuse filter users start */
+		/* Abuse filter users end */
 	];
 
 	protected $cityVisualizationObject = null;
@@ -88,7 +92,7 @@ class WikiService extends WikiaModel {
 				$dbType = $useMaster ? DB_MASTER : DB_SLAVE;
 				$db = wfGetDB( $dbType, [], $dbName );
 
-				return self::getAdminIdsFromDB( $db, $excludeBots, $limit );
+				return self::getUserIdsFromDB( $db, $excludeBots, $limit, self::ADMIN_GROUPS );
 			}
 		);
 
@@ -97,8 +101,47 @@ class WikiService extends WikiaModel {
 		return $userIds;
 	}
 
-	private static function getAdminIdsFromDB( DatabaseBase $db, $excludeBots = false, $limit = null ) {
-		$conditions = [ 'ug_group' => self::ADMIN_GROUPS ];
+	/**
+	 * get list of wiki chatmoderator ids
+	 *
+	 * @param integer $wikiId - wiki Id (default: current wiki Id)
+	 * @param bool    $useMaster - flag that describes if we should use masted DB (default: false)
+	 * @param bool    $excludeBots - flag that describes if bots should be excluded from moderatorlist (default: false)
+	 * @param integer $limit - limit for the number of moderators
+	 *
+	 * @return array of $userIds
+	 */
+	public function getWikiChatmoderatorIds( $wikiId = 0, $useMaster = false, $excludeBots = false, $limit = null ) {
+		$wikiId = empty( $wikiId ) ? $this->wg->CityId : $wikiId ;
+		$wiki = WikiFactory::getWikiById( $wikiId );
+
+		if ( empty( $wiki ) || $wiki->city_public != 1 ) {
+			return [];
+		}
+
+		$userIds = [];
+
+		// Get moderators
+		$memKey = wfSharedMemcKey( 'wiki_chatmoderator_ids', $wikiId, $excludeBots, $limit );
+		$moderatorIds = WikiaDataAccess::cache(
+			$memKey,
+			self::WIKI_ADMIN_IDS_CACHE_TTL,
+			function() use ( $wiki, $useMaster, $excludeBots, $limit ) {
+				$dbName = $wiki->city_dbname;
+				$dbType = $useMaster ? DB_MASTER : DB_SLAVE;
+				$db = wfGetDB( $dbType, [], $dbName );
+
+				return self::getUserIdsFromDB( $db, $excludeBots, $limit, self::MODERATOR_GROUPS );
+			}
+		);
+
+		$userIds = array_unique( array_merge( $userIds, $moderatorIds ) );
+
+		return $userIds;
+	}
+
+	private static function getUserIdsFromDB( DatabaseBase $db, $excludeBots = false, $limit = null, $groups = self::ADMIN_GROUPS ) {
+		$conditions = [ 'ug_group' => $groups ];
 
 		if ( $excludeBots ) {
 			$groupList = $db->makeList( self::$botGroups );
