@@ -219,7 +219,6 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 
 	private function getCardModulesData() {
 		$insightsModules = ( new CommunityPageSpecialInsightsModel() )->getInsightsModules();
-		print_r($insightsModules[ 'modules' ]);
 		$insightsModules[ 'modules' ] = array_merge(
 			$insightsModules[ 'modules' ],
 			( new CommunityPageShortPagesCardModel() )->getData()[ 'modules' ]
