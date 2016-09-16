@@ -105,6 +105,7 @@ $messages['en'] = array(
 	'communitypage-cards-links' => 'Add links',
 	'communitypage-cards-categories' => 'Add categories',
 	'communitypage-cards-create-page' => 'Create a page',
+	'communitypage-cards-create-page-description' => 'Share your knowledge and add a new relevant article to this wiki.',
 	'communitypage-cards-other' => 'Other',
 	'communitypage-moderators' => 'Meet the moderators',
 );
@@ -213,6 +214,7 @@ $messages['qqq'] = array(
 	'communitypage-cards-links' => 'Header of card about adding links',
 	'communitypage-cards-categories' => 'Header of card about adding categories',
 	'communitypage-cards-create-page' => 'Header of card about creating a page',
+	'communitypage-cards-create-page-description' => 'Create a page card content, short description encouraging a new page creation',
 	'communitypage-cards-other' => 'Header of card about other items',
 	'communitypage-moderators' => 'Header of moderators module',
 );
