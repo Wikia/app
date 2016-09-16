@@ -1,14 +1,14 @@
 <div class="community-page-module-section-title">{{topAdminsHeaderText}}</div>
-<ul class="admins reset">
+<div class="admins reset">
 	{{#topAdminsList}}
-		<li class="community-page-admin-item">
+		<div class="community-page-admin-item">
 			<div class="avatar-container">
 				<a data-tracking="top-admins-user-avatar" href="{{profilePage}}">{{{avatar}}}</a>
 			</div>
 			<div class="community-page-contributor-details">
 				<a data-tracking="top-admins-user" href="{{profilePage}}">{{userName}}</a>
 			</div>
-		</li>
+		</div>
 	{{/topAdminsList}}
 	{{^topAdminsList}}
 		<div class="community-page-zero">
@@ -16,7 +16,7 @@
 			<a href="{{noAdminHref}}">{{noAdminContactText}}</a>
 		</div>
 	{{/topAdminsList}}
-</ul>
+</div>
 <div class="admins-text">{{adminsText}}</div>
 {{#haveOtherAdmins}}
 	<a id="openModalTopAdmins" class="admins-view-all" data-tracking="view-all-admins" href="">{{otherAdmins}}</a>
