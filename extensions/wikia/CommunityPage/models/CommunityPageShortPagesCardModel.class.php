@@ -2,6 +2,9 @@
 
 class CommunityPageShortPagesCardModel {
 	const SHORT_PAGES_LIMIT = 3;
+	// on large wikis there are thousands of short pages
+	// - we fetch only a pool of the shortest ones
+	const SHORT_PAGES_MISER_LIMIT = 1000;
 
 	/**
 	 * Will return short pages module
@@ -28,7 +31,7 @@ class CommunityPageShortPagesCardModel {
 	 */
 	private function getPages() {
 		$pages = [ ];
-		foreach ( ( new ShortPagesPage() )->doQuery() as $obj ) {
+		foreach ( ( new ShortPagesPage() )->doQuery( 0, static::SHORT_PAGES_MISER_LIMIT ) as $obj ) {
 			$pages[] = $this->getPage( $obj->title );
 		}
 		shuffle( $pages );
