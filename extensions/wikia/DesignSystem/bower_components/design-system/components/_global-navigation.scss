@@ -1,6 +1,5 @@
 $border-top-width: 6px;
 $nav-height: 49px;
-$wds-global-navigation-outer-height: $nav-height + $border-top-width;
 
 $nav-background-color: $color-white;
 
@@ -166,9 +165,8 @@ $hover-transition-duration: 300ms !default;
 
 	&__link,
 	&__wikis-menu {
-		max-width: 100%;
 		transition-duration: $search-transition-duration;
-		transition-property: color, flex, font-size, max-width, padding;
+		transition-property: color, flex, font-size, padding;
 	}
 
 	&__link {
@@ -399,7 +397,6 @@ $hover-transition-duration: 300ms !default;
 			color: rgba($color-dark-blue-gray, 0);
 			flex: 0 0 auto;
 			font-size: 0;
-			max-width: 0;
 			padding: 0;
 		}
 
