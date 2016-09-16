@@ -10,15 +10,15 @@ class CommunityPageShortPagesCardModel {
 	public function getData() {
 		$pages = $this->getPages();
 
-		return count( $pages ) > 0 ? [
+		$pagesCount = count( $pages );
+		return $pagesCount > 0 ? [
 			[
 				'type' => 'expand-article',
 				'title' => wfMessage( 'communitypage-cards-expand-articles' )->text(),
 				'icon' => 'expand-article',
 				'pages' => array_slice( $pages, 0, static::SHORT_PAGES_LIMIT ),
-				'fulllistlink' => ( count( $pages ) > static::SHORT_PAGES_LIMIT )
-					? SpecialPage::getTitleFor( 'Shortpages' )->getLocalURL()
-					: ''
+				'fulllistlink' => ( $pagesCount > static::SHORT_PAGES_LIMIT ) ?
+					SpecialPage::getTitleFor( 'Shortpages' )->getLocalURL() : ''
 			]
 		] : [ ];
 	}
