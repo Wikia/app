@@ -27,8 +27,16 @@
 }
 
 .CommunityPageMainContent {
+	@include flex-grow(1);
+
 	box-sizing: inherit;
 	padding-top: 30px;
+	> * {
+		// 3 biggest card size with margins
+		max-width: 3 * $community-page-card-module-width-regular + 3 * $content-spacing-regular;
+		margin-left: auto;
+		margin-right: 0;
+	}
 }
 
 .WikiaArticle {
@@ -41,29 +49,4 @@
 
 .WikiaArticleFooter {
 	padding: 0;
-}
-
-@media #{$breakpoint-large-up} {
-	.CommunityPageMainContent {
-		width: calc(100% - #{$community-page-rail-width-big} + #{$padding-width-large});
-
-	}
-}
-
-@media #{$breakpoint-medium-only} {
-	.CommunityPageMainContent {
-		width: calc(100% - #{$community-page-rail-width-big} + #{$padding-width-medium});
-	}
-}
-
-@media #{$breakpoint-small-plus} {
-	.CommunityPageMainContent {
-		width: calc(100% - #{$community-page-rail-width-big} + #{$padding-width-small-plus});
-	}
-}
-
-@media #{$breakpoint-below-small-plus} {
-	.CommunityPageMainContent {
-		width: calc(100% - #{$community-page-rail-width-small} + #{$padding-width-small});
-	}
 }
