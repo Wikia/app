@@ -32,8 +32,8 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 		// queue i18n messages for export to JS
 		JSMessages::enqueuePackage( 'CommunityPageSpecial', JSMessages::EXTERNAL );
 
-		$insightsModulesData = $this->getInsightsModulesData();
-		$defaultModulesLimit = max( 0, self::DEFAULT_MODULES_MAX - count( $insightsModulesData[ 'modules' ] ) );
+		$cardModulesData = $this->getCardModulesData();
+		$defaultModulesLimit = max( 0, self::DEFAULT_MODULES_MAX - count( $cardModulesData[ 'modules' ] ) );
 		$this->response->setValues( [
 			'heroImageUrl' => $this->getHeroImageUrl(),
 			'inviteFriendsText' => $this->msg( 'communitypage-invite-friends' )->text(),
@@ -52,7 +52,7 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 				->getData(),
 			'recentlyJoined' => $this->sendRequest( 'CommunityPageSpecialController', 'getRecentlyJoinedData' )
 				->getData(),
-			'insightsModules' => $insightsModulesData,
+			'cardModules' => $cardModulesData,
 			'defaultModules' => $this->getDefaultModules( $defaultModulesLimit ),
 			'helpModule' => $this->getHelpModuleData(),
 			'communityTodoListModule' => $this->getCommunityTodoListData(),
@@ -232,12 +232,21 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 		return ( new CommunityPageSpecialHelpModel() )->getData();
 	}
 
-	private function getInsightsModulesData() {
-		return ( new CommunityPageSpecialInsightsModel() )->getInsightsModules();
+	private function getCardModulesData() {
+		return [
+			'heading' => wfMessage( 'communitypage-cards-start' )->text(),
+			'messages' => [
+				'fulllist' => wfMessage( 'communitypage-full-list' )->text()
+			],
+			'modules' => array_merge(
+				( new CommunityPageSpecialInsightsModel() )->getInsightsModules(),
+				( new CommunityPageShortPagesCardModel() )->getData()
+			)
+		];
 	}
 
 	private function getDefaultModules( $limit ) {
-		return ( new CommunityPageDefaultCardsModel() )->getData( $limit );
+		return [ 'modules' => ( new CommunityPageDefaultCardsModel() )->getData( $limit ) ];
 	}
 
 	public function getModalHeaderData() {

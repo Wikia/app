@@ -2,6 +2,7 @@
 
 /* models */
 $wgAutoloadClasses['CommunityPageDefaultCardsModel'] = __DIR__ . '/models/CommunityPageDefaultCardsModel.class.php';
+$wgAutoloadClasses['CommunityPageShortPagesCardModel'] = __DIR__ . '/models/CommunityPageShortPagesCardModel.class.php';
 $wgAutoloadClasses['CommunityPageSpecialTopAdminsFormatter'] = __DIR__ . '/models/CommunityPageSpecialTopAdminsFormatter.class.php';
 $wgAutoloadClasses['CommunityPageSpecialUsersModel'] =  __DIR__ . '/models/CommunityPageSpecialUsersModel.class.php';
 $wgAutoloadClasses['CommunityPageSpecialWikiModel'] =  __DIR__ . '/models/CommunityPageSpecialWikiModel.class.php';

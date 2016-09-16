@@ -32,17 +32,12 @@ class CommunityPageSpecialInsightsModel {
 	 * @return array
 	 */
 	public function getInsightsModules() {
-		$modules[ 'modules' ] = [ ];
-		$modules[ 'heading' ] = wfMessage( 'communitypage-cards-start' )->text();
-
-		$modules[ 'messages' ] = [
-			'fulllist' => wfMessage( 'communitypage-full-list' )->text()
-		];
+		$modules = [ ];
 
 		foreach ( static::INSIGHTS_MODULES as $insight => $config ) {
 			$module = $this->getInsightModule( $insight, $config );
 			if ( !empty( $module ) ) {
-				$modules[ 'modules' ][] = $module;
+				$modules[] = $module;
 			}
 		}
 
