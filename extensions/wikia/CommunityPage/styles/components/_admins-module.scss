@@ -5,10 +5,10 @@ $admins-module-margin: 20px;
 $admins-module-text-padding-top: 14px;
 $admins-module-text-padding-bottom: 30px;
 
-.community-page-rail__admins-module {
+.community-page-rail-admins-module {
 	text-align: center;
 
-	.admins {
+	.community-page-admins-list {
 		@include flexbox();
 		@include justify-content(space-between);
 
@@ -16,13 +16,13 @@ $admins-module-text-padding-bottom: 30px;
 		margin: 0 $admins-module-margin;
 	}
 
-	.admins-text {
+	.community-page-admins-text {
 		font-size: $typescale-size-minus-1;
 		line-height: $line-height;
 		padding: $admins-module-text-padding-top 0 $admins-module-text-padding-bottom;
 	}
 
-	.admins-view-all {
+	.community-page-admins-view-all {
 		color: $color-buttons;
 		font-size: $typescale-size-minus-2;
 		font-weight: bold;
@@ -32,21 +32,21 @@ $admins-module-text-padding-bottom: 30px;
 			text-decoration: none;
 		}
 	}
-}
 
-.community-page-admin-item {
-	margin: auto;
-	max-width: 50%;
+	.community-page-admin-item {
+		margin: auto;
+		max-width: 50%;
+
+		.avatar-container {
+			display: inline-block;
+			height: $admins-module-icon-size;
+			width: $admins-module-icon-size;
+		}
+	}
 
 	.community-page-contributor-details {
 		overflow: hidden;
 		text-overflow: ellipsis;
 		white-space: nowrap;
-	}
-
-	.avatar-container {
-		display: inline-block;
-		height: $admins-module-icon-size;
-		width: $admins-module-icon-size;
 	}
 }
