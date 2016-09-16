@@ -6,6 +6,7 @@ $content-spacing-xlarge: 20px;
 .community-page-cards-module-block {
 	@include flexbox();
 	@include flex-wrap(wrap);
+	margin-bottom: 42px;
 }
 
 .community-page-cards-module-header {
