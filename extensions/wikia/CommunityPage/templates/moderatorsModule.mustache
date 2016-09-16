@@ -3,18 +3,18 @@
     <div class="community-page-module community-page-moderators-module">
         <section class="community-page-moderators-module-section">
             <div class="community-page-module-section-title">{{topModeratorsHeaderText}}</div>
-            <ul class="top-moderators reset">
+            <div class="top-moderators">
                 {{#topModerators}}
-                    <li class="community-page-moderators-list-item">
+                    <div class="community-page-moderators-list-item">
                         <div class="avatar-container">
                             <a data-tracking="top-moderators-user-avatar" href="{{profilePage}}">{{{avatar}}}</a>
                         </div>
                         <div class="community-page-moderator-details">
                             <a data-tracking="top-moderators-user" href="{{profilePage}}">{{userName}}</a>
                         </div>
-                    </li>
+                    </div>
                 {{/topModerators}}
-            </ul>
+            </div>
         </section>
     </div>
     {{/topModeratorsModuleEnabled}}
