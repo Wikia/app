@@ -2,7 +2,7 @@
 
 $admins-module-icon-size: 48px;
 $admins-module-margin: 20px;
-$admins-module-text-padding-top: 14px;
+$admins-module-text-padding: 14px;
 $admins-module-text-padding-bottom: 30px;
 
 .community-page-rail__admins-module {
@@ -19,13 +19,15 @@ $admins-module-text-padding-bottom: 30px;
 	.admins-text {
 		font-size: $typescale-size-minus-1;
 		line-height: $line-height;
-		padding: $admins-module-text-padding-top 0 $admins-module-text-padding-bottom;
+		padding: $admins-module-text-padding 0;
 	}
 
 	.admins-view-all {
 		color: $color-buttons;
+		display: block;
 		font-size: $typescale-size-minus-2;
 		font-weight: bold;
+		line-height: $typescale-size-plus-6;
 		text-transform: uppercase;
 
 		&:hover {

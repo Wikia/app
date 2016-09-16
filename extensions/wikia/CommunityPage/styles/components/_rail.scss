@@ -47,7 +47,7 @@ $community-page-rail-spacing-xxlarge: 72px;
 
 	.module-box {
 		background-color: $color-page;
-		padding: $community-page-rail-spacing-xlarge $community-page-rail-spacing-large $community-page-rail-spacing;
+		padding: $community-page-rail-spacing-xlarge $community-page-rail-spacing-large 0;
 
 		.community-page-module-section-title {
 			border: 0;

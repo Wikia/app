@@ -2,11 +2,12 @@
 @import 'extensions/wikia/DesignSystem/bower_components/design-system/base/typography';
 
 $content-spacing-xlarge: 20px;
+$cards-module-margin-bottom: 42px;
 
 .community-page-cards-module-block {
 	@include flexbox();
 	@include flex-wrap(wrap);
-	margin-bottom: 42px;
+	margin-bottom: $cards-module-margin-bottom;
 }
 
 .community-page-cards-module-header {
