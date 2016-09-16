@@ -10,19 +10,21 @@ define('ext.wikia.adEngine.lookup.rubicon.rubiconVulcan', [
 	'use strict';
 
 	var accountId = 7450,
+		incontentAdSettings = {
+			siteId: 55412,
+			size: [640, 480],
+			sizeId: 203,
+			targeting: {
+				loc: 'hivi'
+			},
+			zoneId: 260296
+		},
 		config = {
 			oasis: {
-				INCONTENT_LEADERBOARD: {
-					siteId: 55412,
-					size: [640, 480],
-					sizeId: 203,
-					targeting: {
-						loc: 'hivi'
-					},
-					zoneId: 260296
-				}
+				INCONTENT_LEADERBOARD: incontentAdSettings
 			},
 			mercury: {
+				MOBILE_IN_CONTENT: incontentAdSettings
 			}
 		},
 		cpmBuckets = [
