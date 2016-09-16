@@ -1,12 +1,12 @@
 /*global define*/
 define('ext.wikia.adEngine.slotTweaker', [
-	'wikia.log',
+	'ext.wikia.adEngine.domElementTweaker',
+	'ext.wikia.aRecoveryEngine.recovery.helper',
 	'wikia.browserDetect',
 	'wikia.document',
-	'wikia.window',
-	'ext.wikia.adEngine.domElementTweaker',
-	'ext.wikia.aRecoveryEngine.recovery.helper'
-], function (log, browser, doc, win, DOMElementTweaker, recoveryHelper) {
+	'wikia.log',
+	'wikia.window'
+], function (DOMElementTweaker, recoveryHelper, browser, doc, log, win) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.slotTweaker',
@@ -140,15 +140,15 @@ define('ext.wikia.adEngine.slotTweaker', [
 	}
 
 	function tweakRecoveredSlot(adContainer) {
-		var className = 'tmpHeader';
+		var className = 'virtual-slot';
 
 		if (browser.isIE() || browser.isEdge()) {
 			return;
 		}
 
-		adContainer.className += ' ' + className;
+		adContainer.classList.add(className);
 		DOMElementTweaker.recursiveMoveStylesToInline(adContainer);
-		DOMElementTweaker.removeClass(adContainer, className);
+		adContainer.classList.remove(className);
 	}
 
 	function makeResponsive(slotName, aspectRatio) {

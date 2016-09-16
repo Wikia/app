@@ -45,6 +45,8 @@ define('ext.wikia.adEngine.domElementTweaker', [
 			}
 		} else if (typeof win.CSSStyleDeclaration !== 'undefined' && computedStyles instanceof win.CSSStyleDeclaration) {
 			element.style.cssText = computedStyles.cssText;
+		} else {
+			log(['Can\'t copy styles from element', computedStyles.cssText], 4, logGroup);
 		}
 	}
 
@@ -57,8 +59,8 @@ define('ext.wikia.adEngine.domElementTweaker', [
 
 	return {
 		isElement: isElement,
+		moveStylesToInline: moveStylesToInline,
 		recursiveMoveStylesToInline: recursiveMoveStylesToInline,
-		removeClass: removeClass,
-		moveStylesToInline: moveStylesToInline
+		removeClass: removeClass
 	};
 });
