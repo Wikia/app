@@ -34,7 +34,7 @@ $moderator-module-space-medium: 2 * $moderator-module-space-small;
 		@include flexbox();
 		@include align-items(flex-start);
 
-		padding: $moderator-module-space-medium 0 0;
+		padding-top: $moderator-module-space-medium;
 
 		&:first-of-type {
 			padding: 0;
