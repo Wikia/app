@@ -269,6 +269,7 @@ class WikiaApiQueryAllUsers extends ApiQueryBase {
 		
 		# table
 		$this->addTables('events_local_users');
+		$this->addWhere( 'wiki_id = ' . intval($wgCityId) );
 		$this->addWhere( 'user_is_closed = 0' );
 		
 		# limit
@@ -288,7 +289,6 @@ class WikiaApiQueryAllUsers extends ApiQueryBase {
 			$this->addWhere( 'user_name' . $db->buildLike( $this->keyToTitle( $params['prefix'] ), $db->anyString() ) );
 
 		if ( !is_null($params['group']) ) {
-			$this->addWhere( 'wiki_id = ' . intval($wgCityId) );			
 			$this->addWhere( 'all_groups' . $db->buildLike( $db->anyString(), $params['group'], $db->anyString() ) );
 		}
 
