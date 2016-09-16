@@ -14,10 +14,10 @@ $hover-transition-duration: 300ms !default;
 
 @mixin visible-search-input {
 	&__search-input {
+		// transitioned property: padding;
 		padding: $search-input-padding;
 		position: relative;
 		top: auto;
-		width: 100%;
 	}
 }
 
@@ -215,18 +215,14 @@ $hover-transition-duration: 300ms !default;
 	}
 
 	&__search-input-wrapper {
-		border: {
-			bottom: 1px solid transparent;
-			left: 0;
-			right: 0;
-			top: 0;
-		};
+		border: solid transparent;
+		border-width: 0 0 1px;
 		display: flex;
 		// Safari doesn't set default flex values if we use `flex: 1;`
 		// it requires us to put these values explicitly.
 		flex: 1 1 auto;
-		min-height: 28px;
-		transition: border-color $search-transition-duration;
+		height: 28px;
+		transition: border-bottom-color $search-transition-duration;
 	}
 
 	&__search-label {
@@ -266,8 +262,7 @@ $hover-transition-duration: 300ms !default;
 		position: absolute;
 		right: 0;
 		top: 0;
-		transition-duration: $search-transition-duration;
-		transition-property: width, padding;
+		transition: padding $search-transition-duration;
 
 		&:focus {
 			outline: none;
@@ -394,7 +389,8 @@ $hover-transition-duration: 300ms !default;
 
 		&__link,
 		&__wikis-menu {
-			color: rgba($color-dark-blue-gray, 0);
+			// transitioned properties: color, flex, font-size, padding;
+			color: transparent;
 			flex: 0 0 auto;
 			font-size: 0;
 			padding: 0;
@@ -405,12 +401,15 @@ $hover-transition-duration: 300ms !default;
 		}
 
 		&__search {
+			// transitioned property: flex;
+			//
 			// Safari doesn't set default flex values if we use `flex: 1;`
 			// it requires us to put these values explicitly.
 			flex: 2 1 auto;
 		}
 
 		&__search-input-wrapper {
+			// transitioned property: border-bottom-color;
 			border-bottom-color: $color-slate-gray;
 
 			&.wds-is-active {
@@ -418,15 +417,13 @@ $hover-transition-duration: 300ms !default;
 			}
 		}
 
-		&__search-input {
-			width: 100%;
-		}
-
 		&__search-input::placeholder {
+			// transitioned property: color;
 			color: $color-light-gray;
 		}
 
 		&__search-close {
+			// transitioned properties: max-width, opacity, padding;
 			max-width: 24px;
 			opacity: 1;
 			padding-right: 8px;
