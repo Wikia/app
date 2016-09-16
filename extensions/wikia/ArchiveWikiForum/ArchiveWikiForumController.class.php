@@ -13,8 +13,8 @@ class ArchiveWikiForumController extends WikiaController {
 
         global $wgEnableForumExt;
         if ( !empty( $wgEnableForumExt ) ) {
-            $forumTitle = SpecialPage::getTitleFor( 'Forum' );
             $messageKey = 'archive-wiki-forums-button-to-new-forums';
+            $forumTitle = SpecialPage::getTitleFor( 'Forum' );
             $url = $forumTitle->getLocalURL();
         } else {
             $messageKey = 'archive-wiki-forums-button-to-discussions';
