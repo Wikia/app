@@ -9,9 +9,9 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 	const TOP_CONTRIBUTORS_MODULE_LIMIT = 5;
 	const MODAL_IMAGE_HEIGHT = 700.0;
 	const MODAL_IMAGE_MIN_RATIO = 0.85;
+	const DEFAULT_MODULES_MAX = 3;
 
 	private $usersModel;
-
 	private $wikiModel;
 
 	public function __construct() {
@@ -32,6 +32,8 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 		// queue i18n messages for export to JS
 		JSMessages::enqueuePackage( 'CommunityPageSpecial', JSMessages::EXTERNAL );
 
+		$insightsModulesData = $this->getInsightsModulesData();
+		$defaultModulesLimit = max( 0, self::DEFAULT_MODULES_MAX - count( $insightsModulesData[ 'modules' ] ) );
 		$this->response->setValues( [
 			'heroImageUrl' => $this->getHeroImageUrl(),
 			'inviteFriendsText' => $this->msg( 'communitypage-invite-friends' )->text(),
@@ -50,11 +52,12 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 				->getData(),
 			'recentlyJoined' => $this->sendRequest( 'CommunityPageSpecialController', 'getRecentlyJoinedData' )
 				->getData(),
-			'insightsModules' => $this->getInsightsModulesData(),
+			'insightsModules' => $insightsModulesData,
+			'defaultModules' => $this->getDefaultModules( $defaultModulesLimit ),
 			'helpModule' => $this->getHelpModuleData(),
 			'communityTodoListModule' => $this->getCommunityTodoListData(),
 			'contributorsModuleEnabled' => !$this->wg->CommunityPageDisableTopContributors,
-			'inspectlet' => (new InspectletService(InspectletService::COMMUNITY_PAGE))->getInspectletCode()
+			'inspectlet' => ( new InspectletService( InspectletService::COMMUNITY_PAGE ) )->getInspectletCode()
 		] );
 	}
 
@@ -233,6 +236,10 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 		return ( new CommunityPageSpecialInsightsModel() )->getInsightsModules();
 	}
 
+	private function getDefaultModules( $limit ) {
+		return ( new CommunityPageDefaultCardsModel() )->getData( $limit );
+	}
+
 	public function getModalHeaderData() {
 		$memberCount = $this->usersModel->getMemberCount();
 
@@ -301,8 +308,8 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 					->numParams( $this->getLanguage()->formatNum( $contributor[ 'contributions' ] ?? 0 ) )->text(),
 				'profilePage' => $user->getUserPage()->getLocalURL(),
 				'count' => $count,
-				'isAdmin' => $contributor['isAdmin'] ?? false,
-				'timeAgo' => $contributor['timeAgo'] ?? null,
+				'isAdmin' => $contributor[ 'isAdmin' ] ?? false,
+				'timeAgo' => $contributor[ 'timeAgo' ] ?? null,
 			];
 		}, $contributors );
 	}
@@ -384,8 +391,8 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 
 		return array_merge( $data, [
 			'showEditLink' => $user->isAllowed( 'editinterface' ),
-			'editIcon' => DesignSystemHelper::getSvg('wds-icons-pencil',
-				'community-page-todo-list-module-edit-icon'),
+			'editIcon' => DesignSystemHelper::getSvg( 'wds-icons-pencil',
+				'community-page-todo-list-module-edit-icon' ),
 			'isZeroState' => !$data[ 'haveContent' ],
 			'heading' => $this->msg( 'communitypage-todo-module-heading' )->text(),
 			'editList' => $this->msg( 'communitypage-todo-module-edit-list' )->text(),

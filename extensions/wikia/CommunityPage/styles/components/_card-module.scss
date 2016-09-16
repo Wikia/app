@@ -8,7 +8,7 @@ $card-background-color: mix($color-page, #fff, 91%);
 $card-header-size: 84px;
 $card-footer-size: 48px;
 
-.community-page-insights-module {
+.community-page-card-module {
 	@include flexbox();
 	@include flex-direction(column);
 
@@ -20,18 +20,25 @@ $card-footer-size: 48px;
 	margin-right: $content-spacing-small;
 	width: $community-page-card-module-width-regular;
 
-	.community-page-insights-module-article-data {
+	.community-page-card-module-article-data {
 		@include trim-to-line-number(2);
 
 		color: $color-links;
 		word-break: break-all;
 	}
 
-	.community-page-insights-module-footer {
+	.community-page-card-module-description {
+		@include flex-grow(1);
+
+		font-size: $typescale-size-base;
+		padding: 0 $content-spacing-regular;
+	}
+
+	.community-page-card-module-footer {
 		@include flexbox();
 	}
 
-	.community-page-insights-module-full-list-link {
+	.community-page-card-module-full-list-link {
 		@include flex-grow(1);
 
 		color: $color-buttons;
@@ -48,7 +55,7 @@ $card-footer-size: 48px;
 		}
 	}
 
-	.community-page-insights-module-header {
+	.community-page-card-module-header {
 		@include align-items(center);
 		@include flexbox();
 
@@ -67,29 +74,29 @@ $card-footer-size: 48px;
 		}
 	}
 
-	.community-page-insights-module-header-icon {
+	.community-page-card-module-header-icon {
 		fill: $color-buttons;
 		margin-right: $content-spacing-small;
 	}
 
-	.community-page-insights-module-help {
+	.community-page-card-module-help {
 		height: $card-footer-size;
 		width: $card-footer-size;
 	}
 
-	.community-page-insights-module-help-icon {
+	.community-page-card-module-help-icon {
 		fill: $color-page-border-subtle;
 		margin: $content-spacing-small-plus $content-spacing-small;
 	}
 
-	.community-page-insights-module-list {
+	.community-page-card-module-list {
 		@include flex-grow(1);
 
 		font-size: $typescale-size-base;
 		padding: 0 $content-spacing-regular;
 	}
 
-	.community-page-insights-module-list-item {
+	.community-page-card-module-list-item {
 		@include align-items(center);
 		@include flexbox();
 
@@ -98,19 +105,19 @@ $card-footer-size: 48px;
 }
 
 @media #{$breakpoint-medium-up} {
-	.community-page-insights-module {
+	.community-page-card-module {
 		margin-right: $content-spacing-regular;
 	}
 }
 
 @media #{$breakpoint-small-plus} {
-	.community-page-insights-module {
+	.community-page-card-module {
 		margin-right: $content-spacing-xsmall;
 	}
 }
 
 @media #{$breakpoint-below-small-plus} {
-	.community-page-insights-module {
+	.community-page-card-module {
 		width: $community-page-card-module-width-small;
 	}
 }
