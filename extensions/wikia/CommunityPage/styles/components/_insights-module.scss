@@ -1,3 +1,4 @@
+@import 'variables';
 @import 'skins/shared/color';
 @import 'skins/shared/mixins/flexbox';
 @import 'variables';
@@ -5,22 +6,18 @@
 
 $card-background-color: mix($color-page, #fff, 91%);
 $card-footer-size: 48px;
-$content-spacing-small: 12px;
-$content-spacing-small-plus: 15px;
-$content-spacing-regular: 18px;
-$content-spacing-large: 24px;
-$module-width: 239px;
 
 .community-page-insights-module {
 	@include flexbox();
 	@include flex-direction(column);
 
 	background-color: $card-background-color;
+	box-sizing: border-box;
 	border: 1px solid $color-page-border-subtle;
 	color: $color-button-text;
 	margin-bottom: $content-spacing-regular;
 	margin-right: $content-spacing-small;
-	width: $module-width;
+	width: $community-page-card-module-width-regular;
 
 	.community-page-insights-module-article-data {
 		@include trim-to-line-number(2);
@@ -55,7 +52,7 @@ $module-width: 239px;
 		margin: 0 0 $content-spacing-large;
 		padding: $content-spacing-regular;
 
-		h3 {
+		span {
 			font-size: $typescale-size-minus-1;
 			font-weight: bold;
 			line-height: $typescale-size-base;
@@ -90,5 +87,23 @@ $module-width: 239px;
 		@include flexbox();
 
 		margin-bottom: $content-spacing-large;
+	}
+}
+
+@media #{$breakpoint-medium-up} {
+	.community-page-insights-module {
+		margin-right: $content-spacing-regular;
+	}
+}
+
+@media #{$breakpoint-small-plus} {
+	.community-page-insights-module {
+		margin-right: $content-spacing-xsmall;
+	}
+}
+
+@media #{$breakpoint-below-small-plus} {
+	.community-page-insights-module {
+		width: $community-page-card-module-width-small;
 	}
 }
