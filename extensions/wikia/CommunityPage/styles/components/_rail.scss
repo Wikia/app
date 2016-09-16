@@ -18,8 +18,7 @@ $community-page-rail-spacing-xxlarge: 80px;
 
 .community-page-rail {
 	background-color: $community-page-rail-background-color;
-	display: inline-block;
-	float: right;
+	display: block;
 	padding: $community-page-rail-spacing-xxlarge 0 $community-page-rail-spacing-xlarge;
 
 	.module {
