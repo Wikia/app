@@ -5,6 +5,7 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 	const COMMUNITY_PAGE_BENEFITS_MODAL_IMAGE = 'Community-Page-Modal-Image.jpg';
 	const DEFAULT_TEMPLATE_ENGINE = \WikiaResponse::TEMPLATE_ENGINE_MUSTACHE;
 	const ALL_MEMBERS_LIMIT = 20;
+	const TOP_MODERATORS_MODULE_LIMIT = 2;
 	const TOP_CONTRIBUTORS_MODULE_LIMIT = 5;
 	const MODAL_IMAGE_HEIGHT = 700.0;
 	const MODAL_IMAGE_MIN_RATIO = 0.85;
@@ -44,6 +45,8 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 				[ 'limit' => static::TOP_CONTRIBUTORS_MODULE_LIMIT ]
 			)->getData(),
 			'topAdminsData' => $this->sendRequest( 'CommunityPageSpecialController', 'getTopAdminsData' )
+				->getData(),
+			'topModeratorsData' => $this->sendRequest( 'CommunityPageSpecialController', 'getTopModeratorsData' )
 				->getData(),
 			'recentlyJoined' => $this->sendRequest( 'CommunityPageSpecialController', 'getRecentlyJoinedData' )
 				->getData(),
@@ -138,6 +141,28 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 			'noAdminHref' => $this->msg( 'communitypage-communitycentral-link' )->inContentLanguage()->text(),
 		];
 		$this->response->setData( array_merge( $templateMessages, $topAdminsTemplateData ) );
+	}
+
+	/**
+	 * Set context for topModerators template. Needs to be passed through the index method in order to work.
+	 * @return array
+	 */
+	public function getTopModeratorsData() {
+		$topModeratorsData['topModerators'] =
+			$this->getContributorsDetails(
+				$this->usersModel->getTopModerators( self::TOP_MODERATORS_MODULE_LIMIT ),
+				AvatarService::AVATAR_SIZE_SMALL_PLUS
+			);
+
+		$templateMessages = [
+			'topModeratorsHeaderText' => $this->msg( 'communitypage-moderators' )->plain(),
+			'noAdminContactText' => $this->msg( 'communitypage-no-admins-contact' )->plain(),
+		];
+		$moduleToggle = [
+			'topModeratorsModuleEnabled' => !empty($topModeratorsData['topModerators'])
+		];
+
+		$this->response->setData( array_merge( $templateMessages, $topModeratorsData, $moduleToggle ) );
 	}
 
 	/**

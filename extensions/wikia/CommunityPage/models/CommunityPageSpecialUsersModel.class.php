@@ -5,6 +5,7 @@ use Wikia\Logger\WikiaLogger;
 class CommunityPageSpecialUsersModel {
 	const TOP_CONTRIB_MCACHE_KEY = 'community_page_top_contrib';
 	const ALL_ADMINS_MCACHE_KEY = 'community_page_all_admins';
+	const MODERATORS_MCACHE_KEY = 'community_page_moderators';
 	const GLOBAL_BOTS_MCACHE_KEY = 'community_page_global_bots';
 	const ALL_BOTS_MCACHE_KEY = 'community_page_all_bots';
 	const ALL_BLACKLISTED_IDS_MCACHE_KEY = 'community_page_all_blacklisted_ids';
@@ -140,6 +141,56 @@ class CommunityPageSpecialUsersModel {
 		);
 		self::logUserModelPerformanceData( 'view', 'all_admins', $this->isUserOnList( $data ), $this->isUserLoggedIn() );
 		return $data;
+	}
+
+
+	/**
+	 * Get $limit content/discussions moderators who have contributed most recently
+	 * filter out bots and admins
+	 *
+	 * @param $limit
+	 * @return array
+	 */
+	public function getTopModerators( $limit ) {
+		return WikiaDataAccess::cache(
+			self::getMemcKey( [ self::MODERATORS_MCACHE_KEY, $limit ] ),
+			WikiaResponse::CACHE_STANDARD,
+			function () use ($limit) {
+				$db = wfGetDB( DB_SLAVE );
+
+				$moderatorIds = $this->wikiService->getWikiModeratorIds( 0, false, true, null );
+				$adminIds = $this->wikiService->getWikiAdminIds( 0, false, true, null, true );
+				$botIds = $this->getBotIds();
+				$dateTwoYearsAgo = date( 'Y-m-d', strtotime( '-2 years' ) );
+
+				$sqlData = ( new WikiaSQL() )
+					->SELECT( 'distinct rev_user' )
+					->FROM( 'revision' )
+					->WHERE( 'rev_user' )->NOT_EQUAL_TO( 0 );
+
+				if ( !empty( $moderatorIds ) ) {
+					$sqlData = $sqlData->AND_( 'rev_user' )->IN( $moderatorIds );
+				}
+
+				if ( !empty( $adminIds ) ) {
+					$sqlData = $sqlData->AND_( 'rev_user' )->NOT_IN( $adminIds );
+				}
+
+				if ( !empty( $botIds ) ) {
+					$sqlData = $sqlData->AND_( 'rev_user' )->NOT_IN( $botIds );
+				}
+
+				$sqlData = $sqlData->AND_( 'rev_timestamp' )->GREATER_THAN( $dateTwoYearsAgo )
+					->ORDER_BY( 'rev_timestamp DESC' )
+					->LIMIT( $limit );
+
+				return $sqlData->runLoop( $db, function ( &$result, $row ) {
+					$result[] = [
+						'userId' => $row->rev_user
+					];
+				} );
+			}
+		);
 	}
 
 	/**
