@@ -85,7 +85,7 @@ class EmailConfirmationController extends EmailController {
 	}
 
 	protected static function getEmailSpecificFormFields() {
-		$form = [
+		return [
 			'inputs' => [
 				[
 					'type' => 'hidden',
@@ -94,8 +94,5 @@ class EmailConfirmationController extends EmailController {
 				],
 			]
 		];
-
-		return $form;
-
 	}
 }

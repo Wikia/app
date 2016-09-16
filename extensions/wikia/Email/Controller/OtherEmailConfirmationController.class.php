@@ -58,7 +58,7 @@ abstract class AbstractEmailConfirmationController extends EmailController {
 	abstract protected function getEmailSpecificFooterMessages();
 
 	protected static function getEmailSpecificFormFields() {
-			$form = [
+			return [
 				'inputs' => [
 					[
 						'type' => 'hidden',
@@ -67,9 +67,6 @@ abstract class AbstractEmailConfirmationController extends EmailController {
 					],
 				]
 			];
-
-			return $form;
-
 	}
 }
 

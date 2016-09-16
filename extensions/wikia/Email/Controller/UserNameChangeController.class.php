@@ -66,7 +66,7 @@ class UserNameChangeController extends EmailController {
 	}
 
 	protected static function getEmailSpecificFormFields() {
-		$form = [
+		return [
 			'inputs' => [
 				[
 					'type' => 'text',
@@ -82,7 +82,5 @@ class UserNameChangeController extends EmailController {
 				],
 			]
 		];
-
-		return $form;
 	}
 }
