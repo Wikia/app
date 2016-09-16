@@ -158,14 +158,13 @@ function Ach_ArticleSaveComplete(	&$article, &$user, $text,
 	return true;
 }
 
-function Ach_GetHTMLAfterBody($skin, &$html) {
+function Ach_GetHTMLAfterBody( Skin $skin, &$html ) {
 	wfProfileIn(__METHOD__);
 
 	global $wgOut, $wgTitle, $wgUser;
 
 	if($wgUser->isLoggedIn() && !($wgUser->getGlobalPreference( 'hidepersonalachievements' ))) {
-		$spName = SpecialPageFactory::resolveAlias($wgTitle->getDBkey());
-		if ($wgTitle->getNamespace() == NS_SPECIAL && array_shift($spName) == 'MyHome') {
+		if( $wgTitle->getNamespace() == NS_SPECIAL && $skin->getTitle()->isSpecial( 'MyHome' ) ) {
 			$awardingService = new AchAwardingService();
 			$awardingService->awardCustomNotInTrackBadge($wgUser, BADGE_WELCOME);
 		}
