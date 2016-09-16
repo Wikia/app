@@ -484,7 +484,7 @@ class FounderTipsController extends EmailController {
 				$this->getMessage( 'emailext-founder-visit-community', $this->wikiUrl, $this->wikiName )->parse(),
 				$this->getMessage( 'emailext-founder-happy-wikia-building' )->text()
 			],
-			'signatureIcon' => $this->findSignatureIcon(),
+			'signatureIcon' => $this->getSignatureIcon(),
 			'signature' => $this->createEmailSignature()
 		] );
 	}
@@ -552,7 +552,7 @@ class FounderTipsController extends EmailController {
 		return array_merge_recursive( $formFields, parent::getEmailSpecificFormFields() );
 	}
 
-	protected function findSignatureIcon() {
+	protected function getSignatureIcon() {
 		return ImageHelper::getFileUrl( 'Fandom-heart-color.png' );
 	}
 
@@ -573,14 +573,14 @@ class FounderTipsThreeDaysController extends FounderTipsController {
 	public function body() {
 		$this->response->setData( [
 			'salutation' => $this->getSalutation(),
-			'summary' => $this->getMessage( 'emailext-founder-3-days-extended-summary')->text(),
+			'summary' => $this->getMessage( 'emailext-founder-3-days-extended-summary' )->text(),
 			'extendedSummary' => $this->getMessage( 'emailext-founder-3-days-extended-summary-tips', $this->wikiUrl, $this->wikiName )->parse(),
 			'details' => $this->getDetailsList(),
 			'hasContentFooterMessages' => true,
 			'contentFooterMessages' => [
 				$this->getMessage( 'emailext-founder-3-days-great-work' )->text()
 			],
-			'signatureIcon' => $this->findSignatureIcon(),
+			'signatureIcon' => $this->getSignatureIcon(),
 			'signature' => $this->createEmailSignature()
 		] );
 	}
@@ -635,7 +635,7 @@ class FounderTipsTenDaysController extends FounderTipsController {
 			'contentFooterMessages' => [
 				$this->getMessage( 'emailext-founder-10-days-email-what-next' )->text()
 			],
-			'signatureIcon' => $this->findSignatureIcon(),
+			'signatureIcon' => $this->getSignatureIcon(),
 			'signature' => $this->createEmailSignature()
 		] );
 	}

@@ -56,13 +56,15 @@ class UserNameChangeController extends EmailController {
 	}
 
 	private function generateLinks() {
-		return [[
-			'label' => $this->getMessage( 'emailext-usernamechange-profile-page' )->text(),
-			'url' => $this->targetUser->getUserPage()->getFullURL()
-		], [
-			'label' => $this->getMessage( 'emailext-usernamechange-check-out' )->text(),
-			'url' => 'http://fandom.wikia.com'
-		]];
+		return [
+			[
+				'label' => $this->getMessage( 'emailext-usernamechange-profile-page' )->text(),
+				'url' => $this->targetUser->getUserPage()->getFullURL()
+			], [
+				'label' => $this->getMessage( 'emailext-usernamechange-check-out' )->text(),
+				'url' => 'http://fandom.wikia.com'
+			]
+		];
 	}
 
 	protected static function getEmailSpecificFormFields() {
