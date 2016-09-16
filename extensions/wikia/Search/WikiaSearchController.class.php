@@ -527,6 +527,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		}
 		return null;
 	}
+
 	/**
 	 * Called in index action.
 	 * Based on an article match and various settings, generates tracking events and routes user to appropriate page.
@@ -541,7 +542,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		if ( $searchConfig->hasArticleMatch() ) {
 			$article = Article::newFromID( $searchConfig->getArticleMatch()->getId() );
 			$title = $article->getTitle();
-			if ( $this->getVal('fulltext', '0') === '0' ) {
+			if ( $this->useGoSearch() ) {
 				wfRunHooks( 'SpecialSearchIsgomatch', array( $title, $query ) );
 				$this->setVarnishCacheTime( WikiaResponse::CACHE_DISABLED );
 				$this->response->redirect( $title->getFullUrl() );
@@ -553,6 +554,22 @@ class WikiaSearchController extends WikiaSpecialPageController {
 			}
 		}
 		return true;
+	}
+
+	/**
+	 * Determine whether we should use "Go" search for exact title matches.
+	 *
+	 * This supports both the user preference and has backwards compatibility for
+	 * Monobook's "Go" button and "go" URL parameter on search.
+	 *
+	 * @return bool
+	 */
+	private function useGoSearch() {
+		$default = $this->getUser()->getGlobalPreference( 'enableGoSearch' ) ? '0' : 'Search';
+		// Support for Monobook's "Go" button and functionality
+		$fulltext = $this->getVal( 'fulltext', $this->getVal( 'go', $default ) );
+
+		return $fulltext === '0' || $fulltext === 'Go';
 	}
 
 	/**
