@@ -1,4 +1,5 @@
 @import 'skins/oasis/css/core/breakpoints-variables';
+@import 'extensions/wikia/DesignSystem/bower_components/design-system/base/typography';
 
 // fonts
 $community-page-font-family: "HelveticaNeue", Helvetica, Arial, sans-serif;
@@ -29,3 +30,16 @@ $community-page-rail-width-xbig: 350px;
 // card sizes
 $community-page-card-module-width-small: 232px;
 $community-page-card-module-width-regular: 240px;
+
+@mixin trim-to-line-number($number) {
+	display: -webkit-box;
+	overflow: hidden;
+	// works only in Chrome and Opera
+	-webkit-line-clamp: 2;
+	-webkit-box-orient: vertical;
+
+	// simply not display other lines
+	// (fallback for other browsers)
+	line-height: $line-height;
+	max-height: $number * $line-height;
+}
