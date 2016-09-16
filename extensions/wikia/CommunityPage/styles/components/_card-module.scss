@@ -13,8 +13,8 @@ $card-footer-size: 48px;
 	@include flex-direction(column);
 
 	background-color: $card-background-color;
-	box-sizing: border-box;
 	border: 1px solid $color-page-border-subtle;
+	box-sizing: border-box;
 	margin-bottom: $content-spacing-regular;
 	margin-right: $content-spacing-small;
 	width: $community-page-card-module-width-regular;
@@ -34,19 +34,16 @@ $card-footer-size: 48px;
 	}
 
 	.community-page-card-module-footer {
-		@include flexbox();
+		padding: $content-spacing-small-plus $content-spacing-large $content-spacing-small-plus 0;
+		text-align: right;
 	}
 
 	.community-page-card-module-full-list-link {
-		@include flex-grow(1);
-
 		color: $color-buttons;
 		display: block;
 		font-size: $typescale-size-minus-2;
 		font-weight: bold;
-		line-height: $typescale-size-plus-6;
-		margin-right: $content-spacing-large;
-		text-align: right;
+		line-height: $line-height;
 		text-transform: uppercase;
 
 		&:hover {
