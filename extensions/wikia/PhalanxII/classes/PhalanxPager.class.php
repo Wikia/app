@@ -127,10 +127,9 @@ class PhalanxPager extends ReverseChronologicalPager {
 		if ( ( $row->p_type & Phalanx::TYPE_EMAIL ) && !$this->getUser()->isAllowed( 'phalanxemailblock' ) ) {
 			return '';
 		}
-
-		// SUS-270: Get author from correct field (p_authorId instead of p_author_id)
-		if ( isset( $row->p_authorId ) ) {
-			$author = User::newFromId( $row->p_authorId );
+		
+		if ( isset( $row->p_author_id ) ) {
+			$author = User::newFromId( $row->p_author_id );
 			$authorName = $author->getName();
 		} else {
 			$authorName = '';
