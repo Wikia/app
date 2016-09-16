@@ -67,7 +67,7 @@ class WikiService extends WikiaModel {
 			return [ $this->wg->FounderEmailsDebugUserId ];
 		}
 
-		$wikiId = $wikiId ?? $this->wg->CityId;
+		$wikiId = $wikiId ? $wikiId : $this->wg->CityId;
 		$wiki = WikiFactory::getWikiById( $wikiId );
 
 		if ( empty( $wiki ) || $wiki->city_public != 1 ) {
@@ -113,7 +113,7 @@ class WikiService extends WikiaModel {
 	 * @return array of $userIds
 	 */
 	public function getWikiModeratorIds( $wikiId = 0, $useMaster = false, $excludeBots = false, $limit = null ) {
-		$wikiId = $wikiId ?? $this->wg->CityId;
+		$wikiId = $wikiId ? $wikiId : $this->wg->CityId;
 		$wiki = WikiFactory::getWikiById( $wikiId );
 
 		if ( empty( $wiki ) || $wiki->city_public != 1 ) {
