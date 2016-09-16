@@ -3,12 +3,12 @@
 class CommunityPageSpecialHelpModel {
 	public function getData() {
 		return [
-			'title' => wfMessage( 'communitypage-help-module-title' )->plain(),
+			'title' => wfMessage( 'communitypage-help-module-title' )->text(),
 			'titleIcon' => file_get_contents( 'extensions/wikia/CommunityPage/images/help_icon.svg' ),
-			'editPage' => wfMessage( 'communitypage-help-edit-page' )->plain(),
-			'addLinks' => wfMessage( 'communitypage-help-add-link' )->plain(),
-			'addNewPage' => wfMessage( 'communitypage-help-add-new-page' )->plain(),
-			'communityPolicy' => wfMessage( 'communitypage-help-policy' )->plain(),
+			'editPage' => wfMessage( 'communitypage-help-edit-page' )->text(),
+			'addLinks' => wfMessage( 'communitypage-help-add-link' )->text(),
+			'addNewPage' => wfMessage( 'communitypage-help-add-new-page' )->text(),
+			'communityPolicy' => wfMessage( 'communitypage-help-policy' )->text(),
 			'editPageLink' => $this->getHelpPageLink( 'communitypage-help-module-edit-page-name' ),
 			'addLinksPageLink' => $this->getHelpPageLink( 'communitypage-help-module-add-link-name' ),
 			'addNewPageLink' => $this->getHelpPageLink( 'communitypage-help-module-new-page-name' ),
