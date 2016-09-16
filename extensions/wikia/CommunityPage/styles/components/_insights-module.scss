@@ -1,5 +1,6 @@
 @import 'skins/shared/color';
 @import 'skins/shared/mixins/flexbox';
+@import 'variables';
 @import 'extensions/wikia/DesignSystem/bower_components/design-system/base/typography';
 
 $card-background-color: mix($color-page, #fff, 91%);
@@ -22,6 +23,8 @@ $module-width: 239px;
 	width: $module-width;
 
 	.community-page-insights-module-article-data {
+		@include trim-to-line-number(2);
+
 		color: $color-links;
 		word-break: break-all;
 	}

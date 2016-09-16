@@ -1,4 +1,5 @@
 @import 'skins/oasis/css/core/breakpoints-variables';
+@import 'extensions/wikia/DesignSystem/bower_components/design-system/base/typography';
 
 // fonts
 $community-page-font-family: "HelveticaNeue", Helvetica, Arial, sans-serif;
@@ -13,6 +14,19 @@ $modal-horizontal-padding: 25px;
 $modal-top-padding: 18px;
 $modal-bottom-padding: 6px;
 
-//right rail
+// right rail
 $community-page-rail-width-small: 256px;
 $community-page-rail-width-big: 266px;
+
+@mixin trim-to-line-number($number) {
+	display: -webkit-box;
+	overflow: hidden;
+	// works only in Chrome and Opera
+	-webkit-line-clamp: 2;
+	-webkit-box-orient: vertical;
+
+	// simply not display other lines
+	// (fallback for other browsers)
+	line-height: $line-height;
+	max-height: $number * $line-height;
+}
