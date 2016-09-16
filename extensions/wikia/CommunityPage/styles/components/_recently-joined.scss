@@ -2,7 +2,7 @@
 
 $recently-joined-avatar-size: 30px;
 
-.community-page-rail-recently-joined-module {
+.community-page-recently-joined-module {
 	.community-page-recently-joined-members {
 		@include flexbox();
 		@include flex-wrap(wrap);
