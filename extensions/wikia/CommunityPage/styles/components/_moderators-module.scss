@@ -1,19 +1,21 @@
 @import 'skins/shared/color';
-@import 'skins/shared/mixins/clearfix';
 @import 'skins/shared/mixins/flexbox';
 @import 'variables';
 @import 'extensions/wikia/DesignSystem/bower_components/design-system/base/typography';
 
 // Styles for the moderators module in-page
+$moderator-module-space-small: 6px;
+$moderator-module-space-medium: 2 * $moderator-module-space-small;
+
 .community-page-moderators-module {
 	.avatar-container {
 		display: inline-block;
-		margin-right: 6px;
+		margin-right: $moderator-module-space-small;
 		vertical-align: middle;
 	}
 
 	.community-page-moderators-module-section {
-		margin-top: 12px;
+		margin-top: $moderator-module-space-medium;
 
 		&:first-of-type {
 			margin-top: 0;
@@ -32,7 +34,7 @@
 		@include flexbox();
 		@include align-items(flex-start);
 
-		padding: 12px 0 0;
+		padding-top: $moderator-module-space-medium;
 
 		&:first-of-type {
 			padding: 0;
@@ -43,16 +45,16 @@
 		}
 
 		.community-page-moderator-rank {
-			padding: 6px 6px 0 0;
+			padding: $moderator-module-space-small $moderator-module-space-small 0 0;
 		}
 
 		.community-page-moderator-details {
-			padding-top: 6px;
+			padding-top: $moderator-module-space-small;
 			word-break: break-all;
 		}
 	}
 
 	.community-page-zero {
-		margin: 12px 0;
+		margin: $moderator-module-space-medium 0;
 	}
 }

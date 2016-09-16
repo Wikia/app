@@ -230,6 +230,11 @@ require([
 			handleClick(event, 'community-page-admins-module');
 		});
 
+		// Track clicks in moderators module
+		$('.community-page-moderators-module').on('mousedown touchstart', 'a', function (event) {
+			handleClick(event, 'community-page-moderators-module');
+		});
+
 		// Track clicks in the Help module
 		$('.community-page-help-module').on('mousedown touchstart', 'a', function (event) {
 			handleClick(event, 'community-page-help-module');

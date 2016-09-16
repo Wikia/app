@@ -151,7 +151,7 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 		$topModeratorsData['topModerators'] =
 			$this->getContributorsDetails(
 				$this->usersModel->getTopModerators( self::TOP_MODERATORS_MODULE_LIMIT ),
-				AvatarService::AVATAR_SIZE_MEDIUM
+				AvatarService::AVATAR_SIZE_SMALL_PLUS
 			);
 
 		$templateMessages = [
