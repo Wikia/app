@@ -1,3 +1,4 @@
+@import 'variables';
 @import 'skins/shared/color';
 @import 'skins/oasis/css/core/breakpoints-variables';
 @import 'skins/shared/mixins/flexbox';
@@ -5,7 +6,9 @@
 $edit-icon-size: 16px;
 
 .community-page-todo-list-module {
+	box-sizing: border-box;
 	margin-bottom: 34px;
+	padding-right: $content-spacing-small;
 
 	.community-page-todo-list-module-header {
 		float: left;
@@ -49,5 +52,17 @@ $edit-icon-size: 16px;
 		font-weight: bold;
 		margin-top: 10px;
 		padding: 5px 10px;
+	}
+}
+
+@media #{$breakpoint-medium-up} {
+	.community-page-todo-list-module {
+		padding-right: $content-spacing-regular;
+	}
+}
+
+@media #{$breakpoint-small-plus} {
+	.community-page-todo-list-module {
+		padding-right: $content-spacing-xsmall;
 	}
 }

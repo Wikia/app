@@ -20,7 +20,6 @@
  * @file
  * @ingroup SpecialPage
  */
-use Wikia\Util\PerformanceProfilers\UsernameUseProfiler;
 
 /**
  * Implements Special:DeletedContributions to display archived revisions
@@ -134,7 +133,6 @@ class DeletedContribsPager extends IndexPager {
 	 */
 	function formatRow( $row ) {
 		wfProfileIn( __METHOD__ );
-		$usernameUseProfiler = new UsernameUseProfiler( __CLASS__, __METHOD__ );
 		$rev = new Revision( array(
 				'id'         => $row->ar_rev_id,
 				'comment'    => $row->ar_comment,
@@ -230,7 +228,6 @@ class DeletedContribsPager extends IndexPager {
 		}
 
 		$ret = Html::rawElement( 'li', array(), $ret ) . "\n";
-		$usernameUseProfiler->end();
 		wfProfileOut( __METHOD__ );
 		return $ret;
 	}
