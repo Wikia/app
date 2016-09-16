@@ -5,6 +5,7 @@
 @import 'extensions/wikia/DesignSystem/bower_components/design-system/base/typography';
 
 $card-background-color: mix($color-page, #fff, 91%);
+$card-header-size: 84px;
 $card-footer-size: 48px;
 
 .community-page-card-module {
@@ -60,8 +61,9 @@ $card-footer-size: 48px;
 
 		background: $color-buttons;
 		color: $color-button-text;
-		margin: 0 0 $content-spacing-large;
-		padding: $content-spacing-regular;
+		height: $card-header-size;
+		margin-bottom: $content-spacing-large;
+		padding: 0 $content-spacing-regular;
 
 		span {
 			font-size: $typescale-size-minus-1;
