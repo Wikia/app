@@ -52,7 +52,7 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 				->getData(),
 			'recentlyJoined' => $this->sendRequest( 'CommunityPageSpecialController', 'getRecentlyJoinedData' )
 				->getData(),
-			'insightsModules' => $cardModulesData,
+			'cardModules' => $cardModulesData,
 			'defaultModules' => $this->getDefaultModules( $defaultModulesLimit ),
 			'helpModule' => $this->getHelpModuleData(),
 			'communityTodoListModule' => $this->getCommunityTodoListData(),
