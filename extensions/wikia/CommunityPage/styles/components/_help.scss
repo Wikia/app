@@ -35,7 +35,7 @@ $help-module-link-line-height: 2;
 		font-size: $typescale-size-minus-1;
 		line-height: 1;
 		margin-top: $policy-link-margin-top;
-		padding-top: $policy-link-padding-top;
+		padding: $policy-link-padding-top 0;
 
 		svg {
 			fill: $color-links;
