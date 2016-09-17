@@ -52,7 +52,7 @@ class FandomSearch {
 		return static::FANDOM_API . static::FANDOM_API_POSTS_ENDPOINT . '?' . http_build_query(
 			[
 				'search' => $query,
-				'limit' => static::RESULTS_COUNT,
+				'per_page' => static::RESULTS_COUNT,
 				'_embed' => 1
 			]
 		);

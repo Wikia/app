@@ -17,7 +17,6 @@
 					<a href="<?= $story['url'] ?>" data-pos="<?= $counter ?>"><?= $story['title'] ?></a>
 				</div>
 			</div>
-			<?php if ( $counter++ >= 4 ) { break; } ?>
 		<?php endforeach; ?>
 	</div>
 <?php endif; ?>
