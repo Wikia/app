@@ -46,24 +46,6 @@ class WikiaSearchController extends WikiaSpecialPageController {
 	 */
 	const SNIPPET_SUBSTR = 9;
 
-	/**
-	 * Used for changing mem cache key for top articles snippet (after changed will end up in purging cache)
-	 * @var string
-	 */
-	const TOP_ARTICLES_CACHE = 1;
-
-	/**
-	 * Dimensions for hot article image in Top Wiki Articles module
-	 */
-	const HOT_ARTICLE_IMAGE_WIDTH = 300;
-	const HOT_ARTICLE_IMAGE_HEIGHT = 150;
-
-	/**
-	 * Dimensions for hot article image in Top Wiki Articles module in fluid layout
-	 */
-	const HOT_ARTICLE_IMAGE_WIDTH_FLUID = 270;
-	const HOT_ARTICLE_IMAGE_HEIGHT_FLUID = 135;
-
 	const EXACT_MATCH_THUMBNAIL_HEIGHT = 200;
 	const EXACT_MATCH_THUMBNAIL_WIDTH = 300;
 
@@ -123,59 +105,12 @@ class WikiaSearchController extends WikiaSpecialPageController {
 	 * Accesses top wiki articles for right rail, see PLA-466
 	 */
 	public function topWikiArticles() {
-		global $wgLang;
-		$pages = [];
-		try {
-			$pageData = $this->app->sendRequest( 'ArticlesApiController', 'getTop', [ 'namespaces' => 0 ] )->getData();
-			$ids = [];
-			$counter = 0;
-			foreach ( $pageData['items'] as $pageDatum ) {
-				$ids[] = $pageDatum['id'];
-				if ( $counter++ >= 12 ) {
-					break;
-				}
-			}
-			if ( ! empty( $ids ) ) {
-				$params = [ 'ids' => implode( ',', $ids ), 'height' => 80, 'width' => 80, 'abstract' => 120 ];
-				$detailResponse = $this->app->sendRequest( 'ArticlesApiController', 'getDetails', $params )->getData();
-				$dimensions = $this->getHotArticleImageDimensions();
-				foreach ( $detailResponse['items'] as $id => $item ) {
-					if ( ! empty( $item['thumbnail'] ) ) {
-						$item['thumbnailSize'] = "small";
-						//get the first one image from imageServing as it needs other size
-						if ( empty( $pages ) ) {
-							$is = new ImageServing( [ $id ], $dimensions['width'], $dimensions['height'] );
-							$result = $is->getImages( 1 );
-							if ( ! empty( $result[ $id ][ 0 ][ 'url' ] ) ) {
-								$item[ 'thumbnail' ] = $result[ $id ][ 0 ][ 'url' ];
-								$item['thumbnailSize'] = "large";
-							}
-						}
-						//render date
-						$item[ 'date' ] = $wgLang->date( $item[ 'revision' ][ 'timestamp' ] );
-						$item = $this->processArticleItem( $item, 100 );
-						$pages[] = $item;
-					}
-				}
-			}
-		} catch ( Exception $e ) { } // ignoring API exceptions for gracefulness
-		$this->setVal( 'pages', $pages );
+		$this->response->setVal( 'pages', $this->getVal( 'pages', [] ) );
 	}
 
-	private function getHotArticleImageDimensions() {
-		if ( BodyController::isGridLayoutEnabled() ) {
-			$dimensions = [
-				'width' => self::HOT_ARTICLE_IMAGE_WIDTH,
-				'height' => self::HOT_ARTICLE_IMAGE_HEIGHT
-			];
-		} else {
-			$dimensions = [
-				'width' => self::HOT_ARTICLE_IMAGE_WIDTH_FLUID,
-				'height' => self::HOT_ARTICLE_IMAGE_HEIGHT_FLUID
-			];
-		}
-
-		return $dimensions;
+	public function fandomStories() {
+		$this->response->setVal( 'stories', $this->getVal( 'stories', [] ) );
+		$this->response->setVal( 'viewMoreLink', $this->getVal( 'viewMoreLink', null ) );
 	}
 
 	/**
@@ -462,7 +397,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 					$params = [ 'ids' => implode( ',', $ids ), 'height' => 50, 'width' => 50, 'abstract' => 150 ];
 					$detailResponse = $this->app->sendRequest( 'ArticlesApiController', 'getDetails', $params )->getData();
 					foreach ( $detailResponse['items'] as $item ) {
-						$processed = $this->processArticleItem( $item );
+						$processed = static::processArticleItem( $item );
 						if ( !empty( $processed ) ) {
 							$pages[] = $processed;
 						}
@@ -485,7 +420,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 	 * Controller Helper Methods
 	 *----------------------------------------------------------------------------------*/
 
-	protected function processArticleItem( $item, $maxlen = 150 ) {
+	public static function processArticleItem( $item, $maxlen = 150 ) {
 		if ( empty( $item['thumbnail'] ) ) {
 			//add placeholder
 			$item['thumbnail'] = '';
@@ -606,9 +541,6 @@ class WikiaSearchController extends WikiaSpecialPageController {
 	 * @param Wikia\Search\Config $searchConfig
 	 */
 	protected function setResponseValuesFromConfig( Wikia\Search\Config $searchConfig ) {
-
-		global $wgLanguageCode;
-
 		$response = $this->getResponse();
 		$format = $response->getFormat();
 		if ( $format == 'json' || $format == 'jsonp' ) {
@@ -682,28 +614,44 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		if ( $searchConfig->hasWikiMatch() ) {
 			$this->registerWikiMatch( $searchConfig );
 		}
-		$topWikiArticlesHtml = '';
 
-		if ( ! $searchConfig->getInterWiki() && $wgLanguageCode == 'en'
-			&& !$isMonobook ) {
+		$this->addRightRailModules( $searchConfig );
+	}
 
-			$cacheKey = wfMemcKey(
-				__CLASS__,
-				'WikiaSearch',
-				'topWikiArticles',
-				$this->wg->CityId,
-				static::TOP_ARTICLES_CACHE,
-				$isGridLayoutEnabled
-			);
-			$topWikiArticlesHtml = WikiaDataAccess::cache(
-				$cacheKey,
-				86400 * 5, // 5 days, one business week
-				function () {
-					return $this->app->renderView( 'WikiaSearchController', 'topWikiArticles' );
-				}
-			);
+	protected function addRightRailModules( Wikia\Search\Config $searchConfig ) {
+		global $wgLang;
+
+		$isMonobook = $this->response->getVal( 'isMonobook' );
+		$query = $searchConfig->getQuery()->getSanitizedQuery();
+		$this->setVal( 'fandomStories', [] );
+		$this->setVal( 'hasTopWikiArticles', false );
+
+		if ( $searchConfig->getInterWiki() || $isMonobook ) {
+			return;
 		}
-		$this->setVal( 'topWikiArticles', $topWikiArticlesHtml );
+
+		if ( $wgLang->getCode() === 'en' && !empty( $query ) ) {
+			$fandomStories = \Wikia\Search\FandomSearch::getStoriesWithCache( $query );
+			$viewMoreFandomStoriesLink = \Wikia\Search\FandomSearch::getViewMoreLink( $fandomStories, $query );
+
+			if ( !empty( $fandomStories ) ) {
+				$this->setVal( 'fandomStories', $fandomStories );
+				$this->setVal( 'viewMoreFandomStoriesLink', $viewMoreFandomStoriesLink );
+				$this->setVal( 'hasFandomStories', true );
+
+				return;
+			}
+		}
+
+		$topWikiArticles = \Wikia\Search\TopWikiArticles::getArticlesWithCache(
+			$this->wg->CityId,
+			$this->response->getVal( 'isGridLayoutEnabled' )
+		);
+
+		if ( !empty( $topWikiArticles ) ) {
+			$this->setVal( 'topWikiArticles', $topWikiArticles );
+			$this->setVal( 'hasTopWikiArticles', true );
+		}
 	}
 
 	/**

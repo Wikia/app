@@ -52,12 +52,9 @@ $messages['en'] = array(
 	'wikiasearch2-crosswiki-description' => '$1 is a community site that anyone can contribute to. Discover, share and add your knowledge!',
 	'wikiasearch2-exact-result' => 'Result for $1 from Wikia',
 
-
-	'wikiasearch2-top-module-title' => 'What\'s hot now',
-	'wikiasearch2-top-module-test-1' => 'Top pages',
-	'wikiasearch2-top-module-test-2' => 'Popular articles',
-	'wikiasearch2-top-module-test-3' => 'What\'s hot now',
-	'wikiasearch2-top-module-edit' => 'Last edited on $1',
+	'wikiasearch2-top-module-title' => 'Top pages',
+	'wikiasearch2-fandom-stories-title' => 'Related {{PLURAL:$1|Story|Stories}}',
+	'wikiasearch2-fandom-stories-view-more' => 'View More Stories',
 
 	'wikiamobile-wikiasearch2-next' => 'Next',
 	'wikiamobile-wikiasearch2-prev' => 'Previous',
@@ -98,7 +95,6 @@ $messages['qqq'] = array(
 	'wikiasearch2-videos-M' => 'Parameters: $1 - number of Videos above 1000000',
 	'wikiasearch2-crosswiki-description' => 'Used to display a generic description of a wiki for cross-wiki search results',
 	'wikiasearch2-top-module-title' => 'Top module header title on search page',
-	'wikiasearch2-top-module-edit' => 'Article last edit string containing date',
 	'wikiasearch2-video-results' => 'List on-wiki and premium videos in a search'
 );
 
