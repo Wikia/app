@@ -1,5 +1,7 @@
+<?php $counter = 0; ?>
+
 <?php if ( !empty( $stories ) ) : ?>
-	<div class="side-articles RailModule">
+	<div class="side-articles fandom-stories RailModule">
 		<h1 class="side-articles-header"><?= wfMessage( 'wikiasearch2-fandom-stories-title', count( $stories ) ); ?></h1>
 		<div>
 		<?php foreach ( $stories as $story ) : ?>
@@ -7,16 +9,17 @@
 				<div class="side-article-category"><?= $story['vertical'] ?></div>
 				<div class="side-article-thumbnail">
 					<? if ( isset( $story['image'] ) ) : ?>
-						<a href="<?=$story['url']?>" data-pos="<?= $counter ?>">
+						<a href="<?=$story['url']?>" class="fandom-story-image" data-pos="<?= $counter ?>">
 							<img src="<?= $story['image'] ?>" />
 						</a>
 					<? endif; ?>
 				</div>
 				<div class="side-article-text">
-					<a href="<?= $story['url'] ?>" data-pos="<?= $counter ?>"><?= $story['title'] ?></a>
+					<a href="<?= $story['url'] ?>" class="fandom-story-link" data-pos="<?= $counter ?>"><?= $story['title'] ?></a>
 					<div class="fandom-annotation">fandom</div>
 				</div>
 			</div>
+		<?php $counter++; ?>
 		<?php endforeach; ?>
 		</div>
 		<?php if ( !empty( $viewMoreLink ) ) : ?>

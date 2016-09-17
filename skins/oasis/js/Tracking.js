@@ -316,6 +316,7 @@ jQuery(function ($) {
 		var category = 'search',
 			suggestionShowed = false,
 			$topModule = $('.top-wiki-articles'),
+			$fandomStoriesModule = $('.fandom-stories'),
 			$categoryModule = $('.category-articles'),
 			$wikiaSearch = $('.search-tracking'),
 			$noResults = $('.results-wrapper .no-result');
@@ -383,7 +384,7 @@ jQuery(function ($) {
 				track({
 					browserEvent: e,
 					category: category,
-					label: label,
+					label: label
 				});
 			}).on('mousedown', '.Results .wiki-thumb-tracking', function (e) {
 				var el = $(e.currentTarget),
@@ -394,7 +395,7 @@ jQuery(function ($) {
 				track({
 					browserEvent: e,
 					category: category,
-					label: label,
+					label: label
 				});
 			}).on('mousedown', '.thumb-tracking', function (e) {
 				var el = $(e.currentTarget),
@@ -404,7 +405,7 @@ jQuery(function ($) {
 				track({
 					browserEvent: e,
 					category: category,
-					label: label,
+					label: label
 				});
 			}).on('mousedown', '.image', function (e) {
 				var $currentTarget = $(e.currentTarget),
@@ -424,23 +425,53 @@ jQuery(function ($) {
 				});
 			});
 		}
-		if ($topModule.length) {
-			$topModule.on('mousedown', '.top-wiki-article-thumbnail a', function (e) {
+
+		if ($fandomStoriesModule.length) {
+			track({
+				action: Wikia.Tracker.ACTIONS.IMPRESSION,
+				category: category,
+				label: 'fandom-stories'
+			});
+
+			$fandomStoriesModule.on('mousedown', '.fandom-story-link', function (e) {
 				var el = $(e.currentTarget);
 				track({
 					browserEvent: e,
 					category: category,
-					label: 'top-module-thumb-' + el.data('pos')
+					label: 'fandom-story-link-' + el.data('pos')
 				});
-			}).on('mousedown', '.top-wiki-article-text a', function (e) {
-				var el = $(e.currentTarget);
+			}).on('mousedown', '.fandom-story-image', function (e) {
 				track({
 					browserEvent: e,
 					category: category,
-					label: 'top-module-title-' + el.data('pos')
+					label: 'fandom-story-image-' + el.data('pos')
 				});
 			});
 		}
+
+		if ($topModule.length) {
+			track({
+				action: Wikia.Tracker.ACTIONS.IMPRESSION,
+				category: category,
+				label: 'top-wiki-articles'
+			});
+
+			$topModule.on('mousedown', '.top-wiki-article-link', function (e) {
+				var el = $(e.currentTarget);
+				track({
+					browserEvent: e,
+					category: category,
+					label: 'top-wiki-article-link-' + el.data('pos')
+				});
+			}).on('mousedown', '.top-wiki-article-image', function (e) {
+				track({
+					browserEvent: e,
+					category: category,
+					label: 'top-wiki-article-image-' + el.data('pos')
+				});
+			});
+		}
+
 		if ($categoryModule.length) {
 			$categoryModule.on('mousedown', '.category-articles-thumb a', function (e) {
 				var el = $(e.currentTarget);
