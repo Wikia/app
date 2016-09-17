@@ -46,8 +46,8 @@ class WikiaSearchController extends WikiaSpecialPageController {
 	 */
 	const SNIPPET_SUBSTR = 9;
 
-	const EXACT_MATCH_THUMBNAIL_HEIGHT = 200;
-	const EXACT_MATCH_THUMBNAIL_WIDTH = 300;
+	const EXACT_WIKI_MATCH_THUMBNAIL_HEIGHT = 200;
+	const EXACT_WIKI_MATCH_THUMBNAIL_WIDTH = 300;
 
 	const CROSS_WIKI_PROMO_THUMBNAIL_HEIGHT = 120;
 	const CROSS_WIKI_PROMO_THUMBNAIL_WIDTH = 180;
@@ -662,10 +662,10 @@ class WikiaSearchController extends WikiaSpecialPageController {
 			$matchResult['onWikiMatch'] = true;
 			$this->setVal(
 					'wikiMatch',
-					$this->getApp()->getView( 'WikiaSearch', 'exactResult',
+					$this->getApp()->getView( 'WikiaSearch', 'exactWikiMatch',
 						ResultHelper::extendResult($matchResult, 'wiki', ResultHelper::MAX_WORD_COUNT_EXACT_MATCH, [
-							'width' => WikiaSearchController::EXACT_MATCH_THUMBNAIL_WIDTH,
-							'height' => WikiaSearchController::EXACT_MATCH_THUMBNAIL_HEIGHT
+							'width' => WikiaSearchController::EXACT_WIKI_MATCH_THUMBNAIL_WIDTH,
+							'height' => WikiaSearchController::EXACT_WIKI_MATCH_THUMBNAIL_HEIGHT
 						], $searchConfig->getQuery()->getSanitizedQuery())
 					)
 			);
