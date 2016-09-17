@@ -414,7 +414,6 @@ $form-negative-side-padding: $form-side-padding*-1;
 .RailModule {
 	@include clearfix;
 	background: $color-page;
-	border: 1px solid $color-page-border;
 	@if lightness($color-page) < 50 {
 		background: $color-module-background;
 		border: 1px solid $color-page-border;
@@ -458,7 +457,7 @@ $form-negative-side-padding: $form-side-padding*-1;
 
 	h1 {
 		font: {
-			size: 18px;
+			size: 14px;
 			weight: bold;
 		}
 		margin: {
@@ -525,13 +524,15 @@ $form-negative-side-padding: $form-side-padding*-1;
 			position: relative;
 			top: -4px;
 			width: 205px;
+			line-height: 1.42;
+			font-size: 14px;
 		}
 
 		.top-wiki-article-thumbnail {
 			float: left;
-			height: 80px;
+			height: 50px;
 			margin: 0 10px 0 0;
-			width: 80px;
+			width: 90px;
 		}
 	}
 }
@@ -671,7 +672,7 @@ $form-negative-side-padding: $form-side-padding*-1;
 			width: 270px;
 	
 			.top-wiki-article-text {
-				width: 180px;
+				width: 170px;
 			}
 		}
 

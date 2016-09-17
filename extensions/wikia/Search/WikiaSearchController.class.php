@@ -133,7 +133,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 				}
 			}
 			if ( ! empty( $ids ) ) {
-				$params = [ 'ids' => implode( ',', $ids ), 'height' => 80, 'width' => 80, 'abstract' => 120 ];
+				$params = [ 'ids' => implode( ',', $ids ), 'height' => 50, 'width' => 90, 'abstract' => 120 ];
 				$detailResponse = $this->app->sendRequest( 'ArticlesApiController', 'getDetails', $params )->getData();
 				$dimensions = $this->getHotArticleImageDimensions();
 				foreach ( $detailResponse['items'] as $id => $item ) {
@@ -150,7 +150,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 						}
 						//render date
 						$item[ 'date' ] = $wgLang->date( $item[ 'revision' ][ 'timestamp' ] );
-						$item = $this->processArticleItem( $item, 100 );
+						$item = $this->processArticleItem( $item, 75 );
 						$pages[] = $item;
 					}
 				}
