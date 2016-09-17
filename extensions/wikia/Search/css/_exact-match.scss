@@ -48,6 +48,7 @@ $border-size: 1px;
 		}
 
 		&__content {
+			background-color: $color-module-background;
 			border: $border-size solid $color-search-grid-border;
 			border-top: none;
 			padding: 10px 25px;
