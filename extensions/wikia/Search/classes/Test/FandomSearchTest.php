@@ -12,7 +12,7 @@ class FandomSearchTest extends BaseTest {
 		$method->setAccessible( true );
 
 		$this->assertEquals(
-			'http://fandom.wikia.com/wp-json/wp/v2/posts?search=test&limit=5&_embed=1',
+			'http://fandom.wikia.com/wp-json/wp/v2/posts?search=test&per_page=5&_embed=1',
 			$method->invoke( null, 'test' )
 		);
 	}
