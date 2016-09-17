@@ -13,6 +13,14 @@ class TopWikiArticles {
 	 */
 	const CACHE_TTL = 86400 * 5;
 
+	/**
+	 * We want to return articles with thumbnails, but not all articles
+	 * returned from ArticlesApiController:getTop() have them, that is why we ask for
+	 * more articles than we will return
+	 */
+	const GET_NUMBER_OF_TOP_ARTICLES_FROM_DB = 12;
+	const TOP_ARTICLES_RESULT_LIMIT = 5;
+
 	static public function getArticlesWithCache( $cityId, $isGridLayoutEnabled ) {
 		$cacheKey = wfMemcKey(
 			__CLASS__,
@@ -35,33 +43,29 @@ class TopWikiArticles {
 	static public function getArticles() {
 		global $wgLang;
 
-		$app = \F::app();
 		$pages = [];
 
 		try {
-			$pageData = $app->sendRequest( 'ArticlesApiController', 'getTop', [ 'namespaces' => 0 ] )->getData();
+			$app = \F::app();
+			$pageData = $app
+				->sendRequest( 'ArticlesApiController', 'getTop', [ 'namespaces' => 0, 'limit' => static::GET_NUMBER_OF_TOP_ARTICLES_FROM_DB ] )
+				->getData();
 			$ids = [];
-			$counter = 0;
 
-			foreach ( $pageData['items'] as $pageDatum ) {
-				$ids[] = $pageDatum['id'];
-				if ( $counter++ >= 12 ) {
-					break;
-				}
+			foreach ( $pageData['items'] as $item ) {
+				$ids[] = $item['id'];
 			}
 
-			if ( !empty( $ids ) ) {
-				$params = [ 'ids' => implode( ',', $ids ), 'height' => 90, 'width' => 90, 'abstract' => 120 ];
-				$detailResponse = $app->sendRequest( 'ArticlesApiController', 'getDetails', $params )->getData();
+			$params = [ 'ids' => implode( ',', $ids ), 'height' => 90, 'width' => 90, 'abstract' => 120 ];
+			$detailResponse = $app->sendRequest( 'ArticlesApiController', 'getDetails', $params )->getData();
 
-				foreach ( $detailResponse['items'] as $id => $item ) {
-					if ( !empty( $item['thumbnail'] ) ) {
-						$item['thumbnailSize'] = "small";
-						//render date
-						$item['date'] = $wgLang->date( $item['revision']['timestamp'] );
-						$item = \WikiaSearchController::processArticleItem( $item, 120 );
-						$pages[] = $item;
-					}
+			foreach ( $detailResponse['items'] as $item ) {
+				if ( !empty( $item['thumbnail'] ) && count( $pages ) < static::TOP_ARTICLES_RESULT_LIMIT ) {
+					$item['thumbnailSize'] = "small";
+					//render date
+					$item['date'] = $wgLang->date( $item['revision']['timestamp'] );
+					$item = \WikiaSearchController::processArticleItem( $item, 120 );
+					$pages[] = $item;
 				}
 			}
 		} catch ( \Exception $e ) {

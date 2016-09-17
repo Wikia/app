@@ -1,4 +1,3 @@
-<?php $counter = 0; ?>
 <?php if ( !empty( $pages ) ) : ?>
 <div class="side-articles top-wiki-articles RailModule">
 	<h1 class="side-articles-header"><?= wfMessage( 'wikiasearch2-top-module-title' )->plain() ?></h1>
@@ -16,7 +15,6 @@
 				--><span class="side-article-text-synopsis subtle"><?= $page['abstract'] ?></span>
 			</div>
 		</div>
-		<?php if ( $counter++ >= 4 ) { break; } ?>
 	<?php endforeach; ?>
 </div>
 <?php endif; ?>
