@@ -4,12 +4,14 @@
 			<div class="community-page-todo-list-module-header">
 				{{heading}}
 			</div>
+			{{#showEditLink}}
 				<div class="community-page-todo-list-module-edit">
 					<a data-tracking="community-page-todo-list-module-edit" href="{{editUrl}}" target="_blank">
 						{{{editIcon}}}
 						{{editList}}
 					</a>
 				</div>
+			{{/showEditLink}}
 		</div>
 		<div class="community-page-todo-list-module-description">
 			{{description}}

@@ -19,12 +19,14 @@ $module-header-line-height: 28px;
 	}
 
 	.community-page-todo-list-module-header {
+		display: inline-block;
 		font-size: $typescale-size-plus-2;
 		font-weight: bold;
 		padding-right: 32px;
 	}
 
 	.community-page-todo-list-module-edit {
+		display: inline-block;
 		font-size: $typescale-size-base;
 	}
 
