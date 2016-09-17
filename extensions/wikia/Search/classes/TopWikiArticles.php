@@ -93,7 +93,7 @@ class TopWikiArticles {
 		return $pages;
 	}
 
-	private function getHotArticleImageDimensions() {
+	private static function getHotArticleImageDimensions() {
 		if ( \BodyController::isGridLayoutEnabled() ) {
 			$dimensions = [
 				'width' => self::HOT_ARTICLE_IMAGE_WIDTH,
