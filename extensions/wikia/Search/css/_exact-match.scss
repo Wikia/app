@@ -30,13 +30,15 @@ $border-size: 1px;
 		&__statistics {
 			display: flex;
 			font-size: 12px;
+			justify-content: space-between;
 			line-height: 1rem;
 			list-style: none;
 			margin: 0;
 			padding: 10px 0;
 
 			li {
-				flex: 1;
+				//don't grow elements so they can distribute evenly
+				flex: 0;
 			}
 		}
 
