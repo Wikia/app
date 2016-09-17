@@ -102,7 +102,9 @@
 				<?php if ( $hasFandomStories ): ?>
 					<?= F::app()->renderView( 'WikiaSearch', 'fandomStories', [ 'stories' => $fandomStories ] ); ?>
 				<?php endif ?>
-				<?= $topWikiArticles ?>
+				<?php if ( $hasTopWikiArticles ) : ?>
+					<?= F::app()->renderView( 'WikiaSearch', 'topWikiArticles', [ 'pages' => $topWikiArticles ] ); ?>
+				<?php endif ?>
 				<?= F::app()->renderView( 'Ad', 'Index', ['slotName' => 'LEFT_SKYSCRAPER_2', 'pageTypes' => ['search']] ); ?>
 				<div id="WikiaAdInContentPlaceHolder"></div>
 			</div>
