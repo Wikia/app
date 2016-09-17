@@ -5,7 +5,7 @@ use Wikia\Search\MediaWikiService, Wikia\Search\Utilities, CommunityDataService,
 
 class ResultHelper
 {
-	const MAX_WORD_COUNT_EXACT_MATCH = 16;
+	const MAX_WORD_COUNT_EXACT_MATCH = 40;
 	const MAX_WORD_COUNT_XWIKI_RESULT = 60;
 
 	/**
