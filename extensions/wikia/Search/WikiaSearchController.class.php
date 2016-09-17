@@ -176,9 +176,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 	}
 
 	public function fandomStories() {
-		$stories = \Wikia\Search\FandomSearch::getStories( $this->getVal( 'query' ) );
-
-		$this->response->setVal( 'stories', $stories );
+		$this->response->setVal( 'stories', $this->getVal( 'stories', [] ) );
 	}
 
 	/**
@@ -685,19 +683,16 @@ class WikiaSearchController extends WikiaSpecialPageController {
 			$this->registerWikiMatch( $searchConfig );
 		}
 
-		$hasFandomStories = \Wikia\Search\FandomSearch::hasFandomStories();
+		$fandomStories = \Wikia\Search\FandomSearch::getStoriesWithCache( $searchConfig->getQuery()->getSanitizedQuery() );
 
-		if ( $hasFandomStories ) {
-			$fandomStoriesHtml = $this->app->renderView( 'WikiaSearchController', 'fandomStories', [
-				'query' => $searchConfig->getQuery()->getSanitizedQuery()
-			] );
-			$this->setVal( 'fandomStories', $fandomStoriesHtml );
+		if ( !empty( $fandomStories ) ) {
+			$this->setVal( 'fandomStories', $fandomStories );
+			$this->setVal( 'hasFandomStories', true );
 		} else {
 			$topWikiArticlesHtml = '';
 
 			if ( ! $searchConfig->getInterWiki() && $wgLanguageCode == 'en'
 				&& !$isMonobook ) {
-				$dbname = $this->wg->DBName;
 				$cacheKey = wfMemcKey(
 					__CLASS__,
 					'WikiaSearch',

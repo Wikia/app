@@ -10,10 +10,16 @@ class FandomSearch {
 	const RESULTS_COUNT = 5;
 	const VERTICALS_PARENT_CATEGORY_ID = 3;
 	const CATEGORY_TAXONOMY_NAME = 'category';
+	const CACHE_TTL = 12 * 60 * 60;
 
-	static public function hasFandomStories() {
-		// TODO
-		return true;
+	static public function getStoriesWithCache( $query ) {
+		return \WikiaDataAccess::cache(
+			wfSharedMemcKey( 'FandomSearch', $query ),
+			static::CACHE_TTL,
+			function() use ( $query ) {
+				return static::getStories( $query );
+			}
+		);
 	}
 
 	static public function getStories( $query ) {
