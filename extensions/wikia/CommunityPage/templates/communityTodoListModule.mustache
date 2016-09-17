@@ -1,16 +1,16 @@
 {{#communityTodoListModule}}
 	<section class="community-page-todo-list-module">
-		<div class="community-page-todo-list-module-header">
-			{{heading}}
-		</div>
-		{{#showEditLink}}
-			<div class="community-page-todo-list-module-edit">
-				<a data-tracking="community-page-todo-list-module-edit" href="{{editUrl}}" target="_blank">
-					{{{editIcon}}}
-					{{editList}}
-				</a>
+		<div class="community-page-todo-list-module-header-wrapper">
+			<div class="community-page-todo-list-module-header">
+				{{heading}}
 			</div>
-		{{/showEditLink}}
+				<div class="community-page-todo-list-module-edit">
+					<a data-tracking="community-page-todo-list-module-edit" href="{{editUrl}}" target="_blank">
+						{{{editIcon}}}
+						{{editList}}
+					</a>
+				</div>
+		</div>
 		<div class="community-page-todo-list-module-description">
 			{{description}}
 		</div>
