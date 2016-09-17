@@ -619,7 +619,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 
 		$isMonobook = $this->response->getVal( 'isMonobook' );
 		$query = $searchConfig->getQuery()->getSanitizedQuery();
-		$this->setVal( 'fandomStories', false );
+		$this->setVal( 'fandomStories', [] );
 		$this->setVal( 'hasTopWikiArticles', false );
 
 		if ( $searchConfig->getInterWiki() || $isMonobook ) {

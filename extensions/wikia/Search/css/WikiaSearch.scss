@@ -509,8 +509,9 @@ $form-negative-side-padding: $form-side-padding*-1;
 
 	.side-article {
 		border-top: 2px solid $color-page-border;
-		margin: 0 0 10px;
-		min-height: 106px;
+		margin-bottom: 0;
+		min-height: 90px;
+		padding-bottom: 8px;
 
 		&:last-child {
 			border-bottom: 2px solid $color-page-border;
@@ -583,7 +584,7 @@ $form-negative-side-padding: $form-side-padding*-1;
 	}
 
 	.side-articles-footer {
-		margin: 30px 0 20px;
+		margin: 30px 0;
 	}
 
 	&.top-wiki-articles {
