@@ -14,11 +14,11 @@ class ResultHelper
 	 * +     * @param $result
 	 * +     * @param $pos
 	 * +     * @param $descWordLimit
-	 * +     * @param query
 	 * +     * @param $imageSizes
+	 * +     * @param query
 	 * +     * @return array
 	 * +     */
-	public static function extendResult($result, $pos, $descWordLimit, $query, $imageSizes) {
+	public static function extendResult($result, $pos, $descWordLimit, $imageSizes, $query = null) {
 		$commData = new CommunityDataService($result['id']);
 		$imageURL = ImagesService::getImageSrc(
 			$result['id'],
