@@ -2,7 +2,7 @@ $border-size: 1px;
 
 //We need to have .Search here to be able to override styles from WikiaSearch.scss
 .Search {
-	.exact-match {
+	.exact-wiki-match {
 		padding-bottom: 30px;
 
 		&__header {

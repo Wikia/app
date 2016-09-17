@@ -29,7 +29,7 @@ $color-search-ads-background: mix($color-buttons, $color-page, 3%);
 }
 
 //We are using colors from above in exact-match
-@import "exact-match";
+@import "exact-wiki-match";
 
 $form-side-padding: 12px;
 $form-negative-side-padding: $form-side-padding*-1;
