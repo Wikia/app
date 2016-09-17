@@ -62,15 +62,15 @@ class ResultHelper
 			'description' => $description,
 			'pages' => [
 				'count' => $service->shortNumForMsg($result['articles_i'] ?: 0),
-				'message' => wfMessage('wikiasearch2-pages')->escaped()
+				'message' => wfMessage('wikiasearch3-pages')->escaped()
 			],
 			'img' => [
 				'count' => $service->shortNumForMsg($result['images_i'] ?: 0),
-				'message' => wfMessage('wikiasearch2-images')->escaped(),
+				'message' => wfMessage('wikiasearch3-images')->escaped(),
 			],
 			'video' => [
 				'count' => $service->shortNumForMsg($result['videos_i'] ?: 0),
-				'message' => wfMessage('wikiasearch2-videos')->escaped()
+				'message' => wfMessage('wikiasearch3-videos')->escaped()
 			],
 			'title' => ($sn = $result->getText('sitename_txt')) ? $sn : $result->getText('headline_txt'),
 			'url' => $result->getText('url'),
