@@ -8,6 +8,8 @@ class FandomSearch {
 	const FANDOM_API = 'http://fandom.wikia.com/wp-json/wp/v2/';
 	const FANDOM_API_POSTS_ENDPOINT = 'posts';
 	const RESULTS_COUNT = 5;
+	const VERTICALS_PARENT_CATEGORY_ID = 3;
+	const CATEGORY_TAXONOMY_NAME = 'category';
 
 	static public function getTopStories( Config $searchConfig ) {
 		$query = $searchConfig->getQuery()->getSanitizedQuery();
@@ -54,7 +56,7 @@ class FandomSearch {
 			$out[] = [
 				'title' => $story->title->rendered,
 				'excerpt' => $story->excerpt->rendered,
-				'vertical' => static::getVertical(),
+				'vertical' => static::getVertical( $story ),
 				'image' => $story->_embedded->{'wp:featuredmedia'}[0]->media_details->sizes->thumbnail->source_url,
 				'url' => $story->link
 			];
@@ -63,8 +65,22 @@ class FandomSearch {
 		return $out;
 	}
 
-	private static function getVertical() {
-		//TODO
-		return 'vertical';
+	private static function getVertical( $story ) {
+		foreach ( $story->_embedded->{'wp:term'} as $wpTerms ) {
+			foreach ( $wpTerms as $wpTerm ) {
+
+				if ( $wpTerm->taxonomy !== static::CATEGORY_TAXONOMY_NAME ) {
+					// break entire loop if wpTerm isn't a category. All wpTerms in this array are of the same type
+					break;
+				}
+
+				$parentLinkParts = explode( '/', $wpTerm->_links->up[0]->href );
+				if ( (int) $parentLinkParts[ count( $parentLinkParts ) - 1 ] === static::VERTICALS_PARENT_CATEGORY_ID ) {
+					return $wpTerm->name;
+				}
+			}
+		}
+
+		return null;
 	}
 }
