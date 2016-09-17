@@ -20,8 +20,8 @@
 		<?php endforeach; ?>
 		</div>
 		<?php if ( !empty( $viewMoreLink ) ) : ?>
-			<div>
-				<a href="<?= $viewMoreLink ?>"><?= wfMessage( 'wikiasearch2-fandom-stories-view-more' ); ?></a>
+			<div class="side-articles-footer">
+				<a href="<?= $viewMoreLink ?>"><?= wfMessage( 'wikiasearch2-fandom-stories-view-more' ); ?>  <?= DesignSystemHelper::getSvg( 'wds-icons-arrow', 'wds-icon wds-icon-small fandom-stories__arrow' ); ?></a>
 			</div>
 		<?php endif; ?>
 	</div>

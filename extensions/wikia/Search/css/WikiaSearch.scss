@@ -349,7 +349,7 @@ $form-negative-side-padding: $form-side-padding*-1;
 
 		.wiki-statistics {
 			margin-top: 0.4em;
-	
+
 			li {
 				padding-right: 20px;
 				float: left;
@@ -371,7 +371,7 @@ $form-negative-side-padding: $form-side-padding*-1;
 			position: relative;
 		}
 	}
-	
+
 	.exact {
 		border-bottom: 1px solid $color-search-grid-border;
 		padding-bottom: 10px;
@@ -514,7 +514,6 @@ $form-negative-side-padding: $form-side-padding*-1;
 
 	.side-article {
 		border-top: 2px solid $color-page-border;
-		float: left;
 		margin: 0 0 10px;
 		min-height: 106px;
 
@@ -620,6 +619,11 @@ $form-negative-side-padding: $form-side-padding*-1;
 		}
 	}
 
+	.side-articles-footer {
+		border-top: 2px solid $color-page-border;
+		padding-top: 20px;
+	}
+
 	&.top-wiki-articles {
 		.side-article {
 			min-height: 0;
@@ -716,6 +720,12 @@ $form-negative-side-padding: $form-side-padding*-1;
 	}
 }
 
+.fandom-stories__arrow {
+	margin: 1px 0 0 5px;
+	transform: rotate(180deg);
+	vertical-align: top;
+}
+
 .Search.this-wiki {
 	.SearchAdsTopWrapper {
 		//border-top: 1px solid $color-search-grid-border;
@@ -725,7 +735,7 @@ $form-negative-side-padding: $form-side-padding*-1;
 
 	.WikiaSearchAds {
 		padding: 10px 10px 0;
-	
+
 		h3 {
 			padding-bottom: 10px;
 		}
@@ -733,7 +743,7 @@ $form-negative-side-padding: $form-side-padding*-1;
 		.unit {
 			height: auto;
 			padding: 10px 0;
-	
+
 			&:first-child {
 				padding-top: 0;
 			}
@@ -767,7 +777,7 @@ $form-negative-side-padding: $form-side-padding*-1;
 	.WikiaRail {
 		.side-articles {
 			width: 300px;
-	
+
 			.side-article-text {
 				width: 198px;
 			}
