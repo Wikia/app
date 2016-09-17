@@ -503,8 +503,8 @@ $form-negative-side-padding: $form-side-padding*-1;
 	width: 300px;
 
 	.side-articles-header {
-		border: none;
-		margin: 0 0 15px 0;
+		border: 0;
+		margin: 0 0 15px;
 		padding: 0;
 	}
 
@@ -513,18 +513,25 @@ $form-negative-side-padding: $form-side-padding*-1;
 	}
 
 	.side-article {
+		border-top: 2px solid $color-page-border;
 		float: left;
-		margin: 0 0 10px 0;
+		margin: 0 0 10px;
 		min-height: 80px;
+
+		.side-article-category {
+			font-size: 10px;
+			font-weight: bold;
+			margin: 3px 0;
+		}
 
 		.side-article-text {
 			float: left;
+			font-size: 14px;
+			line-height: 1.42;
 			margin-bottom: 0;
 			position: relative;
 			top: -4px;
 			width: 205px;
-			line-height: 1.42;
-			font-size: 14px;
 		}
 
 		.side-article-text-synopsis {
@@ -542,6 +549,12 @@ $form-negative-side-padding: $form-side-padding*-1;
 			img {
 				max-width: 100%;
 			}
+		}
+	}
+
+	&.top-wiki-articles {
+		.side-article {
+			padding-top: 12px;
 		}
 	}
 }

@@ -5,7 +5,7 @@
 		<h1 class="side-articles-header">Related Fandom Stories</h1>
 		<?php foreach ( $stories as $story ) : ?>
 			<div class="side-article result">
-				<div>Vertical: <?= $story['vertical'] ?></div>
+				<div class="side-article-category"><?= $story['vertical'] ?></div>
 				<div class="side-article-thumbnail">
 					<? if ( isset( $story['image'] ) ) : ?>
 						<a href="<?=$story['url']?>" data-pos="<?= $counter ?>">
@@ -14,9 +14,7 @@
 					<? endif; ?>
 				</div>
 				<div class="side-article-text">
-					<a href="<?= $story['url'] ?>" data-pos="<?= $counter ?>"><?= $story['title'] ?><!-- comment to remove whitespace
-				--><span class="side-article-text-synopsis subtle">
-							<?= $story['excerpt'] ?></span></a>
+					<a href="<?= $story['url'] ?>" data-pos="<?= $counter ?>"><?= $story['title'] ?></a>
 				</div>
 			</div>
 			<?php if ( $counter++ >= 4 ) { break; } ?>

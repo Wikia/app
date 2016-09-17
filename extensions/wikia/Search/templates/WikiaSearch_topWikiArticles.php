@@ -1,6 +1,6 @@
 <?php $counter = 0; ?>
 <?php if ( !empty( $pages ) ) : ?>
-<div class="side-articles RailModule">
+<div class="side-articles top-wiki-articles RailModule">
 	<h1 class="side-articles-header"><?= wfMessage( 'wikiasearch2-top-module-title' )->plain() ?></h1>
 	<?php foreach ( $pages as $page ) : ?>
 		<div class="side-article result">
