@@ -99,13 +99,13 @@
 				<?php if ( !empty( $wikiMatch ) ):?>
 					<?= $wikiMatch ?>
 				<?php endif; ?>
-				<?php if ( $hasFandomStories ): ?>
+				<?php if ( !empty( $fandomStories ) ): ?>
 					<?= F::app()->renderView( 'WikiaSearch', 'fandomStories', [
 						'stories' => $fandomStories,
 						'viewMoreLink' => $viewMoreFandomStoriesLink
 					] ); ?>
 				<?php endif ?>
-				<?php if ( $hasTopWikiArticles ) : ?>
+				<?php if ( !empty( $topWikiArticles ) ) : ?>
 					<?= F::app()->renderView( 'WikiaSearch', 'topWikiArticles', [ 'pages' => $topWikiArticles ] ); ?>
 				<?php endif ?>
 				<?= F::app()->renderView( 'Ad', 'Index', ['slotName' => 'LEFT_SKYSCRAPER_2', 'pageTypes' => ['search']] ); ?>
