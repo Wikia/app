@@ -626,7 +626,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 			return;
 		}
 
-		if ( $wgLang->getCode() === 'en' ) {
+		if ( $wgLang->getCode() === 'en' && !empty( $query ) ) {
 			$fandomStories = \Wikia\Search\FandomSearch::getStoriesWithCache( $query );
 			$viewMoreFandomStoriesLink = \Wikia\Search\FandomSearch::getViewMoreLink( $fandomStories, $query );
 
