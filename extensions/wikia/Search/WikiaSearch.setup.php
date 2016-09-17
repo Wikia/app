@@ -42,14 +42,13 @@ spl_autoload_register( function( $class ) {
 $wgAutoloadClasses['WikiaSearchController'] =  $dir . 'WikiaSearchController.class.php';
 $wgAutoloadClasses['WikiaSearchIndexerController'] =  $dir . 'WikiaSearchIndexerController.class.php';
 $wgAutoloadClasses['WikiaSearchAjaxController'] =  $dir . 'WikiaSearchAjaxController.class.php';
+$wgAutoloadClasses['WikiaSearchHelper'] =  $dir . 'WikiaSearchHelper.class.php';
 
 /**
  * special pages
  */
 $wgSpecialPages['WikiaSearch'] = 'WikiaSearchController';
 $wgSpecialPages['Search'] = 'WikiaSearchController';
-
-
 
 /**
  * Wikia API controllers

@@ -49,12 +49,11 @@ class ResultHelper
 			: $result->getText(Utilities::field('description'), $descWordLimit);
 
 		$service = new MediaWikiService();
+		$wikiaSearchHelper = new \WikiaSearchHelper();
 
-		//TODO this should not come from Global navigation
-		$helper = (new \GlobalNavigationHelper());
-		$lang = $helper->getLangForSearchResults();
-		$centralUrl = $helper->getCentralUrlFromGlobalTitle( $lang );
-		$globalSearchUrl = $helper->getGlobalSearchUrl( $centralUrl );
+		$lang = $wikiaSearchHelper->getLangForSearchResults();
+		$centralUrl = $wikiaSearchHelper->getCentralUrlFromGlobalTitle( $lang );
+		$globalSearchUrl = $wikiaSearchHelper->getGlobalSearchUrl( $centralUrl );
 
 		return [
 			'isOnWikiMatch' => isset($result['onWikiMatch']) && $result['onWikiMatch'],
