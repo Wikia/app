@@ -51,6 +51,7 @@ $border-size: 1px;
 		}
 
 		&__content {
+			color: lighten($color-text, 10%);
 			background-color: $color-module-background;
 			border: $border-size solid $color-search-grid-border;
 			border-top: none;
