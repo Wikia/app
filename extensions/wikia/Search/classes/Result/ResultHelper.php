@@ -5,7 +5,7 @@ use Wikia\Search\MediaWikiService, Wikia\Search\Utilities, CommunityDataService,
 
 class ResultHelper
 {
-	const MAX_WORD_COUNT_EXACT_MATCH = 16;
+	const MAX_WORD_COUNT_EXACT_MATCH = 40;
 	const MAX_WORD_COUNT_XWIKI_RESULT = 60;
 
 	/**
@@ -14,16 +14,18 @@ class ResultHelper
 	 * +     * @param $result
 	 * +     * @param $pos
 	 * +     * @param $descWordLimit
+	 * +     * @param $imageSizes
+	 * +     * @param query
 	 * +     * @return array
 	 * +     */
-	public static function extendResult($result, $pos, $descWordLimit)
-	{
+	public static function extendResult($result, $pos, $descWordLimit, $imageSizes, $query = null) {
 		$commData = new CommunityDataService($result['id']);
 		$imageURL = ImagesService::getImageSrc(
 			$result['id'],
 			$commData->getCommunityImageId(),
-			WikiaSearchController::CROSS_WIKI_PROMO_THUMBNAIL_WIDTH,
-			WikiaSearchController::CROSS_WIKI_PROMO_THUMBNAIL_HEIGHT)['src'];
+			$imageSizes['width'],
+			$imageSizes['height']
+		)['src'];
 
 		$thumbTracking = "thumb";
 		//Fallback: if Curated Mainpage is inaccessible, try to use Special:Promote
@@ -33,8 +35,9 @@ class ResultHelper
 			$imageURL = ImagesService::getImageSrcByTitle(
 				(new \CityVisualization)->getTargetWikiId($result['lang_s']),
 				$imageFileName,
-				WikiaSearchController::CROSS_WIKI_PROMO_THUMBNAIL_WIDTH,
-				WikiaSearchController::CROSS_WIKI_PROMO_THUMBNAIL_HEIGHT);
+				$imageSizes['width'],
+				$imageSizes['height']
+			);
 		}//TODO: end
 
 		if (empty($imageURL)) {
@@ -49,19 +52,37 @@ class ResultHelper
 			: $result->getText(Utilities::field('description'), $descWordLimit);
 
 		$service = new MediaWikiService();
+		$wikiaSearchHelper = new \WikiaSearchHelper();
+
+		$globalSearchUrl = '';
+		if ( $query ) {
+			$lang = $wikiaSearchHelper->getLangForSearchResults();
+			$centralUrl = $wikiaSearchHelper->getCentralUrlFromGlobalTitle( $lang );
+			$globalSearchUrl = $wikiaSearchHelper->getGlobalSearchUrl( $centralUrl ) . '?search='. $query;
+		}
 
 		return [
 			'isOnWikiMatch' => isset($result['onWikiMatch']) && $result['onWikiMatch'],
 			'imageURL' => $imageURL,
 			'description' => $description,
-			'pagesMsg' => $service->shortnumForMsg($result['articles_i'] ?: 0, 'wikiasearch2-pages'),
-			'imgMsg' => $service->shortnumForMsg($result['images_i'] ?: 0, 'wikiasearch2-images'),
-			'videoMsg' => $service->shortnumForMsg($result['videos_i'] ?: 0, 'wikiasearch2-videos'),
+			'pages' => [
+				'count' => $service->shortNumForMsg($result['articles_i'] ?: 0),
+				'message' => wfMessage('wikiasearch3-pages')->escaped()
+			],
+			'img' => [
+				'count' => $service->shortNumForMsg($result['images_i'] ?: 0),
+				'message' => wfMessage('wikiasearch3-images')->escaped(),
+			],
+			'video' => [
+				'count' => $service->shortNumForMsg($result['videos_i'] ?: 0),
+				'message' => wfMessage('wikiasearch3-videos')->escaped()
+			],
 			'title' => ($sn = $result->getText('sitename_txt')) ? $sn : $result->getText('headline_txt'),
 			'url' => $result->getText('url'),
 			'hub' => $result->getHub(),
 			'pos' => $pos,
-			'thumbTracking' => $thumbTracking
+			'thumbTracking' => $thumbTracking,
+			'viewMoreWikisLink' => $globalSearchUrl
 		];
 	}
 }
