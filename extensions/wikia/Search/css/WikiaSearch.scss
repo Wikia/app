@@ -504,7 +504,7 @@ $form-negative-side-padding: $form-side-padding*-1;
 
 	.side-articles-header {
 		border: 0;
-		margin: 0 0 15px;
+		margin: 0 0 19px;
 		padding: 0;
 	}
 
@@ -516,12 +516,16 @@ $form-negative-side-padding: $form-side-padding*-1;
 		border-top: 2px solid $color-page-border;
 		float: left;
 		margin: 0 0 10px;
-		min-height: 116px;
+		min-height: 106px;
+
+		&:last-child {
+			border-bottom: 2px solid $color-page-border;
+		}
 
 		.side-article-category {
 			font-size: 10px;
 			font-weight: bold;
-			line-height: 1;
+			line-height: 12px;
 			margin: 6px 0 10px;
 		}
 
@@ -535,6 +539,13 @@ $form-negative-side-padding: $form-side-padding*-1;
 			width: 205px;
 		}
 
+		.fandom-annotation {
+			color: $color-alternate-text;
+			font-size: 12px;
+			font-weight: bold;
+			text-transform: uppercase;
+		}
+
 		.side-article-text-synopsis {
 			p {
 				display: inline;
@@ -543,7 +554,7 @@ $form-negative-side-padding: $form-side-padding*-1;
 
 		.side-article-thumbnail {
 			float: left;
-			height: 90px;
+			height: 50px;
 			margin: 0 12px 0 0;
 			width: 90px;
 
@@ -614,7 +625,12 @@ $form-negative-side-padding: $form-side-padding*-1;
 			min-height: 0;
 			padding-bottom: 6px;
 			padding-top: 16px;
+
+			.side-article-thumbnail {
+				height: 90px;
+			}
 		}
+
 	}
 }
 
