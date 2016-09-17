@@ -64,8 +64,8 @@ class WikiaSearchController extends WikiaSpecialPageController {
 	const HOT_ARTICLE_IMAGE_WIDTH_FLUID = 270;
 	const HOT_ARTICLE_IMAGE_HEIGHT_FLUID = 135;
 
-	const CROSS_WIKI_PROMO_THUMBNAIL_HEIGHT = 120;
-	const CROSS_WIKI_PROMO_THUMBNAIL_WIDTH = 180;
+	const CROSS_WIKI_PROMO_THUMBNAIL_HEIGHT = 200;
+	const CROSS_WIKI_PROMO_THUMBNAIL_WIDTH = 300;
 
 	/**
 	 * Responsible for instantiating query services based on config.
@@ -675,14 +675,15 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		} else {
 			$this->setVal( 'mediaData', [] );
 		}
-		if ( $this->wg->OnWikiSearchIncludesWikiMatch && $searchConfig->hasWikiMatch() ) {
+
+		if ( $searchConfig->hasWikiMatch() ) {
 			$this->registerWikiMatch( $searchConfig );
 		}
 		$topWikiArticlesHtml = '';
 
 		if ( ! $searchConfig->getInterWiki() && $wgLanguageCode == 'en'
 			&& !$isMonobook ) {
-			$dbname = $this->wg->DBName;
+
 			$cacheKey = wfMemcKey(
 				__CLASS__,
 				'WikiaSearch',
@@ -713,7 +714,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 			$this->setVal(
 					'wikiMatch',
 					$this->getApp()->getView( 'WikiaSearch', 'exactResult',
-						ResultHelper::extendResult($matchResult, 'wiki', ResultHelper::MAX_WORD_COUNT_EXACT_MATCH) )
+						ResultHelper::extendResult($matchResult, 'wiki', ResultHelper::MAX_WORD_COUNT_EXACT_MATCH, $searchConfig->getQuery()->getSanitizedQuery()) )
 			);
 			$this->resultsFound++;
 		}

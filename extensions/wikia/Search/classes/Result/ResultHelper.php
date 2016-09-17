@@ -16,7 +16,7 @@ class ResultHelper
 	 * +     * @param $descWordLimit
 	 * +     * @return array
 	 * +     */
-	public static function extendResult($result, $pos, $descWordLimit)
+	public static function extendResult($result, $pos, $descWordLimit, $query)
 	{
 		$commData = new CommunityDataService($result['id']);
 		$imageURL = ImagesService::getImageSrc(
@@ -50,6 +50,12 @@ class ResultHelper
 
 		$service = new MediaWikiService();
 
+		//TODO this should not come from Global navigation
+		$helper = (new \GlobalNavigationHelper());
+		$lang = $helper->getLangForSearchResults();
+		$centralUrl = $helper->getCentralUrlFromGlobalTitle( $lang );
+		$globalSearchUrl = $helper->getGlobalSearchUrl( $centralUrl );
+
 		return [
 			'isOnWikiMatch' => isset($result['onWikiMatch']) && $result['onWikiMatch'],
 			'imageURL' => $imageURL,
@@ -61,7 +67,8 @@ class ResultHelper
 			'url' => $result->getText('url'),
 			'hub' => $result->getHub(),
 			'pos' => $pos,
-			'thumbTracking' => $thumbTracking
+			'thumbTracking' => $thumbTracking,
+			'viewMoreWikisLink' => $globalSearchUrl . '?search='. $query
 		];
 	}
 }
