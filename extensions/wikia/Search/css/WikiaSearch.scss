@@ -495,14 +495,14 @@ $form-negative-side-padding: $form-side-padding*-1;
 	}
 }
 
-// Top articles module
-.top-wiki-articles {
+// Top articles module, fandom related module
+.side-articles {
 	margin: 0;
 	overflow: hidden;
-	padding: 14px 14px 4px 14px;
+	padding: 14px;
 	width: 300px;
 
-	.top-wiki-main {
+	.side-articles-header {
 		border: none;
 		margin: 0 0 15px 0;
 		padding: 0;
@@ -512,12 +512,12 @@ $form-negative-side-padding: $form-side-padding*-1;
 		margin: 0;
 	}
 
-	.top-wiki-article {
+	.side-article {
 		float: left;
 		margin: 0 0 10px 0;
 		min-height: 80px;
 
-		.top-wiki-article-text {
+		.side-article-text {
 			float: left;
 			margin-bottom: 0;
 			position: relative;
@@ -527,13 +527,13 @@ $form-negative-side-padding: $form-side-padding*-1;
 			font-size: 14px;
 		}
 
-		.top-wiki-article-text-synopsis {
+		.side-article-text-synopsis {
 			p {
 				display: inline;
 			}
 		}
 
-		.top-wiki-article-thumbnail {
+		.side-article-thumbnail {
 			float: left;
 			height: 50px;
 			margin: 0 10px 0 0;
@@ -677,10 +677,10 @@ $form-negative-side-padding: $form-side-padding*-1;
 	}
 
 	.WikiaRail {
-		.top-wiki-articles {
+		.side-articles {
 			width: 270px;
 	
-			.top-wiki-article-text {
+			.side-article-text {
 				width: 170px;
 			}
 		}

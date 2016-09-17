@@ -1,21 +1,21 @@
 <?php $counter = 0; ?>
 
 <?php if ( !empty( $stories ) ) : ?>
-	<div class="top-wiki-articles RailModule">
-		<h1 class="top-wiki-main">Related Fandom Stories</h1>
+	<div class="side-articles RailModule">
+		<h1 class="side-articles-header">Related Fandom Stories</h1>
 		<?php foreach ( $stories as $story ) : ?>
-			<div class="top-wiki-article result">
+			<div class="side-article result">
 				<div>Vertical: <?= $story['vertical'] ?></div>
-				<div class="top-wiki-article-thumbnail">
+				<div class="side-article-thumbnail">
 					<? if ( isset( $story['image'] ) ) : ?>
 						<a href="<?=$story['url']?>" data-pos="<?= $counter ?>">
 							<img src="<?= $story['image'] ?>" />
 						</a>
 					<? endif; ?>
 				</div>
-				<div class="top-wiki-article-text">
+				<div class="side-article-text">
 					<a href="<?= $story['url'] ?>" data-pos="<?= $counter ?>"><?= $story['title'] ?><!-- comment to remove whitespace
-				--><span class="top-wiki-article-text-synopsis subtle">
+				--><span class="side-article-text-synopsis subtle">
 							<?= $story['excerpt'] ?></span></a>
 				</div>
 			</div>
