@@ -413,11 +413,11 @@ $form-negative-side-padding: $form-side-padding*-1;
 //rail module style
 .RailModule {
 	@include clearfix;
-	background: $color-page;
-	@if lightness($color-page) < 50 {
-		background: $color-module-background;
-		border: 1px solid $color-page-border;
-	}
+	//background: $color-page;
+	//@if lightness($color-page) < 50 {
+	//	background: $color-module-background;
+	//	border: 1px solid $color-page-border;
+	//}
 	margin-bottom: 10px;
 	padding: 20px 15px 15px;
 	position: relative;
@@ -499,7 +499,7 @@ $form-negative-side-padding: $form-side-padding*-1;
 .side-articles {
 	margin: 0;
 	overflow: hidden;
-	padding: 14px;
+	padding: 14px 0;
 	width: 300px;
 
 	.side-articles-header {
@@ -521,7 +521,7 @@ $form-negative-side-padding: $form-side-padding*-1;
 		.side-article-category {
 			font-size: 10px;
 			font-weight: bold;
-			margin: 3px 0;
+			margin: 6px 0 10px;
 		}
 
 		.side-article-text {
@@ -543,7 +543,7 @@ $form-negative-side-padding: $form-side-padding*-1;
 		.side-article-thumbnail {
 			float: left;
 			height: 50px;
-			margin: 0 10px 0 0;
+			margin: 0 12px 0 0;
 			width: 90px;
 
 			img {
@@ -694,7 +694,7 @@ $form-negative-side-padding: $form-side-padding*-1;
 			width: 270px;
 	
 			.side-article-text {
-				width: 170px;
+				width: 168px;
 			}
 		}
 
