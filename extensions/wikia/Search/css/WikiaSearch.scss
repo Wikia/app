@@ -580,30 +580,6 @@ $form-negative-side-padding: $form-side-padding*-1;
 				color: $color-vertical-tv;
 			}
 		}
-
-		&.side-article-books {
-			border-top-color: $color-vertical-books;
-
-			.side-article-category {
-				color: $color-vertical-books;
-			}
-		}
-
-		&.side-article-comics {
-			border-top-color: $color-vertical-comics;
-
-			.side-article-category {
-				color: $color-vertical-comics;
-			}
-		}
-
-		&.side-article-lifestyle {
-			border-top-color: $color-vertical-comics;
-
-			.side-article-category {
-				color: $color-vertical-comics;
-			}
-		}
 	}
 
 	.side-articles-footer {
