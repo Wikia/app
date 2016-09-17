@@ -57,6 +57,7 @@ $messages['en'] = array(
 	'wikiasearch2-exact-result' => 'Result for $1 from Wikia',
 
 	'wikiasearch2-top-module-title' => 'Top pages',
+	'wikiasearch2-fandom-stories-title' => 'Related {{PLURAL:$1|Story|Stories}}',
 
 	'wikiamobile-wikiasearch2-next' => 'Next',
 	'wikiamobile-wikiasearch2-prev' => 'Previous',

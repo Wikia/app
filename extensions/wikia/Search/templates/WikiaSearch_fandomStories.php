@@ -2,7 +2,7 @@
 
 <?php if ( !empty( $stories ) ) : ?>
 	<div class="side-articles RailModule">
-		<h1 class="side-articles-header">Related Fandom Stories</h1>
+		<h1 class="side-articles-header"><?= wfMessage( 'wikiasearch2-fandom-stories-title', count( $stories ) ); ?></h1>
 		<?php foreach ( $stories as $story ) : ?>
 			<div class="side-article result">
 				<div class="side-article-category"><?= $story['vertical'] ?></div>
