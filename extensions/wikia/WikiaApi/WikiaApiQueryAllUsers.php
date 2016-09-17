@@ -11,10 +11,10 @@ if (!defined('MEDIAWIKI')) {
  * @addtogroup API
  */
 
-class WikiaApiQueryAllUsers extends ApiQueryBase {
+class WikiaApiQueryAllUsers extends ApiQueryAllUsers {
 
 	public function __construct($query, $moduleName) {
-		parent::__construct( $query, $moduleName, 'au' );
+		parent :: __construct($query, $moduleName);
 		$this->showError = true;
 	}
 
@@ -376,57 +376,9 @@ class WikiaApiQueryAllUsers extends ApiQueryBase {
 
 		$result->setIndexedTagName_internal(array('query', $this->getModuleName()), 'u');
 	}
-
-	private function getBaseAllowedParams() {
-		$userGroups = User::getAllGroups();
-		return array(
-			'from' => null,
-			'to' => null,
-			'prefix' => null,
-			'dir' => array(
-				ApiBase::PARAM_DFLT => 'ascending',
-				ApiBase::PARAM_TYPE => array(
-					'ascending',
-					'descending'
-				),
-			),
-			'group' => array(
-				ApiBase::PARAM_TYPE => $userGroups,
-				ApiBase::PARAM_ISMULTI => true,
-			),
-			'excludegroup' => array(
-				ApiBase::PARAM_TYPE => $userGroups,
-				ApiBase::PARAM_ISMULTI => true,
-			),
-			'rights' => array(
-				ApiBase::PARAM_TYPE => User::getAllRights(),
-				ApiBase::PARAM_ISMULTI => true,
-			),
-			'prop' => array(
-				ApiBase::PARAM_ISMULTI => true,
-				ApiBase::PARAM_TYPE => array(
-					'blockinfo',
-					'groups',
-					'implicitgroups',
-					'rights',
-					'editcount',
-					'registration'
-				)
-			),
-			'limit' => array(
-				ApiBase::PARAM_DFLT => 10,
-				ApiBase::PARAM_TYPE => 'limit',
-				ApiBase::PARAM_MIN => 1,
-				ApiBase::PARAM_MAX => ApiBase::LIMIT_BIG1,
-				ApiBase::PARAM_MAX2 => ApiBase::LIMIT_BIG2
-			),
-			'witheditsonly' => false,
-			'activeusers' => false,
-		);
-	}
 	
 	public function getAllowedParams() {
-		$params = $this->getBaseAllowedParams();
+		$params = parent::getAllowedParams();
 		$params['local'] = array (
 			ApiBase :: PARAM_ISMULTI => 0,
 			ApiBase :: PARAM_TYPE => 'integer',
@@ -435,64 +387,12 @@ class WikiaApiQueryAllUsers extends ApiQueryBase {
 		return $params;
 	}
 
-	private function getBaseParamDescription() {
-		global $wgActiveUserDays;
-		return array(
-			'from' => 'The user name to start enumerating from',
-			'to' => 'The user name to stop enumerating at',
-			'prefix' => 'Search for all users that begin with this value',
-			'dir' => 'Direction to sort in',
-			'group' => 'Limit users to given group name(s)',
-			'excludegroup' => 'Exclude users in given group name(s)',
-			'rights' => 'Limit users to given right(s)',
-			'prop' => array(
-				'What pieces of information to include.',
-				' blockinfo      - Adds the information about a current block on the user',
-				' groups         - Lists groups that the user is in. This uses more server resources and may return fewer results than the limit',
-				' implicitgroups - Lists all the groups the user is automatically in',
-				' rights         - Lists rights that the user has',
-				' editcount      - Adds the edit count of the user',
-				' registration   - Adds the timestamp of when the user registered if available (may be blank)',
-			),
-			'limit' => 'How many total user names to return',
-			'witheditsonly' => 'Only list users who have made edits',
-			'activeusers' => "Only list users active in the last {$wgActiveUserDays} days(s)"
-		);
-	}
-
 	public function getParamDescription() {
-		$params = $this->getBaseParamDescription();
+		$params = parent::getParamDescription();
 		$params['local'] = array(
 			'Show users active on Wikia'
 		);
 		return $params;
 	}
-
-	public function getCacheMode( $params ) {
-		return 'anon-public-user-private';
-	}
-
-	public function getDescription() {
-		return 'Enumerate all registered users';
-	}
-
-	public function getPossibleErrors() {
-		return array_merge( parent::getPossibleErrors(), array(
-			array( 'code' => 'group-excludegroup', 'info' => 'group and excludegroup cannot be used together' ),
-		) );
-	}
-
-	public function getExamples() {
-		return array(
-			'api.php?action=query&list=allusers&aufrom=Y',
-		);
-	}
-
-	public function getHelpUrls() {
-		return 'https://www.mediawiki.org/wiki/API:Allusers';
-	}
-
-	public function getVersion() {
-		return __CLASS__ . ': $Id$';
-	}
+	
 }

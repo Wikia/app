@@ -271,8 +271,7 @@ $config['adengine2_prebid_js'] = [
 		'//extensions/wikia/AdEngine/js/lookup/prebid/prebid.js',
 		'//extensions/wikia/AdEngine/js/lookup/prebid/prebidHelper.js',
 		'//extensions/wikia/AdEngine/js/lookup/prebid/adapters/appnexus.js',
-		'//extensions/wikia/AdEngine/js/lookup/prebid/adapters/appnexusPlacements.js',
-		'//extensions/wikia/AdEngine/js/lookup/prebid/adapters/indexExchange.js'
+		'//extensions/wikia/AdEngine/js/lookup/prebid/adapters/indexExchange.js',
 	],
 ];
 

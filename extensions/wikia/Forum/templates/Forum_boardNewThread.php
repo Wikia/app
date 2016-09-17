@@ -14,7 +14,7 @@
 						<span class="board-list-error"><?= wfMessage( 'forum-no-board-selection-error' )->escaped() ?></span>
 					</div>
 				<? endif; ?>
-				<? if ( $showMiniEditor ): ?>
+				<? if ( $wg->EnableMiniEditorExtForWall ): ?>
 					<?= $app->getView( 'MiniEditorController', 'Header', [
 						'attributes' => [
 							'data-min-height' => 200,
@@ -27,14 +27,14 @@
 					<span class="no-title-warning"><?= wfMessage( 'wall-no-title-warning' )->escaped() ?></span>
 				</div>
 				<div class="body-container">
-					<? if ( $showMiniEditor ): ?>
+					<? if ( $wg->EnableMiniEditorExtForWall ): ?>
 						<?= $app->getView( 'MiniEditorController', 'Editor_Header' )->render() ?>
 					<? endif ?>
 					<textarea class="body" data-space-type="editarea" placeholder="<?= $wall_message ?>"></textarea>
-					<? if ( $showMiniEditor ): ?>
+					<? if ( $wg->EnableMiniEditorExtForWall ): ?>
 						<?= $app->getView( 'MiniEditorController', 'Editor_Footer' )->render() ?>
 					<? endif ?>
-					<div class="speech-bubble-buttons" data-space-type="buttons">
+					<div class="buttons" data-space-type="buttons">
 						<?php if ( $notify_everyone ): ?>
 							<label class="highlight">
 								<input type="checkbox" class="notify-everyone" name="notifyEveryone" value="1" /><?= wfMessage( 'forum-discussion-highlight' )->escaped() ?>
@@ -45,7 +45,7 @@
 						<button disabled="disabled" class="preview secondary"><?= wfMessage( 'wall-button-to-preview-comment' )->escaped() ?></button>
 					</div>
 				</div>
-				<? if ( $showMiniEditor ): ?>
+				<? if ( $wg->EnableMiniEditorExtForWall ): ?>
 					<?= $app->getView( 'MiniEditorController', 'Footer' )->render() ?>
 				<? endif ?>
 				<?= F::app()->renderPartialCached( 'Wall', 'messageTopic', [ ] ) ?>

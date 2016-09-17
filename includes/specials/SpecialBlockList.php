@@ -20,6 +20,7 @@
  * @file
  * @ingroup SpecialPage
  */
+use Wikia\Util\PerformanceProfilers\UsernameUseProfiler;
 
 /**
  * A special page that lists existing blocks
@@ -243,6 +244,7 @@ class BlockListPager extends TablePager {
 	}
 
 	function formatValue( $name, $value ) {
+		$usernameUseProfiler = new UsernameUseProfiler( __CLASS__, __METHOD__ );
 		static $msg = null;
 		if ( $msg === null ) {
 			$msg = array(
@@ -324,7 +326,7 @@ class BlockListPager extends TablePager {
 					$formatted = Linker::userLink( $value, $row->by_user_name );
 					$formatted .= Linker::userToolLinks( $value, $row->by_user_name );
 				} else {
-					$formatted = htmlspecialchars( \User::getUsername( $row->ipb_by, $row->ipb_by_text ) ); // foreign user?
+					$formatted = htmlspecialchars( $row->ipb_by_text ); // foreign user?
 				}
 				break;
 
@@ -359,6 +361,7 @@ class BlockListPager extends TablePager {
 				$formatted = "Unable to format $name";
 				break;
 		}
+		$usernameUseProfiler->end();
 		return $formatted;
 	}
 
