@@ -1,5 +1,3 @@
-<?php $counter = 0; ?>
-
 <?php if ( !empty( $stories ) ) : ?>
 	<div class="side-articles RailModule">
 		<h1 class="side-articles-header"><?= wfMessage( 'wikiasearch2-fandom-stories-title', count( $stories ) ); ?></h1>
