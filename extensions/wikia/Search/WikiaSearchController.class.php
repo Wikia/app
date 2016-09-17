@@ -700,6 +700,8 @@ class WikiaSearchController extends WikiaSpecialPageController {
 			);
 		}
 		$this->setVal( 'topWikiArticles', $topWikiArticlesHtml );
+
+		\Wikia\Search\FandomSearch::getTopStories( $searchConfig );
 	}
 
 	/**
