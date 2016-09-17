@@ -5,13 +5,13 @@
 		<div class="side-article result">
 			<div class="side-article-thumbnail">
 				<? if ( isset( $page['thumbnail'] ) ) : ?>
-				<a href="<?=$page['url']?>" data-pos="<?= $counter ?>">
+				<a href="<?=$page['url']?>" class="top-wiki-article-image" data-pos="<?= $counter ?>">
 					<img src="<?= $page['thumbnail'] ?>" />
 				</a>
 				<? endif; ?>
 			</div>
 			<div class="side-article-text">
-				<b><a href="<?= $page['url'] ?>" data-pos="<?= $counter ?>"><?= $page['title'] ?></a></b><!-- comment to remove whitespace
+				<b><a href="<?= $page['url'] ?>" class="top-wiki-article-link" data-pos="<?= $counter ?>"><?= $page['title'] ?></a></b><!-- comment to remove whitespace
 				--><span class="side-article-text-synopsis subtle"><?= $page['abstract'] ?></span>
 			</div>
 		</div>
