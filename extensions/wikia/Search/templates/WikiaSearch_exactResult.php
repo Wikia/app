@@ -26,5 +26,5 @@
 			<p class="exact-match__wiki-description"><?= $description; ?></p>
 		</div>
 	</div>
-	<a href="<?= $viewMoreWikisLink ?>">View More Wikis ></a>
+	<a href="<?= $viewMoreWikisLink ?>">View More Wikis <?= DesignSystemHelper::getSvg( 'wds-icons-arrow', 'wds-icon wds-icon-small exact-match__arrow' ); ?></a>
 </div>

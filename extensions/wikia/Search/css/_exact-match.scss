@@ -56,5 +56,11 @@ $border-size: 1px;
 				top: -$border-size;
 			};
 		}
+
+		&__arrow {
+			margin: 1px 0 0 5px;
+			transform: rotate(180deg);
+			vertical-align: top;
+		}
 	}
 }
