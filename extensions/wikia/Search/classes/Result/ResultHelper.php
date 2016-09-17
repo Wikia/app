@@ -14,16 +14,18 @@ class ResultHelper
 	 * +     * @param $result
 	 * +     * @param $pos
 	 * +     * @param $descWordLimit
+	 * +     * @param query
+	 * +     * @param $imageSizes
 	 * +     * @return array
 	 * +     */
-	public static function extendResult($result, $pos, $descWordLimit, $query)
-	{
+	public static function extendResult($result, $pos, $descWordLimit, $query, $imageSizes) {
 		$commData = new CommunityDataService($result['id']);
 		$imageURL = ImagesService::getImageSrc(
 			$result['id'],
 			$commData->getCommunityImageId(),
-			WikiaSearchController::CROSS_WIKI_PROMO_THUMBNAIL_WIDTH,
-			WikiaSearchController::CROSS_WIKI_PROMO_THUMBNAIL_HEIGHT)['src'];
+			$imageSizes['width'],
+			$imageSizes['height']
+		)['src'];
 
 		$thumbTracking = "thumb";
 		//Fallback: if Curated Mainpage is inaccessible, try to use Special:Promote
@@ -33,8 +35,9 @@ class ResultHelper
 			$imageURL = ImagesService::getImageSrcByTitle(
 				(new \CityVisualization)->getTargetWikiId($result['lang_s']),
 				$imageFileName,
-				WikiaSearchController::CROSS_WIKI_PROMO_THUMBNAIL_WIDTH,
-				WikiaSearchController::CROSS_WIKI_PROMO_THUMBNAIL_HEIGHT);
+				$imageSizes['width'],
+				$imageSizes['height']
+			);
 		}//TODO: end
 
 		if (empty($imageURL)) {
@@ -51,9 +54,12 @@ class ResultHelper
 		$service = new MediaWikiService();
 		$wikiaSearchHelper = new \WikiaSearchHelper();
 
-		$lang = $wikiaSearchHelper->getLangForSearchResults();
-		$centralUrl = $wikiaSearchHelper->getCentralUrlFromGlobalTitle( $lang );
-		$globalSearchUrl = $wikiaSearchHelper->getGlobalSearchUrl( $centralUrl );
+		$globalSearchUrl = '';
+		if ( $query ) {
+			$lang = $wikiaSearchHelper->getLangForSearchResults();
+			$centralUrl = $wikiaSearchHelper->getCentralUrlFromGlobalTitle( $lang );
+			$globalSearchUrl = $wikiaSearchHelper->getGlobalSearchUrl( $centralUrl ) . '?search='. $query;
+		}
 
 		return [
 			'isOnWikiMatch' => isset($result['onWikiMatch']) && $result['onWikiMatch'],
@@ -76,7 +82,7 @@ class ResultHelper
 			'hub' => $result->getHub(),
 			'pos' => $pos,
 			'thumbTracking' => $thumbTracking,
-			'viewMoreWikisLink' => $globalSearchUrl . '?search='. $query
+			'viewMoreWikisLink' => $globalSearchUrl
 		];
 	}
 }

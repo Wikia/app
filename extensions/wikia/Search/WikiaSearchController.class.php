@@ -64,8 +64,11 @@ class WikiaSearchController extends WikiaSpecialPageController {
 	const HOT_ARTICLE_IMAGE_WIDTH_FLUID = 270;
 	const HOT_ARTICLE_IMAGE_HEIGHT_FLUID = 135;
 
-	const CROSS_WIKI_PROMO_THUMBNAIL_HEIGHT = 200;
-	const CROSS_WIKI_PROMO_THUMBNAIL_WIDTH = 300;
+	const EXACT_MATCH_THUMBNAIL_HEIGHT = 200;
+	const EXACT_MATCH_THUMBNAIL_WIDTH = 300;
+
+	const CROSS_WIKI_PROMO_THUMBNAIL_HEIGHT = 120;
+	const CROSS_WIKI_PROMO_THUMBNAIL_WIDTH = 180;
 
 	/**
 	 * Responsible for instantiating query services based on config.
@@ -714,7 +717,11 @@ class WikiaSearchController extends WikiaSpecialPageController {
 			$this->setVal(
 					'wikiMatch',
 					$this->getApp()->getView( 'WikiaSearch', 'exactResult',
-						ResultHelper::extendResult($matchResult, 'wiki', ResultHelper::MAX_WORD_COUNT_EXACT_MATCH, $searchConfig->getQuery()->getSanitizedQuery()) )
+						ResultHelper::extendResult($matchResult, 'wiki', ResultHelper::MAX_WORD_COUNT_EXACT_MATCH, $searchConfig->getQuery()->getSanitizedQuery(), [
+							'width' => WikiaSearchController::EXACT_MATCH_THUMBNAIL_WIDTH,
+							'height' => WikiaSearchController::EXACT_MATCH_THUMBNAIL_HEIGHT
+						])
+					)
 			);
 		}
 	}
