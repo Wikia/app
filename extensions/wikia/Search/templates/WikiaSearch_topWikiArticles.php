@@ -16,7 +16,7 @@
 				--><span class="top-wiki-article-text-synopsis subtle"><?= $page['abstract'] ?></span>
 			</div>
 		</div>
-		<?php if ( $counter++ >= 6 ) { break; } ?>
+		<?php if ( $counter++ >= 4 ) { break; } ?>
 	<?php endforeach; ?>
 </div>
 <?php endif; ?>
