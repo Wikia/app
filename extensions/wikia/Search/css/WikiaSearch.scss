@@ -413,11 +413,6 @@ $form-negative-side-padding: $form-side-padding*-1;
 //rail module style
 .RailModule {
 	@include clearfix;
-	//background: $color-page;
-	//@if lightness($color-page) < 50 {
-	//	background: $color-module-background;
-	//	border: 1px solid $color-page-border;
-	//}
 	margin-bottom: 10px;
 	padding: 20px 15px 15px;
 	position: relative;
@@ -583,38 +578,6 @@ $form-negative-side-padding: $form-side-padding*-1;
 
 			.side-article-category {
 				color: $color-vertical-tv;
-			}
-		}
-
-		&.side-article-books {
-			border-top-color: $color-vertical-books;
-
-			.side-article-category {
-				color: $color-vertical-books;
-			}
-		}
-
-		&.side-article-comics {
-			border-top-color: $color-vertical-comics;
-
-			.side-article-category {
-				color: $color-vertical-comics;
-			}
-		}
-
-		&.side-article-anime {
-			border-top-color: $color-vertical-comics;
-
-			.side-article-anime {
-				color: $color-vertical-comics;
-			}
-		}
-
-		&.side-article-lifestyle {
-			border-top-color: $color-vertical-comics;
-
-			.side-article-lifestyle {
-				color: $color-vertical-comics;
 			}
 		}
 	}
