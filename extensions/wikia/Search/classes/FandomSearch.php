@@ -11,8 +11,12 @@ class FandomSearch {
 	const VERTICALS_PARENT_CATEGORY_ID = 3;
 	const CATEGORY_TAXONOMY_NAME = 'category';
 
-	static public function getTopStories( Config $searchConfig ) {
-		$query = $searchConfig->getQuery()->getSanitizedQuery();
+	static public function hasFandomStories() {
+		// TODO
+		return true;
+	}
+
+	static public function getStories( $query ) {
 		$url = static::buildUrl( $query );
 		$method = 'GET';
 		$options = [

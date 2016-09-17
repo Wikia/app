@@ -175,6 +175,12 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		return $dimensions;
 	}
 
+	public function fandomStories() {
+		$stories = \Wikia\Search\FandomSearch::getStories( $this->getVal( 'query' ) );
+
+		$this->response->setVal( 'stories', $stories );
+	}
+
 	/**
 	 * Deprecated functionality for indexing.
 	 */
@@ -678,30 +684,38 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		if ( $this->wg->OnWikiSearchIncludesWikiMatch && $searchConfig->hasWikiMatch() ) {
 			$this->registerWikiMatch( $searchConfig );
 		}
-		$topWikiArticlesHtml = '';
 
-		if ( ! $searchConfig->getInterWiki() && $wgLanguageCode == 'en'
-			&& !$isMonobook ) {
-			$dbname = $this->wg->DBName;
-			$cacheKey = wfMemcKey(
-				__CLASS__,
-				'WikiaSearch',
-				'topWikiArticles',
-				$this->wg->CityId,
-				static::TOP_ARTICLES_CACHE,
-				$isGridLayoutEnabled
-			);
-			$topWikiArticlesHtml = WikiaDataAccess::cache(
-				$cacheKey,
-				86400 * 5, // 5 days, one business week
-				function () {
-					return $this->app->renderView( 'WikiaSearchController', 'topWikiArticles' );
-				}
-			);
+		$hasFandomStories = \Wikia\Search\FandomSearch::hasFandomStories();
+
+		if ( $hasFandomStories ) {
+			$fandomStoriesHtml = $this->app->renderView( 'WikiaSearchController', 'fandomStories', [
+				'query' => $searchConfig->getQuery()->getSanitizedQuery()
+			] );
+			$this->setVal( 'fandomStories', $fandomStoriesHtml );
+		} else {
+			$topWikiArticlesHtml = '';
+
+			if ( ! $searchConfig->getInterWiki() && $wgLanguageCode == 'en'
+				&& !$isMonobook ) {
+				$dbname = $this->wg->DBName;
+				$cacheKey = wfMemcKey(
+					__CLASS__,
+					'WikiaSearch',
+					'topWikiArticles',
+					$this->wg->CityId,
+					static::TOP_ARTICLES_CACHE,
+					$isGridLayoutEnabled
+				);
+				$topWikiArticlesHtml = WikiaDataAccess::cache(
+					$cacheKey,
+					86400 * 5, // 5 days, one business week
+					function () {
+						return $this->app->renderView( 'WikiaSearchController', 'topWikiArticles' );
+					}
+				);
+			}
+			$this->setVal( 'topWikiArticles', $topWikiArticlesHtml );
 		}
-		$this->setVal( 'topWikiArticles', $topWikiArticlesHtml );
-
-		\Wikia\Search\FandomSearch::getTopStories( $searchConfig );
 	}
 
 	/**
