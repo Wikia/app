@@ -13,19 +13,19 @@
 
 		&__wiki-header {
 			font-size: 20px;
+			margin-bottom: 0;
 		}
 
 		&__hub {
 			font-size: 14px;
-			color: #c5ced9;
+			margin: 0;
 		}
 
 		&__statistics {
 			font-size: 14px;
-			color: #656e78;
 			text-transform: uppercase;
 			display: flex;
-			padding: 15px 0;
+			padding: 10px 0;
 			list-style: none;
 			margin: 0;
 
@@ -37,15 +37,16 @@
 
 		&__wiki-description {
 			line-height: 1.7rem;
-			color: #656e78;
 		}
 
 		&__content {
-			padding: 25px;
-			border: 1px solid #cccccc;
+			padding: 5px 25px 25px;
+			border: 1px solid $color-search-grid-border;
 			border-top: none;
-			margin-top: -1px;
-			margin-bottom: 30px;
+			margin:{
+				top: -1px;
+				bottom: 30px;
+			};
 		}
 	}
 }

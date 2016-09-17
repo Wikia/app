@@ -8,14 +8,13 @@
 			<h1 class="exact-match__wiki-header">
 				<a href="<?= $url ?>" class="" data-pos="<?=$pos?>" ><?= $title ?></a>
 			</h1>
-			<p class="exact-match__hub"><?= $hub ?></p>
+			<p class="exact-match__hub subtle"><?= $hub ?></p>
 			<ul class="exact-match__statistics">
-				<li><?= $pagesMsg ?></li>
-				<li><?= $imgMsg ?></li>
-				<li><?= $videoMsg ?></li>
+				<li><?= str_replace(' ', '<br>', $pagesMsg) ?></li>
+				<li><?= str_replace(' ', '<br>', $imgMsg) ?></li>
+				<li><?= str_replace(' ', '<br>', $videoMsg) ?></li>
 			</ul>
 			<p class="exact-match__wiki-description"><?= $description; ?></p>
-			<a href="<?= $url ?>">View Wiki ></a>
 		</div>
 	</div>
 	<a href="<?= $viewMoreWikisLink ?>">View More Wikis ></a>

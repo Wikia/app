@@ -5,7 +5,7 @@
 @import "skins/shared/mixins/calc";
 @import "skins/shared/mixins/clearfix";
 @import "skins/shared/mixins/gradient";
-@import "exact-match";
+
 
 $color-search-form-background: mix($color-page, #000, 97%);
 @if $is-dark-wiki {
@@ -27,6 +27,9 @@ $color-search-ads-background: mix($color-buttons, $color-page, 3%);
 @if $is-dark-wiki {
 	$color-search-ads-background: mix($color-buttons, $color-page, 12%);
 }
+
+//We are using colors from above in exact-match
+@import "exact-match";
 
 $form-side-padding: 12px;
 $form-negative-side-padding: $form-side-padding*-1;
