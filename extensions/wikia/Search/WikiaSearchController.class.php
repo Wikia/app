@@ -107,6 +107,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 
 	public function fandomStories() {
 		$this->response->setVal( 'stories', $this->getVal( 'stories', [] ) );
+		$this->response->setVal( 'viewMoreLink', $this->getVal( 'viewMoreLink', null ) );
 	}
 
 	/**
@@ -617,6 +618,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		global $wgLang;
 
 		$isMonobook = $this->response->getVal( 'isMonobook' );
+		$query = $searchConfig->getQuery()->getSanitizedQuery();
 		$this->setVal( 'fandomStories', false );
 		$this->setVal( 'hasTopWikiArticles', false );
 
@@ -625,10 +627,12 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		}
 
 		if ( $wgLang->getCode() === 'en' ) {
-			$fandomStories = \Wikia\Search\FandomSearch::getStoriesWithCache( $searchConfig->getQuery()->getSanitizedQuery() );
+			$fandomStories = \Wikia\Search\FandomSearch::getStoriesWithCache( $query );
+			$viewMoreFandomStoriesLink = \Wikia\Search\FandomSearch::getViewMoreLink( $fandomStories, $query );
 
 			if ( !empty( $fandomStories ) ) {
 				$this->setVal( 'fandomStories', $fandomStories );
+				$this->setVal( 'viewMoreFandomStoriesLink', $viewMoreFandomStoriesLink );
 				$this->setVal( 'hasFandomStories', true );
 
 				return;

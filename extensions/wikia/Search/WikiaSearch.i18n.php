@@ -58,6 +58,7 @@ $messages['en'] = array(
 
 	'wikiasearch2-top-module-title' => 'Top pages',
 	'wikiasearch2-fandom-stories-title' => 'Related {{PLURAL:$1|Story|Stories}}',
+	'wikiasearch2-fandom-stories-view-more' => 'View More Stories',
 
 	'wikiamobile-wikiasearch2-next' => 'Next',
 	'wikiamobile-wikiasearch2-prev' => 'Previous',

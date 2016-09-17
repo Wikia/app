@@ -18,5 +18,10 @@
 				</div>
 			</div>
 		<?php endforeach; ?>
+		<?php if ( !empty( $viewMoreLink ) ) : ?>
+			<div>
+				<a href="<?= $viewMoreLink ?>"><?= wfMessage( 'wikiasearch2-fandom-stories-view-more' ); ?></a>
+			</div>
+		<?php endif; ?>
 	</div>
 <?php endif; ?>

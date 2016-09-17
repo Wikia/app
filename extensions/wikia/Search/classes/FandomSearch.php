@@ -7,12 +7,13 @@ use \Wikia\Logger\WikiaLogger;
 class FandomSearch {
 	const FANDOM_API = 'http://fandom.wikia.com/wp-json/wp/v2/';
 	const FANDOM_API_POSTS_ENDPOINT = 'posts';
+	const FANDOM_SEARCH_PAGE = 'http://fandom.wikia.com/?s=';
 	const RESULTS_COUNT = 5;
 	const VERTICALS_PARENT_CATEGORY_ID = 3;
 	const CATEGORY_TAXONOMY_NAME = 'category';
 	const CACHE_TTL = 12 * 60 * 60;
 
-	static public function getStoriesWithCache( $query ) {
+	public static function getStoriesWithCache( $query ) {
 		return \WikiaDataAccess::cache(
 			wfSharedMemcKey( 'FandomSearch', $query ),
 			static::CACHE_TTL,
@@ -22,7 +23,7 @@ class FandomSearch {
 		);
 	}
 
-	static public function getStories( $query ) {
+	public static function getStories( $query ) {
 		$url = static::buildUrl( $query );
 		$method = 'GET';
 		$options = [
@@ -46,6 +47,14 @@ class FandomSearch {
 		} else if ( !empty( $result ) ) {
 			return static::parseResult( $result );
 		}
+	}
+
+	public static function getViewMoreLink( $stories, $query ) {
+		if ( count( $stories ) === static::RESULTS_COUNT ) {
+			return static::FANDOM_SEARCH_PAGE . $query;
+		}
+
+		return null;
 	}
 
 	private static function buildUrl( $query ) {
