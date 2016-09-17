@@ -1,5 +1,5 @@
 <div class="exact-match">
-	<h1 class="exact-match__header">Related Wiki</h1>
+	<h1 class="exact-match__header"><?= wfMessage('wikiasearch3-related-wiki')->escaped(); ?></h1>
 	<div class="exact-match__result">
 		<a href="<?= $url ?>" title="<?= $title ?>" data-pos="<?=$pos?>" data-event="search_click_wiki-<?=$thumbTracking?>">
 			<img src="<?= $imageURL ?>" alt="<?= $title ?>" class="exact-match__image" />
@@ -26,5 +26,5 @@
 			<p class="exact-match__wiki-description"><?= $description; ?></p>
 		</div>
 	</div>
-	<a href="<?= $viewMoreWikisLink ?>">View More Wikis <?= DesignSystemHelper::getSvg( 'wds-icons-arrow', 'wds-icon wds-icon-small exact-match__arrow' ); ?></a>
+	<a href="<?= $viewMoreWikisLink ?>"><?= wfMessage('wikiasearch3-view-more-wikis')->escaped(); ?> <?= DesignSystemHelper::getSvg( 'wds-icons-arrow', 'wds-icon wds-icon-small exact-match__arrow' ); ?></a>
 </div>
