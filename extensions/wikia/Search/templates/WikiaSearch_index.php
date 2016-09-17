@@ -99,13 +99,13 @@
 			</div>
 			<div class="SearchAdsTopWrapper WikiaRail <?= !empty( $isGridLayoutEnabled ) ? 'grid-2' : '' ?> alpha">
 				<?= F::app()->renderView( 'Ad', 'Index', ['slotName' => 'TOP_RIGHT_BOXAD', 'pageTypes' => ['search']] ); ?>
-				<?php if ( $hasFandomStories ): ?>
+				<?php if ( !empty( $fandomStories ) ): ?>
 					<?= F::app()->renderView( 'WikiaSearch', 'fandomStories', [
 						'stories' => $fandomStories,
 						'viewMoreLink' => $viewMoreFandomStoriesLink
 					] ); ?>
 				<?php endif ?>
-				<?php if ( $hasTopWikiArticles ) : ?>
+				<?php if ( !empty( $topWikiArticles ) ) : ?>
 					<?= F::app()->renderView( 'WikiaSearch', 'topWikiArticles', [ 'pages' => $topWikiArticles ] ); ?>
 				<?php endif ?>
 				<?= F::app()->renderView( 'Ad', 'Index', ['slotName' => 'LEFT_SKYSCRAPER_2', 'pageTypes' => ['search']] ); ?>

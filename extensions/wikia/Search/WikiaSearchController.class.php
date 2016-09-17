@@ -620,7 +620,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		$isMonobook = $this->response->getVal( 'isMonobook' );
 		$query = $searchConfig->getQuery()->getSanitizedQuery();
 		$this->setVal( 'fandomStories', [] );
-		$this->setVal( 'hasTopWikiArticles', false );
+		$this->setVal( 'topWikiArticles', [] );
 
 		if ( $searchConfig->getInterWiki() || $isMonobook ) {
 			return;
@@ -633,7 +633,6 @@ class WikiaSearchController extends WikiaSpecialPageController {
 			if ( !empty( $fandomStories ) ) {
 				$this->setVal( 'fandomStories', $fandomStories );
 				$this->setVal( 'viewMoreFandomStoriesLink', $viewMoreFandomStoriesLink );
-				$this->setVal( 'hasFandomStories', true );
 
 				return;
 			}
@@ -646,7 +645,6 @@ class WikiaSearchController extends WikiaSpecialPageController {
 
 		if ( !empty( $topWikiArticles ) ) {
 			$this->setVal( 'topWikiArticles', $topWikiArticles );
-			$this->setVal( 'hasTopWikiArticles', true );
 		}
 	}
 
