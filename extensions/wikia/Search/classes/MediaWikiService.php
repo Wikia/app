@@ -801,7 +801,7 @@ class MediaWikiService
 
 		return (string) $number;
 	}
-	
+
 	/**
 	 * Provides a relative URL provided a page id, with optional query string as array. 
 	 * @param int $pageId

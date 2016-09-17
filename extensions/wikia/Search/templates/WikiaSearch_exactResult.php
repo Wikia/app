@@ -10,9 +10,18 @@
 			</h1>
 			<p class="exact-match__hub subtle"><?= $hub ?></p>
 			<ul class="exact-match__statistics">
-				<li><?= str_replace(' ', '<br>', $pagesMsg) ?></li>
-				<li><?= str_replace(' ', '<br>', $imgMsg) ?></li>
-				<li><?= str_replace(' ', '<br>', $videoMsg) ?></li>
+				<li>
+					<div><?= $pages['count'] ?></div>
+					<div class="exact-match__statistics-message"><?= $pages['message'] ?></div>
+				</li>
+				<li>
+					<div><?= $img['count'] ?></div>
+					<div class="exact-match__statistics-message"><?= $img['message'] ?></div>
+				</li>
+				<li>
+					<div><?= $video['count'] ?></div>
+					<div class="exact-match__statistics-message"><?= $video['message'] ?></div>
+				</li>
 			</ul>
 			<p class="exact-match__wiki-description"><?= $description; ?></p>
 		</div>
