@@ -665,10 +665,10 @@ class WikiaSearchController extends WikiaSpecialPageController {
 			$this->setVal(
 					'wikiMatch',
 					$this->getApp()->getView( 'WikiaSearch', 'exactResult',
-						ResultHelper::extendResult($matchResult, 'wiki', ResultHelper::MAX_WORD_COUNT_EXACT_MATCH, $searchConfig->getQuery()->getSanitizedQuery(), [
+						ResultHelper::extendResult($matchResult, 'wiki', ResultHelper::MAX_WORD_COUNT_EXACT_MATCH, [
 							'width' => WikiaSearchController::EXACT_MATCH_THUMBNAIL_WIDTH,
 							'height' => WikiaSearchController::EXACT_MATCH_THUMBNAIL_HEIGHT
-						])
+						], $searchConfig->getQuery()->getSanitizedQuery())
 					)
 			);
 		}
