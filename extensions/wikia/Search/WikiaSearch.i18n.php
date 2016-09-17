@@ -51,15 +51,13 @@ $messages['en'] = array(
 	'wikiasearch2-choose-category' => 'Choose Category',
 	'wikiasearch2-crosswiki-description' => '$1 is a community site that anyone can contribute to. Discover, share and add your knowledge!',
 	'wikiasearch2-exact-result' => 'Result for $1 from Wikia',
-
 	'wikiasearch2-top-module-title' => 'Top pages',
 	'wikiasearch2-fandom-stories-title' => 'Related {{PLURAL:$1|Story|Stories}}',
 	'wikiasearch2-fandom-stories-view-more' => 'View More Stories',
-
 	'wikiamobile-wikiasearch2-next' => 'Next',
 	'wikiamobile-wikiasearch2-prev' => 'Previous',
 	'wikiamobile-wikiasearch2-count-of-results' => '$1-$2 of $3 {{PLURAL:$3|result|results}}',
-	'wikiasearch2-video-results' => 'Videos for \'$1\''
+	'wikiasearch2-video-results' => "Videos for '$1'",
 );
 
 /** Message documentation (Message documentation)
@@ -95,7 +93,7 @@ $messages['qqq'] = array(
 	'wikiasearch2-videos-M' => 'Parameters: $1 - number of Videos above 1000000',
 	'wikiasearch2-crosswiki-description' => 'Used to display a generic description of a wiki for cross-wiki search results',
 	'wikiasearch2-top-module-title' => 'Top module header title on search page',
-	'wikiasearch2-video-results' => 'List on-wiki and premium videos in a search'
+	'wikiasearch2-video-results' => 'List on-wiki and premium videos in a search',
 );
 
 /** Afrikaans (Afrikaans)
@@ -728,6 +726,35 @@ $messages['pl'] = array(
 	'wikiasearch2-tabs-articles' => 'Artykuły',
 	'wikiasearch2-tabs-photos-and-videos' => 'Zdjęcia i Filmy',
 	'wikiasearch2-users' => 'Ludzie',
+	'wikiasearch3-pages' => '{{PLURAL:$1|strona|strony|stron}}',
+	'wikiasearch3-images' => '{{PLURAL:$1|obraz|obrazy|obrazów}}',
+	'wikiasearch3-videos' => '{{PLURAL:$1|film|filmy|filmów}}',
+	'wikiasearch3-related-wiki' => 'Powiązane wiki',
+	'wikiasearch3-view-more-wikis' => 'Zobacz więcej wiki',
+	'wikiasearch2-advanced-select-all' => 'Select all',
+	'wikiasearch2-search-all-namespaces' => 'Search all namespaces by default',
+	'wikiasearch2-search-ads-header' => 'Advertisements',
+	'wikiasearch2-users-tooltip' => 'Search in Users',
+	'wikiasearch2-filter-options-label' => 'Filtering Options',
+	'wikiasearch2-sort-options-label' => 'Sorting Options',
+	'wikiasearch2-filter-all' => 'All Files',
+	'wikiasearch2-filter-category' => 'Category',
+	'wikiasearch2-filter-hd' => 'HD Only',
+	'wikiasearch2-filter-photos' => 'Photos Only',
+	'wikiasearch2-filter-videos' => 'Videos Only',
+	'wikiasearch2-sort-relevancy' => 'Relevancy',
+	'wikiasearch2-sort-publish-date' => 'Publish Date',
+	'wikiasearch2-sort-duration' => 'Duration',
+	'wikiasearch2-choose-category' => 'Choose Category',
+	'wikiasearch2-crosswiki-description' => '$1 is a community site that anyone can contribute to. Discover, share and add your knowledge!',
+	'wikiasearch2-exact-result' => 'Result for $1 from Wikia',
+	'wikiasearch2-top-module-title' => 'Top pages',
+	'wikiasearch2-fandom-stories-title' => 'Related {{PLURAL:$1|Story|Stories}}',
+	'wikiasearch2-fandom-stories-view-more' => 'View More Stories',
+	'wikiamobile-wikiasearch2-next' => 'Next',
+	'wikiamobile-wikiasearch2-prev' => 'Previous',
+	'wikiamobile-wikiasearch2-count-of-results' => '$1-$2 of $3 {{PLURAL:$3|result|results}}',
+	'wikiasearch2-video-results' => "Videos for '$1'",
 );
 
 /** Piedmontese (Piemontèis)
