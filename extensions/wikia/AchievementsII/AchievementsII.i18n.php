@@ -1,7 +1,7 @@
 <?php
-$messages = [];
+$messages = [ ];
 
-$messages['en'] = [
+$messages[ 'en' ] = [
 	'achievementsii-desc' => 'An achievement badges system for wiki users',
 	'achievements-upload-error' => 'Sorry!
 That picture does not work.
@@ -322,7 +322,7 @@ on someone else's talk page!",
  * @author Siebrand
  * @author TK-999
  */
-$messages['qqq'] = [
+$messages[ 'qqq' ] = [
 	'achievementsii-desc' => '{{desc}}',
 	'achievements-upload-error' => 'Гафу итегез!
 Бу рәсем дөрес укылмый.
@@ -528,7 +528,7 @@ $4 is any of:
 /** Afrikaans (Afrikaans)
  * @author Naudefj
  */
-$messages['af'] = [
+$messages[ 'af' ] = [
 	'achievements-platinum' => 'Platinum',
 	'achievements-gold' => 'Goud',
 	'achievements-silver' => 'Silwer',
@@ -554,7 +554,7 @@ $messages['af'] = [
  * @author Houcinee1
  * @author OsamaK
  */
-$messages['ar'] = [
+$messages[ 'ar' ] = [
 	'achievementsii-desc' => 'نظام الشارات الإنجاز لمستخدمي ويكي',
 	'achievements-upload-error' => 'آسف! N! تلك الصورة لا يعمل! N! تأكد أنه هو ملف. jpg أو بابوا نيو غينيا.! N! إذا كان لا يزال لا يعمل ، ثم أن الصورة قد تكون كبيرة جدا.! N! الرجاء المحاولة واحد آخر!',
 	'achievements-upload-not-allowed' => 'يمكن للإداريين تغيير أسماء وصور اشارات الانجاز من خلال الذهاب الى صفحة [[Special:AchievementsCustomize|the Customize achievements]]',
@@ -610,7 +610,7 @@ $messages['ar'] = [
 /** Assamese (অসমীয়া)
  * @author Jaminianurag
  */
-$messages['as'] = [
+$messages[ 'as' ] = [
 	'achievements-upload-error' => 'দুঃখিত!
 এই ছবিখন কাৰ্য্যক্ষম নহয় |
 ছবিখন .jpg বা .png হয় নে নহয় পুনাৰাই চাওক |
@@ -624,7 +624,7 @@ $messages['as'] = [
  * @author Ebrahimi-amir
  * @author Vago
  */
-$messages['az'] = [
+$messages[ 'az' ] = [
 	'achievementsii-desc' => 'Wiki istifadəçilər üçün bir nailiyyət döş nişanları sistemi',
 	'achievements-upload-error' => 'Bağışlayın!
 
@@ -699,7 +699,7 @@ Başqa bir cəhd edin!',
 /** Bashkir (Башҡортса)
  * @author Sagan
  */
-$messages['ba'] = [
+$messages[ 'ba' ] = [
 	'achievementsii-desc' => 'Вики-сайт ҡулланыусыларының ҡаҙаныштары систамаһы',
 	'achievements-upload-error' => 'Ғафү итегеҙ!
 Был рәсем тура килмәй.Файлдың .JPG йәки .PNG форматында булыуын тикшерегеҙ.
@@ -712,7 +712,7 @@ $messages['ba'] = [
 /** Belarusian (беларуская)
  * @author Тест
  */
-$messages['be'] = [
+$messages[ 'be' ] = [
 	'achievements-viewless' => 'Закрыць',
 ];
 
@@ -720,7 +720,7 @@ $messages['be'] = [
  * @author EugeneZelenko
  * @author Jim-by
  */
-$messages['be-tarask'] = [
+$messages[ 'be-tarask' ] = [
 	'achievementsii-desc' => 'Сыстэма дасягненьняў для вікі-карыстальнікаў',
 	'achievements-upload-error' => 'Прабачце!
 Гэтая выява — няслушная.
@@ -903,7 +903,7 @@ $5",
 /** Bulgarian (български)
  * @author DCLXVI
  */
-$messages['bg'] = [
+$messages[ 'bg' ] = [
 	'achievements-non-existing-category' => 'Посочената категория не съществува.',
 	'achievements-platinum' => 'Платина',
 	'achievements-gold' => 'Злато',
@@ -961,7 +961,7 @@ $messages['bg'] = [
 /** Bengali (বাংলা)
  * @author RIPENDIL
  */
-$messages['bn'] = [
+$messages[ 'bn' ] = [
 	'achievements-non-existing-category' => 'উল্লেখিত শ্রেনীটির কোন অস্তিত্ব নেই।',
 ];
 
@@ -971,7 +971,7 @@ $messages['bn'] = [
  * @author Gwenn-Ael
  * @author Y-M D
  */
-$messages['br'] = [
+$messages[ 'br' ] = [
 	'achievementsii-desc' => 'Ur sistem badjoù evit implijerien ar wiki',
 	'achievements-upload-error' => "Digarezit !
 Ar skeudenn-mañ ne 'z a ket en-dro.
@@ -1250,7 +1250,7 @@ war pajenn kaozeal unan bennak all !',
  * @author CERminator
  * @author Palapa
  */
-$messages['bs'] = [
+$messages[ 'bs' ] = [
 	'right-platinum' => 'Napravi i uredi Platinaste bedževe',
 	'achievements-platinum' => 'platina',
 	'achievements-gold' => 'Zlato',
@@ -1346,7 +1346,7 @@ $messages['bs'] = [
  * @author BroOk
  * @author SMP
  */
-$messages['ca'] = [
+$messages[ 'ca' ] = [
 	'right-platinum' => 'Crear i editar medalles de Platí',
 	'achievements-platinum' => 'Platí',
 	'achievements-gold' => 'Or',
@@ -1422,7 +1422,7 @@ $5",
 /** Chechen (Нохчийн)
  * @author Sasan700
  */
-$messages['ce'] = [
+$messages[ 'ce' ] = [
 	'achievements-leaderboard-member-label' => 'Декъашхо',
 ];
 
@@ -1432,7 +1432,7 @@ $messages['ce'] = [
  * @author Mr. Richard Bolla
  * @author Spiffyk
  */
-$messages['cs'] = [
+$messages[ 'cs' ] = [
 	'achievementsii-desc' => 'Systém odznaků úspěchů pro uživatele wiki',
 	'achievements-upload-error' => 'Omlouváme se!
 Tento obrázek nefunguje.
@@ -1680,7 +1680,7 @@ vaší uživatelskou stránku!',
 /** Danish (dansk)
  * @author DaneOfScandinavy
  */
-$messages['da'] = [
+$messages[ 'da' ] = [
 	'achievements-badge-name-edit-1' => 'Bare begyndelsen',
 ];
 
@@ -1698,7 +1698,7 @@ $messages['da'] = [
  * @author MF-Warburg
  * @author The Evil IP address
  */
-$messages['de'] = [
+$messages[ 'de' ] = [
 	'achievementsii-desc' => 'Leistungsbasierte Abzeichen für Wiki-Benutzer',
 	'achievements-upload-error' => 'Entschuldigung!
 Dieses Bild funktioniert nicht.
@@ -2008,7 +2008,7 @@ auf der Diskussionsseite eines anderen!',
  * @author Geitost
  * @author The Evil IP address
  */
-$messages['de-formal'] = [
+$messages[ 'de-formal' ] = [
 	'achievements-upload-error' => 'Verzeihung,
 dieses Bild funktioniert nicht.
 Stellen Sie sicher, dass es sich um eine JPEG- oder PNG-Datei handelt.
@@ -2105,7 +2105,7 @@ Geben Sie nicht nach!',
  * @author Erdemaslancan
  * @author Mirzali
  */
-$messages['diq'] = [
+$messages[ 'diq' ] = [
 	'achievements-platinum' => 'Platinyum',
 	'achievements-gold' => 'Altun',
 	'achievements-bronze' => 'Bronz',
@@ -2144,7 +2144,7 @@ $messages['diq'] = [
  * @author Glavkos
  * @author Omnipaedista
  */
-$messages['el'] = [
+$messages[ 'el' ] = [
 	'achievementsii-desc' => 'Ένα σύστημα επιτεύξεων με κονκάρδες για τους χρήστες wiki',
 	'achievements-upload-error' => 'Συγγνώμη! N! Η εικόνα δεν λειτουργεί.!Βεβαιωθείτε ότι είναι. Jpg ή. Png αρχείο.! Αν εξακολουθεί να μην λειτουργεί, τότε η εικόνα μπορεί να είναι πολύ μεγάλη.! Παρακαλώ δοκιμάστε μια άλλη!',
 	'achievements-non-existing-category' => 'Η συγκεκριμένη κατηγορία δεν υπάρχει.',
@@ -2240,7 +2240,7 @@ $messages['el'] = [
 /** Esperanto (Esperanto)
  * @author Tradukisto
  */
-$messages['eo'] = [
+$messages[ 'eo' ] = [
 	'achievements-upload-error' => 'Tiu dosiero ne funkcias.
 Certiĝu, ke ĝi estas formatp .jpg aŭ .png.
 Se ĝi senĉese ne funkcios, la dosiero povas esti tro granda.
@@ -2258,7 +2258,7 @@ Provu kun la alia!',
  * @author Sanbec
  * @author VegaDark
  */
-$messages['es'] = [
+$messages[ 'es' ] = [
 	'achievementsii-desc' => 'Un sistema de logros para los usuarios de la wikia',
 	'achievements-upload-error' => '¡Lo sentimos!
 Esa imagen no funciona.
@@ -2556,7 +2556,7 @@ a {{PLURAL:$1|una categoría|varias categorías}}!',
 /** Estonian (eesti)
  * @author Cylly1512
  */
-$messages['et'] = [
+$messages[ 'et' ] = [
 	'achievementsii-desc' => 'Saavutusembleemidesüsteem viki kasutajatele',
 	'achievements-upload-error' => 'Vabandust!
 Pilt ei tööta.
@@ -2589,7 +2589,7 @@ Palun proovi mõnda teist pilti!',
 /** Basque (euskara)
  * @author An13sa
  */
-$messages['eu'] = [
+$messages[ 'eu' ] = [
 	'achievements-platinum' => 'Platinoa',
 	'achievements-gold' => 'Urrea',
 	'achievements-silver' => 'Zilarra',
@@ -2633,7 +2633,7 @@ $messages['eu'] = [
  * @author Wayiran
  * @author ZxxZxxZ
  */
-$messages['fa'] = [
+$messages[ 'fa' ] = [
 	'achievementsii-desc' => 'سامانه‌ای برای مدال‌های افتخار کاربران ویکی',
 	'achievements-upload-error' => 'با پوزش!
 این عکس کار نمی‌کند.
@@ -2874,7 +2874,7 @@ $messages['fa'] = [
  * @author Tm T
  * @author Tofu II
  */
-$messages['fi'] = [
+$messages[ 'fi' ] = [
 	'achievementsii-desc' => 'Kunniamerkkijärjestelmä wikin käyttäjille',
 	'achievements-upload-error' => 'Tämä kuva ei toimi.
 Varmista, että se on tyypiltään jpg tai png.
@@ -2977,7 +2977,7 @@ jonkun henkilön keskustelusivulle!',
 /** Faroese (føroyskt)
  * @author EileenSanda
  */
-$messages['fo'] = [
+$messages[ 'fo' ] = [
 	'achievementsii-desc' => 'Ein avriks kort skipan fyri wiki brúkarar',
 	'achievements-upload-error' => 'Orsaka!
 Handa myndin kann ikki brúkast.
@@ -3067,7 +3067,7 @@ Vinarliga royn við aðrari mynd!',
  * @author Wyz
  * @author Zetud
  */
-$messages['fr'] = [
+$messages[ 'fr' ] = [
 	'achievementsii-desc' => 'Un système de badges pour les utilisateurs du wiki',
 	'achievements-upload-error' => "Désolé !
 Cette image ne fonctionne pas.
@@ -3372,7 +3372,7 @@ sur la page de discussion de quelqu’un d'autre !",
 /** Galician (Galego)
  * @author Toliño
  */
-$messages['gl'] = [
+$messages[ 'gl' ] = [
 	'achievementsii-desc' => 'Un sistema de insignias para os usuarios do wiki',
 	'achievements-upload-error' => 'Sentímolo!
 A imaxe non vai.
@@ -3678,7 +3678,7 @@ na páxina de conversa de alguén!',
 /** Ancient Greek (Ἀρχαία ἑλληνικὴ)
  * @author Crazymadlover
  */
-$messages['grc'] = [
+$messages[ 'grc' ] = [
 	'achievements-community-platinum-cancel' => 'Ἀκυροῦν',
 ];
 
@@ -3688,7 +3688,7 @@ $messages['grc'] = [
  * @author Ofekalef
  * @author Yova
  */
-$messages['he'] = [
+$messages[ 'he' ] = [
 	'achievementsii-desc' => 'מערכת מתן תגי הוכרה למשתמשי ויקי',
 	'achievements-upload-error' => 'מצטערים!
 התמונה אינה מתאימה.
@@ -3784,7 +3784,7 @@ $messages['he'] = [
 /** Hindi (हिन्दी)
  * @author Rajivkurjee
  */
-$messages['hi'] = [
+$messages[ 'hi' ] = [
 	'achievements-upload-error' => 'क्षमा करें!
 वह तस्वीर काम नहीं करता है!
 सुनिश्चित करें कि यह एक .jpg या .png फ़ाइल है!
@@ -3800,7 +3800,7 @@ $messages['hi'] = [
  * @author Dani
  * @author TK-999
  */
-$messages['hu'] = [
+$messages[ 'hu' ] = [
 	'achievementsii-desc' => 'Eredményalapú jelvényrendszer a wiki felhasználói számára',
 	'achievements-upload-error' => 'Hoppá!
 
@@ -4080,7 +4080,7 @@ más vitalapján hagyott üzenetért kaptál!',
 /** Interlingua (interlingua)
  * @author McDutchie
  */
-$messages['ia'] = [
+$messages[ 'ia' ] = [
 	'achievementsii-desc' => 'Un systema de insignias de merito pro usatores del wiki',
 	'achievements-upload-error' => 'Guai!
 Iste imagine non functiona.
@@ -4383,7 +4383,7 @@ in le pagina de discussion de un altere persona!',
  * @author Aldnonymous
  * @author Farras
  */
-$messages['id'] = [
+$messages[ 'id' ] = [
 	'achievementsii-desc' => 'System lencana prestasi untuk pengguna wiki',
 	'achievements-upload-error' => 'Maaf!
 Gambar itu tidak dapat di gunakan.
@@ -4545,7 +4545,7 @@ Cobalah!',
 /** Igbo (Igbo)
  * @author Ukabia
  */
-$messages['ig'] = [
+$messages[ 'ig' ] = [
 	'achievements-viewless' => 'Mèchié',
 	'achievements-badge-name-category-4' => 'Ọtúzọr',
 ];
@@ -4553,7 +4553,7 @@ $messages['ig'] = [
 /** Ingush (ГӀалгӀай)
  * @author Sapral Mikail
  */
-$messages['inh'] = [
+$messages[ 'inh' ] = [
 	'achievements-non-existing-category' => 'Лаьрха цатег йоацаш я',
 	'achievements-gold' => 'Дошув',
 	'achievements-silver' => 'Дотув',
@@ -4584,7 +4584,7 @@ $messages['inh'] = [
  * @author Valepert
  * @author Ximo17
  */
-$messages['it'] = [
+$messages[ 'it' ] = [
 	'achievementsii-desc' => 'Un sistema di medaglie per i successi degli utenti',
 	'achievements-upload-error' => "Spiacenti!
 Questa immagine non funziona.
@@ -4890,7 +4890,7 @@ nella pagina di discussione di un altro utente!',
  * @author Shirayuki
  * @author Tommy6
  */
-$messages['ja'] = [
+$messages[ 'ja' ] = [
 	'achievementsii-desc' => 'コミュニティ編集者のためのアチーブメント・バッジシステム',
 	'achievements-upload-error' => '申し訳ありません、この画像は使用できません。
 .jpg もしくは .png のファイルをご利用ください。
@@ -5192,7 +5192,7 @@ $5",
 /** Georgian (ქართული)
  * @author David1010
  */
-$messages['ka'] = [
+$messages[ 'ka' ] = [
 	'achievementsii-desc' => 'ვიკი მომხმარებლების მიღწევების სისტემა',
 	'achievements-upload-error' => 'უკაცრავად!
 ეს სურათი არ არის თავსებადი.
@@ -5242,14 +5242,14 @@ $messages['ka'] = [
 /** Khowar (کھوار)
  * @author Rachitrali
  */
-$messages['khw'] = [
+$messages[ 'khw' ] = [
 	'achievements-gold' => 'سوروم',
 ];
 
 /** Khmer (ភាសាខ្មែរ)
  * @author T-Rithy
  */
-$messages['km'] = [
+$messages[ 'km' ] = [
 	'achievements-platinum' => 'ប្លាទីន',
 	'achievements-gold' => 'មាស',
 	'achievements-silver' => 'ប្រាក់',
@@ -5277,7 +5277,7 @@ $messages['km'] = [
  * @author Nayvik
  * @author VASANTH S.N.
  */
-$messages['kn'] = [
+$messages[ 'kn' ] = [
 	'achievements-platinum' => 'ಪ್ಲಾಟಿನಂ',
 	'achievements-gold' => 'ಸ್ವರ್ಣ',
 	'achievements-silver' => 'ರಜತ',
@@ -5297,7 +5297,7 @@ $messages['kn'] = [
  * @author Infinity
  * @author 아라
  */
-$messages['ko'] = [
+$messages[ 'ko' ] = [
 	'achievementsii-desc' => '위키 사용자의 기여도를 배지로 환산해주는 시스템',
 	'achievements-upload-error' => '죄송합니다!
 이 그림은 적합하지 않습니다.
@@ -5434,7 +5434,7 @@ $messages['ko'] = [
 /** Kinaray-a (Kinaray-a)
  * @author Datu
  */
-$messages['krj'] = [
+$messages[ 'krj' ] = [
 	'achievements-upload-error' => 'Pasaylo!
 Ang litrato wara naga gana.
 Siguraduha nga .jpeg o kun .png ang litrato.
@@ -5454,7 +5454,7 @@ Palihog tirawi nga mag gamit ka iba nga litrato!',
 /** Colognian (Ripoarisch)
  * @author Purodha
  */
-$messages['ksh'] = [
+$messages[ 'ksh' ] = [
 	'achievementsii-desc' => 'E Süßteem för Afzeische för Leißtunge em Wiki verdeene.',
 	'achievements-upload-not-allowed' => 'Dem Wiki sing Köbeße künne de Naame un Belder vun de [[Special:AchievementsCustomize|Afzeische ändere]].',
 	'achievements-non-existing-category' => 'De aanjejovve Saachjropp jidd_et nit.',
@@ -5607,7 +5607,7 @@ op sing Klaafsigg jedonn ze han!',
 /** Kurdish (Latin script) (‪Kurdî (latînî)‬)
  * @author George Animal
  */
-$messages['ku-latn'] = [
+$messages[ 'ku-latn' ] = [
 	'achievements-gold' => 'Zêr',
 	'achievements-silver' => 'Zîv',
 	'achievements-bronze' => 'Bronz',
@@ -5627,7 +5627,7 @@ $messages['ku-latn'] = [
 /** Latin (Latina)
  * @author Rsa23899
  */
-$messages['la'] = [
+$messages[ 'la' ] = [
 	'achievements-gold' => 'Aurum',
 	'achievements-silver' => 'Argentum',
 	'achievements-bronze' => 'Aerāmen',
@@ -5637,7 +5637,7 @@ $messages['la'] = [
 /** Luxembourgish (Lëtzebuergesch)
  * @author Robby
  */
-$messages['lb'] = [
+$messages[ 'lb' ] = [
 	'achievements-non-existing-category' => 'Déi Kategorie déi ugi gouf gëtt et net.',
 	'achievements-platinum' => 'Platin',
 	'achievements-gold' => 'Gold',
@@ -5707,7 +5707,7 @@ vun Ärer eegener Benotzersäit!",
 /** Lezghian (Лезги)
  * @author Namik
  */
-$messages['lez'] = [
+$messages[ 'lez' ] = [
 	'achievements-community-platinum-edit' => 'Дегишарун',
 	'achievements-badge-name-category-4' => 'Къекъуьн',
 ];
@@ -5717,7 +5717,7 @@ $messages['lez'] = [
  * @author Eitvys200
  * @author Perkunas
  */
-$messages['lt'] = [
+$messages[ 'lt' ] = [
 	'achievementsii-desc' => 'Viki naudotojų pasiekimų raiščiai',
 	'achievements-platinum' => 'Platina',
 	'achievements-gold' => 'Auksas',
@@ -5813,7 +5813,7 @@ $messages['lt'] = [
 /** Latgalian (latgaļu)
  * @author Dark Eagle
  */
-$messages['ltg'] = [
+$messages[ 'ltg' ] = [
 	'achievements-viewless' => 'Aizdareit',
 	'leaderboard-intro-hide' => 'nūglobuot',
 ];
@@ -5821,7 +5821,7 @@ $messages['ltg'] = [
 /** Basa Banyumasan (Basa Banyumasan)
  * @author StefanusRA
  */
-$messages['map-bms'] = [
+$messages[ 'map-bms' ] = [
 	'achievements-non-existing-category' => 'Kategori sing digoleti ora ana',
 	'achievements-gold' => 'Emas',
 	'achievements-silver' => 'Perak',
@@ -5834,7 +5834,7 @@ $messages['map-bms'] = [
 /** Minangkabau (Baso Minangkabau)
  * @author VoteITP
  */
-$messages['min'] = [
+$messages[ 'min' ] = [
 	'achievements-gold' => '↓ Ameh',
 	'achievements-silver' => '↓ Perak',
 	'achievements-bronze' => '↓ Perunggu',
@@ -5848,7 +5848,7 @@ $messages['min'] = [
  * @author Bjankuloski06
  * @author Rancher
  */
-$messages['mk'] = [
+$messages[ 'mk' ] = [
 	'achievementsii-desc' => 'Систем на значки за достигнувања на вики-корисници',
 	'achievements-upload-error' => 'Жалиме!
 Таа слика не работи.
@@ -6140,7 +6140,7 @@ $5',
 /** Malayalam (മലയാളം)
  * @author Praveenp
  */
-$messages['ml'] = [
+$messages[ 'ml' ] = [
 	'achievements-platinum' => 'പ്ലാറ്റിനം',
 	'achievements-gold' => 'സ്വർണ്ണം',
 	'achievements-silver' => 'വെള്ളി',
@@ -6180,7 +6180,7 @@ $messages['ml'] = [
 /** Marathi (मराठी)
  * @author Htt
  */
-$messages['mr'] = [
+$messages[ 'mr' ] = [
 	'achievements-platinum' => 'प्लॅटिनम',
 	'achievements-gold' => 'सोने',
 	'achievements-silver' => 'चांदी',
@@ -6193,7 +6193,7 @@ $messages['mr'] = [
 /** Malay (Bahasa Melayu)
  * @author Anakmalaysia
  */
-$messages['ms'] = [
+$messages[ 'ms' ] = [
 	'achievementsii-desc' => 'Sistem lencana pencapaian untuk pengguna wiki',
 	'achievements-upload-error' => 'Maaf!
 Gambar ini tidak dapat digunakan.
@@ -6496,7 +6496,7 @@ dalam laman perbincangan orang lain!',
 /** Maltese (Malti)
  * @author Chrisportelli
  */
-$messages['mt'] = [
+$messages[ 'mt' ] = [
 	'achievements-upload-error' => "Jiddispjaċina!
 Din l-istampa ma taħdimx.
 Kun żgur li hija fajl .jpg jew .png.
@@ -6511,7 +6511,7 @@ Jekk jogħġbok, ipprova oħra!",
 /** Burmese (မြန်မာဘာသာ)
  * @author Erikoo
  */
-$messages['my'] = [
+$messages[ 'my' ] = [
 	'achievements-gold' => 'ရွှေ',
 	'achievements-silver' => 'ငွေထည်',
 	'achievements-points' => 'တည်းဖြတ်မှု $1 {{PLURAL:$1|ခု|ခု}}',
@@ -6527,14 +6527,14 @@ $messages['my'] = [
 /** Mazanderani (مازِرونی)
  * @author محک
  */
-$messages['mzn'] = [
+$messages[ 'mzn' ] = [
 	'achievements-community-platinum-edit' => 'دچی‌ین',
 ];
 
 /** Min Nan Chinese (Bân-lâm-gú)
  * @author Ianbu
  */
-$messages['nan'] = [
+$messages[ 'nan' ] = [
 	'achievementsii-desc' => '予Wiki用者的成就徽章系統',
 	'achievements-gold' => '金',
 	'achievements-silver' => '銀',
@@ -6561,7 +6561,7 @@ $messages['nan'] = [
  * @author Audun
  * @author Nghtwlkr
  */
-$messages['nb'] = [
+$messages[ 'nb' ] = [
 	'achievementsii-desc' => 'Et utmerkelsessystem for wikibrukere',
 	'achievements-upload-error' => 'Beklager!
 Det bildet fungerer ikke.
@@ -6852,7 +6852,7 @@ på noen andres diskusjonsside!',
  * @author McDutchie
  * @author Siebrand
  */
-$messages['nl'] = [
+$messages[ 'nl' ] = [
 	'achievementsii-desc' => 'Een speldjessysteem voor door wikigebruikers geleverde prestaties',
 	'achievements-upload-error' => 'Dat plaatje werkt niet.
 Zorg dat het een .jpg- of .png-bestand is.
@@ -7158,7 +7158,7 @@ de overlegpagina van een andere gebruiker!',
  * @author AvatarTeam
  * @author Siebrand
  */
-$messages['nl-informal'] = [
+$messages[ 'nl-informal' ] = [
 	'achievements-you-must' => 'Je moet $1 om dit speldje te verdienen.',
 	'achievements-no-badges' => 'Hieronder staan de speldjes die je op deze wiki kunt verdienen!',
 	'achievements-notification-subtitle' => 'Je hebt zojuist het speldje "$1" verdiend $2',
@@ -7250,7 +7250,7 @@ je eigen gebruikerspagina!',
  * @author Jnanaranjan Sahu
  * @author Psubhashish
  */
-$messages['or'] = [
+$messages[ 'or' ] = [
 	'achievements-non-existing-category' => 'ଆପଣ ଖୋଜୁଥିବା ବିଭାଗଟି ମିଳୁନାହିଁ ।',
 	'achievements-platinum' => 'ହୀରକ',
 	'achievements-gold' => 'ସ୍ଵର୍ଣ',
@@ -7266,14 +7266,14 @@ $messages['or'] = [
 /** Deitsch (Deitsch)
  * @author Xqt
  */
-$messages['pdc'] = [
+$messages[ 'pdc' ] = [
 	'achievements-community-platinum-save' => 'beilege',
 ];
 
 /** Pälzisch (Pälzisch)
  * @author Manuae
  */
-$messages['pfl'] = [
+$messages[ 'pfl' ] = [
 	'achievementsii-desc' => 'Abzaische fa Laischdunge fa Wiki-Benudza',
 	'achievements-upload-error' => "Dschuldischung!
 Awa des Bild fungzioniad ned.
@@ -7345,7 +7345,7 @@ Vasuchs mol midm oanare!",
  * @author Sovq
  * @author Sp5uhe
  */
-$messages['pl'] = [
+$messages[ 'pl' ] = [
 	'achievementsii-desc' => 'System odznaczeń dla użytkowników wiki',
 	'achievements-upload-error' => 'Nie można wyświetlić tego obrazu.
 Upewnij się że jest to plik .jpg lub .png.
@@ -7648,7 +7648,7 @@ na czyjejś stronie dyskusji!',
  * @author Borichèt
  * @author Dragonòt
  */
-$messages['pms'] = [
+$messages[ 'pms' ] = [
 	'achievementsii-desc' => "Un sistema ëd distintiv dle realisassion për j'utent ëd la wiki",
 	'achievements-upload-error' => "Darmagi!
 Sta figura a marcia pa.
@@ -7946,7 +7946,7 @@ an sla pàgina ëd discussion ëd quaidun!',
  * @author Ahmed-Najib-Biabani-Ibrahimkhel
  * @author Wahidullah Kaleem
  */
-$messages['ps'] = [
+$messages[ 'ps' ] = [
 	'achievements-platinum' => 'پلاټېنيم',
 	'achievements-gold' => 'سره زر',
 	'achievements-silver' => 'سپين زر',
@@ -7996,7 +7996,7 @@ $messages['ps'] = [
  * @author Rhaijin
  * @author Waldir
  */
-$messages['pt'] = [
+$messages[ 'pt' ] = [
 	'achievementsii-desc' => 'Um sistema de recompensa através de medalhas para os usuários da wikia',
 	'achievements-upload-error' => 'Desculpe!
 Essa imagem não funciona.
@@ -8311,7 +8311,7 @@ a {{PLURAL:$1|a $2 artigo|$2 artigos}}!',
  * @author Luckas Blade
  * @author Rhaijin
  */
-$messages['pt-br'] = [
+$messages[ 'pt-br' ] = [
 	'achievementsii-desc' => 'Um sistema de recompensa através de medalhas para os usuários da wiki',
 	'achievements-upload-error' => 'Desculpe-nos!
 Essa imagem não funciona.
@@ -8618,7 +8618,7 @@ página de discussão de outro utilizador!',
  * @author Minisarm
  * @author Stelistcristi
  */
-$messages['ro'] = [
+$messages[ 'ro' ] = [
 	'achievementsii-desc' => 'Un sistem de medalii pentru reușitele utilizatorilor',
 	'achievements-upload-error' => 'Ne pare rău!
 Această imagine nu este bună.
@@ -8924,7 +8924,7 @@ pe pagina cuiva de discuție!',
 /** tarandíne (tarandíne)
  * @author Joetaras
  */
-$messages['roa-tara'] = [
+$messages[ 'roa-tara' ] = [
 	'achievements-non-existing-category' => "'A categorije specificate non g'esiste.",
 	'achievements-platinum' => 'Platine',
 	'achievements-gold' => 'Ore',
@@ -8990,7 +8990,7 @@ $messages['roa-tara'] = [
  * @author Александр Сигачёв
  * @author Сrower
  */
-$messages['ru'] = [
+$messages[ 'ru' ] = [
 	'achievementsii-desc' => 'Система достижений пользователей вики-сайта',
 	'achievements-upload-error' => 'Простите!
 Это изображение не подходит.
@@ -9294,7 +9294,7 @@ $5',
  * @author පසිඳු කාවින්ද
  * @author බිඟුවා
  */
-$messages['si'] = [
+$messages[ 'si' ] = [
 	'achievements-platinum' => 'ප්ලැටිනම්',
 	'achievements-gold' => 'රත්‍රන්',
 	'achievements-silver' => 'රිදී',
@@ -9315,7 +9315,7 @@ $messages['si'] = [
 /** Slovenian (slovenščina)
  * @author Irena Plahuta
  */
-$messages['sl'] = [
+$messages[ 'sl' ] = [
 	'achievements-platinum' => 'Platina',
 	'achievements-gold' => 'Zlata',
 	'achievements-silver' => 'Srebrna',
@@ -9334,14 +9334,14 @@ $messages['sl'] = [
 /** Albanian (shqip)
  * @author Marinari
  */
-$messages['sq'] = [
+$messages[ 'sq' ] = [
 	'achievementsii-desc' => 'Një shenjë arritjeje e sistemit për wiki përdoruesit',
 ];
 
 /** Serbian (Cyrillic script) (‪српски (ћирилица)‬)
  * @author Rancher
  */
-$messages['sr-ec'] = [
+$messages[ 'sr-ec' ] = [
 	'achievementsii-desc' => 'Систем значки за достигнућа корисника',
 	'achievements-upload-error' => 'Нажалост, та слика не ради. Проверите да ли је формата JPG или PNG.
 Ако и поред тога не ради, онда је вероватно превелика. Пробајте другу.',
@@ -9525,7 +9525,7 @@ $5',
  * @author Tobulos1
  * @author WikiPhoenix
  */
-$messages['sv'] = [
+$messages[ 'sv' ] = [
 	'achievementsii-desc' => 'En prestationsemblems-system för wiki-användare',
 	'achievements-upload-error' => 'Tyvärr!
 Den här bilden fungerar inte.
@@ -9830,7 +9830,7 @@ på någon annans diskussionssida!',
 /** Swahili (Kiswahili)
  * @author Muddyb Blast Producer
  */
-$messages['sw'] = [
+$messages[ 'sw' ] = [
 	'achievements-upload-error' => 'Pole!
 Picha hiyo haifanyi kazi.
 Hakikisha kwamba hilo faili ni .jpg au .png.
@@ -9848,7 +9848,7 @@ Tafadhali jaribu nyingine!',
  * @author TRYPPN
  * @author செல்வா
  */
-$messages['ta'] = [
+$messages[ 'ta' ] = [
 	'achievements-upload-error' => '↓மன்னிக்கவும்!</br>
 அந்த படம் வேலை செய்யவில்லை.</br>
 அது ஒரு .jpg அல்லது .png கோப்பு என்பதை உறுதி செய்யவும்.</br>
@@ -9894,7 +9894,7 @@ $messages['ta'] = [
  * @author Praveen Illa
  * @author Veeven
  */
-$messages['te'] = [
+$messages[ 'te' ] = [
 	'achievements-platinum' => 'ప్లాటినం',
 	'achievements-gold' => 'స్వర్ణం',
 	'achievements-silver' => 'రజతం',
@@ -9911,14 +9911,14 @@ $messages['te'] = [
 /** Tetum (tetun)
  * @author MF-Warburg
  */
-$messages['tet'] = [
+$messages[ 'tet' ] = [
 	'achievements-community-platinum-edit' => 'edita',
 ];
 
 /** Thai (ไทย)
  * @author Ariesanywhere
  */
-$messages['th'] = [
+$messages[ 'th' ] = [
 	'achievements-viewall' => 'เปิดดูทั้งหมด',
 	'achievements-viewless' => 'ปิด',
 	'achievements-viewall-oasis' => 'ดูทั้งหมด',
@@ -9942,7 +9942,7 @@ $messages['th'] = [
 /** Tagalog (Tagalog)
  * @author AnakngAraw
  */
-$messages['tl'] = [
+$messages[ 'tl' ] = [
 	'achievementsii-desc' => 'Isang sistema ng mga tsapa ng naisagawa para sa mga tagagamit ng wiki',
 	'achievements-upload-error' => 'Paumanhin!
 Hindi gumagana ang larawang iyan!
@@ -10145,7 +10145,7 @@ Magpatuloy sa pamamatnugot!',
 /** толышә зывон (толышә зывон)
  * @author Гусейн
  */
-$messages['tly'] = [
+$messages[ 'tly' ] = [
 	'achievements-gold' => 'Телы',
 	'achievements-silver' => 'Нығә',
 	'achievements-bronze' => 'Бырынҹ',
@@ -10177,7 +10177,7 @@ $messages['tly'] = [
  * @author Emperyan
  * @author Gizemb
  */
-$messages['tr'] = [
+$messages[ 'tr' ] = [
 	'achievementsii-desc' => 'Viki kullanıcıları için bir başarı nişanı sistemi',
 	'achievements-upload-error' => 'Üzgünüz!
 Bu resim çalışmıyor.
@@ -10288,7 +10288,7 @@ Lütfen bir başkasını deneyin.',
  * @author Ajdar
  * @author Рашат Якупов
  */
-$messages['tt-cyrl'] = [
+$messages[ 'tt-cyrl' ] = [
 	'achievementsii-desc' => 'Вики-сайт кулланучыларның казанышлар системасы',
 	'achievements-upload-error' => 'Гафу итегез!
 Бу рәсем туры килми.
@@ -10524,7 +10524,7 @@ $5',
  * @author Olvin
  * @author Тест
  */
-$messages['uk'] = [
+$messages[ 'uk' ] = [
 	'achievementsii-desc' => 'Система відзнак для користувачів',
 	'achievements-upload-error' => '↓Вибачте!
 Не вдалося зчитати малюнок.
@@ -10610,7 +10610,7 @@ $messages['uk'] = [
 /** Veps (Vepsän kel’)
  * @author Игорь Бродский
  */
-$messages['vep'] = [
+$messages[ 'vep' ] = [
 	'achievements-viewall' => 'Kacta kaik',
 	'achievements-viewless' => 'Saubata',
 	'leaderboard-intro-hide' => 'peitta',
@@ -10644,7 +10644,7 @@ $messages['vep'] = [
  * @author Xiao Qiao
  * @author XiaoQiaoGrace
  */
-$messages['vi'] = [
+$messages[ 'vi' ] = [
 	'achievementsii-desc' => 'Một hệ thống phù hiệu cho thành viên',
 	'achievements-upload-error' => 'Rấc tiếc!
 Không thể dùng ảnh đó.
@@ -10689,7 +10689,7 @@ Hãy thử những ảnh khác!',
  * @author Hzy980512
  * @author Map it
  */
-$messages['zh-hans'] = [
+$messages[ 'zh-hans' ] = [
 	'achievementsii-desc' => '一项为维基用户提供成就徽章的系统',
 	'achievements-upload-error' => '对不起！
 这张图片无法使用。
@@ -11000,7 +11000,7 @@ $5",
  * @author Ffaarr
  * @author Lauhenry
  */
-$messages['zh-hant'] = [
+$messages[ 'zh-hant' ] = [
 	'achievements-platinum' => '白金',
 	'achievements-gold' => '黃金',
 	'achievements-silver' => '白銀',
@@ -11312,7 +11312,7 @@ $5",
 /** Chinese (Hong Kong) (‪中文（香港）‬)
  * @author C933103
  */
-$messages['zh-hk'] = [
+$messages[ 'zh-hk' ] = [
 	'achievements-non-existing-category' => '指定的類別不存在。',
 	'achievements-platinum' => '白金',
 	'achievements-gold' => '金',
@@ -11324,7 +11324,7 @@ $messages['zh-hk'] = [
 /** Chinese (Taiwan) (‪中文（台灣）‬)
  * @author Ffaarr
  */
-$messages['zh-tw'] = [
+$messages[ 'zh-tw' ] = [
 	'achievements-community-platinum-edit' => '編輯',
 	'achievements-community-platinum-save' => '儲存',
 	'achievements-community-platinum-cancel' => '取消',

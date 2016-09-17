@@ -9,31 +9,31 @@
 $specialPageAliases = array();
 
 /** English */
-$specialPageAliases['en'] = array(
+$specialPageAliases[ 'en' ] = array(
 	'Platinum' => array( 'Platinum' ),
 	'Leaderboard' => array( 'Leaderboard' ),
 	'AchievementsCustomize' => array( 'AchievementsCustomize' ),
 );
 
 /** German (Deutsch) */
-$specialPageAliases['de'] = array(
+$specialPageAliases[ 'de' ] = array(
 	'Leaderboard' => array( 'Rangliste' ),
 	'AchievementsCustomize' => array( 'HerausforderungenAnpassen' ),
 );
 
 /** Polish (Polski) */
-$specialPageAliases['pl'] = array(
+$specialPageAliases[ 'pl' ] = array(
 	'Platinum' => array( 'Platyna' ),
 	'Leaderboard' => array( 'Ranking' ),
 	'AchievementsCustomize' => array( 'Dostosuj_odznaczenia' ),
 );
 
 /** French (Français) */
-$specialPageAliases['fr'] = array(
+$specialPageAliases[ 'fr' ] = array(
 	'AchievementsCustomize' => array( 'Personnaliser_distinctions' ),
 );
 
 /** Japanese (日本語) */
-$specialPageAliases['ja'] = array(
+$specialPageAliases[ 'ja' ] = array(
 	'AchievementsCustomize' => array( 'アチーブメントカスタマイズ' ),
 );
