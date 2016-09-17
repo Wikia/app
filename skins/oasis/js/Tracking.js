@@ -316,6 +316,7 @@ jQuery(function ($) {
 		var category = 'search',
 			suggestionShowed = false,
 			$topModule = $('.top-wiki-articles'),
+			$exactWikiMatchModule = $('.exact-wiki-match'),
 			$fandomStoriesModule = $('.fandom-stories'),
 			$categoryModule = $('.category-articles'),
 			$wikiaSearch = $('.search-tracking'),
@@ -422,6 +423,23 @@ jQuery(function ($) {
 					browserEvent: e,
 					category: category,
 					label: 'video-addon-results-header'
+				});
+			});
+		}
+
+		if ($exactWikiMatchModule.length) {
+			track({
+				action: Wikia.Tracker.ACTIONS.IMPRESSION,
+				category: category,
+				label: 'exact-wiki-match'
+			});
+
+			$exactWikiMatchModule.on('mousedown', 'a', function (e) {
+				var el = $(e.currentTarget);
+				track({
+					browserEvent: e,
+					category: category,
+					label: 'exact-wiki-match-' + el.data('event')
 				});
 			});
 		}

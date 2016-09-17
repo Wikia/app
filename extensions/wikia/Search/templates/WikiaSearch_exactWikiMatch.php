@@ -1,12 +1,12 @@
-<div class="exact-match">
+<div class="exact-wiki-match">
 	<h1 class="exact-match__header"><?= wfMessage('wikiasearch3-related-wiki')->escaped(); ?></h1>
 	<div class="exact-match__result">
-		<a href="<?= $url ?>" title="<?= $title ?>" data-pos="<?=$pos?>" data-event="search_click_wiki-<?=$thumbTracking?>">
+		<a href="<?= $url ?>" title="<?= $title ?>" data-event="image">
 			<img src="<?= $imageURL ?>" alt="<?= $title ?>" class="exact-match__image" />
 		</a>
 		<div class="exact-match__content">
 			<h1 class="exact-match__wiki-header">
-				<a href="<?= $url ?>" class="" data-pos="<?=$pos?>" ><?= $title ?></a>
+				<a href="<?= $url ?>" data-event="title"><?= $title ?></a>
 			</h1>
 			<p class="exact-match__hub subtle"><?= $hub ?></p>
 			<ul class="exact-match__statistics">
@@ -26,5 +26,5 @@
 			<p class="exact-match__wiki-description"><?= $description; ?></p>
 		</div>
 	</div>
-	<a href="<?= $viewMoreWikisLink ?>"><?= wfMessage('wikiasearch3-view-more-wikis')->escaped(); ?> <?= DesignSystemHelper::getSvg( 'wds-icons-arrow', 'wds-icon wds-icon-small exact-match__arrow' ); ?></a>
+	<a href="<?= $viewMoreWikisLink ?>" data-event="view-more"><?= wfMessage('wikiasearch3-view-more-wikis')->escaped(); ?> <?= DesignSystemHelper::getSvg( 'wds-icons-arrow', 'wds-icon wds-icon-small exact-match__arrow' ); ?></a>
 </div>
