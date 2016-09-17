@@ -516,18 +516,19 @@ $form-negative-side-padding: $form-side-padding*-1;
 		border-top: 2px solid $color-page-border;
 		float: left;
 		margin: 0 0 10px;
-		min-height: 80px;
+		min-height: 116px;
 
 		.side-article-category {
 			font-size: 10px;
 			font-weight: bold;
+			line-height: 1;
 			margin: 6px 0 10px;
 		}
 
 		.side-article-text {
 			float: left;
 			font-size: 14px;
-			line-height: 1.42;
+			line-height: 20px;
 			margin-bottom: 0;
 			position: relative;
 			top: -4px;
@@ -542,7 +543,7 @@ $form-negative-side-padding: $form-side-padding*-1;
 
 		.side-article-thumbnail {
 			float: left;
-			height: 50px;
+			height: 90px;
 			margin: 0 12px 0 0;
 			width: 90px;
 
@@ -550,11 +551,69 @@ $form-negative-side-padding: $form-side-padding*-1;
 				max-width: 100%;
 			}
 		}
+
+		&.side-article-games {
+			border-top-color: $color-vertical-games;
+
+			.side-article-category {
+				color: $color-vertical-games;
+			}
+		}
+
+		&.side-article-movies {
+			border-top-color: $color-vertical-movies;
+
+			.side-article-category {
+				color: $color-vertical-movies;
+			}
+		}
+
+		&.side-article-tv {
+			border-top-color: $color-vertical-tv;
+
+			.side-article-category {
+				color: $color-vertical-tv;
+			}
+		}
+
+		&.side-article-books {
+			border-top-color: $color-vertical-books;
+
+			.side-article-category {
+				color: $color-vertical-books;
+			}
+		}
+
+		&.side-article-comics {
+			border-top-color: $color-vertical-comics;
+
+			.side-article-category {
+				color: $color-vertical-comics;
+			}
+		}
+
+		&.side-article-anime {
+			border-top-color: $color-vertical-comics;
+
+			.side-article-anime {
+				color: $color-vertical-comics;
+			}
+		}
+
+		&.side-article-lifestyle {
+			border-top-color: $color-vertical-comics;
+
+			.side-article-lifestyle {
+				color: $color-vertical-comics;
+			}
+		}
 	}
 
 	&.top-wiki-articles {
 		.side-article {
-			padding-top: 12px;
+			min-height: 0;
+			padding-bottom: 6px;
+			padding-top: 16px;
 		}
 	}
 }
@@ -691,10 +750,10 @@ $form-negative-side-padding: $form-side-padding*-1;
 
 	.WikiaRail {
 		.side-articles {
-			width: 270px;
+			width: 300px;
 	
 			.side-article-text {
-				width: 168px;
+				width: 198px;
 			}
 		}
 

@@ -51,7 +51,7 @@ class TopWikiArticles {
 			}
 
 			if ( !empty( $ids ) ) {
-				$params = [ 'ids' => implode( ',', $ids ), 'height' => 50, 'width' => 90, 'abstract' => 120 ];
+				$params = [ 'ids' => implode( ',', $ids ), 'height' => 90, 'width' => 90, 'abstract' => 120 ];
 				$detailResponse = $app->sendRequest( 'ArticlesApiController', 'getDetails', $params )->getData();
 
 				foreach ( $detailResponse['items'] as $id => $item ) {
@@ -59,7 +59,7 @@ class TopWikiArticles {
 						$item['thumbnailSize'] = "small";
 						//render date
 						$item['date'] = $wgLang->date( $item['revision']['timestamp'] );
-						$item = \WikiaSearchController::processArticleItem( $item, 75 );
+						$item = \WikiaSearchController::processArticleItem( $item, 120 );
 						$pages[] = $item;
 					}
 				}
