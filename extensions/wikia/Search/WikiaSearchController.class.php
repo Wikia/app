@@ -616,7 +616,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 	protected function addRightRailModules( Wikia\Search\Config $searchConfig ) {
 		global $wgLang;
 
-		$isMonobook = $this->getVal( 'isMonobook' );
+		$isMonobook = $this->response->getVal( 'isMonobook' );
 		$this->setVal( 'fandomStories', false );
 		$this->setVal( 'hasTopWikiArticles', false );
 
@@ -637,7 +637,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 
 		$topWikiArticles = \Wikia\Search\TopWikiArticles::getArticlesWithCache(
 			$this->wg->CityId,
-			$this->getVal( 'isGridLayoutEnabled' )
+			$this->response->getVal( 'isGridLayoutEnabled' )
 		);
 
 		if ( !empty( $topWikiArticles ) ) {
