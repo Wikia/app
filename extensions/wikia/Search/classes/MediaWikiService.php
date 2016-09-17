@@ -790,21 +790,16 @@ class MediaWikiService
 	 * @author Rafal
 	 * @author Mech
 	 * @param int $number - number to be put into the i18n message
-	 * @param string $msgName - message id, for bigger $number values a message with postfix is used
 	 * @return string
 	 */
-	public function shortNumForMsg( $number, $msgName ) {
+	public function shortNumForMsg( $number ) {
 		if ( $number >= 1000000 ) {
-			$shortNum = floor($number / 1000000);
-			$msgName = $msgName . '-M';
+			return floor($number / 1000000) . 'M';
 		} else if ( $number >= 1000 ) {
-			$shortNum = floor($number / 1000);
-			$msgName = $msgName . '-k';
-		} else {
-			$shortNum = $number;
+			return floor($number / 1000) . 'k';
 		}
 
-		return wfMessage($msgName, $shortNum, $number);
+		return (string) $number;
 	}
 	
 	/**
