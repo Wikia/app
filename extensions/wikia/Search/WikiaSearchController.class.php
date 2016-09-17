@@ -716,7 +716,6 @@ class WikiaSearchController extends WikiaSpecialPageController {
 					$this->getApp()->getView( 'WikiaSearch', 'exactResult',
 						ResultHelper::extendResult($matchResult, 'wiki', ResultHelper::MAX_WORD_COUNT_EXACT_MATCH, $searchConfig->getQuery()->getSanitizedQuery()) )
 			);
-			$this->resultsFound++;
 		}
 	}
 
