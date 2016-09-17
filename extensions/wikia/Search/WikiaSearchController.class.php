@@ -106,14 +106,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 	}
 
 	public function fandomStories() {
-		$stories = $this->getVal( 'stories', [] );
-
-		foreach ( $stories as &$story ) {
-			$story['excerpt'] = strip_tags( $story['excerpt'] );
-			$story['excerpt'] = wfShortenText( $story['excerpt'], 75, true );
-		}
-
-		$this->response->setVal( 'stories', $stories );
+		$this->response->setVal( 'stories', $this->getVal( 'stories', [] ) );
 	}
 
 	/**
