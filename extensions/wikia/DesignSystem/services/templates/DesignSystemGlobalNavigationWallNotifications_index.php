@@ -4,7 +4,7 @@
 			<div class="wds-global-navigation__notifications-menu-counter notifications-count"></div>
 		</div>
 		<?= DesignSystemHelper::getSvg(
-			'wds-icons-bell-small',
+			'wds-icons-bell',
 			'wds-icon wds-icon-small',
 			wfMessage( 'global-navigation-notifications-title' )->escaped()
 		) ?>
