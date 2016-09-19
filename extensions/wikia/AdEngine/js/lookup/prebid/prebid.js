@@ -38,8 +38,8 @@ define('ext.wikia.adEngine.lookup.prebid', [
 
 			win.pbjs.que.push(function () {
 
-				win.pbjs.addCallback('adUnitBidsBack', function() {
-					console.log('bogna', 'bids are back', arguments);
+				win.pbjs.addCallback('allRequestedBidsBack', function(x, y) {
+					console.log('bogna', 'bids are back', arguments, x, y);
 				});
 				win.pbjs.addAdUnits(adUnits);
 
