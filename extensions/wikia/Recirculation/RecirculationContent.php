@@ -24,7 +24,7 @@ class RecirculationContent implements JsonSerializable {
 		return array_key_exists( $property, $this->data ) ? $this->data[$property] : '';
 	}
 
-	public function jsonSerialize() {
+	public function asObject() {
 		return (object) [
 			'url' => $this->get('url'),
 			'index' => $this->get('index'),
@@ -36,5 +36,9 @@ class RecirculationContent implements JsonSerializable {
 			'isVideo' => $this->get('isVideo'),
 			'meta' => $this->get('meta'),
 		];
+	}
+
+	public function jsonSerialize() {
+		return $this->asObject();
 	}
 }

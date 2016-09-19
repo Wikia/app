@@ -1,5 +1,5 @@
 /*global require*/
-require([
+define('ext.wikia.recirculation.discussions', [
 	'jquery',
 	'wikia.window',
 	'wikia.abTest',
@@ -31,21 +31,5 @@ require([
 		});
 	}
 
-	// if (abTest.inGroup(experimentName, 'CONTROL')) {
-		injectDiscussions(function () {
-			tracker.trackVerboseImpression(experimentName, 'discussions');
-			$('.discussion-timestamp').timeago();
-
-			$('.discussion-thread').click(function () {
-				var slot = $(this).index() + 1,
-					label = 'discussions-tile=slot-' + slot + '=discussions';
-				tracker.trackVerboseClick(experimentName, label);
-				window.location = $(this).data('link');
-			});
-
-			$('.discussion-link').mousedown(function() {
-				tracker.trackVerboseClick(experimentName, 'discussions-link');
-			});
-		});
-	// }
+	return injectDiscussions;
 });

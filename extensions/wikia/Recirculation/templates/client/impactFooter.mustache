@@ -28,7 +28,7 @@
 		{{#posts}}
 		  <li class="discussion-thread" data-index="{{ index }}" data-source="{{source}}"><a class="track-discussions" href="{{url}}">
 			<div class="discussion-author">
-				<img src="{{meta.authorAvatar}}" class="discussion-author-avatar" />
+				<img src="{{meta.authorAvatarUrl}}" class="discussion-author-avatar" />
 				<h4>{{author}}</h4>
 				<span class="subtext">&#183; <time class="discussion-timestamp" datetime="{{pub_date}}"></time></span>
 			</div>
@@ -38,7 +38,7 @@
 					<span class="subtext">{{meta.upvoteCount}} {{i18n.discussionsUpvotes}}</span>
 				</div>
 				<div class="discussion-comments-container">
-					<span class="subtext">{{meta.commentCount}} {{i18n.discussionsReplies}}</span>
+					<span class="subtext">{{meta.postCount}} {{i18n.discussionsReplies}}</span>
 				</div>
 			</div>
 		  </a></li>

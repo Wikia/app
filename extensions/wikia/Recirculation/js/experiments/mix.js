@@ -6,7 +6,8 @@ require([
 	'wikia.log',
 	'ext.wikia.recirculation.tracker',
 	'ext.wikia.recirculation.utils',
-	'ext.wikia.adEngine.taboolaHelper',
+	'ext.wikia.recirculation.discussions',
+	'ext.wikia.recirculation.tracker',
 	require.optional('videosmodule.controllers.rail')
 ], function(
 	$,
@@ -15,9 +16,17 @@ require([
 	log,
 	tracker,
 	utils,
+	discussions,
+	tracker,
 	videosModule
 ) {
-	if (!recircExperiment) {
+
+	var recircExperiment = w.recircExperiment || false;
+
+	if (!recircExperiment || w.wgContentLanguage !== 'en') {
+		if (videosModule) {
+			videosModule('#RECIRCULATION_RAIL');
+		}
 		return;
 	}
 
@@ -71,6 +80,9 @@ require([
 								data.items = data.items.concat(savedData.items);
 							});
 						} else {
+							if (result.title && data.title.length === 0) {
+								data.title = result.title;
+							}
 							data.items = data.items.concat(result.items);
 						}
 
@@ -83,4 +95,22 @@ require([
 				});
 		});
 	});
+
+	if (!views.impactFooter) {
+		discussions(function () {
+			tracker.trackVerboseImpression(experimentName, 'discussions');
+			$('.discussion-timestamp').timeago();
+
+			$('.discussion-thread').click(function () {
+				var slot = $(this).index() + 1,
+					label = 'discussions-tile=slot-' + slot + '=discussions';
+				tracker.trackVerboseClick(experimentName, label);
+				window.location = $(this).data('link');
+			});
+
+			$('.discussion-link').mousedown(function() {
+				tracker.trackVerboseClick(experimentName, 'discussions-link');
+			});
+		});
+	}
 });

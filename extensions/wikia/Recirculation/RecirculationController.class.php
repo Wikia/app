@@ -43,14 +43,20 @@ class RecirculationController extends WikiaController {
 			$posts = $discussionsDataService->getData( 'posts' )['posts'];
 
 			if ( count( $posts ) > 0 ) {
-				$discussionsUrl = "/d/f/$cityId/trending";
+				$discussionsUrl = "$discussionsDataService->server/d/f";
+
+				$postObjects = [];
+
+				foreach ($posts as $post) {
+					$postObjects[] = $post->asObject();
+				}
 
 				$this->response->setCacheValidity( WikiaResponse::CACHE_VERY_SHORT );
 				$this->response->setData( [
 					'title' => wfMessage( 'recirculation-discussion-title' )->plain(),
 					'linkText' => wfMessage( 'recirculation-discussion-link-text' )->plain(),
 					'discussionsUrl' => $discussionsUrl,
-					'posts' => $posts,
+					'posts' => $postObjects,
 				] );
 				return true;
 			}

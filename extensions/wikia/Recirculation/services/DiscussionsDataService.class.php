@@ -129,18 +129,16 @@ class DiscussionsDataService {
 	}
 
 	private function buildPost( $rawPost, $index ) {
-		global $wgContLang;
-
 		$meta = [];
-		$meta['authorAvatar'] = $rawPost['createdBy']['avatarUrl'];
+		$meta['authorAvatarUrl'] = $rawPost['createdBy']['avatarUrl'];
 		$meta['upvoteCount'] = $rawPost['upvoteCount'];
-		$meta['commentCount'] = $rawPost['postCount'];
+		$meta['postCount'] = $rawPost['postCount'];
 
 		return new RecirculationContent([
 			'url' => $this->server . '/d/p/' . $rawPost['id'],
 			'index' => $index,
 			'title' =>  wfShortenText($rawPost['_embedded']['firstPost'][0]['rawContent'], 120),
-			'pub_date' => wfTimestamp( TS_ISO_8601, $rawPost['creationDate']['epochSecond'] ),
+			'publishDate' => wfTimestamp( TS_ISO_8601, $rawPost['creationDate']['epochSecond'] ),
 			'author' => $rawPost['createdBy']['name'],
 			'source' => 'discussions',
 			'isVideo' => false,

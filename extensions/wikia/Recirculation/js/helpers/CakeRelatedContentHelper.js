@@ -22,7 +22,7 @@ define('ext.wikia.recirculation.helpers.cakeRelatedContent', [
             },
             callback: function(data) {
                 if (data.items && data.items.length >= options.limit) {
-                    deferred.resolve(data)
+                    deferred.resolve(formatData(data));
                 } else {
                     deferred.reject('Recirculation widget not shown - not enough items returned from CAKE API');
                 }
@@ -33,6 +33,15 @@ define('ext.wikia.recirculation.helpers.cakeRelatedContent', [
         });
 
         return deferred.promise();
+    }
+
+    function formatData(data) {
+        data.items = data.items.map(function(item) {
+            item.title = item.title.replace('| Fandom - Powered by Wikia', '');
+            return item;
+        });
+
+        return data;
     }
 
     return function(config) {

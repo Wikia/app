@@ -16,7 +16,7 @@ define('ext.wikia.recirculation.views.impactFooter', [
 		renderData.title = data.title;
 		renderData.items = structuredData.items;
 
-		if (structuredData.discussions) {
+		if (structuredData.discussions && structuredData.discussions.length > 0) {
 			renderData.discussions = {
 				posts: structuredData.discussions
 			};
@@ -125,7 +125,7 @@ define('ext.wikia.recirculation.views.impactFooter', [
 		});
 
 		return {
-			items: items,
+			items: items.slice(0,12),
 			discussions: discussions
 		};
 
