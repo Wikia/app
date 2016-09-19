@@ -1,10 +1,8 @@
 @import 'extensions/wikia/DesignSystem/bower_components/design-system/base/typography';
+@import 'variables';
 
 $admins-module-icon-size: 48px;
-$admins-module-text-padding: 14px;
-$admins-module-item-margin: 10px;
 $admins-module-item-width: 80px;
-$admins-view-all-padding: 18px;
 
 .community-page-admins-module {
 	text-align: center;
@@ -18,7 +16,7 @@ $admins-view-all-padding: 18px;
 			width: $admins-module-item-width;
 
 			&:first-child {
-				margin-right: $admins-module-item-margin;
+				margin-right: $content-spacing-xsmall;
 			}
 		}
 	}
@@ -26,15 +24,17 @@ $admins-view-all-padding: 18px;
 	.community-page-admins-text {
 		font-size: $typescale-size-minus-1;
 		line-height: $line-height;
-		padding: $admins-module-text-padding 0;
+		padding: $content-spacing-small-plus 0;
 	}
 
 	.community-page-admins-view-all {
 		color: $color-buttons;
-		display: block;
+		display: inline-block;
 		font-size: $typescale-size-minus-2;
 		font-weight: bold;
-		padding: $admins-view-all-padding 0;
+		line-height: $line-height;
+		margin: $content-spacing-xsmall 0 $content-spacing-xxsmall 0;
+		padding: $content-spacing-small $content-spacing-regular;
 		text-transform: uppercase;
 
 		&:hover {
