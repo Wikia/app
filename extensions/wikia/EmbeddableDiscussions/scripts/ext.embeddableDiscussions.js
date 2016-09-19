@@ -116,6 +116,7 @@ require([
 				withCredentials: true
 			},
 		}).done(function (data) {
+			console.log(requestData.upvoteRequestUrl);
 			var threads = processData(data._embedded.threads, requestData.upvoteRequestUrl);
 
 			$elem.html(mustache.render(templates.DiscussionThreads, {
