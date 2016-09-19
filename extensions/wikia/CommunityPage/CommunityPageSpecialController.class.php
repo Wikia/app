@@ -21,7 +21,7 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 	}
 
 	public function index() {
-		global $wgSitename, $wgWikiTopic;
+		global $wgSitename, $wgWikiTopic, $wgEnableDiscussions;
 
 		$this->specialPage->setHeaders();
 		$this->getOutput()->setPageTitle( $this->msg( 'communitypage-title' )->text() );
@@ -31,6 +31,12 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 
 		// queue i18n messages for export to JS
 		JSMessages::enqueuePackage( 'CommunityPageSpecial', JSMessages::EXTERNAL );
+
+		if ( !empty( $wgEnableDiscussions ) ) {
+			JSMessages::enqueuePackage( 'EmbeddableDiscussions', JSMessages::EXTERNAL );
+			\Wikia::addAssetsToOutput( 'embeddable_discussions_js' );
+			\Wikia::addAssetsToOutput( 'embeddable_discussions_scss' );
+		}
 
 		$cardModulesData = $this->getCardModulesData();
 		$defaultModulesLimit = max( 0, self::DEFAULT_MODULES_MAX - count( $cardModulesData[ 'modules' ] ) );
@@ -56,6 +62,7 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 			'defaultModules' => $this->getDefaultModules( $defaultModulesLimit ),
 			'helpModule' => $this->getHelpModuleData(),
 			'communityTodoListModule' => $this->getCommunityTodoListData(),
+			'discussionsModule' => !empty( $wgEnableDiscussions ) ? EmbeddableDiscussionsController::render( null, [] ) : '',
 			'contributorsModuleEnabled' => !$this->wg->CommunityPageDisableTopContributors,
 			'inspectlet' => ( new InspectletService( InspectletService::COMMUNITY_PAGE ) )->getInspectletCode()
 		] );
