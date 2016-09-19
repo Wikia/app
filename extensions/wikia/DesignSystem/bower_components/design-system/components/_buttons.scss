@@ -1,5 +1,6 @@
 $button-active-color: darken($color-link, 20%);
 $button-line-height: 1.3em;
+$hover-transition-duration: 300ms;
 
 .wds-button {
 	background-color: $color-link;
@@ -16,7 +17,8 @@ $button-line-height: 1.3em;
 	text-align: center;
 	text-decoration: none;
 	text-transform: uppercase;
-	transition: background-color 300ms, border-color 300ms, color 300ms;
+	transition-duration: $hover-transition-duration;
+	transition-property: background-color, border-color, color;
 	-webkit-appearance: none;
 	-webkit-border-radius: 0;
 

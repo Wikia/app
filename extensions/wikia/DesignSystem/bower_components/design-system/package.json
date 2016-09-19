@@ -1,13 +1,13 @@
 {
   "name": "design-system",
-  "version": "0.8.0",
+  "version": "0.9.0",
   "description": "Design System developed for Wikia",
   "scripts": {
     "build": "gulp",
     "dev": "gulp watch",
     "test": "cd reference-page && node test",
     "setup": "npm install",
-    "svgo": "svgo --precision 3 --config .svgo.yml assets/icons",
+    "svgo": "svgo --precision 3 --config .svgo.yml assets/icons && svgo --precision 3 --config .svgo.yml assets/company",
     "svg": "gulp",
     "update-baseline": "rm -rf reference-page/visuals/* && npm run test"
   },
