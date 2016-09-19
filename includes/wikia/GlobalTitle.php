@@ -70,6 +70,12 @@ class GlobalTitle extends Title {
 		}
 
 		$filteredText = Sanitizer::decodeCharReferences( $text );
+
+		if ( $namespace === NS_SPECIAL ) {
+			$localName = SpecialPageFactory::getLocalNameFor( $text );
+			$filteredText = $localName;
+		}
+
 		$title = new GlobalTitle();
 
 		$title->mText = $filteredText;
@@ -81,7 +87,7 @@ class GlobalTitle extends Title {
 
 		return $title;
 	}
-	
+
 	/**
 	 * @desc Create a new Title for the Main Page
 	 *
@@ -822,7 +828,7 @@ class GlobalTitle extends Title {
 			return $this->mNamespaceNames;
 		}
 
-		$this->mNamespaceNames = array();
+		$this->mNamespaceNames = $this->mContLang->getNamespaces() + $wgCanonicalNamespaceNames;
 
 		/**
 		 * get extra namespaces for city_id, they have to be defined in
@@ -830,11 +836,9 @@ class GlobalTitle extends Title {
 		 */
 		$namespaces = WikiFactory::getVarValueByName( "wgExtraNamespacesLocal", $this->mCityId );
 		if( is_array( $namespaces ) ) {
-			$this->mNamespaceNames =  $wgCanonicalNamespaceNames + $namespaces;
+			$this->mNamespaceNames +=  $namespaces;
 		}
-		else {
-			$this->mNamespaceNames = $wgCanonicalNamespaceNames;
-		}
+
 		return $this->mNamespaceNames;
 	}
 
@@ -846,7 +850,7 @@ class GlobalTitle extends Title {
 	 * @return string
 	 */
 	private function memcKey() {
-		return wfSharedMemcKey( 'globaltitle', $this->mCityId );
+		return wfSharedMemcKey( 'globaltitlev1', $this->mCityId );
 	}
 
 	/**
