@@ -54,34 +54,6 @@ body {
 	width: 100%;
 }
 
-.fandom-bar div {
-	display: inline-block;
-	height: 100%;
-	margin: 0;
-	padding: 0;
-	width: 20%;
-}
-
-.fandom-color-1 {
-	background-color: #39414e;
-}
-
-.fandom-color-2 {
-	background-color: #92d300;
-}
-
-.fandom-color-3 {
-	background-color: #00d4bf;
-}
-
-.fandom-color-4 {
-	background-color: #00b6e2;
-}
-
-.fandom-color-5 {
-	background-color: #656d77;
-}
-
 .hub-icon {
 	display: block;
 	margin: 0 auto 5px;

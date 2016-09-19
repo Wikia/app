@@ -6,11 +6,9 @@
 
 <div class="main-wrapper">
 	<div class="fandom-bar">
-		<div class="fandom-color-1"></div><!--
-		--><div class="fandom-color-2"></div><!--
-		--><div class="fandom-color-3"></div><!--
-		--><div class="fandom-color-4"></div><!--
-		--><div class="fandom-color-5"></div>
+		{{# icons.FandomTopBar}}
+			<img src="{{url}}" width="100%" height="{{height}}" alt="Top Bar">
+		{{/icons.FandomTopBar}}
 	</div>
 	<table class="header-wrap">
 		<tr>
@@ -19,7 +17,7 @@
 				<div class="content">
 					<div class="header content-inner">
 						<a href="http://www.wikia.com" class="logo">
-                            {{# icons.FandomLogoHeader}}<img src="{{url}}" width="{{width}}" height="{{height}}" alt="Wikia">{{/ icons.FandomLogoHeader}}
+							{{# icons.FandomLogoHeader}}<img src="{{url}}" width="{{width}}" height="{{height}}" alt="Fandom">{{/ icons.FandomLogoHeader}}
 						</a>
 					</div>
 				</div>

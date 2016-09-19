@@ -13,6 +13,10 @@ class ImageHelper {
 	const ICON_CACHE_TTL = 86400;
 
 	static public $icons = [
+		'FandomTopBar' => [
+			'name' => 'Top-Bar-2x',
+			'extension' => 'png'
+		],
 		'FandomLogoHeader' => [
 			'name' => 'Hero-Logo-2x',
 			'extension' => 'png'
