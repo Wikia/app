@@ -4,6 +4,7 @@
 
 .avatar {
 	border-radius: 100%;
+	border: 2px solid #ccc;
 }
 
 .avatar img {
