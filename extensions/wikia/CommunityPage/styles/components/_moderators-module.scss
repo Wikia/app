@@ -3,19 +3,15 @@
 @import 'variables';
 @import 'extensions/wikia/DesignSystem/bower_components/design-system/base/typography';
 
-// Styles for the moderators module in-page
-$moderator-module-space-small: 6px;
-$moderator-module-space-medium: 2 * $moderator-module-space-small;
-
 .community-page-moderators-module {
 	.avatar-container {
 		display: inline-block;
-		margin-right: $moderator-module-space-small;
+		margin-right: $content-spacing-xxsmall;
 		vertical-align: middle;
 	}
 
 	.community-page-moderators-module-section {
-		margin-top: $moderator-module-space-medium;
+		margin-top: $content-spacing-small;
 
 		&:first-of-type {
 			margin-top: 0;
@@ -34,7 +30,7 @@ $moderator-module-space-medium: 2 * $moderator-module-space-small;
 		@include flexbox();
 		@include align-items(flex-start);
 
-		padding-top: $moderator-module-space-medium;
+		padding-top: $content-spacing-small;
 
 		&:first-of-type {
 			padding: 0;
@@ -45,16 +41,16 @@ $moderator-module-space-medium: 2 * $moderator-module-space-small;
 		}
 
 		.community-page-moderator-rank {
-			padding: $moderator-module-space-small $moderator-module-space-small 0 0;
+			padding: $content-spacing-xxsmall $content-spacing-xxsmall 0 0;
 		}
 
 		.community-page-moderator-details {
-			padding-top: $moderator-module-space-small;
+			padding-top: $content-spacing-xxsmall;
 			word-break: break-all;
 		}
 	}
 
 	.community-page-zero {
-		margin: $moderator-module-space-medium 0;
+		margin: $content-spacing-small 0;
 	}
 }
