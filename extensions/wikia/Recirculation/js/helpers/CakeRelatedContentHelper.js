@@ -1,14 +1,16 @@
 define('ext.wikia.recirculation.helpers.cakeRelatedContent', [
     'jquery',
-    'wikia.nirvana'
-], function($, nirvana) {
+    'wikia.window',
+    'wikia.nirvana',
+    'ext.wikia.recirculation.utils'
+], function($, w, nirvana, utils) {
     var options = {
         limit: 5
     };
 
     function loadData() {
         var deferred = $.Deferred(),
-            articleTitle = window.wgTitle;
+            articleTitle = w.wgTitle;
 
         nirvana.sendRequest({
             controller: 'RecirculationApi',
@@ -17,7 +19,7 @@ define('ext.wikia.recirculation.helpers.cakeRelatedContent', [
             type: 'get',
             data: {
                 relatedTo: articleTitle,
-                ignore: window.location.pathname,
+                ignore: w.location.pathname,
                 limit: options.limit
             },
             callback: function(data) {
@@ -39,7 +41,7 @@ define('ext.wikia.recirculation.helpers.cakeRelatedContent', [
         data.items = data.items.map(function(item) {
             item.title = item.title.replace('| Fandom - Powered by Wikia', '');
             return item;
-        });
+        }).sort(utils.sortThumbnails);
 
         return data;
     }

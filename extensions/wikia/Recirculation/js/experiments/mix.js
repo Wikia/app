@@ -34,30 +34,38 @@ require([
 		logGroup = 'ext.wikia.recirculation.experiments.mix',
 		group = abTest.getGroup(experimentName),
 		views = {},
-		saved = {},
-		savedOptions = {};
+		saved = {};
 
 	recircExperiment.forEach(function(experiment, index) {
+		var deferred = $.Deferred();
+
 		views[experiment.placement] = views[experiment.placement] || [];
+
+		if (experiment.id) {
+			saved[experiment.id] = deferred;
+		}
 
 		if (experiment.helper) {
 			var helperString = 'ext.wikia.recirculation.helpers.' + experiment.helper;
 
 			require([helperString], function (helper) {
-				var promise = helper(experiment.options).loadData();
-
-				views[experiment.placement].push(promise);
-
-				if (experiment.id) {
-					saved[experiment.id] = promise;
-				}
+				helper(experiment.options).loadData()
+					.then(function(data) {
+						deferred.resolve(data);
+					});
 			});
 		}
 
-		if (experiment.source) {
-			views[experiment.placement].push(experiment.source);
-			savedOptions[experiment.source] = experiment.options;
+		if (experiment.source && saved[experiment.source]) {
+			saved[experiment.source].then(function(data) {
+				deferred.resolve({
+					title: data.title,
+					items: data.items.slice(experiment.options.offset)
+				});
+			});
 		}
+
+		views[experiment.placement].push(deferred);
 	});
 
 	$.each(views, function (key, value) {
@@ -74,18 +82,15 @@ require([
 						};
 
 					args.forEach(function (result, index) {
-						if (typeof result === 'string') {
-							saved[result].then(function(savedData) {
-								savedData.items = savedData.items.slice(savedOptions[result].offset);
-								data.items = data.items.concat(savedData.items);
-							});
-						} else {
-							if (result.title && data.title.length === 0) {
-								data.title = result.title;
-							}
-							data.items = data.items.concat(result.items);
+						if (!result) {
+							return;
 						}
 
+						if (result.title && data.title.length === 0) {
+							data.title = result.title;
+						}
+
+						data.items = data.items.concat(result.items);
 					});
 
 					data.items = utils.ditherResults(data.items, 4);

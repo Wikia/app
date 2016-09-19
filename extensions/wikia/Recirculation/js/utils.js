@@ -156,6 +156,18 @@ define('ext.wikia.recirculation.utils', [
 		return deferred.promise();
 	}
 
+	function sortThumbnails(a, b) {
+		if (a.thumbnail && !b.thumbnail) {
+			return -1;
+		}
+
+		if (!a.thumbnail && b.thumbnail) {
+			return 1;
+		}
+
+		return 0;
+	}
+
 	return {
 		buildLabel: buildLabel,
 		loadTemplate: loadTemplate,
@@ -163,6 +175,7 @@ define('ext.wikia.recirculation.utils', [
 		addUtmTracking: addUtmTracking,
 		afterRailLoads: afterRailLoads,
 		waitForRail: waitForRail,
-		ditherResults: ditherResults
+		ditherResults: ditherResults,
+		sortThumbnails: sortThumbnails
 	};
 });
