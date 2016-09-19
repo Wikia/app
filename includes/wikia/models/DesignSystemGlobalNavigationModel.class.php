@@ -156,7 +156,7 @@ class DesignSystemGlobalNavigationModel extends WikiaModel {
 		return [
 			'header' => [
 				'type' => 'line-image',
-				'image' => 'wds-icons-user',
+				'image' => 'wds-icons-user-small',
 				'title' => [
 					'type' => 'translatable-text',
 					'key' => 'global-navigation-anon-my-account',
