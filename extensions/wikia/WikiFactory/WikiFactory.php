@@ -541,13 +541,8 @@ class WikiFactory {
 	 * @return string
 	 */
 	public static function getHostById( $cityId ) {
-		global $wgDevelEnvironment;
-
 		$hostName = \WikiFactory::getVarValueByName( 'wgServer', $cityId );
-
-		if ( !empty( $wgDevelEnvironment ) ) {
-			$hostName = \WikiFactory::getLocalEnvURL( $hostName );
-		}
+		$hostName = \WikiFactory::getLocalEnvURL( $hostName );
 
 		return rtrim( $hostName, '/' );
 	}
@@ -1209,6 +1204,7 @@ class WikiFactory {
 	 * (preview/verify/sandbox).wikiname.wikia.com
 	 * en.wikiname.developer.wikia-dev.com
 	 * wikiname.developer.wikia-dev.com
+	 * @TODO MAIN-7994 support custom domains
 	 * @access public
 	 * @author pbablok@wikia
 	 * @static
