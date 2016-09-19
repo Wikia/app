@@ -56,39 +56,15 @@ class DiscussionsThreadModel {
 	}
 
 	private function getRequestUrl( $showLatest, $limit, $category ) {
-		global $wgDevelEnvironment;
-
 		$sortKey = $showLatest ? self::SORT_LATEST : self::SORT_TRENDING;
 		$categoryId = $this->getCategoryId( $category );
 		$categoryKey = $categoryId ? '&forumId=' . $categoryId : '';
 
-		if ( empty( $wgDevelEnvironment ) ) {
-			return self::DISCUSSIONS_API_BASE .
-				"$this->cityId/threads?sortKey=$sortKey&limit=$limit&viewableOnly=false" . $categoryKey;
-		}
-
-		return self::DISCUSSIONS_API_BASE_DEV .
-			"$this->cityId/threads?sortKey=$sortKey&limit=$limit&viewableOnly=false" . $categoryKey;
+		return "/$this->cityId/threads?sortKey=$sortKey&limit=$limit&viewableOnly=false" . $categoryKey;
 	}
 
 	private function getUpvoteRequestUrl() {
-		global $wgDevelEnvironment;
-
-		if ( empty( $wgDevelEnvironment ) ) {
-			return "/$this->cityId/votes/post/";
-		}
-
 		return "/$this->cityId/votes/post/";
-	}
-
-	private function getBaseUrl() {
-		global $wgDevelEnvironment;
-
-		if ( empty( $wgDevelEnvironment ) ) {
-			return self::DISCUSSIONS_API_BASE;
-		}
-
-		return self::DISCUSSIONS_API_BASE_DEV;
 	}
 
 	public function getData( $showLatest, $limit, $category ) {
@@ -105,7 +81,6 @@ class DiscussionsThreadModel {
 			'siteId' => $this->cityId,
 			'discussionsUrl' => $discussionsUrl,
 			'requestUrl' => $this->getRequestUrl( $showLatest, $limit, $category ),
-			'baseUrl' => $this->getBaseUrl(),
 			'upvoteRequestUrl' => $this->getUpvoteRequestUrl(),
 		];
 	}
