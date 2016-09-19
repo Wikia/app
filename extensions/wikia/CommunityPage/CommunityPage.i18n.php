@@ -815,6 +815,7 @@ $messages['ja'] = array(
 	'communitypage-deadendpages-hightitle' => 'Please add links to these pages',
 	'communitypage-deadendpages-mediumdescription' => 'Please add links to these pages. Well-linked articles help readers discover more information about your topic and improve search engine rankings.',
 	'communitypage-deadendpages-highdescription' => 'Add links to any important names or words that appear in the first few sentences on these pages.',
+	'communitypage-entry-button' => '参加する',
 );
 
 $messages['nl'] = array(
@@ -937,6 +938,7 @@ $messages['nl'] = array(
 	'communitypage-deadendpages-hightitle' => 'Please add links to these pages',
 	'communitypage-deadendpages-mediumdescription' => "Voeg wat links toe aan deze pagina's. Goed verbonden artikels helpen om lezers meer informatie over je onderwerp te laten ontdekken en om je rang in zoekmachines te verbeteren.",
 	'communitypage-deadendpages-highdescription' => "Links toevoegen aan belangrijke namen of woorden die voorkomen in de eerste paar zinnen van deze pagina's.",
+	'communitypage-entry-button' => 'Community-pagina',
 );
 
 $messages['pl'] = array(
@@ -1059,6 +1061,7 @@ $messages['pl'] = array(
 	'communitypage-deadendpages-hightitle' => 'Proszę, dodaj linki do tych stron',
 	'communitypage-deadendpages-mediumdescription' => 'Dodaj linki do tych stron. Odnośniki pomiędzy artykułami ułatwiają czytelnikom odnalezienie informacji na dany temat oraz poprawiają wyniki w wyszukiwarkach.',
 	'communitypage-deadendpages-highdescription' => 'Dodaj linki do ważnych nazw i słów, które pojawiają się w kilku pierwszych zdaniach na tych stronach.',
+	'communitypage-entry-button' => 'Rozpocznij',
 );
 
 $messages['pt'] = array(
@@ -1304,6 +1307,7 @@ $messages['ru'] = array(
 	'communitypage-deadendpages-hightitle' => 'Please add links to these pages',
 	'communitypage-deadendpages-mediumdescription' => 'Пожалуйста, добавьте ссылки на эти страницы.  Статьи с корректными ссылками помогут читателям найти больше интересующей их информации, а также повысят позиции вашей вики в поисковой выдаче.',
 	'communitypage-deadendpages-highdescription' => 'Добавьте ссылки для важных названий или слов, которые часто повторяются в первых предложениях на этих страницах.',
+	'communitypage-entry-button' => 'Страница сообщества',
 );
 
 $messages['zh-hans'] = array(
@@ -1426,6 +1430,7 @@ $messages['zh-hans'] = array(
 	'communitypage-deadendpages-hightitle' => 'Please add links to these pages',
 	'communitypage-deadendpages-mediumdescription' => 'Please add links to these pages. Well-linked articles help readers discover more information about your topic and improve search engine rankings.',
 	'communitypage-deadendpages-highdescription' => 'Add links to any important names or words that appear in the first few sentences on these pages.',
+	'communitypage-entry-button' => '社区页面',
 );
 
 $messages['zh-hant'] = array(
@@ -1548,4 +1553,5 @@ $messages['zh-hant'] = array(
 	'communitypage-deadendpages-hightitle' => 'Please add links to these pages',
 	'communitypage-deadendpages-mediumdescription' => 'Please add links to these pages. Well-linked articles help readers discover more information about your topic and improve search engine rankings.',
 	'communitypage-deadendpages-highdescription' => 'Add links to any important names or words that appear in the first few sentences on these pages.',
+	'communitypage-entry-button' => '社區頁面',
 );
