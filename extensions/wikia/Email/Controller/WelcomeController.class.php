@@ -29,7 +29,7 @@ class WelcomeController extends EmailController {
 			'details' => $this->getDetailsList(),
 			'hasContentFooterMessages' => true,
 			'contentFooterMessages' => $this->createContentFooterMessages(),
-			'signatureIcon' => ImageHelper::getFileUrl( 'Fandom-heart-color.png' ),
+			'signatureIcon' => ImageHelper::getFileUrl( 'Fandom-Heart-2x.png‎' ),
 			'signature' => $this->getMessage( 'emailext-emailconfirmation-community-team' )->text()
 		] );
 	}

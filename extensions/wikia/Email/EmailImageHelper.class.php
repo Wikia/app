@@ -14,11 +14,11 @@ class ImageHelper {
 
 	static public $icons = [
 		'FandomLogoHeader' => [
-			'name' => 'Hero-Logo-1x',
+			'name' => 'Hero-Logo-2x',
 			'extension' => 'png'
 		],
 		'FandomLogoFooter' => [
-			'name' => 'Fandom-logo-footer',
+			'name' => 'Footer-logo-2x',
 			'extension' => 'png'
 		],
 		'Wikia' => [
@@ -26,23 +26,23 @@ class ImageHelper {
 			'extension' => 'gif'
 		],
 		'Twitter' => [
-			'name' => 'Twitter_Footer',
+			'name' => 'Twitter-Icon-2x',
 			'extension' => 'png'
 		],
 		'Facebook' => [
-			'name' => 'Facebook_Footer',
+			'name' => 'Facebook-Icon-2x',
 			'extension' => 'png'
 		],
 		'YouTube' => [
-			'name' => 'Youtube_Footer',
+			'name' => 'YouTube_Default-2x',
 			'extension' => 'png'
 		],
 		'Reddit' => [
-			'name' => 'Reddit_Footer',
+			'name' => 'Reddit-Icon-2x',
 			'extension' => 'png'
 		],
 		'Instagram' => [
-			'name' => 'Instagram_Footer',
+			'name' => 'Instagram-Default-2x',
 			'extension' => 'png'
 		],
 	];
