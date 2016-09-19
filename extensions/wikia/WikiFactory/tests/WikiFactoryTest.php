@@ -223,6 +223,13 @@ class WikiFactoryTest extends WikiaBaseTest {
 		];
 	}
 
+	public function testGetHostById() {
+		$this->mockStaticMethod( 'WikiFactory', 'getVarValueByName', 1 );
+		$this->mockStaticMethod( 'WikiFactory', 'getLocalEnvURL', 'test_host/' );
+
+		$this->assertEquals( 'test_host', WikiFactory::getHostById( 2 ) );
+	}
+
 	public function testRenderValueOfVariableWithoutValue() {
 		$variable = new stdClass();
 

@@ -541,13 +541,8 @@ class WikiFactory {
 	 * @return string
 	 */
 	public static function getHostById( $cityId ) {
-		global $wgWikiaEnvironment;
-
 		$hostName = \WikiFactory::getVarValueByName( 'wgServer', $cityId );
-
-		if ( $wgWikiaEnvironment != WIKIA_ENV_PROD ) {
-			$hostName = \WikiFactory::getLocalEnvURL( $hostName );
-		}
+		$hostName = \WikiFactory::getLocalEnvURL( $hostName );
 
 		return rtrim( $hostName, '/' );
 	}

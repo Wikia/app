@@ -680,7 +680,7 @@ class GlobalTitle extends Title {
 		 */
 		$server = WikiFactory::getVarValueByName( "wgServer", $this->mCityId );
 		if ( $server ) {
-			$this->mServer = self::normalizeEnvURL( $server );
+			$this->mServer = WikiFactory::getLocalEnvURL( $server );
 			return $server;
 		}
 
@@ -698,27 +698,11 @@ class GlobalTitle extends Title {
 
 		if ( $city ) {
 			$server = rtrim( $city->city_url, "/" );
-			$this->mServer = self::normalizeEnvURL( $server );
+			$this->mServer = WikiFactory::getLocalEnvURL( $server );
 			return $server;
 		}
 
 		return false;
-	}
-
-	/**
-	 *
-	 * Normalizes URL passed to this method to generate environment-specific paths
-	 *
-	 * @param $server
-	 * @return string
-	 */
-	private static function normalizeEnvURL( $server ) {
-		global $wgWikiaEnvironment;
-		if ( $wgWikiaEnvironment != WIKIA_ENV_PROD ) {
-			return WikiFactory::getLocalEnvURL( $server );
-		}
-
-		return $server;
 	}
 
 	/**
