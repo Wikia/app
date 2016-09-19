@@ -6,7 +6,9 @@
 			{{#items}}
 			<div class="item {{#isVideo}} is-video{{/isVideo}}" data-index="{{ index }}" data-source="{{source}}">
 				<a title="{{ title }}" href="{{ url }}">
-					<div class="thumbnail"><img src="{{ thumbnail }}" alt="{{ title }}"></div>
+					<div class="thumbnail placeholder-thumbnail">
+						<img src="{{ thumbnail }}" alt="{{ title }}">
+					</div>
 					<h4>{{ title }}</h4>
 				</a>
 			</div>

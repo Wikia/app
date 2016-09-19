@@ -18,11 +18,13 @@ define('ext.wikia.recirculation.views.impactFooter', [
 
 		if (structuredData.discussions && structuredData.discussions.length > 0) {
 			renderData.discussions = {
+				discussionsUrl: getDiscussionsUrl(structuredData.discussions),
 				posts: structuredData.discussions
 			};
 		}
 
 		renderData.i18n = {
+			title: $.msg('recirculation-impact-footer-title'),
 			discussionsTitle: $.msg('recirculation-discussion-title'),
 			discussionsLinkText: $.msg('recirculation-discussion-link-text'),
 			discussionsNew: $.msg('recirculation-discussions-new'),
@@ -128,7 +130,13 @@ define('ext.wikia.recirculation.views.impactFooter', [
 			items: items.slice(0,12),
 			discussions: discussions
 		};
+	}
 
+	function getDiscussionsUrl(posts) {
+		var parser = document.createElement('a');
+		parser.href = posts[0].url;
+
+		return parser.protocol + '//' + parser.hostname + '/d/f';
 	}
 
 	function setupTracking(experimentName) {

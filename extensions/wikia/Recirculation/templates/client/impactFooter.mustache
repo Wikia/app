@@ -1,10 +1,10 @@
 <section class="recirculation-impact-footer recirculation-unit">
-	<h2>{{title}}</h2>
+	<h2>{{i18n.title}}</h2>
 	<div class="items">
 		{{#items}}
 			<div class="item item-{{ source }}{{#isVideo}} is-video{{/isVideo}}" data-index="{{ index }}" data-source="{{source}}">
 				<a title="{{ title }}" href="{{ url }}" class="track-items">
-					<div class="thumbnail">
+					<div class="thumbnail placeholder-thumbnail">
 						{{#thumbnail}}
 							<img src="{{ thumbnail }}" alt="{{ title }}">
 						{{/thumbnail}}

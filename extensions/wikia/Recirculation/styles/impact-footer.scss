@@ -127,31 +127,9 @@ $recirculation-impact-footer-color-feature-overlay: rgba(0, 0, 0, .75);
 	}
 
 	.thumbnail {
-		background: {
-			color: $color-article-thumb-background;
-			image: url('/extensions/wikia/Recirculation/images/brackets.svg'); /* $wgCdnStylePath */
-			position: center;
-			repeat: no-repeat;
-			size: contain;
-		}
 		margin-bottom: 5px;
 		overflow: hidden;
-		position: relative;
 		width: 100%;
-
-		&::before {
-			content: '';
-			display: block;
-			padding-top: 56.25%;
-		}
-
-		img {
-			bottom: 0;
-			left: 0;
-			position: absolute;
-			right: 0;
-			top: 0;
-		}
 	}
 
 	.discussion-threads {
