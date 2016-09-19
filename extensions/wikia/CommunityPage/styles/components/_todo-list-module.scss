@@ -31,22 +31,18 @@ $edit-pen-url: '/extensions/wikia/CommunityPage/images/edit-pen-gray.svg';
 		width: $edit-icon-size;
 	}
 
-	.community-page-todo-list-module-description {
-		clear: both;
-	}
-
 	.community-page-todo-list-module-content {
 		border-style: solid;
 		border-left: thick solid $color-buttons;
+		clear: both;
 		margin-top: 10px;
-		max-height: 500px;
-		overflow: auto;
 		padding: 0 10px;
 	}
 
 	.community-page-todo-list-module-zerostate {
 		border-style: solid;
 		border-left: thick solid $color-buttons;
+		clear: both;
 		font-weight: bold;
 		margin-top: 10px;
 		padding: 5px 10px;
