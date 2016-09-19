@@ -11,7 +11,7 @@ class ArchiveWikiForumHooks {
      */
     public static function onArticleViewHeader( &$article, &$outputDone, &$useParserCache ) {
         $title = $article->getTitle();
-        if ( self::isForumNS( $title->getNamespace() ) ) {
+        if ( static::isForumNS( $title->getNamespace() ) ) {
             $app = F::app();
             $html = $app->renderView(
                 ArchiveWikiForumController::class,
@@ -32,15 +32,21 @@ class ArchiveWikiForumHooks {
     public static function onPageHeaderIndexAfterActionButtonPrepared( $response, $ns, $skin ) {
         $app = F::app();
         $title = $app->wg->Title;
+        $user = $app->wg->User;
 
-        if ( self::isForumNS( $title->getNamespace() ) ) {
-            if ( !static::canEditOldForum( $app->wg->User ) ) {
-                $action = [ 'class' => '', 'text' => wfMessage( 'viewsource' )->escaped(), 'href' => $title->getLocalURL( [ 'action' => 'edit' ] ), 'id' => 'ca-viewsource', 'primary' => 1 ];
-                $response->setVal( 'actionImage', MenuButtonController::LOCK_ICON );
-                $response->setVal( 'action', $action );
-                return false;
-            }
+        if ( static::isForumNS( $title->getNamespace() ) && !static::canEditOldForum( $user ) ) {
+            $action = [
+                'class' => '',
+                'text' => wfMessage('viewsource')->escaped(),
+                'href' => $title->getLocalURL( [ 'action' => 'edit' ] ),
+                'id' => 'ca-viewsource',
+                'primary' => 1
+            ];
+            $response->setVal( 'actionImage', MenuButtonController::LOCK_ICON );
+            $response->setVal( 'action', $action );
+            return false;
         }
+
         return true;
     }
 
@@ -56,11 +62,9 @@ class ArchiveWikiForumHooks {
             return true;
         }
 
-        if ( self::isForumNS( $title->getNamespace() ) ) {
-            if ( !static::canEditOldForum( $user ) ) {
-                $result = [ 'protectedpagetext' ];
-                return false;
-            }
+        if ( static::isForumNS( $title->getNamespace() ) && !static::canEditOldForum( $user ) ) {
+            $result = ['protectedpagetext'];
+            return false;
         }
 
         return true;
