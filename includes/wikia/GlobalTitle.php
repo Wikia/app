@@ -311,7 +311,7 @@ class GlobalTitle extends Title {
 				return SpecialPageFactory::getLocalNameFor( $titleText );
 			} );
 
-			$titleText = wfUrlencode($localName);
+			$titleText = wfUrlencode( $localName );
 		}
 
 		/**
