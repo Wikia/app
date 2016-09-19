@@ -14,11 +14,9 @@ class GlobalTitleTest extends WikiaBaseTest {
 			->willReturnMap( [
 				// basically all tests where GlobalTitle::load() is executed
 				[ 'wgServer', 177, 'http://community.wikia.com' ],
-				[ 'wgServer', 113, 'http://en.memory-alpha.org' ],
-				[ 'wgServer', 490, 'http://www.wowwiki.com' ],
+				[ 'wgServer', 113, 'http://memory-alpha.wikia.com' ],
+				[ 'wgServer', 490, 'http://wowwiki.wikia.com' ],
 				[ 'wgServer', 1686, 'http://spolecznosc.wikia.com' ],
-				/** @see testUrlsMainNSonWoW **/
-				[ 'wgArticlePath', 490, '/$1' ],
 				[ 'wgExtraNamespacesLocal', 490, [ 116 => 'Portal' ] ],
 			] );
 	}
@@ -51,7 +49,7 @@ class GlobalTitleTest extends WikiaBaseTest {
 		$this->mockProdEnv();
 
 		$title = GlobalTitle::newFromText( "Timeline", NS_MAIN, 113 ); # memory-alpha
-		$expectedUrl = "http://en.memory-alpha.org/wiki/Timeline";
+		$expectedUrl = "http://memory-alpha.wikia.com/wiki/Timeline";
 		$this->assertEquals( $expectedUrl, $title->getFullURL() );
 	}
 
@@ -59,7 +57,7 @@ class GlobalTitleTest extends WikiaBaseTest {
 		$this->mockProdEnv();
 
 		$title = GlobalTitle::newFromText( "Main", 116, 490); # wowwiki
-		$expectedUrl = "http://www.wowwiki.com/Portal:Main";
+		$expectedUrl = "http://wowwiki.wikia.com/wiki/Portal:Main";
 		$this->assertEquals( $expectedUrl, $title->getFullURL() );
 	}
 
