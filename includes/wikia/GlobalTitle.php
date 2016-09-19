@@ -71,11 +71,6 @@ class GlobalTitle extends Title {
 
 		$filteredText = Sanitizer::decodeCharReferences( $text );
 
-		if ( $namespace === NS_SPECIAL ) {
-			$localName = SpecialPageFactory::getLocalNameFor( $text );
-			$filteredText = $localName;
-		}
-
 		$title = new GlobalTitle();
 
 		$title->mText = $filteredText;
@@ -306,6 +301,19 @@ class GlobalTitle extends Title {
 		if( $this->mNamespace != NS_MAIN ) {
 			$namespace .= ":";
 		}
+
+		$titleText = $this->mUrlform;
+		if ( $this->mNamespace === NS_SPECIAL ) {
+			$globalStateWrapper = new Wikia\Util\GlobalStateWrapper( [
+				'wgContLang' => $this->mContLang
+			] );
+			$localName = $globalStateWrapper->wrap( function () use ( $titleText ) {
+				return SpecialPageFactory::getLocalNameFor( $titleText );
+			} );
+
+			$titleText = wfUrlencode($localName);
+		}
+
 		/**
 		 * replace $1 with article title with namespace
 		 */
@@ -314,7 +322,7 @@ class GlobalTitle extends Title {
 			$query = wfArrayToCGI( $query );
 		}
 
-		$url = str_replace( '$1', $namespace . $this->mUrlform, $this->mArticlePath );
+		$url = str_replace( '$1', $namespace . $titleText, $this->mArticlePath );
 		$url = wfAppendQuery( $this->mServer . $url, $query );
 
 		return $url;

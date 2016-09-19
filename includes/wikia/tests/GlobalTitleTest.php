@@ -80,7 +80,7 @@ class GlobalTitleTest extends WikiaBaseTest {
 	function testUrlsSpecialNS() {
 		$this->mockProdEnv();
 
-		$title = GlobalTitle::newFromText( "WikiFactory", NS_SPECIAL, 1686 ); # pl.wikia.com
+		$title = GlobalTitle::newFromText( 'WikiFactory', NS_SPECIAL, 1686 ); # pl.wikia.com
 		$expectedUrl = 'http://spolecznosc.wikia.com/wiki/Specjalna:WikiFactory';
 		$this->assertEquals( $expectedUrl, $title->getFullURL() );
 	}
@@ -88,8 +88,16 @@ class GlobalTitleTest extends WikiaBaseTest {
 	function testUrlsLocalizedNS() {
 		$this->mockProdEnv();
 
-		$title = GlobalTitle::newFromText( "Test", NS_USER, 1686 ); # pl.wikia.com
+		$title = GlobalTitle::newFromText( 'Test', NS_USER, 1686 ); # pl.wikia.com
 		$expectedUrl = 'http://spolecznosc.wikia.com/wiki/U%C5%BCytkownik:Test';
+		$this->assertEquals( $expectedUrl, $title->getFullURL() );
+	}
+
+	function testUrlsLocalizedSpecialPage() {
+		$this->mockProdEnv();
+
+		$title = GlobalTitle::newFromText( 'Search', NS_SPECIAL, 1686 ); # pl.wikia.com
+		$expectedUrl = 'http://spolecznosc.wikia.com/wiki/Specjalna:Szukaj';
 		$this->assertEquals( $expectedUrl, $title->getFullURL() );
 	}
 
