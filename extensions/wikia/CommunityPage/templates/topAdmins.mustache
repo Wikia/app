@@ -3,7 +3,9 @@
 	{{#topAdminsList}}
 		<div class="community-page-admin-item">
 			<div class="avatar-container">
-				<a data-tracking="top-admins-user-avatar" href="{{profilePage}}">{{{avatar}}}</a>
+				<a data-tracking="top-admins-user-avatar" href="{{profilePage}}" title="{{userName}}">
+					{{{avatar}}}
+				</a>
 			</div>
 			<div class="community-page-contributor-details">
 				<a data-tracking="top-admins-user" href="{{profilePage}}">{{userName}}</a>
