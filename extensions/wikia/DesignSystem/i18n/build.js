@@ -12,6 +12,9 @@ var fs = require('fs'),
 		},
 		'global-navigation-search-placeholder-in-wiki': {
 			sitename: '$1'
+		},
+		'global-footer-copyright-wikia': {
+			date: '$1'
 		}
 	};
 
