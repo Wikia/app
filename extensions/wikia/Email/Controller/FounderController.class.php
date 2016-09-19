@@ -553,7 +553,7 @@ class FounderTipsController extends EmailController {
 	}
 
 	protected function getSignatureIcon() {
-		return ImageHelper::getFileUrl( 'Fandom-Heart-2x.png‎' );
+		return ImageHelper::getFileUrl( 'Fandom-Heart-2x.png' );
 	}
 
 	protected function createEmailSignature() {
