@@ -186,7 +186,25 @@ class WikiFactoryTest extends WikiaBaseTest {
 				'forcedEnv' => WIKIA_ENV_DEV,
 				'url' => 'http://gta.wikia.com/',
 				'expected' => 'http://preview.gta.wikia.com'
-			]
+			],
+			[
+				'env' => WIKIA_ENV_PROD,
+				'forcedEnv' => null,
+				'url' => 'http://gta.wikia.com/',
+				'expected' => 'http://gta.wikia.com'
+			],
+			[
+				'env' => WIKIA_ENV_PROD,
+				'forcedEnv' => null,
+				'url' => 'http://muupet.wikia.com/wiki/test/test/test',
+				'expected' => 'http://muupet.wikia.com/wiki/test/test/test'
+			],
+			[
+				'env' => WIKIA_ENV_DEV,
+				'forcedEnv' => WIKIA_ENV_PROD,
+				'url' => 'http://gta.wikia.com/',
+				'expected' => 'http://gta.wikia.com'
+			],
 		];
 	}
 
@@ -225,19 +243,9 @@ class WikiFactoryTest extends WikiaBaseTest {
 
 	public function testGetHostById() {
 		$this->mockStaticMethod( 'WikiFactory', 'getVarValueByName', 1 );
-		$this->mockStaticMethod( 'WikiFactory', 'fixURLForNonProductionEnv', 'test_host/' );
+		$this->mockStaticMethod( 'WikiFactory', 'getLocalEnvURL', 'test_host/' );
 
 		$this->assertEquals( 'test_host', WikiFactory::getHostById( 2 ) );
-	}
-
-	public function testFixURLForNonProductionEnv() {
-		$this->mockStaticMethod( 'WikiFactory', 'getLocalEnvURL', 'test_host_processed' );
-
-		$this->mockEnvironment( WIKIA_ENV_PROD );
-		$this->assertEquals( 'test_host', WikiFactory::fixURLForNonProductionEnv( 'test_host' ) );
-
-		$this->mockEnvironment( WIKIA_ENV_SANDBOX );
-		$this->assertEquals( 'test_host_processed', WikiFactory::fixURLForNonProductionEnv( 'test_host' ) );
 	}
 
 	public function testRenderValueOfVariableWithoutValue() {

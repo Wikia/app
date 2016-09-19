@@ -542,27 +542,9 @@ class WikiFactory {
 	 */
 	public static function getHostById( $cityId ) {
 		$hostName = \WikiFactory::getVarValueByName( 'wgServer', $cityId );
-		$hostName = \WikiFactory::fixURLForNonProductionEnv( $hostName );
+		$hostName = \WikiFactory::getLocalEnvURL( $hostName );
 
 		return rtrim( $hostName, '/' );
-	}
-
-	/**
-	 * Calls WikiFactory::getLocalEnvURL only on non-production host names
-	 * @TODO MAIN-7994 remove this method when WikiFactory::getLocalEnvURL supports custom domains
-	 *
-	 * @param string $hostName
-	 *
-	 * @return string
-	 */
-	public static function fixURLForNonProductionEnv( $hostName ) {
-		global $wgWikiaEnvironment;
-
-		if ( $wgWikiaEnvironment != WIKIA_ENV_PROD ) {
-			$hostName = \WikiFactory::getLocalEnvURL( $hostName );
-		}
-
-		return $hostName;
 	}
 
 	/**
