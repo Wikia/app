@@ -41,11 +41,21 @@ body {
 	padding-top: 20px;
 }
 
+.header img {
+	height: 30px;
+	width: 144px;
+}
+
 .footer {
 	background-color: #39424d;
 	padding-left: 0;
 	padding-right: 0;
 	max-width: 600px;
+}
+
+.footer img {
+	height: 46px;
+	width: 194px;
 }
 
 .fandom-bar img {
@@ -65,6 +75,31 @@ body {
 
 .social-links img {
 	padding: 0 10px;
+}
+
+.social-links .facebook img {
+	height: 20px;
+	width: 10px;
+}
+
+.social-links .twitter img {
+	height: 18px;
+	width: 22px;
+}
+
+.social-links .reddit img {
+	height: 21px;
+	width: 22px;
+}
+
+.social-links .youtube img {
+	width: 24px;
+	height: 17px;
+}
+
+.social-links .instagram img {
+	height: 20px;
+	width: 20px;
 }
 
 .fine-print, .fine-print * {
