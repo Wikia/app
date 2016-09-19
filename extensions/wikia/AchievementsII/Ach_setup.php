@@ -161,7 +161,7 @@ function Ach_ArticleSaveComplete(	&$article, &$user, $text,
 function Ach_GetHTMLAfterBody($skin, &$html) {
 	wfProfileIn(__METHOD__);
 
-	global $wgOut, $wgTitle, $wgUser;
+	global $wgOut, $wgUser;
 
 	if($wgUser->isLoggedIn() && !($wgUser->getGlobalPreference( 'hidepersonalachievements' ))) {
 		if( $skin->getTitle()->isSpecial( 'MyHome' ) ) {
