@@ -12,7 +12,7 @@ class EnableDiscussionsController extends \WikiaController {
 	const REASON = 'Enabling discussions!';
 
 	public function index() {
-		//$this->assertCanAccessController();
+		$this->assertCanAccessController();
 
 		$siteId = $this->request->getInt( self::P_SITE_ID );
 		$isRollback = $this->request->getBool( self::P_ROLLBACK );
