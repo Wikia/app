@@ -114,9 +114,8 @@ require([
 			url: requestUrl,
 			xhrFields: {
 				withCredentials: true
-			},
+			}
 		}).done(function (data) {
-			console.log(requestData.upvoteRequestUrl);
 			var threads = processData(data._embedded.threads, requestData.upvoteRequestUrl);
 
 			$elem.html(mustache.render(templates.DiscussionThreads, {
@@ -148,10 +147,12 @@ require([
 		// Track impression
 		track({
 			action: tracker.ACTIONS.IMPRESSION,
-			label: 'embeddable-discussions-loaded',
+			label: 'embeddable-discussions-loaded'
 		});
 
-		$('.embeddable-discussions-module').on('click', '.upvote', function(event) {
+		var discussionsModule = $('.embeddable-discussions-module');
+
+		discussionsModule.on('click', '.upvote', function(event) {
 			var upvoteUrl = getBaseUrl() + event.currentTarget.getAttribute('href'),
 				hasUpvoted = event.currentTarget.getAttribute('data-hasUpvoted') === '1',
 				$svg = $($(event.currentTarget).children()[0]),
@@ -172,14 +173,15 @@ require([
 					url: upvoteUrl,
 					xhrFields: {
 						withCredentials: true
-					},
+					}
 				});
 			}
 
 			event.preventDefault();
+			return false;
 		});
 
-		$('.embeddable-discussions-module').on('click', '.share', function(event) {
+		discussionsModule.on('click', '.share', function(event) {
 			openModal(event.currentTarget.getAttribute('data-link'), event.currentTarget.getAttribute('data-title'));
 			event.preventDefault();
 		});

@@ -32,12 +32,6 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 		// queue i18n messages for export to JS
 		JSMessages::enqueuePackage( 'CommunityPageSpecial', JSMessages::EXTERNAL );
 
-		if ( !empty( $wgEnableDiscussions ) ) {
-			JSMessages::enqueuePackage( 'EmbeddableDiscussions', JSMessages::EXTERNAL );
-			\Wikia::addAssetsToOutput( 'embeddable_discussions_js' );
-			\Wikia::addAssetsToOutput( 'embeddable_discussions_scss' );
-		}
-
 		$cardModulesData = $this->getCardModulesData();
 		$defaultModulesLimit = max( 0, self::DEFAULT_MODULES_MAX - count( $cardModulesData[ 'modules' ] ) );
 		$this->response->setValues( [
