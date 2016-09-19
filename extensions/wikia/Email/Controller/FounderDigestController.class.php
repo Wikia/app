@@ -79,7 +79,7 @@ abstract class FounderDigestController extends EmailController {
 		return array_merge_recursive( $formFields, parent::getEmailSpecificFormFields() );
 	}
 
-	protected function findSignatureIcon() {
+	protected function getSignatureIcon() {
 		return ImageHelper::getFileUrl( 'Fandom-heart-color.png' );
 	}
 
@@ -120,7 +120,7 @@ class FounderActivityDigestController extends FounderDigestController {
 				$this->getCommunityFooterMessage()
 			],
 			'hasContentFooterMessages' => true,
-			'signatureIcon' => $this->findSignatureIcon(),
+			'signatureIcon' => $this->getSignatureIcon(),
 			'signature' => $this->createEmailSignature()
 		] );
 	}
@@ -245,7 +245,7 @@ class FounderPageViewsDigestController extends FounderDigestController {
 			'buttonLink' => $this->getButtonLink(),
 			'details' => $this->getDetailsList(),
 			'hasContentFooterMessages' => false,
-			'signatureIcon' => $this->findSignatureIcon(),
+			'signatureIcon' => $this->getSignatureIcon(),
 			'signature' => $this->createEmailSignature()
 		] );
 	}

@@ -36,7 +36,7 @@ abstract class AbstractEmailConfirmationController extends EmailController {
 	}
 
 	/**
-	 * @template otherEmailConfirmation
+	 * @template registrationEmailConfirmation
 	 */
 	public function body() {
 		$this->response->setData( [
