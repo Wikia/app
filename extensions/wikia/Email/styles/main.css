@@ -42,6 +42,7 @@ body {
 }
 
 .header img {
+	display: block;
 	height: 30px;
 	width: 144px;
 }
