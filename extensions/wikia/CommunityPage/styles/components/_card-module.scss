@@ -34,16 +34,17 @@ $card-footer-size: 48px;
 	}
 
 	.community-page-card-module-footer {
-		padding: $content-spacing-small-plus $content-spacing-large;
 		text-align: right;
 	}
 
 	.community-page-card-module-full-list-link {
 		color: $color-buttons;
-		display: block;
+		display: inline-block;
 		font-size: $typescale-size-minus-2;
 		font-weight: bold;
 		line-height: $line-height;
+		margin: $content-spacing-xxsmall;
+		padding: $content-spacing-small $content-spacing-regular;
 		text-transform: uppercase;
 
 		&:hover {
@@ -82,7 +83,6 @@ $card-footer-size: 48px;
 
 	.community-page-card-module-help-icon {
 		fill: $color-page-border-subtle;
-		margin: $content-spacing-small-plus $content-spacing-small;
 	}
 
 	.community-page-card-module-list {

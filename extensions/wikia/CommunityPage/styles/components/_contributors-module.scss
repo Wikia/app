@@ -8,7 +8,7 @@
 .contributors-module {
 	.avatar-container {
 		display: inline-block;
-		margin-right: 6px;
+		margin-right: $content-spacing-xxsmall;
 		vertical-align: middle;
 	}
 
@@ -89,11 +89,11 @@
 		}
 
 		.community-page-contributor-rank {
-			padding: 6px 6px 0 0;
+			padding: $content-spacing-xxsmall $content-spacing-xxsmall 0 0;
 		}
 
 		.community-page-contributor-details {
-			padding-top: 6px;
+			padding-top: $content-spacing-xxsmall;
 		}
 
 		&.community-page-current-contributor {
@@ -140,7 +140,7 @@
 		}
 
 		.community-page-details {
-			padding-top: 6px;
+			padding-top: $content-spacing-xxsmall;
 		}
 
 		.user-details {
