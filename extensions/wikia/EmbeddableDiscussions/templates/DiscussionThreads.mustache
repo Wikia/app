@@ -1,6 +1,7 @@
 {{#threads}}
 	<div class="embeddable-discussions-post-detail {{columnsDetailsClass}}">
 		<div class="embeddable-discussions-side-spaced">
+			<a href="{{link}}" class="embeddable-discussions-fill-div"></a>
 			<div id="post-{{id}}" class="embeddable-discussions-header-container">
 				<div class="avatar-container">
 					{{#authorAvatar}}
@@ -45,15 +46,13 @@
 			<ul class="embeddable-discussions-post-actions">
 				<li class="small-4 large-4 embeddable-discussions-upvote-area">
 					{{#hasUpvoted}}
-						<a href="#" class="upvote" data-id="{{firstPostId}}" data-url="{{upvoteUrl}}"
-						   data-hasUpvoted="1">
+						<a href="{{upvoteUrl}}" class="upvote" data-id="{{firstPostId}}" data-hasUpvoted="1">
 							<svg class="embeddable-discussions-upvote-icon-active"></svg>
 							{{upvoteText}}
 						</a>
 					{{/hasUpvoted}}
 					{{^hasUpvoted}}
-						<a href="#" class="upvote" data-id="{{firstPostId}}" data-url="{{upvoteUrl}}"
-						   data-hasUpvoted="0">
+						<a href="{{upvoteUrl}}" class="upvote" data-id="{{firstPostId}}" data-hasUpvoted="0">
 							<svg class="embeddable-discussions-upvote-icon"></svg>
 							{{upvoteText}}
 						</a>

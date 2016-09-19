@@ -271,7 +271,8 @@ $config['adengine2_prebid_js'] = [
 		'//extensions/wikia/AdEngine/js/lookup/prebid/prebid.js',
 		'//extensions/wikia/AdEngine/js/lookup/prebid/prebidHelper.js',
 		'//extensions/wikia/AdEngine/js/lookup/prebid/adapters/appnexus.js',
-		'//extensions/wikia/AdEngine/js/lookup/prebid/adapters/indexExchange.js',
+		'//extensions/wikia/AdEngine/js/lookup/prebid/adapters/appnexusPlacements.js',
+		'//extensions/wikia/AdEngine/js/lookup/prebid/adapters/indexExchange.js'
 	],
 ];
 
@@ -3036,36 +3037,6 @@ $config['design_system_scss'] = [
 	'assets' => [
 		'//extensions/wikia/DesignSystem/bower_components/design-system/dist/styles.scss',
 		'//extensions/wikia/DesignSystem/styles/design-system.scss',
-	],
-];
-
-$config['contribution_appreciation_js'] = [
-	'type' => AssetsManager::TYPE_JS,
-	'skin' => [ 'oasis' ],
-	'assets' => [
-		'//extensions/wikia/ContributionAppreciation/scripts/ContributionAppreciation.js',
-	],
-];
-
-$config['contribution_appreciation_user_js'] = [
-	'type' => AssetsManager::TYPE_JS,
-	'skin' => [ 'oasis' ],
-	'assets' => [
-		'//extensions/wikia/ContributionAppreciation/scripts/UserContributionAppreciation.js',
-	],
-];
-
-$config['contribution_appreciation_scss'] = [
-	'type' => AssetsManager::TYPE_SCSS,
-	'assets' => [
-		'//extensions/wikia/ContributionAppreciation/styles/ContributionAppreciation.scss',
-	],
-];
-
-$config['contribution_appreciation_user_scss'] = [
-	'type' => AssetsManager::TYPE_SCSS,
-	'assets' => [
-		'//extensions/wikia/ContributionAppreciation/styles/UserContributionAppreciation.scss',
 	],
 ];
 
