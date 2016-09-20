@@ -20,6 +20,15 @@ define('ext.wikia.adEngine.lookup.rubicon.rubiconVulcan', [
 						loc: 'hivi'
 					},
 					zoneId: 260296
+				},
+				TOP_LEADERBOARD: {
+					siteId: 55412,
+					size: [640, 480],
+					sizeId: 203,
+					targeting: {
+						loc: 'top'
+					},
+					zoneId: 519058
 				}
 			},
 			mercury: {

@@ -16,8 +16,11 @@ $gray: #999;
 $card-border-color: $color-page-border;
 $container-border-color: lighten($color-page-border, 10%);
 
-$icon-size: 24px;
-$tiny-icon-size: 14px;
+$avatar-size: 30px;
+$icon-height: 22px;
+$icon-width: 24px;
+$tiny-icon-height: 16px;
+$tiny-icon-width: 14px;
 $plus-icon-size: 34px;
 
 $font-size-small: 12px;
@@ -33,6 +36,10 @@ $font-size-large: 16px;
 		margin: 0;
 	}
 
+	svg {
+		vertical-align: middle;
+	}
+
 	a.embeddable-discussions-fill-div {
 		display: block;
 		height: 100%;
@@ -43,17 +50,27 @@ $font-size-large: 16px;
 		width: 100%;
 	}
 
+	.avatar {
+		height: $avatar-size;
+		width: $avatar-size;
+	}
+
 	.avatar-container {
+		height: $avatar-size;
 		position: relative;
+		width: $avatar-size;
 		z-index: 1;
 	}
 
 	.avatar-details {
+		font-size: $font-size-regular;
+		line-height: $avatar-size;
 		z-index: 1;
 	}
 
 	.embeddable-discussions-forum {
 		color: $gray;
+		font-size: $font-size-small;
 		float: left;
 	}
 
@@ -86,57 +103,33 @@ $font-size-large: 16px;
 		border-top: 1px solid $card-border-color;
 		font-size: $font-size-small;
 		font-weight: 500;
+		height: 45px;
 		list-style: none;
 		margin: 0;
 		max-width: none;
-		padding: 6px 0;
-		width: auto;
 	}
 
 	.embeddable-discussions-post-actions li {
-		@include flexbox();
-		@include align-items(center);
-		@include align-self(center);
-		@include justify-content(center);
-
 		color: $gray;
 		cursor: pointer;
-		height: 33px;
-		line-height: 33px;
 		text-align: center;
 	}
 
 	.embeddable-discussions-post-actions a {
-		@include flexbox();
-		@include align-items(center);
-		@include align-self(center);
-		@include justify-content(center);
-
 		color: $gray;
 		cursor: pointer;
 		font-size: $font-size-small;
-		font-weight: 500;
-		height: 33px;
-		line-height: 33px;
-		text-align: center;
 	}
 
 	.embeddable-discussions-post-counter {
 		padding-left: 10px;
-		vertical-align: top;
 	}
 
 	.embeddable-discussions-post-counters {
-		@include flexbox();
-		@include align-items(center);
-		@include align-self(center);
-		@include justify-content(center);
-
 		color: $gray;
 		font-size: $font-size-small;
 		justify-content: flex-end;
-		line-height: $font-size-small;
-		padding-bottom: 14px;
+		padding-bottom: 4px;
 		text-align: right;
 	}
 
@@ -154,21 +147,21 @@ $font-size-large: 16px;
 
 	.embeddable-discussions-reply-icon {
 		background: url($reply-icon) no-repeat;
-		height: $icon-size;
-		width: $icon-size;
+		height: $icon-height;
+		width: $icon-width;
 	}
 
 	.embeddable-discussions-reply-icon-tiny {
 		background: url($reply-icon-tiny) no-repeat;
-		height: $tiny-icon-size;
+		height: $tiny-icon-height;
 		margin-right: 4px;
-		width: $tiny-icon-size;
+		width: $tiny-icon-width;
 	}
 
 	.embeddable-discussions-share-icon {
 		background: url($share-icon) no-repeat;
-		height: $icon-size;
-		width: $icon-size;
+		height: $icon-height;
+		width: $icon-width;
 	}
 
 	.embeddable-discussions-show-all {
@@ -196,6 +189,7 @@ $font-size-large: 16px;
 
 	.embeddable-discussions-timestamp {
 		color: $gray;
+		font-size: $font-size-small;
 		padding-left: 5px;
 	}
 
@@ -206,21 +200,21 @@ $font-size-large: 16px;
 
 	.embeddable-discussions-upvote-icon {
 		background: url($upvote-icon) no-repeat;
-		height: $icon-size;
-		width: $icon-size;
+		height: $icon-height;
+		width: $icon-width;
 	}
 
 	.embeddable-discussions-upvote-icon-active {
 		background: url($upvote-icon-active) no-repeat;
-		height: $icon-size;
-		width: $icon-size;
+		height: $icon-height;
+		width: $icon-width;
 	}
 
 	.embeddable-discussions-upvote-icon-tiny {
 		background: url($upvote-icon-tiny) no-repeat;
 		margin-right: 4px;
-		height: $tiny-icon-size;
-		width: $tiny-icon-size;
+		height: $tiny-icon-height;
+		width: $tiny-icon-width;
 	}
 
 	.embeddable-discussions-zero {
