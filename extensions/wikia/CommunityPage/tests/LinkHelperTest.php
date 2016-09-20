@@ -1,0 +1,57 @@
+<?php
+
+
+class LinkHelperTest extends WikiaBaseTest {
+	const ANON = false;
+	const LOGGED_IN = true;
+	const ANNON_EDITS_ALLOWED = false;
+	const ANNOON_EDITS_FORBIDDEN = true;
+
+	const ARTICLE_NAME = 'test_article';
+	const ARTiCLE_LOCAL_URL = '/wiki/test_article';
+	const ARTICLE_LOCAL_EDIT_URL = '/wiki/test_article?veaction=edit';
+	const SIGNUP_URL_WITH_EDIT = '/wiki/Special:SignUp?returnto=test_article&returntoquery=veaction%253Dedit&type=login';
+	const SIGNUP_URL_WITHOUT_EDIT = '/wiki/Special:SignUp?returnto=test_article&type=login';
+
+	/**
+	 * @dataProvider forceLoginLinkTestCases
+	 */
+	public function testForceLoginLink( $user, $editMode, $disableAnonEdits, $expectedLink ) {
+		$mockTitle = $this->getMock( 'Title', [ 'getEscapedText', 'getLocalURL' ] );
+		$mockTitle->expects( $this->any() )
+			->method( 'getEscapedText' )
+			->willReturn( static::ARTICLE_NAME );
+		$mockTitle->expects( $this->any() )
+			->method( 'getLocalURL' )
+			->willReturn( static::ARTiCLE_LOCAL_URL );
+
+		$this->mockGlobalVariable( 'wgDisableAnonymousEditing', $disableAnonEdits );
+		$this->mockGlobalVariable( 'wgUser', $user );
+		$this->mockGlobalVariable( 'wgVisualEditorNeverPrimary', false );
+
+		$this->assertEquals( $expectedLink, LinkHelper::forceLoginLink( $mockTitle, $editMode ) );
+	}
+
+	public function forceLoginLinkTestCases() {
+		return [
+			[ $this->getUser( static::ANON ), LinkHelper::WITH_EDIT_MODE, static::ANNON_EDITS_ALLOWED, static::ARTICLE_LOCAL_EDIT_URL ],
+			[ $this->getUser( static::ANON ), LinkHelper::WITH_EDIT_MODE, static::ANNOON_EDITS_FORBIDDEN, static::SIGNUP_URL_WITH_EDIT ],
+			[ $this->getUser( static::ANON ), LinkHelper::WITHOUT_EDIT_MODE, static::ANNON_EDITS_ALLOWED, static::ARTiCLE_LOCAL_URL ],
+			[ $this->getUser( static::ANON ), LinkHelper::WITHOUT_EDIT_MODE, static::ANNOON_EDITS_FORBIDDEN, static::SIGNUP_URL_WITHOUT_EDIT ],
+
+			[ $this->getUser( static::LOGGED_IN ), LinkHelper::WITH_EDIT_MODE, static::ANNON_EDITS_ALLOWED, static::ARTICLE_LOCAL_EDIT_URL ],
+			[ $this->getUser( static::LOGGED_IN ), LinkHelper::WITH_EDIT_MODE, static::ANNOON_EDITS_FORBIDDEN, static::ARTICLE_LOCAL_EDIT_URL ],
+			[ $this->getUser( static::LOGGED_IN ), LinkHelper::WITHOUT_EDIT_MODE, static::ANNON_EDITS_ALLOWED, static::ARTiCLE_LOCAL_URL ],
+			[ $this->getUser( static::LOGGED_IN ), LinkHelper::WITHOUT_EDIT_MODE, static::ANNOON_EDITS_FORBIDDEN, static::ARTiCLE_LOCAL_URL ]
+		];
+	}
+
+	private function getUser( $loggedIn ) {
+		$mockUser = $this->getMock( 'User', [ 'isLoggedIn' ] );
+		$mockUser->expects( $this->any() )
+			->method( 'isLoggedIn' )
+			->willReturn( $loggedIn );
+
+		return $mockUser;
+	}
+}

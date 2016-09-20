@@ -45,7 +45,7 @@ class CommunityPageShortPagesCardModel {
 			'link' => [
 				'text' => $title->getText(),
 				'articleurl' => $title->getFullURL(),
-				'editlink' => LinkHelper::forceLoginLink( $title, LinkHelper::$WITH_EDIT_MODE )
+				'editlink' => LinkHelper::forceLoginLink( $title, LinkHelper::WITH_EDIT_MODE )
 			]
 		];
 	}

@@ -1,8 +1,8 @@
 <?php
 
 class LinkHelper {
-	static $WITH_EDIT_MODE = true;
-	static $WITHOUT_EDIT_MODE = false;
+	const WITH_EDIT_MODE = true;
+	const WITHOUT_EDIT_MODE = false;
 
 	/**
 	 * Returns url to Special:SignUp with redirect to given article if current wiki has disabled anon edits and current
@@ -17,7 +17,7 @@ class LinkHelper {
 		global $wgUser, $wgDisableAnonymousEditing;
 
 		if ( $wgDisableAnonymousEditing && !$wgUser->isLoggedIn() ) {
-			return SpecialPage::getTitleFor( 'SignUp' )->getFullURL(
+			return SpecialPage::getTitleFor( 'SignUp' )->getLocalURL(
 				[
 					'returnto' => $title->getEscapedText(),
 					'returntoquery' => $editMode ? urlencode( static::getEditorParam() ) : '',
@@ -25,7 +25,7 @@ class LinkHelper {
 				]);
 		}
 
-		return $editMode ?  $title->getFullURL() . '?' . static::getEditorParam() : $title->getFullURL();
+		return $editMode ?  $title->getLocalURL() . '?' . static::getEditorParam() : $title->getLocalURL();
 	}
 
 	private static function getEditorParam() {
