@@ -4,10 +4,7 @@
 @import 'extensions/wikia/DesignSystem/bower_components/design-system/base/typography';
 
 $logo-url: '/extensions/wikia/DesignSystem/bower_components/design-system/dist/svg/wds-company-logo-fandom-heart.svg';
-$content-spacing-xsmall: 14px;
-$content-spacing-small: 20px;
-$content-spacing-regular: 30px;
-$content-spacing-large: 40px;
+
 $button-height: 46px;
 $logo-size: 30px;
 $logo-border-radius: $logo-size / 2;
@@ -17,7 +14,7 @@ $logo-border-radius: $logo-size / 2;
 		position: relative;
 
 		&.community-page-entry-point-module {
-			padding-top: $content-spacing-large;
+			padding-top: $content-spacing-xxlarge;
 		}
 	}
 }
@@ -26,7 +23,7 @@ $logo-border-radius: $logo-size / 2;
 	font-family: $community-page-font-family;
 	font-size: $typescale-size-base;
 	line-height: $module-default-line-height;
-	margin-top: $content-spacing-small;
+	margin-top: $content-spacing-regular;
 	position: relative;
 	text-align: center;
 
@@ -50,8 +47,8 @@ $logo-border-radius: $logo-size / 2;
 		font-weight: bold;
 		height: $button-height;
 		line-height: $button-height;
-		margin: $content-spacing-xsmall 0;
-		padding: 0 $content-spacing-regular;
+		margin: $content-spacing-small-plus 0;
+		padding: 0 $content-spacing-xlarge;
 		text-decoration: none;
 		text-transform: uppercase;
 
@@ -74,7 +71,7 @@ $logo-border-radius: $logo-size / 2;
 
 @media #{$breakpoint-below-small-plus} {
 	.WikiaRail {
-		padding-top: $content-spacing-small;
+		padding-top: $content-spacing-regular;
 	}
 
 	.community-page-entry-point-module {
