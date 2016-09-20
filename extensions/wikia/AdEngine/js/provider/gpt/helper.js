@@ -19,7 +19,7 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 	adLogicPageParams,
 	adDetect,
 	AdElement,
-	GoogleTag,
+	googleTag,
 	slotTargeting,
 	uapContext,
 	recoveryHelper,
@@ -30,7 +30,6 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.provider.gpt.helper',
-		googleApi = new GoogleTag(),
 		hiddenSlots = [
 			'INCONTENT_LEADERBOARD'
 		];
@@ -81,7 +80,7 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 			log(['queueAd', slot.name, element], 'debug', logGroup);
 			slot.container.appendChild(element.getNode());
 
-			googleApi.addSlot(element);
+			googleTag.addSlot(element);
 		}
 
 		function setAdditionalTargeting(slotTargetingData) {
@@ -112,12 +111,12 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 		function gptCallback(gptEvent) {
 			log(['gptCallback', element.getId(), gptEvent], 'info', logGroup);
 			element.updateDataParams(gptEvent);
-			googleApi.onAdLoad(slot.name, element, gptEvent, onAdLoadCallback);
+			googleTag.onAdLoad(slot.name, element, gptEvent, onAdLoadCallback);
 		}
 
-		if (!googleApi.isInitialized()) {
-			googleApi.init();
-			googleApi.setPageLevelParams(adLogicPageParams.getPageLevelParams());
+		if (!googleTag.isInitialized()) {
+			googleTag.init();
+			googleTag.setPageLevelParams(adLogicPageParams.getPageLevelParams());
 		}
 
 		if (!shouldPush) {
@@ -128,13 +127,13 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 
 		log(['pushAd', slot.name], 'info', logGroup);
 		if (!slotTargetingData.flushOnly) {
-			googleApi.registerCallback(element.getId(), gptCallback);
-			googleApi.push(queueAd);
+			googleTag.registerCallback(element.getId(), gptCallback);
+			googleTag.push(queueAd);
 		}
 
 		if (!sraHelper || !extra.sraEnabled || sraHelper.shouldFlush(slot.name)) {
 			log('flushing', 'debug', logGroup);
-			googleApi.flush();
+			googleTag.flush();
 		}
 
 		if (slotTargetingData.flushOnly) {
@@ -143,8 +142,8 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 	}
 
 	adContext.addCallback(function () {
-		if (googleApi.isInitialized()) {
-			googleApi.setPageLevelParams(adLogicPageParams.getPageLevelParams());
+		if (googleTag.isInitialized()) {
+			googleTag.setPageLevelParams(adLogicPageParams.getPageLevelParams());
 			uapContext.reset();
 		}
 	});
