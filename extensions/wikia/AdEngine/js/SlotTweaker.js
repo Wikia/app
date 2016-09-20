@@ -99,12 +99,17 @@ define('ext.wikia.adEngine.slotTweaker', [
 	}
 
 	function getRecoveredIframe(slotName) {
-		var fallbackId = win._sp_.getElementId(document.querySelectorAll('div[id="' + slotName + '"] div')[1].id);
-		return doc.getElementById(fallbackId).querySelector('div:not(.hidden) > div[id*="_container_"] iframe');
+		var nodeList = document.querySelectorAll('div[id="' + slotName + '"] div'),
+			fallbackId = nodeList[1] && win._sp_.getElementId(nodeList[1].id),
+			elementById = fallbackId && doc.getElementById(fallbackId);
+
+		if (elementById) {
+			return elementById.querySelector('div:not(.hidden) > div[id*="_container_"] iframe');
+		}
 	}
 
 	function onReady(slotName, callback) {
-		var iframe = doc.getElementById(slotName).querySelector('div:not(.hidden) > div[id*="_container_"] iframe');
+		var iframe = doc.querySelector('#' + slotName +' div:not(.hidden) > div[id*="_container_"] iframe');
 
 		if (!iframe && !recoveryHelper.isBlocking()) {
 			log('onIframeReady - iframe does not exist', 'debug', logGroup);
@@ -131,7 +136,10 @@ define('ext.wikia.adEngine.slotTweaker', [
 	}
 
 	function getRecoveredProviderContainer(providerContainer) {
-		var element = document.getElementById(win._sp_.getElementId(providerContainer.childNodes[0].id));
+		var elementId = providerContainer.childNodes.length > 0 && providerContainer.childNodes[0].id,
+			recoveredElementId = win._sp_.getElementId(elementId),
+			element = document.getElementById(recoveredElementId);
+
 		if (element && element.parentNode) {
 			return element.parentNode;
 		} else {
@@ -152,11 +160,12 @@ define('ext.wikia.adEngine.slotTweaker', [
 	}
 
 	function makeResponsive(slotName, aspectRatio) {
-		var providerContainer = doc.getElementById(slotName).lastElementChild;
+		var providerContainer = doc.getElementById(slotName).lastElementChild,
+			recoveredProviderContainer;
 
 		if (recoveryHelper.isBlocking()) {
 
-			var recoveredProviderContainer = getRecoveredProviderContainer(providerContainer);
+			recoveredProviderContainer = getRecoveredProviderContainer(providerContainer);
 
 			if (recoveredProviderContainer) {
 				providerContainer = recoveredProviderContainer;

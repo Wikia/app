@@ -1,9 +1,8 @@
 /*global define*/
 define('ext.wikia.adEngine.domElementTweaker', [
 	'wikia.log',
-	'wikia.document',
 	'wikia.window'
-], function (log, doc, win) {
+], function (log, win) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.domElementTweaker',
@@ -24,12 +23,20 @@ define('ext.wikia.adEngine.domElementTweaker', [
 	}
 
 	function isElement(obj) {
-		return obj instanceof HTMLElement;
+		return obj instanceof win.HTMLElement;
+	}
+
+	function rewriteStylesToElement(computedStyles, targetElement) {
+		var i,
+			styleName;
+		for (i = 0; i < computedStyles.length; i++) {
+			styleName = computedStyles[i];
+			targetElement.style[styleName] = computedStyles[styleName];
+		}
 	}
 
 	function moveStylesToInline(element) {
-		var computedStyles,
-			styleName;
+		var computedStyles;
 
 		if (!isElement(element)) {
 			return;
@@ -37,13 +44,9 @@ define('ext.wikia.adEngine.domElementTweaker', [
 
 		computedStyles = document.defaultView.getComputedStyle(element, '');
 
-		if (typeof win.CSS2Properties !== 'undefined' && computedStyles instanceof win.CSS2Properties) {
-			// Hack for Firefox
-			for (var i = 0; i < computedStyles.length; i++) {
-				styleName = computedStyles[i];
-				element.style[styleName] = computedStyles[styleName];
-			}
-		} else if (typeof win.CSSStyleDeclaration !== 'undefined' && computedStyles instanceof win.CSSStyleDeclaration) {
+		if (win.CSS2Properties !== undefined && computedStyles instanceof win.CSS2Properties) {
+			rewriteStylesToElement(computedStyles, element); // Hack for Firefox
+		} else if (win.CSSStyleDeclaration !== undefined && computedStyles instanceof win.CSSStyleDeclaration) {
 			element.style.cssText = computedStyles.cssText;
 		} else {
 			log(['Can\'t copy styles from element', computedStyles.cssText], 4, logGroup);
@@ -51,7 +54,8 @@ define('ext.wikia.adEngine.domElementTweaker', [
 	}
 
 	function recursiveMoveStylesToInline(element) {
-		for (var i = 0; i < element.childNodes.length; i++) {
+		var i;
+		for (i = 0; i < element.childNodes.length; i++) {
 			recursiveMoveStylesToInline(element.childNodes[i]);
 		}
 		moveStylesToInline(element);
