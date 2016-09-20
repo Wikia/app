@@ -348,12 +348,12 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 
 		$out['links'][] = [
 			'type' => 'link-branded',
-			'brand' => 'fan-communities',
+			'brand' => 'explore-wikis',
 			'title' => [
 				'type' => 'translatable-text',
-				'key' => 'global-footer-fandom-overview-link-fan-communities'
+				'key' => 'global-footer-fandom-overview-link-explore-wikis'
 			],
-			'href' => $this->getHref( 'fan-communities' )
+			'href' => $this->getHref( 'explore-wikis' )
 		];
 
 		return $out;

@@ -71,7 +71,7 @@ class DesignSystemGlobalNavigationModel extends WikiaModel {
 							'type' => 'translatable-text',
 							'key' => 'global-navigation-wikis-explore'
 						],
-						'href' => $this->getHref( 'fan-communities' ),
+						'href' => $this->getHref( 'explore-wikis' ),
 					],
 					$this->getCommunityCentralLink(),
 					[
