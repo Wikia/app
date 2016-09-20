@@ -80,9 +80,9 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 						'type' => 'link-text',
 						'title' => [
 							'type' => 'translatable-text',
-							'key' => 'global-footer-company-overview-link-wikia-gives-back'
+							'key' => 'global-footer-company-overview-link-wikia-org'
 						],
-						'href' => $this->getHref( 'wikia-gives-back' )
+						'href' => $this->getHref( 'wikia-org' )
 					]
 				]
 			],
