@@ -20,6 +20,15 @@ define('ext.wikia.adEngine.lookup.rubicon.rubiconVulcan', [
 						loc: 'hivi'
 					},
 					zoneId: 260296
+				},
+				TOP_LEADERBOARD: {
+					siteId: 55412,
+					size: [640, 480],
+					sizeId: 203,
+					targeting: {
+						loc: 'top'
+					},
+					zoneId: 519058
 				}
 			},
 			mercury: {
@@ -106,6 +115,8 @@ define('ext.wikia.adEngine.lookup.rubicon.rubiconVulcan', [
 	function getSlotParams(slotName) {
 		var parameters = {};
 
+		parameters[rubiconVideoTierKey] = slots[slotName].sizeId + '_tierNONE';
+
 		log(['getSlotParams', slotName, parameters], 'debug', logGroup);
 		if (priceMap[slotName]) {
 			parameters[rubiconVideoTierKey] = priceMap[slotName];
@@ -140,6 +151,8 @@ define('ext.wikia.adEngine.lookup.rubicon.rubiconVulcan', [
 
 				log(['VAST ad', slotName, cpm, tier, vastUrl], 'debug', logGroup);
 				priceMap[slotName] = tier;
+			} else {
+				priceMap[slotName] = slots[slotName].sizeId + '_tier0000';
 			}
 		});
 	}

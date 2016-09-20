@@ -161,10 +161,10 @@ function Ach_ArticleSaveComplete(	&$article, &$user, $text,
 function Ach_GetHTMLAfterBody($skin, &$html) {
 	wfProfileIn(__METHOD__);
 
-	global $wgOut, $wgTitle, $wgUser;
+	global $wgOut, $wgUser;
 
 	if($wgUser->isLoggedIn() && !($wgUser->getGlobalPreference( 'hidepersonalachievements' ))) {
-		if ($wgTitle->getNamespace() == NS_SPECIAL && array_shift(SpecialPageFactory::resolveAlias($wgTitle->getDBkey())) == 'MyHome') {
+		if( $skin->getTitle()->isSpecial( 'MyHome' ) ) {
 			$awardingService = new AchAwardingService();
 			$awardingService->awardCustomNotInTrackBadge($wgUser, BADGE_WELCOME);
 		}
