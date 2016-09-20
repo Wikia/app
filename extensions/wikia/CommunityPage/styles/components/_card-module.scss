@@ -23,7 +23,7 @@ $card-footer-size: 48px;
 		@include trim-to-line-number(2);
 
 		color: $color-links;
-		word-break: break-all;
+		overflow-wrap: break-word;
 	}
 
 	.community-page-card-module-description {
