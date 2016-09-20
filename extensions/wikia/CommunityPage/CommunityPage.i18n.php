@@ -1418,7 +1418,7 @@ $messages['zh-hans'] = array(
 	'communitypage-deadendpages-hightitle' => 'Please add links to these pages',
 	'communitypage-deadendpages-mediumdescription' => 'Please add links to these pages. Well-linked articles help readers discover more information about your topic and improve search engine rankings.',
 	'communitypage-deadendpages-highdescription' => 'Add links to any important names or words that appear in the first few sentences on these pages.',
-	'communitypage-entry-button' => '社区页面',
+	'communitypage-entry-button' => '立即开始',
 );
 
 $messages['zh-hant'] = array(
@@ -1540,5 +1540,5 @@ $messages['zh-hant'] = array(
 	'communitypage-deadendpages-hightitle' => 'Please add links to these pages',
 	'communitypage-deadendpages-mediumdescription' => 'Please add links to these pages. Well-linked articles help readers discover more information about your topic and improve search engine rankings.',
 	'communitypage-deadendpages-highdescription' => 'Add links to any important names or words that appear in the first few sentences on these pages.',
-	'communitypage-entry-button' => '社區頁面',
+	'communitypage-entry-button' => '現在開始',
 );
