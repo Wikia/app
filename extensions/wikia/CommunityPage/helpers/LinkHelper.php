@@ -6,9 +6,9 @@ class LinkHelper {
 
 		if ( $wgDisableAnonymousEditing && !$wgUser->isLoggedIn() ) {
 			return SpecialPage::getTitleFor( 'SignUp' )->getFullURL(
-				$query2=[
+				$query=[
 					'returnto' => $title->getEscapedText(),
-					'returntoquery' => $edit ? self::getEditorParam() : '',
+					'returntoquery' => $edit ? urlencode( self::getEditorParam() ) : '',
 					'type' => 'login'
 				]);
 		}
