@@ -79,9 +79,6 @@ define('ext.wikia.adEngine.adTracker', ['wikia.tracker', 'wikia.window', 'wikia.
 			}
 		}
 
-		if (category.indexOf('ad/prebid') > -1) {
-			console.log('bogna', 'adTracker::track', category, action, gaLabel);
-		}
 		gaValue = Math.round(value);
 
 		// Empty action is not allowed by Google Analytics, thus:

@@ -15,6 +15,7 @@ define('ext.wikia.adEngine.lookup.prebid', [
 			index
 		],
 		adUnits = [],
+		biddersPerformance = {},
 		priceMap = {},
 		bidderKey = 'hb_bidder',
 		bidKey = 'hb_pb',
@@ -38,16 +39,8 @@ define('ext.wikia.adEngine.lookup.prebid', [
 
 			win.pbjs.que.push(function () {
 
-				win.pbjs.bidderSettings = {
-					appnexus: {
-						alwaysUseBid: true
-					}, indexExchange: {
-						alwaysUseBid: true
-					}
-				};
-
-				win.pbjs.addCallback('allRequestedBidsBack', function(slotsBids) {
-					updatePriceMap(slotsBids);
+				win.pbjs.addCallback('allRequestedBidsBack', function(allBids) {
+					trackBiddersPerformance(allBids);
 				});
 
 				win.pbjs.addAdUnits(adUnits);
@@ -59,17 +52,17 @@ define('ext.wikia.adEngine.lookup.prebid', [
 		}
 	}
 
-	function updatePriceMap(slotsBids) {
-		Object.keys(slotsBids).forEach(function(slotName) {
-			var slotBids = slotsBids[slotName].bids;
+	function trackBiddersPerformance(allBids) {
+		Object.keys(allBids).forEach(function(slotName) {
+			var slotBids = allBids[slotName].bids;
 
 			slotBids.forEach(function(bid) {
-				priceMap[slotName] = encodeParamsForTracking({
+				biddersPerformance[bid.bidder] = biddersPerformance[bid.bidder] || {};
+				biddersPerformance[bid.bidder][slotName] = encodeParamsForTracking({
 					hb_bidder: bid.bidder,
 					hb_pb: (bid.getStatusCode() === 2  || !bid.pbMg) ? 'NONE' : bid.pbMg,
 					hb_size: bid.getSize()
 				});
-				debugger;
 			});
 		});
 	}
