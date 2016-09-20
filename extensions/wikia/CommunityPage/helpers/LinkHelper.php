@@ -1,12 +1,12 @@
 <?php
 
 class LinkHelper {
-	public static function forceLoginLink(Title $title, $edit=true ) {
+	public static function forceLoginLink( Title $title, $edit=true ) {
 		global $wgUser, $wgDisableAnonymousEditing;
 
 		if ( $wgDisableAnonymousEditing && !$wgUser->isLoggedIn() ) {
 			return SpecialPage::getTitleFor( 'SignUp' )->getFullURL(
-				$query=[
+				[
 					'returnto' => $title->getEscapedText(),
 					'returntoquery' => $edit ? urlencode( self::getEditorParam() ) : '',
 					'type' => 'login'
@@ -17,7 +17,7 @@ class LinkHelper {
 	}
 
 	public static function getEditUrl( $articleUrl ) {
-		return $articleUrl . '?'. static::getEditorParam();
+		return $articleUrl . '?' . static::getEditorParam();
 	}
 
 	private static function getEditorParam() {

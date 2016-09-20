@@ -15,7 +15,7 @@ class CommunityPageDefaultCardsModel {
 				'title' => wfMessage( 'communitypage-cards-create-page' )->text(),
 				'description' => wfMessage( 'communitypage-cards-create-page-description' )->text(),
 				'icon' => 'create-page',
-				'actionlink' => LinkHelper::forceLoginLink(SpecialPage::getTitleFor( 'CreatePage' ), $edit=false),
+				'actionlink' => LinkHelper::forceLoginLink( SpecialPage::getTitleFor( 'CreatePage' ), false ),
 				'actiontext' => wfMessage( 'communitypage-cards-create-page' )->text()
 			]
 		], 0, $modulesLimit );
