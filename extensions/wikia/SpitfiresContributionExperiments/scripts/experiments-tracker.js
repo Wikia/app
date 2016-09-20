@@ -9,9 +9,7 @@ define('ext.wikia.spitfires.experiments.tracker', [
 	var track = tracker.buildTrackingFunction({
 			category: 'spitfires-contribution-experiments',
 			trackingMethod: 'analytics'
-		}),
-		freshlyRegisteredExperimentId = 5654433460,
-		usersWithoutEditExperimentId = 5735670451;
+		});
 
 	function trackVerboseClick(experiment, label) {
 		trackClick(prepareStructuredLabel(experiment, label));
