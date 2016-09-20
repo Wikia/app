@@ -15,8 +15,7 @@
 		<div class="wds-global-footer__header-wrapper">
 			<h2 class="wds-global-footer__header">
 				<?= DesignSystemHelper::getSvg(
-					$model['header']['image'],
-					'wds-global-footer__fandom-logo'
+					$model['header']['image']
 				) ?>
 			</h2>
 		</div>
