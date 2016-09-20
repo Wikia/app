@@ -124,16 +124,18 @@ class DesignSystemGlobalFooterModelTest extends WikiaBaseTest {
 		$footerModel = new DesignSystemGlobalFooterModel( DesignSystemGlobalFooterModel::PRODUCT_WIKIS, 1234, 'en' );
 		$result = $footerModel->getData();
 
-		$this->assertNotEmpty( $result['wikia'] );
-		$this->assertNotEmpty( $result['fandom'] );
+		$this->assertNotEmpty( $result['header'] );
+		$this->assertArrayNotHasKey( 'wikia', $result );
+		$this->assertArrayNotHasKey( 'fandom', $result );
 		$this->assertArrayNotHasKey( 'international_header', $result );
 
 		$footerModel = new DesignSystemGlobalFooterModel( DesignSystemGlobalFooterModel::PRODUCT_WIKIS, 1234, 'de' );
 		$result = $footerModel->getData();
 
-		$this->assertNotEmpty( $result['international_header'] );
+		$this->assertNotEmpty( $result['header'] );
 		$this->assertArrayNotHasKey( 'wikia', $result );
 		$this->assertArrayNotHasKey( 'fandom', $result );
+		$this->assertArrayNotHasKey( 'international_header', $result );
 	}
 
 	public function testGetFandomOverview() {
