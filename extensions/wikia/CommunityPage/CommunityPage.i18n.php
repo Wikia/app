@@ -1296,7 +1296,7 @@ $messages['ru'] = array(
 	'communitypage-deadendpages-hightitle' => 'Please add links to these pages',
 	'communitypage-deadendpages-mediumdescription' => 'Пожалуйста, добавьте ссылки на эти страницы.  Статьи с корректными ссылками помогут читателям найти больше интересующей их информации, а также повысят позиции вашей вики в поисковой выдаче.',
 	'communitypage-deadendpages-highdescription' => 'Добавьте ссылки для важных названий или слов, которые часто повторяются в первых предложениях на этих страницах.',
-	'communitypage-entry-button' => 'Страница сообщества',
+	'communitypage-entry-button' => 'Приступить к работе',
 );
 
 $messages['zh-hans'] = array(
