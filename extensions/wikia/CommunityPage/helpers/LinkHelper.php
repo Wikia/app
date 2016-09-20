@@ -1,23 +1,22 @@
 <?php
 
 class LinkHelper {
-	public static function forceLoginLink( Title $title, $edit=true ) {
+	static $WITH_EDIT_MODE = true;
+	static $WITHOUT_EDIT_MODE = false;
+
+	public static function forceLoginLink( Title $title, $editMode ) {
 		global $wgUser, $wgDisableAnonymousEditing;
 
 		if ( $wgDisableAnonymousEditing && !$wgUser->isLoggedIn() ) {
 			return SpecialPage::getTitleFor( 'SignUp' )->getFullURL(
 				[
 					'returnto' => $title->getEscapedText(),
-					'returntoquery' => $edit ? urlencode( static::getEditorParam() ) : '',
+					'returntoquery' => $editMode ? urlencode( static::getEditorParam() ) : '',
 					'type' => 'login'
 				]);
 		}
 
-		return $edit ? static::getEditUrl( $title->getFullURL() ) : $title->getFullURL();
-	}
-
-	public static function getEditUrl( $articleUrl ) {
-		return $articleUrl . '?' . static::getEditorParam();
+		return $editMode ?  $title->getFullURL() . '?' . static::getEditorParam() : $title->getFullURL();
 	}
 
 	private static function getEditorParam() {

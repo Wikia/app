@@ -79,7 +79,7 @@ class CommunityPageSpecialInsightsModel {
 	private function addEditLinks( $insightsPages ) {
 		foreach ( $insightsPages[ 'pages' ] as $key => $insight ) {
 			$insightsPages[ 'pages' ][ $key ][ 'link' ][ 'editlink' ]
-				= LinkHelper::forceLoginLink( Title::newFromText( $insight[ 'link' ][ 'title' ] ) );
+				= LinkHelper::forceLoginLink( Title::newFromText( $insight[ 'link' ][ 'title' ] ), LinkHelper::$WITH_EDIT_MODE );
 		}
 		return $insightsPages;
 	}
