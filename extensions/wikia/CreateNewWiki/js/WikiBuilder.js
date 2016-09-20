@@ -156,17 +156,12 @@ define('ext.createNewWiki.builder', ['ext.createNewWiki.helper', 'wikia.tracker'
 							action: tracker.ACTIONS.SUCCESS,
 							label: 'wiki-description-phalanx-validation'
 						});
-						if (descriptionVal === WikiBuilderCfg.descriptionplaceholder) {
-							track({
-								action: tracker.ACTIONS.SUBMIT,
-								label: 'wiki-description-empty'
-							});
-						} else {
-							track({
-								action: tracker.ACTIONS.SUBMIT,
-								label: 'wiki-description-not-empty'
-							});
-						}
+
+						var label = descriptionVal === WikiBuilderCfg.descriptionplaceholder ? 'wiki-description-empty' : 'wiki-description-not-empty';
+						track({
+							action: tracker.ACTIONS.SUBMIT,
+							label: label
+						});
 
 						// call create wiki ajax
 						saveState({
