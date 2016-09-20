@@ -10,7 +10,7 @@ $module-header-line-height: 28px;
 
 .community-page-todo-list-module {
 	box-sizing: border-box;
-	margin-bottom: 34px;
+	margin-bottom: $module-margin-bottom;
 	padding-right: $content-spacing-small;
 
 	.community-page-todo-list-module-header-wrapper {

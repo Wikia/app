@@ -12,6 +12,8 @@ $avatar-size: 42px;
 
 		img {
 			border: 0;
+			height: $avatar-size;
+			width: $avatar-size;
 		}
 
 		&.logged-avatar-placeholder {
