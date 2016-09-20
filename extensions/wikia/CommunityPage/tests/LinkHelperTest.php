@@ -8,7 +8,7 @@ class LinkHelperTest extends WikiaBaseTest {
 	const ANNOON_EDITS_FORBIDDEN = true;
 
 	const ARTICLE_NAME = 'test_article';
-	const ARTiCLE_LOCAL_URL = '/wiki/test_article';
+	const ARTICLE_LOCAL_URL = '/wiki/test_article';
 	const ARTICLE_LOCAL_EDIT_URL = '/wiki/test_article?veaction=edit';
 	const SIGNUP_URL_WITH_EDIT = '/wiki/Special:SignUp?returnto=test_article&returntoquery=veaction%253Dedit&type=login';
 	const SIGNUP_URL_WITHOUT_EDIT = '/wiki/Special:SignUp?returnto=test_article&type=login';

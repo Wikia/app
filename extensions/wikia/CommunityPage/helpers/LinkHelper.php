@@ -5,8 +5,8 @@ class LinkHelper {
 	const WITHOUT_EDIT_MODE = false;
 
 	/**
-	 * Returns url to Special:SignUp with redirect to given article if current wiki has disabled anon edits and current
-	 * user is anon. Otherwise link to given article is returned
+	 * If current user is NOT logged in and wiki has disabled edditing by anon, this function returns link to force login
+	 * modal - after login user will be redirected to provided article. Otherwise url to given article is returned.
 	 *
 	 * @param Title $title
 	 * @param $editMode - if $WITH_EDIT_MODE then action=edit or veaction=edit is added to link (depending on which
