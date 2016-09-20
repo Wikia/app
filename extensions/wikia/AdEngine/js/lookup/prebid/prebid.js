@@ -1,13 +1,14 @@
 /*global define*/
 define('ext.wikia.adEngine.lookup.prebid', [
 	'ext.wikia.adEngine.adContext',
+	'ext.wikia.adEngine.adTracker',
 	'ext.wikia.adEngine.lookup.prebid.adapters.appnexus',
 	'ext.wikia.adEngine.lookup.prebid.adapters.indexExchange',
 	'ext.wikia.adEngine.lookup.prebid.prebidHelper',
 	'ext.wikia.adEngine.lookup.lookupFactory',
 	'wikia.document',
 	'wikia.window'
-], function (adContext, appnexus, index, helper, factory, doc, win) {
+], function (adContext, adTracker, appnexus, index, helper, factory, doc, win) {
 	'use strict';
 
 	var adapters = [
@@ -17,7 +18,6 @@ define('ext.wikia.adEngine.lookup.prebid', [
 		adUnits = [],
 		biddersPerformance = {},
 		priceMap = {},
-		bidderKey = 'hb_bidder',
 		bidKey = 'hb_pb',
 		sizeKey = 'hb_size';
 
@@ -39,10 +39,6 @@ define('ext.wikia.adEngine.lookup.prebid', [
 
 			win.pbjs.que.push(function () {
 
-				win.pbjs.addCallback('allRequestedBidsBack', function(allBids) {
-					trackBiddersPerformance(allBids);
-				});
-
 				win.pbjs.addAdUnits(adUnits);
 
 				win.pbjs.requestBids({
@@ -52,32 +48,40 @@ define('ext.wikia.adEngine.lookup.prebid', [
 		}
 	}
 
-	function trackBiddersPerformance(allBids) {
-		Object.keys(allBids).forEach(function(slotName) {
-			var slotBids = allBids[slotName].bids;
+	function updateBiddersPerformance() {
+		var allBids;
 
-			slotBids.forEach(function(bid) {
-				biddersPerformance[bid.bidder] = biddersPerformance[bid.bidder] || {};
-				biddersPerformance[bid.bidder][slotName] = encodeParamsForTracking({
-					hb_bidder: bid.bidder,
-					hb_pb: (bid.getStatusCode() === 2  || !bid.pbMg) ? 'NONE' : bid.pbMg,
-					hb_size: bid.getSize()
+		if (typeof win.pbjs.getBidResponses === 'function') {
+			allBids = win.pbjs.getBidResponses();
+
+			Object.keys(allBids).forEach(function (slotName) {
+				var slotBids = allBids[slotName].bids;
+
+				slotBids.forEach(function (bid) {
+					biddersPerformance[bid.bidder] = biddersPerformance[bid.bidder] || {};
+					biddersPerformance[bid.bidder][slotName] = encodeParamsForTracking({
+						hb_bidder: bid.bidder,
+						hb_pb: (bid.getStatusCode() === 2 || !bid.pbMg) ? 'NONE' : bid.pbMg,
+						hb_size: bid.getSize()
+					});
 				});
 			});
-		});
+		}
 	}
 
 	function encodeParamsForTracking(params) {
-		if (params[bidderKey] && params[sizeKey] && params[bidKey]) {
-			return [params[bidderKey], params[sizeKey], params[bidKey]].join(';');
+		if (params[sizeKey] && params[bidKey]) {
+			return [params[sizeKey], params[bidKey]].join(';');
 		}
 
 		return '';
 	}
 
-	function calculatePrices() {
+	function calculatePrices(allBids) {
 		var slotName,
 			slots = {};
+
+		updateBiddersPerformance(allBids);
 
 		if (win.pbjs && typeof win.pbjs.getAdserverTargeting === 'function') {
 			slots = win.pbjs.getAdserverTargeting();
@@ -88,6 +92,37 @@ define('ext.wikia.adEngine.lookup.prebid', [
 				priceMap[slotName] = encodeParamsForTracking(slots[slotName]);
 			}
 		}
+	}
+
+	function trackOnLookupEnd() {
+		Object.keys(biddersPerformance).forEach(function (bidder) {
+			adTracker.track(bidder + '/lookup_end', biddersPerformance[bidder], 0, 'nodata');
+		});
+	}
+
+	function trackSlotState(providerName, slotName) {
+		var category;
+
+		updateBiddersPerformance();
+
+		adapters.forEach(function (adapter) {
+			var bidderName = adapter.getName();
+
+			if (adapter.isEnabled()) {
+				if (biddersPerformance[bidderName]) {
+					if (biddersPerformance[bidderName][slotName]) {
+						category = bidderName + '/lookup_success/' + providerName;
+						adTracker.track(category, slotName, 0, biddersPerformance[bidderName][slotName]);
+					} else {
+						category = bidderName + '/lookup_error/' + providerName;
+						adTracker.track(category, slotName, 0, 'nodata');
+					}
+				} else {
+					category = bidderName + '/lookup_error/' + providerName;
+					adTracker.track(category, slotName, 0, 'nodata');
+				}
+			}
+		});
 	}
 
 	function getPrices() {
@@ -118,6 +153,8 @@ define('ext.wikia.adEngine.lookup.prebid', [
 		getPrices: getPrices,
 		isSlotSupported: isSlotSupported,
 		encodeParamsForTracking: encodeParamsForTracking,
-		getSlotParams: getSlotParams
+		getSlotParams: getSlotParams,
+		trackOnLookupEnd: trackOnLookupEnd,
+		trackSlotState: trackSlotState
 	});
 });

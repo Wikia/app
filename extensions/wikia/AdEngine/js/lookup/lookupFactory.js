@@ -19,11 +19,15 @@ define('ext.wikia.adEngine.lookup.lookupFactory', [
 			log('onResponse', 'debug', module.logGroup);
 
 			timing.measureDiff({}, 'end').track();
-			module.calculatePrices();
+			module.calculatePrices.apply(null, arguments);
 			response = true;
 			onResponseCallbacks.start();
 
-			adTracker.track(module.name + '/lookup_end', module.getPrices(), 0, 'nodata');
+			if (typeof module.trackOnLookupEnd === 'function') {
+				module.trackOnLookupEnd();
+			} else {
+				adTracker.track(module.name + '/lookup_end', module.getPrices(), 0, 'nodata');
+			}
 		}
 
 		function addResponseListener(callback) {
@@ -64,11 +68,15 @@ define('ext.wikia.adEngine.lookup.lookupFactory', [
 				return;
 			}
 
-			encodedParams = module.encodeParamsForTracking(params);
-			eventName = encodedParams ? 'lookup_success' : 'lookup_error';
-			category = module.name + '/' + eventName + '/' + providerName;
+			if (typeof module.trackSlotState === 'function') {
+				module.trackSlotState(providerName, slotName, params);
+			} else {
+				encodedParams = module.encodeParamsForTracking(params);
+				eventName = encodedParams ? 'lookup_success' : 'lookup_error';
+				category = module.name + '/' + eventName + '/' + providerName;
 
-			adTracker.track(category, slotName, 0, encodedParams || 'nodata');
+				adTracker.track(category, slotName, 0, encodedParams || 'nodata');
+			}
 		}
 
 		function getSlotParams(slotName) {
