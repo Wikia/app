@@ -9,7 +9,7 @@
 
 use Wikia\Service\User\Permissions\PermissionsServiceAccessor;
 
-class ChatBanData
+class ChatBanData extends WikiaModel
 {
 	use PermissionsServiceAccessor;
 
@@ -44,12 +44,6 @@ class ChatBanData
 	private $orderOptions;
 
 	/**
-	 * @var Object
-	 */
-	private $skin;
-
-	/**
-	 * Database
 	 * @var string
 	 */
 	private $db;
@@ -61,12 +55,11 @@ class ChatBanData
 
 
 	function __construct( $city_id, $load = 1 ) {
-		global $wgExternalDatawareDB;
+		parent::__construct();
 
 		$this->cityId = $city_id;
-		$this->db = $wgExternalDatawareDB;
+		$this->db = $this->getDatawareDB();
 		$this->table = 'chat_ban_users';
-		$this->skin = RequestContext::getMain()->getskin();
 
 		$this->orderOptions = [
 			'timestamp' => 'start_date %s',
@@ -118,7 +111,7 @@ class ChatBanData
 	function getOrder() { return $this->order; }
 
 	public function loadData() {
-		global $wgMemc, $wgLang;
+		global $wgMemc;
 		wfProfileIn( __METHOD__ );
 
 		/* initial values for result */
@@ -139,8 +132,6 @@ class ChatBanData
 		$cached = $wgMemc->get( $memkey );
 
 		if ( empty( $cached ) ) {
-			/* db handle */
-			$dbs = wfGetDB( DB_SLAVE, [ ], $this->db );
 
 			/* initial conditions for SQL query */
 			$where = [
@@ -153,11 +144,11 @@ class ChatBanData
 			$userId = User::IdFromName( $this->userName );
 
 			if ( $userId !== null ) {
-				$where[] = " cbu_user_id = " . $dbs->addQuotes( $userId );
+				$where[] = " cbu_user_id = " . $this->db->addQuotes( $userId );
 			}
 
 			/* number of records */
-			$row = $dbs->selectRow(
+			$row = $this->db->selectRow(
 				$this->table,
 				[ 'count(0) as cnt' ],
 				$where,
@@ -169,7 +160,7 @@ class ChatBanData
 
 			if ( $data['cnt'] > 0 ) {
 				/* select records */
-				$oRes = $dbs->select(
+				$oRes = $this->db->select(
 					[
 						$this->table,
 					],
@@ -190,23 +181,23 @@ class ChatBanData
 				);
 
 				$data['data'] = [ ];
-				while ( $row = $dbs->fetchObject( $oRes ) ) {
+				while ( $row = $this->db->fetchObject( $oRes ) ) {
 
 					$user = User::newFromId( $row->cbu_user_id );
 					$admin = User::newFromId( $row->cbu_admin_user_id );
 
 					$data['data'][] = [
-						'timestamp'    => $wgLang->timeanddate( $row->start_date, true ),
-						'user'         => $this->skin->link( $user->getUserPage(), $user->getName() ),
+						'timestamp'    => $this->wg->Lang->timeanddate( $row->start_date, true ),
+						'user'         => Linker::link( $user->getUserPage(), $user->getName() ),
 						'user_actions' => $this->getUserLinks( $user ),
-						'expires'      => $wgLang->formatExpiry( $row->end_date, true ),
-						'admin_user'   => $this->skin->link( $admin->getUserPage(), $admin->getName() ),
+						'expires'      => $this->wg->Lang->formatExpiry( $row->end_date, true ),
+						'admin_user'   => Linker::link( $admin->getUserPage(), $admin->getName() ),
 						'admin_links'  => $this->getUserLinks( $admin ),
 						'reason'       => Linker::commentBlock( $row->reason ),
 					];
 
 				}
-				$dbs->freeResult( $oRes );
+				$this->db->freeResult( $oRes );
 
 				if ( !empty( $data ) ) {
 					$wgMemc->set( $memkey, $data, 60 * 60 );
@@ -222,16 +213,14 @@ class ChatBanData
 	}
 
 	private function getUserLinks( $user ) {
-		global $wgLang, $wgUser;
 
-		$userIsBlocked = $wgUser->isBlocked( true, false );
-		$this->skin = RequestContext::getMain()->getskin();
+		$userIsBlocked = $this->wg->User->isBlocked( true, false );
 		$oEncUserName = urlencode( $user->getName() );
 		$links = [
 			0 => "",
-			1 => $this->skin->link(
+			1 => Linker::link(
 				Title::newFromText( 'Contributions', NS_SPECIAL ),
-				$wgLang->ucfirst( wfMsg( 'contribslink' ) ),
+				$this->wg->Lang->ucfirst( wfMsg( 'contribslink' ) ),
 				"target={$oEncUserName}"
 			),
 		];
@@ -246,19 +235,19 @@ class ChatBanData
 		}
 
 		if ( $oUTitle instanceof Title ) {
-			$links[0] = $this->skin->link( $oUTitle, $wgLang->ucfirst( wfMsg( $msg ) ) );
+			$links[0] = Linker::link( $oUTitle, $this->wg->Lang->ucfirst( wfMsg( $msg ) ) );
 		}
 
-		if ( $wgUser->isAllowed( 'block' ) && ( !$userIsBlocked ) ) {
-			$links[] = $this->skin->link(
+		if ( $this->wg->User->isAllowed( 'block' ) && ( !$userIsBlocked ) ) {
+			$links[] = Linker::link(
 				Title::newFromText( "BlockIP/{$user->getName()}", NS_SPECIAL ),
-				$wgLang->ucfirst( wfMsg( 'blocklink' ) )
+				$this->wg->Lang->ucfirst( wfMsg( 'blocklink' ) )
 			);
-		}
-		if ( $wgUser->isAllowed( 'userrights' ) && ( !$userIsBlocked ) ) {
-			$links[] = $this->skin->link(
+		} 
+		if ( $this->wg->User->isAllowed( 'userrights' ) && ( !$userIsBlocked ) ) {
+			$links[] = Linker::link(
 				Title::newFromText( 'UserRights', NS_SPECIAL ),
-				$wgLang->ucfirst( wfMsg( 'listgrouprights-rights' ) ),
+				$this->wg->Lang->ucfirst( wfMsg( 'listgrouprights-rights' ) ),
 				"user={$oEncUserName}"
 			);
 		};

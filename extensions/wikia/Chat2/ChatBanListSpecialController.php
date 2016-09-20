@@ -18,9 +18,7 @@ class ChatBanListSpecialController extends WikiaSpecialPageController
 
 		$out = $this->getOutput();
 		$out->addModules( 'ext.Chat2.ChatBanList' );
-		$out->setPageTitle( $this->msg( 'chatbanlist' )->text() );
-		$out->setRobotPolicy( 'noindex,nofollow' );
-		$out->setArticleRelated( false );
+		$this->setHeaders();
 
 		wfProfileOut( __METHOD__ );
 	}
@@ -46,11 +44,11 @@ class ChatBanListSpecialController extends WikiaSpecialPageController
 			'sEcho'                => intval( $loop ),
 			'iTotalRecords'        => 0,
 			'iTotalDisplayRecords' => 0,
-			'aaData'               => [],
+			'aaData'               => [ ],
 		];
 
 
-		$records = [];
+		$records = [ ];
 		$data = new ChatBanData( $this->wg->cityId, 0 );
 		if ( is_object( $data ) ) {
 			$data->setUserName( $username );
@@ -80,10 +78,10 @@ class ChatBanListSpecialController extends WikiaSpecialPageController
 			}
 		}
 
-		$this->response->setFormat('json');
-		$this->response->setValues($result);
+		$this->response->setFormat( WikiaResponse::FORMAT_JSON );
+		$this->response->setValues( $result );
 
-		wfProfileOut(__METHOD__);
+		wfProfileOut( __METHOD__ );
 
 	}
 
