@@ -38,9 +38,18 @@ define('ext.wikia.adEngine.lookup.prebid', [
 
 			win.pbjs.que.push(function () {
 
-				win.pbjs.addCallback('allRequestedBidsBack', function(x, y) {
-					console.log('bogna', 'bids are back', arguments, x, y);
+				win.pbjs.bidderSettings = {
+					appnexus: {
+						alwaysUseBid: true
+					}, indexExchange: {
+						alwaysUseBid: true
+					}
+				};
+
+				win.pbjs.addCallback('allRequestedBidsBack', function(slotsBids) {
+					updatePriceMap(slotsBids);
 				});
+
 				win.pbjs.addAdUnits(adUnits);
 
 				win.pbjs.requestBids({
@@ -48,6 +57,21 @@ define('ext.wikia.adEngine.lookup.prebid', [
 				});
 			});
 		}
+	}
+
+	function updatePriceMap(slotsBids) {
+		Object.keys(slotsBids).forEach(function(slotName) {
+			var slotBids = slotsBids[slotName].bids;
+
+			slotBids.forEach(function(bid) {
+				priceMap[slotName] = encodeParamsForTracking({
+					hb_bidder: bid.bidder,
+					hb_pb: (bid.getStatusCode() === 2  || !bid.pbMg) ? 'NONE' : bid.pbMg,
+					hb_size: bid.getSize()
+				});
+				debugger;
+			});
+		});
 	}
 
 	function encodeParamsForTracking(params) {
@@ -67,7 +91,7 @@ define('ext.wikia.adEngine.lookup.prebid', [
 		}
 
 		for (slotName in slots) {
-			if (slots.hasOwnProperty(slotName)) {
+			if (slots.hasOwnProperty(slotName) && Object.keys(slots[slotName]).length !== 0) {
 				priceMap[slotName] = encodeParamsForTracking(slots[slotName]);
 			}
 		}

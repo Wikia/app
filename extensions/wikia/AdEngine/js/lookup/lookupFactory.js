@@ -18,9 +18,6 @@ define('ext.wikia.adEngine.lookup.lookupFactory', [
 		function onResponse() {
 			log('onResponse', 'debug', module.logGroup);
 
-			if (module.name === 'prebid') {
-				console.log('bogna', 'onResponse called for prebid');
-			}
 			timing.measureDiff({}, 'end').track();
 			module.calculatePrices();
 			response = true;
