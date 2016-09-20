@@ -921,7 +921,7 @@ $config['mercury_ads_js'] = [
 $config['prebid_prod_js'] = [
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => [
-		'//extensions/wikia/AdEngine/resources/prebid/prebid.js'
+		'//extensions/wikia/AdEngine/resources/prebid/prebid.min.js'
 	]
 ];
 
