@@ -368,7 +368,6 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 			'isZeroState' => !$data[ 'haveContent' ],
 			'heading' => $this->msg( 'communitypage-todo-module-heading' )->text(),
 			'editList' => $this->msg( 'communitypage-todo-module-edit-list' )->text(),
-			'description' => $this->msg( 'communitypage-todo-module-description' )->text(),
 			'zeroStateText' => $this->msg( 'communitypage-todo-module-zero-state' )->plain(),
 		] );
 	}
