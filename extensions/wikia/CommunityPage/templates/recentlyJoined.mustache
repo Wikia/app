@@ -4,7 +4,9 @@
 		<div class="community-page-recently-joined-members">
 			{{#members}}
 				<div class="avatar-container">
-					<a data-tracking="recently-joined-user-avatar" href="{{profilePage}}">{{{avatar}}}</a>
+					<a data-tracking="recently-joined-user-avatar" href="{{profilePage}}" title="{{userName}}">
+						{{{avatar}}}
+					</a>
 				</div>
 			{{/members}}
 		</div>

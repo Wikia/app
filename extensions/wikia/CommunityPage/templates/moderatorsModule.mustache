@@ -1,21 +1,23 @@
 {{#topModeratorsData}}
-    {{#topModeratorsModuleEnabled}}
-    <div class="community-page-module community-page-moderators-module">
-        <section class="community-page-moderators-module-section">
-            <div class="community-page-module-section-title">{{topModeratorsHeaderText}}</div>
-            <div class="top-moderators">
-                {{#topModerators}}
-                    <div class="community-page-moderators-list-item">
-                        <div class="avatar-container">
-                            <a data-tracking="top-moderators-user-avatar" href="{{profilePage}}">{{{avatar}}}</a>
-                        </div>
-                        <div class="community-page-moderator-details">
-                            <a data-tracking="top-moderators-user" href="{{profilePage}}">{{userName}}</a>
-                        </div>
-                    </div>
-                {{/topModerators}}
-            </div>
-        </section>
-    </div>
-    {{/topModeratorsModuleEnabled}}
+	{{#topModeratorsModuleEnabled}}
+	<div class="community-page-module community-page-moderators-module">
+		<section class="community-page-moderators-module-section">
+			<div class="community-page-module-section-title">{{topModeratorsHeaderText}}</div>
+			<div class="top-moderators">
+				{{#topModerators}}
+					<div class="community-page-moderators-list-item">
+						<div class="avatar-container">
+							<a data-tracking="top-moderators-user-avatar" href="{{profilePage}}" title="{{userName}}">
+								{{{avatar}}}
+							</a>
+						</div>
+						<div class="community-page-moderator-details">
+							<a data-tracking="top-moderators-user" href="{{profilePage}}">{{userName}}</a>
+						</div>
+					</div>
+				{{/topModerators}}
+			</div>
+		</section>
+	</div>
+	{{/topModeratorsModuleEnabled}}
 {{/topModeratorsData}}
