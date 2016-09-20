@@ -61,9 +61,10 @@ $messages['de'] = array(
 	'embeddable-discussions-share-heading' => 'Beitrag Teilen',
 	'embeddable-discussions-error-loading' => 'Fehler beim Laden von Diskussionen',
 	'embeddable-discussions-cancel-button' => 'Abbrechen',
-	'embeddable-discussions-parameter-error' => "Error rendering discussions tag: '$1' is incorrect. ",
-	'embeddable-discussions-parameter-error-range' => 'It must be an integer in the range $1 to $2.',
-	'embeddable-discussions-parameter-error-boolean' => 'It must be either true or false.',
+	'embeddable-discussions-parameter-error' => "Fehler beim Rendern des Diskussionen-Tags: '$1' ist falsch.",
+	'embeddable-discussions-parameter-error-range' => 'Es muss eine ganze Zahl zwischen $1 und $2 eingegeben werden.',
+	'embeddable-discussions-parameter-error-boolean' => 'Die Angabe muss entweder true oder false sein.',
+	'embeddable-discussions-parameter-error-category' => 'Es wird ein gültiger Kategorie-Name benötigt.',
 );
 
 $messages['es'] = array(
@@ -85,6 +86,7 @@ $messages['es'] = array(
 	'embeddable-discussions-parameter-error' => "Error al entregar etiqueta de discusiones: '$1' es incorrecto. ",
 	'embeddable-discussions-parameter-error-range' => 'Debe ser un entero en el rango de $1 a $2.',
 	'embeddable-discussions-parameter-error-boolean' => 'Debe ser o verdadero o falso.',
+	'embeddable-discussions-parameter-error-category' => 'Debe ser un nombre de categoría válido.',
 );
 
 $messages['fr'] = array(
@@ -106,6 +108,7 @@ $messages['fr'] = array(
 	'embeddable-discussions-parameter-error' => "Erreur de marquage de discussion : '$1' est incorrect. ",
 	'embeddable-discussions-parameter-error-range' => 'Vous devez utiliser un nombre entier compris entre $1 et $2.',
 	'embeddable-discussions-parameter-error-boolean' => 'La valeur doit être "true" ou "false".',
+	'embeddable-discussions-parameter-error-category' => 'Vous devez utiliser un nom de catégorie valide.',
 );
 
 $messages['it'] = array(
@@ -124,9 +127,10 @@ $messages['it'] = array(
 	'embeddable-discussions-share-heading' => 'Condividi post',
 	'embeddable-discussions-error-loading' => 'Errore nel caricamento delle discussioni',
 	'embeddable-discussions-cancel-button' => 'Annulla',
-	'embeddable-discussions-parameter-error' => "Error rendering discussions tag: '$1' is incorrect. ",
-	'embeddable-discussions-parameter-error-range' => 'It must be an integer in the range $1 to $2.',
-	'embeddable-discussions-parameter-error-boolean' => 'It must be either true or false.',
+	'embeddable-discussions-parameter-error' => 'Errore di rendering del tag delle discussioni: "$1" è errato.',
+	'embeddable-discussions-parameter-error-range' => "Deve essere un valore intero compreso nell'intervallo tra $1 e $2.",
+	'embeddable-discussions-parameter-error-boolean' => 'Deve essere true o false.',
+	'embeddable-discussions-parameter-error-category' => 'Deve essere un nome di categoria valido.',
 );
 
 $messages['ja'] = array(
@@ -145,9 +149,10 @@ $messages['ja'] = array(
 	'embeddable-discussions-share-heading' => '投稿を共有する',
 	'embeddable-discussions-error-loading' => 'トークの読み込みでエラーが発生しました',
 	'embeddable-discussions-cancel-button' => 'キャンセル',
-	'embeddable-discussions-parameter-error' => "Error rendering discussions tag: '$1' is incorrect. ",
-	'embeddable-discussions-parameter-error-range' => 'It must be an integer in the range $1 to $2.',
-	'embeddable-discussions-parameter-error-boolean' => 'It must be either true or false.',
+	'embeddable-discussions-parameter-error' => 'トークタグのレンダリングエラー：「$1」に間違いがあります。 ',
+	'embeddable-discussions-parameter-error-range' => '$1～$2の整数を指定してください。',
+	'embeddable-discussions-parameter-error-boolean' => '「true」または「false」で指定してください。',
+	'embeddable-discussions-parameter-error-category' => '有効なカテゴリ名を指定してください。',
 );
 
 $messages['pl'] = array(
@@ -166,9 +171,10 @@ $messages['pl'] = array(
 	'embeddable-discussions-share-heading' => 'Udostępnij post',
 	'embeddable-discussions-error-loading' => 'Wystąpił błąd w trakcie ładowania dyskusji',
 	'embeddable-discussions-cancel-button' => 'Anuluj',
-	'embeddable-discussions-parameter-error' => "Error rendering discussions tag: '$1' is incorrect. ",
-	'embeddable-discussions-parameter-error-range' => 'It must be an integer in the range $1 to $2.',
-	'embeddable-discussions-parameter-error-boolean' => 'It must be either true or false.',
+	'embeddable-discussions-parameter-error' => 'W trakcie ładowania dyskusji wystąpił błąd. Parametr „$1” jest błędny. ',
+	'embeddable-discussions-parameter-error-range' => 'Wartość powinna być liczbą całkowitą pomiędzy $1 a $2.',
+	'embeddable-discussions-parameter-error-boolean' => 'Wprowadź wartość „true” lub „false”.',
+	'embeddable-discussions-parameter-error-category' => 'Wprowadź poprawną nazwę kategorii.',
 );
 
 $messages['pt'] = array(
@@ -189,7 +195,8 @@ $messages['pt'] = array(
 	'embeddable-discussions-cancel-button' => 'Cancelar',
 	'embeddable-discussions-parameter-error' => "Erro de processamento de tag de discussões: '$1' está incorreto. ",
 	'embeddable-discussions-parameter-error-range' => 'Deve ser um número inteiro na faixa de $1 a $2.',
-	'embeddable-discussions-parameter-error-boolean' => 'Deve ser verdadeiro ou falso.',
+	'embeddable-discussions-parameter-error-boolean' => 'Deve ser ou verdadeiro ou falso.',
+	'embeddable-discussions-parameter-error-category' => 'Deve ser um nome de categoria válido.',
 );
 
 $messages['ru'] = array(
@@ -209,8 +216,9 @@ $messages['ru'] = array(
 	'embeddable-discussions-error-loading' => 'Ошибка при загрузке обсуждений',
 	'embeddable-discussions-cancel-button' => 'Отмена',
 	'embeddable-discussions-parameter-error' => 'Ошибка обработки тега обсуждений: параметр «$1» неверен. ',
-	'embeddable-discussions-parameter-error-range' => 'Это должно быть целое число от $1 до $2.',
-	'embeddable-discussions-parameter-error-boolean' => 'Это должно быть true или false.',
+	'embeddable-discussions-parameter-error-range' => 'Здесь должно быть целое число от $1 до $2.',
+	'embeddable-discussions-parameter-error-boolean' => 'Здесь должно быть значение true или false.',
+	'embeddable-discussions-parameter-error-category' => 'Здесь должно быть допустимое имя категории.',
 );
 
 $messages['zh-hans'] = array(
@@ -232,6 +240,7 @@ $messages['zh-hans'] = array(
 	'embeddable-discussions-parameter-error' => "讨论标记有误：'$1'不正确。",
 	'embeddable-discussions-parameter-error-range' => '它必须是范围在$1和$2之间的一个整数。',
 	'embeddable-discussions-parameter-error-boolean' => '它必须是true或false。',
+	'embeddable-discussions-parameter-error-category' => '它必须是一个有效的分类名称。',
 );
 
 $messages['zh-hant'] = array(
@@ -250,8 +259,9 @@ $messages['zh-hant'] = array(
 	'embeddable-discussions-share-heading' => '分享話題',
 	'embeddable-discussions-error-loading' => '載入討論時出錯',
 	'embeddable-discussions-cancel-button' => '取消',
-	'embeddable-discussions-parameter-error' => "討論標記有誤：'$1'不正確。",
+	'embeddable-discussions-parameter-error' => "討論標籤有誤：'$1'不正確。 ",
 	'embeddable-discussions-parameter-error-range' => '它必須是範圍在$1和$2之間的一個整數。',
 	'embeddable-discussions-parameter-error-boolean' => '它必須是true或false。',
+	'embeddable-discussions-parameter-error-category' => '它必須是一個有效的分類名稱。',
 );
 

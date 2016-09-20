@@ -51,9 +51,7 @@ class EmbeddableDiscussionsController {
 				wfMessage( 'embeddable-discussions-parameter-error-range',
 					self::ITEMS_MIN , self::ITEMS_MAX )->plain();
 
-			if ( !ctype_digit( $size ) ) {
-				return false;
-			} else if ( intval( $size ) > self::ITEMS_MAX || intval( $size ) < self::ITEMS_MIN ) {
+			if ( !ctype_digit( $size ) || intval( $size ) > self::ITEMS_MAX || intval( $size ) < self::ITEMS_MIN ) {
 				return false;
 			}
 		}
@@ -66,9 +64,7 @@ class EmbeddableDiscussionsController {
 				wfMessage( 'embeddable-discussions-parameter-error-range',
 					self::COLUMNS_MIN , self::COLUMNS_MAX )->plain();
 
-			if ( !ctype_digit( $columns ) ) {
-				return false;
-			} else if ( intval( $columns ) > self::COLUMNS_MAX || intval( $columns ) < self::COLUMNS_MIN ) {
+			if ( !ctype_digit( $columns ) || intval( $columns ) > self::COLUMNS_MAX || intval( $columns ) < self::COLUMNS_MIN ) {
 				return false;
 			}
 		}

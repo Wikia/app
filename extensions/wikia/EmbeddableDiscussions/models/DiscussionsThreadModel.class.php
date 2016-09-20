@@ -73,7 +73,7 @@ class DiscussionsThreadModel {
 		$invalidCategory = false;
 		$discussionsUrl = false;
 
-		if ( !empty($category) ) {
+		if ( !empty( $category ) ) {
 			$categoryId = $this->getCategoryId( $category );
 
 			if ( $categoryId ) {
