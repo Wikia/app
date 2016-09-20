@@ -286,6 +286,23 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 		] );
 	}
 
+	public function getCommunityTodoListData() {
+		$userCanEditinterface = $this->getUser()->isAllowed( 'editinterface' );
+		$data = ( new CommunityPageSpecialCommunityTodoListModel() )->getData();
+
+		return array_merge( $data, [
+			'showEditLink' => $userCanEditinterface,
+			'editIcon' => DesignSystemHelper::getSvg( 'wds-icons-pencil',
+				'community-page-todo-list-module-edit-icon' ),
+			'showTodoListModule' => $data[ 'haveContent' ] || $userCanEditinterface,
+			'isZeroState' => !$data[ 'haveContent' ],
+			'heading' => $this->msg( 'communitypage-todo-module-heading' )->text(),
+			'editList' => $this->msg( 'communitypage-todo-module-edit-list' )->text(),
+			'description' => $this->msg( 'communitypage-todo-module-description' )->text(),
+			'zeroStateText' => $this->msg( 'communitypage-todo-module-zero-state' )->plain(),
+		] );
+	}
+
 	private function addAssets() {
 		$this->response->addAsset( 'special_community_page_js' );
 		$this->response->addAsset( 'special_community_page_scss' );
@@ -392,21 +409,5 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 		}
 
 		return $editors;
-	}
-
-	public function getCommunityTodoListData() {
-		$user = $this->getUser();
-		$data = ( new CommunityPageSpecialCommunityTodoListModel() )->getData();
-
-		return array_merge( $data, [
-			'showEditLink' => $user->isAllowed( 'editinterface' ),
-			'editIcon' => DesignSystemHelper::getSvg( 'wds-icons-pencil',
-				'community-page-todo-list-module-edit-icon' ),
-			'isZeroState' => !$data[ 'haveContent' ],
-			'heading' => $this->msg( 'communitypage-todo-module-heading' )->text(),
-			'editList' => $this->msg( 'communitypage-todo-module-edit-list' )->text(),
-			'description' => $this->msg( 'communitypage-todo-module-description' )->text(),
-			'zeroStateText' => $this->msg( 'communitypage-todo-module-zero-state' )->plain(),
-		] );
 	}
 }
