@@ -72,6 +72,6 @@ $wgSpecialPages['Signup'] = 'Signup';
 // redirects from Signup to UserLogin or UserSignup
 class Signup extends SpecialRedirectToSpecial {
 	function __construct() {
-		parent::__construct( 'Signup', 'UserLogin', false, array( 'returnto', 'type' ) );
+		parent::__construct( 'Signup', 'UserLogin', false, array( 'returnto', 'returntoquery', 'type' ) );
 	}
 }
