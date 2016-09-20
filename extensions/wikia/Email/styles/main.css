@@ -42,7 +42,6 @@ body {
 }
 
 .header img {
-	display: block;
 	height: 30px;
 	width: 144px;
 }
@@ -60,6 +59,7 @@ body {
 }
 
 .fandom-bar img {
+	display: block;
 	height: 5px;
 	padding: 0;
 	width: 100%;
