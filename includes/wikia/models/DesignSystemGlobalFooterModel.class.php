@@ -26,6 +26,15 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 
 	public function getData() {
 		$data = [
+			'header' => [
+				'type' => 'link-image',
+				'image' => 'wds-company-logo-fandom-powered-by-wikia-two-lines',
+				'href' => 'http://fandom.wikia.com',
+				'title' => [
+					'type' => 'translatable-text',
+					'key' => 'global-footer-fandom-header'
+				]
+			],
 			'company_overview' => [
 				'header' => [
 					'type' => 'line-text',
@@ -213,45 +222,6 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 		$data['fandom_overview'] = $this->getFandomOverview();
 		$data['follow_us'] = $this->getFollowUs();
 		$data['community'] = $this->getCommunity();
-
-		if ( $this->lang === static::DEFAULT_LANG ) {
-			$data['fandom'] = [
-				'header' => [
-					'type' => 'link-image',
-					'image' => 'wds-company-logo-fandom',
-					'href' => 'http://fandom.wikia.com',
-					'title' => [
-						'type' => 'translatable-text',
-						'key' => 'global-footer-fandom-header'
-					]
-				]
-			];
-			$data['wikia'] = [
-				'header' => [
-					'type' => 'line-image',
-					'image' => 'wds-company-logo-wikia',
-					'title' => [
-						'type' => 'translatable-text',
-						'key' => 'global-footer-wikia-header'
-					]
-				]
-			];
-		} else {
-			$data['international_header'] = [
-				'header' => [
-					'type' => 'line-image',
-					'image' => 'wds-company-logo-wikia',
-					'title' => [
-						'type' => 'translatable-text',
-						'key' => 'global-footer-wikia-header'
-					],
-					'subtitle' => [
-						'type' => 'translatable-text',
-						'key' => 'global-footer-international-header-subtitle'
-					]
-				]
-			];
-		}
 
 		return $data;
 	}
