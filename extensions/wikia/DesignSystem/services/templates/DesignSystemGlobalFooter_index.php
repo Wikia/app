@@ -11,6 +11,15 @@
 					) ?></span>
 			</h2>
 		</div>
+	<?php elseif ( isset ( $model['header'] ) ) : ?>
+		<div class="wds-global-footer__header-wrapper">
+			<h2 class="wds-global-footer__header">
+				<?= DesignSystemHelper::getSvg(
+					$model['header']['image'],
+					'wds-global-footer__fandom-logo'
+				) ?>
+			</h2>
+		</div>
 	<?php endif; ?>
 	<div class="wds-global-footer__main">
 		<?php if ( isset( $model['fandom']['header'] ) ) : ?>
