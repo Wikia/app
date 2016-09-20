@@ -42,19 +42,18 @@ $module-header-line-height: 28px;
 		clear: both;
 	}
 
-	%community-page-todo-list-module-placeholder {
+	.community-page-todo-list-module-content,
+	.community-page-todo-list-module-zerostate {
 		border-left: thick solid $color-buttons;
 		clear: both;
 		margin-top: $content-spacing-xsmall;
 	}
 
 	.community-page-todo-list-module-content {
-		@extend %community-page-todo-list-module-placeholder;
 		padding: 0 $content-spacing-xsmall;
 	}
 
 	.community-page-todo-list-module-zerostate {
-		@extend %community-page-todo-list-module-placeholder;
 		font-weight: bold;
 		padding: $content-spacing-xxsmall $content-spacing-xsmall;
 	}
