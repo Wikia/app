@@ -23,7 +23,7 @@ class LinkHelperTest extends WikiaBaseTest {
 			->willReturn( static::ARTICLE_NAME );
 		$mockTitle->expects( $this->any() )
 			->method( 'getLocalURL' )
-			->willReturn( static::ARTiCLE_LOCAL_URL );
+			->willReturn( static::ARTICLE_LOCAL_URL );
 
 		$this->mockGlobalVariable( 'wgDisableAnonymousEditing', $disableAnonEdits );
 		$this->mockGlobalVariable( 'wgUser', $user );
@@ -36,13 +36,13 @@ class LinkHelperTest extends WikiaBaseTest {
 		return [
 			[ $this->getUser( static::ANON ), LinkHelper::WITH_EDIT_MODE, static::ANNON_EDITS_ALLOWED, static::ARTICLE_LOCAL_EDIT_URL ],
 			[ $this->getUser( static::ANON ), LinkHelper::WITH_EDIT_MODE, static::ANNOON_EDITS_FORBIDDEN, static::SIGNUP_URL_WITH_EDIT ],
-			[ $this->getUser( static::ANON ), LinkHelper::WITHOUT_EDIT_MODE, static::ANNON_EDITS_ALLOWED, static::ARTiCLE_LOCAL_URL ],
+			[ $this->getUser( static::ANON ), LinkHelper::WITHOUT_EDIT_MODE, static::ANNON_EDITS_ALLOWED, static::ARTICLE_LOCAL_URL ],
 			[ $this->getUser( static::ANON ), LinkHelper::WITHOUT_EDIT_MODE, static::ANNOON_EDITS_FORBIDDEN, static::SIGNUP_URL_WITHOUT_EDIT ],
 
 			[ $this->getUser( static::LOGGED_IN ), LinkHelper::WITH_EDIT_MODE, static::ANNON_EDITS_ALLOWED, static::ARTICLE_LOCAL_EDIT_URL ],
 			[ $this->getUser( static::LOGGED_IN ), LinkHelper::WITH_EDIT_MODE, static::ANNOON_EDITS_FORBIDDEN, static::ARTICLE_LOCAL_EDIT_URL ],
-			[ $this->getUser( static::LOGGED_IN ), LinkHelper::WITHOUT_EDIT_MODE, static::ANNON_EDITS_ALLOWED, static::ARTiCLE_LOCAL_URL ],
-			[ $this->getUser( static::LOGGED_IN ), LinkHelper::WITHOUT_EDIT_MODE, static::ANNOON_EDITS_FORBIDDEN, static::ARTiCLE_LOCAL_URL ]
+			[ $this->getUser( static::LOGGED_IN ), LinkHelper::WITHOUT_EDIT_MODE, static::ANNON_EDITS_ALLOWED, static::ARTICLE_LOCAL_URL ],
+			[ $this->getUser( static::LOGGED_IN ), LinkHelper::WITHOUT_EDIT_MODE, static::ANNOON_EDITS_FORBIDDEN, static::ARTICLE_LOCAL_URL ]
 		];
 	}
 
