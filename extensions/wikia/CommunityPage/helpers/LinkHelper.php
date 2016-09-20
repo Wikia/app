@@ -24,7 +24,7 @@ class LinkHelper {
 		if ( EditorPreference::isVisualEditorPrimary() ) {
 			return 'veaction=edit';
 		}
-		
+
 		return 'action=edit';
 	}
 }
