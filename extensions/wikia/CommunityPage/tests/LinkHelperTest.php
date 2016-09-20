@@ -1,5 +1,5 @@
 <?php
-
+require_once( $IP . '/extensions/wikia/CommunityPage/helpers/LinkHelper.php' );
 
 class LinkHelperTest extends WikiaBaseTest {
 	const ANON = false;
