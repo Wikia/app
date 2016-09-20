@@ -21,7 +21,16 @@ define('ext.wikia.adEngine.lookup.rubicon.rubiconVulcan', [
 		},
 		config = {
 			oasis: {
-				INCONTENT_LEADERBOARD: incontentAdSettings
+				INCONTENT_LEADERBOARD: incontentAdSettings,
+				TOP_LEADERBOARD: {
+					siteId: 55412,
+					size: [640, 480],
+					sizeId: 203,
+					targeting: {
+						loc: 'top'
+					},
+					zoneId: 519058
+				}
 			},
 			mercury: {
 				MOBILE_IN_CONTENT: incontentAdSettings
