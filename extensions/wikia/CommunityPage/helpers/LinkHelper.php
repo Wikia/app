@@ -8,7 +8,7 @@ class LinkHelper {
 			return SpecialPage::getTitleFor( 'SignUp' )->getFullURL(
 				[
 					'returnto' => $title->getEscapedText(),
-					'returntoquery' => $edit ? urlencode( self::getEditorParam() ) : '',
+					'returntoquery' => $edit ? urlencode( static::getEditorParam() ) : '',
 					'type' => 'login'
 				]);
 		}
@@ -24,6 +24,7 @@ class LinkHelper {
 		if ( EditorPreference::isVisualEditorPrimary() ) {
 			return 'veaction=edit';
 		}
+		
 		return 'action=edit';
 	}
 }
