@@ -844,6 +844,13 @@ class WikiOAIRecord extends OAIRecord {
 		$title = Title::makeTitle( $this->_row->page_namespace, $this->_row->page_title );
 		global $wgMimeType, $wgContLanguageCode;
 
+		if ( $this->_row->rev_user > 0 ) {
+			$contributor = User::newFromId( $this->_row->rev_user )->getName();
+		} else {
+			// Anon user
+			$contributor = $this->_row->rev_user_text;
+		}
+
 		$out = oaiTag( 'oai_dc:dc', array(
 			'xmlns:oai_dc'       => 'http://www.openarchives.org/OAI/2.0/oai_dc/',
 			'xmlns:dc'           => 'http://purl.org/dc/elements/1.1/',
@@ -855,7 +862,7 @@ class WikiOAIRecord extends OAIRecord {
 			oaiTag( 'dc:type',        array(), 'Text' ) . "\n" .
 			oaiTag( 'dc:format',      array(), $wgMimeType ) . "\n" .
 			oaiTag( 'dc:identifier',  array(), $title->getCanonicalUrl() ) . "\n" .
-			oaiTag( 'dc:contributor', array(), $this->_row->rev_user_text ) . "\n" .
+			oaiTag( 'dc:contributor', array(), $contributor ) . "\n" .
 			oaiTag( 'dc:date',        array(), oaiDatestamp( $this->getDatestamp() ) ) . "\n" .
 			"</oai_dc:dc>\n";
 		return $out;

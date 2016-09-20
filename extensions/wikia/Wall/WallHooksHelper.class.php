@@ -1714,7 +1714,7 @@ class WallHooksHelper {
 	 * @brief Collects data basing on RC object or std object
 	 * Those lines of code were used a lot in this class. Better keep them in one place.
 	 *
-	 * @param $rc
+	 * @param RecentChange $rc
 	 * @param Object $row
 	 *
 	 * @return Array

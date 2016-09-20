@@ -16,8 +16,13 @@ class QuickToolsHelper extends ContextSource {
 		$where = [
 			'rev_page = page_id',
 			'page_latest = rev_id',
-			'rev_user_text' => $user,
 		];
+
+		if ( IP::isIPAddress( $user ) ) {
+			$where['rev_user_text'] = $user;
+		} else {
+			$where['rev_user'] = User::idFromName( $user );
+		}
 
 		if ( $time !== '' ) {
 			$time = $dbr->addQuotes( $time );

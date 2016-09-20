@@ -129,18 +129,19 @@ class Answer {
 
 			$params['ORDER BY'] = "rev_id  ASC";
 			$params['LIMIT'] = 1;
-			$s = $dbr->selectRow( 'revision',
-					array( 'rev_user','rev_user_text', 'rev_timestamp' ),
+			$row = $dbr->selectRow( 'revision',
+					array( 'rev_user', 'rev_timestamp' ),
 					array( 'rev_page' =>  $page_title_id )
 					, __METHOD__,
 					$params
 			);
 
-			$avatarImg = AvatarService::renderAvatar($s->rev_user_text, 30);
+			$userName = User::newFromId( $row->rev_user )->getName();
+			$avatarImg = AvatarService::renderAvatar( $userName, 30 );
 
-			$user_title = Title::makeTitle(NS_USER,$s->rev_user_text);
+			$user_title = Title::makeTitle( NS_USER, $userName );
 
-			$author = array( "user_id" => $s->rev_user, "user_name" => $s->rev_user_text, "title" => $user_title, "avatar" => $avatarImg, "ts" => $s->rev_timestamp );
+			$author = array( "user_id" => $row->rev_user, "user_name" => $userName, "title" => $user_title, "avatar" => $avatarImg, "ts" => $row->rev_timestamp );
 
 			$wgMemc->set( $key, $author, 60 * 60 );
 		}else{

@@ -867,7 +867,7 @@ class WikiPage extends Page implements IDBAccessObject {
 
 		do {
 			$res = $db->select( array( 'page', 'revision' ),
-				array( 'rev_id', 'rev_user_text' ),
+				array( 'rev_id', 'rev_user', 'rev_user_text' ),
 				array(
 					'page_namespace' => $this->mTitle->getNamespace(),
 					'page_title' => $this->mTitle->getDBkey(),
@@ -894,10 +894,20 @@ class WikiPage extends Page implements IDBAccessObject {
 			}
 		} while ( $continue );
 
-		$authors = array( $row->rev_user_text );
+		if ( $row->rev_user > 0 ) {
+			$userName = User::newFromId( $row->rev_user )->getName();
+		} else {
+			$userName = $row->rev_user_text;
+		}
+		$authors = array( $userName );
 
 		foreach ( $res as $row ) {
-			$authors[] = $row->rev_user_text;
+			if ( $row->rev_user > 0 ) {
+				$userName = User::newFromId( $row->rev_user )->getName();
+			} else {
+				$userName = $row->rev_user_text;
+			}
+			$authors[] = $userName;
 		}
 
 		wfProfileOut( __METHOD__ );
@@ -2756,7 +2766,7 @@ class WikiPage extends Page implements IDBAccessObject {
 
 		// Find out if there was only one contributor
 		// Only scan the last 20 revisions
-		$res = $dbw->select( 'revision', 'rev_user_text',
+		$res = $dbw->select( 'revision', array( 'rev_user', 'rev_user_text' ),
 			array( 'rev_page' => $this->getID(), $dbw->bitAnd( 'rev_deleted', Revision::DELETED_USER ) . ' = 0' ),
 			__METHOD__,
 			array( 'LIMIT' => 20 )
@@ -2771,7 +2781,11 @@ class WikiPage extends Page implements IDBAccessObject {
 		$row = $dbw->fetchObject( $res );
 
 		if ( $row ) { // $row is false if the only contributor is hidden
-			$onlyAuthor = $row->rev_user_text;
+			if ( $row->rev_user > 0 ) {
+				$onlyAuthor = User::newFromId( $row->rev_user )->getName();
+			} else {
+				$onlyAuthor = $row->rev_user_text;
+			}
 			// Try to find a second contributor
 			foreach ( $res as $row ) {
 				if ( $row->rev_user_text != $onlyAuthor ) { // Bug 22999
