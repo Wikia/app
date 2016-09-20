@@ -19,7 +19,8 @@ $logo-url: $logo-url-light;
 }
 
 .WikiaRail {
-	.community-page-module {
+	// override default .WikiaRail .module styles
+	.module {
 		position: relative;
 
 		&.community-page-entry-point-module {
@@ -27,6 +28,7 @@ $logo-url: $logo-url-light;
 		}
 	}
 }
+
 
 .community-page-entry-point-module {
 	font-family: $community-page-font-family;
