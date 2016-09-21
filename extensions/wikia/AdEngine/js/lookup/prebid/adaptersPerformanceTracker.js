@@ -1,7 +1,7 @@
 define('ext.wikia.adEngine.lookup.prebid.adaptersPerformanceTracker', [
 	'ext.wikia.adEngine.adTracker',
 	'wikia.window'
-], function(adTracker, win) {
+], function (adTracker, win) {
 	'use strict';
 
 	var emptyResponseMsg = 'EMPTY',
@@ -14,10 +14,12 @@ define('ext.wikia.adEngine.lookup.prebid.adaptersPerformanceTracker', [
 			var slots = adapter.getSlots(skin),
 				adapterName = adapter.getName();
 
-			Object.keys(slots).forEach(function (slotName) {
-				biddersPerformanceMap[adapterName] = biddersPerformanceMap[adapterName] || {};
-				biddersPerformanceMap[adapterName][slotName] = notRespondedMsg;
-			})
+			if (adapter.isEnabled()) {
+				Object.keys(slots).forEach(function (slotName) {
+					biddersPerformanceMap[adapterName] = biddersPerformanceMap[adapterName] || {};
+					biddersPerformanceMap[adapterName][slotName] = notRespondedMsg;
+				});
+			}
 		});
 
 		return biddersPerformanceMap;
@@ -41,25 +43,31 @@ define('ext.wikia.adEngine.lookup.prebid.adaptersPerformanceTracker', [
 		return performanceMap;
 	}
 
-	function trackBidderSlotState(bidderName, slotName, providerName, performanceMap) {
-		var category;
+	function trackBidderSlotState(adapter, slotName, providerName, performanceMap) {
+		var bidderName = adapter.getName(), category;
 
-		if (performanceMap[bidderName]) {
-			if (performanceMap[bidderName][slotName] !== notRespondedMsg) {
-				category = bidderName + '/lookup_success/' + providerName;
-				adTracker.track(category, slotName, 0, performanceMap[bidderName][slotName]);
+		if (adapter.isEnabled()) {
+			if (performanceMap[bidderName]) {
+				if (performanceMap[bidderName][slotName] !== notRespondedMsg) {
+					category = bidderName + '/lookup_success/' + providerName;
+					adTracker.track(category, slotName, 0, performanceMap[bidderName][slotName]);
+				} else {
+					category = bidderName + '/lookup_error/' + providerName;
+					adTracker.track(category, slotName, 0, 'nodata');
+				}
 			} else {
 				category = bidderName + '/lookup_error/' + providerName;
 				adTracker.track(category, slotName, 0, 'nodata');
 			}
-		} else {
-			category = bidderName + '/lookup_error/' + providerName;
-			adTracker.track(category, slotName, 0, 'nodata');
 		}
 	}
 
-	function trackBidderOnLookupEnd(adapterName, performanceMap) {
-		adTracker.track(adapterName + '/lookup_end', performanceMap[adapterName], 0, 'nodata');
+	function trackBidderOnLookupEnd(adapter, performanceMap) {
+		var bidderName = adapter.getName();
+
+		if (adapter.isEnabled()) {
+			adTracker.track(bidderName + '/lookup_end', performanceMap[bidderName], 0, 'nodata');
+		}
 	}
 
 	function getParamsFromBidForTracking(bid) {
@@ -69,7 +77,6 @@ define('ext.wikia.adEngine.lookup.prebid.adaptersPerformanceTracker', [
 			return [bid.getSize(), bid.pbMg].join(';');
 		}
 	}
-
 
 
 	return {

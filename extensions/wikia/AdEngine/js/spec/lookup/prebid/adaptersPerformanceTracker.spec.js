@@ -15,6 +15,9 @@ describe('ext.wikia.adEngine.lookup.prebid.adaptersPerformanceTracker', function
 				getName: function () {
 					return 'appnexus'
 				},
+				isEnabled: function () {
+					return true;
+				},
 				getSlots: function () {
 					return {
 						TOP_LEADERBOARD: {
@@ -36,6 +39,27 @@ describe('ext.wikia.adEngine.lookup.prebid.adaptersPerformanceTracker', function
 				getName: function () {
 					return 'indexExchange'
 				},
+				isEnabled: function () {
+					return true;
+				},
+				getSlots: function () {
+					return {
+						TOP_LEADERBOARD: {
+							sizes: [
+								[728, 90],
+								[970, 250]
+							]
+						}
+					};
+				}
+			},
+			adapterIndexExchangeDisabled: {
+				getName: function () {
+					return 'indexExchange'
+				},
+				isEnabled: function () {
+					return false;
+				},
 				getSlots: function () {
 					return {
 						TOP_LEADERBOARD: {
@@ -53,7 +77,7 @@ describe('ext.wikia.adEngine.lookup.prebid.adaptersPerformanceTracker', function
 				getStatusCode: function () {
 					return 1;
 				},
-				getSize: function() {
+				getSize: function () {
 					return '200x200';
 				}
 			},
@@ -63,13 +87,13 @@ describe('ext.wikia.adEngine.lookup.prebid.adaptersPerformanceTracker', function
 				getStatusCode: function () {
 					return 1;
 				},
-				getSize: function() {
+				getSize: function () {
 					return '100x100';
 				}
 			},
 			emptyAppNexusBid: {
 				bidder: 'appnexus',
-				getStatusCode: function() {
+				getStatusCode: function () {
 					return 2;
 				}
 			}
@@ -108,7 +132,8 @@ describe('ext.wikia.adEngine.lookup.prebid.adaptersPerformanceTracker', function
 					TOP_LEADERBOARD: 'NOT_RESPONDED',
 					TOP_RIGHT_BOXAD: 'NOT_RESPONDED'
 				}
-			}
+			},
+			message: 'map is correctly initiated if only one adapter is added'
 		}, {
 			skin: 'oasis',
 			adapters: [
@@ -123,7 +148,21 @@ describe('ext.wikia.adEngine.lookup.prebid.adaptersPerformanceTracker', function
 				indexExchange: {
 					TOP_LEADERBOARD: 'NOT_RESPONDED'
 				}
-			}
+			},
+			message: 'map is correctly initiated if two adapters are added'
+		}, {
+			skin: 'oasis',
+			adapters: [
+				mocks.adapterAppNexus,
+				mocks.adapterIndexExchangeDisabled
+			],
+			expected: {
+				appnexus: {
+					TOP_LEADERBOARD: 'NOT_RESPONDED',
+					TOP_RIGHT_BOXAD: 'NOT_RESPONDED'
+				}
+			},
+			message: 'disabled adapters are not added'
 		}].forEach(function (testCase) {
 			var result = module.setupPerformanceMap(testCase.skin, testCase.adapters);
 

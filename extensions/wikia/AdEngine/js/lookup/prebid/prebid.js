@@ -55,9 +55,7 @@ define('ext.wikia.adEngine.lookup.prebid', [
 		biddersPerformanceMap = adaptersTracker.updatePerformanceMap(biddersPerformanceMap);
 
 		adapters.forEach(function (adapter) {
-			var adapterName = adapter.getName();
-
-			adaptersTracker.trackBidderOnLookupEnd(adapterName, biddersPerformanceMap)
+			adaptersTracker.trackBidderOnLookupEnd(adapter, biddersPerformanceMap)
 		});
 	}
 
@@ -65,11 +63,7 @@ define('ext.wikia.adEngine.lookup.prebid', [
 		biddersPerformanceMap = adaptersTracker.updatePerformanceMap(biddersPerformanceMap);
 
 		adapters.forEach(function (adapter) {
-			var bidderName = adapter.getName();
-
-			if (adapter.isEnabled()) {
-				adaptersTracker.trackBidderSlotState(bidderName, slotName, providerName, biddersPerformanceMap);
-			}
+			adaptersTracker.trackBidderSlotState(adapter, slotName, providerName, biddersPerformanceMap);
 		});
 	}
 
