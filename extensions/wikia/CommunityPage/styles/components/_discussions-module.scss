@@ -57,6 +57,16 @@ $module-header-line-height: 28px;
 			font-weight: normal;
 			padding-right: $content-spacing-regular;
 		}
+
+		.embeddable-discussions-content {
+			-webkit-box-orient: vertical;
+			display: -webkit-box;
+			-webkit-line-clamp: 3;
+			margin: 4px 0;
+			overflow: hidden;
+			padding: 5px 0;
+
+		}
 	}
 }
 
