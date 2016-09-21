@@ -4,13 +4,14 @@
 @import 'skins/shared/mixins/flexbox';
 
 $small-icon-size: 18px;
-$big-icon-size: 48px;
+$big-icon-size: 30px;
 $help-module-margin: 12px;
 $help-module-padding-bottom: 20px;
+$help-module-link-padding: 12px;
 $policy-link-padding-top: 18px;
 $policy-link-margin-top: 14px;
 
-$help-module-link-line-height: 2;
+$help-module-link-line-height: 18px;
 
 .community-page-help-module {
 	padding-bottom: $help-module-padding-bottom;
@@ -33,7 +34,7 @@ $help-module-link-line-height: 2;
 		align-items: center;
 		border-top: 1px solid $color-page-border;
 		font-size: $typescale-size-minus-1;
-		line-height: 1;
+		line-height: $help-module-link-line-height;
 		margin-top: $policy-link-margin-top;
 		padding: $policy-link-padding-top 0;
 
@@ -53,6 +54,15 @@ $help-module-link-line-height: 2;
 	}
 
 	.community-page-help-module-links {
+		@include flexbox();
+		@include flex-direction(column);
+
+		font-size: $typescale-size-minus-1;
 		line-height: $help-module-link-line-height;
+
+		a {
+			padding-bottom: $help-module-link-padding;
+			padding-top: $help-module-link-padding;
+		}
 	}
 }
