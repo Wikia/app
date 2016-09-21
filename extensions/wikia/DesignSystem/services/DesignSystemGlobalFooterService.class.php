@@ -2,6 +2,8 @@
 
 class DesignSystemGlobalFooterService extends WikiaService {
 	public function index() {
+		
+		
 		$this->setVal( 'model', $this->getData() );
 	}
 
