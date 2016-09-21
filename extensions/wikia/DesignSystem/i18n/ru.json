@@ -58,7 +58,7 @@
   "global-navigation-notifications-title": "Оповещения",
   "global-navigation-search-cancel": "Отмена",
   "global-navigation-search-placeholder-fandom": "Поиск статей и вики...",
-  "global-navigation-search-placeholder-in-wiki": "Поиск на __sitename__...",
+  "global-navigation-search-placeholder-in-wiki": "Поиск на $1...",
   "global-navigation-search-placeholder-inactive": "Поиск",
   "global-navigation-search-placeholder-wikis": "Поиск вики...",
   "global-navigation-search-select-fandom": "Статьи Фэндома и вики",

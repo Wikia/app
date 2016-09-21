@@ -58,7 +58,7 @@
   "global-navigation-notifications-title": "Powiadomienia",
   "global-navigation-search-cancel": "Anuluj",
   "global-navigation-search-placeholder-fandom": "Szukaj wieści i wiki...",
-  "global-navigation-search-placeholder-in-wiki": "Szukaj na __sitename__...",
+  "global-navigation-search-placeholder-in-wiki": "Szukaj na $1...",
   "global-navigation-search-placeholder-inactive": "Szukaj",
   "global-navigation-search-placeholder-wikis": "Szukaj wiki...",
   "global-navigation-search-select-fandom": "Wieści z Fandomu i wiki",

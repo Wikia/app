@@ -58,7 +58,7 @@
   "global-navigation-notifications-title": "通知",
   "global-navigation-search-cancel": "取消",
   "global-navigation-search-placeholder-fandom": "查询文章和社区...",
-  "global-navigation-search-placeholder-in-wiki": "搜索__sitename__...",
+  "global-navigation-search-placeholder-in-wiki": "搜索$1...",
   "global-navigation-search-placeholder-inactive": "搜索",
   "global-navigation-search-placeholder-wikis": "检索维基...",
   "global-navigation-search-select-fandom": "Fandom文章和社区",

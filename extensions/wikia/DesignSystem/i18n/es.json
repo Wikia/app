@@ -58,7 +58,7 @@
   "global-navigation-notifications-title": "Notificaciones",
   "global-navigation-search-cancel": "Cancelar",
   "global-navigation-search-placeholder-fandom": "Buscar artículos y wikis...",
-  "global-navigation-search-placeholder-in-wiki": "Buscar en __sitename__...",
+  "global-navigation-search-placeholder-in-wiki": "Buscar en $1...",
   "global-navigation-search-placeholder-inactive": "Buscar",
   "global-navigation-search-placeholder-wikis": "Buscar un wiki...",
   "global-navigation-search-select-fandom": "Artículos sobre Fandom y wikis",
