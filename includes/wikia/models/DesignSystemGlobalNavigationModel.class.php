@@ -28,20 +28,14 @@ class DesignSystemGlobalNavigationModel extends WikiaModel {
 		global $wgUser;
 
 		$data = [
-			// TODO: restore old logo before 4th October 2016
-			// https://wikia-inc.atlassian.net/browse/XW-1966
 			'logo' => [
 				'header' => [
 					'type' => 'link-image',
 					'href' => $this->getHref( 'fandom-logo' ),
-					'image' => 'wds-company-logo-wikia',
+					'image' => 'wds-company-logo-fandom-powered-by-wikia',
 					'title' => [
-						'type' => 'translatable-text',
-						'key' => 'global-footer-wikia-header'
-					],
-					'subtitle' => [
-						'type' => 'translatable-text',
-						'key' => 'global-footer-international-header-subtitle'
+						'type' => 'text',
+						'value' => 'Fandom powered by Wikia'
 					]
 				]
 			],
