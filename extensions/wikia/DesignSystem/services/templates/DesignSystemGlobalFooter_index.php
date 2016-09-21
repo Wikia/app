@@ -13,10 +13,12 @@
 		</div>
 	<?php elseif ( isset ( $model['header'] ) ) : ?>
 		<h2 class="wds-global-footer__header">
-			<?= DesignSystemHelper::getSvg(
-				$model['header']['image'],
-				'wds-global-footer__header-logo'
-			) ?>
+			<a href="<?= Sanitizer::encodeAttribute( $model['header']['href'] ) ?>"
+				<?= DesignSystemHelper::getSvg(
+					$model['header']['image'],
+					'wds-global-footer__header-logo'
+				) ?>
+			</a>
 		</h2>
 	<?php endif; ?>
 	<div class="wds-global-footer__main">
