@@ -11,6 +11,22 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 	const MODAL_IMAGE_MIN_RATIO = 0.85;
 	const DEFAULT_MODULES_MAX = 3;
 
+	const BADGE_ADMIN = 'bla bla.svg'; //sysop
+	const BADGE_STAFF = 'bla bla.svg'; //staff
+	const BADGE_HELPER = 'bla bla.svg'; //helper
+	const BADGE_VSTF = 'bla bla.svg'; //vstf
+	const BADGE_MODERATOR = 'bla bla.svg'; //contentmoderator
+	const BADGE_DISCUSSIONS_MODERATOR = 'bla bla.svg'; // threadmoderator
+
+	const PERMISSIONS_HIERARCHY = [
+		'sysop' => 'bla bla.svg',
+		'staff' => 'bla bla.svg',
+		'helper' => 'bla bla.svg',
+		'vstf' => 'bla bla.svg',
+		'content-moderator' => 'bla bla.svg',
+		'threadmoderator' => 'bla bla.svg'
+	];
+
 	private $usersModel;
 	private $wikiModel;
 
@@ -312,6 +328,7 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 	 * Get details for display of top contributors
 	 *
 	 * @param array $contributors List of contributors containing userId and contributions for each user
+	 * @param int $avatarSize optional param size if requested size other than default
 	 * @return array
 	 */
 	private function getContributorsDetails( $contributors, $avatarSize = AvatarService::AVATAR_SIZE_SMALL_PLUS ) {
@@ -327,6 +344,8 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 				$userName = $this->msg( 'oasis-anon-user' )->text();
 			}
 
+			$badge = $this->getUserBadge( $contributor[ 'userId' ] );
+
 			return [
 				'userName' => $userName,
 				'avatar' => $avatar,
@@ -336,6 +355,7 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 				'count' => $count,
 				'isAdmin' => $contributor[ 'isAdmin' ] ?? false,
 				'timeAgo' => $contributor[ 'timeAgo' ] ?? null,
+				'badge' => DesignSystemHelper::getSvg( 'wds-icons-badge-admin' )
 			];
 		}, $contributors );
 	}
@@ -409,5 +429,14 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 		}
 
 		return $editors;
+	}
+
+	private function getUserBadge( $userId ) {
+		$user = User::newFromId( $userId );
+		$groups = $user->getEffectiveGroups();
+
+		//var_dump($groups);
+
+		return '';
 	}
 }
