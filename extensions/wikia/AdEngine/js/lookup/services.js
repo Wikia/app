@@ -28,24 +28,24 @@ define('ext.wikia.adEngine.lookup.services', [
 		],
 		bidIndex = {
 			'rubicon_fastlane': {
-				'pos': 0,
-				'char': 'R'
+				pos: 0,
+				char: 'R'
 			},
 			'ox_bidder': {
-				'pos': 1,
-				'char': 'O'
+				pos: 1,
+				char: 'O'
 			},
-			'amazon': {
-				'pos': 2,
-				'char': 'A'
+			amazon: {
+				pos: 2,
+				char: 'A'
 			},
 			'rubicon_vulcan': {
-				'pos': 3,
-				'char': 'V'
+				pos: 3,
+				char: 'V'
 			},
-			'prebid': {
-				'pos': 4,
-				'char': 'P'
+			prebid: {
+				pos: 4,
+				char: 'P'
 			}
 		},
 		bidMarker = ['x','x','x','x','x'];
@@ -65,14 +65,14 @@ define('ext.wikia.adEngine.lookup.services', [
 					slotTargeting[key] = params[key];
 				});
 				if (bidder.hasResponse()) {
-					bidMarker = appendBidderMarker(bidder.getName(), bidMarker);
+					bidMarker = updateBidderMarker(bidder.getName(), bidMarker);
 				}
 			}
 		});
 		slotTargeting.bid = bidMarker.join('');
 	}
 
-	function appendBidderMarker(bidderName, bidMarker) {
+	function updateBidderMarker(bidderName, bidMarker) {
 		var bidder;
 		if (!bidIndex[bidderName]) {
 			return bidMarker;
