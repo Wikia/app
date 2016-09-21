@@ -5,9 +5,9 @@
  * @addtogroup Extensions
  */
 
-$messages = array();
+$messages = [];
 
-$messages['en'] = array(
+$messages['en'] = [
 	'abtesting' => 'A/B Testing',
 	'abtesting-desc' => 'The A/B Testing extension is used by Wikia to test what effects different features or settings have on actual users.',
 	'abtesting-currently-used-ga-slots' => 'List of currently used GA slots: $1',
@@ -48,13 +48,14 @@ $messages['en'] = array(
 
 	'abtesting-ranges-info' => '(0-99)',
 	'action-abtestpanel' => 'configure A/B tests',
-);
+	'right-abtestpanel' => 'Allows access to Special:AbTesting',
+];
 
 
 /**
  * qqq - Documentation for the messages.
  */
-$messages['qqq'] = array(
+$messages['qqq'] = [
 	'abtesting' => 'Page title',
 	'abtesting-desc' => 'Description of the A/B Testing extension',
 	'abtesting-currently-used-ga-slots' => 'Label for currently used GA slots',
@@ -79,4 +80,4 @@ $messages['qqq'] = array(
 
 	'abtesting-edit-button' => 'Edit button',
 	'abtesting-save-button' => 'Save button',
-);
+];

@@ -423,7 +423,7 @@ class ArticlesApiController extends WikiaApiController {
 	}
 
 	/**
-	 * Resolve categor param name into internal category name (incl. redirecst)
+	 * Resolve category param name into internal category name (incl. redirecst)
 	 * @param $category
 	 * @return mixed|Title
 	 */
@@ -432,6 +432,27 @@ class ArticlesApiController extends WikiaApiController {
 		$category = self::followRedirect( $category );
 
 		return $category;
+	}
+
+	/**
+	 * Normalize valid namespaces
+	 *
+	 * @param $namespaces
+	 * @return array
+	 * @throws InvalidParameterApiException
+	 */
+	public static function validateNamespaces( $namespaces ) {
+		if ( empty( $namespaces ) ) {
+			return [];
+		}
+
+		foreach ( $namespaces as &$n ) {
+			if ( !is_numeric( $n ) ) {
+				throw new InvalidParameterApiException( self::PARAMETER_NAMESPACES );
+			}
+		}
+
+		return $namespaces;
 	}
 
 	/**
@@ -458,44 +479,36 @@ class ArticlesApiController extends WikiaApiController {
 		wfProfileIn( __METHOD__ );
 
 		$category = $this->request->getVal( self::PARAMETER_CATEGORY, null );
-
-		$namespaces = $this->request->getArray( self::PARAMETER_NAMESPACES, null );
+		$namespaces = $this->request->getArray( self::PARAMETER_NAMESPACES, [] );
 		$limit = $this->request->getVal( 'limit', self::ITEMS_PER_BATCH );
 		$offset = $this->request->getVal( 'offset', '' );
 		$expand = $this->request->getBool( static::PARAMETER_EXPAND, false );
 
 		if ( !empty( $category ) ) {
-			$category = self::resolveCategoryName( $category );
-			if ( !is_null( $category ) ) {
-				if ( !empty( $namespaces ) ) {
-					foreach ( $namespaces as &$n ) {
-						if ( !is_numeric( $n ) ) {
-							throw new InvalidParameterApiException( self::PARAMETER_NAMESPACES );
-						}
-					}
-
-					$namespaces = implode( '|', $namespaces );
-				}
-
-				/**
-				 * Wrapping global wgMiserMode.
-				 *
-				 * wgMiserMode = true (default) changes the behavior of categorymembers mediawiki API, causing it to
-				 * filter by namespace after making database query constrained by $limit and thus resulting
-				 * in Api returning fewer than $limit results
-				 *
-				 * wgMiserMode = false filters on DB level
-				 */
-				$wrapper = new GlobalStateWrapper( [
-					'wgMiserMode' => $this->excludeNamespacesFromCategoryMembersDBQuery
-				] );
-				$articles = $wrapper->wrap( function () use ( $category, $limit, $offset, $namespaces ) {
-					return self::getCategoryMembers( $category->getFullText(), $limit, $offset, $namespaces );
-				} );
-			} else {
+			if ( ! ( $category = self::resolveCategoryName( $category ) ) ) {
 				wfProfileOut( __METHOD__ );
 				throw new InvalidParameterApiException( self::PARAMETER_CATEGORY );
 			}
+
+			$namespaces = implode( '|', self::validateNamespaces( $namespaces ) );
+
+			/**
+			 * Wrapping global wgMiserMode.
+			 *
+			 * wgMiserMode = true (default) changes the behavior of categorymembers mediawiki API, causing it to
+			 * filter by namespace after making database query constrained by $limit and thus resulting
+			 * in Api returning fewer than $limit results
+			 *
+			 * wgMiserMode = false filters on DB level
+			 */
+			$wrapper = new GlobalStateWrapper( [
+				'wgMiserMode' => $this->excludeNamespacesFromCategoryMembersDBQuery
+			] );
+
+			$articles = $wrapper->wrap( function () use ( $category, $limit, $offset, $namespaces ) {
+				return self::getCategoryMembers( $category->getFullText(), $limit, $offset, $namespaces );
+			} );
+
 		} else {
 
 			$namespace = $namespaces[0];
@@ -531,58 +544,58 @@ class ArticlesApiController extends WikiaApiController {
 
 					$pages = ApiService::call( $params );
 
-					if ( !empty( $pages ) ) {
-						return [
-							$pages['query']['allpages'],
-							!empty( $pages['query-continue'] ) ? $pages['query-continue']['allpages']['apfrom'] : null
-						];
-					} else {
+					if ( empty( $pages ) ) {
 						return null;
 					}
+
+					return [
+						$pages['query']['allpages'],
+						!empty( $pages['query-continue'] ) ? $pages['query-continue']['allpages']['apfrom'] : null
+					];
 				}
 			);
 		}
 
-		if ( is_array( $articles ) && !empty( $articles[0] ) ) {
-			$ret = [];
+		if ( !is_array( $articles ) || empty( $articles[0] ) ) {
+			wfProfileOut(__METHOD__);
+			throw new NotFoundApiException('No members');
+		}
 
-			if ( $expand ) {
-				$articleIds = array_map( function( $item ) {
-					if ( isset( $item[ 'pageid' ] ) ) {
-						return $item[ 'pageid' ];
-					}
-				} , $articles[ 0 ] );
-				$params = $this->getDetailsParams();
-				$ret = $this->getArticlesDetails( $articleIds, $params[ 'titleKeys' ], $params[ 'width' ], $params[ 'height' ], $params[ 'length' ], true );
-			} else {
-				foreach ( $articles[0] as $article ) {
-					$title = Title::newFromText( $article['title'] );
+		$ret = [];
 
-					if ( $title instanceof Title ) {
-						$ret[] = [
-							'id' => $article['pageid'],
-							'title' => $title->getText(),
-							'url' => $title->getLocalURL(),
-							'ns' => $article['ns']
-						];
-					}
+		if ( $expand ) {
+			$articleIds = array_map( function( $item ) {
+				if ( isset( $item[ 'pageid' ] ) ) {
+					return $item[ 'pageid' ];
 				}
-			}
-			$responseValues = [ 'items' => $ret, 'basepath' => $this->wg->Server ];
-
-			if ( !empty( $articles[1] ) ) {
-				$responseValues[ 'offset' ] = $articles[ 1 ];
-			}
-
-			$this->setResponseData(
-				$responseValues,
-				[ 'imgFields' => 'thumbnail', 'urlFields' => [ 'thumbnail', 'url' ] ],
-				self::getMetadataCacheTime()
-			);
+			} , $articles[ 0 ] );
+			$params = $this->getDetailsParams();
+			$ret = $this->getArticlesDetails( $articleIds, $params[ 'titleKeys' ], $params[ 'width' ], $params[ 'height' ], $params[ 'length' ], true );
 		} else {
-			wfProfileOut( __METHOD__ );
-			throw new NotFoundApiException( 'No members' );
+			foreach ( $articles[0] as $article ) {
+				$title = Title::newFromText( $article['title'] );
+
+				if ( $title instanceof Title ) {
+					$ret[] = [
+						'id' => $article['pageid'],
+						'title' => $title->getText(),
+						'url' => $title->getLocalURL(),
+						'ns' => $article['ns']
+					];
+				}
+			}
 		}
+		$responseValues = [ 'items' => $ret, 'basepath' => $this->wg->Server ];
+
+		if ( !empty( $articles[1] ) ) {
+			$responseValues[ 'offset' ] = $articles[ 1 ];
+		}
+
+		$this->setResponseData(
+			$responseValues,
+			[ 'imgFields' => 'thumbnail', 'urlFields' => [ 'thumbnail', 'url' ] ],
+			self::getMetadataCacheTime()
+		);
 
 		wfProfileOut( __METHOD__ );
 	}
@@ -905,21 +918,21 @@ class ArticlesApiController extends WikiaApiController {
 					)
 				);
 
-				if ( !empty( $ids ) ) {
-					return array( $ids['query']['categorymembers'], !empty( $ids['query-continue'] ) ? $ids['query-continue']['categorymembers']['cmcontinue'] : null );
-				} else {
+				if ( empty( $ids ) ) {
 					return null;
 				}
+
+				return array( $ids['query']['categorymembers'], !empty( $ids['query-continue'] ) ? $ids['query-continue']['categorymembers']['cmcontinue'] : null );
 			}
 		);
 	}
 
 	static private function followRedirect( $category ) {
-
 		if ( $category instanceof Title && $category->exists() ) {
 			$redirect = ( new WikiPage( $category ) )->getRedirectTarget();
 
-			if ( !empty( $redirect ) ) {
+			// Follow redirects only to other categories.
+			if ( !empty( $redirect ) && $redirect->getNamespace() === NS_CATEGORY ) {
 				return $redirect;
 			}
 		}
@@ -927,10 +940,13 @@ class ArticlesApiController extends WikiaApiController {
 		return $category;
 	}
 
+
 	/**
-	 * @param Array $namespaces
+	 * @param      $namespaces
+	 * @param null $caller
 	 *
-	 * @return Array
+	 * @return mixed
+	 * @throws InvalidParameterApiException
 	 */
 	static private function processNamespaces( $namespaces, $caller = null ) {
 		if ( !empty( $namespaces ) ) {
@@ -976,7 +992,6 @@ class ArticlesApiController extends WikiaApiController {
 		$articleId = $this->getRequest()->getInt( self::SIMPLE_JSON_ARTICLE_ID_PARAMETER_NAME, NULL );
 		$articleTitle = $this->getRequest()->getVal( self::SIMPLE_JSON_ARTICLE_TITLE_PARAMETER_NAME, NULL );
 		$redirect = $this->request->getVal( 'redirect' );
-		$sectionsToGet = $this->request->getVal( 'sections' );
 
 		if ( !empty( $articleId ) && !empty( $articleTitle ) ) {
 			throw new BadRequestApiException( 'Can\'t use id and title in the same request' );
@@ -997,6 +1012,8 @@ class ArticlesApiController extends WikiaApiController {
 		}
 
 		if ( empty( $article ) ) {
+			$response = $this->getResponse();
+			$response->setCacheValidity( self::SIMPLE_JSON_VARNISH_CACHE_EXPIRATION );
 			throw new NotFoundApiException( "Unable to find any article" );
 		}
 
@@ -1023,19 +1040,13 @@ class ArticlesApiController extends WikiaApiController {
 
 		if ( $parsedArticle instanceof ParserOutput ) {
 			$articleContent = json_decode( $parsedArticle->getText() );
-
-			if ( !empty( $sectionsToGet ) || $sectionsToGet == '0' ) {
-				$contentArray = $this->splitArticleIntoSections( $articleContent->content );
-				$sectionsArray = $this->getSectionNumbersArray( $sectionsToGet );
-				$content = $this->getArticleSections( $sectionsArray, $contentArray );
-			} else {
-				$content = $articleContent->content;
-			}
+			$content = $articleContent->content;
+			$wgArticleAsJson = false;
 		} else {
+			$wgArticleAsJson = false;
 			throw new ArticleAsJsonParserException( 'Parser is currently not available' );
 		}
 
-		$wgArticleAsJson = false;
 		$categories = [];
 
 		foreach ( array_keys( $parsedArticle->getCategories() ) as $category ) {
@@ -1052,59 +1063,12 @@ class ArticlesApiController extends WikiaApiController {
 			'content' => $content,
 			'media' => $articleContent->media,
 			'users' => $articleContent->users,
-			'categories' => $categories
+			'categories' => $categories,
+			// The same transformation that happens in OutputPage::setPageTitle:
+			'displayTitle' => Sanitizer::stripAllTags( $parsedArticle->getTitleText() ),
 		];
 
 		$this->setResponseData( $result, '', self::SIMPLE_JSON_VARNISH_CACHE_EXPIRATION );
-	}
-
-	/**
-	 * Get all top level sections as an array by splitting on h2 tags
-	 * @param $content
-	 * @return array
-	 */
-	private function splitArticleIntoSections( $content ) {
-		$pattern = '/(\<h2[^\>]*section[^\>]*>)/i';
-
-		$contentArray = preg_split( $pattern, $content, -1, PREG_SPLIT_DELIM_CAPTURE | PREG_SPLIT_NO_EMPTY );
-		$index = count( $contentArray );
-
-		// If the section matches the pattern, prepend it to the following section and delete it.
-		// Count backwards to avoid searching after match is prepended.
-		while ( $index-- ) {
-			if ( preg_match( $pattern, $contentArray[$index], $matches ) ) {
-				$contentArray[$index + 1] = $matches[0] . $contentArray[$index + 1];
-				array_splice( $contentArray, $index, 1 );
-			}
-		}
-
-		return $contentArray;
-	}
-
-	/**
-	 * Return a string of the specified sections joined from section array
-	 * @param $sectionsToGet
-	 * @param $contentArray
-	 * @return string
-	 */
-	private function getArticleSections( $sectionsToGet, $contentArray ) {
-		$content = '';
-		foreach ( $sectionsToGet as $section ) {
-			$content .= $contentArray[$section];
-		}
-		return $content;
-	}
-
-	/**
-	 * @param string $sectionsToGet Value of sections param in request
-	 * @param array $parsedSections Array of top-level (TOC) section data
-	 * @return array
-	 * @throws BadRequestApiException
-	 */
-	private function getSectionNumbersArray( $sectionsToGet ) {
-		// decode strings like "1%2C%202%2C%203" or "1,2,3" into an array
-		$sectionsToGet = explode( ',', preg_replace( '/\s*/', '', urldecode( $sectionsToGet ) ) );
-		return $sectionsToGet;
 	}
 
 	public function getPopular() {

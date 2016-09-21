@@ -83,9 +83,8 @@ class SwiftStorage {
 		$this->wg = \F::app()->wg;
 
 		if ( !is_null( $dataCenter )  ) {
-			$this->swiftServer = $this->wg->FSSwiftDC[ $dataCenter ][ 'servers' ][ array_rand( $this->wg->FSSwiftDC[ $dataCenter ][ 'servers' ] ) ];
+			$this->swiftServer = $this->wg->FSSwiftDC[ $dataCenter ][ 'server' ];
 			$this->swiftConfig = $this->wg->FSSwiftDC[ $dataCenter ][ 'config' ];
-			array_walk( $this->swiftConfig, function( &$v, $k, $data ) { $v = sprintf( $v, $data ); }, $this->swiftServer );			 
 		} else {
 			$this->swiftConfig = $this->wg->FSSwiftConfig;
 			$this->swiftServer = $this->wg->FSSwiftServer;
@@ -390,5 +389,12 @@ class SwiftStorage {
 
 	public function getPathPrefix() {
 		return $this->pathPrefix;
+	}
+
+	/**
+	 * @return \CF_Connection
+	 */
+	public function getConnection() {
+		return $this->connection;
 	}
 }

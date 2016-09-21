@@ -13,4 +13,5 @@ $messages['en'] = [
 	'tasks-result' => 'Result',
 	'tasks-class-select' => 'Select Class',
 	'tasks-method-select' => 'Select Task',
+	'right-tasks-user' => 'Create/execute background tasks',
 ];

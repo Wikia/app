@@ -36,6 +36,8 @@ class CategoryDataService extends Service {
 	/**
 	 * Return the number of articles that are in a particular category.
 	 *
+	 * TODO: use Mostpopularcategories query cache
+	 *
 	 * @param string $sCategoryDBKey The DB key for the category
 	 * @param string $mNamespace A namespace to filter on.  If not given, a count of articles in
 	 *                        any namespace is returned
@@ -45,44 +47,46 @@ class CategoryDataService extends Service {
 	 * @return int The number of articles with this category
 	 */
 	public static function getArticleCount( $sCategoryDBKey, $mNamespace = '', $negative = false ) {
-		wfProfileIn( __METHOD__ );
 
 		if ( strlen($sCategoryDBKey) == 0 ) {
-			wfProfileOut( __METHOD__ );
 			return 0;
 		}
 
-		$db = wfGetDB( DB_SLAVE );
+		// cache the counter for 24h (the same policy is applied for Mostpopularcategories query cache)
+		return WikiaDataAccess::cache(
+			wfMemcKey( __METHOD__, $sCategoryDBKey, $mNamespace, $negative ? 1 : 0 ),
+			WikiaResponse::CACHE_STANDARD,
+			function() use ( $sCategoryDBKey, $mNamespace, $negative ) {
+				$db = wfGetDB( DB_SLAVE );
 
-		$query = (new WikiaSQL())
-			->SELECT()->COUNT('page_title')->AS_( 'count' )
-			->FROM( 'page' )
-				->JOIN( 'categorylinks' )->ON( 'cl_from', 'page_id' )
-			->WHERE( 'cl_to' )->EQUAL_TO( $sCategoryDBKey );
+				$query = (new WikiaSQL())
+					->SELECT()->COUNT('page_title')->AS_( 'count' )
+					->FROM( 'page' )
+					->JOIN( 'categorylinks' )->ON( 'cl_from', 'page_id' )
+					->WHERE( 'cl_to' )->EQUAL_TO( $sCategoryDBKey );
 
-		// If we have a namespace, convert it to an array
-		if ( $mNamespace && !is_array($mNamespace) ) {
-			$mNamespace = explode(',', $mNamespace);
-		}
+				// If we have a namespace, convert it to an array
+				if ( $mNamespace && !is_array($mNamespace) ) {
+					$mNamespace = explode(',', $mNamespace);
+				}
 
-		// Decide whether we include or exclude the namespace passed to us.  If its null
-		// don't include the namespace in the query at all
-		if ( $mNamespace && $negative === true ) {
-			$query->AND_( 'page_namespace' )->NOT_IN( $mNamespace );
-		} else if ( $mNamespace && $negative === false ) {
-			$query->AND_( 'page_namespace' )->IN( $mNamespace );
-		}
+				// Decide whether we include or exclude the namespace passed to us.  If its null
+				// don't include the namespace in the query at all
+				if ( $mNamespace && $negative === true ) {
+					$query->AND_( 'page_namespace' )->NOT_IN( $mNamespace );
+				} else if ( $mNamespace && $negative === false ) {
+					$query->AND_( 'page_namespace' )->IN( $mNamespace );
+				}
 
-		// Run the query we've built
-		$count = $query->run( $db, function( ResultWrapper $result ) {
-			$row = $result->fetchObject();
-			return empty( $row ) ? 0 : $row->count;
-		});
+				// Run the query we've built
+				$count = $query->run( $db, function( ResultWrapper $result ) {
+					$row = $result->fetchObject();
+					return empty( $row ) ? 0 : $row->count;
+				});
 
-		wfProfileOut( __METHOD__ );
-
-		// Make sure we default to zero
-		return $count;
+				return $count;
+			}
+		);
 	}
 
 	/**

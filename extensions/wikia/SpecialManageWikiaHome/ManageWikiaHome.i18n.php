@@ -5,11 +5,12 @@
  * @addtogroup Languages
  */
 
-$messages = array();
+$messages = [];
 
-$messages['en'] = array(
+$messages['en'] = [
 	'managewikiahome-desc' => 'Internal tool to manage corporate pages\'s visualization aka. remix feature',
 	'managewikiahome' => 'Manage Wikia Home',
+	'right-managewikiahome' => 'Allows access to Special:ManageWikiaHome',
 	'manage-wikia-home-wrong-rights' => "You are probably logged-out or you don't have permissions to use this special page.",
 
 	'manage-wikia-home-wikis-in-slots-heading' => 'Slots setup',
@@ -113,14 +114,14 @@ $messages['en'] = array(
 	'manage-wikia-home-stats-total-pages-label' => 'Total Pages fallback',
 	'manage-wikia-home-stats-success' => 'Stats updated successfully!',
 	'manage-wikia-home-stats-failure' => 'Data wasn\'t saved. Please correct errors in form and try again. ',
-	'manage-wikia-home-stats-permissions-error' => 'Data wasn\'t saved. Please make sure you have correct rights to edit this form. '
-);
+	'manage-wikia-home-stats-permissions-error' => 'Data wasn\'t saved. Please make sure you have correct rights to edit this form. ',
+];
 
 /** Message documentation (Message documentation)
  * @author Shirayuki
  * @author Siebrand
  */
-$messages['qqq'] = array(
+$messages['qqq'] = [
 	'managewikiahome-desc' => '{{desc}}',
 	'managewikiahome' => "Page title visible as browser window's title; Content of <title /> tag in HTML",
 	'manage-wikia-home-wrong-rights' => "A message displayed to a user if he doesn't have rights to use this special page",
@@ -250,14 +251,14 @@ Parameters:
 	'manage-wikia-home-stats-total-pages-label' => "Label for 'Total Pages' form field which is fallback on main page used when something wrong happen in the code.",
 	'manage-wikia-home-stats-success' => 'Message after successful save.',
 	'manage-wikia-home-stats-failure' => "Message which informs user that there data weren't saved because of errors in the form.",
-);
+];
 
 /** Arabic (العربية)
  * @author Achraf94
  * @author Claw eg
  * @author Kuwaity26
  */
-$messages['ar'] = array(
+$messages['ar'] = [
 	'managewikiahome' => 'إدارة الصفحة الرئيسية لويكيا',
 	'manage-wikia-home-wrong-rights' => 'ربما قد سجلت خروجك أو ليس لديك تصريح لاستخدام هذه الصفحة الخاصة.',
 	'manage-wikia-home-wikis-in-slots-heading' => 'إعداد فتحات',
@@ -343,12 +344,12 @@ $messages['ar'] = array(
 	'manage-wikia-home-stats-total-pages-label' => 'تراجع كل الصفحات',
 	'manage-wikia-home-stats-success' => 'تم تحديث الإحصائيات بنجاح!',
 	'manage-wikia-home-stats-failure' => 'لم يتم حفظ البيانات. من فضلك قم بتصحيح الأخطاء في النموذج وحاول مجددا.',
-);
+];
 
 /** Azerbaijani (azərbaycanca)
  * @author Cekli829
  */
-$messages['az'] = array(
+$messages['az'] = [
 	'manage-wikia-home-wiki-list-blocked-no' => 'Xeyr',
 	'manage-wikia-home-wiki-list-blocked-yes' => 'Bəli',
 	'manage-wikia-home-wiki-list-promoted-no' => 'Xeyr',
@@ -361,12 +362,12 @@ $messages['az'] = array(
 	'manage-wikia-home-collections-setup-save-button' => 'Saxla',
 	'manage-wikia-home-collections-enabled-field-label' => 'Qoşulub',
 	'manage-wikia-home-collections-name-field-label' => 'Kolleksiya adı',
-);
+];
 
 /** Bulgarian (български)
  * @author DCLXVI
  */
-$messages['bg'] = array(
+$messages['bg'] = [
 	'manage-wikia-home-wiki-list-blocked-no' => 'Не',
 	'manage-wikia-home-wiki-list-blocked-yes' => 'Да',
 	'manage-wikia-home-wiki-list-promoted-no' => 'Не',
@@ -377,20 +378,20 @@ $messages['bg'] = array(
 	'manage-wikia-home-modal-button-yes' => 'Да',
 	'manage-wikia-home-modal-button-okay' => 'Добре',
 	'manage-wikia-home-collections-setup-save-button' => 'Съхраняване',
-);
+];
 
 /** Bengali (বাংলা)
  * @author Tauhid16
  */
-$messages['bn'] = array(
+$messages['bn'] = [
 	'manage-wikia-home-stats-visitors-label' => 'মাসিক পরিদর্শক',
-);
+];
 
 /** Breton (brezhoneg)
  * @author Fohanno
  * @author Gwenn-Ael
  */
-$messages['br'] = array(
+$messages['br'] = [
 	'managewikiahome' => 'Merañ pajenn degemer Wikia',
 	'manage-wikia-home-hubs-slot-name' => 'Anv ar greizenn',
 	'manage-wikia-home-hubs-slot-description' => 'Deskrivadur ar greizenn',
@@ -448,25 +449,25 @@ $messages['br'] = array(
 	'manage-wikia-home-stats-success' => 'Hizivaet eo bet ar stadegoù !',
 	'manage-wikia-home-stats-failure' => "N'eo ket bet enrollet ar roadennoù. Reizhit ar fazioù er furmskrid, mar plij, ha klaskit en-dro.",
 	'manage-wikia-home-stats-permissions-error' => "N'eo ket bet enrollet ar roadennoù. Ha sur eo ho peus ar gwririoù rekis evit kemmañ ar furmskrid-mañ ?",
-);
+];
 
 /** Bosnian (bosanski)
  * @author CERminator
  */
-$messages['bs'] = array(
+$messages['bs'] = [
 	'manage-wikia-home-collections-add-success' => 'Wiki uspješno dodata u kolekciju.',
 	'manage-wikia-home-collections-add-failure-already-exists' => 'Wiki već postoji u ovoj kolekciji',
 	'manage-wikia-home-collections-add-failure-image' => '$1 ne može biti dodato u ovu kolekciju jer je njena osnovna slika odbijena.',
 	'manage-wikia-home-collections-remove-success' => 'Wiki uspješno uklonjena iz kolekcije.',
 	'manage-wikia-home-collections-invalid-action' => 'Ova akcija ne postoji.',
-);
+];
 
 /** Catalan (català)
  * @author Fitoschido
  * @author Roxas Nobody 15
  * @author Unapersona
  */
-$messages['ca'] = array(
+$messages['ca'] = [
 	'managewikiahome-desc' => 'Eina interna per gestionar la visualització de pàgines corporatives.',
 	'managewikiahome' => 'Administrar',
 	'manage-wikia-home-wrong-rights' => 'Vostè probablement no esta connectat  o no teniu permisos per utilitzar aquesta pàgina especial.',
@@ -559,23 +560,23 @@ $messages['ca'] = array(
 	'manage-wikia-home-stats-success' => 'Guardat correctament!',
 	'manage-wikia-home-stats-failure' => "Les dades no s'han guardat. Corregiu els errors en el formulari i torneu-ho a provar.",
 	'manage-wikia-home-stats-permissions-error' => "No s'ha desat. Comprova que tinguis els drets necessaris per editar.",
-);
+];
 
 /** Chechen (нохчийн)
  * @author Умар
  */
-$messages['ce'] = array(
+$messages['ce'] = [
 	'manage-wikia-home-hubs-slot-error' => 'Ӏалаш ечу хенахь гӀалат даьлла. Дехар до, юху а гӀорта.',
 	'manage-wikia-home-hubs-slot' => 'Слот $1',
 	'manage-wikia-home-hubs-slot-name' => 'Хабан цӀе',
 	'manage-wikia-home-marketing-invalid-size' => 'Суьртан барам хила беза $maxWidth x $maxHeight px.',
 	'manage-wikia-home-wiki-list-blocked' => 'Блоктоьхна',
-);
+];
 
 /** Czech (čeština)
  * @author H4nek
  */
-$messages['cs'] = array(
+$messages['cs'] = [
 	'manage-wikia-home-change-button' => 'Změnit',
 	'manage-wikia-home-wikis-in-visualization-heading' => 'Seznam wiki ve vizualizaci',
 	'manage-wikia-home-wiki-name-filter' => 'Začněte psát název wiki a seznam se zkrátí.',
@@ -589,12 +590,12 @@ $messages['cs'] = array(
 	'manage-wikia-home-wiki-list-official-no' => 'Ne',
 	'manage-wikia-home-wiki-list-official-yes' => 'Ano',
 	'manage-wikia-home-collections-setup-save-button' => 'Uložit',
-);
+];
 
 /** German (Deutsch)
  * @author Metalhead64
  */
-$messages['de'] = array(
+$messages['de'] = [
 	'managewikiahome-desc' => 'Internes Werkzeug zum Verwalten der Visualisierung von Unternehmensseiten, aka Remix-Funktion',
 	'managewikiahome' => 'Wikia Home verwalten',
 	'manage-wikia-home-wrong-rights' => 'Du bist vermutlich abgemeldet oder hast keine Berechtigung, diese Spezialseite zu verwenden.',
@@ -687,20 +688,20 @@ $messages['de'] = array(
 	'manage-wikia-home-stats-success' => 'Statistiken erfolgreich aktualisiert!',
 	'manage-wikia-home-stats-failure' => 'Die Daten wurden nicht gespeichert. Bitte korrigiere Fehler im Formular und versuche es erneut.',
 	'manage-wikia-home-stats-permissions-error' => 'Die Daten wurden nicht gespeichert. Bitte stelle sicher, dass du die korrekten Rechte hast, um dieses Formular zu bearbeiten.',
-);
+];
 
 /** Greek (Ελληνικά)
  * @author Nikosguard
  */
-$messages['el'] = array(
+$messages['el'] = [
 	'manage-wikia-home-modal-title' => 'Αλλαγή κατάστασης του wiki',
 	'manage-wikia-home-modal-content-remove-collection' => 'Θέλετε να καταργήσετε αυτό το wiki από τη συλλογή;',
-);
+];
 
 /** British English (British English)
  * @author Shirayuki
  */
-$messages['en-gb'] = array(
+$messages['en-gb'] = [
 	'manage-wikia-home-visualization-wikis' => 'Corporate wikis with visualisation:',
 	'manage-wikia-home-wikis-in-visualization-heading' => 'List of wikis in visualisation',
 	'manage-wikia-home-modal-content-add-blocked' => 'Do you want to exclude this wiki from appearing in the wiki visualisation?',
@@ -709,7 +710,7 @@ $messages['en-gb'] = array(
 	'manage-wikia-home-modal-content-remove-promoted' => 'Do you want to demote this wiki in the wiki visualisation?',
 	'manage-wikia-home-modal-content-add-official' => 'Do you want to add an official logo for this wiki in the wiki visualisation?',
 	'manage-wikia-home-modal-content-remove-official' => 'Do you want to remove the official wiki logo for this wiki in the wiki visualisation?',
-);
+];
 
 /** Spanish (español)
  * @author Benfutbol10
@@ -717,7 +718,7 @@ $messages['en-gb'] = array(
  * @author Macofe
  * @author VegaDark
  */
-$messages['es'] = array(
+$messages['es'] = [
 	'managewikiahome-desc' => 'Herramienta interna para administrar la visualización de páginas corporativas',
 	'managewikiahome' => 'Administrar Wikia Home',
 	'manage-wikia-home-wrong-rights' => 'Probablemente no has iniciado sesión o no tienes los permisos para usar esta página especial.',
@@ -810,12 +811,12 @@ $messages['es'] = array(
 	'manage-wikia-home-stats-success' => '¡Estadísticas actualizadas exitosamente!',
 	'manage-wikia-home-stats-failure' => 'No se guardaron los datos. Corrige los errores del formulario e inténtalo de nuevo.',
 	'manage-wikia-home-stats-permissions-error' => 'No se guardaron los datos. Asegúrate de tener los permisos correctos para editar este formulario.',
-);
+];
 
 /** Basque (euskara)
  * @author Subi
  */
-$messages['eu'] = array(
+$messages['eu'] = [
 	'manage-wikia-home-wiki-filter-reset' => 'Garbitu',
 	'manage-wikia-home-wiki-list-blocked-no' => 'Ez',
 	'manage-wikia-home-wiki-list-blocked-yes' => 'Bai',
@@ -827,12 +828,12 @@ $messages['eu'] = array(
 	'manage-wikia-home-modal-button-yes' => 'Bai',
 	'manage-wikia-home-modal-button-okay' => 'Ados',
 	'manage-wikia-home-collections-setup-save-button' => 'Gorde',
-);
+];
 
 /** Persian (فارسی)
  * @author Reza1615
  */
-$messages['fa'] = array(
+$messages['fa'] = [
 	'manage-wikia-home-change-button' => 'تغییر',
 	'manage-wikia-home-wiki-filter' => 'پالایه',
 	'manage-wikia-home-wiki-filter-reset' => 'پاک‌کردن',
@@ -852,14 +853,14 @@ $messages['fa'] = array(
 	'manage-wikia-home-collections-setup-save-button' => 'ذخیره',
 	'manage-wikia-home-collections-enabled-field-label' => 'فعال',
 	'manage-wikia-home-collections-name-field-label' => 'نام مجموعه',
-);
+];
 
 /** Finnish (suomi)
  * @author Konstaduck
  * @author McSalama
  * @author Silvonen
  */
-$messages['fi'] = array(
+$messages['fi'] = [
 	'manage-wikia-home-wikis-in-slots-total' => 'Paikkoja yhteensä: $1',
 	'manage-wikia-home-wiki-filter-reset' => 'Tyhjennä',
 	'manage-wikia-home-wiki-list-official' => 'Virallinen',
@@ -874,12 +875,12 @@ $messages['fi'] = array(
 	'manage-wikia-home-modal-button-no' => 'Ei',
 	'manage-wikia-home-modal-button-yes' => 'Kyllä',
 	'manage-wikia-home-collections-setup-save-button' => 'Tallenna',
-);
+];
 
 /** Faroese (føroyskt)
  * @author EileenSanda
  */
-$messages['fo'] = array(
+$messages['fo'] = [
 	'manage-wikia-home-change-button' => 'Broyt',
 	'manage-wikia-home-wikis-in-visualization-heading' => 'Listi yvir wikiir í visualisering',
 	'manage-wikia-home-wiki-name-filter' => 'Byrja við at skriva eitt wiki-navn, so verður listin styttri:',
@@ -908,14 +909,14 @@ $messages['fo'] = array(
 	'manage-wikia-home-collection-hero-image-tooltip' => 'Henda myndin eigur at vera $1px × $2px',
 	'manage-wikia-home-collection-sponsor-image-tooltip' => 'Henda myndin eigur at vera $1px × $2px',
 	'manage-wikia-home-collection-add-file-button' => 'Innset eina mynd',
-);
+];
 
 /** French (français)
  * @author Gomoko
  * @author Verdy p
  * @author Wyz
  */
-$messages['fr'] = array(
+$messages['fr'] = [
 	'managewikiahome-desc' => 'Outil interne pour gérer la visualisation des pages dites d’entreprise. Fonctionnalité remixée',
 	'managewikiahome' => 'Gérer l’accueil de Wikia',
 	'manage-wikia-home-wrong-rights' => 'Vous êtes sans doute déconnecté ou n’avez pas les droits pour utiliser cette page spéciale.',
@@ -1008,12 +1009,12 @@ $messages['fr'] = array(
 	'manage-wikia-home-stats-success' => 'Statistiques bien mises à jour !',
 	'manage-wikia-home-stats-failure' => 'Les données n’ont pas été enregistrées. Veuillez corriger les erreurs dans le formulaire et réessayer.',
 	'manage-wikia-home-stats-permissions-error' => 'Les données n’ont pas été enregistrées. Veuillez vous assurer d’avoir droits requis pour modifier ce formulaire.',
-);
+];
 
 /** Western Frisian (Frysk)
  * @author Robin0van0der0vliet
  */
-$messages['fy'] = array(
+$messages['fy'] = [
 	'manage-wikia-home-wiki-list-id' => 'Id',
 	'manage-wikia-home-wiki-list-blocked-no' => 'Nee',
 	'manage-wikia-home-wiki-list-blocked-yes' => 'Ja',
@@ -1025,12 +1026,12 @@ $messages['fy'] = array(
 	'manage-wikia-home-modal-button-yes' => 'Ja',
 	'manage-wikia-home-modal-button-okay' => 'OK',
 	'manage-wikia-home-collections-setup-save-button' => 'Bewarje',
-);
+];
 
 /** Galician (galego)
  * @author Toliño
  */
-$messages['gl'] = array(
+$messages['gl'] = [
 	'managewikiahome' => 'Administrar o inicio de Wikia',
 	'manage-wikia-home-wrong-rights' => 'Probablemente non accedeu ao sistema ou non ten os permisos necesarios para utilizar esta páxina especial.',
 	'manage-wikia-home-wikis-in-slots-heading' => 'Configuración dos espazos',
@@ -1107,13 +1108,13 @@ $messages['gl'] = array(
 	'manage-wikia-home-stats-total-pages-label' => 'Modo de emerxencia do total de páxinas',
 	'manage-wikia-home-stats-success' => 'As estatísticas actualizáronse correctamente!',
 	'manage-wikia-home-stats-failure' => 'Non se gardaron os datos. Corrixa os erros do formulario e inténteo de novo.',
-);
+];
 
 /** Indonesian (Bahasa Indonesia)
  * @author C5st4wr6ch
  * @author Fate Kage
  */
-$messages['id'] = array(
+$messages['id'] = [
 	'manage-wikia-home-wrong-rights' => 'Anda mungkin telah keluar log atau Anda tidak memiliki izin untuk menggunakan halaman khusus ini.',
 	'manage-wikia-home-collections-success' => 'Koleksi telah disimpan.',
 	'manage-wikia-home-error-negative-slots-number-not-allowed' => 'Jumlah petak negatif tidak diizinkan.',
@@ -1134,23 +1135,23 @@ $messages['id'] = array(
 	'manage-wikia-home-collections-name-field-label' => 'Nama koleksi',
 	'manage-wikia-home-collection-hero-image-tooltip' => 'Gambar ini sebaiknya $1px × $2px',
 	'manage-wikia-home-collection-add-file-button' => 'Tambahkan foto',
-);
+];
 
 /** Italian (italiano)
  * @author PeppeAeco
  */
-$messages['it'] = array(
+$messages['it'] = [
 	'manage-wikia-home-hubs-slot' => 'Slot $1',
 	'manage-wikia-home-hubs-slot-empty-option' => '-- Slot vuoto --',
 	'manage-wikia-home-stats-failure' => 'I dati non sono stati salvati. Si prega di correggere errori e riprovare.',
-);
+];
 
 /** Japanese (日本語)
  * @author Barrel0116
  * @author Dude1717
  * @author Plover-Y
  */
-$messages['ja'] = array(
+$messages['ja'] = [
 	'manage-wikia-home-wiki-list-headline' => 'ウィキ名',
 	'manage-wikia-home-wiki-list-blocked' => 'ブロック済',
 	'manage-wikia-home-wiki-list-blocked-no' => 'いいえ',
@@ -1166,12 +1167,12 @@ $messages['ja'] = array(
 	'manage-wikia-home-collection-add-file-button' => '画像を追加',
 	'manage-wikia-home-stats-visitors-label' => '毎月の訪問者',
 	'manage-wikia-home-stats-failure' => 'データは保存されませんでした。フォームのエラーを修正して、やり直してください。',
-);
+];
 
 /** Kannada (ಕನ್ನಡ)
  * @author VASANTH S.N.
  */
-$messages['kn'] = array(
+$messages['kn'] = [
 	'manage-wikia-home-change-button' => 'ಬದಲಿಸಿ',
 	'manage-wikia-home-wiki-filter' => 'ಶೋಧಕ',
 	'manage-wikia-home-wiki-filter-reset' => 'ಅಳಿಸಿ',
@@ -1188,7 +1189,7 @@ $messages['kn'] = array(
 	'manage-wikia-home-collections-enabled-field-label' => 'ಶಕ್ತಗೊಳಿಸಿ',
 	'manage-wikia-home-collections-name-field-label' => 'ಸಂಗ್ರಹ ಹೆಸರು',
 	'manage-wikia-home-collection-add-file-button' => 'ಚಿತ್ರ ಸೇರಿಸಿ',
-);
+];
 
 /** Korean (한국어)
  * @author Clockoon
@@ -1196,7 +1197,7 @@ $messages['kn'] = array(
  * @author Miri-Nae
  * @author Priviet
  */
-$messages['ko'] = array(
+$messages['ko'] = [
 	'managewikiahome' => '위키아 홈 관리',
 	'manage-wikia-home-wrong-rights' => '로그인하지 않았거나 이 특수 기능을 사용할 수 있는 권한이 없습니다.',
 	'manage-wikia-home-wikis-in-slots-heading' => '슬롯 설정',
@@ -1259,12 +1260,12 @@ $messages['ko'] = array(
 	'manage-wikia-home-stats-mobile-percentage-label' => '% 모바일 방문자',
 	'manage-wikia-home-stats-total-pages-label' => '모든 문서 대체',
 	'manage-wikia-home-stats-failure' => '데이터가 저장되지 않았습니다. 양식의 오류를 수정하고 다시 시도해주세요.',
-);
+];
 
 /** Kurdish (Latin script) (Kurdî (latînî)‎)
  * @author Bikarhêner
  */
-$messages['ku-latn'] = array(
+$messages['ku-latn'] = [
 	'manage-wikia-home-change-button' => 'Biguherîne',
 	'manage-wikia-home-wiki-filter' => 'Fîltre',
 	'manage-wikia-home-wiki-filter-reset' => 'Paqij bike',
@@ -1277,12 +1278,12 @@ $messages['ku-latn'] = array(
 	'manage-wikia-home-modal-button-no' => 'Na',
 	'manage-wikia-home-modal-button-yes' => 'Erê',
 	'manage-wikia-home-collections-setup-save-button' => 'Tomar bike',
-);
+];
 
 /** Luxembourgish (Lëtzebuergesch)
  * @author Robby
  */
-$messages['lb'] = array(
+$messages['lb'] = [
 	'manage-wikia-home-hubs-slot-error' => 'Et gouf e Feeler beim Späicheren. Probéiert w.e.g. nach eng Kéier.',
 	'manage-wikia-home-hubs-slot' => 'Slot $1',
 	'manage-wikia-home-hubs-slot-more-links' => '"Méi op..." Linken',
@@ -1306,12 +1307,12 @@ $messages['lb'] = array(
 	'manage-wikia-home-stats-visitors-label' => 'Visiteure pro Mount',
 	'manage-wikia-home-stats-mobile-percentage-label' => '% Mobil Visiteuren',
 	'manage-wikia-home-stats-failure' => "D'Donnéeë goufen net gespäichert. Verbessert w.e.g. d'Feeler am Formulaire a probéiert nach eng Kéier.",
-);
+];
 
 /** Northern Luri (لوری مینجایی)
  * @author Mogoeilor
  */
-$messages['lrc'] = array(
+$messages['lrc'] = [
 	'manage-wikia-home-wiki-filter' => 'فيلتر',
 	'manage-wikia-home-wiki-filter-reset' => 'پاك كردن',
 	'manage-wikia-home-wiki-list-headline' => 'نوم ویکی',
@@ -1327,12 +1328,12 @@ $messages['lrc'] = array(
 	'manage-wikia-home-modal-button-okay' => 'خوئه',
 	'manage-wikia-home-collections-setup-save-button' => 'اماییه كردن',
 	'manage-wikia-home-collections-enabled-field-label' => 'کنشتگر بیه',
-);
+];
 
 /** Macedonian (македонски)
  * @author Bjankuloski06
  */
-$messages['mk'] = array(
+$messages['mk'] = [
 	'manage-wikia-home-stats-header' => 'Статистики за претпријатиска главна страница',
 	'manage-wikia-home-stats-text' => 'Статистиките се прикажуваат на сите претпријатиски страници без да се одвојуваат по јазици',
 	'manage-wikia-home-stats-visitors-label' => 'Посетители месечно',
@@ -1341,12 +1342,12 @@ $messages['mk'] = array(
 	'manage-wikia-home-stats-total-pages-label' => 'Повраток на Вкупно страници',
 	'manage-wikia-home-stats-success' => 'Статистиките се успешно подновени!',
 	'manage-wikia-home-stats-failure' => 'Податоците не се зачувани. Исправете ги грешките во образецот и обидете се повторно.',
-);
+];
 
 /** Malay (Bahasa Melayu)
  * @author Anakmalaysia
  */
-$messages['ms'] = array(
+$messages['ms'] = [
 	'managewikiahome-desc' => 'Alatan dalaman untuk menguruskan visualisasi laman korporat, iaitu ciri-ciri remix',
 	'managewikiahome' => 'Uruskan Wikia Home',
 	'manage-wikia-home-wrong-rights' => 'Anda mungkin sudah log keluar ataupun tidak mempunyai keizinan untuk menggunakan halaman khas ini.',
@@ -1439,13 +1440,13 @@ $messages['ms'] = array(
 	'manage-wikia-home-stats-success' => 'Statistik berjaya dikemaskinikan!',
 	'manage-wikia-home-stats-failure' => 'Data tidak tersimpan. Sila betulkan kesilapan dalam borang dan cuba lagi.',
 	'manage-wikia-home-stats-permissions-error' => 'Data tidak tersimpan. Sila pastikan anda mempunyai hak-hak yang berkenaan untuk menyunting borang ini.',
-);
+];
 
 /** Norwegian Bokmål (norsk bokmål)
  * @author Event
  * @author Laaknor
  */
-$messages['nb'] = array(
+$messages['nb'] = [
 	'manage-wikia-home-wrong-rights' => 'Du er sannsynligvis utlogget eller du har ikke rettigheter for å bruke denne spesialsiden.',
 	'manage-wikia-home-wiki-filter' => 'Filter',
 	'manage-wikia-home-wiki-filter-reset' => 'Tøm',
@@ -1465,7 +1466,7 @@ $messages['nb'] = array(
 	'manage-wikia-home-wiki-list-all-collections' => 'Alle samlinger',
 	'manage-wikia-home-wiki-list-all-verticals' => 'Alle vertikale',
 	'manage-wikia-home-modal-content-blocked-wiki-title' => 'Denne wikien er blokkert',
-);
+];
 
 /** Dutch (Nederlands)
  * @author Bluyten
@@ -1474,7 +1475,7 @@ $messages['nb'] = array(
  * @author Siebrand
  * @author Sjoerddebruin
  */
-$messages['nl'] = array(
+$messages['nl'] = [
 	'managewikiahome' => 'Wikia Home beheren',
 	'manage-wikia-home-wrong-rights' => 'U bent waarschijnlijk afgemeld of u hebt geen rechten voor deze speciale pagina.',
 	'manage-wikia-home-wikis-in-slots-heading' => 'Instellingen voor plaatsen',
@@ -1566,12 +1567,12 @@ $messages['nl'] = array(
 	'manage-wikia-home-stats-success' => 'Statistieken bijgewerkt!',
 	'manage-wikia-home-stats-failure' => 'Gegevens niet opgeslagen. Corrigeer fouten in het formulier en probeer het nogmaals.',
 	'manage-wikia-home-stats-permissions-error' => 'De gegevens zijn niet opgeslagen. Zorg ervoor dat u de juiste rechten hebt om dit formulier te bewerken.',
-);
+];
 
 /** Occitan (occitan)
  * @author Cedric31
  */
-$messages['oc'] = array(
+$messages['oc'] = [
 	'managewikiahome' => 'Gerir l’acuèlh de Wikia',
 	'manage-wikia-home-hubs-slot-heading' => 'Parametratge dels emplaçaments centrals',
 	'manage-wikia-home-hubs-slot-success' => 'Los emplaçaments centrals son estats enregistrats.',
@@ -1608,7 +1609,7 @@ $messages['oc'] = array(
 	'manage-wikia-home-collections-wikis-in-collection' => 'Wikis : $1 sus $2',
 	'manage-wikia-home-collection-add-file-button' => 'Apondre una fòto',
 	'manage-wikia-home-stats-visitors-label' => 'Visitors mesadièrs',
-);
+];
 
 /** Polish (polski)
  * @author Chrumps
@@ -1618,7 +1619,7 @@ $messages['oc'] = array(
  * @author Sovq
  * @author Vengir
  */
-$messages['pl'] = array(
+$messages['pl'] = [
 	'managewikiahome' => 'Zarządzenie Wikia Home',
 	'manage-wikia-home-wrong-rights' => 'Jesteś wylogowany lub nie masz uprawnień aby edytować tą stronę.',
 	'manage-wikia-home-wikis-in-slots-heading' => 'Ustawienie slotów',
@@ -1707,12 +1708,12 @@ $messages['pl'] = array(
 	'manage-wikia-home-stats-success' => 'Statystyki zostały pomyślnie zaktualizowane',
 	'manage-wikia-home-stats-failure' => 'Dane nie zostały zapisane. Proszę popraw błędy w formularzu i spróbuj ponownie.',
 	'manage-wikia-home-stats-permissions-error' => 'Dane nie zostały zapisane. Proszę, upewnij się, że masz odpowiednie prawa do edycji tego formularza.',
-);
+];
 
 /** Pashto (پښتو)
  * @author Ahmed-Najib-Biabani-Ibrahimkhel
  */
-$messages['ps'] = array(
+$messages['ps'] = [
 	'manage-wikia-home-change-button' => 'بدلول',
 	'manage-wikia-home-wiki-filter' => 'چاڼگر',
 	'manage-wikia-home-wiki-filter-reset' => 'سپينول',
@@ -1732,13 +1733,13 @@ $messages['ps'] = array(
 	'manage-wikia-home-modal-button-yes' => 'هو',
 	'manage-wikia-home-collections-setup-save-button' => 'خوندي کول',
 	'manage-wikia-home-collection-add-file-button' => 'يو انځور ورگډول',
-);
+];
 
 /** Portuguese (português)
  * @author Hamilton Abreu
  * @author Luckas
  */
-$messages['pt'] = array(
+$messages['pt'] = [
 	'manage-wikia-home-wiki-filter-reset' => 'Limpar',
 	'manage-wikia-home-wiki-list-official' => 'Oficial',
 	'manage-wikia-home-wiki-list-collection' => 'Coleções',
@@ -1754,12 +1755,12 @@ $messages['pt'] = array(
 	'manage-wikia-home-collections-setup-save-button' => 'Gravar',
 	'manage-wikia-home-collections-name-field-label' => 'Nome da coleção',
 	'manage-wikia-home-collections-sponsor-url-field-label' => 'URL do patrocinador',
-);
+];
 
 /** Brazilian Portuguese (português do Brasil)
  * @author Luckas
  */
-$messages['pt-br'] = array(
+$messages['pt-br'] = [
 	'manage-wikia-home-wiki-filter' => 'Filtrar',
 	'manage-wikia-home-wiki-filter-reset' => 'Limpar',
 	'manage-wikia-home-wiki-list-id' => 'Id',
@@ -1786,12 +1787,12 @@ $messages['pt-br'] = array(
 	'manage-wikia-home-collections-sponsor-image-field-label' => 'Imagem do patrocinador',
 	'manage-wikia-home-collections-wikis-in-collection' => 'Wikis: $1 de $2',
 	'manage-wikia-home-collection-add-file-button' => 'Adicionar uma foto',
-);
+];
 
 /** tarandíne (tarandíne)
  * @author Joetaras
  */
-$messages['roa-tara'] = array(
+$messages['roa-tara'] = [
 	'managewikiahome' => "Gestisce 'a Pàgena Prengepàle de Uicchia",
 	'manage-wikia-home-wikis-in-slots-heading' => "'Mbostazione de le spazie",
 	'manage-wikia-home-wikis-in-slots-total' => 'Numere totale de spazie: $1',
@@ -1838,12 +1839,12 @@ $messages['roa-tara'] = array(
 	'manage-wikia-home-collection-hero-image-tooltip' => "St'immaggine avessa essere $1px × $2px",
 	'manage-wikia-home-collection-sponsor-image-tooltip' => "St'immaggine avessa essere $1px × $2px",
 	'manage-wikia-home-collection-add-file-button' => "Aggiunge 'na fote",
-);
+];
 
 /** Russian (русский)
  * @author Okras
  */
-$messages['ru'] = array(
+$messages['ru'] = [
 	'managewikiahome' => 'Управление домашней страницей Wikia',
 	'manage-wikia-home-wrong-rights' => 'Вы, вероятно, завершили сеанс или не имеете разрешений на использование этой специальной страницы.',
 	'manage-wikia-home-wikis-in-slots-heading' => 'Установка слотов',
@@ -1935,14 +1936,14 @@ $messages['ru'] = array(
 	'manage-wikia-home-stats-success' => 'Статистика успешно обновлена!',
 	'manage-wikia-home-stats-failure' => 'Данные не были сохранены. Пожалуйста, исправьте ошибки в форме и повторите попытку.',
 	'manage-wikia-home-stats-permissions-error' => 'Данные не были сохранены. Пожалуйста, убедитесь, что у вас есть соответствующие права для редактирования этой формы.',
-);
+];
 
 /** Scots (Scots)
  * @author John Reid
  */
-$messages['sco'] = array(
+$messages['sco'] = [
 	'manage-wikia-home-stats-failure' => 'Data wisna hained. Please correct the mistaks in the form n gie it anither shot.',
-);
+];
 
 /** Swedish (svenska)
  * @author Jopparn
@@ -1950,7 +1951,7 @@ $messages['sco'] = array(
  * @author Tobulos1
  * @author WikiPhoenix
  */
-$messages['sv'] = array(
+$messages['sv'] = [
 	'managewikiahome-desc' => 'Internt verktyg för att hantera visualiseringen för kollektiva sidor, även känd som remixfunktionen',
 	'managewikiahome' => 'Hantera Wikia hem',
 	'manage-wikia-home-wrong-rights' => 'Du är förmodligen utloggad eller så har du inte behörighet att använda denna speciella sida.',
@@ -2043,20 +2044,20 @@ $messages['sv'] = array(
 	'manage-wikia-home-stats-success' => 'Statistiken uppdaterades!',
 	'manage-wikia-home-stats-failure' => 'Data sparades inte. Var god korrigera felen i formuläret och försök igen.',
 	'manage-wikia-home-stats-permissions-error' => 'Data sparades inte. Kontrollera att du har rätt rättigheter att redigera denna formulär.',
-);
+];
 
 /** Tamil (தமிழ்)
  * @author ElangoRamanujam
  */
-$messages['ta'] = array(
+$messages['ta'] = [
 	'manage-wikia-home-modal-button-no' => 'இல்லை',
 	'manage-wikia-home-modal-button-yes' => 'ஆம்',
-);
+];
 
 /** Telugu (తెలుగు)
  * @author Chaduvari
  */
-$messages['te'] = array(
+$messages['te'] = [
 	'manage-wikia-home-wrong-rights' => 'మీరు లాగౌటై ఉండవచ్చు లేదా ఈ ప్రత్యేకపేజీని వాడేందుకు మీకు అనుమతులు లేకపోయి ఉండవచ్చు.',
 	'manage-wikia-home-collections-validation-error' => 'భద్రపరచడంలో ఏదో లోపం దొర్లింది. మీరు ఇచ్చినది ఏమిటో ఓసారి సరిచూడండి.',
 	'manage-wikia-home-change-button' => 'మార్చు',
@@ -2103,12 +2104,12 @@ $messages['te'] = array(
 	'manage-wikia-home-stats-mobile-percentage-label' => '% మొబైలు సందర్శకులు',
 	'manage-wikia-home-stats-success' => 'గణాంకాలను జయప్రదంగా తాజాకరించాం!',
 	'manage-wikia-home-stats-failure' => 'డేటాను భద్రపరచలేదు. ఫారంలోని దోషాలను సవరించి మళ్ళీ ప్రయత్నించండి.',
-);
+];
 
 /** Turkish (Türkçe)
  * @author Incelemeelemani
  */
-$messages['tr'] = array(
+$messages['tr'] = [
 	'manage-wikia-home-wiki-list-blocked-no' => 'Hayır',
 	'manage-wikia-home-wiki-list-blocked-yes' => 'Evet',
 	'manage-wikia-home-wiki-list-promoted-no' => 'Hayır',
@@ -2131,14 +2132,14 @@ $messages['tr'] = array(
 	'manage-wikia-home-stats-mobile-percentage-label' => '% Mobil Ziyaretçiler',
 	'manage-wikia-home-stats-success' => 'İstatistikler başarıyla güncelleştirildi!',
 	'manage-wikia-home-stats-failure' => 'Veri kaydedilmedi. Formdaki hataları düzenleyin ve tekrar deneyin.',
-);
+];
 
 /** Ukrainian (українська)
  * @author Andriykopanytsia
  * @author Mykola Swarnyk
  * @author Ua2004
  */
-$messages['uk'] = array(
+$messages['uk'] = [
 	'managewikiahome' => 'Управління Будинком Вікія',
 	'manage-wikia-home-wrong-rights' => 'Ви, ймовірно, вийшли або не маєте дозволу на використання цієї спеціальної сторінки.',
 	'manage-wikia-home-wikis-in-slots-heading' => 'Установки слотів',
@@ -2230,14 +2231,14 @@ $messages['uk'] = array(
 	'manage-wikia-home-stats-success' => 'Успішно оновлено статистику!',
 	'manage-wikia-home-stats-failure' => 'Дані не було збережено. Виправте помилки у формі і повторіть спробу.',
 	'manage-wikia-home-stats-permissions-error' => 'Дані не було збережені. Переконайтеся, що ви маєте належні права на редагування цієї форми.',
-);
+];
 
 /** Vietnamese (Tiếng Việt)
  * @author Baonguyen21022003
  * @author Dinhxuanduyet
  * @author Max20091
  */
-$messages['vi'] = array(
+$messages['vi'] = [
 	'managewikiahome' => 'Quản lý Wikia Home',
 	'manage-wikia-home-wrong-rights' => 'Bạn có lẽ đã đăng xuất hoặc bạn không có quyền sử dụng trang đặc biệt này.',
 	'manage-wikia-home-wikis-in-slots-heading' => 'Cài đặt slot',
@@ -2303,14 +2304,14 @@ $messages['vi'] = array(
 	'manage-wikia-home-stats-visitors-label' => 'Khách viếng thăm hàng tháng',
 	'manage-wikia-home-stats-mobile-percentage-label' => '% Khách ghé thăm qua điện thoại di động',
 	'manage-wikia-home-stats-edits-default-label' => 'Rút lại các thay đổi ngày hôm nay',
-);
+];
 
 /** Simplified Chinese (中文（简体）‎)
  * @author Dimension
  * @author Liuxinyu970226
  * @author Yfdyh000
  */
-$messages['zh-hans'] = array(
+$messages['zh-hans'] = [
 	'managewikiahome-desc' => '内部工具来管理企业页面的可视化，又称混搭（remix）工具。',
 	'managewikiahome' => '管理Wikia首页',
 	'manage-wikia-home-wrong-rights' => '您可能已登出，或者您没有权限使用此特殊页面。',
@@ -2400,14 +2401,14 @@ $messages['zh-hans'] = array(
 	'manage-wikia-home-stats-success' => '统计更新成功！',
 	'manage-wikia-home-stats-failure' => '数据未保存。请更正表单中的错误并重试。',
 	'manage-wikia-home-stats-permissions-error' => '数据没保存。请确信您有正确的权限编辑此表单。',
-);
+];
 
 /** Traditional Chinese (中文（繁體）‎)
  * @author Cwlin0416
  * @author Ffaarr
  * @author Liuxinyu970226
  */
-$messages['zh-hant'] = array(
+$messages['zh-hant'] = [
 	'managewikiahome' => '管理Wikia首頁',
 	'manage-wikia-home-wrong-rights' => '您可能已登出，或者您没有權限使用此特殊頁面。',
 	'manage-wikia-home-wiki-filter' => '篩選器',
@@ -2426,4 +2427,4 @@ $messages['zh-hant'] = array(
 	'manage-wikia-home-collections-setup-save-button' => '儲存',
 	'manage-wikia-home-collection-add-file-button' => '新增圖片',
 	'manage-wikia-home-stats-edits-default-label' => '變更今天的備選',
-);
+];

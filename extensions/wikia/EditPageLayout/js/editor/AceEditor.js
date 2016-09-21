@@ -57,6 +57,7 @@ define(
 	 */
 	function initOptions() {
 		var options = {
+			wrap: true,
 			showPrintMargin: false,
 			fontFamily: 'Monaco, Menlo, Ubuntu Mono, Consolas, source-code-pro, monospace'
 		};
@@ -86,15 +87,36 @@ define(
 	 * Init submit action
 	 */
 	function initSubmit() {
-		$('#editform').submit(function(e) {
-			var hiddenInput = ace.getInput().val(ace.getContent());
+		$('#editform').submit(function (e) {
+			var $hiddenInput = ace.getInput().val(ace.getContent()),
+				$editForm = $(this);
 
 			disableBeforeUnload = true;
 
-			$(this).unbind('submit').append(hiddenInput).submit();
-
 			e.preventDefault();
+
+			/* Allow TemplateClassification extension to break submit */
+			if (win.enableTemplateClassificationEditorPlugin) {
+				require(['TemplateClassificationModalForce'], function forceTemplateClassificationModal(tcForce) {
+					if (tcForce.forceType() === true) {
+						return;
+					} else {
+						finishSubmit($editForm, $hiddenInput);
+					}
+				});
+			} else {
+				finishSubmit($editForm, $hiddenInput);
+			}
 		});
+	}
+
+	/**
+	 * Submit form with hidden field
+	 * @param {jQuery} $editForm
+	 * @param {jQuery} $hiddenInput
+	 */
+	function finishSubmit($editForm, $hiddenInput) {
+		$editForm.unbind('submit').append($hiddenInput).submit();
 	}
 
 	/**

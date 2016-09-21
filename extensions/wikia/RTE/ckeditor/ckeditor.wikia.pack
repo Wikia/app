@@ -211,7 +211,6 @@ packages :
 					'../js/plugins/overlay/plugin.js',
 					'../js/plugins/paste/plugin.js',
 					'../js/plugins/placeholder/plugin.js',
-					'../js/plugins/poll/plugin.js',
 					'../js/plugins/signature/plugin.js',
 					'../js/plugins/spellchecker/plugin.js',
 					'../js/plugins/template/plugin.js',

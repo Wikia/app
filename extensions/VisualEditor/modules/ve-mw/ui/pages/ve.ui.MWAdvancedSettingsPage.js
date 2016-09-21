@@ -23,7 +23,7 @@ ve.ui.MWAdvancedSettingsPage = function VeUiMWAdvancedSettingsPage( name, config
 
 	// Properties
 	this.metaList = null;
-	this.indexingOptionTouched = false;
+	//this.indexingOptionTouched = false;
 	this.newSectionEditLinkOptionTouched = false;
 
 	this.advancedSettingsFieldset = new OO.ui.FieldsetLayout( {
@@ -35,33 +35,33 @@ ve.ui.MWAdvancedSettingsPage = function VeUiMWAdvancedSettingsPage( name, config
 	// Initialization
 
 	// Indexing items
-	this.indexing = new OO.ui.FieldLayout(
-		new OO.ui.ButtonSelectWidget( { $: this.$ } )
-			.addItems( [
-				new OO.ui.ButtonOptionWidget( {
-					data: 'mwIndexForce',
-					label: ve.msg( 'visualeditor-dialog-meta-settings-index-force' ),
-					flags: ['secondary']
-				} ),
-				new OO.ui.ButtonOptionWidget( {
-					data: 'default',
-					label: ve.msg( 'visualeditor-dialog-meta-settings-index-default' ),
-					flags: ['secondary']
-				} ),
-				new OO.ui.ButtonOptionWidget( {
-					data: 'mwIndexDisable',
-					label: ve.msg( 'visualeditor-dialog-meta-settings-index-disable' ),
-					flags: ['secondary']
-				} )
-			] )
-			.connect( this, { select: 'onIndexingOptionChange' } ),
-		{
-			$: this.$,
-			align: 'top',
-			label: ve.msg( 'visualeditor-dialog-meta-settings-index-label' ),
-			help: ve.msg( 'visualeditor-dialog-meta-settings-index-help' )
-		}
-	);
+	//this.indexing = new OO.ui.FieldLayout(
+	//	new OO.ui.ButtonSelectWidget( { $: this.$ } )
+	//		.addItems( [
+	//			new OO.ui.ButtonOptionWidget( {
+	//				data: 'mwIndexForce',
+	//				label: ve.msg( 'visualeditor-dialog-meta-settings-index-force' ),
+	//				flags: ['secondary']
+	//			} ),
+	//			new OO.ui.ButtonOptionWidget( {
+	//				data: 'default',
+	//				label: ve.msg( 'visualeditor-dialog-meta-settings-index-default' ),
+	//				flags: ['secondary']
+	//			} ),
+	//			new OO.ui.ButtonOptionWidget( {
+	//				data: 'mwIndexDisable',
+	//				label: ve.msg( 'visualeditor-dialog-meta-settings-index-disable' ),
+	//				flags: ['secondary']
+	//			} )
+	//		] )
+	//		.connect( this, { select: 'onIndexingOptionChange' } ),
+	//	{
+	//		$: this.$,
+	//		align: 'top',
+	//		label: ve.msg( 'visualeditor-dialog-meta-settings-index-label' ),
+	//		help: ve.msg( 'visualeditor-dialog-meta-settings-index-help' )
+	//	}
+	//);
 
 	// New edit section link items
 	this.newEditSectionLink = new OO.ui.FieldLayout(
@@ -117,7 +117,7 @@ ve.ui.MWAdvancedSettingsPage = function VeUiMWAdvancedSettingsPage( name, config
 		}
 	);
 
-	this.advancedSettingsFieldset.addItems( [ this.indexing, this.newEditSectionLink, this.enableDisplayTitleField, this.displayTitleField ] );
+	this.advancedSettingsFieldset.addItems( [ this.newEditSectionLink, this.enableDisplayTitleField, this.displayTitleField ] );
 
 	this.metaItemCheckboxes = [];
 	if ( mw.config.get( 'wgVariantArticlePath' ) ) {
@@ -198,9 +198,9 @@ ve.ui.MWAdvancedSettingsPage.prototype.setOutlineItem = function ( outlineItem )
 /**
  * Handle indexing option state change events.
  */
-ve.ui.MWAdvancedSettingsPage.prototype.onIndexingOptionChange = function () {
-	this.indexingOptionTouched = true;
-};
+//ve.ui.MWAdvancedSettingsPage.prototype.onIndexingOptionChange = function () {
+//	this.indexingOptionTouched = true;
+//};
 
 /**
  * Get the first meta item of a given name
@@ -231,9 +231,9 @@ ve.ui.MWAdvancedSettingsPage.prototype.setup = function ( metaList ) {
 	this.metaList = metaList;
 
 	var // Indexing items
-		indexingField = this.indexing.getField(),
-		indexingOption = this.getMetaItem( 'mwIndex' ),
-		indexingType = indexingOption && indexingOption.element.type || 'default',
+		//indexingField = this.indexing.getField(),
+		//indexingOption = this.getMetaItem( 'mwIndex' ),
+		//indexingType = indexingOption && indexingOption.element.type || 'default',
 
 		// New section edit link items
 		newSectionEditField = this.newEditSectionLink.getField(),
@@ -246,8 +246,8 @@ ve.ui.MWAdvancedSettingsPage.prototype.setup = function ( metaList ) {
 		advancedSettingsPage = this;
 
 	// Indexing items
-	indexingField.selectItem( indexingField.getItemFromData( indexingType ) );
-	this.indexingOptionTouched = false;
+	//indexingField.selectItem( indexingField.getItemFromData( indexingType ) );
+	//this.indexingOptionTouched = false;
 
 	// New section edit link items
 	newSectionEditField.selectItem( newSectionEditField.getItemFromData( newSectionEditLinkType ) );
@@ -275,8 +275,8 @@ ve.ui.MWAdvancedSettingsPage.prototype.teardown = function ( data ) {
 	data = data || {};
 
 	var // Indexing items
-		currentIndexingItem = this.getMetaItem( 'mwIndex' ),
-		newIndexingData = this.indexing.getField().getSelectedItem(),
+		//currentIndexingItem = this.getMetaItem( 'mwIndex' ),
+		//newIndexingData = this.indexing.getField().getSelectedItem(),
 
 		// New section edit link items
 		currentNewSectionEditLinkItem = this.getMetaItem( 'mwNewSectionEdit' ),
@@ -289,24 +289,24 @@ ve.ui.MWAdvancedSettingsPage.prototype.teardown = function ( data ) {
 		advancedSettingsPage = this;
 
 	// Alter the indexing option flag iff it's been touched & is actually different
-	if ( this.indexingOptionTouched ) {
-		if ( newIndexingData.data === 'default' ) {
-			if ( currentIndexingItem ) {
-				currentIndexingItem.remove();
-			}
-		} else {
-			if ( !currentIndexingItem ) {
-				this.metaList.insertMeta( { type: newIndexingData.data } );
-			} else if ( currentIndexingItem.element.type !== newIndexingData.data ) {
-				currentIndexingItem.replaceWith(
-					ve.extendObject( true, {},
-						currentIndexingItem.getElement(),
-						{ type: newIndexingData.data }
-					)
-				);
-			}
-		}
-	}
+	//if ( this.indexingOptionTouched ) {
+	//	if ( newIndexingData.data === 'default' ) {
+	//		if ( currentIndexingItem ) {
+	//			currentIndexingItem.remove();
+	//		}
+	//	} else {
+	//		if ( !currentIndexingItem ) {
+	//			this.metaList.insertMeta( { type: newIndexingData.data } );
+	//		} else if ( currentIndexingItem.element.type !== newIndexingData.data ) {
+	//			currentIndexingItem.replaceWith(
+	//				ve.extendObject( true, {},
+	//					currentIndexingItem.getElement(),
+	//					{ type: newIndexingData.data }
+	//				)
+	//			);
+	//		}
+	//	}
+	//}
 
 	// Alter the new section edit option flag iff it's been touched & is actually different
 	if ( this.newSectionEditLinkOptionTouched ) {

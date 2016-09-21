@@ -729,7 +729,7 @@ class LoginForm extends SpecialPage {
 			} else {
 				$retval = ( $this->mPassword  == '' ) ? self::EMPTY_PASS : self::WRONG_PASS;
 			}
-		} elseif ( $wgEnableHeliosExt && Wikia\Helios\User::wasResetPassAuth( $this->mUsername, $this->mPassword ) ) {
+		} elseif ( $wgEnableHeliosExt && Wikia\Helios\User::wasResetPassAuth( $u->getName(), $this->mPassword ) ) {
 			$retval = self::RESET_PASS;
 		} elseif ( $wgBlockDisablesLogin && $u->isBlocked() ) {
 			// If we've enabled it, make it so that a blocked user cannot login
@@ -738,8 +738,8 @@ class LoginForm extends SpecialPage {
 			$retval = self::SUCCESS;
 		}
 
-		if ( in_array( $retval, [ self::SUCCESS, self::RESET_PASS ] ) ) {
-			wfRunHooks( 'LoginSuccessModifyRetval', [ $u->getName(), $this->mPassword, &$retval ] );
+		if ( !in_array( $retval, [ self::SUCCESS, self::RESET_PASS ] ) ) {
+			wfRunHooks( 'LoginFormAuthenticateModifyRetval', [ $this, $u->getName(), $this->mPassword, &$retval ] );
 		}
 
 		switch ($retval) {
@@ -764,6 +764,7 @@ class LoginForm extends SpecialPage {
 		// which is needed or the personal links will be
 		// wrong.
 		$this->getContext()->setUser( $u );
+		wfRunHooks( 'AfterUserLogin', array( $u ) ); // Wikia change
 
 		// Please reset throttle for successful logins, thanks!
 		if ( $throttleCount ) {
@@ -807,11 +808,12 @@ class LoginForm extends SpecialPage {
 	 */
 	public static function incLoginThrottle( $username ) {
 		global $wgPasswordAttemptThrottle, $wgMemc, $wgRequest;
-		$username = trim( $username ); // sanity
+		$canUsername = User::getCanonicalName( $username, 'usable' );
+		$username = $canUsername !== false ? $canUsername : $username;
 
 		$throttleCount = 0;
 		if ( is_array( $wgPasswordAttemptThrottle ) ) {
-			$throttleKey = wfMemcKey( 'password-throttle', $wgRequest->getIP(), md5( $username ) );
+			$throttleKey = wfSharedMemcKey( 'password-throttle', $wgRequest->getIP(), md5( $username ) );
 			$count = $wgPasswordAttemptThrottle['count'];
 			$period = $wgPasswordAttemptThrottle['seconds'];
 
@@ -835,9 +837,10 @@ class LoginForm extends SpecialPage {
 	 */
 	public static function clearLoginThrottle( $username ) {
 		global $wgMemc, $wgRequest;
-		$username = trim( $username ); // sanity
+		$canUsername = User::getCanonicalName( $username, 'usable' );
+		$username = $canUsername !== false ? $canUsername : $username;
 
-		$throttleKey = wfMemcKey( 'password-throttle', $wgRequest->getIP(), md5( $username ) );
+		$throttleKey = wfSharedMemcKey( 'password-throttle', $wgRequest->getIP(), md5( $username ) );
 		$wgMemc->delete( $throttleKey );
 	}
 
@@ -912,7 +915,7 @@ class LoginForm extends SpecialPage {
 
 				// Reset the throttle
 				$request = $this->getRequest();
-				$key = wfMemcKey( 'password-throttle', $request->getIP(), md5( $this->mUsername ) );
+				$key = wfSharedMemcKey( 'password-throttle', $request->getIP(), md5( $this->mUsername ) );
 				$wgMemc->delete( $key );
 
 				if( $this->hasSessionCookie() || $this->mSkipCookieCheck ) {
@@ -1501,6 +1504,8 @@ class LoginForm extends SpecialPage {
 			$wgCookieSecure = false;
 		}
 
+		// Always make sure edit token is regenerated. (T122056)
+		$this->getRequest()->setSessionData( 'wsEditToken', null );
 		wfResetSessionID();
 	}
 

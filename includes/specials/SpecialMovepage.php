@@ -419,6 +419,13 @@ class MovePageForm extends UnlistedSpecialPage {
 			return;
 		}
 
+		# Check rights for new title
+		$permErrors = $nt->getUserPermissionsErrors( 'move', $user );
+		if ( count( $permErrors ) ) {
+			$this->showForm( $permErrors );
+			return;
+		}
+
 		# don't allow moving to pages with # in
 		if ( !$nt || $nt->getFragment() != '' ) {
 			$this->showForm( array( array( 'badtitletext' ) ) );

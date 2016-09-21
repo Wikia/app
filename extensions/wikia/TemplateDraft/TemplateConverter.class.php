@@ -155,7 +155,7 @@ class TemplateConverter {
 	public static function isConversion() {
 		global $wgRequest;
 
-		return $wgRequest->getVal( self::CONVERSION_MARKER, false );
+		return $wgRequest->getBool( self::CONVERSION_MARKER );
 	}
 
 	protected function getTemplateDataExtractor() {

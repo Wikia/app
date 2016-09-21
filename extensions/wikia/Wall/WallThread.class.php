@@ -69,16 +69,18 @@ class WallThread {
 			$this->loadReplyIdsFromDB();
 		}
 
-		$this->data->threadReplyObjs = array();
+		$this->data->threadReplyObjs = [ ];
 
 		if ( empty( $this->data->threadReplyIds ) ) {
-			$this->data->threadReplyIds = array();
+			$this->data->threadReplyIds = [ ];
 		}
 
-		foreach ( $this->data->threadReplyIds as $id ) {
-			$wm = WallMessage::newFromId( $id, $this->mForceMaster );
-			if ( $wm instanceof WallMessage && !$wm->isAdminDelete() ) {
-				$this->data->threadReplyObjs[] = $wm;
+		$replyMessages = WallMessage::newFromIds( $this->data->threadReplyIds );
+
+		/** @var WallMessage $reply */
+		foreach ( $replyMessages as $reply ) {
+			if ( !$reply->isAdminDelete() ) {
+				$this->data->threadReplyObjs[] = $reply;
 			}
 		}
 	}
@@ -90,7 +92,7 @@ class WallThread {
 	 * @param integer $afterId The last reply ID after which the next set is selected
 	 * @return array List of reply IDs
 	 */
-	private function getReplyIdsFromDB( $dbr, $afterId = null ) {
+	private function getReplyIdsFromDB( $dbr, $afterId = 0 ) {
 		// this is a direct way to get IDs
 		// the other one is in Wall.class done in a grouped way
 		// (fetch for many threads at once, set with ->setReplies)
@@ -110,10 +112,9 @@ class WallThread {
 				$list[] = $oRow->comment_id;
 			} );
 
-		$lastId = end( $list );
-
-		return empty( $lastId ) ? $list :
-			array_merge( $list, $this->getReplyIdsFromDB( $dbr, $lastId ) );
+		return count( $list ) < self::FETCHED_REPLIES_LIMIT ?
+			$list
+			: array_merge( $list, $this->getReplyIdsFromDB( $dbr, end( $list ) ) );
 	}
 
 	private function loadReplyIdsFromDB( $master = false ) {
@@ -202,14 +203,14 @@ class WallThread {
 		$data = WikiaDataAccess::cache( $key, 30 * 24 * 60 * 60, function() use ( $threadId ) {
 			$db = wfGetDB( DB_SLAVE );
 			$row = $db->selectRow(
-				array( 'comments_index' ),
-				array( 'max(first_rev_id) rev_id' ),
-				array(
+				[ 'comments_index' ],
+				[ 'max(first_rev_id) rev_id' ],
+				[
 						'parent_comment_id' => $threadId,
 						'archived' => 0,
 						'deleted' => 0,
 						'removed' => 0
-				),
+				],
 				__METHOD__
 			);
 			return $row;

@@ -19,9 +19,6 @@ $wgExtensionCredits['specialpage'][] = [
 $wgAutoloadClasses['CoppaToolSpecialController'] =  __DIR__ . '/CoppaToolSpecialController.class.php';
 $wgAutoloadClasses['CoppaToolController'] =  __DIR__ . '/CoppaToolController.class.php';
 
-$wgAvailableRights[] = 'coppatool';
-$wgGroupPermissions['util']['coppatool'] = true;
-
 $wgExtensionMessagesFiles['CoppaTool'] = __DIR__ . '/CoppaTool.i18n.php' ;
 
 $wgSpecialPages['CoppaTool'] = 'CoppaToolSpecialController';

@@ -161,7 +161,7 @@ abstract class ToolbarService {
 		}
 
 		$seenPromotions = $wgUser->getGlobalPreference( $this->getPromotionsOptionName() );
-		$seenPromotions = $seenPromotions ? unserialize( $seenPromotions ) : array();
+		$seenPromotions = $seenPromotions ? unserialize( $seenPromotions, [ 'allowed_classes' => false ] ) : array();
 		$promotionsDiff = array_intersect( $this->getPromotions(), $seenPromotions );
 
 		return $promotionsDiff;
@@ -225,7 +225,7 @@ abstract class ToolbarService {
 		if ( !$wgUser->isAnon() ) {
 			$toolbar = $wgUser->getGlobalPreference( $this->getToolbarOptionName() );
 			if ( is_string( $toolbar ) ) {
-				$toolbar = @unserialize( $toolbar );
+				$toolbar = @unserialize( $toolbar, [ 'allowed_classes' => false ] );
 				if ( is_array( $toolbar ) ) {
 					/* FB:42264 Fix bad data by switch my-tools to menu if it is item */
 					foreach ( $toolbar as $k => $v ) {

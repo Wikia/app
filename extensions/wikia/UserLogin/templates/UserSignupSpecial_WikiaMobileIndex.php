@@ -9,13 +9,13 @@
 				'name' => 'signupToken',
 				'value' => Sanitizer::encodeAttribute( $signupToken ),
 			],
-			[ //fake username field ( not in use )
+			[ // fake username field ( not in use )
 				'type' => 'hidden',
 				'name' => 'username',
 				'value' => '',
 				'label' => wfMessage( 'yourname' )->escaped(),
 			],
-			[ //actual username field
+			[ // actual username field
 				'type' => 'text',
 				'name' => 'userloginext01',
 				'value' => htmlspecialchars( $username ),
@@ -33,13 +33,13 @@
 				'isInvalid' => ( !empty( $errParam ) && $errParam === 'email' ),
 				'errorMsg' => ( !empty( $msg ) ? $msg : '' )
 			],
-			[ //fake password field ( not in use )
+			[ // fake password field ( not in use )
 				'type' => 'hidden',
 				'name' => 'password',
 				'value' => '',
 				'label' => wfMessage( 'yourpassword' )->escaped(),
 			],
-			[ //actual password field
+			[ // actual password field
 				'type' => 'password',
 				'name' => 'userloginext02',
 				'value' => '',
@@ -54,20 +54,18 @@
 				'value' => '',
 			],
 			[
-				'type' => 'nirvanaview',
-				'controller' => 'UserSignupSpecial',
-				'view' => 'birthday',
+				'type' => 'custom',
 				'isRequired' => true,
 				'class' => 'birthday-group',
 				'isInvalid' => ( !empty( $errParam )  ) &&
 					( $errParam === 'birthyear' || $errParam === 'birthmonth' || $errParam === 'birthday' ),
 				'errorMsg' => ( !empty( $msg ) ? $msg : '' ),
-				'params' => [
+				'output' => F::app()->renderPartial( 'UserSignupSpecial', 'birthday', [
 					'birthyear' => $birthyear,
 					'birthmonth' => $birthmonth,
 					'birthday' => $birthday,
 					'isEn' => $isEn
-				],
+				]),
 			],
 			[
 				'class' => 'opt-in-container hidden',
@@ -76,11 +74,11 @@
 				'label' => wfMessage( 'userlogin-opt-in-label' )->escaped(),
 			],
 			[
-				'type' => 'nirvanaview',
-				'controller' => 'UserSignupSpecial',
-				'view' => 'WikiaMobileSubmit',
+				'type' => 'custom',
 				'class' => 'submit-pane',
-				'params' => ['createAccountButtonLabel' => $createAccountButtonLabel]
+				'output' => F::app()->renderPartial( 'UserSignupSpecial', 'WikiaMobileSubmit', [
+					'createAccountButtonLabel' => $createAccountButtonLabel
+				]),
 			]
 		]
 	];
@@ -88,7 +86,7 @@
 	$form['isInvalid'] = !empty( $result ) && $result === 'error' && empty( $errParam );
 	$form['errorMsg'] = $form['isInvalid'] ? $msg : '';
 
-	if( !empty( $returnto ) ) {
+	if ( !empty( $returnto ) ) {
 		$form['inputs'][] = [
 			'type' => 'hidden',
 			'name' => 'returnto',
@@ -96,7 +94,7 @@
 		];
 	}
 
-	if( !empty( $byemail ) ) {
+	if ( !empty( $byemail ) ) {
 		$form['inputs'][] = [
 			'type' => 'hidden',
 			'name' => 'byemail',

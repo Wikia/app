@@ -20,25 +20,46 @@ define(
 		}
 
 		function bindEvents() {
-			$('.content-review-diff-button').on('click', removeCompletedAndUpdateLogs);
+			var $toolbar = $('.content-review-toolbar');
+			$toolbar.on('click', '.content-review-status-button', removeCompletedAndUpdateLogs);
+			$toolbar.on('click', '#content-review-escalate-button', escalateReview);
 		}
 
 		function removeCompletedAndUpdateLogs() {
 			var	$button = $(this),
-				notification,
+				$parent = $button.parent(),
 				data = {
-					wikiId: parseInt($button.attr('data-wiki-id')),
-					pageId: parseInt($button.attr('data-page-id')),
-					status: parseInt($button.attr('data-status')),
+					wikiId: parseInt($parent.data('wiki-id')),
+					pageId: parseInt($parent.data('page-id')),
+					status: parseInt($button.data('status')),
 					diff: diff,
 					oldid: oldid,
 					editToken: mw.user.tokens.get('editToken')
 				};
 
+			sendReviewModifyingRequest('removeCompletedAndUpdateLogs', data);
+		}
+
+		function escalateReview() {
+			var	$parent = $(this).parent(),
+				data = {
+					wikiId: parseInt($parent.data('wiki-id')),
+					pageId: parseInt($parent.data('page-id')),
+					diff: diff,
+					oldid: oldid,
+					editToken: mw.user.tokens.get('editToken')
+				};
+
+			sendReviewModifyingRequest('escalateReview', data);
+		}
+
+		function sendReviewModifyingRequest(method, data) {
+			var notification;
+
 			$('.content-review-diff-button').prop('disabled',true);
 			nirvana.sendRequest({
 				controller: 'ContentReviewApiController',
-				method: 'removeCompletedAndUpdateLogs',
+				method: method,
 				data: data,
 				callback: function (response) {
 					if (response.notification) {

@@ -62,6 +62,10 @@ if ( ini_get( 'register_globals' ) ) {
 	}
 }
 
+if ( ini_get( 'mbstring.func_overload' ) ) {
+	die( 'MediaWiki does not support installations where mbstring.func_overload is non-zero.' );
+}
+
 # bug 15461: Make IE8 turn off content sniffing. Everbody else should ignore this
 # We're adding it here so that it's *always* set, even for alternate entry
 # points and when $wgOut gets disabled or overridden.
@@ -154,11 +158,6 @@ if ( $wgProfiler instanceof Profiler ) {
 		$sink = new ProfilerDataScribeSink();
 	}
 	$wgProfiler->addSink( $sink );
-
-	// keep the legacy stream of Mediawiki profiler data via UDP
-	if ( ( $wgProfiler instanceof ProfilerSimpleDataCollector ) and !( $sink instanceof ProfilerDataUdpSink ) ) {
-		$wgProfiler->addSink( new ProfilerDataUdpSink() );
-	}
 }
 // Wikia change - end
 

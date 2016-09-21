@@ -10,6 +10,49 @@
 
 	var rc = mw.special.recentchanges = {
 
+		handleCollapsible: function(cache) {
+			var prefix = 'rc_',
+				$collapsibleElements = $('.collapsible');
+
+			function toggleCollapsible($collapsible) {
+				$collapsible.toggleClass('collapsed');
+				updateCollapsedCache($collapsible);
+			}
+
+			function updateCollapsedCache($collapsible) {
+				var id = $collapsible.attr('id');
+
+				if (id !== null) {
+					if ($collapsible.hasClass('collapsed')) {
+						cache.set(prefix + id, 'collapsed', cache.CACHE_LONG);
+					} else {
+						cache.set(prefix + id, 'expanded', cache.CACHE_LONG);
+					}
+				}
+			}
+
+			$collapsibleElements.each(function () {
+				var $this = $(this),
+					id = $this.attr('id');
+
+				if (id !== null) {
+					var previousState = cache.get(prefix + id);
+
+					if (!!previousState) {
+						if (previousState === 'collapsed') {
+							$this.addClass('collapsed');
+						} else {
+							$this.removeClass('collapsed');
+						}
+					}
+				}
+			});
+
+			$collapsibleElements.on('click', 'legend', function(e) {
+				toggleCollapsible($(e.currentTarget).parent());
+			});
+		},
+
 		/**
 		 * Handler to disable/enable the namespace selector checkboxes when the
 		 * special 'all' namespace is selected/unselected respectively.
@@ -30,6 +73,11 @@
 
 			// Bind to change event, and trigger once to set the initial state of the checkboxes.
 			$select.change( rc.updateCheckboxes ).change();
+
+			require(['wikia.cache'], function (cache) {
+				// Collapse fieldsets
+				rc.handleCollapsible(cache);
+			});
 		}
 	};
 

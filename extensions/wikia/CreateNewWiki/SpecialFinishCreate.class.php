@@ -6,7 +6,7 @@ class SpecialFinishCreate extends UnlistedSpecialPage {
 		parent::__construct('FinishCreate', 'finishcreate');
 	}
 	
-	public function execute() {
+	public function execute( $par ) {
 		global $wgUser, $wgOut;
 		wfProfileIn( __METHOD__ );
 		

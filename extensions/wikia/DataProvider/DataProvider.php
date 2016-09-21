@@ -34,8 +34,10 @@ class DataProvider {
 
 	/**
 	 * Author: Tomasz Klim (tomek at wikia.com)
+	 *
+	 * @return DataProvider
 	 */
-	final public static function &singleton(&$skin = false) {
+	final public static function singleton(&$skin = false) {
 		static $instance;
 		if (!isset($instance)) {
 			$instance = new DataProvider($skin);
@@ -43,7 +45,7 @@ class DataProvider {
 		return $instance;
 	}
 
-	final private function DataProvider(&$skin) {
+	final private function __construct(&$skin) {
 		$this->skin =& $skin;
 	}
 
@@ -470,7 +472,8 @@ class DataProvider {
 				$fname,
 				[
 					'LIMIT' => self::TOP_USERS_MAX_LIMIT * 4,
-					'ORDER BY' => 'edits DESC'
+					'ORDER BY' => 'edits DESC',
+					'USE INDEX' => 'PRIMARY', # mysql in Reston wants to use a different key (PLATFORM-1648)
 				]
 			);
 
@@ -478,7 +481,7 @@ class DataProvider {
 			while ($row = $dbs->fetchObject($res)) {
 				$user = User::newFromID($row->user_id);
 
-				if (!$user->isBlocked() && !$user->isAllowed('bot')
+				if (!$user->isBlocked( true, false ) && !$user->isAllowed('bot')
 					&& $user->getUserPage()->exists()
 				) {
 					$article['url'] = $user->getUserPage()->getLocalUrl();

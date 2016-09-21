@@ -21,7 +21,7 @@ class HelloWorldTest extends WikiaBaseTest {
 		$testRow->city_title = self::TEST_TITLE;
 		$testRow->city_url = self::TEST_URL;
 
-		$dbMock = $this->getMock( 'DatabaseMysql', array( 'selectRow' ) );
+		$dbMock = $this->getDatabaseMock(array( 'selectRow' ) );
 		$dbMock->expects( $this->once() )
 		       ->method( 'selectRow')
 		       ->will( $this->returnValue( $testRow ) );

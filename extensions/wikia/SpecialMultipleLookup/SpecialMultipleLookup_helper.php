@@ -13,6 +13,8 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 }
 
 class MultipleLookupCore {
+	const DEFAULT_LIMIT = 25;
+
 	var $mUsername;
 	var $mUserId;
 	var $mDBname;
@@ -40,8 +42,8 @@ class MultipleLookupCore {
 			$this->mWikia = WikiFactory::getWikiByID($this->mWikiID);
 		}
 	}
-	public function getDBname () { global $wgDBname; return (LC_TEST) ? $wgDBname : $this->mDBname; }
-	public function setLimit ( $limit = LC_LIMIT ) { $this->mLimit = $limit; }
+	public function getDBname () { return $this->mDBname; }
+	public function setLimit ( $limit = self::DEFAULT_LIMIT ) { $this->mLimit = $limit; }
 	public function setOffset ( $offset = 0 ) { $this->mOffset = $offset; }
 	public function setNumRecords( $num = 0 ) { $this->mNumRecords = $num; }
 	public function getNumRecords() { return $this->mNumRecords; }

@@ -12,10 +12,6 @@ $wgExtensionCredits['other'][] = array(
 	'url'            => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/SkinChooser'
 );
 
-// basic permissions
-#$wgGroupPermissions['sysop']['setadminskin'] = true; #rt74835
-$wgGroupPermissions['staff']['setadminskin'] = true;
-
 $dir = dirname(__FILE__) . '/';
 
 // register class

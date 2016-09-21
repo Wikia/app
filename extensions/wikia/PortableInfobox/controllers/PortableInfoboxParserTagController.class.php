@@ -10,12 +10,12 @@ class PortableInfoboxParserTagController extends WikiaController {
 	const INFOBOX_LAYOUT_PREFIX = 'pi-layout-';
 
 	private $markerNumber = 0;
-	private $markers = [ ];
 	private $supportedLayouts = [
 		'default',
 		'stacked'
 	];
 
+	protected $markers = [ ];
 	protected static $instance;
 
 	/**
@@ -50,7 +50,11 @@ class PortableInfoboxParserTagController extends WikiaController {
 	 * @return string
 	 */
 	public static function replaceInfoboxMarkers( &$parser, &$text ) {
-		$text = static::getInstance()->replaceMarkers( $text );
+		global $wgArticleAsJson;
+		// The replacements for ArticleAsJson are handled in PortableInfoboxHooks::onArticleAsJsonBeforeEncode
+		if ( !$wgArticleAsJson ) {
+			$text = static::getInstance()->replaceMarkers( $text );
+		}
 
 		return true;
 	}
@@ -67,7 +71,8 @@ class PortableInfoboxParserTagController extends WikiaController {
 	 * @throws InvalidInfoboxParamsException when unsupported attributes exist in params array
 	 */
 	public function render( $markup, Parser $parser, PPFrame $frame, $params = null ) {
-		$infoboxNode = Nodes\NodeFactory::newFromXML( $markup, $this->getFrameParams( $frame ) );
+		$frameArguments = $frame->getArguments();
+		$infoboxNode = Nodes\NodeFactory::newFromXML( $markup, $frameArguments ? $frameArguments : [ ] );
 		$infoboxNode->setExternalParser( new Wikia\PortableInfobox\Parser\MediaWikiParserService( $parser, $frame ) );
 
 		//get params if not overridden
@@ -75,7 +80,7 @@ class PortableInfoboxParserTagController extends WikiaController {
 			$params = ( $infoboxNode instanceof Nodes\NodeInfobox ) ? $infoboxNode->getParams() : [ ];
 		}
 
-		$infoboxParamsValidator = new Wikia\PortableInfobox\Helpers\InfoboParamsValidator();
+		$infoboxParamsValidator = new Wikia\PortableInfobox\Helpers\InfoboxParamsValidator();
 		$infoboxParamsValidator->validateParams( $params );
 
 		$data = $infoboxNode->getRenderData();
@@ -99,7 +104,6 @@ class PortableInfoboxParserTagController extends WikiaController {
 	 * @returns String $html
 	 */
 	public function renderInfobox( $text, $params, $parser, $frame ) {
-		global $wgArticleAsJson;
 		$this->markerNumber++;
 		$markup = '<' . self::PARSER_TAG_NAME . '>' . $text . '</' . self::PARSER_TAG_NAME . '>';
 
@@ -113,15 +117,28 @@ class PortableInfoboxParserTagController extends WikiaController {
 			return $this->handleError( wfMessage( 'portable-infobox-xml-parse-error-infobox-tag-attribute-unsupported', [ $e->getMessage() ] )->escaped() );
 		}
 
-		if ( $wgArticleAsJson ) {
-			// (wgArticleAsJson == true) it means that we need to encode output for use inside JSON
-			$renderedValue = trim( json_encode( $renderedValue ), '"' );
-		}
-
-		$marker = $parser->uniqPrefix() . "-" . self::PARSER_TAG_NAME . "-{$this->markerNumber}\x7f-QINU";
+		$marker = $parser->uniqPrefix() . "-" . self::PARSER_TAG_NAME . "-{$this->markerNumber}" . Parser::MARKER_SUFFIX;
 		$this->markers[ $marker ] = $renderedValue;
 
 		return [ $marker, 'markerType' => 'nowiki' ];
+	}
+
+	/**
+	 * @desc Moves the first marker to the top of article content
+	 *
+	 * @param String $text
+	 */
+	public function moveFirstMarkerToTop( &$text ) {
+		if ( !empty( $this->markers ) ) {
+			$firstMarker = array_keys( $this->markers )[0];
+
+			// Skip if the first marker is already at the top
+			if ( strpos( $text, $firstMarker ) !== 0 ) {
+				// Remove first marker and the following whitespace
+				$text = preg_replace( '/' . $firstMarker . '\s*/', '', $text, 1 );
+				$text = $firstMarker . ' ' . $text;
+			}
+		}
 	}
 
 	public function replaceMarkers( $text ) {
@@ -133,7 +150,7 @@ class PortableInfoboxParserTagController extends WikiaController {
 		// (see: PortableInfoboxDataService.class.php)
 		if ( $raw ) {
 			$infoboxes = json_decode( $parserOutput->getProperty( PortableInfoboxDataService::INFOBOXES_PROPERTY_NAME ), true );
-			$infoboxes[] = [ 'data' => $raw->getRenderData(), 'sources' => $raw->getSource() ];
+			$infoboxes[] = [ 'data' => $raw->getRenderData(), 'sourcelabels' => $raw->getSourceLabel() ];
 			$parserOutput->setProperty( PortableInfoboxDataService::INFOBOXES_PROPERTY_NAME, json_encode( $infoboxes ) );
 		}
 	}
@@ -177,22 +194,5 @@ class PortableInfoboxParserTagController extends WikiaController {
 		}
 
 		return self::INFOBOX_LAYOUT_PREFIX . self::DEFAULT_LAYOUT_NAME;
-	}
-
-	/**
-	 * Function ensures that arrays are used for merging
-	 *
-	 * @param PPFrame $frame
-	 *
-	 * @return array
-	 */
-	protected function getFrameParams( PPFrame $frame ) {
-		//we use both getNamedArguments and getArguments to ensure we acquire variables no matter what frame is used
-		$namedArgs = $frame->getNamedArguments();
-		$namedArgs = isset( $namedArgs ) ? ( is_array( $namedArgs ) ? $namedArgs : [ $namedArgs ] ) : [ ];
-		$args = $frame->getArguments();
-		$args = isset( $args ) ? ( is_array( $args ) ? $args : [ $args ] ) : [ ];
-
-		return array_merge( $namedArgs, $args );
 	}
 }

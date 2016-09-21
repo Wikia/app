@@ -142,9 +142,13 @@ ve.ui.WikiaUploadWidget.prototype.onFileChange = function ( event, file ) {
 	} else {
 		form = new FormData( document.createElement( 'form' ) );
 		form.append( 'file', file );
+		form.append( 'action', 'addmediatemporary' );
+		form.append( 'format', 'json' );
+		form.append( 'type', 'image' );
+		form.append( 'token', mw.user.tokens.get( 'editToken' ) );
 
 		$.ajax( {
-			url: mw.util.wikiScript( 'api' ) + '?action=addmediatemporary&format=json',
+			url: mw.util.wikiScript( 'api' ),
 			type: 'post',
 			cache: false,
 			contentType: false,
@@ -153,6 +157,7 @@ ve.ui.WikiaUploadWidget.prototype.onFileChange = function ( event, file ) {
 			success: this.onUploadSuccess.bind( this ),
 			error: this.onUploadError.bind( this )
 		} );
+
 		this.showUploadAnimation();
 	}
 	this.$file.attr( 'value', '' );
@@ -206,4 +211,12 @@ ve.ui.WikiaUploadWidget.prototype.showUploadAnimation = function () {
  */
 ve.ui.WikiaUploadWidget.prototype.hideUploadAnimation = function () {
 	this.$element.removeClass( 've-ui-texture-pending' );
+};
+
+/**
+ * Getter for upload button.
+ * @returns the upload button
+ */
+ve.ui.WikiaUploadWidget.prototype.getUploadButton = function () {
+	return this.uploadButton;
 };

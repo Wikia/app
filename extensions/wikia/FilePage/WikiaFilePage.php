@@ -67,6 +67,9 @@ class WikiaFilePage extends ImagePage {
 		}
 
 		$autoplay = $app->wg->VideoPageAutoPlay;
+		if ( $file->getProviderName() == 'youtube' ) {
+			$autoplay = false;
+		}
 
 		// JS for VideoBootstrap
 		$embedCode = $file->getEmbedCode( self::VIDEO_WIDTH, ['autoplay' => $autoplay] );

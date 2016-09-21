@@ -87,8 +87,8 @@ class WikiaSendgridMailer {
 			$mail_object =& Mail2::factory(WikiaSendgridMailer::$factory, $wgSMTP);
 		} catch (Exception $e) {
 
-			$logContext['errorMessage'] = $e->getMessage();
-			WikiaLogger::instance()->info( 'Failed to create mail object', $logContext );
+			$logContext['exception'] = $e;
+			WikiaLogger::instance()->error( 'Failed to create mail object', $logContext );
 
 			wfDebug( "PEAR::Mail factory failed: " . $e->getMessage() . "\n" );
 			wfRestoreWarnings();
@@ -168,8 +168,8 @@ class WikiaSendgridMailer {
 			$headers['To'] = $chunk;
 			$status = self::sendWithPear( $mail_object, $chunk, $headers, $body );
 			if ( !$status->isOK() ) {
-				$logContext['errorMessage'] = $status->getMessage();
-				WikiaLogger::instance()->info( 'Failed to create mail object', $logContext );
+				$logContext['exception'] = $e;
+				WikiaLogger::instance()->error( 'Failed to create mail object', $logContext );
 				wfRestoreWarnings();
 				wfProfileOut( __METHOD__ );
 				return $status->getMessage();
@@ -217,7 +217,7 @@ class WikiaSendgridMailer {
 			$mailer->send( $dest, $headers, $body );
 		} catch (Exception $e) {
 			WikiaLogger::instance()->error( 'Mail2::send failed', [
-				'msg' => $e->getMessage(),
+				'exception' => $e,
 			] );
 			return Status::newFatal( 'pear-mail-error', $e->getMessage());
 		}

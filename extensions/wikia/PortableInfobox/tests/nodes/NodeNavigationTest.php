@@ -7,8 +7,8 @@ class NodeNavigationTest extends WikiaBaseTest {
 	}
 
 	/**
-	 * @covers       Nodenavigation::getData
-	 * @covers       Node::getInnerValue
+	 * @covers       \Wikia\PortableInfobox\Parser\Nodes\NodeNavigation::getData
+	 * @covers       \Wikia\PortableInfobox\Parser\Nodes\Node::getInnerValue
 	 * @dataProvider dataProvider
 	 *
 	 * @param $markup

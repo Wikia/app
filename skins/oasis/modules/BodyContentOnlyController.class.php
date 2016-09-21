@@ -9,6 +9,10 @@ class BodyContentOnlyController extends WikiaController {
 				$this->overrideTemplate( 'NavOnly' );
 				break;
 
+			case RenderContentOnlyHelper::LEAVE_GLOBAL_NAV_ONLY:
+				$this->overrideTemplate( 'GlobalNavOnly' );
+				break;
+
 			case RenderContentOnlyHelper::LEAVE_NO_SKIN_ELEMENTS:
 				$this->overrideTemplate( 'NoArticleContainer' );
 				break;

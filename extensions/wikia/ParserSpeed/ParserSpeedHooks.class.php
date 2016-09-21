@@ -48,6 +48,7 @@ class ParserSpeedHooks {
 			'parser-time'   => round( $parserOutput->getPerformanceStats( 'time' ) * 1000 ),
 			'node-count'    => (int) $parserOutput->getPerformanceStats( 'nodeCount' ),
 			'wikitext-size' => (int) $parserOutput->getPerformanceStats( 'wikitextSize' ),
+			'html-size'      => (int) $parserOutput->getPerformanceStats( 'htmlSize' ),
 			'skin-name'     => RequestContext::getMain()->getSkin()->getSkinName(),
 		] );
 

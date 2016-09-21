@@ -7,18 +7,19 @@
  * @ingroup Extensions
  */
 
-$messages = array();
+$messages = [];
 
 /** English
  * @author Daniel Grunwell (grunny)
  */
-$messages['en'] = array(
+$messages['en'] = [
 	'restrictsessions-desc' => 'Enforce more secure sessions for staff members.',
-);
+	'right-restrictsession' => 'Have enforced secure sessions',
+];
 
 /**
  * @author Daniel Grunwell (grunny)
  */
-$messages['qqq'] = array(
+$messages['qqq'] = [
 	'restrictsessions-desc' => '{{desc}}',
-);
+];

@@ -6,9 +6,8 @@ ini_set('display_errors', 1);
 $wgNoDBUnits = false;
 
 $params = getopt('', ['exclude-group::', 'slow-list']);
-$excludeGroups = explode(',', $params['exclude-group']);
-if (is_array($excludeGroups)) {
-	foreach($excludeGroups as $group) {
+if (isset($params['exclude-group'])) {
+	foreach(explode(',', $params['exclude-group']) as $group) {
 		if (trim($group) == 'UsingDB') {
 			$wgNoDBUnits = true;
 		}

@@ -46,8 +46,6 @@ $wgAutoloadClasses['VideosModuleController'] =  $dir . 'VideosModuleController.c
 $wgAutoloadClasses['VideosModuleHooks'] =  $dir . 'VideosModuleHooks.class.php';
 $wgHooks['OutputPageBeforeHTML'][] = 'VideosModuleHooks::onOutputPageBeforeHTML';
 
-$wgHooks['GetRailModuleList'][] = 'VideosModuleHooks::onGetRailModuleList';
-
 /**
  * messages
  */

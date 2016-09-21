@@ -43,9 +43,9 @@ class PEAR_REST_10
      * @var PEAR_REST
      */
     var $_rest;
-    function PEAR_REST_10($config, $options = array())
+    function __construct($config, $options = array())
     {
-        $this->_rest = &new PEAR_REST($config, $options);
+        $this->_rest = new PEAR_REST($config, $options);
     }
 
     function getDownloadURL($base, $packageinfo, $prefstate, $installed)

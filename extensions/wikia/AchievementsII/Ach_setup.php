@@ -53,28 +53,6 @@ if( !empty( $wgEnableAchievementsExt ) ) {
     $wgSpecialPages['AchievementsSharing'] = 'SpecialAchievementsSharing';
 }
 
-// RIGHTS
-$wgAvailableRights[] = 'platinum';
-$wgGroupPermissions['*']['platinum'] = false;
-$wgGroupPermissions['staff']['platinum'] = true;
-$wgGroupPermissions['helper']['platinum'] = true;
-
-$wgAvailableRights[] = 'sponsored-achievements';
-$wgGroupPermissions['*']['sponsored-achievements'] = false;
-$wgGroupPermissions['staff']['sponsored-achievements'] = true;
-
-$wgAvailableRights[] = 'achievements-exempt';
-$wgGroupPermissions['*']['achievements-exempt'] = false;
-$wgGroupPermissions['helper']['achievements-exempt'] = true;
-$wgGroupPermissions['staff']['achievements-exempt'] = true;
-$wgGroupPermissions['vstf']['achievements-exempt'] = true;
-
-// overrides acievements-exempt
-$wgAvailableRights[] = 'achievements-explicit';
-$wgGroupPermissions['*']['achievements-explicit'] = false;
-$wgGroupPermissions['sysop']['achievements-explicit'] = true;
-$wgGroupPermissions['bureaucrat']['achievements-explicit'] = true;
-
 // AUTOLOADS
 
 // config
@@ -107,7 +85,7 @@ $wgAutoloadClasses[ 'UploadAchievementsFromFile' ] = "{$dir}UploadAchievementsFr
 $wgAutoloadClasses[ 'WikiaPhotoGalleryUpload' ] = "{$dir}../WikiaPhotoGallery/WikiaPhotoGalleryUpload.class.php";
 
 // I18N
-$wgExtensionMessagesFiles['AchievementsII'] = $dir.'i18n/AchievementsII.i18n.php';
+$wgExtensionMessagesFiles['AchievementsII'] = $dir.'AchievementsII.i18n.php';
 $wgExtensionMessagesFiles['AchievementsIIAliases'] = $dir.'AchievementsII.alias.php' ;
 
 // Michał Roszka (Mix) <michal@wikia-inc.com>
@@ -129,7 +107,6 @@ function Ach_Setup() {
 	$wgHooks['ArticleSaveComplete'][] = 'Ach_ArticleSaveComplete';
 	$wgHooks['GetHTMLAfterBody'][] = 'Ach_GetHTMLAfterBody';
 	$wgHooks['UploadVerification'][] = 'Ach_UploadVerification';
-	$wgHooks['Masthead::editCounter'][] = 'Ach_MastheadEditCounter';
 
 	//hooks for user preferences
 	$wgHooks['GetPreferences'][] = 'Ach_UserPreferences';
@@ -152,22 +129,6 @@ function Ach_GetMenu(&$nodes) {
 		//'parentIndex' => 0
 	);
 
-	return true;
-}
-
-function Ach_MastheadEditCounter(&$editCounter, $user) {
-	if ($user instanceof User) {
-		global $wgUser;
-
-		if(!($wgUser->getId() == $user->getId() && $wgUser->getGlobalPreference('hidepersonalachievements'))) {
-			$dbr = wfGetDB(DB_SLAVE);
-			$editCounter = $dbr->selectField('ach_user_score', 'score', array('user_id' => $user->getId()), __METHOD__);
-
-			$editCounter = '<div id="masthead-achievements">' . wfMsg('achievements-masthead-points', number_format($editCounter)) . '</div>';
-		}
-	} else {
-		$editCounter = '';
-	}
 	return true;
 }
 
@@ -200,10 +161,10 @@ function Ach_ArticleSaveComplete(	&$article, &$user, $text,
 function Ach_GetHTMLAfterBody($skin, &$html) {
 	wfProfileIn(__METHOD__);
 
-	global $wgOut, $wgTitle, $wgUser;
+	global $wgOut, $wgUser;
 
 	if($wgUser->isLoggedIn() && !($wgUser->getGlobalPreference( 'hidepersonalachievements' ))) {
-		if ($wgTitle->getNamespace() == NS_SPECIAL && array_shift(SpecialPageFactory::resolveAlias($wgTitle->getDBkey())) == 'MyHome') {
+		if( $skin->getTitle()->isSpecial( 'MyHome' ) ) {
 			$awardingService = new AchAwardingService();
 			$awardingService->awardCustomNotInTrackBadge($wgUser, BADGE_WELCOME);
 		}
@@ -270,23 +231,23 @@ function Ach_TakeRankingSnapshot($force = false) {
 	global $wgCityId;
 	$dbw = WikiFactory::db( DB_MASTER );
 
-	$res = $dbw->select('ach_ranking_snapshots', array('date'), array('wiki_id' => $wgCityId));
+	$res = $dbw->select('ach_ranking_snapshots', array('date'), array('wiki_id' => $wgCityId), __METHOD__);
 	$rankingService = new AchRankingService();
 
 	if($row = $dbw->fetchObject($res)) {
 		if(strtotime($row->date) <= (time() - (60*60*24)) || $force) {
-			$dbw->update('ach_ranking_snapshots', array('date' => date('Y-m-d H:i:s'), 'data' => $rankingService->serialize()), array('wiki_id' => $wgCityId));
+			$dbw->update('ach_ranking_snapshots', array('date' => date('Y-m-d H:i:s'), 'data' => $rankingService->serialize()), array('wiki_id' => $wgCityId), __METHOD__);
 			echo("\t* Snapshot for the wiki with ID {$wgCityId} has been updated\n");
-			$dbw->commit();
+			$dbw->commit(__METHOD__);
 		}
 			else {
 			echo("\t* A user ranking snapshot already exists for the wiki with ID {$wgCityId} and is still valid (taken on {$row->date})\n");
 		}
 	}
 	else {
-		$dbw->insert('ach_ranking_snapshots', array('wiki_id' => $wgCityId, 'date' => date('Y-m-d H:m:s'), 'data' => $rankingService->serialize()));
+		$dbw->insert('ach_ranking_snapshots', array('wiki_id' => $wgCityId, 'date' => date('Y-m-d H:m:s'), 'data' => $rankingService->serialize()), __METHOD__);
 		echo("\t* Snapshot for the wiki with ID {$wgCityId} has been taken\n");
-		$dbw->commit();
+		$dbw->commit(__METHOD__);
 	}
 
 	$dbw->freeResult($res);

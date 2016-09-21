@@ -24,7 +24,7 @@
 // - TODO: Tracklisting format which isn't tied to a master artist or album.  This is needed for parsing list pages, etc. It will require a different structure for song-names since they will have the artist in them.  Should name it differently to avoid confusion (eg: "song" is current, this would be "pageTitle" or "fullTitle" or something - just keep in mind to avoid confusion related to namespaces when naming this return value... eg: 'fullPageTitle' would be wrong since "Gracenote:" wouldn't go in there).
 ////
 
-include_once 'extras.php'; // for lw_simpleQuery to start
+include_once 'extras.php';
 GLOBAL $LW_USE_PERSISTENT_CONNECTIONS;
 $LW_USE_PERSISTENT_CONNECTIONS = true;
 $ENABLE_LOGGING_SLOW_SOAP = false;
@@ -65,9 +65,10 @@ if(!$SHUT_DOWN_API){
 	}
 
 	if(!$funcsOnly){
-		if(!defined('MEDIAWIKI')){
-			define( 'MEDIAWIKI', true );
-		}
+		// This causes devbox to crash because WebStart will then re-define it. Not sure what changed in core MediaWiki.
+		// if(!defined('MEDIAWIKI')){
+		//	 define( 'MEDIAWIKI', true );
+		// }
 
 		require_once $LW_PATH."includes/Defines.php";
 
@@ -1028,25 +1029,14 @@ function getSong($artist, $song="", $doHyphens=true, $ns=NS_MAIN, $isOuterReques
 					lw_soapStats_logHit($resultFound, $reqType);
 				}
 
-				// SWC 20101209 - Now we allow our own apps to get full lyrics, but the request has to be cryptographically signed so that others can't do the same thing.
-				// NOTE: The value of the fullApiAuth param for the request must be the md5 hash of the concatenation of wgFullLyricWikiApiToken, the artist, and the song.
-				$fullApiAuth = $wgRequest->getVal("fullApiAuth");
-				if(!empty($fullApiAuth)){
-					global $wgFullLyricWikiApiToken;
-					print (!$debug?"":"Comparing token against artist: $artist\n");
-					print (!$debug?"":"Comparing token against song: $song\n");
-
-					$expectedSig = md5($wgFullLyricWikiApiToken . "$origArtist$origSong");
-					if($expectedSig == $fullApiAuth){
-						$allowFullLyrics = true;
-					}
-				}
-
 				// Determine if this result was from the takedown list (must be done before truncating to a snippet, below).
 				$retVal['isOnTakedownList'] = (0 < preg_match("/\{\{(gracenote|lyricfind)[ _]takedown\}\}/", $retVal['lyrics']));
 
 				// SWC 20090802 - Neuter the actual lyrics :( - return an explanation with a link to the LyricWiki page.
 				// SWC 20091021 - Gil has determined that up to 17% of the lyrics can be returned as fair-use - we'll stick with 1/7th (about 14.3%) of the characters for safety.
+				// SWC 20151006 - allowFullLyrics is not likely to be true anymore. That was a previous feature to allow the original LyricWiki app (from 2010) to access
+				// lyrics. The newer LyricWiki app (Lyrically) does NOT use this feature, it uses its own API. To see the code which handled the signature, roll back the commit
+				// in which this comment appeared.
 				if(!$allowFullLyrics){
 					if(($retVal['lyrics'] != $defaultLyrics) && ($retVal['lyrics'] != $instrumental) && ($retVal['lyrics'] != "")){
 						$urlLink = "\n\n<a href='".$retVal['url']."'>".$retVal['artist'].":".$retVal['song']."</a>";
@@ -2457,8 +2447,6 @@ function logSoapFailure($origArtistSql, $origSongSql, $lookedForSql){
 				$dbw->commit();
 				wfDebug("LWSOAP: Stored in the database successfully.\n");
 				$wgMemc->delete($memkey);
-			} else {
-				wfDebug("LWSOAP: Error storing SOAP failure!! - " . mysql_error() . "\n");
 			}
 		} else {
 			wfDebug("LWSOAP: Updating $memkey to " . ($numFails + 1) . "\n");
@@ -2488,13 +2476,20 @@ function requestStarted($funcName, $requestData){
 	 */
 	if( !wfReadOnly() ) {
 		if(defined('TRACK_REQUEST_RUNTIMES') && TRACK_REQUEST_RUNTIMES) {
-			$db = lw_connect();
 			$requestData = str_replace("'", "[&apos;]", $requestData);
-			$queryString = "INSERT INTO apiRequests (requestedThrough, requestedFunction, requestData, requestTime)";
-			$queryString.= " VALUES ('$REQUEST_TYPE', '".mysql_real_escape_string($funcName, $db)."', '".mysql_real_escape_string($requestData, $db)."', NOW())";
-			if( mysql_query($queryString, $db ) ){
-				$retVal = mysql_insert_id( $db );
-			}
+			
+			$dbw = wfGetDB( DB_MASTER );
+			$dbw->insert(
+				'apiRequests',
+				[
+					"requestedThrough" => $REQUEST_TYPE,
+					"requestedFunction" => $funcName,
+					"requestData" => $requestData,
+					"requestTime" => $dbw->timestamp( wfTimestampNow() ),
+				],
+				__METHOD__
+			);
+			$retVal = $dbw->insertId();
 		}
 	}
 	return $retVal;
@@ -2509,8 +2504,11 @@ function requestStarted($funcName, $requestData){
 function requestFinished($id){
 	if( !wfReadOnly() ) {
 		if(defined('TRACK_REQUEST_RUNTIMES') && TRACK_REQUEST_RUNTIMES){
-			$db = lw_connect();
-			mysql_query("DELETE FROM apiRequests WHERE id=$id", $db);
+			$dbr = wfGetDB( DB_MASTER );
+			$dbr->delete("apiRequests",
+			[
+				id => $id
+			], __METHOD__);
 		}
 	}
 } // end requestFinished()

@@ -16,14 +16,6 @@ class WikiaInYourLangControllerTest extends WikiaBaseTest {
 		$this->assertSame( $sParsedDomain, $oController->getWikiDomain( $sDomainToParse ) );
 	}
 
-	/**
-	 * @dataProvider getLanguagesList
-	 */
-	public function testGetLanguageCore( $sFullLanguageCode, $sLanguageCore ) {
-		$oController = new WikiaInYourLangController();
-		$this->assertSame( $sLanguageCore, $oController->getLanguageCore( $sFullLanguageCode ) );
-	}
-
 	public function getDomainsList() {
 		return [
 			['http://rio.wikia.com', 'rio.wikia.com'],

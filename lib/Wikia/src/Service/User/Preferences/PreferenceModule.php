@@ -2,6 +2,7 @@
 
 namespace Wikia\Service\User\Preferences;
 
+use Doctrine\Common\Cache\VoidCache;
 use Interop\Container\ContainerInterface;
 use User;
 use Wikia\Cache\BagOStuffCacheProvider;
@@ -14,12 +15,17 @@ use Wikia\Service\User\Preferences\Migration\PreferenceScopeService;
 
 class PreferenceModule implements Module {
 	const PREFERENCE_CACHE_VERSION = 3;
+	const PREFERENCE_CACHE = false;
 
 	public function configure( InjectorBuilder $builder ) {
 		$builder
 			->bind( PreferenceService::class )->toClass( PreferenceServiceImpl::class )
 			->bind( PreferencePersistence::class )->toClass( PreferencePersistenceSwaggerService::class )
 			->bind( PreferenceServiceImpl::CACHE_PROVIDER )->to( function() {
+				if ( !self::PREFERENCE_CACHE ) {
+					return new VoidCache();
+				}
+
 				global $wgMemc;
 				$provider = new BagOStuffCacheProvider( $wgMemc );
 				$provider->setNamespace( PreferenceService::class . ":" . self::PREFERENCE_CACHE_VERSION );
@@ -48,8 +54,7 @@ class PreferenceModule implements Module {
 				return $defaultPreferences;
 			} )
 			->bind( PreferenceServiceImpl::FORCE_SAVE_PREFERENCES )->to( function() {
-				global $wgGlobalUserProperties;
-				return $wgGlobalUserProperties;
+				return ['language'];
 			} );
 	}
 }

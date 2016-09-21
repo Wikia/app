@@ -2,15 +2,18 @@
 /*jshint maxlen:125, camelcase:false, maxdepth:7*/
 define('ext.wikia.adEngine.sourcePointDetection', [
 	'ext.wikia.adEngine.adContext',
+	'ext.wikia.adEngine.adTracker',
 	'wikia.document',
+	'wikia.window',
 	'wikia.krux',
 	'wikia.log'
-], function (adContext, doc, krux, log) {
+], function (adContext, adTracker, doc, win, krux, log) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.sourcePointDetection',
-		kruxEventSent = false,
-		detectionInitialized = false;
+		statusTracked = false,
+		detectionInitialized = false,
+		spDetectionTime;
 
 	function getClientId() {
 		log('getClientId', 'info', logGroup);
@@ -20,20 +23,37 @@ define('ext.wikia.adEngine.sourcePointDetection', [
 	function sendKruxEvent(value) {
 		var eventId = 'KEa0tIof';
 
-		if (kruxEventSent) {
-			return;
-		}
-
 		if (krux.sendEvent(eventId, {blocking: value})) {
 			log(['sendKruxEvent', eventId, value], 'debug', logGroup);
-			kruxEventSent = true;
 		}
 	}
 
-	function initDetection() {
-		var context = adContext.getContext(),
-			detectionScript = doc.createElement('script'),
+	function trackStatusOnce(value) {
+		if (statusTracked) {
+			return;
+		}
+
+		statusTracked = true;
+		sendKruxEvent(value);
+		spDetectionTime.measureDiff({}, 'end').track();
+	}
+
+	function loadLibrary(context) {
+		var detectionScript = doc.createElement('script'),
 			node = doc.getElementsByTagName('script')[0];
+
+		detectionScript.async = true;
+		detectionScript.type = 'text/javascript';
+		detectionScript.src = context.opts.sourcePointDetectionUrl;
+		detectionScript.setAttribute('data-client-id', getClientId());
+
+		log('Appending detection script to head', 'debug', logGroup);
+		node.parentNode.insertBefore(detectionScript, node);
+		detectionInitialized = true;
+	}
+
+	function initDetection() {
+		var context = adContext.getContext();
 
 		if (!context.opts.sourcePointDetection && !context.opts.sourcePointDetectionMobile) {
 			log(['init', 'SourcePoint detection disabled'], 'debug', logGroup);
@@ -43,24 +63,28 @@ define('ext.wikia.adEngine.sourcePointDetection', [
 			log(['init', 'SourcePoint detection already initialized'], 'debug', logGroup);
 			return;
 		}
+
+		spDetectionTime = adTracker.measureTime('spDetection', {}, 'start');
+		spDetectionTime.track();
 		log('init', 'debug', logGroup);
 
-		detectionScript.async = true;
-		detectionScript.type = 'text/javascript';
-		detectionScript.src = context.opts.sourcePointDetectionUrl;
-		detectionScript.setAttribute('data-client-id', getClientId());
+		win.ads.runtime = win.ads.runtime || {};
+		win.ads.runtime.sp = win.ads.runtime.sp || {};
 
-		// @TODO Refactor event listeners after ADEN-2452
 		doc.addEventListener('sp.blocking', function () {
-			sendKruxEvent('yes');
+			win.ads.runtime.sp.blocking = true;
+			trackStatusOnce('yes');
+			log('sp.blocking', 'info', logGroup);
 		});
 		doc.addEventListener('sp.not_blocking', function () {
-			sendKruxEvent('no');
+			win.ads.runtime.sp.blocking = false;
+			trackStatusOnce('no');
+			log('sp.not_blocking', 'info', logGroup);
 		});
 
-		log('Appending detection script to head', 'debug', logGroup);
-		node.parentNode.insertBefore(detectionScript, node);
-		detectionInitialized = true;
+		if (!context.opts.sourcePointRecovery) {
+			loadLibrary(context);
+		}
 	}
 
 	return {

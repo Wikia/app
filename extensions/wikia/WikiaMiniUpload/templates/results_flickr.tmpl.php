@@ -31,7 +31,7 @@ for($j = 0; $j < ceil(count($results['photo']) / 4); $j++) {
 	for($i = $j*4; $i < ($j+1)*4; $i++) {
 		if(isset($results['photo'][$i])) {
 ?>
-			<td style="width: 167px;"><a href="#" alt="<?= addslashes($results['photo'][$i]['title']) ?>" title="<?= addslashes($results['photo'][$i]['title']) ?>" onclick="WMU_chooseImage(1, '<?= urlencode( $results['photo'][$i]['id'] ); ?>'); return false;"><img src="http://farm<?=$results['photo'][$i]['farm']?>.static.flickr.com/<?=$results['photo'][$i]['server']?>/<?=$results['photo'][$i]['id']?>_<?=$results['photo'][$i]['secret']?>_t.jpg" /></a></td>
+			<td style="width: 167px;"><a href="#" alt="<?= addslashes($results['photo'][$i]['title']) ?>" title="<?= addslashes($results['photo'][$i]['title']) ?>" onclick="WMU_chooseImage(1, '<?= $results['photo'][$i]['id']; ?>'); return false;"><img src="http://farm<?=$results['photo'][$i]['farm']?>.static.flickr.com/<?=$results['photo'][$i]['server']?>/<?=$results['photo'][$i]['id']?>_<?=$results['photo'][$i]['secret']?>_t.jpg" /></a></td>
 <?php
 		}
 	}
@@ -42,7 +42,7 @@ for($j = 0; $j < ceil(count($results['photo']) / 4); $j++) {
 	for($i = $j*4; $i < ($j+1)*4; $i++) {
 		if(isset($results['photo'][$i])) {
 ?>
-			<td><a href="#" onclick="WMU_chooseImage(1, '<?= urlencode( $results['photo'][$i]['id'] ); ?>'); return false;"><?= wfMsg('wmu-insert3') ?></a></td>
+			<td><a href="#" onclick="WMU_chooseImage(1, '<?= $results['photo'][$i]['id']; ?>'); return false;"><?= wfMsg('wmu-insert3') ?></a></td>
 <?php
 		}
 	}

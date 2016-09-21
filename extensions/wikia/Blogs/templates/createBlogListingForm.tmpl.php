@@ -28,6 +28,7 @@ $(document).ready( function () {
 <br />
 <form name="blogPostForm" id="blogPostForm" class="wikia_form" method="post" action="<?php echo $title->getLocalUrl();?>">
 	<input type="hidden" name="articleEditAllowed" value="<?php echo isset($formData['isExistingArticleEditAllowed']) ? $formData['isExistingArticleEditAllowed'] : "0"; ?>" />
+	<input type="hidden" name="token" value="<?= F::app()->wg->User->getEditToken() ?>" />
 	<?php if(!empty($preview)): ?>
 		<h2><?=wfMsg('create-blog-listing-preview')?></h2>
 		<div class='previewnote'><p><strong><?php echo wfMsg('previewnote');?></strong></p></div>

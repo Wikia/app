@@ -1315,7 +1315,7 @@ abstract class QuickTemplate {
 	/**
 	 * Constructor
 	 */
-	public function QuickTemplate() {
+	public function __construct() {
 		$this->data = array();
 		$this->translator = new MediaWiki_I18N();
 	}
@@ -1959,4 +1959,3 @@ abstract class BaseTemplate extends QuickTemplate {
 	}
 
 }
-

@@ -1,0 +1,66 @@
+@import 'skins/shared/color';
+@import 'skins/shared/mixins/flexbox';
+
+$hero-image-pattern: '/extensions/wikia/CommunityPage/images/hero_image_pattern.png';
+$hero-image-height: 200px;
+$hero-image-background: rgba(0,0,0,0.35);
+
+@if $is-dark-wiki {
+	$hero-image-pattern: '/extensions/wikia/CommunityPage/images/hero_image_pattern_dark.png';
+	$hero-image-background: rgba(0,0,0,0);
+}
+
+.community-page-header {
+	@include flexbox();
+	align-items: center;
+	background: url($hero-image-pattern);
+	background-color: $hero-image-background;
+	height: $hero-image-height;
+	justify-content: center;
+	text-align: center;
+
+	&.community-page-header-cover {
+		background-position: center;
+		background-size: cover;
+	}
+
+	&.community-page-header-cover:before {
+		background-color: rgba(0,0,0,0.35);
+		content: '';
+		height: $hero-image-height;
+		left: 0;
+		position: absolute;
+		right: 0;
+		top: 0;
+		z-index: 0;
+	}
+
+	.community-page-header-content {
+		width: 75%;
+		z-index: 0;
+	}
+
+	h1.community-page-heading {
+		color: $color-white;
+		font-size: 36px;
+		font-weight: bold;
+		line-height: 48px;
+	}
+
+	h1.community-page-heading:lang(ja) {
+		font-size: 24px;
+	}
+}
+
+.community-page-admin-welcome-message {
+	align-items: center;
+	background-color: $color-unified-module-background;
+	display: flex;
+	justify-content: center;
+	text-align: center;
+
+	.community-page-admin-welcome-message-text {
+		margin: 30px 0;
+		max-width: 478px;
+	}
+}

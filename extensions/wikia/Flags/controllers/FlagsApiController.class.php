@@ -566,14 +566,13 @@ class FlagsApiController extends FlagsApiBaseController {
 		if ( !empty( $wgEnableInsightsExt ) ) {
 			$flagsIds = $this->prepareFlagTypesIds( $flags );
 
-			$insightsFlagsModel = new InsightsFlagsModel();
-
 			foreach ( $flagsIds as $flagId ) {
-				$insightsFlagsModel->initModel( [ 'flagTypeId' => $flagId ] );
+				$insightsFlagsModel = new InsightsFlagsModel( $flagId );
+				$insightsCache = new InsightsCache( $insightsFlagsModel->getConfig() );
 				if ( !is_null( $pageId ) ) {
-					$insightsFlagsModel->updateInsightsCache( $pageId );
+					$insightsCache->updateInsightsCache( $pageId );
 				} else {
-					$insightsFlagsModel->purgeInsightsCache();
+					$insightsCache->purgeInsightsCache();
 				}
 			}
 		}

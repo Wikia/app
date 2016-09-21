@@ -1,0 +1,60 @@
+@import 'skins/shared/color';
+@import 'extensions/wikia/Search/css/WikiaSearch';
+
+$cell-padding: 10px;
+$filter-pill-padding: 5px;
+$url-input-width: 200px;
+
+.mw-special-PortabilityDashboard {
+	.portability-dashboard-language-filter {
+		list-style: none;
+		margin: 0;
+
+		li {
+			display: inline-block;
+		}
+
+		a {
+			margin: 0 $cell-padding $cell-padding 0;
+			padding: $filter-pill-padding $cell-padding;
+		}
+	}
+
+	.portability-dashboard-table {
+		overflow: hidden;
+
+		tr:hover {
+			background-color: $color-unified-module-background;
+		}
+
+		th,
+		td {
+			padding: $cell-padding;
+		}
+
+		a {
+			display: block;
+		}
+	}
+
+	.tooltip-icon-wrapper {
+		display: inline;
+	}
+
+	.portability-dashboard-noresults {
+		text-align: center;
+	}
+
+	.WikiaSearch {
+		margin-bottom: 25px;
+	}
+
+	.Search {
+		border-bottom: solid 1px $color-page-border;
+		margin-bottom: 18px;
+
+		.WikiaSearch .grid-1.alpha {
+			width: $url-input-width;
+		}
+	}
+}

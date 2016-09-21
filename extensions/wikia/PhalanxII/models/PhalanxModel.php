@@ -6,6 +6,8 @@
  * @method setText
  * @method getText
  * @method getLang
+ * @method setShouldLogInStats
+ * @method getShouldLogInStats
  */
 abstract class PhalanxModel extends WikiaObject {
 	public $model = null;
@@ -18,9 +20,13 @@ abstract class PhalanxModel extends WikiaObject {
 	private $service = null;
 	public $ip = null;
 
+	protected $shouldLogInStats = true;
+
 	public function __construct( $model, $data = array() ) {
 		parent::__construct();
 		$this->model = $model;
+
+		$this->user = $this->wg->user;
 		if ( !empty( $data ) ) {
 			foreach ( $data as $key => $value ) {
 				$method = "set{$key}";
@@ -89,16 +95,22 @@ abstract class PhalanxModel extends WikiaObject {
 		return $instance;
 	}
 
+	/**
+	 * Skip calls to Phalanx service if this method returns true
+	 *
+	 * @return bool
+	 */
 	public function isOk() {
 		return (
 			( ( $this->user instanceof User ) && ( $this->user->getName() == $this->wg->User->getName() && $this->wg->User->isAllowed( 'phalanxexempt' ) ) ) ||
-			( ( $this->user instanceof User ) && $this->user->isAllowed( 'phalanxexempt' ) )
+			( ( $this->user instanceof User ) && $this->user->isAllowed( 'phalanxexempt' ) ) ||
+			$this->isWikiaInternalRequest()
 		);
 	}
 
 	public function __call($name, $args) {
 		$method = substr($name, 0, 3);
-		$key = strtolower( substr( $name, 3 ) );
+		$key = lcfirst( substr( $name, 3 ) );
 
 		$result = null;
 		switch($method) {
@@ -119,7 +131,11 @@ abstract class PhalanxModel extends WikiaObject {
 		$fallback = "{$method}_{$type}_old";
 		$ret = false;
 		if ( method_exists( $this, $fallback ) ) {
-			Wikia::log( __METHOD__, __LINE__, "Call method from previous version of Phalanx - check Phalanx service!\n" );
+			Wikia\Logger\WikiaLogger::instance()->error( __METHOD__, [
+				'method' => $method,
+				'exception' => new Exception( 'Phalanx fallback triggered' )
+			] );
+
 			$ret = call_user_func( array( $this, $fallback ) );
 		}
 		return $ret;
@@ -134,14 +150,12 @@ abstract class PhalanxModel extends WikiaObject {
 		$ret = true;
 
 		if ( !$this->isOk() ) {
-			$isUser = ($this->user instanceof User) && ( $this->user->getName() == $this->wg->User->getName() );
-
 			$content = $this->getText();
 
 			# send request to service
 			$result = $this->service
 				->setLimit(1)
-				->setUser( $isUser ? $this->user : null )
+				->setUser( ( $this->getShouldLogInStats() && $this->user instanceof User ) ? $this->user : null )
 				->match( $type, $content, $this->getLang() );
 
 			if ( $result !== false ) {
@@ -170,5 +184,17 @@ abstract class PhalanxModel extends WikiaObject {
 		}
 
 		return $ret;
+	}
+
+	/**
+	 * Check if the current request is an internal one (has the required header and is a GET)
+	 *
+	 * @see PLATFORM-1473
+	 *
+	 * @return bool
+	 */
+	public function isWikiaInternalRequest() {
+		$request = $this->wg->Request;
+		return !$request->wasPosted() && $request->isWikiaInternalRequest();
 	}
 }

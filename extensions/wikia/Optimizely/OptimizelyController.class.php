@@ -2,8 +2,9 @@
 
 class OptimizelyController extends WikiaController {
 
+	use Wikia\Logger\Loggable;
+
 	const OPTIMIZELY_SCRIPT_KEY = 'optimizely_script_v.1.0';
-	const CACHE_DURATION = 300; /* 5 minutes */
 
 	public function getCode() {
 		$response = $this->getResponse();
@@ -13,10 +14,10 @@ class OptimizelyController extends WikiaController {
 		try {
 			$this->code = $storageModel->get( self::OPTIMIZELY_SCRIPT_KEY );
 		} catch ( Exception $e ) {
-			Wikia::log( __METHOD__, false, 'Cannot read Optimizely code from storage.' );
+			$this->error( __METHOD__ . ' - cannot read Optimizely code from storage.', [ 'exception' => $e ] );
 			$this->code = '';
 		}
 
-		$response->setCacheValidity( self::CACHE_DURATION );
+		$response->setCacheValidity( WikiaResponse::CACHE_VERY_SHORT );
 	}
 }

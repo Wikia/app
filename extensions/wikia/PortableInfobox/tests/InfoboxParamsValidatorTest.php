@@ -9,7 +9,7 @@ class InfoboxParamsValidatorTest extends WikiaBaseTest {
 		$this->setupFile = dirname( __FILE__ ) . '/../PortableInfobox.setup.php';
 		parent::setUp();
 
-		$this->InfoboxParamsValidator = new \Wikia\PortableInfobox\Helpers\InfoboParamsValidator();
+		$this->InfoboxParamsValidator = new \Wikia\PortableInfobox\Helpers\InfoboxParamsValidator();
 	}
 
 	/**

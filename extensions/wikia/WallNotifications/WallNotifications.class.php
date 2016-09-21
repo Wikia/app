@@ -770,10 +770,10 @@ class WallNotifications {
 		// The code will call this method twice for the same notification at times.  Rather than unwind this terrible
 		// mess of logic and state, just make sure we don't add the same notification twice.
 		static $seen = [];
-		if ( $seen[$entityKey] ) {
+		if ( !empty( $seen[$entityKey][$userId] ) ) {
 			return;
 		}
-		$seen[$entityKey] = true;
+		$seen[$entityKey][$userId] = true;
 
 		// Add the new $uniqueId and keep track of the index of the new ID in $notificationIndex.  This end/key/reset
 		// nonsense is required because of how PHP handles arrays.  Since we unset elements from this array later
@@ -850,12 +850,13 @@ class WallNotifications {
 
 		foreach ( $data['relation'][ $uniqueId ]['list'] as $rel ) {
 			if ( $rel['authorId'] == $authorId ) {
-				$found = true;
 
 				// Check the $entityKey here to make sure we're not removing an entry we just added
 				if ( $rel['entityKey'] != $entityKey ) {
 					continue;
 				}
+
+				$found = true;
 
 				// keep track of removed elements - we will remove them from db
 				// table after we are done updating in-memory structures
@@ -984,30 +985,18 @@ class WallNotifications {
 		// for many notifications we want to make sure we 50 notifications from different pages hance distinct
 		$db = $this->getDB( $useMaster );
 		$res = $db->select(
-			[ 'wn1' => 'wall_notification', 'wn2' => 'wall_notification' ],
-			[ 'wn1.unique_id' ],
+			'wall_notification',
+			'unique_id' ,
 			[
-				'wn1.user_id' => $userId,
-				'wn1.wiki_id' => $wikiId,
-				'wn1.is_hidden' => 0,
-				'wn2.id' => null
+				'user_id' => $userId,
+				'wiki_id' => $wikiId,
+				'is_hidden' => 0,
 			],
 			__METHOD__,
 			[
+				'DISTINCT',
 				'LIMIT' => '50',
-				'ORDER BY' => 'wn1.id DESC'
-			],
-			[
-				'wn2' => [
-					'LEFT JOIN',
-					[
-						'wn1.user_id = wn2.user_id',
-						'wn1.wiki_id = wn2.wiki_id',
-						'wn1.is_hidden = wn2.is_hidden',
-						'wn1.unique_id = wn2.unique_id',
-						'wn2.id < wn1.id'
-					]
-				],
+				'ORDER BY' => 'unique_id DESC'
 			]
 		);
 
@@ -1069,7 +1058,7 @@ class WallNotifications {
 	}
 
 	public function getKey( $userId, $wikiId ) {
-		return wfSharedMemcKey( __CLASS__, $userId, $wikiId . 'v31' );
+		return wfSharedMemcKey( __CLASS__, $userId, $wikiId . 'v32' );
 	}
 
 	/**

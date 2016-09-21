@@ -1,0 +1,13 @@
+{
+  "name": "design-system",
+  "description": "Design System developed for Wikia",
+  "license": "GPL-3.0",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/Wikia/design-system.git"
+  },
+  "ignore": [
+    "**/.*",
+    "gulpfile.js"
+  ]
+}

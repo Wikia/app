@@ -30,22 +30,44 @@ class CuratedContentHelper {
 		return $this->removeEmptySections( $processedSections );
 	}
 
+	public function processSectionsFromSpecialPage( $sections ) {
+		$processedSections = [ ];
+		if ( is_array( $sections ) ) {
+			foreach ( $sections as $section ) {
+				$processedSections[] = $this->processLogicForSectionSpecialPage( $section );
+			}
+		}
+		// remove null elements from array
+		return $this->removeEmptySections( $processedSections );
+	}
+
 	public function removeEmptySections( $sections ) {
 		return array_values( array_filter( $sections, function( $section ) { return !is_null( $section ); } ) );
 	}
 
-	public function processLogicForSection( $section ) {
+	public function processLogicForSectionSpecialPage( $section ) {
 		if ( empty ( $section['items'] ) || !is_array( $section['items'] ) ) {
 			// return null if we don't have any items inside section
 			return null;
 		}
-
 		$section['image_id'] = (int)$section['image_id']; // fallback to 0 if it's not set in request
 		$this->processCrop( $section );
-
 		foreach ( $section['items'] as &$item ) {
 			$this->fillItemInfo( $item );
 			$this->processCrop( $item );
+		}
+		return $section;
+	}
+
+	public function processLogicForSection( $section ) {
+		$section['image_id'] = (int)$section['image_id']; // fallback to 0 if it's not set in request
+		$this->processCrop( $section );
+
+		if ( is_array( $section['items'] ) ) {
+			foreach ( $section['items'] as &$item ) {
+				$this->fillItemInfo( $item );
+				$this->processCrop( $item );
+			}
 		}
 
 		return $section;
@@ -139,7 +161,7 @@ class CuratedContentHelper {
 	}
 
 	public static function getImageUrl( $id, $imageSize = 50 ) {
-		$thumbnail = (new ImageServing( [ $id ], $imageSize, $imageSize ))->getImages( 1 );
+		$thumbnail = ( new ImageServing( [ $id ], $imageSize, $imageSize ) )->getImages( 1 );
 		return !empty( $thumbnail ) ? $thumbnail[$id][0]['url'] : null;
 	}
 
@@ -212,7 +234,7 @@ class CuratedContentHelper {
 				}
 			}
 		}
-		return ($imageTitle instanceof Title && $imageTitle->exists()) ? $imageTitle : null;
+		return ( $imageTitle instanceof Title && $imageTitle->exists() ) ? $imageTitle : null;
 	}
 
 	public static function getUrlFromImageTitle( $imageTitle ) {

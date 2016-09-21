@@ -108,16 +108,15 @@ ve.ui.WikiaMediaQueryWidget.prototype.requestMedia = function () {
  * @method
  */
 ve.ui.WikiaMediaQueryWidget.prototype.requestVideo = function () {
-	this.request = $.ajax( {
-		url: mw.util.wikiScript( 'api' ),
-		data: {
-			format: 'json',
-			action: 'addmediatemporary',
-			url: this.value
-		}
+	this.request = $.post( mw.util.wikiScript( 'api' ), {
+		format: 'json',
+		action: 'addmediatemporary',
+		url: this.value,
+		type: 'video',
+		token: mw.user.tokens.get( 'editToken' )
 	} )
-		.always( this.onRequestVideoAlways.bind( this ) )
-		.done( this.onRequestVideoDone.bind( this ) );
+	.always( this.onRequestVideoAlways.bind( this ) )
+	.done( this.onRequestVideoDone.bind( this ) );
 };
 
 /**

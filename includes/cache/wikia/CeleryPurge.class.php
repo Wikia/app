@@ -8,12 +8,11 @@
  * If there are going to be a lot of them, we should change the parameters to the celery worker
  *
  * @author Owen
+ * @author macbre
  */
 
 use Wikia\Logger\WikiaLogger;
-use Wikia\Tasks\AsyncCeleryTask;
-use Wikia\Tasks\Queues\PurgeQueue;
-
+use Wikia\Tasks\Tasks\EdgeCachePurger;
 
 class CeleryPurge {
 
@@ -60,14 +59,31 @@ class CeleryPurge {
 
 		// Queue the tasks
 		foreach ( CeleryPurge::$buckets as $service => $urls) {
-			if ( empty($urls) ) continue;
-			( new AsyncCeleryTask() )
-					->taskType('celery_workers.purger.purge')
-					->setArgs( $urls, [], $service )
-					->setPriority( PurgeQueue::NAME )
-					->queue();
+			if ( !empty( $urls ) ) {
+				( new EdgeCachePurger( $urls, [], $service ) )->queue();
+			}
 		}
 		return true;
+	}
+
+	/**
+	 * SUS-81: allow CDN purging by surrogate key
+	 *
+	 * Use OutputPage::tagWithSurrogateKeys() helper to emit proper headers
+	 *
+	 * @param string $key surrogate key to purge
+	 * @param string $service Fastly's service name (defaults to "mediawiki")
+	 */
+	static function purgeBySurrogateKey( $key, $service = EdgeCachePurger::MEDIAWIKI_SERVICE ) {
+		$caller = self::getPurgeCaller();
+		wfDebug( "Purging surrogate key backtrace: " . wfGetAllCallers( false ) . "\n" );
+
+		WikiaLogger::instance()->info( 'varnish.purge', [
+			'key' => $key,
+			'service' => $service
+		] );
+
+		( new EdgeCachePurger( [], [ $key ], $service ) )->queue();
 	}
 
 	/**

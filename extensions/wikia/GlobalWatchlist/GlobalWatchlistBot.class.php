@@ -12,16 +12,19 @@ class GlobalWatchlistBot {
 	 */
 	public function sendWeeklyDigest() {
 		foreach ( $this->getUserIDs() as $userID ) {
-			$this->sendDigestToUser( $userID );
-			$this->clearWatchLists( $userID );
+			$this->sendWeeklyDigestForUserId($userID);
 		}
 	}
 
+	public function sendWeeklyDigestForUserId( $userID ) {
+		$this->sendDigestToUser( $userID );
+		$this->clearWatchLists( $userID );
+	}
 	/**
 	 * Return all users in the global_watchlist table.
 	 * @return array
 	 */
-	private function getUserIDs() {
+	public function getUserIDs() {
 		$db = wfGetDB( DB_SLAVE, [], \F::app()->wg->ExternalDatawareDB );
 		$userIDs = ( new WikiaSQL() )
 			->SELECT()->DISTINCT( GlobalWatchlistTable::COLUMN_USER_ID )

@@ -33,6 +33,15 @@ class WikiaMapsPoiController extends WikiaMapsBaseController {
 		$poiId = $this->request->getInt( 'id' );
 		$mapId = $this->request->getInt( 'mapId' );
 		$name = $this->request->getVal( 'name' );
+
+		// Temporary change required for ad purpose - https://wikia-inc.atlassian.net/browse/DAT-4051.
+		// We need to limit contribution options on protected maps related to the ad campaign only to stuff
+		// users.
+		// TODO: remove this as a part of https://wikia-inc.atlassian.net/browse/DAT-4055
+		if ( $this->shouldDisableProtectedMapEdit( $mapId ) ) {
+			return;
+		}
+
 		$this->setData( 'poiId', $poiId );
 		$this->setData( 'mapId', $mapId );
 		$this->setData( 'name', $name );

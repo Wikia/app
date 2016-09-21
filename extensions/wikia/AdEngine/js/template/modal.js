@@ -1,13 +1,14 @@
 /*global define*/
 define('ext.wikia.adEngine.template.modal', [
 	'ext.wikia.adEngine.adHelper',
+	'ext.wikia.adEngine.slot.adSlot',
 	'ext.wikia.adEngine.provider.gpt.adDetect',
 	'ext.wikia.adEngine.template.modalHandlerFactory',
 	'wikia.document',
 	'wikia.log',
 	'wikia.iframeWriter',
 	'wikia.window'
-], function (adHelper, adDetect, modalHandlerFactory, doc, log, iframeWriter, win) {
+], function (adHelper, adSlot, adDetect, modalHandlerFactory, doc, log, iframeWriter, win) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.template.modal',
@@ -21,8 +22,9 @@ define('ext.wikia.adEngine.template.modal', [
 	 * @param {number} params.width - desired width of the Lightbox
 	 * @param {number} params.height - desired height of the Lightbox
 	 * @param {boolean} params.scalable - extend iframe to maximum sensible size of the Lightbox
-	 * @param {boolean} [params.canHop] detect ad in the embedded iframe
-	 * @param {string}  [params.slotName] name of the original slot (required if params.canHop set to true)
+	 * @param {boolean} [params.canHop] - detect ad in the embedded iframe
+	 * @param {string} [params.slotName] - name of the original slot (required if params.canHop set to true)
+	 * @param {number} [params.closeDelay] - delay (in seconds) after which a close button will appear and modal will be able to close
 	 */
 	function show(params) {
 		log(['show', params], 'debug', logGroup);
@@ -41,7 +43,8 @@ define('ext.wikia.adEngine.template.modal', [
 					height: params.height
 				}
 			},
-			lightboxParams = modalHandler.getExpansionModel();
+			lightboxParams = modalHandler.getExpansionModel(),
+			slot;
 
 		if (modalHandler === null) {
 			return;
@@ -85,20 +88,27 @@ define('ext.wikia.adEngine.template.modal', [
 		adContainer.appendChild(adIframe);
 
 		if (async) {
-			adIframe.addEventListener('load', function () {
-				adDetect.onAdLoad(params.slotName + ' (modal inner iframe)', gptEventMock, adIframe, function () {
+			slot = adSlot.create(params.slotName, null, {
+				success: function () {
 					log(['ad detect', params.slotName, 'success'], 'info', logGroup);
 					win.postMessage('{"AdEngine":{"slot_' + params.slotName + '":true,"status":"success"}}', '*');
 					modalHandler.show();
-				}, function () {
+				},
+				hop: function () {
 					log(['ad detect', params.slotName, 'hop'], 'info', logGroup);
 					win.postMessage('{"AdEngine":{"slot_' + params.slotName + '":true,"status":"hop"}}', '*');
-				});
+				}
+			});
+			adIframe.addEventListener('load', function () {
+				adDetect.onAdLoad(slot, gptEventMock, adIframe);
 			});
 		}
 
 		scaleAdIfNeeded();
-		modalHandler.create(adContainer, !async);
+		if (!params.hasOwnProperty('closeDelay')) {
+			params.closeDelay = 0;
+		}
+		modalHandler.create(adContainer, !async, params.closeDelay);
 	}
 
 	return {

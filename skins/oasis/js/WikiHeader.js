@@ -176,7 +176,7 @@
 
 				if ( node.is( 'a' ) && node.attr( 'data-canonical' ) === 'chat' ) {
 					event.preventDefault();
-					window.ChatEntryPoint.onClickChatButton( node.attr( 'href' ) );
+					window.ChatWidget.onClickChatButton( node.attr( 'href' ) );
 				}
 			},
 

@@ -33,7 +33,7 @@ class RawAction extends FormlessAction {
 	}
 
 	function onView() {
-		global $wgGroupPermissions, $wgSquidMaxage, $wgForcedRawSMaxage, $wgJsMimeType, $wgEnableContentReviewExt;
+		global $wgGroupPermissions, $wgSquidMaxage, $wgForcedRawSMaxage, $wgJsMimeType, $wgUseXVO;
 
 		$this->getOutput()->disable();
 		$request = $this->getRequest();
@@ -73,14 +73,22 @@ class RawAction extends FormlessAction {
 
 		$maxage = $request->getInt( 'maxage', $wgSquidMaxage );
 
-		if ( $wgEnableContentReviewExt && $contentType == $wgJsMimeType && $this->page->getTitle()->inNamespace( NS_MEDIAWIKI ) ) {
-			if ( ( new \Wikia\ContentReview\Helper() )->isContentReviewTestModeEnabled() ) {
-				$maxage = 0;
-				$smaxage = 0;
-			}
+		if ( Wikia::isUsingSafeJs()
+			&& $contentType == $wgJsMimeType
+			&& $this->page->getTitle()->inNamespace( NS_MEDIAWIKI )
+			&& ( new \Wikia\ContentReview\Helper() )->isContentReviewTestModeEnabled()
+		) {
+			$maxage = 0;
+			$smaxage = 0;
 		}
 
 		$response = $request->response();
+
+		// Set standard Vary headers so cache varies on cookies and such (T125283)
+		$response->header( $this->getOutput()->getVaryHeader() );
+		if ( $wgUseXVO ) {
+			$response->header( $this->getOutput()->getXVO() );
+		}
 
 		$response->header( 'Content-type: ' . $contentType . '; charset=UTF-8' );
 		# Output may contain user-specific data;

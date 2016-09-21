@@ -182,7 +182,15 @@ class OwnWallMessageController extends WallMessageController {
 	}
 }
 
-class ReplyWallMessageController extends OwnWallMessageController {
+class ReplyWallMessageController extends WallMessageController {
+
+	/** @var \Title */
+	protected $containingThread;
+
+	public function initEmail() {
+		parent::initEmail();
+		$this->containingThread = \Title::newFromText( $this->getVal( 'parentId' ), NS_USER_WALL_MESSAGE );
+	}
 
 	/**
 	 * Get the summary text immediately following the salutation in the email
@@ -191,7 +199,7 @@ class ReplyWallMessageController extends OwnWallMessageController {
 	 */
 	protected function getSummary() {
 		return $this->getMessage( 'emailext-wallmessage-reply-summary',
-			$this->wallMessageTitle->getFullURL(),
+			$this->containingThread->getFullURL(),
 			$this->titleText
 		)->parse();
 	}
@@ -206,15 +214,31 @@ class ReplyWallMessageController extends OwnWallMessageController {
 	}
 
 	protected function getFooterMessages() {
-		$unwatchUrl = $this->wallMessageTitle->getFullURL( [
+		$unwatchUrl = $this->containingThread->getFullURL( [
 			'action' => 'unwatch'
 		] );
 
 		$footerMessages = [
-			$this->getMessage( 'emailext-unfollow-text', $unwatchUrl, $this->wallMessageTitle->getPrefixedText() )
+			$this->getMessage( 'emailext-unfollow-text', $unwatchUrl, $this->containingThread->getPrefixedText() )
 				->parse()
 		];
 		return array_merge( $footerMessages, parent::getFooterMessages() );
+	}
+
+	protected static function getEmailSpecificFormFields() {
+		$formFields = [
+			"inputs" => [
+				[
+					'type'  => 'text',
+					'name' => 'parentId',
+					'label' => 'parentID',
+					'tooltip' => 'Message thread ID, eg. http://community.wikia.com/wiki/Thread:<threadId>. ' .
+						'Use the same value as you did for threadId.'
+				]
+			]
+		];
+
+		return array_merge_recursive( parent::getEmailSpecificFormFields(), $formFields );
 	}
 }
 

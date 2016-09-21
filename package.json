@@ -30,6 +30,7 @@
     "karma-phantomjs-launcher": "~0.1.4",
     "karma-requirejs": "~0.2.2",
     "karma-script-launcher": "~0.1.0",
-    "requirejs": "~2.1.15"
+    "requirejs": "~2.1.15",
+    "jscs-jsdoc": "~1.2.0"
   }
 }

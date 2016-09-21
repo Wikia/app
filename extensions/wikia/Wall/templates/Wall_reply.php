@@ -1,12 +1,12 @@
 <? if( $userBlocked === false && $showReplyForm): ?>
 	<li class="SpeechBubble new-reply" >
 		<? if ( $wg->EnableMiniEditorExtForWall ):
-			echo $app->getView( 'MiniEditorController', 'Header', array(
-				'attributes' => array(
+			echo $app->getView( 'MiniEditorController', 'Header', [
+				'attributes' => [
 					'data-min-height' => 100,
 					'data-max-height' => 400
-				)
-			))->render();
+				]
+			] )->render();
 		endif; ?>
 		<div class="speech-bubble-avatar">
 			<?= AvatarService::renderAvatar($username, 30) ?>

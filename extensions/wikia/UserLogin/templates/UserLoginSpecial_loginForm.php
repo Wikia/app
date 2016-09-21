@@ -12,9 +12,9 @@
 		'type' => 'text',
 		'name' => 'username',
 		'isRequired' => true,
-		'label' => wfMessage('yourname')->escaped(),
-		'isInvalid' => (!empty($errParam) && $errParam === 'username'),
-		'value' => htmlspecialchars($username),
+		'label' => wfMessage( 'yourname' )->escaped(),
+		'isInvalid' => ( !empty( $errParam ) && $errParam === 'username' ),
+		'value' => htmlspecialchars( $username ),
 		'tabindex' => ++$tabIndex,
 	);
 	$userNameInput['errorMsg'] = $userNameInput['isInvalid'] ? $msg : '';
@@ -24,19 +24,19 @@
 		'name' => 'password',
 		'class' => 'password-input',
 		'isRequired' => true,
-		'label' => wfMessage('yourpassword')->escaped(),
-		'isInvalid' => (!empty($errParam) && $errParam === 'password'),
-		'value' => htmlspecialchars($password),
+		'label' => wfMessage( 'yourpassword' )->escaped(),
+		'isInvalid' => ( !empty( $errParam ) && $errParam === 'password' ),
+		'value' => htmlspecialchars( $password ),
 		'tabindex' => ++$tabIndex,
 	);
 	$passwordInput['errorMsg'] = $passwordInput['isInvalid'] ? $msg : '';
 
-	$forgotPasswordLinkUrl = SpecialPage::getTitleFor('UserLogin')->getLocalURL(array('type' => 'forgotPassword'));
+	$forgotPasswordLinkUrl = SpecialPage::getTitleFor( 'UserLogin' )->getLocalURL( array( 'type' => 'forgotPassword' ) );
 
 	$forgotPasswordLink = array(
 		'type' => 'custom',
-		'output' => '<a href="'. $forgotPasswordLinkUrl .'" class="forgot-password" tabindex="0">'
-			. wfMessage('userlogin-forgot-password')->escaped()
+		'output' => '<a href="' . $forgotPasswordLinkUrl . '" class="forgot-password" tabindex="0">'
+			. wfMessage( 'userlogin-forgot-password' )->escaped()
 			. '</a>',
 	);
 
@@ -47,21 +47,21 @@
 		'isRequired' => false,
 		'value' => '1',
 		'checked' => $keeploggedin,
-		'label' => wfMessage('userlogin-remembermypassword')->escaped(),
+		'label' => wfMessage( 'userlogin-remembermypassword' )->escaped(),
 		'tabindex' => ++$tabIndex,
 	);
 
 	$loginBtn = array(
 		'type' => 'submit',
-		'value' => wfMessage('login')->escaped(),
+		'value' => wfMessage( 'login' )->escaped(),
 		'class' => 'login-button big',
 		'tabindex' => ++$tabIndex,
 	);
 
-	$specialSignupLink = SpecialPage::getTitleFor('UserSignup')->getLocalURL();
+	$specialSignupLink = SpecialPage::getTitleFor( 'UserSignup' )->getLocalURL();
 	$createAccount = array(
 		'type' => 'custom',
-		'output' => wfMessage('userlogin-get-account', array($specialSignupLink, ++$tabIndex))->inContentLanguage()->text(),
+		'output' => wfMessage( 'userlogin-get-account', array( $specialSignupLink, ++$tabIndex ) )->inContentLanguage()->text(),
 		'class' => 'get-account',
 		'tabindex' => ++$tabIndex,
 	);
@@ -79,10 +79,10 @@
 		'method' => 'post',
 	);
 
-	$form['isInvalid'] = !empty($result) && empty($errParam) && !empty($msg);
-	$form['errorMsg'] = !empty($msg) ? $msg : '';
+	$form['isInvalid'] = !empty( $result ) && empty( $errParam ) && !empty( $msg );
+	$form['errorMsg'] = !empty( $msg ) ? $msg : '';
 
-	if(!empty($returnto)) {
+	if ( !empty( $returnto ) ) {
 		$form['inputs'][] = array(
 			'type' => 'hidden',
 			'name' => 'returnto',
@@ -90,7 +90,7 @@
 		);
 	}
 
-	if(!empty($returntoquery)) {
+	if ( !empty( $returntoquery ) ) {
 		$form['inputs'][] = array(
 			'type' => 'hidden',
 			'name' => 'returntoquery',
@@ -98,9 +98,9 @@
 		);
 	}
 
-	echo $app->renderView('WikiaStyleGuideForm', 'index', array('form' => $form));
+	echo $app->renderView( 'WikiaStyleGuideForm', 'index', array( 'form' => $form ) );
 
 	// 3rd party providers buttons
-	if (!$isMonobookOrUncyclo) echo $app->renderView('UserLoginSpecial', 'Providers', array( 'tabindex' => ++$tabIndex ));
+	if ( !$isMonobookOrUncyclo ) echo $app->renderView( 'UserLoginSpecial', 'Providers', array( 'tabindex' => ++$tabIndex ) );
 ?>
 </div>

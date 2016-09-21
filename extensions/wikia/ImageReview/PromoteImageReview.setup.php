@@ -30,6 +30,7 @@ $wgAutoloadClasses['PromoteImageReviewTask'] =  $dir . 'PromoteImageReviewTask.p
 if( function_exists('extAddBatchTask') ) {
 	extAddBatchTask($dir . "PromoteImageReviewTask.php", "promoteimagereview", "PromoteImageReviewTask");
 }
+//Possibly this line can be removed (as the usage new Wikia\\Tasks\\Tasks\\PromoteImageReviewTask was removed)
 $wgAutoloadClasses['Wikia\\Tasks\\Tasks\\PromoteImageReviewTask'] = "{$dir}/PromoteImageReviewTask.class.php";
 
 $wgAutoloadClasses['PromoteImageReviewSpecialController'] =  $dir . 'PromoteImageReviewSpecialController.class.php';
@@ -39,23 +40,6 @@ $wgSpecialPages[ 'PromoteImageReview'] = 'PromoteImageReviewSpecialController';
 // hooks
 $wgHooks['WikiFactory::onPostChangesApplied'][] = 'CityVisualization::onWikiDataUpdated';
 $wgHooks['CreatePromoImageReviewTask'][] = 'PromoteImageReviewHelper::onCreatePromoteImageReviewTask';
-
-// rights
-$wgAvailableRights[] = 'promoteimagereview';
-$wgGroupPermissions['util']['promoteimagereview'] = true;
-$wgGroupPermissions['vstf']['promoteimagereview'] = true;
-
-$wgAvailableRights[] = 'promoteimagereviewquestionableimagereview';
-$wgGroupPermissions['util']['promoteimagereviewquestionableimagereview'] = true;
-
-$wgAvailableRights[] = 'promoteimagereviewrejectedimagereview';
-$wgGroupPermissions['util']['promoteimagereviewrejectedimagereview'] = true;
-
-$wgAvailableRights[] = 'promoteimagereviewstats';
-$wgGroupPermissions['util']['promoteimagereviewstats'] = true;
-
-$wgAvailableRights[] = 'promoteimagereviewcontrols';
-$wgGroupPermissions['util']['promoteimagereviewcontrols'] = true;
 
 // i18n
 $wgExtensionMessagesFiles['PromoteImageReview'] = $dir . 'PromoteImageReview.i18n.php';

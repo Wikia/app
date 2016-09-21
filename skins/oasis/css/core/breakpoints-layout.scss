@@ -143,32 +143,30 @@
 		padding: 0;
 
 		@media #{$breakpoint-below-small-plus} {
+			-moz-column-count: 2;
+			-webkit-column-count: 2;
+			column-count: 2;
+
 			// this is copied from responsive-core.scss
 			clear: both;
 			float: none;
-			margin: 0;
 			padding: 13px 10px 0;
 			width: auto;
-
-			&.loaded,
-			&.AdminDashboardRail {
-				-moz-column-count: 2;
-				-webkit-column-count: 2;
-				column-count: 2;
-			}
 
 			.module,
 			.admin-dashboard-module {
 				box-sizing: border-box;
-
-				-moz-column-break-inside: avoid;
-				-webkit-column-break-inside: avoid;
-				column-break-inside: avoid;
-
-				// fallback, because column-break-inside is currently NYI
 				display: inline-block;
+				margin: 12px 8px;
 				position: static;
-				width: 100%;
+				vertical-align: top;
+				width: 330px;
+
+				.carousel-container {
+					left: 0;
+					margin: auto;
+					width: 265px;
+				}
 
 			}
 		}
@@ -203,10 +201,6 @@
 	}
 
 	.EditPageHeader {
-		> h1 {
-			margin-left: 5px;
-			margin-top: 2px;
-		}
 
 		> h2 {
 			display: inline-block;
@@ -319,7 +313,9 @@
 $ve-overlay-color: rgba(0, 0, 0, .5);
 $vw-overlay-shadow-size: 1000vw; // IE does not support vmax
 body.ve {
-	pointer-events: none;
+	.WikiaSiteWrapper {
+		pointer-events: none;
+	}
 
 	.ve-ui-overlay {
 		pointer-events: all;
@@ -336,7 +332,7 @@ body.ve {
 	}
 
 	.WikiaMainContent {
-		box-shadow: 0 0 $vw-overlay-shadow-size $vw-overlay-shadow-size $ve-overlay-color;
+		box-shadow: 0 0 0 $vw-overlay-shadow-size $ve-overlay-color;
 		padding: 0;
 		pointer-events: all;
 		z-index: $zTop;

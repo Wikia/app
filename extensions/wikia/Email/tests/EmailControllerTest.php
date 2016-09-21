@@ -1,7 +1,5 @@
 <?php
 
-use Wikia\Util\GlobalStateWrapper;
-
 class EmailController extends \Email\EmailController {
 	public function assertValidFromAddress( $email ) {
 		return parent::assertValidFromAddress( $email );
@@ -26,45 +24,6 @@ class EmailControllerTest extends WikiaBaseTest {
 	function testAssertValidFromAddressValidEmail() {
 		$obj = new EmailController;
 		$this->assertTrue( $obj->assertValidFromAddress( 'valid@email.com' ) );
-	}
-
-	function testAssertCanAccessControllerSuccess() {
-		$secret = 'a-secret';
-		$request = new \WikiaRequest(array('secret' => $secret));
-		$controller = new \Email\Controller\ForgotPasswordController();
-		$controller->setRequest($request);
-
-		$wrapper = new GlobalStateWrapper( [
-			'wgTheSchwartzSecretToken' => $secret
-			] );
-
-		$result = $wrapper->wrap( function() use ( $controller ) {
-			return $controller->assertCanAccessController();
-		});
-
-		$this->assertTrue(!isset($result));
-	}
-
-
-	/**
-	 *
-	 * @@expectedException \Email\Fatal
-	 */
-	function testAssertCanAccessControllerFail() {
-		$secret = 'a-secret';
-		$request = new \WikiaRequest(array('secret' => $secret));
-		$controller = new \Email\Controller\ForgotPasswordController();
-		$controller->setRequest($request);
-
-		$wrapper = new GlobalStateWrapper( [
-			'wgTheSchwartzSecretToken' => 'something-different'
-			] );
-
-		$result = $wrapper->wrap( function() use ( $controller ) {
-			return $controller->assertCanAccessController();
-		});
-
-		$this->assertTrue(!isset($result));
 	}
 
 }

@@ -256,7 +256,7 @@ class PageStatsService extends Service {
 
 				if (!empty($user)) {
 					// remove bots and blocked users
-					$res = !$user->isBlocked() && !$user->isAllowed('bot');
+					$res = !$user->isBlocked( true, false ) && !$user->isAllowed('bot');
 				}
 			}
 

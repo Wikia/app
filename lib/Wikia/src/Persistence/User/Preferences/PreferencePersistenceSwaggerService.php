@@ -3,6 +3,7 @@
 namespace Wikia\Persistence\User\Preferences;
 
 use Swagger\Client\ApiException;
+use Swagger\Client\User\Preferences\Api\ReverseLookupApi;
 use Swagger\Client\User\Preferences\Api\UserPreferencesApi;
 use Swagger\Client\User\Preferences\Models\GlobalPreference as SwaggerGlobalPref;
 use Swagger\Client\User\Preferences\Models\LocalPreference as SwaggerLocalPref;
@@ -107,19 +108,67 @@ class PreferencePersistenceSwaggerService implements PreferencePersistence {
 		return $prefs;
 	}
 
+	public function deleteAll( $userId ) {
+		try {
+			return $this->deleteAllPreferences( $this->getApi( $userId ), $userId );
+		} catch ( ApiException $e ) {
+			$this->handleApiException( $e );
+		}
+
+		return false;
+	}
+
+	public function findWikisWithLocalPreferenceValue( $preferenceName, $value ) {
+		try {
+			return $this->findWikisWithLocalPreference(
+				$this->getApi( null, ReverseLookupApi::class ),
+				$preferenceName,
+				$value
+			);
+		} catch ( ApiException $e ) {
+			$this->handleApiException( $e );
+		}
+
+		return [];
+	}
+
+	public function findUsersWithGlobalPreferenceValue( $preferenceName, $value = null ) {
+		try {
+			return $this->findUsersWithGlobalPreference(
+				$this->getApi( null, ReverseLookupApi::class ),
+				$preferenceName,
+				$value
+			);
+		} catch ( ApiException $e ) {
+			$this->handleApiException( $e );
+		}
+
+		return [];
+	}
+	
 	/**
 	 * @param $userId
-	 * @return UserPreferencesApi
+	 * @param $class
+	 * @return mixed
 	 */
-	private function getApi( $userId ) {
+	private function getApi( $userId = null, $class = UserPreferencesApi::class ) {
 		$profilerStart = $this->startProfile();
-		$api = $this->apiProvider->getAuthenticatedApi( self::SERVICE_NAME, $userId, UserPreferencesApi::class );
+
+		if ( $userId === null ) {
+			$api = $this->apiProvider->getApi( self::SERVICE_NAME, $class );
+		} else {
+			$api = $this->apiProvider->getAuthenticatedApi( self::SERVICE_NAME, $userId, $class );
+		}
+
 		$this->endProfile(
 			\Transaction::EVENT_USER_PREFERENCES,
 			$profilerStart,
 			[
-				'user_id' => $userId,
-				'method' => 'getApi', ] );
+				'user_id' => intval($userId),
+				'method' => 'getApi',
+				'authenticated' => $userId !== null,
+			]
+		);
 
 		return $api;
 	}
@@ -131,8 +180,10 @@ class PreferencePersistenceSwaggerService implements PreferencePersistence {
 			\Transaction::EVENT_USER_PREFERENCES,
 			$profilerStart,
 			[
-				'user_id' => $userId,
-				'method' => 'setPreferences', ] );
+				'user_id' => intval($userId),
+				'method' => 'setPreferences',
+			]
+		);
 	}
 
 	private function getPreferences( UserPreferencesApi $api, $userId ) {
@@ -142,10 +193,46 @@ class PreferencePersistenceSwaggerService implements PreferencePersistence {
 			\Transaction::EVENT_USER_PREFERENCES,
 			$profilerStart,
 			[
-				'user_id' => $userId,
-				'method' => 'getPreferences', ] );
+				'user_id' => intval($userId),
+				'method' => 'getPreferences',
+			]
+		);
 
 		return $preferences;
+	}
+
+	private function deleteAllPreferences( UserPreferencesApi $api, $userId ) {
+		$profilerStart = $this->startProfile();
+		$api->deleteUserPreferences( $userId );
+		$this->endProfile(
+			\Transaction::EVENT_USER_PREFERENCES,
+			$profilerStart,
+			[
+				'user_id' => intval($userId),
+				'method' => 'deletePreferences',
+			]
+		);
+
+		return true;
+	}
+
+	private function findWikisWithLocalPreference( ReverseLookupApi $api, $preferenceName, $value ) {
+		$profilerStart = $this->startProfile();
+		$wikiList = $api->findWikisWithLocalPreference( $preferenceName, $value );
+		$this->endProfile(
+			\Transaction::EVENT_USER_PREFERENCES,
+			$profilerStart,
+			[
+				'method' => 'findWikisWithLocalPreference',
+			]
+		);
+
+		return $wikiList;
+	}
+
+	private function findUsersWithGlobalPreference( ReverseLookupApi $api, $preferenceName, $value = null ) {
+		$userList = $api->findUsersWithGlobalPreference( $preferenceName, $value );
+		return $userList;
 	}
 
 	/**

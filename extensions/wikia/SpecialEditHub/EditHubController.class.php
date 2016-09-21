@@ -371,6 +371,8 @@ class EditHubController extends WikiaSpecialPageController {
 	}
 
 	public function uploadAndGetVideo() {
+		$this->checkWriteRequest();
+
 		if (!$this->checkAccess()) {
 			return false;
 		}

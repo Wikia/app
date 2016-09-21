@@ -17,22 +17,22 @@ define(
 		}
 
 		function bindEvents() {
-			$('#content-review-module-submit').on('click', submitPageForReview);
+			$('.content-review-module-submit').on('click', submitPageForReview);
 		}
 
 		function submitPageForReview(event) {
-			event.preventDefault();
-
 			var notification,
-				data = {
-					pageName: mw.config.get('wgPageName'),
-					editToken: mw.user.tokens.get('editToken')
-				};
+				pageName = $(this).attr('data-page-name');
+
+			event.preventDefault();
 
 			nirvana.sendRequest({
 				controller: 'ContentReviewApiController',
 				method: 'submitPageForReview',
-				data: data,
+				data: {
+					pageName: pageName,
+					editToken: mw.user.tokens.get('editToken')
+				},
 				callback: function () {
 					win.location.reload(true);
 				},

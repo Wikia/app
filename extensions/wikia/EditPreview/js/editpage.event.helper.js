@@ -1,17 +1,18 @@
-define('editpage.event.helper', ['wikia.window'], function(window, ace){
+define('editpage.event.helper', ['wikia.window'], function (window, ace) {
 	'use strict';
 
 	// get editor's content (either wikitext or HTML)
 	// and call provided callback with wikitext as its parameter
 	function getContent() {
 		var dfd = new $.Deferred(),
-			editor = typeof RTE == 'object' ? RTE.getInstance() : false, mode = editor ? editor.mode : 'mw',
+			editor = typeof RTE == 'object' ? RTE.getInstance() : false,
+			mode = editor ? editor.mode : 'mw',
 			content = '';
 
 		if (window.wgEnableCodePageEditor) {
-			require(['wikia.ace.editor'], function(ace){
+			require(['wikia.ace.editor'], function (ace) {
 				content = ace.getContent();
-				dfd.resolve(content);
+				dfd.resolve(content, mode);
 			});
 		} else {
 			switch (mode) {
@@ -24,7 +25,7 @@ define('editpage.event.helper', ['wikia.window'], function(window, ace){
 					break;
 			}
 
-			dfd.resolve(content);
+			dfd.resolve(content, mode);
 		}
 
 		return dfd.promise();
@@ -35,7 +36,7 @@ define('editpage.event.helper', ['wikia.window'], function(window, ace){
 		var editor = typeof RTE == 'object' ? RTE.getInstance() : false;
 
 		params = $.extend({
-			page: window.wgEditPageClass ? window.wgEditPageClass : "",
+			page: window.wgEditPageClass ? window.wgEditPageClass : '',
 			method: method,
 			mode: editor.mode
 		}, params);
@@ -90,10 +91,65 @@ define('editpage.event.helper', ['wikia.window'], function(window, ace){
 		return $('#categories');
 	}
 
+	/**
+	 * Allows for sending POST requests from an iframe.
+	 * Creates an iframe with form with id and target marked with timestamp.
+	 *
+	 * @param {string} url
+	 * @returns {IFrameForm}
+	 */
+	function IFrameForm(url) {
+		if (!this instanceof IFrameForm) {
+			return new IFrameForm(url);
+		}
+
+		this.time = new Date().getTime();
+		this.form = $('<form></form>')
+			.attr('action', url)
+			.attr('style', 'display:none')
+			.attr('target', 'iframe' + this.time)
+			.attr('method', 'post')
+			.attr('id', 'form' + this.time)
+			.attr('name', 'form' + this.time);
+
+		this.iframe = $('<iframe></iframe>')
+			.attr('data-time', this.time)
+			.attr('id', 'iframe' + this.time)
+			.attr('name', 'iframe' + this.time);
+
+		// wrapper with special styling is required to prevent iframe auto-resizing on iOS Safari
+		this.iframeWrapper = $('<div></div>')
+			.attr('class', 'mobile-preview');
+
+		this.addParameter = function (parameter, value) {
+			$('<input type=\'hidden\' />')
+				.attr('name', parameter)
+				.attr('value', value)
+				.appendTo(this.form);
+		};
+
+		this.send = function (frameRoot, callback) {
+			var $frameRoot = $(frameRoot);
+
+			this.iframeWrapper.append(this.iframe);
+			$frameRoot
+				.append(this.iframeWrapper)
+				.append(this.form);
+
+			this.iframe.load((function () {
+				$('#form' + this.time).remove();
+				callback();
+			}).bind(this));
+
+			this.form.submit();
+		};
+	}
+
 	return {
 		ajax: ajax,
 		getCategories: getCategories,
 		getContent: getContent,
-		getScrollbarWidth: getScrollbarWidth
+		getScrollbarWidth: getScrollbarWidth,
+		IFrameForm: IFrameForm
 	};
 });

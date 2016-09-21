@@ -3,6 +3,7 @@
 namespace Wikia\Persistence\User\Preferences;
 
 use Swagger\Client\ApiException;
+use Swagger\Client\User\Preferences\Api\ReverseLookupApi;
 use Swagger\Client\User\Preferences\Api\UserPreferencesApi;
 use Swagger\Client\User\Preferences\Models\GlobalPreference as SwaggerGlobalPref;
 use Swagger\Client\User\Preferences\Models\LocalPreference as SwaggerLocalPref;
@@ -26,19 +27,30 @@ class PreferencePersistenceSwaggerServiceTest extends \PHPUnit_Framework_TestCas
 	/** @var \PHPUnit_Framework_MockObject_MockObject */
 	protected $userPreferencesApi;
 
+	/** @var \PHPUnit_Framework_MockObject_MockObject */
+	protected $reverseLookupApi;
+
 	public function setUp() {
 		$this->apiProvider = $this->getMockBuilder( ApiProvider::class )
-			->setMethods( ['getAuthenticatedApi'] )
+			->setMethods( ['getAuthenticatedApi', 'getApi' ] )
 			->disableOriginalConstructor()
 			->getMock();
 		$this->userPreferencesApi = $this->getMockBuilder( UserPreferencesApi::class )
-			->setMethods( ['setUserPreferences', 'getUserPreferences'] )
+			->setMethods( ['setUserPreferences', 'getUserPreferences', 'deleteUserPreferences'] )
+			->disableOriginalConstructor()
+			->getMock();
+		$this->reverseLookupApi = $this->getMockBuilder( ReverseLookupApi::class )
+			->setMethods( ['findWikisWithLocalPreference' ] )
 			->disableOriginalConstructor()
 			->getMock();
 		$this->apiProvider->expects( $this->any() )
 			->method( 'getAuthenticatedApi' )
 			->with( PreferencePersistenceSwaggerService::SERVICE_NAME, $this->userId, UserPreferencesApi::class )
 			->willReturn( $this->userPreferencesApi );
+		$this->apiProvider->expects( $this->any() )
+			->method( 'getApi' )
+			->with( PreferencePersistenceSwaggerService::SERVICE_NAME, ReverseLookupApi::class )
+			->willReturn( $this->reverseLookupApi );
 
 		$this->persistence = new PreferencePersistenceSwaggerService( $this->apiProvider );
 	}
@@ -160,5 +172,34 @@ class PreferencePersistenceSwaggerServiceTest extends \PHPUnit_Framework_TestCas
 			->with( $this->userId )
 			->willThrowException( new ApiException( "", 500 ) );
 		$this->persistence->get( $this->userId );
+	}
+
+	public function testDeleteAll() {
+		$this->userPreferencesApi->expects( $this->once() )
+			->method( 'deleteUserPreferences' )
+			->with( $this->userId );
+		$this->persistence->deleteAll( $this->userId );
+	}
+
+	/**
+	 * @expectedException \Wikia\Service\PersistenceException
+	 */
+	public function testDeleteAllException() {
+		$this->userPreferencesApi->expects( $this->once() )
+			->method( 'deleteUserPreferences' )
+			->with( $this->userId )
+			->willThrowException( new ApiException( "", 503 ) );
+		$this->persistence->deleteAll( $this->userId );
+	}
+
+	/**
+	 * @expectedException \Wikia\Service\UnauthorizedException
+	 */
+	public function testDeleteUnauthorized() {
+		$this->userPreferencesApi->expects( $this->once() )
+			->method( 'deleteUserPreferences' )
+			->with( $this->userId )
+			->willThrowException( new ApiException( "", UnauthorizedException::CODE ) );
+		$this->persistence->deleteAll( $this->userId );
 	}
 }

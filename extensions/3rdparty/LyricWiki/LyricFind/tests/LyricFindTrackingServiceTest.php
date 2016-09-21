@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * @group LyricFindTracking
+ */
 class LyricFindTrackingServiceTest extends WikiaBaseTest {
 
 	const SERVICE_URL = 'http://api.foo.net/service/';
@@ -98,7 +101,7 @@ class LyricFindTrackingServiceTest extends WikiaBaseTest {
 		// mock API response
 		$respMock = is_array($apiResponse) ? json_encode($apiResponse) : $apiResponse;
 
-		$this->mockStaticMethod('Http', 'post', $respMock);
+		$this->mockStaticMethod('Http', 'request', $respMock);
 		$this->mockGlobalVariable('wgTitle', $this->mockClassWithMethods('Title', [
 			'getArticleID' => 666,
 			'getText' => 'Paradise_Lost:Forever_Failure'

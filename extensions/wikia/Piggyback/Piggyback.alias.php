@@ -14,3 +14,8 @@ $specialPageAliases['de'] = array(
 $specialPageAliases['fr'] = array(
 	'Piggyback' => array( 'Accès_superposé' ),
 );
+
+/** Japanese (日本語) */
+$specialPageAliases['ja'] = array(
+	'Piggyback' => array( 'ピギーバック' )
+);

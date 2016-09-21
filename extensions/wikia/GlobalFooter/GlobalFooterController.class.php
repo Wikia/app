@@ -9,7 +9,6 @@ class GlobalFooterController extends WikiaController {
 	const MESSAGE_KEY_GLOBAL_FOOTER_LINKS = 'shared-Oasis-footer-wikia-links';
 	const MEMC_EXPIRY = 3600;
 	const SITEMAP_GLOBAL = 'http://www.wikia.com/Sitemap';
-	const SITEMAP_LOCAL = 'Special:AllPages';
 
 	public function index() {
 		Wikia::addAssetsToOutput( 'global_footer_scss' );
@@ -105,30 +104,15 @@ class GlobalFooterController extends WikiaController {
 	private function generateSitemapLinks() {
 		$sitemapLinks = [];
 
-// SEO-84 Exploring the possibility of sitemap links update (SEO-6) breaking the SEO:
-		$useGlobalSitemap = true;
-		$useLocalSitemap = false;
+		$sitemapLinks[] = parseItem(
+			'*' . self::SITEMAP_GLOBAL . '|' . wfMessage( 'global-footer-global-sitemap' )->escaped()
+		);
 
-// Regular behaviour:
-//		if ( WikiaPageType::isCorporatePage() || $this->wg->CityId === COMMUNITY_CENTRAL_CITY_ID ) {
-//			$useGlobalSitemap = true;
-//		} elseif ( WikiaPageType::isMainPage() ) {
-//			$useGlobalSitemap = true;
-//			$useLocalSitemap = true;
-//		} else {
-//			$useLocalSitemap = true;
-//		}
-
-		if ( $useGlobalSitemap ) {
-			$sitemapLinks[] = parseItem(
-				'*' . self::SITEMAP_GLOBAL . '|' . wfMessage( 'global-footer-global-sitemap' )->escaped()
-			);
-		}
-
-		if ( $useLocalSitemap ) {
-			$sitemapLinks[] = parseItem(
-				'*' . self::SITEMAP_LOCAL . '|' . wfMessage( 'global-footer-local-sitemap' )->escaped()
-			);
+		// Don't link to local sitemap on corporate sites and community.wikia.com (controlled via WikiFactory)
+		if ( $this->wg->EnableLocalSitemapPageExt ) {
+			$link = LocalSitemapPageHelper::getLocalSitemapArticleDBkey();
+			$label = wfMessage( 'global-footer-local-sitemap' )->escaped();
+			$sitemapLinks[] = parseItem( '*' . $link . '|' . $label );
 		}
 
 		return $sitemapLinks;

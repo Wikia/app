@@ -6,4 +6,4 @@
 
 global $config;
 
-$config = ['host' => 'your-redis-host-here', 'database' => '12'];
+$config = ['host' => 'localhost', 'database' => '12'];

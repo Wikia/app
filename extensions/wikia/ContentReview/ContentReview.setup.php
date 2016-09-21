@@ -25,19 +25,17 @@ $wgExtensionCredits['other'][] = [
 	'url'               => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/ContentReview',
 	'descriptionmsg'    => 'content-review-desc',
 ];
-
-/**
- * Groups and permissions
- */
-$wgAvailableRights[] = 'content-review';
-$wgGroupPermissions['*']['content-review'] = false;
-$wgGroupPermissions['util']['content-review'] = true;
-$wgGroupPermissions['staff']['content-review'] = true;
-
 /**
  * Controllers
  */
 $wgAutoloadClasses['ContentReviewApiController'] = __DIR__ . '/controllers/ContentReviewApiController.class.php';
+$wgAutoloadClasses['JSPagesSpecialController'] = __DIR__ . '/controllers/JSPagesSpecialController.class.php';
+$wgAutoloadClasses['Wikia\ContentReview\ContentReviewDiffPage'] = __DIR__ . '/controllers/ContentReviewDiffPage.class.php';
+
+/**
+ * Special page
+ */
+$wgSpecialPages['JSPages'] = 'JSPagesSpecialController';
 
 /**
  * Models
@@ -51,11 +49,19 @@ $wgAutoloadClasses['Wikia\ContentReview\Models\ReviewLogModel'] = __DIR__ . '/mo
  * Services
  */
 $wgAutoloadClasses['Wikia\ContentReview\ContentReviewService'] = __DIR__ . '/services/ContentReviewService.class.php';
+$wgAutoloadClasses['Wikia\ContentReview\ContentReviewStatusesService'] = __DIR__ . '/services/ContentReviewStatusesService.class.php';
+
+/**
+ * Integrations
+ */
+$wgAutoloadClasses['Wikia\ContentReview\Integrations\SlackIntegration'] = __DIR__ . '/integrations/SlackIntegration.class.php';
 
 /**
  * Helpers
  */
 $wgAutoloadClasses['Wikia\ContentReview\Helper'] = __DIR__ . '/ContentReviewHelper.php';
+$wgAutoloadClasses['Wikia\ContentReview\ImportJS'] = __DIR__ . '/jsmodules/ImportJS.php';
+$wgAutoloadClasses['Wikia\ContentReview\ProfileTags'] = __DIR__ . '/jsmodules/ProfileTags.php';
 
 /**
  * Hooks
@@ -84,4 +90,13 @@ JSMessages::registerPackage( 'ContentReviewTestMode', [
 
 JSMessages::registerPackage( 'ContentReviewDiffPage', [
 	'content-review-diff-page-*'
+] );
+
+JSMessages::registerPackage( 'JSPagesSpecialPage', [
+	'content-review-special-js-pages-*',
+	'content-review-special-list-header-page-name',
+	'content-review-special-list-header-actions',
+	'content-review-module-header-latest',
+	'content-review-module-header-last',
+	'content-review-module-header-live'
 ] );

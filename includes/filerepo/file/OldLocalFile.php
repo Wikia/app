@@ -140,7 +140,7 @@ class OldLocalFile extends LocalFile {
 		return $this->exists() && !$this->isDeleted(File::DELETED_FILE);
 	}
 
-	function loadFromDB() {
+	function loadFromDB( $flags=0 ) {
 		wfProfileIn( __METHOD__ );
 		$this->dataLoaded = true;
 		$dbr = $this->repo->getSlaveDB();

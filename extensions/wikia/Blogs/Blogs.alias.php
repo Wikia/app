@@ -62,3 +62,9 @@ $specialPageAliases['vi'] = array(
 	'CreateBlogPage'	=> array( 'Tạo_blog' ),
 	'CreateBlogListingPage'	=> array( 'Tạo_danh_sách_blog' ),
 );
+
+/** Japanese (日本語) */
+$specialPageAliases['ja'] = array(
+	'CreateBlogPage'	=> array( 'ブログページ作成' ),
+	'CreateBlogListingPage'	=> array( 'ブログリストページ作成' ),
+);

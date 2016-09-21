@@ -13,8 +13,12 @@
 class WikiaResponse {
 	/**
 	 * Response codes
+	 *
+	 * @see http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html
 	 */
 	const RESPONSE_CODE_OK = 200;
+	const RESPONSE_CODE_CREATED = 201;
+	const RESPONSE_CODE_INTERNAL_SERVER_ERROR  = 500;
 	const RESPONSE_CODE_ERROR = 501;
 	const RESPONSE_CODE_BAD_REQUEST = 400;
 	const RESPONSE_CODE_FORBIDDEN = 403;
@@ -34,7 +38,6 @@ class WikiaResponse {
 	 */
 	const TEMPLATE_ENGINE_PHP = 'php';
 	const TEMPLATE_ENGINE_MUSTACHE = 'mustache';
-	const TEMPLATE_ENGINE_HANDLEBARS = 'handlebars';
 
 	/**
 	 * Caching times
@@ -432,8 +435,7 @@ class WikiaResponse {
 	public function setTemplateEngine( $engine ) {
 		if ( in_array( $engine, array(
 				self::TEMPLATE_ENGINE_PHP,
-				self::TEMPLATE_ENGINE_MUSTACHE,
-				self::TEMPLATE_ENGINE_HANDLEBARS)
+				self::TEMPLATE_ENGINE_MUSTACHE)
 		) ) {
 			$this->templateEngine = $engine;
 		}

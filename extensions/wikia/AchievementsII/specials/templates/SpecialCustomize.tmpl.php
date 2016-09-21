@@ -25,19 +25,23 @@
 	<div class="errorbox"><strong><?= $errorMsg ?></strong></div>
 <?endif;?>
 <?
-global $wgCityId, $wgScriptPath, $wgExternalSharedDB, $wgJsMimeType;
+global $wgCityId, $wgScriptPath, $wgExternalSharedDB, $wgJsMimeType, $wgAchievementsEditOnly;
+
 $tracks = array();
-foreach($config->getInTrackStatic() as $badgeTypeId => $trackData){
-	if($badgeTypeId != BADGE_EDIT) {
+foreach( $config->getInTrackStatic() as $badgeTypeId => $trackData ){
+	if ( !$config->shouldShow( $badgeTypeId ) ) {
+		continue;
+	}
+	if ( $badgeTypeId != BADGE_EDIT ) {
 		$tracks[$badgeTypeId] = $trackData;
 	}
 	else {
 		$tracks[$badgeTypeId] = $trackData;
 		$editPlusCategoryTracks = $config->getInTrackEditPlusCategory();
 
-		if($editPlusCategoryTracks) {
-			foreach($editPlusCategoryTracks as $editPlusCategoryTypeId => $editPlusCategoryData) {
-				$tracks[$editPlusCategoryTypeId] = array('category' => $editPlusCategoryData['category'], 'enabled' => $editPlusCategoryData['enabled'], 'laps' => $tracks[$badgeTypeId]['laps'], 'infinite' => $tracks[$badgeTypeId]['infinite']);
+		if( $editPlusCategoryTracks ) {
+			foreach( $editPlusCategoryTracks as $editPlusCategoryTypeId => $editPlusCategoryData ) {
+				$tracks[$editPlusCategoryTypeId] = array( 'category' => $editPlusCategoryData['category'], 'enabled' => $editPlusCategoryData['enabled'], 'laps' => $tracks[$badgeTypeId]['laps'], 'infinite' => $tracks[$badgeTypeId]['infinite'] );
 			}
 		}
 	}
@@ -103,23 +107,24 @@ foreach($config->getInTrackStatic() as $badgeTypeId => $trackData){
 <?endforeach;?>
 
 <?php
+global $wgAchievementsEditOnly;
+$sections = array();
+if ( empty( $wgAchievementsEditOnly ) ) {
+	$sections = array(
+		'special' => array(),
+		'secret' => array()
+	);
+	foreach( $config->getNotInTrackStatic() as $badgeTypeId => $badgeData ) {
+		$section = null;
+		if( $config->isSpecial( $badgeTypeId ) )
+			$section = 'special';
+		elseif( $config->isSecret( $badgeTypeId ) )
+			$section = 'secret';
+		else
+			continue;
 
-$sections = array(
-	'special' => array(),
-	'secret' => array()
-);
-
-foreach($config->getNotInTrackStatic() as $badgeTypeId => $badgeData) {
-	$section = null;
-
-	if($config->isSpecial($badgeTypeId))
-		$section = 'special';
-	elseif($config->isSecret($badgeTypeId))
-		$section = 'secret';
-	else
-		continue;
-
-	$sections[$section][] = new AchBadge($badgeTypeId, null, $badgeData['level']);
+		$sections[$section][] = new AchBadge( $badgeTypeId, null, $badgeData['level'] );
+	}
 }
 ?>
 <?foreach($sections as $section => $badges):?>

@@ -39,9 +39,10 @@ abstract class AbstractWikiService extends AbstractService
 	/**
 	 * Returns a placeholder if there isn't a current page ID
 	 * @see \Wikia\Search\IndexService\AbstractService::getCurrentDocumentId()
+	 * @param boolean $resolveRedirect Ignored; for compatibility with parent's signature
 	 * @return string
 	 */
-    public function getCurrentDocumentId() {
+    public function getCurrentDocumentId($resolveRedirect = true) {
     	return sprintf( '%s_%s', $this->getService()->getWikiId(), $this->currentPageId  ?: self::PAGEID_PLACEHOLDER );
     }
 }

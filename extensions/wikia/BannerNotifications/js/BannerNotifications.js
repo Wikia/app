@@ -82,6 +82,9 @@
 
 		this.hidden = false;
 
+		// If the page is already scrolled, make sure we update our position
+		handleScrolling();
+
 		// Close notification after specified amount of time
 		if (typeof this.timeout === 'number') {
 			setTimeout(function () {
@@ -175,6 +178,17 @@
 			headerHeight = $('#globalNavigation').height();
 			require(['wikia.onScroll'], function (onScroll) {
 				onScroll.bind(handleScrolling);
+			});
+		}
+
+		// SUS-726: hide notifications if VisualEditor is loaded and show them again once it's closed
+		if (mw.config.get('wgVisualEditor') && mw.config.get('wgIsArticle')) {
+			mw.hook('ve.activationComplete').add(function() {
+				$('.banner-notification').fadeOut(400);
+			});
+
+			mw.hook('ve.cancelButton').add(function() {
+				$('.banner-notification').fadeIn(400);
 			});
 		}
 		createBackendNotifications();

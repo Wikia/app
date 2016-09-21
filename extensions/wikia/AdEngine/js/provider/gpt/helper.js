@@ -1,27 +1,27 @@
 /*global define, setTimeout, require*/
 /*jshint maxlen:125, camelcase:false, maxdepth:7*/
 define('ext.wikia.adEngine.provider.gpt.helper', [
-	'wikia.document',
 	'wikia.log',
-	'wikia.window',
 	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.adLogicPageParams',
 	'ext.wikia.adEngine.provider.gpt.adDetect',
 	'ext.wikia.adEngine.provider.gpt.adElement',
 	'ext.wikia.adEngine.provider.gpt.googleTag',
-	'ext.wikia.adEngine.recovery.helper',
+	'ext.wikia.adEngine.slot.slotTargeting',
+	'ext.wikia.adEngine.uapContext',
+	'ext.wikia.aRecoveryEngine.recovery.helper',
 	'ext.wikia.adEngine.slotTweaker',
 	require.optional('ext.wikia.adEngine.provider.gpt.sraHelper'),
 	require.optional('ext.wikia.adEngine.slot.scrollHandler')
 ], function (
-	doc,
 	log,
-	window,
 	adContext,
 	adLogicPageParams,
 	adDetect,
 	AdElement,
-	GoogleTag,
+	googleTag,
+	slotTargeting,
+	uapContext,
 	recoveryHelper,
 	slotTweaker,
 	sraHelper,
@@ -30,88 +30,73 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.provider.gpt.helper',
-		googleApi = new GoogleTag(),
-		sourcePointInitialized = false;
+		hiddenSlots = [
+			'INCONTENT_LEADERBOARD'
+		];
 
-	function loadRecovery() {
-		if (sourcePointInitialized) {
-			return;
-		}
-		log('SourcePoint recovery enabled', 'debug', logGroup);
-		sourcePointInitialized = true;
-		googleApi = recoveryHelper.createSourcePointTag();
-		recoveryHelper.recoverSlots();
-	}
-
-	function loadSourcePoint() {
-		if (recoveryHelper.isBlocking()) {
-			loadRecovery();
-		} else {
-			recoveryHelper.addOnBlockingCallback(function () {
-				loadRecovery();
-			});
-		}
+	function isHiddenOnStart(slotName) {
+		return hiddenSlots.indexOf(slotName) !== -1;
 	}
 
 	/**
 	 * Push ad to queue and flush if it should be
 	 *
-	 * @param {string}   slotName           - slot name
-	 * @param {Object}   slotElement        - slot div container
+	 * @param {Object}   slot               - slot (ext.wikia.adEngine.slot.adSlot::create instance)
 	 * @param {string}   slotPath           - slot path
-	 * @param {Object}   slotTargeting      - slot targeting details
+	 * @param {Object}   slotTargetingData  - slot targeting details
 	 * @param {Object}   extra              - optional parameters
-	 * @param {function} extra.success      - on success callback
-	 * @param {function} extra.error        - on error callback
 	 * @param {boolean}  extra.sraEnabled   - whether to use Single Request Architecture
 	 * @param {string}   extra.forcedAdType - ad type for callbacks info
 	 */
-	function pushAd(slotName, slotElement, slotPath, slotTargeting, extra) {
-		var count,
-			element,
-			recoverableSlots = extra.recoverableSlots || [],
-			shouldPush = !recoveryHelper.isBlocking() ||
-				(recoveryHelper.isBlocking() && recoveryHelper.isRecoverable(slotName, recoverableSlots));
-
+	function pushAd(slot, slotPath, slotTargetingData, extra) {
 		extra = extra || {};
-		slotTargeting = JSON.parse(JSON.stringify(slotTargeting)); // copy value
+		var element,
+			recoverableSlots = extra.recoverableSlots || [],
+			shouldPushRecoverableAd = recoveryHelper.isBlocking() &&
+				recoveryHelper.isRecoverable(slot.name, recoverableSlots),
+			shouldPush = !recoveryHelper.isBlocking() || shouldPushRecoverableAd,
+			uapId = uapContext.getUapId();
 
-		if (scrollHandler) {
-			count = scrollHandler.getReloadedViewCount(slotName);
-			if (count !== null) {
-				slotTargeting.rv = count.toString();
-			}
+		log(['shouldPush',
+			slot.name,
+			recoveryHelper.isBlocking(),
+			recoverableSlots,
+			recoveryHelper.isRecoverable(slot.name, recoverableSlots)], 'debug', logGroup);
+
+		slotTargetingData = JSON.parse(JSON.stringify(slotTargetingData)); // copy value
+
+		if (isHiddenOnStart(slot.name)) {
+			slotTweaker.hide(slot.name);
+			slot.pre('success', function () {
+				slotTweaker.show(slot.name);
+			});
 		}
 
-		element = new AdElement(slotName, slotPath, slotTargeting);
+		setAdditionalTargeting(slotTargetingData);
 
-		function callSuccess(adInfo) {
-			if (adInfo && adInfo.adType === 'collapse') {
-				slotTweaker.hide(
-					element.getSlotName(),
-					recoveryHelper.isBlocking() && recoveryHelper.isRecoveryEnabled()
-				);
-			}
-
-			if (typeof extra.success === 'function') {
-				extra.success(adInfo);
-			}
-		}
-
-		function callError(adInfo) {
-			slotTweaker.hide(element.getId());
-			if (typeof extra.error === 'function') {
-				adInfo = adInfo || {};
-				adInfo.method = 'hop';
-				extra.error(adInfo);
-			}
-		}
+		element = new AdElement(slot.name, slotPath, slotTargetingData);
 
 		function queueAd() {
-			log(['queueAd', slotName, slotElement, element], 'debug', logGroup);
-			slotElement.appendChild(element.getNode());
+			log(['queueAd', slot.name, element], 'debug', logGroup);
+			slot.container.appendChild(element.getNode());
 
-			googleApi.addSlot(element);
+			googleTag.addSlot(element);
+		}
+
+		function setAdditionalTargeting(slotTargetingData) {
+			if (scrollHandler) {
+				var count = scrollHandler.getReloadedViewCount(slot.name);
+				if (count !== null) {
+					slotTargetingData.rv = count.toString();
+				}
+			}
+
+			if (shouldPushRecoverableAd) {
+				slotTargetingData.src = 'rec';
+			}
+
+			slotTargetingData.wsi = slotTargeting.getWikiaSlotId(slot.name, slotTargetingData.src);
+			slotTargetingData.uap = uapId ? uapId.toString() : 'none';
 		}
 
 		function onAdLoadCallback(slotElementId, gptEvent, iframe) {
@@ -119,53 +104,47 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 			// Let's launch our callback in a setTimeout instead.
 			setTimeout(function () {
 				log(['onAdLoadCallback', slotElementId], 'info', logGroup);
-				adDetect.onAdLoad(slotElementId, gptEvent, iframe, callSuccess, callError, extra.forcedAdType);
+				adDetect.onAdLoad(slot, gptEvent, iframe, extra.forcedAdType);
 			}, 0);
 		}
 
 		function gptCallback(gptEvent) {
 			log(['gptCallback', element.getId(), gptEvent], 'info', logGroup);
 			element.updateDataParams(gptEvent);
-			googleApi.onAdLoad(slotName, element, gptEvent, onAdLoadCallback);
+			googleTag.onAdLoad(slot.name, element, gptEvent, onAdLoadCallback);
 		}
 
-		if (!googleApi.isInitialized()) {
-			if (recoveryHelper.isRecoveryEnabled()) {
-				googleApi.init(loadSourcePoint);
-			} else {
-				googleApi.init();
-			}
-			googleApi.setPageLevelParams(adLogicPageParams.getPageLevelParams());
+		if (!googleTag.isInitialized()) {
+			googleTag.init();
+			googleTag.setPageLevelParams(adLogicPageParams.getPageLevelParams());
 		}
 
 		if (!shouldPush) {
-			log(['Push blocked', slotName], 'debug', logGroup);
+			log(['Push blocked', slot.name], 'debug', logGroup);
+			slotTweaker.removeDefaultHeight(slot.name);
 			return;
 		}
 
-		if (!recoveryHelper.isBlocking() && recoveryHelper.isRecoveryEnabled()) {
-			recoveryHelper.addSlotToRecover(slotName);
+		log(['pushAd', slot.name], 'info', logGroup);
+		if (!slotTargetingData.flushOnly) {
+			googleTag.registerCallback(element.getId(), gptCallback);
+			googleTag.push(queueAd);
 		}
 
-		log(['pushAd', slotName], 'info', logGroup);
-		if (!slotTargeting.flushOnly) {
-			googleApi.registerCallback(element.getId(), gptCallback);
-			googleApi.push(queueAd);
-		}
-
-		if (!extra.sraEnabled || sraHelper.shouldFlush(slotName)) {
+		if (!sraHelper || !extra.sraEnabled || sraHelper.shouldFlush(slot.name)) {
 			log('flushing', 'debug', logGroup);
-			googleApi.flush();
+			googleTag.flush();
 		}
 
-		if (slotTargeting.flushOnly) {
-			callSuccess();
+		if (slotTargetingData.flushOnly) {
+			slot.success();
 		}
 	}
 
 	adContext.addCallback(function () {
-		if (googleApi.isInitialized()) {
-			googleApi.setPageLevelParams(adLogicPageParams.getPageLevelParams());
+		if (googleTag.isInitialized()) {
+			googleTag.setPageLevelParams(adLogicPageParams.getPageLevelParams());
+			uapContext.reset();
 		}
 	});
 

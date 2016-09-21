@@ -64,7 +64,9 @@
 										boardTitle: forumModal.$element
 											.find('input[name=boardTitle]').val(),
 										boardDescription: forumModal.$element
-											.find('input[name=boardDescription]').val()
+											.find('input[name=boardDescription]').val(),
+										token: forumModal.$element
+											.find('input[name=token]').val()
 									}, typeof submissionData === 'function' ?
 										submissionData(forumModal) :
 										submissionData),

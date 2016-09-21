@@ -42,6 +42,7 @@
 @import "form";
 @import "curtain";
 @import "related_articles";
+@import "skins/shared/paginator";
 
 //mixins
 @import "mixins/transition.scss";
@@ -66,9 +67,15 @@
 
 #mw-content-text {
 	//don't let iframes,objects be wider than a screen (videos)
-	> iframe[width], > object {
-		width: 75% !important;
+	> iframe[width]:not([height]), > object:not([height]) {
+		max-width: 85% !important;
 		height: auto;
+		margin: 0 auto;
+		display: block;
+	}
+	//don't let iframes,objects be wider than a screen (videos)
+	> iframe[width][height], > object[height] {
+		max-width: 85% !important;
 		margin: 0 auto;
 		display: block;
 	}

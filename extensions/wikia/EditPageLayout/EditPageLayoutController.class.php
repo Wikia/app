@@ -25,7 +25,7 @@ class EditPageLayoutController extends WikiaController {
 
 		// adding 'editor' class as a CSS helper
 		OasisController::addBodyClass('editor');
-		
+
 		// temporary grid transition code, remove after transition
 		OasisController::addBodyClass('WikiaGrid');
 
@@ -221,5 +221,12 @@ class EditPageLayoutController extends WikiaController {
 		wfRunHooks( 'EditPageLayoutExecute', array( $this ) );
 
 		wfProfileOut( __METHOD__ );
+	}
+
+	public function addExtraHeaderHtml( $html ) {
+		if ( !isset( $this->extraHeaderHtml ) ) {
+			$this->extraHeaderHtml = '';
+		}
+		$this->extraHeaderHtml .= $html;
 	}
 }

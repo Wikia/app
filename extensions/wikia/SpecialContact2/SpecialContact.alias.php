@@ -56,3 +56,8 @@ $specialPageAliases['pl'] = array(
 $specialPageAliases['vi'] = array(
 	'Contact' => array( 'Liên_hệ' ),
 );
+
+/** Japanese (日本語) */
+$specialPageAliases['ja'] = array(
+	'Contact' => array( 'お問い合わせ' ),
+);

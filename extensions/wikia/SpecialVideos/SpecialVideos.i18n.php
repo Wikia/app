@@ -1,16 +1,16 @@
 <?php
 /**
-* Internationalisation file for the SpecialVideos extension.
-*
-* @addtogroup Languages
-*/
+ * Internationalisation file for the SpecialVideos extension.
+ *
+ * @addtogroup Languages
+ */
 
-$messages = array();
+$messages = [];
 
-$messages['en'] = array(
+$messages['en'] = [
 	'videos' => 'Videos',
 	'specialvideos-desc' => 'Implements [[Special:Videos]]',
-	'specialvideos-html-title' => 'Videos on this wiki - {{SITENAME}}',
+	'specialvideos-html-title' => 'Videos on this wiki',
 	'specialvideos-page-title' => 'Videos',
 	'specialvideos-wiki-videos-tally' => '<em>{{FORMATNUM:$1}}</em><span>{{PLURAL:$1|video on<br /> this wiki|videos on<br /> this wiki}}</span>',
 	'specialvideos-sort-by' => 'Sort by',
@@ -34,9 +34,11 @@ $messages['en'] = array(
 	'specialvideos-btn-load-more' => 'Load More',
 	'specialvideos-posted-in-label' => 'Posted in',
 	'related-videos-tooltip-add' => 'Add a video to this wiki',
-);
+	'right-specialvideosdelete' => 'Can delete videos',
+	'right-videoupload' => 'Can upload videos',
+];
 
-$messages['qqq'] = array(
+$messages['qqq'] = [
 	'videos' => 'This is the feature name that shows up in the Wiki Nav menu bar when the Extension is enabled',
 	'specialvideos-desc' => '{{desc}}',
 	'specialvideos-html-title' => 'This is the page title for the Special:Videos page',
@@ -63,10 +65,10 @@ $messages['qqq'] = array(
 	'specialvideos-filter-entertainment' => 'Label that appears in sort/filter pulldown to show only trending entertainment videos',
 	'specialvideos-btn-load-more' => 'Label for button that loads more videos when clicked',
 	'specialvideos-posted-in-label' => 'This is the label text that appears before a list of titles in which the video is posted. Due to design constraints, it comes before the list, so if, when translated, it would otherwise come after the list, please do your best to adjust accordingly. Think of it as a label or a heading followed by bullet points. ex: "Posted in: title1, title2, title3."  It is up to you if you want to include a colon at the end.',
-);
+];
 
-$messages['de'] = array(
-	'specialvideos-html-title' => 'Videos auf diesem Wiki - {{SITENAME}}',
+$messages['de'] = [
+	'specialvideos-html-title' => 'Videos auf diesem Wiki',
 	'specialvideos-page-title' => 'Videos',
 	'specialvideos-wiki-videos-tally' => '<em>{{FORMATNUM:$1}}</em><span>{{PLURAL:$1|Videos auf<br /> diesem Wiki|Videos auf<br /> Diesem Wiki}}</span>',
 	'specialvideos-sort-by' => 'Sortieren nach',
@@ -78,10 +80,10 @@ $messages['de'] = array(
 	'specialvideos-posted-in' => 'Veröffentlicht auf $1',
 	'special-videos-add-video' => 'Video hinzufügen',
 	'related-videos-tooltip-add' => 'Eine Video zu dieser Seite hinzufügen',
-);
+];
 
-$messages['es'] = array(
-	'specialvideos-html-title' => 'Vídeos en este wiki - {{SITENAME}}',
+$messages['es'] = [
+	'specialvideos-html-title' => 'Vídeos en este wiki',
 	'specialvideos-page-title' => 'Vídeos',
 	'specialvideos-wiki-videos-tally' => '<em>{{FORMATNUM:$1}}</em><span>{{PLURAL:$1|vídeo en<br /> este wiki|vídeos en<br /> este wiki}}</span>',
 	'specialvideos-sort-by' => 'Organizar Por',
@@ -93,10 +95,10 @@ $messages['es'] = array(
 	'specialvideos-posted-in' => 'Publicado en $1',
 	'special-videos-add-video' => 'Añade un video',
 	'related-videos-tooltip-add' => 'Añadir un vídeo a esta página',
-);
+];
 
-$messages['fr'] = array(
-	'specialvideos-html-title' => 'Vidéos sur ce wiki ? {{SITENAME}}',
+$messages['fr'] = [
+	'specialvideos-html-title' => 'Vidéos sur ce wiki',
 	'specialvideos-page-title' => 'Vidéos',
 	'specialvideos-wiki-videos-tally' => '<em>{{FORMATNUM:$1}}</em><span>{{PLURAL:$1|vidéo|vidéos}} sur<br />ce wiki</span>',
 	'specialvideos-sort-by' => 'Trier par',
@@ -108,38 +110,38 @@ $messages['fr'] = array(
 	'specialvideos-posted-in' => 'Postée sur $1',
 	'special-videos-add-video' => 'Ajouter une vidéo',
 	'related-videos-tooltip-add' => 'Ajouter une vidéo à cette page.',
-);
+];
 
-$messages['gl'] = array(
+$messages['gl'] = [
 	'related-videos-tooltip-add' => 'Engadir un vídeo a esta páxina',
-);
+];
 
-$messages['hu'] = array(
+$messages['hu'] = [
 	'related-videos-tooltip-add' => 'Videó hozzáadása az oldalhoz',
-);
+];
 
-$messages['ia'] = array(
+$messages['ia'] = [
 	'related-videos-tooltip-add' => 'Adder un video a iste pagina',
-);
+];
 
-$messages['mk'] = array(
+$messages['mk'] = [
 	'related-videos-tooltip-add' => 'Додај видео во страницава',
-);
+];
 
-$messages['ms'] = array(
+$messages['ms'] = [
 	'related-videos-tooltip-add' => 'Letakkan video pada laman ini',
-);
+];
 
-$messages['nb'] = array(
+$messages['nb'] = [
 	'related-videos-tooltip-add' => 'Legg til en video på denne siden',
-);
+];
 
-$messages['nl'] = array(
+$messages['nl'] = [
 	'related-videos-tooltip-add' => 'Video aan deze pagina toevoegen',
-);
+];
 
-$messages['pl'] = array(
-	'specialvideos-html-title' => 'Filmy na {{SITENAME}}',
+$messages['pl'] = [
+	'specialvideos-html-title' => 'Filmy',
 	'specialvideos-page-title' => 'Filmy',
 	'specialvideos-wiki-videos-tally' => '<em>{{FORMATNUM:$1}}</em><span> {{PLURAL:$1|film na<br /> tej wiki|filmów na<br /> tej wiki}}</span>',
 	'specialvideos-sort-by' => 'Sposób sortowania',
@@ -151,10 +153,10 @@ $messages['pl'] = array(
 	'specialvideos-posted-in' => 'Użyto w $1',
 	'special-videos-add-video' => 'Dodaj film',
 	'related-videos-tooltip-add' => 'Dodaj film do tej strony',
-);
+];
 
-$messages['ru'] = array(
-	'specialvideos-html-title' => 'Видео на этой вики - {{SITENAME}}',
+$messages['ru'] = [
+	'specialvideos-html-title' => 'Видео на этой вики ',
 	'specialvideos-page-title' => 'Видео',
 	'specialvideos-wiki-videos-tally' => '<em>{{FORMATNUM:$1}}</em><span>{{PLURAL:$1|видео на<br /> этой вики}}</span>',
 	'specialvideos-sort-by' => 'Cортировать по',
@@ -166,18 +168,18 @@ $messages['ru'] = array(
 	'specialvideos-posted-in' => 'Опубликовано в $1',
 	'special-videos-add-video' => 'Добавить видео',
 	'related-videos-tooltip-add' => 'Добавить видео на эту страницу',
-);
+];
 
-$messages['sv'] = array(
+$messages['sv'] = [
 	'related-videos-tooltip-add' => 'Lägg till en video på denna sida',
-);
+];
 
-$messages['tl'] = array(
+$messages['tl'] = [
 	'related-videos-tooltip-add' => 'Magdagdag ng isang bidyo sa pahinang ito',
-);
+];
 
-$messages['it'] = array(
-	'specialvideos-html-title' => 'Video in questa wiki - {{SITENAME}}',
+$messages['it'] = [
+	'specialvideos-html-title' => 'Video in questa wiki',
 	'specialvideos-page-title' => 'Video',
 	'specialvideos-wiki-videos-tally' => '<em>{{FORMATNUM:$1}}</em><span>{{PLURAL:$1|video in<br /> questa wiki|video in<br /> questa wiki}}</span>',
 	'specialvideos-sort-by' => 'Ordina per',
@@ -189,4 +191,4 @@ $messages['it'] = array(
 	'specialvideos-posted-in' => 'Pubblicato in $1',
 	'special-videos-add-video' => 'Carica un video',
 
-);
+];

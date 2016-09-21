@@ -1,5 +1,5 @@
 <?php
-/*
+/**
  * Author: Tomek Odrobny
  * Helper function for extension hook etc.
  */
@@ -8,12 +8,10 @@ class FollowHelper {
 
 	const LOG_ACTION_BLOG_POST = 'blogpost';
 	const LOG_ACTION_CATEGORY_ADD = 'categoryadd';
+	const MAX_WATCHERS_PER_JOB = 1000;
 
 	/**
 	 * watchCategory -- static hook/entry for follow article category
-	 *
-	 * @static
-	 * @access public
 	 *
 	 * @param $categoryInserts
 	 * @param $categoryDeletes
@@ -23,9 +21,8 @@ class FollowHelper {
 	 */
 	static public function watchCategories( $categoryInserts, $categoryDeletes, $title ) {
 		global $wgUser;
-		wfProfileIn( __METHOD__ );
+
 		if ( empty( $categoryInserts ) ) {
-			wfProfileOut( __METHOD__ );
 			return true;
 		}
 
@@ -39,114 +36,160 @@ class FollowHelper {
 
 		self::emailNotification( $title, $queryIn, NS_CATEGORY, $wgUser, $action, wfMsg( 'follow-categoryadd-summary' ) );
 
-		wfProfileOut( __METHOD__ );
 		return true;
 	}
 
 	/**
 	 * emailNotification -- sent Notification for all related article
 	 *
-	 * @static
-	 * @access public
-	 *
-	 *
 	 * @param Title $childTitle
-	 * @param $list
-	 * @param $namespace
+	 * @param array $list
+	 * @param string $namespace
 	 * @param User $user
-	 * @param $action
-	 * @param $message
+	 * @param string $action
+	 * @param string $message
 	 *
 	 * @throws MWException
 	 */
 	public static function emailNotification( $childTitle, $list, $namespace, $user, $action, $message ) {
-		wfProfileIn( __METHOD__ );
 
 		if ( count( $list ) < 1 ) {
-			wfProfileOut( __METHOD__ );
 			return;
 		}
 
-		$dbw = wfGetDB( DB_SLAVE );
-		$queryIn = array();
-		foreach ( $list as $value ) {
-			$queryIn[] = $dbw->addQuotes( $value ) ;
+		$watcherSQL = self::getWatcherSQL( $user->getId(), $namespace, $list, $action );
+		$watcherSets = self::getWatcherSets( $watcherSQL );
+
+		if ( empty( $watcherSets ) ) {
+			return;
 		}
 
-		/* Wikia change begin - @author: wladek */
-		/* RT#55604: Add a timeout to the watchlist email block */
-
-	 	global $wgEnableWatchlistNotificationTimeout, $wgWatchlistNotificationTimeout;
-
-		$now = wfTimestampNow();
-		if ( !empty( $wgEnableWatchlistNotificationTimeout ) && isset( $wgWatchlistNotificationTimeout ) ) { // not using !empty() to allow setting integer value 0
-			$blockTimeout = wfTimestamp( TS_MW, wfTimestamp( TS_UNIX, $now ) - intval( $wgWatchlistNotificationTimeout ) );
-			$notificationTimeoutSql = "(wl_notificationtimestamp IS NULL OR wl_notificationtimestamp < '$blockTimeout')";
-		} else {
-			$notificationTimeoutSql = "wl_notificationtimestamp IS NULL";
-		}
-
-		if ( $action == self::LOG_ACTION_BLOG_POST ) {
-			$notificationTimeoutSql = "1";
-		}
-
-		$res = $dbw->select( array( 'watchlist' ),
-				array( 'wl_user, wl_title' ),
-				array(
-					'wl_user != ' . intval( $user->getID() ),
-					'wl_namespace' => $namespace ,
-					'wl_title in(' . implode( ",", $queryIn ) . ') ',
-					$notificationTimeoutSql
-				),
-		__METHOD__ );
-
-		$watchers = array();
-		while ( $row = $dbw->fetchObject( $res ) ) {
-			if ( empty( $watchers[$row->wl_title] ) ) {
-				$watchers[$row->wl_title] = array( $row->wl_user );
-			} else {
-				if ( in_array( $row->wl_user, $watchers[$row->wl_title] ) ) {
-					$watchers[$row->wl_title][] = $row->wl_user;
-				}
-			}
-		}
-
-		/**
-		 * Selecting all watching users took to long
-		 * and was causing timeouts. It's been moved to a task.
-		 * @see CE-1239 by adamk@wikia-inc.com
-		 */
-		if ( !empty( $watchers ) ) {
-			$oTask = new FollowEmailTask();
-			$oTask->title( $childTitle );
-			$oTask->wikiId( F::app()->wg->CityId );
-			$oTask->call(
+		$wg = \F::app()->wg;
+		foreach ( $watcherSets as $watchers ) {
+			$task = new FollowEmailTask();
+			$task->title( $childTitle );
+			$task->wikiId( $wg->CityId );
+			$task->call(
 				'emailFollowNotifications',
-				F::app()->wg->User->getId(),
+				$wg->User->getId(),
 				$watchers,
 				$user->getId(),
 				$namespace,
 				$message,
 				$action
 			);
-			$oTask->queue();
-		}
 
-		wfProfileOut( __METHOD__ );
+			$task->queue();
+		}
 	}
 
+	/**
+	 * Create and return arrays of at most MAX_WATCHERS_PER_JOB watchers
+	 *
+	 * @param WikiaSQL $watcherSQL
+	 *
+	 * @return array
+	 */
+	private static function getWatcherSets( WikiaSQL $watcherSQL ) {
+		$currentPage = 0;
+		$watcherCount = 0;
 
-	/*
+		$watcherSets = $watcherSQL->runLoop(
+			wfGetDB( DB_SLAVE ),
+			function ( &$watcherSets, stdClass $row ) use ( &$currentPage, &$watcherCount ) {
+				$title = $row->wl_title;
+				$user = $row->wl_user;
+				$watcherSets[$currentPage][$title][] = $user;
+
+				$watcherCount++;
+				if ( ( $watcherCount % self::MAX_WATCHERS_PER_JOB ) === 0 ) {
+					$currentPage++;
+				}
+			}
+		);
+
+		return $watcherSets;
+	}
+
+	/**
+	 * Generate the WikiaSQL object needed to select all the watchers
+	 *
+	 * @param int $userId
+	 * @param string $namespace
+	 * @param array $list
+	 *
+	 * @return WikiaSQL
+	 */
+	private static function getWatcherSQL( $userId, $namespace, $list, $action ) {
+		/** @var WikiaSQL $watcherSQL */
+		$watcherSQL = ( new WikiaSQL() )
+			->SELECT( 'wl_user', 'wl_title' )
+			->FROM( 'watchlist' )
+			->WHERE( 'wl_user' )->NOT_EQUAL_TO( $userId )
+			->AND_( 'wl_namespace' )->EQUAL_TO( $namespace )
+			->AND_( 'wl_title' )->IN( $list );
+
+		self::addAnyTimeStampCondition( $watcherSQL, $action );
+
+		return $watcherSQL;
+	}
+
+	private static function addAnyTimeStampCondition( WikiaSQL $watcherSQL, $action ) {
+		// Skip any timestamp checking if this is a blog post
+		if ( $action == self::LOG_ACTION_BLOG_POST ) {
+			return;
+		}
+
+		$timeAgo = self::getTimeBoundary();
+		if ( !empty( $timeAgo ) ) {
+			$orCondition = "(wl_notificationtimestamp IS NULL OR wl_notificationtimestamp < '$timeAgo')";
+			$watcherSQL->AND_( $orCondition );
+		} else {
+			$watcherSQL->AND_( 'wl_notificationtimestamp' )->IS_NULL();
+		}
+
+		return;
+	}
+
+	/**
+	 * Determine if we should also look at notifications with a timestamp and if so
+	 * how new should they be
+	 *
+	 * RT#55604
+	 *
+	 * @author: wladek
+	 * @throws MWException
+	 *
+	 * @return null|string
+	 */
+	private static function getTimeBoundary() {
+		$wg = \F::app()->wg;
+
+		// This only matters if we have the notification timeout feature enabled
+		if ( empty( $wg->EnableWatchlistNotificationTimeout ) ) {
+			return null;
+		}
+
+		// Only do something if a timeout has been set (zero is allowed here)
+		if ( !isset( $wg->WatchlistNotificationTimeout ) ) {
+			return null;
+		}
+
+		$timeAgoSecs = time() - intval( $wg->WatchlistNotificationTimeout );
+		return wfTimestamp( TS_MW, $timeAgoSecs );
+	}
+
+	/**
 	 * blogListingBuildRelation - hook after save of blogListing create relations in table
 	 *
-	 * @static
-	 * @access public
-	 *
+	 * @param string $title
+	 * @param array $cat
+	 * @param array $users
 	 *
 	 * @return bool
+	 * @throws DBUnexpectedError
 	 */
 	static public function blogListingBuildRelation( $title, $cat, $users ) {
-		wfProfileIn( __METHOD__ );
 		$dbw = wfGetDB( DB_MASTER );
 
 		$exploded = explode( ":", $title );
@@ -160,7 +203,7 @@ class FollowHelper {
 		$dbw->begin();
 		$dbw->delete( 'blog_listing_relation', array( "blr_title = " . $dbw->addQuotes( $title ) ) );
 
-		if ( ( !empty( $cat ) ) && ( is_array( $cat ) ) ) {
+		if ( !empty( $cat ) && is_array( $cat ) ) {
 			foreach ( $cat as $value ) {
 				$value = Title::makeTitle( NS_CATEGORY, $value );
 				$value = $value->getDBKey();
@@ -174,7 +217,7 @@ class FollowHelper {
 			}
 		}
 
-		if ( ( !empty( $users ) ) && ( is_array( $users ) ) ) {
+		if ( !empty( $users ) && is_array( $users ) ) {
 
 			foreach ( $users as $value ) {
 				if ( strlen( trim( $value ) ) < 1 ) continue;
@@ -187,16 +230,12 @@ class FollowHelper {
 			}
 		}
 		$dbw->commit();
-		wfProfileOut( __METHOD__ );
+
 		return true;
 	}
 
 	/**
-	 * saveListingRelation -- hook for
-	 *
-	 * @static
-	 * @access public
-	 *
+	 * saveListingRelation -- hook
 	 *
 	 * @param Article $article
 	 * @param User $user
@@ -216,7 +255,6 @@ class FollowHelper {
 		if ( !$status->value['new'] ) {
 			return true;
 		}
-		wfProfileIn( __METHOD__ );
 
 		$postTitle = $article->getTitle();
 
@@ -278,10 +316,9 @@ class FollowHelper {
 				);
 			}
 		}
-		wfProfileOut( __METHOD__ );
+
 		return true;
 	}
-
 
 	/**
 	 * Add link to Special:MyHome in Monaco user menu
@@ -297,12 +334,10 @@ class FollowHelper {
 	 * @return bool
 	 */
 	public static function addToUserMenu( $skin, $tpl, $custom_user_data ) {
-		wfProfileIn( __METHOD__ );
 
 		// don't touch anon users
 		global $wgUser;
 		if ( $wgUser->isAnon() ) {
-			wfProfileOut( __METHOD__ );
 			return true;
 		}
 
@@ -311,7 +346,6 @@ class FollowHelper {
 			'href' => Skin::makeSpecialUrl( 'following' ),
 		);
 
-		wfProfileOut( __METHOD__ );
 		return true;
 	}
 
@@ -326,12 +360,9 @@ class FollowHelper {
 	 * @return bool
 	 */
 	public static function addPersonalUrl( &$personal_urls, &$title ) {
-		wfProfileIn( __METHOD__ );
-
 		// don't touch anon users
 		global $wgUser;
 		if ( $wgUser->isAnon() ) {
-			wfProfileOut( __METHOD__ );
 			return true;
 		}
 
@@ -343,23 +374,16 @@ class FollowHelper {
 				'href' => Skin::makeSpecialUrl( 'following' ),
 			);
 		}
-		wfProfileOut( __METHOD__ );
 		return true;
 	}
 
-
 	/**
 	 * showAll -- ajax function to show all feeds on follow list
-	 *
-	 * @static
-	 * @access public
-	 *
 	 *
 	 * @return bool
 	 */
 	static public function showAll() {
 		global $wgRequest, $wgUser;
-		wfProfileIn( __METHOD__ );
 
 		$user_id = $wgRequest->getVal( 'user_id' );
 		$head = $wgRequest->getVal( 'head' );
@@ -371,7 +395,6 @@ class FollowHelper {
 		if ( empty( $user ) || $user->getGlobalPreference( 'hidefollowedpages' ) ) {
 			if ( $user->getId() != $wgUser->getId() ) {
 				$response->addText( wfMsg( 'wikiafollowedpages-special-hidden' ) );
-				wfProfileOut( __METHOD__ );
 				return $response;
 			}
 		}
@@ -379,7 +402,7 @@ class FollowHelper {
 		$template = new EasyTemplate( dirname( __FILE__ ) . '/templates/' );
 		$template->set_vars(
 			array (
-				"data" 	=> FollowModel::getWatchList( $user_id, $from, FollowModel::$ajaxListLimit , $head ),
+				"data" => FollowModel::getWatchList( $user_id, $from, FollowModel::$ajaxListLimit , $head ),
 				"owner" => $wgUser->getId() == $user_id,
 				"user_id" =>  $user_id,
 				"more" => true,
@@ -389,16 +412,11 @@ class FollowHelper {
 		$text = $template->render( "followedPages" );
 
 		$response->addText( $text );
-		wfProfileOut( __METHOD__ );
 		return $response;
 	}
 
 	/**
 	 * renderFollowPrefs -- render prefs
-	 *
-	 * @static
-	 * @access public
-	 *
 	 *
 	 * @param User $user
 	 * @param $defaultPreferences
@@ -407,7 +425,6 @@ class FollowHelper {
 	 */
 	static public function renderFollowPrefs( User $user, &$defaultPreferences ) {
 		global $wgUseRCPatrol, $wgEnableAPI, $wgJsMimeType, $wgExtensionsPath, $wgOut, $wgUser;
-		wfProfileIn( __METHOD__ );
 
 		$wgOut->addScript( "<script type=\"{$wgJsMimeType}\" src=\"{$wgExtensionsPath}/wikia/Follow/js/ajax.js\"></script>\n" );
 
@@ -478,7 +495,6 @@ class FollowHelper {
 			);
 		}
 
-
 		$watchTypes = array();
 
 		$watchTypes['move'] = 'watchmoves';
@@ -493,7 +509,6 @@ class FollowHelper {
 				);
 			}
 		}
-
 
 		// wikiafollowedpages-prefs-watchlist
 
@@ -573,15 +588,11 @@ class FollowHelper {
 					);
 		}
 
-		wfProfileOut( __METHOD__ );
 		return false;
 	}
 
 	/**
-	 * jsVars -- add java script varibale to html
-	 *
-	 * @static
-	 * @access public
+	 * jsVars -- add java script variable to html
 	 *
 	 * @param array $vars
 	 *
@@ -607,10 +618,7 @@ class FollowHelper {
 	}
 
 	/**
-	 * getMasthead -- return mashead tab for fallowed pages
-	 *
-	 * @static
-	 * @access public
+	 * getMasthead -- return masthead tab for followed pages
 	 *
 	 * @param $userspace
 	 *
@@ -620,27 +628,27 @@ class FollowHelper {
 	static public function getMasthead( $userspace ) {
 		global $wgUser;
 		if ( ( $wgUser->getId() > 0 ) && ( $wgUser->getName() == $userspace ) ) {
-			return array( 'text' => wfMsg( 'wikiafollowedpages-masthead' ), 'href' => Title::newFromText( "Following", NS_SPECIAL )->getLocalUrl(), 'dbkey' => 'Following', 'tracker' => 'following' );
+			return [
+				'text' => wfMsg( 'wikiafollowedpages-masthead' ),
+				'href' => Title::newFromText( "Following", NS_SPECIAL )->getLocalUrl(),
+				'dbkey' => 'Following',
+				'tracker' => 'following'
+			];
 		}
 		return null;
 	}
 
 	/**
-	 * renderUserProfile -- return mashead tab for fallowed pages
-	 *
-	 * @static
-	 * @access public
-	 *
+	 * renderUserProfile -- return masthead tab for fallowed pages
 	 *
 	 * @param $out
 	 *
 	 * @return array
 	 */
 	static public function renderUserProfile( &$out ) {
-		global $wgTitle, $wgRequest, $wgOut, $wgExtensionsPath, $wgJsMimeType, $wgUser;
-		wfProfileIn( __METHOD__ );
+		global $wgTitle, $wgRequest, $wgOut, $wgExtensionsPath, $wgUser;
+
 		if ( F::app()->checkSkin( 'wikiamobile' ) ) {
-			wfProfileOut( __METHOD__ );
 			return true;
 		}
 
@@ -655,13 +663,11 @@ class FollowHelper {
 			$user = User::newFromName( $key );
 
 			if ( $user == null ) {
-				wfProfileOut( __METHOD__ );
 				return true;
 			}
 
 			if ( $user->getId() == 0 ) {
 				// not a real user
-				wfProfileOut( __METHOD__ );
 				return true;
 			}
 		} else {
@@ -670,12 +676,10 @@ class FollowHelper {
 
 		// do not show Followed box on diffs
 		if ( $wgRequest->getVal( 'diff', null ) != null ) {
-			wfProfileOut( __METHOD__ );
 			return true;
 		}
 
 		if ( $user->getGlobalPreference( "hidefollowedpages" ) ) {
-			wfProfileOut( __METHOD__ );
 			return true;
 		}
 
@@ -685,11 +689,6 @@ class FollowHelper {
 		$template = new EasyTemplate( dirname( __FILE__ ) . '/templates/' );
 
 		if ( count( $data ) == 0 ) $data = null;
-		/*
-		if ( count($data) > 5 ) {
-			$data2 = array_slice($data, 5 );
-			$data = array_slice($data, 0, 5);
-		} */
 
 		// BugId:2643
 		$moreUrl = null;
@@ -709,16 +708,13 @@ class FollowHelper {
 				"moreUrl" => $moreUrl,
 			)
 		);
-		wfProfileOut( __METHOD__ );
+
 		$out['followedPages'] = $template->render( "followedUserPage" );
 		return true;
 	}
 
 	/**
 	 * MailNotifyBuildKeys -- return build keys for mail
-	 *
-	 * @static
-	 * @access public
 	 *
 	 * @param $keys
 	 * @param $action
@@ -777,12 +773,8 @@ class FollowHelper {
 		return true;
 	}
 
-
 	/**
 	 * categoryIndexer --  indexer for blog listing page used only one time by indexing script
-	 *
-	 * @static
-	 * @access public
 	 *
 	 * @param CreateBlogListingPage $blogListing
 	 * @param $article

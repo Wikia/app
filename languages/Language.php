@@ -587,20 +587,6 @@ class Language {
 	/**
 	 * @return array
 	 */
-	function getQuickbarSettings() {
-		return array(
-			$this->getMessage( 'qbsettings-none' ),
-			$this->getMessage( 'qbsettings-fixedleft' ),
-			$this->getMessage( 'qbsettings-fixedright' ),
-			$this->getMessage( 'qbsettings-floatingleft' ),
-			$this->getMessage( 'qbsettings-floatingright' ),
-			$this->getMessage( 'qbsettings-directionality' )
-		);
-	}
-
-	/**
-	 * @return array
-	 */
 	function getDatePreferences() {
 		return self::$dataCache->getItem( $this->mCode, 'datePreferences' );
 	}
@@ -2244,7 +2230,7 @@ class Language {
 	 * @return bool
 	 */
 	function isMultibyte( $str ) {
-		return (bool)preg_match( '/[\x80-\xff]/', $str );
+		return strlen( $str ) !== mb_strlen( $str );
 	}
 
 	/**
@@ -3684,17 +3670,6 @@ class Language {
 	public static function getClassFileName( $code ) {
 		global $IP;
 		return self::getFileName( "$IP/languages/classes/Language", $code, '.php' );
-	}
-
-	/**
-	 * @todo move function to hook Language::getMessagesFileName
-	 * @author wikia
-	 * @param $code string
-	 * @return string
-	 */
-	public static function getAdditionalMessagesFileName( $code ) {
-		global $IP;
-		return self::getFileName( "$IP/languages/messages/wikia/Messages", $code, '.php' );
 	}
 
 	/**

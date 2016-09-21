@@ -68,7 +68,8 @@ $wgResourceModules += array(
 	'ext.visualEditor.wikia.oasisViewPageTarget' => $wgVisualEditorWikiaResourceTemplate + array(
 		'scripts' => array(
 			've/init/ve.init.wikia.js',
-			've/init/ve.init.wikia.ViewPageTarget.js'
+			've/init/ve.init.wikia.ViewPageTarget.js',
+			've/init/ve.init.wikia.TargetEvents.js',
 		),
 		'styles' => array(
 			've/init/styles/ve.init.wikia.ViewPageTarget.css'
@@ -76,9 +77,6 @@ $wgResourceModules += array(
 		'dependencies' => array(
 			'ext.visualEditor.viewPageTarget'
 		)
-	),
-	'ext.visualEditor.wikia.venusViewPageTarget' => $wgVisualEditorWikiaResourceTemplate + array(
-		// placeholder to establish naming scheme
 	),
 	'ext.visualEditor.wikia.core' => $wgVisualEditorWikiaResourceTemplate + array(
 		'scripts' => array(
@@ -123,11 +121,13 @@ $wgResourceModules += array(
 			've/ui/ve.ui.WikiaCommandRegistry.js',
 			've/ui/dialogs/ve.ui.WikiaSourceModeDialog.js',
 			've/ui/dialogs/ve.ui.WikiaMediaInsertDialog.js',
-			've/ui/dialogs/ve.ui.WikiaMediaInsertDialog.js',
+			've/ui/dialogs/ve.ui.WikiaImageInsertDialog.js',
+			've/ui/dialogs/ve.ui.WikiaVideoInsertDialog.js',
 			've/ui/dialogs/ve.ui.WikiaSingleMediaDialog.js',
 			've/ui/dialogs/ve.ui.WikiaMapInsertDialog.js',
 			've/ui/dialogs/ve.ui.WikiaInfoboxInsertDialog.js',
 			've/ui/dialogs/ve.ui.WikiaInfoboxDialog.js',
+			've/ui/dialogs/ve.ui.WikiaInfoboxBuilderDialog.js',
 			've/ui/dialogs/ve.ui.WikiaTemplateInsertDialog.js',
 			've/ui/dialogs/ve.ui.WikiaTransclusionDialog.js',
 			've/ui/tools/ve.ui.WikiaDialogTool.js',
@@ -161,8 +161,12 @@ $wgResourceModules += array(
 		'messages' => array(
 			'oasis-content-picture-added-by',
 			'videohandler-video-views',
+			'wikia-visualeditor-dialog-image-insert-title',
+			'wikia-visualeditor-dialog-video-insert-title',
 			'wikia-visualeditor-preference-enable',
 			'wikia-visualeditor-dialogbutton-wikiamediainsert-tooltip',
+			'wikia-visualeditor-dialogbutton-imageinsert-tooltip',
+			'wikia-visualeditor-dialogbutton-videoinsert-tooltip',
 			'wikia-visualeditor-dialogbutton-wikiamapinsert-tooltip',
 			'wikia-visualeditor-dialog-wikiamapinsert-create-button',
 			'wikia-visualeditor-dialog-wikiamapinsert-headline',
@@ -193,6 +197,7 @@ $wgResourceModules += array(
 			'wikia-visualeditor-dialogbutton-infobox-tooltip',
 			'wikia-visualeditor-dialog-transclusion-zerostate',
 			'wikia-visualeditor-dialog-infobox-insert-title',
+			'wikia-visualeditor-dialog-infobox-insert-add-new-template',
 			'wikia-visualeditor-dialog-infobox-insert-empty-state',
 			'wikia-visualeditor-dialog-infobox-insert-empty-state-has-unconverted-infoboxes',
 			'wikia-visualeditor-savedialog-label-save',

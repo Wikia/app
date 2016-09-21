@@ -17,48 +17,59 @@ class CreateNewWikiControllerTest extends WikiaBaseTest {
 	 * @group hyun
 	 * @dataProvider getCreateWikiDataProvider
 	 */
-	public function testCreateWikiSuccess( $testCase, $userLoggedIn, $userEmailConfirmed, $status) {
+	public function testCreateWikiSuccess( $testCase, $testData ) {
 		$wikiName = 'Muppet is great';
 		$wikiDomain = 'muppet';
 		$wikiLanguage = 'en';
 		$wikiVertical = '3';
 		$wikiId = 322389;
-		$wikiAnswer = 12345;
 		$siteName = 'asdfasdf';
 		$mainPageUrl = 'muppet.wikia.com/wiki/Main_page';
 
 		$requestParams = array("wName" => $wikiName,
 			"wDomain" => $wikiDomain,
 			"wLanguage" => $wikiLanguage,
-			"wVertical" => $wikiVertical,
-			"wAnswer" => $wikiAnswer);
+			"wVertical" => $wikiVertical);
 
 		$wgRequest = $this->getMock('WebRequest');
-		$wgRequest->expects($this->once())
+		$wgRequest->expects($this->any())
 			->method('getArray')
 			->will($this->returnValue($requestParams));
+
 		$wgDevelDomains = array();
-		$wgUser = $this->getMock('User');
+
+		$wgUser = $this->getMock( 'User', [ 'getId', 'isLoggedIn', 'isEmailConfirmed', 'getEditToken' ] );
 		$wgUser->expects($this->any())
 			->method('getId')
 			->will($this->returnValue(6));
-		$wgUser->expects($this->once())
+		$wgUser->expects($this->any())
 			->method('isLoggedIn')
-			->will($this->returnValue($userLoggedIn));
+			->will($this->returnValue( $testData['userLogged'] ) );
 		$wgUser->expects($this->any())
 			->method('isEmailConfirmed')
-			->will($this->returnValue($userEmailConfirmed));
+			->will( $this->returnValue( $testData['userEmailConfirmed'] ) );
+		$wgUser->expects( $this->any() )
+			->method( 'getEditToken' )
+			->will( $this->returnValue( $testData['userToken'] ) );
+
 		$app = $this->getMock('WikiaApp', array('getGlobal', 'runFunction'));
-		$app->expects($this->exactly(3))
+		$app->expects( $this->any() )
 			->method('getGlobal')
 			->will($this->onConsecutiveCalls($wgRequest, $wgDevelDomains, $wgUser));
 
-		$createWiki = $this->getMock('CreateWiki', array('create', 'getWikiInfo'), array(), '', false);
+		$this->mockGlobalVariable( 'wgUser', $wgUser );
+
+		$createWiki = $this->getMock('CreateWiki', array('create', 'getWikiInfo', 'getCityId', 'getSiteName'), array(), '', false);
 		$createWiki->expects($this->any())
 			->method('create');
 		$createWiki->expects($this->any())
 			->method('getWikiInfo')
 			->will($this->onConsecutiveCalls($wikiId, $siteName));
+
+		$createWiki
+			->expects($this->any())
+			->method('getCityId')
+			->willReturn(99);
 
 		$mainPageTitle = $this->getMock('GlobalTitle', array(), array(), '', false);
 		$mainPageTitle->expects($this->any())
@@ -66,13 +77,31 @@ class CreateNewWikiControllerTest extends WikiaBaseTest {
 			->will($this->returnValue($mainPageUrl));
 
 		$this->mockClass('CreateWiki', $createWiki);
-		$this->mockClass('GlobalTitle', $mainPageTitle);
+		$this->mockClass('GlobalTitle', $mainPageTitle, 'newFromText');
 
-		$response = $app->sendRequest('CreateNewWiki', 'CreateWiki');
+		$requestMock = $this->getMock( 'WikiaRequest', [ 'wasPosted' ], [ [ 'token' => $testData['requestToken'] ] ] );
+		$requestMock->expects( $this->once() )
+			->method( 'wasPosted' )
+			->will( $this->returnValue( $testData['wasPosted'] ) );
+		$response = new WikiaResponse( 'json', $requestMock );
 
-		$this->assertEquals($status, $response->getVal('status'), $testCase);
+		if ( !empty( $testData['expectedException'] ) ) {
+			$this->setExpectedException( $testData['expectedException'] );
+		}
 
-		if( $userLoggedIn && $userEmailConfirmed ) {
+		$createNewWikiController = new CreateNewWikiController();
+
+		$createNewWikiController->setRequest( $requestMock );
+		$createNewWikiController->setResponse( $response );
+		$createNewWikiController->setApp( $app );
+
+		$createNewWikiController->CreateWiki();
+
+		$response = $createNewWikiController->getResponse();
+
+		$this->assertEquals( $testData['status'], $response->getVal( 'status' ), $testCase );
+
+		if ( $userLoggedIn && $userEmailConfirmed ) {
 			$this->assertEquals($siteName, $response->getVal('siteName'));
 			$this->assertEquals($mainPageUrl, $response->getval('finishCreateUrl'));
 		}
@@ -82,22 +111,76 @@ class CreateNewWikiControllerTest extends WikiaBaseTest {
 		return [
 			[
 				'testCase' => 'Everything is OK',
-				'userLogged' => true,
-				'userEmailConfirmed' => true,
-				'status' => 'ok'
+				'testData' => [
+					'wasPosted' => true,
+					'userToken' => '1234',
+					'requestToken' => '1234',
+					'userLogged' => true,
+					'userEmailConfirmed' => true,
+					'status' => 'ok',
+					'expectedException' => false
+				],
 			],
 			[
 				'testCase' => 'User logged-in but without confirmed e-mail',
-				'userLogged' => true,
-				'userEmailConfirmed' => false,
-				'status' => 'error'
+				'testData' => [
+					'wasPosted' => true,
+					'userToken' => '1234',
+					'requestToken' => '1234',
+					'userLogged' => true,
+					'userEmailConfirmed' => false,
+					'status' => 'error',
+					'expectedException' => false,
+				],
 			],
 			[
 				'testCase' => 'User not logged-in and therefore without confirmed e-mail',
-				'userLogged' => false,
-				'userEmailConfirmed' => false,
-				'status' => 'error'
-			]
+				'testData' => [
+					'wasPosted' => true,
+					'userToken' => '1234',
+					'requestToken' => '1234',
+					'userLogged' => false,
+					'userEmailConfirmed' => false,
+					'status' => 'error',
+					'expectedException' => false,
+				],
+			],
+			[
+				'testCase' => "Request wasn't POSTed",
+				'testData' => [
+					'wasPosted' => false,
+					'userToken' => '1234',
+					'requestToken' => '1234',
+					'userLogged' => true,
+					'userEmailConfirmed' => true,
+					'status' => null,
+					'expectedException' => 'BadRequestException',
+				],
+			],
+			[
+				'testCase' => "Invalid token provided",
+				'testData' => [
+					'wasPosted' => true,
+					'userToken' => '1234',
+					'requestToken' => '4321',
+					'userLogged' => true,
+					'userEmailConfirmed' => true,
+					'status' => null,
+					'expectedException' => 'BadRequestException',
+				],
+			],
+			[
+				'testCase' => "Request wasn't POSTed and invalid token provided",
+				'testData' => [
+					'wasPosted' => false,
+					'userToken' => '1234',
+					'requestToken' => '4321',
+					'userLogged' => true,
+					'userEmailConfirmed' => true,
+					'status' => null,
+					'expectedException' => 'BadRequestException',
+				],
+			],
 		];
 	}
 
@@ -118,7 +201,7 @@ class CreateNewWikiControllerTest extends WikiaBaseTest {
 		$app = $this->getMock('WikiaApp', array('getGlobal', 'runFunction'));
 
 		$this->mockGlobalVariable('wgRequest',$wgRequest);
-		$this->mockStaticMethod('AutoCreateWiki','checkWikiNameIsCorrect','');
+		$this->mockStaticMethod('CreateWikiChecks','checkWikiNameIsCorrect','');
 
 		$response = $app->sendRequest('CreateNewWiki', 'CheckWikiName');
 

@@ -219,3 +219,8 @@ $messages['ja'] = array(
 	'listusers-blocked' => 'ブロック中',
 	'listusers-nonegroup' => 'なし',
 );
+
+$messages['pt'] = array(
+	'listusers' => 'Lista de usuários locais',
+	'listuserstitle'  => 'Lista de usuários locais',
+);

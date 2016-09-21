@@ -1,4 +1,5 @@
 <?php
+use Wikia\Paginator\Paginator;
 
 /**
  * SpecialVideos Helper
@@ -46,68 +47,16 @@ class SpecialVideosHelper extends WikiaModel {
 	}
 
 	/**
-	 * get list of sorting options
-	 * @return array $options
-	 */
-	public function getSortOptions() {
-		$options = $this->getSortOptionsMobile();
-		$options['popular'] = wfMessage( 'specialvideos-sort-most-popular' )->plain();
-
-		return $options;
-	}
-
-	/**
-	 * get list of sorting options for mobile
-	 * @return array $options
-	 */
-	public function getSortOptionsMobile() {
-		$options = array(
-			'trend'   => wfMessage( 'specialvideos-sort-trending' )->plain(),
-			'recent'  => wfMessage( 'specialvideos-sort-latest' )->plain(),
-		);
-
-		return $options;
-	}
-
-	/**
-	 * get list of filter options
-	 * @return array $options
-	 */
-	public function getFilterOptions() {
-		$options = array();
-
-		$premiumVideos = $this->premiumVideosExist();
-		if ( !empty( $premiumVideos ) ) {
-			$options['premium'] = wfMessage( 'specialvideos-sort-featured' )->text();
-		}
-
-		if ( $this->wg->UseVideoVerticalFilters ) {
-			$options['trend:Games'] = wfMessage( 'specialvideos-filter-games' )->text();
-			$options['trend:Lifestyle'] = wfMessage( 'specialvideos-filter-lifestyle' )->text();
-			$options['trend:Entertainment'] = wfMessage( 'specialvideos-filter-entertainment' )->text();
-		}
-
-		return $options;
-	}
-
-	/**
 	 * get list of videos
-	 * @param string $sort [recent/popular/trend]
 	 * @param integer $page
+	 * @param string $filter [all/premium]
 	 * @param array $providers
 	 * @param string $category
 	 * @param array $options
 	 * @return array $videos
 	 */
-	public function getVideos( $sort, $page, $providers = [], $category = '', $options = [] ) {
+	public function getVideos( $page, $filter = 'all', $providers = [], $category = '', $options = [] ) {
 		wfProfileIn( __METHOD__ );
-
-		if ( $sort == 'premium' ) {
-			$sort = 'recent';
-			$filter = 'premium';
-		} else {
-			$filter = 'all';
-		}
 
 		if ( $this->app->checkSkin( 'wikiamobile' ) ) {
 			$limit = self::VIDEOS_PER_PAGE_MOBILE;
@@ -132,7 +81,7 @@ class SpecialVideosHelper extends WikiaModel {
 
 		// get video list
 		$mediaService = new MediaQueryService();
-		$videoList = $mediaService->getVideoList( $sort, $filter, $limit, $page, $providers, $category );
+		$videoList = $mediaService->getVideoList( $filter, $limit, $page, $providers, $category );
 
 		$videoOptions = [
 			'thumbWidth'       => self::THUMBNAIL_WIDTH,
@@ -149,7 +98,6 @@ class SpecialVideosHelper extends WikiaModel {
 			$videoDetail = $helper->getVideoDetail( $videoInfo, $videoOptions );
 			if ( !empty( $videoDetail ) ) {
 				$byUserMsg = WikiaFileHelper::getByUserMsg( $videoDetail['userName'], $videoDetail['timestamp'] );
-				$viewTotal = wfMessage( 'videohandler-video-views', $this->wg->Lang->formatNum( $videoDetail['viewsTotal'] ) )->text();
 
 				$videos[] = [
 					'title' => $videoDetail['fileTitle'],
@@ -158,7 +106,6 @@ class SpecialVideosHelper extends WikiaModel {
 					'thumbnail' => $videoDetail['thumbnail'],
 					'timestamp' => wfTimeFormatAgo( $videoDetail['timestamp'], false ),
 					'updated' => $videoDetail['timestamp'],
-					'viewTotal' => $viewTotal,
 					'byUserMsg' => $byUserMsg,
 					'truncatedList' => $videoDetail['truncatedList'],
 					'duration' => $videoDetail['duration'],
@@ -263,20 +210,19 @@ class SpecialVideosHelper extends WikiaModel {
 		$totalVideos = $this->getTotalVideos( $videoParams );
 
 		if ( $totalVideos > self::VIDEOS_PER_PAGE ) {
-			// Paginator::newFromArray allows array and integer param
-			$pages = Paginator::newFromArray( $totalVideos, self::VIDEOS_PER_PAGE );
-			$pages->setActivePage( $videoParams['page'] - 1 );
-
-			$urlTemplate = SpecialPage::getTitleFor( 'Videos' )->escapeLocalUrl();
-			$urlTemplate .= '?page=%s';
+			$urlParams = [];
 			foreach( [ 'sort', 'category', 'provider'] as $key ) {
 				if ( !empty( $videoParams[$key] ) ) {
-					$urlTemplate .= "&$key=" . urlencode( $videoParams[$key] );
+					$urlParams[$key] = $videoParams[$key];
 				}
 			}
+			$url = SpecialPage::getTitleFor( 'Videos' )->escapeLocalUrl( $urlParams );
 
-			$body = $pages->getBarHTML( $urlTemplate );
-			$head = $pages->getHeadItem( $urlTemplate );
+			$pages = new Paginator( $totalVideos, self::VIDEOS_PER_PAGE, $url );
+			$pages->setActivePage( $videoParams['page'] );
+
+			$body = $pages->getBarHTML();
+			$head = $pages->getHeadItem();
 
 			// check if we're on the last page
 			if ( $videoParams['page'] < $pages->getPagesCount() ) {

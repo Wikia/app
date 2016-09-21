@@ -18,3 +18,4 @@ $wgExtensionMessagesFiles['WikiActivityAliases'] = "$dir/SpecialWikiActivity.ali
 // hooks
 $wgHooks['InitialQueriesMainPage'][] = 'MyHome::getInitialMainPage';
 $wgHooks['GetPreferences'][] = 'MyHome::onGetPreferences';
+$wgHooks['RevisionInsertComplete'][] = 'MyHome::onRevisionInsertComplete';

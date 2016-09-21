@@ -41,7 +41,7 @@ class WikiFactoryLoader {
 
 	// TODO: FIXME: Why is there a mWikiID and an mCityID?
 	public $mServerName, $mWikiID, $mCityHost, $mCityID, $mOldServerName;
-	public $mAlternativeDomainUsed, $mCityDB, $mDebug;
+	public $mAlternativeDomainUsed, $mCityDB, $mCityCluster, $mDebug;
 	public $mDomain, $mVariables, $mIsWikiaActive, $mAlwaysFromDB;
 	public $mTimestamp, $mCommandLine;
 	public $mExpireDomainCacheTimeout = 86400; #--- 24 hours
@@ -186,12 +186,12 @@ class WikiFactoryLoader {
 	 * @todo change new Database to LoadBalancer factory
 	 *
 	 * @param int $type
-	 * @return Database    database handler
+	 * @return DatabaseBase database handler
 	 */
 	public function getDB( $type = DB_SLAVE ) {
 		global $wgDBserver, $wgDBuser, $wgDBpassword;
 
-		if( $this->mDBhandler instanceof Database ) {
+		if( $this->mDBhandler instanceof DatabaseBase ) {
 			return $this->mDBhandler;
 		}
 
@@ -207,7 +207,7 @@ class WikiFactoryLoader {
 		 */
 		if( !$this->mDBhandler || !$this->mDBhandler->isOpen() ) {
 			error_log( "WikiFactoryLoader[{$this->mCityID}]: fallback to {$wgDBserver}" );
-			$this->mDBhandler = new DatabaseMysql( $wgDBserver, $wgDBuser, $wgDBpassword, $this->mDBname );
+			$this->mDBhandler = new DatabaseMysqli( $wgDBserver, $wgDBuser, $wgDBpassword, $this->mDBname );
 			$this->debug( "fallback to wgDBserver {$wgDBserver}" );
 		}
 
@@ -224,10 +224,10 @@ class WikiFactoryLoader {
 	 * @return integer: wikia id or null if wikia is not handled by WikiFactory
 	 */
 	public function execute() {
+		global $wgCityId, $wgDevelEnvironment,
+			$wgDBservers, $wgLBFactoryConf, $wgDBserver, $wgContLang, $wgWikiaBaseDomain;
 
 		wfProfileIn(__METHOD__);
-		global $wgCityId, $wgDevelEnvironment,
-			$wgDBservers, $wgLBFactoryConf, $wgDBserver, $wgContLang;
 
 		/**
 		 * Hook to allow extensions to alter the initialization.  For example,
@@ -287,7 +287,8 @@ class WikiFactoryLoader {
 							"city_public",
 							"city_factory_timestamp",
 							"city_url",
-							"city_dbname"
+							"city_dbname",
+							"city_cluster"
 						),
 						($this->mCityID) ? array( "city_list.city_id" => $this->mCityID ) : array( "city_list.city_dbname" => $this->mCityDB ),
 						__METHOD__ . '::domaindb'
@@ -302,6 +303,7 @@ class WikiFactoryLoader {
 					$this->mIsWikiaActive = $oRow->city_public;
 					$this->mCityHost = $host;
 					$this->mCityDB   = $oRow->city_dbname;
+					$this->mCityCluster = $oRow->city_cluster;
 					$this->mTimestamp = $oRow->city_factory_timestamp;
 					$this->mDomain = array(
 						"id" => $oRow->city_id,
@@ -448,14 +450,15 @@ class WikiFactoryLoader {
 		if( empty( $this->mWikiID ) || $this->mIsWikiaActive == -1 ) {
 			if( ! $this->mCommandLine ) {
 				global $wgNotAValidWikia;
-				$this->debug( "redirected to {$wgNotAValidWikia}, {$this->mWikiID} {$this->mIsWikiaActive}" );
+				$redirect = $wgNotAValidWikia . '?from=' . rawurlencode( $this->mServerName );
+				$this->debug( "redirected to {$redirect}, {$this->mWikiID} {$this->mIsWikiaActive}" );
 				if( $this->mIsWikiaActive < 0 ) {
 					header( "X-Redirected-By-WF: MarkedForClosing" );
 				}
 				else {
 					header( "X-Redirected-By-WF: NotAValidWikia" );
 				}
-				header("Location: $wgNotAValidWikia");
+				header( "Location: $redirect" );
 				wfProfileOut( __METHOD__ );
 				exit(0);
 			}
@@ -472,12 +475,12 @@ class WikiFactoryLoader {
 					$database = strtolower( $this->mCityDB );
 					$redirect = sprintf(
 						"http://%s/wiki/Special:CloseWiki/information/%s",
-						($wgDevelEnvironment) ? "www.awc.wikia-inc.com" : "community.wikia.com",
+						($wgDevelEnvironment) ? "www.awc.wikia-inc.com" : "community.{$wgWikiaBaseDomain}",
 						$database
 					);
 				}
 				else {
-					$redirect = $wgNotAValidWikia;
+					$redirect = $wgNotAValidWikia . '?from=' . rawurlencode( $this->mServerName );
 				}
 				$this->debug( "disabled and not commandline, redirected to {$redirect}, {$this->mWikiID} {$this->mIsWikiaActive}" );
 				header( "X-Redirected-By-WF: Dump" );
@@ -619,6 +622,10 @@ class WikiFactoryLoader {
 			}
 		}
 
+		# take some WF variables values from city_list
+		$this->mVariables["wgDBname"] = $this->mCityDB;
+		$this->mVariables["wgDBCluster"] = $this->mCityCluster;
+
 		// @author macbre
 		wfRunHooks( 'WikiFactory::executeBeforeTransferToGlobals', array( &$this ) );
 
@@ -678,13 +685,13 @@ class WikiFactoryLoader {
 				}
 
 				if ($key == 'wgServer') {
-					$headers = Wikia::getAllHeaders();
-					if (array_key_exists('X-Original-Host', $headers) &&
-					    !empty($headers['X-Original-Host'])) {
+					if ( !empty( $_SERVER['HTTP_X_ORIGINAL_HOST'] ) ) {
 						global $wgConf;
-						$tValue = 'http://'.$headers['X-Original-Host'];
-						$wgConf->localVHosts = array_merge($wgConf->localVHosts,
-										   array( $headers['X-Original-Host'] ));
+
+						$stagingServer = $_SERVER['HTTP_X_ORIGINAL_HOST'];
+
+						$tValue = 'http://'.$stagingServer;
+						$wgConf->localVHosts = array_merge( $wgConf->localVHosts, [ $stagingServer ] );
 					}
 				}
 

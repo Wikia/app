@@ -17,12 +17,12 @@ class NfcNormalizeVideos {
 	/**
 	 * Used by runOnCluster to Normalize video titles and metadata
 	 *
-	 * @param DatabaseMysql $db
+	 * @param DatabaseBase $db
 	 * @param bool $test
 	 * @param bool $verbose
 	 * @param array $params
 	 */
-	public static function run( DatabaseMysql $db, $test, $verbose = false, $params ) {
+	public static function run( DatabaseBase $db, $test, $verbose = false, $params ) {
 
 		if ( !$db->tableExists( 'image' ) || !$db->tableExists( 'video_info' ) ) {
 			echo "ERROR: $params[dbname] (ID:$params[cityId]): image/video_info table does not exist.\n";
@@ -45,10 +45,10 @@ class NfcNormalizeVideos {
 	/**
 	 * Return an array of videos
 	 *
-	 * @param DatabaseMysql $db
+	 * @param DatabaseBase $db
 	 * @return array
 	 */
-	protected static function getVideoRows( DatabaseMysql $db ) {
+	protected static function getVideoRows( DatabaseBase $db ) {
 		return ( new WikiaSQL() )
 			->SELECT( 'img_name', 'img_metadata', 'img_sha1' )
 			->FROM( 'image' )
@@ -63,11 +63,11 @@ class NfcNormalizeVideos {
 	 * Update title and metadata for videos with titles not in normalized NFC form
 	 *
 	 * @param stdClass $video
-	 * @param DatabaseMysql $db
+	 * @param DatabaseBase $db
 	 * @param bool $test
 	 * @param bool $verbose
 	 */
-	protected static function updateVideo( $video, DatabaseMysql $db, $test, $verbose ) {
+	protected static function updateVideo( $video, DatabaseBase $db, $test, $verbose ) {
 		$originalName = $video->img_name;
 
 		// image.img_name & video_info.video_title

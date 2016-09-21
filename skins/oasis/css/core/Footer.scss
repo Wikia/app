@@ -5,6 +5,10 @@
 @import "skins/shared/mixins/gradient";
 @import "skins/shared/mixins/menus";
 
+.WikiaFooter {
+	margin-bottom: 30px;
+}
+
 .WikiaFooter, .WikiaBarWrapper {
 	clear: both;
 	padding-top: 23px;
@@ -115,13 +119,7 @@
 	}
 	.header-container {
 		@include clearfix;
-		h1 {
-			font-size: 18px;
-			float: left;
-			margin:17px 0 17px 20px;
-		}
 		h2 {
-			// SEO Test "One_H1"
 			font-size: 18px;
 			float: left;
 			margin:17px 0 17px 20px;

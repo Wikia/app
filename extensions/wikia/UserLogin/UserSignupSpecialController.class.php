@@ -38,10 +38,25 @@ class UserSignupSpecialController extends WikiaSpecialPageController {
 	 * employees who have been given the right explicitly.
 	 */
 	public function index() {
+		$contentLangCode = $this->app->wg->ContLang->getCode();
+
+		// Redirect to standalone NewAuth page if extension enabled
+		if ( $this->app->wg->EnableNewAuthModal ) {
+			$newSignupPageUrl = '/register?redirect=' . $this->userLoginHelper->getRedirectUrl();
+
+			if ( $contentLangCode !== 'en' ) {
+				$newSignupPageUrl .= '&uselang=' . $contentLangCode;
+			}
+
+			$this->getOutput()->redirect( $newSignupPageUrl );
+		}
+
 		JSMessages::enqueuePackage( 'UserSignup', JSMessages::EXTERNAL );
 
 		if ( $this->wg->User->isLoggedIn() && !$this->wg->User->isAllowed( 'createaccount' ) ) {
 			$this->forward( 'UserLoginSpecialController', 'loggedIn' );
+		} elseif ( $this->request->getBool( 'sendConfirmationEmail' ) ) {
+			$this->forward( __CLASS__, 'sendConfirmationEmail' );
 		} else {
 			$this->forward( __CLASS__, 'signupForm' );
 		}
@@ -181,12 +196,14 @@ class UserSignupSpecialController extends WikiaSpecialPageController {
 				 * end remove
 				 */
 				$params = [
-					'method' => 'sendConfirmationEmail',
+					'sendConfirmationEmail' => true,
 					'username' => $this->username,
 					'byemail' => intval( $this->byemail ),
 				];
 				$redirectUrl = $this->wg->title->getFullUrl( $params );
 			}
+
+			wfRunHooks( 'UserSignupAfterSignupBeforeRedirect', [ &$redirectUrl ] );
 
 			$this->track( 'signup-successful' );
 			$this->wg->out->redirect( $redirectUrl );
@@ -298,6 +315,8 @@ class UserSignupSpecialController extends WikiaSpecialPageController {
 	 * @responseParam string errParam
 	 * @responseParam string heading
 	 * @responseParam string subheading
+	 *
+	 * @throws BadRequestException
 	 */
 	public function sendConfirmationEmail() {
 		if ( $this->request->getVal( 'format', '' ) !== 'json' ) {
@@ -316,6 +335,7 @@ class UserSignupSpecialController extends WikiaSpecialPageController {
 
 		$this->username = $this->request->getVal( 'username', '' );
 		$this->byemail = $this->request->getBool( 'byemail', false );
+		$this->token = $this->wg->User->getEditToken();
 
 		// default heading, subheading, msg
 		// depending on what happens, default will be over written below
@@ -346,6 +366,8 @@ class UserSignupSpecialController extends WikiaSpecialPageController {
 			$this->errParam = '';
 
 			if ( $this->wg->Request->wasPosted() ) {
+				$this->checkWriteRequest(); // SUS-20: require a user token when handling POST requests
+
 				$action = $this->request->getVal( 'action', '' );
 				if ( $action == 'resendconfirmation' ) {
 					$response = $this->userLoginHelper->sendConfirmationEmail( $this->username );
@@ -662,6 +684,9 @@ class UserSignupSpecialController extends WikiaSpecialPageController {
 		$this->result = ( $signupForm->msgType == 'error' ) ? $signupForm->msgType : 'ok';
 		$this->msg = $signupForm->msg;
 		$this->errParam = $signupForm->errParam;
+		if ( $this->request->getVal('retusername') ) {
+			$this->username = $signupForm->mUsername;
+		}
 	}
 
 	/**

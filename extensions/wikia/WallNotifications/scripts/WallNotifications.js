@@ -135,9 +135,9 @@ var WallNotifications = $.createClass(Object, {
 		this.bucky.timer.start('fetchForCurrentWiki');
 		if ( this.fetchedCurrent == false ) {
 			var wikiEl = ( this.isMonobook ? $('#wall-notifications-inner') : this.$wallNotifications ).find('.notifications-for-wiki').first(),
-				firstWikiId = wikiEl.attr('data-wiki-id');
+				firstWikiId = parseInt(wikiEl.attr('data-wiki-id'));
 
-			if ( firstWikiId != undefined ) {
+			if ( !isNaN(firstWikiId) ) {
 				wikiEl.addClass('show');
 				this.fetchedCurrent = true;
 				this.currentWikiId = firstWikiId;
@@ -180,8 +180,8 @@ var WallNotifications = $.createClass(Object, {
 			controller: 'WallNotificationsExternalController',
 			method: 'markAllAsRead',
 			format: 'json',
+			type: 'POST',
 			data: {
-				username: wgTitle,
 				forceAll: forceAll
 			},
 			callback: this.proxy(function(data) {
@@ -228,9 +228,9 @@ var WallNotifications = $.createClass(Object, {
 
 	showFirst: function() {
 		var wikiEl = ( this.isMonobook ? $('#wall-notifications-inner') : this.$wallNotifications ).find('.notifications-for-wiki').first(),
-			firstWikiId = wikiEl.attr('data-wiki-id');
+			firstWikiId = parseInt(wikiEl.attr('data-wiki-id'));
 
-		if ( firstWikiId != undefined ) {
+		if ( !isNaN(firstWikiId) ) {
 			wikiEl.addClass('show');
 			this.wikiShown = {};
 			this.wikiShown[ firstWikiId ] = true;
@@ -263,11 +263,11 @@ var WallNotifications = $.createClass(Object, {
 		var wikiEl = $(e.target).closest('.notifications-for-wiki');
 		if(wikiEl.hasClass('show') ) {
 			wikiEl.removeClass('show');
-			var wikiId = wikiEl.attr('data-wiki-id');
+			var wikiId = parseInt(wikiEl.attr('data-wiki-id'));
 			delete this.wikiShown[ wikiId ];
 		} else {
 			wikiEl.addClass('show');
-			var wikiId = wikiEl.attr('data-wiki-id');
+			var wikiId = parseInt(wikiEl.attr('data-wiki-id'));
 			this.wikiShown[ wikiId ] = true;
 			this.updateWiki(wikiId);
 		}
@@ -299,7 +299,6 @@ var WallNotifications = $.createClass(Object, {
 	updateWikiFetch: function(wikiId) {
 		var isCrossWiki = (wikiId == wgCityId) ? '0' : '1',
 			data = {
-				username: wgTitle,
 				wikiId: wikiId,
 				isCrossWiki: isCrossWiki
 			};

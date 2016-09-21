@@ -133,7 +133,7 @@ class MysqlInstaller extends DatabaseInstaller {
 	public function openConnection() {
 		$status = Status::newGood();
 		try {
-			$db = new DatabaseMysql(
+			$db = new DatabaseMysqli(
 				$this->getVar( 'wgDBserver' ),
 				$this->getVar( '_InstallUser' ),
 				$this->getVar( '_InstallPassword' ),
@@ -404,7 +404,7 @@ class MysqlInstaller extends DatabaseInstaller {
 		if ( !$create ) {
 			// Test the web account
 			try {
-				new DatabaseMysql(
+				new DatabaseMysqli(
 					$this->getVar( 'wgDBserver' ),
 					$this->getVar( 'wgDBuser' ),
 					$this->getVar( 'wgDBpassword' ),
@@ -481,7 +481,7 @@ class MysqlInstaller extends DatabaseInstaller {
 		if ( $this->getVar( '_CreateDBAccount' ) ) {
 			// Before we blindly try to create a user that already has access,
 			try { // first attempt to connect to the database
-				new DatabaseMysql(
+				new DatabaseMysqli(
 					$server,
 					$dbUser,
 					$password,

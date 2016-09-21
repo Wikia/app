@@ -25,7 +25,7 @@
  * and handle all outputting (or lack of outputting) via it.
  * @ingroup HTTP
  */
-class WebResponse {
+class WebResponse implements \Wikia\HTTP\Response {
 
 	const NO_COOKIE_PREFIX = '';
 
@@ -60,7 +60,6 @@ class WebResponse {
 		if( $domain === null ) {
 			$domain = $wgCookieDomain;
 		}
-		$httpOnlySafe = wfHttpOnlySafe() && $wgCookieHttpOnly;
 		wfDebugLog( 'cookie',
 			'setcookie: "' . implode( '", "',
 				array(
@@ -70,14 +69,14 @@ class WebResponse {
 					$wgCookiePath,
 					$domain,
 					$wgCookieSecure,
-					$httpOnlySafe ) ) . '"' );
+					$wgCookieHttpOnly ) ) . '"' );
 		setcookie( $prefix . $name,
 			$value,
 			$expire,
 			$wgCookiePath,
 			$domain,
 			$wgCookieSecure,
-			$httpOnlySafe );
+			$wgCookieHttpOnly );
 	}
 }
 

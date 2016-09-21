@@ -5,7 +5,7 @@ define('videosmodule.views.bottomModule', [
 	'sloth',
 	'videosmodule.views.titleThumbnail',
 	'wikia.mustache',
-	'videosmodule.templates.mustache',
+	'videosmodule.templates.mustache'
 ], function (sloth, TitleThumbnailView, Mustache, templates) {
 	'use strict';
 

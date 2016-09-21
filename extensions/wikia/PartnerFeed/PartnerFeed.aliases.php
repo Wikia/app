@@ -19,3 +19,8 @@ $specialPageAliases['pl'] = array(
 $specialPageAliases['es'] = array(
 	'PartnerFeed' => array( 'ModalidadesRSS', 'PartnerFeed' )
 );
+
+/** Japanese (日本語) */
+$specialPageAliases['ja'] = array(
+	'PartnerFeed' => array( 'パートナーフィード' )
+);

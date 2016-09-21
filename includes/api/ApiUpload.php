@@ -82,14 +82,14 @@ class ApiUpload extends ApiBase {
 
 		// Check if the uploaded file is sane
 		if ( $this->mParams['chunk'] ) {
-			$maxSize = $this->mUpload->getMaxUploadSize( );
+			$maxSize = UploadBase::getMaxUploadSize();
 			if( $this->mParams['filesize'] > $maxSize ) {
 				$this->dieUsage( 'The file you submitted was too large', 'file-too-large' );
 			}
 		} else {
 			$this->verifyUpload();
 		}
- 
+
 		// Check if the user has the rights to modify or overwrite the requested title
 		// (This check is irrelevant if stashing is already requested, since the errors
 		//  can always be fixed by changing the title)
@@ -99,7 +99,7 @@ class ApiUpload extends ApiBase {
 				$this->dieRecoverableError( $permErrors[0], 'filename' );
 			}
 		}
-		// Get the result based on the current upload context: 
+		// Get the result based on the current upload context:
 		$result = $this->getContextResult();
 
 		if ( $result['result'] === 'Success' ) {
@@ -126,12 +126,18 @@ class ApiUpload extends ApiBase {
 			// Stash the file and get stash result
 			return $this->getStashResult();
 		}
+
+		// Check throttle after we've handled warnings
+		if ( UploadBase::isThrottled( $this->getUser() ) ) {
+			$this->dieUsageMsg( 'actionthrottledtext' );
+		}
+
 		// This is the most common case -- a normal upload with no warnings
 		// performUpload will return a formatted properly for the API with status
 		return $this->performUpload();
 	}
 	/**
-	 * Get Stash Result, throws an expetion if the file could not be stashed. 
+	 * Get Stash Result, throws an expetion if the file could not be stashed.
 	 */
 	private function getStashResult(){
 		$result = array ();
@@ -165,15 +171,33 @@ class ApiUpload extends ApiBase {
 		return $result;
 	}
 	/**
-	 * Get the result of a chunk upload. 
+	 * Get the result of a chunk upload.
 	 */
-	private function getChunkResult(){
+	private function getChunkResult() {
+		global $wgMinUploadChunkSize;
 		$result = array();
-		
+
 		$result['result'] = 'Continue';
 		$request = $this->getMain()->getRequest();
 		$chunkPath = $request->getFileTempname( 'chunk' );
 		$chunkSize = $request->getUpload( 'chunk' )->getSize();
+		$totalSoFar = $this->mParams['offset'] + $chunkSize;
+		$minChunkSize = $wgMinUploadChunkSize;
+
+		// Sanity check sizing
+		if ( $totalSoFar > $this->mParams['filesize'] ) {
+			$this->dieUsage(
+				'Offset plus current chunk is greater than claimed file size', 'invalid-chunk'
+			);
+		}
+
+		// Enforce minimum chunk size
+		if ( $totalSoFar != $this->mParams['filesize'] && $chunkSize < $minChunkSize ) {
+			$this->dieUsage(
+				"Minimum chunk size is $minChunkSize bytes for non-final chunks", 'chunk-too-small'
+			);
+		}
+
 		if ($this->mParams['offset'] == 0) {
 			try {
 				$result['filekey'] = $this->performStash();
@@ -189,8 +213,8 @@ class ApiUpload extends ApiBase {
 				return ;
 			}
 			$result['filekey'] = $this->mParams['filekey'];
-			// Check we added the last chunk: 
-			if( $this->mParams['offset'] + $chunkSize == $this->mParams['filesize'] ) {
+			// Check we added the last chunk:
+			if( $totalSoFar == $this->mParams['filesize'] ) {
 				$status = $this->mUpload->concatenateChunks();
 				if ( !$status->isGood() ) {
 					$this->dieUsage( $status->getWikiText(), 'stashfailed' );
@@ -199,10 +223,10 @@ class ApiUpload extends ApiBase {
 				$result['result'] = 'Success';
 			}
 		}
-		$result['offset'] = $this->mParams['offset'] + $chunkSize;
+		$result['offset'] = $totalSoFar;
 		return $result;
 	}
-	
+
 	/**
 	 * Stash the file and return the file key
 	 * Also re-raises exceptions with slightly more informative message strings (useful for API)
@@ -271,7 +295,10 @@ class ApiUpload extends ApiBase {
 		if ( $this->mParams['chunk'] ) {
 			// Chunk upload
 			$this->mUpload = new UploadFromChunks();
-			if( isset( $this->mParams['filekey'] ) ){
+			if ( isset( $this->mParams['filekey'] ) ) {
+				if ( $this->mParams['offset'] === 0 ) {
+					$this->dieUsage( 'Cannot supply a filekey when offset is 0', 'badparams' );
+				}
 				// handle new chunk
 				$this->mUpload->continueChunks(
 					$this->mParams['filename'],
@@ -524,8 +551,15 @@ class ApiUpload extends ApiBase {
 			),
 			'stash' => false,
 
-			'filesize' => null,
-			'offset' => null,
+			'filesize' => array(
+				ApiBase::PARAM_TYPE => 'integer',
+				ApiBase::PARAM_MIN => 0,
+				ApiBase::PARAM_MAX => UploadBase::getMaxUploadSize(),
+			),
+			'offset' => array(
+				ApiBase::PARAM_TYPE => 'integer',
+				ApiBase::PARAM_MIN => 0,
+			),
 			'chunk' => null,
 
 			'asyncdownload' => false,

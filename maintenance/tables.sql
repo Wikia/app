@@ -1103,30 +1103,6 @@ CREATE INDEX /*i*/namespace_title ON /*_*/watchlist (wl_namespace, wl_title);
 
 
 --
--- When using the default MySQL search backend, page titles
--- and text are munged to strip markup, do Unicode case folding,
--- and prepare the result for MySQL's fulltext index.
---
--- This table must be MyISAM; InnoDB does not support the needed
--- fulltext index.
---
-CREATE TABLE /*_*/searchindex (
-  -- Key to page_id
-  si_page int unsigned NOT NULL,
-
-  -- Munged version of title
-  si_title varchar(255) NOT NULL default '',
-
-  -- Munged version of body text
-  si_text mediumtext NOT NULL
-) ENGINE=MyISAM;
-
-CREATE UNIQUE INDEX /*i*/si_page ON /*_*/searchindex (si_page);
-CREATE FULLTEXT INDEX /*i*/si_title ON /*_*/searchindex (si_title);
-CREATE FULLTEXT INDEX /*i*/si_text ON /*_*/searchindex (si_text);
-
-
---
 -- Recognized interwiki link prefixes
 --
 CREATE TABLE /*_*/interwiki (
@@ -1170,8 +1146,9 @@ CREATE TABLE /*_*/querycache (
   qc_title varchar(255) binary NOT NULL default ''
 ) /*$wgDBTableOptions*/;
 
-CREATE INDEX /*i*/qc_type ON /*_*/querycache (qc_type,qc_value);
+-- CREATE INDEX /*i*/qc_type ON /*_*/querycache (qc_type,qc_value); // PLATFORM-1914
 
+CREATE UNIQUE INDEX /*i*/qc_type_value_ns_title ON /*_*/querycache (qc_type,qc_value,qc_namespace,qc_title);
 
 --
 -- For a few generic cache operations if not using Memcached

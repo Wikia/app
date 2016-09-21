@@ -6,7 +6,6 @@
  */
 
 $wgHooks['ImagePageAfterImageLinks'][] = 'efImageReviewDisplayStatus';
-$wgGroupPermissions['staff']['imagereviewstats'] = true;
 
 function efImageReviewDisplayStatus( ImagePage $imagePage, &$html ) {
 	global $wgCityId, $wgExternalDatawareDB, $wgUser;
@@ -60,7 +59,7 @@ function efImageReviewDisplayStatus( ImagePage $imagePage, &$html ) {
 			if ( $file instanceof WikiaLocalFile && $lastTouched < $now->modify( '-1 hour' ) ) {
 				$scribeEventProducer = new ScribeEventProducer( 'edit' );
 				$user = User::newFromName( $file->getUser() );
-				if ( $scribeEventProducer->buildEditPackage( $imagePage, $user, null, null, $file ) ) {
+				if ( $scribeEventProducer->buildEditPackage( $imagePage, $user, null, $file ) ) {
 					$logParams = [
 						'cityId' => $wgCityId,
 						'pageId' => $imagePage->getID(),

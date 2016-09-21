@@ -243,22 +243,28 @@ class PhalanxHooks extends WikiaObject {
 	 * client original IP.
 	 *
 	 * @see PLATFORM-317
+	 * @see PLATFORM-1473
 	 * @author macbre
 	 *
 	 * @param User $user
 	 * @return bool true
 	 */
-	static public function onGetBlockedStatus( User $user ) {
+	static public function onGetBlockedStatus( User $user, $shouldLogBlockInStats=false, $global=true ) {
+		if ( ! $global ) {
+			return true;
+		}
+
 		global $wgRequest, $wgClientIPHeader;
 
 		// get the client IP using Fastly-generated request header
 		$clientIPFromFastly = $wgRequest->getHeader( $wgClientIPHeader );
 
-		if ( !User::isIP( $clientIPFromFastly ) ) {
+		if ( !User::isIP( $clientIPFromFastly ) && !$wgRequest->isWikiaInternalRequest() ) {
 			WikiaLogger::instance()->error( 'Phalanx user IP incorrect', [
 				'ip_from_fastly' => $clientIPFromFastly,
 				'ip_from_user' => $user->getName(),
 				'ip_from_request' => $wgRequest->getIP(),
+				'user_agent' => $wgRequest->getHeader( 'User-Agent' ),
 			] );
 		}
 

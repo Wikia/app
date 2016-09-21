@@ -22,15 +22,16 @@ $SpecialContactSecMap[] = array(
 	)
 );
 
-$SpecialContactSecMap[] = array(
+$SpecialContactSecMap[] = [
 	'headerMsg' => 'editing',
-	'links' => array(
+	'links' => [
 		'using-wikia',
-		array('link'=>'feedback', 'form'=>true),
-		array('link'=>'bug',      'form'=> 'bug-report' ),
-		array('link'=>'bad-ad',   'form'=> 'bad-ad' ),
-	)
-);
+		[ 'link' => 'feedback', 'form' => true ],
+		[ 'link' => 'bug',      'form' => 'bug-report' ],
+		[ 'link' => 'security', 'form' => 'security' ],
+		[ 'link' => 'bad-ad',   'form' => 'bad-ad' ],
+	],
+];
 
 $SpecialContactSecMap[] = array(
 	'headerMsg' => 'setting',

@@ -60,33 +60,6 @@ global $wgExtensionMessagesFiles;
 $wgExtensionMessagesFiles[ 'TopLists' ] = "{$dir}/TopLists.i18n.php";
 $wgExtensionMessagesFiles[ 'TopListsAliases' ] = "{$dir}/TopLists.alias.php";
 
-//rights
-global $wgAvailableRights, $wgGroupPermissions;
-
-$wgAvailableRights[] = 'toplists-create-edit-list';
-
-$wgGroupPermissions[ '*' ][ 'toplists-create-edit-list' ] = false;
-$wgGroupPermissions[ 'user' ][ 'toplists-create-edit-list' ] = true;
-$wgGroupPermissions[ 'bot' ][ 'toplists-create-edit-list' ] = true;
-
-$wgAvailableRights[] = 'toplists-create-item';
-
-$wgGroupPermissions[ '*' ][ 'toplists-create-item' ] = false;
-$wgGroupPermissions[ 'user' ][ 'toplists-create-item' ] = true;
-$wgGroupPermissions[ 'bot' ][ 'toplists-create-item' ] = true;
-
-$wgAvailableRights[] = 'toplists-edit-item';
-
-$wgGroupPermissions[ '*' ][ 'toplists-edit-item' ] = false;
-$wgGroupPermissions[ 'staff' ][ 'toplists-edit-item' ] = true;
-$wgGroupPermissions[ 'sysop' ][ 'toplists-edit-item' ] = true;
-
-$wgAvailableRights[] = 'toplists-delete-item';
-
-$wgGroupPermissions[ '*' ][ 'toplists-delete-item' ] = false;
-$wgGroupPermissions[ 'staff' ][ 'toplists-delete-item' ] = true;
-$wgGroupPermissions[ 'sysop' ][ 'toplists-delete-item' ] = true;
-
 //special pages
 global $wgSpecialPages;
 

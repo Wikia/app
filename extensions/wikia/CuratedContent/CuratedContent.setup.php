@@ -2,7 +2,7 @@
 /**
  * Curated Content API setup file
  */
- 
+
 $wgExtensionCredits[ 'specialpage' ][ ] = array(
 	'name' => 'CuratedContent',
 	'author' => 'Wikia',
@@ -15,6 +15,7 @@ $wgExtensionCredits[ 'specialpage' ][ ] = array(
  */
 $wgAutoloadClasses['CuratedContentHelper'] = __DIR__ . '/CuratedContentHelper.class.php';
 $wgAutoloadClasses['CuratedContentValidator'] = __DIR__ . '/CuratedContentValidator.class.php';
+$wgAutoloadClasses['CuratedContentSpecialPageValidator'] = __DIR__ . '/CuratedContentSpecialPageValidator.class.php';
 $wgAutoloadClasses['CuratedContentValidatorController'] = __DIR__ . '/CuratedContentValidatorController.class.php';
 $wgAutoloadClasses['CuratedContentController'] = __DIR__ . '/CuratedContentController.class.php';
 $wgAutoloadClasses['CuratedContentWrongAPIVersionException'] = __DIR__ . '/CuratedContentController.class.php';
@@ -27,18 +28,9 @@ $wgAutoloadClasses['CuratedContentHooks'] =  __DIR__ . '/CuratedContentHooks.cla
 $wgExtensionMessagesFiles['CuratedContent'] = __DIR__ . '/CuratedContent.i18n.php';
 $wgExtensionMessagesFiles['CuratedContentAlias'] = __DIR__ . '/CuratedContent.alias.php';
 
-//Special Page for Content Managment Tool
+// Special Page for Content Managment Tool
 $wgAutoloadClasses[ 'CuratedContentSpecialController'] =  __DIR__ . '/CuratedContentSpecialController.class.php' ;
 $wgSpecialPages[ 'CuratedContent' ] =  'CuratedContentSpecialController';
-
-$wgGroupPermissions['*']['curatedcontent'] = false;
-$wgGroupPermissions['staff']['curatedcontent'] = true;
-$wgGroupPermissions['helper']['curatedcontent'] = true;
-$wgGroupPermissions['sysop']['curatedcontent'] = true;
-
-
-$wgGroupPermissions['*']['curatedcontent-switchforadmins'] = false;
-$wgGroupPermissions['staff']['curatedcontent-switchforadmins'] = true;
 
 JSMessages::registerPackage( 'CuratedContentMsg', [
 	'wikiacuratedcontent-content-duplicate-entry',
@@ -54,12 +46,12 @@ JSMessages::registerPackage( 'CuratedContentMsg', [
 	'wikiacuratedcontent-content-imagemissing-error'
 ] );
 
-//hooks
+// hooks
 $wgHooks['CuratedContentSave'][] = 'CuratedContentHooks::onCuratedContentSave';
 $wgHooks['SkinAfterBottomScripts'][] = 'CuratedContentHooks::onSkinAfterBottomScripts';
 $wgHooks['OutputPageBeforeHTML'][] = 'CuratedContentHooks::onOutputPageBeforeHTML';
 
-//minimal package of messages in CuratedContent
+// minimal package of messages in CuratedContent
 JSMessages::registerPackage( 'CuratedContent', [
 	'wikiamobile-hide-section',
 	'wikiamobile-image-not-loaded',

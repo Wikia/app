@@ -71,6 +71,9 @@ class ImportStarter extends Maintenance {
 		$pagesCnt = 0;
 		$then = microtime(true);
 
+		// WikiImporter uses methods which in turn use slaves
+		wfWaitForSlaves();
+
 		// perform the import in a transaction
 		$dbw = wfGetDB( DB_MASTER );
 		$dbw->begin( __METHOD__ );

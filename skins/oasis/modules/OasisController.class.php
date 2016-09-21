@@ -41,10 +41,17 @@ class OasisController extends WikiaController {
 		$this->comScore = null;
 		$this->quantServe = null;
 		$this->amazonMatch = null;
+		$this->nielsen = null;
 		$this->openXBidder = null;
-		$this->rubiconRtp = null;
+		$this->prebid = null;
+		$this->rubiconFastlane = null;
+		$this->rubiconVulcan = null;
+		$this->sourcePoint = null;
 		$this->dynamicYield = null;
 		$this->ivw2 = null;
+		$this->ivw3 = null;
+		$this->krux = null;
+		$this->ubisoft = null;
 
 		wfProfileOut(__METHOD__);
 	}
@@ -77,7 +84,7 @@ class OasisController extends WikiaController {
 		if (WikiaPageType::isSearch() || WikiaPageType::isForum()) {
 			// Remove this whole condition when AdDriver2.js is fully implemented and deployed
 
-			$jsAtBottom = true;	// Liftium.js (part of AssetsManager) must be loaded after LiftiumOptions variable is set in page source
+			$jsAtBottom = true;
 		}
 		elseif ($wgTitle->getNamespace() == NS_SPECIAL || BodyController::isEditPage()) {
 			$jsAtBottom = false;
@@ -89,13 +96,26 @@ class OasisController extends WikiaController {
 	}
 
 	public function executeIndex($params) {
-		global $wgOut, $wgUser, $wgTitle, $wgRequest, $wgCityId, $wgEnableAdminDashboardExt, $wgAllInOne, $wgOasisThemeSettings;
+		global $wgOut, $wgUser, $wgTitle, $wgRequest, $wgEnableAdminDashboardExt, $wgOasisThemeSettings,
+		$wgWikiaMobileSmartBannerConfig;
 
 		wfProfileIn(__METHOD__);
 
-		//Add Smart banner for My Wikia App
-		//See: https://wikia-inc.atlassian.net/browse/MOB-167
-		$wgOut->addHeadItem('My Wikia Smart Banner', '<meta name="apple-itunes-app" content="app-id=623705389">');
+		//Add Smart banner for Wikia dedicated App
+		//Or fallback to My Wikia App
+		if (
+			!empty( $wgWikiaMobileSmartBannerConfig ) &&
+			is_array( $wgWikiaMobileSmartBannerConfig['meta'] ) &&
+			!empty( $wgWikiaMobileSmartBannerConfig['meta']['apple-itunes-app'] )
+		) {
+			$appId= $wgWikiaMobileSmartBannerConfig['meta']['apple-itunes-app'];
+			$wgOut->addHeadItem(
+				'Wikia App Smart Banner',
+				sprintf('<meta name="apple-itunes-app" content="%s, app-arguments=%s">', $appId, $wgRequest->getFullRequestURL())
+			);
+		} else {
+			$wgOut->addHeadItem('My Wikia Smart Banner', '<meta name="apple-itunes-app" content="app-id=623705389">');
+		}
 
 		/* set the grid if passed in, otherwise, respect the default */
 		$grid = $wgRequest->getVal('wikiagrid', '');
@@ -157,7 +177,7 @@ class OasisController extends WikiaController {
 		wfProfileIn(__METHOD__ . ' - skin Operations');
 		// add skin theme name
 		if(!empty($skin->themename)) {
-			$bodyClasses[] = "oasis-{$skin->themename}";
+			$bodyClasses[] = Sanitizer::escapeClass( "oasis-{$skin->themename}" );
 		}
 
 		// mark dark themes
@@ -172,6 +192,9 @@ class OasisController extends WikiaController {
 
 		// sets background settings by adding classes to <body>
 		$bodyClasses = array_merge($bodyClasses, $this->getOasisBackgroundClasses($wgOasisThemeSettings));
+
+		// VOLDEV-168: Add a community-specific class to the body tag
+		$bodyClasses[] = $skin->getBodyClassForCommunity();
 
 		$this->bodyClasses = $bodyClasses;
 
@@ -215,16 +238,17 @@ class OasisController extends WikiaController {
 			$this->comScore = AnalyticsEngine::track('Comscore', AnalyticsEngine::EVENT_PAGEVIEW);
 			$this->quantServe = AnalyticsEngine::track('QuantServe', AnalyticsEngine::EVENT_PAGEVIEW);
 			$this->amazonMatch = AnalyticsEngine::track('AmazonMatch', AnalyticsEngine::EVENT_PAGEVIEW);
+			$this->nielsen = AnalyticsEngine::track('Nielsen', AnalyticsEngine::EVENT_PAGEVIEW);
 			$this->openXBidder = AnalyticsEngine::track('OpenXBidder', AnalyticsEngine::EVENT_PAGEVIEW);
-			$this->rubiconRtp = AnalyticsEngine::track('RubiconRTP', AnalyticsEngine::EVENT_PAGEVIEW);
+			$this->prebid = AnalyticsEngine::track('Prebid', AnalyticsEngine::EVENT_PAGEVIEW);
+			$this->rubiconFastlane = AnalyticsEngine::track('RubiconFastlane', AnalyticsEngine::EVENT_PAGEVIEW);
+			$this->rubiconVulcan = AnalyticsEngine::track('RubiconVulcan', AnalyticsEngine::EVENT_PAGEVIEW);
+			$this->sourcePoint = ARecoveryModule::getSourcePointBootstrapCode();
 			$this->dynamicYield = AnalyticsEngine::track('DynamicYield', AnalyticsEngine::EVENT_PAGEVIEW);
 			$this->ivw2 = AnalyticsEngine::track('IVW2', AnalyticsEngine::EVENT_PAGEVIEW);
-		}
-
-		if (!empty($wgEnableAdminDashboardExt) && AdminDashboardLogic::displayAdminDashboard($this->app, $wgTitle)) {
-			$this->displayAdminDashboard = true;
-		} else {
-			$this->displayAdminDashboard = false;
+			$this->ivw3 = AnalyticsEngine::track('IVW3', AnalyticsEngine::EVENT_PAGEVIEW);
+			$this->krux = AnalyticsEngine::track('Krux', AnalyticsEngine::EVENT_PAGEVIEW);
+			$this->ubisoft = AnalyticsEngine::track('Ubisoft', AnalyticsEngine::EVENT_PAGEVIEW);
 		}
 
 		wfProfileOut(__METHOD__);
@@ -283,7 +307,7 @@ class OasisController extends WikiaController {
 
 	// TODO: implement as a separate module?
 	private function loadJs() {
-		global $wgJsMimeType, $wgUser, $wgDevelEnvironment, $wgEnableAdEngineExt, $wgAllInOne;
+		global $wgJsMimeType, $wgUser, $wgDevelEnvironment, $wgAllInOne;
 		wfProfileIn(__METHOD__);
 
 		$this->jsAtBottom = self::JsAtBottom();
@@ -373,10 +397,6 @@ class OasisController extends WikiaController {
 			$this->squeezeMediawikiLoad($jsFiles,$bottomScripts);
 			$this->bottomScripts = $bottomScripts;
 			$this->jsFiles = $jsFiles;
-		}
-
-		if ($wgEnableAdEngineExt && AdEngine2Service::shouldLoadLiftium()) {
-			$this->jsFiles = AdEngine2Controller::getLiftiumOptionsScript() . $this->jsFiles;
 		}
 
 		wfProfileOut(__METHOD__);

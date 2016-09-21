@@ -1,23 +1,32 @@
+<?php
+/** @var $displayHeader bool */
+/** @var $afterBodyHtml string */
+/** @var $beforeWikiaPageHtml string */
+/** @var $headerModuleName string */
+/** @var $headerModuleAction string */
+?>
+
 <? if ( $displayHeader ): ?>
-	<? if ( $seoTestOneH1 ): ?>
-		<h2><?= wfMsg( 'oasis-global-page-header' ); ?></h2>
-	<? else: ?>
-		<h1><?= wfMsg( 'oasis-global-page-header' ); ?></h1>
-	<? endif; ?>
+	<h2><?= wfMessage( 'oasis-global-page-header' )->escaped(); ?></h2>
 <? endif; ?>
 <div class="skiplinkcontainer">
-<a class="skiplink" rel="nofollow" href="#WikiaArticle"><?= wfMsg( 'oasis-skip-to-content' ); ?></a>
-<a class="skiplink wikinav" rel="nofollow" href="#WikiHeader"><?= wfMsg( 'oasis-skip-to-wiki-navigation' ); ?></a>
-<a class="skiplink sitenav" rel="nofollow" href="#GlobalNavigation"><?= wfMsg( 'oasis-skip-to-site-navigation' ); ?></a>
+<a class="skiplink" rel="nofollow" href="#WikiaArticle"><?= wfMessage( 'oasis-skip-to-content' )->escaped(); ?></a>
+<a class="skiplink wikinav" rel="nofollow" href="#WikiHeader"><?= wfMessage( 'oasis-skip-to-wiki-navigation' )->escaped(); ?></a>
+<a class="skiplink sitenav" rel="nofollow" href="#GlobalNavigation"><?= wfMessage( 'oasis-skip-to-site-navigation' )->escaped(); ?></a>
 </div>
 <?= $afterBodyHtml ?>
 
 <div id="ad-skin" class="wikia-ad noprint"></div>
 
-<?= $app->renderView( 'GlobalNavigation', 'index' ) ?>
 <?= $app->renderView( 'Ad', 'Top' ) ?>
+<?= $app->renderView( 'GlobalNavigation', 'index' ) ?>
+<?= empty( $wg->EnableEBS ) ? '' : $app->renderView( 'EmergencyBroadcastSystem', 'index' ); ?>
+
+<?= $app->renderView('AdEmptyContainer', 'Index', ['slotName' => 'TOP_LEADERBOARD_AB']); ?>
 
 <?= empty( $wg->WikiaSeasonsPencilUnit ) ? '' : $app->renderView( 'WikiaSeasons', 'pencilUnit', array() ); ?>
+
+<?= $beforeWikiaPageHtml ?>
 
 <section id="WikiaPage" class="WikiaPage<?= empty( $wg->OasisNavV2 ) ? '' : ' V2' ?><?= !empty( $isGridLayoutEnabled ) ? ' WikiaGrid' : '' ?>">
 	<div id="WikiaPageBackground" class="WikiaPageBackground"></div>
@@ -94,12 +103,16 @@
 				<?php if ( $subtitle != '' && $headerModuleName == 'UserPagesHeader' ) { ?>
 					<div id="contentSub"><?= $subtitle ?></div>
 				<?php } ?>
-
-				<div id="WikiaArticle" class="WikiaArticle<?= $displayAdminDashboardChromedArticle ? ' AdminDashboardChromedArticle' : '' ?>"<?= $body_ondblclick ? ' ondblclick="' . htmlspecialchars( $body_ondblclick ) . '"' : '' ?>>
-					<? if( $displayAdminDashboardChromedArticle ) { ?>
-						<?= ( string )$app->sendRequest( 'AdminDashboardSpecialPage', 'chromedArticleHeader', array( 'headerText' => $wg->Title->getText() ) ) ?>
-					<? } ?>
-
+				<?php if ( ARecoveryModule::isLockEnabled() ) { ?>
+					<div id="WikiaArticleMsg">
+						<h2><?= wfMessage('arecovery-blocked-message-headline')->escaped() ?></h2>
+						<br />
+						<h3><?= wfMessage('arecovery-blocked-message-part-one')->escaped() ?>
+							<br /><br />
+							<?= wfMessage('arecovery-blocked-message-part-two')->escaped() ?></h3>
+					</div>
+				<?php } ?>
+				<div id="WikiaArticle" class="WikiaArticle">
 					<div class="home-top-right-ads">
 					<?php
 						if ( !WikiaPageType::isCorporatePage() && !$wg->EnableVideoPageToolExt && WikiaPageType::isMainPage() ) {
@@ -164,6 +177,11 @@
 				?>
 				<div id="WikiaArticleBottomAd" class="noprint">
 					<?= $app->renderView( 'Ad', 'Index', ['slotName' => 'PREFOOTER_LEFT_BOXAD', 'onLoad' => true] ) ?>
+					<?php
+					if ( WikiaPageType::isMainPage() ) {
+						echo $app->renderView( 'Ad', 'Index', ['slotName' => 'PREFOOTER_MIDDLE_BOXAD', 'onLoad' => true] );
+					}
+					?>
 					<?= $app->renderView( 'Ad', 'Index', ['slotName' => 'PREFOOTER_RIGHT_BOXAD', 'onLoad' => true] ) ?>
 				</div>
 			</div>
@@ -180,11 +198,13 @@
 		?>
 
 		<?= empty( $wg->SuppressFooter ) ? $app->renderView( 'Footer', 'Index' ) : '' ?>
-		<? if( !empty( $wg->EnableCorporateFooterExt ) ) echo $app->renderView( 'CorporateFooter', 'index' ) ?>
-		<?= $app->renderView( 'GlobalFooter', 'index' ); ?>
+		<? if ( !empty( $wg->EnableCorporateFooterExt ) && empty( $wg->EnableDesignSystem ) ) echo $app->renderView( 'CorporateFooter', 'index' ) ?>
+		<? if ( empty( $wg->EnableDesignSystem ) ) echo $app->renderView( 'GlobalFooter', 'index' ); ?>
 	</div>
 </section><!--WikiaPage-->
 
-<?php if( $wg->EnableWikiaBarExt ): ?>
+<? if ( !empty( $wg->EnableDesignSystem ) ) echo $app->renderView( 'DesignSystemGlobalFooterService', 'index' ); ?>
+
+<?php if ( $wg->EnableWikiaBarExt ): ?>
 	<?= $app->renderView( 'WikiaBar', 'Index' ); ?>
 <?php endif; ?>

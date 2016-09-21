@@ -483,7 +483,7 @@ class OAIUpdateRecord {
 
 	/**
 	 * Rename a conflicting page record
-	 * @param Database $db
+	 * @param DatabaseBase $db
 	 * @param int $existing
 	 * @param Title $title
 	 */

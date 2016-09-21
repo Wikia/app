@@ -46,6 +46,15 @@ var UserProfilePage = {
 			UserProfilePage.renderLightbox('avatar');
 		});
 
+		$('#discussionAllPostsByUser').click(function (event) {
+			Wikia.Tracker.track({
+				action: Wikia.Tracker.ACTIONS.CLICK_LINK_TEXT,
+				browserEvent: event,
+				href: $(event.target).attr('href'),
+				label: 'discussion-all-posts-by-user'
+			});
+		});
+
 		// for touch devices (without hover state) make sure that Edit is always
 		// visible
 		if (Wikia.isTouchScreen()) {
@@ -247,7 +256,7 @@ var UserProfilePage = {
 			$sampleAvatars = modal.find('.sample-avatars');
 
 		// VOLDEV-83: Fix confusing file upload interface
-		$avatarUploadButton.on('click', function() {
+		$avatarUploadButton.on('click', function () {
 			$avatarUploadInput.click();
 		});
 
@@ -388,7 +397,11 @@ var UserProfilePage = {
 			type: 'POST',
 			url: this.ajaxEntryPoint + '&method=saveUserData',
 			dataType: 'json',
-			data: {'userId': UserProfilePage.userId, 'data': JSON.stringify(userData)},
+			data: {
+				'userId': UserProfilePage.userId,
+				'data': JSON.stringify(userData),
+				'token': window.mw.user.tokens.get('editToken')
+			},
 			success: function (data) {
 				if (data.status === 'error') {
 					UserProfilePage.error(data.errMsg);
@@ -447,9 +460,8 @@ var UserProfilePage = {
 				userData[i] = userDataItem;
 			}
 		}
-		if (document.userData.hideEditsWikis.checked) {
-			userData.hideEditsWikis = 1;
-		}
+
+		userData.hideEditsWikis = document.userData.hideEditsWikis.checked ? 1 : 0;
 
 		return userData;
 	},
@@ -628,7 +640,8 @@ var UserProfilePage = {
 				method: 'removeavatar',
 				format: 'json',
 				data: {
-					avUser: name
+					avUser: name,
+					token: mw.user.tokens.get('editToken')
 				},
 				callback: function (data) {
 					if (data.status === 'ok') {

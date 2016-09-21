@@ -39,8 +39,8 @@ class WikiaSpecialVersion extends SpecialVersion {
 	 * @return string
 	 * @todo use MW 1.20 functionality for Git-based version
 	 */
-	private function getGitBranch($dir) {
-		return shell_exec("cd $dir ; git branch | grep '*' | perl -pe 's/^\* (\S+).*$/$1/g'");
+	private static function getGitBranch($dir) {
+		return shell_exec("cd $dir ; git branch 2> /dev/null | grep '*' | perl -pe 's/^\* (\S+).*$/$1/g'");
 	}
 
 	/**

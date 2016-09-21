@@ -32,8 +32,11 @@ $messages['en'] = [
 
 	'content-review-diff-approve' => 'Approve',
 	'content-review-diff-reject' => 'Reject',
+	'content-review-diff-escalate' => 'Escalate!',
+	'content-review-diff-revision-escalated' => '(escalated)',
 	'content-review-diff-approve-confirmation' => 'Reviewed code has been approved. Go back to [[w:c:dev:Special:ContentReview|Special:ContentReview]]',
 	'content-review-diff-reject-confirmation' => 'Reviewed code has been rejected. [$1 Provide feedback] or go back to [[w:c:dev:Special:ContentReview|Special:ContentReview]]',
+	'content-review-diff-escalate-confirmation' => 'The review has been escalated and developers were notified. You can monitor the #js-review-tool Slack channel.',
 	'content-review-diff-page-error' => 'Something went wrong. Please try again later.',
 	'content-review-diff-already-done' => 'You are trying to make changes to the revision that isn\'t in review anymore.',
 
@@ -79,6 +82,9 @@ $messages['qqq'] = [
 	'content-review-diff-reject-confirmation' => 'A message shown in a Banner Notification after click reject button if everything went well.',
 	'content-review-diff-page-error' => 'A message shown in a Banner Notification when something go wrong on diff page.',
 	'content-review-diff-already-done' => 'A message shown to reviewers if they try to review an already reviewed revision.',
+	'content-review-diff-escalate' => 'The text of the button to escalate a given revision for further review.',
+	'content-review-diff-revision-escalated' => 'Text that shown when a given revision has been escalated.',
+	'content-review-diff-escalate-confirmation' => 'The message shown in a Banner Notification after clicking the escalate button if everything went well.',
 
 	'content-review-diff-toolbar-title' => 'A title of a toolbar that enables a reviewer to approve or reject a revision.',
 	'content-review-diff-toolbar-talkpage' => 'A text of a link to a talk page of a page that is being reviewed.',

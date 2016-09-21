@@ -4,6 +4,8 @@ use Wikia\ContentReview\Models\CurrentRevisionModel;
 use Wikia\ContentReview\Models\ReviewModel;
 use Wikia\ContentReview\Models\ReviewLogModel;
 use Wikia\ContentReview\Helper;
+use Wikia\ContentReview\ContentReviewService;
+use Wikia\ContentReview\ContentReviewStatusesService;
 
 class ContentReviewApiController extends WikiaApiController {
 
@@ -49,6 +51,8 @@ class ContentReviewApiController extends WikiaApiController {
 		( new ReviewModel() )->submitPageForReview( $this->wg->CityId, $pageId,
 			$revisionId, $submitUserId );
 
+		ContentReviewStatusesService::purgeJsPagesCache();
+
 		$this->makeSuccessResponse();
 	}
 
@@ -62,16 +66,8 @@ class ContentReviewApiController extends WikiaApiController {
 	public function enableTestMode() {
 		$this->isValidPostRequest( $this->request, $this->wg->User );
 
-		$pageId = $this->request->getInt( 'pageId' );
-
-		$title = Title::newFromID( $pageId );
-		if ( $title === null || !$title->isJsPage() ) {
-			throw new NotFoundApiException( "JS page with ID {$pageId} does not exist");
-		}
-
-		$submitUserId = $this->wg->User->getId();
-		if ( !$submitUserId > 0 || !$this->canUserSubmit( $title )	) {
-			throw new PermissionsException( 'edit' );
+		if ( !$this->wg->User->isAllowed( 'content-review-test-mode' ) ) {
+			throw new PermissionsException( 'content-review-test-mode' );
 		}
 
 		$this->getHelper()->setContentReviewTestMode( $this->wg->CityId );
@@ -114,6 +110,8 @@ class ContentReviewApiController extends WikiaApiController {
 
 		$model = new ReviewModel();
 		$model->updateRevisionStatus( $wikiId, $pageId, $oldStatus, $status, $reviewerId );
+
+		ContentReviewStatusesService::purgeJsPagesCache();
 	}
 
 	/**
@@ -154,29 +152,34 @@ class ContentReviewApiController extends WikiaApiController {
 				$this->notification = wfMessage( 'content-review-diff-approve-confirmation' )->parse();
 			} elseif ( $status === ReviewModel::CONTENT_REVIEW_STATUS_REJECTED ) {
 				$title = Title::newFromID( $pageId );
-				$feedbackLink = $helper->prepareProvideFeedbackLink( $title );
+				$feedbackLink = $helper->prepareProvideFeedbackLink( $title, $diff );
 				$this->notification = wfMessage( 'content-review-diff-reject-confirmation', $feedbackLink )->parse();
 			}
-		}
-		else {
+
+			$reviewModel->updateCompletedReview( $wikiId, $pageId, $review['revision_id'], $status );
+
+			ContentReviewStatusesService::purgeJsPagesCache();
+		} else {
 			$this->notification = wfMessage( 'content-review-diff-already-done' )->escaped();
 		}
 	}
 
-	public function getPageStatus() {
+	public function escalateReview() {
+		$this->isValidPostRequest( $this->request, $this->wg->User );
+
+		if ( !$this->wg->User->isAllowed( 'content-review' ) ) {
+			throw new PermissionsException( 'content-review' );
+		}
+
 		$wikiId = $this->request->getInt( 'wikiId' );
 		$pageId = $this->request->getInt( 'pageId' );
+		$diff = $this->request->getInt( 'diff' );
+		$oldid = $this->request->getInt( 'oldid' );
 
-		$liveRevisionData = [
-			'liveId' => $this->getLatestReviewedRevisionFromDB( $wikiId, $pageId )['revision_id'],
-		];
-
-		$reviewModel = new ReviewModel();
-		$reviewData = $reviewModel->getPageStatus( $wikiId, $pageId );
-
-		$currentPageData = array_merge( $liveRevisionData, $reviewData );
-
-		$this->makeSuccessResponse( $currentPageData );
+		$service = new ContentReviewService();
+		if ( $service->escalateReview( $wikiId, $pageId, $diff, $oldid ) ) {
+			$this->notification = wfMessage( 'content-review-diff-escalate-confirmation' )->escaped();
+		}
 	}
 
 	public function getLatestReviewedRevision() {
@@ -209,24 +212,13 @@ class ContentReviewApiController extends WikiaApiController {
 		/* Override global title to provide context */
 		$this->wg->Title = Title::newFromText( $pageName );
 
-		/* Get page status */
-		$pageStatus = \F::app()->sendRequest(
-			'ContentReviewApiController',
-			'getPageStatus',
+		/* Render status module */
+		$res = $this->app->sendRequest(
+			'ContentReviewModule',
+			'Render',
 			[
 				'wikiId' => $this->wg->CityId,
 				'pageId' => $this->wg->Title->getArticleID(),
-			],
-			true
-		)->getData();
-
-		/* Render status module */
-		$res = \F::app()->sendRequest(
-			'ContentReviewModule',
-			'executeRender',
-			[
-				'pageStatus' => $pageStatus,
-				'latestRevisionId' => $this->wg->Title->getLatestRevID(),
 			],
 			true
 		)->getData();

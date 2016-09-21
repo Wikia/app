@@ -37,10 +37,6 @@ $wgExtensionCredits['specialpage'][] = array(
 	'descriptionmsg' => 'spamregex-desc',
 );
 
-// New user right
-$wgAvailableRights[] = 'spamregex';
-$wgGroupPermissions['staff']['spamregex'] = true;
-
 /* return the proper db key for Memc */
 function wfSpamRegexCacheKey( /*...*/ ) {
 	global $wgSharedDB, $wgSharedTables, $wgSharedPrefix;

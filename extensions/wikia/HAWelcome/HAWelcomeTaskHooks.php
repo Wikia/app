@@ -33,7 +33,6 @@ class HAWelcomeTaskHooks {
 
 		// means we're dealing with a null edit (no content change) and therefore we don't have to welcome anybody
 		if ( is_null( $revisionObject ) ) {
-			WikiaLogger::instance()->error( "error, null \$revisionObject passed to " . __METHOD__ );
 			return true;
 		}
 

@@ -38,12 +38,6 @@ $wgSpecialPageGroups['Phalanx'] = 'wikia';
 $wgSpecialPages[ 'PhalanxStats' ] =  'PhalanxStatsSpecialController';
 $wgSpecialPageGroups['PhalanxStats'] = 'wikia';
 
-/*
- * rights, globals, etc.
- */
-$wgAvailableRights[] = 'phalanx';
-$wgAvailableRights[] = 'phalanxemailblock';
-
 // Resources Loader module
 $wgResourceModules['ext.wikia.Phalanx'] = array(
 	'scripts' => array(
@@ -61,6 +55,7 @@ $wgResourceModules['ext.wikia.Phalanx'] = array(
 		'phalanx',
 		'phalanx-validate-regexp-valid',
 		'phalanx-validate-regexp-invalid',
+		'phalanx-unblock-message',
 		'phalanx-unblock-failure',
 	),
 	'localBasePath' => __DIR__,

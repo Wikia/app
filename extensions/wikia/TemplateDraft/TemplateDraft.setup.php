@@ -22,19 +22,6 @@ $wgExtensionCredits['other'][] = [
 $wgExtensionMessagesFiles['TemplateDraft'] = __DIR__ . '/TemplateDraft.i18n.php';
 
 /**
- * Rights and permissions
- */
-$wgAvailableRights[] = [ 'templatedraft' ];
-
-$wgGroupPermissions['*']['templatedraft'] = false;
-$wgGroupPermissions['util']['templatedraft'] = true;
-$wgGroupPermissions['staff']['templatedraft'] = true;
-$wgGroupPermissions['helper']['templatedraft'] = true;
-$wgGroupPermissions['vstf']['templatedraft'] = true;
-$wgGroupPermissions['voldev']['templatedraft'] = true;
-$wgGroupPermissions['user']['templatedraft'] = true;
-
-/**
  * Controllers
  */
 $wgAutoloadClasses['TemplateDraftController'] = __DIR__ . '/controllers/TemplateDraftController.class.php';

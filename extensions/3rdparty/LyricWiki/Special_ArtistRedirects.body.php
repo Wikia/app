@@ -22,8 +22,6 @@ class ArtistRedirects extends SpecialPage
 	function wfArtistRedirects(){
 		global $wgOut;
 
-		$tablePrefix = "";
-
 		$wgOut->setPageTitle("Artist Redirects");
 
 		$msg = "";
@@ -50,8 +48,14 @@ class ArtistRedirects extends SpecialPage
 			if(!$content){
 				ob_start();
 
-				$queryString = "SELECT COUNT(*) as numRedirs FROM $tablePrefix"."page WHERE page_is_redirect=1 AND page_title NOT LIKE '%:%'";
-				$numRedirs = lw_simpleQuery($queryString);
+				$dbr = wfGetDB( DB_SLAVE );
+				$numRedirs = $dbr->selectField(
+					"page",
+					"COUNT(*) as numRedirs",
+					[
+						"page_is_redirect" => 1,
+						"page_title NOT LIKE '%:%'"
+					], __METHOD__);
 
 				print "View results by pages:\n";
 				print "<ul>\n";

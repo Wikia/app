@@ -114,7 +114,7 @@ require(
 					var wikiEl = this.$wallNotifications.find('.notifications-for-wiki').first(),
 						firstWikiId = parseInt(wikiEl.data('wiki-id'), 10);
 
-					if (firstWikiId !== undefined) {
+					if ( !isNaN(firstWikiId) ) {
 						wikiEl.addClass('show');
 						this.fetchedCurrent = true;
 						this.currentWikiId = firstWikiId;
@@ -141,7 +141,6 @@ require(
 					method: 'markAllAsRead',
 					format: 'json',
 					data: {
-						username: window.wgTitle,
 						forceAll: forceAll
 					},
 					callback: this.proxy(function (data) {
@@ -174,7 +173,7 @@ require(
 				var wikiEl = this.$wallNotifications.find('.notifications-for-wiki').first(),
 					firstWikiId = parseInt(wikiEl.data('wiki-id'), 10);
 
-				if (firstWikiId !== undefined) {
+				if ( !isNaN(firstWikiId) ) {
 					wikiEl.addClass('show');
 					this.wikiShown = {};
 					this.wikiShown[firstWikiId] = true;
@@ -243,7 +242,6 @@ require(
 			updateWikiFetch: function (wikiId) {
 				var isCrossWiki = (wikiId === this.cityId) ? '0' : '1',
 					data = {
-						username: window.wgTitle,
 						wikiId: wikiId,
 						isCrossWiki: isCrossWiki
 					};

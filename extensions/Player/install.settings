@@ -1,3 +1,0 @@
-$wgUseAjax = true;
-
-require_once( "{{path}}/Player.php" );

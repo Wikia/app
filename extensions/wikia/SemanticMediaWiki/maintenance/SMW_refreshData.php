@@ -38,13 +38,24 @@
  * @ingroup SMWMaintenance
  */
 
-$optionsWithArgs = array( 'd', 's', 'e', 'n', 'b', 'startidfile', 'server', 'page' ); // -d <delay>, -s <startid>, -e <endid>, -n <numids>, --startidfile <startidfile> -b <backend>
+$optionsWithArgs = array( 'd', 's', 'e', 'n', 'b', 'startidfile', 'server', 'page', 'task_id' ); // -d <delay>, -s <startid>, -e <endid>, -n <numids>, --startidfile <startidfile> -b <backend>
+
+$notSmwNamespaces = [
+	//Forum
+	110, 111,
+	//Blog
+	500, 501,
+	//Wall
+	1200, 1201, 1202,
+	//Wikia Forum
+	2000, 2001, 2002,
+];
 
 require_once ( getenv( 'MW_INSTALL_PATH' ) !== false
 	? getenv( 'MW_INSTALL_PATH' ) . "/maintenance/commandLine.inc"
 	: dirname( __FILE__ ) . '/../../../../maintenance/commandLine.inc' );
 
-global $smwgEnableUpdateJobs, $wgServer, $wgTitle;
+global $smwgEnableUpdateJobs, $wgServer, $wgTitle, $wgDBname, $wgCityId;
 $wgTitle = Title::newFromText( 'SMW_refreshData.php' );
 $smwgEnableUpdateJobs = false; // do not fork additional update jobs while running this script
 
@@ -57,6 +68,8 @@ if ( array_key_exists( 'd', $options ) ) {
 } else {
 	$delay = false;
 }
+
+$taskId = isset($options['task_id'])?$options['task_id']:'';
 
 if ( isset( $options['page'] ) ) {
 	$pages = explode( '|', $options['page'] );
@@ -108,7 +121,17 @@ if (  array_key_exists( 't', $options ) ) {
 	$filterarray[] = SMW_NS_TYPE;
 }
 $filter = count( $filterarray ) > 0 ? $filterarray : false;
-
+# Wikia change - begin
+if ($filter === false) {
+	global $wgContLang;
+	//get all namespaces from wikia
+	$filter = $wgContLang->getNamespaceIds();
+	//filter forums, wall, blog
+	$filter = array_diff($filter, $notSmwNamespaces);
+	//filter talk pages (odd namespaces)
+	$filter = array_filter($filter, function ($var) { return !($var > 0 && ($var & 1)); });
+}
+# Wikia change - end
 if (  array_key_exists( 'f', $options ) ) {
 	print "\n  Deleting all stored data completely and rebuilding it again later!\n  Semantic data in the wiki might be incomplete for some time while this operation runs.\n\n  NOTE: It is usually necessary to run this script ONE MORE TIME after this operation,\n  since some properties' types are not stored yet in the first run.\n  The first run can normally use the parameter -p to refresh only properties.\n\n";
 	if ( ( array_key_exists( 's', $options ) )  || ( array_key_exists( 'e', $options ) ) ) {
@@ -141,8 +164,9 @@ if ( $pages == false ) {
 
 	$id = $start;
 	while ( ( ( !$end ) || ( $id <= $end ) ) && ( $id > 0 ) ) {
+		$startTime = round(microtime(true), 4); # [sec]
 		if ( $verbose ) {
-			print "($num_files) Processing ID " . $id . " ...\n";
+			print "$wgDBname ($num_files) Processing ID " . $id . " ...\n"; # Wikia change
 		}
 		smwfGetStore()->refreshData( $id, 1, $filter, false );
 		if ( $delay !== false ) {
@@ -152,17 +176,29 @@ if ( $pages == false ) {
 		if ( $num_files % 100 === 0 ) { // every 100 pages only
 			$linkCache->clear(); // avoid memory leaks
 		}
+
+		# Wikia Change - begin
+		if ($num_files % 1000 === 0) {
+			Wikia\Logger\WikiaLogger::instance()->info('SMW_refreshData.php - process', [
+				'task_id' => $taskId,
+				'page_id' => $id,
+				'processed_int' => $num_files,
+				'took_float' => round(microtime(true) - $startTime, 4), # [sec]
+				'args' => join(' ', $argv),
+			]);
+		}
+		# Wikia Change - end
 	}
 	if ( $writeToStartidfile ) {
 		file_put_contents( $options['startidfile'], "$id" );
 	}
-	print "$num_files IDs refreshed.\n";
+	print "$wgDBname - $num_files IDs refreshed.\n"; # Wikia change
 } else {
 	print "Refreshing specified pages!\n\n";
 
 	foreach ( $pages as $page ) {
 		if ( $verbose ) {
-			print "($num_files) Processing page " . $page . " ...\n";
+			print "$wgDBname ($num_files) Processing page " . $page . " ...\n"; # Wikia change
 		}
 
 		$title = Title::newFromText( $page );
@@ -176,5 +212,16 @@ if ( $pages == false ) {
 		$num_files++;
 	}
 
-	print "$num_files pages refreshed.\n";
+	print "$wgDBname - $num_files pages refreshed.\n"; # Wikia change
 }
+
+
+# Wikia change - begin
+global $wgRequestTime;
+
+Wikia\Logger\WikiaLogger::instance()->info( 'SMW_refreshData.php - completed', [
+	'processed_int' => $num_files,
+	'took_float' => round( microtime( true ) - $wgRequestTime, 4 ), # [sec]
+	'args' => join( ' ', $argv ),
+] );
+# Wikia change - end

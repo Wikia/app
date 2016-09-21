@@ -19,9 +19,10 @@
  *
  * //Wikia Change Start - helping PHP lint
  * @property Title mTitle
- * @method exists
- * @method getID
- * @method getRedirectTarget
+ * @method bool exists
+ * @method int getID
+ * @method Title getRedirectTarget
+ * @method void loadPageData
  * //Wikia Change End
  */
 class Article extends Page {
@@ -104,8 +105,8 @@ class Article extends Page {
 	/**
 	 * Create an Article object of the appropriate class for the given page.
 	 *
-	 * @param Title $title
-	 * @param IContextSource $context
+	 * @param $title Title
+	 * @param $context IContextSource
 	 * @return Article object
 	 */
 	public static function newFromTitle( $title, IContextSource $context ) {
@@ -218,12 +219,6 @@ class Article extends Page {
 			return $text;
 		} else {
 			$this->fetchContent();
-			// Wikia: Temporary Investigation for PLATFORM-1355
-			if(empty($this->mContent)) {
-					Wikia\Logger\WikiaLogger::instance()->error( __METHOD__ . ' empty content PLAT1355', [
-						'page_id' => $this->mPage->getID()
-				] );
-			}
 			wfProfileOut( __METHOD__ );
 
 			return $this->mContent;
@@ -329,7 +324,7 @@ class Article extends Page {
 				$this->mRevision = Revision::newFromId( $oldid );
 				if ( !$this->mRevision ) {
 					wfDebug( __METHOD__ . " failed to retrieve specified revision, id $oldid\n" );
-					Wikia::log(__METHOD__, 1, "failed to retrieve specified revision, title '$t', id $oldid", true); # Wikia change - @author macbre
+					Wikia\Logger\WikiaLogger::instance()->error( __METHOD__ . " - failed to retrieve specified revision", [ 'title' => $t, 'rev_id' => (string) $oldid ] ); # Wikia change - @author macbre
 					wfProfileOut( __METHOD__ );
 					return false;
 				}
@@ -344,7 +339,7 @@ class Article extends Page {
 			$this->mRevision = $this->mPage->getRevision();
 			if ( !$this->mRevision ) {
 				wfDebug( __METHOD__ . " failed to retrieve current page, rev_id " . $this->mPage->getLatest() . "\n" );
-				Wikia::log(__METHOD__, 3, "failed to retrieve current page, title '$t', rev_id " . $this->mPage->getLatest(), true); # Wikia change - @author macbre
+				Wikia\Logger\WikiaLogger::instance()->error( __METHOD__ . " - failed to retrieve current page", [ 'title' => $t, 'rev_id' => (string) $this->mPage->getLatest() ] ); # Wikia change - @author macbre
 				wfProfileOut( __METHOD__ );
 				return false;
 			}
@@ -699,12 +694,12 @@ class Article extends Page {
 		# tents of 'pagetitle-view-mainpage' instead of the default (if
 		# that's not empty).
 		# This message always exists because it is in the i18n files
+		# Wikia change - begin
 		if ( $this->getTitle()->isMainPage() ) {
-			$msg = wfMessage( 'pagetitle-view-mainpage' )->inContentLanguage();
-			if ( !$msg->isDisabled() ) {
-				$wgOut->setHTMLTitle( $msg->title( $this->getTitle() )->text() );
-			}
+			// The wiki name and brand name are added to all titles
+			$wgOut->setHTMLTitle( '' );
 		}
+		# Wikia change - end
 
 		# Check for any __NOINDEX__ tags on the page using $pOutput
 		$policy = $this->getRobotPolicy( 'view', $pOutput );
@@ -736,6 +731,8 @@ class Article extends Page {
 	 */
 	public function showDiffPage() {
 		global $wgRequest, $wgUser;
+
+		Transaction::setAttribute( Transaction::PARAM_ACTION, 'diff' ); # Wikia change
 
 		$diff = $wgRequest->getVal( 'diff' );
 		$rcid = $wgRequest->getVal( 'rcid' );
@@ -1049,7 +1046,9 @@ class Article extends Page {
 			if ( !($user && $user->isLoggedIn()) && !$ip ) { # User does not exist
 				$wgOut->wrapWikiMsg( "<div class=\"mw-userpage-userdoesnotexist error\">\n\$1\n</div>",
 					array( 'userpage-userdoesnotexist-view', wfEscapeWikiText( $rootPart ) ) );
-			} elseif ( $user->isBlocked() ) { # Show log extract if the user is currently blocked
+			/* Wikia change begin - SUS-92 */
+			} elseif ( $user->isBlocked( true, false ) ) { # Show log extract if the user is currently blocked
+			/* Wikia change end */
 				LogEventsList::showLogExtract(
 					$wgOut,
 					'block',
@@ -1279,64 +1278,59 @@ class Article extends Page {
 	}
 
 	/**
-	 * View redirect
+	 * Return the HTML for the top of a redirect page
 	 *
-	 * @param $target Title|Array of destination(s) to redirect
-	 * @param $appendSubtitle Boolean [optional]
-	 * @param $forceKnown Boolean: should the image be shown as a bluelink regardless of existence?
-	 * @return string containing HMTL with redirect link
+	 * @param Title|array $target Destination(s) to redirect
+	 * @param bool $appendSubtitle [optional]
+	 * @param bool $forceKnown Should the image be shown as a bluelink regardless of existence?
+	 * @return string Containing HTML with redirect link
 	 */
 	public function viewRedirect( $target, $appendSubtitle = true, $forceKnown = false ) {
-		global $wgOut, $wgStylePath;
-
-		if ( !is_array( $target ) ) {
-			$target = array( $target );
-		}
-
 		$lang = $this->getTitle()->getPageLanguage();
-		$imageDir = $lang->getDir();
-
+		$out = $this->getContext()->getOutput();
 		if ( $appendSubtitle ) {
-			$wgOut->appendSubtitle( wfMsgHtml( 'redirectpagesub' ) );
+			$out->addSubtitle( wfMessage( 'redirectpagesub' ) );
 		}
 
-		// the loop prepends the arrow image before the link, so the first case needs to be outside
+		// VOLDEV-120: Fix redirect icons on dark wikias
+		Wikia::addAssetsToOutput( 'resources/mediawiki.action/mediawiki.action.view.redirectPage.scss' );
+		return static::getRedirectHeaderHtml( $lang, $target, $forceKnown );
+	}
 
-		/**
-		 * @var $title Title
-		 */
-		$title = array_shift( $target );
-
-		if ( $forceKnown ) {
-			$link = Linker::linkKnown( $title, htmlspecialchars( $title->getFullText() ) );
-		} else {
-			$link = Linker::link( $title, htmlspecialchars( $title->getFullText() ) );
+	/**
+	 * Return the HTML for the top of a redirect page
+	 *
+	 * @since 1.23
+	 * @param Language $lang
+	 * @param Title|array $target Destination(s) to redirect
+	 * @param bool $forceKnown Should the image be shown as a bluelink regardless of existence?
+	 * @return string Containing HTML with redirect link
+	 */
+	public static function getRedirectHeaderHtml( Language $lang, $target, $forceKnown = false ) {
+		if ( !is_array( $target ) ) {
+			$target = [ $target ];
 		}
 
-		$nextRedirect = $wgStylePath . '/common/images/nextredirect' . $imageDir . '.png';
-		$alt = $lang->isRTL() ? '←' : '→';
-		// Automatically append redirect=no to each link, since most of them are redirect pages themselves.
-		foreach ( $target as $rt ) {
-			$link .= Html::element( 'img', array( 'src' => $nextRedirect, 'alt' => $alt ) );
-			if ( $forceKnown ) {
-				$link .= Linker::linkKnown( $rt, htmlspecialchars( $rt->getFullText(), array(), array( 'redirect' => 'no' ) ) );
-			} else {
-				$link .= Linker::link( $rt, htmlspecialchars( $rt->getFullText() ), array(), array( 'redirect' => 'no' ) );
-			}
+		$html = '<ul class="redirectText">';
+		/** @var Title $title */
+		foreach ( $target as $title ) {
+			$html .= '<li>' . Linker::link(
+					$title,
+					htmlspecialchars( $title->getFullText() ),
+					[],
+					// Make sure wiki page redirects are not followed
+					$title->isRedirect() ? [ 'redirect' => 'no' ] : [],
+					( $forceKnown ? [ 'known', 'noclasses' ] : [] )
+				) . '</li>';
 		}
+		$html .= '</ul>';
 
-		$imageUrl = $wgStylePath . '/common/images/redirect' . $imageDir . '.png';
-
-		# start wikia change - overwrite imageUrl with $wgRedirectIconUrl
-		global $wgRedirectIconUrl;
-		if( !empty( $wgRedirectIconUrl ) ) {
-			$imageUrl = $wgRedirectIconUrl;
-		}
-		# end wikia change
+		$redirectToText = wfMessage( 'redirectpagesub' )->inLanguage( $lang )->escaped();
 
 		return '<div class="redirectMsg">' .
-			Html::element( 'img', array( 'src' => $imageUrl, 'alt' => '#REDIRECT' ) ) .
-			'<span class="redirectText">' . $link . '</span></div>';
+		'<p>' . $redirectToText . '</p>' .
+		$html .
+		'</div>';
 	}
 
 	/**

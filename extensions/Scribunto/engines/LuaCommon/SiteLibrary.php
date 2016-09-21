@@ -57,7 +57,7 @@ class Scribunto_LuaSiteLibrary extends Scribunto_LuaLibraryBase {
 
 			$aliases = array_merge( $wgNamespaceAliases, $wgContLang->getNamespaceAliases() );
 			foreach ( $aliases as $title => $ns ) {
-				if ( !isset( $namespacesByName[$title] ) ) {
+				if ( !isset( $namespacesByName[$title] ) && isset( $namespaces[$ns] ) ) {
 					$ct = count( $namespaces[$ns]['aliases'] );
 					$namespaces[$ns]['aliases'][$ct+1] = $title;
 					$namespacesByName[$title] = $ns;

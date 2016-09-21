@@ -32,6 +32,7 @@ class UserPreferencesIntegrationTest extends PHPUnit_Framework_TestCase {
 	 * @var string
 	 */
 	const TEST_PREFERENCE_NAME = "hidepatrolled";
+	const TEST_USER_NAME = "Array";
 
 	/**
 	 * @param bool $ignoreCache should we return not cached PreferenceService instance
@@ -46,8 +47,7 @@ class UserPreferencesIntegrationTest extends PHPUnit_Framework_TestCase {
 	}
 
 	function setUp() {
-		global $wgWikiaBotUsers;
-		$this->testUserName = $wgWikiaBotUsers["bot"];
+		$this->testUserName = self::TEST_USER_NAME;
 		$this->testUserId = \User::idFromName( $this->testUserName );
 		$this->preferenceServiceCached = Injector::getInjector()->get( PreferenceService::class );
 		$defaultPreferences = Injector::getInjector()->get( PreferenceServiceImpl::DEFAULT_PREFERENCES );

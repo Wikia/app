@@ -25,14 +25,6 @@ if(!defined('MEDIAWIKI')) die("Not a valid entry point.");
 // Credentials for the editable (not public) devbox database.
 //require_once( dirname( $wgWikiaLocalSettingsPath ) . '/../DevBoxDatabase.php' );
 
-// TODO: DETERMINE THE CORRECT PERMISSIONS... IS THERE A "DEVELOPERS" GROUP THAT WE ALL ACTUALLY BELONG TO?  WILL WE BE ON ALL WIKIS?
-// Permissions
-$wgAvailableRights[] = 'devboxpanel';
-$wgGroupPermissions['*']['devboxpanel'] = false;
-$wgGroupPermissions['user']['devboxpanel'] = false;
-$wgGroupPermissions['staff']['devboxpanel'] = true;
-$wgGroupPermissions['devboxpanel']['devboxpanel'] = true;
-
 $wgSpecialPageGroups['DevBoxPanel'] = 'wikia';
 
 // Hooks
@@ -62,12 +54,15 @@ $wgSpecialPages['DevBoxPanel'] = 'DevBoxPanel';
 if (getenv('wgDevelEnvironmentName')) {
 	$wgDevelEnvironmentName = getenv('wgDevelEnvironmentName');
 } else {
+
+	# PLATFORM-1737 (Allow multiple dashes on dev hostnames)
+	# Get first hyphen, if there's any, delete it and everything from the left side of that "-", else pass whole $host
 	$host = gethostname();
-	$host = explode("-", $host);
-	if ( isset( $host[ 1 ] ) ) {
-		$wgDevelEnvironmentName = trim($host[1]);
+	$index = stripos($host, "-");
+	if($index > 0) {
+		$wgDevelEnvironmentName = trim(substr($host, $index + 1));
 	} else {
-		$wgDevelEnvironmentName = trim($host[0]);
+		$wgDevelEnvironmentName = trim($host);
 	}
 }
 
@@ -285,7 +280,7 @@ function getForcedWikiValue(){
 
 
 /**
- * @param DatabaseMysql $db
+ * @param DatabaseBase $db
  * @return array - databases which are available on this cluster
  *					  use the writable devbox server instead of the production slaves.
  */

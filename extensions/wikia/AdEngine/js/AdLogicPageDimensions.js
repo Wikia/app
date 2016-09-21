@@ -21,6 +21,7 @@ define('ext.wikia.adEngine.adLogicPageDimensions', [
 			LEFT_SKYSCRAPER_2: 2400,
 			LEFT_SKYSCRAPER_3: 4000,
 			PREFOOTER_LEFT_BOXAD: preFootersThreshold,
+			PREFOOTER_MIDDLE_BOXAD: preFootersThreshold,
 			PREFOOTER_RIGHT_BOXAD: preFootersThreshold
 		},
 		pageHeight,
@@ -32,23 +33,20 @@ define('ext.wikia.adEngine.adLogicPageDimensions', [
 		 * @see skins/oasis/css/core/responsive-background.scss
 		 */
 		slotsToHideOnMediaQuery = {
-			VIRTUAL_INCONTENT:       'twoColumns', // "virtual" slot to launch INCONTENT_* slots
-			INCONTENT_1A:            'twoColumns',
-			INCONTENT_1B:            'twoColumns',
-			INCONTENT_1C:            'twoColumns',
-			INCONTENT_LEADERBOARD_1: 'twoColumns',
 			TOP_BUTTON_WIDE:         'noTopButton',
 			'TOP_BUTTON_WIDE.force': 'noTopButton',
 			TOP_RIGHT_BOXAD:         'oneColumn',
 			HOME_TOP_RIGHT_BOXAD:    'oneColumn',
 			LEFT_SKYSCRAPER_2:       'oneColumn',
 			LEFT_SKYSCRAPER_3:       'oneColumn',
-			INCONTENT_BOXAD_1:       'oneColumn'
+			INCONTENT_BOXAD_1:       'oneColumn',
+			PREFOOTER_MIDDLE_BOXAD:  'noMiddlePrefooter'
 		},
 		mediaQueriesToCheck = {
 			twoColumns: 'screen and (min-width: 1024px)',
 			oneColumn: 'screen and (max-width: 1023px)',
-			noTopButton: 'screen and (max-width: 1063px)'
+			noTopButton: 'screen and (max-width: 1063px)',
+			noMiddlePrefooter: 'screen and (max-width: 1083px)'
 		},
 		mediaQueriesMet,
 		matchMedia;
@@ -245,7 +243,8 @@ define('ext.wikia.adEngine.adLogicPageDimensions', [
 	}
 
 	return {
+		addSlot: add,
 		isApplicable: isApplicable,
-		addSlot: add
+		shouldBeShown: shouldBeShown
 	};
 });

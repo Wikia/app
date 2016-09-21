@@ -1,124 +1,130 @@
 <?php
 
-$messages = array();
+$messages = [];
 
-$messages['en'] = array(
-    'chat' => 'Chat',
-    'chat-desc' => '[[Special:Chat|Live chat]]',
-    'chat-no-login' => 'You must be logged in to chat.',
-    'chat-no-login-text' => 'Please login to chat.',
-    'chat-default-topic' => 'Welcome to the $1 chat',
-    'chat-welcome-message' => 'Welcome to the $1 chat',
-    'chat-user-joined' => '$1 has joined the chat.',
-    'chat-read-only' => 'Chat is temporarily unavailable while wiki is in read-only mode.',
-    'chat-private-messages' => 'Private Messages',
-    // Many of these are sent from server.js to the client (which uses $.msg() to translate the message).
-    'chat-user-parted' => '$1 has left the chat.',
-    'chat-user-blocked' => '$1 has blocked $2.',
-    'chat-user-allow' => '$1 has allowed $2.',
+$messages['en'] = [
+	'chat' => 'Chat',
+	'chatbanlist' => 'Chat Ban List',
+	'chat-desc' => '[[Special:Chat|Live chat]]',
+	'chat-no-login' => 'You must be logged in to chat.',
+	'chat-no-login-text' => 'Please login to chat.',
+	'chat-welcome-message' => 'Welcome to the $1 chat',
+	'chat-user-joined' => '$1 has joined the chat.',
+	'chat-read-only' => 'Chat is temporarily unavailable while wiki is in read-only mode.',
+	'chat-private-messages' => 'Private Messages',
+	// Many of these are sent from server.js to the client (which uses $.msg() to translate the message).
+	'chat-user-parted' => '$1 has left the chat.',
+	'chat-user-blocked' => '$1 has blocked $2.',
+	'chat-user-allow' => '$1 has allowed $2.',
 
-    'chat-kick-you-need-permission' => 'You do not have permissions to kick a user.',
-    'chat-kick-cant-kick-moderator' => 'You cannot kick another Chat Moderator.',
+	'chat-kick-you-need-permission' => 'You do not have permissions to kick a user.',
+	'chat-kick-cant-kick-moderator' => 'You cannot kick another Chat Moderator.',
 
-    'chat-user-was-kicked' => "$1 has been kicked by $2.",
-    'chat-you-were-kicked' => "You have been kicked by $1.",
+	'chat-user-was-kicked' => "$1 has been kicked by $2.",
+	'chat-you-were-kicked' => "You have been kicked by $1.",
 
-    'chat-user-was-banned' => '$1 has been banned by $2 $3.',
-    'chat-you-were-banned' => 'You have been banned by $1.',
-    'chat-user-was-unbanned' => '$2 has ended the Chat ban for $1.',
+	'chat-user-was-banned' => '$1 has been banned by $2 $3.',
+	'chat-you-were-banned' => 'You have been banned by $1.',
+	'chat-user-was-unbanned' => '$2 has ended the Chat ban for $1.',
 
-    'chat-ban-cannt-undo' => 'Ban has already been undone',
+	'chat-ban-cannt-undo' => 'Ban has already been undone',
 
-    'chat-user-permanently-disconnected' => 'You have been disconnected, check your Internet connection and refresh browser window',
+	'chat-user-permanently-disconnected' => 'You have been disconnected, check your Internet connection and refresh browser window',
 
-    'chat-inlinealert-a-made-b-chatmod' => "$1 has made <strong>$2</strong> a chat moderator.",
-    'chat-err-connected-from-another-browser' => 'You have connected from another browser. This connection will be closed.',
-    'chat-err-communicating-with-mediawiki' => 'Error communicating with MediaWiki server.',
+	'chat-message-was-too-long' => 'The message was too long and could not be displayed.',
 
-    // Kick/Ban modal
+	'chat-inlinealert-a-made-b-chatmod' => "$1 has made <strong>$2</strong> a chat moderator.",
+	'chat-err-connected-from-another-browser' => 'You have connected from another browser. This connection will be closed.',
+	'chat-err-communicating-with-mediawiki' => 'Error communicating with MediaWiki server.',
 
-    'chat-ban-contributions-heading' => 'Ban from chat',
-    'chat-ban-modal-heading' => 'Ban this user from chat',
-    'chat-ban-modal-label-expires' => 'Expires',
-    'chat-ban-modal-label-reason' => 'Reason',
-    'chat-log-reason-banadd' => 'Misbehaving in chat',
-    'chat-log-reason-undo' => 'undo',
+	// Kick/Ban modal
 
-    'chat-ban-undolink' => 'undo',
-    'chat-ban-modal-button-ok' => 'Ban this user',
+	'chat-ban-contributions-heading' => 'Ban from chat',
+	'chat-ban-modal-heading' => 'Ban this user from chat',
+	'chat-ban-modal-label-expires' => 'Expires',
+	'chat-ban-modal-label-reason' => 'Reason',
+	'chat-log-reason-banadd' => 'Misbehaving in chat',
+	'chat-log-reason-undo' => 'undo',
 
-    'chat-ban-modal-button-change-ban' => 'Change Ban',
-    'chat-ban-modal-button-cancel' => 'Cancel',
-    'chat-ban-modal-change-ban-heading' => 'Change this user\'s chat ban',
-    'chat-ban-modal-change-ban-label' => 'Change to',
-    'chat-ban-modal-end-ban' => 'End Ban',
-    'chat-log-reason-banchange' => 'No reason given',
-    'chat-log-reason-banremove' => 'No reason given',
+	'chat-ban-undolink' => 'undo',
+	'chat-ban-modal-button-ok' => 'Ban this user',
 
-    // Possible errors when trying to kick/ban a user:
-    'chat-ban-cant-ban-moderator' => "You cannot kick/ban another Chat Moderator.",
-    'chat-ban-already-banned' => '$1 is already banned from chat on this wiki.',
-    'chat-ban-you-need-permission' => 'You do not have the $1 permission which is required to kick/ban a user.',
-    'chat-missing-required-parameter' => '\'$1\' is required but was not found in the request.',
+	'chat-ban-modal-button-change-ban' => 'Change Ban',
+	'chat-ban-modal-button-cancel' => 'Cancel',
+	'chat-ban-modal-change-ban-heading' => 'Change this user\'s chat ban',
+	'chat-ban-modal-change-ban-label' => 'Change to',
+	'chat-ban-modal-end-ban' => 'End Ban',
+	'chat-log-reason-banchange' => 'No reason given',
+	'chat-log-reason-banremove' => 'No reason given',
 
-    'chat-err-already-chatmod' => "Error: \"$1\" is already in the \"$2\" group.",
-    'chat-err-no-permission-to-add-chatmod' => "Error: You do not have permission to add the \"$1\" group to this user.",
-    'chat-userrightslog-a-made-b-chatmod' => "$1 promoted $2 to be a chat moderator on this wiki.",
-    'chat-err-invalid-username-chatmod' => 'Error: Couldn\'t find user "$1"',
+	// Possible errors when trying to kick/ban a user:
+	'chat-ban-cant-ban-moderator' => "You cannot kick/ban another Chat Moderator.",
+	'chat-ban-already-banned' => '$1 is already banned from chat on this wiki.',
+	'chat-ban-you-need-permission' => 'You do not have the $1 permission which is required to kick/ban a user.',
+	'chat-missing-required-parameter' => '\'$1\' is required but was not found in the request.',
 
-    'chat-you-are-banned' => 'Permissions error.',
-    // TODO: link to list of admins
-    'chat-you-are-banned-text' => 'Sorry, you do not have permission to chat on this wiki.  If you think this was a mistake or would like to be reconsidered, please contact an administrator.',
-    'chat-room-is-not-on-this-wiki' => 'The chat room you are attempting to enter does not appear to exist on this wiki.',
-    'chat-live2' => 'Live! Chat',
-    'chat-start-a-chat' => 'Start a Chat',
-    'chat-join-the-chat' => 'Join the Chat',
-    'chat-edit-count' => '{{PLURAL:$1|$1 edit|$1 edits}}',
+	'chat-err-already-chatmod' => "Error: \"$1\" is already in the \"$2\" group.",
+	'chat-err-no-permission-to-add-chatmod' => "Error: You do not have permission to add the \"$1\" group to this user.",
+	'chat-userrightslog-a-made-b-chatmod' => "$1 promoted $2 to be a chat moderator on this wiki.",
+	'chat-err-invalid-username-chatmod' => 'Error: Couldn\'t find user "$1"',
 
-    'chat-member-since' => 'Member since $1',
-    'chat-great-youre-logged-in' => "Great! You're logged in.",
+	'chat-you-are-banned' => 'Permissions error.',
+	// TODO: link to list of admins
+	'chat-you-are-banned-text' => 'Sorry, you do not have permission to chat on this wiki.  If you think this was a mistake or would like to be reconsidered, please contact an administrator.',
+	'chat-room-is-not-on-this-wiki' => 'The chat room you are attempting to enter does not appear to exist on this wiki.',
+	'chat-live2' => 'Live! Chat',
+	'chat-start-a-chat' => 'Start a Chat',
+	'chat-join-the-chat' => 'Join the Chat',
+	'chat-edit-count' => '{{PLURAL:$1|$1 edit|$1 edits}}',
 
-    'chat-user-menu-message-wall' => 'Message Wall',
-    'chat-user-menu-talk-page' => 'Talk Page',
-    'chat-user-menu-contribs' => 'Contributions',
-    'chat-user-menu-private' => 'Private Message',
-    'chat-user-menu-give-chat-mod' => 'Give ChatMod Status',
-    'chat-user-menu-kick' => 'Kick',
-    'chat-user-menu-ban' => 'Ban',
+	'chat-member-since' => 'Member since $1',
+	'chat-great-youre-logged-in' => "Great! You're logged in.",
 
-    'chat-user-menu-private-block' => 'Block Private Messages',
-    'chat-user-menu-private-allow' => 'Allow Private Messages',
-    'chat-user-menu-private-close' => 'Close Private Room',
-    'chat-private-headline' => 'Private chat with $1',
+	'chat-user-menu-message-wall' => 'Message Wall',
+	'chat-user-menu-talk-page' => 'Talk Page',
+	'chat-user-menu-contribs' => 'Contributions',
+	'chat-user-menu-private' => 'Private Message',
+	'chat-user-menu-give-chat-mod' => 'Give ChatMod Status',
+	'chat-user-menu-kick' => 'Kick',
+	'chat-user-menu-ban' => 'Ban',
 
-    //rights/groups
-    'right-chatmoderator' => 'Can kick/ban users from [[Help:Chat|Chat]]',
-    'group-chatmoderator' => 'Chat moderators',
-    'group-chatmoderator-member' => 'Chat moderator',
-    'grouppage-chatmoderator' => 'w:c:community:Help:Chat',
+	'chat-user-menu-private-block' => 'Block Private Messages',
+	'chat-user-menu-private-allow' => 'Allow Private Messages',
+	'chat-user-menu-private-close' => 'Close Private Room',
+	'chat-private-headline' => 'Private chat with $1',
 
-    'group-bannedfromchat' => 'Banned from chat',
-    'group-bannedfromchat-member' => 'Banned from chat',
-    'grouppage-bannedfromchat' => 'w:c:community:Help:Chat',
+	// rights/groups
+	'right-chatmoderator' => 'Can kick/ban users from [[Help:Chat|Chat]]',
+	'right-chat' => 'Chat with other users, via [[Help:Chat|Chat]]',
+	'right-chatadmin' => 'User has chat admin rights on [[Help:Chat|Chat]]',
+	'right-chatstaff' => 'User has Wikia Staff rights on [[Help:Chat|Chat]]',
+	'right-chatfailover' => 'Can access Special:Chatfailover',
+	'group-chatmoderator' => 'Chat moderators',
+	'group-chatmoderator-member' => 'Chat moderator',
+	'grouppage-chatmoderator' => 'w:c:community:Help:Chat',
 
-    'chat-ban-option-list' => '2 hours:2 hours,1 day:1 day,3 days:3 days,1 week:1 week,2 weeks:2 weeks,1 month:1 month,3 months:3 months,6 months:6 months,1 year:1 year,infinite:infinite',
+	'group-bannedfromchat' => 'Banned from chat',
+	'group-bannedfromchat-member' => 'Banned from chat',
+	'grouppage-bannedfromchat' => 'w:c:community:Help:Chat',
 
-    'chat-ban-log-change-ban-link' => 'change ban',
+	'chat-ban-option-list' => '2 hours:2 hours,1 day:1 day,3 days:3 days,1 week:1 week,2 weeks:2 weeks,1 month:1 month,3 months:3 months,6 months:6 months,1 year:1 year,infinite:infinite',
 
-    'chat-chatconnect-log' => 'Chat connection log',
-    'chat-chatconnect-log-entry' => 'connected to $1 from address $2',
+	'chat-ban-log-change-ban-link' => 'change ban',
 
-    'chat-chatban-log' => 'Chat ban log',
-    'chat-chatbanadd-log-entry' => 'banned $1 from chat with an expiry time of $2, ends $3',
-    'chat-chatbanremove-log-entry' => 'unbanned $1 from chat',
-    'chat-chatbanchange-log-entry' => 'changed ban settings for $1 with an expiry time of $2, ends $3',
-    'chat-contributions-ban-notice' => '{{GENDER:$1|This user}} is currently banned from chat. The latest chat ban log entry is provided below for reference:',
+	'chat-chatconnect-log' => 'Chat connection log',
+	'chat-chatconnect-log-entry' => 'connected to $1 from address $2',
 
-    'chat-browser-is-notsupported' => '	Your browser is not supported. For the best experience, use a <a href="http://community.wikia.com/wiki/Help:Supported_browsers">newer browser</a>.',
-    'chat-checkuser-join-action' => 'Joined Chat',
+	'chat-chatban-log' => 'Chat ban log',
+	'chat-chatbanadd-log-entry' => 'banned $1 from chat with an expiry time of $2, ends $3',
+	'chat-chatbanremove-log-entry' => 'unbanned $1 from chat',
+	'chat-chatbanchange-log-entry' => 'changed ban settings for $1 with an expiry time of $2, ends $3',
+	'chat-contributions-ban-notice' => '{{GENDER:$1|This user}} is currently banned from chat. The latest chat ban log entry is provided below for reference:',
 
-    'chat-status-away' => 'Away'
-);
+	'chat-browser-is-notsupported' => '	Your browser is not supported. For the best experience, use a <a href="http://community.wikia.com/wiki/Help:Supported_browsers">newer browser</a>.',
+	'chat-checkuser-join-action' => 'Joined Chat',
+
+	'chat-status-away' => 'Away',
+];
 
 /** Message documentation (Message documentation)
  * @author Aldnonymous
@@ -131,7 +137,7 @@ $messages['en'] = array(
  * @author Siebrand
  * @author VezonThunder
  */
-$messages['qqq'] = array(
+$messages['qqq'] = [
 	'chat' => 'shown in Special:Specialpages as the link label.
 {{Identical|Chat}}',
 	'chat-welcome-message' => 'sent to a user when he join chat',
@@ -194,29 +200,29 @@ This is used for setting the options for expiration time when banning a user fro
 
 Parameters:
 * $1 - User name is passed to the message for gender purposes',
+	'chat-message-was-too-long' => 'shown to a user when their message was too long to be displayed',
 	'chat-browser-is-notsupported' => 'shown when user broser is not supported',
 	'chat-checkuser-join-action' => 'Shown in CheckUser extension for chat-join events',
 	'chat-status-away' => 'Display when user chnages his status to away.
 {{Identical|Away}}',
-);
+];
 
 /** Afrikaans (Afrikaans)
  * @author Naudefj
  */
-$messages['af'] = array(
+$messages['af'] = [
 	'chat-no-login-text' => 'Meld asseblief aan om te klets.',
-);
+];
 
 /** Arabic (العربية)
  * @author Achraf94
  * @author Malhargan
  */
-$messages['ar'] = array(
+$messages['ar'] = [
 	'chat' => 'دردشة',
 	'chat-desc' => '[[Special:Chat|دردشة مباشرة]]',
 	'chat-no-login' => 'يجب تسجيل الدخول لكي تلتحق بالدردشة.',
 	'chat-no-login-text' => 'يرجى تسجيل الدخول للإلتحاق بالدردشة.',
-	'chat-default-topic' => 'مرحبا بكم في دردشة $1',
 	'chat-welcome-message' => 'مرحبا بكم في دردشة $1',
 	'chat-user-joined' => 'انضم $1 إلى الدردشة.',
 	'chat-read-only' => 'الدردشة تصبح غير متوفرة عندما تكون الويكي في وضع القراءة فقط.',
@@ -296,17 +302,16 @@ $messages['ar'] = array(
 	'chat-browser-is-notsupported' => 'المتصفح الخاص بك غير معتمد. لتجربة أفضل, استخدم <a href="http://community.wikia.com/wiki/Help:Supported_browsers">متصفح أحدث</a>.',
 	'chat-checkuser-join-action' => 'انضممت للدردشة',
 	'chat-status-away' => 'مشغول',
-);
+];
 
 /** Asturian (asturianu)
  * @author Xuacu
  */
-$messages['ast'] = array(
+$messages['ast'] = [
 	'chat' => 'Chat',
 	'chat-desc' => '[[Special:Chat|Charra en vivu]]',
 	'chat-no-login' => 'Has de tar coneutáu pa charrar',
 	'chat-no-login-text' => 'Por favor, conéutate pa charrar.',
-	'chat-default-topic' => 'Bienveníu a la charra $1',
 	'chat-user-joined' => '$1 entró na charra.',
 	'chat-read-only' => 'El chat nun ta disponible de mou temporal mentanto la wiki ta en mou de sólo llectura.',
 	'chat-private-messages' => 'Mensaxes privaos',
@@ -348,17 +353,16 @@ $messages['ast'] = array(
 	'group-chatmoderator-member' => 'Moderador del chat',
 	'group-bannedfromchat' => 'Bloquiaos de la charra',
 	'group-bannedfromchat-member' => 'Bloquiáu de la charra',
-);
+];
 
 /** Azerbaijani (azərbaycanca)
  * @author Khan27
  */
-$messages['az'] = array(
+$messages['az'] = [
 	'chat' => 'Söhbət',
 	'chat-desc' => '[[Special:Chat|Söhbət]]',
 	'chat-no-login' => 'Söhbətə daxil olmaq üçün qeydiyyatdan keçməlisiz.',
 	'chat-no-login-text' => 'Zəhmət olmasa söhbətə daxil olun.',
-	'chat-default-topic' => '$1 söhbətinə xoş gəlmisiniz',
 	'chat-welcome-message' => '$1 söhbətinə xoş gəlmisiniz',
 	'chat-user-joined' => '$1 söhbətə qoşuldu.',
 	'chat-private-messages' => 'Özəl Mesajlar',
@@ -397,12 +401,12 @@ $messages['az'] = array(
 	'chat-user-menu-private' => 'Özəl Mesaj',
 	'chat-checkuser-join-action' => 'Söhbətə Qoşuldu',
 	'chat-status-away' => 'Kənar',
-);
+];
 
 /** South Azerbaijani (تۆرکجه)
  * @author Koroğlu
  */
-$messages['azb'] = array(
+$messages['azb'] = [
 	'chat-ban-modal-label-reason' => 'ندن',
 	'chat-log-reason-undo' => 'قایتار',
 	'chat-ban-undolink' => 'قایتار',
@@ -410,36 +414,36 @@ $messages['azb'] = array(
 	'chat-user-menu-talk-page' => 'دانیشیق صفحه‌سی',
 	'chat-user-menu-contribs' => 'چالیشمالار',
 	'chat-status-away' => 'اوزاق',
-);
+];
 
 /** Bulgarian (български)
  * @author DCLXVI
  */
-$messages['bg'] = array(
+$messages['bg'] = [
 	'chat-desc' => '[[Special:Chat|Чат]]',
 	'chat-ban-modal-label-reason' => 'Причина',
 	'chat-ban-modal-button-cancel' => 'Отказване',
 	'chat-log-reason-banchange' => 'Не е указана причина.',
 	'chat-log-reason-banremove' => 'Не е указана причина.',
 	'chat-edit-count' => '{{PLURAL:$1|$1 редакция|$1 редакции}}',
-);
+];
 
 /** Western Balochi (بلوچی رخشانی)
  * @author Baloch Afghanistan
  */
-$messages['bgn'] = array(
+$messages['bgn'] = [
 	'chat' => 'چت وهبر',
 	'chat-ban-modal-label-reason' => 'دلیل',
 	'chat-log-reason-undo' => 'بیئرگردینتین',
 	'chat-ban-undolink' => 'بیئرگردینتین',
 	'chat-ban-modal-button-cancel' => 'کنسیل',
-);
+];
 
 /** Bengali (বাংলা)
  * @author Aftab1995
  * @author Aftabuzzaman
  */
-$messages['bn'] = array(
+$messages['bn'] = [
 	'chat' => 'আড্ডা',
 	'chat-desc' => '[[Special:Chat|সরাসরি আড্ডা]]',
 	'chat-log-reason-undo' => 'পূর্বাবস্থায় আনো',
@@ -454,7 +458,7 @@ $messages['bn'] = array(
 	'chat-member-since' => '$1 থেকে সদস্য',
 	'chat-user-menu-talk-page' => 'আলাপ পাতা',
 	'chat-user-menu-contribs' => 'অবদান',
-);
+];
 
 /** Breton (brezhoneg)
  * @author Fohanno
@@ -462,12 +466,11 @@ $messages['bn'] = array(
  * @author Gwenn-Ael
  * @author Y-M D
  */
-$messages['br'] = array(
+$messages['br'] = [
 	'chat' => 'Flap',
 	'chat-desc' => '[[Special:Chat|Flapiñ war-eeun]]',
 	'chat-no-login' => "Ret eo deoc'h bezañ kevreet evit flapiñ",
 	'chat-no-login-text' => 'Kevreit evit gallout flapiñ.',
-	'chat-default-topic' => 'Degemer mat er flap $1',
 	'chat-welcome-message' => 'Degemer mat er flap $1',
 	'chat-user-joined' => '$1 a zo deuet er flap.',
 	'chat-private-messages' => 'Kemennadennoù brevez',
@@ -545,40 +548,38 @@ Ma soñj deoc'h ez eo dre fazi pe mar fell deoc'h e vefe distroet war an diviz e
 	'chat-chatbanchange-log-entry' => "en deus kemmet an arventennoù stankañ evit $1 gant un termen d'an $2 $3",
 	'chat-checkuser-join-action' => 'A zo deuet er flap',
 	'chat-status-away' => 'Ezvezant',
-);
+];
 
 /** Bosnian (bosanski)
  * @author CERminator
  */
-$messages['bs'] = array(
+$messages['bs'] = [
 	'chat-desc' => '[[Special:Chat|Razgovor uživo]]',
 	'chat-no-login' => 'Morate biti prijavljeni da biste chatali',
 	'chat-no-login-text' => 'Molimo prijavite se za chat.',
-	'chat-default-topic' => 'Dobrodošli na $1 chat',
 	'chat-you-are-banned' => 'Greške pri odobrenju.',
 	'chat-you-are-banned-text' => 'Zabranjen vam je chat.
 Ako mislite da je to greška ili želite da se ponovo razmotri, molimo kontaktirajte administratora.', # Fuzzy
-);
+];
 
 /** Iriga Bicolano (Iriga Bicolano)
  * @author Filipinayzd
  */
-$messages['bto'] = array(
+$messages['bto'] = [
 	'chat-log-reason-undo' => 'ibalik',
 	'chat-ban-undolink' => 'ibalik',
-);
+];
 
 /** Catalan (català)
  * @author Anskar
  * @author BroOk
  * @author Unapersona
  */
-$messages['ca'] = array(
+$messages['ca'] = [
 	'chat' => 'Xat',
 	'chat-desc' => '[[Special:Chat|Xat en directe]]',
 	'chat-no-login' => "Has d'estar connectat per poder entrar al xat.",
 	'chat-no-login-text' => "Si us plau connecta't per entrar al xat.",
-	'chat-default-topic' => 'Benvingut al xat de $1',
 	'chat-welcome-message' => 'Benvingut al xat de $1',
 	'chat-user-joined' => "$1 s'ha unit al xat.",
 	'chat-read-only' => 'El xat està temporalment no disponible mentre el wiki estigui en mode de lectura.',
@@ -658,16 +659,16 @@ $messages['ca'] = array(
 	'chat-browser-is-notsupported' => 'El teu navegador no és compatible. Per una millor experiència, fes servir un <a href="http://ayuda.wikia.com/wiki/Ayuda:Navegadores_soportados">navegador millor i nou</a>.',
 	'chat-checkuser-join-action' => "S'ha unit al xat",
 	'chat-status-away' => 'Absent',
-);
+];
 
 /** Chechen (нохчийн)
  * @author Умар
  */
-$messages['ce'] = array(
+$messages['ce'] = [
 	'chat-ban-modal-label-expires' => 'Чекхйолу',
 	'chat-user-menu-talk-page' => 'Декъашхочун дийцаре',
 	'chat-ban-option-list' => '2 сахьат:2 hours,1 де:1 day,3 де:3 days,1 кӀиран:1 week,2 кӀиран:2 weeks,1 бутт:1 month,3 бутт:3 months,6 бутт:6 months,1 шо:1 year,цlкъа:infinite',
-);
+];
 
 /** Czech (čeština)
  * @author Aktron
@@ -677,12 +678,11 @@ $messages['ce'] = array(
  * @author Mormegil
  * @author Quinn
  */
-$messages['cs'] = array(
+$messages['cs'] = [
 	'chat' => 'Chat',
 	'chat-desc' => '[[Special:Chat|Chat na živo]]',
 	'chat-no-login' => 'Musíte být přihlášen, pokud chcete použít chat.',
 	'chat-no-login-text' => 'Přihlaste se k chatu.',
-	'chat-default-topic' => 'Vítejte na $1 chatu',
 	'chat-welcome-message' => 'Vítejte na chatu $1',
 	'chat-user-joined' => '$1 se připojil k chatu.',
 	'chat-read-only' => 'Chat je dočasně nedostupný po dobu, kdy je wiki v režimu jen pro čtení.',
@@ -746,7 +746,7 @@ $messages['cs'] = array(
 	'chat-chatbanadd-log-entry' => '$1 byl zablokován na chatu s datem vypršení $2, které skončí v $3',
 	'chat-checkuser-join-action' => 'Připojen k chatu',
 	'chat-status-away' => 'Pryč',
-);
+];
 
 /** German (Deutsch)
  * @author Claudia Hattitten
@@ -763,12 +763,11 @@ $messages['cs'] = array(
  * @author Tiin
  * @author Yottabyte
  */
-$messages['de'] = array(
+$messages['de'] = [
 	'chat' => 'Chat',
 	'chat-desc' => '[[Special:Chat|Chat]]',
 	'chat-no-login' => 'Du musst angemeldet sein, um chatten zu können.',
 	'chat-no-login-text' => 'Bitte melde dich an, um zu chatten.',
-	'chat-default-topic' => 'Willkommen im $1 Chat',
 	'chat-welcome-message' => 'Willkommen im Chat "$1"',
 	'chat-user-joined' => '$1 hat den Chat betreten.',
 	'chat-read-only' => 'Der Chat ist vorübergehend nicht erreichbar, während es sich im Nur-Lesen-Modus befindet.',
@@ -851,20 +850,20 @@ Wenn du dies für einen Fehler hältst oder möchtest, dass die Entscheidung üb
 	'chat-browser-is-notsupported' => 'Dein Internet-Browser wird nicht unterstützt. Bitte benutze für den Chat einen <a href="http://community.wikia.com/wiki/Help:Supported_browsers">aktuelleren Browser</a>.',
 	'chat-checkuser-join-action' => 'Betrat Chat',
 	'chat-status-away' => 'Abwesend',
-);
+];
 
 /** German (formal address) (Deutsch (Sie-Form)‎)
  * @author Tiin
  */
-$messages['de-formal'] = array(
+$messages['de-formal'] = [
 	'chat-user-permanently-disconnected' => 'Die Verbindung wurde getrennt. Überprüfen Sie ihre Internet-Verbindung und aktualisieren Sie das Browser-Fenster.',
-);
+];
 
 /** Zazaki (Zazaki)
  * @author Erdemaslancan
  * @author Mirzali
  */
-$messages['diq'] = array(
+$messages['diq'] = [
 	'chat' => 'Mıhebet',
 	'chat-desc' => '[[Special:Chat|Live chat]]',
 	'chat-ban-modal-label-reason' => 'Sebeb',
@@ -878,12 +877,12 @@ $messages['diq'] = array(
 	'chat-user-menu-ban' => 'Wedarnê',
 	'chat-checkuser-join-action' => 'Chat Kewê',
 	'chat-status-away' => 'Duri de',
-);
+];
 
 /** Greek (Ελληνικά)
  * @author Glavkos
  */
-$messages['el'] = array(
+$messages['el'] = [
 	'chat-ban-modal-label-expires' => 'Λήγει',
 	'chat-ban-modal-label-reason' => 'Λόγος',
 	'chat-log-reason-undo' => 'αναίρεση',
@@ -904,7 +903,7 @@ $messages['el'] = array(
 	'chat-user-menu-ban' => 'Φραγή',
 	'chat-user-menu-private-block' => 'Φραγή Ιδιωτικών Μηνυμάτων',
 	'chat-user-menu-private-allow' => 'Να επιτρέπονται Ιδιωτικά Μηνύματα',
-);
+];
 
 /** Spanish (español)
  * @author Armando-Martin
@@ -915,12 +914,11 @@ $messages['el'] = array(
  * @author Translationista
  * @author VegaDark
  */
-$messages['es'] = array(
+$messages['es'] = [
 	'chat' => 'Chat',
 	'chat-desc' => '[[Special:Chat|Chat en directo]]',
 	'chat-no-login' => 'Debes iniciar sesión para chatear.',
 	'chat-no-login-text' => 'Inicia sesión para chatear.',
-	'chat-default-topic' => 'Bienvenido al chat de $1',
 	'chat-welcome-message' => 'Bienvenido al chat de $1',
 	'chat-user-joined' => '$1 ha entrado al chat.',
 	'chat-read-only' => 'El chat está temporalmente deshabilitado mientras el wiki está en modo de lectura.',
@@ -1003,13 +1001,13 @@ Si crees que ha sido un error o te gustaría reconsiderarlo, por favor contacta 
 	'chat-browser-is-notsupported' => 'Tu navegador no es compatible. Para una mejor experiencia usa un mejor navegador, usa un <a href="http://ayuda.wikia.com/wiki/Ayuda:Navegadores_soportados">navegador nuevo</a>.',
 	'chat-checkuser-join-action' => 'Se unió al chat',
 	'chat-status-away' => 'Ausente',
-);
+];
 
 /** Basque (euskara)
  * @author Subi
  * @author Xabier Armendaritz
  */
-$messages['eu'] = array(
+$messages['eu'] = [
 	'chat-private-messages' => 'Mezu pribatuak',
 	'chat-user-was-kicked' => '$2(e)k $1 kanporatu du.',
 	'chat-you-were-kicked' => '$1(e)k kanporatu zaitu.',
@@ -1020,7 +1018,7 @@ $messages['eu'] = array(
 	'chat-user-menu-private' => 'Mezu pribatua',
 	'chat-user-menu-kick' => 'Kanporatu',
 	'chat-chatbanchange-log-entry' => 'administratzaileak $1 wikilariaren blokeoa aldatu du. Blokeoaldia: $2. Bukaera: $3',
-);
+];
 
 /** Persian (فارسی)
  * @author BlueDevil
@@ -1030,12 +1028,11 @@ $messages['eu'] = array(
  * @author جواد
  * @author پاناروما
  */
-$messages['fa'] = array(
+$messages['fa'] = [
 	'chat' => 'چت',
 	'chat-desc' => '[[ویژه:Chat|گفتگوی زنده]]', # Fuzzy
 	'chat-no-login' => 'برای گپ‌زدن باید ثبت ورود کرده باشید.',
 	'chat-no-login-text' => 'لطفاً برای گپ‌زدن ثبت ورود کنید.',
-	'chat-default-topic' => 'به چت $1 خوش‌آمدید',
 	'chat-welcome-message' => 'به چت $1 خوش‌آمدید',
 	'chat-user-joined' => '$1 به چت پیوست.',
 	'chat-read-only' => 'گپ موقتاً، تا زمانی که ویکی در حالت فقط خواندنی است، در دسترس نیست.',
@@ -1114,7 +1111,7 @@ $messages['fa'] = array(
 	'chat-browser-is-notsupported' => '	مرورگر شما پشتیبانی نشده است. برای داشتن بهترین تجربه، از یک <a href="http://community.wikia.com/wiki/Help:Supported_browsers">مرورگر تازه‌تر</a> استفاده کنید.',
 	'chat-checkuser-join-action' => 'به گپ پیوست',
 	'chat-status-away' => 'دور',
-);
+];
 
 /** Finnish (suomi)
  * @author Centerlink
@@ -1124,12 +1121,11 @@ $messages['fa'] = array(
  * @author Nike
  * @author VezonThunder
  */
-$messages['fi'] = array(
+$messages['fi'] = [
 	'chat' => 'Chat',
 	'chat-desc' => '[[Special:Chat|Suora chat]]',
 	'chat-no-login' => 'Chatin käyttö vaatii sisäänkirjautumisen.',
 	'chat-no-login-text' => 'Ole hyvä ja kirjaudu sisään käyttääksesi chattia.',
-	'chat-default-topic' => 'Tervetuloa {{GRAMMAR:genitive|$1}} chattiin',
 	'chat-welcome-message' => 'Tervetuloa {{GRAMMAR:genitive|$1}} chattiin',
 	'chat-user-joined' => '$1 on liittynyt chattiin.',
 	'chat-read-only' => 'Chat on tilapäisesti poissa käytöstä wikin ollessa vain luku -tilassa.',
@@ -1210,17 +1206,16 @@ $messages['fi'] = array(
 	'chat-browser-is-notsupported' => 'Selaimesi ei tue Chat-toimintoa. Käytä <a href="http://community.wikia.com/wiki/Help:Supported_browsers">uudempaa selainta</a> parhaimman kokemuksen saamiseksi.',
 	'chat-checkuser-join-action' => 'Liittyi keskusteluun',
 	'chat-status-away' => 'Poissa',
-);
+];
 
 /** Faroese (føroyskt)
  * @author EileenSanda
  */
-$messages['fo'] = array(
+$messages['fo'] = [
 	'chat' => 'Kjatt',
 	'chat-desc' => '[[Special:Chat|Beinleiðis kjatt]]',
 	'chat-no-login' => 'Tú mást vera innritað/ur til kjattið.',
 	'chat-no-login-text' => 'Vinarliga rita inn fyri at kjatta.',
-	'chat-default-topic' => 'Vælkomin til $1 kjattið',
 	'chat-welcome-message' => 'Vælkomin til $1 kjattið',
 	'chat-user-joined' => '$1 luttekur nú í kjattinum.',
 	'chat-private-messages' => 'Privat boð',
@@ -1280,7 +1275,7 @@ $messages['fo'] = array(
 	'group-bannedfromchat-member' => 'Atgongd til kjattið er sperrað',
 	'chat-ban-option-list' => '2 tímar:2 hours,1 dag:1 day,3 dagar:3 days,1 viku:1 week,2 vikur:2 weeks,1 mánað:1 month,3 mánaðir:3 months,6 mánaðir:6 months,1 ár:1 year,fyri altíð:infinite',
 	'chat-ban-log-change-ban-link' => 'broyt sperring',
-);
+];
 
 /** French (français)
  * @author Fujimaru-kun
@@ -1291,12 +1286,11 @@ $messages['fo'] = array(
  * @author Od1n
  * @author Wyz
  */
-$messages['fr'] = array(
+$messages['fr'] = [
 	'chat' => 'Tchat',
 	'chat-desc' => '[[Special:Chat|Tchater en direct]]',
 	'chat-no-login' => 'Vous devez être connecté pour tchater.',
 	'chat-no-login-text' => 'Veuillez vous connecter pour tchater.',
-	'chat-default-topic' => 'Bienvenue sur le tchat de $1',
 	'chat-welcome-message' => 'Bienvenue sur le tchat de $1',
 	'chat-user-joined' => '$1 a rejoint le tchat.',
 	'chat-read-only' => 'Le tchat est temporairement indisponible car le wiki est en mode lecture seule.',
@@ -1378,27 +1372,26 @@ $messages['fr'] = array(
 	'chat-browser-is-notsupported' => 'Votre navigateur n’est pas supporté. Pour la meilleur expérience possible, veuillez utiliser un <a href="http://communaute.wikia.com/wiki/Aide:Navigateurs_supportés">navigateur plus récent</a>.',
 	'chat-checkuser-join-action' => 'A rejoint le tchat',
 	'chat-status-away' => 'Absent',
-);
+];
 
 /** Western Frisian (Frysk)
  * @author Robin0van0der0vliet
  */
-$messages['fy'] = array(
+$messages['fy'] = [
 	'chat' => 'Petear',
 	'chat-ban-modal-label-reason' => 'Reden',
 	'chat-ban-modal-button-cancel' => 'Annulearje',
 	'chat-ban-option-list' => '2 oeren:2 hours,1 dei:1 day,3 dagen:3 days,1 wike:1 week,2 wiken:2 weeks,1 moanne:1 month,3 moannen:3 months,6 moannen:6 months,1 jier:1 year,ûnbeheind:infinite',
-);
+];
 
 /** Galician (galego)
  * @author Toliño
  */
-$messages['gl'] = array(
+$messages['gl'] = [
 	'chat' => 'Chat',
 	'chat-desc' => '[[Special:Chat|Conversación en vivo]]',
 	'chat-no-login' => 'Debe acceder ao sistema para conversar no chat.',
 	'chat-no-login-text' => 'Acceda ao sistema para conversar no chat.',
-	'chat-default-topic' => 'Benvido ao chat $1',
 	'chat-welcome-message' => 'Benvido ao chat $1',
 	'chat-user-joined' => '$1 uniuse ao chat.',
 	'chat-read-only' => 'O chat non está dispoñible temporalmente debido a que o wiki está en modo de só lectura.',
@@ -1478,16 +1471,15 @@ $messages['gl'] = array(
 	'chat-browser-is-notsupported' => 'O seu navegador non está soportado. Para obter a mellor experiencia, utilice un <a href="http://community.wikia.com/wiki/Help:Supported_browsers">navegador máis recente</a>.',
 	'chat-checkuser-join-action' => 'Chat unido',
 	'chat-status-away' => 'Ausente',
-);
+];
 
 /** Hebrew (עברית)
  * @author LaG roiL
  */
-$messages['he'] = array(
+$messages['he'] = [
 	'chat' => "צ'אט",
 	'chat-no-login' => "עליך להיכנס לחשבון על מנת להשתתף בצ'אט.",
 	'chat-no-login-text' => "נא להיכנס לחשבון על מנת להשתתף בצ'אט.",
-	'chat-default-topic' => "ברוכים הבאים לצ'אט $1",
 	'chat-welcome-message' => "ברוכים הבאים לצ'אט $1",
 	'chat-user-joined' => "$1 {{GENDER:הצטרף|הצטרפה}} לצ'אט.",
 	'chat-private-messages' => 'הודעות פרטיות',
@@ -1522,19 +1514,18 @@ $messages['he'] = array(
 	'chat-browser-is-notsupported' => '	הדפדפן שלך אינו נתמך. לחווייה הטובה ביותר, יש להשתמש <a href="http://community.wikia.com/wiki/Help:Supported_browsers">דפדפן חדש יותר</a>.',
 	'chat-checkuser-join-action' => "{{GENDER:הצטרף|הצטרפה}} לצ'אט",
 	'chat-status-away' => 'לא זמין',
-);
+];
 
 /** Hungarian (magyar)
  * @author Dani
  * @author Dj
  * @author TK-999
  */
-$messages['hu'] = array(
+$messages['hu'] = [
 	'chat' => 'Csevegés',
 	'chat-desc' => '[[Special:Chat|Élő csevegés]]',
 	'chat-no-login' => 'A csevegéshez be kell jelentkezned!',
 	'chat-no-login-text' => 'Jelentkezz be a csevegéshez!',
-	'chat-default-topic' => 'Üdvözlünk a $1 csevegőben!',
 	'chat-user-joined' => '$1belépett a csevegésbe.',
 	'chat-read-only' => 'A csevegés ideiglenesen szünetel, amíg a wiki csak olvasható módban van.',
 	'chat-private-messages' => 'Privát üzenetek',
@@ -1591,17 +1582,16 @@ $messages['hu'] = array(
 	'chat-ban-log-change-ban-link' => 'tiltás megváltoztatása',
 	'chat-browser-is-notsupported' => 'A böngésződet nem támogatjuk. A legjobb élményért használj egy <a href="http://community.wikia.com/wiki/Help:Supported_browsers">újabbat</a>.',
 	'chat-status-away' => 'Távol',
-);
+];
 
 /** Interlingua (interlingua)
  * @author McDutchie
  */
-$messages['ia'] = array(
+$messages['ia'] = [
 	'chat' => 'Chat',
 	'chat-desc' => '[[Special:Chat|Live chat]]',
 	'chat-no-login' => 'Tu debe aperir un session pro poter chattar.',
 	'chat-no-login-text' => 'Per favor aperi session pro chattar.',
-	'chat-default-topic' => 'Benvenite al chat de $1',
 	'chat-welcome-message' => 'Benvenite al chat de $1',
 	'chat-user-joined' => '$1 ha entrate in le chat.',
 	'chat-read-only' => 'Le chat es temporarimente indisponibile durante que le wiki es in modo de lectura sol.',
@@ -1682,7 +1672,7 @@ Si tu pensa que isto es un error o si tu vole esser reconsiderate, per favor con
 	'chat-browser-is-notsupported' => 'Iste navigator del web non es supportate. Pro le melior experientia, per favor usa un <a href="http://community.wikia.com/wiki/Help:Supported_browsers">navigator plus nove</a>.',
 	'chat-checkuser-join-action' => 'Entrava in chat',
 	'chat-status-away' => 'Absente',
-);
+];
 
 /** Indonesian (Bahasa Indonesia)
  * @author Aldnonymous
@@ -1691,12 +1681,11 @@ Si tu pensa que isto es un error o si tu vole esser reconsiderate, per favor con
  * @author Kenrick95
  * @author Riemogerz
  */
-$messages['id'] = array(
+$messages['id'] = [
 	'chat' => 'Obrolan',
 	'chat-desc' => '[[Special:Chat|Obrolan langsung]]',
 	'chat-no-login' => 'Anda harus masuk log untuk melakukan obrolan.',
 	'chat-no-login-text' => 'Silakan masuk log untuk melakukan obrolan.',
-	'chat-default-topic' => 'Selamat datang di obrolan $1',
 	'chat-welcome-message' => 'Selamat datang di $1 obrolan',
 	'chat-user-joined' => '$1 telah bergabung dengan obrolan.',
 	'chat-read-only' => 'Obrolan sementara tidak tersedia saat wiki berada pada mode hanya baca.',
@@ -1776,7 +1765,7 @@ $messages['id'] = array(
 	'chat-browser-is-notsupported' => 'Browser Anda tidak didukung. Untuk pengalaman yang terbaik, gunakan <a href="http://community.wikia.com/wiki/Help:Supported_browsers">peramban yang lebih baru</a>.',
 	'chat-checkuser-join-action' => 'Bergabung dengan Obrolan',
 	'chat-status-away' => 'Pergi',
-);
+];
 
 /** Italian (italiano)
  * @author Beta16
@@ -1784,12 +1773,11 @@ $messages['id'] = array(
  * @author Leviathan 89
  * @author Minerva Titani
  */
-$messages['it'] = array(
+$messages['it'] = [
 	'chat' => 'Chat',
 	'chat-desc' => '[[Special:Chat|Chat dal vivo]]',
 	'chat-no-login' => 'Devi effettuare il login per chattare.',
 	'chat-no-login-text' => 'Per favore effettua il login per chattare.',
-	'chat-default-topic' => 'Benvenuto nella chat di $1',
 	'chat-welcome-message' => 'Benvenuto nella chat $1',
 	'chat-user-joined' => '$1 è entrato nella chat.',
 	'chat-read-only' => 'La chat è momentaneamente non disponibile mentre la wiki è in modalità solo lettura.',
@@ -1870,19 +1858,18 @@ $1 è stato bannato da $2 $3.',
 	'chat-browser-is-notsupported' => 'Il tuo browser non è supportato. Per risolvere il problema, utilizza un <a href="http://community.wikia.com/wiki/Help:Supported_browsers">browser più recente</a>.',
 	'chat-checkuser-join-action' => 'È entrato nella chat',
 	'chat-status-away' => 'Assente',
-);
+];
 
 /** Japanese (日本語)
  * @author BryghtShadow
  * @author Shirayuki
  * @author Tommy6
  */
-$messages['ja'] = array(
+$messages['ja'] = [
 	'chat' => 'チャット',
 	'chat-desc' => '[[Special:Chat|ライブチャット]]',
 	'chat-no-login' => 'ログインする必要があります。',
 	'chat-no-login-text' => 'チャット機能を利用するにはログインする必要があります。',
-	'chat-default-topic' => '「$1 チャット」にようこそ',
 	'chat-welcome-message' => '「$1 チャット」にようこそ',
 	'chat-user-joined' => '$1 がチャットに参加しました。',
 	'chat-read-only' => 'ウィキが閲覧のみに制限されているためチャットは一時的に無効になっています。',
@@ -1962,36 +1949,35 @@ $messages['ja'] = array(
 	'chat-browser-is-notsupported' => 'お使いのブラウザはサポートされていません。より快適にご利用いただくために、<a href="http://community.wikia.com/wiki/Help:Supported_browsers">最新のブラウザ</a>への変更をお勧めいたします。',
 	'chat-checkuser-join-action' => 'チャットに参加',
 	'chat-status-away' => '退席中',
-);
+];
 
 /** Georgian (ქართული)
  * @author GeorgeBarnick
  */
-$messages['ka'] = array(
+$messages['ka'] = [
 	'chat' => 'სტატისტიკა',
 	'chat-desc' => '[[Special:Chat|სტატისტიკა]]',
 	'chat-log-reason-undo' => 'გაუქმება',
 	'chat-ban-undolink' => 'გაუქმება',
 	'chat-ban-modal-button-cancel' => 'გაუქმება',
 	'chat-you-are-banned' => 'ნებართვის შეცდომა.',
-);
+];
 
 /** Khowar (کھوار)
  * @author Rachitrali
  */
-$messages['khw'] = array(
+$messages['khw'] = [
 	'chat-desc' => '[[Special:Chat|لایو چیٹنگ]]',
-);
+];
 
 /** Kannada (ಕನ್ನಡ)
  * @author VASANTH S.N.
  */
-$messages['kn'] = array(
+$messages['kn'] = [
 	'chat' => 'ಸಂಭಾಷಣೆ',
 	'chat-desc' => '[[Special:Chat|ನೇರ ಸಂಭಾಷಣೆ]]',
 	'chat-no-login' => 'ನೀವು ಸಂಭಾಷಣೆ ನಡೆಸಲು ಲಾಗಿನ್ ಆಗಿರಬೇಕು.',
 	'chat-no-login-text' => 'ಸಂಭಾಷಣೆ ನಡೆಸಲು ದಯವಿಟ್ಟು ಲಾಗಿನ್ ಆಗಿ.',
-	'chat-default-topic' => '$1 ಸಂಭಾಷಣೆಗೆ ಸ್ವಾಗತ',
 	'chat-welcome-message' => '$1 ಸಂಭಾಷಣೆಗೆ ಸ್ವಾಗತ',
 	'chat-user-joined' => '$1 ಸಂಭಾಷಣೆಗೆ ಸೇರಿದ್ದಾರೆ.',
 	'chat-private-messages' => 'ಖಾಸಗಿ ಸಂದೇಶಗಳು',
@@ -2027,7 +2013,7 @@ $messages['kn'] = array(
 	'chat-chatban-log' => 'ಸಂಭಾಷಣೆ ನಿರ್ಬಂಧ ದಿನಚರಿ',
 	'chat-checkuser-join-action' => 'ಸಂಭಾಷಣೆಗೆ ಸೇರಿಕೊಳ್ಳು',
 	'chat-status-away' => 'ದೂರದಲ್ಲಿ',
-);
+];
 
 /** Korean (한국어)
  * @author Cafeinlove
@@ -2038,12 +2024,11 @@ $messages['kn'] = array(
  * @author 아라
  * @author 한글화담당
  */
-$messages['ko'] = array(
+$messages['ko'] = [
 	'chat' => '채트',
 	'chat-desc' => '[[Special:Chat|실시간 채팅]]',
 	'chat-no-login' => '채팅을 하려면 로그인해야 합니다.',
 	'chat-no-login-text' => '채팅을 하기 위해서는 로그인이 필요합니다.',
-	'chat-default-topic' => '$1 채팅에 오신 것을 환영합니다',
 	'chat-welcome-message' => '$1 채팅에 오신 것을 환영합니다',
 	'chat-user-joined' => '$1님이 대화에 참여했습니다.',
 	'chat-read-only' => '위키가 편집 불가 상태인 경우, 일시적으로 채팅을 이용할 수 없습니다.',
@@ -2123,39 +2108,38 @@ $messages['ko'] = array(
 	'chat-browser-is-notsupported' => '해당 브라우저를 지원하지 않습니다. 원활한 이용을 위해 <a href="http://community.wikia.com/wiki/Help:Supported_browsers">최신 브라우저</a>를 사용해주세요.',
 	'chat-checkuser-join-action' => '참여한 채팅방',
 	'chat-status-away' => '잠수',
-);
+];
 
 /** Kurdish (Latin script) (Kurdî (latînî)‎)
  * @author Bikarhêner
  */
-$messages['ku-latn'] = array(
+$messages['ku-latn'] = [
 	'chat' => 'Çet',
 	'chat-ban-modal-label-reason' => 'Sedem',
 	'chat-ban-modal-button-cancel' => 'Betal bike',
 	'chat-start-a-chat' => 'Çetek bide destpêkirin',
-);
+];
 
 /** Kyrgyz (Кыргызча)
  * @author Growingup
  */
-$messages['ky'] = array(
+$messages['ky'] = [
 	'chat' => 'Чат',
 	'chat-ban-modal-label-reason' => 'Себеп',
 	'chat-log-reason-undo' => 'жокко чыгаруу',
 	'chat-ban-undolink' => 'жокко чыгаруу',
 	'chat-ban-modal-button-cancel' => 'Жокко чыгаруу',
 	'chat-user-menu-ban' => 'Бан кылуу',
-);
+];
 
 /** Luxembourgish (Lëtzebuergesch)
  * @author Robby
  */
-$messages['lb'] = array(
+$messages['lb'] = [
 	'chat' => 'Chat',
 	'chat-desc' => '[[Special:Chat|Live chat]]',
 	'chat-no-login' => 'Dir musst ageloggt si fir ze chatten.',
 	'chat-no-login-text' => 'Loggt Iech w.e.g. a fir ze chatten.',
-	'chat-default-topic' => 'Wëllkomm am $1-Chat',
 	'chat-welcome-message' => 'Wëllkomm am $1-Chat',
 	'chat-private-messages' => 'Privat Messagen',
 	'chat-user-parted' => '$1 huet den Chat verlooss.',
@@ -2182,16 +2166,15 @@ $messages['lb'] = array(
 	'chat-user-menu-private-allow' => 'Privat Messagen erlaben',
 	'chat-ban-option-list' => '2 Stonnen:2 hours,1 Dag:1 day,3 Deeg:3 days,1 Woch:1 week,2 Wochen:2 weeks,1 Mount:1 month,3 Méint:3 months,6 Méint:6 months,1 Joer:1 year,onbegrenzt:infinite',
 	'chat-status-away' => 'Net do',
-);
+];
 
 /** Northern Luri (لوری مینجایی)
  * @author Mogoeilor
  */
-$messages['lrc'] = array(
+$messages['lrc'] = [
 	'chat' => 'انجوماگپ',
 	'chat-no-login' => 'شما سی انجوماگپ روئیت وامین',
 	'chat-no-login-text' => 'لطف بکیت سی انجوماگپ روئیت وامین.',
-	'chat-default-topic' => 'خوش اومائیت د انجوماگپ $1',
 	'chat-ban-contributions-heading' => 'جلؤگری د انجوماگپ',
 	'chat-ban-modal-label-expires' => 'تموم بیه آ',
 	'chat-ban-modal-label-reason' => 'دليل',
@@ -2214,18 +2197,17 @@ $messages['lrc'] = array(
 	'chat-user-menu-ban' => 'جلوگری',
 	'chat-checkuser-join-action' => 'اومائه د انجوماگپ',
 	'chat-status-away' => 'دير',
-);
+];
 
 /** Lithuanian (lietuvių)
  * @author Eitvys200
  * @author Mantak111
  */
-$messages['lt'] = array(
+$messages['lt'] = [
 	'chat' => 'Pokalbiai',
 	'chat-desc' => '[[Special:Chat|Tiesioginiai pokalbiai]]',
 	'chat-no-login' => 'Jus turite būti prisijungęs, kad galėtumėte kalbėti.',
 	'chat-no-login-text' => 'Prisijunkite, norėdami kalbėtis.',
-	'chat-default-topic' => 'Sveiki atvykę į, $1 pokalbį',
 	'chat-welcome-message' => 'Sveiki atvykę į $1 pokalbį',
 	'chat-user-joined' => '$1 prisijungė prie pokalbio.',
 	'chat-read-only' => 'Pokalbiai yra laikinai neprieinami, kol wiki yra tik skaitymo režimu.',
@@ -2273,24 +2255,23 @@ $messages['lt'] = array(
 	'group-chatmoderator' => 'Pokalbių moderatoriai',
 	'group-chatmoderator-member' => 'Pokalbių moderatorius',
 	'chat-browser-is-notsupported' => '	Jūsų naršyklė nepalaiko. Geriausiam patyrimui, naudokitės <a href="http://community.wikia.com/wiki/Help:Supported_browsers">naujesnę naršyklė</a>.',
-);
+];
 
 /** Latvian (latviešu)
  * @author Sg ghost
  */
-$messages['lv'] = array(
+$messages['lv'] = [
 	'chat-user-menu-message-wall' => 'Lietotāja diskusija',
-);
+];
 
 /** Macedonian (македонски)
  * @author Bjankuloski06
  */
-$messages['mk'] = array(
+$messages['mk'] = [
 	'chat' => 'Разговори',
 	'chat-desc' => '[[Special:Chat|Разговори во живо]]',
 	'chat-no-login' => 'Мора да се најавени за да разговарате.',
 	'chat-no-login-text' => 'Најавете се за да разговарате.',
-	'chat-default-topic' => 'Добре дојдовте на разговорот за $1',
 	'chat-welcome-message' => 'Добре дојдовте на разговорот за $1',
 	'chat-user-joined' => '$1 се приклучи на разговорот.',
 	'chat-read-only' => 'Разговорите се привремено недостапни кога викито е во режимот „само читање“.',
@@ -2372,24 +2353,23 @@ $messages['mk'] = array(
 	'chat-browser-is-notsupported' => 'Вашиот прелистувач не е поддржан. Најдобро е да користите <a href="http://community.wikia.com/wiki/Help:Supported_browsers">понов прелистувач</a>.',
 	'chat-checkuser-join-action' => 'Се приклучил во разговорот',
 	'chat-status-away' => 'Отсутен',
-);
+];
 
 /** Malayalam (മലയാളം)
  * @author Praveenp
  */
-$messages['ml'] = array(
+$messages['ml'] = [
 	'chat-edit-count' => '$1 തിരുത്തലുകൾ', # Fuzzy
-);
+];
 
 /** Malay (Bahasa Melayu)
  * @author Anakmalaysia
  */
-$messages['ms'] = array(
+$messages['ms'] = [
 	'chat' => 'Sembang',
 	'chat-desc' => '[[Special:Chat|Sembang secara langsung]]',
 	'chat-no-login' => 'Anda mesti log masuk untuk bersembang',
 	'chat-no-login-text' => 'Sila log masuk untuk bersembang',
-	'chat-default-topic' => 'Selamat datang ke ruang sembang $1',
 	'chat-welcome-message' => 'Selamat datang ke ruang sembang $1',
 	'chat-user-joined' => '$1 telah memasuki ruang sembang.',
 	'chat-read-only' => 'Laman Sembang tergendala buat sementara kerana wiki berada dalam mod baca sahaja.',
@@ -2472,19 +2452,18 @@ Jika anda rasa ini kesilapan atau ingin merayu untuk dibenarkan semula, sila hub
 	'chat-browser-is-notsupported' => 'Pelayar anda tidak disokong. Demi kemudahan anda, gunakan <a href="http://community.wikia.com/wiki/Help:Supported_browsers">pelayar yang lebih baharu</a>.',
 	'chat-checkuser-join-action' => 'Menyertai Sembang',
 	'chat-status-away' => 'Keluar',
-);
+];
 
 /** Norwegian Bokmål (norsk bokmål)
  * @author Audun
  * @author Laaknor
  * @author Nghtwlkr
  */
-$messages['nb'] = array(
+$messages['nb'] = [
 	'chat' => 'Chat',
 	'chat-desc' => '[[Special:Chat|Chat]]',
 	'chat-no-login' => 'Du må være logget inn for å chatte.',
 	'chat-no-login-text' => 'Vennligst logg inn for å chatte.',
-	'chat-default-topic' => 'Velkommen til $1-chatten',
 	'chat-welcome-message' => 'Velkommen til $1-chatten',
 	'chat-user-joined' => '$1 ble med i chatten.',
 	'chat-read-only' => 'Nettprat er midlertidig utilgjengelig mens wikien er i skrivebeskyttet modus.',
@@ -2566,12 +2545,12 @@ $messages['nb'] = array(
 	'chat-browser-is-notsupported' => 'Nettleseren din støttes ikke. For en best mulig opplevelse, bruk en <a href="http://community.wikia.com/wiki/Help:Supported_browsers">nyere nettleser</a>.',
 	'chat-checkuser-join-action' => 'Ble med i chatten',
 	'chat-status-away' => 'Borte',
-);
+];
 
 /** Nepali (नेपाली)
  * @author सरोज कुमार ढकाल
  */
-$messages['ne'] = array(
+$messages['ne'] = [
 	'chat' => 'कुराकानी',
 	'chat-ban-modal-label-reason' => 'कारण',
 	'chat-log-reason-undo' => 'रद्द गर्ने',
@@ -2579,7 +2558,7 @@ $messages['ne'] = array(
 	'chat-ban-modal-button-cancel' => 'रद्द',
 	'chat-log-reason-banchange' => 'कारण दिइएको छैन',
 	'chat-log-reason-banremove' => 'कारण दिइएको छैन',
-);
+];
 
 /** Dutch (Nederlands)
  * @author AvatarTeam
@@ -2588,12 +2567,11 @@ $messages['ne'] = array(
  * @author Siebrand
  * @author Tjcool007
  */
-$messages['nl'] = array(
+$messages['nl'] = [
 	'chat' => 'Chatten',
 	'chat-desc' => '[[Special:Chat|Livechat]]',
 	'chat-no-login' => 'U moet aangemeld zijn om deel te nemen aan de chat.',
 	'chat-no-login-text' => 'Meld u aan om deel te nemen aan de chat.',
-	'chat-default-topic' => 'Welkom bij de chat van $1',
 	'chat-welcome-message' => 'Welkom bij de chat van $1',
 	'chat-user-joined' => '$1 neemt nu deel aan de chat.',
 	'chat-read-only' => 'Chatten is tijdelijk niet mogelijk omdat de wiki alleen-lezen is.',
@@ -2674,30 +2652,29 @@ De laatste regel uit het logboek chatverbanningen wordt hieronder ter referentie
 	'chat-browser-is-notsupported' => 'Uw browser wordt niet ondersteund. Gebruik een <a href="http://community.wikia.com/wiki/Help:Supported_browsers">nieuwere browser</a> voor de beste ervaring.',
 	'chat-checkuser-join-action' => 'Verbonden met chat',
 	'chat-status-away' => 'Weg',
-);
+];
 
 /** Nederlands (informeel)‎ (Nederlands (informeel)‎)
  * @author Siebrand
  */
-$messages['nl-informal'] = array(
+$messages['nl-informal'] = [
 	'chat-no-login' => 'Je moet aangemeld zijn om deel te nemen aan de chat',
 	'chat-no-login-text' => 'Meld je aan om deel te nemen aan de chat.',
 	'chat-ban-cant-ban-moderator' => 'Je kunt een andere chatmoderator niet kicken of verbannen.',
 	'chat-ban-you-need-permission' => 'Je hebt het recht "$1" niet wat nodig is om een gebruiker te kicken of te verbannen.',
 	'chat-you-are-banned-text' => 'Je mag niet langer deelnemen aan de chat. Als je denkt dat dit niet klopt, of als je wilt vragen uw blokkade op te heffen, neem dan contact op met een beheerder.',
 	'chat-room-is-not-on-this-wiki' => 'De chatroom waar je probeert binnen te komen bestaat niet op deze wiki.',
-);
+];
 
 /** Occitan (occitan)
  * @author Cedric31
  * @author Hulothe
  */
-$messages['oc'] = array(
+$messages['oc'] = [
 	'chat' => 'Chat',
 	'chat-desc' => '[[Special:Chat|Charrar en dirècte]]',
 	'chat-no-login' => 'Vos cal èsser connectat per charrar.',
 	'chat-no-login-text' => 'Connectatz-vos per charrar.',
-	'chat-default-topic' => 'Benvenguda sul chat de $1',
 	'chat-welcome-message' => 'Benvenguda sul chat de $1',
 	'chat-user-joined' => '$1 a rejunt lo chat.',
 	'chat-private-messages' => 'Messatges privats',
@@ -2749,7 +2726,7 @@ $messages['oc'] = array(
 	'chat-chatbanremove-log-entry' => 'a levat lo bandiment del chat de $1',
 	'chat-checkuser-join-action' => 'A rejunt lo Chat',
 	'chat-status-away' => 'Absent',
-);
+];
 
 /** Polish (polski)
  * @author Anoon6
@@ -2760,12 +2737,11 @@ $messages['oc'] = array(
  * @author Sp5uhe
  * @author Woytecr
  */
-$messages['pl'] = array(
+$messages['pl'] = [
 	'chat' => 'Czat',
 	'chat-desc' => '[[Special:Chat|Czat na żywo]]',
 	'chat-no-login' => 'Musisz być zalogowany, żeby korzystać z czatu.',
 	'chat-no-login-text' => 'Zaloguj się, żeby korzystać z czatu.',
-	'chat-default-topic' => 'Witaj na czacie $1',
 	'chat-welcome-message' => 'Witaj na czacie $1',
 	'chat-user-joined' => '$1 dołączył na czat.',
 	'chat-read-only' => 'Czat jest niedostępny ponieważ wiki jest w trybie tylko do odczytu.',
@@ -2845,18 +2821,17 @@ $messages['pl'] = array(
 	'chat-browser-is-notsupported' => 'Twoja przeglądarka nie jest obsługiwana. Dla najlepszych rezultatów użyj <a href="http://community.wikia.com/wiki/Help:Supported_browsers">nowszej przeglądarki</a>.',
 	'chat-checkuser-join-action' => 'Dołączył na czat',
 	'chat-status-away' => 'Zaraz wracam',
-);
+];
 
 /** Piedmontese (Piemontèis)
  * @author Borichèt
  * @author Dragonòt
  */
-$messages['pms'] = array(
+$messages['pms'] = [
 	'chat' => 'Ciaciaré',
 	'chat-desc' => '[[Special:Chat|Ciaciaré dal viv]]',
 	'chat-no-login' => 'A dev esse intrà ant ël sistema për ciaciaré dal viv.',
 	'chat-no-login-text' => "Për piasì, ch'a intra ant ël sistema për ciaciaré dal viv.",
-	'chat-default-topic' => 'Bin ëvnù an sle ciaciarade dal viv ëd $1',
 	'chat-welcome-message' => 'Bin ëvnù an sle ciaciarade dal viv ëd $1',
 	'chat-user-joined' => "$1 a l'é intrà ant la ciaciarada.",
 	'chat-read-only' => "La ciaciarada a l'é nen disponìbil al moment dagià che la wiki a l'é mach an manera letura.",
@@ -2936,15 +2911,14 @@ $messages['pms'] = array(
 	'chat-browser-is-notsupported' => 'Sò navigador a l\'é pa mantnù. Për na mej esperiensa, ch\'a deuvra un <a href="http://community.wikia.com/wiki/Help:Supported_browsers">navigador pi neuv</a>.',
 	'chat-checkuser-join-action' => "A l'é intrà ant la ciaciarada dal viv",
 	'chat-status-away' => 'Assent',
-);
+];
 
 /** Pashto (پښتو)
  * @author Ahmed-Najib-Biabani-Ibrahimkhel
  */
-$messages['ps'] = array(
+$messages['ps'] = [
 	'chat' => 'بانډار',
 	'chat-no-login-text' => 'د بانډار لپاره غونډال ته ورننوځۍ.',
-	'chat-default-topic' => 'د $1 بانډار ته ښه راغلئ',
 	'chat-welcome-message' => 'د $1 بانډار ته ښه راغلئ',
 	'chat-user-joined' => '$1 بانډار کې ورگډ شو.',
 	'chat-private-messages' => 'شخصي پيغامونه',
@@ -2978,7 +2952,7 @@ $messages['ps'] = array(
 	'chat-private-headline' => 'د $1 سره شخصي بانډار',
 	'chat-checkuser-join-action' => 'بانډار کې ورگډ شو',
 	'chat-status-away' => 'ليرې دی',
-);
+];
 
 /** Portuguese (português)
  * @author Hamilton Abreu
@@ -2986,12 +2960,11 @@ $messages['ps'] = array(
  * @author Pttraduc
  * @author SandroHc
  */
-$messages['pt'] = array(
+$messages['pt'] = [
 	'chat' => 'Conversação ao vivo',
 	'chat-desc' => '[[Special:Chat|Conversação ao vivo]]',
 	'chat-no-login' => 'Para conversar tem de autenticar-se.',
 	'chat-no-login-text' => 'Autentique-se para conversar, por favor.',
-	'chat-default-topic' => 'Bem-vindo(a) à conversação ao vivo da $1',
 	'chat-welcome-message' => 'Bem-vindo(a) à conversação ao vivo da $1',
 	'chat-user-joined' => '$1 entrou.',
 	'chat-read-only' => 'A conversação ao vivo está temporariamente indisponível porque a wiki está em modo de leitura.',
@@ -3071,7 +3044,7 @@ $messages['pt'] = array(
 	'chat-browser-is-notsupported' => 'O seu browser não é suportado. Para uma melhor experiência de navegação, use um <a href="http://community.wikia.com/wiki/Help:Supported_browsers">browser mais recente</a>.',
 	'chat-checkuser-join-action' => 'Entrou na conversação ao vivo',
 	'chat-status-away' => 'Ausente',
-);
+];
 
 /** Brazilian Portuguese (português do Brasil)
  * @author Aristóbulo
@@ -3082,12 +3055,11 @@ $messages['pt'] = array(
  * @author TheGabrielZaum
  * @author 555
  */
-$messages['pt-br'] = array(
+$messages['pt-br'] = [
 	'chat' => 'Chat',
 	'chat-desc' => '[[Special:Chat|Chat ao vivo]]',
 	'chat-no-login' => 'Você precisa estar logado no chat.',
 	'chat-no-login-text' => 'Por favor, faça login para entrar no chat.',
-	'chat-default-topic' => 'Bem-vindo ao chat da $1',
 	'chat-welcome-message' => 'Bem-vindo ao chat da $1',
 	'chat-user-joined' => '$1 entrou no chat.',
 	'chat-read-only' => 'O chat está temporariamente indisponível porque a wiki está em modo de leitura.',
@@ -3167,29 +3139,28 @@ $messages['pt-br'] = array(
 	'chat-browser-is-notsupported' => 'Seu navegador não é compatível. Para uma experiência melhor, use um <a href="http://community.wikia.com/wiki/Help:Supported_browsers">navegador mais recente</a>.',
 	'chat-checkuser-join-action' => 'Uniu-se ao Chat',
 	'chat-status-away' => 'Ausente',
-);
+];
 
 /** Romanian (română)
  * @author Stelistcristi
  */
-$messages['ro'] = array(
+$messages['ro'] = [
 	'chat-desc' => '[[Special:Chat|Chat live]]',
 	'chat-no-login' => 'Trebuie să fii autentificat pentru a intra pe chat.',
 	'chat-no-login-text' => 'Te rugăm autentifică-te pentru a intra pe chat.',
 	'chat-start-a-chat' => 'Porneşte un chat',
 	'chat-join-the-chat' => 'Alăturaţi-vă chat-ului',
 	'chat-member-since' => 'Membru din $1',
-);
+];
 
 /** tarandíne (tarandíne)
  * @author Joetaras
  */
-$messages['roa-tara'] = array(
+$messages['roa-tara'] = [
 	'chat' => 'Ciat',
 	'chat-desc' => "[[Special:Chat|Ciat da 'u vive]]",
 	'chat-no-login' => 'Tu a trasè pe ciattà.',
 	'chat-no-login-text' => "Pe piacere tràse jndr'à ciat.",
-	'chat-default-topic' => "Bovègne jndr'à ciat $1",
 	'chat-welcome-message' => "Bovègne jndr'à ciat $1",
 	'chat-user-joined' => "$1 s'ha collegate 'a ciat.",
 	'chat-read-only' => "'A ciat è temboraneamende indisponibbile mendre 'a uicchi ste jndr'à modalità in sole-letture.",
@@ -3213,19 +3184,18 @@ $messages['roa-tara'] = array(
 	'chat-edit-count' => '{{PLURAL: $1|$1 cangiamende|$1 cangiaminde}}',
 	'group-bannedfromchat' => "Mise fore da 'a ciat",
 	'group-bannedfromchat-member' => "Mise fore da 'a ciat",
-);
+];
 
 /** Russian (русский)
  * @author DCamer
  * @author Kuzura
  * @author Okras
  */
-$messages['ru'] = array(
+$messages['ru'] = [
 	'chat' => 'Чат',
 	'chat-desc' => '[[Special:Chat|Чат]]',
 	'chat-no-login' => 'Вы должны быть зарегистрированы, чтобы войти в чат',
 	'chat-no-login-text' => 'Пожалуйста, войдите в чат.',
-	'chat-default-topic' => 'Добро пожаловать в $1 чат',
 	'chat-welcome-message' => 'Добро пожаловать в $1 чат',
 	'chat-user-joined' => '$1 присоединился к чату',
 	'chat-read-only' => 'Чат временно недоступен, так как вики находится в режиме только для чтения.',
@@ -3305,12 +3275,12 @@ $messages['ru'] = array(
 	'chat-browser-is-notsupported' => 'Ваш браузер не поддерживается. Используйте <a href="http://community.wikia.com/wiki/Help:Supported_browsers">другой браузер или другую версию браузера</a>.',
 	'chat-checkuser-join-action' => 'Присоединиться',
 	'chat-status-away' => 'Отсутствует',
-);
+];
 
 /** Sanskrit (संस्कृतम्)
  * @author NehalDaveND
  */
-$messages['sa'] = array(
+$messages['sa'] = [
 	'chat-ban-modal-label-reason' => 'कारणम्',
 	'chat-log-reason-undo' => 'पूर्ववत्',
 	'chat-ban-undolink' => 'पूर्ववत्',
@@ -3321,17 +3291,16 @@ $messages['sa'] = array(
 	'chat-user-menu-talk-page' => 'सम्भाषणपृष्ठम्',
 	'chat-user-menu-contribs' => 'योगदानानि',
 	'chat-user-menu-private' => 'वैय्यक्तिकसन्देशाः',
-);
+];
 
 /** Scots (Scots)
  * @author John Reid
  */
-$messages['sco'] = array(
+$messages['sco'] = [
 	'chat' => 'Bleather',
 	'chat-desc' => '[[Special:Chat|Live bleather]]',
 	'chat-no-login' => 'Ye maun be loggit in tae bleather.',
 	'chat-no-login-text' => 'Please login tae bleather.',
-	'chat-default-topic' => 'Walcome tae the $1 bleather',
 	'chat-welcome-message' => 'Walcome tae the $1 bleather',
 	'chat-user-joined' => '$1 haes joined the bleather.',
 	'chat-read-only' => 'The bleather is tempralie onavailable while wiki is in read-yinlie mode.',
@@ -3411,17 +3380,16 @@ $messages['sco'] = array(
 	'chat-browser-is-notsupported' => '	Yer brouser isna supportit. Fer the best expereeance, uise ae <a href="http://community.wikia.com/wiki/Help:Supported_browsers">newer brouser</a>.',
 	'chat-checkuser-join-action' => 'Jyned Bleather',
 	'chat-status-away' => 'Awa',
-);
+];
 
 /** Serbian (Cyrillic script) (српски (ћирилица)‎)
  * @author Aktron
  * @author Rancher
  */
-$messages['sr-ec'] = array(
+$messages['sr-ec'] = [
 	'chat-desc' => '[[Special:Chat|Ћаскање]]',
 	'chat-no-login' => 'Морате бити пријављени да бисте ћаскали.',
 	'chat-no-login-text' => 'Пријавите се да бисте ћаскали.',
-	'chat-default-topic' => 'Добро дошли на ћасање $1',
 	'chat-private-messages' => 'Приватне поруке',
 	'chat-you-are-banned' => 'Грешка у дозволама.',
 	'chat-you-are-banned-text' => 'Немате дозволу да ћаскате на овом викију. Ако мислите да је ово грешка или желите да се одлука преиспита, обратите се администратору.',
@@ -3430,7 +3398,7 @@ $messages['sr-ec'] = array(
 	'chat-user-menu-private' => 'Приватна порука',
 	'grouppage-chatmoderator' => 'w:c:community:Help:Chat',
 	'grouppage-bannedfromchat' => 'w:c:community:Help:Chat',
-);
+];
 
 /** Swedish (svenska)
  * @author Geitost
@@ -3438,12 +3406,11 @@ $messages['sr-ec'] = array(
  * @author Lokal Profil
  * @author WikiPhoenix
  */
-$messages['sv'] = array(
+$messages['sv'] = [
 	'chat' => 'Chatt',
 	'chat-desc' => '[[Special:Chat|Live-chatt]]',
 	'chat-no-login' => 'Du måste vara inloggad för att chatta.',
 	'chat-no-login-text' => 'Var god logga in för att chatta.',
-	'chat-default-topic' => 'Välkommen till $1-chatten',
 	'chat-welcome-message' => 'Välkommen till $1-chatten',
 	'chat-user-joined' => '$1 har gått med i chatten.',
 	'chat-read-only' => 'Chatten är för tillfället inte tillgänglig medan wikin är i skrivskyddat läge.',
@@ -3523,27 +3490,26 @@ $messages['sv'] = array(
 	'chat-browser-is-notsupported' => 'Din webbläsare stöds inte. För den bästa upplevelsen, använd en <a href="http://community.wikia.com/wiki/Help:Supported_browsers">nyare webbläsare</a>.',
 	'chat-checkuser-join-action' => 'Gick med i chatten',
 	'chat-status-away' => 'Borta',
-);
+];
 
 /** Tamil (தமிழ்)
  * @author Karthi.dr
  */
-$messages['ta'] = array(
+$messages['ta'] = [
 	'chat' => 'அரட்டை',
 	'chat-you-are-banned' => 'அனுமதிப் பிழை',
-);
+];
 
 /** Telugu (తెలుగు)
  * @author Chaduvari
  * @author Ravichandra
  * @author Veeven
  */
-$messages['te'] = array(
+$messages['te'] = [
 	'chat' => 'బాతాఖానీ',
 	'chat-desc' => '[[Special:Chat|లైవు బాతాఖానీ]]',
 	'chat-no-login' => 'బాతాఖానీ చేసేందుకు మీరు లాగినై ఉండాలి.',
 	'chat-no-login-text' => 'బాతాఖానీ చేసేందుకు లాగినవండి.',
-	'chat-default-topic' => '$1 బాతాఖానీకి స్వాగతం',
 	'chat-welcome-message' => '$1 బాతాఖానీకి స్వాగతం',
 	'chat-user-joined' => '$1 బాతాఖానీలో చేరారు.',
 	'chat-private-messages' => 'గోపనీయ సందేశాలు',
@@ -3589,16 +3555,15 @@ $messages['te'] = array(
 	'chat-user-menu-private-block' => 'గోప్య సందేశాలను నిరోధించు',
 	'chat-user-menu-private-allow' => 'గోప్య సందేశాలను అనుమతించు',
 	'chat-status-away' => 'ఇక్కడ లేరు',
-);
+];
 
 /** Thai (ไทย)
  * @author Akkhaporn
  */
-$messages['th'] = array(
+$messages['th'] = [
 	'chat-desc' => '[[Special:Chat|Live chat]]',
 	'chat-no-login' => 'คุณต้องล็อกอินในการสนทนา',
 	'chat-no-login-text' => 'กรุณาเข้าสู่ระบบเพื่อสนทนา',
-	'chat-default-topic' => 'ยินดีต้อนรับ $1 สู่ห้องสนทนา',
 	'chat-user-parted' => '$1 ได้ออกจากห้องสนทนา',
 	'chat-inlinealert-a-made-b-chatmod' => '$1 ได้แต่งตั้ง <strong>$2</strong> เป็นผู้ดูแลห้องสนทนา',
 	'chat-err-connected-from-another-browser' => 'คุณได้มีเชื่อมต่อจากเบราเซอร์อื่น การเชื่อมต่อนี้จะถูกปิด',
@@ -3617,17 +3582,16 @@ $messages['th'] = array(
 	'chat-join-the-chat' => 'เข้าร่วมสนทนา',
 	'chat-edit-count' => '$1 การแก้ไข', # Fuzzy
 	'chat-member-since' => 'เป็นสมาชิกตั้งแต่ $1',
-);
+];
 
 /** Tagalog (Tagalog)
  * @author AnakngAraw
  */
-$messages['tl'] = array(
+$messages['tl'] = [
 	'chat' => 'Makipagtalastasan',
 	'chat-desc' => '[[Special:Chat|Buhay na satsatan]]',
 	'chat-no-login' => 'Dapat kang nakalagda upang makapagsatsatan',
 	'chat-no-login-text' => 'Mangyaring lumagda upang makapagsatsatan.',
-	'chat-default-topic' => 'Maligayang pagdating sa satsatang $1',
 	'chat-welcome-message' => 'Maligayang pagdating sa satsatang $1',
 	'chat-user-joined' => 'Sumali na si $1 sa satsatan.',
 	'chat-read-only' => 'Pansamantalang hindi makukuha ang pakikipagtalastan habang ang wiki ay nasa moda ng pagbabasa lamang.',
@@ -3710,13 +3674,13 @@ Kung iniisip mong isa itong pagkakamali o nais mong muling maisaalang-alang, man
 	'chat-browser-is-notsupported' => 'Hindi sinusuportahan ang pantingin-tingin mo. Para sa pinaka mahusay na karanasan, gumamit ng isang <a href="http://community.wikia.com/wiki/Help:Supported_browsers">mas bagong pantingin-tingin</a>.',
 	'chat-checkuser-join-action' => 'Sumali sa Satsatan',
 	'chat-status-away' => 'Nasa malayo',
-);
+];
 
 /** Turkish (Türkçe)
  * @author Incelemeelemani
  * @author Sayginer
  */
-$messages['tr'] = array(
+$messages['tr'] = [
 	'chat' => 'Sohbet',
 	'chat-private-messages' => 'Özel Mesajlar',
 	'chat-log-reason-undo' => 'geri al',
@@ -3732,29 +3696,28 @@ $messages['tr'] = array(
 	'chat-user-menu-private-block' => 'Özel Mesajları Engelle',
 	'chat-user-menu-private-allow' => 'Özel Mesajlara İzin Ver',
 	'chat-user-menu-private-close' => 'Özel Odayı Kapat',
-);
+];
 
 /** Tatar (Cyrillic script) (татарча)
  * @author Ajdar
  */
-$messages['tt-cyrl'] = array(
+$messages['tt-cyrl'] = [
 	'chat-great-youre-logged-in' => 'Шәп! Сез системага кердегез.',
-);
+];
 
 /** Tuvinian (тыва дыл)
  * @author Agilight
  */
-$messages['tyv'] = array(
-	'chat-default-topic' => '$1 деп чугаа-соотче кирип моорлаңар',
+$messages['tyv'] = [
 	'chat-welcome-message' => '$1 деп чугаа-соотче кирип моорлаңар',
-);
+];
 
 /** Central Atlas Tamazight (ⵜⴰⵎⴰⵣⵉⵖⵜ)
  * @author Tifinaghes
  */
-$messages['tzm'] = array(
+$messages['tzm'] = [
 	'chat-ban-modal-button-cancel' => 'ⵓⵖⴰⵍ',
-);
+];
 
 /** Ukrainian (українська)
  * @author Andriykopanytsia
@@ -3764,12 +3727,11 @@ $messages['tzm'] = array(
  * @author Ua2004
  * @author Wildream
  */
-$messages['uk'] = array(
+$messages['uk'] = [
 	'chat' => 'Чат',
 	'chat-desc' => '[[Special:Chat|Чат]]',
 	'chat-no-login' => 'Ви повинні увійти в систему, щоб приєднатися до чату.',
 	'chat-no-login-text' => 'Будь ласка, увійдіть в систему, щоб приєднатися до чату.',
-	'chat-default-topic' => 'Ласкаво просимо в чат  $1',
 	'chat-welcome-message' => 'Ласкаво просимо в чат $1',
 	'chat-user-joined' => '$1 приєднався до чату.',
 	'chat-read-only' => 'Чта тимчасово недоступний, так як вікі знаходиться в режимі "лише для читання".',
@@ -3849,17 +3811,17 @@ $messages['uk'] = array(
 	'chat-browser-is-notsupported' => 'Ваш браузер не підтримується. Для найкращого результату використовуйте <a href="http://community.wikia.com/wiki/Help:Supported_browsers">новий браузер</a>.',
 	'chat-checkuser-join-action' => 'Приєднатися',
 	'chat-status-away' => 'Відсутній',
-);
+];
 
 /** Veps (vepsän kel’)
  * @author Игорь Бродский
  */
-$messages['vep'] = array(
+$messages['vep'] = [
 	'chat' => 'Čat',
 	'chat-start-a-chat' => 'Zavottä čat',
 	'group-chatmoderator' => 'Čatan moderatorad',
 	'group-chatmoderator-member' => 'Čatan moderator',
-);
+];
 
 /** Vietnamese (Tiếng Việt)
  * @author Timothy Quievryn
@@ -3867,12 +3829,11 @@ $messages['vep'] = array(
  * @author Xiao Qiao
  * @author XiaoQiaoGrace
  */
-$messages['vi'] = array(
+$messages['vi'] = [
 	'chat' => 'Tán gẫu',
 	'chat-desc' => '[[Special:Chat|Tán gẫu trực tuyến]]',
 	'chat-no-login' => 'Bạn phải đăng nhập để tán gẫu.',
 	'chat-no-login-text' => 'Vui lòng đăng nhập để tán gẫu.',
-	'chat-default-topic' => 'Chào mừng đến với tán gẫu $1',
 	'chat-welcome-message' => 'Chào mừng đến Phòng tán gẫu $1',
 	'chat-user-joined' => '$1 đã tham gia tán gẫu.',
 	'chat-read-only' => 'Tán gẫu tạm thời không được áp dụng trong khi wiki đang ở chế độ chỉ-đọc.',
@@ -3952,7 +3913,7 @@ $messages['vi'] = array(
 	'chat-browser-is-notsupported' => 'Trình duyệt của bạn không được hỗ trợ. Để trải nghiệm tốt nhất, sử dụng một <a href="http://community.wikia.com/wiki/Help:Supported_browsers">trình duyệt mới hơn</a>.',
 	'chat-checkuser-join-action' => 'Tham gia Tán gẫu',
 	'chat-status-away' => 'Vắng',
-);
+];
 
 /** Simplified Chinese (中文（简体）‎)
  * @author Dimension
@@ -3964,12 +3925,11 @@ $messages['vi'] = array(
  * @author Yfdyh000
  * @author 乌拉跨氪
  */
-$messages['zh-hans'] = array(
+$messages['zh-hans'] = [
 	'chat' => '聊天',
 	'chat-desc' => '[[Special:Chat|在线聊天]]',
 	'chat-no-login' => '您必须登录才能聊天。',
 	'chat-no-login-text' => '请登录来聊天。',
-	'chat-default-topic' => '欢迎来到$1聊天',
 	'chat-welcome-message' => '欢迎来到 $1 的聊天室',
 	'chat-user-joined' => '$1 已经加入聊天。',
 	'chat-read-only' => '维基是只读模式，聊天暂时不可用。',
@@ -4049,7 +4009,7 @@ $messages['zh-hans'] = array(
 	'chat-browser-is-notsupported' => '您的浏览器不支持。为了获得最佳体验，请使用<a href="http://community.wikia.com/wiki/Help:Supported_browsers">较新的浏览器</a>。',
 	'chat-checkuser-join-action' => '加入聊天',
 	'chat-status-away' => '不在',
-);
+];
 
 /** Traditional Chinese (中文（繁體）‎)
  * @author Cwlin0416
@@ -4057,12 +4017,11 @@ $messages['zh-hans'] = array(
  * @author LNDDYL
  * @author Liuxinyu970226
  */
-$messages['zh-hant'] = array(
+$messages['zh-hant'] = [
 	'chat' => '聊天室',
 	'chat-desc' => '[[Special:Chat|即時聊天室]]',
 	'chat-no-login' => '您必須登入才能聊天。',
 	'chat-no-login-text' => '請登入來聊天。',
-	'chat-default-topic' => '歡迎光臨 $1 聊天室',
 	'chat-welcome-message' => '歡迎光臨 $1 聊天室',
 	'chat-user-joined' => '$1 已加入聊天室。',
 	'chat-read-only' => 'wiki 目前為唯讀模式，聊天室暫時無法使用。',
@@ -4142,4 +4101,4 @@ $messages['zh-hant'] = array(
 	'chat-browser-is-notsupported' => '	您的瀏覽器不支援。 要取得最佳體驗請使用 <a href="http://community.wikia.com/wiki/Help:Supported_browsers">新版的瀏覽器</a>。',
 	'chat-checkuser-join-action' => '已加入聊天',
 	'chat-status-away' => '不在座位',
-);
+];

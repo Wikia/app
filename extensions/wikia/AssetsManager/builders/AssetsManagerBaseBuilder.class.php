@@ -123,8 +123,11 @@ class AssetsManagerBaseBuilder {
 
 			$out = $wrapper->wrap( function () use ( $IP, &$retval, $tempInFile ) {
 				$tempOutFile = tempnam(sys_get_temp_dir(), 'AMOut');
-				wfShellExec("nice -n 15 java -jar {$IP}/lib/vendor/yuicompressor-2.4.2.jar --type js -o {$tempOutFile} {$tempInFile}", $retval);
-				$out = file_get_contents($tempOutFile);
+				$out = wfShellExec("nice -n 15 java -jar {$IP}/lib/vendor/yuicompressor-2.4.2.jar --type js -o {$tempOutFile} {$tempInFile} 2>&1", $retval);
+
+				if ($retval === 0) {
+					$out = file_get_contents($tempOutFile);
+				}
 				unlink($tempOutFile);
 
 				return $out;

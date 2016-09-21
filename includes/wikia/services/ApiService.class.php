@@ -1,4 +1,6 @@
 <?php
+use \Wikia\Service\User\Auth\HeliosCookieHelper;
+
 class ApiService extends Service {
 
 	/**
@@ -132,6 +134,12 @@ class ApiService extends Service {
 			$cookie .= $app->wg->CookiePrefix.$key.'='.$value.';';
 		}
 
+		if ( $app->wg->EnableHeliosExt ) {
+			$token = \Wikia\Helios\User::getAccessToken( $app->wg->Request );
+			if ( !empty( $token ) ) {
+				$cookie .= HeliosCookieHelper::ACCESS_TOKEN_COOKIE_NAME . "=" . $token . ";";
+			}
+		}
 		$options['curlOptions'] = array( CURLOPT_COOKIE => $cookie );
 
 		return $options;

@@ -76,14 +76,19 @@ fwrite(STDERR, "\n\nGenerating file heatmap...\n");
 
 $totals = array();
 $max_runs = 1;  // 1, to prevent div-by-zeros
-foreach( $coverage_data as $file => $lines ) {
-    $totals[$file] = 0;
-    foreach( $lines as $line => $runs ) {
-        $totals[$file] += $runs;
+foreach ($coverage_data as $file => $lines) {
+    $totals[$file]["line_count"] = [
+        "aggregate_runs" => 0,
+        "lines_run" => 0
+    ];
+
+    foreach ($lines as $line => $aggregate_runs) {
+        $totals[$file]["aggregate_runs"] += $aggregate_runs;
+        $totals[$file]["lines_run"]++;
     }
 
-    if( $totals[$file] > $max_runs ) {
-        $max_runs = $totals[$file];
+    if ($totals[$file]["aggregate_runs"] > $max_runs) {
+        $max_runs = $totals[$file]["aggregate_runs"];
     }
 }
 
@@ -113,14 +118,29 @@ $css = "
 $sorttable_lib = file_get_contents("sorttable.js");
 
 $body = "<table class='sortable'>";
-$header = "<thead><tr><th class='line'>Lines Run</th><th class='line_count'>File Name</th></tr></thead>";
+$header = "<thead><tr>";
+$header .= "<th class='line'>Lines Run<br/>(at least once)</th>";
+$header .= "<th class='line'>Aggregate Lines Run</th>";
+$header .= "<th class='line'>Run Ratio</th>";
+$header .= "<th class='line_count'>File Name</th>";
+$header .= "</tr></thead>";
 $body .= $header;
 
-foreach ($totals as $file => $runs ) {
-    $ratio = $runs / $max_runs;    // For the coloration heatmap
+foreach ($totals as $file => $run_data) {
+    $aggregate_runs = $run_data["aggregate_runs"];
+    $lines_run = $run_data["lines_run"];
+    $run_ratio = round( $aggregate_runs / $lines_run, 1);
 
-    $style = "background-color: rgba(166, 255, 0, $ratio);";
-    $tr = "<tr class='line' style='$style'><td class='line_count'>$runs</td><td class='line_text'>$file</td></tr>";
+    $color_ratio = $aggregate_runs / $max_runs;    // For the coloration heatmap
+
+    $style = "background-color: rgba(166, 255, 0, $color_ratio);";
+    $converted_filename = str_replace("/", "_", $file);
+    $tr = "<tr class='line' style='$style'>";
+    $tr .= "<td class='line_count'>$lines_run</td>";
+    $tr .= "<td class='line_count'>$aggregate_runs</td>";
+    $tr .= "<td class='line_count'>$run_ratio</td>";
+    $tr .= "<td class='line_text'><a href='./line_heat_maps/$converted_filename.html' target='_blank'>$file</a></td>";
+    $tr .= "</tr>";
     $body .= $tr;
 }
 

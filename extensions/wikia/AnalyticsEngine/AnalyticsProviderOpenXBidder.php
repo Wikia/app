@@ -3,13 +3,11 @@
 class AnalyticsProviderOpenXBidder implements iAnalyticsProvider {
 
 	public static function isEnabled() {
-		global $wgAdDriverEnableOpenXBidder, $wgEnableAdEngineExt, $wgShowAds, $wgAdDriverUseSevenOneMedia;
+		global $wgAdDriverEnableOpenXBidder, $wgShowAds;
 
-		return ( $wgAdDriverEnableOpenXBidder )
-			&& $wgEnableAdEngineExt
+		return $wgAdDriverEnableOpenXBidder
 			&& $wgShowAds
-			&& AdEngine2Service::areAdsShowableOnPage()
-			&& !$wgAdDriverUseSevenOneMedia;
+			&& AdEngine2Service::areAdsShowableOnPage();
 	}
 
 	private function getIntegrationScript( $moduleName, $instantGlobalName ) {
@@ -27,7 +25,7 @@ class AnalyticsProviderOpenXBidder implements iAnalyticsProvider {
 			qs = new Querystring();
 
 		if (geo.isProperGeo(ac) || qs.getVal('oxbidder', '0') === '1') {
-			oxBidder.call('oasis');
+			oxBidder.call();
 		};
 	});
 CODE;

@@ -96,7 +96,8 @@ class Parser {
 	const OT_PLAIN = 4; # like extractSections() - portions of the original are returned unchanged.
 
 	# Marker Suffix needs to be accessible staticly.
-	const MARKER_SUFFIX = "-QINU\x7f";
+	const MARKER_SUFFIX = "-QINU`\"'\x7f";
+	const MARKER_PREFIX = "\x7f'\"`UNIQ";
 
 	# Persistent:
 	var $mTagHooks = array();
@@ -297,7 +298,7 @@ class Parser {
 		 */
 		# $this->mUniqPrefix = "\x07UNIQ" . Parser::getRandomString();
 		# Changed to \x7f to allow XML double-parsing -- TS
-		$this->mUniqPrefix = "\x7fUNIQ" . self::getRandomString();
+		$this->mUniqPrefix = self::MARKER_PREFIX . self::getRandomString();
 		$this->mStripState = new StripState( $this->mUniqPrefix );
 
 
@@ -479,6 +480,7 @@ class Parser {
 		}
 
 		wfRunHooks( 'ParserAfterTidy', array( &$this, &$text ) );
+
 		// Wikia change begin - @author: wladek
 		$this->recordPerformanceStats( $wikitextSize, strlen($text) );
 		// Wikia change end
@@ -1263,6 +1265,11 @@ class Parser {
 					[0-9Xx]                 # check digit
 					\b)
 			)!xu', array( &$this, 'magicLinkCallback' ), $text );
+
+		if ( preg_last_error() !== 0 ) {
+			\Wikia\Logger\WikiaLogger::instance()->error( 'PCRE error', [ 'preg_last_error' => preg_last_error() ] );
+		}
+
 		wfProfileOut( __METHOD__ );
 		return $text;
 	}
@@ -1966,7 +1973,7 @@ class Parser {
 				$might_be_img = true;
 				$text = $m[2];
 				if ( strpos( $m[1], '%' ) !== false ) {
-					$m[1] = rawurldecode( $m[1] );
+					$m[1] = str_replace( [ '<', '>' ], [ '&lt;', '&gt;' ], rawurldecode( $m[1] ) );
 				}
 				$trail = "";
 			} else { # Invalid form; output directly
@@ -3387,6 +3394,7 @@ class Parser {
 		# SUBST
 		wfProfileIn( __METHOD__.'-modifiers' );
 		if ( !$found ) {
+			Wikia\Util\Assert::true( $this->mSubstWords instanceof MagicWordArray, 'Parser::mSubstWords should be an instance of MagicWordArray', [ 'part1' => $part1 ] ); // ER-9507
 
 			$substMatch = $this->mSubstWords->matchStartAndRemove( $part1 );
 
@@ -3615,7 +3623,7 @@ class Parser {
 					$found = false; # access denied
 					wfDebug( __METHOD__.": template inclusion denied for " . $title->getPrefixedDBkey() );
 				} else {
-					list( $text, $title ) = $this->getTemplateDom( $title );
+					list( $text, $title ) = $this->getTemplateDom( $title, $args, $frame );
 					if ( $text !== false ) {
 						$found = true;
 						$isChildObj = true;
@@ -3750,6 +3758,10 @@ class Parser {
 			$ret = array( 'text' => $text );
 		}
 
+		# wikia start
+		wfRunHooks( 'Parser::endBraceSubstitution', array( $originalTitle, &$ret['text'], &$this ) );
+		# wikia end
+
 		wfProfileOut( __METHOD__ );
 		return $ret;
 	}
@@ -3759,12 +3771,24 @@ class Parser {
 	 * and its redirect destination title. Cached.
 	 *
 	 * @param $title Title
+	 * @param $args array
+	 * @param $frame PPFrame_DOM
 	 *
 	 * @return array
 	 */
-	function getTemplateDom( $title ) {
+	function getTemplateDom( $title, $args = null, $frame = null ) {
 		$cacheTitle = $title;
 		$titleText = $title->getPrefixedDBkey();
+
+		# wikia start
+		$text = '';
+		wfRunHooks( 'Parser::getTemplateDom', array( $title, $args, $frame,  &$text ) );
+
+		if ( !empty( $text ) ) {
+			$dom = $this->preprocessToDom( $text, self::PTD_FOR_INCLUSION );
+			return array( $dom, $title );
+		}
+		# wikia end
 
 		if ( isset( $this->mTplRedirCache[$titleText] ) ) {
 			list( $ns, $dbk ) = $this->mTplRedirCache[$titleText];
@@ -3868,7 +3892,7 @@ class Parser {
 			# Get the revision
 			$rev = $id
 				? Revision::newFromId( $id )
-				: Revision::newFromTitle( $title );
+				: Revision::newFromTitle( $title, 0, Revision::READ_NORMAL );
 			$rev_id = $rev ? $rev->getId() : 0;
 			# If there is no current revision, there is no page
 			if ( $id === false && !$rev ) {
@@ -4003,9 +4027,14 @@ class Parser {
 
 		$text = Http::get( $url );
 		if ( !$text ) {
-			# wikia start
-			Wikia::log(__METHOD__, false, "Scary transclusion failed for <{$url}>");
-			# wikia end
+			// Wikia change - begin
+			if ( $text === '' ) {
+				Wikia\Logger\WikiaLogger::instance()->error( __METHOD__ . ' - empty response', [
+					'url' => $url,
+				] );
+			}
+			// Wikia change - end
+
 			return wfMsgForContent( 'scarytranscludefailed', $url );
 		}
 

@@ -73,9 +73,7 @@ class SeoTesting {
 			return $bucket;
 		}
 
-		$requestVars = $wgRequest->getValues();
-		unset( $requestVars[ 'title' ] );
-		if ( !empty($requestVars) || ! WikiaPageType::isArticlePage() ) {
+		if ( ! WikiaPageType::isArticlePage() ) {
 			$bucket = self::NOT_AN_ARTICLE;
 			return $bucket;
 		}

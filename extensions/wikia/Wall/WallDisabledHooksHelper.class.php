@@ -18,10 +18,10 @@ class WallDisabledHooksHelper {
 			|| $title->getNamespace() == NS_USER_WALL_MESSAGE
 			|| $title->getNamespace() == NS_USER_WALL_MESSAGE_GREETING
 		) ) {
-			$permErrors[] = array(
+			$permErrors[] = [
 				0 => 'protectedpagetext',
 				1 => 'archived'
-			);
+			];
 		}
 
 		return true;

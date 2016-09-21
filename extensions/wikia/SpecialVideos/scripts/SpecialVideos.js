@@ -65,6 +65,7 @@ $(function () {
 							'addVideo',
 							// data
 							{
+								token: mw.user.tokens.get('editToken'),
 								url: url
 							},
 							// success callback
@@ -79,7 +80,7 @@ $(function () {
 										.show();
 								} else {
 									VET.close();
-									(new Wikia.Querystring()).setVal('sort', 'recent').goTo();
+									(new Wikia.Querystring()).goTo();
 								}
 							},
 							// error callback

@@ -151,7 +151,7 @@ class VideoPageToolAssetTest extends WikiaBaseTest {
 		}
 
 		// Let slave catch up
-		sleep(1);
+		wfWaitForSlaves();
 
 		/**
 		 * Check loading the object from database

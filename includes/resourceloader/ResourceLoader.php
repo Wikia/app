@@ -28,6 +28,8 @@
  */
 class ResourceLoader {
 
+	const RESOURCE_LOADER_MINIMUM_CACHE = '20160105100000';
+
 	/* Protected Static Members */
 	protected static $filterCacheVersion = 7;
 	protected static $requiredSourceProperties = array( 'loadScript' );
@@ -499,7 +501,8 @@ class ResourceLoader {
 
 		// To send Last-Modified and support If-Modified-Since, we need to detect
 		// the last modified time
-		$mtime = wfTimestamp( TS_UNIX, $wgCacheEpoch );
+		// ResourceLoader minimum cache added in MAIN-6140
+		$mtime = wfTimestamp( TS_UNIX, max( $wgCacheEpoch, self::RESOURCE_LOADER_MINIMUM_CACHE ) );
 		foreach ( $modules as $module ) {
 			/**
 			 * @var $module ResourceLoaderModule

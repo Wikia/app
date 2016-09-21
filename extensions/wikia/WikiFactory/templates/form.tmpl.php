@@ -642,9 +642,6 @@ $(function() {
 			<li <?php echo ( $tab === "clog" ) ? 'class="selected"' : 'class="inactive"' ?> >
 				<?php echo WikiFactoryPage::showTab( "clog", $tab, $wiki->city_id ); ?>
 			</li>
-			<li <?php echo ( $tab === "google" ) ? 'class="selected"' : 'class="inactive"' ?> >
-				<?php echo WikiFactoryPage::showTab( "google", $tab, $wiki->city_id ); ?>
-			</li>
 			<li <?php echo ( $tab === "close" ) ? 'class="selected"' : 'class="inactive"' ?> >
 				<?php echo WikiFactoryPage::showTab( "close", $tab, $wiki->city_id ); ?>
 			</li>
@@ -733,11 +730,6 @@ $(function() {
 
 			case "findtags":
 				include_once( "form-tags-find.tmpl.php" );
-				break;
-
-		# GOOGLE
-			case "google":
-				include_once( "form-google.tmpl.php" );
 				break;
 
 		# CLOSE

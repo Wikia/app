@@ -26,20 +26,20 @@ $wgWidgets['WidgetTopContent'] = array(
 function WidgetTopContent($id, $params) {
 
     wfProfileIn(__METHOD__);
-    
+
     // select active section
     $active = $params['at'];
     list ($sections, $default) = WidgetTopContentGetSectionsList();
     if (!array_key_exists($active, $sections)) {
         $active = $default;
     }
-    
+
     // ...and get its content
     $section = WidgetTopContentGetSection($active, $sections[$active]);
-    
+
     // select box
     $provider = & DataProvider::singleton();
-    
+
 	// don't show select box when being rendered by WidgetTag
 	if ( !isset($params['_widgetTag']) ) {
 		$out_selector = '<select onchange="WidgetTopContentSwitchSection(this);" id="'.$id.'_select">';
@@ -52,13 +52,10 @@ function WidgetTopContent($id, $params) {
 	else {
 		$out_selector = '';
 	}
-    
-    // more link
-    $more = Title::makeTitle( NS_SPECIAL, 'Top' )->getLocalURL().'/'.$active;
-    
+
     wfProfileOut(__METHOD__);
-    
-    return array( 'body' => $section . $out_selector . WidgetFramework::moreLink($more) );
+
+    return array( 'body' => $section . $out_selector );
 }
 
 // AJAX support for dynamic change of widget "tabs"
@@ -69,10 +66,10 @@ function WidgetTopContentGetSection($id, $functionName) {
 	// get list from DataProvider
 	$provider = & DataProvider::singleton();
 	$articles =& $provider->$functionName();
-    
-	// make items list    
+
+	// make items list
 	$items = array();
-    
+
 	if ( is_array($articles) && count($articles) > 0 ) {
 		foreach ($articles as $article) {
 			if ($article['text'] != 'Not a valid Wikia') {
@@ -80,7 +77,7 @@ function WidgetTopContentGetSection($id, $functionName) {
 			}
 		}
 	}
-    
+
 	wfProfileOut(__METHOD__);
 
 	return WidgetFramework::wrapLinks($items);
@@ -94,9 +91,9 @@ function WidgetTopContentGetSectionsList() {
     $provider = & DataProvider::singleton();
     list( $links, $active ) = $provider->GetTopFiveArray();
     unset($links['community']);
-    
+
     wfProfileOut(__METHOD__);
-    
+
     return array(0 => $links,1 => $active);
 }
 

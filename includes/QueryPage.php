@@ -292,6 +292,16 @@ abstract class QueryPage extends SpecialPage {
 		# Do query
 		$res = $this->reallyDoQuery( $limit, false );
 		$num = false;
+
+		/**
+		 * Wikia change begin
+		 * @author <adamk@wikia-inc.com>
+		 */
+		wfRunHooks( 'QueryPageUseResultsBeforeRecache', [ $this, $dbr, $res ] );
+		/**
+		 * Wikia change end
+		 */
+
 		if ( $res ) {
 			$num = $dbr->numRows( $res );
 			# Fetch results

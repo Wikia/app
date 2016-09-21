@@ -58,7 +58,8 @@
       queryParamName: 'query',
       fnPreprocessResults: null,
       skipBadQueries: false,
-      positionRight: null
+      positionRight: null,
+      matchFromStart: true
     };
     if (options) {
       // since we're using an old version of this plugin with minChars instead of minLength,
@@ -236,13 +237,14 @@
     },
 
     getSuggestionsLocal: function(q) {
-      var ret, arr, len, val;
+      var ret, arr, len, val, pos;
       arr = this.options.lookup;
       len = arr.suggestions.length;
       ret = { suggestions:[], data:[] };
       for(var i=0; i< len; i++){
         val = arr.suggestions[i];
-        if(val.toLowerCase().indexOf(q.toLowerCase()) === 0){
+        pos = val.toLowerCase().indexOf(q.toLowerCase());
+        if( (this.options.matchFromStart && pos === 0) || (!this.options.matchFromStart && pos >= 0) ){
           ret.suggestions.push(val);
           ret.data.push(arr.data[i]);
         }

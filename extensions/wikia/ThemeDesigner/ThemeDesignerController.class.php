@@ -66,6 +66,9 @@ class ThemeDesignerController extends WikiaController {
 
 		$this->globalVariablesScript = $ret;
 
+		$pageTitle = wfMessage( 'themedesigner-title' );
+		$this->pageTitle = ( new WikiaHtmlTitle() )->setParts( [ $pageTitle ] )->getTitle();
+
 		wfProfileOut( __METHOD__ );
 	}
 
@@ -86,7 +89,9 @@ class ThemeDesignerController extends WikiaController {
 	}
 
 	public function executePreview() {
+		global $wgEnablePortableInfoboxEuropaTheme;
 
+		$this->infoboxTheme = $wgEnablePortableInfoboxEuropaTheme ? 'theme="europa"' : '';
 	}
 
 	/**

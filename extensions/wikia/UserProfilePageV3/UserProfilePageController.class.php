@@ -20,14 +20,11 @@ class UserProfilePageController extends WikiaController {
 	protected $defaultAvatars = null;
 	protected $defaultAvatarPath = 'http://images.wikia.com/messaging/images/';
 
-	public function __construct( WikiaApp $app = null ) {
+	public function __construct() {
+		parent::__construct();
 		global $UPPNamespaces;
-		if ( is_null( $app ) ) {
-			$app = F::app();
-		}
-		$this->app = $app;
 		$this->allowedNamespaces = $UPPNamespaces;
-		$this->title = $app->wg->Title;
+		$this->title = $this->wg->Title;
 	}
 
 	/**
@@ -51,7 +48,7 @@ class UserProfilePageController extends WikiaController {
 			$namespace = $this->title->getNamespace();
 			$isSubpage = $this->title->isSubpage();
 		} else {
-			$namespace = $this->app->wg->NamespaceNumber;
+			$namespace = $this->wg->NamespaceNumber;
 			$isSubpage = false;
 		}
 
@@ -97,7 +94,7 @@ class UserProfilePageController extends WikiaController {
 
 		$sessionUser = $this->wg->User;
 
-		$this->setRequest( new WikiaRequest( $this->app->wg->Request->getValues() ) );
+		$this->setRequest( new WikiaRequest( $this->wg->Request->getValues() ) );
 		$user = UserProfilePageHelper::getUserFromTitle();
 		/**
 		 * @var $userIdentityBox UserIdentityBox
@@ -120,11 +117,11 @@ class UserProfilePageController extends WikiaController {
 
 		$userData = $userIdentityBox->getFullData();
 
-		$this->setVal( 'isBlocked', ( $user->isBlocked() || $user->isBlockedGlobally() ) );
-		$this->setVal( 'zeroStateCssClass', ( $userData['showZeroStates'] ) ? 'zero-state' : '' );
+		$this->setVal( 'isBlocked', ( $user->isBlocked( true, false ) || $user->isBlockedGlobally() ) );
+		$this->setVal( 'zeroStateCssClass', ( $userData[ 'showZeroStates' ] ) ? 'zero-state' : '' );
 
 		$this->setVal( 'user', $userData );
-		$this->setVal( 'deleteAvatarLink', SpecialPage::getTitleFor( 'RemoveUserAvatar' )->getFullUrl( 'av_user=' . $userData['name'] ) );
+		$this->setVal( 'deleteAvatarLink', SpecialPage::getTitleFor( 'RemoveUserAvatar' )->getFullURL( 'av_user=' . $userData[ 'name' ] ) );
 		$this->setVal( 'canRemoveAvatar', $sessionUser->isAllowed( 'removeavatar' ) );
 		$this->setVal( 'isUserPageOwner', $isUserPageOwner );
 
@@ -138,8 +135,10 @@ class UserProfilePageController extends WikiaController {
 		$this->setVal( 'isWikiStaff', $sessionUser->isAllowed( 'staff' ) );
 		$this->setVal( 'canEditProfile', ( $isUserPageOwner || $sessionUser->isAllowed( 'staff' ) || $sessionUser->isAllowed( 'editprofilev3' ) ) );
 
+		$this->fetchDiscussionPostsNumberFrom($user);
+
 		if ( !empty( $this->title ) ) {
-			$this->setVal( 'reloadUrl', htmlentities( $this->title->getFullUrl(), ENT_COMPAT, 'UTF-8' ) );
+			$this->setVal( 'reloadUrl', htmlentities( $this->title->getFullURL(), ENT_COMPAT, 'UTF-8' ) );
 		} else {
 			$this->setVal( 'reloadUrl', '' );
 		}
@@ -163,7 +162,7 @@ class UserProfilePageController extends WikiaController {
 
 		$namespace = $this->title->getNamespace();
 
-		$this->setRequest( new WikiaRequest( $this->app->wg->Request->getValues() ) );
+		$this->setRequest( new WikiaRequest( $this->wg->Request->getValues() ) );
 		$user = UserProfilePageHelper::getUserFromTitle();
 
 		/**
@@ -175,29 +174,30 @@ class UserProfilePageController extends WikiaController {
 		$canDelete = $sessionUser->isAllowed( 'deleteprofilev3' );
 		$isUserPageOwner = ( $user instanceof User && !$user->isAnon() && $user->getId() == $sessionUser->getId() ) ? true : false;
 
-		$editQuery = array( 'action' => 'edit' );
+		$editQuery = [ 'action' => 'edit' ];
 
 		// check if this is an older version of the page
-		$oldid = $this->app->wg->Request->getInt( 'oldid', 0 );
+		$oldid = $this->wg->Request->getInt( 'oldid', 0 );
 		if ( $oldid ) {
-			$editQuery['oldid'] = $oldid;
+			$editQuery[ 'oldid' ] = $oldid;
 		}
 
-		$actionButtonArray = array();
+		$actionButtonArray = [ ];
+		$canSessionUserEdit = $this->title->userCan( 'edit', $sessionUser );
 		if ( $namespace == NS_USER ) {
 			// profile page
-			$actionButtonArray = array(
-				'action' => array(
-					'href' => $this->title->getLocalUrl( $editQuery ),
-					'text' => wfMessage( 'user-action-menu-edit-profile' )->escaped(),
-					'id' => 'ca-edit',
-					'accesskey' => wfMessage( 'accesskey-ca-edit' )->escaped(),
-				),
-				'image' => MenuButtonController::EDIT_ICON,
-				'name' => 'editprofile',
-			);
+			$actionButtonArray = [
+				'action' => [
+					'href'      => $this->title->getLocalURL( $editQuery ),
+					'text'      => $canSessionUserEdit ? wfMessage( 'user-action-menu-edit-profile' )->escaped() : wfMessage( 'viewsource' )->escaped(),
+					'id'        => 'ca-edit',
+					'accesskey' => $canSessionUserEdit ? wfMessage( 'accesskey-ca-edit' )->escaped() : wfMessage( 'accesskey-ca-viewsource' )->escaped(),
+				],
+				'image'  => $canSessionUserEdit ? MenuButtonController::EDIT_ICON : MenuButtonController::LOCK_ICON,
+				'name'   => 'editprofile',
+			];
 		} else {
-			if ( $namespace == NS_USER_TALK && empty( $this->app->wg->EnableWallExt ) ) {
+			if ( $namespace == NS_USER_TALK && empty( $this->wg->EnableWallExt ) ) {
 				// talk page
 				/**
 				 * @var $title Title
@@ -207,102 +207,101 @@ class UserProfilePageController extends WikiaController {
 				if ( $title instanceof Title ) {
 					// sometimes title isn't created, I've tried to reproduce it on my devbox and I couldn't
 					// checking if $title is instance of Title is a quick fix -- if it isn't no action button will be shown
-					if ( $isUserPageOwner || $this->app->wg->Request->getVal( 'oldid' ) ) {
-						$actionButtonArray = array(
-							'action' => array(
-								'href' => $this->title->getLocalUrl( $editQuery ),
-								'text' => wfMessage( 'user-action-menu-edit' )->escaped(),
-								'id' => 'ca-edit',
-								'accesskey' => wfMessage( 'accesskey-ca-edit' )->escaped(),
-							),
-							'image' => MenuButtonController::EDIT_ICON,
-							'name' => 'editprofile',
-						);
+					if ( $isUserPageOwner || $this->wg->Request->getVal( 'oldid' ) ) {
+						$actionButtonArray = [
+							'action' => [
+								'href'      => $this->title->getLocalURL( $editQuery ),
+								'text'      => $canSessionUserEdit ? wfMessage( 'user-action-menu-edit' )->escaped() : wfMessage( 'viewsource' )->escaped(),
+								'id'        => 'ca-edit',
+								'accesskey' => $canSessionUserEdit ? wfMessage( 'accesskey-ca-edit' )->escaped() : wfMessage( 'accesskey-ca-viewsource' )->escaped(),
+							],
+							'image'  => $canSessionUserEdit ? MenuButtonController::EDIT_ICON : MenuButtonController::LOCK_ICON,
+							'name'   => 'editprofile',
+						];
 					} else {
-						$actionButtonArray = array(
-							'action' => array(
-								'href' => $title->getLocalUrl( array_merge( $editQuery, array( 'section' => 'new' ) ) ),
-								'text' => wfMessage( 'user-action-menu-leave-message' )->escaped(),
-								'id' => 'ca-addsection',
-								'accesskey' => wfMessage( 'accesskey-ca-addsection' )->escaped(),
-							),
-							'image' => MenuButtonController::MESSAGE_ICON,
-							'name' => 'leavemessage',
-							'dropdown' => array(
-								'edit' => array(
-									'href' => $this->title->getFullUrl( $editQuery ),
-									'text' => wfMessage( 'user-action-menu-edit' )->escaped(),
-									'id' => 'ca-edit',
+						$actionButtonArray = [
+							'action'   => [
+								'href'      => $title->getLocalURL( array_merge( $editQuery, [ 'section' => 'new' ] ) ),
+								'text'      => $canSessionUserEdit ? wfMessage( 'user-action-menu-leave-message' )->escaped() : wfMessage( 'viewsource' )->escaped(),
+								'id'        => 'ca-addsection',
+								'accesskey' => $canSessionUserEdit ? wfMessage( 'accesskey-ca-addsection' )->escaped() : wfMessage( 'accesskey-ca-viewsource' )->escaped(),
+							],
+							'image'    => $canSessionUserEdit ? MenuButtonController::MESSAGE_ICON :MenuButtonController::LOCK_ICON,
+							'name'     => 'leavemessage',
+							'dropdown' => [
+								'edit' => [
+									'href'      => $this->title->getFullURL( $editQuery ),
+									'text'      => wfMessage( 'user-action-menu-edit' )->escaped(),
+									'id'        => 'ca-edit',
 									'accesskey' => wfMessage( 'accesskey-ca-edit' )->escaped(),
-								)
-							),
-						);
+								],
+							],
+						];
 					}
 				}
 			} else {
 				if ( defined( 'NS_BLOG_ARTICLE' ) && $namespace == NS_BLOG_ARTICLE && $isUserPageOwner ) {
 					// blog page
-					global $wgCreateBlogPagePreload;
 
-					$actionButtonArray = array(
-						'action' => array(
-							'href' => SpecialPage::getTitleFor( 'CreateBlogPage' )->getLocalUrl( !empty( $wgCreateBlogPagePreload ) ? 'preload=$wgCreateBlogPagePreload' : '' ),
+					$actionButtonArray = [
+						'action' => [
+							'href' => SpecialPage::getTitleFor( 'CreateBlogPage' )->getLocalURL( !empty( $this->wg->CreateBlogPagePreload ) ? 'preload=$wgCreateBlogPagePreload' : '' ),
 							'text' => wfMessage( 'blog-create-post-label' )->escaped(),
-						),
-						'image' => MenuButtonController::BLOG_ICON,
-						'name' => 'createblogpost',
-					);
+						],
+						'image'  => MenuButtonController::BLOG_ICON,
+						'name'   => 'createblogpost',
+					];
 				}
 			}
 		}
 
-		if ( in_array( $namespace, array( NS_USER, NS_USER_TALK ) ) ) {
+		if ( in_array( $namespace, [ NS_USER, NS_USER_TALK ] ) ) {
 			// profile & talk page
 			if ( $canRename ) {
 				/**
 				 * @var $specialMovePage Title
 				 */
 				$specialMovePage = SpecialPage::getTitleFor( 'MovePage' );
-				$renameUrl = $specialMovePage->getLocalUrl() . '/' . $this->title->__toString();
-				$actionButtonArray['dropdown']['rename'] = array(
-					'href' => $renameUrl,
-					'text' => wfMessage( 'user-action-menu-rename' )->escaped(),
-					'id' => 'ca-move',
+				$renameUrl = $specialMovePage->getLocalURL() . '/' . $this->title->__toString();
+				$actionButtonArray[ 'dropdown' ][ 'rename' ] = [
+					'href'      => $renameUrl,
+					'text'      => wfMessage( 'user-action-menu-rename' )->escaped(),
+					'id'        => 'ca-move',
 					'accesskey' => wfMessage( 'accesskey-ca-move' )->escaped(),
-				);
+				];
 			}
 
 			if ( $canProtect ) {
 				$protectStatus = $this->title->isProtected() ? 'unprotect' : 'protect';
 
-				$actionButtonArray['dropdown']['protect'] = array(
-					'href' => $this->title->getLocalUrl( array( 'action' => $protectStatus ) ),
-					'text' => wfMessage( 'user-action-menu-' . $protectStatus )->escaped(),
-					'id' => 'ca-protect',
+				$actionButtonArray[ 'dropdown' ][ 'protect' ] = [
+					'href'      => $this->title->getLocalURL( [ 'action' => $protectStatus ] ),
+					'text'      => wfMessage( 'user-action-menu-' . $protectStatus )->escaped(),
+					'id'        => 'ca-protect',
 					'accesskey' => wfMessage( 'accesskey-ca-protect' )->escaped(),
-				);
+				];
 			}
 
 			if ( $canDelete ) {
-				$actionButtonArray['dropdown']['delete'] = array(
-					'href' => $this->title->getLocalUrl( array( 'action' => 'delete' ) ),
-					'text' => wfMessage( 'user-action-menu-delete' )->escaped(),
-					'id' => 'ca-delete',
+				$actionButtonArray[ 'dropdown' ][ 'delete' ] = [
+					'href'      => $this->title->getLocalURL( [ 'action' => 'delete' ] ),
+					'text'      => wfMessage( 'user-action-menu-delete' )->escaped(),
+					'id'        => 'ca-delete',
 					'accesskey' => wfMessage( 'accesskey-ca-delete' )->escaped(),
-				);
+				];
 			}
 
-			$actionButtonArray['dropdown']['history'] = array(
-				'href' => $this->title->getLocalUrl( array( 'action' => 'history' ) ),
-				'text' => wfMessage( 'user-action-menu-history' )->escaped(),
-				'id' => 'ca-history',
+			$actionButtonArray[ 'dropdown' ][ 'history' ] = [
+				'href'      => $this->title->getLocalURL( [ 'action' => 'history' ] ),
+				'text'      => wfMessage( 'user-action-menu-history' )->escaped(),
+				'id'        => 'ca-history',
 				'accesskey' => wfMessage( 'accesskey-ca-history' )->escaped(),
-			);
+			];
 		}
 
-		wfRunHooks( 'UserProfilePageAfterGetActionButtonData', array( &$actionButtonArray, $namespace, $canRename, $canProtect, $canDelete, $isUserPageOwner ) );
+		wfRunHooks( 'UserProfilePageAfterGetActionButtonData', [ &$actionButtonArray, $namespace, $canRename, $canProtect, $canDelete, $isUserPageOwner ] );
 
-		$actionButton = wfRenderModule( 'MenuButton', 'Index', $actionButtonArray );
+		$actionButton = F::app()->renderView( 'MenuButton', 'Index', $actionButtonArray );
 		$this->setVal( 'actionButton', $actionButton );
 
 		wfProfileOut( __METHOD__ );
@@ -335,7 +334,7 @@ class UserProfilePageController extends WikiaController {
 		} else {
 			$this->profilePage = new UserProfilePage( $sessionUser );
 
-			$this->setVal( 'body', ( string )$this->sendSelfRequest( 'renderLightbox', array( 'tab' => $selectedTab, 'userId' => $userId ) ) );
+			$this->setVal( 'body', ( string )$this->sendSelfRequest( 'renderLightbox', [ 'tab' => $selectedTab, 'userId' => $userId ] ) );
 
 			if ( !empty( $this->wg->AvatarsMaintenance ) ) {
 				$this->setVal( 'avatarsDisabled', true );
@@ -361,8 +360,8 @@ class UserProfilePageController extends WikiaController {
 		$userId = $this->getVal( 'userId' );
 
 		$tabs = [
-			['id' => 'avatar', 'name' => wfMessage( 'user-identity-box-avatar' )->escaped()],
-			['id' => 'about', 'name' => wfMessage( 'user-identity-box-about-me' )->escaped()],
+			[ 'id' => 'avatar', 'name' => wfMessage( 'user-identity-box-avatar' )->escaped() ],
+			[ 'id' => 'about', 'name' => wfMessage( 'user-identity-box-about-me' )->escaped() ],
 		];
 
 		$this->renderAvatarLightbox( $userId );
@@ -393,8 +392,7 @@ class UserProfilePageController extends WikiaController {
 			if ( !$this->profilePage->saveInterviewAnswers( $wikiId, $answers ) ) {
 				$status = 'error';
 				$errorMsg = wfMessage( 'userprofilepage-interview-save-internal-error' )->escaped();
-			}
-			else {
+			} else {
 				$status = 'ok';
 			}
 		}
@@ -415,8 +413,16 @@ class UserProfilePageController extends WikiaController {
 	public function saveUserData() {
 		wfProfileIn( __METHOD__ );
 
+		try {
+			$this->checkWriteRequest();
+		} catch ( \BadRequestException $bre ) {
+			$this->setTokenMismatchError();
+			wfProfileOut( __METHOD__ );
+			return;
+		}
+
 		$user = User::newFromId( $this->getVal( 'userId' ) );
-		$isAllowed = ( $this->app->wg->User->isAllowed( 'editprofilev3' ) || intval( $user->getId() ) === intval( $this->app->wg->User->getId() ) );
+		$isAllowed = ( $this->wg->User->isAllowed( 'editprofilev3' ) || intval( $user->getId() ) === intval( $this->wg->User->getId() ) );
 
 		$userData = json_decode( $this->getVal( 'data' ) );
 
@@ -453,20 +459,21 @@ class UserProfilePageController extends WikiaController {
 		if ( $status === 'error' ) {
 			$this->setVal( 'errorMsg', $errorMsg );
 			wfProfileOut( __METHOD__ );
-			return true;
+			return;
 		}
 
 		if ( !empty( $userData->avatarData ) ) {
-			$status = $this->saveUsersAvatar( $user->getID(), $userData->avatarData );
+			$status = $this->saveUsersAvatar( $user->getId(), $userData->avatarData );
 			if ( $status !== true ) {
 				$this->setVal( 'errorMsg', $errorMsg );
+				$this->setVal( 'status', 'error' );
 				wfProfileOut( __METHOD__ );
-				return true;
+				return;
 			}
 		}
 
 		wfProfileOut( __METHOD__ );
-		return null;
+		return;
 	}
 
 	/**
@@ -479,7 +486,6 @@ class UserProfilePageController extends WikiaController {
 	 * @author Andrzej 'nAndy' Łukaszewski
 	 */
 	private function saveUsersAvatar( $userId = null, $data = null ) {
-		global $wgAvatarsUseService;
 		wfProfileIn( __METHOD__ );
 
 		if ( is_null( $userId ) ) {
@@ -490,12 +496,14 @@ class UserProfilePageController extends WikiaController {
 
 		$isAllowed = (
 			$this->app->wg->User->isAllowed( 'editprofilev3' ) ||
-			$user->getId() == $this->app->wg->User->getId()
+			$user->getId() == $this->wg->User->getId()
 		);
 
 		if ( is_null( $data ) ) {
 			$data = json_decode( $this->getVal( 'data' ) );
 		}
+
+		$success = true;
 
 		if ( $isAllowed && isset( $data->source ) && isset( $data->file ) ) {
 			switch ( $data->source ) {
@@ -503,46 +511,30 @@ class UserProfilePageController extends WikiaController {
 					// remove old avatar file
 					Masthead::newFromUser( $user )->removeFile( false );
 
-					// user avatars service updates user preferences on its own
-					if ( empty( $wgAvatarsUseService ) ) {
-						$user->setGlobalAttribute( AVATAR_USER_OPTION_NAME, $data->file );
-					}
-					else {
-						// store the full URL of the predefined avatar and skip an upload via service (PLATFORM-1494)
-						$user->setGlobalAttribute( AVATAR_USER_OPTION_NAME, Masthead::getDefaultAvatarUrl( $data->file ) );
-						$user->saveSettings();
-					}
+					// store the full URL of the predefined avatar and skip an upload via service (PLATFORM-1494)
+					$user->setGlobalAttribute( AVATAR_USER_OPTION_NAME, Masthead::getDefaultAvatarUrl( $data->file ) );
+					$user->saveSettings();
 					break;
 				case 'uploaded':
-					$errorMsg = wfMessage( 'userprofilepage-interview-save-internal-error' )->escaped();
-					$avatar = $this->saveAvatarFromUrl( $user, $data->file, $errorMsg );
-
-					// user avatars service updates user preferences on its own
-					if ( empty( $wgAvatarsUseService ) ) {
-						$user->setGlobalAttribute( AVATAR_USER_OPTION_NAME, $avatar );
+					$url = $this->saveAvatarFromUrl( $user, $data->file );
+					if ( $url === '' ) {
+						$success = false;
 					}
 					break;
 				default:
 					break;
 			}
 
-			// user avatars service updates user preferences on its own
-			if ( empty( $wgAvatarsUseService ) ) {
-				// TODO: $user->getTouched() get be used to invalidate avatar URLs instead
-				$user->setGlobalAttribute( 'avatar_rev', date( 'U' ) );
-				$user->saveSettings();
-			}
-
 			$this->clearAttributeCache( $userId );
 		}
 
 		wfProfileOut( __METHOD__ );
-		return true;
+		return $success;
 	}
 
 	private function clearAttributeCache( $userId ) {
 		/** @var UserAttributes $attributeService */
-		$attributeService = Injector::getInjector()->get(UserAttributes::class);
+		$attributeService = Injector::getInjector()->get( UserAttributes::class );
 		$attributeService->clearCache( $userId );
 	}
 
@@ -553,33 +545,31 @@ class UserProfilePageController extends WikiaController {
 	 * @param string $url url to user's avatar
 	 * @param string $errorMsg reference to a string variable where errors messages are returned
 	 *
-	 * @return string | boolean
+	 * @return string
 	 *
 	 * @author Andrzej 'nAndy' Łukaszewski
 	 */
-	private function saveAvatarFromUrl( User $user, $url, &$errorMsg ) {
+	private function saveAvatarFromUrl( User $user, $url ) {
 		wfProfileIn( __METHOD__ );
 
 		$userId = $user->getId();
 
 		$errorNo = $this->uploadByUrl(
 			$url,
-			array(
-				'userId' => $userId,
-				'username' => $user->getName(),
-				'user' => $user,
+			[
+				'userId'    => $userId,
+				'username'  => $user->getName(),
+				'user'      => $user,
 				'localPath' => '',
-			),
-			$errorMsg
+			]
 		);
 
 		$localPath = $this->getLocalPath( $user );
-
-		if ( $errorNo != UPLOAD_ERR_OK ) {
-			$res = false;
-		} else {
+		$res = '';
+		if ( $errorNo == UPLOAD_ERR_OK ) {
 			$res = $localPath;
 		}
+
 		wfProfileOut( __METHOD__ );
 		return $res;
 	}
@@ -600,19 +590,19 @@ class UserProfilePageController extends WikiaController {
 
 		if ( !$user->isAnon() && $this->request->wasPosted() ) {
 			$avatarUploadFiled = 'UPPLightboxAvatar';
-			$uploadError = $this->app->wg->Request->getUploadError( $avatarUploadFiled );
+			$uploadError = $this->wg->Request->getUploadError( $avatarUploadFiled );
 
 			if ( $uploadError != 0 ) {
 				$thumbnail = $uploadError;
 			} else {
-				$fileName = $this->app->wg->Request->getFileTempName( $avatarUploadFiled );
+				$fileName = $this->wg->Request->getFileTempname( $avatarUploadFiled );
 				$fileuploader = new WikiaTempFilesUpload();
 				$thumbnail = $this->storeInTempImage( $fileName, $fileuploader );
 			}
 
 			if ( false === $thumbnail || is_int( $thumbnail ) ) {
 				$result = [ 'success' => false, 'error' => $this->validateUpload( $thumbnail ) ];
-				$this->setVal( 'result', $result ) ;
+				$this->setVal( 'result', $result );
 				return;
 			}
 
@@ -669,13 +659,13 @@ class UserProfilePageController extends WikiaController {
 
 			$thumbnail = $file->transform( [
 				'height' => $height,
-				'width' => $width,
+				'width'  => $width,
 			] );
 		} else {
 			$errors = $status->getErrorsArray();
 			$errMsg = 'Unable to upload temp file fo avatar. Error(s): ';
 			foreach ( $errors as $error ) {
-				$errMsg .= $error[0] . ', ';
+				$errMsg .= $error[ 0 ] . ', ';
 			}
 			$errMsg = rtrim( $errMsg, ', ' );
 
@@ -733,10 +723,10 @@ class UserProfilePageController extends WikiaController {
 	/**
 	 * @brief Saves the file on the server
 	 *
-	 * @param WebRequest $request    WebRequest instance
-	 * @param array $userData     user data array; contains: user id (key: userId), full page url (fullPageUrl), user name (username)
-	 * @param String $input       name of file input in form
-	 * @param String $errorMsg           optional string containing details on what went wrong if there is an UPLOAD_ERR_EXTENSION
+	 * @param WebRequest $request WebRequest instance
+	 * @param array $userData user data array; contains: user id (key: userId), full page url (fullPageUrl), user name (username)
+	 * @param String $input name of file input in form
+	 * @param String $errorMsg optional string containing details on what went wrong if there is an UPLOAD_ERR_EXTENSION
 	 *
 	 * @return Integer an error code of operation
 	 *
@@ -752,13 +742,13 @@ class UserProfilePageController extends WikiaController {
 			return $errorNo;
 		}
 
-		$errorMsg = "";
+		$errorMsg = '';
 
 		if ( class_exists( 'Masthead' ) ) {
 			/**
 			 * @var $oAvatarObj Masthead
 			 */
-			$oAvatarObj = Masthead::newFromUser( $userData['user'] );
+			$oAvatarObj = Masthead::newFromUser( $userData[ 'user' ] );
 			$errorNo = $oAvatarObj->uploadFile( $this->wg->Request, 'UPPLightboxAvatar', $errorMsg );
 
 
@@ -775,18 +765,23 @@ class UserProfilePageController extends WikiaController {
 	 * to uploadFile, but instead of having the file come from the user's computer, it comes
 	 * from the supplied URL.
 	 *
-	 * @param String $url        the full URL of an image to download and apply as the user's Avatar
-	 * @param array $userData    user data array; contains: user id (key: userId), full page url (fullPageUrl), user name (username)
-	 * @param String $errorMsg          optional string containing details on what went wrong if there is an UPLOAD_ERR_EXTENSION
+	 * @param String $url the full URL of an image to download and apply as the user's Avatar
+	 * @param array $userData user data array; contains: user id (key: userId), full page url (fullPageUrl), user name (username)
+	 * @param String $errorMsg optional string containing details on what went wrong if there is an UPLOAD_ERR_EXTENSION
 	 *
 	 * @return Integer error code of operation
 	 */
-	public function uploadByUrl( $url, $userData, &$errorMsg = '' ) {
-		wfProfileIn( __METHOD__ );
+	public function uploadByUrl( $url, $userData ) {
+		try {
+			$this->checkWriteRequest();
+		} catch ( \BadRequestException $bre ) {
+			$this->setTokenMismatchError();
+			return UPLOAD_ERR_CANT_WRITE;
+		}
 
 		// start by presuming there is no error
 		// $errorNo = UPLOAD_ERR_OK;
-		$user = $userData['user'];
+		$user = $userData[ 'user' ];
 		if ( class_exists( 'Masthead' ) ) {
 			/**
 			 * @var $oAvatarObj Masthead
@@ -794,23 +789,10 @@ class UserProfilePageController extends WikiaController {
 			$oAvatarObj = Masthead::newFromUser( $user );
 			$localPath = $this->getLocalPath( $user );
 			$errorNo = $oAvatarObj->uploadByUrl( $url );
-
-			// user avatars service updates user preferences on its own
-			global $wgAvatarsUseService;
-			if ( empty( $wgAvatarsUseService ) ) {
-				/**
-				 * @var $userIdentityBox UserIdentityBox
-				 */
-				$userIdentityBox = new UserIdentityBox( $user );
-				$userData = $userIdentityBox->getFullData();
-				$userData['avatar'] = $localPath;
-				$userIdentityBox->saveUserData( $userData );
-			}
 		} else {
 			$errorNo = UPLOAD_ERR_EXTENSION;
 		}
 
-		wfProfileOut( __METHOD__ );
 		return $errorNo;
 	}
 
@@ -861,13 +843,13 @@ class UserProfilePageController extends WikiaController {
 			return $this->defaultAvatars;
 		}
 
-		$this->defaultAvatars = array();
+		$this->defaultAvatars = [ ];
 		$images = getMessageForContentAsArray( 'blog-avatar-defaults' );
 
 		if ( is_array( $images ) ) {
 			foreach ( $images as $image ) {
 				$hash = FileRepo::getHashPathForLevel( $image, 2 );
-				$this->defaultAvatars[] = array( 'name' => $image, 'url' => $this->defaultAvatarPath . $thumb . $hash . $image );
+				$this->defaultAvatars[] = [ 'name' => $image, 'url' => $this->defaultAvatarPath . $thumb . $hash . $image ];
 			}
 		}
 
@@ -894,21 +876,21 @@ class UserProfilePageController extends WikiaController {
 
 		$userData = $userIdentityBox->getFullData();
 
-		if ( !empty( $userData['fbPage'] ) ) {
-			$userData['fbPage'] = str_replace( self::FBPAGE_BASE_URL, '', $userData['fbPage'] );
+		if ( !empty( $userData[ 'fbPage' ] ) ) {
+			$userData[ 'fbPage' ] = str_replace( self::FBPAGE_BASE_URL, '', $userData[ 'fbPage' ] );
 		}
 
 		$this->setVal( 'user', $userData );
 
 		$this->setVal( 'charLimits', [
-			'name' => UserIdentityBox::USER_NAME_CHAR_LIMIT,
-			'location' => UserIdentityBox::USER_LOCATION_CHAR_LIMIT,
+			'name'       => UserIdentityBox::USER_NAME_CHAR_LIMIT,
+			'location'   => UserIdentityBox::USER_LOCATION_CHAR_LIMIT,
 			'occupation' => UserIdentityBox::USER_OCCUPATION_CHAR_LIMIT,
-			'gender' => UserIdentityBox::USER_GENDER_CHAR_LIMIT,
+			'gender'     => UserIdentityBox::USER_GENDER_CHAR_LIMIT,
 		] );
 
-		if ( !empty( $userData['birthday']['month'] ) ) {
-			$this->setVal( 'days', cal_days_in_month( CAL_GREGORIAN, $userData['birthday']['month'], 2000 /* leap year */ ) );
+		if ( !empty( $userData[ 'birthday' ][ 'month' ] ) ) {
+			$this->setVal( 'days', cal_days_in_month( CAL_GREGORIAN, $userData[ 'birthday' ][ 'month' ], 2000 /* leap year */ ) );
 		}
 
 		wfProfileOut( __METHOD__ );
@@ -920,7 +902,7 @@ class UserProfilePageController extends WikiaController {
 	 * @author Andrzej 'nAndy' Łukaszewski
 	 */
 	public function onHideWiki() {
-		$result = array( 'success' => false );
+		$result = [ 'success' => false ];
 		$userId = intval( $this->getVal( 'userId' ) );
 		$wikiId = intval( $this->getVal( 'wikiId' ) );
 
@@ -934,7 +916,7 @@ class UserProfilePageController extends WikiaController {
 			$userIdentityBox = new UserIdentityBox( $user );
 			$success = $userIdentityBox->hideWiki( $wikiId );
 
-			$result = array( 'success' => $success, 'wikis' => $userIdentityBox->getTopWikis() );
+			$result = [ 'success' => $success, 'wikis' => $userIdentityBox->getTopWikis() ];
 		}
 
 		$this->setVal( 'result', $result );
@@ -949,7 +931,7 @@ class UserProfilePageController extends WikiaController {
 		$userId = intval( $this->getVal( 'userId' ) );
 		$user = User::newFromId( $userId );
 		$userIdentityBox = new UserIdentityBox( $user );
-		$result = array( 'success' => true, 'wikis' => $userIdentityBox->getTopWikis( true ) );
+		$result = [ 'success' => true, 'wikis' => $userIdentityBox->getTopWikis( true ) ];
 
 		$this->setVal( 'result', $result );
 	}
@@ -961,7 +943,7 @@ class UserProfilePageController extends WikiaController {
 		$user = $this->wg->User;
 
 		if ( !$user->isAnon() ) {
-			$this->setVal( 'body', ( string )$this->sendSelfRequest( 'renderClosingModal', array( 'userId' => $userId ) ) );
+			$this->setVal( 'body', ( string )$this->sendSelfRequest( 'renderClosingModal', [ 'userId' => $userId ] ) );
 		} else {
 			throw new WikiaException( 'User not logged in' );
 		}
@@ -977,8 +959,28 @@ class UserProfilePageController extends WikiaController {
 		wfProfileOut( __METHOD__ );
 	}
 
+	public function fetchDiscussionPostsNumberFrom( $user ) {
+		global $wgEnableDiscussionPostsCountInUserIdentityBox;
+
+		$this->setVal( 'discussionPostsCountInUserIdentityBoxEnabled', $wgEnableDiscussionPostsCountInUserIdentityBox );
+		if ( $wgEnableDiscussionPostsCountInUserIdentityBox ) {
+			$discussionInfo = UserIdentityBoxDiscussionInfo::createFor( $user );
+
+			$this->setVal( 'discussionActive', $discussionInfo->isDiscussionActive() );
+			$this->setVal( 'discussionPostsCount', $discussionInfo->getDiscussionPostsCount() );
+			$this->setVal( 'discussionAllPostsByUserLink',
+				$discussionInfo->getDiscussionAllPostsByUserLink() );
+		}
+	}
+
+	/**
+	 * @throws BadRequestException
+	 * @return bool
+	 */
 	public function removeavatar() {
 		wfProfileIn( __METHOD__ );
+		$this->checkWriteRequest();
+
 		$this->setVal( 'status', false );
 
 		// macbre: avatars operations are disabled during maintenance
@@ -989,18 +991,19 @@ class UserProfilePageController extends WikiaController {
 			return true;
 		}
 
-		if ( !$this->app->wg->User->isAllowed( 'removeavatar' ) ) {
+		if ( !$this->wg->User->isAllowed( 'removeavatar' ) ) {
 			wfProfileOut( __METHOD__ );
 			return true;
 		}
 
 		if ( $this->request->getVal( 'avUser' ) ) {
 			$avUser = User::newFromName( $this->request->getVal( 'avUser' ) );
-			if ( $avUser->getID() !== 0 ) {
+			if ( $avUser->getId() !== 0 ) {
 				$avatar = Masthead::newFromUser( $avUser );
 				if ( $avatar->removeFile( true ) ) {
+					$this->clearAttributeCache( $avUser->getId() );
+					$this->setVal( 'status', 'ok' );
 					wfProfileOut( __METHOD__ );
-					$this->setVal( 'status', "ok" );
 					return true;
 				}
 			}
@@ -1011,5 +1014,5 @@ class UserProfilePageController extends WikiaController {
 		wfProfileOut( __METHOD__ );
 		return true;
 	}
-
 }
+

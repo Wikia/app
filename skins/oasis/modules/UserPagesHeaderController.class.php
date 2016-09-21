@@ -118,6 +118,13 @@ class UserPagesHeaderController extends WikiaController {
 					'data-id' => 'following',
 				);
 			}
+			if ( !empty( F::app()->wg->EnableUserActivityExt ) ) {
+				$tabs[] = [
+					'link' => Wikia::link( SpecialPage::getTitleFor( 'UserActivity' ), wfMessage( 'user-activity-tab' )->text() ),
+					'selected' => ( $wgTitle->isSpecial( 'UserActivity' ) ),
+					'data-id' => 'user-activity',
+				];
+			}
 
 			// avatar dropdown menu
 			$this->avatarMenu = array(
@@ -147,10 +154,10 @@ class UserPagesHeaderController extends WikiaController {
 
 			if ( !empty( $stats ) ) {
 				// date and points formatting
-				if ( !empty( $stats['date'] ) ) {
-					$stats['date'] = $wgLang->date( wfTimestamp( TS_MW, $stats['date'] ) );
+				if ( !empty( $stats['firstContributionTimestamp'] ) ) {
+					$stats['date'] = $wgLang->date( wfTimestamp( TS_MW, $stats['firstContributionTimestamp'] ) );
 				}
-				$stats['edits'] = $wgLang->formatNum( $stats['edits'] );
+				$stats['edits'] = $wgLang->formatNum( $stats['editcount'] );
 			}
 		}
 

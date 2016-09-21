@@ -103,6 +103,12 @@
 
 		// handle "Save" button
 		onSave: function (event) {
+			event.preventDefault();
+
+			if (this.editor.fire('save') === false) {
+				return;
+			}
+
 			if (this.textarea.val() == this.textarea.attr('placeholder')) {
 				this.textarea.val('');
 			}
@@ -114,17 +120,18 @@
 					isDirty: (typeof this.editor.plugins.leaveconfirm === 'undefined' || this.editor.plugins.leaveconfirm.isDirty()) ? 'yes' : 'no'
 				});
 			}
+
+			this.editform.off('submit');
 			this.editor.track({
 				action: Wikia.Tracker.ACTIONS.SUBMIT,
-				label: 'publish'
+				label: 'publish',
+				callbacks: {
+					timeout: 5000,
+					complete: this.proxy(function() {
+						this.editform.submit();
+					})
+				}
 			});
-
-			// prevent submitting immediately so we can track this event
-			event.preventDefault();
-			this.editform.off('submit');
-			setTimeout(this.proxy(function () {
-				this.editform.submit();
-			}), 100);
 
 			// block "Publish" button
 			$('#wpSave').attr('disabled', true);
@@ -436,7 +443,7 @@
 								self.ajax('diff' , extraData),
 
 								// load CSS for diff
-								mw.loader.use('mediawiki.action.history.diff')
+								mw.loader.using('mediawiki.action.history.diff')
 							).done(function(ajaxData) {
 								var data = ajaxData[ 0 ],
 									html = '<h1 class="pagetitle">' + window.wgEditedTitle + '</h1>' + data.html;

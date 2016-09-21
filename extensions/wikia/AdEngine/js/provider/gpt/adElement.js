@@ -14,6 +14,7 @@ define('ext.wikia.adEngine.provider.gpt.adElement', [
 		this.node = doc.getElementById(this.id);
 		this.slotPath = slotPath;
 		this.slotName = slotName;
+		this.slotContainerId = this.id;
 
 		if (!this.node) {
 			this.node = doc.createElement('div');
@@ -23,15 +24,25 @@ define('ext.wikia.adEngine.provider.gpt.adElement', [
 			this.sizes = adSizeConverter.convert(slotTargeting.size);
 			this.sizes = adSizeFilter.filter(slotName, this.sizes);
 			delete slotTargeting.size;
+			this.node.setAttribute('data-gpt-slot-sizes', JSON.stringify(this.sizes));
+		} else {
+			this.node.setAttribute('data-gpt-slot-type', 'out-of-page');
 		}
 
 		this.slotTargeting = slotTargeting;
-		this.node.setAttribute('data-gpt-slot-sizes', JSON.stringify(this.sizes));
 		log(['AdElement', this], 'debug', logGroup);
 	}
 
 	AdElement.prototype.getId = function () {
 		return this.id;
+	};
+
+	AdElement.prototype.getSlotContainerId = function () {
+		return this.slotContainerId;
+	};
+
+	AdElement.prototype.setSlotContainerId = function (slotContainerId) {
+		this.slotContainerId = slotContainerId;
 	};
 
 	AdElement.prototype.getSlotName = function () {

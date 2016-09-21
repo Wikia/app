@@ -30,6 +30,7 @@ class DBError extends MWException {
 			'cluster'     => $wgDBcluster,
 			'server'      => $db->getServer(),
 			'server_role' => $isMaster ? 'master' : 'slave',
+			'db_user'     => $db->getLBInfo( 'user' ),
 			'errno'       => $db->lastErrno(),
 			'err'         => $db->lastError(),
 			'exception'   => $this,

@@ -79,6 +79,19 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 	 * Route the view based on logged in status
 	 */
 	public function index() {
+		$contentLangCode = $this->app->wg->ContLang->getCode();
+
+		// Redirect to standalone NewAuth page if extension enabled
+		if ( $this->app->wg->EnableNewAuthModal && $this->wg->request->getVal( 'type' ) !== 'forgotPassword' ) {
+			$newLoginPageUrl = '/signin?redirect=' . $this->userLoginHelper->getRedirectUrl();
+
+			if ( $contentLangCode !== 'en' ) {
+				$newLoginPageUrl .= '&uselang=' . $contentLangCode;
+			}
+
+			$this->getOutput()->redirect( $newLoginPageUrl );
+		}
+
 		if ( $this->wg->User->isLoggedIn() ) {
 			$this->forward( __CLASS__, 'loggedIn' );
 		} else {
@@ -264,7 +277,7 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 	public function getUnconfirmedUserRedirectUrl() {
 		$title = Title::newFromText( 'UserSignup', NS_SPECIAL );
 		$params = [
-			'method' => 'sendConfirmationEmail',
+			'sendConfirmationEmail' => true,
 			'username' => $this->getVal( 'username' ),
 			'uselang' => $this->getVal( 'uselang' ),
 		];
@@ -420,6 +433,8 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 
 		$loginCase = $loginForm->authenticateUserData();
 
+		\Wikia\Util\Assert::true( is_int( $loginCase ), 'LoginForm::authenticateUserData is expected to return an int' );
+
 		switch ( $loginCase ) {
 			case LoginForm::SUCCESS:
 				// first check if user has confirmed email after sign up
@@ -472,6 +487,9 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 						'username' => $loginForm->mUsername,
 						'result' => 'ok',
 					] );
+
+					// Always make sure edit token is regenerated. (T122056)
+					$this->getRequest()->setSessionData( 'wsEditToken', null );
 
 					// regenerate session ID on user login (the approach MW's core SpecialUserLogin uses)
 					// to avoid race conditions with long running requests logging the user back in & out
@@ -576,8 +594,12 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 	 * @requestParam string username
 	 * @responseParam string result [ok/noemail/error/null]
 	 * @responseParam string msg - result message
+	 *
+	 * @throws BadRequestException
 	 */
 	public function mailPassword() {
+		$this->checkWriteRequest();
+
 		$loginForm = new LoginForm( $this->wg->request );
 		if ( $this->wg->request->getText( 'username', '' ) != '' ) {
 			$loginForm->mUsername = $this->wg->request->getText( 'username' );
@@ -615,7 +637,18 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 			return;
 		}
 
-		/// Get a temporary password
+		if ( !empty( array_intersect( $this->wg->AccountAdminGroups, $user->getGroups() ) )
+			|| in_array( $user->getName(), $this->wg->AccountAdmins )
+		) {
+			\Wikia\Logger\WikiaLogger::instance()->warning(
+				sprintf( "Junior helper cannot change account info - user: %s", $user->getName() )
+			);
+
+			$this->setParsedErrorResponse( 'userlogin-account-admin-error' );
+			return;
+		}
+
+		// / Get a temporary password
 		$userService = new \UserService();
 		$tempPass = $userService->resetPassword( $user );
 
@@ -629,6 +662,18 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 			$this->setSuccessResponse( 'userlogin-password-email-sent', $loginForm->mUsername );
 		} else {
 			$this->setParsedErrorResponse( 'userlogin-error-mail-error' );
+		}
+	}
+
+	/**
+	 * @see SUS-24
+	 * @throws BadRequestException
+	 */
+	public function checkWriteRequest() {
+		if ( !$this->request->isInternal() ) {
+			if (!$this->request->wasPosted() || !Wikia\Security\Utils::matchToken(UserLoginHelper::getLoginToken(), $this->wg->request->getVal('token'))) {
+				throw new BadRequestException('Request must be POSTed and provide a valid login token.');
+			}
 		}
 	}
 
@@ -675,7 +720,7 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 	private function setResponseGeneric( $key, $params, $result = 'ok', $postProcess = 'escaped' ) {
 		$msg = wfMessage( $key, $params )->$postProcess();
 
-		$this->response->setData([
+		$this->response->setData( [
 			'result' => $result,
 			'msg' => $msg,
 		] );

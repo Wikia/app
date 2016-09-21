@@ -1,8 +1,11 @@
 <?php
 
-require_once "$IP/extensions/wikia/IndexingPipeline/PipelineConnectionBase.class.php";
-
 class PipelineConnectionBaseTest extends WikiaBaseTest {
+
+	protected function setUp() {
+		$this->setupFile = dirname( __FILE__ ) . '/../IndexingPipeline.setup.php';
+		parent::setUp();
+	}
 
 	/** @test */
 	public function shouldLoadConfigCorrectly() {
@@ -16,7 +19,8 @@ class PipelineConnectionBaseTest extends WikiaBaseTest {
 			'exchange' => 'test-exchange',
 			'deadExchange' => 'test-dead',
 		];
-		$pipe = new PipelineConnectionBase();
+
+		$pipe = new \Wikia\IndexingPipeline\ConnectionBase( $wgIndexingPipeline );
 		$this->assertAttributeEquals($wgIndexingPipeline['host'], 'host', $pipe);
 		$this->assertAttributeEquals($wgIndexingPipeline['port'], 'port', $pipe);
 		$this->assertAttributeEquals($wgIndexingPipeline['user'], 'user', $pipe);

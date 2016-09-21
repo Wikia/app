@@ -32,3 +32,8 @@ $specialPageAliases['pl'] = array(
 $specialPageAliases['es'] = array(
 	'ApiExplorer' => array( 'ExplorarApi' ),
 );
+
+/** Japanese (日本語) */
+$specialPageAliases['ja'] = array(
+	'ApiExplorer' => array( 'APIエクスプローラー' ),
+);

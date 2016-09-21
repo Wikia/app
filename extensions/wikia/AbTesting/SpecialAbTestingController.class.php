@@ -223,16 +223,14 @@ class SpecialAbTestingController extends WikiaSpecialPageController {
 		);
 
 		$fields[] = array(
-			'type' => 'nirvanaview',
+			'type' => 'custom',
 			'class' => 'experiment-groups',
-			'controller' => 'WikiaStyleGuideForm',
-			'view' => 'index',
-			'params' => array(
-				'form' => array(
+			'output' => F::app()->renderPartial( 'WikiaStyleGuideForm', 'index', [
+				'form' => [
 					'inputs' => $groups,
 					'legend' => wfMsg('abtesting-heading-treatment-groups')
-				)
-			),
+				]
+			]),
 		);
 
 		$form = array(

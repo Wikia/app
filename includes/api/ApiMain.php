@@ -406,6 +406,8 @@ class ApiMain extends ApiBase {
 		global $wgUseXVO, $wgVaryOnXFP;
 		$response = $this->getRequest()->response();
 
+		wfRunHooks( 'ApiMainBeforeSendCacheHeaders', [ $response ] ); # Wikia change
+
 		if ( $this->mCacheMode == 'private' ) {
 			$response->header( 'Cache-Control: private' );
 			return;

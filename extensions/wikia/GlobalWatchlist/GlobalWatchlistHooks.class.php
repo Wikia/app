@@ -8,16 +8,10 @@ class GlobalWatchlistHooks {
 
 		$defaultPreferences['watchlistdigest'] = [
 			'type' => 'toggle',
-			'label-message' => 'tog-watchlistdigest',
-			'section' => 'watchlist/advancedwatchlist',
+			'label-message' => 'tog-watchlistdigest-v2',
+			'section' => 'emailv2/email-me-v2',
 		];
 
-		$defaultPreferences['watchlistdigestclear'] = [
-			'type' => 'toggle',
-			'label-message' => 'tog-watchlistdigestclear',
-			'section' => 'watchlist/advancedwatchlist',
-		];
-		
 		return true;
 	}
 

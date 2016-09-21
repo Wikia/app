@@ -36,10 +36,11 @@ class ApiQueryRecentChanges extends ApiQueryGeneratorBase {
 		parent::__construct( $query, $moduleName, 'rc' );
 	}
 
-	private $fld_comment = false, $fld_parsedcomment = false, $fld_user = false, $fld_userid = false,
+	private $fld_comment = false, $fld_parsedcomment = false,
+			$fld_user = false, $fld_userid = false, $fld_useravatar = false,
 			$fld_flags = false, $fld_timestamp = false, $fld_title = false, $fld_ids = false,
-			$fld_sizes = false, $fld_redirect = false, $fld_patrolled = false, $fld_loginfo = false,
-			$fld_tags = false, $token = array();
+			$fld_sizes = false, $fld_redirect = false, $fld_patrolled = false,
+			$fld_loginfo = false, $fld_tags = false, $fld_upvotes, $token = array();
 
 	private $tokenFunctions;
 
@@ -100,6 +101,7 @@ class ApiQueryRecentChanges extends ApiQueryGeneratorBase {
 		$this->fld_parsedcomment = isset( $prop['parsedcomment'] );
 		$this->fld_user = isset( $prop['user'] );
 		$this->fld_userid = isset( $prop['userid'] );
+		$this->fld_useravatar = isset( $prop['useravatar'] );
 		$this->fld_flags = isset( $prop['flags'] );
 		$this->fld_timestamp = isset( $prop['timestamp'] );
 		$this->fld_title = isset( $prop['title'] );
@@ -109,6 +111,7 @@ class ApiQueryRecentChanges extends ApiQueryGeneratorBase {
 		$this->fld_patrolled = isset( $prop['patrolled'] );
 		$this->fld_loginfo = isset( $prop['loginfo'] );
 		$this->fld_tags = isset( $prop['tags'] );
+		$this->fld_upvotes = isset( $prop['upvotes'] );
 	}
 
 	public function execute() {
@@ -274,7 +277,8 @@ class ApiQueryRecentChanges extends ApiQueryGeneratorBase {
 		/* Perform the actual query. */
 		$res = $this->select( __METHOD__ );
 
-		$titles = array();
+		$titles = [];
+		$revisionIds = [];
 
 		$result = $this->getResult();
 
@@ -285,6 +289,8 @@ class ApiQueryRecentChanges extends ApiQueryGeneratorBase {
 				$this->setContinueEnumParameter( 'start', wfTimestamp( TS_ISO_8601, $row->rc_timestamp ) );
 				break;
 			}
+
+			$revisionIds[] = $row->rc_this_oldid;
 
 			if ( is_null( $resultPageSet ) ) {
 				/* Extract the data from a single row. */
@@ -302,6 +308,10 @@ class ApiQueryRecentChanges extends ApiQueryGeneratorBase {
 			} else {
 				$titles[] = Title::makeTitle( $row->rc_namespace, $row->rc_title );
 			}
+		}
+
+		if ( $this->fld_upvotes ) {
+			$this->addUpvoteData( $result, $revisionIds );
 		}
 
 		if ( is_null( $resultPageSet ) ) {
@@ -406,6 +416,10 @@ class ApiQueryRecentChanges extends ApiQueryGeneratorBase {
 
 			if ( $this->fld_userid ) {
 				$vals['userid'] = $row->rc_user;
+			}
+
+			if ( $this->fld_useravatar ) {
+				$vals['useravatar'] = AvatarService::getAvatarUrl( $row->rc_user_text, AvatarService::AVATAR_SIZE_MEDIUM );
 			}
 
 			if ( !$row->rc_user ) {
@@ -519,6 +533,23 @@ class ApiQueryRecentChanges extends ApiQueryGeneratorBase {
 		}
 	}
 
+	private function addUpvoteData( ApiResult $result, array $revisionIds ) {
+		global $wgCityId;
+
+		$upvotes = ( new RevisionUpvotesService() )->getRevisionsUpvotes( $wgCityId, $revisionIds );
+		foreach ( $revisionIds as $index => $id ) {
+			$upvote = [];
+			$upvoteCount = 0;
+			$path = [ 'query', $this->getModuleName(), $index ];
+			if ( isset( $upvotes[$id] ) ) {
+				$upvote = $upvotes[$id]['upvotes'];
+				$upvoteCount = $upvotes[$id]['count'];
+			}
+			$result->addValue( $path, 'upvotes', $upvote );
+			$result->addValue( $path, 'upvotescount', $upvoteCount );
+		}
+	}
+
 	public function getCacheMode( $params ) {
 		if ( isset( $params['show'] ) ) {
 			foreach ( $params['show'] as $show ) {
@@ -569,6 +600,7 @@ class ApiQueryRecentChanges extends ApiQueryGeneratorBase {
 				ApiBase::PARAM_TYPE => array(
 					'user',
 					'userid',
+					'useravatar',
 					'comment',
 					'parsedcomment',
 					'flags',
@@ -580,7 +612,8 @@ class ApiQueryRecentChanges extends ApiQueryGeneratorBase {
 					'patrolled',
 					'loginfo',
 					'wikiamode',
-					'tags'
+					'upvotes',
+					'tags',
 				)
 			),
 			'token' => array(
@@ -639,6 +672,7 @@ class ApiQueryRecentChanges extends ApiQueryGeneratorBase {
 				'Include additional pieces of information',
 				' user           - Adds the user responsible for the edit and tags if they are an IP',
 				' userid         - Adds the user id responsible for the edit',
+				' useravatar     - Adds an avatar of a user responsible for the edit. It requires the user or the userid param to be present.',
 				' comment        - Adds the comment for the edit',
 				' parsedcomment  - Adds the parsed comment for the edit',
 				' flags          - Adds flags for the edit',
@@ -649,6 +683,7 @@ class ApiQueryRecentChanges extends ApiQueryGeneratorBase {
 				' redirect       - Tags edit if page is a redirect',
 				' patrolled      - Tags edits that have been patrolled',
 				' loginfo        - Adds log information (logid, logtype, etc) to log entries',
+				' upvotes        - Adds data about upvotes for the edit',
 				' tags           - Lists tags for the entry',
 			),
 			'token' => 'Which tokens to obtain for each change',

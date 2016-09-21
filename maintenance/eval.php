@@ -31,6 +31,11 @@
  * @ingroup Maintenance
  */
 
+use Monolog\Logger;
+use Monolog\Handler\StreamHandler;
+use Wikia\Logger\WikiaLogger;
+use Wikia\Logger\LogstashFormatter;
+
 $optionsWithArgs = array( 'd' );
 
 /** */
@@ -55,6 +60,15 @@ if ( isset( $options['d'] ) ) {
 		$wgMemc->setDebug(true);
 		$wgDebugFunctionEntry = true;
 	}
+
+	// Wikia change - start
+	// emit WikiaLogger messages to stderr
+	if ( $d > 3 ) {
+		$stdErrHandler = new StreamHandler( STDERR, Logger::DEBUG );
+		$stdErrHandler->setFormatter( new LogstashFormatter( 'eval.php' ) );
+		WikiaLogger::instance()->getLogger()->pushHandler( $stdErrHandler );
+	}
+	// Wikia change - end
 }
 
 $useReadline = function_exists( 'readline_add_history' )

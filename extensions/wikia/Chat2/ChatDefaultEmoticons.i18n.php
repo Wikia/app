@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 $messages = array();
 
@@ -110,4 +110,4 @@ $messages['en'] = array(
 * http://images2.wikia.nocookie.net/__cb20110904041913/central/images/1/1c/Emoticon_yes.png
 ** (yes)
 ** (y)
-	');
+	' );

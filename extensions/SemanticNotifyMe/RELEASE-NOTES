@@ -1,9 +1,0 @@
-For a documentation of all features, see http://www.mediawiki.org/wiki/Extension:Semantic_NotifyMe
-
-== Semantic NotifyMe 0.5 ==
-
-This is a pre-alpha version of the Semantic NotifyMe extensions.
-It includes:
-
-* support for realtime notification on Semantic property/value changing
-* Special:NotifyMe, manage all NotifyMe notifications, delegation enabled

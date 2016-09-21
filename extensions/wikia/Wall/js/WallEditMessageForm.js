@@ -127,37 +127,51 @@ Wall.EditMessageForm = $.createClass(Wall.MessageForm, {
 
 		buttons.attr('disabled', true);
 
-		this.model.saveEdit( this.page, id, newtitle, newbody, isreply, format, this.proxy(function(data) {
-			var $bubble, $body, $timestamp, $editor;
+		this.model.saveEdit(
+			this.page,
+			id,
+			newtitle,
+			newbody,
+			isreply,
+			format,
+			//success callback
+			this.proxy(function (data) {
+				var $bubble, $body, $timestamp, $editor;
 
-			$bubble = $('.speech-bubble-message', msg).first();
-			this.resetHTMLAfterEdit(id, $bubble);
+				$bubble = $('.speech-bubble-message', msg).first();
+				this.resetHTMLAfterEdit(id, $bubble);
 
-			$('.msg-title', msg).first().html(data.msgTitle);
-			$body = $('.msg-body', msg).first().html(data.body);
+				$('.msg-title', msg).first().html(data.msgTitle);
+				$body = $('.msg-body', msg).first().html(data.body);
 
-			// fire event when new article comment is/will be added to DOM
-			mw.hook('wikipage.content').fire($body);
+				// fire event when new article comment is/will be added to DOM
+				mw.hook('wikipage.content').fire($body);
 
-			$timestamp = $bubble.find('.timestamp');
-			$editor = $timestamp.find('.username');
-			if($editor.exists()) {
-				$timestamp.find('.username').html(data.username).attr('href', data.userUrl);
-			} else {
-				$timestamp.prepend($($.msg('wall-message-edited', data.userUrl, data.username, data.historyUrl)));
-			}
+				$timestamp = $bubble.find('.timestamp');
+				$editor = $timestamp.find('.username');
+				if ($editor.exists()) {
+					$timestamp.find('.username').html(data.username).attr('href', data.userUrl);
+				} else {
+					$timestamp.prepend($($.msg('wall-message-edited', data.userUrl, data.username, data.historyUrl)));
+				}
 
-			$timestamp.find('.timeago').attr('title', data.isotime).timeago();
-			$timestamp.find('.timeago-fmt').html(data.fulltime);
+				$timestamp.find('.timeago').attr('title', data.isotime).timeago();
+				$timestamp.find('.timeago-fmt').html(data.fulltime);
 
-			if(window.skin && window.skin != "monobook") {
-				WikiaButtons.init(msg);
-			}
+				if (window.skin && window.skin != "monobook") {
+					WikiaButtons.init(msg);
+				}
 
-			buttons.removeAttr('disabled');
+				buttons.removeAttr('disabled');
 
-			msg.find('.buttonswrapper').show();
-		}));
+				msg.find('.buttonswrapper').show();
+			}),
+			//fail callback
+			this.proxy(function () {
+				buttons.removeAttr('disabled');
+				$.showModal($.msg('wall-posting-message-failed-title'), $.msg('wall-posting-message-failed-body'));
+			})
+		);
 	},
 
 	resetHTMLAfterEdit: function(id, bubble){

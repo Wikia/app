@@ -17,10 +17,6 @@ $wgExtensionMessagesFiles['StaffPowers'] = dirname(__FILE__) . '/StaffPowers.i18
 
 // Power: unblockableness
 $wgHooks['BlockIp'][] = 'efPowersMakeUnblockable';
-$wgAvailableRights[] = 'unblockable';
-$wgGroupPermissions['staff']['unblockable'] = true;
-$wgGroupPermissions['helper']['unblockable'] = true;
-$wgGroupPermissions['vstf']['unblockable'] = true;
 
 /**
  * @param Block $block

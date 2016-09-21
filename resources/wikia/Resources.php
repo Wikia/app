@@ -18,6 +18,7 @@ return [
 			'wikia.cookies',
 			'wikia.document',
 			'wikia.geo',
+			'wikia.fbLocale',
 			'wikia.loader',
 			'wikia.localStorage',
 			'wikia.location',
@@ -31,6 +32,7 @@ return [
 			'wikia.tracker',
 			'wikia.window',
 			'wikia.abTest',
+			'underscore',
 		],
 		'position' => 'top', // needs to be loaded before AssetsManager files
 	],
@@ -82,6 +84,12 @@ return [
 			'wikia.window',
 		],
 	],
+	'wikia.fbLocale' => [
+		'scripts' => 'resources/wikia/modules/facebookLocale.js',
+		'dependencies' => [
+			'wikia.geo',
+		],
+	],
 	'wikia.loader' => [
 		'scripts' => 'resources/wikia/modules/loader.js',
 		'dependencies' => [
@@ -89,6 +97,7 @@ return [
 			'wikia.window',
 			'wikia.mw',
 			'wikia.nirvana',
+			'wikia.fbLocale',
 		],
 	],
 	'wikia.querystring' => [
@@ -167,6 +176,12 @@ return [
 			'amd',
 		],
 	],
+	'underscore' => [
+		'scripts' => 'resources/wikia/libraries/underscore/underscore-min.js',
+		'dependencies' => [
+			'amd',
+		],
+	],
 
 	// AMD modules loaded on demand
 	'wikia.aim' => [
@@ -211,16 +226,6 @@ return [
 		]
 	],
 
-	'wikia.handlebars' => [
-		'scripts' => 'resources/wikia/libraries/handlebars/handlebars.js',
-		'dependencies' => 'amd',
-	],
-
-	'wikia.stringhelper' => [
-		'scripts' => 'resources/wikia/modules/stringhelper.js',
-		'dependencies' => 'amd',
-	],
-
 	// module loaded via $.loadjQuery UI and is a wrapper for MediaWiki jQuery UI modules
 	// this used to be static file located in /skins/common/jquery/jquery-ui-1.8.14.custom.js
 	'wikia.jquery.ui' => [
@@ -245,11 +250,6 @@ return [
 	'jquery.mustache' => [
 		'scripts' => 'resources/wikia/libraries/mustache/jquery.mustache.js',
 		'dependencies' => 'wikia.mustache',
-	],
-
-	'jquery.handlebars' => [
-		'scripts' => 'resources/wikia/libraries/handlebars/jquery.handlebars.js',
-		'dependencies' => 'wikia.handlebars',
 	],
 
 	'jquery.autocomplete' => [
@@ -291,6 +291,15 @@ return [
 		'scripts' => [
 			'resources/wikia/modules/importScript.js',
 			'resources/wikia/modules/importScriptHelper.js'
+		]
+	],
+
+	'wikia.article.edit' => [
+		'scripts' => [
+			'resources/wikia/modules/articleEditTracking.js',
+		],
+		'dependencies' => [
+			'wikia.tracker',
 		]
 	],
 ];

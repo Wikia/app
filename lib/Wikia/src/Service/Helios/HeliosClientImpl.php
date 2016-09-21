@@ -1,10 +1,12 @@
 <?php
 namespace Wikia\Service\Helios;
 
+use Wikia\Tracer\WikiaTracer;
 use Wikia\Util\GlobalStateWrapper;
 use Wikia\Service\Constants;
 
 /**
+ * @Injectable(lazy=true)
  * A client for Wikia authentication service.
  *
  * This is a naive implementation.
@@ -12,29 +14,22 @@ use Wikia\Service\Constants;
 class HeliosClientImpl implements HeliosClient
 {
 	const BASE_URI = "helios_base_uri";
-	const CLIENT_ID = "client_id";
-	const CLIENT_SECRET = "client_secret";
-
+	const SCHWARTZ_TOKEN = "schwartz_token";
+	const SCHWARTZ_HEADER_NAME = 'THE-SCHWARTZ';
 	protected $baseUri;
-	protected $clientId;
-	protected $clientSecret;
 	protected $status;
+	protected $schwartzToken;
 
 	/**
 	 * @Inject({
 	 *   Wikia\Service\Helios\HeliosClientImpl::BASE_URI,
-	 *   Wikia\Service\Helios\HeliosClientImpl::CLIENT_ID,
-	 *   Wikia\Service\Helios\HeliosClientImpl::CLIENT_SECRET})
+	 *   Wikia\Service\Helios\HeliosClientImpl::SCHWARTZ_TOKEN})
 	 * The constructor.
 	 * @param string $baseUri
-	 * @param string $clientId
-	 * @param string $clientSecret
 	 */
-	public function __construct( $baseUri, $clientId, $clientSecret )
-	{
+	public function __construct( $baseUri, $schwartzToken ) {
 		$this->baseUri = $baseUri;
-		$this->clientId = $clientId;
-		$this->clientSecret = $clientSecret;
+		$this->schwartzToken = $schwartzToken;
 	}
 
 	/**
@@ -53,12 +48,23 @@ class HeliosClientImpl implements HeliosClient
 		// Crash if we cannot make HTTP requests.
 		\Wikia\Util\Assert::true( \MWHttpRequest::canMakeRequests() );
 
-		// Add client_id and client_secret to the GET data.
-		$getParams['client_id'] = $this->clientId;
-		$getParams['client_secret'] = $this->clientSecret;
-
 		// Request URI pre-processing.
 		$uri = "{$this->baseUri}{$resourceName}?" . http_build_query($getParams);
+
+		// Appending the request remote IP for client to be able to
+		// identify the source of the remote request.
+		if ( isset( $extraRequestOptions['headers'] ) ) {
+			$headers = $extraRequestOptions['headers'];
+			unset( $extraRequestOptions['headers'] );
+		} else {
+			$headers = [];
+		}
+
+		global $wgRequest;
+		$headers['X-Forwarded-For'] = $wgRequest->getIP();
+
+		// adding internal headers
+		WikiaTracer::instance()->setRequestHeaders( $headers, true );
 
 		// Request options pre-processing.
 		$options = [
@@ -69,6 +75,7 @@ class HeliosClientImpl implements HeliosClient
 			'followRedirects' => false,
 			'returnInstance'  => true,
 			'internalRequest' => true,
+			'headers'         => $headers,
 		];
 
 		$options = array_merge( $options, $extraRequestOptions );
@@ -91,7 +98,7 @@ class HeliosClientImpl implements HeliosClient
 			return \Http::request( $options['method'], $uri, $options );
 		} );
 
-		$this->status = $request->status;
+		$this->status = $request->getStatus();
 		return $this->processResponseOutput( $request );
 	}
 
@@ -100,10 +107,14 @@ class HeliosClientImpl implements HeliosClient
 			return null;
 		}
 
-		$output = json_decode( $request->getContent() );
+		$response = $request->getContent();
+		$output = json_decode( $response );
 
 		if ( !$output ) {
-			throw new ClientException ( 'Invalid response.' );
+			$data = [];
+			$data[ "response" ] = $response;
+			$data["status_code"] = $request->getStatus();
+			throw new ClientException ( 'Invalid Helios response.', 0, null, $data );
 		}
 
 		return $output;
@@ -127,12 +138,31 @@ class HeliosClientImpl implements HeliosClient
 
 		$response = $this->request(
 			'token',
-			[ 'grant_type'	=> 'password' ],
+			[],
 			$postData,
 			[ 'method'	=> 'POST' ]
 		);
 
-		return $response;
+		return [$this->status, $response];
+	}
+
+	/**
+	 * A shortcut method to remove all tokens for user in helios
+	 *
+	 * @param $userId int for remove user tokens
+	 * @internal param $username
+	 * @return null
+	 */
+	public function forceLogout( $userId ) {
+		return $this->request(
+			sprintf( 'users/%s/tokens', $userId ),
+			[ ],
+			[ ],
+			[
+				'method' => 'DELETE',
+				'headers' => [ self::SCHWARTZ_HEADER_NAME => $this->schwartzToken ]
+			]
+		);
 	}
 
 	/**
@@ -145,20 +175,6 @@ class HeliosClientImpl implements HeliosClient
 			[
 				'code' => $token,
 				'noblockcheck' => 1,
-			]
-		);
-	}
-
-	/**
-	 * A shortcut method for refresh token requests.
-	 */
-	public function refreshToken( $token )
-	{
-		return $this->request(
-			'token',
-			[
-				'grant_type'	=> 'refresh_token',
-				'refresh_token'	=> $token
 			]
 		);
 	}
@@ -179,6 +195,24 @@ class HeliosClientImpl implements HeliosClient
 			[],
 			[ 'method' => 'DELETE',
 				'headers' => array( Constants::HELIOS_AUTH_HEADER => $userId ) ]
+		);
+	}
+
+	/**
+	 * Generate a token for a user.
+	 * Warning: Assumes the user is already authenticated.
+	 *
+	 * @param $userId integer - the current user id
+	 *
+	 * @return array - JSON string deserialized into an associative array
+	 */
+	public function generateToken( $userId )
+	{
+		return $this->request(
+			sprintf('users/%s/tokens', $userId),
+			[],
+			[],
+			[ 'method' => 'POST' ]
 		);
 	}
 

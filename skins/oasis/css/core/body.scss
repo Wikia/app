@@ -8,15 +8,10 @@ body {
 	font-size: 12px;
 	margin: 0;
 	overflow-x: auto;
-	padding: 0 0 30px 0;
-}
-
-.WikiaSiteWrapper > h1 {
-	display: none;
+	padding: 0;
 }
 
 .WikiaSiteWrapper > h2 {
-	// SEO Test "One_H1"
 	display: none;
 }
 
@@ -78,5 +73,10 @@ a {
 .neutral {
 	background-color: $color-page-border;
 	border-color: $color-page;
+	color: $color-text;
+}
+
+// Customization for Local_Sitemap
+.local-sitemap-line a span {
 	color: $color-text;
 }

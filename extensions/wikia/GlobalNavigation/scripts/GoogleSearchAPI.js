@@ -26,14 +26,19 @@ $(function () {
 			$googleInput = $('.gsc-input'),
 			$googleButton = $('.gsc-search-button'),
 			$selectElement = $('#searchSelect'),
-			$selectedOption = $selectElement.find('option:selected');
+			$selectedOption = $selectElement.find('option:selected'),
+			currentUrlPath = window.location.pathname,
+			fakeSearchParam = '&qInter=' + encodeURIComponent(searchQuery);
 
+		//We run Google search only for inter search (INT-289)
+		if ($selectedOption.val() === 'local') {
+			return;
+		}
 		evt.preventDefault();
 
-		//get info of local or global and modify query scope
-		if ($selectedOption.val() === 'local') {
-			searchQuery += ' site:' + window.location.hostname;
-		}
+		//Manually trigger page view
+		currentUrlPath += '?q=' + encodeURIComponent(searchQuery) + fakeSearchParam;
+		window.guaTrackPageview(currentUrlPath);
 
 		//Invoke google search
 		$googleInput.val(searchQuery);

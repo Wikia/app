@@ -20,7 +20,7 @@ class UserPreferencesV2 {
 	 * @return Bool
 	 */
 	static public function onGetPreferences( $user, &$defaultPreferences ) {
-		global $wgEnableWallExt, $wgOut, $wgScriptPath, $wgServer, $wgUser, $wgAuth;
+		global $wgEnableWallExt, $wgEnableDiscussions, $wgOut, $wgScriptPath, $wgServer, $wgUser, $wgAuth;
 
 		// add javascript
 		// TODO: use $wgExtensionsPath instead
@@ -147,6 +147,13 @@ class UserPreferencesV2 {
 			$defaultPreferences['enotifminoredits']['label-message'] = 'tog-enotifminoredits-v2';
 			$defaultPreferences = self::moveToEndOfArray( $defaultPreferences, 'enotifminoredits' );
 		}
+		if ( $wgEnableDiscussions ) {
+			if ( isset( $defaultPreferences['enotifdiscussions'] ) ) {
+				$defaultPreferences['enotifdiscussions']['section'] = 'emailv2/email-me-v2';
+				$defaultPreferences['enotifdiscussions']['label-message'] = 'tog-enotifdiscussions-v2';
+				$defaultPreferences = self::moveToEndOfArray( $defaultPreferences, 'enotifdiscussions' );
+			}
+		}
 		if ( isset( $defaultPreferences['enotifusertalkpages'] ) ) {
 			$defaultPreferences['enotifusertalkpages']['section'] = 'emailv2/email-me-v2';
 			$defaultPreferences['enotifusertalkpages']['label-message'] = 'tog-enotifusertalkpages-v2';
@@ -156,11 +163,6 @@ class UserPreferencesV2 {
 			$defaultPreferences['marketingallowed']['section'] = 'emailv2/email-me-v2';
 			$defaultPreferences['marketingallowed']['label-message'] = 'tog-marketingallowed-v2';
 			$defaultPreferences = self::moveToEndOfArray( $defaultPreferences, 'marketingallowed' );
-		}
-		if ( isset( $defaultPreferences['watchlistdigest'] ) ) {
-			$defaultPreferences['watchlistdigest']['section'] = 'emailv2/email-me-v2';
-			$defaultPreferences['watchlistdigest']['label-message'] = 'tog-watchlistdigest-v2';
-			$defaultPreferences = self::moveToEndOfArray( $defaultPreferences, 'watchlistdigest' );
 		}
 		if ( isset( $defaultPreferences['marketingallowed'] ) ) {
 			$defaultPreferences['marketingallowed']['section'] = 'emailv2/email-me-v2';
@@ -183,11 +185,6 @@ class UserPreferencesV2 {
 			$defaultPreferences['enotifrevealaddr']['section'] = 'emailv2/email-advanced-v2';
 			$defaultPreferences = self::moveToEndOfArray( $defaultPreferences, 'enotifrevealaddr' );
 		}
-		if ( array_key_exists( 'watchlistdigestclear', $defaultPreferences ) ) {
-			$defaultPreferences['watchlistdigestclear']['section'] = 'emailv2/email-advanced-v2';
-			$defaultPreferences = self::moveToEndOfArray( $defaultPreferences, 'watchlistdigestclear' );
-		}
-
 		if ( isset( $defaultPreferences['unsubscribed'] ) ) {
 			$defaultPreferences['unsubscribed']['section'] = 'emailv2/email-unsubscribe';
 			$defaultPreferences['unsubscribed']['label-message'] = 'unsubscribe-preferences-toggle-v2';

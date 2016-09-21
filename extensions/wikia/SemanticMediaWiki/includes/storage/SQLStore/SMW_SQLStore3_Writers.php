@@ -802,6 +802,7 @@ class SMWSQLStore3Writers {
 								// wikia change start - jobqueue migration
 								$task = new \Wikia\Tasks\Tasks\JobWrapperTask();
 								$task->call( 'SMWUpdateJob', $title );
+								$task->dupCheck();
 								$jobs[] = $task;
 								// wikia change end
 							}
@@ -819,6 +820,7 @@ class SMWSQLStore3Writers {
 									// wikia change start - jobqueue migration
 									$task = new \Wikia\Tasks\Tasks\JobWrapperTask();
 									$task->call( 'SMWUpdateJob', $title );
+									$task->dupCheck();
 									$jobs[] = $task;
 									// wikia change end
 								}

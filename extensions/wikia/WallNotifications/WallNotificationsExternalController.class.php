@@ -6,11 +6,12 @@ class WallNotificationsExternalController extends WikiaController {
 	private $controllerName;
 
 	public function __construct() {
+		parent::__construct();
 		$this->app = F::app();
 	}
 
 	public function init() {
-		if ( ( $this->app->checkSkin( 'oasis' ) ) || $this->app->checkSkin( 'venus' ) ) {
+		if ( ( $this->app->checkSkin( [ 'oasis' ] ) ) ) {
 			$this->controllerName = 'GlobalNavigationWallNotifications';
 		} else {
 			$this->controllerName = 'WallNotifications';
@@ -43,7 +44,7 @@ class WallNotificationsExternalController extends WikiaController {
 		$wn = new WallNotifications();
 		$ret = $wn->markRead( $wgUser->getId(), $wgCityId );
 		if ( $ret === false || $forceAll == 'FORCE' ) {
-			$ret = $wn->markReadAllWikis( $wgUser->getId() );
+			$wn->markReadAllWikis( $wgUser->getId() );
 		}
 
 		$this->getUpdateCountsInternal( $wn );

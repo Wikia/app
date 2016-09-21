@@ -236,7 +236,9 @@ define('wikia.loader', [
 			}
 
 			if (mw && use.length) {
-				mw.loader.use(use).done(callback).fail(fail(failure, {type: loader.LIBRARY, resources: useNames}));
+				mw.loader.using(use)
+					.done(callback)
+					.fail(fail(failure, {type: loader.LIBRARY, resources: useNames}));
 				load += use.length;
 			}
 
@@ -331,6 +333,11 @@ define('wikia.loader', [
 				if (typeof options.styles !== 'undefined') {
 					// Add sass params to ensure per-theme colors Varnish cache and mcache
 					options.sassParams = options.sassParams || window.wgSassParams;
+				}
+
+				if (typeof window.wgUserLanguage !== 'undefined' && typeof options.messages  !== 'undefined') {
+					// Add language to avoid cache pollution
+					options.uselang = window.wgUserLanguage;
 				}
 
 				nirvana.getJson(

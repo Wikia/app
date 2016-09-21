@@ -329,6 +329,9 @@ function smwfRegisterClasses() {
 
 	// Other extensions
 	$wgAutoloadClasses['SMWPageSchemas'] = $smwgIP . 'includes/SMW_PageSchemas.php';
+
+	//Migration job
+	$wgAutoloadClasses['SMW_MigrationJob'] = $smwgIP . 'maintenance/SMW_MigrationJob.php';
 }
 
 /**

@@ -54,10 +54,6 @@ class CategorySelectController extends WikiaController {
 		$this->response->setVal( 'showHidden', $showHidden );
 		$this->response->setVal( 'userCanEdit', $userCanEdit );
 
-		if ( $this->app->checkSkin( 'venus' ) ) {
-			$this->overrideTemplate( 'articlePageVenus' );
-		}
-
 		wfProfileOut( __METHOD__ );
 	}
 
@@ -139,7 +135,7 @@ class CategorySelectController extends WikiaController {
 	 */
 	public function editPageMetadata() {
 		$categories = '';
-		$data = CategoryHelper::getExtractedCategoryData();
+		$data = $this->getVal('categories', CategoryHelper::getExtractedCategoryData());
 
 		if ( isset( $data ) && !empty( $data[ 'categories' ] ) ) {
 			$categories = htmlspecialchars( CategoryHelper::changeFormat( $data[ 'categories' ], 'array', 'json' ) );
@@ -190,6 +186,8 @@ class CategorySelectController extends WikiaController {
 	 */
 	public function save() {
 		wfProfileIn( __METHOD__ );
+
+		$this->checkWriteRequest();
 
 		$articleId = $this->request->getVal( 'articleId', 0 );
 		$categories = $this->request->getVal( 'categories', array() );

@@ -1,7 +1,7 @@
 <script type="text/javascript" charset="utf-8">
 $(document).ready(function() {
 	var baseurl = wgScript + "?action=ajax&rs=LookupContribsAjax::axData&lookupUser=1";
-	var username = '<?= urlencode( $username ) ?>';
+	var username = '<?= Xml::escapeJsString( $username ) ?>';
 
 	if ( !username ) {
 		return;
@@ -12,19 +12,19 @@ $(document).ready(function() {
 	var oTable = $('#lookupuser-table').dataTable( {
 		bAutoWidth: false,
 		oLanguage: {
-			sLengthMenu: "<?=wfMsg('table_pager_limit', '_MENU_');?>",
-			sZeroRecords: "<?=wfMsg('table_pager_empty');?>",
-			sEmptyTable: "<?=wfMsg('table_pager_empty');?>",
-			sInfo: "<?=wfMsgExt('lookupuser-table-recordspager',  array('parseinline'), '_START_', '_END_', '_TOTAL_');?>",
-			sInfoEmpty: "<?=wfMsgExt('lookupuser-table-recordspager', array('parseinline'), '0', '0', '0');?>",
+			sLengthMenu: "<?= wfMessage( 'table_pager_limit', '_MENU_' )->escaped() ?>",
+			sZeroRecords: "<?= wfMessage( 'table_pager_empty' )->escaped() ?>",
+			sEmptyTable: "<?= wfMessage( 'table_pager_empty' )->escaped() ?>",
+			sInfo: "<?= wfMessage( 'lookupuser-table-recordspager' )->parse() ?>",
+			sInfoEmpty: "<?= wfMessage( 'lookupuser-table-recordspager' )->parse() ?>",
 			sInfoFiltered: "",
-			sSearch: "<?=wfMsg('search')?>",
-			sProcessing: "<img src='" + stylepath + "/common/images/ajax.gif' /> <?=wfMsg('livepreview-loading')?>",
+			sSearch: "<?= wfMessage( 'search' )->escaped() ?>",
+			sProcessing: "<img src='" + stylepath + "/common/images/ajax.gif' /> <?= wfMessage( 'livepreview-loading' )->escaped() ?>",
 			oPaginate : {
-				sFirst: "<?=wfMsg('table_pager_first')?>",
-				sPrevious: "<?=wfMsg('table_pager_prev')?>",
-				sNext: "<?=wfMsg('table_pager_next')?>",
-				sLast: "<?=wfMsg('table_pager_last')?>"
+				sFirst: "<?= wfMessage( 'table_pager_first' )->escaped() ?>",
+				sPrevious: "<?= wfMessage( 'table_pager_prev' )->escaped() ?>",
+				sNext: "<?= wfMessage( 'table_pager_next' )->escaped() ?>",
+				sLast: "<?= wfMessage( 'table_pager_last' )->escaped() ?>"
 			}
 		},
 		aaSorting : [],
@@ -45,9 +45,9 @@ $(document).ready(function() {
 			{ bVisible: true,  aTargets: [1], bSortable: true },
 			{
 				fnRender: function ( oObj ) {
-					var row = '<span class="lc-row"><a href="' + oObj.aData[2] + '">' + oObj.aData[2] + '</a></span>';
-					row += '&nbsp;(<a href="' + oObj.aData[2] + 'index.php?title=Special:Contributions/' + username + '">';
-					row += '<?=wfMsg('lookupuser-table-contribs')?>';
+					var row = '<span class="lc-row"><a href="' + mw.html.escape( oObj.aData[2] ) + '">' + mw.html.escape( oObj.aData[2] ) + '</a></span>';
+					row += '&nbsp;(<a href="' + mw.html.escape( oObj.aData[2] ) + 'index.php?title=Special:Contributions/' + mw.html.escape( username ) + '">';
+					row += '<?= wfMessage( 'lookupuser-table-contribs' )->escaped() ?>';
 					row += '</a>)</span>';
 					return row;
 				},
@@ -109,7 +109,7 @@ $(document).ready(function() {
 				type: "POST",
 				url: sSource,
 				data: [
-					{ name: 'username', value: ( $('#lu_name').exists() ) ? $('#lu_name').val() : '' },
+					{ name: 'username', value: ( $('#lu_name').length ) ? $('#lu_name').val() : '' },
 					{ name: 'limit', value: limit },
 					{ name: 'offset', value: offset },
 					{ name: 'loop', value: loop },
@@ -129,15 +129,19 @@ $(document).ready(function() {
 					//changing placeholders with ajax loading gifs
 					$('.user-groups-placeholder').each(function(){
 						var self = $(this);
-						var wikiId = self.find('input.wikiId').val();
+						var wikiId = parseInt( self.find('input.wikiId').val() );
 						var url = self.find('input.wikiUrl').val();
-						var userName = self.find('input.name').val();
+						var username = self.find('input.name').val();
 
 						try {
 							var ajaxRequest = $.ajax({
 								dataType: 'json',
 								type: "POST",
-								data: 'url=' + url + '&username=' + username + '&id=' + wikiId,
+								data: {
+									url: url,
+									username: username,
+									id: wikiId,
+								},
 								url: wgScript + "?action=ajax&rs=LookupUserPage::requestApiAboutUser",
 								success: function(res) {
 									var blockedInfo = $('.user-blocked-placeholder-' + wikiId);
@@ -193,7 +197,7 @@ $(document).ready(function() {
 });
 </script>
 
-<input id="lu_name" type="hidden" value="<?= $username; ?>" />
+<input id="lu_name" type="hidden" value="<?= Sanitizer::encodeAttribute( $username ) ?>" />
 
 <ul>
 <?php if( $isUsernameGloballyBlocked ) { ?>
@@ -202,7 +206,7 @@ $(document).ready(function() {
 		wfMessage( 'lookupuser-username-blocked-globally' )->parse(),
 		[],
 		[
-			'wpBlockText' => $username,
+			'wpBlockText' => Sanitizer::encodeAttribute( $username ),
 		]
 	) ?></li>
 <?php } else { ?>
@@ -214,29 +218,28 @@ $(document).ready(function() {
 	<thead>
 		<tr>
 			<th width="2%">#</th>
-			<th width="25%"><?= wfMsg('lookupuser-table-title') ?></th>
-			<th width="20%"><?= wfMsg('lookupuser-table-url') ?></th>
-			<th width="20%" style="white-space:nowrap"><?= wfMsg('lookupuser-table-lastedited') ?></th>
-			<th width="15%" style="white-space:nowrap"><?= wfMsg('lookupuser-table-editcount') ?></th>
-			<th width="15%" style="white-space:nowrap"><?= wfMsg('lookupuser-table-userrights') ?></th>
-			<th width="3%" style="white-space:nowrap"><?= wfMsg('lookupuser-table-blocked') ?></th>
+			<th width="25%"><?= wfMessage( 'lookupuser-table-title' )->escaped() ?></th>
+			<th width="20%"><?= wfMessage( 'lookupuser-table-url' )->escaped() ?></th>
+			<th width="20%"><?= wfMessage( 'lookupuser-table-lastedited' )->escaped() ?></th>
+			<th width="15%"><?= wfMessage( 'lookupuser-table-editcount' )->escaped() ?></th>
+			<th width="15%"><?= wfMessage( 'lookupuser-table-userrights' )->escaped() ?></th>
+			<th width="3%"><?= wfMessage( 'lookupuser-table-blocked' )->escaped() ?></th>
 		</tr>
 	</thead>
 	<tbody>
 		<tr>
-			<td colspan="6" class="dataTables_empty"><?= wfMsg('livepreview-loading'); ?></td>
+			<td colspan="6" class="dataTables_empty"><?= wfMessage( 'livepreview-loading' )->escaped() ?></td>
 		</tr>
 	</tbody>
 	<tfoot>
 		<tr>
 			<th width="2%">#</th>
-			<th width="25%"><?= wfMsg('lookupuser-table-title') ?></th>
-			<th width="20%"><?= wfMsg('lookupuser-table-url') ?></th>
-			<th width="20%" style="white-space:nowrap"><?= wfMsg('lookupuser-table-lastedited') ?></th>
-			<th width="15%" style="white-space:nowrap"><?= wfMsg('lookupuser-table-editcount') ?></th>
-			<th width="15%" style="white-space:nowrap"><?= wfMsg('lookupuser-table-userrights') ?></th>
-			<th width="3%" style="white-space:nowrap"><?= wfMsg('lookupuser-table-blocked') ?></th>
+			<th width="25%"><?= wfMessage( 'lookupuser-table-title' )->escaped() ?></th>
+			<th width="20%"><?= wfMessage( 'lookupuser-table-url' )->escaped() ?></th>
+			<th width="20%"><?= wfMessage( 'lookupuser-table-lastedited' )->escaped() ?></th>
+			<th width="15%"><?= wfMessage( 'lookupuser-table-editcount' )->escaped() ?></th>
+			<th width="15%"><?= wfMessage( 'lookupuser-table-userrights' )->escaped() ?></th>
+			<th width="3%"><?= wfMessage( 'lookupuser-table-blocked' )->escaped() ?></th>
 		</tr>
 	</tfoot>
 </table>
-

@@ -19,85 +19,71 @@ class CuratedContentToGameGuidesRegressionTest extends WikiaBaseTest {
 		return [
 			[
 				'empty content',
-				[],
+				[ ],
 				[ ]
 			],
 			[
 				'simple one',
 				//Curated Content
 				[
-					0 =>
-						[
-							'title' => 'awfaw',
-							'image_id' => 7,
-							'items' =>
-								[
-									0 =>
-										[
-											'title' => 'Category:Samantha Carter images',
-											'label' => 'Samantha',
-											'image_id' => 0,
-											'article_id' => 22245,
-											'type' => 'category'
-										],
-									1 =>
-										[
-											'title' => 'Category:Sun Tzu crew',
-											'label' => 'Sun Tzu crew',
-											'image_id' => 15,
-											'article_id' => 43626,
-											'type' => 'category'
-										],
-									2 =>
-										[
-											'title' => 'Kategoria:Apophis',
-											'label' => 'Apophis',
-											'article_id' => 43626,
-											'type' => 'category'
-										],
-									3 =>
-										[
-											'title' => 'Sun Tzu',
-											'label' => 'Sun Tzu',
-											'image_id' => 0,
-											'article_id' => 43626,
-											'type' => 'article'
-										],
-								],
-						],
-					1 =>
-						[
-							'title' => '',
-							'image_id' => 0,
-							'items' =>
-								[
-									0 =>
-										[
-											'title' => 'Category:Carson Beckett (clone) images',
-											'label' => 'Carson Beckett (clone) images',
-											'image_id' => 0,
-											'article_id' => 38761,
-											'type' => 'category'
-										],
-								],
-						],
-					2 =>
-						[
-							'title' => 'features',
-							'image_id' => 2344,
-							'items' =>
-								[
-									0 =>
-										[
-											'title' => 'Category:Carson Beckett (clone) images',
-											'label' => 'Carson Beckett (clone) images',
-											'image_id' => 0,
-											'article_id' => 38761,
-											'type' => 'category'
-										],
-								],
-							'featured' => true
-						],
+					[
+						'label' => 'awfaw',
+						'image_id' => 7,
+						'items' =>
+							[
+								0 =>
+									[
+										'title' => 'Category:Samantha Carter images',
+										'label' => 'Samantha',
+										'image_id' => 0,
+										'article_id' => 22245,
+										'type' => 'category'
+									],
+								1 =>
+									[
+										'title' => 'Category:Sun Tzu crew',
+										'label' => 'Sun Tzu crew',
+										'image_id' => 15,
+										'article_id' => 43626,
+										'type' => 'category'
+									],
+								2 =>
+									[
+										'title' => 'Kategoria:Apophis',
+										'label' => 'Apophis',
+										'article_id' => 43626,
+										'type' => 'category'
+									],
+								3 =>
+									[
+										'title' => 'Sun Tzu',
+										'label' => 'Sun Tzu',
+										'image_id' => 0,
+										'article_id' => 43626,
+										'type' => 'article'
+									],
+							],
+					],
+					[
+						'label' => '',
+						'image_id' => 0,
+						'items' =>
+							[
+								0 =>
+									[
+										'title' => 'Category:Carson Beckett (clone) images',
+										'label' => 'Carson Beckett (clone) images',
+										'image_id' => 0,
+										'article_id' => 38761,
+										'type' => 'category'
+									],
+							],
+					],
+					[
+						'label' => '',
+						'image_id' => 0,
+						'items' => [ ],
+					]
 				],
 				//GameGuide Content
 				[
@@ -144,6 +130,12 @@ class CuratedContentToGameGuidesRegressionTest extends WikiaBaseTest {
 											'id' => 38761,
 										],
 								],
+						],
+					2 =>
+						[
+							'title' => '',
+							'image_id' => 0,
+							'categories' => [ ]
 						],
 				]
 			],

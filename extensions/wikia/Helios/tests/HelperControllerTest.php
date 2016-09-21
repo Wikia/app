@@ -2,6 +2,7 @@
 
 namespace Wikia\Helios;
 use Wikia\Service\User\Auth;
+use Wikia\Helios\HelperController;
 
 include_once( __DIR__ . '/HelperControllerWrapper.php' );
 
@@ -30,9 +31,13 @@ class HelperControllerTest extends \WikiaBaseTest {
 	}
 
 	public function testAuthenticateAuthenticationFailed() {
-		$this->wikiaRequestMock->expects( $this->once() )
+		$this->wikiaRequestMock->expects( $this->at( 0 ) )
 			->method( 'getVal' )
-			->with( 'secret' )
+			->with( HelperController::SCHWARTZ_PARAM )
+			->willReturn( "foo" );
+		$this->wikiaRequestMock->expects( $this->at( 1 ) )
+			->method( 'getVal' )
+			->with( HelperController::EXTERNAL_SCHWARTZ_PARAM )
 			->willReturn( "foo" );
 
 		$this->wikiaResponseMock->expects( $this->at( 0 ) )
@@ -46,10 +51,14 @@ class HelperControllerTest extends \WikiaBaseTest {
 	}
 
 	public function testAuthenticateAuthenticationSuccess() {
-		$this->wikiaRequestMock->expects( $this->once() )
+		$this->wikiaRequestMock->expects( $this->at( 0 ) )
 			->method( 'getVal' )
-			->with( 'secret' )
+			->with( HelperController::SCHWARTZ_PARAM )
 			->willReturn( $this->secret );
+		$this->wikiaRequestMock->expects( $this->at( 1 ) )
+			->method( 'getVal' )
+			->with( HelperController::EXTERNAL_SCHWARTZ_PARAM )
+			->willReturn( "wrong" );
 
 		$this->wikiaResponseMock->expects( $this->never() )
 			->method( 'setVal' );
@@ -61,9 +70,13 @@ class HelperControllerTest extends \WikiaBaseTest {
 	public function testIsUserBlockedYes() {
 		$this->wikiaRequestMock->expects( $this->at( 0 ) )
 			->method( 'getVal' )
-			->with( 'secret' )
-			->willReturn( $this->secret );
+			->with( HelperController::SCHWARTZ_PARAM )
+			->willReturn( "wrong" );
 		$this->wikiaRequestMock->expects( $this->at( 1 ) )
+			->method( 'getVal' )
+			->with( HelperController::EXTERNAL_SCHWARTZ_PARAM )
+			->willReturn( $this->secret );
+		$this->wikiaRequestMock->expects( $this->at( 2 ) )
 			->method( 'getVal' )
 			->with( 'username' )
 			->willReturn( $this->username );
@@ -80,9 +93,13 @@ class HelperControllerTest extends \WikiaBaseTest {
 	public function testIsUserBlockedNo() {
 		$this->wikiaRequestMock->expects( $this->at( 0 ) )
 			->method( 'getVal' )
-			->with( 'secret' )
+			->with( HelperController::SCHWARTZ_PARAM )
 			->willReturn( $this->secret );
 		$this->wikiaRequestMock->expects( $this->at( 1 ) )
+			->method( 'getVal' )
+			->with( HelperController::EXTERNAL_SCHWARTZ_PARAM )
+			->willReturn( $this->secret );
+		$this->wikiaRequestMock->expects( $this->at( 2 ) )
 			->method( 'getVal' )
 			->with( 'username' )
 			->willReturn( $this->username );
@@ -99,9 +116,13 @@ class HelperControllerTest extends \WikiaBaseTest {
 	public function testIsBlockedNotFound() {
 		$this->wikiaRequestMock->expects( $this->at( 0 ) )
 			->method( 'getVal' )
-			->with( 'secret' )
+			->with( HelperController::SCHWARTZ_PARAM )
 			->willReturn( $this->secret );
 		$this->wikiaRequestMock->expects( $this->at( 1 ) )
+			->method( 'getVal' )
+			->with( HelperController::EXTERNAL_SCHWARTZ_PARAM )
+			->willReturn( $this->secret );
+		$this->wikiaRequestMock->expects( $this->at( 2 ) )
 			->method( 'getVal' )
 			->with( 'username' )
 			->willReturn( $this->username );

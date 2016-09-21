@@ -104,15 +104,6 @@ class NavigationModel extends WikiaModel {
 		);
 	}
 
-	/**
-	 * Refresh local navigation cache
-	 *
-	 * Called by LocalNavigationHooks::onMessageCacheReplace
-	 */
-	public function clearNavigationTreeCache() {
-		$this->getLocalNavigationTree( NavigationModel::WIKI_LOCAL_MESSAGE, true /* $refreshCache */ );
-	}
-
 	private function setShouldTranslateContent($shouldTranslateContent) {
 		$this->shouldTranslateContent = $shouldTranslateContent;
 	}

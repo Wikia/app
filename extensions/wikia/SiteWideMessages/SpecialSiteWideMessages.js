@@ -1,7 +1,7 @@
 (function( window ) {
 	var track = Wikia.Tracker.buildTrackingFunction({
 		category: 'sitewidemessages',
-		trackingMethod: 'internal'
+		trackingMethod: 'analytics'
 	});
 
 	$(document).ready(function(){

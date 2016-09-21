@@ -1,8 +1,9 @@
 /*global define*/
 define('ext.wikia.adEngine.messageListener', [
+	'ext.wikia.adEngine.adContext',
 	'wikia.log',
 	'wikia.window'
-], function (log, window) {
+], function (adContext, log, window) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.messageListener',
@@ -93,6 +94,10 @@ define('ext.wikia.adEngine.messageListener', [
 
 		callbacks.push({match: match, fn: callback});
 	}
+
+	adContext.addCallback(function () {
+		unhandledMessages = [];
+	});
 
 	return {
 		init: init,

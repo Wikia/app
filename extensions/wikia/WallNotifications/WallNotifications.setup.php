@@ -1,10 +1,10 @@
 <?php
-$wgExtensionCredits[ 'other' ][ ] = array(
+$wgExtensionCredits[ 'other' ][ ] = [
 	'name' => 'WallNotifications',
 	'author' => 'Wikia',
 	'descriptionmsg' => 'wallnotifications-desc',
 	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/WallNotifications',
-);
+];
 
 // i18n
 $wgExtensionMessagesFiles['WallNotifications'] = __DIR__ . '/i18n/WallNotifications.i18n.php';
@@ -17,6 +17,7 @@ $wgAutoloadClasses['WallNotificationAdminEntity'] =  __DIR__ . '/WallNotificatio
 $wgAutoloadClasses['WallNotificationsOwner'] =  __DIR__ . '/WallNotificationsOwner.class.php';
 $wgAutoloadClasses['WallNotificationOwnerEntity'] =  __DIR__ . '/WallNotificationOwnerEntity.class.php';
 
+$wgAutoloadClasses['WallNotificationControllerBase'] = __DIR__ . '/WallNotificationControllerBase.class.php';
 $wgAutoloadClasses['WallNotificationEntity'] =  __DIR__ . '/WallNotificationEntity.class.php';
 $wgAutoloadClasses['WallNotificationsController'] =  __DIR__ . '/WallNotificationsController.class.php';
 $wgAutoloadClasses['GlobalNavigationWallNotificationsController'] =  __DIR__ . '/GlobalNavigationWallNotificationsController.class.php';

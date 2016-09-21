@@ -350,7 +350,9 @@ class SMWSQLStore3 extends SMWStore {
 	public function getQueryResult( SMWQuery $query ) {
 		wfProfileIn( 'SMWSQLStore3::getQueryResult (SMW)' );
 
-		$qe = new SMWSQLStore3QueryEngine( $this, wfGetDB( DB_SLAVE, 'smw' ) );
+		$dbr = wfGetDB( DB_SLAVE, 'smw' );
+		$dbr->clearFlag( DBO_TRX );
+		$qe = new SMWSQLStore3QueryEngine( $this, $dbr );
 		$result = $qe->getQueryResult( $query );
 		wfProfileOut( 'SMWSQLStore3::getQueryResult (SMW)' );
 

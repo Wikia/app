@@ -15,12 +15,13 @@ $wgAutoloadClasses['AdEngine2Controller'] =  __DIR__ . '/AdEngine2Controller.cla
 $wgAutoloadClasses['AdEngine2ExitstitialHooks'] =  __DIR__ . '/AdEngine2ExitstitialHooks.class.php';
 $wgAutoloadClasses['AdEngine2Hooks'] =  __DIR__ . '/AdEngine2Hooks.class.php';
 $wgAutoloadClasses['AdEngine2PageTypeService'] = __DIR__ . '/AdEngine2PageTypeService.class.php';
+$wgAutoloadClasses['AdEngine2Resource'] = __DIR__ . '/ResourceLoaders/AdEngine2Resource.class.php';
 $wgAutoloadClasses['AdEngine2Service'] =  __DIR__ . '/AdEngine2Service.class.php';
+$wgAutoloadClasses['AdTargeting'] =  __DIR__ . '/AdTargeting.class.php';
 $wgAutoloadClasses['ResourceLoaderAdEngineBase'] = __DIR__ . '/ResourceLoaders/ResourceLoaderAdEngineBase.php';
 $wgAutoloadClasses['ResourceLoaderScript'] = __DIR__ . '/ResourceLoaders/ResourceLoaderScript.php';
-$wgAutoloadClasses['ResourceLoaderAdEngineSevenOneMediaModule'] = __DIR__ . '/ResourceLoaders/ResourceLoaderAdEngineSevenOneMediaModule.php';
-$wgAutoloadClasses['ResourceLoaderAdEngineSourcePointModule'] = __DIR__ . '/ResourceLoaders/ResourceLoaderAdEngineSourcePointModule.php';
-$wgAutoloadClasses['ResourceLoaderAdEngineSourcePointDetectionModule'] = __DIR__ . '/ResourceLoaders/ResourceLoaderAdEngineSourcePointDetectionModule.php';
+$wgAutoloadClasses['ResourceLoaderAdEngineYavliModule'] = __DIR__ . '/ResourceLoaders/ResourceLoaderAdEngineYavliModule.php';
+$wgAutoloadClasses['AdEngine2ApiController'] = __DIR__ . '/AdEngine2ApiController.class.php';
 
 // Hooks for Exitstitial ads
 $wgHooks['LinkerMakeExternalLink'][] = 'AdEngine2ExitstitialHooks::onLinkerMakeExternalLink';
@@ -36,27 +37,30 @@ $wgHooks['OasisSkinAssetGroupsBlocking'][] = 'AdEngine2Hooks::onOasisSkinAssetGr
 $wgHooks['WikiaMobileAssetsPackages'][] = 'AdEngine2Hooks::onWikiaMobileAssetsPackages';
 $wgHooks['WikiaSkinTopScripts'][] = 'AdEngine2Hooks::onWikiaSkinTopScripts';
 $wgHooks['WikiaSkinTopModules'][] = 'AdEngine2Hooks::onWikiaSkinTopModules';
-$wgHooks['VenusAssetsPackages'][] = 'AdEngine2Hooks::onVenusAssetsPackages';
 $wgHooks['SkinAfterContent'][] = 'AdEngine2Hooks::onSkinAfterContent';
-$wgHooks['SkinAfterBottomScripts'][] = 'AdEngine2Hooks::onSkinAfterBottomScripts';
 
 // i18n
 $wgExtensionMessagesFiles['AdEngine'] = __DIR__ . '/AdEngine.i18n.php';
 $wgExtensionFunctions[] = function() {
-	JSMessages::registerPackage( 'AdEngine', array( 'adengine-*' ) );
-} ;
+	JSMessages::registerPackage( 'AdEngine', [
+		'adengine-*'
+	] );
+};
 
-// Register Resource Loader module for SevenOne Media files
-$wgResourceModules['wikia.ext.adengine.sevenonemedia'] = array(
-	'class' => 'ResourceLoaderAdEngineSevenOneMediaModule',
-);
+JSMessages::enqueuePackage('AdEngine', JSMessages::EXTERNAL);
 
-$wgResourceModules['wikia.ext.adengine.sourcepoint'] = array(
-	'class' => 'ResourceLoaderAdEngineSourcePointModule',
-);
+AdEngine2Resource::register('wikia.ext.adengine.pf.detection', 'ResourceLoaderAdEnginePageFairDetectionModule');
+AdEngine2Resource::register('wikia.ext.adengine.sp.detection', 'ResourceLoaderAdEngineSourcePointDetectionModule');
+AdEngine2Resource::register('wikia.ext.adengine.yavli', 'ResourceLoaderAdEngineYavliModule');
 
-$wgResourceModules['wikia.ext.adengine.sourcepoint.detection'] = array(
+// Keep old resource links for cache
+// TODO: ADEN-3407
+$wgResourceModules['wikia.ext.adengine.sp.detection'] = array(
 	'class' => 'ResourceLoaderAdEngineSourcePointDetectionModule',
+);
+
+$wgResourceModules['wikia.ext.adengine.yavli'] = array(
+	'class' => 'ResourceLoaderAdEngineYavliModule',
 );
 
 // Special page for importing ad test

@@ -107,7 +107,7 @@ $messages['en'] = array(
 	'editpagelayout-preview-dropdown-item-mobile' => 'Mobile',
 	'editpagelayout-preview-dropdown-item-tablet' => 'Tablet Portrait',
 	'editpagelayout-preview-dropdown-item-desktop' => 'Desktop',
-	'editpagelayout-preview-dropdown-item-desktopxl' => 'Desktop XL'
+	'editpagelayout-preview-dropdown-item-desktopxl' => 'Desktop XL',
 );
 
 /** Message documentation (Message documentation)

@@ -2,7 +2,7 @@
 
 class TestResourceLoaderModule extends ResourceLoaderModule {
 
-	const TIMESTAMP = 1361547436;
+	const TIMESTAMP = 1452004000;
 
 	public function getModifiedTime( ResourceLoaderContext $context ) {
 		return self::TIMESTAMP;

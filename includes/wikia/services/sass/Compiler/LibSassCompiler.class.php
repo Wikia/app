@@ -113,6 +113,8 @@ SASS;
 
 	public function quoteIfNeeded( $item, $key ) {
 		if ( !is_numeric( $item ) && strpos( $key, 'color' ) === false ) {
+			// escape only single quotes, as they are used as wrappers for each $item
+			$item = addcslashes( $item, "'" );
 			$item = "'{$item}'";
 		}
 		return $item;

@@ -30,7 +30,7 @@ $.fn.extend({
 			wrapper;
 
 		//wrap with modal chrome
-		if (skin === 'oasis' || skin === 'venus' || settings.appendToBody) {
+		if (skin === 'oasis' || settings.appendToBody) {
 			/**
 			 * Generate modal content and add it to <body>
 			 * <section class="modalWrapper" id="'+id+'"><section class="modalContent">[modal content]</section></section>');
@@ -76,7 +76,7 @@ $.fn.extend({
 		}
 
 		// skin === oasis is for backward support
-		if (settings.tabsOutsideContent || skin === 'oasis' || skin === 'venus') {
+		if (settings.tabsOutsideContent || skin === 'oasis') {
 			// find tabs with .modal-tabs class and move them outside modal content
 			var modalTabs = wrapper.find('.modal-tabs');
 			if (modalTabs.exists()) {
@@ -85,7 +85,7 @@ $.fn.extend({
 		}
 
 		// calculate modal width for oasis
-		if (skin === 'oasis' || skin === 'venus') {
+		if (skin === 'oasis') {
 
 			if(settings.width !== 'auto') {
 
@@ -227,7 +227,7 @@ $.fn.extend({
 				}
 		});
 
-		if (skin == 'oasis' || skin == 'venus' || settings.appendToBody) {
+		if (skin == 'oasis' || settings.appendToBody) {
 			blackout.appendTo("body");
 		} else {
 			blackout.appendTo("#positioned_elements");

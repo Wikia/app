@@ -4,7 +4,8 @@ $messages = array();
 
 $messages['en'] = array(
 	'places' => 'Places on this wiki',
-	'places-desc' => 'Provides <nowiki><place> and <places></nowiki> parser hooks for geo tagging pages and a [[Special:Places|map of all tagged pages]]',
+	'places-nearby' => 'Places nearby',
+	'places-desc' => 'Provides <nowiki><place> and <places></nowiki> parser hooks for geo tagging pages, [[Special:Places|map of all tagged pages]] and [[Special:Nearby|list of nearby places]]',
 	'places-in-category' => 'Places in $1 category',
 	'places-on-map' => '{{PLURAL:$1|$1 place|$1 places}} on this map',
 	'places-modal-go-to-special' => 'Showing {{PLURAL:$1|$1 place|$1 places}} ([[Special:Places|see all]])',
@@ -586,7 +587,8 @@ $messages['pfl'] = array(
  */
 $messages['pl'] = array(
 	'places' => 'Miejsca na tej wiki',
-	'places-desc' => 'Dodaje tagi <nowiki><place> i <places></nowiki> pozwalające na geotagowanie artykułów oraz [[Special:Places|mapę wszystkich oznaczonych artykułów]]',
+	'places-nearby' => 'Miejsca w pobliżu Twojego aktualnego położenia',
+	'places-desc' => 'Dodaje tagi <nowiki><place> i <places></nowiki> pozwalające na geotagowanie artykułów, [[Special:Places|mapę wszystkich oznaczonych artykułów]] oraz [[Special:Nearby|listę pobliskich miejsc]]',
 	'places-in-category' => 'Miejsca w kategorii "$1"',
 	'places-on-map' => '{{PLURAL:$1|$1 miejsce|$1 miejsc}} na mapie',
 	'places-modal-go-to-special' => '{{PLURAL:$1|$1 miejsce|$1 miejsc}} na mapie ([[Special:Places|zobacz wszystkie]])',

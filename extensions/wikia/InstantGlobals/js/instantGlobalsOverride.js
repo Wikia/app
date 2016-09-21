@@ -9,3 +9,12 @@ location.search.replace(
 		Wikia.InstantGlobals[b] = c > 0;
 	}
 );
+
+location.search.replace(
+	/InstantGlobals\.(\w+)=\[(.*?)]/g,
+	//Applying all the InstantGlobals.*=Array params
+	//example: ?InstantGlobals.wgAdDriverOpenXBidderCountries=[DE,PL,XX]
+	function (a, b, c) {
+		Wikia.InstantGlobals[b] = c.split(',');
+	}
+);

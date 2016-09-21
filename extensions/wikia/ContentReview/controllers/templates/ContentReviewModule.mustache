@@ -12,11 +12,9 @@
 
 	{{#displaySubmit}}
 	<div class="content-review-module-submit-container">
-		<a href="#" id="content-review-module-submit" title="{{submit}}">
-		<button class="content-review-module-button primary" type="button">
+		<button class="content-review-module-submit primary" data-page-name="{{pageName}}">
 			{{submit}}
 		</button>
-		</a>
 	</div>
 	{{/displaySubmit}}
 
@@ -33,9 +31,12 @@
 		{{/isTestModeEnabled}}
 	</div>
 
-	{{#help}}
 	<div class="content-review-module-help">
-		{{{help}}}
+		{{#jsPages}}
+			<a href="{{jsPagesUrl}}">{{jsPagesTitle}}</a>
+		{{/jsPages}}
+		{{#help}}
+			{{{help}}}
+		{{/help}}
 	</div>
-	{{/help}}
 </section>

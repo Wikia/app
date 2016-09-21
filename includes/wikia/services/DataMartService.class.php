@@ -236,38 +236,6 @@ class DataMartService extends Service {
 	}
 
 	/**
-	 * Get top wikis by videoviews over a specified span of time, optionally filtering by
-	 * public status
-	 *
-	 * @param integer $periodId The interval of time to take into consideration, one of PERIOD_ID_WEEKLY,
-	 * PERIOD_ID_MONTHLY or PERIOD_ID_QUARTERLY
-	 * @param integer $lastN The last N periods to sum results for
-	 * @param integer $limit The maximum number of results, defaults to 200
-	 * @return array $topWikis [ array( wikiId => videoviews ) ]
-	 */
-	public static function getTopWikisByVideoviews ( $periodId, $lastN, $limit = 200 ) {
-		$db = DataMartService::getDB();
-
-		$topWikis = ( new WikiaSQL() )->skipIf( self::isDisabled() )
-			->cacheGlobal( self::TTL )
-			->SELECT( 'r.wiki_id' )->AS_( 'id' )
-				->SUM( 'views' )->AS_( 'totalViews' )
-			->FROM( 'rollup_wiki_video_views' )->AS_( 'r' )
-			->WHERE( 'period_id' )->EQUAL_TO( $periodId )
-				->AND_( 'time_id' )->GREATER_THAN( sql::NOW()->MINUS_INTERVAL( $lastN, 'day' ) )
-			->GROUP_BY( 'id' )
-			->ORDER_BY( ['totalViews', 'desc'] )
-			->LIMIT( 200 )
-			->runLoop( $db, function( &$topWikis, $row ) {
-				$topWikis[$row->id] = $row->totalViews;
-			} );
-
-		$topWikis = array_slice( $topWikis, 0, $limit, true );
-
-		return $topWikis;
-	}
-
-	/**
 	 * get events by wiki Id
 	 * @param integer $periodId
 	 * @param string $startDate [YYYY-MM-DD]
@@ -427,9 +395,10 @@ class DataMartService extends Service {
 		$date = date( 'Y-m-d' ) . ' 00:00:01';
 		do {
 			$date = ( new WikiaSQL() )->skipIf( self::isDisabled() )
-				->SELECT( 'max(time_id) as t' )
+				->SELECT( 'time_id as t' )
 				->FROM( 'rollup_wiki_article_pageviews' )
 				->WHERE( 'time_id' )->LESS_THAN( $date )
+				->ORDER_BY( 'time_id' )->DESC()
 				->LIMIT( 1 )
 				->cache( self::CACHE_TOP_ARTICLES )
 				->run( $db, function ( ResultWrapper $result ) {
@@ -818,9 +787,7 @@ class DataMartService extends Service {
 	 * @return array
 	 */
 	public static function getPageViewsForArticles( Array $articlesIds, $timeId, $wikiId, $periodId = self::PERIOD_ID_WEEKLY ) {
-		$app = F::app();
-
-		$db = wfGetDB( DB_SLAVE, [], $app->wg->DWStatsDB );
+		$db = DataMartService::getDB();
 
 		$articlePageViews = ( new WikiaSQL() )->skipIf( self::isDisabled() )
 			->SELECT( 'article_id', 'pageviews' )
@@ -837,9 +804,7 @@ class DataMartService extends Service {
 	}
 
 	public static function getWAM200Wikis() {
-		$app = F::app();
-
-		$db = wfGetDB( DB_SLAVE, [], $app->wg->DWStatsDB );
+		$db = DataMartService::getDB();
 
 		$wikis = ( new WikiaSQL() )->skipIf( self::isDisabled() )
 			->cacheGlobal( self::TTL )
@@ -862,9 +827,7 @@ class DataMartService extends Service {
 	 * @return bool|array An array of IDs or `false` on no results
 	 */
 	public function getWikisOrderByWam( $limit = self::DEFAULT_TOP_WIKIAS_LIMIT, array $wikisIds = [] ) {
-		$app = F::app();
-
-		$db = wfGetDB( DB_SLAVE, [], $app->wg->DWStatsDB );
+		$db = DataMartService::getDB();
 
 		$sql = ( new WikiaSQL() )->skipIf( self::isDisabled() )
 			->cacheGlobal( self::TTL )
@@ -895,8 +858,8 @@ class DataMartService extends Service {
 
 	protected static function getDB() {
 		$app = F::app();
-		wfGetLB( $app->wg->DatamartDB )->allowLagged( true );
-		$db = wfGetDB( DB_SLAVE, array(), $app->wg->DatamartDB );
+		wfGetLB( $app->wg->DWStatsDB )->allowLagged( true );
+		$db = wfGetDB( DB_SLAVE, array(), $app->wg->DWStatsDB );
 		$db->clearFlag( DBO_TRX );
 		return $db;
 	}

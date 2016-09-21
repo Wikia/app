@@ -26,7 +26,5 @@ require_once( dirname( __FILE__ ) . '/SpecialMultipleLookup_helper.php' );
 require_once( dirname( __FILE__ ) . '/SpecialMultipleLookup_ajax.php' );
 require_once( dirname( __FILE__ ) . '/SpecialMultipleLookup_hooks.php' );
 
-$wgAvailableRights[] = 'multilookup';
-
 extAddSpecialPage( dirname( __FILE__ ) . '/SpecialMultipleLookup_body.php', 'MultiLookup', 'MultipleLookupPage' );
 $wgSpecialPageGroups['MultiLookup'] = 'users';

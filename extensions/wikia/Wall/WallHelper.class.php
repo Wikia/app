@@ -13,11 +13,11 @@ class WallHelper {
 	const PARSER_CACHE_TTL = 3600; // 60 * 60
 
 	public function __construct() {
-		$this->urls = array();
+		$this->urls = [ ];
 	}
 
 	public function createPostContent( $title, $body ) {
-		return Xml::element( "title", array(), $title ) . "\n" . Xml::element( "body", array(), $body );
+		return Xml::element( "title", [ ], $title ) . "\n" . Xml::element( "body", [ ], $body );
 	}
 
 	public function getArchiveSubPageText() {
@@ -123,7 +123,7 @@ class WallHelper {
 	public function wikiActivityFilterMessageWall( $title, &$res ) {
 		wfProfileIn( __METHOD__ );
 
-		$item = array();
+		$item = [ ];
 		$item['type'] = 'new';
 		$item['wall'] = true;
 		$item['ns'] = $res['ns'];
@@ -134,7 +134,7 @@ class WallHelper {
 		$wmessage = new WallMessage( $title );
 		$parent = $wmessage->getTopParentObj();
 
-		if ( !in_array( true, array( $wmessage->isAdminDelete(), $wmessage->isRemove() ) ) ) {
+		if ( !in_array( true, [ $wmessage->isAdminDelete(), $wmessage->isRemove() ] ) ) {
 			$item['wall-title'] = $wmessage->getArticleTitle()->getPrefixedText();
 
 			$owner = $wmessage->getWallOwner();
@@ -160,7 +160,7 @@ class WallHelper {
 			// child
 				$parent->load();
 
-				if ( !in_array( true, array( $parent->isRemove(), $parent->isAdminDelete() ) ) ) {
+				if ( !in_array( true, [ $parent->isRemove(), $parent->isAdminDelete() ] ) ) {
 					$title = wfMessage( 'wall-no-title' )->escaped(); // in case metadata does not include title field
 					if ( isset( $parent->mMetadata['title'] ) ) $title = $wmessage->getMetaTitle();
 					$this->mapParentData( $item, $parent, $title );
@@ -168,15 +168,15 @@ class WallHelper {
 					$item['wall-msg'] = wfMessage( 'wall-wiki-activity-on', $item['wall-title'], $item['wall-owner'] )->parse();
 				} else {
 				// message was removed or deleted
-					$item = array();
+					$item = [ ];
 				}
 			}
 		} else {
 		// message was removed or deleted
-			$item = array();
+			$item = [ ];
 		}
 
-		wfRunHooks( 'AfterWallWikiActivityFilter', array( &$item, $wmessage ) );
+		wfRunHooks( 'AfterWallWikiActivityFilter', [ &$item, $wmessage ] );
 
 		wfProfileOut( __METHOD__ );
 		return $item;
@@ -224,7 +224,7 @@ class WallHelper {
 	public function getWallComments( $parentId = null ) {
 		wfProfileIn( __METHOD__ );
 
-		$comments = array();
+		$comments = [ ];
 		$commentsCount = 0;
 
 		if ( !is_null( $parentId ) ) {
@@ -235,13 +235,14 @@ class WallHelper {
 				Wikia::log( __METHOD__, false, 'No WallMessage instance article id: ' . $parentId, true );
 
 				wfProfileOut( __METHOD__ );
-				return array(
+				return [
 					'count' => $commentsCount,
 					'comments' => $comments,
-				);
+				];
 			}
 
 			$wallThread = WallThread::newFromId( $parentId );
+			$wallThread->loadIfCached();
 			$topMessage = $wallThread->getThreadMainMsg();
 			$comments = $wallThread->getRepliesWallMessages();
 
@@ -251,10 +252,10 @@ class WallHelper {
 				// not only replies (comments), so we add 1 which is top message
 				$commentsCount = count( $comments ) + 1;
 				$revComments = array_reverse( $comments );
-				$comments = array();
+				$comments = [ ];
 				$i = 0;
 				foreach ( $revComments as $comment ) {
-					if ( !in_array( true, array( $comment->isRemove(), $comment->isAdminDelete() ) ) ) {
+					if ( !in_array( true, [ $comment->isRemove(), $comment->isAdminDelete() ] ) ) {
 						$comments[] = $comment;
 						$i++;
 					}
@@ -273,15 +274,15 @@ class WallHelper {
 				$comments = $this->getCommentsData( $comments );
 			} else {
 			// top message doesn't have replies yet -- it's a new wall message
-				$comments = $this->getCommentsData( array( $topMessage ) );
+				$comments = $this->getCommentsData( [ $topMessage ] );
 			}
 		}
 
 		wfProfileOut( __METHOD__ );
-		return array(
+		return [
 			'count' => $commentsCount,
 			'comments' => $comments,
-		);
+		];
 	}
 
 	/**
@@ -296,7 +297,7 @@ class WallHelper {
 		wfProfileIn( __METHOD__ );
 
 		$timeNow = time();
-		$items = array();
+		$items = [ ];
 		$i = 0;
 		foreach ( $comments as $wm ) {
 			/** @var WallMessage $wm */
@@ -456,8 +457,8 @@ class WallHelper {
 
 		$row = $dbr->selectRow(
 			'text',
-			array( 'old_text', 'old_flags' ),
-			array( 'old_id' => $textId ),
+			[ 'old_text', 'old_flags' ],
+			[ 'old_id' => $textId ],
 			__METHOD__
 		);
 
@@ -571,7 +572,7 @@ class WallHelper {
 	}
 
 	/**
-	 * @param null $rc
+	 * @param RecentChange $rc
 	 * @param array $row [ page_title, page_namespace, rev_user_text?, page_is_new?, rev_parent_id? ]
 	 * @return array|bool
 	 */
@@ -598,7 +599,7 @@ class WallHelper {
 
 		if ( !( $objTitle instanceof Title ) ) {
 			// it can be media wiki deletion of an article -- we ignore them
-			Wikia::log( __METHOD__, false, "WALL_NOTITLE_FOR_MSG_OPTS " . print_r( array( $rc, $row ), true ) );
+			Wikia::log( __METHOD__, false, "WALL_NOTITLE_FOR_MSG_OPTS " . print_r( [ $rc, $row ], true ) );
 			wfProfileOut( __METHOD__ );
 			return true;
 		}
@@ -606,7 +607,7 @@ class WallHelper {
 		$wm = WallMessage::newFromId( $objTitle->getArticleId() );
 		if ( empty( $wm ) ) {
 			// it can be media wiki deletion of an article -- we ignore them
-			Wikia::log( __METHOD__, false, "WALL_NOTITLE_FOR_MSG_OPTS " . print_r( array( $rc, $row ), true ) );
+			Wikia::log( __METHOD__, false, "WALL_NOTITLE_FOR_MSG_OPTS " . print_r( [ $rc, $row ], true ) );
 			wfProfileOut( __METHOD__ );
 			return true;
 		}
@@ -639,7 +640,7 @@ class WallHelper {
 			// change in NS_USER_WALL namespace mean that wall page was created (bugid:95249)
 			$title = Title::newFromText( $row->page_title, NS_USER_WALL );
 
-			$out = array(
+			$out = [
 				'articleTitle' => $title->getPrefixedText(),
 				'articleFullUrl' => $title->getFullUrl(),
 				'articleTitleVal' => '',
@@ -650,12 +651,12 @@ class WallHelper {
 				'actionUser' => $userText,
 				'isThread' => $wm->isMain(),
 				'isNew' => $isNew
-			);
+			];
 
 		} else {
 			$title = Title::newFromText( $articleId, NS_USER_WALL_MESSAGE );
 
-			$out = array(
+			$out = [
 				'articleTitle' => $title->getPrefixedText(),
 				'articleFullUrl' => $wm->getMessagePageUrl(),
 				'articleTitleVal' => $articleTitleTxt,
@@ -666,7 +667,7 @@ class WallHelper {
 				'actionUser' => $userText,
 				'isThread' => $wm->isMain(),
 				'isNew' => $isNew
-			);
+			];
 		}
 
 		wfProfileOut( __METHOD__ );

@@ -39,6 +39,29 @@ class MigrateImagesBetweenSwiftDC extends Maintenance {
 	}
 
 	/**
+	 * @return \Wikia\Logger\WikiaLogger
+	 */
+	private function getLogger() {
+		return Wikia\Logger\WikiaLogger::instance();
+	}
+
+	/**
+	 * @return array
+	 */
+	private function getLoggerContext() {
+		return [
+			'id'      => $this->imageSyncQueueItem->id,
+			'action'  => $this->imageSyncQueueItem->action,
+			'city_id' => $this->imageSyncQueueItem->city_id,
+			'src'     => $this->imageSyncQueueItem->src,
+			'dst'     => $this->imageSyncQueueItem->dst,
+			'@root'   => [
+				'tags' => [ 'SwiftSync' ]
+			]
+		];
+	}
+
+	/**
 	 * Create container and authenticate - for source Ceph/Swift storage
 	 *
 	 * @return Wikia\SwiftStorage storage instance
@@ -122,10 +145,6 @@ class MigrateImagesBetweenSwiftDC extends Maintenance {
 				 * $res === false - error, keep an item in the queue (i.e. retry in the next run)
 				 * $res === null  - error, move the item to archive (i.e. ignore the error)
 				 */
-				if ( $res === null ) {
-					$this->output( "\tFile ({$this->imageSyncQueueItem->dst}) doesn't exist in source DC\n" );
-				}
-
 				if ( $res === false ) {
 					$this->output( "\tCannot finish operation {$this->imageSyncQueueItem->action} in destination DC \n\n" );
 				} else {
@@ -133,7 +152,7 @@ class MigrateImagesBetweenSwiftDC extends Maintenance {
 					$this->output( "\tRecord moved to archive\n\n" );
 				}
 
-				Wikia\Logger\WikiaLogger::instance()->debug( 'MigrateImagesBetweenSwiftDC' , [
+				$this->getLogger()->debug( 'MigrateImagesBetweenSwiftDC' , [
 					'is_ok'   => ( $res === true ),
 					'retry'   => ( $res === false ),
 					'id'      => $this->imageSyncQueueItem->id,
@@ -146,7 +165,7 @@ class MigrateImagesBetweenSwiftDC extends Maintenance {
 		}
 
 		if ( $imageSyncList->count() > 0 ) {
-			Wikia\Logger\WikiaLogger::instance()->debug( 'MigrateImagesBetweenSwiftDC: execute', [
+			$this->getLogger()->debug( 'MigrateImagesBetweenSwiftDC: execute', [
 				'dest_dc'    => $this->mDC_dst,
 				'limit'      => $this->mLimit,
 				'batch_size' => $imageSyncList->count(),
@@ -201,6 +220,14 @@ class MigrateImagesBetweenSwiftDC extends Maintenance {
 			$this->output( "\tCannot find image to sync \n" );
 			$this->imageSyncQueueItem->setError( self::ERROR_CANT_FIND_FILE );
 
+			$this->getLogger()->error( 'MigrateImagesBetweenSwiftDC: cannot find image to sync' , [
+				'id'      => $this->imageSyncQueueItem->id,
+				'action'  => $this->imageSyncQueueItem->action,
+				'city_id' => $this->imageSyncQueueItem->city_id,
+				'src'     => $this->imageSyncQueueItem->src,
+				'dst'     => $this->imageSyncQueueItem->dst,
+			]);
+
 			$result = null;
 		} else {
 			/* save image content into memory and send content to destination storage */
@@ -220,7 +247,7 @@ class MigrateImagesBetweenSwiftDC extends Maintenance {
 					$this->output( "\t'{$this->imageSyncQueueItem->dst}' file is empty!\n" );
 					$this->imageSyncQueueItem->setError( self::ERROR_FILE_IS_EMPTY );
 
-					Wikia\Logger\WikiaLogger::instance()->warning( 'MigrateImagesBetweenSwiftDC: file is empty' , [
+					$this->getLogger()->error( 'MigrateImagesBetweenSwiftDC: file is empty' , [
 						'id'      => $this->imageSyncQueueItem->id,
 						'action'  => $this->imageSyncQueueItem->action,
 						'city_id' => $this->imageSyncQueueItem->city_id,
@@ -278,19 +305,17 @@ class MigrateImagesBetweenSwiftDC extends Maintenance {
 			if ( $dstStorage->exists( $remoteFile ) ) {
 				$result = $dstStorage->remove( $remoteFile )->isOK();
 			} else {
+				$this->output( "\tImage to delete does not exist in dest DC \n" );
+
+				$this->getLogger()->error( 'MigrateImagesBetweenSwiftDC: file do delete does not exist in dest DC', $this->getLoggerContext());
+
 				$result = null;
 			}
 		} else {
-			$this->output( "\tImage still exists in source DC \n" );
+			$this->output( "\tNew version of the file exists in source DC \n" );
 			$this->imageSyncQueueItem->setError( self::ERROR_FILE_EXISTS_IN_SOURCE_DC );
 
-			Wikia\Logger\WikiaLogger::instance()->warning( 'MigrateImagesBetweenSwiftDC: file still exists in source DC' , [
-				'id'      => $this->imageSyncQueueItem->id,
-				'action'  => $this->imageSyncQueueItem->action,
-				'city_id' => $this->imageSyncQueueItem->city_id,
-				'src'     => $this->imageSyncQueueItem->src,
-				'dst'     => $this->imageSyncQueueItem->dst,
-			]);
+			$this->getLogger()->info( 'MigrateImagesBetweenSwiftDC: new version of the file exists in source DC' , $this->getLoggerContext());
 
 			$result = null;
 		}

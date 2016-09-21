@@ -55,7 +55,7 @@ class Vertical extends Base {
 		sort( $category );
 		$hashCategory = md5( json_encode( $category ) );
 
-		return implode( ':', [ $cacheKey, $hashCategory, $this->sort ] );
+		return implode( ':', [ $cacheKey, $hashCategory ] );
 	}
 
 	/**

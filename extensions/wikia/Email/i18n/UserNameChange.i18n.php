@@ -97,6 +97,14 @@ $messages['zh-hans'] = array(
 	'emailext-usernamechange-signature' => 'Wikia社区团队',
 );
 
+$messages['zh-hant'] = array(
+	'emailext-usernamechange-subject' => '你的Wikia用戶名已更改！',
+	'emailext-usernamechange-summary' => '你的Wikia用戶名已更改。',
+	'emailext-usernamechange-changed' => '用戶名已由$1更改為$2了。',
+	'emailext-usernamechange-closing' => '期待見到你！',
+	'emailext-usernamechange-signature' => 'Wikia社區團隊',
+);
+
 $messages['zh-tw'] = array(
 	'emailext-usernamechange-subject' => '你的Wikia用戶名已更改！',
 	'emailext-usernamechange-summary' => '你的Wikia用戶名已更改。',

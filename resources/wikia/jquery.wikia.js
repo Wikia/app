@@ -1,6 +1,34 @@
 (function (window, $) {
 	'use strict';
 
+	/**
+	 * Returns CDN-compatible url string to asset manager returning contents
+	 * for combined elements
+	 *
+	 * @param elements
+	 * @param params
+	 * @param requesttype 'groups'|'sasses'
+	 * @returns {*}
+     */
+	var getAssetManagerUrl = function ( elements, params, requesttype ) {
+		if (typeof elements === 'string') {
+			elements = [elements];
+		}
+
+		params = params || {};
+
+		// Don't minify the response when allinone=0
+		if (window.debug === true) {
+			params.minify = 0;
+		}
+
+		return wgCdnRootUrl + wgAssetsManagerQuery.
+			replace('%1$s', requesttype).
+			replace('%2$s', elements.join(',')).
+			replace('%3$s', $.isEmptyObject(params) ? '-' : encodeURIComponent($.param(params))).
+			replace('%4$d', wgStyleVersion);
+	};
+
 	$.getSassURL = function (rootURL, scssFilePath, params) {
 		return rootURL + wgAssetsManagerQuery.
 		replace('%1$s', 'sass').
@@ -18,27 +46,21 @@
 	};
 
 	/**
-	 *	Get URL for loading asset manager groups
+	 *	Get URL for loading asset manager groups (applicable to JS)
 	 *  @param {String|String[]} groups Assets manager group name
 	 *  @param {Object} params Extra params for url string. Ex: {minify:0}
 	 */
 	$.getAssetManagerGroupUrl = function (groups, params) {
-		if (typeof groups === 'string') {
-			groups = [groups];
-		}
+		return getAssetManagerUrl( groups, params, 'groups' );
+	};
 
-		params = params || {};
-
-		// Don't minify the response when allinone=0
-		if (window.debug === true) {
-			params.minify = 0;
-		}
-
-		return wgCdnRootUrl + wgAssetsManagerQuery.
-		replace('%1$s', 'groups').
-		replace('%2$s', groups.join(',')).
-		replace('%3$s', $.isEmptyObject(params) ? '-' : encodeURIComponent($.param(params))).
-		replace('%4$d', wgStyleVersion);
+	/**
+	 *	Get URL for loading asset manager groups (applicable to SCSS)
+	 *  @param {String|String[]} groups Assets manager group name
+	 *  @param {Object} params Extra params for url string. Ex: {minify:0}
+	 */
+	$.getSassesURL = function (sasses, params) {
+		return getAssetManagerUrl( sasses, params, 'sasses' );
 	};
 
 	//see http://jamazon.co.uk/web/2008/07/21/jquerygetscript-does-not-cache

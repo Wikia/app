@@ -16,7 +16,7 @@ class NavigationApiController extends WikiaApiController {
 	 * @example
 	 */
 
-	public function getData(){
+	public function getData() {
 		$model = new NavigationModel();
 		$nav = $model->getWiki();
 
@@ -30,11 +30,6 @@ class NavigationApiController extends WikiaApiController {
 			[ 'urlFields' => 'href' ],
 			NavigationModel::CACHE_TTL
 		);
-		$errors = $model->getErrors();
-
-		if ( !empty( $errors ) ) {
-			throw new InvalidDataApiException( implode(', ', array_keys( $errors ) ) );
-		}
 	}
 
 	private function getChildren( $list, $i = 0 ){

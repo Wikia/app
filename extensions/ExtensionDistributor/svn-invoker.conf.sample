@@ -1,4 +1,0 @@
-<?php
-
-$wgExtDistWorkingCopy = '/path/to/mw-working-copy';
-$wgExtDistLockFile = '/path/to/lock-file';

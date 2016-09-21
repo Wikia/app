@@ -50,4 +50,40 @@ class ContentReviewHooksTest extends WikiaBaseTest {
 
 		( new Wikia\ContentReview\Hooks() )->onUserLogoutComplete( $userMock, $injectHtml, '' );
 	}
+
+	/**
+	 * @dataProvider addingImportJSScriptsProvider
+	 */
+	public function testAddingImportJSScripts( $jsEnabled, $importScripts, $bottomScriptsResult ) {
+		$skinMock = $this->getMock( 'Skin' );
+		$this->mockGlobalVariable( 'wgUseSiteJs', $jsEnabled );
+		$importJSMock = $this->getMock( 'Wikia\ContentReview\ImportJS', [ 'getImportScripts' ] );
+
+		$importJSMock->expects( $this->any() )
+			->method( 'getImportScripts' )
+			->will( $this->returnValue( $importScripts ) );
+
+		$this->mockClass( 'Wikia\ContentReview\ImportJS', $importJSMock );
+
+		$bottomScripts = '';
+
+		( new Wikia\ContentReview\Hooks() )->onSkinAfterBottomScripts( $skinMock, $bottomScripts );
+
+		$this->assertEquals( $bottomScripts, $bottomScriptsResult );
+	}
+
+	public function addingImportJSScriptsProvider() {
+		return [
+			[
+				true,
+				'<script>(function(){importWikiaScriptPages(["Script.js"]);})();</script>',
+				'<script>(function(){importWikiaScriptPages(["Script.js"]);})();</script>',
+			],
+			[
+				false,
+				'<script>(function(){importWikiaScriptPages(["Script.js"]);})();</script>',
+				'',
+			],
+		];
+	}
 }

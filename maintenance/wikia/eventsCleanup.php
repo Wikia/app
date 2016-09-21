@@ -23,7 +23,7 @@ require_once( dirname( __FILE__ ) . '/../Maintenance.php' );
  */
 class EventsCleanup extends Maintenance {
 
-	const BATCH = 50;
+	const BATCH = 10;
 
 	/**
 	 * Set script options
@@ -51,9 +51,8 @@ class EventsCleanup extends Maintenance {
 		$db->commit( __METHOD__ );
 
 		Wikia\Logger\WikiaLogger::instance()->info( __METHOD__, [
+			'database' => $db->getDBname(),
 			'table' => $table,
-			'cities' => join( ', ', $city_ids ),
-			'count' => count( $city_ids ),
 			'took' => round( microtime( true ) - $start, 4 ),
 			'rows' => $rows
 		] );
@@ -63,6 +62,7 @@ class EventsCleanup extends Maintenance {
 		// throttle delete queries
 		if ( $rows > 0 ) {
 			sleep( 5 );
+			wfWaitForSlaves( $db->getDBname() );
 		}
 	}
 
@@ -76,6 +76,11 @@ class EventsCleanup extends Maintenance {
 		$this->doTableCleanup( $dataware, 'pages',              $city_ids, 'page_wikia_id' );
 		$this->doTableCleanup( $specials, 'events_local_users', $city_ids );
 		$this->doTableCleanup( $stats,    'events',             $city_ids );
+
+		Wikia\Logger\WikiaLogger::instance()->info( __METHOD__, [
+			'cities' => join( ', ', $city_ids ),
+			'count' => count( $city_ids ),
+		] );
 	}
 
 	public function execute() {
@@ -107,5 +112,5 @@ class EventsCleanup extends Maintenance {
 	}
 }
 
-$maintClass = "EventsCleanup";
+$maintClass = EventsCleanup::class;
 require_once( RUN_MAINTENANCE_IF_MAIN );

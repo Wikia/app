@@ -7,8 +7,9 @@ class IgnVideoHandler extends VideoHandler {
 	protected static $providerDetailUrlTemplate = 'http://www.ign.com/watch?v=$1';
 	protected static $providerPlayerUrl = 'http://widgets.ign.com/video/embed/content.html';
 	protected static $providerHomeUrl = 'http://www.ign.com/';
-	protected static $autoplayParam = "autoplay";
-	protected static $autoplayValue = "true";
+	protected static $autoplayParam = 'autoplay';
+	protected static $autoplayValue = 'true';
+	protected static $playerVersion = '4';
 
 	public function getEmbed( $width, array $options = [] ) {
 		$autoplay = !empty( $options['autoplay'] );
@@ -18,7 +19,7 @@ class IgnVideoHandler extends VideoHandler {
 	private function getEmbedNative( $width, $autoplay = false ) {
 		$height =  $this->getHeight( $width );
 		$autoplay = $autoplay ? '&' . self::$autoplayParam . '=' . self::$autoplayValue : '';
-		$url = self::$providerPlayerUrl.'?url='.$this->getEmbedUrl().$autoplay;
+		$url = self::$providerPlayerUrl . '?url=' . $this->getEmbedUrl() . $autoplay . '&version=' . self::$playerVersion;
 		$sizeString = $this->getSizeString( $width, $height );
 
 		$html = <<<EOT

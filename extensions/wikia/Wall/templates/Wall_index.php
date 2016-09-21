@@ -28,12 +28,12 @@ if ($wg->EnableMiniEditorExtForWall) {
 	<? endif; ?>
 	<ul class="comments">
 		<? foreach($threads as $value): ?>
-			<? echo $app->renderView( 'WallController', 'message', array( 'isThreadPage' => false, 'condense' => $condenseMessage, 'title' => $title, 'replies' => $value->getRepliesWallMessages(), 'comment' => $value->getThreadMainMsg(), 'isreply' => false ) ); ?>
+			<? echo $app->renderView( 'WallController', 'message', [ 'isThreadPage' => false, 'condense' => $condenseMessage, 'title' => $title, 'replies' => $value->getRepliesWallMessages(), 'comment' => $value->getThreadMainMsg(), 'isreply' => false ] ); ?>
 		<? endforeach; ?>
 	</ul>
 	<?php if($showPager): ?>
-		<?= $app->renderView( 'PaginationController', 'index', array('totalItems' => $totalItems, 'itemsPerPage' => $itemsPerPage, 'currentPage' => $currentPage)); ?>
+		<?= $app->renderView( 'PaginationController', 'index', [ 'totalItems' => $totalItems, 'itemsPerPage' => $itemsPerPage, 'currentPage' => $currentPage ] ); ?>
 	<?php endif;?>
-	<?= $app->renderView( 'WallController', 'renderUserTalkArchiveAnchor', array('renderUserTalkArchiveAnchor' => $renderUserTalkArchiveAnchor,  'title' => $title ) ); ?>
+	<?= $app->renderView( 'WallController', 'renderUserTalkArchiveAnchor', [ 'renderUserTalkArchiveAnchor' => $renderUserTalkArchiveAnchor,  'title' => $title ] ); ?>
 	<?= $app->renderPartial('Wall', 'TooltipMeta' ); ?>
 </div>

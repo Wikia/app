@@ -8,10 +8,9 @@ class SpecialPageViewsController extends WikiaSpecialPageController {
 
 	function __construct() {
 		parent::__construct( self::SPECIALPAGE_NAME );
-		$this->getOutput()->addModules( 'ext.SpecialPageViews' );
 	}
 
-	public function execute() {
+	public function execute( $par ) {
 		wfProfileIn( __METHOD__ );
 		$this->setHeaders();
 
@@ -19,6 +18,8 @@ class SpecialPageViewsController extends WikiaSpecialPageController {
 			$this->displayRestrictionError();
 			return false;  // skip rendering
 		}
+
+		$this->getOutput()->addModules( 'ext.SpecialPageViews' );
 
 		$this->setInitialDates();
 

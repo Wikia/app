@@ -38,6 +38,9 @@ class InterwikiDispatcher extends UnlistedSpecialPage {
 		$art = $wgRequest->getText('article');
 
 		if (!empty($wikia)) {
+			// The code in NotAValidWikiaArticle.class.php will drop the ".interwiki" pseudo-TLD
+			// When constructing the search query
+			$redirect .= '?from=' . rawurlencode( $wikia . '.interwiki' );
 			$iCityId = self::isWikiExists($wikia);
 			if ($iCityId) {	//wiki exists
 				$redirect = self::getCityUrl($iCityId);
@@ -128,7 +131,7 @@ class InterwikiDispatcher extends UnlistedSpecialPage {
 
 						//RT#54264,#41254
 						$sArticleTitle = str_replace(' ', '_', $sArticleTitle);
-						$sArticleTitle = urlencode($sArticleTitle);
+						$sArticleTitle = wfUrlencode($sArticleTitle);
 
 						$sCityUrl = self::getCityUrl($iCityId);
 						if (!empty($sCityUrl)) {

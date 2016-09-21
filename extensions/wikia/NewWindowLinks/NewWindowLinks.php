@@ -64,7 +64,8 @@ function efParserCreateLink( $parser, $target, $label = null ) {
         $label = $parser->recursiveTagParse( $label );
         $label = preg_replace( "/\b({$parser->mUrlProtocols}) /", "$1", $label ); // Put them back together
     }
-    $attributes = array( 'target' => '_blank' );
+    // Functionality disabled per SEC-54
+    $attributes = [];// array( 'target' => '_blank' );
 
     // WARNING: the order of the statements below does matter!
     //

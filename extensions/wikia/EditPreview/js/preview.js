@@ -35,7 +35,8 @@ define('wikia.preview', [
 		previewTypes, //List of available preview options
 		currentTypeName, //Currently used preview type
 		editPageOptions, //options passed from EditPageLayout
-		previewLoaded; //a flag indicating that preview has been loaded
+		previewLoaded, //a flag indicating that preview has been loaded
+		previousType; // the previous preview type loaded if any
 
 	// show dialog for preview / show changes and scale it to fit viewport's height
 	function renderDialog(title, options, callback) {
@@ -43,14 +44,10 @@ define('wikia.preview', [
 			callback: function () {
 				var $editPageDialog = $('#EditPageDialog'),
 					$contentNode = $editPageDialog.find('.ArticlePreviewInner'),
-					$previewMsgNode = $editPageDialog.find('.preview-modal-msg-wrapper'),
-					modalHeight = options.height,
+					modalHeight = options.height || $(window).height() - 250,
 					modalHeightModifier = 0;
 
-				if (!modalHeight) {
-					modalHeightModifier = -250 -($previewMsgNode.outerHeight() || 0);
-					modalHeight = $(window).height() + modalHeightModifier;
-				}
+				$contentNode.startThrobbing();
 
 				// block all clicks
 				$contentNode.on('click', function (ev) {
@@ -64,14 +61,8 @@ define('wikia.preview', [
 					'overflow-x': 'hidden'
 				});
 
-				$previewMsgNode.on('click', 'a', function () {
-					tracker.track({
-						action: Wikia.Tracker.ACTIONS.CLICK,
-						category: 'edit-preview',
-						label: 'button-best-practices',
-						trackingMethod: 'analytics'
-					});
-				});
+				// SUS-126: prevent page scrolling on large pages breaking the classic editor
+				$('body').css('overflow-y', 'hidden');
 
 				if (typeof callback === 'function') {
 					callback($contentNode);
@@ -82,56 +73,9 @@ define('wikia.preview', [
 		}, options);
 
 		// use loading indicator before real content will be fetched
-		var content = '<div class="ArticlePreview"><div class="ArticlePreviewInner"><img src="' +
-			window.stylepath +
-			'/common/images/ajax.gif" class="loading"></div></div>';
+		var content = '<div class="ArticlePreview"><div class="ArticlePreviewInner"></div></div>';
 
-		$.when(
-			loader({
-				type: loader.MULTI,
-				resources: {
-					mustache: 'extensions/wikia/EditPreview/templates/preview_best_practices.mustache'
-				}
-			}),
-			msg.getForContent('EditPreviewInContLang')
-		).done(function(response){
-			var params = {
-					bestPracticesMsg: $.htmlentities(msg('wikia-editor-preview-best-practices-notice')),
-					bestPracticesLinkText: $.htmlentities(msg('wikia-editor-preview-best-practices-button')),
-					bestPracticesLinkUrl:  window.wgArticlePath.replace(
-						'$1', $.htmlentities(msg('wikia-editor-preview-best-practices-button-link'))
-					)
-				},
-
-				template = response.mustache[0],
-				html = mustache.render(template, params);
-
-			content = html+content;
-			$.showCustomModal(title, content, options);
-		});
-	}
-
-	/**
-	 * @desc Handles appending mobile preview to modal
-	 *
-	 * This is a separate skin so we're loading it in iframe
-	 * @param {object} data - data that comes from preview api
-	 */
-	function handleMobilePreview(data) {
-		var iframe = $article.html(
-				'<div class="mobile-preview"><iframe width="320" height="480"></iframe></div>'
-			).find('iframe')[0],
-			doc = iframe.document;
-
-		if (iframe.contentDocument) {
-			doc = iframe.contentDocument;
-		} else if (iframe.contentWindow) {
-			doc = iframe.contentWindow.document;
-		}
-
-		doc.open();
-		doc.writeln(data.html);
-		doc.close();
+		$.showCustomModal(title, content, options);
 	}
 
 	/**
@@ -152,6 +96,7 @@ define('wikia.preview', [
 	function loadPreview(type, opening) {
 		if (!opening) {
 			$previewTypeDropdown.attr('disabled', true);
+			$article.html('');
 			$article.parent().startThrobbing();
 		}
 
@@ -160,9 +105,7 @@ define('wikia.preview', [
 			$previewTypeDropdown.attr('disabled', false);
 			$article.parent().stopThrobbing();
 
-			if (type === previewTypes.mobile.name) {
-				handleMobilePreview(data);
-			} else {
+			if (type !== previewTypes.mobile.name) {
 				handleDesktopPreview(data);
 			}
 
@@ -177,7 +120,7 @@ define('wikia.preview', [
 				}
 
 				if (currentTypeName) {
-					var articleWidth = breakpointsLayout.getArticleWidth(currentTypeName ,isWidePage);
+					var articleWidth = breakpointsLayout.getArticleWidth(currentTypeName, isWidePage);
 					$article.width(articleWidth);
 				}
 			}
@@ -189,14 +132,22 @@ define('wikia.preview', [
 					$this.appendTo($this.next());
 				});
 
-				addEditSummary($article, editPageOptions.width, data.summary);
+				if (data) {
+					addEditSummary($article, editPageOptions.width, data.summary);
+				}
 
 				// fire an event once preview is rendered
 				$(window).trigger('EditPageAfterRenderPreview', [$article]);
 
 				// fire event when new article comment is/will be added to DOM
 				mw.hook('wikipage.content').fire($article);
+			} else if (previousType === previewTypes.mobile.name) {
+				// always fire event when switching out of mobile preview
+				mw.hook('wikipage.content').fire($article);
 			}
+
+			previousType = type;
+
 			//If current view is different skin, pass it to getPreviewContent
 		}, previewTypes[currentTypeName].skin);
 	}

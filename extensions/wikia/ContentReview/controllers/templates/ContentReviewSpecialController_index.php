@@ -22,7 +22,7 @@
 	<?php if ( !empty( $reviews ) ): ?>
 		<?php foreach ( $reviews as $wikiReview ): ?>
 			<?php foreach( $wikiReview as $review ): ?>
-				<tr class="content-review-special-list-item">
+				<tr class="content-review-special-list-item <?= $review['escalated'] ? 'content-review-escalated' : '' ?>">
 					<td>
 						<a href="<?= Sanitizer::cleanUrl( $review['wikiArchiveUrl'] ) ?>">
 							<?= htmlspecialchars( $review['wiki'] ) ?>

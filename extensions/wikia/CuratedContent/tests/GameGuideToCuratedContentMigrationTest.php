@@ -23,7 +23,7 @@ class GameGuideToCuratedContentMigrationTest extends WikiaBaseTest {
 			],
 			[
 				'simple one',
-				//GameGuide Content
+				// GameGuide Content
 				[
 					0 =>
 						[
@@ -63,7 +63,7 @@ class GameGuideToCuratedContentMigrationTest extends WikiaBaseTest {
 								],
 						],
 				],
-				//Curated Content
+				// Curated Content
 				[
 					0 =>
 						[

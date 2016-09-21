@@ -30,6 +30,8 @@
  * @see Database
  */
 abstract class DatabaseMysqlBase extends DatabaseBase {
+	/** @var MysqlMasterPos */
+	protected $lastKnownSlavePos;
 
 	/**
 	 * @return string
@@ -293,6 +295,29 @@ abstract class DatabaseMysqlBase extends DatabaseBase {
 	 * @return string
 	 */
 	abstract protected function mysqlFieldName( $res, $n );
+
+	/**
+	 * mysqlFieldType wrapper
+	 * @param $res
+	 * @param $n
+	 * @return string|int
+	 */
+	function fieldType( $res, $n ) {
+		if ( $res instanceof ResultWrapper ) {
+			$res = $res->result;
+		}
+
+		return $this->mysqlFieldType( $res, $n );
+	}
+
+	/**
+	 * Get the type of the specified field in a result
+	 *
+	 * @param ResultWrapper|resource $res
+	 * @param int $n
+	 * @return string
+	 */
+	abstract protected function mysqlFieldType( $res, $n );
 
 	/**
 	 * @param $res ResultWrapper
@@ -594,23 +619,24 @@ abstract class DatabaseMysqlBase extends DatabaseBase {
 
 	/**
 	 * Wait for the slave to catch up to a given master position.
+	 * @TODO: return values for this and base class are rubbish
 	 *
 	 * @param $pos DBMasterPos object
 	 * @param $timeout Integer: the maximum number of seconds to wait for synchronisation
 	 * @return bool|string
 	 */
 	function masterPosWait( DBMasterPos $pos, $timeout ) {
-		$fname = __METHOD__;
-		wfProfileIn( $fname );
-
-		# Commit any open transactions
-		if ( $this->mTrxLevel ) {
-			$this->commit( $fname );
+		if ( $this->lastKnownSlavePos && $this->lastKnownSlavePos->hasReached( $pos ) ) {
+			return '0'; // http://dev.mysql.com/doc/refman/5.0/en/miscellaneous-functions.html
 		}
+
+		wfProfileIn( __METHOD__ );
+		# Commit any open transactions
+		$this->commit( __METHOD__, 'flush' );
 
 		if ( !is_null( $this->mFakeSlaveLag ) ) {
 			$status = parent::masterPosWait( $pos, $timeout );
-			wfProfileOut( $fname );
+			wfProfileOut( __METHOD__ );
 			return $status;
 		}
 
@@ -620,12 +646,16 @@ abstract class DatabaseMysqlBase extends DatabaseBase {
 		$sql = "SELECT MASTER_POS_WAIT($encFile, $encPos, $timeout)";
 		$res = $this->doQuery( $sql );
 
+		$status = false;
 		if ( $res && $row = $this->fetchRow( $res ) ) {
-			wfProfileOut( $fname );
-			return $row[0];
+			$status = $row[0]; // can be NULL, -1, or 0+ per the MySQL manual
+			if ( ctype_digit( $status ) ) { // success
+				$this->lastKnownSlavePos = $pos;
+			}
 		}
-		wfProfileOut( $fname );
-		return false;
+
+		wfProfileOut( __METHOD__ );
+		return $status;
 	}
 
 	/**
@@ -1003,4 +1033,114 @@ abstract class DatabaseMysqlBase extends DatabaseBase {
 		return $status;
 	}
 
+}
+
+class MySQLMasterPos implements DBMasterPos {
+	/** @var string */
+	public $file;
+	/** @var int Position */
+	public $pos;
+	/** @var float UNIX timestamp */
+	public $asOfTime = 0.0;
+
+	function __construct( $file, $pos ) {
+		$this->file = $file;
+		$this->pos = $pos;
+		$this->asOfTime = microtime( true );
+	}
+
+	function __toString() {
+		// e.g db1034-bin.000976/843431247
+		return "{$this->file}/{$this->pos}";
+	}
+
+	/**
+	 * @return array|false (int, int)
+	 */
+	protected function getCoordinates() {
+		$m = array();
+		if ( preg_match( '!\.(\d+)/(\d+)$!', (string)$this, $m ) ) {
+			return array( (int)$m[1], (int)$m[2] );
+		}
+		return false;
+	}
+
+	function hasReached( MySQLMasterPos $pos ) {
+		$thisPos = $this->getCoordinates();
+		$thatPos = $pos->getCoordinates();
+		return ( $thisPos && $thatPos && $thisPos >= $thatPos );
+	}
+}
+
+/**
+ * Utility class.
+ * @ingroup Database
+ */
+class MySQLField implements Field {
+	private $name, $tablename, $default, $max_length, $nullable,
+		$is_pk, $is_unique, $is_multiple, $is_key, $type, $binary;
+
+	function __construct( $info ) {
+		$this->name = $info->name;
+		$this->tablename = $info->table;
+		$this->default = $info->def;
+		$this->max_length = $info->max_length;
+		$this->nullable = !$info->not_null;
+		$this->is_pk = $info->primary_key;
+		$this->is_unique = $info->unique_key;
+		$this->is_multiple = $info->multiple_key;
+		$this->is_key = ( $this->is_pk || $this->is_unique || $this->is_multiple );
+		$this->type = $info->type;
+		$this->binary = isset( $info->binary ) ? $info->binary : false;
+	}
+
+	/**
+	 * @return string
+	 */
+	function name() {
+		return $this->name;
+	}
+
+	/**
+	 * @return string
+	 */
+	function tableName() {
+		return $this->tableName;
+	}
+
+	/**
+	 * @return string
+	 */
+	function type() {
+		return $this->type;
+	}
+
+	/**
+	 * @return bool
+	 */
+	function isNullable() {
+		return $this->nullable;
+	}
+
+	function defaultValue() {
+		return $this->default;
+	}
+
+	/**
+	 * @return bool
+	 */
+	function isKey() {
+		return $this->is_key;
+	}
+
+	/**
+	 * @return bool
+	 */
+	function isMultipleKey() {
+		return $this->is_multiple;
+	}
+
+	function isBinary() {
+		return $this->binary;
+	}
 }

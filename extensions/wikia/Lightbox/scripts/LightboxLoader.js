@@ -423,7 +423,7 @@
 	};
 
 	$(function () {
-		if (window.wgEnableLightboxExt && window.skin !== 'venus' ) {
+		if (window.wgEnableLightboxExt) {
 			LightboxLoader.init();
 		}
 	});

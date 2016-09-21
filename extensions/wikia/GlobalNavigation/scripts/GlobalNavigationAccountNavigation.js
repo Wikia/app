@@ -55,17 +55,15 @@ require([
 	}
 
 	function authModalOpen(url) {
-		require(['AuthModal'], function (authModal) {
-			authModal.load({
-				url: url,
-				origin: 'global-nav',
-				onAuthSuccess: onAuthSuccess.bind({url: url})
-			});
+		window.wikiaAuthModal.load({
+			url: url,
+			origin: 'global-nav',
+			onAuthSuccess: onAuthSuccess.bind({url: url})
 		});
 	}
 
 	function onAuthSuccess() {
-		var redirect = this.url.replace(/.*?redirect=([^&]+)/, '$1');
+		var redirect = this.url.replace(/.*?redirect=([^&]+).*/, '$1');
 		window.location.href = decodeURIComponent(redirect);
 	}
 

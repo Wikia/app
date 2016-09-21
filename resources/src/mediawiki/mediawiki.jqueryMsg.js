@@ -1217,7 +1217,7 @@
 
 	// Replace the default message parser with jqueryMsg
 	oldParser = mw.Message.prototype.parser;
-	mw.Message.prototype.parser = function () {
+	mw.Message.prototype.parser = function ( messageContent, insertRaw ) {
 		var messageFunction;
 
 		// TODO: should we cache the message function so we don't create a new one every time? Benchmark this maybe?
@@ -1226,7 +1226,7 @@
 		// Do not use mw.jqueryMsg unless required
 		if ( this.format === 'plain' || !/\{\{|[\[<>]/.test( this.map.get( this.key ) ) ) {
 			// Fall back to mw.msg's simple parser
-			return oldParser.apply( this );
+			return oldParser.apply( this, [ messageContent, insertRaw ] );
 		}
 
 		messageFunction = mw.jqueryMsg.getMessageFunction( {

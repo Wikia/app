@@ -117,7 +117,7 @@ function wfReplaceImageServer( $url, $timestamp = false ) {
 	// FIXME: This needs to be removed. It should be encapsulated in the URL generation.
 	$overrideServer = !empty( $wg->DevBoxImageServerOverride ) && !$wg->EnableVignette;
 	if ( $overrideServer ) {
-		$url = preg_replace( "/\/\/(.*?)wikia-dev\.com\/(.*)/", "//{$wg->DevBoxImageServerOverride}/$2", $url );
+		$url = preg_replace( "/\\/\\/(.*?)wikia-dev\\.com\\/(.*)/", "//{$wg->DevBoxImageServerOverride}/$2", $url );
 	}
 
 	wfDebug( __METHOD__ . ": requested url $url\n" );
@@ -350,12 +350,13 @@ function wfStrToBool( $value ) {
  * @param mixed $variable: variable to be displayed/set
  * @param boolean $return default false: display or just return
  *
- * @return void or string: depends of $return param
+ * @return void|string: depends of $return param
  */
 function wfEchoIfSet( $variable, $return = false )
 {
     if ( empty( $return ) ) {
         echo isset( $variable ) ? $variable : "";
+		return null;
     }
     else {
         return isset( $variable ) ? $variable : "";
@@ -466,13 +467,14 @@ function parseItem( $line ) {
 
 /**
  * @author Inez Korczynski <inez@wikia.com>
- * @return array
+ * @author Adam Karmiński <adamk@wikia-inc.com>
+ * @param string $messageKey
+ * @return array|null
  */
 function getMessageForContentAsArray( $messageKey ) {
-
-	$message = trim( wfMsgForContent( $messageKey ) );
-	if ( !wfEmptyMsg( $messageKey, $message ) ) {
-		$lines = explode( "\n", $message );
+	$message = wfMessage( $messageKey )->inContentLanguage();
+	if ( !$message->isBlank() ) {
+		$lines = explode( "\n", trim( $message->plain() ) );
 		if ( count( $lines ) > 0 ) {
 			return $lines;
 		}
@@ -492,11 +494,12 @@ function getMessageAsArray( $messageKey, $params = [] ) {
 			return $lines;
 		}
 	}
+	return null;
 }
 
 /**
  * @author emil@wikia.com
- * @return default external cluster
+ * @return string default external cluster
  */
 function wfGetDefaultExternalCluster() {
 	global $wgDefaultExternalStore;
@@ -515,7 +518,7 @@ function wfGetDefaultExternalCluster() {
 
 /**
  * @author MoLi <moli@wikia.com>
- * @return db's handle for external storage
+ * @return DatabaseBase db's handle for external storage
  */
 function wfGetDBExt( $db = DB_MASTER, $cluster = null ) {
 	if ( !$cluster ) {
@@ -619,17 +622,19 @@ function getMenuHelper( $name, $limit = 7 ) {
 	}
 
 	$name = str_replace( " ", "_", $name );
+	$limit = intval( $limit );
 
-	$dbr =& wfGetDB( DB_SLAVE );
-	$query = "SELECT cl_from FROM categorylinks USE INDEX (cl_from), page_visited USE INDEX (page_visited_cnt_inx) WHERE article_id = cl_from AND cl_to = '" . addslashes( $name ) . "' ORDER BY COUNT DESC LIMIT $limit";
-	$res = $dbr->query( $query );
+	$dbr = wfGetDB( DB_SLAVE );
+	$query = "SELECT cl_from FROM categorylinks USE INDEX (cl_from), page_visited USE INDEX (page_visited_cnt_inx) WHERE article_id = cl_from AND cl_to = " . $dbr->addQuotes( $name ) . " ORDER BY COUNT DESC LIMIT $limit";
+	$res = $dbr->query( $query, __METHOD__ );
 	$result = array();
 	while ( $row = $dbr->fetchObject( $res ) ) {
 		$result[] = $row->cl_from;
 	}
 	if ( count( $result ) < $limit ) {
-		$query = "SELECT cl_from FROM categorylinks WHERE cl_to = '" . addslashes( $name ) . "' " . ( count( $result ) > 0 ? " AND cl_from NOT IN (" . implode( ',', $result ) . ") " : "" ) . " LIMIT " . ( $limit - count( $result ) );
-		$res = $dbr->query( $query );
+		$resultEscaped = $dbr->makeList( $result ); # PLATFORM-1579 - e.g. 'a', 'b', 'c'
+		$query = "SELECT cl_from FROM categorylinks WHERE cl_to = " . $dbr->addQuotes( $name ) . " " . ( count( $result ) > 0 ? " AND cl_from NOT IN (" . $resultEscaped . ") " : "" ) . " LIMIT " . ( $limit - count( $result ) );
+		$res = $dbr->query( $query, __METHOD__ );
 		while ( $row = $dbr->fetchObject( $res ) ) {
 			$result[] = $row->cl_from;
 		}
@@ -931,7 +936,7 @@ function wfTimeFormatAgo( $stamp, $hideCurrentYear = true ) {
 		// remove year from user's date format
 		$format = $wgLang->getDateFormatString( 'date', 'default' );
 		if ( $hideCurrentYear ) {
-			$format = trim( $format, ' ,yY' );
+			$format = trim( $format, ' ,yY年' );
 		}
 		$res = $wgLang->sprintfDate( $format, wfTimestamp( TS_MW, $stamp ) );
 	}
@@ -974,20 +979,6 @@ function wfMsgWithFallback( $key ) {
 	}
 
 	return $msg;
-}
-
-/**
- * @deprecated
- *
- * TODO: remove this
- *
- * @param $name module name
- * @param string $action method name
- * @param null $params
- * @return string rendered module's response
- */
-function wfRenderModule( $name, $action = 'Index', $params = null ) {
-	return F::app()->renderView( $name, $action, $params );
 }
 
 /**
@@ -1094,6 +1085,15 @@ function &wfGetSolidCacheStorage( $bucket = false ) {
 
 /**
  * Set value of wikia article prop list of type is define in
+ *
+ * Note: The query below used to be done using a REPLACE, however
+ * the primary key was removed from the page_wikia_props due to
+ * performance issues (see PLATFORM-1658). Without a primary key
+ * or unique index, a REPLACE becomes just an INSERT so this method
+ * was adding duplicate rows to the table.
+ *
+ * Because of this, we're implementing a manual REPLACE by explicitly
+ * issuing a DELETE query followed by an INSERT.
  */
 function wfSetWikiaPageProp( $type, $pageID, $value, $dbname = '' ) {
 	if ( empty( $dbname ) ) {
@@ -1102,14 +1102,22 @@ function wfSetWikiaPageProp( $type, $pageID, $value, $dbname = '' ) {
 		$db = wfGetDB( DB_MASTER, array(), $dbname );
 	}
 
-	$db->replace(
+	$db->delete(
 		'page_wikia_props',
-		'',
-		array(
+		[
+			'page_id' => $pageID,
+			'propname' => $type
+		],
+		__METHOD__
+	);
+
+	$db->insert(
+		'page_wikia_props',
+		[
 			'page_id'  => $pageID,
 			'propname' => $type,
 			'props'    => wfSerializeProp( $type, $value )
-		),
+		],
 		__METHOD__
 	);
 
@@ -1321,47 +1329,12 @@ function endsWith( $haystack, $needle, $case = true ) {
 	return ( strcasecmp( substr( $haystack, strlen( $haystack ) - strlen( $needle ) ), $needle ) === 0 );
 }
 
-function json_encode_jsfunc( $input = array(), $funcs = array(), $level = 0 )
- {
-  foreach ( $input as $key => $value )
-         {
-          if ( is_array( $value ) )
-             {
-              $ret = json_encode_jsfunc( $value, $funcs, 1 );
-              $input[$key] = $ret[0];
-              $funcs = $ret[1];
-             }
-          else
-             {
-              if ( substr( $value, 0, 10 ) == 'function()' )
-                 {
-                  $func_key = "#" . uniqid() . "#";
-                  $funcs[$func_key] = $value;
-                  $input[$key] = $func_key;
-                 }
-             }
-         }
-  if ( $level == 1 )
-     {
-      return array( $input, $funcs );
-     }
-  else
-     {
-      $input_json = json_encode( $input );
-      foreach ( $funcs as $key => $value )
-             {
-              $input_json = str_replace( '"' . $key . '"', $value, $input_json );
-             }
-      return $input_json;
-     }
- }
-
 /**
  * @brief Handles pagination for arrays
  *
  * @author Federico "Lox" Lucignano
  *
- * @param Array $data the array to paginate
+ * @param array $data the array to paginate
  * @param integer $limit the maximum number of items per page
  * @param integer $batch [OPTIONAL] the batch to retrieve
  *
@@ -1431,7 +1404,7 @@ function wfPaginateArray( $data, $limit, $batch = 1 ) {
  *
  * @author Krzysztof Krzyżaniak (eloy) <eloy@wikia-inc.com>
  *
- * @param Array $array typical array with key => value
+ * @param array $array typical array with key => value
  *
  * @return string string for debugging purposes
  */
@@ -1514,7 +1487,7 @@ function wfGetNamespaces() {
 
 /**
  * Repair malformed HTML without making semantic changes (ie, changing tags to more closely follow the HTML spec.)
- * Refs DAR-985 and VID-1011
+ * Refs DAR-985, VID-1011, SUS-327
  *
  * @param string $html - HTML to repair
  * @return string - repaired HTML
@@ -1526,18 +1499,24 @@ function wfFixMalformedHTML( $html ) {
 	// what we're using it to fix) see: http://www.php.net/manual/en/domdocument.loadhtml.php#95463
 	libxml_use_internal_errors( true );
 
-	// Make sure loadHTML knows that text is utf-8 (it assumes ISO-88591)
 	// CONN-130 - Added <!DOCTYPE html> to allow HTML5 tags in the article comment
-	$htmlHeader = '<!DOCTYPE html><head><meta http-equiv="content-type" content="text/html; charset=utf-8"></head>';
+	$htmlHeader = '<!DOCTYPE html><html>';
+
+	// Make sure loadHTML knows that text is utf-8 (it assumes ISO-88591)
+	$htmlHeader .= '<head><meta http-equiv="content-type" content="text/html; charset=utf-8"></head>';
+
+	// SUS-237 - Wrap in <body> tag to prevent wrapping simple text with <p> tags and stripping HTML comments and script tags
+	// This also simplifies the return value extraction
+	$htmlHeader .= '<body>';
+
 	$domDocument->loadHTML( $htmlHeader . $html );
 
 	// Strip doctype declaration, <html>, <body> tags created by saveHTML, as well as <meta> tag added to
 	// to html above to declare the charset as UTF-8
 	$html = preg_replace(
 		array(
-			'/^.*?<body>/si', '/^.*?charset=utf-8">/si',
-			'/<\/body><\/html>$/si',
-			'/<\/head><\/html>$/si',
+			'/^.*<body>/s',
+			'/<\/body>\s*<\/html>$/s',
 		),
 		'',
 		$domDocument->saveHTML()
@@ -1609,6 +1588,7 @@ function wfGetUniqueArrayCI( array $arr ) {
  */
 function mb_pathinfo( $filepath ) {
 	preg_match( '%^(.*?)[\\\\/]*(([^/\\\\]*?)(\.([^\.\\\\/]+?)|))[\\\\/\.]*$%im', $filepath, $m );
+	$ret = [];
 	if ( $m[1] ) {
 		$ret['dirname'] = $m[1];
 	}
@@ -1622,4 +1602,82 @@ function mb_pathinfo( $filepath ) {
 		$ret['filename'] = $m[3];
 	}
 	return $ret;
+}
+
+// Selectively allow cross-site AJAX
+
+/**
+ * Helper function to convert wildcard string into a regex
+ * '*' => '.*?'
+ * '?' => '.'
+ *
+ * @param $search string
+ * @return string
+ */
+function convertWildcard( $search ) {
+	$search = preg_quote( $search, '/' );
+	$search = str_replace(
+		array( '\*', '\?' ),
+		array( '.*?', '.' ),
+		$search
+	);
+	return "/$search/";
+}
+
+/**
+ * Moved core code from api.php to be available in wikia.php
+ *
+ * @see PLATFORM-1790
+ * @author macbre
+ */
+function wfHandleCrossSiteAJAXdomain() {
+	global $wgCrossSiteAJAXdomains, $wgCrossSiteAJAXdomainExceptions;
+
+	if ( $wgCrossSiteAJAXdomains && isset( $_SERVER['HTTP_ORIGIN'] ) ) {
+		$exceptions = array_map( 'convertWildcard', $wgCrossSiteAJAXdomainExceptions );
+		$regexes = array_map( 'convertWildcard', $wgCrossSiteAJAXdomains );
+		foreach ( $regexes as $regex ) {
+			if ( preg_match( $regex, $_SERVER['HTTP_ORIGIN'] ) ) {
+				foreach ( $exceptions as $exc ) { // Check against exceptions
+					if ( preg_match( $exc, $_SERVER['HTTP_ORIGIN'] ) ) {
+						break 2;
+					}
+				}
+				header( "Access-Control-Allow-Origin: {$_SERVER['HTTP_ORIGIN']}" );
+				header( 'Access-Control-Allow-Credentials: true' );
+				break;
+			}
+		}
+	}
+}
+
+function wfGetValueExcerpt( $value ) {
+	$parts = [];
+	$parts[] = gettype( $value );
+
+	if ( is_object( $value ) ) {
+		$parts[] = get_class( $value );
+	} else if ( is_resource( $value ) ) {
+		$parts[] = get_resource_type( $value );
+	}
+
+	if ( is_string( $value ) ) {
+		$parts[] = strlen( $value );
+	}
+
+	if ( is_bool( $value ) ) {
+		$parts[] = $value ? "true" : "false";
+	} else if ( !is_null( $value ) ) {
+		if ( is_scalar( $value ) ) {
+			$stringValue = strval( $value );
+		} else {
+			$stringValue = var_export( $value, true );
+		}
+		if ( strlen( $stringValue ) > 1000 ) {
+			$stringValue = substr( $stringValue, 0, 1000 ) . "...";
+		}
+		$parts[] = $stringValue;
+	}
+
+	return "[" . implode( ':', $parts ) . "]";
 }

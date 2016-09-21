@@ -12,3 +12,8 @@ $specialPageAliases['en'] = array(
 $specialPageAliases['pl'] = array(
 	'MultiLookup' => array( 'Wyszukiwanie użytkownika w wielu wiki', 'MultiLookup' )
 );
+
+/** Japanese (日本語) */
+$specialPageAliases['ja'] = array(
+	'MultiLookup' => array( 'マルチルックアップ' )
+);

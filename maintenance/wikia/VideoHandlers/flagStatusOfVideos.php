@@ -66,10 +66,9 @@ class flagStatusOfVideos extends Maintenance {
 					$loggingParams = [
 						"video_title" => $video["video_title"],
 						"video_id" => $video["video_id"],
-						"error" => $e->getMessage(),
-						"exception" => get_class( $e ),
-						"status_code" => $e->getStatusCode() ];
-					$log->info( "Video with error encountered", $loggingParams );
+						"exception" => $e,
+					];
+					$log->error( "Video with error encountered", $loggingParams );
 					if ( $e instanceof VideoNotFoundException ) {
 						$this->debug( "Found deleted video: " . $video['video_title'] );
 						$deletedVideos++;

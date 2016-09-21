@@ -34,8 +34,9 @@ class WikiaInYourLangController extends WikiaController {
 		 * A language code's core for the wfMessage
 		 * @var string
 		 */
-		$sTargetLanguage = $this->getLanguageCore( $this->request->getVal( 'targetLanguage' ) );
+		$sTargetLanguage = $this->request->getVal( 'targetLanguage' );
 		$sArticleTitle = $this->request->getVal( 'articleTitle', false );
+		$sInterlangTitle = $this->request->getVal('interlangTitle', null);
 
 		/**
 		 * Steps to get the native wikia's ID:
@@ -70,7 +71,12 @@ class WikiaInYourLangController extends WikiaController {
 						$oNativeWiki->city_title,
 					];
 					$isMainPageLink = true;
-					$articleURL = $this->getArticleURL( $sArticleTitle, $oNativeWiki->city_id );
+					$articleURL = null;
+					if ( $sInterlangTitle && strlen($sInterlangTitle) ) { //If main page, then $sInterlang is ''
+						$articleURL = $this->getArticleURL( $sInterlangTitle, $oNativeWiki->city_id );
+					} else {
+						$articleURL = $this->getArticleURL( $sArticleTitle, $oNativeWiki->city_id );
+					}
 					if ( $articleURL ) {
 						$aMessageParams[1] = $articleURL;
 						$this->response->setVal( 'linkAddress', $articleURL );
@@ -140,15 +146,6 @@ class WikiaInYourLangController extends WikiaController {
 	}
 
 	/**
-	 * Returns a core of a full language code (e.g. pt from pt-br)
-	 * @param  string $sFullLangCode Full language code
-	 * @return string A core of the language code
-	 */
-	public function getLanguageCore( $sFullLangCode ) {
-		return explode( '-', $sFullLangCode )[0];
-	}
-
-	/**
 	 * Concats a lang code with a domain
 	 * @param  string $sWikiDomain A domain (host) (e.g. community.wikia.com)
 	 * @param  string $sTargetLanguage A lang code (e.g. ja)
@@ -208,7 +205,7 @@ class WikiaInYourLangController extends WikiaController {
 			return false;
 		}
 
-		if ( $this->getLanguageCore( $oWiki->city_lang ) != $sTargetLanguage ) {
+		if ( $oWiki->city_lang != $sTargetLanguage ) {
 			$this->response->setVal( 'error', "A native wikia matches the original." );
 			return false;
 		}
@@ -238,11 +235,19 @@ class WikiaInYourLangController extends WikiaController {
 	}
 
 	private function getArticleURL( $sArticleTitle, $cityId ) {
+		$sArticleAnchor = null;
 		$articleURL = null;
+
 		if ( $sArticleTitle !== false ) {
+			$sArticleTitle = str_replace( ' ', '_', $sArticleTitle );
+			list($sArticleTitle, $sArticleAnchor) = explode('#', $sArticleTitle);
 			$title = GlobalTitle::newFromText( $sArticleTitle, NS_MAIN, $cityId );
+
 			if ( !is_null( $title ) && $title->exists() ) {
 				$articleURL = $title->getFullURL();
+			}
+			if ( $sArticleAnchor ) {
+				$articleURL = $articleURL . '#' . $sArticleAnchor;
 			}
 		}
 		return $articleURL;

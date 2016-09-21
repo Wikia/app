@@ -2,6 +2,8 @@
 
 namespace Wikia\ContentReview\Models;
 
+use \FluentSql\Exception\SqlException;
+
 class CurrentRevisionModel extends ContentReviewBaseModel {
 
 	/**
@@ -30,7 +32,7 @@ class CurrentRevisionModel extends ContentReviewBaseModel {
 		$affectedRows = $db->affectedRows();
 
 		if ( $affectedRows === 0 ) {
-			throw new \FluentSql\Exception\SqlException( 'The INSERT operation failed.' );
+			throw new SqlException( 'The INSERT operation failed.' );
 		}
 
 		$db->commit( __METHOD__ );
@@ -80,5 +82,37 @@ class CurrentRevisionModel extends ContentReviewBaseModel {
 			} );
 
 		return $revisionData;
+	}
+
+	/**
+	 * Deletes current revision for a given page.
+	 * Used for cleaning up data on deleted articles.
+	 * @param $wikiId
+	 * @param $pageId
+	 * @return bool|mixed
+	 * @throws \FluentSql\Exception\SqlException
+	 */
+	public function deleteCurrentRevisionOfPage( $wikiId, $pageId ) {
+		$currentRevision = $this->getLatestReviewedRevision( $wikiId, $pageId );
+
+		// Quit early if there is no current revision for the page
+		if ( $currentRevision['revision_id'] === null ) {
+			return true;
+		}
+
+		$dbw = $this->getDatabaseForWrite();
+
+		$result = ( new \WikiaSQL() )
+			->DELETE()
+			->FROM( self::CONTENT_REVIEW_CURRENT_REVISIONS_TABLE )
+			->WHERE( 'wiki_id' )->EQUAL_TO( $wikiId )
+			->AND_( 'page_id' )->EQUAL_TO( $pageId )
+			->run( $dbw );
+
+		if ( $result ) {
+			$dbw->commit();
+		}
+
+		return $result;
 	}
 }

@@ -54,11 +54,15 @@ $placeholder-bg-color: darken($color-page, 10%);
 	}
 }
 
+// tag name required to override strong grid selector
+.WikiaArticle ul.special-videos-grid {
+	margin: 16px 0;
+}
+
 .special-videos-grid {
 	@include clearfix;
 	border-bottom: 1px solid $color-page-border;
 	color: $color-alternate-text;
-	margin-bottom: 18px;
 
 	a {
 		color: $color-alternate-text;
