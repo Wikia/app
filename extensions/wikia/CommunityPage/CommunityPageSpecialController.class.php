@@ -358,7 +358,7 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 			$user = User::newFromId( $userId );
 			$userName = $user->getName();
 			$avatar = AvatarService::renderAvatar( $userName, $avatarSize );
-			$badge = $this->getUserBadge( $userId );
+			$badge = 'wds-icons-badge-admin';
 			$count += 1;
 
 			if ( User::isIp( $userName ) ) {

@@ -36,6 +36,16 @@
 			@include flex($avatar-flex);
 		}
 
+		.badge-container {
+			position: relative;
+			top: -7px;
+			left: -6px;
+
+			svg {
+				position: absolute;
+			}
+		}
+
 		.community-page-moderator-rank {
 			padding: $content-spacing-xxsmall $content-spacing-xxsmall 0 0;
 		}
