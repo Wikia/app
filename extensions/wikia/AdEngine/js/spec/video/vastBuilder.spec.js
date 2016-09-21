@@ -8,6 +8,9 @@ describe('ext.wikia.adEngine.video.vastBuilder', function () {
 			adContext: {
 				addCallback: noop
 			},
+			adUnitBuilder: {
+				build: noop
+			},
 			page: {
 				getPageLevelParams: function () {
 					return {
@@ -34,6 +37,7 @@ describe('ext.wikia.adEngine.video.vastBuilder', function () {
 		return modules['ext.wikia.adEngine.video.vastBuilder'](
 			mocks.adContext,
 			mocks.page,
+			mocks.adUnitBuilder,
 			mocks.loc,
 			mocks.log
 		);
@@ -53,12 +57,6 @@ describe('ext.wikia.adEngine.video.vastBuilder', function () {
 		expect(vastUrl).toMatch(/&gdfp_req=1&/g);
 		expect(vastUrl).toMatch(/&impl=s&/g);
 		expect(vastUrl).toMatch(/&unviewed_position_start=1&/g);
-	});
-
-	it('Build VAST URL with ad unit id', function () {
-		var vastUrl = getModule().build('playwire', 'TOP_LEADERBOARD', 0.5);
-
-		expect(vastUrl).toMatch(/&iu=\/5441\/wka\.life\/_project43\/\/article\/playwire\/TOP_LEADERBOARD&/g);
 	});
 
 	it('Build VAST URL with ad size horizontal', function () {
