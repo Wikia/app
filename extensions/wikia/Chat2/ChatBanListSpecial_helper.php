@@ -111,7 +111,7 @@ class ChatBanData extends WikiaModel
 	function getOrder() { return $this->order; }
 
 	public function loadData() {
-		global $wgMemc;
+
 		wfProfileIn( __METHOD__ );
 
 		/* initial values for result */
@@ -121,90 +121,72 @@ class ChatBanData extends WikiaModel
 			'data'     => [ ],
 		];
 
-		$subMemkey = [
-			'O' . $this->offset,
-			'O' . $this->order,
-			'L' . $this->limit,
-			'U' . $this->userName,
+		/* initial conditions for SQL query */
+		$where = [
+			'cbu_wiki_id' => $this->cityId,
+			"cbu_user_id != ''",
+			"end_date > '" . wfTimestamp( TS_MW ) . "'",
 		];
 
-		$memkey = wfForeignMemcKey( $this->cityId, null, "cbdata", md5( implode( ', ', $subMemkey ) ) );
-		$cached = $wgMemc->get( $memkey );
+		/* filter: user name */
+		$userId = User::IdFromName( $this->userName );
 
-		if ( empty( $cached ) ) {
+		if ( $userId !== null ) {
+			$where[] = " cbu_user_id = " . $this->db->addQuotes( $userId );
+		}
 
-			/* initial conditions for SQL query */
-			$where = [
-				'cbu_wiki_id' => $this->cityId,
-				"cbu_user_id != ''",
-				"end_date > '" . wfTimestamp( TS_MW ) . "'",
-			];
+		/* number of records */
+		$row = $this->db->selectRow(
+			$this->table,
+			[ 'count(0) as cnt' ],
+			$where,
+			__METHOD__
+		);
+		if ( is_object( $row ) ) {
+			$data['cnt'] = $row->cnt;
+		}
 
-			/* filter: user name */
-			$userId = User::IdFromName( $this->userName );
-
-			if ( $userId !== null ) {
-				$where[] = " cbu_user_id = " . $this->db->addQuotes( $userId );
-			}
-
-			/* number of records */
-			$row = $this->db->selectRow(
-				$this->table,
-				[ 'count(0) as cnt' ],
+		if ( $data['cnt'] > 0 ) {
+			/* select records */
+			$oRes = $this->db->select(
+				[
+					$this->table,
+				],
+				[
+					'start_date',
+					'cbu_user_id',
+					'end_date',
+					'cbu_admin_user_id',
+					'reason',
+				],
 				$where,
-				__METHOD__
+				__METHOD__,
+				[
+					'ORDER BY' => $this->order,
+					'LIMIT'    => $this->limit,
+					'OFFSET'   => intval( $this->offset ),
+				]
 			);
-			if ( is_object( $row ) ) {
-				$data['cnt'] = $row->cnt;
+
+			$data['data'] = [ ];
+			while ( $row = $this->db->fetchObject( $oRes ) ) {
+
+				$user = User::newFromId( $row->cbu_user_id );
+				$admin = User::newFromId( $row->cbu_admin_user_id );
+
+				$data['data'][] = [
+					'timestamp'    => $this->wg->Lang->timeanddate( $row->start_date, true ),
+					'user'         => Linker::link( $user->getUserPage(), $user->getName() ),
+					'user_actions' => $this->getUserLinks( $user ),
+					'expires'      => $this->wg->Lang->formatExpiry( $row->end_date, true ),
+					'admin_user'   => Linker::link( $admin->getUserPage(), $admin->getName() ),
+					'admin_links'  => $this->getUserLinks( $admin ),
+					'reason'       => Linker::commentBlock( $row->reason ),
+				];
+
 			}
+			$this->db->freeResult( $oRes );
 
-			if ( $data['cnt'] > 0 ) {
-				/* select records */
-				$oRes = $this->db->select(
-					[
-						$this->table,
-					],
-					[
-						'start_date',
-						'cbu_user_id',
-						'end_date',
-						'cbu_admin_user_id',
-						'reason',
-					],
-					$where,
-					__METHOD__,
-					[
-						'ORDER BY' => $this->order,
-						'LIMIT'    => $this->limit,
-						'OFFSET'   => intval( $this->offset ),
-					]
-				);
-
-				$data['data'] = [ ];
-				while ( $row = $this->db->fetchObject( $oRes ) ) {
-
-					$user = User::newFromId( $row->cbu_user_id );
-					$admin = User::newFromId( $row->cbu_admin_user_id );
-
-					$data['data'][] = [
-						'timestamp'    => $this->wg->Lang->timeanddate( $row->start_date, true ),
-						'user'         => Linker::link( $user->getUserPage(), $user->getName() ),
-						'user_actions' => $this->getUserLinks( $user ),
-						'expires'      => $this->wg->Lang->formatExpiry( $row->end_date, true ),
-						'admin_user'   => Linker::link( $admin->getUserPage(), $admin->getName() ),
-						'admin_links'  => $this->getUserLinks( $admin ),
-						'reason'       => Linker::commentBlock( $row->reason ),
-					];
-
-				}
-				$this->db->freeResult( $oRes );
-
-				if ( !empty( $data ) ) {
-					$wgMemc->set( $memkey, $data, 60 * 60 );
-				}
-			}
-		} else {
-			$data = $cached;
 		}
 
 		wfProfileOut( __METHOD__ );
@@ -221,12 +203,11 @@ class ChatBanData extends WikiaModel
 			1 => Linker::link(
 				Title::newFromText( 'Contributions', NS_SPECIAL ),
 				$this->wg->Lang->ucfirst( wfMsg( 'contribslink' ) ),
-				"target={$oEncUserName}"
+				[ 'target' => $oEncUserName]
 			),
 		];
 
-		global $wgEnableWallExt;
-		if ( !empty( $wgEnableWallExt ) ) {
+		if ( !empty( $this->wg->EnableWallExt ) ) {
 			$oUTitle = Title::newFromText( $user->getName(), NS_USER_WALL );
 			$msg = 'wall-message-wall-shorten';
 		} else {
@@ -243,7 +224,7 @@ class ChatBanData extends WikiaModel
 				Title::newFromText( "BlockIP/{$user->getName()}", NS_SPECIAL ),
 				$this->wg->Lang->ucfirst( wfMsg( 'blocklink' ) )
 			);
-		} 
+		}
 		if ( $this->wg->User->isAllowed( 'userrights' ) && ( !$userIsBlocked ) ) {
 			$links[] = Linker::link(
 				Title::newFromText( 'UserRights', NS_SPECIAL ),

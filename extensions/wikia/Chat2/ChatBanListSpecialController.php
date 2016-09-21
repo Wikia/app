@@ -16,8 +16,7 @@ class ChatBanListSpecialController extends WikiaSpecialPageController
 	public function index() {
 		wfProfileIn( __METHOD__ );
 
-		$out = $this->getOutput();
-		$out->addModules( 'ext.Chat2.ChatBanList' );
+		$this->wg->Out->addModules( 'ext.Chat2.ChatBanList' );
 		$this->setHeaders();
 
 		wfProfileOut( __METHOD__ );
@@ -55,6 +54,7 @@ class ChatBanListSpecialController extends WikiaSpecialPageController
 			$data->setLimit( $limit );
 			$data->setOffset( $offset );
 			$data->setOrder( $order );
+
 			$records = $data->loadData();
 		}
 
@@ -78,11 +78,17 @@ class ChatBanListSpecialController extends WikiaSpecialPageController
 			}
 		}
 
+		$this->wg->Out->tagWithSurrogateKeys( self::getAxShowUsersSurrogateKey() );
+		$this->response->setCacheValidity( WikiaResponse::CACHE_STANDARD );
 		$this->response->setFormat( WikiaResponse::FORMAT_JSON );
 		$this->response->setValues( $result );
 
 		wfProfileOut( __METHOD__ );
 
+	}
+
+	public static function getAxShowUsersSurrogateKey() {
+		return Wikia::surrogateKey( __CLASS__, 'axShowUsers' );
 	}
 
 }
