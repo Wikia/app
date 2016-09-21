@@ -45,7 +45,7 @@ $admins-module-item-width: 80px;
 	.community-page-admin-item {
 		margin: auto;
 		max-width: 50%;
-
+		position: relative;
 
 		.avatar-container {
 			display: inline-block;
@@ -60,9 +60,9 @@ $admins-module-item-width: 80px;
 		}
 
 		.badge-container {
-			position: relative;
-			top: 27px;
-			left: -15px;
+			position: absolute;
+			top: -4px;
+			left: 12px;
 		}
 	}
 
