@@ -25,205 +25,230 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 	}
 
 	public function getData() {
-		$data = [
+		return [
+			'header' => $this->getHeaderData(),
+			'company_overview' => $this->getCompanyOverviewData(),
+			'site_overview' => $this->getSiteOverviewData(),
+			'create_wiki' => $this->getCreateWikiData(),
+			'community_apps' => $this->getCommunityAppsData(),
+			'advertise' => $this->getAdvertiseData(),
+			'licensing_and_vertical' => $this->getLicensingAndVerticalData(),
+			'fandom_overview' => $this->getFandomOverview(),
+			'follow_us' => $this->getFollowUs(),
+			'community' => $this->getCommunity()
+		];
+	}
+
+	private function getSiteOverviewData() {
+		return [
+			'links' => [
+				[
+					'type' => 'link-text',
+					'title' => [
+						'type' => 'translatable-text',
+						'key' => 'global-footer-site-overview-link-terms-of-use'
+					],
+					'href' => $this->getHref( 'terms-of-use' )
+				],
+				[
+					'type' => 'link-text',
+					'title' => [
+						'type' => 'translatable-text',
+						'key' => 'global-footer-site-overview-link-privacy-policy'
+					],
+					'href' => $this->getHref( 'privacy-policy' )
+				],
+				[
+					'type' => 'link-text',
+					'title' => [
+						'type' => 'translatable-text',
+						'key' => 'global-footer-site-overview-link-global-sitemap'
+					],
+					'href' => $this->getHref( 'global-sitemap' )
+				],
+				[
+					'type' => 'link-text',
+					'title' => [
+						'type' => 'translatable-text',
+						'key' => 'global-footer-site-overview-link-local-sitemap'
+					],
+					'href' => $this->getLocalSitemapUrl()
+				],
+				[
+					'type' => 'link-text',
+					'title' => [
+						'type' => 'translatable-text',
+						'key' => 'global-footer-site-overview-link-api'
+					],
+					'href' => $this->getHref( 'api' )
+				]
+			]
+		];
+	}
+
+	private function getCreateWikiData () {
+		return [
+			'description' => [
+				'type' => 'translatable-text',
+				'key' => 'global-footer-create-wiki-description'
+			],
+			'links' => [
+				[
+					'type' => 'link-text',
+					'title' => [
+						'type' => 'translatable-text',
+						'key' => 'global-footer-create-wiki-link-start-wikia'
+					],
+					'href' => $this->getHref( 'create-new-wiki' )
+				]
+			]
+		];
+	}
+
+	private function getCommunityAppsData () {
+		return [
 			'header' => [
-				'type' => 'link-image',
-				'image' => 'wds-company-logo-fandom-powered-by-wikia-two-lines',
-				'href' => 'http://fandom.wikia.com',
+				'type' => 'line-text',
 				'title' => [
 					'type' => 'translatable-text',
-					'key' => 'global-footer-fandom-header'
+					'key' => 'global-footer-community-apps-header'
 				]
 			],
-			'company_overview' => [
-				'header' => [
-					'type' => 'line-text',
+			'description' => [
+				'type' => 'translatable-text',
+				'key' => 'global-footer-community-apps-description'
+			],
+			'links' => [
+				[
+					'type' => 'link-image',
+					'image' => 'wds-company-store-appstore',
 					'title' => [
 						'type' => 'translatable-text',
-						'key' => 'global-footer-company-overview-header'
-					]
+						'key' => 'global-footer-community-apps-link-app-store'
+					],
+					'href' => $this->getHref( 'app-store' )
 				],
-				'links' => [
-					[
-						'type' => 'link-text',
-						'title' => [
-							'type' => 'translatable-text',
-							'key' => 'global-footer-company-overview-link-about'
-						],
-						'href' => $this->getHref( 'about' )
-					],
-					[
-						'type' => 'link-text',
-						'title' => [
-							'type' => 'translatable-text',
-							'key' => 'global-footer-company-overview-link-careers'
-						],
-						'href' => $this->getHref( 'careers' )
-					],
-					[
-						'type' => 'link-text',
-						'title' => [
-							'type' => 'translatable-text',
-							'key' => 'global-footer-company-overview-link-press'
-						],
-						'href' => $this->getHref( 'press' )
-					],
-					[
-						'type' => 'link-text',
-						'title' => [
-							'type' => 'translatable-text',
-							'key' => 'global-footer-company-overview-link-contact'
-						],
-						'href' => $this->getHref( 'contact' )
-					],
-					[
-						'type' => 'link-text',
-						'title' => [
-							'type' => 'translatable-text',
-							'key' => 'global-footer-company-overview-link-wikia-org'
-						],
-						'href' => $this->getHref( 'wikia-org' )
-					]
-				]
-			],
-			'site_overview' => [
-				'links' => [
-					[
-						'type' => 'link-text',
-						'title' => [
-							'type' => 'translatable-text',
-							'key' => 'global-footer-site-overview-link-terms-of-use'
-						],
-						'href' => $this->getHref( 'terms-of-use' )
-					],
-					[
-						'type' => 'link-text',
-						'title' => [
-							'type' => 'translatable-text',
-							'key' => 'global-footer-site-overview-link-privacy-policy'
-						],
-						'href' => $this->getHref( 'privacy-policy' )
-					],
-					[
-						'type' => 'link-text',
-						'title' => [
-							'type' => 'translatable-text',
-							'key' => 'global-footer-site-overview-link-global-sitemap'
-						],
-						'href' => $this->getHref( 'global-sitemap' )
-					],
-					[
-						'type' => 'link-text',
-						'title' => [
-							'type' => 'translatable-text',
-							'key' => 'global-footer-site-overview-link-local-sitemap'
-						],
-						'href' => $this->getLocalSitemapUrl()
-					],
-					[
-						'type' => 'link-text',
-						'title' => [
-							'type' => 'translatable-text',
-							'key' => 'global-footer-site-overview-link-api'
-						],
-						'href' => $this->getHref( 'api' )
-					]
-				]
-			],
-			'create_wiki' => [
-				'description' => [
-					'type' => 'translatable-text',
-					'key' => 'global-footer-create-wiki-description'
-				],
-				'links' => [
-					[
-						'type' => 'link-text',
-						'title' => [
-							'type' => 'translatable-text',
-							'key' => 'global-footer-create-wiki-link-start-wikia'
-						],
-						'href' => $this->getHref( 'create-new-wiki' )
-					]
-				]
-			],
-			'community_apps' => [
-				'header' => [
-					'type' => 'line-text',
+				[
+					'type' => 'link-image',
+					'image' => 'wds-company-store-googleplay',
 					'title' => [
 						'type' => 'translatable-text',
-						'key' => 'global-footer-community-apps-header'
-					]
-				],
-				'description' => [
-					'type' => 'translatable-text',
-					'key' => 'global-footer-community-apps-description'
-				],
-				'links' => [
-					[
-						'type' => 'link-image',
-						'image' => 'wds-company-store-appstore',
-						'title' => [
-							'type' => 'translatable-text',
-							'key' => 'global-footer-community-apps-link-app-store'
-						],
-						'href' => $this->getHref( 'app-store' )
+						'key' => 'global-footer-community-apps-link-google-play'
 					],
-					[
-						'type' => 'link-image',
-						'image' => 'wds-company-store-googleplay',
-						'title' => [
-							'type' => 'translatable-text',
-							'key' => 'global-footer-community-apps-link-google-play'
-						],
-						'href' => $this->getHref( 'google-play' )
-					]
+					'href' => $this->getHref( 'google-play' )
 				]
-			],
-			'advertise' => [
-				'header' => [
-					'type' => 'line-text',
-					'title' => [
-						'type' => 'translatable-text',
-						'key' => 'global-footer-advertise-header'
-					]
-				],
-				'links' => [
-					[
-						'type' => 'link-text',
-						'title' => [
-							'type' => 'translatable-text',
-							'key' => 'global-footer-advertise-link-media-kit'
-						],
-						'href' => $this->getHref( 'media-kit' )
-					],
-					[
-						'type' => 'link-text',
-						'title' => [
-							'type' => 'translatable-text',
-							'key' => 'global-footer-advertise-link-contact'
-						],
-						'href' => $this->getHref( 'media-kit-contact' )
-					]
-				]
-			],
-			'licensing_and_vertical' => [
-				'description' => [
-					'type' => 'translatable-text',
-					'key' => 'global-footer-licensing-and-vertical-description',
-					'params' => [
-						'sitename' => $this->getSitenameData(),
-						'vertical' => $this->getVerticalData(),
-						'license' => $this->getLicenseData()
-					]
-				],
-			],
+			]
 		];
+	}
 
-		$data['fandom_overview'] = $this->getFandomOverview();
-		$data['follow_us'] = $this->getFollowUs();
-		$data['community'] = $this->getCommunity();
+	private function getAdvertiseData () {
+		return [
+			'header' => [
+				'type' => 'line-text',
+				'title' => [
+					'type' => 'translatable-text',
+					'key' => 'global-footer-advertise-header'
+				]
+			],
+			'links' => [
+				[
+					'type' => 'link-text',
+					'title' => [
+						'type' => 'translatable-text',
+						'key' => 'global-footer-advertise-link-media-kit'
+					],
+					'href' => $this->getHref( 'media-kit' )
+				],
+				[
+					'type' => 'link-text',
+					'title' => [
+						'type' => 'translatable-text',
+						'key' => 'global-footer-advertise-link-contact'
+					],
+					'href' => $this->getHref( 'media-kit-contact' )
+				]
+			]
+		];
+	}
 
-		return $data;
+	private function getLicensingAndVerticalData () {
+		return [
+			'description' => [
+				'type' => 'translatable-text',
+				'key' => 'global-footer-licensing-and-vertical-description',
+				'params' => [
+					'sitename' => $this->getSitenameData(),
+					'vertical' => $this->getVerticalData(),
+					'license' => $this->getLicenseData()
+				]
+			]
+		];
+	}
+
+	private function getCompanyOverviewData() {
+		return [
+			'header' => [
+				'type' => 'line-text',
+				'title' => [
+					'type' => 'translatable-text',
+					'key' => 'global-footer-company-overview-header'
+				]
+			],
+			'links' => [
+				[
+					'type' => 'link-text',
+					'title' => [
+						'type' => 'translatable-text',
+						'key' => 'global-footer-company-overview-link-about'
+					],
+					'href' => $this->getHref( 'about' )
+				],
+				[
+					'type' => 'link-text',
+					'title' => [
+						'type' => 'translatable-text',
+						'key' => 'global-footer-company-overview-link-careers'
+					],
+					'href' => $this->getHref( 'careers' )
+				],
+				[
+					'type' => 'link-text',
+					'title' => [
+						'type' => 'translatable-text',
+						'key' => 'global-footer-company-overview-link-press'
+					],
+					'href' => $this->getHref( 'press' )
+				],
+				[
+					'type' => 'link-text',
+					'title' => [
+						'type' => 'translatable-text',
+						'key' => 'global-footer-company-overview-link-contact'
+					],
+					'href' => $this->getHref( 'contact' )
+				],
+				[
+					'type' => 'link-text',
+					'title' => [
+						'type' => 'translatable-text',
+						'key' => 'global-footer-company-overview-link-wikia-org'
+					],
+					'href' => $this->getHref( 'wikia-org' )
+				]
+			]
+		];
+	}
+
+	private function getHeaderData() {
+		return [
+			'type' => 'link-image',
+			'image' => 'wds-company-logo-fandom-powered-by-wikia-two-lines',
+			'href' => 'http://fandom.wikia.com',
+			'title' => [
+				'type' => 'translatable-text',
+				'key' => 'global-footer-fandom-header'
+			]
+		];
 	}
 
 	private function getSitenameData() {
