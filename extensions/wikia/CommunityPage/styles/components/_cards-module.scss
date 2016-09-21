@@ -2,12 +2,12 @@
 @import 'skins/shared/mixins/flexbox';
 @import 'extensions/wikia/DesignSystem/bower_components/design-system/base/typography';
 
-$content-spacing-xlarge: 20px;
 $cards-module-line-height: 28px;
 
 .community-page-cards-module-block {
 	@include flexbox();
 	@include flex-wrap(wrap);
+
 	margin-bottom: $module-margin-bottom;
 }
 
@@ -15,5 +15,5 @@ $cards-module-line-height: 28px;
 	font-size: $typescale-size-plus-2;
 	font-weight: bold;
 	line-height: $cards-module-line-height;
-	margin-bottom: $content-spacing-xlarge;
+	margin-bottom: $content-spacing-regular;
 }

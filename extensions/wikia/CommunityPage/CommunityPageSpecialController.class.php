@@ -57,8 +57,8 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 			'helpModule' => $this->getHelpModuleData(),
 			'communityTodoListModule' => $this->getCommunityTodoListData(),
 			'discussionsModule' => !empty( $wgEnableDiscussions ) ? EmbeddableDiscussionsController::render( null, [
-				'columns' => 2,
-				'size' => 6,
+				'columns' => '2',
+				'size' => '6',
 				'avatarSize' => AvatarService::AVATAR_SIZE_SMALL_PLUS
 			] ) : '',
 			'contributorsModuleEnabled' => !$this->wg->CommunityPageDisableTopContributors,

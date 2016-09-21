@@ -1,9 +1,13 @@
 @import 'skins/shared/color';
+@import 'extensions/wikia/DesignSystem/bower_components/design-system/base/typography';
 
-$avatar-size: 42px;
+$avatar-size: 30px;
 
 .embeddable-discussions-module {
 	.avatar-container {
+		background-image: url('/extensions/wikia/GlobalNavigation/images/signin_icon.svg'); /* inline */
+		background-position: center 2px;
+		background-repeat: no-repeat;
 		border: 2px solid $color-secondary-button-border;
 		border-radius: 50%;
 		height: $avatar-size;
@@ -16,12 +20,6 @@ $avatar-size: 42px;
 			width: $avatar-size;
 		}
 
-		&.logged-avatar-placeholder {
-			background-image: url('/extensions/wikia/GlobalNavigation/images/signin_icon.svg'); /* inline */
-			background-position: center;
-			background-repeat: no-repeat;
-		}
-
 		&.avatar-more {
 			background: $color-secondary-button;
 			color: $color-alternate-text;
@@ -32,8 +30,8 @@ $avatar-size: 42px;
 	}
 
 	.avatar-details {
+		font-size: $typescale-size-minus-1;
 		line-height: $avatar-size;
 		margin-left: 10px;
-		font-size: 16px;
 	}
 }

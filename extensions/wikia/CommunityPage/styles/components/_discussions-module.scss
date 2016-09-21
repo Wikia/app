@@ -1,71 +1,17 @@
 @import 'variables';
-@import 'skins/shared/color';
 @import 'skins/oasis/css/core/breakpoints-variables';
-@import 'skins/shared/mixins/flexbox';
-@import 'extensions/wikia/DesignSystem/bower_components/design-system/base/colors';
 @import 'extensions/wikia/DesignSystem/bower_components/design-system/base/typography';
-
-$edit-icon-size: 16px;
-$module-header-line-height: 28px;
 
 .CommunityPageMainContent {
 	.embeddable-discussions-module {
 		border: 0;
 		box-sizing: border-box;
-		margin-bottom: 34px;
+		margin-bottom: $content-spacing-xlarge;
 		padding: 0;
 
-		.community-page-todo-list-module-header-wrapper {
-			line-height: $module-header-line-height;
-			margin-bottom: $content-spacing-small;
-		}
-
 		.embeddable-discussions-heading {
-			display: inline-block;
 			font-size: $typescale-size-plus-2;
 			font-weight: bold;
-			padding-right: 32px;
-		}
-
-		.avatar-container {
-			height: $avatar-size;
-			width: $avatar-size;
-
-			img {
-				border: 0;
-				height: $avatar-size;
-				width: $avatar-size;
-			}
-		}
-
-		.avatar-details {
-			font-size: $typescale-size-minus-1;
-			line-height: $avatar-size;
-		}
-
-		.embeddable-discussions-timestamp {
-			font-size: $typescale-size-minus-2;
-		}
-
-		.embeddable-discussions-forum {
-			font-size: $typescale-size-minus-2;
-		}
-
-		.embeddable-discussions-show-all {
-			display: inline-block;
-			font-size: 16px;
-			font-weight: normal;
-			padding-right: $content-spacing-regular;
-		}
-
-		.embeddable-discussions-content {
-			-webkit-box-orient: vertical;
-			display: -webkit-box;
-			-webkit-line-clamp: 3;
-			margin: 4px 0;
-			overflow: hidden;
-			padding: 5px 0;
-
 		}
 	}
 }
