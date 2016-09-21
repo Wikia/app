@@ -23,7 +23,6 @@
  *
  * @file
  */
-use Wikia\Util\PerformanceProfilers\UsernameUseProfiler;
 
 /**
  * This is a base class for all Query modules.
@@ -509,7 +508,6 @@ abstract class ApiQueryBase extends ApiBase {
 	 * @return void
 	 */
 	public function showHiddenUsersAddBlockInfo( $showBlockInfo ) {
-		$usernameUseProfiler = new UsernameUseProfiler( __CLASS__, __METHOD__ );
 		$userCanViewHiddenUsers = $this->getUser()->isAllowed( 'hideuser' );
 
 		if ( $showBlockInfo || !$userCanViewHiddenUsers ) {
@@ -529,7 +527,6 @@ abstract class ApiQueryBase extends ApiBase {
 				$this->addWhere( 'ipb_deleted = 0 OR ipb_deleted IS NULL' );
 			}
 		}
-		$usernameUseProfiler->end();
 	}
 
 	/**

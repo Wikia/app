@@ -100,7 +100,10 @@ class DesignSystemGlobalNavigationModel extends WikiaModel {
 
 		if ( $wgUser->isLoggedIn() ) {
 			$data[ 'user' ] = $this->getLoggedInUserData( $wgUser );
-			$data[ 'notifications' ] = $this->getNotifications( $wgUser );
+
+			if ( $this->product !== static::PRODUCT_FANDOMS ) {
+				$data[ 'notifications' ] = $this->getNotifications( $wgUser );
+			}
 		} else {
 			$data[ 'anon' ] = $this->getAnonUserData();
 		}
@@ -119,13 +122,24 @@ class DesignSystemGlobalNavigationModel extends WikiaModel {
 	private function getSearchData() {
 		$isCorporatePage = WikiaPageType::isCorporatePage( $this->productInstanceId );
 
+		if ( $this->product === static::PRODUCT_FANDOMS ) {
+			$searchUrl = '/';
+			$searchPlaceholderKey = 'global-navigation-search-placeholder-fandom';
+		} else {
+			if ( $isCorporatePage ) {
+				$searchUrl = $this->getCorporatePageSearchUrl();
+				$searchPlaceholderKey = 'global-navigation-search-placeholder-wikis';
+			} else {
+				$searchUrl = $this->getPageUrl( 'Search', NS_SPECIAL, [ 'fulltext' => 'Search' ] );
+				$searchPlaceholderKey = 'global-navigation-search-placeholder-in-wiki';
+			}
+		}
+
 		$search = [
 			'type' => 'search',
 			'results' => [
-				'url' => $isCorporatePage
-					? $this->getCorporatePageSearchUrl()
-					: $this->getPageUrl( 'Search', NS_SPECIAL, [ 'fulltext' => 'Search' ] ),
-				'param-name' => 'query'
+				'url' => $searchUrl,
+				'param-name' => $this->product === static::PRODUCT_FANDOMS ? 's' : 'query'
 			],
 			'placeholder-inactive' => [
 				'type' => 'translatable-text',
@@ -133,13 +147,11 @@ class DesignSystemGlobalNavigationModel extends WikiaModel {
 			],
 			'placeholder-active' => [
 				'type' => 'translatable-text',
-				'key' => $isCorporatePage
-					? 'global-navigation-search-placeholder-wikis'
-					: 'global-navigation-search-placeholder-in-wiki'
+				'key' => $searchPlaceholderKey
 			]
 		];
 
-		if ( !$isCorporatePage ) {
+		if ( $this->product !== static::PRODUCT_FANDOMS && !$isCorporatePage ) {
 			$search['suggestions'] = [
 				'url' => WikiFactory::getHostById( $this->productInstanceId ) . '/index.php?action=ajax&rs=getLinkSuggest&format=json',
 				'param-name' => 'query'

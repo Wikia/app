@@ -153,7 +153,7 @@ describe('ext.wikia.adEngine.lookup.rubicon.rubiconVulcan', function () {
 		vulcan.call();
 		defineSlotsCalls = mocks.win.rubicontag.video.defineSlot.calls;
 
-		expect(defineSlotsCalls.count()).toEqual(1);
+		expect(defineSlotsCalls.count()).toEqual(2);
 		expect(defineSlotsCalls.argsFor(0)[0]).toEqual('INCONTENT_LEADERBOARD');
 
 		assertRequestParam(defineSlotsCalls.argsFor(0)[1], 'account_id');
@@ -221,6 +221,6 @@ describe('ext.wikia.adEngine.lookup.rubicon.rubiconVulcan', function () {
 
 		vulcan.call();
 
-		expect(vulcan.getSlotParams('TOP_LEADERBOARD')).toEqual({});
+		expect(vulcan.getSlotParams('TOP_RIGHT_BOXAD')).toEqual({});
 	});
 });

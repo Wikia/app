@@ -3,10 +3,10 @@
 class CommunityPageSpecialHelpModel {
 	public function getData() {
 		return [
-			'title' => wfMessage( 'communitypage-help-module-title' )->plain(),
-			'editPage' => wfMessage( 'communitypage-help-edit-page' )->plain(),
-			'addLinks' => wfMessage( 'communitypage-help-add-link' )->plain(),
-			'addNewPage' => wfMessage( 'communitypage-help-add-new-page' )->plain(),
+			'title' => wfMessage( 'communitypage-help-module-title' )->text(),
+			'editPage' => wfMessage( 'communitypage-help-edit-page' )->text(),
+			'addLinks' => wfMessage( 'communitypage-help-add-link' )->text(),
+			'addNewPage' => wfMessage( 'communitypage-help-add-new-page' )->text(),
 			'editPageLink' => $this->getHelpPageLink( 'communitypage-help-module-edit-page-name' ),
 			'addLinksPageLink' => $this->getHelpPageLink( 'communitypage-help-module-add-link-name' ),
 			'addNewPageLink' => $this->getHelpPageLink( 'communitypage-help-module-new-page-name' )
