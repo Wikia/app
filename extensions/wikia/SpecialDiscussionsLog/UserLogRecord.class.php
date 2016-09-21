@@ -10,4 +10,5 @@ class UserLogRecord {
 	public $timestamp;
 	public $user;
 	public $userName;
+	public $userAction;
 }

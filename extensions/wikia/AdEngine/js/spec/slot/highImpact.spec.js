@@ -44,6 +44,5 @@ describe('ext.wikia.adEngine.slot.highImpact', function () {
 
 		expect(mocks.window.adslots2.length).toEqual(1);
 		expect(mocks.window.adslots2[0].slotName).toEqual('INVISIBLE_HIGH_IMPACT_2');
-		expect(typeof mocks.window.adslots2[0].onSuccess).toEqual('function');
 	});
 });

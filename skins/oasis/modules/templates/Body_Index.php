@@ -104,13 +104,13 @@
 					<div id="contentSub"><?= $subtitle ?></div>
 				<?php } ?>
 				<?php if ( ARecoveryModule::isLockEnabled() ) { ?>
-				<div id="WikiaArticleMsg">
-					<h2>Ad blocker interference detected!</h2>
-					<br />
-					<h3>Wikia is a free-to-use site that makes money from advertising. We have a modified experience for viewers using ad blockers.
-						<br /><br />
-						Wikia is not accessible if you’ve made further modifications. Remove the custom ad blocker rule(s) and the page will load as expected.</h3>
-				</div>
+					<div id="WikiaArticleMsg">
+						<h2><?= wfMessage('arecovery-blocked-message-headline')->escaped() ?></h2>
+						<br />
+						<h3><?= wfMessage('arecovery-blocked-message-part-one')->escaped() ?>
+							<br /><br />
+							<?= wfMessage('arecovery-blocked-message-part-two')->escaped() ?></h3>
+					</div>
 				<?php } ?>
 				<div id="WikiaArticle" class="WikiaArticle">
 					<div class="home-top-right-ads">
@@ -198,11 +198,13 @@
 		?>
 
 		<?= empty( $wg->SuppressFooter ) ? $app->renderView( 'Footer', 'Index' ) : '' ?>
-		<? if( !empty( $wg->EnableCorporateFooterExt ) ) echo $app->renderView( 'CorporateFooter', 'index' ) ?>
-		<?= $app->renderView( 'GlobalFooter', 'index' ); ?>
+		<? if ( !empty( $wg->EnableCorporateFooterExt ) && empty( $wg->EnableDesignSystem ) ) echo $app->renderView( 'CorporateFooter', 'index' ) ?>
+		<? if ( empty( $wg->EnableDesignSystem ) ) echo $app->renderView( 'GlobalFooter', 'index' ); ?>
 	</div>
 </section><!--WikiaPage-->
 
-<?php if( $wg->EnableWikiaBarExt ): ?>
+<? if ( !empty( $wg->EnableDesignSystem ) ) echo $app->renderView( 'DesignSystemGlobalFooterService', 'index' ); ?>
+
+<?php if ( $wg->EnableWikiaBarExt ): ?>
 	<?= $app->renderView( 'WikiaBar', 'Index' ); ?>
 <?php endif; ?>

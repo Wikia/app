@@ -44,10 +44,3 @@
 		width: 100%;
 	}
 }
-
-// remove this after ab test is over: https://wikia-inc.atlassian.net/browse/WW-83
-.community-page-insights-module {
-	.medium, .high, .lite {
-		display: none;
-	}
-}

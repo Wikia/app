@@ -133,7 +133,6 @@ class DeletedContribsPager extends IndexPager {
 	 */
 	function formatRow( $row ) {
 		wfProfileIn( __METHOD__ );
-
 		$rev = new Revision( array(
 				'id'         => $row->ar_rev_id,
 				'comment'    => $row->ar_comment,
@@ -229,7 +228,6 @@ class DeletedContribsPager extends IndexPager {
 		}
 
 		$ret = Html::rawElement( 'li', array(), $ret ) . "\n";
-
 		wfProfileOut( __METHOD__ );
 		return $ret;
 	}

@@ -75,8 +75,6 @@ class WikiaNoArticleLocalFile extends WikiaLocalFile {
 		);
 
 		if( $dbw->affectedRows() == 0 ) {
-			$reupload = true;
-
 			# Collision, this is an update of a file
 			# Insert previous contents into oldimage
 			$dbw->insertSelect( 'oldimage', 'image',

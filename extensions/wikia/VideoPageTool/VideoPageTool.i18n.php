@@ -1,15 +1,16 @@
 <?php
 /**
-* Internationalisation file for VideoPageTool extension.
-*
-* @addtogroup Languages
-*/
+ * Internationalisation file for VideoPageTool extension.
+ *
+ * @addtogroup Languages
+ */
 
-$messages = array();
+$messages = [];
 
-$messages['en'] = array(
+$messages['en'] = [
 	'videopagetool-desc' => 'Wikia\'s Video Tool',
 	'videopagetool-page-title' => 'Wikia Video Tool',
+	'right-videopagetool' => 'Access Wikia\'s Video Tool',
 	'videopagetool-error-permission' => 'You cannot access this tool.',
 	'videopagetool-error-invalid-language' => 'Invalid language',
 	'videopagetool-error-invalid-date' => 'Invalid date',
@@ -85,9 +86,9 @@ $messages['en'] = array(
 	'videohomepage-partner-name-iva' => 'IVA',
 	'videohomepage-partner-name-ooyala' => 'Ooyala',
 	'videohomepage-partner-name-screenplay' => 'Screenplay',
-);
+];
 
-$messages['qqq'] = array(
+$messages['qqq'] = [
 	'videopagetool-desc' => '{{desc}}',
 	'videopagetool-page-title' => 'This is the page header/title (h1 tag) that is displayed at the top of the page.',
 	'videopagetool-error-permission' => 'This text appears if user does not have permission to access the tool.',
@@ -161,4 +162,4 @@ $messages['qqq'] = array(
 	'videohomepage-partner-name-iva' => 'This text is the name of a partner: IVA',
 	'videohomepage-partner-name-ooyala' => 'This text is the name of a partner: Ooyala',
 	'videohomepage-partner-name-screenplay' => 'This text is the name of a partner: Screenplay',
-);
+];

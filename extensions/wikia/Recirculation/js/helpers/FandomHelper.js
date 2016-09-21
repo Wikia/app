@@ -65,8 +65,20 @@ define('ext.wikia.recirculation.helpers.fandom', [
 
 			return {
 				title: data.title,
-				items: items
+				items: items.sort(sortItem)
 			};
+		}
+
+		function sortItem(a, b) {
+			if (a.type === 'recent_popular' && b.type !== 'recent_popular') {
+				return 1;
+			}
+
+			if (b.type === 'recent_popular' && a.type !== 'recent_popular') {
+				return -1;
+			}
+
+			return b.isVideo - a.isVideo;
 		}
 
 		return {

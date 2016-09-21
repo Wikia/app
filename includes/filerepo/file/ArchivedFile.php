@@ -117,6 +117,7 @@ class ArchivedFile {
 		}
 
 		if( !$this->title || $this->title->getNamespace() == NS_FILE ) {
+
 			$dbr = wfGetDB( DB_SLAVE );
 			$res = $dbr->select( 'filearchive',
 				array(
@@ -166,6 +167,7 @@ class ArchivedFile {
 			$this->user_text = $row->fa_user_text;
 			$this->timestamp = $row->fa_timestamp;
 			$this->deleted = $row->fa_deleted;
+
 		} else {
 			throw new MWException( 'This title does not correspond to an image page.' );
 		}

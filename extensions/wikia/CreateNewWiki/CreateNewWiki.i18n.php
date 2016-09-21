@@ -1,13 +1,13 @@
 <?php
 /**
-* Internationalisation file for the CreateNewWiki extension.
-*
-* @addtogroup Languages
-*/
+ * Internationalisation file for the CreateNewWiki extension.
+ *
+ * @addtogroup Languages
+ */
 
-$messages = array();
+$messages = [];
 
-$messages['en'] = array(
+$messages['en'] = [
 	'createnewwiki-desc' => 'Wiki creation wizard',
 	'cnw-next' => 'Next',
 	'cnw-back' => 'Back',
@@ -73,7 +73,11 @@ $messages['en'] = array(
 	'cnw-error-bot-header' => 'You have been detected as a bot',
 	'cnw-error-unconfirmed-email-header' => 'Your e-mail has not been confirmed',
 	'cnw-error-unconfirmed-email' => 'Your e-mail should be confirmed to create a Wiki.',
-);
+	// rights
+	'right-createnewwiki' => 'Allows the user to create a new Wiki',
+	'right-createwikilimitsexempt' => 'User is exempt from wiki creation limits',
+	'right-finishcreate' => 'Can finish the wiki creation process',
+];
 
 /** Message documentation (Message documentation)
  * @author EugeneZelenko
@@ -81,7 +85,7 @@ $messages['en'] = array(
  * @author Siebrand
  * @author Wyz
  */
-$messages['qqq'] = array(
+$messages['qqq'] = [
 	'cnw-next' => 'Text for "Next" Button.
 {{Identical|Next}}',
 	'cnw-back' => 'Text for "Back" Button
@@ -156,12 +160,12 @@ Be careful to keep it short as there are 2 successive balloon tips to display in
 	'cnw-error-bot-header' => 'Message header for modal box',
 	'cnw-error-unconfirmed-email-header' => 'Message header for modal box',
 	'cnw-error-unconfirmed-email' => 'Message describing your e-mail has not been confirmed yet therefore you cannot process with Wiki creation',
-);
+];
 
 /** Afrikaans (Afrikaans)
  * @author Naudefj
  */
-$messages['af'] = array(
+$messages['af'] = [
 	'cnw-next' => 'Volgende',
 	'cnw-back' => 'Vorige',
 	'cnw-or' => 'of',
@@ -180,15 +184,15 @@ $messages['af'] = array(
 	'cnw-desc-wiki-submit-error' => "Kies 'n kategorie",
 	'cnw-theme-headline' => 'Ontwerp u wiki',
 	'cnw-badword-header' => 'Pas op!',
-);
+];
 
 /** Aragonese (aragonés)
  * @author Willtron
  */
-$messages['an'] = array(
+$messages['an'] = [
 	'cnw-call-to-signup' => 'Rechistra-te aquí',
 	'cnw-userauth-marketing-heading' => 'No tiene garra cuenta?',
-);
+];
 
 /** Arabic (العربية)
  * @author Achraf94
@@ -201,7 +205,7 @@ $messages['an'] = array(
  * @author ترجمان05
  * @author زكريا
  */
-$messages['ar'] = array(
+$messages['ar'] = [
 	'createnewwiki-desc' => 'صانع الويكيات',
 	'cnw-next' => 'التالي',
 	'cnw-back' => 'رجوع',
@@ -266,12 +270,12 @@ $messages['ar'] = array(
 	'cnw-error-bot-header' => 'لقد تم رصدك بأنك بوت (مستخدم أوتوماتيكي)',
 	'cnw-error-unconfirmed-email-header' => 'لم يتم تأكيد البريد الإلكتروني الخاص بك',
 	'cnw-error-unconfirmed-email' => 'ينبغي تأكيد البريد الإلكتروني الخاص بك لإنشاء ويكي.',
-);
+];
 
 /** Kotava (Kotava)
  * @author Wikimistusik
  */
-$messages['avk'] = array(
+$messages['avk'] = [
 	'createnewwiki-desc' => 'Tcicesiki va redura va wiki',
 	'cnw-next' => 'Radim-',
 	'cnw-back' => 'Dim-',
@@ -321,24 +325,24 @@ $messages['avk'] = array(
 	'cnw-error-blocked' => 'Gan $1 su zo elekal. Bazena lazava tiyir : $2. (Block ID vas vuestesiki : $3)',
 	'cnw-error-torblock' => 'Redura va wiki kan "Tor Network" zo zuker.',
 	'cnw-error-bot-header' => 'Wetce stiernik su zo karavotal',
-);
+];
 
 /** Azerbaijani (azərbaycanca)
  * @author Cekli829
  */
-$messages['az'] = array(
+$messages['az'] = [
 	'cnw-next' => 'Növbəti',
 	'cnw-back' => 'Əvvəlki',
 	'cnw-or' => 'və ya',
 	'cnw-login' => 'Daxil ol',
 	'cnw-auth-headline' => 'Daxil ol',
 	'cnw-desc-lang' => 'Dil',
-);
+];
 
 /** South Azerbaijani (تۆرکجه)
  * @author Koroğlu
  */
-$messages['azb'] = array(
+$messages['azb'] = [
 	'cnw-next' => 'سونراکی',
 	'cnw-back' => 'دالی',
 	'cnw-or' => 'یا دا',
@@ -362,12 +366,12 @@ $messages['azb'] = array(
 	'cnw-desc-select-one' => 'بیرینی سئچ',
 	'cnw-desc-change-lang' => 'دَییشیک',
 	'cnw-desc-lang' => 'دیل',
-);
+];
 
 /** Bavarian (Boarisch)
  * @author Mucalexx
  */
-$messages['bar'] = array(
+$messages['bar'] = [
 	'createnewwiki-desc' => 'Assistent zan Dastejn vahram Wiki',
 	'cnw-next' => 'Naxde',
 	'cnw-back' => 'Zruck',
@@ -377,12 +381,12 @@ $messages['bar'] = array(
 	'cnw-name-wiki-creative' => 'Wikia is da béste Ort, um rund um deih Liablingsthéma a Webseiten afzbaun und a Gmoahschoft woxen zan lossen.',
 	'cnw-name-wiki-label' => 'Gib an Wiki an Naum',
 	'cnw-name-wiki-domain-label' => 'Gib deim Wiki a Adress',
-);
+];
 
 /** Bulgarian (български)
  * @author DCLXVI
  */
-$messages['bg'] = array(
+$messages['bg'] = [
 	'createnewwiki-desc' => 'Съветник за създаване на уики',
 	'cnw-next' => 'Продължаване',
 	'cnw-back' => 'Връщане',
@@ -430,12 +434,12 @@ $messages['bg'] = array(
 	'cnw-error-blocked-header' => 'Сметката е блокирана',
 	'cnw-error-blocked' => 'Потребителската ви сметка е била блокирана от $1. Причината за блокирането, която е посочена, е: $2. (Номер на блокирането, за референции: $3)',
 	'cnw-error-torblock' => 'Създаването на укита чрез Tor мрежа не е позволено.',
-);
+];
 
 /** Western Balochi (بلوچی رخشانی)
  * @author Baloch Afghanistan
  */
-$messages['bgn'] = array(
+$messages['bgn'] = [
 	'cnw-next' => 'دیگرین',
 	'cnw-back' => 'بیئرگشت',
 	'cnw-or' => 'یا',
@@ -446,7 +450,7 @@ $messages['bgn'] = array(
 	'cnw-userauth-marketing-heading' => 'شما کار زوروکین حسابئ نداریت؟',
 	'cnw-desc-headline' => 'شمی ویکی بئ چه موریدا اینت؟',
 	'cnw-desc-lang' => 'زبان',
-);
+];
 
 /** Breton (brezhoneg)
  * @author Fohanno
@@ -454,7 +458,7 @@ $messages['bgn'] = array(
  * @author Gwenn-Ael
  * @author Y-M D
  */
-$messages['br'] = array(
+$messages['br'] = [
 	'createnewwiki-desc' => 'Skoazeller evit krouiñ wikioù',
 	'cnw-next' => "War-lerc'h",
 	'cnw-back' => 'Distreiñ',
@@ -516,12 +520,12 @@ $messages['br'] = array(
 	'cnw-error-bot-header' => "Kavet hon eus ez oc'h ur robot",
 	'cnw-error-unconfirmed-email-header' => "N'eo ket bet kadarnaet ho postel",
 	'cnw-error-unconfirmed-email' => "Ret eo d'ho postel bezañ kadarnaet evit krouiñ ur Wiki.",
-);
+];
 
 /** Iriga Bicolano (Iriga Bicolano)
  * @author Filipinayzd
  */
-$messages['bto'] = array(
+$messages['bto'] = [
 	'cnw-or' => 'o',
 	'cnw-title' => 'Gumibo sa Bagong Wiki',
 	'cnw-login' => 'Lumoog',
@@ -529,7 +533,7 @@ $messages['bto'] = array(
 	'cnw-auth-headline' => 'Lumoog',
 	'cnw-userauth-marketing-heading' => 'Uda sa account?',
 	'cnw-desc-all-ages' => 'Ngamin na edad',
-);
+];
 
 /** Catalan (català)
  * @author Fitoschido
@@ -537,7 +541,7 @@ $messages['bto'] = array(
  * @author Roxas Nobody 15
  * @author Unapersona
  */
-$messages['ca'] = array(
+$messages['ca'] = [
 	'createnewwiki-desc' => 'Assistent de creació de wikis',
 	'cnw-next' => 'Següent',
 	'cnw-back' => 'Enrere',
@@ -602,15 +606,15 @@ $messages['ca'] = array(
 	'cnw-error-bot-header' => 'Has estat detectat com a un bot',
 	'cnw-error-unconfirmed-email-header' => "El teu correu electrònic no s'ha confirmat",
 	'cnw-error-unconfirmed-email' => 'Has de confirmar el teu correu electrònic per crear un wiki.',
-);
+];
 
 /** Chechen (нохчийн)
  * @author Умар
  */
-$messages['ce'] = array(
+$messages['ce'] = [
 	'cnw-next' => 'Кхин дӀа',
 	'cnw-desc-lang' => 'Мотт',
-);
+];
 
 /** Czech (čeština)
  * @author Aktron
@@ -619,7 +623,7 @@ $messages['ce'] = array(
  * @author Jezevec
  * @author Reaperman
  */
-$messages['cs'] = array(
+$messages['cs'] = [
 	'createnewwiki-desc' => 'Průvodce vytvořením wiki',
 	'cnw-next' => 'Další',
 	'cnw-back' => 'Zpět',
@@ -665,19 +669,19 @@ $messages['cs'] = array(
 	'cnw-error-bot-header' => 'Byli jste detekováni jako bot',
 	'cnw-error-unconfirmed-email-header' => 'Váš e-mail nebyl potvrzen',
 	'cnw-error-unconfirmed-email' => 'Váš e-mail musí být potvrzen před vytvořením Wiki.',
-);
+];
 
 /** Welsh (Cymraeg)
  * @author Lloffiwr
  * @author Thefartydoctor
  */
-$messages['cy'] = array(
+$messages['cy'] = [
 	'cnw-title' => 'Dechrau wici newydd',
 	'cnw-name-wiki-headline' => 'Dechrau wici',
 	'cnw-auth-facebook-login' => 'Mewngofnodi gyda Facebook',
 	'cnw-userauth-creative' => 'Mewngofnodi',
 	'cnw-desc-lang' => 'Iaith',
-);
+];
 
 /** German (Deutsch)
  * @author Avatar
@@ -691,7 +695,7 @@ $messages['cy'] = array(
  * @author Quedel
  * @author Tiin
  */
-$messages['de'] = array(
+$messages['de'] = [
 	'createnewwiki-desc' => 'Assistent für die Erstellung eines Wikis',
 	'cnw-next' => 'Weiter',
 	'cnw-back' => 'Zurück',
@@ -757,23 +761,23 @@ $messages['de'] = array(
 	'cnw-error-unconfirmed-email-header' => 'Deine E-Mail-Adresse wurde nicht bestätigt',
 	'cnw-error-unconfirmed-email' => 'Deine E-Mail-Adresse muss zum Erstellen eines Wikis bestätigt werden.',
 	'cnw-name-wiki-language' => '',
-);
+];
 
 /** German (formal address) (Deutsch (Sie-Form)‎)
  * @author Geitost
  * @author Tiin
  */
-$messages['de-formal'] = array(
+$messages['de-formal'] = [
 	'cnw-error-wiki-limit' => 'Guten Tag, Sie dürfen nur {{PLURAL:$1|ein Wiki|$1 Wikis}} am Tag gründen. Warten Sie 24 Stunden, bevor Sie ein weiteres Wiki gründen.',
 	'cnw-error-blocked' => 'Sie wurden von $1 gesperrt. Die Begründung lautet: $2. (Block-ID zu Referenzzwecken: $3)',
-);
+];
 
 /** Zazaki (Zazaki)
  * @author Erdemaslancan
  * @author Marmase
  * @author Mirzali
  */
-$messages['diq'] = array(
+$messages['diq'] = [
 	'createnewwiki-desc' => 'Wikiyo newe vırazdar',
 	'cnw-next' => 'Bahdoyên',
 	'cnw-back' => 'Peyser',
@@ -804,15 +808,15 @@ $messages['diq'] = array(
 	'cnw-badword-header' => 'Oha',
 	'cnw-error-wiki-limit-header' => 'Reşt sinorê wikiy',
 	'cnw-error-blocked-header' => 'Hesab biyo kılit',
-);
+];
 
 /** British English (British English)
  * @author Caliburn
  */
-$messages['en-gb'] = array(
+$messages['en-gb'] = [
 	'createnewwiki-desc' => 'Wiki creation wizard',
 	'cnw-next' => 'Next',
-);
+];
 
 /** Spanish (español)
  * @author Benfutbol10
@@ -824,7 +828,7 @@ $messages['en-gb'] = array(
  * @author Macofe
  * @author VegaDark
  */
-$messages['es'] = array(
+$messages['es'] = [
 	'createnewwiki-desc' => 'Asistente para la creación de wikias',
 	'cnw-next' => 'Siguiente',
 	'cnw-back' => 'Atrás',
@@ -890,17 +894,17 @@ $messages['es'] = array(
 	'cnw-error-unconfirmed-email-header' => 'Tu correo electrónico no ha sido confirmado',
 	'cnw-error-unconfirmed-email' => 'Tu correo electrónico debe ser confirmado para crear una wikia.',
 	'cnw-name-wiki-language' => '',
-);
+];
 
 /** Basque (euskara)
  * @author An13sa
  */
-$messages['eu'] = array(
+$messages['eu'] = [
 	'cnw-next' => 'Hurrengoa',
 	'cnw-back' => 'Atzera',
 	'cnw-or' => 'edo',
 	'cnw-desc-lang' => 'Hizkuntza',
-);
+];
 
 /** Persian (فارسی)
  * @author Alirezaaa
@@ -910,7 +914,7 @@ $messages['eu'] = array(
  * @author Movyn
  * @author Reza1615
  */
-$messages['fa'] = array(
+$messages['fa'] = [
 	'cnw-next' => 'بعدی',
 	'cnw-back' => 'عقب',
 	'cnw-or' => 'یا',
@@ -944,7 +948,7 @@ $messages['fa'] = array(
 	'cnw-error-anon-user-header' => 'لطفاً وارد شوید',
 	'cnw-error-unconfirmed-email-header' => 'ایمیل شما تایید نشده است',
 	'cnw-error-unconfirmed-email' => 'برای ساخت یک ویکی باید ایمیل شما تایید شود.',
-);
+];
 
 /** Finnish (suomi)
  * @author Elseweyr
@@ -956,7 +960,7 @@ $messages['fa'] = array(
  * @author VezonThunder
  * @author Ville96
  */
-$messages['fi'] = array(
+$messages['fi'] = [
 	'createnewwiki-desc' => 'Ohjattu wikin luonti',
 	'cnw-next' => 'Seuraava',
 	'cnw-back' => 'Takaisin',
@@ -1019,12 +1023,12 @@ $messages['fi'] = array(
 	'cnw-error-bot-header' => 'Sinut on havaittu botiksi',
 	'cnw-error-unconfirmed-email-header' => 'Sähköpostiosoitettasi ei ole vahvistettu',
 	'cnw-error-unconfirmed-email' => 'Sähköpostiosoitteesi on vahvistettava ennen wikin luomista.',
-);
+];
 
 /** Faroese (føroyskt)
  * @author EileenSanda
  */
-$messages['fo'] = array(
+$messages['fo'] = [
 	'createnewwiki-desc' => 'Vegleiðing í at upprætta eina Wiki',
 	'cnw-next' => 'Næsta',
 	'cnw-back' => 'Aftur',
@@ -1058,7 +1062,7 @@ $messages['fo'] = array(
 	'cnw-desc-change-lang' => 'broyt',
 	'cnw-desc-lang' => 'Mál',
 	'cnw-desc-wiki-submit-error' => 'Vinarliga vel ein bólk',
-);
+];
 
 /** French (français)
  * @author Fujimaru-kun
@@ -1070,7 +1074,7 @@ $messages['fo'] = array(
  * @author Windes
  * @author Wyz
  */
-$messages['fr'] = array(
+$messages['fr'] = [
 	'createnewwiki-desc' => 'Assistant de création de wikia',
 	'cnw-next' => 'Suite',
 	'cnw-back' => 'Retour',
@@ -1136,26 +1140,26 @@ $messages['fr'] = array(
 	'cnw-error-unconfirmed-email-header' => "Votre adresse e-mail n'a pas été confirmée.",
 	'cnw-error-unconfirmed-email' => 'Avant de pouvoir créer un wikia, vous devez confirmer votre adresse e-mail.',
 	'cnw-name-wiki-language' => '',
-);
+];
 
 /** Western Frisian (Frysk)
  * @author Robin0van0der0vliet
  */
-$messages['fy'] = array(
+$messages['fy'] = [
 	'cnw-next' => 'Folgjende',
 	'cnw-back' => 'Foarige',
 	'cnw-or' => 'of',
 	'cnw-login' => 'Oanmelde',
 	'cnw-desc-tip2' => 'Psst',
 	'cnw-desc-lang' => 'Taal',
-);
+];
 
 /** Galician (galego)
  * @author Elisardojm
  * @author Toliño
  * @author Vivaelcelta
  */
-$messages['gl'] = array(
+$messages['gl'] = [
 	'createnewwiki-desc' => 'Asistente para a creación de wikis',
 	'cnw-next' => 'Seguinte',
 	'cnw-back' => 'Volver',
@@ -1219,14 +1223,14 @@ $messages['gl'] = array(
 	'cnw-error-bot-header' => 'Detectamos que é un bot',
 	'cnw-error-unconfirmed-email-header' => 'Non confirmou o seu correo electrónico',
 	'cnw-error-unconfirmed-email' => 'Debe confirmar o seu correo electrónico para crear un wiki.',
-);
+];
 
 /** Hebrew (עברית)
  * @author Amire80
  * @author LaG roiL
  * @author שומבלע
  */
-$messages['he'] = array(
+$messages['he'] = [
 	'createnewwiki-desc' => 'אשף יצירת ויקי',
 	'cnw-next' => 'הבא',
 	'cnw-back' => 'הקודם',
@@ -1285,7 +1289,7 @@ $messages['he'] = array(
 	'cnw-error-torblock' => 'יצירת ויקיות דרך רשת Tor אסורה.',
 	'cnw-error-unconfirmed-email-header' => 'כתובת הדוא"ל שלך לא אומתה',
 	'cnw-error-unconfirmed-email' => 'יש לאמת את כתובת הדוא"ל שלך על מנת ליצור ויקי.',
-);
+];
 
 /** Hungarian (magyar)
  * @author Dani
@@ -1293,7 +1297,7 @@ $messages['he'] = array(
  * @author TK-999
  * @author Tacsipacsi
  */
-$messages['hu'] = array(
+$messages['hu'] = [
 	'createnewwiki-desc' => 'Wikikészítő varázsló',
 	'cnw-next' => 'Következő',
 	'cnw-back' => 'Vissza',
@@ -1350,19 +1354,19 @@ $messages['hu'] = array(
 	'cnw-error-torblock' => 'Wiki létrehozása Tor hálózatból nem engedélyezett.',
 	'cnw-error-bot' => 'Lehetséges botként azonosítottunk  Amennyiben tévedtünk, kérlek, lépj kapcsolatba velünk, elmondva, hogy helytelenül botként azonosítottunk, és segítünk a wikid létrehozásában: [http://www.wikia.com/Special:Contact/general Kapcsolat]',
 	'cnw-error-bot-header' => 'Botként azonosítva',
-);
+];
 
 /** Armenian (Հայերեն)
  * @author M hamlet
  */
-$messages['hy'] = array(
+$messages['hy'] = [
 	'cnw-error-anon-user-header' => 'Խնդրում ենք, մուտք գործեք',
-);
+];
 
 /** Interlingua (interlingua)
  * @author McDutchie
  */
-$messages['ia'] = array(
+$messages['ia'] = [
 	'createnewwiki-desc' => 'Assistente pro crear wikis',
 	'cnw-next' => 'Sequente',
 	'cnw-back' => 'Retornar',
@@ -1419,14 +1423,14 @@ $messages['ia'] = array(
 	'cnw-error-torblock' => 'Le creation de wikis via le rete Tor non es permittite.',
 	'cnw-error-bot' => 'Nos ha detegite que tu pote esser un robot. Si nos ha facite un error, per favor contacta nos indicante que tu ha essite detegite falsemente como robot, e nos te adjutara a crear tu wiki: [http://www.wikia.com/Special:Contact/general Contactar nos]',
 	'cnw-error-bot-header' => 'Tu ha essite detegite como robot',
-);
+];
 
 /** Indonesian (Bahasa Indonesia)
  * @author C5st4wr6ch
  * @author Fate Kage
  * @author Riemogerz
  */
-$messages['id'] = array(
+$messages['id'] = [
 	'createnewwiki-desc' => 'Ahli pembuatan Wiki',
 	'cnw-next' => 'Selanjutnya',
 	'cnw-back' => 'Kembali',
@@ -1490,21 +1494,21 @@ $messages['id'] = array(
 	'cnw-error-bot-header' => 'Anda telah terdeteksi sebagai bot',
 	'cnw-error-unconfirmed-email-header' => 'Surel Anda tidak dikonfirmasi',
 	'cnw-error-unconfirmed-email' => 'Surel Anda harus dikonfirmasi untuk membuat Wiki.',
-);
+];
 
 /** Interlingue (Interlingue)
  * @author Makuba
  */
-$messages['ie'] = array(
+$messages['ie'] = [
 	'cnw-error-anon-user-header' => 'Ples inregistrar.',
 	'cnw-error-anon-user' => 'Li creation de wikis por anonym usatores ha esset desactivat. Ples [[Special:UserLogin|inregistrar]] e prova denov.',
-);
+];
 
 /** Ingush (ГӀалгӀай)
  * @author Sapral Mikail
  */
-$messages['inh'] = array(
-);
+$messages['inh'] = [
+];
 
 /** Italian (italiano)
  * @author Beta16
@@ -1512,7 +1516,7 @@ $messages['inh'] = array(
  * @author Lexaeus 94
  * @author Minerva Titani
  */
-$messages['it'] = array(
+$messages['it'] = [
 	'createnewwiki-desc' => 'Creazione guidata della wikia',
 	'cnw-next' => 'Avanti',
 	'cnw-back' => 'Indietro',
@@ -1578,7 +1582,7 @@ $messages['it'] = array(
 	'cnw-desc-all-ages' => 'Questa wikia è per bambini?',
 	'cnw-desc-tip-all-ages' => "Riguarda un tema d'interesse per il pubblico infantile? In osservanza delle leggi degli Stati Uniti, monitoriamo le wikia che riguardano tematiche che attirano bambini di età fino ai 12 anni.",
 	'cnw-error-anon-user' => 'La creazione di wikia da parte di utenti anonimi è stata disattivata.  [[Special:UserLogin|Accedi]] e riprova.',
-);
+];
 
 /** Japanese (日本語)
  * @author Barrel0116
@@ -1587,7 +1591,7 @@ $messages['it'] = array(
  * @author Tommy6
  * @author Wrightbus
  */
-$messages['ja'] = array(
+$messages['ja'] = [
 	'createnewwiki-desc' => 'Wiki作成ウィザード',
 	'cnw-next' => '次へ',
 	'cnw-back' => '戻る',
@@ -1656,12 +1660,12 @@ $messages['ja'] = array(
 	'cnw-error-torblock' => 'Torネットワーク経由でWikiaコミュニティを作成することはできません。',
 	'cnw-error-bot' => 'ボットの可能性が検出されました。ボットでない場合には、誤ってボットと検出された旨を下記のお問い合わせからお知らせください。その後、Wikiaコミュニティの作成をサポートさせていただきます：[http://www.wikia.com/Special:Contact/general お問い合わせ]',
 	'cnw-error-unconfirmed-email-header' => 'メールの認証が完了していません',
-);
+];
 
 /** Khmer (ភាសាខ្មែរ)
  * @author គីមស៊្រុន
  */
-$messages['km'] = array(
+$messages['km'] = [
 	'cnw-next' => 'បន្ទាប់',
 	'cnw-back' => 'ត្រលប់ក្រោយ',
 	'cnw-or' => 'ឬ',
@@ -1703,12 +1707,12 @@ $messages['km'] = array(
 	'cnw-welcome-help' => 'រកចំលើយ ដំបូន្មាន និង អ្វីៗបន្ថែមទៀតនៅលើ<a href="http://community.wikia.com">មជ្ឍមណ្ឌលសហគមន៍</a>។',
 	'cnw-error-general' => 'មានបញ្ហាពេលបង្កើតវិគីរបស់អ្នក។ សូមព្យាយាមម្ដងទៀតនៅពេលក្រោយ។',
 	'cnw-error-general-heading' => 'បញ្ហាក្នុងការបង្កើតវិគីថ្មី',
-);
+];
 
 /** Kannada (ಕನ್ನಡ)
  * @author VASANTH S.N.
  */
-$messages['kn'] = array(
+$messages['kn'] = [
 	'createnewwiki-desc' => 'ವಿಕಿ ನಿರ್ಮಾಣ ನಿಪುಣ ತಂತ್ರಾಂಶ',
 	'cnw-next' => 'ನಂತರ',
 	'cnw-back' => 'ಹಿಂದಕ್ಕೆ',
@@ -1754,7 +1758,7 @@ $messages['kn'] = array(
 	'cnw-error-anon-user-header' => 'ದಯವಿಟ್ಟು ಲಾಗಿನ್ ಆಗಿ',
 	'cnw-error-unconfirmed-email-header' => 'ನಿಮ್ಮ ಮಿಂಚಂಚೆ ದೃಢಪಡಿಸಲಾಗಿಲ್ಲ',
 	'cnw-error-unconfirmed-email' => 'ವಿಕಿಯನ್ನು ರಚಿಸಲು ನಿಮ್ಮ ಮಿಂಚಂಚೆಯು ದೃಢಪಡಬೇಕಾಗಿದೆ.',
-);
+];
 
 /** Korean (한국어)
  * @author Miri-Nae
@@ -1763,7 +1767,7 @@ $messages['kn'] = array(
  * @author 아라
  * @author 한글화담당
  */
-$messages['ko'] = array(
+$messages['ko'] = [
 	'createnewwiki-desc' => '위키 만들기 마법사',
 	'cnw-next' => '다음',
 	'cnw-back' => '뒤로',
@@ -1828,31 +1832,31 @@ $messages['ko'] = array(
 	'cnw-error-bot-header' => '당신은 봇으로 감지되었습니다',
 	'cnw-error-unconfirmed-email-header' => '이메일이 확인되지 않았습니다',
 	'cnw-error-unconfirmed-email' => '위키를 만들려면 이메일을 확인해야 합니다.',
-);
+];
 
 /** Karachay-Balkar (къарачай-малкъар)
  * @author Iltever
  */
-$messages['krc'] = array(
+$messages['krc'] = [
 	'cnw-back' => 'Артха',
 	'cnw-or' => 'неда',
 	'cnw-title' => 'Джангы вики къура',
 	'cnw-userauth-creative' => 'Кириу',
 	'cnw-userauth-marketing-heading' => 'Аккаунтугъуз джокъмуду?',
-);
+];
 
 /** Colognian (Ripoarisch)
  * @author Purodha
  */
-$messages['ksh'] = array(
+$messages['ksh'] = [
 	'cnw-name-wiki-headline' => 'Donn e Wikia bejenne',
-);
+];
 
 /** Kurdish (Latin script) (Kurdî (latînî)‎)
  * @author Bikarhêner
  * @author George Animal
  */
-$messages['ku-latn'] = array(
+$messages['ku-latn'] = [
 	'cnw-next' => 'Pêşve',
 	'cnw-back' => 'Paşve',
 	'cnw-or' => 'an',
@@ -1874,12 +1878,12 @@ $messages['ku-latn'] = array(
 	'cnw-theme-headline' => 'Temayek hilbijêre',
 	'cnw-error-blocked-header' => 'Hesab hat astengkirin',
 	'cnw-error-anon-user-header' => 'Ji kerema xwe têkeve',
-);
+];
 
 /** Luxembourgish (Lëtzebuergesch)
  * @author Robby
  */
-$messages['lb'] = array(
+$messages['lb'] = [
 	'cnw-next' => 'Weider',
 	'cnw-back' => 'Zréck',
 	'cnw-or' => 'oder',
@@ -1913,20 +1917,20 @@ $messages['lb'] = array(
 	'cnw-error-anon-user-header' => 'Loggt Iech w.e.g. an',
 	'cnw-error-bot-header' => 'Dir gouft als Bot identifizéiert',
 	'cnw-error-unconfirmed-email-header' => 'Är E-Mail-Adress gouf net confirméiert',
-);
+];
 
 /** Lingua Franca Nova (Lingua Franca Nova)
  * @author Malafaya
  */
-$messages['lfn'] = array(
+$messages['lfn'] = [
 	'cnw-or' => 'o',
 	'cnw-desc-lang' => 'Lingua',
-);
+];
 
 /** لەکی‎ (لەکی‎)
  * @author Hosseinblue
  */
-$messages['lki'] = array(
+$messages['lki'] = [
 	'createnewwiki-desc' => 'دورس گۀر جادوئی ویکی',
 	'cnw-next' => 'بچؤ نووا-بعدی',
 	'cnw-back' => 'بچو دؤما-گِلّ بارا',
@@ -1964,13 +1968,13 @@ $messages['lki'] = array(
 	'cnw-error-anon-user-header' => 'لطفن بوونه نؤم',
 	'cnw-error-unconfirmed-email-header' => 'رایانامۀت تأیید نِؤیۀ',
 	'cnw-error-unconfirmed-email' => 'رایانامۀت بائد تأیید بوو ئۀرا ویکی سازین',
-);
+];
 
 /** Northern Luri (لوری مینجایی)
  * @author Hosseinblue
  * @author Mogoeilor
  */
-$messages['lrc'] = array(
+$messages['lrc'] = [
 	'cnw-next' => 'نها',
 	'cnw-back' => 'وا دما',
 	'cnw-or' => 'يا',
@@ -2000,14 +2004,14 @@ $messages['lrc'] = array(
 	'cnw-desc-lang' => 'زون',
 	'cnw-error-blocked-header' => 'حساو قلف بیه',
 	'cnw-error-anon-user-header' => 'لطف بکیت بیایت وامین',
-);
+];
 
 /** Lithuanian (lietuvių)
  * @author Eitvys200
  * @author Mantak111
  * @author Vpovilaitis
  */
-$messages['lt'] = array(
+$messages['lt'] = [
 	'cnw-next' => 'Kitas',
 	'cnw-back' => 'Atgal',
 	'cnw-or' => 'arba',
@@ -2040,14 +2044,14 @@ $messages['lt'] = array(
 	'cnw-error-general-heading' => 'Mūsų atsiprašymai',
 	'cnw-error-wiki-limit-header' => 'Pasiektas Wiki limitas',
 	'cnw-error-blocked-header' => 'Sąskaita užblokuota',
-);
+];
 
 /** Macedonian (македонски)
  * @author Bjankuloski06
  * @author Rancher
  * @author Монтехристо
  */
-$messages['mk'] = array(
+$messages['mk'] = [
 	'createnewwiki-desc' => 'Помошник за создавање на вики',
 	'cnw-next' => 'Следно',
 	'cnw-back' => 'Назад',
@@ -2112,12 +2116,12 @@ $messages['mk'] = array(
 	'cnw-error-bot-header' => 'Утврдено е дека сте бот',
 	'cnw-error-unconfirmed-email-header' => 'Вашата е-пошта не е потврдена',
 	'cnw-error-unconfirmed-email' => 'Вашата е-пошта треба да е потврдена за да можете да направите Вики.',
-);
+];
 
 /** Malayalam (മലയാളം)
  * @author Praveenp
  */
-$messages['ml'] = array(
+$messages['ml'] = [
 	'cnw-next' => 'അടുത്തത്',
 	'cnw-or' => 'അഥവാ',
 	'cnw-title' => 'പുതിയ വിക്കി സൃഷ്ടിക്കുക',
@@ -2140,22 +2144,22 @@ $messages['ml'] = array(
 	'cnw-desc-lang' => 'ഭാഷ',
 	'cnw-desc-wiki-submit-error' => 'ദയവായി ഒരു വർഗ്ഗം തിരഞ്ഞെടുക്കുക',
 	'cnw-welcome-headline' => 'അഭിനന്ദനങ്ങൾ! $1 സൃഷ്ടിക്കപ്പെട്ടിരിക്കുന്നു',
-);
+];
 
 /** Mongolian (монгол)
  * @author Mongol
  */
-$messages['mn'] = array(
+$messages['mn'] = [
 	'createnewwiki-desc' => 'Вики үүсгэх хялбар хэрэгсэл (wizard)',
 	'cnw-error-unconfirmed-email-header' => 'Таны имэйл баталгаажуулагдаагүй байна',
 	'cnw-error-unconfirmed-email' => 'Вики үүсгэхийн тулд имэйл чинь баталгаажуулагдсан байх ёстой',
-);
+];
 
 /** Malay (Bahasa Melayu)
  * @author Anakmalaysia
  * @author SNN95
  */
-$messages['ms'] = array(
+$messages['ms'] = [
 	'createnewwiki-desc' => 'Pendeta cipta wiki',
 	'cnw-next' => 'Berikutnya',
 	'cnw-back' => 'Sebelumnya',
@@ -2220,23 +2224,23 @@ $messages['ms'] = array(
 	'cnw-error-bot-header' => 'Anda telah dikesan sebagai bot',
 	'cnw-error-unconfirmed-email-header' => 'E-mel anda belum disahkan',
 	'cnw-error-unconfirmed-email' => 'Alamat e-mel anda perlu disahkan untuk membuka wiki.',
-);
+];
 
 /** Neapolitan (Napulitano)
  * @author C.R.
  */
-$messages['nap'] = array(
+$messages['nap'] = [
 	'createnewwiki-desc' => "Procedura guidata p' 'a criazione 'e na wiki",
 	'cnw-error-unconfirmed-email-header' => "Ll'e-mail d' 'o tujo nun è stato cunfermato",
 	'cnw-error-unconfirmed-email' => "Ll'e-mail d' 'o tujo s'ha dda cunfermà pe' crià 'a Wiki.",
-);
+];
 
 /** Norwegian Bokmål (norsk bokmål)
  * @author Audun
  * @author Laaknor
  * @author Nghtwlkr
  */
-$messages['nb'] = array(
+$messages['nb'] = [
 	'createnewwiki-desc' => 'Veiviser for opprettelse av wiki',
 	'cnw-next' => 'Neste',
 	'cnw-back' => 'Tilbake',
@@ -2294,13 +2298,13 @@ $messages['nb'] = array(
 	'cnw-error-torblock' => 'Å opprette wikier via Tor-nettverket er ikke tillatt.',
 	'cnw-error-bot' => 'Vi har registrert at du kan være en bot. Hvis vi har gjort en feil, vennligst kontakt oss og gi beskjed om at du har blitt feilaktig registrert som en bot, og vi vil hjelpe deg med å opprette wikien din: [http://www.wikia.com/Special:Contact/general Kontakt oss]',
 	'cnw-error-bot-header' => 'Du har blitt fanget opp som en bot',
-);
+];
 
 /** Nepali (नेपाली)
  * @author Nirjal stha
  * @author सरोज कुमार ढकाल
  */
-$messages['ne'] = array(
+$messages['ne'] = [
 	'cnw-name-wiki-headline' => 'विकिया शुरू गर्नु होस्',
 	'cnw-name-wiki-label' => 'तपाईको विकियालाई नाम दिनुहोस्',
 	'cnw-name-wiki-domain-label' => 'तपाईको विकियाको ठेगाना दिनुहोस्',
@@ -2319,7 +2323,7 @@ $messages['ne'] = array(
 	'cnw-desc-change-lang' => 'परिवर्तन',
 	'cnw-desc-lang' => 'भाषा',
 	'cnw-welcome-headline' => 'बधाई छ ! तपाईले सफलतापूर्वक $1 तयार गर्नु भयो',
-);
+];
 
 /** Dutch (Nederlands)
  * @author Hansmuller
@@ -2329,7 +2333,7 @@ $messages['ne'] = array(
  * @author Trijnstel
  * @author Yatalu
  */
-$messages['nl'] = array(
+$messages['nl'] = [
 	'createnewwiki-desc' => 'Wizard wiki aanmaken',
 	'cnw-next' => 'Volgende',
 	'cnw-back' => 'Vorige',
@@ -2395,14 +2399,14 @@ $messages['nl'] = array(
 	'cnw-error-unconfirmed-email-header' => 'Uw e-mailadres is niet bevestigd',
 	'cnw-error-unconfirmed-email' => 'Uw e-mailadres moet bevestigd zijn om een wiki te kunnen aanmaken.',
 	'cnw-name-wiki-language' => '',
-);
+];
 
 /** Nederlands (informeel)‎ (Nederlands (informeel)‎)
  * @author Geitost
  * @author MarkvA
  * @author Siebrand
  */
-$messages['nl-informal'] = array(
+$messages['nl-informal'] = [
 	'cnw-name-wiki-creative' => 'Wikia is de beste plaats om een website te bouwen en een gemeenschap te laten groeien om het onderwerp dat je aan het hart gaat.',
 	'cnw-name-wiki-label' => 'Geef je wiki een naam',
 	'cnw-name-wiki-domain-label' => 'Geef je wiki een adres',
@@ -2420,13 +2424,13 @@ $messages['nl-informal'] = array(
 	'cnw-welcome-instruction1' => "Klik op de onderstaande knop om pagina's aan je wiki toe te voegen.",
 	'cnw-error-general' => 'Er is iets misgegaan tijdens het aanmaken van je wiki. Probeer het later opnieuw.',
 	'cnw-error-wiki-limit' => "Hoi. Je mag maximaal $1 {{PLURAL:$1|wiki|wiki's}} per dag aanmaken. Wacht 24 uur om een nieuwe wiki aan te kunnen maken.",
-);
+];
 
 /** Occitan (occitan)
  * @author Cedric31
  * @author Hulothe
  */
-$messages['oc'] = array(
+$messages['oc'] = [
 	'createnewwiki-desc' => 'Assistent de creacion de wiki',
 	'cnw-next' => 'Seguent',
 	'cnw-back' => 'Precedent',
@@ -2468,14 +2472,14 @@ $messages['oc'] = array(
 	'cnw-error-general-heading' => 'O planhèm',
 	'cnw-badword-header' => 'Au !',
 	'cnw-error-anon-user-header' => 'Connectatz-vos',
-);
+];
 
 /** Palatine German (Pälzisch)
  * @author Manuae
  */
-$messages['pfl'] = array(
+$messages['pfl'] = [
 	'cnw-badword-header' => 'Imma longsoam',
-);
+];
 
 /** Polish (polski)
  * @author BeginaFelicysym
@@ -2487,7 +2491,7 @@ $messages['pfl'] = array(
  * @author Wedkarski
  * @author Woytecr
  */
-$messages['pl'] = array(
+$messages['pl'] = [
 	'createnewwiki-desc' => 'Kreator tworzenia Wiki',
 	'cnw-next' => 'Dalej',
 	'cnw-back' => 'Wstecz',
@@ -2553,13 +2557,13 @@ $messages['pl'] = array(
 	'cnw-error-unconfirmed-email-header' => 'Twój e-mail nie został potwierdzony',
 	'cnw-error-unconfirmed-email' => 'Twój e-mail musi być potwierdzony, aby stworzyć Wiki.',
 	'cnw-name-wiki-language' => '',
-);
+];
 
 /** Piedmontese (Piemontèis)
  * @author Borichèt
  * @author Dragonòt
  */
-$messages['pms'] = array(
+$messages['pms'] = [
 	'createnewwiki-desc' => 'Creassion guidà ëd Wiki',
 	'cnw-next' => 'Apress',
 	'cnw-back' => 'André',
@@ -2616,12 +2620,12 @@ $messages['pms'] = array(
 	'cnw-error-torblock' => "Creé dle Wiki via la Rej Tor a l'é pa përmëttù.",
 	'cnw-error-bot' => "I l'oma trovà che it peule esse un trigomiro. S'i l'oma fàit n'eror, për piasì contatne dëscrivend ch'it ses stàit falsament andividuà com un trigomiro, e it giuteroma a creé toa wiki: [http://www.wikia.com/Special:Contact/general ContatNe]",
 	'cnw-error-bot-header' => 'It ses stàit andividuà com un trigomiro',
-);
+];
 
 /** Pashto (پښتو)
  * @author Ahmed-Najib-Biabani-Ibrahimkhel
  */
-$messages['ps'] = array(
+$messages['ps'] = [
 	'cnw-next' => 'راتلونکی',
 	'cnw-back' => 'پر شا کېدل',
 	'cnw-or' => 'يا',
@@ -2656,7 +2660,7 @@ $messages['ps'] = array(
 	'cnw-welcome-headline' => 'بختور مو شه، د $1 ويکي جوړ شو',
 	'cnw-error-blocked-header' => 'پر گڼون بنديز ولگېد',
 	'cnw-error-anon-user-header' => 'لطفاً ورننوځئ',
-);
+];
 
 /** Portuguese (português)
  * @author Geitost
@@ -2669,7 +2673,7 @@ $messages['ps'] = array(
  * @author Vitorvicentevalente
  * @author Waldir
  */
-$messages['pt'] = array(
+$messages['pt'] = [
 	'createnewwiki-desc' => 'Assistente de criação de wikias',
 	'cnw-next' => 'Próximo',
 	'cnw-back' => 'Voltar',
@@ -2736,7 +2740,7 @@ $messages['pt'] = array(
 	'cnw-name-wiki-language' => '',
 	'cnw-desc-select-vertical' => 'Selecione um Portal',
 	'cnw-desc-select-categories' => 'Selecione categorias adicionais',
-);
+];
 
 /** Brazilian Portuguese (português do Brasil)
  * @author Aristóbulo
@@ -2749,7 +2753,7 @@ $messages['pt'] = array(
  * @author Sudastelaro
  * @author TheGabrielZaum
  */
-$messages['pt-br'] = array(
+$messages['pt-br'] = [
 	'createnewwiki-desc' => 'Assistente de criação de wikias',
 	'cnw-next' => 'Próximo',
 	'cnw-back' => 'Voltar',
@@ -2814,12 +2818,12 @@ $messages['pt-br'] = array(
 	'cnw-error-bot-header' => 'Você foi detectado como um robô',
 	'cnw-error-unconfirmed-email-header' => 'Seu endereço de e-mail não foi confirmado',
 	'cnw-error-unconfirmed-email' => 'Seu endereço de e-mail deve ser confirmado para criar uma wikia.',
-);
+];
 
 /** Romanian (română)
  * @author Stelistcristi
  */
-$messages['ro'] = array(
+$messages['ro'] = [
 	'cnw-or' => 'sau',
 	'cnw-title' => 'Crează un nou wiki',
 	'cnw-name-wiki-headline' => 'Porneşte un wiki',
@@ -2846,12 +2850,12 @@ $messages['ro'] = array(
 	'cnw-desc-wiki-submit-error' => 'Te rugăm alege o categorie',
 	'cnw-theme-headline' => 'Alege o temă',
 	'cnw-welcome-instruction1' => 'Apasă pe butonul de mai jos pentru a începe să adaugi pagini wiki-ului tău.',
-);
+];
 
 /** tarandíne (tarandíne)
  * @author Joetaras
  */
-$messages['roa-tara'] = array(
+$messages['roa-tara'] = [
 	'createnewwiki-desc' => "Procedure de ccrejazione d'a Uicchi",
 	'cnw-next' => 'Prossime',
 	'cnw-back' => 'Rrete',
@@ -2888,7 +2892,7 @@ $messages['roa-tara'] = array(
 	'cnw-error-general-heading' => 'Le scuse nostre',
 	'cnw-error-blocked-header' => 'Cunde bloccate',
 	'cnw-error-bot-header' => "Tu è state signalate cumme a 'nu bot",
-);
+];
 
 /** Russian (русский)
  * @author DCamer
@@ -2897,7 +2901,7 @@ $messages['roa-tara'] = array(
  * @author Okras
  * @author Дмитрий
  */
-$messages['ru'] = array(
+$messages['ru'] = [
 	'createnewwiki-desc' => 'Мастер создания вики',
 	'cnw-next' => 'Далее',
 	'cnw-back' => 'Назад',
@@ -2963,12 +2967,12 @@ $messages['ru'] = array(
 	'cnw-error-unconfirmed-email-header' => 'Адрес электронной почты не был подтверждён',
 	'cnw-error-unconfirmed-email' => 'Чтобы создать Вики, необходимо подтвердить адрес электронной почты.',
 	'cnw-name-wiki-language' => '',
-);
+];
 
 /** Sanskrit (संस्कृतम्)
  * @author NehalDaveND
  */
-$messages['sa'] = array(
+$messages['sa'] = [
 	'cnw-next' => 'अग्रे',
 	'cnw-back' => 'पृष्ठे',
 	'cnw-or' => 'वा',
@@ -2983,19 +2987,19 @@ $messages['sa'] = array(
 	'cnw-userauth-marketing-heading' => 'सदस्यता नास्ति किम् ?',
 	'cnw-desc-change-lang' => 'परिवर्त्यताम्',
 	'cnw-desc-lang' => 'भाषा',
-);
+];
 
 /** Sicilian (sicilianu)
  * @author Gmelfi
  */
-$messages['scn'] = array(
+$messages['scn'] = [
 	'cnw-userauth-creative' => 'Trasi',
-);
+];
 
 /** Scots (Scots)
  * @author John Reid
  */
-$messages['sco'] = array(
+$messages['sco'] = [
 	'createnewwiki-desc' => 'Wiki creaution worlock',
 	'cnw-next' => 'Nex',
 	'cnw-back' => 'Back',
@@ -3061,21 +3065,21 @@ Fynd answers, advice, n mair oan <a href="http://community.wikia.com">Communitie
 	'cnw-error-bot-header' => "Ye'v been detectit aes ae bot",
 	'cnw-error-unconfirmed-email-header' => 'Yer e-mail haes no been confirmed',
 	'cnw-error-unconfirmed-email' => 'Yer e-mail shid be confirmed tae creaut ae Wiki.',
-);
+];
 
 /** Slovenian (slovenščina)
  * @author Eleassar
  */
-$messages['sl'] = array(
+$messages['sl'] = [
 	'cnw-signup' => 'Registracija',
-);
+];
 
 /** Serbian (Cyrillic script) (српски (ћирилица)‎)
  * @author Aktron
  * @author Milicevic01
  * @author Rancher
  */
-$messages['sr-ec'] = array(
+$messages['sr-ec'] = [
 	'createnewwiki-desc' => 'Помоћник за стварање викија',
 	'cnw-next' => 'Следеће',
 	'cnw-back' => 'Назад',
@@ -3132,7 +3136,7 @@ $messages['sr-ec'] = array(
 	'cnw-error-bot-header' => 'Препознати сте као бот',
 	'cnw-error-unconfirmed-email-header' => 'Ваша е-пошта није потврђен',
 	'cnw-error-unconfirmed-email' => 'Ваша е-пошта мора бити потврђена да би направили Вики',
-);
+];
 
 /** Swedish (svenska)
  * @author Geitost
@@ -3141,7 +3145,7 @@ $messages['sr-ec'] = array(
  * @author McDutchie
  * @author WikiPhoenix
  */
-$messages['sv'] = array(
+$messages['sv'] = [
 	'createnewwiki-desc' => 'Guide för att skapa en wiki',
 	'cnw-next' => 'Nästa',
 	'cnw-back' => 'Tillbaka',
@@ -3206,13 +3210,13 @@ $messages['sv'] = array(
 	'cnw-error-bot-header' => 'Du har identifierats som en bot',
 	'cnw-error-unconfirmed-email-header' => 'Din e-postadress har inte bekräftats',
 	'cnw-error-unconfirmed-email' => 'Din e-postadress bör bekräftas för att skapa en wiki.',
-);
+];
 
 /** Tamil (தமிழ்)
  * @author ElangoRamanujam
  * @author Jayarathina
  */
-$messages['ta'] = array(
+$messages['ta'] = [
 	'cnw-next' => 'அடுத்து',
 	'cnw-back' => 'பின்செல்க',
 	'cnw-or' => 'அல்லது',
@@ -3220,14 +3224,14 @@ $messages['ta'] = array(
 	'cnw-auth-headline' => 'புகுபதிகை',
 	'cnw-desc-lang' => 'மொழி',
 	'cnw-error-unconfirmed-email-header' => 'உங்கள் மின்னஞ்சல் உறுதி செய்யப்படவில்லை',
-);
+];
 
 /** Telugu (తెలుగు)
  * @author Chaduvari
  * @author Ravichandra
  * @author Veeven
  */
-$messages['te'] = array(
+$messages['te'] = [
 	'createnewwiki-desc' => '[[Special:CreateNewWiki|వికీని సృష్టించే విజార్డు]]',
 	'cnw-next' => 'తదుపరి',
 	'cnw-back' => 'వెనుకకు',
@@ -3290,13 +3294,13 @@ $messages['te'] = array(
 	'cnw-error-bot-header' => 'మీరు బాట్ అని కనుక్కున్నాం',
 	'cnw-error-unconfirmed-email-header' => 'మీ ఈమెయిలు ధృవీకరించబడలేదు',
 	'cnw-error-unconfirmed-email' => 'ఒక వికీని సృష్టించడానికి మీ ఈమెయిలు ధృవీకరించబడాలి.',
-);
+];
 
 /** Tagalog (Tagalog)
  * @author AnakngAraw
  * @author Jojit fb
  */
-$messages['tl'] = array(
+$messages['tl'] = [
 	'createnewwiki-desc' => 'Madyikerong panlikha ng Wiki',
 	'cnw-next' => 'Susunod',
 	'cnw-back' => 'Bumalik',
@@ -3353,12 +3357,12 @@ $messages['tl'] = array(
 	'cnw-error-torblock' => 'Hindi pinapayagan ang paglikha ng mga wiki sa pamamagitan ng Network ng Tor.',
 	'cnw-error-bot' => 'Napansin namin na maaaring ikaw ay isang bot.  Kung nagawa kami ng kamalian, paki makipag-ugnayan sa amin na naglalarawan na ikaw napasinungalingan mapansin bilang isang bot, at tutulungan ka namin sa paglikha ng wiki mo: [http://www.wikia.com/Special:Contact/general Makipag-ugnayan sa Amin]',
 	'cnw-error-bot-header' => 'Natiktikan na isa ka palang bot',
-);
+];
 
 /** Talysh (толышә зывон)
  * @author Гусейн
  */
-$messages['tly'] = array(
+$messages['tly'] = [
 	'cnw-next' => 'Бәнав',
 	'cnw-or' => 'јаанки',
 	'cnw-login' => 'Ыштәни едаштеј',
@@ -3369,7 +3373,7 @@ $messages['tly'] = array(
 	'cnw-desc-change-lang' => 'дәгиш кардеј',
 	'cnw-desc-lang' => 'Зывон',
 	'cnw-theme-headline' => 'Мывзу сәчын кардеј',
-);
+];
 
 /** Turkish (Türkçe)
  * @author Emperyan
@@ -3378,7 +3382,7 @@ $messages['tly'] = array(
  * @author Joseph
  * @author Suelnur
  */
-$messages['tr'] = array(
+$messages['tr'] = [
 	'createnewwiki-desc' => 'Wiki oluşturma sihirbazı',
 	'cnw-next' => 'Sonraki',
 	'cnw-back' => 'Geri',
@@ -3439,12 +3443,12 @@ $messages['tr'] = array(
 	'cnw-error-torblock' => 'Tor ağı üzerinden wikiler oluşturmaya izin verilmemektedir.',
 	'cnw-error-bot' => 'Sizin bir bot olabileceğinizi tespit ettik. Bir hata yaptıysanız, sizin yanlışlıkla bir bot olduğunuzu tespit etmiş olabiliriz. Wiki oluştururken size yardımcı olabilmemiz için bizimle [http://www.wikia.com/Special:Contact/general İletişime] geçin',
 	'cnw-error-bot-header' => 'Sizin bir bot olduğunuz tespit edilmiştir',
-);
+];
 
 /** Tatar (Cyrillic script) (татарча)
  * @author Ajdar
  */
-$messages['tt-cyrl'] = array(
+$messages['tt-cyrl'] = [
 	'createnewwiki-desc' => 'Вики ясау остаханәсе',
 	'cnw-next' => 'Киләсе',
 	'cnw-back' => 'Артка',
@@ -3501,14 +3505,14 @@ $messages['tt-cyrl'] = array(
 	'cnw-error-torblock' => 'Tor челтәре аша вики ясау рөхсәт ителми.',
 	'cnw-error-bot' => 'Без сезне бот дип уйлыйбыз. Әгәр ялгышабыз икән, зинһар өчен, безнең белән элемтәгә керегез һәм бот булмавыгызны дәлилләгез, аннары без сезгә яңа вики ясарга ярдәм итәрбез: [http://www.wikia.com/Special:Contact/general безнең белән элемтә]',
 	'cnw-error-bot-header' => 'Сез бот буларак танылдыгыз',
-);
+];
 
 /** Ukrainian (українська)
  * @author A1
  * @author Andriykopanytsia
  * @author Ua2004
  */
-$messages['uk'] = array(
+$messages['uk'] = [
 	'createnewwiki-desc' => 'Майстер створення вікі',
 	'cnw-next' => 'Далі',
 	'cnw-back' => 'Назад',
@@ -3573,18 +3577,18 @@ $messages['uk'] = array(
 	'cnw-error-bot-header' => 'Ми вважаємо, що ви бот',
 	'cnw-error-unconfirmed-email-header' => 'Вашу адресу електронної пошти не підтверджено',
 	'cnw-error-unconfirmed-email' => 'Ваша адреса електронної пошти повинні бути підтверджена для створення вікі.',
-);
+];
 
 /** Veps (vepsän kel’)
  * @author Игорь Бродский
  */
-$messages['vep'] = array(
+$messages['vep'] = [
 	'cnw-next' => "Jäl'ghine",
 	'cnw-desc-select-one' => "Valikat üks'",
 	'cnw-desc-change-lang' => 'toižetada',
 	'cnw-desc-lang' => 'Kel’',
 	'cnw-badword-header' => 'Hei sigä',
-);
+];
 
 /** Vietnamese (Tiếng Việt)
  * @author Baonguyen21022003
@@ -3593,7 +3597,7 @@ $messages['vep'] = array(
  * @author Xiao Qiao
  * @author XiaoQiaoGrace
  */
-$messages['vi'] = array(
+$messages['vi'] = [
 	'createnewwiki-desc' => 'Thuật sĩ tạo lập wiki',
 	'cnw-next' => 'Tiếp theo',
 	'cnw-back' => 'Trở lại',
@@ -3658,13 +3662,13 @@ $messages['vi'] = array(
 	'cnw-error-bot-header' => 'Bạn đã được phát hiện là bot',
 	'cnw-error-unconfirmed-email-header' => 'Thư điện tử của bạn chưa được xác nhận',
 	'cnw-error-unconfirmed-email' => 'Thư điện tử của bạn cần được xác nhận để tạo lập một Wiki.',
-);
+];
 
 /** Chinese (中文)
  * @author Ahmed-Najib-Biabani-Ibrahimkhel
  * @author Shirayuki
  */
-$messages['zh'] = array(
+$messages['zh'] = [
 	'createnewwiki-desc' => 'Wiki creation wizard',
 	'cnw-next' => 'Next',
 	'cnw-back' => 'Back',
@@ -3705,7 +3709,7 @@ $messages['zh'] = array(
 	'cnw-welcome-headline' => 'Congratulations! $1 has been created',
 	'cnw-welcome-instruction1' => 'Click the button below to start adding pages to your wiki.',
 	'cnw-welcome-help' => 'Find answers, advice, and more on <a href="http://community.wikia.com">Community Central</a>.',
-);
+];
 
 /** Simplified Chinese (中文（简体）‎)
  * @author Anakmalaysia
@@ -3722,7 +3726,7 @@ $messages['zh'] = array(
  * @author 乌拉跨氪
  * @author 凡人丶
  */
-$messages['zh-hans'] = array(
+$messages['zh-hans'] = [
 	'createnewwiki-desc' => '维基创建向导',
 	'cnw-next' => '下一步',
 	'cnw-back' => '上一步',
@@ -3788,7 +3792,7 @@ $messages['zh-hans'] = array(
 	'cnw-error-unconfirmed-email-header' => '您的电子邮件尚未验证。',
 	'cnw-error-unconfirmed-email' => '您需要先验证邮件才能创建维基。',
 	'cnw-name-wiki-language' => '',
-);
+];
 
 /** Traditional Chinese (中文（繁體）‎)
  * @author Anakmalaysia
@@ -3799,7 +3803,7 @@ $messages['zh-hans'] = array(
  * @author Oapbtommy
  * @author Wrightbus
  */
-$messages['zh-hant'] = array(
+$messages['zh-hant'] = [
 	'createnewwiki-desc' => 'Wiki 建立精靈',
 	'cnw-next' => '下一步',
 	'cnw-back' => '前一步',
@@ -3859,9 +3863,9 @@ $messages['zh-hant'] = array(
 	'cnw-error-torblock' => '不允許透過 Tor 網路建立 wiki 。',
 	'cnw-error-bot' => '我們檢測到您可能是個機器人。如果我們搞錯了，請聯絡並告訴我們，您已經被誤以為是一個機器人，我們將協助您建立您的 wiki: [HTTP://www.wikia.com/Special:Contact/聯絡我們]',
 	'cnw-error-bot-header' => '你已被檢測到是機器人',
-);
+];
 
-$messages['zh-tw'] = array(
+$messages['zh-tw'] = [
 	'createnewwiki-desc' => '維基創建嚮導',
 	'cnw-next' => '下一步',
 	'cnw-back' => '前一步',
@@ -3927,4 +3931,4 @@ $messages['zh-tw'] = array(
 	'cnw-error-bot-header' => '你已被檢測認定為機器人。',
 	'cnw-error-unconfirmed-email-header' => '你的電子郵件尚未認證。',
 	'cnw-error-unconfirmed-email' => '必須先認證你的電子郵件才能創建維基。',
-);
+];

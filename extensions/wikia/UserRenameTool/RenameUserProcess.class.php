@@ -270,7 +270,8 @@ class RenameUserProcess {
 
 		if ( class_exists( 'SpoofUser' ) ) {
 			$oNewSpoofUser = new SpoofUser( $nun );
-			if ( !$oNewSpoofUser -> isLegal() ) {
+			$conflicts = $oNewSpoofUser->getConflicts();
+			if ( !empty( $conflicts ) ) {
 				$this->addWarning( wfMessage( 'userrenametool-error-antispoof-conflict', $nun ) );
 			}
 		} else {

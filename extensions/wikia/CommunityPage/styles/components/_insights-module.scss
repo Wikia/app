@@ -4,8 +4,8 @@
 
 $item-icon-size: 34px;
 $item-icon-margin-right: 6px;
-$item-data-width: calc(86% - #{$item-icon-size + $item-icon-margin-right});
-$item-link-width: 14%;
+$item-data-width: calc(70% - #{$item-icon-size + $item-icon-margin-right});
+$item-link-width: 30%;
 
 $edit-icon: '/extensions/wikia/CommunityPage/images/edit-pen.svg';
 
@@ -49,6 +49,7 @@ $edit-icon: '/extensions/wikia/CommunityPage/images/edit-pen.svg';
 	}
 
 	.community-page-insights-module-article-data {
+		color: $color-links;
 		overflow: hidden;
 		text-overflow: ellipsis;
 		width: $item-data-width;

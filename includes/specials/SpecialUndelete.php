@@ -1238,7 +1238,6 @@ class SpecialUndelete extends SpecialPage {
 			$misc .= Xml::closeElement( 'form' );
 			$out->addHTML( $misc );
 		}
-
 		return true;
 	}
 
