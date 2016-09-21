@@ -19,15 +19,16 @@ define('ext.wikia.adEngine.lookup.lookupFactory', [
 			log('onResponse', 'debug', module.logGroup);
 
 			timing.measureDiff({}, 'end').track();
-			module.calculatePrices.apply(null, arguments);
+			module.calculatePrices();
 			response = true;
 			onResponseCallbacks.start();
 
-			if (typeof module.trackOnLookupEnd === 'function') {
-				module.trackOnLookupEnd();
+			if (module.name === 'prebid') {
+				module.trackAdaptersOnLookupEnd();
 			} else {
 				adTracker.track(module.name + '/lookup_end', module.getPrices(), 0, 'nodata');
 			}
+
 		}
 
 		function addResponseListener(callback) {
@@ -68,8 +69,8 @@ define('ext.wikia.adEngine.lookup.lookupFactory', [
 				return;
 			}
 
-			if (typeof module.trackSlotState === 'function') {
-				module.trackSlotState(providerName, slotName, params);
+			if (module.name === 'prebid') {
+				module.trackAdaptersSlotState(providerName, slotName, params);
 			} else {
 				encodedParams = module.encodeParamsForTracking(params);
 				eventName = encodedParams ? 'lookup_success' : 'lookup_error';

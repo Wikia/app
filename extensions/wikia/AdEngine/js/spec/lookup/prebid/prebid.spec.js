@@ -113,6 +113,9 @@ describe('ext.wikia.adEngine.lookup.prebid', function () {
 						}
 					];
 				}
+			},
+			adaptersPerformanceTracker: {
+				setupPerformanceMap: noop
 			}
 		},
 		prebid;
@@ -141,6 +144,7 @@ describe('ext.wikia.adEngine.lookup.prebid', function () {
 	function getPrebid() {
 		return modules['ext.wikia.adEngine.lookup.prebid'](
 			mocks.adContext,
+			mocks.adaptersPerformanceTracker,
 			mocks.adapters.appnexus,
 			mocks.adapters.indexExchange,
 			mocks.prebidHelper,

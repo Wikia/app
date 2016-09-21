@@ -1,14 +1,14 @@
 /*global define*/
 define('ext.wikia.adEngine.lookup.prebid', [
 	'ext.wikia.adEngine.adContext',
-	'ext.wikia.adEngine.adTracker',
+	'ext.wikia.adEngine.lookup.prebid.adaptersPerformanceTracker',
 	'ext.wikia.adEngine.lookup.prebid.adapters.appnexus',
 	'ext.wikia.adEngine.lookup.prebid.adapters.indexExchange',
 	'ext.wikia.adEngine.lookup.prebid.prebidHelper',
 	'ext.wikia.adEngine.lookup.lookupFactory',
 	'wikia.document',
 	'wikia.window'
-], function (adContext, adTracker, appnexus, index, helper, factory, doc, win) {
+], function (adContext, adaptersTracker, appnexus, index, helper, factory, doc, win) {
 	'use strict';
 
 	var adapters = [
@@ -16,14 +16,13 @@ define('ext.wikia.adEngine.lookup.prebid', [
 			index
 		],
 		adUnits = [],
-		biddersPerformance = {},
-		priceMap = {},
-		bidKey = 'hb_pb',
-		sizeKey = 'hb_size';
+		biddersPerformanceMap = {};
 
 	function call(skin, onResponse) {
 		var prebid = doc.createElement('script'),
 			node = doc.getElementsByTagName('script')[0];
+
+		biddersPerformanceMap = adaptersTracker.setupPerformanceMap(skin, adapters);
 
 		adUnits = helper.setupAdUnits(adapters, skin);
 
@@ -48,85 +47,30 @@ define('ext.wikia.adEngine.lookup.prebid', [
 		}
 	}
 
-	function updateBiddersPerformance() {
-		var allBids;
-
-		if (typeof win.pbjs.getBidResponses === 'function') {
-			allBids = win.pbjs.getBidResponses();
-
-			Object.keys(allBids).forEach(function (slotName) {
-				var slotBids = allBids[slotName].bids;
-
-				slotBids.forEach(function (bid) {
-					biddersPerformance[bid.bidder] = biddersPerformance[bid.bidder] || {};
-					biddersPerformance[bid.bidder][slotName] = encodeParamsForTracking({
-						hb_bidder: bid.bidder,
-						hb_pb: (bid.getStatusCode() === 2 || !bid.pbMg) ? 'NONE' : bid.pbMg,
-						hb_size: bid.getSize()
-					});
-				});
-			});
-		}
+	function calculatePrices() {
+		biddersPerformanceMap = adaptersTracker.updatePerformanceMap(biddersPerformanceMap);
 	}
 
-	function encodeParamsForTracking(params) {
-		if (params[sizeKey] && params[bidKey]) {
-			return [params[sizeKey], params[bidKey]].join(';');
-		}
+	function trackAdaptersOnLookupEnd() {
+		biddersPerformanceMap = adaptersTracker.updatePerformanceMap(biddersPerformanceMap);
 
-		return '';
-	}
+		adapters.forEach(function (adapter) {
+			var adapterName = adapter.getName();
 
-	function calculatePrices(allBids) {
-		var slotName,
-			slots = {};
-
-		updateBiddersPerformance(allBids);
-
-		if (win.pbjs && typeof win.pbjs.getAdserverTargeting === 'function') {
-			slots = win.pbjs.getAdserverTargeting();
-		}
-
-		for (slotName in slots) {
-			if (slots.hasOwnProperty(slotName) && Object.keys(slots[slotName]).length !== 0) {
-				priceMap[slotName] = encodeParamsForTracking(slots[slotName]);
-			}
-		}
-	}
-
-	function trackOnLookupEnd() {
-		Object.keys(biddersPerformance).forEach(function (bidder) {
-			adTracker.track(bidder + '/lookup_end', biddersPerformance[bidder], 0, 'nodata');
+			adaptersTracker.trackBidderOnLookupEnd(adapterName, biddersPerformanceMap)
 		});
 	}
 
-	function trackSlotState(providerName, slotName) {
-		var category;
-
-		updateBiddersPerformance();
+	function trackAdaptersSlotState(providerName, slotName) {
+		biddersPerformanceMap = adaptersTracker.updatePerformanceMap(biddersPerformanceMap);
 
 		adapters.forEach(function (adapter) {
 			var bidderName = adapter.getName();
 
 			if (adapter.isEnabled()) {
-				if (biddersPerformance[bidderName]) {
-					if (biddersPerformance[bidderName][slotName]) {
-						category = bidderName + '/lookup_success/' + providerName;
-						adTracker.track(category, slotName, 0, biddersPerformance[bidderName][slotName]);
-					} else {
-						category = bidderName + '/lookup_error/' + providerName;
-						adTracker.track(category, slotName, 0, 'nodata');
-					}
-				} else {
-					category = bidderName + '/lookup_error/' + providerName;
-					adTracker.track(category, slotName, 0, 'nodata');
-				}
+				adaptersTracker.trackBidderSlotState(bidderName, slotName, providerName, biddersPerformanceMap);
 			}
 		});
-	}
-
-	function getPrices() {
-		return priceMap;
 	}
 
 	function isSlotSupported(slotName) {
@@ -150,11 +94,9 @@ define('ext.wikia.adEngine.lookup.prebid', [
 		name: 'prebid',
 		call: call,
 		calculatePrices: calculatePrices,
-		getPrices: getPrices,
 		isSlotSupported: isSlotSupported,
-		encodeParamsForTracking: encodeParamsForTracking,
 		getSlotParams: getSlotParams,
-		trackOnLookupEnd: trackOnLookupEnd,
-		trackSlotState: trackSlotState
+		trackAdaptersOnLookupEnd: trackAdaptersOnLookupEnd,
+		trackAdaptersSlotState: trackAdaptersSlotState
 	});
 });
