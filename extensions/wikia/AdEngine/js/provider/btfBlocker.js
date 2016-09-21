@@ -1,10 +1,11 @@
 /*global define*/
 define('ext.wikia.adEngine.provider.btfBlocker', [
 	'ext.wikia.adEngine.adContext',
+	'ext.wikia.aRecoveryEngine.recovery.helper',
 	'wikia.lazyqueue',
 	'wikia.log',
 	'wikia.window'
-], function (adContext, lazyQueue, log, win) {
+], function (adContext, recoveryHelper, lazyQueue, log, win) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.provider.btfBlocker',
@@ -57,6 +58,7 @@ define('ext.wikia.adEngine.provider.btfBlocker', [
 
 			// Remove slot from pendingAtfSlots
 			var index = pendingAtfSlots.indexOf(slotName);
+
 			if (index > -1) {
 				pendingAtfSlots.splice(index, 1);
 
@@ -64,6 +66,10 @@ define('ext.wikia.adEngine.provider.btfBlocker', [
 				if (pendingAtfSlots.length === 0) {
 					startBtfQueue();
 				}
+			}
+
+			if (recoveryHelper.isBlocking()) {
+				startBtfQueue();
 			}
 		}
 

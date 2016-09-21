@@ -41,7 +41,7 @@ class WikiaLoggerTest extends PHPUnit_Framework_TestCase {
 			->will($this->returnValue(E_NOTICE));
 
 		$wikiaLoggerMock->setLogger($loggerMock);
-		$this->assertTrue($wikiaLoggerMock->onError(E_NOTICE, 'foo', __FILE__, __LINE__, 'here'));
+		$this->assertFalse($wikiaLoggerMock->onError(E_NOTICE, 'foo', __FILE__, __LINE__, 'here'));
 	}
 
 }

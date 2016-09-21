@@ -49,12 +49,6 @@ $wgExtensionFunctions[] = function() {
 
 JSMessages::enqueuePackage('AdEngine', JSMessages::EXTERNAL);
 
-$wgExtensionFunctions[] = function() {
-	JSMessages::registerPackage( 'AdEngineRecoveryMessage', [
-		'adengine-recovery-message-*'
-	] );
-};
-
 AdEngine2Resource::register('wikia.ext.adengine.pf.detection', 'ResourceLoaderAdEnginePageFairDetectionModule');
 AdEngine2Resource::register('wikia.ext.adengine.sp.detection', 'ResourceLoaderAdEngineSourcePointDetectionModule');
 AdEngine2Resource::register('wikia.ext.adengine.yavli', 'ResourceLoaderAdEngineYavliModule');

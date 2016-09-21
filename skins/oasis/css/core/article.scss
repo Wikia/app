@@ -412,11 +412,16 @@
 	//diff page
 	td.diff-context {
 		background-color: $color-diff-context;
+		color: $color-diff-text;
 	}
 
 	td.diff-deletedline,
 	td.diff-addedline {
-		color: #000;
+		color: $color-diff-text;
+	}
+
+	.diffchange-inline {
+		color: $color-diffchange-text;
 	}
 
 	table.diff, td.diff-otitle, td.diff-ntitle {

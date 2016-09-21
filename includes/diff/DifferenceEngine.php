@@ -498,6 +498,9 @@ class DifferenceEngine extends ContextSource {
 		wfProfileIn( __METHOD__ );
 		$out = $this->getOutput();
 		$revHeader = $this->getRevisionHeader( $this->mNewRev );
+
+		wfRunHooks( 'AfterDiffRevisionHeader', [ $this, $this->mNewRev, &$out ] );
+
 		# Add "current version as of X" title
 		$out->addHTML( "<hr class='diff-hr' />
 		<h2 class='diff-currentversion-title'>{$revHeader}</h2>\n" );

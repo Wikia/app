@@ -112,7 +112,7 @@ define('VisualEditorTourExperiment', ['jquery', 'wikia.loader', 'wikia.mustache'
 		};
 
 		Tour.prototype._setupStep = function (item, id) {
-			var buttonLabel = id === this.tourConfig.length - 1 ? 'Start editing' : 'Next',
+			var buttonLabel = id === this.tourConfig.length - 1 ? '編集を開始' : '次へ',
 				showPrev = id > 0;
 
 			this.steps[id] = {

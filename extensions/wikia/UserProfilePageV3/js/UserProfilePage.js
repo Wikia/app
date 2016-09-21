@@ -46,6 +46,15 @@ var UserProfilePage = {
 			UserProfilePage.renderLightbox('avatar');
 		});
 
+		$('#discussionAllPostsByUser').click(function (event) {
+			Wikia.Tracker.track({
+				action: Wikia.Tracker.ACTIONS.CLICK_LINK_TEXT,
+				browserEvent: event,
+				href: $(event.target).attr('href'),
+				label: 'discussion-all-posts-by-user'
+			});
+		});
+
 		// for touch devices (without hover state) make sure that Edit is always
 		// visible
 		if (Wikia.isTouchScreen()) {

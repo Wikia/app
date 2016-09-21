@@ -41,14 +41,29 @@ class ApiClient extends \Swagger\Client\ApiClient {
 
 		wfRunHooks( 'AfterHttpRequest', [ $method, $this->config->getHost(), $this->serviceName, $start, null ] ); # PLATFORM-2079
 
-		if ($this->logSampler->shouldSample()) {
-			$this->info("Http request", [
-				'statusCode' => $code,
-				'reqMethod' => $method,
-				'reqUrl' => "http://".$this->getConfig()->getHost().$resourcePath,
-				'isOk' => $exception == null,
-				'requestTimeMS' => (int)((microtime(true) - $start) * 1000.0)
-			]);
+		$params = [
+			'statusCode' => (int) $code,
+			'served-by' => $this->getConfig()->getHost(),
+			'reqMethod' => $method,
+			'reqUrl' => "http://".$this->getConfig()->getHost().$resourcePath,
+			'caller' => $this->serviceName,
+			'isOk' => $exception == null,
+			'requestTimeMS' => (int)((microtime(true) - $start) * 1000.0)
+		];
+
+		if ($exception instanceof \Swagger\Client\ApiException) {
+			$params[ 'exception' ] = $exception;
+			$level = 'error';
+			$message = "HTTP request failed - {$this->serviceName} service";
+		}
+		else {
+			$message = "Http request";
+			$level = 'debug';
+		}
+
+		// keep sampled logging of all requests, but log all server-side errors (HTTP 500+)
+		if ( $this->logSampler->shouldSample() ||  ( $code >= 500 ) ) {
+			$this->$level( $message, $params );
 		}
 
 		if ($exception != null) {
