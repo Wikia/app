@@ -89,6 +89,14 @@
 			@include flex($avatar-flex);
 		}
 
+		.badge-container {
+			position: relative;
+			top: -7px;
+			left: -6px;
+			height: 0px;
+			width: 0px;
+		}
+
 		.community-page-contributor-rank {
 			padding: $content-spacing-xxsmall $content-spacing-xxsmall 0 0;
 		}
