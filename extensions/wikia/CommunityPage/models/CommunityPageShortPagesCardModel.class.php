@@ -45,15 +45,8 @@ class CommunityPageShortPagesCardModel {
 			'link' => [
 				'text' => $title->getText(),
 				'articleurl' => $title->getFullURL(),
-				'editlink' => $this->getEditUrl( $title->getFullURL() )
+				'editlink' => LinkHelper::forceLoginLink( $title, LinkHelper::WITH_EDIT_MODE )
 			]
 		];
-	}
-
-	private function getEditUrl( $articleUrl ) {
-		if ( EditorPreference::isVisualEditorPrimary() ) {
-			return $articleUrl . '?veaction=edit';
-		}
-		return $articleUrl . '?action=edit';
 	}
 }
