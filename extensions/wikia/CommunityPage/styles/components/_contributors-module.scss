@@ -33,8 +33,9 @@
 	}
 
 	.community-page-contributor-details {
+		max-width: $username-column-width - $userrank-column-width;
+		overflow-wrap: break-word;
 		vertical-align: middle;
-		word-break: break-all;
 	}
 
 	.community-page-contributor {

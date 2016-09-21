@@ -22,10 +22,6 @@
 		}
 	}
 
-	.community-page-moderator-details {
-		vertical-align: middle;
-	}
-
 	.community-page-moderators-list-item {
 		@include flexbox();
 		@include align-items(flex-start);
@@ -45,8 +41,10 @@
 		}
 
 		.community-page-moderator-details {
+			max-width: $username-column-width;
+			overflow-wrap: break-word;
 			padding-top: $content-spacing-xxsmall;
-			word-break: break-all;
+			vertical-align: middle;
 		}
 	}
 
