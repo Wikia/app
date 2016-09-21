@@ -1,9 +1,10 @@
 <?php
-$messages = array();
+$messages = [];
 
-$messages['en'] = array(
+$messages['en'] = [
 	'insights' => 'Insights',
 	'insights-desc' => 'Introduces the [[Special:Insights]] special page and subpages which list articles or templates that require attention from contributors.',
+	'right-insights' => 'Allows viewing the [[Special:Insights]] special page and subpages which list articles or templates that require attention from contributors.',
 	'insights-landing-title' => 'Welcome to Insights',
 	'insights-landing-lead' => 'Spend your time efficiently and make informed decisions about which articles you should edit with these insights.',
 	'insights-list-no-items' => 'Great work! There are no articles in this queue that need attention.',
@@ -66,9 +67,9 @@ $messages['en'] = array(
 	'insights-notification-message-inprogress-flags' => 'This page is flagged.',
 	'insights-notification-message-set-flags' => 'Set flags for this page',
 	'insights-error' => 'Something went wrong. Please try again.',
-);
+];
 
-$messages['qqq'] = array(
+$messages['qqq'] = [
 	'insights' => 'Name of the insights page',
 	'insights-desc' => 'Insights description shown on Special:Version',
 	'insights-landing-title' => 'A title of the Insights landing page appearing as an h1 element.',
@@ -130,9 +131,9 @@ $messages['qqq'] = array(
 	'insights-notification-message-inprogress-flags' => 'Message displayed on notification banner informing user that this page is flagged.',
 	'insights-notification-message-set-flags' => 'Text of a button that opens a modal window with a form for editing flags.',
 	'insights-error' => 'Information for user that something went wrong and ask to try again.',
-);
+];
 
-$messages['de'] = array(
+$messages['de'] = [
 	'insights' => 'Insights',
 	'insights-desc' => 'Beschreibung von Insights',
 	'insights-landing-title' => 'Willkommen bei Insights',
@@ -201,9 +202,9 @@ $messages['de'] = array(
 	'insights-list-description-templateswithouttype' => 'Der Zweck dieser Vorlagen ist unbekannt, da sie nicht nach Vorlagentyp sortiert wurden. Unter [[Hilfe:Vorlagentypen]] erfährst du mehr!',
 	'insights-list-no-items-informative' => 'Noch ist nichts zu tun. Bleibe einfach am Ball und es werden bald neue Besucher auftauchen!',
 	'insights-error' => 'Es ist etwas schief gelaufen. Versuche es bitte noch einmal.',
-);
+];
 
-$messages['es'] = array(
+$messages['es'] = [
 	'insights' => 'Sugerencias',
 	'insights-desc' => 'Introduce la página especial [[Especial:Sugerencias]] y sub páginas las cuales listan artículos o plantillas que requieren atención del editor.',
 	'insights-landing-title' => '¡Bienvenido a sugerencias!',
@@ -272,9 +273,9 @@ $messages['es'] = array(
 	'insights-list-description-templateswithouttype' => 'El objetivo de estas plantillas es desconocido, ya que no han sido organizadas por tipo. ¡ Ver [[Ayuda:Tipos de plantilla]] para aprender más!',
 	'insights-list-no-items-informative' => 'Nada aquí todavía. ¡Sigue editando y así vendrán los visitantes!',
 	'insights-error' => 'Algo salió mal. Por favor, inténtelo de nuevo.',
-);
+];
 
-$messages['fi'] = array(
+$messages['fi'] = [
 	'insights' => 'Oivallukset',
 	'insights-desc' => 'Esittelee toimintosivun [[Toiminnot:Oivallukset]] sekä alasivut, joissa luetellaan muokkaajien huomiota vaativat artikkelit ja mallineet.',
 	'insights-landing-title' => 'Tervetuloa oivalluksiin',
@@ -339,9 +340,9 @@ $messages['fi'] = array(
 	'insights-notification-message-inprogress-flags' => 'Tämä sivu on liputettu.',
 	'insights-notification-message-set-flags' => 'Aseta lippuja tälle sivulle',
 	'insights-error' => 'Jokin meni vikaan. Yritä uudelleen.',
-);
+];
 
-$messages['fr'] = array(
+$messages['fr'] = [
 	'insights' => 'Suggestions',
 	'insights-desc' => 'Présentation des Suggestions',
 	'insights-landing-title' => 'Bienvenue dans les Suggestions',
@@ -410,9 +411,9 @@ $messages['fr'] = array(
 	'insights-list-description-templateswithouttype' => "L'objet de ces modèles n'est pas connu car ils n'ont pas été classés par type. Pour en savoir plus, consultez la page [[Aide:Types de modèles]].",
 	'insights-list-no-items-informative' => "Rien pour l'instant. Continuez à apporter des modifications, les visiteurs viendront à coup sûr !",
 	'insights-error' => 'Un problème est survenu. Veuillez réessayer.',
-);
+];
 
-$messages['it'] = array(
+$messages['it'] = [
 	'insights' => 'Consigli',
 	'insights-desc' => 'Introduce la pagina speciale di [[Special:Insights|Speciale:Consigli]] e sottopagine che elencano le pagine o i template che richiedono attenzione da parte degli utenti.',
 	'insights-landing-title' => 'Benvenuto nella pagina Consigli',
@@ -483,9 +484,9 @@ $messages['it'] = array(
 	'insights-list-description-templateswithouttype' => 'Lo scopo di questi template è sconosciuto dal momento che non sono stati organizzati in base al tipo. Vedi [[w:it:Aiuto:Tipologie di template|Aiuto:Tipologie di template]] per saperne di più!',
 	'insights-list-no-items-informative' => 'Niente per il momento. Continua a fare le tue modifiche e vedrai e che i visitatori arriveranno!',
 	'insights-error' => 'Qualcosa è andato storto. Riprova.',
-);
+];
 
-$messages['ja'] = array(
+$messages['ja'] = [
 	'insights' => 'インサイト',
 	'insights-desc' => 'インサイトの説明',
 	'insights-landing-title' => 'インサイトへようこそ',
@@ -554,9 +555,9 @@ $messages['ja'] = array(
 	'insights-list-description-templateswithouttype' => 'これらのテンプレートは種類別に整理されていないため、その目的が不明です。詳しくは、[[ヘルプ:テンプレートの種類]]をご覧ください。',
 	'insights-list-no-items-informative' => 'まだ何もありません。ページを訪れてもらえるよう、編集を続けましょう！',
 	'insights-error' => 'エラーが発生したようです。もう一度お試しください。',
-);
+];
 
-$messages['nl'] = array(
+$messages['nl'] = [
 	'insights' => 'Insights',
 	'insights-desc' => 'Insights description',
 	'insights-landing-title' => 'Welcome to Insights',
@@ -619,9 +620,9 @@ $messages['nl'] = array(
 	'insights-list-subtitle-popularpages' => 'Popular pages',
 	'insights-list-description-popularpages' => 'These pages are gaining traction with your readers! Make sure they are up to your standards and have all the latest images and information.',
 	'insights-error' => 'Something went wrong. Please try again.',
-);
+];
 
-$messages['pl'] = array(
+$messages['pl'] = [
 	'insights' => 'Podpowiedzi',
 	'insights-desc' => 'Opis Podpowiedzi',
 	'insights-landing-title' => 'Witamy w Podpowiedziach',
@@ -690,9 +691,9 @@ $messages['pl'] = array(
 	'insights-list-description-templateswithouttype' => 'Przeznaczenie tych szablonów nie jest znane, ponieważ nie zostały one skategoryzowane pod względem typu. Zobacz [[Pomoc:Typy szablonów]], aby dowiedzieć się więcej!',
 	'insights-list-no-items-informative' => 'Nic tutaj jeszcze nie ma. Edytuj dalej, a odwiedzający z pewnością przyjdą!',
 	'insights-error' => 'Coś poszło nie tak. Spróbuj ponownie.',
-);
+];
 
-$messages['pt'] = array(
+$messages['pt'] = [
 	'insights' => 'Insights',
 	'insights-desc' => 'Apresenta a página especial [[Special:Insights]] e subpáginas que listam artigos ou predefinições que exigem atenção dos contribuidores.',
 	'insights-landing-title' => 'Bem-vindo(a) ao Insights',
@@ -764,9 +765,9 @@ $messages['pt'] = array(
 	'insights-list-description-templateswithouttype' => 'O propósito destas predefinições é desconhecido, porque não foram organizadas por tipo. Veja [[Ajuda:Tipos_de_predefinição]] para saber mais!',
 	'insights-list-no-items-informative' => 'Nada aqui ainda. Continue editando e os visitantes certamente virão!',
 	'insights-error' => 'Algo deu errado. Por favor, tente novamente.',
-);
+];
 
-$messages['ru'] = array(
+$messages['ru'] = [
 	'insights' => 'Исследования',
 	'insights-desc' => 'Introduces the [[Special:Insights]] special page and subpages which list articles or templates that require attention from contributors.',
 	'insights-landing-title' => 'Добро пожаловать на страницу исследований',
@@ -837,9 +838,9 @@ $messages['ru'] = array(
 	'insights-list-description-templateswithouttype' => 'Применение этих шаблонов неизвестно, поскольку они не были организованы по [[Справка:Типы шаблонов|классификации шаблонов]].',
 	'insights-list-no-items-informative' => 'Пока здесь ничего нет. Продолжайте редактировать, и читатели не заставят себя ждать!',
 	'insights-error' => 'К сожалению, произошла ошибка. Попробуйте ещё раз.',
-);
+];
 
-$messages['zh-hans'] = array(
+$messages['zh-hans'] = [
 	'insights' => '问题页面列表',
 	'insights-desc' => '问题页面列表说明',
 	'insights-landing-title' => '欢迎访问问题页面列表',
@@ -908,9 +909,9 @@ $messages['zh-hans'] = array(
 	'insights-list-description-templateswithouttype' => '使用这些模版的目的未知，因为它们并不是按照类型进行分类的。请查看[[Help:Template types|模版类型]]了解更多！',
 	'insights-list-no-items-informative' => '未发现任何内容。请继续编辑以吸引更多用户！',
 	'insights-error' => '出现错误。请再试一次。',
-);
+];
 
-$messages['zh-hant'] = array(
+$messages['zh-hant'] = [
 	'insights' => '問題頁面列表',
 	'insights-desc' => '問題頁面列表説明',
 	'insights-landing-title' => '歡迎訪問問題頁面列表',
@@ -973,5 +974,5 @@ $messages['zh-hant'] = array(
 	'insights-list-subtitle-popularpages' => '流行頁面',
 	'insights-list-description-popularpages' => '讀者會對這些頁面感興趣的！請確保各頁面達到你的標準，並附有所有最新圖像和資訊。',
 	'insights-error' => '出現錯誤。 請再試一次。',
-);
+];
 

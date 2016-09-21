@@ -3,7 +3,10 @@ describe('Method ext.wikia.adEngine.provider.gpt.adDetect.onAdLoad', function ()
 	'use strict';
 
 	var noop = function () {},
-		returnObj = function () { return {}; };
+		returnObj = function () { return {};},
+		slotTweaker = {
+			onReady: noop
+		};
 
 	function createSlot(slotName, success, collapse, hop) {
 		return {
@@ -35,6 +38,16 @@ describe('Method ext.wikia.adEngine.provider.gpt.adDetect.onAdLoad', function ()
 		}
 	}
 
+	function getModule(mocks) {
+		return modules['ext.wikia.adEngine.provider.gpt.adDetect'](
+			mocks.adContext,
+			mocks.messageListener,
+			slotTweaker,
+			mocks.log,
+			mocks.window
+		);
+	}
+
 	function desktop(name, slotName, gptEvent, windowMock, result, forceAdType) {
 		it('calls ' + result + ' for ' + name + ' ' + slotName + ' on desktop', function () {
 			var gptHop, mocks = {
@@ -61,12 +74,7 @@ describe('Method ext.wikia.adEngine.provider.gpt.adDetect.onAdLoad', function ()
 				}
 			};
 
-			gptHop = modules['ext.wikia.adEngine.provider.gpt.adDetect'](
-				mocks.log,
-				mocks.window,
-				mocks.adContext,
-				mocks.messageListener
-			);
+			gptHop = getModule(mocks);
 
 			spyOn(mocks, 'success');
 			spyOn(mocks, 'collapse');
@@ -117,12 +125,7 @@ describe('Method ext.wikia.adEngine.provider.gpt.adDetect.onAdLoad', function ()
 			mocks.iframeDoc.querySelector = specialAd ? returnObj : noop;
 			mocks.iframeDoc.querySelectorAll = function () { return []; };
 
-			gptHop = modules['ext.wikia.adEngine.provider.gpt.adDetect'](
-				mocks.log,
-				mocks.window,
-				mocks.adContext,
-				mocks.messageListener
-			);
+			gptHop = getModule(mocks);
 
 			spyOn(mocks, 'success');
 			spyOn(mocks, 'collapse');

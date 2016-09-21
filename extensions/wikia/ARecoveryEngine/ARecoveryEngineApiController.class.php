@@ -8,9 +8,17 @@ class ARecoveryEngineApiController extends WikiaController {
 		$resourceLoader = new ResourceLoaderAdEngineSourcePointCSDelivery();
 		$resourceLoaderContext = new ResourceLoaderContext( new ResourceLoader(), new FauxRequest() );
 		$source = $resourceLoader->getScript( $resourceLoaderContext );
+
 		$this->response->setContentType( 'text/javascript; charset=utf-8' );
 		$this->response->setBody( $source );
 		$this->response->setCacheValidity( WikiaResponse::CACHE_STANDARD );
+	}
+
+	public function getSourcePointStatus() {
+		$this->response->setContentType( 'text/javascript; charset=utf-8' );
+		$wgGlobalEnableSourcePoint = WikiFactory::getVarValueByName( 'wgGlobalEnableSourcePoint', Wikia::COMMUNITY_WIKI_ID );
+		$this->response->setBody( 'window.wikiaSourcePointStatus = ' . ( $wgGlobalEnableSourcePoint ? 'true;' : 'false;' ) );
+		$this->response->setCacheValidity( WikiaResponse::CACHE_STANDARD, WikiaResponse::CACHE_DISABLED );
 	}
 
 	public function getBootstrap() {
@@ -18,6 +26,7 @@ class ARecoveryEngineApiController extends WikiaController {
 		$resourceLoaderContext = new ResourceLoaderContext( new ResourceLoader(), new FauxRequest() );
 		$this->response->setVal( 'code', $resourceLoader->getScript( $resourceLoaderContext ) );
 		$this->response->setVal( 'domain', F::app()->wg->server );
+		$this->response->setVal( 'cs_endpoint', ResourceLoaderAdEngineSourcePointCSDelivery::CS_ENDPOINT );
 	}
 
 	public function getLogInfo() {

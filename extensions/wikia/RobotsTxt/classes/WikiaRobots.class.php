@@ -73,6 +73,7 @@ class WikiaRobots {
 	 */
 	private $blockedPaths = [
 		'/d/u/', // User pages for discussions
+		'/fandom?p=', // Fandom old URLs
 	];
 
 	/**
@@ -113,7 +114,6 @@ class WikiaRobots {
 	 */
 	public function __construct( PathBuilder $pathBuilder ) {
 		global $wgAllowSpecialImagesInRobots,
-			   $wgEnableLocalSitemap,
 			   $wgRequest,
 			   $wgRobotsTxtCustomRules,
 			   $wgWikiaEnvironment;
@@ -126,10 +126,6 @@ class WikiaRobots {
 			foreach ( (array) $wgRobotsTxtCustomRules['allowSpecialPage'] as $page ) {
 				$this->allowedSpecialPages[$page] = 'allow';
 			}
-		}
-
-		if ( !empty( $wgEnableLocalSitemap ) ) {
-			$this->allowedSpecialPages['Allpages'] = 'allow';
 		}
 
 		if ( !empty( $wgAllowSpecialImagesInRobots ) ) {

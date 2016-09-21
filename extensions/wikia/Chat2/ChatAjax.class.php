@@ -45,7 +45,10 @@ class ChatAjax {
 		}
 
 		$user = User::newFromId( $data['user_id'] );
-		if ( empty( $user ) || !$user->isLoggedIn() || $user->getName() != urldecode( $wgRequest->getVal( 'name', '' ) ) ) {
+		if ( empty( $user ) ||
+			 !$user->isLoggedIn() ||
+			 $user->getName() != $wgRequest->getVal( 'name', '' )
+			) {
 			wfProfileOut( __METHOD__ );
 
 			return [ 'errorMsg' => self::ERROR_USER_NOT_FOUND ];
@@ -82,7 +85,8 @@ class ChatAjax {
 		if ( $res['canChat'] ) {
 			$roomId = $wgRequest->getVal( 'roomId' );
 			$cityIdFromRoom = ChatServerApiClient::getCityIdFromRoomId( $roomId );
-			if ( $wgCityId !== $cityIdFromRoom ) {
+			$cityIdHash = md5($wgCityId.$wgServer);
+			if ( $cityIdHash !== $cityIdFromRoom ) {
 				$res['canChat'] = false; // don't let the user chat in the room they requested.
 				$res['errorMsg'] = wfMessage( 'chat-room-is-not-on-this-wiki' )->text();
 			}

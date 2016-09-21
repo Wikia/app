@@ -79,9 +79,17 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 	 * Route the view based on logged in status
 	 */
 	public function index() {
+		$contentLangCode = $this->app->wg->ContLang->getCode();
+
 		// Redirect to standalone NewAuth page if extension enabled
-		if ( $this->app->wg->EnableNewAuthModal && $this->wg->request->getVal('type') !== 'forgotPassword' ) {
-			$this->getOutput()->redirect( '/signin?redirect=' . $this->userLoginHelper->getRedirectUrl() );
+		if ( $this->app->wg->EnableNewAuthModal && $this->wg->request->getVal( 'type' ) !== 'forgotPassword' ) {
+			$newLoginPageUrl = '/signin?redirect=' . $this->userLoginHelper->getRedirectUrl();
+
+			if ( $contentLangCode !== 'en' ) {
+				$newLoginPageUrl .= '&uselang=' . $contentLangCode;
+			}
+
+			$this->getOutput()->redirect( $newLoginPageUrl );
 		}
 
 		if ( $this->wg->User->isLoggedIn() ) {
@@ -636,7 +644,7 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 				sprintf( "Junior helper cannot change account info - user: %s", $user->getName() )
 			);
 
-			$this->setErrorResponse( 'userlogin-account-admin-error' );
+			$this->setParsedErrorResponse( 'userlogin-account-admin-error' );
 			return;
 		}
 

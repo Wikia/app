@@ -107,5 +107,5 @@ interface IRequest {
 	 * @return mixed
 	 * @throws BadRequestException
 	 */
-	public function isValidWriteRequest( \User $user );
+	public function assertValidWriteRequest( \User $user );
 }

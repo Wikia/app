@@ -13,6 +13,10 @@ define('ext.wikia.adEngine.adTracker', ['wikia.tracker', 'wikia.window', 'wikia.
 			extraParams.sp = window.ads.runtime.sp.blocking ? 'yes' : 'no';
 		}
 
+		if (window.ads && window.ads.runtime.pf && typeof window.ads.runtime.pf.blocking === 'boolean') {
+			extraParams.pf = window.ads.runtime.pf.blocking ? 'yes' : 'no';
+		}
+
 		for (key in extraParams) {
 			if (extraParams.hasOwnProperty(key)) {
 				keys.push(key);

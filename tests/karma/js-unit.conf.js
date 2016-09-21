@@ -23,6 +23,7 @@ module.exports = function (config) {
 			'tests/lib/jasmine/helpers.js',
 			'resources/jquery/jquery-1.8.2.js',
 			'resources/wikia/polyfills/bind.js',
+			'resources/mediawiki/mediawiki.js',
 
 			//JSMessages
 			'extensions/wikia/JSMessages/js/JSMessages.js',

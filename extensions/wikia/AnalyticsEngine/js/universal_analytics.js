@@ -45,7 +45,47 @@
 		window.ga = function () {};
 	}
 
-	var cookieExists, isProductionEnv, blockingTracked = false;
+	var cookieExists,
+		isProductionEnv,
+		blockingTracked = {
+			sourcePoint: false,
+			pageFair: false
+		},
+		GASettings = {
+			sourcePoint: {
+				trackName: 'sourcePoint',
+				name: 'sourcepoint',
+				dimension: 6
+			},
+			pageFair: {
+				trackName: 'pageFair',
+				dimension: 7,
+				name: 'pagefair'
+			}
+		},
+		listenerSettings = [
+			{
+				eventName: 'sp.blocking',
+				value: true,
+				detectorSettings: GASettings.sourcePoint
+			},
+			{
+				eventName: 'sp.not_blocking',
+				value: false,
+				detectorSettings: GASettings.sourcePoint
+			},
+			{
+				eventName: 'pf.blocking',
+				value: true,
+				detectorSettings: GASettings.pageFair
+			},
+			{
+				eventName: 'pf.not_blocking',
+				value: false,
+				detectorSettings: GASettings.pageFair
+			}
+		];
+
 	/**
 	 * Main Tracker
 	 *
@@ -253,15 +293,16 @@
 		return kruxSegment;
 	}
 
-	function trackBlocking(value) {
-		if (blockingTracked) {
+	function trackBlocking(detectorSettings, isBlocked) {
+		var value = isBlocked ? 'Yes' : 'No';
+		if (blockingTracked[detectorSettings.trackName]) {
 			return;
 		}
-		blockingTracked = true;
-		_gaWikiaPush(['set', 'dimension6', value]);
-		window.ga('ads.set', 'dimension6', value);
-		guaTrackAdEvent('ad/sourcepoint/detection', value, '', 0, true);
-		guaTrackEvent('ads-sourcepoint-detection', 'impression', value, 0, true);
+		blockingTracked[detectorSettings.trackName] = true;
+		_gaWikiaPush(['set', 'dimension' + detectorSettings.dimension, value]);
+		window.ga('ads.set', 'dimension' + detectorSettings.dimension, value);
+		guaTrackAdEvent('ad/' + detectorSettings.name + '/detection', value, '', 0, true);
+		guaTrackEvent('ads-' + detectorSettings.name + '-detection', 'impression', value, 0, true);
 	}
 
 	/**** High-Priority Custom Dimensions ****/
@@ -413,13 +454,11 @@
 	_gaWikiaPush(['send', 'pageview']);
 
 	if (window.ads && window.ads.context.opts.showAds) {
-		document.addEventListener('sp.blocking', function () {
-			window.ads.runtime.sp.blocking = true;
-			trackBlocking('Yes');
-		});
-		document.addEventListener('sp.not_blocking', function () {
-			window.ads.runtime.sp.blocking = false;
-			trackBlocking('No');
+
+		listenerSettings.map(function (listenerSetting) {
+			document.addEventListener(listenerSetting.eventName, function () {
+				trackBlocking(listenerSetting.detectorSettings, listenerSetting.value);
+			});
 		});
 	}
 

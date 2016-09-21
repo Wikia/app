@@ -19,7 +19,7 @@ class CategoryPageII extends CategoryPage {
 		$oTmpl->set_vars(
 			[
 				'path' => $wgTitle->getFullURL(),
-				'sortTypes' => $urlParams->getAllowedSortOptions(),
+				'sortTypes' => $urlParams->getAllowedSortTypes(),
 				'current' => $urlParams->getSortType(),
 				'displayType' => $urlParams->getDisplayType(),
 			]

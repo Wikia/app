@@ -1115,7 +1115,7 @@ HTML;
 	 * @return mixed
 	 * @throws BadRequestException
 	 */
-	public function isValidWriteRequest( \User $user ) {
+	public function assertValidWriteRequest( \User $user ) {
 		if ( !$this->wasPosted() || !$user->matchEditToken( $this->getVal( 'token' ) ) ) {
 			throw new BadRequestException( 'Request must be POSTed and provide a valid edit token.' );
 		}
@@ -1133,6 +1133,12 @@ HTML;
 	 */
 	public function isWikiaInternalRequest() {
 		return $this->getHeader( self::WIKIA_INTERNAL_REQUEST_HEADER ) !== false;
+	}
+
+	const MW_AUTH_OK_HEADER = 'X-MW-AUTH-OK';
+
+	public function isMwAuthOk() {
+		return $this->getHeader( self::MW_AUTH_OK_HEADER ) !== false;
 	}
 }
 

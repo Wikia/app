@@ -180,6 +180,17 @@
 				onScroll.bind(handleScrolling);
 			});
 		}
+
+		// SUS-726: hide notifications if VisualEditor is loaded and show them again once it's closed
+		if (mw.config.get('wgVisualEditor') && mw.config.get('wgIsArticle')) {
+			mw.hook('ve.activationComplete').add(function() {
+				$('.banner-notification').fadeOut(400);
+			});
+
+			mw.hook('ve.cancelButton').add(function() {
+				$('.banner-notification').fadeIn(400);
+			});
+		}
 		createBackendNotifications();
 	}
 

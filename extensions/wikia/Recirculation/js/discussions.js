@@ -38,7 +38,7 @@ require([
 
 			$('.discussion-thread').click(function () {
 				var slot = $(this).index() + 1,
-					label = 'discussions-tile=slot-' + slot;
+					label = 'discussions-tile=slot-' + slot + '=discussions';
 				tracker.trackVerboseClick(experimentName, label);
 				window.location = $(this).data('link');
 			});

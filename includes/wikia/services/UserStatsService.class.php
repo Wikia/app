@@ -1,7 +1,5 @@
 <?php
 
-use Wikia\Logger\WikiaLogger;
-
 class UserStatsService extends WikiaModel {
 
 	const CACHE_TTL = 86400;

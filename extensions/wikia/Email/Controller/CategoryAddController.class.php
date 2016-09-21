@@ -85,7 +85,7 @@ class CategoryAddController extends EmailController {
 	private function incrementEmailsSentCount() {
 		global $wgMemc;
 		$emailsSent = $wgMemc->get( $this->getTargetUserCacheKey() );
-		if ( !is_int( $emailsSent ) ) {
+		if ( !is_numeric( $emailsSent ) ) {
 			$wgMemc->set( $this->getTargetUserCacheKey(), 0, time() + self::THROTTLE_PERIOD );
 		}
 

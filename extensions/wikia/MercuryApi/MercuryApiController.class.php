@@ -44,8 +44,8 @@ class MercuryApiController extends WikiaController {
 			];
 
 			$smartBannerConfig[ 'appScheme' ] = [
-				'ios' => $meta[ 'ios-scheme' ],
-				'android' => $meta[ 'android-scheme' ]
+				'ios' => $meta[ 'ios-scheme' ] ?? null,
+				'android' => $meta[ 'android-scheme' ] ?? null,
 			];
 
 			return $smartBannerConfig;
@@ -247,7 +247,7 @@ class MercuryApiController extends WikiaController {
 
 			$adContext = ( new AdEngine2ContextService() )->getContext( $title, 'mercury' );
 			$dimensions[3] = $adContext['targeting']['wikiVertical'];
-			$dimensions[14] = $adContext['opts']['showAds'] ? 'yes' : 'no';
+			$dimensions[14] = $adContext['opts']['showAds'] ? 'Yes' : 'No';
 			$dimensions[19] = WikiaPageType::getArticleType( $title );
 			$dimensions[25] = strval( $title->getNamespace() );
 		} catch ( Exception $ex ) {

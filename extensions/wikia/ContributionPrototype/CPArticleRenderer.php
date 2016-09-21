@@ -69,6 +69,7 @@ class CPArticleRenderer {
 	}
 
 	private function addScripts(OutputPage $output) {
+		$output->addScript("<script src=\"{$this->publicHost}/public/assets/vendor.dll.js\"></script>");
 		$output->addScript("<script src=\"{$this->publicHost}/public/assets/app.js\"></script>");
 	}
 

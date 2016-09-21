@@ -45,10 +45,13 @@ class OasisController extends WikiaController {
 		$this->openXBidder = null;
 		$this->prebid = null;
 		$this->rubiconFastlane = null;
+		$this->rubiconVulcan = null;
+		$this->sourcePoint = null;
 		$this->dynamicYield = null;
 		$this->ivw2 = null;
 		$this->ivw3 = null;
 		$this->krux = null;
+		$this->ubisoft = null;
 
 		wfProfileOut(__METHOD__);
 	}
@@ -81,7 +84,7 @@ class OasisController extends WikiaController {
 		if (WikiaPageType::isSearch() || WikiaPageType::isForum()) {
 			// Remove this whole condition when AdDriver2.js is fully implemented and deployed
 
-			$jsAtBottom = true;	// Liftium.js (part of AssetsManager) must be loaded after LiftiumOptions variable is set in page source
+			$jsAtBottom = true;
 		}
 		elseif ($wgTitle->getNamespace() == NS_SPECIAL || BodyController::isEditPage()) {
 			$jsAtBottom = false;
@@ -239,16 +242,13 @@ class OasisController extends WikiaController {
 			$this->openXBidder = AnalyticsEngine::track('OpenXBidder', AnalyticsEngine::EVENT_PAGEVIEW);
 			$this->prebid = AnalyticsEngine::track('Prebid', AnalyticsEngine::EVENT_PAGEVIEW);
 			$this->rubiconFastlane = AnalyticsEngine::track('RubiconFastlane', AnalyticsEngine::EVENT_PAGEVIEW);
+			$this->rubiconVulcan = AnalyticsEngine::track('RubiconVulcan', AnalyticsEngine::EVENT_PAGEVIEW);
+			$this->sourcePoint = ARecoveryModule::getSourcePointBootstrapCode();
 			$this->dynamicYield = AnalyticsEngine::track('DynamicYield', AnalyticsEngine::EVENT_PAGEVIEW);
 			$this->ivw2 = AnalyticsEngine::track('IVW2', AnalyticsEngine::EVENT_PAGEVIEW);
 			$this->ivw3 = AnalyticsEngine::track('IVW3', AnalyticsEngine::EVENT_PAGEVIEW);
 			$this->krux = AnalyticsEngine::track('Krux', AnalyticsEngine::EVENT_PAGEVIEW);
-		}
-
-		if (!empty($wgEnableAdminDashboardExt) && AdminDashboardLogic::displayAdminDashboard($this->app, $wgTitle)) {
-			$this->displayAdminDashboard = true;
-		} else {
-			$this->displayAdminDashboard = false;
+			$this->ubisoft = AnalyticsEngine::track('Ubisoft', AnalyticsEngine::EVENT_PAGEVIEW);
 		}
 
 		wfProfileOut(__METHOD__);
@@ -397,10 +397,6 @@ class OasisController extends WikiaController {
 			$this->squeezeMediawikiLoad($jsFiles,$bottomScripts);
 			$this->bottomScripts = $bottomScripts;
 			$this->jsFiles = $jsFiles;
-		}
-
-		if (AdEngine2Service::shouldLoadLiftium()) {
-			$this->jsFiles = AdEngine2Controller::getLiftiumOptionsScript() . $this->jsFiles;
 		}
 
 		wfProfileOut(__METHOD__);

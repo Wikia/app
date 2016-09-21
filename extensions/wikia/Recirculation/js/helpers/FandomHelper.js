@@ -11,7 +11,8 @@ define('ext.wikia.recirculation.helpers.fandom', [
 		var defaults = {
 				limit: 3,
 				type: 'recent_popular',
-				ignoreError: false
+				ignoreError: false,
+				fill: false
 			},
 			options = $.extend({}, defaults, config);
 
@@ -26,7 +27,9 @@ define('ext.wikia.recirculation.helpers.fandom', [
 				scriptPath: w.wgCdnApiUrl,
 				data: {
 					type: options.type,
-					cityId: w.wgCityId
+					cityId: w.wgCityId,
+					limit: options.limit,
+					fill: options.fill
 				},
 				callback: function(data) {
 					data = formatData(data);
@@ -62,8 +65,20 @@ define('ext.wikia.recirculation.helpers.fandom', [
 
 			return {
 				title: data.title,
-				items: items
+				items: items.sort(sortItem)
 			};
+		}
+
+		function sortItem(a, b) {
+			if (a.type === 'recent_popular' && b.type !== 'recent_popular') {
+				return 1;
+			}
+
+			if (b.type === 'recent_popular' && a.type !== 'recent_popular') {
+				return -1;
+			}
+
+			return b.isVideo - a.isVideo;
 		}
 
 		return {

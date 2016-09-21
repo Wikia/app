@@ -7,14 +7,71 @@ define('ext.wikia.recirculation.utils', [
 ], function ($, loader, cache, Mustache) {
 	'use strict';
 
+	// returns a gaussian random function with the given mean and stdev.
+	function gaussian(mean, stdev) {
+		var y2,
+			use_last = false;
+		return function() {
+			var y1;
+			if (use_last) {
+				y1 = y2;
+				use_last = false;
+			} else {
+				var x1, x2, w;
+
+				do {
+					x1 = 2.0 * Math.random() - 1.0;
+					x2 = 2.0 * Math.random() - 1.0;
+					w = x1 * x1 + x2 * x2;
+				} while (w >= 1.0);
+
+				w = Math.sqrt((-2.0 * Math.log(w))/w);
+				y1 = x1 * w;
+				y2 = x2 * w;
+				use_last = true;
+			}
+
+			var retval = mean + stdev * y1;
+			return Math.abs(retval);
+	   };
+	}
+
+	function createResult (item, score) {
+		return {
+			item: item,
+			score: score
+		};
+	}
+
+	function ditherResults(results, epsilon) {
+		var standardDeviation = (epsilon > 1) ? Math.sqrt(Math.log(epsilon)) : Math.exp(1e-10),
+			distribution = gaussian(0, standardDeviation);
+
+		return results.map(createResult)
+			.map(function(result, index) {
+				result.score = Math.log(index + 1) + distribution();
+				return result;
+			}).sort(function(a, b) {
+				return a.score - b.score;
+			}).map(function(result, index) {
+				result.item.index = index;
+				return result.item;
+			});
+	}
+
 	/**
 	 * Checks if template is cached in LocalStorage and if not loads it by using loader
 	 * @returns {$.Deferred}
 	 */
-	function loadTemplate(templateLocation) {
+	function loadTemplate(templateName) {
 		var dfd = new $.Deferred(),
+			templateLocation = 'extensions/wikia/Recirculation/templates/client/' + templateName,
 			cacheKey = 'RecirculationAssets_' + templateLocation,
 			template = cache.getVersioned(cacheKey);
+
+		if (!templateName) {
+			return dfd.reject('Invalid template name');
+		}
 
 		if (template) {
 			dfd.resolve(template);
@@ -29,7 +86,8 @@ define('ext.wikia.recirculation.utils', [
 
 				dfd.resolve(template);
 
-				cache.setVersioned(cacheKey, template, 86400); //1 days
+				// 1 day
+				cache.setVersioned(cacheKey, template, 86400);
 			});
 		}
 
@@ -37,8 +95,6 @@ define('ext.wikia.recirculation.utils', [
 	}
 
 	function renderTemplate(templateName, data) {
-		var templateName = 'extensions/wikia/Recirculation/templates/client/' + templateName;
-
 		return loadTemplate(templateName)
 			.then(function(template) {
 				return $(Mustache.render(template, data));
@@ -106,6 +162,7 @@ define('ext.wikia.recirculation.utils', [
 		renderTemplate: renderTemplate,
 		addUtmTracking: addUtmTracking,
 		afterRailLoads: afterRailLoads,
-		waitForRail: waitForRail
+		waitForRail: waitForRail,
+		ditherResults: ditherResults
 	};
 });

@@ -39,7 +39,7 @@ class WikiHeaderController extends WikiaController {
 
 		$this->mainPageURL = Title::newMainPage()->getLocalURL();
 
-		$this->displaySearch = !empty( $this->wg->EnableAdminDashboardExt ) && AdminDashboardLogic::displayAdminDashboard( $this, $this->wg->Title );
+		$this->displaySearch = $this->wg->Title->isSpecial( 'AdminDashboard' );
 		$this->setVal( 'displayHeader', !$this->wg->HideNavigationHeaders );
 		$this->displayHeaderButtons = !WikiaPageType::isWikiaHubMain();
 

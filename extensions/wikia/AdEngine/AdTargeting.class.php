@@ -52,4 +52,28 @@ class AdTargeting {
 		return $dartRating;
 	}
 
+	/**
+	 * @param $keyword
+	 * @return array of string values for given keyword or []
+	 */
+	static public function getRatingFromDartKeyValues( $keyword ) {
+		global $wgDartCustomKeyValues;
+
+		$dartValues = [];
+		$pairs = explode( ';', $wgDartCustomKeyValues );
+
+		foreach ( $pairs as $pair ) {
+			if ( strpos( $pair, '=' ) === false ) {
+				continue;
+			}
+
+			list( $key, $value ) = explode( '=', $pair );
+
+			if ( $key === $keyword ) {
+				$dartValues[] = $value;
+			}
+		}
+
+		return $dartValues;
+	}
 }

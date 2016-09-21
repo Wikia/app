@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Backend functions for suppressing and unsuppressing all references to a given user,
  * used when blocking with HideUser enabled.  This was spun out of SpecialBlockip.php
@@ -108,7 +109,6 @@ class RevisionDeleteUser {
 			array( 'oi_user_text' => $name ),
 			__METHOD__
 		);
-
 		# Hide name from deleted images
 		# Wikia change begin
 		# Log this for better understanding of the usage and further effort around

@@ -2,11 +2,12 @@
 /*jshint camelcase:false, maxlen:127*/
 /*jslint regexp:true*/
 define('ext.wikia.adEngine.provider.gpt.adDetect', [
-	'wikia.log',
-	'wikia.window',
 	'ext.wikia.adEngine.adContext',
-	'ext.wikia.adEngine.messageListener'
-], function (log, window, adContext, messageListener) {
+	'ext.wikia.adEngine.messageListener',
+	'ext.wikia.adEngine.slotTweaker',
+	'wikia.log',
+	'wikia.window'
+], function (adContext, messageListener, slotTweaker, log, win) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.provider.gpt.adDetect',
@@ -108,7 +109,7 @@ define('ext.wikia.adEngine.provider.gpt.adDetect', [
 			return iframe.contentWindow.AdEngine_adType;
 		}
 
-		status = window.adDriver2ForcedStatus && window.adDriver2ForcedStatus[slotName];
+		status = win.adDriver2ForcedStatus && win.adDriver2ForcedStatus[slotName];
 
 		if (status === 'success') {
 			return 'forced_success';
@@ -161,6 +162,7 @@ define('ext.wikia.adEngine.provider.gpt.adDetect', [
 	function onAdLoad(slot, gptEvent, iframe, forcedAdType) {
 
 		var adType = forcedAdType || getAdType(slot.name, gptEvent, iframe),
+			isCollapsed = false,
 			shouldPollForSuccess = false,
 			expectAsyncCollapse = false,
 			expectAsyncHop = false,
@@ -183,6 +185,7 @@ define('ext.wikia.adEngine.provider.gpt.adDetect', [
 			adInfo = adInfo || {};
 			adInfo.adType = adType;
 
+			isCollapsed = true;
 			clearTimeout(successTimer);
 			slot.collapse(adInfo);
 		}
@@ -196,6 +199,10 @@ define('ext.wikia.adEngine.provider.gpt.adDetect', [
 		}
 
 		function pollForSuccess() {
+			if (isCollapsed) {
+				return;
+			}
+
 			successTimer = setTimeout(function () {
 				log(['pollForSuccess', slot.name], 'info', logGroup);
 				pollForSuccess();
@@ -277,7 +284,7 @@ define('ext.wikia.adEngine.provider.gpt.adDetect', [
 		}
 
 		if (shouldPollForSuccess) {
-			pollForSuccess();
+			slotTweaker.onReady(slot.name, pollForSuccess);
 		}
 
 		if (expectAsyncHop || expectAsyncSuccess || expectAsyncCollapse) {

@@ -144,6 +144,7 @@ class ApiQueryFilearchive extends ApiQueryBase {
 				$file['timestamp'] = wfTimestamp( TS_ISO_8601, $row->fa_timestamp );
 			}
 			if ( $fld_user ) {
+				$user_text_is_used = true;
 				$file['userid'] = $row->fa_user;
 				/* Wikia change begin */
 				if ( ( new Wikia\Util\Statistics\BernoulliTrial( 0.01 ) )->shouldSample() ) {

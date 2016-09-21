@@ -117,6 +117,7 @@ class ArchivedFile {
 		}
 
 		if( !$this->title || $this->title->getNamespace() == NS_FILE ) {
+
 			$dbr = wfGetDB( DB_SLAVE );
 			$res = $dbr->select( 'filearchive',
 				array(
@@ -174,6 +175,7 @@ class ArchivedFile {
 			/* Wikia change end */
 			$this->timestamp = $row->fa_timestamp;
 			$this->deleted = $row->fa_deleted;
+
 		} else {
 			throw new MWException( 'This title does not correspond to an image page.' );
 		}

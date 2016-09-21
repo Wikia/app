@@ -2,21 +2,17 @@
 define('ext.wikia.recirculation.views.impactFooter', [
 	'jquery',
 	'wikia.window',
-	'wikia.log',
 	'ext.wikia.recirculation.tracker',
 	'ext.wikia.recirculation.utils'
-], function ($, w, log, tracker, utils) {
+], function ($, w, tracker, utils) {
 
-	var logGroup = 'ext.wikia.recirculation.views.rail',
-		imageRatio = 9/16;
-		options = {
-			template: 'impactFooter.mustache'
-		};
+	var imageRatio = 9/16,
+		options = {};
 
 	function render(data) {
 		var renderData = {};
 		renderData.title = data.title;
-		renderData.items = utils.addUtmTracking(organizeItems(data), 'impact-footer');
+		renderData.items = organizeItems(data);
 		renderData.discussions = data.discussions;
 
 		renderData.i18n = {
@@ -29,7 +25,7 @@ define('ext.wikia.recirculation.views.impactFooter', [
 			wikiTag: $.msg('recirculation-impact-footer-wiki-tag')
 		};
 
-		return utils.renderTemplate(options.template, renderData).then(function($html) {
+		return utils.renderTemplate('impactFooter.mustache', renderData).then(function($html) {
 			$('#WikiaFooter').html($html).find('.discussion-timestamp').timeago();
 			adjustFeatureItem($html);
 
@@ -77,14 +73,14 @@ define('ext.wikia.recirculation.views.impactFooter', [
 		return function($html) {
 			tracker.trackVerboseImpression(experimentName, 'impact-footer');
 
-			$html.on('mousedown', '.track-items', function(e) {
+			$html.on('mousedown', '.track-items', function() {
 				tracker.trackVerboseClick(experimentName, utils.buildLabel(this, 'impact-footer'));
 			});
 
 			if ($html.find('.discussion-module').length) {
 				tracker.trackVerboseImpression(experimentName, 'impact-footer-discussions');
 
-				$html.on('mousedown', '.track-discussions', function(e) {
+				$html.on('mousedown', '.track-discussions', function() {
 					tracker.trackVerboseClick(experimentName, utils.buildLabel(this, 'impact-footer-discussions'));
 				});
 			}

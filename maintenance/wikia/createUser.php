@@ -43,7 +43,7 @@ if ( !is_object( $user ) ) {
 # Insert the account into the database
 $user->addToDatabase();
 $user->setEmail( $email );
-$user->setPassword( $password );
+$user->setPassword( $password, false );
 $user->confirmEmail();
 UserLoginHelper::removeNotConfirmedFlag( $user ); // this calls saveSettings();
 if ( !ExternalUser_Wikia::addUser( $user, $password, $email, $username ) ) {
