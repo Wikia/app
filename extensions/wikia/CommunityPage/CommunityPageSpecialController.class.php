@@ -94,8 +94,8 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 	 */
 	public function getTopContributorsData() {
 		$limit = $this->request->getInt( 'limit', 0 );
-
-		$currentUserContributionCount = ( new UserStatsService( $this->getUser()->getId() ) )
+		$userId = $this->getUser()->getId();
+		$currentUserContributionCount = ( new UserStatsService( $userId ) )
 			->getEditCountFromWeek();
 		$topContributors = $this->usersModel->getTopContributors();
 		$topContributorsCount = count( $topContributors );
@@ -128,6 +128,7 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 			->rawParams( $login, $register )
 			->escaped();
 
+		$userBadge = $this->getUserBadge( $userId );
 		$this->response->setData( [
 			'admin' => $this->msg( 'communitypage-admin' )->text(),
 			'topContributorsHeaderText' => $this->msg( 'communitypage-top-contributors-week' )->text(),
@@ -142,6 +143,7 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 				$this->getUser()->getName(),
 				AvatarService::AVATAR_SIZE_SMALL_PLUS
 			),
+			'userBadge' => $userBadge ? DesignSystemHelper::getSvg( $userBadge ) : '',
 			'userRank' => $userRank,
 			'weeklyEditorCount' => $this->formatTotalEditorsNumber( $topContributorsCount ),
 			'userContribCount' => $currentUserContributionCount,
@@ -229,6 +231,11 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 	 */
 	public function getRecentlyJoinedData() {
 		$recentlyJoined = $this->usersModel->getRecentlyJoinedUsers();
+		$recentlyJoined = array_map( function($user ) {
+			$badge = $this->getUserBadge( $user[ 'userId' ] );
+			$user[ 'badge' ] = $badge ? DesignSystemHelper::getSvg( $badge ) : '';
+			return $user;
+		}, $recentlyJoined );
 
 		$this->response->setData( [
 			'recentlyJoinedHeaderText' => $this->msg( 'communitypage-recently-joined' )->text(),
@@ -245,6 +252,11 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 		$currentUser = $this->getUser();
 		$allMembers = $this->usersModel->getAllContributors( $currentUser->getId() );
 		$allMembers = $this->addTimeAgoDataDetail( $allMembers );
+		$allMembers = array_map( function( $member ) {
+			$badge = $this->getUserBadge( $member[ 'userId' ] );
+			$member[ 'badge' ] = $badge ? DesignSystemHelper::getSvg( $badge ) : '';
+			return $member;
+		}, $allMembers);
 
 		$moreMembers = SpecialPage::getTitleFor( 'ListUsers' );
 		$membersCount = $this->usersModel->getMemberCount();
@@ -358,7 +370,7 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 			$user = User::newFromId( $userId );
 			$userName = $user->getName();
 			$avatar = AvatarService::renderAvatar( $userName, $avatarSize );
-			$badge = 'wds-icons-badge-admin';
+			$badge = $this->getUserBadge( $userId );
 			$count += 1;
 
 			if ( User::isIp( $userName ) ) {
@@ -458,6 +470,7 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 	 * @return string name of DS svg file with proper badge
 	 */
 	private function getUserBadge( $userId ) {
+		return 'wds-icons-badge-admin';
 		$userGroups = User::newFromId( $userId )->getEffectiveGroups();
 
 		foreach ( self::PERMISSION_HIERARCHY as $group ) {

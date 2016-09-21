@@ -6,6 +6,16 @@
 
 // Styles for the contributors module in-page and modal version
 .contributors-module {
+	.badge-container {
+		position: relative;
+		top: -7px;
+		left: -6px;
+
+		svg {
+			position: absolute;
+		}
+	}
+
 	.avatar-container {
 		display: inline-block;
 		margin-right: $content-spacing-xxsmall;
@@ -87,16 +97,6 @@
 
 		.avatar-container {
 			@include flex($avatar-flex);
-		}
-
-		.badge-container {
-			position: relative;
-			top: -7px;
-			left: -6px;
-
-			svg {
-				position: absolute;
-			}
 		}
 
 		.community-page-contributor-rank {
