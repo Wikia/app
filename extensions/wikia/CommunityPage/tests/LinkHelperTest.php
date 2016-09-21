@@ -7,29 +7,23 @@ class LinkHelperTest extends WikiaBaseTest {
 	const ANNON_EDITS_ALLOWED = false;
 	const ANNOON_EDITS_FORBIDDEN = true;
 
-	const ARTICLE_NAME = 'test_article';
-	const ARTICLE_LOCAL_URL = '/wiki/test_article';
-	const ARTICLE_LOCAL_EDIT_URL = '/wiki/test_article?veaction=edit';
-	const SIGNUP_URL_WITH_EDIT = '/wiki/Special:SignUp?returnto=test_article&returntoquery=veaction%253Dedit&type=login';
-	const SIGNUP_URL_WITHOUT_EDIT = '/wiki/Special:SignUp?returnto=test_article&type=login';
+	const ARTICLE_NAME = 'Test_article';
+	const ARTICLE_LOCAL_URL = '/wiki/Test_article';
+	const ARTICLE_LOCAL_EDIT_URL = '/wiki/Test_article?veaction=edit';
+	const SIGNUP_URL_WITH_EDIT = '/wiki/Special:SignUp?returnto=Test+article&returntoquery=veaction%253Dedit&type=login';
+	const SIGNUP_URL_WITHOUT_EDIT = '/wiki/Special:SignUp?returnto=Test+article&type=login';
 
 	/**
 	 * @dataProvider forceLoginLinkTestCases
 	 */
 	public function testForceLoginLink( $user, $editMode, $disableAnonEdits, $expectedLink ) {
-		$mockTitle = $this->getMock( 'Title', [ 'getEscapedText', 'getLocalURL' ] );
-		$mockTitle->expects( $this->any() )
-			->method( 'getEscapedText' )
-			->willReturn( static::ARTICLE_NAME );
-		$mockTitle->expects( $this->any() )
-			->method( 'getLocalURL' )
-			->willReturn( static::ARTICLE_LOCAL_URL );
+		$title = Title::newFromText('test_article');
 
 		$this->mockGlobalVariable( 'wgDisableAnonymousEditing', $disableAnonEdits );
 		$this->mockGlobalVariable( 'wgUser', $user );
 		$this->mockGlobalVariable( 'wgVisualEditorNeverPrimary', false );
 
-		$this->assertEquals( $expectedLink, LinkHelper::forceLoginLink( $mockTitle, $editMode ) );
+		$this->assertEquals( $expectedLink, LinkHelper::forceLoginLink( $title, $editMode ) );
 	}
 
 	public function forceLoginLinkTestCases() {
