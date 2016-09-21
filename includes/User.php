@@ -29,6 +29,7 @@ use Wikia\Service\User\Preferences\PreferenceService;
 use Wikia\Service\User\Permissions\PermissionsService;
 use Wikia\Util\Statistics\BernoulliTrial;
 use Wikia\Service\Helios\HeliosClient;
+use Wikia\Util\PerformanceProfilers\UsernameLookupProfiler;
 
 /**
  * Int Number of characters in user_token field.
@@ -4841,5 +4842,36 @@ class User {
 		$key = "right-$right";
 		$msg = wfMessage( $key );
 		return $msg->isBlank() ? $right : $msg->text();
+	}
+
+
+	/**
+	 * We want to use one source for username.
+	 * This function will perform the lookup if
+	 * $wgEnableUsernameLookup is true
+	 *
+	 * @param $userId int userId
+	 * @param $name string anon username
+	 * @return string
+	 */
+	public static function getUsername( $userId, $name ) {
+		global $wgEnableUsernameLookup;
+		if( $wgEnableUsernameLookup && $userId != 0 ) {
+			$caller = debug_backtrace()[1];
+			$callerFunction = $caller["class"]."::".$caller["function"];
+			$profiler = UsernameLookupProfiler::create( $caller["class"], $callerFunction );
+			$dbName = static::whoIs( $userId );
+			if( $dbName !== $name ) {
+				\Wikia\Logger\WikiaLogger::instance()->debug( "Default name different than lookup", [
+					"user_id" => $userId,
+					"username_db" => $dbName,
+					"username_default" => $name,
+					"caller" => $callerFunction
+				] );
+			}
+			$profiler->end();
+			return $dbName ?: $name;
+		}
+		return $name;
 	}
 }

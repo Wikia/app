@@ -72,6 +72,7 @@ $config['adengine2_desktop_js'] = [
 		'//extensions/wikia/AdEngine/js/provider/gpt/adSizeFilter.js',
 		'//extensions/wikia/AdEngine/js/provider/gpt/adSizeConverter.js',
 		'//extensions/wikia/AdEngine/js/provider/gpt/googleTag.js',
+		'//extensions/wikia/AdEngine/js/provider/gpt/googleSlots.js',
 		'//extensions/wikia/AdEngine/js/provider/gpt/helper.js',
 		'//extensions/wikia/AdEngine/js/provider/gpt/sraHelper.js',
 		'//extensions/wikia/AdEngine/js/provider/remnantGpt.js',
@@ -271,7 +272,8 @@ $config['adengine2_prebid_js'] = [
 		'//extensions/wikia/AdEngine/js/lookup/prebid/prebid.js',
 		'//extensions/wikia/AdEngine/js/lookup/prebid/prebidHelper.js',
 		'//extensions/wikia/AdEngine/js/lookup/prebid/adapters/appnexus.js',
-		'//extensions/wikia/AdEngine/js/lookup/prebid/adapters/indexExchange.js',
+		'//extensions/wikia/AdEngine/js/lookup/prebid/adapters/appnexusPlacements.js',
+		'//extensions/wikia/AdEngine/js/lookup/prebid/adapters/indexExchange.js'
 	],
 ];
 
@@ -825,6 +827,7 @@ $config['mobile_base_ads_js'] = [
 		'//extensions/wikia/AdEngine/js/lookup/openx/openXBidderHelper.js',
 		'//extensions/wikia/AdEngine/js/lookup/openXBidder.js',
 		'//extensions/wikia/AdEngine/js/lookup/rubicon/rubiconFastlane.js',
+		'//extensions/wikia/AdEngine/js/lookup/rubicon/rubiconVulcan.js',
 		'//extensions/wikia/AdEngine/js/lookup/rubicon/rubiconTargeting.js',
 		'//extensions/wikia/AdEngine/js/lookup/services.js',
 		'//extensions/wikia/AdEngine/js/provider/btfBlocker.js',
@@ -837,6 +840,7 @@ $config['mobile_base_ads_js'] = [
 		'//extensions/wikia/AdEngine/js/provider/gpt/adSizeFilter.js',
 		'//extensions/wikia/AdEngine/js/provider/gpt/adSizeConverter.js',
 		'//extensions/wikia/AdEngine/js/provider/gpt/googleTag.js',
+		'//extensions/wikia/AdEngine/js/provider/gpt/googleSlots.js',
 		'//extensions/wikia/AdEngine/js/provider/gpt/helper.js',
 		'//extensions/wikia/AdEngine/js/provider/paidAssetDrop.js',
 		'//extensions/wikia/AdEngine/js/provider/remnantGptMobile.js',
@@ -844,6 +848,7 @@ $config['mobile_base_ads_js'] = [
 		'//extensions/wikia/AdEngine/js/utils/AdLogicZoneParams.js',
 		'//extensions/wikia/AdEngine/js/utils/eventDispatcher.js',
 		'//extensions/wikia/AdEngine/js/utils/hooks.js',
+		'//extensions/wikia/AdEngine/js/utils/math.js',
 		'//extensions/wikia/AdEngine/js/video/playwire.js',
 		'//extensions/wikia/AdEngine/js/video/vastBuilder.js',
 
@@ -945,6 +950,7 @@ $config['interactivemaps_ads_js'] = [
 		'//extensions/wikia/AdEngine/js/provider/gpt/adSizeFilter.js',
 		'//extensions/wikia/AdEngine/js/provider/gpt/adSizeConverter.js',
 		'//extensions/wikia/AdEngine/js/provider/gpt/googleTag.js',
+		'//extensions/wikia/AdEngine/js/provider/gpt/googleSlots.js',
 		'//extensions/wikia/AdEngine/js/provider/gpt/helper.js',
 		'//extensions/wikia/AdEngine/js/SlotTweaker.js',
 		'//extensions/wikia/AdEngine/InteractiveMaps/ads.js',
@@ -3036,36 +3042,6 @@ $config['design_system_scss'] = [
 	'assets' => [
 		'//extensions/wikia/DesignSystem/bower_components/design-system/dist/styles.scss',
 		'//extensions/wikia/DesignSystem/styles/design-system.scss',
-	],
-];
-
-$config['contribution_appreciation_js'] = [
-	'type' => AssetsManager::TYPE_JS,
-	'skin' => [ 'oasis' ],
-	'assets' => [
-		'//extensions/wikia/ContributionAppreciation/scripts/ContributionAppreciation.js',
-	],
-];
-
-$config['contribution_appreciation_user_js'] = [
-	'type' => AssetsManager::TYPE_JS,
-	'skin' => [ 'oasis' ],
-	'assets' => [
-		'//extensions/wikia/ContributionAppreciation/scripts/UserContributionAppreciation.js',
-	],
-];
-
-$config['contribution_appreciation_scss'] = [
-	'type' => AssetsManager::TYPE_SCSS,
-	'assets' => [
-		'//extensions/wikia/ContributionAppreciation/styles/ContributionAppreciation.scss',
-	],
-];
-
-$config['contribution_appreciation_user_scss'] = [
-	'type' => AssetsManager::TYPE_SCSS,
-	'assets' => [
-		'//extensions/wikia/ContributionAppreciation/styles/UserContributionAppreciation.scss',
 	],
 ];
 
