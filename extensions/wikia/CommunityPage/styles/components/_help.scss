@@ -6,23 +6,26 @@
 $small-icon-size: 18px;
 $big-icon-size: 30px;
 $help-module-margin: 12px;
-$help-module-padding-bottom: 20px;
+$help-module-padding: 24px;
+$help-module-padding-side: 18px;
 $help-module-link-padding: 12px;
+$help-module-title-padding: 3px;
 $policy-link-padding-top: 18px;
 $policy-link-margin-top: 14px;
 
 $help-module-link-line-height: 18px;
 
 .community-page-help-module {
-	padding-bottom: $help-module-padding-bottom;
+	&.community-page-module-box {
+		padding: $help-module-padding $help-module-padding-side;
+	}
 
 	.community-page-module-section-title {
 		@include flexbox();
 
-		align-items: center;
-
 		svg {
 			fill: $color-alternate-text;
+			flex-shrink: 0;
 			height: $big-icon-size;
 			width: $big-icon-size;
 		}
@@ -31,16 +34,17 @@ $help-module-link-line-height: 18px;
 	.community-page-policy-link {
 		@include flexbox();
 
-		align-items: center;
+		align-items: flex-start;
 		border-top: 1px solid $color-page-border;
 		font-size: $typescale-size-minus-1;
 		line-height: $help-module-link-line-height;
 		margin-top: $policy-link-margin-top;
-		padding: $policy-link-padding-top 0;
+		padding-top: $policy-link-padding-top;
 
 		svg {
 			fill: $color-links;
-			height: $small-icon-size;
+			flex-shrink: 0;
+			height: auto;
 			width: $small-icon-size;
 		}
 	}
@@ -51,6 +55,7 @@ $help-module-link-line-height: 18px;
 
 	.community-page-help-module-title {
 		margin-left: $help-module-margin;
+		padding-top: $help-module-title-padding;
 	}
 
 	.community-page-help-module-links {
