@@ -357,8 +357,9 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 			$userId = $contributor[ 'userId' ];
 			$user = User::newFromId( $userId );
 			$userName = $user->getName();
+			$userGroups = $user->getEffectiveGroups();
+			$badge = $this->getUserBadgeMarkup( $userGroups );
 			$avatar = AvatarService::renderAvatar( $userName, $avatarSize );
-			$badge = $this->getUserBadge( $userId );
 			$count += 1;
 
 			if ( User::isIp( $userName ) ) {
@@ -375,7 +376,7 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 				'count' => $count,
 				'isAdmin' => $contributor[ 'isAdmin' ] ?? false,
 				'timeAgo' => $contributor[ 'timeAgo' ] ?? null,
-				'badge' => $badge ? DesignSystemHelper::getSvg( $badge ) : ''
+				'badge' => $badge
 			];
 		}, $contributors );
 	}
@@ -454,15 +455,14 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 	}
 
 	/**
-	 * @param $userId
-	 * @return string name of DS svg file with proper badge
+	 * @param $userGroups
+	 * @return string markup of svg to be used in template
+	 * or empty string if no badge applicable
 	 */
-	private function getUserBadge( $userId ) {
-		$userGroups = User::newFromId( $userId )->getEffectiveGroups();
-
+	private function getUserBadgeMarkup( $userGroups ) {
 		foreach ( self::PERMISSION_HIERARCHY as $group ) {
 			if ( in_array( $group, $userGroups ) ) {
-				return self::PERMISSIONS_TO_BADGES[ $group ];
+				return DesignSystemHelper::getSvg( self::PERMISSIONS_TO_BADGES[ $group ] );
 			}
 		}
 
