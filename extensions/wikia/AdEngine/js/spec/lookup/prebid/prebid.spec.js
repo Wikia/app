@@ -3,7 +3,6 @@ describe('ext.wikia.adEngine.lookup.prebid', function () {
 	'use strict';
 
 	var insertBefore = jasmine.createSpy('insertBefore'),
-		slotParams = {},
 		mocks = {
 			adContext: {
 				getContext: function () {
@@ -159,7 +158,6 @@ describe('ext.wikia.adEngine.lookup.prebid', function () {
 			pageType: 'article'
 		};
 		mocks.targeting.skin = 'oasis';
-		slotParams = {};
 		prebid = getPrebid();
 		spyOn(mocks.adTracker, 'track');
 		spyOn(mocks.win.pbjs.que, 'push');
