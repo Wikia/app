@@ -1,0 +1,8 @@
+.wds-avatar {
+	@include square(28px);
+	border: solid 2px currentColor;
+
+	&.wds-is-circle {
+		border-radius: 50%;
+	}
+}
