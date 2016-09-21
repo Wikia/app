@@ -354,8 +354,7 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 		$count = 0;
 
 		return array_map( function ( $contributor ) use ( &$count, $avatarSize ) {
-			$userId = $contributor[ 'userId' ];
-			$user = User::newFromId( $userId );
+			$user = User::newFromId( $contributor[ 'userId' ] );
 			$userName = $user->getName();
 			$userGroups = $user->getEffectiveGroups();
 			$badge = $this->getUserBadgeMarkup( $userGroups );
