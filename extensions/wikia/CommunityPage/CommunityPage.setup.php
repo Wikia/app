@@ -17,6 +17,7 @@ $wgAutoloadClasses['CommunityPageEntryPointController'] = $IP . '/skins/oasis/mo
 
 /* helpers */
 $wgAutoloadClasses['WikiTopic'] = __DIR__ . '/helpers/WikiTopic.php';
+$wgAutoloadClasses['LinkHelper'] = __DIR__ . '/helpers/LinkHelper.php';
 
 /* hooks */
 $wgAutoloadClasses['CommunityPageSpecialHooks'] =  __DIR__ . '/CommunityPageSpecialHooks.class.php';
