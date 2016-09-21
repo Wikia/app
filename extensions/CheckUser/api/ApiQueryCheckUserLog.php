@@ -28,10 +28,10 @@ class ApiQueryCheckUserLog extends ApiQueryBase {
 			'cul_reason', 'cul_type', 'cul_target_id', 'cul_target_text') );
 
 		if ( isset( $user ) ) {
-			$this->addWhereFld( 'cul_user', \User::idFromName( $user ) );
+			$this->addWhereFld( 'cul_user', User::idFromName( $user ) );
 		}
 		if ( isset( $target ) ) {
-			$targetId = \User::idFromName( $target );
+			$targetId = User::idFromName( $target );
 			if ( $targetId ) {
 				$this->addWhereFld( 'cul_target_id', $targetId );
 			} else {
@@ -46,10 +46,10 @@ class ApiQueryCheckUserLog extends ApiQueryBase {
 		foreach ( $res as $row ) {
 			$log[] = array(
 				'timestamp' => wfTimestamp( TS_ISO_8601, $row->cul_timestamp ),
-				'checkuser' => \User::getUsername( $row->cul_user, $row->cul_user_text ),
+				'checkuser' => User::getUsername( $row->cul_user, $row->cul_user_text ),
 				'type'      => $row->cul_type,
 				'reason'    => $row->cul_reason,
-				'target'    => \User::getUsername( $row->cul_target_id, $row->cul_target_text ),
+				'target'    => User::getUsername( $row->cul_target_id, $row->cul_target_text ),
 			);
 		}
 
