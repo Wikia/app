@@ -11,20 +11,13 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 	const MODAL_IMAGE_MIN_RATIO = 0.85;
 	const DEFAULT_MODULES_MAX = 3;
 
-	const BADGE_ADMIN = 'bla bla.svg'; //sysop
-	const BADGE_STAFF = 'bla bla.svg'; //staff
-	const BADGE_HELPER = 'bla bla.svg'; //helper
-	const BADGE_VSTF = 'bla bla.svg'; //vstf
-	const BADGE_MODERATOR = 'bla bla.svg'; //contentmoderator
-	const BADGE_DISCUSSIONS_MODERATOR = 'bla bla.svg'; // threadmoderator
-
 	const PERMISSIONS_HIERARCHY = [
-		'sysop' => 'bla bla.svg',
-		'staff' => 'bla bla.svg',
-		'helper' => 'bla bla.svg',
-		'vstf' => 'bla bla.svg',
-		'content-moderator' => 'bla bla.svg',
-		'threadmoderator' => 'bla bla.svg'
+		'sysop' => 'wds-icons-badge-admin',
+		'staff' => 'wds-icons-badge-fandom',
+		'helper' => 'wds-icons-help',
+		'vstf' => 'wds-icons-badge-vstf',
+		'content-moderator' => 'wds-icons-badge-content-moderator',
+		'threadmoderator' => 'wds-icons-badge-discussion-moderator'
 	];
 
 	private $usersModel;
@@ -355,7 +348,7 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 				'count' => $count,
 				'isAdmin' => $contributor[ 'isAdmin' ] ?? false,
 				'timeAgo' => $contributor[ 'timeAgo' ] ?? null,
-				'badge' => DesignSystemHelper::getSvg( 'wds-icons-badge-admin' )
+				'badge' => DesignSystemHelper::getSvg( $badge )
 			];
 		}, $contributors );
 	}
@@ -432,10 +425,13 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 	}
 
 	private function getUserBadge( $userId ) {
-		$user = User::newFromId( $userId );
-		$groups = $user->getEffectiveGroups();
+		$userGroups = User::newFromId( $userId )->getEffectiveGroups();
 
-		//var_dump($groups);
+		foreach ( self::PERMISSIONS_HIERARCHY as $group => $svgFile ) {
+			if ( in_array( $group, $userGroups ) ) {
+				return $svgFile;
+			}
+		}
 
 		return '';
 	}
