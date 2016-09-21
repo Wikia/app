@@ -31,6 +31,7 @@ $logo-border-radius: $logo-size / 2;
 		background: $color-white url($logo-url) 50% 50%/18px 18px no-repeat; /* inline */
 		border: 1px solid $color-page-border;
 		border-radius: $logo-border-radius;
+		box-sizing: border-box;
 		height: $logo-size;
 		left: 50%;
 		position: absolute;
