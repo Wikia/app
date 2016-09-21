@@ -13,7 +13,7 @@
 		</div>
 	<?php elseif ( isset ( $model['header'] ) ) : ?>
 		<h2 class="wds-global-footer__header">
-			<a href="<?= Sanitizer::encodeAttribute( $model['header']['href'] ) ?>"
+			<a href="<?= Sanitizer::encodeAttribute( $model['header']['href'] ); ?>">
 				<?= DesignSystemHelper::getSvg(
 					$model['header']['image'],
 					'wds-global-footer__header-logo'
