@@ -2,59 +2,55 @@
 @import 'extensions/wikia/DesignSystem/bower_components/design-system/base/colors';
 @import 'extensions/wikia/DesignSystem/bower_components/design-system/base/typography';
 @import 'skins/shared/mixins/flexbox';
+@import 'variables';
 
 $small-icon-size: 18px;
 $big-icon-size: 30px;
-$help-module-margin: 12px;
-$help-module-padding: 24px;
-$help-module-padding-side: 18px;
-$help-module-link-padding: 12px;
 $help-module-title-padding: 3px;
-$policy-link-padding-top: 18px;
-$policy-link-margin-top: 14px;
-
 $help-module-link-line-height: 18px;
 
 .community-page-help-module {
 	&.community-page-module-box {
-		padding: $help-module-padding $help-module-padding-side;
+		padding: $content-spacing-large $content-spacing-regular;
 	}
 
 	.community-page-module-section-title {
 		@include flexbox();
 
 		svg {
+			@include flex-shrink(0);
+
 			fill: $color-alternate-text;
-			flex-shrink: 0;
 			height: $big-icon-size;
 			width: $big-icon-size;
 		}
 	}
 
 	.community-page-policy-link {
+		@include align-items(flex-start);
 		@include flexbox();
 
-		align-items: flex-start;
 		border-top: 1px solid $color-page-border;
 		font-size: $typescale-size-minus-1;
 		line-height: $help-module-link-line-height;
-		margin-top: $policy-link-margin-top;
-		padding-top: $policy-link-padding-top;
+		margin-top: $content-spacing-small-plus;
+		padding-top: $content-spacing-regular;
 
 		svg {
+			@include flex-shrink(0);
+
 			fill: $color-links;
-			flex-shrink: 0;
 			height: auto;
 			width: $small-icon-size;
 		}
 	}
 
 	.community-page-help-module-policy-title {
-		margin-left: $help-module-margin;
+		margin-left: $content-spacing-small;
 	}
 
 	.community-page-help-module-title {
-		margin-left: $help-module-margin;
+		margin-left: $content-spacing-small;
 		padding-top: $help-module-title-padding;
 	}
 
@@ -66,8 +62,7 @@ $help-module-link-line-height: 18px;
 		line-height: $help-module-link-line-height;
 
 		a {
-			padding-bottom: $help-module-link-padding;
-			padding-top: $help-module-link-padding;
+			padding: $content-spacing-small 0;
 		}
 	}
 }
