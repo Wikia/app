@@ -152,15 +152,18 @@ define('ext.createNewWiki.builder', ['ext.createNewWiki.helper', 'wikia.tracker'
 						$.showModal(res.msgHeader, res.msgBody);
 						descWikiNext.attr('disabled', false);
 					} else {
+						var descriptionLabel = descriptionVal === WikiBuilderCfg.descriptionplaceholder ?
+							'wiki-description-empty' :
+							'wiki-description-not-empty';
+
 						track({
 							action: tracker.ACTIONS.SUCCESS,
 							label: 'wiki-description-phalanx-validation'
 						});
 
-						var label = descriptionVal === WikiBuilderCfg.descriptionplaceholder ? 'wiki-description-empty' : 'wiki-description-not-empty';
 						track({
 							action: tracker.ACTIONS.SUBMIT,
-							label: label
+							label: descriptionLabel
 						});
 
 						// call create wiki ajax
