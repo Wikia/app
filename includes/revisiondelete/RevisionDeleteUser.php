@@ -119,13 +119,14 @@ class RevisionDeleteUser {
 				[ 'method' => __METHOD__, 'exception' => new Exception() ]
 			);
 		}
-		# Wikia change end
+		$faWhereCondition = $userId ? array( 'fa_user' => $userId ) : array( 'fa_user_text' => $name );
 		$dbw->update(
 			'filearchive',
 			array( "fa_deleted = fa_deleted $op $delUser" ),
-			array( 'fa_user_text' => $name ),
+			$faWhereCondition,
 			__METHOD__
 		);
+		# Wikia change end
 		# Done!
 		return true;
 	}

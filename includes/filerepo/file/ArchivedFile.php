@@ -165,13 +165,7 @@ class ArchivedFile {
 			$this->description = $row->fa_description;
 			$this->user = $row->fa_user;
 			/* Wikia change begin */
-			if ( ( new Wikia\Util\Statistics\BernoulliTrial( 0.01 ) )->shouldSample() ) {
-				Wikia\Logger\WikiaLogger::instance()->debug(
-					'SUS-810',
-					[ 'method' => __METHOD__, 'exception' => new Exception() ]
-				);
-			}
-			$this->user_text = ( $row->fa_user > 0 ) ? User::newFromId( $row->fa_user )->getName() : $row->fa_user_text;
+			$this->user_text = User::getUsername( $row->fa_user, $row->fa_user_text);
 			/* Wikia change end */
 			$this->timestamp = $row->fa_timestamp;
 			$this->deleted = $row->fa_deleted;
@@ -210,17 +204,7 @@ class ArchivedFile {
 		$file->description = $row->fa_description;
 		$file->user = $row->fa_user;
 		/* Wikia change begin */
-		if ( ( new Wikia\Util\Statistics\BernoulliTrial( 0.01 ) )->shouldSample() ) {
-			Wikia\Logger\WikiaLogger::instance()->debug(
-				'SUS-810',
-				[ 'method' => __METHOD__, 'exception' => new Exception() ]
-			);
-		}
-		if ( is_numeric( $row->fa_user ) && $row->fa_user > 0 ) {
-			$file->user_text = User::newFromId( $row->fa_user )->getName();
-		} else {
-			$file->user_text = $row->fa_user_text;
-		}
+		$file->user_text = User::getUsername( $row->fa_user, $row->fa_user_text );
 		/* Wikia change end */
 		$file->timestamp = $row->fa_timestamp;
 		$file->deleted = $row->fa_deleted;

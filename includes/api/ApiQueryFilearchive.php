@@ -144,20 +144,9 @@ class ApiQueryFilearchive extends ApiQueryBase {
 				$file['timestamp'] = wfTimestamp( TS_ISO_8601, $row->fa_timestamp );
 			}
 			if ( $fld_user ) {
-				$user_text_is_used = true;
 				$file['userid'] = $row->fa_user;
 				/* Wikia change begin */
-				if ( ( new Wikia\Util\Statistics\BernoulliTrial( 0.01 ) )->shouldSample() ) {
-					Wikia\Logger\WikiaLogger::instance()->debug(
-						'SUS-810',
-						[ 'method' => __METHOD__, 'exception' => new Exception() ]
-					);
-				}
-				if ( $row->fa_user > 0 ) {
-					$file['user'] = User::newFromId( $row->fa_user )->getName();
-				} else {
-					$file['user'] = $row->fa_user_text;
-				}
+				$file['user'] = User::getUsername( $row->fa_user, $row->fa_user_text );
 				/* Wikia change end */
 			}
 			if ( $fld_size || $fld_dimensions ) {
