@@ -28,6 +28,13 @@ $wgAutoloadClasses['CrosslinkTagController'] =  $dir . 'CrosslinkTagController.c
 $wgAutoloadClasses['CrosslinkTagHelper'] =  $dir . 'CrosslinkTagHelper.class.php';
 
 /**
+ * hooks
+ */
+$wgHooks['ParserFirstCallInit'][] = 'CrosslinkTagController::onParserFirstCallInit';
+$wgHooks['ParserAfterTidy'][] = 'CrosslinkTagController::onParserAfterTidy';
+$wgHooks['ArticleAsJsonBeforeEncode'][] = 'CrosslinkTagController::onArticleAsJsonBeforeEncode';
+
+/**
  * messages
  */
 $wgExtensionMessagesFiles['CrosslinkTag'] = $dir . 'CrosslinkTag.i18n.php';

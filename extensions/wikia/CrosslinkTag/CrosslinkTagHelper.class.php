@@ -10,44 +10,41 @@ class CrosslinkTagHelper extends WikiaModel {
 	const VALID_HOST = 'fandom.wikia.com';
 
 	/**
-	 * Get data for the article
+	 * Get data for the article by slug
 	 * @param string $slug - alphanumeric id
 	 * @return array|false
 	 */
-	public function getArticleData( $slug ) {
+	public function getArticleDataBySlug( $slug ) {
 		$cacheKey = $this->getMemcKey( $slug );
 		$data = $this->wg->Memc->get( $cacheKey );
 		if ( !is_array( $data ) ) {
 			$params = [
 				'_embed' => 1,
 				'context' => 'embed',
-				'per_page' => 1,
 				'slug' => $slug,
 			];
 
 			$apiUrl = self::FANDOM_API_URL.'?' . http_build_query( $params );
-
 			$method = 'GET';
 			$options = [ 'noProxy' => true ];
+
 			$response = Http::request( $method, $apiUrl, $options );
 			if ( $response === false ) {
 				return false;
 			}
 
 			$data = [];
-			if ( !empty( $response ) ) {
-				$response = json_decode( $response, true );
-				if ( is_array( $response ) ) {
-					$result = array_pop( $response );
+			$response = json_decode( $response, true );
+			if ( is_array( $response ) ) {
+				$result = array_pop( $response );
 
-					$data = [
-						'title' => $result['title']['rendered'],
-						'id' => $result['id'],
-						'description' => trim( strip_tags( $result['excerpt']['rendered'] ) ),
-						'url' => $result['link'],
-						'imageUrl' => $this->getImageUrl( $result ),
-					];
-				}
+				$data = [
+					'title' => $result['title']['rendered'],
+					'id' => $result['id'],
+					'description' => trim( strip_tags( $result['excerpt']['rendered'] ) ),
+					'url' => $result['link'],
+					'imageUrl' => $this->getImageUrl( $result ),
+				];
 			}
 
 			$this->wg->Memc->set( $cacheKey, $data, self::CACHE_TTL );
@@ -58,11 +55,11 @@ class CrosslinkTagHelper extends WikiaModel {
 
 	/**
 	 * Get memcache key
-	 * @param string $slug
+	 * @param string $name - unique name (slug)
 	 * @return string
 	 */
-	public function getMemcKey( $slug ) {
-		return wfSharedMemcKey( 'crosslinktag', 'fandom', md5( $slug ) );
+	public function getMemcKey( $name ) {
+		return wfSharedMemcKey( 'crosslinktag', 'fandom', md5( $name ) );
 	}
 
 	/**
