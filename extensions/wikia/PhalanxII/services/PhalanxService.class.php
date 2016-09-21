@@ -21,6 +21,13 @@ class PhalanxService extends Service {
 	const PHALANX_SERVICE_TRIES_LIMIT = 3; // number of retries for phalanx POST requests
 	const PHALANX_SERVICE_TRY_USLEEP = 20000; // delay between retries - 0.2s
 
+	/**
+	 * @var int PHALANX_SERVICE_RELOAD_TIMEOUT
+	 * SUS-964: Give Phalanx /reload requests more time to succeed (25 seconds, the old default for $wgHttpTimeout)
+	 * This does not affect site performance - /reload requests are sent only upon saving/modifying a block.
+	 */
+	const PHALANX_SERVICE_RELOAD_TIMEOUT = 25;
+
 	protected function getLoggerContext() {
 		return [
 			'class' => __CLASS__
@@ -202,6 +209,13 @@ class PhalanxService extends Service {
 					}
 					$loggerPostParams[ $key ] = substr( json_encode( $values ), 0, self::PHALANX_LOG_PARAM_LENGTH_LIMIT );
 				}
+			}
+
+			// SUS-964: Give reload requests more time to succeed
+			// Reload requests are only sent upon saving/modifying a block,
+			// so using a higher value here won't affect site performance
+			if ( $action === 'reload' ) {
+				$options['timeout'] = static::PHALANX_SERVICE_RELOAD_TIMEOUT;
 			}
 
 			$options["postData"] = implode( "&", $postData );
