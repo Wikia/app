@@ -913,11 +913,7 @@ class WikiOAIRecord extends OAIRecord {
 				$url = $wgServer . $url;
 			}
 			/* Wikia change begin */
-			if ( $imageRow->img_user > 0 ) {
-				$username = User::newFromId( $imageRow->img_user )->getName();
-			} else {
-				$username = $imageRow->img_user_text;
-			}
+			$username = User::getUsername( $imageRow->img_user, $imageRow->img_user_text );
 			return implode( "\n", array(
 				"<upload>",
 				oaiTag( 'timestamp', array(), wfTimestamp( TS_ISO_8601, $imageRow->img_timestamp ) ),

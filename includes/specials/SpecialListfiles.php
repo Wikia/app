@@ -192,7 +192,7 @@ class ImageListPager extends TablePager {
 			foreach ( $this->mResult as $row ) {
 				if ( $row->img_user ) {
 					/* Wikia change begin */
-					$row->img_user_text = User::newFromId( $row->img_user )->getName();
+					$row->img_user_text = User::getUsername( $row->img_user, $row->img_user_text );
 					/* Wikia change end */
 					$lb->add( NS_USER, str_replace( ' ', '_', $row->img_user_text ) );
 				}
@@ -244,7 +244,7 @@ class ImageListPager extends TablePager {
 			case 'img_user_text':
 				if ( $this->mCurrentRow->img_user ) {
 					/* Wikia change begin */
-					$value = User::newFromId( $this->mCurrentRow->img_user )->getName();
+					$value = User::getUsername( $this->mCurrentRow->img_user, $this->mCurrentRow->img_user_text );
 					/* Wikia change end */
 					$link = Linker::link(
 						Title::makeTitle( NS_USER, $value ),

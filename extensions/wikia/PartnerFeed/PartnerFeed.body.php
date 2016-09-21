@@ -396,7 +396,7 @@ class PartnerFeed extends SpecialPage {
 				'description' => $row->img_name,
 				'url' => $tmpTitle->getFullURL(),
 				'date' => $image->getTimestamp(),
-				'author' => ( $row->img_user > 0 ) ? User::newFromId( $row->img_user )->getName() : $row->img_user_text,
+				'author' => User::getUsername( $row->img_user, $row->img_user_text ),
 				'otherTags' => [
 						'image' => $testImage
 				]

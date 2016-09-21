@@ -104,9 +104,7 @@ class MIMEsearchPage extends QueryPage {
 			$lang->formatNum( $result->img_height )
 		) );
 		/* Wikia change begin */
-		if ( $result->img_user > 0 ) {
-			$result->img_user_text = User::newFromId( $result->img_user )->getName();
-		}
+		$result->img_user_text = User::getUsername( $result->img_user, $result->img_user_text );
 		/* Wikia change end */
 		$user = Linker::link( Title::makeTitle( NS_USER, $result->img_user_text ), htmlspecialchars( $result->img_user_text ) );
 		$time = htmlspecialchars( $lang->timeanddate( $result->img_timestamp ) );

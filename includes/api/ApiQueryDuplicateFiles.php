@@ -112,9 +112,10 @@ class ApiQueryDuplicateFiles extends ApiQueryGeneratorBase {
 				$titles[] = Title::makeTitle( NS_FILE, $row->dup_name );
 			} else {
 				/* Wikia change begin */
+				$username = User::getUsername( $row->dup_user, $row->dup_user_text );
 				$r = array(
 					'name' => $row->dup_name,
-					'user' => ( $row->dup_user > 0 ) ? User::newFromId( $row->dup_user )->getName() : $row->dup_user_text,
+					'user' => $username,
 					'timestamp' => wfTimestamp( TS_ISO_8601, $row->dup_timestamp )
 				);
 				/* Wikia change end */
