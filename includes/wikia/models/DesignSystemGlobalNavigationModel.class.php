@@ -243,7 +243,7 @@ class DesignSystemGlobalNavigationModel extends WikiaModel {
 				],
 				[
 					'type' => 'link-text',
-					'href' => $this->getPageUrl( 'Contents', NS_HELP ),
+					'href' => $this->getHref( 'help' ),
 					'title' => [
 						'type' => 'translatable-text',
 						'key' => 'global-navigation-user-help'

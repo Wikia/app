@@ -86,7 +86,9 @@ class DesignSystemSharedLinks {
 			'social-youtube' => 'https://www.youtube.com/user/WikiaDE',
 			'social-instagram' => 'https://www.instagram.com/wikia_de/',
 			'app-store' => 'https://itunes.apple.com/de/artist/wikia-inc./id422467077',
-			'google-play' => 'https://play.google.com/store/apps/developer?id=Wikia,+Inc.&hl=de'
+			'google-play' => 'https://play.google.com/store/apps/developer?id=Wikia,+Inc.&hl=de',
+			'user-signin' => 'https://www.wikia.com/signin?uselang=de',
+			'user-register' => 'https://www.wikia.com/register?uselang=de',
 		],
 		'en' => [
 			'fan-contributor' => 'http://fandom.wikia.com/fan-contributor',
@@ -116,7 +118,9 @@ class DesignSystemSharedLinks {
 			'social-youtube' => 'https://www.youtube.com/channel/UCjwNzRwdDqpmELNZsJv3PSg',
 			'social-instagram' => 'https://www.instagram.com/wikiaes/',
 			'app-store' => 'https://itunes.apple.com/es/artist/wikia-inc./id422467077',
-			'google-play' => 'https://play.google.com/store/apps/developer?id=Wikia,+Inc.&hl=es'
+			'google-play' => 'https://play.google.com/store/apps/developer?id=Wikia,+Inc.&hl=es',
+			'user-signin' => 'https://www.wikia.com/signin?uselang=es',
+			'user-register' => 'https://www.wikia.com/register?uselang=es',
 		],
 		'fr' => [
 			'explore-wikis' => 'http://fr.wikia.com/Wikia',
@@ -135,7 +139,9 @@ class DesignSystemSharedLinks {
 			'social-twitter' => 'https://twitter.com/wikia_fr',
 			'social-youtube' => 'https://www.youtube.com/channel/UClzAEgYaMs0SyDnXS4cyefg',
 			'app-store' => 'https://itunes.apple.com/fr/artist/wikia-inc./id422467077',
-			'google-play' => 'https://play.google.com/store/apps/developer?id=Wikia,+Inc.&hl=fr'
+			'google-play' => 'https://play.google.com/store/apps/developer?id=Wikia,+Inc.&hl=fr',
+			'user-signin' => 'https://www.wikia.com/signin?uselang=fr',
+			'user-register' => 'https://www.wikia.com/register?uselang=fr',
 		],
 		'it' => [
 			'explore-wikis' => 'http://it.community.wikia.com/wiki/Wiki_della_Community',
@@ -151,7 +157,9 @@ class DesignSystemSharedLinks {
 			'social-facebook' => 'https://www.facebook.com/wikia.it',
 			'social-twitter' => 'https://twitter.com/wikia_it',
 			'app-store' => 'https://itunes.apple.com/it/artist/wikia-inc./id422467077',
-			'google-play' => 'https://play.google.com/store/apps/developer?id=Wikia,+Inc.&hl=it'
+			'google-play' => 'https://play.google.com/store/apps/developer?id=Wikia,+Inc.&hl=it',
+			'user-signin' => 'https://www.wikia.com/signin?uselang=it',
+			'user-register' => 'https://www.wikia.com/register?uselang=it',
 		],
 		'ja' => [
 			'explore-wikis' => 'http://ja.wikia.com/',
@@ -169,7 +177,9 @@ class DesignSystemSharedLinks {
 			'media-kit' => 'http://www.wikia.com/mediakit?uselang=ja',
 			'social-twitter' => 'https://twitter.com/wikiajapan',
 			'app-store' => 'https://itunes.apple.com/jp/artist/wikia-inc./id422467077',
-			'google-play' => 'https://play.google.com/store/apps/developer?id=Wikia,+Inc.&hl=ja'
+			'google-play' => 'https://play.google.com/store/apps/developer?id=Wikia,+Inc.&hl=ja',
+			'user-signin' => 'https://www.wikia.com/signin?uselang=ja',
+			'user-register' => 'https://www.wikia.com/register?uselang=ja',
 		],
 		'pl' => [
 			'explore-wikis' => 'http://pl.wikia.com/Wikia',
@@ -187,7 +197,9 @@ class DesignSystemSharedLinks {
 			'social-facebook' => 'https://www.facebook.com/wikiapl',
 			'social-twitter' => 'https://twitter.com/wikia_pl',
 			'app-store' => 'https://itunes.apple.com/pl/artist/wikia-inc./id422467077',
-			'google-play' => 'https://play.google.com/store/apps/developer?id=Wikia,+Inc.&hl=pl'
+			'google-play' => 'https://play.google.com/store/apps/developer?id=Wikia,+Inc.&hl=pl',
+			'user-signin' => 'https://www.wikia.com/signin?uselang=pl',
+			'user-register' => 'https://www.wikia.com/register?uselang=pl',
 		],
 		'pt-br' => [
 			'explore-wikis' => 'http://pt-br.wikia.com/wiki/Wikia_em_Portugu%C3%AAs',
@@ -205,7 +217,9 @@ class DesignSystemSharedLinks {
 			'social-twitter' => 'https://twitter.com/WikiaBR',
 			'social-youtube' => 'https://www.youtube.com/channel/UCi8B4eUGFLU7SjHWFIjt3WQ',
 			'app-store' => 'https://itunes.apple.com/br/artist/wikia-inc./id422467077',
-			'google-play' => 'https://play.google.com/store/apps/developer?id=Wikia,+Inc.&hl=pt-br'
+			'google-play' => 'https://play.google.com/store/apps/developer?id=Wikia,+Inc.&hl=pt-br',
+			'user-signin' => 'https://www.wikia.com/signin?uselang=pt-br',
+			'user-register' => 'https://www.wikia.com/register?uselang=pt-br',
 		],
 		'ru' => [
 			'explore-wikis' => 'http://ru.wikia.com/wiki/%D0%92%D0%B8%D0%BA%D0%B8%D1%8F_%D0%BD%D0%B0_%D1%80%D1%83%D1%81%D1%81%D0%BA%D0%BE%D0%BC',
@@ -224,7 +238,9 @@ class DesignSystemSharedLinks {
 			'social-twitter' => 'https://twitter.com/wikia_ru',
 			'social-youtube' => 'https://www.youtube.com/user/ruWikia',
 			'app-store' => 'https://itunes.apple.com/ru/artist/wikia-inc./id422467077',
-			'google-play' => 'https://play.google.com/store/apps/developer?id=Wikia,+Inc.&hl=ru'
+			'google-play' => 'https://play.google.com/store/apps/developer?id=Wikia,+Inc.&hl=ru',
+			'user-signin' => 'https://www.wikia.com/signin?uselang=ru',
+			'user-register' => 'https://www.wikia.com/register?uselang=ru',
 		],
 		'zh' => [
 			'explore-wikis' => 'http://zh.wikia.com/wiki/Wikia%E4%B8%AD%E6%96%87',
@@ -238,7 +254,9 @@ class DesignSystemSharedLinks {
 			'help' => 'http://zh.community.wikia.com/wiki/Help:%E5%86%85%E5%AE%B9',
 			'social-facebook' => 'https://www.facebook.com/ChineseWikia',
 			'app-store' => 'https://itunes.apple.com/cn/artist/wikia-inc./id422467077',
-			'google-play' => 'https://play.google.com/store/apps/developer?id=Wikia,+Inc.&hl=zh'
+			'google-play' => 'https://play.google.com/store/apps/developer?id=Wikia,+Inc.&hl=zh',
+			'user-signin' => 'https://www.wikia.com/signin?uselang=zh',
+			'user-register' => 'https://www.wikia.com/register?uselang=zh',
 		],
 		'zh-tw' => [
 			'explore-wikis' => 'http://zh-tw.wikia.com/wiki/Wikia%E4%B8%AD%E6%96%87',
@@ -254,7 +272,9 @@ class DesignSystemSharedLinks {
 			'help' => 'http://zh.community.wikia.com/wiki/Help:%E5%86%85%E5%AE%B9',
 			'social-facebook' => 'https://www.facebook.com/ChineseWikia',
 			'app-store' => 'https://itunes.apple.com/tw/artist/wikia-inc./id422467077',
-			'google-play' => 'https://play.google.com/store/apps/developer?id=Wikia,+Inc.&hl=zh-tw'
+			'google-play' => 'https://play.google.com/store/apps/developer?id=Wikia,+Inc.&hl=zh-tw',
+			'user-signin' => 'https://www.wikia.com/signin?uselang=zh-tw',
+			'user-register' => 'https://www.wikia.com/register?uselang=zh-tw',
 		]
 	];
 }
