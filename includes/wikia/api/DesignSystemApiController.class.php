@@ -80,7 +80,7 @@ class DesignSystemApiController extends WikiaApiController {
 	private function addCachingHeaders() {
 		global $wgUser;
 
-		$this->response->setHeader( 'Vary', 'Cookie' );
+		$this->response->setHeader( 'Vary', 'Accept-Encoding,Cookie' );
 
 		if ( $wgUser->isLoggedIn() ) {
 			$this->response->setCachePolicy( WikiaResponse::CACHE_PRIVATE );
