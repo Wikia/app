@@ -275,6 +275,26 @@ class DesignSystemSharedLinks {
 			'google-play' => 'https://play.google.com/store/apps/developer?id=Wikia,+Inc.&hl=zh-tw',
 			'user-signin' => 'https://www.wikia.com/signin?uselang=zh-tw',
 			'user-register' => 'https://www.wikia.com/register?uselang=zh-tw',
-		]
+		],
+		'vi' => [
+			'community-central' => 'http://congdong.wikia.com/wiki/Trang_Ch%C3%ADnh',
+			'create-new-wiki' => 'http://www.wikia.com/Special:CreateNewWiki?uselang=vi',
+			'help' => 'http://congdong.wikia.com/wiki/Tr%E1%BB%A3_gi%C3%BAp:M%E1%BB%A5c_l%E1%BB%A5c',
+		],
+		'nl' => [
+			'community-central' => 'http://nl.community.wikia.com/wiki/Centrale_Wikia_community',
+			'create-new-wiki' => 'http://www.wikia.com/Special:CreateNewWiki?uselang=nl',
+			'help' => 'http://nl.community.wikia.com/wiki/Help:Inhoud',
+		],
+		'fi' => [
+			'community-central' => 'http://yhteiso.wikia.com/wiki/Yhteis%C3%B6wiki',
+			'create-new-wiki' => 'http://www.wikia.com/Special:CreateNewWiki?uselang=fi',
+			'help' => 'http://yhteiso.wikia.com/wiki/Ohje:Sis%C3%A4ll%C3%B6t',
+		],
+		'ko' => [
+			'community-central' => 'http://ko.community.wikia.com/wiki/%EB%8C%80%EB%AC%B8',
+			'create-new-wiki' => 'http://www.wikia.com/Special:CreateNewWiki?uselang=ko',
+			'help' => 'http://ko.community.wikia.com/wiki/%EB%8F%84%EC%9B%80%EB%A7%90:%EC%BD%98%ED%85%90%EC%B8%A0',
+		],
 	];
 }
