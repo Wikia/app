@@ -41,7 +41,13 @@ $wgExtensionMessagesFiles['BannerNotification'] = $dir . 'BannerNotifications.i1
  * ResourceLoader module
  */
 $wgResourceModules['ext.bannerNotifications'] = [
+	'scripts' => [
+		'BannerNotifications.js',
+		'templates.mustache.js',
+	],
 	'messages' => [
 		'bannernotifications-general-ajax-failure',
-	]
+	],
+	'localBasePath' => __DIR__ . '/js',
+	'remoteExtPath' => 'wikia/BannerNotifications',
 ];

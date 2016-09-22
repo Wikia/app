@@ -79,15 +79,8 @@ class CommunityPageSpecialInsightsModel {
 	private function addEditLinks( $insightsPages ) {
 		foreach ( $insightsPages[ 'pages' ] as $key => $insight ) {
 			$insightsPages[ 'pages' ][ $key ][ 'link' ][ 'editlink' ]
-				= $this->getEditUrl( $insight[ 'link' ][ 'articleurl' ] );
+				= LinkHelper::forceLoginLink( Title::newFromText( $insight[ 'link' ][ 'title' ] ), LinkHelper::WITH_EDIT_MODE );
 		}
 		return $insightsPages;
-	}
-
-	private function getEditUrl( $articleUrl ) {
-		if ( EditorPreference::isVisualEditorPrimary() ) {
-			return $articleUrl . '?veaction=edit';
-		}
-		return $articleUrl . '?action=edit';
 	}
 }
