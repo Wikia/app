@@ -1,7 +1,7 @@
 $(function ($) {
 	'use strict';
 
-	$('body').on('click focusin', function(event) {
+	$('body').on('click', function(event) {
 		var $eventTarget = $(event.target),
 			$clickedToggle = $eventTarget.closest('.wds-dropdown__toggle'),
 			$clickedDropdown = $eventTarget.closest('.wds-dropdown');
