@@ -3,11 +3,13 @@
 		<div class="community-page-module-section-title">{{recentlyJoinedHeaderText}}</div>
 		<div class="community-page-recently-joined-members">
 			{{#members}}
-				<div class="badge-container">{{{badge}}}</div>
-				<div class="avatar-container">
-					<a data-tracking="recently-joined-user-avatar" href="{{profilePage}}" title="{{userName}}">
-						{{{avatar}}}
-					</a>
+				<div>
+					<div class="badge-container">{{{badge}}}</div>
+					<div class="avatar-container">
+						<a data-tracking="recently-joined-user-avatar" href="{{profilePage}}" title="{{userName}}">
+							{{{avatar}}}
+						</a>
+					</div>
 				</div>
 			{{/members}}
 		</div>

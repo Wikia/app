@@ -2,11 +2,13 @@
 <div class="community-page-admins-list reset">
 	{{#topAdminsList}}
 		<div class="community-page-admin-item">
-			<div class="badge-container">{{{badge}}}</div>
-			<div class="avatar-container">
-				<a data-tracking="top-admins-user-avatar" href="{{profilePage}}" title="{{userName}}">
-					{{{avatar}}}
-				</a>
+			<div>
+				<div class="badge-container">{{{badge}}}</div>
+				<div class="avatar-container">
+					<a data-tracking="top-admins-user-avatar" href="{{profilePage}}" title="{{userName}}">
+						{{{avatar}}}
+					</a>
+				</div>
 			</div>
 			<div class="community-page-contributor-details">
 				<a data-tracking="top-admins-user" href="{{profilePage}}">{{userName}}</a>

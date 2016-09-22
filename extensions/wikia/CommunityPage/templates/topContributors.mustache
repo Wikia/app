@@ -3,11 +3,13 @@
 	<div class="top-contributors">
 		{{#contributors}}
 			<div class="community-page-contributors-list-item">
-				<div class="badge-container">{{{badge}}}</div>
-				<div class="avatar-container">
-					<a data-tracking="top-contributors-user-avatar" href="{{profilePage}}" title="{{userName}}">
-						{{{avatar}}}
-					</a>
+				<div>
+					<div class="badge-container">{{{badge}}}</div>
+					<div class="avatar-container">
+						<a data-tracking="top-contributors-user-avatar" href="{{profilePage}}" title="{{userName}}">
+							{{{avatar}}}
+						</a>
+					</div>
 				</div>
 				<div class="community-page-contributor-rank">
 					{{count}}.

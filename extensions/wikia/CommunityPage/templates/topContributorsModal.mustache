@@ -1,8 +1,10 @@
 {{^isAnon}}
 <div class="user-details">
-	<div class="badge-container">{{{userBadge}}}</div>
-	<div class="avatar-container">
-		{{{userAvatar}}}
+	<div>
+		<div class="badge-container">{{{userBadge}}}</div>
+		<div class="avatar-container">
+			{{{userAvatar}}}
+		</div>
 	</div>
 	<div class="community-page-rank">
 		<span>{{userRank}} <small>/ {{weeklyEditorCount}}</small></span>
@@ -17,9 +19,11 @@
 <ul class="reset top-contributors">
 	{{#contributors}}
 		<li class="community-page-contributors-list-item">
-			<div class="badge-container">{{{badge}}}</div>
-			<div class="avatar-container">
-				<a data-tracking="top-contributors-user-avatar" href="{{profilePage}}">{{{avatar}}}</a>
+			<div>
+				<div class="badge-container">{{{badge}}}</div>
+				<div class="avatar-container">
+					<a data-tracking="top-contributors-user-avatar" href="{{profilePage}}">{{{avatar}}}</a>
+				</div>
 			</div>
 			<div class="community-page-contributor-rank">
 				{{count}}.
