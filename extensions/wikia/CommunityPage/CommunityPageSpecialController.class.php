@@ -94,8 +94,8 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 	 */
 	public function getTopContributorsData() {
 		$limit = $this->request->getInt( 'limit', 0 );
-		$userId = $this->getUser()->getId();
-		$currentUserContributionCount = ( new UserStatsService( $userId ) )
+		$user = $this->getUser();
+		$currentUserContributionCount = ( new UserStatsService( $user->getId() ) )
 			->getEditCountFromWeek();
 		$topContributors = $this->usersModel->getTopContributors();
 		$topContributorsCount = count( $topContributors );
@@ -128,7 +128,6 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 			->rawParams( $login, $register )
 			->escaped();
 
-		$userBadge = $this->getUserBadge( $userId );
 		$this->response->setData( [
 			'admin' => $this->msg( 'communitypage-admin' )->text(),
 			'topContributorsHeaderText' => $this->msg( 'communitypage-top-contributors-week' )->text(),
@@ -143,7 +142,7 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 				$this->getUser()->getName(),
 				AvatarService::AVATAR_SIZE_SMALL_PLUS
 			),
-			'userBadge' => $userBadge ? DesignSystemHelper::getSvg( $userBadge ) : '',
+			'userBadge' => $this->getUserBadgeMarkup( $user->getEffectiveGroups() ),
 			'userRank' => $userRank,
 			'weeklyEditorCount' => $this->formatTotalEditorsNumber( $topContributorsCount ),
 			'userContribCount' => $currentUserContributionCount,
@@ -232,8 +231,7 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 	public function getRecentlyJoinedData() {
 		$recentlyJoined = $this->usersModel->getRecentlyJoinedUsers();
 		$recentlyJoined = array_map( function($user ) {
-			$badge = $this->getUserBadge( $user[ 'userId' ] );
-			$user[ 'badge' ] = $badge ? DesignSystemHelper::getSvg( $badge ) : '';
+			$user[ 'badge' ] = $this->getUserBadgeMarkup( User::newFromId( $user[ 'userId' ] )->getEffectiveGroups() );
 			return $user;
 		}, $recentlyJoined );
 
@@ -253,8 +251,7 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 		$allMembers = $this->usersModel->getAllContributors( $currentUser->getId() );
 		$allMembers = $this->addTimeAgoDataDetail( $allMembers );
 		$allMembers = array_map( function( $member ) {
-			$badge = $this->getUserBadge( $member[ 'userId' ] );
-			$member[ 'badge' ] = $badge ? DesignSystemHelper::getSvg( $badge ) : '';
+			$member[ 'badge' ] = $this->getUserBadgeMarkup( User::newFromId( $member[ 'userId' ] )->getEffectiveGroups() );
 			return $member;
 		}, $allMembers);
 
@@ -366,11 +363,10 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 		$count = 0;
 
 		return array_map( function ( $contributor ) use ( &$count, $avatarSize ) {
-			$userId = $contributor[ 'userId' ];
-			$user = User::newFromId( $userId );
+			$user = User::newFromId( $contributor[ 'userId' ] );
 			$userName = $user->getName();
+			$userGroups = $user->getEffectiveGroups();
 			$avatar = AvatarService::renderAvatar( $userName, $avatarSize );
-			$badge = $this->getUserBadge( $userId );
 			$count += 1;
 
 			if ( User::isIp( $userName ) ) {
@@ -387,7 +383,7 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 				'count' => $count,
 				'isAdmin' => $contributor[ 'isAdmin' ] ?? false,
 				'timeAgo' => $contributor[ 'timeAgo' ] ?? null,
-				'badge' => $badge ? DesignSystemHelper::getSvg( $badge ) : ''
+				'badge' => $this->getUserBadgeMarkup( $userGroups )
 			];
 		}, $contributors );
 	}
@@ -466,16 +462,14 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 	}
 
 	/**
-	 * @param $userId
-	 * @return string name of DS svg file with proper badge
+	 * @param $userGroups
+	 * @return string markup of svg to be used in template
+	 * or empty string if no badge applicable
 	 */
-	private function getUserBadge( $userId ) {
-		return 'wds-icons-badge-admin';
-		$userGroups = User::newFromId( $userId )->getEffectiveGroups();
-
+	private function getUserBadgeMarkup( $userGroups ) {
 		foreach ( self::PERMISSION_HIERARCHY as $group ) {
 			if ( in_array( $group, $userGroups ) ) {
-				return self::PERMISSIONS_TO_BADGES[ $group ];
+				return DesignSystemHelper::getSvg( self::PERMISSIONS_TO_BADGES[ $group ] );
 			}
 		}
 
