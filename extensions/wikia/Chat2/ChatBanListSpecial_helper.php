@@ -231,7 +231,7 @@ class ChatBanData extends WikiaModel
 				$this->wg->Lang->ucfirst( wfMsg( 'listgrouprights-rights' ) ),
 				"user={$oEncUserName}"
 			);
-		};
+		}
 
 		return "(" . implode( ") &#183; (", $links ) . ")";
 	}
