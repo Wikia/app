@@ -7,7 +7,6 @@
 $small-icon-size: 18px;
 $big-icon-size: 30px;
 $help-module-title-padding: 3px;
-$help-module-link-line-height: 18px;
 
 .community-page-help-module {
 	&.community-page-module-box {
@@ -32,7 +31,7 @@ $help-module-link-line-height: 18px;
 
 		border-top: 1px solid $color-page-border;
 		font-size: $typescale-size-minus-1;
-		line-height: $help-module-link-line-height;
+		line-height: $line-height;
 		margin-top: $content-spacing-small-plus;
 		padding-top: $content-spacing-regular;
 
@@ -59,7 +58,7 @@ $help-module-link-line-height: 18px;
 		@include flex-direction(column);
 
 		font-size: $typescale-size-minus-1;
-		line-height: $help-module-link-line-height;
+		line-height: $line-height;
 
 		a {
 			padding: $content-spacing-small 0;
