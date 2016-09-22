@@ -33,14 +33,12 @@ class ChatBanListSpecialController extends WikiaSpecialPageController
 		$username = $this->getVal( 'username' );
 		$limit = $this->request->getVal( 'limit' );
 		$offset = $this->request->getVal( 'offset' );
-		$loop = $this->request->getVal( 'loop' );
 		$order = $this->request->getVal( 'order' );
 
 		/*
 		 * initial values for response
 		 */
 		$result = [
-			'sEcho'                => intval( $loop ),
 			'iTotalRecords'        => 0,
 			'iTotalDisplayRecords' => 0,
 			'aaData'               => [ ],

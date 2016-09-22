@@ -39,8 +39,7 @@ require(['wikia.nirvana'], function (nirvana) {
         "sPaginationType": "full_numbers",
         "sAjaxSource": '',
         "fnServerData": function (sSource, aoData, fnCallback) {
-            var sortingCols = 0,
-                refData = [];
+            var refData = [];
 
             aoData.map(function (el) {
                 refData[el.name] = el.value;
@@ -53,8 +52,6 @@ require(['wikia.nirvana'], function (nirvana) {
                 username: $('#lu_search').val(),
                 limit: refData["iDisplayLength"],
                 offset: refData["iDisplayStart"],
-                loop: refData["sEcho"],
-                numOrder: sortingCols,
                 order: order
             };
 
@@ -62,6 +59,7 @@ require(['wikia.nirvana'], function (nirvana) {
                 controller: 'ChatBanListSpecialController',
                 method: 'axShowUsers',
                 format: 'json',
+                type: 'GET',
                 data: requestData,
                 callback: fnCallback
             });
