@@ -4,10 +4,7 @@ describe('ext.wikia.adEngine.video.playwire', function () {
 
 	function noop () {}
 
-	var mockBody = {
-			appendChild: noop
-		},
-		mocks = {
+	var mocks = {
 			dfpVastUrl: {
 				build: function () {
 					return '//vast.url';
@@ -24,9 +21,7 @@ describe('ext.wikia.adEngine.video.playwire', function () {
 			},
 			log: noop,
 			parent: {
-				contentDocument: {
-					body: mockBody
-				}
+				appendChild: noop
 			}
 		};
 
@@ -59,30 +54,30 @@ describe('ext.wikia.adEngine.video.playwire', function () {
 	it('Inject player with given config url', function () {
 		var playwire = getModule();
 
-		spyOn(mockBody, 'appendChild');
+		spyOn(mocks.parent, 'appendChild');
 
-		playwire.inject({configUrl: '//fake.url', containerIframe: mocks.parent});
+		playwire.inject({configUrl: '//fake.url', container: mocks.parent});
 
-		expect(mockBody.appendChild.calls.mostRecent().args[0]['data-config']).toEqual('//fake.url');
+		expect(mocks.parent.appendChild.calls.mostRecent().args[0]['data-config']).toEqual('//fake.url');
 	});
 
 	it('Inject player with vast url', function () {
 		var playwire = getModule();
 
-		spyOn(mockBody, 'appendChild');
+		spyOn(mocks.parent, 'appendChild');
 
-		playwire.inject({configUrl: '//fake.url', containerIframe: mocks.parent, vastUrl: '//custom-vast.url'});
+		playwire.inject({configUrl: '//fake.url', container: mocks.parent, vastUrl: '//custom-vast.url'});
 
-		expect(mockBody.appendChild.calls.mostRecent().args[0]['data-ad-tag']).toEqual('//custom-vast.url');
+		expect(mocks.parent.appendChild.calls.mostRecent().args[0]['data-ad-tag']).toEqual('//custom-vast.url');
 	});
 
 	it('Inject player with built vast url if not passed', function () {
 		var playwire = getModule();
 
-		spyOn(mockBody, 'appendChild');
+		spyOn(mocks.parent, 'appendChild');
 
-		playwire.inject({configUrl: '//fake.url', containerIframe: mocks.parent});
+		playwire.inject({configUrl: '//fake.url', container: mocks.parent});
 
-		expect(mockBody.appendChild.calls.mostRecent().args[0]['data-ad-tag']).toEqual('//vast.url');
+		expect(mocks.parent.appendChild.calls.mostRecent().args[0]['data-ad-tag']).toEqual('//vast.url');
 	});
 });
