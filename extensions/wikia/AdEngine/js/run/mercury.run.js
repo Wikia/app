@@ -6,7 +6,7 @@ require([
 	'ext.wikia.adEngine.lookup.prebid',
 	'ext.wikia.adEngine.lookup.rubicon.rubiconFastlane',
 	'ext.wikia.adEngine.lookup.rubicon.rubiconVulcan',
-	'ext.wikia.adEngine.customAdsLoader',
+	'ext.wikia.adEngine.templatesService',
 	'ext.wikia.adEngine.messageListener',
 	'ext.wikia.adEngine.mobile.mercuryListener',
 	'ext.wikia.adEngine.slot.scrollHandler',
@@ -21,7 +21,7 @@ require([
 	prebid,
 	rubiconFastlane,
 	rubiconVulcan,
-	customAdsLoader,
+	templatesService,
 	messageListener,
 	mercuryListener,
 	scrollHandler,
@@ -36,7 +36,7 @@ require([
 	scrollHandler.init('mercury');
 
 	// Custom ads (skins, footer, etc)
-	win.loadCustomAd = customAdsLoader.loadCustomAd;
+	win.loadCustomAd = templatesService.loadCustomAd;
 
 	if (geo.isProperGeo(instantGlobals.wgAmazonMatchCountriesMobile)) {
 		amazon.call();
