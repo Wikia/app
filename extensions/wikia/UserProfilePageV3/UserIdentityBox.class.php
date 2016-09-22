@@ -496,16 +496,9 @@ class UserIdentityBox {
 	 * @author tor
 	 */
 	protected function getUserTags( &$data ) {
-		global $wgEnableTwoTagsInMasthead;
 		wfProfileIn( __METHOD__ );
 
-		if ( !empty( $wgEnableTwoTagsInMasthead ) ) {
-			/** @var $strategy UserTwoTagsStrategy */
-			$strategy = new UserTwoTagsStrategy( $this->user );
-		} else {
-			/** @var $strategy UserOneTagStrategy */
-			$strategy = new UserOneTagStrategy( $this->user );
-		}
+		$strategy = new UserTagsStrategy( $this->user );
 		$tags = $strategy->getUserTags();
 
 		$data['tags'] = $tags;

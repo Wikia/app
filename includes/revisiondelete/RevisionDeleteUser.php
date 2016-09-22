@@ -110,12 +110,15 @@ class RevisionDeleteUser {
 			__METHOD__
 		);
 		# Hide name from deleted images
+		# Wikia change begin
+		$faWhereCondition = $userId ? array( 'fa_user' => $userId ) : array( 'fa_user_text' => $name );
 		$dbw->update(
 			'filearchive',
 			array( "fa_deleted = fa_deleted $op $delUser" ),
-			array( 'fa_user_text' => $name ),
+			$faWhereCondition,
 			__METHOD__
 		);
+		# Wikia change end
 		# Done!
 		return true;
 	}
