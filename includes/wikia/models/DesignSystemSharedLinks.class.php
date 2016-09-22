@@ -26,14 +26,12 @@ class DesignSystemSharedLinks {
 	 * @return string full URL, in case of lang specific URL missing, default one is returned
 	 */
 	public function getHref( $name, $lang ) {
-		if ( !isset( $this->hrefs[ $lang ] ) ) {
-			$lang = $this->getLangFallback( $lang );
-		}
+		$lang = $this->getLangWithFallback( $lang );
 
 		return $this->hrefs[ $lang ][ $name ] ?? $this->hrefs[ 'default' ][ $name ];
 	}
 
-	private function getLangFallback( $lang ) {
+	private function getLangWithFallback( $lang ) {
 		if ( isset( $this->hrefs[ $lang ] ) ) {
 			return $lang;
 		}
