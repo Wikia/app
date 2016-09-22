@@ -230,10 +230,7 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 	 */
 	public function getRecentlyJoinedData() {
 		$recentlyJoined = $this->usersModel->getRecentlyJoinedUsers();
-		$recentlyJoined = array_map( function($user ) {
-			$user[ 'badge' ] = $this->getUserBadgeMarkup( User::newFromId( $user[ 'userId' ] )->getEffectiveGroups() );
-			return $user;
-		}, $recentlyJoined );
+		$recentlyJoined = $this->applyBadges( $recentlyJoined );
 
 		$this->response->setData( [
 			'recentlyJoinedHeaderText' => $this->msg( 'communitypage-recently-joined' )->text(),
@@ -250,10 +247,7 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 		$currentUser = $this->getUser();
 		$allMembers = $this->usersModel->getAllContributors( $currentUser->getId() );
 		$allMembers = $this->addTimeAgoDataDetail( $allMembers );
-		$allMembers = array_map( function( $member ) {
-			$member[ 'badge' ] = $this->getUserBadgeMarkup( User::newFromId( $member[ 'userId' ] )->getEffectiveGroups() );
-			return $member;
-		}, $allMembers);
+		$allMembers = $this->applyBadges( $allMembers );
 
 		$moreMembers = SpecialPage::getTitleFor( 'ListUsers' );
 		$membersCount = $this->usersModel->getMemberCount();
@@ -459,6 +453,13 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 		}
 
 		return $editors;
+	}
+
+	private function applyBadges( $users ) {
+		return array_map( function( $user ) {
+			$user[ 'badge' ] = $this->getUserBadgeMarkup( User::newFromId( $user[ 'userId' ] )->getEffectiveGroups() );
+			return $user;
+		}, $users );
 	}
 
 	/**
