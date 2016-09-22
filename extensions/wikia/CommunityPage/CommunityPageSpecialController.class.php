@@ -20,22 +20,13 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 		'vstf'
 	];
 
-//TODO: update when this will be live: https://github.com/Wikia/design-system/pull/69/files
-//	const PERMISSIONS_TO_BADGES = [
-//		'sysop' => 'wds-avatar-badges-admin',
-//		'threadmoderator' => 'wds-avatar-badges-discussion-moderator',
-//		'content-moderator' => 'wds-avatar-badges-content-moderator',
-//		'staff' => 'wds-avatar-badges-staff',
-//		'helper' => 'wds-avatar-badges-helper',
-//		'vstf' => 'wds-avatar-badges-vstf',
-//	];
 	const PERMISSIONS_TO_BADGES = [
-		'sysop' => 'wds-icons-badge-admin',
-		'threadmoderator' => 'wds-icons-badge-discussion-moderator',
-		'content-moderator' => 'wds-icons-badge-content-moderator',
-		'staff' => 'wds-icons-badge-fandom',
-		'helper' => 'wds-icons-help',
-		'vstf' => 'wds-icons-badge-vstf'
+		'sysop' => 'wds-avatar-badges-admin',
+		'threadmoderator' => 'wds-avatar-badges-discussion-moderator',
+		'content-moderator' => 'wds-avatar-badges-content-moderator',
+		'staff' => 'wds-avatar-badges-staff',
+		'helper' => 'wds-avatar-badges-helper',
+		'vstf' => 'wds-avatar-badges-vstf',
 	];
 
 	private $usersModel;
