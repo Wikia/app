@@ -3620,7 +3620,7 @@ function wfSplitWikiID( $wiki ) {
  *
  * @return DatabaseMysqli
  */
-function &wfGetDB( $db, $groups = array(), $wiki = false ) {
+function &wfGetDB( int $db, $groups = array(), $wiki = false ) {
 	// wikia change begin -- SMW DB separation project, @author Krzysztof Krzyżaniak (eloy)
 	global $smwgUseExternalDB, $wgDBname;
 	if( $smwgUseExternalDB === true ) {
