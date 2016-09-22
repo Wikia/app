@@ -340,8 +340,8 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 				'userName' => $userName,
 				'avatar' => AvatarService::renderAvatar( $userName, $avatarSize ),
 				'contributionsText' => $this->msg( 'communitypage-contributions' )
-					->numParams( $this->getLanguage()
-					->formatNum( $contributor[ 'contributions' ] ?? 0 ) )->text(),
+					->numParams( $this->getLanguage()->formatNum( $contributor[ 'contributions' ] ?? 0 ) )
+					->text(),
 				'profilePage' => $user->getUserPage()->getLocalURL(),
 				'count' => $count,
 				'isAdmin' => $contributor[ 'isAdmin' ] ?? false,

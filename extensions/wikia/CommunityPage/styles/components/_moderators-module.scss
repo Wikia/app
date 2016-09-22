@@ -37,9 +37,8 @@
 		}
 
 		.badge-container {
-          @include avatar-badge($avatar-small-badge-top, $avatar-small-badge-left);
-
-        }
+			@include avatar-badge($avatar-small-badge-top, $avatar-small-badge-left);
+		}
 
 		.community-page-moderator-rank {
 			padding: $content-spacing-xxsmall $content-spacing-xxsmall 0 0;
