@@ -102,8 +102,8 @@ require([
 		// Inject proper class for 2 columns display
 		if (requestData.columns === 2) {
 			if ($elem.closest('.main-page-tag-rcs').length) {
-				// When the tag is inside the right rail
-				columnsDetailsClass = 'embeddable-discussions-post-detail-right-rail';
+				// When the tag is inside the main page right column
+				columnsDetailsClass = 'embeddable-discussions-post-detail-right-column';
 			} else {
 				columnsDetailsClass = 'embeddable-discussions-post-detail-columns';
 			}
