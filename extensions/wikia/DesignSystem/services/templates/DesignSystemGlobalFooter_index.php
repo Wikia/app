@@ -1,4 +1,6 @@
-<footer class="wds-global-footer <?= isset( $model['international_header'] ) ? 'wds-is-international' : 'wds-is-en' ?>">
+<footer class="wds-global-footer<?php if ( !isset ( $model['header'] ) ) : ?>
+	<?= isset( $model['international_header'] ) ? ' wds-is-international' : ' wds-is-en'; ?>
+<?php endif; ?>">
 	<?php if ( isset ( $model['international_header'] ) ) : ?>
 		<div class="wds-global-footer__header-wrapper">
 			<h2 class="wds-global-footer__header">
@@ -11,6 +13,18 @@
 					) ?></span>
 			</h2>
 		</div>
+	<?php elseif ( isset ( $model['header'] ) ) : ?>
+		<h2 class="wds-global-footer__header">
+			<a href="<?= Sanitizer::encodeAttribute( $model['header']['href'] ); ?>"
+			   data-tracking-label="<?= Sanitizer::encodeAttribute( $model['header']['title']['key'] ) ?>"
+			   title="<?= DesignSystemHelper::renderText( $model['header']['title'] ); ?>">
+				<?= DesignSystemHelper::getSvg(
+					$model['header']['image'],
+					'wds-global-footer__header-logo',
+					DesignSystemHelper::renderText( $model['header']['title'] )
+				) ?>
+			</a>
+		</h2>
 	<?php endif; ?>
 	<div class="wds-global-footer__main">
 		<?php if ( isset( $model['fandom']['header'] ) ) : ?>
