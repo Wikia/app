@@ -7,13 +7,7 @@
 // Styles for the contributors module in-page and modal version
 .contributors-module {
 	.badge-container {
-		position: relative;
-		top: -7px;
-		left: -6px;
-
-		svg {
-			position: absolute;
-		}
+		@include avatar-badge-small();
 	}
 
 	.avatar-container {

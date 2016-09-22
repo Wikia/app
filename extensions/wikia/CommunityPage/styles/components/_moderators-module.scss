@@ -37,13 +37,7 @@
 		}
 
 		.badge-container {
-			position: relative;
-			top: -7px;
-			left: -6px;
-
-			svg {
-				position: absolute;
-			}
+			@include avatar-badge-small();
 		}
 
 		.community-page-moderator-rank {

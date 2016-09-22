@@ -47,3 +47,13 @@ $community-page-card-module-width-regular: 240px;
 	line-height: $line-height;
 	max-height: $number * $line-height;
 }
+
+@mixin avatar-badge-small() {
+	position: relative;
+	top: -7px;
+	left: -6px;
+
+	svg {
+		position: absolute;
+	}
+}
