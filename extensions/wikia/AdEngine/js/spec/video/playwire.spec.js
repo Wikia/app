@@ -21,7 +21,10 @@ describe('ext.wikia.adEngine.video.playwire', function () {
 			},
 			log: noop,
 			parent: {
-				appendChild: noop
+				appendChild: noop,
+				ownerDocument: {
+					defaultView: {}
+				}
 			}
 		};
 
@@ -66,7 +69,7 @@ describe('ext.wikia.adEngine.video.playwire', function () {
 
 		spyOn(mocks.parent, 'appendChild');
 
-		playwire.inject('//fake.url', mocks.parent, '//custom-vast.url');
+		playwire.inject('//fake.url', mocks.parent, { vastUrl: '//custom-vast.url' });
 
 		expect(mocks.parent.appendChild.calls.mostRecent().args[0]['data-ad-tag']).toEqual('//custom-vast.url');
 	});

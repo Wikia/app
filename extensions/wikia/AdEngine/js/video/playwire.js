@@ -17,6 +17,8 @@ define('ext.wikia.adEngine.video.playwire', [
 			script = doc.createElement('script'),
 			win = playerContainer.ownerDocument.defaultView || playerContainer.ownerDocument.parentWindow;
 
+		params = params || {};
+
 		if (!params.vastUrl) {
 			params.vastUrl = vastBuilder.build();
 		}
