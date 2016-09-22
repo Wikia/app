@@ -129,8 +129,8 @@ describe('ext.wikia.adEngine.lookup.prebid.adaptersPerformanceTracker', function
 			],
 			expected: {
 				appnexus: {
-					TOP_LEADERBOARD: 'NOT_RESPONDED',
-					TOP_RIGHT_BOXAD: 'NOT_RESPONDED'
+					TOP_LEADERBOARD: 'NO_RESPONSE',
+					TOP_RIGHT_BOXAD: 'NO_RESPONSE'
 				}
 			},
 			message: 'map is correctly initiated if only one adapter is added'
@@ -142,11 +142,11 @@ describe('ext.wikia.adEngine.lookup.prebid.adaptersPerformanceTracker', function
 			],
 			expected: {
 				appnexus: {
-					TOP_LEADERBOARD: 'NOT_RESPONDED',
-					TOP_RIGHT_BOXAD: 'NOT_RESPONDED'
+					TOP_LEADERBOARD: 'NO_RESPONSE',
+					TOP_RIGHT_BOXAD: 'NO_RESPONSE'
 				},
 				indexExchange: {
-					TOP_LEADERBOARD: 'NOT_RESPONDED'
+					TOP_LEADERBOARD: 'NO_RESPONSE'
 				}
 			},
 			message: 'map is correctly initiated if two adapters are added'
@@ -158,8 +158,8 @@ describe('ext.wikia.adEngine.lookup.prebid.adaptersPerformanceTracker', function
 			],
 			expected: {
 				appnexus: {
-					TOP_LEADERBOARD: 'NOT_RESPONDED',
-					TOP_RIGHT_BOXAD: 'NOT_RESPONDED'
+					TOP_LEADERBOARD: 'NO_RESPONSE',
+					TOP_RIGHT_BOXAD: 'NO_RESPONSE'
 				}
 			},
 			message: 'disabled adapters are not added'
@@ -174,32 +174,32 @@ describe('ext.wikia.adEngine.lookup.prebid.adaptersPerformanceTracker', function
 		[{
 			performanceMap: {
 				appnexus: {
-					TOP_LEADERBOARD: 'NOT_RESPONDED',
-					TOP_RIGHT_BOXAD: 'NOT_RESPONDED'
+					TOP_LEADERBOARD: 'NO_RESPONSE',
+					TOP_RIGHT_BOXAD: 'NO_RESPONSE'
 				},
 				indexExchange: {
-					TOP_LEADERBOARD: 'NOT_RESPONDED'
+					TOP_LEADERBOARD: 'NO_RESPONSE'
 				}
 			},
 			allBids: {},
 			expected: {
 				appnexus: {
-					TOP_LEADERBOARD: 'NOT_RESPONDED',
-					TOP_RIGHT_BOXAD: 'NOT_RESPONDED'
+					TOP_LEADERBOARD: 'NO_RESPONSE',
+					TOP_RIGHT_BOXAD: 'NO_RESPONSE'
 				},
 				indexExchange: {
-					TOP_LEADERBOARD: 'NOT_RESPONDED'
+					TOP_LEADERBOARD: 'NO_RESPONSE'
 				}
 			},
 			message: 'if no bids are returned map stays untouched'
 		}, {
 			performanceMap: {
 				appnexus: {
-					TOP_LEADERBOARD: 'NOT_RESPONDED',
-					TOP_RIGHT_BOXAD: 'NOT_RESPONDED'
+					TOP_LEADERBOARD: 'NO_RESPONSE',
+					TOP_RIGHT_BOXAD: 'NO_RESPONSE'
 				},
 				indexExchange: {
-					TOP_LEADERBOARD: 'NOT_RESPONDED'
+					TOP_LEADERBOARD: 'NO_RESPONSE'
 				}
 			},
 			allBids: {
@@ -213,7 +213,7 @@ describe('ext.wikia.adEngine.lookup.prebid.adaptersPerformanceTracker', function
 			expected: {
 				appnexus: {
 					TOP_LEADERBOARD: '100x100;0.00',
-					TOP_RIGHT_BOXAD: 'NOT_RESPONDED'
+					TOP_RIGHT_BOXAD: 'NO_RESPONSE'
 				},
 				indexExchange: {
 					TOP_LEADERBOARD: '200x200;1.00'
@@ -223,11 +223,11 @@ describe('ext.wikia.adEngine.lookup.prebid.adaptersPerformanceTracker', function
 		}, {
 			performanceMap: {
 				appnexus: {
-					TOP_LEADERBOARD: 'NOT_RESPONDED',
-					TOP_RIGHT_BOXAD: 'NOT_RESPONDED'
+					TOP_LEADERBOARD: 'NO_RESPONSE',
+					TOP_RIGHT_BOXAD: 'NO_RESPONSE'
 				},
 				indexExchange: {
-					TOP_LEADERBOARD: 'NOT_RESPONDED'
+					TOP_LEADERBOARD: 'NO_RESPONSE'
 				}
 			},
 			allBids: {
@@ -240,8 +240,8 @@ describe('ext.wikia.adEngine.lookup.prebid.adaptersPerformanceTracker', function
 			},
 			expected: {
 				appnexus: {
-					TOP_LEADERBOARD: 'EMPTY',
-					TOP_RIGHT_BOXAD: 'NOT_RESPONDED'
+					TOP_LEADERBOARD: 'EMPTY_RESPONSE',
+					TOP_RIGHT_BOXAD: 'NO_RESPONSE'
 				},
 				indexExchange: {
 					TOP_LEADERBOARD: '200x200;1.00'
@@ -251,11 +251,11 @@ describe('ext.wikia.adEngine.lookup.prebid.adaptersPerformanceTracker', function
 		}, {
 			performanceMap: {
 				appnexus: {
-					TOP_LEADERBOARD: 'NOT_RESPONDED',
-					TOP_RIGHT_BOXAD: 'NOT_RESPONDED'
+					TOP_LEADERBOARD: 'NO_RESPONSE',
+					TOP_RIGHT_BOXAD: 'NO_RESPONSE'
 				},
 				indexExchange: {
-					TOP_LEADERBOARD: 'NOT_RESPONDED'
+					TOP_LEADERBOARD: 'NO_RESPONSE'
 				}
 			},
 			allBids: {
@@ -275,7 +275,7 @@ describe('ext.wikia.adEngine.lookup.prebid.adaptersPerformanceTracker', function
 					TOP_RIGHT_BOXAD: '100x100;0.00'
 				},
 				indexExchange: {
-					TOP_LEADERBOARD: 'NOT_RESPONDED'
+					TOP_LEADERBOARD: 'NO_RESPONSE'
 				}
 			},
 			message: 'if no bids for one bidder are returned map stays untouched'
