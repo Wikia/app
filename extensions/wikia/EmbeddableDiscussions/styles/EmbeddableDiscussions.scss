@@ -63,7 +63,7 @@ $plus-icon-size: 34px;
 		float: left;
 		font-size: $typescale-size-minus-2;
 		line-height: $typescale-size-minus-2;
-		margin: $content-spacing-regular 0;
+		margin: $content-spacing-small 0;
 	}
 
 	.embeddable-discussions-content {
@@ -85,7 +85,7 @@ $plus-icon-size: 34px;
 		@include flexbox();
 		@include justify-content(space-between);
 
-		margin-top: 10px;
+		margin: $content-spacing-xsmall 0;
 	}
 
 	.embeddable-discussions-heading {
@@ -130,7 +130,7 @@ $plus-icon-size: 34px;
 		font-size: $typescale-size-minus-2;
 		justify-content: flex-end;
 		line-height: $typescale-size-minus-2;
-		margin: $content-spacing-regular 0;
+		margin: $content-spacing-small 0;
 		text-align: right;
 	}
 
@@ -202,7 +202,7 @@ $plus-icon-size: 34px;
 	.embeddable-discussions-title {
 		font-size: $typescale-size-plus-1;
 		font-weight: bold;
-		margin-bottom: $content-spacing-regular;
+		margin-bottom: $content-spacing-xxsmall;
 	}
 
 	.embeddable-discussions-upvote-icon {
