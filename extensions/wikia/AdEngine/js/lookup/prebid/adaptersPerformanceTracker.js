@@ -4,8 +4,9 @@ define('ext.wikia.adEngine.lookup.prebid.adaptersPerformanceTracker', [
 ], function (adTracker, win) {
 	'use strict';
 
-	var emptyResponseMsg = 'EMPTY',
-		notRespondedMsg = 'NOT_RESPONDED';
+	var emptyResponseMsg = 'EMPTY_RESPONSE',
+		notRespondedMsg = 'NO_RESPONSE',
+		responseErrorCode = 2;
 
 	function setupPerformanceMap(skin, adapters) {
 		var biddersPerformanceMap = {};
@@ -46,19 +47,21 @@ define('ext.wikia.adEngine.lookup.prebid.adaptersPerformanceTracker', [
 	function trackBidderSlotState(adapter, slotName, providerName, performanceMap) {
 		var bidderName = adapter.getName(), category;
 
-		if (adapter.isEnabled()) {
-			if (performanceMap[bidderName]) {
-				if (performanceMap[bidderName][slotName] !== notRespondedMsg) {
-					category = bidderName + '/lookup_success/' + providerName;
-					adTracker.track(category, slotName, 0, performanceMap[bidderName][slotName]);
-				} else {
-					category = bidderName + '/lookup_error/' + providerName;
-					adTracker.track(category, slotName, 0, 'nodata');
-				}
+		if (!adapter.isEnabled()) {
+			return;
+		}
+
+		if (performanceMap[bidderName]) {
+			if (performanceMap[bidderName][slotName] !== notRespondedMsg) {
+				category = bidderName + '/lookup_success/' + providerName;
+				adTracker.track(category, slotName, 0, performanceMap[bidderName][slotName]);
 			} else {
 				category = bidderName + '/lookup_error/' + providerName;
 				adTracker.track(category, slotName, 0, 'nodata');
 			}
+		} else {
+			category = bidderName + '/lookup_error/' + providerName;
+			adTracker.track(category, slotName, 0, 'nodata');
 		}
 	}
 
@@ -71,7 +74,7 @@ define('ext.wikia.adEngine.lookup.prebid.adaptersPerformanceTracker', [
 	}
 
 	function getParamsFromBidForTracking(bid) {
-		if (bid.getStatusCode() === 2) {
+		if (bid.getStatusCode() === responseErrorCode) {
 			return emptyResponseMsg;
 		} else {
 			return [bid.getSize(), bid.pbMg].join(';');
