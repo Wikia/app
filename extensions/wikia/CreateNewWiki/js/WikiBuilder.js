@@ -147,7 +147,7 @@ define('ext.createNewWiki.builder', ['ext.createNewWiki.helper', 'wikia.tracker'
 					if (res.msgHeader) {
 						track({
 							action: tracker.ACTIONS.ERROR,
-							label: 'wiki-description-phalanx-validation'
+							label: 'wiki-description-validation'
 						});
 						$.showModal(res.msgHeader, res.msgBody);
 						descWikiNext.attr('disabled', false);
@@ -157,13 +157,13 @@ define('ext.createNewWiki.builder', ['ext.createNewWiki.helper', 'wikia.tracker'
 							'wiki-description-not-empty';
 
 						track({
-							action: tracker.ACTIONS.SUCCESS,
-							label: 'wiki-description-phalanx-validation'
+							action: tracker.ACTIONS.SUBMIT,
+							label: descriptionLabel
 						});
 
 						track({
-							action: tracker.ACTIONS.SUBMIT,
-							label: descriptionLabel
+							action: tracker.ACTIONS.SUCCESS,
+							label: 'wiki-description-validation'
 						});
 
 						// call create wiki ajax
