@@ -1,22 +1,13 @@
 @import 'skins/shared/color';
 @import 'skins/oasis/css/core/breakpoints-variables';
 @import '../components/variables';
+@import 'extensions/wikia/DesignSystem/bower_components/design-system/base/typography';
 
-$background-color-dark: #1a1a1a;
-$background-color-light: #f6f6f6;
+$logo-url: '/extensions/wikia/DesignSystem/bower_components/design-system/dist/svg/wds-company-logo-fandom-heart.svg';
 
-$background-color: $background-color-light;
-@if $is-dark-wiki {
-	$background-color: $background-color-dark;
-}
-
-$logo-url-dark: '/extensions/wikia/CommunityPage/images/wikia-logo-dark.svg';
-$logo-url-light: '/extensions/wikia/CommunityPage/images/wikia-logo.svg';
-
-$logo-url: $logo-url-light;
-@if $is-dark-wiki {
-	$logo-url: $logo-url-dark;
-}
+$button-height: 46px;
+$logo-size: 30px;
+$logo-border-radius: $logo-size / 2;
 
 .WikiaRail {
 	// override default .WikiaRail .module styles
@@ -24,39 +15,42 @@ $logo-url: $logo-url-light;
 		position: relative;
 
 		&.community-page-entry-point-module {
-			padding-top: 40px;
+			padding-top: $content-spacing-xxlarge;
 		}
 	}
 }
 
 .community-page-entry-point-module {
 	font-family: $community-page-font-family;
-	font-size: 16px;
-	line-height: 21px;
-	margin-top: 20px;
+	font-size: $typescale-size-base;
+	line-height: $module-default-line-height;
+	margin-top: $content-spacing-regular;
 	position: relative;
 	text-align: center;
 
 	.community-page-entry-point-logo {
-		background-image: url($logo-url); /* inline */
-		height: 30px;
+		background: $color-white url($logo-url) 50% 50%/18px 18px no-repeat; /* inline */
+		border: 1px solid $color-page-border;
+		border-radius: $logo-border-radius;
+		box-sizing: border-box;
+		height: $logo-size;
 		left: 50%;
 		position: absolute;
 		top: 0;
 		transform: translate(-50%, -40%);
-		width: 30px;
+		width: $logo-size;
 	}
 
 	.community-page-entry-point-button {
 		background: $color-buttons;
 		color: $color-button-text;
 		display: inline-block;
-		font-size: 12px;
+		font-size: $typescale-size-minus-2;
 		font-weight: bold;
-		height: 46px;
-		line-height: 46px;
-		margin: 14px 0;
-		padding: 0 30px;
+		height: $button-height;
+		line-height: $button-height;
+		margin: $content-spacing-small-plus 0;
+		padding: 0 $content-spacing-xlarge;
 		text-decoration: none;
 		text-transform: uppercase;
 
@@ -70,7 +64,7 @@ $logo-url: $logo-url-light;
 		white-space: pre-line; // Respect linebreaks
 
 		b {
-			font-size: 18px;
+			font-size: $typescale-size-plus-1;
 			&:before { content: '\A'; } // Add a linebreak before bolded text
 		}
 
@@ -79,7 +73,7 @@ $logo-url: $logo-url-light;
 
 @media #{$breakpoint-below-small-plus} {
 	.WikiaRail {
-		padding-top: 20px;
+		padding-top: $content-spacing-regular;
 	}
 
 	.community-page-entry-point-module {
