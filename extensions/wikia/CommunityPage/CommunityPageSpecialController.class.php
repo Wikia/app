@@ -34,7 +34,7 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 		$this->response->setValues( [
 			'heroImageUrl' => $this->getHeroImageUrl(),
 			'inviteFriendsText' => $this->msg( 'communitypage-invite-friends' )->text(),
-			'headerWelcomeMsg' => $this->msg( 'communitypage-tasks-header-welcome' )->plain(),
+			'headerWelcomeMsg' => $this->msg( 'communitypage-tasks-header-welcome' )->text(),
 			'adminWelcomeMsg' => $this->msg( 'communitypage-admin-welcome-message' )->text(),
 			'pageListEmptyText' => $this->msg( 'communitypage-page-list-empty' )->text(),
 			'pageTitle' => $this->msg( 'communitypage-title' )->text(),
@@ -258,6 +258,21 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 		] );
 	}
 
+	public function getCommunityTodoListData() {
+		$userCanEditinterface = $this->getUser()->isAllowed( 'editinterface' );
+		$data = ( new CommunityPageSpecialCommunityTodoListModel() )->getData();
+
+		return array_merge( $data, [
+			'showEditLink' => $userCanEditinterface,
+			'showTodoListModule' => $data[ 'haveContent' ] || $userCanEditinterface,
+			'isZeroState' => !$data[ 'haveContent' ],
+			'heading' => $this->msg( 'communitypage-todo-module-heading' )->text(),
+			'editList' => $this->msg( 'communitypage-todo-module-edit-list' )->text(),
+			'description' => $this->msg( 'communitypage-todo-module-description' )->text(),
+			'zeroStateText' => $this->msg( 'communitypage-todo-module-zero-state' )->plain(),
+		] );
+	}
+
 	private function addAssets() {
 		$this->response->addAsset( 'special_community_page_js' );
 		$this->response->addAsset( 'special_community_page_scss' );
@@ -357,19 +372,5 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 		}
 
 		return $editors;
-	}
-
-	public function getCommunityTodoListData() {
-		$user = $this->getUser();
-		$data = ( new CommunityPageSpecialCommunityTodoListModel() )->getData();
-
-		return array_merge( $data, [
-			'showEditLink' => $user->isAllowed( 'editinterface' ),
-			'isZeroState' => !$data[ 'haveContent' ],
-			'heading' => $this->msg( 'communitypage-todo-module-heading' )->text(),
-			'editList' => $this->msg( 'communitypage-todo-module-edit-list' )->text(),
-			'description' => $this->msg( 'communitypage-todo-module-description' )->text(),
-			'zeroStateText' => $this->msg( 'communitypage-todo-module-zero-state' )->plain(),
-		] );
 	}
 }
