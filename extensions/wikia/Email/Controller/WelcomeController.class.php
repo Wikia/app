@@ -62,15 +62,15 @@ class WelcomeController extends EmailController {
 				'icons' => [
 					[
 						'iconSrc' => ImageHelper::getFileUrl( 'Connect-FB.png' ),
-						'iconLink' => 'https://www.facebook.com/getfandom'
+						'iconLink' => $this->getMessage( 'oasis-social-facebook-link' )->text()
 					],
 					[
 						'iconSrc' => ImageHelper::getFileUrl( 'Connect-Tw.png' ),
-						'iconLink' => 'https://twitter.com/getfandom'
+						'iconLink' => $this->getMessage( 'oasis-social-twitter-link' )->text()
 					],
 					[
 						'iconSrc' => ImageHelper::getFileUrl( 'Connect-IG.png' ),
-						'iconLink' => 'https://www.instagram.com/getfandom/'
+						'iconLink' => $this->getMessage( 'oasis-social-instagram' )->text()
 					]
 				],
 				'iconLink' => $this->getMessage( 'emailext-wikia-home-url' )->text(),
