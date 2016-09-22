@@ -54,9 +54,7 @@ $admins-module-item-width: 80px;
 		}
 
 		.badge-container {
-			position: absolute;
-			top: -4px;
-			left: 12px;
+			@include avatar-badge($avatar-large-badge-top, $avatar-large-badge-left);
 		}
 	}
 
