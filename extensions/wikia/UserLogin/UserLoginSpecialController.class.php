@@ -27,6 +27,9 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 	/* @const SIGNED_UP_ON_WIKI_OPTION_NAME Name of user option containing id of wiki where user signed up */
 	const SIGNED_UP_ON_WIKI_OPTION_NAME = 'SignedUpOnWiki';
 
+	/** @const BLACKLIST_TITLES */
+	const BLACKLIST_TITLES = [ 'Special:UserLogout', 'Special:UserSignup', 'Special:WikiaConfirmEmail', 'Special:Badtitle' ];
+
 	/* @var UserLoginHelper $userLoginHelper */
 	private $userLoginHelper = null;
 
@@ -332,7 +335,7 @@ class UserLoginSpecialController extends WikiaSpecialPageController {
 	}
 
 	private function isTitleBlacklisted( $title ) {
-		return AccountNavigationController::isBlacklisted( $title );
+		return in_array( $title, static::BLACKLIST_TITLES );
 	}
 
 	private function getReturnToQueryFromQuery( $query ) {

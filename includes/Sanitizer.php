@@ -1115,7 +1115,7 @@ class Sanitizer {
 	/**
 	 * Encode an attribute value for HTML output.
 	 * @param $text String
-	 * @return HTML-encoded text fragment
+	 * @return string HTML-encoded text fragment
 	 */
 	static function encodeAttribute( $text ) {
 		$encValue = htmlspecialchars( $text, ENT_QUOTES );

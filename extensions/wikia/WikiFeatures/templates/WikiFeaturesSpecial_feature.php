@@ -1,39 +1,39 @@
-<li class="feature" data-name="<?= $feature['name'] ?>" data-heading="<?= wfMessage('wikifeatures-feature-heading-'.$feature['name'])->plain() ?>">
+<li class="feature" data-name="<?= $feature['name'] ?>" data-heading="<?= wfMessage( 'wikifeatures-feature-heading-' . $feature['name'] )->escaped(); ?>">
 	<h3>
-		<?= wfMsg('wikifeatures-feature-heading-'.$feature['name']) ?>
-		<? if (isset($feature['active'])): ?>
+		<?= wfMessage( 'wikifeatures-feature-heading-' . $feature['name'] )->escaped(); ?>
+		<? if ( isset( $feature['active'] ) ): ?>
 			<span class="active-on">
-				<?= wfMsg('wikifeatures-active-on', $feature['active']) ?>
+				<?= wfMessage( 'wikifeatures-active-on', $feature['active'] )->escaped(); ?>
 			</span>
 		<? endif; ?>
 	</h3>
 
-	<div class="representation<?= !empty($feature['new']) ? ' promotion' : '' ?>">
+	<div class="representation<?= !empty( $feature['new'] ) ? ' promotion' : '' ?>">
 		<div class="feature-image-wrapper">
 			<img src="<?= $wg->ExtensionsPath ?>/wikia/WikiFeatures/images/<?= $feature['name'] . $feature['imageExtension'] ?>" >
 		</div>
-		<? if(!empty($feature['new'])): ?>
-			<span class="promo-text"><?= wfMessage('wikifeatures-promotion-new')->plain() ?></span>
+		<? if ( !empty( $feature['new'] ) ): ?>
+			<span class="promo-text"><?= wfMessage( 'wikifeatures-promotion-new' )->escaped(); ?></span>
 		<? endif; ?>
 	</div>
 	<div class="details">
 		<p>
-			<?= wfMessage('wikifeatures-feature-description-'.$feature['name'])->parse() ?>
+			<?= wfMessage( 'wikifeatures-feature-description-' . $feature['name'] )->parse() ?>
 		</p>
 	</div>
 	<div class="actions">
-		<? if ($editable && isset($feature['enabled'])): ?>
+		<? if ( $editable && isset( $feature['enabled'] ) ): ?>
 			<span class="slider<?= $feature['enabled'] ? ' on' : '' ?>">
 				<span class="button"></span>
-				<span class="textoff"><?= wfMsg('wikifeatures-toggle-inactive') ?></span>
-				<span class="texton"><?= wfMsg('wikifeatures-toggle-active') ?></span>
+				<span class="textoff"><?= wfMessage( 'wikifeatures-toggle-inactive' )->escaped(); ?></span>
+				<span class="texton"><?= wfMessage( 'wikifeatures-toggle-active' )->escaped(); ?></span>
 				<span class="loading"></span>
 			</span>
 		<? endif; ?>
-		<? if (isset($feature['active'])): ?>
+		<? if ( isset( $feature['active'] ) ): ?>
 			<button class="secondary feedback">
 				<img height="10" width="10" src="<?= $wg->ExtensionsPath ?>/wikia/WikiFeatures/images/star-inactive.png">
-				<?php echo wfMsg('wikifeatures-feedback'); ?>
+				<?= wfMessage( 'wikifeatures-feedback' )->escaped(); ?>
 			</button>
 		<? endif; ?>
 	</div>

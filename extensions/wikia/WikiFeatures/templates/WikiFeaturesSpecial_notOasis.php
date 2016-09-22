@@ -1,3 +1,3 @@
 <p>
-	<?= wfMsg('wikifeatures-oasis-only') ?>
+	<?= wfMessage( 'wikifeatures-oasis-only' )->escaped(); ?>
 </p>

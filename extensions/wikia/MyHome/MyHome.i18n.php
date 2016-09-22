@@ -1,8 +1,8 @@
 <?php
 
-$messages = array();
+$messages = [];
 
-$messages['en'] = array(
+$messages['en'] = [
 	'myhome-desc' => 'A private home page for logged-in users',
 	'myhome' => 'My Home',
 	'wikiactivity' => 'Wiki Activity',
@@ -99,7 +99,7 @@ For example, you could:
 	'activityfeed' => 'Activity feed',
 
 	'wiki-activity-message-wall-messages-count' => '{{PLURAL:$1|one message|$1 messages}}',
-);
+];
 
 /** Message documentation (Message documentation)
  * @author EugeneZelenko
@@ -109,7 +109,7 @@ For example, you could:
  * @author Siebrand
  * @author Umherirrender
  */
-$messages['qqq'] = array(
+$messages['qqq'] = [
 	'myhome-activity-feed' => 'This the title of the list/summary of recent activity in "My home page" in Wikia. "Feed" here does not refer to an RSS/Atom-type feed.',
 	'myhome-watchlist-feed' => '{{Identical|Watchlist}}',
 	'myhome-user-contributions-feed' => '{{Identical|Contribution}}',
@@ -136,12 +136,12 @@ The parameter $1 is replaced by either:
 * {{msg-wikia|Myhome-activity-feed}}, or:
 * {{msg-wikia|Myhome-watchlist-feed}}",
 	'accesskey-pt-myhome' => '{{doc-accesskey}}',
-);
+];
 
 /** Afrikaans (Afrikaans)
  * @author Naudefj
  */
-$messages['af'] = array(
+$messages['af'] = [
 	'myhome' => 'My tuiste',
 	'myhome-activity-more' => 'sien meer onlangse aktiwiteit',
 	'myhome-watchlist-feed' => 'Dophoulys',
@@ -185,7 +185,7 @@ $messages['af'] = array(
 	'myhome-community-corner-edit' => 'wysig boodskap',
 	'myhome-hot-spots-definition' => 'Bladsye met die meeste outeurs oor die laaste {{PLURAL:$1|dag|$1 dage}}.',
 	'tooltip-pt-myhome' => 'Gaan na My Tuisblad',
-);
+];
 
 /** Arabic (العربية)
  * @author Achraf94
@@ -193,7 +193,7 @@ $messages['af'] = array(
  * @author Meno25
  * @author OsamaK
  */
-$messages['ar'] = array(
+$messages['ar'] = [
 	'myhome-desc' => 'صفحة رئيسية خاصة بالمستخدمين الذين قاموا بالتسجيل',
 	'myhome' => 'صفحتي الرئيسية',
 	'wikiactivity' => 'نشاط الويكي',
@@ -275,26 +275,26 @@ $messages['ar'] = array(
 	'tooltip-pt-myhome' => 'اذهب الى صفحتي الرئيسية',
 	'activityfeed' => 'دليل النشاطات',
 	'wiki-activity-message-wall-messages-count' => '{{PLURAL:$1|رسالة جديدة|$1 رسائل جديدة}}',
-);
+];
 
 /** Assamese (অসমীয়া)
  * @author Bellayet
  * @author Chaipau
  * @author Jaminianurag
  */
-$messages['as'] = array(
+$messages['as'] = [
 	'myhome-watchlist-feed' => 'লক্ষ্য তালিকা',
 	'myhome-user-contributions-feed' => 'অৱদানসমূহ',
 	'myhome-feed-newpage' => 'নতুন পৃষ্ঠা',
 	'myhome-feed-edit' => 'সম্পাদনা কৰক',
 	'myhome-feed-new-blog-comment-details' => 'মন্তব্য',
 	'myhome-feed-new-article-comment-details' => 'মন্তব্য',
-);
+];
 
 /** Azerbaijani (azərbaycanca)
  * @author Cekli829
  */
-$messages['az'] = array(
+$messages['az'] = [
 	'wikiactivity' => 'Viki-fəaliyyət',
 	'myhome-activity-feed' => 'Son dəyişikliklər',
 	'myhome-feed-newpage' => 'yeni səhifə',
@@ -310,13 +310,13 @@ $messages['az'] = array(
 	'myhome-feed-redirect-details' => 'İstiqamətləndirmə',
 	'myhome-hot-spots-number-of-editors' => 'redaktorlar',
 	'myhome-namespace-blog' => 'Bloq',
-);
+];
 
 /** Belarusian (Taraškievica orthography) (беларуская (тарашкевіца)‎)
  * @author EugeneZelenko
  * @author Jim-by
  */
-$messages['be-tarask'] = array(
+$messages['be-tarask'] = [
 	'myhome' => 'Мая хатняя старонка',
 	'wikiactivity' => 'Актыўнасьць у {{GRAMMAR:месны|{{SITENAME}}}}',
 	'myhome-activity-more' => 'паказаць апошнюю актыўнасьць',
@@ -360,13 +360,13 @@ $messages['be-tarask'] = array(
 	'myhome-feed-move-details' => 'Перайменавана',
 	'myhome-feed-redirect-details' => 'Перанакіраваньне',
 	'myhome-community-corner-edit' => 'рэдагаваць паведамленьне',
-);
+];
 
 /** Bulgarian (български)
  * @author Aquilax
  * @author DCLXVI
  */
-$messages['bg'] = array(
+$messages['bg'] = [
 	'myhome-desc' => 'Лична начална страница за регистрирани потребители',
 	'myhome' => 'Моята начална страница',
 	'wikiactivity' => 'Уики активност',
@@ -425,12 +425,12 @@ $messages['bg'] = array(
 	'oasis-myhome-community-corner-edit' => 'редактиране на съобщението &gt;',
 	'myhome-community-corner-edit' => 'редактиране на съобщението',
 	'wiki-activity-message-wall-messages-count' => '{{PLURAL:$1|едно съобщение|$1 съобщения}}',
-);
+];
 
 /** Tibetan (བོད་ཡིག)
  * @author Freeyak
  */
-$messages['bo'] = array(
+$messages['bo'] = [
 	'myhome' => 'ང་ཡི་ཁྱིམ།',
 	'wikiactivity' => 'ཝེ་ཁེ་བྱ་འགུལ།',
 	'myhome-activity-more' => 'ཉེ་བའི་བྱ་འགུལ་མང་བ།',
@@ -453,7 +453,7 @@ $messages['bo'] = array(
 	'myhome-feed-move-details' => 'མིང་གསར།',
 	'myhome-feed-redirect-details' => 'ཁ་ཕྱོགས་གསར་བ།',
 	'myhome-feed-inserted-image-details' => 'འདྲ་པར་$1 བསྣན་པ།',
-);
+];
 
 /** Breton (brezhoneg)
  * @author Fohanno
@@ -461,7 +461,7 @@ $messages['bo'] = array(
  * @author Gwenn-Ael
  * @author Y-M D
  */
-$messages['br'] = array(
+$messages['br'] = [
 	'myhome-desc' => 'Ur bajenn degemer prevez evit an implijerien kevreet',
 	'myhome' => 'Ma fajenn degemer',
 	'wikiactivity' => 'Oberiantiz ar wiki',
@@ -542,14 +542,14 @@ Ma'z oc'h diazezer ar wiki-mañ pe unan eus merourien anezhañ e c'hallit kemma�
 	'tooltip-pt-myhome' => "Mont d'am Degemer",
 	'activityfeed' => 'Gwazh obererezh',
 	'wiki-activity-message-wall-messages-count' => '{{PLURAL:$1|ur gemennadenn|$1 kemennadenn}}',
-);
+];
 
 /** Catalan (català)
  * @author Anskar
  * @author BroOk
  * @author Marcmpujol
  */
-$messages['ca'] = array(
+$messages['ca'] = [
 	'myhome-desc' => "Una pàgina d'inici privada pels usuaris registrats.",
 	'myhome' => "La meva pàgina d'inici",
 	'wikiactivity' => 'Activitat Wiki',
@@ -628,25 +628,25 @@ Per exemple, pots:
 	'tooltip-pt-myhome' => 'Anar a la meva pàgina',
 	'activityfeed' => "Llista d'activitat",
 	'wiki-activity-message-wall-messages-count' => '{{PLURAL:$1|un missatge|$1 missatges}}',
-);
+];
 
 /** Chechen (нохчийн)
  * @author Sasan700
  * @author Умар
  */
-$messages['ce'] = array(
+$messages['ce'] = [
 	'myhome-user-contributions-feed' => 'Къинхьегам',
 	'myhome-feed-newpage' => 'Керла агӀо',
 	'myhome-feed-edit' => 'нисдар',
 	'myhome-feed-delete' => 'дӀаяьккхина',
 	'myhome-hot-spots-number-of-editors' => 'нисдарш',
-);
+];
 
 /** Czech (čeština)
  * @author Darth Daron
  * @author Dontlietome7
  */
-$messages['cs'] = array(
+$messages['cs'] = [
 	'myhome-desc' => 'Soukromá domovská stránka pro registrované uživatele',
 	'myhome' => 'Moje domovská stránka',
 	'wikiactivity' => 'Wiki Aktivita',
@@ -728,14 +728,14 @@ Administrátoři do ní mohou psát:
 	'tooltip-pt-myhome' => 'Jít na Mou domovskou stránku',
 	'activityfeed' => 'Informační kanál aktivity',
 	'wiki-activity-message-wall-messages-count' => '{{PLURAL:$1|jedna zpráva|$1 zpráv(y)}}',
-);
+];
 
 /** Welsh (Cymraeg)
  * @author (vinny)
  * @author Lloffiwr
  * @author Thefartydoctor
  */
-$messages['cy'] = array(
+$messages['cy'] = [
 	'myhome' => 'Fy Hafan',
 	'wikiactivity' => 'Gweithgarwch Wici',
 	'myhome-feed-edit' => 'golygu',
@@ -744,7 +744,7 @@ $messages['cy'] = array(
 	'myhome-feed-new-article-comment-details' => 'Sylw',
 	'myhome-namespace-blog' => 'Blog',
 	'myhome-default-view-checkbox' => 'Gwnewch yn $1 fy marn ball',
-);
+];
 
 /** German (Deutsch)
  * @author Dennis07
@@ -758,7 +758,7 @@ $messages['cy'] = array(
  * @author The Evil IP address
  * @author Umherirrender
  */
-$messages['de'] = array(
+$messages['de'] = [
 	'myhome-desc' => 'Eine wikiaspezifische Übersichtsseite auf Aktivitäten (Edits, Blogposts, Comments, Forumposts) im Wiki.',
 	'myhome' => 'Startseite',
 	'wikiactivity' => 'Wiki-Aktivität',
@@ -840,7 +840,7 @@ Wenn du der Gründer oder ein Admin dieses Wikis bist, kannst du diese Nachricht
 	'tooltip-pt-myhome' => 'Gehe zu meiner Startseite',
 	'activityfeed' => 'Aktivitäten-Feed',
 	'wiki-activity-message-wall-messages-count' => '{{PLURAL:$1|eine Nachricht|$1 Nachrichten}}',
-);
+];
 
 /** German (formal address) (Deutsch (Sie-Form)‎)
  * @author Claudia Hattitten
@@ -848,7 +848,7 @@ Wenn du der Gründer oder ein Admin dieses Wikis bist, kannst du diese Nachricht
  * @author LWChris
  * @author The Evil IP address
  */
-$messages['de-formal'] = array(
+$messages['de-formal'] = [
 	'myhome-activity-feed-empty' => "Dieses Wiki wartet auf Ihre Beteiligung.
 Klicken Sie auf '''[[Special:CreatePage|Neue Seite]]''' um mit dem Schreiben zu beginnen!",
 	'myhome-watchlist-feed-empty' => 'Sie können Seiten zu Ihrer Beobachtungsliste hinzufügen, indem Sie den Link „{{int:watch}}“ klicken, der oben in der Leiste auf der Seite ist.
@@ -878,13 +878,13 @@ Wenn Sie der Gründer oder ein Admin dieses Wikis sind, können Sie diese Nachri
 
 * Oder einfach ein paar Worte zur Motivation!",
 	'myhome-default-view-success' => 'Ihre Einstellung wurde gespeichert.',
-);
+];
 
 /** Zazaki (Zazaki)
  * @author Erdemaslancan
  * @author Mirzali
  */
-$messages['diq'] = array(
+$messages['diq'] = [
 	'myhome' => 'Keyeyê mı',
 	'myhome-watchlist-feed' => 'Lista seyrkerdışi',
 	'myhome-user-contributions-feed' => 'İştıraqi',
@@ -910,7 +910,7 @@ $messages['diq'] = array(
 	'myhome-feed-inserted-category-details' => '{{PLURAL:$1|Kategoriye ke debyay|Kategoriye ke debyay}}',
 	'myhome-namespace-blog' => 'Qeyd',
 	'wiki-activity-message-wall-messages-count' => '{{PLURAL:$1|yew mesac|$1 mesaci}}',
-);
+];
 
 /** Greek (Ελληνικά)
  * @author Crazymadlover
@@ -918,7 +918,7 @@ $messages['diq'] = array(
  * @author Geraki
  * @author Περίεργος
  */
-$messages['el'] = array(
+$messages['el'] = [
 	'myhome-desc' => 'Μια ιδιωτική κεντρική σελίδα για συνδεδεμένους χρήστες',
 	'myhome' => 'Η αρχική μου σελίδα',
 	'wikiactivity' => 'Δραστηριότητα Wiki',
@@ -995,12 +995,12 @@ $messages['el'] = array(
 	'myhome-default-view-success' => 'Εντάξει, αυτή είναι πλέον η προεπιλεγμένη σου προβολή',
 	'tooltip-pt-myhome' => 'Πήγαινε στην αρχική μου σελίδα',
 	'activityfeed' => 'πρόσφατη δραστηριότητα',
-);
+];
 
 /** British English (British English)
  * @author Shirayuki
  */
-$messages['en-gb'] = array(
+$messages['en-gb'] = [
 	'myhome-feed-categorization' => 'categorisation',
 	'community-corner' => "'''Welcome to My Home!'''
 
@@ -1018,7 +1018,7 @@ For example, you could:
 * Give a shout-out to a contributor who's added something special to the wiki
 
 * Or just post some words of encouragement!",
-);
+];
 
 /** Spanish (español)
  * @author Absay
@@ -1030,7 +1030,7 @@ For example, you could:
  * @author Peter17
  * @author VegaDark
  */
-$messages['es'] = array(
+$messages['es'] = [
 	'myhome-desc' => 'Una página de inicio privada para usuarios registrados',
 	'myhome' => 'Mi página de inicio',
 	'wikiactivity' => 'Wiki Actividad',
@@ -1105,12 +1105,12 @@ Si eres el fundador o un administrador de este wiki, puedes cambiar este mensaje
 	'tooltip-pt-myhome' => 'Ir a mi página',
 	'activityfeed' => 'Lista de actividad',
 	'wiki-activity-message-wall-messages-count' => '{{PLURAL:$1|un mensaje|$1 mensajes}}',
-);
+];
 
 /** Estonian (eesti)
  * @author KalmerE.
  */
-$messages['et'] = array(
+$messages['et'] = [
 	'myhome-desc' => 'Isiklik avaleht sisse loginud kasutajale',
 	'myhome' => 'Wiki logi',
 	'wikiactivity' => 'Wiki logi',
@@ -1193,15 +1193,15 @@ Näiteks:
 	'tooltip-pt-myhome' => 'Suundu Viki logisse',
 	'activityfeed' => 'Aktiivsuse kanal',
 	'wiki-activity-message-wall-messages-count' => '{{PLURAL:$1|üks sõnum|$1 sõnumit}}',
-);
+];
 
 /** Basque (euskara)
  * @author Subi
  */
-$messages['eu'] = array(
+$messages['eu'] = [
 	'myhome-user-contributions-feed' => 'Ekarpenak',
 	'wiki-activity-message-wall-messages-count' => '{{PLURAL:$1|mezu bat|$1 mezu}}',
-);
+];
 
 /** Persian (فارسی)
  * @author Alirezaaa
@@ -1209,7 +1209,7 @@ $messages['eu'] = array(
  * @author Ebraminio
  * @author Wayiran
  */
-$messages['fa'] = array(
+$messages['fa'] = [
 	'myhome-desc' => 'صفحهٔ خانگی خصوصی برای کاربران واردشده',
 	'myhome' => 'خانۀ من',
 	'wikiactivity' => 'فعالیت‌های ویکی',
@@ -1292,7 +1292,7 @@ $messages['fa'] = array(
 	'tooltip-pt-myhome' => 'برگشت به خانهٔ خودم',
 	'activityfeed' => 'اشتراک فعالیت',
 	'wiki-activity-message-wall-messages-count' => '{{PLURAL:$1|یک پیام|$1 پیام}}',
-);
+];
 
 /** Finnish (suomi)
  * @author Centerlink
@@ -1305,7 +1305,7 @@ $messages['fa'] = array(
  * @author Varusmies
  * @author VezonThunder
  */
-$messages['fi'] = array(
+$messages['fi'] = [
 	'myhome-desc' => 'Yksityinen kotisivu kirjautuneille käyttäjille',
 	'myhome' => 'Kotisivu',
 	'wikiactivity' => 'Aktiivisuus wikissä',
@@ -1387,7 +1387,7 @@ Jos olet tämän wikin perustaja tai olet ylläpitäjänä tässä wikissä, voi
 	'tooltip-pt-myhome' => 'Palaa kotisivulle',
 	'activityfeed' => 'Toimintasyöte',
 	'wiki-activity-message-wall-messages-count' => '{{PLURAL:$1|viesti|$1 viestiä}}',
-);
+];
 
 /** French (français)
  * @author Crochet.david
@@ -1398,7 +1398,7 @@ Jos olet tämän wikin perustaja tai olet ylläpitäjänä tässä wikissä, voi
  * @author Urhixidur
  * @author Wyz
  */
-$messages['fr'] = array(
+$messages['fr'] = [
 	'myhome-desc' => 'Une page d’accueil privée pour les utilisateurs identifiés',
 	'myhome' => 'Mon accueil',
 	'wikiactivity' => 'Activité du wiki',
@@ -1479,19 +1479,19 @@ Si vous êtes le fondateur ou bien un administrateur de ce wiki, vous pouvez cha
 	'tooltip-pt-myhome' => 'Aller à Mon Accueil',
 	'activityfeed' => 'Flux d’activité',
 	'wiki-activity-message-wall-messages-count' => '{{PLURAL:$1|un message|$1 messages}}',
-);
+];
 
 /** Western Frisian (Frysk)
  * @author Robin0van0der0vliet
  */
-$messages['fy'] = array(
+$messages['fy'] = [
 	'myhome-feed-edit' => 'bewurkje',
-);
+];
 
 /** Galician (galego)
  * @author Toliño
  */
-$messages['gl'] = array(
+$messages['gl'] = [
 	'myhome-desc' => 'Unha páxina principal privada para os usuarios rexistrados',
 	'myhome' => 'A miña páxina de inicio',
 	'wikiactivity' => 'Actividade no wiki',
@@ -1571,20 +1571,20 @@ Se vostede é o fundador ou un administrador desde wiki, pode cambiar esta mensa
 	'tooltip-pt-myhome' => 'Ir á miña páxina de inicio',
 	'activityfeed' => 'Fonte de novas da actividade',
 	'wiki-activity-message-wall-messages-count' => '{{PLURAL:$1|unha mensaxe|$1 mensaxes}}',
-);
+];
 
 /** Hausa (Hausa)
  */
-$messages['ha'] = array(
+$messages['ha'] = [
 	'myhome-feed-new-blog-comment-details' => 'Bahasi',
 	'myhome-feed-new-article-comment-details' => 'Bahasi',
-);
+];
 
 /** Hebrew (עברית)
  * @author 0ftal
  * @author Amire80
  */
-$messages['he'] = array(
+$messages['he'] = [
 	'myhome-desc' => 'דף בית פרטי למשתמשים שנכנסים',
 	'myhome' => 'הבית שלי',
 	'wikiactivity' => 'פעילות ויקי',
@@ -1655,7 +1655,7 @@ $messages['he'] = array(
 	'myhome-default-view-success' => 'אוקיי, זאת ברירת המחדל שלך עכשיו',
 	'tooltip-pt-myhome' => 'עבור אל הבית שלי',
 	'activityfeed' => 'הזנת פעילות',
-);
+];
 
 /** Hungarian (magyar)
  * @author Dani
@@ -1663,7 +1663,7 @@ $messages['he'] = array(
  * @author Misibacsi
  * @author TK-999
  */
-$messages['hu'] = array(
+$messages['hu'] = [
 	'myhome-desc' => 'Személyes kezdőlap a bejelentkezett felhasználóknak',
 	'myhome' => 'Kezdőlapom',
 	'wikiactivity' => 'Wiki tevékenység',
@@ -1744,19 +1744,19 @@ Ha te vagy a wiki alapítója vagy egyik adminisztrátora, megváltoztathatod ez
 	'tooltip-pt-myhome' => 'Kezdőlapom megtekintése',
 	'activityfeed' => 'Tevékenység hírcsatornája',
 	'wiki-activity-message-wall-messages-count' => '{{PLURAL:$1|egy|$1}} üzenet',
-);
+];
 
 /** Armenian (Հայերեն)
  * @author Vadgt
  */
-$messages['hy'] = array(
+$messages['hy'] = [
 	'myhome-feed-newpage' => 'նոր էջ',
-);
+];
 
 /** Interlingua (interlingua)
  * @author McDutchie
  */
-$messages['ia'] = array(
+$messages['ia'] = [
 	'myhome-desc' => 'Un pagina personal private pro usatores authenticate',
 	'myhome' => 'Mi pagina initial',
 	'wikiactivity' => 'Activitate in wiki',
@@ -1831,14 +1831,14 @@ Si tu es le fundator o un administrator de iste wiki, tu pote cambiar iste messa
 	'tooltip-pt-myhome' => 'Ir a mi pagina initial',
 	'activityfeed' => 'Summario de activitate',
 	'wiki-activity-message-wall-messages-count' => '{{PLURAL:$1|un message|$1 messages}}',
-);
+];
 
 /** Indonesian (Bahasa Indonesia)
  * @author Aldnonymous
  * @author Farras
  * @author Irwangatot
  */
-$messages['id'] = array(
+$messages['id'] = [
 	'myhome-desc' => 'Halaman pribadi untuk Pengguna terdaftar.',
 	'myhome' => 'Rumah saya',
 	'wikiactivity' => 'Aktivitas Wiki',
@@ -1915,15 +1915,15 @@ Sebagai contoh, Anda bisa:
 	'myhome-default-view-success' => 'Baiklah, sekarang ini baku Anda',
 	'tooltip-pt-myhome' => 'Tuju ke Halaman Depan Saya',
 	'activityfeed' => 'Asupan kegiatan',
-);
+];
 
 /** Igbo (Igbo)
  * @author Ukabia
  */
-$messages['ig'] = array(
+$messages['ig'] = [
 	'myhome-feed-categorization' => 'Ndósé ébé ihe nọr',
 	'myhome-feed-created-by' => 'onyé kéré ya bu $1',
-);
+];
 
 /** Italian (italiano)
  * @author Beta16
@@ -1931,7 +1931,7 @@ $messages['ig'] = array(
  * @author McDutchie
  * @author Minerva Titani
  */
-$messages['it'] = array(
+$messages['it'] = [
 	'myhome-desc' => 'Una home page privata per gli utenti registrati',
 	'myhome' => 'My Home',
 	'wikiactivity' => 'Attività su wiki',
@@ -2005,14 +2005,14 @@ Se sei il fondatore o un admin di questa wiki, puoi modificare questo messaggio 
 	'tooltip-pt-myhome' => 'Vai a My Home',
 	'activityfeed' => 'Attività recenti',
 	'wiki-activity-message-wall-messages-count' => '{{PLURAL:$1|un messaggio|$1 messaggi}}',
-);
+];
 
 /** Japanese (日本語)
  * @author Shirayuki
  * @author Tommy6
  * @author 青子守歌
  */
-$messages['ja'] = array(
+$messages['ja'] = [
 	'myhome-desc' => '登録利用者向けのプライベートホームページ',
 	'myhome' => 'My Home',
 	'wikiactivity' => 'ウィキアクティビティ',
@@ -2082,13 +2082,13 @@ $messages['ja'] = array(
 	'tooltip-pt-myhome' => 'My Home',
 	'activityfeed' => 'アクティビティフィード',
 	'wiki-activity-message-wall-messages-count' => '{{PLURAL:$1|$1件のメッセージ}}',
-);
+];
 
 /** Georgian (ქართული)
  * @author David1010
  * @author DevaMK
  */
-$messages['ka'] = array(
+$messages['ka'] = [
 	'wikiactivity' => 'ვიკი აქტიურობა',
 	'myhome-activity-feed' => 'აქტიურობის არხი',
 	'myhome-watchlist-feed' => 'გვერდები, რომლებსაც თვალს ვადევნებ',
@@ -2107,14 +2107,14 @@ $messages['ka'] = array(
 	'oasis-myhome-community-corner-edit' => 'განცხადების რედაქტირება &gt;',
 	'myhome-hot-spots-definition' => 'გვერდები, რომლებსაც ბოლო $1 დღის მანძილზე ყველაზე მეტი რედაქტორი ჰყავდათ.',
 	'myhome-default-view-checkbox' => 'აქციე $1 ჩემს ნაგულისხმევ ხედად',
-);
+];
 
 /** Kannada (ಕನ್ನಡ)
  * @author Dimension10
  * @author Nayvik
  * @author VASANTH S.N.
  */
-$messages['kn'] = array(
+$messages['kn'] = [
 	'myhome-watchlist-feed' => 'ವೀಕ್ಷಣಾಪಟ್ಟಿ',
 	'myhome-user-contributions-feed' => 'ಕಾಣಿಕೆಗಳು',
 	'myhome-feed-newpage' => 'ಹೊಸ ಪುಟ',
@@ -2131,13 +2131,13 @@ $messages['kn'] = array(
 	'myhome-hot-spots-number-of-editors' => 'ಸಂಪಾದಕರು',
 	'myhome-namespace-blog' => 'ಬ್ಲಾಗ್',
 	'myhome-community-corner-edit' => 'ಸಂದೇಶವನ್ನು ಸಂಪಾದಿಸು',
-);
+];
 
 /** Korean (한국어)
  * @author Cafeinlove
  * @author Miri-Nae
  */
-$messages['ko'] = array(
+$messages['ko'] = [
 	'myhome' => '마이 홈',
 	'wikiactivity' => '위키 활동 내역',
 	'myhome-activity-more' => '더 많은 활동 내역 보기',
@@ -2197,22 +2197,22 @@ $messages['ko'] = array(
 	'myhome-hot-spots-definition' => '$1일 동안에 편집이 가장 많은 문서들의 목록입니다.',
 	'myhome-default-view-checkbox' => '$1을 기본으로 보기',
 	'myhome-default-view-success' => '설정이 변경되었습니다.',
-);
+];
 
 /** Colognian (Ripoarisch)
  * @author Purodha
  */
-$messages['ksh'] = array(
+$messages['ksh'] = [
 	'myhome-feed-new-blog-comment-details' => 'Aanmärkong',
 	'myhome-feed-new-article-comment-details' => 'Aanmärkong',
 	'myhome-feed-redirect-details' => 'Ömleidong',
-);
+];
 
 /** Kurdish (Latin script) (Kurdî (latînî)‎)
  * @author Bikarhêner
  * @author George Animal
  */
-$messages['ku-latn'] = array(
+$messages['ku-latn'] = [
 	'myhome' => 'Mala min',
 	'myhome-watchlist-feed' => 'Lîsteya şopandinê',
 	'myhome-feed-newpage' => 'rûpela nû',
@@ -2226,12 +2226,12 @@ $messages['ku-latn'] = array(
 	'myhome-feed-redirect-details' => 'Beralîkirin',
 	'myhome-hot-spots-number-of-editors' => 'edîtor',
 	'myhome-namespace-blog' => 'Blog',
-);
+];
 
 /** Luxembourgish (Lëtzebuergesch)
  * @author Robby
  */
-$messages['lb'] = array(
+$messages['lb'] = [
 	'myhome' => 'Meng Haaptsäit',
 	'myhome-watchlist-feed' => 'Iwwerwaachungslëscht',
 	'myhome-user-contributions-feed' => 'Kontributiounen',
@@ -2254,12 +2254,12 @@ $messages['lb'] = array(
 	'myhome-feed-new-article-comment-details' => 'Bemierkung',
 	'myhome-feed-redirect-details' => 'Viruleedung',
 	'tooltip-pt-myhome' => 'Op meng Haaptsäit goen',
-);
+];
 
 /** Northern Luri (لوری مینجایی)
  * @author Mogoeilor
  */
-$messages['lrc'] = array(
+$messages['lrc'] = [
 	'myhome' => 'سرآسونه مه',
 	'myhome-watchlist-feed' => 'سئیل بأرگ',
 	'prefs-myhome' => 'سرآسونه مه',
@@ -2274,19 +2274,19 @@ $messages['lrc'] = array(
 	'myhome-feed-new-article-comment-details' => 'ویر و باور',
 	'myhome-hot-spots-number-of-editors' => 'ویرایشتگریا',
 	'tooltip-pt-myhome' => 'رو د سرآسونه مه',
-);
+];
 
 /** Latvian (latviešu)
  * @author Sg ghost
  */
-$messages['lv'] = array(
+$messages['lv'] = [
 	'wikiactivity' => 'Viki Aktivitātes',
-);
+];
 
 /** Macedonian (македонски)
  * @author Bjankuloski06
  */
-$messages['mk'] = array(
+$messages['mk'] = [
 	'myhome-desc' => 'Лична домашна страница за најавени корисници',
 	'myhome' => 'Мојата домашна страница',
 	'wikiactivity' => 'Активности на викито',
@@ -2365,12 +2365,12 @@ $messages['mk'] = array(
 	'tooltip-pt-myhome' => 'Оди на Мојата домашна страница',
 	'activityfeed' => 'Лента на активности',
 	'wiki-activity-message-wall-messages-count' => '{{PLURAL:$1|една порака|$1 пораки}}',
-);
+];
 
 /** Malayalam (മലയാളം)
  * @author Praveenp
  */
-$messages['ml'] = array(
+$messages['ml'] = [
 	'wikiactivity' => 'വിക്കി പ്രവർത്തനങ്ങൾ',
 	'myhome-activity-more' => 'കൂടുതൽ സമീപകാല പ്രവർത്തനങ്ങൾ കാണുക',
 	'myhome-feed-newpage' => 'പുതിയ താൾ',
@@ -2400,13 +2400,13 @@ $messages['ml'] = array(
 	'myhome-community-corner-header' => 'സമൂഹ സന്ദേശങ്ങൾ',
 	'oasis-myhome-community-corner-edit' => 'സന്ദേശം തിരുത്തുക &gt;',
 	'myhome-community-corner-edit' => 'സന്ദേശം തിരുത്തുക',
-);
+];
 
 /** Malay (Bahasa Melayu)
  * @author Anakmalaysia
  * @author Zamwan
  */
-$messages['ms'] = array(
+$messages['ms'] = [
 	'myhome-desc' => 'Laman utama persendirian untuk pengguna yang log masuk',
 	'myhome' => 'Laman Utama Saya',
 	'wikiactivity' => 'Aktiviti Wiki',
@@ -2486,20 +2486,20 @@ Misalnya, anda boleh:
 	'tooltip-pt-myhome' => 'Pergi ke Laman Utama Saya',
 	'activityfeed' => 'Suapan kegiatan',
 	'wiki-activity-message-wall-messages-count' => '{{PLURAL:$1|satu pesanan|$1 pesanan}}',
-);
+];
 
 /** Maltese (Malti)
  * @author Chrisportelli
  */
-$messages['mt'] = array(
+$messages['mt'] = [
 	'myhome-feed-newpage' => 'paġna ġdida',
 	'myhome-feed-new-page-details' => 'Paġna ġdida',
-);
+];
 
 /** Burmese (မြန်မာဘာသာ)
  * @author Erikoo
  */
-$messages['my'] = array(
+$messages['my'] = [
 	'myhome-watchlist-feed' => 'စောင့်ကြည့်စာရင်း',
 	'myhome-user-contributions-feed' => 'ပံ့ပိုးထားမှုများ',
 	'myhome-feed-newpage' => 'စာမျက်နှာအသစ်',
@@ -2511,20 +2511,20 @@ $messages['my'] = array(
 	'myhome-feed-new-blog-comment-details' => 'မှတ်ချက်',
 	'myhome-feed-new-article-comment-details' => 'မှတ်ချက်',
 	'myhome-feed-move-details' => 'အမည်ပြန်မှည့်ရန်',
-);
+];
 
 /** Mazanderani (مازِرونی)
  * @author محک
  */
-$messages['mzn'] = array(
+$messages['mzn'] = [
 	'myhome-feed-edit' => 'دچی‌ین',
-);
+];
 
 /** Norwegian Bokmål (norsk bokmål)
  * @author Audun
  * @author Nghtwlkr
  */
-$messages['nb'] = array(
+$messages['nb'] = [
 	'myhome-desc' => 'En privat hjem-side for innloggede brukere',
 	'myhome' => 'Mitt hjem',
 	'wikiactivity' => 'Wiki-aktivitet',
@@ -2607,21 +2607,21 @@ For eksempel kan du:
 	'tooltip-pt-myhome' => 'Gå til Mitt hjem',
 	'activityfeed' => 'Aktivitetsfeed',
 	'wiki-activity-message-wall-messages-count' => '{{PLURAL:$1|én melding|$1 meldinger}}',
-);
+];
 
 /** Nepali (नेपाली)
  * @author RajeshPandey
  */
-$messages['ne'] = array(
+$messages['ne'] = [
 	'myhome-feed-new-blog-comment-details' => 'टिप्पणी',
 	'myhome-feed-new-article-comment-details' => 'टिप्पणी',
-);
+];
 
 /** Dutch (Nederlands)
  * @author Siebrand
  * @author Tjcool007
  */
-$messages['nl'] = array(
+$messages['nl'] = [
 	'myhome-desc' => 'Een eigen startpagina voor aangemelde gebruikers',
 	'myhome' => 'Mijn startpagina',
 	'wikiactivity' => 'Wikiactiviteit',
@@ -2703,12 +2703,12 @@ Als u de oprichter of een beheerder van deze wiki bent, kunt u dit bericht gebru
 	'tooltip-pt-myhome' => 'Naar Mijn startpagina gaan',
 	'activityfeed' => 'Activiteitenfeed',
 	'wiki-activity-message-wall-messages-count' => '{{PLURAL:$1|één bericht|$1 berichten}}',
-);
+];
 
 /** Nederlands (informeel)‎ (Nederlands (informeel)‎)
  * @author Siebrand
  */
-$messages['nl-informal'] = array(
+$messages['nl-informal'] = [
 	'myhome-watchlist-feed-empty' => 'Je kunt pagina\'s toevoegen aan uw volglijst door op de koppeling "{{int:watch}}" te klikken in de balk bovenaan de pagina.
 Je kunt je volglijst gebruiken om de laatste wijzigingen aan pagina\'s waar je bij betrokken bent te bekijken.',
 	'myhome-user-contributions-empty' => 'Je kunt meewerken aan deze wiki door op "bewerken" te klikken op een pagina en daarna toe te voegen wat je weet.
@@ -2735,12 +2735,12 @@ Als je de oprichter of een beheerder van deze wiki bent, kan je dit bericht gebr
 * Een bepaalde gebruiker prijzen die iets speciaals heeft toegevoegd aan de wiki
 
 * Of gewoon wat schrijven om mensen aan te moedigen!",
-);
+];
 
 /** Occitan (occitan)
  * @author Cedric31
  */
-$messages['oc'] = array(
+$messages['oc'] = [
 	'myhome' => 'Mon Acuèlh',
 	'wikiactivity' => 'Activitat del Wiki',
 	'myhome-activity-feed' => "Flux d'activitat",
@@ -2774,12 +2774,12 @@ $messages['oc'] = array(
 	'myhome-community-corner-header' => 'Messatges de la comunautat',
 	'oasis-myhome-community-corner-edit' => 'modificar lo messatge &gt;',
 	'myhome-community-corner-edit' => 'modificar lo messatge',
-);
+];
 
 /** Punjabi (ਪੰਜਾਬੀ)
  * @author Aalam
  */
-$messages['pa'] = array(
+$messages['pa'] = [
 	'myhome' => 'ਮੇਰਾ ਘਰ',
 	'myhome-activity-more' => 'ਹੋਰ ਤਾਜ਼ਾ ਸਰਗਰਮੀ ਵੇਖੋ',
 	'myhome-activity-feed' => 'ਸਰਗਰਮੀ ਫੀਡ',
@@ -2807,12 +2807,12 @@ $messages['pa'] = array(
 	'myhome-feed-new-blog-comment-details' => 'ਟਿੱਪਣੀ',
 	'myhome-feed-new-article-comment-details' => 'ਟਿੱਪਣੀ',
 	'myhome-feed-move-details' => 'ਨਾਂ ਬਦਲਿਆ ਗਿਆ',
-);
+];
 
 /** Pennsylvania German (Deitsch)
  * @author Xqt
  */
-$messages['pdc'] = array(
+$messages['pdc'] = [
 	'myhome' => 'Haaptblatt',
 	'myhome-feed-edit' => 'ennere',
 	'myhome-feed-talkpage' => 'Gschwetz-Blatt',
@@ -2835,12 +2835,12 @@ $messages['pdc'] = array(
 	'myhome-hot-spots-number-of-editors' => 'Schreiwer',
 	'myhome-community-corner-header' => 'Gmeeschafts-Portal', # Fuzzy
 	'myhome-hot-spots-definition' => 'Bledder mit de meescht Schreiwer vun de letscht $1 Daag.', # Fuzzy
-);
+];
 
 /** Palatine German (Pälzisch)
  * @author Manuae
  */
-$messages['pfl'] = array(
+$messages['pfl'] = [
 	'myhome-feed-edit' => 'bearwaide',
 	'myhome-feed-move' => 'Said vaschowe',
 	'myhome-feed-talkpage' => 'Dischbediersaid',
@@ -2848,7 +2848,7 @@ $messages['pfl'] = array(
 	'myhome-feed-inserted-image-details' => '{{PLURAL:$1|Bild dzugfieschd|Bilda dzugfieschd}}',
 	'myhome-feed-inserted-video-details' => '{{PLURAL:$1|Wideo dzugfieschd|Wideos dzugfieschd}}',
 	'myhome-feed-inserted-category-details' => '{{PLURAL:$1|Kadegorie dzugfieschd|Kadegorije dzugfieschd}}',
-);
+];
 
 /** Polish (polski)
  * @author Ankry
@@ -2856,7 +2856,7 @@ $messages['pfl'] = array(
  * @author Sp5uhe
  * @author Wyvek
  */
-$messages['pl'] = array(
+$messages['pl'] = [
 	'myhome-desc' => 'Własna strona główna dla zalogowanych użytkowników',
 	'myhome' => 'Moja strona domowa',
 	'wikiactivity' => 'Aktywność na Wiki',
@@ -2938,13 +2938,13 @@ Jeśli jesteś założycielem lub administratorem tej wiki, możesz zmienić tą
 	'tooltip-pt-myhome' => 'Przejdź do Strony domowej',
 	'activityfeed' => 'Aktywność',
 	'wiki-activity-message-wall-messages-count' => '{{PLURAL:$1|jedna wiadomość|$1 wiadomości}}',
-);
+];
 
 /** Piedmontese (Piemontèis)
  * @author Borichèt
  * @author Dragonòt
  */
-$messages['pms'] = array(
+$messages['pms'] = [
 	'myhome-desc' => "Na pàgina d'intrada privà për j'utent identificà",
 	'myhome' => 'Mia Intrada',
 	'wikiactivity' => 'Atività dla Wiki',
@@ -3020,12 +3020,12 @@ Se chiel a l'é ël fondador o n'aministrator ëd la wiki, a peul cangé sto më
 	'tooltip-pt-myhome' => 'Andé a Mia Intrada',
 	'activityfeed' => "Fluss d'atività",
 	'wiki-activity-message-wall-messages-count' => '{{PLURAL:$1|un mëssagi|$1 mëssagi}}',
-);
+];
 
 /** Pashto (پښتو)
  * @author Ahmed-Najib-Biabani-Ibrahimkhel
  */
-$messages['ps'] = array(
+$messages['ps'] = [
 	'myhome' => 'زما کورپاڼه',
 	'wikiactivity' => 'ويکي فعاليتونه',
 	'myhome-watchlist-feed' => 'کتنلړ',
@@ -3080,7 +3080,7 @@ $messages['ps'] = array(
 * او يا هم يوازې د تشويق او د نورو د هڅولو لپاره خوږې خبرې وليکۍ!",
 	'tooltip-pt-myhome' => 'خپلې کورپاڼې ته ورتلل',
 	'wiki-activity-message-wall-messages-count' => '{{PLURAL:$1|يو پيغام|$1 پيغامونه}}',
-);
+];
 
 /** Portuguese (português)
  * @author Hamilton Abreu
@@ -3090,7 +3090,7 @@ $messages['ps'] = array(
  * @author Malafaya
  * @author SandroHc
  */
-$messages['pt'] = array(
+$messages['pt'] = [
 	'myhome-desc' => 'Uma página privada para utilizadores autenticados',
 	'myhome' => 'A Minha Casa',
 	'wikiactivity' => 'Atividade na Wiki',
@@ -3172,7 +3172,7 @@ Podes, por exemplo:
 	'tooltip-pt-myhome' => 'Ir para A Minha Casa',
 	'activityfeed' => 'Atividade recente',
 	'wiki-activity-message-wall-messages-count' => '{{PLURAL:$1|uma mensagem|$1 mensagens}}',
-);
+];
 
 /** Brazilian Portuguese (português do Brasil)
  * @author Aristóbulo
@@ -3182,7 +3182,7 @@ Podes, por exemplo:
  * @author Jefersonmoraes
  * @author Jesielt
  */
-$messages['pt-br'] = array(
+$messages['pt-br'] = [
 	'myhome-desc' => 'Uma página privada para usuários autenticados',
 	'myhome' => 'Minha página inicial',
 	'wikiactivity' => 'Atividade na Wiki',
@@ -3261,12 +3261,12 @@ Se você é o fundador ou um administrador desta wiki, pode mudar esta mensagem 
 	'tooltip-pt-myhome' => 'Ir para Minha Página Inicial',
 	'activityfeed' => 'Feed das mudanças',
 	'wiki-activity-message-wall-messages-count' => '{{PLURAL:$1|uma mensagem|$1 mensagens}}',
-);
+];
 
 /** tarandíne (tarandíne)
  * @author Joetaras
  */
-$messages['roa-tara'] = array(
+$messages['roa-tara'] = [
 	'myhome-desc' => "'Na pàgena prengèpale private pe le utinde trasute",
 	'myhome' => 'Pàgena meje',
 	'wikiactivity' => "Attivita d'a Uicchi",
@@ -3302,7 +3302,7 @@ $messages['roa-tara'] = array(
 	'myhome-community-corner-edit' => "cange 'u messagge",
 	'activityfeed' => "Feed de l'attività",
 	'wiki-activity-message-wall-messages-count' => "{{PLURAL:$1|'nu messàgge|$1 messàgge}}",
-);
+];
 
 /** Russian (русский)
  * @author DCamer
@@ -3313,7 +3313,7 @@ $messages['roa-tara'] = array(
  * @author Prima klasy4na
  * @author Александр Сигачёв
  */
-$messages['ru'] = array(
+$messages['ru'] = [
 	'myhome-desc' => 'Личная заглавная страница для авторизованных пользователей',
 	'myhome' => 'Личный кабинет',
 	'wikiactivity' => 'Вики-деятельность',
@@ -3389,23 +3389,23 @@ $messages['ru'] = array(
 	'tooltip-pt-myhome' => 'Перейти в личный кабинет',
 	'activityfeed' => 'Лента действий',
 	'wiki-activity-message-wall-messages-count' => '{{PLURAL:$1|одно сообщение|$1 сообщений}}',
-);
+];
 
 /** Rusyn (русиньскый)
  * @author Gazeb
  */
-$messages['rue'] = array(
+$messages['rue'] = [
 	'myhome' => 'Моя домашня сторінка',
 	'myhome-watchlist-feed' => 'Слїдованы сторінкы',
 	'myhome-user-contributions-feed' => 'Мої приспевкы',
-);
+];
 
 /** Sinhala (සිංහල)
  * @author Singhalawap
  * @author තඹරු විජේසේකර
  * @author පසිඳු කාවින්ද
  */
-$messages['si'] = array(
+$messages['si'] = [
 	'myhome' => 'මගේ නිවස',
 	'myhome-activity-more' => 'අළුත් ම ක්‍රියාවන් නරඹන්න',
 	'myhome-activity-feed' => 'කාර්ය පෝෂණය',
@@ -3424,21 +3424,21 @@ $messages['si'] = array(
 	'myhome-default-view-checkbox' => '$1 මගේ සාමාන්‍ය දසුන (default view) කරන්න',
 	'myhome-default-view-success' => 'හරි, දැන් මෙය ඔබේ සාමාන්‍ය විදිහයි',
 	'tooltip-pt-myhome' => 'මගේ ප්‍රධාන පිටුවට යන්න',
-);
+];
 
 /** Slovenian (slovenščina)
  * @author Dbc334
  */
-$messages['sl'] = array(
+$messages['sl'] = [
 	'myhome-feed-summary-details' => 'Povzetek',
-);
+];
 
 /** Serbian (Cyrillic script) (српски (ћирилица)‎)
  * @author Rancher
  * @author Verlor
  * @author Жељко Тодоровић
  */
-$messages['sr-ec'] = array(
+$messages['sr-ec'] = [
 	'myhome' => 'Мој Дом',
 	'wikiactivity' => 'Активност на викији',
 	'myhome-activity-more' => 'прикажи скорашњу активност',
@@ -3513,7 +3513,7 @@ $messages['sr-ec'] = array(
 	'myhome-default-view-success' => 'Ово је сада ваш подразумевани приказ.',
 	'tooltip-pt-myhome' => 'Пређите у Мој Дом',
 	'activityfeed' => 'Активности',
-);
+];
 
 /** Swedish (svenska)
  * @author Diupwijk
@@ -3522,7 +3522,7 @@ $messages['sr-ec'] = array(
  * @author Tobulos1
  * @author WikiPhoenix
  */
-$messages['sv'] = array(
+$messages['sv'] = [
 	'myhome-desc' => 'En privat hemsida för inloggade användare',
 	'myhome' => 'Mitt hem',
 	'wikiactivity' => 'Wiki-aktivitet',
@@ -3602,18 +3602,18 @@ Om du är grundaren eller en administratör på denna wiki kan du ändra detta b
 	'tooltip-pt-myhome' => 'Gå till Mitt Hem',
 	'activityfeed' => 'Aktivitetsflöde',
 	'wiki-activity-message-wall-messages-count' => '{{PLURAL:$1|ett meddelande|$1 meddelanden}}',
-);
+];
 
 /** Swahili (Kiswahili)
  */
-$messages['sw'] = array(
+$messages['sw'] = [
 	'myhome-feed-summary-details' => 'Muhtasari',
-);
+];
 
 /** Tamil (தமிழ்)
  * @author Karthi.dr
  */
-$messages['ta'] = array(
+$messages['ta'] = [
 	'myhome' => 'எனது இல்லம்',
 	'wikiactivity' => 'விக்கி செயல்பாடு',
 	'myhome-activity-more' => 'மேலதிக அண்மைய செயல்பாட்டைப் பார்க்கவும்',
@@ -3631,13 +3631,13 @@ $messages['ta'] = array(
 	'myhome-feed-move-details' => 'பெயர் மாற்றப்பட்டது',
 	'myhome-feed-redirect-details' => 'திருப்பிவிடு',
 	'myhome-hot-spots-number-of-editors' => 'தொகுப்பாளர்கள்',
-);
+];
 
 /** Telugu (తెలుగు)
  * @author Chaduvari
  * @author Veeven
  */
-$messages['te'] = array(
+$messages['te'] = [
 	'myhome-desc' => 'లాగినైన వాడుకరులకు ఓ స్వంత హోమ్ పేజీ',
 	'myhome' => 'నా హోమ్',
 	'wikiactivity' => 'వికీ వ్యాపకం',
@@ -3677,20 +3677,20 @@ $messages['te'] = array(
 	'myhome-feed-move-details' => 'పేరు మార్చబడింది',
 	'myhome-feed-redirect-details' => 'దారిమార్పు',
 	'myhome-namespace-blog' => 'బ్లాగు',
-);
+];
 
 /** Tetum (tetun)
  * @author MF-Warburg
  */
-$messages['tet'] = array(
+$messages['tet'] = [
 	'myhome-feed-edit' => 'edita',
 	'myhome-feed-summary-details' => 'Rezumu',
-);
+];
 
 /** Tagalog (Tagalog)
  * @author AnakngAraw
  */
-$messages['tl'] = array(
+$messages['tl'] = [
 	'myhome-desc' => 'Isang pribadong tahanang pahina para sa nakalagdang mga tagagamit',
 	'myhome' => 'Tahanan Ko',
 	'wikiactivity' => 'Mga Galaw sa Wiki',
@@ -3772,12 +3772,12 @@ Halimbawa, maaari kang:
 	'tooltip-pt-myhome' => 'Pumunta sa Tahanan Ko',
 	'activityfeed' => 'Pakain ng paggalaw',
 	'wiki-activity-message-wall-messages-count' => '{{PLURAL:$1|isang mensahe|$1 mga mensahe}}',
-);
+];
 
 /** Talysh (толышә зывон)
  * @author Гусейн
  */
-$messages['tly'] = array(
+$messages['tly'] = [
 	'myhome-user-contributions-feed' => 'Гәнҹ',
 	'myhome-feed-newpage' => 'тожә сәһифә',
 	'myhome-feed-edit' => 'сәрост кардеј',
@@ -3786,13 +3786,13 @@ $messages['tly'] = array(
 	'myhome-feed-summary-details' => 'Дәгишон тәсвир',
 	'myhome-feed-move-details' => 'Ном дәгиш кардә быә',
 	'myhome-feed-inserted-category-details' => '{{PLURAL:$1|Зијод кардә быә категоријә|Зијод кардә быән категоријон}}',
-);
+];
 
 /** Turkish (Türkçe)
  * @author Incelemeelemani
  * @author Joseph
  */
-$messages['tr'] = array(
+$messages['tr'] = [
 	'myhome-desc' => 'Kayıtlı kullanıcılar için özel ana sayfa',
 	'myhome' => 'Evim',
 	'wikiactivity' => 'Wiki Etkinliği',
@@ -3874,13 +3874,13 @@ Eğer bu wikinin kurucusu ve yöneticisi iseniz, site hakkında önemli şeyler 
 	'tooltip-pt-myhome' => 'Evime git',
 	'activityfeed' => 'Etkinlik akışı',
 	'wiki-activity-message-wall-messages-count' => '{{PLURAL:$1|bir mesajınız|$1 mesajlarınız}}',
-);
+];
 
 /** Tatar (Cyrillic script) (татарча)
  * @author Ajdar
  * @author Ильнар
  */
-$messages['tt-cyrl'] = array(
+$messages['tt-cyrl'] = [
 	'myhome-desc' => 'Теркәлгән кулланучылар өчен шәхси баш бит',
 	'myhome' => 'Минем сәхифә',
 	'wikiactivity' => 'Вики-эшчәнлек',
@@ -3953,12 +3953,12 @@ $messages['tt-cyrl'] = array(
 	'tooltip-pt-myhome' => 'Шәхси кабинетка күчү',
 	'activityfeed' => 'Гамәлләр тасмасы',
 	'wiki-activity-message-wall-messages-count' => '{{PLURAL:$1|бер хәбәр|$1 хәбәр}}',
-);
+];
 
 /** Central Atlas Tamazight (ⵜⴰⵎⴰⵣⵉⵖⵜ)
  * @author Tifinaghes
  */
-$messages['tzm'] = array(
+$messages['tzm'] = [
 	'myhome' => 'ⴰⵅⵅⴰⵎ ⵉⵏⵡ',
 	'prefs-myhome' => 'ⴰⵅⵅⴰⵎ ⵉⵏⵡ',
 	'myhome-feed-newpage' => 'ⵜⴰⵙⵏⴰ ⵜⴰⵎⴰⵢⵏⵓⵜ',
@@ -3966,12 +3966,12 @@ $messages['tzm'] = array(
 	'myhome-feed-new-page-details' => 'ⵜⴰⵙⵏⴰ ⵜⴰⵎⴰⵢⵏⵓⵜ',
 	'myhome-feed-new-blog-post-details' => 'ⴰⴱⵍⵓⴳ ⴰⵎⴰⵢⵏⵓ',
 	'myhome-community-corner-edit' => 'ⴱⴷⴷⴻⵍ ⵜⴰⴱⵔⴰⵜ',
-);
+];
 
 /** Uyghur (Arabic script) (ئۇيغۇرچە)
  * @author Tel'et
  */
-$messages['ug-arab'] = array(
+$messages['ug-arab'] = [
 	'myhome' => 'ئۆيۈم',
 	'myhome-watchlist-feed' => 'كۆزەت تىزىملىكى',
 	'myhome-hot-spots-newest' => 'ۋىكىدىكى يېڭى بەتلەر',
@@ -4004,7 +4004,7 @@ $messages['ug-arab'] = array(
 	'myhome-community-corner-edit' => 'ئۇچۇر ئۆزگەرتىش',
 	'tooltip-pt-myhome' => 'ئۆيۈمگە بار',
 	'wiki-activity-message-wall-messages-count' => '{{PLURAL:$1|بىر ئۇچۇر|$1 ئۇچۇر}}',
-);
+];
 
 /** Ukrainian (українська)
  * @author Andriykopanytsia
@@ -4012,7 +4012,7 @@ $messages['ug-arab'] = array(
  * @author Wildream
  * @author Тест
  */
-$messages['uk'] = array(
+$messages['uk'] = [
 	'myhome-desc' => 'Особиста домашня сторінка для користувачів, що увійшли в систему',
 	'myhome' => 'Моя домашня сторінка',
 	'wikiactivity' => 'Вікі-діяльність',
@@ -4091,7 +4091,7 @@ $messages['uk'] = array(
 	'tooltip-pt-myhome' => 'На мою домашню сторінку',
 	'activityfeed' => 'Останні зміни',
 	'wiki-activity-message-wall-messages-count' => '{{PLURAL:$1|одне повідомлення|$1 повідомлення|$1 повідомлень}}',
-);
+];
 
 /** Vietnamese (Tiếng Việt)
  * @author Baonguyen21022003
@@ -4099,7 +4099,7 @@ $messages['uk'] = array(
  * @author Xiao Qiao
  * @author XiaoQiaoGrace
  */
-$messages['vi'] = array(
+$messages['vi'] = [
 	'myhome-desc' => 'Trang riêng này dành cho thành viên đã đăng nhập',
 	'myhome' => 'Nhà của tôi',
 	'wikiactivity' => 'Hoạt động wiki',
@@ -4182,14 +4182,14 @@ Ví dụ, bạn có thể:
 	'tooltip-pt-myhome' => 'Đi đến nhà của tôi',
 	'activityfeed' => 'Hoạt động nguồn cấp dữ liệu',
 	'wiki-activity-message-wall-messages-count' => '{{PLURAL:$1|Một thông điệp|$1 thông điệp}}',
-);
+];
 
 /** Chinese (中文)
  * @author Yyaootw
  */
-$messages['zh'] = array(
+$messages['zh'] = [
 	'myhome' => '我的首页',
-);
+];
 
 /** Simplified Chinese (中文（简体）‎)
  * @author Hydra
@@ -4199,7 +4199,7 @@ $messages['zh'] = array(
  * @author Yanmiao liu
  * @author Yfdyh000
  */
-$messages['zh-hans'] = array(
+$messages['zh-hans'] = [
 	'myhome-desc' => '已登录的用户的个人主页',
 	'myhome' => '我的主页',
 	'wikiactivity' => 'Wiki活动',
@@ -4282,7 +4282,7 @@ $messages['zh-hans'] = array(
 	'tooltip-pt-myhome' => '转到我的主页',
 	'activityfeed' => '活动供稿',
 	'wiki-activity-message-wall-messages-count' => '{{PLURAL:$1|一条信息|$1条信息}}',
-);
+];
 
 /** Traditional Chinese (中文（繁體）‎)
  * @author Cwlin0416
@@ -4290,7 +4290,7 @@ $messages['zh-hans'] = array(
  * @author LNDDYL
  * @author Liuxinyu970226
  */
-$messages['zh-hant'] = array(
+$messages['zh-hant'] = [
 	'myhome-desc' => '已登入使用者的個人首頁',
 	'myhome' => '我的首頁',
 	'wikiactivity' => 'wiki動作',
@@ -4373,13 +4373,13 @@ $messages['zh-hant'] = array(
 	'tooltip-pt-myhome' => '轉到我的首頁',
 	'activityfeed' => '活動 Feed',
 	'wiki-activity-message-wall-messages-count' => '{{PLURAL:$1|1 則訊息|$1 則訊息}}',
-);
+];
 
 /** Chinese (Taiwan) (中文（台灣）‎)
  * @author Ffaarr
  * @author Yyaootw
  */
-$messages['zh-tw'] = array(
+$messages['zh-tw'] = [
 	'myhome' => '我的首頁',
 	'myhome-feed-edit' => '編輯',
-);
+];

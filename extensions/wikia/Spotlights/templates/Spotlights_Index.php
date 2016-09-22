@@ -1,10 +1,12 @@
-<? if (!$wg->NoExternals && !$wg->SuppressSpotlights) { ?>
+<? if ( !$wg->NoExternals && !$wg->SuppressSpotlights ): ?>
 <section>
 	<div class="header-container">
-		<h2><?= wfMsg('oasis-spotlights-footer-title') ?></h2>
-		<?= F::app()->renderView('RandomWiki', 'Index') ?>
+		<h2><?= wfMessage( 'oasis-spotlights-footer-title' )->escaped(); ?></h2>
+		<? if ( $wg->EnableRandomWikiOasisButton ): ?>
+			<a id="WikiaRandomWiki" href="http://community.wikia.com/wiki/Special:RandomWiki/<?= $wg->CityId ?>" class="wikia-button"><?= wfMessage( 'oasis-random-wiki' )->escaped(); ?></a>
+		<? endif; ?>
 	</div>
-	<script type='text/javascript'>
+	<script type="text/javascript">
 		wgAfterContentAndJS.push(function() {
 			window.OpenXSPC = {};
 			window.OpenXSPC[ 'fillElem_SPOTLIGHT_FOOTER' ] = function() {
@@ -21,4 +23,4 @@
 		<li class="WikiaSpotlight item-3" id="SPOTLIGHT_FOOTER_3"></li>
 	</ul>
 </section>
-<? } ?>
+<? endif; ?>

@@ -34,8 +34,8 @@ class SearchController extends WikiaController {
 
 		$this->fulltext = $this->wg->User->getGlobalPreference('enableGoSearch') ? 0 : 'Search';
 		$this->placeholder = WikiaPageType::isWikiaHub()
-			? wfMessage('wikiahubs-search-placeholder')->text()
-			: wfMessage('Tooltip-search', $this->wg->Sitename)->text();
+			? wfMessage('wikiahubs-search-placeholder')->escaped()
+			: wfMessage('Tooltip-search', $this->wg->Sitename)->escaped();
 		$this->isCrossWikiaSearch = $this->wg->request->getCheck('crossWikiaSearch');
 
 		$this->searchFormId = $this->request->getVal('searchFormId');

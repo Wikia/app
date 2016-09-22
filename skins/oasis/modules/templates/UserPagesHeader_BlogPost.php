@@ -1,29 +1,27 @@
 <header id="WikiaUserPagesHeader" class="WikiaUserPagesHeader WikiaBlogPostHeader">
-	<?= F::app()->renderView('CommentsLikes', 'Index', array('comments' => $comments)); ?>
-	<?php
-		if (!empty($actionMenu['action'])) {
-			echo F::app()->renderView('MenuButton', 'Index', array(
-				'action' => $actionMenu['action'],
-				'dropdown' => $actionMenu['dropdown'],
-				'image' => MenuButtonController::EDIT_ICON,
-			));
-		}
-	?>
-	<h1><?= htmlspecialchars($title) ?></h1>
+	<?= $app->renderView( 'CommentsLikes', 'Index', [ 'comments' => $comments ] ); ?>
+	<?php if ( !empty( $actionMenu['action'] ) ): ?>
+		<?= $app->renderView( 'MenuButton', 'Index', [
+			'action' => $actionMenu['action'],
+			'dropdown' => $actionMenu['dropdown'],
+			'image' => MenuButtonController::EDIT_ICON,
+		] ); ?>
+	<?php endif; ?>
+	<h1><?= htmlspecialchars( $title ) ?></h1>
 
 	<div class="author-details">
 		<?= $avatar ?>
-		<span class="post-author"><a href="<?= htmlspecialchars($userPage) ?>"><?= htmlspecialchars($userName) ?></a></span>
+		<span class="post-author"><a href="<?= Sanitizer::encodeAttribute( $userPage ); ?>"><?= htmlspecialchars( $userName ); ?></a></span>
 		<span><?= $editTimestamp ?></span>
 		<? if ( $wg->EnableBlogArticles ): ?>
-		<span><a href="<?= htmlspecialchars($userBlogPage) ?>"><?= $userBlogPageMessage ?></a></span>
+		<span><a href="<?= Sanitizer::encodeAttribute( $userBlogPage ); ?>"><?= $userBlogPageMessage ?></a></span>
 		<? endif; ?>
 		<? if ( !empty( $wg->EnableGoogleAuthorInfo ) && !empty( $googleAuthorLink ) ): ?>
 		<a class="google-author-link" href="<?= htmlspecialchars( $googleAuthorLink ) ?>">Google</a>
 		<? endif; ?>
 
 	</div>
-	<? if (isset($navLinks)) : ?>
-		<?= $navLinks ?>
+	<? if ( isset( $showNavLinks ) ) : ?>
+	<a href="<?= Sanitizer::encodeAttribute( $wg->Title->getLocalURL() ); ?>"><?= wfMessage( 'oasis-page-header-back-to-article' )->escaped(); ?></a>
 	<? endif; ?>
 </header>
