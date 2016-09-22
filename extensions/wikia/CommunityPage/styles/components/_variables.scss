@@ -43,6 +43,12 @@ $community-page-rail-width-xbig: 350px;
 $community-page-card-module-width-small: 232px;
 $community-page-card-module-width-regular: 240px;
 
+//badges
+$avatar-small-badge-left: -6px;
+$avatar-small-badge-top: -7px;
+$avatar-large-badge-left: -27px;
+$avatar-large-badge-top: -4px;
+
 @mixin trim-to-line-number($number) {
 	display: -webkit-box;
 	overflow: hidden;
@@ -54,4 +60,14 @@ $community-page-card-module-width-regular: 240px;
 	// (fallback for other browsers)
 	line-height: $line-height;
 	max-height: $number * $line-height;
+}
+
+@mixin avatar-badge($top, $left) {
+	position: relative;
+	top: $top;
+	left: $left;
+
+	svg {
+		position: absolute;
+	}
 }

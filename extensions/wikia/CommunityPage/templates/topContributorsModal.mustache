@@ -1,5 +1,6 @@
 {{^isAnon}}
 <div class="user-details">
+	<div class="badge-container">{{{userBadge}}}</div>
 	<div class="avatar-container">
 		{{{userAvatar}}}
 	</div>
@@ -16,6 +17,7 @@
 <ul class="reset top-contributors">
 	{{#contributors}}
 		<li class="community-page-contributors-list-item">
+			<div class="badge-container">{{{badge}}}</div>
 			<div class="avatar-container">
 				<a data-tracking="top-contributors-user-avatar" href="{{profilePage}}">{{{avatar}}}</a>
 			</div>

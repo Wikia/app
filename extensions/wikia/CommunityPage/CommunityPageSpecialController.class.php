@@ -10,33 +10,6 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 	const MODAL_IMAGE_HEIGHT = 700.0;
 	const MODAL_IMAGE_MIN_RATIO = 0.85;
 	const DEFAULT_MODULES_MAX = 3;
-	// order of permissions is consistent with badges hierarchy in Discussions
-	const PERMISSION_HIERARCHY = [
-		'sysop',
-		'threadmoderator',
-		'content-moderator',
-		'staff',
-		'helper',
-		'vstf'
-	];
-
-//TODO: update when this will be live: https://github.com/Wikia/design-system/pull/69/files
-//	const PERMISSIONS_TO_BADGES = [
-//		'sysop' => 'wds-avatar-badges-admin',
-//		'threadmoderator' => 'wds-avatar-badges-discussion-moderator',
-//		'content-moderator' => 'wds-avatar-badges-content-moderator',
-//		'staff' => 'wds-avatar-badges-staff',
-//		'helper' => 'wds-avatar-badges-helper',
-//		'vstf' => 'wds-avatar-badges-vstf',
-//	];
-	const PERMISSIONS_TO_BADGES = [
-		'sysop' => 'wds-icons-badge-admin',
-		'threadmoderator' => 'wds-icons-badge-discussion-moderator',
-		'content-moderator' => 'wds-icons-badge-content-moderator',
-		'staff' => 'wds-icons-badge-fandom',
-		'helper' => 'wds-icons-help',
-		'vstf' => 'wds-icons-badge-vstf'
-	];
 
 	private $usersModel;
 	private $wikiModel;
@@ -94,8 +67,8 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 	 */
 	public function getTopContributorsData() {
 		$limit = $this->request->getInt( 'limit', 0 );
-
-		$currentUserContributionCount = ( new UserStatsService( $this->getUser()->getId() ) )
+		$user = $this->getUser();
+		$currentUserContributionCount = ( new UserStatsService( $user->getId() ) )
 			->getEditCountFromWeek();
 		$topContributors = $this->usersModel->getTopContributors();
 		$topContributorsCount = count( $topContributors );
@@ -142,6 +115,7 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 				$this->getUser()->getName(),
 				AvatarService::AVATAR_SIZE_SMALL_PLUS
 			),
+			'userBadge' => $this->usersModel->getUserBadgeMarkup( $user->getEffectiveGroups() ),
 			'userRank' => $userRank,
 			'weeklyEditorCount' => $this->formatTotalEditorsNumber( $topContributorsCount ),
 			'userContribCount' => $currentUserContributionCount,
@@ -356,9 +330,6 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 		return array_map( function ( $contributor ) use ( &$count, $avatarSize ) {
 			$user = User::newFromId( $contributor[ 'userId' ] );
 			$userName = $user->getName();
-			$userGroups = $user->getEffectiveGroups();
-			$badge = $this->getUserBadgeMarkup( $userGroups );
-			$avatar = AvatarService::renderAvatar( $userName, $avatarSize );
 			$count += 1;
 
 			if ( User::isIp( $userName ) ) {
@@ -367,7 +338,7 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 
 			return [
 				'userName' => $userName,
-				'avatar' => $avatar,
+				'avatar' => AvatarService::renderAvatar( $userName, $avatarSize ),
 				'contributionsText' => $this->msg( 'communitypage-contributions' )
 					->numParams( $this->getLanguage()
 					->formatNum( $contributor[ 'contributions' ] ?? 0 ) )->text(),
@@ -375,7 +346,7 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 				'count' => $count,
 				'isAdmin' => $contributor[ 'isAdmin' ] ?? false,
 				'timeAgo' => $contributor[ 'timeAgo' ] ?? null,
-				'badge' => $badge
+				'badge' => $this->usersModel->getUserBadgeMarkup(  $user->getEffectiveGroups() )
 			];
 		}, $contributors );
 	}
@@ -451,20 +422,5 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 		}
 
 		return $editors;
-	}
-
-	/**
-	 * @param $userGroups
-	 * @return string markup of svg to be used in template
-	 * or empty string if no badge applicable
-	 */
-	private function getUserBadgeMarkup( $userGroups ) {
-		foreach ( self::PERMISSION_HIERARCHY as $group ) {
-			if ( in_array( $group, $userGroups ) ) {
-				return DesignSystemHelper::getSvg( self::PERMISSIONS_TO_BADGES[ $group ] );
-			}
-		}
-
-		return '';
 	}
 }

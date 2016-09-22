@@ -45,11 +45,16 @@ $admins-module-item-width: 80px;
 	.community-page-admin-item {
 		margin: auto;
 		max-width: 50%;
+		position: relative;
 
 		.avatar-container {
 			display: inline-block;
 			height: $admins-module-icon-size;
 			width: $admins-module-icon-size;
+		}
+
+		.badge-container {
+			@include avatar-badge($avatar-large-badge-top, $avatar-large-badge-left);
 		}
 	}
 
