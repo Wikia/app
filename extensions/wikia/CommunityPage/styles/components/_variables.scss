@@ -48,6 +48,7 @@ $avatar-small-badge-left: -6px;
 $avatar-small-badge-top: -7px;
 $avatar-large-badge-left: -27px;
 $avatar-large-badge-top: -4px;
+$avatar-badge-z-index: 10;
 
 @mixin trim-to-line-number($number) {
 	display: -webkit-box;
@@ -69,5 +70,6 @@ $avatar-large-badge-top: -4px;
 
 	svg {
 		position: absolute;
+		z-index: $avatar-badge-z-index;
 	}
 }
