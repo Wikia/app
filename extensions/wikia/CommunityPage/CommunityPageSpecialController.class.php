@@ -10,24 +10,6 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 	const MODAL_IMAGE_HEIGHT = 700.0;
 	const MODAL_IMAGE_MIN_RATIO = 0.85;
 	const DEFAULT_MODULES_MAX = 3;
-	// order of permissions is consistent with badges hierarchy in Discussions
-	const PERMISSION_HIERARCHY = [
-		'sysop',
-		'threadmoderator',
-		'content-moderator',
-		'staff',
-		'helper',
-		'vstf'
-	];
-
-	const PERMISSIONS_TO_BADGES = [
-		'sysop' => 'wds-avatar-badges-admin',
-		'threadmoderator' => 'wds-avatar-badges-discussion-moderator',
-		'content-moderator' => 'wds-avatar-badges-content-moderator',
-		'staff' => 'wds-avatar-badges-staff',
-		'helper' => 'wds-avatar-badges-helper',
-		'vstf' => 'wds-avatar-badges-vstf',
-	];
 
 	private $usersModel;
 	private $wikiModel;
@@ -133,7 +115,7 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 				$this->getUser()->getName(),
 				AvatarService::AVATAR_SIZE_SMALL_PLUS
 			),
-			'userBadge' => $this->getUserBadgeMarkup( $user->getEffectiveGroups() ),
+			'userBadge' => $this->usersModel->getUserBadgeMarkup( $user->getEffectiveGroups() ),
 			'userRank' => $userRank,
 			'weeklyEditorCount' => $this->formatTotalEditorsNumber( $topContributorsCount ),
 			'userContribCount' => $currentUserContributionCount,
@@ -221,7 +203,6 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 	 */
 	public function getRecentlyJoinedData() {
 		$recentlyJoined = $this->usersModel->getRecentlyJoinedUsers();
-		$recentlyJoined = $this->applyBadges( $recentlyJoined );
 
 		$this->response->setData( [
 			'recentlyJoinedHeaderText' => $this->msg( 'communitypage-recently-joined' )->text(),
@@ -238,7 +219,6 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 		$currentUser = $this->getUser();
 		$allMembers = $this->usersModel->getAllContributors( $currentUser->getId() );
 		$allMembers = $this->addTimeAgoDataDetail( $allMembers );
-		$allMembers = $this->applyBadges( $allMembers );
 
 		$moreMembers = SpecialPage::getTitleFor( 'ListUsers' );
 		$membersCount = $this->usersModel->getMemberCount();
@@ -350,8 +330,6 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 		return array_map( function ( $contributor ) use ( &$count, $avatarSize ) {
 			$user = User::newFromId( $contributor[ 'userId' ] );
 			$userName = $user->getName();
-			$userGroups = $user->getEffectiveGroups();
-			$avatar = AvatarService::renderAvatar( $userName, $avatarSize );
 			$count += 1;
 
 			if ( User::isIp( $userName ) ) {
@@ -360,7 +338,7 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 
 			return [
 				'userName' => $userName,
-				'avatar' => $avatar,
+				'avatar' => AvatarService::renderAvatar( $userName, $avatarSize ),
 				'contributionsText' => $this->msg( 'communitypage-contributions' )
 					->numParams( $this->getLanguage()
 					->formatNum( $contributor[ 'contributions' ] ?? 0 ) )->text(),
@@ -368,7 +346,7 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 				'count' => $count,
 				'isAdmin' => $contributor[ 'isAdmin' ] ?? false,
 				'timeAgo' => $contributor[ 'timeAgo' ] ?? null,
-				'badge' => $this->getUserBadgeMarkup( $userGroups )
+				'badge' => $this->usersModel->getUserBadgeMarkup(  $user->getEffectiveGroups() )
 			];
 		}, $contributors );
 	}
@@ -444,27 +422,5 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 		}
 
 		return $editors;
-	}
-
-	private function applyBadges( $users ) {
-		return array_map( function( $user ) {
-			$user[ 'badge' ] = $this->getUserBadgeMarkup( User::newFromId( $user[ 'userId' ] )->getEffectiveGroups() );
-			return $user;
-		}, $users );
-	}
-
-	/**
-	 * @param $userGroups
-	 * @return string markup of svg to be used in template
-	 * or empty string if no badge applicable
-	 */
-	private function getUserBadgeMarkup( $userGroups ) {
-		foreach ( self::PERMISSION_HIERARCHY as $group ) {
-			if ( in_array( $group, $userGroups ) ) {
-				return DesignSystemHelper::getSvg( self::PERMISSIONS_TO_BADGES[ $group ] );
-			}
-		}
-
-		return '';
 	}
 }
