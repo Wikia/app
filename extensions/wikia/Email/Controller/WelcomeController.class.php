@@ -70,7 +70,7 @@ class WelcomeController extends EmailController {
 					],
 					[
 						'iconSrc' => ImageHelper::getFileUrl( 'Connect-IG.png' ),
-						'iconLink' => $this->getMessage( 'oasis-social-instagram' )->text()
+						'iconLink' => $this->getMessage( 'oasis-social-instagram-link' )->text()
 					]
 				],
 				'iconLink' => $this->getMessage( 'emailext-wikia-home-url' )->text(),
