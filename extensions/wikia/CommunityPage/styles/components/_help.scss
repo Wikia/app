@@ -7,6 +7,7 @@
 $small-icon-size: 18px;
 $big-icon-size: 30px;
 $help-module-title-padding: 3px;
+$help-link-line-height: 14px;
 
 .community-page-help-module {
 	&.community-page-module-box {
@@ -58,10 +59,10 @@ $help-module-title-padding: 3px;
 		@include flex-direction(column);
 
 		font-size: $typescale-size-minus-1;
-		line-height: $line-height;
+		line-height: $help-link-line-height;
 
 		a {
-			padding: $content-spacing-small 0;
+			padding: $content-spacing-xsmall 0 $content-spacing-small 0;
 		}
 	}
 }
