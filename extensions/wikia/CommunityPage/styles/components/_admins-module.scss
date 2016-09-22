@@ -46,12 +46,6 @@ $admins-module-item-width: 80px;
 		margin: auto;
 		max-width: 50%;
 
-		svg {
-			fill: $color-links;
-			height: 18px;
-			width: 18px;
-		}
-
 		.avatar-container {
 			display: inline-block;
 			height: $admins-module-icon-size;
