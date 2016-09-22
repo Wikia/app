@@ -144,6 +144,8 @@ class Chat {
 			$reason
 		);
 
+		Wikia::purgeSurrogateKey( ChatBanListSpecialController::getAxShowUsersSurrogateKey() );
+
 		return true;
 	}
 
