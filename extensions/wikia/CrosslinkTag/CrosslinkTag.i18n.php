@@ -8,8 +8,7 @@
 
 $messages['en'] = [
 	'crosslink-tag-desc' => "Wikia's Crosslink Tag",
-	'crosslink-tag-read-more' => 'Read more >'
-
+	'crosslink-tag-read-more' => 'Read more >',
 ];
 
 $messages['qqq'] = [

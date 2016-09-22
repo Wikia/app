@@ -40,12 +40,14 @@ class CrosslinkTagController extends WikiaController {
 	 * @param PPFrame $frame - parent frame with the context
 	 * @return string
 	 */
-	public function renderTag($content, $attributes, Parser $parser, PPFrame $frame) {
+	public function renderTag( $content, $attributes, Parser $parser, PPFrame $frame ) {
 		$markerId = $this->getMarkerId( $parser );
 
-		$urls = [];
+		$urls = explode( PHP_EOL, trim( $content ) );
 		$html = $this->app->renderView( 'CrosslinkTag', 'render', [ 'markerId' => $this->counter, 'urls' => $urls ] );
-		$html .= $this->getJSSnippet();
+		if ( !empty( $html ) ) {
+			$html .= $this->getJSSnippet();
+		}
 
 		$this->markers[$markerId] = $html;
 
@@ -118,7 +120,7 @@ class CrosslinkTagController extends WikiaController {
 	}
 
 	/**
-	 * Render Crosslink Tag
+	 * Render crosslink unit
 	 * @responseParam int markerId
 	 * @responseParam array articles - list of articles
 	 * @responseParam string readMore
@@ -128,21 +130,31 @@ class CrosslinkTagController extends WikiaController {
 		$urls = $this->request->getVal( 'urls', [] );
 
 		$helper = new CrosslinkTagHelper();
+		if ( !$helper->canShowUnit() ) {
+			return false;
+		}
 
-		$sliderId = 0;
 		$articles = [];
+		$sliderId = 0;
+		$urls = array_slice( $urls, 0, self::MAX_URLS );
 		foreach ( $urls as $url ) {
-			$urlParts = parse_url( $url );
+			$urlParts = parse_url( trim( $url ) );
 			if ( !empty( $urlParts['host'] ) && strtolower( $urlParts['host'] ) == CrosslinkTagHelper::VALID_HOST ) {
 				$urlParts = parse_url( $url );
-				$slug = preg_replace( '/^\/(articles|videos)?\//', '', $urlParts['path'] );
-				$item = $helper->getArticleData( $slug );
-				if ( !empty( $item ) ) {
-					$item['sliderId'] = $sliderId;
-					$articles[] = $item;
-					$sliderId++;
+				list( $pageType, $slug ) = explode( '/', trim( $urlParts['path'], '/' ), 2 );
+				if ( !empty( $slug ) ) {
+					$article = $helper->getArticleDataBySlug( $slug, $pageType );
+					if ( !empty( $article ) ) {
+						$article['sliderId'] = $sliderId;
+						$articles[] = $article;
+						$sliderId++;
+					}
 				}
 			}
+		}
+
+		if ( empty( $articles ) ) {
+			return false;
 		}
 
 		$this->response->setTemplateEngine( WikiaResponse::TEMPLATE_ENGINE_MUSTACHE );

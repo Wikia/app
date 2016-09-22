@@ -6,25 +6,53 @@
 class CrosslinkTagHelper extends WikiaModel {
 
 	const CACHE_TTL = 86400;
-	const FANDOM_API_URL = 'http://fandom.wikia.com/wp-json/wp/v2/posts';
+	const FANDOM_API_URL = 'http://fandom.wikia.com/wp-json/wp/v2/';
 	const VALID_HOST = 'fandom.wikia.com';
+
+	protected $endpoints = [
+		'articles' => 'posts',
+		'videos' => 'video',
+	];
+
+	/**
+	 * Show the crosslink unit only on Article pages and Main pages
+	 * @return boolean
+	 */
+	public function canShowUnit() {
+		if ( !$this->app->checkSkin( 'oasis' ) ) {
+			return false;
+		}
+
+		$title = $this->wg->Title;
+		if ( $title instanceof Title && $title->getNamespace() == NS_MAIN ) {
+			return true;
+		}
+
+		return false;
+	}
 
 	/**
 	 * Get data for the article by slug
 	 * @param string $slug - alphanumeric id
+	 * @param string $pageType - page type
 	 * @return array|false
 	 */
-	public function getArticleDataBySlug( $slug ) {
+	public function getArticleDataBySlug( $slug, $pageType = 'articles' ) {
 		$cacheKey = $this->getMemcKey( $slug );
 		$data = $this->wg->Memc->get( $cacheKey );
 		if ( !is_array( $data ) ) {
 			$params = [
 				'_embed' => 1,
-				'context' => 'embed',
 				'slug' => $slug,
 			];
 
-			$apiUrl = self::FANDOM_API_URL.'?' . http_build_query( $params );
+			if ( array_key_exists( $pageType, $this->endpoints ) ) {
+				$endpoint = $this->endpoints[$pageType];
+			} else {
+				$endpoint = $this->endpoints['articles'];
+			}
+
+			$apiUrl = self::FANDOM_API_URL . $endpoint.'?' . http_build_query( $params );
 			$method = 'GET';
 			$options = [ 'noProxy' => true ];
 
@@ -39,11 +67,11 @@ class CrosslinkTagHelper extends WikiaModel {
 				$result = array_pop( $response );
 
 				$data = [
-					'title' => $result['title']['rendered'],
+					'title' => html_entity_decode( $result['title']['rendered'] ),
 					'id' => $result['id'],
-					'description' => trim( strip_tags( $result['excerpt']['rendered'] ) ),
+					'description' => $this->getArticleDescription( $result ),
 					'url' => $result['link'],
-					'imageUrl' => $this->getImageUrl( $result ),
+					'imageUrl' => $this->getArticleImageUrl( $result ),
 				];
 			}
 
@@ -63,11 +91,28 @@ class CrosslinkTagHelper extends WikiaModel {
 	}
 
 	/**
+	 * Get description for the article
+	 * @param array $data - response from API
+	 * @return string
+	 */
+	protected function getArticleDescription( $data ) {
+		if ( !empty( $data['excerpt']['rendered'] ) ) {
+			$description = $data['excerpt']['rendered'];
+		} else if ( !empty( $data['content']['rendered'] ) ) {
+			$description = $data['content']['rendered'];
+		} else {
+			$description = '';
+		}
+
+		return html_entity_decode( trim( strip_tags( $description ) ) );
+	}
+
+	/**
 	 * Get image url for the article
 	 * @param array $data - response from API
 	 * @return string
 	 */
-	public function getImageUrl( $data ) {
+	protected function getArticleImageUrl( $data ) {
 		if ( !empty( $data['_embedded']['wp:featuredmedia'][0]['media_details']['sizes']['medium_large']['source_url'] ) ) {
 			return $data['_embedded']['wp:featuredmedia'][0]['media_details']['sizes']['medium_large']['source_url'];
 		}
