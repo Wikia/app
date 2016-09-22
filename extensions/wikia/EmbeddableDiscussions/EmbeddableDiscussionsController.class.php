@@ -31,7 +31,7 @@ class EmbeddableDiscussionsController {
 	/**
 	 * Checks arguments for errors.
 	 * @param array $args
-	 * @oaram errorMessage Return parameter with the proper error message to show. Disregard if return is false
+	 * @param string errorMessage Return parameter with the proper error message to show. Disregard if return is false
 	 * @return true if ok, false if error
 	 */
 	private static function checkArguments( array $args, $modelData, &$errorMessage ) {
@@ -47,11 +47,15 @@ class EmbeddableDiscussionsController {
 		if ( array_key_exists( 'size', $args ) ) {
 			$size = $args['size'];
 
+			// TODO: Refactor error messages to avoid direct concatenation, see JPN-657
 			$errorMessage = wfMessage( 'embeddable-discussions-parameter-error', 'size' )->plain() .
 				wfMessage( 'embeddable-discussions-parameter-error-range',
 					self::ITEMS_MIN , self::ITEMS_MAX )->plain();
 
-			if ( !ctype_digit( $size ) || intval( $size ) > self::ITEMS_MAX || intval( $size ) < self::ITEMS_MIN ) {
+			if ( !ctype_digit( $size ) ||
+				 intval( $size ) > self::ITEMS_MAX ||
+				 intval( $size ) < self::ITEMS_MIN
+			   ) {
 				return false;
 			}
 		}
@@ -60,17 +64,21 @@ class EmbeddableDiscussionsController {
 		if ( array_key_exists( 'columns', $args ) ) {
 			$columns = $args['columns'];
 
+			// TODO: Refactor error messages to avoid direct concatenation, see JPN-657
 			$errorMessage = wfMessage( 'embeddable-discussions-parameter-error', 'columns' )->plain() .
-				wfMessage( 'embeddable-discussions-parameter-error-range',
-					self::COLUMNS_MIN , self::COLUMNS_MAX )->plain();
+				wfMessage( 'embeddable-discussions-parameter-error-range', self::COLUMNS_MIN , self::COLUMNS_MAX )->plain();
 
-			if ( !ctype_digit( $columns ) || intval( $columns ) > self::COLUMNS_MAX || intval( $columns ) < self::COLUMNS_MIN ) {
+			if ( !ctype_digit( $columns ) ||
+				 intval( $columns ) > self::COLUMNS_MAX ||
+				 intval( $columns ) < self::COLUMNS_MIN
+			   ) {
 				return false;
 			}
 		}
 
 		// category must be a valid category
 		if ( $modelData['invalidCategory'] ) {
+			// TODO: Refactor error messages to avoid direct concatenation, see JPN-657
 			$errorMessage = wfMessage( 'embeddable-discussions-parameter-error', $args['category'] )->plain() .
 				wfMessage( 'embeddable-discussions-parameter-error-category' )->plain();
 
@@ -78,6 +86,53 @@ class EmbeddableDiscussionsController {
 		}
 
 		return true;
+	}
+
+	private static function renderMobile( $modelData, $showLatest, $itemCount, $templateEngine ) {
+		// In Mercury, discussions are rendered client side as an Ember component
+		$modelData = [
+			'mercuryComponentAttrs' => json_encode( [
+				'category' => $modelData['categoryId'],
+				'show' => $showLatest ? 'latest' : 'trending',
+				'itemCount' => $itemCount,
+			] ),
+			'loading' => wfMessage( 'embeddable-discussions-loading' )->plain()
+		];
+
+		// In mercury, discussions app is rendered client side in an Ember container
+		return $templateEngine->clearData()
+			->setData( $modelData )
+			->render( 'DiscussionThreadMobile.mustache' );
+	}
+
+	private static function renderDesktop( $modelData, $showLatest, $category, $columns, $templateEngine ) {
+		$modelData['requestData'] = json_encode( [
+			'category' => $category,
+			'columns' => $columns,
+			'columnsDetailsClass' => $columns === 2 ? 'embeddable-discussions-post-detail-columns' : '',
+			'showLatest' => $showLatest,
+			'upvoteRequestUrl' => $modelData['upvoteRequestUrl'],
+		] );
+
+		if ( $showLatest && $category ) {
+			$heading = wfMessage( 'embeddable-discussions-show-latest-in-category', $category )->plain();
+		} else if ( $showLatest ) {
+			$heading = wfMessage( 'embeddable-discussions-show-latest' )->plain();
+		} else if ( $category ) {
+			$heading = wfMessage( 'embeddable-discussions-show-trending-in-category', $category )->plain();
+		} else {
+			$heading = wfMessage( 'embeddable-discussions-show-trending' )->plain();
+		}
+
+		$modelData['columnsWrapperClass'] = $columns === 2 ? 'embeddable-discussions-threads-columns' : '';
+		$modelData['heading'] = $heading;
+		$modelData['showAll'] = wfMessage( 'embeddable-discussions-show-all' )->plain();
+		$modelData['loading'] = wfMessage( 'embeddable-discussions-loading' )->plain();
+
+		return $templateEngine->clearData()
+			->setData( $modelData )
+			->render( 'DiscussionThreadDesktop.mustache' );
+
 	}
 
 	public static function render( $input, array $args ) {
@@ -100,47 +155,9 @@ class EmbeddableDiscussionsController {
 		}
 
 		if ( F::app()->checkSkin( 'wikiamobile' ) ) {
-			// In Mercury, discussions are rendered client side as an Ember component
-			$modelData = [
-				'mercuryComponentAttrs' => json_encode( [
-					'category' => $modelData['categoryId'],
-					'show' => $showLatest ? 'latest' : 'trending',
-					'itemCount' => $itemCount,
-				] ),
-				'loading' => wfMessage( 'embeddable-discussions-loading' )->plain()
-			];
-
-			// In mercury, discussions app is rendered client side in an Ember container
-			return $templateEngine->clearData()
-				->setData( $modelData )
-				->render( 'DiscussionThreadMobile.mustache' );
+			return self::renderMobile( $modelData, $showLatest, $itemCount, $templateEngine );
 		} else {
-			$modelData['requestData'] = json_encode( [
-				'category' => $category,
-				'columns' => $columns,
-				'columnsDetailsClass' => $columns === 2 ? 'embeddable-discussions-post-detail-columns' : '',
-				'showLatest' => $showLatest,
-				'upvoteRequestUrl' => $modelData['upvoteRequestUrl'],
-			] );
-
-			if ( $showLatest && $category ) {
-				$heading = wfMessage( 'embeddable-discussions-show-latest-in-category', $category )->plain();
-			} else if ( $showLatest ) {
-				$heading = wfMessage( 'embeddable-discussions-show-latest' )->plain();
-			} else if ( $category ) {
-				$heading = wfMessage( 'embeddable-discussions-show-trending-in-category', $category )->plain();
-			} else {
-				$heading = wfMessage( 'embeddable-discussions-show-trending' )->plain();
-			}
-
-			$modelData['columnsWrapperClass'] = $columns === 2 ? 'embeddable-discussions-threads-columns' : '';
-			$modelData['heading'] = $heading;
-			$modelData['showAll'] = wfMessage( 'embeddable-discussions-show-all' )->plain();
-			$modelData['loading'] = wfMessage( 'embeddable-discussions-loading' )->plain();
-
-			return $templateEngine->clearData()
-				->setData( $modelData )
-				->render( 'DiscussionThreadDesktop.mustache' );
+			return self::renderDesktop( $modelData, $showLatest, $category, $columns, $templateEngine );
 		}
 	}
 }
