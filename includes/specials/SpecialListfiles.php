@@ -74,7 +74,14 @@ class ImageListPager extends TablePager {
 			$nt = Title::newFromText( $userName, NS_USER );
 			if ( !is_null( $nt ) ) {
 				$this->mUserName = $nt->getText();
-				$this->mQueryConds['img_user_text'] = $this->mUserName;
+				/* Wikia change begin */
+				$userId = User::idFromName( $this->mUserName );
+				if ( !empty( $userId ) ) {
+					$this->mQueryConds['img_user'] = $userId;
+				} else {
+					$this->mQueryConds['img_user_text'] = $this->mUserName;
+				}
+				/* Wikia change end */
 			}
 		}
 
@@ -184,6 +191,9 @@ class ImageListPager extends TablePager {
 			$this->mResult->seek( 0 );
 			foreach ( $this->mResult as $row ) {
 				if ( $row->img_user ) {
+					/* Wikia change begin */
+					$row->img_user_text = User::getUsername( $row->img_user, $row->img_user_text );
+					/* Wikia change end */
 					$lb->add( NS_USER, str_replace( ' ', '_', $row->img_user_text ) );
 				}
 			}
@@ -233,6 +243,9 @@ class ImageListPager extends TablePager {
 				}
 			case 'img_user_text':
 				if ( $this->mCurrentRow->img_user ) {
+					/* Wikia change begin */
+					$value = User::getUsername( $this->mCurrentRow->img_user, $this->mCurrentRow->img_user_text );
+					/* Wikia change end */
 					$link = Linker::link(
 						Title::makeTitle( NS_USER, $value ),
 						htmlspecialchars( $value )
