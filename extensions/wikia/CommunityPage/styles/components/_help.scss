@@ -24,6 +24,7 @@ $policy-link-title-padding-top: 2px;
 			fill: $color-alternate-text;
 			height: $big-icon-size;
 			width: $big-icon-size;
+			margin: auto 0;
 		}
 	}
 
@@ -55,8 +56,7 @@ $policy-link-title-padding-top: 2px;
 	}
 
 	.community-page-help-module-title {
-		margin-left: $content-spacing-small;
-		padding-top: $help-module-title-padding;
+		margin: auto 0 auto $content-spacing-small;
 	}
 
 	.community-page-help-module-links {
