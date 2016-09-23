@@ -144,13 +144,13 @@ require([
 	}
 
 	$(function () {
+		var discussionsModule = $('.embeddable-discussions-module');
+
 		// Track impression
 		track({
 			action: tracker.ACTIONS.IMPRESSION,
 			label: 'embeddable-discussions-loaded'
 		});
-
-		var discussionsModule = $('.embeddable-discussions-module');
 
 		discussionsModule.on('click', '.upvote', function(event) {
 			var upvoteUrl = getBaseUrl() + event.currentTarget.getAttribute('href'),
@@ -162,8 +162,7 @@ require([
 				if (hasUpvoted) {
 					$svg.attr('class', 'embeddable-discussions-upvote-icon');
 					event.currentTarget.setAttribute('data-hasUpvoted', '0');
-				}
-				else {
+				} else {
 					$svg.attr('class', 'embeddable-discussions-upvote-icon-active');
 					event.currentTarget.setAttribute('data-hasUpvoted', '1');
 				}

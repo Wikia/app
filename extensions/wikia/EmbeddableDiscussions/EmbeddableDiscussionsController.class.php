@@ -14,6 +14,12 @@ class EmbeddableDiscussionsController {
 	const PARAM_COLUMNS = 'columns';
 	const PARAM_CATEGORY = 'category';
 
+	private $templateEngine;
+
+	function __construct() {
+		$this->templateEngine = ( new Wikia\Template\MustacheEngine )->setPrefix( __DIR__ . '/templates' );
+	}
+
 	public static function onParserFirstCallInit( Parser $parser ) {
 		global $wgEnableDiscussions;
 
@@ -135,9 +141,7 @@ class EmbeddableDiscussionsController {
 	 * @return string
 	 */
 	private function renderError( $errorMessage ) {
-		$templateEngine = ( new Wikia\Template\MustacheEngine )->setPrefix( __DIR__ . '/templates' );
-
-		return $templateEngine->clearData()->setData( [
+		return $this->templateEngine->clearData()->setData( [
 			'errorMessage' => $errorMessage
 		] )->render( 'DiscussionError.mustache' );
 	}
@@ -149,8 +153,6 @@ class EmbeddableDiscussionsController {
 	 * @return string
 	 */
 	private function renderMobile( $modelData, $showLatest, $itemCount ) {
-		$templateEngine = ( new Wikia\Template\MustacheEngine )->setPrefix( __DIR__ . '/templates' );
-
 		// In Mercury, discussions are rendered client side as an Ember component
 		$modelData = [
 			'mercuryComponentAttrs' => json_encode( [
@@ -162,7 +164,8 @@ class EmbeddableDiscussionsController {
 		];
 
 		// In mercury, discussions app is rendered client side in an Ember container
-		return $templateEngine->clearData()
+		return $this->templateEngine
+			->clearData()
 			->setData( $modelData )
 			->render( 'DiscussionThreadMobile.mustache' );
 	}
@@ -175,20 +178,6 @@ class EmbeddableDiscussionsController {
 	 * @return string
 	 */
 	private function renderDesktop( $modelData, $showLatest, $category, $columns ) {
-		$templateEngine = ( new Wikia\Template\MustacheEngine )->setPrefix( __DIR__ . '/templates' );
-		$heading = 'embeddable-discussions-show-trending';
-
-		if ( $showLatest && $category ) {
-			$heading = 'embeddable-discussions-show-latest-in-category';
-		} else {
-			if ( $showLatest ) {
-				$heading = 'embeddable-discussions-show-latest';
-			}
-			if ( $category ) {
-				$heading = 'embeddable-discussions-show-trending-in-category';
-			}
-		}
-
 		$modelData[ 'requestData' ] = json_encode( [
 			'category' => $category,
 			'columns' => $columns,
@@ -196,12 +185,26 @@ class EmbeddableDiscussionsController {
 			'upvoteRequestUrl' => $modelData[ 'upvoteRequestUrl' ],
 		] );
 
-		$modelData[ 'columnsWrapperClass' ] = $columns === 2 ? 'embeddable-discussions-threads-columns' : '';
+		if ( $showLatest && $category ) {
+			$heading = 'embeddable-discussions-show-latest-in-category';
+		} elseif ( $showLatest ) {
+			$heading = 'embeddable-discussions-show-latest';
+		} elseif ( $category ) {
+			$heading = 'embeddable-discussions-show-trending-in-category';
+		} else {
+			$heading = 'embeddable-discussions-show-trending';
+		}
+
+		$modelData[ 'columnsWrapperClass' ] =
+			$columns === static::COLUMNS_MAX ?
+				'embeddable-discussions-threads-columns' :
+				'';
 		$modelData[ 'heading' ] = wfMessage( $heading, $category )->plain();
 		$modelData[ 'showAll' ] = wfMessage( 'embeddable-discussions-show-all' )->plain();
 		$modelData[ 'loading' ] = wfMessage( 'embeddable-discussions-loading' )->plain();
 
-		return $templateEngine->clearData()
+		return $this->templateEngine
+			->clearData()
 			->setData( $modelData )
 			->render( 'DiscussionThreadDesktop.mustache' );
 	}
