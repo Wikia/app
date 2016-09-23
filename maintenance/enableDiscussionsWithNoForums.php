@@ -58,10 +58,11 @@ class EnableDiscussionsWithNoForums extends Maintenance {
 				continue;
 			}
 
-			$site = new \Swagger\Client\Discussion\Models\Site(
+			$site = new \Swagger\Client\Discussion\Models\SiteInput(
 				[
 					'id' => $wikiId,
-					'languageCode' => $wiki->city_lang,
+					'language_code' => $wiki->city_lang,
+					'name' => $wiki->city_sitename,
 				]
 			);
 			try {
