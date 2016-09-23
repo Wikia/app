@@ -159,7 +159,7 @@ class CommunityPageSpecialUsersModel {
 				$db = wfGetDB( DB_SLAVE );
 
 				$moderatorIds = $this->wikiService->getWikiModeratorIds( 0, false, true, null );
-				if ( empty ( $moderatorIds ) ) {
+				if ( empty( $moderatorIds ) ) {
 					return [];
 				}
 
