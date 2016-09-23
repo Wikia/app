@@ -143,7 +143,6 @@ $font-size-large: 16px;
 	}
 
 	.embeddable-discussions-post-detail-columns {
-		height: 100%;
 		margin-right: 10px;
 		width: 48%;
 	}
@@ -203,6 +202,7 @@ $font-size-large: 16px;
 	.embeddable-discussions-title {
 		font-size: $font-size-regular;
 		font-weight: bold;
+		min-height: 22px;
 	}
 
 	.embeddable-discussions-upvote-icon {
