@@ -214,7 +214,6 @@ $messages['de'] = array(
 	'communitypage-page-list-create' => 'Erstellen',
 	'communitypage-entry-join' => 'Mach mit in dieser Community!',
 	'communitypage-entry-learn-more' => 'Erfahre mehr',
-	'communitypage-entry-button' => 'Leg los',
 	'communitypage-tasks-title' => 'Aufgaben',
 	'communitypage-entry-tasks' => 'Hilf mit bei der Bearbeitung dieser Community',
 	'communitypage-tasks-header-welcome' => 'Hilf uns dabei, {{SITENAME}} zu erweitern!',
@@ -321,6 +320,7 @@ $messages['de'] = array(
 	'communitypage-deadendpages-hightitle' => 'Auf diesen Seiten bitte noch Links einfügen',
 	'communitypage-deadendpages-mediumdescription' => 'Bitte auf diesen Seiten noch Links einfügen. Gut verlinkte Artikel können deinen Lesern noch mehr Informationen zu dem Thema vermitteln und außerdem das Suchmaschinenranking verbessern.',
 	'communitypage-deadendpages-highdescription' => 'Füge Links wichtigen Namen oder Worten hinzu, die in den ersten Sätzen der Seite genannt werden.',
+	'communitypage-entry-button' => 'Leg los',
 );
 
 $messages['es'] = array(
@@ -458,7 +458,6 @@ $messages['fr'] = array(
 	'communitypage-page-list-create' => 'Créer',
 	'communitypage-entry-join' => 'Rejoindre cette communauté !',
 	'communitypage-entry-learn-more' => 'En savoir plus',
-	'communitypage-entry-button' => 'Page de la communauté',
 	'communitypage-tasks-title' => 'Tâches',
 	'communitypage-entry-tasks' => 'Aidez-nous à modifier ce wiki',
 	'communitypage-tasks-header-welcome' => '{{SITENAME}} a besoin de votre aide !',
@@ -565,6 +564,7 @@ $messages['fr'] = array(
 	'communitypage-deadendpages-hightitle' => 'Please add links to these pages',
 	'communitypage-deadendpages-mediumdescription' => 'Please add links to these pages. Well-linked articles help readers discover more information about your topic and improve search engine rankings.',
 	'communitypage-deadendpages-highdescription' => 'Add links to any important names or words that appear in the first few sentences on these pages.',
+	'communitypage-entry-button' => 'Commencer',
 );
 
 $messages['it'] = array(
@@ -580,7 +580,6 @@ $messages['it'] = array(
 	'communitypage-page-list-create' => 'Crea',
 	'communitypage-entry-join' => 'Unisciti a questa community!',
 	'communitypage-entry-learn-more' => 'Ulteriori informazioni',
-	'communitypage-entry-button' => 'Inizia adesso',
 	'communitypage-tasks-title' => 'Compiti',
 	'communitypage-entry-tasks' => 'Aiutaci a modificare questa wiki',
 	'communitypage-tasks-header-welcome' => 'Aiutaci a far crescere {{SITENAME}}!',
@@ -687,6 +686,7 @@ $messages['it'] = array(
 	'communitypage-deadendpages-hightitle' => 'Per favore, aggiungi dei collegamenti a queste pagine',
 	'communitypage-deadendpages-mediumdescription' => 'Per favore, aggiungi dei collegamenti a queste pagine. Articoli ben collegati tra di loro tramite link aiutano i lettori a scoprire più informazioni sul tuo argomento e migliorano la classificazione nei motori di ricerca.',
 	'communitypage-deadendpages-highdescription' => 'Aggiungi i link ai nomi o alle parole importanti che appaiono nelle prime frasi di queste pagine.',
+	'communitypage-entry-button' => 'Inizia adesso',
 );
 
 $messages['ja'] = array(
@@ -701,7 +701,6 @@ $messages['ja'] = array(
 	'communitypage-entry-learn-more' => 'もっと見る',
 	'communitypage-tasks-header-welcome' => '{{SITENAME}}で<br>もっと知識と情熱を共有しよう！',
 	'communitypage-header-welcome' => '{{SITENAME}} コミュニティへようこそ！',
-	'communitypage-entry-button' => 'コミュニティ・ページ',
 	'communitypage-tasks-title' => 'タスク',
 	'communitypage-entry-tasks' => 'あなたの知識と情熱を共有してください！',
 	'communitypage-tasks-admin-welcome' => '{{SITENAME}} へようこそ。このコミュニティはあなたの知識と情熱を求めています。もっと書き込みが必要なページの一部をこちらに紹介しています。まずは知っていることを書き込んでみよう！',
@@ -809,6 +808,7 @@ $messages['ja'] = array(
 	'communitypage-deadendpages-hightitle' => 'Please add links to these pages',
 	'communitypage-deadendpages-mediumdescription' => 'Please add links to these pages. Well-linked articles help readers discover more information about your topic and improve search engine rankings.',
 	'communitypage-deadendpages-highdescription' => 'Add links to any important names or words that appear in the first few sentences on these pages.',
+	'communitypage-entry-button' => '参加する',
 );
 
 $messages['nl'] = array(
@@ -824,7 +824,6 @@ $messages['nl'] = array(
 	'communitypage-page-list-create' => 'Aanmaken',
 	'communitypage-entry-join' => 'Word lid van deze community!',
 	'communitypage-entry-learn-more' => 'Meer te weten komen',
-	'communitypage-entry-button' => 'Community-pagina',
 	'communitypage-tasks-title' => 'Taken',
 	'communitypage-entry-tasks' => 'Help ons deze wikia te bewerken',
 	'communitypage-tasks-header-welcome' => "Help ons om '''{{SITENAME}}''' te doen groeien!",
@@ -931,6 +930,7 @@ $messages['nl'] = array(
 	'communitypage-deadendpages-hightitle' => 'Please add links to these pages',
 	'communitypage-deadendpages-mediumdescription' => "Voeg wat links toe aan deze pagina's. Goed verbonden artikels helpen om lezers meer informatie over je onderwerp te laten ontdekken en om je rang in zoekmachines te verbeteren.",
 	'communitypage-deadendpages-highdescription' => "Links toevoegen aan belangrijke namen of woorden die voorkomen in de eerste paar zinnen van deze pagina's.",
+	'communitypage-entry-button' => 'Community-pagina',
 );
 
 $messages['pl'] = array(
@@ -946,7 +946,6 @@ $messages['pl'] = array(
 	'communitypage-page-list-create' => 'Utwórz',
 	'communitypage-entry-join' => 'Dołącz do społeczności!',
 	'communitypage-entry-learn-more' => 'Czytaj więcej',
-	'communitypage-entry-button' => 'Strona społeczności',
 	'communitypage-tasks-title' => 'Zadania',
 	'communitypage-entry-tasks' => 'Pomóż nam edytować tę wikię',
 	'communitypage-tasks-header-welcome' => 'Pomóż nam rozwijać {{SITENAME}}!',
@@ -1053,6 +1052,7 @@ $messages['pl'] = array(
 	'communitypage-deadendpages-hightitle' => 'Proszę, dodaj linki do tych stron',
 	'communitypage-deadendpages-mediumdescription' => 'Dodaj linki do tych stron. Odnośniki pomiędzy artykułami ułatwiają czytelnikom odnalezienie informacji na dany temat oraz poprawiają wyniki w wyszukiwarkach.',
 	'communitypage-deadendpages-highdescription' => 'Dodaj linki do ważnych nazw i słów, które pojawiają się w kilku pierwszych zdaniach na tych stronach.',
+	'communitypage-entry-button' => 'Rozpocznij',
 );
 
 $messages['pt'] = array(
@@ -1068,7 +1068,6 @@ $messages['pt'] = array(
 	'communitypage-page-list-create' => 'Criar',
 	'communitypage-entry-join' => 'Junte-se a esta comunidade!',
 	'communitypage-entry-learn-more' => 'Saiba Mais',
-	'communitypage-entry-button' => 'Começar',
 	'communitypage-tasks-title' => 'Tarefas',
 	'communitypage-entry-tasks' => 'Ajude-nos a editar esta wikia',
 	'communitypage-tasks-header-welcome' => 'Ajude-nos a fazer a {{SITENAME}} crescer!',
@@ -1175,6 +1174,7 @@ $messages['pt'] = array(
 	'communitypage-deadendpages-hightitle' => 'Por favor, adicione links a estas páginas',
 	'communitypage-deadendpages-mediumdescription' => 'Estas páginas devem conter links para outros artigos em sua wikia. Artigos bem conectados ajudam os leitores a descobrir mais informações sobre o seu tema e a melhorar os resultados da busca.',
 	'communitypage-deadendpages-highdescription' => 'Adicione links para nomes ou palavras importantes que aparecem nas primeiras frases nestas páginas.',
+	'communitypage-entry-button' => 'Começar',
 );
 
 $messages['ru'] = array(
@@ -1190,7 +1190,6 @@ $messages['ru'] = array(
 	'communitypage-page-list-create' => 'Создать',
 	'communitypage-entry-join' => 'Присоединяйтесь к этому сообществу!',
 	'communitypage-entry-learn-more' => 'Узнать больше',
-	'communitypage-entry-button' => 'Страница сообщества',
 	'communitypage-tasks-title' => 'Задачи',
 	'communitypage-entry-tasks' => 'Помогите нам улучшить эту вики',
 	'communitypage-tasks-header-welcome' => 'Помогите нам улучшить {{SITENAME}}!',
@@ -1297,6 +1296,7 @@ $messages['ru'] = array(
 	'communitypage-deadendpages-hightitle' => 'Please add links to these pages',
 	'communitypage-deadendpages-mediumdescription' => 'Пожалуйста, добавьте ссылки на эти страницы.  Статьи с корректными ссылками помогут читателям найти больше интересующей их информации, а также повысят позиции вашей вики в поисковой выдаче.',
 	'communitypage-deadendpages-highdescription' => 'Добавьте ссылки для важных названий или слов, которые часто повторяются в первых предложениях на этих страницах.',
+	'communitypage-entry-button' => 'Приступить к работе',
 );
 
 $messages['zh-hans'] = array(
@@ -1312,7 +1312,6 @@ $messages['zh-hans'] = array(
 	'communitypage-page-list-create' => '创建',
 	'communitypage-entry-join' => '赶快加入社区！',
 	'communitypage-entry-learn-more' => '了解更多',
-	'communitypage-entry-button' => '社区页面',
 	'communitypage-tasks-title' => '任务',
 	'communitypage-entry-tasks' => '帮助我们编辑这个维基',
 	'communitypage-tasks-header-welcome' => '帮助我们发展 {{SITENAME}}！',
@@ -1419,6 +1418,7 @@ $messages['zh-hans'] = array(
 	'communitypage-deadendpages-hightitle' => 'Please add links to these pages',
 	'communitypage-deadendpages-mediumdescription' => 'Please add links to these pages. Well-linked articles help readers discover more information about your topic and improve search engine rankings.',
 	'communitypage-deadendpages-highdescription' => 'Add links to any important names or words that appear in the first few sentences on these pages.',
+	'communitypage-entry-button' => '立即开始',
 );
 
 $messages['zh-hant'] = array(
@@ -1434,7 +1434,6 @@ $messages['zh-hant'] = array(
 	'communitypage-page-list-create' => '創建',
 	'communitypage-entry-join' => '加入社區！',
 	'communitypage-entry-learn-more' => '閱讀更多',
-	'communitypage-entry-button' => '社區頁面',
 	'communitypage-tasks-title' => '任務',
 	'communitypage-entry-tasks' => '幫助我們編輯這個Wiki',
 	'communitypage-tasks-header-welcome' => '幫助我們發展「{{SITENAME}}」！',
@@ -1541,5 +1540,5 @@ $messages['zh-hant'] = array(
 	'communitypage-deadendpages-hightitle' => 'Please add links to these pages',
 	'communitypage-deadendpages-mediumdescription' => 'Please add links to these pages. Well-linked articles help readers discover more information about your topic and improve search engine rankings.',
 	'communitypage-deadendpages-highdescription' => 'Add links to any important names or words that appear in the first few sentences on these pages.',
+	'communitypage-entry-button' => '現在開始',
 );
-

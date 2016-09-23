@@ -12,7 +12,6 @@ $config['oasis_shared_core_js'] = [
 		'//resources/wikia/libraries/mustache/mustache.js',
 		'//resources/wikia/modules/browserDetect.js',
 		'//resources/mediawiki/mediawiki.Uri.js',
-		'#group_banner_notifications_js',
 		'#group_ui_repo_api_js',
 	],
 ];
@@ -72,6 +71,7 @@ $config['adengine2_desktop_js'] = [
 		'//extensions/wikia/AdEngine/js/provider/gpt/adSizeFilter.js',
 		'//extensions/wikia/AdEngine/js/provider/gpt/adSizeConverter.js',
 		'//extensions/wikia/AdEngine/js/provider/gpt/googleTag.js',
+		'//extensions/wikia/AdEngine/js/provider/gpt/googleSlots.js',
 		'//extensions/wikia/AdEngine/js/provider/gpt/helper.js',
 		'//extensions/wikia/AdEngine/js/provider/gpt/sraHelper.js',
 		'//extensions/wikia/AdEngine/js/provider/remnantGpt.js',
@@ -506,11 +506,11 @@ $config['user_signup_js'] = [
 
 /**
  * For logged in users in oasis
- * @todo Remove this and clean up references UC-228
  */
 $config['oasis_user_js'] = [
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => [
+		'#group_design_system_user_js',
 		'//extensions/wikia/EmergencyBroadcastSystem/js/EmergencyBroadcastSystem.js',
 	],
 ];
@@ -826,6 +826,7 @@ $config['mobile_base_ads_js'] = [
 		'//extensions/wikia/AdEngine/js/lookup/openx/openXBidderHelper.js',
 		'//extensions/wikia/AdEngine/js/lookup/openXBidder.js',
 		'//extensions/wikia/AdEngine/js/lookup/rubicon/rubiconFastlane.js',
+		'//extensions/wikia/AdEngine/js/lookup/rubicon/rubiconVulcan.js',
 		'//extensions/wikia/AdEngine/js/lookup/rubicon/rubiconTargeting.js',
 		'//extensions/wikia/AdEngine/js/lookup/services.js',
 		'//extensions/wikia/AdEngine/js/provider/btfBlocker.js',
@@ -838,6 +839,7 @@ $config['mobile_base_ads_js'] = [
 		'//extensions/wikia/AdEngine/js/provider/gpt/adSizeFilter.js',
 		'//extensions/wikia/AdEngine/js/provider/gpt/adSizeConverter.js',
 		'//extensions/wikia/AdEngine/js/provider/gpt/googleTag.js',
+		'//extensions/wikia/AdEngine/js/provider/gpt/googleSlots.js',
 		'//extensions/wikia/AdEngine/js/provider/gpt/helper.js',
 		'//extensions/wikia/AdEngine/js/provider/paidAssetDrop.js',
 		'//extensions/wikia/AdEngine/js/provider/remnantGptMobile.js',
@@ -845,6 +847,7 @@ $config['mobile_base_ads_js'] = [
 		'//extensions/wikia/AdEngine/js/utils/AdLogicZoneParams.js',
 		'//extensions/wikia/AdEngine/js/utils/eventDispatcher.js',
 		'//extensions/wikia/AdEngine/js/utils/hooks.js',
+		'//extensions/wikia/AdEngine/js/utils/math.js',
 		'//extensions/wikia/AdEngine/js/video/playwire.js',
 		'//extensions/wikia/AdEngine/js/video/vastBuilder.js',
 
@@ -946,6 +949,7 @@ $config['interactivemaps_ads_js'] = [
 		'//extensions/wikia/AdEngine/js/provider/gpt/adSizeFilter.js',
 		'//extensions/wikia/AdEngine/js/provider/gpt/adSizeConverter.js',
 		'//extensions/wikia/AdEngine/js/provider/gpt/googleTag.js',
+		'//extensions/wikia/AdEngine/js/provider/gpt/googleSlots.js',
 		'//extensions/wikia/AdEngine/js/provider/gpt/helper.js',
 		'//extensions/wikia/AdEngine/js/SlotTweaker.js',
 		'//extensions/wikia/AdEngine/InteractiveMaps/ads.js',
@@ -2093,7 +2097,23 @@ $config['design_system_js'] = [
 	'type' => AssetsManager::TYPE_JS,
 	'skin' => [ 'oasis' ],
 	'assets' => [
-		'//extensions/wikia/DesignSystem/scripts/DesignSystemGlobalFooterTracking.js',
+		'//resources/wikia/modules/scrollToLink.js',
+		'//extensions/wikia/DesignSystem/scripts/DesignSystemTracking.js',
+		'//extensions/wikia/DesignSystem/scripts/DesignSystemDropdowns.js',
+		'//extensions/wikia/DesignSystem/scripts/DesignSystemGlobalNavigationScrollToLink.js',
+		'//extensions/wikia/DesignSystem/scripts/DesignSystemAuthenticationMenu.js',
+		'//extensions/wikia/DesignSystem/scripts/DesignSystemGlobalNavigationSearch.js',
+		'//extensions/wikia/DesignSystem/scripts/DesignSystemGlobalNavigationSearchSuggestions.js',
+	],
+];
+
+$config['design_system_user_js'] = [
+	'type' => AssetsManager::TYPE_JS,
+	'skin' => [ 'oasis' ],
+	'assets' => [
+		'//resources/wikia/libraries/headroom/headroom.js',
+		'//extensions/wikia/DesignSystem/scripts/DesignSystemGlobalNavigationHeadroom.js',
+		'//extensions/wikia/DesignSystem/scripts/DesignSystemGlobalNavigationNotifications.js'
 	],
 ];
 
@@ -2376,15 +2396,6 @@ $config['banner_notifications_scss'] = [
 	'assets' => [
 		'//extensions/wikia/BannerNotifications/css/BannerNotifications.scss',
 		'//extensions/wikia/BannerNotifications/css/BannerNotifications.monobook.scss',
-	],
-];
-
-$config['banner_notifications_js'] = [
-	'type' => AssetsManager::TYPE_SCSS,
-	'skin' => [ 'oasis', 'monobook' ],
-	'assets' => [
-		'//extensions/wikia/BannerNotifications/js/BannerNotifications.js',
-		'//extensions/wikia/BannerNotifications/js/templates.mustache.js',
 	],
 ];
 
@@ -3035,8 +3046,16 @@ $config['design_system_scss'] = [
 	'type' => AssetsManager::TYPE_SCSS,
 	'skin' => [ 'oasis' ],
 	'assets' => [
-		'//extensions/wikia/DesignSystem/bower_components/design-system/dist/styles.scss',
 		'//extensions/wikia/DesignSystem/styles/design-system.scss',
+	],
+];
+
+$config['design_system_user_scss'] = [
+	'type' => AssetsManager::TYPE_SCSS,
+	'skin' => [ 'oasis' ],
+	'assets' => [
+		'//resources/wikia/libraries/headroom/headroom.scss',
+		'//extensions/wikia/GlobalNavigation/styles/GlobalNavigationNotifications.scss'
 	],
 ];
 

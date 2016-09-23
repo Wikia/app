@@ -1,4 +1,75 @@
+@import '/extensions/wikia/DesignSystem/bower_components/design-system/dist/css/styles.css';
+@import '../bower_components/design-system/base/colors';
+
 // Platform-specific styles for DesignSystem integration
+$global-navigation-z-index: 5000101;
+$global-navigation-height: 55px;
+
+.wds-global-navigation-wrapper {
+	height: $global-navigation-height;
+}
+
+.wds-global-navigation {
+	position: fixed;
+	top: 0;
+	width: 100%;
+	z-index: $global-navigation-z-index;
+
+	&.bfaa-pinned {
+		position: relative;
+	}
+
+	&.headroom--unpinned {
+		box-shadow: none;
+	}
+
+	a:hover {
+		text-decoration: none;
+	}
+
+	button,
+	button:hover {
+		background-image: none;
+		border-radius: 0;
+		height: auto;
+	}
+
+	button:hover:disabled {
+		background-color: $color-link;
+	}
+
+	.notifications-container .bubbles {
+		background: none;
+		min-width: 0;
+		padding: 0;
+		position: static;
+		right: 0;
+		top: auto;
+	}
+
+	.ve & {
+		position: absolute;
+		z-index: $global-navigation-z-index - 1;
+	}
+
+	&__search-suggestions {
+		strong {
+			font-weight: bold;
+		}
+
+		a {
+			cursor: pointer;
+		}
+
+		a:hover {
+			color: $color-dark-blue-gray;
+		}
+
+		.wds-is-selected a {
+			color: $color-link;
+		}
+	}
+}
 
 .wds-global-footer {
 	position: relative;
