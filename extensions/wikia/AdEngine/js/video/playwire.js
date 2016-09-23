@@ -13,13 +13,13 @@ define('ext.wikia.adEngine.video.playwire', [
 	}
 
 	function inject(params) {
-		var configUrl = params.configUrl,
-			container = params.container,
-			vastUrl = params.vastUrl,
-			slotName = params.slotName,
-			width = params.width,
+		var container = params.container,
 			height = params.height,
-			script = doc.createElement('script');
+			script = doc.createElement('script'),
+			slotName = params.slotName,
+			vastUrl = params.vastUrl,
+			width = params.width,
+			configUrl = params.configUrl;
 
 		if (!vastUrl) {
 			vastUrl = vastBuilder.build('playwire', slotName, width / height);
