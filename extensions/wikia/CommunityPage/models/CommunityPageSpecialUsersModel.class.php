@@ -178,6 +178,10 @@ class CommunityPageSpecialUsersModel {
 				$db = wfGetDB( DB_SLAVE );
 
 				$moderatorIds = $this->wikiService->getWikiModeratorIds( 0, false, true, null );
+				if ( empty( $moderatorIds ) ) {
+					return [];
+				}
+
 				$adminIds = $this->wikiService->getWikiAdminIds( 0, false, true, null, true );
 				$botIds = $this->getBotIds();
 				$dateTwoYearsAgo = date( 'Y-m-d', strtotime( '-2 years' ) );
@@ -185,11 +189,8 @@ class CommunityPageSpecialUsersModel {
 				$sqlData = ( new WikiaSQL() )
 					->SELECT( 'distinct rev_user' )
 					->FROM( 'revision' )
-					->WHERE( 'rev_user' )->NOT_EQUAL_TO( 0 );
-
-				if ( !empty( $moderatorIds ) ) {
-					$sqlData = $sqlData->AND_( 'rev_user' )->IN( $moderatorIds );
-				}
+					->WHERE( 'rev_user' )->NOT_EQUAL_TO( 0 )
+					->AND_( 'rev_user' )->IN( $moderatorIds );
 
 				if ( !empty( $adminIds ) ) {
 					$sqlData = $sqlData->AND_( 'rev_user' )->NOT_IN( $adminIds );

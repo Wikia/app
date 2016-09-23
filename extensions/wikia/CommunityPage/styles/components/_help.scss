@@ -2,25 +2,25 @@
 @import 'extensions/wikia/DesignSystem/bower_components/design-system/base/colors';
 @import 'extensions/wikia/DesignSystem/bower_components/design-system/base/typography';
 @import 'skins/shared/mixins/flexbox';
+@import 'variables';
 
 $small-icon-size: 18px;
-$big-icon-size: 48px;
-$help-module-margin: 12px;
-$help-module-padding-bottom: 20px;
-$policy-link-padding-top: 18px;
-$policy-link-margin-top: 14px;
-
-$help-module-link-line-height: 2;
+$big-icon-size: 30px;
+$help-module-title-padding: 4px;
+$help-link-line-height: 14px;
+$policy-link-title-padding-top: 2px;
 
 .community-page-help-module {
-	padding-bottom: $help-module-padding-bottom;
+	&.community-page-module-box {
+		padding: $content-spacing-large $content-spacing-regular;
+	}
 
 	.community-page-module-section-title {
 		@include flexbox();
 
-		align-items: center;
-
 		svg {
+			@include flex-shrink(0);
+
 			fill: $color-alternate-text;
 			height: $big-icon-size;
 			width: $big-icon-size;
@@ -28,31 +28,46 @@ $help-module-link-line-height: 2;
 	}
 
 	.community-page-policy-link {
+		@include align-items(flex-start);
 		@include flexbox();
 
-		align-items: center;
 		border-top: 1px solid $color-page-border;
 		font-size: $typescale-size-minus-1;
-		line-height: 1;
-		margin-top: $policy-link-margin-top;
-		padding: $policy-link-padding-top 0;
+		line-height: $help-link-line-height;
+		margin-top: $content-spacing-small-plus;
+		padding-top: $content-spacing-regular;
 
 		svg {
+			@include flex-shrink(0);
+
 			fill: $color-links;
-			height: $small-icon-size;
+			height: auto;
 			width: $small-icon-size;
+		}
+
+		span {
+			padding-top: $policy-link-title-padding-top;
 		}
 	}
 
 	.community-page-help-module-policy-title {
-		margin-left: $help-module-margin;
+		margin-left: $content-spacing-small;
 	}
 
 	.community-page-help-module-title {
-		margin-left: $help-module-margin;
+		margin-left: $content-spacing-small;
+		padding-top: $help-module-title-padding;
 	}
 
 	.community-page-help-module-links {
-		line-height: $help-module-link-line-height;
+		@include flexbox();
+		@include flex-direction(column);
+
+		font-size: $typescale-size-minus-1;
+		line-height: $help-link-line-height;
+
+		a {
+			padding: $content-spacing-xsmall 0 $content-spacing-small 0;
+		}
 	}
 }
