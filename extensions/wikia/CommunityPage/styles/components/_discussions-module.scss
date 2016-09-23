@@ -13,6 +13,25 @@
 			font-size: $typescale-size-plus-2;
 			font-weight: bold;
 		}
+
+		.embeddable-discussions-post-detail-columns {
+			height: 280px;
+			position: relative;
+
+			.embeddable-discussions-title {
+				-webkit-box-orient: vertical;
+				display: -webkit-box;
+				font-size: $typescale-size-plus-1;
+				-webkit-line-clamp: 2;
+				overflow: hidden;
+			}
+		}
+
+		.embeddable-discussions-post-toolbar {
+			position: absolute;
+			bottom: 0;
+			width: 100%;
+		}
 	}
 }
 
