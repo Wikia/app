@@ -63,6 +63,7 @@
 		display: flex;
 		justify-content: center;
 		margin: 0;
+		padding: 30px 0 25px;
 	}
 
 	&__bottom-bar {
@@ -110,6 +111,11 @@
 		padding: 14px 18px;
 		text-decoration: none;
 		text-transform: uppercase;
+	}
+
+	&__header-logo {
+		height: 44px;
+		width: 184px;
 	}
 
 	&__fandom-logo {
@@ -333,13 +339,6 @@
 			margin: 0 20px;
 		}
 
-		&__header-wrapper {
-			padding: {
-				bottom: $mobile-row-header-international-padding-bottom;
-				top: $mobile-row-header-international-padding-top;
-			}
-		}
-
 		&__fandom-header {
 			margin: {
 				bottom: $mobile-row-header-en-margin-bottom;
@@ -369,6 +368,8 @@
 			}
 
 			&.wds-is-follow-us {
+				margin-bottom: 20px;
+
 				.wds-global-footer__links-list-item {
 					margin-bottom: 0;
 				}
@@ -409,9 +410,9 @@
 			}
 		}
 
-		&.wds-is-international {
+		&.wds-is-en {
 			.wds-global-footer__fandom-section.wds-is-follow-us {
-				margin-bottom: 37px;
+				margin-bottom: 0;
 			}
 		}
 
@@ -436,13 +437,6 @@
 			width: $desktop-width;
 		}
 
-		&__header-wrapper {
-			padding: {
-				bottom: $desktop-row-header-international-padding-bottom;
-				top: $desktop-row-header-international-padding-top;
-			}
-		}
-
 		// left (Fandom) and right (Wikia) headers and sections
 		&__fandom-header,
 		&__wikia-header {
@@ -451,6 +445,10 @@
 				bottom: $desktop-row-header-en-margin-bottom;
 				top: $desktop-row-header-en-margin-top;
 			}
+		}
+
+		&__header {
+			padding: 40px 0 35px;
 		}
 
 		&__fandom-header {
