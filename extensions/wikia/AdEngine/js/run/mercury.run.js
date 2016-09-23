@@ -1,12 +1,12 @@
 /*global require*/
 require([
 	'ext.wikia.adEngine.adContext',
+	'ext.wikia.adEngine.customAdsLoader',
 	'ext.wikia.adEngine.lookup.amazonMatch',
 	'ext.wikia.adEngine.lookup.openXBidder',
 	'ext.wikia.adEngine.lookup.prebid',
 	'ext.wikia.adEngine.lookup.rubicon.rubiconFastlane',
 	'ext.wikia.adEngine.lookup.rubicon.rubiconVulcan',
-	'ext.wikia.adEngine.templatesService',
 	'ext.wikia.adEngine.messageListener',
 	'ext.wikia.adEngine.mobile.mercuryListener',
 	'ext.wikia.adEngine.slot.scrollHandler',
@@ -16,12 +16,12 @@ require([
 	'wikia.window'
 ], function (
 	adContext,
+	customAdsLoader,
 	amazon,
 	oxBidder,
 	prebid,
 	rubiconFastlane,
 	rubiconVulcan,
-	templatesService,
 	messageListener,
 	mercuryListener,
 	scrollHandler,
@@ -36,7 +36,7 @@ require([
 	scrollHandler.init('mercury');
 
 	// Custom ads (skins, footer, etc)
-	win.loadCustomAd = templatesService.loadCustomAd;
+	win.loadCustomAd = customAdsLoader.loadCustomAd;
 
 	if (geo.isProperGeo(instantGlobals.wgAmazonMatchCountriesMobile)) {
 		amazon.call();
