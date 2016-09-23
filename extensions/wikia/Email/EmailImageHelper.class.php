@@ -48,7 +48,7 @@ class ImageHelper {
 		'Instagram' => [
 			'name' => 'Instagram-Default-2x',
 			'extension' => 'png'
-		]
+		],
 	];
 
 	/**

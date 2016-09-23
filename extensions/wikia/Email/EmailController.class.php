@@ -269,10 +269,10 @@ abstract class EmailController extends \WikiaController {
 				'content' => $this->getContent(),
 				'footerMessages' => $this->getFooterMessages(),
 				'footerMobileApplicationMessages' => $this->getFooterMobileApplicationMessages(),
+				'badges' => $this->generateMobileApplicationBadges(),
 				'marketingFooter' => $this->marketingFooter,
 				'socialMessages' => $this->getSocialMessages(),
 				'icons' => ImageHelper::getIconInfo(),
-				'badges' => $this->generateMobileApplicationBadges(),
 				'disableInit' => true
 			]
 		);
@@ -417,13 +417,15 @@ abstract class EmailController extends \WikiaController {
 			if ( $mobileApplicationsLinks['android'] ) {
 				$badges['android'] = [
 					'link' => $mobileApplicationsLinks['android'],
-					'src' => ImageHelper::getFileUrl( $this->getMessage( 'emailext-mobile-application-android-badge' )->text() )
+					'src' => ImageHelper::getFileUrl(
+						$this->getMessage( 'emailext-mobile-application-android-badge' )->text() )
 				];
 			}
 			if ( $mobileApplicationsLinks['ios'] ) {
 				$badges['ios'] = [
 					'link' => $mobileApplicationsLinks['ios'],
-					'src' => ImageHelper::getFileUrl( $this->getMessage( 'emailext-mobile-application-ios-badge' )->text() )
+					'src' => ImageHelper::getFileUrl(
+						$this->getMessage( 'emailext-mobile-application-ios-badge' )->text() )
 				];
 			}
 		}
@@ -434,7 +436,7 @@ abstract class EmailController extends \WikiaController {
 	private function generateMobileApplicationLinks() {
 		$result = [];
 
-		$response = $this->fetchMobileApplications();
+		$response = $this->fetchMobileApplicationsDetails();
 		$siteId = $this->wg->CityId;
 
 		if ( $this->applicationsExistFor($siteId, $response ) ) {
@@ -473,7 +475,7 @@ abstract class EmailController extends \WikiaController {
 	/**
 	 * @return string
 	 */
-	private function fetchMobileApplications() {
+	private function fetchMobileApplicationsDetails() {
 		// currently it does not matter if Android or iOS value is added, data is returned for both Android and iOS
 		return Http::request( "GET",  'https://services.wikia.com/mobile-applications/platform/android' );
 	}

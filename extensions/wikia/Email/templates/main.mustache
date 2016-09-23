@@ -74,21 +74,21 @@
 							<div class="spacer">
 							</div>
 
-						{{# footerMobileApplicationMessages}}
-							<p class="fine-print">{{{.}}}</p>
-						{{/ footerMobileApplicationMessages}}
+							{{# footerMobileApplicationMessages}}
+								<p class="fine-print">{{{.}}}</p>
+							{{/ footerMobileApplicationMessages}}
 
-						<div class="mobile-badges">
-							{{# badges.ios}}
-								<a class="ios-badge" href="{{link}}">
-									<img src="{{src}}" alt="{{alt}}">
-								</a>
-							{{/ badges.ios}}
-							{{# badges.android}}
-								<a class="android-badge" href="{{link}}">
-									<img src="{{src}}" alt="{{alt}}">
-								</a>
-							{{/ badges.android}}
+							<div class="mobile-badges">
+								{{# badges.ios}}
+									<a class="ios-badge" href="{{link}}">
+										<img src="{{src}}" alt="iOS">
+									</a>
+								{{/ badges.ios}}
+								{{# badges.android}}
+									<a class="android-badge" href="{{link}}">
+										<img src="{{src}}" alt="Android">
+									</a>
+								{{/ badges.android}}
 						</div>
 
 						{{/ badges.hasMobileApplicationBadges}}
