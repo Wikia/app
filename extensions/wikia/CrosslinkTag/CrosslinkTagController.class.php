@@ -4,6 +4,7 @@ class CrosslinkTagController extends WikiaController {
 
 	const PARSER_TAG_NAME = 'crosslink';
 	const MAX_URLS = 4;
+	const MAX_LENGTH = 90;
 
 	protected $counter = 0;
 	protected $markers = [];
@@ -146,6 +147,10 @@ class CrosslinkTagController extends WikiaController {
 					$article = $helper->getArticleDataBySlug( $slug, $pageType );
 					if ( !empty( $article ) ) {
 						$article['sliderId'] = $sliderId;
+						if ( strlen( $article['description'] ) > self::MAX_LENGTH ) {
+							$maxLength = strpos( wordwrap( $article['description'], self::MAX_LENGTH ), PHP_EOL );
+							$article['description'] = substr( $article['description'], 0, $maxLength ) . ' ...';
+						}
 						$articles[] = $article;
 						$sliderId++;
 					}
