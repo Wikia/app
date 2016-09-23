@@ -2108,15 +2108,6 @@ $config['design_system_user_js'] = [
 	],
 ];
 
-/** CorporateFooter extension */
-$config['corporate_footer_js'] = [
-	'type' => AssetsManager::TYPE_JS,
-	'skin' => [ 'oasis' ],
-	'assets' => [
-		'//extensions/wikia/CorporateFooter/scripts/CorporateFooterTracker.js',
-	],
-];
-
 /* extension/wikia/Bucky */
 $config['bucky_js'] = [
 	'type' => AssetsManager::TYPE_JS,

@@ -198,7 +198,6 @@
 		?>
 
 		<?= empty( $wg->SuppressFooter ) ? $app->renderView( 'Footer', 'Index' ) : '' ?>
-		<? if ( !empty( $wg->EnableCorporateFooterExt ) && empty( $wg->EnableDesignSystem ) ) echo $app->renderView( 'CorporateFooter', 'index' ) ?>
 	</div>
 </section><!--WikiaPage-->
 
