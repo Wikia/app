@@ -39,6 +39,7 @@ define('ext.wikia.adEngine.domElementTweaker', [
 		var computedStyles;
 
 		if (!isElement(element)) {
+			log(['Can\'t copy styles because parameter isn\'t element', element], 4, logGroup);
 			return;
 		}
 
