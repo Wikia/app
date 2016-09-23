@@ -2083,15 +2083,6 @@ $config['optimizely_blocking_js'] = [
 	],
 ];
 
-/** GlobalFooter extension */
-$config['global_footer_js'] = [
-	'type' => AssetsManager::TYPE_JS,
-	'skin' => [ 'oasis' ],
-	'assets' => [
-		'//extensions/wikia/GlobalFooter/scripts/GlobalFooter.js',
-	],
-];
-
 /** DesignSystem extension */
 $config['design_system_js'] = [
 	'type' => AssetsManager::TYPE_JS,
@@ -2477,14 +2468,6 @@ $config['page_share_scss'] = [
 	'skin' => [ 'oasis' ],
 	'assets' => [
 		'//extensions/wikia/PageShare/styles/PageShare.scss',
-	],
-];
-
-$config['global_footer_scss'] = [
-	'type' => AssetsManager::TYPE_SCSS,
-	'skin' => [ 'oasis' ],
-	'assets' => [
-		'//extensions/wikia/GlobalFooter/styles/GlobalFooter.scss',
 	],
 ];
 
