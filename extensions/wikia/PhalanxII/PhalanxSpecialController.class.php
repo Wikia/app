@@ -271,6 +271,7 @@ class PhalanxSpecialController extends WikiaSpecialPageController {
 			$noMatches = false;
 
 			$pager = new PhalanxBlockTestPager($blockType);
+			$pager->setContext( $this->getContext() );
 			$pager->setRows($res);
 			$listing .= $pager->getHeader();
 			$listing .= $pager->getBody();

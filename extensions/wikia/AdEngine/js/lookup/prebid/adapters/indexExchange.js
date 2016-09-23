@@ -60,8 +60,13 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.indexExchange',[
 		return slots[skin];
 	}
 
+	function getName() {
+		return bidderName;
+	}
+
 	return {
 		isEnabled: isEnabled,
+		getName: getName,
 		getSlots: getSlots,
 		prepareAdUnit: prepareAdUnit
 	};

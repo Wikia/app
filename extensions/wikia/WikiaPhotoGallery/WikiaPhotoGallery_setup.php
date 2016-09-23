@@ -54,6 +54,13 @@ $wgHooks[ 'PageRenderingHash' ][] = 'WikiaPhotoGalleryHelper::addMediaGalleryCac
 // i18n
 $wgExtensionMessagesFiles['WikiaPhotoGallery'] = $dir.'/WikiaPhotoGallery.i18n.php';
 
+// ResourceLoader module
+$wgResourceModules['ext.WikiaPhotoGallery'] = [
+	'scripts' => 'js/WikiaPhotoGallery.js',
+	'localBasePath' => __DIR__,
+	'remoteExtPath' => 'wikia/WikiaPhotoGallery',
+];
+
 // Ajax dispatcher
 $wgAjaxExportList[] = 'WikiaPhotoGalleryAjax';
 function WikiaPhotoGalleryAjax() {

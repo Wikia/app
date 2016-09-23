@@ -10,19 +10,30 @@ define('ext.wikia.adEngine.lookup.rubicon.rubiconVulcan', [
 	'use strict';
 
 	var accountId = 7450,
+		incontentAdSettings = {
+			siteId: 55412,
+			size: [640, 480],
+			sizeId: 203,
+			targeting: {
+				loc: 'hivi'
+			},
+			zoneId: 260296
+		},
 		config = {
 			oasis: {
-				INCONTENT_LEADERBOARD: {
+				INCONTENT_LEADERBOARD: incontentAdSettings,
+				TOP_LEADERBOARD: {
 					siteId: 55412,
 					size: [640, 480],
 					sizeId: 203,
 					targeting: {
-						loc: 'hivi'
+						loc: 'top'
 					},
-					zoneId: 260296
+					zoneId: 519058
 				}
 			},
 			mercury: {
+				MOBILE_IN_CONTENT: incontentAdSettings
 			}
 		},
 		cpmBuckets = [
@@ -106,6 +117,8 @@ define('ext.wikia.adEngine.lookup.rubicon.rubiconVulcan', [
 	function getSlotParams(slotName) {
 		var parameters = {};
 
+		parameters[rubiconVideoTierKey] = slots[slotName].sizeId + '_tierNONE';
+
 		log(['getSlotParams', slotName, parameters], 'debug', logGroup);
 		if (priceMap[slotName]) {
 			parameters[rubiconVideoTierKey] = priceMap[slotName];
@@ -140,6 +153,8 @@ define('ext.wikia.adEngine.lookup.rubicon.rubiconVulcan', [
 
 				log(['VAST ad', slotName, cpm, tier, vastUrl], 'debug', logGroup);
 				priceMap[slotName] = tier;
+			} else {
+				priceMap[slotName] = slots[slotName].sizeId + '_tier0000';
 			}
 		});
 	}
