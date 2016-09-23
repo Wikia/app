@@ -58,6 +58,12 @@ body {
 	width: 194px;
 }
 
+.footer .spacer {
+	border-bottom: 1px solid #fff;
+	margin: 25px auto;
+	width: 50%;
+}
+
 .fandom-bar img {
 	display: block;
 	height: 5px;
@@ -112,4 +118,19 @@ body {
 
 .fine-print a {
 	 text-decoration: underline;
+}
+
+.mobile-badges {
+	margin-top: 15px;
+}
+
+.mobile-badges .ios-badge img {
+	height: auto;
+	padding-bottom: 15px;
+	width: 210px;
+}
+
+.mobile-badges .android-badge img {
+	height: auto;
+	width: 240px;
 }

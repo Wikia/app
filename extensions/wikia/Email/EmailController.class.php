@@ -267,6 +267,7 @@ abstract class EmailController extends \WikiaController {
 			[
 				'content' => $this->getContent(),
 				'footerMessages' => $this->getFooterMessages(),
+				'footerMobileApplicationMessages' => $this->getFooterMobileApplicationMessages(),
 				'marketingFooter' => $this->marketingFooter,
 				'socialMessages' => $this->getSocialMessages(),
 				'icons' => ImageHelper::getIconInfo(),
@@ -373,6 +374,13 @@ abstract class EmailController extends \WikiaController {
 				->parse(),
 			$this->getMessage( 'emailext-unsubscribe', $this->getUnsubscribeLink() )
 				->parse(),
+		];
+	}
+
+	private function getFooterMobileApplicationMessages() {
+		return [
+			$this->getMessage( 'emailext-mobile-application-footer-1' )->text(),
+			$this->getMessage( 'emailext-mobile-application-footer-2' )->text()
 		];
 	}
 

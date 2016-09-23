@@ -16,6 +16,8 @@ $messages['en'] = [
 	'emailext-unfollow-text' => 'No longer interested in receiving these updates? Click [$1 here] to unfollow $2 on {{SITENAME}}.',
 	'emailext-salutation' => 'Hi $1,',
 	'emailext-wikia-home-url' => 'http://www.wikia.com/explore',
+	'emailext-mobile-application-footer-1' => 'Take your favorite fandoms with you and never miss a beat.',
+	'emailext-mobile-application-footer-2' => 'Check out our Fandom Community apps!'
 ];
 
 $messages['qqq'] = [
@@ -32,6 +34,8 @@ $messages['qqq'] = [
 	'emailext-unfollow-text' => 'Asks the user if they want to stop following this page and provides a link to unfollow the page. $1 -> unfollow url, $2 article title',
 	'emailext-salutation' => "Email greeting. $1 is the recipient's username.",
 	'emailext-wikia-home-url' => 'URL to the appropriate Wikia home page for each localized language',
+	'emailext-mobile-application-footer-1' => 'Message encouraging to download mobile application.',
+	'emailext-mobile-application-footer-2' => 'Message encouraging to download mobile application.'
 ];
 
 $messages['de'] = [

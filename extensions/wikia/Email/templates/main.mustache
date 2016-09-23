@@ -8,7 +8,7 @@
 	<div class="fandom-bar">
 		{{# icons.FandomTopBar}}
 			<img src="{{url}}" height="5" width="100%" alt="Top Bar">
-		{{/icons.FandomTopBar}}
+		{{/ icons.FandomTopBar}}
 	</div>
 	<table class="header-wrap">
 		<tr>
@@ -68,6 +68,26 @@
 						{{#footerMessages}}
 							<p class="fine-print">{{{.}}}</p>
 						{{/footerMessages}}
+
+						<div class="spacer">
+						</div>
+
+						{{# footerMobileApplicationMessages}}
+							<p class="fine-print">{{{.}}}</p>
+						{{/ footerMobileApplicationMessages}}
+
+						<div class="mobile-badges">
+							{{# icons.iOS}}
+								<a class="ios-badge" href="{{link}}">
+									<img src="{{url}}" alt="{{alt}}">
+								</a>
+							{{/ icons.iOS}}
+							{{# icons.Android}}
+								<a class="android-badge" href="{{link}}">
+									<img src="{{url}}" alt="{{alt}}">
+								</a>
+							{{/ icons.Android}}
+						</div>
 					</div>
 				</div>
 			</td>
