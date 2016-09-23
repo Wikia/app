@@ -26,7 +26,26 @@ class DesignSystemSharedLinks {
 	 * @return string full URL, in case of lang specific URL missing, default one is returned
 	 */
 	public function getHref( $name, $lang ) {
+		$lang = $this->getLangWithFallback( $lang );
+
 		return $this->hrefs[ $lang ][ $name ] ?? $this->hrefs[ 'default' ][ $name ];
+	}
+
+	private function getLangWithFallback( $lang ) {
+		if ( isset( $this->hrefs[ $lang ] ) ) {
+			return $lang;
+		}
+
+		$fallbacks = Language::getFallbacksFor( $lang );
+		foreach ( $fallbacks as $fallbackCode ) {
+			// All languages fallback to en, but we use that for English-specific
+			// URLs, so we want to fallback only to default, rather than en
+			if ( $fallbackCode !== 'en' && isset( $this->hrefs[ $fallbackCode ] ) ) {
+				return $fallbackCode;
+			}
+		}
+
+		return 'default';
 	}
 
 	private $hrefs = [
