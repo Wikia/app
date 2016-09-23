@@ -7,9 +7,10 @@ define('ext.wikia.adEngine.slot.adUnitBuilder', [
 	var dfpId = '5441';
 
 	function build(slotName, src) {
-		var pageLevelParams = page.getPageLevelParams();
-		return '/' + dfpId + '/wka.' + pageLevelParams.s0 + '/' + pageLevelParams.s1 +
-			'//' + pageLevelParams.s2 + '/' + src + '/' + slotName;
+		var params = page.getPageLevelParams();
+		return [
+			'', dfpId, 'wka.' + params.s0, params.s1, '', params.s2, src, slotName
+		].join('/');
 	}
 
 	return {

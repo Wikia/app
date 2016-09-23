@@ -9,7 +9,9 @@ describe('ext.wikia.adEngine.video.vastBuilder', function () {
 				addCallback: noop
 			},
 			adUnitBuilder: {
-				build: noop
+				build: function() {
+					return 'my/ad/unit';
+				}
 			},
 			page: {
 				getPageLevelParams: function () {
@@ -44,13 +46,13 @@ describe('ext.wikia.adEngine.video.vastBuilder', function () {
 	}
 
 	it('Build VAST URL with DFP domain', function () {
-		var vastUrl = getModule().build();
+		var vastUrl = getModule().build('', '', 1);
 
 		expect(vastUrl).toMatch(/^https:\/\/pubads\.g\.doubleclick\.net\/gampad\/ads/gi);
 	});
 
 	it('Build VAST URL with required DFP parameters', function () {
-		var vastUrl = getModule().build();
+		var vastUrl = getModule().build('', '', 1);
 
 		expect(vastUrl).toMatch(/output=vast&/g);
 		expect(vastUrl).toMatch(/&env=vp&/g);
@@ -78,20 +80,27 @@ describe('ext.wikia.adEngine.video.vastBuilder', function () {
 	});
 
 	it('Build VAST URL with referrer', function () {
-		var vastUrl = getModule().build();
+		var vastUrl = getModule().build('', '', 1);
 
 		expect(vastUrl).toMatch(/&url=http:\/\/foo\.url/g);
 	});
 
 	it('Build VAST URL with numeric correlator', function () {
-		var vastUrl = getModule().build();
+		var vastUrl = getModule().build('', '', 1);
 
 		expect(vastUrl).toMatch(/&correlator=\d+&/g);
 	});
 
 	it('Build VAST URL with page level params', function () {
-		var vastUrl = getModule().build();
+		var vastUrl = getModule().build('', '', 1);
 
 		expect(vastUrl).toMatch(/&cust_params=uno%3Dfoo%26due%3D15%26tre%3Dbar%2Czero%26s0%3Dlife%26s1%3D_project43%26s2%3Darticle$/g);
 	});
+
+	it('Build VAST URL with ad unit id', function () {
+		var vastUrl = getModule().build('', '', 1);
+
+		expect(vastUrl).toMatch('&iu=my\/ad\/unit&');
+	});
 });
+

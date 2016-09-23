@@ -2,15 +2,15 @@ describe('ext.wikia.adEngine.slot.adUnitBuilder', function () {
 	'use strict';
 
 	var mocks = {
-			page: {
-				getPageLevelParams: function() {
-					return {
-						s0: 'life',
-						s1: '_project43',
-						s2: 'article'
-					};
-				}
+		page: {
+			getPageLevelParams: function() {
+				return {
+					s0: 'life',
+					s1: '_project43',
+					s2: 'article'
+				};
 			}
+		}
 	};
 
 	function getModule() {
