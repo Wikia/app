@@ -69,25 +69,29 @@
 							<p class="fine-print">{{{.}}}</p>
 						{{/footerMessages}}
 
-						<div class="spacer">
-						</div>
+						{{# badges.hasMobileApplicationBadges}}
+
+							<div class="spacer">
+							</div>
 
 						{{# footerMobileApplicationMessages}}
 							<p class="fine-print">{{{.}}}</p>
 						{{/ footerMobileApplicationMessages}}
 
 						<div class="mobile-badges">
-							{{# iOSBadge}}
+							{{# badges.ios}}
 								<a class="ios-badge" href="{{link}}">
 									<img src="{{src}}" alt="{{alt}}">
 								</a>
-							{{/ iOSBadge}}
-							{{# androidBadge}}
+							{{/ badges.ios}}
+							{{# badges.android}}
 								<a class="android-badge" href="{{link}}">
 									<img src="{{src}}" alt="{{alt}}">
 								</a>
-							{{/ androidBadge}}
+							{{/ badges.android}}
 						</div>
+
+						{{/ badges.hasMobileApplicationBadges}}
 					</div>
 				</div>
 			</td>
