@@ -19,11 +19,7 @@
 			position: relative;
 
 			.embeddable-discussions-title {
-				-webkit-box-orient: vertical;
-				display: -webkit-box;
-				font-size: $typescale-size-plus-1;
-				-webkit-line-clamp: 2;
-				overflow: hidden;
+				@include trim-to-line-number(2);
 			}
 		}
 
