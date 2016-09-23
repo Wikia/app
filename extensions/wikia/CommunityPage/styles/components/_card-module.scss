@@ -6,6 +6,7 @@
 
 $card-background-color: mix($color-page, #fff, 91%);
 $card-header-size: 84px;
+$card-header-icon-size: 48px;
 $card-footer-size: 48px;
 
 .community-page-card-module {
@@ -73,7 +74,9 @@ $card-footer-size: 48px;
 
 	.community-page-card-module-header-icon {
 		fill: $color-buttons;
+		height: $card-header-icon-size;
 		margin-right: $content-spacing-small;
+		padding: $content-spacing-regular 0;
 	}
 
 	.community-page-card-module-help {
