@@ -610,7 +610,7 @@ class CommunityPageSpecialUsersModel {
 			if ( in_array( $group, $userGroups ) ) {
 				return [
 					'badgeMarkup' => DesignSystemHelper::getSvg( self::PERMISSIONS_TO_BADGES[ $group ] ),
-					'badgeText' => wfMessage( self::PERMISSIONS_TO_GROUP_MSG_KEY[ $group ] )->plain()
+					'badgeText' => wfMessage( self::PERMISSIONS_TO_GROUP_MSG_KEY[ $group ] )->text()
 				];
 			}
 		}
