@@ -33,12 +33,13 @@ class EmbeddableDiscussionsController {
 
 	/**
 	 * Checks arguments for errors.
+	 * @param $modelData
 	 * @param array $args
-	 * @param errorMessage /Return parameter with the proper error message to show.
+	 * @internal param $errorMessage /Return parameter with the proper error message to show.
 	 * Disregard if return is false.
 	 * @return true if ok, false if error
 	 */
-	private function checkArguments( array $args, $modelData, &$errorMessage ) {
+	private function checkArguments( $modelData, array $args, &$errorMessage ) {
 		// mostrecent must be bool
 		if ( isset( $args[ 'mostrecent' ] ) &&
 			$args[ 'mostrecent' ] !== 'true' &&
@@ -100,30 +101,32 @@ class EmbeddableDiscussionsController {
 		return true;
 	}
 
-	public function render( $input, array $args ) {
+	/**
+	 * @param array $args
+	 * @return string
+	 */
+	public function render( array $args ) {
 		global $wgCityId;
 
 		$showLatest = !empty( $args[ 'mostrecent' ] ) && filter_var( $args[ 'mostrecent' ], FILTER_VALIDATE_BOOLEAN );
-		$itemCount = empty( $args[ 'size' ] ) ? self::ITEMS_DEFAULT : intval( $args[ 'size' ] );
-		$columns = empty( $args[ 'columns' ] ) ? self::COLUMNS_DEFAULT : intval( $args[ 'columns' ] );
-		$category = empty( $args[ 'category' ] ) ? '' : $args[ 'category' ];
+		$itemCount = !empty( $args[ 'size' ] ) ? intval( $args[ 'size' ] ) : self::ITEMS_DEFAULT;
+		$columns = !empty( $args[ 'columns' ] ) ? intval( $args[ 'columns' ] ) : self::COLUMNS_DEFAULT;
+		$category = !empty( $args[ 'category' ] ) ? $args[ 'category' ] : '';
 
 		$modelData = ( new DiscussionsThreadModel( $wgCityId ) )->getData( $showLatest, $itemCount, $category );
 
-		if ( !$this->checkArguments( $args, $modelData, $errorMessage ) ) {
+		if ( !$this->checkArguments( $modelData, $args, $errorMessage ) ) {
 			return $this->renderError( $errorMessage );
 		}
 
-		if ( F::app()->checkSkin( 'wikiamobile' ) ) {
-			return $this->renderMobile( $modelData, $showLatest, $itemCount );
-		} else {
-			return $this->renderDesktop( $category, $columns, $showLatest, $modelData );
-		}
+		return F::app()->checkSkin( 'wikiamobile' ) ?
+			$this->renderMobile( $modelData, $showLatest, $itemCount ) :
+			$this->renderDesktop( $modelData, $showLatest, $category, $columns );
 	}
 
 	/**
 	 * @param $errorMessage
-	 * @return mixed
+	 * @return string
 	 */
 	private function renderError( $errorMessage ) {
 		$templateEngine = ( new Wikia\Template\MustacheEngine )->setPrefix( __DIR__ . '/templates' );
@@ -137,7 +140,7 @@ class EmbeddableDiscussionsController {
 	 * @param $modelData
 	 * @param $showLatest
 	 * @param $itemCount
-	 * @return mixed
+	 * @return string
 	 */
 	private function renderMobile( $modelData, $showLatest, $itemCount ) {
 		$templateEngine = ( new Wikia\Template\MustacheEngine )->setPrefix( __DIR__ . '/templates' );
@@ -159,13 +162,13 @@ class EmbeddableDiscussionsController {
 	}
 
 	/**
+	 * @param $modelData
+	 * @param $showLatest
 	 * @param $category
 	 * @param $columns
-	 * @param $showLatest
-	 * @param $modelData
-	 * @return mixed
+	 * @return string
 	 */
-	private function renderDesktop( $category, $columns, $showLatest, $modelData ) {
+	private function renderDesktop( $modelData, $showLatest, $category, $columns ) {
 		$templateEngine = ( new Wikia\Template\MustacheEngine )->setPrefix( __DIR__ . '/templates' );
 		$heading = 'embeddable-discussions-show-trending';
 
