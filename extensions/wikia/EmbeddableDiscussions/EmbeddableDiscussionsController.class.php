@@ -9,11 +9,17 @@ class EmbeddableDiscussionsController {
 	const COLUMNS_MIN = 1;
 	const COLUMNS_MAX = 2;
 
+	private $templateEngine;
+
+	function __construct() {
+		$this->templateEngine = ( new Wikia\Template\MustacheEngine )->setPrefix( __DIR__ . '/templates' );
+	}
+
 	public static function onParserFirstCallInit( Parser $parser ) {
 		global $wgEnableDiscussions;
 
 		if ( $wgEnableDiscussions ) {
-			$parser->setHook( self::TAG_NAME, [ 'EmbeddableDiscussionsController', 'render' ] );
+			$parser->setHook( self::TAG_NAME, [ new self(), 'render' ] );
 		}
 
 		return true;
@@ -34,9 +40,12 @@ class EmbeddableDiscussionsController {
 	 * @param string errorMessage Return parameter with the proper error message to show. Disregard if return is false
 	 * @return true if ok, false if error
 	 */
-	private static function checkArguments( array $args, $modelData, &$errorMessage ) {
+	private function checkArguments( array $args, $modelData, &$errorMessage ) {
 		// mostrecent must be bool
-		if ( array_key_exists( 'mostrecent', $args ) && $args['mostrecent'] !== 'true' && $args['mostrecent'] !== 'false' ) {
+		if ( isset( $args['mostrecent'] ) &&
+			$args['mostrecent'] !== 'true' &&
+			$args['mostrecent'] !== 'false'
+		) {
 			$errorMessage = wfMessage( 'embeddable-discussions-parameter-error', 'mostrecent' )->plain() .
 				wfMessage( 'embeddable-discussions-parameter-error-boolean' )->plain();
 
@@ -44,7 +53,7 @@ class EmbeddableDiscussionsController {
 		}
 
 		// size must be integer in range
-		if ( array_key_exists( 'size', $args ) ) {
+		if ( isset( $args['size'] ) ) {
 			$size = $args['size'];
 
 			// TODO: Refactor error messages to avoid direct concatenation, see JPN-657
@@ -53,15 +62,15 @@ class EmbeddableDiscussionsController {
 					self::ITEMS_MIN , self::ITEMS_MAX )->plain();
 
 			if ( !ctype_digit( $size ) ||
-				 intval( $size ) > self::ITEMS_MAX ||
-				 intval( $size ) < self::ITEMS_MIN
-			   ) {
+				intval( $size ) > self::ITEMS_MAX ||
+				intval( $size ) < self::ITEMS_MIN
+			) {
 				return false;
 			}
 		}
 
 		// columns must be integer in range
-		if ( array_key_exists( 'columns', $args ) ) {
+		if ( isset( $args['columns'] ) ) {
 			$columns = $args['columns'];
 
 			// TODO: Refactor error messages to avoid direct concatenation, see JPN-657
@@ -69,9 +78,9 @@ class EmbeddableDiscussionsController {
 				wfMessage( 'embeddable-discussions-parameter-error-range', self::COLUMNS_MIN , self::COLUMNS_MAX )->plain();
 
 			if ( !ctype_digit( $columns ) ||
-				 intval( $columns ) > self::COLUMNS_MAX ||
-				 intval( $columns ) < self::COLUMNS_MIN
-			   ) {
+				intval( $columns ) > self::COLUMNS_MAX ||
+				intval( $columns ) < self::COLUMNS_MIN
+			) {
 				return false;
 			}
 		}
@@ -88,7 +97,7 @@ class EmbeddableDiscussionsController {
 		return true;
 	}
 
-	private static function renderMobile( $modelData, $showLatest, $itemCount, $templateEngine ) {
+	private function renderMobile( $modelData, $showLatest, $itemCount ) {
 		// In Mercury, discussions are rendered client side as an Ember component
 		$modelData = [
 			'mercuryComponentAttrs' => json_encode( [
@@ -100,12 +109,12 @@ class EmbeddableDiscussionsController {
 		];
 
 		// In mercury, discussions app is rendered client side in an Ember container
-		return $templateEngine->clearData()
+		return $this->templateEngine->clearData()
 			->setData( $modelData )
 			->render( 'DiscussionThreadMobile.mustache' );
 	}
 
-	private static function renderDesktop( $modelData, $showLatest, $category, $columns, $templateEngine ) {
+	private function renderDesktop( $modelData, $showLatest, $category, $columns ) {
 		$modelData['requestData'] = json_encode( [
 			'category' => $category,
 			'columns' => $columns,
@@ -115,9 +124,9 @@ class EmbeddableDiscussionsController {
 
 		if ( $showLatest && $category ) {
 			$heading = wfMessage( 'embeddable-discussions-show-latest-in-category', $category )->plain();
-		} else if ( $showLatest ) {
+		} elseif ( $showLatest ) {
 			$heading = wfMessage( 'embeddable-discussions-show-latest' )->plain();
-		} else if ( $category ) {
+		} elseif ( $category ) {
 			$heading = wfMessage( 'embeddable-discussions-show-trending-in-category', $category )->plain();
 		} else {
 			$heading = wfMessage( 'embeddable-discussions-show-trending' )->plain();
@@ -128,13 +137,12 @@ class EmbeddableDiscussionsController {
 		$modelData['showAll'] = wfMessage( 'embeddable-discussions-show-all' )->plain();
 		$modelData['loading'] = wfMessage( 'embeddable-discussions-loading' )->plain();
 
-		return $templateEngine->clearData()
+		return $this->templateEngine->clearData()
 			->setData( $modelData )
 			->render( 'DiscussionThreadDesktop.mustache' );
-
 	}
 
-	public static function render( $input, array $args ) {
+	public function render( $input, array $args ) {
 		global $wgCityId;
 
 		$showLatest = !empty( $args['mostrecent'] ) && filter_var( $args['mostrecent'], FILTER_VALIDATE_BOOLEAN );
@@ -142,11 +150,10 @@ class EmbeddableDiscussionsController {
 		$columns = empty( $args['columns'] ) ? self::COLUMNS_DEFAULT : intval( $args['columns'] );
 		$category = empty( $args['category'] ) ? '' :  $args['category'];
 
-		$templateEngine = ( new Wikia\Template\MustacheEngine )->setPrefix( __DIR__ . '/templates' );
 		$modelData = ( new DiscussionsThreadModel( $wgCityId ) )->getData( $showLatest, $itemCount, $category );
 
-		if ( !self::checkArguments( $args, $modelData, $errorMessage ) ) {
-			return $templateEngine->clearData()
+		if ( !$this->checkArguments( $args, $modelData, $errorMessage ) ) {
+			return $this->templateEngine->clearData()
 				->setData( [
 					'errorMessage' => $errorMessage,
 				] )
@@ -154,9 +161,9 @@ class EmbeddableDiscussionsController {
 		}
 
 		if ( F::app()->checkSkin( 'wikiamobile' ) ) {
-			return self::renderMobile( $modelData, $showLatest, $itemCount, $templateEngine );
+			return $this->renderMobile( $modelData, $showLatest, $itemCount );
 		} else {
-			return self::renderDesktop( $modelData, $showLatest, $category, $columns, $templateEngine );
+			return $this->renderDesktop( $modelData, $showLatest, $category, $columns );
 		}
 	}
 }
