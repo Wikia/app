@@ -2,18 +2,14 @@
 require([
 	'jquery',
 	'wikia.window',
-	'wikia.abTest',
 	'wikia.log',
-	'ext.wikia.recirculation.tracker',
 	'ext.wikia.recirculation.utils',
 	'ext.wikia.recirculation.discussions',
 	require.optional('videosmodule.controllers.rail')
 ], function(
 	$,
 	w,
-	abTest,
 	log,
-	tracker,
 	utils,
 	discussions,
 	videosModule
@@ -48,6 +44,7 @@ require([
 		if (videosModule) {
 			videosModule('#RECIRCULATION_RAIL');
 		}
+		discussions(experimentName);
 		return;
 	}
 
