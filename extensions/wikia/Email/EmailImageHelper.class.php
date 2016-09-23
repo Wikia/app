@@ -48,14 +48,6 @@ class ImageHelper {
 		'Instagram' => [
 			'name' => 'Instagram-Default-2x',
 			'extension' => 'png'
-		],
-		'iOS' => [
-			'name' => 'App-store-badge-en',
-			'extension' => 'svg'
-		],
-		'Android' => [
-			'name' => 'Google-play-badge-en',
-			'extension' => 'png'
 		]
 	];
 

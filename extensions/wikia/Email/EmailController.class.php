@@ -271,6 +271,12 @@ abstract class EmailController extends \WikiaController {
 				'marketingFooter' => $this->marketingFooter,
 				'socialMessages' => $this->getSocialMessages(),
 				'icons' => ImageHelper::getIconInfo(),
+				'iOSBadge' => [
+					'url' => ImageHelper::getFileUrl( $this->getMessage( 'emailext-mobile-application-ios-badge' )->text() )
+				],
+				'androidBadge' => [
+					'url' => ImageHelper::getFileUrl( $this->getMessage( 'emailext-mobile-application-android-badge' )->text() )
+				],
 				'disableInit' => true,
 			]
 		);
