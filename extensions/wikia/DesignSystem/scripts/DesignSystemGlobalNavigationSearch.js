@@ -11,6 +11,12 @@ $(function ($) {
 		if (!$globalNav.hasClass(activeSearchClass)) {
 			$globalNav.addClass(activeSearchClass);
 			$searchInput.attr('placeholder', $searchInput.data('active-placeholder'));
+
+			/**
+			 * [bug fix]: On Firefox click is not triggered when placeholder text is changed
+			 * that is why we have to do it manually
+			 */
+			$(this).click();
 		}
 	}
 
