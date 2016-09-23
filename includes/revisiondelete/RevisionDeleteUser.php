@@ -103,12 +103,16 @@ class RevisionDeleteUser {
 		);
 
 		# Hide name from live images
+		/* Wikia change begin */
+		$oiWhereCondition = $userId ? array( 'oi_user' => $userId ) : array( 'oi_user_text' => $name );
 		$dbw->update(
 			'oldimage',
 			array( "oi_deleted = oi_deleted $op $delUser" ),
-			array( 'oi_user_text' => $name ),
+			$oiWhereCondition,
 			__METHOD__
 		);
+		/* Wikia change end */
+
 		# Hide name from deleted images
 		# Wikia change begin
 		$faWhereCondition = $userId ? array( 'fa_user' => $userId ) : array( 'fa_user_text' => $name );
