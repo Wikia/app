@@ -28,14 +28,20 @@ class DesignSystemGlobalNavigationModel extends WikiaModel {
 		global $wgUser;
 
 		$data = [
+			// TODO: restore old logo before 4th October 2016
+			// https://wikia-inc.atlassian.net/browse/XW-1966
 			'logo' => [
 				'header' => [
 					'type' => 'link-image',
 					'href' => $this->getHref( 'fandom-logo' ),
-					'image' => 'wds-company-logo-fandom-powered-by-wikia',
+					'image' => 'wds-company-logo-wikia',
 					'title' => [
-						'type' => 'text',
-						'value' => 'Fandom powered by Wikia'
+						'type' => 'translatable-text',
+						'key' => 'global-footer-wikia-header'
+					],
+					'subtitle' => [
+						'type' => 'translatable-text',
+						'key' => 'global-footer-international-header-subtitle'
 					]
 				]
 			],
@@ -153,6 +159,9 @@ class DesignSystemGlobalNavigationModel extends WikiaModel {
 				'url' => WikiFactory::getHostById( $this->productInstanceId ) . '/index.php?action=ajax&rs=getLinkSuggest&format=json',
 				'param-name' => 'query'
 			];
+			$search['placeholder-active']['params'] = [
+				'sitename' => $this->getSitenameData(),
+			];
 		}
 
 		return $search;
@@ -246,7 +255,7 @@ class DesignSystemGlobalNavigationModel extends WikiaModel {
 				],
 				[
 					'type' => 'link-text',
-					'href' => $this->getPageUrl( 'Contents', NS_HELP ),
+					'href' => $this->getHref( 'help' ),
 					'title' => [
 						'type' => 'translatable-text',
 						'key' => 'global-navigation-user-help'
@@ -347,6 +356,13 @@ class DesignSystemGlobalNavigationModel extends WikiaModel {
 				'key' => 'global-navigation-wikis-community-central'
 			],
 			'href' => $this->getHref( 'community-central' ),
+		];
+	}
+
+	private function getSitenameData() {
+		return [
+			'type' => 'text',
+			'value' => WikiFactory::getVarValueByName( 'wgSitename', $this->productInstanceId, false, $this->wg->Sitename ),
 		];
 	}
 }

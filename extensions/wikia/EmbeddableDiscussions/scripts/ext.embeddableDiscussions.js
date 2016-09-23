@@ -59,22 +59,25 @@ require([
 		});
 	}
 
-	function processData(threads, baseUrl, upvoteUrl) {
+	function processData(threads, upvoteUrl) {
 		var ret = [],
 			i,
 			thread,
-			userData;
+			userData,
+			date;
 
 		for (i in threads) {
 			thread = threads[i];
 			userData = thread._embedded.userData[0];
+			date = new Date(thread.creationDate.epochSecond * 1000);
 
 			ret.push({
 				author: thread.createdBy.name,
 				authorAvatar: thread.createdBy.avatarUrl,
 				commentCount: thread.postCount,
 				content: thread.rawContent,
-				createdAt: $.timeago(new Date(thread.creationDate.epochSecond * 1000)),
+				createdAt: $.timeago(date),
+				timestamp: date.toLocaleString([mw.config.get('wgContentLanguage')]),
 				forumName: $.msg( 'embeddable-discussions-forum-name', thread.forumName),
 				id: thread.id,
 				firstPostId: thread.firstPostId,
@@ -93,7 +96,18 @@ require([
 
 	function performRequest($elem) {
 		var requestUrl = getBaseUrl() + $elem.attr('data-requestUrl'),
-			requestData = JSON.parse($elem.attr('data-requestData'));
+			requestData = JSON.parse($elem.attr('data-requestData')),
+			columnsDetailsClass;
+
+		// Inject proper class for 2 columns display
+		if (requestData.columns === 2) {
+			if ($elem.closest('.main-page-tag-rcs').length) {
+				// When the tag is inside the main page right column
+				columnsDetailsClass = 'embeddable-discussions-post-detail-right-column';
+			} else {
+				columnsDetailsClass = 'embeddable-discussions-post-detail-columns';
+			}
+		}
 
 		$.ajax({
 			type: 'GET',
@@ -106,7 +120,7 @@ require([
 
 			$elem.html(mustache.render(templates.DiscussionThreads, {
 				threads: threads,
-				columnsDetailsClass: requestData.columnsDetailsClass,
+				columnsDetailsClass: columnsDetailsClass,
 				replyText: $.msg('embeddable-discussions-reply'),
 				shareText: $.msg('embeddable-discussions-share'),
 				showAll: $.msg('embeddable-discussions-show-all'),

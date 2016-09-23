@@ -23,7 +23,12 @@ define('ext.wikia.adEngine.lookup.lookupFactory', [
 			response = true;
 			onResponseCallbacks.start();
 
-			adTracker.track(module.name + '/lookup_end', module.getPrices(), 0, 'nodata');
+			if (module.name === 'prebid') {
+				module.trackAdaptersOnLookupEnd();
+			} else {
+				adTracker.track(module.name + '/lookup_end', module.getPrices(), 0, 'nodata');
+			}
+
 		}
 
 		function addResponseListener(callback) {
@@ -64,11 +69,15 @@ define('ext.wikia.adEngine.lookup.lookupFactory', [
 				return;
 			}
 
-			encodedParams = module.encodeParamsForTracking(params);
-			eventName = encodedParams ? 'lookup_success' : 'lookup_error';
-			category = module.name + '/' + eventName + '/' + providerName;
+			if (module.name === 'prebid') {
+				module.trackAdaptersSlotState(providerName, slotName, params);
+			} else {
+				encodedParams = module.encodeParamsForTracking(params);
+				eventName = encodedParams ? 'lookup_success' : 'lookup_error';
+				category = module.name + '/' + eventName + '/' + providerName;
 
-			adTracker.track(category, slotName, 0, encodedParams || 'nodata');
+				adTracker.track(category, slotName, 0, encodedParams || 'nodata');
+			}
 		}
 
 		function getSlotParams(slotName) {

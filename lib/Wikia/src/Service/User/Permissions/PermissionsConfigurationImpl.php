@@ -254,6 +254,7 @@ class PermissionsConfigurationImpl implements PermissionsConfiguration {
 		'viewedittab',
 		'createclass',
 		'first-edit-dialog-exempt',
+		'hideblockername',
 		'fancontributor-staff',
 		'fancontributor-contributor',
 	];
