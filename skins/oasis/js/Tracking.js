@@ -452,17 +452,16 @@ jQuery(function ($) {
 			});
 
 			$fandomStoriesModule.on('mousedown', '.fandom-story-link', function (e) {
-				var el = $(e.currentTarget);
 				track({
 					browserEvent: e,
 					category: category,
-					label: 'fandom-story-link-' + el.data('pos')
+					label: 'fandom-story-link-' + $(e.currentTarget).data('pos')
 				});
 			}).on('mousedown', '.fandom-story-image', function (e) {
 				track({
 					browserEvent: e,
 					category: category,
-					label: 'fandom-story-image-' + el.data('pos')
+					label: 'fandom-story-image-' + $(e.currentTarget).data('pos')
 				});
 			});
 		}
@@ -475,17 +474,16 @@ jQuery(function ($) {
 			});
 
 			$topModule.on('mousedown', '.top-wiki-article-link', function (e) {
-				var el = $(e.currentTarget);
 				track({
 					browserEvent: e,
 					category: category,
-					label: 'top-wiki-article-link-' + el.data('pos')
+					label: 'top-wiki-article-link-' + $(e.currentTarget).data('pos')
 				});
 			}).on('mousedown', '.top-wiki-article-image', function (e) {
 				track({
 					browserEvent: e,
 					category: category,
-					label: 'top-wiki-article-image-' + el.data('pos')
+					label: 'top-wiki-article-image-' + $(e.currentTarget).data('pos')
 				});
 			});
 		}
