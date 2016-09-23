@@ -2,6 +2,7 @@
 
 namespace Email;
 
+use Http;
 use TijsVerkoyen\CssToInlineStyles\CssToInlineStyles;
 use Wikia\Logger\WikiaLogger;
 
@@ -271,13 +272,8 @@ abstract class EmailController extends \WikiaController {
 				'marketingFooter' => $this->marketingFooter,
 				'socialMessages' => $this->getSocialMessages(),
 				'icons' => ImageHelper::getIconInfo(),
-				'iOSBadge' => [
-					'url' => ImageHelper::getFileUrl( $this->getMessage( 'emailext-mobile-application-ios-badge' )->text() )
-				],
-				'androidBadge' => [
-					'url' => ImageHelper::getFileUrl( $this->getMessage( 'emailext-mobile-application-android-badge' )->text() )
-				],
-				'disableInit' => true,
+				'badges' => $this->generateMobileApplicationBadges(),
+				'disableInit' => true
 			]
 		);
 
@@ -408,6 +404,67 @@ abstract class EmailController extends \WikiaController {
 			'instagram' => $this->getMessage( 'oasis-social-instagram' )->text(),
 			'instagram-link' => $this->getMessage( 'oasis-social-instagram-link' )->text(),
 		];
+	}
+
+	private function generateMobileApplicationBadges() {
+		$mobileApplicationsLinks = $this->generateMobileApplicationLinks();
+		$hasMobileApplicationBadges = count($mobileApplicationsLinks) > 0;
+		$badges = [
+			'hasMobileApplicationBadges' => $hasMobileApplicationBadges
+		];
+
+		if ( $hasMobileApplicationBadges ) {
+			if ( $mobileApplicationsLinks['android'] ) {
+				$badges['android'] = [
+					'link' => $mobileApplicationsLinks['android'],
+					'src' => ImageHelper::getFileUrl( $this->getMessage( 'emailext-mobile-application-android-badge' )->text() )
+				];
+			}
+			if ( $mobileApplicationsLinks['ios'] ) {
+				$badges['android'] = [
+					'link' => $mobileApplicationsLinks['ios'],
+					'src' => ImageHelper::getFileUrl( $this->getMessage( 'emailext-mobile-application-ios-badge' )->text() )
+				];
+			}
+		}
+
+		return $badges;
+	}
+
+	private function generateMobileApplicationLinks() {
+		$result = [];
+
+		$response = $this->fetchMobileApplications();
+		$siteId = $this->wg->CityId;
+
+		if ( strpos( $response, 'wikia_id":' . $siteId ) ) {
+			$json = json_decode($response, true);
+			foreach ( $json['apps'] as &$app ) {
+				foreach ( $app['languages'] as &$language ) {
+					if ( $language['wikia_id'] == $siteId ) {
+						if ( $app['android_release'] ) {
+							$release = $app['android_release'];
+							$result['android'] = "https://play.google.com/store/apps/details?id=$release";
+						}
+						if ( $app['ios_release'] ) {
+							$release = $app['ios_release'];
+							$result['ios'] = "https://itunes.apple.com/us/app/id$release";
+						}
+						break;
+					}
+				}
+			}
+		}
+
+		return $result;
+	}
+
+	/**
+	 * @return string
+	 */
+	private function fetchMobileApplications() {
+		// currently it does not matter if Android or iOS value is added, data is returned for both Android and iOS
+		Http::request( "GET",  'https://services.wikia.com/mobile-applications/platform/android' );
 	}
 
 	/**
