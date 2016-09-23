@@ -16,6 +16,34 @@ class CommunityPageSpecialUsersModel {
 
 	const ALL_CONTRIBUTORS_MODAL_LIMIT = 50;
 
+	// order of permissions is consistent with badges hierarchy in Discussions
+	const PERMISSION_HIERARCHY = [
+		'sysop',
+		'threadmoderator',
+		'content-moderator',
+		'staff',
+		'helper',
+		'vstf'
+	];
+
+	const PERMISSIONS_TO_BADGES = [
+		'sysop' => 'wds-avatar-badges-admin',
+		'threadmoderator' => 'wds-avatar-badges-discussion-moderator',
+		'content-moderator' => 'wds-avatar-badges-content-moderator',
+		'staff' => 'wds-avatar-badges-staff',
+		'helper' => 'wds-avatar-badges-helper',
+		'vstf' => 'wds-avatar-badges-vstf',
+	];
+
+	const PERMISSIONS_TO_GROUP_MSG_KEY = [
+		'sysop' => 'group-sysop-member',
+		'threadmoderator' => 'group-threadmoderator-member',
+		'content-moderator' => 'group-content-moderator-member',
+		'staff' => 'group-staff-member',
+		'helper' => 'group-helper-member',
+		'vstf' => 'group-vstf-member',
+	];
+
 	private $wikiService;
 	private $user;
 	private $admins;
@@ -336,6 +364,7 @@ class CommunityPageSpecialUsersModel {
 								'userName' => $userName,
 								'avatar' => $avatar,
 								'profilePage' => $user->getUserPage()->getLocalURL(),
+								'badge' => $this->getUserBadge( $user->getEffectiveGroups() ),
 							];
 						}
 					} );
@@ -491,6 +520,7 @@ class CommunityPageSpecialUsersModel {
 				'isCurrent' => false,
 				'avatar' => $avatar,
 				'profilePage' => $user->getUserPage()->getLocalURL(),
+				'badge' => $this->getUserBadge( $user->getEffectiveGroups() )
 			];
 		}
 
@@ -568,5 +598,23 @@ class CommunityPageSpecialUsersModel {
 			$params = implode( ':', $params );
 		}
 		return wfMemcKey( $params, self::MCACHE_VERSION );
+	}
+
+	/**
+	 * @param $userGroups
+	 * @return string markup of svg to be used in template
+	 * or empty string if no badge applicable
+	 */
+	public function getUserBadge( $userGroups ) {
+		foreach ( self::PERMISSION_HIERARCHY as $group ) {
+			if ( in_array( $group, $userGroups ) ) {
+				return [
+					'badgeMarkup' => DesignSystemHelper::getSvg( self::PERMISSIONS_TO_BADGES[ $group ] ),
+					'badgeText' => wfMessage( self::PERMISSIONS_TO_GROUP_MSG_KEY[ $group ] )->text()
+				];
+			}
+		}
+
+		return '';
 	}
 }

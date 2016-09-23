@@ -6,6 +6,10 @@
 
 // Styles for the contributors module in-page and modal version
 .contributors-module {
+	.badge-container {
+		@include avatar-badge($avatar-small-badge-top, $avatar-small-badge-left);
+	}
+
 	.avatar-container {
 		display: inline-block;
 		margin-right: $content-spacing-xxsmall;
