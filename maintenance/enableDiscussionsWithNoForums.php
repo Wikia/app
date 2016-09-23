@@ -34,7 +34,8 @@ class EnableDiscussionsWithNoForums extends Maintenance {
 		$schwartzToken = F::app()->wg->TheSchwartzSecretToken;
 
 		while ( !empty( $wikiId = trim( fgets( $fh ) ) ) ) {
-			$dbw = wfGetDB( DB_SLAVE, [], $wikiId );
+			$wiki =  WikiFactory::getWikiByID( $wikiId );
+			$dbw = wfGetDB( DB_SLAVE, [], $wiki->city_dbname );
 			$row = $dbw->selectRow(
 				[ 'comments_index', 'page' ],
 				[ 'count(*) cnt' ],
@@ -57,11 +58,10 @@ class EnableDiscussionsWithNoForums extends Maintenance {
 				continue;
 			}
 
-			$wikiLang = WikiFactory::getWikiByID( $wikiId )->city_lang;
 			$site = new \Swagger\Client\Discussion\Models\Site(
 				[
 					'id' => $wikiId,
-					'languageCode' => $wikiLang,
+					'languageCode' => $wiki->city_lang,
 				]
 			);
 			try {
