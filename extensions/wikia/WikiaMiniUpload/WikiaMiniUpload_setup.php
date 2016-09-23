@@ -64,11 +64,10 @@ function WMUSetupVars(Array &$vars) {
 $wgAjaxExportList[] = 'WMU';
 
 function WMU() {
-	global $wgRequest, $wgGroupPermissions, $wgAllowCopyUploads;
+	global $wgRequest, $wgAllowCopyUploads;
 
 	// Overwrite configuration settings needed by image import functionality
 	$wgAllowCopyUploads = true;
-	$wgGroupPermissions['user']['upload_by_url']   = true;
 
 	$method = $wgRequest->getVal('method');
 	$wmu = new WikiaMiniUpload();

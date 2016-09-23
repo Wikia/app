@@ -149,9 +149,9 @@ parameter.
      *
      * @access public
      */
-    function PEAR_Command_Remote(&$ui, &$config)
+    function __construct(&$ui, &$config)
     {
-        parent::PEAR_Command_Common($ui, $config);
+        parent::__construct($ui, $config);
     }
 
     // }}}
@@ -486,7 +486,7 @@ parameter.
         if (!class_exists('PEAR_Downloader')) {
             require_once 'PEAR/Downloader.php';
         }
-        $a = &new PEAR_Downloader($this->ui, $options, $this->config);
+        $a = new PEAR_Downloader($this->ui, $options, $this->config);
         return $a;
     }
     // {{{ doDownload()

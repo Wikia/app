@@ -34,6 +34,24 @@ describe('BuckyResourcesTiming', function () {
 		});
 	});
 
+	it('correctly get the domain from URL', function() {
+		var resourcesTiming = getModule(),
+			urls = {
+				// Wikia assets
+				'http://vignette1.wikia.nocookie.net/nordycka/images/d/d7/Mykines_2.jpg/revision/latest/scale-to-width/300?cb=20141031093541&path-prefix=pl': 'nocookie.net',
+				// 3rd party assets
+				'http://edge.quantserve.com/quant-wikia.js': 'quantserve.com',
+				'http://www.google-analytics.com/ga.js': 'google-analytics.com',
+				'http://www.google-analytics.com': 'google-analytics.com',
+				// invalid URL
+				'foo.bar/test.css': false
+			};
+
+		Object.keys(urls).forEach(function(url) {
+			expect(resourcesTiming.getDomain(url)).toEqual(urls[url]);
+		});
+	});
+
 	it('detects a feature when it\'s present', function() {
 		var resourcesTiming = getModule({
 			performance: {

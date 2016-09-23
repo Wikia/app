@@ -51,7 +51,7 @@ class PopularArticlesModelTest extends WikiaBaseTest {
 	private function mockDbQuery( &$mockDb = null ) {
 		$mockQueryResults = $this->getMock( "ResultWrapper", array( 'fetchObject' ), array(), '', false );
 
-		$mockDb = $this->getMock( 'DatabaseMysql', array( 'query' ) );
+		$mockDb = $this->getDatabaseMock(array( 'query' ) );
 		$mockDb->expects( $this->any() )->method( 'query' )->will( $this->returnValue( $mockQueryResults ) );
 
 		$this->mockGlobalFunction( 'wfGetDb', $mockDb );

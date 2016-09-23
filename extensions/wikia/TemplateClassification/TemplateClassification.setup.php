@@ -27,16 +27,6 @@ $wgExtensionCredits['other'][] = [
 ];
 
 /**
- * Groups and permissions
- */
-$wgAvailableRights[] = 'template-bulk-classification';
-$wgGroupPermissions['*']['template-bulk-classification'] = false;
-$wgGroupPermissions['helper']['template-bulk-classification'] = true;
-$wgGroupPermissions['vstf']['template-bulk-classification'] = true;
-$wgGroupPermissions['staff']['template-bulk-classification'] = true;
-$wgGroupPermissions['sysop']['template-bulk-classification'] = true;
-
-/**
  * UserTemplateClassificationService
  */
 $wgAutoloadClasses['UserTemplateClassificationService'] = __DIR__ . '/services/UserTemplateClassificationService.class.php';
@@ -102,13 +92,6 @@ JSMessages::registerPackage( 'TemplateClassificationHints', [
 	'template-classification-bulk-classification-*'
 ] );
 
-/**
- * Resources Loader module
- */
-$wgResourceModules['ext.wikia.TemplateClassification.ModalMessages'] = [
-	'messages' => [
-		'template-classification-entry-point-hint',
-	],
-	'localBasePath' => __DIR__,
-	'remoteExtPath' => 'wikia/TemplateClassification'
-];
+JSMessages::registerPackage( 'TemplateClassificationGlobalShortcuts', [
+	'template-classification-global-shortcuts-caption-classify-page',
+] );

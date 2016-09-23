@@ -1,6 +1,8 @@
-@import "skins/shared/color";
+@import 'skins/shared/color';
 
+$tc-name-color: $color-text;
 $tc-name-color-checked: $color-links;
+$tc-modal-text-color: $color-text;
 
 @if $is-dark-wiki {
 	$tc-name-color: lighten(mix($color-text, $color-links, 75%), 5%);
@@ -16,6 +18,7 @@ $tc-name-color-checked: $color-links;
 
 .template-classification-type-text {
 	cursor: pointer;
+
 	.edit {
 		display: inline-block;
 		margin: 0 4px;
@@ -38,9 +41,9 @@ $tc-name-color-checked: $color-links;
 
 .template-classification-edit-modal {
 	/* Override modal defaults to new design */
+	color: $tc-modal-text-color;
 	font-size: 14px;
 	line-height: 20px;
-	color: $tc-modal-text-color;
 
 	&.modal>section {
 		padding: 25px 27px;
@@ -69,12 +72,12 @@ $tc-name-color-checked: $color-links;
 
 	.template-classification-edit-form-input {
 		flex: 0 0 14px;
-		margin: 0 13px 0 0 ;
+		margin: 0 13px 0 0;
 		vertical-align: text-bottom;
 	}
 
 	.template-classification-edit-form-label::after {
-		content: "\A";
+		content: '\A';
 		white-space: pre;
 	}
 }
@@ -97,10 +100,10 @@ $tc-name-color-checked: $color-links;
 			margin-bottom: 30px;
 		}
 	}
-}
 
-.template-classification-edit-form-label .tc-type-name {
-	font-weight: bold;
+	.tc-type-name {
+		font-weight: bold;
+	}
 }
 
 @keyframes fadeBackground {
@@ -110,8 +113,8 @@ $tc-name-color-checked: $color-links;
 }
 
 .template-classification-error {
-	background-color: $color-error;
 	animation: fadeBackground 1s linear;
+	background-color: $color-error;
 }
 
 .template-classification-type-wrapper .tooltip,
@@ -127,4 +130,9 @@ $tc-name-color-checked: $color-links;
 	.close-bulk-hint {
 		text-align: right;
 	}
+}
+
+// for new templates in order to hide editor while template classification modal is visible
+.show-template-classification-modal .WikiaPage {
+	opacity: 0;
 }

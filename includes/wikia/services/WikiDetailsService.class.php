@@ -31,14 +31,15 @@ class WikiDetailsService extends WikiService {
 			$factoryData = $this->getFromWikiFactory( $wikiId, $exists );
 			if ( $exists ) {
 				$wikiInfo = array_merge(
-					[ 'id' => (int) $wikiId, 'wordmark' => $this->getWikiWordmarkImage( $wikiId ) ],
+					[ 'id' => (int)$wikiId, 'wordmark' => $this->getWikiWordmarkImage( $wikiId ) ],
 					$factoryData,
 					$this->getFromService( $wikiId ),
-					$this->getFromWAMService( $wikiId )
+					$this->getFromWAMService( $wikiId ),
+					$this->getFromCommunityData( $wikiId )
 				);
 			} else {
 				$wikiInfo = [
-					'id' => (int) $wikiId,
+					'id' => (int)$wikiId,
 					'exists' => false
 				];
 			}
@@ -46,7 +47,7 @@ class WikiDetailsService extends WikiService {
 		}
 		//return empty result if wiki does not exist
 		if ( isset( $wikiInfo[ 'exists' ] ) ) {
-			return [];
+			return [ ];
 		}
 		//post process thumbnails
 		$wikiInfo = array_merge(
@@ -70,43 +71,42 @@ class WikiDetailsService extends WikiService {
 	 * @return array
 	 */
 	protected function getImageData( $wikiInfo, $width = null, $height = null ) {
+		// check community data image first
+		if ( isset( $wikiInfo[ 'image' ][ 'community' ] ) && $wikiInfo[ 'image' ][ 'community' ] ) {
+			return $this->getImage(
+				GlobalFile::newFromText( $wikiInfo[ 'image' ][ 'title' ], $wikiInfo[ 'id' ] ), $width, $height );
+		}
 		$imageName = $wikiInfo[ 'image' ];
+		$img = wfFindFile( $imageName );
+		if ( $img ) {
+			return $this->getImage( $img, $width, $height );
+		}
+		$f = $this->findGlobalFileImage( $imageName, $wikiInfo[ 'lang' ], $wikiInfo[ 'id' ] );
+		return $this->getImage( $f, $width, $height );
+	}
+
+	/**
+	 * @param GlobalFile|File $file
+	 * @param $width
+	 * @param $height
+	 * @return array
+	 */
+	protected function getImage( $file, $width, $height ) {
+		if ( !$file || !$file->exists() ) {
+			// nothing to do here
+			return [ 'image' => '' ];
+		}
 		$crop = ( $width != null || $height != null );
 		$width = ( $width !== null ) ? $width : static::DEFAULT_WIDTH;
 		$height = ( $height !== null ) ? $height : static::DEFAULT_HEIGHT;
-		$imgWidth = null;
-		$imgHeight = null;
-		$img = wfFindFile( $imageName );
-		if ( $img instanceof WikiaLocalFile ) {
-			//found on en-corporate wiki
-			$imgWidth = $img->getWidth();
-			$imgHeight = $img->getHeight();
-			if ( $crop ) {
-				//get original image if no cropping
-				$imageServing = new ImageServing( null, $width, $height );
-				$imgUrl = $imageServing->getUrl( $img, $width, $height );
-			} else {
-				$imgUrl = $img->getFullUrl();
-			}
-		} else {
-			$f = $this->findGlobalFileImage( $imageName, $wikiInfo[ 'lang' ], $wikiInfo[ 'id' ] );
-			if ( $f && $f->exists() ) {
-				$imgWidth = $f->getWidth();
-				$imgHeight = $f->getHeight();
-				if ( $crop ) {
-					$globalTitle = $f->getTitle();
-					$imageService = new ImagesService();
-					$response = $imageService->getImageSrc( $globalTitle->getCityId(), $globalTitle->getArticleID(), $width, $height );
-					$imgUrl = $response[ 'src' ];
-				} else {
-					$imgUrl = $f->getUrl();
-				}
-			}
-		}
-		if ( isset( $imgUrl ) ) {
-			return [ 'image' => $imgUrl, 'original_dimensions' => [ 'width' => $imgWidth, 'height' => $imgHeight ] ];
-		}
-		return [ 'image' => '' ];
+		return [
+			'image' => $crop ? ( new ImageServing( null, $width, $height ) )->getUrl( $file, $width, $height )
+				: ( $file instanceof WikiaLocalFile ? $file->getFullUrl() : $file->getUrl() ),
+			'original_dimensions' => [
+				'width' => $file->getWidth(),
+				'height' => $file->getHeight()
+			]
+		];
 	}
 
 	/**
@@ -125,7 +125,7 @@ class WikiDetailsService extends WikiService {
 			$f = GlobalFile::newFromText( $imageName, $cityList[ $lang ][ 'wikiId' ] );
 		} else {
 			//if image wasn't found, try to find it on wiki itself
-			$promoImage = (new PromoImage(PromoImage::MAIN))->setCityId($wikiId);
+			$promoImage = ( new PromoImage( PromoImage::MAIN ) )->setCityId( $wikiId );
 			$f = $promoImage->getOriginFile();
 		}
 
@@ -168,7 +168,7 @@ class WikiDetailsService extends WikiService {
 				'url' => $wikiObj->city_url,
 			];
 		}
-		return [];
+		return [ ];
 	}
 
 	/**
@@ -176,12 +176,14 @@ class WikiDetailsService extends WikiService {
 	 * @return array
 	 */
 	protected function getFromService( $id ) {
+		global $wgEnableDiscussions;
+
 		$wikiStats = $this->getSiteStats( $id );
 		$topUsers = $this->getTopEditors( $id, static::DEFAULT_TOP_EDITORS_NUMBER, true );
 		$modelData = $this->getDetails( [ $id ] );
 
 		//filter out flags
-		$flags = [];
+		$flags = [ ];
 		if ( isset( $modelData[ $id ] ) ) {
 			foreach ( $modelData[ $id ][ 'flags' ] as $name => $val ) {
 				if ( $val == true && !in_array( $name, static::$flagsBlacklist ) ) {
@@ -190,24 +192,51 @@ class WikiDetailsService extends WikiService {
 			}
 		}
 
-		return [
+		$wikiDetails = [
 			'stats' => [
-				'edits' => (int) $wikiStats[ 'edits' ],
-				'articles' => (int) $wikiStats[ 'articles' ],
-				'pages' => (int) $wikiStats[ 'pages' ],
-				'users' => (int) $wikiStats[ 'users' ],
-				'activeUsers' => (int) $wikiStats[ 'activeUsers' ],
-				'images' => (int) $wikiStats[ 'images' ],
-				'videos' => (int) $this->getTotalVideos( $id ),
+				'edits' => (int)$wikiStats[ 'edits' ],
+				'articles' => (int)$wikiStats[ 'articles' ],
+				'pages' => (int)$wikiStats[ 'pages' ],
+				'users' => (int)$wikiStats[ 'users' ],
+				'activeUsers' => (int)$wikiStats[ 'activeUsers' ],
+				'images' => (int)$wikiStats[ 'images' ],
+				'videos' => (int)$this->getTotalVideos( $id ),
 				'admins' => count( $this->getWikiAdminIds( $id ) )
 			],
 			'topUsers' => array_keys( $topUsers ),
 			'headline' => isset( $modelData[ $id ] ) ? $modelData[ $id ][ 'headline' ] : '',
+			'title' => isset( $modelData [ $id ] ) ? $modelData[ $id ][ 'title' ] : '',
+			'name' => isset( $modelData [ $id ] ) ? $modelData[ $id ][ 'name' ] : '',
+			'domain' => isset( $modelData [ $id ] ) ? $modelData[ $id ][ 'domain' ] : '',
+			'hub' => isset( $modelData [ $id ] ) ? $modelData[ $id ][ 'hub' ] : '',
 			'lang' => isset( $modelData[ $id ] ) ? $modelData[ $id ][ 'lang' ] : '',
+			'topic' => isset( $modelData[ $id ] ) ? $modelData[ $id ][ 'topic' ] : '',
 			'flags' => $flags,
 			'desc' => isset( $modelData[ $id ] ) ? $modelData[ $id ][ 'desc' ] : '',
 			'image' => isset( $modelData[ $id ] ) ? $modelData[ $id ][ 'image' ] : '',
 		];
+
+		if ( $wgEnableDiscussions ) {
+			$wikiDetails[ 'stats' ][ 'discussions' ] = (int)$this->getDiscussionStats( $id );
+		}
+
+		return $wikiDetails;
+	}
+
+	protected function getFromCommunityData( $wikiId ) {
+		$result = [ ];
+		if ( !empty( $wikiId ) ) {
+			$provider = new CommunityDataService( $wikiId );
+			$desc = $provider->getCommunityDescription();
+			if ( !empty( $desc ) ) {
+				$result = [ 'desc' => $desc ];
+			}
+			$image = GlobalTitle::newFromId( $provider->getCommunityImageId(), $wikiId );
+			if ( $image && $image->exists() ) {
+				$result[ 'image' ] = [ 'community' => true, 'title' => $image->getText() ];
+			}
+		}
+		return $result;
 	}
 
 	/**
@@ -229,7 +258,7 @@ class WikiDetailsService extends WikiService {
 	 */
 	protected function getMemCacheKey( $seed ) {
 		if ( !isset( $this->keys[ $seed ] ) ) {
-			$this->keys[ $seed ] =  wfsharedMemcKey( static::MEMC_NAME.static::CACHE_VERSION.':'.$seed );
+			$this->keys[ $seed ] = wfsharedMemcKey( static::MEMC_NAME . static::CACHE_VERSION . ':' . $seed );
 		}
 		return $this->keys[ $seed ];
 	}
@@ -240,9 +269,27 @@ class WikiDetailsService extends WikiService {
 	 */
 	protected function cacheWikiData( $wikiInfo, $method = null ) {
 		global $wgMemc;
-		$seed = $method !== null ? $wikiInfo[ 'id' ].':'.$method : $wikiInfo[ 'id' ];
+		$seed = $method !== null ? $wikiInfo[ 'id' ] . ':' . $method : $wikiInfo[ 'id' ];
 		$key = $this->getMemCacheKey( $seed );
 		$wgMemc->set( $key, $wikiInfo, static::CACHE_1_DAY );
+	}
+
+	/**
+	 * @param int $id
+	 * @return mixed
+	 */
+	private function getDiscussionStats( $id ) {
+		global $wgConsulServiceTag, $wgConsulUrl;
+
+		$consulUrl = ( new Wikia\Service\Gateway\ConsulUrlProvider( $wgConsulUrl, $wgConsulServiceTag ))->getUrl( 'discussion' );
+		$response = Http::get( "http://$consulUrl/$id/forums/$id?limit=1", 'default', array( 'noProxy' => true ));
+		if ( $response !== false ) {
+			$decodedResponse = json_decode( $response, true );
+			if ( isset( $decodedResponse[ 'threadCount' ] ) && json_last_error() === JSON_ERROR_NONE ) {
+				return $decodedResponse[ 'threadCount' ];
+			}
+		}
+		return null;
 	}
 
 	/**
@@ -252,7 +299,7 @@ class WikiDetailsService extends WikiService {
 	 */
 	protected function getFromCacheWiki( $wikiId, $method = null ) {
 		global $wgMemc;
-		$seed = $method !== null ? $wikiId.':'.$method : $wikiId;
+		$seed = $method !== null ? $wikiId . ':' . $method : $wikiId;
 		$key = $this->getMemCacheKey( $seed );
 		return $wgMemc->get( $key );
 	}

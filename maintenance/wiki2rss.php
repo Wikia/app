@@ -36,7 +36,7 @@ class BackupReader {
 	var $frss = false;
 	var $indx = array();
 
-	function BackupReader() {
+	function __construct() {
 		$this->stderr = fopen( "php://stderr", "wt" );
 	}
 

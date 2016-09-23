@@ -31,7 +31,7 @@ class AttributePersistenceSwagger implements AttributePersistence {
 	 */
 	public function saveAttribute( $userId, Attribute $attribute ) {
 		try {
-			$this->getApi( $userId )->saveAttributeForUser( $userId, $attribute->getName(), $attribute->getValue() );
+			$this->getApi( $userId )->saveAttribute( $userId, $attribute->getName(), $attribute->getValue() );
 			return true;
 		} catch ( ApiException $e ) {
 			$this->handleApiException($e);
@@ -68,7 +68,7 @@ class AttributePersistenceSwagger implements AttributePersistence {
 	 * @throws \Exception
 	 */
 	private function getAttributesFromApi( $userId ) {
-		$halResponse = $this->getApi( $userId )->getAllAttributesForUser( $userId );
+		$halResponse = $this->getApi( $userId )->getAllAttributes( $userId );
 		$this->assertValidResponse( $halResponse );
 
 		return $halResponse->getEmbedded()->getProperties();
@@ -95,7 +95,7 @@ class AttributePersistenceSwagger implements AttributePersistence {
 	 */
 	public function deleteAttribute( $userId, Attribute $attribute ) {
 		try {
-			$this->getApi( $userId )->deleteAttributeForUser( $userId, $attribute->getName() );
+			$this->getApi( $userId )->deleteAttribute( $userId, $attribute->getName() );
 			return true;
 		} catch ( ApiException $e ) {
 			$this->handleApiException( $e );
@@ -120,16 +120,16 @@ class AttributePersistenceSwagger implements AttributePersistence {
 	private function handleApiException( ApiException $e ) {
 		switch ( $e->getCode() ) {
 			case UnauthorizedException::CODE:
-				throw new UnauthorizedException( $e->getResponseBody() );
+				throw new UnauthorizedException( $e->getMessage() );
 				break;
 			case NotFoundException::CODE:
-				throw new NotFoundException( $e->getResponseBody() );
+				throw new NotFoundException( $e->getMessage() );
 				break;
 			case ForbiddenException::CODE:
-				throw new ForbiddenException( $e->getResponseBody() );
+				throw new ForbiddenException( $e->getMessage() );
 				break;
 			default:
-				throw new PersistenceException( $e->getResponseBody() );
+				throw new PersistenceException( $e->getMessage() );
 				break;
 		}
 	}

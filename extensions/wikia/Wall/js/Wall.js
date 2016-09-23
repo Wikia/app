@@ -1,4 +1,4 @@
-(function (window, $) {
+(function (window, $, mw) {
 	'use strict';
 
 	var Wall = $.createClass(Object, {
@@ -17,7 +17,7 @@
 			this.wall = $(element);
 			this.settings = $.extend(true, {}, Wall.settings, settings);
 			this.deletedMessages = {};
-			this.isMonobook = window.skin && window.skin === 'monobook';
+			this.isMonobook = Wall.isMonobook;
 			this.hasMiniEditor = typeof window.wgEnableMiniEditorExt !== 'undefined' && !this.isMonobook;
 			this.title = window.wgTitle;
 			this.page = {
@@ -292,6 +292,7 @@
 				controller: 'WallNotificationsExternalController',
 				method: 'markAsRead',
 				format: 'json',
+				type: 'POST',
 				data: {
 					id: commentId
 				}
@@ -301,17 +302,20 @@
 		vote: function (e) {
 			e.preventDefault();
 			if (!window.wgUserName) {
-				require(['AuthModal'], function (authModal) {
-					authModal.load({
-						url: '/signin?redirect=' + encodeURIComponent(window.location.href),
+				if (!this.isMonobook) {
+					window.wikiaAuthModal.load({
+						forceLogin: true,
 						origin: 'wall-and-forum',
-						onAuthSuccess: this.proxy(function () {
+						onAuthSuccess: function () {
 							this.voteBase(e, function () {
 								window.location.reload();
 							});
-						})
+						}.bind(this)
 					});
-				}.bind(this));
+				} else {
+					// SUS-550: AuthModal doesn't work on Monobook, breaks the page
+					Wall.showMonobookLoginPopup();
+				}
 			} else {
 				this.voteBase(e, this.proxy(function (target, data, dir) {
 					var votes = target.closest('li.message').find('.votes:first'),
@@ -347,6 +351,7 @@
 				controller: 'WallExternalController',
 				method: 'vote',
 				format: 'json',
+				type: 'POST',
 				data: {
 					dir: dir,
 					id: id
@@ -400,6 +405,7 @@
 			$.nirvana.sendRequest({
 				controller: 'WallExternalController',
 				method: 'undoAction',
+				type: 'POST',
 				data: {
 					msgid: id
 				},
@@ -419,6 +425,7 @@
 			$.nirvana.sendRequest({
 				controller: 'WallExternalController',
 				method: 'restoreMessage',
+				type: 'POST',
 				data: {
 					msgid: id,
 					formdata: formdata
@@ -571,12 +578,14 @@
 			$.nirvana.sendRequest({
 				controller: 'WallExternalController',
 				method: 'deleteMessage',
+				type: 'POST',
 				format: 'json',
 				data: {
 					mode: mode,
 					msgid: id,
 					username: this.username,
-					formdata: formdata
+					formdata: formdata,
+					token: mw.user.tokens.get('editToken')
 				},
 				callback: this.proxy(function (data) {
 					if (data.status) {
@@ -606,10 +615,12 @@
 				controller: 'WallExternalController',
 				method: 'changeThreadStatus',
 				format: 'json',
+				type: 'POST',
 				data: {
 					msgid: id,
 					newState: newState,
-					formdata: formdata
+					formdata: formdata,
+					token: mw.user.tokens.get('editToken')
 				},
 				callback: this.proxy(function (json) {
 					if (json.status) {
@@ -732,15 +743,20 @@
 			e.preventDefault();
 			var rootMessageId = $(e.target).closest('.message').data('id');
 			if (window.wgDisableAnonymousEditing && !window.wgUserName) {
-				require(['AuthModal'], function (authModal) {
-					authModal.load({
-						url: '/signin?redirect=' + encodeURIComponent(window.location.href),
-						origin: 'wall-and-forum',
-						onAuthSuccess: this.proxy(function () {
-							this.editTopics(rootMessageId);
-						})
-					});
-				}.bind(this));
+				if (!this.isMonobook) {
+					require(['AuthModal'], function (authModal) {
+						authModal.load({
+							forceLogin: true,
+							origin: 'wall-and-forum',
+							onAuthSuccess: this.proxy(function () {
+								this.editTopics(rootMessageId);
+							})
+						});
+					}.bind(this));
+				} else {
+					// SUS-550: AuthModal doesn't work on Monobook, breaks the page
+					Wall.showMonobookLoginPopup();
+				}
 			} else {
 				this.editTopics(rootMessageId);
 			}
@@ -802,6 +818,7 @@
 				controller: 'WallExternalController',
 				method: 'moveModal',
 				format: 'html',
+				type: 'POST',
 				data: {
 					id: id
 				},
@@ -846,10 +863,12 @@
 										controller: 'WallExternalController',
 										method: 'moveThread',
 										format: 'json',
+										type: 'POST',
 										data: {
 											destinationBoardId: moveThreadModal.$content
 												.find('.destinationBoardId option:selected').val(),
-											rootMessageId: id
+											rootMessageId: id,
+											token: mw.user.tokens.get('editToken')
 										},
 										callback: function (json) {
 											if (json.status === 'ok') {
@@ -885,6 +904,25 @@
 		classBindings: {}
 	};
 
+	// Static methods and properties
+	/**
+	 * Whether we are using Monobook
+	 */
+	Wall.isMonobook = (mw.config.get('skin') === 'monobook');
+
+	/**
+	 * SUS-550: Show a login popup message for anons on Monobook
+	 */
+	Wall.showMonobookLoginPopup = function () {
+		new BannerNotification(
+			$('<a>')
+				.attr('href', '/wiki/Special:UserLogin')
+				.text($.msg('wall-action-monobook-login'))
+				.prop('outerHTML'),
+			'error'
+		).show()
+	};
+
 	// jQuery bridge
 	$.fn.wikiaWall = function (settings) {
 		return this.each(function () {
@@ -895,4 +933,4 @@
 	// Exports
 	window.Wall = Wall;
 
-})(window, jQuery);
+})(window, jQuery, mediaWiki);

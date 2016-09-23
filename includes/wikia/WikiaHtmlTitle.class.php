@@ -7,17 +7,11 @@ class WikiaHtmlTitle {
 
 	/**
 	 * @var string - The separator used to separate parts of the HTML title
-	 *
-	 * Note there is a logic that guesses the separator from a MediaWiki message <pagetitle>
-	 * This logic might be removed later for consistency and simplicity (see the file below)
 	 */
-	private $separator = ' - ';
+	private $separator = ' | ';
 
 	/** @var array - Configurable parts of the title */
 	private $parts = [];
-
-	/** @var array - Environment like dev-rychu, sandbox-s4, etc */
-	private $environment;
 
 	/** @var Message|null - The site name to include in the title */
 	private $siteName;
@@ -26,12 +20,6 @@ class WikiaHtmlTitle {
 	private $brandName;
 
 	public function __construct() {
-		global $wgWikiaEnvironment;
-
-		if ( $wgWikiaEnvironment !== WIKIA_ENV_PROD ) {
-			$this->environment = wfHostname();
-		}
-
 		$this->brandName = wfMessage( 'wikia-pagetitle-brand' );
 		$this->siteName = wfMessage( 'wikia-pagetitle-sitename' );
 
@@ -72,7 +60,6 @@ class WikiaHtmlTitle {
 	 */
 	public function getAllParts() {
 		$parts = array_merge(
-			[$this->environment],
 			$this->parts,
 			[$this->siteName, $this->brandName]
 		);
@@ -108,5 +95,29 @@ class WikiaHtmlTitle {
 	 */
 	public function getTitle() {
 		return join( $this->getSeparator(), $this->getAllParts() );
+	}
+
+	/**
+	 * Set HTML title based on the information passed from OutputPage
+	 *
+	 * This adds the HTML title structure for special pages.
+	 * Later we should add structure for images, videos, categories, blogs, etc.
+	 * Then this method should be promoted to a separate class with a set of tests.
+	 *
+	 * @param Title $title
+	 * @param string $name
+	 * @return WikiaHtmlTitle
+	 */
+	public function generateTitle( $title, $name ) {
+		if ( !$title ) {
+			return $this->setParts( [ $name ] );
+		}
+
+		// Extra title for admin dashboard (and maybe other pages handled by extensions)
+		$parts = [];
+		wfRunHooks( 'WikiaHtmlTitleExtraParts', [ $title, &$parts ] );
+		array_unshift( $parts, $name );
+
+		return $this->setParts( $parts );
 	}
 }

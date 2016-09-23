@@ -31,11 +31,6 @@ $dir = dirname(__FILE__) . '/';
 //i18n
 $wgExtensionMessagesFiles['CommentCSV'] = $dir . 'CommentCSV.i18n.php';
 
-// New user right, required to use the extension.
-$wgAvailableRights[] = 'commentcsv';
-$wgGroupPermissions['*']['commentcsv'] = false;
-$wgGroupPermissions['staff']['commentcsv'] = true;
-
 $wgAutoloadClasses['CommentCSV'] = $dir . '/CommentCSV.class.php';
 
 $wgHooks['UnknownAction'][] = 'CommentCSV::onCommentCSVDownload';

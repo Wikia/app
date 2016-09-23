@@ -513,6 +513,9 @@ SQL;
 		}
 
 		$this->wg->Memc->set( self::getMemcKey( $this->getVideoTitle() ), $cache, 60*60*24*7 );
+
+		// SUS-81: allow other features to clear their video_info-related caches
+		wfRunHooks( 'VideoInfoSaveToCache', [ $this ] );
 	}
 
 	/**
@@ -520,6 +523,8 @@ SQL;
 	 */
 	protected function invalidateCache() {
 		$this->wg->Memc->delete( self::getMemcKey( $this->getVideoTitle() ) );
-	}
 
+		// SUS-81: allow other features to clear their video_info-related caches
+		wfRunHooks( 'VideoInfoInvalidateCache', [ $this ] );
+	}
 }

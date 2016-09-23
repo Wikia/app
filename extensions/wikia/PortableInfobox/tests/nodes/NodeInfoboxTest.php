@@ -7,7 +7,7 @@ class NodeInfoboxTest extends WikiaBaseTest {
 	}
 
 	/**
-	 * @covers       NodeInfobox::getParams
+	 * @covers       \Wikia\PortableInfobox\Parser\Nodes\NodeInfobox::getParams
 	 * @dataProvider paramsProvider
 	 *
 	 * @param $markup

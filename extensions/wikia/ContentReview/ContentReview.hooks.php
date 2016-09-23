@@ -20,9 +20,6 @@ class Hooks {
 		\Hooks::register( 'ArticleDeleteComplete', [ $hooks, 'onArticleDeleteComplete' ] );
 		\Hooks::register( 'ArticleUndelete', [ $hooks, 'onArticleUndelete' ] );
 		\Hooks::register( 'ShowDiff', [ $hooks, 'onShowDiff' ] );
-		\Hooks::register( 'UserRights::groupCheckboxes', [ $hooks, 'onUserRightsGroupCheckboxes' ] );
-		\Hooks::register( 'UserAddGroup', [ $hooks, 'onUserAddGroup' ] );
-		\Hooks::register( 'BeforeUserAddGlobalGroup', [ $hooks, 'onUserAddGroup' ] );
 		\Hooks::register( 'SkinAfterBottomScripts', [ $hooks, 'onSkinAfterBottomScripts' ] );
 		\Hooks::register( 'ArticleNonExistentPage', [ $hooks, 'onArticleNonExistentPage' ] );
 		\Hooks::register( 'OutputPageBeforeHTML', [ $hooks, 'onOutputPageBeforeHTML' ] );
@@ -126,21 +123,27 @@ class Hooks {
 	 * @throws \MWException
 	 */
 	public function onSkinAfterBottomScripts( $skin, &$bottomScripts ) {
-		$bottomScripts .= ( new ImportJS() )->getImportScripts();
+		global $wgUseSiteJs;
+
+		if ( !empty( $wgUseSiteJs ) ) {
+			$bottomScripts .= ( new ImportJS() )->getImportScripts();
+		}
 
 		return true;
 	}
 
+	/**
+	 * Initiates a diff page Content Review controller and renders a reviewer's toolbar.
+	 * @param $diffEngine
+	 * @param \OutputPage $output
+	 * @return bool
+	 */
 	public function onArticleContentOnDiff( $diffEngine, \OutputPage $output ) {
-		$helper = new Helper();
+		$title = $output->getTitle();
+		$diffPage = new ContentReviewDiffPage( $title );
 
-		if ( $helper->shouldDisplayReviewerToolbar() ) {
-			\Wikia::addAssetsToOutput( 'content_review_diff_page_js' );
-			\Wikia::addAssetsToOutput( 'content_review_diff_page_scss' );
-			\JSMessages::enqueuePackage( 'ContentReviewDiffPage', \JSMessages::EXTERNAL );
-
-			$revisionId = $helper->getCurrentlyReviewedRevisionId( $output->getRequest() );
-			$output->prependHTML( $helper->getToolbarTemplate( $revisionId ) );
+		if ( $diffPage->shouldDisplayToolbar() ) {
+			$diffPage->addToolbarToOutput( $output );
 		}
 
 		return true;
@@ -336,26 +339,6 @@ class Hooks {
 			);
 			return false;
 		}
-		return true;
-	}
-
-	public function onUserRightsGroupCheckboxes( $group, &$disabled, &$irreversible ) {
-		global $wgUser;
-
-		if ( $group === 'content-reviewer' && ( !$wgUser->isAllowed( 'content-review' ) || !$wgUser->isStaff() ) ) {
-			$disabled = true;
-		}
-
-		return true;
-	}
-
-	public function onUserAddGroup( \User $user, $group ) {
-		global $wgUser;
-
-		if ( $group === 'content-reviewer' && ( !$wgUser->isAllowed( 'content-review' ) || !$wgUser->isStaff() ) ) {
-			return false;
-		}
-
 		return true;
 	}
 

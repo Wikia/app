@@ -22,38 +22,14 @@ class TwitterCards extends WikiaModel {
 		$meta['twitter:card'] = 'summary';
 		$meta['twitter:site'] = $this->wg->TwitterAccount;
 		$meta['twitter:url'] = $title->getFullURL();
-		$meta['twitter:title'] = $this->getPageTitle( $output );
 
-		// add description
+		$titleText = $output->getHTMLTitle();
+		$meta['twitter:title'] = wfShortenText( $titleText, self::TITLE_MAX_LENGTH, true );
+
 		$description = $this->getDescription( $output );
-		if ( !empty( $description ) ) {
-			$meta['twitter:description'] = $description;
-		}
+		$meta['twitter:description'] = wfShortenText( $description, self::DESCRIPTION_MAX_LENGTH, true );
 
 		return $meta;
-	}
-
-	/**
-	 * Get page title
-	 * @param OutputPage $output
-	 * @return string
-	 */
-	protected function getPageTitle( $output ) {
-		$title = $output->getTitle();
-		$namespace = $title->getNamespace();
-		if ( $title->isMainPage() ) {
-			$pageTitle = $this->wg->Sitename;
-		} else if ( !empty( $this->wg->EnableBlogArticles )
-			&& ( $namespace == NS_BLOG_ARTICLE || $namespace == NS_BLOG_ARTICLE_TALK ) )
-		{
-			$pageTitle = $title->getSubpageText();
-		} else if ( !empty( $this->wg->EnableWallExt ) && $namespace == NS_USER_WALL_MESSAGE ) {
-			$pageTitle = $output->getPageTitle();
-		} else {
-			$pageTitle = $title->getText();
-		}
-
-		return mb_substr( $pageTitle, 0, self::TITLE_MAX_LENGTH );
 	}
 
 	/**
@@ -61,13 +37,17 @@ class TwitterCards extends WikiaModel {
 	 * @param OutputPage $output
 	 * @return string
 	 */
-	protected function getDescription( $output ) {
+	private function getDescription( $output ) {
 		$description = '';
+
 		if ( !empty( $output->mDescription ) ) {
-			$description = mb_substr( $output->mDescription, 0, self::DESCRIPTION_MAX_LENGTH );
+			$description = $output->mDescription;
+		}
+
+		if ( empty( $description ) ) {
+			$description = $output->getHTMLTitle();
 		}
 
 		return $description;
 	}
-
 }

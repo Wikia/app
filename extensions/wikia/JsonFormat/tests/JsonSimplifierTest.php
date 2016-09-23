@@ -8,6 +8,9 @@ class JsonSimplifierTest extends WikiaBaseTest {
 		parent::setUp();
 	}
 
+	/**
+	 * @group ContractualResponsibilitiesValidation
+	 */
 	public function testImages() {
 		// PLA-1362
 		$htmlParser = new \Wikia\JsonFormat\HtmlParser();
@@ -26,7 +29,10 @@ class JsonSimplifierTest extends WikiaBaseTest {
 		$this->assertEquals( "http://example.com/image.png", $images[0]['src'] );
 		$this->assertEquals( 1, count($images), "Blank image has not been skipped" );		
 	}
-	
+
+	/**
+	 * @group ContractualResponsibilitiesValidation
+	 */
 	public function testEditSection() {
 		$htmlParser = new \Wikia\JsonFormat\HtmlParser();
 		$simplifier = new Wikia\JsonFormat\JsonFormatSimplifier;
@@ -55,7 +61,10 @@ EOD;
 		$this->assertEquals('History', $jsonSimple['sections'][1]['title'], "Edit section should not be included in title");
 		$this->assertEquals(2, count($jsonSimple['sections']), "There should be 2 sections");		
 	}
-	
+
+	/**
+	 * @group ContractualResponsibilitiesValidation
+	 */
 	public function testLists() {
 		$htmlParser = new \Wikia\JsonFormat\HtmlParser();
 		$simplifier = new Wikia\JsonFormat\JsonFormatSimplifier;
@@ -75,6 +84,7 @@ EOD;
 	
 	/**
 	 * @group Slow
+	 * @group ContractualResponsibilitiesValidation
 	 * @slowExecutionTime 0.01676 ms
 	 */
 	public function testProcessList() {
@@ -179,7 +189,10 @@ EOD;
 			->method( $method )
 			->will( $this->returnValue( $value ) );
 	}
-	
+
+	/**
+	 * @group ContractualResponsibilitiesValidation
+	 */
 	public function testPrehistoricIceMan() {
 		// PLA-1343
 		$htmlParser = new \Wikia\JsonFormat\HtmlParser();

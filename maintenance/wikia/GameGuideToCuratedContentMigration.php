@@ -18,7 +18,7 @@ if ( empty( $cityId ) ) {
 
 $convertGameGuideToCuratedContent = GameGuideToCuratedContentHelper::ConvertGameGuideToCuratedContent( $app->wg->WikiaGameGuidesContent );
 
-$statusContent = WikiFactory::setVarByName( 'wgWikiaCuratedContent', $cityId, $convertGameGuideToCuratedContent );
+$statusContent = ( new CommunityDataService( $cityId ) )->setCuratedContent( $convertGameGuideToCuratedContent );
 if ( $statusContent == 0 ) {
 	die( "Error: Cannot Set WikiaCuratedContent Variable" );
 }

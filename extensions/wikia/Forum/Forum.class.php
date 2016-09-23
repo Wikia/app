@@ -1,4 +1,5 @@
 <?php
+use Wikia\Logger\WikiaLogger;
 
 /**
  * Forum
@@ -26,18 +27,33 @@ class Forum extends Walls {
 	const LEN_TOO_SMALL_ERR = -2;
 
 	public function getBoardList( $db = DB_SLAVE ) {
-		$boardTitles = $this->getListTitles( $db, NS_WIKIA_FORUM_BOARD );
-		$titlesBatch = new TitleBatch( $boardTitles );
-		$orderIndexes = $titlesBatch->getWikiaProperties( WPP_WALL_ORDER_INDEX, $db );
+		$titlesBatch = TitleBatch::newFromConds( [ ],
+			[ 'page.page_namespace' => NS_WIKIA_FORUM_BOARD ],
+			__METHOD__,
+			[ 'ORDER BY' => 'page_title' ],
+			$db
+		);
 
-		$boards = [];
+		$orderIndexes = $titlesBatch->getWikiaProperties( WPP_WALL_ORDER_INDEX, $db );
+		foreach ( $titlesBatch->getArticleIds() as $id ) {
+			if ( !isset( $orderIndexes[ $id ] ) ) {
+				$orderIndexes[ $id ] = $id;
+			}
+		}
+
+		$boards = [ ];
 		arsort( $orderIndexes );
 		foreach ( array_keys( $orderIndexes ) as $pageId ) {
-			$title = $boardTitles[$pageId];
+			/** @var Title $title */
+			$title = $titlesBatch->getById( $pageId );
+
+			if ( empty( $title ) ) {
+				WikiaLogger::instance()->error( "Expecting title got null", [ "pageId" => $pageId ] );
+				continue;
+			}
 
 			/** @var $board ForumBoard */
 			$board = ForumBoard::newFromTitle( $title );
-			$title = $board->getTitle();
 
 			$boardInfo = $board->getBoardInfo();
 			$boardInfo['id'] = $title->getArticleID();
@@ -61,11 +77,11 @@ class Forum extends Walls {
 
 		// get board list
 		$result = (int)$dbw->selectField(
-			array( 'page' ),
-			array( 'count(*) as cnt' ),
-			array( 'page_namespace' => NS_WIKIA_FORUM_BOARD ),
+			[ 'page' ],
+			[ 'count(*) as cnt' ],
+			[ 'page_namespace' => NS_WIKIA_FORUM_BOARD ],
 			__METHOD__,
-			array()
+			[ ]
 		);
 
 		wfProfileOut( __METHOD__ );
@@ -85,13 +101,13 @@ class Forum extends Walls {
 		if ( $totalThreads === false ) {
 			$db = wfGetDB( DB_SLAVE );
 
-			$sqlWhere = array(
+			$sqlWhere = [
 				'parent_comment_id' => 0,
 				'archived' => 0,
 				'deleted' => 0,
 				'removed' => 0,
 				'page_namespace' => NS_WIKIA_FORUM_BOARD_THREAD
-			);
+			];
 
 			// active threads
 			if ( !empty( $days ) ) {
@@ -99,12 +115,12 @@ class Forum extends Walls {
 			}
 
 			$row = $db->selectRow(
-				array( 'comments_index', 'page' ),
-				array( 'count(*) cnt' ),
+				[ 'comments_index', 'page' ],
+				[ 'count(*) cnt' ],
 				$sqlWhere,
 				__METHOD__,
-				array(),
-				array( 'page' => array( 'LEFT JOIN', array( 'page_id=comment_id' ) ) )
+				[ ],
+				[ 'page' => [ 'LEFT JOIN', [ 'page_id=comment_id' ] ] ]
 			);
 
 			$totalThreads = 0;
@@ -144,14 +160,14 @@ class Forum extends Walls {
 		$this->clearCacheTotalThreads( self::ACTIVE_DAYS );
 	}
 
-	public function hasAtLeast( $ns, $count ) {
+	public function hasMoreThan( $ns, $count ) {
 		wfProfileIn( __METHOD__ );
 
-		$out = WikiaDataAccess::cache( wfMemcKey( 'Forum_hasAtLeast', $ns, $count ), 24 * 60 * 60/* one day */, function() use ( $ns, $count ) {
+		$out = WikiaDataAccess::cache( wfMemcKey( 'Forum_hasMoreThan', $ns, $count ), 24 * 60 * 60/* one day */, function() use ( $ns, $count ) {
 			$db = wfGetDB( DB_MASTER );
 			// check if there is more then 5 forum pages (5 is number of forum pages from starter)
 			// limit 6 is faster solution then count(*) and the compare in php
-			$result = $db->select( array( 'page' ), array( 'page_id' ), array( 'page_namespace' => $ns ), __METHOD__, array( 'LIMIT' => $count + 1 ) );
+			$result = $db->select( [ 'page' ], [ 'page_id' ], [ 'page_namespace' => $ns ], __METHOD__, [ 'LIMIT' => $count + 1 ] );
 
 			$rowCount = $db->numRows( $result );
 			// string value is a work around for false value problem in memc
@@ -167,7 +183,7 @@ class Forum extends Walls {
 	}
 
 	public function haveOldForums() {
-		return $this->hasAtLeast( NS_FORUM, 5 );
+		return $this->hasMoreThan( NS_FORUM, 5 );
 	}
 
 	public function swapBoards( $boardId1, $boardId2 ) {
@@ -193,10 +209,10 @@ class Forum extends Walls {
 
 		// get board list
 		$result = $dbw->select(
-			array( 'page' ),
-			array( 'page_id, page_title' ),
-			array( 'page_namespace' => NS_WIKIA_FORUM_BOARD ),
-			__METHOD__, array( 'ORDER BY' => 'page_title' )
+			[ 'page' ],
+			[ 'page_id, page_title' ],
+			[ 'page_namespace' => NS_WIKIA_FORUM_BOARD ],
+			__METHOD__, [ 'ORDER BY' => 'page_title' ]
 		);
 
 		while ( $row = $dbw->fetchObject( $result ) ) {
@@ -220,9 +236,14 @@ class Forum extends Walls {
 
 	/**
 	 *  create or edit board, if $board = null then we are creating new one
+	 * @param ForumBoard $board
+	 * @param $titletext
+	 * @param $body
+	 * @param bool $bot
+	 * @return Status
+	 * @throws MWException
 	 */
 	protected function createOrEditBoard( $board, $titletext, $body, $bot = false ) {
-		wfProfileIn( __METHOD__ );
 		$id = null;
 		if ( !empty( $board ) ) {
 			$id = $board->getId();
@@ -232,7 +253,6 @@ class Forum extends Walls {
 			self::LEN_OK !== $this->validateLength( $titletext, 'title' ) ||
 			self::LEN_OK !== $this->validateLength( $body, 'desc' )
 		) {
-			wfProfileOut( __METHOD__ );
 			return false;
 		}
 
@@ -250,10 +270,12 @@ class Forum extends Walls {
 		$article = new Article( $title );
 		$editPage = new EditPage( $article );
 
-		$editPage->edittime = $article->getTimestamp();
+		$editPage->edittime = $article->getPage()->getTimestamp();
 		$editPage->textbox1 = $body;
+		// Maintain the "watch" status for the page after the edit
+		$editPage->watchthis = $article->getTitle()->userIsWatching();
 
-		$result = array();
+		$result = [ ];
 		$retval = $editPage->internalAttemptSave( $result, $bot );
 
 		if ( $id == null ) {
@@ -265,7 +287,6 @@ class Forum extends Walls {
 
 		Forum::$allowToEditBoard = false;
 
-		wfProfileOut( __METHOD__ );
 		return $retval;
 	}
 
@@ -307,6 +328,7 @@ class Forum extends Walls {
 
 	/**
 	 * delete board
+	 * @param ForumBoard $board
 	 */
 
 	public function deleteBoard( $board ) {
@@ -322,11 +344,14 @@ class Forum extends Walls {
 		wfProfileOut( __METHOD__ );
 	}
 
+	/**
+	 * @deprecated Remove as soon as SUS-302 and SUS-303 are completed
+	 */
 	public function createDefaultBoard() {
 		wfProfileIn( __METHOD__ );
 		$app = F::App();
-		if ( !$this->hasAtLeast( NS_WIKIA_FORUM_BOARD, 0 ) ) {
-			WikiaDataAccess::cachePurge( wfMemcKey( 'Forum_hasAtLeast', NS_WIKIA_FORUM_BOARD, 0 ) );
+		if ( !$this->hasMoreThan( NS_WIKIA_FORUM_BOARD, 0 ) ) {
+			WikiaDataAccess::cachePurge( wfMemcKey( 'Forum_hasMoreThan', NS_WIKIA_FORUM_BOARD, 0 ) );
 			/* the wgUser swap is the only way to create page as other user then current */
 			$tmpUser = $app->wg->User;
 			$app->wg->User = User::newFromName( Forum::AUTOCREATE_USER );

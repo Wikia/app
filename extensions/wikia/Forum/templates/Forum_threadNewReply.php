@@ -1,12 +1,12 @@
 <? if ( $userBlocked !== true ): ?>
 	<li class="new-reply">
 		<? if ( $wg->EnableMiniEditorExtForWall ): ?>
-			<?= $app->getView( 'MiniEditorController', 'Header', array(
-				'attributes' => array(
+			<?= $app->getView( 'MiniEditorController', 'Header', [
+				'attributes' => [
 					'data-min-height' => 100,
 					'data-max-height' => 400
-				)
-			) )->render() ?>
+				]
+			] )->render() ?>
 		<? endif ?>
 		<div class="avatar"><?= AvatarService::renderAvatar( $username, 30 ) ?></div>
 		<div class="message">

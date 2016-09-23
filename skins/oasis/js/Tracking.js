@@ -262,24 +262,28 @@ jQuery(function ($) {
 	/** recent-changes **/
 
 	if ($body.hasClass('page-Special_RecentChanges')) {
-		$wikiaArticle.find('.rc-conntent').on('mousedown', 'a', function (e) {
-			var label,
-				el = $(e.target),
-				href = el.attr('href');
+		// We need to bind to #WikiaArticle because users use scripts which reload the content
+		// see: http://dev.wikia.com/wiki/MediaWiki:AjaxRC/code.js
+		$wikiaArticle.on('mousedown', 'a', function (e) {
+			var $el = $(e.target),
+				label = $el.attr('data-action'),
+				href = $el.attr('href');
 
 			// Primary mouse button only
 			if (e.which !== 1) {
 				return;
 			}
 
-			if (rHrefDiff.test(href)) {
-				label = 'diff';
-			} else if (rHrefHistory.test(href)) {
-				label = 'history';
-			} else if (el.hasClass('mw-userlink')) {
-				label = 'username';
-			} else if (!el.parent().is('span')) {
-				label = 'title';
+			if (!label) {
+				if (rHrefDiff.test(href)) {
+					label = 'diff';
+				} else if (rHrefHistory.test(href)) {
+					label = 'history';
+				} else if ($el.hasClass('mw-userlink')) {
+					label = 'username';
+				} else if (!$el.parent().is('span')) {
+					label = 'title';
+				}
 			}
 
 			if (label !== undefined) {
@@ -291,6 +295,20 @@ jQuery(function ($) {
 			}
 		});
 	}
+
+	/** diff page **/
+	$wikiaArticle.find('.diff-header').on('mousedown', 'a', function(e) {
+		var $el = $(e.target),
+			action = $el.attr('data-action');
+
+		if (action) {
+			track({
+				browserEvent: e,
+				category: 'oasis-diff',
+				label: action
+			});
+		}
+	});
 
 	/** search **/
 
@@ -602,7 +620,7 @@ jQuery(function ($) {
 				case 'random':
 					label = 'on-the-wiki-random';
 					break;
-				case 'newfiles':
+				case 'images':
 					label = 'on-the-wiki-new-photos';
 					break;
 				case 'chat':

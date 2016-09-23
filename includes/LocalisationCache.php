@@ -571,23 +571,12 @@ class LocalisationCache {
 
 		# Load the primary localisation from the source file
 		$fileName = Language::getMessagesFileName( $code );
-		$addFileName = Language::getAdditionalMessagesFileName(  $code, 'core' );
 		if ( !file_exists( $fileName ) ) {
 			wfDebug( __METHOD__.": no localisation file for $code, using fallback to en\n" );
 			$coreData['fallback'] = 'en';
 		} else {
 			$deps[] = new FileDependency( $fileName );
 			$data = $this->readPHPFile( $fileName, 'core' );
-			// wikia changes begin
-			if ( file_exists( $addFileName ) ) {
-				$deps[] = new FileDependency( $addFileName );
-				$addData = $this->readPHPFile( $addFileName, 'core' );
-				
-				if(!empty($addData['messages'])) {
-					$data['messages'] = array_merge($data['messages'], $addData['messages']);
-				}
-			}
-			// wikia changes end
 			wfDebug( __METHOD__.": got localisation for $code from source\n" );
 
 			# Merge primary localisation
@@ -618,7 +607,6 @@ class LocalisationCache {
 				# Load the secondary localisation from the source file to
 				# avoid infinite cycles on cyclic fallbacks
 				$fbFilename = Language::getMessagesFileName( $fbCode );
-				$fbAddFileName = Language::getAdditionalMessagesFileName(  $fbCode, 'core' );
 
 				if ( !file_exists( $fbFilename ) ) {
 					continue;
@@ -627,16 +615,6 @@ class LocalisationCache {
 				$deps[] = new FileDependency( $fbFilename );
 				$fbData = $this->readPHPFile( $fbFilename, 'core' );
 
-				// wikia changes begin
-				if ( file_exists( $fbAddFileName ) ) {
-					$deps[] = new FileDependency( $fbAddFileName );
-					$addData = $this->readPHPFile( $fbAddFileName, 'core' );
-
-					if(!empty($addData['messages'])) {
-						$fbData['messages'] = array_merge($fbData['messages'], $addData['messages']);
-					}
-				}
-				// wikia changes end
 				wfDebug( __METHOD__.": got fallback localisation for $fbCode from source\n" );
                         
 				foreach ( self::$allKeys as $key ) {

@@ -21,7 +21,7 @@ class CreateBlogPage extends SpecialBlogPage {
 		}
 	}
 
-	public function execute() {
+	public function execute( $par ) {
 		global $wgOut, $wgUser, $wgRequest;
 
 		if ( !$wgUser->isLoggedIn() ) {

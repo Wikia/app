@@ -3,6 +3,7 @@
 @import 'skins/shared/mixins/flexbox';
 @import 'skins/shared/mixins/transform';
 @import 'extensions/wikia/PortableInfobox/styles/PortableInfoboxVariables';
+@import 'extensions/wikia/PortableInfobox/styles/PortableInfoboxMixins';
 
 .portable-infobox {
 	background-color: $infobox-background;
@@ -12,37 +13,12 @@
 	width: $infobox-width;
 }
 
-	// **********  Overwrite styles from article  ********** //
-	// (placing it within portable-infobox class makes it strong enough) //
+// **********  Overwrite styles from article  ********** //
+// (placing it within portable-infobox class makes it strong enough) //
 
 .portable-infobox {
 
-	.pi-item-spacing {
-		padding: $infobox-item-margin $infobox-item-margin * 2;
-	}
-
-	.pi-secondary-font {
-		font-size: 12px;
-		font-weight: bold;
-		line-height: 18px;
-		margin-top: 0;
-	}
-
-	.pi-header,
-	.pi-title {
-		border: 0;
-		margin: 0;
-	}
-
-	.pi-title {
-		font-size: 18px;
-		line-height: 28px;
-	}
-
-	.pi-data-label {
-		margin-bottom: inherit;
-		margin-top: 0;
-	}
+	@include wikiaArticleOverwrites;
 
 	// overwrite default article styles for children of data value
 	.pi-data-value {
@@ -62,67 +38,8 @@
 	}
 }
 
-// **********  Common elements styling ********** //
-
-.pi-secondary-background {
-	background-color: $infobox-section-header-background;
-}
-
-.pi-border-color {
-	border-color: $infobox-section-header-background;
-}
-
-// remove border from last infobox item either <data> or <group>
-.portable-infobox > .pi-item:last-child {
-	border-bottom: 0;
-}
-
-// **********  Individual elements styling ********** //
-
-.pi-image {
-	text-align: center; // center smaller image inside infobox
-}
-
-.pi-caption {
-	color: $color-alternate-text;
-	font-size: 12px;
-	font-style: italic;
-	text-align: left;
-}
-
-.pi-data:not(:last-of-type),
-.pi-group {
-	border-bottom-style: solid;
-	border-bottom-width: 1px;
-}
-
-.pi-data:last-of-type + .pi-group {
-	border-top-style: solid;
-	border-top-width: 1px;
-}
-
-.pi-data {
-	@include flexbox;
-	@include flex-direction(row);
-	box-sizing: border-box;
-	overflow: hidden;
-	width: 100%;
-}
-
-.pi-data-label {
-	@include flex-basis($infobox-width / 3);
-}
-
-.pi-data-value {
-	font-size: 12px;
-	line-height: 18px;
-	padding-left: 0;
-
-	&:not(:first-child) {
-		@include flex-basis($infobox-width * 2 / 3);
-		padding-left: 10px;
-	}
-}
+@include commonElementsStyles;
+@include individualElementsStyles;
 
 // **********  Special styles for HORIZONTAL group  ********** //
 
@@ -164,20 +81,8 @@
 
 // **********  Collapsible groups  ********** //
 
-.pi-collapse {
-	.pi-header {
-		@include right-chevron($infobox-chevron-size, 2px, 'up', $color-text);
-		padding-right: $infobox-item-margin * 3 + $infobox-chevron-size;
-		position: relative;
-
-		&:after {
-			display: block;
-			margin-top: -($infobox-chevron-size / 2) + 2;
-			position: absolute;
-			right: $infobox-item-margin * 2;
-			top: 50%;
-		}
-	}
+.pi-collapse .pi-header {
+	@include collapsibleChevron;
 }
 
 .pi-collapse-closed {

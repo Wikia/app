@@ -25,9 +25,5 @@ $wgAutoloadClasses['WDACReviewHelper'] =  $dir . 'WDACReviewHelper.class.php';
 
 $wgSpecialPages['WDACReview'] = 'WDACReviewSpecialController';
 
-// rights
-$wgAvailableRights[] = 'wdacreview';
-$wgGroupPermissions['util']['wdacreview'] = true;
-
 // i18n
 $wgExtensionMessagesFiles['WDACReview'] = $dir . 'WDACReview.i18n.php';

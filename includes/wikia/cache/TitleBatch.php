@@ -1,4 +1,5 @@
 <?php
+use Wikia\Logger\WikiaLogger;
 
 /**
  * Class provides an easy interface to preload requested data
@@ -6,29 +7,35 @@
  * doing it in a batch in a single db query
  *
  * @author Władysław Bodzek
+ * @group TitleBatch
  */
 class TitleBatch {
 
-	protected $titles = array();
-	protected $articleIds = false;
+	/* @var array $titles key = articleId, value = title */
+	protected $titles = [ ];
+	protected $articleIds = [ ];
+	protected $articleIdsLoaded = false;
 	protected $restrictionsLoaded = false;
 
 	/**
 	 * Creates a new TitleBatch object
 	 *
 	 * @param $titles array List of Title objects or title texts
+	 *
+	 * @todo: load article ids (if they aren't loaded yet) in a more efficient way than one by one
 	 */
 	public function __construct( $titles ) {
-		foreach ($titles as $k => $title) {
+		$this->titles = [ ];
+		foreach ( $titles as $k => $title ) {
 			if ( $title instanceof Title ) {
-				// nothing to do...
-			} elseif ( is_string($title) ) {
-				$titles[$k] = Title::newFromText($title);
+				$this->titles[ $title->getArticleID() ] = $title;
+			} elseif ( is_string( $title ) ) {
+				$newTitle = Title::newFromText( $title );
+				$this->titles[ $newTitle->getArticleID() ] = $newTitle;
 			} else {
 				wfDebug( "Warning: TitleBatch::__construct got invalid title object/text\n" );
 			}
 		}
-		$this->titles = $titles;
 	}
 
 	/**
@@ -36,11 +43,12 @@ class TitleBatch {
 	 *
 	 * @return array List of article ids
 	 */
-	protected function getArticleIds() {
+	public function getArticleIds() {
 		wfProfileIn( __METHOD__ );
-		if ( $this->articleIds === false ) {
+		if ( $this->articleIdsLoaded === false ) {
 			wfProfileIn( __METHOD__ . '::CacheMiss' );
 			$ids = array();
+			/** @var Title $title */
 			foreach ($this->titles as $title) {
 				$id = $title->getArticleID();
 				if ( $id > 0 ) {
@@ -48,6 +56,7 @@ class TitleBatch {
 				}
 			}
 			$this->articleIds = $ids;
+			$this->articleIdsLoaded = true;
 			wfProfileOut( __METHOD__ . '::CacheMiss' );
 		}
 		wfProfileOut( __METHOD__ );
@@ -105,6 +114,7 @@ class TitleBatch {
 			$res->free();
 
 			// feed fetched data to Title objects
+			/* @var Title $title */
 			foreach ($this->titles as $title) {
 				$id = $title->getArticleID();
 				$restrictions = isset($byArticle[$id]) ? $byArticle[$id] : array();
@@ -128,31 +138,37 @@ class TitleBatch {
 	}
 
 	/**
+	 * @param $pageId
+	 */
+	public function getById( $pageId ) {
+		if ( empty( $this->titles[ $pageId ] ) ) {
+			WikiaLogger::instance()->warning( "TitleBatch does not have cached title", [ "pageId" => $pageId ] );
+		}
+		return $this->titles[ $pageId ];
+	}
+
+	/**
 	 * Get wikia-properties requested by its ID
 	 *
-	 * @param $propertyIds One or many property IDs to fetch
+	 * @param $propertyId int property ID to fetch
 	 * @param $dbType int Database connection type
-	 * @return array 1-D or 2-D array representing fetched properties (2-D if more than one property ID was provided)
+	 * @return array representing fetched properties
 	 */
-	public function getWikiaProperties( $propertyIds, $dbType = DB_SLAVE ) {
-		$articleIds = $this->getArticleIds();
-		$res = wfGetDB($dbType)->select(
+	public function getWikiaProperties( $propertyId, $dbType = DB_SLAVE ) {
+		$res = wfGetDB( $dbType )->select(
 			array( 'p' => 'page', 'pp' => 'page_wikia_props' ),
 			array( 'p.page_id, pp.propname, pp.props' ),
 			array(
 				'p.page_id = pp.page_id',
-				'pp.propname' => $propertyIds,
+				'pp.propname' => $propertyId,
+				'p.page_id' => $this->getArticleIds()
 			),
 			__METHOD__
 		);
 
 		$props = array();
-		foreach ($res as $row) {
-			if ( is_array( $propertyIds ) ) {
-				$props[$row->page_id][$row->propname] = wfUnserializeProp($row->propname, $row->props);
-			} else {
-				$props[$row->page_id] = wfUnserializeProp($row->propname, $row->props);
-			}
+		foreach ( $res as $row ) {
+			$props[ $row->page_id ] = wfUnserializeProp( $row->propname, $row->props );
 		}
 		return $props;
 	}
@@ -203,7 +219,7 @@ class TitleBatch {
 	 * @param $fname string Function name
 	 * @param $options array Query options
 	 * @param $dbType int Database connection type (doesn't support DB_SLAVE_BEFORE_MASTER)
-	 * @return array Array with article IDs as keys and Title objects as values (non-existent articles ore omitted)
+	 * @return TitleBatch titleBatch contains existing articles
 	 */
 	static public function newFromConds( $tables, $conds, $fname = 'TitleBatch::newFromConds',
 			$options = array(), $dbType = DB_SLAVE ) {
@@ -211,18 +227,17 @@ class TitleBatch {
 
 		$tables = array_merge( array( 'page' ), (array)$tables );
 
-		$list = array();
-
 		$db = wfGetDB( $dbType );
 		$res = $db->select( $tables, 'page.*', $conds, $fname, $options );
+		$titles = [];
 		foreach ($res as $row) {
-			$list[$row->page_id] = Title::newFromRow($row);
+			$titles[] = Title::newFromRow($row);
 		}
 		$res->free();
 
+		$titleBatch = new TitleBatch($titles);
 		wfProfileOut( __METHOD__ );
-		return $list;
+		return $titleBatch;
 	}
-
 
 }

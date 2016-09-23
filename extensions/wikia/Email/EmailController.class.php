@@ -69,8 +69,8 @@ abstract class EmailController extends \WikiaController {
 				return;
 			}
 
-			$this->currentUser = $this->findUserFromRequest( 'currentUser', $this->wg->User );
-			$this->targetUser = $this->findUserFromRequest( 'targetUser', $this->wg->User );
+			$this->currentUser = $this->findUserFromRequest( 'currentUser',  'currentUserId' );
+			$this->targetUser = $this->findUserFromRequest( 'targetUser',  'targetUserId' );
 			$this->targetLang = $this->getVal( 'targetLang', $this->targetUser->getGlobalPreference( 'language' ) );
 			$this->test = $this->getVal( 'test', false );
 			$this->marketingFooter = $this->request->getBool( 'marketingFooter' );
@@ -175,6 +175,7 @@ abstract class EmailController extends \WikiaController {
 					$sourceType = 'email-ext' // Remove when this is the only sourceType sent
 				);
 				$this->assertGoodStatus( $status );
+				$this->afterSuccess();
 			}
 		} catch ( \Exception $e ) {
 			$this->setErrorResponse( $e );
@@ -479,18 +480,28 @@ abstract class EmailController extends \WikiaController {
 		return \AvatarService::getAvatarUrl( $user, self::AVATAR_SIZE );
 	}
 
-	protected function findUserFromRequest( $paramName, \User $default = null ) {
-		$userName = $this->getRequest()->getVal( $paramName );
-		if ( empty( $userName ) ) {
-			return $default;
+	/**
+	 * Clients to these email controllers can specify the acting and target
+	 * user using either userName or userId.
+	 *
+	 * @param $userNameParam
+	 * @param $userIdParam
+	 * @return \User
+	 * @throws Fatal
+	 */
+	protected function findUserFromRequest( $userNameParam, $userIdParam ) {
+		$userName = $this->getRequest()->getVal( $userNameParam );
+		$userId = $this->getRequest()->getVal( $userIdParam );
+
+		if ( !empty( $userName ) ) {
+			return $this->getUserFromName( $userName );
 		}
 
-		// Allow an anonymous user to be specified
-		if ( $userName == self::ANONYMOUS_USER_ID ) {
-			return \User::newFromId( 0 );
+		if ( !empty( $userId ) ) {
+			return \User::newFromId( $userId );
 		}
 
-		return $this->getUserFromName( $userName );
+		return $this->wg->User;
 	}
 
 	/**
@@ -504,6 +515,11 @@ abstract class EmailController extends \WikiaController {
 	protected function getUserFromName( $username ) {
 		if ( !$username ) {
 			throw new Fatal( 'Required username has been left empty' );
+		}
+
+		// Allow an anonymous user to be specified
+		if ( $username == self::ANONYMOUS_USER_ID ) {
+			return \User::newFromId( 0 );
 		}
 
 		if ( $username instanceof \User ) {
@@ -541,6 +557,7 @@ abstract class EmailController extends \WikiaController {
 	public function assertCanEmail() {
 		$this->assertUserHasEmail();
 		$this->assertUserWantsEmail();
+		$this->assertEmailIsConfirmed();
 		$this->assertUserNotBlocked();
 	}
 
@@ -595,6 +612,17 @@ abstract class EmailController extends \WikiaController {
 	}
 
 	/**
+	 * This checks if the user has confirmed their email address
+	 *
+	 * @throws \Email\Check
+	 */
+	public function assertEmailIsConfirmed() {
+		if ( !$this->targetUser->isEmailConfirmed() ) {
+			throw new Check( 'User does not have a confirmed email address' );
+		}
+	}
+
+	/**
 	 * This checks to see if the current user is blocked
 	 *
 	 * @throws \Email\Check
@@ -604,6 +632,12 @@ abstract class EmailController extends \WikiaController {
 			throw new Check( 'User is blocked from taking this action' );
 		}
 	}
+
+	/**
+	 * Allow child classes to perform actions after an email is successfully
+	 * sent
+	 */
+	protected function afterSuccess() {}
 
 	/**
 	 * Get the form field for this email to be used on Special:SendEmail

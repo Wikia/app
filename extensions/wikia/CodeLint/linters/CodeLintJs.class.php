@@ -32,7 +32,6 @@ class CodeLintJs extends CodeLint {
 			'BannerNotifications',
 			'GlobalTriggers',
 			'jQuery',
-			'Liftium',
 			'mw',
 			'mediaWiki',
 			'Modernizr',

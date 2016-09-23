@@ -15,7 +15,8 @@
 					"value" : {
 						"0" : "small",
 						"1" : "medium",
-						"2" : "large"
+						"2" : "large",
+						"3" : "content-size"
 					},
 					"description" : "styleguide-description-modal-size"
 				},

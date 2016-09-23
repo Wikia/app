@@ -56,7 +56,21 @@ class SMWUpdateJob extends Job {
 
 		wfProfileIn( __METHOD__ . '-parse' );
 		$options = new ParserOptions();
-		$output = $wgParser->parse( $revision->getText(), $this->title, $options, true, true, $revision->getID() );
+
+		# Wikia change
+		try {
+			$output = $wgParser->parse( $revision->getText(), $this->title, $options, true, true, $revision->getID() );
+		}
+		catch( \Exception $e ) {
+			Wikia\Logger\WikiaLogger::instance()->error( __METHOD__, [
+				'exception' => $e,
+				'title' => $this->title->getPrefixedDBkey()
+			] );
+
+			wfProfileOut( __METHOD__ . '-parse' );
+			wfProfileOut( 'SMWUpdateJob::run (SMW)' );
+			return false;
+		}
 
 		wfProfileOut( __METHOD__ . '-parse' );
 		wfProfileIn( __METHOD__ . '-update' );

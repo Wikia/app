@@ -7,9 +7,9 @@
 				<div class="avatar"><?= AvatarService::renderAvatar( $deleteOrRemoveInfo['user']->getName(), 20 ) ?></div>
 				<div class="message">
 					<? if ( $isreply ): ?>
-					<?= wfMsgExt( 'wall-message-' . $deleteOrRemoveInfo['status'] . '-reply-because', array( 'parsemag' ), array( $deleteOrRemoveInfo['user_displayname_linked'] ) ); ?><br />
+					<?= wfMsgExt( 'wall-message-' . $deleteOrRemoveInfo['status'] . '-reply-because', [ 'parsemag' ], [ $deleteOrRemoveInfo['user_displayname_linked'] ] ); ?><br />
 					<? else : ?>
-					<?= wfMsgExt( 'wall-message-' . $deleteOrRemoveInfo['status'] . '-thread-because', array( 'parsemag' ), array( $deleteOrRemoveInfo['user_displayname_linked'] ) ); ?><br />
+					<?= wfMsgExt( 'wall-message-' . $deleteOrRemoveInfo['status'] . '-thread-because', [ 'parsemag' ], [ $deleteOrRemoveInfo['user_displayname_linked'] ] ); ?><br />
 					<? endif; ?>
 					<div class="reason"><?php echo $deleteOrRemoveInfo['reason']; ?></div>
 					<div class="timestamp"><span><?php echo $deleteOrRemoveInfo['fmttime']; ?></span></div>
@@ -42,12 +42,12 @@
 	</div>
 	<div class="speech-bubble-message">
 		<? if ( $wg->EnableMiniEditorExtForWall ):
-			echo $app->getView( 'MiniEditorController', 'Header', array(
-				'attributes' => array(
+			echo $app->getView( 'MiniEditorController', 'Header', [
+				'attributes' => [
 					'data-min-height' => 100,
 					'data-max-height' => 400
-				)
-			) )->render();
+				]
+			] )->render();
 		endif; ?>
 		<? if ( !$isreply ): ?>
 			<?php if ( $isWatched ): ?>
@@ -76,7 +76,7 @@
 		<div class="msg-toolbar">
 			<div class="timestamp">
 				<?php if ( $isEdited ):?>
-					<? echo wfMsg( 'wall-message-edited', array( $editorUrl, $editorName, $historyUrl ) ); ?>
+					<? echo wfMsg( 'wall-message-edited', [ $editorUrl, $editorName, $historyUrl ] ); ?>
 				<?php endif; ?>
 				<a href="<?= $fullpageurl; ?>" class="permalink" tabindex="-1">
 					<?php if ( !is_null( $iso_timestamp ) ): ?>
@@ -87,7 +87,7 @@
 					<?php endif; ?>
 				</a>
 				<div class="buttonswrapper">
-					<?= $app->renderView( 'WallController', 'messageButtons', array( 'comment' => $comment ) ); ?>
+					<?= $app->renderView( 'WallController', 'messageButtons', [ 'comment' => $comment ] ); ?>
 				</div>
 			</div>
 			<div class="edit-buttons sourceview">

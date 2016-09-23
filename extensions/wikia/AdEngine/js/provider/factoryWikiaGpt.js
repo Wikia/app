@@ -1,20 +1,24 @@
 /*global define, require*/
 define('ext.wikia.adEngine.provider.factory.wikiaGpt', [
+	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.adLogicPageParams',
+	'ext.wikia.adEngine.provider.btfBlocker',
 	'ext.wikia.adEngine.provider.gpt.helper',
-	'wikia.geo',
 	'wikia.log',
 	require.optional('ext.wikia.adEngine.lookup.services')
-], function (adLogicPageParams, gptHelper, geo, log, lookups) {
+], function (adContext, adLogicPageParams, btfBlocker, gptHelper, log, lookups) {
 	'use strict';
-	var country = geo.getCountryCode();
 
-	function overrideSizes(slotMap, newSizes) {
-		var slotName;
-		for (slotName in slotMap) {
-			if (slotMap.hasOwnProperty(slotName) && newSizes[slotName]) {
-				slotMap[slotName].size = newSizes[slotName];
-			}
+	function overrideSizes(slotMap) {
+		var context = adContext.getContext();
+
+		if (context.opts.overridePrefootersSizes) {
+			slotMap.PREFOOTER_LEFT_BOXAD.size = '300x250,468x60,728x90';
+			delete slotMap.PREFOOTER_RIGHT_BOXAD;
+		}
+
+		if (!!slotMap.INCONTENT_LEADERBOARD && context.slots.incontentLeaderboardAsOutOfPage) {
+			delete slotMap.INCONTENT_LEADERBOARD.size;
 		}
 	}
 
@@ -26,18 +30,17 @@ define('ext.wikia.adEngine.provider.factory.wikiaGpt', [
 	 * @param {string} src          - src to set in slot targeting
 	 * @param {Object} slotMap      - slot map (slot name => targeting)
 	 * @param {Object} [extra]      - optional extra params
-	 * @param {function} [extra.beforeSuccess] - function to call before calling success
-	 * @param {function} [extra.beforeHop]     - function to call before calling hop
-	 * @param {boolean}  [extra.sraEnabled]    - whether to use Single Request Architecture
+	 * @param {function} [extra.beforeSuccess]  - function to call before calling success
+	 * @param {function} [extra.beforeCollapse] - function to call before calling collapse
+	 * @param {function} [extra.beforeHop]      - function to call before calling hop
+	 * @param {boolean}  [extra.sraEnabled]     - whether to use Single Request Architecture
 	 * @see extensions/wikia/AdEngine/js/providers/directGpt.js
 	 * @returns {{name: string, canHandleSlot: function, fillInSlot: function}}
 	 */
 	function createProvider(logGroup, providerName, src, slotMap, extra) {
 		extra = extra || {};
 
-		if (extra.overrideSizesPerCountry && extra.overrideSizesPerCountry[country]) {
-			overrideSizes(slotMap, extra.overrideSizesPerCountry[country]);
-		}
+		overrideSizes(slotMap);
 
 		function canHandleSlot(slotName) {
 			log(['canHandleSlot', slotName], 'debug', logGroup);
@@ -47,48 +50,47 @@ define('ext.wikia.adEngine.provider.factory.wikiaGpt', [
 			return ret;
 		}
 
-		function fillInSlot(slotName, slotElement, success, hop) {
-			log(['fillInSlot', slotName, slotElement, success, hop], 'debug', logGroup);
+		function addHook(slot, hookName, callback) {
+			log([hookName, slot.name], 'debug', logGroup);
 
-			var extraParams = {
-					sraEnabled: extra.sraEnabled,
-					recoverableSlots: extra.recoverableSlots
-				},
-				pageParams = adLogicPageParams.getPageLevelParams(),
-				slotTargeting = JSON.parse(JSON.stringify(slotMap[slotName])), // copy value
+			slot.pre(hookName, function (adInfo) {
+				if (typeof callback === 'function') {
+					callback(slot.name, adInfo);
+				}
+			});
+		}
+
+		function fillInSlot(slot) {
+			log(['fillInSlot', slot.name], 'debug', logGroup);
+
+			var pageParams = adLogicPageParams.getPageLevelParams(),
+				slotTargeting = JSON.parse(JSON.stringify(slotMap[slot.name])), // copy value
 				slotPath = [
-					'/5441', 'wka.' + pageParams.s0, pageParams.s1, '', pageParams.s2, src, slotName
+					'/5441', 'wka.' + pageParams.s0, pageParams.s1, '', pageParams.s2, src, slot.name
 				].join('/');
 
-			extraParams.success = function (adInfo) {
-				if (typeof extra.beforeSuccess === 'function') {
-					extra.beforeSuccess(slotName, adInfo);
-				}
-				success(adInfo);
-			};
+			addHook(slot, 'success', extra.beforeSuccess);
+			addHook(slot, 'collapse', extra.beforeCollapse);
+			addHook(slot, 'hop', extra.beforeHop);
 
-			extraParams.error = function (adInfo) {
-				if (typeof extra.beforeHop === 'function') {
-					extra.beforeHop(slotName, adInfo);
-				}
-				hop(adInfo);
-			};
-
-			slotTargeting.pos = slotTargeting.pos || slotName;
+			slotTargeting.pos = slotTargeting.pos || slot.name;
 			slotTargeting.src = src;
 
 			if (lookups) {
-				lookups.extendSlotTargeting(slotName, slotTargeting, providerName);
+				lookups.extendSlotTargeting(slot.name, slotTargeting, providerName);
 			}
 
-			gptHelper.pushAd(slotName, slotElement, slotPath, slotTargeting, extraParams);
-			log(['fillInSlot', slotName, success, hop, 'done'], 'debug', logGroup);
+			gptHelper.pushAd(slot, slotPath, slotTargeting, {
+				sraEnabled: extra.sraEnabled,
+				recoverableSlots: extra.recoverableSlots
+			});
+			log(['fillInSlot', slot.name, 'done'], 'debug', logGroup);
 		}
 
 		return {
 			name: providerName,
 			canHandleSlot: canHandleSlot,
-			fillInSlot: fillInSlot
+			fillInSlot: extra.atfSlots ? btfBlocker.decorate(extra.atfSlots, fillInSlot) : fillInSlot
 		};
 	}
 

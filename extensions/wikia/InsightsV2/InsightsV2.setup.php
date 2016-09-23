@@ -17,12 +17,12 @@ $dir = __DIR__ . '/';
 $wgExtensionCredits['specialpage'][] = [
 	'name' => 'Insights',
 	'descriptionmsg' => 'insights-desc',
-	'authors' => [
+	'author' => [
 		'Łukasz Konieczny',
 		'Adam Karminski <adamk@wikia-inc.com>',
 		'Kamil Koterba',
-	],
-	'version' => 1.0,
+		],
+	'version' => '2.0',
 	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/InsightsV2',
 ];
 
@@ -55,12 +55,6 @@ $wgSpecialPages['Insights'] = 'InsightsController';
 $wgSpecialPageGroups['Insights'] = 'wikia';
 
 /**
- * Permissions
- */
-$wgAvailableRights[] = 'insights';
-$wgGroupPermissions['*']['insights'] = true;
-
-/**
  * Models
  */
 $wgAutoloadClasses['InsightsModel'] = $dir . 'models/InsightsModel.php';
@@ -72,10 +66,11 @@ $wgAutoloadClasses['InsightsWantedpagesModel'] = $dir . 'models/InsightsWantedpa
 $wgAutoloadClasses['InsightsWithoutimagesModel'] = $dir . 'models/InsightsWithoutimagesModel.php';
 
 /**
- * Counting service
+ * Services
  */
 $wgAutoloadClasses['InsightsCountService'] = $dir . 'services/InsightsCountService.class.php';
 $wgAutoloadClasses['InsightsCountApiController'] = $dir . 'controllers/InsightsCountApiController.class.php';
+$wgAutoloadClasses['InsightsService'] = $dir . 'services/InsightsService.class.php';
 
 /**
  * The right rail module

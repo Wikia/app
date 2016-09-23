@@ -66,7 +66,15 @@ class WikiaApiQuerySiteinfo extends ApiQuerySiteinfo {
 		$data = array ();
 		foreach ($this->variablesList as $id => $variableName) {
 			$data[$id] = array( 'id' => $variableName );
-			$value = (array_key_exists($variableName, $GLOBALS) && !is_null($GLOBALS[$variableName])) ? $GLOBALS[$variableName] : "";
+			switch ($variableName) {
+				case 'wgWikiaGlobalUserGroups':
+					/** @var \Wikia\Service\User\Permissions\PermissionsService $permissionsService */
+					$permissionsService = \Wikia\DependencyInjection\Injector::getInjector()->get( \Wikia\Service\User\Permissions\PermissionsService::class );
+					$value = $permissionsService->getConfiguration()->getGlobalGroups();
+					break;
+				default:
+					$value = (array_key_exists($variableName, $GLOBALS) && !is_null($GLOBALS[$variableName])) ? $GLOBALS[$variableName] : "";
+			}
 			if ( is_array($value) ) {
 				$loop = 0; foreach ($value as $key => $v) {
 					$data[$id]["value".$loop] = array( 'id' => $key);

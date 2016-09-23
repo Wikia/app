@@ -1,6 +1,6 @@
 <li class="SpeechBubble message <?php echo ($isreply ? '':'message-main'); ?> <?php echo ($removedOrDeletedMessage ? 'hide ':'') . ($showRemovedBox?' message-removed':''); ?> <? echo 'message-'.$linkid ?>" id="<? echo $linkid ?>" data-id="<? echo $id ?>" data-is-reply="<?= $isreply == true ?>" <? if($collapsed):?> style="display:none" <? endif;?> >
 	<?php echo $head ?>
-	<?php echo $app->renderView( 'WallController', 'statusInfoBox', array('showDeleteOrRemoveInfo' => $showDeleteOrRemoveInfo, 'comment' => $comment) ); ?>
+	<?php echo $app->renderView( 'WallController', 'statusInfoBox', [ 'showDeleteOrRemoveInfo' => $showDeleteOrRemoveInfo, 'comment' => $comment ] ); ?>
 
 	<? if($showRemovedBox): ?>
 		<div class='removed-info speech-bubble-message-removed' >
@@ -42,9 +42,9 @@
 
 
 		<? if ( $wg->EnableMiniEditorExtForWall ):
-			echo $app->renderPartialCached( 'MiniEditorController', 'Header', 'Wall_message', array(
-				'attributes' => array( 'data-min-height' => 100, 'data-max-height' => 400 )
-			));
+			echo $app->renderPartialCached( 'MiniEditorController', 'Header', 'Wall_message', [
+				'attributes' => [ 'data-min-height' => 100, 'data-max-height' => 400 ]
+			] );
 		endif; ?>
 		<? if(!$isreply): ?>
 			<div class="msg-title"><a href="<?= $fullpageurl; ?>"><? echo $feedtitle ?></a></div>
@@ -79,9 +79,9 @@
 			<div class="timestamp">
 				<?php if($isEdited):?>
 					<? if($showSummary): ?>
-						<? echo wfMsg('wall-message-edited-summary', array('$1' => $summary, '$2' => $editorUrl, '$3' => $editorName, '$4' => $historyUrl )); ?>
+						<? echo wfMsg('wall-message-edited-summary', [ '$1' => $summary, '$2' => $editorUrl, '$3' => $editorName, '$4' => $historyUrl ] ); ?>
 					<? else: ?>
-						<? echo wfMsg('wall-message-edited', array( '$1' => $editorUrl, '$2' => $editorName, '$3' => $historyUrl )); ?>
+						<? echo wfMsg('wall-message-edited', [ '$1' => $editorUrl, '$2' => $editorName, '$3' => $historyUrl ] ); ?>
 					<? endif; ?>
 				<?php endif; ?>
 				<a href="<?= $fullpageurl; ?>" class="permalink" tabindex="-1">
@@ -94,7 +94,7 @@
 				</a>
 			</div>
 			<div class="buttonswrapper">
-				<?= $app->renderView( 'WallController', 'messageButtons', array('comment' => $comment)); ?>
+				<?= $app->renderView( 'WallController', 'messageButtons', [ 'comment' => $comment ] ); ?>
 			</div>
 			<?= $app->renderPartialCached( 'WallController', 'messageEditButtons', 'Wall_message' ); ?>
 		</div>
@@ -103,32 +103,32 @@
 		endif; ?>
 	</div>
 
-	<?php echo $app->renderView( 'WallController', 'statusInfoBox', array('showDeleteOrRemoveInfo' => $showClosedBox, 'comment' => $comment) ); ?>
+	<?php echo $app->renderView( 'WallController', 'statusInfoBox', [ 'showDeleteOrRemoveInfo' => $showClosedBox, 'comment' => $comment ] ); ?>
 
 	<? if(!$isreply): ?>
 		<ul class="replies">
 			<? if(!empty($replies)): ?>
 				<? $i =0;?>
 				<? if($showLoadMore): ?>
-					<?= $app->renderView( 'WallController', 'loadMore', array('repliesNumber' => $repliesNumber) ); ?>
+					<?= $app->renderView( 'WallController', 'loadMore', [ 'repliesNumber' => $repliesNumber ] ); ?>
 				<? endif; ?>
 				<? foreach( $replies as $key  => $val): ?>
 					<?php //TODO: move this logic to controler !!! ?>
 					<?php if(!$val->isRemove() || $showDeleteOrRemoveInfo): ?>
-						<?= $app->renderView( 'WallController', 'message', array('isThreadPage' => $isThreadPage, 'comment' => $val, 'isreply' => true, 'repliesNumber' => $repliesNumber, 'showRepliesNumber' => $showRepliesNumber,  'current' => $i)  ) ; ?>
+						<?= $app->renderView( 'WallController', 'message', [ 'isThreadPage' => $isThreadPage, 'comment' => $val, 'isreply' => true, 'repliesNumber' => $repliesNumber, 'showRepliesNumber' => $showRepliesNumber,  'current' => $i ] ) ; ?>
 					<?php else: ?>
-						<?= $app->renderView( 'WallController', 'messageRemoved', array('comment' => $val, 'repliesNumber' => $repliesNumber, 'showRepliesNumber' => $showRepliesNumber,  'current' => $i)) ; ?>
+						<?= $app->renderView( 'WallController', 'messageRemoved', [ 'comment' => $val, 'repliesNumber' => $repliesNumber, 'showRepliesNumber' => $showRepliesNumber,  'current' => $i ] ) ; ?>
 					<?php endif; ?>
 					<? $i++; ?>
 				<? endforeach; ?>
 			<? endif; ?>
 			<? if( $repliesNumber < $repliesLimit ) {
-				echo $app->renderViewCached( 'WallController', 'reply', 'Wall_message'.$showReplyForm, array('showReplyForm' => $showReplyForm ));
+				echo $app->renderViewCached( 'WallController', 'reply', 'Wall_message'.$showReplyForm, [ 'showReplyForm' => $showReplyForm ] );
 			} else {
-				echo "<div class=message-topic-error >" . wfMsgExt('wall-message-limit-reached', array('parsemag'), array( $repliesLimit )) . "</div>";
+				echo "<div class=message-topic-error >" . wfMsgExt('wall-message-limit-reached', [ 'parsemag' ], [ $repliesLimit ] ) . "</div>";
 			} ?>
 			<?php if($showTopics): ?>
-				<?= F::app()->renderPartial( 'Wall', 'relatedTopics', array('relatedTopics' => $relatedTopics) ) ?>
+				<?= F::app()->renderPartial( 'Wall', 'relatedTopics', [ 'relatedTopics' => $relatedTopics ] ) ?>
 			<?php endif; ?>
 		</ul>
 	<? endif; ?>

@@ -28,13 +28,21 @@ $(function() {
 			trackingMethod: 'internal'
 		});
 
+		function getPositionRightValue() {
+			var width = 0;
+
+			width = parseInt($('.search-container').css('padding-left'), 10) +
+				$('.account-navigation-container').width() +
+				$('.notifications-container').width();
+
+			return '-' + width + 'px';
+		}
+
 		// download necessary dependencies (AutoComplete plugin) and initialize search suggest feature for #search_field
 		WikiaSearchApp.prototype.initSuggest = function() {
 			var autocompleteReEscape = new RegExp('(\\' + ['/', '.', '*', '+', '?', '|', '(', ')',
 				'[', ']', '{', '}', '\\'].join('|\\') + ')', 'g');
-			$.when(
-					mw.loader.use('jquery.autocomplete')
-				).then($.proxy(function() {
+				mw.loader.using('jquery.autocomplete').then($.proxy(function() {
 					this.searchField.autocomplete({
 						serviceUrl: window.wgServer + window.wgScript + '?action=ajax&rs=getLinkSuggest&format=json',
 						onSelect: $.proxy(function(value, data, event) {
@@ -67,6 +75,7 @@ $(function() {
 						maxHeight: 1000,
 						selectedClass: 'selected',
 						width: '100%',
+						positionRight: getPositionRightValue(),
 						// Add span around every autocomplete result
 						fnFormatResult: function(value, data, currentValue) {
 							var pattern = '(' + currentValue.replace(autocompleteReEscape, '\\$1') + ')';

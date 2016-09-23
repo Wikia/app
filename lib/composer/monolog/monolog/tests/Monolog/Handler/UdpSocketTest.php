@@ -1,12 +1,25 @@
 <?php
 
+/*
+ * This file is part of the Monolog package.
+ *
+ * (c) Jordi Boggiano <j.boggiano@seld.be>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Monolog\Handler;
 
 use Monolog\TestCase;
+use Monolog\Handler\SyslogUdp\UdpSocket;
 
+/**
+ * @requires extension sockets
+ */
 class UdpSocketTest extends TestCase
 {
-    public function testWeDoNotSplitShortMessages()
+    public function testWeDoNotTruncateShortMessages()
     {
         $socket = $this->getMock('\Monolog\Handler\SyslogUdp\UdpSocket', array('send'), array('lol', 'lol'));
 
@@ -17,29 +30,35 @@ class UdpSocketTest extends TestCase
         $socket->write("The quick brown fox jumps over the lazy dog", "HEADER: ");
     }
 
-    public function testWeSplitLongMessages()
+    public function testLongMessagesAreTruncated()
     {
         $socket = $this->getMock('\Monolog\Handler\SyslogUdp\UdpSocket', array('send'), array('lol', 'lol'));
 
-        $socket->expects($this->at(1))
+        $truncatedString = str_repeat("derp", 16254).'d';
+
+        $socket->expects($this->exactly(1))
             ->method('send')
-            ->with("The quick brown fox jumps over the lazy dog");
+            ->with("HEADER" . $truncatedString);
 
-        $aStringOfLength2048 = str_repeat("derp", 2048/4);
+        $longString = str_repeat("derp", 20000);
 
-        $socket->write($aStringOfLength2048."The quick brown fox jumps over the lazy dog");
+        $socket->write($longString, "HEADER");
     }
 
-    public function testAllSplitMessagesHasAHeader()
+    public function testDoubleCloseDoesNotError()
     {
-        $socket = $this->getMock('\Monolog\Handler\SyslogUdp\UdpSocket', array('send'), array('lol', 'lol'));
+        $socket = new UdpSocket('127.0.0.1', 514);
+        $socket->close();
+        $socket->close();
+    }
 
-        $socket->expects($this->exactly(5))
-            ->method('send')
-            ->with($this->stringStartsWith("HEADER"));
-
-        $aStringOfLength8192 = str_repeat("derp", 2048);
-
-        $socket->write($aStringOfLength8192, "HEADER");
+    /**
+     * @expectedException LogicException
+     */
+    public function testWriteAfterCloseErrors()
+    {
+        $socket = new UdpSocket('127.0.0.1', 514);
+        $socket->close();
+        $socket->write('foo', "HEADER");
     }
 }

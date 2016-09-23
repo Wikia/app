@@ -27,11 +27,6 @@ $wgExtensionCredits['specialpage'][] = array(
 	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/EditAccount'
 );
 
-// New user right, required to use the extension.
-$wgAvailableRights[] = 'editaccount';
-$wgGroupPermissions['*']['editaccount'] = false;
-$wgGroupPermissions['util']['editaccount'] = true;
-
 // Log definition
 $wgLogTypes[] = 'editaccnt';
 $wgLogNames['editaccnt'] = 'editaccount-log';
@@ -41,9 +36,6 @@ $wgLogActions['editaccnt/passchange'] = 'editaccount-log-entry-pass';
 $wgLogActions['editaccnt/realnamechange'] = 'editaccount-log-entry-realname';
 $wgLogActions['editaccnt/closeaccnt'] = 'editaccount-log-entry-close';
 $wgLogRestrictions['editaccnt'] = 'editaccount';
-
-// Log user email changes
-$wgHooks['BeforeUserSetEmail'][] = 'EditAccount::logEmailChanges';
 
 // Set up the new special page
 $wgExtensionMessagesFiles['EditAccount'] = __DIR__ . '/SpecialEditAccount.i18n.php';

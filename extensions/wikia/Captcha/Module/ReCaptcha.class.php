@@ -36,8 +36,7 @@ class ReCaptcha extends BaseCaptcha {
 	public function passCaptcha() {
 		$verifyUrl = $this->getVerifyUrl();
 
-		$responseObj = \Http::get( $verifyUrl, 'default', [
-			'noProxy' => true,
+		$responseObj = \ExternalHttp::get( $verifyUrl, 'default', [
 			'returnInstance' => true
 		] );
 
@@ -84,11 +83,11 @@ class ReCaptcha extends BaseCaptcha {
 	 */
 	public function getMessage( $action ) {
 		// Possible keys for easy grepping: recaptcha-edit, recaptcha-addurl, recaptcha-createaccount, recaptcha-create
-		$name = 'recaptcha-' . $action;
+		$name = 'captcha-recaptcha-' . $action;
 		$text = wfMessage( $name )->escaped();
 
 		// Obtain a more tailored message, if possible, otherwise, fall back to the default for edits
-		$msg = wfMessage( $name )->isBlank() ? wfMessage( 'recaptcha-edit' )->escaped() : $text;
+		$msg = wfMessage( $name )->isBlank() ? wfMessage( 'captcha-recaptcha-edit' )->escaped() : $text;
 
 		return $msg;
 	}

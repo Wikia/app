@@ -9,8 +9,23 @@ describe('ext.wikia.adEngine.adEngine', function () {
 		noop = function () { return; },
 		originalLazyQueue = modules['wikia.lazyqueue'](),
 		adDecoratorLegacyParamFormatMock = function (fillInSlot) { return fillInSlot; },
+		adSlotMock = {
+			create: function (slotName, slotElement, callbacks) {
+				return {
+					name: slotName,
+					success: callbacks.success || noop,
+					hop: callbacks.hop || noop,
+					post: noop
+				};
+			}
+		},
+		hooksMock = noop,
 		slotTrackerMock = function () { return { track: noop }; },
-		slotTweakerMock = { show: noop, hide: noop },
+		slotTweakerMock = {
+			show: noop,
+			hide: noop,
+			isTopLeaderboard: noop
+		},
 		docMock = {
 			getElementById: function () {
 				return {
@@ -45,13 +60,15 @@ describe('ext.wikia.adEngine.adEngine', function () {
 
 	function getAdEngine(lazyQueueMock, adDecoratorMock) {
 		return modules['ext.wikia.adEngine.adEngine'](
-			docMock,
-			logMock,
-			lazyQueueMock,
 			adDecoratorMock || adDecoratorLegacyParamFormatMock,
 			eventDispatcher,
+			adSlotMock,
 			slotTrackerMock,
-			slotTweakerMock
+			slotTweakerMock,
+			hooksMock,
+			docMock,
+			lazyQueueMock,
+			logMock
 		);
 	}
 
@@ -139,12 +156,12 @@ describe('ext.wikia.adEngine.adEngine', function () {
 			);
 
 			expect(fakeProvider.fillInSlot.calls.count()).toBe(2, 'AdProvider*.fillInSlot called 2 times');
-			expect(fakeProvider.fillInSlot.calls.argsFor(0)).toEqual(
-				['slot1', jasmine.any(Object), jasmine.any(Function), jasmine.any(Function)],
+			expect(fakeProvider.fillInSlot.calls.argsFor(0)[0].name).toEqual(
+				'slot1',
 				'AdProvider*.fillInSlot called for slot1'
 			);
-			expect(fakeProvider.fillInSlot.calls.argsFor(1)).toEqual(
-				['slot2', jasmine.any(Object), jasmine.any(Function), jasmine.any(Function)],
+			expect(fakeProvider.fillInSlot.calls.argsFor(1)[0].name).toEqual(
+				'slot2',
 				'AdProvider*.fillInSlot called for slot2'
 			);
 		}
@@ -182,8 +199,8 @@ describe('ext.wikia.adEngine.adEngine', function () {
 	});
 
 	it('Calls all the provider in the chain and then hides the slot if all of the hop', function () {
-		function callHop(slotname, slotElement, success, hop) {
-			hop();
+		function callHop(slot) {
+			slot.hop();
 		}
 
 		var fakeProvider1 = {

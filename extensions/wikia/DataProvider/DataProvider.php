@@ -34,8 +34,10 @@ class DataProvider {
 
 	/**
 	 * Author: Tomasz Klim (tomek at wikia.com)
+	 *
+	 * @return DataProvider
 	 */
-	final public static function &singleton(&$skin = false) {
+	final public static function singleton(&$skin = false) {
 		static $instance;
 		if (!isset($instance)) {
 			$instance = new DataProvider($skin);
@@ -43,7 +45,7 @@ class DataProvider {
 		return $instance;
 	}
 
-	final private function DataProvider(&$skin) {
+	final private function __construct(&$skin) {
 		$this->skin =& $skin;
 	}
 
@@ -479,7 +481,7 @@ class DataProvider {
 			while ($row = $dbs->fetchObject($res)) {
 				$user = User::newFromID($row->user_id);
 
-				if (!$user->isBlocked() && !$user->isAllowed('bot')
+				if (!$user->isBlocked( true, false ) && !$user->isAllowed('bot')
 					&& $user->getUserPage()->exists()
 				) {
 					$article['url'] = $user->getUserPage()->getLocalUrl();

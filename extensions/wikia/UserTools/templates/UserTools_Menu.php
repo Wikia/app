@@ -10,7 +10,7 @@
 	<span class="arrow-icon-ctr"><span class="arrow-icon arrow-icon-single"></span></span>
 	<a href="#"><?= htmlspecialchars( $item['caption'] ); ?></a>
 	<ul id="my-tools-menu" class="tools-menu">
-		<?= F::app()->renderView( 'UserTools', 'Menu', array( 'format' => 'html', 'items' => $item['items'] ) ); ?>
+		<?= F::app()->renderView( 'UserTools', 'Menu', [ 'format' => 'html', 'type' => 'submenu', 'items' => $item['items'] ] ); ?>
 	</ul>
 </li>
 <?php     break; ?>

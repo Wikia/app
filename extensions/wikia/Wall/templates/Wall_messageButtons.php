@@ -9,108 +9,108 @@
 	<? endif; ?>
 
 	<?php
-		$dropdown = array();
+		$dropdown = [ ];
 
 		if ( $canEdit ) {
-			$dropdown[] = array(
+			$dropdown[] = [
 				'class' => 'edit-message',
 				'href' => '#',
 				'text' => wfMessage( 'wall-message-edit' )->escaped(),
-			);
+			];
 		}
 
-		$dropdown[] = array(
+		$dropdown[] = [
 			'class' => 'thread-history',
 			'href' => $threadHistoryLink,
 			'text' => wfMessage( 'history_short' )->escaped(),
-		);
+		];
 
 		if ( $canAdminDelete ) {
-			$dropdown[] = array(
+			$dropdown[] = [
 				'attr' => 'data-mode="admin"',
 				'class' => 'admin-delete-message',
 				'href' => '#',
 				'text' => wfMessage( 'wall-message-delete' )->escaped(),
-			);
+			];
 		}
 
 		if ( $showViewSource ) {
-			$dropdown[] = array(
+			$dropdown[] = [
 				'class' => 'source-message',
 				'href' => '#',
 				'text' => wfMessage( 'user-action-menu-view-source' )->escaped(),
-			);
+			];
 		}
 
 		if ( $canRemove ) {
-			$dropdown[] = array(
+			$dropdown[] = [
 				'attr' => 'data-mode="remove"',
 				'class' => 'remove-message',
 				'href' => '#',
 				'text' => wfMessage( 'wall-message-remove' )->escaped(),
-			);
+			];
 		}
 
 		if ( $canDelete ) {
-			$dropdown[] = array(
+			$dropdown[] = [
 				'attr' => 'data-mode="rev"',
 				'class' => 'delete-message',
 				'href' => '#',
 				'text' => wfMessage( 'wall-message-rev-delete' )->escaped(),
-			);
+			];
 		}
 
 		if ( $canNotifyeveryone ) {
-			$dropdown[] = array(
+			$dropdown[] = [
 				'attr' => 'data-dir="1"',
 				'class' => 'edit-notifyeveryone',
 				'href' => '#',
 				'text' => wfMessage( 'wall-message-notifyeveryone' )->escaped(),
-			);
+			];
 		}
 
 		if ( $canUnnotifyeveryone ) {
-			$dropdown[] = array(
+			$dropdown[] = [
 				'attr' => 'data-mode="0"',
 				'class' => 'edit-notifyeveryone',
 				'href' => '#',
 				'text' => wfMessage( 'wall-message-unnotifyeveryone' )->escaped(),
-			);
+			];
 		}
 
 		if ( $canClose ) {
-			$dropdown[] = array(
+			$dropdown[] = [
 				'attr' => 'data-mode="close"',
 				'class' => 'close-thread',
 				'href' => '#',
 				'text' => wfMessage( 'wall-message-close-thread' )->escaped(),
-			);
+			];
 		}
 
 		if ( $canReopen ) {
-			$dropdown[] = array(
+			$dropdown[] = [
 				'class' => 'reopen-thread',
 				'href' => '#',
 				'text' => wfMessage( 'wall-message-reopen-thread' )->escaped(),
-			);
+			];
 		}
 
 		if ( $canMove ) {
-			$dropdown[] = array(
+			$dropdown[] = [
 				'class' => 'move-thread',
 				'href' => '#',
 				'text' => wfMessage( 'wall-message-move-thread' )->escaped(),
-			);
+			];
 		}
 	?>
 	<?php if ( !empty( $dropdown ) ): ?>
 		<?= F::app()->renderView( 'MenuButton',
 			'Index',
-			array(
-				'action' => array( 'text' => wfMessage( 'wall-message-more' )->escaped(), 'id' => '' ),
+			[
+				'action' => [ 'text' => wfMessage( 'wall-message-more' )->escaped(), 'id' => '' ],
 				'class' => 'secondary',
 				'dropdown' => $dropdown
-			)
+			]
 		) ?>
 	<?php endif; ?>
 </div>

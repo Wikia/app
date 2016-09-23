@@ -47,7 +47,7 @@ class BaseDump {
 	var $lastRev = 0;
 	var $infiles = null;
 
-	function BaseDump( $infile ) {
+	function __construct( $infile ) {
 		$this->infiles = explode(';',$infile);
 		$this->reader = new XMLReader();
 		$infile = array_shift($this->infiles);

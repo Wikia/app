@@ -7,7 +7,8 @@
 	@media #{$breakpoint-not-supported} {
 		.global-navigation {
 			min-width: 767px;
-			position: relative;
+			position: absolute;
+			top: 0;
 		}
 	}
 

@@ -1,0 +1,35 @@
+<!-- Begin Nielsen body tag -->
+<script type="text/javascript">
+	(function() {
+		function trackPageView() {
+			var _nolggGlobalParams = {
+					sfcode: 'dcr',
+					apid: '{{appId}}',
+					apn: 'wikiaCOM'
+				},
+				assetidRnd = Math.round(1000000 * Math.random());
+
+			if( typeof(_nolggGlobalParams.apid) !== "string" || _nolggGlobalParams.apid === "" || _nolggGlobalParams.apid === "FIXME" ) {
+				throw "Invalid Nielsen apid";
+			}
+
+			gg1 = NOLCMB.getInstance(_nolggGlobalParams);
+			staticmeta = {
+				type: 'static',
+				assetid: assetidRnd,
+				section: '{{section}}',
+				segA: '{{dbName}}',
+				segB: '',
+				segC: ''
+			};
+
+			gg1.ggInitialize(_nolggGlobalParams);
+			gg1.ggPM('staticstart', staticmeta);
+		}
+
+		document.addEventListener("DOMContentLoaded", function() {
+			window.nielsenCmd.push(trackPageView);
+		});
+	})();
+</script>
+<!-- End Nielsen body tag -->

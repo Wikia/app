@@ -51,6 +51,29 @@ class TemplateTypesParser {
 		return true;
 	}
 
+
+	/**
+	 * @desc run resolve methods after whole article was parsed
+	 *
+	 * @param $parser
+	 * @param $html
+	 * @return bool
+	 */
+	public static function onParserAfterTidy( $parser, &$html ) {
+		global $wgEnableNavigationTemplateParsing;
+		wfProfileIn( __METHOD__ );
+
+		if ( self::shouldTemplateBeParsed() ) {
+			if ( $wgEnableNavigationTemplateParsing ) {
+				NavigationTemplate::resolve( $html );
+			}
+		}
+
+		wfProfileOut( __METHOD__ );
+
+		return true;
+	}
+
 	/**
 	 * @desc alters template parser output based on its arguments and template type
 	 *
@@ -67,16 +90,14 @@ class TemplateTypesParser {
 
 		if ( self::shouldTemplateBeParsed() && !is_null( $args ) ) {
 			$type = self::getTemplateType( $title );
-			$templateArgs = TemplateArgsHelper::getTemplateArgs( $args, $frame );
 
 			if ( $type === TemplateClassificationService::TEMPLATE_SCROLLBOX && $wgEnableScrollboxTemplateParsing ) {
+				$templateArgs = TemplateArgsHelper::getTemplateArgs( $args, $frame );
 				$outputText = ScrollboxTemplate::getLongestElement( $templateArgs );
 			}
 
-			if ( ( $type === TemplateClassificationService::TEMPLATE_QUOTE
-				   || $type === TemplateClassificationService::TEMPLATE_QUOTE )
-				 && $wgEnableQuoteTemplateParsing
-			) {
+			if ( $type === TemplateClassificationService::TEMPLATE_QUOTE && $wgEnableQuoteTemplateParsing ) {
+				$templateArgs = TemplateArgsHelper::getTemplateArgs( $args, $frame );
 				$outputText = QuoteTemplate::execute( $templateArgs );
 			}
 		}
@@ -95,18 +116,24 @@ class TemplateTypesParser {
 	 * @return bool
 	 */
 	public static function onEndBraceSubstitution( $templateTitle, &$templateWikitext, &$parser ) {
-		global $wgEnableContextLinkTemplateParsing, $wgEnableInfoIconTemplateParsing;
+		global $wgEnableContextLinkTemplateParsing, $wgEnableInfoIconTemplateParsing, $wgEnableNavigationTemplateParsing;
 		wfProfileIn( __METHOD__ );
 
-		if ( self::isSuitableForProcessing( $templateWikitext ) ) {
+		if ( self::isSuitableForProcessing( $templateWikitext ) &&
+			 ( $wgEnableContextLinkTemplateParsing ||
+			   $wgEnableInfoIconTemplateParsing ||
+			   $wgEnableNavigationTemplateParsing )
+		) {
 			$title = self::getValidTemplateTitle( $templateTitle );
 
 			if ( $title ) {
 				$type = self::getTemplateType( $title );
 				if ( $wgEnableContextLinkTemplateParsing && $type == TemplateClassificationService::TEMPLATE_CONTEXT_LINK ) {
 					$templateWikitext = ContextLinkTemplate::handle( $templateWikitext );
-				} else if ( $wgEnableInfoIconTemplateParsing && $type == TemplateClassificationService::TEMPLATE_INFOICON ) {
+				} elseif ( $wgEnableInfoIconTemplateParsing && $type == TemplateClassificationService::TEMPLATE_INFOICON ) {
 					$templateWikitext = InfoIconTemplate::handle( $templateWikitext, $parser );
+				} elseif ( $wgEnableNavigationTemplateParsing && $type == TemplateClassificationService::TEMPLATE_NAV ) {
+					$templateWikitext = NavigationTemplate::removeInnerMarks( $templateWikitext );
 				}
 			}
 		}
@@ -152,9 +179,9 @@ class TemplateTypesParser {
 	 */
 	private static function isSuitableForProcessing( $wikitext ) {
 		return self::shouldTemplateBeParsed()
-			&& !empty( $wikitext )
-			&& !TemplateArgsHelper::containsUnexpandedArgs( $wikitext );
-		}
+			   && !empty( $wikitext )
+			   && !TemplateArgsHelper::containsUnexpandedArgs( $wikitext );
+	}
 
 	/**
 	 * @desc return a valid cached Title object for a given template title string

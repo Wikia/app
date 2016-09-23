@@ -10,11 +10,7 @@ describe('ext.wikia.adEngine.config.desktop', function () {
 		return {};
 	}
 
-	var uaIE8 = [
-			'Mozilla/5.0 (compatible; MSIE 8.0; Windows NT 6.1; Trident/4.0;',
-			'GTB7.4; InfoPath.2; SV1; .NET CLR 3.3.69573; WOW64; en-US)'
-		].join(''),
-		mocks = {
+	var mocks = {
 			adDecoratorPageDimensions: noop,
 			getAdContextOpts: function () {
 				return {
@@ -44,30 +40,20 @@ describe('ext.wikia.adEngine.config.desktop', function () {
 				directGpt: {
 					name: 'direct'
 				},
-				evolve: {
-					name: 'evolve',
-					canHandleSlot: noop
-				},
 				evolve2: {
 					name: 'evolve2',
 					canHandleSlot: noop
-				},
-				liftium: {
-					name: 'liftium'
 				},
 				monetizationService: {
 					name: 'monetizationService',
 					canHandleSlot: noop
 				},
-				openX: {
-					name: 'openX',
-					canHandleSlot: noop
-				},
 				remnantGpt: {
 					name: 'remnant'
 				},
-				sevenOneMedia: {
-					name: 'sevenOneMedia'
+				rubiconFastlane: {
+					name: 'rpfl',
+					canHandleSlot: noop
 				},
 				taboola: {
 					name: 'taboola',
@@ -80,8 +66,7 @@ describe('ext.wikia.adEngine.config.desktop', function () {
 			}
 		},
 		forcedProvidersMap = {
-			'liftium': mocks.providers.liftium.name,
-			'openx': mocks.providers.openX.name,
+			'evolve2': mocks.providers.evolve2.name,
 			'turtle': mocks.providers.turtle.name
 		};
 
@@ -94,13 +79,10 @@ describe('ext.wikia.adEngine.config.desktop', function () {
 			mocks.adsContext,
 			mocks.adDecoratorPageDimensions,
 			mocks.providers.directGpt,
-			mocks.providers.evolve,
 			mocks.providers.evolve2,
-			mocks.providers.liftium,
 			mocks.providers.monetizationService,
-			mocks.providers.openX,
 			mocks.providers.remnantGpt,
-			mocks.providers.sevenOneMedia,
+			mocks.providers.rubiconFastlane,
 			mocks.providers.turtle,
 			mocks.providers.taboola
 		);
@@ -115,85 +97,35 @@ describe('ext.wikia.adEngine.config.desktop', function () {
 		return providerNames.join(',');
 	}
 
-	it('default setup: Direct, Remnant, Liftium', function () {
-		expect(getProviders('foo')).toEqual('direct,remnant,liftium');
+	it('default setup: Direct, Remnant', function () {
+		expect(getProviders('foo')).toEqual('direct,remnant');
 	});
 
-	it('non-Evolve country, Evolve slot: Direct, Remnant, Liftium', function () {
-		expect(getProviders('foo')).toEqual('direct,remnant,liftium');
+	it('non-Evolve country, Evolve slot: Direct, Remnant', function () {
+		expect(getProviders('foo')).toEqual('direct,remnant');
 	});
 
-	it('NZ, Evolve slot: Evolve, Remnant, Liftium', function () {
+	it('non-Evolve slot: Direct, Remnant', function () {
 		spyOn(mocks.geo, 'getCountryCode').and.returnValue('NZ');
-		spyOn(mocks.providers.evolve, 'canHandleSlot').and.returnValue(true);
-		expect(getProviders('foo')).toEqual('evolve,remnant,liftium');
+		expect(getProviders('foo')).toEqual('direct,remnant');
 	});
 
-	it('NZ, not Evolve slot: Direct, Remnant, Liftium', function () {
-		spyOn(mocks.geo, 'getCountryCode').and.returnValue('NZ');
-		expect(getProviders('foo')).toEqual('direct,remnant,liftium');
-	});
-
-	it('Turtle: Turtle, Remnant, Liftium', function () {
+	it('Turtle: Turtle, Remnant', function () {
 		spyOn(mocks.providers.turtle, 'canHandleSlot').and.returnValue(true);
 		spyOn(mocks, 'getAdContextProviders').and.returnValue({turtle: true});
-		expect(getProviders('foo')).toEqual('turtle,remnant,liftium');
+		expect(getProviders('foo')).toEqual('turtle,remnant');
 	});
 
-	it('Turtle cannot handle slot: Direct, Remnant, Liftium', function () {
+	it('Turtle cannot handle slot: Direct, Remnant', function () {
 		spyOn(mocks.providers.turtle, 'canHandleSlot').and.returnValue(false);
 		spyOn(mocks, 'getAdContextProviders').and.returnValue({turtle: true});
-		expect(getProviders('foo')).toEqual('direct,remnant,liftium');
+		expect(getProviders('foo')).toEqual('direct,remnant');
 	});
 
-	it('non-Evolve country, SevenOne Media on: SevenOneMedia', function () {
-		spyOn(mocks, 'getAdContextProviders').and.returnValue({sevenOneMedia: true});
-		expect(getProviders('foo')).toEqual('sevenOneMedia');
-	});
-
-	it('non-Evolve country, Evolve-slot, SevenOne Media on: SevenOneMedia', function () {
-		spyOn(mocks.providers.evolve, 'canHandleSlot').and.returnValue(true);
-		spyOn(mocks, 'getAdContextProviders').and.returnValue({sevenOneMedia: true});
-		expect(getProviders('foo')).toEqual('sevenOneMedia');
-	});
-
-	it('non-Evolve country, Evolve-slot, SevenOne Media on: SevenOneMedia', function () {
+	it('Evolve country, Evolve-slot', function () {
 		spyOn(mocks.providers.evolve2, 'canHandleSlot').and.returnValue(true);
 		spyOn(mocks, 'getAdContextProviders').and.returnValue({evolve2: true});
-		expect(getProviders('foo')).toEqual('evolve2,remnant,liftium');
-	});
-
-	it('NZ, Evolve-slot, SevenOne Media on: SevenOneMedia', function () {
-		spyOn(mocks.geo, 'getCountryCode').and.returnValue('NZ');
-		spyOn(mocks.providers.evolve, 'canHandleSlot').and.returnValue(true);
-		spyOn(mocks, 'getAdContextProviders').and.returnValue({sevenOneMedia: true});
-		expect(getProviders('foo')).toEqual('sevenOneMedia');
-	});
-
-	it('any country, SevenOne Media on, wgSitewideDisableSevenOneMedia on: None', function () {
-		spyOn(mocks.providers.evolve, 'canHandleSlot').and.returnValue(true);
-		spyOn(mocks, 'getAdContextProviders').and.returnValue({sevenOneMedia: true});
-		spyOn(mocks, 'getInstantGlobals').and.returnValue({wgSitewideDisableSevenOneMedia: true});
-		expect(getProviders('foo')).toEqual('');
-	});
-
-	it('any country, SevenOne Media off, wgSitewideDisableSevenOneMedia on: Direct, Remnant, Liftium', function () {
-		spyOn(mocks.providers.evolve, 'canHandleSlot').and.returnValue(true);
-		spyOn(mocks, 'getInstantGlobals').and.returnValue({wgSitewideDisableSevenOneMedia: true});
-		expect(getProviders('foo')).toEqual('direct,remnant,liftium');
-	});
-
-	it('any country, SevenOne Media on, IE8: None', function () {
-		spyOn(mocks.providers.evolve, 'canHandleSlot').and.returnValue(true);
-		spyOn(mocks, 'getAdContextProviders').and.returnValue({sevenOneMedia: true});
-		spyOn(mocks, 'getUserAgent').and.returnValue(uaIE8);
-		expect(getProviders('foo')).toEqual('');
-	});
-
-	it('any country, SevenOne Media off, IE8: Direct, Remnant, Liftium', function () {
-		spyOn(mocks.providers.evolve, 'canHandleSlot').and.returnValue(true);
-		spyOn(mocks, 'getUserAgent').and.returnValue(uaIE8);
-		expect(getProviders('foo')).toEqual('direct,remnant,liftium');
+		expect(getProviders('foo')).toEqual('evolve2,remnant');
 	});
 
 	it('any country, Taboola on, Taboola slot: Taboola', function () {
@@ -207,23 +139,18 @@ describe('ext.wikia.adEngine.config.desktop', function () {
 		expect(getProviders('foo')).not.toEqual('taboola');
 	});
 
-	it('default setup, wgSitewideDisableGpt on: just Liftium', function () {
+	it('Evolve country, wgSitewideDisableGpt on: Evolve', function () {
+		spyOn(mocks.providers.evolve2, 'canHandleSlot').and.returnValue(true);
+		spyOn(mocks, 'getAdContextProviders').and.returnValue({evolve2: true});
 		spyOn(mocks, 'getInstantGlobals').and.returnValue({wgSitewideDisableGpt: true});
-		expect(getProviders('foo')).toEqual('liftium');
+		expect(getProviders('foo')).toEqual('evolve2');
 	});
 
-	it('Evolve country, wgSitewideDisableGpt on: Evolve, Liftium', function () {
-		spyOn(mocks.geo, 'getCountryCode').and.returnValue('NZ');
-		spyOn(mocks.providers.evolve, 'canHandleSlot').and.returnValue(true);
-		spyOn(mocks, 'getInstantGlobals').and.returnValue({wgSitewideDisableGpt: true});
-		expect(getProviders('foo')).toEqual('evolve,liftium');
-	});
-
-	it('Turtle country, wgSitewideDisableGpt on: Turtle, Liftium', function () {
+	it('Turtle country, wgSitewideDisableGpt on: Turtle', function () {
 		spyOn(mocks.providers.turtle, 'canHandleSlot').and.returnValue(true);
 		spyOn(mocks, 'getAdContextProviders').and.returnValue({turtle: true});
 		spyOn(mocks, 'getInstantGlobals').and.returnValue({wgSitewideDisableGpt: true});
-		expect(getProviders('foo')).toEqual('turtle,liftium');
+		expect(getProviders('foo')).toEqual('turtle');
 	});
 
 	it('any country, Monetization Service on, Monetization Service slot', function () {
@@ -237,17 +164,6 @@ describe('ext.wikia.adEngine.config.desktop', function () {
 		expect(getProviders('foo')).not.toEqual('monetizationService');
 	});
 
-	it('any country, OpenX on and can handle slot: Direct, Remnant, OpenX', function () {
-		spyOn(mocks, 'getAdContextProviders').and.returnValue({openX: true});
-		spyOn(mocks.providers.openX, 'canHandleSlot').and.returnValue(true);
-		expect(getProviders('foo')).toEqual('direct,remnant,openX');
-	});
-
-	it('any country, OpenX on but cannot handle slot: Direct, Remnant, Liftium', function () {
-		spyOn(mocks, 'getAdContextProviders').and.returnValue({openX: true});
-		expect(getProviders('foo')).toEqual('direct,remnant,liftium');
-	});
-
 	it('returns correct providers depending on forcedProvider', function () {
 		spyOn(mocks, 'getAdContextForcedProvider');
 
@@ -255,5 +171,24 @@ describe('ext.wikia.adEngine.config.desktop', function () {
 			mocks.getAdContextForcedProvider.and.returnValue(k);
 			expect(getProviders('foo')).toEqual(forcedProvidersMap[k]);
 		});
+	});
+
+	it('RubiconFastlane country but cannot handle slot: Direct, Remnant', function () {
+		spyOn(mocks.providers.rubiconFastlane, 'canHandleSlot').and.returnValue(false);
+		spyOn(mocks, 'getAdContextProviders').and.returnValue({rubiconFastlane: true});
+		expect(getProviders('foo')).toEqual('direct,remnant');
+	});
+
+	it('RubiconFastlane country and can handle slot: Direct, Remnant, RubiconFastlane', function () {
+		spyOn(mocks.providers.rubiconFastlane, 'canHandleSlot').and.returnValue(true);
+		spyOn(mocks, 'getAdContextProviders').and.returnValue({rubiconFastlane: true});
+		expect(getProviders('foo')).toEqual('direct,remnant,rpfl');
+	});
+
+	it('RubiconFastlane country and wgSitewideDisableGpt on: just RubiconFastlane', function () {
+		spyOn(mocks.providers.rubiconFastlane, 'canHandleSlot').and.returnValue(true);
+		spyOn(mocks, 'getInstantGlobals').and.returnValue({wgSitewideDisableGpt: true});
+		spyOn(mocks, 'getAdContextProviders').and.returnValue({rubiconFastlane: true});
+		expect(getProviders('foo')).toEqual('rpfl');
 	});
 });

@@ -6,13 +6,17 @@
 
 class AssetsManagerOneBuilder extends AssetsManagerBaseBuilder {
 
+	/**
+	 * @param WebRequest $request
+	 * @throws Exception
+	 */
 	public function __construct(WebRequest $request) {
 		parent::__construct($request);
 
 		global $IP;
 
 		if(strpos($this->mOid, '..') !== false) {
-			throw new Exception('File path must not contain \'..\'.');
+			throw new InvalidArgumentException('File path must not contain \'..\'.');
 		}
 
 		if(endsWith($this->mOid, '.js', false)) {
@@ -20,7 +24,7 @@ class AssetsManagerOneBuilder extends AssetsManagerBaseBuilder {
 		} else if(endsWith($this->mOid, '.css', false)) {
 			$this->mContentType = AssetsManager::TYPE_CSS;
 		} else {
-			throw new Exception('Requested file must be .css or .js.');
+			throw new InvalidArgumentException('Requested file must be .css or .js.');
 		}
 
 		$filePath = $IP . '/' . $this->mOid;
@@ -29,8 +33,6 @@ class AssetsManagerOneBuilder extends AssetsManagerBaseBuilder {
 			$this->mContent = file_get_contents($filePath);
 		}
 		else {
-			$requestDetails = AssetsManager::getRequestDetails();
-			Wikia::log(__METHOD__, false, "file '{$filePath}' doesn't exist ({$requestDetails})", true /* $always */);
 			throw new Exception('File does not exist');
 		}
 	}

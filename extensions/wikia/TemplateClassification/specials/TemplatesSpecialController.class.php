@@ -1,7 +1,6 @@
 <?php
 
-use Wikia\ContentReview\ContentReviewStatusesService;
-use Wikia\ContentReview\Helper;
+use Wikia\Paginator\Paginator;
 
 class TemplatesSpecialController extends WikiaSpecialPageController {
 
@@ -201,6 +200,12 @@ class TemplatesSpecialController extends WikiaSpecialPageController {
 			$template['wlh'] = SpecialPage::getTitleFor( 'Whatlinkshere', $title->getPrefixedText() )->getLocalURL();
 			$template['revision'] = $this->getRevisionData( $title );
 			$template['count'] = $this->wg->Lang->formatNum( $template['count'] );
+
+			if ( ( new UserTemplateClassificationService() )->isInfoboxType( $this->type ) ) {
+				$template['subgroup'] = !empty( PortableInfoboxDataService::newFromTitle( $title )->getData() ) ?
+					wfMessage( 'special-templates-portable-infobox' )->escaped() :
+					wfMessage( 'special-templates-non-portable-infobox' )->escaped();
+			}
 		}
 
 		return $template;
@@ -242,8 +247,7 @@ class TemplatesSpecialController extends WikiaSpecialPageController {
 	 * @param int $page
 	 */
 	private function preparePagination( $total, $page ) {
-		$itemsPerPage = self::ITEMS_PER_PAGE;
-		$params = [ 'page' => '%s' ];
+		$params = [];
 
 		if ( $this->type ) {
 			$params['type'] = $this->type;
@@ -252,13 +256,11 @@ class TemplatesSpecialController extends WikiaSpecialPageController {
 		if ( $this->templateName ) {
 			$params['template'] = $this->templateName;
 		}
+		$url = $this->specialPage->getTitle()->getLocalUrl( $params );
 
-		if ( $total > $itemsPerPage ) {
-			$paginator = Paginator::newFromArray( array_fill( 0, $total, '' ), $itemsPerPage, 3, false, '',  self::ITEMS_PER_PAGE );
-			$paginator->setActivePage( $page );
-			$url = urldecode( $this->specialPage->getTitle()->getLocalUrl( $params ) );
-			$this->paginatorBar = $paginator->getBarHTML( $url );
-		}
+		$paginator = new Paginator( $total, self::ITEMS_PER_PAGE, $url );
+		$paginator->setActivePage( $page + 1 );
+		$this->paginatorBar = $paginator->getBarHTML();
 	}
 
 	/**

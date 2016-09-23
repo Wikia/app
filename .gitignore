@@ -38,3 +38,4 @@ maintenance/.mweval_history
 
 composer.phar
 
+/messageCache

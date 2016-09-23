@@ -111,8 +111,22 @@ abstract class MapsGeocoder {
 	 * @return array or false
 	 */
 	public function geocode( $address ) {
-		$response = Http::get( $this->getRequestUrl( $address ) );
-		
+
+		// MAIN-6654: cache requests to this API because it has daily limits
+		global $wgMemc;
+		$key = wfMemcKey( "geocoder", $address );
+		$response = $wgMemc->get( $key );
+		if ( empty($response) ) {
+			$response = ExternalHttp::get( $this->getRequestUrl( $address ) ); # Wikia change
+			// MAIN-6654: make sure we do not return or store a bad response because it causes errors later
+			if ( strpos( $response, "OVER_QUERY_LIMIT" ) !== false ) {
+				$response = false;
+			}
+			if ( $response !== false ) {
+				$wgMemc->set( $key, $response, 86400 * 30 );  // 30 days
+			}
+		}
+
 		if ( $response === false ) {
 			return false;
 		}

@@ -18,6 +18,9 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 	exit( 1 );
 }
 
+use Wikia\DependencyInjection\Injector;
+use Wikia\Service\Helios\HeliosClient;
+
 class EditAccount extends SpecialPage {
 	/** @var User */
 	var $mUser = null;
@@ -38,7 +41,6 @@ class EditAccount extends SpecialPage {
 	 * @param $par Mixed: parameter passed to the page or null
 	 */
 	public function execute( $par ) {
-		global $wgExternalAuthType;
 
 		// Set page title and other stuff
 		$this->setHeaders();
@@ -149,9 +151,13 @@ class EditAccount extends SpecialPage {
 				$this->mStatus = $this->setRealName( $newRealName, $changeReason );
 				$template = 'displayuser';
 				break;
+			case 'logout':
+				$this->mStatus = $this->logOut();
+				$template = 'displayuser';
+				break;
 			case 'closeaccount':
 				$template = 'closeaccount';
-				$this->mStatus = (bool) $this->mUser->getGlobalFlag( 'requested-closure', 0 );
+				$this->mStatus = (bool) $this->mUser->getGlobalPreference( CloseMyAccountHelper::REQUEST_CLOSURE_PREF, 0 );
 				$this->mStatusMsg = $this->mStatus ? wfMsg( 'editaccount-requested' ) : wfMsg( 'editaccount-not-requested' );
 				break;
 			case 'closeaccountconfirm':
@@ -281,7 +287,6 @@ class EditAccount extends SpecialPage {
 				} else {
 					$this->mStatusMsg = wfMsg( 'editaccount-success-email', $this->mUser->mName, $email );
 				}
-				wfRunHooks( 'EditAccountEmailChanged', array( $this->mUser ) );
 				return true;
 			} else {
 				$this->mStatusMsg = wfMsg( 'editaccount-error-email', $this->mUser->mName );
@@ -370,20 +375,19 @@ class EditAccount extends SpecialPage {
 	/**
 	 * Clears the user's password, sets an empty e-mail and marks as disabled
 	 *
-	 * @param  User    $user         User account to close
-	 * @param  string  $changeReason Reason for change
-	 * @param  string  $mStatusMsg   Main error message
-	 * @param  string  $mStatusMsg2  Secondary (non-critical) error message
-	 * @param  boolean $keepEmail    Optionally keep the email address in a
-	 *                               user option
-	 * @return boolean               true on success, false on failure
+	 * @param string|User $user User account to close
+	 * @param  string $changeReason Reason for change
+	 * @param  string $mStatusMsg Main error message
+	 * @param  string $mStatusMsg2 Secondary (non-critical) error message
+	 * @param  boolean $keepEmail Optionally keep the email address in a user option
+	 * @return bool true on success, false on failure
+	 * @throws Exception
+	 * @throws MWException
 	 */
 	public static function closeAccount( $user = '', $changeReason = '', &$mStatusMsg = '', &$mStatusMsg2 = '', $keepEmail = true ) {
 		if ( empty( $user ) ) {
 			throw new Exception( 'User object is invalid.' );
 		}
-
-		$id = $user->getId();
 
 		# Set flag for Special:Contributions
 		# NOTE: requires FlagClosedAccounts.php to be included separately
@@ -420,7 +424,10 @@ class EditAccount extends SpecialPage {
 			// All clear!
 			$mStatusMsg = wfMessage( 'editaccount-success-close', $user->mName )->plain();
 
-			wfRunHooks( 'EditAccountClosed', array( $user ) );
+			/** @var HeliosClient $heliosClient */
+			$heliosClient = Injector::getInjector()->get(HeliosClient::class);
+			$heliosClient->forceLogout($user->getId());
+
 			return true;
 
 		} else {
@@ -530,23 +537,6 @@ class EditAccount extends SpecialPage {
 		return (wfGenerateToken() . $REQUIRED_CHARS);
 	}
 
-	/** Hook for storing historical log of email changes **/
-	public static function logEmailChanges($user, $new_email, $old_email) {
-		global $wgExternalSharedDB, $wgUser, $wgRequest;
-		if ( $wgExternalSharedDB && isset( $new_email ) && isset( $old_email ) ) {
-			$dbw = wfGetDB( DB_MASTER, array(), $wgExternalSharedDB );
-			$dbw->insert(
-				'user_email_log',
-				['user_id' => $user->getId(),
-				 'old_email' => $old_email,
-				 'new_email' => $new_email,
-				 'changed_by_id' => $wgUser->getId(),
-				 'changed_by_ip' => $wgRequest->getIP()		// stored as string
-				]);
-		}
-		return true;
-	}
-
 	public function displayLogData() {
 		global $wgExternalSharedDB, $wgOut, $wgRequest;
 
@@ -581,5 +571,30 @@ class EditAccount extends SpecialPage {
 		);
 
 		$wgOut->addHTML( $oTmpl->render( "changelog" ) );
+	}
+
+	private function logOut() {
+		$ok = false;
+		try {
+			/** @var HeliosClient $heliosClient */
+			$heliosClient = Injector::getInjector()->get(HeliosClient::class);
+			$response = $heliosClient->forceLogout($this->mUser->getId());
+
+			// successful logout returns 204 No Content and forceLogout() returns null
+			$ok = is_null($response);
+		} catch (\Wikia\Service\Helios\ClientException $e) {
+			\Wikia\Logger\WikiaLogger::instance()->error( "Exception while logging out user", [
+				'exception' => $e,
+				'user_name' => $this->mUser->getName()
+			] );
+		}
+
+		if ($ok) {
+			$this->mStatusMsg = $this->msg( 'editaccount-success-logout', $this->mUser->getName() );
+		} else {
+			$this->mStatusMsg = $this->msg( 'editaccount-error-logout', $this->mUser->getName() );
+		}
+
+		return $ok;
 	}
 }

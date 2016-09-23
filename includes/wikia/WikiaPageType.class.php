@@ -1,5 +1,7 @@
 <?php
 
+use Wikia\Util\Assert;
+
 /**
  * Utility class to check types of currently rendered page
  */
@@ -226,44 +228,59 @@ class WikiaPageType {
 	/**
 	 * Check if page is Wikia hub page, for example http://www.wikia.com/Video_games
 	 *
+	 * @param int|null $wikiId
 	 * @return bool
 	 */
-	public static function isWikiaHub() {
-		global $wgEnableWikiaHubsV3Ext;
+	public static function isWikiaHub( $wikiId = null ) {
+		global $wgCityId;
 
-		return !empty( $wgEnableWikiaHubsV3Ext );
+		return WikiFactory::getVarValueByName( 'wgEnableWikiaHubsV3Ext', $wikiId ?? $wgCityId );
 	}
 
 	/**
 	 * Check if current page is Wikia hub main page ( for hubs v3 )
 	 *
+	 * @param Title|null $title optional title to perform a check for (instead of wgTitle as it's not always set - see SUS-11)
 	 * @return bool
+	 * @throws \Wikia\Util\AssertionException
 	 */
-	public static function isWikiaHubMain() {
-		$title = self::getTitle();
-		$mainPageName = trim( str_replace( '_', ' ', wfMessage( 'mainpage' )->inContentLanguage()->text() ) );
+	public static function isWikiaHubMain( $title = null ) {
+		$title = $title ?: self::getTitle();
+
+		Assert::true( $title instanceof Title, __METHOD__ ); // SUS-11
+
+		$mainPageName = self::getMainPageName();
 		$isMainPage = ( strcasecmp( $mainPageName, $title->getText() ) === 0 ) && $title->getNamespace() === NS_MAIN;
 
 		return ( self::isWikiaHub() && $isMainPage );
 	}
 
 	/**
+	 * @return string
+	 */
+	public static function getMainPageName() {
+		return trim( str_replace( '_', ' ', wfMessage( 'mainpage' )->inContentLanguage()->text() ) );
+	}
+
+	/**
 	 * Check if current page is home page
 	 *
+	 * @param int|null $wikiId
 	 * @return bool
 	 */
-	public static function isWikiaHomePage() {
-		global $wgEnableWikiaHomePageExt;
+	public static function isWikiaHomePage( $wikiId = null ) {
+		global $wgCityId;
 
-		return !empty( $wgEnableWikiaHomePageExt );
+		return WikiFactory::getVarValueByName( 'wgEnableWikiaHomePageExt', $wikiId ?? $wgCityId );
 	}
 
 	/**
 	 * Check if current page is corporate page
 	 *
+	 * @param int|null $wikiId
 	 * @return bool
 	 */
-	public static function isCorporatePage() {
-		return self::isWikiaHub() || self::isWikiaHomePage();
+	public static function isCorporatePage( $wikiId = null ) {
+		return self::isWikiaHub( $wikiId ) || self::isWikiaHomePage( $wikiId );
 	}
 }

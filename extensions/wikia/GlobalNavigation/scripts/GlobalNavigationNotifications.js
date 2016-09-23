@@ -1,3 +1,8 @@
+// TODO XW-1943
+// don't update this file as it's no longer being used
+// we plan to keep it only until the Design System Global Navigation proves to be stable on production
+// the logic was copied to extensions/wikia/DesignSystem/scripts/DesignSystemGlobalNavigationNotifications.js
+
 require(
 	['jquery', 'wikia.window', 'wikia.nirvana', 'wikia.delayedhover', 'wikia.globalNavigationDropdowns'],
 	function($, window, nirvana, delayedHover, dropdowns) {
@@ -114,7 +119,7 @@ require(
 					var wikiEl = this.$wallNotifications.find('.notifications-for-wiki').first(),
 						firstWikiId = parseInt(wikiEl.data('wiki-id'), 10);
 
-					if (firstWikiId !== undefined) {
+					if ( !isNaN(firstWikiId) ) {
 						wikiEl.addClass('show');
 						this.fetchedCurrent = true;
 						this.currentWikiId = firstWikiId;
@@ -141,7 +146,6 @@ require(
 					method: 'markAllAsRead',
 					format: 'json',
 					data: {
-						username: window.wgTitle,
 						forceAll: forceAll
 					},
 					callback: this.proxy(function (data) {
@@ -174,7 +178,7 @@ require(
 				var wikiEl = this.$wallNotifications.find('.notifications-for-wiki').first(),
 					firstWikiId = parseInt(wikiEl.data('wiki-id'), 10);
 
-				if (firstWikiId !== undefined) {
+				if ( !isNaN(firstWikiId) ) {
 					wikiEl.addClass('show');
 					this.wikiShown = {};
 					this.wikiShown[firstWikiId] = true;
@@ -243,7 +247,6 @@ require(
 			updateWikiFetch: function (wikiId) {
 				var isCrossWiki = (wikiId === this.cityId) ? '0' : '1',
 					data = {
-						username: window.wgTitle,
 						wikiId: wikiId,
 						isCrossWiki: isCrossWiki
 					};

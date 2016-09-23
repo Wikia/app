@@ -9,13 +9,13 @@
 				$accesskey = ' accesskey="e"';
 			}
 ?>
-			<a<?= $accesskey ?> href="<?= htmlspecialchars($action['href']) ?>" class="<?= $class ?>" <?= ( !empty($nofollow) ? 'rel="nofollow"' : '' ); ?> data-id="<?= $actionName ?>"<?= $tooltip ?><?= $tabindex ?>><?= $icon ?> <?= htmlspecialchars($action['text']) ?><?= isset($action['html']) ? $action['html'] : '' ?></a>
+			<a<?= $accesskey ?> href="<?= htmlspecialchars($action['href']) ?>" class="<?= Sanitizer::encodeAttribute( $class ) ?>" <?= ( !empty($nofollow) ? 'rel="nofollow"' : '' ); ?> data-id="<?= $actionName ?>"<?= $tooltip ?><?= $tabindex ?>><?= $icon ?> <?= htmlspecialchars($action['text']) ?><?= isset($action['html']) ? $action['html'] : '' ?></a>
 <?php
 		}
 		// render edit button with dropdown
 		else {
 ?>
-<nav class="<?= $class ?><?= (isset($action['href']) || $actionName == 'submit') ? '' : ' combined' ?>" <?= empty($id) ? '' : 'id="'.$id.'"'?>>
+<nav class="<?= Sanitizer::encodeAttribute( $class ) ?><?= (isset($action['href']) || $actionName == 'submit') ? '' : ' combined' ?>" <?= empty($id) ? '' : 'id="'.$id.'"'?>>
 <?php
 			// render edit menu
 			if (isset($action['href'])) {
@@ -26,7 +26,7 @@
 <?php
 			}
 			else if ($actionName == 'submit') { ?>
-				<input id="<?= $action['id'] ?>" class="<?= $action['class'] ?>" type="submit" value="<?= $action['text'] ?>"/>
+				<input id="<?= $action['id'] ?>" class="<?= Sanitizer::encodeAttribute( $action['class'] ) ?>" type="submit" value="<?= $action['text'] ?>"/>
 <?php
 			}
 			// render menu without URL defined for a button
@@ -54,7 +54,7 @@
 				$href = isset($item['href']) ? htmlspecialchars($item['href']) : '#';
 ?>
 		<li>
-			<a href="<?= $href ?>" <?= $accesskey ?> data-id="<?= $key ?>" <?= empty($item['title']) ? '' : ' title="'.$item['title'].'"'; ?> <?= empty($item['id']) ? '' : ' id="'.$item['id'].'"' ?><?= empty($item['class']) ? '' : ' class="'.$item['class'].'"' ?><?= empty($item['attr']) ? '' : ' '.$item['attr'] ?>><?=htmlspecialchars($item['text']) ?></a>
+			<a href="<?= $href ?>" <?= $accesskey ?> data-id="<?= $key ?>" <?= empty($item['title']) ? '' : ' title="'.$item['title'].'"'; ?> <?= empty($item['id']) ? '' : ' id="'.$item['id'].'"' ?><?= empty($item['class']) ? '' : ' class="'. Sanitizer::encodeAttribute( $item['class'] ) .'"' ?><?= empty($item['attr']) ? '' : ' '.$item['attr'] ?>><?=htmlspecialchars($item['text']) ?></a>
 		</li>
 <?php
 			}

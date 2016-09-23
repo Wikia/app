@@ -3,24 +3,19 @@
 /*jshint camelcase: false*/
 define('ext.wikia.adEngine.provider.taboola', [
 	'ext.wikia.adEngine.adContext',
-	'ext.wikia.adEngine.recovery.helper',
+	'ext.wikia.aRecoveryEngine.recovery.helper',
 	'ext.wikia.adEngine.slotTweaker',
-	'wikia.abTest',
+	'ext.wikia.adEngine.taboolaHelper',
 	'wikia.geo',
 	'wikia.instantGlobals',
 	'wikia.log',
 	'wikia.window',
 	'wikia.document'
-], function (adContext, recoveryHelper, slotTweaker, abTest, geo, instantGlobals, log, window, document) {
+], function (adContext, recoveryHelper, slotTweaker, taboolaHelper, geo, instantGlobals, log, window, document) {
 	'use strict';
 
-	var abGroups = {
-			recovery: abTest.getGroup('PROJECT_43_TABOOLA') === 'YES',
-			regular: abTest.getGroup('NATIVE_ADS_TABOOLA') === 'YES'
-		},
-		config = instantGlobals.wgAdDriverTaboolaConfig || {},
+	var config = instantGlobals.wgAdDriverTaboolaConfig || {},
 		context = adContext.getContext(),
-		libraryLoaded = false,
 		logGroup = 'ext.wikia.adEngine.provider.taboola',
 		mappedVerticals = {
 			tv: 'Television',
@@ -31,7 +26,6 @@ define('ext.wikia.adEngine.provider.taboola', [
 			music: 'Music',
 			movies: 'Movies'
 		},
-		pageType = context.targeting.pageType,
 		readMoreDiv = document.getElementById('RelatedPagesModuleWrapper'),
 		slots = {
 			'NATIVE_TABOOLA_ARTICLE': {
@@ -43,6 +37,11 @@ define('ext.wikia.adEngine.provider.taboola', [
 				id: 'taboola-right-rail-thumbnails',
 				mode: 'thumbnails-rr',
 				label: 'Right Rail Thumbnails - '
+			},
+			'TOP_LEADERBOARD_AB': {
+				id: 'taboola-above-article-thumbnails',
+				mode: 'thumbnails-h-abp',
+				label: 'Above Article Thumbnails'
 			}
 		},
 		supportedSlots = {
@@ -61,13 +60,13 @@ define('ext.wikia.adEngine.provider.taboola', [
 			return false;
 		}
 
-		if (slots[slotName] && config[slotName] && abGroups.regular && geo.isProperGeo(config[slotName].regular)) {
+		if (slots[slotName] && config[slotName] && geo.isProperGeo(config[slotName].regular)) {
 			log(['canHandleSlot', 'Using regular taboola', slotName], 'debug', logGroup);
 			supportedSlots.regular.push(slotName);
 			return true;
 		}
 
-		if (slots[slotName] && config[slotName] && abGroups.recovery && geo.isProperGeo(config[slotName].recovery)) {
+		if (slots[slotName] && config[slotName] && geo.isProperGeo(config[slotName].recovery)) {
 			log(['canHandleSlot', 'Using recovery taboola', slotName], 'debug', logGroup);
 			supportedSlots.recovery.push(slotName);
 			return true;
@@ -76,58 +75,35 @@ define('ext.wikia.adEngine.provider.taboola', [
 		return false;
 	}
 
-	function loadTaboola() {
-		var taboolaInit = {},
-			taboolaScript,
-			url = '//cdn.taboola.com/libtrc/wikia-network/loader.js';
-
-		if (libraryLoaded) {
-			return;
-		}
-
-		taboolaInit[pageType] = 'auto';
-		window._taboola = window._taboola || [];
-		window._taboola.push(taboolaInit);
-		window._taboola.push({flush: true});
-
-		taboolaScript = document.createElement('script');
-		taboolaScript.async = true;
-		taboolaScript.src = url;
-		taboolaScript.id = logGroup;
-		document.getElementsByTagName('body')[0].appendChild(taboolaScript);
-
-		libraryLoaded = true;
-	}
-
-	function fillInSlot(slotName, slotElement, success) {
+	function fillInSlot(slot) {
 		var container = document.createElement('div'),
-			slot = slots[slotName];
-		log(['fillInSlot', slotName, slotElement], 'debug', logGroup);
+			mappedSlot = slots[slot.name];
+		log(['fillInSlot', slot.name], 'debug', logGroup);
 
-		if (slotName === 'NATIVE_TABOOLA_ARTICLE') {
+		if (slot.name === 'NATIVE_TABOOLA_ARTICLE') {
 			readMoreDiv.parentNode.removeChild(readMoreDiv);
 		}
-		loadTaboola();
-		container.id = slot.id;
-		slotElement.appendChild(container);
 
-		window._taboola.push({
-			mode: slot.mode,
+		container.id = mappedSlot.id;
+		slot.container.appendChild(container);
+
+		taboolaHelper.initializeWidget({
+			mode: mappedSlot.mode,
 			container: container.id,
-			placement: slot.label + getVerticalName(),
+			placement: mappedSlot.label + getVerticalName(),
 			target_type: 'mix'
 		});
 
-		slotTweaker.show(slotName);
-		success();
+		slotTweaker.show(slot.name);
+		slot.success();
 	}
 
-	function fillInSlotByConfig(slotName, slotElement, success) {
-		if (supportedSlots.regular.indexOf(slotName) !== -1) {
-			fillInSlot(slotName, slotElement, success);
-		} else if (supportedSlots.recovery.indexOf(slotName) !== -1) {
+	function fillInSlotByConfig(slot) {
+		if (supportedSlots.regular.indexOf(slot.name) !== -1) {
+			fillInSlot(slot);
+		} else if (supportedSlots.recovery.indexOf(slot.name) !== -1) {
 			recoveryHelper.addOnBlockingCallback(function () {
-				fillInSlot(slotName, slotElement, success);
+				fillInSlot(slot);
 			});
 		}
 	}

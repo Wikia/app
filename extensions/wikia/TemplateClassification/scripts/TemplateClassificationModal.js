@@ -6,14 +6,13 @@
  */
 define('TemplateClassificationModal',
 	['jquery', 'wikia.window', 'mw', 'wikia.loader', 'wikia.nirvana', 'wikia.tracker', 'wikia.throbber',
-		'TemplateClassificationLabeling'],
-function ($, w, mw, loader, nirvana, tracker, throbber, labeling) {
+		'TemplateClassificationLabeling', require.optional('wikia.infoboxBuilder.templateClassificationHelper')],
+function ($, w, mw, loader, nirvana, tracker, throbber, labeling, infoboxBuilderHelper) {
 	'use strict';
 
 	var $classificationForm,
 		$saveBtn,
 		$typeLabel,
-		$typeWrapper,
 		messagesLoaded,
 		modalConfig,
 		modalMode,
@@ -26,7 +25,8 @@ function ($, w, mw, loader, nirvana, tracker, throbber, labeling) {
 			trackingMethod: 'analytics'
 		}),
 		$w = $(w),
-		$throbber = $('#tc-throbber');
+		$throbber = $('#tc-throbber'),
+		forceClassificationModalMode = 'addTypeBeforePublish';
 
 	/**
 	 * @param {function} typeGetterProvided Method that should return type in json format,
@@ -42,8 +42,6 @@ function ($, w, mw, loader, nirvana, tracker, throbber, labeling) {
 		typeGetter = typeGetterProvided;
 		$typeLabel = $('.template-classification-type-text');
 
-		$w.on('keydown', openModalKeyboardShortcut);
-
 		$typeLabel.click(function (e) {
 			e.preventDefault();
 			openEditModal(mode);
@@ -58,12 +56,7 @@ function ($, w, mw, loader, nirvana, tracker, throbber, labeling) {
 
 		modalMode = modeProvided;
 
-		// Unbind modal opening keyboard shortcut while it's open
-		$w.unbind('keydown', openModalKeyboardShortcut);
-
 		labeling.init(modalMode);
-
-		dismissWelcomeHint();
 
 		if (!messagesLoaded) {
 			messagesLoader = getMessages;
@@ -146,14 +139,15 @@ function ($, w, mw, loader, nirvana, tracker, throbber, labeling) {
 		modalInstance.bind('close', function () {
 			$w.unbind('keypress', submitFormOnEnterKeyPress);
 
-			// Re-bind modal opening keyboard shortcut
-			$w.on('keydown', openModalKeyboardShortcut);
-
 			// Track - close TC modal
 			track({
 				action: tracker.ACTIONS.CLOSE,
 				label: 'close-event'
 			});
+
+			if (infoboxBuilderHelper) {
+				infoboxBuilderHelper.showHiddenEditor();
+			}
 		});
 
 		if (newTypeModes.indexOf(modalMode) >= 0) {
@@ -211,8 +205,14 @@ function ($, w, mw, loader, nirvana, tracker, throbber, labeling) {
 			});
 		}
 
-		if (modalMode === 'addTypeBeforePublish' && newTemplateType) {
+		if (modalMode === forceClassificationModalMode && newTemplateType) {
 			$('#wpSave').click();
+		} else if (
+			infoboxBuilderHelper &&
+			infoboxBuilderHelper.shouldRedirectToInfoboxBuilder(newTemplateType, modalMode)
+		) {
+			throbber.show(modalInstance.$content);
+			infoboxBuilderHelper.redirectToInfoboxBuilder();
 		} else {
 			modalInstance.trigger('close');
 		}
@@ -267,40 +267,9 @@ function ($, w, mw, loader, nirvana, tracker, throbber, labeling) {
 	}
 
 	function setupTooltip() {
-		$typeWrapper = $('.template-classification-type-wrapper');
-
-		if ($typeWrapper.data('mode') === 'welcome') {
-			mw.loader.using(
-				['ext.wikia.TemplateClassification.ModalMessages', 'mediawiki.jqueryMsg'],
-				function showWelcomeTooltip() {
-					$typeWrapper.tooltip({
-						title: mw.message(
-							'template-classification-entry-point-hint',
-							mw.config.get('wgUserName')
-						).parse()
-					}).tooltip('show');
-				}
-			);
-		} else {
-			$typeWrapper.tooltip({
-				delay: {show: 500, hide: 300}
-			});
-		}
-	}
-
-	function dismissWelcomeHint() {
-		if ($typeWrapper.data('has-seen-welcome') === 0) {
-			$typeWrapper.data('has-seen-welcome', 1);
-			$typeWrapper.tooltip('hide');
-			nirvana.sendRequest({
-				controller: 'TemplateClassification',
-				method: 'dismissWelcomeHint',
-				type: 'post',
-				data: {
-					token: mw.user.tokens.get('editToken')
-				}
-			});
-		}
+		$('.template-classification-type-wrapper').tooltip({
+			delay: {show: 500, hide: 300}
+		});
 	}
 
 	function getTemplateClassificationEditForm() {
@@ -323,16 +292,6 @@ function ($, w, mw, loader, nirvana, tracker, throbber, labeling) {
 
 	function falseFunction() {
 		return false;
-	}
-
-	function openModalKeyboardShortcut(e) {
-		var keyCode = e.keyCode ? e.keyCode : e.which;
-
-		// Shortcut - Shift + Action Key (Ctrl or Cmd) + K
-		if (e.shiftKey && (e.ctrlKey || e.metaKey) && keyCode === 75) {
-			e.preventDefault();
-			openEditModal('editType');
-		}
 	}
 
 	function submitFormOnEnterKeyPress(e) {

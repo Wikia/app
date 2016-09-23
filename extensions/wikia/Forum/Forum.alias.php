@@ -6,58 +6,58 @@
  * @ingroup Extensions
  */
 
-$specialPageAliases = array();
+$specialPageAliases = [ ];
 
 /**
  * English (English)
  */
-$specialPageAliases['en'] = array(
-	'Forum' => array( 'Forum', 'Forums' ),
-);
+$specialPageAliases['en'] = [
+	'Forum' => [ 'Forum', 'Forums' ],
+];
 
 /**
  * Spanish (Español)
  */
-$specialPageAliases['es'] = array(
-	'Forum' => array( 'Foro' ),
-);
+$specialPageAliases['es'] = [
+	'Forum' => [ 'Foro' ],
+];
 
 /**
  * Finnish (Suomi)
  */
-$specialPageAliases['fi'] = array(
-	'Forum' => array( 'Foorumi' ),
-);
+$specialPageAliases['fi'] = [
+	'Forum' => [ 'Foorumi' ],
+];
 
 /**
  * Hungarian (Magyar)
  */
-$specialPageAliases['hu'] = array(
-	'Forum' => array( 'Fórum', 'Fórumok' ),
-);
+$specialPageAliases['hu'] = [
+	'Forum' => [ 'Fórum', 'Fórumok' ],
+];
 
 /**
  * Korean (한국어)
  */
-$specialPageAliases['ko'] = array(
-	'Forum' => array( '포럼' ),
-);
+$specialPageAliases['ko'] = [
+	'Forum' => [ '포럼' ],
+];
 
 /**
  * Russian (Русский)
  */
-$specialPageAliases['ru'] = array(
-	'Forum' => array( 'Форум' ),
-);
+$specialPageAliases['ru'] = [
+	'Forum' => [ 'Форум' ],
+];
 
 /**
  * Vietnamese (Tiếng Việt)
  */
-$specialPageAliases['vi'] = array(
-	'Forum' => array( 'Diễn_đàn' ),
-);
+$specialPageAliases['vi'] = [
+	'Forum' => [ 'Diễn_đàn' ],
+];
 
 /** Japanese (日本語) */
-$specialPageAliases['ja'] = array(
-	'Forum' => array( 'フォーラム' )
-);
+$specialPageAliases['ja'] = [
+	'Forum' => [ 'フォーラム' ]
+];

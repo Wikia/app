@@ -284,6 +284,8 @@ function &smwfGetStore() {
 
 	if ( is_null( $smwgMasterStore ) ) {
 		$smwgMasterStore = new $smwgDefaultStore();
+
+		wfRunHooks( 'AfterSmwfGetStore', [ $smwgMasterStore ] ); # Wikia change / @macbre
 	}
 
 	return $smwgMasterStore;

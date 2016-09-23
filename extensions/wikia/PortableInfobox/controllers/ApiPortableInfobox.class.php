@@ -11,7 +11,7 @@ class ApiPortableInfobox extends ApiBase {
 		$title = $this->getParameter( "title" );
 		$arguments = $this->getFrameArguments();
 		if ( $arguments === null ) {
-			$this->getResult()->setWarning( "Arguments json format incorect or empty" );
+			$this->getResult()->setWarning( "Args param format is incorrect" );
 		}
 
 		/*
@@ -48,12 +48,12 @@ class ApiPortableInfobox extends ApiBase {
 		$wgParser->startExternalParse( Title::newFromText( $title ), ParserOptions::newFromContext( $this->getContext() ), Parser::OT_HTML, true );
 
 		if ( is_array( $arguments ) ) {
-			foreach( $arguments as $key => &$value ) {
-				$value =  $wgParser->replaceVariables( $value );
+			foreach ( $arguments as $key => &$value ) {
+				$value = $wgParser->replaceVariables( $value );
 			}
 		}
 
-		$frame = $wgParser->getPreprocessor()->newCustomFrame( $arguments );
+		$frame = $wgParser->getPreprocessor()->newCustomFrame( is_array( $arguments ) ? $arguments : [ ] );
 
 		try {
 			$output = PortableInfoboxParserTagController::getInstance()->render( $text, $wgParser, $frame );

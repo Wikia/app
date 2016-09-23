@@ -309,6 +309,16 @@ class OutputPage extends ContextSource {
 	 * @param $val String tag value
 	 */
 	function addMeta( $name, $val ) {
+		/** Wikia change begin: SEO-361: Investigate <meta name="description" content=" " /> */
+		if ( $name === 'description' && $val === ' ' ) {
+			array_push( $this->mMetatags, array( 'debug-description', 'SPACE' ) );
+			\Wikia\Logger\WikiaLogger::instance()->warning(
+				'Meta description containing just a space', [
+					'ex' => new Exception(),
+				]
+			);
+		}
+		/** Wikia change end */
 		array_push( $this->mMetatags, array( $name, $val ) );
 	}
 
@@ -831,11 +841,10 @@ class OutputPage extends ContextSource {
 	public function setHTMLTitle( $name ) {
 		/* Wikia change - begin */
 		if ( is_array( $name ) ) {
-			$parts = $name;
+			$this->mHTMLtitle = ( new WikiaHtmlTitle() )->setParts( $name )->getTitle();
 		} else {
-			$parts = [ $name ];
+			$this->mHTMLtitle = ( new WikiaHtmlTitle() )->generateTitle( $this->getTitle(), $name )->getTitle();
 		}
-		$this->mHTMLtitle = ( new WikiaHtmlTitle() )->setParts( $parts )->getTitle();
 		/* Wikia change - end */
 	}
 
@@ -1643,7 +1652,9 @@ class OutputPage extends ContextSource {
 	function addParserOutput( &$parserOutput ) {
 		$this->addParserOutputNoText( $parserOutput );
 		$text = $parserOutput->getText();
+
 		wfRunHooks( 'OutputPageBeforeHTML', array( &$this, &$text ) );
+
 		$this->addHTML( $text );
 	}
 
@@ -1820,6 +1831,20 @@ class OutputPage extends ContextSource {
 			}
 		}
 		$this->mVaryHeader[$header] = array_unique( (array)$this->mVaryHeader[$header] );
+	}
+
+	/**
+	 * Return a Vary: header on which to vary caches. Based on the keys of $mVaryHeader,
+	 * such as Accept-Encoding or Cookie
+	 *
+	 * @return string
+	 */
+	public function getVaryHeader() {
+		// If we vary on cookies, let's make sure it's always included here too.
+		if ( $this->getCacheVaryCookies() ) {
+			$this->addVaryHeader( 'Cookie' );
+		}
+		return 'Vary: ' . join( ', ', array_keys( $this->mVaryHeader ) );
 	}
 
 	/**
@@ -3104,6 +3129,7 @@ $templates
 	public function userCanPreview() {
 		if ( $this->getRequest()->getVal( 'action' ) != 'submit'
 			|| !$this->getRequest()->wasPosted()
+			|| !$this->getUser()->isLoggedIn()
 			|| !$this->getUser()->matchEditToken(
 				$this->getRequest()->getVal( 'wpEditToken' ) )
 		) {
@@ -3734,7 +3760,9 @@ $templates
 			}
 		}
 	}
+
 	/**
+	 * @param string|array $keyArr Surrogate keys (array or space-delimited string)
 	 * @author Wikia
 	 */
 	public function tagWithSurrogateKeys( $keyArr ) {

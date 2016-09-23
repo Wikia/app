@@ -110,7 +110,7 @@ class SharedToolbarService extends ToolbarService {
 			'SpecialPage:MostLinkedTemplates',
 			'SpecialPage:Mostpopularcategories',
 			'SpecialPage:NewPages',
-			'SpecialPage:NewFiles',
+			'SpecialPage:Images',
 			'SpecialPage:AncientPages',
 			'SpecialPage:LonelyPages',
 			'SpecialPage:FewestRevisions',

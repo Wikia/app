@@ -13,7 +13,10 @@ use FluentSql\Breakdown;
 class Limit implements ClauseInterface {
 	protected $limit;
 
-	public function __construct($limit) {
+	public function __construct($limit, $allowNonNumeric = false) {
+		if (!$allowNonNumeric && !is_numeric($limit)) {
+			throw new \InvalidArgumentException('using non-numeric LIMIT when not allowed');
+		}
 		$this->limit = $limit;
 	}
 

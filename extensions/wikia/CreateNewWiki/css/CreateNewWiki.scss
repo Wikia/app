@@ -13,7 +13,7 @@ $color-borders: #CECECE;
 	border: 0;
 
 	.WikiaPageBackground {
-		@include linear-gradient(false, top, #01386e, 20%, #2185da, 70%, #fff, 100%);
+		@include linear-gradient(false, top, #01386e, 0%, #2185da, 25%, #fff, 60%);
 	}
 }
 
@@ -309,7 +309,6 @@ $color-borders: #CECECE;
 	}
 
 	.select-container {
-		float: left;
 		max-width: 490px;
 		min-width: 210px;
 	}

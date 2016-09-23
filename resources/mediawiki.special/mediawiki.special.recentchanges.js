@@ -11,7 +11,7 @@
 	var rc = mw.special.recentchanges = {
 
 		handleCollapsible: function(cache) {
-			var prefix = 'rce_',
+			var prefix = 'rc_',
 				$collapsibleElements = $('.collapsible');
 
 			function toggleCollapsible($collapsible) {
@@ -53,21 +53,6 @@
 			});
 		},
 
-		bindTracking: function(tracker) {
-			var $trackedElement = $('#recentchanges-on-wikia-box');
-
-			if ($trackedElement.length > 0) {
-				$trackedElement.on('mousedown', 'a', function(e) {
-					tracker.track({
-						action: tracker.ACTIONS.CLICK_LINK_TEXT,
-						category: 'recentchanges-on-wikia',
-						label: $(e.currentTarget).attr('href'),
-						trackingMethod: 'analytics'
-					});
-				});
-			}
-		},
-
 		/**
 		 * Handler to disable/enable the namespace selector checkboxes when the
 		 * special 'all' namespace is selected/unselected respectively.
@@ -89,12 +74,9 @@
 			// Bind to change event, and trigger once to set the initial state of the checkboxes.
 			$select.change( rc.updateCheckboxes ).change();
 
-			require(['wikia.cache', 'wikia.tracker'], function (cache, tracker) {
+			require(['wikia.cache'], function (cache) {
 				// Collapse fieldsets
 				rc.handleCollapsible(cache);
-
-				// Track clicks on links in the collapsible box
-				rc.bindTracking(tracker);
 			});
 		}
 	};

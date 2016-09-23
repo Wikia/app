@@ -1035,7 +1035,9 @@ class CheckUser extends SpecialPage {
 				$s .= '</li>';
 			}
 			$s .= "</ul></div>\n";
-			if ( $wgUser->isAllowed( 'block' ) && !$wgUser->isBlocked() ) {
+			/* Wikia change begin - SUS-92 */
+			if ( $wgUser->isAllowed( 'block' ) && !$wgUser->isBlocked( true, false ) ) {
+			/* Wikia change end */
 				$s .= "<fieldset>\n";
 				$s .= '<legend>' . wfMsgHtml( 'checkuser-massblock' ) . "</legend>\n";
 				$s .= '<p>' . wfMsgExt( 'checkuser-massblock-text', array( 'parseinline' ) ) . "</p>\n";

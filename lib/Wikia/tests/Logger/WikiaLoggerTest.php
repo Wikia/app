@@ -16,11 +16,6 @@ class WikiaLoggerTest extends PHPUnit_Framework_TestCase {
 		$this->assertTrue($logger->getWebProcessor() instanceof WebProcessor);
 	}
 
-	function testDetectIdent() {
-		$ident = WikiaLogger::instance()->detectIdent();
-		$this->assertTrue(!empty($ident));
-	}
-
 	function testLogger() {
 		$loggerMock = $this->getMock('\Monolog\Logger', [], ['phpunit']);
 		$loggerMock->expects($this->any())
@@ -46,7 +41,7 @@ class WikiaLoggerTest extends PHPUnit_Framework_TestCase {
 			->will($this->returnValue(E_NOTICE));
 
 		$wikiaLoggerMock->setLogger($loggerMock);
-		$this->assertTrue($wikiaLoggerMock->onError(E_NOTICE, 'foo', __FILE__, __LINE__, 'here'));
+		$this->assertFalse($wikiaLoggerMock->onError(E_NOTICE, 'foo', __FILE__, __LINE__, 'here'));
 	}
 
 }

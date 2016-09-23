@@ -17,6 +17,19 @@ abstract class LBFactory {
 	 */
 	static $instance;
 
+	/** @var string|bool Reason all LBs are read-only or false if not */
+	protected $readOnlyReason = false;
+
+	/**
+	 * Construct a factory based on a configuration array (typically from $wgLBFactoryConf)
+	 * @param array $conf
+	 */
+	public function __construct( array $conf ) {
+		if ( isset( $conf['readOnlyReason'] ) && is_string( $conf['readOnlyReason'] ) ) {
+			$this->readOnlyReason = $conf['readOnlyReason'];
+		}
+	}
+
 	/**
 	 * Disables all access to the load balancer, will cause all database access
 	 * to throw a DBAccessError
@@ -33,9 +46,14 @@ abstract class LBFactory {
 	 */
 	static function &singleton() {
 		if ( is_null( self::$instance ) ) {
-			global $wgLBFactoryConf;
+			global $wgLBFactoryConf, $wgReadOnly;
 			$class = $wgLBFactoryConf['class'];
-			self::$instance = new $class( $wgLBFactoryConf );
+
+			$config = $wgLBFactoryConf;
+			if ( !isset( $config['readOnlyReason'] ) ) {
+				$config['readOnlyReason'] = $wgReadOnly;
+			}
+			self::$instance = new $class( $config );
 		}
 		return self::$instance;
 	}
@@ -60,12 +78,6 @@ abstract class LBFactory {
 		self::destroyInstance();
 		self::$instance = $instance;
 	}
-
-	/**
-	 * Construct a factory based on a configuration array (typically from $wgLBFactoryConf)
-	 * @param $conf
-	 */
-	abstract function __construct( $conf );
 
 	/**
 	 * Create a new load balancer object. The resulting object will be untracked,

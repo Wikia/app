@@ -13,6 +13,10 @@ class UserAttributes {
 	const DEFAULT_ATTRIBUTES = "user_attributes_default_attributes";
 	const CACHE_PROVIDER = "user_attributes_cache_provider";
 
+	// Attributes which the service returns, but treats as immutable and therefore we
+	// shouldn't attempt to save as the service will return a 403.
+	const READ_ONLY_ATTRIBUTES = [ 'username' ];
+
 	/** @var CacheProvider */
 	private $cache;
 
@@ -51,11 +55,11 @@ class UserAttributes {
 	public function getAttribute( $userId, $attributeName, $default = null ) {
 		$attributes = $this->loadAttributes( $userId );
 
-		if ( !is_null( $attributes[$attributeName] ) ) {
+		if ( isset( $attributes[$attributeName] ) ) {
 			return $attributes[$attributeName];
 		}
 
-		if ( !is_null( $this->defaultAttributes[$attributeName] ) ) {
+		if ( isset( $this->defaultAttributes[$attributeName] ) ) {
 			return  $this->defaultAttributes[$attributeName];
 		}
 
@@ -63,6 +67,12 @@ class UserAttributes {
 	}
 
 	private function loadAttributes( $userId ) {
+
+		// By returning an empty array here for anonymous users, we prevent an unnecessary
+		// call to the attribute service Anon users will just use default values for attributes.
+		if ( $userId == 0 ) {
+			return [];
+		}
 
 		if ( isset( $this->attributes[$userId] ) ) {
 			return $this->attributes[$userId];
@@ -114,15 +124,39 @@ class UserAttributes {
 		// Ticket: SOC-1482
 		$savedAttributes = [];
 		foreach( $attributes as $name => $value ) {
+			if ( $this->isReadOnlyAttribute( $name ) ) {
+				continue;
+			}
+
 			if ( $this->attributeShouldBeSaved( $name, $value ) ) {
 				$this->setInService( $userId, new Attribute( $name, $value ) );
 				$savedAttributes[$name] = $value;
+				if ( $name == 'avatar' ) {
+					$this->logIfBadAvatarVal( $value, $userId );
+				}
 			} elseif ( $this->attributeShouldBeDeleted( $name, $value ) ) {
 				$this->deleteFromService( $userId, new Attribute( $name, $value ) );
 			}
 		}
 
 		$this->setInMemcache( $userId, $savedAttributes );
+	}
+
+	private function isReadOnlyAttribute( $name ) {
+		return in_array( $name, self::READ_ONLY_ATTRIBUTES );
+	}
+
+	private function logIfBadAvatarVal( $value, $userId ) {
+
+		if ( $value == "" || preg_match( '/^http/', $value ) ) {
+			return;
+		}
+
+		$this->error( 'USER_ATTRIBUTES saving_bad_avatar_val', [
+			'userId' => $userId,
+			'avatar_val' => $value,
+			'exception' => new \Exception()
+		] );
 	}
 
 	/**
@@ -141,7 +175,10 @@ class UserAttributes {
 	}
 
 	private function attributeShouldBeDeleted( $name, $value ) {
-		return isset( $this->defaultAttributes[$name] ) && $value == $this->defaultAttributes[$name];
+		return (
+			( isset( $this->defaultAttributes[$name] ) && $value == $this->defaultAttributes[$name] ) ||
+			is_null( $value )
+		);
 	}
 
 	/**

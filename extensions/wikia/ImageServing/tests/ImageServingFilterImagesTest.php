@@ -51,7 +51,7 @@ class ImageServingFilterImagesTest extends WikiaBaseTest {
 			'img_width' => 100,
 			'img_minor_mime' => $mime
 		];
-		$db = $this->mockClassWithMethods('DatabaseMysql', [
+		$db = $this->mockClassWithMethods('DatabaseMysqli', [
 			'select' => new FakeResultWrapper([$row])
 		]);
 

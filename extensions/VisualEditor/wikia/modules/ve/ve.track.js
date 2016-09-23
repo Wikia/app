@@ -58,6 +58,9 @@ require( ['wikia.tracker'], function ( tracker ) {
 				};
 			},
 			'mwtiming.performance.user.saveComplete': function ( data ) {
+				require(['VisualEditorTourExperimentInit'], function (veTourInit) {
+					veTourInit.trackPublish();
+				});
 				return {
 					action: actions.SUCCESS,
 					label: 'publish',
@@ -137,6 +140,7 @@ require( ['wikia.tracker'], function ( tracker ) {
 	 * @param {Object} data The data to send to our internal tracking function.
 	 */
 	function track( topic, data ) {
+
 		var i, mwEvent, topics,
 			params = {
 				category: 'editor-ve',
@@ -190,6 +194,7 @@ require( ['wikia.tracker'], function ( tracker ) {
 	function handleFunnel( data ) {
 		var funnelEvents = [
 			'edit-page-ready/impression',
+			'edit-page-ready-toolbartest/impression',
 			'button-publish/enable',
 			'button-cancel/click',
 			'button-publish/click',

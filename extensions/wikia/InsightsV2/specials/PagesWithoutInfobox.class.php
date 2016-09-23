@@ -32,7 +32,7 @@ class PagesWithoutInfobox extends PageQueryPage {
 	 *
 	 * @param bool $limit Only for consistency
 	 * @param bool $ignoreErrors Only for consistency
-	 * @return bool|int
+	 * @return int
 	 */
 	public function recache( $limit = false, $ignoreErrors = true ) {
 		$dbw = wfGetDB( DB_MASTER );
@@ -41,7 +41,6 @@ class PagesWithoutInfobox extends PageQueryPage {
 		 * 1. Get the new data first
 		 */
 		$pagesWithoutInfobox = $this->reallyDoQuery();
-		$dbw->begin();
 
 		/**
 		 * 2. Delete the existing records
@@ -54,9 +53,7 @@ class PagesWithoutInfobox extends PageQueryPage {
 		/**
 		 * 3. Insert the new records if the $pagesWithoutInfobox array is not empty
 		 */
-		$num = 0;
 		if ( !empty( $pagesWithoutInfobox ) ) {
-
 			( new WikiaSQL() )
 				->INSERT()->INTO( 'querycache', [
 					'qc_type',
@@ -66,19 +63,10 @@ class PagesWithoutInfobox extends PageQueryPage {
 				] )
 				->VALUES( $pagesWithoutInfobox )
 				->run( $dbw );
-
-			$num = $dbw->affectedRows();
-			if ( $num === 0 ) {
-				$dbw->rollback();
-				$num = false;
-			} else {
-				$dbw->commit();
-			}
 		}
-
 		wfRunHooks( 'PagesWithoutInfoboxQueryRecached' );
 
-		return $num;
+		return count( $pagesWithoutInfobox );
 	}
 
 	/**
@@ -93,8 +81,8 @@ class PagesWithoutInfobox extends PageQueryPage {
 
 		$tc = new UserTemplateClassificationService();
 
-		$infoboxTemplates = [];
-		foreach( $tc->getTemplatesOnWiki( $wgCityId ) as $pageId => $templateType ) {
+		$infoboxTemplates = [ ];
+		foreach ( $tc->getTemplatesOnWiki( $wgCityId ) as $pageId => $templateType ) {
 			if ( $tc->isInfoboxType( $templateType ) ) {
 				$templateTitle = Title::newFromID( $pageId );
 				if ( $templateTitle instanceof Title ) {
@@ -105,15 +93,15 @@ class PagesWithoutInfobox extends PageQueryPage {
 
 		$dbr = wfGetDB( DB_SLAVE, [ $this->getName(), __METHOD__, 'vslow' ] );
 
-		$pagesWithInfobox = [];
+		$pagesWithInfobox = [ ];
 		if ( !empty( $infoboxTemplates ) ) {
 			$pagesWithInfobox = ( new WikiaSQL() )
 				->SELECT( 'tl_from' )
 				->FROM( 'templatelinks' )
 				->WHERE( 'tl_title' )->IN( $infoboxTemplates )
-					->AND_( 'tl_namespace' )->EQUAL_TO( NS_TEMPLATE )
+				->AND_( 'tl_namespace' )->EQUAL_TO( NS_TEMPLATE )
 				->runLoop( $dbr, function ( &$pagesWithInfobox, $row ) {
-					$pagesWithInfobox[$row->tl_from] = true;
+					$pagesWithInfobox[ $row->tl_from ] = true;
 				} );
 		}
 
@@ -123,7 +111,7 @@ class PagesWithoutInfobox extends PageQueryPage {
 			->WHERE( 'page_namespace' )->IN( $wgContentNamespaces )
 			->ORDER_BY( 'page_id' )->DESC()
 			->runLoop( $dbr, function ( &$contentPages, $row ) {
-				$contentPages[$row->page_id] = [
+				$contentPages[ $row->page_id ] = [
 					$this->getName(),
 					$row->page_id,
 					$row->page_namespace,
@@ -132,7 +120,7 @@ class PagesWithoutInfobox extends PageQueryPage {
 			} );
 
 		if ( empty( $contentPages ) ) {
-			$pagesWithoutInfobox = [];
+			$pagesWithoutInfobox = [ ];
 		} elseif ( empty( $pagesWithInfobox ) ) {
 			$pagesWithoutInfobox = $contentPages;
 		} else {

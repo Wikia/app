@@ -44,13 +44,6 @@ $wgHooks['CategorySelectSave'][] = 'VideoPageToolHooks::onCategorySelectSave';
 $wgHooks['VideoIngestionComplete'][] = 'VideoPageToolHooks::onVideoIngestionComplete';
 $wgHooks['FileDeleteComplete'][] = 'VideoPageToolHooks::onFileDeleteComplete';
 
-// permissions
-$wgGroupPermissions['*']['videopagetool'] = false;
-$wgGroupPermissions['staff']['videopagetool'] = true;
-$wgGroupPermissions['sysop']['videopagetool'] = true;
-$wgGroupPermissions['helper']['videopagetool'] = true;
-$wgGroupPermissions['vstf']['videopagetool'] = true;
-
 // register messages package for JS
 JSMessages::registerPackage('VideoPageTool', array(
 	'htmlform-required',

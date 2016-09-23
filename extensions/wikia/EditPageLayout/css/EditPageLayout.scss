@@ -105,11 +105,6 @@ body {
 	width: $width-rail-epl;
 	z-index: 101; // and the loading status indicator (z-index: 100)
 
-	.InfoboxPreview {
-		display: block;
-		margin: 10px auto 0;
-	}
-
 	.rail-auto-height {
 		overflow: hidden;
 		position: relative; // IE 7 needs this
@@ -553,7 +548,7 @@ body {
 }
 // END - edit page fixes
 
-//Mobile preview styles
+//Mercury preview styles
 .mobile-preview {
 	border: 1px solid $color-page-border;
 	box-sizing: border-box;

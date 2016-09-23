@@ -1494,8 +1494,8 @@ class WikiPage extends Page implements IDBAccessObject {
 							PatrolLog::record( $rc, true, $user );
 						}
 					}
-					$user->incEditCount();
 					$dbw->commit(__METHOD__);
+					$user->incEditCount();
 				}
 			} else {
 				// Bug 32948: revision ID must be set to page {{REVISIONID}} and
@@ -1581,8 +1581,8 @@ class WikiPage extends Page implements IDBAccessObject {
 					PatrolLog::record( $rc, true, $user );
 				}
 			}
-			$user->incEditCount();
 			$dbw->commit(__METHOD__);
+			$user->incEditCount();
 
 			# Update links, etc.
 			$this->doEditUpdates( $revision, $user, array( 'created' => true ) );
@@ -1601,9 +1601,6 @@ class WikiPage extends Page implements IDBAccessObject {
 
 		wfRunHooks( 'ArticleSaveComplete', array( &$this, &$user, $text, $summary,
 			$flags & EDIT_MINOR, null, null, &$flags, $revision, &$status, $baseRevId ) );
-
-		# Promote user to any groups they meet the criteria for
-		$user->addAutopromoteOnceGroups( 'onEdit' );
 
 		wfProfileOut( __METHOD__ );
 		return $status;
@@ -3198,21 +3195,6 @@ class PoolWorkArticleView extends PoolCounterWork {
 			wfDebugLog( 'slow-parse', sprintf( "%-5.2f %s", $time,
 				$this->page->getTitle()->getPrefixedDBkey() ) );
 		}
-
-		# PLATFORM-1355 (investigate blank pages)
-		# Check to see if Input exists but Output is just a Parser Performance dump with no other content
-		global $wgContentNamespaces;
-		if ( !empty($text) &&
-			 in_array ( $this->page->getTitle()->getNamespace(), $wgContentNamespaces ) &&
-			 preg_match("/^\n<!-- \nNewPP/s", $this->parserOutput->mText) === 1 ) {
-
-			\Wikia\Logger\WikiaLogger::instance()->error(
-				__METHOD__ . ' empty content PLAT1355'
-			);
-			// In addition to logging, do this quick hack/fix for blank pages
-			$this->cacheable = false;
-		}
-		// End PLATFORM-1355 investigation code
 
 		if ( $this->cacheable && $this->parserOutput->isCacheable() ) {
 			ParserCache::singleton()->save( $this->parserOutput, $this->page, $this->parserOptions );

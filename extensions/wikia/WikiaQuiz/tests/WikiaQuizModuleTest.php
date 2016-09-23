@@ -3,7 +3,9 @@
 class WikiaQuizModuleTest extends WikiaBaseTest {
 	
 	public function __construct() {
-		$this->setupFile = dirname(__FILE__) . '/../WikiaQuiz_setup.php';
+		parent::__construct();
+
+		$this->setupFile = __DIR__ . '/../WikiaQuiz_setup.php';
 	}
 	
 	public function testExecuteGetQuizElement() {
@@ -15,7 +17,7 @@ class WikiaQuizModuleTest extends WikiaBaseTest {
 		$this->mockGlobalVariable('wgRequest', $wgRequest);
 
 		$quizElement = $this->getMock('WikiaQuizElement', array('getData'), array(), '', false);
-		$quizElement->expects($this->once())
+		$quizElement->expects($this->any())
 			->method('getData')
 			->will($this->returnValue(array('foo'=>'bar', 'baz'=>'asdf')));
 		$this->mockClass('WikiaQuizElement', $quizElement);
@@ -26,7 +28,7 @@ class WikiaQuizModuleTest extends WikiaBaseTest {
 
 	public function testExecuteGetQuizElementInvalidRequest() {
 		$wgRequest = $this->getMock('WebRequest', array('getVal'), array(), '', false);
-		$wgRequest->expects($this->once())
+		$wgRequest->expects($this->any())
 			->method('getVal')
 			->will($this->returnValue(null));
 		

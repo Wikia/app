@@ -43,7 +43,7 @@ class HelperController extends \WikiaController
 		$spoofUser = new \SpoofUser( $username );
 
 		// Allow the given user name if it is legal and does not conflict with other names.
-		$this->response->setVal( 'allow', $spoofUser->isLegal() && ! $spoofUser->getConflicts() );
+		$this->response->setVal( 'allow', $spoofUser->isLegal() && !$spoofUser->getConflicts( true ) );
 		return;
 	}
 

@@ -1,78 +1,33 @@
 /*global define*/
 /*jshint camelcase:false*/
 define('ext.wikia.adEngine.lookup.openXBidder', [
-	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.lookup.lookupFactory',
 	'ext.wikia.adEngine.slot.adSlot',
-	'ext.wikia.adEngine.utils.adLogicZoneParams',
+	'ext.wikia.adEngine.lookup.openx.openXBidderHelper',
 	'wikia.document',
 	'wikia.log',
 	'wikia.window'
-], function (adContext, factory, adSlot, adLogicZoneParams, doc, log, win) {
+], function (factory, adSlot, openXHelper, doc, log, win) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.lookup.openXBidder',
 		priceTimeout = 't',
-		config = {
-			oasis: {
-				TOP_LEADERBOARD: '728x90',
-				TOP_RIGHT_BOXAD: '300x250',
-				LEFT_SKYSCRAPER_2: '160x600',
-				PREFOOTER_LEFT_BOXAD: '300x250',
-				PREFOOTER_RIGHT_BOXAD: '300x250'
-			},
-			mercury: {
-				MOBILE_IN_CONTENT: '300x250',
-				MOBILE_PREFOOTER: '300x250',
-				MOBILE_TOP_LEADERBOARD: '320x50'
-			}
-		},
-		priceMap = {},
-		slots = [];
+		priceMap = {};
 
-	function configureHomePageSlots() {
-		var slotName;
-		for (slotName in slots) {
-			if (slots.hasOwnProperty(slotName) && slotName.indexOf('TOP') > -1) {
-				slots['HOME_' + slotName] = slots[slotName];
-				delete slots[slotName];
-			}
-		}
-		slots.PREFOOTER_MIDDLE_BOXAD = '300x250';
-	}
-
-	function getSlots(skin) {
-		var context = adContext.getContext(),
-			pageType = context.targeting.pageType;
-
-		slots = config[skin];
-		if (skin === 'oasis' && pageType === 'home') {
-			configureHomePageSlots();
-		}
-
-		return slots;
-	}
-
-	function getAds(skin) {
+	function getAds() {
 		var ads = [],
-			size,
+			sizes,
 			slotName,
-			slotPath = [
-				'/5441',
-				'wka.' + adLogicZoneParams.getSite(),
-				adLogicZoneParams.getMappedVertical(),
-				'',
-				adLogicZoneParams.getPageType()
-			].join('/');
+			slots = openXHelper.getSlots(),
+			pagePath = openXHelper.getPagePath();
 
-		slots = getSlots(skin);
 		for (slotName in slots) {
 			if (slots.hasOwnProperty(slotName)) {
-				size = slots[slotName];
+				sizes = slots[slotName].sizes;
 				ads.push([
-					slotPath,
-					[size],
-					'wikia_gpt' + slotPath + '/gpt/' + slotName
+					pagePath,
+					sizes,
+					openXHelper.getSlotPath(slotName, 'gpt')
 				]);
 			}
 		}
@@ -83,16 +38,23 @@ define('ext.wikia.adEngine.lookup.openXBidder', [
 	function getSlotParams(slotName) {
 		var dfpParams = {},
 			dfpKey,
-			price;
+			price,
+			size;
 
-		price = priceMap[slotName];
+		if (!priceMap[slotName]) {
+			log(['getSlotParams', 'No response for the slot', slotName], 'debug', logGroup);
+			return {};
+		}
+
+		price = priceMap[slotName].price;
+		size = priceMap[slotName].size;
 
 		if (!price) {
 			log(['getSlotParams', 'No price for the slot', slotName], 'debug', logGroup);
 			return {};
 		}
 
-		dfpKey = 'ox' + slots[slotName];
+		dfpKey = 'ox' + size;
 		dfpParams[dfpKey] = price;
 		log(['getSlotParams', dfpKey, price], 'debug', logGroup);
 
@@ -120,7 +82,7 @@ define('ext.wikia.adEngine.lookup.openXBidder', [
 		for (slotName in prices) {
 			if (prices.hasOwnProperty(slotName) && prices[slotName].price !== priceTimeout) {
 				shortSlotName = adSlot.getShortSlotName(slotName);
-				priceMap[shortSlotName] = prices[slotName].price;
+				priceMap[shortSlotName] = prices[slotName];
 			}
 		}
 	}
@@ -129,7 +91,8 @@ define('ext.wikia.adEngine.lookup.openXBidder', [
 		var openx = doc.createElement('script'),
 			node = doc.getElementsByTagName('script')[0];
 
-		win.OX_dfp_ads = getAds(skin);
+		openXHelper.setupSlots(skin);
+		win.OX_dfp_ads = getAds();
 
 		win.OX_dfp_options = {
 			callback: onResponse
@@ -142,27 +105,24 @@ define('ext.wikia.adEngine.lookup.openXBidder', [
 		node.parentNode.insertBefore(openx, node);
 	}
 
-	function isEnabled() {
-		return adLogicZoneParams.getSite() === 'life';
-	}
-
 	function getPrices() {
-		return priceMap;
-	}
-
-	function isSlotSupported(slotName) {
-		return slots[slotName];
+		var prices = {};
+		for (var slotName in priceMap) {
+			if (priceMap.hasOwnProperty(slotName)) {
+				prices[slotName] = priceMap[slotName].price;
+			}
+		}
+		return prices;
 	}
 
 	return factory.create({
 		logGroup: logGroup,
 		name: 'ox_bidder',
-		isEnabled: isEnabled,
 		call: call,
 		calculatePrices: calculatePrices,
 		getPrices: getPrices,
-		isSlotSupported: isSlotSupported,
 		encodeParamsForTracking: encodeParamsForTracking,
-		getSlotParams: getSlotParams
+		getSlotParams: getSlotParams,
+		isSlotSupported: openXHelper.isSlotSupported
 	});
 });

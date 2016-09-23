@@ -1,0 +1,109 @@
+@import 'skins/shared/mixins/flexbox';
+@import 'skins/shared/color';
+
+$recirculation-horizontal-border-size: 2px;
+$recirculation-horizontal-border-color: rgba($color-headline-border, 0.5);
+.recirculation-horizontal {
+	box-sizing: border-box;
+	clear: both;
+	margin: 30px auto;
+	position: relative;
+
+	h3,
+	h4 {
+		margin: 0;
+	}
+
+	h4 {
+		font-size: 12px;
+		line-height: 14px;
+	}
+
+	.items {
+		@include flexbox();
+		@include justify-content(space-between);
+	}
+
+	.item a {
+		color: $color-text;
+	}
+
+	.thumbnail {
+		background-color: $color-headline-border;
+		margin-bottom: 5px;
+		overflow: hidden;
+		text-align: center;
+
+		img {
+			max-height: 100%;
+			max-width: 100%;
+		}
+	}
+}
+
+$recirculation-incontent-thumbnail-width: 160px;
+$recirculation-incontent-thumbnail-height: 90px;
+.recirculation-horizontal.recirculation-incontent {
+	border-bottom: $recirculation-horizontal-border-size solid $recirculation-horizontal-border-color;
+	padding: 40px 30px 25px;
+	width: 90%;
+
+	h3 {
+		@include flexbox();
+
+		color: lighten($color-text, 10%);
+		font-size: 14px;
+		font-weight: bold;
+		left: -10px;
+		position: absolute;
+		right: -10px;
+		text-align: center;
+		top: 0;  
+		
+
+		&::before,
+		&::after {
+			@include align-self(center);
+			@include flex(1 0 0px);
+
+			background-color: $recirculation-horizontal-border-color;
+			content: ' ';
+			display: block;
+			height: $recirculation-horizontal-border-size;
+			margin: 0 10px;
+		}
+	}
+
+	.item {
+		width: $recirculation-incontent-thumbnail-width;
+		min-width: $recirculation-incontent-thumbnail-width;
+	}
+
+	.thumbnail {
+		height: $recirculation-incontent-thumbnail-height;
+		width: $recirculation-incontent-thumbnail-width;
+	}
+}
+
+$recirculation-footer-thumbnail-width: 200px;
+$recirculation-footer-thumbnail-height: 110px;
+.recirculation-horizontal.recirculation-footer {
+	h3 {
+		font-size: 21px;
+		line-height: 25px;
+	}
+
+	.items {
+		padding: 10px;
+		border-top: $recirculation-horizontal-border-size solid rgba($color-headline-border, 0.5);
+	}
+
+	.item {
+		width: $recirculation-footer-thumbnail-width;
+	}
+
+	.thumbnail {
+		height: $recirculation-footer-thumbnail-height;
+		width: $recirculation-footer-thumbnail-width;
+	}
+}

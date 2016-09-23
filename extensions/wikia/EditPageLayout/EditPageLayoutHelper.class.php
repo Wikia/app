@@ -50,7 +50,7 @@ class EditPageLayoutHelper {
 	 * @author macbre
 	 */
 	function setupEditPage( Article $editedArticle, $fullScreen = true, $class = false ) {
-		global $wgHooks, $wgInfoboxPreviewURL;
+		global $wgHooks, $wgEditPreviewMercuryUrl;
 
 		wfProfileIn( __METHOD__ );
 
@@ -103,6 +103,8 @@ class EditPageLayoutHelper {
 			? $formCustomHandler->getLocalUrl( 'wpTitle=$1' )
 			: $this->app->getGlobal( 'wgScript' ) . '?action=ajax&rs=EditPageLayoutAjax&title=$1' );
 
+		$this->addJsVariable( 'wgEditPreviewMercuryUrl', $wgEditPreviewMercuryUrl );
+
 		$this->addJsVariable( 'wgEditPagePopularTemplates', TemplateService::getPromotedTemplates() );
 		$this->addJsVariable( 'wgEditPageIsWidePage', $this->isWidePage() );
 		$this->addJsVariable( 'wgIsDarkTheme', SassUtil::isThemeDark() );
@@ -127,9 +129,6 @@ class EditPageLayoutHelper {
 
 		// copyright warning for notifications (BugId:7951)
 		$this->addJsVariable( 'wgCopywarn', $this->editPage->getCopyrightNotice() );
-
-		// infobox preview url
-		$this->addJsVariable( 'wgInfoboxPreviewURL', $wgInfoboxPreviewURL );
 
 		// extra hooks for edit page
 		$wgHooks['MakeGlobalVariablesScript'][] = 'EditPageLayoutHooks::onMakeGlobalVariablesScript';

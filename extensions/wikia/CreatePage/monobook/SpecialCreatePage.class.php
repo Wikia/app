@@ -16,11 +16,11 @@ class SpecialCreatePage extends SpecialEditPage {
 		parent::__construct( 'CreatePage'  /*class*/, '' /*restriction*/, true );
 	}
 
-	public function execute( $subpage ) {
+	public function execute( $par ) {
 		global $wgUser, $wgOut, $wgRequest, $wgJsMimeType, $wgExtensionsPath;
 
-		if ( !empty( $subpage ) ) {
-			if ( !wfRunHooks('SpecialCreatePage::Subpage', array( $subpage )) ) {
+		if ( !empty( $par ) ) {
+			if ( !wfRunHooks('SpecialCreatePage::Subpage', array( $par )) ) {
 				return;
 			}
 		}

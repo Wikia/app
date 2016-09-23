@@ -52,7 +52,7 @@ class PEAR_Dependency
      * @param  object Registry object
      * @return void
      */
-    function PEAR_Dependency(&$registry)
+    function __construct(&$registry)
     {
         $this->registry = &$registry;
     }

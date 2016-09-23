@@ -167,9 +167,31 @@ $color-user-profile-gradient-bottom: desaturate(darken($color-menu-highlight, 5%
 	}
 
 	.tally {
-		margin-bottom: 25px;
+		padding-bottom: 10px;
+
 		em {
 			margin-right: 5px;
+		}
+
+		.discussion-label {
+			padding: 5px 0;
+		}
+
+		&:last-of-type {
+			margin-bottom: 25px;
+		}
+	}
+
+	.discussion-details {
+		border-top: 1px solid $color-page-border;
+		padding-top: 10px;
+
+		a {
+			color: $color-text;
+
+			&:hover {
+				color: $color-links;
+			}
 		}
 	}
 

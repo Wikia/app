@@ -8,12 +8,12 @@
 			<? endif ?>
 		</div>
 		<? if ( $wg->EnableMiniEditorExtForWall ): ?>
-			<?= $app->getView( 'MiniEditorController', 'Header', array(
-				'attributes' => array(
+			<?= $app->getView( 'MiniEditorController', 'Header', [
+				'attributes' => [
 					'data-min-height' => 100,
 					'data-max-height' => 400
-				)
-			) )->render() ?>
+				]
+			] )->render() ?>
 		<? endif ?>
 		<? if ( $wg->EnableMiniEditorExtForWall ): ?>
 			<?= $app->getView( 'MiniEditorController', 'Editor_Header' )->render() ?>
@@ -33,12 +33,12 @@
 			-->
 		<div class="msg-toolbar">
 			<div class="buttonswrapper">
-				<?= $app->renderView( 'ForumController', 'threadMessageButtons', array( 'comment' => $comment ) ) ?>
+				<?= $app->renderView( 'ForumController', 'threadMessageButtons', [ 'comment' => $comment ] ) ?>
 			</div>
 		</div>
 		<div class="timestamp">
 			<? if ( $isEdited ): ?>
-				<?= wfMsg( 'wall-message-edited', array( $editorUrl, $editorName, $historyUrl ) ) ?>
+				<?= wfMsg( 'wall-message-edited', [ $editorUrl, $editorName, $historyUrl ] ) ?>
 			<? endif ?>
 			<a class="permalink" href="<?= $fullpageurl ?>" tabindex="-1">
 				<? if ( !is_null( $iso_timestamp ) ): ?>

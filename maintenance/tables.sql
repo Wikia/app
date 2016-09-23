@@ -1146,8 +1146,9 @@ CREATE TABLE /*_*/querycache (
   qc_title varchar(255) binary NOT NULL default ''
 ) /*$wgDBTableOptions*/;
 
-CREATE INDEX /*i*/qc_type ON /*_*/querycache (qc_type,qc_value);
+-- CREATE INDEX /*i*/qc_type ON /*_*/querycache (qc_type,qc_value); // PLATFORM-1914
 
+CREATE UNIQUE INDEX /*i*/qc_type_value_ns_title ON /*_*/querycache (qc_type,qc_value,qc_namespace,qc_title);
 
 --
 -- For a few generic cache operations if not using Memcached

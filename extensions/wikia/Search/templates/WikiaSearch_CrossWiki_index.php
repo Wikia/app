@@ -10,7 +10,7 @@
 						<?= wfMsg('wikiasearch2-results-for', '<strong>' . $query . '</strong>'); ?>
 					<?php endif; ?>
 					<?php if (isset($hub) && $hub) : ?>
-						<?= wfMsg('wikiasearch2-onhub', $hub) ?>
+						<?= wfMessage( 'wikiasearch2-onhub', Sanitizer::stripAllTags( $hub ) )->escaped() ?>
 						|
 						<a
 							href="<?= preg_replace('/&hub=[^&]+/', '', $_SERVER['REQUEST_URI']) ?>"><?= wfMsg('wikiasearch2-search-all-wikia') ?></a>
@@ -30,14 +30,13 @@
 					$pos = 0;
 					foreach ($results as $result) {
 						$pos++;
-						echo $app->getView('WikiaSearch', 'CrossWiki_result', array(
-							'result' => $result,
-							'pos' => $pos + (($currentPage - 1) * $resultsPerPage),
-							'query' => $query,
-							'hub' => $hub,
-							'corporateWikiId' => $corporateWikiId,
-							'wgExtensionsPath' => $wgExtensionsPath
-						));
+						echo $app->getView('WikiaSearch', 'CrossWiki_result',
+							\Wikia\Search\Result\ResultHelper::extendResult(
+								$result,
+								$pos + (($currentPage - 1) * $resultsPerPage),
+								\Wikia\Search\Result\ResultHelper::MAX_WORD_COUNT_XWIKI_RESULT
+							)
+						);
 					}
 					?>
 				</ul>

@@ -27,40 +27,17 @@ $dir = dirname(__FILE__) . '/';
 $app = F::app();
 
 // classes
-$wgAutoloadClasses['Wikia\\Tasks\\Tasks\\ImageReviewTask'] = "{$dir}ImageReviewTask.class.php";
-
 $wgAutoloadClasses['ImageReviewSpecialController'] =  $dir . 'ImageReviewSpecialController.class.php';
 $wgAutoloadClasses['ImageReviewHelperBase'] =  $dir . 'ImageReviewHelperBase.class.php';
 $wgAutoloadClasses['ImageReviewHelper'] =  $dir . 'ImageReviewHelper.class.php';
 $wgAutoloadClasses['ImageReviewDatabaseHelper'] =  $dir . 'ImageReviewDatabaseHelper.class.php';
 $wgAutoloadClasses['ImageReviewHooks'] =  $dir . 'ImageReview.hooks.php';
+$wgAutoloadClasses['ImageReviewStatsCache'] =  $dir . 'ImageReviewStatsCache.class.php';
 
 $wgSpecialPages['ImageReview'] = 'ImageReviewSpecialController';
 
 // hooks setup
 $wgExtensionFunctions[] = 'ImageReviewHooks::setupHooks';
-
-// rights
-$wgAvailableRights[] = 'imagereview';
-$wgGroupPermissions['util']['imagereview'] = true;
-$wgGroupPermissions['vstf']['imagereview'] = true;
-
-$wgGroupPermissions['reviewer']['imagereview'] = true;
-$wgGroupPermissions['reviewer']['deletedhistory'] = true;
-$wgGroupPermissions['reviewer']['deletedtext'] = true;
-$wgGroupPermissions['reviewer']['edit'] = false;
-
-$wgAvailableRights[] = 'questionableimagereview';
-$wgGroupPermissions['util']['questionableimagereview'] = true;
-
-$wgAvailableRights[] = 'rejectedimagereview';
-$wgGroupPermissions['util']['rejectedimagereview'] = true;
-
-$wgAvailableRights[] = 'imagereviewstats';
-$wgGroupPermissions['util']['imagereviewstats'] = true;
-
-$wgAvailableRights[] = 'imagereviewcontrols';
-$wgGroupPermissions['util']['imagereviewcontrols'] = true;
 
 // i18n
 $wgExtensionMessagesFiles['ImageReview'] = $dir . 'ImageReview.i18n.php';

@@ -27,15 +27,15 @@ function getParentPage( $articleComment ) {
 
 // get comment properties
 function getCommentProperties( $articleComment ) {
-	$properties = array();
+	$properties = [ ];
 	if ( $articleComment->getTitle()->getNamespace() == NS_USER_WALL_MESSAGE
 			|| $articleComment->getTitle()->getNamespace() == NS_WIKIA_FORUM_BOARD_THREAD ) {
 		$wallMessage = WallMessage::newFromArticleComment( $articleComment );
-		$properties = array(
+		$properties = [
 			'archived' => intval( $wallMessage->isArchive() ),
 			'deleted' => intval( $wallMessage->isAdminDelete() ),
 			'removed' => intval( $wallMessage->isRemove() ),
-		);
+		];
 	}
 
 	return $properties;
@@ -44,25 +44,25 @@ function getCommentProperties( $articleComment ) {
 function getLastChildCommentId( $articleComment ) {
 	$db = wfGetDB( DB_MASTER );
 	$row = $db->selectRow(
-		array( 'page', 'page_wikia_props' ),
-		array( 'max(page.page_id) last_comment_id' ),
-		array(
+		[ 'page', 'page_wikia_props' ],
+		[ 'max(page.page_id) last_comment_id' ],
+		[
 			'page_wikia_props.page_id is NULL',
 			'page.page_namespace' => $articleComment->getTitle()->getNamespace(),
 			'page.page_title ' . $db->buildLike( sprintf( "%s/%s", $articleComment->getTitle()->getDBkey(), ARTICLECOMMENT_PREFIX ), $db->anyString() ),
-		),
+		],
 		__METHOD__,
-		array(),
-		array(
-			'page_wikia_props' => array(
+		[ ],
+		[
+			'page_wikia_props' => [
 				'LEFT JOIN',
-				array(
+				[
 					'page.page_id' => 'page_wikia_props.page_id',
 					'page_wikia_props.propname in (' . WPP_WALL_ARCHIVE . ',' . WPP_WALL_REMOVE . ',' . WPP_WALL_ADMINDELETE . ')',
 					'page_wikia_props.props' => serialize( 1 )
-				)
-			)
-		)
+				]
+			]
+		]
 	);
 
 	$lastCommentId = 0;
@@ -77,7 +77,7 @@ function getLastChildCommentId( $articleComment ) {
 function insertIntoCommentsIndex( $parentPageId, $articleComment, $parentCommentId = 0, $lastChildCommentId = 0 ) {
 	global $isDryrun;
 
-	$data = array(
+	$data = [
 		'parentPageId' => $parentPageId,
 		'commentId' => $articleComment->getTitle()->getArticleID(),
 		'parentCommentId' => intval( $parentCommentId ),
@@ -86,7 +86,7 @@ function insertIntoCommentsIndex( $parentPageId, $articleComment, $parentComment
 		'createdAt' => $articleComment->mFirstRevision->getTimestamp(),
 		'lastTouched' => $articleComment->mLastRevision->getTimestamp(),
 		'lastRevId' => $articleComment->mLastRevId,
-	);
+	];
 
 	$data = array_merge( $data, getCommentProperties( $articleComment ) );
 	$commentsIndex = new CommentsIndex( $data );

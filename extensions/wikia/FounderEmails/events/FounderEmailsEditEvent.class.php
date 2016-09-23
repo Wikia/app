@@ -176,7 +176,7 @@ class FounderEmailsEditEvent extends FounderEmailsEvent {
 		static $counter = null;
 
 		if ( empty( $counter[$admin->getId()] ) ) {
-			$allCounter = unserialize( $admin->getGlobalAttribute( 'founderemails-counter' ) );
+			$allCounter = unserialize( $admin->getGlobalAttribute( 'founderemails-counter' ), [ 'allowed_classes' => false ] );
 			$allCounter = is_array( $allCounter ) ? $allCounter : [];
 
 			if ( $this->userCounterNeedsReset( $allCounter ) ) {

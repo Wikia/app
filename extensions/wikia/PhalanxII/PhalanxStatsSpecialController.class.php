@@ -14,6 +14,7 @@ class PhalanxStatsSpecialController extends WikiaSpecialPageController {
 	public function index() {
 		wfProfileIn( __METHOD__ );
 		$this->wg->Out->setPageTitle( wfMsg('phalanx-stats-title') );
+		$this->wg->Out->addBacklinkSubtitle( $this->phalanxTitle );
 
 		if ( !$this->userCanExecute( $this->wg->User ) ) {
 			wfProfileOut( __METHOD__ );
@@ -42,6 +43,7 @@ class PhalanxStatsSpecialController extends WikiaSpecialPageController {
 
 	private function blockStats($blockId) {
 		$this->wg->Out->setPageTitle( sprintf( "%s #%s", wfMsg('phalanx-stats-title'), $blockId ) );
+		$this->wg->Out->addBacklinkSubtitle( $this->title );
 
 		$data = Phalanx::newFromId($blockId);
 
@@ -139,6 +141,7 @@ class PhalanxStatsSpecialController extends WikiaSpecialPageController {
 
 		// we have a valid id, change title to use it
 		$this->wg->Out->setPageTitle( wfMsg( 'phalanx-stats-title' ) . ': ' . $data['url'] );
+		$this->wg->Out->addBacklinkSubtitle( $this->title );
 
 		$headers = array(
 			wfMsg('phalanx-stats-table-wiki-id'),

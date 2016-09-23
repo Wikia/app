@@ -18,11 +18,11 @@
 					<? endif; ?>
 					<ul class="forum-replies">
 						<? if ( $message['totalReplies'] < 2 ): ?>
-							<?= $app->renderPartial( 'RelatedForumDiscussion', 'message', array( 'reply' => $message ) ); ?>
+							<?= $app->renderPartial( 'RelatedForumDiscussion', 'message', [ 'reply' => $message ] ); ?>
 						<? endif; ?>
 
 						<? foreach ( $message['replies'] as $reply ): ?>
-							<?= $app->renderPartial( 'RelatedForumDiscussion', 'message', array( 'reply' => $reply ) ); ?>
+							<?= $app->renderPartial( 'RelatedForumDiscussion', 'message', [ 'reply' => $reply ] ); ?>
 						<? endforeach; ?>
 					</ul>
 				</li>

@@ -26,13 +26,6 @@ $wgSpecialPages['ThemeDesignerPreview'] = 'SpecialThemeDesignerPreview';
 $wgExtensionMessagesFiles['ThemeDesigner'] = "$dir/ThemeDesigner.i18n.php";
 $wgExtensionMessagesFiles['ThemeDesignerAliases'] = "$dir/ThemeDesigner.alias.php";
 
-// Ability to access ThemeDesigner.
-$wgAvailableRights[] = 'themedesigner';
-$wgGroupPermissions['*']['themedesigner'] = false;
-$wgGroupPermissions['sysop']['themedesigner'] = true;
-$wgGroupPermissions['helper']['themedesigner'] = true;
-$wgGroupPermissions['staff']['themedesigner'] = true;
-
 JSMessages::registerPackage('ThemeDesigner', [
 	'themedesigner-wordmark-preview-error'
 ]);

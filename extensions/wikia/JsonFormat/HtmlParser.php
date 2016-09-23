@@ -34,10 +34,11 @@ class HtmlParser {
 		$time = Time::start([__CLASS__, __METHOD__]);
 		$doc = new \DOMDocument();
 
-		libxml_use_internal_errors(true);
+		$libxmlErrorSetting = libxml_use_internal_errors(true);
 		$html = preg_replace("/\s+/", " ", $html);
 		$doc->loadHTML("<?xml encoding=\"UTF-8\">\n<html><body>" . $html . "</body></html>");
 		libxml_clear_errors();
+		libxml_use_internal_errors($libxmlErrorSetting);
 		$body = $doc->getElementsByTagName('body')->item(0);
 
 		$jsonFormatTraversingState = new \JsonFormatBuilder();

@@ -65,8 +65,8 @@ $(function () {
 						});
 					}
 
-					if (window.ChatEntryPoint && typeof window.wgWikiaChatUsers !== 'undefined') {
-						window.ChatEntryPoint.init();
+					if (window.ChatWidget && typeof window.wgWikiaChatUsers !== 'undefined') {
+						window.ChatWidget.init();
 					}
 
 					// Fix any rail modules that use jQuery timeago (DAR-2344)
@@ -79,9 +79,12 @@ $(function () {
 						Wikia.initRailTracking();
 					}
 
-					if (window.AIC2) {
-						window.AIC2.init();
-					}
+					require([
+						'ext.wikia.adEngine.slot.floatingMedrec',
+						'wikia.window'
+					], function (floatingMedrec, win) {
+						win.wgAfterContentAndJS.push(floatingMedrec.init);
+					});
 
 					if (window.wgEnableLightboxExt) {
 						window.LightboxLoader.init();

@@ -34,11 +34,5 @@ $wgExtensionMessagesFiles["SpecialLookupContribs"] = $dir . 'SpecialLookupContri
 $wgHooks['ArticleSaveComplete'][] = 'LookupContribsHooks::ArticleSaveComplete';
 $wgHooks['ContributionsToolLinks'][] = 'LookupContribsHooks::ContributionsToolLinks';
 
-/**
- * rights
- */
-$wgAvailableRights[] = 'lookupcontribs';
-$wgGroupPermissions['staff']['lookupcontribs'] = true;
-
 $wgAjaxExportList[] = "LookupContribsAjax::axData";
 

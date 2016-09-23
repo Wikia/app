@@ -9,6 +9,7 @@
 $messages = [ ];
 
 $messages['en'] = [
+	'images' => '{{int:wikianewfiles-title}}',
 	'wikianewfiles-title' => 'Images',
 	'wikianewfiles-desc' => 'Extends a [[Special:NewFiles|special page]] to override some of the header formatting',
 	'wikianewfiles-uploadby' => 'by {{GENDER:$2|$1}}',

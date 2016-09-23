@@ -437,7 +437,7 @@ class VisualEditorHooks {
 
 		foreach ( $veConfig->get( 'VisualEditorPreferenceModules' ) as $pref => $module ) {
 			$vars['wgVisualEditorConfig']['defaultUserOptions'][$pref] =
-				$defaultUserOptions[$pref];
+				$wgDefaultUserOptions[$pref];
 		}
 
 		return true;

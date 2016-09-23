@@ -31,10 +31,6 @@ $wgExtensionMessagesFiles['GameGuides'] = "{$dir}/GameGuides.i18n.php";
 $wgAutoloadClasses['GameGuidesSpecialPreviewController'] =  "{$dir}/GameGuidesSpecialPreviewController.class.php" ;
 $wgSpecialPages['GameGuidesPreview'] = 'GameGuidesSpecialPreviewController';
 
-$wgGroupPermissions['*']['gameguidespreview'] = false;
-$wgGroupPermissions['staff']['gameguidespreview'] = true;
-$wgGroupPermissions['sysop']['gameguidespreview'] = true;
-
 //Special Page for Content Managment Tool
 //Replaced by Special:CuratedContent
 //@author tor
@@ -42,16 +38,7 @@ $wgGroupPermissions['sysop']['gameguidespreview'] = true;
 //$wgAutoloadClasses[ 'GameGuidesSpecialContentController'] =  "{$dir}/GameGuidesSpecialContentController.class.php" ;
 //$wgSpecialPages[ 'GameGuidesContent' ] =  'GameGuidesSpecialContentController';
 
-$wgGroupPermissions['*']['gameguidescontent'] = false;
-$wgGroupPermissions['staff']['gameguidescontent'] = true;
-$wgGroupPermissions['helper']['gameguidescontent'] = true;
 
-if ( $wgGameGuidesContentForAdmins ) {
-	$wgGroupPermissions['sysop']['gameguidescontent'] = true;
-}
-
-$wgGroupPermissions['*']['gameguidescontent-switchforadmins'] = false;
-$wgGroupPermissions['staff']['gameguidescontent-switchforadmins'] = true;
 
 JSMessages::registerPackage( 'GameGuidesContentMsg', [
 	'wikiagameguides-content-category',
@@ -66,9 +53,6 @@ JSMessages::registerPackage( 'GameGuidesContentMsg', [
 //Special Page for Sponsored Videos Managment Tool
 $wgAutoloadClasses['GameGuidesSpecialSponsoredController'] = "{$dir}/GameGuidesSpecialSponsoredController.class.php";
 $wgSpecialPages['GameGuidesSponsored'] ='GameGuidesSpecialSponsoredController';
-
-$wgGroupPermissions['*']['gameguidessponsored'] = false;
-$wgGroupPermissions['staff']['gameguidessponsored'] = true;
 
 JSMessages::registerPackage( 'GameGuidesSponsoredMsg', [
 	'wikiagameguides-sponsored-video',

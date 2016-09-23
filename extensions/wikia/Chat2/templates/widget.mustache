@@ -1,0 +1,42 @@
+<section class="ChatModule {{sectionClassName}} ChatModuleUninitialized">
+	<div class="chat-contents
+		{{#userName}} chat-user-logged-in{{/userName}}
+		{{^userName}} chat-user-anonymous{{/userName}}
+		{{#hasUsers}} chat-room-active{{/hasUsers}}
+		{{^hasUsers}} chat-room-empty{{/hasUsers}}">
+		<h2 class="chat-headline">
+			<span class="chat-live" data-msg-id="chat-live2"> </span>
+			<span class="chat-total">{{usersCount}}</span>
+		</h2>
+		<p class="chat-name">{{siteName}}</p>
+		<div class="chat-join">
+			<button
+				type="button"
+				{{^userName}}class="loginToChat" {{/userName}}
+				onclick="ChatWidget.onClickChatButton('{{linkToSpecialChat}}')">
+				{{buttonText}}
+			</button>
+		</div>
+		<div class="chat-whos-here">
+			<span class="arrow-left"><img src="{{blankImgUrl}}" /></span>
+			<span class="arrow-right"><img src="{{blankImgUrl}}" /></span>
+			<div class="carousel-container">
+				<div>
+					<ul class="carousel chatCarousel">
+						{{>widgetUserElement}}
+					</ul>
+					{{#myAvatarUrl}}
+						<img src="{{myAvatarUrl}}" class="avatar currentUser" width="32" height="32" />
+					{{/myAvatarUrl}}
+				</div>
+			</div>
+		</div>
+	</div>
+	{{#guidelinesText}}
+		<span class="more">{{{guidelinesText}}}</span>
+	{{/guidelinesText}}
+</section>
+{{#fromParserTag}}
+	<script language="javascript" type="text/javascript">if ( typeof ChatWidget!=="undefined" ) ChatWidget.init();</script>
+	<a class="ChatMonobookWidget" href="{{linkToSpecialChat}}">{{joinChatText}}></a>
+{{/fromParserTag}}

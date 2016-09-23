@@ -19,7 +19,7 @@ class WallRailHelper {
 			&& !$app->wg->Title->isSubpage()
 		) {
 			// we want only chat, achivements and following pages
-			$remove = array( 1250, 1450, 1300, 1150 );
+			$remove = [ 1250, 1450, 1300, 1150 ];
 			foreach ( $remove as $rightRailEl ) {
 				if ( !empty( $modules[$rightRailEl] ) ) {
 					unset( $modules[$rightRailEl] );
@@ -28,8 +28,8 @@ class WallRailHelper {
 		}
 
 		if ( $action === 'history' && WallHelper::isWallNamespace( $namespace ) ) {
-			$modules = array();
-			$modules[1440] = array( 'WallRail', 'index', null );
+			$modules = [ ];
+			$modules[1440] = [ 'WallRail', 'index', null ];
 		}
 
 		wfProfileOut( __METHOD__ );

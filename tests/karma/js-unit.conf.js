@@ -23,6 +23,7 @@ module.exports = function (config) {
 			'tests/lib/jasmine/helpers.js',
 			'resources/jquery/jquery-1.8.2.js',
 			'resources/wikia/polyfills/bind.js',
+			'resources/mediawiki/mediawiki.js',
 
 			//JSMessages
 			'extensions/wikia/JSMessages/js/JSMessages.js',
@@ -87,14 +88,20 @@ module.exports = function (config) {
 			//Advertisement
 			'extensions/wikia/AdEngine/js/*.js',
 			'extensions/wikia/AdEngine/js/config/*.js',
-			'extensions/wikia/AdEngine/js/lookup/*.js',
+			'extensions/wikia/AdEngine/js/context/*.js',
+			'extensions/wikia/AdEngine/js/lookup/**/*.js',
 			'extensions/wikia/AdEngine/js/provider/*.js',
 			'extensions/wikia/AdEngine/js/provider/gpt/*.js',
 			'extensions/wikia/AdEngine/js/slot/*.js',
 			'extensions/wikia/AdEngine/js/template/*.js',
 			'extensions/wikia/AdEngine/js/utils/*.js',
+			'extensions/wikia/AdEngine/js/video/*.js',
 
 			'extensions/wikia/AdEngine/js/spec/**/*.spec.js',
+
+			//ARecoveryEngine
+			'extensions/wikia/ARecoveryEngine/js/*.js',
+			'extensions/wikia/ARecoveryEngine/js/**/*.js',
 
 			//PhalanxII
 			'extensions/wikia/PhalanxII/js/modules/phalanx.js',
@@ -123,6 +130,10 @@ module.exports = function (config) {
 			'extensions/wikia/VideoPageTool/scripts/admin/collections/categorydata.js',
 			// Views
 			'extensions/wikia/VideoPageTool/scripts/admin/views/autocomplete.js',
+
+			//CreateNewWiki
+			'extensions/wikia/CreateNewWiki/js/CreateNewWikiHelper.js',
+			'extensions/wikia/CreateNewWiki/js/spec/*.spec.js',
 
 			/*
 			 * VideoPageTool: Homepage Module
@@ -196,7 +207,15 @@ module.exports = function (config) {
 
 			// PageShare
 			'extensions/wikia/PageShare/scripts/PageShare.js',
-			'extensions/wikia/PageShare/scripts/spec/PageShare.spec.js'
+			'extensions/wikia/PageShare/scripts/spec/PageShare.spec.js',
+
+			// Recirculation
+			'extensions/wikia/Recirculation/js/*.js',
+			'extensions/wikia/Recirculation/js/spec/**/*.spec.js',
+
+			//PortableInfoboxBuilder
+			'extensions/wikia/PortableInfoboxBuilder/js/PortableInfoboxBuilderTemplateClassificationHelper.js',
+			'extensions/wikia/PortableInfoboxBuilder/js/spec/PortableInfoboxBuilderTemplateClassificationHelper.spec.js',
 		]
 	});
 };

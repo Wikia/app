@@ -10,15 +10,13 @@ define('ext.wikia.adEngine.config.desktop', [
 
 	// adProviders
 	'ext.wikia.adEngine.provider.directGpt',
-	'ext.wikia.adEngine.provider.evolve',
 	'ext.wikia.adEngine.provider.evolve2',
-	'ext.wikia.adEngine.provider.liftium',
 	'ext.wikia.adEngine.provider.monetizationService',
-	'ext.wikia.adEngine.provider.openX',
 	'ext.wikia.adEngine.provider.remnantGpt',
-	'ext.wikia.adEngine.provider.sevenOneMedia',
+	'ext.wikia.adEngine.provider.rubiconFastlane',
 	'ext.wikia.adEngine.provider.turtle',
-	require.optional('ext.wikia.adEngine.provider.taboola')
+	require.optional('ext.wikia.adEngine.provider.taboola'),
+	require.optional('ext.wikia.adEngine.provider.revcontent')
 ], function (
 	// regular dependencies
 	log,
@@ -30,29 +28,24 @@ define('ext.wikia.adEngine.config.desktop', [
 
 	// AdProviders
 	adProviderDirectGpt,
-	adProviderEvolve,
 	adProviderEvolve2,
-	adProviderLiftium,
 	adProviderMonetizationService,
-	adProviderOpenX,
 	adProviderRemnantGpt,
-	adProviderSevenOneMedia,
+	adProviderRubiconFastlane,
 	adProviderTurtle,
-	adProviderTaboola
+	adProviderTaboola,
+	adProviderRevcontent
 ) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.adConfigLate',
-		country = geo.getCountryCode(),
-		evolveCountry = (country === 'AU' || country === 'CA' || country === 'NZ'),
 		context = adContext.getContext(),
-		liftiumSlotsToShowWithSevenOneMedia = {
-			'WIKIA_BAR_BOXAD_1': true,
-			'TOP_BUTTON_WIDE': true,
-			'TOP_BUTTON_WIDE.force': true
-		},
-		ie8 = window.navigator && window.navigator.userAgent && window.navigator.userAgent.match(/MSIE [6-8]\./),
-		gptEnabled = !instantGlobals.wgSitewideDisableGpt;
+		gptEnabled = !instantGlobals.wgSitewideDisableGpt,
+		forcedProviders = {
+			evolve2:  [adProviderEvolve2],
+			rpfl:     [adProviderRubiconFastlane],
+			turtle:   [adProviderTurtle]
+		};
 
 	function getDecorators() {
 		return [adDecoratorPageDimensions];
@@ -69,50 +62,20 @@ define('ext.wikia.adEngine.config.desktop', [
 			return [];
 		}
 
-		// Force Turtle
-		if (context.forcedProvider === 'turtle') {
-			log(['getProvider', slotName, 'Turtle (wgAdDriverForcedProvider)'], 'info', logGroup);
-			return [adProviderTurtle];
-		}
-
-		// Force Evolve2
-		if (context.forcedProvider === 'evolve2') {
-			log(['getProvider', slotName, 'Evolve (wgAdDriverForcedProvider)'], 'info', logGroup);
-			return [adProviderEvolve2];
-		}
-
-		// Force OpenX
-		if (context.forcedProvider === 'openx') {
-			log(['getProvider', slotName, 'OpenX (wgAdDriverForcedProvider)'], 'info', logGroup);
-			return [adProviderOpenX];
-		}
-
-		// Force Liftium
-		if (context.forcedProvider === 'liftium') {
-			log(['getProvider', slotName, 'Liftium (wgAdDriverForcedProvider)'], 'info', logGroup);
-			return [adProviderLiftium];
-		}
-
-		// SevenOne Media
-		if (context.providers.sevenOneMedia) {
-			if (!liftiumSlotsToShowWithSevenOneMedia[slotName]) {
-				if (ie8) {
-					log('SevenOneMedia not supported on IE8. No ads', 'warn', logGroup);
-					return [];
-				}
-
-				if (instantGlobals.wgSitewideDisableSevenOneMedia) {
-					log('SevenOneMedia disabled by DR. No ads', 'warn', logGroup);
-					return [];
-				}
-
-				return [adProviderSevenOneMedia];
-			}
+		// Force provider
+		if (context.forcedProvider && !!forcedProviders[context.forcedProvider]) {
+			log(['getProvider', slotName, context.forcedProvider + ' (wgAdDriverForcedProvider)'], 'info', logGroup);
+			return forcedProviders[context.forcedProvider];
 		}
 
 		// Taboola
 		if (context.providers.taboola && adProviderTaboola && adProviderTaboola.canHandleSlot(slotName)) {
 			return [adProviderTaboola];
+		}
+
+		// Revcontent
+		if (adProviderRevcontent && context.providers.revcontent && adProviderRevcontent.canHandleSlot(slotName)) {
+			return [adProviderRevcontent];
 		}
 
 		// MonetizationService
@@ -129,8 +92,6 @@ define('ext.wikia.adEngine.config.desktop', [
 			providerList.push(adProviderTurtle);
 		} else if (context.providers.evolve2 && adProviderEvolve2.canHandleSlot(slotName)) {
 			providerList.push(adProviderEvolve2);
-		} else if (evolveCountry && adProviderEvolve.canHandleSlot(slotName)) {
-			providerList.push(adProviderEvolve);
 		} else if (gptEnabled) {
 			providerList.push(adProviderDirectGpt);
 		}
@@ -140,11 +101,9 @@ define('ext.wikia.adEngine.config.desktop', [
 			providerList.push(adProviderRemnantGpt);
 		}
 
-		// Last resort provider: OpenX or Liftium
-		if (context.providers.openX && adProviderOpenX.canHandleSlot(slotName)) {
-			providerList.push(adProviderOpenX);
-		} else {
-			providerList.push(adProviderLiftium);
+		// Last resort provider: RubiconFastlane
+		if (context.providers.rubiconFastlane && adProviderRubiconFastlane.canHandleSlot(slotName)) {
+			providerList.push(adProviderRubiconFastlane);
 		}
 
 		return providerList;

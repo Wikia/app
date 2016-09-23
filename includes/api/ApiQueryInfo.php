@@ -57,7 +57,10 @@ class ApiQueryInfo extends ApiQueryBase {
 		global $wgDisableCounters;
 
 		$pageSet->requestField( 'page_restrictions' );
-		$pageSet->requestField( 'page_is_redirect' );
+		// when resolving redirects, no page will have this field
+		if( !$pageSet->isResolvingRedirects() ) {
+			$pageSet->requestField( 'page_is_redirect' );
+		}
 		$pageSet->requestField( 'page_is_new' );
 		if ( !$wgDisableCounters ) {
 			$pageSet->requestField( 'page_counter' );
@@ -269,7 +272,10 @@ class ApiQueryInfo extends ApiQueryBase {
 		}
 
 		$this->pageRestrictions = $pageSet->getCustomField( 'page_restrictions' );
-		$this->pageIsRedir = $pageSet->getCustomField( 'page_is_redirect' );
+		// when resolving redirects, no page will have this field
+		$this->pageIsRedir = !$pageSet->isResolvingRedirects()
+			? $pageSet->getCustomField( 'page_is_redirect' )
+			: array();
 		$this->pageIsNew = $pageSet->getCustomField( 'page_is_new' );
 
 		global $wgDisableCounters;
@@ -332,7 +338,7 @@ class ApiQueryInfo extends ApiQueryBase {
 				: intval( $this->pageCounter[$pageid] );
 			$pageInfo['length'] = intval( $this->pageLength[$pageid] );
 
-			if ( $this->pageIsRedir[$pageid] ) {
+			if ( isset( $this->pageIsRedir[$pageid] ) && $this->pageIsRedir[$pageid] ) {
 				$pageInfo['redirect'] = '';
 			}
 			if ( $this->pageIsNew[$pageid] ) {

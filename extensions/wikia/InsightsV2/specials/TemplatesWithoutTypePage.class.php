@@ -45,7 +45,6 @@ class TemplatesWithoutTypePage extends PageQueryPage {
 		 * 1. Get the new data first
 		 */
 		$templatesWithoutType = $this->reallyDoQuery();
-		$dbw->begin();
 
 		/**
 		 * 2. Delete the existing records
@@ -58,9 +57,7 @@ class TemplatesWithoutTypePage extends PageQueryPage {
 		/**
 		 * 3. Insert the new records if the $templatesWithoutType array is not empty
 		 */
-		$num = 0;
 		if ( !empty( $templatesWithoutType ) ) {
-
 			( new WikiaSQL() )
 				->INSERT()->INTO( 'querycache', [
 					'qc_type',
@@ -70,15 +67,10 @@ class TemplatesWithoutTypePage extends PageQueryPage {
 				] )
 				->VALUES( $templatesWithoutType )
 				->run( $dbw );
-
-			$num = $dbw->affectedRows();
-			if ( $num === 0 ) {
-				$dbw->rollback();
-				$num = false;
-			} else {
-				$dbw->commit();
-			}
 		}
+		$num = count( $templatesWithoutType );
+
+		wfRunHooks( 'TemplatesWithoutTypeQueryRecached', [ 'count' => $num ] );
 
 		return $num;
 	}
@@ -107,7 +99,12 @@ class TemplatesWithoutTypePage extends PageQueryPage {
 
 		$cnNotRecognizedTemplates = $recognizedProvider->getNotRecognizedTemplates();
 
+		$templatesCounter = 0;
 		foreach( $cnNotRecognizedTemplates as $pageId => $notRecognizedTemplate ) {
+			if ( $templatesCounter === self::LIMIT ) {
+				break;
+			}
+
 			$title = Title::newFromID( $pageId );
 			if ( $title instanceof Title && !$title->isRedirect() ) {
 				$links = $title->getIndirectLinks();
@@ -118,6 +115,7 @@ class TemplatesWithoutTypePage extends PageQueryPage {
 						NS_TEMPLATE,
 						$title->getDBkey()
 					];
+				$templatesCounter++;
 			}
 		}
 

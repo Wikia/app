@@ -99,35 +99,4 @@ class Lilly {
 
 		return $linkMap;
 	}
-
-	public function postLink( $sourceUrl, $targetUrl ) {
-		global $wgLillyServiceUrl, $wgWikiaDatacenter;
-
-		// No calls from Reston
-		if ( $wgWikiaDatacenter === WIKIA_DC_RES ) {
-			return;
-		}
-
-		if ( !$this->isSupportedUrl( $sourceUrl ) || !$this->isSupportedUrl( $targetUrl ) ) {
-			return;
-		}
-
-		$sourceHost = parse_url( $sourceUrl, PHP_URL_HOST );
-		$targetHost = parse_url( $targetUrl, PHP_URL_HOST );
-
-		// Don't accept links to the same wiki
-		if ( $sourceHost === $targetHost ) {
-			return;
-		}
-
-		// Post the link to Lilly
-		Http::post( $wgLillyServiceUrl . self::API_V2_QUEUE, [
-			'noProxy' => true,
-			'timeout' => self::HTTP_TIMEOUT,
-			'postData' => [
-				'source' => $sourceUrl,
-				'target' => $targetUrl,
-			]
-		] );
-	}
 }

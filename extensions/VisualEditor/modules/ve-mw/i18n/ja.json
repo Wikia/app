@@ -172,6 +172,7 @@
 	"visualeditor-editnotices-tooltip": "通知を編集",
 	"visualeditor-editsummary": "編集内容を説明してください",
 	"visualeditor-editsummary-bytes-remaining": "残りバイト数",
+	"visualeditor-formatdropdown-format-blockquote": "ブロック引用",
 	"visualeditor-formatdropdown-format-mw-heading1": "ページ名",
 	"visualeditor-formatdropdown-format-mw-heading2": "見出し",
 	"visualeditor-formatdropdown-format-mw-heading3": "小見出し 1",

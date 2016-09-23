@@ -86,12 +86,13 @@ Be Original.',
 	'wikiahome-preview-user-member-since' => "Member since $1",
 
 	'wikiahome-import-script-no-description' => 'No description given',
-
-	'wikiahome-hub-current-day' => '{{CURRENTDAY}} {{CURRENTMONTHNAME}} {{CURRENTYEAR}}',
 );
 
 $messages['de'] = array(
 	'wikiahome-page-header-heading' => 'Erschaffe. Mach mit. Sei kreativ.',
+	'wikiahome-page-header-heading-mobile' => 'Erschaffe.
+Mach mit.
+Sei kreativ.',
 	'wikiahome-page-header-subheading' => 'Teile, was du kennst und liebst.',
 	'wikiahome-page-header-create-wiki-button' => 'Starte ein Wiki',
 	'wikiahome-page-header-create-wiki-button-destination' => 'http://www.wikia.com/Special:CreateWiki?uselang=de',
@@ -161,6 +162,9 @@ $messages['de'] = array(
 
 $messages['es'] = array(
 	'wikiahome-page-header-heading' => 'Crea. Colabora. Sé original.',
+	'wikiahome-page-header-heading-mobile' => 'Crea.
+Colabora.
+Sé original.',
 	'wikiahome-page-header-subheading' => 'Comparte tus conocimientos y lo que te gusta',
 	'wikiahome-page-header-create-wiki-button' => 'Crea un wiki',
 	'wikiahome-page-header-create-wiki-button-destination' => 'http://www.wikia.com/Special:CreateWiki?uselang=es',
@@ -230,12 +234,13 @@ $messages['es'] = array(
 	'wikiahome-preview-user-member-since' => "Miembro desde el $1",
 
 	'wikiahome-import-script-no-description' => 'No se ha dado una descripción',
-
-	'wikiahome-hub-current-day' => '{{CURRENTDAY}} {{CURRENTMONTHNAME}} {{CURRENTYEAR}}',
 );
 
 $messages['fr'] = array(
 	'wikiahome-page-header-heading' => 'Créez. Collaborez. Soyez original.',
+	'wikiahome-page-header-heading-mobile' => 'Créez.
+Collaborez.
+Soyez original.',
 	'wikiahome-page-header-subheading' => 'Partagez ce que vous savez et aimez.',
 	'wikiahome-page-header-create-wiki-button' => 'Commencer un wiki',
 	'wikiahome-page-header-create-wiki-button-destination' => 'http://www.wikia.com/Special:CreateWiki?uselang=fr',
@@ -285,11 +290,13 @@ $messages['fr'] = array(
 	'wikiahome-preview-error' => 'Erreur interstitielle',
 	'wikiahome-preview-user-member-since' => 'Membre depuis $1',
 	'wikiahome-import-script-no-description' => 'Aucune description renseignée',
-	'wikiahome-hub-current-day' => '{{CURRENTDAY}} {{CURRENTMONTHNAME}} {{CURRENTYEAR}}',
 );
 
 $messages['pl'] = array(
 	'wikiahome-page-header-heading' => 'Twórz. Współpracuj. Bądź oryginalny.',
+	'wikiahome-page-header-heading-mobile' => 'Twórz.
+Współpracuj.
+Bądź oryginalny.',
 	'wikiahome-page-header-subheading' => 'Podziel się swoją wiedzą o tym, co kochasz. ',
 	'wikiahome-page-header-create-wiki-button' => 'Utwórz wiki',
 	'wikiahome-page-header-create-wiki-button-destination' => 'http://www.wikia.com/Special:CreateWiki?uselang=pl',
@@ -361,12 +368,13 @@ $messages['pl'] = array(
 	'wikiahome-preview-user-member-since' => "Edytuje od $1",
 
 	'wikiahome-import-script-no-description' => 'Brak opisu',
-
-	'wikiahome-hub-current-day' => '{{CURRENTDAY}} {{CURRENTMONTHNAME}} {{CURRENTYEAR}}',
 );
 
 $messages['ja'] = array(
 	'wikiahome-page-header-heading' => '作成。合作。独創的にする。',
+	'wikiahome-page-header-heading-mobile' => '作成。
+合作。
+独創的にする。',
 	'wikiahome-page-header-subheading' => 'あなたの知っていること、好きなことをシェアしよう',
 	'wikiahome-page-header-create-wiki-button' => 'ウィキアを始める',
 	'wikiahome-page-header-create-wiki-button-destination' => 'http://www.wikia.com/Special:CreateWiki?uselang=ja',
@@ -427,14 +435,13 @@ $messages['ja'] = array(
 	'wikiahome-preview-user-member-since' => " $1 からメンバー",
 
 	'wikiahome-import-script-no-description' => '詳細はありません',
-
-	'wikiahome-hub-current-day' => '{{CURRENTDAY}} {{CURRENTMONTHNAME}} {{CURRENTYEAR}}',
 );
 
 
 $messages['qqq'] = array(
 	'wikiahome-desc' => '{{desc}}',
 	'wikiahome-page-header-heading' => 'The page title text in H1 tag on the top of the page',
+	'wikiahome-page-header-heading-mobile' => 'The page title text in H1 tag on the top of the page on the mobile skin.',
 	'wikiahome-page-header-subheading' => 'The page subtitle text in H4 tag below H1 tag',
 	'wikiahome-page-header-create-wiki-button' => 'A button label',
 	'wikiahome-page-header-create-wiki-button-destination' => 'URL for Special:CreateNewWiki on the language specific corporate wiki',
@@ -498,6 +505,4 @@ $messages['qqq'] = array(
 	'wikiahome-preview-user-member-since' => 'Member since date',
 	
 	'wikiahome-import-script-no-description' => 'This message should be used only when an edge case occurs and there is no wiki description on wikis list used in importing process. This message will be place in wiki description in Interstitial if original description is not provided.',
-	
-	'wikiahome-hub-current-day' => 'Date in format "day monthname year" using templates: {{CURRENTDAY}} {{CURRENTMONTHNAME}} {{CURRENTYEAR}}',
 );

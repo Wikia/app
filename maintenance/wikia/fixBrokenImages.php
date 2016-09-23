@@ -32,7 +32,7 @@ class FixBrokenImages extends Maintenance {
 	private $otherLocation;
 	private $foundMissing = [];
 
-	/* @var $dbr DatabaseMysql */
+	/* @var $dbr DatabaseBase */
 	private $dbr;
 
 	/**

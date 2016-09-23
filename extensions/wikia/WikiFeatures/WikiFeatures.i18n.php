@@ -1,13 +1,13 @@
 <?php
 /**
-* Internationalisation file for the WikiFeatures extension.
-*
-* @addtogroup Languages
-*/
+ * Internationalisation file for the WikiFeatures extension.
+ *
+ * @addtogroup Languages
+ */
 
-$messages = array();
+$messages = [];
 
-$messages['en'] = array(
+$messages['en'] = [
 	'wikifeatures-desc' => "Allows privileged users to toggle Wikia's optional features",
 	'wikifeatures' => 'Wiki Features',
 	'wikifeatures-title' => 'Wiki Features',
@@ -71,6 +71,8 @@ $messages['en'] = array(
 	'wikifeatures-feature-description-wgGameGuidesContentForAdmins' => 'Use the Special:GameGuidesContent page of your wiki to manage which categories appear in the [[w:c:community:Help:Game Guides|Game Guides]] mobile app. Expand your potential audience!',
 	'wikifeatures-feature-heading-wgEnableNjordExt' => 'Hero Image',
 	'wikifeatures-feature-description-wgEnableNjordExt' => 'Make your wiki more attractive by uploading an image to represent it on its home page!',
+	'wikifeatures-feature-heading-wgEnablePortableInfoboxEuropaTheme' => 'Europa Infobox Theme',
+	'wikifeatures-feature-description-wgEnablePortableInfoboxEuropaTheme' => "Enable a new look for your [[w:c:community:Help:Infobox|infoboxes]] to fully benefit from your wiki's color theme!",
 	'wikifeatures-feature-heading-wgDisableAnonymousEditing' => 'Require all contributors to log in',
 	'wikifeatures-feature-description-wgDisableAnonymousEditing' => 'Do you want all contributors on your wikia to be logged in? When this feature is enabled, no anonymous visitors will be allowed to edit pages or participate in comments, Forum or Message Wall without logging in. Anyone can still create a Wikia account to join your community!',
 	'wikifeatures-feature-heading-emptylabs' => 'Looks like the lab is taking a break',
@@ -78,12 +80,14 @@ $messages['en'] = array(
 	'wikifeatures-log-name' => 'Wiki Features log',
 	'wikifeatures-log-header' => 'Below is a list of Wiki Features settings changes.',
 	'action-wikifeaturesview' => 'view Wiki Features',
-);
+	'right-wikifeatures' => 'Can toggle extensions available in Special:WikiFeatures',
+	'right-wikifeaturesview' => 'Can view Special:WikiFeatures',
+];
 
 /** Message documentation (Message documentation)
  * @author Siebrand
  */
-$messages['qqq'] = array(
+$messages['qqq'] = [
 	'wikifeatures-desc' => '{{desc}}',
 	'wikifeatures-feature-description-wgEnableChat' => 'Feel free not to translate "lol omg rolfl" if there is no proper equivalent in your language. These are acronyms for Laughing Out Loud, Oh My God, and Rolling On The Floor Laughing.',
 	'wikifeatures-feature-heading-wgEnableWikiaInteractiveMaps' => 'Heading title for the Maps feature.',
@@ -92,13 +96,15 @@ $messages['qqq'] = array(
 	'wikifeatures-feature-description-wgEnableMediaGalleryExt' => 'Description text for enabling the Media Gallery feature',
 	'wikifeatures-feature-heading-wgDisableAnonymousEditing' => 'Header text for requiring all contributors to log in to edit.',
 	'wikifeatures-feature-description-wgDisableAnonymousEditing' => 'Description for requiring all contributors to log in to edit.',
+	'wikifeatures-feature-heading-wgEnablePortableInfoboxEuropaTheme' => 'Header text for Europa Infobox Theme',
+	'wikifeatures-feature-description-wgEnablePortableInfoboxEuropaTheme' => 'Description for Europa Infobox Theme feature. Link from the word "infoboxes" should link to community help page in proper language when present.',
 	'action-wikifeaturesview' => '{{doc-action|wikifeaturesview}}',
-);
+];
 
 /** Arabic (العربية)
  * @author روخو
  */
-$messages['ar'] = array(
+$messages['ar'] = [
 	'wikifeatures' => 'سمات الويكي',
 	'wikifeatures-heading' => 'سمات',
 	'wikifeatures-toggle-active' => 'مفعل',
@@ -118,19 +124,19 @@ $messages['ar'] = array(
 	'wikifeatures-feature-heading-wgEnableEditPageReskinExt' => 'إعادة تصميم محرر ويكيا',
 	'wikifeatures-feature-heading-wgEnableAjaxPollExt' => 'استطلاعات الرأي',
 	'wikifeatures-feature-heading-wgEnableBlogArticles' => 'مدونات',
-);
+];
 
 /** Azerbaijani (azərbaycanca)
  * @author Cekli829
  */
-$messages['az'] = array(
+$messages['az'] = [
 	'wikifeatures-feedback-comment-label' => 'Şərh',
-);
+];
 
 /** Bavarian (Boarisch)
  * @author Mucalexx
  */
-$messages['bar'] = array(
+$messages['bar'] = [
 	'wikifeatures' => 'Wiki-Funkzióner',
 	'wikifeatures-title' => 'Wiki-Funkzióner',
 	'wikifeatures-heading' => 'Funkzióner',
@@ -155,19 +161,19 @@ A wengerl experimentiern - du kauhst dert jeederzeid d' Tools deaktiviern, dé d
 	'wikifeatures-an-idea-for-project' => "I ho' a Idee fyr dés Prójekt",
 	'wikifeatures-feedback-heading' => 'Ryckmejdung',
 	'wikifeatures-promotion-new' => 'Neich',
-);
+];
 
 /** Bulgarian (български)
  * @author DCLXVI
  */
-$messages['bg'] = array(
+$messages['bg'] = [
 	'wikifeatures-deactivate-cancel-button' => 'Отказване',
-);
+];
 
 /** Breton (brezhoneg)
  * @author Y-M D
  */
-$messages['br'] = array(
+$messages['br'] = [
 	'wikifeatures-toggle-active' => 'Gweredekaet',
 	'wikifeatures-toggle-inactive' => 'Diweredekaet',
 	'wikifeatures-active-on' => 'Oberiant war $1 wiki',
@@ -188,13 +194,13 @@ $messages['br'] = array(
 	'wikifeatures-feature-heading-wgEnableChat' => 'Flap',
 	'wikifeatures-feature-heading-wgEnableAjaxPollExt' => 'Sontadegoù',
 	'wikifeatures-feature-heading-wgEnableBlogArticles' => 'Blogoù',
-);
+];
 
 /** Catalan (català)
  * @author CuBaN VeRcEttI
  * @author Gemmaa
  */
-$messages['ca'] = array(
+$messages['ca'] = [
 	'wikifeatures' => 'Wiki Funcionalitats',
 	'wikifeatures-title' => 'Wiki Funcionalitats',
 	'wikifeatures-heading' => 'Funcionalitats',
@@ -245,12 +251,12 @@ $messages['ca'] = array(
 	'wikifeatures-feature-description-wgEnableBlogArticles' => 'Els blogs permeten als usuaris del teu wiki crear les seves pròpies entrades de blog als seus perfils i poden usar-se per comunicar notícies i esdeveniments a la comunitat del teu wiki.',
 	'wikifeatures-feature-heading-emptylabs' => 'Sembla que el laboratori està prenent un descans',
 	'wikifeatures-feature-description-emptylabs' => 'Els nostres tècnics estan treballant dur per crear noves funcionalitats que podràs provar aviat. Visita aquesta pàgina aviat per trobar més novetats!',
-);
+];
 
 /** Czech (česky)
  * @author Darth Daron
  */
-$messages['cs'] = array(
+$messages['cs'] = [
 	'wikifeatures' => 'Wiki funkce',
 	'wikifeatures-title' => 'Wiki funkce',
 	'wikifeatures-heading' => 'Funkce',
@@ -302,7 +308,7 @@ $messages['cs'] = array(
 	'wikifeatures-feature-heading-wgEnableWallExt' => 'Zeď zpráv',
 	'wikifeatures-feature-heading-emptylabs' => 'Vypadá to, že laboratoř má přestávku',
 	'wikifeatures-feature-description-emptylabs' => 'Naši vědci tvrdě pracují. Již brzy očekávejte nové funkce!',
-);
+];
 
 /** German (Deutsch)
  * @author Kghbln
@@ -311,21 +317,21 @@ $messages['cs'] = array(
  * @author Sebastian Wallroth
  * @author Tiin
  */
-$messages['de'] = array(
+$messages['de'] = [
 	'wikifeatures' => 'Wiki-Funktionen',
 	'wikifeatures-title' => 'Wiki-Funktionen',
 	'wikifeatures-heading' => 'Wiki-Funktionen',
-	'wikifeatures-creative' => 'Über Wiki-Funktionen kannst du auswählen, welche der optionalen Funktionen von Wikia du in deinem Wiki verwenden möchtest. Sieh sie dir an und spiele ein wenig damit herum. Du kannst diese Funktionen jederzeit aktivieren oder deaktivieren.',
+	'wikifeatures-creative' => 'Über Wiki-Funktionen kannst du auswählen, welche der optionalen Funktionen von Wikia du in deinem Wikia verwenden möchtest. Sieh sie dir an und probiere sie aus. Du kannst diese Funktionen jederzeit aktivieren oder deaktivieren.',
 	'wikifeatures-labs-heading' => 'Wikia Labs',
-	'wikifeatures-labs-creative' => 'In Labs findest du die Funktionen und Ideen, an denen wir gerade arbeiten. Da wir diese Funktionen immer noch in unserem Labor testen, sind möglicherweise noch nicht alle Fehler ausgebügelt, es würde uns trotzdem freuen, wenn du in den Spaß mit einsteigst! Probiere sie aus und schicke uns dein Feedback zu den guten, weniger guten und absolut grotesken Aspekten dieser Produkte.',
+	'wikifeatures-labs-creative' => 'In den Wikia Labs findest du die Funktionen und Ideen, an denen wir gerade arbeiten. Da wir diese Funktionen immer noch testen, sind möglicherweise noch nicht alle Fehler ausgebügelt. Es würde uns trotzdem freuen, wenn du in den Spaß mit einsteigst! Probiere sie aus und schicke uns dein Feedback zu den guten, weniger guten und absolut kuriosen Aspekten dieser Produkte.',
 	'wikifeatures-feedback' => 'Feedback abgeben',
-	'wikifeatures-error-permission' => 'Sorry, du hast leider keine Berechtigung, diese Seite anzusehen.',
+	'wikifeatures-error-permission' => 'Leider hast du keine Berechtigung, diese Seite anzusehen.',
 	'wikifeatures-error-invalid-parameter' => 'Ungültiger Parameter: $1. Bitte versuche es erneut.',
 	'wikifeatures-error-message' => 'Dein Kommentar ist entweder zu kurz oder zu lang.',
 	'wikifeatures-error-spam-attempt' => 'Warte bitte 60 Sekunden, bevor du weiteres Feedback abgibst.',
 	'wikifeatures-error-invalid-category' => 'Hoppla! Wähle bitte aus, worum es in diesem Ticket geht.',
-	'wikifeatures-toggle-active' => 'An',
-	'wikifeatures-toggle-inactive' => 'Aus',
+	'wikifeatures-toggle-active' => 'Aktiviert',
+	'wikifeatures-toggle-inactive' => 'Deaktiviert',
 	'wikifeatures-active-on' => 'In {{PLURAL:$1|$1 Wikia|$1 Wikias}} aktiviert',
 	'wikifeatures-category-choose-one' => 'Wähle eine Option aus...',
 	'wikifeatures-love-this-project' => 'Diese Funktion gefällt mir',
@@ -333,35 +339,35 @@ $messages['de'] = array(
 	'wikifeatures-problem-with-project' => 'Ich möchte ein Problem melden',
 	'wikifeatures-an-idea-for-project' => 'Ich habe eine Idee für eine Funktion',
 	'wikifeatures-feedback-heading' => 'Feedback',
-	'wikifeatures-feedback-description' => 'Wir freuen uns über Feedback zu Funktionen in Wikia Labs! Hast du eine Idee, wie wir diese Funktion verbessern könnten, möchtest du ein Problem melden oder uns einfach wissen lassen, was dir daran gefällt und was nicht? Lass es uns wissen und verwende das nachstehende Feld für dein Feedback.',
+	'wikifeatures-feedback-description' => 'Wir freuen uns über Feedback zu Funktionen in Labs! Hast du eine Idee, wie wir diese Funktion verbessern könnten, möchtest du ein Problem melden oder uns einfach wissen lassen, was dir daran gefällt uns was nicht? Lass es uns wissen und verwende das nachstehende Feld für dein Feedback.',
 	'wikifeatures-feedback-type-label' => 'Worum geht es?',
 	'wikifeatures-feedback-comment-label' => 'Hinterlasse uns einen Kommentar',
 	'wikifeatures-feedback-success' => 'Vielen Dank für dein Feedback!',
-	'wikifeatures-deactivate-heading' => '$1 deaktivieren?',
-	'wikifeatures-deactivate-description' => 'Wenn du eine Funktion deaktivierst, wird sie aus deinem Wiki entfernt. Deine Benutzer können diese Funktion dann nicht mehr nutzen und sie auch nirgends im Wiki angezeigt bekommen.',
+	'wikifeatures-deactivate-heading' => '$1 abschalten?',
+	'wikifeatures-deactivate-description' => 'Wenn du eine Funktion deaktivierst, wird sie aus deiner Community entfernt. Deine Benutzer können diese Funktion dann nicht mehr nutzen und sie auch nirgends im Wikia angezeigt bekommen.',
 	'wikifeatures-deactivate-notification' => 'Du kannst die Funktion jederzeit wieder einschalten.',
-	'wikifeatures-deactivate-confirm-button' => 'Ja, deaktivieren',
+	'wikifeatures-deactivate-confirm-button' => 'Ja, abschalten',
 	'wikifeatures-deactivate-cancel-button' => 'Abbrechen',
 	'wikifeatures-promotion-new' => 'Neu',
-	'wikifeatures-oasis-only' => 'Wiki-Funktionen stehen in Monobook nicht zur Verfügung. Wenn du diese Funktion verwenden möchtest, stelle bitte deine Einstellungen auf den Wikia-Skin um.',
+	'wikifeatures-oasis-only' => 'Wiki-Funktionen stehen in Monobook nicht zur Verfügung. Wenn du diese Funktion verwenden möchtest, stelle bitte in deinen Einstellungen auf den Wikia-Skin um.',
 	'wikifeatures-feature-heading-wgShowTopListsInCreatePage' => 'Top-10-Listen',
-	'wikifeatures-feature-description-wgShowTopListsInCreatePage' => 'Die [[w:de:community:Hilfe:Top-10-Listen|Top-10-Listen]] ermöglichen es jedem in deinem Wiki, eine Liste zu erstellen, über deren Inhalt abgestimmt werden kann. Wenn du nach einer Möglichkeit suchst, wie du neue Bearbeiter dazu bringst, sich in das Wiki einzubringen, dann liegst du hier genau richtig! Wenn du diese Funktion einschaltest, wird "Top-10-Listen" als Option hinzugefügt, wenn man auf "Seite hinzufügen" klickt.',
+	'wikifeatures-feature-description-wgShowTopListsInCreatePage' => 'Die [[w:c:de.community:Hilfe:Top-10-Listen|Top-10-Listen]] ermöglichen es jedem in deinem Wiki, eine Liste zu erstellen, über deren Inhalt abgestimmt werden kann. Wenn du nach einer Möglichkeit suchst, wie du neue Bearbeiter dazu bringst, sich in das Wiki einzubringen, dann liegst du hier genau richtig! Wenn du diese Funktion einschaltest, wird "Top-10-Listen" als Option hinzugefügt, wenn man auf "Seite hinzufügen" klickt.',
 	'wikifeatures-feature-heading-wgEnableAchievementsExt' => 'Herausforderungen',
-	'wikifeatures-feature-description-wgEnableAchievementsExt' => 'Die Erweiterung [[w:de:community:Hilfe:Herausforderungen|Herausforderungen]] hilft dem Wachstum deines Wikis, indem es für die Benutzer einen Anreiz schafft, verschiedene Inhalte beizutragen. Du kannst deine eigenen Herausforderungen erstellen, die sich nur auf dein Wiki beziehen und sogar eigene Bilder für die Abzeichen hochladen.',
+	'wikifeatures-feature-description-wgEnableAchievementsExt' => 'Die Erweiterung [[w:c:de.community:Hilfe:Herausforderungen|Herausforderungen]] hilft dem Wachstum deines Wikis, indem es für die Benutzer einen Anreiz schafft, verschiedene Inhalte beizutragen. Du kannst deine eigenen Herausforderungen erstellen, die sich nur auf dein Wiki beziehen und sogar eigene Bilder für die Abzeichen hochladen.',
 	'wikifeatures-feature-heading-wgEnableArticleCommentsExt' => 'Artikelkommentare',
-	'wikifeatures-feature-description-wgEnableArticleCommentsExt' => 'Mit dieser Erweiterung können Benutzer am Ende von Artikelseiten [[w:de:community:Hilfe:Artikelkommentare|Artikelkommentare]] hinzufügen. Andere Benutzer können auf diese Kommentare antworten und es werden automatisch Signaturen und Zeitstempel zugewiesen. Diese Funktion ersetzt die Diskussionsseiten in deinem Wiki.',
+	'wikifeatures-feature-description-wgEnableArticleCommentsExt' => 'Mit dieser Erweiterung können Benutzer am Ende von Artikelseiten [[w:c:de.community:Hilfe:Artikelkommentare|Artikelkommentare]] hinzufügen. Andere Benutzer können auf diese Kommentare antworten und es werden automatisch Signaturen und Zeitstempel zugewiesen. Diese Funktion ersetzt die Diskussionsseiten in deinem Wiki.',
 	'wikifeatures-feature-heading-wgEnableCategoryExhibitionExt' => 'Kategorie-Ausstellung',
-	'wikifeatures-feature-description-wgEnableCategoryExhibitionExt' => 'Die beliebtesten acht Seiten in deinen [[w:de:community:Hilfe:Kategorien|Kategorien]] werden bereits als Bilder angezeigt, mithilfe dieser Funktion werden jedoch alle deine Seiten als Bilder angezeigt und können nach Namen, neueste zuerst oder Beliebtheit sortiert werden!',
+	'wikifeatures-feature-description-wgEnableCategoryExhibitionExt' => 'Die beliebtesten acht Seiten in deinen [[w:c:de.community:Hilfe:Kategorien|Kategorien]] werden bereits als Bilder angezeigt, mithilfe dieser Funktion werden jedoch alle deine Seiten als Bilder angezeigt und können nach Namen, neueste zuerst oder Beliebtheit sortiert werden!',
 	'wikifeatures-feature-heading-wgEnableChat' => 'Chat',
-	'wikifeatures-feature-description-wgEnableChat' => 'Kommuniziere sofort mit anderen Leuten, denen dein Wiki gefällt und die das Thema deines Wikis so toll finden wie du! Jeder, der ein Wikia-Konto besitzt, kann über die Schaltfläche "Chat beitreten" im rechten Navigationsbereich auf deiner Seite am [[w:de:community:Hilfe:Chat|Chat]] teilnehmen.',
+	'wikifeatures-feature-description-wgEnableChat' => 'Kommuniziere sofort mit anderen Leuten, denen dein Wiki gefällt und die das Thema deines Wikis so toll finden wie du! Jeder, der ein Wikia-Konto besitzt, kann über die Schaltfläche "Chat beitreten" im rechten Navigationsbereich auf deiner Seite am [[w:c:de.community:Hilfe:Chat|Chat]] teilnehmen.',
 	'wikifeatures-feature-heading-wgEnableEditPageReskinExt' => 'Neugestaltung des Wikia-Editors',
 	'wikifeatures-feature-description-wgEnableEditPageReskinExt' => 'Die Bearbeitung und das Hinzufügen von Inhalten ist das Herzstück jedes Wikis und ein großartiger Editor macht dieses Erlebnis so viel einfacher und angenehmer. Um dieses Erlebnis noch zu verbessern, haben wir die Bearbeitung von Seiten neu gestaltet.',
 	'wikifeatures-feature-heading-wgEnableAjaxPollExt' => 'Umfragen',
-	'wikifeatures-feature-description-wgEnableAjaxPollExt' => 'Erlaube es jedem auf deinem Wiki, eine Umfrage zu erstellen! Wenn [[w:de:community:Hilfe:Umfragen|Umfragen]] eingeschaltet sind, können deine Benutzer mithilfe des <poll>-Tags auf jeder beliebigen Seite eine Umfrage einfügen. Über diese Funktion lässt sich die Mitwirkung in deinem Wiki ganz einfach steigern.',
+	'wikifeatures-feature-description-wgEnableAjaxPollExt' => 'Erlaube es jedem auf deinem Wiki, eine Umfrage zu erstellen! Wenn [[w:c:de.community:Hilfe:Umfragen|Umfragen]] eingeschaltet sind, können deine Benutzer mithilfe des <poll>-Tags auf jeder beliebigen Seite eine Umfrage einfügen. Über diese Funktion lässt sich die Mitwirkung in deinem Wiki ganz einfach steigern.',
 	'wikifeatures-feature-heading-wgEnableBlogArticles' => 'Blogs',
-	'wikifeatures-feature-description-wgEnableBlogArticles' => 'Die Funktion [[w:de:community:Hilfe:Blog-Artikel|Blog-Artikel]] ermöglichen es Benutzern in deinem Wiki ihre eigenen Artikel zu verfassen. Damit kannst du auch ganz einfach in deiner Wiki-Community Neuigkeiten und Events ankündigen.',
+	'wikifeatures-feature-description-wgEnableBlogArticles' => 'Die Funktion [[w:c:de.community:Hilfe:Blog-Artikel|Blog-Artikel]] ermöglichen es Benutzern in deinem Wiki ihre eigenen Artikel zu verfassen. Damit kannst du auch ganz einfach in deiner Wiki-Community Neuigkeiten und Events ankündigen.',
 	'wikifeatures-feature-heading-wgEnableWallExt' => 'Nachrichtenseiten',
-	'wikifeatures-feature-description-wgEnableWallExt' => 'Die Kommunikation mit den Mitarbeitern in deinem Wiki ist ein grundlegender Teil des Aufbaus und der Erhaltung deiner Community. Auf den [[w:de:community:Hilfe:Nachrichtenseiten|Nachrichtenseiten]] werden Diskussionen im Thread-Format geführt und es steht ein Benachrichtigungssystem zur Verfügung, über das du Gespräche, die dich interessieren, verfolgen kannst. Verpasse keine Nachrichten mehr!',
+	'wikifeatures-feature-description-wgEnableWallExt' => 'Die Kommunikation mit den Mitarbeitern in deinem Wiki ist ein grundlegender Teil des Aufbaus und der Erhaltung deiner Community. Auf den [[w:c:de.community:Hilfe:Nachrichtenseiten|Nachrichtenseiten]] werden Diskussionen im Thread-Format geführt und es steht ein Benachrichtigungssystem zur Verfügung, über das du Gespräche, die dich interessieren, verfolgen kannst. Verpasse keine Nachrichten mehr!',
 	'wikifeatures-feature-heading-emptylabs' => 'Wikia Labs scheint gerade eine Pause einzulegen',
 	'wikifeatures-feature-description-emptylabs' => 'Unsere Ingenieure sprudeln nur so vor neuen Ideen und arbeiten mit Nachdruck an neuen Funktionen, die du bald ausprobieren kannst. Hier findest du bald neue Funktionen!',
 	'wikifeatures-log-name' => 'Wiki-Funktionen-Logbuch',
@@ -370,13 +376,13 @@ $messages['de'] = array(
 	'wikifeatures-feedback-submit-button' => 'Absenden',
 	'wikifeatures-feedback-cancel-button' => 'Abbrechen',
 	'wikifeatures-feature-heading-wgEnableMediaGalleryExt' => 'Neue Bildergalerien',
-	'wikifeatures-feature-description-wgEnableMediaGalleryExt' => 'Hier findest du eine kurze Vorschau der [[w:de:community:Hilfe:Neue_Bilder-Galerien|neuen Bilder-Galerien]], die wir so aktualisiert haben, dass die von der Community eingepflegten Bildersammlungen in einem moderneren Design anzeigt werden. Während dieser Wikia Labs-Betaphase steht das Erstellen neuer und Ändern bereits existierender Galerien nur im Quelltext zur Verfügung. [[w:de:community:Hilfe:Neue_Bilder-Galerien|Erfahre mehr]].',
+	'wikifeatures-feature-description-wgEnableMediaGalleryExt' => 'Hier findest du eine kurze Vorschau der [[w:c:de.community:Hilfe:Neue_Bilder-Galerien|neuen Bilder-Galerien]], die wir so aktualisiert haben, dass die von der Community eingepflegten Bildersammlungen in einem moderneren Design anzeigt werden. Während dieser Wikia Labs-Betaphase steht das Erstellen neuer und Ändern bereits existierender Galerien nur im Quelltext zur Verfügung. [[[w:c:de.community:Hilfe:Neue_Bilder-Galerien|Erfahre mehr]].',
 	'wikifeatures-feature-heading-wgEnableForumExt' => 'Forum',
-	'wikifeatures-feature-description-wgEnableForumExt' => 'Mithilfe des neuen Wikia-[[w:de:community:Hilfe:Forum|Forums]] hast du alle Diskussionen in deinem Wiki immer im Griff. Nutze es, um neue Teilnehmer in Diskussionen zu den Inhalten deines Wikis einzubeziehen und Leute, die sich bereits bei der Bearbeitung des Wikis engagieren, dabei zu unterstützen, bei allen aktuellen Themen am Ball zu bleiben.',
+	'wikifeatures-feature-description-wgEnableForumExt' => 'Mithilfe des neuen Wikia-[[w:de:community:Hilfe:Forum|Forums]] hast du alle Diskussionen in deiner Community immer im Griff. Nutze es, um neue Teilnehmer in den Diskussionen mit den Inhalten deines Wikias bekannt zu machen und Leute, die sich bereits bei der Bearbeitung des Wikis engagieren, dabei zu unterstützen, bei allen aktuellen Themen am Ball zu bleiben.',
 	'wikifeatures-feature-heading-wgEnableWikiaInteractiveMaps' => 'Karten',
 	'wikifeatures-feature-description-wgEnableWikiaInteractiveMaps' => 'Über Wikia-Karten können Benutzer interaktive Karten für Orte in der realen Welt, für Bilder oder fiktive Welten  erstellen. Die Community kann den Karten Marker hinzufügen und diese bearbeiten und  individuell anpassen, und so wird eine besonders interessante Interaktion möglich. Diese Karten können außerdem in Wikia-Artikel oder in externe Websites eingebunden werden.',
 	'wikifeatures-feature-heading-wgGameGuidesContentForAdmins' => 'Inhalte in Game Guides',
-	'wikifeatures-feature-description-wgGameGuidesContentForAdmins' => 'Verwende die Seite Special:GameGuidesContent deines Wikis, um festzulegen, welche Kategorien in der mobilen App [[w:de:community:Hilfe:Game Guides|Game Guides]] erscheinen. Vergrößere dein potentielles Publikum!',
+	'wikifeatures-feature-description-wgGameGuidesContentForAdmins' => 'Verwende die Seite Special:GameGuidesContent deines Wikis, um festzulegen, welche Kategorien in der mobilen App [[w:c:de.community:Hilfe:Game Guides|Game Guides]] erscheinen. Vergrößere dein potentielles Publikum!',
 	'wikifeatures-feature-heading-wgEnableNjordExt' => 'Titelbild',
 	'wikifeatures-feature-description-wgEnableNjordExt' => 'Dein Wiki wird noch attraktiver, wenn du ein Bild hochlädst, das auf seiner Startseite angezeigt wird und das Thema des Wikis repräsentiert!',
 	'wikifeatures-feature-heading-wgEnableCuratedContentExt' => 'Curated Content',
@@ -384,19 +390,21 @@ $messages['de'] = array(
 	'action-wikifeaturesview' => 'Wiki-Funktionen ansehen',
 	'wikifeatures-feature-heading-wgDisableAnonymousEditing' => 'Alle Autoren müssen sich anmelden.',
 	'wikifeatures-feature-description-wgDisableAnonymousEditing' => 'Möchtest du, dass sich alle Autoren auf deinem Wikia anmelden müssen? Wenn diese Funktion aktiviert ist, dürfen anonyme Besucher keine Seiten bearbeiten, keine Kommentare schreiben und auch das Forum und die Nachrichtenseiten nicht nutzen, solange sie nicht angemeldet sind. Jeder kann nach wie vor ein Wikia-Konto einrichten, um deiner Community beizutreten!',
-);
+	'wikifeatures-feature-heading-wgEnablePortableInfoboxEuropaTheme' => 'Infobox-Thema Europa',
+	'wikifeatures-feature-description-wgEnablePortableInfoboxEuropaTheme' => 'Aktiviere den neuen Look für deine [[w:c:de.community:Hilfe:Infoboxen|Infoboxen]], um das Farbthema deines Wikis in vollem Umfang nutzen zu können!',
+];
 
 /** German (formal address) (‪Deutsch (Sie-Form)‬)
  * @author Kghbln
  */
-$messages['de-formal'] = array(
+$messages['de-formal'] = [
 	'wikifeatures-error-permission' => 'Sie haben nicht die erforderliche Berechtigung, um diese Seite aufrufen zu können.',
-);
+];
 
 /** Zazaki (Zazaki)
  * @author Erdemaslancan
  */
-$messages['diq'] = array(
+$messages['diq'] = [
 	'wikifeatures' => 'Xasiyeyê Wiki',
 	'wikifeatures-title' => 'Xasiyeyê Wiki',
 	'wikifeatures-heading' => 'Xasiyey',
@@ -413,7 +421,7 @@ $messages['diq'] = array(
 	'wikifeatures-feature-heading-wgEnableChat' => 'Mıhebet',
 	'wikifeatures-feature-heading-wgEnableAjaxPollExt' => 'Anket',
 	'wikifeatures-feature-heading-wgEnableWallExt' => 'Mesacê Dêsi',
-);
+];
 
 /** Spanish (español)
  * @author Benfutbol10
@@ -421,7 +429,7 @@ $messages['diq'] = array(
  * @author VegaDark
  * @author Vivaelcelta
  */
-$messages['es'] = array(
+$messages['es'] = [
 	'wikifeatures' => 'Funcionalidades de Wikia',
 	'wikifeatures-title' => 'Funcionalidades de Wikia',
 	'wikifeatures-heading' => 'Funcionalidades',
@@ -436,7 +444,7 @@ $messages['es'] = array(
 	'wikifeatures-error-invalid-category' => '¡Uy! Elija de qué se trata este ticket.',
 	'wikifeatures-toggle-active' => 'Activada',
 	'wikifeatures-toggle-inactive' => 'Desactivada',
-	'wikifeatures-active-on' => 'Activa en $1 wikis',
+	'wikifeatures-active-on' => 'Activa en $1 wikias',
 	'wikifeatures-category-choose-one' => 'Elija una...',
 	'wikifeatures-love-this-project' => 'Me encanta esta funcionalidad',
 	'wikifeatures-hate-this-project' => 'Detesto esta funcionalidad',
@@ -450,58 +458,60 @@ $messages['es'] = array(
 	'wikifeatures-deactivate-heading' => '¿Desactivar $1?',
 	'wikifeatures-deactivate-description' => 'Al desactivar una funcionalidad se eliminará de su wikia. Sus usuarios ya no podrán usar esta funcionalidad, y no verán la funcionalidad en ninguna parte de la comunidad.',
 	'wikifeatures-deactivate-notification' => 'Puede activar la funcionalidad de nuevo en cualquier momento.',
-	'wikifeatures-deactivate-confirm-button' => 'Si, deshabilitar',
+	'wikifeatures-deactivate-confirm-button' => 'Si, desactivarla',
 	'wikifeatures-deactivate-cancel-button' => 'Cancelar',
 	'wikifeatures-promotion-new' => 'Nuevo',
 	'wikifeatures-oasis-only' => 'Las funcionalidades de Wikia no están disponibles en Monobook. Si quisiera usar esta funcionalidad, cambie su preferencia a la piel Wikia.',
 	'wikifeatures-feature-heading-wgShowTopListsInCreatePage' => 'Lista de Top 10',
 	'wikifeatures-feature-description-wgShowTopListsInCreatePage' => 'Las listas de top 10 permiten que cualquiera en su wikia genere una lista de votación. Si busca una manera magnífica para conseguir que los editores junior interactúen con el wiki, ¡aquí la tiene! Al habilitar esta funcionalidad agregará  "listas de top 10" como una opción al hacer clic en "Añadir una página"',
 	'wikifeatures-feature-heading-wgEnableAchievementsExt' => 'Logros',
-	'wikifeatures-feature-description-wgEnableAchievementsExt' => '[[w:es:comunidad:Ayuda:Logros|Logros]] ayudará a que su wikia crezca al dar incentivos a los editores para que aporten contenido variado. Puede crear sus propios retos que sean exclusivos para su wikia, e incluso subir sus propias imágenes para los logros.',
+	'wikifeatures-feature-description-wgEnableAchievementsExt' => '[[Ayuda:Logros|Logros]] ayudará a que su wikia crezca al dar incentivos a los editores para que aporten contenido variado. Puede crear sus propios retos que sean exclusivos para su wikia, e incluso subir sus propias imágenes para los logros.',
 	'wikifeatures-feature-heading-wgEnableArticleCommentsExt' => 'Comentarios de artículos',
-	'wikifeatures-feature-description-wgEnableArticleCommentsExt' => 'Esta funcionalidad permitirá que la gente escriba [[w:es:comunidad:Ayuda:Comentarios|comentarios]] en la parte inferior de las páginas del artículo. Otros usuarios pueden responder a los comentarios y automáticamente se asignan firmas y marcas de tiempo. Esto reemplazará a las páginas de discusión en su wikia.',
+	'wikifeatures-feature-description-wgEnableArticleCommentsExt' => 'Esta funcionalidad permitirá que la gente escriba [[Ayuda:Comentarios|comentarios]] en la parte inferior de las páginas del artículo. Otros usuarios pueden responder a los comentarios y automáticamente se asignan firmas y marcas de tiempo. Esto reemplazará a las páginas de discusión en su wikia.',
 	'wikifeatures-feature-heading-wgEnableCategoryExhibitionExt' => 'Exposición en categoría',
-	'wikifeatures-feature-description-wgEnableCategoryExhibitionExt' => 'Las ocho páginas más populares en sus [[w:es:comunidad:Ayuda:Categoría#Visualizar_Categorías|categorías]] ya están visualizadas como imágenes, pero esta funcionalidad mostrará sus páginas con enlaces de imagen que se pueden organizar por nombre, antigüedad o popularidad.',
+	'wikifeatures-feature-description-wgEnableCategoryExhibitionExt' => 'Las ocho páginas más populares en sus [[Ayuda:Categoría|categorías]] ya están visualizadas como imágenes, pero esta funcionalidad mostrará sus páginas con enlaces de imagen que se pueden organizar por nombre, antigüedad o popularidad.',
 	'wikifeatures-feature-heading-wgEnableChat' => 'Chat',
-	'wikifeatures-feature-description-wgEnableChat' => 'Comuníquese al instante con otras personas a quienes les encanta su wikia y el tema de su wikia tanto como a usted. Cualquiera con una cuenta en Wikia puede participar [[w:es:comunidad:Ayuda:Chat|chat]] por medio del botón "Participar en el chat" que se encuentra en el área de navegación de su sitio.',
+	'wikifeatures-feature-description-wgEnableChat' => 'Comuníquese al instante con otras personas a quienes les encanta su wikia y el tema de su wikia tanto como a usted. Cualquiera con una cuenta en Wikia puede participar [[Ayuda:Chat|chat]] por medio del botón "Participar en el chat" que se encuentra en el área de navegación de su sitio.',
 	'wikifeatures-feature-heading-wgEnableEditPageReskinExt' => 'Rediseño del editor de Wikia',
 	'wikifeatures-feature-description-wgEnableEditPageReskinExt' => 'La edición se encuentra en el corazón de una wikia, y contar con un gran editor es clave para tener una experiencia fácil y divertida al agregar contenido. Para mejorar su experiencia, hemos rediseñado nuestras páginas de edición.',
 	'wikifeatures-feature-heading-wgEnableAjaxPollExt' => 'Encuestas',
-	'wikifeatures-feature-description-wgEnableAjaxPollExt' => 'Permita que cualquiera en su wikia pueda crear una encuesta. Con [[w:es:comunidad:Ayuda:Encuesta|Encuestas]] habilitada, sus usuarios pueden usar la etiqueta de encuesta para agregar esta funcionalidad a cualquier página. Es una manera magnífica de aumentar las aportaciones a su wikia.',
+	'wikifeatures-feature-description-wgEnableAjaxPollExt' => 'Permita que cualquiera en su wikia pueda crear una encuesta. Con [[Ayuda:Encuesta|Encuestas]] habilitada, sus usuarios pueden usar la etiqueta de encuesta para agregar esta funcionalidad a cualquier página. Es una manera magnífica de aumentar las aportaciones a su wikia.',
 	'wikifeatures-feature-heading-wgEnableBlogArticles' => 'Blogs',
-	'wikifeatures-feature-description-wgEnableBlogArticles' => '[[w:es:comunidad:Ayuda:Blogs|Blogs]] permite a los usuarios en su wikia crear sus propias aportaciones en el blog sobre su página de perfil y también se puede usar como una manera magnífica para comunicar noticias y eventos en la comunidad de su wikia.',
+	'wikifeatures-feature-description-wgEnableBlogArticles' => '[[Ayuda:Blogs|Blogs]] permite a los usuarios en su wikia crear sus propias aportaciones en el blog sobre su página de perfil y también se puede usar como una manera magnífica para comunicar noticias y eventos en la comunidad de su wikia.',
 	'wikifeatures-feature-heading-wgEnableWallExt' => 'Muro de mensajes',
-	'wikifeatures-feature-description-wgEnableWallExt' => 'La comunicación con los colaboradores de su wikia es una parte esencial para desarrollar y mantener su comunidad. El [[w:es:comunidad:Ayuda:Muro de mensajes|Muro de mensajes]] utiliza un formato de conversación y un sistema de notificación que conserva la secuencia, lo cual le permite controlar las conversaciones que le interesan seguir. ¡Olvídese de mensajes perdidos!',
+	'wikifeatures-feature-description-wgEnableWallExt' => 'La comunicación con los colaboradores de su wikia es una parte esencial para desarrollar y mantener su comunidad. El [[Ayuda:Muro de mensajes|Muro de mensajes]] utiliza un formato de conversación y un sistema de notificación que conserva la secuencia, lo cual le permite controlar las conversaciones que le interesan seguir. ¡Olvídese de mensajes perdidos!',
 	'wikifeatures-feature-heading-emptylabs' => 'Parece que el laboratorio está tomando un descanso',
-	'wikifeatures-feature-description-emptylabs' => 'Nuestros científicos técnicos trabajan duro ideando nuevas funciones para que las pruebe. ¡Espere aquí muy pronto más laboratorios!',
+	'wikifeatures-feature-description-emptylabs' => 'Nuestros científicos técnicos trabajan duro ideando nuevas funcionalidades para que las pruebe. ¡Espere aquí muy pronto por más laboratorios!',
 	'wikifeatures-log-name' => 'Registro de funcionalidades de Wikia',
 	'wikifeatures-log-header' => 'A continuación encontrará una lista de los cambios en la configuración de las funcionalidades de Wikia.',
 	'wikifeatures-desc' => 'Permite a los usuarios con privilegios activar o desactivar funcionalidades opcionales de Wikia',
 	'wikifeatures-feedback-submit-button' => 'Enviar',
 	'wikifeatures-feedback-cancel-button' => 'Cancelar',
 	'wikifeatures-feature-heading-wgEnableMediaGalleryExt' => 'Nuevas galerías de imágenes',
-	'wikifeatures-feature-description-wgEnableMediaGalleryExt' => 'Aquí encontrará un vistazo de las [[w:es:comunidad:Ayuda:Nuevas galerías de imágenes|nuevas galerías de imágenes]] que se han actualizado para presentar sus colecciones de imágenes organizadas por su comunidad de manera más elegante y moderna. Durante este periodo beta, la creación de galerías nuevas y la modificación de galerías existentes estará disponible temporalmente solo en la fuente. [[w:es:comunidad:Ayuda:Nuevas galerías de imágenes|Conozca más]].',
+	'wikifeatures-feature-description-wgEnableMediaGalleryExt' => 'Aquí encontrará un vistazo de las [[Ayuda:Nuevas galerías de imágenes|nuevas galerías de imágenes]] que se han actualizado para presentar sus colecciones de imágenes organizadas por su comunidad de manera más elegante y moderna. Durante este periodo beta, la creación de galerías nuevas y la modificación de galerías existentes estará disponible temporalmente solo en la fuente. [[Ayuda:Nuevas galerías de imágenes|Conozca más]].',
 	'wikifeatures-feature-heading-wgEnableForumExt' => 'Foro',
-	'wikifeatures-feature-description-wgEnableForumExt' => 'Manténgase al tanto de todos los debates en su wiki utilizando el nuevo [[w:es:comunidad:Ayuda:Foro|Foro]] de Wikia. Atraiga a nuevas personas para participar en conversaciones acerca del contenido de su wiki, y mantenga a editores dedicados del wiki a un nivel eficiente y comprometido con todos los temas actuales. ',
+	'wikifeatures-feature-description-wgEnableForumExt' => 'Manténgase al tanto de todos los debates en su wiki utilizando el nuevo [[Ayuda:Foro|Foro]] de Wikia. Atraiga a nuevas personas para participar en conversaciones acerca del contenido de su wiki, y mantenga a editores dedicados del wiki a un nivel eficiente y comprometido con todos los temas actuales. ',
 	'wikifeatures-feature-heading-wgEnableWikiaInteractiveMaps' => 'Mapas',
 	'wikifeatures-feature-description-wgEnableWikiaInteractiveMaps' => 'Los mapas de Wikia permiten a los usuarios crear mapas interactivos para lugares del mundo real, imágenes o mundos ficticios. La comunidad puede agregar, editar y personalizar alfileres para crear una gran experiencia de generación de mapas. Estos mapas también se pueden integrar en artículos de Wikia o en sitios web externos.',
-	'wikifeatures-feature-heading-wgGameGuidesContentForAdmins' => 'Contenido para Game Guides',
-	'wikifeatures-feature-description-wgGameGuidesContentForAdmins' => 'Use la página Especial:ContenidodeGuíasdeJuegos de su wiki para administrar las categorías que aparecen en la aplicación móvil [[w:es:comunidad:Ayuda:Guías de juegos|Guías de juegos]]. ¡Expanda su público potencial!',
+	'wikifeatures-feature-heading-wgGameGuidesContentForAdmins' => 'Contenido para Guías de juegos',
+	'wikifeatures-feature-description-wgGameGuidesContentForAdmins' => 'Use la página Especial:ContenidodeGuíasdeJuegos de su wiki para administrar las categorías que aparecen en la aplicación móvil [[Ayuda:Guías de juegos|Guías de juegos]]. ¡Expanda su público potencial!',
 	'wikifeatures-feature-heading-wgEnableNjordExt' => 'Hero Image',
 	'wikifeatures-feature-description-wgEnableNjordExt' => 'Haga más atractiva su wikia subiendo a su portada una imagen que la represente.',
 	'wikifeatures-feature-heading-wgEnableCuratedContentExt' => 'Contenido puesto al día',
 	'wikifeatures-feature-description-wgEnableCuratedContentExt' => 'Use la página Especial:CuratedContent de su wikia para administrar el contenido que aparece en la aplicación móvil. ¡Expanda su público potencial!',
 	'action-wikifeaturesview' => 'Ver funcionalidades de Wikia',
 	'wikifeatures-feature-heading-wgDisableAnonymousEditing' => 'Requiere a todos los editores el iniciar sesión',
-	'wikifeatures-feature-description-wgDisableAnonymousEditing' => '¿Quieres todos los editores en tu wikia inicien sesión? Cuando esta funcionalidad es habilitada, los visitantes anónimos no podrán editar páginas o participar en comentarios, Foro o Muro de mensajes sin antes iniciar sesión. ¡Todavía cualquiera puede crear una cuenta de Wikia para unirse a tu comunidad!',
-);
+	'wikifeatures-feature-description-wgDisableAnonymousEditing' => '¿Quiere todos los editores en su wikia inicien sesión? Cuando esta funcionalidad es habilitada, los visitantes anónimos no podrán editar páginas o participar en comentarios, Foro o Muro de mensajes sin antes iniciar sesión. ¡Todavía cualquiera puede crear una cuenta de Wikia para unirse a su comunidad!',
+	'wikifeatures-feature-heading-wgEnablePortableInfoboxEuropaTheme' => 'Tema Europa de infobox',
+	'wikifeatures-feature-description-wgEnablePortableInfoboxEuropaTheme' => '¡Activa el nuevo look en tus [[Ayuda:Infoboxes|infoboxes]] para beneficiarte del tema de color de tu wikia!',
+];
 
 /** French (français)
  * @author Gomoko
  * @author Od1n
  * @author Wyz
  */
-$messages['fr'] = array(
+$messages['fr'] = [
 	'wikifeatures' => 'Composants de wikia',
 	'wikifeatures-title' => 'Composants de wikia',
 	'wikifeatures-heading' => 'Fonctionnalités',
@@ -574,12 +584,14 @@ $messages['fr'] = array(
 	'action-wikifeaturesview' => 'afficher Composants de wiki',
 	'wikifeatures-feature-heading-wgDisableAnonymousEditing' => 'Demander à tous les éditeurs de se connecter',
 	'wikifeatures-feature-description-wgDisableAnonymousEditing' => "Voulez-vous que tous les éditeurs de votre wikia se connectent ? Si vous activez cette fonctionnalité, les visiteurs anonymes ne pourront pas modifier de pages ni participer aux commentaires, forum ou mur de discussion sans être d'abord connectés. Il est toujours possible de créer un compte Wikia pour rejoindre votre communauté !",
-);
+	'wikifeatures-feature-heading-wgEnablePortableInfoboxEuropaTheme' => "Thème d'infobox Europa",
+	'wikifeatures-feature-description-wgEnablePortableInfoboxEuropaTheme' => 'Donnez une nouvelle apparence à vos [[w:c:communaute:Aide:Infoboxes|infoboxes]] afin de profiter au maximum de la couleur du thème de votre wiki !',
+];
 
 /** Galician (Galego)
  * @author Toliño
  */
-$messages['gl'] = array(
+$messages['gl'] = [
 	'wikifeatures' => 'Características do wiki',
 	'wikifeatures-title' => 'Características do wiki',
 	'wikifeatures-heading' => 'Características',
@@ -634,12 +646,12 @@ $messages['gl'] = array(
 	'wikifeatures-feature-description-emptylabs' => 'Os nosos científicos traballan arreo para concibir novas características que poida probar. Volva pronto por aquí para atopar máis funcións!',
 	'wikifeatures-log-name' => 'Rexistro das características do wiki',
 	'wikifeatures-log-header' => 'A continuación hai unha lista cos cambios feitos nas características do wiki.',
-);
+];
 
 /** Interlingua (interlingua)
  * @author McDutchie
  */
-$messages['ia'] = array(
+$messages['ia'] = [
 	'wikifeatures' => 'Functionalitate wiki',
 	'wikifeatures-title' => 'Functionalitate wiki',
 	'wikifeatures-heading' => 'Functiones',
@@ -694,12 +706,12 @@ $messages['ia'] = array(
 	'wikifeatures-feature-description-emptylabs' => 'Nostre technicos labora durmente pro conciper nove functionalitate que tu pote probar. Reveni hic tosto pro nove projectos de laboratorio!',
 	'wikifeatures-log-name' => 'Registro de functionalitate wiki',
 	'wikifeatures-log-header' => 'Ecce un lista de cambios de configuration in le functionalitate wiki.',
-);
+];
 
 /** Italian (italiano)
  * @author Minerva Titani
  */
-$messages['it'] = array(
+$messages['it'] = [
 	'wikifeatures' => 'Wiki Funzioni',
 	'wikifeatures-title' => 'Wiki Funzioni',
 	'wikifeatures-heading' => 'Funzioni',
@@ -771,22 +783,24 @@ $messages['it'] = array(
 	'wikifeatures-log-header' => 'Di seguito è riportato un elenco delle modifiche alle impostazioni delle Wiki Funzioni.',
 	'action-wikifeaturesview' => 'mostra Wiki Funzioni',
 	'wikifeatures-feature-heading-wgDisableAnonymousEditing' => 'Richiedi a tutti i collaboratori di accedere',
-	'wikifeatures-feature-description-wgDisableAnonymousEditing' => 'Vuoi che tutti i collaboratori della tua wikia siano connessi? Quando questa funzione è attivata, ai visitatori anonimi non sarà permesso di modificare pagine o di partecipare nei commenti, nel Forum o alla Bacheca senza prima accedere. Chiunque potrà ancora creare un account con Wikia per unirsi alla tua community!',
-);
+	'wikifeatures-feature-description-wgDisableAnonymousEditing' => "Vuoi che tutti i collaboratori della tua wiki siano connessi? Quando questa funzione è attivata, ai visitatori anonimi non sarà permesso di modificare pagine o di partecipare nei commenti, nel Forum o nella Bacheca senza prima effettuare l'accesso. Chiunque potrà ancora creare un account su Wikia per unirsi alla tua community!",
+	'wikifeatures-feature-heading-wgEnablePortableInfoboxEuropaTheme' => 'Tema infobox Europa',
+	'wikifeatures-feature-description-wgEnablePortableInfoboxEuropaTheme' => 'Attiva un nuovo look per i tuoi [[w:it:Aiuto:Infobox|infobox]] per trarre il massimo vantaggio dal tema della tua wki!',
+];
 
 /** Japanese (日本語)
  * @author Tommy6
  */
-$messages['ja'] = array(
+$messages['ja'] = [
 	'wikifeatures-title' => 'ウィキ・フィーチャーズ',
 	'wikifeatures-heading' => '機能',
-	'wikifeatures-creative' => 'ウィキ・フィーチャーズでは、自分のウィキアコミュニティで使いたい拡張機能の有効、無効をご希望で切り替えることができます。役立ちそうだと思う機能を見つけたらぜひお試しください。切り替えはいつでも行うことができ、一度有効にした機能を再度無効にすることもできます。',
+	'wikifeatures-creative' => 'ウィキ・フィーチャーズでは、自分のWikiaコミュニティで使いたい拡張機能の有効、無効をご希望で切り替えることができます。役立ちそうだと思う機能を見つけたらぜひお試しください。切り替えはいつでも行うことができ、一度有効にした機能を再度無効にすることもできます。',
 	'wikifeatures-labs-heading' => 'ラボ',
 	'wikifeatures-labs-creative' => 'ラボでは、試験的に運用している機能やアイディアをご紹介しています。ここでご覧いただける機能はまだ調整中であるため、不都合が生じてしまう場合もありますが、宜しければお試しください。使ってみた感想、改善すべき点、動作がおかしいと思われる点がありましたら、ぜひお聞かせください。',
 	'wikifeatures-feedback' => 'フィードバックを送る',
 	'wikifeatures-toggle-active' => '有効にしました',
 	'wikifeatures-toggle-inactive' => '無効にしました',
-	'wikifeatures-active-on' => '$1個のウィキアで有効になっています',
+	'wikifeatures-active-on' => '$1個のWikiaコミュニティで有効になっています',
 	'wikifeatures-category-choose-one' => '1つ選択してください',
 	'wikifeatures-love-this-project' => 'この機能が気に入った',
 	'wikifeatures-hate-this-project' => 'この機能に不満がある',
@@ -795,19 +809,19 @@ $messages['ja'] = array(
 	'wikifeatures-feedback-heading' => 'フィードバック',
 	'wikifeatures-feedback-type-label' => 'フィードバックの内容をお選びください。',
 	'wikifeatures-feedback-comment-label' => 'コメント',
-	'wikifeatures-desc' => '権限を持つユーザーはウィキアの拡張機能を切り替えることができます',
+	'wikifeatures-desc' => '権限を持つユーザーはWikiaの拡張機能を切り替えることができます',
 	'wikifeatures' => 'ウィキ・フィーチャーズ',
 	'wikifeatures-error-permission' => '申し訳ありませんが、このページを表示する権限をお持ちでないようです。',
 	'wikifeatures-error-invalid-parameter' => '無効なパラメータ: $1。再度お試しください。',
 	'wikifeatures-error-message' => 'コメントが短すぎるか長すぎるようです。',
 	'wikifeatures-error-spam-attempt' => '追加のフィードバックを送信するには、1分ほどお待ちください。',
 	'wikifeatures-error-invalid-category' => 'フィードバックの内容を選択してください。',
-	'wikifeatures-feedback-description' => 'ウィキアでは、ラボに掲載されている機能についてのご意見、ご感想をお待ちしています。この機能の改善すべき点、問題点、その他ご感想などがございましたら、下のボックスからぜひお知らせください。',
+	'wikifeatures-feedback-description' => 'Wikiaでは、ラボに掲載されている機能についてのご意見、ご感想をお待ちしています。この機能の改善すべき点、問題点、その他ご感想などがございましたら、下のボックスからぜひお知らせください。',
 	'wikifeatures-feedback-success' => 'フィードバックをお送りいただき、ありがとうございました。',
 	'wikifeatures-feedback-submit-button' => '送信',
 	'wikifeatures-feedback-cancel-button' => 'キャンセル',
 	'wikifeatures-deactivate-heading' => '$1を無効にしますか？',
-	'wikifeatures-deactivate-description' => '機能を無効にすると、この機能があなたのウィキアからなくなります。ユーザーは今後この機能を使用できなくなるとともに、ウィキア上にも機能が表示されなくなります。',
+	'wikifeatures-deactivate-description' => '機能を無効にすると、この機能があなたのWikiaコミュニティからなくなります。ユーザーは今後この機能を使用できなくなるとともに、コミュニティ上でも機能が表示されなくなります。',
 	'wikifeatures-deactivate-notification' => 'この機能はいつでも再度有効にすることができます。',
 	'wikifeatures-deactivate-confirm-button' => '無効にする',
 	'wikifeatures-deactivate-cancel-button' => 'キャンセル',
@@ -816,54 +830,56 @@ $messages['ja'] = array(
 	'wikifeatures-feature-heading-wgEnableMediaGalleryExt' => '新イメージギャラリー',
 	'wikifeatures-feature-description-wgEnableMediaGalleryExt' => 'こちらは、[[w:c:ja:ヘルプ:新イメージギャラリー|新イメージギャラリー]]のプレビューです。新イメージギャラリーは更新版で、コミュニティ内の画像コレクションをスタイリッシュなデザインに変えて表示できるようになりました。研究室のベータ段階で作成した新しいギャラリーや修正を加えた既存のギャラリーは、ソースモードでのみ一時的にご覧いただけます。[[w:c:ja:ヘルプ:新イメージギャラリー|詳細]]',
 	'wikifeatures-feature-heading-wgEnableForumExt' => 'フォーラム',
-	'wikifeatures-feature-description-wgEnableForumExt' => 'ウィキアの新しい[[w:c:ja:ヘルプ:フォーラム|フォーラム]]を活用して、あなたのウィキアコミュニティで行われているディスカッションを常にチェックしましょう。コミュニティのコンテンツに関する会話に新たなユーザーを呼び込んだり、現在行われているトピックに、熱心に編集をしているユーザーが関わることができるようにして、効率的で活動的になってもらえるようにしましょう。 ',
+	'wikifeatures-feature-description-wgEnableForumExt' => 'Wikiaの新しい[[w:c:ja:ヘルプ:フォーラム|フォーラム]]を活用して、あなたのWikiaコミュニティで行われているディスカッションを常にチェックしましょう。コミュニティのコンテンツに関する会話に新たなユーザーを呼び込んだり、現在行われているトピックに、熱心に編集をしているユーザーが関わることができるようにして、効率的で活動的になってもらえるようにしましょう。 ',
 	'wikifeatures-feature-heading-wgShowTopListsInCreatePage' => 'トップ10リスト',
 	'wikifeatures-feature-description-wgShowTopListsInCreatePage' => '[[w:c:ja:ヘルプ:トップ10リスト|トップ10リスト]]を使うと、投票可能なリストをウィキアコミュニティの誰もが作成できるようになります。この機能は、コミュニティの新しいメンバーにウィキアでもっと活動なってもらいたい時におすすめです。この機能を有効にすると、ユーザーが「ページを追加」をクリックしたときに「トップ10リスト」のオプションも表示されるようになります。',
 	'wikifeatures-feature-heading-wgEnableAchievementsExt' => 'アチーブメント',
-	'wikifeatures-feature-description-wgEnableAchievementsExt' => '[[w:c:ja:ヘルプ:アチーブメント|アチーブメント]]を導入すると、バラエティ豊かなコンテンツを投稿する編集者のモチベーションを高め、ウィキアコミュニティの発展につなげることができます。自分のウィキアコミュニティ独自のタスクを作成することができるほか、お好きなバッジ画像をアップロードすることもできます。',
+	'wikifeatures-feature-description-wgEnableAchievementsExt' => '[[w:c:ja:ヘルプ:アチーブメント|アチーブメント]]を導入すると、バラエティ豊かなコンテンツを投稿する編集者のモチベーションを高め、Wikiaコミュニティの発展につなげることができます。自分のWikiaコミュニティ独自のタスクを作成することができるほか、お好きなバッジ画像をアップロードすることもできます。',
 	'wikifeatures-feature-heading-wgEnableArticleCommentsExt' => '記事へのコメント',
-	'wikifeatures-feature-description-wgEnableArticleCommentsExt' => 'この拡張機能を有効にすると、ユーザーが記事ページの下部で[[w:c:ja:ヘルプ:コメント|コメント]]ができるようになります。そのコメントに対して他のユーザーが返信することもでき、署名とタイムスタンプが自動的に追加されます。コメント機能は、あなたのウィキア上でトークページに代わって役割を果たします。',
+	'wikifeatures-feature-description-wgEnableArticleCommentsExt' => 'この拡張機能を有効にすると、ユーザーが記事ページの下部で[[w:c:ja:ヘルプ:コメント|コメント]]ができるようになります。そのコメントに対して他のユーザーが返信することもでき、署名とタイムスタンプが自動的に追加されます。コメント機能は、あなたのWikiaコミュニティ上でトークページに代わって役割を果たします。',
 	'wikifeatures-feature-heading-wgEnableCategoryExhibitionExt' => 'カテゴリ・エキシビション',
 	'wikifeatures-feature-description-wgEnableCategoryExhibitionExt' => '[[w:c:ja.community:ヘルプ:カテゴリ|カテゴリ]]には最も人気のある8ページが画像で表示されますが、この機能を有効にすると、全ページを画像リンクとして表示することができ、名前順や新着順、人気度で並べ替えることもできます。',
 	'wikifeatures-feature-heading-wgEnableChat' => 'チャット',
-	'wikifeatures-feature-description-wgEnableChat' => 'ウィキアコミュニティやそのトピックを気に入ってくれているユーザーと、リアルタイムでコミュニケーションをとることができます。ウィキアアカウントを持っていれば誰でも、サイト右側のナビゲーションの「チャットに参加」ボタンから[[w:c:ja:ヘルプ:チャット|チャット]]に参加することができます。',
-	'wikifeatures-feature-heading-wgEnableEditPageReskinExt' => 'ウィキアエディタの新デザイン',
-	'wikifeatures-feature-description-wgEnableEditPageReskinExt' => '編集が活動の中心であるウィキアでは、コンテンツの追加を手軽で楽しくするためにエディタが使いやすいということはとても重要だと考えています。そして、編集のしやすさを求めて、編集ページを新たにデザインしました。',
+	'wikifeatures-feature-description-wgEnableChat' => 'Wikiaコミュニティやそのトピックを気に入ってくれているユーザーと、リアルタイムでコミュニケーションをとることができます。Wikiaアカウントを持っていれば誰でも、サイト右側のナビゲーションの「チャットに参加」ボタンから[[w:c:ja:ヘルプ:チャット|チャット]]に参加することができます。',
+	'wikifeatures-feature-heading-wgEnableEditPageReskinExt' => 'Wikiaエディタの新デザイン',
+	'wikifeatures-feature-description-wgEnableEditPageReskinExt' => '編集が活動の中心であるWikiaコミュニティでは、コンテンツの追加を手軽で楽しくするためにエディタが使いやすいということはとても重要だと考えています。そして、編集のしやすさを求めて、編集ページを新たにデザインしました。',
 	'wikifeatures-feature-heading-wgEnableAjaxPollExt' => '投票',
-	'wikifeatures-feature-description-wgEnableAjaxPollExt' => 'アンケートはコミュニティの誰でも作成できるようにしましょう。[[w:c:ja:ヘルプ:投票|投票]]機能を有効にすると、ユーザーがpollタグを使って、どのページにもアンケートを追加できるようになります。ウィキアコミュニティでの投稿を増やすのに、おすすめの機能です。',
+	'wikifeatures-feature-description-wgEnableAjaxPollExt' => 'アンケートはコミュニティの誰でも作成できるようにしましょう。[[w:c:ja:ヘルプ:投票|投票]]機能を有効にすると、ユーザーがpollタグを使って、どのページにもアンケートを追加できるようになります。Wikiaコミュニティでの投稿を増やすのに、おすすめの機能です。',
 	'wikifeatures-feature-heading-wgEnableBlogArticles' => 'ブログ',
-	'wikifeatures-feature-description-wgEnableBlogArticles' => '[[w:c:ja:ヘルプ:ブログ|ブログ]]機能を有効にすると、ウィキアコミュニティのユーザーが自分のプロフィールページにブログを作成できるようになります。また、このブログ機能は、ウィキアコミュニティにニュースやイベントを紹介するツールとしても活用できます。',
+	'wikifeatures-feature-description-wgEnableBlogArticles' => '[[w:c:ja:ヘルプ:ブログ|ブログ]]機能を有効にすると、Wikiaコミュニティのユーザーが自分のプロフィールページにブログを作成できるようになります。また、このブログ機能は、Wikiaコミュニティにニュースやイベントを紹介するツールとしても活用できます。',
 	'wikifeatures-feature-heading-wgEnableWikiaInteractiveMaps' => 'マップ',
 	'wikifeatures-feature-description-wgEnableWikiaInteractiveMaps' => 'ウィキアマップを有効にすると、実際にある場所や画像、架空の世界のインタラクティブな地図をユーザーが作成できるようになります。地図にピンを追加したり、編集、カスタマイズを行うことで、より高機能な地図にすることも可能です。でき上がった地図は、ウィキアの記事や外部のウェブサイトに埋め込むことができます。',
 	'wikifeatures-feature-heading-wgEnableWallExt' => 'メッセージウォール',
-	'wikifeatures-feature-description-wgEnableWallExt' => 'ウィキアコミュニティのメンバーとのコミュニケーションは、コミュニティの発展と運営には欠かせない要素です。[[w:c:ja:ヘルプ:メッセージウォール|メッセージウォール]]は、通知機能を持つスレッド形式のコミュニケーションツールで、 ユーザーは興味のある会話をフォローすることができます。この機能を有効にすれば、メッセージを見逃す心配もありません。',
+	'wikifeatures-feature-description-wgEnableWallExt' => 'Wikiaコミュニティのメンバーとのコミュニケーションは、コミュニティの発展と運営には欠かせない要素です。[[w:c:ja:ヘルプ:メッセージウォール|メッセージウォール]]は、通知機能を持つスレッド形式のコミュニケーションツールで、 ユーザーは興味のある会話をフォローすることができます。この機能を有効にすれば、メッセージを見逃す心配もありません。',
 	'wikifeatures-feature-heading-wgGameGuidesContentForAdmins' => 'ゲームガイド・コンテンツ',
-	'wikifeatures-feature-description-wgGameGuidesContentForAdmins' => 'ウィキアコミュニティの 特別:GameGuidesContent ページを使用すると、[[w:c:ja:ヘルプ:ゲームガイド|ゲームガイド]]のモバイルアプリに表示するカテゴリを指定することができます。この機能を活用して、あなたのコミュニティにより多くのユーザーを呼び込みましょう！',
+	'wikifeatures-feature-description-wgGameGuidesContentForAdmins' => 'Wikiaコミュニティの 特別:GameGuidesContent ページを使用すると、[[w:c:ja:ヘルプ:ゲームガイド|ゲームガイド]]のモバイルアプリに表示するカテゴリを指定することができます。この機能を活用して、あなたのコミュニティにより多くのユーザーを呼び込みましょう！',
 	'wikifeatures-feature-heading-wgEnableNjordExt' => 'ヒーローイメージ',
-	'wikifeatures-feature-description-wgEnableNjordExt' => 'メインページにウィキアコミュニティの特徴をアピールする画像をアップロードして、魅力的なコミュニティを紹介しましょう！',
+	'wikifeatures-feature-description-wgEnableNjordExt' => 'メインページにWikiaコミュニティの特徴をアピールする画像をアップロードして、魅力的なコミュニティを紹介しましょう！',
 	'wikifeatures-feature-heading-wgEnableCuratedContentExt' => 'キュレーション・コンテンツ',
 	'wikifeatures-feature-description-wgEnableCuratedContentExt' => 'ウィキアコミュニティの Special:CuratedContent ページでは、モバイルアプリに表示するコンテンツを指定することができます。この機能を活用して、あなたのコミュニティにより多くのユーザーを呼び込みましょう！',
 	'wikifeatures-feature-heading-emptylabs' => '現在、研究室はご利用いただけません',
-	'wikifeatures-feature-description-emptylabs' => 'ウィキアでは現在、新しい機能の開発に取り組んでいます。しばらくしてからこのページを再度ご覧の上、新機能の追加をご確認ください。',
+	'wikifeatures-feature-description-emptylabs' => 'Wikiaでは現在、新しい機能の開発に取り組んでいます。しばらくしてからこのページを再度ご覧の上、新機能の追加をご確認ください。',
 	'wikifeatures-log-name' => 'ウィキ・フィーチャーズ・ログ',
 	'wikifeatures-log-header' => '以下は、ウィキ・フィーチャーズの設定変更のリストです。',
 	'action-wikifeaturesview' => 'ウィキ・フィーチャーズを表示',
 	'wikifeatures-feature-heading-wgDisableAnonymousEditing' => 'すべての投稿者のログインを必須にする',
-	'wikifeatures-feature-description-wgDisableAnonymousEditing' => 'あなたのウィキアですべての投稿者のログインを必須にしますか？この機能を有効にすると、匿名ユーザーはログインせずにページを編集したり、コメントやフォーラム、メッセージウォールに参加したりすることができなくなります。ただし、誰でもウィキアアカウントを作成してコミュニティに参加することはできます。',
-);
+	'wikifeatures-feature-description-wgDisableAnonymousEditing' => 'あなたのWikiaコミュニティですべての投稿者のログインを必須にしますか？この機能を有効にすると、匿名ユーザーはログインせずにページを編集したり、コメントやフォーラム、メッセージウォールに参加したりすることができなくなります。ただし、誰でもWikiaアカウントを作成してコミュニティに参加することはできます。',
+	'wikifeatures-feature-heading-wgEnablePortableInfoboxEuropaTheme' => 'インフォボックスのデザインテーマ - Europa',
+	'wikifeatures-feature-description-wgEnablePortableInfoboxEuropaTheme' => '[[w:c:ja.community:ヘルプ:インフォボックス|インフォボックス]]の新しいデザインを有効にすると、コミュニティのテーマにあった見た目にすることができます。ぜひ使ってみよう！',
+];
 
 /** Kannada (ಕನ್ನಡ)
  * @author Nayvik
  */
-$messages['kn'] = array(
+$messages['kn'] = [
 	'wikifeatures-category-choose-one' => 'ಒಂದನ್ನು ಆರಿಸಿ...',
 	'wikifeatures-promotion-new' => 'ಹೊಸ',
-);
+];
 
 /** Kurdish (Latin script) (‪Kurdî (latînî)‬)
  * @author Gomada
  */
-$messages['ku-latn'] = array(
+$messages['ku-latn'] = [
 	'wikifeatures-title' => 'Taybetmendiyên Wîkî',
 	'wikifeatures-heading' => 'Taybetmendî',
 	'wikifeatures-love-this-project' => 'Ez ji vê projeyê hez dikim.',
@@ -874,12 +890,12 @@ $messages['ku-latn'] = array(
 	'wikifeatures-promotion-new' => 'Nû',
 	'wikifeatures-feature-heading-wgEnableAchievementsExt' => 'Serkeftin',
 	'wikifeatures-feature-heading-wgEnableArticleCommentsExt' => 'Şîroveyên gotarê',
-);
+];
 
 /** Macedonian (македонски)
  * @author Bjankuloski06
  */
-$messages['mk'] = array(
+$messages['mk'] = [
 	'wikifeatures' => 'Можности на викито',
 	'wikifeatures-title' => 'Можности на викито',
 	'wikifeatures-heading' => 'Можности',
@@ -934,12 +950,12 @@ $messages['mk'] = array(
 	'wikifeatures-feature-description-emptylabs' => 'Нашите технолози работат напорно на нови функции што ќе можете да ги испробувате. Вратете се тука наскоро, и ќе најдете повеќе лаборатории!',
 	'wikifeatures-log-name' => 'Дневник на Функции на викито',
 	'wikifeatures-log-header' => 'Подолу е наведен список на промени во поставките на Функциите на викито.',
-);
+];
 
 /** Malay (Bahasa Melayu)
  * @author Anakmalaysia
  */
-$messages['ms'] = array(
+$messages['ms'] = [
 	'wikifeatures' => 'Wiki Features',
 	'wikifeatures-title' => 'Wiki Features',
 	'wikifeatures-heading' => 'Ciri-ciri',
@@ -994,12 +1010,12 @@ $messages['ms'] = array(
 	'wikifeatures-feature-description-emptylabs' => 'Para saintis kami tengah berusaha membangunkan ciri-ciri baru untuk anda cuba. Nantikan kemunculan makmal baru di sini tidak lama lagi!',
 	'wikifeatures-log-name' => 'Log Ciri-Ciri Wiki',
 	'wikifeatures-log-header' => 'Berikut ialah senarai perubahan tetapan Ciri-Ciri Wiki.',
-);
+];
 
 /** Norwegian Bokmål (‪norsk (bokmål)‬)
  * @author Audun
  */
-$messages['nb'] = array(
+$messages['nb'] = [
 	'wikifeatures' => 'Wiki-funksjoner',
 	'wikifeatures-title' => 'Wiki-funksjoner',
 	'wikifeatures-heading' => 'Funksjoner',
@@ -1054,7 +1070,7 @@ $messages['nb'] = array(
 	'wikifeatures-feature-description-emptylabs' => 'Teknikerne våre jobber hardt med å koke i hop nye funksjoner du kan prøve ut. Se etter flere laber her snart!',
 	'wikifeatures-log-name' => 'Logg over Wiki-funksjoner',
 	'wikifeatures-log-header' => 'Under følger en liste over endringer i innstillingene for Wiki-funksjoner.',
-);
+];
 
 /** Dutch (Nederlands)
  * @author AvatarTeam
@@ -1062,7 +1078,7 @@ $messages['nb'] = array(
  * @author Siebrand
  * @author TBloemink
  */
-$messages['nl'] = array(
+$messages['nl'] = [
 	'wikifeatures' => 'Wiki Features',
 	'wikifeatures-title' => 'Wiki Features',
 	'wikifeatures-heading' => 'Features',
@@ -1135,14 +1151,16 @@ $messages['nl'] = array(
 	'action-wikifeaturesview' => 'view Wiki Features',
 	'wikifeatures-feature-heading-wgDisableAnonymousEditing' => 'Require all contributors to log in',
 	'wikifeatures-feature-description-wgDisableAnonymousEditing' => 'Do you want all contributors on your wikia to be logged in? When this feature is enabled, no anonymous visitors will be allowed to edit pages or participate in comments, Forum or Message Wall without logging in. Anyone can still create a Wikia account to join your community!',
-);
+	'wikifeatures-feature-heading-wgEnablePortableInfoboxEuropaTheme' => 'Europa Infobox Theme',
+	'wikifeatures-feature-description-wgEnablePortableInfoboxEuropaTheme' => "Enable a new look for your [[w:c:community:Help:Infobox|infoboxes]] to fully benefit from your wiki's color theme!",
+];
 
 /** Polish (polski)
  * @author BeginaFelicysym
  * @author Sovq
  * @author Wladekb
  */
-$messages['pl'] = array(
+$messages['pl'] = [
 	'wikifeatures' => 'Rozszerzenia Wiki',
 	'wikifeatures-title' => 'Rozszerzenia Wiki',
 	'wikifeatures-heading' => 'Rozszerzenia',
@@ -1188,7 +1206,7 @@ $messages['pl'] = array(
 	'wikifeatures-feature-heading-wgEnableEditPageReskinExt' => 'Nowy wygląd edytora',
 	'wikifeatures-feature-description-wgEnableEditPageReskinExt' => 'Edytowanie jest siłą napędową wiki, a dobry edytor jest kluczowy, aby dodawanie treści było łatwe i przyjemne. Dlatego postanowiliśmy temu zaradzić poprawiając nasze strony edycji.',
 	'wikifeatures-feature-heading-wgEnableAjaxPollExt' => 'Ankiety',
-	'wikifeatures-feature-description-wgEnableAjaxPollExt' => 'Daj każdemu możliwość stworzenia sondy na Twojej wiki! [[w:c:spolecznosc:Pomoc:Ankiety|Ankiety]] udostępniają tagi <code>poll</code>, które umożliwiając ich łatwe tworzenie. To rozszerzenie to świetny sposób na zachęcenie nowych edytorów.',
+	'wikifeatures-feature-description-wgEnableAjaxPollExt' => 'Ankiety pozwalają każdemu na Twojej wiki na utworzenie sondy. Edytorzy mogą używać [[w:c:spolecznosc;Pomoc:Ankiety|tagów poll]], aby dodawać sondy do dowolnej strony. To rozszerzenie to świetny sposób na zachęcenie nowych edytorów.',
 	'wikifeatures-feature-heading-wgEnableBlogArticles' => 'Blogi',
 	'wikifeatures-feature-description-wgEnableBlogArticles' => '[[w:c:spolecznosc:Pomoc:Blogi|Blogi]] pozwalają użytkownikom Twojej wiki na tworzenie wpisów we własnym profilu. Są też doskonałym narzędziem do informowania społeczności Twojej wiki o nowościach.',
 	'wikifeatures-feature-heading-wgEnableWallExt' => 'Tablica Wiadomości',
@@ -1214,13 +1232,15 @@ $messages['pl'] = array(
 	'wikifeatures-feature-description-wgEnableCuratedContentExt' => 'Użyj strony [[{{#special:CuratedContent}}]] na Twojej wiki, aby zarządzać treścią, która jest widoczna w aplikacji mobilnej. Poszerz swoją widownie!',
 	'action-wikifeaturesview' => 'zobacz Rozszerzenia Wiki',
 	'wikifeatures-feature-heading-wgDisableAnonymousEditing' => 'Należy być zalogowanym, aby edytować',
-	'wikifeatures-feature-description-wgDisableAnonymousEditing' => 'Czy chcesz, żeby wszyscy użytkownicy twojej strony wikia byli zalogowani, aby móc edytować? Kiedy ta funkcja jest włączona, osoby odwiedzające stronę anonimowo nie mogą edytować stron, komentować treści na stronie, udzielać się na Forum ani na Tablicy Wiadomości, bez uprzedniego zalogowania.   Kązdy może w końcu utworzyć konto na portalu Wikia i dołączyć do twojej społeczności!',
-);
+	'wikifeatures-feature-description-wgDisableAnonymousEditing' => 'Czy chcesz, żeby wszyscy użytkownicy Twojej wikii byli zalogowani, aby móc edytować? Kiedy ta funkcja jest włączona, osoby odwiedzające stronę anonimowo nie mogą edytować stron, komentować treści na stronie, udzielać się na forum ani na tablicach użytkowników, bez uprzedniego zalogowania. Każdy ciągle może utworzyć konto na Wikii i dołączyć do Twojej społeczności!',
+	'wikifeatures-feature-heading-wgEnablePortableInfoboxEuropaTheme' => 'Motyw kolorystyczny Europa dla infoboksów',
+	'wikifeatures-feature-description-wgEnablePortableInfoboxEuropaTheme' => 'Aktywuj nowy wygląd swoich [[w:c:spolecznosc:Pomoc:Infoboksy|infoboksów]], aby w pełni wykorzystać kolorystykę twojej wiki!',
+];
 
 /** Pashto (پښتو)
  * @author Ahmed-Najib-Biabani-Ibrahimkhel
  */
-$messages['ps'] = array(
+$messages['ps'] = [
 	'wikifeatures-labs-heading' => 'ازمېنتون',
 	'wikifeatures-category-choose-one' => 'يو وټاکۍ...',
 	'wikifeatures-deactivate-cancel-button' => 'ناګارل',
@@ -1228,9 +1248,9 @@ $messages['ps'] = array(
 	'wikifeatures-feature-heading-wgShowTopListsInCreatePage' => 'د سر 10 لړليکونه',
 	'wikifeatures-feature-heading-wgEnableAchievementsExt' => 'برياوې',
 	'wikifeatures-feature-heading-wgEnableChat' => 'بانډار',
-);
+];
 
-$messages['pt'] = array(
+$messages['pt'] = [
 	'wikifeatures-desc' => 'Permite que usuários com privilégios habilitem ou desabilitem recursos opcionais da Wikia',
 	'wikifeatures' => 'Recursos da Wikia',
 	'wikifeatures-title' => 'Recursos da Wikia',
@@ -1267,31 +1287,32 @@ $messages['pt'] = array(
 	'wikifeatures-promotion-new' => 'Novo',
 	'wikifeatures-oasis-only' => 'Os recursos da Wikia não estão disponíveis no Monobook.  Se você quiser usar estes recursos, altere suas preferências para Wikia skin.',
 	'wikifeatures-feature-heading-wgEnableMediaGalleryExt' => 'Novas galerias de imagem',
-	'wikifeatures-feature-description-wgEnableMediaGalleryExt' => 'Aqui temos uma prévia da [[w:c:comunidade:Ajuda:Novas_galerias_de_imagens|nova galeria de imagem]] que foi atualizada para apresentar coleções de imagens criadas pela comunidade de maneira mais elegante e moderna. Durante este período beta em laboratório, a criação de novas galerias e a alteração de galerias existentes estarão  apenas disponíveis na fonte temporariamente. [[w:c:comunidade:Ajuda:Novas_galerias_de_imagens|Saiba mais]].',
+	'wikifeatures-feature-description-wgEnableMediaGalleryExt' => 'Aqui temos uma prévia da [[w:c:comunidade:Ajuda:Novas_galerias_de_imagens|nova galeria de imagem]] que foi atualizada para apresentar coleções de imagens criadas pela comunidade de maneira mais elegante e moderna. Durante este período beta em laboratório, a criação de novas galerias e a alteração de galerias existentes estarão apenas disponíveis na fonte temporariamente. [[w:c:comunidade:Ajuda:Novas_galerias_de_imagens|Saiba mais]].',
 	'wikifeatures-feature-heading-wgEnableForumExt' => 'Fórum',
 	'wikifeatures-feature-description-wgEnableForumExt' => 'Fique atento a cada discussão em sua wikia, utilizando o novo [[w:c:comunidade:Ajuda:Fórum|Fórum]]. Atraia novas pessoas para participar das conversas sobre o conteúdo de sua wikia e para que os os editores da wikia permaneçam dedicados, eficientes e comprometidos com todos os temas atuais. ',
 	'wikifeatures-feature-heading-wgShowTopListsInCreatePage' => 'Listas Top 10',
-	'wikifeatures-feature-description-wgShowTopListsInCreatePage' => '[[w:c:community:Help:Top 10 Lists| Listas Top 10]] permite que qualquer pessoa em sua wikia possa criar uma lista para votação. Se você está procurando uma maneira para que os editores novos interajam com a wikia, essa é a solução!  A habilitação desse recurso irá adicionar a "Lista Top 10" como uma opção quando você clicar em "Adicionar uma página"',
+	'wikifeatures-feature-description-wgShowTopListsInCreatePage' => '[[w:c:pt.community:Ajuda:Listas_Top_10|Listas Top 10]] permite que qualquer pessoa em sua wikia possa criar uma lista para votação. Se você está procurando uma maneira para que os editores novos interajam com a wikia, essa é a solução!  A habilitação desse recurso irá adicionar a "Lista Top 10" como uma opção quando você clicar em "Adicionar uma página"',
 	'wikifeatures-feature-heading-wgEnableAchievementsExt' => 'Conquistas',
 	'wikifeatures-feature-description-wgEnableAchievementsExt' => '[[w:c:community:Help:Achievements|Conquistas]] ajudarão a sua wikia a crescer através de incentivos para que os editores contribuam com conteúdos variados. Você pode criar seus próprios desafios que são exclusivos a sua wikia, e até mesmo carregar as suas próprias imagens para as medalhas.',
 	'wikifeatures-feature-heading-wgEnableArticleCommentsExt' => 'Comentários sobre o artigo',
-	'wikifeatures-feature-description-wgEnableArticleCommentsExt' => 'Esta extensão permitirá que as pessoas escrevam [[w:c:community:Help:Comments|comentários]] na parte inferior das páginas do artigo. Outros usuários podem responder aos comentários, e as assinaturas e timestamps são atribuídos automaticamente. Isso irá substituir páginas de conversa em sua wikia.',
+	'wikifeatures-feature-description-wgEnableArticleCommentsExt' => 'Esta extensão permitirá que as pessoas escrevam [[w:c:pt.community:Ajuda:Comentários
+|comentários]] na parte inferior das páginas do artigo. Outros usuários podem responder aos comentários, e as assinaturas e timestamps são atribuídos automaticamente. Isso irá substituir páginas de conversa em sua wikia.',
 	'wikifeatures-feature-heading-wgEnableCategoryExhibitionExt' => 'Exibição de categoria',
-	'wikifeatures-feature-description-wgEnableCategoryExhibitionExt' => 'As oito páginas mais populares em suas [[w:c:community:Help:Category #Category_Displays|categorias]] já são exibidas como imagens, mas esse recurso irá listar todas as suas páginas como links de imagem classificável por nome, data ou  popularidade!',
+	'wikifeatures-feature-description-wgEnableCategoryExhibitionExt' => 'As oito páginas mais populares em suas [[w:c:pt.community:Ajuda:Categorias|categorias]] já são exibidas como imagens, mas esse recurso irá listar todas as suas páginas como links de imagem classificável por nome, data ou  popularidade!',
 	'wikifeatures-feature-heading-wgEnableChat' => 'Bate-papo',
-	'wikifeatures-feature-description-wgEnableChat' => 'Comunique-se instantaneamente com outras pessoas que amam a sua wikia e seus tópicos tanto quanto você! Qualquer pessoa com uma conta na Wikia pode participar do [[w:c:community:Help:Chat|chat]] através do botão "Entre no Chat" do lado direito da navegação do seu site.',
+	'wikifeatures-feature-description-wgEnableChat' => 'Comunique-se instantaneamente com outras pessoas que amam a sua wikia e seus tópicos tanto quanto você! Qualquer pessoa com uma conta na Wikia pode participar do [[w:c:comunidade:Ajuda:Chat|chat]] através do botão "Entre no Chat" do lado direito da navegação do seu site.',
 	'wikifeatures-feature-heading-wgEnableEditPageReskinExt' => 'Redesenho do editor da Wikia',
 	'wikifeatures-feature-description-wgEnableEditPageReskinExt' => 'A edição é o pulso de uma wikia. Possuir um bom editor é a chave para ter uma experiência fácil e divertida quando adicionar conteúdo. Para melhorar a sua experiência, redesenhamos nossas páginas de edição.',
 	'wikifeatures-feature-heading-wgEnableAjaxPollExt' => 'Enquetes',
-	'wikifeatures-feature-description-wgEnableAjaxPollExt' => 'Permita que qualquer pessoa em sua wikia crie uma enquete! Com as [[w:c:community:Help:Poll|enquetes]] habilitadas, os usuários podem usar a tag enquete para adicionar esta funcionalidade à qualquer página. Esse recurso é uma ótima maneira de aumentar contribuições em sua wikia.',
+	'wikifeatures-feature-description-wgEnableAjaxPollExt' => 'Permita que qualquer pessoa em sua wikia crie uma enquete! Com as [[w:c:comunidade:Ajuda:Enquete|enquetes]] habilitadas, os usuários podem usar a tag enquete para adicionar esta funcionalidade à qualquer página. Esse recurso é uma ótima maneira de aumentar contribuições em sua wikia.',
 	'wikifeatures-feature-heading-wgEnableBlogArticles' => 'Blogs',
-	'wikifeatures-feature-description-wgEnableBlogArticles' => '[[w:c:community:Help:Blogs|Blogs]] permitem que os usuários em sua wikia criem seus próprios posts em sua página de perfil, e também podem ser usados como uma ótima maneira de comunicar notícias e eventos à sua comunidade wikia.',
+	'wikifeatures-feature-description-wgEnableBlogArticles' => '[[w:c:comunidade:Ajuda:Blogs|Blogs]] permitem que os usuários em sua wikia criem seus próprios posts em sua página de perfil, e também podem ser usados como uma ótima maneira de comunicar notícias e eventos à sua comunidade wikia.',
 	'wikifeatures-feature-heading-wgEnableWikiaInteractiveMaps' => 'Mapas',
 	'wikifeatures-feature-description-wgEnableWikiaInteractiveMaps' => 'Os mapas da Wikia permitem aos usuários criar mapas interativos de lugares reais do mundo, imagens ou mundos fictícios. Marcadores de mapa podem ser adicionados, editados e personalizados pela comunidade para criar uma experiência rica de mapeamento. Estes mapas também podem ser incorporados aos artigos Wikia ou sites externos.',
 	'wikifeatures-feature-heading-wgEnableWallExt' => 'Mural de mensagem',
-	'wikifeatures-feature-description-wgEnableWallExt' => 'A comunicação com os colaboradores em sua wikia é parte essencial da construção e manutenção da sua comunidade. O [[w:c:community:Help:Message Wall|Mural de mensagem]] utiliza um sistema de formato e notificação de conversas que permite controlar quais conversas você está interessado em seguir. Fim de mensagens perdidas!',
-	'wikifeatures-feature-heading-wgGameGuidesContentForAdmins' => 'Conteúdo de guias de jogo',
-	'wikifeatures-feature-description-wgGameGuidesContentForAdmins' => 'Use a página especial:GameGuidesContent de sua wikia para gerenciar quais categorias aparecem no app móvel [[w:c:community:Help:Game Guides|Game Guides]] para expandir seu público potencial!',
+	'wikifeatures-feature-description-wgEnableWallExt' => 'A comunicação com os colaboradores em sua wikia é parte essencial da construção e manutenção da sua comunidade. O [[w:c:comunidade:Ajuda:Mural_de_mensagens|Mural de mensagem]] utiliza um sistema de formato e notificação de conversas que permite controlar quais conversas você está interessado em seguir. Fim de mensagens perdidas!',
+	'wikifeatures-feature-heading-wgGameGuidesContentForAdmins' => 'Conteúdo do Game Guides',
+	'wikifeatures-feature-description-wgGameGuidesContentForAdmins' => 'Use a página Especial:GameGuidesContent de sua wikia para gerenciar quais categorias aparecem no app móvel [[w:c:comunidade:Ajuda:Game Guides|Game Guides]] para expandir seu público potencial!',
 	'wikifeatures-feature-heading-wgEnableNjordExt' => 'Hero Image',
 	'wikifeatures-feature-description-wgEnableNjordExt' => 'Torne sua wikia mais atrativa fazendo o upload de uma imagem para representá-la em sua página inicial!',
 	'wikifeatures-feature-heading-wgEnableCuratedContentExt' => 'Conteúdo personalizado',
@@ -1303,13 +1324,15 @@ $messages['pt'] = array(
 	'action-wikifeaturesview' => 'Exibir recursos da Wikia',
 	'wikifeatures-feature-heading-wgDisableAnonymousEditing' => 'Exigir que todos os contribuidores iniciem sessão',
 	'wikifeatures-feature-description-wgDisableAnonymousEditing' => 'Você quer que todos os contribuidores em sua wikia iniciem sessão? Quando este recurso é habilitado, visitantes anônimos não poderão editar páginas ou participar nos comentários, fórum ou no mural de mensagens sem iniciarem sessão. Entretanto, qualquer pessoa ainda pode criar uma conta na Wikia para participar de sua comunidade!',
-);
+	'wikifeatures-feature-heading-wgEnablePortableInfoboxEuropaTheme' => 'Tema de Infobox Europa',
+	'wikifeatures-feature-description-wgEnablePortableInfoboxEuropaTheme' => 'Habilita um novo visual para suas [[w:c:comunidade:Ajuda:Infoboxes|infoboxes]] para aproveitar o tema de cores da sua wikia!',
+];
 
 /** Brazilian Portuguese (português do Brasil)
  * @author Caio1478
  * @author Pedroca cerebral
  */
-$messages['pt-br'] = array(
+$messages['pt-br'] = [
 	'wikifeatures' => 'Recursos da Wiki',
 	'wikifeatures-title' => 'Recursos da Wiki',
 	'wikifeatures-heading' => 'Recursos',
@@ -1349,33 +1372,33 @@ $messages['pt-br'] = array(
 	'wikifeatures-feature-heading-wgEnableAjaxPollExt' => 'Enquetes',
 	'wikifeatures-feature-heading-wgEnableWallExt' => 'Mural de Mensagens',
 	'wikifeatures-log-name' => 'Registro Recursos da Wiki',
-);
+];
 
 /** Russian (русский)
  * @author Kuzura
  * @author Lvova
  */
-$messages['ru'] = array(
+$messages['ru'] = [
 	'wikifeatures-heading' => 'Расширения',
-	'wikifeatures-creative' => 'Wiki Features позволяют Вам выбрать, какие из дополнительных расширений Викия Вы хотели бы иметь на Вашей вики. Попробуйте эти расширения. Вы можете включить или отключить эти расширения в любое время.',
+	'wikifeatures-creative' => 'Wiki Features позволяют вам выбрать, какие из дополнительных расширений Викия вы хотели бы иметь на вашей вики. Попробуйте эти расширения. Вы можете включить или отключить эти расширения в любое время.',
 	'wikifeatures-labs-heading' => 'Лаборатория',
-	'wikifeatures-labs-creative' => 'Лаборатория - место, где находятся расширения Викия, проходящие стадию тестирования. Поскольку мы всё ещё работаем над этими расширениями, их внешний вид и настройки могут меняться, но мы не хотим лишать Вас удовольствия опробовать их сейчас. Подключите их и отправьте нам Ваши отзывы о хорошей, плохой или странной работе этих расширений.',
+	'wikifeatures-labs-creative' => 'Лаборатория — это место, где находятся расширения Викия, проходящие стадию тестирования. Поскольку мы всё ещё работаем над этими расширениями, их внешний вид и настройки могут меняться, но мы не хотим лишать вас удовольствия опробовать их сейчас. Подключите их и отправьте нам ваши отзывы о хорошей, плохой или странной работе этих расширений.',
 	'wikifeatures-feedback' => 'Отправить отзыв',
-	'wikifeatures-error-permission' => 'Извините, у вас недостаточно прав для доступа к этой странице.',
+	'wikifeatures-error-permission' => 'Извините, но у вас недостаточно прав для доступа к этой странице.',
 	'wikifeatures-error-invalid-parameter' => 'Недопустимый параметр: $1. Попробуйте ещё раз.',
 	'wikifeatures-error-message' => 'Комментарий слишком короткий или слишком длинный.',
 	'wikifeatures-error-spam-attempt' => 'Пожалуйста, подождите 60 секунд перед отправкой следующего отзыва.',
 	'wikifeatures-error-invalid-category' => 'Выберите тему заявки.',
-	'wikifeatures-toggle-active' => 'Включён',
-	'wikifeatures-toggle-inactive' => 'Отключён',
-	'wikifeatures-active-on' => 'Активно на $1 вики',
+	'wikifeatures-toggle-active' => 'Включено',
+	'wikifeatures-toggle-inactive' => 'Отключено',
+	'wikifeatures-active-on' => 'Активировано на $1 вики',
 	'wikifeatures-category-choose-one' => 'Выберите из...',
 	'wikifeatures-love-this-project' => 'Мне нравится это расширение',
 	'wikifeatures-hate-this-project' => 'Мне не нравится это расширение',
 	'wikifeatures-problem-with-project' => 'Я хочу сообщить о проблеме',
 	'wikifeatures-an-idea-for-project' => 'У меня есть идея для этого расширения',
 	'wikifeatures-feedback-heading' => 'Отзыв',
-	'wikifeatures-feedback-description' => 'Мы рады услышать Ваши отзывы о расширениях, которые находятся в лаборатории! У Вас есть идея, как можно улучшить то или иное расширение, или Вы обнаружили ошибку, или Вы хотите просто сказать, что Вам нравится или не нравится расширение? Дайте нам знать с помощью формы ниже.',
+	'wikifeatures-feedback-description' => 'Мы рады услышать ваши отзывы о расширениях, которые находятся в лаборатории! У вас есть идея, как можно улучшить то или иное расширение; вы обнаружили ошибку или просто хотите сказать, что вам нравится или не нравится расширение? Дайте нам знать с помощью формы ниже.',
 	'wikifeatures-feedback-type-label' => 'Что это значит?',
 	'wikifeatures-feedback-comment-label' => 'Оставить комментарий',
 	'wikifeatures-feedback-success' => 'Спасибо за ваш отзыв!',
@@ -1385,28 +1408,28 @@ $messages['ru'] = array(
 	'wikifeatures-deactivate-confirm-button' => 'Да, отключить',
 	'wikifeatures-deactivate-cancel-button' => 'Отменить',
 	'wikifeatures-promotion-new' => 'Новое',
-	'wikifeatures-oasis-only' => 'Страница Wiki Features не доступна в Monobook. Если вы хотите включить любое из расширений, пожалуйста переключитесь на скин Викия в личных настройках.',
+	'wikifeatures-oasis-only' => 'Страница Wiki Features недоступна в Monobook. Если вы хотите включить любое из расширений, пожалуйста, переключитесь на скин Викия в личных настройках.',
 	'wikifeatures-feature-heading-wgShowTopListsInCreatePage' => 'Списки Топ-10',
 	'wikifeatures-feature-description-wgShowTopListsInCreatePage' => '[[w:c:ru.community:Справка:Списки Топ-10|Списки Топ-10]] позволяют любому участнику вашей вики создать собственный список для голосования. Это расширение является отличным способом наладить взаимоотношения новых участников друг с другом и с вики. Подключив это расширение, можно создать новый список Топ-10 в диалоге создания новой страницы',
 	'wikifeatures-feature-heading-wgEnableAchievementsExt' => 'Достижения',
-	'wikifeatures-feature-description-wgEnableAchievementsExt' => '[[w:c:ru.community:Справка:Достижения|Достижения]] помогут Вашей вики расти за счёт поощрения разнообразных видов деятельности участников на вики. Вы можете создавать свои собственные наборы стандартных значков, которые можно будет получить только на Вашей вики, а также загружать собственные изображения на значки.',
+	'wikifeatures-feature-description-wgEnableAchievementsExt' => '[[w:c:ru.community:Справка:Достижения|Достижения]] помогут вашей вики расти за счёт поощрения разнообразных видов деятельности участников на вики. Вы можете создавать свои собственные наборы стандартных значков, которые можно будет получить только на вашей вики, а также загружать собственные изображения на значки.',
 	'wikifeatures-feature-heading-wgEnableArticleCommentsExt' => 'Комментарии к статьям',
 	'wikifeatures-feature-description-wgEnableArticleCommentsExt' => 'Это расширение позволит пользователям писать [[w:c:ru.community:Справка:Комментарии|комментарии]] в нижней части страницы каждой статьи. Другие пользователи могут ответить на комментарии. Подпись и время комментария будут проставлены автоматически. Внимание! Это приведёт к исчезновению страниц обсуждения на страницах из основного пространства имён.',
 	'wikifeatures-feature-heading-wgEnableCategoryExhibitionExt' => 'Категории-галереи',
-	'wikifeatures-feature-description-wgEnableCategoryExhibitionExt' => 'Категории-галереи преобразуют текстовые ссылки на страницах категории в изображения-миниатюры, давая Вам способ визуализировать навигацию по Вашей вики. Если Вы активируете это расширение, все страницы категорий Вашей вики преобразуются в категории-галереи.',
+	'wikifeatures-feature-description-wgEnableCategoryExhibitionExt' => 'Категории-галереи преобразуют текстовые ссылки на страницах категории в изображения-миниатюры, давая вам способ визуализировать навигацию по вашей вики. Если вы активируете это расширение, все страницы категорий вашей вики преобразуются в категории-галереи.',
 	'wikifeatures-feature-heading-wgEnableChat' => 'Чат',
-	'wikifeatures-feature-description-wgEnableChat' => 'Это расширение позволит участникам вики обмениваться мгновенными сообщениями друг с другом. Любой зарегистрированный участник может присоединиться к [[w:c:ru.community:Справка:Чат|чату]], нажав кнопку "Присоединиться к чату" в окошке чата, которое появится в правой части любой страницы вики.',
+	'wikifeatures-feature-description-wgEnableChat' => 'Это расширение позволит участникам вики обмениваться мгновенными сообщениями друг с другом. Любой зарегистрированный участник может присоединиться к [[w:c:ru.community:Справка:Чат|чату]], нажав кнопку «Присоединиться к чату» в окошке чата, которое появится в правой части любой страницы вики.',
 	'wikifeatures-feature-heading-wgEnableEditPageReskinExt' => 'Новый дизайн визуального редактора',
-	'wikifeatures-feature-description-wgEnableEditPageReskinExt' => 'Редактирование - это основа Вики, поэтому наличие удобного визуального редактора необходимо для облегчения этого процесса. Мы изменили текущий визуальный редактор, существенно усовершенствовав его.',
+	'wikifeatures-feature-description-wgEnableEditPageReskinExt' => 'Редактирование — это основа любой вики, поэтому наличие удобного визуального редактора необходимо для облегчения этого процесса. Мы изменили текущий визуальный редактор, существенно усовершенствовав его.',
 	'wikifeatures-feature-heading-wgEnableAjaxPollExt' => 'Голосования',
-	'wikifeatures-feature-description-wgEnableAjaxPollExt' => 'Разрешите всем участникам вики создавать [[w:c:ru.community:Справка:Голосование|голосования]]! Подключите это расширение, и участники вашего вики-сообщества смогут использовать теги, чтобы добавить голосования на любую страницу. Это расширение - отличный способ увеличить вклад в вики.',
+	'wikifeatures-feature-description-wgEnableAjaxPollExt' => 'Разрешите всем участникам вики создавать [[w:c:ru.community:Справка:Голосование|голосования]]! Подключите это расширение, и участники вашего вики-сообщества смогут использовать теги, чтобы добавить голосования на любую страницу. Это расширение — отличный способ увеличить вклад в вики.',
 	'wikifeatures-feature-heading-wgEnableBlogArticles' => 'Блоги',
 	'wikifeatures-feature-description-wgEnableBlogArticles' => 'Это расширение позволит участникам вики писать [[w:c:ru.community:Справка:Блог|блоги]]. Это отличный способ общаться, делиться новостями или высказать своё мнение на вики.',
 	'wikifeatures-feature-heading-wgEnableWallExt' => 'Стена обсуждения',
-	'wikifeatures-feature-description-wgEnableWallExt' => 'Общение с участниками вашей вики - это неотъемлемая часть создания и поддержания активного вики-сообщества. [[w:c:ru.community:Справка:Стена обсуждения|Стена обсуждения]] представляет новый взгляд на традиционную страницу обсуждения участника. Форма вопрос-ответ позволяет контролировать конкретные темы обсуждения и не метаться между своей и чужой страницами обсуждения. Пропущенных сообщений больше не будет!',
-	'wikifeatures-feature-heading-emptylabs' => 'Похоже, Лаборатория Викия взяла перерыв',
-	'wikifeatures-feature-description-emptylabs' => 'Наши инженеры напряжённо работают, разрабатывая новые расширения, которые вам будет интересно попробовать. Загляните в Лабораторию Викия в ближайшее время!',
-	'wikifeatures-log-name' => 'Запись о функциях Вики',
+	'wikifeatures-feature-description-wgEnableWallExt' => 'Общение с участниками вашей вики — это неотъемлемая часть создания и поддержания активного вики-сообщества. [[w:c:ru.community:Справка:Стена обсуждения|Стена обсуждения]] представляет новый взгляд на традиционную страницу обсуждения участника. Форма вопрос-ответ позволяет контролировать конкретные темы обсуждения и не метаться между своей и чужой страницами обсуждения. Пропущенных сообщений больше не будет!',
+	'wikifeatures-feature-heading-emptylabs' => 'На данный момент Лаборатория недоступна',
+	'wikifeatures-feature-description-emptylabs' => 'Наши инженеры напряжённо работают, разрабатывая новые расширения, которые вам будет интересно попробовать. Загляните в Лабораторию в ближайшее время!',
+	'wikifeatures-log-name' => 'Журнал Wiki Features',
 	'wikifeatures-log-header' => 'Ниже дан список изменений для расширений из Wiki Features.',
 	'wikifeatures-desc' => 'Позволяет участникам с правами администратора подключать дополнительные расширения Викия',
 	'wikifeatures' => 'Wiki Features',
@@ -1427,14 +1450,16 @@ $messages['ru'] = array(
 	'wikifeatures-feature-description-wgEnableCuratedContentExt' => 'Используйте страницу Special:CuratedContent вашей вики, чтобы управлять контентом мобильного приложения. Расширьте свою потенциальную аудиторию!',
 	'action-wikifeaturesview' => 'просмотреть Wiki Features',
 	'wikifeatures-feature-heading-wgDisableAnonymousEditing' => 'Обязательная регистрация участников',
-	'wikifeatures-feature-description-wgDisableAnonymousEditing' => 'Хотите, чтобы на вашей вики редактировали только зарегистрированные участники? После подключения этого расширения, анонимные участники не смогут редактировать статьи, оставлять комментарии к статьям и блогам, или общаться на Форуме и Стенах обсуждения. Только зарегистрированные участники смогут редактировать вашу вики.',
-);
+	'wikifeatures-feature-description-wgDisableAnonymousEditing' => 'Хотите, чтобы на вашей вики редактировали только зарегистрированные участники? После подключения этого расширения анонимные участники не смогут редактировать статьи, оставлять комментарии к статьям и блогам, или общаться на Форуме и Стенах обсуждения. Только зарегистрированные участники смогут редактировать вашу вики.',
+	'wikifeatures-feature-heading-wgEnablePortableInfoboxEuropaTheme' => 'Тема для инфобоксов «Europa»',
+	'wikifeatures-feature-description-wgEnablePortableInfoboxEuropaTheme' => 'Подключите новую тему для [[w:c:ru.community:Справка:Инфобоксы|инфобоксов]], которая соответствует теме вашей вики.',
+];
 
 /** Swedish (svenska)
  * @author VickyC
  * @author WikiPhoenix
  */
-$messages['sv'] = array(
+$messages['sv'] = [
 	'wikifeatures' => 'Wiki-funktioner',
 	'wikifeatures-title' => 'Wiki-funktioner',
 	'wikifeatures-heading' => 'Funktioner',
@@ -1478,20 +1503,20 @@ $messages['sv'] = array(
 	'wikifeatures-feature-heading-emptylabs' => 'Det ser ut som labbet tar en paus',
 	'wikifeatures-feature-description-emptylabs' => 'Våra tekniker jobbar hårt med att koka ihop nya funktioner till dig att prova ut. Leta efter fler labbar här snart!',
 	'wikifeatures-log-name' => 'Logg över Wiki-funktioner',
-);
+];
 
 /** Turkish (Türkçe)
  * @author Bilalokms
  */
-$messages['tr'] = array(
+$messages['tr'] = [
 	'wikifeatures-deactivate-cancel-button' => 'İptal',
 	'wikifeatures-promotion-new' => 'Yeni',
-);
+];
 
 /** Vietnamese (Tiếng Việt)
  * @author Xiao Qiao
  */
-$messages['vi'] = array(
+$messages['vi'] = [
 	'wikifeatures' => 'Tính năng Wiki',
 	'wikifeatures-title' => 'Tính năng Wiki',
 	'wikifeatures-heading' => 'Tính năng',
@@ -1546,17 +1571,17 @@ $messages['vi'] = array(
 	'wikifeatures-feature-description-emptylabs' => 'Các kỹ sư của chúng tôi đang nỗ lực trong công việc xây dựng các tính năng mới để bạn có thể thử. Tìm kiếm nhiều thí nghiệm hơn ở đây!',
 	'wikifeatures-log-name' => 'Nhật trình Tính năng Wiki',
 	'wikifeatures-log-header' => 'Dưới đây là danh sách các thay đổi trong thiết lập các Tính năng Wiki.',
-);
+];
 
 /** Simplified Chinese (‪中文（简体）‬)
  * @author Anakmalaysia
  * @author Dimension
  */
-$messages['zh-hans'] = array(
+$messages['zh-hans'] = [
 	'wikifeatures' => '维基功能',
 	'wikifeatures-title' => '维基功能',
 	'wikifeatures-feedback' => '提供反馈',
-	'wikifeatures-error-message' => '您的评论要么太短，要么太长。',
+	'wikifeatures-error-message' => '您的评论可能太短或太长。',
 	'wikifeatures-error-spam-attempt' => '请等待60秒后再提交其他反馈。',
 	'wikifeatures-love-this-project' => '我很喜欢这个功能',
 	'wikifeatures-hate-this-project' => '我不喜欢这个功能',
@@ -1568,50 +1593,50 @@ $messages['zh-hans'] = array(
 	'wikifeatures-feature-heading-wgEnableChat' => '聊天',
 	'wikifeatures-feature-description-wgEnableEditPageReskinExt' => '编辑工作是维基的核心工作，因此，在添加内容时，有一个功能强大的编辑器会让您的编辑体验变得简单而有趣。为了提升您的体验，我们已经重新设计了我们的编辑页面。',
 	'wikifeatures-feature-heading-wgEnableBlogArticles' => '博客',
-	'wikifeatures-feature-heading-wgEnableWallExt' => '留言板',
-	'wikifeatures-desc' => '允许授权用户实现维基可选功能之间的转换',
+	'wikifeatures-feature-heading-wgEnableWallExt' => '信息墙',
+	'wikifeatures-desc' => '允许授权用户開启或关闭维基可选功能',
 	'wikifeatures-heading' => '功能',
-	'wikifeatures-creative' => '“维基功能”允许您在您的维基上使用多种产品功能。您可以亲自动手尝试一下如何使用这些功能，并且可以随时开启或关闭这些功能。',
+	'wikifeatures-creative' => '“维基功能”允许您选择在您的维基上使用哪些产品功能。您可以亲自动手尝试一下如何使用这些功能，并且可以随时开启或关闭这些功能。',
 	'wikifeatures-labs-heading' => '实验室',
-	'wikifeatures-labs-creative' => '实验室是您查找各种功能、了解到我们正在实验新产品的地方。由于这些功能会通过实验室不断进行调整，本身可能还存在许多问题。但我们希望您能和我们一起享受其中的乐趣！您可以开启这些功能，发送反馈意见给我们，说说这些产品的优势和劣势，以及各种奇异特征。',
-	'wikifeatures-error-permission' => '对不起，您没有权限显示此页面。',
+	'wikifeatures-labs-creative' => '实验室是您查找各种功能、了解到我们正在实验新产品的地方。由于这些功能会通过实验室不断进行调整，本身可能还存在许多问题。但我们希望您能和我们一起享受其中的乐趣！您可以开启这些功能，发送反馈意见给我们，说说这些产品的优势和劣势，以及各种奇异体验。',
+	'wikifeatures-error-permission' => '对不起，您没有权限进入此页面。',
 	'wikifeatures-error-invalid-parameter' => '$1参数无效。请重试。',
 	'wikifeatures-error-invalid-category' => '很抱歉。请您选择此问题与什么有关。',
 	'wikifeatures-toggle-active' => '启用',
 	'wikifeatures-toggle-inactive' => '禁用',
-	'wikifeatures-active-on' => '活跃在$1个维基上',
+	'wikifeatures-active-on' => '在$1个维基上使用',
 	'wikifeatures-category-choose-one' => '选择一个...',
 	'wikifeatures-problem-with-project' => '我有问题要报告',
 	'wikifeatures-feedback-heading' => '反馈',
-	'wikifeatures-feedback-description' => '我们非常希望能听到与实验室尚未推出的功能相关的反馈！您对我们如何才能改善此功能、 如何报告问题，或您喜欢或不喜欢什么有任何想法吗？请在方框内填充内容跟我们沟通。',
+	'wikifeatures-feedback-description' => '我们非常希望能听到与实验室的功能相关的反馈！您对如何改善此功能有想法、 有问题要回报，或是有喜欢或不喜欢的反馈吗？请在方框内填写内容告诉我们。',
 	'wikifeatures-feedback-type-label' => '这是关于什么的？',
 	'wikifeatures-feedback-submit-button' => '提交',
 	'wikifeatures-feedback-cancel-button' => '取消',
-	'wikifeatures-deactivate-description' => '禁用某个功能会将此功能从您的维基中删除。之后，您的用户将无法再使用此功能，而且他们也不会在维基社区上的任何地方再看到该功能了。',
+	'wikifeatures-deactivate-description' => '禁用某个功能会将此功能从您的维基中移除。之后，您的用户将无法使用此功能，而且他们也不会在维基社区上的任何地方再看到该功能了。',
 	'wikifeatures-deactivate-notification' => '您可以随时开启此功能。',
 	'wikifeatures-deactivate-confirm-button' => '是的，禁用',
 	'wikifeatures-deactivate-cancel-button' => '取消',
 	'wikifeatures-promotion-new' => '新增功能',
 	'wikifeatures-oasis-only' => '维基功能在MonoBook上不可用。如果您想使用此功能，请将您的偏好设置更改为Wikia界面。',
 	'wikifeatures-feature-heading-wgEnableMediaGalleryExt' => '新图片册',
-	'wikifeatures-feature-description-wgEnableMediaGalleryExt' => '这里是[[w:c:zh.community:Help:New Image Galleries|新图片册]]的说明页面，我们已对其进行更新，以便您能以更时尚、更现代的方式展示您所在社区的图片集。在测试期间，创建新图片册和修改现有图片册目前仅限于源代码编辑。 [[w:c:zh.community:Help:New Image Galleries|点击了解更多]]。',
+	'wikifeatures-feature-description-wgEnableMediaGalleryExt' => '这里是[[Help:New Image Galleries|新图片册]]的简要说明，我们已对其进行更新，以便您能以更时尚、更现代的方式展示您所在社区的图片集。在测试期间，创建新图片册和修改现有图片册目前仅限于源代码编辑。 [[Help:New Image Galleries|点击了解更多]]。',
 	'wikifeatures-feature-heading-wgEnableForumExt' => '论坛',
-	'wikifeatures-feature-description-wgEnableForumExt' => '通过Wikia的新的[[w:c:zh.community:Help:Forum|论坛]]让自己更加了解维基社区所有的探讨性话题。吸引新的社区成员和您一起讨论维基相关内容，更好地使用维基编辑器参与社区话题的建设。 ',
-	'wikifeatures-feature-heading-wgShowTopListsInCreatePage' => '排行榜前10名',
-	'wikifeatures-feature-description-wgShowTopListsInCreatePage' => '[[w:c:zh:community:Help:Top 10 Lists|排行榜前10名列表]]让任何人都可以在您的维基上创建表决型列表。如果您想让初级编辑者更好地参与社区事务，这就是最好的方法了。只需点击“添加页面”就能开启此功能，并将“排行榜前10名列表”作为一个选项添加到您的维基上。',
-	'wikifeatures-feature-description-wgEnableAchievementsExt' => '[[w:c:zh.community:Help:Achievements|成就]]可帮助您通过激励用户不断编辑贡献来扩充您的维基社区内容。您可以对您的维基设置各种不同的挑战，甚至可以上传自己设计的社区荣誉勋章。',
+	'wikifeatures-feature-description-wgEnableForumExt' => '通过Wikia的新的[[w:c:zh.community:Help:Forum|论坛]]让自己更加了解维基社区所有的探讨性话题。吸引新的社区成员和您一起讨论维基相关内容，让维基编辑者们更容易参与社区的话题。 ',
+	'wikifeatures-feature-heading-wgShowTopListsInCreatePage' => '前10名排行榜',
+	'wikifeatures-feature-description-wgShowTopListsInCreatePage' => '[[Help:Top 10 Lists|前10名排行榜]]让任何人都可以在您的维基上创建表决型列表。如果您想让初级编辑者更好地参与社区事务，这就是最好的方法了。开启本功能之后，在点击“添加页面”时就会新增一个“前10名排行榜”的选项。',
+	'wikifeatures-feature-description-wgEnableAchievementsExt' => '[[w:c:zh.community:Help:Achievements|成就]]可帮助您通过激励用户不断编辑贡献来扩充您的维基社区内容。您可以在您的维基设置各种不同的挑战，甚至可以上传自己设计的社区荣誉勋章。',
 	'wikifeatures-feature-heading-wgEnableArticleCommentsExt' => '文章评论',
 	'wikifeatures-feature-description-wgEnableArticleCommentsExt' => '此扩展功能允许用户在文章页面底部进行[[w:c:zh.community:Help:Comments|评论]]。其他用户可以回复评论，还可以自动加上签名和时间戳。此功能将替代维基社区的讨论页。',
 	'wikifeatures-feature-heading-wgEnableCategoryExhibitionExt' => '类别展示',
 	'wikifeatures-feature-description-wgEnableCategoryExhibitionExt' => '[[w:c:zh.community:Help:Category#Category_Displays|类别]]中最受欢迎的8个页面已显示为图片格式，但此功能将会以图片链接的方式将您的所有页面按名称、新旧程度或人气排序！',
-	'wikifeatures-feature-description-wgEnableChat' => '即时与其他酷爱您的维基网站和维基主题的朋友们进行交流吧！任何Wikia注册用户都可以通过网站右边导航栏中的“加入聊天”按钮加入到社区[[w:c:zh.community:Help:Chat|聊天]]中。',
-	'wikifeatures-feature-heading-wgEnableEditPageReskinExt' => 'Wikia编辑器重新设计',
+	'wikifeatures-feature-description-wgEnableChat' => '即时与其他酷爱您的维基网站和维基主题的朋友们进行交流吧！任何Wikia注册用户都可以通过网站导航栏右边的“加入聊天”按钮参与社区[[w:c:zh.community:Help:Chat|聊天]]。',
+	'wikifeatures-feature-heading-wgEnableEditPageReskinExt' => 'Wikia编辑器新设计',
 	'wikifeatures-feature-heading-wgEnableAjaxPollExt' => '投票',
-	'wikifeatures-feature-description-wgEnableAjaxPollExt' => '允许您维基上的任何人都能创建投票！开启[[w:c:zh.community:Help:Poll|投票功能]]后，您的用户可以通过投票标签将这个实用功能添加到任何网页。此功能是让您的维基上的贡献大幅增加的好方法。',
+	'wikifeatures-feature-description-wgEnableAjaxPollExt' => '允许您维基上的任何人都能创建投票！开启[[Help:Poll|投票功能]]后，您的用户可以通过投票标签将这个实用功能添加到任何网页。此功能是让您的维基上的贡献大幅增加的好方法。',
 	'wikifeatures-feature-description-wgEnableBlogArticles' => '[[w:c:zh.community:Help:Blogs|博客]]允许维基用户能在自己的用户档案中创建博客。您还可以将其用作与维基社区沟通交流或发布新闻的有效渠道。',
 	'wikifeatures-feature-heading-wgEnableWikiaInteractiveMaps' => '地图',
 	'wikifeatures-feature-description-wgEnableWikiaInteractiveMaps' => '维基地图使用户能够为真实世界或虚构世界的地点或图片创建交互式地图。社区成员可以添加、编辑和自定义地图上的标签为社区带来丰富的地图体验。这些地图还可以嵌入到维基文章或外部网站中。',
-	'wikifeatures-feature-description-wgEnableWallExt' => '与您的维基的贡献者沟通是建立和维护社区的重要组成部分。[[w:c:zh.community:Help:Message Wall|留言板]]采用了线程会话形式和通知系统，您可以决定是否有兴趣关注相关话题的探讨。这样您就不会错过任何想要了解的话题啦！',
+	'wikifeatures-feature-description-wgEnableWallExt' => '与您的维基的贡献者沟通是建立和维护社区的重要组成部分。[[w:c:zh.community:Help:Message Wall|留言板]]采用了线程会话形式和通知系统，您可以决定是否有兴趣关注相关话题。这样您就不会错过任何想要了解的话题啦！',
 	'wikifeatures-feature-heading-wgGameGuidesContentForAdmins' => '游戏指南内容',
 	'wikifeatures-feature-description-wgGameGuidesContentForAdmins' => '根据你的维基网页上的Special:GameGuidesContent来管理要让哪些类别显示在[[w:c:zh.community:Help:Game Guides|游戏指南]]移动应用程序中。这将帮助你增长潜在的社群用户哟！',
 	'wikifeatures-feature-heading-wgEnableNjordExt' => '封面图',
@@ -1624,56 +1649,90 @@ $messages['zh-hans'] = array(
 	'wikifeatures-log-header' => '下面是维基功能设置更改列表。',
 	'action-wikifeaturesview' => '查看维基功能',
 	'wikifeatures-feature-heading-wgDisableAnonymousEditing' => '要求所有贡献者登入',
-	'wikifeatures-feature-description-wgDisableAnonymousEditing' => '希望访问您维基的所有贡献者登入？启用此功能后，任何匿名访客均无权编辑页面、参与评论或论坛讨论，或在留言板上留言，但任何人都仍然可以创建维基帐户加入您的社区！',
-);
+	'wikifeatures-feature-description-wgDisableAnonymousEditing' => '希望您维基的所有贡献者登入？启用此功能后，任何匿名访客均无权编辑页面、参与评论或论坛讨论，或在信息墙上留言，但任何人都仍然可以创建维基帐户加入您的社区！',
+	'wikifeatures-feature-heading-wgEnablePortableInfoboxEuropaTheme' => 'Europa讯息框版式',
+	'wikifeatures-feature-description-wgEnablePortableInfoboxEuropaTheme' => '为[[Help:訊息框|讯息框]]开启新的外观并且使用你的维基社区背景颜色！',
+];
 
 /** Traditional Chinese (‪中文（繁體）‬)
  * @author Ffaarr
  */
-$messages['zh-hant'] = array(
-	'wikifeatures' => 'Wiki功能',
-	'wikifeatures-title' => 'Wiki功能',
+$messages['zh-hant'] = [
+	'wikifeatures' => '維基功能',
+	'wikifeatures-title' => '維基功能',
 	'wikifeatures-heading' => '功能',
-	'wikifeatures-creative' => 'Wiki 功能允許您選擇想要在您的wiki上使用的功能。看一看並試用一下，您可以隨時啟用或停用這些功能。',
+	'wikifeatures-creative' => '「維基功能」允許您選擇要在您的Wiki使用哪些功能。您可以先嘗試使用這些功能，並且可以隨時開啟或關閉。',
 	'wikifeatures-labs-heading' => '實驗室',
-	'wikifeatures-feedback' => '送出回饋',
-	'wikifeatures-error-permission' => '對不起，您沒有顯示此頁的權限',
-	'wikifeatures-error-invalid-parameter' => '無效的參數：  $1 。請重試。',
-	'wikifeatures-error-message' => '您的評論太短或太長。',
-	'wikifeatures-error-spam-attempt' => '請等待 60 秒，然後再提交回饋。',
+	'wikifeatures-feedback' => '提供反饋',
+	'wikifeatures-error-permission' => '對不起，您沒有權限進入此頁面。',
+	'wikifeatures-error-invalid-parameter' => '參數$1無效。請再試一次。',
+	'wikifeatures-error-message' => '你的評論可能太短或太長。',
+	'wikifeatures-error-spam-attempt' => '請等待60秒鐘再提交更多回饋。',
 	'wikifeatures-toggle-active' => '已啟用',
-	'wikifeatures-toggle-inactive' => '已停用',
-	'wikifeatures-active-on' => '在 $1 個wiki上活躍',
-	'wikifeatures-category-choose-one' => '選擇一個...',
-	'wikifeatures-love-this-project' => '我愛這項功能',
-	'wikifeatures-hate-this-project' => '我討厭這項功能',
-	'wikifeatures-problem-with-project' => '我有一個問題要回報',
-	'wikifeatures-an-idea-for-project' => '對於此功能，我有個想法。',
-	'wikifeatures-feedback-heading' => '回饋',
-	'wikifeatures-feedback-comment-label' => '留給我們一個評論',
-	'wikifeatures-feedback-success' => '感謝您的回饋 ！',
-	'wikifeatures-deactivate-heading' => '停用 $1 嗎？',
-	'wikifeatures-deactivate-description' => '停用一個功能將其從你的 wiki移除。您的使用者將無法再使用此功能，他們不會在這個 wiki 上的任何地方看到該功能。',
-	'wikifeatures-deactivate-notification' => '您可以隨時再次開啟該功能。',
-	'wikifeatures-deactivate-confirm-button' => '是，停用',
+	'wikifeatures-toggle-inactive' => '已禁用',
+	'wikifeatures-active-on' => '在$1個維基上使用',
+	'wikifeatures-category-choose-one' => '選擇一個......',
+	'wikifeatures-love-this-project' => '我喜歡這個功能',
+	'wikifeatures-hate-this-project' => '我不喜歡這個功能',
+	'wikifeatures-problem-with-project' => '我有一個問題要報告',
+	'wikifeatures-an-idea-for-project' => '我有一個與此功能相關的想法',
+	'wikifeatures-feedback-heading' => '反饋',
+	'wikifeatures-feedback-comment-label' => '請給我們留言',
+	'wikifeatures-feedback-success' => '感謝您提供回饋！',
+	'wikifeatures-deactivate-heading' => '要禁用$1？',
+	'wikifeatures-deactivate-description' => '禁用某項功能會將此功能從您的維基中移除。之後，您的用戶將無法再使用此功能，而且他們也無法在維基上的任何地方再看到這個功能了。',
+	'wikifeatures-deactivate-notification' => '您隨時都可以再次打開此功能。',
+	'wikifeatures-deactivate-confirm-button' => '是的，禁用',
 	'wikifeatures-deactivate-cancel-button' => '取消',
-	'wikifeatures-promotion-new' => '新',
-	'wikifeatures-oasis-only' => '在Wiki功能Monobook無法使用，如果您想使用這一功能，請把您的外觀改為Wikia skin。.',
+	'wikifeatures-promotion-new' => '新增功能',
+	'wikifeatures-oasis-only' => '維基功能不能在MonoBook上使用。如果您要使用此功能，請將您的偏好設置切換到Wikia介面。',
 	'wikifeatures-feature-heading-wgEnableAchievementsExt' => '成就',
 	'wikifeatures-feature-heading-wgEnableArticleCommentsExt' => '文章評論',
-	'wikifeatures-feature-description-wgEnableArticleCommentsExt' => '此功能可讓人們在文章底部撰寫評論。其他使用者可回覆這些評論，簽名與時間會自動標上。這會取代你的wiki上的討論頁功能',
-	'wikifeatures-feature-heading-wgEnableCategoryExhibitionExt' => '類別展覽',
+	'wikifeatures-feature-description-wgEnableArticleCommentsExt' => '此擴展功能允許用戶在文章頁面底部進行[[Help:Comments|評論]]。其他用戶可以回覆評論，還可以自動加上簽名和時間。此功能將替代維基社區的討論頁。',
+	'wikifeatures-feature-heading-wgEnableCategoryExhibitionExt' => '類別展示',
 	'wikifeatures-feature-heading-wgEnableChat' => '聊天',
-	'wikifeatures-feature-description-wgEnableChat' => '儘量即時與喜愛你的wiki及其主題的其他人聯絡！任何有Wikia帳號的人，可以即藉由導航區右側的「加入聊天」按鈕來參加聊天。',
-	'wikifeatures-feature-heading-wgEnableEditPageReskinExt' => 'Wikia 編輯器重新設計',
-	'wikifeatures-feature-heading-wgEnableAjaxPollExt' => '民調',
-	'wikifeatures-feature-description-wgEnableAjaxPollExt' => '允許任何人在你的 wiki 發起民調！的使用者可以使用 [http://help.wikia.com/wiki/Help:Poll 民調標籤] 將此整潔的功能放置到任何網頁。此功能是增加你的 wiki 貢獻量的好方法。',
+	'wikifeatures-feature-description-wgEnableChat' => '即時與其他酷愛您的維基網站和維基主題的朋友們進行交流吧！任何Wikia註冊用戶都可以通過網站導航欄右邊中的「加入聊天」按鈕參與社區的[[w:c:zh.community:Help:Chat|聊天]]中。',
+	'wikifeatures-feature-heading-wgEnableEditPageReskinExt' => 'Wikia編輯器新設計',
+	'wikifeatures-feature-heading-wgEnableAjaxPollExt' => '投票',
+	'wikifeatures-feature-description-wgEnableAjaxPollExt' => '允許您維基上的任何人都能創建投票！開啟[[w:c:zh.community:Help:Poll|投票功能]]後，您的用戶可以通過投票標籤將這個實用功能添加到任何網頁。此功能是讓您的維基上的貢獻大幅增加的好方法。',
 	'wikifeatures-feature-heading-wgEnableBlogArticles' => '部落格',
-	'wikifeatures-feature-description-wgEnableBlogArticles' => '部落格允許您的wiki的使用者，在他們的資料頁創建他們自己的部落格文章，這可作為與你的wiki社群傳布消息和事件的好方法。',
+	'wikifeatures-feature-description-wgEnableBlogArticles' => '[[w:c:zh.community:Help:Blogs|部落格]]允許維基用戶能在自己的用戶檔案中創建部落格。您還可以將其用作與維基社區溝通交流或發布新聞的有效渠道。',
 	'wikifeatures-feature-heading-wgEnableWallExt' => '訊息牆',
-);
+	'wikifeatures-desc' => '允許授權用戶開啟或關閉Wikia可選功能間',
+	'wikifeatures-labs-creative' => '實驗室可以讓您查找了解我們正在實驗的新想法和產品。由於這些功能會通過實驗室不斷進行調整，本身可能還存在許多問題。但我們希望您能和我們一起享受其中的樂趣！您可以開啟這些功能，發送反饋意見給我們，說說這些產品的優點和缺點，以及各種特别的體驗。',
+	'wikifeatures-error-invalid-category' => '很抱歉。請您選擇此問題是關於什麼。',
+	'wikifeatures-feedback-description' => '我們非常希望能聽到與實驗室尚未推出的功能相關的回饋！您對如何改善此功能有想法、 有問題要回報，或是有喜好與否的反饋？請在方框內填寫內容告訴我們。',
+	'wikifeatures-feedback-type-label' => '這是關於什麼的？',
+	'wikifeatures-feedback-submit-button' => '提交',
+	'wikifeatures-feedback-cancel-button' => '取消',
+	'wikifeatures-feature-heading-wgEnableMediaGalleryExt' => '新圖片冊',
+	'wikifeatures-feature-description-wgEnableMediaGalleryExt' => '這裡是[[Help:New Image Galleries|新圖片冊]]的簡要説明，我们已對其進行更新，以便您能以更時尚、更現代的方式展示您所在社區的圖片集。在測試期間，創建新圖片冊和修改現有圖片冊目前僅限於源代碼編輯。[[Help:New Image Galleries|點擊了解更多]]。',
+	'wikifeatures-feature-heading-wgEnableForumExt' => '論壇',
+	'wikifeatures-feature-description-wgEnableForumExt' => '通過Wikia新的[[w:c:zh.community:Help:Forum|論壇]]讓自己更加了解維基社區所有的探討話題。吸引新的社區成員和您一起討論維基相關內容，讓維基編輯者們更容易參與社區的話題。',
+	'wikifeatures-feature-heading-wgShowTopListsInCreatePage' => '前10名排行榜',
+	'wikifeatures-feature-description-wgShowTopListsInCreatePage' => '[[Help:Top 10 Lists|前10名排行榜]]讓任何人都可以在您的維基上創建表決型列表。如果您想讓初級編輯者更好地參與社區事務，這是最好的方法了。開啟本功能之後，在點擊「添加頁面」時就會新增一個「前10名排行榜」的選項。',
+	'wikifeatures-feature-description-wgEnableAchievementsExt' => '[[w:c:zh.community:Help:Achievements|成就]]可幫助您通過激勵用戶不斷編輯貢獻來擴充您的維基社區內容。您可以在您的維基設置各種不同的挑戰，甚至可以上傳自己設計的社區榮譽勳章。',
+	'wikifeatures-feature-description-wgEnableCategoryExhibitionExt' => '[[w:c:zh.community:Help:頁面分類#.E5.88.86.E9.A1.9E.E7.9A.84.E5.91.88.E7.8F.BE|類別]]中最受歡迎的8個頁面已以圖片的形式顯示，但此功能將會以圖片連結的方式將您的所有頁面列出，並可按名稱、新舊程度或人氣排序！',
+	'wikifeatures-feature-description-wgEnableEditPageReskinExt' => '編輯工作是維基的核心，因此，在添加内容時，有一個功能強大的編輯器會讓你的編輯體驗變得簡單而有趣。爲了提升你的體驗，我們已經重新設計了我們的編輯網頁。',
+	'wikifeatures-feature-heading-wgEnableWikiaInteractiveMaps' => '地圖',
+	'wikifeatures-feature-description-wgEnableWikiaInteractiveMaps' => '維基地圖使使用者能夠為真實世界或虛構世界的地點或圖片創建互動式地圖。社區成員可以添加、編輯和自訂地圖上的標籤為社區帶來豐富的地圖體驗。這些地圖還可以嵌入到維基文章或外部網站中。',
+	'wikifeatures-feature-description-wgEnableWallExt' => '與您的維基的貢獻者溝通是建立和維護社區的重要組成部分。[[w:c:zh.community:Help:Message Wall|訊息牆]]採用了線性會話形式和通知系統，您可以決定是否有興趣關注相關話題。這樣您就不會錯過任何想要了解的話題啦！',
+	'wikifeatures-feature-heading-wgGameGuidesContentForAdmins' => '遊戲指南內容',
+	'wikifeatures-feature-description-wgGameGuidesContentForAdmins' => '根據你的維基網頁上的Special:GameGuidesContent來管理要讓哪些類別顯示在[[w:c:zh.community:Help:Game Guides|遊戲指南]]App中。這將幫助你增長潛在的社群用戶喲！',
+	'wikifeatures-feature-heading-wgEnableNjordExt' => '封面圖',
+	'wikifeatures-feature-description-wgEnableNjordExt' => '透過上傳圖片到主頁的方法讓你的社區更有吸引力！',
+	'wikifeatures-feature-heading-wgEnablePortableInfoboxEuropaTheme' => 'Europa訊息框版式',
+	'wikifeatures-feature-description-wgEnablePortableInfoboxEuropaTheme' => '為[[Help:訊息框|訊息框]]開啟新的外觀並且使用你的維基社區背景顏色！',
+	'wikifeatures-feature-heading-wgDisableAnonymousEditing' => '要求所有貢獻者登入',
+	'wikifeatures-feature-description-wgDisableAnonymousEditing' => '希望你的維基的所有貢獻者登入？啟用此功能後，任何匿名訪客將無權編輯頁面、參與評論或論壇討論，或在訊息牆上留言，但任何人都仍然可以創建維基帳戶加入你的社區！',
+	'wikifeatures-feature-heading-emptylabs' => '實驗项目目前似乎不能正常使用',
+	'wikifeatures-feature-description-emptylabs' => '我們的技術人員都在竭盡全力地開發新功能讓你一試為快，很快你就可以在這裡找到更多的試驗項目了！',
+	'wikifeatures-log-name' => '維基功能日誌',
+	'wikifeatures-log-header' => '下面是維基功能設置的更改列表。',
+	'action-wikifeaturesview' => '查看維基功能',
+];
 
-$messages['zh-tw'] = array(
+$messages['zh-tw'] = [
 	'wikifeatures-desc' => '允許授權用戶實行Wikia可選功能間的切換',
 	'wikifeatures' => '維基功能',
 	'wikifeatures-title' => '維基功能',
@@ -1746,5 +1805,4 @@ $messages['zh-tw'] = array(
 	'action-wikifeaturesview' => '查看維基功能',
 	'wikifeatures-feature-heading-wgDisableAnonymousEditing' => '要求所有貢獻者登入',
 	'wikifeatures-feature-description-wgDisableAnonymousEditing' => '希望訪問你的維基的所有貢獻者登入？啟用此功能後，任何匿名訪客將無權編輯頁面、參與評論或論壇討論，或在留言板上留言，但任何人都仍然可以創建維基帳戶加入你的社區！',
-);
-
+];

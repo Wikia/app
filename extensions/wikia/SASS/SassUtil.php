@@ -6,6 +6,8 @@
 class SassUtil {
 
 	const DEFAULT_OASIS_THEME = 'oasis';
+	const HEX_REG_EXP = '/#([a-f0-9]{3,6})/i';
+	const THEME_DESIGNER_COLOR_KEYS = array('color-body', 'color-body-middle', 'color-page', 'color-buttons', 'color-links', 'color-header');
 
 	/**
 	 * Returns complete set of sass parameters including theme settings set by user
@@ -138,7 +140,7 @@ class SassUtil {
 		wfProfileIn(__METHOD__);
 		static $cb = null;
 
-		if (is_null($cb)) {
+		if (is_null($cb) && is_array($wgOasisThemeSettingsHistory)) {
 			$currentSettings = end($wgOasisThemeSettingsHistory);
 			if (!empty($currentSettings['revision'])) {
 				$cb = $currentSettings['revision'];
@@ -453,4 +455,19 @@ class SassUtil {
 		}
 	}
 
+	/**
+	 * @desc Converts theme designer color names to hex
+	 *
+	 * @param $themeSettings
+	 * @return mixed
+	 */
+	public static function normalizeThemeColors( $themeSettings ) {
+		foreach ( self::THEME_DESIGNER_COLOR_KEYS as $key ) {
+			if ( !preg_match(self::HEX_REG_EXP, $themeSettings[$key]) ) {
+				$themeSettings[$key] = self::colorNameToHex( $themeSettings[$key] );
+			}
+		}
+
+		return $themeSettings;
+	}
 }

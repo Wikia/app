@@ -181,8 +181,10 @@ var importNotifications = (function() {
 window.importArticle = window.importArticles = importArticle;
 window.importNotifications = importNotifications;
 
-require(['wikia.importScript', 'wikia.window'], function(importScript, window){
-	window.importWikiaScriptPages = importScript.importWikiaScriptPages;
-});
+window.importWikiaScriptPages = function(articles) {
+	require(['wikia.importScript'], function(importScript){
+		importScript.importWikiaScriptPages(articles);
+	});
+}
 
 })( this, jQuery );

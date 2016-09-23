@@ -93,6 +93,7 @@ $(function () {
 					type: type,
 					flag: flagType,
 					lang: this.visualizationLang,
+					token: mw.user.tokens.get('editToken'),
 					corpWikiId: $('#visualizationWikiId').val(),
 					wikiId: wikiId
 				},

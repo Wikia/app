@@ -1,0 +1,21 @@
+<section class="community-page-insights-module" data-tracking="community-page-insights-{{type}}">
+	<h3 class="community-page-insights-module-header">{{title}}</h3>
+	<p class="community-page-insights-module-description">{{description}}</p>
+	{{#fulllistlink}}
+		<a class="community-page-insights-module-full-list-link" href="{{fulllistlink}}" data-tracking="view-full-list">
+			{{insightsModules.messages.fulllist}}&nbsp;&rarr;
+		</a>
+	{{/fulllistlink}}
+	<ul class="community-page-insights-module-list">
+		{{#pages}}
+			<li class="community-page-insights-module-list-item">
+				<a class="community-page-insights-module-edit-icon" href="{{editlink}}" data-tracking="edit-icon"></a>
+				<span class="community-page-insights-module-article-data">
+					<a href="{{link.articleurl}}" data-tracking="page-link">{{link.text}}</a>
+					<div class="community-page-insights-module-metadata">{{{metadataDetails}}} {{#pageviews}}&middot; {{pageviews}}{{/pageviews}}</div>
+				</span>
+				<a class="community-page-insights-module-edit-link" data-tracking="edit-link" href="{{editlink}}">{{edittext}}</a>
+			</li>
+		{{/pages}}
+	</ul>
+</section>

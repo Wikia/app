@@ -6,32 +6,6 @@
 class VideosModuleHooks {
 
 	/**
-	 * Insert the VideosModule on to the right rail
-	 * @param array $modules
-	 * @return bool
-	 */
-	static public function onGetRailModuleList( &$modules ) {
-		wfProfileIn(__METHOD__);
-
-		// Check if we're on a page where we want to show the Videos Module.
-		// If we're not, stop right here.
-		if ( !self::canShowVideosModule() ) {
-			wfProfileOut(__METHOD__);
-			return true;
-		}
-
-		// Use a different position depending on whether the user is logged in
-		$app = F::App();
-		$pos = $app->wg->User->isAnon() ? 1305 : 1285;
-
-		$modules[$pos] = array('VideosModule', 'index', null);
-
-		wfProfileOut(__METHOD__);
-
-		return true;
-	}
-
-	/**
 	 * Load JS needed to display the VideosModule at the bottom of the article content
 	 * @param OutputPage $out
 	 * @param string $text

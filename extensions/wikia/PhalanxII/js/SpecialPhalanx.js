@@ -1,4 +1,4 @@
-require(['jquery', 'mw', 'phalanx'], function($, mw, phalanx) {
+require(['jquery', 'mw', 'phalanx', 'BannerNotification'], function($, mw, phalanx, notification) {
 	// edit token is required by Phalanx API
 	phalanx.init(mw.config.get('wgPhalanxToken'));
 
@@ -16,7 +16,7 @@ require(['jquery', 'mw', 'phalanx'], function($, mw, phalanx) {
 
 			phalanx.unblock(blockId).
 				done(function() {
-					// hide
+					new notification(mw.msg('phalanx-unblock-message', blockId), 'confirm').show();
 					node.closest('li').addClass('removed');
 				}).
 				fail(function() {

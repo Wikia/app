@@ -21,7 +21,6 @@ class HeliosCookieHelperTest extends \PHPUnit_Framework_TestCase {
 			->disableOriginalConstructor()
 			->getMock();
 		$this->helios = $this->getMockBuilder( HeliosClient::class )
-			->setMethods( ['generateToken', 'info', 'register', 'invalidateToken', 'login'] )
 			->disableOriginalConstructor()
 			->getMock();
 

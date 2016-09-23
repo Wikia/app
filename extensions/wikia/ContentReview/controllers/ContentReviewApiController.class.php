@@ -4,6 +4,7 @@ use Wikia\ContentReview\Models\CurrentRevisionModel;
 use Wikia\ContentReview\Models\ReviewModel;
 use Wikia\ContentReview\Models\ReviewLogModel;
 use Wikia\ContentReview\Helper;
+use Wikia\ContentReview\ContentReviewService;
 use Wikia\ContentReview\ContentReviewStatusesService;
 
 class ContentReviewApiController extends WikiaApiController {
@@ -158,9 +159,26 @@ class ContentReviewApiController extends WikiaApiController {
 			$reviewModel->updateCompletedReview( $wikiId, $pageId, $review['revision_id'], $status );
 
 			ContentReviewStatusesService::purgeJsPagesCache();
-		}
-		else {
+		} else {
 			$this->notification = wfMessage( 'content-review-diff-already-done' )->escaped();
+		}
+	}
+
+	public function escalateReview() {
+		$this->isValidPostRequest( $this->request, $this->wg->User );
+
+		if ( !$this->wg->User->isAllowed( 'content-review' ) ) {
+			throw new PermissionsException( 'content-review' );
+		}
+
+		$wikiId = $this->request->getInt( 'wikiId' );
+		$pageId = $this->request->getInt( 'pageId' );
+		$diff = $this->request->getInt( 'diff' );
+		$oldid = $this->request->getInt( 'oldid' );
+
+		$service = new ContentReviewService();
+		if ( $service->escalateReview( $wikiId, $pageId, $diff, $oldid ) ) {
+			$this->notification = wfMessage( 'content-review-diff-escalate-confirmation' )->escaped();
 		}
 	}
 

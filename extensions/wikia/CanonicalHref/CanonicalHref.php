@@ -26,9 +26,14 @@ $wgHooks['BeforePageDisplay'][] = 'wfCanonicalHref';
  * @return bool
  */
 function wfCanonicalHref(&$out, &$sk) {
-	global $wgTitle;
+	global $wgTitle, $wgRequest;
 
 	if ( !($wgTitle instanceof Title) ) {
+		return true;
+	}
+
+	// No canonical on pages with pagination -- they should have the link rel="next/prev" instead
+	if ( $wgRequest->getVal( 'page' ) ) {
 		return true;
 	}
 

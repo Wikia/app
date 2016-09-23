@@ -83,7 +83,7 @@ define('ext.wikia.adEngine.utils.adLogicZoneParams', [
 		return site;
 	}
 
-	function getMappedVertical() {
+	function getName() {
 		if (!calculated) {
 			calculateParams();
 		}
@@ -128,7 +128,7 @@ define('ext.wikia.adEngine.utils.adLogicZoneParams', [
 		getDomain: getDomain,
 		getHostnamePrefix: getHostnamePrefix,
 		getSite: getSite,
-		getMappedVertical: getMappedVertical,
+		getName: getName,
 		getPageType: getPageType,
 		getVertical: getVertical,
 		getPageCategories: getPageCategories,

@@ -8,13 +8,6 @@
 $wgHooks[ "CustomSpecialStatistics" ][] = "DumpsOnDemand::customSpecialStatistics";
 $wgExtensionMessagesFiles[ "DumpsOnDemand" ] =  __DIR__ . '/DumpsOnDemand.i18n.php';
 
-$wgAvailableRights[] = 'dumpsondemand';
-$wgGroupPermissions['*']['dumpsondemand'] = false;
-$wgGroupPermissions['staff']['dumpsondemand'] = true;
-$wgGroupPermissions['sysop']['dumpsondemand'] = true;
-$wgGroupPermissions['bureaucrat']['dumpsondemand'] = true;
-$wgGroupPermissions['autoconfirmed']['dumpsondemand'] = true;
-
 class DumpsOnDemand {
 
 	const BASEURL = "http://dumps.wikia.net";
@@ -25,6 +18,8 @@ class DumpsOnDemand {
      * All earlier dumps are gone and all data referring to them should be considered invalid.
      */
 	const S3_MIGRATION = '20131002154415';
+
+	const S3_COMMAND = '/usr/bin/s3cmd -c /etc/s3cmd/amazon_prod.cfg';
 
 	/**
 	 * @access public
@@ -196,17 +191,25 @@ class DumpsOnDemand {
 			's3://wikia_xml_dumps/'
 			. DumpsOnDemand::getPath( basename( $sPath ) )
 		);
+
+		$size = filesize( $sPath );
 		$sPath = wfEscapeShellArg( $sPath );
-		$sCmd = 'sudo /usr/bin/s3cmd -c /root/.s3cfg --add-header=Content-Disposition:attachment';
+
+		$sCmd = self::S3_COMMAND . ' --add-header=Content-Disposition:attachment';
 		if ( !is_null( $sMimeType ) ) {
 			$sMimeType = wfEscapeShellArg( $sMimeType );
 			$sCmd .= " --mime-type={$sMimeType}";
 		}
 		$sCmd .= ($bPublic)? ' --acl-public' : '';
 		$sCmd .= " put {$sPath} {$sDestination}";
+
+		Wikia::log( __METHOD__, "info", "Put {$sPath} to Amazon S3 storage: command: {$sCmd} size: {$size}", true, true);
+
 		wfShellExec( $sCmd, $iStatus );
+
 		$time = Wikia::timeDuration( wfTime() - $time );
 		Wikia::log( __METHOD__, "info", "Put {$sPath} to Amazon S3 storage: status: {$iStatus}, time: {$time}", true, true);
+
 		return $iStatus;
 	}
 

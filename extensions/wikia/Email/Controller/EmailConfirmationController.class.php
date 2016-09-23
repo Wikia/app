@@ -26,6 +26,7 @@ abstract class AbstractEmailConfirmationController extends EmailController {
 	 * A redefinition of our parent's assertCanEmail which removes assertions:
 	 *
 	 * - assertUserWantsEmail : Even if a user says they don't want email, they should get this
+	 * - assertEmailIsConfirmed : Even if a user hasn't confirmed their email address, they should get this
 	 * - assertUserNotBlocked : Even if a user is blocked they should still get these emails
 	 *
 	 * @throws \Email\Fatal

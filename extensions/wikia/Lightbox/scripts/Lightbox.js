@@ -76,13 +76,6 @@
 			// cache re-used DOM elements and templates for this modal instance
 			Lightbox.cacheDOM();
 
-			// Init ads in Lightbox
-			if ($('#MODAL_RECTANGLE').length && Lightbox.ads.showAds()) {
-				Lightbox.openModal.lightbox.addClass('show-ads');
-				window.adslots2.push('MODAL_RECTANGLE');
-				Lightbox.ads.adModalRectangleShown = true;
-			}
-
 			// Set up carousel
 			Lightbox.setUpCarousel();
 
@@ -536,8 +529,6 @@
 			}
 		},
 		ads: {
-			// is MODAL_RECTANGLE ad shown?
-			adModalRectangleShown: false,
 			// preload ad after this number of unique images/videos are shown
 			adMediaCountPreload: 2,
 			// show an ad after this number of unique images/videos are shown
@@ -854,8 +845,7 @@
 			// Load backfill content from DOM
 			var types = Lightbox.carouselTypes,
 				deferredList = [],
-				// show-ads class appears when there is going to be a MODAL_RECTANGLE ad
-				itemsShown = Lightbox.ads.adModalRectangleShown ? 6 : 9,
+				itemsShown = 9,
 				i,
 				type,
 				deferredInfo,
@@ -1116,16 +1106,14 @@
 				if (window.wgUserName) {
 					doShareEmail(addresses);
 				} else {
-					require(['AuthModal'], function (authModal) {
-						authModal.load({
-							url: '/signin?redirect=' + encodeURIComponent(window.location.href),
-							origin: 'image-lightbox',
-							onAuthSuccess: function () {
-								doShareEmail(addresses);
-								// see VID-473 - Reload page on lightbox close
-								LightboxLoader.reloadOnClose = true;
-							}
-						});
+					window.wikiaAuthModal.load({
+						forceLogin: true,
+						origin: 'image-lightbox',
+						onAuthSuccess: function () {
+							doShareEmail(addresses);
+							// see VID-473 - Reload page on lightbox close
+							LightboxLoader.reloadOnClose = true;
+						}
 					});
 				}
 			});

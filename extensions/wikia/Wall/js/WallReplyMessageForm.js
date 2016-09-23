@@ -132,29 +132,41 @@ Wall.ReplyMessageForm = $.createClass(Wall.MessageForm, {
 		return reply.find(this.replyBodyContent).val();
 	},
 
-	doReplyToMessage: function(thread, reply, reload) {
-		this.model.postReply(this.page, this.getMessageBody(reply), this.getFormat(reply), thread.attr('data-id'), reply.data('quotedFrom'), this.proxy(function(newMessage) {
-			newMessage = $(newMessage);
+	doReplyToMessage: function (thread, reply, reload) {
+		this.model.postReply(
+			this.page,
+			this.getMessageBody(reply),
+			this.getFormat(reply),
+			thread.attr('data-id'),
+			reply.data('quotedFrom'),
+			//success callback
+			this.proxy(function (newMessage) {
+				newMessage = $(newMessage);
 
-			this.enable(reply);
-			this.resetEditor(reply);
+				this.enable(reply);
+				this.resetEditor(reply);
 
-			// fire event when new article comment is/will be added to DOM
-			mw.hook('wikipage.content').fire(newMessage);
+				// fire event when new article comment is/will be added to DOM
+				mw.hook('wikipage.content').fire(newMessage);
 
-			newMessage.insertBefore(reply).hide().fadeIn('slow').find('.timeago').timeago();
+				newMessage.insertBefore(reply).hide().fadeIn('slow').find('.timeago').timeago();
 
-			if (window.skin && window.skin != 'monobook') {
-				WikiaButtons.init(newMessage);
-			}
+				if (window.skin && window.skin != 'monobook') {
+					WikiaButtons.init(newMessage);
+				}
 
-			thread.find(this.replyThreadCount).html(thread.find(this.replyThreadMessages).length);
-			thread.find(this.replyThreadFollow).text($.msg('wikiafollowedpages-following')).removeClass('secondary');
+				thread.find(this.replyThreadCount).html(thread.find(this.replyThreadMessages).length);
+				thread.find(this.replyThreadFollow).text($.msg('wikiafollowedpages-following')).removeClass('secondary');
 
-			if (reload) {
-				this.reloadAfterLogin();
-			}
-		}));
+				if (reload) {
+					this.reloadAfterLogin();
+				}
+			}),
+			//fail callback
+			this.proxy(function () {
+				this.enable(reply);
+				$.showModal($.msg('wall-posting-message-failed-title'), $.msg('wall-posting-message-failed-body'));
+			}));
 	}
 });
 

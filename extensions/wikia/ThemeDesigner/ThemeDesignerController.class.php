@@ -89,7 +89,9 @@ class ThemeDesignerController extends WikiaController {
 	}
 
 	public function executePreview() {
+		global $wgEnablePortableInfoboxEuropaTheme;
 
+		$this->infoboxTheme = $wgEnablePortableInfoboxEuropaTheme ? 'theme="europa"' : '';
 	}
 
 	/**

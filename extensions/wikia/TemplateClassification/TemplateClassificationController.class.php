@@ -6,7 +6,6 @@
 
 use Swagger\Client\ApiException;
 use Wikia\TemplateClassification\Helper;
-use \Wikia\TemplateClassification\View;
 use Wikia\Logger\Loggable;
 
 class TemplateClassificationController extends WikiaController {
@@ -99,19 +98,6 @@ class TemplateClassificationController extends WikiaController {
 			$this->logErrors( $templateType, $category, $errors, $templatesCount );
 		} else {
 			$this->logSuccess( $templateType, $category, $templatesCount );
-		}
-	}
-
-	/**
-	 * Sets user property confirming that user has seen hint on TemplateClassification edit entry point,
-	 * so it won't show up again
-	 */
-	public function dismissWelcomeHint() {
-		$this->checkWriteRequest();
-		$user = $this->getContext()->getUser();
-		if ( !$user->isAnon() ) {
-			$user->setGlobalPreference( View::HAS_SEEN_HINT, 1 );
-			$user->saveSettings();
 		}
 	}
 

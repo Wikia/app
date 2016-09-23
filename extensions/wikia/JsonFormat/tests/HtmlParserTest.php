@@ -16,6 +16,9 @@ class HtmlParserTest extends WikiaBaseTest {
 		parent::setUp();
 	}
 
+	/**
+	 * @group ContractualResponsibilitiesValidation
+	 */
 	public function testParseSimple() {
 		$htmlParser = new HtmlParser();
 		$node = $htmlParser->parse("<div><a>link</div>");
@@ -24,6 +27,9 @@ class HtmlParserTest extends WikiaBaseTest {
 		$this->assertEquals( 0, sizeof($node->getChildren()), 'wrong number of children' );
 	}
 
+	/**
+	 * @group ContractualResponsibilitiesValidation
+	 */
 	public function testParseSimpleNoA() {
 		$htmlParser = new HtmlParser();
 		$node = $htmlParser->parse("<div>link</div>");
@@ -32,6 +38,9 @@ class HtmlParserTest extends WikiaBaseTest {
 		$this->assertEquals( 0, sizeof($node->getChildren()) );
 	}
 
+	/**
+	 * @group ContractualResponsibilitiesValidation
+	 */
 	public function testParseDivWrappingSection() {
 		$htmlParser = new HtmlParser();
 		$node = $htmlParser->parse('
@@ -48,6 +57,9 @@ class HtmlParserTest extends WikiaBaseTest {
 		$this->assertEquals( 'Section1', $node->getChildren()[1]->getTitle() );
 	}
 
+	/**
+	 * @group ContractualResponsibilitiesValidation
+	 */
 	public function testSectionsSameLevel() {
 		$htmlParser = new HtmlParser();
 		$node = $htmlParser->parse('
@@ -67,6 +79,9 @@ class HtmlParserTest extends WikiaBaseTest {
 		$this->assertEquals( 'Section2', $node->getChildren()[2]->getTitle() );
 	}
 
+	/**
+	 * @group ContractualResponsibilitiesValidation
+	 */
 	public function testParseSimpleParagraph() {
 		$htmlParser = new HtmlParser();
 		$node = $htmlParser->parse("<p><a>link</p>");
@@ -78,6 +93,9 @@ class HtmlParserTest extends WikiaBaseTest {
 		$this->assertEquals( 'link', $node->getChildren()[0]->getChildren()[0]->getText() );
 	}
 
+	/**
+	 * @group ContractualResponsibilitiesValidation
+	 */
 	public function testParseSection() {
 		$htmlParser = new HtmlParser();
 		$node = $htmlParser->parse('<h1><span class="mw-headline" id="Section">Section</span><span class="editsection"><a href="...;section=1" title="Edit Section section"><img src="" class="sprite edit-pencil" />Edit</a></span></h1>');
@@ -89,6 +107,9 @@ class HtmlParserTest extends WikiaBaseTest {
 		$this->assertEquals( 1, $node->getChildren()[0]->getLevel(), "Wrong section level." );
 	}
 
+	/**
+	 * @group ContractualResponsibilitiesValidation
+	 */
 	public function testParseSectionWithContent() {
 		$htmlParser = new HtmlParser();
 		$node = $htmlParser->parse('<h1><span class="mw-headline" id="Section">Section</span><span class="editsection"><a href="...;section=1" title="Edit Section section"><img src="" class="sprite edit-pencil" />Edit</a></span></h1>content');
@@ -103,6 +124,9 @@ class HtmlParserTest extends WikiaBaseTest {
 		$this->assertEquals( 'content', $node->getChildren()[0]->getChildren()[0]->getText() );
 	}
 
+	/**
+	 * @group ContractualResponsibilitiesValidation
+	 */
 	public function testAmericanDadWrapper() {
 		$htmlParser = new HtmlParser();
 		$node = $htmlParser->parse('<div style="clear:both; width:100%; border:2px solid #1E90FF; background-color:#E3F2FF">' .

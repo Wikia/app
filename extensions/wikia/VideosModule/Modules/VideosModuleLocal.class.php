@@ -11,23 +11,8 @@ namespace VideosModule\Modules;
  */
 class Local extends Base {
 
-	const SORT = 'trend';
-
 	public function getSource() {
 		return 'local';
-	}
-
-	public function getCacheKey() {
-		$cacheKey = parent::getCacheKey();
-
-		return implode( ':', [ $cacheKey, $this->sort ] );
-	}
-
-	protected function getLogParams() {
-		$params = parent::getLogParams();
-		$params['sort'] = $this->sort;
-
-		return $params;
 	}
 
 	/**
@@ -39,7 +24,7 @@ class Local extends Base {
 		$paddedLimit = $this->getPaddedVideoLimit( $this->limit );
 
 		$mediaService = new \MediaQueryService();
-		$videoList = $mediaService->getVideoList( $this->sort, $filter, $paddedLimit );
+		$videoList = $mediaService->getVideoList( $filter, $paddedLimit );
 		$videosWithDetails = $this->getVideoDetailFromLocalWiki( $videoList );
 
 		foreach ( $videosWithDetails as $video ) {

@@ -4,23 +4,33 @@ describe('ext.wikia.adEngine.config.mobile', function () {
 
 	var adProviderDirectMock = {
 			name: 'GptMobileMock',
-			canHandleSlot: function () { return true; }
+			canHandleSlot: function () {
+				return true;
+			}
 		},
 		adProviderEvolveMock = {
 			name: 'Evolve2',
-			canHandleSlot: function () { return true; }
+			canHandleSlot: function () {
+				return true;
+			}
 		},
 		adProviderPaidAssetDropMock = {
 			name: 'PaidAssetDropMock',
-			canHandleSlot: function () { return false; }
+			canHandleSlot: function () {
+				return false;
+			}
 		},
 		adProviderRemnantMock = {
 			name: 'RemnantGptMobileMock',
-			canHandleSlot: function () { return true; }
+			canHandleSlot: function () {
+				return true;
+			}
 		},
-		adProviderOpenXMock = {
-			name: 'OpenX',
-			canHandleSlot: function () { return true; }
+		adProviderRubiconFastlaneMock = {
+			name: 'RubiconFastlaneMock',
+			canHandleSlot: function () {
+				return true;
+			}
 		},
 		context = {},
 		mocks = {
@@ -44,6 +54,7 @@ describe('ext.wikia.adEngine.config.mobile', function () {
 			providers: {},
 			forcedProvider: null
 		};
+		mocks.instantGlobals = {};
 	});
 
 	function getConfig() {
@@ -51,9 +62,10 @@ describe('ext.wikia.adEngine.config.mobile', function () {
 			mocks.adContext,
 			adProviderDirectMock,
 			adProviderEvolveMock,
-			adProviderOpenXMock,
 			adProviderPaidAssetDropMock,
-			adProviderRemnantMock
+			adProviderRemnantMock,
+			adProviderRubiconFastlaneMock,
+			mocks.instantGlobals
 		);
 	}
 
@@ -75,29 +87,13 @@ describe('ext.wikia.adEngine.config.mobile', function () {
 		var adConfigMobile = getConfig();
 
 		expect(adConfigMobile.getProviderList('INVISIBLE_HIGH_IMPACT'))
-				.toEqual([adProviderDirectMock, adProviderRemnantMock]);
+			.toEqual([adProviderDirectMock, adProviderRemnantMock]);
 	});
 
 	it('getProviderLists returns [] for high impact slot when high impact slot is turned off', function () {
 		var adConfigMobile = getConfig();
 
 		expect(adConfigMobile.getProviderList('INVISIBLE_HIGH_IMPACT')).toEqual([]);
-	});
-
-	it('getProviderLists returns DirectGPT, RemnantGPT, OpenX when OpenX provider is turned on', function () {
-		context.providers.openX = true;
-		var adConfigMobile = getConfig();
-
-		expect(adConfigMobile.getProviderList('foo'))
-				.toEqual([adProviderDirectMock, adProviderRemnantMock, adProviderOpenXMock]);
-	});
-
-	it('getProviderLists returns DirectGPT, RemnantGPT when ox is turned on but cannot handle slot', function () {
-		spyOn(adProviderOpenXMock, 'canHandleSlot').and.returnValue(false);
-		context.providers.openX = true;
-		var adConfigMobile = getConfig();
-
-		expect(adConfigMobile.getProviderList('foo')).toEqual([adProviderDirectMock, adProviderRemnantMock]);
 	});
 
 	it('getProviderLists returns Evolve2, RemnantGPT when evolve is enabled', function () {
@@ -107,7 +103,22 @@ describe('ext.wikia.adEngine.config.mobile', function () {
 		expect(adConfigMobile.getProviderList('foo')).toEqual([adProviderEvolveMock, adProviderRemnantMock]);
 	});
 
+	it('getProviderLists returns DirectGpt, RemnantGPT when directGpt is enabled', function () {
+		context.providers.directGpt = true;
+		var adConfigMobile = getConfig();
+
+		expect(adConfigMobile.getProviderList('foo')).toEqual([adProviderDirectMock, adProviderRemnantMock]);
+	});
+
 	it('getProviderLists returns DirectGpt, RemnantGPT when evolve is enabled but cannot handle the slot', function () {
+		spyOn(adProviderEvolveMock, 'canHandleSlot').and.returnValue(false);
+		context.providers.evolve2 = true;
+		var adConfigMobile = getConfig();
+
+		expect(adConfigMobile.getProviderList('foo')).toEqual([adProviderDirectMock, adProviderRemnantMock]);
+	});
+
+	it('getProviderLists returns DirectGpt, RemnantGPT when evolve is enabled but cant handle the slot', function () {
 		spyOn(adProviderEvolveMock, 'canHandleSlot').and.returnValue(false);
 		context.providers.evolve2 = true;
 		var adConfigMobile = getConfig();
@@ -122,10 +133,40 @@ describe('ext.wikia.adEngine.config.mobile', function () {
 		expect(adConfigMobile.getProviderList('foo')).toEqual([adProviderEvolveMock]);
 	});
 
-	it('getProviderLists returns OpenX when force provider is set', function () {
-		context.forcedProvider = 'openx';
+	it('getProviderLists returns RPFL when force provider is set', function () {
+		context.forcedProvider = 'rpfl';
 		var adConfigMobile = getConfig();
 
-		expect(adConfigMobile.getProviderList('foo')).toEqual([adProviderOpenXMock]);
+		expect(adConfigMobile.getProviderList('foo')).toEqual([adProviderRubiconFastlaneMock]);
+	});
+
+	it('getProviderLists returns Direct, Remnant when RPFL is disabled', function () {
+		spyOn(adProviderRubiconFastlaneMock, 'canHandleSlot').and.returnValue(false);
+		context.providers.rubiconFastlane = true;
+
+		var adConfigMobile = getConfig();
+
+		expect(adConfigMobile.getProviderList('foo')).toEqual([adProviderDirectMock, adProviderRemnantMock]);
+	});
+
+	it('getProviderLists returns Direct, Remnant, RubiconFastlane', function () {
+		context.providers.rubiconFastlane = true;
+
+		var adConfigMobile = getConfig();
+
+		expect(adConfigMobile.getProviderList('foo')).toEqual([
+			adProviderDirectMock,
+			adProviderRemnantMock,
+			adProviderRubiconFastlaneMock
+		]);
+	});
+
+	it('getProviderLists returns RubiconFastlane when wgSitewideDisableGpt is enabled', function () {
+		mocks.instantGlobals.wgSitewideDisableGpt = true;
+		context.providers.rubiconFastlane = true;
+
+		var adConfigMobile = getConfig();
+
+		expect(adConfigMobile.getProviderList('foo')).toEqual([adProviderRubiconFastlaneMock]);
 	});
 });

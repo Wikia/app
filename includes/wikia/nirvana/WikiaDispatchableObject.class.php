@@ -102,10 +102,11 @@ abstract class WikiaDispatchableObject extends WikiaObject {
 	 * @param $controllerName
 	 * @param $methodName
 	 * @param array $params
+	 * @param int $exceptionMode exception mode
 	 * @return WikiaResponse
 	 */
-	protected function sendExternalRequest( $controllerName, $methodName, $params = array() ) {
-		return $this->app->sendExternalRequest( $controllerName, $methodName, $params );
+	protected function sendExternalRequest( $controllerName, $methodName, $params = array(), $exceptionMode = null ) {
+		return $this->app->sendExternalRequest( $controllerName, $methodName, $params, $exceptionMode );
 	}
 
 	protected function sendRequestAcceptExceptions( $controllerName, $methodName, $params = [] ) {
@@ -207,7 +208,10 @@ abstract class WikiaDispatchableObject extends WikiaObject {
 	 *                             a valid edit token.
 	 */
 	public function checkWriteRequest() {
-		$this->request->isValidWriteRequest( $this->wg->User );
+		// skip internal requests, write access should be checked when direct user interaction happen
+		if ( !$this->request->isInternal() ) {
+			$this->request->assertValidWriteRequest( $this->wg->User );
+		}
 	}
 
 	protected function setTokenMismatchError() {

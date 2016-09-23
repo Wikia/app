@@ -9,6 +9,9 @@ abstract class InsightsModel {
 
 	const INSIGHTS_FLOW_URL_PARAM = 'insights';
 
+	const INSIGHTS_USAGE_INFORMATIVE = 1;
+	const INSIGHTS_USAGE_ACTIONABLE = 2;
+
 	private $template = 'subpageList';
 	protected $config;
 	protected $subtype;

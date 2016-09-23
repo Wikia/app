@@ -2,12 +2,12 @@
 /*jshint camelcase:false, maxlen:127*/
 /*jslint regexp:true*/
 define('ext.wikia.adEngine.provider.gpt.adDetect', [
-	'wikia.log',
-	'wikia.window',
 	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.messageListener',
-	'ext.wikia.adEngine.slot.adSlot'
-], function (log, window, adContext, messageListener, adSlot) {
+	'ext.wikia.adEngine.slotTweaker',
+	'wikia.log',
+	'wikia.window'
+], function (adContext, messageListener, slotTweaker, log, win) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.provider.gpt.adDetect',
@@ -109,7 +109,7 @@ define('ext.wikia.adEngine.provider.gpt.adDetect', [
 			return iframe.contentWindow.AdEngine_adType;
 		}
 
-		status = window.adDriver2ForcedStatus && window.adDriver2ForcedStatus[slotName];
+		status = win.adDriver2ForcedStatus && win.adDriver2ForcedStatus[slotName];
 
 		if (status === 'success') {
 			return 'forced_success';
@@ -117,6 +117,11 @@ define('ext.wikia.adEngine.provider.gpt.adDetect', [
 
 		height = gptEvent.size && gptEvent.size[1];
 		gptEmpty = gptEvent.isEmpty;
+
+		if (gptEvent.slot && gptEvent.slot.getOutOfPage && gptEvent.slot.getOutOfPage()) {
+			log(['getAdType', slotName, 'out of page ad', 'always_success'], 'info', logGroup);
+			return 'always_success';
+		}
 
 		if (gptEmpty || height <= 1) {
 			log(['getAdType', slotName, 'ad is empty (GPT event)', 'empty'], 'info', logGroup);
@@ -150,73 +155,98 @@ define('ext.wikia.adEngine.provider.gpt.adDetect', [
 		return 'inspect_iframe';
 	}
 
-	function onAdLoad(slotName, gptEvent, iframe, adCallback, noAdCallback, forcedAdType) {
+	function isPartnerAdType(adType) {
+		return (/^partner\/[a-zA-Z0-9]{1,30}$/).test(adType);
+	}
 
-		var adType = forcedAdType || getAdType(slotName, gptEvent, iframe),
+	function onAdLoad(slot, gptEvent, iframe, forcedAdType) {
+
+		var adType = forcedAdType || getAdType(slot.name, gptEvent, iframe),
+			isCollapsed = false,
 			shouldPollForSuccess = false,
+			expectAsyncCollapse = false,
 			expectAsyncHop = false,
 			expectAsyncHopWithSlotName = false,
 			expectAsyncSuccessWithSlotName = false,
 			expectAsyncSuccess = false,
-			successTimer,
-			shortSlotName = adSlot.getShortSlotName(slotName);
+			successTimer;
 
 		function noop() { return; }
 
-		function callAdCallback(extra) {
-			extra = extra || {};
-			extra.adType = adType;
+		function callAdCallback(adInfo) {
+			adInfo = adInfo || {};
+			adInfo.adType = adType;
 
 			clearTimeout(successTimer);
-			adCallback(extra);
+			slot.success(adInfo);
 		}
 
-		function callNoAdCallback(extra) {
-			extra = extra || {};
-			extra.adType = adType;
+		function callCollapseAdCallback(adInfo) {
+			adInfo = adInfo || {};
+			adInfo.adType = adType;
+
+			isCollapsed = true;
+			clearTimeout(successTimer);
+			slot.collapse(adInfo);
+		}
+
+		function callNoAdCallback(adInfo) {
+			adInfo = adInfo || {};
+			adInfo.adType = adType;
 
 			clearTimeout(successTimer);
-			noAdCallback(extra);
+			slot.hop(adInfo);
 		}
 
 		function pollForSuccess() {
+			if (isCollapsed) {
+				return;
+			}
+
 			successTimer = setTimeout(function () {
-				log(['pollForSuccess', slotName], 'info', logGroup);
+				log(['pollForSuccess', slot.name], 'info', logGroup);
 				pollForSuccess();
-				findAdInIframe(slotName + ' (poll)', iframe, callAdCallback, noop);
+				findAdInIframe(slot.name + ' (poll)', iframe, callAdCallback, noop);
 			}, 500);
 		}
 
-		function msgCallback(data) {
-			log(['msgCallback', slotName, 'caught message', data], 'info', logGroup);
-
-			if (data.status === 'success') {
-				if (expectAsyncSuccess || expectAsyncSuccessWithSlotName) {
-					callAdCallback(data.extra);
-				} else {
-					log(
-						['msgCallback', slotName, 'Got asynchronous success message, while not expecting it'],
-						'error',
-						logGroup
-					);
-				}
-			}
-
-			if (data.status === 'hop') {
-				if (expectAsyncHop || expectAsyncHopWithSlotName) {
-					callNoAdCallback(data.extra);
-				} else {
-					log(
-						['msgCallback', slotName, 'Got asynchronous hop message, while not expecting it'],
-						'error',
-						logGroup
-					);
-				}
+		function handleAsyncMessage(status, isExpected, callback) {
+			if (isExpected) {
+				callback();
+			} else {
+				log(
+					['msgCallback', slot.name, status, 'Got asynchronous message, while not expecting it'],
+					'error',
+					logGroup
+				);
 			}
 		}
 
-		if (adType === 'openx' || adType === 'rubicon' || adType === 'saymedia' || adType === 'turtle') {
+		function msgCallback(data) {
+			log(['msgCallback', slot.name, 'caught message', data], 'info', logGroup);
+
+			switch (data.status) {
+				case 'success':
+					handleAsyncMessage('success', expectAsyncSuccess || expectAsyncSuccessWithSlotName, function () {
+						callAdCallback(data.extra);
+					});
+					break;
+				case 'collapse':
+					handleAsyncMessage('collapse', expectAsyncCollapse, function () {
+						callCollapseAdCallback(data.extra);
+					});
+					break;
+				case 'hop':
+					handleAsyncMessage('hop', expectAsyncHop || expectAsyncHopWithSlotName, function () {
+						callNoAdCallback(data.extra);
+					});
+					break;
+			}
+		}
+
+		if (['openx', 'rubicon', 'saymedia', 'turtle', 'evolve2'].indexOf(adType) !== -1 || isPartnerAdType(adType)) {
 			shouldPollForSuccess = true;
+			expectAsyncCollapse = true;
 			expectAsyncHop = true;
 		}
 
@@ -235,10 +265,14 @@ define('ext.wikia.adEngine.provider.gpt.adDetect', [
 			expectAsyncSuccessWithSlotName = true;
 		}
 
-		log(['onAdLoad', slotName, 'adType', adType], 'info', logGroup);
+		log(['onAdLoad', slot.name, 'adType', adType], 'info', logGroup);
 
-		if (adType === 'forced_success' || adType === 'always_success' || adType === 'collapse') {
+		if (adType === 'forced_success' || adType === 'always_success') {
 			return callAdCallback();
+		}
+
+		if (adType === 'collapse') {
+			return callCollapseAdCallback();
 		}
 
 		if (adType === 'empty') {
@@ -246,19 +280,19 @@ define('ext.wikia.adEngine.provider.gpt.adDetect', [
 		}
 
 		if (adType === 'inspect_iframe') {
-			return inspectIframe(slotName, iframe, callAdCallback, callNoAdCallback);
+			return inspectIframe(slot.name, iframe, callAdCallback, callNoAdCallback);
 		}
 
 		if (shouldPollForSuccess) {
-			pollForSuccess();
+			slotTweaker.onReady(slot.name, pollForSuccess);
 		}
 
-		if (expectAsyncHop || expectAsyncSuccess) {
+		if (expectAsyncHop || expectAsyncSuccess || expectAsyncCollapse) {
 			messageListener.register({source: iframe.contentWindow, dataKey: 'status'}, msgCallback);
 		}
 
 		if (expectAsyncHopWithSlotName || expectAsyncSuccessWithSlotName) {
-			messageListener.register({dataKey: 'slot_' + shortSlotName}, msgCallback);
+			messageListener.register({dataKey: 'slot_' + slot.name}, msgCallback);
 		}
 
 		if (expectAsyncHop || expectAsyncHopWithSlotName) {

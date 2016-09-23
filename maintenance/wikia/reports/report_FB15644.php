@@ -22,7 +22,7 @@ class report_FB15644 {
     /**
      * The constructor
      */
-    public function __construct( DatabaseMysql $dbObj ) {
+    public function __construct( DatabaseBase $dbObj ) {
         $this->dbObj = $dbObj;
         return null;
     }

@@ -57,12 +57,12 @@ class SeoLinkHreflang {
 	}
 
 	private static function generateHreflangLinks( OutputPage $out ) {
-		global $wgEnableLillyExt;
+		global $wgEnableLillyExt, $wgArticle;
 
 		$title = $out->getTitle();
 
 		// No mapping for redirect pages
-		if ( $title->isRedirect() ) {
+		if ( empty( $wgArticle ) || !empty( $wgArticle->mRedirectedFrom ) ) {
 			return [];
 		}
 

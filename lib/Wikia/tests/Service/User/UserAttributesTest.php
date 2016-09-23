@@ -137,6 +137,18 @@ class UserAttributeTest extends PHPUnit_Framework_TestCase {
 		$this->assertNull( $userAttributes->getAttribute( $this->userId, $this->attribute1->getName() ) );
 	}
 
+	public function testDeleteAttrbutesWithNullValue() {
+		$attrNullValue = new Attribute( "someKey", null );
+		$this->setupServiceGetExpects();
+		$this->service->expects( $this->once() )
+			->method( 'delete' )
+			->with( $this->userId, $attrNullValue );
+
+		$userAttributes = new UserAttributes( $this->service, $this->cache, [] );
+		$userAttributes->setAttribute( $this->userId, $attrNullValue );
+		$userAttributes->save( $this->userId );
+	}
+
 	protected function setupServiceGetExpects() {
 		$this->service->expects( $this->once( ))
 			->method( 'get' )

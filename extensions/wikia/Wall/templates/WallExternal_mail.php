@@ -34,7 +34,7 @@
 								<table cellpadding="7" cellspacing="0" width="100%">
 									<tr>
 										<td style="color: #2c85d5; font-size: 20px; font-weight: bold">
-											<?php echo wfMsgForContent($data['$MSG_KEY_GREETING'], array('$1' => $data['$WATCHER'] ) ); ?>
+											<?php echo wfMsgForContent($data['$MSG_KEY_GREETING'], [ '$1' => $data['$WATCHER'] ] ); ?>
 										</td>
 									</tr>
 									<tr>

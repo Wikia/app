@@ -1,12 +1,14 @@
 <?php
-$messages = array();
+$messages = [];
 
-$messages['en'] = array(
+$messages['en'] = [
 	'insights' => 'Insights',
-	'insights-desc' => 'Insights description',
+	'insights-desc' => 'Introduces the [[Special:Insights]] special page and subpages which list articles or templates that require attention from contributors.',
+	'right-insights' => 'Allows viewing the [[Special:Insights]] special page and subpages which list articles or templates that require attention from contributors.',
 	'insights-landing-title' => 'Welcome to Insights',
 	'insights-landing-lead' => 'Spend your time efficiently and make informed decisions about which articles you should edit with these insights.',
 	'insights-list-no-items' => 'Great work! There are no articles in this queue that need attention.',
+	'insights-list-no-items-informative' => 'Nothing here yet. Keep editing, and visitors are sure to come!',
 	'insights-list-no-flag-types' => 'There are no articles using the selected flag type!',
 	'insights-list-header-page' => 'Page',
 	'insights-list-header-altaction' => 'Action',
@@ -34,6 +36,8 @@ $messages['en'] = array(
 	'insights-notification-message-inprogress-wantedpages' => 'This page needs to be created. ',
 	'insights-notification-message-fixed-wantedpages' => 'Thanks for making this page!',
 	'insights-notification-next-item-wantedpages' => 'Create another article.',
+	'insights-list-subtitle-popularpages' => 'Popular pages',
+	'insights-list-description-popularpages' => 'These pages are gaining traction with your readers! Make sure they are up to your standards and have all the latest images and information.',
 	'insights-list-subtitle-nonportableinfoboxes' => 'Non-portable infoboxes',
 	'insights-list-description-nonportableinfoboxes' => "The following infoboxes are built with tables or divs, and should be converted to use the new [[Help:PortableInfoboxes|infobox markup]] so they render appropriately to all visitors.
 
@@ -62,15 +66,16 @@ $messages['en'] = array(
 	'insights-flags-filter-label' => 'Filter pages by flag type',
 	'insights-notification-message-inprogress-flags' => 'This page is flagged.',
 	'insights-notification-message-set-flags' => 'Set flags for this page',
-	'insights-error' => 'Something went wrong. Please try again.'
-);
+	'insights-error' => 'Something went wrong. Please try again.',
+];
 
-$messages['qqq'] = array(
+$messages['qqq'] = [
 	'insights' => 'Name of the insights page',
-	'insights-desc' => 'Insights description',
+	'insights-desc' => 'Insights description shown on Special:Version',
 	'insights-landing-title' => 'A title of the Insights landing page appearing as an h1 element.',
 	'insights-landing-lead' => 'A lead for the Insights special page with a general description, appearing below the title.',
-	'insights-list-no-items' => 'A message that is shown when there are no items to work on left on a list',
+	'insights-list-no-items' => 'A message that is shown for types that are actionable when there are no items to work on left on a list',
+	'insights-list-no-items-informative' => 'A message that is shown for types that are informative when there are no items to work on left on a list.',
 	'insights-list-no-flag-types' => 'A message that is shown when there are no articles using the selected flag type',
 	'insights-list-header-page' => 'A header of an Insights list table for a column with a title and last revision data',
 	'insights-list-header-altaction' => 'A header of an Insights list table for a column with a link to a semi- or fully automatic action taken on the corresponding page',
@@ -98,6 +103,8 @@ $messages['qqq'] = array(
 	'insights-notification-message-inprogress-wantedpages' => 'Message displayed on notification banner informing user that page should be created',
 	'insights-notification-message-fixed-wantedpages' => 'Message displayed on notification banner informing user that page was created',
 	'insights-notification-next-item-wantedpages' => 'Link text to redirect to next not existing page',
+	'insights-list-subtitle-popularpages' => 'A title of a subpage with a list of popular pages',
+	'insights-list-description-popularpages' => 'A description for a subpage with a list of popular pages',
 	'insights-list-subtitle-nonportableinfoboxes' => 'A title of list of pages with old (unconverted, non-portable) infoboxes',
 	'insights-list-description-nonportableinfoboxes' => 'The description of what the list of old infoboxes is.',
 	'insights-notification-message-inprogress-nonportableinfoboxes' => 'A hint that is displayed if a currently visited page needs conversion of an infobox.',
@@ -123,10 +130,10 @@ $messages['qqq'] = array(
 	'insights-flags-filter-label' => 'Label for select dropdown on flags insights page explaining purpose of it',
 	'insights-notification-message-inprogress-flags' => 'Message displayed on notification banner informing user that this page is flagged.',
 	'insights-notification-message-set-flags' => 'Text of a button that opens a modal window with a form for editing flags.',
-	'insights-error' => 'Information for user that something went wrong and ask to try again.'
-);
+	'insights-error' => 'Information for user that something went wrong and ask to try again.',
+];
 
-$messages['de'] = array(
+$messages['de'] = [
 	'insights' => 'Insights',
 	'insights-desc' => 'Beschreibung von Insights',
 	'insights-landing-title' => 'Willkommen bei Insights',
@@ -193,11 +200,13 @@ $messages['de'] = array(
 	'insights-list-description-pageswithoutinfobox' => 'Diese Seiten haben keine anerkannte [[Hilfe:Infoboxen|Infobox]]. Vielleicht solltest du eine hinzufügen!',
 	'insights-list-subtitle-templateswithouttype' => 'Unorganisierte Vorlagen',
 	'insights-list-description-templateswithouttype' => 'Der Zweck dieser Vorlagen ist unbekannt, da sie nicht nach Vorlagentyp sortiert wurden. Unter [[Hilfe:Vorlagentypen]] erfährst du mehr!',
-);
+	'insights-list-no-items-informative' => 'Noch ist nichts zu tun. Bleibe einfach am Ball und es werden bald neue Besucher auftauchen!',
+	'insights-error' => 'Es ist etwas schief gelaufen. Versuche es bitte noch einmal.',
+];
 
-$messages['es'] = array(
+$messages['es'] = [
 	'insights' => 'Sugerencias',
-	'insights-desc' => 'Descripción de sugerencias',
+	'insights-desc' => 'Introduce la página especial [[Especial:Sugerencias]] y sub páginas las cuales listan artículos o plantillas que requieren atención del editor.',
 	'insights-landing-title' => '¡Bienvenido a sugerencias!',
 	'insights-landing-lead' => 'Haga uso eficiente de su tiempo y tome decisiones informadas sobre los artículos que debe editar con estas sugerencias.',
 	'insights-last-edit' => 'Editado por última vez por $1, $2',
@@ -261,10 +270,79 @@ $messages['es'] = array(
 	'insights-list-subtitle-pageswithoutinfobox' => 'Páginas sin una infobox',
 	'insights-list-description-pageswithoutinfobox' => 'Estas páginas no tienen un [[Ayuda:Infoboxes|infobox]] reconocido en ellas. ¡Puede que desees considerar adicionar uno!',
 	'insights-list-subtitle-templateswithouttype' => 'Plantillas desorganizadas',
-	'insights-list-description-templateswithouttype' => 'El objetivo de estas plantillas es desconocido, ya que no han sido organizadas por tipo. ¡ Ver [[Ayuda:Tipos de plantilla]]para aprender más!',
-);
+	'insights-list-description-templateswithouttype' => 'El objetivo de estas plantillas es desconocido, ya que no han sido organizadas por tipo. ¡ Ver [[Ayuda:Tipos de plantilla]] para aprender más!',
+	'insights-list-no-items-informative' => 'Nada aquí todavía. ¡Sigue editando y así vendrán los visitantes!',
+	'insights-error' => 'Algo salió mal. Por favor, inténtelo de nuevo.',
+];
 
-$messages['fr'] = array(
+$messages['fi'] = [
+	'insights' => 'Oivallukset',
+	'insights-desc' => 'Esittelee toimintosivun [[Toiminnot:Oivallukset]] sekä alasivut, joissa luetellaan muokkaajien huomiota vaativat artikkelit ja mallineet.',
+	'insights-landing-title' => 'Tervetuloa oivalluksiin',
+	'insights-landing-lead' => 'Käytä aikasi tehokkaasti ja tee perusteltuja päätöksiä siitä, mitä artikkeleita sinun pitäisi muokata.',
+	'insights-list-no-items' => 'Hienoa työtä! Ei ole enää huomiota tarvitsevia artikkeleita.',
+	'insights-list-no-items-informative' => 'Ei mitään täällä vielä. Jatka muokkausta, niin vierailijoita tulee varmasti!',
+	'insights-list-no-flag-types' => 'Yhdessäkään artikkelissa ei ole valittua lipputyyppiä!',
+	'insights-list-header-page' => 'Sivu',
+	'insights-list-header-altaction' => 'Toiminta',
+	'insights-list-header-pageviews' => 'Katselukertoja',
+	'insights-last-edit' => 'Viimeksi muokannut $1, $2',
+	'insights-list-subtitle-flags' => 'Liputetut sivut',
+	'insights-list-description-flags' => 'Käytä lippuja järjestelläksesi ja merkitäksesi artikkelisivuja. Tämä Oivallus-luettelo antaa sinun katsoa muokautettuja raportteja liputetuista artikkeleista, jotka tarvitset eniten parantelua. [[Ohje:Liput|Opi lisää lipuista]]',
+	'insights-list-subtitle-uncategorizedpages' => 'Sivut ilman luokkaa',
+	'insights-list-description-uncategorizedpages' => 'Lisää näille sivuille luokat. Hyvä luokitus on tärkeää onnituneesti järjestellylle wikialle!',
+	'insights-notification-message-inprogress-uncategorizedpages' => 'Tämä sivu tarvitsee luokkia.',
+	'insights-notification-message-fixed-uncategorizedpages' => 'Mahtavaa! Tämä sivu on nyt luokiteltu.',
+	'insights-notification-next-item-uncategorizedpages' => 'Siirry seuraavaan luokittelemattomaan artikkeliin.',
+	'insights-list-subtitle-withoutimages' => 'Sivut ilman kuvia',
+	'insights-list-description-withoutimages' => 'Kuvitettuja artikkeleita luetaan ja jaetaan useammin, ja lisäksi hakukoneet havaitsevat ne paremmin kuin artikkelit ilman kuvia. Jopa löyhästi liittyvä kuva voi auttaa.',
+	'insights-notification-message-inprogress-withoutimages' => 'Tämä sivu tarvitsee kuvan.',
+	'insights-notification-message-fixed-withoutimages' => 'Hienoa, sivu näyttää paljon paremmalta!',
+	'insights-notification-next-item-withoutimages' => ' Siirry seuraavaan artikkeliin, johon tarvitaan.',
+	'insights-list-subtitle-deadendpages' => 'SIvut ilman linkkejä',
+	'insights-list-description-deadendpages' => 'Näiden sivujen pitäisi linkittää wikiasi muihin artikkeleihin. Hyvin linkitetyt artikkelit auttavat lukijoita löytämään enemmän tietoa aiheestasi ja parantelemaan hakukoneen sijoituksia.',
+	'insights-notification-message-inprogress-deadendpages' => 'Tämä sivu tarvitsee linkkejä muille sivulle. ',
+	'insights-notification-message-fixed-deadendpages' => 'Jee, tämä sivu on linkitetty!',
+	'insights-notification-next-item-deadendpages' => 'Siirry seuraavaan artikkeliin, joka tarvitsee linkkejä.',
+	'insights-list-subtitle-wantedpages' => 'Halutut sivut',
+	'insights-list-description-wantedpages' => 'Näille sivuille on linkkejä, mutta sivuja ei ole olemassa! Luo artikkeli tai uudelleenohjaa oikeaan artikkeliin auttaaksesi lukijoita navigoimaan yhteisössäsi.',
+	'insights-notification-message-inprogress-wantedpages' => 'Tämä sivu on luotava.',
+	'insights-notification-message-fixed-wantedpages' => 'Kiitos, että loit tämän sivun!',
+	'insights-notification-next-item-wantedpages' => 'Luo toinen artikkeli.',
+	'insights-list-subtitle-popularpages' => 'Suositut sivut',
+	'insights-list-description-popularpages' => 'Nämä sivut vetävät lukijoitasi puoleensa! Varmista, että ne ovat standardiesi mukaisia ja että niissä kaikki uusimmat kuvat ja tiedot.',
+	'insights-list-subtitle-nonportableinfoboxes' => 'Ei-kannettavat tietolaatikot',
+	'insights-list-description-nonportableinfoboxes' => "Seuraavat tietolaatikot ovat rakennettu taulukoilla ja osioilla, ja pitäisi muuttaa käyttämään uutta [[Ohje:Tietolaatikot|tietolaatikkomerkintää]], jotta ne näkyvät kunnolla kaikille vierailijoille.
+
+'''Oletko jumissa etkä tiedä miten edetä? [[w:c:portability:Mentoring:Requests|Pyydä apua Portability Hubista]].'''",
+	'insights-notification-message-inprogress-nonportableinfoboxes' => 'Tämä tietolaatikko on päivitettävä uudella tietolaatikkomerkinnällä.',
+	'insights-notification-message-fixed-nonportableinfoboxes' => 'Mahtavaa! Tämän sivun tietolaatikko on muunnettu.',
+	'insights-notification-next-item-nonportableinfoboxes' => 'Muunna seuraava tietolaatikko.',
+	'insights-list-subtitle-pageswithoutinfobox' => 'Sivut vailla tietolaatikkoa',
+	'insights-list-description-pageswithoutinfobox' => 'Näillä sivuilla ei ole tunnistettavaa [[Ohje:Tietolaatikot|tietolaatikkoa]]. Saatat haluta lisätä sellaisen!',
+	'insights-list-subtitle-templateswithouttype' => 'Luokittelemattomat mallineet',
+	'insights-list-description-templateswithouttype' => 'Näiden mallineiden käyttötarkoitus on epäselvä, koska niitä ei ole järjestelty tyypin mukaan. Katso sivulta [[Ohje:Mallinetyypit]] oppiakseksi lisää!',
+	'insights-sort-label' => 'Lajittele',
+	'insights-sort-pv7' => 'Katselukertojen, viime viikolla',
+	'insights-sort-pv28' => 'Katselukertojen, viimeisten 4 viikon aikana',
+	'insights-sort-pvDiff' => 'Viime aikoina lisääntyneet sivujen katselut',
+	'insights-sort-title' => 'Aakkosjärjestyksessä',
+	'insights-notification-message-alldone' => 'Onnittelut! Tässä pinossa ei ole enää kohteita.',
+	'insights-notification-message-fixit' => 'Korjataan se.',
+	'insights-notification-list-button' => 'Palaa luetteloon.',
+	'insights-notification-see-more' => 'Katso lisää oivalluksia.',
+	'insights-wanted-by' => '$1 viittauslinkkiä',
+	'insights-used-on' => 'Käytössä $1 artikkelissa',
+	'insights-module-see-more' => 'Katso lisää oivalluksia',
+	'insights-altaction-convert' => 'Muunna!',
+	'insights-altaction-seedraft' => 'Katso luonnosta',
+	'insights-flags-filter-label' => 'Suodata sivut lipputyypin mukaan',
+	'insights-notification-message-inprogress-flags' => 'Tämä sivu on liputettu.',
+	'insights-notification-message-set-flags' => 'Aseta lippuja tälle sivulle',
+	'insights-error' => 'Jokin meni vikaan. Yritä uudelleen.',
+];
+
+$messages['fr'] = [
 	'insights' => 'Suggestions',
 	'insights-desc' => 'Présentation des Suggestions',
 	'insights-landing-title' => 'Bienvenue dans les Suggestions',
@@ -331,37 +409,39 @@ $messages['fr'] = array(
 	'insights-list-description-pageswithoutinfobox' => "Aucune [[Aide:Infoboxes|infobox]] n'a été reconnue sur ces pages. Peut-être serait-il souhaitable d'en ajouter une ?",
 	'insights-list-subtitle-templateswithouttype' => 'Modèles non classés',
 	'insights-list-description-templateswithouttype' => "L'objet de ces modèles n'est pas connu car ils n'ont pas été classés par type. Pour en savoir plus, consultez la page [[Aide:Types de modèles]].",
-);
+	'insights-list-no-items-informative' => "Rien pour l'instant. Continuez à apporter des modifications, les visiteurs viendront à coup sûr !",
+	'insights-error' => 'Un problème est survenu. Veuillez réessayer.',
+];
 
-$messages['it'] = array(
+$messages['it'] = [
 	'insights' => 'Consigli',
-	'insights-desc' => 'Descrizione di Consigli',
+	'insights-desc' => 'Introduce la pagina speciale di [[Special:Insights|Speciale:Consigli]] e sottopagine che elencano le pagine o i template che richiedono attenzione da parte degli utenti.',
 	'insights-landing-title' => 'Benvenuto nella pagina Consigli',
 	'insights-landing-lead' => 'Usa bene il tuo tempo e decidi con criterio quali articoli modificare seguendo questi consigli.',
 	'insights-last-edit' => "Modificato l'ultima volta da $1, $2",
 	'insights-list-no-items' => 'Ben fatto! Non ci sono articoli da modificare in questa lista.',
 	'insights-list-subtitle-uncategorizedpages' => 'Pagine senza categorie',
-	'insights-list-description-uncategorizedpages' => 'Aggiungi le categorie a queste pagine. Una buona categorizzazione è fondamentale per una wikia ben organizzata.',
-	'insights-notification-message-inprogress-uncategorizedpages' => 'Questa pagina ha bisogno di categorie.',
+	'insights-list-description-uncategorizedpages' => 'Aggiungi le categorie a queste pagine. Una buona categorizzazione è fondamentale per una wiki ben organizzata!',
+	'insights-notification-message-inprogress-uncategorizedpages' => 'Questa pagina ha bisogno di categorie. ',
 	'insights-notification-message-fixed-uncategorizedpages' => 'Perfetto! Questa pagina adesso è categorizzata.',
 	'insights-notification-next-item-uncategorizedpages' => 'Vai al prossimo articolo non categorizzato.',
 	'insights-list-subtitle-withoutimages' => 'Pagine senza immagini',
-	'insights-list-description-withoutimages' => "Gli articoli con immagini vengono letti e condivisi più spesso, e sono più popolari nei motori di ricerca rispetto a quelli che non ne hanno. Anche aggiungere un'immagine vagamente correlata al contenuto può aiutarti.",
-	'insights-notification-message-inprogress-withoutimages' => "Questa pagina ha bisogno di un'immagine.",
+	'insights-list-description-withoutimages' => "Gli articoli con immagini vengono letti e condivisi più spesso e sono più popolari nei motori di ricerca rispetto a quelli che non ne hanno. Anche l'aggiunta di un'immagine vagamente correlata al contenuto può aiutare.",
+	'insights-notification-message-inprogress-withoutimages' => "Questa pagina ha bisogno di un'immagine. ",
 	'insights-notification-message-fixed-withoutimages' => 'Ben fatto! La pagina si presenta molto meglio adesso.',
 	'insights-notification-next-item-withoutimages' => ' Vai al prossimo articolo a cui potresti aggiungerne una.',
 	'insights-list-subtitle-deadendpages' => 'Pagine senza link',
-	'insights-list-description-deadendpages' => 'Queste pagine dovrebbero contenere dei link ad altri articoli sulla tua wikia. Articoli con molti link aiutano i lettori a scoprire più informazioni sul tuo argomento e a migliorare la classificazione degli articoli stessi nei motori di ricerca.',
-	'insights-notification-message-inprogress-deadendpages' => 'Questa pagina ha bisogno di link alle altre pagine.',
+	'insights-list-description-deadendpages' => 'Queste pagine dovrebbero contenere dei link ad altri articoli sulla tua wiki. Articoli ben collegati tra di loro tramite link aiutano i lettori a scoprire più informazioni sul tuo argomento e a migliorare la loro classificazione nei motori di ricerca.',
+	'insights-notification-message-inprogress-deadendpages' => 'Questa pagina ha bisogno di link ad altre pagine. ',
 	'insights-notification-message-fixed-deadendpages' => 'Ottimo! Questa pagina adesso ha dei link.',
 	'insights-notification-next-item-deadendpages' => 'Vai al prossimo articolo che ha bisogno di link.',
 	'insights-list-subtitle-wantedpages' => 'Pagine richieste',
-	'insights-list-description-wantedpages' => "Ci sono dei link in rosso che collegano a pagine che non esistono! Crea un articolo o aggiungi il link all'articolo corretto per aiutare i lettori a navigare nella tua community.",
-	'insights-notification-message-inprogress-wantedpages' => 'Questa pagina ha bisogno di essere creata.',
+	'insights-list-description-wantedpages' => "Ci sono dei link in rosso che puntano a pagine che non esistono! Crea l'articolo o fanne un redirect a quello corretto per aiutare gli utenti a navigare nella tua community.",
+	'insights-notification-message-inprogress-wantedpages' => 'Questa pagina deve essere creata. ',
 	'insights-notification-message-fixed-wantedpages' => 'Grazie per aver creato questa pagina!',
 	'insights-notification-next-item-wantedpages' => 'Crea un altro articolo.',
 	'insights-list-subtitle-popularpages' => 'Pagine popolari',
-	'insights-list-description-popularpages' => 'Queste pagine piacciono ai tuoi lettori! Assicurati che siano ben fatte e che contengano le immagini e informazioni più aggiornate.',
+	'insights-list-description-popularpages' => 'Queste pagine piacciono ai tuoi lettori! Assicurati che siano ben fatte e che contengano le immagini e le informazioni più aggiornate.',
 	'insights-notification-message-inprogress-popularpages' => 'Questa pagina viene letta con frequenza. Assicurati che sia ben fatta!',
 	'insights-notification-next-item-popularpages' => 'Vai al prossimo articolo non categorizzato.',
 	'insights-sort-label' => 'Ordina per',
@@ -369,19 +449,21 @@ $messages['it'] = array(
 	'insights-sort-pageviews-4weeks' => 'Visualizzazioni della pagina, ultime quattro settimane',
 	'insights-sort-pageviews-risingfast' => 'Aumento recente nelle visualizzazioni della pagina',
 	'insights-sort-alphabetical' => 'Alfabetico',
-	'insights-notification-message-alldone' => 'Congratulazioni! Non ci sono più articoli in questa lista.',
+	'insights-notification-message-alldone' => 'Congratulazioni! Non ci sono più elementi in questa lista.',
 	'insights-notification-list-button' => 'Ritorna alla lista',
 	'insights-notification-see-more' => 'Vedi altri consigli.',
-	'insights-wanted-by' => '$1 link di riferimento',
+	'insights-wanted-by' => 'linkato da {{PLURAL:$1|una pagina|$1 pagine}}',
 	'insights-module-see-more' => 'Vedi altri consigli',
 	'insights-list-header-page' => 'Pagina',
 	'insights-list-header-altaction' => 'Azione',
 	'insights-list-header-pageviews' => 'Visualizzazioni pagina',
 	'insights-list-subtitle-flags' => 'Pagine contrassegnate',
-	'insights-list-description-flags' => 'Usa Contrassegni per organizzare e categorizzare pagine di articoli. Questa lista di Consigli ti permette di vedere rapporti personalizzati su articoli contrassegnati per trovare quelli che necessitano miglioramenti. [[Help:Flags|Per saperne di più sui contrassegni]]',
+	'insights-list-description-flags' => 'Usa Contrassegni per organizzare e categorizzare gli articoli. Questa lista di Consigli ti permette di vedere rapporti personalizzati su articoli contrassegnati per trovare quelli che necessitano miglioramenti. [[w:it:Aiuto:Contrassegni|Per saperne di più sui contrassegni]]',
 	'insights-notification-message-inprogress-flags' => 'Questa pagina è contrassegnata.',
-	'insights-list-subtitle-nonportableinfoboxes' => 'Infobox non esportabili',
-	'insights-list-description-nonportableinfoboxes' => 'I seguenti infobox sono costruiti con tabelle o divisioni e devono essere convertiti per utilizzare il nuovo [[Help:PortableInfoboxes|markup]] e apparire accuratamente su tutte le piattaforme. Se non sai come procedere, puoi anche [[w:c:community:Thread:841717|visitare il nostro forum e fare domande]].',
+	'insights-list-subtitle-nonportableinfoboxes' => 'Infobox non portatili',
+	'insights-list-description-nonportableinfoboxes' => "I seguenti infobox sono costruiti con tabelle o \"div\" e devono essere convertiti per utilizzare il nuovo [[w:it:Aiuto:Infobox|markup]] e apparire accuratamente su tutte le piattaforme. 
+
+'''Bloccato o non sai come procedere? [[w:c:portability:Mentoring:Requests|Chiedi aiuto nel Portability Hub]].'''",
 	'insights-notification-message-inprogress-nonportableinfoboxes' => 'Questo infobox deve essere aggiornato con il nuovo markup.',
 	'insights-notification-message-fixed-nonportableinfoboxes' => "Perfetto! L'infobox di questa pagina è stato convertito.",
 	'insights-notification-next-item-nonportableinfoboxes' => "Converti l'infobox successivo.",
@@ -391,18 +473,20 @@ $messages['it'] = array(
 	'insights-sort-title' => 'Ordine alfabetico',
 	'insights-notification-message-fixit' => 'Risolviamo la cosa.',
 	'insights-notification-message-set-flags' => 'Imposta contrassegni per questa pagina',
-	'insights-used-on' => 'Usato in $1 articoli',
+	'insights-used-on' => 'Usato su {{PLURAL:$1|un articolo|$1 articoli}}',
 	'insights-altaction-convert' => 'Fai la conversione!',
 	'insights-altaction-seedraft' => 'Visualizza la bozza',
 	'insights-flags-filter-label' => 'Filtra pagine per tipo di contrassegno',
 	'insights-list-no-flag-types' => 'Non ci sono articoli con il tipo di contrassegno selezionato!',
 	'insights-list-subtitle-pageswithoutinfobox' => 'Pagine senza infobox',
-	'insights-list-description-pageswithoutinfobox' => 'Queste pagine non hanno un [[Aiuto:Infobox|infobox]] riconosciuto. Potresti aggiungerne uno!',
-	'insights-list-subtitle-templateswithouttype' => 'Modelli non organizzati',
-	'insights-list-description-templateswithouttype' => 'Lo scopo di questi modelli è sconosciuto, dal momento che non sono stati organizzati in base al tipo. Vedi [[Aiuto:Tipi di modello]] per saperne di più!',
-);
+	'insights-list-description-pageswithoutinfobox' => 'Queste pagine non hanno un [[w:it:Aiuto:Infobox|infobox]] riconosciuto. Potresti aggiungerne uno!',
+	'insights-list-subtitle-templateswithouttype' => 'Template non organizzati',
+	'insights-list-description-templateswithouttype' => 'Lo scopo di questi template è sconosciuto dal momento che non sono stati organizzati in base al tipo. Vedi [[w:it:Aiuto:Tipologie di template|Aiuto:Tipologie di template]] per saperne di più!',
+	'insights-list-no-items-informative' => 'Niente per il momento. Continua a fare le tue modifiche e vedrai e che i visitatori arriveranno!',
+	'insights-error' => 'Qualcosa è andato storto. Riprova.',
+];
 
-$messages['ja'] = array(
+$messages['ja'] = [
 	'insights' => 'インサイト',
 	'insights-desc' => 'インサイトの説明',
 	'insights-landing-title' => 'インサイトへようこそ',
@@ -469,9 +553,11 @@ $messages['ja'] = array(
 	'insights-list-description-pageswithoutinfobox' => 'これらのページには[[ヘルプ:インフォボックス|インフォボックス]]が含まれていないようです。1つ追加してみましょう。',
 	'insights-list-subtitle-templateswithouttype' => '未整理のテンプレート',
 	'insights-list-description-templateswithouttype' => 'これらのテンプレートは種類別に整理されていないため、その目的が不明です。詳しくは、[[ヘルプ:テンプレートの種類]]をご覧ください。',
-);
+	'insights-list-no-items-informative' => 'まだ何もありません。ページを訪れてもらえるよう、編集を続けましょう！',
+	'insights-error' => 'エラーが発生したようです。もう一度お試しください。',
+];
 
-$messages['nl'] = array(
+$messages['nl'] = [
 	'insights' => 'Insights',
 	'insights-desc' => 'Insights description',
 	'insights-landing-title' => 'Welcome to Insights',
@@ -530,9 +616,13 @@ $messages['nl'] = array(
 	'insights-flags-filter-label' => 'Filter pages by flag type',
 	'insights-notification-message-inprogress-flags' => 'This page is flagged.',
 	'insights-notification-message-set-flags' => 'Set flags for this page',
-);
+	'insights-list-no-items-informative' => 'Nothing here yet. Keep editing, and visitors are sure to come!',
+	'insights-list-subtitle-popularpages' => 'Popular pages',
+	'insights-list-description-popularpages' => 'These pages are gaining traction with your readers! Make sure they are up to your standards and have all the latest images and information.',
+	'insights-error' => 'Something went wrong. Please try again.',
+];
 
-$messages['pl'] = array(
+$messages['pl'] = [
 	'insights' => 'Podpowiedzi',
 	'insights-desc' => 'Opis Podpowiedzi',
 	'insights-landing-title' => 'Witamy w Podpowiedziach',
@@ -549,12 +639,12 @@ $messages['pl'] = array(
 	'insights-notification-message-inprogress-withoutimages' => 'Ta strona potrzebuje obrazu. Czas to naprawić.',
 	'insights-notification-message-fixed-withoutimages' => 'Świetnie! Strona wygląda teraz znacznie lepiej.',
 	'insights-notification-next-item-withoutimages' => ' Przejdź do następnego artykułu, któremu też przyda się obraz.',
-	'insights-list-subtitle-deadendpages' => 'Strona bez odnośników',
+	'insights-list-subtitle-deadendpages' => 'Strony bez odnośników',
 	'insights-list-description-deadendpages' => 'Te strony powinny zawierać odnośniki do innych artykułów na twojej wikia. Dobrze powiązane artykuły pomagają czytelnikom odnaleźć więcej informacji i poprawiają pozycje w wyszukiwarkach.',
 	'insights-notification-message-inprogress-deadendpages' => 'Tej stronie brakuje odnośników do innych stron. Czas to naprawić.',
 	'insights-notification-message-fixed-deadendpages' => 'Hurra! Ta strona zawiera teraz  odnośniki.',
 	'insights-notification-next-item-deadendpages' => 'Przejdź do kolejnego artykułu, któremu przydadzą się odnośniki.',
-	'insights-list-subtitle-wantedpages' => 'Szukane strony',
+	'insights-list-subtitle-wantedpages' => 'Potrzebne strony',
 	'insights-list-description-wantedpages' => 'Istnieją redlinki kierujące do tych stron, ale te strony nie istnieją! Stwórz artykuł, albo przekieruj do właściwego artykułu, aby pomóc czytelnikom poruszać się po twojej społeczności.',
 	'insights-notification-message-inprogress-wantedpages' => 'Ta strona powinna powstać. Czas to naprawić.',
 	'insights-notification-message-fixed-wantedpages' => 'Dziękujemy za stworzenie strony!',
@@ -599,11 +689,13 @@ $messages['pl'] = array(
 	'insights-list-description-pageswithoutinfobox' => 'Na tych stronach nie wykryto [[Pomoc:Infoboksy|infoboksu]]. Warto byłoby rozważyć jego dodanie!',
 	'insights-list-subtitle-templateswithouttype' => 'Niezorganizowane szablony',
 	'insights-list-description-templateswithouttype' => 'Przeznaczenie tych szablonów nie jest znane, ponieważ nie zostały one skategoryzowane pod względem typu. Zobacz [[Pomoc:Typy szablonów]], aby dowiedzieć się więcej!',
-);
+	'insights-list-no-items-informative' => 'Nic tutaj jeszcze nie ma. Edytuj dalej, a odwiedzający z pewnością przyjdą!',
+	'insights-error' => 'Coś poszło nie tak. Spróbuj ponownie.',
+];
 
-$messages['pt'] = array(
+$messages['pt'] = [
 	'insights' => 'Insights',
-	'insights-desc' => 'Descrição de Insights',
+	'insights-desc' => 'Apresenta a página especial [[Special:Insights]] e subpáginas que listam artigos ou predefinições que exigem atenção dos contribuidores.',
 	'insights-landing-title' => 'Bem-vindo(a) ao Insights',
 	'insights-landing-lead' => 'Gaste seu tempo com eficiência e tome decisões informadas sobre quais artigos você deve editar com estes insights.',
 	'insights-last-edit' => 'Última edição por $1, $2',
@@ -615,7 +707,7 @@ $messages['pt'] = array(
 	'insights-notification-next-item-uncategorizedpages' => 'Ir para o próximo artigo não categorizado.',
 	'insights-list-subtitle-withoutimages' => 'Páginas sem imagens',
 	'insights-list-description-withoutimages' => 'Artigos com imagens são lidos e compartilhados com mais frequência e oferecem melhores resultados de busca do que aqueles sem imagens. Mesmo adicionando uma imagem vagamente relacionada pode ajudar.',
-	'insights-notification-message-inprogress-withoutimages' => 'Esta página necessita de uma imagem. ',
+	'insights-notification-message-inprogress-withoutimages' => 'Esta página precisa de uma imagem. ',
 	'insights-notification-message-fixed-withoutimages' => 'Ótimo, a página está muito melhor!',
 	'insights-notification-next-item-withoutimages' => ' Ir para o próximo artigo ao qual uma imagem poderia ser adicionada.',
 	'insights-list-subtitle-deadendpages' => 'Páginas sem links',
@@ -623,7 +715,7 @@ $messages['pt'] = array(
 	'insights-notification-message-inprogress-deadendpages' => 'Esta página necessita de links para outras páginas. ',
 	'insights-notification-message-fixed-deadendpages' => 'Ótimo, esta página agora tem links!',
 	'insights-notification-next-item-deadendpages' => 'Ir para o próximo artigo que necessita de links.',
-	'insights-list-subtitle-wantedpages' => 'páginas pedidas',
+	'insights-list-subtitle-wantedpages' => 'Páginas pedidas',
 	'insights-list-description-wantedpages' => 'Há links apontando para essas páginas, mas elas não existem! Crie um artigo ou o redirecione para o artigo correto para ajudar os leitores a navegar sua comunidade.',
 	'insights-notification-message-inprogress-wantedpages' => 'Esta página precisa ser criada. ',
 	'insights-notification-message-fixed-wantedpages' => 'Obrigado por criar esta página!',
@@ -637,7 +729,7 @@ $messages['pt'] = array(
 	'insights-sort-pageviews-4weeks' => 'Visualizações de página, últimas 4 semanas',
 	'insights-sort-pageviews-risingfast' => 'Recente aumento nas visualizações de página',
 	'insights-sort-alphabetical' => 'Em ordem alfabética',
-	'insights-notification-message-alldone' => 'Parabéns! Não há mais itens nesta fila.',
+	'insights-notification-message-alldone' => 'Parabéns! Não há mais itens nesta lista.',
 	'insights-notification-list-button' => 'Voltar à lista.',
 	'insights-notification-see-more' => 'Ver mais insights.',
 	'insights-wanted-by' => '$ links de referência',
@@ -646,10 +738,13 @@ $messages['pt'] = array(
 	'insights-list-header-altaction' => 'Ação',
 	'insights-list-header-pageviews' => 'Visualizações de página',
 	'insights-list-subtitle-flags' => 'Páginas marcadas com bandeiras',
-	'insights-list-description-flags' => 'Use as bandeiras para organizar e etiquetar páginas de artigos. Esta lista de Insights permite a visualização de relatórios personalizados sobre artigos sinalizados para a identificação daqueles que necessitam de melhorias. [[Help:Flags|Saiba mais sobre as bandeiras]]',
+	'insights-list-description-flags' => 'Use Bandeiras para organizar e etiquetar páginas de artigos. Esta lista de Insights permite a visualização de relatórios personalizados sobre artigos sinalizados para a identificação daqueles que necessitam de melhorias. [[Ajuda:BandeirasSaiba mais sobre as bandeiras]]',
 	'insights-notification-message-inprogress-flags' => 'Esta página é sinalizada.',
 	'insights-list-subtitle-nonportableinfoboxes' => 'Infoboxes não-portáteis',
-	'insights-list-description-nonportableinfoboxes' => 'As seguintes infoboxes são criadas com tabelas ou divs, e devem ser convertidas para usar o novo [[w:c:comunidade:Ajuda:InfoboxesPortáteis|marcador de infobox]] para que renderizem adequadamente para todos os visitantes. Se tiver problemas, você pode também [[w:c:community:Thread:841717|visitar nosso fórum e fazer perguntas]].',
+	'insights-list-description-nonportableinfoboxes' => "As seguintes infoboxes são criadas com tabelas ou divs, e devem ser convertidas para usar a nova [[Ajuda:Infoboxes|marcação de infobox]] para que renderizem adequadamente para todos os visitantes. 
+
+'''Não sabe como prosseguir?
+[[w:c:portability:Mentoring:Requests|Peça ajuda no hub de portabilidade]].'''",
 	'insights-notification-message-inprogress-nonportableinfoboxes' => 'Esta infobox necessita ser atualizada com o novo marcador de infobox.',
 	'insights-notification-message-fixed-nonportableinfoboxes' => 'Ótimo! A infobox nesta página foi convertida.',
 	'insights-notification-next-item-nonportableinfoboxes' => 'Converter a infobox seguinte.',
@@ -665,20 +760,22 @@ $messages['pt'] = array(
 	'insights-flags-filter-label' => 'Selecione páginas pelo tipo de bandeira',
 	'insights-list-no-flag-types' => 'Não existem artigos usando o tipo de bandeira selecionado!',
 	'insights-list-subtitle-pageswithoutinfobox' => 'Páginas sem infoboxes',
-	'insights-list-description-pageswithoutinfobox' => 'Estas páginas não têm [[Ajuda: Infoboxes|infobox]] reconhecidas. Você pode  considerar adicionar uma!',
+	'insights-list-description-pageswithoutinfobox' => 'Estas páginas não têm [[Ajuda:Infoboxes|infobox]] reconhecidas. Você pode considerar adicionar uma!',
 	'insights-list-subtitle-templateswithouttype' => 'Predefinições não-organizadas',
-	'insights-list-description-templateswithouttype' => 'O propósito destas predefinições é desconhecido, porque não foram organizadas por tipo. Veja [[Ajuda:Tipos de predefinição]] para saber mais!',
-);
+	'insights-list-description-templateswithouttype' => 'O propósito destas predefinições é desconhecido, porque não foram organizadas por tipo. Veja [[Ajuda:Tipos_de_predefinição]] para saber mais!',
+	'insights-list-no-items-informative' => 'Nada aqui ainda. Continue editando e os visitantes certamente virão!',
+	'insights-error' => 'Algo deu errado. Por favor, tente novamente.',
+];
 
-$messages['ru'] = array(
+$messages['ru'] = [
 	'insights' => 'Исследования',
-	'insights-desc' => 'Описание исследований',
+	'insights-desc' => 'Introduces the [[Special:Insights]] special page and subpages which list articles or templates that require attention from contributors.',
 	'insights-landing-title' => 'Добро пожаловать на страницу исследований',
-	'insights-landing-lead' => 'Используйте свое время эффективнее благодаря исследованиям — принимайте взвешенные решения о том, какие статьи стоит редактировать.',
+	'insights-landing-lead' => 'Используйте своё время эффективнее благодаря исследованиям — принимайте взвешенные решения о том, какие статьи стоит редактировать.',
 	'insights-last-edit' => 'Последний раз редактировалось участником $1, $2',
 	'insights-list-no-items' => 'Отлично! В списке больше нет статей, требующих работы.',
 	'insights-list-subtitle-uncategorizedpages' => 'Некатегоризованные страницы',
-	'insights-list-description-uncategorizedpages' => 'Добавьте категории данным страницам. Правильно присвоенные категории — залог хорошо организованной вики!',
+	'insights-list-description-uncategorizedpages' => 'Добавьте категории к данным страницам. Правильно присвоенные категории — залог хорошо организованной вики!',
 	'insights-notification-message-inprogress-uncategorizedpages' => 'Необходимо добавить категории для данной страницы. ',
 	'insights-notification-message-fixed-uncategorizedpages' => 'Отлично! Для данной страницы добавлена категория.',
 	'insights-notification-next-item-uncategorizedpages' => 'Перейти к следующей некатегоризованной статье.',
@@ -688,17 +785,17 @@ $messages['ru'] = array(
 	'insights-notification-message-fixed-withoutimages' => 'Отлично! Страница выглядит намного лучше.',
 	'insights-notification-next-item-withoutimages' => ' Перейти к следующей статье без изображения.',
 	'insights-list-subtitle-deadendpages' => 'Страницы без ссылок',
-	'insights-list-description-deadendpages' => 'Эти страницы должны иметь ссылки на другие статьи на вашей вики. Статьи с корректными ссылками помогут читателям найти больше информации по вашей теме, а также повысят позиции вашей вики в поисковой выдаче.',
+	'insights-list-description-deadendpages' => 'Эти страницы должны иметь ссылки на другие статьи вики. Статьи с корректными ссылками помогут читателям найти больше интересующей их информации, а также повысят позиции вашей вики в поисковой выдаче.',
 	'insights-notification-message-inprogress-deadendpages' => 'В эту статью необходимо добавить ссылки на другие страницы. ',
 	'insights-notification-message-fixed-deadendpages' => 'Теперь эта страница связана с другими статьями на вашей вики!',
 	'insights-notification-next-item-deadendpages' => 'Перейти к следующей статье без ссылок.',
 	'insights-list-subtitle-wantedpages' => 'Требуемые страницы',
-	'insights-list-description-wantedpages' => 'Требуемые страницы — это страницы, которых не существует, но на них есть ссылки в других статьях данной вики. Создайте статью или перенаправьте "красные" ссылки на существующую статью, чтобы помочь читателям проще находить важную для них информацию.',
+	'insights-list-description-wantedpages' => 'Требуемые страницы — это страницы, которых не существует, но на которые есть ссылки в других статьях этой вики. Создайте статью или перенаправьте «красные» ссылки на существующую статью, чтобы помочь читателям проще находить важную для них информацию.',
 	'insights-notification-message-inprogress-wantedpages' => 'Необходимо создать эту страницу. ',
 	'insights-notification-message-fixed-wantedpages' => 'Благодарим за создание этой страницы!',
 	'insights-notification-next-item-wantedpages' => 'Создать другую статью.',
 	'insights-list-subtitle-popularpages' => 'Популярные страницы',
-	'insights-list-description-popularpages' => 'Эти страницы набирают популярность среди ваших читателей! Убедитесь, что вы довольны качеством своей вики – проверьте, чтобы там были размещены самые последние изображения и информация.',
+	'insights-list-description-popularpages' => 'Эти страницы набирают популярность среди читателей данной вики. Убедитесь, что они качественные, и проверьте, чтобы там были размещены самые новые изображения и информация.',
 	'insights-notification-message-inprogress-popularpages' => 'Эта страница популярна среди читателей. Убедитесь, что она хорошо выглядит!',
 	'insights-notification-next-item-popularpages' => 'Перейти к следующей некатегоризованной статье.',
 	'insights-sort-label' => 'Сортировать по',
@@ -736,12 +833,14 @@ $messages['ru'] = array(
 	'insights-flags-filter-label' => 'Фильтр страниц по типу флагов',
 	'insights-list-no-flag-types' => 'Данный тип флагов не используется ни в одной статье.',
 	'insights-list-subtitle-pageswithoutinfobox' => 'Страницы без инфобоксов',
-	'insights-list-description-pageswithoutinfobox' => 'На этих страницах не были найдены [[Справка:Инфобоксы|Инфобоксы]]. Возможно, их необходимо добавить.',
+	'insights-list-description-pageswithoutinfobox' => 'На этих страницах не удалось обнаружить [[Справка:Инфобоксы|инфобоксы]]. Возможно, вам стоит их добавить.',
 	'insights-list-subtitle-templateswithouttype' => 'Неклассифицированные шаблоны',
-	'insights-list-description-templateswithouttype' => 'Цель этих шаблонов неизвестна, поскольку они не были организованы по типу [[Справка:Типы шаблонов|Подробнее о типах шаблонов]].',
-);
+	'insights-list-description-templateswithouttype' => 'Применение этих шаблонов неизвестно, поскольку они не были организованы по [[Справка:Типы шаблонов|классификации шаблонов]].',
+	'insights-list-no-items-informative' => 'Пока здесь ничего нет. Продолжайте редактировать, и читатели не заставят себя ждать!',
+	'insights-error' => 'К сожалению, произошла ошибка. Попробуйте ещё раз.',
+];
 
-$messages['zh-hans'] = array(
+$messages['zh-hans'] = [
 	'insights' => '问题页面列表',
 	'insights-desc' => '问题页面列表说明',
 	'insights-landing-title' => '欢迎访问问题页面列表',
@@ -808,9 +907,11 @@ $messages['zh-hans'] = array(
 	'insights-list-description-pageswithoutinfobox' => '这些页面上不含有有效的[[Help:Infoboxes|讯息框]]。您可以考虑添加一个！',
 	'insights-list-subtitle-templateswithouttype' => '无效的模版',
 	'insights-list-description-templateswithouttype' => '使用这些模版的目的未知，因为它们并不是按照类型进行分类的。请查看[[Help:Template types|模版类型]]了解更多！',
-);
+	'insights-list-no-items-informative' => '未发现任何内容。请继续编辑以吸引更多用户！',
+	'insights-error' => '出现错误。请再试一次。',
+];
 
-$messages['zh-hant'] = array(
+$messages['zh-hant'] = [
 	'insights' => '問題頁面列表',
 	'insights-desc' => '問題頁面列表説明',
 	'insights-landing-title' => '歡迎訪問問題頁面列表',
@@ -869,5 +970,9 @@ $messages['zh-hant'] = array(
 	'insights-list-description-pageswithoutinfobox' => '這些頁面上不含有有效的[[Help:Infoboxes|訊息框]]。 您可以考慮添加一個！',
 	'insights-list-subtitle-templateswithouttype' => '不正確的模版',
 	'insights-list-description-templateswithouttype' => '使用這些模版的目的未知，因為它們並不是按照類型進行分類的。請查看[[Help:Template types|模版類型]]了解更多！',
-);
+	'insights-list-no-items-informative' => '未發現任何內容。 請繼續編輯以吸引更多使用者！',
+	'insights-list-subtitle-popularpages' => '流行頁面',
+	'insights-list-description-popularpages' => '讀者會對這些頁面感興趣的！請確保各頁面達到你的標準，並附有所有最新圖像和資訊。',
+	'insights-error' => '出現錯誤。 請再試一次。',
+];
 

@@ -41,20 +41,28 @@ class AnalyticsEngine {
 				return new AnalyticsProviderExelate();
 			case 'GoogleUA':
 				return new AnalyticsProviderGoogleUA();
+			case 'Krux':
+				return new AnalyticsProviderKrux();
 			case 'AmazonMatch':
 				return new AnalyticsProviderAmazonMatch();
+			case 'Nielsen':
+				return new AnalyticsProviderNielsen();
 			case 'OpenXBidder':
 				return new AnalyticsProviderOpenXBidder();
+			case 'Prebid':
+				return new AnalyticsProviderPrebid();
 			case 'RubiconFastlane':
 				return new AnalyticsProviderRubiconFastlane();
+			case 'RubiconVulcan':
+				return new AnalyticsProviderRubiconVulcan();
 			case 'DynamicYield':
 				return new AnalyticsProviderDynamicYield();
 			case 'IVW2':
 				return new AnalyticsProviderIVW2();
-			case 'BlueKai':
-				return new AnalyticsProviderBlueKai();
-			case 'Datonics':
-				return new AnalyticsProviderDatonics();
+			case 'IVW3':
+				return new AnalyticsProviderIVW3();
+			case 'Ubisoft':
+				return new AnalyticsProviderUbisoft();
 		}
 
 		return null;

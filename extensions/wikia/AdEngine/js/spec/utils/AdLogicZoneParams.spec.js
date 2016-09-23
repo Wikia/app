@@ -115,14 +115,14 @@ describe('ext.wikia.adEngine.utils.adLogicZoneParams', function () {
 		var zoneParams = getModule();
 
 		expect(zoneParams.getSite()).toBe('mappedVertical');
-		expect(zoneParams.getMappedVertical()).toBe('_dbname');
+		expect(zoneParams.getName()).toBe('_dbname');
 		expect(zoneParams.getPageType()).toBe('article');
 	});
 
-	it('MappedVertical default DB name', function () {
+	it('Name default DB name', function () {
 		var zoneParams = getModule();
 
-		expect(zoneParams.getMappedVertical()).toBe('_wikia', 's1=_wikia');
+		expect(zoneParams.getName()).toBe('_wikia', 's1=_wikia');
 	});
 
 	it('getPageType', function () {
@@ -217,7 +217,7 @@ describe('ext.wikia.adEngine.utils.adLogicZoneParams', function () {
 		var zoneParams = getModule();
 
 		expect(zoneParams.getSite()).toBe('hub');
-		expect(zoneParams.getMappedVertical()).toBe('_gaming_hub');
+		expect(zoneParams.getName()).toBe('_gaming_hub');
 		expect(zoneParams.getPageType()).toBe('hub');
 		expect(zoneParams.getDomain()).toBe('wikiacom');
 		expect(zoneParams.getHostnamePrefix()).toBe('www');
@@ -236,7 +236,7 @@ describe('ext.wikia.adEngine.utils.adLogicZoneParams', function () {
 		var zoneParams = getModule();
 
 		expect(zoneParams.getSite()).toBe('hub');
-		expect(zoneParams.getMappedVertical()).toBe('_ent_hub');
+		expect(zoneParams.getName()).toBe('_ent_hub');
 		expect(zoneParams.getPageType()).toBe('hub');
 		expect(zoneParams.getDomain()).toBe('wikiacom');
 		expect(zoneParams.getHostnamePrefix()).toBe('www');
@@ -255,7 +255,7 @@ describe('ext.wikia.adEngine.utils.adLogicZoneParams', function () {
 		var zoneParams = getModule();
 
 		expect(zoneParams.getSite()).toBe('hub');
-		expect(zoneParams.getMappedVertical()).toBe('_life_hub');
+		expect(zoneParams.getName()).toBe('_life_hub');
 		expect(zoneParams.getPageType()).toBe('hub');
 		expect(zoneParams.getDomain()).toBe('wikiacom');
 		expect(zoneParams.getHostnamePrefix()).toBe('www');

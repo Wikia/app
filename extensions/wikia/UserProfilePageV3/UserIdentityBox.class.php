@@ -28,6 +28,7 @@ class UserIdentityBox {
 
 	public $optionsArray = array(
 		'location',
+		'bio',
 		'occupation',
 		'birthday',
 		'gender',
@@ -98,11 +99,11 @@ class UserIdentityBox {
 				$this->userStats = $userStatsService->getStats();
 			}
 
-			$iEdits = $this->userStats['edits'];
+			$iEdits = $this->userStats['editcount'];
 			$iEdits = $data['edits'] = is_null( $iEdits ) ? 0 : intval( $iEdits );
 
 			// data depends on which wiki it is displayed
-			$data['registration'] = $this->userStats['date'];
+			$data['registration'] = $this->userStats['firstContributionTimestamp'];
 			$data['userPage'] = $this->user->getUserPage()->getFullURL();
 
 			$data = call_user_func( array( $this, $dataType ), $data );
@@ -495,16 +496,9 @@ class UserIdentityBox {
 	 * @author tor
 	 */
 	protected function getUserTags( &$data ) {
-		global $wgEnableTwoTagsInMasthead;
 		wfProfileIn( __METHOD__ );
 
-		if ( !empty( $wgEnableTwoTagsInMasthead ) ) {
-			/** @var $strategy UserTwoTagsStrategy */
-			$strategy = new UserTwoTagsStrategy( $this->user );
-		} else {
-			/** @var $strategy UserOneTagStrategy */
-			$strategy = new UserOneTagStrategy( $this->user );
-		}
+		$strategy = new UserTagsStrategy( $this->user );
 		$tags = $strategy->getUserTags();
 
 		$data['tags'] = $tags;
@@ -552,7 +546,7 @@ class UserIdentityBox {
 			$this->userStats = $userStatsService->getStats();
 		}
 
-		$iEdits = $this->userStats['edits'];
+		$iEdits = $this->userStats['editcount'];
 		$iEdits = is_null( $iEdits ) ? 0 : intval( $iEdits );
 
 		$hasUserEverEditedMastheadBefore = $this->hasUserEverEditedMasthead();
@@ -577,11 +571,16 @@ class UserIdentityBox {
 				$option = self::USER_PROPERTIES_PREFIX . $option;
 			}
 			$this->user->setGlobalAttribute( $option, null );
-
-			$this->user->saveSettings();
-			$wgMemc->delete( $this->getMemcUserIdentityDataKey() );
-			Wikia::invalidateUser( $this->user );
 		}
+
+		Wikia::invalidateUser( $this->user );
+		$this->user->saveSettings();
+		$wgMemc->delete( $this->getMemcUserIdentityDataKey() );
+
+		// Delete both the avatar from the user's attributes (above),
+		// as well as from disk.
+		$avatarService = new UserAvatarsService( $this->user->getId() );
+		$avatarService->remove();
 	}
 
 	/**

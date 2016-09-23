@@ -146,25 +146,25 @@ class CuratedContentValidatorTest extends WikiaBaseTest {
 	public function validateSectionDataProvider() {
 		return [
 			[
-				['image_id' => 9, 'title' => 'foo'],
+				['image_id' => 9, 'label' => 'foo'],
 				[],
 			], [
-				['image_id' => 0, 'title' => 'foo'],
+				['image_id' => 0, 'label' => 'foo'],
 				[CuratedContentValidator::ERR_IMAGE_MISSING],
 			], [
-				['image_id' => 9, 'label' => 'foo'],
+				['image_id' => 9, 'title' => 'foo'],
 				[CuratedContentValidator::ERR_EMPTY_LABEL],
 			], [
-				['image_id' => 9, 'title' => ''],
+				['image_id' => 9, 'label' => ''],
 				[CuratedContentValidator::ERR_EMPTY_LABEL],
 			], [
 				[
 					'image_id' => 9,
-					'title' => 'thisisfartoolonglabelthisisfartoolonglabelthisisfartoolonglabelthisisfartoolonglabel',
+					'label' => 'thisisfartoolonglabelthisisfartoolonglabelthisisfartoolonglabelthisisfartoolonglabel',
 				],
 				[CuratedContentValidator::ERR_TOO_LONG_LABEL],
 			], [
-				['image_id' => null, 'title' => ''],
+				['image_id' => null, 'label' => ''],
 				[
 					CuratedContentValidator::ERR_EMPTY_LABEL,
 					CuratedContentValidator::ERR_IMAGE_MISSING,
@@ -187,28 +187,28 @@ class CuratedContentValidatorTest extends WikiaBaseTest {
 	public function validateSectionWithItemsDataProvider() {
 		return [
 			[
-				['image_id' => 9, 'title' => 'foo', 'items' => [
+				['image_id' => 9, 'label' => 'foo', 'items' => [
 					['article_id' => 9, 'image_id' => 9, 'label' => 'foo', 'type' => 'category'],
 					['article_id' => 9, 'image_id' => 9, 'label' => 'bar', 'type' => 'category'],
 				]],
 				[],
 			], [
-				['image_id' => 9, 'title' => 'foo'],
+				['image_id' => 9, 'label' => 'foo'],
 				[CuratedContentValidator::ERR_ITEMS_MISSING],
 			], [
-				['image_id' => 9, 'title' => 'foo', 'items' => []],
+				['image_id' => 9, 'label' => 'foo', 'items' => []],
 				[CuratedContentValidator::ERR_ITEMS_MISSING],
 			], [
-				['image_id' => 0, 'title' => '', 'items' => []],
+				['image_id' => 0, 'label' => '', 'items' => []],
 				[CuratedContentValidator::ERR_ITEMS_MISSING, CuratedContentValidator::ERR_OTHER_ERROR],
 			], [
-				['image_id' => 9, 'title' => 'foo', 'items' => [
+				['image_id' => 9, 'label' => 'foo', 'items' => [
 					['article_id' => 9, 'image_id' => 9, 'label' => 'foo', 'type' => 'category'],
 					['article_id' => 9, 'image_id' => 9, 'label' => 'foo', 'type' => 'category'],
 				]],
 				[],
 			], [
-				['image_id' => 9, 'title' => 'foo', 'items' => [
+				['image_id' => 9, 'label' => 'foo', 'items' => [
 					['article_id' => 9, 'image_id' => 0, 'label' => 'foo', 'type' => 'category'],
 				]],
 				[CuratedContentValidator::ERR_OTHER_ERROR],
@@ -233,79 +233,79 @@ class CuratedContentValidatorTest extends WikiaBaseTest {
 				[],
 				[]
 			], [
-				[['items' => [['article_id' => 9, 'image_id' => 9, 'label' => 'foo', 'type' => 'category']], 'featured' => true, 'title' => 'foo', 'image_id' => 0]],
+				[['items' => [['article_id' => 9, 'image_id' => 9, 'label' => 'foo', 'type' => 'category']], 'featured' => true, 'label' => 'foo', 'image_id' => 0]],
 				[]
 			], [
-				[['items' => [['article_id' => 9, 'image_id' => 9, 'label' => 'foo', 'type' => 'category']], 'title' => '', 'image_id' => 0]],
+				[['items' => [['article_id' => 9, 'image_id' => 9, 'label' => 'foo', 'type' => 'category']], 'label' => '', 'image_id' => 0]],
 				[]
 			], [
-				[['items' => [], 'featured' => true, 'title' => 'foo', 'image_id' => 0]],
+				[['items' => [], 'featured' => true, 'label' => 'foo', 'image_id' => 0]],
 				[CuratedContentValidator::ERR_OTHER_ERROR]
 			], [
-				[['featured' => true, 'title' => 'foo', 'image_id' => 0]],
+				[['featured' => true, 'label' => 'foo', 'image_id' => 0]],
 				[CuratedContentValidator::ERR_OTHER_ERROR]
 			], [
-				[['items' => [], 'title' => '', 'image_id' => 0]],
+				[['items' => [], 'label' => '', 'image_id' => 0]],
 				[CuratedContentValidator::ERR_OTHER_ERROR]
 			], [
-				[['title' => '', 'image_id' => 0]],
+				[['label' => '', 'image_id' => 0]],
 				[CuratedContentValidator::ERR_OTHER_ERROR]
 			], [
-				[['items' => [['article_id' => 9, 'image_id' => 9, 'label' => 'foo', 'type' => 'video']], 'featured' => true, 'title' => 'foo', 'image_id' => 0]],
+				[['items' => [['article_id' => 9, 'image_id' => 9, 'label' => 'foo', 'type' => 'video']], 'featured' => true, 'label' => 'foo', 'image_id' => 0]],
 				[CuratedContentValidator::ERR_OTHER_ERROR]
 			], [
-				[['items' => [['article_id' => 9, 'image_id' => 9, 'label' => 'foo', 'type' => 'video']], 'title' => '', 'image_id' => 0]],
+				[['items' => [['article_id' => 9, 'image_id' => 9, 'label' => 'foo', 'type' => 'video']], 'label' => '', 'image_id' => 0]],
 				[CuratedContentValidator::ERR_OTHER_ERROR]
 			], [
-				[['items' => [['article_id' => 9, 'image_id' => 9, 'label' => 'foo', 'type' => 'category']], 'title' => 'foo', 'image_id' => 9]],
+				[['items' => [['article_id' => 9, 'image_id' => 9, 'label' => 'foo', 'type' => 'category']], 'label' => 'foo', 'image_id' => 9]],
 				[]
 			], [
-				[['items' => [['article_id' => 9, 'image_id' => 9, 'label' => 'foo', 'type' => 'notSupported']], 'title' => 'foo', 'image_id' => 0]],
+				[['items' => [['article_id' => 9, 'image_id' => 9, 'label' => 'foo', 'type' => 'notSupported']], 'label' => 'foo', 'image_id' => 0]],
 				[CuratedContentValidator::ERR_OTHER_ERROR]
 			], [
 				[
-					['items' => [['article_id' => 9, 'image_id' => 9, 'label' => 'foo', 'type' => 'category']], 'title' => 'foo', 'image_id' => 9],
-					['items' => [['article_id' => 9, 'image_id' => 9, 'label' => 'foo', 'type' => 'category']], 'title' => 'bar', 'image_id' => 9]
+					['items' => [['article_id' => 9, 'image_id' => 9, 'label' => 'foo', 'type' => 'category']], 'label' => 'foo', 'image_id' => 9],
+					['items' => [['article_id' => 9, 'image_id' => 9, 'label' => 'foo', 'type' => 'category']], 'label' => 'bar', 'image_id' => 9]
 				],
 				[]
 			], [
 				[
-					['items' => [['article_id' => 9, 'image_id' => 9, 'label' => 'foo', 'type' => 'category']], 'title' => 'foo', 'image_id' => 9],
-					['items' => [['article_id' => 9, 'image_id' => 9, 'label' => 'foo', 'type' => 'category']], 'title' => 'foo', 'image_id' => 9]
-				],
-				[CuratedContentValidator::ERR_DUPLICATED_LABEL]
-			], [
-				[
-					['items' => [['article_id' => 9, 'image_id' => 9, 'label' => 'foo', 'type' => 'category']], 'title' => '', 'image_id' => 9],
-					['items' => [['article_id' => 9, 'image_id' => 9, 'label' => 'foo', 'type' => 'category']], 'title' => '', 'image_id' => 9]
+					['items' => [['article_id' => 9, 'image_id' => 9, 'label' => 'foo', 'type' => 'category']], 'label' => 'foo', 'image_id' => 9],
+					['items' => [['article_id' => 9, 'image_id' => 9, 'label' => 'foo', 'type' => 'category']], 'label' => 'foo', 'image_id' => 9]
 				],
 				[CuratedContentValidator::ERR_DUPLICATED_LABEL]
 			], [
 				[
-					['items' => [['article_id' => 9, 'image_id' => 9, 'label' => 'foo', 'type' => 'category']], 'featured' => true, 'title' => 'foo', 'image_id' => 0],
-					['items' => [['article_id' => 9, 'image_id' => 9, 'label' => 'foo', 'type' => 'category']], 'title' => 'section', 'image_id' => 9],
-					['items' => [['article_id' => 9, 'image_id' => 9, 'label' => 'foo', 'type' => 'category']], 'title' => '', 'image_id' => 0]
+					['items' => [['article_id' => 9, 'image_id' => 9, 'label' => 'foo', 'type' => 'category']], 'label' => '', 'image_id' => 9],
+					['items' => [['article_id' => 9, 'image_id' => 9, 'label' => 'foo', 'type' => 'category']], 'label' => '', 'image_id' => 9]
+				],
+				[CuratedContentValidator::ERR_DUPLICATED_LABEL]
+			], [
+				[
+					['items' => [['article_id' => 9, 'image_id' => 9, 'label' => 'foo', 'type' => 'category']], 'featured' => true, 'label' => 'foo', 'image_id' => 0],
+					['items' => [['article_id' => 9, 'image_id' => 9, 'label' => 'foo', 'type' => 'category']], 'label' => 'section', 'image_id' => 9],
+					['items' => [['article_id' => 9, 'image_id' => 9, 'label' => 'foo', 'type' => 'category']], 'label' => '', 'image_id' => 0]
 				],
 				[]
 			], [
 				[
-					['items' => [['article_id' => 9, 'image_id' => 9, 'label' => 'foo', 'type' => 'category']], 'featured' => true, 'title' => 'foo', 'image_id' => 0],
-					['items' => [['article_id' => 9, 'image_id' => 9, 'label' => 'foo', 'type' => 'category'], ['article_id' => 9, 'image_id' => 9, 'label' => 'foo', 'type' => 'category']], 'title' => 'section', 'image_id' => 9],
-					['items' => [['article_id' => 9, 'image_id' => 9, 'label' => 'foo', 'type' => 'category']], 'title' => '', 'image_id' => 0]
+					['items' => [['article_id' => 9, 'image_id' => 9, 'label' => 'foo', 'type' => 'category']], 'featured' => true, 'label' => 'foo', 'image_id' => 0],
+					['items' => [['article_id' => 9, 'image_id' => 9, 'label' => 'foo', 'type' => 'category'], ['article_id' => 9, 'image_id' => 9, 'label' => 'foo', 'type' => 'category']], 'label' => 'section', 'image_id' => 9],
+					['items' => [['article_id' => 9, 'image_id' => 9, 'label' => 'foo', 'type' => 'category']], 'label' => '', 'image_id' => 0]
 				],
 				[]
 			], [
 				[
-					['items' => [['article_id' => 9, 'image_id' => 9, 'label' => 'foo', 'type' => 'category']], 'featured' => true, 'title' => 'foo', 'image_id' => 0],
-					['items' => [['article_id' => 9, 'image_id' => 9, 'label' => 'foo', 'type' => 'category'], ['article_id' => 9, 'image_id' => 9, 'label' => 'bar', 'type' => 'category']], 'title' => 'section', 'image_id' => 9],
-					['items' => [['article_id' => 9, 'image_id' => 9, 'label' => 'foo', 'type' => 'category']], 'title' => '', 'image_id' => 0]
+					['items' => [['article_id' => 9, 'image_id' => 9, 'label' => 'foo', 'type' => 'category']], 'featured' => true, 'label' => 'foo', 'image_id' => 0],
+					['items' => [['article_id' => 9, 'image_id' => 9, 'label' => 'foo', 'type' => 'category'], ['article_id' => 9, 'image_id' => 9, 'label' => 'bar', 'type' => 'category']], 'label' => 'section', 'image_id' => 9],
+					['items' => [['article_id' => 9, 'image_id' => 9, 'label' => 'foo', 'type' => 'category']], 'label' => '', 'image_id' => 0]
 				],
 				[]
 			], [
 				[
 					// Section with title 0 is incorrect -> image_id can't be 0
-					['items' => [['article_id' => 9, 'image_id' => 9, 'label' => 'foo', 'type' => 'category']], 'title' => 0, 'image_id' => 0],
-					['items' => [['article_id' => 9, 'image_id' => 9, 'label' => 'foo', 'type' => 'category']], 'title' => '', 'image_id' => 0]
+					['items' => [['article_id' => 9, 'image_id' => 9, 'label' => 'foo', 'type' => 'category']], 'label' => 0, 'image_id' => 0],
+					['items' => [['article_id' => 9, 'image_id' => 9, 'label' => 'foo', 'type' => 'category']], 'label' => '', 'image_id' => 0]
 				],
 				[CuratedContentValidator::ERR_OTHER_ERROR]
 			],

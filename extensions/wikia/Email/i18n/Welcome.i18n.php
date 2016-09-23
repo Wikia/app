@@ -183,7 +183,7 @@ $messages['ru'] = array(
 	'emailext-welcome-basics-header' => 'Изучите основы',
 	'emailext-welcome-basics-description' => 'Нуждаетесь в кратком руководстве по редактированию страниц, созданию обсуждений и загрузке файлов? Посмотрите эти [$1 обучающие видео].',
 	'emailext-welcome-fandom-header' => 'Найдите интересующие вас сообщества',
-	'emailext-welcome-fandom-description' => 'Откройте для себя тысячи вики о фильмах, телешоу, играх и многом другом. Отслеживайте их, чтобы не пропустить ни одной мелочи.',
+	'emailext-welcome-fandom-description' => 'Откройте для себя тысячи википроектов о фильмах, телешоу, играх и многом другом. Следите за ними, чтобы не пропустить ни одной мелочи.',
 	'emailext-welcome-footer-community' => 'Хотите получить больше информации? Найдите дополнительные советы, ответы на вопросы и познакомьтесь с новыми участниками на [http://ru.community.wikia.com Вики Сообщества].',
 	'emailext-welcome-footer-closing' => 'Благодарим за присоединение к Викия!',
 );
@@ -203,6 +203,23 @@ $messages['zh-hans'] = array(
 	'emailext-welcome-fandom-description' => '查找成千上万有关电影、电视、游戏和更多流行文化的维基社区。关注它们，这样您才不会错过任何精彩时刻。',
 	'emailext-welcome-footer-community' => '想要获得更多信息？请前往[http://zh.community.wikia.com Wikia中文社区中心]查找更多建议、寻求帮助以及认识新朋友。',
 	'emailext-welcome-footer-closing' => '感谢您加入Wikia全球粉丝社区！',
+);
+
+$messages['zh-hant'] = array(
+	'emailext-welcome-subject' => '歡迎來到Wikia，$1！',
+	'emailext-welcome-summary' => '恭喜你，你現在是Wikia社區的一員了！Wikia是為粉絲們創建的，而且所有內容都是由數以百萬計像你一樣的粉絲們撰寫的。',
+	'emailext-welcome-summary-extended' => '下一步要做什麼呢？',
+	'emailext-welcome-profile-header' => '創建您的個人資料',
+	'emailext-welcome-profile-description' => '在這裡你可以建立你在Wikia上的資訊、與其他人交流，還可以找到許多您喜愛的流行社區。',
+	'emailext-welcome-mobile-header' => '讓Wikia無處不在',
+	'emailext-welcome-mobile-description' => '下載你最喜愛的Wikia應用程式到[$1 iOS]或[$2 Android]設備，持續不斷關注參與粉絲社區。',
+	'emailext-welcome-basics-url' => 'http://zh.community.wikia.com/wiki/%E7%BB%B4%E5%9F%BA%E8%AF%BE%E5%A0%82',
+	'emailext-welcome-basics-header' => '了解基礎知識',
+	'emailext-welcome-basics-description' => '需要了解如何編輯頁面、開始討論或上傳媒體？請觀看下列[$1 幫助影片]。',
+	'emailext-welcome-fandom-header' => '找到你最喜歡的粉絲社區',
+	'emailext-welcome-fandom-description' => '找到關於電影、電視、遊戲及其他主題的成千上萬Wiki。關注它們，這樣你才不會錯過任何一個精彩時刻。',
+	'emailext-welcome-footer-community' => '想要得到更多資訊？到[HTTP://zh.community.wikia.com Wikia社區中心]獲得更多建議、協助和朋友。',
+	'emailext-welcome-footer-closing' => '謝謝你加入Wikia粉絲社區！',
 );
 
 $messages['zh-tw'] = array(

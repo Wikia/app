@@ -30,6 +30,24 @@ class Node {
 		return $this->extractSourceFromNode( $this->xmlNode );
 	}
 
+	public function getSourceLabel() {
+		$sourceLabels = [];
+		$sources = $this->extractSourceFromNode( $this->xmlNode );
+		$label = \Sanitizer::stripAllTags( $this->getInnerValue( $this->xmlNode->{self::LABEL_TAG_NAME} ) );
+
+		if ( count( $sources ) > 1 ) {
+			foreach ( $sources as $source ) {
+				if ( !empty( $source ) ) {
+					$sourceLabels[$source] = !empty( $label ) ? "{$label} ({$source})" : '';
+				}
+			}
+		} elseif ( !empty( $sources[0] ) ) {
+			$sourceLabels[$sources[0]] = $label;
+		}
+
+		return $sourceLabels;
+	}
+
 	/**
 	 * @return ExternalParser
 	 */
@@ -141,6 +159,16 @@ class Node {
 		$uniqueParams = array_unique( $result );
 
 		return array_values( $uniqueParams );
+	}
+
+	protected function getSourceLabelForChildren() {
+		/** @var Node $item */
+		$result = [ ];
+		foreach ( $this->getChildNodes() as $item ) {
+			$result = array_merge( $result, $item->getSourceLabel() );
+		}
+
+		return $result;
 	}
 
 	protected function getValueWithDefault( \SimpleXMLElement $xmlNode ) {
