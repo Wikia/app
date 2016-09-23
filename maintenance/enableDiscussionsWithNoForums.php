@@ -33,8 +33,8 @@ class EnableDiscussionsWithNoForums extends Maintenance {
 
 		$schwartzToken = F::app()->wg->TheSchwartzSecretToken;
 
-		while ( !empty( $wikiId = fgets( $fh ) ) ) {
-			$dbw = wfGetDB( DB_MASTER, [], $wikiId );
+		while ( !empty( $wikiId = trim( fgets( $fh ) ) ) ) {
+			$dbw = wfGetDB( DB_SLAVE, [], $wikiId );
 			$row = $dbw->selectRow(
 				[ 'comments_index', 'page' ],
 				[ 'count(*) cnt' ],
