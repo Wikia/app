@@ -38,7 +38,7 @@ $(function ($) {
 		}
 	});
 
-	$searchInput.on('keydown', function (event) {
+	$searchInput.on('keyup', function (event) {
 		// Escape key
 		if (event.which === 27) {
 			this.blur();
