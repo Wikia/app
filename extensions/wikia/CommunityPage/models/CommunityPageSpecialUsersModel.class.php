@@ -35,6 +35,15 @@ class CommunityPageSpecialUsersModel {
 		'vstf' => 'wds-avatar-badges-vstf',
 	];
 
+	const PERMISSIONS_TO_TEXT = [
+		'sysop' => 'group-sysop-member',
+		'threadmoderator' => 'group-threadmoderator-member',
+		'content-moderator' => 'group-content-moderator-member',
+		'staff' => 'group-staff-member',
+		'helper' => 'group-helper-member',
+		'vstf' => 'group-vstf-member',
+	];
+
 	private $wikiService;
 	private $user;
 	private $admins;
@@ -355,7 +364,7 @@ class CommunityPageSpecialUsersModel {
 								'userName' => $userName,
 								'avatar' => $avatar,
 								'profilePage' => $user->getUserPage()->getLocalURL(),
-								'badge' => $this->getUserBadgeMarkup( $user->getEffectiveGroups() ),
+								'badge' => $this->getUserBadge( $user->getEffectiveGroups() ),
 							];
 						}
 					} );
@@ -511,7 +520,7 @@ class CommunityPageSpecialUsersModel {
 				'isCurrent' => false,
 				'avatar' => $avatar,
 				'profilePage' => $user->getUserPage()->getLocalURL(),
-				'badge' => $this->getUserBadgeMarkup( $user->getEffectiveGroups() )
+				'badge' => $this->getUserBadge( $user->getEffectiveGroups() )
 			];
 		}
 
@@ -596,10 +605,13 @@ class CommunityPageSpecialUsersModel {
 	 * @return string markup of svg to be used in template
 	 * or empty string if no badge applicable
 	 */
-	public function getUserBadgeMarkup( $userGroups ) {
+	public function getUserBadge( $userGroups ) {
 		foreach ( self::PERMISSION_HIERARCHY as $group ) {
 			if ( in_array( $group, $userGroups ) ) {
-				return DesignSystemHelper::getSvg( self::PERMISSIONS_TO_BADGES[ $group ] );
+				return [
+					'badgeMarkup' => DesignSystemHelper::getSvg( self::PERMISSIONS_TO_BADGES[ $group ] ),
+					'badgeText' => wfMsg( self::PERMISSIONS_TO_TEXT[ $group ] )
+				];
 			}
 		}
 

@@ -115,7 +115,7 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 				$this->getUser()->getName(),
 				AvatarService::AVATAR_SIZE_SMALL_PLUS
 			),
-			'userBadge' => $this->usersModel->getUserBadgeMarkup( $user->getEffectiveGroups() ),
+			'userBadge' => $this->usersModel->getUserBadge( $user->getEffectiveGroups() ),
 			'userRank' => $userRank,
 			'weeklyEditorCount' => $this->formatTotalEditorsNumber( $topContributorsCount ),
 			'userContribCount' => $currentUserContributionCount,
@@ -345,7 +345,7 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 				'count' => $count,
 				'isAdmin' => $contributor[ 'isAdmin' ] ?? false,
 				'timeAgo' => $contributor[ 'timeAgo' ] ?? null,
-				'badge' => $this->usersModel->getUserBadgeMarkup(  $user->getEffectiveGroups() )
+				'badge' => $this->usersModel->getUserBadge(  $user->getEffectiveGroups() )
 			];
 		}, $contributors );
 	}
