@@ -343,7 +343,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		$config = new Wikia\Search\Config;
 		$videoOnly = (bool) $request->getVal( 'videoOnly', false );
 		$config->setQuery( $query )
-			>setCombinedMediaSearch( true )
+			->setCombinedMediaSearch( true )
 			->setCombinedMediaSearchIsVideoOnly( $videoOnly )
 			->setLimit( 4 )
 			->setStart( $this->getVal( 'next', 0 ) );
