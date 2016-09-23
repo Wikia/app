@@ -16,7 +16,7 @@ require_once( __DIR__ . '/Maintenance.php' );
 class EnableDiscussionsWithNoForums extends Maintenance {
 
 	const CURL_TIMEOUT = 5;
-	const SERVICE_NAME = 'discussions';
+	const SERVICE_NAME = 'discussion';
 
 	public function __construct() {
 		parent::__construct();
@@ -65,8 +65,10 @@ class EnableDiscussionsWithNoForums extends Maintenance {
 					'name' => $wiki->city_sitename,
 				]
 			);
+
 			try {
 				$this->getDiscussionsSitesApi()->createSite( $site, $schwartzToken );
+				WikiFactory::setVarByName( "wgEnableDiscussions", $wikiId, true );
 			} catch ( ApiException $e ) {
 				$this->error(
 					'Creating site caused an error (siteId: ' . $wikiId . ',  error: ' . $e->getMessage() . ')'
