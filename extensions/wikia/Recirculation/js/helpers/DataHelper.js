@@ -11,13 +11,9 @@ define('ext.wikia.recirculation.helpers.data', [
 		options = options || {};
 
 		function loadData() {
-			switch(options.type) {
-				case 'articles':
-				default:
-					return loadArticles().then(function(articles) {
-						return { items: articles };
-					});
-			}
+			return loadArticles().then(function(articles) {
+				return { items: articles };
+			});
 		}
 
 		function loadArticles() {
@@ -50,7 +46,6 @@ define('ext.wikia.recirculation.helpers.data', [
 
 			$.each(data.items, function(index, item) {
 				item.source = 'wiki';
-				item.thumbnail = item.thumbnail;
 				item.index = index;
 				articles.push(item);
 			});

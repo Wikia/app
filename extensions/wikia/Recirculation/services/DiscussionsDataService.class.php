@@ -91,8 +91,7 @@ class DiscussionsDataService {
 		$url = $this->buildUrl( $endpoint, $options );
 		$data = Http::get( $url );
 
-		$obj = json_decode( $data, true );
-		return $obj;
+		return json_decode( $data, true );
 	}
 
 	/**
@@ -110,9 +109,7 @@ class DiscussionsDataService {
 
 		$params = array_merge($defaultParams, $options);
 
-		$url = self::DISCUSSIONS_API_BASE . $endpoint . '?' . http_build_query( $params );
-
-		return $url;
+		return self::DISCUSSIONS_API_BASE . $endpoint . '?' . http_build_query( $params );
 	}
 
 	private function buildPost( $rawPost, $index ) {
