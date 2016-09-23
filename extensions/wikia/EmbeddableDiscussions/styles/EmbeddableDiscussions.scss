@@ -28,6 +28,9 @@ $font-size-regular: 14px;
 $font-size-large: 16px;
 
 .embeddable-discussions-module {
+	@include flexbox();
+	@include flex-direction(column);
+
 	border: 1px solid $container-border-color;
 	margin: 0;
 	padding: 3px 21px 30px 27px;
@@ -143,6 +146,10 @@ $font-size-large: 16px;
 		height: 100%;
 		margin-right: 10px;
 		width: 48%;
+	}
+
+	.embeddable-discussions-post-detail-right-column {
+		width: 100%;
 	}
 
 	.embeddable-discussions-reply-icon {
