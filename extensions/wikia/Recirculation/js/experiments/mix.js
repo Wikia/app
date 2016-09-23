@@ -7,7 +7,6 @@ require([
 	'ext.wikia.recirculation.tracker',
 	'ext.wikia.recirculation.utils',
 	'ext.wikia.recirculation.discussions',
-	'ext.wikia.recirculation.tracker',
 	require.optional('videosmodule.controllers.rail')
 ], function(
 	$,
@@ -17,7 +16,6 @@ require([
 	tracker,
 	utils,
 	discussions,
-	tracker,
 	videosModule
 ) {
 	/**
@@ -43,7 +41,6 @@ require([
 	var recircExperiment = w.recircExperiment || false,
 		experimentName = 'RECIRCULATION_MIX',
 		logGroup = 'ext.wikia.recirculation.experiments.mix',
-		group = abTest.getGroup(experimentName),
 		views = {},
 		saved = {};
 
@@ -54,7 +51,7 @@ require([
 		return;
 	}
 
-	recircExperiment.forEach(function(experiment, index) {
+	recircExperiment.forEach(function(experiment) {
 		var deferred = $.Deferred();
 
 		views[experiment.placement] = views[experiment.placement] || [];
@@ -102,7 +99,7 @@ require([
 
 					log(args, 'info', logGroup);
 
-					args.forEach(function (result, index) {
+					args.forEach(function (result) {
 						if (!result) {
 							return;
 						}

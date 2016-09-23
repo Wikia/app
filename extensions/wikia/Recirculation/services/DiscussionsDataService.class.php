@@ -64,7 +64,6 @@ class DiscussionsDataService {
 
 	private function formatData( $rawData ) {
 		$data = [];
-		$siteId = $rawData['siteId'];
 
 		$rawPosts = $rawData['_embedded']['doc:threads'];
 		$data['discussionsUrl'] = $this->server . '/d/f';
