@@ -56,7 +56,7 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 			'defaultModules' => $this->getDefaultModules( $defaultModulesLimit ),
 			'helpModule' => $this->getHelpModuleData(),
 			'communityTodoListModule' => $this->getCommunityTodoListData(),
-			'discussionsModule' => !empty( $wgEnableDiscussions ) ? (new EmbeddableDiscussionsController)->render( null, [
+			'discussionsModule' => !empty( $wgEnableDiscussions ) ? ( new EmbeddableDiscussionsController() )->render( null, [
 				'columns' => '2',
 				'size' => '6'
 			] ) : '',

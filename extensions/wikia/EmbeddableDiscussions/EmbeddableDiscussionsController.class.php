@@ -31,14 +31,15 @@ class EmbeddableDiscussionsController {
 	/**
 	 * Checks arguments for errors.
 	 * @param array $args
-	 * @param errorMessage Return parameter with the proper error message to show. Disregard if return is false
+	 * @param errorMessage /Return parameter with the proper error message to show.
+	 * Disregard if return is false.
 	 * @return true if ok, false if error
 	 */
 	private function checkArguments( array $args, $modelData, &$errorMessage ) {
 		// mostrecent must be bool
-		if ( isset( $args['mostrecent'] )
-			&& $args['mostrecent'] !== 'true'
-			&& $args['mostrecent'] !== 'false'
+		if ( isset( $args['mostrecent'] ) &&
+			$args['mostrecent'] !== 'true' &&
+			$args['mostrecent'] !== 'false'
 		) {
 			$errorMessage = wfMessage( 'embeddable-discussions-parameter-error',
 				'mostrecent',
@@ -52,9 +53,9 @@ class EmbeddableDiscussionsController {
 		if ( isset( $args['size'] ) ) {
 			$size = $args['size'];
 
-			if ( !ctype_digit( $size )
-				|| intval( $size ) > self::ITEMS_MAX
-				|| intval( $size ) < self::ITEMS_MIN
+			if ( !ctype_digit( $size ) ||
+				intval( $size ) > self::ITEMS_MAX ||
+				intval( $size ) < self::ITEMS_MIN
 			) {
 				$errorMessage = wfMessage( 'embeddable-discussions-parameter-error',
 					'size',
@@ -69,9 +70,9 @@ class EmbeddableDiscussionsController {
 		if ( isset( $args['columns'] ) ) {
 			$columns = $args['columns'];
 
-			if ( !ctype_digit( $columns )
-				|| intval( $columns ) > self::COLUMNS_MAX
-				|| intval( $columns ) < self::COLUMNS_MIN
+			if ( !ctype_digit( $columns ) ||
+				intval( $columns ) > self::COLUMNS_MAX ||
+				intval( $columns ) < self::COLUMNS_MIN
 			) {
 				$errorMessage = wfMessage( 'embeddable-discussions-parameter-error',
 					'columns',
@@ -116,7 +117,6 @@ class EmbeddableDiscussionsController {
 	}
 
 	/**
-	 * @param $templateEngine
 	 * @param $errorMessage
 	 * @return mixed
 	 */
@@ -131,7 +131,6 @@ class EmbeddableDiscussionsController {
 	 * @param $modelData
 	 * @param $showLatest
 	 * @param $itemCount
-	 * @param $templateEngine
 	 * @return mixed
 	 */
 	private function renderMobile( $modelData, $showLatest, $itemCount ) {
@@ -156,7 +155,6 @@ class EmbeddableDiscussionsController {
 	 * @param $columns
 	 * @param $showLatest
 	 * @param $modelData
-	 * @param $templateEngine
 	 * @return mixed
 	 */
 	private function renderDesktop( $category, $columns, $showLatest, $modelData ) {
