@@ -16,7 +16,8 @@ define('ext.wikia.adEngine.lookup.prebid', [
 			index
 		],
 		adUnits = [],
-		biddersPerformanceMap = {};
+		biddersPerformanceMap = {},
+		autoPriceGranularity = 'auto';
 
 	function call(skin, onResponse) {
 		var prebid = doc.createElement('script'),
@@ -38,7 +39,7 @@ define('ext.wikia.adEngine.lookup.prebid', [
 
 			win.pbjs.que.push(function () {
 
-				win.pbjs.setPriceGranularity('auto');
+				win.pbjs.setPriceGranularity(autoPriceGranularity);
 				win.pbjs.addAdUnits(adUnits);
 
 				win.pbjs.requestBids({
