@@ -101,13 +101,13 @@ define('WikiWelcome', ['wikia.ui.factory', 'wikia.loader', 'wikia.tracker'], fun
 
 	function onCreatePageButtonClick(){
 		track({
-			label: 'welcome-modal-add-page'
+			label: 'welcome-modal-add-page-clicked'
 		});
 	}
 
 	function onCommCentralLinkClick(){
 		track({
-			label: 'welcome-modal-community-central'
+			label: 'welcome-modal-community-central-clicked'
 		});
 	}
 
@@ -119,7 +119,7 @@ define('WikiWelcome', ['wikia.ui.factory', 'wikia.loader', 'wikia.tracker'], fun
 	function onModalClose(e){
 		if(!e.originalEvent.preventCloseTracking) {
 			track({
-				label: 'welcome-modal-close'
+				label: 'welcome-modal-closed'
 			});
 		}
 	}

@@ -115,7 +115,7 @@ define('ext.createNewWiki.builder', ['ext.createNewWiki.helper', 'wikia.tracker'
 	function onThemeNavNextClick() {
 		track({
 			action: tracker.ACTIONS.SUBMIT,
-			label: 'theme-selector'
+			label: 'theme-selection-submitted'
 		});
 		saveState(ThemeDesigner.settings, function () {
 			gotoMainPage();
@@ -125,11 +125,6 @@ define('ext.createNewWiki.builder', ['ext.createNewWiki.helper', 'wikia.tracker'
 	function onDescWikiNextClick() {
 		var val,
 			descriptionVal;
-
-		track({
-			action: tracker.ACTIONS.SUBMIT,
-			label: 'wiki-description'
-		});
 
 		descWikiNext.attr('disabled', true);
 		val = wikiVertical.find('option:selected').val();
@@ -147,23 +142,18 @@ define('ext.createNewWiki.builder', ['ext.createNewWiki.helper', 'wikia.tracker'
 					if (res.msgHeader) {
 						track({
 							action: tracker.ACTIONS.ERROR,
-							label: 'wiki-description-validation'
+							label: 'wiki-description-validation-error'
 						});
 						$.showModal(res.msgHeader, res.msgBody);
 						descWikiNext.attr('disabled', false);
 					} else {
 						var descriptionLabel = descriptionVal === WikiBuilderCfg.descriptionplaceholder ?
-							'wiki-description-empty' :
-							'wiki-description-not-empty';
+							'wiki-description-submitted-empty' :
+							'wiki-description-submitted';
 
 						track({
 							action: tracker.ACTIONS.SUBMIT,
 							label: descriptionLabel
-						});
-
-						track({
-							action: tracker.ACTIONS.SUCCESS,
-							label: 'wiki-description-validation'
 						});
 
 						// call create wiki ajax
@@ -180,7 +170,7 @@ define('ext.createNewWiki.builder', ['ext.createNewWiki.helper', 'wikia.tracker'
 		} else {
 			track({
 				action: tracker.ACTIONS.ERROR,
-				label: 'vertical-not-selected'
+				label: 'vertical-not-selected-error'
 			});
 			descWikiSubmitError
 				.show()
@@ -203,12 +193,12 @@ define('ext.createNewWiki.builder', ['ext.createNewWiki.helper', 'wikia.tracker'
 
 		if (selectedValue === '-1' /* yes, it is a string */ ) {
 			track({
-				label: 'vertical-unselect'
+				label: 'vertical-unselected'
 			});
 			categoriesSets.hide();
 		} else {
 			track({
-				label: 'vertical-select'
+				label: 'vertical-selected'
 			});
 			categoriesSets.show();
 
@@ -240,19 +230,19 @@ define('ext.createNewWiki.builder', ['ext.createNewWiki.helper', 'wikia.tracker'
 
 	function onCategorySelection() {
 		track({
-			label: 'category-select'
+			label: 'category-checkbox-clicked'
 		});
 	}
 
 	function onIntendedForKidsCheckboxChange() {
 		track({
-			label: 'intended-for-kids'
+			label: 'intended-for-kids-checkbox-clicked'
 		});
 	}
 
 	function onNavBackClick() {
 		track({
-			label: 'verticals-back-button'
+			label: 'description-back-button-clicked'
 		});
 
 		var id = $(this).closest('.step').attr('id');
@@ -272,7 +262,7 @@ define('ext.createNewWiki.builder', ['ext.createNewWiki.helper', 'wikia.tracker'
 
 	function onChangeLangClick(e) {
 		track({
-			label: 'change-language-link'
+			label: 'change-language-link-clicked'
 		});
 		e.preventDefault();
 		$nameWikiWrapper.find('.language-default').hide();
@@ -322,14 +312,11 @@ define('ext.createNewWiki.builder', ['ext.createNewWiki.helper', 'wikia.tracker'
 
 	function onNameWikiWrapperClick () {
 		var wikiNameVal, wikiDomainVal, wikiLanguageVal;
-		track({
-			action: tracker.ACTIONS.SUBMIT,
-			label: 'wiki-name'
-		});
+
 		if (isNameWikiSubmitError()) {
 			track({
 				action: tracker.ACTIONS.ERROR,
-				label: 'wiki-name'
+				label: 'wiki-name-submit-error'
 			});
 			nameWikiSubmitError
 				.show()
@@ -352,13 +339,13 @@ define('ext.createNewWiki.builder', ['ext.createNewWiki.helper', 'wikia.tracker'
 			} else {
 				track({
 					action: tracker.ACTIONS.IMPRESSION,
-					label: 'login-modal'
+					label: 'login-modal-shown'
 				});
 				helper.login(onAuthSuccess, helper.getLoginRedirectURL(wikiNameVal, wikiDomainVal, wikiLanguageVal));
 			}
 			track({
 				action: tracker.ACTIONS.SUCCESS,
-				label: 'wiki-name'
+				label: 'wiki-name-submitted'
 			});
 		}
 	}

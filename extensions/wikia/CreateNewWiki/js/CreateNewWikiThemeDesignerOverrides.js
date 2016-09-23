@@ -16,7 +16,7 @@
 				action: tracker.ACTIONS.CLICK,
 				category: 'create-new-wiki',
 				trackingMethod: 'analytics',
-				label: 'theme-select'
+				label: 'theme-option-clicked'
 			});
 		});
 	}
