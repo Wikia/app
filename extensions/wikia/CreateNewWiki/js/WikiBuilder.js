@@ -147,7 +147,7 @@ define('ext.createNewWiki.builder', ['ext.createNewWiki.helper', 'wikia.tracker'
 						$.showModal(res.msgHeader, res.msgBody);
 						descWikiNext.attr('disabled', false);
 					} else {
-						var descriptionLabel = descriptionVal === WikiBuilderCfg.descriptionplaceholder ?
+						var descriptionLabel = (descriptionVal === WikiBuilderCfg.descriptionplaceholder) ?
 							'wiki-description-submitted-empty' :
 							'wiki-description-submitted';
 
