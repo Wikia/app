@@ -25,26 +25,23 @@ class BatchAntiSpoof extends Maintenance {
 		$dbw->bufferResults( false );
 
 		$batchSize = 1000;
-
-		$this->output( "Creating username spoofs...\n" );
-		$result = $dbw->select( '`user`', 'user_name', null, __FUNCTION__ );
 		$n = 0;
-		$items = array();
-		foreach( $result as $row ) {
-			if ( $n++ % $batchSize == 0 ) {
-				$this->output( "...$n\n" );
+		$this->output( "Creating username spoofs...\n" );
+		$current = 0;
+		do {
+			$from = $current;
+			$to = $current + $batchSize;
+			$cond = [ "user_id >= $from", "user_id<$to" ];
+			$result = $dbw->select( '`user`', 'user_name', $cond, __FUNCTION__ );
+			$items = [];
+			foreach ( $result as $row ) {
+				$items[] = new SpoofUser( $row->user_name );
+				$n++;
 			}
-
-			$items[] = new SpoofUser( $row->user_name );
-
-			if ( $n % $batchSize == 0 ) {
-				$this->batchRecord( $items );
-				$items = array();
-			}
-		}
-
-		$this->batchRecord( $items );
-		$this->output( "$n user(s) done.\n" );
+			$this->batchRecord( $items );
+			$this->output( "$n user(s) done. Current user_id $current\n" );
+			$current += $batchSize;
+		} while ( $result->numRows() > 0 );
 	}
 }
 
