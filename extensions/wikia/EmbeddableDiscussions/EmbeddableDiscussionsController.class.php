@@ -75,7 +75,6 @@ class EmbeddableDiscussionsController {
 			$modelData['requestData'] = json_encode( [
 				'category' => $category,
 				'columns' => $columns,
-				'columnsDetailsClass' => $columns === 2 ? 'embeddable-discussions-post-detail-columns' : '',
 				'showLatest' => $showLatest,
 				'upvoteRequestUrl' => $modelData['upvoteRequestUrl'],
 			] );
