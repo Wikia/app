@@ -13,6 +13,7 @@ define('ext.wikia.adEngine.video.vastBuilder', [
 		},
 		baseUrl = 'https://pubads.g.doubleclick.net/gampad/ads?',
 		correlator = Math.round(Math.random() * 10000000000),
+		defaultAdUnit = '/5441/VIDEO_ATG',
 		logGroup = 'ext.wikia.adEngine.video.vastBuilder';
 
 	function getCustomParameters() {
@@ -28,8 +29,12 @@ define('ext.wikia.adEngine.video.vastBuilder', [
 		return encodeURIComponent(customParameters.join('&'));
 	}
 
+	function isNumeric(n) {
+		return !isNaN(parseFloat(n)) && isFinite(n);
+	}
+
 	function getSize(aspectRatio) {
-		return aspectRatio >= 1 ? adSizes.horizontal : adSizes.vertical;
+		return aspectRatio >= 1 || !isNumeric(aspectRatio) ? adSizes.horizontal : adSizes.vertical;
 	}
 
 	function build(src, slotName, aspectRatio) {
@@ -39,7 +44,7 @@ define('ext.wikia.adEngine.video.vastBuilder', [
 				'gdfp_req=1',
 				'impl=s',
 				'unviewed_position_start=1',
-				'iu=' + adUnitBuilder.build(slotName, src),
+				'iu=' + (src && slotName ?  adUnitBuilder.build(slotName, src) : defaultAdUnit),
 				'sz=' + getSize(aspectRatio),
 				'url=' + loc.href,
 				'correlator=' + correlator,

@@ -79,6 +79,18 @@ describe('ext.wikia.adEngine.video.vastBuilder', function () {
 		expect(vastUrl).toMatch(/&sz=640x480&/);
 	});
 
+	it('Build VAST URL with no ad size parameters', function () {
+		var vastUrl = getModule().build(mocks.src, mocks.slotName, NaN);
+
+		expect(vastUrl).toMatch(/&sz=640x480&/);
+	});
+
+	it('Build VAST URL without needed parameters', function () {
+		var vastUrl = getModule().build();
+
+		expect(vastUrl).toMatch(/&iu=\/5441\/VIDEO_ATG&/);
+	});
+
 	it('Build VAST URL with referrer', function () {
 		var vastUrl = getModule().build('', '', 1);
 
@@ -98,7 +110,7 @@ describe('ext.wikia.adEngine.video.vastBuilder', function () {
 	});
 
 	it('Build VAST URL with ad unit id', function () {
-		var vastUrl = getModule().build('', '', 1);
+		var vastUrl = getModule().build('a', 'b', 1);
 
 		expect(vastUrl).toMatch('&iu=my\/ad\/unit&');
 	});
