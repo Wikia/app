@@ -211,9 +211,6 @@ define('ext.wikia.adEngine.lookup.rubicon.rubiconFastlane', [
 		if (parameters[rubiconTierKey] && typeof parameters[rubiconTierKey].sort === 'function') {
 			parameters[rubiconTierKey].sort(compareTiers);
 		}
-		if (parameters[rubiconTierKey] && parameters[rubiconTierKey].length > 0) {
-			parameters.bid = 'Rxx';
-		}
 
 		log(['getSlotParams', slotName, parameters], 'debug', logGroup);
 		return parameters;

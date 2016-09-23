@@ -2,7 +2,26 @@
 @import "layout";
 @import "skins/shared/mixins/box-shadow";
 @import "skins/shared/mixins/clearfix";
+@import 'skins/shared/mixins/flexbox';
 @import "skins/shared/mixins/gradient";
+
+.full-screen-page {
+	&,
+	body,
+	.WikiaSiteWrapper {
+		height: 100%;
+	}
+
+	#mw-content-text,
+	.WikiaArticle,
+	.WikiaPage,
+	.WikiaPageContentWrapper,
+	.WikiaSiteWrapper {
+		@include flexbox();
+		@include flex-direction(column);
+		@include flex(1);
+	}
+}
 
 .WikiaPage {
 	border: 1px solid $color-page-border;
@@ -44,10 +63,8 @@
 
 // Change z-indexes for proper stacking with VisualEditor focus mode
 .ve .WikiaPage {
-	z-index: auto;
+	z-index: $zTop;
 }
-
-
 
 .WikiaMainContent {
 	float: left;

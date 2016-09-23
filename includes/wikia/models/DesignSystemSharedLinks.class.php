@@ -26,7 +26,26 @@ class DesignSystemSharedLinks {
 	 * @return string full URL, in case of lang specific URL missing, default one is returned
 	 */
 	public function getHref( $name, $lang ) {
+		$lang = $this->getLangWithFallback( $lang );
+
 		return $this->hrefs[ $lang ][ $name ] ?? $this->hrefs[ 'default' ][ $name ];
+	}
+
+	private function getLangWithFallback( $lang ) {
+		if ( isset( $this->hrefs[ $lang ] ) ) {
+			return $lang;
+		}
+
+		$fallbacks = Language::getFallbacksFor( $lang );
+		foreach ( $fallbacks as $fallbackCode ) {
+			// All languages fallback to en, but we use that for English-specific
+			// URLs, so we want to fallback only to default, rather than en
+			if ( $fallbackCode !== 'en' && isset( $this->hrefs[ $fallbackCode ] ) ) {
+				return $fallbackCode;
+			}
+		}
+
+		return 'default';
 	}
 
 	private $hrefs = [
@@ -68,6 +87,7 @@ class DesignSystemSharedLinks {
 		],
 		'de' => [
 			'fan-communities' => 'http://de.wikia.com/Wikia',
+			'fandom-logo' => 'http://de.wikia.com',
 			'about' => 'http://de.wikia.com/Ueber_Wikia',
 			'press' => 'http://de.wikia.com/Presse',
 			'contact' => 'http://de.wikia.com/Spezial:Kontakt',
@@ -85,7 +105,9 @@ class DesignSystemSharedLinks {
 			'social-youtube' => 'https://www.youtube.com/user/WikiaDE',
 			'social-instagram' => 'https://www.instagram.com/wikia_de/',
 			'app-store' => 'https://itunes.apple.com/de/artist/wikia-inc./id422467077',
-			'google-play' => 'https://play.google.com/store/apps/developer?id=Wikia,+Inc.&hl=de'
+			'google-play' => 'https://play.google.com/store/apps/developer?id=Wikia,+Inc.&hl=de',
+			'user-signin' => 'https://www.wikia.com/signin?uselang=de',
+			'user-register' => 'https://www.wikia.com/register?uselang=de',
 		],
 		'en' => [
 			'fan-contributor' => 'http://fandom.wikia.com/fan-contributor',
@@ -97,6 +119,7 @@ class DesignSystemSharedLinks {
 		],
 		'es' => [
 			'fan-communities' => 'http://es.wikia.com/Wikia',
+			'fandom-logo' => 'http://es.wikia.com',
 			'about' => 'http://es.wikia.com/Sobre_nosotros',
 			'press' => 'http://es.wikia.com/Prensa',
 			'contact' => 'http://es.wikia.com/Especial:Contactar',
@@ -114,10 +137,13 @@ class DesignSystemSharedLinks {
 			'social-youtube' => 'https://www.youtube.com/channel/UCjwNzRwdDqpmELNZsJv3PSg',
 			'social-instagram' => 'https://www.instagram.com/wikiaes/',
 			'app-store' => 'https://itunes.apple.com/es/artist/wikia-inc./id422467077',
-			'google-play' => 'https://play.google.com/store/apps/developer?id=Wikia,+Inc.&hl=es'
+			'google-play' => 'https://play.google.com/store/apps/developer?id=Wikia,+Inc.&hl=es',
+			'user-signin' => 'https://www.wikia.com/signin?uselang=es',
+			'user-register' => 'https://www.wikia.com/register?uselang=es',
 		],
 		'fr' => [
 			'fan-communities' => 'http://fr.wikia.com/Wikia',
+			'fandom-logo' => 'http://fr.wikia.com',
 			'about' => 'http://fr.wikia.com/%C3%80_propos',
 			'contact' => 'http://fr.wikia.com/Sp%C3%A9cial:Contact',
 			'wikia-gives-back' => 'http://www.wikia.com/wikiagivesback?uselang=fr',
@@ -132,7 +158,9 @@ class DesignSystemSharedLinks {
 			'social-twitter' => 'https://twitter.com/wikia_fr',
 			'social-youtube' => 'https://www.youtube.com/channel/UClzAEgYaMs0SyDnXS4cyefg',
 			'app-store' => 'https://itunes.apple.com/fr/artist/wikia-inc./id422467077',
-			'google-play' => 'https://play.google.com/store/apps/developer?id=Wikia,+Inc.&hl=fr'
+			'google-play' => 'https://play.google.com/store/apps/developer?id=Wikia,+Inc.&hl=fr',
+			'user-signin' => 'https://www.wikia.com/signin?uselang=fr',
+			'user-register' => 'https://www.wikia.com/register?uselang=fr',
 		],
 		'it' => [
 			'fan-communities' => 'http://it.community.wikia.com/wiki/Wiki_della_Community',
@@ -148,10 +176,13 @@ class DesignSystemSharedLinks {
 			'social-facebook' => 'https://www.facebook.com/wikia.it',
 			'social-twitter' => 'https://twitter.com/wikia_it',
 			'app-store' => 'https://itunes.apple.com/it/artist/wikia-inc./id422467077',
-			'google-play' => 'https://play.google.com/store/apps/developer?id=Wikia,+Inc.&hl=it'
+			'google-play' => 'https://play.google.com/store/apps/developer?id=Wikia,+Inc.&hl=it',
+			'user-signin' => 'https://www.wikia.com/signin?uselang=it',
+			'user-register' => 'https://www.wikia.com/register?uselang=it',
 		],
 		'ja' => [
 			'fan-communities' => 'http://ja.wikia.com/',
+			'fandom-logo' => 'http://ja.wikia.com',
 			'about' => 'http://ja.wikia.com/companyinfo',
 			'contact' => 'http://ja.wikia.com/%E7%89%B9%E5%88%A5:%E3%81%8A%E5%95%8F%E3%81%84%E5%90%88%E3%82%8F%E3%81%9B',
 			'wikia-gives-back' => 'http://www.wikia.com/wikiagivesback?uselang=ja',
@@ -165,10 +196,13 @@ class DesignSystemSharedLinks {
 			'media-kit' => 'http://www.wikia.com/mediakit?uselang=ja',
 			'social-twitter' => 'https://twitter.com/wikiajapan',
 			'app-store' => 'https://itunes.apple.com/jp/artist/wikia-inc./id422467077',
-			'google-play' => 'https://play.google.com/store/apps/developer?id=Wikia,+Inc.&hl=ja'
+			'google-play' => 'https://play.google.com/store/apps/developer?id=Wikia,+Inc.&hl=ja',
+			'user-signin' => 'https://www.wikia.com/signin?uselang=ja',
+			'user-register' => 'https://www.wikia.com/register?uselang=ja',
 		],
 		'pl' => [
 			'fan-communities' => 'http://pl.wikia.com/Wikia',
+			'fandom-logo' => 'http://pl.wikia.com',
 			'about' => 'http://pl.wikia.com/O_nas',
 			'contact' => 'http://pl.wikia.com/Specjalna:Kontakt',
 			'wikia-gives-back' => 'http://www.wikia.com/wikiagivesback?uselang=pl',
@@ -182,10 +216,13 @@ class DesignSystemSharedLinks {
 			'social-facebook' => 'https://www.facebook.com/wikiapl',
 			'social-twitter' => 'https://twitter.com/wikia_pl',
 			'app-store' => 'https://itunes.apple.com/pl/artist/wikia-inc./id422467077',
-			'google-play' => 'https://play.google.com/store/apps/developer?id=Wikia,+Inc.&hl=pl'
+			'google-play' => 'https://play.google.com/store/apps/developer?id=Wikia,+Inc.&hl=pl',
+			'user-signin' => 'https://www.wikia.com/signin?uselang=pl',
+			'user-register' => 'https://www.wikia.com/register?uselang=pl',
 		],
 		'pt-br' => [
 			'fan-communities' => 'http://pt-br.wikia.com/wiki/Wikia_em_Portugu%C3%AAs',
+			'fandom-logo' => 'http://pt-br.wikia.com',
 			'contact' => 'http://pt-br.wikia.com/wiki/Especial:Contact',
 			'wikia-gives-back' => 'http://www.wikia.com/wikiagivesback?uselang=pt-br',
 			'terms-of-use' => 'http://pt-br.wikia.com/wiki/Termos_de_Uso',
@@ -199,10 +236,13 @@ class DesignSystemSharedLinks {
 			'social-twitter' => 'https://twitter.com/WikiaBR',
 			'social-youtube' => 'https://www.youtube.com/channel/UCi8B4eUGFLU7SjHWFIjt3WQ',
 			'app-store' => 'https://itunes.apple.com/br/artist/wikia-inc./id422467077',
-			'google-play' => 'https://play.google.com/store/apps/developer?id=Wikia,+Inc.&hl=pt-br'
+			'google-play' => 'https://play.google.com/store/apps/developer?id=Wikia,+Inc.&hl=pt-br',
+			'user-signin' => 'https://www.wikia.com/signin?uselang=pt-br',
+			'user-register' => 'https://www.wikia.com/register?uselang=pt-br',
 		],
 		'ru' => [
 			'fan-communities' => 'http://ru.wikia.com/wiki/%D0%92%D0%B8%D0%BA%D0%B8%D1%8F_%D0%BD%D0%B0_%D1%80%D1%83%D1%81%D1%81%D0%BA%D0%BE%D0%BC',
+			'fandom-logo' => 'http://ru.wikia.com',
 			'about' => 'http://ru.wikia.com/wiki/%D0%9E_%D0%BD%D0%B0%D1%81',
 			'contact' => 'http://ru.wikia.com/wiki/%D0%A1%D0%BB%D1%83%D0%B6%D0%B5%D0%B1%D0%BD%D0%B0%D1%8F:Contact',
 			'wikia-gives-back' => 'http://www.wikia.com/wikiagivesback?uselang=ru',
@@ -217,10 +257,13 @@ class DesignSystemSharedLinks {
 			'social-twitter' => 'https://twitter.com/wikia_ru',
 			'social-youtube' => 'https://www.youtube.com/user/ruWikia',
 			'app-store' => 'https://itunes.apple.com/ru/artist/wikia-inc./id422467077',
-			'google-play' => 'https://play.google.com/store/apps/developer?id=Wikia,+Inc.&hl=ru'
+			'google-play' => 'https://play.google.com/store/apps/developer?id=Wikia,+Inc.&hl=ru',
+			'user-signin' => 'https://www.wikia.com/signin?uselang=ru',
+			'user-register' => 'https://www.wikia.com/register?uselang=ru',
 		],
 		'zh' => [
 			'fan-communities' => 'http://zh.wikia.com/wiki/Wikia%E4%B8%AD%E6%96%87',
+			'fandom-logo' => 'http://zh.wikia.com',
 			'terms-of-use' => 'http://zh.wikia.com/wiki/%E4%BD%BF%E7%94%A8%E6%9D%A1%E6%AC%BE',
 			'privacy-policy' => 'http://zh.wikia.com/wiki/Privacy_Policy',
 			'community-central' => 'http://zh.community.wikia.com/wiki/Wikia_%E4%B8%AD%E6%96%87',
@@ -230,10 +273,13 @@ class DesignSystemSharedLinks {
 			'help' => 'http://zh.community.wikia.com/wiki/Help:%E5%86%85%E5%AE%B9',
 			'social-facebook' => 'https://www.facebook.com/ChineseWikia',
 			'app-store' => 'https://itunes.apple.com/cn/artist/wikia-inc./id422467077',
-			'google-play' => 'https://play.google.com/store/apps/developer?id=Wikia,+Inc.&hl=zh'
+			'google-play' => 'https://play.google.com/store/apps/developer?id=Wikia,+Inc.&hl=zh',
+			'user-signin' => 'https://www.wikia.com/signin?uselang=zh',
+			'user-register' => 'https://www.wikia.com/register?uselang=zh',
 		],
 		'zh-tw' => [
 			'fan-communities' => 'http://zh-tw.wikia.com/wiki/Wikia%E4%B8%AD%E6%96%87',
+			'fandom-logo' => 'http://zh-tw.wikia.com',
 			'contact' => 'http://zh-tw.wikia.com/wiki/%E7%89%B9%E6%AE%8A:Contact',
 			'wikia-gives-back' => 'http://www.wikia.com/wikiagivesback?uselang=zh-tw',
 			'terms-of-use' => 'http://zh-tw.wikia.com/wiki/%E4%BD%BF%E7%94%A8%E6%A2%9D%E6%AC%BE',
@@ -245,7 +291,29 @@ class DesignSystemSharedLinks {
 			'help' => 'http://zh.community.wikia.com/wiki/Help:%E5%86%85%E5%AE%B9',
 			'social-facebook' => 'https://www.facebook.com/ChineseWikia',
 			'app-store' => 'https://itunes.apple.com/tw/artist/wikia-inc./id422467077',
-			'google-play' => 'https://play.google.com/store/apps/developer?id=Wikia,+Inc.&hl=zh-tw'
-		]
+			'google-play' => 'https://play.google.com/store/apps/developer?id=Wikia,+Inc.&hl=zh-tw',
+			'user-signin' => 'https://www.wikia.com/signin?uselang=zh-tw',
+			'user-register' => 'https://www.wikia.com/register?uselang=zh-tw',
+		],
+		'vi' => [
+			'community-central' => 'http://congdong.wikia.com/wiki/Trang_Ch%C3%ADnh',
+			'create-new-wiki' => 'http://www.wikia.com/Special:CreateNewWiki?uselang=vi',
+			'help' => 'http://congdong.wikia.com/wiki/Tr%E1%BB%A3_gi%C3%BAp:M%E1%BB%A5c_l%E1%BB%A5c',
+		],
+		'nl' => [
+			'community-central' => 'http://nl.community.wikia.com/wiki/Centrale_Wikia_community',
+			'create-new-wiki' => 'http://www.wikia.com/Special:CreateNewWiki?uselang=nl',
+			'help' => 'http://nl.community.wikia.com/wiki/Help:Inhoud',
+		],
+		'fi' => [
+			'community-central' => 'http://yhteiso.wikia.com/wiki/Yhteis%C3%B6wiki',
+			'create-new-wiki' => 'http://www.wikia.com/Special:CreateNewWiki?uselang=fi',
+			'help' => 'http://yhteiso.wikia.com/wiki/Ohje:Sis%C3%A4ll%C3%B6t',
+		],
+		'ko' => [
+			'community-central' => 'http://ko.community.wikia.com/wiki/%EB%8C%80%EB%AC%B8',
+			'create-new-wiki' => 'http://www.wikia.com/Special:CreateNewWiki?uselang=ko',
+			'help' => 'http://ko.community.wikia.com/wiki/%EB%8F%84%EC%9B%80%EB%A7%90:%EC%BD%98%ED%85%90%EC%B8%A0',
+		],
 	];
 }
