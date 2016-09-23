@@ -56,15 +56,15 @@ class EmbeddableDiscussionsController {
 		if ( isset( $args['size'] ) ) {
 			$size = $args['size'];
 
-			// TODO: Refactor error messages to avoid direct concatenation, see JPN-657
-			$errorMessage = wfMessage( 'embeddable-discussions-parameter-error', 'size' )->plain() .
-				wfMessage( 'embeddable-discussions-parameter-error-range',
-					self::ITEMS_MIN , self::ITEMS_MAX )->plain();
-
 			if ( !ctype_digit( $size ) ||
 				intval( $size ) > self::ITEMS_MAX ||
 				intval( $size ) < self::ITEMS_MIN
 			) {
+				// TODO: Refactor error messages to avoid direct concatenation, see JPN-657
+				$errorMessage = wfMessage( 'embeddable-discussions-parameter-error', 'size' )->plain() .
+					wfMessage( 'embeddable-discussions-parameter-error-range',
+						self::ITEMS_MIN , self::ITEMS_MAX )->plain();
+
 				return false;
 			}
 		}
@@ -73,14 +73,14 @@ class EmbeddableDiscussionsController {
 		if ( isset( $args['columns'] ) ) {
 			$columns = $args['columns'];
 
-			// TODO: Refactor error messages to avoid direct concatenation, see JPN-657
-			$errorMessage = wfMessage( 'embeddable-discussions-parameter-error', 'columns' )->plain() .
-				wfMessage( 'embeddable-discussions-parameter-error-range', self::COLUMNS_MIN , self::COLUMNS_MAX )->plain();
-
 			if ( !ctype_digit( $columns ) ||
 				intval( $columns ) > self::COLUMNS_MAX ||
 				intval( $columns ) < self::COLUMNS_MIN
 			) {
+				// TODO: Refactor error messages to avoid direct concatenation, see JPN-657
+				$errorMessage = wfMessage( 'embeddable-discussions-parameter-error', 'columns' )->plain() .
+					wfMessage( 'embeddable-discussions-parameter-error-range', self::COLUMNS_MIN , self::COLUMNS_MAX )->plain();
+
 				return false;
 			}
 		}
