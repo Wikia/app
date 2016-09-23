@@ -21,7 +21,7 @@ class TopWikiArticles {
 	const GET_NUMBER_OF_TOP_ARTICLES_FROM_DB = 12;
 	const TOP_ARTICLES_RESULT_LIMIT = 5;
 
-	static public function getArticlesWithCache( $cityId, $isGridLayoutEnabled ) {
+	public static function getArticlesWithCache( $cityId, $isGridLayoutEnabled ) {
 		$cacheKey = wfMemcKey(
 			__CLASS__,
 			'WikiaSearch',
@@ -40,7 +40,7 @@ class TopWikiArticles {
 		);
 	}
 
-	static public function getArticles() {
+	public static function getArticles() {
 		global $wgLang;
 
 		$pages = [];
