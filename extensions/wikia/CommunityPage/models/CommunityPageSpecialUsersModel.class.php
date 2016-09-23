@@ -35,7 +35,7 @@ class CommunityPageSpecialUsersModel {
 		'vstf' => 'wds-avatar-badges-vstf',
 	];
 
-	const PERMISSIONS_TO_TEXT = [
+	const PERMISSIONS_TO_GROUP_MSG_KEY = [
 		'sysop' => 'group-sysop-member',
 		'threadmoderator' => 'group-threadmoderator-member',
 		'content-moderator' => 'group-content-moderator-member',
@@ -610,7 +610,7 @@ class CommunityPageSpecialUsersModel {
 			if ( in_array( $group, $userGroups ) ) {
 				return [
 					'badgeMarkup' => DesignSystemHelper::getSvg( self::PERMISSIONS_TO_BADGES[ $group ] ),
-					'badgeText' => wfMsg( self::PERMISSIONS_TO_TEXT[ $group ] )
+					'badgeText' => wfMessage( self::PERMISSIONS_TO_GROUP_MSG_KEY[ $group ] )->plain()
 				];
 			}
 		}
