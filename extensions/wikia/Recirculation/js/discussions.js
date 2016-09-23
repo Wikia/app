@@ -6,9 +6,8 @@ define('ext.wikia.recirculation.discussions', [
 	'wikia.nirvana',
 	'ext.wikia.recirculation.tracker'
 ], function ($, w, abTest, nirvana, tracker) {
-	var experimentName = 'RECIRCULATION_MIX';
 
-	function injectDiscussions(done) {
+	function injectDiscussions(experimentName) {
 		nirvana.sendRequest({
 			controller: 'Recirculation',
 			method: 'discussions',
@@ -18,15 +17,28 @@ define('ext.wikia.recirculation.discussions', [
 				cityId: w.wgCityId
 			},
 			callback: function (response) {
-				var $WikiaArticleFooter = $('#WikiaArticleFooter');
+				var $WikiaArticleFooter = $('#WikiaArticleFooter'),
+					$response = $(response);
 
 				if ($WikiaArticleFooter.length) {
-					$WikiaArticleFooter.before(response);
+					$WikiaArticleFooter.before($response);
 				} else {
-					$('#WikiaArticleBottomAd').before(response);
+					$('#WikiaArticleBottomAd').before($response);
 				}
 
-				done();
+				tracker.trackVerboseImpression(experimentName, 'discussions');
+				$response.find('.discussion-timestamp').timeago();
+
+				$response.find('.discussion-thread').click(function () {
+					var slot = $(this).index() + 1,
+						label = 'discussions-tile=slot-' + slot + '=discussions';
+					tracker.trackVerboseClick(experimentName, label);
+					w.location = $(this).data('link');
+				});
+
+				$response.find('.discussion-link').mousedown(function() {
+					tracker.trackVerboseClick(experimentName, 'discussions-link');
+				});
 			}
 		});
 	}

@@ -20,8 +20,39 @@ require([
 	tracker,
 	videosModule
 ) {
+	/**
+	 *
+	 * This test is setup using the AB testing tool.
+	 * We inject a variable called recircExperiment that dictates which content
+	 * gets rendered in which placement. The structure of the variable is:
+	 *
+	 *  var recircExperiment = [
+	 *  	{
+	 *  		id: 'unique identifier - only used if you want to use data across multiple views',
+	 *  		sorce: 'the id you want to use for data - only used if you want to use data across multiple views',
+	 *  		placement: 'name of the view',
+	 *  		helper: 'name of the helper',
+	 *  		options: {
+	 *  			any options to pass to the helper
+	 *  		}
+	 *  	},
+	 *  	{
+	 *  		placement: 'impactFooter',
+	 *  		helper: 'cakeRelatedContent',
+	 *  		options: {
+	 *  			limit: 21
+	 *  		}
+	 *  	}
+	 *  ];
+	 *
+	 */
 
-	var recircExperiment = w.recircExperiment || false;
+	var recircExperiment = w.recircExperiment || false,
+		experimentName = 'RECIRCULATION_MIX',
+		logGroup = 'ext.wikia.recirculation.experiments.mix',
+		group = abTest.getGroup(experimentName),
+		views = {},
+		saved = {};
 
 	if (!recircExperiment || w.wgContentLanguage !== 'en') {
 		if (videosModule) {
@@ -29,12 +60,6 @@ require([
 		}
 		return;
 	}
-
-	var experimentName = 'RECIRCULATION_MIX',
-		logGroup = 'ext.wikia.recirculation.experiments.mix',
-		group = abTest.getGroup(experimentName),
-		views = {},
-		saved = {};
 
 	recircExperiment.forEach(function(experiment, index) {
 		var deferred = $.Deferred();
@@ -71,6 +96,7 @@ require([
 	$.each(views, function (key, value) {
 		var viewString = 'ext.wikia.recirculation.views.' + key;
 
+		log('Initializing View: ' + key, 'info', logGroup);
 		require([viewString], function (viewFactory) {
 			$.when.apply($, value)
 				.then(function () {
@@ -80,6 +106,8 @@ require([
 							title: '',
 							items: []
 						};
+
+					log(args, 'info', logGroup);
 
 					args.forEach(function (result, index) {
 						if (!result) {
@@ -102,20 +130,6 @@ require([
 	});
 
 	if (!views.impactFooter) {
-		discussions(function () {
-			tracker.trackVerboseImpression(experimentName, 'discussions');
-			$('.discussion-timestamp').timeago();
-
-			$('.discussion-thread').click(function () {
-				var slot = $(this).index() + 1,
-					label = 'discussions-tile=slot-' + slot + '=discussions';
-				tracker.trackVerboseClick(experimentName, label);
-				window.location = $(this).data('link');
-			});
-
-			$('.discussion-link').mousedown(function() {
-				tracker.trackVerboseClick(experimentName, 'discussions-link');
-			});
-		});
+		discussions(experimentName);
 	}
 });
