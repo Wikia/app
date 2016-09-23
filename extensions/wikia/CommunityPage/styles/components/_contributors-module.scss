@@ -138,6 +138,7 @@
 
 		.community-page-contributor-details {
 			@include flex(10 1 100%);
+			max-width: 100%;
 		}
 
 		.community-page-details {
