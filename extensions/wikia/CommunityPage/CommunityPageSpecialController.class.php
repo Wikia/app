@@ -7,6 +7,8 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 	const ALL_MEMBERS_LIMIT = 20;
 	const TOP_MODERATORS_MODULE_LIMIT = 2;
 	const TOP_CONTRIBUTORS_MODULE_LIMIT = 5;
+	const DISCUSSIONS_MODULE_COLUMNS = 2;
+	const DISCUSSIONS_MODULE_SIZE = 6;
 	const MODAL_IMAGE_HEIGHT = 700.0;
 	const MODAL_IMAGE_MIN_RATIO = 0.85;
 	const DEFAULT_MODULES_MAX = 3;
@@ -57,8 +59,8 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 			'helpModule' => $this->getHelpModuleData(),
 			'communityTodoListModule' => $this->getCommunityTodoListData(),
 			'discussionsModule' => !empty( $wgEnableDiscussions ) ? ( new EmbeddableDiscussionsController() )->render( null, [
-				'columns' => '2',
-				'size' => '6'
+				'columns' => static::DISCUSSIONS_MODULE_COLUMNS,
+				'size' => static::DISCUSSIONS_MODULE_SIZE
 			] ) : '',
 			'contributorsModuleEnabled' => !$this->wg->CommunityPageDisableTopContributors,
 			'inspectlet' => ( new InspectletService( InspectletService::COMMUNITY_PAGE ) )->getInspectletCode()
