@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Blocks and bans object
  *

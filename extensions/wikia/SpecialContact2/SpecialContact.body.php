@@ -5,6 +5,8 @@
  * @subpackage SpecialPage
  */
 class ContactForm extends SpecialPage {
+	const WIKIA_SUPPORT_EMAIL = 'support@wikia-inc.com';
+
 	var $mUserName, $mPassword, $mRetype, $mReturnto, $mCookieCheck;
 	var $mAction, $mCreateaccount, $mCreateaccountMail, $mMailmypassword;
 	var $mLoginattempt, $mRemember, $mEmail, $mBrowser;
@@ -192,7 +194,7 @@ class ContactForm extends SpecialPage {
 			#if there were any ->err s, they will be displayed in ContactForm
 		}
 
-		$out->setRobotpolicy( 'noindex,nofollow' );
+		$out->setRobotPolicy( 'noindex,nofollow' );
 		$out->setArticleRelated( false );
 
 		if ( $isMobile ) {
@@ -257,13 +259,15 @@ class ContactForm extends SpecialPage {
 		$request = $this->getRequest();
 
 		$output->setPageTitle( $this->msg( 'specialcontact-pagetitle' )->text() );
-		$output->setRobotpolicy( 'noindex,nofollow' );
+		$output->setRobotPolicy( 'noindex,nofollow' );
 		$output->setArticleRelated( false );
 
 		//build common top of both emails
-		$uid = $user->getID();
+		$uid = $user->getId();
 		$m_shared = '';
-		if( empty($uid) ) { $m_shared .= "USER IS NOT LOGGED IN\n"; }
+		if ( empty($uid) ) {
+			$m_shared .= "USER IS NOT LOGGED IN\n";
+		}
 		$m_shared .= ( !empty( $this->mRealName ) ) ? ( $this->mRealName ) : ( ( ( !empty( $this->mUserName ) ) ? ( $this->mUserName ) : ('--') ) );
 		$m_shared .= " ({$this->mEmail})";
 		$m_shared .= " " . ( ( !empty($this->mUserName) ) ? $wgServer . "/wiki/User:" . urlencode(str_replace(" ", "_", $this->mUserName)) : $wgServer ) . "\n";
@@ -290,7 +294,7 @@ class ContactForm extends SpecialPage {
 		//smush it all together
 		$info = $this->mBrowser . "\n\n";
 		if ( !empty($uid) ) {
-		$info .= 'http://community.wikia.com/wiki/Special:LookUpUser/'. urlencode(str_replace(" ", "_", $this->mUserName)) . "_\n";
+			$info .= 'http://community.wikia.com/wiki/Special:LookUpUser/'. urlencode(str_replace(" ", "_", $this->mUserName)) . "_\n";
 		}
 		$info .= 'http://community.wikia.com/wiki/Special:LookUpUser/'. $this->mEmail . "\n\n";
 		$info .= "A/B Tests: " . $this->mAbTestInfo . "\n\n"; // giving it its own line so that it stands out more
@@ -299,13 +303,14 @@ class ContactForm extends SpecialPage {
 
 		$body = "\n{$this->mProblemDesc}\n\n----\n" . $m_shared . $info;
 
-		if($this->mCCme) {
+		if ( $this->mCCme ) {
 			$mcc = $this->msg( 'specialcontact-ccheader' )->text() . "\n\n";
 			$mcc .= $m_shared . "\n{$this->mProblemDesc}\n";
 		}
 
 		$mail_user = new MailAddress($this->mEmail);
-		$mail_community = new MailAddress( $wgSpecialContactEmail, 'Wikia Support');
+		$mail_support_service = new MailAddress( $wgSpecialContactEmail, 'Wikia Support');
+		$mail_support_from = new MailAddress( self::WIKIA_SUPPORT_EMAIL, 'Wikia Support' );
 
 		$errors = '';
 
@@ -324,7 +329,6 @@ class ContactForm extends SpecialPage {
 		if ( !empty( $screenshot ) ) {
 			foreach ( $screenshot as $image ) {
 				if ( !empty( $image ) ) {
-					$extList = '';
 					$mime = $magic->guessMimeType( $image );
 					if ( $mime !== 'unknown/unknown' ) {
 							# Get a space separated list of extensions
@@ -344,7 +348,17 @@ class ContactForm extends SpecialPage {
 
 		# send mail to wgSpecialContactEmail
 		# PLATFORM-212 -> To: and From: fields are set to wgSpecialContactEmail, ReplyTo: field is the user email
-		$result = UserMailer::send( $mail_community, $mail_community, $subject, $body, $mail_user, null, 'SpecialContact', 0, $screenshots );
+		$result = UserMailer::send(
+			$mail_support_service,
+			$mail_support_from,
+			$subject,
+			$body,
+			$mail_user,
+			null,
+			'SpecialContact',
+			0,
+			$screenshots
+		);
 
 		if (!$result->isOK()) {
 			$errors .= "\n" . $result->getMessage();
@@ -352,8 +366,16 @@ class ContactForm extends SpecialPage {
 
 		#to user, from us (but only if the first one didnt error, dont want to echo the user on an email we didnt get)
 		if ( empty( $errors ) && $this->mCCme && $user->isEmailConfirmed() ) {
-			$result = UserMailer::send( $mail_user, $mail_community, $this->msg( 'specialcontact-mailsubcc' )->text(), $mcc, $mail_user, null, 'SpecialContactCC' );
-			if (!$result->isOK()) {
+			$result = UserMailer::send(
+				$mail_user,
+				$mail_support_from,
+				$this->msg( 'specialcontact-mailsubcc' )->text(),
+				$mcc,
+				$mail_user,
+				null,
+				'SpecialContactCC'
+			);
+			if ( !$result->isOK() ) {
 				$errors .= "\n" . $result->getMessage();
 			}
 		}

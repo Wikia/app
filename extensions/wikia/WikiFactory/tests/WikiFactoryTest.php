@@ -162,6 +162,13 @@ class WikiFactoryTest extends WikiaBaseTest {
 				'url' => 'http://gta.wikia.com/wiki/test/test/test',
 				'expected' => 'http://gta.wikia-staging.com/wiki/test/test/test'
 			],
+			// @see PLATFORM-2400
+			[
+				'env' => WIKIA_ENV_STAGING,
+				'forcedEnv' => null,
+				'url' => 'http://gta.wikia-staging.com/wiki/test/test/test',
+				'expected' => 'http://gta.wikia-staging.com/wiki/test/test/test'
+			],
 			[
 				'env' => WIKIA_ENV_DEV,
 				'forcedEnv' => null,
@@ -179,7 +186,25 @@ class WikiFactoryTest extends WikiaBaseTest {
 				'forcedEnv' => WIKIA_ENV_DEV,
 				'url' => 'http://gta.wikia.com/',
 				'expected' => 'http://preview.gta.wikia.com'
-			]
+			],
+			[
+				'env' => WIKIA_ENV_PROD,
+				'forcedEnv' => null,
+				'url' => 'http://gta.wikia.com/',
+				'expected' => 'http://gta.wikia.com'
+			],
+			[
+				'env' => WIKIA_ENV_PROD,
+				'forcedEnv' => null,
+				'url' => 'http://muupet.wikia.com/wiki/test/test/test',
+				'expected' => 'http://muupet.wikia.com/wiki/test/test/test'
+			],
+			[
+				'env' => WIKIA_ENV_DEV,
+				'forcedEnv' => WIKIA_ENV_PROD,
+				'url' => 'http://gta.wikia.com/',
+				'expected' => 'http://gta.wikia.com'
+			],
 		];
 	}
 
@@ -214,6 +239,13 @@ class WikiFactoryTest extends WikiaBaseTest {
 				'http://community-name.wikia.com',
 			]
 		];
+	}
+
+	public function testGetHostById() {
+		$this->mockStaticMethod( 'WikiFactory', 'getVarValueByName', 1 );
+		$this->mockStaticMethod( 'WikiFactory', 'getLocalEnvURL', 'test_host/' );
+
+		$this->assertEquals( 'test_host', WikiFactory::getHostById( 2 ) );
 	}
 
 	public function testRenderValueOfVariableWithoutValue() {

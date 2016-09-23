@@ -541,13 +541,8 @@ class WikiFactory {
 	 * @return string
 	 */
 	public static function getHostById( $cityId ) {
-		global $wgDevelEnvironment;
-
 		$hostName = \WikiFactory::getVarValueByName( 'wgServer', $cityId );
-
-		if ( !empty( $wgDevelEnvironment ) ) {
-			$hostName = \WikiFactory::getLocalEnvURL( $hostName );
-		}
+		$hostName = \WikiFactory::getLocalEnvURL( $hostName );
 
 		return rtrim( $hostName, '/' );
 	}
@@ -1246,6 +1241,7 @@ class WikiFactory {
 
 		$server = str_replace( '.' . $devbox . '.wikia-dev.com', '', $server );
 		$server = str_replace( static::WIKIA_TOP_DOMAIN, '', $server );
+		$server = str_replace( '.' . $wgWikiaBaseDomain, '', $server ); // PLATFORM-2400: make WF redirects work on staging
 
 		// determine the environment we want to get url for
 		$environment = (

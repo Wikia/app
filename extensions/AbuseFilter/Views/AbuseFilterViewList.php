@@ -236,16 +236,16 @@ class AbuseFilterPager extends TablePager {
 				}
 				return $link;
 			case 'af_timestamp':
+				$username = User::getUsername( $row->af_user, $row->af_user_text );
 				$userLink =
 					Linker::userLink(
 						$row->af_user,
-						$row->af_user_text
+						$username
 					) .
 					Linker::userToolLinks(
 						$row->af_user,
-						$row->af_user_text
+						$username
 					);
-				$user = $row->af_user_text;
 				return wfMsgExt(
 					'abusefilter-edit-lastmod-text',
 					array( 'replaceafter', 'parseinline' ),
@@ -253,7 +253,7 @@ class AbuseFilterPager extends TablePager {
 						$userLink,
 						$lang->date( $value, true ),
 						$lang->time( $value, true ),
-						$user )
+						$username )
 				);
 			default:
 				throw new MWException( "Unknown row type $name!" );
@@ -280,7 +280,6 @@ class AbuseFilterPager extends TablePager {
 			'af_enabled',
 			'af_hit_count',
 			'af_throttled',
-			'af_user_text',
 			'af_timestamp'
 		);
 		return in_array( $name, $sortable_fields );

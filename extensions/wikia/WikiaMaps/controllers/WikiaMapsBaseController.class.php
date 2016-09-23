@@ -217,10 +217,6 @@ class WikiaMapsBaseController extends WikiaController {
 	 * @return bool
 	 */
 	protected function shouldDisableProtectedMapEdit( $mapId ) {
-		$IntMapConfig = $this->wg->IntMapConfig;
-
-		return array_key_exists( 'protectedMaps', $IntMapConfig ) &&
-			array_key_exists($mapId, $IntMapConfig[ 'protectedMaps' ]) &&
-			$this->wg->User->isStaff() === false;
+		return in_array($mapId, $this->wg->IntMapProtectedMaps) && $this->wg->User->isStaff() === false;
 	}
 }

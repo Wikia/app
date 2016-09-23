@@ -157,10 +157,6 @@ body.skin-oasis {
 				display: none;
 			}
 		}
-
-		&.ve .WikiaPage {
-			z-index: 3;
-		}
 	}
 
 	@media #{$breakpoint-small-only} {

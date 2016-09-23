@@ -1106,6 +1106,7 @@ class LocalFile extends File {
 				array( 'img_name' => $this->getName() ),
 				__METHOD__
 			);
+
 		}
 
 		$descTitle = $this->getTitle();
@@ -2200,7 +2201,6 @@ class LocalFileRestoreBatch {
 		}
 
 		$this->file->unlock();
-
 		return $status;
 	}
 
