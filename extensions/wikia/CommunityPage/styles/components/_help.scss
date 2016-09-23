@@ -7,6 +7,7 @@
 $small-icon-size: 18px;
 $big-icon-size: 30px;
 $help-module-title-padding: 4px;
+$help-module-title-text-width: 133px;
 $help-link-line-height: 14px;
 $policy-link-title-padding-top: 2px;
 
@@ -57,6 +58,7 @@ $policy-link-title-padding-top: 2px;
 
 	.community-page-help-module-title {
 		margin: auto 0 auto $content-spacing-small;
+		max-width: $help-module-title-text-width;
 	}
 
 	.community-page-help-module-links {
