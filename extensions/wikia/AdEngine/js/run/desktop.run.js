@@ -61,7 +61,7 @@ require([
 	// Everything starts after content and JS
 	win.wgAfterContentAndJS.push(function () {
 		if (floatingRail) {
-			pageLevelParams.add('rrspace', floatingRail.getAvailableSpaceParameter().toString());
+			pageLevelParams.add('ahspace', floatingRail.getArticleHeightParameter().toString());
 		}
 
 		// Ads
