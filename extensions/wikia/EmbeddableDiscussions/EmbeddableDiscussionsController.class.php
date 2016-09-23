@@ -34,7 +34,7 @@ class EmbeddableDiscussionsController {
 	 * @param errorMessage Return parameter with the proper error message to show. Disregard if return is false
 	 * @return true if ok, false if error
 	 */
-	private static function checkArguments( array $args, $modelData, &$errorMessage ) {
+	private function checkArguments( array $args, $modelData, &$errorMessage ) {
 		// mostrecent must be bool
 		if ( isset( $args['mostrecent'] )
 			&& $args['mostrecent'] !== 'true'
@@ -94,7 +94,7 @@ class EmbeddableDiscussionsController {
 		return true;
 	}
 
-	public static function render( $input, array $args ) {
+	public function render( $input, array $args ) {
 		global $wgCityId;
 
 		$showLatest = !empty( $args['mostrecent'] ) && filter_var( $args['mostrecent'], FILTER_VALIDATE_BOOLEAN );
@@ -104,14 +104,14 @@ class EmbeddableDiscussionsController {
 
 		$modelData = ( new DiscussionsThreadModel( $wgCityId ) )->getData( $showLatest, $itemCount, $category );
 
-		if ( !static::checkArguments( $args, $modelData, $errorMessage ) ) {
-			return static::renderError( $errorMessage );
+		if ( !$this->checkArguments( $args, $modelData, $errorMessage ) ) {
+			return $this->renderError( $errorMessage );
 		}
 
 		if ( F::app()->checkSkin( 'wikiamobile' ) ) {
-			return static::renderMobile( $modelData, $showLatest, $itemCount );
+			return $this->renderMobile( $modelData, $showLatest, $itemCount );
 		} else {
-			return static::renderDesktop( $category, $columns, $showLatest, $modelData );
+			return $this->renderDesktop( $category, $columns, $showLatest, $modelData );
 		}
 	}
 
@@ -120,7 +120,7 @@ class EmbeddableDiscussionsController {
 	 * @param $errorMessage
 	 * @return mixed
 	 */
-	private static function renderError( $errorMessage ) {
+	private function renderError( $errorMessage ) {
 		$templateEngine = ( new Wikia\Template\MustacheEngine )->setPrefix( __DIR__ . '/templates' );
 		return $templateEngine->clearData()->setData( [
 			'errorMessage' => $errorMessage
@@ -134,7 +134,7 @@ class EmbeddableDiscussionsController {
 	 * @param $templateEngine
 	 * @return mixed
 	 */
-	private static function renderMobile( $modelData, $showLatest, $itemCount ) {
+	private function renderMobile( $modelData, $showLatest, $itemCount ) {
 		$templateEngine = ( new Wikia\Template\MustacheEngine )->setPrefix( __DIR__ . '/templates' );
 
 		// In Mercury, discussions are rendered client side as an Ember component
@@ -159,7 +159,7 @@ class EmbeddableDiscussionsController {
 	 * @param $templateEngine
 	 * @return mixed
 	 */
-	private static function renderDesktop( $category, $columns, $showLatest, $modelData ) {
+	private function renderDesktop( $category, $columns, $showLatest, $modelData ) {
 		$templateEngine = ( new Wikia\Template\MustacheEngine )->setPrefix( __DIR__ . '/templates' );
 
 		$modelData['requestData'] = json_encode( [
