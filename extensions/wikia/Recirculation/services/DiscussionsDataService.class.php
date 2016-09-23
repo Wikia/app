@@ -35,8 +35,6 @@ class DiscussionsDataService {
 
 		if ($type === 'posts') {
 			$data = $this->getPosts( $rawData );
-		} elseif ( $type === 'meta' ) {
-			$data = $this->getMeta( $rawData );
 		} else {
 			$data = $this->formatData( $rawData );
 		}
@@ -60,16 +58,6 @@ class DiscussionsDataService {
 				$data['posts'][] = $this->buildPost( $value, $key );
 			}
 		}
-
-		return $data;
-	}
-
-	private function getMeta( $rawData ) {
-		$data = [];
-		$siteId = $rawData['siteId'];
-
-		$data['discussionsUrl'] = $this->server . '/d/f';
-		$data['postCount'] = $rawData['threadCount'];
 
 		return $data;
 	}

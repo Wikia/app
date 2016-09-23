@@ -1,7 +1,7 @@
 <?php
 
 class RecirculationApiController extends WikiaApiController {
-	const ALLOWED_TYPES = ['recent_popular', 'vertical', 'community', 'curated', 'hero', 'category', 'latest', 'posts', 'meta', 'all'];
+	const ALLOWED_TYPES = ['recent_popular', 'vertical', 'community', 'curated', 'hero', 'category', 'latest', 'posts', 'all'];
 	const FANDOM_LIMIT = 5;
 
 	/**
@@ -63,33 +63,6 @@ class RecirculationApiController extends WikiaApiController {
 				'title' => wfMessage( 'recirculation-fandom-subtitle' )->plain(),
 				'items' => (new CakeRelatedContentService())->getContentRelatedTo($target, $this->wg->sitename, $limit, $ignore),
 		]);
-	}
-
-	public function getAllPosts() {
-		$this->cors->setHeaders($this->response);
-
-		$cityId = $this->getParamCityId();
-
-		$parselyDataService = new ParselyDataService( $cityId );
-		$fandom = [
-			'title' => wfMessage( 'recirculation-fandom-title' )->plain(),
-			'items' => $parselyDataService->getPosts( 'recent_popular', 12 )
-		];
-
-		$discussionsData = [];
-		if ( RecirculationHooks::canShowDiscussions( $cityId ) ) {
-			$discussionsDataService = new DiscussionsDataService( $cityId );
-			$discussionsData = $discussionsDataService->getData();
-			$discussionsData['title'] = wfMessage( 'recirculation-discussion-title' )->plain();
-			$discussionsData['linkText'] = wfMessage( 'recirculation-discussion-link-text' )->plain();
-		}
-
-		$this->response->setCacheValidity( WikiaResponse::CACHE_VERY_SHORT );
-		$this->response->setData( [
-			'title' => wfMessage( 'recirculation-impact-footer-title' )->plain(),
-			'fandom' => $fandom,
-			'discussions' => $discussionsData,
-		] );
 	}
 
 	public function getDiscussions() {

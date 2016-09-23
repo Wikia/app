@@ -3,8 +3,9 @@ define('ext.wikia.recirculation.helpers.data', [
 	'jquery',
 	'wikia.window',
 	'wikia.abTest',
-	'wikia.nirvana'
-], function ($, w, abTest, nirvana) {
+	'wikia.nirvana',
+	'ext.wikia.recirculation.utils'
+], function ($, w, abTest, nirvana, utils) {
 
 	return function(options) {
 		options = options || {};
@@ -17,34 +18,6 @@ define('ext.wikia.recirculation.helpers.data', [
 						return { items: articles };
 					});
 			}
-
-
-			return $.when(loadAll(), loadArticles())
-				.done(function(data, articles) {
-					data.articles = articles;
-					return data;
-				});
-		}
-
-		function loadAll() {
-			var deferred = $.Deferred();
-
-			nirvana.sendRequest({
-				controller: 'RecirculationApi',
-				method: 'getAllPosts',
-				format: 'json',
-				type: 'get',
-				scriptPath: w.wgCdnApiUrl,
-				data: {
-					cityId: w.wgCityId
-				},
-				callback: function(data) {
-					data = formatFandom(data);
-					deferred.resolve(data);
-				}
-			});
-
-			return deferred.promise();
 		}
 
 		function loadArticles() {
@@ -72,24 +45,6 @@ define('ext.wikia.recirculation.helpers.data', [
 			return deferred.promise();
 		}
 
-		function formatFandom(data) {
-			var fandomPosts = [];
-
-			$.each(data.fandom.items, function(index, item) {
-				item.thumbnail = item.image_url;
-				item.index = index;
-				fandomPosts.push(item);
-			});
-
-			data.fandom.items = fandomPosts;
-
-			return {
-				title: data.title,
-				fandom: data.fandom,
-				discussions: data.discussions,
-			};
-		}
-
 		function formatArticles(data) {
 			var articles = [];
 
@@ -100,21 +55,9 @@ define('ext.wikia.recirculation.helpers.data', [
 				articles.push(item);
 			});
 
-			articles.sort(sortThumbnails);
+			articles.sort(utils.sortThumbnails);
 
 			return articles.slice(0,5);
-		}
-
-		function sortThumbnails(a, b) {
-			if (a.thumbnail && !b.thumbnail) {
-				return -1;
-			}
-
-			if (!a.thumbnail && b.thumbnail) {
-				return 1;
-			}
-
-			return 0;
 		}
 
 		return {

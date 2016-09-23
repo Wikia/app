@@ -35,13 +35,6 @@ require([
 	 *  		options: {
 	 *  			any options to pass to the helper
 	 *  		}
-	 *  	},
-	 *  	{
-	 *  		placement: 'impactFooter',
-	 *  		helper: 'cakeRelatedContent',
-	 *  		options: {
-	 *  			limit: 21
-	 *  		}
 	 *  	}
 	 *  ];
 	 *
