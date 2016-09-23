@@ -350,6 +350,12 @@ class LocalFile extends File {
 			$this->$name = $value;
 		}
 
+		/* Wikia change begin */
+		if ( array_key_exists( 'user', $array ) ) {
+			$this->user_text = User::getUsername( $array['user'], $array['user_text'] );
+		}
+		/* Wikia change end */
+
 		$this->fileExists = true;
 		$this->maybeUpgradeRow();
 	}
