@@ -9,6 +9,11 @@ class EmbeddableDiscussionsController {
 	const COLUMNS_MIN = 1;
 	const COLUMNS_MAX = 2;
 
+	const PARAM_MOSTRECENT = 'mostrecent';
+	const PARAM_SIZE = 'size';
+	const PARAM_COLUMNS = 'columns';
+	const PARAM_CATEGORY = 'category';
+
 	public static function onParserFirstCallInit( Parser $parser ) {
 		global $wgEnableDiscussions;
 
@@ -40,13 +45,13 @@ class EmbeddableDiscussionsController {
 	 * @return true if ok, false if error
 	 */
 	private function checkArguments( $modelData, array $args, &$errorMessage ) {
-		// mostrecent must be bool
-		if ( isset( $args[ 'mostrecent' ] ) &&
-			$args[ 'mostrecent' ] !== 'true' &&
-			$args[ 'mostrecent' ] !== 'false'
+		// PARAM_MOSTRECENT must be bool
+		if ( isset( $args[ static::PARAM_MOSTRECENT ] ) &&
+			$args[ static::PARAM_MOSTRECENT ] !== 'true' &&
+			$args[ static::PARAM_MOSTRECENT ] !== 'false'
 		) {
 			$errorMessage = wfMessage( 'embeddable-discussions-parameter-error',
-				'mostrecent',
+				static::PARAM_MOSTRECENT,
 				wfMessage( 'embeddable-discussions-parameter-error-boolean' )->plain()
 			)->plain();
 
@@ -54,8 +59,8 @@ class EmbeddableDiscussionsController {
 		}
 
 		// size must be integer in range
-		if ( isset( $args[ 'size' ] ) ) {
-			$sizeArg = $args[ 'size' ];
+		if ( isset( $args[ static::PARAM_SIZE ] ) ) {
+			$sizeArg = $args[ static::PARAM_SIZE ];
 			$size = ctype_digit( $sizeArg ) ? intval( $sizeArg ) : $sizeArg;
 
 			if ( !is_int ( $size ) ||
@@ -63,7 +68,7 @@ class EmbeddableDiscussionsController {
 				$size < self::ITEMS_MIN
 			) {
 				$errorMessage = wfMessage( 'embeddable-discussions-parameter-error',
-					'size',
+					static::PARAM_SIZE,
 					wfMessage( 'embeddable-discussions-parameter-error-range', self::ITEMS_MIN, self::ITEMS_MAX )->plain()
 				)->plain();
 
@@ -72,8 +77,8 @@ class EmbeddableDiscussionsController {
 		}
 
 		// columns must be integer in range
-		if ( isset( $args[ 'columns' ] ) ) {
-			$columnsArg = $args[ 'columns' ];
+		if ( isset( $args[ static::PARAM_COLUMNS ] ) ) {
+			$columnsArg = $args[ static::PARAM_COLUMNS ];
 			$columns = ctype_digit( $columnsArg ) ? intval( $columnsArg ) : $columnsArg;
 
 			if ( !is_int( $columns ) ||
@@ -81,7 +86,7 @@ class EmbeddableDiscussionsController {
 				$columns < self::COLUMNS_MIN
 			) {
 				$errorMessage = wfMessage( 'embeddable-discussions-parameter-error',
-					'columns',
+					static::PARAM_COLUMNS,
 					wfMessage( 'embeddable-discussions-parameter-error-range', self::COLUMNS_MIN, self::COLUMNS_MAX )->plain()
 				)->plain();
 
@@ -91,7 +96,8 @@ class EmbeddableDiscussionsController {
 
 		// category must be a valid category
 		if ( !empty( $modelData[ 'invalidCategory' ] ) ) {
-			$errorMessage = wfMessage( 'embeddable-discussions-parameter-error', $args[ 'category' ],
+			$errorMessage = wfMessage( 'embeddable-discussions-parameter-error',
+				$args[ static::PARAM_CATEGORY ],
 				wfMessage( 'embeddable-discussions-parameter-error-category' )->plain()
 			)->plain();
 
@@ -108,10 +114,10 @@ class EmbeddableDiscussionsController {
 	public function render( array $args ) {
 		global $wgCityId;
 
-		$showLatest = !empty( $args[ 'mostrecent' ] ) && filter_var( $args[ 'mostrecent' ], FILTER_VALIDATE_BOOLEAN );
-		$itemCount = !empty( $args[ 'size' ] ) ? intval( $args[ 'size' ] ) : self::ITEMS_DEFAULT;
-		$columns = !empty( $args[ 'columns' ] ) ? intval( $args[ 'columns' ] ) : self::COLUMNS_DEFAULT;
-		$category = !empty( $args[ 'category' ] ) ? $args[ 'category' ] : '';
+		$showLatest = !empty( $args[ static::PARAM_MOSTRECENT ] ) && filter_var( $args[ static::PARAM_MOSTRECENT ], FILTER_VALIDATE_BOOLEAN );
+		$itemCount = !empty( $args[ static::PARAM_SIZE ] ) ? intval( $args[ static::PARAM_SIZE ] ) : self::ITEMS_DEFAULT;
+		$columns = !empty( $args[ static::PARAM_COLUMNS ] ) ? intval( $args[ static::PARAM_COLUMNS ] ) : self::COLUMNS_DEFAULT;
+		$category = !empty( $args[ static::PARAM_CATEGORY ] ) ? $args[ static::PARAM_CATEGORY ] : '';
 
 		$modelData = ( new DiscussionsThreadModel( $wgCityId ) )->getData( $showLatest, $itemCount, $category );
 
