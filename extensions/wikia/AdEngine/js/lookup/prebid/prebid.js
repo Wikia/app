@@ -38,6 +38,7 @@ define('ext.wikia.adEngine.lookup.prebid', [
 
 			win.pbjs.que.push(function () {
 
+				win.pbjs.setPriceGranularity('auto');
 				win.pbjs.addAdUnits(adUnits);
 
 				win.pbjs.requestBids({
