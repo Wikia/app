@@ -40,7 +40,7 @@ $(function ($) {
 
 	$searchInput.on('keyup', function (event) {
 		// Escape key
-		if (event.keyCode === 27) {
+		if (event.which === 27) {
 			this.blur();
 			deactivateSearch();
 		}
