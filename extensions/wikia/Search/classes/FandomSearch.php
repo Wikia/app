@@ -37,16 +37,18 @@ class FandomSearch {
 		$log = WikiaLogger::instance();
 
 		$result = \Http::request( $method, $url, $options );
-		if ( $result === false ) {
-			$loggingParams['request'] = [
-				'url' => $url,
-				'method' => $method,
-				'options' => $options,
-			];
-			$log->debug( '', $loggingParams );
-		} else if ( !empty( $result ) ) {
+		if ( !empty( $result ) ) {
 			return static::parseResult( $result );
 		}
+
+		$loggingParams['request'] = [
+			'url' => $url,
+			'method' => $method,
+			'options' => $options,
+		];
+		$log->debug( 'Empty response from fandom search API', $loggingParams );
+
+		return [];
 	}
 
 	public static function getViewMoreLink( $stories, $query ) {

@@ -32,9 +32,9 @@ class WikiaSearchHelper {
 		$resultsLang = $wgRequest->getVal( 'resultsLang' );
 		if ( !empty( $resultsLang ) ) {
 			return $resultsLang;
-		} else {
-			return $wgLanguageCode;
 		}
+
+		return $wgLanguageCode;
 	}
 
 	/**
@@ -50,7 +50,7 @@ class WikiaSearchHelper {
 		$title = $this->wikiaLogoHelper->getCentralWikiUrlForLangIfExists( $lang );
 		if ( $title ) {
 			$out = $title->getServer();
-		} else if ( $title = $this->wikiaLogoHelper->getCentralWikiUrlForLangIfExists( self::DEFAULT_LANG ) ) {
+		} elseif ( $title = $this->wikiaLogoHelper->getCentralWikiUrlForLangIfExists( self::DEFAULT_LANG ) ) {
 			$out = $title->getServer();
 		}
 
