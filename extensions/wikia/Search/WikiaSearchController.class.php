@@ -52,6 +52,8 @@ class WikiaSearchController extends WikiaSpecialPageController {
 	const CROSS_WIKI_PROMO_THUMBNAIL_HEIGHT = 120;
 	const CROSS_WIKI_PROMO_THUMBNAIL_WIDTH = 180;
 
+	const FANDOM_STORIES_MEMC_KEY = 'fandom-stories-memcache-key';
+
 	/**
 	 * Responsible for instantiating query services based on config.
 	 * @var Wikia\Search\QueryService\Factory
@@ -656,7 +658,14 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		}
 
 		if ( $wgLang->getCode() === 'en' && !empty( $query ) ) {
-			$fandomStories = \Wikia\Search\FandomSolrSearch::getStoriesWithCache( $query );
+			$fandomStories = \WikiaDataAccess::cache(
+				wfSharedMemcKey(static::FANDOM_STORIES_MEMC_KEY, $query),
+				\WikiaResponse::CACHE_STANDARD,
+				function() use ($query) {
+					return ( new \Wikia\Search\Services\FandomSearchService() )->query( $query );
+				}
+			);
+
 			$viewMoreFandomStoriesLink = \Wikia\Search\FandomSearch::getViewMoreLink( $fandomStories, $query );
 
 			if ( !empty( $fandomStories ) ) {
