@@ -59,7 +59,7 @@ describe('ext.wikia.adEngine.video.playwire', function () {
 
 		spyOn(mocks.parent, 'appendChild');
 
-		playwire.inject('//fake.url', mocks.parent);
+		playwire.inject({configUrl: '//fake.url', container: mocks.parent});
 
 		expect(mocks.parent.appendChild.calls.mostRecent().args[0]['data-config']).toEqual('//fake.url');
 	});
@@ -69,7 +69,7 @@ describe('ext.wikia.adEngine.video.playwire', function () {
 
 		spyOn(mocks.parent, 'appendChild');
 
-		playwire.inject('//fake.url', mocks.parent, { vastUrl: '//custom-vast.url' });
+		playwire.inject({configUrl: '//fake.url', container: mocks.parent, vastUrl: '//custom-vast.url'});
 
 		expect(mocks.parent.appendChild.calls.mostRecent().args[0]['data-ad-tag']).toEqual('//custom-vast.url');
 	});
@@ -79,7 +79,7 @@ describe('ext.wikia.adEngine.video.playwire', function () {
 
 		spyOn(mocks.parent, 'appendChild');
 
-		playwire.inject('//fake.url', mocks.parent);
+		playwire.inject({configUrl: '//fake.url', container: mocks.parent});
 
 		expect(mocks.parent.appendChild.calls.mostRecent().args[0]['data-ad-tag']).toEqual('//vast.url');
 	});

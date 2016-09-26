@@ -12,15 +12,19 @@ define('ext.wikia.adEngine.video.playwire', [
 		return '//config.playwire.com/' + publisherId + '/videos/v2/' + videoId + '/zeus.json';
 	}
 
-	function inject(configUrl, playerContainer, params) {
-		var playerId = 'playwire_' + Math.floor((1 + Math.random()) * 0x10000),
+	function inject(params) {
+		var configUrl = params.configUrl,
+			container = params.container,
+			height = params.height,
+			playerId = 'playwire_' + Math.floor((1 + Math.random()) * 0x10000),
 			script = doc.createElement('script'),
-			win = playerContainer.ownerDocument.defaultView || playerContainer.ownerDocument.parentWindow;
+			slotName = params.slotName,
+			vastUrl = params.vastUrl,
+			width = params.width,
+			win = container.ownerDocument.defaultView || container.ownerDocument.parentWindow;
 
-		params = params || {};
-
-		if (!params.vastUrl) {
-			params.vastUrl = vastBuilder.build();
+		if (!vastUrl) {
+			vastUrl = vastBuilder.build('playwire', slotName, width / height);
 		}
 
 		win.onReady = function () {
@@ -29,7 +33,7 @@ define('ext.wikia.adEngine.video.playwire', [
 
 		script.setAttribute('data-id', playerId);
 		script.setAttribute('data-config', configUrl);
-		script.setAttribute('data-ad-tag', params.vastUrl);
+		script.setAttribute('data-ad-tag', vastUrl);
 
 		if (params.onReady) {
 			script.setAttribute('data-onready', 'onReady');
@@ -38,7 +42,7 @@ define('ext.wikia.adEngine.video.playwire', [
 		script.setAttribute('type', 'text/javascript');
 		script.src = playerUrl;
 
-		playerContainer.appendChild(script);
+		container.appendChild(script);
 		log(['inject', configUrl], 'debug', logGroup);
 	}
 
