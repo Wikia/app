@@ -4104,15 +4104,15 @@ class Language {
 		if ( $number >= 1000000000 ) {
 			return wfMessage( 'number-shortening-billions' )
 				->params( round( $number / 1000000000, 1 ) )
-				->parse();
+				->escaped();
 		} elseif ( $number >= 1000000 ) {
 			return wfMessage( 'number-shortening-millions' )
 				->params( round( $number / 1000000, 1 ) )
-				->parse();
+				->escaped();
 		} elseif ( $number >= 10000 ) {
 			return wfMessage( 'number-shortening' )
 				->params( round( $number / 1000 , 1 ) )
-				->parse();
+				->escaped();
 		} else {
 			return $this->formatNum( $number );
 		}
