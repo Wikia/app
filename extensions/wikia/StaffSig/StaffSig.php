@@ -21,25 +21,20 @@ function wfSigSetup(&$parser) {
 
 function wfMakeStaffSignature( $contents, $attributes, $parser ) {
 	$title = GlobalTitle::newFromText('Staff', 4 /*project*/, 177);
-	return wfMakeSignatureCommon( $title->getFullURL(), "This user is a member of Fandom Staff" );
+	return wfMakeSignatureCommon( $title->getFullURL(), "This user is a member of Wikia Staff" );
 }
 
 function wfMakeHelperSignature( $contents, $attributes, $parser ) {
 	$title = GlobalTitle::newFromText('Helper_Group', 12 /*help*/, 177);
-	return wfMakeSignatureCommon( $title->getFullURL(), "This user is a Fandom Helper" );
+	return wfMakeSignatureCommon( $title->getFullURL(), "This user is a Wikia Helper" );
 }
 
 function wfMakeSignatureCommon($href, $title, $iurl=null) {
 	global $wgExtensionsPath, $wgBlankImgUrl;
 
 	if( empty($iurl) ) {
-		$iurl = wfGetSignatureUrl();
+		$iurl = $wgExtensionsPath . '/wikia/StaffSig/images/WikiaStaff.png';
 	}
 
 	return '<a href="'. $href .'" title="'. $title . '" class="staffSigLink"><img src="'. $wgBlankImgUrl .'" style="background-image: url('. $iurl .')" alt="@Wikia" class="staffSig" width="41" height="12" /></a>';
-}
-
-function wfGetSignatureUrl() {
-	global $wgExtensionsPath;
-	return $wgExtensionsPath . '/wikia/DesignSystem/bower_components/design-system/assets/company/logo-fandom.svg';
 }
