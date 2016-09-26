@@ -11,9 +11,9 @@
 		<p class="description"><?= $description; ?></p>
 
 		<ul class="wiki-statistics subtle">
-			<li><?= $pages['count'] ?> <?= $pages['message'] ?></li>
-			<li><?= $img['count'] ?> <?= $img['message'] ?></li>
-			<li><?= $video['count'] ?> <?= $video['message'] ?></li>
+			<li><?= wfMessage( 'wikiasearch2-pages' )->params( $wg->Lang->shortenNumberDecorator( $pagesCount), $pagesCount )->escaped(); ?></li>
+			<li><?= wfMessage( 'wikiasearch2-images' )->params( $wg->Lang->shortenNumberDecorator( $imagesCount), $imagesCount )->escaped(); ?></li>
+			<li><?= wfMessage( 'wikiasearch2-videos' )->params( $wg->Lang->shortenNumberDecorator( $videosCount), $videosCount )->escaped(); ?></li>
 		</ul>
 	</div>
 </li>

@@ -10,18 +10,9 @@
 			</h1>
 			<p class="exact-wiki-match__hub subtle"><?= $hub ?></p>
 			<ul class="exact-wiki-match__statistics">
-				<li>
-					<div><?= $pages['count'] ?></div>
-					<div class="exact-wiki-match__statistics-message"><?= $pages['message'] ?></div>
-				</li>
-				<li>
-					<div><?= $img['count'] ?></div>
-					<div class="exact-wiki-match__statistics-message"><?= $img['message'] ?></div>
-				</li>
-				<li>
-					<div><?= $video['count'] ?></div>
-					<div class="exact-wiki-match__statistics-message"><?= $video['message'] ?></div>
-				</li>
+				<li><?= wfMessage( 'wikiasearch2-pages' )->params( $wg->Lang->shortenNumberDecorator( $pagesCount), $pagesCount )->escaped(); ?></li>
+				<li><?= wfMessage( 'wikiasearch2-images' )->params( $wg->Lang->shortenNumberDecorator( $imagesCount), $imagesCount )->escaped(); ?></li>
+				<li><?= wfMessage( 'wikiasearch2-videos' )->params( $wg->Lang->shortenNumberDecorator( $videosCount), $videosCount )->escaped(); ?></li>
 			</ul>
 			<p class="exact-wiki-match__wiki-description"><?= $description; ?></p>
 		</div>

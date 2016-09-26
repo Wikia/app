@@ -67,18 +67,9 @@ class ResultHelper
 			'isOnWikiMatch' => isset( $result['onWikiMatch'] ) && $result['onWikiMatch'],
 			'imageURL' => $imageURL,
 			'description' => $description,
-			'pages' => [
-				'count' => $service->shortNumForMsg( $result['articles_i'] ?: 0 ),
-				'message' => wfMessage( 'wikiasearch3-pages' )->escaped()
-			],
-			'img' => [
-				'count' => $service->shortNumForMsg( $result['images_i'] ?: 0 ),
-				'message' => wfMessage( 'wikiasearch3-images' )->escaped(),
-			],
-			'video' => [
-				'count' => $service->shortNumForMsg( $result['videos_i'] ?: 0 ),
-				'message' => wfMessage( 'wikiasearch3-videos' )->escaped()
-			],
+			'pagesCount' => $result['articles_i'] ?: 0,
+			'imagesCount' => $result['images_i'] ?: 0,
+			'videosCount' => $result['videos_i'] ?: 0,
 			'title' => ( $sn = $result->getText( 'sitename_txt' ) ) ? $sn : $result->getText( 'headline_txt' ),
 			'url' => $result->getText( 'url' ),
 			'hub' => $result->getHub(),
