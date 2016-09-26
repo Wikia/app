@@ -997,7 +997,6 @@ class MediaWikiService
 		return $title;
 	}
 
-
 	/**
 	 * Gets a title from a page id
 	 * @param int $pageId
