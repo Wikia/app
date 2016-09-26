@@ -30,11 +30,8 @@ class WikiaSearchHelper {
 		global $wgLanguageCode, $wgRequest;
 
 		$resultsLang = $wgRequest->getVal( 'resultsLang' );
-		if ( !empty( $resultsLang ) ) {
-			return $resultsLang;
-		}
 
-		return $wgLanguageCode;
+		return $resultsLang ? $resultsLang : $wgLanguageCode;
 	}
 
 	/**
