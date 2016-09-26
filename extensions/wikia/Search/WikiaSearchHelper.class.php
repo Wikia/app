@@ -29,9 +29,7 @@ class WikiaSearchHelper {
 	public function getLangForSearchResults() {
 		global $wgLanguageCode, $wgRequest;
 
-		$resultsLang = $wgRequest->getVal( 'resultsLang' );
-
-		return $resultsLang ? $resultsLang : $wgLanguageCode;
+		return $wgRequest->getVal( 'resultsLang', $wgLanguageCode );
 	}
 
 	/**
