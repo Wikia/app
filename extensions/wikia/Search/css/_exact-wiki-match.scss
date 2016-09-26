@@ -30,20 +30,15 @@ $border-size: 1px;
 		&__statistics {
 			display: flex;
 			font-size: 12px;
-			justify-content: space-between;
 			line-height: 1rem;
 			list-style: none;
 			margin: 0;
 			padding: 15px 0;
+			text-transform: uppercase;
 
 			li {
-				//don't grow elements so they can distribute evenly
-				flex: 0;
+				flex: 1;
 			}
-		}
-
-		&__statistics-message {
-			text-transform: uppercase;
 		}
 
 		&__wiki-description {
