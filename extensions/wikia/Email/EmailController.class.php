@@ -15,7 +15,9 @@ abstract class EmailController extends \WikiaController {
 
 	const ANDROID_PLATFORM = 'android';
 
-	const IOS_PATFORM = 'ios';
+	const IOS_PLATFORM = 'ios';
+
+	const MOBILE_APPLICATIONS_LINKS_EVICTION_TIME = 24 * 60 * 60; // 24h
 
 	/** CSS used for the main content section of each email. Used by getContent()
 	 * and intended to be overridden by child classes. */
@@ -418,16 +420,16 @@ abstract class EmailController extends \WikiaController {
 		];
 
 		if ( $hasMobileApplicationBadges ) {
-			if ( $mobileApplicationsLinks[ANDROID_PLATFORM] ) {
-				$badges[ANDROID_PLATFORM] = [
-					'link' => $mobileApplicationsLinks[ANDROID_PLATFORM],
-					'src' => EmailMobileBadges::getBadgeFor( $this->targetLang, ANDROID_PLATFORM )
+			if ( $mobileApplicationsLinks[self::ANDROID_PLATFORM] ) {
+				$badges[self::ANDROID_PLATFORM] = [
+					'link' => $mobileApplicationsLinks[self::ANDROID_PLATFORM],
+					'src' => EmailMobileBadges::getBadgeFor( $this->targetLang, self::ANDROID_PLATFORM )
 				];
 			}
-			if ( $mobileApplicationsLinks[IOS_PATFORM] ) {
-				$badges[IOS_PATFORM] = [
-					'link' => $mobileApplicationsLinks[IOS_PATFORM],
-					'src' => EmailMobileBadges::getBadgeFor( $this->targetLang, IOS_PATFORM )
+			if ( $mobileApplicationsLinks[self::IOS_PLATFORM] ) {
+				$badges[self::IOS_PLATFORM] = [
+					'link' => $mobileApplicationsLinks[self::IOS_PLATFORM],
+					'src' => EmailMobileBadges::getBadgeFor( $this->targetLang, self::IOS_PLATFORM )
 				];
 			}
 		}
@@ -436,16 +438,32 @@ abstract class EmailController extends \WikiaController {
 	}
 
 	private function generateMobileApplicationsLinks() {
-		$mobileApplicationsLinks = [];
+		global $wgMemc;
 
-		$response = $this->fetchMobileApplicationsDetails();
+		$mobileApplicationsLinks = $wgMemc->get( $this->createCacheKeyForMobileApplicationsLinks() );
 
-		if ( $response && $this->applicationsExistFor( $this->wg->CityId, $response ) ) {
-			$mobileApplications = json_decode( $response, true );
-			$mobileApplicationsLinks = $this->traverseThrough( $mobileApplications );
+		if ( is_bool( $mobileApplicationsLinks )) {
+			$mobileApplicationsLinks = [];
+			$response = $this->fetchMobileApplicationsDetails();
+
+			if ( $response && $this->applicationsExistFor( $this->wg->CityId, $response )) {
+					$mobileApplications = json_decode($response, true);
+					$mobileApplicationsLinks = $this->traverseThrough($mobileApplications);
+			}
+
+			// Event if response is not valid (for example there are some difficulties with mobile applications service)
+			// result will be cached to prevent too long delays in email generation
+			$wgMemc->set(
+				$this->createCacheKeyForMobileApplicationsLinks(),
+				$mobileApplicationsLinks,
+				time() + self::MOBILE_APPLICATIONS_LINKS_EVICTION_TIME );
 		}
 
 		return $mobileApplicationsLinks;
+	}
+
+	private function createCacheKeyForMobileApplicationsLinks() {
+		return "{$this->wg->CityId}:mobileApplicationsLinks";
 	}
 
 	/**
@@ -480,11 +498,11 @@ abstract class EmailController extends \WikiaController {
 				if ( $language['wikia_id'] ==  $siteId) {
 					if ( $app['android_release'] ) {
 						$release = $app['android_release'];
-						$mobileApplicationsLinks[ANDROID_PLATFORM] = "https://play.google.com/store/apps/details?id=$release";
+						$mobileApplicationsLinks[self::ANDROID_PLATFORM] = "https://play.google.com/store/apps/details?id=$release";
 					}
 					if ( $app['ios_release'] ) {
 						$release = $app['ios_release'];
-						$mobileApplicationsLinks[IOS_PATFORM] = "https://itunes.apple.com/us/app/id$release";
+						$mobileApplicationsLinks[self::IOS_PLATFORM] = "https://itunes.apple.com/us/app/id$release";
 					}
 					break;
 				}
