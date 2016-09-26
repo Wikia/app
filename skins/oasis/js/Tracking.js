@@ -23,21 +23,21 @@ jQuery(function ($) {
 		trackingMethod: 'analytics'
 	});
 
-	trackWithEventData = function (e) {
-		if (window.veTrack && e.data.label === 'section-edit') {
+	trackWithEventData = function (event) {
+		if (window.veTrack && event.data.label === 'section-edit') {
 			veTrack({
 				action: ($('#ca-ve-edit').exists() ? 've-section-edit' : 'other-section-edit') + '-click'
 			});
 		}
 
 		// Primary mouse button only
-		if (e.type === 'mousedown' && e.which !== 1) {
+		if (event.type === 'mousedown' && event.which !== 1) {
 			return;
 		}
 
 		track({
-			browserEvent: e
-		}, e.data);
+			browserEvent: event
+		}, event.data);
 	};
 
 	// For tracking components which are used inside and outside of the editor.
@@ -70,13 +70,13 @@ jQuery(function ($) {
 			return;
 		}
 
-		$('#WikiaPageHeader').on('mousedown', 'a', function (e) {
+		$('#WikiaPageHeader').on('mousedown', 'a', function (event) {
 			var label,
-				el = $(e.currentTarget),
+				el = $(event.currentTarget),
 				id = el.data('id');
 
 			// Primary mouse button only
-			if (e.which !== 1) {
+			if (event.which !== 1) {
 				return;
 			}
 
@@ -111,19 +111,19 @@ jQuery(function ($) {
 
 			if (label !== undefined) {
 				track({
-					browserEvent: e,
+					browserEvent: event,
 					category: category,
 					label: label
 				});
 			}
 		});
 
-		$wikiaArticle.on('mousedown', 'a', function (e) {
+		$wikiaArticle.on('mousedown', 'a', function (event) {
 			var label,
-				el = $(e.currentTarget);
+				el = $(event.currentTarget);
 
 			// Primary mouse button only
-			if (e.which !== 1) {
+			if (event.which !== 1) {
 				return;
 			}
 
@@ -143,7 +143,7 @@ jQuery(function ($) {
 
 			if (label !== undefined) {
 				track({
-					browserEvent: e,
+					browserEvent: event,
 					category: category,
 					label: label
 				});
@@ -185,12 +185,12 @@ jQuery(function ($) {
 			label,
 			suffix;
 		if (alliance.length) {
-			alliance.on('mousedown', 'a', function (e) {
+			alliance.on('mousedown', 'a', function (event) {
 				suffix = '-click';
 				if ($(this).attr('href').indexOf('http://www.wikia.com/Alliance') !== -1) {
 					suffix = '-logo-click';
 				}
-				label = $(e.delegateTarget).attr('data-label');
+				label = $(event.delegateTarget).attr('data-label');
 
 				if (label !== undefined) {
 					label += suffix;
@@ -219,13 +219,13 @@ jQuery(function ($) {
 
 	/** contribute **/
 
-	$wikiHeader.find('.buttons .contribute').on('mousedown', 'a', function (e) {
+	$wikiHeader.find('.buttons .contribute').on('mousedown', 'a', function (event) {
 		var label,
-			el = $(e.target),
+			el = $(event.target),
 			id = el.data('id');
 
 		// Primary mouse button only
-		if (e.which !== 1) {
+		if (event.which !== 1) {
 			return;
 		}
 
@@ -252,7 +252,7 @@ jQuery(function ($) {
 
 		if (label !== undefined) {
 			track({
-				browserEvent: e,
+				browserEvent: event,
 				category: 'contribute',
 				label: label
 			});
@@ -264,13 +264,13 @@ jQuery(function ($) {
 	if ($body.hasClass('page-Special_RecentChanges')) {
 		// We need to bind to #WikiaArticle because users use scripts which reload the content
 		// see: http://dev.wikia.com/wiki/MediaWiki:AjaxRC/code.js
-		$wikiaArticle.on('mousedown', 'a', function (e) {
-			var $el = $(e.target),
+		$wikiaArticle.on('mousedown', 'a', function (event) {
+			var $el = $(event.target),
 				label = $el.attr('data-action'),
 				href = $el.attr('href');
 
 			// Primary mouse button only
-			if (e.which !== 1) {
+			if (event.which !== 1) {
 				return;
 			}
 
@@ -288,7 +288,7 @@ jQuery(function ($) {
 
 			if (label !== undefined) {
 				track({
-					browserEvent: e,
+					browserEvent: event,
 					category: 'recent-changes',
 					label: label
 				});
@@ -331,17 +331,17 @@ jQuery(function ($) {
 		$wikiaSearch.on('mousedown', '.autocomplete', {
 			category: category,
 			label: 'search-suggest'
-		}, trackWithEventData).on('mousedown', '.wikia-button', function (e) {
+		}, trackWithEventData).on('mousedown', '.wikia-button', function (event) {
 			// Prevent tracking 'fake' form submission clicks
-			if (e.which === 1 && e.clientX > 0) {
+			if (event.which === 1 && event.clientX > 0) {
 				var label = !suggestionShowed ? 'search-button' : 'search-after-suggest-button';
 				track({
 					category: category,
 					label: label
 				});
 			}
-		}).on('keypress', '[name=search]', function (e) {
-			if (e.which === 13 && $(this).is(':focus')) {
+		}).on('keypress', '[name=search]', function (event) {
+			if (event.which === 13 && $(this).is(':focus')) {
 				var label = !suggestionShowed ? 'search-enter' : 'search-after-suggest-enter';
 				track({
 					category: category,
@@ -355,9 +355,9 @@ jQuery(function ($) {
 			action: Wikia.Tracker.ACTIONS.VIEW,
 			category: category,
 			label: 'search-suggest-show'
-		}, function (e) {
+		}, function (event) {
 			suggestionShowed = true;
-			trackWithEventData(e);
+			trackWithEventData(event);
 		});
 
 		/**
@@ -371,56 +371,56 @@ jQuery(function ($) {
 					label: 'empty-page'
 				});
 			}
-			$wikiaSearch.on('mousedown', '.search-tabs a', function (e) {
+			$wikiaSearch.on('mousedown', '.search-tabs a', function (event) {
 				track({
-					browserEvent: e,
+					browserEvent: event,
 					category: category,
-					label: 'sidebar-' + $(e.currentTarget).prop('className')
+					label: 'sidebar-' + $(event.currentTarget).prop('className')
 				});
-			}).on('mousedown', '.Results .result-link', function (e) {
-				var el = $(e.currentTarget),
+			}).on('mousedown', '.Results .result-link', function (event) {
+				var el = $(event.currentTarget),
 					label = 'result-' +
 					(el.data('event') === 'search_click_match' ? 'push-top' : 'item-' +
 						el.data('pos'));
 				track({
-					browserEvent: e,
+					browserEvent: event,
 					category: category,
 					label: label
 				});
-			}).on('mousedown', '.Results .wiki-thumb-tracking', function (e) {
-				var el = $(e.currentTarget),
+			}).on('mousedown', '.Results .wiki-thumb-tracking', function (event) {
+				var el = $(event.currentTarget),
 					label = 'result-item-' +
 					el.data('pos') +
 					'-image' +
 					(el.data('event') === 'search_click_wiki-no-thumb' ? '-placeholder' : '');
 				track({
-					browserEvent: e,
+					browserEvent: event,
 					category: category,
 					label: label
 				});
-			}).on('mousedown', '.thumb-tracking', function (e) {
-				var el = $(e.currentTarget),
+			}).on('mousedown', '.thumb-tracking', function (event) {
+				var el = $(event.currentTarget),
 					label = 'result-item-' +
 					'image-' +
 					(el.data('event') === 'search_click_match' ? 'push-top' : el.data('pos'));
 				track({
-					browserEvent: e,
+					browserEvent: event,
 					category: category,
 					label: label
 				});
-			}).on('mousedown', '.image', function (e) {
-				var $currentTarget = $(e.currentTarget),
+			}).on('mousedown', '.image', function (event) {
+				var $currentTarget = $(event.currentTarget),
 					label = 'result-' +
 					($currentTarget.hasClass('video') ? 'video' : 'photo') +
 					(($currentTarget.parents('.video-addon-results').length > 0) ? '-video-addon' : '');
 				track({
-					browserEvent: e,
+					browserEvent: event,
 					category: category,
 					label: label
 				});
-			}).on('mousedown', '.video-addon-seach-video', function (e) {
+			}).on('mousedown', '.video-addon-seach-video', function (event) {
 				track({
-					browserEvent: e,
+					browserEvent: event,
 					category: category,
 					label: 'video-addon-results-header'
 				});
@@ -434,10 +434,10 @@ jQuery(function ($) {
 				label: 'exact-wiki-match'
 			});
 
-			$exactWikiMatchModule.on('mousedown', 'a', function (e) {
-				var el = $(e.currentTarget);
+			$exactWikiMatchModule.on('mousedown', 'a', function (event) {
+				var el = $(event.currentTarget);
 				track({
-					browserEvent: e,
+					browserEvent: event,
 					category: category,
 					label: 'exact-wiki-match-' + el.data('event')
 				});
@@ -451,17 +451,17 @@ jQuery(function ($) {
 				label: 'fandom-stories'
 			});
 
-			$fandomStoriesModule.on('mousedown', '.fandom-story-link', function (e) {
+			$fandomStoriesModule.on('mousedown', '.fandom-story-link', function (event) {
 				track({
-					browserEvent: e,
+					browserEvent: event,
 					category: category,
-					label: 'fandom-story-link-' + $(e.currentTarget).data('pos')
+					label: 'fandom-story-link-' + $(event.currentTarget).data('pos')
 				});
-			}).on('mousedown', '.fandom-story-image', function (e) {
+			}).on('mousedown', '.fandom-story-image', function (event) {
 				track({
-					browserEvent: e,
+					browserEvent: event,
 					category: category,
-					label: 'fandom-story-image-' + $(e.currentTarget).data('pos')
+					label: 'fandom-story-image-' + $(event.currentTarget).data('pos')
 				});
 			});
 		}
@@ -473,33 +473,33 @@ jQuery(function ($) {
 				label: 'top-wiki-articles'
 			});
 
-			$topModule.on('mousedown', '.top-wiki-article-link', function (e) {
+			$topModule.on('mousedown', '.top-wiki-article-link', function (event) {
 				track({
-					browserEvent: e,
+					browserEvent: event,
 					category: category,
-					label: 'top-wiki-article-link-' + $(e.currentTarget).data('pos')
+					label: 'top-wiki-article-link-' + $(event.currentTarget).data('pos')
 				});
-			}).on('mousedown', '.top-wiki-article-image', function (e) {
+			}).on('mousedown', '.top-wiki-article-image', function (event) {
 				track({
-					browserEvent: e,
+					browserEvent: event,
 					category: category,
-					label: 'top-wiki-article-image-' + $(e.currentTarget).data('pos')
+					label: 'top-wiki-article-image-' + $(event.currentTarget).data('pos')
 				});
 			});
 		}
 
 		if ($categoryModule.length) {
-			$categoryModule.on('mousedown', '.category-articles-thumb a', function (e) {
-				var el = $(e.currentTarget);
+			$categoryModule.on('mousedown', '.category-articles-thumb a', function (event) {
+				var el = $(event.currentTarget);
 				track({
-					browserEvent: e,
+					browserEvent: event,
 					category: category,
 					label: 'category-module-thumb-' + el.data('pos')
 				});
-			}).on('mousedown', '.category-articles-text a', function (e) {
-				var el = $(e.currentTarget);
+			}).on('mousedown', '.category-articles-text a', function (event) {
+				var el = $(event.currentTarget);
 				track({
-					browserEvent: e,
+					browserEvent: event,
 					category: category,
 					label: 'category-module-title-' + el.data('pos')
 				});
@@ -509,12 +509,12 @@ jQuery(function ($) {
 
 	/** thread-module **/
 
-	$('#RelatedForumDiscussion').on('mousedown', 'a', function (e) {
+	$('#RelatedForumDiscussion').on('mousedown', 'a', function (event) {
 		var label,
-			el = $(e.target);
+			el = $(event.target);
 
 		// Primary mouse button only
-		if (e.which !== 1) {
+		if (event.which !== 1) {
 			return;
 		}
 
@@ -528,7 +528,7 @@ jQuery(function ($) {
 
 		if (label !== undefined) {
 			track({
-				browserEvent: e,
+				browserEvent: event,
 				category: 'thread-module',
 				label: label
 			});
@@ -537,13 +537,13 @@ jQuery(function ($) {
 
 	/** toolbar **/
 
-	$('#WikiaBarWrapper').on('mousedown', '.toolbar a', function (e) {
+	$('#WikiaBarWrapper').on('mousedown', '.toolbar a', function (event) {
 		var label,
-			el = $(e.target),
+			el = $(event.target),
 			name = el.data('name');
 
 		// Primary mouse button only
-		if (e.which !== 1) {
+		if (event.which !== 1) {
 			return;
 		}
 
@@ -561,7 +561,7 @@ jQuery(function ($) {
 
 		if (label !== undefined) {
 			track({
-				browserEvent: e,
+				browserEvent: event,
 				category: 'toolbar',
 				label: label
 			});
@@ -573,13 +573,13 @@ jQuery(function ($) {
 	(function () {
 		var category = 'top-nav';
 
-		$('#wall-notifications-markasread').on('mousedown', 'span', function (e) {
+		$('#wall-notifications-markasread').on('mousedown', 'span', function (event) {
 			var label,
-				el = $(e.target),
+				el = $(event.target),
 				id = el.attr('id');
 
 			// Primary mouse button only
-			if (e.which !== 1) {
+			if (event.which !== 1) {
 				return;
 			}
 
@@ -592,7 +592,7 @@ jQuery(function ($) {
 
 			if (label !== undefined) {
 				track({
-					browserEvent: e,
+					browserEvent: event,
 					category: category,
 					label: label
 				});
@@ -603,13 +603,13 @@ jQuery(function ($) {
 	/** wiki-activity **/
 
 	if ($body.hasClass('page-Special_WikiActivity')) {
-		$wikiaArticle.find('.activityfeed').on('mousedown', 'a', function (e) {
+		$wikiaArticle.find('.activityfeed').on('mousedown', 'a', function (event) {
 			var label, type,
-				el = $(e.target),
+				el = $(event.target),
 				parent = el.parent();
 
 			// Primary mouse button only
-			if (e.which !== 1) {
+			if (event.which !== 1) {
 				return;
 			}
 
@@ -635,7 +635,7 @@ jQuery(function ($) {
 
 			if (label !== undefined) {
 				track({
-					browserEvent: e,
+					browserEvent: event,
 					category: 'wiki-activity',
 					label: label
 				});
@@ -645,13 +645,13 @@ jQuery(function ($) {
 
 	/** wiki-nav **/
 
-	$wikiHeader.on('mousedown', 'a', function (e) {
+	$wikiHeader.on('mousedown', 'a', function (event) {
 		var label,
-			el = $(e.target),
+			el = $(event.target),
 			canonical;
 
 		// Primary mouse button only
-		if (e.which !== 1) {
+		if (event.which !== 1) {
 			return;
 		}
 
@@ -691,7 +691,7 @@ jQuery(function ($) {
 
 		if (label !== undefined) {
 			track({
-				browserEvent: e,
+				browserEvent: event,
 				category: 'wiki-nav',
 				label: label
 			});
@@ -707,12 +707,12 @@ jQuery(function ($) {
 		}, trackWithEventData);
 
 		/** recent-wiki-activity **/
-		$wikiaRail.find('.WikiaActivityModule').on('mousedown', 'a', function (e) {
+		$wikiaRail.find('.WikiaActivityModule').on('mousedown', 'a', function (event) {
 			var label,
-				el = $(e.target);
+				el = $(event.target);
 
 			// Primary mouse button only
-			if (e.which !== 1) {
+			if (event.which !== 1) {
 				return;
 			}
 
@@ -726,7 +726,7 @@ jQuery(function ($) {
 
 			if (label !== undefined) {
 				track({
-					browserEvent: e,
+					browserEvent: event,
 					category: 'recent-wiki-activity',
 					label: label
 				});

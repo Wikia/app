@@ -16,18 +16,18 @@ class FandomSearchTest extends BaseTest {
 		$this->assertEquals(
 			[
 				[
-					'title' => "test title",
-					'excerpt' => "test excerpt",
-					'vertical' => "Games",
-					'image' => "http://fandom.wikia.com/wp-content/uploads/2016/07/Gears-of-War-4-Comic-Con-San-diego-SDCC-2016-Feature-400x225.jpeg",
-					'url' => "http://fandom.wikia.com/test-link",
+					'title' => 'test title',
+					'excerpt' => 'test excerpt',
+					'vertical' => 'Games',
+					'image' => 'http://fandom.wikia.com/wp-content/uploads/2016/07/Gears-of-War-4-Comic-Con-San-diego-SDCC-2016-Feature-400x225.jpeg',
+					'url' => 'http://fandom.wikia.com/test-link',
 				],
 				[
-					'title' => "test title 2",
-					'excerpt' => "test excerpt 2",
-					'vertical' => "Comics",
-					'image' => "http://fandom.wikia.com/wp-content/uploads/2016/08/Batman-1-400x225.jpg",
-					'url' => "http://fandom.wikia.com/articles/8-best-frenemies-pop-culture",
+					'title' => 'test title 2',
+					'excerpt' => 'test excerpt 2',
+					'vertical' => 'Comics',
+					'image' => 'http://fandom.wikia.com/wp-content/uploads/2016/08/Batman-1-400x225.jpg',
+					'url' => 'http://fandom.wikia.com/articles/8-best-frenemies-pop-culture',
 				]
 			],
 			\Wikia\Search\FandomSearch::getStories( 'test' )

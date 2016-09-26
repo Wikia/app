@@ -4090,4 +4090,32 @@ class Language {
 		return $pluralRules;
 	}
 
+	/**
+	 * Shorten number to thousands/millions/billions
+	 *
+	 * @param $number
+	 * @return String
+	 *
+	 * (added by Wikia)
+	 */
+	public function shortenNumberDecorator( $number ) {
+		$number = intval( $number );
+
+		if ( $number >= 1000000000 ) {
+			return wfMessage( 'number-shortening-billions' )
+				->params( round( $number / 1000000000, 1 ) )
+				->escaped();
+		} elseif ( $number >= 1000000 ) {
+			return wfMessage( 'number-shortening-millions' )
+				->params( round( $number / 1000000, 1 ) )
+				->escaped();
+		} elseif ( $number >= 1000 ) {
+			return wfMessage( 'number-shortening' )
+				->params( round( $number / 1000 , 1 ) )
+				->escaped();
+		} else {
+			return $this->formatNum( $number );
+		}
+	}
+
 }

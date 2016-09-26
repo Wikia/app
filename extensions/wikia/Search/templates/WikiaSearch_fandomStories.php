@@ -9,7 +9,7 @@
 				<div class="side-article-category"><?= htmlspecialchars( $story['vertical'] ); ?></div>
 				<div class="side-article-thumbnail">
 					<? if ( isset( $story['image'] ) ) : ?>
-						<a href="<?= Sanitizer::encodeAttribute($story['url'] ); ?>" class="fandom-story-image" data-pos="<?= $counter ?>">
+						<a href="<?= Sanitizer::encodeAttribute( $story['url'] ); ?>" class="fandom-story-image" data-pos="<?= $counter ?>">
 							<img src="<?= Sanitizer::encodeAttribute( $story['image'] ); ?>" />
 						</a>
 					<? endif; ?>
