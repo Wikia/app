@@ -34,7 +34,6 @@ class ARecoveryEngineApiController extends WikiaController {
 			->warning( 'AdBlock Interference',
 				[ 'action' => $this->request->getVal('kind') ]
 			);
-		$this->response->setHeader('X-Robots-Tag', 'noindex,noarchive'); //ADEN-3930
 		$this->response->setContentType( 'text/javascript; charset=utf-8' );
 		$this->response->setBody( 'var arecoveryEngineLogInfoStatus=1;' );
 		$this->response->setCacheValidity( self::MAX_EVENT_INTERVAL );
