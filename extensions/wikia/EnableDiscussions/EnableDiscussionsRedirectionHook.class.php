@@ -14,8 +14,7 @@ class EnableDiscussionsRedirectionHook {
 
 
 	public static function onBeforeInitialize(
-		Title $title = null, $unused, OutputPage $output = null, User $user = null,
-		WebRequest $request = null, MediaWiki $mediaWiki
+		Title $title = null, $unused, OutputPage $output = null, $user, $request, $mediaWiki
 	) {
 		if ( !self::shouldRedirectToDiscussions() || $title == null ) {
 			return true;
