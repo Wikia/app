@@ -435,8 +435,8 @@ class WikiFactoryLoader {
 			// For URLs starting with upper-case letter (/Something) redirect to /wiki/Something
 			$wikiPrefix = '';
 			if ( $host == 'paragon.wikia.com' ) {
-				$firstLetter = $url['path'][1];
-				if ( strtoupper( $firstLetter ) == $firstLetter ) {
+				$firstLetter = substr( $url['path'], 1, 1 );
+				if ( is_string( $firstLetter ) && ctype_upper( $firstLetter ) ) {
 					$wikiPrefix = '/wiki';
 				}
 			}
