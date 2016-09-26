@@ -4109,7 +4109,7 @@ class Language {
 			return wfMessage( 'number-shortening-millions' )
 				->params( round( $number / 1000000, 1 ) )
 				->escaped();
-		} elseif ( $number >= 10000 ) {
+		} elseif ( $number >= 1000 ) {
 			return wfMessage( 'number-shortening' )
 				->params( round( $number / 1000 , 1 ) )
 				->escaped();
