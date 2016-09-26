@@ -2,7 +2,7 @@
 
 class CrosslinkTagController extends WikiaController {
 
-	const PARSER_TAG_NAME = 'crosslink';
+	const PARSER_TAG_NAME = 'storieslink';
 	const MAX_URLS = 4;
 	const MAX_LENGTH = 90;
 
