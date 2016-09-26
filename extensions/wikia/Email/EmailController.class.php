@@ -442,8 +442,8 @@ abstract class EmailController extends \WikiaController {
 		if ( $this->applicationsExistFor($siteId, $response ) ) {
 			$mobileApplications = json_decode($response, true);
 
-			foreach ( $mobileApplications['apps'] as &$app ) {
-				foreach ( $app['languages'] as &$language ) {
+			foreach ( $mobileApplications['apps'] as $app ) {
+				foreach ( $app['languages'] as $language ) {
 					if ( $language['wikia_id'] == $siteId ) {
 						if ( $app['android_release'] ) {
 							$release = $app['android_release'];
