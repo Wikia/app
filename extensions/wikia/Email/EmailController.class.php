@@ -269,11 +269,11 @@ abstract class EmailController extends \WikiaController {
 				'content' => $this->getContent(),
 				'footerMessages' => $this->getFooterMessages(),
 				'footerMobileApplicationMessages' => $this->getFooterMobileApplicationMessages(),
-				'badges' => $this->generateMobileApplicationBadges(),
+				'badges' => $this->generateMobileApplicationsBadges(),
 				'marketingFooter' => $this->marketingFooter,
 				'socialMessages' => $this->getSocialMessages(),
 				'icons' => ImageHelper::getIconInfo(),
-				'disableInit' => true
+				'disableInit' => true,
 			]
 		);
 
@@ -406,9 +406,9 @@ abstract class EmailController extends \WikiaController {
 		];
 	}
 
-	private function generateMobileApplicationBadges() {
-		$mobileApplicationsLinks = $this->generateMobileApplicationLinks();
-		$hasMobileApplicationBadges = count($mobileApplicationsLinks) > 0;
+	private function generateMobileApplicationsBadges() {
+		$mobileApplicationsLinks = $this->generateMobileApplicationsLinks();
+		$hasMobileApplicationBadges = count( $mobileApplicationsLinks ) > 0;
 		$badges = [
 			'hasMobileApplicationBadges' => $hasMobileApplicationBadges
 		];
@@ -433,25 +433,25 @@ abstract class EmailController extends \WikiaController {
 		return $badges;
 	}
 
-	private function generateMobileApplicationLinks() {
-		$result = [];
+	private function generateMobileApplicationsLinks() {
+		$mobileApplicationsLinks = [];
 
 		$response = $this->fetchMobileApplicationsDetails();
 		$siteId = $this->wg->CityId;
 
 		if ( $this->applicationsExistFor($siteId, $response ) ) {
-			$json = json_decode($response, true);
+			$mobileApplications = json_decode($response, true);
 
-			foreach ( $json['apps'] as &$app ) {
+			foreach ( $mobileApplications['apps'] as &$app ) {
 				foreach ( $app['languages'] as &$language ) {
 					if ( $language['wikia_id'] == $siteId ) {
 						if ( $app['android_release'] ) {
 							$release = $app['android_release'];
-							$result['android'] = "https://play.google.com/store/apps/details?id=$release";
+							$mobileApplicationsLinks['android'] = "https://play.google.com/store/apps/details?id=$release";
 						}
 						if ( $app['ios_release'] ) {
 							$release = $app['ios_release'];
-							$result['ios'] = "https://itunes.apple.com/us/app/id$release";
+							$mobileApplicationsLinks['ios'] = "https://itunes.apple.com/us/app/id$release";
 						}
 						break;
 					}
@@ -459,7 +459,7 @@ abstract class EmailController extends \WikiaController {
 			}
 		}
 
-		return $result;
+		return $mobileApplicationsLinks;
 	}
 
 	/**
