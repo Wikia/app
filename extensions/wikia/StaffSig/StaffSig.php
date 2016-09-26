@@ -40,5 +40,6 @@ function wfMakeSignatureCommon($href, $title, $iurl=null) {
 }
 
 function wfGetSignatureUrl() {
+	global $wgExtensionsPath;
 	return $wgExtensionsPath . '/wikia/DesignSystem/bower_components/design-system/assets/company/logo-fandom.svg';
 }
