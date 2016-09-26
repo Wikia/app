@@ -18,7 +18,7 @@ class UserQuery implements SearchQuery {
 				"bool": {
 					"should": [{
 						"query_string": {
-							"query":"rawTags:dis_service_contribution AND user_id:$userId"
+							"query":"rawTags:dis_service_* AND user_id:$userId"
 						}
 					}]
 				}

@@ -73,6 +73,7 @@ class WikiaRobots {
 	 */
 	private $blockedPaths = [
 		'/d/u/', // User pages for discussions
+		'/fandom?p=', // Fandom old URLs
 	];
 
 	/**

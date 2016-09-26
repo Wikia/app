@@ -281,7 +281,7 @@ class PaginatorTest extends \WikiaBaseTest {
 	 *
 	 * 1. Create an object of Paginator using new Paginator()
 	 * 2. Set the active page number through Paginator::setActivePage()
-	 * 3. Get the current slice of the input array using Paginator::getCurrentPage (passing the array)
+	 * 3. Get the current slice of the input array using Paginator::getCurrentPageData (passing the array)
 	 * 4. Generate the HTML for the pagination bar by Paginator::getBarHTML
 	 *
 	 * This style of calling the class is used by:
@@ -308,7 +308,7 @@ class PaginatorTest extends \WikiaBaseTest {
 		$expectedPageData = explode( ',', $pageDataString );
 		$pages = new Paginator( count( $allData ), $itemsPerPage, $url );
 		$pages->setActivePage( $pageNo );
-		$onePageData = $pages->getCurrentPage( $allData );
+		$onePageData = $pages->getCurrentPageData( $allData );
 		$html = $pages->getBarHTML();
 		$this->assertEquals( $expectedPageData, $onePageData );
 		$this->assertHtmlEquals( $expectedHtml, $html );
@@ -335,7 +335,7 @@ class PaginatorTest extends \WikiaBaseTest {
 		$expectedPageData = explode( ',', $pageDataString );
 		$pages = new Paginator( (string) count( $allData ), (string) $itemsPerPage, $url );
 		$pages->setActivePage( $pageNo );
-		$onePageData = $pages->getCurrentPage( $allData );
+		$onePageData = $pages->getCurrentPageData( $allData );
 		$html = $pages->getBarHTML();
 		$this->assertEquals( $expectedPageData, $onePageData );
 		$this->assertHtmlEquals( $expectedHtml, $html );

@@ -3,9 +3,9 @@
  *  extension message file
  */
 
-$messages = array();
+$messages = [];
 
-$messages['en'] = array(
+$messages['en'] = [
 	"welcome-user" => "@latest",
 	"welcome-bot" => "@bot",
 	"welcome-enabled" => "page-user message-anon message-user",
@@ -63,7 +63,8 @@ Welcome to {{SITENAME}} and thank you for your edit to the [[:$1]] page. We enco
 
 If you need help, check out our [[Help:Contents|help pages]] first and then visit [[w:c:community|Community Central]] to learn more. Happy editing!",
 	'welcome-description' => 'Sends a welcome message to users after their first edits',
-);
+	'right-welcomeexempt' => 'Flags user as exempt from welcome tool messages',
+];
 
 /** Message documentation (Message documentation)
  * @author Josep Maria 15.
@@ -72,7 +73,7 @@ If you need help, check out our [[Help:Contents|help pages]] first and then visi
  * @author Shirayuki
  * @author TK-999
  */
-$messages['qqq'] = array(
+$messages['qqq'] = [
 	'welcome-user-page' => 'Parameters:
 * $1 - the name of the user whose page the base layout is being added to',
 	'welcome-message-user-staff' => 'Please translate the link texts but leave the link addresses untranslated. Wikia administrators will localise the link addresses when the localized hubs of the wikis are available.',
@@ -88,14 +89,14 @@ $3 is the name of the last admin who edited in the wiki.',
 
 Please translate the link texts but leave the link addresses untranslated. Wikia administrators will localise the link addresses when the localized hubs of the wikis are available.',
 	'welcome-description' => 'The description of the extension displayed on the Special:Version page.',
-);
+];
 
 /** Arabic (العربية)
  * @author Achraf94
  * @author Claw eg
  * @author Kuwaity26
  */
-$messages['ar'] = array(
+$messages['ar'] = [
 	'welcome-user-page' => "== معلومات عني ==
 
 ''هذه هي صفحة المستخدم الخاصة بك. الرجاء تحرير هذه الصفحة لكي تعرف بنفسك! ''
@@ -148,7 +149,7 @@ $messages['ar'] = array(
 
 إن احتجت المساعدة، تصفح [[Help:Contents|صفحات المساعدة]] أولاً ثم قم بزيارة [[w:c:community|المجتمع المركزي]] لمعرفة المزيد. تحرير سعيد!',
 	'welcome-description' => 'أرسل رسالة ترحيب إلى المستخدمين بعد تعديلاتهم الأولى',
-);
+];
 
 /** Breton (brezhoneg)
  * @author Fohanno
@@ -156,7 +157,7 @@ $messages['ar'] = array(
  * @author Gwenn-Ael
  * @author Y-M D
  */
-$messages['br'] = array(
+$messages['br'] = [
 	'welcome-user-page' => "==Diwar ma fenn ==
 
 'War ho pajenn implijer emaoc'h. Kemmit, mar plij, ho pajenn evit en em ginnig d'ar gumuniezh !''
@@ -197,7 +198,7 @@ M'ho peus ezhomm skoazell ha ma n'eus merour ebet amañ e c'hallit gweladenniñ 
 
 Gallout a rit lezel ur gemennadenn din ma c'hallan sikour ac'hanoc'h d'ober tra pe dra !",
 	'welcome-description' => "Kas ur gemennadenn degemer mat d'an implijerien goude o aozadennoù kentañ",
-);
+];
 
 /** Catalan (català)
  * @author Alvaro Vidal-Abarca
@@ -205,7 +206,7 @@ Gallout a rit lezel ur gemennadenn din ma c'hallan sikour ac'hanoc'h d'ober tra 
  * @author Marcmpujol
  * @author Roxas Nobody 15
  */
-$messages['ca'] = array(
+$messages['ca'] = [
 	'welcome-user-page' => "==Sobre mi==
 
 ''Aquesta es la teva pàgina d'usuari. Edita-la per parlar sobre tu a la comunitat!
@@ -259,12 +260,12 @@ Per què no et '''[[Special:UserLogin|crees un compte d'usuari i t'identifiques]
 
 Si necessites ajuda, fes un cop d'ull primer a les nostres [[Help:Contents|pàgines d'ajuda]] i després visita la [[w:c:community|Comunitat Central]] per aprendre'n més. Que et diverteixis!",
 	'welcome-description' => 'Envia un missatge de benvinguda als usuaris després de la seva primera edició',
-);
+];
 
 /** Czech (čeština)
  * @author Dontlietome7
  */
-$messages['cs'] = array(
+$messages['cs'] = [
 	'welcome-user-page' => "==O mně==
 
 ''Toto je Vaše uživatelská stránka. Upravte ji, aby o Vás komunita věděla!''
@@ -305,7 +306,7 @@ Pokud potřebujete pomoci a nejsou zde žádní administrátoři, můžete navš
 Central Wiki]] $3", # Fuzzy
 	'staffsig-text' => '[[{{ns:user}}:$1|$2]]<staff /> <small>([[w:forums|fórum podpory]] | [[w:sblog|blog]])</small>', # Fuzzy
 	'hawelcomeedit' => 'HAWelcomeEdit',
-);
+];
 
 /** German (Deutsch)
  * @author Geitost
@@ -314,7 +315,7 @@ Central Wiki]] $3", # Fuzzy
  * @author PtM
  * @author The Evil IP address
  */
-$messages['de'] = array(
+$messages['de'] = [
 	'welcome-user-page' => "== Über mich ==
 
 ''Dies ist deine Benutzerseite. Hier kannst du anderen etwas über dich verraten!''
@@ -368,14 +369,14 @@ Wir fänden es gut, wenn du [[Special:UserLogin|dir ein Benutzerkonto anlegst]].
 
 Falls du Hilfe brauchst, schau dir zuerst die [[Help:Contents|Hilfe-Seiten]] an und besuche [[w:c:community|die deutsche Wikia-Community]], um mehr zu erfahren. Viel Spaß noch!',
 	'welcome-description' => 'Sendet eine Willkommensnachricht an Benutzer nach ihren ersten Bearbeitungen',
-);
+];
 
 /** German (formal address) (Deutsch (Sie-Form)‎)
  * @author Geitost
  * @author LWChris
  * @author The Evil IP address
  */
-$messages['de-formal'] = array(
+$messages['de-formal'] = [
 	'welcome-user-page' => "== Über mich ==
 
 ''Dies ist Ihre Benutzerseite. Hier können Sie anderen etwas über sich verraten!''
@@ -410,13 +411,13 @@ Guten Tag, Willkommen bei {{SITENAME}}! Danke für Ihre Bearbeitung der Seite �
 '''[[Special:UserLogin|Bitte legen Sie sich ein Benutzerkonto an]]'''. So können Sie ganz einfach Ihre Beiträge im Überblick behalten und sich besser mit dem Rest der Gemeinschaft verständigen.
 
 Wenn Sie Hilfe brauchen, und kein Admin von hier in der Nähe ist, möchten Sie vielleicht die [[wikia:Forum:Community Central Forum|Foren des Community Zentralwikis]] besuchen $3", # Fuzzy
-);
+];
 
 /** Zazaki (Zazaki)
  * @author Erdemaslancan
  * @author Mirzali
  */
-$messages['diq'] = array(
+$messages['diq'] = [
 	'welcome-message-log' => 'Cıkerdoğê newey rê xeyrvatış',
 	'hawelcomeedit' => 'HAXeyrAmeyVurnayış',
 	'welcome-message-wall-anon' => "Merheba, Şıma xeyr ameyê {{SITENAME}}! pela [[:$1]] vurnayê deye şıma rê teşekur kemê.
@@ -424,7 +425,7 @@ $messages['diq'] = array(
 '''[[Special:Userlogin|Şıma ra recay ma dekewe sita yana xorê jew nameyê karberiyo newe  vırazê]]'''. Şıma eno hesaba şenê merdumana irtibat kewê u iştıraxin bıkerê deye tewr rehat ju raya.
 
 Persiyayışa pêron rê ez şımarê peşti dana!",
-);
+];
 
 /** Spanish (español)
  * @author Benfutbol10
@@ -435,7 +436,7 @@ Persiyayışa pêron rê ez şımarê peşti dana!",
  * @author VegaDark
  * @author Vivaelcelta
  */
-$messages['es'] = array(
+$messages['es'] = [
 	'welcome-user-page' => "==Sobre mí==
 
 ''Esta es tu página de usuario. ¡Edítala para hablar sobre ti a la comunidad!''
@@ -503,12 +504,12 @@ Si requieres más ayuda, o sigues teniendo dudas, ¡no dudes en visitar la [[w:c
 
 ¡Esperamos que te diviertas!",
 	'welcome-description' => 'Envía un mensaje a todos los usuarios después de realizar su primera edición.',
-);
+];
 
 /** Estonian (eesti)
  * @author KalmerE.
  */
-$messages['et'] = array(
+$messages['et'] = [
 	'welcome-user-page' => '== Minust ==
 "See on sinu kasutaja lehekülg. Palun kirjuta siia leheküljele endast, et tutvustada ennast kogukonnale! "
 == Minu kaastööd ==
@@ -517,14 +518,14 @@ $messages['et'] = array(
 * Lisa  viki lemmik lehekülje lingid siia!
  * lemmik lehekülg # 2
  * lemmik lehekülg # 3',
-);
+];
 
 /** Persian (فارسی)
  * @author BlueDevil
  * @author Ebraminio
  * @author Huji
  */
-$messages['fa'] = array(
+$messages['fa'] = [
 	'welcome-user-page' => "[[File:Placeholder|thumb|300px]]
 ==دربارۀ من==
 ''
@@ -549,7 +550,7 @@ $messages['fa'] = array(
 
 اگر سوالی داشتید می‌توانید از من در [[$2|صفحهٔ بحثم]] بپرسید! $3",
 	'welcome-message-log' => 'خوش‌آمدگویی کاربر جدید',
-);
+];
 
 /** Finnish (suomi)
  * @author Crt
@@ -558,7 +559,7 @@ $messages['fa'] = array(
  * @author Varusmies
  * @author Ville96
  */
-$messages['fi'] = array(
+$messages['fi'] = [
 	'welcome-user-page' => "==Tietoa minusta==
 
 ''Tämä on käyttäjäsivusi. Muokkaa tätä sivua ja kerro yhteisölle itsestäsi!''
@@ -598,12 +599,12 @@ Mikäli tarvitset apua, tutustu ensin [[Ohje:Sisällöt|ohjesivuihin]] ja vierai
 
 Voit jättää minulle vapaasti viestiä, jos sinulle tulee vastaan ongelmia!',
 	'welcome-description' => 'Lähettää tervetuloviestin ensimmäisen muokkasensa tehneille käyttäjille',
-);
+];
 
 /** Faroese (føroyskt)
  * @author EileenSanda
  */
-$messages['fo'] = array(
+$messages['fo'] = [
 	'welcome-message-user' => 'Hey, vælkomin til {{SITENAME}}! Takk fyri tína rætting til [[:$1]] síðuna.
 
 Skriva eini boð á [[$2|mínari kjaksíðu]] um eg kann hjálpa tær við nøkrum! $3',
@@ -613,7 +614,7 @@ Skriva eini boð á [[$2|mínari kjaksíðu]] um eg kann hjálpa tær við nøkr
 
 Skriva mær eini boð um eg kann hjálpa tær við nøkrum!',
 	'welcome-description' => 'Sendir eina vælkomuheilsan til brúkarar eftir teirra fyrstu rættingar',
-);
+];
 
 /** French (français)
  * @author Geitost
@@ -622,7 +623,7 @@ Skriva mær eini boð um eg kann hjálpa tær við nøkrum!',
  * @author Urhixidur
  * @author Wyz
  */
-$messages['fr'] = array(
+$messages['fr'] = [
 	'welcome-user-page' => "== Sur moi ==
 
 ''Ceci est votre page utilisateur. Vous pouvez y ajouter des informations vous concernant !''
@@ -674,14 +675,14 @@ Bienvenue sur {{SITENAME}} et merci d’avoir modifié la page [[:$1]]. Nous enc
 
 Si vous avez besoin d’aide, consultez d’abord nos [[Help:Contents|pages d’aide]], puis visitez le [[w:c:community|centre de la communauté]] pour en savoir plus. Bonnes modifications!',
 	'welcome-description' => 'Envoie un message d’accueil aux utilisateurs après leurs premières modifications',
-);
+];
 
 /** Galician (galego)
  * @author Josep Maria 15.
  * @author Toliño
  * @author Vivaelcelta
  */
-$messages['gl'] = array(
+$messages['gl'] = [
 	'welcome-user-page' => "==Sobre min==
 
 ''Esta é a túa páxina de usuario. Edita esta páxina para contarlles aos demais o que queiras acerca de ti!''
@@ -736,13 +737,13 @@ Dámoslle a benvida a {{SITENAME}} e agradecemos a súa edición na páxina "[[:
 
 Se necesita axuda, consulte as [[Help:Contents|páxinas de axuda]] e logo visite a [[w:c:community|central da comunidade]] para aprender máis cousas. Páseo ben!',
 	'welcome-description' => 'Envía unha mensaxe de benvida aos usuarios despois das súas primeiras edicións',
-);
+];
 
 /** Hebrew (עברית)
  * @author Amire80
  * @author Rotemliss
  */
-$messages['he'] = array(
+$messages['he'] = [
 	'welcome-user-page' => "==עליי==
 ''זה דף המשתמש שלך. כדאי לערוך דף זה כדי שמשתמשים אחרים יוכלו לדעת עליך יותר!''
 
@@ -762,13 +763,13 @@ $messages['he'] = array(
 
 אם אתה זקוק לעזרה כלשהי, אנא השאר הודעה ב[[$2|דף השיחה שלי]], $3",
 	'welcome-message-log' => 'ברך משתמש חדש',
-);
+];
 
 /** Hungarian (magyar)
  * @author Glanthor Reviol
  * @author TK-999
  */
-$messages['hu'] = array(
+$messages['hu'] = [
 	'welcome-user-page' => "== Magamról ==
 
 ''Ez a felhasználólapod. Kérlek szerkeszd ezt a lapot és írj magadról a közösségnek!''
@@ -812,12 +813,12 @@ Kérlek, hagyj nekem üzenetet, ha segíthetek valamiben.',
 Ha segítségre van szükséged, és nincsenek itt helyi adminisztrátorok, meglátogathatod [[wikia:Forum:Community Central Forum|a Community Central fórumait]]. Megtekintheted a [[w:c:community:Blog:Wikia_Staff_Blog|személyzeti]] blogot is, hogy naprakész maradj a Wikia friss híreivel és eseményeivel kapcsolatban.
 
 Jó szerkesztést!', # Fuzzy
-);
+];
 
 /** Interlingua (interlingua)
  * @author McDutchie
  */
-$messages['ia'] = array(
+$messages['ia'] = [
 	'welcome-user-page' => "==A proposito de me==
 
 ''Iste es tu pagina de usator. Modifica le pagina pro presentar te al communitate!''
@@ -875,14 +876,14 @@ Non hesita de lassar un message si io pote adjutar te con alcun cosa!",
 '''[[Special:Userlogin|Per favor aperi un session o crea un conto]]'''. Isto permitte sequer tu contributiones e facilita le communication con le resto del communitate.
 
 Non hesita de lassar un message si io pote adjutar te con alcun cosa!", # Fuzzy
-);
+];
 
 /** Indonesian (Bahasa Indonesia)
  * @author C5st4wr6ch
  * @author Irwangatot
  * @author Riemogerz
  */
-$messages['id'] = array(
+$messages['id'] = [
 	'welcome-user-page' => "== Tentang saya == 
 
 ''Ini adalah halaman pengguna Anda. Silakan sunting halaman ini untuk memberitahu komunitas tentang diri Anda!'' 
@@ -920,14 +921,14 @@ Silakan meninggalkan pesan jika saya dapat membantu dalam hal apapun!',
 Selamat datang ke {{SITENAME}} dan terima kasih atas suntingan Anda pada halaman [[:$1]]. Kami mendorong semua kontributor untuk [[Special:UserLogin|membuat nama pengguna]], sehingga Anda dapat melacak kontribusi Anda, mengakses lebih banyak fitur Wikia, dan dapat mengetahui seluruh komunitas {{SITENAME}}.
 
 Jika Anda membutuhkan bantuan, pertama lihatlah [[Help:Contents|halaman bantuan]] kami dan kemudian mengunjungi [[w:c:community|Pusat Komunitas]] untuk mempelajari lebih lanjut. Selamat menyunting!',
-);
+];
 
 /** Italian (italiano)
  * @author Beta16
  * @author Gianfranco
  * @author Viscontino
  */
-$messages['it'] = array(
+$messages['it'] = [
 	'welcome-user-page' => "==Qualcosa su di me==
 
 ''Questa è la tua pagina utente. Modifica liberamente questa pagina per farti conoscere dalla comunità!''
@@ -975,13 +976,13 @@ Lascia pure un messaggio se posso esserti utile per qualsiasi cosa!',
 Se hai bisogno di aiuto, e gli amministratori locali non sono presenti, puoi visitare il [[wikia:Forum:Community Central Forum|Forum sulla Comunità Centrale di Wiki]]. È anche possibile controllare il nostro [[w:c:community:Blog:Wikia_Staff_Blog|blog dello Staff]] per seguire le ultime notizie e gli eventi di Wikia.
 
 Buone modifiche!', # Fuzzy
-);
+];
 
 /** Japanese (日本語)
  * @author Shirayuki
  * @author Tommy6
  */
-$messages['ja'] = array(
+$messages['ja'] = [
 	'welcome-user-page' => "==自己紹介==
 
 '''ここはあなたの利用者ページです。このページを編集してあなた自身のことをみんなに伝えましょう!'''
@@ -1012,12 +1013,12 @@ $messages['ja'] = array(
 もし、まだアカウントをお持ちでなければ、[[Special:Userlogin|ぜひアカウントを取得してみてください]]。他の方とコミュニケーションがとりやすくなりますし、アカウントユーザーだけが利用できる機能も多くあります。
 
 もし、何か困ったことがあり、このウィキローカルの管理者が見当たらない場合には、[[w:ja:Forum:Index|セントラルウィキアのフォーラム]]までメッセージをお寄せください。$3', # Fuzzy
-);
+];
 
 /** Korean (한국어)
  * @author Miri-Nae
  */
-$messages['ko'] = array(
+$messages['ko'] = [
 	'welcome-user-page' => '==저에 대해서==
 
 이 문서는 당신의 사용자 문서입니다. 이 단락에 당신에 대해 소개하는 글을 남겨보세요.
@@ -1049,27 +1050,27 @@ $messages['ko'] = array(
 '''[[특수기능:로그인|사용자 계정을 생성하시는 것은 어떨까요]]'''? 사용자 계정이 있으면 자신의 기여 내역을 확인할 수 있고, 더 많은 커뮤니티에서 더 쉽게 활동할 수 있습니다.
 
 도움이 필요하시다면 제게 메시지를 남겨주세요!", # Fuzzy
-);
+];
 
 /** Kurdish (Latin script) (Kurdî (latînî)‎)
  * @author Bikarhêner
  */
-$messages['ku-latn'] = array(
+$messages['ku-latn'] = [
 	'hawelcomeedit' => 'HAWelcomeEdit',
-);
+];
 
 /** Luxembourgish (Lëtzebuergesch)
  * @author Robby
  */
-$messages['lb'] = array(
+$messages['lb'] = [
 	'welcome-message-log' => 'Begréissung vun engem neien Auteur',
 	'hawelcomeedit' => 'HAWelcomeEdit',
-);
+];
 
 /** Macedonian (македонски)
  * @author Bjankuloski06
  */
-$messages['mk'] = array(
+$messages['mk'] = [
 	'welcome-user-page' => "==За мене==
 
 ''Ова е вашата корисничка страница. Уредете ја со тоа што ќе напишете некои нешта за себе, за да ве запознае заедницата!''
@@ -1125,12 +1126,12 @@ $messages['mk'] = array(
 
 Оставете ми порака на ако ви треба било каква помош!", # Fuzzy
 	'welcome-description' => 'Испраќа порака за добредојде на корисниците откако ќе го направат првото уредување.', # Fuzzy
-);
+];
 
 /** Malay (Bahasa Melayu)
  * @author Anakmalaysia
  */
-$messages['ms'] = array(
+$messages['ms'] = [
 	'welcome-user-page' => "==Tentang saya==
 
 ''Inilah laman pengguna anda. Sila sunting laman ini untuk memperkenalkan diri anda kepada seluruh komuniti!''
@@ -1185,14 +1186,14 @@ Selamat datang ke {{SITENAME}} dan terima kasih kerana menyunting halaman [[:$1]
 
 Jika anda memerlukan bantuan, sila baca [[Help:Contents|halaman bantuan]] kami terlebih dahulu, kemudian kunjungi [[w:c:community|Community Central]] untuk keterangan lanjut. Selamat menyunting!',
 	'welcome-description' => 'Menghantar pesanan alu-aluan kepada pengguna selepas suntingan sulungnya',
-);
+];
 
 /** Norwegian Bokmål (norsk bokmål)
  * @author Audun
  * @author Laaknor
  * @author Nghtwlkr
  */
-$messages['nb'] = array(
+$messages['nb'] = [
 	'welcome-user-page' => "==Om meg==
 
 ''Dette er brukersiden din. Vennligst rediger denne siden for å fortelle fellesskapet om deg selv!''
@@ -1251,7 +1252,7 @@ Vennligst legg igjen en beskjed hvis jeg kan hjelpe deg med noe!",
 
 Vennligst legg igjen en beskjed hvis jeg kan hjelpe deg med noe!", # Fuzzy
 	'welcome-description' => 'Sender en velkomstbeskjed til brukere etter deres første redigering',
-);
+];
 
 /** Dutch (Nederlands)
  * @author Arent
@@ -1260,7 +1261,7 @@ Vennligst legg igjen en beskjed hvis jeg kan hjelpe deg med noe!", # Fuzzy
  * @author McDutchie
  * @author Siebrand
  */
-$messages['nl'] = array(
+$messages['nl'] = [
 	'welcome-user-page' => "==Over mij==
 
 ''Dit is uw gebruikerspagina. Bewerk deze pagina en vertel de gemeenschap iets over uzelf''
@@ -1316,13 +1317,13 @@ Welkom bij {{SITENAME}} en dank u wel voor uw bewerking van de [[:$1]] pagina. W
 
 Als u hulp nodig heeft, bekijk dan eerst onze [[Help:Contents|help pagina's]] en bezoek dan [[w:c:community|de centrale gemeenschap]] om meer te weten te komen. Veel plezier met bewerken!",
 	'welcome-description' => 'Stuurt een welkomstbericht aan gebruikers na hun eerste bewerkingen',
-);
+];
 
 /** Nederlands (informeel)‎ (Nederlands (informeel)‎)
  * @author Geitost
  * @author Siebrand
  */
-$messages['nl-informal'] = array(
+$messages['nl-informal'] = [
 	'welcome-user-page' => "==Over mij==
 ''Dit is je gebruikerspagina. Bewerk deze pagina en vertel de gemeenschap iets over jezelf''
 
@@ -1354,12 +1355,12 @@ Hoi! Welkom bij {{SITENAME}}. Dank je wel voor je bewerking aan de pagina [[:$1]
 '''[[Special:UserLogin|Meld je alsjeblieft aan of maak een gebruiker aan]]'''. Zo kan je eenvoudig je bewerkingen bijhouden en contact houden met de andere leden van de gemeenschap.
 
 Als je hulp zoekt en er zijn geen lokale beheerders, ga dan naar de [[wikia:Forum:Community Central Forum|forums op de Centrale Gemeenschapswiki]] $3", # Fuzzy
-);
+];
 
 /** Occitan (occitan)
  * @author Cedric31
  */
-$messages['oc'] = array(
+$messages['oc'] = [
 	'welcome-user-page' => "==A prepaus de ieu==
 
 Aquò's vòstra vòstra pagina d'utilizaire. I podètz apondre d'entresenhas que vos concernisson !
@@ -1417,7 +1418,7 @@ Benvenguda sus {{SITENAME}} e mercé d'aver modificat la pagina [[:$1]]. Encorat
 
 S'avètz besonh d'ajuda e, podètz visitar primièr nòstras [[Help:Contents|paginas d’ajuda]], puèi, visitatz lo [[w:c:community|centre de la comunautat]] per ne saber mai. Bonas modificacions!",
 	'welcome-description' => 'Manda un messatge d’acuèlh als utilizaires aprèp lors primièras modificacions',
-);
+];
 
 /** Polish (polski)
  * @author BeginaFelicysym
@@ -1428,7 +1429,7 @@ S'avètz besonh d'ajuda e, podètz visitar primièr nòstras [[Help:Contents|pag
  * @author Sp5uhe
  * @author Vuh
  */
-$messages['pl'] = array(
+$messages['pl'] = [
 	'welcome-user-page' => "== O mnie ==
 ''To Twoja strona użytkownika. Edytuj ją i powiedz społeczności coś o sobie!''
 
@@ -1482,13 +1483,13 @@ Witaj na {{SITENAME}} i dziękuję za edycję na stronie [[:$1]] Dzięki za doko
 
 Jeśli potrzebujesz pomocy, odwiedź nasze  [[Pomoc:Zawartość|strony pomocy]], a potem odwiedź [[w:c:spolecznosc|Centrum Społeczności]], by dowiedzieć się więcej. Wesołego edytowania!', # Fuzzy
 	'welcome-description' => 'Wysyła wiadomość powitalną dla użytkowników po ich pierwszej edycji.',
-);
+];
 
 /** Piedmontese (Piemontèis)
  * @author Borichèt
  * @author Dragonòt
  */
-$messages['pms'] = array(
+$messages['pms'] = [
 	'welcome-user-page' => "==A propòsit ëd mi==
 
 ''Costa-sì a l'é soa pàgina utent. Për piasì ch'a modìfica sta pàgina-sì për parlé ëd chiel a la comunità!''
@@ -1542,12 +1543,12 @@ Për piasì ch'am lassa un mëssagi s'i peuss giuté con cheicòs!",
 Bin ëvnù su {{SITENAME}} e mersì për soa modìfica a la pàgina [[:$1]]. I ancoragioma tuti ij contributor a [[Special:UserLogin|creé në stranòm]], parèj a peul ten-e ël cont ëd soe contribussion, acede a d'àutre caraterìstiche ëd Wikia e conòsse ël rest ëd la comunità ëd {{SITENAME}}.
 
 S'a l'ha damanca d'agiut, ch'a daga për prima còsa n'ociada a nòstra [[Help:Contents|pàgina d'agiut]] e peui ch'a vìsita la [[w:c:community|Sentral dla comunità]] për amprende ëd pi. Bon-e modìfiche!",
-);
+];
 
 /** Pashto (پښتو)
  * @author Ahmed-Najib-Biabani-Ibrahimkhel
  */
-$messages['ps'] = array(
+$messages['ps'] = [
 	'welcome-user-page' => "==زما په اړه==
 
 ''دا ستاسې کارن مخ دی. لطفاً دا مخ سم کړۍ او د دې ځای ټولنې ته د ځان په اړه مالومات ورکړۍ!''
@@ -1561,7 +1562,7 @@ $messages['ps'] = array(
 * دلته د همدې ويکي د خواپورو مخونو تړنې مو ورگډې کړۍ!
 * خواپوری مخ #2
 * خواپوری مخ #3",
-);
+];
 
 /** Portuguese (português)
  * @author Avatar
@@ -1572,7 +1573,7 @@ $messages['ps'] = array(
  * @author SandroHc
  * @author Waldir
  */
-$messages['pt'] = array(
+$messages['pt'] = [
 	'welcome-user-page' => "== Sobre mim ==
 ''Esta é a tua página de utilizador. Por favor, edita esta página para contar mais sobre ti para a comunidade!''
 
@@ -1619,7 +1620,7 @@ Se tiveres alguma dúvida, deixa-me uma mensagem caso eu possa ajudar com alguma
 !!
 Se precisas de ajuda, primeiro olha as nossas [[Help:Contents|páginas de ajuda]] e depois visita a [[w:c:community|Comunidade Central]] para obter mais informações. Boas contribuições!',
 	'welcome-description' => 'Envia uma mensagem de boas-vindas para utilizadores depois das suas primeiras edições',
-);
+];
 
 /** Brazilian Portuguese (português do Brasil)
  * @author Aristóbulo
@@ -1629,7 +1630,7 @@ Se precisas de ajuda, primeiro olha as nossas [[Help:Contents|páginas de ajuda]
  * @author Jefersonmoraes
  * @author Jesielt
  */
-$messages['pt-br'] = array(
+$messages['pt-br'] = [
 	'welcome-user-page' => "== Sobre mim ==
 
 ''Essa é sua página de usuário. Por favor, edite esta página e conte a comunidade algo sobre você!''
@@ -1687,17 +1688,17 @@ Por favor, deixe-me uma mensagem se eu puder te ajudar com qualquer coisa!",
 
 Por favor, deixe-me uma mensagem se eu puder te ajudar com qualquer coisa!", # Fuzzy
 	'welcome-description' => 'Envie uma mensagem de boas-vindas para usuários depois das suas primeiras edições',
-);
+];
 
 /** tarandíne (tarandíne)
  * @author Joetaras
  */
-$messages['roa-tara'] = array(
+$messages['roa-tara'] = [
 	'welcome-message-log' => 'Bovègne a le condrebbutore nuève',
 	'staffsig-text' => "[[{{ns:user}}:$1|$2]]<staff /> <small>([[w:forums|forum d'aijute]] | [[w:sblog|blog]])</small>",
 	'hawelcomeedit' => 'HAWelcomeEdit',
 	'welcome-description' => "Manne 'nu messàgge de bovègne a le utinde apprisse ca onne fatte 'u prime cangiamende",
-);
+];
 
 /** Russian (русский)
  * @author DCamer
@@ -1706,7 +1707,7 @@ $messages['roa-tara'] = array(
  * @author Okras
  * @author Александр Сигачёв
  */
-$messages['ru'] = array(
+$messages['ru'] = [
 	'welcome-user-page' => "== Обо мне ==
 
 ''Это ваша страница участника. Пожалуйста, отредактируйте эту страницу, расскажите о себе!''
@@ -1754,7 +1755,7 @@ $messages['ru'] = array(
 
 Если вам нужна помощь, сначала проверьте [[Help:Contents|справочные страницы]], а затем посетите [[w:c:community|центральное сообщество]], чтоб узнать больше. Удачных правок!',
 	'welcome-description' => 'Отправляет сообщение с приветствием пользователям после их первых правок',
-);
+];
 
 /** Serbian (Cyrillic script) (српски (ћирилица)‎)
  * @author Charmed94
@@ -1762,7 +1763,7 @@ $messages['ru'] = array(
  * @author Verlor
  * @author Жељко Тодоровић
  */
-$messages['sr-ec'] = array(
+$messages['sr-ec'] = [
 	'welcome-user-page' => "== О мени ==
 
 ''Ово је ваша корисничка страница. Измените је да бисте рекли нешто о себи!''
@@ -1800,12 +1801,12 @@ $messages['sr-ec'] = array(
 То је најлакши начин да приступите својим доприносима и комуницирате с остатком заједнице.
 
 Ако вам буде затребала помоћ а не нађете администратора, посетите [[wikia:Forum:Community Central Forum|форум на Централној вики заједници]] $3", # Fuzzy
-);
+];
 
 /** Swedish (svenska)
  * @author WikiPhoenix
  */
-$messages['sv'] = array(
+$messages['sv'] = [
 	'welcome-user-page' => "==Om mig==
 
 ''Detta är din användarsida. Redigera den här sidan för att berätta för gemenskapen om dig själv!''
@@ -1862,12 +1863,12 @@ Välkommen till {{SITENAME}} och tack för din redigering på sidan [[:$1]]. Vi 
 
 Om du behöver hjälp kan du börja med att kolla på våra [[Help:Contents|hjälpsidor]] och sedan besöka [[w:c:community|Gemenskapscentralen]] för att läsa mer. Lycka till med redigeringen!',
 	'welcome-description' => 'Skickar ett välkomstmeddelande till användare efter deras första redigering',
-);
+];
 
 /** Telugu (తెలుగు)
  * @author Chaduvari
  */
-$messages['te'] = array(
+$messages['te'] = [
 	'welcome-user-page' => "==నా గురించి==
 
 ''ఇది మీ వాడుకరి పేజీ. ఈ పేజీలో మార్పుచేర్పులు చేసి, మీగురించి సముదాయానికి చెప్పండి!''
@@ -1896,12 +1897,12 @@ $messages['te'] = array(
 
 నేనేమైనా సాయపడగలననుకుంటే నాకో సందేశం పెట్టండి!',
 	'welcome-description' => 'వాడుకరులు తమ మొదటి మార్పు చెయ్యగానే వారికి స్వాగత సందేశం పంపిస్తుంది',
-);
+];
 
 /** Thai (ไทย)
  * @author Akkhaporn
  */
-$messages['th'] = array(
+$messages['th'] = [
 	'welcome-user-page' => "==เกี่ยวกับฉัน==
 
 ''นี่เป็นหน้าผู้ใช้ของคุณ. กรุณาแก้ไขหน้านี้เพื่อบอกให้ชุมชนรู้เรื่องเกี่ยวกับตัวคุณ!''
@@ -1940,12 +1941,12 @@ $messages['th'] = array(
 ถ้าคุณต้องการให้ช่วย และไม่มีผู้ดูแลที่นี่ คุณอาจจำเป็นต้องไปที่เยี่ยมชม [[wikia:Forum:Community Central Forum|ฟอรั่มบนศูนย์กลางชุมชนวิกิ]] $3", # Fuzzy
 	'staffsig-text' => '[[{{ns:user}}:$1|$2]]<staff /> <small>([[w:forums|กระดานช่วยเหลือ]] | [[w:sblog|บล๊อก]])</small>',
 	'hawelcomeedit' => 'ยินดีต้อนรับสู่ HA',
-);
+];
 
 /** Tagalog (Tagalog)
  * @author AnakngAraw
  */
-$messages['tl'] = array(
+$messages['tl'] = [
 	'welcome-user-page' => "==Patungkol sa akin==
 
 ''Ito ang iyong pahina ng tagagamit. Paki baguhin ang pahinang ito upang makapagsabi sa pamayanan ng hinggil sa sarili mo!''
@@ -2002,12 +2003,12 @@ Mangyaring iwanan ako ng isang mensahe kung makakatulong ako sa anumang bagay!",
 '''[[Special:Userlogin|Paki lumagda at lumikha ng isang pangalan ng tagagamit]]'''. Isa itong madaling paraan upang masubaybayan ang mga ambag mo at makatutulong sa iyong makipag-ugnayan sa iba pang nasa pamayanan.
 
 Paki iwanan ako ng isang mensahe kung makakatulong ako sa anumang bagay!", # Fuzzy
-);
+];
 
 /** Turkish (Türkçe)
  * @author Incelemeelemani
  */
-$messages['tr'] = array(
+$messages['tr'] = [
 	'welcome-user-page' => "== Hakkımda ==
 
 ''Bu kullanıcı sayfanızdır. Kendinizi topluluğa tanıtmak için bu sayfayı düzenleyin!''
@@ -2021,12 +2022,12 @@ $messages['tr'] = array(
 * Buraya sevdiğiniz wiki sayfalarını ekleyin!
 * Favori sayfası #2
 * Favori sayfası #3",
-);
+];
 
 /** Tatar (Cyrillic script) (татарча)
  * @author Ajdar
  */
-$messages['tt-cyrl'] = array(
+$messages['tt-cyrl'] = [
 	'welcome-user-page' => "==Минем турыда==
 
 ''Бу сезнең кулланучы сәхифәсе. Зинһар, аны төзәтегез һәм үзегез турында сөйләгезf!''
@@ -2039,7 +2040,7 @@ $messages['tt-cyrl'] = array(
 * Яраткан вики-мәкаләләрегезгә сылтаманы монда өстәгез
 * Сайланган мәкалә #2
 * Сайланган мәкалә #3",
-);
+];
 
 /** Ukrainian (українська)
  * @author Ahonc
@@ -2050,7 +2051,7 @@ $messages['tt-cyrl'] = array(
  * @author Ua2004
  * @author Тест
  */
-$messages['uk'] = array(
+$messages['uk'] = [
 	'welcome-user-page' => "==Про мене==
 
 ''Це ваша сторінка користувача. Будь ласка, відредагуйте її, розповівши спільноті про себе.''
@@ -2115,14 +2116,14 @@ $messages['uk'] = array(
 
 Творчих успіхів!',
 	'welcome-description' => 'Надсилає привітальне повідомлення новим користувачам після їхнього першого редагування на вікі',
-);
+];
 
 /** Urdu (اردو)
  * @author Noor2020
  */
-$messages['ur'] = array(
+$messages['ur'] = [
 	'staffsig-text' => '[[{{ns:user}}:$1|$2]]<staff> </staff> <small>([[w:forums|معاونت چوپال]] | [[w:sblog|blog]])</small>',
-);
+];
 
 /** Vietnamese (Tiếng Việt)
  * @author Baonguyen21022003
@@ -2130,7 +2131,7 @@ $messages['ur'] = array(
  * @author Xiao Qiao
  * @author XiaoQiaoGrace
  */
-$messages['vi'] = array(
+$messages['vi'] = [
 	'welcome-user-page' => "==Giới thiệu thành viên==
 ''Đây là trang thành viên của bạn. Xin vui lòng viết và sửa đổi trang này để cho cộng đồng biết một chút về bạn!''
 
@@ -2191,7 +2192,7 @@ Wiki hiện nay không có bảo quản viên, vì thế nên nếu bạn cần 
 
 Xin vui lòng để lại tin nhắn cho tôi nếu bạn cần sự trợ giúp về bất cứ điều gì!",
 	'welcome-description' => 'Gửi thư chào đón cho người dùng sau khi có một sửa đổi đầu tiên của họ',
-);
+];
 
 /** Simplified Chinese (中文（简体）‎)
  * @author Dimension
@@ -2199,7 +2200,7 @@ Xin vui lòng để lại tin nhắn cho tôi nếu bạn cần sự trợ giúp
  * @author Liuxinyu970226
  * @author Yfdyh000
  */
-$messages['zh-hans'] = array(
+$messages['zh-hans'] = [
 	'welcome-user-page' => "==关于我==
 
 ''这是您的用户页面。请编辑本页向整个社区介绍您！''
@@ -2251,14 +2252,14 @@ $3',
 
 如果您需要帮助，请先访问[[Help:Contents|帮助页面]]，然后访问[[w:c:community|社群中心]]以了解更多。祝编辑愉快！',
 	'welcome-description' => '在用户初次贡献后发一条欢迎消息给他们',
-);
+];
 
 /** Traditional Chinese (中文（繁體）‎)
  * @author Ffaarr
  * @author LNDDYL
  * @author Liuxinyu970226
  */
-$messages['zh-hant'] = array(
+$messages['zh-hant'] = [
 	'welcome-user-page' => "==關於我==
 
 ''這是您的使用者頁面。請編輯本頁向整個社群介紹您自己！''
@@ -2318,4 +2319,4 @@ $messages['zh-hant'] = array(
 
 如果您需要幫助，可以參見[[Help:Contents|幫助頁面]]、訪問 [[w:c:zh.community|社區中心]]。祝編輯愉快。', # Fuzzy
 	'welcome-description' => '在用戶初次貢獻後發給他們歡迎訊息',
-);
+];

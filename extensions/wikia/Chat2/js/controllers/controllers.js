@@ -747,12 +747,15 @@ var NodeChatController = $.createClass(NodeRoomController, {
 			}
 
 			if (typeof(privateUser) != "undefined") {
-				this.chats.privates[privateUser.get('roomId')].model.room.set({
+				var privateRoom = this.chats.privates[privateUser.get('roomId')];
+				privateRoom.model.room.set({
 					'hidden': false
 				});
+				this.setActive(false);
+				privateRoom.setActive(true);
 
 				var newChatEntry = new models.InlineAlert({text: mw.message('chat-user-allow', wgUserName, privateUser.get('name')).escaped()});
-				this.chats.privates[privateUser.get('roomId')].socket.send(newChatEntry.xport());
+				privateRoom.socket.send(newChatEntry.xport());
 			}
 		}, this));
 

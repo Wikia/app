@@ -3434,6 +3434,15 @@ function wfFixSessionID() {
  */
 function wfResetSessionID() {
 	global $wgCookieSecure;
+
+	// Wikia change - start
+	// leave early if PHP session is not active - PLATFORM-2364
+	if ( session_status() != PHP_SESSION_ACTIVE ) {
+		wfDebug( __METHOD__ . ": PHP session is not active, leaving early\n" );
+		return;
+	}
+	// Wikia change - end
+
 	$oldSessionId = session_id();
 	$cookieParams = session_get_cookie_params();
 	if ( wfCheckEntropy() && $wgCookieSecure == $cookieParams['secure'] ) {
@@ -3611,7 +3620,7 @@ function wfSplitWikiID( $wiki ) {
  *
  * @return DatabaseMysqli
  */
-function &wfGetDB( $db, $groups = array(), $wiki = false ) {
+function &wfGetDB( int $db, $groups = array(), $wiki = false ) {
 	// wikia change begin -- SMW DB separation project, @author Krzysztof Krzyżaniak (eloy)
 	global $smwgUseExternalDB, $wgDBname;
 	if( $smwgUseExternalDB === true ) {

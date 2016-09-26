@@ -1134,21 +1134,13 @@ class SpecialUndelete extends SpecialPage {
 		}
 		if( $haveFiles ) {
 			$batch = new LinkBatch();
+			/* Wikia change begin */
 			foreach ( $files as $row ) {
-				/**
-				 * Check, how often is this code executed. Scope: the following if block.
-				 *
-				 * @author Mix
-				 * @see SUS-810
-				 */
-				Wikia\Logger\WikiaLogger::instance()->debugSampled(
-					0.01,
-					'SUS-810',
-					[ 'method' => __METHOD__, 'exception' => new Exception() ]
-				);
-				$batch->addObj( Title::makeTitleSafe( NS_USER, $row->fa_user_text ) );
-				$batch->addObj( Title::makeTitleSafe( NS_USER_TALK, $row->fa_user_text ) );
+				$userName = User::getUsername( $row->fa_user, $row->fa_user_text );
+				$batch->addObj( Title::makeTitleSafe( NS_USER, $userName ) );
+				$batch->addObj( Title::makeTitleSafe( NS_USER_TALK, $userName ) );
 			}
+			/* Wikia change end */
 			$batch->execute();
 			$files->seek( 0 );
 		}
@@ -1249,7 +1241,6 @@ class SpecialUndelete extends SpecialPage {
 			$misc .= Xml::closeElement( 'form' );
 			$out->addHTML( $misc );
 		}
-
 		return true;
 	}
 

@@ -29,6 +29,8 @@ class AdEngine2ContextService {
 			$pageFairDetectionKey = AdEngine2Resource::getKey('wikia.ext.adengine.pf.detection');
 			$pageFairDetectionUrl = ResourceLoader::makeCustomURL( $wg->Out, [$pageFairDetectionKey], 'scripts' );
 
+			$prebidBidderUrl = AssetsManager::getInstance()->getURL( 'prebid_prod_js', $type );
+
 			$langCode = $title->getPageLanguage()->getCode();
 
 			// 1 of 3 verticals
@@ -52,7 +54,8 @@ class AdEngine2ContextService {
 					'sourcePointDetectionUrl' => $sourcePointDetectionUrl,
 					'sourcePointRecovery' => $skinName === 'oasis' && ARecoveryModule::isEnabled(),
 					'yavliUrl' => $yavliUrl,
-					'pageFairDetectionUrl' => $pageFairDetectionUrl
+					'pageFairDetectionUrl' => $pageFairDetectionUrl,
+					'prebidBidderUrl' => $prebidBidderUrl
 				] ),
 				'targeting' => $this->filterOutEmptyItems( [
 					'enableKruxTargeting' => AnalyticsProviderKrux::isEnabled(),

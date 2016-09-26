@@ -38,7 +38,8 @@ class DesignSystemGlobalFooterService extends WikiaService {
 
 	private function getData() {
 		return $this->sendRequest( 'DesignSystemApi', 'getFooter', [
-			'wikiId' => $this->wg->CityId,
+			'id' => $this->wg->CityId,
+			'product' => 'wikis',
 			'lang' => $this->wg->Lang->getCode()
 		] )->getData();
 	}

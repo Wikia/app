@@ -39,12 +39,6 @@ class GlobalNavigationController extends WikiaController {
 		$this->response->setVal( 'createWikiUrl', $createWikiUrl );
 		$this->response->setVal( 'notificationsEnabled', !empty( $userCanRead ) );
 		$this->response->setVal( 'isAnon', $wgUser->isAnon() );
-
-		$isGameStarLogoEnabled = $this->isGameStarLogoEnabled();
-		$this->response->setVal( 'isGameStarLogoEnabled', $isGameStarLogoEnabled );
-		if ( $isGameStarLogoEnabled ) {
-			$this->response->addAsset( 'extensions/wikia/GlobalNavigation/styles/GlobalNavigationGameStar.scss' );
-		}
 	}
 
 	public function searchIndex() {
@@ -75,9 +69,5 @@ class GlobalNavigationController extends WikiaController {
 		$this->response->setVal( 'fulltext', $fulltext );
 		$this->response->setVal( 'query', $query );
 		$this->response->setVal( 'lang', $lang );
-	}
-
-	protected function isGameStarLogoEnabled() {
-		return $this->wg->contLang->getCode() == 'de';
 	}
 }
