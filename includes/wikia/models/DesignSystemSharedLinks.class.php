@@ -193,6 +193,7 @@ class DesignSystemSharedLinks {
 			'wam' => 'http://ja.wikia.com/WAM?langCode=ja',
 			'help' => 'http://ja.community.wikia.com/wiki/%E3%83%98%E3%83%AB%E3%83%97:%E3%82%B3%E3%83%B3%E3%83%86%E3%83%B3%E3%83%84',
 			'media-kit' => 'http://www.wikia.com/mediakit?uselang=ja',
+			'social-facebook' => 'https://www.facebook.com/WikiaJapan',
 			'social-twitter' => 'https://twitter.com/wikiajapan',
 			'app-store' => 'https://itunes.apple.com/jp/artist/wikia-inc./id422467077',
 			'google-play' => 'https://play.google.com/store/apps/developer?id=Wikia,+Inc.&hl=ja',
