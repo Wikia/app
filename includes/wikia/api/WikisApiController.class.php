@@ -25,7 +25,6 @@ class WikisApiController extends WikiaApiController {
 	const CACHE_VERSION = 3;
 	const WORDMARK = 'Wiki-wordmark.png';
 	const MAX_WIKIS = 250;
-	private static $flagsBlacklist = array( 'blocked', 'promoted' );
 
 	private $keys;
 	private $service;
