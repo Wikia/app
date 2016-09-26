@@ -61,6 +61,14 @@ class EnableDiscussionsHooks {
 				return $mainTitle;
 			}
 		}
+		if ( $title->getNamespace() === 0 ) {
+			$mainTitle = Title::newFromID($title->getArticleID() );
+			if ($mainTitle instanceof Title &&
+			    in_array( $mainTitle->getNamespace(), self::$forumNamespaces )
+			) {
+				return $mainTitle;
+			}
+		}
 
 		return null;
 	}
