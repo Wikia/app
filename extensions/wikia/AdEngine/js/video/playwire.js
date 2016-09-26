@@ -12,11 +12,17 @@ define('ext.wikia.adEngine.video.playwire', [
 		return '//config.playwire.com/' + publisherId + '/videos/v2/' + videoId + '/zeus.json';
 	}
 
-	function inject(configUrl, parent, vastUrl) {
-		var script = doc.createElement('script');
+	function inject(params) {
+		var container = params.container,
+			height = params.height,
+			script = doc.createElement('script'),
+			slotName = params.slotName,
+			vastUrl = params.vastUrl,
+			width = params.width,
+			configUrl = params.configUrl;
 
 		if (!vastUrl) {
-			vastUrl = vastBuilder.build();
+			vastUrl = vastBuilder.build('playwire', slotName, width / height);
 		}
 
 		script.setAttribute('data-config', configUrl);
@@ -25,7 +31,7 @@ define('ext.wikia.adEngine.video.playwire', [
 		script.setAttribute('type', 'text/javascript');
 		script.src = playerUrl;
 
-		parent.appendChild(script);
+		container.appendChild(script);
 		log(['inject', configUrl], 'debug', logGroup);
 	}
 

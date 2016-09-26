@@ -16,13 +16,9 @@ describe('ext.wikia.adEngine.provider.*', function () {
 				return mocks.context;
 			}
 		},
-		adLogicPageParams: {
-			getPageLevelParams: function () {
-				return {
-					s0: 'ent',
-					s1: '_muppet',
-					s2: 'home'
-				};
+		adUnitBuilder: {
+			build: function(slotName, src) {
+				return '/5441/wka.ent/_muppet//home/' + src + '/' + slotName;
 			}
 		},
 		gptHelper: {
@@ -61,9 +57,9 @@ describe('ext.wikia.adEngine.provider.*', function () {
 	function getFactory() {
 		return modules['ext.wikia.adEngine.provider.factory.wikiaGpt'](
 			mocks.adContext,
-			mocks.adLogicPageParams,
 			mocks.btfBlocker,
 			mocks.gptHelper,
+			mocks.adUnitBuilder,
 			mocks.log,
 			mocks.lookups
 		);
