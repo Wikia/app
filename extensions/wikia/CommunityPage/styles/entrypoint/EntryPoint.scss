@@ -10,6 +10,7 @@ $logo-size: 30px;
 $logo-border-radius: $logo-size / 2;
 
 .WikiaRail {
+	// override default .WikiaRail .module styles
 	.module {
 		position: relative;
 

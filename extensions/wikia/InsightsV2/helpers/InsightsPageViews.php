@@ -54,6 +54,8 @@ class InsightsPageViews {
 			$sortingData['pvDiff'][ $articleId ] = $pvDiff;
 			$articlesData[ $articleId ]['metadata']['pvDiff'] = $pvDiff;
 
+			$sortingData['random'][ $articleId ] = rand();
+
 		}
 
 		( new InsightsSorting( $this->config ) )->createSortingArrays( $sortingData );
