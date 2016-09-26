@@ -10,11 +10,11 @@ $wgExtensionCredits['Discussions'][] = [
 	'name' => 'Discussions',
 	'author' => [ 'Michal "slayful" Turek' ],
 	'descriptionmsg' => 'discussions-desc',
-	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/Discussions',
+	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/EnableDiscussions',
 ];
 
 $wgAutoloadClasses['EnableDiscussionsController'] = $dir . 'EnableDiscussionsController.class.php';
-$wgAutoloadClasses['EnableDiscussionsRedirectionHook'] =
-	$dir . 'EnableDiscussionsRedirectionHook.class.php';
+$wgAutoloadClasses['EnableDiscussionsHooks'] =
+	$dir . 'EnableDiscussionsHooks.class.php';
 
-$wgHooks['BeforeInitialize'][] = $dir . 'EnableDiscussionsRedirectionHook::onBeforeInitialize';
+$wgHooks['BeforeInitialize'][] = $dir . 'EnableDiscussionsHooks::onBeforeInitialize';

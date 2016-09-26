@@ -1,7 +1,7 @@
 <?php
 
 
-class EnableDiscussionsRedirectionHook {
+class EnableDiscussionsHooks {
 
 	const DISCUSSIONS_URL = '/d/f';
 	// Forum namespaces should be available
