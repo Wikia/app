@@ -437,30 +437,23 @@ abstract class EmailController extends \WikiaController {
 		$mobileApplicationsLinks = [];
 
 		$response = $this->fetchMobileApplicationsDetails();
-		$siteId = $this->wg->CityId;
 
-		if ( $this->applicationsExistFor($siteId, $response ) ) {
-			$mobileApplications = json_decode($response, true);
-
-			foreach ( $mobileApplications['apps'] as $app ) {
-				foreach ( $app['languages'] as $language ) {
-					if ( $language['wikia_id'] == $siteId ) {
-						if ( $app['android_release'] ) {
-							$release = $app['android_release'];
-							$mobileApplicationsLinks['android'] = "https://play.google.com/store/apps/details?id=$release";
-						}
-						if ( $app['ios_release'] ) {
-							$release = $app['ios_release'];
-							$mobileApplicationsLinks['ios'] = "https://itunes.apple.com/us/app/id$release";
-						}
-						break;
-					}
-				}
-			}
+		if ( $response && $this->applicationsExistFor( $this->wg->CityId, $response ) ) {
+			$mobileApplications = json_decode( $response, true );
+			$mobileApplicationsLinks = $this->traverseThrough( $mobileApplications );
 		}
 
 		return $mobileApplicationsLinks;
 	}
+
+	/**
+	 * @return string or boolean (because of Http::request)
+	 */
+	private function fetchMobileApplicationsDetails() {
+		// currently it does not matter if Android or iOS value is added, data is returned for both Android and iOS
+		return Http::request( "GET",  'https://services.wikia.com/mobile-applications/platform/android' );
+	}
+
 
 	/**
 	 * @param string siteId - current site id
@@ -473,11 +466,30 @@ abstract class EmailController extends \WikiaController {
 	}
 
 	/**
-	 * @return string
+	 * @param array $mobileApplications - array containing information about mobile applications
+	 * @return array - containing mobile applications links
 	 */
-	private function fetchMobileApplicationsDetails() {
-		// currently it does not matter if Android or iOS value is added, data is returned for both Android and iOS
-		return Http::request( "GET",  'https://services.wikia.com/mobile-applications/platform/android' );
+	private function traverseThrough( $mobileApplications ) {
+		$mobileApplicationsLinks = [];
+		$siteId = $this->wg->CityId;
+
+		foreach ( $mobileApplications['apps'] as $app ) {
+			foreach ( $app['languages'] as $language ) {
+				if ( $language['wikia_id'] ==  $siteId) {
+					if ( $app['android_release'] ) {
+						$release = $app['android_release'];
+						$mobileApplicationsLinks['android'] = "https://play.google.com/store/apps/details?id=$release";
+					}
+					if ( $app['ios_release'] ) {
+						$release = $app['ios_release'];
+						$mobileApplicationsLinks['ios'] = "https://itunes.apple.com/us/app/id$release";
+					}
+					break;
+				}
+			}
+		}
+
+		return $mobileApplicationsLinks;
 	}
 
 	/**
