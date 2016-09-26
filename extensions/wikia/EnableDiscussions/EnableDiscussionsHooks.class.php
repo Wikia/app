@@ -69,7 +69,7 @@ class EnableDiscussionsHooks {
 		if ( empty( $id ) ) {
 			return self::DISCUSSIONS_URL;
 		}
-		if ( $namespace == NS_WIKIA_FORUM_TOPIC_BOARD || NS_WIKIA_FORUM_BOARD ) {
+		if ( $namespace == NS_WIKIA_FORUM_TOPIC_BOARD || $namespace == NS_WIKIA_FORUM_BOARD ) {
 			return '/d/f/' . $id;
 		}
 		if ( $namespace == NS_WIKIA_FORUM_BOARD_THREAD ) {
