@@ -160,8 +160,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 			->setCityId         ( $this->wg->CityId )
 			->setQuery          ( $this->getVal('q') )
 			->setNamespaces     ( array(NS_FILE) )
-			->setVideoSearch    ( true )
-		;
+			->setVideoSearch    ( true );
 		$wikiaSearch = $this->queryServiceFactory->getFromConfig( $searchConfig );
 		$this->getResponse()->setFormat( 'json' );
 		$this->getResponse()->setData( $wikiaSearch->searchAsApi() );
@@ -535,8 +534,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 			->setInterWiki               ( $this->isCorporateWiki() )
 			->setVideoSearch             ( $request->getVal( 'videoSearch', false ) )
 			->setFilterQueriesFromCodes  ( $request->getVal( 'filters', array() ) )
-			->setBoostGroup              ( $request->getVal( 'ab' ) )
-		;
+			->setBoostGroup              ( $request->getVal( 'ab' ) );
 
 		if ( $this->isCorporateWiki() ) {
 			$searchConfig->setLanguageCode( $request->getVal( 'resultsLang' ) );
