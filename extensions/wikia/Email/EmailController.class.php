@@ -13,6 +13,10 @@ abstract class EmailController extends \WikiaController {
 
 	const AVATAR_SIZE = 40;
 
+	const ANDROID_PLATFORM = 'android';
+
+	const IOS_PATFORM = 'ios';
+
 	/** CSS used for the main content section of each email. Used by getContent()
 	 * and intended to be overridden by child classes. */
 	const LAYOUT_CSS = 'avatarLayout.css';
@@ -414,18 +418,16 @@ abstract class EmailController extends \WikiaController {
 		];
 
 		if ( $hasMobileApplicationBadges ) {
-			if ( $mobileApplicationsLinks['android'] ) {
-				$badges['android'] = [
-					'link' => $mobileApplicationsLinks['android'],
-					'src' => ImageHelper::getFileUrl(
-						$this->getMessage( 'emailext-mobile-application-android-badge' )->text() )
+			if ( $mobileApplicationsLinks[ANDROID_PLATFORM] ) {
+				$badges[ANDROID_PLATFORM] = [
+					'link' => $mobileApplicationsLinks[ANDROID_PLATFORM],
+					'src' => EmailMobileBadges::getBadgeFor( $this->targetLang, ANDROID_PLATFORM )
 				];
 			}
-			if ( $mobileApplicationsLinks['ios'] ) {
-				$badges['ios'] = [
-					'link' => $mobileApplicationsLinks['ios'],
-					'src' => ImageHelper::getFileUrl(
-						$this->getMessage( 'emailext-mobile-application-ios-badge' )->text() )
+			if ( $mobileApplicationsLinks[IOS_PATFORM] ) {
+				$badges[IOS_PATFORM] = [
+					'link' => $mobileApplicationsLinks[IOS_PATFORM],
+					'src' => EmailMobileBadges::getBadgeFor( $this->targetLang, IOS_PATFORM )
 				];
 			}
 		}
@@ -478,11 +480,11 @@ abstract class EmailController extends \WikiaController {
 				if ( $language['wikia_id'] ==  $siteId) {
 					if ( $app['android_release'] ) {
 						$release = $app['android_release'];
-						$mobileApplicationsLinks['android'] = "https://play.google.com/store/apps/details?id=$release";
+						$mobileApplicationsLinks[ANDROID_PLATFORM] = "https://play.google.com/store/apps/details?id=$release";
 					}
 					if ( $app['ios_release'] ) {
 						$release = $app['ios_release'];
-						$mobileApplicationsLinks['ios'] = "https://itunes.apple.com/us/app/id$release";
+						$mobileApplicationsLinks[IOS_PATFORM] = "https://itunes.apple.com/us/app/id$release";
 					}
 					break;
 				}
