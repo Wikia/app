@@ -54,6 +54,10 @@ class EmailMobileBadges {
 			'ios' => 'App-store-badge-zh.svg',
 			'android' => 'Google-play-badge-zh.png'
 		],
+		'zh-hans' => [
+			'ios' => 'App-store-badge-zh.svg',
+			'android' => 'Google-play-badge-zh.png'
+		],
 		'zh-hant' => [
 			'ios' => 'App-store-badge-zh-tw.svg',
 			'android' => 'Google-play-badge-zh-tw.png'
@@ -65,13 +69,19 @@ class EmailMobileBadges {
 	];
 
 	/**
-	 * Selects proper mobile badge for given input parameters.
+	 * Selects proper mobile badge for given input parameters. If language is not found, fallback to 'en'.
 	 *
 	 * @param $language - language for badge
 	 * @param $platform - platform, currently supported: android, ios
 	 * @return string - url to mobile badge
 	 */
 	public static function getBadgeFor( $language, $platform ) {
-		return ImageHelper::getFileUrl( EmailMobileBadges::$badges[$language][$platform] );
+		$badge = EmailMobileBadges::$badges[$language][$platform];
+
+		if ( !$badge ) {
+			$badge = EmailMobileBadges::$badges['en'][$platform];
+		}
+
+		return ImageHelper::getFileUrl( $badge );
 	}
 }
