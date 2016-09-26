@@ -53,7 +53,6 @@ class ResultHelper
 			? $description
 			: $result->getText( Utilities::field( 'description' ), $descWordLimit );
 
-		$service = new MediaWikiService();
 		$wikiaSearchHelper = new \WikiaSearchHelper();
 
 		$globalSearchUrl = '';
