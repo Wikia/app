@@ -70,7 +70,7 @@ class DesignSystemSharedLinks {
 			'help' => 'http://community.wikia.com/wiki/Help:Contents',
 			'media-kit' => 'http://www.wikia.com/mediakit',
 			'media-kit-contact' => 'http://www.wikia.com/mediakit/contact',
-			'social-facebook' => 'https://www.facebook.com/wikia',
+			'social-facebook' => 'https://www.facebook.com/getfandom',
 			'social-twitter' => 'https://twitter.com/wikia',
 			'social-reddit' => null,
 			'social-youtube' => 'https://www.youtube.com/user/wikia',
@@ -111,7 +111,6 @@ class DesignSystemSharedLinks {
 		],
 		'en' => [
 			'fan-contributor' => 'http://fandom.wikia.com/fan-contributor',
-			'social-facebook' => 'https://www.facebook.com/getfandom',
 			'social-twitter' => 'https://twitter.com/getfandom',
 			'social-reddit' => 'https://www.reddit.com/r/wikia',
 			'social-youtube' => 'https://www.youtube.com/channel/UC988qTQImTjO7lUdPfYabgQ',
