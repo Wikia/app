@@ -18,15 +18,17 @@ class EnableDiscussionsRedirectionHook {
 		WebRequest $request = null, MediaWiki $mediaWiki
 	) {
 		if ( !self::shouldRedirectToDiscussions() || $title == null ) {
-			return;
+			return true;
 		}
 		$forumTitle = self::getForumTitle( $title );
 		if ( empty( $forumTitle ) ) {
-			return;
+			return true;
 		}
 
 		$output->redirect( self::getDiscussionsUrl( $forumTitle->getNamespace(),
 			$forumTitle->getArticleID() ) );
+
+		return false;
 	}
 
 	/**

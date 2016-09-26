@@ -18,7 +18,7 @@ $dir = __DIR__ . '/';
 
 // classes
 $wgAutoloadClasses['ForumSpecialController'] =  $dir . 'ForumSpecialController.class.php' ;
-$wgAutoloadClasses['ForumHooksHelper'] =  $dir . 'ForumHooksHelper.class.php' ;
+	$wgAutoloadClasses['ForumHooksHelper'] =  $dir . 'ForumHooksHelper.class.php' ;
 $wgAutoloadClasses['ForumController'] =  $dir . 'ForumController.class.php' ;
 $wgAutoloadClasses['ForumNotificationPlugin'] =  $dir . 'ForumNotificationPlugin.class.php' ;
 $wgAutoloadClasses['Forum'] =  $dir . 'Forum.class.php' ;
