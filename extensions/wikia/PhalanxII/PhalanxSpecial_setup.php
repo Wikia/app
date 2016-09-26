@@ -49,8 +49,7 @@ $wgResourceModules['ext.wikia.Phalanx'] = array(
 	),
 	'dependencies' => array(
 		'wikia.log',
-		'wikia.nirvana',
-		'ext.bannerNotifications'
+		'wikia.nirvana'
 	),
 	'messages' => array(
 		'phalanx',
