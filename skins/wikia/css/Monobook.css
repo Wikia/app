@@ -246,7 +246,7 @@ body.rtl #column-google {
 /* IE fixes */
 * html .staffSig {
 	background-image: none !important;
-	filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='/extensions/wikia/StaffSig/images/WikiaStaff.png', sizingMethod='scale');
+	filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='/extensions/wikia/DesignSystem/bower_components/design-system/assets/company/logo-fandom.svg', sizingMethod='scale');
 }
 
 /* LeanMonaco code */
