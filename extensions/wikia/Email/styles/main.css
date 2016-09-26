@@ -59,7 +59,9 @@ body {
 }
 
 .footer .spacer {
-	border-bottom: 1px solid #fff;
+	border-width: 1px 0 0 0;
+	border-color: #fff;
+	border-style: solid;
 	margin: 25px auto;
 	width: 50%;
 }
