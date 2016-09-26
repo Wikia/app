@@ -658,9 +658,9 @@ class WikiaSearchController extends WikiaSpecialPageController {
 
 		if ( $wgLang->getCode() === 'en' && !empty( $query ) ) {
 			$fandomStories = \WikiaDataAccess::cache(
-				wfSharedMemcKey(static::FANDOM_STORIES_MEMC_KEY, $query),
+				wfSharedMemcKey( static::FANDOM_STORIES_MEMC_KEY, $query ),
 				\WikiaResponse::CACHE_STANDARD,
-				function() use ($query) {
+				function() use ( $query ) {
 					return ( new \Wikia\Search\Services\FandomSearchService() )->query( $query );
 				}
 			);
