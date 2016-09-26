@@ -3025,34 +3025,6 @@ class MediaWikiServiceTest extends BaseTest
 		);
 	}
 
-	/**
-	 * @group Slow
-	 * @slowExecutionTime 0.13433 ms
-	 * @covers Wikia\Search\MediaWikiService::shortNumForMsg
-	 * @dataProvider dataShortNumForMsg
-	 */
-	public function testShortNumForMsg($number, $baseMessageId, $usedNumber, $usedMessageId) {
-		$this->getGlobalFunctionMock( 'wfMessage' )
-			->expects( $this->exactly( 1 ) )
-			->method( 'wfMessage' )
-			->with( $usedMessageId, $usedNumber, $number )
-			->will( $this->returnValue( 'mocked message' ) );
-
-		$service = (new MediaWikiService);
-		$this->assertEquals('mocked message', $service->shortNumForMsg($number, $baseMessageId));
-
-	}
-
-	public function dataShortNumForMsg() {
-		return array(
-			array(1, 'message-id', 1, 'message-id'),
-			array(999, 'message-id', 999, 'message-id'),
-			array(1000, 'message-id', 1, 'message-id-k'),
-			array(999999, 'message-id', 999, 'message-id-k'),
-			array(1000000, 'message-id', 1, 'message-id-M'),
-			array(10000000000, 'message-id', 10000, 'message-id-M'),
-		);
-	}
 
 	/**
 	 * @group Slow
