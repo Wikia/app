@@ -4098,7 +4098,7 @@ class Language {
 	 *
 	 * (added by Wikia)
 	 */
-	public function shortenNumberDecorator($number) {
+	public function shortenNumberDecorator( $number ) {
 		$number = intval( $number );
 
 		if ( $number >= 1000000000 ) {

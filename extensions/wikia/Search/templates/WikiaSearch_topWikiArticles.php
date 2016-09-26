@@ -2,7 +2,7 @@
 
 <?php if ( !empty( $pages ) ) : ?>
 <div class="side-articles top-wiki-articles RailModule">
-	<h1 class="side-articles-header"><?= wfMessage( 'wikiasearch2-top-module-title' )->plain() ?></h1>
+	<h1 class="side-articles-header"><?= wfMessage( 'wikiasearch2-top-module-title' )->escaped() ?></h1>
 	<?php foreach ( $pages as $page ) : ?>
 		<div class="side-article result">
 			<div class="side-article-thumbnail">
