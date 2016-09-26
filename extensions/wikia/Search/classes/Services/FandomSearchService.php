@@ -3,6 +3,7 @@
 namespace Wikia\Search\Services;
 
 class FandomSearchService extends EntitySearchService {
+	const RESULTS_COUNT = 5;
 
 	protected function getCore() {
 		return 'fandom';
@@ -12,9 +13,9 @@ class FandomSearchService extends EntitySearchService {
 		$select = $this->getSelect();
 
 		$phrase = $this->sanitizeQuery( $query );
-		$select->setQuery( "title:" . $phrase . " excerpt_t:" . $phrase . " content_t:" . $phrase );
+		$select->setQuery( 'title:' . $phrase . ' excerpt_t:' . $phrase . ' content_t:' . $phrase );
 		$select->clearFields()->addFields( [ 'title', 'url', 'image_s', 'excerpt_t', 'vertical_s' ] );
-		$select->setRows( 5 );
+		$select->setRows( static::RESULTS_COUNT );
 
 		return $select;
 	}

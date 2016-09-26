@@ -53,6 +53,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 	const CROSS_WIKI_PROMO_THUMBNAIL_WIDTH = 180;
 
 	const FANDOM_STORIES_MEMC_KEY = 'fandom-stories-memcache-key';
+	const FANDOM_SEARCH_PAGE = 'http://fandom.wikia.com/?s=';
 
 	/**
 	 * Responsible for instantiating query services based on config.
@@ -664,9 +665,13 @@ class WikiaSearchController extends WikiaSpecialPageController {
 				}
 			);
 
-			$viewMoreFandomStoriesLink = \Wikia\Search\FandomSearch::getViewMoreLink( $fandomStories, $query );
-
 			if ( !empty( $fandomStories ) ) {
+				if ( count( $fandomStories ) === \Wikia\Search\Services\FandomSearchService::RESULTS_COUNT ) {
+					$viewMoreFandomStoriesLink = static::FANDOM_SEARCH_PAGE . urlencode( $query );
+				} else {
+					$viewMoreFandomStoriesLink = null;
+				}
+
 				$this->response->setValues( [
 					'fandomStories' => $fandomStories,
 					'viewMoreFandomStoriesLink' => $viewMoreFandomStoriesLink,
