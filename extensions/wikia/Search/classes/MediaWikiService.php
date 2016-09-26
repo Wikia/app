@@ -185,8 +185,6 @@ class MediaWikiService
 		return isset($data['query']['backlinks_count'] ) ? $data['query']['backlinks_count'] : 0;
 	}
 
-
-
 	/**
 	 * Provides global value as set in the Oasis wg helper. Can use wgGlobalValue or GlobalValue.
 	 * @param mixed $global
@@ -313,7 +311,6 @@ class MediaWikiService
 					'siprop'   => 'statistics'
 			));
 	}
-
 
 	/**
 	 * Determines whether or not a page "exists"
