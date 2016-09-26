@@ -3074,8 +3074,8 @@ class DPLMain {
         $dbr =& wfGetDB( DB_SLAVE );
         $cats=$cat;
         $res = $dbr->query("SELECT DISTINCT page_title FROM ".$dbr->tableName('page')." INNER JOIN "
-                .$dbr->tableName('categorylinks')." AS cl0 ON ".$sPageTable.".page_id = cl0.cl_from AND cl0.cl_to='"
-               .str_replace(' ','_',$cat)."'"." WHERE page_namespace='14'");
+                .$dbr->tableName('categorylinks')." AS cl0 ON ".$sPageTable.".page_id = cl0.cl_from AND cl0.cl_to="
+               . $dbr->addQuotes(str_replace(' ','_',$cat))." WHERE page_namespace='14'"); # Wikia change - PLATFORM-2422
         foreach ($res as $row) {
 			if ($depth>1) {
 				$cats .= '|'. self::getSubcategories($row->page_title,$sPageTable,$depth -1) ;
