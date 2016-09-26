@@ -415,11 +415,11 @@ abstract class EmailController extends \WikiaController {
 	private function generateMobileApplicationsBadges() {
 		$mobileApplicationsLinks = $this->generateMobileApplicationsLinks();
 		$hasMobileApplicationBadges = count( $mobileApplicationsLinks ) > 0;
-		$badges = [
-			'hasMobileApplicationBadges' => $hasMobileApplicationBadges
-		];
+		$badges = null;
 
 		if ( $hasMobileApplicationBadges ) {
+			$badges = [];
+
 			if ( $mobileApplicationsLinks[self::ANDROID_PLATFORM] ) {
 				$badges[self::ANDROID_PLATFORM] = [
 					'link' => $mobileApplicationsLinks[self::ANDROID_PLATFORM],
