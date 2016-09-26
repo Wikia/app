@@ -59,7 +59,7 @@ class ResultHelper
 		if ( $query ) {
 			$lang = $wikiaSearchHelper->getLangForSearchResults();
 			$centralUrl = $wikiaSearchHelper->getCentralUrlFromGlobalTitle( $lang );
-			$globalSearchUrl = $wikiaSearchHelper->getGlobalSearchUrl( $centralUrl ) . '?search='. $query;
+			$globalSearchUrl = $wikiaSearchHelper->getGlobalSearchUrl( $centralUrl ) . '?search=' . urlencode( $query );
 		}
 
 		return [

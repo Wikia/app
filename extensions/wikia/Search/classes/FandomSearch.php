@@ -53,7 +53,7 @@ class FandomSearch {
 
 	public static function getViewMoreLink( $stories, $query ) {
 		if ( count( $stories ) === static::RESULTS_COUNT ) {
-			return static::FANDOM_SEARCH_PAGE . $query;
+			return static::FANDOM_SEARCH_PAGE . urlencode( $query );
 		}
 
 		return null;
