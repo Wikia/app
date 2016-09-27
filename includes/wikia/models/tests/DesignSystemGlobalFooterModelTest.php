@@ -4,24 +4,25 @@ class DesignSystemGlobalFooterModelTest extends WikiaBaseTest {
 	/**
 	 * @dataProvider getLicensingAndVerticalDataProvider
 	 *
+	 * @param string $product
 	 * @param $sitename
 	 * @param $rightsText license name
 	 * @param $rightsUrl license URL
 	 * @param $expectedResult
 	 */
-	public function testGetLicensingAndVertical( $sitename, $rightsText, $rightsUrl, $expectedResult ) {
-		$wikiId = 1234;
+	public function testGetLicensingAndVertical( $product, $sitename, $rightsText, $rightsUrl, $expectedResult ) {
+		$productInstanceId = 1234;
 
 		$this->getStaticMethodMock( 'WikiFactory', 'getVarValueByName' )
 			->expects( $this->any() )
 			->method( 'getVarValueByName' )
 			->will( $this->returnValueMap( [
-				[ 'wgRightsText', $wikiId, $rightsText ],
-				[ 'wgRightsUrl', $wikiId, $rightsUrl ],
-				[ 'wgSitename', $wikiId, $sitename ]
+				[ 'wgRightsText', $productInstanceId, $rightsText ],
+				[ 'wgRightsUrl', $productInstanceId, $rightsUrl ],
+				[ 'wgSitename', $productInstanceId, $sitename ]
 			] ) );
 
-		$footerModel = new DesignSystemGlobalFooterModel( $wikiId );
+		$footerModel = new DesignSystemGlobalFooterModel( $product, $productInstanceId );
 		$result = $footerModel->getData();
 
 		$this->assertEquals( $result['licensing_and_vertical'], $expectedResult );
@@ -30,6 +31,7 @@ class DesignSystemGlobalFooterModelTest extends WikiaBaseTest {
 	public function getLicensingAndVerticalDataProvider() {
 		return [
 			[
+				DesignSystemGlobalFooterModel::PRODUCT_WIKIS,
 				'wikia',
 				'CC-BY-SA',
 				'http://www.wikia.com/Licensing',
@@ -59,6 +61,7 @@ class DesignSystemGlobalFooterModelTest extends WikiaBaseTest {
 				],
 			],
 			[
+				DesignSystemGlobalFooterModel::PRODUCT_WIKIS,
 				'memory-alpha',
 				'CC-BY-NC-SA',
 				'http://memory-alpha.wikia.com/wiki/Project:Licensing',
@@ -87,18 +90,45 @@ class DesignSystemGlobalFooterModelTest extends WikiaBaseTest {
 					],
 				],
 			],
+			[
+				DesignSystemGlobalFooterModel::PRODUCT_FANDOMS,
+				'Fandom',
+				'foo',
+				'',
+				'licensing_and_vertical' => [
+					'description' => [
+						'type' => 'translatable-text',
+						'key' => 'global-footer-licensing-and-vertical-description',
+						'params' => [
+							'sitename' => [
+								'type' => 'text',
+								'value' => 'Fandom',
+							],
+							'vertical' => [],
+							'license' => [
+								'type' => 'line-text',
+								'title' => [
+									'type' => 'translatable-text',
+									'key' => 'global-footer-copyright-wikia',
+								],
+							]
+						]
+					],
+				],
+
+			]
 		];
 	}
 
 	public function testInternationalHeader() {
-		$footerModel = new DesignSystemGlobalFooterModel( 1234, 'en' );
+		$footerModel = new DesignSystemGlobalFooterModel( DesignSystemGlobalFooterModel::PRODUCT_WIKIS, 1234, 'en' );
 		$result = $footerModel->getData();
 
 		$this->assertNotEmpty( $result['wikia'] );
 		$this->assertNotEmpty( $result['fandom'] );
 		$this->assertArrayNotHasKey( 'international_header', $result );
 
-		$footerModel = new DesignSystemGlobalFooterModel( 1234, 'de' );
+		$footerModel = new DesignSystemGlobalFooterModel( DesignSystemGlobalFooterModel::PRODUCT_WIKIS, 1234, 'de' );
 		$result = $footerModel->getData();
 
 		$this->assertNotEmpty( $result['international_header'] );
@@ -107,12 +137,12 @@ class DesignSystemGlobalFooterModelTest extends WikiaBaseTest {
 	}
 
 	public function testGetFandomOverview() {
-		$footerModel = new DesignSystemGlobalFooterModel( 1234, 'en' );
+		$footerModel = new DesignSystemGlobalFooterModel( DesignSystemGlobalFooterModel::PRODUCT_WIKIS, 1234, 'en' );
 		$result = $footerModel->getData();
 
 		$this->assertCount( 4, $result['fandom_overview']['links'] );
 
-		$footerModel = new DesignSystemGlobalFooterModel( 1234, 'pl' );
+		$footerModel = new DesignSystemGlobalFooterModel( DesignSystemGlobalFooterModel::PRODUCT_WIKIS, 1234, 'pl' );
 		$result = $footerModel->getData();
 
 		$this->assertCount( 1, $result['fandom_overview']['links'] );

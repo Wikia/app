@@ -2,14 +2,25 @@
 
 class DesignSystemGlobalNavigationModel extends WikiaModel {
 	const DEFAULT_LANG = 'en';
+	const PRODUCT_WIKIS = 'wikis';
+	const PRODUCT_FANDOMS = 'fandoms';
 
-	private $wikiId;
+	private $product;
+	private $productInstanceId;
 	private $lang;
 
-	public function __construct( $wikiId, $lang = self::DEFAULT_LANG ) {
+	/**
+	 * constructor
+	 *
+	 * @param string $product Name of product, ex: fandoms, wikis
+	 * @param int $productInstanceId Identifier for given product, ex: wiki id
+	 * @param string $lang
+	 */
+	public function __construct( $product, $productInstanceId, $lang = self::DEFAULT_LANG ) {
 		parent::__construct();
 
-		$this->wikiId = $wikiId;
+		$this->product = $product;
+		$this->productInstanceId = $productInstanceId;
 		$this->lang = $lang;
 	}
 
@@ -17,14 +28,20 @@ class DesignSystemGlobalNavigationModel extends WikiaModel {
 		global $wgUser;
 
 		$data = [
+			// TODO: restore old logo before 4th October 2016
+			// https://wikia-inc.atlassian.net/browse/XW-1966
 			'logo' => [
 				'header' => [
 					'type' => 'link-image',
 					'href' => $this->getHref( 'fandom-logo' ),
-					'image' => 'wds-company-logo-fandom-powered-by-wikia',
+					'image' => 'wds-company-logo-wikia',
 					'title' => [
-						'type' => 'text',
-						'value' => 'Fandom powered by Wikia'
+						'type' => 'translatable-text',
+						'key' => 'global-footer-wikia-header'
+					],
+					'subtitle' => [
+						'type' => 'translatable-text',
+						'key' => 'global-footer-international-header-subtitle'
 					]
 				]
 			],
@@ -83,7 +100,10 @@ class DesignSystemGlobalNavigationModel extends WikiaModel {
 
 		if ( $wgUser->isLoggedIn() ) {
 			$data[ 'user' ] = $this->getLoggedInUserData( $wgUser );
-			$data[ 'notifications' ] = $this->getNotifications( $wgUser );
+
+			if ( $this->product !== static::PRODUCT_FANDOMS ) {
+				$data[ 'notifications' ] = $this->getNotifications( $wgUser );
+			}
 		} else {
 			$data[ 'anon' ] = $this->getAnonUserData();
 		}
@@ -96,19 +116,30 @@ class DesignSystemGlobalNavigationModel extends WikiaModel {
 	}
 
 	private function getPageUrl( $pageTitle, $namespace, $query = '' ) {
-		return GlobalTitle::newFromText( $pageTitle, $namespace, $this->wikiId )->getFullURL( $query );
+		return GlobalTitle::newFromText( $pageTitle, $namespace, $this->productInstanceId )->getFullURL( $query );
 	}
 
 	private function getSearchData() {
-		$isCorporatePage = WikiaPageType::isCorporatePage( $this->wikiId );
+		$isCorporatePage = WikiaPageType::isCorporatePage( $this->productInstanceId );
+
+		if ( $this->product === static::PRODUCT_FANDOMS ) {
+			$searchUrl = '/';
+			$searchPlaceholderKey = 'global-navigation-search-placeholder-fandom';
+		} else {
+			if ( $isCorporatePage ) {
+				$searchUrl = $this->getCorporatePageSearchUrl();
+				$searchPlaceholderKey = 'global-navigation-search-placeholder-wikis';
+			} else {
+				$searchUrl = $this->getPageUrl( 'Search', NS_SPECIAL, [ 'fulltext' => 'Search' ] );
+				$searchPlaceholderKey = 'global-navigation-search-placeholder-in-wiki';
+			}
+		}
 
 		$search = [
 			'type' => 'search',
 			'results' => [
-				'url' => $isCorporatePage
-					? $this->getCorporatePageSearchUrl()
-					: $this->getPageUrl( 'Search', NS_SPECIAL, [ 'fulltext' => 'Search' ] ),
-				'param-name' => 'query'
+				'url' => $searchUrl,
+				'param-name' => $this->product === static::PRODUCT_FANDOMS ? 's' : 'query'
 			],
 			'placeholder-inactive' => [
 				'type' => 'translatable-text',
@@ -116,16 +147,17 @@ class DesignSystemGlobalNavigationModel extends WikiaModel {
 			],
 			'placeholder-active' => [
 				'type' => 'translatable-text',
-				'key' => $isCorporatePage
-					? 'global-navigation-search-placeholder-wikis'
-					: 'global-navigation-search-placeholder-in-wiki'
+				'key' => $searchPlaceholderKey
 			]
 		];
 
-		if ( !$isCorporatePage ) {
+		if ( $this->product !== static::PRODUCT_FANDOMS && !$isCorporatePage ) {
 			$search['suggestions'] = [
-				'url' => WikiFactory::getHostById( $this->wikiId ) . '/index.php?action=ajax&rs=getLinkSuggest&format=json',
+				'url' => WikiFactory::getHostById( $this->productInstanceId ) . '/index.php?action=ajax&rs=getLinkSuggest&format=json',
 				'param-name' => 'query'
+			];
+			$search['placeholder-active']['params'] = [
+				'sitename' => $this->getSitenameData(),
 			];
 		}
 
@@ -217,7 +249,7 @@ class DesignSystemGlobalNavigationModel extends WikiaModel {
 				],
 				[
 					'type' => 'link-text',
-					'href' => $this->getPageUrl( 'Contents', NS_HELP ),
+					'href' => $this->getHref( 'help' ),
 					'title' => [
 						'type' => 'translatable-text',
 						'key' => 'global-navigation-user-help'
@@ -262,15 +294,6 @@ class DesignSystemGlobalNavigationModel extends WikiaModel {
 			'links' => [
 				[
 					'type' => 'link-branded',
-					'brand' => 'tv',
-					'title' => [
-						'type' => 'translatable-text',
-						'key' => 'global-navigation-fandom-overview-link-vertical-tv'
-					],
-					'href' => $this->getHref( 'tv' ),
-				],
-				[
-					'type' => 'link-branded',
 					'brand' => 'games',
 					'title' => [
 						'type' => 'translatable-text',
@@ -286,13 +309,22 @@ class DesignSystemGlobalNavigationModel extends WikiaModel {
 						'key' => 'global-navigation-fandom-overview-link-vertical-movies'
 					],
 					'href' => $this->getHref( 'movies' ),
+				],
+				[
+					'type' => 'link-branded',
+					'brand' => 'tv',
+					'title' => [
+						'type' => 'translatable-text',
+						'key' => 'global-navigation-fandom-overview-link-vertical-tv'
+					],
+					'href' => $this->getHref( 'tv' ),
 				]
 			]
 		];
 	}
 
 	private function isMessageWallEnabled() {
-		return WikiFactory::getVarValueByName( 'wgEnableWallExt', $this->wikiId );
+		return WikiFactory::getVarValueByName( 'wgEnableWallExt', $this->productInstanceId );
 	}
 
 	private function getCorporatePageSearchUrl() {
@@ -310,6 +342,13 @@ class DesignSystemGlobalNavigationModel extends WikiaModel {
 				'key' => 'global-navigation-wikis-community-central'
 			],
 			'href' => $this->getHref( 'community-central' ),
+		];
+	}
+
+	private function getSitenameData() {
+		return [
+			'type' => 'text',
+			'value' => WikiFactory::getVarValueByName( 'wgSitename', $this->productInstanceId, false, $this->wg->Sitename ),
 		];
 	}
 }

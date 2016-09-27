@@ -1,8 +1,5 @@
 <?php
 
-use Wikia\Logger\WikiaLogger;
-use Wikia\Util\PerformanceProfilers\UsernameUseProfiler;
-
 class UserStatsService extends WikiaModel {
 
 	const CACHE_TTL = 86400;
@@ -161,7 +158,6 @@ class UserStatsService extends WikiaModel {
 	 * @return Int Number of edits
 	 */
 	public function calculateEditCountWiki( $flags = 0 ) {
-		$usernameUseProfiler = new UsernameUseProfiler( __CLASS__, __METHOD__ );
 		if ( !$this->validateUser() ) {
 			return 0;
 		}
@@ -181,7 +177,6 @@ class UserStatsService extends WikiaModel {
 		);
 
 		$this->setUserStat( 'editcount', $editCount );
-		$usernameUseProfiler->end();
 		return $editCount;
 	}
 
@@ -210,7 +205,6 @@ class UserStatsService extends WikiaModel {
 		if ( !$this->validateUser() ) {
 			return 0;
 		}
-		$usernameUseProfiler = new UsernameUseProfiler( __CLASS__, __METHOD__ );
 
 		$dbr = $this->getDatabase( $flags );
 
@@ -233,7 +227,6 @@ class UserStatsService extends WikiaModel {
 		);
 
 		$this->setUserStat( 'editcountThisWeek', $editCount );
-		$usernameUseProfiler->end();
 		return $editCount;
 	}
 

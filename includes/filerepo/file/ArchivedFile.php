@@ -5,7 +5,6 @@
  * @file
  * @ingroup FileAbstraction
  */
-use Wikia\Util\PerformanceProfilers\UsernameUseProfiler;
 
 /**
  * Class representing a row of the 'filearchive' table
@@ -118,7 +117,6 @@ class ArchivedFile {
 		}
 
 		if( !$this->title || $this->title->getNamespace() == NS_FILE ) {
-			$usernameUseProfiler = new UsernameUseProfiler( __CLASS__, __METHOD__ );
 
 			$dbr = wfGetDB( DB_SLAVE );
 			$res = $dbr->select( 'filearchive',
@@ -166,11 +164,12 @@ class ArchivedFile {
 			$this->media_type = $row->fa_media_type;
 			$this->description = $row->fa_description;
 			$this->user = $row->fa_user;
-			$this->user_text = $row->fa_user_text;
+			/* Wikia change begin */
+			$this->user_text = User::getUsername( $row->fa_user, $row->fa_user_text);
+			/* Wikia change end */
 			$this->timestamp = $row->fa_timestamp;
 			$this->deleted = $row->fa_deleted;
 
-			$usernameUseProfiler->end();
 		} else {
 			throw new MWException( 'This title does not correspond to an image page.' );
 		}
@@ -188,8 +187,6 @@ class ArchivedFile {
 	 * @return ArchivedFile
 	 */
 	public static function newFromRow( $row ) {
-		$usernameUseProfiler = new UsernameUseProfiler( __CLASS__, __METHOD__ );
-
 		$file = new ArchivedFile( Title::makeTitle( NS_FILE, $row->fa_name ) );
 
 		$file->id = intval($row->fa_id);
@@ -206,11 +203,11 @@ class ArchivedFile {
 		$file->media_type = $row->fa_media_type;
 		$file->description = $row->fa_description;
 		$file->user = $row->fa_user;
-		$file->user_text = $row->fa_user_text;
+		/* Wikia change begin */
+		$file->user_text = User::getUsername( $row->fa_user, $row->fa_user_text );
+		/* Wikia change end */
 		$file->timestamp = $row->fa_timestamp;
 		$file->deleted = $row->fa_deleted;
-
-		$usernameUseProfiler->end();
 
 		return $file;
 	}

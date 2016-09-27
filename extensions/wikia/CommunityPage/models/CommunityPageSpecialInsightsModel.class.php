@@ -174,7 +174,7 @@ class CommunityPageSpecialInsightsModel {
 		$userName = $metadata['lastRevision']['username'];
 
 		if ( User::isIp( $userName ) ) {
-			$userName = wfMessage( 'oasis-anon-user' )->plain();
+			$userName = wfMessage( 'oasis-anon-user' )->text();
 		}
 
 		return wfMessage( 'communitypage-lastrevision' )->rawParams(

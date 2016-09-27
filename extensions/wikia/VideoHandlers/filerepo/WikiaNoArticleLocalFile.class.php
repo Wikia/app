@@ -5,8 +5,6 @@
  * Works as interface, logic should go to WikiaLocalFileShared
  */
 
-use Wikia\Util\PerformanceProfilers\UsernameUseProfiler;
-
 class WikiaNoArticleLocalFile extends WikiaLocalFile {
 	
 	/**
@@ -77,9 +75,6 @@ class WikiaNoArticleLocalFile extends WikiaLocalFile {
 		);
 
 		if( $dbw->affectedRows() == 0 ) {
-			$usernameUseProfiler = new UsernameUseProfiler( __CLASS__, __METHOD__ );
-			$reupload = true;
-
 			# Collision, this is an update of a file
 			# Insert previous contents into oldimage
 			$dbw->insertSelect( 'oldimage', 'image',
@@ -122,7 +117,6 @@ class WikiaNoArticleLocalFile extends WikiaLocalFile {
 					'img_name' => $this->getName()
 				), __METHOD__
 			);
-			$usernameUseProfiler->end();
 		} else {
 			# This is a new file
 			# Update the image count
