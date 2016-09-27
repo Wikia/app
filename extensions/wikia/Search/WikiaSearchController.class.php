@@ -52,6 +52,9 @@ class WikiaSearchController extends WikiaSpecialPageController {
 	const CROSS_WIKI_PROMO_THUMBNAIL_HEIGHT = 120;
 	const CROSS_WIKI_PROMO_THUMBNAIL_WIDTH = 180;
 
+	const FANDOM_STORIES_MEMC_KEY = 'fandom-stories-memcache-key';
+	const FANDOM_SEARCH_PAGE = 'http://fandom.wikia.com/?s=';
+
 	/**
 	 * Responsible for instantiating query services based on config.
 	 * @var Wikia\Search\QueryService\Factory
@@ -654,10 +657,21 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		}
 
 		if ( $wgEnableFandomStoriesOnSearchResultPage && $wgLang->getCode() === 'en' && !empty( $query ) ) {
-			$fandomStories = \Wikia\Search\FandomSearch::getStoriesWithCache( $query );
-			$viewMoreFandomStoriesLink = \Wikia\Search\FandomSearch::getViewMoreLink( $fandomStories, $query );
+			$fandomStories = \WikiaDataAccess::cache(
+				wfSharedMemcKey( static::FANDOM_STORIES_MEMC_KEY, $query ),
+				\WikiaResponse::CACHE_STANDARD,
+				function() use ( $query ) {
+					return ( new \Wikia\Search\Services\FandomSearchService() )->query( $query );
+				}
+			);
 
 			if ( !empty( $fandomStories ) ) {
+				if ( count( $fandomStories ) === \Wikia\Search\Services\FandomSearchService::RESULTS_COUNT ) {
+					$viewMoreFandomStoriesLink = static::FANDOM_SEARCH_PAGE . urlencode( $query );
+				} else {
+					$viewMoreFandomStoriesLink = null;
+				}
+
 				$this->response->setValues( [
 					'fandomStories' => $fandomStories,
 					'viewMoreFandomStoriesLink' => $viewMoreFandomStoriesLink,
