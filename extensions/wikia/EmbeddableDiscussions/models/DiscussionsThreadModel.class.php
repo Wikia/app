@@ -29,7 +29,7 @@ class DiscussionsThreadModel {
 		return self::DISCUSSIONS_API_BASE_DEV . "$this->cityId/forums?responseGroup=small&viewableOnly=true";
 	}
 
-	public function getCategoryName( $categoryId ) {
+	public function getCategoryNames( $categoryIds ) {
 		$memcKey = wfMemcKey( __METHOD__, self::MCACHE_VER );
 		$rawData = WikiaDataAccess::cache(
 			$memcKey,
@@ -39,25 +39,38 @@ class DiscussionsThreadModel {
 			}
 		);
 
-		return $this->categoryNameLookup( $categoryId, $rawData );
+		return $this->categoryNameLookup( $categoryIds, $rawData );
 	}
 
-	private function categoryNameLookup( $categoryId, $rawData ) {
+	private function categoryNameLookup( $categoryIds, $rawData ) {
+		$explodedIds = explode( ',', $categoryIds );
+		$ret = array();
+
 		$categories = $rawData['_embedded']['doc:forum'];
 		if ( is_array( $categories ) ) {
 			foreach ( $categories as $value ) {
-				if ( $value['id'] === $categoryId ) {
-					return $value['name'];
+				if ( in_array( $value['id'], $explodedIds ) ) {
+					$ret[] = [
+						'id' => $value['id'],
+						'name' => $value['name'],
+					];
 				}
 			}
 		}
 
-		return false;
+		return $ret;
 	}
 
-	private function getRequestUrl( $showLatest, $limit, $category ) {
+	private function getRequestUrl( $showLatest, $limit, $categoryIds ) {
 		$sortKey = $showLatest ? self::SORT_LATEST : self::SORT_TRENDING;
-		$categoryKey = $category ? '&forumId=' . $category : '';
+		$categoryKey = null;
+
+		if ( !empty( $categoryIds ) ) {
+			$allCategoryIds = explode( ',', $categoryIds );
+			$categoryKey = array_reduce( $allCategoryIds, function( $carry, $item ) {
+				return $carry . '&forumId=' . $item;
+			} );
+		}
 
 		return "/$this->cityId/threads?sortKey=$sortKey&limit=$limit&viewableOnly=false" . $categoryKey;
 	}
@@ -73,12 +86,27 @@ class DiscussionsThreadModel {
 		$categoryName = false;
 
 		if ( !empty( $categoryId ) ) {
-			$categoryName = $this->getCategoryName( $categoryId );
+			$categoryNames = $this->getCategoryNames( $categoryId );
 
-			if ( $categoryName ) {
-				$discussionsUrl = "/d/f?catId=$categoryId&sort=$sortKey";
-			} else {
+			if ( count ( $categoryNames ) === 0 ) {
+				// No valid categories specified, show error message
 				$invalidCategory = true;
+			} elseif ( count ( $categoryNames ) === 1 ) {
+				// A single category specified, use its name
+				$categoryName = $categoryNames[0]['name'];
+				$discussionsUrl = "/d/f?sort=$sortKey&catId=$categoryId";
+			} else {
+				// Multiple categories specified, don't use name
+				$categoryName = false;
+				$catIdUrl = '&catId=';
+				$separator = '';
+
+				foreach ( $categoryNames as $category ) {
+					$catIdUrl .= $separator . $category['id'];
+					$separator = urlencode( ',' );
+				}
+
+				$discussionsUrl = "/d/f?sort=$sortKey$catIdUrl";
 			}
 		} else {
 			$discussionsUrl = "/d/f?sort=$sortKey";
