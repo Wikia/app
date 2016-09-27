@@ -12,6 +12,15 @@ require(
 				var autocompleteReEscape = new RegExp('(\\' + ['/', '.', '*', '+', '?', '|', '(', ')',
 						'[', ']', '{', '}', '\\'].join('|\\') + ')', 'g');
 
+				$searchInput.on({
+					suggestShow: function () {
+						$searchInputWrapper.addClass('wds-is-active');
+					},
+					suggestHide: function () {
+						$searchInputWrapper.removeClass('wds-is-active');
+					}
+				});
+
 				$searchInput.autocomplete({
 					serviceUrl: searchSuggestionsUrl,
 					queryParamName: $searchInput.data('suggestions-param-name'),
@@ -74,15 +83,6 @@ require(
 		if (searchSuggestionsUrl) {
 			$searchInput.one('focus', function () {
 				initSuggestions();
-
-				$searchInput.bind({
-					suggestShow: function () {
-						$searchInputWrapper.addClass('wds-is-active');
-					},
-					suggestHide: function () {
-						$searchInputWrapper.removeClass('wds-is-active');
-					}
-				});
 			});
 
 			if ($searchInput.is(':focus')) {
