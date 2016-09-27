@@ -1,10 +1,10 @@
-/*global define*/
 define('ext.wikia.recirculation.views.impactFooter', [
 	'jquery',
 	'wikia.window',
 	'ext.wikia.recirculation.tracker',
 	'ext.wikia.recirculation.utils'
 ], function ($, w, tracker, utils) {
+	'use strict';
 
 	var imageRatio = 9/16,
 		options = {};

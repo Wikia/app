@@ -4,6 +4,8 @@ define('ext.wikia.recirculation.helpers.cakeRelatedContent', [
     'wikia.nirvana',
     'ext.wikia.recirculation.utils'
 ], function($, w, nirvana, utils) {
+	'use strict';
+
     var options = {
         limit: 5
     };
@@ -50,6 +52,6 @@ define('ext.wikia.recirculation.helpers.cakeRelatedContent', [
         $.extend(options, config);
         return {
             loadData: loadData
-        }
-    }
+        };
+    };
 });

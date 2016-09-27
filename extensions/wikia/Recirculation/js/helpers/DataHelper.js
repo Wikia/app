@@ -1,4 +1,3 @@
-/*global define*/
 define('ext.wikia.recirculation.helpers.data', [
 	'jquery',
 	'wikia.window',
@@ -6,6 +5,7 @@ define('ext.wikia.recirculation.helpers.data', [
 	'wikia.nirvana',
 	'ext.wikia.recirculation.utils'
 ], function ($, w, abTest, nirvana, utils) {
+	'use strict';
 
 	return function(options) {
 		options = options || {};

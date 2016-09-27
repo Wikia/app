@@ -1,10 +1,10 @@
-/*global define*/
 define('ext.wikia.recirculation.helpers.discussions', [
 	'jquery',
 	'wikia.window',
 	'wikia.abTest',
 	'wikia.nirvana'
 ], function ($, w, abTest, nirvana) {
+	'use strict';
 
 	return function(config) {
 		var defaults = {

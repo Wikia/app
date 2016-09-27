@@ -1,4 +1,3 @@
-/*global require*/
 require([
 	'jquery',
 	'wikia.window',
@@ -33,6 +32,7 @@ require([
 	 *  ];
 	 *
 	 */
+	'use strict';
 
 	var recircExperiment = w.recircExperiment || false,
 		experimentName = 'RECIRCULATION_MIX',

@@ -1,4 +1,3 @@
-/*global require*/
 define('ext.wikia.recirculation.discussions', [
 	'jquery',
 	'wikia.window',
@@ -6,6 +5,7 @@ define('ext.wikia.recirculation.discussions', [
 	'wikia.nirvana',
 	'ext.wikia.recirculation.tracker'
 ], function ($, w, abTest, nirvana, tracker) {
+	'use strict';
 
 	function injectDiscussions(experimentName) {
 		nirvana.sendRequest({

@@ -1,4 +1,3 @@
-/*global define*/
 define('ext.wikia.recirculation.views.rail', [
 	'jquery',
 	'wikia.window',
@@ -7,11 +6,12 @@ define('ext.wikia.recirculation.views.rail', [
 	'ext.wikia.recirculation.utils',
 	'ext.wikia.recirculation.helpers.curatedContent'
 ], function ($, w, abTest, tracker, utils, CuratedHelper) {
+	'use strict';
 
 	var options = {};
 
 	function render(data) {
-		var curated = CuratedHelper();
+		var curated = new CuratedHelper();
 
 		return curated.injectContent(data)
 			.then(renderTemplate('rail.mustache'))
@@ -32,7 +32,7 @@ define('ext.wikia.recirculation.views.rail', [
 		return function(data) {
 			data.items = data.items.slice(0, 5);
 			return utils.renderTemplate(templateName, data);
-		}
+		};
 	}
 
 	function setupTracking(experimentName) {
