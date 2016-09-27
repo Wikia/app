@@ -262,7 +262,6 @@ class DesignSystemSharedLinks {
 		],
 		'zh-hans' => [
 			'explore-wikis' => 'http://zh.wikia.com/wiki/Wikia%E4%B8%AD%E6%96%87',
-			'fan-communities' => 'http://zh.wikia.com/wiki/Wikia%E4%B8%AD%E6%96%87',
 			'fandom-logo' => 'http://zh.wikia.com',
 			'terms-of-use' => 'http://zh.wikia.com/wiki/%E4%BD%BF%E7%94%A8%E6%9D%A1%E6%AC%BE',
 			'privacy-policy' => 'http://zh.wikia.com/wiki/Privacy_Policy',
