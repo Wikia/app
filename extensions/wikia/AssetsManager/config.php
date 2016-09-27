@@ -143,7 +143,6 @@ $config['recirculation_js'] = [
 		'//extensions/wikia/Recirculation/js/experiments/placement/impactFooter.js',
 		'//extensions/wikia/Recirculation/js/experiments/placement/fandomTopic.js',
 		'//extensions/wikia/Recirculation/js/experiments/placement/control.js',
-		'//extensions/wikia/Recirculation/js/scrolldepth.js',
 		'//extensions/wikia/Recirculation/js/libs/perfect-scrollbar.js',
 	],
 ];
@@ -352,7 +351,6 @@ $config['oasis_jquery'] = [
 		'//resources/wikia/libraries/jquery/store/jquery.store.js',
 		'//resources/wikia/libraries/jquery/throttle-debounce/jquery.throttle-debounce.js',
 		'//resources/wikia/libraries/jquery/floating-scrollbar/jquery.floating-scrollbar.js',
-		'//resources/wikia/libraries/jquery/scrolldepth/jquery.scrolldepth.js',
 
 		// Wikia plugins
 		'//resources/wikia/jquery.wikia.js',
