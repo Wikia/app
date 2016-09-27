@@ -47,7 +47,7 @@ $wgHooks['OasisSkinAssetGroups'][] = 'FacebookClientHooks::onSkinAssetGroups';
 $wgHooks['MonobookSkinAssetGroups'][] = 'FacebookClientHooks::onSkinAssetGroups';
 $wgHooks['ParserFirstCallInit'][] = 'FacebookClientHooks::setupParserHook';
 $wgHooks['SkinTemplatePageBeforeUserMsg'][] = 'FacebookClientHooks::onSkinTemplatePageBeforeUserMsg';
-$wgHooks['BeforePageDisplay'][] = 'FacebookClientHooks::onBeforePageDisplay';
+$wgHooks['SkinAfterBottomScripts'][] = 'FacebookClientHooks::onSkinAfterBottomScripts';
 $wgHooks['UserLogout'][] = 'FacebookClientHooks::onUserLogout';
 
 /**

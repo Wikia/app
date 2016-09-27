@@ -48,11 +48,6 @@ require([
 			event.preventDefault();
 			openCommunityModal(tabs.TAB_ADMINS);
 		});
-
-		$('#viewAllMembers').click(function (event) {
-			event.preventDefault();
-			openCommunityModal(tabs.TAB_ALL);
-		});
 	}
 
 	function getUiModalInstance() {
@@ -123,9 +118,9 @@ require([
 
 				tab.cachedData = mustache.render(templates[tab.template], response);
 				$deferred.resolve(tab.cachedData);
-			}, function (error) {
+			}, function () {
 				$deferred.resolve(mustache.render(templates.loadingError, {
-					loadingError: $.msg('communitypage-modal-tab-loadingerror'),
+					loadingError: $.msg('communitypage-modal-tab-loadingerror')
 				}));
 			});
 		}
@@ -225,27 +220,28 @@ require([
 	}
 
 	function initTracking() {
-		// Track clicks in contribution module
+		// Track clicks in contribution and recently joined modules
 		$('.contributors-module').on('mousedown touchstart', 'a', function (event) {
 			handleClick(event, 'community-page-contribution-module');
 		});
 
-		// Track clicks in the Recent Activity module
-		$('.recent-activity-module').on('mousedown touchstart', 'a', function (event) {
-			handleClick(event, 'community-page-recent-activity-module');
+		// Track clicks in admins view all link
+		$('.community-page-admins-module').on('mousedown touchstart', 'a', function (event) {
+			handleClick(event, 'community-page-admins-module');
+		});
+
+		// Track clicks in moderators module
+		$('.community-page-moderators-module').on('mousedown touchstart', 'a', function (event) {
+			handleClick(event, 'community-page-moderators-module');
 		});
 
 		// Track clicks in the Help module
-		$('.help-module').on('mousedown touchstart', 'a', function (event) {
+		$('.community-page-help-module').on('mousedown touchstart', 'a', function (event) {
 			handleClick(event, 'community-page-help-module');
 		});
 
-		$('.community-policy-module').on('mousedown touchstart', 'a', function (event) {
-			handleClick(event, 'community-page-community-policy-module');
-		});
-
-		// Track clicks in the Insights modules
-		$('.community-page-insights-module').on('mousedown touchstart', 'a', function (event) {
+		// Track clicks in the cards modules
+		$('.community-page-card-module').on('mousedown touchstart', 'a', function (event) {
 			var category = event.delegateTarget.getAttribute('data-tracking');
 
 			if (category !== null && category.length > 0) {
@@ -258,10 +254,10 @@ require([
 			handleClick(event, 'community-page-todo-list-module');
 		});
 
-		$('.community-page-todo-list-module-content').on('mousedown touchstart', 'a', function (event) {
+		$('.community-page-todo-list-module-content').on('mousedown touchstart', 'a', function () {
 			track({
 				category: 'community-page-todo-list-module',
-				label: 'community-page-todo-list-module-content',
+				label: 'community-page-todo-list-module-content'
 			});
 		});
 	}
