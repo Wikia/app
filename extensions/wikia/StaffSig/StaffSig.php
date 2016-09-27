@@ -44,7 +44,3 @@ function wfGetSignatureUrl() {
 	return $wgExtensionsPath . '/wikia/DesignSystem/bower_components/design-system/assets/company/logo-fandom.svg';
 }
 
-function wfGetSignatureUrl() {
-	global $wgExtensionsPath;
-	return $wgExtensionsPath . '/wikia/DesignSystem/bower_components/design-system/assets/company/logo-fandom.svg';
-}
