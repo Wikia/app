@@ -6,7 +6,7 @@
   "global-footer-follow-us-link-youtube": "YouTube",
   "global-footer-follow-us-header": "关注我们",
   "global-footer-fandom-overview-link-fan-communities": "粉丝社区",
-  "global-footer-fandom-overview-link-explore-wikis": "探索维基社区",
+  "global-footer-fandom-overview-link-explore-wikis": "探索维基",
   "global-footer-fandom-overview-link-vertical-games": "游戏",
   "global-footer-fandom-overview-link-vertical-movies": "电影",
   "global-footer-fandom-overview-link-vertical-tv": "电视",
@@ -45,7 +45,7 @@
   "global-footer-licensing-and-vertical-description-param-vertical-movies": "电影",
   "global-footer-full-site-link": "查看完整网站",
   "global-footer-mobile-site-link": "查看移动网站",
-  "global-footer-copyright-wikia": "版权所有__date__Wikia, Inc.",
+  "global-footer-copyright-wikia": "版权所有$1Wikia, Inc.",
   "global-navigation-anon-my-account": "我的账户",
   "global-navigation-anon-register": "注册",
   "global-navigation-anon-register-description": "没有帐户？",
@@ -70,7 +70,7 @@
   "global-navigation-user-sign-out": "登出",
   "global-navigation-user-view-profile": "查看个人主页",
   "global-navigation-wikis-community-central": "社区中心",
-  "global-navigation-wikis-explore": "探索维基社区",
+  "global-navigation-wikis-explore": "探索维基",
   "global-navigation-wikis-fandom-university": "Fandom课堂",
   "global-navigation-wikis-header": "维基"
 }

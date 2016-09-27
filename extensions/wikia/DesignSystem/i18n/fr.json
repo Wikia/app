@@ -45,7 +45,7 @@
   "global-footer-licensing-and-vertical-description-param-vertical-movies": "Cinéma",
   "global-footer-full-site-link": "Voir le site complet",
   "global-footer-mobile-site-link": "Visiter le site mobile",
-  "global-footer-copyright-wikia": "Copyright __date__ Wikia, Inc.",
+  "global-footer-copyright-wikia": "Copyright $1 Wikia, Inc.",
   "global-navigation-anon-my-account": "Mon compte",
   "global-navigation-anon-register": "Créer un compte",
   "global-navigation-anon-register-description": "Vous n'avez pas de compte?",
@@ -70,7 +70,7 @@
   "global-navigation-user-sign-out": "Se déconnecter",
   "global-navigation-user-view-profile": "Voir profil",
   "global-navigation-wikis-community-central": "Centre des communautés",
-  "global-navigation-wikis-explore": "Wikis",
+  "global-navigation-wikis-explore": "Explorer les wikis",
   "global-navigation-wikis-fandom-university": "Université Fandom",
   "global-navigation-wikis-header": "Wikis"
 }

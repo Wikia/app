@@ -45,7 +45,7 @@
   "global-footer-licensing-and-vertical-description-param-vertical-movies": "Film",
   "global-footer-full-site-link": "Vai al sito completo",
   "global-footer-mobile-site-link": "Vai al sito Mobile",
-  "global-footer-copyright-wikia": "Copyright __date__ Wikia, Inc.",
+  "global-footer-copyright-wikia": "Copyright $1 Wikia, Inc.",
   "global-navigation-anon-my-account": "Il mio account",
   "global-navigation-anon-register": "Iscriviti",
   "global-navigation-anon-register-description": "Non hai un account?",
