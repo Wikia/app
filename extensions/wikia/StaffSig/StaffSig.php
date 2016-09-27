@@ -36,7 +36,7 @@ function wfMakeSignatureCommon($href, $title, $iurl=null) {
 		$iurl = wfGetSignatureUrl();
 	}
 
-	return '<a href="'. $href .'" title="'. $title . '" class="staffSigLink"><img src="'. $wgBlankImgUrl .'" style="background-image: url('. $iurl .')" alt="@Wikia" class="staffSig" width="41" height="12" /></a>';
+	return '<a href="'. $href .'" title="'. $title . '" class="staffSigLink"><img src="'. $wgBlankImgUrl .'" style="background-image: url('. $iurl .'); background-size: 100% 100%;" alt="@Wikia" class="staffSig" width="64" height="14" /></a>';
 }
 
 function wfGetSignatureUrl() {
