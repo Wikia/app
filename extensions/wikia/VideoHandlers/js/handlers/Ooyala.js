@@ -86,10 +86,16 @@ define('wikia.videohandler.ooyala', [
 				throw 'ext.wikia.adEngine.dartVideoHelper is not defined and it should as we need to display ads';
 			}
 
+
 			tagUrl = dartVideoHelper.getUrl();
+			console.log('BEFORE RECOVERY', tagUrl);
+			console.log(tagUrl);
+			tagUrl = _sp_.getSafeUri(tagUrl); // TODO: add here if recovery
+			console.log('AFTER RECOVERY', tagUrl);
 
 			createParams.vast = {
-				tagUrl: tagUrl
+				tagUrl: tagUrl,
+				vastUrl: tagUrl
 			};
 		}
 
