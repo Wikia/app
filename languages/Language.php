@@ -4130,8 +4130,8 @@ class Language {
 			$number
 		);
 	}
-
 }
+
 
 /**
  * Class DecoratedShortenNumber returned by Language::shortenNumberDecorator()

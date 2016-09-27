@@ -5,7 +5,7 @@ class LanguageTest extends WikiaBaseTest {
 	 * @dataProvider shortenNumberDecoratorDataProvider
 	 * @group UsingDB
 	 */
-	public function testShortenNumberDecorator($number,$expectedDecorated, $expectedRounded) {
+	public function testShortenNumberDecorator( $number, $expectedDecorated, $expectedRounded ) {
 		$this->mockMessage( 'number-shortening-billions', '$1B' );
 		$this->mockMessage( 'number-shortening-millions', '$1M' );
 		$this->mockMessage( 'number-shortening', '$1K' );
