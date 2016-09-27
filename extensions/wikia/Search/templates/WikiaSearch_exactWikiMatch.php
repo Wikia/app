@@ -10,9 +10,14 @@
 			</h1>
 			<p class="exact-wiki-match__hub subtle"><?= htmlspecialchars( $hub ) ?></p>
 			<ul class="exact-wiki-match__statistics">
-				<li><?= wfMessage( 'wikiasearch2-pages' )->rawParams( HTML::element( 'div', [], $wg->Lang->shortenNumberDecorator( $pagesCount) ) )->params( $pagesCount )->escaped(); ?></li>
-				<li><?= wfMessage( 'wikiasearch2-images' )->rawParams( HTML::element( 'div', [], $wg->Lang->shortenNumberDecorator( $imagesCount) ) )->params( $imagesCount )->escaped(); ?></li>
-				<li><?= wfMessage( 'wikiasearch2-videos' )->rawParams( HTML::element( 'div', [], $wg->Lang->shortenNumberDecorator( $videosCount) ) )->params( $videosCount )->escaped(); ?></li>
+				<?
+					$shortenedPagesCount = $wg->Lang->shortenNumberDecorator( $pagesCount);
+					$shortenedImagesCount = $wg->Lang->shortenNumberDecorator( $imagesCount);
+					$shortenedVideosCount = $wg->Lang->shortenNumberDecorator( $videosCount);
+				?>
+				<li><?= wfMessage( 'wikiasearch2-pages' )->rawParams( HTML::element( 'div', [], $shortenedPagesCount->decorated ) )->params( $shortenedPagesCount->rounded )->escaped(); ?></li>
+				<li><?= wfMessage( 'wikiasearch2-images' )->rawParams( HTML::element( 'div', [], $shortenedImagesCount->decorated ) )->params( $shortenedImagesCount->rounded )->escaped(); ?></li>
+				<li><?= wfMessage( 'wikiasearch2-videos' )->rawParams( HTML::element( 'div', [], $shortenedVideosCount->decorated ) )->params( $shortenedVideosCount->rounded )->escaped(); ?></li>
 			</ul>
 			<p class="exact-wiki-match__wiki-description"><?= htmlspecialchars( $description ); ?></p>
 		</div>

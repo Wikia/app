@@ -16,9 +16,9 @@
 						<?= wfMessage( 'quickstats-totals-label' )->escaped() ?>
 					</div>
 				</td>
-				<td><div class="highlight-bottom"><?= $wg->Lang->shortenNumberDecorator($totals['pageviews']) ?></div></td>
-				<td><?= $wg->Lang->shortenNumberDecorator($totals['edits']) ?></td>
-				<td><?= $wg->Lang->shortenNumberDecorator($totals['photos']) ?></td>
+				<td><div class="highlight-bottom"><?= $wg->Lang->shortenNumberDecorator($totals['pageviews'])->decorated ?></div></td>
+				<td><?= $wg->Lang->shortenNumberDecorator($totals['edits'])->decorated ?></td>
+				<td><?= $wg->Lang->shortenNumberDecorator($totals['photos'])->decorated ?></td>
 			</tr>
 			<tr>
 				<td colspan="4" class="supplemental-info">
@@ -33,9 +33,9 @@
 					$formattedDate = $dateObject->format( wfMessage( 'quickstats-date-format' )->escaped() );  ?>
 				<tr>
 					<td><?= $formattedDate ?></td>
-					<td><?= $wg->Lang->shortenNumberDecorator($row['pageviews']) ?></td>
-					<td><?= $wg->Lang->shortenNumberDecorator($row['edits']) ?></td>
-					<td><?= $wg->Lang->shortenNumberDecorator($row['photos']) ?></td>
+					<td><?= $wg->Lang->shortenNumberDecorator($row['pageviews'])->decorated ?></td>
+					<td><?= $wg->Lang->shortenNumberDecorator($row['edits'])->decorated ?></td>
+					<td><?= $wg->Lang->shortenNumberDecorator($row['photos'])->decorated ?></td>
 				</tr>
 			<? } ?>
 		</tbody>

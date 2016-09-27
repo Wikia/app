@@ -4092,30 +4092,56 @@ class Language {
 
 	/**
 	 * Shorten number to thousands/millions/billions
+	 * Returns an object containing 2 values to allow calculation of correct plural version of the message
+	 *	* shortened number string
+	 *	* rounded number
+	 *
+	 * Languages like PL and RU uses more complex plural rules that uses multiple forms for different numbers
+	 * http://www.unicode.org/cldr/charts/29/supplemental/language_plural_rules.html#pl
 	 *
 	 * @param $number
-	 * @return String
+	 * @param $precision
+	 * @return DecoratedShortenNumber
 	 *
 	 * (added by Wikia)
 	 */
-	public function shortenNumberDecorator( $number ) {
+	public function shortenNumberDecorator( $number, $precision = 1 ) {
 		$number = intval( $number );
 
-		if ( $number >= 1000000000 ) {
-			return wfMessage( 'number-shortening-billions' )
-				->params( round( $number / 1000000000, 1 ) )
-				->escaped();
-		} elseif ( $number >= 1000000 ) {
-			return wfMessage( 'number-shortening-millions' )
-				->params( round( $number / 1000000, 1 ) )
-				->escaped();
-		} elseif ( $number >= 1000 ) {
-			return wfMessage( 'number-shortening' )
-				->params( round( $number / 1000 , 1 ) )
-				->escaped();
-		} else {
-			return $this->formatNum( $number );
-		}
-	}
+		$shorteningBreakpoints = [
+			'number-shortening-billions' => 1000000000,
+			'number-shortening-millions' => 1000000,
+			'number-shortening' => 1000
+		];
 
+		foreach ( $shorteningBreakpoints as $messageKey => $breakpointNumber ) {
+			if ( $number >= $breakpointNumber ) {
+				return new DecoratedShortenNumber(
+					wfMessage( $messageKey )
+						->params( $this->formatNum( round( $number / $breakpointNumber, $precision ) ) )
+						->escaped(),
+					round( $number, - ( log10( $breakpointNumber ) - $precision ) )
+				);
+			}
+		}
+
+		return new DecoratedShortenNumber(
+			$this->formatNum( $number ),
+			$number
+		);
+	}
+}
+
+
+/**
+ * Class DecoratedShortenNumber returned by Language::shortenNumberDecorator()
+ */
+class DecoratedShortenNumber {
+	public $decorated;
+	public $rounded;
+
+	public function __construct( $decorated, $rounded ) {
+		$this->decorated = $decorated;
+		$this->rounded = $rounded;
+	}
 }

@@ -29,12 +29,7 @@ class WikiaSearchHelper {
 	public function getLangForSearchResults() {
 		global $wgLanguageCode, $wgRequest;
 
-		$resultsLang = $wgRequest->getVal( 'resultsLang' );
-		if ( !empty( $resultsLang ) ) {
-			return $resultsLang;
-		}
-
-		return $wgLanguageCode;
+		return $wgRequest->getVal( 'resultsLang', $wgLanguageCode );
 	}
 
 	/**
@@ -45,15 +40,16 @@ class WikiaSearchHelper {
 	 * @return string - central wiki url
 	 */
 	public function getCentralUrlFromGlobalTitle( $lang ) {
-		$out = '/';
-
 		$title = $this->wikiaLogoHelper->getCentralWikiUrlForLangIfExists( $lang );
 		if ( $title ) {
-			$out = $title->getServer();
-		} elseif ( $title = $this->wikiaLogoHelper->getCentralWikiUrlForLangIfExists( self::DEFAULT_LANG ) ) {
-			$out = $title->getServer();
+			return  $title->getServer();
 		}
 
-		return $out;
+		$title = $this->wikiaLogoHelper->getCentralWikiUrlForLangIfExists( self::DEFAULT_LANG );
+		if ( $title ) {
+			return $title->getServer();
+		}
+
+		return '/';
 	}
 }
