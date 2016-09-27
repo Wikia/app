@@ -2859,16 +2859,16 @@ class WikiPage extends Page implements IDBAccessObject {
 				$missingCats[] = $cat;
 			}
 		}
-		$insertCats = $missingCats;
 
-		if ( $insertCats ) {
-			$insertRows = array();
-			foreach ( $insertCats as $cat ) {
-				$insertRows[] = array(
-					'cat_id' => $dbw->nextSequenceValue( 'category_cat_id_seq' ),
-					'cat_title' => $cat
-				);
-			}
+		$insertRows = array();
+		foreach ( $missingCats as $cat ) {
+			$insertRows[] = array(
+				'cat_id' => $dbw->nextSequenceValue( 'category_cat_id_seq' ),
+				'cat_title' => $cat
+			);
+		}
+
+		if ( !empty( $insertRows ) ) {
 			$dbw->insert( 'category', $insertRows, __METHOD__, 'IGNORE' );
 		}
 		// Wikia change - end
