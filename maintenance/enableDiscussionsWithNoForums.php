@@ -34,56 +34,42 @@ class EnableDiscussionsWithNoForums extends Maintenance {
 		$schwartzToken = F::app()->wg->TheSchwartzSecretToken;
 
 		while ( !empty( $wikiId = trim( fgets( $fh ) ) ) ) {
-			$wiki =  WikiFactory::getWikiByID( $wikiId );
-			$dbw = wfGetDB( DB_SLAVE, [], $wiki->city_dbname );
-			$row = $dbw->selectRow(
-				[ 'comments_index', 'page' ],
-				[ 'count(*) cnt' ],
-				[
-					'parent_comment_id' => 0,
-					'archived' => 0,
-					'deleted' => 0,
-					'removed' => 0,
-					'page_namespace' => NS_WIKIA_FORUM_BOARD_THREAD
-				],
-				__METHOD__,
-				[ ],
-				[ 'page' => [ 'LEFT JOIN', [ 'page_id=comment_id' ] ] ]
-			);
+			$wiki = WikiFactory::getWikiByID( $wikiId );
 
-			$totalThreads = intval( $row->cnt );
-
-			if ( $totalThreads > 0 ) {
-				$this->error( "$wikiId has $totalThreads forum threads. Skipping!" );
-				continue;
+			if ( $this->getForumThreadCount( $wiki ) > 0 ) {
+				$this->error( "$wikiId has more than 0 forum threads, skipping!" );
 			}
 
-			$site = new \Swagger\Client\Discussion\Models\SiteInput(
-				[
-					'id' => $wikiId,
-					'language_code' => $wiki->city_lang,
-					'name' => $wiki->city_sitename,
-				]
-			);
-
-			try {
-				$this->getDiscussionsSitesApi()->createSite( $site, $schwartzToken );
-				WikiFactory::setVarByName( "wgEnableDiscussions", $wikiId, true );
-			} catch ( ApiException $e ) {
-				$this->error(
-					'Creating site caused an error (siteId: ' . $wikiId . ',  error: ' . $e->getMessage() . ')'
-				);
+			if ( SpecialDiscussionsHelper::activateDiscussions(
+					$wikiId,
+					$wiki->city_lang,
+					$wiki->city_sitename ) ) {
+				$this->output('Enabled discussions on ' . $wikiId);
+			} else {
+				$this->error('Creating site ' . $wikiId . ' caused an error');
 			}
 		}
 	}
 
-	private function getDiscussionsSitesApi() {
-		/** @var ApiProvider $apiProvider */
-		$apiProvider = Injector::getInjector()->get( ApiProvider::class );
-		/** @var SitesApi $api */
-		$api = $apiProvider->getApi( self::SERVICE_NAME, SitesApi::class );
-		$api->getApiClient()->getConfig()->setCurlTimeout( self::CURL_TIMEOUT );
-		return $api;
+	private function getForumThreadCount( $wiki ) {
+		//TODO use WikiaSQL
+		$dbw = wfGetDB(DB_SLAVE, [], $wiki->city_dbname);
+		$row = $dbw->selectRow(
+			['comments_index', 'page'],
+			['count(*) cnt'],
+			[
+				'parent_comment_id' => 0,
+				'archived' => 0,
+				'deleted' => 0,
+				'removed' => 0,
+				'page_namespace' => NS_WIKIA_FORUM_BOARD_THREAD
+			],
+			__METHOD__,
+			[],
+			['page' => ['LEFT JOIN', ['page_id=comment_id']]]
+		);
+
+		return intval($row->cnt);
 	}
 }
 
