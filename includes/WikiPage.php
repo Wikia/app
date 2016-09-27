@@ -2850,6 +2850,14 @@ class WikiPage extends Page implements IDBAccessObject {
 			return;
 		}
 
+		// Wikia change - begin - @author: wladek
+		// PLATFORM-410: Attempt to lower the chance of deadlocks
+		sort( $insertCats );
+		foreach ( $insertCats as $cat ) {
+			$dbw->selectRow( 'category', 'cat_id', [ 'cat_title' => $cat ], __METHOD__, [ 'FOR UPDATE' ] );
+		}
+		// Wikia change - end
+
 		$insertRows = array();
 
 		foreach ( $insertCats as $cat ) {

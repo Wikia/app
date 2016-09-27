@@ -75,11 +75,11 @@ describe('ext.wikia.adEngine.provider.gpt.helper', function () {
 			mocks.log,
 			mocks.adContext,
 			mocks.adLogicPageParams,
+			mocks.uapContext,
 			mocks.adDetect,
 			AdElement,
 			mocks.googleTag,
 			mocks.slotTargetingHelper,
-			mocks.uapContext,
 			mocks.recoveryHelper,
 			mocks.slotTweaker,
 			mocks.sraHelper

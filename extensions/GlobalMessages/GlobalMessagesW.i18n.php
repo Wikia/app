@@ -212,7 +212,7 @@ hu',
 	'wikia-days-ago' => '$1 {{PLURAL:$1|day|days}} ago',
 	'wikia-pagination-prev' => 'Prev',
 	'wikia-pagination-next' => 'Next',
-	'wikia-pagetitle-brand' => 'Wikia',
+	'wikia-pagetitle-brand' => 'Fandom powered by Wikia',
 	'wikia-pagetitle-sitename' => '{{SITENAME}}',
 	'wikia-read-only-mode' => 'Uh-oh! Our main datacenter is currently unavailable, so this is our backup. Unfortunately, this means you may not be able to do certain things like edit, upload, or chat.
 We are working to fix the problem, thank you for your patience! If you see this for an extended period of time, feel free to contact Wikia at community@wikia.com.',

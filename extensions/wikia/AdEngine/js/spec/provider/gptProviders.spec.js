@@ -16,13 +16,9 @@ describe('ext.wikia.adEngine.provider.*', function () {
 				return mocks.context;
 			}
 		},
-		adLogicPageParams: {
-			getPageLevelParams: function () {
-				return {
-					s0: 'ent',
-					s1: '_muppet',
-					s2: 'home'
-				};
+		adUnitBuilder: {
+			build: function(slotName, src) {
+				return '/5441/wka.ent/_muppet//home/' + src + '/' + slotName;
 			}
 		},
 		gptHelper: {
@@ -38,6 +34,9 @@ describe('ext.wikia.adEngine.provider.*', function () {
 			removeDefaultHeight: noop,
 			removeTopButtonIfNeeded: noop,
 			adjustLeaderboardSize: noop
+		},
+		uapContext: {
+			isUapLoaded: noop
 		},
 		lazyQueue: {},
 		window: {},
@@ -61,9 +60,9 @@ describe('ext.wikia.adEngine.provider.*', function () {
 	function getFactory() {
 		return modules['ext.wikia.adEngine.provider.factory.wikiaGpt'](
 			mocks.adContext,
-			mocks.adLogicPageParams,
 			mocks.btfBlocker,
 			mocks.gptHelper,
+			mocks.adUnitBuilder,
 			mocks.log,
 			mocks.lookups
 		);
@@ -74,6 +73,7 @@ describe('ext.wikia.adEngine.provider.*', function () {
 			case 'directGpt':
 			case 'remnantGpt':
 				return modules['ext.wikia.adEngine.provider.' + providerName](
+					mocks.uapContext,
 					getFactory(),
 					mocks.slotTweaker
 				);

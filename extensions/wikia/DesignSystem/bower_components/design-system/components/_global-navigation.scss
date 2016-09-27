@@ -265,6 +265,12 @@ $hover-transition-duration: 300ms !default;
 		right: 0;
 		top: 0;
 		transition: padding $search-transition-duration;
+		-webkit-appearance: none;
+
+		&::-webkit-search-decoration,
+		&::-webkit-search-cancel-button {
+			display: none;
+		}
 
 		&:focus {
 			outline: none;

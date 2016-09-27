@@ -26,7 +26,26 @@ class DesignSystemSharedLinks {
 	 * @return string full URL, in case of lang specific URL missing, default one is returned
 	 */
 	public function getHref( $name, $lang ) {
+		$lang = $this->getLangWithFallback( $lang );
+
 		return $this->hrefs[ $lang ][ $name ] ?? $this->hrefs[ 'default' ][ $name ];
+	}
+
+	private function getLangWithFallback( $lang ) {
+		if ( isset( $this->hrefs[ $lang ] ) ) {
+			return $lang;
+		}
+
+		$fallbacks = Language::getFallbacksFor( $lang );
+		foreach ( $fallbacks as $fallbackCode ) {
+			// All languages fallback to en, but we use that for English-specific
+			// URLs, so we want to fallback only to default, rather than en
+			if ( $fallbackCode !== 'en' && isset( $this->hrefs[ $fallbackCode ] ) ) {
+				return $fallbackCode;
+			}
+		}
+
+		return 'default';
 	}
 
 	private $hrefs = [
@@ -51,7 +70,7 @@ class DesignSystemSharedLinks {
 			'help' => 'http://community.wikia.com/wiki/Help:Contents',
 			'media-kit' => 'http://www.wikia.com/mediakit',
 			'media-kit-contact' => 'http://www.wikia.com/mediakit/contact',
-			'social-facebook' => 'https://www.facebook.com/wikia',
+			'social-facebook' => 'https://www.facebook.com/getfandom',
 			'social-twitter' => 'https://twitter.com/wikia',
 			'social-reddit' => null,
 			'social-youtube' => 'https://www.youtube.com/user/wikia',
@@ -92,7 +111,6 @@ class DesignSystemSharedLinks {
 		],
 		'en' => [
 			'fan-contributor' => 'http://fandom.wikia.com/fan-contributor',
-			'social-facebook' => 'https://www.facebook.com/getfandom',
 			'social-twitter' => 'https://twitter.com/getfandom',
 			'social-reddit' => 'https://www.reddit.com/r/wikia',
 			'social-youtube' => 'https://www.youtube.com/channel/UC988qTQImTjO7lUdPfYabgQ',
@@ -242,8 +260,9 @@ class DesignSystemSharedLinks {
 			'user-signin' => 'https://www.wikia.com/signin?uselang=ru',
 			'user-register' => 'https://www.wikia.com/register?uselang=ru',
 		],
-		'zh' => [
+		'zh-hans' => [
 			'explore-wikis' => 'http://zh.wikia.com/wiki/Wikia%E4%B8%AD%E6%96%87',
+			'fan-communities' => 'http://zh.wikia.com/wiki/Wikia%E4%B8%AD%E6%96%87',
 			'fandom-logo' => 'http://zh.wikia.com',
 			'terms-of-use' => 'http://zh.wikia.com/wiki/%E4%BD%BF%E7%94%A8%E6%9D%A1%E6%AC%BE',
 			'privacy-policy' => 'http://zh.wikia.com/wiki/Privacy_Policy',
@@ -258,7 +277,7 @@ class DesignSystemSharedLinks {
 			'user-signin' => 'https://www.wikia.com/signin?uselang=zh',
 			'user-register' => 'https://www.wikia.com/register?uselang=zh',
 		],
-		'zh-tw' => [
+		'zh-hant' => [
 			'explore-wikis' => 'http://zh-tw.wikia.com/wiki/Wikia%E4%B8%AD%E6%96%87',
 			'fandom-logo' => 'http://zh-tw.wikia.com',
 			'contact' => 'http://zh-tw.wikia.com/wiki/%E7%89%B9%E6%AE%8A:Contact',
