@@ -35,6 +35,9 @@ describe('ext.wikia.adEngine.provider.*', function () {
 			removeTopButtonIfNeeded: noop,
 			adjustLeaderboardSize: noop
 		},
+		uapContext: {
+			isUapLoaded: noop
+		},
 		lazyQueue: {},
 		window: {},
 		beforeSuccess: noop,
@@ -70,6 +73,7 @@ describe('ext.wikia.adEngine.provider.*', function () {
 			case 'directGpt':
 			case 'remnantGpt':
 				return modules['ext.wikia.adEngine.provider.' + providerName](
+					mocks.uapContext,
 					getFactory(),
 					mocks.slotTweaker
 				);

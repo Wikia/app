@@ -1,11 +1,11 @@
 /*global define, require*/
 /*jshint maxlen: 150*/
 define('ext.wikia.adEngine.provider.directGpt', [
+	'ext.wikia.adEngine.context.uapContext',
 	'ext.wikia.adEngine.provider.factory.wikiaGpt',
 	'ext.wikia.adEngine.slotTweaker',
-	'ext.wikia.adEngine.uapContext',
 	require.optional('ext.wikia.adEngine.lookup.openx.openXBidderHelper')
-], function (factory, slotTweaker, uapContext, openXHelper) {
+], function (uapContext, factory, slotTweaker, openXHelper) {
 	'use strict';
 
 	return factory.createProvider(

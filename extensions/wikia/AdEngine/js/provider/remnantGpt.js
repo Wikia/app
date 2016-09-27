@@ -1,9 +1,9 @@
 /*global define*/
 define('ext.wikia.adEngine.provider.remnantGpt', [
+	'ext.wikia.adEngine.context.uapContext',
 	'ext.wikia.adEngine.provider.factory.wikiaGpt',
-	'ext.wikia.adEngine.slotTweaker',
-	'ext.wikia.adEngine.uapContext'
-], function (factory, slotTweaker, uapContext) {
+	'ext.wikia.adEngine.slotTweaker'
+], function (uapContext, factory, slotTweaker) {
 	'use strict';
 
 	return factory.createProvider(

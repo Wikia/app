@@ -1,22 +1,20 @@
 /*global define, require*/
 define('ext.wikia.adEngine.template.bfaa', [
 	'ext.wikia.adEngine.adContext',
+	'ext.wikia.adEngine.context.uapContext',
 	'ext.wikia.adEngine.adHelper',
 	'ext.wikia.adEngine.provider.btfBlocker',
 	'ext.wikia.adEngine.slotTweaker',
-	'ext.wikia.adEngine.uapContext',
-	'ext.wikia.adEngine.utils.eventDispatcher',
 	'wikia.document',
 	'wikia.log',
 	'wikia.window',
 	require.optional('ext.wikia.adEngine.mobile.mercuryListener')
 ], function (
 	adContext,
+	uapContext,
 	adHelper,
 	btfBlocker,
 	slotTweaker,
-	uapContext,
-	eventDispatcher,
 	doc,
 	log,
 	win,
@@ -133,8 +131,6 @@ define('ext.wikia.adEngine.template.bfaa', [
 
 		uapContext.setUapId(params.uap);
 		unblockedSlots.forEach(btfBlocker.unblock);
-
-		eventDispatcher.dispatch('wikia.uap');
 	}
 
 	return {
