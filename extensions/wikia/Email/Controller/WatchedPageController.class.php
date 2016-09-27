@@ -347,7 +347,7 @@ class WatchedPageRenamedController extends WatchedPageController {
 	 * @param $title
 	 * @return String
 	 */
-	protected function getAllChangesText( $title ) {
+	protected function getAllChangesText( \Title $title ) {
 		return parent::getAllChangesText( $this->newTitle );
 	}
 }
