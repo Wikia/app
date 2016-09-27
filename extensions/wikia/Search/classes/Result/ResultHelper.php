@@ -19,6 +19,8 @@ class ResultHelper
 	 * @return array
 	 */
 	public static function extendResult( $result, $pos, $descWordLimit, $imageSizes, $query = null ) {
+		global $wgUser;
+
 		$commData = new CommunityDataService( $result['id'] );
 		$imageURL = ImagesService::getImageSrc(
 			$result['id'],
@@ -59,7 +61,11 @@ class ResultHelper
 		if ( $query ) {
 			$lang = $wikiaSearchHelper->getLangForSearchResults();
 			$centralUrl = $wikiaSearchHelper->getCentralUrlFromGlobalTitle( $lang );
-			$globalSearchUrl = $wikiaSearchHelper->getGlobalSearchUrl( $centralUrl ) . '?search=' . urlencode( $query );
+			$fulltext = $wgUser->getGlobalPreference( 'enableGoSearch' ) ? 0 : 'Search';
+			$globalSearchUrl = $wikiaSearchHelper->getGlobalSearchUrl( $centralUrl ) .
+				'?search=' . urlencode( $query ) .
+				'&fulltext=' . urlencode( $fulltext ).
+				'&resultsLang=' . urlencode( $lang );
 		}
 
 		return [
