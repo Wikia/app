@@ -114,12 +114,13 @@ html>body #Wall .new-reply .speech-bubble-avatar { *position: absolute; *left:-9
 		.stafflogo {
 			background: none no-repeat scroll 0 0 transparent;
 			background: url("/extensions/wikia/DesignSystem/bower_components/design-system/assets/company/logo-fandom.svg"); /* $wgCdnStylePath */
+			background-size: 100% 100%;
 			bottom: -1px;
 			display: inline-block;
-			height: 12px;
+			height: 0.9em;
 			margin: 0;
 			padding: 0;
-			width: 41px;
+			width: 5em;
 			position: relative;
 		}
 	}
