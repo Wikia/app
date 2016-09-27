@@ -420,16 +420,10 @@ abstract class EmailController extends \WikiaController {
 		if ( $hasMobileApplicationBadges ) {
 			$badges = [];
 
-			if ( $mobileApplicationsLinks[self::ANDROID_PLATFORM] ) {
-				$badges[self::ANDROID_PLATFORM] = [
-					'link' => $mobileApplicationsLinks[self::ANDROID_PLATFORM],
-					'src' => EmailMobileBadges::getBadgeFor( $this->targetLang, self::ANDROID_PLATFORM )
-				];
-			}
-			if ( $mobileApplicationsLinks[self::IOS_PLATFORM] ) {
-				$badges[self::IOS_PLATFORM] = [
-					'link' => $mobileApplicationsLinks[self::IOS_PLATFORM],
-					'src' => EmailMobileBadges::getBadgeFor( $this->targetLang, self::IOS_PLATFORM )
+			foreach ( $mobileApplicationsLinks as $platform => $link) {
+				$badges[$platform] = [
+					'link' => $link,
+					'src' => EmailMobileBadges::getBadgeFor( $this->targetLang, $platform )
 				];
 			}
 		}
@@ -446,9 +440,14 @@ abstract class EmailController extends \WikiaController {
 			$mobileApplicationsLinks = [];
 			$response = $this->fetchMobileApplicationsDetails();
 
-			if ( $response && $this->applicationsExistFor( $this->wg->CityId, $response )) {
-					$mobileApplications = json_decode($response, true);
-					$mobileApplicationsLinks = $this->traverseThrough($mobileApplications);
+			if ( $response && $this->applicationsExistIn( $response )) {
+				$mobileApplications = json_decode( $response, true );
+				$mobileApplicationsLinks = $this->traverseThrough( $mobileApplications );
+			} else {
+				$mobileApplicationsLinks[self::ANDROID_PLATFORM]
+					= 'https://play.google.com/store/apps/developer?id=Wikia,+Inc.';
+				$mobileApplicationsLinks[self::IOS_PLATFORM]
+					= 'https://itunes.apple.com/us/developer/wikia-inc./id422467077';
 			}
 
 			// Event if response is not valid (for example there are some difficulties with mobile applications service)
@@ -463,7 +462,7 @@ abstract class EmailController extends \WikiaController {
 	}
 
 	private function createCacheKeyForMobileApplicationsLinks() {
-		return "{$this->wg->CityId}:mobileApplicationsLinks";
+		return wfMemcKey('mobileApplicationsLinks');
 	}
 
 	/**
@@ -471,18 +470,16 @@ abstract class EmailController extends \WikiaController {
 	 */
 	private function fetchMobileApplicationsDetails() {
 		// currently it does not matter if Android or iOS value is added, data is returned for both Android and iOS
-		return Http::request( "GET",  'https://services.wikia.com/mobile-applications/platform/android' );
+		return Http::request( 'GET', 'https://services.wikia.com/mobile-applications/platform/android' );
 	}
 
-
 	/**
-	 * @param string siteId - current site id
 	 * @param string response - raw, not parsed response
 	 *
 	 * @return boolean
 	 */
-	private function applicationsExistFor( $siteId, $response ) {
-		return strpos( $response, 'wikia_id":' . $siteId ) !== false;
+	private function applicationsExistIn( $response ) {
+		return strpos( $response, 'wikia_id":' . $this->wg->CityId ) !== false;
 	}
 
 	/**
@@ -506,6 +503,10 @@ abstract class EmailController extends \WikiaController {
 					}
 					break;
 				}
+			}
+
+			if ( !empty($mobileApplicationsLinks) ) {
+				break;
 			}
 		}
 
