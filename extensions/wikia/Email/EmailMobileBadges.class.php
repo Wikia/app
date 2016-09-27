@@ -11,59 +11,59 @@ class EmailMobileBadges {
 
 	static private $badges = [
 		'en' => [
-			'ios' => 'App-store-badge-en.svg',
+			'ios' => 'App-store-badge-en.png',
 			'android' => 'Google-play-badge-en.png',
 		],
 		'de' => [
-			'ios' => 'App-store-badge-de.svg',
+			'ios' => 'App-store-badge-de.png',
 			'android' => 'Google-play-badge-de.png',
 		],
 		'es' => [
-			'ios' => 'App-store-badge-es.svg',
+			'ios' => 'App-store-badge-es.png',
 			'android' => 'Google-play-badge-es.png',
 		],
 		'fr' => [
-			'ios' => 'App-store-badge-fr.svg',
+			'ios' => 'App-store-badge-fr.png',
 			'android' => 'Google-play-badge-fr.png',
 		],
 		'it' => [
-			'ios' => 'App-store-badge-it.svg',
+			'ios' => 'App-store-badge-it.png',
 			'android' => 'Google-play-badge-it.png',
 		],
 		'ja' => [
-			'ios' => 'App-store-badge-ja.svg',
+			'ios' => 'App-store-badge-ja.png',
 			'android' => 'Google-play-badge-ja.png',
 		],
 		'pl' => [
-			'ios' => 'App-store-badge-pl.svg',
+			'ios' => 'App-store-badge-pl.png',
 			'android' => 'Google-play-badge-pl.png',
 		],
 		'pt' => [
-			'ios' => 'App-store-badge-pt.svg',
+			'ios' => 'App-store-badge-pt.png',
 			'android' => 'Google-play-badge-pt.png',
 		],
 		'pt-br' => [
-			'ios' => 'App-store-badge-pt-br.svg',
+			'ios' => 'App-store-badge-pt-br.png',
 			'android' => 'Google-play-badge-pt-br.png',
 		],
 		'ru' => [
-			'ios' => 'App-store-badge-ru.svg',
+			'ios' => 'App-store-badge-ru.png',
 			'android' => 'Google-play-badge-ru.png',
 		],
 		'zh' => [
-			'ios' => 'App-store-badge-zh.svg',
+			'ios' => 'App-store-badge-zh.png',
 			'android' => 'Google-play-badge-zh.png',
 		],
 		'zh-hans' => [
-			'ios' => 'App-store-badge-zh.svg',
+			'ios' => 'App-store-badge-zh.png',
 			'android' => 'Google-play-badge-zh.png',
 		],
 		'zh-hant' => [
-			'ios' => 'App-store-badge-zh-tw.svg',
+			'ios' => 'App-store-badge-zh-tw.png',
 			'android' => 'Google-play-badge-zh-tw.png',
 		],
 		'zh-tw' => [
-			'ios' => 'App-store-badge-zh-tw.svg',
+			'ios' => 'App-store-badge-zh-tw.png',
 			'android' => 'Google-play-badge-zh-tw.png',
 		],
 	];
