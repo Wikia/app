@@ -60,9 +60,10 @@ class ResultHelper
 		if ( $query ) {
 			$lang = $wikiaSearchHelper->getLangForSearchResults();
 			$centralUrl = $wikiaSearchHelper->getCentralUrlFromGlobalTitle( $lang );
-			$globalSearchUrl = $wikiaSearchHelper->getGlobalSearchUrl( $centralUrl ) .
-				'?search=' . urlencode( $query ) .
-				'&resultsLang=' . urlencode( $lang );
+			$globalSearchUrl = $wikiaSearchHelper->getGlobalSearchUrl( $centralUrl ) . http_build_query( [
+					'search' => $query,
+					'resultsLang'=> $lang,
+				] );
 		}
 
 		return [
