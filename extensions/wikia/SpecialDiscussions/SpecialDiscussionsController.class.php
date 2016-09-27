@@ -1,10 +1,5 @@
 <?php
 
-use Swagger\Client\ApiException;
-use Swagger\Client\Discussion\Api\SitesApi;
-use Wikia\DependencyInjection\Injector;
-use Wikia\Service\Swagger\ApiProvider;
-
 /**
  * Discussion user log page
  */
@@ -37,7 +32,7 @@ class SpecialDiscussionsController extends WikiaSpecialPageController {
 		if ( $this->request->wasPosted() && $this->assertValidPostRequest() ) {
 			if ( !SpecialDiscussionsHelper::activateDiscussions(
 					$this->siteId,
-					F::app()->wg->ContLang->getCode(),
+					$this->app->wg->ContLang->getCode(),
 					$this->siteName ) ) {
 				throw new ErrorPageError( 'unknown-error', 'discussions-activate-error' );
 			}

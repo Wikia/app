@@ -7,16 +7,9 @@
  *
  * @ingroup Maintenance
  */
-use Swagger\Client\ApiException;
-use Swagger\Client\Discussion\Api\SitesApi;
-use Wikia\DependencyInjection\Injector;
-use Wikia\Service\Swagger\ApiProvider;
 require_once( __DIR__ . '/Maintenance.php' );
 
 class EnableDiscussionsWithNoForums extends Maintenance {
-
-	const CURL_TIMEOUT = 5;
-	const SERVICE_NAME = 'discussion';
 
 	public function __construct() {
 		parent::__construct();
@@ -30,8 +23,6 @@ class EnableDiscussionsWithNoForums extends Maintenance {
 		if ( !$fh ) {
 			$this->error( 'Unable to read from input file, exiting', true );
 		}
-
-		$schwartzToken = F::app()->wg->TheSchwartzSecretToken;
 
 		while ( !empty( $wikiId = trim( fgets( $fh ) ) ) ) {
 			$wiki = WikiFactory::getWikiByID( $wikiId );
@@ -52,11 +43,10 @@ class EnableDiscussionsWithNoForums extends Maintenance {
 	}
 
 	private function getForumThreadCount( $wiki ) {
-		//TODO use WikiaSQL
-		$dbw = wfGetDB(DB_SLAVE, [], $wiki->city_dbname);
+		$dbw = wfGetDB( DB_SLAVE, [ ], $wiki->city_dbname );
 		$row = $dbw->selectRow(
-			['comments_index', 'page'],
-			['count(*) cnt'],
+			[ 'comments_index', 'page' ],
+			[ 'count(*) cnt' ],
 			[
 				'parent_comment_id' => 0,
 				'archived' => 0,
@@ -65,11 +55,11 @@ class EnableDiscussionsWithNoForums extends Maintenance {
 				'page_namespace' => NS_WIKIA_FORUM_BOARD_THREAD
 			],
 			__METHOD__,
-			[],
-			['page' => ['LEFT JOIN', ['page_id=comment_id']]]
+			[ ],
+			[ 'page' => [ 'LEFT JOIN', [ 'page_id=comment_id' ] ] ]
 		);
 
-		return intval($row->cnt);
+		return intval( $row->cnt );
 	}
 }
 
