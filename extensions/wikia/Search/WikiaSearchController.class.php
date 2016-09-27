@@ -640,7 +640,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 	}
 
 	protected function addRightRailModules( Wikia\Search\Config $searchConfig ) {
-		global $wgLang;
+		global $wgLang, $wgEnableFandomStoriesOnSearchResultPage;
 
 		$isMonobook = $this->response->getVal( 'isMonobook' );
 		$query = $searchConfig->getQuery()->getSanitizedQuery();
@@ -653,7 +653,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 			return;
 		}
 
-		if ( $wgLang->getCode() === 'en' && !empty( $query ) ) {
+		if ( $wgEnableFandomStoriesOnSearchResultPage && $wgLang->getCode() === 'en' && !empty( $query ) ) {
 			$fandomStories = \Wikia\Search\FandomSearch::getStoriesWithCache( $query );
 			$viewMoreFandomStoriesLink = \Wikia\Search\FandomSearch::getViewMoreLink( $fandomStories, $query );
 
