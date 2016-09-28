@@ -19,7 +19,15 @@ class CPEditor extends EditPage {
 	}
 
 	function edit() {
-		global $wgOut, $wgRequest, $wgUser;
+		global $wgOut, $wgRequest, $wgUser, $wgContributionPrototypeExternalHost;
+
+		$wgOut->addLink([
+			'rel' => 'stylesheet',
+			'href'=> "{$wgContributionPrototypeExternalHost}/public/assets/styles/main.css",
+		]);
+
+		// this ends up using $wgOut, but we need it for the assets manager integration, no point in duplicating :(
+		Wikia::addAssetsToOutput('contribution_prototype_scss');
 
 		$wgOut->addHTML( '<div id="editarea">\n' );
 	}

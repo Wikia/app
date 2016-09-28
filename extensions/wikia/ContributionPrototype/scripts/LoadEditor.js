@@ -19,12 +19,52 @@ require(['jquery', 'wikia.window'],
 		function init(window) {
 			console.log("CP init and do something");
 
-			var url = window.wgContributionPrototypeExternalHost + '/wikia/' + window.wgDBname + '/wiki/' + window.wgTitle;
-			$.get( url, null, function(result) {
-				$("#editarea").html(result);
-			});
+			loadHTML().then(injectHTMLAndLoadVendor).then(loadApp);
 
+//			var url = window.wgContributionPrototypeExternalHost + '/wiki/' + window.wgDBname + '/wiki/' + window.wgTitle;
+//			$.ajax({
+//				url: window.wgContributionPrototypeExternalHost + '/wiki/' + window.wgTitle,
+//				type: "GET",
+//				beforeSend: function(xhr) {
+//					xhr.setRequestHeader('x-wikia-community', window.wgDBname);
+//				},
+//				success: function(result) {
+//					console.log(result);
+//					$("#editarea").html(result);
+//				}
+//			});
+//			$.get( url, null, function(result) {
+//				$("#editarea").html(result);
+//			});
 		};
+
+		function loadHTML() {
+			return $.ajax({
+                                url: window.wgContributionPrototypeExternalHost + '/wiki/' + window.wgTitle,
+                                type: 'GET',
+                                beforeSend: function(xhr) {
+                                        xhr.setRequestHeader('x-wikia-community', window.wgDBname);
+                                }
+                        });
+		}
+
+		function injectHTMLAndLoadVendor(data) {
+			$("#editarea").html(data);
+
+			return $.ajax({
+				url: window.wgContributionPrototypeExternalHost + '/public/assets/vendor.dll.js', 
+                                type: 'GET',
+				dataType: 'script'
+			});
+		}
+
+		function loadApp() {
+			return $.ajax({
+                                url: window.wgContributionPrototypeExternalHost + '/public/assets/app.js',
+                                type: 'GET',
+                                dataType: 'script'
+			});
+		}
 
 		init(window);
 	}
