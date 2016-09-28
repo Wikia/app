@@ -414,7 +414,7 @@ Falls ihr lieber eine E-Mail schicken wollt, dann schreibt uns an [mailto:commun
 	'specialcontact-error-message' => 'Beim Absenden des Formulars ist ein Fehler aufgetreten. Bitte versuche es später erneut.',
 	'specialcontact-error-logintext' => 'Du musst angemeldet sein, um diesen Antrag zu stellen. Bitte [[Special:SignUp|melde dich an]] und versuche es erneut.',
 	'specialcontact-error-alreadyrenamed' => 'Dein Benutzername wurde schon einmal geändert. Kontaktiere einen [[Special:Contact/general|Wikia-Mitarbeiter]] um weitere Informationen darüber zu erhalten.',
-	'specialcontact-mailsub' => 'Wikia-Support',
+	'specialcontact-mailsub' => 'Wikia Kontakt-Adresse',
 	'specialcontact-mailsubcc' => 'Kopie der Wikia Kontakt-Mail',
 	'specialcontact-ccheader' => 'Das ist eine Kopie der E-Mail, die an den Wikia-Support geschickt wurde',
 	'specialcontact-submitcomplete' => 'Danke, dass du Wikia kontaktiert hast. Wir haben alle hier angegebenen Informationen bekommen. Wir werden unser bestes tun, um innerhalb von 2 Arbeitstagen auf deine Nachricht zu antworten. Wir bitten um Geduld.
@@ -959,7 +959,7 @@ $messages['ja'] = [
 	'specialcontact-error-message' => 'メッセージを送信中にエラーがおきました。大変お手数ですがもう一度お願いします。',
 	'specialcontact-error-logintext' => 'リクエストを送るときは必ずログインをしてください。 もう一度お願いします。 [[Special:SignUp|login to your account]]',
 	'specialcontact-error-alreadyrenamed' => '以前に一度ユーザー名を変更されております為、今回ユーザー名をここで変更させていただくことができません。 [[Special:Contact/general|contact staff]] スタッフにご連絡ください。',
-	'specialcontact-mailsub' => 'ウィキア サポート',
+	'specialcontact-mailsub' => 'ウィキアサポート',
 	'specialcontact-mailsubcc' => 'ウィキアコンタクトメールをコピーする。',
 	'specialcontact-ccheader' => 'これはウィキアサポートに送られたメッセージのコピーです。',
 	'specialcontact-submitcomplete' => 'ウィキアにご連絡いただきましてありがとうございます。お返事に2から3日ほどお時間をいただいておりますことをご了承ください。また、こちらのページ
