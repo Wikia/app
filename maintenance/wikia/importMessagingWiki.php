@@ -152,9 +152,10 @@ class ImportMessagingWiki extends Maintenance {
 		foreach ( $messages as $lang => $translations ) {
 			$contents .= "\$messages['$lang'] = [\n";
 			foreach ( $translations as $key => $text ) {
+				$text = addslashes($text);
 				$contents .= "\t'$key' => '$text',\n";
 			}
-			$contents .= "];\n\n";
+			$contents .= "];\n";
 		}
 
 		if ( $this->isDryRun ) {
