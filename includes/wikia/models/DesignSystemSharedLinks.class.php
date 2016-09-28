@@ -61,7 +61,6 @@ class DesignSystemSharedLinks {
 			'global-sitemap' => 'http://www.wikia.com/Sitemap',
 			'local-sitemap' => '/wiki/Local_Sitemap',
 			'local-sitemap-fandom' => 'http://fandom.wikia.com/local-sitemap',
-			'api' => 'http://api.wikia.com/wiki/Wikia_API_Wiki',
 			'community-central' => 'http://community.wikia.com/wiki/Community_Central',
 			'support' => 'http://community.wikia.com/wiki/Special:Contact',
 			'create-new-wiki' => 'http://www.wikia.com/Special:CreateNewWiki',
