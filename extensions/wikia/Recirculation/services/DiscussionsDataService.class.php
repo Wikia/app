@@ -65,16 +65,9 @@ class DiscussionsDataService {
 	private function formatData( $rawData ) {
 		$data = [];
 
-		$rawPosts = $rawData['_embedded']['doc:threads'];
 		$data['discussionsUrl'] = $this->server . '/d/f';
 		$data['postCount'] = $rawData['threadCount'];
-		$data['posts'] = [];
-
-		if ( is_array( $rawPosts ) && count( $rawPosts ) > 0 ) {
-			foreach ( $rawPosts as $key => $value ) {
-				$data['posts'][] = $this->buildPost( $value, $key );
-			}
-		}
+		$data['posts'] = $this->getPosts( $rawData )['posts'];
 
 		return $data;
 	}

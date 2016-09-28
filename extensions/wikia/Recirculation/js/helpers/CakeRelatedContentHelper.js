@@ -41,7 +41,7 @@ define('ext.wikia.recirculation.helpers.cakeRelatedContent', [
 
     function formatData(data) {
         data.items = data.items.map(function(item) {
-            item.title = item.title.replace('| Fandom - Powered by Wikia', '');
+            item.title = item.title.split(' | ')[0];
             return item;
         }).sort(utils.sortThumbnails);
 
