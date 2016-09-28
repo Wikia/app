@@ -326,7 +326,6 @@ $wgAutoloadLocalClasses = array(
 	'ApiQueryAllLinks' => 'includes/api/ApiQueryAllLinks.php',
 	'ApiQueryAllmessages' => 'includes/api/ApiQueryAllmessages.php',
 	'ApiQueryAllpages' => 'includes/api/ApiQueryAllpages.php',
-	'ApiQueryAllUsers' => 'includes/api/ApiQueryAllUsers.php',
 	'ApiQueryBacklinks' => 'includes/api/ApiQueryBacklinks.php',
 	'ApiQueryBase' => 'includes/api/ApiQueryBase.php',
 	'ApiQueryBlocks' => 'includes/api/ApiQueryBlocks.php',

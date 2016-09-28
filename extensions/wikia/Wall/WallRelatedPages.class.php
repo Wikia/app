@@ -115,12 +115,12 @@ class WallRelatedPages extends WikiaModel {
 	 * @param array $messageId
 	 */
 
-	function getMessagesRelatedArticleIds( $messageIds, $orderBy = 'order_index', $db = DB_SLAVE ) {
+	function getMessagesRelatedArticleIds( $messageIds, $orderBy = 'order_index', $dbType = DB_SLAVE ) {
 		wfProfileIn( __METHOD__ );
 		$pageIds = [ ];
 
 		// Loading from cache
-		$db = wfGetDB( $db );
+		$db = wfGetDB( $dbType );
 
 		if ( ! $db->tableExists( 'wall_related_pages' ) && wfReadOnly() ) {
 			wfProfileOut( __METHOD__ );
@@ -128,7 +128,7 @@ class WallRelatedPages extends WikiaModel {
 		}
 
 		if ( $this->createTable() ) {
-			$db = wfGetDB( $db );
+			$db = wfGetDB( $dbType );
 		}
 
 		$result = $db->select(
