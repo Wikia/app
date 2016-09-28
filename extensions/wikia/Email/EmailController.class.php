@@ -655,7 +655,7 @@ abstract class EmailController extends \WikiaController {
 	 */
 	public function assertValidUser( $user ) {
 		if ( !$user instanceof \User ) {
-			throw new Fatal( 'Unable to create user object');
+			throw new Fatal( 'Unable to create user object' );
 		}
 	}
 
