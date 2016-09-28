@@ -417,9 +417,9 @@ Falls ihr lieber eine E-Mail schicken wollt, dann schreibt uns an [mailto:commun
 	'specialcontact-mailsub' => 'Wikia Kontakt-Adresse',
 	'specialcontact-mailsubcc' => 'Kopie der Wikia Kontakt-Mail',
 	'specialcontact-ccheader' => 'Das ist eine Kopie der E-Mail, die an den Wikia-Support geschickt wurde',
-	'specialcontact-submitcomplete' => 'Danke, dass du Wikia kontaktiert hast. Wir haben alle hier angegebenen Informationen bekommen. Wir werden unser bestes tun, um innerhalb von 2 Arbeitstagen auf deine Nachricht zu antworten. Wir bitten um Geduld.
+	'specialcontact-submitcomplete' => 'Danke für deine Nachricht an Wikia.
 
-Vergiss nicht, du kannst dir jederzeit die \'\'\'[[w:c:de.community:Hilfe:Übersicht|Hilfeseiten]]\'\'\' ansehen, den [[w:c:community:Blog:Wikia_Staff_Blog|Wikia-Blog]] lesen oder in unseren \'\'\'[[w:c:de.community:Spezial:Forum|Foren]]\'\'\' posten.',
+Sofern du eine gültige E-Mail-Adresse angegeben hast und die Nachricht dies erfordert, erhältst du möglichst bald eine Antwort per E-Mail.',
 	'specialcontact-seclink-security' => 'Ich glaube, ich habe ein Sicherheitsproblem entdeckt',
 	'specialcontact-seclink-dmca-request' => 'Ich habe eine Urheberrechtsbeschwerde',
 	'specialcontact-sectitle-security' => 'Bericht über Sicherheitsproblem',
@@ -648,9 +648,9 @@ Si prefieres usar un email o adjuntar archivos, puedes contactar con nosotros en
 	'specialcontact-mailsub' => 'Correo de contacto de Wikia',
 	'specialcontact-mailsubcc' => 'Copia del correo de contacto de Wikia',
 	'specialcontact-ccheader' => 'Esta es una copia del mensaje que enviaste al Staff de Wikia',
-	'specialcontact-submitcomplete' => 'Gracias por contactar con Wikia. Recibimos y revisamos todos los mensajes que se envían por aquí. En los próximos 2 o 3 días laborables recibirás una respuesta, por favor sé paciente mientras nos encargamos de todos los mensajes que recibimos.
+	'specialcontact-submitcomplete' => 'Gracias por contactar con Wikia. Recibimos y revisamos todos los mensajes que se envían por aquí. En los próximos 2 ó 3 días laborables recibirás una respuesta, por favor sé paciente mientras nos encargamos de todos los mensajes que recibimos.
 
-Recuerda que puedes encontrar ayuda también en nuestro [[w:c:comunidad:Foro:Índice|foro]] de la comunidad de Wikia en español o en nuestro [[w:c:ayuda|wikia de ayuda]]. Y por supuesto si quieres mantenerte al día con las últimas novedades, sigue nuestro [http://es.wikia.com/wiki/Blog:Noticias_de_Wikia?action=watch blog de noticias]. ¡Diviértete!',
+Recuerda que puedes encontrar ayuda también en nuestro [[w:c:comunidad:Especial:Forum|foro]] de la comunidad de Wikia en español o en nuestro [[w:c:ayuda|wiki de ayuda]]. Y por supuesto si quieres mantenerte al día con las últimas novedades, sigue nuestro [http://comunidad.wikia.com/wiki/Blog:Noticias_de_Wikia?action=watch blog de noticias]. ¡Diviértete!',
 	'specialcontact-seclink-security' => 'Creo que he encontrado un problema de seguridad',
 	'specialcontact-seclink-dmca-request' => 'Tengo una queja sobre derechos de autor',
 	'specialcontact-sectitle-security' => 'Informe de problemas de seguridad',
@@ -962,8 +962,7 @@ $messages['ja'] = [
 	'specialcontact-mailsub' => 'ウィキアサポート',
 	'specialcontact-mailsubcc' => 'ウィキアコンタクトメールをコピーする。',
 	'specialcontact-ccheader' => 'これはウィキアサポートに送られたメッセージのコピーです。',
-	'specialcontact-submitcomplete' => 'ウィキアにご連絡いただきましてありがとうございます。お返事に2から3日ほどお時間をいただいておりますことをご了承ください。また、こちらのページ
-[[w:c:community:Forum:Community_Central_Forum|コミュニティーヘルプフォーラム]] と [[w:c:community:Help:Index|ヘルプページ]]をご確認ください。ウィキアの最新ニュースはここで確認することができます。  [[w:c:community:Blog:Wikia_Staff_Blog |スタッフブログ]]. 楽しんでね!',
+	'specialcontact-submitcomplete' => 'ウィキアへご連絡いただきありがとうございます。',
 	'specialcontact-seclink-security' => 'セキュリティの問題を見つけた',
 	'specialcontact-seclink-dmca-request' => '著作権侵害の申し立て',
 	'specialcontact-sectitle-security' => 'セキュリティの問題に関する報告',
