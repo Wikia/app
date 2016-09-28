@@ -152,7 +152,7 @@ class ImportMessagingWiki extends Maintenance {
 		foreach ( $messages as $lang => $translations ) {
 			$contents .= "\$messages['$lang'] = [\n";
 			foreach ( $translations as $key => $text ) {
-				$text = addslashes($text);
+				$text = str_replace( "'", "\\'", $text );
 				$contents .= "\t'$key' => '$text',\n";
 			}
 			$contents .= "];\n\n";
