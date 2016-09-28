@@ -713,7 +713,6 @@ class SFUploadForm extends HTMLForm {
 			+ $this->getDescriptionSection()
 			+ $this->getOptionsSection();
 
-		Hooks::run( 'UploadFormInitDescriptor', array( &$descriptor ) );
 		parent::__construct( $descriptor, 'upload' );
 
 		# Set some form properties
