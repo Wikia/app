@@ -155,7 +155,7 @@ class ImportMessagingWiki extends Maintenance {
 				$text = addslashes($text);
 				$contents .= "\t'$key' => '$text',\n";
 			}
-			$contents .= "];\n";
+			$contents .= "];\n\n";
 		}
 
 		if ( $this->isDryRun ) {

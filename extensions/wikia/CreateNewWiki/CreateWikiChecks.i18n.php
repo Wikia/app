@@ -121,6 +121,7 @@ All of the above links are a great place to start exploring, and have fun!
 -- [[User:$2|$3]] <staff />',
 	'autocreatewiki-language-top-list' => 'de,en,es,fr,it,ja,pl,pt-br,ru,zh',
 ];
+
 $messages['qqq'] = [
 	'autocreatewiki-desc' => '{{desc}}',
 	'autocreatewiki-page-title-answers' => '\"Answers sites\" are  special wikis of the type answers.wikia.com, where you ask and answer questions.',
@@ -141,6 +142,7 @@ Parameters:
 * $4 - <nowiki>{{SITENAME}}</nowiki> of the wiki welcome message is being left on',
 	'autocreatewiki-language-top-list' => 'Do not translate. List of the top 13 languages used for wiki creation.',
 ];
+
 $messages['af'] = [
 	'autocreatewiki' => 'Skep \'n nuwe Wiki',
 	'autocreatewiki-page-title-default' => 'Skep \'n nuwe Wiki',
@@ -176,6 +178,7 @@ $messages['af'] = [
 	'autocreatewiki-protect-reason' => 'Deel van die amptelike koppelvlak',
 	'autocreatewiki-welcomesubject' => '$1 is geskep!',
 ];
+
 $messages['ar'] = [
 	'autocreatewiki' => 'أنشئ ويكي جديدة',
 	'autocreatewiki-desc' => 'أنشأ ويكي في ويكيفاكتوري من قبل طلب المستخدم',
@@ -249,6 +252,7 @@ $messages['ar'] = [
 
 -- [[مستخدم:$2|$3]]<staff />',
 ];
+
 $messages['as'] = [
 	'autocreatewiki' => 'এখন নতুন ৱিকি সৃষ্টি কৰক',
 	'autocreatewiki-page-title-default' => 'এখন নতুন ৱিকি সৃষ্টি কৰক',
@@ -271,6 +275,7 @@ $messages['as'] = [
 	'autocreatewiki-welcometalk-log' => 'আদৰণি বাৰ্তা',
 	'autocreatewiki-welcomesubject' => '$1 সৃষ্টি কৰা হ’ল!',
 ];
+
 $messages['az'] = [
 	'autocreatewiki-web-address' => 'Veb ünvanı:',
 	'autocreatewiki-language-all' => 'Bütün dillər',
@@ -278,14 +283,17 @@ $messages['az'] = [
 	'autocreatewiki-category-label' => 'Kateqoriya:',
 	'autocreatewiki-category-other' => 'Digər',
 ];
+
 $messages['bbc-latn'] = [
 	'autocreatewiki-title-template' => '$1 Wikia',
 ];
+
 $messages['be-tarask'] = [
 	'autocreatewiki' => 'Стварыць новую вікі',
 	'autocreatewiki-page-title-default' => 'Стварыць новую вікі',
 	'autocreatewiki-language-all' => 'Усе мовы',
 ];
+
 $messages['bg'] = [
 	'autocreatewiki' => 'Създаване на ново уики',
 	'autocreatewiki-page-title-default' => 'Заявка за ново уики',
@@ -319,6 +327,7 @@ $messages['bg'] = [
 	'autocreatewiki-congratulation' => 'Поздравления!',
 	'autocreatewiki-step2-error' => 'Базата данни съществува!',
 ];
+
 $messages['br'] = [
 	'autocreatewiki' => 'Krouiñ ur Wiki nevez.',
 	'autocreatewiki-desc' => 'Krouiñ ur wiki er WikiFactory dre rekedoù implijerien',
@@ -430,6 +439,7 @@ M\'ho peus goulennoù da sevel e c\'hallit skrivañ ur gerig dimp war ar bajenn 
 
 -- [[User:$2|$3]] <staff /></div>',
 ];
+
 $messages['ca'] = [
 	'autocreatewiki' => 'Crea un nou wiki',
 	'autocreatewiki-desc' => 'Crear un wiki en WikiFactory a petició d\'un usuari',
@@ -549,6 +559,7 @@ Tots els enllaços anteriors són llocs magnífics per començar a explorar Wiki
 
 -- [[User:$2|$3]] <staff />',
 ];
+
 $messages['ckb'] = [
 	'autocreatewiki' => 'ویکییەکی نوێ دروست بکە',
 	'autocreatewiki-page-title-default' => 'دروستکردنی ویکییەکی نوێ',
@@ -558,6 +569,7 @@ $messages['ckb'] = [
 	'autocreatewiki-log-title' => 'ویکییەکەت خەریکە دروست‌دەبێ',
 	'autocreatewiki-welcometalk-log' => 'پەیامی بەخێرھاتن',
 ];
+
 $messages['cs'] = [
 	'autocreatewiki' => 'Vytvořit novou wiki',
 	'autocreatewiki-desc' => 'Vytvořit wiki podle požadavků uživatelů s pomocí WikiFactory',
@@ -628,6 +640,7 @@ Prosím, vyberte hodnotu ze seznamu.',
 	'autocreatewiki-protect-reason' => 'Součást oficiálního rozhraní',
 	'autocreatewiki-welcomesubject' => '$1 bylo vytvořeno!',
 ];
+
 $messages['cy'] = [
 	'autocreatewiki' => 'Dechrau wici newydd',
 	'autocreatewiki-desc' => 'Creu wici yn y WikiFactory gyda ymofyniadau defnyddiwyr',
@@ -663,6 +676,7 @@ $messages['cy'] = [
 	'autocreatewiki-name-taken' => 'Mae\'n wici gyda y cyfeiriad hwn. Dych chi\'n gallu creu newidiadau wrth <a href=\"http://$1.wikia.com\">http://$1.wikia.com</a> neu dewis cyfeiriad arall.',
 	'autocreatewiki-name-too-short' => 'Mae\'r cyfeiriad yn rhy fach, dewis cyfeiriad gyda 3 llythryn neu nifer o leiaf.',
 ];
+
 $messages['da'] = [
 	'autocreatewiki' => 'Opret en ny wiki',
 	'autocreatewiki-desc' => 'Opret wiki i WikiFactory efter en bruger forespørsel',
@@ -783,6 +797,7 @@ Alle de ovenstående henvisninger er gode steder at starte udforskningen og få 
 
 -- [[User:$2|$3]] <staff />',
 ];
+
 $messages['de'] = [
 	'autocreatewiki' => 'Erstelle ein neues Wiki',
 	'autocreatewiki-desc' => 'Erzeugt ein Wiki in WikiFactory nach Benutzeranforderungen',
@@ -908,6 +923,7 @@ All diese Links sind gute Startpunkte, um sich zurechtzufinden und Spaß zu habe
 	'requestwiki-filter-language' => 'als,an,ang,ast,bar,de2,de-at,de-ch,de-formal,de-weigsbrag,dk,en-gb,eshelp,fihelp,frc,frhelp,ia,ie,ithelp,jahelp,kh,kohelp,kp,ksh,nb,nds,nds-nl,mu,mwl,nlhelp,pdc,pdt,pfl,pthelp,pt-brhelp,ruhelp,simple,tokipona,tp,zh-classical,zh-cn,zh-hans,zh-hant,zh-hk,zh-min-nan,zh-mo,zh-my,zh-sg,zh-tw,zh-yue',
 	'autocreatewiki-language-top-list' => 'de,en,es,fr,it,ja,pl,pt-br,ru,zh',
 ];
+
 $messages['de-formal'] = [
 	'autocreatewiki' => 'Ein neues Wiki erstellen',
 	'autocreatewiki-page-title-default' => 'Ein neues Wiki erstellen',
@@ -972,6 +988,7 @@ Wenn Sie Fragen haben, können Sie uns eine Mail über unser [[Special:Contact|K
 
 -- [[User:$2|$3]] <staff /></div>',
 ];
+
 $messages['diq'] = [
 	'autocreatewiki' => 'Wikiya newi vıraze',
 	'autocreatewiki-desc' => 'Wikifebrika vıraştışire Qarqer buwaze',
@@ -1007,9 +1024,11 @@ $messages['diq'] = [
 	'autocreatewiki-welcomesubject' => '$1 vıraziya!',
 	'autocreatewiki-welcometalk-wall-title' => 'Xeyr amey!',
 ];
+
 $messages['ee'] = [
 	'autocreatewiki-create-account' => 'Ŋlɔ ŋkɔ daɖi',
 ];
+
 $messages['el'] = [
 	'autocreatewiki' => 'Δημιουργήστε έναν νέο ιστότοπο τύπου Wiki',
 	'autocreatewiki-desc' => 'Δημιουργήστε έναν ιστότοπο τύπου wiki στο WikiFactory από αιτήματα χρηστών',
@@ -1054,6 +1073,7 @@ $messages['el'] = [
 	'autocreatewiki-welcometalk-log' => 'Χαιρετιστήριο Μήνυμα',
 	'autocreatewiki-step2-error' => 'Η βάση δεδομένων υπάρχει!',
 ];
+
 $messages['eo'] = [
 	'autocreatewiki' => 'Krei novan vikion',
 	'autocreatewiki-language-top' => '$1 plej gravaj lingvoj',
@@ -1093,6 +1113,7 @@ $3
 Wikia-komunuma asistaro
 <http://community.wikia.com/wiki/Uzanto:$4>',
 ];
+
 $messages['es'] = [
 	'autocreatewiki' => 'Crear una nueva wikia',
 	'autocreatewiki-desc' => 'Crear una wikia en WikiFactory a petición de un usuario',
@@ -1213,6 +1234,7 @@ Todos los enlaces anteriores son un gran lugar para comenzar a explorar, ¡así 
 	'requestwiki-filter-language' => 'als,an,ang,ast,bar,de2,de-at,de-ch,de-formal,de-weigsbrag,dk,en-gb,eshelp,fihelp,frc,frhelp,ia,ie,ithelp,jahelp,kh,kohelp,kp,ksh,nb,nds,nds-nl,mu,mwl,nlhelp,pdc,pdt,pfl,pthelp,pt-brhelp,ruhelp,simple,tokipona,tp,zh-classical,zh-cn,zh-hans,zh-hant,zh-hk,zh-min-nan,zh-mo,zh-my,zh-sg,zh-tw,zh-yue',
 	'autocreatewiki-language-top-list' => 'de,en,es,fr,it,ja,pl,pt-br,ru,zh',
 ];
+
 $messages['et'] = [
 	'autocreatewiki' => 'Loo uus viki',
 	'autocreatewiki-desc' => 'Loo uus viki WikiFactorysse kasutaja taotluse soovil',
@@ -1237,6 +1259,7 @@ $messages['et'] = [
 	'autocreatewiki-congratulation' => 'Õnnitlen!',
 	'autocreatewiki-welcometalk-log' => 'Tere tulemast sõnum',
 ];
+
 $messages['eu'] = [
 	'autocreatewiki' => 'Wiki berria sortu',
 	'autocreatewiki-category-select' => 'Bat aukeratu',
@@ -1246,6 +1269,7 @@ $messages['eu'] = [
 	'autocreatewiki-category-label' => 'Kategoria:',
 	'autocreatewiki-congratulation' => 'Zorionak!',
 ];
+
 $messages['fa'] = [
 	'autocreatewiki' => 'ایجاد ویکی جدید',
 	'autocreatewiki-page-title-default' => 'ایجاد ویکی جدید',
@@ -1344,6 +1368,7 @@ $3
 با آرزوی بهترین‌ها، [[User:$2|$3]] <staff />
 </div>',
 ];
+
 $messages['fi'] = [
 	'autocreatewiki' => 'Luo uusi wiki',
 	'autocreatewiki-desc' => 'Luo käyttäjän pyynnöistä wikin sivustolle WikiFactory',
@@ -1456,6 +1481,7 @@ Jos sinulla on kysyttävää, [[Special:Contact|lähetä sähköpostia]] Wikian 
 
 -- [[User:$2|$3]] <staff /></div>',
 ];
+
 $messages['fo'] = [
 	'autocreatewiki' => 'Stovnað eina nýggja wiki',
 	'autocreatewiki-desc' => 'Stovnað wiki í WikiFactory eftir áheitan frá brúkara',
@@ -1466,6 +1492,7 @@ $messages['fo'] = [
 	'autocreatewiki-required' => '$1 = er kravt',
 	'autocreatewiki-web-address' => 'Internet bústaður:',
 ];
+
 $messages['fr'] = [
 	'autocreatewiki' => 'Créer un  nouveau wikia',
 	'autocreatewiki-desc' => 'Crée un wikia dans WikiFactory à la demande des utilisateurs',
@@ -1596,6 +1623,7 @@ Bonnes modifications !
 	'requestwiki-filter-language' => 'als,an,ang,ast,bar,de2,de-at,de-ch,de-formal,de-weigsbrag,dk,en-gb,eshelp,fihelp,frc,frhelp,ia,ie,ithelp,jahelp,kh,kohelp,kp,ksh,nb,nds,nds-nl,mu,mwl,nlhelp,pdc,pdt,pfl,pthelp,pt-brhelp,ruhelp,simple,tokipona,tp,zh-classical,zh-cn,zh-hans,zh-hant,zh-hk,zh-min-nan,zh-mo,zh-my,zh-sg,zh-tw,zh-yue',
 	'autocreatewiki-language-top-list' => 'de,en,es,fr,it,ja,pl,pt-br,ru,zh',
 ];
+
 $messages['gl'] = [
 	'autocreatewiki' => 'Crear un novo wiki',
 	'autocreatewiki-desc' => 'Crea un wiki en WikiFactory mediante a solicitude dun usuario',
@@ -1713,6 +1741,7 @@ Todas as ligazóns anteriores son magníficos lugares para comezar a explorar Wi
 
 -- [[User:$2|$3]] <staff />',
 ];
+
 $messages['he'] = [
 	'autocreatewiki' => 'צור אתר וויקי חדש',
 	'autocreatewiki-desc' => 'צור אתר ווקי במפעל הווקי עם הגדרות משתמש',
@@ -1734,6 +1763,7 @@ $messages['he'] = [
 	'autocreatewiki-info-realname' => 'את תבחרו לציין אותו, הוא ישמש לייחוס עבודתכם אליכם.',
 	'autocreatewiki-category-label' => 'קטגוריה:',
 ];
+
 $messages['hi'] = [
 	'autocreatewiki' => 'बनाएँ एक नई wiki',
 	'autocreatewiki-desc' => 'Wiki में WikiFactory उपयोगकर्ता का अनुरोध बनाएँ',
@@ -1757,6 +1787,7 @@ $messages['hi'] = [
 	'autocreatewiki-info-blurry-word' => 'स्वचालित खाता निर्माण के खिलाफ की रक्षा में मदद करने के लिए, कृपया इस फ़ील्ड में blurry शब्द है कि आप देखें लिखें।',
 	'autocreatewiki-title-template' => '$1 विकि',
 ];
+
 $messages['hu'] = [
 	'autocreatewiki' => 'Új wiki létrehozása',
 	'autocreatewiki-desc' => 'Új wiki létrehozása a Wikigyárban a felhasználói kérések alapján',
@@ -1866,6 +1897,7 @@ Ha kérdéseid vannak, küldhetsz nekünk e-mailt a [[Special:Contact|kapcsolatf
 
 -- [[User:$2|$3]] <staff /></div>',
 ];
+
 $messages['ia'] = [
 	'autocreatewiki' => 'Crear un nove wiki',
 	'autocreatewiki-desc' => 'Crear wiki in WikiFactory per requestas de usatores',
@@ -1976,6 +2008,7 @@ Si tu ha questiones, invia nos e-mail per nostre [[Special:Contact|formulario de
 
 -- [[User:$2|$3]] <staff /></div>',
 ];
+
 $messages['id'] = [
 	'autocreatewiki' => 'Buat wiki baru',
 	'autocreatewiki-desc' => 'Buat wiki di WikiFactory dari permintaan pengguna',
@@ -2089,13 +2122,16 @@ Jika Anda punya pertanyaan, Anda dapat mengirim kami sur-el melalui [[Special:Co
 
 -- [[User:$2|$3]] <staff /></div>',
 ];
+
 $messages['ig'] = [
 	'autocreatewiki-category-select' => 'Kpàtá otụ',
 	'autocreatewiki-category-label' => 'Ébéonọr:',
 ];
+
 $messages['inh'] = [
 	'autocreatewiki-category-label' => 'Цатег:',
 ];
+
 $messages['it'] = [
 	'autocreatewiki' => 'Crea una nuova wikia',
 	'autocreatewiki-desc' => 'Crea una wikia in WikiFactory su richiesta dell\'utente',
@@ -2211,6 +2247,7 @@ C\'è ancora molto da fare; perciò ti vogliamo dare alcuni suggerimenti e link 
 Tutti questi link sono un buon punto di partenza per entrare nel mondo di Wikia e iniziare a divertirsi!',
 	'autocreatewiki-language-top-list' => 'de,en,es,fr,it,ja,pl,pt-br,ru,zh',
 ];
+
 $messages['ja'] = [
 	'autocreatewiki' => '新しいWikiaコミュニティを作成する',
 	'autocreatewiki-desc' => 'ユーザーのリクエストにより、ウィキファクトリーにWikiaコミュニティを作成します',
@@ -2333,6 +2370,7 @@ ___________________________________________
 このリンクを活用して、ウィキアをどんどんお楽しみください！',
 	'autocreatewiki-language-top-list' => 'de,en,es,fr,it,ja,pl,pt-br,ru,zh',
 ];
+
 $messages['km'] = [
 	'autocreatewiki' => 'បង្កើតវិគីថ្មីមួយ',
 	'autocreatewiki-desc' => 'បង្កើតវិគីក្នុង WikiFactory តាមសំណើរបស់អ្នកប្រើប្រាស់',
@@ -2363,6 +2401,7 @@ $messages['km'] = [
 	'autocreatewiki-category-other' => 'ផ្សេងទៀត',
 	'autocreatewiki-set-username' => 'ដាក់អត្តនាមមុន។',
 ];
+
 $messages['ko'] = [
 	'autocreatewiki' => '새 위키 만들기',
 	'autocreatewiki-page-title-default' => '새 위키 만들기',
@@ -2371,6 +2410,7 @@ $messages['ko'] = [
 	'autocreatewiki-create-account' => '계정 만들기',
 	'autocreatewiki-haveaccount-question' => '이미 위키아 계정이 있습니까?',
 ];
+
 $messages['ksh'] = [
 	'autocreatewiki' => 'E neu Wiki opmaache',
 	'autocreatewiki-desc' => 'Määt e neu Wiki en de Wiki_Fabrek wi ene Metmaacher et well.',
@@ -2458,19 +2498,23 @@ Donn eine ööhndlesch uß dä Leß ußwähle.
 	'autocreatewiki-protect-reason' => 'Deil vun de offizjälle Schnettshtäll',
 	'autocreatewiki-welcomesubject' => '$1 es aanjelaat woode!',
 ];
+
 $messages['ku-latn'] = [
 	'autocreatewiki-language-all' => 'Hemû ziman',
 	'autocreatewiki-category-label' => 'Kategorî:',
 ];
+
 $messages['ky'] = [
 	'autocreatewiki-remember' => 'Мени эске сактоо',
 	'autocreatewiki-create-account' => 'Эсеп жазуусун жаратуу',
 	'autocreatewiki-category-label' => 'Категория:',
 	'autocreatewiki-category-other' => 'Башка',
 ];
+
 $messages['la'] = [
 	'autocreatewiki-category-label' => 'Categoria:',
 ];
+
 $messages['lb'] = [
 	'autocreatewiki' => 'Eng nei Wiki uleeën',
 	'autocreatewiki-page-title-default' => 'Eng nei Wiki uleeën',
@@ -2494,9 +2538,11 @@ $messages['lb'] = [
 	'autocreatewiki-welcometalk-log' => 'Wëllkommensmessage',
 	'autocreatewiki-step2-error' => 'D\'Datebank gëtt et!',
 ];
+
 $messages['lez'] = [
 	'autocreatewiki-page-title-default' => 'Туькlурун цlийи вики',
 ];
+
 $messages['lt'] = [
 	'autocreatewiki' => 'Sukurti naują wiki',
 	'autocreatewiki-desc' => 'Sukurti wiki WikiFactory pagal vartotojų prašymus',
@@ -2558,6 +2604,7 @@ ___________________________________________
 http://community.wikia.com/Special:Preferences',
 	'autocreatewiki-welcometalk-wall-title' => 'Sveiki atvykę!',
 ];
+
 $messages['mk'] = [
 	'autocreatewiki' => 'Создај ново вики',
 	'autocreatewiki-desc' => 'Создавање на вики во ВикиФабрика по барања на корисници',
@@ -2671,6 +2718,7 @@ $3
 
 -- [[User:$2|$3]] <staff /></div>',
 ];
+
 $messages['ml'] = [
 	'autocreatewiki' => 'പുതിയൊരു വിക്കി സൃഷ്ടിക്കുക',
 	'autocreatewiki-page-title-default' => 'പുതിയൊരു വിക്കി സൃഷ്ടിക്കുക',
@@ -2693,6 +2741,7 @@ $messages['ml'] = [
 	'autocreatewiki-congratulation' => 'അഭിനന്ദനങ്ങൾ!',
 	'autocreatewiki-welcometalk-log' => 'സ്വാഗതസന്ദേശം',
 ];
+
 $messages['ms'] = [
 	'autocreatewiki' => 'Cipta wiki baru',
 	'autocreatewiki-desc' => 'Cipta wiki di WikiFactory atas permintaan pengguna',
@@ -2811,10 +2860,12 @@ Kesemua pautan di atas sesuai sekali untuk memulakan jelajah anda. Semoga ceria!
 
 -- [[User:$2|$3]] <staff />',
 ];
+
 $messages['mzn'] = [
 	'autocreatewiki' => 'اتا نو ویکی درس هکردن',
 	'autocreatewiki-page-title-default' => 'اتا نو ویکی درس هکردن',
 ];
+
 $messages['nb'] = [
 	'autocreatewiki' => 'Opprett en ny Wiki',
 	'autocreatewiki-desc' => 'Opprett wiki i WikiFactory etter forespørsel fra bruker',
@@ -2937,6 +2988,7 @@ Hvis du har spørsmål, kan du sende oss en e-post gjennom vårt [[Special:Conta
 
 -- [[User:$2|$3]] <staff /></div>',
 ];
+
 $messages['nl'] = [
 	'autocreatewiki' => 'Begin een nieuwe wiki',
 	'autocreatewiki-desc' => 'Wiki aanmaken in WikiFactory door gebruikersverzoeken',
@@ -3063,6 +3115,7 @@ Alle bovenstaande koppelingen zijn een prima plaats om te beginnen met het verke
 	'requestwiki-filter-language' => 'als,an,ang,ast,bar,de2,de-at,de-ch,de-formal,de-weigsbrag,dk,en-gb,eshelp,fihelp,frc,frhelp,ia,ie,ithelp,jahelp,kh,kohelp,kp,ksh,nb,nds,nds-nl,mu,mwl,nlhelp,pdc,pdt,pfl,pthelp,pt-brhelp,ruhelp,simple,tokipona,tp,zh-classical,zh-cn,zh-hans,zh-hant,zh-hk,zh-min-nan,zh-mo,zh-my,zh-sg,zh-tw,zh-yue',
 	'autocreatewiki-language-top-list' => 'de,en,es,fr,it,ja,pl,pt-br,ru,zh',
 ];
+
 $messages['nl-informal'] = [
 	'autocreatewiki-haveaccount-question' => 'Heb je al een Wikia-gebruiker?',
 	'autocreatewiki-info-domain' => 'Het is het beste om een woord te kiezen dat vaak gebruikt wordt om je onderwerp te vinden.',
@@ -3105,6 +3158,7 @@ Als je vragen hebt, e-mail ons dan via het [[Special:Contact|contactformulier]].
 
 -- [[User:$2|$3]] <staff /></div>',
 ];
+
 $messages['pfl'] = [
 	'autocreatewiki' => 'Ä naijes Wiki grinde',
 	'autocreatewiki-page-title-default' => 'Ä naijes Wiki grinde',
@@ -3135,6 +3189,7 @@ Wikia Community Support
 ___________________________________________
 * Wilschd wenischa Nochrischde krische? Konschd disch ausschraiwe oda doi doi E-Mail Oischdellunge änare: http://community.wikia.com/Special:Preferences',
 ];
+
 $messages['pl'] = [
 	'autocreatewiki' => 'Utwórz nową wiki',
 	'autocreatewiki-desc' => 'Utwórz wiki w WikiFactory na prośbę użytkownika',
@@ -3261,6 +3316,7 @@ Wszystkie powyższe linki to świetne miejsca, od których możesz rozpocząć z
 	'requestwiki-filter-language' => 'als,an,ang,ast,bar,de2,de-at,de-ch,de-formal,de-weigsbrag,dk,en-gb,eshelp,fihelp,frc,frhelp,ia,ie,ithelp,jahelp,kh,kohelp,kp,ksh,nb,nds,nds-nl,mu,mwl,nlhelp,pdc,pdt,pfl,pthelp,pt-brhelp,ruhelp,simple,tokipona,tp,zh-classical,zh-cn,zh-hans,zh-hant,zh-hk,zh-min-nan,zh-mo,zh-my,zh-sg,zh-tw,zh-yue',
 	'autocreatewiki-language-top-list' => 'de,en,es,fr,it,ja,pl,pt-br,ru,zh',
 ];
+
 $messages['pms'] = [
 	'autocreatewiki' => 'Crea na neuva Wiki',
 	'autocreatewiki-desc' => 'Crea wiki an WikiFactory për arcesta utent',
@@ -3383,6 +3439,7 @@ S\'a l\'ha ëd chestion, a peul mandeje për pòsta eletrònica a nòstr [[Speci
 
 -- [[User:$2|$3]] <staff /></div>',
 ];
+
 $messages['ps'] = [
 	'autocreatewiki' => 'يو نوی ويکي جوړول',
 	'autocreatewiki-page-title-default' => 'یو نوی ويکي جوړول',
@@ -3413,6 +3470,7 @@ $messages['ps'] = [
 	'autocreatewiki-welcomesubject' => '$1 جوړ شو!',
 	'autocreatewiki-welcometalk-wall-title' => 'ښه راغلۍ!',
 ];
+
 $messages['pt'] = [
 	'autocreatewiki' => 'Crie uma nova wikia',
 	'autocreatewiki-desc' => 'Crie uma wikia no WikiFactory a partir de pedidos de usuários.',
@@ -3537,6 +3595,7 @@ Ainda há muita coisa a fazer; aqui estão algumas dicas e links importantes par
 Todos os links acima são bons lugares para começar explorando, divirta-se!',
 	'autocreatewiki-language-top-list' => 'de,en,es,fr,it,ja,pl,pt-br,ru,zh',
 ];
+
 $messages['pt-br'] = [
 	'autocreatewiki' => 'Crie uma nova Wiki',
 	'autocreatewiki-desc' => 'Crie uma wiki no WikiFactory a partir de pedidos de usuários',
@@ -3656,6 +3715,7 @@ Todos os links acima são ótimos lugares para começar explorando, e divirta-se
 
 -- [[User:$2|$3]] <staff />',
 ];
+
 $messages['ro'] = [
 	'autocreatewiki' => 'Creează un site de tip wiki',
 	'autocreatewiki-desc' => 'Creează wiki în Wikifactory la cererea unui utilizator',
@@ -3692,6 +3752,7 @@ $messages['ro'] = [
 	'autocreatewiki-welcometalk-log' => 'Mesaj de bun venit',
 	'autocreatewiki-step2-error' => 'Baza de date există!',
 ];
+
 $messages['roa-tara'] = [
 	'autocreatewiki-page-title-default' => 'Ccreje \'na uicchi nove',
 	'autocreatewiki-required' => '$1 = richieste',
@@ -3710,6 +3771,7 @@ $messages['roa-tara'] = [
 	'autocreatewiki-category-other' => 'otre',
 	'autocreatewiki-step2' => 'Stoche a ccreje l\'archivije ...',
 ];
+
 $messages['ru'] = [
 	'autocreatewiki' => 'Создать новую вики',
 	'autocreatewiki-desc' => 'Создать вики в WikiFactory по запросам участников',
@@ -3835,6 +3897,7 @@ ___________________________________________
 	'requestwiki-filter-language' => 'als,an,ang,ast,bar,de2,de-at,de-ch,de-formal,de-weigsbrag,dk,en-gb,eshelp,fihelp,frc,frhelp,ia,ie,ithelp,jahelp,kh,kohelp,kp,ksh,nb,nds,nds-nl,mu,mwl,nlhelp,pdc,pdt,pfl,pthelp,pt-brhelp,ruhelp,simple,tokipona,tp,zh-classical,zh-cn,zh-hans,zh-hant,zh-hk,zh-min-nan,zh-mo,zh-my,zh-sg,zh-tw,zh-yue',
 	'autocreatewiki-language-top-list' => 'de,en,es,fr,it,ja,pl,pt-br,ru,zh',
 ];
+
 $messages['sr-ec'] = [
 	'autocreatewiki' => 'Направи нову викију',
 	'autocreatewiki-page-title-default' => 'Стварање новог викија',
@@ -3880,6 +3943,7 @@ $messages['sr-ec'] = [
 	'autocreatewiki-protect-reason' => 'Део званичног сучеља',
 	'autocreatewiki-welcomesubject' => '$1 је направљена!',
 ];
+
 $messages['sv'] = [
 	'autocreatewiki' => 'Skapa en ny wiki',
 	'autocreatewiki-desc' => 'Create wiki in WikiFactory by user requests',
@@ -3993,11 +4057,13 @@ Alla ovanstående länkar är perfekta platser att börja utforska och ha kul!
 
 -- [[User:$2|$3]] <staff />',
 ];
+
 $messages['sw'] = [
 	'autocreatewiki-create-account' => 'Sajili akaunti',
 	'autocreatewiki-category-label' => 'Jamii:',
 	'autocreatewiki-category-other' => 'Nyingine',
 ];
+
 $messages['ta'] = [
 	'autocreatewiki-category-select' => 'ஒன்றைத் தேர்வு செய்யவும்',
 	'autocreatewiki-language-all' => 'அனைத்து மொழிகள்',
@@ -4009,6 +4075,7 @@ $messages['ta'] = [
 	'autocreatewiki-log-title' => 'தங்களது விக்கி உருவாக்கப்பட்டுவிட்டது',
 	'autocreatewiki-welcometalk-log' => 'வரவேற்பு செய்தி',
 ];
+
 $messages['te'] = [
 	'autocreatewiki-required' => '$1 = తప్పనిసరి',
 	'autocreatewiki-web-address' => 'జాల చిరునామా:',
@@ -4020,6 +4087,7 @@ $messages['te'] = [
 	'autocreatewiki-congratulation' => 'అభినందనలు!',
 	'autocreatewiki-welcometalk-log' => 'స్వాగత సందేశం',
 ];
+
 $messages['tl'] = [
 	'autocreatewiki' => 'Lumikha ng isang bagong wiki',
 	'autocreatewiki-desc' => 'Lumikha ng wiki sa WikiPabrika ayon sa mga kahilingan ng tagagamit',
@@ -4132,12 +4200,14 @@ Kung mayroong kang mga katanungan, mapapadalhan mo kami ng e-liham sa pamamagita
 
 -- [[User:$2|$3]] <staff /></div>',
 ];
+
 $messages['tly'] = [
 	'autocreatewiki' => 'Тожә вики сохтеј',
 	'autocreatewiki-page-title-default' => 'Тожә вики сохте',
 	'createwiki' => 'Тожә вики сохте',
 	'autocreatewiki-category-select' => 'Бывыжнән',
 ];
+
 $messages['tr'] = [
 	'autocreatewiki' => 'Yeni bir wiki oluştur',
 	'autocreatewiki-page-title-default' => 'Yeni bir wiki oluştur',
@@ -4178,6 +4248,7 @@ $messages['tr'] = [
 	'autocreatewiki-step2' => 'Veri tabanı oluşturuluyor...',
 	'autocreatewiki-congratulation' => 'Tebrikler!',
 ];
+
 $messages['tt-cyrl'] = [
 	'autocreatewiki' => 'Яңа вики ясау',
 	'autocreatewiki-desc' => 'Катнашучылар соравы буенча Вики-фабрикада вики ясау',
@@ -4291,6 +4362,7 @@ ___________________________________________
 
 — [[User:$2|$3]] <staff /></div>',
 ];
+
 $messages['tzm'] = [
 	'autocreatewiki' => 'ⵔⵏⵓ ⵡⵉⴽⵉ ⵜⴰⵎⴰⵢⵏⵓⵜ',
 	'autocreatewiki-page-title-default' => 'ⵔⵏⵓ ⵡⵉⴽⵉ ⵜⴰⵎⴰⵢⵏⵓⵜ',
@@ -4301,6 +4373,7 @@ $messages['tzm'] = [
 	'autocreatewiki-category-label' => 'ⵜⴰⴳⴳⴰⵢⵜ:',
 	'autocreatewiki-welcometalk-wall-title' => 'ⴰⵏⵙⵓⴼ!',
 ];
+
 $messages['uk'] = [
 	'autocreatewiki' => 'Створити нову Вікі',
 	'autocreatewiki-desc' => 'Створити вікі у WikiFactory з запитів користувачів',
@@ -4406,6 +4479,7 @@ $messages['uk'] = [
 
 — [[User:$2|$3]] <staff /></div>',
 ];
+
 $messages['vep'] = [
 	'autocreatewiki' => 'Säta uz\' wiki',
 	'autocreatewiki-page-title-default' => 'Säta uz\' wiki',
@@ -4413,14 +4487,17 @@ $messages['vep'] = [
 	'autocreatewiki-title-template' => '$1 Wikia',
 	'autocreatewiki-category-label' => 'Kategorii:',
 ];
+
 $messages['vi'] = [
 	'autocreatewiki' => 'Tạo wiki mới',
 	'autocreatewiki-info-terms-agree' => 'Bằng việc tạo ra một wiki và một tài khoản thành viên, bạn đồng ý với <a href=\"http://www.wikia.com/wiki/Terms_of_use\">Điều khoản Sử dụng của Wikia</a>',
 	'autocreatewiki-title-template' => 'Wikia $1',
 ];
+
 $messages['yi'] = [
 	'autocreatewiki-create-account' => 'שאַפֿן אַ קאנטע',
 ];
+
 $messages['zh'] = [
 	'autocreatewiki-page-title-default' => '申请wiki',
 	'createwiki' => '申請Wiki',
@@ -4443,10 +4520,12 @@ Wikia 社区支持
 ___________________________________________
 * 不想要收到那么多通知吗？ 您可以在以下连结更改您的电子邮件通知设定：http://zh.community.wikia.com/Special:Preferences',
 ];
+
 $messages['zh-cn'] = [
 	'autocreatewiki-page-title-default' => '申请wiki',
 	'createwiki' => '申请wiki',
 ];
+
 $messages['zh-hans'] = [
 	'autocreatewiki' => '创建新的维基',
 	'autocreatewiki-desc' => '按用户的请求在维基出厂配置中创建维基',
@@ -4571,6 +4650,7 @@ ___________________________________________
 -- [[User:$2|$3]] <staff />',
 	'autocreatewiki-language-top-list' => 'de,en,es,fr,it,ja,pl,pt-br,ru,zh',
 ];
+
 $messages['zh-hant'] = [
 	'autocreatewiki' => '創建一個新的 wiki',
 	'autocreatewiki-desc' => '通過使用者的請求，在 WikiFactory 中創建 wiki',
@@ -4649,14 +4729,17 @@ $messages['zh-hant'] = [
 	'autocreatewiki-protect-reason' => '官方介面的一部分',
 	'autocreatewiki-welcomesubject' => '$1已創建 ！',
 ];
+
 $messages['zh-hk'] = [
 	'autocreatewiki-page-title-default' => '申請wiki',
 	'createwiki' => '申請wiki',
 ];
+
 $messages['zh-sg'] = [
 	'autocreatewiki-page-title-default' => '申请wiki',
 	'createwiki' => '申请wiki',
 ];
+
 $messages['zh-tw'] = [
 	'autocreatewiki-page-title-default' => '創建新的維基',
 	'createwiki' => '創建新的維基',
@@ -4781,3 +4864,4 @@ ___________________________________________
  -- [[User:$2|$3]]  <staff />',
 	'autocreatewiki-language-top-list' => 'de,en,es,fr,it,ja,pl,pt-br,ru,zh',
 ];
+
