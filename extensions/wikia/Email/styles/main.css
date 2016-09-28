@@ -63,7 +63,7 @@ body {
 	border-color: #fff;
 	border-style: solid;
 	margin: 25px auto;
-	width: 50%;
+	width: 300px;
 }
 
 .fandom-bar img {
@@ -128,11 +128,11 @@ body {
 
 .mobile-badges .ios-badge img {
 	height: auto;
-	padding-bottom: 15px;
-	width: 210px;
+	padding-bottom: 9px;
+	width: 120px;
 }
 
 .mobile-badges .android-badge img {
 	height: auto;
-	width: 240px;
+	width: 140px;
 }
