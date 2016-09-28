@@ -99,7 +99,7 @@
 	"sf_formedit_remove": "إزالة",
 	"sf_formedit_addanother": "إضافة آخر",
 	"sf_formedit_none": "لا شيء",
-	"sf-autoedit-wait": "إصبر ...",
+	"sf-autoedit-wait": "انتظر...",
 	"runquery": "شغّل استعلامًا",
 	"sf_runquery_badurl": "يجب أن تحدد اسم نموذج في المسار;\nالمسار ينبغي أن يبدو ك 'Special:RunQuery/<form name>'.",
 	"sf_runquery_title": "تشغيل الاستعلام: $1",
@@ -126,5 +126,6 @@
 	"sf_category_desc": "هذا $1 تصنيف.",
 	"sf_blank_namespace": "رئيسي",
 	"right-viewedittab": "أظهر لسان \"{{int:edit}}\" للصفحات التي يمكن تعديلها باستخدام نموذج.",
-	"right-editrestrictedfields": "حرّر حقول النموذج المقيّدة"
+	"right-editrestrictedfields": "حرّر حقول النموذج المقيّدة",
+	"sf-datepicker-next": "التالي"
 }
