@@ -7,11 +7,6 @@ class ImportMessagingWiki extends Maintenance {
 	const MESSAGING_WIKI_DB = 'messaging';
 
 	/**
-	 * @var array Array of titles to delete (strings)
-	 */
-	protected $articlesToDelete = [];
-
-	/**
 	 * @var array Array of messages from messaging wiki (same format as in i18n php files
 	 */
 	protected $messages = [];
@@ -81,14 +76,12 @@ class ImportMessagingWiki extends Maintenance {
 				$lang = 'en';
 			}
 
-			$res['articlesToDelete'][] = $row->page_title;
 			$res['messages'][$lang] = $res['messages'][$lang] ?? [];
 			$res['messages'][$lang][$key] = $text;
 			$i++;
 		} );
 
 		$this->messages = $res['messages'];
-		$this->articlesToDelete = $res['articlesToDelete'];
 
 		$this->output( "Found $i messages in messaging DB.\n" );
 		if ( $this->isDryRun ) {
