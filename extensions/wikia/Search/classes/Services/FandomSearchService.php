@@ -3,7 +3,7 @@
 namespace Wikia\Search\Services;
 
 class FandomSearchService extends EntitySearchService {
-	const RESULTS_COUNT = 5;
+	const RESULTS_COUNT = 6;
 
 	protected function getCore() {
 		return 'fandom';

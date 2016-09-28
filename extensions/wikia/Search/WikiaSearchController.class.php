@@ -55,6 +55,8 @@ class WikiaSearchController extends WikiaSpecialPageController {
 	const FANDOM_STORIES_MEMC_KEY = 'fandom-stories-memcache-key';
 	const FANDOM_SEARCH_PAGE = 'http://fandom.wikia.com/?s=';
 
+	const NUMBER_OF_ITEMS_IN_FANDOM_STORIES_MODULE = 5;
+
 	/**
 	 * Responsible for instantiating query services based on config.
 	 * @var Wikia\Search\QueryService\Factory
@@ -673,7 +675,7 @@ class WikiaSearchController extends WikiaSpecialPageController {
 				}
 
 				$this->response->setValues( [
-					'fandomStories' => $fandomStories,
+					'fandomStories' => array_slice( $fandomStories, 0, static::NUMBER_OF_ITEMS_IN_FANDOM_STORIES_MODULE ),
 					'viewMoreFandomStoriesLink' => $viewMoreFandomStoriesLink,
 				] );
 
