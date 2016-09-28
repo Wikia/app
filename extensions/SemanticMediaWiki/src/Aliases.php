@@ -1,10 +1,5 @@
 <?php
 
-global $wgEnableSemanticMediaWikiExt;
-if ( empty( $wgEnableSemanticMediaWikiExt ) ) {
-	return 1;
-}
-
 /**
  * SemanticMediaWiki compatibility aliases for classes that got moved into the SMW namespace
  */

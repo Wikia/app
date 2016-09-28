@@ -19,11 +19,6 @@ class ComposerStaticInitb367f9b4bf4d43e0d5ea402c134db26b
         '94e265ce14c952a920a4ea5f7e8e9baa' => __DIR__ . '/..' . '/mediawiki/parser-hooks/ParserHooks.php',
         'bbf73f3db644d3dced353b837903e74c' => __DIR__ . '/..' . '/php-di/php-di/src/DI/functions.php',
         '9ebf2cbcc0b7687b276c44d77096b002' => __DIR__ . '/../../..' . '/extensions/Maps/Maps.php',
-        '69e0397dea3bf8934eed002abf6b38ef' => __DIR__ . '/../../..' . '/extensions/SemanticMediaWiki/src/Aliases.php',
-        '1e1cb42dd2499e18ea5eab984a9f5c8b' => __DIR__ . '/../../..' . '/extensions/SemanticMediaWiki/src/Defines.php',
-        '81831d7e713e54a40378b62fec6629d5' => __DIR__ . '/../../..' . '/extensions/SemanticMediaWiki/src/GlobalFunctions.php',
-        '0e960e930c32120da8e2ee126b82c67b' => __DIR__ . '/../../..' . '/extensions/SemanticMediaWiki/DefaultSettings.php',
-        'cd9b6b6b76aed1304a64986142337d3a' => __DIR__ . '/../../..' . '/extensions/SemanticMediaWiki/SemanticMediaWiki.php',
     );
 
     public static $prefixLengthsPsr4 = array (

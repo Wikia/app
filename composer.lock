@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "d6966c8ed930dab1883cd9b52a5a3f72",
-    "content-hash": "947210e1df26fa1cd49bd692f5d5825d",
+    "hash": "1ec289d59388a1a31d8f97fe1c273d9c",
+    "content-hash": "68b5a439289617551cae86e7d8816982",
     "packages": [
         {
             "name": "composer/installers",
@@ -666,12 +666,12 @@
             "version": "4.0.11",
             "source": {
                 "type": "git",
-                "url": "https://github.com/facebook/facebook-php-sdk-v4.git",
+                "url": "https://github.com/facebook/php-graph-sdk.git",
                 "reference": "e2dc662c4ab4da680434b6b777d56461a9bd2563"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/facebook/facebook-php-sdk-v4/zipball/e2dc662c4ab4da680434b6b777d56461a9bd2563",
+                "url": "https://api.github.com/repos/facebook/php-graph-sdk/zipball/e2dc662c4ab4da680434b6b777d56461a9bd2563",
                 "reference": "e2dc662c4ab4da680434b6b777d56461a9bd2563",
                 "shasum": ""
             },
@@ -708,6 +708,7 @@
                 "facebook",
                 "sdk"
             ],
+            "abandoned": "facebook/graph-sdk",
             "time": "2014-08-25 18:58:37"
         },
         {
@@ -993,11 +994,11 @@
         },
         {
             "name": "mediawiki/semantic-media-wiki",
-            "version": "2.4.2",
+            "version": "2.4.2.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Wikia/SemanticMediaWiki",
-                "reference": "87590e9eed7ddbca6eb1fb3b276e2fdf04310e70"
+                "reference": "51276a377845f2d0c6dabc49a8d15c17c141cef9"
             },
             "require": {
                 "composer/installers": "1.*,>=1.0.1",
@@ -1035,13 +1036,6 @@
                     "SMW\\": "src/",
                     "SMW\\Maintenance\\": "maintenance/"
                 },
-                "files": [
-                    "src/Aliases.php",
-                    "src/Defines.php",
-                    "src/GlobalFunctions.php",
-                    "DefaultSettings.php",
-                    "SemanticMediaWiki.php"
-                ],
                 "classmap": [
                     "includes/",
                     "languages/SMW_Language.php"
@@ -1105,7 +1099,7 @@
                 "wiki": "https://www.semantic-mediawiki.org/wiki/",
                 "source": "https://github.com/SemanticMediaWiki/SemanticMediaWiki"
             },
-            "time": "2016-08-02 08:58:45"
+            "time": "2016-09-28 09:52:34"
         },
         {
             "name": "mediawiki/validator",

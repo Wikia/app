@@ -18,9 +18,4 @@ return array(
     '94e265ce14c952a920a4ea5f7e8e9baa' => $vendorDir . '/mediawiki/parser-hooks/ParserHooks.php',
     'bbf73f3db644d3dced353b837903e74c' => $vendorDir . '/php-di/php-di/src/DI/functions.php',
     '9ebf2cbcc0b7687b276c44d77096b002' => $baseDir . '/extensions/Maps/Maps.php',
-    '69e0397dea3bf8934eed002abf6b38ef' => $baseDir . '/extensions/SemanticMediaWiki/src/Aliases.php',
-    '1e1cb42dd2499e18ea5eab984a9f5c8b' => $baseDir . '/extensions/SemanticMediaWiki/src/Defines.php',
-    '81831d7e713e54a40378b62fec6629d5' => $baseDir . '/extensions/SemanticMediaWiki/src/GlobalFunctions.php',
-    '0e960e930c32120da8e2ee126b82c67b' => $baseDir . '/extensions/SemanticMediaWiki/DefaultSettings.php',
-    'cd9b6b6b76aed1304a64986142337d3a' => $baseDir . '/extensions/SemanticMediaWiki/SemanticMediaWiki.php',
 );

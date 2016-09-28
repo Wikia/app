@@ -5,11 +5,6 @@ use SMW\NamespaceManager;
 use SMW\NumberFormatter;
 use SMW\SPARQLStore\SparqlDBConnectionProvider;
 
-global $wgEnableSemanticMediaWikiExt;
-if ( empty( $wgEnableSemanticMediaWikiExt ) ) {
-	return 1;
-}
-
 /**
  * Global functions specified and used by Semantic MediaWiki. In general, it is
  * tried to fit functions in suitable classes as static methods if they clearly

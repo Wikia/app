@@ -16,11 +16,6 @@ if ( !defined( 'MEDIAWIKI' ) ) {
   die( "This file is part of the Semantic MediaWiki extension. It is not a valid entry point.\n" );
 }
 
-global $wgEnableSemanticMediaWikiExt;
-if ( empty( $wgEnableSemanticMediaWikiExt ) ) {
-	return 1;
-}
-
 ###
 # This is the path to your installation of Semantic MediaWiki as seen on your
 # local filesystem. Used against some PHP file path issues.

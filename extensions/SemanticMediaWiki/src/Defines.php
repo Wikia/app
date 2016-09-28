@@ -1,9 +1,4 @@
 <?php
-
-global $wgEnableSemanticMediaWikiExt;
-if ( empty( $wgEnableSemanticMediaWikiExt ) ) {
-	return 1;
-}
 /**
  * Constants relevant to Semantic MediaWiki
  *

@@ -71,13 +71,6 @@
 			"SMW\\": "src/",
 			"SMW\\Maintenance\\": "maintenance/"
 		},
-		"files" : [
-			"src/Aliases.php",
-			"src/Defines.php",
-			"src/GlobalFunctions.php",
-			"DefaultSettings.php",
-			"SemanticMediaWiki.php"
-		],
 		"classmap": [
 			"includes/",
 			"languages/SMW_Language.php"

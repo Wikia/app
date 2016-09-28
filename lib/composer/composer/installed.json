@@ -815,12 +815,12 @@
         "version_normalized": "4.0.11.0",
         "source": {
             "type": "git",
-            "url": "https://github.com/facebook/facebook-php-sdk-v4.git",
+            "url": "https://github.com/facebook/php-graph-sdk.git",
             "reference": "e2dc662c4ab4da680434b6b777d56461a9bd2563"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/facebook/facebook-php-sdk-v4/zipball/e2dc662c4ab4da680434b6b777d56461a9bd2563",
+            "url": "https://api.github.com/repos/facebook/php-graph-sdk/zipball/e2dc662c4ab4da680434b6b777d56461a9bd2563",
             "reference": "e2dc662c4ab4da680434b6b777d56461a9bd2563",
             "shasum": ""
         },
@@ -858,7 +858,8 @@
         "keywords": [
             "facebook",
             "sdk"
-        ]
+        ],
+        "abandoned": "facebook/graph-sdk"
     },
     {
         "name": "cssjanus/cssjanus",
@@ -3012,12 +3013,12 @@
     },
     {
         "name": "mediawiki/semantic-media-wiki",
-        "version": "2.4.2",
-        "version_normalized": "2.4.2.0",
+        "version": "2.4.2.1",
+        "version_normalized": "2.4.2.1",
         "source": {
             "type": "git",
             "url": "https://github.com/Wikia/SemanticMediaWiki",
-            "reference": "87590e9eed7ddbca6eb1fb3b276e2fdf04310e70"
+            "reference": "51276a377845f2d0c6dabc49a8d15c17c141cef9"
         },
         "require": {
             "composer/installers": "1.*,>=1.0.1",
@@ -3044,7 +3045,7 @@
             "mediawiki/semantic-forms": "Easy creation of forms to add semantic data",
             "mediawiki/semantic-result-formats": "Additional result formats for SMW queries"
         },
-        "time": "2016-08-02 08:58:45",
+        "time": "2016-09-28 09:52:34",
         "type": "mediawiki-extension",
         "extra": {
             "branch-alias": {
@@ -3057,13 +3058,6 @@
                 "SMW\\": "src/",
                 "SMW\\Maintenance\\": "maintenance/"
             },
-            "files": [
-                "src/Aliases.php",
-                "src/Defines.php",
-                "src/GlobalFunctions.php",
-                "DefaultSettings.php",
-                "SemanticMediaWiki.php"
-            ],
             "classmap": [
                 "includes/",
                 "languages/SMW_Language.php"
