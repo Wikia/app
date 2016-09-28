@@ -335,7 +335,7 @@ Viel Spaß im Wiki! Falls ich dir irgendwie helfen kann, hinterlass mir einfach 
 
 Wir fänden es gut, wenn du [[Special:UserLogin|dir ein Benutzerkonto anlegst]]. So kannst du ganz einfach deine Beiträge im Überblick behalten, hast mehr Funktionen zur Verfügung und bist für den Rest der Wiki-Gemeinschaft erkennbar.
 
-Falls du Hilfe brauchst, schau dir zuerst die [[Help:Contents|Hilfe-Seiten]] an und besuche [[w:c:community|die deutsche Wikia-Community]], um mehr zu erfahren. Viel Spaß noch!',
+Falls du Hilfe brauchst, schau dir zuerst die [[Hilfe:Übersicht|Hilfe-Seiten]] an und besuche [[w:c:de.community|die deutsche Wikia-Community]], um mehr zu erfahren. Viel Spaß noch!',
 	'welcome-description' => 'Sendet eine Willkommensnachricht an Benutzer nach ihren ersten Bearbeitungen',
 ];
 
@@ -434,19 +434,13 @@ Bienvenido a {{SITENAME}} y gracias por tu edición en la página [[:$1]]. Si ne
 \'\'\'[[Special:Userlogin|Por favor, identifícate o crea una nueva cuenta de usuario]]\'\'\'. Es una forma fácil de mantener un registro de todas tus contribuciones y te ayudará a comunicarte con el resto de la comunidad.
 
 Por favor, ¡déjame un mensaje si puedo ayudarte con cualquier cosa!',
-	'welcome-message-wall-anon-staff' => 'Hola,
+	'welcome-message-wall-anon-staff' => 'Hola, ¡bienvenido a {{SITENAME}}! Gracias por tu edición en la página [[:$1]].
 
-¡Bienvenido a {{SITENAME}}! Te agradecemos por tu edición en [[:$1]].
+\'\'\'[[Special:Userlogin|Por favor, identifícate o crea una nueva cuenta de usuario]]\'\'\'. Es una forma fácil de mantener un registro de tus contribuciones y te ayudará a comunicarte con el resto de la comunidad.
 
-¿Qué tal si te \'\'\'[[Special:UserLogin|creas una cuenta]]\'\'\'?, así, nos será más sencillo saber que páginas has editado y recibirás una atribución por tu trabajo en {{SITENAME}}.
+No olvides que puedes contactar con el staff de Wikia a través de [[especial:contactar]] y te atenderemos directamente por email.
 
-Además, podrás acceder a muchas otras funcionalidades de Wikia, ¡incluso tendrás la posibilidad de darte a conocer con otros miembros de la comunidad!
-
-Si lo que buscas es ayuda, puedes consultar nuestras [[Help:Contents|páginas de ayuda]], llenas de información.
-
-Si requieres más ayuda, o sigues teniendo dudas, ¡no dudes en visitar la [[w:c:community|Comunidad Central de Wikia en Español]]!
-
-¡Esperamos que te diviertas!',
+Por favor, déjame un mensaje si puedo ayudarte con cualquier cosa.',
 	'welcome-description' => 'Envía un mensaje a todos los usuarios después de realizar su primera edición.',
 ];
 
@@ -593,10 +587,13 @@ Bienvenue sur {{SITENAME}} et merci d’avoir modifié la page [[:$1]]. Si vous 
 \'\'\'[[Special:Userlogin|Enregistre-toi et crée un compte utilisateur]]\'\'\'. C’est un moyen simple de garder une trace de tes contributions et faciliter la communication avec le reste de la communauté.
 
 Tu peux me laisser un message si je peux t’aider pour quoi que ce soit !',
-	'welcome-message-wall-anon-staff' => 'Bonjour,
-Bienvenue sur {{SITENAME}} et merci d’avoir modifié la page [[:$1]]. Nous encourageons tous les contributeurs à [[Special:UserLogin|créer un nom d’utilisateur]], afin de garder trace de vos contributions, d’accéder à davantage de fonctionnalités de Wikia et de connaître le reste de la communauté de {{SITENAME}}.
+	'welcome-message-wall-anon-staff' => 'Bonjour et bienvenue sur {{SITENAME}} ! Merci d’avoir modifié la page [[:$1]].
 
-Si vous avez besoin d’aide, consultez d’abord nos [[Help:Contents|pages d’aide]], puis visitez le [[w:c:community|centre de la communauté]] pour en savoir plus. Bonnes modifications!',
+Nous encourageons tous les contributeurs à se [[Special:UserLogin|créer un compte utilisateur]], tu peux ainsi garder un suivi de tes contributions, accéder à plus de fonctionnalités de Wikia et connaître le reste de la communauté.
+
+Si tu as besoin d\'aide, consulte nos [[Aide:Contenu|pages d\'aide]] ou contacte un [[Special:ListUsers/sysop|administrateur ici]]. Si aucun administrateur n\'est actif, visite le [[w:fr:Accueil|Centre des communautés]] et consulte le [[w:fr:Forum|forum]].
+
+Bonnes modifications !',
 	'welcome-description' => 'Envoie un message d’accueil aux utilisateurs après leurs premières modifications',
 ];
 
@@ -1342,11 +1339,15 @@ Przyjemnego edytowania!',
 Proszę, [[Special:UserLogin|załóż konto]]. Ułatwi Ci to kontakt ze społecznością projektu i sprawi, że wszystkie Twoje edycje będą trzymane w jednym miejscu.
 
 Zostaw wiadomość, gdyby potrzebna była Ci jakakolwiek pomoc.',
-	'welcome-message-wall-anon-staff' => 'Cześć,
-Witaj na {{SITENAME}} i dziękuję za edycję na stronie [[:$1]] Dzięki za dokonanie pierwszej edycji. Zachęcamy każdego edytora do [[Special:UserLogin|utworzenia profilu użytkownika]], dzięki czemu Twoje edycje będą trzymane w jednym miejscu, uzyskasz dostęp do więcej rozszerzeń Wikii i poznasz resztę społeczności {{SITENAME}}.
+	'welcome-message-wall-anon-staff' => 'Hej, witaj na {{SITENAME}} i dzięki za Twoją edycję na stronie [[:$1]].
 
+Zalecamy \'\'\'[[Special:UserLogin|utworzenie konta]]\'\'\' co pozwoli Ci na śledzenie swojego wkładu, udostępni wiele funkcji dostępnych na Wikii oraz umożliwi poznanie lokalnej społeczności.
 
-Jeśli potrzebujesz pomocy, odwiedź nasze  [[Pomoc:Zawartość|strony pomocy]], a potem odwiedź [[w:c:spolecznosc|Centrum Społeczności]], by dowiedzieć się więcej. Wesołego edytowania!',
+Wygląda na to, że [[Specjalna:Administratorzy|lokalna administracja]] jest nieaktywna. Jeśli potrzebujesz pomocy zerknij na [[Pomoc:Zawartość|strony pomocy]].
+
+Możesz też odwiedzić [[w:c:spolecznosc:Centrum Społeczności|Centrum Społeczności]] gdzie znajdziesz blog z [[w:c:spolecznosc:Blog:Wikia_News|nowościami]] oraz zasięgniesz pomocy na [http://spolecznosc.wikia.com/wiki/Specjalna:Chat?useskin=wikia czacie] albo [[w:c:spolecznosc:Specjalna:Forum|forum dyskusyjnym]].
+
+Miłego edytowania!',
 	'welcome-description' => 'Wysyła wiadomość powitalną dla użytkowników po ich pierwszej edycji.',
 ];
 
@@ -1589,9 +1590,11 @@ $messages['ru'] = [
 \'\'\'[[Special:Userlogin|Пожалуйста, зарегистрируйтесь и создайте учётную запись]]\'\'\'. Так будет проще следить за собственным вкладом в вики и общаться с другими участниками вики-сообщества.
 
 Пожалуйста, оставьте мне сообщение, если я могу вам чем-нибудь помочь.',
-	'welcome-message-wall-anon-staff' => 'Привет, добро пожаловать на {{SITENAME}}! Спасибо за вашу правку на странице [[:$1]]. Мы призываем всех участников [[Special:UserLogin|создавать учётные записи]], чтоб вы могли следить за своими исправлениями, иметь доступ к дополнительным возможностям и узнать остальных членов сообщества {{SITENAME}}.
+	'welcome-message-wall-anon-staff' => 'Здравствуйте, добро пожаловать на {{SITENAME}}! Спасибо за правку на странице [[:$1]].
 
-Если вам нужна помощь, сначала проверьте [[Help:Contents|справочные страницы]], а затем посетите [[w:c:community|центральное сообщество]], чтоб узнать больше. Удачных правок!',
+\'\'\'[[Special:Userlogin|Пожалуйста, зарегистрируйтесь и создайте учётную запись]]\'\'\'. Так будет проще следить за собственным вкладом в вики и общаться с другими участниками вики-сообщества.
+
+Пожалуйста, оставьте мне сообщение, если я могу вам чем-нибудь помочь.',
 	'welcome-description' => 'Отправляет сообщение с приветствием пользователям после их первых правок',
 ];
 
@@ -1984,9 +1987,9 @@ Xin vui lòng để lại tin nhắn cho tôi nếu bạn cần sự trợ giúp
 
 \'\'\'[[Special:UserLogin|Xin hãy đăng kí tài khoản mới]]\'\'\'. Đó là cách dễ dàng để giữ lại những đóng góp của bạn và giúp bạn giao tiếp với cộng đồng. Ngoài ra còn giúp bạn che giấu và không để địa chỉ IP của bạn. Ngoài ra còn rất nhiều điều đang chờ đón bạn khi tạo tài khoản mới
 
-Wiki hiện nay không có bảo quản viên, vì thế nên nếu bạn cần trợ giúp, bạn có thể vào [[Help:Contents|trang trợ giúp]] hoặc bạn cần đến [[w:c:community|cộng đồng Wikia]] hoặc [http://vi.wikia.com cộng đồng Wikia tiếng việt]
+Wiki hiện nay không có bảo quản viên, vì thế nên nếu bạn cần trợ giúp, bạn có thể vào [[Help:Mục lục|trang trợ giúp]] hoặc bạn cần đến [[w:vi:Trang Chính|Cộng đồng Wikia tiếng Việt]].
 
-Xin vui lòng để lại tin nhắn cho tôi nếu bạn cần sự trợ giúp về bất cứ điều gì!',
+Biên tập vui vẻ!',
 	'welcome-description' => 'Gửi thư chào đón cho người dùng sau khi có một sửa đổi đầu tiên của họ',
 ];
 
@@ -2040,7 +2043,7 @@ $3',
 如果我能帮助您什么请留下信息！',
 	'welcome-message-wall-anon-staff' => '嗨！欢迎来到{{SITENAME}}，感谢您对页面[[:$1]]的编辑。我们鼓励所有贡献者[[Special:UserLogin|创建用户名]]，这样您就可以跟踪您的贡献，访问更多Wikia功能并与{{SITENAME}}其他社群成员保持亲近。
 
-如果您需要帮助，请先访问[[Help:Contents|帮助页面]]，然后访问[[w:c:community|社群中心]]以了解更多。祝编辑愉快！',
+如果您需要帮助，请先访问[[Help:Contents|帮助页面]]，然后访问[[w:c:zh.community|社群中心]]以了解更多。祝编辑愉快！',
 	'welcome-description' => '在用户初次贡献后发一条欢迎消息给他们',
 ];
 
