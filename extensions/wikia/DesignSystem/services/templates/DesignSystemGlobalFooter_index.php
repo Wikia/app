@@ -16,7 +16,7 @@
 	<?php elseif ( isset ( $model['header'] ) ) : ?>
 		<h2 class="wds-global-footer__header">
 			<a href="<?= Sanitizer::encodeAttribute( $model['header']['href'] ); ?>"
-			   data-tracking-label="<?= Sanitizer::encodeAttribute( $model['header']['title']['key'] ) ?>"
+			   data-tracking-label="<?= Sanitizer::encodeAttribute( $model['header']['tracking-label'] ) ?>"
 			   title="<?= DesignSystemHelper::renderText( $model['header']['title'] ); ?>">
 				<?= DesignSystemHelper::getSvg(
 					$model['header']['image'],
@@ -27,16 +27,6 @@
 		</h2>
 	<?php endif; ?>
 	<div class="wds-global-footer__main">
-		<?php if ( isset( $model['fandom']['header'] ) ) : ?>
-			<?= $app->renderView(
-				'DesignSystemGlobalFooterService',
-				'imageHeader',
-				[
-					'model' => $model['fandom']['header'],
-					'section' => 'fandom'
-				]
-			); ?>
-		<?php endif; ?>
 		<div class="wds-global-footer__fandom-sections">
 			<?= $app->renderView(
 				'DesignSystemGlobalFooterService',
@@ -57,16 +47,6 @@
 				]
 			); ?>
 		</div>
-		<?php if ( isset ( $model['wikia']['header'] ) ) : ?>
-			<?= $app->renderView(
-				'DesignSystemGlobalFooterService',
-				'imageHeader',
-				[
-					'model' => $model['wikia']['header'],
-					'section' => 'wikia'
-				]
-			); ?>
-		<? endif; ?>
 		<div class="wds-global-footer__wikia-sections">
 			<?= $app->renderView(
 				'DesignSystemGlobalFooterService',
