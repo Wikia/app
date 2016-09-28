@@ -25,6 +25,7 @@ class ImportMessagingWiki extends Maintenance {
 		parent::__construct();
 
 		$this->addOption( 'dry-run', 'Don\'t make any changes to i18n files - print output in /tmp/ folder.' );
+		$this->addOption( 'message', 'Message name to process', false, true /* $withArg */ );
 	}
 
 	/**
@@ -49,7 +50,7 @@ class ImportMessagingWiki extends Maintenance {
 		$i = 0;
 
 		$db = wfGetDB( DB_SLAVE, [], static::MESSAGING_WIKI_DB );
-		$res = ( new WikiaSQL() )
+		$sql = ( new WikiaSQL() )
 			->SELECT( 'page_title', 'old_text', 'old_flags' )
 			->FROM( 'page, revision, text' )
 			->WHERE( 'page_namespace' )
@@ -59,8 +60,16 @@ class ImportMessagingWiki extends Maintenance {
 			->AND_( 'page_latest' )
 			->EQUAL_TO_FIELD( 'rev_id' )
 			->AND_( 'rev_text_id' )
-			->EQUAL_TO_FIELD( 'old_id' )
-		->runLoop( $db, function ( &$res, $row ) use ( &$i, $wgContLang ) {
+			->EQUAL_TO_FIELD( 'old_id' );
+
+		# handle --message argument
+		$msg = $this->getOption('message');
+		if ($msg) {
+			# AND page_title LIKE 'Autocreatewiki-welcomebody/%'
+			$sql->AND_('page_title')->LIKE( ucfirst( $msg ) . '/%' );
+		}
+
+		$res = $sql->runLoop( $db, function ( &$res, $row ) use ( &$i, $wgContLang ) {
 			$text = Revision::getRevisionText( $row );
 			$lckey = $wgContLang->lcfirst( $row->page_title );
 			if ( strpos( $lckey, '/' ) ) {
@@ -90,12 +99,25 @@ class ImportMessagingWiki extends Maintenance {
 	}
 
 	/**
+	 * @return array
+	 */
+	private function getMessagesFiles() {
+		global $wgExtensionMessagesFiles;
+
+		return array_unique(
+			array_merge(
+				GlobalMessagesService::getInstance()->getCoreMessageFiles(),
+				GlobalMessagesService::getInstance()->getExtensionMessageFiles(),
+				$wgExtensionMessagesFiles
+			)
+		);
+	}
+
+	/**
 	 * Process all i18n files of enabled extensions, and update them if messaging wiki has a different version
 	 */
 	public function processExtensions() {
-		global $wgExtensionMessagesFiles;
-
-		foreach ( $wgExtensionMessagesFiles as $extension => $filePath ) {
+		foreach ( $this->getMessagesFiles() as $extension => $filePath ) {
 			require $filePath;
 			$changed = 0;
 			/** @var array $messages */
@@ -109,12 +131,13 @@ class ImportMessagingWiki extends Maintenance {
 						$this->messages[$lang][$key] !== $messages[$lang][$key]
 					) {
 						$messages[$lang][$key] = $this->messages[$lang][$key];
+						$changed++;
 					}
 				}
 			}
 
 			if ( $changed === 0 ) {
-				$this->output( "Nothing to update in $extension ($filePath).\n" );
+				# $this->output( "Nothing to update in $extension ($filePath).\n" ); // XXX: DEBUG
 			} else {
 				$this->output( "Found $changed messages to update in $extension ($filePath). Updating...\n" );
 				$this->updateI18nFile( $extension, $filePath, $messages );
@@ -143,6 +166,7 @@ class ImportMessagingWiki extends Maintenance {
 
 		if ( $this->isDryRun ) {
 			$file = tempnam( sys_get_temp_dir(), "$extension.i18n.php" );
+			$this->output( "Stored i18n file in {$file} temporary file\n");
 		} else {
 			$file = $filePath;
 		}
