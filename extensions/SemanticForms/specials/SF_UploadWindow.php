@@ -469,7 +469,7 @@ END;
 	 * state can get out of sync.
 	 */
 	protected function watchCheck() {
-		if ( $this->getUser()->getOption( 'watchdefault' ) ) {
+		if ( $this->getUser()->getGlobalPreference( 'watchdefault' ) ) {
 			// Watch all edits!
 			return true;
 		}
@@ -481,7 +481,7 @@ END;
 			return $this->getUser()->isWatched( $local->getTitle() );
 		} else {
 			// New page should get watched if that's our option.
-			return $this->getUser()->getOption( 'watchcreations' );
+			return $this->getUser()->getGlobalPreference( 'watchcreations' );
 		}
 	}
 
@@ -855,8 +855,8 @@ class SFUploadForm extends HTMLForm {
 	 * @return array Descriptor array
 	 */
 	protected function getDescriptionSection() {
-		$cols = intval( $this->getUser()->getOption( 'cols' ) );
-		if ( $this->getUser()->getOption( 'editwidth' ) ) {
+		$cols = intval( $this->getUser()->getGlobalPreference( 'cols' ) );
+		if ( $this->getUser()->getGlobalPreference( 'editwidth' ) ) {
 			$this->getOutput()->addInlineStyle( '#mw-htmlform-description { width: 100%; }' );
 		}
 
