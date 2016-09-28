@@ -5,9 +5,7 @@
  */
 class SpecialDiscussionsController extends WikiaSpecialPageController {
 
-	const HTTP_STATUS_OK = 200;
 	const DISCUSSIONS_ACTION = 'specialdiscussions';
-	const EDIT_TOKEN = 'editToken';
 
 	const DEFAULT_TEMPLATE_ENGINE = \WikiaResponse::TEMPLATE_ENGINE_MUSTACHE;
 
@@ -29,7 +27,7 @@ class SpecialDiscussionsController extends WikiaSpecialPageController {
 
 		$this->wg->Out->setPageTitle( wfMessage( 'discussions-pagetitle' )->escaped() );
 
-		if ( $this->request->wasPosted() && $this->assertValidPostRequest() ) {
+		if ( $this->checkWriteRequest() ) {
 			if ( !SpecialDiscussionsHelper::activateDiscussions(
 					$this->siteId,
 					$this->app->wg->ContLang->getCode(),
@@ -46,7 +44,7 @@ class SpecialDiscussionsController extends WikiaSpecialPageController {
 			[
 				'discussionsInactiveMessage' => wfMessage( 'discussions-not-active' )->escaped(),
 				'activateDiscussions' => wfMessage( 'discussions-activate' )->escaped(),
-				'editToken' => $this->getUser()->getEditToken(),
+				'token' => $this->getUser()->getEditToken(),
 			]
 		);
 	}
@@ -55,7 +53,7 @@ class SpecialDiscussionsController extends WikiaSpecialPageController {
 		$this->response->setValues(
 			[
 				'discussionsActiveMessage' => wfMessage( 'discussions-active' )->escaped(),
-				'discussionsLink' => SpecialDiscussionsHelper::getDiscussionsLink(),
+				'discussionsLink' => SpecialDiscussionsHelper::DISCUSSIONS_LINK,
 				'discussionsLinkCaption' => wfMessage( 'discussions-navigate' )->escaped(),
 			]
 		);
@@ -69,13 +67,6 @@ class SpecialDiscussionsController extends WikiaSpecialPageController {
 	private function assertCanAccess() {
 		if ( !$this->wg->User->isAllowed( self::DISCUSSIONS_ACTION ) ) {
 			throw new \PermissionsError( self::DISCUSSIONS_ACTION );
-		}
-	}
-
-	private function assertValidPostRequest() {
-		if ( !$this->request->wasPosted() ||
-			!$this->getUser()->matchEditToken( $this->request->getVal( self::EDIT_TOKEN ) ) ) {
-			throw new BadRequestApiException();
 		}
 	}
 }

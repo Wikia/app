@@ -13,7 +13,7 @@ class EnableDiscussionsWithNoForums extends Maintenance {
 
 	public function __construct() {
 		parent::__construct();
-		$this->mDescription = "Enables Discussions on given wikis with no threaded forum posts";
+		$this->mDescription = 'Enables Discussions on given wikis with no threaded forum posts';
 		$this->addArg( 'listfile', 'File with site IDs to enable discussions on, separated by newlines.' );
 	}
 
@@ -28,16 +28,16 @@ class EnableDiscussionsWithNoForums extends Maintenance {
 			$wiki = WikiFactory::getWikiByID( $wikiId );
 
 			if ( $this->getForumThreadCount( $wiki ) > 0 ) {
-				$this->error( "$wikiId has more than 0 forum threads, skipping!" );
+				$this->error( $wikiId . ' has more than 0 forum threads, skipping!' );
 			}
 
 			if ( SpecialDiscussionsHelper::activateDiscussions(
 					$wikiId,
 					$wiki->city_lang,
 					$wiki->city_sitename ) ) {
-				$this->output('Enabled discussions on ' . $wikiId);
+				$this->output( 'Enabled discussions on ' . $wikiId );
 			} else {
-				$this->error('Creating site ' . $wikiId . ' caused an error');
+				$this->error( 'Creating site ' . $wikiId . ' caused an error' );
 			}
 		}
 	}
@@ -63,5 +63,5 @@ class EnableDiscussionsWithNoForums extends Maintenance {
 	}
 }
 
-$maintClass = "EnableDiscussionsWithNoForums";
+$maintClass = 'EnableDiscussionsWithNoForums';
 require_once( RUN_MAINTENANCE_IF_MAIN );
