@@ -445,8 +445,7 @@ Nota: solo trabaja en wikis tipo answers.',
 	'phalanx-help-type-email' => 'Este filtro evita el registro de cuentas usando un correo electrónico bloqueado.',
 	'phalanx-user-block-reason-ip' => 'Esta dirección IP ha sido bloqueada para editar debido a vandalismo, spam u otro problema por ti u otra persona quien comparte la misma dirección IP. Si crees que es un error, por favor [[Special:Contact|contacta a Wikia]]',
 	'phalanx-user-block-reason-exact' => 'Esta cuenta ha sido bloqueada para editar debido a vandalismo, spam u otro problema. Si crees que es un error, por favor [[Special:Contact|contacta a Wikia]].',
-	'phalanx-user-block-reason-similar' => 'Este nombre de usuario ha sido bloqueado para editar en toda Wikia debido a vandalismo, spam u otro problema por ti u otra persona quien comparte la misma dirección IP.
-Si crees que es un error, por favor [[Special:Contact|contacta a Wikia]].',
+	'phalanx-user-block-reason-similar' => 'Esta cuenta ha sido bloqueda para que edite debido a vandalismo, spam u otro problema por un usuario con nombre similar. Por favor crea una cuenta alternativa o [[Special:Contact|contacta a Wikia]] acerca del problema.',
 	'phalanx-user-block-new-account' => 'El nombre de usuario no está disponible para su registro. Por favor, selecciona otro.',
 	'phalanx-user-block-withreason-ip' => 'Esta dirección IP ha sido bloqueada para editar en toda Wikia debido a vandalismo, spam u otro problema por ti u otra persona quien comparte la misma dirección IP.
 Si crees que es un error, por favor [[Special:Contact|contacta a Wikia]].<br />El que hizo el bloqueo ha dado este motivo adicional: $1.',
