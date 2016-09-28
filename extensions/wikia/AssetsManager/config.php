@@ -142,13 +142,6 @@ $config['recirculation_js'] = [
 		'//extensions/wikia/Recirculation/js/views/impactFooter.js',
 		'//extensions/wikia/Recirculation/js/experiments/mix.js',
 		'//extensions/wikia/Recirculation/js/libs/perfect-scrollbar.js',
-	],
-];
-
-$config['recirculation_discussions_js'] = [
-	'type' => AssetsManager::TYPE_JS,
-	'skin' => [ 'oasis' ],
-	'assets' => [
 		'//extensions/wikia/Recirculation/js/discussions.js',
 	],
 ];

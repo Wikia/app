@@ -50,10 +50,6 @@ class RecirculationHooks {
 
 		if ( static::isCorrectPageType() ) {
 			$jsAssets[] = 'recirculation_js';
-
-			if ( static::canShowDiscussions( $wgCityId ) ) {
-				$jsAssets[] = 'recirculation_discussions_js';
-			}
 		}
 
 		return true;
