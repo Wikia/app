@@ -22,6 +22,7 @@ $hover-transition-duration: 300ms;
 	-webkit-appearance: none;
 	-webkit-border-radius: 0;
 
+	&:focus:not(:disabled),
 	&:hover:not(:disabled),
 	&:active,
 	&.wds-is-active {
@@ -39,6 +40,7 @@ $hover-transition-duration: 300ms;
 		background-color: $color-white;
 		color: $color-link;
 
+		&:focus:not(:disabled),
 		&:hover:not(:disabled),
 		&:active,
 		&.wds-is-active {
@@ -66,6 +68,7 @@ $hover-transition-duration: 300ms;
 		border: 0;
 		color: $color-link;
 
+		&:focus:not(:disabled),
 		&:hover:not(:disabled),
 		&:active,
 		&.wds-is-active {
