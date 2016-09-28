@@ -358,6 +358,12 @@ $hover-transition-duration: 300ms !default;
 		top: 8px;
 	}
 
+	html[lang^='zh'] &__start-a-wiki-button {
+		font-size: 12px;
+		font-weight: 400;
+		padding: 9px 12px 7px;
+	}
+
 	&__start-a-wiki-icon {
 		@include square(14px);
 
