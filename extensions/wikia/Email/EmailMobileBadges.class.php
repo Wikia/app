@@ -76,11 +76,8 @@ class EmailMobileBadges {
 	 * @return string - url to mobile badge
 	 */
 	public static function getBadgeFor( $language, $platform ) {
-		$images = EmailMobileBadges::$badges[$language];
-
-		if ( !$images ) {
-			$images = EmailMobileBadges::$badges['en'];
-		}
+		$images =
+			empty( self::$badges[$language] ) ? self::$badges['en'] : self::$badges[$language];
 
 		return ImageHelper::getFileUrl( $images[$platform] );
 	}
