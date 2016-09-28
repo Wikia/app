@@ -28,14 +28,17 @@ $global-navigation-height: 55px;
 	}
 
 	button,
-	button:hover {
+	button:focus,
+	button:hover,
+	button:active {
 		background-image: none;
 		border-radius: 0;
 		height: auto;
 	}
 
 	button:focus:disabled,
-	button:hover:disabled {
+	button:hover:disabled,
+	button:active:disabled {
 		background-color: $color-link;
 	}
 
