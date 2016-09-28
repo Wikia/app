@@ -31,7 +31,6 @@
   "global-footer-company-overview-link-press": "Prasa",
   "global-footer-company-overview-link-wikia-gives-back": "Wikia Gives Back",
   "global-footer-company-overview-link-wikia-org": "Wikia.org",
-  "global-footer-site-overview-link-api": "API",
   "global-footer-site-overview-link-global-sitemap": "Globalna mapa strony",
   "global-footer-site-overview-link-local-sitemap": "Lokalna mapa strony",
   "global-footer-site-overview-link-terms-of-use": "Zasady Użytkowania",
@@ -71,7 +70,7 @@
   "global-navigation-user-sign-out": "Wyloguj",
   "global-navigation-user-view-profile": "Zobacz profil",
   "global-navigation-wikis-community-central": "Centrum Społeczności",
-  "global-navigation-wikis-explore": "Wiki",
+  "global-navigation-wikis-explore": "Odkrywaj wiki",
   "global-navigation-wikis-fandom-university": "Uniwersytet Fandomu",
   "global-navigation-wikis-header": "Wikis"
 }
