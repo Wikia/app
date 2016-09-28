@@ -26,6 +26,15 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 
 	public function getData() {
 		$data = [
+			'header' => [
+				'type' => 'link-image',
+				'image' => 'wds-company-logo-fandom-powered-by-wikia-two-lines',
+				'href' => 'http://fandom.wikia.com',
+				'title' => [
+					'type' => 'translatable-text',
+					'key' => 'global-footer-fandom-header'
+				]
+			],
 			'company_overview' => [
 				'header' => [
 					'type' => 'line-text',
@@ -71,9 +80,9 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 						'type' => 'link-text',
 						'title' => [
 							'type' => 'translatable-text',
-							'key' => 'global-footer-company-overview-link-wikia-gives-back'
+							'key' => 'global-footer-company-overview-link-wikia-org'
 						],
-						'href' => $this->getHref( 'wikia-gives-back' )
+						'href' => $this->getHref( 'wikia-org' )
 					]
 				]
 			],
@@ -206,45 +215,6 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 		$data['follow_us'] = $this->getFollowUs();
 		$data['community'] = $this->getCommunity();
 
-		if ( $this->lang === static::DEFAULT_LANG ) {
-			$data['fandom'] = [
-				'header' => [
-					'type' => 'link-image',
-					'image' => 'wds-company-logo-fandom',
-					'href' => 'http://fandom.wikia.com',
-					'title' => [
-						'type' => 'translatable-text',
-						'key' => 'global-footer-fandom-header'
-					]
-				]
-			];
-			$data['wikia'] = [
-				'header' => [
-					'type' => 'line-image',
-					'image' => 'wds-company-logo-wikia',
-					'title' => [
-						'type' => 'translatable-text',
-						'key' => 'global-footer-wikia-header'
-					]
-				]
-			];
-		} else {
-			$data['international_header'] = [
-				'header' => [
-					'type' => 'line-image',
-					'image' => 'wds-company-logo-wikia',
-					'title' => [
-						'type' => 'translatable-text',
-						'key' => 'global-footer-wikia-header'
-					],
-					'subtitle' => [
-						'type' => 'translatable-text',
-						'key' => 'global-footer-international-header-subtitle'
-					]
-				]
-			];
-		}
-
 		return $data;
 	}
 
@@ -370,12 +340,12 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 
 		$out['links'][] = [
 			'type' => 'link-branded',
-			'brand' => 'fan-communities',
+			'brand' => 'explore-wikis',
 			'title' => [
 				'type' => 'translatable-text',
-				'key' => 'global-footer-fandom-overview-link-fan-communities'
+				'key' => 'global-footer-fandom-overview-link-explore-wikis'
 			],
-			'href' => $this->getHref( 'fan-communities' )
+			'href' => $this->getHref( 'explore-wikis' )
 		];
 
 		return $out;
