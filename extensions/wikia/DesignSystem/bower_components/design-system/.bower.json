@@ -11,13 +11,14 @@
     "reference-page/"
   ],
   "homepage": "https://github.com/Wikia/design-system",
-  "_release": "b589fe1443",
+  "version": "0.14.2",
+  "_release": "0.14.2",
   "_resolution": {
-    "type": "branch",
-    "branch": "XW-2106",
-    "commit": "b589fe14434804cc185c0612f0d778fc9ab60743"
+    "type": "version",
+    "tag": "0.14.2",
+    "commit": "98d5f830c9a5787c49745b31e87a9011bb53ae47"
   },
   "_source": "git://github.com/Wikia/design-system.git",
-  "_target": "XW-2106",
+  "_target": "0.14.2",
   "_originalSource": "Wikia/design-system"
 }
