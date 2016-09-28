@@ -560,9 +560,9 @@ $messages['fr'] = [
 * Vous pouvez placer ici des liens vers vos pages préférées du wiki !
 * Lien vers la page #2
 * Lien vers la page #3',
-	'welcome-message-user' => 'Bonjour, bienvenue sur {{SITENAME}} ! Merci d\'avoir modifié la page [[:$1]].
+	'welcome-message-user' => 'Bonjour et bienvenue sur {{SITENAME}} ! Merci d\'avoir modifié la page [[:$1]].
 
-Vous pouvez laisser un message sur ma page de [[$2|discussion]] si je peux vous aider pour quoi que ce soit ! $3',
+N’hésite pas à laisser un message sur ma [[$2|page de discussion]] si je peux t’aider pour quoi que ce soit ! $3',
 	'welcome-message-anon' => 'Bonjour et bienvenue sur {{SITENAME}} ! Merci d’avoir modifié la page [[:$1]].
 
 \'\'\'[[Special:Userlogin|Enregistre-toi et crée un compte utilisateur]]\'\'\'. C’est un moyen simple de garder une trace de tes contributions et faciliter la communication avec le reste de la communauté.
@@ -670,7 +670,7 @@ $messages['he'] = [
 * [[דף אהוב שלישי]]',
 	'welcome-message-user' => 'שלום, ברוך הבא ל{{SITENAME}}. תודה על תרומתך בדף [[:$1]].
 
-אם אתה זקוק לעזרה כלשהי, אנא השאר הודעה ב[[$2|דף השיחה שלי]], $3',
+במידה ואתה זקוק לעזרה כלשהי, אנא השאר הודעה ב[[$2|דף השיחה שלי]], $3',
 	'welcome-message-anon' => 'שלום, ברוך הבא ל{{SITENAME}}. תודה על תרומתך בדף [[:$1]].
 
 \'\'\'[[מיוחד:התחברות לחשבון|רצוי להרשם לאתר וליצור משתמש]]\'\'\'. הרשמות היא דרך נוחה לעקוב אחרי עריכות ועוזרת לך לתקשר עם שאר הקהילה.
@@ -839,9 +839,10 @@ $messages['it'] = [
 * Aggiungi i collegamenti alle tue pagine preferite su questo wiki!
 * Pagina preferita n.2
 * Pagina preferita n.3',
-	'welcome-message-user' => 'Ciao, benvenuto su {{SITENAME}}! Grazie per la tua modifica alla pagina [[:$1]].
+	'welcome-message-user' => '== Benvenuto ==
+Ciao $4, benvenuto su {{SITENAME}}! Grazie per la tua modifica sulla pagina [[:$1]].
 
-Lascia pure un messaggio sulla [[$2|mia pagina di discussione]], se posso esserti utile per qualsiasi cosa! $3',
+Lascia un messaggio sulla [[$2|pagina delle mie discussioni]], se posso esserti utile per qualunque problema! $3',
 	'welcome-message-anon' => '== Benvenuto ==
 Ciao, benvenuto su {{SITENAME}}. Grazie per la tua modifica sulla pagina [[:$1]].
 
@@ -889,9 +890,10 @@ $messages['ja'] = [
 * ウィキのお気に入りのページへのリンクをここに追加してください!
 * お気に入りページ2
 * お気に入りページ3',
-	'welcome-message-user' => 'こんにちは、{{SITENAME}}へようこそ！ [[:$1]]への編集ありがとうございます。
+	'welcome-message-user' => '== ようこそ ==
+こんにちは、{{SITENAME}} へようこそ！! \'\'\'$1\'\'\' ページへの編集ありがとうございます。
 
-もし、何か困ったことがありましたら、お気軽に[[$2|私の会話ページ]]までメッセージをお寄せください。$3',
+もし、何か手伝えることがありましたら、お気軽に[[$2|私のトークページ]]までメッセージをお寄せください！ $3',
 	'welcome-message-anon' => '== ようこそ ==
 こんにちは、{{SITENAME}}へようこそ！ [[:$1]]のご編集、ありがとうございます。
 
@@ -931,9 +933,7 @@ $messages['ko'] = [
 * 여기에 관심 있는 문서들을 링크로 추가해보세요.
 * 2번째 관심 문서
 * 3번째 관심 문서',
-	'welcome-message-user' => '안녕하세요, {{SITENAME}}에 오신 것을 환영합니다! [[:$1]] 문서에 기여를 해주셔서 감사합니다.
-
-도움이 필요하시다면 제 [[$2|토론 문서]]에 메시지를 남겨주세요! $3',
+	'welcome-message-user' => '$4님, 안녕하세요.&nbsp;{{SITENAME}}에 오신 것을 환영합니다! [[:$1]] 문서를 편집해주셔서 감사드립니다. 만약 도움이 필요하시다면 [[$2|제 사용자 토론 문서]]에 메시지를 남겨주세요.&nbsp;$3',
 	'welcome-message-anon' => '안녕하세요. {{SITENAME}}에 오신 것을 환영합니다. [[:$1]] 문서를 편집해주셔서 감사드립니다. \'\'\'[[Special:Userlogin|먼저 계정을 만드셔서 활동하시는 것을 권해드립니다.]]\'\'\' 이는 당신의 기여를 쉽게 추적하고 다른 사용자분들과 쉽게 소통할 수 있는 좋은 방법입니다. 만약 도움이 필요하시다면 [[$2|제 사용자 토론 문서]]에 메시지를 남겨주세요.&nbsp;$3',
 	'welcome-message-log' => '새 기여자 환영하기',
 	'welcome-message-wall-user' => '안녕하세요, {{SITENAME}}에 오신 것을 환영합니다! [[:$1]] 문서에 기여를 해주셔서 감사합니다.
@@ -1145,9 +1145,10 @@ $messages['nl'] = [
 * Voeg hier koppelingen toe naar uw favoriete pagina\'s op deze wiki!
 * Favoriete pagina #2
 * Favoriete pagina #3',
-	'welcome-message-user' => 'Hallo, welkom bij {{SITENAME}}! Bedankt voor uw bewerking van de pagina [[:$1]].
+	'welcome-message-user' => '== Welkom ==
+Hoi, welkom bij {{SITENAME}}! Bedankt voor je bewerking van de pagina [[:$1]].
 
-Laat gerust een bericht achter op [[$2|mijn overlegpagina]] als ik u ergens mee kan helpen! $3',
+Laat gerust een bericht achter op [[$2|mijn overlegpagina]] als ik je ergens mee kan helpen! $3',
 	'welcome-message-anon' => 'Hoi, welkom bij {{SITENAME}}. Dank je wel voor je werk aan de pagina [[:$1]].
 
 \'\'\'[[Special:Userlogin|Maak alsjeblieft een gebruiker aan of meld je aan]]\'\'\'.
@@ -1295,7 +1296,7 @@ $messages['pl'] = [
 * Drugi link.
 * I trzeci.',
 	'welcome-message-user' => '==Witaj==
-Witaj na {{SITENAME}}. Dzięki za edycję w artykule \'\'\'[[:$1]]\'\'\'.
+Witaj na {{SITENAME}}. Dzięki za dokonanie pierwszej edycji.
 
 Zostaw wiadomość na [[$2|mojej stronie dyskusji]], gdyby potrzebna była Ci jakakolwiek pomoc. $3',
 	'welcome-message-anon' => '==Witaj==
@@ -1478,9 +1479,16 @@ $messages['pt-br'] = [
 * Adicione links para as suas páginas favoritas nesta wiki!
 * Página favorita #2
 * Página favorita #3',
-	'welcome-message-user' => 'Olá, bem-vindo a {{SITENAME}}! Obrigado pela sua edição na página [[:$1]].
+	'welcome-message-user' => 'Olá, bem vindo(a) a {{SITENAME}}! Obrigada por sua edição em [[:$1]].
 
-Por favor deixe uma mensagem na minha [[$2|página de discussão]] se eu puder ajudar com qualquer coisar! $3',
+Estamos felizes que voce tenha criado uma conta.  Há muito que fazer na Wikirespostas, aquí estão as recomendações das coisas que voce pode fazer:
+
+* Buscar perguntas [[Especial:Categorias|por categorias]].
+* Visitar o [[Forum:Index|Forum de WikiRespostas]].
+* [[Especial:Randomincategory/Perguntas_sem_respostas|Responder perguntas]]  que ainda não tem respostas.
+* Ver as [[Especial:Páginas_novas|ultimas perguntas]] que foram feitas na WikiRespostas.
+
+Por favor, se tiver alguma duvida, sinta-se a vontade para deixar uma mensagem em [[$2|minha discussão]] para ver se posso ajudar em alguma coisa. $3',
 	'welcome-message-anon' => 'Ola, benvindo(a) a {{SITENAME}}! Muito obrigado por sua edição em [[:$1]]. 
 
 Porque não \'\'\'[[Special:Userlogin|cria uma conta e se identifica]]\'\'\'?  Desta forma será muito máis fácil saber qué páginas voce editou e o trabalho será atribuido a voce na wiki, alem do mais será de grande ajuda na hora de se comunicar com o resto da comunidade.
