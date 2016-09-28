@@ -181,7 +181,4 @@ class SFFormEdit extends UnlistedSpecialPage {
 		return null;
 	}
 
-	protected function getGroupName() {
-		return 'sf_group';
-	}
 }

@@ -77,7 +77,11 @@ class SFCreateClass extends SpecialPage {
 				$params['user_id'] = $user->getId();
 				$params['page_text'] = $full_text;
 				$params['edit_summary'] = wfMessage( 'sf_createproperty_editsummary', $property_type)->inContentLanguage()->text();
-				$jobs[] = new SFCreatePageJob( $property_title, $params );
+				// wikia change start - jobqueue migration
+				$job = new \Wikia\Tasks\Tasks\JobWrapperTask();
+				$job->call( 'createPage', $property_title, $params );
+				$jobs[] = $job;
+				// wikia change end
 			}
 		}
 
@@ -93,7 +97,11 @@ class SFCreateClass extends SpecialPage {
 			$params['user_id'] = $user->getId();
 			$params['page_text'] = $full_text;
 			$params['edit_summary'] = wfMessage( 'sf_createproperty_editsummary', $property_type)->inContentLanguage()->text();
-			$jobs[] = new SFCreatePageJob( $property_title, $params );
+			// wikia change start - jobqueue migration
+			$job = new \Wikia\Tasks\Tasks\JobWrapperTask();
+			$job->call( 'createPage', $property_title, $params );
+			$jobs[] = $job;
+			// wikia change end
 		}
 
 		// Create the template, and save it (might as well save
@@ -137,7 +145,11 @@ class SFCreateClass extends SpecialPage {
 			$params = array();
 			$params['user_id'] = $user->getId();
 			$params['page_text'] = $full_text;
-			$jobs[] = new SFCreatePageJob( $form_title, $params );
+			// wikia change start - jobqueue migration
+			$job = new \Wikia\Tasks\Tasks\JobWrapperTask();
+			$job->call( 'createPage', $form_title, $params );
+			$jobs[] = $job;
+			// wikia change end
 		}
 
 		// Create the category, and make a job for it.
@@ -147,15 +159,17 @@ class SFCreateClass extends SpecialPage {
 			$params = array();
 			$params['user_id'] = $user->getId();
 			$params['page_text'] = $full_text;
-			$jobs[] = new SFCreatePageJob( $category_title, $params );
+
+			// wikia change start - jobqueue migration
+			$job = new \Wikia\Tasks\Tasks\JobWrapperTask();
+			$job->call( 'createPage', $category_title, $params );
+			$jobs[] = $job;
+			// wikia change end
 		}
 
-		if ( class_exists( 'JobQueueGroup' ) ) {
-			JobQueueGroup::singleton()->push( $jobs );
-		} else {
-			// MW <= 1.20
-			Job::batchInsert( $jobs );
-		}
+		// wikia change start - jobqueue migration
+		\Wikia\Tasks\Tasks\BaseTask::batch( $jobs );
+		// wikia change end
 
 		$out->addWikiMsg( 'sf_createclass_success' );
 	}
@@ -364,9 +378,5 @@ END;
 		);
 		$text .= "</form>\n";
 		$out->addHTML( $text );
-	}
-
-	protected function getGroupName() {
-		return 'sf_group';
 	}
 }

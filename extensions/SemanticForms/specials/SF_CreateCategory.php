@@ -128,7 +128,4 @@ class SFCreateCategory extends SpecialPage {
 		$out->addHTML( $text );
 	}
 
-	protected function getGroupName() {
-		return 'sf_group';
-	}
 }

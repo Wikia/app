@@ -193,7 +193,4 @@ END;
 		return;
 	}
 
-	protected function getGroupName() {
-		return 'sf_group';
-	}
 }

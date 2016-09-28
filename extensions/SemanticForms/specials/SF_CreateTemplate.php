@@ -299,7 +299,4 @@ END;
 		$out->addHTML( $text );
 	}
 
-	protected function getGroupName() {
-		return 'sf_group';
-	}
 }
