@@ -9,14 +9,14 @@ class RecirculationApiController extends WikiaApiController {
 	 */
 	protected $cors;
 
-	public function __construct(){
+	public function __construct() {
 		parent::__construct();
 		$this->cors = new CrossOriginResourceSharingHeaderHelper();
 		$this->cors->setAllowOrigin( [ '*' ] );
 	}
 
 	public function getFandomPosts() {
-		$this->cors->setHeaders($this->response);
+		$this->cors->setHeaders( $this->response );
 
 		$type = $this->getParamType();
 		$cityId = $this->getParamCityId();
@@ -48,25 +48,25 @@ class RecirculationApiController extends WikiaApiController {
 	}
 
 	public function getCakeRelatedContent() {
-		$this->cors->setHeaders($this->response);
+		$this->cors->setHeaders( $this->response );
 
-		$target = trim($this->request->getVal('relatedTo'));
-		if (empty($target)) {
-			throw new InvalidParameterApiException('relatedTo');
+		$target = trim( $this->request->getVal( 'relatedTo' ) );
+		if ( empty( $target ) ) {
+			throw new InvalidParameterApiException( 'relatedTo' );
 		}
 
-		$limit = trim($this->request->getVal('limit'));
-		$ignore = trim($this->request->getVal('ignore'));
+		$limit = trim( $this->request->getVal( 'limit' ) );
+		$ignore = trim( $this->request->getVal( 'ignore' ) );
 
-		$this->response->setCacheValidity(WikiaResponse::CACHE_VERY_SHORT);
-		$this->response->setData([
+		$this->response->setCacheValidity( WikiaResponse::CACHE_VERY_SHORT );
+		$this->response->setData( [
 				'title' => wfMessage( 'recirculation-fandom-subtitle' )->plain(),
-				'items' => (new CakeRelatedContentService())->getContentRelatedTo($target, $this->wg->sitename, $limit, $ignore),
-		]);
+				'items' => ( new CakeRelatedContentService() )->getContentRelatedTo( $target, $this->wg->sitename, $limit, $ignore ),
+		] );
 	}
 
 	public function getDiscussions() {
-		$this->cors->setHeaders($this->response);
+		$this->cors->setHeaders( $this->response );
 
 		$cityId = $this->getParamCityId();
 		$type = $this->getParamType();

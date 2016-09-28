@@ -12,7 +12,7 @@ class CuratedContentService {
 	 * Get curated posts. Uses cache if available
 	 * @return an array of posts
 	 */
-	public function getPosts($type, $limit) {
+	public function getPosts( $type, $limit ) {
 		$memcKey = wfSharedMemcKey( __METHOD__, self::MCACHE_VER, $type, $limit );
 
 		return WikiaDataAccess::cache(
@@ -33,7 +33,7 @@ class CuratedContentService {
 		$data = json_decode( $response, true );
 
 		if ( isset( $data['posts'] ) && is_array( $data['posts'] ) ) {
-			return $this->formatData($data['posts']);
+			return $this->formatData( $data['posts'] );
 		} else {
 			return [];
 		}

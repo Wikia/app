@@ -94,6 +94,6 @@ class RecirculationHooks {
 			return true;
 		} else {
 			return false;
-		}		
+		}
 	}
 }

@@ -47,7 +47,7 @@ class RecirculationController extends WikiaController {
 
 				$postObjects = [];
 
-				foreach ($posts as $post) {
+				foreach ( $posts as $post ) {
 					$postObjects[] = $post->asObject();
 				}
 
@@ -66,7 +66,7 @@ class RecirculationController extends WikiaController {
 	}
 
 	public function container( $params ) {
-		$containerId = $this->request->getVal('containerId');
-		$this->response->setVal('containerId', $containerId);
+		$containerId = $this->request->getVal( 'containerId' );
+		$this->response->setVal( 'containerId', $containerId );
 	}
 }

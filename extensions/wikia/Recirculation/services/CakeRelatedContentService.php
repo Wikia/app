@@ -21,58 +21,58 @@ class CakeRelatedContentService {
 	 * @param $ignore
 	 * @return RecirculationContent[]
 	 */
-	public function getContentRelatedTo($title, $universeName=null, $limit=5, $ignore=null) {
+	public function getContentRelatedTo( $title, $universeName = null, $limit = 5, $ignore = null ) {
 		$items = [];
 
-		if (!$this->onValidWiki() || !$this->onValidPage($title)) {
+		if ( !$this->onValidWiki() || !$this->onValidPage( $title ) ) {
 			return $items;
 		}
 
 		$api = $this->relatedContentApi();
 
 		try {
-			$filteredRelatedContent = $api->getRelatedContentFromEntityName($title, $universeName, $limit + 1, "true");
-			if (is_null($filteredRelatedContent)) {
-				$this->warning("getRelatedContentFromEntityName failed to retrieve recommendations", [
+			$filteredRelatedContent = $api->getRelatedContentFromEntityName( $title, $universeName, $limit + 1, "true" );
+			if ( is_null( $filteredRelatedContent ) ) {
+				$this->warning( "getRelatedContentFromEntityName failed to retrieve recommendations", [
 						"title" => $title,
 						"limit" => $limit
-				]);
+				] );
 
 				return [];
 			}
 
 			// The server may have given us a malformed response, so log and adjust accordingly
-			if (!is_array($filteredRelatedContent->getFandomArticles())) {
-				$this->warning("getRelatedContentFromEntityName expected fandom_articles to be an array", [
+			if ( !is_array( $filteredRelatedContent->getFandomArticles() ) ) {
+				$this->warning( "getRelatedContentFromEntityName expected fandom_articles to be an array", [
 						"title" => $title,
 						"limit" => $limit,
 						"fandom_articles" => $filteredRelatedContent->getFandomArticles()
-				]);
-				$filteredRelatedContent->setFandomArticles([]);
+				] );
+				$filteredRelatedContent->setFandomArticles( [] );
 			}
 
-			if (!is_array($filteredRelatedContent->getDiscussionThreads())) {
-				$this->warning("getRelatedContentFromEntityName expected discussion_threads to be an array", [
+			if ( !is_array( $filteredRelatedContent->getDiscussionThreads() ) ) {
+				$this->warning( "getRelatedContentFromEntityName expected discussion_threads to be an array", [
 						"title" => $title,
 						"limit" => $limit,
 						"discussion_threads" => $filteredRelatedContent->getDiscussionThreads()
-				]);
-				$filteredRelatedContent->setDiscussionThreads([]);
+				] );
+				$filteredRelatedContent->setDiscussionThreads( [] );
 			}
 
-			if (!is_array($filteredRelatedContent->getWikiArticles())) {
-				$this->warning("getRelatedContentFromEntityName expected wiki_articles to be an array", [
+			if ( !is_array( $filteredRelatedContent->getWikiArticles() ) ) {
+				$this->warning( "getRelatedContentFromEntityName expected wiki_articles to be an array", [
 						"title" => $title,
 						"limit" => $limit,
 						"wiki_articles" => $filteredRelatedContent->getWikiArticles()
-				]);
-				$filteredRelatedContent->setWikiArticles([]);
+				] );
+				$filteredRelatedContent->setWikiArticles( [] );
 			}
 
 			$wikiArticles = [];
-			foreach ($filteredRelatedContent->getWikiArticles() as $article) {
-				$parsed = parse_url($article->getContent()->getUrl());
-				if (urldecode($parsed['path']) != $ignore) {
+			foreach ( $filteredRelatedContent->getWikiArticles() as $article ) {
+				$parsed = parse_url( $article->getContent()->getUrl() );
+				if ( urldecode( $parsed['path'] ) != $ignore ) {
 					$wikiArticles[] = $article;
 				}
 			}
@@ -91,39 +91,39 @@ class CakeRelatedContentService {
 					null,
 					$filteredRelatedContent->getFandomArticles(),
 					$filteredRelatedContent->getDiscussionThreads(),
-					$wikiArticles);
+					$wikiArticles );
 
-			foreach ($ordered as $sublist) {
-				foreach ($sublist as $item) {
-					if (!empty($item)) {
+			foreach ( $ordered as $sublist ) {
+				foreach ( $sublist as $item ) {
+					if ( !empty( $item ) ) {
 						/** @var RelatedContent $item */
 						$content = $item->getContent();
 
 						$items[] = new RecirculationContent( [
-								'index' => count($items),
+								'index' => count( $items ),
 								'url' => $content->getUrl(),
 								'thumbnail' => $content->getImage(),
-								'title' => $this->formatTitle($content),
+								'title' => $this->formatTitle( $content ),
 								'publishDate' => $content->getModified(),
-								'author' => $this->getAuthor($content->getContentMetadata()),
+								'author' => $this->getAuthor( $content->getContentMetadata() ),
 								'isVideo' => false,
 								'meta' => $content->getContentMetadata(),
-								'source' => $this->getRecirculationContentType($content->getContentType()),
+								'source' => $this->getRecirculationContentType( $content->getContentType() ),
 							] );
 					}
 
-					if (count($items) >= $limit) {
+					if ( count( $items ) >= $limit ) {
 						break 2;
 					}
 				}
 			}
 
 			return $items;
-		} catch (ApiException $e) {
-			$this->error("error while getting content", [
+		} catch ( ApiException $e ) {
+			$this->error( "error while getting content", [
 				'code' => $e->getCode(),
 				'message' => $e->getMessage(),
-			]);
+			] );
 			return [];
 		}
 	}
@@ -133,28 +133,28 @@ class CakeRelatedContentService {
 	 */
 	private function relatedContentApi() {
 		/** @var ApiProvider $apiProvider */
-		$apiProvider = Injector::getInjector()->get(ApiProvider::class);
+		$apiProvider = Injector::getInjector()->get( ApiProvider::class );
 		/** @var RelatedContentApi $api */
-		$api = $apiProvider->getApi(self::SERVICE_NAME, RelatedContentApi::class);
-		$api->getApiClient()->getConfig()->setCurlTimeout(self::TIMEOUT);
+		$api = $apiProvider->getApi( self::SERVICE_NAME, RelatedContentApi::class );
+		$api->getApiClient()->getConfig()->setCurlTimeout( self::TIMEOUT );
 
 		return $api;
 	}
 
-	private function formatTitle(Content $content) {
+	private function formatTitle( Content $content ) {
 		global $wgContLang;
 
-		if ($content->getContentType() == "Discussion Thread") {
+		if ( $content->getContentType() == "Discussion Thread" ) {
 			return $wgContLang->truncate(
 					$content->getTitle(),
-					self::DISCUSSION_THREAD_TITLE_MAX_LENGTH);
+					self::DISCUSSION_THREAD_TITLE_MAX_LENGTH );
 		}
 
 		return $content->getTitle();
 	}
 
-	private function getAuthor($metadata) {
-		if (array_key_exists("authorName", $metadata)) {
+	private function getAuthor( $metadata ) {
+		if ( array_key_exists( "authorName", $metadata ) ) {
 			return $metadata["authorName"];
 		} else {
 			return "";
@@ -162,8 +162,8 @@ class CakeRelatedContentService {
 
 	}
 
-	private function getRecirculationContentType($contentType) {
-		switch ($contentType) {
+	private function getRecirculationContentType( $contentType ) {
+		switch ( $contentType ) {
 			case "Discussion Thread":
 				return "discussions";
 			case "Fandom Article":
@@ -192,7 +192,7 @@ class CakeRelatedContentService {
 		);
 	}
 
-	private function onValidPage($title) {
+	private function onValidPage( $title ) {
 		return $title != "Main Page";
 	}
 }

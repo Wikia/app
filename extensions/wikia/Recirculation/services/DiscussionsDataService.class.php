@@ -33,7 +33,7 @@ class DiscussionsDataService {
 			}
 		);
 
-		if ($type === 'posts') {
+		if ( $type === 'posts' ) {
 			$data = $this->getPosts( $rawData );
 		} else {
 			$data = $this->formatData( $rawData );
@@ -107,7 +107,7 @@ class DiscussionsDataService {
 			'sortDirection' => self::DISCUSSIONS_API_SORT_DIRECTION,
 		];
 
-		$params = array_merge($defaultParams, $options);
+		$params = array_merge( $defaultParams, $options );
 
 		return self::DISCUSSIONS_API_BASE . $endpoint . '?' . http_build_query( $params );
 	}
@@ -118,15 +118,15 @@ class DiscussionsDataService {
 		$meta['upvoteCount'] = $rawPost['upvoteCount'];
 		$meta['postCount'] = $rawPost['postCount'];
 
-		return new RecirculationContent([
+		return new RecirculationContent( [
 			'url' => $this->server . '/d/p/' . $rawPost['id'],
 			'index' => $index,
-			'title' =>  wfShortenText($rawPost['_embedded']['firstPost'][0]['rawContent'], 120),
+			'title' =>  wfShortenText( $rawPost['_embedded']['firstPost'][0]['rawContent'], 120 ),
 			'publishDate' => wfTimestamp( TS_ISO_8601, $rawPost['creationDate']['epochSecond'] ),
 			'author' => $rawPost['createdBy']['name'],
 			'source' => 'discussions',
 			'isVideo' => false,
 			'meta' => $meta,
-		]);
+		] );
 	}
 }
