@@ -372,12 +372,11 @@ Wenn du über neue Funktionen auf dem Laufenden gehalten werden willst, dann fol
 Falls du den Namen deines Wikias ändern möchtest oder es komplett neu gestalten möchtest, besuche [[Help:Rename]] um Seitennamen zu ändern, und [[Help:Theme designer]] um den Titel des Wikias zu ändern. Die Namen der Wikias können einfach geändert werden, ohne dass man komplett von vorne beginnen muss. Falls du die URL deines Wikias ändern möchtest, dann [[Special:Contact/general|schreib uns]] und wir werden es liebend gern für dich machen.
 
 Wenn du das Gefühl hast, dass dieses Wikia keinen Nutzen für andere darstellt (wie z.B. ein Spam-Wikia oder ein persönliches Wikia), dann stelle einen Antrag, indem du dieses Formular benutzt. Bitte stelle den Antrag aus dem betreffenden Wikia.',
-	'specialcontact-intro-general' => 'Du kannst einen [[w:project:Staff|Wikia Mitarbeiter]] kontaktieren, indem du dieses Formular benutzt. Die Admins dieses Wikia können [[Special:ListAdmins|hier]] gefunden werden.
+	'specialcontact-intro-general' => 'Du kannst einen [http://de.community.wikia.com/wiki/Wikia-Mitarbeiter Wikia-Mitarbeiter] kontaktieren, indem du dieses Formular benutzt. Die Admins dieses Wiki können [[Special:ListAdmins|hier]] gefunden werden.
 
-	Zusätzliche Informationen zur Meldung von Problemen können [[w:project:Report_a_problem|hier]] gefunden werden, oder ihr postet es iunsere \'\'\'[[w:c:de.community:Spezial:Forum|Foren]]\'\'\'
+	Zusätzliche Informationen zur Meldung von Problemen können [http://de.community.wikia.com/wiki/Hilfe:Wikia_kontaktieren hier] gefunden werden, oder ihr postet es in unseren [http://de.community.wikia.com/wiki/Spezial:Forum Foren].
 
-Falls ihr lieber eine E-Mail schicken wollt, dann schreibt uns an [mailto:community@wikia.com community@wikia.com].
-',
+Falls ihr lieber eine E-Mail schicken wollt, dann schreibt uns an [mailto:community@wikia.com community@wikia.com].',
 	'specialcontact-noform-footer' => '\'\'\'Beantwortet das hier deine Frage?\'\'\' Wenn nicht, dann [[Special:contact/general|schreib uns]]. Vergiss nicht, du kannst dir jederzeit die \'\'\'[[w:c:de.community:Hilfe:Übersicht|Hilfeseiten]]\'\'\' ansehen, das [[w:c:de.community:Blog:Wikia_Deutschland_News|Wikia-Blog]] lesen oder in unseren \'\'\'[[w:c:de.community:Spezial:Forum|Foren]]\'\'\' posten. Falls du ein Admin bist und nach Hilfe und Ratschlägen suchst, dann besuche unseren [[w:c:de.community:Admin-Bereich:Hauptseite|Gründer & Admin Bereich]].',
 	'specialcontact-username' => 'Bitte gib deinen Benutzernamen ein',
 	'specialcontact-wikiname' => 'Welches Wikia',
@@ -604,12 +603,11 @@ Si piensas que este wikia trata sobre un tema que no interesará a otros usuario
 Esperamos que encuentres otro wikia que forme parte de Wikia, en el que participar construyendo una fantástica fuente de información sobre cualquier tema que te apasione.
 
 ¡Diviértete editando!',
-	'specialcontact-intro-general' => 'Contacta con el [[w:c:comunidad:Staff_de_Wikia|Staff de Wikia]] usando este formulario. Los administradores de este wikia pueden ser encontrados [[Special:ListAdmins|aquí]].
+	'specialcontact-intro-general' => 'Contacta con el [[w:c:comunidad:Staff_de_Wikia|Staff de Wikia]] usando este formulario. Los administradores de este wiki pueden ser encontrados [[Special:ListAdmins|aquí]].
 
 Puedes encontrar información adicional sobre cómo reportar los bugs que veas en Wikia [[Ayuda:Cómo informar de fallos|aquí]], o puedes dejar un mensaje en los [[w:c:comunidad:Foro:Soporte_técnico|foros de la Comunidad Central]].
 
-Si prefieres usar un email o adjuntar archivos, puedes contactar con nosotros en la dirección [mailto:community@wikia.com community@wikia.com].
-',
+Si prefieres usar un email o adjuntar archivos, puedes contactar con nosotros en la dirección [mailto:community@wikia.com community@wikia.com].',
 	'specialcontact-noform-footer' => '\'\'\'¿Responde esta página a tu pregunta?\'\'\' Si no lo hace, siéntete libre de [[Special:contact/general|contactar con nosotros]] para hablar sobre el problema que tienes. Recuerda que siempre puedes revisar nuestras \'\'\'[[w:c:ayuda|páginas de ayuda]]\'\'\', [[w:c:comunidad:Blog:Noticias_de_Wikia|blog del staff]] o dejar un mensaje en nuestros \'\'\'[[w:c:comunidad:Foro:Índice|foros de ayuda]]\'\'\'.',
 	'specialcontact-username' => 'Nombre de usuario',
 	'specialcontact-wikiname' => 'Dirección del wikia',
@@ -919,11 +917,11 @@ $messages['ja'] = [
 
 ウィキアには様々なコンテンツのページがあります。あなたが興味のあるコミュニティーを見つけたら是非参加してください。
 楽しんでね!',
-	'specialcontact-intro-general' => 'このフォームを使って [[w:project:Staff|Wikia Staff]] ご連絡ください。 お探しのウィキアページの管理者を見つけます。[[Special:ListAdmins|here]].
+	'specialcontact-intro-general' => 'こちらのフォームを使用して[[w:project:Staff|ウィキアスタッフ]]と連絡をとることができます。このウィキアのアドミン (管理者) は[[Special:ListAdmins|こちら]]で見つけることができます。
 
-	問題点をウィキアにレポートするための詳しい案内は [[w:project:Report_a_problem|here]], もしくはこちらから [[w:Forum:Index|Wikia Community Forums]] お願いします。
-普段利用されているEメールにメールが欲しい場合や添付がある場合、大変お手数ですがこちらまでご連絡ください [mailto:community@wikia.com community@wikia.com].
-',
+ウィキアに問題を報告する方法に関してのさらに詳しい情報は、[[Special:Contact|こちら]]見つけることができます。もしくは、ユーザーサポート用の[[w:ja:Special:Forum|ウィキアコミュニティフォーラム]] ([[w:Special:Forum|英語版]]) にて投稿できます。
+
+もし通常のEメールや添付ファイルをお好みの場合は、[mailto:community@wikia.com community@wikia.com] でお問い合わせできます。',
 	'specialcontact-noform-footer' => '\'\'\'このページで充分な回答は得られましたか?\'\'\' そうでなければ [[Special:contact/general|連絡をとる]] で問題点を解決しましょう。またいつでも \'\'\'[[w:c:community:Help:Index|ヘルプページ]]\'\'\', [[w:c:community:Blog:Wikia_Staff_Blog|スタッフブログ]]  もしくは \'\'\'[[w:c:community:Forum:Community_Central_Forum|コミュニティーヘルプフォーラム]]\'\'\'. 管理者からのヘルプもしくはアドバイスが欲しい場合は, ここから [[w:c:community:Admin_Central:Main_Page|管理者のページ]].',
 	'specialcontact-username' => 'あなたのユーザー名',
 	'specialcontact-wikiname' => 'どのウィキアページ',
@@ -1599,12 +1597,11 @@ $messages['zh'] = [
 如果您认为这个维基主页不会有其他用户感兴趣，比如说这是有关您自己的维基主页，请通过以下表格提交申请，告诉我们您希望要求关闭的维基主页。
 
 维基网拥有大量不同主题的社区，我们希望您可以通过浏览其他的社区，找到您的兴趣所在。',
-	'specialcontact-intro-general' => '您可以填写这个表格联系[[w:project:Staff|维基员工]]，也可以在[[Special:ListAdmins|这里]]查找维基管理员名单。
+	'specialcontact-intro-general' => '您可以填写这个表格联系[[w:c:zh.community:维基员工|Wikia员工]]。
 
-	如果您还有其他关于维基的问题，可以访问[[w:project:Report_a_problem|这里]]，或者您也可以在[[w:Forum:Index|维基社区论坛]]发帖来获取其他用户的帮助。
+有些问题您也可以先找[[Special:ListAdmins|这个维基的管理员]]，或者也可以在[[w:c:zh.community:special:Forum:|维基社区论坛]]发帖来获取其他用户的帮助。
 
-如果您希望通过加载附件发邮件的方式联系我们，您可以发信至[mailto:community@wikia.com community@wikia.com]。
-',
+如果您希望通过加载附件发邮件的方式联系我们，您可以发信至[mailto:community@wikia.com community@wikia.com]。',
 	'specialcontact-noform-footer' => '\'\'\'这个网页回答了您的问题吗？\'\'\' 如果没有，请[[Special:contact/general|联系我们]]获取帮助。您也可以查看我们的\'\'\'[[w:c:community:Help:Index|帮助主页]]\'\'\'，[[w:c:community:Blog:Wikia_Staff_Blog|员工博客]]或者在\'\'\'[[w:c:community:Forum:Community_Central_Forum|社区中心论坛]]\'\'\'上发帖寻求帮助。如果您希望寻求管理员的帮助或者建议，请访问[[w:c:community:Admin_Central:Main_Page|管理员中心]]进行查看',
 	'specialcontact-username' => '用户名',
 	'specialcontact-wikiname' => '所属维基主页',
