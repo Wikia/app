@@ -1532,9 +1532,9 @@ $messages['zh'] = [
 	'specialcontact-intro-content-issue' => '维基内容全部来自于维基各个社区，由维基社区[[Special:ListAdmins|管理员]]进行统一管理。维基网不负责任何相关内容的发布和社区的管理。如果您有任何关于内容的问题，我们建议您可以直接联系此维基主页的[[Special:ListAdmins|管理员]]。
 
 如果您认为相关内容违反了我们的“[http://www.wikia.com/Terms_of_Use 维基社区使用规定]”，您可以点击[[Special:Contact/general|这里]]直接联系我们。',
-	'specialcontact-intro-content-issue-mobile' => '维基内容全部来自于维基各个社区，由维基社区管理员进行统一管理。维基网不负责任何相关内容的发布和社区的管理。如果您有任何关于内容的问题，我们建议您可以直接联系此维基主页的管理员。
+	'specialcontact-intro-content-issue-mobile' => '维基内容全部来自于维基各个社区，由维基社区管理员进行管理。Wikia不负责任何相关内容的发布和社区的管理。如果您有任何关于内容的问题，我们建议您可以直接联系[[Special:listusers/sysop|此维基的管理员]]
 
-如果您认为相关内容违反了我们的“维基社区使用规定”，您可以直接联系我们。',
+如果您认为相关内容违反了我们的“使用条款”，您可以直接联系我们。',
 	'specialcontact-intro-user-conflict' => '维基是通过所有人的共同合作建立的社区空间。在这种情况下，用户间不可避免地会发生一些冲突。最好的解决办法就是在您所参与的维基主页上，在尊重他人的基础上进行有效的沟通。
 
 如果您需要任何帮助，可以首先联系此维基主页的[[Special:ListAdmins|管理员]]。他们负责社区的管理，会为您提供最好的帮助。如果管理员也不能帮到您，或者您认为某个用户违反了[http://www.wikia.com/Terms_of_Use 维基社区使用规定]，您可以直接[[Special:Contact/general|联系我们]]。',
