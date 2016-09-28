@@ -320,7 +320,7 @@ Wenn du Hilfe brauchst, und kein Admin von hier in der Nähe ist, möchtest du v
 PS: Mit diesem Benutzerkonto kannst du in jedem Wiki bei [[w:c:de|Wikia]] aktiv sein - du brauchst dich nicht nochmal neu anmelden.',
 	'staffsig-text' => '[[{{ns:user}}:$1|$2]]<staff /> <small>([[w:forums|Hilfe]] | [[w:sblog|Blog]])</small>',
 	'hawelcomeedit' => 'HAWelcomeEdit',
-	'welcome-message-wall-user' => 'Hallo und Willkommen auf {{SITENAME}}! Danke für deine Bearbeitung auf der Seite [[:$1]]. 
+	'welcome-message-wall-user' => 'Hi, Willkommen im {{SITENAME}}! Danke für deine Bearbeitung auf der Seite [[:$1]]. 
 
 Viel Spaß im Wiki! Falls ich dir irgendwie helfen kann, hinterlass mir einfach eine Nachricht.',
 	'welcome-message-wall-user-staff' => 'Hallo und willkommen auf {{SITENAME}}! Danke für deine Bearbeitung auf der Seite [[:$1]].
@@ -423,9 +423,9 @@ Hola, bienvenido a {{SITENAME}}. Gracias por editar la página [[:$1]].
 Si necesita ayuda y no hay administradores locales aquí, quizás quiera visitar los [[w:c:comunidad:Foro:Índice|foros de la Comunidad de Wikia en español]] $3',
 	'staffsig-text' => '[[{{ns:user}}:$1|$2]]<staff /> <small>([[w:forums|foro de ayuda]] | [[w:sblog|blog]])</small>',
 	'hawelcomeedit' => 'HaWelcomeEdit',
-	'welcome-message-wall-user' => '¡Hola, bienvenido a {{SITENAME}}! Gracias por tu edición en [[:$1]].
+	'welcome-message-wall-user' => 'Hola, ¡bienvenido a {{SITENAME}}! Gracias por tu edición en la página $1.
 
-Por favor, si tienes alguna duda, no seas tímido, deja un mensaje en mi muro para ver si puedo ayudarte con cualquier cosa.',
+Por favor, ¡déjame un mensaje si puedo ayudarte con cualquier cosa!',
 	'welcome-message-wall-user-staff' => '¡Hola,
 
 Bienvenido a {{SITENAME}} y gracias por tu edición en la página [[:$1]]. Si necesitas ayuda, visita las [[w:c:ayuda|páginas de ayuda]]. Visita la [[w:c:comunidad|Comunidad Central]] para mantenerte informado con nuestro [[w:c:comunidad:Blog:Actualizaciones técnicas|blog del personal]], haz preguntas en nuestro [[w:c:comunidad:Special:Forum|foro de la comunidad]], participa en nuestras [[w:c:community:Help:Webinars|series web]], o conversa en directo con tus amigos de Wikia. ¡Que te diviertas!',
@@ -578,7 +578,7 @@ Bonnes modifications ! $3',
 	'hawelcomeedit' => 'HAWelcomeEdit',
 	'welcome-message-wall-user' => 'Bonjour et bienvenue sur {{SITENAME}} ! Merci d’avoir modifié la page [[:$1]].
 
-Veuillez me laisser un message si je peux vous aider pour quoi que ce soit !',
+Tu peux me laisser un message si je peux t’aider pour quoi que ce soit !',
 	'welcome-message-wall-user-staff' => 'Bonjour,
 
 Bienvenue sur {{SITENAME}} et merci d’avoir modifié la page [[:$1]]. Si vous avez besoin d’aide, commencez par consulter nos [[Help:Contents|pages d’aide]]. Visitez le [[w:c:community|centre de la communauté]] pour rester informé via le [[w:c:community:Blog:Wikia_Staff_Blog|blog de notre équipe]], posez vos questions sur notre [[w:c:community:Special:Forum|forum de communauté]], participez à nos [[w:c:community:Help:Webinars|séries de webinar]], ou discutez en direct avec d’autres Wikiens. Bonnes modifications!',
@@ -865,9 +865,9 @@ E\' un modo semplice per tenere traccia dei tuoi contributi e per aiutarti a com
 
 Se hai bisogno di aiuto e non ci sono amministratori disponibili, visita i [[w:c:it.community:Special:Forum|forum sul wiki centrale della Community]] $3',
 	'staffsig-text' => '[[{{ns:user}}:$1|$2]]<staff /> <small>([[w:forums|forum di supporto]] | [[w:sblog|blog]])</small>',
-	'welcome-message-wall-user' => 'Ciao, benvenuto su {{SITENAME}}! Grazie per la tua modifica alla pagina [[:$1]].
+	'welcome-message-wall-user' => 'Ciao, benvenuto su {{SITENAME}}! Grazie per la tua modifica nella pagina [[:$1]].
 
-Lascia pure un messaggio se posso esserti utile per qualsiasi cosa!',
+Lasciami un messaggio se hai bisogno di aiuto!',
 	'welcome-message-wall-user-staff' => 'Ciao, benvenuto su {{SITENAME}}! Grazie per la tua modifica alla voce [[$1]].
 
 Se hai bisogno di aiuto, e gli amministratori locali non sono presenti, puoi visitare il [[wikia:Forum:Community Central Forum|Forum sulla Comunità Centrale di Wiki]]. È anche possibile controllare il nostro [[w:c:community:Blog:Wikia_Staff_Blog|blog dello Staff]] per seguire le ultime notizie e gli eventi di Wikia.
@@ -936,9 +936,9 @@ $messages['ko'] = [
 	'welcome-message-user' => '$4님, 안녕하세요.&nbsp;{{SITENAME}}에 오신 것을 환영합니다! [[:$1]] 문서를 편집해주셔서 감사드립니다. 만약 도움이 필요하시다면 [[$2|제 사용자 토론 문서]]에 메시지를 남겨주세요.&nbsp;$3',
 	'welcome-message-anon' => '안녕하세요. {{SITENAME}}에 오신 것을 환영합니다. [[:$1]] 문서를 편집해주셔서 감사드립니다. \'\'\'[[Special:Userlogin|먼저 계정을 만드셔서 활동하시는 것을 권해드립니다.]]\'\'\' 이는 당신의 기여를 쉽게 추적하고 다른 사용자분들과 쉽게 소통할 수 있는 좋은 방법입니다. 만약 도움이 필요하시다면 [[$2|제 사용자 토론 문서]]에 메시지를 남겨주세요.&nbsp;$3',
 	'welcome-message-log' => '새 기여자 환영하기',
-	'welcome-message-wall-user' => '안녕하세요, {{SITENAME}}에 오신 것을 환영합니다! [[:$1]] 문서에 기여를 해주셔서 감사합니다.
+	'welcome-message-wall-user' => '안녕하세요. {{SITENAME}}에 오신 것을 환영합니다! [[:$1]] 문서를 편집해주셔서 감사드립니다.
 
-도움이 필요하시다면 제게 메시지를 남겨주세요!',
+만약 도움이 필요하시다면 제 담벼락에 메시지를 남겨주세요.',
 	'welcome-message-wall-anon' => '안녕하세요. {{SITENAME}}에 오신 것을 환영합니다. $1 문서를 편집해주셔서 감사드립니다.
 
 \'\'\'[[Special:Userlogin|먼저 계정을 만드셔서 활동하시는 것을 권해드립니다.]]\'\'\' 이는 당신의 기여를 쉽게 추적하고 다른 사용자분들과 쉽게 소통할 수 있는 좋은 방법입니다.
@@ -1325,7 +1325,7 @@ Możesz też odwiedzić [[w:c:spolecznosc:Centrum Społeczności|Centrum Społec
 Miłego edytowania! $3',
 	'staffsig-text' => '[[{{ns:user}}:$1|$2]]<staff /> <small>([[w:forums|forum pomocy]] | [[w:sblog|blog]])</small>',
 	'hawelcomeedit' => 'HAWelcomeEdit',
-	'welcome-message-wall-user' => 'Witaj na {{SITENAME}}. Dzięki za edycję w artykule \'\'\'[[:$1]]\'\'\'.
+	'welcome-message-wall-user' => 'Witaj na {{SITENAME}}. Dzięki za dokonanie pierwszej edycji.
 
 Zostaw wiadomość, gdyby potrzebna była Ci jakakolwiek pomoc.',
 	'welcome-message-wall-user-staff' => 'Witaj na {{SITENAME}}. Dzięki za edycję w artykule \'\'\'$1\'\'\'.
@@ -1580,9 +1580,16 @@ $messages['ru'] = [
 Если вам нужна помощь, сначала проверьте [[Help:Contents|справочные страницы]], а затем посетите [[w:c:community|центральное сообщество]], чтоб узнать больше. Удачных правок! $3',
 	'staffsig-text' => '[[{{ns:user}}:$1|$2]]<staff /> <small>([[w:forums|справочный форум]] | [[w:sblog|блог]])</small>',
 	'hawelcomeedit' => 'HAWelcomeEdit',
-	'welcome-message-wall-user' => 'Здравствуйте, добро пожаловать {{SITENAME}}! Спасибо за ваши правки на странице [[:$1]].
+	'welcome-message-wall-user' => 'Здравствуйте, добро пожаловать на {{SITENAME}}! Спасибо за вашу правку на странице [[:$1]].
 
-Пожалуйста, оставьте мне сообщение если я могу чем-нибудь помочь!',
+Пожалуйста, оставьте мне сообщение, если я могу вам чем-нибудь помочь.
+
+Также, если вам нужна помощь:
+* Посетите [[Справка:Содержание|страницы Справки]], где есть ответы на большинство простых вопросов.
+* Изучите справочные видео-курсы в [[w:c:ru.community:Университет_Викия|Университете Викия]]
+* Прочтите [[w:c:ru.community|последние записи в блогах]], чтобы узнать о новых возможностях и обновлениях Викия.
+
+Счастливого редактирования!',
 	'welcome-message-wall-user-staff' => 'Здравствуйте.
 Добро пожаловать на {{SITENAME}}! Спасибо за ваши правки на странице [[:$1]]. Если вам нужна помощь, начните со [[Help:Contents|справочных страниц]]. Посетите [[w:c:community|центральное сообщество]], чтоб быть в курсе нашего  [[w:c:community:Blog:Wikia_Staff_Blog|блога]], задавайте вопросы на  [[w:c:community:Special:Forum|форуме]], участвуйте в [[w:c:community:Help:Webinars|сериях вебинаров]] или общайтесь вживую с вики-товарищами. Удачных правок!',
 	'welcome-message-wall-anon' => 'Здравствуйте, добро пожаловать на {{SITENAME}}! Спасибо за правку на странице $1.
@@ -1902,9 +1909,9 @@ $messages['uk'] = [
 Творчих успіхів! $3',
 	'staffsig-text' => '[[{{ns:user}}:$1|$2]]<staff /> <small>([[w:forums|форум допомоги]] | [[w:sblog|блог]])</small>',
 	'hawelcomeedit' => 'HAWelcomeEdit',
-	'welcome-message-wall-user' => 'Привіт, ласкаво просимо на {{SITENAME}}! Дякуємо за редагування сторінки [[:$1]].
+	'welcome-message-wall-user' => 'Вітаємо вас на {{SITENAME}}! Дякуємо за ваші редагування на сторінці [[:$1]].
 
-Будь ласка, повідомте мене, якщо я можу чимось допомогти!',
+Будь ласка, залишіть мені повідомлення, якщо я можу вам допомогти!',
 	'welcome-message-wall-user-staff' => 'Привіт, ласкаво просимо на {{SITENAME}}! Дякуємо за редагування сторінки [[:$1]].
 
 Якщо вам потрібна допомога, то для початку перегляньте [[Help:Contents|довідку]]. Відвідайте [[w:c:community|Центральну Спільноту]], щоб бути в курсі останніх подій, задавайте питання на [[w:c:community:Special:Forum|форумі нашої спільноти]], візьміть участь у [[w:c:community:Help:Webinars|вебінарах]] або спілкуйтеся у чаті з іншими учасниками.
