@@ -52,7 +52,7 @@ class EnableDiscussionsHooks {
 			return $title;
 		}
 		if ( $title->getNamespace() === NS_USER_WALL_MESSAGE ) {
-	        // if we visit the thread using Thread:xxxxx url
+			// if we visit the thread using Thread:xxxxx url
 			// title's namespace is NS_USER_WALL_MESSAGE for both, wall and forum threads.
 			// But when we create new title from it using newFromId we can distinguish those two
 			$mainTitle = Title::newFromID( $title->getText() );

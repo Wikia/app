@@ -14,7 +14,6 @@ $wgExtensionCredits['EnableDiscussions'][] = [
 ];
 
 $wgAutoloadClasses['EnableDiscussionsController'] = $dir . 'EnableDiscussionsController.class.php';
-$wgAutoloadClasses['EnableDiscussionsHooks'] =
-	$dir . 'EnableDiscussionsHooks.class.php';
+$wgAutoloadClasses['EnableDiscussionsHooks'] = $dir . 'EnableDiscussionsHooks.class.php';
 
 $wgHooks['BeforeInitialize'][] = 'EnableDiscussionsHooks::onBeforeInitialize';
