@@ -137,20 +137,17 @@ class CrosslinkTagController extends WikiaController {
 
 		$articles = [];
 		$sliderId = 0;
-		$urls = array_slice( $urls, 0, self::MAX_URLS );
+		$urls = array_slice( array_filter( $urls ), 0, self::MAX_URLS );
 		foreach ( $urls as $url ) {
 			$urlParts = parse_url( trim( $url ) );
-			if ( !empty( $urlParts['host'] ) && strtolower( $urlParts['host'] ) == CrosslinkTagHelper::VALID_HOST ) {
-				$urlParts = parse_url( $url );
-				list( $pageType, $slug ) = explode( '/', trim( $urlParts['path'], '/' ), 2 );
-				if ( !empty( $slug ) ) {
-					$article = $helper->getArticleDataBySlug( $slug, $pageType );
+			if ( !empty( $urlParts['host'] ) && strtolower( $urlParts['host'] ) == CrosslinkTagHelper::VALID_HOST
+				&& preg_match( '/^\/?([^\/]+)\/(.+)/', $urlParts['path'], $matches )
+			) {
+				if ( !empty( $matches[2] ) ) {
+					$article = $helper->getArticleDataBySlug( $matches[2], $matches[1] );
 					if ( !empty( $article ) ) {
 						$article['sliderId'] = $sliderId;
-						if ( strlen( $article['description'] ) > self::MAX_LENGTH ) {
-							$maxLength = strpos( wordwrap( $article['description'], self::MAX_LENGTH ), PHP_EOL );
-							$article['description'] = substr( $article['description'], 0, $maxLength ) . ' ...';
-						}
+						$article['description'] = wfShortenText( $article['description'], self::MAX_LENGTH );
 						$articles[] = $article;
 						$sliderId++;
 					}

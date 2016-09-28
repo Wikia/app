@@ -63,7 +63,7 @@ class CrosslinkTagHelper extends WikiaModel {
 
 			$data = [];
 			$response = json_decode( $response, true );
-			if ( is_array( $response ) ) {
+			if ( !empty( $response[0]['id'] ) ) {
 				$result = array_pop( $response );
 
 				$data = [
