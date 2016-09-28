@@ -3,9 +3,6 @@ class UserService extends Service {
 
 	const CACHE_EXPIRATION = 86400;//1 day
 
-	private static $userCache;
-	private static $userCacheMapping;
-
 	public static function getNameFromUrl($url) {
 		$out = false;
 
@@ -18,6 +15,28 @@ class UserService extends Service {
 		}
 
 		return $out;
+	}
+
+	/**
+	 * get main page for current user respecting user preferences
+	 * @param User $user
+	 * @return Title
+	 */
+	public static function getMainPage(User $user) {
+		$title = Title::newMainPage();
+
+		if( $user->isLoggedIn() ) {
+			$value = $user->getGlobalPreference(UserPreferencesV2::LANDING_PAGE_PROP_NAME);
+			switch($value) {
+				case UserPreferencesV2::LANDING_PAGE_WIKI_ACTIVITY:
+					$title = SpecialPage::getTitleFor('WikiActivity');
+					break;
+				case UserPreferencesV2::LANDING_PAGE_RECENT_CHANGES:
+					$title = SpecialPage::getTitleFor('RecentChanges');
+					break;
+			}
+		}
+		return $title;
 	}
 
 	/**

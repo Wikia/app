@@ -1,15 +1,17 @@
-.community-page-recently-joined {
+@import 'skins/shared/mixins/flexbox';
+
+$recently-joined-avatar-size: 30px;
+
+.community-page-recently-joined-module {
+	.community-page-recently-joined-members {
+		@include flexbox();
+		@include flex-wrap(wrap);
+	}
 
 	.avatar-container {
-		margin: 0 10px 10px 0;
-	}
+		@include flex-basis($recently-joined-avatar-size);
 
-	.members {
-		overflow: hidden;
-	}
-
-	.more-link {
-		clear: both;
-		display: block;
+		height: $recently-joined-avatar-size;
+		margin: 0 13px 10px 0;
 	}
 }

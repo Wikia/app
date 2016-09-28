@@ -1,23 +1,22 @@
 /*global define*/
 /*jshint maxlen:125, camelcase:false, maxdepth:7*/
 define('ext.wikia.adEngine.provider.gpt.googleTag', [
+	'ext.wikia.adEngine.provider.gpt.googleSlots',
 	'ext.wikia.aRecoveryEngine.recovery.helper',
 	'wikia.document',
 	'wikia.log',
 	'wikia.window'
-], function (helper, doc, log, window) {
+], function (googleSlots, helper, doc, log, window) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.provider.gpt.googleTag',
 		registeredCallbacks = {},
-		slots = {},
 		slotQueue = [],
 		pageLevelParams,
-		pubAds;
+		initialized = false;
 
-	function GoogleTag() {
-		this.initialized = false;
-	}
+	window.googletag = window.googletag || {};
+	window.googletag.cmd = window.googletag.cmd || [];
 
 	function dispatchEvent(event) {
 		var id;
@@ -25,42 +24,42 @@ define('ext.wikia.adEngine.provider.gpt.googleTag', [
 		log(['dispatchEvent', event], 'info', logGroup);
 
 		for (id in registeredCallbacks) {
-			if (registeredCallbacks.hasOwnProperty(id)) {
-				if (registeredCallbacks[id] && event.slot && event.slot === slots[id]) {
-					log(['dispatchEvent', event, 'Launching registered callback'], 'debug', logGroup);
-					registeredCallbacks[id](event);
-					return;
-				}
+			if (registeredCallbacks.hasOwnProperty(id) &&
+				registeredCallbacks[id] && event.slot && event.slot === googleSlots.getSlot(id)
+			) {
+				log(['dispatchEvent', event, id, 'Launching registered callback'], 'debug', logGroup);
+				registeredCallbacks[id](event);
+				return;
 			}
 		}
 
 		log(['dispatchEvent', event, 'No callback registered for this slot render ended event'], 'error', logGroup);
 	}
 
-	GoogleTag.prototype.enableServices = function () {
-		log(['enableServices', 'push'], 'info', logGroup);
-		this.push(function () {
-			pubAds = window.googletag.pubads();
+	function push(callback) {
+		window.googletag.cmd.push(callback);
+	}
 
-			pubAds.collapseEmptyDivs();
-			pubAds.enableSingleRequest();
-			pubAds.disableInitialLoad(); // manually request ads using refresh
-			pubAds.addEventListener('slotRenderEnded', dispatchEvent);
+	function enableServices() {
+		log(['enableServices', 'push'], 'info', logGroup);
+		push(function () {
+			window.googletag.pubads().collapseEmptyDivs();
+			window.googletag.pubads().enableSingleRequest();
+			window.googletag.pubads().disableInitialLoad(); // manually request ads using refresh
+			window.googletag.pubads().addEventListener('slotRenderEnded', dispatchEvent);
 
 			window.googletag.enableServices();
 
 			log(['enableServices', 'push', 'done'], 'debug', logGroup);
 		});
-	};
+	}
 
-	GoogleTag.prototype.init = function () {
+	function init() {
 		log('init', 'debug', logGroup);
 
 		var gads = doc.createElement('script'),
 			node = doc.getElementsByTagName('script')[0];
 
-		window.googletag = window.googletag || {};
-		window.googletag.cmd = window.googletag.cmd || [];
 		if (!window.googletag.apiReady && !helper.isBlocking()) {
 			gads.async = true;
 			gads.type = 'text/javascript';
@@ -69,17 +68,17 @@ define('ext.wikia.adEngine.provider.gpt.googleTag', [
 			node.parentNode.insertBefore(gads, node);
 		}
 
-		this.initialized = true;
-		this.enableServices();
-	};
+		initialized = true;
+		enableServices();
+	}
 
-	GoogleTag.prototype.isInitialized = function () {
-		log(['isInitialized', this.initialized], 'debug', logGroup);
-		return this.initialized;
-	};
+	function isInitialized() {
+		log(['isInitialized', initialized], 'debug', logGroup);
+		return initialized;
+	}
 
-	GoogleTag.prototype.setPageLevelParams = function (params) {
-		this.push(function () {
+	function setPageLevelParams(params) {
+		push(function () {
 			var name,
 				value;
 
@@ -89,71 +88,125 @@ define('ext.wikia.adEngine.provider.gpt.googleTag', [
 					value = pageLevelParams[name];
 					if (value) {
 						log(['setPageLevelParams', 'pubAds.setTargeting', name, value], 'debug', logGroup);
-						pubAds.setTargeting(name, value);
+						window.googletag.pubads().setTargeting(name, value);
 					}
 				}
 			}
 		});
-	};
+	}
 
-	GoogleTag.prototype.push = function (callback) {
-		window.googletag.cmd.push(callback);
-	};
-
-	GoogleTag.prototype.flush = function () {
-		if (!this.isInitialized()) {
+	function flush() {
+		if (!isInitialized()) {
 			log(['flush', 'done', 'No slots to flush'], 'info', logGroup);
 			return;
 		}
 
-		this.push(function () {
+		push(function () {
 			log(['flush', 'start'], 'info', logGroup);
 
 			log(['flush', 'refresh', slotQueue], 'debug', logGroup);
 			if (slotQueue.length) {
-				pubAds.refresh(slotQueue, {changeCorrelator: false});
+				window.googletag.pubads().refresh(slotQueue, {changeCorrelator: false});
 				slotQueue = [];
 			}
 
 			log(['flush', 'done'], 'info', logGroup);
 		});
-	};
+	}
 
-	GoogleTag.prototype.addSlot = function (adElement) {
+	function addSlot(adElement) {
 		var sizes = adElement.getSizes(),
-			slot = slots[adElement.getId()];
+			slotId = adElement.getId(),
+			slot = googleSlots.getSlot(slotId);
 
 		log(['addSlot', adElement], 'debug', logGroup);
 
 		adElement.setPageLevelParams(pageLevelParams);
 		if (!slot) {
 			if (sizes) {
-				slot = window.googletag.defineSlot(adElement.getSlotPath(), sizes, adElement.getId());
+				slot = window.googletag.defineSlot(adElement.getSlotPath(), sizes, slotId);
 			} else {
-				slot = window.googletag.defineOutOfPageSlot(adElement.getSlotPath(), adElement.getId());
+				slot = window.googletag.defineOutOfPageSlot(adElement.getSlotPath(), slotId);
 			}
-			slot.addService(pubAds);
-			window.googletag.display(adElement.getId());
-			slots[adElement.getId()] = slot;
+			slot.addService(window.googletag.pubads());
+			window.googletag.display(slotId);
+			googleSlots.addSlot(slot);
 		}
 
 		adElement.configureSlot(slot);
 		slotQueue.push(slot);
 
 		return slot;
-	};
+	}
 
-	GoogleTag.prototype.registerCallback = function (id, callback) {
+	function registerCallback(id, callback) {
 		log(['registerCallback', id], 'info', logGroup);
 		registeredCallbacks[id] = callback;
-	};
+	}
 
-	GoogleTag.prototype.onAdLoad = function (slotName, element, gptEvent, onAdLoadCallback) {
+	function onAdLoad(slotName, element, gptEvent, onAdLoadCallback) {
 		log(['onAdLoad', slotName], 'info', logGroup);
 		var iframe = element.getNode().querySelector('div[id*="_container_"] iframe');
 
 		onAdLoadCallback(element.getId(), gptEvent, iframe);
-	};
+	}
 
-	return GoogleTag;
+	function destroySlots(slotsNames) {
+		var slotsToDestroy = [],
+			allSlots = window.googletag.getSlots(),
+			success;
+
+		// when nothing passed - destroy all slots
+		if (!slotsNames) {
+			slotsToDestroy = allSlots;
+		} else {
+			allSlots.forEach(function (slot) {
+				var slotsPositionTargeting = slot.getTargeting('pos');
+
+				// google returns array
+				// - in our case it has always one element and this element is the one we are interested in
+				if (!slotsPositionTargeting.length) {
+					log(['destroySlots', 'getTargeting doesn\'t return pos', slotsPositionTargeting, slot], 'error', logGroup);
+				} else {
+					if (slotsNames.indexOf(slotsPositionTargeting[0]) > -1) {
+						slotsToDestroy.push(slot);
+					}
+				}
+			});
+		}
+
+		if (slotsToDestroy.length) {
+			push(function () {
+				log(['destroySlots', slotsNames, slotsToDestroy], 'debug', logGroup);
+				success = window.googletag.destroySlots(slotsToDestroy);
+
+				if (!success) {
+					log(['destroySlots', slotsNames, slotsToDestroy, 'failed'], 'error', logGroup);
+				}
+
+				googleSlots.removeSlots(slotsToDestroy);
+			});
+		} else {
+			log(['destroySlots', 'no slots returned to destroy', allSlots, slotsNames], 'debug', logGroup);
+		}
+	}
+
+	function updateCorrelator() {
+		push(function() {
+			window.googletag.pubads().updateCorrelator();
+		});
+	}
+
+	return {
+		addSlot: addSlot,
+		destroySlots: destroySlots,
+		flush: flush,
+		init: init,
+		isInitialized: isInitialized,
+		onAdLoad: onAdLoad,
+		push: push,
+		registerCallback: registerCallback,
+		setPageLevelParams: setPageLevelParams,
+		updateCorrelator: updateCorrelator
+	};
 });

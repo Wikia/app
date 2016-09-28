@@ -1,4 +1,3 @@
-@import 'extensions/wikia/GlobalNavigation/styles/GlobalNavigationVariables';
 @import 'skins/shared/color';
 @import 'skins/oasis/css/core/layout';
 @import 'skins/oasis/css/core/breakpoints-variables';
@@ -106,7 +105,7 @@
 
 .banner-notifications-wrapper {
 	margin: 0 auto;
-	position: relative;
+	transition: top 200ms linear;
 	width: 958px;
 	z-index: $zTop + 1;
 
@@ -114,14 +113,6 @@
 		left: 50%;
 		margin-left: -515px;
 		position: fixed;
-		top: $global-navigation-height;
-	}
-
-	// global nav doesn't scroll with the page when the page is small
-	@media #{$breakpoint-not-supported} {
-		&.float {
-			top: 0;
-		}
 	}
 }
 
