@@ -105,7 +105,7 @@ class DesignSystemSharedLinks {
 			'user-register' => 'https://www.wikia.com/register?uselang=de',
 		],
 		'en' => [
-			'fan-contributor' => 'http://fandom.wikia.com/fan-contributor'
+			'fan-contributor' => 'http://fandom.wikia.com/fan-contributor',
 		],
 		'es' => [
 			'fan-communities' => 'http://es.wikia.com/Wikia',
