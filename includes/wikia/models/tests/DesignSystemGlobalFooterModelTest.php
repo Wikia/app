@@ -55,7 +55,7 @@ class DesignSystemGlobalFooterModelTest extends WikiaBaseTest {
 									'value' => 'CC-BY-SA'
 								],
 								'href' => 'http://www.wikia.com/Licensing',
-								'tracking-label' => 'licence',
+								'tracking_label' => 'licence',
 							],
 						],
 					],
@@ -86,7 +86,7 @@ class DesignSystemGlobalFooterModelTest extends WikiaBaseTest {
 									'value' => 'CC-BY-NC-SA'
 								],
 								'href' => 'http://memory-alpha.wikia.com/wiki/Project:Licensing',
-								'tracking-label' => 'licence',
+								'tracking_label' => 'licence',
 							],
 						],
 					],
