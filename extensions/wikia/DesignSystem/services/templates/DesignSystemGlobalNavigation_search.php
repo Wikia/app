@@ -19,7 +19,7 @@
 				autocomplete="off"
 			/>
 		</label>
-		<button class="wds-button wds-is-text wds-global-navigation__search-close" type="reset" data-tracking-label="global-navigation-search-close">
+		<button class="wds-button wds-is-text wds-global-navigation__search-close" type="reset">
 			<?= DesignSystemHelper::getSvg(
 				'wds-icons-cross',
 				'wds-icon wds-icon-small wds-global-navigation__search-close-icon',
