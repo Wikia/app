@@ -8,8 +8,10 @@ class AttributesValidator {
 	 * @return bool
 	 */
 	public static function isBoolish( $value ) {
-		return is_bool( $value ) ||
-		$value === 'true' ||
-		$value === 'false';
+		return is_bool( $value ) || $value === 'true' || $value === 'false';
+	}
+
+	public static function isInRange( $value, $min, $max ) {
+		return $value;
 	}
 }
