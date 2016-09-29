@@ -5,6 +5,7 @@ class EnableDiscussionsController extends \WikiaController {
 	const ENABLE_DISCUSSIONS_NAV = 'wgEnableDiscussionsNavigation';
 	const ENABLE_DISCUSSIONS = 'wgEnableDiscussions';
 	const ENABLE_FORUMS = 'wgEnableForumExt';
+	const ARCHIVE_WIKI_FORUMS = 'wgArchiveWikiForums';
 
 	const P_SITE_ID = 'siteId';
 	const P_ROLLBACK = 'rollback';
@@ -24,11 +25,13 @@ class EnableDiscussionsController extends \WikiaController {
 		$discussions = $this->setVariable( $siteId, self::ENABLE_DISCUSSIONS, !$isRollback );
 		$navigation = $this->setVariable( $siteId, self::ENABLE_DISCUSSIONS_NAV, !$isRollback );
 		$forum = $this->setVariable( $siteId, self::ENABLE_FORUMS, $isRollback );
+		$archiveWikiForums = $this->setVariable( $siteId, self::ARCHIVE_WIKI_FORUMS, !$isRollback );
 
 		$this->response->setBody( json_encode( [
 			'enableDiscussions' => $discussions,
 			'enableNavigation' => $navigation,
 			'disableForums' => $forum,
+			'archiveWikiForums' => $archiveWikiForums
 		] ) );
 	}
 
