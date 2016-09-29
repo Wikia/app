@@ -185,11 +185,15 @@ $messages['en'] = [
 	'oasis-label-wiki-category-id-27' => 'Movies',
 	'oasis-label-wiki-category-id-28' => 'Anime',
 	'oasis-social-facebook' => 'Facebook',
-	'oasis-social-facebook-link' => 'https://www.facebook.com/wikia',
+	'oasis-social-facebook-link' => 'https://www.facebook.com/getfandom',
 	'oasis-social-twitter' => 'Twitter',
 	'oasis-social-twitter-link' => 'https://twitter.com/wikia',
 	'oasis-social-youtube' => 'YouTube',
 	'oasis-social-youtube-link' => 'https://www.youtube.com/user/wikia',
+	'oasis-social-reddit' => 'Reddit',
+	'oasis-social-reddit-link' => 'https://www.reddit.com/r/wikia',
+	'oasis-social-instagram' => 'Instagram',
+	'oasis-social-instagram-link' => 'https://www.instagram.com/getfandom/',
 ];
 
 $messages['qqq'] = [
