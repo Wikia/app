@@ -30,8 +30,19 @@ class AttributesValidatorTest extends WikiaBaseTest {
 		];
 	}
 
-	public function testIsInRange() {
-		$result = AttributesValidator::isInRange( 0, 0, 0 );
-		$this->assertEquals( true, $result, "Number in a range" );
+	/**
+	 * @dataProvider isInRangeDataProvider
+	 */
+	public function testIsInRange( $value, $min, $max, $expected, $message ) {
+		$result = AttributesValidator::isInRange( $value, $min, $max );
+		$this->assertEquals( $expected, $result, $message );
+	}
+
+	public function isInRangeDataProvider() {
+		return [
+			// value, expected, message
+			[ 0, 0, 0, true, '0 is in a ranne between 0 and 0' ],
+			[ 1, 0, 2, true, '1 is in a ranne between 0 and 2' ],
+		];
 	}
 }
