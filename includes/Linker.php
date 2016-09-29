@@ -751,7 +751,7 @@ class Linker {
 	 * @param $manualthumb String
 	 * @return mixed
 	 */
-	public static function makeThumbLinkObj( Title $title, $file, $label = '', $alt,
+	public static function makeThumbLinkObj( Title $title, $file, $label = '', $alt = '',
 		$align = 'right', $params = array(), $framed = false , $manualthumb = "" )
 	{
 		$frameParams = array(
