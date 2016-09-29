@@ -41,8 +41,12 @@ class AttributesValidatorTest extends WikiaBaseTest {
 	public function isInRangeDataProvider() {
 		return [
 			// value, expected, message
-			[ 0, 0, 0, true, '0 is in a ranne between 0 and 0' ],
-			[ 1, 0, 2, true, '1 is in a ranne between 0 and 2' ],
+			[ 0, 0, 0, true, '0 is in a range between 0 and 0' ],
+			[ 1, 0, 2, true, '1 is in a range between 0 and 2' ],
+			[ 0, 1, 2, false, '0 is not in a range between 1 and 2' ],
+			[ "a", 1, 2, false, 'value is not a number' ],
+			[ "0", 0, 2, true, 'string number is in range' ],
+			[ 'a', 0, 1000, false, 'Char is not a number in range' ],
 		];
 	}
 }
