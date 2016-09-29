@@ -29,7 +29,7 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 			'header' => [
 				'type' => 'link-image',
 				'image' => 'wds-company-logo-fandom-powered-by-wikia-two-lines',
-				'href' => $this->getHref( 'footer-fandom-logo' ),
+				'href' => $this->getHref( 'fandom-logo' ),
 				'title' => [
 					'type' => 'translatable-text',
 					'key' => 'global-footer-fandom-header'

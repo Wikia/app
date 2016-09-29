@@ -77,7 +77,6 @@ class DesignSystemSharedLinks {
 			'app-store' => 'https://itunes.apple.com/developer/wikia-inc./id422467077',
 			'google-play' => 'https://play.google.com/store/apps/developer?id=Wikia,+Inc.',
 			'fandom-logo' => 'http://fandom.wikia.com',
-			'footer-fandom-logo' => 'http://fandom.wikia.com',
 			'games' => 'http://fandom.wikia.com/games',
 			'movies' => 'http://fandom.wikia.com/movies',
 			'tv' => 'http://fandom.wikia.com/tv',
@@ -87,8 +86,7 @@ class DesignSystemSharedLinks {
 		],
 		'de' => [
 			'explore-wikis' => 'http://de.wikia.com/Wikia',
-			'fandom-logo' => 'http://de.wikia.com',
-			'footer-fandom-logo' => 'http://fandom.wikia.com/explore-de',
+			'fandom-logo' => 'http://fandom.wikia.com/explore-de',
 			'about' => 'http://de.wikia.com/Ueber_Wikia',
 			'press' => 'http://de.wikia.com/Presse',
 			'contact' => 'http://de.wikia.com/Spezial:Kontakt',
@@ -119,8 +117,7 @@ class DesignSystemSharedLinks {
 		],
 		'es' => [
 			'explore-wikis' => 'http://es.wikia.com/Wikia',
-			'fandom-logo' => 'http://es.wikia.com',
-			'footer-fandom-logo' => 'http://fandom.wikia.com/explore-es',
+			'fandom-logo' => 'http://fandom.wikia.com/explore-es',
 			'about' => 'http://es.wikia.com/Sobre_nosotros',
 			'press' => 'http://es.wikia.com/Prensa',
 			'contact' => 'http://es.wikia.com/Especial:Contactar',
@@ -144,8 +141,7 @@ class DesignSystemSharedLinks {
 		],
 		'fr' => [
 			'explore-wikis' => 'http://fr.wikia.com/Wikia',
-			'fandom-logo' => 'http://fr.wikia.com',
-			'footer-fandom-logo' => 'http://fandom.wikia.com/explore-fr',
+			'fandom-logo' => 'http://fandom.wikia.com/explore-fr',
 			'about' => 'http://fr.wikia.com/%C3%80_propos',
 			'contact' => 'http://fr.wikia.com/Sp%C3%A9cial:Contact',
 			'wikia-org' => 'http://wikia.org',
@@ -166,7 +162,7 @@ class DesignSystemSharedLinks {
 		],
 		'it' => [
 			'explore-wikis' => 'http://it.community.wikia.com/wiki/Wiki_della_Community',
-			'footer-fandom-logo' => 'http://fandom.wikia.com/explore-it',
+			'fandom-logo' => 'http://fandom.wikia.com/explore-it',
 			'contact' => 'http://it.community.wikia.com/wiki/Speciale:Contatta',
 			'wikia-org' => 'http://wikia.org',
 			'terms-of-use' => 'http://it.community.wikia.com/wiki/Wiki_della_Community:Termini_di_utilizzo',
@@ -185,8 +181,7 @@ class DesignSystemSharedLinks {
 		],
 		'ja' => [
 			'explore-wikis' => 'http://ja.wikia.com/',
-			'fandom-logo' => 'http://ja.wikia.com',
-			'footer-fandom-logo' => 'http://fandom.wikia.com/explore-ja',
+			'fandom-logo' => 'http://fandom.wikia.com/explore-ja',
 			'about' => 'http://ja.wikia.com/companyinfo',
 			'contact' => 'http://ja.wikia.com/%E7%89%B9%E5%88%A5:%E3%81%8A%E5%95%8F%E3%81%84%E5%90%88%E3%82%8F%E3%81%9B',
 			'wikia-org' => 'http://wikia.org',
@@ -206,8 +201,7 @@ class DesignSystemSharedLinks {
 		],
 		'pl' => [
 			'explore-wikis' => 'http://pl.wikia.com/Wikia',
-			'fandom-logo' => 'http://pl.wikia.com',
-			'footer-fandom-logo' => 'http://fandom.wikia.com/explore-pl',
+			'fandom-logo' => 'http://fandom.wikia.com/explore-pl',
 			'about' => 'http://pl.wikia.com/O_nas',
 			'contact' => 'http://pl.wikia.com/Specjalna:Kontakt',
 			'wikia-org' => 'http://wikia.org',
@@ -227,8 +221,7 @@ class DesignSystemSharedLinks {
 		],
 		'pt-br' => [
 			'explore-wikis' => 'http://pt-br.wikia.com/wiki/Wikia_em_Portugu%C3%AAs',
-			'fandom-logo' => 'http://pt-br.wikia.com',
-			'footer-fandom-logo' => 'http://fandom.wikia.com/explore-pt-br',
+			'fandom-logo' => 'http://fandom.wikia.com/explore-pt-br',
 			'contact' => 'http://pt-br.wikia.com/wiki/Especial:Contact',
 			'wikia-org' => 'http://wikia.org',
 			'terms-of-use' => 'http://pt-br.wikia.com/wiki/Termos_de_Uso',
@@ -248,8 +241,7 @@ class DesignSystemSharedLinks {
 		],
 		'ru' => [
 			'explore-wikis' => 'http://ru.wikia.com/wiki/%D0%92%D0%B8%D0%BA%D0%B8%D1%8F_%D0%BD%D0%B0_%D1%80%D1%83%D1%81%D1%81%D0%BA%D0%BE%D0%BC',
-			'fandom-logo' => 'http://ru.wikia.com',
-			'footer-fandom-logo' => 'http://fandom.wikia.com/explore-ru',
+			'fandom-logo' => 'http://fandom.wikia.com/explore-ru',
 			'about' => 'http://ru.wikia.com/wiki/%D0%9E_%D0%BD%D0%B0%D1%81',
 			'contact' => 'http://ru.wikia.com/wiki/%D0%A1%D0%BB%D1%83%D0%B6%D0%B5%D0%B1%D0%BD%D0%B0%D1%8F:Contact',
 			'wikia-org' => 'http://wikia.org',
@@ -270,8 +262,7 @@ class DesignSystemSharedLinks {
 		],
 		'zh-hans' => [
 			'explore-wikis' => 'http://zh.wikia.com/wiki/Wikia%E4%B8%AD%E6%96%87',
-			'fandom-logo' => 'http://zh.wikia.com',
-			'footer-fandom-logo' => 'http://fandom.wikia.com/explore-zh',
+			'fandom-logo' => 'http://fandom.wikia.com/explore-zh',
 			'terms-of-use' => 'http://zh.wikia.com/wiki/%E4%BD%BF%E7%94%A8%E6%9D%A1%E6%AC%BE',
 			'privacy-policy' => 'http://zh.wikia.com/wiki/Privacy_Policy',
 			'community-central' => 'http://zh.community.wikia.com/wiki/Wikia_%E4%B8%AD%E6%96%87',
@@ -287,8 +278,7 @@ class DesignSystemSharedLinks {
 		],
 		'zh-hant' => [
 			'explore-wikis' => 'http://zh-tw.wikia.com/wiki/Wikia%E4%B8%AD%E6%96%87',
-			'fandom-logo' => 'http://zh-tw.wikia.com',
-			'footer-fandom-logo' => 'http://fandom.wikia.com/explore-zh-tw',
+			'fandom-logo' => 'http://fandom.wikia.com/explore-zh-tw',
 			'contact' => 'http://zh-tw.wikia.com/wiki/%E7%89%B9%E6%AE%8A:Contact',
 			'wikia-org' => 'http://wikia.org',
 			'terms-of-use' => 'http://zh-tw.wikia.com/wiki/%E4%BD%BF%E7%94%A8%E6%A2%9D%E6%AC%BE',
