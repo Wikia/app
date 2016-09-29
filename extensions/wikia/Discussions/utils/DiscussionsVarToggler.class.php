@@ -10,8 +10,10 @@ class DiscussionsVarToggler {
 
 	private $discussionsVarMap;
 	private $logger;
+	private $cityId;
 
-	public function __construct() {
+	public function __construct( $cityId = null ) {
+		$this->cityId = $cityId ?? F::app()->wg->CityId;
 		$this->logger = Wikia\Logger\WikiaLogger::instance();
 		$this->discussionsVarMap = [
 			self:: ENABLE_DISCUSSIONS => null,
@@ -42,12 +44,11 @@ class DiscussionsVarToggler {
 	}
 
 	public function save() {
-		$siteId = F::app()->wg->CityId;
 		foreach ( $this->discussionsVarMap as $varName => $value ) {
 			if ( !is_null( $value ) ) {
-				$success = WikiFactory::setVarByName( $varName, $siteId, $value );
+				$success = WikiFactory::setVarByName( $varName, $this->cityId, $value );
 				if ( !$success ) {
-					$this->logAndThrowError( $varName, $siteId, $value );
+					$this->logAndThrowError( $varName, $this->cityId, $value );
 				}
 			}
 		}

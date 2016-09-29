@@ -15,8 +15,14 @@ class DiscussionsApi {
 
     private $sitesResourceApi;
     private $logger;
+    private $cityId;
+    private $cityName;
+    private $cityLang;
 
-    public function __construct() {
+    public function __construct( $cityId = null, $cityName = null, $cityLang = null ) {
+        $this->cityId = $cityId ?? F::app()->wg->CityId;
+        $this->cityName = $cityName ?? F::app()->wg->Sitename;
+        $this->cityLang = $cityLang ?? F::app()->wg->ContLang->getCode();
         $this->sitesResourceApi = $this->getSitesApi();
         $this->logger = Wikia\Logger\WikiaLogger::instance();
     }
@@ -35,25 +41,23 @@ class DiscussionsApi {
     }
 
     private function getSiteInput() : SiteInput {
-        $app = F::app();
         return new SiteInput(
             [
-                'id' => $app->wg->CityId,
-                'name' => substr( $app->wg->Sitename, 0, self::SITE_NAME_MAX_LENGTH ),
-                'language_code' => $app->wg->ContLang->getCode()
+                'id' => $this->cityId,
+                'name' => substr( $this->cityName, 0, self::SITE_NAME_MAX_LENGTH ),
+                'language_code' => $this->cityLang
             ]
         );
     }
 
     public function isDiscussionsActive() {
-        $siteId = F::app()->wg->CityId;
         try {
-            $this->sitesResourceApi->getSite( $siteId );
+            $this->sitesResourceApi->getSite( $this->cityId );
             return true;
         } catch ( ApiException $e ) {
             $this->logger->debug( 'Getting site caused an error',
                 [
-                    'siteId' => $siteId,
+                    'siteId' => $this->cityId,
                     'error' => $e->getMessage(),
                 ] );
         }
@@ -74,7 +78,7 @@ class DiscussionsApi {
         $this->logger->error(
             'Creating site caused an error',
             [
-                'siteId' => F::app()->wg->CityId,
+                'siteId' => $this->cityId,
                 'error' => $e->getMessage()
             ]
         );
