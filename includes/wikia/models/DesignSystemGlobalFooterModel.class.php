@@ -313,7 +313,7 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 				'value' => WikiFactory::getVarValueByName( 'wgRightsText', $this->productInstanceId ) ?: $this->wg->RightsText,
 			],
 			'href' => $this->getLicenseUrl(),
-			'tracking_label' => 'licence',
+			'tracking_label' => 'license',
 		];
 	}
 
