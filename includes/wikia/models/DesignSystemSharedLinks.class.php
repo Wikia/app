@@ -85,7 +85,7 @@ class DesignSystemSharedLinks {
 			'user-register' => 'https://www.wikia.com/register',
 		],
 		'de' => [
-			'explore-wikis' => 'http://de.wikia.com/Wikia',
+			'explore-wikis' => 'http://de.wikia.com',
 			'fandom-logo' => 'http://fandom.wikia.com/explore-de',
 			'about' => 'http://de.wikia.com/Ueber_Wikia',
 			'press' => 'http://de.wikia.com/Presse',
@@ -107,7 +107,7 @@ class DesignSystemSharedLinks {
 			'fan-contributor' => 'http://fandom.wikia.com/fan-contributor',
 		],
 		'es' => [
-			'explore-wikis' => 'http://es.wikia.com/Wikia',
+			'explore-wikis' => 'http://es.wikia.com',
 			'fandom-logo' => 'http://fandom.wikia.com/explore-es',
 			'about' => 'http://es.wikia.com/Sobre_nosotros',
 			'press' => 'http://es.wikia.com/Prensa',
@@ -126,7 +126,7 @@ class DesignSystemSharedLinks {
 			'user-register' => 'https://www.wikia.com/register?uselang=es',
 		],
 		'fr' => [
-			'explore-wikis' => 'http://fr.wikia.com/Wikia',
+			'explore-wikis' => 'http://fr.wikia.com',
 			'fandom-logo' => 'http://fandom.wikia.com/explore-fr',
 			'about' => 'http://fr.wikia.com/%C3%80_propos',
 			'contact' => 'http://fr.wikia.com/Sp%C3%A9cial:Contact',
@@ -143,7 +143,7 @@ class DesignSystemSharedLinks {
 			'user-register' => 'https://www.wikia.com/register?uselang=fr',
 		],
 		'it' => [
-			'explore-wikis' => 'http://it.community.wikia.com/wiki/Wiki_della_Community',
+			'explore-wikis' => 'http://it.community.wikia.com',
 			'fandom-logo' => 'http://fandom.wikia.com/explore-it',
 			'contact' => 'http://it.community.wikia.com/wiki/Speciale:Contatta',
 			'terms-of-use' => 'http://it.community.wikia.com/wiki/Wiki_della_Community:Termini_di_utilizzo',
@@ -159,7 +159,7 @@ class DesignSystemSharedLinks {
 			'user-register' => 'https://www.wikia.com/register?uselang=it',
 		],
 		'ja' => [
-			'explore-wikis' => 'http://ja.wikia.com/',
+			'explore-wikis' => 'http://ja.wikia.com',
 			'fandom-logo' => 'http://fandom.wikia.com/explore-ja',
 			'about' => 'http://ja.wikia.com/companyinfo',
 			'contact' => 'http://ja.wikia.com/%E7%89%B9%E5%88%A5:%E3%81%8A%E5%95%8F%E3%81%84%E5%90%88%E3%82%8F%E3%81%9B',
@@ -177,7 +177,7 @@ class DesignSystemSharedLinks {
 			'user-register' => 'https://www.wikia.com/register?uselang=ja',
 		],
 		'pl' => [
-			'explore-wikis' => 'http://pl.wikia.com/Wikia',
+			'explore-wikis' => 'http://pl.wikia.com',
 			'fandom-logo' => 'http://fandom.wikia.com/explore-pl',
 			'about' => 'http://pl.wikia.com/O_nas',
 			'contact' => 'http://pl.wikia.com/Specjalna:Kontakt',
@@ -194,7 +194,7 @@ class DesignSystemSharedLinks {
 			'user-register' => 'https://www.wikia.com/register?uselang=pl',
 		],
 		'pt-br' => [
-			'explore-wikis' => 'http://pt-br.wikia.com/wiki/Wikia_em_Portugu%C3%AAs',
+			'explore-wikis' => 'http://pt-br.wikia.com',
 			'fandom-logo' => 'http://fandom.wikia.com/explore-pt-br',
 			'contact' => 'http://pt-br.wikia.com/wiki/Especial:Contact',
 			'terms-of-use' => 'http://pt-br.wikia.com/wiki/Termos_de_Uso',
@@ -210,7 +210,7 @@ class DesignSystemSharedLinks {
 			'user-register' => 'https://www.wikia.com/register?uselang=pt-br',
 		],
 		'ru' => [
-			'explore-wikis' => 'http://ru.wikia.com/wiki/%D0%92%D0%B8%D0%BA%D0%B8%D1%8F_%D0%BD%D0%B0_%D1%80%D1%83%D1%81%D1%81%D0%BA%D0%BE%D0%BC',
+			'explore-wikis' => 'http://ru.wikia.com',
 			'fandom-logo' => 'http://fandom.wikia.com/explore-ru',
 			'about' => 'http://ru.wikia.com/wiki/%D0%9E_%D0%BD%D0%B0%D1%81',
 			'contact' => 'http://ru.wikia.com/wiki/%D0%A1%D0%BB%D1%83%D0%B6%D0%B5%D0%B1%D0%BD%D0%B0%D1%8F:Contact',
@@ -227,7 +227,7 @@ class DesignSystemSharedLinks {
 			'user-register' => 'https://www.wikia.com/register?uselang=ru',
 		],
 		'zh-hans' => [
-			'explore-wikis' => 'http://zh.wikia.com/wiki/Wikia%E4%B8%AD%E6%96%87',
+			'explore-wikis' => 'http://zh.wikia.com',
 			'fandom-logo' => 'http://fandom.wikia.com/explore-zh',
 			'terms-of-use' => 'http://zh.wikia.com/wiki/%E4%BD%BF%E7%94%A8%E6%9D%A1%E6%AC%BE',
 			'privacy-policy' => 'http://zh.wikia.com/wiki/Privacy_Policy',
@@ -242,7 +242,7 @@ class DesignSystemSharedLinks {
 			'user-register' => 'https://www.wikia.com/register?uselang=zh',
 		],
 		'zh-hant' => [
-			'explore-wikis' => 'http://zh-tw.wikia.com/wiki/Wikia%E4%B8%AD%E6%96%87',
+			'explore-wikis' => 'http://zh-tw.wikia.com',
 			'fandom-logo' => 'http://fandom.wikia.com/explore-zh-tw',
 			'contact' => 'http://zh-tw.wikia.com/wiki/%E7%89%B9%E6%AE%8A:Contact',
 			'terms-of-use' => 'http://zh-tw.wikia.com/wiki/%E4%BD%BF%E7%94%A8%E6%A2%9D%E6%AC%BE',
