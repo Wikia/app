@@ -15,9 +15,9 @@ class DiscussionsVarToggler {
 		$this->logger = Wikia\Logger\WikiaLogger::instance();
 		$this->discussionsVarMap = [
 			self:: ENABLE_DISCUSSIONS => null,
-		    self::ENABLE_DISCUSSIONS_NAV => null,
-		    self::ENABLE_FORUMS => null,
-		    self::ARCHIVE_WIKI_FORUMS => null
+			self::ENABLE_DISCUSSIONS_NAV => null,
+			self::ENABLE_FORUMS => null,
+			self::ARCHIVE_WIKI_FORUMS => null
 		];
 	}
 
