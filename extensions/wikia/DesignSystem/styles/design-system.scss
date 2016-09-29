@@ -4,6 +4,7 @@
 // Platform-specific styles for DesignSystem integration
 $global-navigation-z-index: 5000101;
 $global-navigation-height: 55px;
+$target-spacing: $global-navigation-height + 10px;
 
 .wds-global-navigation-wrapper {
 	height: $global-navigation-height;
@@ -73,6 +74,14 @@ $global-navigation-height: 55px;
 			color: $color-link;
 		}
 	}
+}
+
+//This handles anchor links and increase size of target to accommodate for global navigation
+*:target:before {
+	content: '';
+	display: block;
+	padding-top: $target-spacing;
+	margin-top: -$target-spacing;
 }
 
 .wds-global-footer {
