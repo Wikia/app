@@ -36,60 +36,38 @@ class EmbeddableDiscussionsController {
 
 	private function processArguments( array $args ) {
 		$parameters = [
-			static::PARAM_MOSTRECENT => false,
-			static::PARAM_SIZE => self::ITEMS_DEFAULT,
-			static::PARAM_COLUMNS => self::COLUMNS_DEFAULT,
-			static::PARAM_CATEGORY => '',
+			static::PARAM_MOSTRECENT => $args[ static::PARAM_MOSTRECENT ] ?? false,
+			static::PARAM_SIZE => $args[ static::PARAM_SIZE ] ?? self::ITEMS_DEFAULT,
+			static::PARAM_COLUMNS => $args[ static::PARAM_COLUMNS ] ?? self::COLUMNS_DEFAULT,
+			static::PARAM_CATEGORY => $args[ static::PARAM_CATEGORY ] ?? '',
 		];
 
 		// PARAM_MOSTRECENT must be bool
-		if ( isset( $args[ static::PARAM_MOSTRECENT ] ) ) {
-			if ( AttributesValidator::isBoolish( $args[ static::PARAM_MOSTRECENT ] )) {
-				$parameters[ static::PARAM_MOSTRECENT ] = $args[ static::PARAM_MOSTRECENT ];
-			} else {
-				$errorMessage = wfMessage( 'embeddable-discussions-parameter-error',
-					static::PARAM_MOSTRECENT,
-					wfMessage( 'embeddable-discussions-parameter-error-boolean' )->plain()
-				)->plain();
-
-				$this->renderError( $errorMessage );
-			}
+		if ( !AttributesValidator::isBoolish( $parameters[ static::PARAM_MOSTRECENT ] ) ) {
+			$errorMessage = wfMessage( 'embeddable-discussions-parameter-error',
+				static::PARAM_MOSTRECENT,
+				wfMessage( 'embeddable-discussions-parameter-error-boolean' )->plain()
+			)->plain();
 		}
 
 		// size must be integer in range
-		if ( isset( $args[ static::PARAM_SIZE ] ) ) {
-			$size = $args[ static::PARAM_SIZE ];
-
-			if ( AttributesValidator::isInRange( $size, self::ITEMS_MIN, self::ITEMS_MAX) ) {
-				$parameters[ static::PARAM_SIZE ] = $size;
-			} else {
-				$errorMessage = wfMessage( 'embeddable-discussions-parameter-error',
-					static::PARAM_SIZE,
-					wfMessage( 'embeddable-discussions-parameter-error-range', self::ITEMS_MIN, self::ITEMS_MAX )->plain()
-				)->plain();
-
-				$this->renderError( $errorMessage );
-			}
+		if ( !AttributesValidator::isInRange( $parameters[ static::PARAM_SIZE ], self::ITEMS_MIN, self::ITEMS_MAX ) ) {
+			$errorMessage = wfMessage( 'embeddable-discussions-parameter-error',
+				static::PARAM_SIZE,
+				wfMessage( 'embeddable-discussions-parameter-error-range', self::ITEMS_MIN, self::ITEMS_MAX )->plain()
+			)->plain();
 		}
 
 		// columns must be integer in range
-		if ( isset( $args[ static::PARAM_COLUMNS ] ) ) {
-			$columns = $args[ static::PARAM_COLUMNS ];
-
-			if ( AttributesValidator::isInRange( $columns, self::COLUMNS_MIN, self::COLUMNS_MAX) ) {
-				$parameters[ static::PARAM_COLUMNS ] = $$columns;
-			} else {
-				$errorMessage = wfMessage( 'embeddable-discussions-parameter-error',
-					static::PARAM_COLUMNS,
-					wfMessage( 'embeddable-discussions-parameter-error-range', self::COLUMNS_MIN, self::COLUMNS_MAX )->plain()
-				)->plain();
-
-				$this->renderError( $errorMessage );
-			}
+		if ( !AttributesValidator::isInRange( $parameters[ static::PARAM_COLUMNS ], self::COLUMNS_MIN, self::COLUMNS_MAX ) ) {
+			$errorMessage = wfMessage( 'embeddable-discussions-parameter-error',
+				static::PARAM_COLUMNS,
+				wfMessage( 'embeddable-discussions-parameter-error-range', self::COLUMNS_MIN, self::COLUMNS_MAX )->plain()
+			)->plain();
 		}
 
-		if ( isset( $args[ static::PARAM_CATEGORY ] ) ) {
-				$parameters[ static::PARAM_CATEGORY ] = $args[ static::PARAM_CATEGORY ];
+		if ( isset( $errorMessage ) ) {
+			$this->renderError( $errorMessage );
 		}
 
 		return $parameters;
