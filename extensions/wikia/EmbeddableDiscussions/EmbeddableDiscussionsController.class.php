@@ -23,24 +23,38 @@ class EmbeddableDiscussionsController {
 	public function render( array $args ) {
 		global $wgCityId;
 
-		$params = $this->processArguments( $args );
-		$modelData = ( new DiscussionsThreadModel( $wgCityId ) )
-			->getData( $params[ static::PARAM_MOSTRECENT ], $params[ static::PARAM_SIZE ], $params[ static::PARAM_CATEGORY ] );
-
-		$this->checkCategory( $args, $modelData );
-
-		return F::app()->checkSkin( 'wikiamobile' ) ?
-			$this->renderMobile( $modelData, $params[ static::PARAM_MOSTRECENT ], $params[ static::PARAM_SIZE ] ) :
-			$this->renderDesktop( $modelData, $params[ static::PARAM_MOSTRECENT ], $params[ static::PARAM_CATEGORY ], $params[ static::PARAM_COLUMNS ] );
-	}
-
-	private function processArguments( array $args ) {
 		$parameters = [
 			static::PARAM_MOSTRECENT => $args[ static::PARAM_MOSTRECENT ] ?? false,
 			static::PARAM_SIZE => $args[ static::PARAM_SIZE ] ?? self::ITEMS_DEFAULT,
 			static::PARAM_COLUMNS => $args[ static::PARAM_COLUMNS ] ?? self::COLUMNS_DEFAULT,
 			static::PARAM_CATEGORY => $args[ static::PARAM_CATEGORY ] ?? '',
 		];
+
+		$errorMessage = $this->validateArguments( $parameters );
+
+		$modelData = ( new DiscussionsThreadModel( $wgCityId ) )
+			->getData( $parameters[ static::PARAM_MOSTRECENT ], $parameters[ static::PARAM_SIZE ], $parameters[ static::PARAM_CATEGORY ] );
+
+		$errorMessage = $this->validateCategory( $args, $modelData ) ?? $errorMessage;
+
+		if ( isset( $errorMessage ) ) {
+			return $this->templateEngine
+				->clearData()
+				->setData( [ 'errorMessage' => $errorMessage ] )
+				->render( 'DiscussionError.mustache' );
+		}
+
+		return F::app()->checkSkin( 'wikiamobile' ) ?
+			$this->renderMobile( $modelData, $parameters[ static::PARAM_MOSTRECENT ], $parameters[ static::PARAM_SIZE ] ) :
+			$this->renderDesktop( $modelData, $parameters[ static::PARAM_MOSTRECENT ], $parameters[ static::PARAM_CATEGORY ], $parameters[ static::PARAM_COLUMNS ] );
+	}
+
+	/**
+	 * @param array $parameters
+	 * @return String error message or empty string if category is valid
+	 */
+	private function validateArguments( array $parameters ) {
+		$errorMessage = '';
 
 		// PARAM_MOSTRECENT must be bool
 		if ( !AttributesValidator::isBoolish( $parameters[ static::PARAM_MOSTRECENT ] ) ) {
@@ -66,31 +80,24 @@ class EmbeddableDiscussionsController {
 			)->plain();
 		}
 
-		if ( isset( $errorMessage ) ) {
-			$this->renderError( $errorMessage );
-		}
-
-		return $parameters;
+		return $errorMessage;
 	}
 
-	private function checkCategory( $modelData, array $args ) {
+	/**
+	 * @param $modelData
+	 * @param array $args
+	 * @return String error message or empty string if category is valid
+	 */
+	private function validateCategory( $modelData, array $args ) {
 		// category must be a valid category
 		if ( !empty( $modelData[ 'invalidCategory' ] ) ) {
-			$errorMessage = wfMessage( 'embeddable-discussions-parameter-error',
+			return wfMessage( 'embeddable-discussions-parameter-error',
 				$args[ static::PARAM_CATEGORY ],
 				wfMessage( 'embeddable-discussions-parameter-error-category' )->plain()
 			)->plain();
-
-			return $this->renderError( $errorMessage );
 		}
 
-		return true;
-	}
-
-	private function renderError( $errorMessage ) {
-		return $this->templateEngine->clearData()->setData( [
-			'errorMessage' => $errorMessage
-		] )->render( 'DiscussionError.mustache' );
+		return '';
 	}
 
 	private function renderMobile( $modelData, $showLatest, $itemCount ) {
