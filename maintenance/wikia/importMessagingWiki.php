@@ -114,15 +114,31 @@ class ImportMessagingWiki extends Maintenance {
 			require $filePath;
 			$changed = 0;
 			/** @var array $messages */
-			foreach ( $messages as $lang => $translations ) {
-				if ( !isset( $this->messages[$lang] ) ) {
+
+			# is the message defined in this file?
+			# check English so we can handle messages customized on Messaging Wiki that do not exist in i18n files
+			$msg = $this->getOption('message');
+
+			if ($msg) {
+				$msgDefinedInTheCode = isset( $messages['en'][$msg] );
+				if ( $msgDefinedInTheCode === false ) {
 					continue;
 				}
 
+				// we have a single message to process, simply replace i18n files entries here with those from Messaging Wiki
+				// will add missing entries as well (i.e. no entry in the code, translation of theWiki)
+				foreach( $this->messages as $lang => $translations ) {
+					if ( $messages[$lang][$msg] != $translations[$msg] ) {
+						$messages[$lang][$msg] = $translations[$msg];
+						$changed++;
+					}
+				}
+			}
+
+			// iterate over i18n file content and update it using data from Messaging Wiki when neeeded
+			foreach ( $messages as $lang => $translations ) {
 				foreach ( $translations as $key => $text ) {
-					if ( isset( $this->messages[$lang][$key] ) &&
-						$this->messages[$lang][$key] !== $messages[$lang][$key]
-					) {
+					if ( isset( $this->messages[$lang][$key] ) && $this->messages[$lang][$key] !== $messages[$lang][$key] ) {
 						$messages[$lang][$key] = $this->messages[$lang][$key];
 						$changed++;
 					}
@@ -130,7 +146,7 @@ class ImportMessagingWiki extends Maintenance {
 			}
 
 			if ( $changed === 0 ) {
-				# $this->output( "Nothing to update in $extension ($filePath).\n" ); // XXX: DEBUG
+				$this->output( "Nothing to update in $extension ($filePath).\n" ); // XXX: DEBUG
 			} else {
 				$this->output( "Found $changed messages to update in $extension ($filePath). Updating...\n" );
 				$this->updateI18nFile( $extension, $filePath, $messages );
