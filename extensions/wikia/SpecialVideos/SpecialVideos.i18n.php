@@ -1,10 +1,5 @@
 <?php
-/**
- * Internationalisation file for the SpecialVideos extension.
- *
- * @addtogroup Languages
- */
-
+/** Internationalization file for /extensions/wikia/SpecialVideos/SpecialVideos extension. */
 $messages = [];
 
 $messages['en'] = [
@@ -59,7 +54,6 @@ $messages['qqq'] = [
 	'specialvideos-remove-modal-title' => 'Modal dialog title to delete video',
 	'specialvideos-remove-modal-message' => 'Modal dialog message to confirm whether or not user wants to delete',
 	'specialvideos-no-videos' => 'Message shown when there are no videos added to the wiki',
-
 	'specialvideos-filter-games' => 'Label that appears in sort/filter pulldown to show only trending gaming videos',
 	'specialvideos-filter-lifestyle' => 'Label that appears in sort/filter pulldown to show only trending lifestyle videos',
 	'specialvideos-filter-entertainment' => 'Label that appears in sort/filter pulldown to show only trending entertainment videos',
@@ -90,7 +84,7 @@ $messages['es'] = [
 	'specialvideos-sort-latest' => 'Más Recientes',
 	'specialvideos-sort-most-popular' => 'Más Populares',
 	'specialvideos-sort-trending' => 'Creciendo Ahora',
-	'specialvideos-sort-featured' => 'Fuente: Biblioteca Wikia',
+	'specialvideos-sort-featured' => 'Fuente: Videoteca de Wikia',
 	'specialvideos-uploadby' => 'por $1',
 	'specialvideos-posted-in' => 'Publicado en $1',
 	'special-videos-add-video' => 'Añade un video',
@@ -148,7 +142,7 @@ $messages['pl'] = [
 	'specialvideos-sort-latest' => 'Najnowsze',
 	'specialvideos-sort-most-popular' => 'Najpopularniejsze',
 	'specialvideos-sort-trending' => 'Na fali',
-	'specialvideos-sort-featured' => 'Źródło: Wikia Library',
+	'specialvideos-sort-featured' => 'Źródło: Filmoteka Wikii',
 	'specialvideos-uploadby' => 'dodał(a) $1',
 	'specialvideos-posted-in' => 'Użyto w $1',
 	'special-videos-add-video' => 'Dodaj film',
@@ -163,7 +157,7 @@ $messages['ru'] = [
 	'specialvideos-sort-latest' => 'Самому новому',
 	'specialvideos-sort-most-popular' => 'Самому просматриваемому',
 	'specialvideos-sort-trending' => 'Самому популярному',
-	'specialvideos-sort-featured' => 'Источник: Библиотека Викия',
+	'specialvideos-sort-featured' => 'Источник: Видео Библиотека',
 	'specialvideos-uploadby' => 'от $1',
 	'specialvideos-posted-in' => 'Опубликовано в $1',
 	'special-videos-add-video' => 'Добавить видео',
@@ -190,5 +184,29 @@ $messages['it'] = [
 	'specialvideos-uploadby' => 'da $1',
 	'specialvideos-posted-in' => 'Pubblicato in $1',
 	'special-videos-add-video' => 'Carica un video',
-
 ];
+
+$messages['fi'] = [
+	'specialvideos-sort-featured' => 'Lähde: Wikia Library',
+];
+
+$messages['ja'] = [
+	'specialvideos-sort-featured' => 'ウィキア動画ライブラリから導入したもののみ表示',
+];
+
+$messages['ko'] = [
+	'specialvideos-sort-featured' => '위키아 동영상 라이브러리에서 가져옴',
+];
+
+$messages['pt'] = [
+	'specialvideos-sort-featured' => 'Fonte: Videoteca da Wikia',
+];
+
+$messages['pt-br'] = [
+	'specialvideos-sort-featured' => 'Fonte: Biblioteca da Wikia',
+];
+
+$messages['zh'] = [
+	'specialvideos-sort-featured' => '来源: 维基图书馆',
+];
+

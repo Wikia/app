@@ -1,8 +1,8 @@
 <?php
+/** Internationalization file for /extensions/wikia/VideoEmbedTool/VideoEmbedTool extension. */
+$messages = [];
 
-$messages = array();
-
-$messages['en'] = array(
+$messages['en'] = [
 	'vet-desc' => 'Wikia\'s Video Embed Tool',
 	'vet-add-from-preview' => 'Add video',
 	'vet-added-from-placeholder' => 'Video added from video placeholder',
@@ -22,7 +22,7 @@ $messages['en'] = array(
 	'vet-error-invalid-file-type' => 'Oops! The file is not a video. Please, check the supplied URL.',
 	'vet-error-while-loading' => 'Error occurred while loading data. Please recheck your connection and refresh the page.',
 	'vet-gallery' => 'Gallery',
-	'vet-imagebutton' => 'Insert videos' ,
+	'vet-imagebutton' => 'Insert videos',
 	'vet-insert-error' => 'Sorry, something went wrong while inserting this video to the article',
 	'vet-insert2' => 'Insert video',
 	'vet-layout' => 'Position',
@@ -61,18 +61,9 @@ $messages['en'] = array(
 	'vet-warn3' => 'Please supply name of the video you like to add',
 	'vet-width' => 'Width',
 	'vet-uploaddisabled' => 'Video uploads are disabled on this wiki',
-);
+];
 
-
-/** Message documentation (Message documentation)
- * @author Crt
- * @author EugeneZelenko
- * @author LWChris
- * @author McDutchie
- * @author Siebrand
- * @author mech
- */
-$messages['qqq'] = array(
+$messages['qqq'] = [
 	'vet-desc' => '{{desc}}',
 	'vet-add-from-preview' => 'Add video from preview window',
 	'vet-added-from-placeholder' => '{{Identical|Video added from video placeholder}}',
@@ -107,7 +98,7 @@ $messages['qqq'] = array(
 	'vet-notlogged' => 'Message shown to the user in the video embed tool when they are not logged in.',
 	'vet-placeholder-return' => 'button text to return to an article after inserting a video with a video placeholder',
 	'vet-preview' => 'this text is displayed below the video player preview in the details screen of the vet.',
-	'vet-return' => "text for button to click and return to editing an article after adding a video.",
+	'vet-return' => 'text for button to click and return to editing an article after adding a video.',
 	'vet-right' => '{{Identical|Right}}',
 	'vet-search-filter-caption' => 'Label for dropdown menu to limit where to search for video',
 	'vet-search-label' => 'Label for the search input + name of search submit button',
@@ -128,36 +119,30 @@ $messages['qqq'] = array(
 	'vet-video-replace-link' => 'This link takes you to the file page where you can upload a new version of the video',
 	'vet-video-wiki' => 'dropdown label for search filter - Wikia Video Library',
 	'vet-warn2' => 'this error is shown if the url field is submitted without a value.',
-	'vet-warn3' => "this error is shown if there's no 'name' value specified in the details screen of the VET.",
+	'vet-warn3' => 'this error is shown if there\'s no \'name\' value specified in the details screen of the VET.',
 	'vet-width' => '{{Identical|Width}}',
-);
+];
 
-/** Abkhazian (Аҧсшәа)
- * @author Temuri rajavi
- */
-$messages['ab'] = array(
+$messages['ab'] = [
 	'vet-caption' => 'Анапынҵамҭа',
-);
+];
 
-/** Afrikaans (Afrikaans)
- * @author Naudefj
- */
-$messages['af'] = array(
+$messages['af'] = [
 	'vet-upload' => 'Volledige URL',
-	'vet-notlogged' => "Teken aan of registreer om video's by te voeg",
-	'vet-find' => "Vind 'n video",
+	'vet-notlogged' => 'Teken aan of registreer om video\'s by te voeg',
+	'vet-find' => 'Vind \'n video',
 	'vet-thiswiki' => 'Hierdie wiki',
 	'vet-flickr' => 'Flickr',
 	'vet-upload-btn' => 'Volgende',
 	'vet-find-btn' => 'Soek',
-	'vet-flickr-inf' => "Soek korrek gelisensieerde vrye foto's vanaf Flickr en laai hulle in u wiki in.",
-	'vet-conflict-inf' => "<h1>Oeps, 'n video met daardie naam bestaan reeds.</h1>Wat wil u met <b>$1</b> doen?",
+	'vet-flickr-inf' => 'Soek korrek gelisensieerde vrye foto\'s vanaf Flickr en laai hulle in u wiki in.',
+	'vet-conflict-inf' => '<h1>Oeps, \'n video met daardie naam bestaan reeds.</h1>Wat wil u met <b>$1</b> doen?',
 	'vet-rename' => 'Hernoem video',
 	'vet-existing' => 'Gebruik bestaande video',
 	'vet-overwrite' => 'Oorskryf die bestaande video met u video',
 	'vet-insert' => 'Voeg by',
-	'vet-details-inf' => "<h1>Lêerbesonderhede</h1>
-Verskaf 'n beskrywende naam vir die video.",
+	'vet-details-inf' => '<h1>Lêerbesonderhede</h1>
+Verskaf \'n beskrywende naam vir die video.',
 	'vet-name' => 'Naam',
 	'vet-license' => 'Lisensie',
 	'vet-details-inf2' => 'Videovertoon-opsies',
@@ -174,62 +159,56 @@ Verskaf 'n beskrywende naam vir die video.",
 	'vet-prev' => 'Vorige 8',
 	'vet-next' => 'Volgende 8',
 	'vet-insert3' => 'Voeg hierdie video in',
-	'vet-recent-inf' => "Onlangs ingevoegde video's",
-	'vet-thiswiki2' => "Video's van hierdie wiki ($1 {{PLURAL:$1|resultaat|resultate}})",
+	'vet-recent-inf' => 'Onlangs ingevoegde video\'s',
+	'vet-thiswiki2' => 'Video\'s van hierdie wiki ($1 {{PLURAL:$1|resultaat|resultate}})',
 	'vet-success' => 'Geslaag',
 	'vet-return' => 'Terug na wysiging',
 	'vet-back' => 'terug',
 	'vet-close' => 'sluit',
-	'vet-warn1' => "U moet eers 'n soekopdrag spesifiseer!",
+	'vet-warn1' => 'U moet eers \'n soekopdrag spesifiseer!',
 	'vet-warn2' => 'Verskaf asseblief URL van die video wat u wil byvoeg',
 	'vet-warn3' => 'Verstrek asseblief naam van die video wat u wil byvoeg',
-	'vet-imagelink' => "<b>Nuut!</b> Voeg video's by",
-	'vet-imagebutton' => "Voeg video's by",
+	'vet-imagelink' => '<b>Nuut!</b> Voeg video\'s by',
+	'vet-imagebutton' => 'Voeg video\'s by',
 	'vet-license-cc' => 'Gelisensieer onder die Creative Commons-lisensie Erkenning-Insgelyks Deel 3.0',
 	'vet-name-incorrect' => 'Die naam van hierdie video bevat ongeldige karakters. soos #.',
-	'vet-description' => "Verskaf 'n volledige URL vanaf enige van die ondersteunde webwerwe. Sien",
-	'vet-uploadtext' => "'''Hierdie vorm laat u toe om vinnig lêers te laai en in artikels te plaas.'''
+	'vet-description' => 'Verskaf \'n volledige URL vanaf enige van die ondersteunde webwerwe. Sien',
+	'vet-uploadtext' => '\'\'\'Hierdie vorm laat u toe om vinnig lêers te laai en in artikels te plaas.\'\'\'
 
-''Sien ook die [[Special:Log/upload|oplaailogboek]] en 'n [[Special:ImageList|lys met alle toegevoegde lêers]].''",
+\'\'Sien ook die [[Special:Log/upload|oplaailogboek]] en \'n [[Special:ImageList|lys met alle toegevoegde lêers]].\'\'',
 	'vet-show-message' => 'wys boodskap',
 	'vet-hide-message' => 'versteek boodskap',
 	'vet-hide-license-msg' => 'versteek lisensie-teks',
 	'vet-show-license-msg' => 'wys lisensie-teks',
 	'vet-max-thumb' => 'die maksimum duimnael-grootte is oorskry; word na die oorspronklike afmetings teruggestel',
-	'vet-notallowed' => "U kan nie video's op hierdie wiki bysit nie",
-	'vet-title' => "Voeg 'n video by u artikel",
+	'vet-notallowed' => 'U kan nie video\'s op hierdie wiki bysit nie',
+	'vet-title' => 'Voeg \'n video by u artikel',
 	'vet-supported' => 'Ondersteunde video-werwe:',
 	'vet-preview' => '<i>Hierdie voorskou is nie korrek geskaal nie</i>',
 	'vet-bad-url' => 'Die opgegewe URL is ongeldig',
 	'vet-non-existing' => 'Die opgegewe video bestaan nie',
-	'vet-main-info' => "<i>Verskaf 'n volledige URL vanaf een van die ondersteunde webwerwe.</i>",
+	'vet-main-info' => '<i>Verskaf \'n volledige URL vanaf een van die ondersteunde webwerwe.</i>',
 	'vet-page-success' => 'Die videobladsy is suksesvol opgedateer.
 U sal moontlik die videobladsy moet opruim (purge) om die verandering te sien.',
 	'vet-add-button' => 'Voeg Video by',
 	'vet-added-from-gallery' => 'video bygevoeg vanuit videogalery',
-	'vet-bad-search' => "'n Fout het voorgekom tydens die laai van die soekopdrag.",
-	'vet-no-preview' => "U kan nie 'n video by die bladsy voeg as u met 'n voorskou besig is nie",
+	'vet-bad-search' => '\'n Fout het voorgekom tydens die laai van die soekopdrag.',
+	'vet-no-preview' => 'U kan nie \'n video by die bladsy voeg as u met \'n voorskou besig is nie',
 	'vet-single-success' => 'Die video is suksesvol by die bladsy bygevoeg.',
-	'vet-gallery-create-success' => "'n Video-galery is by hierdie bladsy bygevoeg",
+	'vet-gallery-create-success' => '\'n Video-galery is by hierdie bladsy bygevoeg',
 	'vet-gallery-add-success' => 'Die video is bygevoeg by die galery op hierdie bladsy.',
 	'vet-left' => 'Links',
 	'vet-right' => 'Regs',
 	'vet-gallery' => 'Gallery',
 	'vet-protected' => 'Hierdie video is beveilig',
-);
+];
 
-/** Aragonese (Aragonés)
- * @author Juanpabl
- */
-$messages['an'] = array(
+$messages['an'] = [
 	'vet-insert' => 'Insertar',
 	'vet-thumbnail' => 'Miniatura',
-);
+];
 
-/** Arabic (العربية)
- * @author OsamaK
- */
-$messages['ar'] = array(
+$messages['ar'] = [
 	'vet-upload' => 'المسار الكامل',
 	'vet-thiswiki' => 'هذه الويكي',
 	'vet-flickr' => 'فلكر',
@@ -254,12 +233,9 @@ $messages['ar'] = array(
 	'vet-show-license-msg' => 'أظهر نص الرخصة',
 	'vet-title' => 'إضافة فيديو لمقالك',
 	'vet-supported' => 'مواقع الفيديو المدعومة:',
-);
+];
 
-/** Azerbaijani (azərbaycanca)
- * @author Cekli829
- */
-$messages['az'] = array(
+$messages['az'] = [
 	'vet-name' => 'Ad',
 	'vet-license' => 'Lisenziya',
 	'vet-size' => 'Həcm',
@@ -267,21 +243,14 @@ $messages['az'] = array(
 	'vet-left' => 'Sol',
 	'vet-right' => 'Sağ',
 	'vet-gallery' => 'Qalereya',
-);
+];
 
-/** Belarusian (беларуская)
- * @author Тест
- */
-$messages['be'] = array(
+$messages['be'] = [
 	'vet-license' => 'Ліцэнзія',
 	'vet-size' => 'Памер',
-);
+];
 
-/** Belarusian (Taraškievica orthography) (‪Беларуская (тарашкевіца)‬)
- * @author EugeneZelenko
- * @author Jim-by
- */
-$messages['be-tarask'] = array(
+$messages['be-tarask'] = [
 	'vet-upload' => 'Поўны URL-адрас',
 	'vet-notlogged' => 'Увайдзіце ў сыстэму альбо зарэгіструйцеся, каб устаўляць відэа',
 	'vet-find' => 'Знайсьці відэа',
@@ -325,9 +294,9 @@ $messages['be-tarask'] = array(
 	'vet-imagebutton' => 'Уставіць відэа',
 	'vet-license-cc' => 'На ўмовах ліцэнзіі Creative Commons Attribution-Share Alike 3.0',
 	'vet-name-incorrect' => 'Гэтая назва відэа ўтрымлівае няслушныя сымбалі',
-	'vet-uploadtext' => "'''Гэтая форма дазваляе Вам хутка загружаць і паказваць файлы ў артыкулах.'''
+	'vet-uploadtext' => '\'\'\'Гэтая форма дазваляе Вам хутка загружаць і паказваць файлы ў артыкулах.\'\'\'
 
-''Глядзіце таксама [[Special:Log/upload|журнал загрузак]] і [[Special:ImageList|сьпіс усіх загружаных файлаў]].''",
+\'\'Глядзіце таксама [[Special:Log/upload|журнал загрузак]] і [[Special:ImageList|сьпіс усіх загружаных файлаў]].\'\'',
 	'vet-show-message' => 'паказаць паведамленьне',
 	'vet-hide-message' => 'схаваць паведамленьне',
 	'vet-hide-license-msg' => 'схаваць тэкст ліцэнзіі',
@@ -352,12 +321,9 @@ $messages['be-tarask'] = array(
 	'vet-right' => 'Справа',
 	'vet-gallery' => 'Галерэя',
 	'vet-protected' => 'Гэтае відэа было абароненае',
-);
+];
 
-/** Bulgarian (български)
- * @author DCLXVI
- */
-$messages['bg'] = array(
+$messages['bg'] = [
 	'vet-upload' => 'Пълен адрес',
 	'vet-thiswiki' => 'Това уики',
 	'vet-flickr' => 'Flickr',
@@ -379,28 +345,23 @@ $messages['bg'] = array(
 	'vet-left' => 'Ляво',
 	'vet-right' => 'Дясно',
 	'vet-gallery' => 'Галерия',
-);
+];
 
-/** Breton (brezhoneg)
- * @author Fulup
- * @author Gwenn-Ael
- * @author Y-M D
- */
-$messages['br'] = array(
+$messages['br'] = [
 	'vet-upload' => 'URL klok',
-	'vet-notlogged' => "Kevreit pe krouit ur gont implijer evit ensoc'hañ videoioù",
+	'vet-notlogged' => 'Kevreit pe krouit ur gont implijer evit ensoc\'hañ videoioù',
 	'vet-find' => 'Kavout ur video',
 	'vet-thiswiki' => 'Ar Wiki-se',
 	'vet-flickr' => 'Flickr',
 	'vet-upload-btn' => 'Mont',
 	'vet-find-btn' => 'Klask',
-	'vet-flickr-inf' => "Klask luc'hskeudennoù gant aotreoù-implijout dieub adal Flcikr hag ensoc'hañ anezho en ho wiki.",
-	'vet-conflict-inf' => "<h1>Ur video gant an anv-se zo dija ! </h1> Petra ho peus c'hoant d'ober gant <b>$1</b> ?",
+	'vet-flickr-inf' => 'Klask luc\'hskeudennoù gant aotreoù-implijout dieub adal Flcikr hag ensoc\'hañ anezho en ho wiki.',
+	'vet-conflict-inf' => '<h1>Ur video gant an anv-se zo dija ! </h1> Petra ho peus c\'hoant d\'ober gant <b>$1</b> ?',
 	'vet-rename' => 'Adeñvel ar video',
 	'vet-existing' => 'Implijout ur video a zo diouti dija',
-	'vet-overwrite' => "Erlerc'hiañ ar video zo anezhañ gant ho video.",
-	'vet-insert' => "Ensoc'hañ",
-	'vet-details-inf' => "<h1>Anv ar restr</h1>Roit un anv heverk d'ar video, mar plij",
+	'vet-overwrite' => 'Erlerc\'hiañ ar video zo anezhañ gant ho video.',
+	'vet-insert' => 'Ensoc\'hañ',
+	'vet-details-inf' => '<h1>Anv ar restr</h1>Roit un anv heverk d\'ar video, mar plij',
 	'vet-name' => 'Anv',
 	'vet-license' => 'Aotre implijout',
 	'vet-details-inf2' => 'An dibaboù diskwel video',
@@ -411,45 +372,45 @@ $messages['br'] = array(
 	'vet-layout' => 'Fichañ',
 	'vet-caption' => 'Deskrivadur',
 	'vet-optional' => ' (diret)',
-	'vet-insert2' => "Ensoc'hañ ur Video",
+	'vet-insert2' => 'Ensoc\'hañ ur Video',
 	'vet-update' => 'Hizivaat ar video',
-	'vet-video-replace-link' => "Evit erlec'hiañ ar video-mañ, kit war-du [[:$1]], mar plij",
+	'vet-video-replace-link' => 'Evit erlec\'hiañ ar video-mañ, kit war-du [[:$1]], mar plij',
 	'vet-prev' => 'an 8 a-raok',
 	'vet-next' => 'an 8 goude',
-	'vet-insert3' => "Ensoc'hañ ar video-mañ",
+	'vet-insert3' => 'Ensoc\'hañ ar video-mañ',
 	'vet-recent-inf' => 'Videoioù ouzhpennet nevez zo',
-	'vet-thiswiki2' => "Videoioù war ar wiki-mañ ($1 {{PLURAL:$1|disoc'h|disoc'h}})",
-	'vet-success' => "Video ensoc'het ensoc'het eo ar c'hod da-heul er pennad gant berzh :",
-	'vet-return' => "Distreiñ d'ar c'hemm",
+	'vet-thiswiki2' => 'Videoioù war ar wiki-mañ ($1 {{PLURAL:$1|disoc\'h|disoc\'h}})',
+	'vet-success' => 'Video ensoc\'het ensoc\'het eo ar c\'hod da-heul er pennad gant berzh :',
+	'vet-return' => 'Distreiñ d\'ar c\'hemm',
 	'vet-back' => 'distreiñ',
 	'vet-close' => 'serriñ',
-	'vet-warn1' => "Ret eo deoc'h spisaat ho reked da gentañ !",
-	'vet-warn2' => "Ouzhpennit, mar plij, URL ar video hoc'h eus c'hoant da enporzhiañ war {{SITENAME}}",
-	'vet-warn3' => "Roit un anv d'ar video emaoc'h oc'h enporzhiañ, mar plij.",
+	'vet-warn1' => 'Ret eo deoc\'h spisaat ho reked da gentañ !',
+	'vet-warn2' => 'Ouzhpennit, mar plij, URL ar video hoc\'h eus c\'hoant da enporzhiañ war {{SITENAME}}',
+	'vet-warn3' => 'Roit un anv d\'ar video emaoc\'h oc\'h enporzhiañ, mar plij.',
 	'vet-imagelink' => '<b>Nevez!</b> Ouzhpennit videoioù',
-	'vet-imagebutton' => "Ensoc'hañ videoioù",
-	'vet-license-cc' => "A c'haller kaout dindan aotre-implijout Creative Commons Attribution-Share Alike 3.0",
+	'vet-imagebutton' => 'Ensoc\'hañ videoioù',
+	'vet-license-cc' => 'A c\'haller kaout dindan aotre-implijout Creative Commons Attribution-Share Alike 3.0',
 	'vet-name-incorrect' => 'Arouezennoù direizh zo en anv ar video-mañ',
-	'vet-uploadtext' => "'''Gant ar furmskrid-mañ e c'hallit enporzhiañ buan restroù ha diskwel anezho er pennadoù.'''
+	'vet-uploadtext' => '\'\'\'Gant ar furmskrid-mañ e c\'hallit enporzhiañ buan restroù ha diskwel anezho er pennadoù.\'\'\'
 
-'''Kit da welet ivez '[[Special:Log/upload|istor enporzhiañ ar restroù liesvedia]] ha [[Special:ImageList|roll an holl restroù enporzhiet]].''",
+\'\'\'Kit da welet ivez \'[[Special:Log/upload|istor enporzhiañ ar restroù liesvedia]] ha [[Special:ImageList|roll an holl restroù enporzhiet]].\'\'',
 	'vet-show-message' => 'diskouez ar gemenadenn',
 	'vet-hide-message' => 'kuzhat ar gemenadenn',
 	'vet-hide-license-msg' => 'Kuzhat skrid an aotre-implijout',
 	'vet-show-license-msg' => 'Diskouez skrid an aotre-implijout',
-	'vet-max-thumb' => "Tizhet eo bet ment vrasañ ar skeudennig, distreiñ d'ar vent orin",
-	'vet-notallowed' => "Ne c'hallit ket ensoc'hañ videoioù war ar wiki-mañ",
+	'vet-max-thumb' => 'Tizhet eo bet ment vrasañ ar skeudennig, distreiñ d\'ar vent orin',
+	'vet-notallowed' => 'Ne c\'hallit ket ensoc\'hañ videoioù war ar wiki-mañ',
 	'vet-title' => 'Ouzhpennañ ur video er pennad',
-	'vet-supported' => "Lec'hiennoù videoioù kemeret e karg",
-	'vet-preview' => "<i>n'eo ket ment wirion an alberz</i>",
-	'vet-bad-url' => "Direizh eo ar chomlec'h URL. Gwiriit ar chomlec'h, mar plij",
-	'vet-non-existing' => "N'eus ket eus ar video ouzhpennet",
-	'vet-main-info' => "<i>Klaskit chomlec'h URL a-bezh ur video kemeret e karg war unan eus al lec'hiennoù embreget",
-	'vet-page-success' => "Hizivaet eo bet pajenn ar video gant berzh. Ret eo deoc'h spurjañ pajenn ar video evit gwelet ar c'hemmoù",
+	'vet-supported' => 'Lec\'hiennoù videoioù kemeret e karg',
+	'vet-preview' => '<i>n\'eo ket ment wirion an alberz</i>',
+	'vet-bad-url' => 'Direizh eo ar chomlec\'h URL. Gwiriit ar chomlec\'h, mar plij',
+	'vet-non-existing' => 'N\'eus ket eus ar video ouzhpennet',
+	'vet-main-info' => '<i>Klaskit chomlec\'h URL a-bezh ur video kemeret e karg war unan eus al lec\'hiennoù embreget',
+	'vet-page-success' => 'Hizivaet eo bet pajenn ar video gant berzh. Ret eo deoc\'h spurjañ pajenn ar video evit gwelet ar c\'hemmoù',
 	'vet-add-button' => 'Ouzhpennañ ur Video',
 	'vet-added-from-gallery' => 'Video ouzhpennet adal ar videaoueg',
-	'vet-bad-search' => "Ur fazi zo bet pa'z eo bet pellgarget ar reked",
-	'vet-no-preview' => "Ne c'hallit ket ouzhpennañ videoioù er mod rakwelet",
+	'vet-bad-search' => 'Ur fazi zo bet pa\'z eo bet pellgarget ar reked',
+	'vet-no-preview' => 'Ne c\'hallit ket ouzhpennañ videoioù er mod rakwelet',
 	'vet-single-success' => 'Lakaet eo bet ar video er pennad ervat.',
 	'vet-gallery-create-success' => 'Ur videaoueg a oa bet ouzhpennet er pennad-mañ',
 	'vet-gallery-add-success' => 'Ur video zo bet ouzhpennet e videaoueg ar pennad-mañ',
@@ -457,12 +418,9 @@ $messages['br'] = array(
 	'vet-right' => 'Dehou',
 	'vet-gallery' => 'Videaoueg',
 	'vet-protected' => 'Gwarezet eo ar video-mañ',
-);
+];
 
-/** Catalan (català)
- * @author Paucabot
- */
-$messages['ca'] = array(
+$messages['ca'] = [
 	'vet-upload' => 'URL completa',
 	'vet-thiswiki' => 'Aquesta Wiki',
 	'vet-flickr' => 'Flickr',
@@ -478,22 +436,14 @@ $messages['ca'] = array(
 	'vet-right' => 'Dreta',
 	'vet-gallery' => 'Galeria',
 	'vet-protected' => 'Aquest vídeo està protegit',
-);
+];
 
-/** Sorani Kurdish (کوردی) */
-$messages['ckb'] = array(
+$messages['ckb'] = [
 	'vet-upload-btn' => 'بڕۆ',
 	'vet-find-btn' => 'گەڕان',
-);
+];
 
-/** German (Deutsch)
- * @author Claudia Hattitten
- * @author DaSch
- * @author Geitost
- * @author LWChris
- * @author The Evil IP address
- */
-$messages['de'] = array(
+$messages['de'] = [
 	'vet-upload' => 'Komplette URL',
 	'vet-notlogged' => 'Melde dich an oder registriere dich, um Videos einzubinden',
 	'vet-find' => 'Video suchen',
@@ -538,9 +488,9 @@ $messages['de'] = array(
 	'vet-license-cc' => 'Lizenziert unter der Creative Commons Attribution-Share Alike 3.0 Lizenz',
 	'vet-name-incorrect' => 'Dieser Video-Name enthält ungültige Zeichen, etwa #.',
 	'vet-description' => 'Gib die vollständige URL von einer der unterstützten Websites ein. Siehe',
-	'vet-uploadtext' => "'''Dieses Formular erlaubt dir das schnelle Hochladen und Einbinden von Dateien in Artikel.'''
+	'vet-uploadtext' => '\'\'\'Dieses Formular erlaubt dir das schnelle Hochladen und Einbinden von Dateien in Artikel.\'\'\'
 
-''Siehe auch das [[Special:Log/upload|Datei-Logbuch]] und die [[Special:ImageList|Liste aller hochgeladenen Dateien]].''",
+\'\'Siehe auch das [[Special:Log/upload|Datei-Logbuch]] und die [[Special:ImageList|Liste aller hochgeladenen Dateien]].\'\'',
 	'vet-show-message' => 'Hinweis anzeigen',
 	'vet-hide-message' => 'Hinweis ausblenden',
 	'vet-hide-license-msg' => 'Lizenz-Text ausblenden',
@@ -565,13 +515,12 @@ $messages['de'] = array(
 	'vet-right' => 'Rechts',
 	'vet-gallery' => 'Galerie',
 	'vet-protected' => 'Dieses Video ist geschützt',
-);
+	'vet-search-results-WVL' => 'Wir fanden $1 {{PLURAL:$1|Ergebnis|Ergebnisse}} für "$2" in der Wikia Video-Bibliothek',
+	'vet-video-add-intro' => 'Suchst du nach Videos für dein Wiki? Unter [http://video.wikia.com video.wikia.com (englisch)] kannst du von Wikia lizenzierte englischsprachige Videos abrufen.',
+	'vet-video-wiki' => 'Wikia Video-Bibliothek',
+];
 
-/** German (formal address) (‪Deutsch (Sie-Form)‬)
- * @author LWChris
- * @author Umherirrender
- */
-$messages['de-formal'] = array(
+$messages['de-formal'] = [
 	'vet-notlogged' => 'Melden Sie sich an oder registrieren Sie sich, um Videos einzubinden',
 	'vet-flickr-inf' => 'Durchsuchen Sie passend lizenzierte Fotos von Flickr und importieren Sie sie in Ihr Wiki.',
 	'vet-conflict-inf' => '<h1>Es existiert bereits ein Video unter diesem Namen.</h1>Was wollen Sie mit <b>$1</b> machen?',
@@ -582,20 +531,17 @@ $messages['de-formal'] = array(
 	'vet-warn1' => 'Sie müssen zuerst einen Suchbegriff eingeben!',
 	'vet-warn2' => 'Bitte geben Sie die URL des Videos an, das Sie einfügen möchten',
 	'vet-warn3' => 'Bitte geben Sie dem hinzuzufügenden Video einen Namen',
-	'vet-uploadtext' => "'''Dieses Formular erlaubt Ihnen das schnelle Hochladen und Einbinden von Dateien in Artikel.'''
+	'vet-uploadtext' => '\'\'\'Dieses Formular erlaubt Ihnen das schnelle Hochladen und Einbinden von Dateien in Artikel.\'\'\'
 
-''Siehe auch das [[Special:Log/upload|Datei-Logbuch]] und die [[Special:ImageList|Liste aller hochgeladenen Dateien]].''",
+\'\'Siehe auch das [[Special:Log/upload|Datei-Logbuch]] und die [[Special:ImageList|Liste aller hochgeladenen Dateien]].\'\'',
 	'vet-notallowed' => 'Sie können in diesem Wiki keine Videos einbinden',
 	'vet-title' => 'Fügen Sie ein Video in den Artikel ein',
 	'vet-main-info' => '<i>Geben Sie die vollständige URL von einer der unterstützten Websites ein</i>',
 	'vet-page-success' => 'Die Video-Seite wurde aktualisiert. Sie müssen ggf. den Server-Cache per purge leeren um die Änderung zu sehen.',
 	'vet-no-preview' => 'Sie können aus dem Vorschaumodus kein Video hinzufügen',
-);
+];
 
-/** Zazaki (Zazaki)
- * @author Erdemaslancan
- */
-$messages['diq'] = array(
+$messages['diq'] = [
 	'vet-upload' => 'GIRE Pêro',
 	'vet-thiswiki' => 'E na wiki',
 	'vet-flickr' => 'Flickr',
@@ -610,8 +556,8 @@ $messages['diq'] = array(
 	'vet-layout' => 'Ca gınayiş',
 	'vet-caption' => 'Bınnuşte',
 	'vet-optional' => '(Waştışo keyfi)',
-	'vet-prev' => "8'ê verêni",
-	'vet-next' => "8'ê peyêni",
+	'vet-prev' => '8\'ê verêni',
+	'vet-next' => '8\'ê peyêni',
 	'vet-return' => 'Peyd bê vurnayış',
 	'vet-back' => 'Peyd bê',
 	'vet-close' => 'Racnê',
@@ -623,23 +569,14 @@ $messages['diq'] = array(
 	'vet-left' => 'Çep',
 	'vet-right' => 'Raşt',
 	'vet-gallery' => 'Galeri',
-);
+];
 
-/** Ewe (eʋegbe) */
-$messages['ee'] = array(
+$messages['ee'] = [
 	'vet-upload-btn' => 'Yi',
 	'vet-find-btn' => 'Dii',
-);
+];
 
-/** Spanish (español)
- * @author Armando-Martin
- * @author McDutchie
- * @author Peter17
- * @author Sanbec
- * @author Translationista
- * @author VegaDark
- */
-$messages['es'] = array(
+$messages['es'] = [
 	'vet-upload' => 'URL completa',
 	'vet-notlogged' => 'Identifícate o regístrate para insertar vídeos en este wiki',
 	'vet-find' => 'Buscar un vídeo',
@@ -684,7 +621,7 @@ $messages['es'] = array(
 	'vet-license-cc' => 'Licenciada bajo Creative Commons Attribution-Share Alike 3.0',
 	'vet-name-incorrect' => 'Este nombre de vídeo contiene caracteres inválidos, como #',
 	'vet-description' => 'Escribe la URL completa de cualquiera de los sitios soportados. Ver',
-	'vet-uploadtext' => "'''Este formulario te permite subir rápidamente y mostrar archivos en los artículos.''' ''Echa un vistazo también al [[Special:Log/upload|registro de subidas]] y la [[Special:ImageList|lista de todos los archivos subidos]].''",
+	'vet-uploadtext' => '\'\'\'Este formulario te permite subir rápidamente y mostrar archivos en los artículos.\'\'\' \'\'Echa un vistazo también al [[Special:Log/upload|registro de subidas]] y la [[Special:ImageList|lista de todos los archivos subidos]].\'\'',
 	'vet-show-message' => 'mostrar mensaje',
 	'vet-hide-message' => 'ocultar mensaje',
 	'vet-hide-license-msg' => 'ocultar texto de la licencia',
@@ -709,26 +646,21 @@ $messages['es'] = array(
 	'vet-right' => 'Derecha',
 	'vet-gallery' => 'Galería',
 	'vet-protected' => 'Este video está protegido',
-);
+	'vet-search-results-WVL' => 'Encontramos $1 {{PLURAL:$1|resultado|resultados}} para "$2" en la Librería de Video de Wikia',
+	'vet-video-add-intro' => '¿Buscas videos para tu wikia? Busca en la [http://video.wikia.com Librería de Video de Wikia] videos de alta calidad licenciados por Wikia.',
+	'vet-video-wiki' => 'Videoteca de Wikia',
+];
 
-/** Basque (euskara)
- * @author An13sa
- */
-$messages['eu'] = array(
+$messages['eu'] = [
 	'vet-find' => 'Bideoa bilatu',
 	'vet-flickr' => 'Flickr',
 	'vet-find-btn' => 'Bilaketa',
 	'vet-insert' => 'Txertatu',
 	'vet-name' => 'Izena',
 	'vet-license' => 'Lizentzia',
-);
+];
 
-/** Finnish (suomi)
- * @author Crt
- * @author Silvonen
- * @author Tofu II
- */
-$messages['fi'] = array(
+$messages['fi'] = [
 	'vet-find' => 'Etsi video',
 	'vet-thiswiki' => 'Tämä wiki',
 	'vet-flickr' => 'Flickr',
@@ -748,28 +680,18 @@ $messages['fi'] = array(
 	'vet-add-button' => 'Lisää video',
 	'vet-gallery' => 'Galleria',
 	'vet-protected' => 'Tämä video on suojattu',
-);
+];
 
-/** French (français)
- * @author Crochet.david
- * @author Dodoïste
- * @author Gomoko
- * @author IAlex
- * @author McDutchie
- * @author Peter17
- * @author Slamduck
- * @author Wyz
- */
-$messages['fr'] = array(
+$messages['fr'] = [
 	'vet-upload' => 'URL complète',
-	'vet-notlogged' => "Connectez-vous ou créez un compte d'utilisateur pour incorporer des vidéos",
+	'vet-notlogged' => 'Connectez-vous ou créez un compte d\'utilisateur pour incorporer des vidéos',
 	'vet-find' => 'Chercher une vidéo',
 	'vet-thiswiki' => 'Ce wiki',
 	'vet-flickr' => 'Flickr',
 	'vet-upload-btn' => 'Suivant',
 	'vet-find-btn' => 'Chercher',
 	'vet-flickr-inf' => 'Rechercher des photos de licence libre à partir de Flickr et les incorporer dans votre wiki.',
-	'vet-conflict-inf' => "<h1>Il y a déjà une vidéo existant avec ce nom !</h1>Qu'est-ce que vous voulez faire avec <b>$1</b> ?",
+	'vet-conflict-inf' => '<h1>Il y a déjà une vidéo existant avec ce nom !</h1>Qu\'est-ce que vous voulez faire avec <b>$1</b> ?',
 	'vet-rename' => 'Renommer la vidéo',
 	'vet-existing' => 'Utiliser la vidéo existante',
 	'vet-overwrite' => 'Remplacer la vidéo existante par votre vidéo.',
@@ -797,47 +719,46 @@ $messages['fr'] = array(
 	'vet-return' => 'Retourner à la modification',
 	'vet-back' => 'Retour',
 	'vet-close' => 'fermer',
-	'vet-warn1' => "Vous devez d'abord spécifier votre requête!",
-	'vet-warn2' => "Merci d'ajouter l'URL de la vidéo que vous voulez importer sur {{SITENAME}}",
+	'vet-warn1' => 'Vous devez d\'abord spécifier votre requête!',
+	'vet-warn2' => 'Merci d\'ajouter l\'URL de la vidéo que vous voulez importer sur {{SITENAME}}',
 	'vet-warn3' => 'Merci de donner un nom à la vidéo que vous importez.',
 	'vet-imagelink' => '<b>Nouveau!</b> Ajouter des vidéos',
 	'vet-imagebutton' => 'Ajouter des vidéos',
 	'vet-license-cc' => 'Disponible sous licence Creative Commons Attribution-Share Alike 3.0',
 	'vet-name-incorrect' => 'Le nom de cette vidéo contient des caractères non-valides, comme #',
-	'vet-description' => "Entrez l'URL complète provenant de l'un des sites pris en charge. Voir",
-	'vet-uploadtext' => "'''Ce formulaire vous permet d'importer rapidement des fichiers et de les afficher dans les articles.'''
+	'vet-description' => 'Entrez l\'URL complète provenant de l\'un des sites pris en charge. Voir',
+	'vet-uploadtext' => '\'\'\'Ce formulaire vous permet d\'importer rapidement des fichiers et de les afficher dans les articles.\'\'\'
 
-''Allez voir aussi l'[[Special:Log/upload|historique des imports de fichiers multimédia]] et la [[Special:ImageList|liste de tout les fichiers importés]].''",
+\'\'Allez voir aussi l\'[[Special:Log/upload|historique des imports de fichiers multimédia]] et la [[Special:ImageList|liste de tout les fichiers importés]].\'\'',
 	'vet-show-message' => 'Afficher le message',
 	'vet-hide-message' => 'masquer le message',
 	'vet-hide-license-msg' => 'Masquer le texte de licence',
 	'vet-show-license-msg' => 'Afficher la licence',
-	'vet-max-thumb' => "la taille maximale de l'image a été atteinte, retour à la taille originale",
+	'vet-max-thumb' => 'la taille maximale de l\'image a été atteinte, retour à la taille originale',
 	'vet-notallowed' => 'Vous ne pouvez pas importer de vidéos sur ce wiki',
-	'vet-title' => "Ajouter une vidéo dans l'article",
+	'vet-title' => 'Ajouter une vidéo dans l\'article',
 	'vet-supported' => 'Sites de vidéos pris en charge :',
-	'vet-preview' => "''Cet aperçu n'est pas à la taille réelle''",
-	'vet-bad-url' => "Cette adresse URL n'est pas valide. Vérifiez l'adresse, s'il vous plaît.",
-	'vet-non-existing' => "La vidéo ajoutée n'existe pas",
-	'vet-main-info' => "<i>Entrez l'URL complète provenant de l'un des sites pris en charge.</i>",
+	'vet-preview' => '\'\'Cet aperçu n\'est pas à la taille réelle\'\'',
+	'vet-bad-url' => 'Cette adresse URL n\'est pas valide. Vérifiez l\'adresse, s\'il vous plaît.',
+	'vet-non-existing' => 'La vidéo ajoutée n\'existe pas',
+	'vet-main-info' => '<i>Entrez l\'URL complète provenant de l\'un des sites pris en charge.</i>',
 	'vet-page-success' => 'La page de la vidéo a été mise à jour avec succès. Vous devez purger la page de la vidéo pour voir les changements.',
 	'vet-add-button' => 'Ajouter une vidéo',
-	'vet-added-from-gallery' => "Vidéo ajoutée d'une galerie de vidéos",
+	'vet-added-from-gallery' => 'Vidéo ajoutée d\'une galerie de vidéos',
 	'vet-bad-search' => 'Une erreur est survenue durant le chargement de la requête',
 	'vet-no-preview' => 'Vous ne pouvez pas ajouter de vidéos lors du mode de prévisualisation',
 	'vet-single-success' => 'La vidéo a été placée avec succès dans l’article.',
-	'vet-gallery-create-success' => "Une galerie de vidéos fut ajoutée à l'article",
+	'vet-gallery-create-success' => 'Une galerie de vidéos fut ajoutée à l\'article',
 	'vet-gallery-add-success' => 'Une vidéo a été ajoutée dans la galerie de vidéos de cet article',
 	'vet-left' => 'Gauche',
 	'vet-right' => 'Droite',
 	'vet-gallery' => 'Galerie',
 	'vet-protected' => 'Cette vidéo est protégée',
-);
+	'vet-search-results-WVL' => 'Nous avons trouvé $1 {{PLURAL:$1|résultat|résultats}} pour « $2 » sur Wikia Video Library.',
+	'vet-video-add-intro' => 'Vous recherchez des vidéos pour votre wiki ? Essayez de rechercher sur [http://video.wikia.com Wikia Video Library] pour des vidéos de bonne qualité autorisées par Wikia.',
+];
 
-/** Galician (Galego)
- * @author Toliño
- */
-$messages['gl'] = array(
+$messages['gl'] = [
 	'vet-upload' => 'URL completo',
 	'vet-notlogged' => 'Acceda ao sistema ou rexístrese para inserir vídeos',
 	'vet-find' => 'Atopar un vídeo',
@@ -882,9 +803,9 @@ $messages['gl'] = array(
 	'vet-license-cc' => 'Licenciado baixo a licenza Creative Commons recoñecemento compartir igual 3.0',
 	'vet-name-incorrect' => 'O nome deste vídeo contén caracteres non válidos, como #',
 	'vet-description' => 'Escriba o enderezo URL completo de calquera dos sitios soportados. Véxase',
-	'vet-uploadtext' => "'''Este formulario permítelle cargar ficheiros rapidamente e incluílos en artigos.'''
+	'vet-uploadtext' => '\'\'\'Este formulario permítelle cargar ficheiros rapidamente e incluílos en artigos.\'\'\'
 
-''Olle tamén o [[Special:Log/upload|rexistro de cargas]] e mais unha [[Special:ImageList|lista con todos os ficheiros cargados]].''",
+\'\'Olle tamén o [[Special:Log/upload|rexistro de cargas]] e mais unha [[Special:ImageList|lista con todos os ficheiros cargados]].\'\'',
 	'vet-show-message' => 'mostrar a mensaxe',
 	'vet-hide-message' => 'agochar a mensaxe',
 	'vet-hide-license-msg' => 'agochar o texto da licenza',
@@ -909,17 +830,13 @@ $messages['gl'] = array(
 	'vet-right' => 'Dereita',
 	'vet-gallery' => 'Galería',
 	'vet-protected' => 'Este vídeo está protexido',
-);
+];
 
-/** Hausa (هَوُسَ) */
-$messages['ha'] = array(
+$messages['ha'] = [
 	'vet-find-btn' => 'Nema',
-);
+];
 
-/** Hebrew (עברית)
- * @author שומבלע
- */
-$messages['he'] = array(
+$messages['he'] = [
 	'vet-upload' => 'כתובת מלאה',
 	'vet-notlogged' => 'התחברו או הרשמו כדי להוסיף סרטונים',
 	'vet-find' => 'חיפוש סרטון',
@@ -963,9 +880,9 @@ $messages['he'] = array(
 	'vet-imagebutton' => 'הוספת סרטונים',
 	'vet-license-cc' => 'רשיון לפי Creative Commons Attribution Share-Alike 3.0',
 	'vet-name-incorrect' => 'שם הסרטון מכיל תווים לא חוקיים',
-	'vet-uploadtext' => "'''טופס זה מאפשר לך להעלות ולהציג קבצי הדפים בקלות.'''
+	'vet-uploadtext' => '\'\'\'טופס זה מאפשר לך להעלות ולהציג קבצי הדפים בקלות.\'\'\'
 
-''ראו גם  [[Special:Log/upload|יומן העלאות]] ו[[Special:ImageList|רשימת כל הקבצים באתר]].''",
+\'\'ראו גם  [[Special:Log/upload|יומן העלאות]] ו[[Special:ImageList|רשימת כל הקבצים באתר]].\'\'',
 	'vet-show-message' => 'הצגת הודעה',
 	'vet-hide-message' => 'הסתרת הודעה',
 	'vet-hide-license-msg' => 'הסתרת הרישיון',
@@ -990,19 +907,13 @@ $messages['he'] = array(
 	'vet-right' => 'ימין',
 	'vet-gallery' => 'גלריה',
 	'vet-protected' => 'סרטון זה מוגן.',
-);
+];
 
-/** Croatian (hrvatski)
- * @author Anton008
- */
-$messages['hr'] = array(
+$messages['hr'] = [
 	'vet-left' => 'Lijevo',
-);
+];
 
-/** Hungarian (magyar)
- * @author Glanthor Reviol
- */
-$messages['hu'] = array(
+$messages['hu'] = [
 	'vet-upload' => 'Teljes URL',
 	'vet-find' => 'Videó keresése',
 	'vet-thiswiki' => 'Ez a Wiki',
@@ -1044,12 +955,9 @@ $messages['hu'] = array(
 	'vet-right' => 'Jobb',
 	'vet-gallery' => 'Galéria',
 	'vet-protected' => 'Ez a videó védett',
-);
+];
 
-/** Interlingua (interlingua)
- * @author McDutchie
- */
-$messages['ia'] = array(
+$messages['ia'] = [
 	'vet-upload' => 'URL complete',
 	'vet-notlogged' => 'Aperi un session o crea un conto pro inserer videos',
 	'vet-find' => 'Cercar un video',
@@ -1094,9 +1002,9 @@ $messages['ia'] = array(
 	'vet-license-cc' => 'Disponibile sub licentia Creative Commons Attribution-Share Alike 3.0',
 	'vet-name-incorrect' => 'Le nomine de iste video contine characteres invalide, como #',
 	'vet-description' => 'Entra le URL complete de un del sitos supportate. Vide',
-	'vet-uploadtext' => "'''Iste formulario permitte rapidemente incargar e presentar files in articulos.'''
+	'vet-uploadtext' => '\'\'\'Iste formulario permitte rapidemente incargar e presentar files in articulos.\'\'\'
 
-''Vide etiam le [[Special:Log/upload|registro de incargamentos]] e un [[Special:ImageList|lista de tote le files incargate]].''",
+\'\'Vide etiam le [[Special:Log/upload|registro de incargamentos]] e un [[Special:ImageList|lista de tote le files incargate]].\'\'',
 	'vet-show-message' => 'revelar message',
 	'vet-hide-message' => 'celar message',
 	'vet-hide-license-msg' => 'celar texto del licentia',
@@ -1121,14 +1029,9 @@ $messages['ia'] = array(
 	'vet-right' => 'Dextra',
 	'vet-gallery' => 'Galeria',
 	'vet-protected' => 'Iste video es protegite',
-);
+];
 
-/** Indonesian (Bahasa Indonesia)
- * @author Bennylin
- * @author Irwangatot
- * @author Kenrick95
- */
-$messages['id'] = array(
+$messages['id'] = [
 	'vet-insert' => 'Sisipkan',
 	'vet-name' => 'Nama',
 	'vet-license' => 'Lisensi',
@@ -1181,27 +1084,17 @@ $messages['id'] = array(
 	'vet-right' => 'Kanan',
 	'vet-gallery' => 'Galeri',
 	'vet-protected' => 'Video ini dilindungi',
-);
+];
 
-/** Igbo (Igbo)
- * @author Ukabia
- */
-$messages['ig'] = array(
+$messages['ig'] = [
 	'vet-find-btn' => 'Chọwa',
-);
+];
 
-/** Ingush (ГӀалгӀай)
- * @author Sapral Mikail
- */
-$messages['inh'] = array(
+$messages['inh'] = [
 	'vet-gallery' => 'Суртанче',
-);
+];
 
-/** Italian (italiano)
- * @author Beta16
- * @author HalphaZ
- */
-$messages['it'] = array(
+$messages['it'] = [
 	'vet-find' => 'Trova un video',
 	'vet-flickr' => 'Flickr',
 	'vet-upload-btn' => 'VAI',
@@ -1232,20 +1125,19 @@ $messages['it'] = array(
 	'vet-hide-license-msg' => 'Nascondi il testo della licenza',
 	'vet-show-license-msg' => 'Mostra il testo della licenza',
 	'vet-title' => 'Aggiungi un video al tuo articolo',
-	'vet-bad-url' => "L'URL fornito non è valido",
+	'vet-bad-url' => 'L\'URL fornito non è valido',
 	'vet-non-existing' => 'Il video fornito non esiste',
 	'vet-add-button' => 'Aggiungi video',
 	'vet-left' => 'Sinistra',
 	'vet-right' => 'Giusto',
 	'vet-gallery' => 'Galleria',
 	'vet-protected' => 'Questo video è protetto',
-);
+	'vet-search-results-WVL' => 'Abbiamo trovato $1 {{PLURAL:$1|risultato|risultati}} per "$2" nella Wikia Video Library',
+	'vet-video-add-intro' => 'Hai bisogno di video per la tua wiki? Prova a cercare nella [http://video.wikia.com Wikia Video Library] video di alta qualità con licenza Wikia.',
+	'vet-video-wiki' => 'Wikia Video Library',
+];
 
-/** Japanese (日本語)
- * @author Schu
- * @author Tommy6
- */
-$messages['ja'] = array(
+$messages['ja'] = [
 	'vet-upload' => 'URL',
 	'vet-notlogged' => '動画の挿入にはログインかアカウントの登録が必要です。',
 	'vet-find' => '動画を探す',
@@ -1290,9 +1182,9 @@ $messages['ja'] = array(
 	'vet-license-cc' => 'CC-by-sa 3.0を適用する',
 	'vet-name-incorrect' => '動画名に無効な文字が含まれています',
 	'vet-description' => 'サポートされているサイトのいずれかから完全なURLを入力してください。参照',
-	'vet-uploadtext' => "'''このフォームでは、簡単にファイルをアップロードして記事に挿入できます。'''
+	'vet-uploadtext' => '\'\'\'このフォームでは、簡単にファイルをアップロードして記事に挿入できます。\'\'\'
 
-''[[Special:Log/upload|アップロード記録]]や[[Special:ImageList|アップロードされたファイルのリスト]]もご覧ください。''",
+\'\'[[Special:Log/upload|アップロード記録]]や[[Special:ImageList|アップロードされたファイルのリスト]]もご覧ください。\'\'',
 	'vet-show-message' => 'メッセージを表示',
 	'vet-hide-message' => 'メッセージを非表示',
 	'vet-hide-license-msg' => 'ライセンステキストを非表示',
@@ -1317,19 +1209,16 @@ $messages['ja'] = array(
 	'vet-right' => '右寄せ',
 	'vet-gallery' => 'ギャラリー',
 	'vet-protected' => 'この動画は保護されています',
-);
+	'vet-search-results-WVL' => 'ウィキア動画ライブラリで「$2」に一致する動画は $1 件でした',
+	'vet-video-add-intro' => '自分のウィキアコミュニティのビデオをお探しですか？　ウィキアに許諾された高品質のビデオを [http://video.wikia.com Wikia Video Library] にて検索してみてください。',
+	'vet-video-wiki' => 'ウィキア動画ライブラリ',
+];
 
-/** Kalaallisut (kalaallisut)
- * @author Qaqqalik
- */
-$messages['kl'] = array(
+$messages['kl'] = [
 	'vet-find-btn' => 'Ujarlerit',
-);
+];
 
-/** Kannada (ಕನ್ನಡ)
- * @author Nayvik
- */
-$messages['kn'] = array(
+$messages['kn'] = [
 	'vet-thiswiki' => 'ಈ ವಿಕಿ',
 	'vet-flickr' => 'ಫ಼್ಲಿಕ್ರ್',
 	'vet-upload-btn' => 'ಹೋಗು',
@@ -1337,19 +1226,13 @@ $messages['kn'] = array(
 	'vet-name' => 'ಹೆಸರು',
 	'vet-left' => 'ಎಡ',
 	'vet-right' => 'ಬಲ',
-);
+];
 
-/** Colognian (Ripoarisch)
- * @author Purodha
- */
-$messages['ksh'] = array(
+$messages['ksh'] = [
 	'vet-upload-btn' => 'Lohß Jonn!',
-);
+];
 
-/** Kurdish (Latin script) (‪Kurdî (latînî)‬)
- * @author George Animal
- */
-$messages['ku-latn'] = array(
+$messages['ku-latn'] = [
 	'vet-upload-btn' => ' Biçe',
 	'vet-find-btn' => 'Lêbigere',
 	'vet-name' => 'Nav',
@@ -1359,21 +1242,15 @@ $messages['ku-latn'] = array(
 	'vet-show-license-msg' => 'Lîsansa nivîsê nîşan bide',
 	'vet-left' => 'Çep',
 	'vet-right' => 'Rast',
-);
+];
 
-/** Latin (Latina)
- * @author Rsa23899
- */
-$messages['la'] = array(
+$messages['la'] = [
 	'vet-name' => 'Nōmen',
 	'vet-left' => 'Sinister',
 	'vet-right' => 'Dexter',
-);
+];
 
-/** Luxembourgish (Lëtzebuergesch)
- * @author Robby
- */
-$messages['lb'] = array(
+$messages['lb'] = [
 	'vet-upload' => 'Komplett URL',
 	'vet-find' => 'E Video fannen',
 	'vet-thiswiki' => 'Dës Wiki',
@@ -1394,19 +1271,13 @@ $messages['lb'] = array(
 	'vet-left' => 'Lenks',
 	'vet-right' => 'Riets',
 	'vet-gallery' => 'Galerie',
-);
+];
 
-/** Limburgish (Limburgs)
- * @author Ooswesthoesbes
- */
-$messages['li'] = array(
+$messages['li'] = [
 	'vet-upload' => 'Gansen URL',
-);
+];
 
-/** Macedonian (македонски)
- * @author Bjankuloski06
- */
-$messages['mk'] = array(
+$messages['mk'] = [
 	'vet-upload' => 'Полна URL-адреса',
 	'vet-notlogged' => 'Најавете се или регистрирајте сметка за да можете да вметнувате видеоснимки',
 	'vet-find' => 'Пронајди видеоснимка',
@@ -1451,9 +1322,9 @@ $messages['mk'] = array(
 	'vet-license-cc' => 'Лиценцирано со Creative Commons Наведи извор-Сподели под исти услови 3.0',
 	'vet-name-incorrect' => 'Името на оваа видеоснимка содржи неважечки знаци, како на пр. #',
 	'vet-description' => 'Внесете ја полната URL-адреса од едно од поддржаните мрежни места. Вид.',
-	'vet-uploadtext' => "'''Овој образец служи за брзо подигање и поставување на податотеки во статии.'''
+	'vet-uploadtext' => '\'\'\'Овој образец служи за брзо подигање и поставување на податотеки во статии.\'\'\'
 
-''Погледајте го и [[Special:Log/upload|дневникот на подигања]] и [[Special:ImageList|списокот на сите подигнати податотеки]].''",
+\'\'Погледајте го и [[Special:Log/upload|дневникот на подигања]] и [[Special:ImageList|списокот на сите подигнати податотеки]].\'\'',
 	'vet-show-message' => 'прикажи порака',
 	'vet-hide-message' => 'скриј порака',
 	'vet-hide-license-msg' => 'скриј текст на лиценцата',
@@ -1478,19 +1349,13 @@ $messages['mk'] = array(
 	'vet-right' => 'Десно',
 	'vet-gallery' => 'Галерија',
 	'vet-protected' => 'Оваа видеоснимка е заштитена',
-);
+];
 
-/** Mongolian (монгол)
- * @author Chinneeb
- */
-$messages['mn'] = array(
+$messages['mn'] = [
 	'vet-upload-btn' => 'Явах',
-);
+];
 
-/** Malay (Bahasa Melayu)
- * @author Anakmalaysia
- */
-$messages['ms'] = array(
+$messages['ms'] = [
 	'vet-upload' => 'URL penuh',
 	'vet-notlogged' => 'Log masuk atau berdaftar untuk menyisipkan video',
 	'vet-find' => 'Cari video',
@@ -1535,9 +1400,9 @@ $messages['ms'] = array(
 	'vet-license-cc' => 'Dilesenkan di bawah Creative Commons Attribution-Share Alike 3.0',
 	'vet-name-incorrect' => 'Nama video ini mengandungi aksara yang tidak boleh diterima, seperti #',
 	'vet-description' => 'Isikan URL dari mana-mana tapak yang disokong. Lihat',
-	'vet-uploadtext' => "'''Borang ini membolehkan anda memuat naik dan memaparkan fail pada rencana dengan segera.'''
+	'vet-uploadtext' => '\'\'\'Borang ini membolehkan anda memuat naik dan memaparkan fail pada rencana dengan segera.\'\'\'
 
-''Lihat juga [[Special:Log/upload|log muat naik]] dan [[Special:ImageList|senarai semua fail yang dimuat naik]].''",
+\'\'Lihat juga [[Special:Log/upload|log muat naik]] dan [[Special:ImageList|senarai semua fail yang dimuat naik]].\'\'',
 	'vet-show-message' => 'paparkan pesanan',
 	'vet-hide-message' => 'sorokkan pesanan',
 	'vet-hide-license-msg' => 'sorokkan teks lesen',
@@ -1562,20 +1427,14 @@ $messages['ms'] = array(
 	'vet-right' => 'Kanan',
 	'vet-gallery' => 'Galeri',
 	'vet-protected' => 'Video ini dilindungi.',
-);
+];
 
-/** Maltese (Malti)
- * @author Chrisportelli
- */
-$messages['mt'] = array(
+$messages['mt'] = [
 	'vet-upload-btn' => 'MUR',
 	'vet-close' => 'Agħlaq',
-);
+];
 
-/** Burmese (မြန်မာဘာသာ)
- * @author Erikoo
- */
-$messages['my'] = array(
+$messages['my'] = [
 	'vet-upload-btn' => 'သွား​ပါ​',
 	'vet-find-btn' => 'ရှာ​ဖွေ​ရန်​',
 	'vet-name' => 'အမည်',
@@ -1586,13 +1445,9 @@ $messages['my'] = array(
 	'vet-prev' => 'နောက် 8',
 	'vet-back' => 'နောက်',
 	'vet-close' => 'ပိတ်ရန်',
-);
+];
 
-/** Norwegian Bokmål (‪norsk (bokmål)‬)
- * @author Audun
- * @author Nghtwlkr
- */
-$messages['nb'] = array(
+$messages['nb'] = [
 	'vet-upload' => 'Full URL',
 	'vet-notlogged' => 'Logg inn eller registrer deg for å sette inn videoer',
 	'vet-find' => 'Finn en video',
@@ -1637,9 +1492,9 @@ $messages['nb'] = array(
 	'vet-license-cc' => 'Lisensiert under Creative Commons Navngivelse-Del på samme vilkår 3.0',
 	'vet-name-incorrect' => 'Dette videonavnet inneholder ugyldige tegn, som #',
 	'vet-description' => 'Skriv inn hele nettadressen fra et av de støttede nettstedene. Se',
-	'vet-uploadtext' => "'''Dette skjemaet gjør at du raskt kan laste opp og vise filer i artikler.'''
+	'vet-uploadtext' => '\'\'\'Dette skjemaet gjør at du raskt kan laste opp og vise filer i artikler.\'\'\'
 
-''Se også [[Special:Log/upload|opplastingsloggen]] og en [[Special:ImageList|liste over alle opplastede filer]].''",
+\'\'Se også [[Special:Log/upload|opplastingsloggen]] og en [[Special:ImageList|liste over alle opplastede filer]].\'\'',
 	'vet-show-message' => 'vis melding',
 	'vet-hide-message' => 'skjul melding',
 	'vet-hide-license-msg' => 'skjul lisenstekst',
@@ -1664,22 +1519,15 @@ $messages['nb'] = array(
 	'vet-right' => 'Høyre',
 	'vet-gallery' => 'Galleri',
 	'vet-protected' => 'Denne videoen er beskyttet',
-);
+];
 
-/** Nepali (नेपाली)
- * @author RajeshPandey
- */
-$messages['ne'] = array(
+$messages['ne'] = [
 	'vet-find-btn' => 'खोज्नुहोस',
-);
+];
 
-/** Dutch (Nederlands)
- * @author Naudefj
- * @author Siebrand
- */
-$messages['nl'] = array(
+$messages['nl'] = [
 	'vet-upload' => 'Volledige URL',
-	'vet-notlogged' => "Meld u aan of registreet een gebruiker om video's toe te voegen",
+	'vet-notlogged' => 'Meld u aan of registreet een gebruiker om video\'s toe te voegen',
 	'vet-find' => 'Video zoeken',
 	'vet-thiswiki' => 'Deze wiki',
 	'vet-flickr' => 'Flickr',
@@ -1709,8 +1557,8 @@ Geef een beschrijvende naam op voor deze video.',
 	'vet-prev' => 'Vorige 8',
 	'vet-next' => 'Volgende 8',
 	'vet-insert3' => 'Deze video invoegen',
-	'vet-recent-inf' => "Recent toegevoegde video's",
-	'vet-thiswiki2' => "Video's van deze wiki ($1 {{PLURAL:$1|resultaat|resultaten}})",
+	'vet-recent-inf' => 'Recent toegevoegde video\'s',
+	'vet-thiswiki2' => 'Video\'s van deze wiki ($1 {{PLURAL:$1|resultaat|resultaten}})',
 	'vet-success' => 'Geslaagd',
 	'vet-return' => 'Terug naar bewerken',
 	'vet-back' => 'terug',
@@ -1719,19 +1567,19 @@ Geef een beschrijvende naam op voor deze video.',
 	'vet-warn2' => 'Geef alstublieft de URL op van de video die u wilt toevoegen',
 	'vet-warn3' => 'Geef alstublieft de naam op van de video die u wilt toevoegen',
 	'vet-imagelink' => '<b>Nieuw!</b> Video toevoegen',
-	'vet-imagebutton' => "Video's toevoegen",
+	'vet-imagebutton' => 'Video\'s toevoegen',
 	'vet-license-cc' => 'Gelicenseerd onder de Creative Commons-licentie Naamsvermelding-Gelijk delen 3.0',
 	'vet-name-incorrect' => 'De naam van deze video bevat ongeldige tekens, zoals #.',
 	'vet-description' => 'Geef een volledige URL op van een van de ondersteunde websites. Zie',
-	'vet-uploadtext' => "'''Via dit formulier kunt u snel bestanden uploaden en in pagina's plaatsen.'''
+	'vet-uploadtext' => '\'\'\'Via dit formulier kunt u snel bestanden uploaden en in pagina\'s plaatsen.\'\'\'
 
-''Zie ook het [[Special:Log/upload|uploadlogboek]] en een [[Special:ImageList|lijst met alle toegevoegde bestanden]].''",
+\'\'Zie ook het [[Special:Log/upload|uploadlogboek]] en een [[Special:ImageList|lijst met alle toegevoegde bestanden]].\'\'',
 	'vet-show-message' => 'bericht weergeven',
 	'vet-hide-message' => 'bericht verbergen',
 	'vet-hide-license-msg' => 'licentietekst verbergen',
 	'vet-show-license-msg' => 'licentietekst weergeven',
 	'vet-max-thumb' => 'de maximale miniatuurgrootte is overschreden; de originele afmetingen worden ingesteld',
-	'vet-notallowed' => "U kunt geen video's toevoegen in deze wiki",
+	'vet-notallowed' => 'U kunt geen video\'s toevoegen in deze wiki',
 	'vet-title' => 'Video aan uw pagina toevoegen',
 	'vet-supported' => 'Ondersteunde videosites:',
 	'vet-preview' => '<i>Deze voorvertoning is niet correct geschaald</i>',
@@ -1751,32 +1599,26 @@ Wellicht moet u de videopagina opschonen om de wijzigingen te zien.',
 	'vet-right' => 'Rechts',
 	'vet-gallery' => 'Galerij',
 	'vet-protected' => 'Deze video is beveiligd',
-);
+];
 
-/** ‪Nederlands (informeel)‬ (‪Nederlands (informeel)‬)
- * @author Siebrand
- */
-$messages['nl-informal'] = array(
+$messages['nl-informal'] = [
 	'vet-flickr-inf' => 'Zoek correct gelicenseerde vrije afbeeldingen van Flickr en importeer ze in je wiki.',
 	'vet-conflict-inf' => '<h1>De video met deze naam bestaat al</h1>Wat wil je met <b>$1</b> doen?',
 	'vet-overwrite' => 'De bestaande video met jouw bestand overschrijven',
 	'vet-warn1' => 'Je moet eerst een zoekopdracht ingeven!',
 	'vet-warn2' => 'Geef alstublieft de URL op van de video die je wilt toevoegen',
 	'vet-warn3' => 'Geef alsjeblieft de naam op van de video die je wilt toevoegen',
-	'vet-uploadtext' => "'''Via dit formulier kan je snel bestanden uploaden en in pagina's plaatsen.'''
+	'vet-uploadtext' => '\'\'\'Via dit formulier kan je snel bestanden uploaden en in pagina\'s plaatsen.\'\'\'
 
-''Zie ook het [[Special:Log/upload|uploadlogboek]] en een [[Special:ImageList|lijst met alle toegevoegde bestanden]].''",
-	'vet-notallowed' => "Je kunt geen video's toevoegen in deze wiki",
+\'\'Zie ook het [[Special:Log/upload|uploadlogboek]] en een [[Special:ImageList|lijst met alle toegevoegde bestanden]].\'\'',
+	'vet-notallowed' => 'Je kunt geen video\'s toevoegen in deze wiki',
 	'vet-title' => 'Video aan je pagina toevoegen',
 	'vet-page-success' => 'Die videopagina is bijgewerkt.
 Wellicht moet je de videopagina opschonen om de wijzigingen te zien.',
 	'vet-no-preview' => 'Je kunt geen video uit een pagina toevoegen in de voorvertoning',
-);
+];
 
-/** Occitan (occitan)
- * @author Cedric31
- */
-$messages['oc'] = array(
+$messages['oc'] = [
 	'vet-upload' => 'URL completa',
 	'vet-find' => 'Cercar una vidèo',
 	'vet-thiswiki' => 'Aqueste wiki',
@@ -1788,29 +1630,23 @@ $messages['oc'] = array(
 	'vet-insert' => 'Inserir',
 	'vet-name' => 'Nom',
 	'vet-license' => 'Licéncia',
-	'vet-details-inf2' => "Las opcions d'afichatge vidèo",
+	'vet-details-inf2' => 'Las opcions d\'afichatge vidèo',
 	'vet-size' => 'Talha',
 	'vet-thumbnail' => 'Apercebut',
 	'vet-width' => 'largor',
 	'vet-layout' => 'Orientacion',
 	'vet-caption' => 'Descripcion',
 	'vet-optional' => '(Opcional)',
-);
+];
 
-/** Deitsch (Deitsch)
- * @author Xqt
- */
-$messages['pdc'] = array(
+$messages['pdc'] = [
 	'vet-find-btn' => 'Uffgucke',
 	'vet-next' => 'Neegschte 8',
 	'vet-back' => 'zerrick',
 	'vet-close' => 'zumache',
-);
+];
 
-/** Pälzisch (Pälzisch)
- * @author Manuae
- */
-$messages['pfl'] = array(
+$messages['pfl'] = [
 	'vet-upload-btn' => 'Negschde',
 	'vet-find-btn' => 'Suche',
 	'vet-name' => 'Noame',
@@ -1821,13 +1657,9 @@ $messages['pfl'] = array(
 	'vet-left' => 'Lings',
 	'vet-right' => 'Reschds',
 	'vet-gallery' => 'Galarie',
-);
+];
 
-/** Polish (polski)
- * @author BeginaFelicysym
- * @author Sp5uhe
- */
-$messages['pl'] = array(
+$messages['pl'] = [
 	'vet-upload' => 'Pełny adres URL',
 	'vet-notlogged' => 'Zaloguj się lub zarejestruj aby dodać film',
 	'vet-find' => 'Znajdź film',
@@ -1873,9 +1705,9 @@ Podaj nazwę tego filmu. Może to być np. opis jego zawartości.',
 	'vet-license-cc' => 'Udostępniane na licencji Creative Commons Uznanie autorstwa – Na tych samych warunkach 3.0',
 	'vet-name-incorrect' => 'Nazwa filmu zawiera niedozwolone znaki, jak #',
 	'vet-description' => 'Wprowadź pełny adres URL jednej z obsługiwanych witryn. Zobacz',
-	'vet-uploadtext' => "'''Ten formularz umożliwia szybkie przesyłanie i zamieszczanie plików w artykułach.'''
+	'vet-uploadtext' => '\'\'\'Ten formularz umożliwia szybkie przesyłanie i zamieszczanie plików w artykułach.\'\'\'
 
-''Zobacz również [[Special:Log/upload|rejestr przesyłania]] oraz [[Special:ImageList|spis wszystkich przesłanych plików]].''",
+\'\'Zobacz również [[Special:Log/upload|rejestr przesyłania]] oraz [[Special:ImageList|spis wszystkich przesłanych plików]].\'\'',
 	'vet-show-message' => 'pokaż wiadomość',
 	'vet-hide-message' => 'ukryj wiadomość',
 	'vet-hide-license-msg' => 'ukryj treść licencji',
@@ -1901,27 +1733,26 @@ Podaj nazwę tego filmu. Może to być np. opis jego zawartości.',
 	'vet-gallery' => 'Galeria',
 	'vet-protected' => 'Ten film jest zabezpieczony.',
 	'vet-uploaddisabled' => 'Przesyłanie filmów zostało na tej wiki wyłączone.',
-);
+	'vet-search-results-WVL' => 'Odnaleziono $1 wyników dla frazy "$2" w Filmotece Wikii',
+	'vet-video-add-intro' => 'Szukasz filmów do dodania na swoją wiki? Odwiedź [http://video.wikia.com Filmotekę Wikii] aby znaleźć filmy udostępnione Wikii.',
+	'vet-video-wiki' => 'Filmoteka Wikii',
+];
 
-/** Piedmontese (Piemontèis)
- * @author Borichèt
- * @author Dragonòt
- */
-$messages['pms'] = array(
+$messages['pms'] = [
 	'vet-upload' => 'Adrëssa dla ragnà completa',
-	'vet-notlogged' => "Ch'a intra ant ël sistema o ch'as argistra për anserì dij filmà",
+	'vet-notlogged' => 'Ch\'a intra ant ël sistema o ch\'as argistra për anserì dij filmà',
 	'vet-find' => 'Trové un filmà',
 	'vet-thiswiki' => 'Sta Wiki-sì',
 	'vet-flickr' => 'Flickr',
 	'vet-upload-btn' => 'Apress',
 	'vet-find-btn' => 'Sërché',
 	'vet-flickr-inf' => 'Sërché che fòto lìbere licensià për da bin su Flickr e amporteje su soa wiki.',
-	'vet-conflict-inf' => "<h1>Contacc, un filmà con col nòm a esist già.</h1>Lòn ch'a veul fé con <b>$1</b>?",
+	'vet-conflict-inf' => '<h1>Contacc, un filmà con col nòm a esist già.</h1>Lòn ch\'a veul fé con <b>$1</b>?',
 	'vet-rename' => 'Arnominé ël filmà',
 	'vet-existing' => 'Dovré un filmà Esistent',
 	'vet-overwrite' => 'Coaté ël filmà esistent con ël sò',
 	'vet-insert' => 'Anserì',
-	'vet-details-inf' => "<h1>Detaj dl'archivi</h1>Ch'a spessìfica un nòm për ës filmà-sì. Ch'a sia cheicòs ëd descritiv.",
+	'vet-details-inf' => '<h1>Detaj dl\'archivi</h1>Ch\'a spessìfica un nòm për ës filmà-sì. Ch\'a sia cheicòs ëd descritiv.',
 	'vet-name' => 'Nòm',
 	'vet-license' => 'Licensa',
 	'vet-details-inf2' => 'Opsion ëd visualisassion dël filmà',
@@ -1934,7 +1765,7 @@ $messages['pms'] = array(
 	'vet-optional' => ' (Opsional)',
 	'vet-insert2' => 'Anserì ël filmà',
 	'vet-update' => 'Modifiché ël filmà',
-	'vet-video-replace-link' => "Për rimpiassé ës filmà-sì, për piasì ch'a vada a [[:$1]]",
+	'vet-video-replace-link' => 'Për rimpiassé ës filmà-sì, për piasì ch\'a vada a [[:$1]]',
 	'vet-prev' => '8 prima',
 	'vet-next' => '8 dapress',
 	'vet-insert3' => 'Anserì ës filmà',
@@ -1944,17 +1775,17 @@ $messages['pms'] = array(
 	'vet-return' => 'Artorné a le modìfiche',
 	'vet-back' => 'andré',
 	'vet-close' => 'sara',
-	'vet-warn1' => "A deuv prima spessifiché l'arcesta!",
-	'vet-warn2' => "Për piasì, ch'a buta l'adrëssa an sl'aragnà dël filmà ch'a veul gionté",
-	'vet-warn3' => "Për piasì, ch'a buta ël nòm dël filmà ch'a veul gionté",
+	'vet-warn1' => 'A deuv prima spessifiché l\'arcesta!',
+	'vet-warn2' => 'Për piasì, ch\'a buta l\'adrëssa an sl\'aragnà dël filmà ch\'a veul gionté',
+	'vet-warn3' => 'Për piasì, ch\'a buta ël nòm dël filmà ch\'a veul gionté',
 	'vet-imagelink' => '<b>Neuv!</b> Anserì dij filmà',
 	'vet-imagebutton' => 'Gionté dij filmà',
 	'vet-license-cc' => 'Licensià sota Creative Commons Attribution-Share Alike 3.0',
 	'vet-name-incorrect' => 'Ël nòm ëd cost filmà a conten dij caràter pa bon, com #',
-	'vet-description' => "Ch'a anserissa l'anliura completa da qualsëssìa dij sit mantnù. Vëdde",
-	'vet-uploadtext' => "'''Cost formolari a-j përmët ëd carié e visualisé an pressa dj'archivi ant j'artìcoj.'''
+	'vet-description' => 'Ch\'a anserissa l\'anliura completa da qualsëssìa dij sit mantnù. Vëdde',
+	'vet-uploadtext' => '\'\'\'Cost formolari a-j përmët ëd carié e visualisé an pressa dj\'archivi ant j\'artìcoj.\'\'\'
 
-''Ch'a bèica ëdcò ël [[Special:Log/upload|registr dij cariagi]] e na [[Special:ImageList|lista ëd tùit j'archivi carià]].''",
+\'\'Ch\'a bèica ëdcò ël [[Special:Log/upload|registr dij cariagi]] e na [[Special:ImageList|lista ëd tùit j\'archivi carià]].\'\'',
 	'vet-show-message' => 'smon-e ël mëssagi',
 	'vet-hide-message' => 'stërma mëssagi',
 	'vet-hide-license-msg' => 'stërmé ël test ëd la licensa',
@@ -1963,28 +1794,25 @@ $messages['pms'] = array(
 	'vet-notallowed' => 'A peule pa anserì dij filmà su sta wiki-sì',
 	'vet-title' => 'Gionté un filmà a sò artìcol',
 	'vet-supported' => 'Sit ëd filmà sostnù:',
-	'vet-preview' => "<i>Costa preuva a l'é nen an scala</i>",
-	'vet-bad-url' => "L'adrëssa dl'aragnà butà a l'é pa bon-a",
+	'vet-preview' => '<i>Costa preuva a l\'é nen an scala</i>',
+	'vet-bad-url' => 'L\'adrëssa dl\'aragnà butà a l\'é pa bon-a',
 	'vet-non-existing' => 'Ël filmà giontà a esist pa',
-	'vet-main-info' => "<i>Ch'a anserissa l'anliura completa da qualsëssìa dij sit mantnù. </i>",
-	'vet-page-success' => "La pàgina dël filmà a l'é stàita modificà për da bin. A dovrìa purghé la pàgina dël filmà për vëdde ij cangiament.",
+	'vet-main-info' => '<i>Ch\'a anserissa l\'anliura completa da qualsëssìa dij sit mantnù. </i>',
+	'vet-page-success' => 'La pàgina dël filmà a l\'é stàita modificà për da bin. A dovrìa purghé la pàgina dël filmà për vëdde ij cangiament.',
 	'vet-add-button' => 'Gionté un filmà',
 	'vet-added-from-gallery' => 'filmà giontà da na galarìa ëd filmà',
-	'vet-bad-search' => "Eror cariand l'arcesta d'arserca",
+	'vet-bad-search' => 'Eror cariand l\'arcesta d\'arserca',
 	'vet-no-preview' => 'A peul pa gionté ëd filmà da artìcoj an manera preuva',
-	'vet-single-success' => "Ël filmà a l'é stàit piassà da bin an st'artìcol-sì",
-	'vet-gallery-create-success' => "Na galarìa ëd filmà a l'é stàita giontà a cost artìcol",
-	'vet-gallery-add-success' => "Un filmà a l'é stàit giontà a la galarìa ëd filmà an st'artìcol-sì",
+	'vet-single-success' => 'Ël filmà a l\'é stàit piassà da bin an st\'artìcol-sì',
+	'vet-gallery-create-success' => 'Na galarìa ëd filmà a l\'é stàita giontà a cost artìcol',
+	'vet-gallery-add-success' => 'Un filmà a l\'é stàit giontà a la galarìa ëd filmà an st\'artìcol-sì',
 	'vet-left' => 'Snist',
 	'vet-right' => 'Drit',
 	'vet-gallery' => 'Galarìa',
-	'vet-protected' => "Ës filmà-sì a l'é protegiù",
-);
+	'vet-protected' => 'Ës filmà-sì a l\'é protegiù',
+];
 
-/** Pashto (پښتو)
- * @author Ahmed-Najib-Biabani-Ibrahimkhel
- */
-$messages['ps'] = array(
+$messages['ps'] = [
 	'vet-upload' => 'بشپړ يو آر اېل',
 	'vet-find' => 'يوه ويډيو موندل',
 	'vet-thiswiki' => 'همدا ويکي',
@@ -2007,13 +1835,9 @@ $messages['ps'] = array(
 	'vet-right' => 'ښي',
 	'vet-gallery' => 'انځورتون',
 	'vet-protected' => 'دا ويډيو ژغورل شوې',
-);
+];
 
-/** Portuguese (português)
- * @author Giro720
- * @author Hamilton Abreu
- */
-$messages['pt'] = array(
+$messages['pt'] = [
 	'vet-upload' => 'URL completa',
 	'vet-notlogged' => 'Para inserir vídeos, autentique-se ou registe-se',
 	'vet-find' => 'Procure um vídeo',
@@ -2058,9 +1882,9 @@ $messages['pt'] = array(
 	'vet-license-cc' => 'Sujeito aos termos da licença Creative Commons - Atribuição - Partilha nos Mesmos Termos 3.0',
 	'vet-name-incorrect' => 'O nome deste vídeo contém caracteres inválidos',
 	'vet-description' => 'Introduza a URL completa de qualquer um dos sites suportados. Ver',
-	'vet-uploadtext' => "'''Este formulário permite-lhe carregar e incorporar ficheiros nas páginas de forma rápida.'''
+	'vet-uploadtext' => '\'\'\'Este formulário permite-lhe carregar e incorporar ficheiros nas páginas de forma rápida.\'\'\'
 
-''Veja também o [[Special:Log/upload|registo de uploads]] e uma [[Special:ImageList|lista de todos os ficheiros carregados]].''",
+\'\'Veja também o [[Special:Log/upload|registo de uploads]] e uma [[Special:ImageList|lista de todos os ficheiros carregados]].\'\'',
 	'vet-show-message' => 'mostrar mensagem',
 	'vet-hide-message' => 'esconder mensagem',
 	'vet-hide-license-msg' => 'esconder texto da licença',
@@ -2085,14 +1909,12 @@ $messages['pt'] = array(
 	'vet-right' => 'Direita',
 	'vet-gallery' => 'Galeria',
 	'vet-protected' => 'Este vídeo está protegido.',
-);
+	'vet-search-results-WVL' => 'Nós encontramos $1 {{PLURAL:$1|resultado|resultados}} para "$2" na Videoteca da Wikia',
+	'vet-video-add-intro' => 'Procurando vídeos para a sua wiki? Tente procurar na [http://video.wikia.com Videoteca da Wikia] por vídeos de alta qualidade licenciados pela Wikia.',
+	'vet-video-wiki' => 'Videoteca da Wikia',
+];
 
-/** Brazilian Portuguese (português do Brasil)
- * @author Giro720
- * @author Luckas Blade
- * @author Pedroca cerebral
- */
-$messages['pt-br'] = array(
+$messages['pt-br'] = [
 	'vet-upload' => 'URL completa',
 	'vet-notlogged' => 'Para inserir vídeos, autentique-se ou registre-se',
 	'vet-find' => 'Procure um vídeo',
@@ -2137,9 +1959,9 @@ $messages['pt-br'] = array(
 	'vet-license-cc' => 'Licenciado sob os termos da licença Creative Commons - Atribuição - Partilha nos Mesmos Termos 3.0',
 	'vet-name-incorrect' => 'O nome deste vídeo contém caracteres inválidos',
 	'vet-description' => 'Escreva a URL completa de qualquer um dos sites suportados. Ver',
-	'vet-uploadtext' => "'''Este formulário permite-lhe carregar e incorporar arquivos nas páginas de forma rápida.'''
+	'vet-uploadtext' => '\'\'\'Este formulário permite-lhe carregar e incorporar arquivos nas páginas de forma rápida.\'\'\'
 
-''Veja também o [[Special:Log/upload|registro de uploads]] e uma [[Special:ImageList|lista de todos os arquivos carregados]].''",
+\'\'Veja também o [[Special:Log/upload|registro de uploads]] e uma [[Special:ImageList|lista de todos os arquivos carregados]].\'\'',
 	'vet-show-message' => 'mostrar mensagem',
 	'vet-hide-message' => 'ocultar mensagem',
 	'vet-hide-license-msg' => 'esconder texto da licença',
@@ -2164,25 +1986,18 @@ $messages['pt-br'] = array(
 	'vet-right' => 'Direita',
 	'vet-gallery' => 'Galeria',
 	'vet-protected' => 'Este vídeo está protegido.',
-);
+	'vet-search-results-WVL' => 'Nós encontramos $1 {{PLURAL:$1|resultado|resultados}} para "$2" na videoteca da Wikia',
+	'vet-video-add-intro' => 'Procurando por vídeos para a sua wiki? Tente procurar na [http://video.wikia.com Videoteca da Wikia] por vídeos de alta qualidade licenciados pela Wikia.',
+	'vet-video-wiki' => 'Videoteca da Wikia',
+];
 
-/** Romanian (română)
- * @author Stelistcristi
- */
-$messages['ro'] = array(
+$messages['ro'] = [
 	'vet-flickr' => 'Flickr',
 	'vet-name' => 'Nume',
 	'vet-license' => 'Licenţă',
-);
+];
 
-/** Russian (русский)
- * @author Eleferen
- * @author Kaganer
- * @author Kuzura
- * @author Lockal
- * @author Александр Сигачёв
- */
-$messages['ru'] = array(
+$messages['ru'] = [
 	'vet-upload' => 'Полный URL',
 	'vet-notlogged' => 'Представьтесь системе или зарегистрируйтесь, чтобы вставлять видео',
 	'vet-find' => 'Найти видео',
@@ -2227,9 +2042,9 @@ $messages['ru'] = array(
 	'vet-license-cc' => 'Лицензировано на условиях Creative Commons Attribution-Share Alike 3.0',
 	'vet-name-incorrect' => 'Это название видео содержит недопустимые символы, как #',
 	'vet-description' => 'Введите полный URL любого из поддерживаемых сайтов. Смотреть',
-	'vet-uploadtext' => "'''Эта форма позволяет быстро загружать и отображать файлы в статьях.'''
+	'vet-uploadtext' => '\'\'\'Эта форма позволяет быстро загружать и отображать файлы в статьях.\'\'\'
 
-''См. также [[Special:Log/upload|журнал загрузок]] и [[Special:ImageList|список всех загруженных файлов]].''",
+\'\'См. также [[Special:Log/upload|журнал загрузок]] и [[Special:ImageList|список всех загруженных файлов]].\'\'',
 	'vet-show-message' => 'показать сообщение',
 	'vet-hide-message' => 'скрыть сообщение',
 	'vet-hide-license-msg' => 'скрыть текст лицензии',
@@ -2254,20 +2069,16 @@ $messages['ru'] = array(
 	'vet-right' => 'Справа',
 	'vet-gallery' => 'Галерея',
 	'vet-protected' => 'Это видео защищено',
-);
+	'vet-search-results-WVL' => 'Найдено $1 {{PLURAL:$1|видео}} для "$2" в Видео Библиотеке Викия',
+	'vet-video-add-intro' => 'Ищете видео для своей вики? Попробуйте поискать в [http://video.wikia.com Видео Библиотеке Викия], где находится качественное и лицензионное видео от Викия и её партнёров.',
+	'vet-video-wiki' => 'Видео Библиотека Викия',
+];
 
-/** Slovenian (slovenščina)
- * @author Dbc334
- */
-$messages['sl'] = array(
+$messages['sl'] = [
 	'vet-back' => 'Nazaj',
-);
+];
 
-/** Serbian (Cyrillic script) (‪српски (ћирилица)‬)
- * @author Rancher
- * @author Verlor
- */
-$messages['sr-ec'] = array(
+$messages['sr-ec'] = [
 	'vet-upload' => 'Пуна URL адреса',
 	'vet-notlogged' => 'Пријавите се или отворите налог да бисте могли да убацујете видео-снимке',
 	'vet-find' => 'Пронађи видео-снимак',
@@ -2319,15 +2130,9 @@ $messages['sr-ec'] = array(
 	'vet-right' => 'Десно',
 	'vet-gallery' => 'Галерија',
 	'vet-protected' => 'Овај видео-снимак је заштићен.',
-);
+];
 
-/** Swedish (svenska)
- * @author Jopparn
- * @author Lokal Profil
- * @author Tobulos1
- * @author WikiPhoenix
- */
-$messages['sv'] = array(
+$messages['sv'] = [
 	'vet-upload' => 'Fullständig URL',
 	'vet-notlogged' => 'Logga in eller registrera dig för att lägga till videoklipp',
 	'vet-find' => 'Hitta en video',
@@ -2372,9 +2177,9 @@ $messages['sv'] = array(
 	'vet-license-cc' => 'Gjord tillgänglig under licensen Creative Commons Erkännande-Dela Lika 3.0',
 	'vet-name-incorrect' => 'Detta videonamn innehåller ogiltiga tecken, som #',
 	'vet-description' => 'Skriv in den fulla URL-adressen från någon av de stödjande sidorna. Se',
-	'vet-uploadtext' => "'''Detta formulär tillåter dig att snabbt ladda upp och visa filer i artiklar.'''
+	'vet-uploadtext' => '\'\'\'Detta formulär tillåter dig att snabbt ladda upp och visa filer i artiklar.\'\'\'
 
-''Se också [[Special:Log/upload|uppladdnings-loggen]] och en [[Special:ImageList|lista av alla uppladdade filer]].''",
+\'\'Se också [[Special:Log/upload|uppladdnings-loggen]] och en [[Special:ImageList|lista av alla uppladdade filer]].\'\'',
 	'vet-show-message' => 'visa meddelande',
 	'vet-hide-message' => 'dölj meddelande',
 	'vet-hide-license-msg' => 'dölj licens-text',
@@ -2399,20 +2204,14 @@ $messages['sv'] = array(
 	'vet-right' => 'Höger',
 	'vet-gallery' => 'Galleri',
 	'vet-protected' => 'Denna video är skyddad.',
-);
+];
 
-/** Swahili (Kiswahili)
- * @author Lloffiwr
- */
-$messages['sw'] = array(
+$messages['sw'] = [
 	'vet-left' => 'Kushoto',
 	'vet-right' => 'Kulia',
-);
+];
 
-/** Tamil (தமிழ்)
- * @author Karthi.dr
- */
-$messages['ta'] = array(
+$messages['ta'] = [
 	'vet-thiswiki' => 'இந்த விக்கி',
 	'vet-upload-btn' => 'அடுத்தது',
 	'vet-find-btn' => 'தேடுக',
@@ -2426,12 +2225,9 @@ $messages['ta'] = array(
 	'vet-next' => 'அடுத்து  8',
 	'vet-back' => 'பின் செல்',
 	'vet-close' => 'மூடுக',
-);
+];
 
-/** Telugu (తెలుగు)
- * @author Veeven
- */
-$messages['te'] = array(
+$messages['te'] = [
 	'vet-upload-btn' => 'తర్వాతి',
 	'vet-find-btn' => 'వెతుకు',
 	'vet-name' => 'పేరు',
@@ -2440,19 +2236,13 @@ $messages['te'] = array(
 	'vet-optional' => '  (ఐచ్చికం)',
 	'vet-back' => 'వెనక్కి',
 	'vet-close' => 'మూసివేయి',
-);
+];
 
-/** Tetum (tetun)
- * @author MF-Warburg
- */
-$messages['tet'] = array(
+$messages['tet'] = [
 	'vet-name' => 'Naran',
-);
+];
 
-/** Thai (ไทย)
- * @author Saipetch
- */
-$messages['th'] = array(
+$messages['th'] = [
 	'vet-find' => 'ค้นหาวิดีโอ',
 	'vet-find-btn' => 'ค้นหา',
 	'vet-rename' => 'เปลี่ยนชื่อวิดีโอ',
@@ -2463,12 +2253,9 @@ $messages['th'] = array(
 	'vet-warn3' => 'กรุณาใส่ชื่อของวิดีโอที่คุณต้องการเพิ่ม',
 	'vet-show-message' => 'แสดงข้อความ',
 	'vet-hide-message' => 'ซ่อนข้อความ',
-);
+];
 
-/** Tagalog (Tagalog)
- * @author AnakngAraw
- */
-$messages['tl'] = array(
+$messages['tl'] = [
 	'vet-upload' => 'Buong URL',
 	'vet-notlogged' => 'Lumagda o magpatala upang makapagsingit ng mga bidyo',
 	'vet-find' => 'Maghanap ng isang bidyo',
@@ -2537,13 +2324,9 @@ $messages['tl'] = array(
 	'vet-right' => 'Kanan',
 	'vet-gallery' => 'Galeriya',
 	'vet-protected' => 'Pinuprutektahan ang bidyong ito.',
-);
+];
 
-/** Ukrainian (українська)
- * @author Prima klasy4na
- * @author Тест
- */
-$messages['uk'] = array(
+$messages['uk'] = [
 	'vet-find-btn' => 'Знайти',
 	'vet-insert' => 'Вставити',
 	'vet-name' => 'Назва',
@@ -2554,22 +2337,14 @@ $messages['uk'] = array(
 	'vet-next' => 'Наступні 8',
 	'vet-back' => 'Назад',
 	'vet-close' => 'Закрити',
-);
+];
 
-/** Yiddish (ייִדיש)
- * @author פוילישער
- */
-$messages['yi'] = array(
+$messages['yi'] = [
 	'vet-license' => 'ליצענץ',
 	'vet-caption' => 'באשרייבונג',
-);
+];
 
-/** Simplified Chinese (‪中文（简体）‬)
- * @author Anakmalaysia
- * @author Hydra
- * @author Xiaomingyan
- */
-$messages['zh-hans'] = array(
+$messages['zh-hans'] = [
 	'vet-thiswiki' => '这个维基',
 	'vet-upload-btn' => '下一步',
 	'vet-find-btn' => '寻找',
@@ -2584,5 +2359,35 @@ $messages['zh-hans'] = array(
 	'vet-show-message' => '显示性息',
 	'vet-left' => '左',
 	'vet-right' => '右',
-);
+];
+
+$messages['ko'] = [
+	'vet-search-results-WVL' => '위키아 동영상 라이브러리에서 \'$2\'에 해당하는 $1개의 동영상을 찾았습니다.',
+	'vet-video-add-intro' => '위키에 올릴만한 동영상을 찾고 계신가요? [http://video.wikia.com 위키아 동영상 라이브러리 (영어)]에서 고품질의 동영상을 찾아보세요.',
+	'vet-video-wiki' => '위키아 동영상 라이브러리',
+];
+
+$messages['zh'] = [
+	'vet-search-results-WVL' => '在Wikia视频库中关于"$2"发现$1条{{PLURAL:$1|结果|结果}}',
+	'vet-video-add-intro' => '正在为您的维基寻找视频？赶快访问[http://video.wikia.com Wikia视频库]搜索授权许可的视频吧！',
+	'vet-video-wiki' => 'Wikia视频库',
+];
+
+$messages['zh-hant'] = [
+	'vet-search-results-WVL' => '在Wikia影片庫中發現$1條關於"$2"的{{PLURAL:$1|結果|結果}}',
+	'vet-video-add-intro' => '正在為您的wiki尋找影片？試著在[http://video.wikia.com Wikia影片庫]搜尋授權許可的影片吧！',
+	'vet-video-wiki' => 'Wikia影片庫',
+];
+
+$messages['zh-hk'] = [
+	'vet-search-results-WVL' => '在Wikia影片庫中發現$1條關於"$2"的{{PLURAL:$1|結果|結果}}',
+	'vet-video-add-intro' => '正在為您的wiki尋找影片？試著在[http://video.wikia.com Wikia影片庫]搜尋授權許可的影片吧！',
+	'vet-video-wiki' => 'Wikia影片庫',
+];
+
+$messages['zh-tw'] = [
+	'vet-search-results-WVL' => '在Wikia影片庫中發現$1條關於"$2"的{{PLURAL:$1|結果|結果}}',
+	'vet-video-add-intro' => '正在為您的wiki尋找影片？試著在[http://video.wikia.com Wikia影片庫]搜尋授權許可的影片吧！',
+	'vet-video-wiki' => 'Wikia影片庫',
+];
 
