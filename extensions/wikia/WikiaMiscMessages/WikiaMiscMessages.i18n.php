@@ -1,8 +1,8 @@
 <?php
+/** Internationalization file for /extensions/wikia/WikiaMiscMessages/WikiaMiscMessages extension. */
+$messages = [];
 
-$messages = array();
-
-$messages['en'] = array(
+$messages['en'] = [
 	'autocreatewiki-welcomebody-HTML' => '<p>Hello $2,<br /><br />
 The Wikia you created is now available at <a href="$1">$1</a>.  We hope to see you editing there soon!<br /><br />
 We have added some information and tips on your <a href="$5">user talk Page</a> to help you get started. If you have any questions, just reply to this e-mail or browse our help pages at <a href="http://help.wikia.com/">Wikia Help</a>.<br /><br />
@@ -174,9 +174,9 @@ Thank you for updating the e-mail address for your Wikia account. Please confirm
 We look forward to seeing you on Wikia!<br /><br />
 The Wikia Community Team<br />
 www.wikia.com<br /></p>',
-);
+];
 
-$messages['nl-informal'] = array(
+$messages['nl-informal'] = [
 	'autocreatewiki-welcomebody-html' => 'Hallo $2,
 
 
@@ -214,9 +214,9 @@ We kijken er naar uit om je op Wikia te zien!
 
 Het Wikia Community Team <br />
 <a href="http://community.wikia.com/">community.wikia.com</a>',
-);
+];
 
-$messages['de'] = array(
+$messages['de'] = [
 	'confirmemail_body-html' => '<p>Hallo,<br /><br />
 
 dies ist eine automatisch erstellte Nachricht. <br /><br />
@@ -433,9 +433,9 @@ Das neue Passwort ist {{PLURAL:$5|1 Tag|$5 Tage}} gültig.<br />
 <br />
 Bitte ignoriere diese E-Mail, falls du sie nicht selbst angefordert hast. Das alte Passwort bleibt weiterhin gültig.<br />
 </p>',
-);
+];
 
-$messages['es'] = array(
+$messages['es'] = [
 	'confirmemail_body-html' => '<p>Hola $2,
 <br /><br />
 ¡Te damos la bienvenida a Wikia!
@@ -518,9 +518,27 @@ www.wikia.com
 <li>Este recordatorio de contraseña fue solicitado por la siguiente dirección: $1.</li>
 </ul>
 </p>',
-);
+	'autocreatewiki-welcomebody-HTML' => '<p>
+Hola $2!<br />
+<br />
+¡Tu wiki ha sido creado! Aquí lo tienes: <a href="$1">$1</a><br />
+<br />
+¡Es el momento de comenzar la aventura! Hemos añadido algunos enlaces en tu <a href="$5">página de discusión</a> para ayudarte a comenzar y animarte a explorar sitios de Wikia en los que encontrarás páginas de ayuda que te podrían resultar interesantes. Si tienes preguntas o no sabes por dónde empezar, contéstanos a este email o echa un vistazo a nuestras <a href="http://ayuda.wikia.com/">páginas de ayuda</a>.<br />
+<br />
+También puedes mirar nuestro <a href="http://comunidad.wikia.com/wiki/Blog:Noticias_de_Wikia">blog de noticias</a>, donde encontrarás consejos e información sobre las nuevas funcionalidades y herramientas que añadimos a los wikis.<br />
+<br />
+¡Buena suerte con el wiki!<br />
 
-$messages['fr'] = array(
+<a href="http://comunidad.wikia.com/wiki/User:$4">$3</a><br />
+Equipo comunitario de Wikia<br />
+</p>
+<br /><hr />
+<p>
+¿Quieres dejar de recibir estos mensajes? Puedes darte de baja en el servicio de emails desde tus preferencias <a href="http://comunidad.wikia.com/Especial:Preferencias">aquí</a>.
+</p>',
+];
+
+$messages['fr'] = [
 	'confirmemail_body-html' => '<p>Quelqu’un, probablement vous, à partir de l’adresse IP $1,<br />
 a enregistré un compte « $2 » avec cette adresse de courriel<br />
 sur le site {{SITENAME}}.
@@ -634,9 +652,16 @@ Si vou n’êtes pas l’auteur de cette demande, ou si vous vous souvenez à pr
 de votre ancien mot de passe et que vous ne souhaitez plus en changer, vous<br />
 pouvez ignorer ce message et continuer à utiliser votre ancien mot de passe.<br />
 </p>',
-);
+	'autocreatewiki-welcomebody-HTML' => '<p>Bonjour $2 !<br /><br />
+Le wikia que vous avez créé est maintenant accessible via <a href="$1">$1</a>.<br /><br />
+Prêt à commencer ? Nous avons ajouté quelques liens sur <a href="$5">votre page de discussion</a> pour vous aider à commencer et vous encourager à explorer les nombreuses zones d\'aide de Wikia. Si vous avez des questions ou vous sentez un peu perdu, répondez à ce message ou regardez nos <a href="http://communaute.wikia.com/wiki/Catégorie:Aide">pages d\'aide </a>.<br /><br />
+Vous pouvez aussi regarder le <a href="http://communaute.wikia.com/wiki/Blog:Actualit%C3%A9_Wikia">blog d\'actualité</a> où vous trouverez des trucs et astuces, des informations sur les nouvelles fonctionnalités et les nouveautés sur Wikia.<br /><br />
+Bonnes modifications !<br /><br />
+L’équipe Wikia<br /><br />
+<a href="http://communaute.wikia.com/wiki/Utilisateur:$4">$3</a></p>',
+];
 
-$messages['it'] = array(
+$messages['it'] = [
 	'confirmemail_body-html' => '<p>Qualcuno, probabilmente tu stesso dall\'indirizzo IP $1, ha registrato l\'account "$2" su {{SITENAME}} indicando questo indirizzo e-mail.
 <br /><br />
 Per confermare che l\'account ti appartiene veramente e attivare le funzioni relative all\'invio di e-mail su {{SITENAME}}, apri il collegamento seguente con il tuo browser:
@@ -680,9 +705,15 @@ Una password temporanea per l\'utente "$2" è stata impostata a "$3".<br />
 <br />
 Se non sei stato tu a fare la richiesta, oppure hai ritrovato la password e non desideri più cambiarla, puoi ignorare questo messaggio e continuare a usare la vecchia password.<br />
 </p>',
-);
+	'autocreatewiki-welcomebody-HTML' => '<p>Ciao $2,<br /><br />
+La wiki che hai creato ora è disponibile su <a href="$1">$1</a>. Ci auguriamo di vedere presto i tuoi contributi!<br /><br />
+Abbiamo aggiunto alcune informazioni e suggerimenti nella tua <a href="$5">pagina di discussione</a> per aiutarti a mettere in moto la tua wiki. Per qualunque domanda, puoi rispondere a questa email o leggere le pagine di aiuto sulla <a href="http://it.community.wikia.com/wiki/Aiuto:Contenuti">Wiki della Community</a>.<br /><br />
+Buona fortuna per il tuo progetto,<br /><br /> 
+<a href="http://community.wikia.com/wiki/User:$4">$3</a><br />
+Wikia Community Team<br /></p>',
+];
 
-$messages['pl'] = array(
+$messages['pl'] = [
 	'confirmemail_body-html' => '<p>Ktoś łącząc się z komputera o adresie IP $1<br/ >
 zarejestrował w {{GRAMMAR:MS.lp|{{SITENAME}}}} konto „$2” podając niniejszy adres e‐mail.<br />
 <br />
@@ -736,4 +767,65 @@ Tymczasowe hasło wygaśnie za {{PLURAL:$5|1 dzień|$5 dni}}.<br />
 <br />
 Jeśli to nie Ty prosiłeś o przesłanie hasła lub przypomniałeś sobie hasło i nie chcesz go zmieniać, wystarczy, że zignorujesz tę wiadomość i dalej będziesz się posługiwać swoim dotychczasowym hasłem.<br />
 </p>',
-);
+];
+
+$messages['sv'] = [
+	'autocreatewiki-welcomebody-HTML' => '<p>
+Hej $2,<br />
+<br />
+Wikia du skapat är nu tillgänglig på <a href="$1">$1</a>. Vi hoppas att ni redigering där snart!<br />
+<br />
+Vi har lagt till lite information och tips om din <a href="$5">användardiskussionsida</a> för att hjälpa dig komma igång. Om du har några frågor, bara svara på denna post eller bläddra våra hjälpsidor på <a href="http://hjalp.wikia.com/">Wikia Hjälp</a>.<br />
+<br />
+Lycka till med projektet,<br />
+<br />
+<a href="http://community.wikia.com/wiki/User:$4">$3</a><br />
+Wikia Community Support <br />
+</p>',
+];
+
+$messages['zh'] = [
+	'autocreatewiki-welcomebody-HTML' => '<p>嗨 $2,<br /><br />
+您创建的Wiki已经可以在 <a href="$1">$1</a>访问。 期望很快能看到您的编辑！<br /><br />
+我们在您的<a href="$5">用户对话页</a>提供了一些资讯来协助您开始。如果有任何问题，可以浏览我们的 <a href="http://zh.community.wikia.com/wiki/help:content">帮助中心</a>.<br /><br />
+祝一切顺利。<br /><br />
+<a href="http://community.wikia.com/wiki/User:$4">$3</a><br />
+Wikia社区团队<br /></p>',
+];
+
+$messages['zh-hans'] = [
+	'autocreatewiki-welcomebody-HTML' => '<p>嗨 $2,<br /><br />
+您创建的Wiki已经可以在 <a href="$1">$1</a>访问。 期望很快能看到您的编辑！<br /><br />
+我们在您的<a href="$5">用户对话页</a>提供了一些资讯来协助您开始。如果有任何问题，可以浏览我们的 <a href="http://zh.community.wikia.com/wiki/help:content">帮助中心</a>.<br /><br />
+祝一切顺利。<br /><br />
+<a href="http://community.wikia.com/wiki/User:$4">$3</a><br />
+Wikia社区团队<br /></p>',
+];
+
+$messages['zh-hant'] = [
+	'autocreatewiki-welcomebody-HTML' => '<p>嗨 $2,<br /><br />
+您創建的Wiki已經可以在 <a href="$1">$1</a>訪問。 期望很快能看到您的編輯！<br /><br />
+我們在您的<a href="$5">用戶對話頁</a>提供了一些資訊來協助您開始。如果有任何問題，可以瀏覽我們的 <a href="http://zh.community.wikia.com/wiki/help:content">幫助中心</a>.<br /><br />
+祝一切順利。<br /><br />
+<a href="http://community.wikia.com/wiki/User:$4">$3</a><br />
+Wikia社區團隊<br /></p>',
+];
+
+$messages['zh-hk'] = [
+	'autocreatewiki-welcomebody-HTML' => '<p>嗨 $2,<br /><br />
+您創建的Wiki已經可以在 <a href="$1">$1</a>訪問。 期望很快能看到您的編輯！<br /><br />
+我們在您的<a href="$5">用戶對話頁</a>提供了一些資訊來協助您開始。如果有任何問題，可以瀏覽我們的 <a href="http://zh.community.wikia.com/wiki/help:content">幫助中心</a>.<br /><br />
+祝一切順利。<br /><br />
+<a href="http://community.wikia.com/wiki/User:$4">$3</a><br />
+Wikia社區團隊<br /></p>',
+];
+
+$messages['zh-tw'] = [
+	'autocreatewiki-welcomebody-HTML' => '<p>嗨 $2,<br /><br />
+您創建的Wiki已經可以在 <a href="$1">$1</a>訪問。 期望很快能看到您的編輯！<br /><br />
+我們在您的<a href="$5">用戶對話頁</a>提供了一些資訊來協助您開始。如果有任何問題，可以瀏覽我們的 <a href="http://zh.community.wikia.com/wiki/help:content">幫助中心</a>.<br /><br />
+祝一切順利。<br /><br />
+<a href="http://community.wikia.com/wiki/User:$4">$3</a><br />
+Wikia社區團隊<br /></p>',
+];
+
