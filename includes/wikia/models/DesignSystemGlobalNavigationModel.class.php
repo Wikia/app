@@ -91,9 +91,6 @@ class DesignSystemGlobalNavigationModel extends WikiaModel {
 				]
 			];
 		} else {
-			if ( $this->product === static::PRODUCT_FANDOMS ) {
-				$data[ 'fandom_overview' ] = $this->getVerticalsSection();
-			}
 			$data[ 'wikis' ] = [
 				'links' => [
 					$this->getCommunityCentralLink()
