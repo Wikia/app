@@ -21,22 +21,22 @@ class DiscussionsVarToggler {
 		];
 	}
 
-	public function setEnableDiscussions( $val ) {
+	public function setEnableDiscussions( bool $val ) : DiscussionsVarToggler {
 		$this->discussionsVarMap[self::ENABLE_DISCUSSIONS] = $val;
 		return $this;
 	}
 
-	public function setEnableDiscussionsNav( $val ) {
+	public function setEnableDiscussionsNav( bool $val ) : DiscussionsVarToggler {
 		$this->discussionsVarMap[self::ENABLE_DISCUSSIONS_NAV] = $val;
 		return $this;
 	}
 
-	public function setEnableForums( $val ) {
+	public function setEnableForums( bool $val ) : DiscussionsVarToggler {
 		$this->discussionsVarMap[self::ENABLE_FORUMS] = $val;
 		return $this;
 	}
 
-	public function setArchiveWikiForums( $val ) {
+	public function setArchiveWikiForums( bool $val ) : DiscussionsVarToggler {
 		$this->discussionsVarMap[self::ARCHIVE_WIKI_FORUMS] = $val;
 		return $this;
 	}
@@ -66,4 +66,4 @@ class DiscussionsVarToggler {
 	}
 }
 
-class DiscussionsVarTogglerException extends \Exception {}
+class DiscussionsVarTogglerException extends Exception {}

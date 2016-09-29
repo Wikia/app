@@ -13,15 +13,14 @@ $wgExtensionCredits['specialpage'][] = [
 	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/SpecialDiscussions',
 ];
 
-// controllers
+// load classes
 $wgAutoloadClasses['SpecialDiscussionsController'] = $dir . 'controllers/SpecialDiscussionsController.class.php';
 $wgAutoloadClasses['EnableDiscussionsController'] = $dir . 'controllers/EnableDiscussionsController.class.php';
-
-// util classes
 $wgAutoloadClasses['DiscussionsApi'] = $dir . 'utils/DiscussionsApi.class.php';
 $wgAutoloadClasses['DiscussionsVarToggler'] = $dir . 'utils/DiscussionsVarToggler.class.php';
+$wgAutoloadClasses['DiscussionsVarTogglerException'] = $dir . 'utils/DiscussionsVarToggler.class.php';
 
-// special page
+// register special page
 $wgSpecialPages['Discussions'] = 'SpecialDiscussionsController';
 
 // message files
