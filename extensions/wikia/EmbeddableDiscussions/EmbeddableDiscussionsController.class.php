@@ -54,33 +54,31 @@ class EmbeddableDiscussionsController {
 	 * @return String error message or empty string if category is valid
 	 */
 	private function validateArguments( array $parameters ) {
-		$errorMessage = '';
-
 		// PARAM_MOSTRECENT must be bool
 		if ( !AttributesValidator::isBoolish( $parameters[ static::PARAM_MOSTRECENT ] ) ) {
-			$errorMessage = wfMessage( 'embeddable-discussions-parameter-error',
+			return wfMessage( 'embeddable-discussions-parameter-error',
 				static::PARAM_MOSTRECENT,
 				wfMessage( 'embeddable-discussions-parameter-error-boolean' )->plain()
 			)->plain();
 		}
 
 		// size must be integer in range
-		if ( !AttributesValidator::isInRange( $parameters[ static::PARAM_SIZE ], self::ITEMS_MIN, self::ITEMS_MAX ) ) {
-			$errorMessage = wfMessage( 'embeddable-discussions-parameter-error',
+		if ( !AttributesValidator::isIntegerInRange( $parameters[ static::PARAM_SIZE ], self::ITEMS_MIN, self::ITEMS_MAX ) ) {
+			return wfMessage( 'embeddable-discussions-parameter-error',
 				static::PARAM_SIZE,
 				wfMessage( 'embeddable-discussions-parameter-error-range', self::ITEMS_MIN, self::ITEMS_MAX )->plain()
 			)->plain();
 		}
 
 		// columns must be integer in range
-		if ( !AttributesValidator::isInRange( $parameters[ static::PARAM_COLUMNS ], self::COLUMNS_MIN, self::COLUMNS_MAX ) ) {
-			$errorMessage = wfMessage( 'embeddable-discussions-parameter-error',
+		if ( !AttributesValidator::isIntegerInRange( $parameters[ static::PARAM_COLUMNS ], self::COLUMNS_MIN, self::COLUMNS_MAX ) ) {
+			return wfMessage( 'embeddable-discussions-parameter-error',
 				static::PARAM_COLUMNS,
 				wfMessage( 'embeddable-discussions-parameter-error-range', self::COLUMNS_MIN, self::COLUMNS_MAX )->plain()
 			)->plain();
 		}
 
-		return $errorMessage;
+		return '';
 	}
 
 	/**

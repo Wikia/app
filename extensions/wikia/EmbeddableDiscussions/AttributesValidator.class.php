@@ -12,13 +12,15 @@ class AttributesValidator {
 	}
 
 	/**
-	 * Checks if a given value is a number or a number string in given range
+	 * Checks if a given value is a number or a number string in given range.
+	 * Float numbers with decimal part 0 (ie. 2.0, 5.0) are considered valid and treated like integers.
+	 *
 	 * @param Mixed $value a value to be tested
 	 * @param integer $min
 	 * @param integer $max
 	 * @return bool
 	 */
-	public static function isInRange( $value, $min, $max ) {
-		return is_numeric( $value ) && $value <= $max && $value >= $min;
+	public static function isIntegerInRange( $value, $min, $max ) {
+		return is_numeric( $value ) && $value == intval( $value ) && $value <= $max && $value >= $min;
 	}
 }
