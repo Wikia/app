@@ -16,30 +16,22 @@ class EmbeddableDiscussionsController {
 
 	private $templateEngine;
 
-	function __construct() {
+	public function __construct() {
 		$this->templateEngine = ( new Wikia\Template\MustacheEngine )->setPrefix( __DIR__ . '/templates' );
 	}
 
-	public static function onParserFirstCallInit( Parser $parser ) {
-		global $wgEnableDiscussions;
+	public function render( array $args ) {
+		global $wgCityId;
 
-		if ( $wgEnableDiscussions ) {
-			$parser->setHook( self::TAG_NAME, [
-				'EmbeddableDiscussionsController',
-				'render'
-			] );
-		}
+		$params = $this->processArguments( $args );
+		$modelData = ( new DiscussionsThreadModel( $wgCityId ) )
+			->getData( $params[ static::PARAM_MOSTRECENT ], $params[ static::PARAM_SIZE ], $params[ static::PARAM_CATEGORY ] );
 
-		return true;
-	}
+		$this->checkCategory( $args, $modelData );
 
-	public static function onBeforePageDisplay() {
-		\Wikia::addAssetsToOutput( 'embeddable_discussions_js' );
-		\Wikia::addAssetsToOutput( 'embeddable_discussions_scss' );
-
-		JSMessages::enqueuePackage( 'EmbeddableDiscussions', JSMessages::EXTERNAL );
-
-		return true;
+		return F::app()->checkSkin( 'wikiamobile' ) ?
+			$this->renderMobile( $modelData, $params[ static::PARAM_MOSTRECENT ], $params[ static::PARAM_SIZE ] ) :
+			$this->renderDesktop( $modelData, $params[ static::PARAM_MOSTRECENT ], $params[ static::PARAM_CATEGORY ], $params[ static::PARAM_COLUMNS ] );
 	}
 
 	private function processArguments( array $args ) {
@@ -117,40 +109,12 @@ class EmbeddableDiscussionsController {
 		return true;
 	}
 
-	/**
-	 * @param array $args
-	 * @return string
-	 */
-	public function render( array $args ) {
-		global $wgCityId;
-
-		$params = $this->processArguments( $args );
-		$modelData = ( new DiscussionsThreadModel( $wgCityId ) )
-			->getData( $params[ static::PARAM_MOSTRECENT ], $params[ static::PARAM_SIZE ], $params[ static::PARAM_CATEGORY ] );
-
-		$this->checkCategory( $args, $modelData );
-
-		return F::app()->checkSkin( 'wikiamobile' ) ?
-			$this->renderMobile( $modelData, $params[ static::PARAM_MOSTRECENT ], $params[ static::PARAM_SIZE ] ) :
-			$this->renderDesktop( $modelData, $params[ static::PARAM_MOSTRECENT ], $params[ static::PARAM_CATEGORY ], $params[ static::PARAM_COLUMNS ] );
-	}
-
-	/**
-	 * @param $errorMessage
-	 * @return string
-	 */
 	private function renderError( $errorMessage ) {
 		return $this->templateEngine->clearData()->setData( [
 			'errorMessage' => $errorMessage
 		] )->render( 'DiscussionError.mustache' );
 	}
 
-	/**
-	 * @param $modelData
-	 * @param $showLatest
-	 * @param $itemCount
-	 * @return string
-	 */
 	private function renderMobile( $modelData, $showLatest, $itemCount ) {
 		// In Mercury, discussions are rendered client side as an Ember component
 		$modelData = [
@@ -169,13 +133,6 @@ class EmbeddableDiscussionsController {
 			->render( 'DiscussionThreadMobile.mustache' );
 	}
 
-	/**
-	 * @param $modelData
-	 * @param $showLatest
-	 * @param $category
-	 * @param $columns
-	 * @return string
-	 */
 	private function renderDesktop( $modelData, $showLatest, $category, $columns ) {
 		$modelData[ 'requestData' ] = json_encode( [
 			'category' => $category,
