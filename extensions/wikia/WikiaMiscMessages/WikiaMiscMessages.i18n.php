@@ -433,6 +433,16 @@ Das neue Passwort ist {{PLURAL:$5|1 Tag|$5 Tage}} gültig.<br />
 <br />
 Bitte ignoriere diese E-Mail, falls du sie nicht selbst angefordert hast. Das alte Passwort bleibt weiterhin gültig.<br />
 </p>',
+	'passwordremindertext-HTML' => '<p>
+Jemand mit der IP-Adresse $1, wahrscheinlich du selbst, hat ein neues Passwort für die Anmeldung bei {{SITENAME}} ($4) angefordert.<br />
+<br />
+Das automatisch generierte Passwort für Benutzer „$2“ lautet nun: $3<br /><br />
+
+Du solltest dich jetzt anmelden und das Passwort ändern: <a href="{{fullurl:{{ns:special}}:Userlogin}}">{{fullurl:{{ns:special}}:Userlogin}}</a><br />
+Das neue Passwort ist {{PLURAL:$5|1 Tag|$5 Tage}} gültig.<br />
+<br />
+Bitte ignoriere diese E-Mail, falls du sie nicht selbst angefordert hast. Das alte Passwort bleibt weiterhin gültig.<br />
+</p>',
 ];
 
 $messages['es'] = [
@@ -535,6 +545,20 @@ Equipo comunitario de Wikia<br />
 <br /><hr />
 <p>
 ¿Quieres dejar de recibir estos mensajes? Puedes darte de baja en el servicio de emails desde tus preferencias <a href="http://comunidad.wikia.com/Especial:Preferencias">aquí</a>.
+</p>',
+	'passwordremindertext-HTML' => '$1,
+<br /><br />
+La contraseña para el usuario "$2" ha sido cambiada a "$3".
+<br /><br />
+¿No solicitaste una nueva contraseña? No te preocupes, tu cuenta está segura; la contraseña solo la hemos enviado a esta dirección de correo electrónico, así que puedes continuar usando tu antigua contraseña sin problemas.
+<br /><br />
+- Equipo comunitario de Wikia
+<br /><hr />
+<p>
+<ul>
+<li>Si necesitas ayuda o consejos, visita nuestra <a href="http://comunidad.wikia.com">comunidad central</a>.</li>
+<li>¿Quieres dejar de recibir estos mensajes? Puedes darte de baja en el servicio de emails desde tus preferencias <a href="http://comunidad.wikia.com/Especial:Preferencias">aquí</a>.</li>
+</ul>
 </p>',
 ];
 
@@ -659,6 +683,17 @@ Vous pouvez aussi regarder le <a href="http://communaute.wikia.com/wiki/Blog:Act
 Bonnes modifications !<br /><br />
 L’équipe Wikia<br /><br />
 <a href="http://communaute.wikia.com/wiki/Utilisateur:$4">$3</a></p>',
+	'passwordremindertext-HTML' => '<p>
+Quelqu’un (probablement vous, ayant l’adresse IP $1) a demandé un nouveau mot de<br />
+passe pour {{SITENAME}} ($4). Un mot de passe temporaire a été créé pour<br />
+l’utilisateur « $2 » et est « $3 ». Si cela était votre intention, vous devrez<br />
+vous connecter et choisir un nouveau mot de passe.<br />
+Votre mot de passe temporaire expirera dans $5 jour{{PLURAL:$5||s}}.<br />
+<br />
+Si vou n’êtes pas l’auteur de cette demande, ou si vous vous souvenez à présent<br />
+de votre ancien mot de passe et que vous ne souhaitez plus en changer, vous<br />
+pouvez ignorer ce message et continuer à utiliser votre ancien mot de passe.<br />
+</p>',
 ];
 
 $messages['it'] = [
@@ -711,6 +746,13 @@ Abbiamo aggiunto alcune informazioni e suggerimenti nella tua <a href="$5">pagin
 Buona fortuna per il tuo progetto,<br /><br /> 
 <a href="http://community.wikia.com/wiki/User:$4">$3</a><br />
 Wikia Community Team<br /></p>',
+	'passwordremindertext-HTML' => '<p>
+Qualcuno (probabilmente tu, con indirizzo IP $1) ha richiesto l\'invio di una nuova password di accesso a {{SITENAME}} ($4).<br />
+Una password temporanea per l\'utente "$2" è stata impostata a "$3".<br />
+È opportuno eseguire un accesso quanto prima e cambiare la password immediatamente. La password temporanea scadrà dopo {{PLURAL:$5|un giorno|$5 giorni}}.<br />
+<br />
+Se non sei stato tu a fare la richiesta, oppure hai ritrovato la password e non desideri più cambiarla, puoi ignorare questo messaggio e continuare a usare la vecchia password.<br />
+</p>',
 ];
 
 $messages['pl'] = [
@@ -767,6 +809,15 @@ Tymczasowe hasło wygaśnie za {{PLURAL:$5|1 dzień|$5 dni}}.<br />
 <br />
 Jeśli to nie Ty prosiłeś o przesłanie hasła lub przypomniałeś sobie hasło i nie chcesz go zmieniać, wystarczy, że zignorujesz tę wiadomość i dalej będziesz się posługiwać swoim dotychczasowym hasłem.<br />
 </p>',
+	'passwordremindertext-HTML' => '<p>
+Ktoś (prawdopodobnie Ty, spod adresu IP $1)<br />
+poprosił o przesłanie nowego hasła do {{GRAMMAR:D.lp|{{SITENAME}}}} ($4).<br/ >
+Dla użytkownika „$2” zostało wygenerowane tymczasowe hasło i jest nim „$3”.<br />
+Jeśli było to zamierzone działanie, to po zalogowaniu się, musisz podać nowe hasło. <br />
+Tymczasowe hasło wygaśnie za {{PLURAL:$5|1 dzień|$5 dni}}.<br />
+<br />
+Jeśli to nie Ty prosiłeś o przesłanie hasła lub przypomniałeś sobie hasło i nie chcesz go zmieniać, wystarczy, że zignorujesz tę wiadomość i dalej będziesz się posługiwać swoim dotychczasowym hasłem.<br />
+</p>',
 ];
 
 $messages['sv'] = [
@@ -782,6 +833,23 @@ Lycka till med projektet,<br />
 <a href="http://community.wikia.com/wiki/User:$4">$3</a><br />
 Wikia Community Support <br />
 </p>',
+	'passwordremindertext-HTML' => '<p>
+Hej,<br />
+Inloggningslösenordet för användaren "$2" är nu "$3".<br />
+Om du inte begära ett nytt lösenord, oroa dig inte. Att ersätta lösenord har skickats bara till dig på denna e-postadress. Ditt konto är säkert och du kan fortsätta använda ditt gamla lösenord.<br />
+<br />
+Tack,
+<br /><br />
+Wikia Community Team
+<br /><br />
+www.wikia.com
+<br />
+<hr />
+<ul>
+<li>Om du vill ändra dina inställningar eller lösenord, gå till: <a href="http://community.wikia.com/wiki/Special:Preferences">Användarinställningar</a>.</li>
+<li>Detta lösenord påminnelse begärdes från följande adress: $1.</li>
+</ul>
+</p>',
 ];
 
 $messages['zh'] = [
@@ -791,6 +859,16 @@ $messages['zh'] = [
 祝一切顺利。<br /><br />
 <a href="http://community.wikia.com/wiki/User:$4">$3</a><br />
 Wikia社区团队<br /></p>',
+	'passwordremindertext-HTML' => '<p>您好<br /><br />
+用户"$2" 的密码已更新为"$3"。<br /><br />
+如果您并没有申请新帐号，请别担心。这个临时密码仅仅由这个电子信箱寄给您，因此您的帐号是安全的，您也可以继续使用旧密码登入。<br /><br />
+谢谢,<br /><br />
+Wikia 社区团队<br /><br />
+www.wikia.com<br /><hr />
+<ul>
+<li>要改更您的个人设定或密码，请进入: <a href="http://zh.community.wikia.com/wiki/Special:Preferences">用户设定</li>
+<li>这个密码提醒是由以下IP位址所申请发送： $1.</li>
+</ul></p>',
 ];
 
 $messages['zh-hans'] = [
@@ -800,6 +878,16 @@ $messages['zh-hans'] = [
 祝一切顺利。<br /><br />
 <a href="http://community.wikia.com/wiki/User:$4">$3</a><br />
 Wikia社区团队<br /></p>',
+	'passwordremindertext-HTML' => '<p>您好<br /><br />
+用户"$2" 的密码已更新为"$3"。<br /><br />
+如果您并没有申请新帐号，请别担心。这个临时密码仅仅由这个电子信箱寄给您，因此您的帐号是安全的，您也可以继续使用旧密码登入。<br /><br />
+谢谢,<br /><br />
+Wikia 社区团队<br /><br />
+www.wikia.com<br /><hr />
+<ul>
+<li>要改更您的个人设定或密码，请进入: <a href="http://zh.community.wikia.com/wiki/Special:Preferences">用户设定</li>
+<li>这个密码提醒是由以下IP位址所申请发送： $1.</li>
+</ul></p>',
 ];
 
 $messages['zh-hant'] = [
@@ -809,6 +897,16 @@ $messages['zh-hant'] = [
 祝一切順利。<br /><br />
 <a href="http://community.wikia.com/wiki/User:$4">$3</a><br />
 Wikia社區團隊<br /></p>',
+	'passwordremindertext-HTML' => '<p>您好<br /><br />
+用戶"$2" 的密碼已更新為"$3"。<br /><br />
+如果您並沒有申請新帳號，請別擔心。這個臨時密碼僅僅由這個電子信箱寄給您，因此您的帳號是安全的，您也可以繼續使用舊密碼登入。<br /><br />
+謝謝,<br /><br />
+Wikia 社區團隊<br /><br />
+www.wikia.com<br /><hr />
+<ul>
+<li>要改更您的個人設定或密碼，請進入: <a href="http://zh.community.wikia.com/wiki/Special:Preferences">用戶設定</li>
+<li>這個密碼提醒是由以下IP位址所申請發送： $1.</li>
+</ul></p>',
 ];
 
 $messages['zh-hk'] = [
@@ -818,6 +916,16 @@ $messages['zh-hk'] = [
 祝一切順利。<br /><br />
 <a href="http://community.wikia.com/wiki/User:$4">$3</a><br />
 Wikia社區團隊<br /></p>',
+	'passwordremindertext-HTML' => '<p>您好<br /><br />
+用戶"$2" 的密碼已更新為"$3"。<br /><br />
+如果您並沒有申請新帳號，請別擔心。這個臨時密碼僅僅由這個電子信箱寄給您，因此您的帳號是安全的，您也可以繼續使用舊密碼登入。<br /><br />
+謝謝,<br /><br />
+Wikia 社區團隊<br /><br />
+www.wikia.com<br /><hr />
+<ul>
+<li>要改更您的個人設定或密碼，請進入: <a href="http://zh.community.wikia.com/wiki/Special:Preferences">用戶設定</li>
+<li>這個密碼提醒是由以下IP位址所申請發送： $1.</li>
+</ul></p>',
 ];
 
 $messages['zh-tw'] = [
@@ -827,5 +935,33 @@ $messages['zh-tw'] = [
 祝一切順利。<br /><br />
 <a href="http://community.wikia.com/wiki/User:$4">$3</a><br />
 Wikia社區團隊<br /></p>',
+	'passwordremindertext-HTML' => '<p>您好<br /><br />
+用戶"$2" 的密碼已更新為"$3"。<br /><br />
+如果您並沒有申請新帳號，請別擔心。這個臨時密碼僅僅由這個電子信箱寄給您，因此您的帳號是安全的，您也可以繼續使用舊密碼登入。<br /><br />
+謝謝,<br /><br />
+Wikia 社區團隊<br /><br />
+www.wikia.com<br /><hr />
+<ul>
+<li>要改更您的個人設定或密碼，請進入: <a href="http://zh.community.wikia.com/wiki/Special:Preferences">用戶設定</li>
+<li>這個密碼提醒是由以下IP位址所申請發送： $1.</li>
+</ul></p>',
+];
+
+$messages['ja'] = [
+	'passwordremindertext-HTML' => '$1 さん、
+<br /><br />
+ユーザー「$2」のログインパスワードが「$3」に変更されました。
+<br /><br />
+新しいパスワードをリクエストした覚えがありませんか？ 心配いりません。あなたのアカウントは安全です。パスワードの変更はこの電子メールアドレスにのみ送信されています。古いパスワードの利用を継続することができます。
+<br /><br />
+- ウィキア・コミュニティ・サポート
+
+<br /><hr />
+<p>
+<ul>
+<li><a href="http://ja.community.wikia.com/wiki/">コミュニティセントラル</a>でヘルプやアドバイスを探してみよう。</li>
+<li>私たちが送信するメッセージの受信を減らしたいですか？ <a href="http://ja.community.wikia.com/Special:Preferences">こちら</a>にて定期購読解除や電子メールの設定変更をすることができます。</li>
+</ul>
+</p>',
 ];
 
