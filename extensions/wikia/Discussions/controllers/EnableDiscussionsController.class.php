@@ -17,10 +17,6 @@ class EnableDiscussionsController extends \WikiaController {
 		$this->assertCanAccessController();
 
 		$isRollback = $this->request->getBool( self::ROLLBACK );
-		if ( !$isRollback ) {
-			$this->discussionsApi->activateDiscussions();
-		}
-
 		$this->varToggler
 			->setEnableDiscussions( !$isRollback )
 			->setEnableDiscussionsNav( !$isRollback )
