@@ -6,7 +6,7 @@ use Swagger\Client\Discussion\Models\SiteInput;
 use Wikia\DependencyInjection\Injector;
 use Wikia\Service\Swagger\ApiProvider;
 
-class DiscussionActivator {
+class DiscussionsActivator {
 
     const SERVICE_NAME = 'discussion';
     const TIMEOUT = 5;

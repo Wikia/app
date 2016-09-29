@@ -16,7 +16,7 @@ $wgExtensionCredits['specialpage'][] = [
 // load classes
 $wgAutoloadClasses['SpecialDiscussionsController'] = $dir . 'controllers/SpecialDiscussionsController.class.php';
 $wgAutoloadClasses['EnableDiscussionsController'] = $dir . 'controllers/EnableDiscussionsController.class.php';
-$wgAutoloadClasses['DiscussionsApi'] = $dir . 'utils/DiscussionsApi.class.php';
+$wgAutoloadClasses['DiscussionsActivator'] = $dir . 'utils/DiscussionsActivator.class.php';
 $wgAutoloadClasses['DiscussionsVarToggler'] = $dir . 'utils/DiscussionsVarToggler.class.php';
 $wgAutoloadClasses['DiscussionsVarTogglerException'] = $dir . 'utils/DiscussionsVarToggler.class.php';
 

@@ -21,7 +21,7 @@ class EnableDiscussionsTask extends Task {
 	 * Creates a new instance of Discussions for this wiki.
 	 */
 	private function activateDiscussions() {
-		( new \DiscussionActivator(
+		( new \DiscussionsActivator(
 			$this->taskContext->getCityId(),
 			$this->taskContext->getSiteName(),
 			$this->taskContext->getLanguage()

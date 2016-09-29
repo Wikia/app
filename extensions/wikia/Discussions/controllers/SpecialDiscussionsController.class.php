@@ -13,7 +13,7 @@ class SpecialDiscussionsController extends WikiaSpecialPageController {
 
 	public function __construct() {
 		parent::__construct( 'Discussions', '', false );
-		$this->activator = new DiscussionActivator();
+		$this->activator = new DiscussionsActivator();
 		$this->toggler = new DiscussionsVarToggler();
 	}
 
@@ -71,7 +71,7 @@ class SpecialDiscussionsController extends WikiaSpecialPageController {
 	}
 
 	/**
-	 * Override the directory Nirvana looks for templates in
+	 * Override directory where Nirvana looks for templates
 	 * @return string
 	 */
 	public static function getTemplateDir() {

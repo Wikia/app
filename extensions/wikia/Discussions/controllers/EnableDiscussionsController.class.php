@@ -9,7 +9,7 @@ class EnableDiscussionsController extends \WikiaController {
 
 	public function __construct() {
 		parent::__construct();
-		$this->activator = new DiscussionActivator();
+		$this->activator = new DiscussionsActivator();
 		$this->toggler = new DiscussionsVarToggler();
 	}
 
