@@ -1,3 +1,5 @@
-<p class="error widget-discussions-error">
-	{{errorMessage}}
-</p>
+{{#errorMessages}}
+	<p class="error widget-discussions-error">
+		{{.}}
+	</p>
+{{/errorMessages}}
