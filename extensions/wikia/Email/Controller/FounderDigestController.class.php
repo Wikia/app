@@ -78,6 +78,14 @@ abstract class FounderDigestController extends EmailController {
 
 		return array_merge_recursive( $formFields, parent::getEmailSpecificFormFields() );
 	}
+
+	protected function getSignatureIcon() {
+		return ImageHelper::getFileUrl( 'Fandom-Heart-2x.png' );
+	}
+
+	protected function createEmailSignature() {
+		return $this->getMessage( 'emailext-founder-digest-signature' )->text();
+	}
 }
 
 class FounderActivityDigestController extends FounderDigestController {
@@ -111,7 +119,9 @@ class FounderActivityDigestController extends FounderDigestController {
 			'contentFooterMessages' => [
 				$this->getCommunityFooterMessage()
 			],
-			'hasContentFooterMessages' => true
+			'hasContentFooterMessages' => true,
+			'signatureIcon' => $this->getSignatureIcon(),
+			'signature' => $this->createEmailSignature()
 		] );
 	}
 
@@ -172,20 +182,15 @@ class FounderActivityDigestController extends FounderDigestController {
 	protected function getDetailsList() {
 		return [
 			[
-				'iconSrc' => ImageHelper::getFileUrl( 'Page-views.png' ),
+				'iconSrc' => ImageHelper::getFileUrl( '100PagesViewed.png' ),
 				'detailsHeader' => $this->getMessage( 'emailext-founder-digest-views-header', $this->pageViews )->parse(),
 				'details' => $this->getMessage( 'emailext-founder-digest-views-description-1' )->text()
 			],
 			[
-				'iconSrc' => ImageHelper::getFileUrl( 'Number-of-edits.png' ),
+				'iconSrc' => ImageHelper::getFileUrl( '10ContributionsMade.png' ),
 				'detailsHeader' => $this->getMessage( 'emailext-founder-digest-edits-header', $this->pageEdits )->parse(),
 				'details' => $this->getMessage( 'emailext-founder-digest-edits-description' )->text()
-			],
-			[
-				'iconSrc' => ImageHelper::getFileUrl( 'New-users.png' ),
-				'detailsHeader' => $this->getMessage( 'emailext-founder-digest-users-header', $this->newUsers )->parse(),
-				'details' => $this->getMessage( 'emailext-founder-digest-users-description' )->text()
-			] 
+			]
 		];
 	}
 
@@ -239,7 +244,9 @@ class FounderPageViewsDigestController extends FounderDigestController {
 			'buttonText' => $this->getButtonText(),
 			'buttonLink' => $this->getButtonLink(),
 			'details' => $this->getDetailsList(),
-			'hasContentFooterMessages' => false
+			'hasContentFooterMessages' => false,
+			'signatureIcon' => $this->getSignatureIcon(),
+			'signature' => $this->createEmailSignature()
 		] );
 	}
 
@@ -290,7 +297,7 @@ class FounderPageViewsDigestController extends FounderDigestController {
 	protected function getDetailsList() {
 		return [
 			[
-				'iconSrc' => ImageHelper::getFileUrl( 'Page-views.png' ),
+				'iconSrc' => ImageHelper::getFileUrl( '100PagesViewed.png' ),
 				'detailsHeader' => $this->getMessage( 'emailext-founder-digest-views-header', $this->pageViews )->parse(),
 				'details' => $this->getMessage( 'emailext-founder-digest-views-description-2' )->text()
 			] 
