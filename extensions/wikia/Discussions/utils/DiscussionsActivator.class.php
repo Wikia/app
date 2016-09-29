@@ -56,7 +56,7 @@ class DiscussionsActivator {
             $this->sitesApi->getSite( $this->cityId );
             return true;
         } catch ( ApiException $e ) {
-            $this->logger->info( 'Getting site caused an error',
+            $this->logger->info( 'DISCUSSIONS Getting site caused an error',
                 [
                     'siteId' => $this->cityId,
                     'error' => $e->getMessage(),
@@ -77,7 +77,7 @@ class DiscussionsActivator {
 
     private function logAndThrowError( Exception $e ) {
         $this->logger->error(
-            'Creating site caused an error',
+            'DISCUSSIONS Creating site caused an error',
             [
                 'siteId' => $this->cityId,
                 'error' => $e->getMessage()

@@ -54,7 +54,7 @@ class DiscussionsVarToggler {
 
 	private function logAndThrowError( $varName, $siteId, $value ) {
 		Wikia\Logger\WikiaLogger::instance()->error(
-			'Error setting Discussions related wg variable',
+			'DISCUSSIONS Error setting Discussions related wg variable',
 			[
 				'siteId' => $siteId,
 				'varName' => $varName,

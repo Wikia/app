@@ -43,9 +43,10 @@ class EnableDiscussionsTask extends Task {
 
 	private function logException( \Exception $e ) {
 		WikiaLogger::instance()->error(
-			'Error while activating or enabling Discussions for new wiki',
+			'DISCUSSIONS Error while activating or enabling Discussions for new wiki',
 			[
-				'taskContext' => $this->taskContext,
+				'siteId' => $this->taskContext->getCityId(),
+				'siteName' => $this->taskContext->getSiteName(),
 				'exception' => $e
 			]
 		);
