@@ -31,8 +31,8 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 				'image' => 'wds-company-logo-fandom-powered-by-wikia-two-lines',
 				'href' => $this->getHref( 'fandom-logo' ),
 				'title' => [
-					'type' => 'translatable-text',
-					'key' => 'global-footer-fandom-header'
+					'type' => 'text',
+					'value' => 'Fandom powered by Wikia'
 				]
 			],
 			'company_overview' => [
