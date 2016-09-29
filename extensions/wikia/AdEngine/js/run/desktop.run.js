@@ -3,6 +3,7 @@
 require([
 	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.adEngineRunner',
+	'ext.wikia.adEngine.adLogicPageParams',
 	'ext.wikia.adEngine.config.desktop',
 	'ext.wikia.adEngine.customAdsLoader',
 	'ext.wikia.adEngine.dartHelper',
@@ -16,10 +17,12 @@ require([
 	'ext.wikia.adEngine.provider.yavliTag',
 	'wikia.window',
 	'wikia.loader',
-	require.optional('ext.wikia.adEngine.recovery.gcs')
+	require.optional('ext.wikia.adEngine.recovery.gcs'),
+	require.optional('ext.wikia.adEngine.template.floatingRail')
 ], function (
 	adContext,
 	adEngineRunner,
+	pageLevelParams,
 	adConfigDesktop,
 	customAdsLoader,
 	dartHelper,
@@ -33,7 +36,8 @@ require([
 	yavliTag,
 	win,
 	loader,
-	gcs
+	gcs,
+	floatingRail
 ) {
 	'use strict';
 
@@ -56,21 +60,23 @@ require([
 
 	// Everything starts after content and JS
 	win.wgAfterContentAndJS.push(function () {
+		if (floatingRail) {
+			pageLevelParams.add('ah', floatingRail.getArticleHeightParameter().toString());
+		}
+
 		// Ads
 		scrollHandler.init(skin);
 		win.adslots2 = win.adslots2 || [];
 		adEngineRunner.run(adConfigDesktop, win.adslots2, 'queue.desktop', !!context.opts.delayEngine);
 
-		// Recovery
-		recoveryHelper.initEventQueue();
-
-		if (!context.opts.sourcePointRecovery) {
-			sourcePoint.initDetection();
-		}
+		sourcePoint.initDetection();
 
 		if (context.opts.pageFairDetection) {
 			pageFair.initDetection(context);
 		}
+
+		// Recovery
+		recoveryHelper.initEventQueue();
 
 		if (context.opts.googleConsumerSurveys && gcs) {
 			gcs.addRecoveryCallback();
@@ -78,17 +84,6 @@ require([
 
 		if (context.opts.yavli) {
 			yavliTag.add();
-		}
-
-		if (context.opts.recoveredAdsMessage) {
-			loader({
-				type: loader.AM_GROUPS,
-				resources: ['adengine2_ads_recovery_message_js']
-			}).done(function () {
-				require(['ext.wikia.adEngine.recovery.message'], function (recoveredAdMessage) {
-					recoveredAdMessage.addRecoveryCallback();
-				});
-			});
 		}
 	});
 });

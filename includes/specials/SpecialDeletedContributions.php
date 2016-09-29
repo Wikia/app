@@ -243,7 +243,6 @@ class DeletedContribsPager extends IndexPager {
 		}
 
 		$ret = Html::rawElement( 'li', array(), $ret ) . "\n";
-
 		wfProfileOut( __METHOD__ );
 		return $ret;
 	}

@@ -1,17 +1,8 @@
 /*global define*/
 define('ext.wikia.adEngine.provider.directGptMobile', [
-	'ext.wikia.adEngine.provider.factory.wikiaGpt',
-	'ext.wikia.adEngine.uapContext',
-	'ext.wikia.adEngine.utils.eventDispatcher'
-], function (factory, uapContext, eventDispatcher) {
+	'ext.wikia.adEngine.provider.factory.wikiaGpt'
+], function (factory) {
 	'use strict';
-
-	// TODO: ADEN-3542
-	function dispatchNoUapEvent(slotName) {
-		if (slotName === 'MOBILE_TOP_LEADERBOARD' && uapContext.getUapId() === undefined) {
-			eventDispatcher.dispatch('wikia.not_uap');
-		}
-	}
 
 	return factory.createProvider(
 		'ext.wikia.adEngine.provider.directGptMobile',
@@ -19,6 +10,7 @@ define('ext.wikia.adEngine.provider.directGptMobile', [
 		'mobile',
 		{
 			INVISIBLE_HIGH_IMPACT:      {size: '1x1'},
+			INVISIBLE_HIGH_IMPACT_2:    {loc: 'hivi'},
 			MOBILE_TOP_LEADERBOARD:     {size: '300x50,300x250,320x50,320x100,320x480'},
 			MOBILE_BOTTOM_LEADERBOARD:  {size: '300x50,300x250,320x50,320x100,320x480'},
 			MOBILE_IN_CONTENT:          {size: '320x50,300x250,300x50,320x480'},
@@ -28,12 +20,10 @@ define('ext.wikia.adEngine.provider.directGptMobile', [
 			MOBILE_PREFOOTER:           {size: '320x50,300x250,300x50'}
 		},
 		{
-			beforeSuccess: dispatchNoUapEvent,
-			beforeHop: dispatchNoUapEvent,
-			beforeCollapse: dispatchNoUapEvent,
 			atfSlots: [
 				'MOBILE_TOP_LEADERBOARD',
-				'INVISIBLE_HIGH_IMPACT'
+				'INVISIBLE_HIGH_IMPACT',
+				'INVISIBLE_HIGH_IMPACT_2'
 			]
 		}
 	);

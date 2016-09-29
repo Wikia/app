@@ -70,6 +70,7 @@ class GlobalTitle extends Title {
 		}
 
 		$filteredText = Sanitizer::decodeCharReferences( $text );
+
 		$title = new GlobalTitle();
 
 		$title->mText = $filteredText;
@@ -81,7 +82,7 @@ class GlobalTitle extends Title {
 
 		return $title;
 	}
-	
+
 	/**
 	 * @desc Create a new Title for the Main Page
 	 *
@@ -300,6 +301,19 @@ class GlobalTitle extends Title {
 		if( $this->mNamespace != NS_MAIN ) {
 			$namespace .= ":";
 		}
+
+		$titleText = $this->mUrlform;
+		if ( $this->mNamespace === NS_SPECIAL ) {
+			$globalStateWrapper = new Wikia\Util\GlobalStateWrapper( [
+				'wgContLang' => $this->mContLang
+			] );
+			$localName = $globalStateWrapper->wrap( function () use ( $titleText ) {
+				return SpecialPageFactory::getLocalNameFor( $titleText );
+			} );
+
+			$titleText = wfUrlencode( $localName );
+		}
+
 		/**
 		 * replace $1 with article title with namespace
 		 */
@@ -308,7 +322,7 @@ class GlobalTitle extends Title {
 			$query = wfArrayToCGI( $query );
 		}
 
-		$url = str_replace( '$1', $namespace . $this->mUrlform, $this->mArticlePath );
+		$url = str_replace( '$1', $namespace . $titleText, $this->mArticlePath );
 		$url = wfAppendQuery( $this->mServer . $url, $query );
 
 		return $url;
@@ -680,7 +694,7 @@ class GlobalTitle extends Title {
 		 */
 		$server = WikiFactory::getVarValueByName( "wgServer", $this->mCityId );
 		if ( $server ) {
-			$this->mServer = self::normalizeEnvURL( $server );
+			$this->mServer = \WikiFactory::getLocalEnvURL( $server );
 			return $server;
 		}
 
@@ -698,27 +712,11 @@ class GlobalTitle extends Title {
 
 		if ( $city ) {
 			$server = rtrim( $city->city_url, "/" );
-			$this->mServer = self::normalizeEnvURL( $server );
+			$this->mServer = \WikiFactory::getLocalEnvURL( $server );
 			return $server;
 		}
 
 		return false;
-	}
-
-	/**
-	 *
-	 * Normalizes URL passed to this method to generate environment-specific paths
-	 *
-	 * @param $server
-	 * @return string
-	 */
-	private static function normalizeEnvURL( $server ) {
-		global $wgWikiaEnvironment;
-		if ( $wgWikiaEnvironment != WIKIA_ENV_PROD ) {
-			return WikiFactory::getLocalEnvURL( $server );
-		}
-
-		return $server;
 	}
 
 	/**
@@ -822,7 +820,7 @@ class GlobalTitle extends Title {
 			return $this->mNamespaceNames;
 		}
 
-		$this->mNamespaceNames = array();
+		$this->mNamespaceNames = $this->mContLang->getNamespaces() + $wgCanonicalNamespaceNames;
 
 		/**
 		 * get extra namespaces for city_id, they have to be defined in
@@ -830,11 +828,9 @@ class GlobalTitle extends Title {
 		 */
 		$namespaces = WikiFactory::getVarValueByName( "wgExtraNamespacesLocal", $this->mCityId );
 		if( is_array( $namespaces ) ) {
-			$this->mNamespaceNames =  $wgCanonicalNamespaceNames + $namespaces;
+			$this->mNamespaceNames +=  $namespaces;
 		}
-		else {
-			$this->mNamespaceNames = $wgCanonicalNamespaceNames;
-		}
+
 		return $this->mNamespaceNames;
 	}
 
@@ -846,7 +842,7 @@ class GlobalTitle extends Title {
 	 * @return string
 	 */
 	private function memcKey() {
-		return wfSharedMemcKey( 'globaltitle', $this->mCityId );
+		return wfSharedMemcKey( 'globaltitlev1', $this->mCityId );
 	}
 
 	/**

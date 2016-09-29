@@ -165,6 +165,10 @@ abstract class WikiaHttpException extends WikiaBaseException {
 			$this->details = $details;
 			wfDebug(get_class($this)  . ": {$this->details}\n");
 		}
+		WikiaLogger::instance()->error('WikiaHttpException', [
+			'exception_details' => $details,
+			'exception' => $this
+		]);
 	}
 
 	public function getDetails() {

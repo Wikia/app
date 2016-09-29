@@ -440,15 +440,6 @@ class WikiaMapsSpecialController extends WikiaSpecialPageController {
 	}
 
 	/**
-	 * Return Real Map image URL
-	 */
-	public function getRealMapImageUrl() {
-		$this->response->setVal( 'url', $this->getModel()->getRealMapImageUrl() );
-		$this->response->setFormat( WikiaResponse::FORMAT_JSON );
-		$this->response->setCacheValidity( WikiaResponse::CACHE_SHORT, WikiaResponse::CACHE_SHORT );
-	}
-
-	/**
 	 * Returns WikiaMaps model
 	 * @return WikiaMaps
 	 */

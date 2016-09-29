@@ -1,12 +1,8 @@
 <?php
-/**
- * Internationalisation file for the WAM Page extension.
- *
- * @addtogroup Languages
- */
-$messages = array();
+/** Internationalization file for /extensions/wikia/WAMPage/WAMPage extension. */
+$messages = [];
 
-$messages['en'] = array(
+$messages['en'] = [
 	'wam-page-desc' => 'WAM Page',
 	'wam-html-title' => 'Wikia Activity Monitor (WAM)',
 	'wampage-header' => 'Wam',
@@ -60,9 +56,9 @@ Please contact community support at [mailto:support@wikia-inc.com support@wikia-
 	'wam-index-filter-lang-label' => 'Language',
 	'wam-index-filter-language-default' => 'All',
 	'wam-index-filter-vertical-default' => 'All',
-);
+];
 
-$messages['qqq'] = array(
+$messages['qqq'] = [
 	'wam-page-desc' => '{{desc}}',
 	'wam-html-title' => 'Title for the WAM pages. For information about WAM visit http://www.wikia.com/WAM',
 	'wampage-header' => 'Header of the WAM page on corporate wiki. For information about WAM visit http://www.wikia.com/WAM',
@@ -83,9 +79,9 @@ $messages['qqq'] = array(
 	'wampage-faq' => 'Content of the FAQ page for WAM page on corporate wiki. For information about WAM visit http://www.wikia.com/WAM',
 	'wampage-breadcrumb-back-to-wam' => 'Content of an anchor which goes back to WAM page on corporate wiki. There is a "<" sign before this text. For information about WAM visit http://www.wikia.com/WAM',
 	'wam-index-no-results' => 'Information displayed in the table when there are no results found. It contains link to e-mail address of our support team. For information about WAM visit http://www.wikia.com/WAM',
-);
+];
 
-$messages['de'] = array(
+$messages['de'] = [
 	'wam-html-title' => 'Wikia Aktivitätsmonitor (WAM)',
 	'wampage-header' => 'WAM',
 	'wam-Gaming' => 'Videospiele',
@@ -148,9 +144,9 @@ Dem Community-Team unter [mailto:support@wikia-inc.com support@wikia-inc.com].',
 	'wampage-top-gainers-header' => 'Aufsteiger',
 	'wampage-subheader-wam' => 'Der Wikia Aktivitätsmonitor (WAM) zeigt an, wie es um die Aktivität und Bekanntheit deiner Community steht.',
 	'wampage-content-faq-link' => '[[$1|Häufig gestellte Fragen]]',
-);
+];
 
-$messages['es'] = array(
+$messages['es'] = [
 	'wam-html-title' => 'Monitor de Actividad de Wikia (WAM)',
 	'wampage-header' => 'WAM',
 	'wam-Gaming' => 'Videojuegos',
@@ -208,39 +204,39 @@ Por favor, ponte en contacto con el equipo de soporte comunitario en [mailto:sup
 	'wampage-top-gainers-header' => 'Los que más ganan',
 	'wampage-subheader-wam' => 'El Monitor de Actividad de Wikia (WAM) es un indicador de la salud y vitalidad de las comunidades.',
 	'wampage-content-faq-link' => '[[$1|Preguntas más frecuentes]]',
-);
+];
 
-$messages['fr'] = array(
-	'wam-html-title' => "Moniteur d'Activité Wikia (WAM)",
+$messages['fr'] = [
+	'wam-html-title' => 'Moniteur d\'Activité Wikia (WAM)',
 	'wampage-header' => 'Wam',
 	'wam-Gaming' => 'Jeux vidéo',
 	'wam-Entertainment' => 'Divertissement',
 	'wam-Lifestyle' => 'Mode de vie',
 	'wampage-header-wam' => 'Score WAM',
 	'wampage-header-faq' => 'Foire Aux Questions',
-	'wampage-content' => "Le WAM est calculé chaque jour pour les 5&nbsp;000 meilleurs wikias et inclut un classement global et par thème ainsi qu'une note comprise entre 0 et 100. Le classement WAM est sensible aux événements du monde réel et varie souvent, aussi revenez régulièrement pour voir les dernières tendances.",
-	'wampage-faq' => "__NOTOC____NOEDITSECTION__===Comment le WAM est-il calculé ?===
-Le classement WAM est une combinaison du trafic, de l'engagement et de la croissance. Nous ne pouvons pas rentrer dans les détails car nous ne voulons pas que les wikias essaient de manipuler le classement. Mais soyez sûr que nous avons intégré tous les ingrédients essentiels pour un wikia réussi et prospère.
+	'wampage-content' => 'Le WAM est calculé chaque jour pour les 5&nbsp;000 meilleurs wikias et inclut un classement global et par thème ainsi qu\'une note comprise entre 0 et 100. Le classement WAM est sensible aux événements du monde réel et varie souvent, aussi revenez régulièrement pour voir les dernières tendances.',
+	'wampage-faq' => '__NOTOC____NOEDITSECTION__===Comment le WAM est-il calculé ?===
+Le classement WAM est une combinaison du trafic, de l\'engagement et de la croissance. Nous ne pouvons pas rentrer dans les détails car nous ne voulons pas que les wikias essaient de manipuler le classement. Mais soyez sûr que nous avons intégré tous les ingrédients essentiels pour un wikia réussi et prospère.
 
 ===Pourquoi dois-je me soucier du WAM ?===
-Chez Wikia, nous pensons que la connaissance est le pouvoir. Bien que nous ayons toujours été ouverts sur les données et les statistiques, le WAM représente un grand pas en avant dans la mesure des communautés en ligne. Le WAM est un système de remontée de l'information précieux pour les fondateurs, administrateurs et contributeurs lorsqu'ils cherchent à mieux comprendre où se situe leur wikia dans le classement et l'impact qu'ont leurs actions.
+Chez Wikia, nous pensons que la connaissance est le pouvoir. Bien que nous ayons toujours été ouverts sur les données et les statistiques, le WAM représente un grand pas en avant dans la mesure des communautés en ligne. Le WAM est un système de remontée de l\'information précieux pour les fondateurs, administrateurs et contributeurs lorsqu\'ils cherchent à mieux comprendre où se situe leur wikia dans le classement et l\'impact qu\'ont leurs actions.
 
 ===Comment puis-je améliorer ma note WAM ?===
-Le WAM est un algorithme complexe et il n'y a pas de moyen simple d'améliorer instantanément votre note et classement. Ceci dit, il y a des étapes que vous pouvez suivre qui vous placeront en bonne voie pour monter dans le classement. D'abord et avant tout, nous vous suggérons [[w:c:communaute:Aide:Attirer des contributeurs|d'encourager la participation sur votre wikia]]. Les wikias qui ont un grand nombre de contributions et de contributeurs actifs ont plus de chance d'être bien positionnés dans le classement WAM. Mais il est important de vous rappeler que vous ne pouvez pas abuser le système. Plus votre contenu est authentique et pertinent et plus il aura de chances de parler à vos lecteurs.
+Le WAM est un algorithme complexe et il n\'y a pas de moyen simple d\'améliorer instantanément votre note et classement. Ceci dit, il y a des étapes que vous pouvez suivre qui vous placeront en bonne voie pour monter dans le classement. D\'abord et avant tout, nous vous suggérons [[w:c:communaute:Aide:Attirer des contributeurs|d\'encourager la participation sur votre wikia]]. Les wikias qui ont un grand nombre de contributions et de contributeurs actifs ont plus de chance d\'être bien positionnés dans le classement WAM. Mais il est important de vous rappeler que vous ne pouvez pas abuser le système. Plus votre contenu est authentique et pertinent et plus il aura de chances de parler à vos lecteurs.
 
-Nous vous recommandons aussi de contacter vos co-contributeurs et voir s'il y a des améliorations [[w:c:communaute:Aide:Bâtir une communauté|que vous pourriez apporter au wikia]]. La navigation est-elle intuitive ? Avez-vous suffisamment de médias riches (vidéos et images) ? Y a-t-il des trous dans le contenu ? Bien sûr, nous pouvons [[w:c:fr:aide:Contenu|vous aider à partir dans la bonne direction]].
+Nous vous recommandons aussi de contacter vos co-contributeurs et voir s\'il y a des améliorations [[w:c:communaute:Aide:Bâtir une communauté|que vous pourriez apporter au wikia]]. La navigation est-elle intuitive ? Avez-vous suffisamment de médias riches (vidéos et images) ? Y a-t-il des trous dans le contenu ? Bien sûr, nous pouvons [[w:c:fr:aide:Contenu|vous aider à partir dans la bonne direction]].
 
 ===Combien de temps les données WAM couvrent-elles ?===
 Les données de WAM remontent au 1<sup>er</sup> janvier 2012.
 
 ===Où le WAM est-il actuellement affiché ?===
-Vous pouvez trouver actuellement le WAM sur cette page produit, les pages de thème [[w:c:fr:Jeux vidéo|Jeux vidéo]], [[w:c:fr:Divertissement|Divertissement]] et [[w:c:fr:Mode de vie|Mode de vie]] et la page interstitielle d'aperçu pour chaque wikia.
+Vous pouvez trouver actuellement le WAM sur cette page produit, les pages de thème [[w:c:fr:Jeux vidéo|Jeux vidéo]], [[w:c:fr:Divertissement|Divertissement]] et [[w:c:fr:Mode de vie|Mode de vie]] et la page interstitielle d\'aperçu pour chaque wikia.
 
 ===Puis-je afficher ma note WAM sur mon wikia ?===
 Nous vous encourageons à afficher votre note WAM sur votre wikia, mais nous vous demandons de mettre un lien vers la page produit.
 
-===À qui puis-je parler si j'ai d'autres questions sur le WAM ?===
-Veuillez contacter le support de la communauté via [mailto:support@wikia-inc.com support@wikia-inc.com].",
+===À qui puis-je parler si j\'ai d\'autres questions sur le WAM ?===
+Veuillez contacter le support de la communauté via [mailto:support@wikia-inc.com support@wikia-inc.com].',
 	'wam-index-header-rank' => 'Position',
 	'wam-index-header-score' => 'Score WAM',
 	'wam-index-header-wiki-name' => 'URL',
@@ -265,12 +261,12 @@ Veuillez contacter le support de la communauté via [mailto:support@wikia-inc.co
 	'wam-music' => 'Musique',
 	'wam-movies' => 'Cinéma',
 	'wampage-top-gainers-header' => 'Meilleure progression',
-	'wampage-subheader-wam' => "Le score WAM est un indicateur de la santé et de la vitalité d'une communauté de fans Wikia.",
+	'wampage-subheader-wam' => 'Le score WAM est un indicateur de la santé et de la vitalité d\'une communauté de fans Wikia.',
 	'wampage-content-faq-link' => '[[$1|Foire Aux Questions]]',
-);
+];
 
-$messages['it'] = array(
-	'wam-html-title' => 'Wikia Activity Monitor (WAM)',
+$messages['it'] = [
+	'wam-html-title' => 'Wikia Activity Monitor (WAM) - Wikia.com/WAM',
 	'wampage-header' => 'Wam',
 	'wampage-header-faq' => 'Domande frequenti',
 	'wam-all' => 'Tutte',
@@ -284,16 +280,20 @@ $messages['it'] = array(
 	'wampage-top-gainers-header' => 'Top in crescita',
 	'wampage-header-wam' => 'Punteggio WAM',
 	'wampage-subheader-wam' => 'Il punteggio WAM è un indicatore della forza e dello slancio di una community di Wikia.',
-	'wampage-content' => 'Il WAM è calcolato giornalmente per le prime 5.000 wiki e include una posizione globale e di categoria nonché un punteggio da 0 a 100. Le posizioni WAM sono sensibili ad eventi del mondo reale e cambiano frequentemente, per cui assicurati di controllare spesso per scoprire gli ultimi trend.',
+	'wampage-content' => 'Il Wikia Activity Monitor (WAM) è un indicatore della salute e della vitalità di una wiki. Si tratta di uno strumento di misurazione personalizzato sviluppato da Wikia che riunisce una serie di indicatori independenti in un unico indice globale, come i punteggi Billboard o Parker.
+
+L\'WAM è calcolato giornalmente per le 5000 wiki più grosse e include una posizione globale e una posizione per categoria e un punteggio da 0 a 100. I punteggi WAM sono sensibili agli eventi del mondo reale e cambiano frequentemente, perciò assicurati di controllarli regolarmente per vedere le ultime tendenze. L\'WAM può anche essere consultato tutti i giorni nelle nostre pagine delle categorie [[Video Games|Videogiochi]], [[Entertainment|Intrattenimento]] e [[Lifestyle|Stili di vita]].
+
+[[$1|Domande frequenti]]',
 	'wampage-content-faq-link' => '[[$1|Domande frequenti]]',
-	'wampage-faq' => "__NOTOC____NOEDITSECTION__=== Com'è calcolato il punteggio WAM? ===
+	'wampage-faq' => '__NOTOC____NOEDITSECTION__=== Com\'è calcolato il punteggio WAM? ===
 La classificazione WAM è una combinazione di traffico, coinvolgimento e crescita. Non possiamo fornirvi i dettagli perché non vogliamo che le wiki cerchino di manipolare i punteggi. Ma state tranquilli: abbiamo incluso tutti gli ingredienti essenziali per verificare quali sono le wiki di successo.
 
 === Perché dovrei interessarmi al WAM? ===
 Noi di Wikia crediamo che la conoscenza sia potere. Anche se siamo sempre stati aperti a dati e statistiche, il WAM rappresenta un grande passo avanti nella misurazione delle community online. Il WAM è un prezioso feedback continuo per i fondatori, gli amministratori e i collaboratori che cercano di capire meglio in che posizione si situa la loro wiki e come la loro attività può incidere sul punteggio.
 
 === Come posso migliorare il mio punteggio WAM? ===
-Il WAM è un algoritmo complesso e non esiste un modo semplice per migliorare istantaneamente il tuo punteggio e la tua posizione. Ciò detto, ci sono alcuni passi da seguire per favorire l'ascesa della classifica. Innanzitutto, ti suggeriamo di [[w:it:Aiuto:Attrarre collaboratori|incoraggiare la partecipazione nella tua wiki]]. Le wiki che hanno un gran numero di contributi e di collaboratori attivi hanno più probabilità di posizionarsi bene nella classifica WAM. Ma è importante ricordare che non si può imbrogliare il sistema. Più i contenuti sono autentici e rilevanti, più è probabile che facciano colpo sui tuoi lettori.
+Il WAM è un algoritmo complesso e non esiste un modo semplice per migliorare istantaneamente il tuo punteggio e la tua posizione. Ciò detto, ci sono alcuni passi da seguire per favorire l\'ascesa della classifica. Innanzitutto, ti suggeriamo di [[w:it:Aiuto:Attrarre collaboratori|incoraggiare la partecipazione nella tua wiki]]. Le wiki che hanno un gran numero di contributi e di collaboratori attivi hanno più probabilità di posizionarsi bene nella classifica WAM. Ma è importante ricordare che non si può imbrogliare il sistema. Più i contenuti sono autentici e rilevanti, più è probabile che facciano colpo sui tuoi lettori.
 
 Ti raccomandiamo inoltre di confrontarti con i tuoi collaboratori per vedere se puoi [[w:it:Aiuto:Come creare una wiki di successo|migliorare qualcosa nella tua wiki]]. Il menù di navigazione è intuitivo? Hai abbastanza contenuti multimediali (video e immagini)? Ci sono lacune nel contenuto? Chiaramente, possiamo [[w:it:Aiuto:Contenuti|guidarti nella giusta direzione]].
 
@@ -307,25 +307,26 @@ Puoi trovare i punteggi WAM in questa pagina, nelle pagine delle categorie [[w:c
 Ti invitiamo sicuramente a mostrare il tuo punteggio WAM o la tua posizione nella tua wiki, ma ti chiediamo di inserire anche un link alla pagina WAM (http://www.wikia.com/WAM).
 
 === Con chi posso parlare se ho altre domande su WAM? ===
-Per favore contatta il community support tramite [mailto:support@wikia-inc.com support@wikia-inc.com].",
+Per favore contatta il community support tramite [mailto:support@wikia-inc.com support@wikia-inc.com].',
 	'wam-index-header-rank' => 'Posizione',
 	'wam-index-header-score' => 'Punteggio WAM',
-	'wam-index-header-wiki-name' => 'URL della wiki',
+	'wam-index-header-wiki-name' => 'URL',
 	'wam-index-header-vertical' => 'Categoria',
 	'wam-index-header-vertical-rank' => 'Posizione di categoria',
 	'wam-index-header-admins' => 'Amministratori',
 	'wampage-breadcrumb-back-to-wam' => 'Torna al punteggio WAM',
 	'wam-index-header-peak-rank' => 'Picco di posizione',
-	'wam-index-no-results' => 'La wiki cercata non rientra tra le prime 5000 nella data selezionata. La classifica WAM è aggiornata giornalmente, per cui controlla frequentemente. [mailto:support@wikia-inc.com Contatta Wikia Community Support] se hai ulteriori domande.',
+	'wam-index-no-results' => 'La wiki che hai cercato non è nella classifica top 5000 nella data da te selezionata.
+Le posizioni WAM sono aggiornate ogni giorno, perciò ricontrolla spesso. [mailto:support@wikia-inc.com Contatta il Wikia Community Support] se hai delle domande.',
 	'wam-index-filter-search-placeholder' => 'Cerca',
 	'wam-index-filter-sort-label' => 'Categoria',
 	'wam-index-filter-date-label' => 'Data',
 	'wam-index-filter-lang-label' => 'Lingua',
 	'wam-index-filter-language-default' => 'Tutte',
 	'wam-index-filter-vertical-default' => 'Tutte',
-);
+];
 
-$messages['ja'] = array(
+$messages['ja'] = [
 	'wam-html-title' => 'ウィキア・アクティビティ・モニター (WAM)',
 	'wampage-header' => 'Wam',
 	'wam-Gaming' => 'ゲーム',
@@ -362,7 +363,7 @@ WAMスコアやランキングをウィキ上にのせることは、ウィキ�
 	'wam-index-header-admins' => '管理者',
 	'wampage-breadcrumb-back-to-wam' => 'WAMスコアに戻る',
 	'wam-index-header-peak-rank' => 'ピークランキング',
-	'wam-index-no-results' => '検索いただいたウィキアは、選択された期間中の上位5000ではありませんでした。WAMランキングは毎日更新されていますので、頻繁にご確認ください。ご不明な点は、[mailto:support@wikia-inc.com Contact Wikia Community Support]までご連絡ください。',
+	'wam-index-no-results' => 'あなたが検索したウィキアは、選択した日付ではトップ5000以内にありません。WAM ランキングは毎日更新されるので頻繁に確認してみてください。何か質問があるときは[mailto:support@wikia-inc.com ウィキア・コミュニティ・サポート]にお問い合わせください。',
 	'wam-index-filter-search-placeholder' => '検索',
 	'wam-index-filter-sort-label' => 'ジャンル',
 	'wam-index-filter-date-label' => '日付',
@@ -380,9 +381,9 @@ WAMスコアやランキングをウィキ上にのせることは、ウィキ�
 	'wampage-top-gainers-header' => '人気上昇コミュニティ',
 	'wampage-subheader-wam' => 'WAMスコアはウィキアのファンコミュニティのパワーと勢いを示しています。',
 	'wampage-content-faq-link' => '[[$1|よくある質問]]',
-);
+];
 
-$messages['nl'] = array(
+$messages['nl'] = [
 	'wam-html-title' => 'Wikia Activity Monitor (WAM)',
 	'wampage-header' => 'Wam',
 	'wampage-header-faq' => 'Frequently asked questions',
@@ -435,9 +436,9 @@ Please contact community support at [mailto:support@wikia-inc.com support@wikia-
 	'wam-index-filter-lang-label' => 'Language',
 	'wam-index-filter-language-default' => 'All',
 	'wam-index-filter-vertical-default' => 'All',
-);
+];
 
-$messages['pl'] = array(
+$messages['pl'] = [
 	'wam-html-title' => 'Wikia Activity Monitor (WAM)',
 	'wampage-header' => 'WAM',
 	'wam-Gaming' => 'Gry',
@@ -445,7 +446,7 @@ $messages['pl'] = array(
 	'wam-Lifestyle' => 'Lifestyle',
 	'wampage-header-wam' => 'Punktacja WAM',
 	'wampage-header-faq' => 'Najczęściej zadawane pytania',
-	'wampage-content' => 'WAM aktualizowany jest codziennie, a 5000 najwyżej ocenionych wikii dodawanych jest do rankingu ogólnego i rankingów dla odrębnych kategorii. Pozycja w rankingu zależy od wielu czynników, które nieustannie się zmieniają, więc, aby być na bieżąco z aktualnymi trendami, należy regularnie śledzić ranking.',
+	'wampage-content' => 'WAM aktualizowany jest codziennie, a 5000 najwyżej ocenionych wiki dodawanych jest do rankingu ogólnego i rankingów dla odrębnych kategorii. Pozycja w rankingu zależy od wielu czynników, które nieustannie się zmieniają, więc aby być na bieżąco z aktualnymi trendami, należy regularnie śledzić ranking.',
 	'wampage-faq' => '__NOTOC____NOEDITSECTION__===Jak liczony jest WAM?===
 WAM to wypadkowa liczby odwiedzających, edytorów i edycji na wiki. Nie chcemy zdradzać zbyt wielu szczegółów, gdyż nie chcemy, aby edytorzy próbowali bezpośrednio wpływać na wyniki. Zapewniamy jednak, że wliczone zostały wszystkie czynniki pozwalające poprawnie ocenić aktywne projekty.
 ===Czemu powinno mnie to interesować?===
@@ -464,13 +465,13 @@ Tak. Zachęcamy użytkowników do publikacji punktacji na wiki, jednak prosimy o
 Skontaktuj się z nami poprzez [mailto:support@wikia-inc.com support@wikia-inc.com].',
 	'wam-index-header-rank' => 'Pozycja',
 	'wam-index-header-score' => 'Punktacja WAM',
-	'wam-index-header-wiki-name' => 'URL wiki',
+	'wam-index-header-wiki-name' => 'URL Wiki',
 	'wam-index-header-vertical' => 'Kategoria',
 	'wam-index-header-vertical-rank' => 'Pozycja w kategorii',
 	'wam-index-header-admins' => 'Administratorzy',
 	'wampage-breadcrumb-back-to-wam' => 'Punktacja WAM',
 	'wam-index-header-peak-rank' => 'Najwyższa pozycja',
-	'wam-index-no-results' => 'Wikia, której szukasz nie znajduje się w pierwszych 5000 w podanym dniu. Ranking jest aktualizowany codziennie, więc wchodź często. [mailto:support@wikia-inc.com Skontaktuj się] z nami jeśli masz jakieś pytania.',
+	'wam-index-no-results' => 'Brak wyników',
 	'wam-index-filter-search-placeholder' => 'Szukaj',
 	'wam-index-filter-sort-label' => 'Kategoria',
 	'wam-index-filter-date-label' => 'Data',
@@ -486,11 +487,11 @@ Skontaktuj się z nami poprzez [mailto:support@wikia-inc.com support@wikia-inc.c
 	'wam-music' => 'Muzyka',
 	'wam-movies' => 'Filmy',
 	'wampage-top-gainers-header' => 'Największe zyski',
-	'wampage-subheader-wam' => 'WAM to wskaźnik siły i pędu społeczności fanów skupionych wokół wikii.',
+	'wampage-subheader-wam' => 'WAM to wskaźnik siły i pędu społeczności fanów skupionych wokół wiki.',
 	'wampage-content-faq-link' => '[[$1|Najczęściej zadawane pytania]]',
-);
+];
 
-$messages['pt'] = array(
+$messages['pt'] = [
 	'wam-html-title' => 'Monitor de Atividade da Wikia (WAM)',
 	'wampage-header' => 'WAM',
 	'wampage-header-faq' => 'Perguntas mais frequentes',
@@ -543,9 +544,9 @@ Por favor, entre em contato com a equipe de apoio pelo endereço [mailto:support
 	'wam-index-filter-lang-label' => 'Idioma',
 	'wam-index-filter-language-default' => 'Todos',
 	'wam-index-filter-vertical-default' => 'Todos',
-);
+];
 
-$messages['ru'] = array(
+$messages['ru'] = [
 	'wam-html-title' => 'Wikia Activity Monitor (WAM)',
 	'wampage-header' => 'Wam',
 	'wampage-header-faq' => 'Часто задаваемые вопросы',
@@ -591,16 +592,16 @@ $messages['ru'] = array(
 	'wam-index-header-admins' => 'Администраторы',
 	'wampage-breadcrumb-back-to-wam' => 'Обратно к рейтингу WAM',
 	'wam-index-header-peak-rank' => 'Высшая позиция',
-	'wam-index-no-results' => 'Вики, которую вы искали, не входит в топ-5000 википроектов на Викия. Однако рейтинг WAM обновляется ежедневно, поэтому не забудьте проверить его снова. Если у вас есть вопросы,  [mailto:support@wikia-inc.com свяжитесь с нами].',
+	'wam-index-no-results' => 'Вики, которую вы искали, не входит в топ-5000 википроектов на Викия. Однако рейтинг WAM обновляется ежедневно, поэтому не забудьте проверить его снова. Если у вас есть вопросы, [mailto:support@wikia-inc.com свяжитесь с нами].',
 	'wam-index-filter-search-placeholder' => 'Поиск',
 	'wam-index-filter-sort-label' => 'Портал',
 	'wam-index-filter-date-label' => 'Дата',
 	'wam-index-filter-lang-label' => 'Язык',
 	'wam-index-filter-language-default' => 'Все',
 	'wam-index-filter-vertical-default' => 'Все',
-);
+];
 
-$messages['zh-hans'] = array(
+$messages['zh-hans'] = [
 	'wam-html-title' => 'Wikia活动监视器(WAM)',
 	'wampage-header' => 'Wam',
 	'wampage-header-faq' => '常见问题',
@@ -653,9 +654,9 @@ WAM上的数据最早可以追溯到2012年1月1日
 	'wam-index-filter-lang-label' => '语言',
 	'wam-index-filter-language-default' => '所有',
 	'wam-index-filter-vertical-default' => '所有',
-);
+];
 
-$messages['zh-tw'] = array(
+$messages['zh-tw'] = [
 	'wam-html-title' => 'Wikia活動監視器(WAM)',
 	'wampage-header' => 'Wam',
 	'wampage-header-faq' => '常見問題',
@@ -670,7 +671,7 @@ $messages['zh-tw'] = array(
 	'wampage-top-gainers-header' => '排行榜',
 	'wampage-header-wam' => 'WAM分數',
 	'wampage-subheader-wam' => 'WAM分數是展示社區實力的標準和動力之所在。',
-	'wampage-content' => 'WAM用來每日計算排名前5000的維琪社區，包括所有社區和分類社區以及其0 -100的排名分數。WAM的排名每日都將按照社區的發展趨勢不斷變化，所以記得時常檢查一下最新的流行趨勢。',
+	'wampage-content' => 'WAM用來每日計算排名前5000的Wiki社區，包括所有社區和分類社區以及其0 -100的排名分數。WAM的排名每日都將按照社區的發展趨勢不斷變化，所以記得時常檢查一下最新的流行趨勢。',
 	'wampage-content-faq-link' => '[[$1|常見問題]]',
 	'wampage-faq' => '__NOTOC____NOEDITSECTION__
 === 如何計算WAM分數? ===
@@ -708,5 +709,25 @@ WAM上的資料最早可以追溯到2012年1月1日
 	'wam-index-filter-lang-label' => '語言',
 	'wam-index-filter-language-default' => '所有',
 	'wam-index-filter-vertical-default' => '所有',
-);
+];
+
+$messages['ko'] = [
+	'wam-index-header-wiki-name' => '위키아 URL',
+	'wam-index-no-results' => '귀하가 검색하고자 하신 위키는 선택하신 날짜의 5,000위 안에 들지 못했습니다. WAM 순위는 매일 갱신되므로 다음에 다시 확인하러 와 주세요. 질문이 있으시다면 위키아 커뮤니티 지원팀에게 [mailto:support@wikia-inc.com 연락]해주세요.',
+	'wampage-content' => 'WAM은 매일 상위 커뮤니티 5,000개를 선정해 전체 순위와 분야 순위, 그리고 특정 방식으로 계산된 점수(0~100점)를 보여줍니다. WAM 순위는 현실에서 발생한 사건이나 변화에 매우 민감하게 반응합니다. 그러므로 주기적으로 이 페이지에 들러 최근 유행을 확인해 보세요.',
+	'wampage-subheader-wam' => 'WAM 점수를 통해 각 위키아 커뮤니티가 가진 힘과 발전 가속도를 알아볼 수 있습니다.',
+];
+
+$messages['uk'] = [
+	'wam-index-header-wiki-name' => 'URL вікі',
+	'wam-index-no-results' => 'Немає інформації',
+];
+
+$messages['zh-hant'] = [
+	'wampage-content' => 'WAM用來每日計算排名前5000的Wiki社區，包括所有社區和分類社區以及其0 -100的排名分數。WAM的排名每日都將按照社區的發展趨勢不斷變化，所以記得時常檢查一下最新的流行趨勢。',
+];
+
+$messages['zh-hk'] = [
+	'wampage-content' => 'WAM用來每日計算排名前5000的Wiki社區，包括所有社區和分類社區以及其0 -100的排名分數。WAM的排名每日都將按照社區的發展趨勢不斷變化，所以記得時常檢查一下最新的流行趨勢。',
+];
 

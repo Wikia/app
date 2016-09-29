@@ -1,4 +1,5 @@
 <?php
+
 if (!defined('MEDIAWIKI')) die();
 
 class Editcount extends SpecialPage {

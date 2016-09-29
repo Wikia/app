@@ -1,8 +1,8 @@
 <?php
 
-$messages = array();
+$messages = [];
 
-$messages['en'] = array(
+$messages['en'] = [
 	'specialprotectsite-desc' => 'Allows a site administrator to [[Special:ProtectSite|temporarily block various site modifications]]',
 	'protectsite' => 'Protect site',
 	'protectsite-text-protect' => '<!-- Instructions/Comments/Policy for use -->',
@@ -41,13 +41,14 @@ $messages['en'] = array(
 	'protectsite-upload-0' => 'Registered users and sysops',
 	'protectsite-upload-1' => 'Sysops only',
 	'action-protectsite' => 'temporarily block various site modifications',
-);
+	'right-protectsite' => 'Limit actions that can be preformed for some groups for a limited time',
+];
 
 /** Message documentation (Message documentation)
  * @author EugeneZelenko
  * @author Umherirrender
  */
-$messages['qqq'] = array(
+$messages['qqq'] = [
 	'specialprotectsite-desc' => '{{desc}}',
 	'protectsite-comment' => '{{Identical|Comment}}',
 	'protectsite-protect' => '{{Identical|Protect}}',
@@ -55,12 +56,12 @@ $messages['qqq'] = array(
 	'protectsite-log-suppressed' => 'If the protecting user chooses to hide the amount of time in the log entry, then the log entry will say indicate the protection length was hidden',
 	'protectsite-unprotect' => '{{Identical|Unprotect}}',
 	'action-protectsite' => '{{doc-action|protectsite}}',
-);
+];
 
 /** Afrikaans (Afrikaans)
  * @author Naudefj
  */
-$messages['af'] = array(
+$messages['af'] = [
 	'protectsite' => 'Beskerm werf',
 	'protectsite-title' => 'Veiligheidsinstellings vir die werf',
 	'protectsite-allowall' => 'Alle gebruikers',
@@ -72,32 +73,32 @@ $messages['af'] = array(
 	'protectsite-until' => 'Beveilig tot:',
 	'protectsite-protect' => 'Beskerm',
 	'protectsite-unprotect' => 'Verwyder beskerming',
-);
+];
 
 /** Arabic (العربية)
  * @author OsamaK
  */
-$messages['ar'] = array(
+$messages['ar'] = [
 	'protectsite-allowall' => 'كل المستخدمين',
 	'protectsite-comment' => 'التعليق:',
 	'protectsite-protect' => 'احمِ',
 	'protectsite-unprotect' => 'أزل الحماية',
-);
+];
 
 /** Azerbaijani (azərbaycanca)
  * @author Cekli829
  */
-$messages['az'] = array(
+$messages['az'] = [
 	'protectsite-maxtimeout' => 'Maksimum:',
 	'protectsite-comment' => 'Şərh:',
-);
+];
 
 /** Belarusian (Taraškievica orthography) (‪Беларуская (тарашкевіца)‬)
  * @author EugeneZelenko
  * @author Jim-by
  * @author Wizardist
  */
-$messages['be-tarask'] = array(
+$messages['be-tarask'] = [
 	'specialprotectsite-desc' => 'Дазваляе адміністратару сайта [[Special:ProtectSite|часова блякаваць розныя зьмены сайту]]',
 	'protectsite' => 'Абарона сайту',
 	'protectsite-text-protect' => '<!-- Інструкцыі/Камэнтары/Правілы выкарыстаньня -->',
@@ -119,14 +120,14 @@ $messages['be-tarask'] = array(
 	'protectsite-until' => 'Абаронены да:',
 	'protectsite-protect' => 'Абараніць',
 	'protectsite-unprotect' => 'Зьняць абарону',
-);
+];
 
 /** Breton (brezhoneg)
  * @author Fulup
  * @author Gwenn-Ael
  * @author Y-M D
  */
-$messages['br'] = array(
+$messages['br'] = [
 	'specialprotectsite-desc' => "Aotren a ra merour ul lechienn da [[Special:ProtectSite|stankañ kemmoù niverus bet degaset war al lec'hienn, evit ur prantad bennak]]",
 	'protectsite' => "Gwareziñ al lec'hienn",
 	'protectsite-text-protect' => '<!-- Kemennoù / Displegadennoù / Reolennoù implijout -->',
@@ -148,12 +149,12 @@ $messages['br'] = array(
 	'protectsite-until' => 'Gwarezet betek :',
 	'protectsite-protect' => 'Gwareziñ',
 	'protectsite-unprotect' => 'Diwareziñ',
-);
+];
 
 /** Czech (česky)
  * @author Dontlietome7
  */
-$messages['cs'] = array(
+$messages['cs'] = [
 	'specialprotectsite-desc' => 'Umožňuje administrátorům [[Special:ProtectSite|dočasně zablokovat editaci dané stránky]]',
 	'protectsite' => 'Zamknout stránku',
 	'protectsite-text-protect' => '<!-- Pokyny/Připomínky/Zásady používání -->',
@@ -175,14 +176,14 @@ $messages['cs'] = array(
 	'protectsite-until' => 'Zamknuto do:',
 	'protectsite-protect' => 'Zamknout',
 	'protectsite-unprotect' => 'Odemknout',
-);
+];
 
 /** German (Deutsch)
  * @author LWChris
  * @author SVG
  * @author The Evil IP address
  */
-$messages['de'] = array(
+$messages['de'] = [
 	'specialprotectsite-desc' => '[[Special:ProtectSite|Spezialseite]] zum Blocken diverser Seitenänderungen',
 	'protectsite' => 'Seite schützen',
 	'protectsite-text-protect' => '<!-- Anweisungen/Kommentare/Richtlinie zur Verwendung -->',
@@ -205,16 +206,16 @@ $messages['de'] = array(
 	'protectsite-protect' => 'Schützen',
 	'protectsite-unprotect' => 'Freigeben',
 	'protectsite-nologs' => 'nicht in den Logbüchern anzeigen',
-);
+];
 
 /** Zazaki (Zazaki)
  * @author Erdemaslancan
  */
-$messages['diq'] = array(
+$messages['diq'] = [
 	'protectsite-allowall' => 'Karberi pêro',
 	'protectsite-allowsysop' => 'Yew ke sysopi',
 	'protectsite-maxtimeout' => 'Maximum:',
-);
+];
 
 /** Spanish (español)
  * @author Crazymadlover
@@ -222,7 +223,7 @@ $messages['diq'] = array(
  * @author Translationista
  * @author VegaDark
  */
-$messages['es'] = array(
+$messages['es'] = [
 	'specialprotectsite-desc' => 'Permite un administrador de sitio [[Special:ProtectSite|bloquear temporalmente varias modificaciones de sitio]]',
 	'protectsite' => 'Proteger el sitio',
 	'protectsite-text-protect' => '<!-- Instrucciones/Comentario/Políticas de uso -->',
@@ -245,14 +246,14 @@ $messages['es'] = array(
 	'protectsite-protect' => 'Proteger',
 	'protectsite-unprotect' => 'Desproteger',
 	'protectsite-nologs' => 'no mostrar en los registros',
-);
+];
 
 /** Finnish (suomi)
  * @author Centerlink
  * @author Crt
  * @author Tofu II
  */
-$messages['fi'] = array(
+$messages['fi'] = [
 	'protectsite' => 'Suojaa sivu',
 	'protectsite-title' => 'Sivuston suojausasetukset',
 	'protectsite-allowall' => 'Kaikki käyttäjät',
@@ -268,7 +269,7 @@ $messages['fi'] = array(
 	'protectsite-until' => 'Suojattu, kunnes:',
 	'protectsite-protect' => 'Suojaa',
 	'protectsite-unprotect' => 'Poista suojaus',
-);
+];
 
 /** French (français)
  * @author IAlex
@@ -276,7 +277,7 @@ $messages['fi'] = array(
  * @author Slamduck
  * @author Wyz
  */
-$messages['fr'] = array(
+$messages['fr'] = [
 	'specialprotectsite-desc' => 'Permet à un administrateur du site de [[Special:ProtectSite|bloquer temporairement de nombreuses modifications du site]]',
 	'protectsite' => 'Protéger le site',
 	'protectsite-text-protect' => "<!-- Instructions / Commentaires / Règles d'utilisation -->",
@@ -299,12 +300,12 @@ $messages['fr'] = array(
 	'protectsite-protect' => 'Protéger',
 	'protectsite-unprotect' => 'Déprotéger',
 	'protectsite-nologs' => 'ne pas afficher dans les journaux',
-);
+];
 
 /** Galician (Galego)
  * @author Toliño
  */
-$messages['gl'] = array(
+$messages['gl'] = [
 	'specialprotectsite-desc' => 'Permite que un administrador do sitio [[Special:ProtectSite|bloquee temporalmente varias modificacións do mesmo]]',
 	'protectsite' => 'Protexer o sitio',
 	'protectsite-text-protect' => '<!-- Instrucións/Comentarios/Política de uso -->',
@@ -327,17 +328,17 @@ $messages['gl'] = array(
 	'protectsite-protect' => 'Protexer',
 	'protectsite-unprotect' => 'Desprotexer',
 	'protectsite-nologs' => 'non mostrar nos rexistros',
-);
+];
 
 /** Hausa (هَوُسَ) */
-$messages['ha'] = array(
+$messages['ha'] = [
 	'protectsite-comment' => 'Bahasi:',
-);
+];
 
 /** Hungarian (magyar)
  * @author Glanthor Reviol
  */
-$messages['hu'] = array(
+$messages['hu'] = [
 	'protectsite' => 'Oldal védelme',
 	'protectsite-title' => 'Oldal védelmi beállításai',
 	'protectsite-allowall' => 'Összes felhasználó',
@@ -348,12 +349,12 @@ $messages['hu'] = array(
 	'protectsite-ucomment' => 'Védelem feloldása megjegyzés:',
 	'protectsite-protect' => 'Védelem',
 	'protectsite-unprotect' => 'Védelem feloldása',
-);
+];
 
 /** Interlingua (interlingua)
  * @author McDutchie
  */
-$messages['ia'] = array(
+$messages['ia'] = [
 	'specialprotectsite-desc' => 'Permitte a un administrator del sito de [[Special:ProtectSite|blocar temporarimente varie modificationes del sito]]',
 	'protectsite' => 'Proteger sito',
 	'protectsite-text-protect' => '<!-- Instructiones/Commentos/Politica pro uso -->',
@@ -376,28 +377,28 @@ $messages['ia'] = array(
 	'protectsite-protect' => 'Proteger',
 	'protectsite-unprotect' => 'Disproteger',
 	'protectsite-nologs' => 'non monstrar in registros',
-);
+];
 
 /** Indonesian (Bahasa Indonesia)
  * @author Kenrick95
  */
-$messages['id'] = array(
+$messages['id'] = [
 	'protectsite-comment' => 'Komentar:',
 	'protectsite-protect' => 'Lindungi',
-);
+];
 
 /** Italian (italiano) */
-$messages['it'] = array(
+$messages['it'] = [
 	'protectsite-allowall' => 'Tutti gli utenti',
 	'protectsite-maxtimeout' => 'Massimo:',
 	'protectsite-comment' => 'Oggetto:',
-);
+];
 
 /** Japanese (日本語)
  * @author Tommy6
  * @author 青子守歌
  */
-$messages['ja'] = array(
+$messages['ja'] = [
 	'specialprotectsite-desc' => 'サイト管理者が、[[Special:ProtectSite|サイトの様々な修正を一時的に制限]]することを許可する',
 	'protectsite' => 'サイトの保護',
 	'protectsite-text-protect' => '<!-- 利用時の方針/コメント/指示 -->',
@@ -420,26 +421,26 @@ $messages['ja'] = array(
 	'protectsite-protect' => '保護',
 	'protectsite-unprotect' => '保護解除',
 	'protectsite-nologs' => 'ログに表示させない',
-);
+];
 
 /** Colognian (Ripoarisch)
  * @author Purodha
  */
-$messages['ksh'] = array(
+$messages['ksh'] = [
 	'protectsite-comment' => 'Jrond:',
-);
+];
 
 /** Kurdish (Latin script) (‪Kurdî (latînî)‬)
  * @author George Animal
  */
-$messages['ku-latn'] = array(
+$messages['ku-latn'] = [
 	'protectsite-allowall' => 'Hemû bikarhêneran',
-);
+];
 
 /** Luxembourgish (Lëtzebuergesch)
  * @author Robby
  */
-$messages['lb'] = array(
+$messages['lb'] = [
 	'protectsite' => 'Site schützen',
 	'protectsite-text-protect' => '<!-- Instruktiounen/Commentairen/Richtlinne fir de Gebrauch -->',
 	'protectsite-text-unprotect' => '<!-- Instruktiounen/Bemierkunge wa gespaart -->',
@@ -458,20 +459,20 @@ $messages['lb'] = array(
 	'protectsite-until' => 'Gespaart bis:',
 	'protectsite-protect' => 'Spären',
 	'protectsite-unprotect' => 'Spär ophiewen',
-);
+];
 
 /** Latgalian (latgaļu)
  * @author Dark Eagle
  */
-$messages['ltg'] = array(
+$messages['ltg'] = [
 	'protectsite-protect' => 'Apsorguot',
 	'protectsite-unprotect' => 'Nūjimt apsardzeibu',
-);
+];
 
 /** Macedonian (македонски)
  * @author Bjankuloski06
  */
-$messages['mk'] = array(
+$messages['mk'] = [
 	'specialprotectsite-desc' => 'Му овозможува на администраторот [[Special:ProtectSite|привремено да спречува разни измени на мреж-то место]]',
 	'protectsite' => 'Заштити мреж. место',
 	'protectsite-text-protect' => '<!-- Инструкции/Коментари/Правила на употреба -->',
@@ -494,12 +495,12 @@ $messages['mk'] = array(
 	'protectsite-protect' => 'Заштити',
 	'protectsite-unprotect' => 'Тргни заштита',
 	'protectsite-nologs' => 'не прикажувај во дневници',
-);
+];
 
 /** Malay (Bahasa Melayu)
  * @author Anakmalaysia
  */
-$messages['ms'] = array(
+$messages['ms'] = [
 	'specialprotectsite-desc' => 'Membenarkan pentadbir tapak untuk [[Special:ProtectSite|menyekat pengubahsuaian tapak buat sementara]]',
 	'protectsite' => 'Lindungi laman',
 	'protectsite-text-protect' => '<!-- Arahan/Ulasan/Dasar penggunaan -->',
@@ -522,23 +523,23 @@ $messages['ms'] = array(
 	'protectsite-protect' => 'Lindungi',
 	'protectsite-unprotect' => 'Nyahlindung',
 	'protectsite-nologs' => 'jangan tunjukkan dalam log',
-);
+];
 
 /** Burmese (မြန်မာဘာသာ)
  * @author Erikoo
  */
-$messages['my'] = array(
+$messages['my'] = [
 	'protectsite-allowall' => 'အသုံးပြုသူအားလုံး',
 	'protectsite-comment' => 'မှတ်ချက် :',
 	'protectsite-protect' => 'ပရောဂျက်',
 	'protectsite-unprotect' => 'မကာကွယ်တော့ရန်',
-);
+];
 
 /** Norwegian Bokmål (‪norsk (bokmål)‬)
  * @author Audun
  * @author Nghtwlkr
  */
-$messages['nb'] = array(
+$messages['nb'] = [
 	'specialprotectsite-desc' => 'Lar en sideadministrator [[Special:ProtectSite|midlertidig blokkere ulike sidemodifikasjoner]]',
 	'protectsite' => 'Beskytt side',
 	'protectsite-text-protect' => '<!-- Instruksjoner/kommentarer/fremgangsmåte for bruk -->',
@@ -561,13 +562,13 @@ $messages['nb'] = array(
 	'protectsite-protect' => 'Beskytt',
 	'protectsite-unprotect' => 'Opphev beskyttelse',
 	'protectsite-nologs' => 'ikke vis i logger',
-);
+];
 
 /** Dutch (Nederlands)
  * @author SPQRobin
  * @author Siebrand
  */
-$messages['nl'] = array(
+$messages['nl'] = [
 	'specialprotectsite-desc' => 'Maakt het voor sitebeheerders mogelijk [[Special:ProtectSite|tijdelijk verschillende wijzigingen aan de site tegen te gaan]]',
 	'protectsite' => 'Site beveiligen',
 	'protectsite-text-protect' => '<!-- Instructies/opmerkingen/beleid voor gebruik -->',
@@ -590,22 +591,22 @@ $messages['nl'] = array(
 	'protectsite-protect' => 'Beveiligen',
 	'protectsite-unprotect' => 'Beveiliging opheffen',
 	'protectsite-nologs' => 'niet weergeven in logboeken',
-);
+];
 
 /** Deitsch (Deitsch)
  * @author Xqt
  */
-$messages['pdc'] = array(
+$messages['pdc'] = [
 	'protectsite-comment' => 'Grund:',
 	'protectsite-protect' => 'Schitze',
-);
+];
 
 /** Polish (polski)
  * @author BeginaFelicysym
  * @author Sovq
  * @author Sp5uhe
  */
-$messages['pl'] = array(
+$messages['pl'] = [
 	'specialprotectsite-desc' => 'Umożliwia administratorowi witryny [[Special:ProtectSite|tymczasowe blokowanie różnych zmian]]',
 	'protectsite' => 'Zabezpiecz witrynę',
 	'protectsite-text-protect' => '<!-- Wskazówki/Komentarze/Zasady wykorzystania -->',
@@ -628,13 +629,13 @@ $messages['pl'] = array(
 	'protectsite-protect' => 'Zabezpiecz',
 	'protectsite-unprotect' => 'Nie chroń',
 	'protectsite-nologs' => 'nie pokazuj w rejestrze',
-);
+];
 
 /** Piedmontese (Piemontèis)
  * @author Borichèt
  * @author Dragonòt
  */
-$messages['pms'] = array(
+$messages['pms'] = [
 	'specialprotectsite-desc' => "A përmët a n'aministrator d'un sit ëd [[Special:ProtectSite|bloché temporaneament vàire modìfiche dël sit]]",
 	'protectsite' => 'Sit protet',
 	'protectsite-text-protect' => '<!-- Istrussion/Coment/Polìtica për dovragi -->',
@@ -657,24 +658,24 @@ $messages['pms'] = array(
 	'protectsite-protect' => 'Protet',
 	'protectsite-unprotect' => 'Dësprotege',
 	'protectsite-nologs' => 'mostré nen ant ij registr',
-);
+];
 
 /** Pashto (پښتو)
  * @author Ahmed-Najib-Biabani-Ibrahimkhel
  */
-$messages['ps'] = array(
+$messages['ps'] = [
 	'protectsite-allowall' => 'ټول کارنان',
 	'protectsite-allowsysop' => 'يوازې پازوالان',
 	'protectsite-comment' => 'تبصره:',
 	'protectsite-protect' => 'ژغورل',
 	'protectsite-unprotect' => 'نه ژغورل',
-);
+];
 
 /** Portuguese (português)
  * @author Hamilton Abreu
  * @author Waldir
  */
-$messages['pt'] = array(
+$messages['pt'] = [
 	'specialprotectsite-desc' => 'Permite que um administrador [[Special:ProtectSite|bloqueie temporariamente várias modificações do site]]',
 	'protectsite' => 'Proteger o site',
 	'protectsite-text-protect' => '<!-- Instruções/Comentários/Normas de utilização -->',
@@ -697,14 +698,14 @@ $messages['pt'] = array(
 	'protectsite-protect' => 'Proteger',
 	'protectsite-unprotect' => 'Desproteger',
 	'protectsite-nologs' => 'não mostrar nos registos',
-);
+];
 
 /** Brazilian Portuguese (português do Brasil)
  * @author Aristóbulo
  * @author Giro720
  * @author Luckas Blade
  */
-$messages['pt-br'] = array(
+$messages['pt-br'] = [
 	'specialprotectsite-desc' => 'Permite que um administrador [[Special:ProtectSite|bloqueie temporariamente várias modificações do site]]',
 	'protectsite' => 'Proteger o site',
 	'protectsite-text-protect' => '<!-- Instruções/Comentários/Normas de utilização -->',
@@ -727,25 +728,25 @@ $messages['pt-br'] = array(
 	'protectsite-protect' => 'Proteger',
 	'protectsite-unprotect' => 'Desproteger',
 	'protectsite-nologs' => 'não mostrar nos registos',
-);
+];
 
 /** Romanian (română)
  * @author Stelistcristi
  */
-$messages['ro'] = array(
+$messages['ro'] = [
 	'protectsite' => 'Protejează un sait',
 	'protectsite-allowall' => 'Toţi utilizatorii',
 	'protectsite-comment' => 'Comentariu:',
 	'protectsite-protect' => 'Protejează',
 	'protectsite-unprotect' => 'Deprotejează',
-);
+];
 
 /** Russian (русский)
  * @author Kuzura
  * @author Lockal
  * @author Александр Сигачёв
  */
-$messages['ru'] = array(
+$messages['ru'] = [
 	'specialprotectsite-desc' => 'Позволяет администратору сайта [[Special:ProtectSite|временно блокировать различные изменения сайта]]',
 	'protectsite' => 'Защита сайта',
 	'protectsite-text-protect' => '<!-- Инструкции/Комментарии/Правила для использования -->',
@@ -768,14 +769,14 @@ $messages['ru'] = array(
 	'protectsite-protect' => 'Защитить',
 	'protectsite-unprotect' => 'Снять защиту',
 	'protectsite-nologs' => 'не записывать в журнал',
-);
+];
 
 /** Serbian (Cyrillic script) (‪српски (ћирилица)‬)
  * @author Rancher
  * @author Verlor
  * @author Жељко Тодоровић
  */
-$messages['sr-ec'] = array(
+$messages['sr-ec'] = [
 	'protectsite' => 'Заштити сајт',
 	'protectsite-allowall' => 'Сви корисници',
 	'protectsite-allowusersysop' => 'Уписани корисници и администратори',
@@ -790,13 +791,13 @@ $messages['sr-ec'] = array(
 	'protectsite-until' => 'Заштићено до:',
 	'protectsite-protect' => 'Заштити',
 	'protectsite-unprotect' => 'Скини заштиту',
-);
+];
 
 /** Swedish (svenska)
  * @author Tobulos1
  * @author WikiPhoenix
  */
-$messages['sv'] = array(
+$messages['sv'] = [
 	'specialprotectsite-desc' => 'Låter en administratör [[Special:ProtectSite|tillfälligt blockera olika sidändringar]]',
 	'protectsite' => 'Skydda sida',
 	'protectsite-text-protect' => '<!-- Instruktioner/Kommentarer/Policy för användning -->',
@@ -819,19 +820,19 @@ $messages['sv'] = array(
 	'protectsite-protect' => 'Skydda',
 	'protectsite-unprotect' => 'Oskyddad',
 	'protectsite-nologs' => 'visa inte i loggar',
-);
+];
 
 /** Swahili (Kiswahili)
  * @author Lloffiwr
  */
-$messages['sw'] = array(
+$messages['sw'] = [
 	'protectsite-allowall' => 'Watumiaji wote',
-);
+];
 
 /** Telugu (తెలుగు)
  * @author Veeven
  */
-$messages['te'] = array(
+$messages['te'] = [
 	'protectsite-text-protect' => '<!-- ఉపయోగించడానికి సూచనలు/వ్యాఖ్యలు/విధానం -->',
 	'protectsite-title' => 'సైటు సంరక్షణ అమరికలు',
 	'protectsite-allowall' => 'అందరు వాడుకరులు',
@@ -840,12 +841,12 @@ $messages['te'] = array(
 	'protectsite-maxtimeout' => 'గరిష్ఠం:',
 	'protectsite-comment' => 'వ్యాఖ్య:',
 	'protectsite-protect' => 'సంరక్షించు',
-);
+];
 
 /** Tagalog (Tagalog)
  * @author AnakngAraw
  */
-$messages['tl'] = array(
+$messages['tl'] = [
 	'specialprotectsite-desc' => 'Nagpapahintulot sa isang tagapangasiwa ng sityo upang [[Special:ProtectSite|pansamantalang harangin ang sari-saring mga pagbabago sa sityo]]',
 	'protectsite' => 'Prutektahan ang sayt',
 	'protectsite-text-protect' => '<!-- Magagamit na mga tagubilin/Mga puna/Patakaran -->',
@@ -868,13 +869,13 @@ $messages['tl'] = array(
 	'protectsite-protect' => 'Isanggalang',
 	'protectsite-unprotect' => 'Huwag isanggalang',
 	'protectsite-nologs' => 'huwag ipakita sa loob ng mga talaan',
-);
+];
 
 /** Ukrainian (українська)
  * @author Prima klasy4na
  * @author Тест
  */
-$messages['uk'] = array(
+$messages['uk'] = [
 	'specialprotectsite-desc' => 'Дозволяє адміністратору сайту [[Special:ProtectSite|тимчасово блокувати різні зміни сайту]]',
 	'protectsite' => 'Захист сайту',
 	'protectsite-text-protect' => '<!-- Інструкції/Коментарі/Правила використання -->',
@@ -896,16 +897,16 @@ $messages['uk'] = array(
 	'protectsite-until' => 'Захищено до:',
 	'protectsite-protect' => 'Захистити',
 	'protectsite-unprotect' => 'Зняти захист',
-);
+];
 
 /** Simplified Chinese (‪中文（简体）‬)
  * @author Hydra
  */
-$messages['zh-hans'] = array(
+$messages['zh-hans'] = [
 	'protectsite-allowall' => '所有用户',
 	'protectsite-allowsysop' => '管理员而已',
 	'protectsite-maxtimeout' => '最多：',
 	'protectsite-protect' => '保护',
 	'protectsite-unprotect' => '不保护',
-);
+];
 

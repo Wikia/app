@@ -1,4 +1,4 @@
-/*global define, require*/
+/*global define*/
 define('ext.wikia.aRecoveryEngine.recovery.helper', [
 	'ext.wikia.adEngine.adContext',
 	'wikia.document',

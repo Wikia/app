@@ -16,13 +16,9 @@ describe('ext.wikia.adEngine.provider.*', function () {
 				return mocks.context;
 			}
 		},
-		adLogicPageParams: {
-			getPageLevelParams: function () {
-				return {
-					s0: 'ent',
-					s1: '_muppet',
-					s2: 'home'
-				};
+		adUnitBuilder: {
+			build: function(slotName, src) {
+				return '/5441/wka.ent/_muppet//home/' + src + '/' + slotName;
 			}
 		},
 		gptHelper: {
@@ -38,6 +34,9 @@ describe('ext.wikia.adEngine.provider.*', function () {
 			removeDefaultHeight: noop,
 			removeTopButtonIfNeeded: noop,
 			adjustLeaderboardSize: noop
+		},
+		uapContext: {
+			isUapLoaded: noop
 		},
 		lazyQueue: {},
 		window: {},
@@ -61,9 +60,9 @@ describe('ext.wikia.adEngine.provider.*', function () {
 	function getFactory() {
 		return modules['ext.wikia.adEngine.provider.factory.wikiaGpt'](
 			mocks.adContext,
-			mocks.adLogicPageParams,
 			mocks.btfBlocker,
 			mocks.gptHelper,
+			mocks.adUnitBuilder,
 			mocks.log,
 			mocks.lookups
 		);
@@ -74,6 +73,7 @@ describe('ext.wikia.adEngine.provider.*', function () {
 			case 'directGpt':
 			case 'remnantGpt':
 				return modules['ext.wikia.adEngine.provider.' + providerName](
+					mocks.uapContext,
 					getFactory(),
 					mocks.slotTweaker
 				);
@@ -209,7 +209,7 @@ describe('ext.wikia.adEngine.provider.*', function () {
 	it('directGptMobile: Push ad with specific slot sizes', function () {
 		var expectedSizes = {
 			INVISIBLE_HIGH_IMPACT: '1x1',
-			INVISIBLE_HIGH_IMPACT_2: null,
+			INVISIBLE_HIGH_IMPACT_2: 'out-of-page',
 			MOBILE_TOP_LEADERBOARD: '300x50,300x250,320x50,320x100,320x480',
 			MOBILE_BOTTOM_LEADERBOARD: '300x50,300x250,320x50,320x100,320x480',
 			MOBILE_IN_CONTENT: '320x50,300x250,300x50,320x480',

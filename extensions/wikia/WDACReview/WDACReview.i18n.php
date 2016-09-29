@@ -1,8 +1,8 @@
 <?php
 
-$messages = array();
+$messages = [];
 
-$messages['en'] = array(
+$messages['en'] = [
 	'wdacreview-tool-name' => 'WDAC Review',
 	'action-wdacreview' => 'access WDAC Review tool',
 	'wdacreview-noresults' => 'There are no wikis flagged by users for review.',
@@ -15,9 +15,10 @@ $messages['en'] = array(
 	'wdacreview-tool-description' => "Staff tool for reviewing Wikis suggested as Directed At Children",
 	'wdacreview-confirm-update' => "Flags for selected wikis were updated",
 	'wdacreview-refresh-page' => 'Refresh page',
-);
+	'right-wdacreview' => 'Access to COPPA review tool',
+];
 
-$messages['qqq'] = array(
+$messages['qqq'] = [
 	'wdacreview-tool-name' => 'Name of tool',
 	'action-wdacreview' => '{{doc-action|wdacreview}}',
 	'wdacreview-noresults' => 'Information to display when there are no results found.',
@@ -30,9 +31,9 @@ $messages['qqq'] = array(
 	'wdacreview-tool-description' => "Description of WDAC Review tool displayed below title",
 	'wdacreview-confirm-update' => "Confirm notification on submiting WDAC review form",
 	'wdacreview-refresh-page' => 'Text to be displayed on a button reloading the page',
-);
+];
 
-$messages['pl'] = array(
+$messages['pl'] = [
 	'action-wdacreview' => 'dostępu do narzędzia WDAC Review',
 	'wdacreview-noresults' => 'Nie znaleziono żadnych wiki oznaczonych przez użytkowników do sprawdzenia.',
 	'wdacreview-approve' => 'Tak',
@@ -44,4 +45,4 @@ $messages['pl'] = array(
 	'wdacreview-tool-description' => "Narzędzie do inspekcji wiki kierowanych do dzieci",
 	'wdacreview-confirm-update' => "Flagi dla wybranych wiki zostały zmienione.",
 	'wdacreview-refresh-page' => 'Odśwież stronę',
-);
+];

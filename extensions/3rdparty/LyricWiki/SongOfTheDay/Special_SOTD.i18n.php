@@ -1,7 +1,7 @@
 <?php
-$messages = array();
+$messages = [];
 
-$messages['en'] = array(
+$messages['en'] = [
 	'sotd' => 'Song of the Day',
 	'sotd-desc' => 'Provides an interface to add a nomination for Song of the Day',
 	'sotd-artist' => 'Artist',
@@ -84,9 +84,11 @@ $messages['en'] = array(
 	This is your personal token to your nomination: '''$1'''<br/>
 	It allows you to check, edit or withdraw your nomination. Please keep the token if you want to perform one of these actions.<br/>
 	Keep in mind changes are only possible until your nomination was reviewed and added to the queue.",
-);
+	'group-sotdhelper' => 'Song of the Day Helpers',
+	'right-moderatesotd' => 'Moderate Song of the Day content on [[w:c:lyrics|LyricWiki]]',
+];
 
-$messages['de'] = array(
+$messages['de'] = [
 	'sotd' => 'Song des Tages',
 	'sotd-desc' => 'Bietet eine Oberfläche zum Hinzufügen einer Nominierung zum Song des Tages',
 	'sotd-artist' => 'Künstler',
@@ -169,4 +171,4 @@ $messages['de'] = array(
 	Dies ist dein persönlicher Token zu deiner Nominierung: '''$1'''<br/>
 	Er erlaubt es dir, deine Nominierung zu beobachten, bearbeiten oder zurückzuziehen. Bitte bewahre den Token auf, wenn du eine dieser Aktionen ausführen möchtest.<br/>
 	Denk dran, dass Veränderungen nur möglich sind, bis deine Nominierung gesichtet und zur Warteliste hinzugefügt worden ist.",
-);
+];

@@ -39,9 +39,8 @@ class OnWiki extends AbstractDismax
 		if (! empty( $match ) ) {
 			$config->setArticleMatch( $match );
 		}
-		if ( $service->getGlobal( 'OnWikiSearchIncludesWikiMatch' ) ) {
-			$this->extractWikiMatch();
-		}
+		$this->extractWikiMatch();
+
 		return $config->getMatch();
 	}
 	

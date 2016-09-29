@@ -551,6 +551,8 @@ class NavigationModel extends WikiaModel {
 		if ( empty( $doNotLink ) ) {
 			if ( preg_match( '/^(?:' . wfUrlProtocols() . ')/', $link ) ) {
 				$href = $link;
+			} else if ( preg_match( '/^\/{1}\w+[\w\/]*/', $link ) ) {
+				$href = $link;
 			} else {
 				if ( empty( $link ) ) {
 					$href = '#';

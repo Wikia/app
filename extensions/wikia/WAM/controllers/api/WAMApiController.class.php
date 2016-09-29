@@ -99,7 +99,7 @@ class WAMApiController extends WikiaApiController {
 				return $wamIndex;
 			}
 		);
-		
+
 		if (!$this->request->isInternal() && empty($wamIndex['wam_index'])) {
 			$wamIndex['wam_index'] = (object)$wamIndex['wam_index'];
 		}
@@ -136,10 +136,10 @@ class WAMApiController extends WikiaApiController {
 		$wamDay = $this->request->getVal( 'wam_day', null );
 		$wamDates = $this->getMinMaxWamIndexDateInternal();
 
-		if ( empty( $wamDay ) ) {
+		if ( empty( $wamDay ) || $wamDay > $wamDates[ 'max_date' ] ) {
 			$wamDay = $wamDates[ 'max_date' ];
-		} elseif ( $wamDay > $wamDates[ 'max_date' ] || $wamDay < $wamDates[ 'min_date' ] ) {
-			throw new OutOfRangeApiException( 'wam_day', $wamDates[ 'min_date' ], $wamDates[ 'max_date' ] );
+		} elseif ( $wamDay < $wamDates[ 'min_date' ] ) {
+			$wamDay = $wamDates[ 'min_date' ];
 		}
 
 		$wamService = new WAMService();

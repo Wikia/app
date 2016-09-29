@@ -94,8 +94,6 @@ define(
 			modal.trigger('cleanUpError');
 
 			tileSetData = tileSet;
-			// set type param for mustache template
-			tileSetData[tileSet.type] = true;
 
 			if(originalImageURL) {
 				tileSetData.originalImageURL = utils.createThumbURL(originalImageURL, thumbWidth);
@@ -131,7 +129,7 @@ define(
 
 				if (value) {
 					tileSetData[$(this).attr('name')] = value;
-					return true
+					return true;
 				} else {
 					isValid = false;
 					return false;
@@ -201,7 +199,7 @@ define(
 
 		/**
 		 * @desc trigger "storage" event (by calling localStorage.setItem) after the map is created
- 		 */
+		 */
 		function triggerStorageEvent(data) {
 			if ( localStorage ) {
 				localStorage.setItem('mapCreated', data.id);
@@ -236,9 +234,7 @@ define(
 		 */
 		function trackMapCreation(tileSetData) {
 			var tileSetId = tileSetData.tileSetId,
-				mapTypeChosen = tileSetData.type,
-				label = mapTypeChosen + '-map-created' +
-					((!tileSetId && mapTypeChosen !== 'geo') ? '-with-new-tileset' : '');
+				label = 'custom-map-created' + (!tileSetId ? '-with-new-tileset' : '');
 
 			utils.track(utils.trackerActions.IMPRESSION, label, tileSetId);
 		}
