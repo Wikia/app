@@ -1,29 +1,30 @@
-define('flowTracking', ['wikia.cookies', 'wikia.tracker', 'mw'], function (cookies, tracker, mw) {
-	var cookieName = 'CNPFlowLabel',
+define('wikia.flowTracking', ['wikia.cookies', 'wikia.tracker', 'mw'], function (cookies, tracker, mw) {
+	var cookieName = 'flowTrackingLabel',
 		track = tracker.buildTrackingFunction({
-			action: tracker.ACTIONS.CLICK,
 			trackingMethod: 'analytics',
-			category: 'create-new-page-flows'
+			category: 'flow-tracking'
 		});
 
-	function beginFlow(label) {
+	function beginFlow(flowLabel) {
 		cookies.set(cookieName, label, { path: mw.config.get('wgCookiePath') });
 		track({
-			label: 'begin-' + label
+			action: tracker.ACTIONS.BEGIN,
+			label: flowLabel
 		});
 	}
 
 	function endFlow() {
 		var flowLabel = cookies.get(cookieName);
 
-		if (flowLabel && validatePage()) {
+		if (flowLabel && isContentPage()) {
 			track({
-				label: 'end-' + flowLabel
+				action: tracker.ACTIONS.END,
+				label: flowLabel
 			});
 		}
 	}
 
-	function validatePage() {
+	function isContentPage() {
 		return mw.config.get('wgNamespaceNumber') === 0;
 	}
 

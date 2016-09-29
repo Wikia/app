@@ -3068,10 +3068,10 @@ $config['crosslink_module_scss'] = [
 	],
 ];
 
-/* Create new page flow tracking */
-$config['create_new_page_flow_js'] = [
+/* Flow tracking */
+$config['flow_tracking_js'] = [
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => [
-		'//extensions/wikia/CreateNewPageFlow/scripts/flowTracking.js'
+		'//resources/wikia/modules/flowTracking.js'
 	]
 ];
