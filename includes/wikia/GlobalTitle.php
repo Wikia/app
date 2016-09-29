@@ -820,7 +820,16 @@ class GlobalTitle extends Title {
 			return $this->mNamespaceNames;
 		}
 
-		$this->mNamespaceNames = $this->mContLang->getNamespaces() + $wgCanonicalNamespaceNames;
+		// $wgExtraNamespaces is calculated at MW init in context language.
+		// We have to override them to get correctly localized namespaces registered by extensions.
+		$globalStateWrapper = new Wikia\Util\GlobalStateWrapper( [
+			'wgExtraNamespaces' => $this->getLocalWgExtraNamespaces()
+		] );
+		$langNamespaces = $globalStateWrapper->wrap( function () {
+			return $this->mContLang->getNamespaces();
+		} );
+
+		$this->mNamespaceNames = $langNamespaces + $wgCanonicalNamespaceNames;
 
 		/**
 		 * get extra namespaces for city_id, they have to be defined in
@@ -832,6 +841,32 @@ class GlobalTitle extends Title {
 		}
 
 		return $this->mNamespaceNames;
+	}
+
+	/**
+	 * Get $wgExtraNamespaces for title language
+	 *
+	 * @return array
+	 */
+	private function getLocalWgExtraNamespaces() {
+		global $wgExtensionNamespacesFiles;
+		$extraNamespaces = [ ];
+
+		foreach ( $wgExtensionNamespacesFiles as $extFile ) {
+			$namespaces = [ ];
+			// Namespace files fill in $namespaces array
+			require( $extFile );
+
+			foreach ( $namespaces as $langKey => $namespaceArray ) {
+				if ( array_key_exists( $langKey, $extraNamespaces ) ) {
+					$extraNamespaces[$langKey] += $namespaceArray;
+				} else {
+					$extraNamespaces[$langKey] = $namespaceArray;
+				}
+			}
+		}
+
+		return $extraNamespaces[$this->mLang] + $extraNamespaces['en'];
 	}
 
 	/**
