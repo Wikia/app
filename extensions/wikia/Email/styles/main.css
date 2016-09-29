@@ -109,3 +109,7 @@ body {
 	line-height: 20px;
 	margin-bottom: 0;
 }
+
+.fine-print a {
+	 text-decoration: underline;
+}
