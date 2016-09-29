@@ -51,7 +51,7 @@ class DiscussionsDataService {
 			'posts' => []
 		];
 
-		$rawPosts = $rawData['_embedded']['doc:threads'];
+		$rawPosts = $rawData['_embedded']['threads'];
 
 		if ( is_array( $rawPosts ) && count( $rawPosts ) > 0 ) {
 			foreach ( $rawPosts as $key => $value ) {
@@ -79,7 +79,7 @@ class DiscussionsDataService {
 	 */
 	private function apiRequest() {
 		$options = [];
-		$endpoint = $this->cityId . '/forums/' . $this->cityId;
+		$endpoint = $this->cityId . '/threads';
 
 		$url = $this->buildUrl( $endpoint, $options );
 		$data = Http::get( $url );
@@ -114,7 +114,7 @@ class DiscussionsDataService {
 		return new RecirculationContent( [
 			'url' => $this->server . '/d/p/' . $rawPost['id'],
 			'index' => $index,
-			'title' =>  wfShortenText( $rawPost['_embedded']['firstPost'][0]['rawContent'], 120 ),
+			'title' =>  wfShortenText( $rawPost['rawContent'], 120 ),
 			'publishDate' => wfTimestamp( TS_ISO_8601, $rawPost['creationDate']['epochSecond'] ),
 			'author' => $rawPost['createdBy']['name'],
 			'source' => 'discussions',
