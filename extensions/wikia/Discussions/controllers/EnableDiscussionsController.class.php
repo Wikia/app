@@ -42,5 +42,8 @@ class EnableDiscussionsController extends \WikiaController {
 		if ( !$this->request->isInternal() ) {
 			throw new ForbiddenException( 'Access to this controller is restricted' );
 		}
+		if ( !$this->request->wasPosted() ) {
+			throw new MethodNotAllowedException( 'Only POST allowed' );
+		}
 	}
 }
