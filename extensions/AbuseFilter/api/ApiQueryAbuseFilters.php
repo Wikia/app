@@ -75,21 +75,22 @@ class ApiQueryAbuseFilters extends ApiQueryBase {
 		$this->addWhereRange( 'af_id', $params['dir'], $params['startid'], $params['endid'] );
 
 		if ( !is_null( $params['show'] ) ) {
-			$show = array_flip( $params['show'] );
+			$show = array_flip( $params[ 'show' ] );
 
 			/* Check for conflicting parameters. */
-			if ( ( isset( $show['enabled'] ) && isset( $show['!enabled'] ) )
-					|| ( isset( $show['deleted'] ) && isset( $show['!deleted'] ) )
-					|| ( isset( $show['private'] ) && isset( $show['!private'] ) ) ) {
-					$this->dieUsage( 'Incorrect parameter - mutually exclusive values may not be supplied', 'show' );
+			if( ( isset( $show[ 'enabled' ] ) && isset( $show[ '!enabled' ] ) )
+				|| ( isset( $show[ 'deleted' ] ) && isset( $show[ '!deleted' ] ) )
+				|| ( isset( $show[ 'private' ] ) && isset( $show[ '!private' ] ) )
+			) {
+				$this->dieUsage( 'Incorrect parameter - mutually exclusive values may not be supplied', 'show' );
 			}
 
-			$this->addWhereIf( 'af_enabled = 0', isset( $show['!enabled'] ) );
-			$this->addWhereIf( 'af_enabled != 0', isset( $show['enabled'] ) );
-			$this->addWhereIf( 'af_deleted = 0', isset( $show['!deleted'] ) );
-			$this->addWhereIf( 'af_deleted != 0', isset( $show['deleted'] ) );
-			$this->addWhereIf( 'af_hidden = 0', isset( $show['!private'] ) );
-			$this->addWhereIf( 'af_hidden != 0', isset( $show['private'] ) );
+			$this->addWhereIf( 'af_enabled = 0', isset( $show[ '!enabled' ] ) );
+			$this->addWhereIf( 'af_enabled != 0', isset( $show[ 'enabled' ] ) );
+			$this->addWhereIf( 'af_deleted = 0', isset( $show[ '!deleted' ] ) );
+			$this->addWhereIf( 'af_deleted != 0', isset( $show[ 'deleted' ] ) );
+			$this->addWhereIf( 'af_hidden = 0', isset( $show[ '!private' ] ) );
+			$this->addWhereIf( 'af_hidden != 0', isset( $show[ 'private' ] ) );
 		}
 
 		$res = $this->select( __METHOD__ );
@@ -123,7 +124,7 @@ class ApiQueryAbuseFilters extends ApiQueryBase {
 				$entry['comments'] = $row->af_comments;
 			}
 			if ( $fld_user ) {
-				$entry['lasteditor'] = $row->af_user_text;
+				$entry['lasteditor'] = User::getUsername( $row->af_user, $row->af_user_text );
 			}
 			if ( $fld_time ) {
 				$entry['lastedittime'] = wfTimestamp( TS_ISO_8601, $row->af_timestamp );

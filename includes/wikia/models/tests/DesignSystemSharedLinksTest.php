@@ -73,6 +73,46 @@ class DesignSystemSharedLinksTest extends WikiaBaseTest {
 				],
 				'http://www.wikia.com'
 			],
+			[
+				'pt',
+				[
+					'en' => [
+						'create-new-wiki' => 'http://www.wikia.com'
+					],
+					'default' => [
+						'create-new-wiki' => null
+					],
+					'pt-br' => [
+						'create-new-wiki' => 'http://pt-br.wikia.com'
+					],
+				],
+				'http://pt-br.wikia.com'
+			],
+			[
+				'pt',
+				[
+					'en' => [
+						'create-new-wiki' => 'http://www.wikia.com'
+					],
+					'default' => [
+						'create-new-wiki' => null
+					],
+					'pt-br' => [ ],
+				],
+				null
+			],
+			[
+				'pt',
+				[
+					'en' => [
+						'create-new-wiki' => 'http://www.wikia.com'
+					],
+					'default' => [
+						'create-new-wiki' => null
+					],
+				],
+				null
+			],
 		];
 	}
 }
