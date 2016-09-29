@@ -130,20 +130,20 @@ class EmbeddableDiscussionsController {
 		] );
 
 		if ( $showLatest && $category ) {
-			$heading = 'embeddable-discussions-show-latest-in-category';
+			$headingMsgKey = 'embeddable-discussions-show-latest-in-category';
 		} elseif ( $showLatest ) {
-			$heading = 'embeddable-discussions-show-latest';
+			$headingMsgKey = 'embeddable-discussions-show-latest';
 		} elseif ( $category ) {
-			$heading = 'embeddable-discussions-show-trending-in-category';
+			$headingMsgKey = 'embeddable-discussions-show-trending-in-category';
 		} else {
-			$heading = 'embeddable-discussions-show-trending';
+			$headingMsgKey = 'embeddable-discussions-show-trending';
 		}
 
 		$modelData[ 'columnsWrapperClass' ] =
 			$columns === static::COLUMNS_MAX ?
 				'embeddable-discussions-threads-columns' :
 				'';
-		$modelData[ 'heading' ] = wfMessage( $heading, $category )->plain();
+		$modelData[ 'heading' ] = wfMessage( $headingMsgKey, $category )->plain();
 		$modelData[ 'showAll' ] = wfMessage( 'embeddable-discussions-show-all' )->plain();
 		$modelData[ 'loading' ] = wfMessage( 'embeddable-discussions-loading' )->plain();
 
