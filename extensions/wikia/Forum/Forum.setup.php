@@ -58,17 +58,11 @@ $wgHooks['FilePageImageUsageSingleLink'][] = 'ForumHooksHelper::onFilePageImageU
 // notification hooks
 $wgHooks['NotificationGetNotificationMessage'][] = 'ForumNotificationPlugin::onGetNotificationMessage';
 
-// old forum archive
-$wgHooks['getUserPermissionsErrors'][] = 'ForumHooksHelper::onGetUserPermissionsErrors';
-$wgHooks['PageHeaderIndexAfterActionButtonPrepared'][] = 'ForumHooksHelper::onPageHeaderIndexAfterActionButtonPrepared';
-$wgHooks['ArticleViewHeader'][] = 'ForumHooksHelper::onArticleViewHeader';
-
 // make sure that when an article is deleted, if it has a comments_index,
 // that record is properly marked as deleted. this needs to happen within
 // the transaction in  WikiPage::doDeleteArticleReal which is why it's being hooked
 // here and not in ArticleDeleteComplete
 $wgHooks['ArticleDoDeleteArticleBeforeLogEntry'][] = 'ForumHooksHelper::onArticleDoDeleteArticleBeforeLogEntry';
-
 
 // forum discussion on article
 // It need to be first one !!!
