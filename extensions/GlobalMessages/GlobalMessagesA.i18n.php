@@ -17586,13 +17586,13 @@ $messages['lzh'] = array(
 	'accountcreatedtext' => '$1簿增矣',
 	'anoneditwarning' => "'''警示：'''子未登簿，IP將誌。",
 	'anonpreviewwarning' => "''子未登簿，IP將誌。''",
-	'autoblockedtext' => "爾之IP或簿自禁，因簿先用，禁者$1也。因故：:\\'\\'$2\\'\\'
+	'autoblockedtext' => '爾之IP或簿自禁，因簿先用，禁者$1也。因故：:\'\'$2\'\'
 
 * 始之時為：$8
 * 終之時為：$6
 * 見禁之人：$7
 
-存惑可詢$1，或[[{{MediaWiki:Grouppage-sysop}}|有秩]]，[[Special:Preferences|簿註]]無驛則信不遣。另，子用IP $3，禁號為#$5。詢時切附之。",
+存惑可詢$1，或[[{{MediaWiki:Grouppage-sysop}}|有秩]]，[[Special:Preferences|簿註]]無驛則信不遣。另，子用IP $3，禁號為#$5。詢時切附之',
 	'accmailtitle' => '符節傳矣',
 	'accmailtext' => '"$1"符節至$2矣',
 	'anontalkpagetext' => "----''此匿論也，為未簿或不簿者設，IP俱錄以辨人焉。然IP不獨，恐生亂象，不喜惠[[Special:UserLogin/signup|增]][[Special:UserLogin|登簿]]遠之。",
