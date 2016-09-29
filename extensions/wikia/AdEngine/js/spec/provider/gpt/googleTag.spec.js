@@ -217,6 +217,7 @@ describe('ext.wikia.adEngine.provider.gpt.googleTag', function () {
 		spyOn(mocks.window.googletag, 'destroySlots');
 		spyOn(mocks.window.googletag, 'getSlots').and.returnValue(mocks.allSlots);
 
+		googleTag.init();
 		googleTag.destroySlots();
 
 		expect(mocks.window.googletag.destroySlots).toHaveBeenCalledWith(mocks.allSlots);
@@ -226,6 +227,7 @@ describe('ext.wikia.adEngine.provider.gpt.googleTag', function () {
 		spyOn(mocks.window.googletag, 'destroySlots');
 		spyOn(mocks.window.googletag, 'getSlots').and.returnValue(mocks.allSlots);
 
+		googleTag.init();
 		googleTag.destroySlots(['TOP_LEADERBOARD']);
 
 		expect(mocks.window.googletag.destroySlots).toHaveBeenCalledWith([mocks.allSlots[0]]);
@@ -235,6 +237,7 @@ describe('ext.wikia.adEngine.provider.gpt.googleTag', function () {
 		spyOn(mocks.window.googletag, 'destroySlots');
 		spyOn(mocks.window.googletag, 'getSlots').and.returnValue(mocks.allSlots);
 
+		googleTag.init();
 		googleTag.destroySlots(['foo']);
 
 		expect(mocks.window.googletag.destroySlots).not.toHaveBeenCalled();
