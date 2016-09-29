@@ -20,6 +20,12 @@ $(function ($) {
 		}
 	}
 
+	function deactivateSearch() {
+		$searchSubmit.prop('disabled', true);
+		$globalNav.removeClass(activeSearchClass);
+		$searchInput.attr('placeholder', placeholderText).val('');
+	}
+
 	$searchInput.on('focus', activateSearch);
 
 	$searchInput.on('input', function () {
@@ -32,11 +38,15 @@ $(function ($) {
 		}
 	});
 
-	$globalNav.find('.wds-global-navigation__search-close').on('click', function () {
-		$globalNav.removeClass(activeSearchClass);
-		$searchInput.attr('placeholder', placeholderText);
-		$searchSubmit.prop('disabled', true);
+	$searchInput.on('keydown', function (event) {
+		// Escape key
+		if (event.which === 27) {
+			this.blur();
+			deactivateSearch();
+		}
 	});
+
+	$globalNav.find('.wds-global-navigation__search-close').on('click', deactivateSearch);
 
 	if ($searchInput.is(':focus')) {
 		activateSearch();

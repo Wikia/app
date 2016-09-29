@@ -34,7 +34,11 @@
 							\Wikia\Search\Result\ResultHelper::extendResult(
 								$result,
 								$pos + (($currentPage - 1) * $resultsPerPage),
-								\Wikia\Search\Result\ResultHelper::MAX_WORD_COUNT_XWIKI_RESULT
+								\Wikia\Search\Result\ResultHelper::MAX_WORD_COUNT_XWIKI_RESULT,
+								[
+									'width' => WikiaSearchController::CROSS_WIKI_PROMO_THUMBNAIL_WIDTH,
+									'height' => WikiaSearchController::CROSS_WIKI_PROMO_THUMBNAIL_HEIGHT
+								]
 							)
 						);
 					}

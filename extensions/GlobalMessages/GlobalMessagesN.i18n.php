@@ -164,6 +164,9 @@ Try prefixing your query with ''all:'' to search all content (including talk pag
 	'nodiff' => 'No changes',
 	'namespacedisabled' => 'Namespace disabled',
 	'namespacedisabledtext' => 'This namespace has been disabled.',
+	'number-shortening' => '$1K',
+	'number-shortening-millions' => '$1M',
+	'number-shortening-billions' => '$1B',
 );
 
 $messages['qqq'] = array(
@@ -302,6 +305,11 @@ Parameter $1 is a page title.',
 	'namespacesall' => 'In special page [[Special:WhatLinksHere]]. Drop-down box option for namespace.
 
 {{Identical|All}}',
+	'number-shortening' => 'This is a shortend number abbreviation. Number larger than 10.000 are rendered using this message (as thousands rounded up to the first decimal fraction). K stands for thousands (1.000)
+
+{{Identical|$1k}}',
+	'number-shortening-millions' => 'This is a shortend number abbreviation. Number between 1.000.000 and 999.999.999.999 are rendered using this message (as millions rounded up to the first decimal fraction). M stands for millions (1.000.000)',
+	'number-shortening-billions' => 'This is a shortend number abbreviation. Number larger than 1.000.000.000 are rendered using this message (as billions rounded up to the first decimal fraction). B stands for billions (1.000.000.000)',
 );
 
 $messages['ab'] = array(
@@ -1201,6 +1209,9 @@ $messages['ar'] = array(
 	'newuserlog-byemail' => 'كلمة السر تم إرسالها بواسطة البريد الإلكتروني',
 	'not_you' => 'لست أنت؟',
 	'newly_changed' => 'متغيّر حديثا',
+	'number-shortening' => '$1 ألف',
+	'number-shortening-millions' => '$1 مليون',
+	'number-shortening-billions' => '$1 مليار',
 );
 
 $messages['arc'] = array(
@@ -2125,6 +2136,9 @@ Siz geri qayıdıb mövcud səhifəni və ya  [[Special:UserLogin|sistemə təqd
 	'noimages' => 'Heç nəyi görməmək.',
 	'namespacesall' => 'bütün',
 	'newuserlog-byemail' => 'parol e-maillə göndərildi',
+	'number-shortening' => '$1 тис.',
+	'number-shortening-millions' => '$1M',
+	'number-shortening-billions' => '$1milyard',
 );
 
 $messages['ba'] = array(
@@ -2256,6 +2270,9 @@ The wiki server cannot provide data in a format your client can read.',
 	'noimages' => 'Рәсемдәр юҡ.',
 	'namespacesall' => 'бөтә',
 	'newuserlog-byemail' => 'пароль электрон почта адресы аша ебәрелде',
+	'number-shortening' => '$1K',
+	'number-shortening-millions' => '$1милл.',
+	'number-shortening-billions' => '$1миллиард',
 );
 
 $messages['bar'] = array(
@@ -2665,6 +2682,9 @@ o habo magresibo nin e-surat sa ibang paragamit.',
 	'newimages' => 'Galeria nin mga bàgong file',
 	'noimages' => 'Mayong mahihilíng.',
 	'namespacesall' => 'gabós',
+	'number-shortening' => '$1 na ribo',
+	'number-shortening-millions' => '$1 na milyon',
+	'number-shortening-billions' => '$1 na bilyon',
 );
 
 $messages['be'] = array(
@@ -3177,6 +3197,9 @@ $messages['bg'] = array(
 	'noimages' => 'Няма нищо.',
 	'namespacesall' => 'Всички',
 	'newuserlog-byemail' => 'паролата е изпратена по е-поща',
+	'number-shortening' => '$1 хил.',
+	'number-shortening-millions' => '$1M',
+	'number-shortening-billions' => '$1B',
 );
 
 $messages['bh'] = array(
@@ -3367,6 +3390,9 @@ $messages['bho'] = array(
 	'nolinkshere' => "'''[[:$1]]''' से कौनो पन्ना नईखे जुड़ल।",
 	'nolinkshere-ns' => "चुनल गईल सन्दर्भ में '''[[:$1]]''' से कौनो पन्ना ना जुड़ेला।",
 	'namespacesall' => 'सब',
+	'number-shortening' => '$1के',
+	'number-shortening-millions' => '$1मिलियन',
+	'number-shortening-billions' => '$1बिलियन',
 );
 
 $messages['bi'] = array(
@@ -3647,6 +3673,9 @@ $messages['bn'] = array(
 	'noimages' => 'দেখার মত কিছু নেই।',
 	'namespacesall' => 'সমস্ত',
 	'newuserlog-byemail' => 'শব্দচাবি ইমেইলের মাধ্যমে পাঠানো হয়েছে',
+	'number-shortening' => '$1 হাজার',
+	'number-shortening-millions' => '$1 মিলিয়ন',
+	'number-shortening-billions' => '$1 বিলিয়ন',
 );
 
 $messages['bo'] = array(
@@ -3976,6 +4005,9 @@ $1 {{PLURAL:$1|rummad|rummad}}',
 	'noimages' => 'Netra da welet.',
 	'namespacesall' => 'pep tra',
 	'newuserlog-byemail' => 'ger-tremen kaset dre bostel',
+	'number-shortening' => '$1 тис.',
+	'number-shortening-millions' => '$1M',
+	'number-shortening-billions' => '$1Mrd',
 );
 
 $messages['brh'] = array(
@@ -4159,6 +4191,9 @@ na kome bi se izvela ova funkcija.',
 	'noimages' => 'Ništa za prikazati.',
 	'namespacesall' => 'sve',
 	'newuserlog-byemail' => 'šifra je poslana putem e-maila',
+	'number-shortening' => '$1K',
+	'number-shortening-millions' => '$1M',
+	'number-shortening-billions' => '$1B',
 );
 
 $messages['bug'] = array(
@@ -4318,6 +4353,9 @@ Podeu modificar les planes ja existents o bé [[Special:UserLogin|entrar en un c
 	'namespacesall' => 'tots',
 	'not_you' => 'No ets tu?',
 	'newly_changed' => 'Editats recentment',
+	'number-shortening' => '$1K',
+	'number-shortening-millions' => '$1M',
+	'number-shortening-billions' => '$1B',
 );
 
 $messages['cbk-zam'] = array(
@@ -4736,6 +4774,9 @@ $messages['ckb'] = array(
 	'newimages-legend' => 'پاڵاوتن',
 	'noimages' => 'هیچ بۆ دیتن نیە.',
 	'namespacesall' => 'ھەموو',
+	'number-shortening' => '$1 ھەزار',
+	'number-shortening-millions' => '$1 میلیۆن',
+	'number-shortening-billions' => '$1 بیلیۆن',
 );
 
 $messages['co'] = array(
@@ -5248,6 +5289,9 @@ Pokud na začátek dotazu přidáte ''all:'', bude se hledat všude (včetně di
 	'noimages' => 'Není co zobrazit.',
 	'namespacesall' => 'všechny',
 	'newuserlog-byemail' => 'heslo zasláno e-mailem',
+	'number-shortening' => '$1K',
+	'number-shortening-millions' => '$1M',
+	'number-shortening-billions' => '$1B',
 );
 
 $messages['csb'] = array(
@@ -5563,6 +5607,9 @@ Gallwch [[Special:Search/{{PAGENAME}}|chwilio am y teitl hwn]] ar dudalennau era
 	'noimages' => "Does dim byd i'w weld.",
 	'namespacesall' => 'pob un',
 	'newuserlog-byemail' => 'anfonwyd y cyfrinair trwy e-bost',
+	'number-shortening' => '$1,000',
+	'number-shortening-millions' => '$1 miliwn',
+	'number-shortening-billions' => '$1 biliwn',
 );
 
 $messages['da'] = array(
@@ -5821,6 +5868,9 @@ oder die zugehörigen <span class="plainlinks">[{{fullurl:{{#special:Log}}|page=
 	'newuserlog-byemail' => 'das Passwort wurde per E-Mail versandt',
 	'not_you' => 'Das bist nicht Du?',
 	'newly_changed' => 'Zuletzt geändert',
+	'number-shortening' => '$1K',
+	'number-shortening-millions' => '$1M',
+	'number-shortening-billions' => '$1B',
 );
 
 $messages['de-ch'] = array(
@@ -6106,6 +6156,9 @@ Pe verbendi ''all:'', vaceyê xo bıvurni ki contenti hemi cıgeyro (pelanê mı
 	'noimages' => 'Çik çini yo.',
 	'namespacesall' => 'têde',
 	'newuserlog-byemail' => 'pê e-mail ra paralo şiravt',
+	'number-shortening' => '$1K',
+	'number-shortening-millions' => '$1M',
+	'number-shortening-billions' => '$1B',
 );
 
 $messages['dsb'] = array(
@@ -6566,6 +6619,9 @@ $messages['el'] = array(
 	'newuserlog-byemail' => 'ο κωδικός έχει σταλεί μέσω ηλεκτρονικού μηνύματος',
 	'not_you' => 'Δεν είστε εσείς;',
 	'newly_changed' => 'Άλλαξαν πρόσφατα',
+	'number-shortening' => '$1K',
+	'number-shortening-millions' => '$1M',
+	'number-shortening-billions' => '$1δις',
 );
 
 $messages['eml'] = array(
@@ -6699,6 +6755,9 @@ Provu prefiksi vian mendon kun ''all:'' por serĉi ĉiun enhavon (inkluzivante d
 	'noimages' => 'Nenio videbla.',
 	'namespacesall' => 'ĉiuj',
 	'newuserlog-byemail' => 'pasvorto sendita retpoŝte',
+	'number-shortening' => '$1K',
+	'number-shortening-millions' => '$1M',
+	'number-shortening-billions' => '$1 Mrd',
 );
 
 $messages['es'] = array(
@@ -6834,6 +6893,9 @@ Prueba a usar el prefijo ''all:'' para buscar en todo el contenido (incluyendo p
 	'newuserlog-byemail' => 'contraseña enviada por correo electrónico',
 	'not_you' => '¿No eres tú?',
 	'newly_changed' => 'Editados recientemente',
+	'number-shortening' => '$1K',
+	'number-shortening-millions' => '$1M',
+	'number-shortening-billions' => '$1B',
 );
 
 $messages['et'] = array(
@@ -6965,6 +7027,9 @@ päringu ees prefiksit ''all:''. Konkreetsest nimeruumist otsimiseks kasuta pref
 	'noimages' => 'Uusi pilte ei ole.',
 	'namespacesall' => 'kõik',
 	'newuserlog-byemail' => 'parool saadetud e-postiga',
+	'number-shortening' => '$1K',
+	'number-shortening-millions' => '$1M',
+	'number-shortening-billions' => '$1B',
 );
 
 $messages['eu'] = array(
@@ -7089,6 +7154,8 @@ Saia zaitez zure eskeraren aurretik ''all:'' jartzen eduki guztien artean bilatz
 	'noimages' => 'Ez dago ezer ikusteko.',
 	'namespacesall' => 'guztiak',
 	'newuserlog-byemail' => 'pasahitza e-postaz bidali da',
+	'number-shortening' => '$1 K',
+	'number-shortening-millions' => '$1 M',
 );
 
 $messages['ext'] = array(
@@ -7341,6 +7408,9 @@ $messages['fa'] = array(
 	'noimages' => 'چیزی برای دیدن نیست.',
 	'namespacesall' => 'همه',
 	'newuserlog-byemail' => 'گذرواژه با پست الکترونیکی ارسال شد',
+	'number-shortening' => '$1 هزار',
+	'number-shortening-millions' => '$1 میلیون',
+	'number-shortening-billions' => '$1 میلیارد',
 );
 
 $messages['ff'] = array(
@@ -7475,6 +7545,9 @@ Kokeile lisätä haun alkuun ''all:'', niin haku kohdistuu kaikkeen sisältöön
 	'newuserlog-byemail' => 'salasana lähetetty sähköpostitse',
 	'not_you' => 'Eikö tämä ole tunnuksesi?',
 	'newly_changed' => 'Äskettäin muutetut',
+	'number-shortening' => '$1 tuhatta',
+	'number-shortening-millions' => '$1 milj',
+	'number-shortening-billions' => '$1 mrd',
 );
 
 $messages['fiu-vro'] = array(
@@ -7725,6 +7798,9 @@ Tú kanst royna at brúka ''all:'' sum fyrsta stavilsi fyri at søkja í øllum 
 	'newimages' => 'Nýggjar myndir',
 	'noimages' => 'Einki at síggja.',
 	'namespacesall' => 'alt',
+	'number-shortening' => '$1K',
+	'number-shortening-millions' => '$1M',
+	'number-shortening-billions' => '$1B',
 );
 
 $messages['fr'] = array(
@@ -7858,6 +7934,9 @@ Essayez en utilisant le préfixe ''all:'' pour rechercher dans tout le contenu (
 	'newuserlog-byemail' => 'mot de passe envoyé par courriel',
 	'not_you' => 'Pas vous ?',
 	'newly_changed' => 'Récemment modifié',
+	'number-shortening' => '$1K',
+	'number-shortening-millions' => '$1M',
+	'number-shortening-billions' => '$1 Mrd',
 );
 
 $messages['frc'] = array(
@@ -8353,6 +8432,9 @@ Jo kinne ek in nammerûmte as foarheaksel brûke.",
 	'noimages' => 'Neat te sjen.',
 	'namespacesall' => 'alles',
 	'newuserlog-byemail' => 'wachtwurd is ferstjoerd oer e-mail',
+	'number-shortening' => '$1K',
+	'number-shortening-millions' => '$1*10ˆ6',
+	'number-shortening-billions' => '$1*10ˆ9',
 );
 
 $messages['ga'] = array(
@@ -8972,6 +9054,9 @@ Probe a fixar a súa petición con ''all:'' para procurar en todo o contido (inc
 	'newuserlog-byemail' => 'contrasinal enviado por correo electrónico',
 	'not_you' => '¿Non es?',
 	'newly_changed' => 'Recentemente cambiados',
+	'number-shortening' => '$1K',
+	'number-shortening-millions' => '$1M',
+	'number-shortening-billions' => '$1B',
 );
 
 $messages['glk'] = array(
@@ -9670,6 +9755,9 @@ Kó-yèn ngì-he put-séu-sîm to chhṳ́ hong-mien, chhṳ̍t-chiap tiám-kit 
 	'newimages' => 'Sîn-kien thù-chhiong ke va̍k-lòng',
 	'noimages' => 'Mò-khó kiám-sṳ thù-chhiong.',
 	'namespacesall' => 'Chhiòn-phu',
+	'number-shortening' => '$1千',
+	'number-shortening-millions' => '$1百萬',
+	'number-shortening-billions' => '$10億',
 );
 
 $messages['haw'] = array(
@@ -9717,6 +9805,9 @@ Hiki iā ʻoe ke [[Special:Search/{{PAGENAME}}|huli no kēia inoa ʻaoʻao]] i n
 	'newtitle' => 'I ka inoa hou:',
 	'nextdiff' => 'Hoʻololi hou aʻe →',
 	'namespacesall' => 'apau',
+	'number-shortening' => '$1K',
+	'number-shortening-millions' => '$1M',
+	'number-shortening-billions' => '$1B',
 );
 
 $messages['he'] = array(
@@ -9855,6 +9946,9 @@ $messages['he'] = array(
 	'newuserlog-byemail' => 'הסיסמה נשלחה בדוא"ל',
 	'not_you' => 'לא את/ה?',
 	'newly_changed' => 'נערכו לאחרונה',
+	'number-shortening' => '$1 אלפים',
+	'number-shortening-millions' => '$1 מיליונים',
+	'number-shortening-billions' => '$1 מיליארדים',
 );
 
 $messages['hi'] = array(
@@ -9993,6 +10087,9 @@ $messages['hi'] = array(
 	'newimages-label' => 'संचिका नाम (या उसका अंश):',
 	'noimages' => 'देखनेके लिये कुछ भी नहीं हैं।',
 	'namespacesall' => 'सभी',
+	'number-shortening' => '$1के',
+	'number-shortening-millions' => '$1मिलियन',
+	'number-shortening-billions' => '$1बिलियन',
 );
 
 $messages['hif'] = array(
@@ -10853,6 +10950,9 @@ Visszamehetsz és szerkeszthetsz egy létező lapot, valamint [[Special:UserLogi
 	'noimages' => 'Nem tekinthető meg semmi.',
 	'namespacesall' => 'Összes',
 	'newuserlog-byemail' => 'a jelszót kiküldtük a megadott e-mail címre',
+	'number-shortening' => '$1 ezer',
+	'number-shortening-millions' => '$1 millió',
+	'number-shortening-billions' => '$1 milliárd',
 );
 
 $messages['hy'] = array(
@@ -11098,6 +11198,9 @@ executar iste function.',
 	'noimages' => 'Nihil a vider.',
 	'namespacesall' => 'totes',
 	'newuserlog-byemail' => 'contrasigno inviate per e-mail',
+	'number-shortening' => '$1K',
+	'number-shortening-millions' => '$1mln',
+	'number-shortening-billions' => '$1mld',
 );
 
 $messages['id'] = array(
@@ -11222,6 +11325,9 @@ Anda dapat kembali dan menyunting halaman yang telah ada, atau silakan [[Special
 	'noimages' => 'Tidak ada yang dilihat.',
 	'namespacesall' => 'semua',
 	'newuserlog-byemail' => 'kata sandi dikirim melalui surel',
+	'number-shortening' => '$1K',
+	'number-shortening-millions' => '$1M',
+	'number-shortening-billions' => '$1B',
 );
 
 $messages['ie'] = array(
@@ -11976,6 +12082,9 @@ Se il collegamento è stato aperto per errore, è sufficiente fare clic sul puls
 	'namespacesall' => 'Tutti',
 	'newuserlog-byemail' => 'password inviata via mail',
 	'not_you' => 'Non sei tu?',
+	'number-shortening' => '$1K',
+	'number-shortening-millions' => '$1 mln',
+	'number-shortening-billions' => '$1B',
 );
 
 $messages['iu'] = array(
@@ -12237,6 +12346,9 @@ URLを間違って打ったか、正しくないリンクを辿った可能性�
 	'newuserlog-byemail' => 'パスワードを電子メールで送信しました',
 	'not_you' => '違う場合、',
 	'newly_changed' => '更新された記事',
+	'number-shortening' => '$1K',
+	'number-shortening-millions' => '$1M',
+	'number-shortening-billions' => '$1B',
 );
 
 $messages['jam'] = array(
@@ -14200,6 +14312,9 @@ $messages['kn'] = array(
 	'newimages-summary' => 'ಈ ವಿಶೇಷ ಪುಟವು ಕೊನೆಯದಾಗಿ ಅಪ್ಲೋಡ್ ಆಗಿರುವ ಫೈಲುಗಳನ್ನು ತೋರುತ್ತದೆ',
 	'noimages' => 'ನೋಡಲು ಏನೂ ಇಲ್ಲ.',
 	'namespacesall' => 'ಎಲ್ಲಾ',
+	'number-shortening' => '$1 ಸಾವಿರ',
+	'number-shortening-millions' => '$1 ದಶಲಕ್ಷ',
+	'number-shortening-billions' => '$1 ಶತಕೋಟಿ',
 );
 
 $messages['ko'] = array(
@@ -14324,6 +14439,9 @@ $messages['ko'] = array(
 	'noimages' => '그림이 없습니다.',
 	'namespacesall' => '모두',
 	'newuserlog-byemail' => '이메일로 보낸 암호',
+	'number-shortening' => '$1천',
+	'number-shortening-millions' => '$1백만',
+	'number-shortening-billions' => '$1B',
 );
 
 $messages['ko-kp'] = array(
@@ -15493,6 +15611,9 @@ oder <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}
 	'noimages' => 'Keng Biller fonnt.',
 	'namespacesall' => 'all',
 	'newuserlog-byemail' => "d'Passwuert gouf per E-Mail geschéckt",
+	'number-shortening' => '$1k',
+	'number-shortening-millions' => '$1M',
+	'number-shortening-billions' => '$1 Mrd',
 );
 
 $messages['lbe'] = array(
@@ -15561,6 +15682,9 @@ $messages['lez'] = array(
 	'newtitle' => 'Цlийи тlарцlихъ:',
 	'nextdiff' => 'ЦIийи дегишунар',
 	'namespacesall' => 'вири',
+	'number-shortening' => '$1K',
+	'number-shortening-millions' => '$1M',
+	'number-shortening-billions' => '$1B',
 );
 
 $messages['lfn'] = array(
@@ -16355,6 +16479,9 @@ Jūs galite grįžti ir redaguoti jau esantį puslapį, arba [[Special:UserLogin
 	'noimages' => 'Nėra ką parodyti.',
 	'namespacesall' => 'visos',
 	'newuserlog-byemail' => 'slaptažodis nusiųstas elektroniniu paštu',
+	'number-shortening' => '$1K',
+	'number-shortening-millions' => '$1M',
+	'number-shortening-billions' => '$1B',
 );
 
 $messages['ltg'] = array(
@@ -16522,6 +16649,9 @@ Tu vari atgriezties atpakaļ un izmainīt esošu lapu, vai arī [[Special:UserLo
 	'noimages' => 'Nav nekā ko redzēt.',
 	'namespacesall' => 'visas',
 	'newuserlog-byemail' => 'parole nosūtīta pa e-pastu',
+	'number-shortening' => '$1K',
+	'number-shortening-millions' => '$1M',
+	'number-shortening-billions' => '$1B',
 );
 
 $messages['lzh'] = array(
@@ -16639,6 +16769,8 @@ $messages['lzh'] = array(
 	'noimages' => '無可見。',
 	'namespacesall' => '全',
 	'newuserlog-byemail' => '號發自電郵',
+	'number-shortening' => '$1千',
+	'number-shortening-millions' => '$1百萬',
 );
 
 $messages['lzz'] = array(
@@ -16933,6 +17065,9 @@ Jajal aweh awalan ''all:'' kanggo nggolèti kabèh isi (kalebu kaca dhiskusi, ci
 	'nonfile-cannot-move-to-file' => 'Ora teyeng mindahna dudu-berkas ming bilik jeneng berkas',
 	'nextdiff' => 'Suntingan sing lewih anyar →',
 	'namespacesall' => 'kabèh',
+	'number-shortening' => '$1K',
+	'number-shortening-millions' => '$1Jt',
+	'number-shortening-billions' => '$1M',
 );
 
 $messages['mdf'] = array(
@@ -17482,6 +17617,9 @@ $messages['mk'] = array(
 	'noimages' => 'Нема ништо.',
 	'namespacesall' => 'сите',
 	'newuserlog-byemail' => 'испратена лозинка по е-пошта',
+	'number-shortening' => '$1 К',
+	'number-shortening-millions' => '$1 млн.',
+	'number-shortening-billions' => '$1 млд',
 );
 
 $messages['ml'] = array(
@@ -17606,6 +17744,9 @@ $messages['ml'] = array(
 	'noimages' => 'ഒന്നും കാണാനില്ല.',
 	'namespacesall' => 'എല്ലാം',
 	'newuserlog-byemail' => 'രഹസ്യവാക്ക് ഇ-മെയിൽ വഴി അയച്ചിരിക്കുന്നു',
+	'number-shortening' => '$1 ആയിരം',
+	'number-shortening-millions' => '$1 ദശലക്ഷം',
+	'number-shortening-billions' => '$1 ആയിരം കോടി',
 );
 
 $messages['mn'] = array(
@@ -17898,6 +18039,7 @@ $messages['mr'] = array(
 	'noimages' => 'बघण्यासारखे येथे काही नाही.',
 	'namespacesall' => 'सर्व',
 	'newuserlog-byemail' => 'परवलीचा शब्द ई-मेल मार्फत पाठविलेला आहे',
+	'number-shortening' => '$1के',
 );
 
 $messages['mrj'] = array(
@@ -18065,6 +18207,9 @@ Cuba berikan awalan ''all:'' untuk mencari semua kandungan (termasuk laman perbi
 	'noimages' => 'Tiada imej.',
 	'namespacesall' => 'semua',
 	'newuserlog-byemail' => 'kata laluan dihantar melalui e-mel',
+	'number-shortening' => '$1K',
+	'number-shortening-millions' => '$1J',
+	'number-shortening-billions' => '$1B',
 );
 
 $messages['mt'] = array(
@@ -18192,6 +18337,9 @@ Ipprova għamel prefiss għall-inkjesta tiegħek ma' ''all:'' sabiex tfittex il-
 	'noimages' => "M'hawn xejn x'tara.",
 	'namespacesall' => 'kollha',
 	'newuserlog-byemail' => "il-password intbagħtet permezz ta' posta elettronika",
+	'number-shortening' => '$1K',
+	'number-shortening-millions' => '$1M',
+	'number-shortening-billions' => '$1B',
 );
 
 $messages['mwl'] = array(
@@ -18706,6 +18854,9 @@ Tùi khoàⁿ-māi,  lí phah--ê.',
 	'newimages' => 'Sin iáⁿ-siōng oē-lóng',
 	'namespacesall' => 'choân-pō·',
 	'newuserlog-byemail' => '用電子批寄密碼',
+	'number-shortening' => '$1K',
+	'number-shortening-millions' => '$1M',
+	'number-shortening-billions' => '$1B',
 );
 
 $messages['nap'] = array(
@@ -18868,6 +19019,9 @@ For å søke i alle, bruk prefikset ''all:'' (inkluderer diskusjonssider, maler,
 	'noimages' => 'Ingenting å se.',
 	'namespacesall' => 'alle',
 	'newuserlog-byemail' => 'passord sendt på e-post',
+	'number-shortening' => '$1K',
+	'number-shortening-millions' => '$1 M',
+	'number-shortening-billions' => '$1 B',
 );
 
 $messages['nds'] = array(
@@ -19251,6 +19405,9 @@ $messages['ne'] = array(
 	'newimages-label' => 'भिडियो स्न्यापशट डाइरेक्टरी (वा फाइलनाम)',
 	'noimages' => 'हेर्नको लागि केही छैन.',
 	'namespacesall' => 'सबै',
+	'number-shortening' => '$1 हजार',
+	'number-shortening-millions' => '$1 मिलियन',
+	'number-shortening-billions' => '$1 बिलियन',
 );
 
 $messages['new'] = array(
@@ -19434,6 +19591,9 @@ U kunt ook een naamruimte als voorvoegsel gebruiken.",
 	'newuserlog-byemail' => 'wachtwoord is verzonden per e-mail',
 	'not_you' => 'Niet u?',
 	'newly_changed' => 'Recent gewijzigd',
+	'number-shortening' => '$1K',
+	'number-shortening-millions' => '$1*10ˆ6',
+	'number-shortening-billions' => '$1*10ˆ9',
 );
 
 $messages['nl-informal'] = array(
@@ -20008,6 +20168,9 @@ Ensajatz en utilizant lo prefix ''all:'' per recercar tot lo contengut (tot incl
 	'noimages' => "Cap d'imatge d'afichar pas.",
 	'namespacesall' => 'Totes',
 	'newuserlog-byemail' => 'senhal mandat per corrièr electronic',
+	'number-shortening' => '$1K',
+	'number-shortening-millions' => '$1 M',
+	'number-shortening-billions' => '$1 Mrd',
 );
 
 $messages['om'] = array(
@@ -20640,6 +20803,9 @@ orrer [{{fullurl:{{FULLPAGENAME}}|action=edit}} die Said bearwaide]</span>.',
 	'newtitle' => 'Zum naie Titel:',
 	'nextdiff' => 'Naiere Bearwaidung →',
 	'namespacesall' => 'alle',
+	'number-shortening' => '$1k',
+	'number-shortening-millions' => '$1Mill.',
+	'number-shortening-billions' => '$1Mrd.',
 );
 
 $messages['pi'] = array(
@@ -20789,6 +20955,9 @@ Możesz edytować istniejące strony bądź też [[Special:UserLogin|zalogować 
 	'not_you' => 'Nie ty?',
 	'newly_changed' => 'Ostatnio zmienione',
 	'nodiff' => 'Brak różnic',
+	'number-shortening' => '$1 tys.',
+	'number-shortening-millions' => '$1 mln',
+	'number-shortening-billions' => '$1 mld',
 );
 
 $messages['pms'] = array(
@@ -20920,6 +21089,9 @@ Ch'a preuva a gionté dnans a soa arserca ël prefiss ''all:'' për sërché an 
 	'noimages' => 'Pa gnente da vëdde.',
 	'namespacesall' => 'tùit',
 	'newuserlog-byemail' => 'ciav spedìa për pòsta eletrònica',
+	'number-shortening' => '$1K',
+	'number-shortening-millions' => '$1M',
+	'number-shortening-billions' => '$1Mrd',
 );
 
 $messages['pnb'] = array(
@@ -21379,6 +21551,9 @@ $messages['ps'] = array(
 	'noimages' => 'د کتلو لپاره څه نشته.',
 	'namespacesall' => 'ټول',
 	'newuserlog-byemail' => 'پټنوم مو برېښليک ته درولېږه',
+	'number-shortening' => '$1زر',
+	'number-shortening-millions' => '$1ميليون',
+	'number-shortening-billions' => '$1بيليون',
 );
 
 $messages['pt'] = array(
@@ -21517,6 +21692,9 @@ Tente usar o prefixo ''all:'' para pesquisar todo o conteúdo (incluindo página
 	'newuserlog-byemail' => 'palavra-chave enviada por correio-electrónico',
 	'not_you' => 'Você não?',
 	'newly_changed' => 'Modificados recentemente',
+	'number-shortening' => '$1K',
+	'number-shortening-millions' => '$1M',
+	'number-shortening-billions' => '$1B',
 );
 
 $messages['pt-br'] = array(
@@ -21650,6 +21828,9 @@ Tente utilizar o prefixo ''all:'' em sua busca, para pesquisar por todos os cont
 	'noimages' => 'Nada para ver.',
 	'namespacesall' => 'todos',
 	'newuserlog-byemail' => 'senha enviada por correio-eletrônico',
+	'number-shortening' => '$1K',
+	'number-shortening-millions' => '$1M',
+	'number-shortening-billions' => '$1B',
 );
 
 $messages['qu'] = array(
@@ -22385,6 +22566,9 @@ Prueve mettènne nnande a l'inderrogaziona toje 'u prefisse '''all:''' pe cercà
 	'noimages' => 'Non ge stè ninde da vedè.',
 	'namespacesall' => 'tutte',
 	'newuserlog-byemail' => 'password mannete pe e-mail',
+	'number-shortening' => '$1K',
+	'number-shortening-millions' => '$1M',
+	'number-shortening-billions' => '$1B',
 );
 
 $messages['ru'] = array(
@@ -22518,6 +22702,9 @@ The wiki server can't provide data in a format your client can read.",
 	'newuserlog-byemail' => 'пароль отправлен по эл. почте',
 	'not_you' => 'Не Вы?',
 	'newly_changed' => 'Недавно обновленные',
+	'number-shortening' => '$1K',
+	'number-shortening-millions' => '$1милл.',
+	'number-shortening-billions' => '$1миллиард',
 );
 
 $messages['rue'] = array(
@@ -22820,6 +23007,9 @@ $messages['sa'] = array(
 	'nextdiff' => 'नवतरं सम्पादनम् →',
 	'newimages' => 'नूतन-संचिकानां वीथिका',
 	'namespacesall' => 'सर्वाणि',
+	'number-shortening' => '$1 सहस्राणि',
+	'number-shortening-millions' => '$1 कोटिः',
+	'number-shortening-billions' => '$1 अर्बुदं',
 );
 
 $messages['sah'] = array(
@@ -23260,6 +23450,9 @@ Ye can go back an eik tae an existing page, or [[Special:UserLogin|log in or mak
 	'newimages' => 'Gallery o new files',
 	'noimages' => 'Naething tae see.',
 	'namespacesall' => 'aa',
+	'number-shortening' => '$1K',
+	'number-shortening-millions' => '$1M',
+	'number-shortening-billions' => '$1B',
 );
 
 $messages['sd'] = array(
@@ -24043,6 +24236,7 @@ $messages['si'] = array(
 	'noimages' => 'පෙනෙන්නට කිසිවක් නොමැත.',
 	'namespacesall' => 'සියල්ල',
 	'newuserlog-byemail' => 'විද්‍යුත්-තැපෑලෙන් මුර-පදය යවන ලදි',
+	'number-shortening' => '$1K',
 );
 
 $messages['sk'] = array(
@@ -24310,6 +24504,9 @@ Lahko se vrnete nazaj in urejate že obstoječe strani, ali pa se [[Special:User
 	'newuserlog-byemail' => 'geslo je bilo poslano po e-pošti',
 	'not_you' => 'Niste vi?',
 	'newly_changed' => 'Nedavno spremenjeno',
+	'number-shortening' => '$1 tis.',
+	'number-shortening-millions' => '$1 mio.',
+	'number-shortening-billions' => '$1 mia.',
 );
 
 $messages['sli'] = array(
@@ -24542,6 +24739,9 @@ $messages['so'] = array(
 	'noemailtitle' => 'Malaha cinwaan E-boosto',
 	'nowatchlist' => 'Waxba kuma jiraan liiskaaga waardiyeynta.',
 	'numwatchers' => 'Tirada waardiyeyaasha: $1',
+	'number-shortening' => '$1K',
+	'number-shortening-millions' => '$1M',
+	'number-shortening-billions' => '$1B',
 );
 
 $messages['sq'] = array(
@@ -24947,6 +25147,9 @@ $messages['sr-ec'] = array(
 	'noimages' => 'Нема ништа.',
 	'namespacesall' => 'све',
 	'newuserlog-byemail' => 'лозинка је послата е-поштом',
+	'number-shortening' => '$1 хиљ.',
+	'number-shortening-millions' => '$1 мил.',
+	'number-shortening-billions' => '$1 млрд.',
 );
 
 $messages['sr-el'] = array(
@@ -25568,6 +25771,9 @@ Du kan redigera existerande sidor, eller [[Special:UserLogin|logga in eller skap
 	'newuserlog-byemail' => 'lösenord skickat med e-post',
 	'not_you' => 'Är detta inte du?',
 	'newly_changed' => 'Nyligen ändrade',
+	'number-shortening' => '$1K',
+	'number-shortening-millions' => '$1M',
+	'number-shortening-billions' => '$1B',
 );
 
 $messages['sw'] = array(
@@ -25802,6 +26008,9 @@ Možeš sprowjać te co juž sům, abo [[Special:UserLogin|zalogować śe, abo z
 	'noimages' => 'Brak plikůw do pokozańo.',
 	'namespacesall' => 'wszyjske',
 	'newuserlog-byemail' => 'hasło uostało wysłane e-brifym',
+	'number-shortening' => '$1 tyś.',
+	'number-shortening-millions' => '$1 mln',
+	'number-shortening-billions' => '$1 mld',
 );
 
 $messages['ta'] = array(
@@ -26138,6 +26347,9 @@ $messages['te'] = array(
 	'noimages' => 'చూసేందుకు ఏమీ లేదు.',
 	'namespacesall' => 'అన్నీ',
 	'newuserlog-byemail' => 'ఈ-మెయిలులో సంకేతపదం పంపించాం',
+	'number-shortening' => '$1K',
+	'number-shortening-millions' => '$1మిలియన్',
+	'number-shortening-billions' => '$1బిలియన్',
 );
 
 $messages['tet'] = array(
@@ -26604,6 +26816,9 @@ $messages['th'] = array(
 	'noimages' => 'ไม่มีให้ดู',
 	'namespacesall' => 'ทั้งหมด',
 	'newuserlog-byemail' => 'รหัสผ่านถูกส่งทางอีเมล',
+	'number-shortening' => '$1หมื่น',
+	'number-shortening-millions' => '$1ล้าน',
+	'number-shortening-billions' => '$1พันล้าน',
 );
 
 $messages['ti'] = array(
@@ -26887,6 +27102,9 @@ Subuking lagyan ng unlapi/paunang ''all:'' upang hanapin ang lahat ng mga nialal
 	'noimages' => 'Walang makikita dito.',
 	'namespacesall' => 'lahat',
 	'newuserlog-byemail' => 'Ipinadala ang hudyat sa pamamagitan ng e-liham',
+	'number-shortening' => '$1,000',
+	'number-shortening-millions' => '$1 Milyon',
+	'number-shortening-billions' => '$1 Bilyon',
 );
 
 $messages['tn'] = array(
@@ -27152,6 +27370,9 @@ Aramanızın başına '''all:''' önekini ekleyerek tüm içeriği aramayı (tar
 	'newuserlog-byemail' => 'e-posta yoluyla şifre gönderilmiştir',
 	'not_you' => 'Bu siz değil misiniz?',
 	'newly_changed' => 'Yeni değiştirilenler',
+	'number-shortening' => '$1K',
+	'number-shortening-millions' => '$1M',
+	'number-shortening-billions' => '$1B',
 );
 
 $messages['ts'] = array(
@@ -27290,6 +27511,9 @@ $messages['tt-cyrl'] = array(
 	'newimages-legend' => 'Фильтр',
 	'namespacesall' => 'барлык',
 	'newuserlog-byemail' => 'серсүз электрон почта аша җибәрелде',
+	'number-shortening' => '$1K',
+	'number-shortening-millions' => '$1милл.',
+	'number-shortening-billions' => '$1миллиард',
 );
 
 $messages['tt-latn'] = array(
@@ -27800,6 +28024,9 @@ The wiki server can't provide data in a format your client can read.",
 	'newuserlog-byemail' => 'пароль надісланий електронною поштою',
 	'not_you' => 'Не ви?',
 	'newly_changed' => 'Нещодавно змінені',
+	'number-shortening' => '$1 тис.',
+	'number-shortening-millions' => '$1 млн',
+	'number-shortening-billions' => '$1 млрд',
 );
 
 $messages['ur'] = array(
@@ -28428,6 +28655,9 @@ Bạn có thể quay trở lại và sửa đổi các trang đã có, hoặc [[
 	'noimages' => 'Chưa có hình.',
 	'namespacesall' => 'tất cả',
 	'newuserlog-byemail' => 'gửi mật khẩu qua thư điện tử',
+	'number-shortening' => '$1K',
+	'number-shortening-millions' => '$1M',
+	'number-shortening-billions' => '$1B',
 );
 
 $messages['vls'] = array(
@@ -29912,6 +30142,9 @@ $messages['zh-hans'] = array(
 	'noimages' => '无可查看文件。',
 	'namespacesall' => '全部',
 	'newuserlog-byemail' => '密码已用电子邮件发送',
+	'number-shortening' => '$1千',
+	'number-shortening-millions' => '$1百万',
+	'number-shortening-billions' => '$10亿',
 );
 
 $messages['zh-hant'] = array(
@@ -30038,6 +30271,9 @@ $messages['zh-hant'] = array(
 	'noimages' => '無可檢視圖片。',
 	'namespacesall' => '全部',
 	'newuserlog-byemail' => '密碼已由電子郵件寄出',
+	'number-shortening' => '$1 千',
+	'number-shortening-millions' => '$1 百萬',
+	'number-shortening-billions' => '$10 億',
 );
 
 $messages['zh-hk'] = array(
@@ -30045,6 +30281,9 @@ $messages['zh-hk'] = array(
 	'navigation' => '導航',
 	'nstab-special' => '特殊頁面',
 	'nav-login-createaccount' => '登入／創造帳戶',
+	'number-shortening' => '$1K',
+	'number-shortening-millions' => '$1M',
+	'number-shortening-billions' => '$1B',
 );
 
 $messages['zh-min-nan'] = array(

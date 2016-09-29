@@ -94,8 +94,8 @@ class WikiaPhotoGalleryHelper {
 
 		wfProfileIn( __METHOD__ );
 
-		if ( $app->checkSkin( [ 'oasis' ] ) ) {
-			$app->wg->Out->addModules( 'ext.WikiaPhotoGallery' );
+		if ( F::app()->checkSkin( [ 'oasis' ] ) ) {
+			$app->wg->Out->addScript("<script type=\"{$app->wg->JsMimeType}\" src=\"{$app->wg->ExtensionsPath}/wikia/WikiaPhotoGallery/js/WikiaPhotoGallery.js\"></script>\n");
 
 			// load message for MW toolbar button tooltip
 			$wgHooks['MakeGlobalVariablesScript'][] = 'WikiaPhotoGalleryHelper::makeGlobalVariablesScript';

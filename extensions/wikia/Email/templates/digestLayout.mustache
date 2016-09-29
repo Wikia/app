@@ -1,14 +1,20 @@
-{{> greeting}}
-<table>
-	{{# details}}
-		<tr>
-			<td>
-				{{> digestDetail}}
-			</td>
-		</tr>
-	{{/ details}}
-	{{> button}}
+<div class="digest-layout-container">
+	{{> greeting}}
+	<table class="digest-layout-details">
+		{{# details}}
+			{{> digestDetail}}
+		{{/ details}}
+		{{# buttonLink}}
+			{{> button}}
+		{{/ buttonLink}}
+	</table>
 	{{# hasContentFooterMessages}}
-		{{> contentFooterMessages}}
+		{{#contentFooterMessages}}
+			<p>{{{.}}}</p>
+		{{/contentFooterMessages}}
 	{{/ hasContentFooterMessages}}
-</table>
+	<img class="signature-icon" src="{{signatureIcon}}">
+	<p class="signature">
+		{{signature}}
+	</p>
+</div>
