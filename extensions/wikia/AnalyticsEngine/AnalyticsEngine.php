@@ -43,6 +43,8 @@ class AnalyticsEngine {
 				return new AnalyticsProviderGoogleUA();
 			case 'Krux':
 				return new AnalyticsProviderKrux();
+			case 'NetzAthleten':
+				return new AnalyticsProviderNetzAthleten();
 			case 'AmazonMatch':
 				return new AnalyticsProviderAmazonMatch();
 			case 'Nielsen':

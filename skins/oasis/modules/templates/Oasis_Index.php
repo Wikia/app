@@ -64,6 +64,7 @@
 
 <?= $comScore ?>
 <?= $quantServe ?>
+<?= $netzAthleten ?>
 <?= $rubiconFastlane ?>
 <?= $amazonMatch ?>
 <?= $openXBidder ?>
