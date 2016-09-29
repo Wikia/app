@@ -60,6 +60,7 @@ class SpecialSitemapXmlController extends WikiaSpecialPageController {
 
 		echo '</urlset>' . PHP_EOL;
 		echo sprintf( '<!-- Generation time: %dms -->' . PHP_EOL, microtime( true ) * 1000 - $start );
+		echo sprintf( '<!-- Generation date: %s -->' . PHP_EOL, wfTimestamp( TS_ISO_8601 ) );
 	}
 
 	private function getIso8601Timestamp( $touched ) {

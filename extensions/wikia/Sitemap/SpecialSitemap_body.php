@@ -250,7 +250,7 @@ class SitemapPage extends UnlistedSpecialPage {
 				return gzencode( str_replace( 'http://localhost/', 'http://' . $_SERVER['SERVER_NAME'] . '/', gzdecode( $namespaceSitemap ) ) );
 			}
 		}
-		$startTime = microtime( true );
+		$start = microtime( true ) * 1000;
 
 		$dbr = wfGetDB( DB_SLAVE, 'vslow' );
 
@@ -306,8 +306,8 @@ class SitemapPage extends UnlistedSpecialPage {
 			$out .= $entry;
 		}
 		$out .= "</urlset>\n";
-		$endTime = microtime( true );
-		$out .= "<!-- Generating time: " . ( $endTime - $startTime ) . " sec - " . date( 'Y-m-d H:i:s' ) . " -->\n";
+		$out .= sprintf( '<!-- Generation time: %dms -->' . PHP_EOL, ( microtime( true ) * 1000 - $start ) );
+		$out .= sprintf( '<!-- Generation date: %s -->' . PHP_EOL, wfTimestamp( TS_ISO_8601 ) );
 
 		return gzencode( $out );
 	}
