@@ -631,7 +631,7 @@ $messages['es'] = [
 	'wikia-visualeditor-dialog-wikiasourcemode-help-link' => 'Ayuda:Wikitexto',
 	'wikia-visualeditor-dialog-wikiasourcemode-help-text' => 'Ayuda para el formato',
 	'wikia-visualeditor-notification-media-must-be-logged-in' => 'Debes estar conectado para añadir imágenes y videos.',
-	'wikia-visualeditor-notification-media-only-premium-videos-allowed' => 'Esta wikia solo permite contenido con licencia de la <a href="http://video.wikia.com" target="_blank">Biblioteca de Videos de Wikia</a> para ser agregado. Por favor, ve a <a href="http://video.wikia.com" target="_blank">video.wikia.com</a> para buscar videos.',
+	'wikia-visualeditor-notification-media-only-premium-videos-allowed' => 'Este wiki solo permite contenido con licencia de la <a href="http://video.wikia.com" target="_blank">Videoteca de Wikia</a> para ser agregado. Por favor, ve a <a href="http://video.wikia.com" target="_blank">video.wikia.com</a> para buscar videos.',
 	'wikia-visualeditor-notification-media-query-failed' => 'Lo sentimos, no encontramos una imagen o video admitidos en esa URL.',
 	'wikia-visualeditor-notification-media-permission-denied' => 'Permiso denegado',
 	'wikia-visualeditor-notification-video-preview-not-available' => 'Lo sentimos, este video no está disponible para su prevista.',
@@ -1106,7 +1106,7 @@ $messages['it'] = [
 	'wikia-visualeditor-dialog-wikiasourcemode-help-link' => 'Aiuto:Wikitext',
 	'wikia-visualeditor-dialog-wikiasourcemode-help-text' => 'Guida alla formattazione',
 	'wikia-visualeditor-notification-media-must-be-logged-in' => 'Devi aver effettuato l\'accesso per aggiungere immagini e video.',
-	'wikia-visualeditor-notification-media-only-premium-videos-allowed' => 'Questa wiki autorizza solo l\'aggiunta di contenuti sotto licenza della <a href="http://video.wikia.com" target="_blank">Biblioteca video di Wikia</a>. Sei pregato di andare su <a href="http://video.wikia.com" target="_blank">video.wikia.com</a> per cercare i video.',
+	'wikia-visualeditor-notification-media-only-premium-videos-allowed' => 'Questa wiki accetta soltanto l\'inserimento di contenuti autorizzati dalla <a href="http://video.wikia.com" target="_blank">Wikia Video Library</a>. Per favore vai su <a href="http://video.wikia.com" target="_blank">video.wikia.com</a> per cercare i video.',
 	'wikia-visualeditor-notification-media-query-failed' => 'Purtroppo non abbiamo trovato immagini o video supportati a questa URL.',
 	'wikia-visualeditor-notification-media-permission-denied' => 'Autorizzazione negata',
 	'wikia-visualeditor-notification-video-preview-not-available' => 'Purtroppo questo video non è disponibile per l\'anteprima.',
@@ -1193,7 +1193,7 @@ $messages['ja'] = [
 	'wikia-visualeditor-savedialog-label-restore' => 'ページを復元',
 	'wikia-visualeditor-toolbar-savedialog' => '公開',
 	'wikia-visualeditor-dialog-wikiasourcemode-help-text' => '書式設定のヘルプ',
-	'wikia-visualeditor-notification-media-only-premium-videos-allowed' => 'このウィキアに追加できるのは、<a href="http://video.wikia.com" target="_blank">ウィキア動画ライブラリ</a>内の使用許可のあるコンテンツのみです。<a href="http://video.wikia.com" target="_blank">video.wikia.com</a>から動画を探してみてください。',
+	'wikia-visualeditor-notification-media-only-premium-videos-allowed' => 'このウィキアは<a href="http://video.wikia.com" target="_blank">ウィキアビデオライブラリ</a>から追加されたの認可されたコンテンツのみ許可していますされています。ビデオを検索するには <a href="http://video.wikia.com" target="_blank">video.wikia.com</a> にアクセスしてください。',
 	'wikia-visualeditor-notification-media-query-failed' => '申し訳ありませんが、サポートされている画像や動画はこのURLでは見つかりませんでした。',
 	'wikia-visualeditor-notification-media-permission-denied' => '権限がありません',
 	'wikia-visualeditor-notification-video-preview-not-available' => '申し訳ありませんが、この動画をプレビューすることはできません。',
@@ -1920,7 +1920,7 @@ $messages['pt'] = [
 	'wikia-visualeditor-dialog-wikiasourcemode-help-link' => 'Help:Wikitext',
 	'wikia-visualeditor-dialog-wikiasourcemode-help-text' => 'Ajuda de formatação',
 	'wikia-visualeditor-notification-media-must-be-logged-in' => 'Você precisa estar logado para adicionar imagens e vídeos.',
-	'wikia-visualeditor-notification-media-only-premium-videos-allowed' => 'Esta wiki permite apenas conteúdo licenciado da <a href="http://video.wikia.com" target="_blank">Biblioteca de Vídeos da Wikia</a> para ser adicionado. Por favor acesse <a href="http://video.wikia.com" target="_blank">video.wikia.com</a> para encontrar vídeos.',
+	'wikia-visualeditor-notification-media-only-premium-videos-allowed' => 'Essa wikia permite que somente conteúdos licenciados da <a href="http://video.wikia.com" target="_blank">videoteca da Wikia</a> sejam adicionados. Por favor, vá a <a href="http://video.wikia.com" target="_blank">video.wikia.com</a> para procurar por vídeos.',
 	'wikia-visualeditor-notification-media-query-failed' => 'Desculpe, não conseguimos encontrar uma imagem ou vídeo suportados nesse URL.',
 	'wikia-visualeditor-notification-media-permission-denied' => 'Permissão negada',
 	'wikia-visualeditor-dialog-map-insert-title' => 'Inserir mapa',
@@ -1975,7 +1975,7 @@ $messages['pt-br'] = [
 	'wikia-visualeditor-dialog-wikiasourcemode-help-link' => 'Help:Wikitext',
 	'wikia-visualeditor-dialog-wikiasourcemode-help-text' => 'Ajuda de formatação',
 	'wikia-visualeditor-notification-media-must-be-logged-in' => 'Você precisa estar logado para adicionar imagens e vídeos.',
-	'wikia-visualeditor-notification-media-only-premium-videos-allowed' => 'Esta wiki permite apenas conteúdo licenciado da <a href="http://video.wikia.com" target="_blank">Biblioteca de Vídeos da Wikia</a> para ser adicionado. Por favor acesse <a href="http://video.wikia.com" target="_blank">video.wikia.com</a> para encontrar vídeos.',
+	'wikia-visualeditor-notification-media-only-premium-videos-allowed' => 'Essa wiki só permite que conteúdos licenciados da<a href="http://video.wikia.com" target="_blank">videoteca da Wikia</a> sejam adicionados. Por favor, vá a <a href="http://video.wikia.com" target="_blank">video.wikia.com</a> para procurar por vídeos.',
 	'wikia-visualeditor-notification-media-query-failed' => 'Desculpe, não conseguimos encontrar uma imagem ou vídeo suportados nesse URL.',
 	'wikia-visualeditor-notification-media-permission-denied' => 'Permissão negada',
 	'wikia-visualeditor-notification-video-preview-not-available' => 'Desculpe,esse vídeo não está disponível para visualização.',
@@ -2685,5 +2685,9 @@ $messages['zh-hant'] = [
 	'wikia-visualeditor-dialogbutton-imageinsert-tooltip' => '圖像',
 	'wikia-visualeditor-dialogbutton-videoinsert-tooltip' => '視頻',
 	'wikia-visualeditor-dialog-video-insert-title' => '插入視頻',
+];
+
+$messages['zh'] = [
+	'wikia-visualeditor-notification-media-only-premium-videos-allowed' => '这个维基只允许添加来自<a href="http://video.wikia.com" target="_blank">Wikia视频库</a>中的内容。请进入<a href="http://video.wikia.com" target="_blank">video.wikia.com</a>搜索视频。',
 ];
 
