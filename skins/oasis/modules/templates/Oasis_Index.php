@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="<?= $lang ?>" dir="<?= $dir ?>" class="<?= implode(' ', array_map( 'Sanitizer::escapeClass', $htmlClasses )) ?>">
 <head>
-
+<?= $netzAthleten ?>
 <meta http-equiv="Content-Type" content="<?= $mimeType ?>; charset=<?= $charset ?>">
 <?php if ( BodyController::isResponsiveLayoutEnabled() || BodyController::isOasisBreakpoints() ) : ?>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
@@ -64,7 +64,6 @@
 
 <?= $comScore ?>
 <?= $quantServe ?>
-<?= $netzAthleten ?>
 <?= $rubiconFastlane ?>
 <?= $amazonMatch ?>
 <?= $openXBidder ?>

@@ -13,7 +13,8 @@ class AnalyticsProviderNetzAthleten implements iAnalyticsProvider {
 <script type="text/javascript" src="//s.adadapter.netzathleten-media.de/API-1.0/NA-828433-1/naMediaAd.js"></script>
 <script type="text/javascript">
   naMediaAd.setValue("homesite", false); 
-</script>		
+</script>	
+	
 CODE;
 
 		return $code;
