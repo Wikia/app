@@ -1,7 +1,6 @@
-/*global beforeEach, describe, it, modules, expect, spyOn*/
+/*global beforeEach, describe, it, modules, expect*/
 describe('ext.wikia.recirculation.tracker', function () {
 	'use strict';
-	function noop() {}
 
 	var mocks = {
 			abTest: {
