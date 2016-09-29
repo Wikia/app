@@ -831,16 +831,12 @@ class GlobalTitle extends Title {
 			return $this->mContLang->getNamespaces();
 		} );
 
-		$this->mNamespaceNames = $langNamespaces + $wgCanonicalNamespaceNames;
-
 		/**
 		 * get extra namespaces for city_id, they have to be defined in
 		 * $wgExtraNamespacesLocal variable
 		 */
-		$namespaces = WikiFactory::getVarValueByName( "wgExtraNamespacesLocal", $this->mCityId );
-		if( is_array( $namespaces ) ) {
-			$this->mNamespaceNames +=  $namespaces;
-		}
+		$namespaces = WikiFactory::getVarValueByName( "wgExtraNamespacesLocal", $this->mCityId, false, [] );
+		$this->mNamespaceNames = $namespaces + $langNamespaces + $wgCanonicalNamespaceNames;
 
 		return $this->mNamespaceNames;
 	}
