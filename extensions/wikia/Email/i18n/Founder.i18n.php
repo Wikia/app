@@ -1,23 +1,24 @@
 <?php
-$messages = array();
+/** Internationalization file for /extensions/wikia/Email/i18n/Founder extension. */
+$messages = [];
 
-$messages['en'] = array(
+$messages['en'] = [
 	'emailext-founder-active-subject' => '{{SITENAME}} is heating up!',
 	'emailext-founder-subject' => '$1 on {{SITENAME}} has been edited by $2',
 	'emailext-founder-anon-subject' => '$1 on {{SITENAME}} has been edited',
 	'emailext-founder-summary' => '[$1 $2] on [{{SERVER}} {{SITENAME}}] has been edited.',
-	'emailext-founder-active-summary' => "Congratulations, there's a lot going on at {{SITENAME}} today! Here are some recent updates:",
+	'emailext-founder-active-summary' => 'Congratulations, there\'s a lot going on at {{SITENAME}} today! Here are some recent updates:',
 	'emailext-founder-body' => 'This is [$1 $2]’s first edit on your wikia. Help them feel like they are a part of the community and encourage them to keep that good stuff coming!',
 	'emailext-founder-link-label' => 'Compare Changes',
 	'emailext-founder-active-link-label' => 'All Recent Activity',
-	'emailext-founder-footer-article' => "Head over to [$1 $2] to see what's new",
+	'emailext-founder-footer-article' => 'Head over to [$1 $2] to see what\'s new',
 	'emailext-founder-footer-all-changes' => 'View all changes to [$1 $2]',
 	'emailext-founder-encourage' => 'This is [$1 $2]’s first edit on your wikia. Help them feel like they are a part of the community and encourage them to keep that good stuff coming!',
 	'emailext-founder-anon-encourage' => 'Wikia fans are people who make edits without logging in to a registered account. Go see what this mysterious friend added to your wikia!',
 	'emailext-founder-multi-encourage' => '[$1 $2] has made multiple edits on your wikia. Thank them for their contributions. It’s all about community-building!',
 	'emailext-founder-new-update' => 'Created [$1 $2]',
 	'emailext-founder-edit-update' => 'Updated [$1 $2]',
-	'emailext-founder-active-footer-1' => "If you haven't already, you can see all of the great work that's been happening on your community’s activity page. Since there's so much going on, keep in mind you can change your email preferences to digest mode. With digest mode, you'll receive one email that lists all of the activity on your wikia each day.",
+	'emailext-founder-active-footer-1' => 'If you haven\'t already, you can see all of the great work that\'s been happening on your community’s activity page. Since there\'s so much going on, keep in mind you can change your email preferences to digest mode. With digest mode, you\'ll receive one email that lists all of the activity on your wikia each day.',
 	'emailext-founder-active-footer-2' => 'Way to go on creating such an active fan community!',
 	'emailext-founder-new-member-subject' => '$1 just joined {{SITENAME}}. Congrats!',
 	'emailext-founder-new-member-details' => 'Take a few minutes to welcome $1 and encourage them to get involved. The more the merrier, and the faster your wikia will grow!',
@@ -33,12 +34,12 @@ $messages['en'] = array(
 	'emailext-founder-customize-details' => 'What’s the latest news on your wikia? Feature the best content on your homepage to make a great first impression!',
 	'emailext-founder-share-header' => 'Share It',
 	'emailext-founder-share-details' => 'Love your wikia? Stand on a mountain and shout it to the world! Tag @Wikia on your favorite social media network.',
-	'emailext-founder-visit-community' => "Now you're on your way! But, don't worry, we won't leave you high and dry. We're here to help you make [$1 $2] successful every step of the way. Visit [http://community.wikia.com Community Central] to ask questions and get advice!",
+	'emailext-founder-visit-community' => 'Now you\'re on your way! But, don\'t worry, we won\'t leave you high and dry. We\'re here to help you make [$1 $2] successful every step of the way. Visit [http://community.wikia.com Community Central] to ask questions and get advice!',
 	'emailext-founder-happy-wikia-building' => 'Happy wikia building!',
 	'emailext-founder-3-days-subject' => 'How’s it going on $1? We’re here to help!',
 	'emailext-founder-3-days-summary' => 'Can you believe it’s been three days since you started [$1 $2]?',
-	'emailext-founder-3-days-extended-summary' => "We're checking in to share a few more tips on building your wikia community and make sure you’re having a great fan experience.",
-	'emailext-founder-3-days-extended-summary-tips' => "In the meantime, here’s a few more tips on building [$1 $2]:",
+	'emailext-founder-3-days-extended-summary' => 'We\'re checking in to share a few more tips on building your wikia community and make sure you’re having a great fan experience.',
+	'emailext-founder-3-days-extended-summary-tips' => 'In the meantime, here’s a few more tips on building [$1 $2]:',
 	'emailext-founder-3-days-add-videos-header' => 'Add Videos',
 	'emailext-founder-3-days-add-videos-details' => 'Make your page awesome and interesting by adding your favorite fandom videos. And who doesn’t love a good video?',
 	'emailext-founder-3-days-update-theme-header' => 'Update Your Theme',
@@ -47,7 +48,7 @@ $messages['en'] = array(
 	'emailext-founder-3-days-wam-details' => 'Draw inspiration from some of our [$1 favorite communities]. These represent the best and most popular wikia fan sites!',
 	'emailext-founder-3-days-discussion-header' => 'Start a Discussion',
 	'emailext-founder-3-days-discussion-details' => 'The easiest way for fans to talk with each other in your community is through Discussions. Ask a question, share an article, get thoughts from the community.',
-	'emailext-founder-3-days-need-help' => "Need help figuring out how something works? We're always here for you! Ask us for help and advice at [http://community.wikia.com Community Central].",
+	'emailext-founder-3-days-need-help' => 'Need help figuring out how something works? We\'re always here for you! Ask us for help and advice at [http://community.wikia.com Community Central].',
 	'emailext-founder-3-days-great-work' => 'Keep up the great work! ',
 	'emailext-founder-10-days-subject' => 'Happy 10-day anniversary on $1!',
 	'emailext-founder-10-days-summary' => 'It’s been 10 days since you started [$1 $2].',
@@ -60,9 +61,9 @@ $messages['en'] = array(
 	'emailext-founder-10-days-email-google-details' => 'The internet is just...so big. But we’ve got some tips on how to improve your search traffic. Check it out!',
 	'emailext-founder-get-with-google' => 'http://community.wikia.com/wiki/Help:Search_Engine_Optimization',
 	'emailext-founder-10-days-email-what-next' => 'We can’t imagine the Wikia fan community without you.  What will you do next? We can’t wait to find out!',
-);
+];
 
-$messages['qqq'] = array(
+$messages['qqq'] = [
 	'emailext-founder-active-subject' => 'Subject of the email sent to founders when there is increased edit activity on the wiki',
 	'emailext-founder-subject' => 'Subject of the email sent to founders on an edit to their wiki.  $1 -> page title, $2 -> author',
 	'emailext-founder-anon-subject' => 'Subject of the email sent to founder on an anonymous edit to their wiki.  $1 -> page title',
@@ -82,7 +83,7 @@ $messages['qqq'] = array(
 	'emailext-founder-active-footer-2' => 'Encouragement text shown to a wiki founder who has gotten a lot of recent edit activity',
 	'emailext-founder-new-member-subject' => 'Subject of the email send to founders when a user registers on their wiki. $1 -> new username',
 	'emailext-founder-new-member-details' => 'Text encouraging the founder to reach out to the new member and encourage them to get involved on the wiki. $1 -> new username',
-	'emailext-founder-new-member-link-label' => "Button label linking to the new member's talk page where the founder can welcome them to the wiki",
+	'emailext-founder-new-member-link-label' => 'Button label linking to the new member\'s talk page where the founder can welcome them to the wiki',
 	'emailext-founder-newly-created-subject' => 'Subject of email a founder receives after they create a wiki. $1 -> wiki name',
 	'emailext-founder-newly-created-summary' => 'Line congratulating the founder for creating a wiki. $1 wiki URL $2 -> wiki name',
 	'emailext-founder-newly-created-summary-extended' => 'Line telling the user this email contains tips to help them build a healthy and active wiki',
@@ -99,11 +100,11 @@ $messages['qqq'] = array(
 	'emailext-founder-3-days-subject' => 'Subject for the email a founder receives 3 days after creating the wiki. The email contains additional tips for building and maintaining a wiki',
 	'emailext-founder-3-days-summary' => 'Into line to 3 day founder wiki-tips email. $1 -> wikiName, $2 -> wikiUrl',
 	'emailext-founder-3-days-extended-summary' => 'Additional line explaining the email contains tips for the founder to create a healthy and active wiki',
-	'emailext-founder-3-days-extended-summary-tips' => "A line stating that beneath it there will be a list of tips on how to build community",
+	'emailext-founder-3-days-extended-summary-tips' => 'A line stating that beneath it there will be a list of tips on how to build community',
 	'emailext-founder-3-days-add-videos-header' => 'Header for the link to add videos to the wiki',
 	'emailext-founder-3-days-add-videos-details' => 'Line encouraging the user to add videos to the wiki',
 	'emailext-founder-3-days-update-theme-header' => 'Header for the link to change themes, colors, and wordmarks on the wiki',
-	'emailext-founder-3-days-update-theme-details' => "Line encouraging the user to customize their wiki's themes, colors, and wordmarks using Wikia's Theme Designer. $1 Theme Designer URL",
+	'emailext-founder-3-days-update-theme-details' => 'Line encouraging the user to customize their wiki\'s themes, colors, and wordmarks using Wikia\'s Theme Designer. $1 Theme Designer URL',
 	'emailext-founder-3-days-wam-header' => 'Header for the link to WAM which presents the most successful wikis on Wikia. Meant to provide inspiration for the founder and their wiki',
 	'emailext-founder-3-days-wam-details' => 'Line encouraging the founder to visit WAM to see the successful wikis for inspiration',
 	'emailext-founder-3-days-discussion-header' => 'Header for starting a discussion',
@@ -111,19 +112,19 @@ $messages['qqq'] = array(
 	'emailext-founder-3-days-need-help' => 'Line which asks if the founder needs help and, if so, to visit their community.wikia.com wiki to get help from Wikia community support. http://community.wikia.com should point to language appropriate community wiki',
 	'emailext-founder-3-days-great-work' => 'Line which enthusiastically tells the founder to keep doing good work',
 	'emailext-founder-10-days-subject' => 'Subject for the email a founder receives 10 days after creating their wiki.',
-	'emailext-founder-10-days-summary' => "Intro line which reminds the founder it's been 10 days since they started their wiki. $1 -> wiki URL, $2 wiki name",
-	'emailext-founder-10-days-extended-summary' => "Line telling the founder their wiki is looking good, and that now it's time to promote it to share it with the world",
+	'emailext-founder-10-days-summary' => 'Intro line which reminds the founder it\'s been 10 days since they started their wiki. $1 -> wiki URL, $2 wiki name',
+	'emailext-founder-10-days-extended-summary' => 'Line telling the founder their wiki is looking good, and that now it\'s time to promote it to share it with the world',
 	'emailext-founder-10-days-sharing-header' => 'Header for the section which encourages the founder to share their wiki on social media using the share buttons',
 	'emailext-founder-10-days-sharing-details' => 'Line encouraging the founder to share their wiki on social media using the share buttons',
 	'emailext-founder-10-days-email-power-header' => 'Header for the section encouraging the founder to email users to get them more involved and active on the wiki',
 	'emailext-founder-10-days-email-power-details' => 'Line encouraging the founder to email users to get them more involved and active on the wiki',
-	'emailext-founder-10-days-email-google-header' => "Header link which gives the founder tips on improving their SEO. See 'emailext-founder-get-with-google'",
+	'emailext-founder-10-days-email-google-header' => 'Header link which gives the founder tips on improving their SEO. See \'emailext-founder-get-with-google\'',
 	'emailext-founder-10-days-email-google-details' => 'Line which reminds the user the internet is vast and they should work on improving their SEO to draw more traffic',
 	'emailext-founder-get-with-google' => 'Link to page on community.wikia.com which gives tips on helping with SEO.',
-	'emailext-founder-10-days-email-what-next' => "Line which tells the user we're excited to see what they're going to do with their wiki",
-);
+	'emailext-founder-10-days-email-what-next' => 'Line which tells the user we\'re excited to see what they\'re going to do with their wiki',
+];
 
-$messages['de'] = array(
+$messages['de'] = [
 	'emailext-founder-subject' => '$1 auf {{SITENAME}} wurde von $2 bearbeitet.',
 	'emailext-founder-anon-subject' => '$1 auf {{SITENAME}} wurde bearbeitet.',
 	'emailext-founder-summary' => '[$1 $2] auf [{{SERVER}} {{SITENAME}}] wurde bearbeitet.',
@@ -179,9 +180,9 @@ $messages['de'] = array(
 	'emailext-founder-10-days-email-google-details' => 'Ja, das Internet ist... groß. Aber wir können dir ein paar Tipps geben, wie du mehr Traffic auf dein Wikia bekommst. Schau es dir einfach mal an!',
 	'emailext-founder-get-with-google' => 'http://de.community.wikia.com/wiki/Hilfe:Verbessere_dein_Googleranking',
 	'emailext-founder-10-days-email-what-next' => 'Wir können uns die Wikia-Fan-Community gar nicht mehr ohne deine Mitarbeit vorstellen. Was hast du als nächstes vor? Wir können es kaum erwarten, mehr zu erfahren!',
-);
+];
 
-$messages['es'] = array(
+$messages['es'] = [
 	'emailext-founder-subject' => 'La página $1 en {{SITENAME}} ha sido editada por $2',
 	'emailext-founder-anon-subject' => 'La página $1 en {{SITENAME}} ha sido editada',
 	'emailext-founder-summary' => 'La página [$1 $2] en [{{SERVER}} {{SITENAME}}] ha sido editada.',
@@ -237,73 +238,73 @@ $messages['es'] = array(
 	'emailext-founder-10-days-email-google-details' => 'La red es tan...  grande. Pero tenemos algunos consejos sobre cómo mejorar el tráfico de tu búsqueda. ¡Échale un vistazo!',
 	'emailext-founder-get-with-google' => 'http://comunidad.wikia.com/wiki/Ayuda:Aumentar_el_ranking_de_tu_wiki%27s_en_Google',
 	'emailext-founder-10-days-email-what-next' => 'No podemos imaginar la comunidad de fans de Wikia sin ti.  ¿Qué harás a continuación? ¡Estamos ansiosos por saber!',
-);
+];
 
-$messages['fr'] = array(
+$messages['fr'] = [
 	'emailext-founder-subject' => 'Page $1 de {{SITENAME}} modifiée par $2',
 	'emailext-founder-anon-subject' => 'Page $1 de {{SITENAME}} modifiée',
 	'emailext-founder-summary' => 'La page [$1 $2] de [{{SERVER}} {{SITENAME}}] a été modifiée.',
-	'emailext-founder-body' => "Il s'agit de la première modification de [$1 $2] sur votre wikia. Encouragez cet utilisateur ou cette utilisatrice à continuer afin qu'il ou elle se sente intégré(e) à la communauté !",
+	'emailext-founder-body' => 'Il s\'agit de la première modification de [$1 $2] sur votre wikia. Encouragez cet utilisateur ou cette utilisatrice à continuer afin qu\'il ou elle se sente intégré(e) à la communauté !',
 	'emailext-founder-link-label' => 'Comparer les versions',
 	'emailext-founder-footer-article' => 'Voir la page [$1 $2] modifiée',
-	'emailext-founder-footer-all-changes' => "Voir l'historique des versions de [$1 $2]",
-	'emailext-founder-encourage' => "Il s'agit de la première modification de [$1 $2] sur votre wikia. Encouragez cet utilisateur ou cette utilisatrice à continuer afin qu'il ou elle se sente intégré(e) à la communauté !",
-	'emailext-founder-anon-encourage' => 'Les fans de Wikia sont des gens qui apportent des modifications sans se connecter à un compte. Allez voir ce que cette mystérieuse personne a ajouté à votre wikia !',
-	'emailext-founder-multi-encourage' => "[$1 $2] a apporté plusieurs modifications à votre wikia. N'oubliez pas de remercier cet utilisateur ou cette utilisatrice pour sa contribution. L'objectif est de développer la communauté !",
+	'emailext-founder-footer-all-changes' => 'Voir l\'historique des versions de [$1 $2]',
+	'emailext-founder-encourage' => 'Il s\'agit de la première modification de [$1 $2] sur votre wikia. Encouragez cet utilisateur ou cette utilisatrice à continuer afin qu\'il ou elle se sente intégré(e) à la communauté !',
+	'emailext-founder-anon-encourage' => 'Les fans de Wikia sont des gens qui apportent des modifications sans se connecter avec un compte. Allez voir ce que cette mystérieuse personne a ajouté à votre wikia !',
+	'emailext-founder-multi-encourage' => '[$1 $2] a apporté plusieurs modifications à votre wikia. N\'oubliez pas de remercier cet utilisateur ou cette utilisatrice pour sa contribution. L\'objectif est de développer la communauté !',
 	'emailext-founder-new-member-subject' => '$1 vient tout juste de rejoindre {{SITENAME}}. Félicitations !',
-	'emailext-founder-new-member-details' => "Prenez quelques minutes pour souhaiter la bienvenue à $1 et l'encourager à contribuer. Plus votre wikia sera populaire, plus il se développera rapidement !",
+	'emailext-founder-new-member-details' => 'Prenez quelques minutes pour souhaiter la bienvenue à $1 et l\'encourager à contribuer. Plus votre wikia sera populaire, plus il se développera rapidement !',
 	'emailext-founder-new-member-link-label' => 'Envoyer un message',
-	'emailext-founder-active-subject' => "{{SITENAME}} prend de l'ampleur !",
-	'emailext-founder-active-summary' => "Félicitations ! Il se passe beaucoup de choses sur {{SITENAME}} aujourd'hui ! Voici quelques mises à jour récentes :",
+	'emailext-founder-active-subject' => '{{SITENAME}} prend de l\'ampleur !',
+	'emailext-founder-active-summary' => 'Félicitations ! Il se passe beaucoup de choses sur {{SITENAME}} aujourd\'hui ! Voici quelques mises à jour récentes :',
 	'emailext-founder-active-link-label' => 'Activité récente',
 	'emailext-founder-new-update' => 'Page [$1 $2] créée',
 	'emailext-founder-edit-update' => 'Page [$1 $2] modifiée',
-	'emailext-founder-active-footer-1' => "Si ce n'est pas déjà fait, allez à la page d'activité de votre communauté pour voir l'excellent travail qui a été effectué. Comme il se passe beaucoup de choses, n'oubliez pas que vous pouvez choisir de recevoir un e-mail de résumé de l'activité qui a lieu sur votre wikia chaque jour en sélectionnant l'option appropriée dans vos préférences d'e-mail.",
-	'emailext-founder-active-footer-2' => "Nous vous félicitons d'avoir créé une communauté de fans aussi active !",
+	'emailext-founder-active-footer-1' => 'Si ce n\'est pas déjà fait, allez à la page d\'activité de votre communauté pour voir l\'excellent travail qui a été effectué. Comme il se passe beaucoup de choses, n\'oubliez pas que vous pouvez choisir de recevoir un e-mail de résumé de l\'activité qui a lieu sur votre wikia chaque jour en sélectionnant l\'option appropriée dans vos préférences d\'e-mail.',
+	'emailext-founder-active-footer-2' => 'Nous vous félicitons d\'avoir créé une communauté de fans aussi active !',
 	'emailext-founder-newly-created-subject' => 'Félicitations pour votre nouveau wikia $1 !',
 	'emailext-founder-newly-created-summary' => 'Vous venez de créer [$1 $2] !',
-	'emailext-founder-newly-created-summary-extended' => "Vous avez la chance de proposer une expérience unique à un public impatient de vous rejoindre. Voici quelques astuces qui vous aideront à mettre votre communauté en valeur au sein d'un univers social créé par les fans, pour les fans.",
+	'emailext-founder-newly-created-summary-extended' => 'Vous avez la chance de proposer une expérience unique à un public impatient de vous rejoindre. Voici quelques astuces qui vous aideront à mettre votre communauté en valeur au sein d\'un univers social créé par les fans, pour les fans.',
 	'emailext-founder-add-pages-header' => 'Ajoutez des pages.',
-	'emailext-founder-add-pages-details' => "Complétez votre wikia avec tout ce que vous savez sur le sujet qui vous tient à cœur. Partagez vos connaissances et recrutez d'autres fans pour vous aider&nbsp;!",
+	'emailext-founder-add-pages-details' => 'Complétez votre wikia avec tout ce que vous savez sur le sujet qui vous tient à cœur. Partagez vos connaissances et recrutez d\'autres fans pour vous aider&nbsp;!',
 	'emailext-founder-add-photos-header' => 'Ajoutez des photos et des vidéos.',
 	'emailext-founder-add-photos-details' => 'Proposez un wikia riche en illustrations, avec des photos et des vidéos incroyables qui inciteront votre communauté à revenir vous voir !',
 	'emailext-founder-customize-header' => 'Personnalisez votre wikia.',
-	'emailext-founder-customize-details' => "Quelles sont les dernières actualités de votre wikia ? Affichez le meilleur contenu sur votre page d'accueil pour faire grande impression au premier coup d'œil.",
+	'emailext-founder-customize-details' => 'Quelles sont les dernières actualités de votre wikia ? Affichez le meilleur contenu sur votre page d\'accueil pour faire grande impression au premier coup d\'œil.',
 	'emailext-founder-share-header' => 'Partagez votre wikia.',
 	'emailext-founder-share-details' => 'Fan de votre wikia ? Criez-le haut et fort afin de le dire au monde entier ! Ajoutez @Wikia à votre réseau social préféré.',
-	'emailext-founder-visit-community' => "Vous êtes sur la bonne voie ! Ne vous inquiétez pas, vous n'êtes pas seul(e). Nous sommes là pour vous aider à faire de [$1 $2] une réussite. Pour toute question ou conseil, consultez le [http://communaute.wikia.com/wiki/Centre_des_communaut%C3%A9s Centre des communautés].",
+	'emailext-founder-visit-community' => 'Vous êtes sur la bonne voie ! Ne vous inquiétez pas, vous n\'êtes pas seul(e). Nous sommes là pour vous aider à faire de [$1 $2] une réussite. Pour toute question ou conseil, consultez le [http://communaute.wikia.com/wiki/Centre_des_communaut%C3%A9s Centre des communautés].',
 	'emailext-founder-happy-wikia-building' => 'Bonne continuation !',
-	'emailext-founder-3-days-subject' => "Comment va $1 ? Besoin d'aide ?",
+	'emailext-founder-3-days-subject' => 'Comment va $1 ? Besoin d\'aide ?',
 	'emailext-founder-3-days-summary' => 'Le temps passe vite. Voilà déjà trois jours que vous avez créé [$1 $2] !',
-	'emailext-founder-3-days-extended-summary' => "Nous aimerions vous proposer d'autres astuces pour développer la communauté et offrir aux fans une expérience inoubliable.",
+	'emailext-founder-3-days-extended-summary' => 'Nous aimerions vous proposer d\'autres astuces pour développer la communauté et offrir aux fans une expérience inoubliable.',
 	'emailext-founder-3-days-add-videos-header' => 'Ajoutez des vidéos.',
 	'emailext-founder-3-days-add-videos-details' => 'Faites briller votre page avec des vidéos captivantes que les fans adoreront.',
-	'emailext-founder-3-days-update-theme-header' => "Changez l'apparence de votre wikia.",
+	'emailext-founder-3-days-update-theme-header' => 'Changez l\'apparence de votre wikia.',
 	'emailext-founder-3-days-update-theme-details' => 'Des thèmes, des couleurs et des types de logo sont mis à votre disposition ! Utilisez le [$1 Concepteur de thème] pour fournir à votre wikia un style entièrement adapté à votre univers de fans.',
-	'emailext-founder-3-days-wam-header' => "Inspirez-vous d'autres wikias à succès.",
+	'emailext-founder-3-days-wam-header' => 'Inspirez-vous d\'autres wikias à succès.',
 	'emailext-founder-3-days-wam-details' => 'Trouvez des idées auprès de certaines de nos [$1 communautés favorites] représentant les sites de fans wikia les plus populaires et réussis.',
-	'emailext-founder-3-days-need-help' => "Si vous avez besoin d'aide ou d'un conseil, n'hésitez pas à nous contacter via le [http://communaute.wikia.com/wiki/Centre_des_communaut%C3%A9s Centre des communautés]. Nous sommes à votre disposition&nbsp;!",
+	'emailext-founder-3-days-need-help' => 'Si vous avez besoin d\'aide ou d\'un conseil, n\'hésitez pas à nous contacter via le [http://communaute.wikia.com/wiki/Centre_des_communaut%C3%A9s Centre des communautés]. Nous sommes à votre disposition&nbsp;!',
 	'emailext-founder-3-days-great-work' => 'Continuez sur cette bonne voie !',
 	'emailext-founder-10-days-subject' => 'Déjà 10 jours que $1 a été créé !',
 	'emailext-founder-10-days-summary' => 'Cela fait déjà 10 jours que vous avez créé [$1 $2] !',
 	'emailext-founder-10-days-extended-summary' => 'Félicitations pour ce superbe travail. Il faut maintenant faire connaître votre wikia&nbsp;!',
 	'emailext-founder-10-days-sharing-header' => 'Partagez-le.',
-	'emailext-founder-10-days-sharing-details' => "Présentez votre wikia à vos amis sur Facebook, Twitter, etc., en utilisant le bouton Partager disponible sur n'importe quelle page.",
+	'emailext-founder-10-days-sharing-details' => 'Présentez votre wikia à vos amis sur Facebook, Twitter, etc., en utilisant le bouton Partager disponible sur n\'importe quelle page.',
 	'emailext-founder-10-days-email-power-header' => 'Envoyez des invitations par e-mail.',
-	'emailext-founder-10-days-email-power-details' => "Vous souhaitez recruter quelqu'un pour votre wikia ? Envoyez-lui une invitation par e-mail. Rien de tel que d'agrandir la base d'une communauté&nbsp;!",
+	'emailext-founder-10-days-email-power-details' => 'Vous souhaitez recruter quelqu\'un pour votre wikia ? Envoyez-lui une invitation par e-mail. Rien de tel que d\'agrandir la base d\'une communauté&nbsp;!',
 	'emailext-founder-10-days-email-google-header' => 'Améliorez votre visibilité sur Google.',
 	'emailext-founder-10-days-email-google-details' => 'Consultez nos astuces pour améliorer le trafic vers votre wikia&nbsp;!',
 	'emailext-founder-get-with-google' => 'http://communaute.wikia.com/wiki/Aide:Am%C3%A9liorer_le_positionnement_Google_de_votre_wikia',
 	'emailext-founder-10-days-email-what-next' => 'Que serait la communauté de fans Wikia sans vous ! Nous sommes impatients de voir vos prochains ajouts !',
-);
+];
 
-$messages['it'] = array(
+$messages['it'] = [
 	'emailext-founder-subject' => '$2 ha modificato $1 in {{SITENAME}}',
 	'emailext-founder-anon-subject' => '$1 in {{SITENAME}} è stato modificato',
 	'emailext-founder-summary' => '[$1 $2] in [{{SERVER}} {{SITENAME}}] è stato modificato.',
 	'emailext-founder-body' => 'Questa è la prima modifica di [$1 $2] alla tua wikia. Aiuta i collaboratori a sentirsi parte della community e incoraggiali a partecipare!',
 	'emailext-founder-link-label' => 'Confronta le modifiche',
-	'emailext-founder-footer-article' => "Vai su [$1 $2] per vedere cosa c'è di nuovo",
+	'emailext-founder-footer-article' => 'Vai su [$1 $2] per vedere cosa c\'è di nuovo',
 	'emailext-founder-footer-all-changes' => 'Vedi tutte le modifiche a [$1 $2]',
 	'emailext-founder-encourage' => 'Questa è la prima modifica di [$1 $2] alla tua wikia. Aiuta i collaboratori a sentirsi parte della community e incoraggiali a partecipare!',
 	'emailext-founder-anon-encourage' => 'I fan di Wikia sono persone che fanno modifiche agli articoli senza accedere al servizio con un account registrato. Controlla che cosa ha aggiunto alla tua wikia questo fan misterioso!',
@@ -312,17 +313,17 @@ $messages['it'] = array(
 	'emailext-founder-new-member-details' => 'Prenditi qualche minuto per dare il benvenuto a $1 e incoraggiarlo a partecipare. Più partecipanti ci sono e meglio è: la tua wikia crescerà più velocemente!',
 	'emailext-founder-new-member-link-label' => 'Invia un messaggio',
 	'emailext-founder-active-subject' => '{{SITENAME}} si sta animando!',
-	'emailext-founder-active-summary' => "Congratulazioni! C'è parecchia attività oggi su {{SITENAME}}! Ecco alcuni aggiornamenti:",
-	'emailext-founder-active-link-label' => "Tutta l'attività recente",
+	'emailext-founder-active-summary' => 'Congratulazioni! C\'è parecchia attività oggi su {{SITENAME}}! Ecco alcuni aggiornamenti:',
+	'emailext-founder-active-link-label' => 'Tutta l\'attività recente',
 	'emailext-founder-new-update' => 'Creata [$1 $2]',
 	'emailext-founder-edit-update' => 'Aggiornata [$1 $2]',
-	'emailext-founder-active-footer-1' => "Se non l'hai ancora fatto, puoi vedere tutti i nuovi contributi sulla pagina delle attività della tua community. Dal momento che c'è molto da leggere, tieni presente che puoi selezionare la modalità riassunto nelle tue preferenze di Email. In modalità riassunto, riceverai un'email che contiene una lista di tutte le attività giornaliere sulla tua wikia.",
+	'emailext-founder-active-footer-1' => 'Se non l\'hai ancora fatto, puoi vedere tutti i nuovi contributi sulla pagina delle attività della tua community. Dal momento che c\'è molto da leggere, tieni presente che puoi selezionare la modalità riassunto nelle tue preferenze di Email. In modalità riassunto, riceverai un\'email che contiene una lista di tutte le attività giornaliere sulla tua wikia.',
 	'emailext-founder-active-footer-2' => 'Ben fatto! La tua community di fan è molto attiva!',
 	'emailext-founder-newly-created-subject' => 'Congratulazioni per aver creato $1!',
 	'emailext-founder-newly-created-summary' => 'Congratulazioni per aver creato [$1 $2]!',
-	'emailext-founder-newly-created-summary-extended' => "Hai la possibilità di dare vita a un'esperienza unica per i tuoi lettori! Ecco alcuni suggerimenti per aiutare la tua community di fan a brillare nell'universo sociale creato dai fan per i fan.",
+	'emailext-founder-newly-created-summary-extended' => 'Hai la possibilità di dare vita a un\'esperienza unica per i tuoi lettori! Ecco alcuni suggerimenti per aiutare la tua community di fan a brillare nell\'universo sociale creato dai fan per i fan.',
 	'emailext-founder-add-pages-header' => 'Aggiungi pagine',
-	'emailext-founder-add-pages-details' => "Completa la tua wikia aggiungendo tutto quello che sai sull'argomento che ti appassiona. Condividi la tua conoscenza e coinvolgi altri fan per farti aiutare!",
+	'emailext-founder-add-pages-details' => 'Completa la tua wikia aggiungendo tutto quello che sai sull\'argomento che ti appassiona. Condividi la tua conoscenza e coinvolgi altri fan per farti aiutare!',
 	'emailext-founder-add-photos-header' => 'Foto e video',
 	'emailext-founder-add-photos-details' => 'Arricchisci la tua wikia con tanti media! Aggiungi foto e video interessanti che coinvolgano sempre di più i tuoi fan.',
 	'emailext-founder-customize-header' => 'Personalizza',
@@ -333,29 +334,29 @@ $messages['it'] = array(
 	'emailext-founder-happy-wikia-building' => 'Buon lavoro con Wikia!',
 	'emailext-founder-3-days-subject' => 'Come va con $1? Siamo qui per aiutarti!',
 	'emailext-founder-3-days-summary' => 'Il tempo vola. Sono già passati tre giorni da quando hai creato [$1 $2]!',
-	'emailext-founder-3-days-extended-summary' => "Ti contattiamo per proporti qualche suggerimento in più per sviluppare la tua comunità di fan e assicurarci che tu abbia un'ottima esperienza con noi.",
+	'emailext-founder-3-days-extended-summary' => 'Ti contattiamo per proporti qualche suggerimento in più per sviluppare la tua comunità di fan e assicurarci che tu abbia un\'ottima esperienza con noi.',
 	'emailext-founder-3-days-add-videos-header' => 'Aggiungi video',
 	'emailext-founder-3-days-add-videos-details' => 'Migliora la tua pagina e rendila interessante aggiungendo i tuoi video preferiti. Piaceranno anche ai tuoi fan!',
-	'emailext-founder-3-days-update-theme-header' => "Cambia l'aspetto della tua wikia",
-	'emailext-founder-3-days-update-theme-details' => "Temi, colori, tipi di logo. Chi più ne ha più ne metta! Usa il [$1 Theme Designer] per creare un design che ben si adatti all'universo dei tuoi fan.",
-	'emailext-founder-3-days-wam-header' => "Trova l'ispirazione",
-	'emailext-founder-3-days-wam-details' => "Prendi l'ispirazione da alcune delle nostre [$1 comunità preferite]. Sono i siti migliori e più popolari creati dai fan di Wikia!",
+	'emailext-founder-3-days-update-theme-header' => 'Cambia l\'aspetto della tua wikia',
+	'emailext-founder-3-days-update-theme-details' => 'Temi, colori, tipi di logo. Chi più ne ha più ne metta! Usa il [$1 Theme Designer] per creare un design che ben si adatti all\'universo dei tuoi fan.',
+	'emailext-founder-3-days-wam-header' => 'Trova l\'ispirazione',
+	'emailext-founder-3-days-wam-details' => 'Prendi l\'ispirazione da alcune delle nostre [$1 comunità preferite]. Sono i siti migliori e più popolari creati dai fan di Wikia!',
 	'emailext-founder-3-days-need-help' => 'Ti serve aiuto? Siamo sempre qui per te! Non esitare a contattarci visitando [http://it.community.wikia.com Wiki della Community].',
 	'emailext-founder-3-days-great-work' => 'Continua con il tuo grande contributo! ',
-	'emailext-founder-10-days-subject' => "Festeggia l'anniversario di dieci giorni di $1!",
+	'emailext-founder-10-days-subject' => 'Festeggia l\'anniversario di dieci giorni di $1!',
 	'emailext-founder-10-days-summary' => 'Sono passati dieci giorni da quando hai creato [$1 $2].',
 	'emailext-founder-10-days-extended-summary' => 'Dobbiamo ammettere che hai lavorato bene. Adesso è il momento di diffondere la voce!',
 	'emailext-founder-10-days-sharing-header' => 'Il bello della condivisione',
 	'emailext-founder-10-days-sharing-details' => 'Usa il bottone Condividi presente su ogni pagina della tua wikia per condividere i tuoi contenuti con gli amici su Facebook, Twitter e altro.',
 	'emailext-founder-10-days-email-power-header' => 'Il potere delle email',
-	'emailext-founder-10-days-email-power-details' => "Vuoi trovare dei collaboratori per la tua wikia? Invitali con un'email. Più siamo e meglio è!",
+	'emailext-founder-10-days-email-power-details' => 'Vuoi trovare dei collaboratori per la tua wikia? Invitali con un\'email. Più siamo e meglio è!',
 	'emailext-founder-10-days-email-google-header' => 'Migliora la tua visibilità su Google',
 	'emailext-founder-10-days-email-google-details' => 'Internet è davvero grande ma non farti intimidire. Abbiamo dei suggerimenti per te per migliorare il traffico sulla tua wikia. Provali!',
 	'emailext-founder-get-with-google' => ' http://it.community.wikia.com/wiki/Aiuto:Migliorare_il_ranking_di_una_wiki_su_Google',
 	'emailext-founder-10-days-email-what-next' => 'È impossibile immaginare la comunità dei fan di Wikia senza di te! Siamo impazienti di scoprire quale sarà la tua prossima mossa.',
-);
+];
 
-$messages['ja'] = array(
+$messages['ja'] = [
 	'emailext-founder-subject' => '$2さんが{{SITENAME}}の$1を編集したようです',
 	'emailext-founder-anon-subject' => '{{SITENAME}}の$1に編集が加えられたようです',
 	'emailext-founder-summary' => '[{{SERVER}} {{SITENAME}}]の[$1 $2]に編集が加えられたようです。',
@@ -411,15 +412,15 @@ $messages['ja'] = array(
 	'emailext-founder-10-days-email-google-details' => '広大なインターネットの中で、検索からのトラフィックをアップする方法についてご紹介しています。ぜひご活用ください。',
 	'emailext-founder-get-with-google' => 'http://ja.community.wikia.com/wiki/ヘルプ:あなたのウィキアのGoogleランキングを上昇させる',
 	'emailext-founder-10-days-email-what-next' => 'コミュニティのより一層の発展を心よりお祈りします。',
-);
+];
 
-$messages['nl'] = array(
+$messages['nl'] = [
 	'emailext-founder-subject' => '$1 on {{SITENAME}} has been edited by $2',
 	'emailext-founder-anon-subject' => '$1 on {{SITENAME}} has been edited',
 	'emailext-founder-summary' => '[$1 $2] on [{{SERVER}} {{SITENAME}}] has been edited.',
 	'emailext-founder-body' => 'This is [$1 $2]’s first edit on your wikia. Help them feel like they are a part of the community and encourage them to keep that good stuff coming!',
 	'emailext-founder-link-label' => 'Compare Changes',
-	'emailext-founder-footer-article' => "Head over to [$1 $2] to see what's new",
+	'emailext-founder-footer-article' => 'Head over to [$1 $2] to see what\'s new',
 	'emailext-founder-footer-all-changes' => 'View all changes to [$1 $2]',
 	'emailext-founder-encourage' => 'This is [$1 $2]’s first edit on your wikia. Help them feel like they are a part of the community and encourage them to keep that good stuff coming!',
 	'emailext-founder-anon-encourage' => 'Wikia fans are people who make edits without logging in to a registered account. Go see what this mysterious friend added to your wikia!',
@@ -428,11 +429,11 @@ $messages['nl'] = array(
 	'emailext-founder-new-member-details' => 'Take a few minutes to welcome $1 and encourage them to get involved. The more the merrier, and the faster your wikia will grow!',
 	'emailext-founder-new-member-link-label' => 'Send a message',
 	'emailext-founder-active-subject' => '{{SITENAME}} is heating up!',
-	'emailext-founder-active-summary' => "Congratulations, there's a lot going on at {{SITENAME}} today! Here are some recent updates:",
+	'emailext-founder-active-summary' => 'Congratulations, there\'s a lot going on at {{SITENAME}} today! Here are some recent updates:',
 	'emailext-founder-active-link-label' => 'All Recent Activity',
 	'emailext-founder-new-update' => 'Created [$1 $2]',
 	'emailext-founder-edit-update' => 'Updated [$1 $2]',
-	'emailext-founder-active-footer-1' => "If you haven't already, you can see all of the great work that's been happening on your community’s activity page. Since there's so much going on, keep in mind you can change your email preferences to digest mode. With digest mode, you'll receive one email that lists all of the activity on your wikia each day.",
+	'emailext-founder-active-footer-1' => 'If you haven\'t already, you can see all of the great work that\'s been happening on your community’s activity page. Since there\'s so much going on, keep in mind you can change your email preferences to digest mode. With digest mode, you\'ll receive one email that lists all of the activity on your wikia each day.',
 	'emailext-founder-active-footer-2' => 'Way to go on creating such an active fan community!',
 	'emailext-founder-newly-created-subject' => 'Congratulations on creating $1!',
 	'emailext-founder-newly-created-summary' => 'You are now the proud founder of [$1 $2]!',
@@ -445,18 +446,18 @@ $messages['nl'] = array(
 	'emailext-founder-customize-details' => 'What’s the latest news on your wikia? Feature the best content on your homepage to make a great first impression!',
 	'emailext-founder-share-header' => 'Share It',
 	'emailext-founder-share-details' => 'Love your wikia? Stand on a mountain and shout it to the world! Tag @Wikia on your favorite social media network.',
-	'emailext-founder-visit-community' => "Now you're on your way! But, don't worry, we won't leave you high and dry. We're here to help you make [$1 $2] successful every step of the way. Visit [http://community.wikia.com Community Central] to ask questions and get advice!",
+	'emailext-founder-visit-community' => 'Now you\'re on your way! But, don\'t worry, we won\'t leave you high and dry. We\'re here to help you make [$1 $2] successful every step of the way. Visit [http://community.wikia.com Community Central] to ask questions and get advice!',
 	'emailext-founder-happy-wikia-building' => 'Happy wikia building!',
 	'emailext-founder-3-days-subject' => 'How’s it going on $1? We’re here to help!',
 	'emailext-founder-3-days-summary' => 'Can you believe it’s been three days since you started [$1 $2]?',
-	'emailext-founder-3-days-extended-summary' => "We're checking in to share a few more tips on building your wikia community and make sure you’re having a great fan experience.",
+	'emailext-founder-3-days-extended-summary' => 'We\'re checking in to share a few more tips on building your wikia community and make sure you’re having a great fan experience.',
 	'emailext-founder-3-days-add-videos-header' => 'Add Videos',
 	'emailext-founder-3-days-add-videos-details' => 'Make your page awesome and interesting by adding your favorite fandom videos. And who doesn’t love a good video?',
 	'emailext-founder-3-days-update-theme-header' => 'Update Your Theme',
 	'emailext-founder-3-days-update-theme-details' => 'Themes, colors, wordmarks, oh my! Use the [$1 Wikia Theme Designer] to create a design that matches your fandom perfectly.',
 	'emailext-founder-3-days-wam-header' => 'Get Inspired',
 	'emailext-founder-3-days-wam-details' => 'Draw inspiration from some of our [$1 favorite communities]. These represent the best and most popular wikia fan sites!',
-	'emailext-founder-3-days-need-help' => "Need help figuring out how something works? We're always here for you! Ask us for help and advice at [http://community.wikia.com Community Central].",
+	'emailext-founder-3-days-need-help' => 'Need help figuring out how something works? We\'re always here for you! Ask us for help and advice at [http://community.wikia.com Community Central].',
 	'emailext-founder-3-days-great-work' => 'Keep up the great work! ',
 	'emailext-founder-10-days-subject' => 'Happy 10-day anniversary on $1!',
 	'emailext-founder-10-days-summary' => 'It’s been 10 days since you started [$1 $2].',
@@ -469,9 +470,9 @@ $messages['nl'] = array(
 	'emailext-founder-10-days-email-google-details' => 'The internet is just...so big. But we’ve got some tips on how to improve your search traffic. Check it out!',
 	'emailext-founder-get-with-google' => 'http://community.wikia.com/wiki/Help:Raising_your_wiki%27s_Google_ranking',
 	'emailext-founder-10-days-email-what-next' => 'We can’t imagine the Wikia fan community without you.  What will you do next? We can’t wait to find out!',
-);
+];
 
-$messages['pl'] = array(
+$messages['pl'] = [
 	'emailext-founder-subject' => 'Użytkownik $2 dokonał edycji $1 na {{SITENAME}}',
 	'emailext-founder-anon-subject' => 'Dokonano edycji $1 na {{SITENAME}}',
 	'emailext-founder-summary' => 'Dokonano edycji [$1 $2] na [{{SERVER}} {{SITENAME}}].',
@@ -527,9 +528,9 @@ $messages['pl'] = array(
 	'emailext-founder-10-days-email-google-details' => 'Internet jest taaaki wielki. Dlatego właśnie przygotowaliśmy kilka wskazówek o tym jak przyciągnąć ruch z wyszukiwarek. Sprawdź!',
 	'emailext-founder-get-with-google' => 'http://community.wikia.com/wiki/Help:Raising_your_wiki%27s_Google_ranking',
 	'emailext-founder-10-days-email-what-next' => 'Nie wyobrażamy sobie społeczności fanów Wikia bez Ciebie. Czym chcesz się teraz zająć? Nie możemy się doczekać, żeby to zobaczyć!',
-);
+];
 
-$messages['pt'] = array(
+$messages['pt'] = [
 	'emailext-founder-subject' => '$1 foi editada por $2 na {{SITENAME}}',
 	'emailext-founder-anon-subject' => '$1 na {{SITENAME}} foi editada',
 	'emailext-founder-summary' => '[$1 $2] na [{{SERVER}} {{SITENAME}}] foi editada.',
@@ -585,9 +586,9 @@ $messages['pt'] = array(
 	'emailext-founder-10-days-email-google-details' => 'A internet é... tão grande. Mas nós temos algumas dicas sobre como melhorar o seu tráfego de busca. Confira!',
 	'emailext-founder-get-with-google' => 'http://community.wikia.com/wiki/Help:Raising_your_wiki%27s_Google_ranking',
 	'emailext-founder-10-days-email-what-next' => 'Não podemos imaginar a comunidade de fãs da Wikia sem você.  O que você vai fazer a seguir? Não podemos esperar para descobrir!',
-);
+];
 
-$messages['ru'] = array(
+$messages['ru'] = [
 	'emailext-founder-subject' => '$2 отредактировал(а) страницу $1 на {{SITENAME}}',
 	'emailext-founder-anon-subject' => 'Страница $1 на {{SITENAME}} была отредактирована',
 	'emailext-founder-summary' => 'Страница [$1 $2] на [{{SERVER}} {{SITENAME}}] была отредактирована.',
@@ -643,13 +644,13 @@ $messages['ru'] = array(
 	'emailext-founder-10-days-email-google-details' => 'В интернете можно и потеряться... но не волнуйтесь: у нас есть советы для того, чтобы повысить рейтинг вашей вики в поисковых системах.',
 	'emailext-founder-get-with-google' => 'http://ru.community.wikia.com/wiki/%D0%A1%D0%BF%D1%80%D0%B0%D0%B2%D0%BA%D0%B0:%D0%A1%D0%BE%D0%B2%D0%B5%D1%82-%D0%9F%D0%BE%D0%B2%D1%8B%D1%88%D0%B5%D0%BD%D0%B8%D0%B5_%D1%80%D0%B5%D0%B9%D1%82%D0%B8%D0%BD%D0%B3%D0%B0_%D0%B2%D0%B0%D1%88%D0%B5%D0%B9_%D0%B2%D0%B8%D0%BA%D0%B8_%D0%B2_Google',
 	'emailext-founder-10-days-email-what-next' => 'Ваше участие делает Викия уникальной, и мы с нетерпением ждём от вас новых начинаний.',
-);
+];
 
-$messages['zh-hans'] = array(
+$messages['zh-hans'] = [
 	'emailext-founder-subject' => '{{SITENAME}}上的$1已被$2编辑过',
 	'emailext-founder-anon-subject' => '{{SITENAME}}上的$1已被编辑过',
 	'emailext-founder-summary' => '[{{SERVER}} {{SITENAME}}]上的[$1 $2]已被编辑过。',
-	'emailext-founder-body' => '这是[$1 $2]第一次编辑您的Wikia。帮个忙，让他们觉得自己也是社区的一部分，并鼓励他们不断发布好的东西！',
+	'emailext-founder-body' => '这是[$1 $2]第一次编辑您的Wiki。协助他们，让他们觉得自己也是社区的一份子，并鼓励他们不断增加好的内容！',
 	'emailext-founder-link-label' => '比较修改内容',
 	'emailext-founder-footer-article' => '到[$1 $2]查看更新内容',
 	'emailext-founder-footer-all-changes' => '查看对[$1 $2]做的所有更改',
@@ -701,28 +702,28 @@ $messages['zh-hans'] = array(
 	'emailext-founder-10-days-email-google-details' => '互联网简直......太大了。但我们有一些关于如何改善您的搜索排名的诀窍。赶快点击一下试试看吧！',
 	'emailext-founder-get-with-google' => 'http://zh.community.wikia.com/wiki/Help:%E6%8F%90%E9%AB%98%E4%BD%A0%E7%9A%84wiki%E7%9A%84Google%E6%8E%92%E5%90%8D',
 	'emailext-founder-10-days-email-what-next' => '我们无法想象没有您的维基粉丝社区会是什么样。您下一步有什么计划？我们已经迫不及待地想知道了！',
-);
+];
 
-$messages['zh-hant'] = array(
+$messages['zh-hant'] = [
 	'emailext-founder-active-subject' => '{{SITENAME}}的人氣在不斷上漲！',
 	'emailext-founder-subject' => '{{SITENAME}}上的$1已經被$2編輯過',
 	'emailext-founder-anon-subject' => '{{SITENAME}}上的$1已經被編輯過',
 	'emailext-founder-summary' => '[{{SERVER}} {{SITENAME}}]上的$1已經被[$1 $2]編輯過',
 	'emailext-founder-active-summary' => '恭喜，今天{{SITENAME}}上好熱鬧呀！這裡列出一些最新更新内容：',
-	'emailext-founder-body' => '這是[$1 $2]第一次編輯你的Wiki。幫助他們，讓他們感覺自己也是社區的一部分，並鼓勵他們不斷發佈好的內容！',
+	'emailext-founder-body' => '這是[$1 $2]第一次編輯您的Wiki。協助他們，讓他們覺得自己也是社區的一份子，並鼓勵他們不斷增加好的內容！',
 	'emailext-founder-link-label' => '對比更改内容',
 	'emailext-founder-active-link-label' => '所有的最近動態',
 	'emailext-founder-footer-article' => '到[$1 $2]查看更新内容',
 	'emailext-founder-footer-all-changes' => '查看對[$1 $2]做的所有更改',
-	'emailext-founder-encourage' => '這是[$1 $2]第一次編輯你的維基。幫助他們，讓他們感覺自己也是社區的一部分，並鼓勵他們不斷發佈好的東西！',
+	'emailext-founder-encourage' => '這是[$1 $2]第一次編輯您的Wiki。協助他們，讓他們覺得自己也是社區的一份子，並鼓勵他們不斷增加好的內容！',
 	'emailext-founder-anon-encourage' => 'Wikia粉絲是指那些未登入帳戶就進行編輯的用戶。去看看這個神秘的朋友在你的Wiki增加了什麼內容！',
-	'emailext-founder-multi-encourage' => '[$1 $2]已經在你的Wiki上作了很多編輯。感謝他們做出的貢獻。這就是社區建設的意義所在！',
+	'emailext-founder-multi-encourage' => '[$1 $ 2]已經在您的Wiki上做了很多修改。去感謝他們的貢獻，這就是社區構建！',
 	'emailext-founder-new-update' => '[$1 $2]已經創建',
 	'emailext-founder-edit-update' => '[$1 $2]已經更新',
 	'emailext-founder-active-footer-1' => '如果你還沒有注意到的話，你可以去看看你的社區動態頁面有很多內容。由於有這麽多更新内容，別忘了你可以把電子郵件的偏好設置更改為摘要模式。這樣，每天你都會收到一個電子郵件，郵件中會列出一天中你的Wiki上進行的所有活動。',
 	'emailext-founder-active-footer-2' => '為創建這樣一個活躍的粉絲社區加油！',
 	'emailext-founder-new-member-subject' => '$1剛剛加入{{SITENAME}}。恭喜！',
-	'emailext-founder-new-member-details' => '請花幾分鐘來歡迎$1，鼓勵他的參與。參與的人越多越好，這樣你維基的增長速度才會更快！',
+	'emailext-founder-new-member-details' => '請花一點時間來歡迎$1，鼓勵他們的參與。參與的人越多越好，這樣您的Wiki的增長速度才會更快！',
 	'emailext-founder-new-member-link-label' => '發送郵件',
 	'emailext-founder-newly-created-subject' => '恭喜您创建了$1！',
 	'emailext-founder-newly-created-summary' => '你現在就是[$1 $2]的創建人了，為自己感到自豪吧！',
@@ -759,21 +760,21 @@ $messages['zh-hant'] = array(
 	'emailext-founder-10-days-email-google-details' => '網路簡直是……太大了。但我們有一些增加你的搜索流量的訣竅。試試看！',
 	'emailext-founder-get-with-google' => 'http://zh.community.wikia.com/wiki/Help:Raising_your_wiki%27s_Google_ranking',
 	'emailext-founder-10-days-email-what-next' => '我們無法想象沒有你的Wikia粉絲社區。你下一步要做什麽？我們迫不及待地想要知道！',
-);
+];
 
-$messages['zh-tw'] = array(
+$messages['zh-tw'] = [
 	'emailext-founder-subject' => '{{SITENAME}}上的$1已經被$2編輯過',
 	'emailext-founder-anon-subject' => '{{SITENAME}}上的$1已經被編輯過',
 	'emailext-founder-summary' => '[{{SERVER}} {{SITENAME}}]上的$1已經被[$1 $2]編輯過',
-	'emailext-founder-body' => '這是[$1 $2]第一次編輯你的Wiki。幫助他們，讓他們感覺自己也是社區的一部分，並鼓勵他們不斷發佈好的內容！',
+	'emailext-founder-body' => '這是[$1 $2]第一次編輯您的Wiki。協助他們，讓他們覺得自己也是社區的一份子，並鼓勵他們不斷增加好的內容！',
 	'emailext-founder-link-label' => '對比更改内容',
 	'emailext-founder-footer-article' => '到[$1 $2]查看更新内容',
 	'emailext-founder-footer-all-changes' => '查看對[$1 $2]做的所有更改',
-	'emailext-founder-encourage' => '這是[$1 $2]第一次編輯你的維基。幫助他們，讓他們感覺自己也是社區的一部分，並鼓勵他們不斷發佈好的東西！',
+	'emailext-founder-encourage' => '這是[$1 $2]第一次編輯您的Wiki。協助他們，讓他們覺得自己也是社區的一份子，並鼓勵他們不斷增加好的內容！',
 	'emailext-founder-anon-encourage' => 'Wikia粉絲是指那些未登入帳戶就進行編輯的用戶。去看看這個神秘的朋友在你的Wiki增加了什麼內容！',
-	'emailext-founder-multi-encourage' => '[$1 $2]已經在你的Wiki上作了很多編輯。感謝他們做出的貢獻。這就是社區建設的意義所在！',
+	'emailext-founder-multi-encourage' => '[$1 $ 2]已經在您的Wiki上做了很多修改。去感謝他們的貢獻，這就是社區構建！',
 	'emailext-founder-new-member-subject' => '$1剛剛加入{{SITENAME}}。恭喜！',
-	'emailext-founder-new-member-details' => '請花幾分鐘來歡迎$1，鼓勵他的參與。參與的人越多越好，這樣你維基的增長速度才會更快！',
+	'emailext-founder-new-member-details' => '請花一點時間來歡迎$1，鼓勵他們的參與。參與的人越多越好，這樣您的Wiki的增長速度才會更快！',
 	'emailext-founder-new-member-link-label' => '發送郵件',
 	'emailext-founder-active-subject' => '{{SITENAME}}的人氣在不斷上漲！',
 	'emailext-founder-active-summary' => '恭喜，今天{{SITENAME}}上好熱鬧呀！這裡列出一些最新更新内容：',
@@ -817,5 +818,43 @@ $messages['zh-tw'] = array(
 	'emailext-founder-10-days-email-google-details' => '網路簡直是……太大了。但我們有一些增加你的搜索流量的訣竅。試試看！',
 	'emailext-founder-get-with-google' => 'http://zh.community.wikia.com/wiki/Help:搜尋引擎最佳化',
 	'emailext-founder-10-days-email-what-next' => '我們無法想象沒有你的Wikia粉絲社區。你下一步要做什麽？我們迫不及待地想要知道！',
-);
+];
+
+$messages['ko'] = [
+	'emailext-founder-10-days-email-google-details' => '이 넓은 인터넷 세상에서 귀하의 커뮤니티를 효과적으로 알리는 방법을 알려드립니다. 빨리 확인해 보세요!',
+	'emailext-founder-10-days-email-power-details' => '귀하의 커뮤니티에 사람들을 불러오고 싶나요? 이메일을 통해 사람들을 초대해 보세요. 많을수록 좋습니다!',
+	'emailext-founder-10-days-email-what-next' => '귀하 같은 분이 있기에 커뮤니티가 한층 더 발전할 수 있었습니다. 커뮤니티를 위해 할 수 있는 일로는 또 무엇이 있을까요?',
+	'emailext-founder-10-days-extended-summary' => '귀하의 이 뛰어난 커뮤니티를 감상해 보세요. 더 많은 사람들이 이 커뮤니티를 볼 수 있다면 훨씬 더 좋지 않을까요?',
+	'emailext-founder-10-days-sharing-details' => '공유 버튼을 이용해 커뮤니티의 콘텐츠를 페이스북이나 트위터, 아니면 그 외 다양한 곳에서 공유해 보세요.',
+	'emailext-founder-10-days-summary' => '[$1 $2]를 시작한 지 벌써 10일이나 지났습니다.',
+	'emailext-founder-3-days-add-videos-details' => '동영상을 추가해서 문서를 더욱 알차게 만들어 보세요. 정보는 자세하면 자세할수록 좋은 법이니까요!',
+	'emailext-founder-3-days-extended-summary' => '커뮤니티를 성장시키는 데에 도움이 될 만한 팁 몇 가지를 더 가지고 왔는데, 한번 확인해 보시면 어떨까요?',
+	'emailext-founder-3-days-subject' => '$1를 위한 팁 몇 가지를 준비했어요!',
+	'emailext-founder-3-days-summary' => '[$1 $2]를 시작한 지 이제 3일째 되는 날입니다!',
+	'emailext-founder-3-days-update-theme-details' => '테마, 배경색, 로고 등등 귀하의 위키아를 대표할 만한 요소들을 꾸며 보세요! [$1 위키아 테마 디자이너]를 이용하면 한층 더 쉽게 테마를 꾸밀 수 있습니다.',
+	'emailext-founder-3-days-wam-details' => '저희가 [$1 추천해드리는 커뮤니티]에서 영감을 얻어 보세요! 이 커뮤니티들은 여러 면에서 뛰어나며 해당 분야에서 인기 있는 사이트입니다.',
+	'emailext-founder-active-footer-1' => '혹시 모르셨다면 기억해 두세요! 위키 활동 내역에서 그동안 귀하의 커뮤니티에 무슨 일이 일어났었는지 확인하실 수 있습니다. 또 환경 설정에서 주간 주시문서 내역을 받겠다고 설정하시면 매주 주시 중인 문서의 편집 내용을 알림 형태로 받아보실 수 있습니다.',
+	'emailext-founder-active-footer-2' => '알찬 커뮤니티를 만들어 보자구요!',
+	'emailext-founder-add-photos-details' => '다양한 매체를 활용해 문서를 만들어 보세요! 그림이나 동영상을 추가하면 독자들에게 더 알찬 내용을 제공할 수 있습니다.',
+	'emailext-founder-anon-encourage' => '익명 사용자는 로그인하지 않은 상태로 편집을 행한 사용자를 뜻합니다. 베일에 싸인 친구가 귀하의 위키아에 무슨 편집을 했는지 지금 확인해 보세요!',
+	'emailext-founder-body' => '[$1 $2] 님이 귀하의 위키아에 첫 편집을 남겼습니다! 사용자분이 커뮤니티에서 편안함을 느낄 수 있도록 도와주시고, 편집을 지속할 수 있도록 응원해 주세요.',
+	'emailext-founder-customize-details' => '첫인상은 커뮤니티에 있어서 매우 중요한 요소입니다. 커뮤니티를 꾸며 사용자들에게 좋은 인상을 심어 주세요!',
+	'emailext-founder-encourage' => '[$1 $2] 님이 귀하의 위키아에 첫 편집을 남겼습니다! 사용자분이 커뮤니티에서 편안함을 느낄 수 있도록 도와주시고, 편집을 지속할 수 있도록 응원해 주세요.',
+	'emailext-founder-happy-wikia-building' => '즐거운 위키아 이용 되세요!',
+	'emailext-founder-multi-encourage' => '[$1 $2] 님이 귀하의 위키아에 여러 편집을 남겼습니다. 사용자분에게 박수를! 이런 것들이 커뮤니티를 발전시킨답니다.',
+	'emailext-founder-new-member-details' => '약간만 시간을 투자해서 $1 님을 환영하고 응원해 주세요. 그러면 귀하의 위키아가 더 화목한 장소가 되고, 더 빠르게 성장할 것입니다.',
+	'emailext-founder-newly-created-summary-extended' => '귀하의 커뮤니티가 열정적인 팬들의 좋은 정보 공유소가 되기를 바랍니다. 커뮤니티의 첫걸음을 내딛을 수 있도록 몇 가지 팁을 준비했는데 읽어 보시면 어떨까요?',
+	'emailext-founder-share-details' => '귀하의 커뮤니티를 세상에 알려 보세요! 원하는 SNS에 들어가서 @위키아 태그를 이용해 사람들에게 커뮤니티를 홍보해 보면 어떨까요?',
+];
+
+$messages['zh'] = [
+	'emailext-founder-body' => '这是[$1 $2]第一次编辑您的Wiki。协助他们，让他们觉得自己也是社区的一份子，并鼓励他们不断增加好的内容！',
+];
+
+$messages['zh-hk'] = [
+	'emailext-founder-body' => '這是[$1 $2]第一次編輯您的Wiki。協助他們，讓他們覺得自己也是社區的一份子，並鼓勵他們不斷增加好的內容！',
+	'emailext-founder-encourage' => '這是[$1 $2]第一次編輯您的Wiki。協助他們，讓他們覺得自己也是社區的一份子，並鼓勵他們不斷增加好的內容！',
+	'emailext-founder-multi-encourage' => '[$1 $ 2]已經在您的Wiki上做了很多修改。去感謝他們的貢獻，這就是社區構建！',
+	'emailext-founder-new-member-details' => '請花一點時間來歡迎$1，鼓勵他們的參與。參與的人越多越好，這樣您的Wiki的增長速度才會更快！',
+];
 
