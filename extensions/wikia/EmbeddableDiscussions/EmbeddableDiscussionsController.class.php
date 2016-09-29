@@ -52,10 +52,7 @@ class EmbeddableDiscussionsController {
 
 		// PARAM_MOSTRECENT must be bool
 		if ( isset( $args[ static::PARAM_MOSTRECENT ] ) ) {
-			if ( is_bool ( $args[ static::PARAM_MOSTRECENT ] ) ||
-				$args[ static::PARAM_MOSTRECENT ] === 'true' ||
-				$args[ static::PARAM_MOSTRECENT ] === 'false'
-			) {
+			if ( AttributesValidator::isBoolish( $args[ static::PARAM_MOSTRECENT ] )) {
 				$parameters[ static::PARAM_MOSTRECENT ] = $args[ static::PARAM_MOSTRECENT ];
 			} else {
 				$errorMessage = wfMessage( 'embeddable-discussions-parameter-error',
@@ -69,13 +66,9 @@ class EmbeddableDiscussionsController {
 
 		// size must be integer in range
 		if ( isset( $args[ static::PARAM_SIZE ] ) ) {
-			$sizeArg = $args[ static::PARAM_SIZE ];
-			$size = ctype_digit( $sizeArg ) ? intval( $sizeArg ) : $sizeArg;
+			$size = $args[ static::PARAM_SIZE ];
 
-			if ( is_int ( $size ) &&
-				$size > self::ITEMS_MIN &&
-				$size <= self::ITEMS_MAX) {
-
+			if ( AttributesValidator::isInRange( $size, self::ITEMS_MIN, self::ITEMS_MAX) ) {
 				$parameters[ static::PARAM_SIZE ] = $size;
 			} else {
 				$errorMessage = wfMessage( 'embeddable-discussions-parameter-error',
@@ -89,14 +82,10 @@ class EmbeddableDiscussionsController {
 
 		// columns must be integer in range
 		if ( isset( $args[ static::PARAM_COLUMNS ] ) ) {
-			$columnsArg = $args[ static::PARAM_COLUMNS ];
-			$columns = ctype_digit( $columnsArg ) ? intval( $columnsArg ) : $columnsArg;
+			$columns = $args[ static::PARAM_COLUMNS ];
 
-			if ( is_int( $columns ) &&
-				$columns > self::COLUMNS_MIN &&
-				$columns <= self::COLUMNS_MAX
-			) {
-				$parameters[ static::PARAM_COLUMNS ] = $columns;
+			if ( AttributesValidator::isInRange( $columns, self::COLUMNS_MIN, self::COLUMNS_MAX) ) {
+				$parameters[ static::PARAM_COLUMNS ] = $$columns;
 			} else {
 				$errorMessage = wfMessage( 'embeddable-discussions-parameter-error',
 					static::PARAM_COLUMNS,
@@ -110,8 +99,6 @@ class EmbeddableDiscussionsController {
 		if ( isset( $args[ static::PARAM_CATEGORY ] ) ) {
 				$parameters[ static::PARAM_CATEGORY ] = $args[ static::PARAM_CATEGORY ];
 		}
-
-
 
 		return $parameters;
 	}

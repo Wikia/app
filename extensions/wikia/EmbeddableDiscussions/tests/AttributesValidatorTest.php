@@ -18,6 +18,7 @@ class AttributesValidatorTest extends WikiaBaseTest {
 	public function boolishDataProvider() {
 		return [
 			// value, expected, message
+			[ null, false, "null should be false" ],
 			[ true, true, "True should be true" ],
 			[ false, true, "False should be true" ],
 			[ 'true', true, "'True' sting should be true" ],
@@ -40,7 +41,8 @@ class AttributesValidatorTest extends WikiaBaseTest {
 
 	public function isInRangeDataProvider() {
 		return [
-			// value, expected, message
+			// value, min, max, expected, message
+			[ null, 0, 0, false, "null should be false" ],
 			[ 0, 0, 0, true, '0 is in a range between 0 and 0' ],
 			[ 1, 0, 2, true, '1 is in a range between 0 and 2' ],
 			[ 0, 1, 2, false, '0 is not in a range between 1 and 2' ],
