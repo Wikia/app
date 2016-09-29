@@ -119,24 +119,27 @@ class DesignSystemGlobalNavigationModel extends WikiaModel {
 	private function getSearchData() {
 		$isCorporatePage = WikiaPageType::isCorporatePage( $this->productInstanceId );
 
-		if ( $this->product === static::PRODUCT_FANDOMS ) {
+		if ( $this->product === static::PRODUCT_FANDOMS && $this->lang === static::DEFAULT_LANG ) {
 			$searchUrl = '/';
 			$searchPlaceholderKey = 'global-navigation-search-placeholder-fandom';
+			$searchParamName = 's';
 		} else {
-			if ( $isCorporatePage ) {
+			if ( $isCorporatePage || $this->product === static::PRODUCT_FANDOMS ) {
 				$searchUrl = $this->getCorporatePageSearchUrl();
 				$searchPlaceholderKey = 'global-navigation-search-placeholder-wikis';
 			} else {
 				$searchUrl = $this->getPageUrl( 'Search', NS_SPECIAL, [ 'fulltext' => 'Search' ] );
 				$searchPlaceholderKey = 'global-navigation-search-placeholder-in-wiki';
 			}
+			$searchParamName = 'query';
 		}
 
 		$search = [
 			'type' => 'search',
 			'results' => [
 				'url' => $searchUrl,
-				'param-name' => $this->product === static::PRODUCT_FANDOMS ? 's' : 'query'
+				'param-name' => $searchParamName,
+				'tracking_label' => 'search',
 			],
 			'placeholder-inactive' => [
 				'type' => 'translatable-text',
