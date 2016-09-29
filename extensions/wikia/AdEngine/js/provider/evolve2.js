@@ -28,13 +28,6 @@ define('ext.wikia.adEngine.provider.evolve2', [
 			MOBILE_PREFOOTER:         {size: '300x250', wsrc: 'mobile_evolve'}
 		};
 
-	// TODO: ADEN-3542
-	function dispatchNoUapEvent(slotName) {
-		if (slotName === 'MOBILE_TOP_LEADERBOARD') {
-			eventDispatcher.dispatch('wikia.not_uap');
-		}
-	}
-
 	function resetPosTargeting() {
 		posTargetingValue = {
 			'728x90,970x250,970x300,970x90': 'a',
@@ -104,13 +97,8 @@ define('ext.wikia.adEngine.provider.evolve2', [
 			slotTweaker.removeDefaultHeight(slot.name);
 			slotTweaker.removeTopButtonIfNeeded(slot.name);
 			slotTweaker.adjustLeaderboardSize(slot.name);
-			dispatchNoUapEvent(slot.name);
-		});
-		slot.pre('collapse', function() {
-			dispatchNoUapEvent(slot.name);
 		});
 		slot.pre('hop', function() {
-			dispatchNoUapEvent(slot.name);
 			openXHelper && openXHelper.addOpenXSlot(slot.name);
 		});
 		gptHelper.pushAd(

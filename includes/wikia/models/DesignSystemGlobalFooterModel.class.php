@@ -110,14 +110,6 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 							'key' => 'global-footer-site-overview-link-local-sitemap'
 						],
 						'href' => $this->getLocalSitemapUrl()
-					],
-					[
-						'type' => 'link-text',
-						'title' => [
-							'type' => 'translatable-text',
-							'key' => 'global-footer-site-overview-link-api'
-						],
-						'href' => $this->getHref( 'api' )
 					]
 				]
 			],

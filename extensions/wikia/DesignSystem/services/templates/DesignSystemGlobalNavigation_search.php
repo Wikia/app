@@ -6,6 +6,7 @@
 				'wds-icon wds-icon-small wds-global-navigation__search-label-icon'
 			) ?>
 			<input id="searchInput"
+				type="search"
 				class="wds-global-navigation__search-input"
 				name="<?= Sanitizer::encodeAttribute( $model['module']['results']['param-name'] ); ?>"
 				<?php if ( !empty( $model['module']['suggestions'] ) ) : ?>

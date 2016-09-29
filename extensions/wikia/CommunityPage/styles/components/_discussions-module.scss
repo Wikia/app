@@ -1,0 +1,35 @@
+@import 'variables';
+@import 'skins/oasis/css/core/breakpoints-variables';
+@import 'extensions/wikia/DesignSystem/bower_components/design-system/base/typography';
+
+.CommunityPageMainContent {
+	.embeddable-discussions-module {
+		border: 0;
+		box-sizing: border-box;
+		margin-bottom: $content-spacing-xlarge;
+		padding: 0;
+
+		.embeddable-discussions-heading {
+			font-size: $typescale-size-plus-2;
+			font-weight: bold;
+		}
+	}
+}
+
+@media #{$breakpoint-medium-up} {
+	.embeddable-discussions-module {
+		padding-right: $content-spacing-regular;
+	}
+}
+
+@media #{$breakpoint-small-plus} {
+	.embeddable-discussions-module {
+		padding-right: $content-spacing-xsmall;
+	}
+}
+
+@media #{$breakpoint-below-small-plus} {
+	.CommunityPageMainContent .embeddable-discussions-module .embeddable-discussions-post-detail-columns {
+		width: 96%;
+	}
+}

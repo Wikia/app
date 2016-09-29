@@ -1,8 +1,10 @@
-@import 'skins/shared/mixins/flexbox';
-@import 'skins/shared/color';
-
 @import 'avatar';
 @import 'ShareModal';
+@import 'skins/shared/mixins/flexbox';
+@import 'skins/shared/color';
+@import 'extensions/wikia/DesignSystem/bower_components/design-system/base/colors';
+@import 'extensions/wikia/DesignSystem/bower_components/design-system/base/typography';
+
 
 $reply-icon: '/extensions/wikia/EmbeddableDiscussions/images/reply.svg';
 $reply-icon-tiny: '/extensions/wikia/EmbeddableDiscussions/images/reply-tiny.svg';
@@ -12,20 +14,23 @@ $upvote-icon-tiny: '/extensions/wikia/EmbeddableDiscussions/images/upvote-tiny.s
 $share-icon: '/extensions/wikia/EmbeddableDiscussions/images/share.svg';
 $plus-icon: '/extensions/wikia/EmbeddableDiscussions/images/plus-x-large.svg';
 
-$gray: #999;
 $card-border-color: $color-page-border;
 $container-border-color: lighten($color-page-border, 10%);
 
-$avatar-size: 30px;
+// spacing
+$content-spacing-xxsmall: 6px;
+$content-spacing-xsmall: 10px;
+$content-spacing-small: 12px;
+$content-spacing-small-plus: 14px;
+$content-spacing-regular: 18px;
+$content-spacing-large: 24px;
+$content-spacing-xxlarge: 48px;
+
 $icon-height: 22px;
 $icon-width: 24px;
 $tiny-icon-height: 16px;
 $tiny-icon-width: 14px;
 $plus-icon-size: 34px;
-
-$font-size-small: 12px;
-$font-size-regular: 14px;
-$font-size-large: 16px;
 
 .embeddable-discussions-module {
 	@include flexbox();
@@ -53,48 +58,39 @@ $font-size-large: 16px;
 		width: 100%;
 	}
 
-	.avatar {
-		height: $avatar-size;
-		width: $avatar-size;
-	}
-
-	.avatar-container {
-		height: $avatar-size;
-		position: relative;
-		width: $avatar-size;
-		z-index: 1;
-	}
-
-	.avatar-details {
-		font-size: $font-size-regular;
-		line-height: $avatar-size;
-		z-index: 1;
-	}
-
 	.embeddable-discussions-forum {
-		color: $gray;
-		font-size: $font-size-small;
+		color: $color-light-gray;
 		float: left;
+		font-size: $typescale-size-minus-2;
+		line-height: $typescale-size-minus-2;
+		margin: $content-spacing-small 0;
 	}
 
 	.embeddable-discussions-content {
-		font-size: $font-size-regular;
+		-webkit-box-orient: vertical;
+		display: -webkit-box;
+		font-size: $typescale-size-minus-1;
+		-webkit-line-clamp: 3;
+		overflow: hidden;
 	}
 
 	.embeddable-discussions-header-container {
 		@include flexbox();
 		@include flex-direction(row);
+
+		padding: $content-spacing-small 0;
 	}
 
 	.embeddable-discussions-heading-container {
 		@include flexbox();
+		@include justify-content(space-between);
 
-		margin-top: 10px;
+		margin: $content-spacing-xsmall 0;
 	}
 
 	.embeddable-discussions-heading {
-		height: 24px;
-		font-size: 18px;
+		font-size: $typescale-size-plus-1;
+		height: $content-spacing-large;
 	}
 
 	.embeddable-discussions-post-actions {
@@ -104,24 +100,25 @@ $font-size-large: 16px;
 		@include justify-content(center);
 
 		border-top: 1px solid $card-border-color;
-		font-size: $font-size-small;
-		font-weight: 500;
-		height: 45px;
+		font-size: $typescale-size-minus-2;
+		font-weight: normal;
+		height: $content-spacing-xxlarge;
+		line-height: $typescale-size-minus-2;
 		list-style: none;
 		margin: 0;
 		max-width: none;
-	}
 
-	.embeddable-discussions-post-actions li {
-		color: $gray;
-		cursor: pointer;
-		text-align: center;
-	}
+		li {
+			color: $color-light-gray;
+			cursor: pointer;
+			text-align: center;
+		}
 
-	.embeddable-discussions-post-actions a {
-		color: $gray;
-		cursor: pointer;
-		font-size: $font-size-small;
+		a {
+			color: $color-light-gray;
+			cursor: pointer;
+			font-size: $typescale-size-minus-2;
+		}
 	}
 
 	.embeddable-discussions-post-counter {
@@ -129,17 +126,18 @@ $font-size-large: 16px;
 	}
 
 	.embeddable-discussions-post-counters {
-		color: $gray;
-		font-size: $font-size-small;
+		color: $color-light-gray;
+		font-size: $typescale-size-minus-2;
 		justify-content: flex-end;
-		padding-bottom: 4px;
+		line-height: $typescale-size-minus-2;
+		margin: $content-spacing-small 0;
 		text-align: right;
 	}
 
 	.embeddable-discussions-post-detail {
 		border: 1px solid $card-border-color;
 		margin: 0 0 20px;
-		padding: 20px 0 0;
+		padding: 0;
 	}
 
 	.embeddable-discussions-post-detail-columns {
@@ -147,7 +145,8 @@ $font-size-large: 16px;
 		width: 48%;
 	}
 
-	.embeddable-discussions-post-detail-right-column {
+
+	.embeddable-discussions-post-detail-mainpage-rail {
 		width: 100%;
 	}
 
@@ -171,15 +170,16 @@ $font-size-large: 16px;
 	}
 
 	.embeddable-discussions-show-all {
-		font-size: $font-size-small;
-		font-weight: bold;
-		line-height: 24px;
-		margin-left: auto;
+		display: inline-block;
+		font-size: $typescale-size-base;
+		font-weight: normal;
+		line-height: $typescale-size-plus-2;
+		padding-right: $content-spacing-regular;
 	}
 
 	.embeddable-discussions-side-spaced {
-		padding-left: 15px;
-		padding-right: 15px;
+		padding-left: $content-spacing-small;
+		padding-right: $content-spacing-small;
 		position: relative;
 	}
 
@@ -194,15 +194,15 @@ $font-size-large: 16px;
 	}
 
 	.embeddable-discussions-timestamp {
-		color: $gray;
-		font-size: $font-size-small;
+		color: $color-light-gray;
+		font-size: $typescale-size-minus-2;
 		padding-left: 5px;
 	}
 
 	.embeddable-discussions-title {
-		font-size: $font-size-regular;
+		font-size: $typescale-size-plus-1;
 		font-weight: bold;
-		min-height: 22px;
+		margin-bottom: $content-spacing-xxsmall;
 	}
 
 	.embeddable-discussions-upvote-icon {
@@ -219,8 +219,8 @@ $font-size-large: 16px;
 
 	.embeddable-discussions-upvote-icon-tiny {
 		background: url($upvote-icon-tiny) no-repeat;
-		margin-right: 4px;
 		height: $tiny-icon-height;
+		margin-right: 4px;
 		width: $tiny-icon-width;
 	}
 
@@ -231,8 +231,8 @@ $font-size-large: 16px;
 		align-items: center;
 		border: 1px dashed $card-border-color;
 		clear: both;
-		padding: 48px 0 75px;
 		line-height: 1.4;
+		padding: 48px 0 75px;
 		text-align: center;
 	}
 
@@ -240,10 +240,10 @@ $font-size-large: 16px;
 		background: url($plus-icon) no-repeat;
 		height: $plus-icon-size;
 		padding-bottom: 18px;
-		width: $plus-icon-size
+		width: $plus-icon-size;
 	}
 
 	.embeddable-discussions-zero-text {
-		font-size: $font-size-large;
+		font-size: $typescale-size-plus-1;
 	}
 }
