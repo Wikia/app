@@ -28,21 +28,16 @@ class DesignSystemGlobalNavigationModel extends WikiaModel {
 		global $wgUser;
 
 		$data = [
-			// TODO: restore old logo before 4th October 2016
-			// https://wikia-inc.atlassian.net/browse/XW-1966
 			'logo' => [
 				'header' => [
 					'type' => 'link-image',
 					'href' => $this->getHref( 'fandom-logo' ),
-					'image' => 'wds-company-logo-wikia',
+					'image' => 'wds-company-logo-fandom-powered-by-wikia',
 					'title' => [
-						'type' => 'translatable-text',
-						'key' => 'global-footer-wikia-header'
+						'type' => 'text',
+						'value' => 'Fandom powered by Wikia'
 					],
-					'subtitle' => [
-						'type' => 'translatable-text',
-						'key' => 'global-footer-international-header-subtitle'
-					]
+					'tracking_label' => 'logo',
 				]
 			],
 			'search' => [
@@ -56,6 +51,7 @@ class DesignSystemGlobalNavigationModel extends WikiaModel {
 						'key' => 'global-navigation-create-wiki-link-start-wikia'
 					],
 					'href' => $this->getHref( 'create-new-wiki' ),
+					'tracking_label' => 'start-a-wiki',
 				]
 			]
 		];
@@ -69,6 +65,7 @@ class DesignSystemGlobalNavigationModel extends WikiaModel {
 						'type' => 'translatable-text',
 						'key' => 'global-navigation-wikis-header',
 					],
+					'tracking_label' => 'link.wikis',
 				],
 				'links' => [
 					[
@@ -77,7 +74,8 @@ class DesignSystemGlobalNavigationModel extends WikiaModel {
 							'type' => 'translatable-text',
 							'key' => 'global-navigation-wikis-explore'
 						],
-						'href' => $this->getHref( 'fan-communities' ),
+						'href' => $this->getHref( 'explore-wikis' ),
+						'tracking_label' => 'link.explore',
 					],
 					$this->getCommunityCentralLink(),
 					[
@@ -87,6 +85,7 @@ class DesignSystemGlobalNavigationModel extends WikiaModel {
 							'key' => 'global-navigation-wikis-fandom-university'
 						],
 						'href' => $this->getHref( 'fandom-university' ),
+						'tracking_label' => 'link.fandom-university',
 					]
 				]
 			];
@@ -142,7 +141,8 @@ class DesignSystemGlobalNavigationModel extends WikiaModel {
 			'type' => 'search',
 			'results' => [
 				'url' => $searchUrl,
-				'param-name' => $this->product === static::PRODUCT_FANDOMS ? 's' : 'query'
+				'param-name' => $this->product === static::PRODUCT_FANDOMS ? 's' : 'query',
+				'tracking_label' => 'search',
 			],
 			'placeholder-inactive' => [
 				'type' => 'translatable-text',
@@ -157,7 +157,8 @@ class DesignSystemGlobalNavigationModel extends WikiaModel {
 		if ( $this->product !== static::PRODUCT_FANDOMS && !$isCorporatePage ) {
 			$search['suggestions'] = [
 				'url' => WikiFactory::getHostById( $this->productInstanceId ) . '/index.php?action=ajax&rs=getLinkSuggest&format=json',
-				'param-name' => 'query'
+				'param-name' => 'query',
+				'tracking_label' => 'search-suggestion',
 			];
 			$search['placeholder-active']['params'] = [
 				'sitename' => $this->getSitenameData(),
@@ -179,7 +180,8 @@ class DesignSystemGlobalNavigationModel extends WikiaModel {
 				'subtitle' => [
 					'type' => 'translatable-text',
 					'key' => 'global-navigation-anon-my-account',
-				]
+				],
+				'tracking_label' => 'account',
 			],
 			'links' => [
 				[
@@ -190,6 +192,7 @@ class DesignSystemGlobalNavigationModel extends WikiaModel {
 					],
 					'href' => $this->getHref( 'user-signin' ),
 					'param-name' => 'redirect',
+					'tracking_label' => 'account.sign-in',
 				],
 				[
 					'type' => 'link-authentication',
@@ -202,7 +205,8 @@ class DesignSystemGlobalNavigationModel extends WikiaModel {
 						'key' => 'global-navigation-anon-register-description',
 					],
 					'href' => $this->getHref( 'user-register' ),
-					"param-name" => "redirect"
+					'param-name' => 'redirect',
+					'tracking_label' => 'account.register',
 				],
 			],
 		];
@@ -218,7 +222,8 @@ class DesignSystemGlobalNavigationModel extends WikiaModel {
 			'title' => [
 				'type' => 'translatable-text',
 				'key' => 'global-navigation-user-view-profile'
-			]
+			],
+			'tracking_label' => 'account.profile',
 		];
 		$logOutLink = [
 			'type' => 'link-authentication',
@@ -227,7 +232,8 @@ class DesignSystemGlobalNavigationModel extends WikiaModel {
 				'type' => 'translatable-text',
 				'key' => 'global-navigation-user-sign-out'
 			],
-			'param-name' => 'returnto'
+			'param-name' => 'returnto',
+			'tracking_label' => 'account.sign-out',
 		];
 
 		$links = [
@@ -243,7 +249,8 @@ class DesignSystemGlobalNavigationModel extends WikiaModel {
 						'key' => $isMessageWallEnabled
 							? 'global-navigation-user-message-wall'
 							: 'global-navigation-user-my-talk'
-					]
+					],
+					'tracking_label' => $isMessageWallEnabled ? 'account.message-wall' : 'account.talk',
 				],
 				[
 					'type' => 'link-text',
@@ -251,7 +258,8 @@ class DesignSystemGlobalNavigationModel extends WikiaModel {
 					'title' => [
 						'type' => 'translatable-text',
 						'key' => 'global-navigation-user-my-preferences'
-					]
+					],
+					'tracking_label' => 'account.preferences',
 				],
 				[
 					'type' => 'link-text',
@@ -259,7 +267,8 @@ class DesignSystemGlobalNavigationModel extends WikiaModel {
 					'title' => [
 						'type' => 'translatable-text',
 						'key' => 'global-navigation-user-help'
-					]
+					],
+					'tracking_label' => 'account.help',
 				],
 				$logOutLink
 			],
@@ -277,6 +286,7 @@ class DesignSystemGlobalNavigationModel extends WikiaModel {
 					'value' => $userName
 				],
 				'url' => AvatarService::getAvatarUrl( $userName, 50 ),
+				'tracking_label' => 'account',
 			],
 			'links' => $links[$this->product]
 		];
@@ -292,7 +302,8 @@ class DesignSystemGlobalNavigationModel extends WikiaModel {
 				'title' => [
 					'type' => 'translatable-text',
 					'key' => 'global-navigation-notifications-title'
-				]
+				],
+				'tracking_label' => 'notifications',
 			],
 			'module' => [
 				'type' => 'notifications',
@@ -314,6 +325,7 @@ class DesignSystemGlobalNavigationModel extends WikiaModel {
 						'key' => 'global-navigation-fandom-overview-link-vertical-games'
 					],
 					'href' => $this->getHref( 'games' ),
+					'tracking_label' => 'link.games'
 				],
 				[
 					'type' => 'link-branded',
@@ -323,6 +335,7 @@ class DesignSystemGlobalNavigationModel extends WikiaModel {
 						'key' => 'global-navigation-fandom-overview-link-vertical-movies'
 					],
 					'href' => $this->getHref( 'movies' ),
+					'tracking_label' => 'link.movies'
 				],
 				[
 					'type' => 'link-branded',
@@ -332,6 +345,7 @@ class DesignSystemGlobalNavigationModel extends WikiaModel {
 						'key' => 'global-navigation-fandom-overview-link-vertical-tv'
 					],
 					'href' => $this->getHref( 'tv' ),
+					'tracking_label' => 'link.tv'
 				]
 			]
 		];
@@ -356,6 +370,7 @@ class DesignSystemGlobalNavigationModel extends WikiaModel {
 				'key' => 'global-navigation-wikis-community-central'
 			],
 			'href' => $this->getHref( 'community-central' ),
+			'tracking_label' => 'link.community-central',
 		];
 	}
 

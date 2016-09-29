@@ -2,7 +2,8 @@
 @import 'skins/shared/color';
 
 $recirculation-horizontal-border-size: 2px;
-$recirculation-horizontal-border-color: rgba($color-headline-border, 0.5);
+$recirculation-horizontal-border-color: rgba($color-headline-border, .5);
+
 .recirculation-horizontal {
 	box-sizing: border-box;
 	clear: both;
@@ -43,6 +44,7 @@ $recirculation-horizontal-border-color: rgba($color-headline-border, 0.5);
 
 $recirculation-incontent-thumbnail-width: 160px;
 $recirculation-incontent-thumbnail-height: 90px;
+
 .recirculation-horizontal.recirculation-incontent {
 	border-bottom: $recirculation-horizontal-border-size solid $recirculation-horizontal-border-color;
 	padding: 40px 30px 25px;
@@ -58,13 +60,12 @@ $recirculation-incontent-thumbnail-height: 90px;
 		position: absolute;
 		right: -10px;
 		text-align: center;
-		top: 0;  
-		
+		top: 0;
 
 		&::before,
 		&::after {
 			@include align-self(center);
-			@include flex(1 0 0px);
+			@include flex(1 0 0);
 
 			background-color: $recirculation-horizontal-border-color;
 			content: ' ';
@@ -75,8 +76,8 @@ $recirculation-incontent-thumbnail-height: 90px;
 	}
 
 	.item {
-		width: $recirculation-incontent-thumbnail-width;
 		min-width: $recirculation-incontent-thumbnail-width;
+		width: $recirculation-incontent-thumbnail-width;
 	}
 
 	.thumbnail {
@@ -87,6 +88,7 @@ $recirculation-incontent-thumbnail-height: 90px;
 
 $recirculation-footer-thumbnail-width: 200px;
 $recirculation-footer-thumbnail-height: 110px;
+
 .recirculation-horizontal.recirculation-footer {
 	h3 {
 		font-size: 21px;
@@ -94,8 +96,8 @@ $recirculation-footer-thumbnail-height: 110px;
 	}
 
 	.items {
+		border-top: $recirculation-horizontal-border-size solid rgba($color-headline-border, .5);
 		padding: 10px;
-		border-top: $recirculation-horizontal-border-size solid rgba($color-headline-border, 0.5);
 	}
 
 	.item {

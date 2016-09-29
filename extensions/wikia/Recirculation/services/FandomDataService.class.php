@@ -79,7 +79,7 @@ class FandomDataService {
 	private function buildUrl( $type, $options ) {
 		switch ( $type ) {
 			case 'latest':
-				$date = (new \DateTime())->modify( '-24 hours' );
+				$date = ( new \DateTime() )->modify( '-24 hours' );
 				$options['after'] = $date->format( 'Y-m-d\TH:i:s' );
 				$options['per_page'] = 1;
 				$endpoint = 'posts';
@@ -96,10 +96,10 @@ class FandomDataService {
 	private function formatPosts( $data ) {
 		$posts = [];
 
-		foreach ($data as $key => $post) {
-			if ($this->postHasImage( $post ) && count( $posts ) < self::LIMIT ) {
+		foreach ( $data as $key => $post ) {
+			if ( $this->postHasImage( $post ) && count( $posts ) < self::LIMIT ) {
 				$posts[] = new RecirculationContent( [
-					'url' => empty($post['upstream_content_link']) ? $post['link'] : $post['upstream_content_link'],
+					'url' => empty( $post['upstream_content_link'] ) ? $post['link'] : $post['upstream_content_link'],
 					'index' => $key,
 					'thumbnail' => $post['_embedded']['wp:featuredmedia'][0]['media_details']['sizes']['thumbnail']['source_url'],
 					'title' => html_entity_decode( $post['title']['rendered'] ),
