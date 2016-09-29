@@ -154,13 +154,17 @@ class FacebookClientHooks {
 	}
 
 	/**
-	 * SUS-905: Load FBTags JS in a single HTTP request with the other groups
-	 * @param OutputPage $out
 	 * @param Skin $skin
-	 * @return bool true to continue hook processing
+	 * @param string $text
+	 *
+	 * @return bool
+	 * @throws WikiaException
 	 */
-	public static function onBeforePageDisplay( OutputPage $out, Skin $skin ) {
-		Wikia::addAssetsToOutput( 'facebook_client_fbtags_js' );
+	public static function onSkinAfterBottomScripts( $skin, &$text ) {
+
+		$script = AssetsManager::getInstance()->getURL( 'facebook_client_fbtags_js' );
+		$text .= Html::linkedScript( $script[0] );
+
 		return true;
 	}
 
