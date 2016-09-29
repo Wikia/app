@@ -52,6 +52,8 @@ class GlobalTitle extends Title {
 
 	static protected $cachedObjects = array();
 
+	private static $extraExtensionNamespaces = [];
+
 	/**
 	 * @desc Static constructor, Create new Title from name of page
 	 *
@@ -823,7 +825,7 @@ class GlobalTitle extends Title {
 		// $wgExtraNamespaces is calculated at MW init in context language.
 		// We have to override them to get correctly localized namespaces registered by extensions.
 		$globalStateWrapper = new Wikia\Util\GlobalStateWrapper( [
-			'wgExtraNamespaces' => $this->getLocalWgExtraNamespaces()
+			'wgExtraNamespaces' => $this->getExtraExtensionNamespaces()
 		] );
 		$langNamespaces = $globalStateWrapper->wrap( function () {
 			return $this->mContLang->getNamespaces();
@@ -848,25 +850,30 @@ class GlobalTitle extends Title {
 	 *
 	 * @return array
 	 */
-	private function getLocalWgExtraNamespaces() {
+	private function getExtraExtensionNamespaces() {
 		global $wgExtensionNamespacesFiles;
-		$extraNamespaces = [ ];
 
-		foreach ( $wgExtensionNamespacesFiles as $extFile ) {
-			$namespaces = [ ];
-			// Namespace files fill in $namespaces array
-			require( $extFile );
+		if ( empty( static::$extraExtensionNamespaces ) ){
+			$extraExtensionNamespaces = [ ];
 
-			foreach ( $namespaces as $langKey => $namespaceArray ) {
-				if ( array_key_exists( $langKey, $extraNamespaces ) ) {
-					$extraNamespaces[$langKey] += $namespaceArray;
-				} else {
-					$extraNamespaces[$langKey] = $namespaceArray;
+			foreach ( $wgExtensionNamespacesFiles as $extFile ) {
+				$namespaces = [ ];
+				// Namespace files fill in $namespaces array
+				require $extFile ;
+
+				foreach ( $namespaces as $langKey => $namespaceArray ) {
+					if ( array_key_exists( $langKey, $extraExtensionNamespaces ) ) {
+						$extraExtensionNamespaces[$langKey] += $namespaceArray;
+					} else {
+						$extraExtensionNamespaces[$langKey] = $namespaceArray;
+					}
 				}
 			}
+
+			static::$extraExtensionNamespaces = $extraExtensionNamespaces;
 		}
 
-		return $extraNamespaces[$this->mLang] + $extraNamespaces['en'];
+		return static::$extraExtensionNamespaces[$this->mLang] + static::$extraExtensionNamespaces['en'];
 	}
 
 	/**
