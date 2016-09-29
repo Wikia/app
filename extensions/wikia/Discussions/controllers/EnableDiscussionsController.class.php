@@ -4,20 +4,22 @@ class EnableDiscussionsController extends \WikiaController {
 
 	const ROLLBACK = 'rollback';
 
-	private $discussionsApi;
-	private $varToggler;
+	private $activator;
+	private $toggler;
 
 	public function __construct() {
 		parent::__construct();
-		$this->varToggler = new DiscussionsVarToggler();
-		$this->discussionsApi = new DiscussionsApi();
+		$this->activator = new DiscussionActivator();
+		$this->toggler = new DiscussionsVarToggler();
+	}
+
+	public function init() {
+		$this->assertCanAccessController();
 	}
 
 	public function index() {
-		$this->assertCanAccessController();
-
 		$isRollback = $this->request->getBool( self::ROLLBACK );
-		$this->varToggler
+		$this->toggler
 			->setEnableDiscussions( !$isRollback )
 			->setEnableDiscussionsNav( !$isRollback )
 			->setArchiveWikiForums( !$isRollback )

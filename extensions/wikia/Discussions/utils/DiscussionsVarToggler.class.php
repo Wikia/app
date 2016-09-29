@@ -9,14 +9,12 @@ class DiscussionsVarToggler {
 	const ARCHIVE_WIKI_FORUMS = 'wgArchiveWikiForums';
 
 	private $discussionsVarMap;
-	private $logger;
 	private $cityId;
 
 	public function __construct( $cityId = null ) {
 		$this->cityId = $cityId ?? F::app()->wg->CityId;
-		$this->logger = Wikia\Logger\WikiaLogger::instance();
 		$this->discussionsVarMap = [
-			self:: ENABLE_DISCUSSIONS => null,
+			self::ENABLE_DISCUSSIONS => null,
 			self::ENABLE_DISCUSSIONS_NAV => null,
 			self::ENABLE_FORUMS => null,
 			self::ARCHIVE_WIKI_FORUMS => null
@@ -55,7 +53,7 @@ class DiscussionsVarToggler {
 	}
 
 	private function logAndThrowError( $varName, $siteId, $value ) {
-		$this->logger->error(
+		Wikia\Logger\WikiaLogger::instance()->error(
 			'Error setting Discussions related wg variable',
 			[
 				'siteId' => $siteId,

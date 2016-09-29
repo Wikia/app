@@ -6,27 +6,28 @@ use Swagger\Client\Discussion\Models\SiteInput;
 use Wikia\DependencyInjection\Injector;
 use Wikia\Service\Swagger\ApiProvider;
 
-class DiscussionsApi {
+class DiscussionActivator {
 
     const SERVICE_NAME = 'discussion';
     const TIMEOUT = 5;
     const SITE_NAME_MAX_LENGTH = 256;
 
-
-    private $sitesResourceApi;
-    private $logger;
     private $cityId;
     private $cityName;
     private $cityLang;
+
+    private $sitesApi;
+    private $logger;
 
     public function __construct( $cityId = null, $cityName = null, $cityLang = null ) {
         $this->cityId = $cityId ?? F::app()->wg->CityId;
         $this->cityName = $cityName ?? F::app()->wg->Sitename;
         $this->cityLang = $cityLang ?? F::app()->wg->ContLang->getCode();
-        $this->sitesResourceApi = $this->getSitesApi();
+
+        $this->sitesApi = $this->getSitesApi();
         $this->logger = Wikia\Logger\WikiaLogger::instance();
     }
-    
+
     public function activateDiscussions() {
         if ( $this->isDiscussionsActive() ) {
             return;
@@ -34,7 +35,7 @@ class DiscussionsApi {
 
         $siteInput = $this->getSiteInput();
         try {
-            $this->sitesResourceApi->createSite( $siteInput, F::app()->wg->TheSchwartzSecretToken );
+            $this->sitesApi->createSite( $siteInput, F::app()->wg->TheSchwartzSecretToken );
         } catch ( ApiException $e ) {
             $this->logAndThrowError( $e );
         }
@@ -52,10 +53,10 @@ class DiscussionsApi {
 
     public function isDiscussionsActive() {
         try {
-            $this->sitesResourceApi->getSite( $this->cityId );
+            $this->sitesApi->getSite( $this->cityId );
             return true;
         } catch ( ApiException $e ) {
-            $this->logger->debug( 'Getting site caused an error',
+            $this->logger->info( 'Getting site caused an error',
                 [
                     'siteId' => $this->cityId,
                     'error' => $e->getMessage(),

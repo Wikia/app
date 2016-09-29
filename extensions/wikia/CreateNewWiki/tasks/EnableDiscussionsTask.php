@@ -11,23 +11,17 @@ class EnableDiscussionsTask extends Task {
 			$this->activateDiscussions();
 			$this->enableDiscussions();
 		} catch ( \Exception $e ) {
-			WikiaLogger::instance()->error(
-				'Error while activating or enabling Discussions for new community',
-				[
-					'cityId' => \F::app()->wg->CityId,
-					'exception' => $e
-				]
-			);
+			$this->logException( $e );
 		}
 
 		return TaskResult::createForSuccess();
 	}
 
 	/**
-	 * Creates a new instance of Discussions for this community.
+	 * Creates a new instance of Discussions for this wiki.
 	 */
 	private function activateDiscussions() {
-		( new \DiscussionsApi(
+		( new \DiscussionActivator(
 			$this->taskContext->getCityId(),
 			$this->taskContext->getSiteName(),
 			$this->taskContext->getLanguage()
@@ -36,7 +30,7 @@ class EnableDiscussionsTask extends Task {
 
 	/**
 	 * Sets the appropriate wg variables to make the new discussions
-	 * instance enabled and available on this new wiki
+	 * instance enabled and available on this new wiki.
 	 */
 	private function enableDiscussions() {
 		( new \DiscussionsVarToggler( $this->taskContext->getCityId() ) )
@@ -45,5 +39,15 @@ class EnableDiscussionsTask extends Task {
 			->setEnableForums( false )
 			->setArchiveWikiForums( true )
 			->save();
+	}
+
+	private function logException( \Exception $e ) {
+		WikiaLogger::instance()->error(
+			'Error while activating or enabling Discussions for new wiki',
+			[
+				'taskContext' => $this->taskContext,
+				'exception' => $e
+			]
+		);
 	}
 }

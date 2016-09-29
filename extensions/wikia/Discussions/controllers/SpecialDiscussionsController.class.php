@@ -2,18 +2,19 @@
 
 class SpecialDiscussionsController extends WikiaSpecialPageController {
 
+	const DISCUSSIONS_LINK = '/d/f';
 	const DISCUSSIONS_ACTION = 'specialdiscussions';
 	const EDIT_TOKEN = 'editToken';
 
 	const DEFAULT_TEMPLATE_ENGINE = \WikiaResponse::TEMPLATE_ENGINE_MUSTACHE;
 
-	private $discussionsApi;
-	private $varToggler;
+	private $activator;
+	private $toggler;
 
 	public function __construct() {
 		parent::__construct( 'Discussions', '', false );
-		$this->discussionsApi = new DiscussionsApi();
-		$this->varToggler = new DiscussionsVarToggler();
+		$this->activator = new DiscussionActivator();
+		$this->toggler = new DiscussionsVarToggler();
 	}
 
 	public function index() {
@@ -21,13 +22,12 @@ class SpecialDiscussionsController extends WikiaSpecialPageController {
 
 		$this->setHeaders();
 		$this->response->addAsset( 'special_discussions_scss' );
-
 		$this->wg->Out->setPageTitle( wfMessage( 'discussions-pagetitle' )->escaped() );
 
 		if ( $this->request->wasPosted() ) {
 			$this->assertValidPostRequest();
-			$this->discussionsApi->activateDiscussions();
-			$this->varToggler->setEnableDiscussions( true )->save();
+			$this->activator->activateDiscussions();
+			$this->toggler->setEnableDiscussions( true )->save();
 		}
 
 		$this->setIndexOutput();
@@ -46,7 +46,7 @@ class SpecialDiscussionsController extends WikiaSpecialPageController {
 	}
 
 	private function setIndexOutput() {
-		$callMethod = $this->discussionsApi->isDiscussionsActive() ? 'discussionsLink' : 'inputForm';
+		$callMethod = $this->activator->isDiscussionsActive() ? 'discussionsLink' : 'inputForm';
 		$this->response->setVal( 'content', $this->sendSelfRequest( $callMethod ) );
 	}
 
@@ -64,16 +64,16 @@ class SpecialDiscussionsController extends WikiaSpecialPageController {
 		$this->response->setValues(
 			[
 				'discussionsActiveMessage' => wfMessage( 'discussions-active' )->escaped(),
-				'discussionsLink' => $this->getDiscussionsLink(),
+				'discussionsLink' => self::DISCUSSIONS_LINK,
 				'discussionsLinkCaption' => wfMessage( 'discussions-navigate' )->escaped(),
 			]
 		);
 	}
 
-	private function getDiscussionsLink() {
-		return "/d/f";
-	}
-
+	/**
+	 * Override the directory Nirvana looks for templates in
+	 * @return string
+	 */
 	public static function getTemplateDir() {
 		return dirname( __FILE__ ) . '/../templates';
 	}
