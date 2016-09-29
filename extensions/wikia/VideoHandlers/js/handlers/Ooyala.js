@@ -88,14 +88,12 @@ define('wikia.videohandler.ooyala', [
 
 
 			tagUrl = dartVideoHelper.getUrl();
-			console.log('BEFORE RECOVERY', tagUrl);
-			console.log(tagUrl);
-			tagUrl = _sp_.getSafeUri(tagUrl); // TODO: add here if recovery
-			console.log('AFTER RECOVERY', tagUrl);
+			console.log('---BEFORE---', tagUrl);
+			tagUrl = _sp_.getSafeUri(tagUrl);
+			console.log('---AFTER---', tagUrl);
 
 			createParams.vast = {
-				tagUrl: tagUrl,
-				vastUrl: tagUrl
+				tagUrl: tagUrl
 			};
 		}
 

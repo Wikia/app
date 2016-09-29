@@ -13400,7 +13400,8 @@ window.LZW = {
           }, this);
           OO.jsOnSuccessList[jsSrc] = [];
         },
-        error: function() {
+        error: function(a,b,c,d) {
+          console.log('------- errors', a,b,c,d);
           OO.safeFuncCall(errorCallBack);
         }
       });
@@ -20083,7 +20084,6 @@ OO.plugin("Librato", function(OO, _, $, W) {
 
     _.extend(AdsManager.prototype, {
       onPlayerCreated: function(event, elementId, params) {
-        debugger;
         if (params.vast && params.vast.tagUrl) {
           this.vastPassThroughAdTagUrl = params.vast.tagUrl;
         }
@@ -20330,9 +20330,11 @@ OO.plugin("Librato", function(OO, _, $, W) {
     var DEFAULT_ADS_REQUEST_TIME_OUT = 3000;
     var PLAYHEAD_UPDATE_INTERVAL = 200;
     var ext = OO.DEV ? '_debug.js' : '.js';
-    var IMA_JS = "//imasdk.googleapis.com/js/sdkloader/ima3" + ext;
+    var IMA_JS = "//imasdk.googleapis.com/js/sdkloader/ima3.js";
     var protocol = OO.isSSL ? "https:" : "http:";
-    var bootJsSrc = _sp_.getSafeUri(protocol + IMA_JS);
+    var bootJsSrc = protocol + IMA_JS;
+
+    bootJsSrc = _sp_.getSafeUri(bootJsSrc);
 
     W.googleImaSdkLoadedCbList = W.googleImaSdkLoadedCbList  || [];
     W.googleImaSdkFailedCbList = W.googleImaSdkFailedCbList || [];
