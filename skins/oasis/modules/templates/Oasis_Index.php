@@ -55,6 +55,16 @@
 <? endif ?>
 
 <?= $headItems ?>
+	<script src="//s.adadapter.netzathleten-media.de/API-1.0/NA-828433-1/naMediaAd.js" type="text/javascript"></script>
+<!--	<script>-->
+<!--		require(['wikia.scriptwriter'], function (scriptWriter) {-->
+<!--			var libraryUrl = '//s.adadapter.netzathleten-media.de/API-1.0/NA-828433-1/naMediaAd.js';-->
+<!--			scriptWriter.injectScriptByUrl(document.body, libraryUrl, function () {-->
+<!--				console.warn('ZALADOWANE');-->
+<!--				window.naMediaAd.setValue('homesite', false);-->
+<!--			});-->
+<!--		});-->
+<!--	</script>-->
 
 </head>
 <body class="<?= implode(' ', $bodyClasses) ?>" <?= $itemType ?>>
