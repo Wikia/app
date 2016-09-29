@@ -5,6 +5,11 @@ define('wikia.flowTracking', ['wikia.cookies', 'wikia.tracker', 'mw'], function 
 			category: 'flow-tracking'
 		});
 
+	/**
+	 * Set cookie with current flow name and track flow beginning
+	 *
+	 * @param flowLabel
+	 */
 	function beginFlow(flowLabel) {
 		cookies.set(cookieName, label, { path: mw.config.get('wgCookiePath') });
 		track({
@@ -13,6 +18,9 @@ define('wikia.flowTracking', ['wikia.cookies', 'wikia.tracker', 'mw'], function 
 		});
 	}
 
+	/**
+	 * Track flow ending
+	 */
 	function endFlow() {
 		var flowLabel = cookies.get(cookieName);
 
