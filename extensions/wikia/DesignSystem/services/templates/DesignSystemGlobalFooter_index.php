@@ -16,7 +16,8 @@
 	<?php elseif ( isset ( $model['header'] ) ) : ?>
 		<h2 class="wds-global-footer__header">
 			<a href="<?= Sanitizer::encodeAttribute( $model['header']['href'] ); ?>"
-			   data-tracking-label="<?= Sanitizer::encodeAttribute( $model['header']['title']['key'] ) ?>">
+			   data-tracking-label="<?= Sanitizer::encodeAttribute( $model['header']['title']['key'] ) ?>"
+			   title="<?= DesignSystemHelper::renderText( $model['header']['title'] ); ?>">
 				<?= DesignSystemHelper::getSvg(
 					$model['header']['image'],
 					'wds-global-footer__header-logo',
