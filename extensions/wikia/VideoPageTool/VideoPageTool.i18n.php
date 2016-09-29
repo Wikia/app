@@ -1,10 +1,5 @@
 <?php
-/**
- * Internationalisation file for VideoPageTool extension.
- *
- * @addtogroup Languages
- */
-
+/** Internationalization file for /extensions/wikia/VideoPageTool/VideoPageTool extension. */
 $messages = [];
 
 $messages['en'] = [
@@ -35,7 +30,7 @@ $messages['en'] = [
 	'videopagetool-label-display-title' => 'Display Title',
 	'videopagetool-label-video-description' => 'Description',
 	'videopagetool-placeholder-video-description' => 'About this video',
-	'videopagetool-html-text-tip' => "'''Tip:''' to add a link copy the following and replace the italicized text with your own: <a href=\"''your_url_here''\">''Your Text Here''</a>",
+	'videopagetool-html-text-tip' => '\'\'\'Tip:\'\'\' to add a link copy the following and replace the italicized text with your own: <a href="\'\'your_url_here\'\'">\'\'Your Text Here\'\'</a>',
 	'videopagetool-button-save' => 'Save',
 	'videopagetool-button-search' => 'Search',
 	'videopagetool-button-clear' => 'Clear all',
@@ -54,32 +49,25 @@ $messages['en'] = [
 	'videopagetool-success-publish' => 'Your changes have been published',
 	'videopagetool-hint-description-maxlength' => '$1 characters max',
 	'videopagetool-see-more-label' => 'See more videos',
-
-	// Latest Video (category) form
 	'videopagetool-category-label-name' => 'Category',
 	'videopagetool-category-label-display-title' => 'Title',
 	'videopagetool-category-name-placeholder' => 'Type in words to bring in videos',
 	'videopagetool-category-display-title-placeholder' => 'Category title',
 	'videopagetool-category-preview' => 'Preview',
 	'videopagetool-category-instructions' => 'Note: A minimum of three modules must be programmed in order to save or publish this page.',
-
 	'videopagetool-hint-required-dimensions' => 'Image dimensions must be 1024 x 461',
 	'videopagetool-formerror-videokey' => 'Please add a video',
 	'videopagetool-formerror-altthumb' => 'Please add an image',
 	'videopagetool-formerror-category-name' => 'At least 3 categories must be chosen',
 	'videopagetool-date-header' => 'Editing for date: $1',
-
-	// Home Page Section: Header
 	'videohomepage-header-dropdown-name' => 'Discover',
 	'videohomepage-header-search-placeholder' => 'Search for Wikia videos',
 	'videohomepage-header-browse' => 'Browse',
-	'videopagetool-header-last-saved' => "'''Last saved:''' $1",
-	'videopagetool-header-publish-date' => "'''Publish date:''' $1",
-	'videopagetool-header-not-published' => "'''Not published'''",
-	'videopagetool-header-saved-by' => "'''Saved by:''' $1",
-	'videopagetool-header-published-by' => "'''Published by:''' $1",
-
-	// Home Page Section: Partners
+	'videopagetool-header-last-saved' => '\'\'\'Last saved:\'\'\' $1',
+	'videopagetool-header-publish-date' => '\'\'\'Publish date:\'\'\' $1',
+	'videopagetool-header-not-published' => '\'\'\'Not published\'\'\'',
+	'videopagetool-header-saved-by' => '\'\'\'Saved by:\'\'\' $1',
+	'videopagetool-header-published-by' => '\'\'\'Published by:\'\'\' $1',
 	'videohomepage-partner-section-title' => 'Our Partners',
 	'videohomepage-partner-name-anyclip' => 'Anyclip',
 	'videohomepage-partner-name-ign' => 'IGN',
@@ -115,7 +103,7 @@ $messages['qqq'] = [
 	'videopagetool-label-display-title' => 'Label text for an input to enter the title to display next to the video',
 	'videopagetool-label-video-description' => 'Label text for the video description textarea',
 	'videopagetool-placeholder-video-description' => 'Placeholder text inside a textarea for entering a description of a video',
-	'videopagetool-html-text-tip' => "Tip advising how to add html anchor tags to their content.",
+	'videopagetool-html-text-tip' => 'Tip advising how to add html anchor tags to their content.',
 	'videopagetool-button-save' => 'button text for saving a form',
 	'videopagetool-button-search' => 'button text for searching for category',
 	'videopagetool-button-clear' => 'button text for clearing the entire contents of a form',
@@ -132,21 +120,16 @@ $messages['qqq'] = [
 	'videopagetool-header-dashboard' => 'Title for dashboard page',
 	'videopagetool-success-save' => 'This text appears if your changes have been saved successfully',
 	'videopagetool-see-more-label' => 'Link text to a page of all videos in the category being displayed',
-
-	// Latest Video (category) form
 	'videopagetool-category-label-name' => 'label for the form input to enter a category',
 	'videopagetool-category-label-display-title' => 'label for the form input to enter a display title for a given video',
 	'videopagetool-category-name-placeholder' => 'form input placeholder text to enter a category',
 	'videopagetool-category-preview' => 'link to view a preview of the different videos in a category',
 	'videopagetool-category-display-title-placeholder' => 'form input placeholder text to enter the title that will be displayed for a given video',
-
 	'videopagetool-success-publish' => 'This text appears if your changes have been published successfully',
 	'videopagetool-hint-required-dimensions' => 'Message describing exact dimensions required for custom image upload (1024 x 461)',
 	'videopagetool-formerror-videokey' => 'Error message for required video to be added',
 	'videopagetool-formerror-altthumb' => 'Error message for required custom image to be added',
 	'videopagetool-date-header' => 'Shows the date that you\'re programming for at the top of the form.',
-
-	// Home Page Section: Header
 	'videohomepage-header-dropdown-name' => 'Name of the dropdown that allows users to explore Wikia Video\'s sections',
 	'videohomepage-header-search-placeholder' => 'Placeholder text for Wikia Video search box',
 	'videopagetool-header-last-saved' => 'This text is the date and time the page was last saved',
@@ -154,8 +137,6 @@ $messages['qqq'] = [
 	'videopagetool-header-not-published' => 'This text is displayed if the page has not yet been published',
 	'videopagetool-header-saved-by' => 'Name of last person to save this page',
 	'videopagetool-header-published-by' => 'Name of person to publish this page',
-
-	// Home Page Section: Partners
 	'videohomepage-partner-section-title' => 'Title for section that links to videos from our content partners',
 	'videohomepage-partner-name-anyclip' => 'This text is the name of a partner: anyclip',
 	'videohomepage-partner-name-ign' => 'This text is the name of a partner: IGN',
@@ -163,3 +144,83 @@ $messages['qqq'] = [
 	'videohomepage-partner-name-ooyala' => 'This text is the name of a partner: Ooyala',
 	'videohomepage-partner-name-screenplay' => 'This text is the name of a partner: Screenplay',
 ];
+
+$messages['de'] = [
+	'videohomepage-header-search-placeholder' => 'Suche nach Wikia-Videos',
+	'videopagetool-page-title' => 'Wikia Video-Tool',
+	'videopagetool-section-fan' => 'Wikia Fan-Medien',
+];
+
+$messages['es'] = [
+	'videohomepage-header-search-placeholder' => 'Buscar videos de Wikia',
+];
+
+$messages['fi'] = [
+	'videohomepage-header-search-placeholder' => 'Etsi Wikian videoita',
+];
+
+$messages['fr'] = [
+	'videohomepage-header-search-placeholder' => 'Rechercher des vidéos de Wikia',
+	'videopagetool-page-title' => 'Outil Wikia pour les vidéos',
+	'videopagetool-section-fan' => 'Médias Wikia par les fans',
+];
+
+$messages['it'] = [
+	'videohomepage-header-search-placeholder' => 'Cerca video di Wikia',
+	'videopagetool-page-title' => 'Wikia Video Tool',
+	'videopagetool-section-fan' => 'Wikia Fan Media',
+];
+
+$messages['ja'] = [
+	'videohomepage-header-search-placeholder' => 'ウィキアビデオを検索',
+	'videopagetool-page-title' => 'ウィキアビデオツール',
+	'videopagetool-section-fan' => 'ウィキアファンメディア',
+];
+
+$messages['pl'] = [
+	'videohomepage-header-search-placeholder' => 'Szukaj filmów na Wikii',
+	'videopagetool-page-title' => 'Narzędzie Wideo Wikii',
+	'videopagetool-section-fan' => 'Multimedia od fanów',
+];
+
+$messages['pt'] = [
+	'videohomepage-header-search-placeholder' => 'Procure por vídeos na Wikia',
+	'videopagetool-page-title' => 'Ferramenta de Vídeo da Wikia',
+	'videopagetool-section-fan' => 'Mídia de fãs na Wikia',
+];
+
+$messages['pt-br'] = [
+	'videohomepage-header-search-placeholder' => 'Procure pelos vídeos da Wikia',
+	'videopagetool-page-title' => 'Ferramenta de Vídeo Wikia',
+	'videopagetool-section-fan' => 'Mídia de fãs da Wikia',
+];
+
+$messages['ru'] = [
+	'videohomepage-header-search-placeholder' => 'Поиск по видео на Викия',
+	'videopagetool-page-title' => 'Видео инструмент Викия',
+];
+
+$messages['zh'] = [
+	'videohomepage-header-search-placeholder' => '搜索维基视频',
+	'videopagetool-page-title' => '维基视频工具',
+	'videopagetool-section-fan' => '维基粉丝媒体',
+];
+
+$messages['zh-hant'] = [
+	'videohomepage-header-search-placeholder' => '搜尋Wikia影片',
+	'videopagetool-page-title' => 'Wikia影片工具',
+	'videopagetool-section-fan' => 'Wikia 粉絲媒體',
+];
+
+$messages['zh-hk'] = [
+	'videohomepage-header-search-placeholder' => '搜尋Wikia影片',
+	'videopagetool-page-title' => 'Wikia影片工具',
+	'videopagetool-section-fan' => 'Wikia 粉絲媒體',
+];
+
+$messages['zh-tw'] = [
+	'videohomepage-header-search-placeholder' => '搜尋Wikia影片',
+	'videopagetool-page-title' => 'Wikia影片工具',
+	'videopagetool-section-fan' => 'Wikia 粉絲媒體',
+];
+

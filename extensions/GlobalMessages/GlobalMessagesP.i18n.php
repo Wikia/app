@@ -9434,7 +9434,7 @@ $messages['es'] = [
 	'passwordtooshort' => 'Las contraseñas deben tener al menos {{PLURAL:$1|1 caracter|$1 caracteres}}.',
 	'password-name-match' => 'Tu contraseña debe ser diferente de tu nombre de usuario.',
 	'password-login-forbidden' => 'El uso de este nombre de usuario y contraseña han sido prohibidos.',
-	'passwordremindertitle' => 'Recordatorio de contraseña de {{SITENAME}}',
+	'passwordremindertitle' => 'Recordatorio de contraseña de Wikia',
 	'passwordremindertext' => '$1,
 
 La contraseña para el usuario "$2" ha sido cambiada a "$3".
@@ -16998,7 +16998,7 @@ $messages['ja'] = [
 	'passwordtooshort' => 'パスワードは{{PLURAL:$1|$1文字}}以上でなければなりません。',
 	'password-name-match' => 'パスワードは利用者名と同じであってはいけません。',
 	'password-login-forbidden' => 'このような利用者名とパスワードを使用することは禁止されています。',
-	'passwordremindertitle' => '{{SITENAME}}の仮パスワード通知',
+	'passwordremindertitle' => 'ウィキアからのパスワード・リマインダー',
 	'passwordremindertext' => '$1 さん,
 
 ユーザー「$2」のログインパスワードが「S3」に変更されています。
@@ -41005,7 +41005,7 @@ $messages['zh-hans'] = [
 	'passwordtooshort' => '您的密码至少需要$1个字符。',
 	'password-name-match' => '您的密码必须和您的用户名不相同。',
 	'password-login-forbidden' => '这个用户名称及密码的使用是被禁止的。',
-	'passwordremindertitle' => '{{SITENAME}}的新临时密码',
+	'passwordremindertitle' => 'Wikia密码变更通知',
 	'passwordremindertext' => '您好, 用户"$2" 的密码已改为"$3"。如果您并没有申请新密码，请别担心。这个新密码仅仅寄送到这个电子邮件信箱给您，因此您的帐号是安全的，且仍然可以使用您的旧密码。谢谢。
 
 Wikia社区团队 
@@ -41214,7 +41214,7 @@ $messages['zh-hant'] = [
 	'passwordtooshort' => '您的密碼不能少於$1個字元。',
 	'password-name-match' => '您的密碼必須跟您的用戶名不相同。',
 	'password-login-forbidden' => '這個用戶名稱及密碼的使用是被禁止的。',
-	'passwordremindertitle' => '{{SITENAME}}的新臨時密碼',
+	'passwordremindertitle' => 'Wikia密碼變更通知',
 	'passwordremindertext' => '您好, 用戶"$2" 的密碼已改為"$3"。如果您並沒有申請新密碼，請別擔心。這個新密碼僅僅寄送到這個電子郵件信箱給您，因此您的帳號是安全的，且仍然可以使用您的舊密碼。謝謝。
 
 Wikia社區團隊 
@@ -41409,6 +41409,7 @@ $messages['zh-hk'] = [
 	'print' => '打印',
 	'privacy' => '私隱政策',
 	'privacypage' => 'Project:私隱政策',
+	'passwordremindertitle' => 'Wikia密碼變更通知',
 ];
 
 $messages['zh-min-nan'] = [
@@ -41446,7 +41447,7 @@ $messages['zh-tw'] = [
 	'page-rss-feed' => '訂閱「$1」的 RSS 資料來源',
 	'page-atom-feed' => '訂閱「$1」的 Atom 資料來源',
 	'passwordtooshort' => '您的密碼不正確或太短，不能少於$1個字元，而且必須跟使用者名不同。',
-	'passwordremindertitle' => '{{SITENAME}}密碼提醒',
+	'passwordremindertitle' => 'Wikia密碼變更通知',
 	'passwordremindertext' => '您好, 用戶"$2" 的密碼已改為"$3"。如果您並沒有申請新密碼，請別擔心。這個新密碼僅僅寄送到這個電子郵件信箱給您，因此您的帳號是安全的，且仍然可以使用您的舊密碼。謝謝。
 
 Wikia社區團隊 
@@ -41540,5 +41541,9 @@ $messages['zu'] = [
 	'prefsnologin' => 'Awungenile',
 	'protectcomment' => 'Isizathu',
 	'proxyblocksuccess' => 'Kuphelile.',
+];
+
+$messages['zh'] = [
+	'passwordremindertitle' => 'Wikia密码变更通知',
 ];
 

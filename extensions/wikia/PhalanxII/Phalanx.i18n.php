@@ -355,6 +355,7 @@ Bitte [[Special:Contact|kontaktiere Wikia]] im Falle eines Versehens!<br />Als S
 	'right-phalanx' => 'Kann globale Benutzersperren und Spamfilter verwalten',
 	'right-phalanxexempt' => 'Von Phalanx-Regelungen ausgenommen',
 	'right-phalanxemailblock' => 'Kann E-Mail-bezogene Sperren ordnen, einsehen und bearbeiten',
+	'phalanx-sp-contributions-blocked-globally' => 'Dieser Benutzer ist aktuell im gesamten Wikia-Netzwerk gesperrt.',
 ];
 
 $messages['de-formal'] = [
@@ -487,6 +488,7 @@ Si crees que es un error, por favor [[Special:Contact|contacta a Wikia]].<br />E
 	'right-phalanx' => 'Puede administrar bloqueos globales y filtros de spam',
 	'right-phalanxexempt' => 'Exento de las reglas de Phalanx',
 	'right-phalanxemailblock' => 'Crear, ver y administrar bloqueos de correos',
+	'phalanx-sp-contributions-blocked-globally' => 'Esta cuenta de usuario está actualmente bloqueada en toda la red de Wikia.',
 ];
 
 $messages['fi'] = [
@@ -650,6 +652,7 @@ Veuillez [[Special:Contact|contacter Wikia]] à propos de ce problème.<br />La 
 	'right-phalanx' => 'Peut gérer les blocages globaux et filtres de contenu indésirable',
 	'right-phalanxexempt' => 'Exonéré des règles Phalanx',
 	'right-phalanxemailblock' => 'Vous pouvez lister, voir et gérer les blocs basés sur les courriels.',
+	'phalanx-sp-contributions-blocked-globally' => 'Cet utilisateur est actuellement bloqué sur tout Wikia.',
 ];
 
 $messages['gl'] = [
@@ -1056,6 +1059,7 @@ $messages['ja'] = [
 	'phalanx-stats-table-wiki-name' => 'ウィキ名',
 	'phalanx-stats-table-wiki-url' => 'ウィキの URL',
 	'phalanx-stats-table-wiki-last-edited' => '最終編集',
+	'phalanx-sp-contributions-blocked-globally' => 'このユーザーは現在、ウィキアネットワーク全体でブロックされています。',
 ];
 
 $messages['km'] = [
@@ -1543,10 +1547,10 @@ Als je denkt dat dit ten onrechte is, [[Special:Contact|neem dan contact op met 
 	'phalanx-user-block-reason-similar' => 'Deze gebruiker mag niet bewerken in het hele Wikia-netwerk wegens vandalisme of verstoring door een gebruiker met een gelijkluidende naam.
 Kies een andere gebruikersnaam of [[Special:Contact|neem contact op met Wikia]] over het probleem.',
 	'phalanx-user-block-new-account' => 'De gebruikersnaam kan niet geregistreerd worden. Kies een andere naam.',
-	'phalanx-user-block-withreason-ip' => 'Gebruikers vanaf dit IP-adres mogen niet bewerken in het gehele Wikia-netwerk wegens vandalisme of verstoring door u of door iemand met hetzelfde IP-adres.
-Als u denkt dat dit ten onrechte is, [[Special:Contact|neem dan contact op met Wikia]].<br />De reden voor blokkeren is: $1.',
-	'phalanx-user-block-withreason-exact' => 'Gebruikers vanaf dit IP-adres mogen niet bewerken in het gehele Wikia-netwerk wegens vandalisme of verstoring door u of door iemand met hetzelfde IP-adres.
-Als u denkt dat dit ten onrechte is, [[Special:Contact|neem dan contact op met Wikia]].<br />De reden voor blokkeren is: $1.',
+	'phalanx-user-block-withreason-ip' => 'Gebruikers vanaf dit IP-adres mogen niet bewerken in het gehele Wikia-netwerk wegens vandalisme of verstoring door jou of door iemand met hetzelfde IP-adres.
+Als je denkt dat dit ten onrechte is, [[Special:Contact|neem dan contact op met Wikia]].<br />De reden voor blokkeren is: $1.',
+	'phalanx-user-block-withreason-exact' => 'Gebruikers vanaf dit IP-adres mogen niet bewerken in het gehele Wikia-netwerk wegens vandalisme of verstoring door jou of door iemand met hetzelfde IP-adres.
+Als je denkt dat dit ten onrechte is, [[Special:Contact|neem dan contact op met Wikia]].<br />De reden voor blokkeren is: $1.',
 	'phalanx-user-block-withreason-similar' => 'Deze gebruiker mag niet bewerken in het hele Wikia-netwerk wegens vandalisme of verstoring door een gebruiker met een gelijkluidende naam.
 Kies een andere gebruikersnaam of [[Special:Contact|neem contact op met Wikia]] over het probleem.<br />De reden voor blokkeren is: $1.',
 	'phalanx-title-move-summary' => 'De opgegeven reden bevat een tekstdeel dat op de zwarte lijst staat.',
@@ -1747,6 +1751,7 @@ Prosimy [[Special:Contact|skontaktuj się z nami]] w sprawie problemu.<br />Blok
 	'phalanx-section-type-account-creation' => 'Zakładanie kont',
 	'phalanx-section-type-wiki-creation' => 'Tworzenie wiki',
 	'phalanx-section-type-questions' => 'Wiki Answers',
+	'phalanx-sp-contributions-blocked-globally' => 'Ten użytkownik jest zablokowany na całej Wikii.',
 ];
 
 $messages['pms'] = [
@@ -2142,6 +2147,7 @@ $messages['ru'] = [
 	'right-phalanx' => 'Можно управлять глобальными блоками и спам-фильтрами',
 	'right-phalanxexempt' => 'Освобождено от правил Phalanx',
 	'right-phalanxemailblock' => 'Можно обратиться, просмотреть и управлять e-mail на основе блоков',
+	'phalanx-sp-contributions-blocked-globally' => 'Этот участник заблокирован на всём пространстве Викия.',
 ];
 
 $messages['saz'] = [
@@ -2492,5 +2498,12 @@ $messages['zh-hans'] = [
 	'phalanx-stats-table-wiki-id' => '维基 ID',
 	'phalanx-stats-table-wiki-name' => '维基名字',
 	'phalanx-stats-table-wiki-url' => '维基 URL',
+];
+
+$messages['it'] = [
+	'phalanx-sp-contributions-blocked-globally' => 'Questo utente è al momento bloccato sulla rete di Wikia.',
+	'phalanx-user-block-withreason-exact' => 'Questo nome utente o indirizzo IP non può modificare sulla rete di Wikia per vandalismo o altri disturbi creati. Se ritieni ci sia un errore, per favore [[Special:Contact|contatta Wikia]].<br />La seguente ragione è stata fornita per il blocco: $1.',
+	'phalanx-user-block-withreason-ip' => 'Questo indirizzo IP non può modificare sulla rete di Wikia per vandalismo o altri disturbi creati da te o qualcun altro che condivide il tuo stesso indirizzo IP. Se ritieni ci sia un errore, per favore [[Special:Contact|contatta Wikia]].<br />La seguente ragione è stata fornita per il blocco: $1.',
+	'phalanx-user-block-withreason-similar' => 'Questo nome utente non può modificare sulla rete di Wikia per vandalismo o altri disturbi creati da un utente con un nome simile. Per favore, [[Special:Contact|contatta Wikia]] e segnala il problema.<br />La seguente ragione è stata fornita per il blocco: $1.',
 ];
 
