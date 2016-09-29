@@ -12,6 +12,7 @@ define('ext.wikia.adEngine.config.desktop', [
 	'ext.wikia.adEngine.provider.directGpt',
 	'ext.wikia.adEngine.provider.evolve2',
 	'ext.wikia.adEngine.provider.monetizationService',
+	'ext.wikia.adEngine.provider.netzathleten',
 	'ext.wikia.adEngine.provider.remnantGpt',
 	'ext.wikia.adEngine.provider.rubiconFastlane',
 	'ext.wikia.adEngine.provider.turtle',
@@ -30,6 +31,7 @@ define('ext.wikia.adEngine.config.desktop', [
 	adProviderDirectGpt,
 	adProviderEvolve2,
 	adProviderMonetizationService,
+	adProviderNetzAthleten,
 	adProviderRemnantGpt,
 	adProviderRubiconFastlane,
 	adProviderTurtle,
@@ -61,6 +63,10 @@ define('ext.wikia.adEngine.config.desktop', [
 		if (!context.opts.showAds) {
 			return [];
 		}
+
+		return [
+			adProviderNetzAthleten
+		];
 
 		// Force provider
 		if (context.forcedProvider && !!forcedProviders[context.forcedProvider]) {
