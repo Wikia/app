@@ -8,6 +8,8 @@ class AttributesValidator {
 	 * @return bool
 	 */
 	public static function isBoolish( $value ) {
-		return is_bool( $value );
+		return is_bool( $value ) ||
+		$value === 'true' ||
+		$value === 'false';
 	}
 }

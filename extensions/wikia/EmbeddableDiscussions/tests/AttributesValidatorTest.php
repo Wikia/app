@@ -19,7 +19,11 @@ class AttributesValidatorTest extends WikiaBaseTest {
 		return [
 			// value, expected, message
 			[ true, true, "True should be true" ],
-			[ 'true', true, "True should be true" ],
+			[ false, true, "False should be true" ],
+			[ 'true', true, "'True' sting should be true" ],
+			[ 'false', true, "'false' string should be true" ],
+			[ 'fkesnfesjkf', false, "Random string should be false" ],
+			[ 9999, false, "Number should be false" ],
 		];
 	}
 }
