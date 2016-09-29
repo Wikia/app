@@ -36,10 +36,10 @@ function wfMakeSignatureCommon($href, $title, $iurl=null) {
 		$iurl = wfGetSignatureUrl();
 	}
 
-	return '<a href="'. $href .'" title="'. $title . '" class="staffSigLink"><img src="'. $wgBlankImgUrl .'" style="background-image: url('. $iurl .'); background-size: 100% 100%;" alt="@Wikia" class="staffSig" width="64" height="14" /></a>';
+	return '<a href="'. $href .'" title="'. $title . '" class="staffSigLink"><img src="'. $wgBlankImgUrl .'" style="background-image: url('. $iurl .'); background-size: 100% 100%;" alt="@fandom" class="staffSig" width="64" height="14" /></a>';
 }
 
 function wfGetSignatureUrl() {
 	global $wgExtensionsPath;
-	return $wgExtensionsPath . '/wikia/DesignSystem/bower_components/design-system/assets/company/logo-fandom.svg';
+	return $wgExtensionsPath . '/wikia/DesignSystem/bower_components/design-system/dist/svg/wds-company-logo-fandom.svg';
 }

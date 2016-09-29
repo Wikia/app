@@ -246,7 +246,7 @@ body.rtl #column-google {
 /* IE fixes */
 * html .staffSig {
 	background-image: none !important;
-	filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='/extensions/wikia/DesignSystem/bower_components/design-system/assets/company/logo-fandom.svg', sizingMethod='scale');
+	filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='/extensions/wikia/DesignSystem/bower_components/design-system/dist/svg/wds-company-logo-fandom.svg', sizingMethod='scale');
 }
 
 /* LeanMonaco code */
@@ -304,7 +304,7 @@ body.ajax * {
 }
 .wikia-paginator ul, .wikia-paginator li {
 	list-style: none;
-	margin: 0; 
+	margin: 0;
 	padding: 0;
 }
 .wikia-paginator li {
