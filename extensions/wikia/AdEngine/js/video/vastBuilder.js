@@ -18,14 +18,14 @@ define('ext.wikia.adEngine.video.vastBuilder', [
 
 	function getCustomParameters(slotName, src) {
 		var customParameters = [],
-			pageParams = page.getPageLevelParams();
+			params = page.getPageLevelParams();
 
-		pageParams.pos = slotName;
-		pageParams.src = src;
+		params.pos = slotName;
+		params.src = src;
 
-		Object.keys(pageParams).forEach(function (key) {
-			if (pageParams[key]) {
-				customParameters.push(key + '=' + pageParams[key]);
+		Object.keys(params).forEach(function (key) {
+			if (params[key]) {
+				customParameters.push(key + '=' + params[key]);
 			}
 		});
 
