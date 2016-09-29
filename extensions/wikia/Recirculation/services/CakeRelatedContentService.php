@@ -10,6 +10,10 @@ use Wikia\Service\Swagger\ApiProvider;
 
 class CakeRelatedContentService {
 
+	const FAILED_TO_RETRIEVE_RECOMMENDATIONS = "getRelatedContentFromEntityName failed to retrieve recommendations";
+	const ARTICLES_ARE_NOT_ARRAY = "getRelatedContentFromEntityName expected fandom_articles to be an array";
+	const THREADS_ARE_NOT_ARRAY = "getRelatedContentFromEntityName expected discussion_threads to be an array";
+	const WIKI_ARTICLES_ARE_NOT_ARRAY = "getRelatedContentFromEntityName expected wiki_articles to be an array";
 	use Loggable;
 
 	const SERVICE_NAME = "content-entity-service";
@@ -21,105 +25,80 @@ class CakeRelatedContentService {
 	 * @param $ignore
 	 * @return RecirculationContent[]
 	 */
-	public function getContentRelatedTo($title, $universeName=null, $limit=5, $ignore=null) {
-		$items = [];
+	public function getContentRelatedTo( $title, $universeName = null, $limit = 5, $ignore = null ) {
 
-		if (!$this->onValidWiki() || !$this->onValidPage($title)) {
-			return $items;
+		if ( !$this->onValidWiki() || !$this->onValidPage( $title ) ) {
+			return [];
 		}
 
 		$api = $this->relatedContentApi();
 
 		try {
-			$filteredRelatedContent = $api->getRelatedContentFromEntityName($title, $universeName, $limit + 1, "true");
-			if (is_null($filteredRelatedContent)) {
-				$this->warning("getRelatedContentFromEntityName failed to retrieve recommendations", [
-						"title" => $title,
-						"limit" => $limit
-				]);
-
-				return [];
-			}
-
-			// The server may have given us a malformed response, so log and adjust accordingly
-			if (!is_array($filteredRelatedContent->getFandomArticles())) {
-				$this->warning("getRelatedContentFromEntityName expected fandom_articles to be an array", [
-						"title" => $title,
-						"limit" => $limit,
-						"fandom_articles" => $filteredRelatedContent->getFandomArticles()
-				]);
-				$filteredRelatedContent->setFandomArticles([]);
-			}
-
-			if (!is_array($filteredRelatedContent->getDiscussionThreads())) {
-				$this->warning("getRelatedContentFromEntityName expected discussion_threads to be an array", [
-						"title" => $title,
-						"limit" => $limit,
-						"discussion_threads" => $filteredRelatedContent->getDiscussionThreads()
-				]);
-				$filteredRelatedContent->setDiscussionThreads([]);
-			}
-
-			if (!is_array($filteredRelatedContent->getWikiArticles())) {
-				$this->warning("getRelatedContentFromEntityName expected wiki_articles to be an array", [
-						"title" => $title,
-						"limit" => $limit,
-						"wiki_articles" => $filteredRelatedContent->getWikiArticles()
-				]);
-				$filteredRelatedContent->setWikiArticles([]);
-			}
-
-			$wikiArticles = [];
-			foreach ($filteredRelatedContent->getWikiArticles() as $article) {
-				$parsed = parse_url($article->getContent()->getUrl());
-				if (urldecode($parsed['path']) != $ignore) {
-					$wikiArticles[] = $article;
-				}
-			}
-
-			/**
-			 * this seems funky, but http://php.net/manual/en/function.array-map.php#refsect1-function.array-map-examples
-			 * so this actually will create an array of arrays where the elements are ordered:
-			 * [
-			 *   // fandom
-			 *   // discussion
-			 *   // article
-			 * ]
-			 * because that's the order they're passed in
-			 */
-			$ordered = array_map(
-					null,
-					$filteredRelatedContent->getFandomArticles(),
-					$filteredRelatedContent->getDiscussionThreads(),
-					$wikiArticles);
-
-			foreach ($ordered as $sublist) {
-				foreach ($sublist as $item) {
-					if (!empty($item)) {
-						/** @var RelatedContent $item */
-						$content = $item->getContent();
-
-						$items[] = new RecirculationContent( [
-								'index' => count($items),
-								'url' => $content->getUrl(),
-								'thumbnail' => $content->getImage(),
-								'title' => $this->formatTitle($content),
-							] );
-					}
-
-					if (count($items) >= $limit) {
-						break 2;
-					}
-				}
-			}
-
-			return $items;
-		} catch (ApiException $e) {
-			$this->error("error while getting content", [
+			$filteredRelatedContent = $api->getRelatedContentFromEntityName( $title, $universeName, $limit + 1, "true" );
+		} catch ( ApiException $e ) {
+			$this->error( "error while getting content", [
 				'code' => $e->getCode(),
 				'message' => $e->getMessage(),
-			]);
+			] );
+		}
+		$context = [ "title" => $title, "limit" => $limit ];
+
+		if ( empty( $filteredRelatedContent ) ) {
+			$this->warning( static::FAILED_TO_RETRIEVE_RECOMMENDATIONS, $context );
 			return [];
+		}
+
+		// The server may have given us a malformed response, so log and adjust accordingly
+		if ( !is_array( $filteredRelatedContent->getFandomArticles() ) ) {
+			$this->warning( static::ARTICLES_ARE_NOT_ARRAY,
+				array_merge( [ "fandom_articles" => $filteredRelatedContent->getFandomArticles() ], $context ) );
+			$filteredRelatedContent->setFandomArticles( [] );
+		}
+
+		if ( !is_array( $filteredRelatedContent->getDiscussionThreads() ) ) {
+			$this->warning( static::THREADS_ARE_NOT_ARRAY,
+				array_merge( [ "discussion_threads" => $filteredRelatedContent->getDiscussionThreads() ], $context ) );
+			$filteredRelatedContent->setDiscussionThreads( [] );
+		}
+
+		if ( !is_array( $filteredRelatedContent->getWikiArticles() ) ) {
+			$this->warning( static::WIKI_ARTICLES_ARE_NOT_ARRAY,
+				array_merge( [ "wiki_articles" => $filteredRelatedContent->getWikiArticles() ], $context ) );
+			$filteredRelatedContent->setWikiArticles( [] );
+		}
+
+		$wikiArticles = [];
+		foreach ( $filteredRelatedContent->getWikiArticles() as $article ) {
+			$parsed = parse_url( $article->getContent()->getUrl() );
+			if ( urldecode( $parsed[ 'path' ] ) != $ignore ) {
+				$wikiArticles[] = $article;
+			}
+		}
+
+		$items = [];
+		$fandomArticles = array_slice( $filteredRelatedContent->getFandomArticles(), 0, $limit - count( $items ), true );
+		$this->addRecirculationContent( $fandomArticles, $items );
+
+		$discussionThreads = array_slice( $filteredRelatedContent->getDiscussionThreads(), 0, $limit - count( $items ), true );
+		$this->addRecirculationContent( $discussionThreads, $items );
+
+		$wikiArticles = array_slice( $wikiArticles, 0, $limit - count( $items ), true );
+		$this->addRecirculationContent( $wikiArticles, $items );
+
+		return $items;
+	}
+
+	private function addRecirculationContent( $list, &$items ) {
+		/** @var RelatedContent $item */
+		foreach ( $list as $item ) {
+			$content = $item->getContent();
+
+			$items[] = new RecirculationContent( [
+				'index' => count( $items ),
+				'url' => $content->getUrl(),
+				'thumbnail' => $content->getImage(),
+				'title' => $this->formatTitle( $content ),
+			] );
 		}
 	}
 
