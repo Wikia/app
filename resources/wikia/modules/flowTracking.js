@@ -1,6 +1,4 @@
 define('wikia.flowTracking', ['wikia.cookies', 'wikia.tracker', 'mw'], function (cookies, tracker, mw) {
-	var COOKIE_SET = 1,
-		COOKIE_UNSET = 0;
 
 	var track = tracker.buildTrackingFunction({
 			trackingMethod: 'analytics',
@@ -13,7 +11,6 @@ define('wikia.flowTracking', ['wikia.cookies', 'wikia.tracker', 'mw'], function 
 	 * @param flow name of the flow
 	 */
 	function beginFlow(flow) {
-		cookies.set(flow, COOKIE_SET, { path: mw.config.get('wgCookiePath') });
 		track({
 			action: tracker.ACTIONS.FLOW_START,
 			label: flow
@@ -26,15 +23,11 @@ define('wikia.flowTracking', ['wikia.cookies', 'wikia.tracker', 'mw'], function 
 	 * @param flow name of the flow
 	 */
 	function endFlow(flow) {
-		var flowInProgress = cookies.get(flow);
-
-		if (flowInProgress && isContentPage()) {
+		if (isContentPage()) {
 			track({
 				action: tracker.ACTIONS.FLOW_END,
 				label: flow
 			});
-
-			cookies.set(flow, COOKIE_UNSET,{ path: mw.config.get('wgCookiePath') });
 		}
 	}
 
@@ -44,9 +37,7 @@ define('wikia.flowTracking', ['wikia.cookies', 'wikia.tracker', 'mw'], function 
 	 * @param flow name of the flow
 	 */
 	function trackFlowStep(flow) {
-		var flowInProgress = cookies.get(flow);
-
-		if (flowInProgress && isContentPage()) {
+		if (isContentPage()) {
 			track({
 				action: tracker.ACTIONS.FLOW_MID_STEP,
 				label: flow
