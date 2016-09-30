@@ -81,6 +81,9 @@
 				// Sharing view email, social network, etc
 				SHARE: 'share',
 
+				// Action or flow step
+				STEP: 'step',
+
 				// Form submit, usually a post method
 				SUBMIT: 'submit',
 
