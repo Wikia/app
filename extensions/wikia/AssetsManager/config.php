@@ -12,6 +12,7 @@ $config['oasis_shared_core_js'] = [
 		'//resources/wikia/libraries/mustache/mustache.js',
 		'//resources/wikia/modules/browserDetect.js',
 		'//resources/mediawiki/mediawiki.Uri.js',
+		'#group_banner_notifications_js',
 		'#group_ui_repo_api_js',
 	],
 ];
@@ -79,6 +80,7 @@ $config['adengine2_desktop_js'] = [
 		'//extensions/wikia/AdEngine/js/provider/turtle.js',
 		'//extensions/wikia/AdEngine/js/provider/yavliTag.js',
 		'//extensions/wikia/AdEngine/js/slot/adSlot.js',
+		'//extensions/wikia/AdEngine/js/slot/adUnitBuilder.js',
 		'//extensions/wikia/AdEngine/js/slot/bottomLeaderboard.js',
 		'//extensions/wikia/AdEngine/js/slot/floatingMedrec.js',
 		'//extensions/wikia/AdEngine/js/slot/highImpact.js',
@@ -141,7 +143,6 @@ $config['recirculation_js'] = [
 		'//extensions/wikia/Recirculation/js/experiments/placement/impactFooter.js',
 		'//extensions/wikia/Recirculation/js/experiments/placement/fandomTopic.js',
 		'//extensions/wikia/Recirculation/js/experiments/placement/control.js',
-		'//extensions/wikia/Recirculation/js/scrolldepth.js',
 		'//extensions/wikia/Recirculation/js/libs/perfect-scrollbar.js',
 	],
 ];
@@ -350,7 +351,6 @@ $config['oasis_jquery'] = [
 		'//resources/wikia/libraries/jquery/store/jquery.store.js',
 		'//resources/wikia/libraries/jquery/throttle-debounce/jquery.throttle-debounce.js',
 		'//resources/wikia/libraries/jquery/floating-scrollbar/jquery.floating-scrollbar.js',
-		'//resources/wikia/libraries/jquery/scrolldepth/jquery.scrolldepth.js',
 
 		// Wikia plugins
 		'//resources/wikia/jquery.wikia.js',
@@ -845,6 +845,7 @@ $config['mobile_base_ads_js'] = [
 		'//extensions/wikia/AdEngine/js/provider/paidAssetDrop.js',
 		'//extensions/wikia/AdEngine/js/provider/remnantGptMobile.js',
 		'//extensions/wikia/AdEngine/js/slot/adSlot.js',
+		'//extensions/wikia/AdEngine/js/slot/adUnitBuilder.js',
 		'//extensions/wikia/AdEngine/js/utils/AdLogicZoneParams.js',
 		'//extensions/wikia/AdEngine/js/utils/eventDispatcher.js',
 		'//extensions/wikia/AdEngine/js/utils/hooks.js',
@@ -2084,15 +2085,6 @@ $config['optimizely_blocking_js'] = [
 	],
 ];
 
-/** GlobalFooter extension */
-$config['global_footer_js'] = [
-	'type' => AssetsManager::TYPE_JS,
-	'skin' => [ 'oasis' ],
-	'assets' => [
-		'//extensions/wikia/GlobalFooter/scripts/GlobalFooter.js',
-	],
-];
-
 /** DesignSystem extension */
 $config['design_system_js'] = [
 	'type' => AssetsManager::TYPE_JS,
@@ -2115,15 +2107,6 @@ $config['design_system_user_js'] = [
 		'//resources/wikia/libraries/headroom/headroom.js',
 		'//extensions/wikia/DesignSystem/scripts/DesignSystemGlobalNavigationHeadroom.js',
 		'//extensions/wikia/DesignSystem/scripts/DesignSystemGlobalNavigationNotifications.js'
-	],
-];
-
-/** CorporateFooter extension */
-$config['corporate_footer_js'] = [
-	'type' => AssetsManager::TYPE_JS,
-	'skin' => [ 'oasis' ],
-	'assets' => [
-		'//extensions/wikia/CorporateFooter/scripts/CorporateFooterTracker.js',
 	],
 ];
 
@@ -2400,6 +2383,15 @@ $config['banner_notifications_scss'] = [
 	],
 ];
 
+$config['banner_notifications_js'] = [
+	'type' => AssetsManager::TYPE_SCSS,
+	'skin' => [ 'oasis', 'monobook' ],
+	'assets' => [
+		'//extensions/wikia/BannerNotifications/js/BannerNotifications.js',
+		'//extensions/wikia/BannerNotifications/js/templates.mustache.js',
+	],
+];
+
 $config['wikia_in_your_lang_js'] = [
 	'type' => AssetsManager::TYPE_JS,
 	'skin' => [ 'oasis', 'monobook' ],
@@ -2478,14 +2470,6 @@ $config['page_share_scss'] = [
 	'skin' => [ 'oasis' ],
 	'assets' => [
 		'//extensions/wikia/PageShare/styles/PageShare.scss',
-	],
-];
-
-$config['global_footer_scss'] = [
-	'type' => AssetsManager::TYPE_SCSS,
-	'skin' => [ 'oasis' ],
-	'assets' => [
-		'//extensions/wikia/GlobalFooter/styles/GlobalFooter.scss',
 	],
 ];
 

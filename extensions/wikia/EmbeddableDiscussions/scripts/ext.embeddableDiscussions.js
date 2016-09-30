@@ -7,7 +7,7 @@ require([
 	'wikia.throbber',
 	'embeddablediscussions.templates.mustache',
 	'EmbeddableDiscussionsSharing'
-], function ($, tracker, uiFactory, mustache, window, throbber, templates, sharing) {
+], function($, tracker, uiFactory, mustache, window, throbber, templates, sharing) {
 	'use strict';
 
 	var track = tracker.buildTrackingFunction({
@@ -28,10 +28,10 @@ require([
 		// Track impression
 		track({
 			action: tracker.ACTIONS.IMPRESSION,
-			label: 'embeddable-discussions-share-modal-loaded',
+			label: 'embeddable-discussions-share-modal-loaded'
 		});
 
-		uiFactory.init(['modal']).then(function (uiModal) {
+		uiFactory.init(['modal']).then(function(uiModal) {
 			var modalConfig = {
 				vars: {
 					classes: ['embeddable-discussions-share-modal'],
@@ -41,7 +41,7 @@ require([
 				}
 			};
 
-			uiModal.createComponent(modalConfig, function (modal) {
+			uiModal.createComponent(modalConfig, function(modal) {
 				modal.$content
 					.html(mustache.render(templates.ShareModal, {
 						heading: $.msg('embeddable-discussions-share-heading'),
@@ -78,7 +78,7 @@ require([
 				content: thread.rawContent,
 				createdAt: $.timeago(date),
 				timestamp: date.toLocaleString([mw.config.get('wgContentLanguage')]),
-				forumName: $.msg( 'embeddable-discussions-forum-name', thread.forumName),
+				forumName: $.msg('embeddable-discussions-forum-name', thread.forumName),
 				id: thread.id,
 				firstPostId: thread.firstPostId,
 				index: i,
@@ -101,12 +101,9 @@ require([
 
 		// Inject proper class for 2 columns display
 		if (requestData.columns === 2) {
-			if ($elem.closest('.main-page-tag-rcs').length) {
-				// When the tag is inside user-defined main page right rail
-				columnsDetailsClass = 'embeddable-discussions-post-detail-mainpage-rail';
-			} else {
-				columnsDetailsClass = 'embeddable-discussions-post-detail-columns';
-			}
+			columnsDetailsClass = $elem.closest('.main-page-tag-rcs').length ?
+				'embeddable-discussions-post-detail-mainpage-rail' :
+				'embeddable-discussions-post-detail-columns';
 		}
 
 		$.ajax({
@@ -115,7 +112,7 @@ require([
 			xhrFields: {
 				withCredentials: true
 			}
-		}).done(function (data) {
+		}).done(function(data) {
 			var threads = processData(data._embedded.threads, requestData.upvoteRequestUrl);
 
 			$elem.html(mustache.render(templates.DiscussionThreads, {
@@ -128,7 +125,7 @@ require([
 				zeroText: $.msg('embeddable-discussions-zero'),
 				zeroTextDetail: $.msg('embeddable-discussions-zero-detail'),
 			}));
-		}).fail(function () {
+		}).fail(function() {
 			throbber.hide($elem);
 			$elem.html($.msg('embeddable-discussions-error-loading'));
 		});
@@ -143,7 +140,7 @@ require([
 		});
 	}
 
-	$(function () {
+	$(function() {
 		var discussionsModule = $('.embeddable-discussions-module');
 
 		// Track impression
@@ -177,6 +174,7 @@ require([
 			}
 
 			event.preventDefault();
+
 			return false;
 		});
 
@@ -186,12 +184,12 @@ require([
 		});
 
 		// Hook to load after VE edit completes (no page reload)
-		mw.hook('postEdit').add(function () {
+		mw.hook('postEdit').add(function() {
 			loadData();
 		});
 
 		// Hook for loading data on page load
-		mw.hook('wikipage.content').add(function () {
+		mw.hook('wikipage.content').add(function() {
 			loadData();
 		});
 	});

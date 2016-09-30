@@ -20,6 +20,7 @@
 
 			.embeddable-discussions-title {
 				@include trim-to-line-number(2);
+
 				font-size: $typescale-size-plus-1;
 			}
 		}

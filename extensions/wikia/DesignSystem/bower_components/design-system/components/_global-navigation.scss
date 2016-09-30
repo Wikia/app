@@ -265,6 +265,12 @@ $hover-transition-duration: 300ms !default;
 		right: 0;
 		top: 0;
 		transition: padding $search-transition-duration;
+		-webkit-appearance: none;
+
+		&::-webkit-search-decoration,
+		&::-webkit-search-cancel-button {
+			display: none;
+		}
 
 		&:focus {
 			outline: none;
@@ -350,6 +356,13 @@ $hover-transition-duration: 300ms !default;
 		padding: 0 4px;
 		position: absolute;
 		top: 8px;
+	}
+
+	// XW-2106 | enhance readability of Chinese Start a Wiki button in nav
+	html[lang^='zh'] &__start-a-wiki-button {
+		font-size: 12px;
+		font-weight: 400;
+		padding: 9px 12px 8px;
 	}
 
 	&__start-a-wiki-icon {

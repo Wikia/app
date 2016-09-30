@@ -17,9 +17,16 @@ class GlobalNavigationController extends WikiaController {
 	 */
 	private $wikiaLogoHelper;
 
+	/**
+	 * @var WikiaSearchHelper
+	 */
+	private $wikiaSearchHelper;
+
 	public function __construct() {
 		parent::__construct();
+
 		$this->helper = new GlobalNavigationHelper();
+		$this->wikiaSearchHelper = new WikiaSearchHelper();
 		$this->wikiaLogoHelper = new WikiaLogoHelper();
 	}
 
@@ -44,10 +51,10 @@ class GlobalNavigationController extends WikiaController {
 	public function searchIndex() {
 		global $wgRequest, $wgSitename, $wgUser;
 
-		$lang = $this->helper->getLangForSearchResults();
+		$lang = $this->wikiaSearchHelper->getLangForSearchResults();
 
-		$centralUrl = $this->helper->getCentralUrlFromGlobalTitle( $lang );
-		$globalSearchUrl = $this->helper->getGlobalSearchUrl( $centralUrl );
+		$centralUrl = $this->wikiaSearchHelper->getCentralUrlFromGlobalTitle( $lang );
+		$globalSearchUrl = $this->wikiaSearchHelper->getGlobalSearchUrl( $centralUrl );
 		$localSearchUrl = SpecialPage::getTitleFor( 'Search' )->getFullUrl();
 		$fulltext = $wgUser->getGlobalPreference( 'enableGoSearch' ) ? 0 : 'Search';
 		$query = $wgRequest->getVal( 'search', $wgRequest->getVal( 'query', '' ) );
