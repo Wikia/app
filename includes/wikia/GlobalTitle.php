@@ -836,6 +836,10 @@ class GlobalTitle extends Title {
 		 * $wgExtraNamespacesLocal variable
 		 */
 		$namespaces = WikiFactory::getVarValueByName( "wgExtraNamespacesLocal", $this->mCityId, false, [] );
+		if ( !is_array( $namespaces ) ) {
+			$namespaces = [];
+		}
+		
 		$this->mNamespaceNames = $namespaces + $langNamespaces + $wgCanonicalNamespaceNames;
 
 		return $this->mNamespaceNames;
