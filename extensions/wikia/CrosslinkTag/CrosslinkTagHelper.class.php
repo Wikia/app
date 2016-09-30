@@ -54,7 +54,13 @@ class CrosslinkTagHelper extends WikiaModel {
 
 			$apiUrl = self::FANDOM_API_URL . $endpoint.'?' . http_build_query( $params );
 			$method = 'GET';
-			$options = [ 'noProxy' => true ];
+			$options = [
+				'noProxy' => true,
+				'curlOptions' => [
+					CURLOPT_TIMEOUT_MS => 500,
+					CURLOPT_NOSIGNAL => true,
+				]
+			];
 
 			$response = Http::request( $method, $apiUrl, $options );
 			if ( $response === false ) {
@@ -87,7 +93,7 @@ class CrosslinkTagHelper extends WikiaModel {
 	 * @return string
 	 */
 	public function getMemcKey( $name ) {
-		return wfSharedMemcKey( 'crosslinktag', 'fandom', md5( $name ) );
+		return wfSharedMemcKey( 'crosslinktag', 'fandom', sha1( $name ) );
 	}
 
 	/**

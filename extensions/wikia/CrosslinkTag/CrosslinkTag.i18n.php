@@ -13,5 +13,5 @@ $messages['en'] = [
 
 $messages['qqq'] = [
 	'crosslink-tag-desc' => '{{desc}}',
-	'crosslink-tag-read-more' => '{{Identical|Read more}}',
+	'crosslink-tag-read-more' => 'Message on read more button',
 ];

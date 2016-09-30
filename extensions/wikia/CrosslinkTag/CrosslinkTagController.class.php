@@ -141,16 +141,14 @@ class CrosslinkTagController extends WikiaController {
 		foreach ( $urls as $url ) {
 			$urlParts = parse_url( trim( $url ) );
 			if ( !empty( $urlParts['host'] ) && strtolower( $urlParts['host'] ) == CrosslinkTagHelper::VALID_HOST
-				&& preg_match( '/^\/?([^\/]+)\/(.+)/', $urlParts['path'], $matches )
+				&& !empty( $urlParts['path'] ) && preg_match( '/^\/([^\/]+)\/(.+)/', $urlParts['path'], $matches )
 			) {
-				if ( !empty( $matches[2] ) ) {
-					$article = $helper->getArticleDataBySlug( $matches[2], $matches[1] );
-					if ( !empty( $article ) ) {
-						$article['sliderId'] = $sliderId;
-						$article['description'] = wfShortenText( $article['description'], self::MAX_LENGTH );
-						$articles[] = $article;
-						$sliderId++;
-					}
+				$article = $helper->getArticleDataBySlug( $matches[2], $matches[1] );
+				if ( !empty( $article ) ) {
+					$article['sliderId'] = $sliderId;
+					$article['description'] = wfShortenText( $article['description'], self::MAX_LENGTH );
+					$articles[] = $article;
+					$sliderId++;
 				}
 			}
 		}
