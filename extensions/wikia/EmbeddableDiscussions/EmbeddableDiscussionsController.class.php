@@ -9,161 +9,156 @@ class EmbeddableDiscussionsController {
 	const COLUMNS_MIN = 1;
 	const COLUMNS_MAX = 2;
 
-	private $templateEngine;
+	const PARAM_MOSTRECENT = 'mostrecent';
+	const PARAM_SIZE = 'size';
+	const PARAM_COLUMNS = 'columns';
+	const PARAM_CATEGORY = 'category';
 
-	function __construct() {
+	private $templateEngine;
+	private static $instance;
+
+	public function __construct() {
 		$this->templateEngine = ( new Wikia\Template\MustacheEngine )->setPrefix( __DIR__ . '/templates' );
 	}
 
-	public static function onParserFirstCallInit( Parser $parser ) {
-		global $wgEnableDiscussions;
-
-		if ( $wgEnableDiscussions ) {
-			$parser->setHook( self::TAG_NAME, [ new self(), 'render' ] );
+	public static function getInstance() {
+		if ( !isset( static::$instance ) ) {
+			static::$instance = new EmbeddableDiscussionsController();
 		}
 
-		return true;
+		return static::$instance;
 	}
 
-	public static function onBeforePageDisplay() {
-		\Wikia::addAssetsToOutput( 'embeddable_discussions_js' );
-		\Wikia::addAssetsToOutput( 'embeddable_discussions_scss' );
+	public function render( array $args ) {
+		global $wgCityId;
 
-		JSMessages::enqueuePackage( 'EmbeddableDiscussions', JSMessages::EXTERNAL );
+		$parameters = [
+			static::PARAM_MOSTRECENT => $args[ static::PARAM_MOSTRECENT ] ?? false,
+			static::PARAM_SIZE => $args[ static::PARAM_SIZE ] ?? self::ITEMS_DEFAULT,
+			static::PARAM_COLUMNS => $args[ static::PARAM_COLUMNS ] ?? self::COLUMNS_DEFAULT,
+			static::PARAM_CATEGORY => $args[ static::PARAM_CATEGORY ] ?? '',
+		];
 
-		return true;
+		$errorMessages = $this->validateParameters( $parameters );
+
+		$modelData = ( new DiscussionsThreadModel( $wgCityId ) )
+			->getData( $parameters[ static::PARAM_MOSTRECENT ], $parameters[ static::PARAM_SIZE ], $parameters[ static::PARAM_CATEGORY ] );
+
+		$categoryError = $this->validateCategory( $args, $modelData );
+		if ( $categoryError ) {
+			$errorMessages[] = $categoryError;
+		}
+
+		if ( !empty( $errorMessages ) ) {
+			return $this->templateEngine
+				->clearData()
+				->setData( [ 'errorMessages' => $errorMessages ] )
+				->render( 'DiscussionError.mustache' );
+		}
+
+		return F::app()->checkSkin( 'wikiamobile' ) ?
+			$this->renderMobile( $modelData, $parameters[ static::PARAM_MOSTRECENT ], $parameters[ static::PARAM_SIZE ] ) :
+			$this->renderDesktop( $modelData, $parameters[ static::PARAM_MOSTRECENT ], $parameters[ static::PARAM_CATEGORY ], $parameters[ static::PARAM_COLUMNS ] );
 	}
 
 	/**
-	 * Checks arguments for errors.
-	 * @param array $args
-	 * @param string errorMessage Return parameter with the proper error message to show. Disregard if return is false
-	 * @return true if ok, false if error
+	 * @param array $parameters
+	 * @return array of error strings or empty array if all args valid
 	 */
-	private function checkArguments( array $args, $modelData, &$errorMessage ) {
-		// mostrecent must be bool
-		if ( isset( $args['mostrecent'] ) &&
-			$args['mostrecent'] !== 'true' &&
-			$args['mostrecent'] !== 'false'
-		) {
-			$errorMessage = wfMessage( 'embeddable-discussions-parameter-error', 'mostrecent' )->plain() .
-				wfMessage( 'embeddable-discussions-parameter-error-boolean' )->plain();
+	private function validateParameters( array $parameters ) {
+		$errors = [ ];
 
-			return false;
+		// PARAM_MOSTRECENT must be bool
+		if ( !AttributesValidator::isBoolish( $parameters[ static::PARAM_MOSTRECENT ] ) ) {
+			$errors[] = wfMessage( 'embeddable-discussions-parameter-error',
+				static::PARAM_MOSTRECENT,
+				wfMessage( 'embeddable-discussions-parameter-error-boolean' )->plain()
+			)->plain();
 		}
 
 		// size must be integer in range
-		if ( isset( $args['size'] ) ) {
-			$size = $args['size'];
-
-			if ( !ctype_digit( $size ) ||
-				intval( $size ) > self::ITEMS_MAX ||
-				intval( $size ) < self::ITEMS_MIN
-			) {
-				// TODO: Refactor error messages to avoid direct concatenation, see JPN-657
-				$errorMessage = wfMessage( 'embeddable-discussions-parameter-error', 'size' )->plain() .
-					wfMessage( 'embeddable-discussions-parameter-error-range',
-						self::ITEMS_MIN , self::ITEMS_MAX )->plain();
-
-				return false;
-			}
+		if ( !AttributesValidator::isIntegerInRange( $parameters[ static::PARAM_SIZE ], self::ITEMS_MIN, self::ITEMS_MAX ) ) {
+			$errors[] = wfMessage( 'embeddable-discussions-parameter-error',
+				static::PARAM_SIZE,
+				wfMessage( 'embeddable-discussions-parameter-error-range', self::ITEMS_MIN, self::ITEMS_MAX )->plain()
+			)->plain();
 		}
 
 		// columns must be integer in range
-		if ( isset( $args['columns'] ) ) {
-			$columns = $args['columns'];
-
-			if ( !ctype_digit( $columns ) ||
-				intval( $columns ) > self::COLUMNS_MAX ||
-				intval( $columns ) < self::COLUMNS_MIN
-			) {
-				// TODO: Refactor error messages to avoid direct concatenation, see JPN-657
-				$errorMessage = wfMessage( 'embeddable-discussions-parameter-error', 'columns' )->plain() .
-					wfMessage( 'embeddable-discussions-parameter-error-range', self::COLUMNS_MIN , self::COLUMNS_MAX )->plain();
-
-				return false;
-			}
+		if ( !AttributesValidator::isIntegerInRange( $parameters[ static::PARAM_COLUMNS ], self::COLUMNS_MIN, self::COLUMNS_MAX ) ) {
+			$errors[] = wfMessage( 'embeddable-discussions-parameter-error',
+				static::PARAM_COLUMNS,
+				wfMessage( 'embeddable-discussions-parameter-error-range', self::COLUMNS_MIN, self::COLUMNS_MAX )->plain()
+			)->plain();
 		}
 
+		return $errors;
+	}
+
+	/**
+	 * @param $modelData
+	 * @param array $args
+	 * @return String error message or empty string if category is valid
+	 */
+	private function validateCategory( $modelData, array $args ) {
 		// category must be a valid category
-		if ( $modelData['invalidCategory'] ) {
-			// TODO: Refactor error messages to avoid direct concatenation, see JPN-657
-			$errorMessage = wfMessage( 'embeddable-discussions-parameter-error', $args['category'] )->plain() .
-				wfMessage( 'embeddable-discussions-parameter-error-category' )->plain();
-
-			return false;
+		if ( !empty( $modelData[ 'invalidCategory' ] ) ) {
+			return wfMessage( 'embeddable-discussions-parameter-error',
+				$args[ static::PARAM_CATEGORY ],
+				wfMessage( 'embeddable-discussions-parameter-error-category' )->plain()
+			)->plain();
 		}
 
-		return true;
+		return '';
 	}
 
 	private function renderMobile( $modelData, $showLatest, $itemCount ) {
 		// In Mercury, discussions are rendered client side as an Ember component
 		$modelData = [
 			'mercuryComponentAttrs' => json_encode( [
-				'category' => $modelData['categoryId'],
+				'category' => $modelData[ 'categoryId' ],
 				'show' => $showLatest ? 'latest' : 'trending',
-				'itemCount' => $itemCount,
+				'itemCount' => $itemCount
 			] ),
 			'loading' => wfMessage( 'embeddable-discussions-loading' )->plain()
 		];
 
 		// In mercury, discussions app is rendered client side in an Ember container
-		return $this->templateEngine->clearData()
+		return $this->templateEngine
+			->clearData()
 			->setData( $modelData )
 			->render( 'DiscussionThreadMobile.mustache' );
 	}
 
 	private function renderDesktop( $modelData, $showLatest, $category, $columns ) {
-		$modelData['requestData'] = json_encode( [
+		$modelData[ 'requestData' ] = json_encode( [
 			'category' => $category,
 			'columns' => $columns,
 			'showLatest' => $showLatest,
-			'upvoteRequestUrl' => $modelData['upvoteRequestUrl'],
+			'upvoteRequestUrl' => $modelData[ 'upvoteRequestUrl' ],
 		] );
 
 		if ( $showLatest && $category ) {
-			$heading = wfMessage( 'embeddable-discussions-show-latest-in-category', $category )->plain();
+			$headingMsgKey = 'embeddable-discussions-show-latest-in-category';
 		} elseif ( $showLatest ) {
-			$heading = wfMessage( 'embeddable-discussions-show-latest' )->plain();
+			$headingMsgKey = 'embeddable-discussions-show-latest';
 		} elseif ( $category ) {
-			$heading = wfMessage( 'embeddable-discussions-show-trending-in-category', $category )->plain();
+			$headingMsgKey = 'embeddable-discussions-show-trending-in-category';
 		} else {
-			$heading = wfMessage( 'embeddable-discussions-show-trending' )->plain();
+			$headingMsgKey = 'embeddable-discussions-show-trending';
 		}
 
-		$modelData['columnsWrapperClass'] = $columns === 2 ? 'embeddable-discussions-threads-columns' : '';
-		$modelData['heading'] = $heading;
-		$modelData['showAll'] = wfMessage( 'embeddable-discussions-show-all' )->plain();
-		$modelData['loading'] = wfMessage( 'embeddable-discussions-loading' )->plain();
+		$modelData[ 'columnsWrapperClass' ] =
+			$columns === static::COLUMNS_MAX ?
+				'embeddable-discussions-threads-columns' :
+				'';
+		$modelData[ 'heading' ] = wfMessage( $headingMsgKey, $category )->plain();
+		$modelData[ 'showAll' ] = wfMessage( 'embeddable-discussions-show-all' )->plain();
+		$modelData[ 'loading' ] = wfMessage( 'embeddable-discussions-loading' )->plain();
 
-		return $this->templateEngine->clearData()
+		return $this->templateEngine
+			->clearData()
 			->setData( $modelData )
 			->render( 'DiscussionThreadDesktop.mustache' );
-	}
-
-	public function render( $input, array $args ) {
-		global $wgCityId;
-
-		$showLatest = !empty( $args['mostrecent'] ) && filter_var( $args['mostrecent'], FILTER_VALIDATE_BOOLEAN );
-		$itemCount = empty( $args['size'] ) ? self::ITEMS_DEFAULT : intval( $args['size'] );
-		$columns = empty( $args['columns'] ) ? self::COLUMNS_DEFAULT : intval( $args['columns'] );
-		$category = empty( $args['category'] ) ? '' :  $args['category'];
-
-		$modelData = ( new DiscussionsThreadModel( $wgCityId ) )->getData( $showLatest, $itemCount, $category );
-
-		if ( !$this->checkArguments( $args, $modelData, $errorMessage ) ) {
-			return $this->templateEngine->clearData()
-				->setData( [
-					'errorMessage' => $errorMessage,
-				] )
-				->render( 'DiscussionError.mustache' );
-		}
-
-		if ( F::app()->checkSkin( 'wikiamobile' ) ) {
-			return $this->renderMobile( $modelData, $showLatest, $itemCount );
-		} else {
-			return $this->renderDesktop( $modelData, $showLatest, $category, $columns );
-		}
 	}
 }

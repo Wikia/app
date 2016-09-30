@@ -10,6 +10,7 @@
 @import 'components/list';
 @import 'components/admins-module';
 @import 'components/moderators-module';
+@import 'components/discussions-module';
 @import 'components/contributors-module';
 @import 'components/modal';
 @import 'components/card-module';
@@ -32,7 +33,8 @@
 	box-sizing: inherit;
 	padding-top: 32px;
 	.community-page-cards-module,
-	.community-page-todo-list-module {
+	.community-page-todo-list-module,
+	.embeddable-discussions-module {
 		margin-left: auto;
 		margin-right: 0;
 		// 3 biggest card size with margins

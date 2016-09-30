@@ -1,5 +1,5 @@
 <?php
-$wgExtensionCredits['parserhook'][] = [
+$wgExtensionCredits[ 'parserhook' ][] = [
 	'name' => 'Embeddable Discussions',
 	'author' => [
 		'pgroland',
@@ -9,17 +9,19 @@ $wgExtensionCredits['parserhook'][] = [
 ];
 
 // model
-$wgAutoloadClasses['DiscussionsThreadModel'] = __DIR__ . '/models/DiscussionsThreadModel.class.php';
+$wgAutoloadClasses[ 'DiscussionsThreadModel' ] = __DIR__ . '/models/DiscussionsThreadModel.class.php';
 
 // controller
-$wgAutoloadClasses['EmbeddableDiscussionsController'] =  __DIR__ . '/EmbeddableDiscussionsController.class.php';
+$wgAutoloadClasses[ 'AttributesValidator' ] = __DIR__ . '/AttributesValidator.class.php';
+$wgAutoloadClasses[ 'EmbeddableDiscussionsController' ] = __DIR__ . '/EmbeddableDiscussionsController.class.php';
+$wgAutoloadClasses[ 'EmbeddableDiscussionsHooks' ] = __DIR__ . '/EmbeddableDiscussionsHooks.class.php';
 
 // hooks
-$wgHooks['ParserFirstCallInit'][] = 'EmbeddableDiscussionsController::onParserFirstCallInit';
-$wgHooks['BeforePageDisplay'][] = 'EmbeddableDiscussionsController::onBeforePageDisplay';
+$wgHooks[ 'ParserFirstCallInit' ][] = 'EmbeddableDiscussionsHooks::onParserFirstCallInit';
+$wgHooks[ 'BeforePageDisplay' ][] = 'EmbeddableDiscussionsHooks::onBeforePageDisplay';
 
 // i18n
-$wgExtensionMessagesFiles['EmbeddableDiscussions'] = __DIR__ . '/EmbeddableDiscussions.i18n.php';
+$wgExtensionMessagesFiles[ 'EmbeddableDiscussions' ] = __DIR__ . '/EmbeddableDiscussions.i18n.php';
 
 // messages exported to JS
 JSMessages::registerPackage( 'EmbeddableDiscussions', [
