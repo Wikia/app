@@ -7,11 +7,6 @@
 			'pageTypes' => ['homepage_logged', 'corporate', 'search', 'all_ads']
 		]); ?>
 
-		<?= $app->renderView('Ad', 'Index', [
-			'slotName' => 'SUPERBANNER',
-			'pageTypes' => ['homepage_logged', 'corporate', 'search', 'all_ads']
-		]); ?>
-
 		<?= $app->renderView('Ad', 'Index', ['slotName' => 'TOP_BUTTON_WIDE', 'pageTypes' => ['homepage_logged', 'search', 'all_ads']]); ?>
 
 	</div>

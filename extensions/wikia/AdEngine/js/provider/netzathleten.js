@@ -1,32 +1,26 @@
 /*global define, require*/
 define('ext.wikia.adEngine.provider.netzathleten', [
 	'wikia.document',
-	'wikia.scriptwriter'
-], function (doc, scriptWriter) {
+	'wikia.window'
+], function (doc, win) {
 	'use strict';
 
-	var libraryUrl = '//s.adadapter.netzathleten-media.de/API-1.0/NA-828433-1/naMediaAd.js',
-		supportedSlots = [
-			'SUPERBANNER'
-		];
-
-	function init() {
-		scriptWriter.injectScriptByUrl(doc.body, libraryUrl, function () {
-			window.naMediaAd.setValue('homesite', false);
-		});
-	}
+	var slotMap = {
+			TOP_LEADERBOARD: 'SUPERBANNER',
+			TOP_RIGHT_BOXAD: 'MEDIUM_RECTANGLE'
+		};
 
 	function canHandleSlot(slotName) {
-		return supportedSlots.indexOf(slotName) !== -1;
+		return !!slotMap[slotName];
 	}
 
 	function fillInSlot(slot) {
 		var container = doc.createElement('div');
 
-		container.id = 'naMediaAd_' + slot.name;
+		container.id = 'naMediaAd_' + slotMap[slot.name];
 		slot.container.appendChild(container);
 
-		window.naMediaAd.includeAd(slot.name);
+		win.naMediaAd.includeAd(slotMap[slot.name]);
 	}
 
 	return {
