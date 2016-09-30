@@ -57,7 +57,7 @@
 <?= $headItems ?>
 
 <script>
-	if (window.Wikia && window.Wikia.geo.isProperGeo(['XX'])) {
+	if (window.Wikia && window.Wikia.geo.isProperGeo(['XX']) && window.location.href.indexOf('na_async=1') === -1) {
 		var script = document.createElement('script');
 		script.src = '//s.adadapter.netzathleten-media.de/API-1.0/NA-828433-1/naMediaAd.js';
 
