@@ -453,7 +453,7 @@ $hover-transition-duration: 300ms !default;
 		&__search-submit {
 			max-width: 100%;
 			padding: 5px 9px;
-			transition: background-color $hover-transition-duration, border-color $hover-transition-duration, color $hover-transition-duration, max-width $search-buttons-transition-duration $search-buttons-transition-delay, padding $search-buttons-transition-duration $search-buttons-transition-delay;
+			transition: background-color $hover-transition-duration, border-color $hover-transition-duration, color $hover-transition-duration, max-width $search-buttons-transition-duration $search-buttons-transition-delay, opacity $hover-transition-duration, padding $search-buttons-transition-duration $search-buttons-transition-delay;
 		}
 	}
 
