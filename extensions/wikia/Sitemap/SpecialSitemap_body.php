@@ -313,6 +313,14 @@ class SitemapPage extends UnlistedSpecialPage {
 	}
 
 	private function generateNamespaceFromDb() {
+		// Sitemaps are ONLY saved to database for NS_6 and only if wgEnableVideoSitemaps is true.
+		// If you turn that var ON you're putting the pre-cached sitemaps into the db.
+		// If you then turn the var back OFF you're serving the outdated sitemaps.
+		// SEO-557
+		if ( !F::app()->wg->EnableVideoSitemaps ) {
+			return null;
+		}
+
 		$dbr = wfGetDB( DB_SLAVE );
 		if ( $dbr->tableExists( self::BLOBS_TABLE_NAME ) ) {
 			$sitemapContent = $dbr->selectField(
