@@ -35,6 +35,7 @@ define('ext.wikia.adEngine.provider.netzathleten', [
 		}
 
 		slotTweaker.show(slot.name);
+		slotTweaker.removeDefaultHeight(slot.name);
 		container.id = 'naMediaAd_' + slotMap[slot.name];
 		slot.container.appendChild(container);
 
