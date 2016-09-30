@@ -82,7 +82,11 @@ class PhalanxSpecialController extends WikiaSpecialPageController {
 			$this->wg->Out->redirect($this->title->getFullURL());
 
 			wfProfileOut( __METHOD__ );
-			return;
+
+			// SUS-1078: Don't render template when handling a POST request (block save) to prevent warnings
+			// We will be redirected back to Special:Phalanx anyways
+			$this->skipRendering();
+			return false;
 		}
 
 		/* set pager */

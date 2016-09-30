@@ -152,10 +152,15 @@ define('ext.wikia.adEngine.provider.gpt.googleTag', [
 	}
 
 	function destroySlots(slotsNames) {
-		var slotsToDestroy = [],
-			allSlots = window.googletag.getSlots(),
+		var allSlots,
+			slotsToDestroy = [],
 			success;
 
+		if (!isInitialized()) {
+			return;
+		}
+
+		allSlots = window.googletag.getSlots();
 		// when nothing passed - destroy all slots
 		if (!slotsNames) {
 			slotsToDestroy = allSlots;

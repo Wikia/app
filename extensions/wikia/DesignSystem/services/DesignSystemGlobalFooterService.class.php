@@ -13,13 +13,6 @@ class DesignSystemGlobalFooterService extends WikiaService {
 		] );
 	}
 
-	public function imageHeader() {
-		$this->response->setValues( [
-			'model' => $this->getVal( 'model' ),
-			'section' => $this->getVal( 'section' )
-		] );
-	}
-
 	public function linkBranded() {
 		$this->setVal( 'model', $this->getVal( 'model' ) );
 	}
