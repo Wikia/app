@@ -21,6 +21,9 @@
 				// Generic add
 				ADD: 'add',
 
+				// Action or flow beginning
+				BEGIN: 'begin',
+
 				// Generic click, mostly javascript clicks
 				// NOTE: When tracking clicks, consider binding to 'onMouseDown' instead of 'onClick'
 				// to allow the browser time to send these events naturally. For more information on
@@ -48,6 +51,9 @@
 				// Generic enable
 				ENABLE: 'enable',
 
+				// Action or flow end
+				END: 'end',
+
 				// Generic error (generally AJAX)
 				ERROR: 'error',
 
@@ -74,6 +80,9 @@
 
 				// Sharing view email, social network, etc
 				SHARE: 'share',
+
+				// Action or flow step
+				STEP: 'step',
 
 				// Form submit, usually a post method
 				SUBMIT: 'submit',
