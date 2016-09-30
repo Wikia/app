@@ -37,8 +37,8 @@ $messages['ja'] = array(
 );
 
 $messages['nl'] = array(
-	'emailext-weeklydigest-subject' => "See what's new on your favorite Wikia pages this week",
-	'emailext-weeklydigest-summary' => "Since you're last visit, Wikia Community members have made improvements to pages that you follow.",
+	'emailext-weeklydigest-subject' => "Bekijk wat er deze week nieuw is op je favoriete Wikia-pagina's",
+	'emailext-weeklydigest-summary' => "Sinds je laatste bezoek hebben Wikia communityleden verbeteringen gemaakt aan pagina's die jij volgt.",
 );
 
 $messages['pl'] = array(
@@ -52,8 +52,8 @@ $messages['pt'] = array(
 );
 
 $messages['ru'] = array(
-	'emailext-weeklydigest-subject' => 'Что нового на ваших любимых страницах Викия на этой неделе',
-	'emailext-weeklydigest-summary' => 'С момента вашего последнего посещения Викия участники сообщества сделали отслеживаемые вами страницы ещё лучше.',
+	'emailext-weeklydigest-subject' => 'Узнайте, что нового на ваших любимых страницах Викия на этой неделе',
+	'emailext-weeklydigest-summary' => 'С вашего последнего посещения участники сообщества сделали отслеживаемые вами страницы ещё лучше.',
 );
 
 $messages['zh-hans'] = array(
