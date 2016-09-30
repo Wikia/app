@@ -8,7 +8,7 @@ class EnableDiscussionsController extends \WikiaController {
 
 	public function __construct() {
 		parent::__construct();
-		$this->toggler = new DiscussionsVarToggler();
+		$this->toggler = new DiscussionsVarToggler( $this->wg->CityId );
 	}
 
 	public function init() {

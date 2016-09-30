@@ -11,8 +11,8 @@ class DiscussionsVarToggler {
 	private $discussionsVarMap;
 	private $cityId;
 
-	public function __construct( $cityId = null ) {
-		$this->cityId = $cityId ?? F::app()->wg->CityId;
+	public function __construct( int $cityId ) {
+		$this->cityId = $cityId;
 		$this->discussionsVarMap = [
 			self::ENABLE_DISCUSSIONS => null,
 			self::ENABLE_DISCUSSIONS_NAV => null,

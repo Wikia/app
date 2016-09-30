@@ -13,7 +13,7 @@ class SpecialDiscussionsController extends WikiaSpecialPageController {
 
 	public function __construct() {
 		parent::__construct( 'Discussions', '', false );
-		$this->toggler = new DiscussionsVarToggler();
+		$this->toggler = new DiscussionsVarToggler( $this->wg->CityId );
 		$this->activator = new DiscussionsActivator(
 			$this->wg->CityId,
 			$this->wg->Sitename,
