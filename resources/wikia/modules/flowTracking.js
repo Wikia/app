@@ -1,6 +1,5 @@
 define('wikia.flowTracking', ['wikia.cookies', 'wikia.tracker', 'mw'], function (cookies, tracker, mw) {
-	var cookieName = 'flowTrackingLabel',
-		track = tracker.buildTrackingFunction({
+	var track = tracker.buildTrackingFunction({
 			trackingMethod: 'analytics',
 			category: 'flow-tracking'
 		});
@@ -8,40 +7,46 @@ define('wikia.flowTracking', ['wikia.cookies', 'wikia.tracker', 'mw'], function 
 	/**
 	 * Set cookie with current flow name and track flow beginning
 	 *
-	 * @param flowLabel
+	 * @param flow name of the flow
 	 */
-	function beginFlow(flowLabel) {
-		cookies.set(cookieName, flowLabel, { path: mw.config.get('wgCookiePath') });
+	function beginFlow(flow) {
+		cookies.set(flow, 1, { path: mw.config.get('wgCookiePath') });
 		track({
-			action: tracker.ACTIONS.BEGIN,
-			label: flowLabel
+			action: tracker.ACTIONS.FLOW_START,
+			label: flow
 		});
 	}
 
 	/**
 	 * Track flow ending
+	 *
+	 * @param flow name of the flow
 	 */
-	function endFlow() {
-		var flowLabel = cookies.get(cookieName);
+	function endFlow(flow) {
+		var flowInProgress = cookies.get(flow);
 
-		if (flowLabel && isContentPage()) {
+		if (flowInProgress && isContentPage()) {
 			track({
-				action: tracker.ACTIONS.END,
-				label: flowLabel
+				action: tracker.ACTIONS.FLOW_END,
+				label: flow
 			});
+
+			cookies.set(flow, 0,{ path: mw.config.get('wgCookiePath') });
 		}
 	}
 
 	/**
 	 * Track intermediary flow step
+	 *
+	 * @param flow name of the flow
 	 */
-	function trackFlowStep() {
-		var flowLabel = cookies.get(cookieName);
+	function trackFlowStep(flow) {
+		var flowInProgress = cookies.get(flow);
 
-		if (flowLabel && isContentPage()) {
+		if (flowInProgress && isContentPage()) {
 			track({
-				action: tracker.ACTIONS.STEP,
-				label: flowLabel
+				action: tracker.ACTIONS.FLOW_MID_STEP,
+				label: flow
 			});
 		}
 	}
