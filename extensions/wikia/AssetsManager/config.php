@@ -3070,19 +3070,19 @@ $config['crosslink_module_scss'] = [
 	],
 ];
 
-/* CrosslinkTag */
-$config['crosslink_tag_scss'] = [
+/* StoriesLinkTag */
+$config['storieslink_tag_scss'] = [
 	'type' => AssetsManager::TYPE_SCSS,
 	'skin' => [ 'oasis' ],
 	'assets' => [
-		'//extensions/wikia/CrosslinkTag/styles/CrosslinkTag.scss',
+		'//extensions/wikia/StoriesLinkTag/styles/StoriesLinkTag.scss',
 	],
 ];
 
-$config['crosslink_tag_js'] = [
+$config['storieslink_tag_js'] = [
 	'type' => AssetsManager::TYPE_JS,
 	'skin' => [ 'oasis' ],
 	'assets' => [
-		'//extensions/wikia/CrosslinkTag/scripts/CrosslinkTag.js',
+		'//extensions/wikia/StoriesLinkTag/scripts/StoriesLinkTag.js',
 	],
 ];

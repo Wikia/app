@@ -1,9 +1,9 @@
 <?php
 
 /**
- * Class CrosslinkTagHelper
+ * Class StoriesLinkTagTagHelper
  */
-class CrosslinkTagHelper extends WikiaModel {
+class StoriesLinkTagHelper extends WikiaModel {
 
 	const CACHE_TTL = 3600;
 	const FANDOM_API_URL = 'http://fandom.wikia.com/wp-json/wp/v2/';
@@ -93,7 +93,7 @@ class CrosslinkTagHelper extends WikiaModel {
 	 * @return string
 	 */
 	public function getMemcKey( $name ) {
-		return wfSharedMemcKey( 'crosslinktag', 'fandom', sha1( $name ) );
+		return wfSharedMemcKey( 'storieslinktag', 'fandom', sha1( $name ) );
 	}
 
 	/**

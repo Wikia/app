@@ -1,6 +1,6 @@
 <?php
 
-class CrosslinkTagController extends WikiaController {
+class StoriesLinkTagController extends WikiaController {
 
 	const PARSER_TAG_NAME = 'storieslink';
 	const MAX_URLS = 4;
@@ -11,11 +11,11 @@ class CrosslinkTagController extends WikiaController {
 	protected static $instance = null;
 
 	/**
-	 * @return CrosslinkTagController
+	 * @return StoriesLinkTagController
 	 */
 	public static function getInstance() {
 		if ( is_null( static::$instance ) ) {
-			static::$instance = new CrosslinkTagController();
+			static::$instance = new StoriesLinkTagController();
 		}
 
 		return static::$instance;
@@ -45,7 +45,7 @@ class CrosslinkTagController extends WikiaController {
 		$markerId = $this->getMarkerId( $parser );
 
 		$urls = explode( PHP_EOL, trim( $content ) );
-		$html = $this->app->renderView( 'CrosslinkTag', 'render', [ 'markerId' => $this->counter, 'urls' => $urls ] );
+		$html = $this->app->renderView( 'StoriesLinkTag', 'render', [ 'markerId' => $this->counter, 'urls' => $urls ] );
 		if ( !empty( $html ) ) {
 			$html .= $this->getJSSnippet();
 		}
@@ -109,11 +109,11 @@ class CrosslinkTagController extends WikiaController {
 	protected function getJSSnippet() {
 		$html = JSSnippets::addToStack(
 			[
-				'crosslink_tag_scss',
-				'crosslink_tag_js'
+				'storieslink_tag_scss',
+				'storieslink_tag_js'
 			],
 			[],
-			'CrosslinkTag.init',
+			'StoriesLinkTag.init',
 			[$this->counter]
 		);
 
@@ -121,7 +121,7 @@ class CrosslinkTagController extends WikiaController {
 	}
 
 	/**
-	 * Render crosslink unit
+	 * Render storieslink unit
 	 * @responseParam int markerId
 	 * @responseParam array articles - list of articles
 	 * @responseParam string readMore
@@ -130,7 +130,7 @@ class CrosslinkTagController extends WikiaController {
 		$markerId = $this->request->getInt( 'markerId' );
 		$urls = $this->request->getVal( 'urls', [] );
 
-		$helper = new CrosslinkTagHelper();
+		$helper = new StoriesLinkTagHelper();
 		if ( !$helper->canShowUnit() ) {
 			return false;
 		}
@@ -140,7 +140,7 @@ class CrosslinkTagController extends WikiaController {
 		$urls = array_slice( array_filter( $urls ), 0, self::MAX_URLS );
 		foreach ( $urls as $url ) {
 			$urlParts = parse_url( trim( $url ) );
-			if ( !empty( $urlParts['host'] ) && strtolower( $urlParts['host'] ) == CrosslinkTagHelper::VALID_HOST
+			if ( !empty( $urlParts['host'] ) && strtolower( $urlParts['host'] ) == StoriesLinkTagHelper::VALID_HOST
 				&& !empty( $urlParts['path'] ) && preg_match( '/^\/([^\/]+)\/(.+)/', $urlParts['path'], $matches )
 			) {
 				$article = $helper->getArticleDataBySlug( $matches[2], $matches[1] );
@@ -161,7 +161,7 @@ class CrosslinkTagController extends WikiaController {
 
 		$this->markerId = $markerId;
 		$this->articles = $articles;
-		$this->readMore = wfMessage('crosslink-tag-read-more')->text();
+		$this->readMore = wfMessage('storieslink-tag-read-more')->text();
 	}
 
 }

@@ -1,8 +1,8 @@
 @import 'skins/shared/color';
 
-$color-crosslink-grey: #555;
+$color-storieslink-grey: #555;
 
-.crosslink-tag {
+.storieslink-tag {
 	background-color: $color-black;
 	clear: both;
 	height: 360px;
@@ -31,7 +31,7 @@ $color-crosslink-grey: #555;
 		}
 
 		img {
-			border: 1px solid $color-crosslink-grey;
+			border: 1px solid $color-storieslink-grey;
 			cursor: pointer;
 			display: inline-block;
 			opacity: .8;
@@ -49,7 +49,7 @@ $color-crosslink-grey: #555;
 		}
 	}
 
-	.crosslink-tag-slider {
+	.storieslink-tag-slider {
 		left: 0;
 		position: absolute;
 		top: 0;
@@ -108,12 +108,12 @@ $color-crosslink-grey: #555;
 		}
 	}
 
-	.crosslink-tag-slider-0 .nav {
+	.storieslink-tag-slider-0 .nav {
 		right: 305px;
 	}
 
-	.crosslink-tag-slider-1 {
-		.crosslink-tag-slider {
+	.storieslink-tag-slider-1 {
+		.storieslink-tag-slider {
 			left: 670px;
 		}
 
@@ -122,8 +122,8 @@ $color-crosslink-grey: #555;
 		}
 	}
 
-	.crosslink-tag-slider-2 {
-		.crosslink-tag-slider {
+	.storieslink-tag-slider-2 {
+		.storieslink-tag-slider {
 			left: 1340px;
 		}
 
@@ -132,8 +132,8 @@ $color-crosslink-grey: #555;
 		}
 	}
 
-	.crosslink-tag-slider-3 {
-		.crosslink-tag-slider {
+	.storieslink-tag-slider-3 {
+		.storieslink-tag-slider {
 			left: 2010px;
 		}
 
