@@ -1,4 +1,4 @@
-define('wikia.flowTracking', ['wikia.cookies', 'wikia.tracker', 'mw'], function (cookies, tracker, mw) {
+define('wikia.flowTracking', ['wikia.tracker', 'mw'], function (tracker, mw) {
 
 	var track = tracker.buildTrackingFunction({
 			trackingMethod: 'analytics',
@@ -6,29 +6,16 @@ define('wikia.flowTracking', ['wikia.cookies', 'wikia.tracker', 'mw'], function 
 		});
 
 	/**
-	 * Set cookie with current flow name and track flow beginning
+	 * Track edit flow beginning.
 	 *
 	 * @param flow name of the flow
 	 */
 	function beginFlow(flow) {
 		track({
 			action: tracker.ACTIONS.FLOW_START,
-			label: flow
+			label: flow,
+			flowname: flow
 		});
-	}
-
-	/**
-	 * Track flow ending
-	 *
-	 * @param flow name of the flow
-	 */
-	function endFlow(flow) {
-		if (isContentPage()) {
-			track({
-				action: tracker.ACTIONS.FLOW_END,
-				label: flow
-			});
-		}
 	}
 
 	/**
