@@ -1,13 +1,12 @@
 <?php
 
 class EmbeddableDiscussionsHooks {
-
 	public static function onParserFirstCallInit( Parser $parser ) {
 		global $wgEnableDiscussions;
 
 		if ( $wgEnableDiscussions ) {
 			$parser->setHook( EmbeddableDiscussionsController::TAG_NAME, [
-				'EmbeddableDiscussionsController',
+				EmbeddableDiscussionsController::getInstance(),
 				'render'
 			] );
 		}

@@ -15,9 +15,18 @@ class EmbeddableDiscussionsController {
 	const PARAM_CATEGORY = 'category';
 
 	private $templateEngine;
+	private static $instance;
 
 	public function __construct() {
 		$this->templateEngine = ( new Wikia\Template\MustacheEngine )->setPrefix( __DIR__ . '/templates' );
+	}
+
+	public static function getInstance() {
+		if ( !isset( static::$instance ) ) {
+			static::$instance = new EmbeddableDiscussionsController();
+		}
+
+		return static::$instance;
 	}
 
 	public function render( array $args ) {
@@ -57,7 +66,7 @@ class EmbeddableDiscussionsController {
 	 * @return array of error strings or empty array if all args valid
 	 */
 	private function validateParameters( array $parameters ) {
-		$errors = [];
+		$errors = [ ];
 
 		// PARAM_MOSTRECENT must be bool
 		if ( !AttributesValidator::isBoolish( $parameters[ static::PARAM_MOSTRECENT ] ) ) {
