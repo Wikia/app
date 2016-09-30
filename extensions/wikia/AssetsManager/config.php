@@ -3058,3 +3058,11 @@ $config['crosslink_module_scss'] = [
 		'//extensions/wikia/CrosslinkModule/styles/CrosslinkModule.scss',
 	],
 ];
+
+/* Create new page flow tracking */
+$config['create_new_page_flow_js'] = [
+	'type' => AssetsManager::TYPE_JS,
+	'assets' => [
+		'//extensions/wikia/CreateNewPageFlow/scripts/flowTracking.js'
+	]
+];
