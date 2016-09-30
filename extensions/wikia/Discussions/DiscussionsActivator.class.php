@@ -19,10 +19,10 @@ class DiscussionsActivator {
     private $sitesApi;
     private $logger;
 
-    public function __construct( $cityId = null, $cityName = null, $cityLang = null ) {
-        $this->cityId = $cityId ?? F::app()->wg->CityId;
-        $this->cityName = $cityName ?? F::app()->wg->Sitename;
-        $this->cityLang = $cityLang ?? F::app()->wg->ContLang->getCode();
+    public function __construct( int $cityId, string $cityName, string $cityLang ) {
+        $this->cityId = $cityId;
+        $this->cityName = $cityName;
+        $this->cityLang = $cityLang;
 
         $this->sitesApi = $this->getSitesApi();
         $this->logger = Wikia\Logger\WikiaLogger::instance();
@@ -61,8 +61,8 @@ class DiscussionsActivator {
                     'siteId' => $this->cityId,
                     'error' => $e->getMessage(),
                 ] );
+            return false;
         }
-        return false;
     }
 
     private function getSitesApi() {

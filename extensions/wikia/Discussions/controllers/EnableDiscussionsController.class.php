@@ -4,12 +4,10 @@ class EnableDiscussionsController extends \WikiaController {
 
 	const ROLLBACK = 'rollback';
 
-	private $activator;
 	private $toggler;
 
 	public function __construct() {
 		parent::__construct();
-		$this->activator = new DiscussionsActivator();
 		$this->toggler = new DiscussionsVarToggler();
 	}
 

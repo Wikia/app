@@ -13,8 +13,12 @@ class SpecialDiscussionsController extends WikiaSpecialPageController {
 
 	public function __construct() {
 		parent::__construct( 'Discussions', '', false );
-		$this->activator = new DiscussionsActivator();
 		$this->toggler = new DiscussionsVarToggler();
+		$this->activator = new DiscussionsActivator(
+			$this->wg->CityId,
+			$this->wg->Sitename,
+			$this->wg->ContLang->getCode()
+		);
 	}
 
 	public function index() {
@@ -75,6 +79,6 @@ class SpecialDiscussionsController extends WikiaSpecialPageController {
 	 * @return string
 	 */
 	public static function getTemplateDir() {
-		return dirname( __FILE__ ) . '/../templates';
+		return __DIR__ . '/../templates';
 	}
 }
