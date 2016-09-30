@@ -1,14 +1,18 @@
 define('ext.wikia.recirculation.helpers.cakeRelatedContent', [
     'jquery',
-    'wikia.nirvana'
-], function($, nirvana) {
+    'wikia.window',
+    'wikia.nirvana',
+    'ext.wikia.recirculation.utils'
+], function($, w, nirvana, utils) {
+	'use strict';
+
     var options = {
         limit: 5
     };
 
     function loadData() {
         var deferred = $.Deferred(),
-            articleTitle = window.wgTitle;
+            articleTitle = w.wgTitle;
 
         nirvana.sendRequest({
             controller: 'RecirculationApi',
@@ -17,12 +21,12 @@ define('ext.wikia.recirculation.helpers.cakeRelatedContent', [
             type: 'get',
             data: {
                 relatedTo: articleTitle,
-                ignore: window.location.pathname,
+                ignore: w.location.pathname,
                 limit: options.limit
             },
             callback: function(data) {
                 if (data.items && data.items.length >= options.limit) {
-                    deferred.resolve(data)
+                    deferred.resolve(formatData(data));
                 } else {
                     deferred.reject('Recirculation widget not shown - not enough items returned from CAKE API');
                 }
@@ -35,10 +39,19 @@ define('ext.wikia.recirculation.helpers.cakeRelatedContent', [
         return deferred.promise();
     }
 
+    function formatData(data) {
+        data.items = data.items.map(function(item) {
+            item.title = item.title.split(' | ')[0];
+            return item;
+        }).sort(utils.sortThumbnails);
+
+        return data;
+    }
+
     return function(config) {
         $.extend(options, config);
         return {
             loadData: loadData
-        }
-    }
+        };
+    };
 });

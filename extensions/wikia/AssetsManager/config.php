@@ -132,6 +132,7 @@ $config['recirculation_js'] = [
 		'//extensions/wikia/Recirculation/js/helpers/ContentLinksHelper.js',
 		'//extensions/wikia/Recirculation/js/helpers/FandomHelper.js',
 		'//extensions/wikia/Recirculation/js/helpers/DataHelper.js',
+		'//extensions/wikia/Recirculation/js/helpers/DiscussionsHelper.js',
 		'//extensions/wikia/Recirculation/js/helpers/CakeRelatedContentHelper.js',
 		'//extensions/wikia/Recirculation/js/helpers/CuratedContentHelper.js',
 		'//extensions/wikia/Recirculation/js/views/incontent.js',
@@ -139,18 +140,8 @@ $config['recirculation_js'] = [
 		'//extensions/wikia/Recirculation/js/views/footer.js',
 		'//extensions/wikia/Recirculation/js/views/scroller.js',
 		'//extensions/wikia/Recirculation/js/views/impactFooter.js',
-		'//extensions/wikia/Recirculation/js/experiments/placement.js',
-		'//extensions/wikia/Recirculation/js/experiments/placement/impactFooter.js',
-		'//extensions/wikia/Recirculation/js/experiments/placement/fandomTopic.js',
-		'//extensions/wikia/Recirculation/js/experiments/placement/control.js',
+		'//extensions/wikia/Recirculation/js/experiments/mix.js',
 		'//extensions/wikia/Recirculation/js/libs/perfect-scrollbar.js',
-	],
-];
-
-$config['recirculation_discussions_js'] = [
-	'type' => AssetsManager::TYPE_JS,
-	'skin' => [ 'oasis' ],
-	'assets' => [
 		'//extensions/wikia/Recirculation/js/discussions.js',
 	],
 ];
