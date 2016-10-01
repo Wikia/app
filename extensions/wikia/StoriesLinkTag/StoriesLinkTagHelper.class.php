@@ -8,6 +8,7 @@ class StoriesLinkTagHelper extends WikiaModel {
 	const CACHE_TTL = 3600;
 	const FANDOM_API_URL = 'http://fandom.wikia.com/wp-json/wp/v2/';
 	const VALID_HOST = 'fandom.wikia.com';
+	const VAR_NAME_API_TIMEOUT = 'wgStoriesLinkTagTimeout';
 
 	protected $endpoints = [
 		'articles' => 'posts',
@@ -54,13 +55,14 @@ class StoriesLinkTagHelper extends WikiaModel {
 
 			$apiUrl = self::FANDOM_API_URL . $endpoint.'?' . http_build_query( $params );
 			$method = 'GET';
-			$options = [
-				'noProxy' => true,
-				'curlOptions' => [
-					CURLOPT_TIMEOUT_MS => 500,
+			$options = [ 'noProxy' => true ];
+			$timeout = WikiFactory::getVarValueByName( self::VAR_NAME_API_TIMEOUT, WikiFactory::COMMUNITY_CENTRAL );
+			if ( !empty( $timeout ) ) {
+				$options['curlOptions'] = [
+					CURLOPT_TIMEOUT_MS => $timeout,
 					CURLOPT_NOSIGNAL => true,
-				]
-			];
+				];
+			}
 
 			$response = Http::request( $method, $apiUrl, $options );
 			if ( $response === false ) {
