@@ -2,9 +2,15 @@
 
 	var WE = window.WikiaEditor = window.WikiaEditor || (new Observable());
 
+	var editorName = function(mode) {
+		var name = window.RTE === undefined ? "" : "rte-";
+
+		return name + mode;
+	};
+
 	WE.plugins.flowtracking = $.createClass(WE.plugin,{
 
-		initEditor: function( editor ) {
+		initEditor: function(editor) {
 			require(['wikia.flowTracking', 'wikia.querystring', 'mw'], function(flowTrack, QueryString, mw) {
 				var namespaceId = mw.config.get('wgNamespaceNumber'),
 					articleId = mw.config.get('wgArticleId');
@@ -20,7 +26,7 @@
 					if (flowParam || document.referrer) {
 						//TODO: track middle step for other flows
 					} else {
-						flowTrack.beginFlow('direct-url', {editor: editor.mode});
+						flowTrack.beginFlow('direct-url', {editor: editorName(editor.mode)});
 					}
 				}
 
