@@ -33,36 +33,6 @@ class PhalanxContentModel extends PhalanxModel {
 	public function getText() {
 		return !is_null( $this->text ) ? $this->text : $this->title->getFullText();
 	}
-
-	public function buildWhiteList() {
-		wfProfileIn( __METHOD__ );
-
-		$whitelist = array();
-		$content = wfMsgForContent( self::SPAM_WHITELIST_TITLE );
-		
-		if ( wfemptyMsg( self::SPAM_WHITELIST_TITLE, $content ) ) {
-			wfProfileOut( __METHOD__ );
-			return $whitelist;
-		}
-			
-		$content = array_filter( array_map( 'trim', preg_replace( '/#.*$/', '', explode( "\n", $content ) ) ) );
-		if ( !empty( $content ) ) {
-			foreach ( $content as $regex ) {
-				$regex = str_replace( '/', '\/', preg_replace('|\\\*/|', '/', $regex) );
-				$regex = "/https?:\/\/+[a-z0-9_.-]*$regex/i";
-				wfsuppressWarnings();
-				$regexValid = preg_match($regex, '');
-				wfrestoreWarnings();
-				if ( $regexValid === false ) continue;
-				$whitelist[] = $regex;
-			}
-		}
-
-		Wikia::log( __METHOD__, __LINE__, count( $whitelist ) . ' whitelist entries loaded.' );
-
-		wfProfileOut( __METHOD__ );
-		return $whitelist;
-	}
 	
 	public function displayBlock() {
 		$this->wg->Out->setPageTitle( wfMsg( 'spamprotectiontitle' ) );

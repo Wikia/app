@@ -8,8 +8,6 @@
  */
 
 class PhalanxContentBlock extends WikiaObject {
-	private static $whitelist = null;
-
 	/**
 	 * @static
 	 *
@@ -85,16 +83,6 @@ class PhalanxContentBlock extends WikiaObject {
 
 		$summary = $editPage->summary;
 		$textbox = $editPage->textbox1;
-		
-		/* compare summary with spam-whitelist */
-		if ( !empty( $summary ) && !empty( $textbox ) && is_null( self::$whitelist ) ) {
-			self::$whitelist = $phalanxModel->buildWhiteList();
-		}
-
-		/* check summary */
-		if ( !empty( self::$whitelist ) ) {
-			$summary = preg_replace( self::$whitelist, '', $summary );
-		}
 
 		$contentIsBlocked = !$phalanxModel->match_summary( $summary );
 		if ( $contentIsBlocked === false ) {
@@ -132,16 +120,6 @@ class PhalanxContentBlock extends WikiaObject {
 		$phalanxModel = new PhalanxContentModel( $newTitle );
 		$ret = $phalanxModel->match_title();
 		if ( $ret !== false ) {
-			/* compare reason with spam-whitelist - WTF? */
-			if ( !empty( $reason ) && is_null( self::$whitelist ) ) {
-				self::$whitelist = $phalanxModel->buildWhiteList();
-			}
-			
-			/* check reason - WHY? */
-			if ( !empty( self::$whitelist ) ) {
-				$reason = preg_replace( self::$whitelist, '', $reason );
-			}
-
 			$ret = $phalanxModel->match_summary( $reason );
 		} 
 		
@@ -169,16 +147,6 @@ class PhalanxContentBlock extends WikiaObject {
 
 		if ( is_null( $phalanxModel ) ) {
 			$phalanxModel = new PhalanxContentModel( $title );
-		}
-		
-		/* compare summary with spam-whitelist */
-		if ( !empty( $textbox ) && is_null(self::$whitelist) ) {
-			self::$whitelist = $phalanxModel->buildWhiteList();
-		}
-
-		/* check content */
-		if ( !empty( self::$whitelist ) ) {
-			$textbox = preg_replace( self::$whitelist, '', $textbox );
 		}
 
 		/* check in Phalanx service */
