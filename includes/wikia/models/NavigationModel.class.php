@@ -231,9 +231,9 @@ class NavigationModel extends WikiaModel {
 	private function recursiveConvertMenuNodeToArray( $index ) {
 		$node = $this->menuNodes[$index];
 		$returnValue = [
-			'text' => $node[self::TEXT],
+			self::TEXT => $node[self::TEXT],
 			'textEscaped' => htmlspecialchars( $node[self::TEXT], ENT_QUOTES | ENT_HTML5, 'UTF-8' ),
-			'href' => $node[self::HREF],
+			self::HREF => $node[self::HREF],
 		];
 		if ( !empty( $node[self::SPECIAL] ) ) {
 			$returnValue[self::SPECIAL] = $node[self::SPECIAL];
