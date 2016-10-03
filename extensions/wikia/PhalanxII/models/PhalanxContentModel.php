@@ -4,8 +4,6 @@ class PhalanxContentModel extends PhalanxModel {
 
 	/* @var Title $title */
 	protected $title = null;
-	const SPAM_WHITELIST_TITLE = 'Spam-whitelist';
-	const SPAM_WHITELIST_NS_TITLE = 'Mediawiki:Spam-whitelist';
 
 	/**
 	 * @param Title $title
@@ -24,8 +22,7 @@ class PhalanxContentModel extends PhalanxModel {
 	public function isOk() { 
 		return ( 
 			$this->wg->User->isAllowed( 'phalanxexempt' ) || 
-			!( $this->title instanceof Title ) || 
-			( $this->title->getPrefixedText() == self::SPAM_WHITELIST_NS_TITLE ) ||
+			!( $this->title instanceof Title ) ||
 			$this->isWikiaInternalRequest()
 		);
 	}
@@ -35,14 +32,15 @@ class PhalanxContentModel extends PhalanxModel {
 	}
 
 	public function displayBlock() {
-		$this->wg->Out->setPageTitle( wfMsg( 'spamprotectiontitle' ) );
+		$this->wg->Out->setPageTitle( wfMessage( 'spamprotectiontitle' ) );
 		$this->wg->Out->setRobotPolicy( 'noindex,nofollow' );
 		$this->wg->Out->setArticleRelated( false );
-		$this->wg->Out->addHTML( Html::openElement( 'div', array( 'id' => 'spamprotected_summary' ) ) );
+		$this->wg->Out->addHTML( Html::openElement( 'div', [ 'id' => 'spamprotected_summary' ] ) );
 		$this->wg->Out->addWikiMsg( 'spamprotectiontext' );
-		$this->wg->Out->addHTML( Html::element( 'p', array(), wfMsg( 'phalanx-stats-table-id' ) . " #{$this->block->id}" ) );
+		$this->wg->Out->addHTML( Html::element( 'p', [], wfMessage( 'phalanx-stats-table-id' )->text() . " #{$this->block->id}" ) );
 		$this->wg->Out->addWikiMsg( 'spamprotectionmatch', "<nowiki>{$this->block->text}</nowiki>" );
 
+		// SUS-1090: Only indicate that the edit summary was blocked if it was indeed a summary block
 		if ( $this->block->type === Phalanx::TYPE_SUMMARY ) {
 			$this->wg->Out->addWikiMsg( 'phalanx-content-spam-summary' );
 		}

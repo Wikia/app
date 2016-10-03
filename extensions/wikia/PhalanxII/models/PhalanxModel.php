@@ -1,12 +1,12 @@
 <?php
 
 /**
- * @method setBlock( $block )
+ * @method PhalanxModel setBlock( $block )
  * @method getBlock
- * @method setText( string $text )
+ * @method PhalanxModel setText( string $text )
  * @method getText
  * @method getLang
- * @method setShouldLogInStats
+ * @method PhalanxModel setShouldLogInStats
  * @method getShouldLogInStats
  */
 abstract class PhalanxModel extends WikiaObject {
