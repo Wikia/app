@@ -3,9 +3,15 @@
 	var WE = window.WikiaEditor = window.WikiaEditor || (new Observable());
 
 	var editorName = function(mode) {
-		var name = window.RTE === undefined ? "" : "rte-";
+		var RTE = (window.RTE === undefined);
 
-		return name + mode;
+		if (!RTE) {
+			return 'rte-' + mode;
+		} else if (mode == 'source') {
+			return 'sourceedit';
+		}
+
+		return mode;
 	};
 
 	WE.plugins.flowtracking = $.createClass(WE.plugin,{
@@ -27,6 +33,7 @@
 						//TODO: track middle step for other flows
 					} else {
 						flowTrack.beginFlow('direct-url', {editor: editorName(editor.mode)});
+						console.log(editorName(editor.mode));
 					}
 				}
 
