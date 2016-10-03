@@ -207,7 +207,7 @@ hu',
 	'wikia-days-ago' => '$1 {{PLURAL:$1|day|days}} ago',
 	'wikia-pagination-prev' => 'Prev',
 	'wikia-pagination-next' => 'Next',
-	'wikia-pagetitle-brand' => 'Fandom',
+	'wikia-pagetitle-brand' => 'Fandom powered by Wikia',
 	'wikia-pagetitle-sitename' => '{{SITENAME}}',
 	'wikia-read-only-mode' => 'Uh-oh! Our main datacenter is currently unavailable, so this is our backup. Unfortunately, this means you may not be able to do certain things like edit, upload, or chat.
 We are working to fix the problem, thank you for your patience! If you see this for an extended period of time, feel free to contact Fandom at community@wikia.com.',
@@ -3606,7 +3606,6 @@ Wir arbeiten daran, dieses Problem zu beheben, vielen Dank für deine Geduld! We
 	'wikicitieshome' => 'Fandom Startseite',
 	'widget-desc-wikiamessages' => 'Fandom-Nachrichten',
 	'widget-title-wikiamessages' => 'Fandom-Nachrichten',
-	'wikia-pagetitle-brand' => 'Fandom',
 ];
 
 $messages['de-formal'] = [
@@ -4238,7 +4237,6 @@ Estamos trabajando para solucionar el problema, gracias por tu comprensión! Si 
 	'widget-title-wikiamessages' => 'Mensajes de Fandom',
 	'wikia_messages' => 'Mensajes de Fandom',
 	'widget-title-advertiser' => 'Spotlights de Fandom',
-	'wikia-pagetitle-brand' => 'Fandom',
 	'wikicitieshome' => 'Casa de Fandom',
 ];
 
@@ -4880,7 +4878,6 @@ Nous essayons de résoudre le problème et vous remercions de votre patience. S\
 	'wikicitieshome' => 'Accueil de Fandom',
 	'widget-desc-wikiamessages' => 'Messages de Fandom',
 	'widget-title-wikiamessages' => 'Messages de Fandom',
-	'wikia-pagetitle-brand' => 'Fandom',
 ];
 
 $messages['frc'] = [
@@ -7341,7 +7338,6 @@ Si noti che è anche possibile [[Special:EditWatchlist|modificare la lista con l
 	'widget-desc-wikiamessages' => 'Messaggi di Fandom',
 	'widget-title-advertiser' => 'Fandom Spotlight',
 	'widget-title-wikiamessages' => 'Messaggi di Fandom',
-	'wikia-pagetitle-brand' => 'Fandom',
 	'wikicitieshome' => 'Pagina principale di Fandom',
 ];
 
@@ -7525,7 +7521,6 @@ $messages['ja'] = [
 	'widget-desc-wikiamessages' => 'Fandomのメッセージ',
 	'widget-title-advertiser' => 'Fandomスポットライト',
 	'widget-title-wikiamessages' => 'Fandomのメッセージ',
-	'wikia-pagetitle-brand' => 'Fandom',
 ];
 
 $messages['jam'] = [
@@ -12625,7 +12620,6 @@ Dziękujemy za cierpliwość! Właśnie pracujemy nad rozwiązaniem tego problem
 	'widget-title-advertiser' => 'Wyróżnione w Fandom',
 	'wikia_messages' => 'Wiadomości Fandomu',
 	'wikicitieshome' => 'Strona główna Fandom',
-	'wikia-pagetitle-brand' => 'Fandom',
 ];
 
 $messages['pms'] = [
@@ -13065,7 +13059,6 @@ Estamos trabalhando para corrigir o problema, obrigado por sua paciência! Se is
 	'widget-title-advertiser' => 'Fandom Spotlight',
 	'widget-title-wikiamessages' => 'Mensagens do Fandom',
 	'wikia_messages' => 'Mensagens do Fandom',
-	'wikia-pagetitle-brand' => 'Fandom',
 	'wikicitieshome' => 'Página inicial do Fandom',
 ];
 
@@ -13682,7 +13675,6 @@ $messages['ru'] = [
 	'widget-title-advertiser' => 'Баннер для вики',
 	'widget-title-wikiamessages' => 'Сообщения Фэндома',
 	'wikia_messages' => 'Сообщения Фэндома',
-	'wikia-pagetitle-brand' => 'Фэндом',
 	'wikicitieshome' => 'Заглавная страница Фэндома',
 ];
 
@@ -17982,7 +17974,6 @@ $messages['zh-hans'] = [
 	'widget-title-advertiser' => 'Fandom聚光灯',
 	'widget-title-wikiamessages' => 'Fandom消息',
 	'wikia_messages' => 'Fandom消息',
-	'wikia-pagetitle-brand' => 'Fandom',
 	'wikicitieshome' => 'Fandom之家',
 ];
 
@@ -18070,7 +18061,6 @@ $messages['zh-hant'] = [
 	'widget-title-advertiser' => 'Fandom聚光燈',
 	'widget-title-wikiamessages' => 'Fandom訊息',
 	'wikia_messages' => 'Fandom訊息',
-	'wikia-pagetitle-brand' => 'Fandom',
 	'wikicitieshome' => 'Fandom家園',
 ];
 
