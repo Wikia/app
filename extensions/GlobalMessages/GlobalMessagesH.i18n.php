@@ -106,7 +106,7 @@ Try [[Special:Search|searching on the wiki]] for relevant new pages.',
 	'hub-Video_Games' => 'Video Games',
 	'hub-Videospiele' => 'Videospiele',
 	'hub-Lifestyle' => 'Lifestyle',
-	'hub-Wikia' => 'Wikia',
+	'hub-Wikia' => 'Fandom',
 	'hub-Food_and_Drink' => 'Food and Drink',
 ];
 
@@ -251,6 +251,7 @@ Name of month in Hebrew calender.',
 * stub threshold (appearance tab)
 
 {{Identical|Other}}',
+	'hub-Wikia' => 'Missing documentation',
 ];
 
 $messages['ab'] = [
@@ -2545,6 +2546,7 @@ $messages['de'] = [
 	'hub-Gaming' => 'Videospiele',
 	'hub-Videospiele' => 'Videospiele',
 	'hub-Lifestyle' => 'Lifestyle',
+	'hub-Wikia' => 'Fandom',
 ];
 
 $messages['de-formal'] = [
@@ -2944,6 +2946,7 @@ Prueba a [[Special:Search|buscar en el wiki]] nuevas páginas relevantes.',
 	'home' => 'Portada',
 	'helpfaq' => 'Ayuda y preguntas frecuentes',
 	'highest_ratings' => 'Mejor puntuados',
+	'hub-Wikia' => 'Fandom',
 ];
 
 $messages['et'] = [
@@ -3380,6 +3383,7 @@ Essayez de [[Special:Search|rechercher sur le wiki]] pour trouver des pages en r
 	'home' => 'Accueil',
 	'helpfaq' => 'Aide et FAQ',
 	'highest_ratings' => 'Les meilleurs notes',
+	'hub-Wikia' => 'Fandom',
 ];
 
 $messages['frc'] = [
@@ -5079,7 +5083,7 @@ Legenda: \'\'\'({{int:cur}})\'\'\' = differenze con la versione attuale, \'\'\'(
 	'htmlform-submit' => 'Invia',
 	'htmlform-reset' => 'Annulla modifiche',
 	'htmlform-selectorother-other' => 'Altro',
-	'hub-Wikia' => 'Wikia',
+	'hub-Wikia' => 'Fandom',
 ];
 
 $messages['iu'] = [
@@ -5235,7 +5239,7 @@ $messages['ja'] = [
 	'hub-Gaming' => 'ゲーム',
 	'hub-Video_Games' => 'ゲーム',
 	'hub-Lifestyle' => 'ライフスタイル',
-	'hub-Wikia' => 'Wikia',
+	'hub-Wikia' => 'Fandom',
 ];
 
 $messages['jam'] = [
@@ -8761,7 +8765,7 @@ Spróbuj [[Special:Search|poszukać]] tej strony.',
 	'hub-Gaming' => 'Gry wideo',
 	'hub-Video_Games' => 'Gry wideo',
 	'hub-Lifestyle' => 'Lifestyle',
-	'hub-Wikia' => 'Wikia',
+	'hub-Wikia' => 'Fandom',
 ];
 
 $messages['pms'] = [
@@ -9044,6 +9048,7 @@ Tente [[Special:Search|pesquisar na wiki]] novas páginas relevantes.',
 	'home' => 'Página principal',
 	'helpfaq' => 'Ajuda e perguntas mais freqüentes',
 	'highest_ratings' => 'Melhores pontuações',
+	'hub-Wikia' => 'Fandom',
 ];
 
 $messages['pt-br'] = [
@@ -9522,7 +9527,7 @@ $messages['ru'] = [
 	'home' => 'Домой',
 	'helpfaq' => 'Помощь и FAQ',
 	'highest_ratings' => 'Самые высокие рейтинги',
-	'hub-Wikia' => 'Викия',
+	'hub-Wikia' => 'Фэндом',
 ];
 
 $messages['rue'] = [
@@ -12441,6 +12446,7 @@ $messages['zh-hans'] = [
 	'htmlform-submit' => '提交',
 	'htmlform-reset' => '撤销更改',
 	'htmlform-selectorother-other' => '其他',
+	'hub-Wikia' => 'Fandom',
 ];
 
 $messages['zh-hant'] = [
@@ -12493,6 +12499,7 @@ $messages['zh-hant'] = [
 	'htmlform-submit' => '提交',
 	'htmlform-reset' => '撤銷更改',
 	'htmlform-selectorother-other' => '其他',
+	'hub-Wikia' => 'Fandom',
 ];
 
 $messages['zh-tw'] = [

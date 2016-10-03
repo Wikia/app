@@ -3,9 +3,9 @@
 $messages = [];
 
 $messages['en'] = [
-	'wikiacuratedcontent-desc' => 'Wikia Curated Content mobile app modules',
-	'wikiacuratedcontent-preview-description' => 'This is just a preview of how pages would look like in a Wikia Curated Content application.',
-	'wikiacuratedcontent-content-title' => 'Wikia Curated Content managment tool',
+	'wikiacuratedcontent-desc' => 'Fandom Curated Content mobile app modules',
+	'wikiacuratedcontent-preview-description' => 'This is just a preview of how pages would look like in a Fandom Curated Content application.',
+	'wikiacuratedcontent-content-title' => 'Fandom Curated Content managment tool',
 	'wikiacuratedcontent-content-item' => 'Item',
 	'wikiacuratedcontent-content-section' => 'Item Section (optional)',
 	'wikiacuratedcontent-content-name' => 'Curated Content Name',
@@ -127,9 +127,9 @@ $messages['cs'] = [
 ];
 
 $messages['de'] = [
-	'wikiacuratedcontent-desc' => 'Modul für Wikias Curated Content App',
-	'wikiacuratedcontent-preview-description' => 'Dies ist nur eine Vorschau, wie die erstellten Seiten aussehen würden.',
-	'wikiacuratedcontent-content-title' => 'Wikias Curated Content Managementoberfläche',
+	'wikiacuratedcontent-desc' => 'Modul für Fandom Curated Content App',
+	'wikiacuratedcontent-preview-description' => 'Dies ist nur eine Vorschau, wie die erstellten Seiten in einer Fandom Curated Content App aussehen würden.',
+	'wikiacuratedcontent-content-title' => 'Fandoms Curated Content Managementoberfläche',
 	'wikiacuratedcontent-content-save' => 'Speichern',
 	'wikiacuratedcontent-content-duplicate-entry' => 'Dieser Eintrag ist bereits vorhanden.',
 	'wikiacuratedcontent-content-item' => 'Eintrag',
@@ -162,9 +162,9 @@ $messages['de'] = [
 ];
 
 $messages['es'] = [
-	'wikiacuratedcontent-desc' => 'Módulos de Mantenimiento de contendido de la app para móviles de Wikia',
-	'wikiacuratedcontent-preview-description' => 'Esta es solo una previsualización de cómo se verían las páginas en la aplicación de Mantenimiento de contenido de Wikia.',
-	'wikiacuratedcontent-content-title' => 'Herramienta para la gestión del Mantenimiento de contenido de Wikia',
+	'wikiacuratedcontent-desc' => 'Módulos de Mantenimiento de contendido de la app para móviles de Fandom',
+	'wikiacuratedcontent-preview-description' => 'Esta es solo una previsualización de cómo se verían las páginas en la aplicación de Mantenimiento de contenido de Fandom.',
+	'wikiacuratedcontent-content-title' => 'Herramienta para la gestión del Mantenimiento de contenido de Fandom',
 	'wikiacuratedcontent-content-save' => 'Guardar',
 	'wikiacuratedcontent-content-duplicate-entry' => 'Este valor está duplicado',
 	'wikiacuratedcontent-content-item' => 'Elemento',
@@ -234,8 +234,8 @@ $messages['fi'] = [
 ];
 
 $messages['fr'] = [
-	'wikiacuratedcontent-desc' => 'Modules pour le contenu de l\'application communautaire mobile',
-	'wikiacuratedcontent-preview-description' => 'Ceci est un simple aperçu de ce à quoi ressembleront les pages dans une application communautaire de Wikia.',
+	'wikiacuratedcontent-desc' => 'Fandom Curated Content mobile app modules',
+	'wikiacuratedcontent-preview-description' => 'Ceci est un simple aperçu de ce à quoi ressembleront les pages dans une application communautaire de Fandom.',
 	'wikiacuratedcontent-content-title' => 'Outil de gestion du contenu de l\'application communautaire',
 	'wikiacuratedcontent-content-save' => 'Enregistrer',
 	'wikiacuratedcontent-content-duplicate-entry' => 'Cette valeur est dupliquée',
@@ -284,9 +284,9 @@ $messages['ia'] = [
 ];
 
 $messages['it'] = [
-	'wikiacuratedcontent-desc' => 'Moduli dei contenuti curati per le app di Wikia mobile',
-	'wikiacuratedcontent-preview-description' => 'Questa è solo un\'anteprima di come le pagine verranno visualizzate nell\'applicazione dei contenuti curati di Wikia.',
-	'wikiacuratedcontent-content-title' => 'Strumento di gestione dei contenuti curati di Wikia',
+	'wikiacuratedcontent-desc' => 'Moduli dei contenuti curati per le app di Fandom mobile',
+	'wikiacuratedcontent-preview-description' => 'Questa è solo un\'anteprima di come le pagine verranno visualizzate nell\'applicazione dei contenuti curati di Fandom.',
+	'wikiacuratedcontent-content-title' => 'Strumento di gestione dei contenuti curati di Fandom',
 	'wikiacuratedcontent-content-item' => 'Elemento',
 	'wikiacuratedcontent-content-section' => 'Sezione dell\'elemento (opzionale)',
 	'wikiacuratedcontent-content-name' => 'Nome del contenuto curato',
@@ -318,9 +318,9 @@ $messages['it'] = [
 ];
 
 $messages['ja'] = [
-	'wikiacuratedcontent-desc' => 'ウィキアキュレーションコンテンツ　モバイルアプリのモジュール',
-	'wikiacuratedcontent-preview-description' => 'こちらはウィキアキュレーションコンテンツのアプリケーション上で、ページがどのように表示されるかのプレビューです。',
-	'wikiacuratedcontent-content-title' => 'ウィキアキュレーションコンテンツ　管理ツール',
+	'wikiacuratedcontent-desc' => 'Fandomキュレーション・コンテンツのモバイルアプリ・モジュール',
+	'wikiacuratedcontent-preview-description' => 'こちらはFandomキュレーション・コンテンツアプリ上で、ページがどのように表示されるかのプレビューです。',
+	'wikiacuratedcontent-content-title' => 'Fandomキュレーション・コンテンツ管理ツール',
 	'wikiacuratedcontent-content-item' => '項目',
 	'wikiacuratedcontent-content-section' => '項目セクション（任意）',
 	'wikiacuratedcontent-content-name' => 'キュレーションコンテンツ名',
@@ -452,9 +452,9 @@ $messages['nl'] = [
 ];
 
 $messages['pl'] = [
-	'wikiacuratedcontent-desc' => 'Zarządzanie treścią modułów w aplikacji mobilnej',
-	'wikiacuratedcontent-preview-description' => 'To jest tylko podgląd jak strony będą wyglądać w aplikacji Wikia Curated Content.',
-	'wikiacuratedcontent-content-title' => 'Narzędzie zarządzania treścią w aplikacji mobilnej',
+	'wikiacuratedcontent-desc' => 'Moduły aplikacji mobilnej do selekcjonowania treści w Fandom',
+	'wikiacuratedcontent-preview-description' => 'To jest tylko podgląd tego, jak strony będą wyglądać w aplikacji do selekcjonowania treści w Fandom.',
+	'wikiacuratedcontent-content-title' => 'Narzędzie do selekcjonowania treści w Fandom',
 	'wikiacuratedcontent-content-save' => 'Zapisz',
 	'wikiacuratedcontent-content-duplicate-entry' => 'Ta wartość jest zduplikowana',
 	'wikiacuratedcontent-content-item' => 'Element',
@@ -498,9 +498,9 @@ $messages['ps'] = [
 ];
 
 $messages['pt'] = [
-	'wikiacuratedcontent-desc' => 'Módulos de aplicativos móveis do Conteúdo Personalizado da Wikia',
-	'wikiacuratedcontent-preview-description' => 'Esta é apenas uma prévia de como as páginas serão mostradas em um aplicativo da Wikia.',
-	'wikiacuratedcontent-content-title' => 'Ferramenta de gerenciamento de conteúdo personalizado da Wikia',
+	'wikiacuratedcontent-desc' => 'Módulos de aplicativos móveis do conteúdo personalizado do Fandom',
+	'wikiacuratedcontent-preview-description' => 'Esta é apenas uma prévia de como as páginas serão mostradas em um aplicativo do conteúdo personalizado do Fandom.',
+	'wikiacuratedcontent-content-title' => 'Ferramenta de gerenciamento de conteúdo personalizado do Fandom',
 	'wikiacuratedcontent-content-item' => 'Item',
 	'wikiacuratedcontent-content-section' => 'Seção do item (opcional)',
 	'wikiacuratedcontent-content-name' => 'Nome do Conteúdo Personalizado',
@@ -540,9 +540,9 @@ $messages['roa-tara'] = [
 ];
 
 $messages['ru'] = [
-	'wikiacuratedcontent-desc' => 'Инструмент Wikia Curated Content для мобильных приложений',
-	'wikiacuratedcontent-preview-description' => 'Это только макет того, как страницы будут выглядеть в приложении Wikia Curated Content.',
-	'wikiacuratedcontent-content-title' => 'Инструмент управления Wikia Curated Content',
+	'wikiacuratedcontent-desc' => 'Инструмент курирования контента Фэндома для мобильных приложений',
+	'wikiacuratedcontent-preview-description' => 'Это предпросмотр страниц, созданных с помощью инструмента курирования контента Фэндома.',
+	'wikiacuratedcontent-content-title' => 'Управление инструментом курирования контента Фэндома',
 	'wikiacuratedcontent-content-save' => 'Сохранить',
 	'wikiacuratedcontent-content-duplicate-entry' => 'Эта переменная уже используется',
 	'wikiacuratedcontent-content-item' => 'Пункт',
@@ -637,9 +637,9 @@ $messages['vi'] = [
 
 $messages['zh-hans'] = [
 	'wikiacuratedcontent-content-save' => '保存',
-	'wikiacuratedcontent-desc' => 'Wikia内容手机移动应用模块',
-	'wikiacuratedcontent-preview-description' => '这是Wikia内容选择功能的效果展示图。',
-	'wikiacuratedcontent-content-title' => 'Wikia应用内容管理工具',
+	'wikiacuratedcontent-desc' => 'Fandom内容手机移动应用模块',
+	'wikiacuratedcontent-preview-description' => '这是Fandom内容选择功能的效果展示图。',
+	'wikiacuratedcontent-content-title' => 'Fandom应用内容管理工具',
 	'wikiacuratedcontent-content-item' => '条目',
 	'wikiacuratedcontent-content-section' => '条目分类（可选）',
 	'wikiacuratedcontent-content-name' => '内容名称',
@@ -670,9 +670,9 @@ $messages['zh-hans'] = [
 ];
 
 $messages['zh-hant'] = [
-	'wikiacuratedcontent-desc' => 'Wikia內容手機移行動應用模組',
-	'wikiacuratedcontent-preview-description' => '這是Wikia內容應用的效果展示圖。',
-	'wikiacuratedcontent-content-title' => 'Wikia應用內容管理工具',
+	'wikiacuratedcontent-desc' => 'Fandom手機App內容模組',
+	'wikiacuratedcontent-preview-description' => '這是Fandom app內容選擇的效果預覽。',
+	'wikiacuratedcontent-content-title' => 'Fandom內容選擇管理工具',
 	'wikiacuratedcontent-content-item' => '條目',
 	'wikiacuratedcontent-content-section' => '條目分類（可選）',
 	'wikiacuratedcontent-content-name' => '內容名稱',

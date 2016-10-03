@@ -51,12 +51,13 @@ Write the first section of your page here.
 ==Section heading==
 
 Write the second section of your page here.',
-	'createpage-ve-body' => 'The article <b>$1</b> does not yet exist on this wikia. You can help out by adding a few sentences.',
+	'createpage-ve-body' => 'The article <b>$1</b> does not yet exist on this community. You can help out by adding a few sentences.',
 	'createpage-button-cancel' => 'Cancel',
 ];
 
 $messages['qqq'] = [
 	'createpage-desc' => '{{desc}}',
+	'createpage-ve-body' => 'Missing documentation',
 ];
 
 $messages['af'] = [
@@ -403,7 +404,7 @@ Schreibe den ersten Abschnitt deines Artikels hier.
 ==Überschrift des Abschnittes==
 
 Schreibe den zweiten Abschnitt deines Artikels hier.',
-	'createpage-ve-body' => 'Der <b>$1</b> Artikel existiert auf diesem Wiki nicht. Du kannst helfen, indem du ein paar Sätze hinzufügst.',
+	'createpage-ve-body' => 'Der Artikel <b>$1</b> existiert in dieser Community nicht. Du kannst uns helfen, indem du ein paar Sätze hinzufügst.',
 	'createpage-button-cancel' => 'Abbrechen',
 ];
 
@@ -511,7 +512,7 @@ Escribe aquí la primera sección de tu artículo.
 ==Encabezado de sección==
 
 Escribe aquí la segunda sección de tu artículo.',
-	'createpage-ve-body' => 'El artículo <b>$1</b> aún no existe en esta wikia. Puedes ayudar agregando unas pocas frases.',
+	'createpage-ve-body' => 'El artículo <b>$1</b> aún no existe en esta comunidad. Puedes ayudar agregando algunas oraciones.',
 	'createpage-button-cancel' => 'Cancelar',
 ];
 
@@ -674,7 +675,7 @@ $messages['fr'] = [
 == Titre de section ==
 
 Écrivez la deuxième section de votre article ici.',
-	'createpage-ve-body' => 'L\'article <b>$1</b> n\'existe pas sur ce wikia. Vous pouvez aider en ajoutant quelques phrases.',
+	'createpage-ve-body' => 'L\'article <b>$1</b> n\'existe pas dans cette communauté. Vous pouvez aider en ajoutant quelques phrases.',
 	'createpage-button-cancel' => 'Annuler',
 ];
 
@@ -988,7 +989,7 @@ Scrivi qui la prima sezione del tuo articolo.
 ==Titolo della sezione==
 
 Scrivi qui la seconda sezione del tuo articolo.',
-	'createpage-ve-body' => 'L\'articolo <b>$1</b> non è ancora disponibile su questo wikia. Puoi dare il tuo contributo aggiungendo qualche frase.',
+	'createpage-ve-body' => 'L\'articolo <b>$1</b> non è ancora disponibile su questa wiki. Puoi dare il tuo contributo aggiungendo qualche frase.',
 	'createpage-button-cancel' => 'Annulla',
 ];
 
@@ -1033,7 +1034,7 @@ $messages['ja'] = [
 
 == 節見出し ==
 ここに2番目の節を書く。',
-	'createpage-ve-body' => '<b>$1</b>という記事はこのウィキアには存在しません。記事を作成するにはいくつかの文章を加えて下さい。',
+	'createpage-ve-body' => '「<b>$1</b>」という記事はこのコミュニティには存在しません。新たに文章を追加して、記事を作成してみてください。',
 	'createpage-button-cancel' => 'キャンセル',
 ];
 
@@ -1568,7 +1569,7 @@ Tutaj napisz treść pierwszej sekcji strony.
 ==Nagłówek sekcji==
 
 Tutaj napisz treść drugiej sekcji strony.',
-	'createpage-ve-body' => 'Artykuł <b>$1</b> nie istnieje jeszcze w tej wikii. Możesz pomóc, dodając kilka zdań.',
+	'createpage-ve-body' => 'Artykuł <b>$1</b> nie istnieje jeszcze w tej wiki. Możesz pomóc, dodając kilka zdań.',
 	'createpage-button-cancel' => 'Anuluj',
 ];
 
@@ -1704,7 +1705,7 @@ Escreva aqui a primeira secção da sua página.
 ==Cabeçalho de secção==
 
 Escreva aqui a segunda secção da sua página.',
-	'createpage-ve-body' => 'O artigo <b>$1</b> ainda não existe nesta wikia. Você pode ajudar adicionando algumas frases.',
+	'createpage-ve-body' => 'O artigo <b>$1</b> ainda não existe neste Fandom. Você pode ajudar adicionando algumas frases.',
 	'createpage-button-cancel' => 'Cancelar',
 ];
 
@@ -1824,7 +1825,7 @@ $messages['ru'] = [
 ==Заголовок секции==
 
 Напишите здесь вторую секцию вашей статьи.',
-	'createpage-ve-body' => 'Статья <b>$1</b> еще не существует на этом сервисе wikia. Вы можете помочь, добавив несколько предложений.',
+	'createpage-ve-body' => 'Статья <b>$1</b> ещё не существует на этой вики. Вы можете помочь, добавив несколько предложений.',
 	'createpage-button-cancel' => 'Отмена',
 ];
 
@@ -2244,7 +2245,7 @@ $messages['zh-hans'] = [
 ==标题项==
 
 在这里撰写第二项。',
-	'createpage-ve-body' => '文章<b>$1</b>在此维基上不存在。您可以进行创建。',
+	'createpage-ve-body' => '文章<b>$1</b>在此Fandom上不存在。您可以添加内容进行创建。',
 	'createpage-button-cancel' => '取消',
 ];
 
@@ -2264,7 +2265,7 @@ $messages['zh-hant'] = [
 	'createpage-dialog-message2' => '你想叫它什麼？',
 	'createpage-error-article-blocked' => '對不起，您不能在這個時候創建該頁面。',
 	'tog-createpagedefaultblank' => '使用空白頁作為預設創建新頁面',
-	'createpage-ve-body' => '文章<b>$1</b>在此維基上不存在。您可以進行創建。',
+	'createpage-ve-body' => '文章<b>$1</b>在此Fandom社群上不存在。您可以進行創建。',
 	'createpage-button-cancel' => '取消',
 ];
 
