@@ -9,7 +9,7 @@ abstract class AbstractEmailConfirmationController extends EmailController {
 
 	const LAYOUT_CSS = EmailController::NO_ADDITIONAL_STYLES;
 
-	private $confirmUrl;
+	protected $confirmUrl;
 
 	public function initEmail() {
 		$this->confirmUrl = $this->request->getVal( 'confirmUrl' );

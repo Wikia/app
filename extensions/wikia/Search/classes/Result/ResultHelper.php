@@ -45,7 +45,7 @@ class ResultHelper
 
 		if ( empty( $imageURL ) ) {
 			// display placeholder image if no thumbnail
-			$imageURL = \F::app()->wg->ExtensionsPath . '/wikia/Search/images/wiki_image_placeholder.png';
+			$imageURL = \F::app()->wg->ExtensionsPath . '/wikia/Search/images/fandom_image_placeholder.jpg';
 			$thumbTracking = "no-thumb";
 		}
 

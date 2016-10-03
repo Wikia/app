@@ -52,6 +52,8 @@ class GlobalTitle extends Title {
 
 	static protected $cachedObjects = array();
 
+	private static $extraExtensionNamespaces = [];
+
 	/**
 	 * @desc Static constructor, Create new Title from name of page
 	 *
@@ -820,18 +822,58 @@ class GlobalTitle extends Title {
 			return $this->mNamespaceNames;
 		}
 
-		$this->mNamespaceNames = $this->mContLang->getNamespaces() + $wgCanonicalNamespaceNames;
+		// $wgExtraNamespaces is calculated at MW init in context language.
+		// We have to override them to get correctly localized namespaces registered by extensions.
+		$globalStateWrapper = new Wikia\Util\GlobalStateWrapper( [
+			'wgExtraNamespaces' => $this->getExtraExtensionNamespaces()
+		] );
+		$langNamespaces = $globalStateWrapper->wrap( function () {
+			return $this->mContLang->getNamespaces();
+		} );
 
 		/**
 		 * get extra namespaces for city_id, they have to be defined in
 		 * $wgExtraNamespacesLocal variable
 		 */
-		$namespaces = WikiFactory::getVarValueByName( "wgExtraNamespacesLocal", $this->mCityId );
-		if( is_array( $namespaces ) ) {
-			$this->mNamespaceNames +=  $namespaces;
+		$namespaces = WikiFactory::getVarValueByName( "wgExtraNamespacesLocal", $this->mCityId, false, [] );
+		if ( !is_array( $namespaces ) ) {
+			$namespaces = [];
 		}
+		
+		$this->mNamespaceNames = $namespaces + $langNamespaces + $wgCanonicalNamespaceNames;
 
 		return $this->mNamespaceNames;
+	}
+
+	/**
+	 * Get $wgExtraNamespaces for title language
+	 *
+	 * @return array
+	 */
+	private function getExtraExtensionNamespaces() {
+		global $wgExtensionNamespacesFiles;
+
+		if ( empty( static::$extraExtensionNamespaces ) ){
+			$extraExtensionNamespaces = [ ];
+
+			foreach ( $wgExtensionNamespacesFiles as $extFile ) {
+				$namespaces = [ ];
+				// Namespace files fill in $namespaces array
+				require $extFile ;
+
+				foreach ( $namespaces as $langKey => $namespaceArray ) {
+					if ( array_key_exists( $langKey, $extraExtensionNamespaces ) ) {
+						$extraExtensionNamespaces[$langKey] += $namespaceArray;
+					} else {
+						$extraExtensionNamespaces[$langKey] = $namespaceArray;
+					}
+				}
+			}
+
+			static::$extraExtensionNamespaces = $extraExtensionNamespaces;
+		}
+
+		return static::$extraExtensionNamespaces[$this->mLang] + static::$extraExtensionNamespaces['en'];
 	}
 
 	/**

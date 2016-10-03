@@ -3064,5 +3064,22 @@ $config['flow_tracking_js'] = [
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => [
 		'//resources/wikia/modules/flowTracking.js'
-	]
+	],
+];
+
+/* StoriesLinkTag */
+$config['storieslink_tag_scss'] = [
+	'type' => AssetsManager::TYPE_SCSS,
+	'skin' => [ 'oasis' ],
+	'assets' => [
+		'//extensions/wikia/StoriesLinkTag/styles/StoriesLinkTag.scss',
+	],
+];
+
+$config['storieslink_tag_js'] = [
+	'type' => AssetsManager::TYPE_JS,
+	'skin' => [ 'oasis' ],
+	'assets' => [
+		'//extensions/wikia/StoriesLinkTag/scripts/StoriesLinkTag.js',
+	],
 ];

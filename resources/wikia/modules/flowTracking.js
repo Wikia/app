@@ -1,47 +1,31 @@
-define('wikia.flowTracking', ['wikia.cookies', 'wikia.tracker', 'mw'], function (cookies, tracker, mw) {
+define('wikia.flowTracking', ['wikia.tracker', 'wikia.window', 'mw', 'jquery'], function (tracker, w, mw, $) {
 
 	var track = tracker.buildTrackingFunction({
-			trackingMethod: 'analytics',
-			category: 'flow-tracking'
-		});
+			category: 'flow-tracking',
+			trackingMethod: 'analytics'
+
+		}),
+		userAgent = w.navigator.userAgent;
 
 	/**
-	 * Set cookie with current flow name and track flow beginning
+	 * Track edit flow beginning.
 	 *
 	 * @param flow name of the flow
+	 * @param extraParams additional parameters to track
 	 */
-	function beginFlow(flow) {
-		track({
-			action: tracker.ACTIONS.FLOW_START,
-			label: flow
-		});
-	}
-
-	/**
-	 * Track flow ending
-	 *
-	 * @param flow name of the flow
-	 */
-	function endFlow(flow) {
-		if (isContentPage()) {
-			track({
-				action: tracker.ACTIONS.FLOW_END,
-				label: flow
-			});
-		}
+	function beginFlow(flow, extraParams) {
+		track(prepareParams(tracker.ACTIONS.FLOW_START, flow, extraParams));
 	}
 
 	/**
 	 * Track intermediary flow step
 	 *
 	 * @param flow name of the flow
+	 * @param extraParams additional parameters to track
 	 */
-	function trackFlowStep(flow) {
+	function trackFlowStep(flow, extraParams) {
 		if (isContentPage()) {
-			track({
-				action: tracker.ACTIONS.FLOW_MID_STEP,
-				label: flow
-			});
+			track(prepareParams(tracker.ACTIONS.FLOW_MID_STEP, flow, extraParams));
 		}
 	}
 
@@ -49,9 +33,19 @@ define('wikia.flowTracking', ['wikia.cookies', 'wikia.tracker', 'mw'], function 
 		return mw.config.get('wgNamespaceNumber') === 0;
 	}
 
+	function prepareParams(action, flow, extraParams) {
+		var params = {
+			action: action,
+			flowname: flow,
+			label: flow
+		};
+
+		extraParams = extraParams || {};
+		return $.extend(params, extraParams, { useragent: userAgent });
+	}
+
 	return {
 		beginFlow: beginFlow,
-		endFlow: endFlow,
 		trackFlowStep: trackFlowStep
 	}
 });
