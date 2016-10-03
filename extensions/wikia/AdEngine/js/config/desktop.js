@@ -94,6 +94,8 @@ define('ext.wikia.adEngine.config.desktop', [
 			providerList.push(adProviderTurtle);
 		} else if (context.providers.evolve2 && adProviderEvolve2.canHandleSlot(slotName)) {
 			providerList.push(adProviderEvolve2);
+		} else if (context.providers.netzAthleten && adProviderNetzAthleten.canHandleSlot(slotName)) {
+			providerList.push(adProviderNetzAthleten);
 		} else if (gptEnabled) {
 			providerList.push(adProviderDirectGpt);
 		}

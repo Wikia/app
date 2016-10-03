@@ -1393,6 +1393,19 @@ $wgAdDriverUseEvolve2 = true;
 $wgAdDriverEvolve2Countries = null;
 
 /**
+ * @name $wgAdDriverNetzAthleten
+ * Whether to enable AdProviderNetzAthleten (true) or not (false)
+ */
+$wgAdDriverUseNetzAthleten = true;
+
+/**
+ * @name $wgAdDriverNetzAthletenCountries
+ * List of countries with enabled NetzAthleten module.
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ */
+$wgAdDriverNetzAthletenCountries = null;
+
+/**
  * @name $wgAdDriverUseTaboola
  * Whether to enable AdProviderTaboola (true) or not (false)
  */

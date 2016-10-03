@@ -78,6 +78,7 @@ class AdEngine2ContextService {
 					'newWikiCategories' => $this->getNewWikiCategories($wikiFactoryHub, $wg->CityId),
 				] ),
 				'providers' => $this->filterOutEmptyItems( [
+					'netzAthleten' => $wg->AdDriverUseNetzAthleten,
 					'evolve2' => $wg->AdDriverUseEvolve2,
 					'monetizationService' => $wg->AdDriverUseMonetizationService,
 					'monetizationServiceAds' => $monetizationServiceAds,

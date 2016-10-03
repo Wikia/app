@@ -100,6 +100,11 @@ define('ext.wikia.adEngine.adContext', [
 			context.targeting.pageCategories = w.wgCategories || getMercuryCategories();
 		}
 
+		// NetzAthleten integration
+		if (context.providers.netzAthleten) {
+			context.providers.netzAthleten = geo.isProperGeo(instantGlobals.wgAdDriverNetzAthletenCountries);
+		}
+
 		// Evolve2 integration
 		if (context.providers.evolve2) {
 			context.providers.evolve2 = geo.isProperGeo(instantGlobals.wgAdDriverEvolve2Countries);
