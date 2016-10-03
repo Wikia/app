@@ -1,9 +1,9 @@
 <?php
 
 /**
- * @method setBlock
+ * @method setBlock( $block )
  * @method getBlock
- * @method setText
+ * @method setText( string $text )
  * @method getText
  * @method getLang
  * @method setShouldLogInStats
@@ -12,6 +12,7 @@
 abstract class PhalanxModel extends WikiaObject {
 	public $model = null;
 	public $text = null;
+	/** @var null|object $block Information about the current block that was triggered */
 	public $block = null;
 	public $lang = null;
 	/* @var User */
