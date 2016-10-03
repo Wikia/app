@@ -12,6 +12,8 @@ $wgHooks['WikiaSkinTopScripts'][] = 'Track::onWikiaSkinTopScripts';
 
 class Track {
 	const BASE_URL = 'http://a.wikia-beacon.com/__track';
+	const GA_URL = 'https://www.google-analytics.com';
+	const GA_VERSION = 1;
 
 	private static function getURL ($type=null, $name=null, $param=null, $for_html=true) {
 		global $wgStyleVersion, $wgCityId, $wgContLanguageCode, $wgDBname, $wgDBcluster, $wgUser, $wgArticle, $wgTitle, $wgAdServerTest;
@@ -41,6 +43,76 @@ class Track {
 				$url .= $sep.urlencode($key).'='.urlencode($val);
 			}
 		}
+
+		return $url;
+	}
+
+	private static function getGAURL( $type = null, $for_html = null ) {
+		global $wgTitle, $wgContLanguageCode, $wgDBname, $wgUser, $wgCityId, $wgGAUserIdSalt, $wgDevelEnvironment;
+
+		$type = 'event';
+		$category = 'flow-test';
+		$action = 'impression';
+		$label = 'test';
+
+		$skinName = RequestContext::getMain()->getSkin()->getSkinName();
+		$adContext = ( new AdEngine2ContextService() )->getContext( $wgTitle, $skinName );
+		$hubFactory = WikiFactoryHub::getInstance();
+
+		$sep = $for_html ? '&amp;' : '&';
+		$params = [
+			'v' => static::GA_VERSION,
+//			'_v' => '',
+//			'a' => '',
+			't' => $type,
+			'ni' => 1,
+//			'_s' => '',
+			'dl' => $wgTitle->getFullURL(),
+			'ul' => $wgContLanguageCode,
+			'de' => 'UTF-8',
+			'dt' => $wgTitle->getText(),
+			'ec' => $category,
+			'ea' => $action,
+			'el' => $label,
+			'_utma' => $_COOKIE[ '__utma' ] ?? '',
+			'_utmz' => $_COOKIE[ '__utmz' ] ?? '',
+//			'_utmht' => '',
+//			'_u' => '',
+//			'jid' => '',
+//			'cid' => '', //TODO: get client id from cookie (_ga field?)
+			'tid' => $wgDevelEnvironment ? 'UA-32129070-2' : 'UA-32129070-1',
+			// custom dimensions
+			'cd1' => $wgDBname,
+			'cd2' => $wgContLanguageCode,
+			'cd3' => implode(',', $hubFactory->getWikiVertical( $wgCityId )),
+			'cd4' => $skinName,
+			'cd5' => $wgUser->isAnon() ? 'anon' : 'user',
+			'cd8' => WikiaPageType::getPageType(),
+			'cd9' => $wgCityId,
+			'cd13' => AdTargeting::getEsrbRating(),
+			'cd14' => isset( $adContext[ 'opts' ][ 'showAds' ] ) ? 'Yes' : 'No',
+			'cd15' => WikiaPageType::isCorporatePage(),
+//			'cd16' => '', // TODO: krux segment, getKruxSegment // Krux Segment
+			'cd17' => implode(',', $hubFactory->getWikiVertical( $wgCityId )),
+			'cd18' => implode( ',', $hubFactory->getWikiCategories( $wgCityId ) ),
+			'cd19' => WikiaPageType::getArticleType(),
+//			'cd20' => '', //TODO: performance ab testing, window.wgABPerformanceTest || 'not set' // Performance A/B testing
+			'cd21' => $wgTitle->getArticleID(),
+			'cd23' => $wgUser->isSpecificPowerUser( Wikia\PowerUser\PowerUser::TYPE_FREQUENT ) ? 'Yes' : 'No',
+			'cd24' => $wgUser->isSpecificPowerUser( Wikia\PowerUser\PowerUser::TYPE_LIFETIME ) ? 'Yes' : 'No',
+			'cd25' => $wgTitle->getNamespace(),
+//			'cd26' => '', //TODO: seo testing bucket, String(window.wgSeoTestingBucket || 0 // SEO Testing bucket
+		];
+		if (!$wgUser->isAnon()) {
+			$params['uid'] = md5( $wgUser->getId() . $wgGAUserIdSalt );
+		}
+		$url = static::GA_URL . '/debug/collect?' .
+			   implode( "&", array_map( function ( $k, $v ) {
+				   if(is_array($v)) {
+					   print_r($k);
+				   }
+				   return "{$k}={$v}";
+			   }, array_keys( $params ), $params ) );
 
 		return $url;
 	}
