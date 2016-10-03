@@ -182,7 +182,6 @@ class NavigationModel extends WikiaModel {
 	 * @param string $type
 	 * @param string $source
 	 * @param array $maxChildrenAtLevel
-	 * @param bool $forContent
 	 * @param bool $refreshCache pass true to refresh the cache which stores parsed navigation tree
 	 *
 	 * @return Mixed|null
@@ -201,7 +200,7 @@ class NavigationModel extends WikiaModel {
 					self::CACHE_TTL
 				);
 
-				foreach ( $this->menuNodes[0]['children'] as $id ) {
+				foreach ( $this->menuNodes[0][self::CHILDREN] as $id ) {
 					$menuData[] = $this->recursiveConvertMenuNodeToArray( $id );
 				}
 
@@ -245,14 +244,14 @@ class NavigationModel extends WikiaModel {
 			$returnValue['canonicalAttr'] = null;
 		}
 
-		if ( isset( $node['children'] ) ) {
+		if ( isset( $node[self::CHILDREN] ) ) {
 			$children = [];
 
-			foreach ( $node['children'] as $childId ) {
+			foreach ( $node[self::CHILDREN] as $childId ) {
 				$children[] = $this->recursiveConvertMenuNodeToArray( $childId );
 			}
 
-			$returnValue['children'] = $children;
+			$returnValue[self::CHILDREN] = $children;
 		}
 
 		return $returnValue;
