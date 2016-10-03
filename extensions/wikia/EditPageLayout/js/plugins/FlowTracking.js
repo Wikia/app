@@ -7,7 +7,7 @@
 
 		if (!RTE) {
 			return 'rte-' + mode;
-		} else if (mode == 'source') {
+		} else if (mode === 'source') {
 			return 'sourceedit';
 		}
 
@@ -33,7 +33,6 @@
 						//TODO: track middle step for other flows
 					} else {
 						flowTrack.beginFlow('direct-url', {editor: editorName(editor.mode)});
-						console.log(editorName(editor.mode));
 					}
 				}
 
