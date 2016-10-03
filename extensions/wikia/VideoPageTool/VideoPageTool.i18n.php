@@ -4,7 +4,7 @@ $messages = [];
 
 $messages['en'] = [
 	'videopagetool-desc' => 'Wikia\'s Video Tool',
-	'videopagetool-page-title' => 'Wikia Video Tool',
+	'videopagetool-page-title' => 'Fandom Video Tool',
 	'right-videopagetool' => 'Access Wikia\'s Video Tool',
 	'videopagetool-error-permission' => 'You cannot access this tool.',
 	'videopagetool-error-invalid-language' => 'Invalid language',
@@ -21,7 +21,7 @@ $messages['en'] = [
 	'videopagetool-error-program-not-ready' => 'Please save all sections first',
 	'videopagetool-section-featured' => 'Featured',
 	'videopagetool-section-category' => 'Latest Video',
-	'videopagetool-section-fan' => 'Wikia Fan Media',
+	'videopagetool-section-fan' => 'Fandom Fan Media',
 	'videopagetool-publish-button' => 'Publish',
 	'videopagetool-button-add-video' => 'Add a video',
 	'videopagetool-button-add-thumbnail' => 'Add Image',
@@ -61,7 +61,7 @@ $messages['en'] = [
 	'videopagetool-formerror-category-name' => 'At least 3 categories must be chosen',
 	'videopagetool-date-header' => 'Editing for date: $1',
 	'videohomepage-header-dropdown-name' => 'Discover',
-	'videohomepage-header-search-placeholder' => 'Search for Wikia videos',
+	'videohomepage-header-search-placeholder' => 'Search for Fandom videos',
 	'videohomepage-header-browse' => 'Browse',
 	'videopagetool-header-last-saved' => '\'\'\'Last saved:\'\'\' $1',
 	'videopagetool-header-publish-date' => '\'\'\'Publish date:\'\'\' $1',
@@ -78,7 +78,7 @@ $messages['en'] = [
 
 $messages['qqq'] = [
 	'videopagetool-desc' => '{{desc}}',
-	'videopagetool-page-title' => 'This is the page header/title (h1 tag) that is displayed at the top of the page.',
+	'videopagetool-page-title' => 'Missing documentation',
 	'videopagetool-error-permission' => 'This text appears if user does not have permission to access the tool.',
 	'videopagetool-error-invalid-language' => 'This text appears if the language is invalid.',
 	'videopagetool-error-invalid-date' => 'This text appears if the date is invalid.',
@@ -94,7 +94,7 @@ $messages['qqq'] = [
 	'videopagetool-error-image-invalid-size' => 'This text appears if the image size is invalid',
 	'videopagetool-section-featured' => 'Link title for the left menu item',
 	'videopagetool-section-category' => 'Link title for the left menu item',
-	'videopagetool-section-fan' => 'Link title for the left menu item',
+	'videopagetool-section-fan' => 'Missing documentation',
 	'videopagetool-publish-button' => 'Button text - click the button to publish the page based on what\'s been inputted into the form.',
 	'videopagetool-button-add-video' => 'Button text - click the button to open the add video modal',
 	'videopagetool-button-add-thumbnail' => 'Button text - click the button to open the upload image modal',
@@ -131,7 +131,7 @@ $messages['qqq'] = [
 	'videopagetool-formerror-altthumb' => 'Error message for required custom image to be added',
 	'videopagetool-date-header' => 'Shows the date that you\'re programming for at the top of the form.',
 	'videohomepage-header-dropdown-name' => 'Name of the dropdown that allows users to explore Wikia Video\'s sections',
-	'videohomepage-header-search-placeholder' => 'Placeholder text for Wikia Video search box',
+	'videohomepage-header-search-placeholder' => 'Missing documentation',
 	'videopagetool-header-last-saved' => 'This text is the date and time the page was last saved',
 	'videopagetool-header-publish-date' => 'This text is the date the page was published',
 	'videopagetool-header-not-published' => 'This text is displayed if the page has not yet been published',
@@ -146,13 +146,15 @@ $messages['qqq'] = [
 ];
 
 $messages['de'] = [
-	'videohomepage-header-search-placeholder' => 'Suche nach Wikia-Videos',
-	'videopagetool-page-title' => 'Wikia Video-Tool',
-	'videopagetool-section-fan' => 'Wikia Fan-Medien',
+	'videohomepage-header-search-placeholder' => 'Nach Fandom-Videos suchen',
+	'videopagetool-page-title' => 'Fandom Video-Tool',
+	'videopagetool-section-fan' => 'Fandom Fan-Medien',
 ];
 
 $messages['es'] = [
-	'videohomepage-header-search-placeholder' => 'Buscar videos de Wikia',
+	'videohomepage-header-search-placeholder' => 'Buscar por videos en Fandom',
+	'videopagetool-page-title' => 'Videoteca de Fandom',
+	'videopagetool-section-fan' => 'Fandom Fan Media',
 ];
 
 $messages['fi'] = [
@@ -160,33 +162,33 @@ $messages['fi'] = [
 ];
 
 $messages['fr'] = [
-	'videohomepage-header-search-placeholder' => 'Rechercher des vidéos de Wikia',
-	'videopagetool-page-title' => 'Outil Wikia pour les vidéos',
-	'videopagetool-section-fan' => 'Médias Wikia par les fans',
+	'videohomepage-header-search-placeholder' => 'Rechercher des vidéos de Fandom',
+	'videopagetool-page-title' => 'Outil vidéo de Fandom',
+	'videopagetool-section-fan' => 'Médias des fans de Fandom',
 ];
 
 $messages['it'] = [
-	'videohomepage-header-search-placeholder' => 'Cerca video di Wikia',
-	'videopagetool-page-title' => 'Wikia Video Tool',
-	'videopagetool-section-fan' => 'Wikia Fan Media',
+	'videohomepage-header-search-placeholder' => 'Cerca video Fandom',
+	'videopagetool-page-title' => 'Strumento video di Fandom',
+	'videopagetool-section-fan' => 'Fandom Fan Media',
 ];
 
 $messages['ja'] = [
-	'videohomepage-header-search-placeholder' => 'ウィキアビデオを検索',
-	'videopagetool-page-title' => 'ウィキアビデオツール',
-	'videopagetool-section-fan' => 'ウィキアファンメディア',
+	'videohomepage-header-search-placeholder' => 'Fandomの動画を検索',
+	'videopagetool-page-title' => 'Fandom動画ツール',
+	'videopagetool-section-fan' => 'Fandom ファンメディア',
 ];
 
 $messages['pl'] = [
-	'videohomepage-header-search-placeholder' => 'Szukaj filmów na Wikii',
-	'videopagetool-page-title' => 'Narzędzie Wideo Wikii',
-	'videopagetool-section-fan' => 'Multimedia od fanów',
+	'videohomepage-header-search-placeholder' => 'Szukaj filmów w Fandom',
+	'videopagetool-page-title' => 'Narzędzia wideo portalu Fandom',
+	'videopagetool-section-fan' => 'Multimedia dla Fanów portalu Fandom',
 ];
 
 $messages['pt'] = [
-	'videohomepage-header-search-placeholder' => 'Procure por vídeos na Wikia',
-	'videopagetool-page-title' => 'Ferramenta de Vídeo da Wikia',
-	'videopagetool-section-fan' => 'Mídia de fãs na Wikia',
+	'videohomepage-header-search-placeholder' => 'Buscar vídeos do Fandom',
+	'videopagetool-page-title' => 'Ferramenta de vídeo do Fandom',
+	'videopagetool-section-fan' => 'Mídia do fã do Fandom',
 ];
 
 $messages['pt-br'] = [
@@ -196,8 +198,9 @@ $messages['pt-br'] = [
 ];
 
 $messages['ru'] = [
-	'videohomepage-header-search-placeholder' => 'Поиск по видео на Викия',
-	'videopagetool-page-title' => 'Видео инструмент Викия',
+	'videohomepage-header-search-placeholder' => 'Поиск видео на Фэндоме',
+	'videopagetool-page-title' => 'Инструмент Фэндома для видео',
+	'videopagetool-section-fan' => 'Медиаматериалы участников Фэндома',
 ];
 
 $messages['zh'] = [
@@ -207,9 +210,9 @@ $messages['zh'] = [
 ];
 
 $messages['zh-hant'] = [
-	'videohomepage-header-search-placeholder' => '搜尋Wikia影片',
-	'videopagetool-page-title' => 'Wikia影片工具',
-	'videopagetool-section-fan' => 'Wikia 粉絲媒體',
+	'videohomepage-header-search-placeholder' => 'Fandom影片搜索',
+	'videopagetool-page-title' => 'Fandom影片工具',
+	'videopagetool-section-fan' => 'Fandom粉絲媒體',
 ];
 
 $messages['zh-hk'] = [
@@ -222,5 +225,11 @@ $messages['zh-tw'] = [
 	'videohomepage-header-search-placeholder' => '搜尋Wikia影片',
 	'videopagetool-page-title' => 'Wikia影片工具',
 	'videopagetool-section-fan' => 'Wikia 粉絲媒體',
+];
+
+$messages['zh-hans'] = [
+	'videohomepage-header-search-placeholder' => '搜索Fandom视频',
+	'videopagetool-page-title' => 'Fandom视频工具',
+	'videopagetool-section-fan' => 'Fandom粉丝媒体',
 ];
 
