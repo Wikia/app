@@ -48,6 +48,9 @@ describe('ext.wikia.adEngine.config.desktop', function () {
 					name: 'monetizationService',
 					canHandleSlot: noop
 				},
+				netzAthleten: {
+					name: 'na'
+				},
 				remnantGpt: {
 					name: 'remnant'
 				},
@@ -81,6 +84,7 @@ describe('ext.wikia.adEngine.config.desktop', function () {
 			mocks.providers.directGpt,
 			mocks.providers.evolve2,
 			mocks.providers.monetizationService,
+			mocks.providers.netzAthleten,
 			mocks.providers.remnantGpt,
 			mocks.providers.rubiconFastlane,
 			mocks.providers.turtle,
