@@ -1,4 +1,3 @@
-/*global define*/
 define('ext.wikia.recirculation.helpers.curatedContent', [
 	'jquery',
 	'underscore',
@@ -7,6 +6,7 @@ define('ext.wikia.recirculation.helpers.curatedContent', [
 	'wikia.cache',
 	'ext.wikia.recirculation.tracker'
 ], function ($, _, w, nirvana, cache , tracker) {
+	'use strict';
 
 	return function(config) {
 		var defaults = {
@@ -33,6 +33,9 @@ define('ext.wikia.recirculation.helpers.curatedContent', [
 					} else {
 						deferred.reject();
 					}
+				},
+				onErrorCallback: function() {
+					deferred.reject();
 				}
 			});
 
@@ -80,7 +83,7 @@ define('ext.wikia.recirculation.helpers.curatedContent', [
 				setSeen(curatedPosts[0]);
 				deferred.resolve(data);
 			}).fail(function() {
-				deferred.resolve(data)
+				deferred.resolve(data);
 			});
 
 			return deferred.promise();
@@ -111,6 +114,6 @@ define('ext.wikia.recirculation.helpers.curatedContent', [
 			injectContent: injectContent,
 			setupTracking: setupTracking,
 			loadData: loadData
-		}
-	}
+		};
+	};
 });

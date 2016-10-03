@@ -13,17 +13,42 @@ class ImageHelper {
 	const ICON_CACHE_TTL = 86400;
 
 	static public $icons = [
-		'Wikia',
-		'Comics',
-		'Games',
-		'Movies',
-		'Lifestyle',
-		'Music',
-		'Books',
-		'TV',
-		'Twitter',
-		'Facebook',
-		'YouTube',
+		'FandomTopBar' => [
+			'name' => 'Top-Bar-2x',
+			'extension' => 'png'
+		],
+		'FandomLogoHeader' => [
+			'name' => 'Hero-Logo-2x',
+			'extension' => 'png'
+		],
+		'FandomLogoFooter' => [
+			'name' => 'Footer-logo-2x',
+			'extension' => 'png'
+		],
+		'Wikia' => [
+			'name' => 'Wikia',
+			'extension' => 'gif'
+		],
+		'Twitter' => [
+			'name' => 'Twitter-Icon-2x',
+			'extension' => 'png'
+		],
+		'Facebook' => [
+			'name' => 'Facebook-Icon-2x',
+			'extension' => 'png'
+		],
+		'YouTube' => [
+			'name' => 'YouTube_Default-2x',
+			'extension' => 'png'
+		],
+		'Reddit' => [
+			'name' => 'Reddit-Icon-2x',
+			'extension' => 'png'
+		],
+		'Instagram' => [
+			'name' => 'Instagram-Default-2x',
+			'extension' => 'png'
+		],
 	];
 
 	/**
@@ -34,9 +59,9 @@ class ImageHelper {
 	public static function getIconInfo() {
 		$info = [];
 
-		foreach ( self::$icons as $name ) {
-			$fileInfo = self::getFileInfo( $name . '.gif' );
-			$info[$name] = $fileInfo;
+		foreach ( self::$icons as $key => $icon ) {
+			$fileInfo = self::getFileInfo( $icon['name'] . '.' . $icon['extension'] );
+			$info[$key] = $fileInfo;
 		}
 
 		return $info;

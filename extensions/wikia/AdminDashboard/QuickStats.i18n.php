@@ -16,9 +16,6 @@ $messages['en'] = array(
 	'quickstats-date-format' => 'M d',	// follow this guide: http://php.net/manual/en/function.date.php
 	'quickstats-totals-label' => 'Totals',
 	'quickstats-see-more-stats-link' => '[[Special:Insights|See more stats]]',
-	'quickstats-number-shortening' => '$1K',
-	'quickstats-number-shortening-millions' => '$1M',
-	'quickstats-number-shortening-billions' => '$1B',
 );
 
 /** Message documentation (Message documentation)
@@ -35,11 +32,6 @@ $messages['qqq'] = array(
 	'quickstats-date-format' => 'Follow this guide: http://php.net/manual/en/function.date.php.',
 	'quickstats-totals-label' => '{{Identical|Total}}',
 	'quickstats-see-more-stats-link' => 'Link to [[Special:WikiStats]] under the "quick stats" chart in the [[Special:AdminDashboard|Admin Dashboard]].',
-	'quickstats-number-shortening' => 'This is a shortend number abbreviation shown in a stats table. Number larger than 10.000 are rendered using this message (as thousands rounded up to the first decimal fraction). K stands for thousands (1.000)
-
-{{Identical|$1k}}',
-	'quickstats-number-shortening-millions' => 'This is a shortend number abbreviation shown in a stats table. Number between 1.000.000 and 999.999.999.999 are rendered using this message (as millions rounded up to the first decimal fraction). M stands for millions (1.000.000)',
-	'quickstats-number-shortening-billions' => 'This is a shortend number abbreviation shown in a stats table. Number larger than 1.000.000.000 are rendered using this message (as billions rounded up to the first decimal fraction). B stands for billions (1.000.000.000)',
 );
 
 /** Afrikaans (Afrikaans)
@@ -71,9 +63,6 @@ $messages['ar'] = array(
 	'quickstats-header-photos' => 'الصور',
 	'quickstats-totals-label' => 'المجموع',
 	'quickstats-see-more-stats-link' => '[[Special:Insights|مشاهدة المزيد من الإحصائيات]]',
-	'quickstats-number-shortening' => '$1 ألف',
-	'quickstats-number-shortening-millions' => '$1 مليون',
-	'quickstats-number-shortening-billions' => '$1 مليار',
 );
 
 /** Aramaic (ܐܪܡܝܐ)
@@ -108,9 +97,6 @@ $messages['az'] = array(
 	'quickstats-header-photos' => 'Şəkillər',
 	'quickstats-totals-label' => 'Yekunu',
 	'quickstats-see-more-stats-link' => '[[Special:Insights|Daha çox statistikaya bax]]',
-	'quickstats-number-shortening' => '$1 тис.',
-	'quickstats-number-shortening-millions' => '$1M',
-	'quickstats-number-shortening-billions' => '$1milyard',
 );
 
 /** South Azerbaijani (تۆرکجه)
@@ -122,7 +108,6 @@ $messages['azb'] = array(
 	'quickstats-header-views' => 'گؤرونوشلر',
 	'quickstats-header-edits' => 'دَییشدیرمه‌لر',
 	'quickstats-header-photos' => 'شکیل‌لر',
-	'quickstats-number-shortening' => '$1 مین',
 );
 
 /** Bashkir (башҡортса)
@@ -137,9 +122,6 @@ $messages['ba'] = array(
 	'quickstats-header-photos' => 'Фото',
 	'quickstats-totals-label' => 'Барыһы',
 	'quickstats-see-more-stats-link' => '[[Special:Insights|Тағын статистика]]',
-	'quickstats-number-shortening' => '$1K',
-	'quickstats-number-shortening-millions' => '$1милл.',
-	'quickstats-number-shortening-billions' => '$1миллиард',
 );
 
 /** Bavarian (Boarisch)
@@ -161,9 +143,6 @@ $messages['bcl'] = array(
 	'quickstats-header-photos' => 'Mga Litrato',
 	'quickstats-totals-label' => 'Mga Kabilogan',
 	'quickstats-see-more-stats-link' => '[[Special:Insights|Hilngon an mga kadugangang mga estadistika]]',
-	'quickstats-number-shortening' => '$1 na ribo',
-	'quickstats-number-shortening-millions' => '$1 na milyon',
-	'quickstats-number-shortening-billions' => '$1 na bilyon',
 );
 
 /** Belarusian (беларуская)
@@ -186,9 +165,6 @@ $messages['bg'] = array(
 	'quickstats-header-photos' => 'Снимки',
 	'quickstats-totals-label' => 'Общо',
 	'quickstats-see-more-stats-link' => '[[Special:Insights|Още статистики]]',
-	'quickstats-number-shortening' => '$1 хил.',
-	'quickstats-number-shortening-millions' => '$1M',
-	'quickstats-number-shortening-billions' => '$1B',
 );
 
 /** Western Balochi (بلوچی رخشانی)
@@ -199,9 +175,6 @@ $messages['bgn'] = array(
 	'quickstats-header-views' => 'دیستینین',
 	'quickstats-header-edits' => 'ایڈیٹ',
 	'quickstats-header-photos' => 'اکس هان',
-	'quickstats-number-shortening' => '$1 هزار',
-	'quickstats-number-shortening-millions' => '$1 میلیون',
-	'quickstats-number-shortening-billions' => '$1 میلیارد',
 );
 
 /** Bhojpuri (भोजपुरी)
@@ -215,9 +188,6 @@ $messages['bho'] = array(
 	'quickstats-header-photos' => 'तस्वीरें',
 	'quickstats-totals-label' => 'योग',
 	'quickstats-see-more-stats-link' => '[[Special:Insights|और आँकड़ा देखीं]]',
-	'quickstats-number-shortening' => '$1के',
-	'quickstats-number-shortening-millions' => '$1मिलियन',
-	'quickstats-number-shortening-billions' => '$1बिलियन',
 );
 
 /** Bengali (বাংলা)
@@ -233,9 +203,6 @@ $messages['bn'] = array(
 	'quickstats-header-photos' => 'চিত্রসমূহ',
 	'quickstats-totals-label' => 'মোট',
 	'quickstats-see-more-stats-link' => '[[Special:Insights|আরও পরিসংখ্যান দেখুন]]',
-	'quickstats-number-shortening' => '$1 হাজার',
-	'quickstats-number-shortening-millions' => '$1 মিলিয়ন',
-	'quickstats-number-shortening-billions' => '$1 বিলিয়ন',
 );
 
 /** Tibetan (བོད་ཡིག)
@@ -262,9 +229,6 @@ $messages['br'] = array(
 	'quickstats-header-photos' => "Luc'hskeudennoù",
 	'quickstats-totals-label' => 'Hollad',
 	'quickstats-see-more-stats-link' => "[[Special:Insights|Gwelet muioc'h a stadegoù]]",
-	'quickstats-number-shortening' => '$1 тис.',
-	'quickstats-number-shortening-millions' => '$1M',
-	'quickstats-number-shortening-billions' => '$1Mrd',
 );
 
 /** Bosnian (bosanski)
@@ -274,9 +238,6 @@ $messages['bs'] = array(
 	'quickstats-header-photos' => 'Fotografije',
 	'quickstats-totals-label' => 'Ukupno',
 	'quickstats-see-more-stats-link' => '[[Special:Insights|Pogledajte više statistike]]',
-	'quickstats-number-shortening' => '$1K',
-	'quickstats-number-shortening-millions' => '$1M',
-	'quickstats-number-shortening-billions' => '$1B',
 );
 
 /** Iriga Bicolano (Iriga Bicolano)
@@ -286,9 +247,6 @@ $messages['bto'] = array(
 	'quickstats-header-date' => 'Petsa',
 	'quickstats-header-views' => 'Mga silung',
 	'quickstats-header-edits' => 'Mga pagbalyow',
-	'quickstats-number-shortening' => '$1,000',
-	'quickstats-number-shortening-millions' => '$1 Milyon',
-	'quickstats-number-shortening-billions' => '$1 Bilyon',
 );
 
 /** Catalan (català)
@@ -306,10 +264,6 @@ $messages['ca'] = array(
 	'quickstats-date-format' => 'M d',
 	'quickstats-totals-label' => 'Totals',
 	'quickstats-see-more-stats-link' => '[[Special:Insights|Veure més estadístiques]]',
-	'quickstats-number-shortening' => '$1K',
-	'quickstats-number-shortening-millions' => '$1M',
-	'quickstats-number-shortening-billions' => '
-$1B',
 );
 
 /** Chechen (нохчийн)
@@ -326,9 +280,6 @@ $messages['ckb'] = array(
 	'quickstats-header-date' => 'ڕێکەوت',
 	'quickstats-header-edits' => 'دەستکارییەکان',
 	'quickstats-header-photos' => 'وێنەکان',
-	'quickstats-number-shortening' => '$1 ھەزار',
-	'quickstats-number-shortening-millions' => '$1 میلیۆن',
-	'quickstats-number-shortening-billions' => '$1 بیلیۆن',
 );
 
 /** Czech (čeština)
@@ -345,9 +296,6 @@ $messages['cs'] = array(
 	'quickstats-header-photos' => 'Fotografie',
 	'quickstats-totals-label' => 'Celkem',
 	'quickstats-see-more-stats-link' => '[[Special:Insights|Další statistiky]]',
-	'quickstats-number-shortening' => '$1K',
-	'quickstats-number-shortening-millions' => '$1M',
-	'quickstats-number-shortening-billions' => '$1B',
 );
 
 /** Welsh (Cymraeg)
@@ -362,9 +310,6 @@ $messages['cy'] = array(
 	'quickstats-header-photos' => 'Lluniau',
 	'quickstats-totals-label' => 'Cyfanswm',
 	'quickstats-see-more-stats-link' => '[[Special:Insights|Amlygu mwy ystadegau]]',
-	'quickstats-number-shortening' => '$1,000',
-	'quickstats-number-shortening-millions' => '$1 miliwn',
-	'quickstats-number-shortening-billions' => '$1 biliwn',
 );
 
 /** Danish (dansk)
@@ -391,9 +336,6 @@ $messages['de'] = array(
 	'quickstats-header-photos' => 'Fotos',
 	'quickstats-totals-label' => 'Gesamt',
 	'quickstats-see-more-stats-link' => '[[Special:Insights|Siehe weitere Statistiken]]',
-	'quickstats-number-shortening' => '$1K',
-	'quickstats-number-shortening-millions' => '$1M',
-	'quickstats-number-shortening-billions' => '$1B',
 );
 
 /** Zazaki (Zazaki)
@@ -407,9 +349,6 @@ $messages['diq'] = array(
 	'quickstats-header-photos' => 'Fotrafi',
 	'quickstats-totals-label' => 'Pêro piya',
 	'quickstats-see-more-stats-link' => '[[Special:Insights|istatistiki bıvin]]',
-	'quickstats-number-shortening' => '$1K',
-	'quickstats-number-shortening-millions' => '$1M',
-	'quickstats-number-shortening-billions' => '$1B',
 );
 
 /** Greek (Ελληνικά)
@@ -423,9 +362,6 @@ $messages['el'] = array(
 	'quickstats-header-photos' => 'Φωτογραφίες',
 	'quickstats-totals-label' => 'Σύνολα',
 	'quickstats-see-more-stats-link' => '[[Special:Insights|Δείτε περισσότερα στατιστικά]]',
-	'quickstats-number-shortening' => '$1K',
-	'quickstats-number-shortening-millions' => '$1M',
-	'quickstats-number-shortening-billions' => '$1δις',
 );
 
 /** British English (British English)
@@ -451,9 +387,6 @@ $messages['eo'] = array(
 	'quickstats-header-photos' => 'Fotoj',
 	'quickstats-totals-label' => 'Sumoj',
 	'quickstats-see-more-stats-link' => '[[Special:Insights|Vidu pli da statistiko]]',
-	'quickstats-number-shortening' => '$1K',
-	'quickstats-number-shortening-millions' => '$1M',
-	'quickstats-number-shortening-billions' => '$1 Mrd',
 );
 
 /** Spanish (español)
@@ -469,9 +402,6 @@ $messages['es'] = array(
 	'quickstats-header-photos' => 'Imágenes',
 	'quickstats-totals-label' => 'Total',
 	'quickstats-see-more-stats-link' => '[[Special:Insights|Ver más estadísticas]]',
-	'quickstats-number-shortening' => '$1K',
-	'quickstats-number-shortening-millions' => '$1M',
-	'quickstats-number-shortening-billions' => '$1B',
 );
 
 /** Estonian (eesti)
@@ -485,9 +415,6 @@ $messages['et'] = array(
 	'quickstats-header-photos' => 'Fotod',
 	'quickstats-totals-label' => 'Kokku',
 	'quickstats-see-more-stats-link' => '[[Special:Insights|Vaata rohkem statistikat]]',
-	'quickstats-number-shortening' => '$1K',
-	'quickstats-number-shortening-millions' => '$1M',
-	'quickstats-number-shortening-billions' => '$1B',
 );
 
 /** Basque (euskara)
@@ -500,8 +427,6 @@ $messages['eu'] = array(
 	'quickstats-header-edits' => 'Aldaketak',
 	'quickstats-header-photos' => 'Argazkiak',
 	'quickstats-see-more-stats-link' => '[[Special:Insights|Ikusi estatistika gehiago]]',
-	'quickstats-number-shortening' => '$1 K',
-	'quickstats-number-shortening-millions' => '$1 M',
 );
 
 /** Persian (فارسی)
@@ -518,9 +443,6 @@ $messages['fa'] = array(
 	'quickstats-header-photos' => 'عکس‌ها',
 	'quickstats-totals-label' => 'مجموع',
 	'quickstats-see-more-stats-link' => '[[Special:Insights|دیدن آمار بیشتر]]',
-	'quickstats-number-shortening' => '$1 هزار',
-	'quickstats-number-shortening-millions' => '$1 میلیون',
-	'quickstats-number-shortening-billions' => '$1 میلیارد',
 );
 
 /** Finnish (suomi)
@@ -536,9 +458,6 @@ $messages['fi'] = array(
 	'quickstats-header-photos' => 'Kuvia',
 	'quickstats-totals-label' => 'Yhteensä',
 	'quickstats-see-more-stats-link' => '[[Special:Insights|Katso lisää tilastoja]]',
-	'quickstats-number-shortening' => '$1 tuhatta',
-	'quickstats-number-shortening-millions' => '$1 milj',
-	'quickstats-number-shortening-billions' => '$1 mrd',
 );
 
 /** Faroese (føroyskt)
@@ -552,9 +471,6 @@ $messages['fo'] = array(
 	'quickstats-header-photos' => 'Myndir',
 	'quickstats-totals-label' => 'Tilsamans',
 	'quickstats-see-more-stats-link' => '[[Special:Insights|Sí fleiri hagtøl]]',
-	'quickstats-number-shortening' => '$1K',
-	'quickstats-number-shortening-millions' => '$1M',
-	'quickstats-number-shortening-billions' => '$1B',
 );
 
 /** French (français)
@@ -570,9 +486,6 @@ $messages['fr'] = array(
 	'quickstats-header-photos' => 'Images',
 	'quickstats-totals-label' => 'Totaux',
 	'quickstats-see-more-stats-link' => '[[Special:Insights|Voir plus de stats]]',
-	'quickstats-number-shortening' => '$1K',
-	'quickstats-number-shortening-millions' => '$1M',
-	'quickstats-number-shortening-billions' => '$1 Mrd',
 );
 
 /** Western Frisian (Frysk)
@@ -580,9 +493,6 @@ $messages['fr'] = array(
  */
 $messages['fy'] = array(
 	'quickstats-header-date' => 'Datum',
-	'quickstats-number-shortening' => '$1K',
-	'quickstats-number-shortening-millions' => '$1*10ˆ6',
-	'quickstats-number-shortening-billions' => '$1*10ˆ9',
 );
 
 /** Galician (galego)
@@ -598,9 +508,6 @@ $messages['gl'] = array(
 	'quickstats-date-format' => 'd de M',
 	'quickstats-totals-label' => 'Totais',
 	'quickstats-see-more-stats-link' => '[[Special:Insights|Ollar máis estatísticas]]',
-	'quickstats-number-shortening' => '$1K',
-	'quickstats-number-shortening-millions' => '$1M',
-	'quickstats-number-shortening-billions' => '$1B',
 );
 
 /** Hakka Chinese (客家語/Hak-kâ-ngî)
@@ -614,9 +521,6 @@ $messages['hak'] = array(
 	'quickstats-header-photos' => '相片',
 	'quickstats-totals-label' => '共計',
 	'quickstats-see-more-stats-link' => '[[Special:Insights|查看還加多統計]]',
-	'quickstats-number-shortening' => '$1千',
-	'quickstats-number-shortening-millions' => '$1百萬',
-	'quickstats-number-shortening-billions' => '$10億',
 );
 
 /** Hawaiian (Hawai`i)
@@ -630,9 +534,6 @@ $messages['haw'] = array(
 	'quickstats-header-photos' => 'Kiʻi',
 	'quickstats-totals-label' => 'Huinanui',
 	'quickstats-see-more-stats-link' => '[[Special:Insights|Nā ʻikepilihelu ʻē aʻe]]',
-	'quickstats-number-shortening' => '$1K',
-	'quickstats-number-shortening-millions' => '$1M',
-	'quickstats-number-shortening-billions' => '$1B',
 );
 
 /** Hebrew (עברית)
@@ -647,9 +548,6 @@ $messages['he'] = array(
 	'quickstats-header-photos' => 'תמונות',
 	'quickstats-totals-label' => 'סה"כ',
 	'quickstats-see-more-stats-link' => '[[Special:Insights|לצפיה בסטטיסטיקות נוספות]]',
-	'quickstats-number-shortening' => '$1 אלפים',
-	'quickstats-number-shortening-millions' => '$1 מיליונים',
-	'quickstats-number-shortening-billions' => '$1 מיליארדים',
 );
 
 /** Hindi (हिन्दी)
@@ -665,9 +563,6 @@ $messages['hi'] = array(
 	'quickstats-header-photos' => 'तस्वीरें',
 	'quickstats-totals-label' => 'योग',
 	'quickstats-see-more-stats-link' => '[[विशिष्ट:विकीआँकड़े|देखना अधिक आँकड़े]]', # Fuzzy
-	'quickstats-number-shortening' => '$1के',
-	'quickstats-number-shortening-millions' => '$1मिलियन',
-	'quickstats-number-shortening-billions' => '$1बिलियन',
 );
 
 /** Hunsrik (Hunsrik)
@@ -681,9 +576,6 @@ $messages['hrx'] = array(
 	'quickstats-header-photos' => 'Fotos',
 	'quickstats-totals-label' => 'Gesamt',
 	'quickstats-see-more-stats-link' => '[[Special:Insights|Sieh weitre Statistike]]',
-	'quickstats-number-shortening' => '$1K',
-	'quickstats-number-shortening-millions' => '$1M',
-	'quickstats-number-shortening-billions' => '$1B',
 );
 
 /** Hungarian (magyar)
@@ -698,9 +590,6 @@ $messages['hu'] = array(
 	'quickstats-header-photos' => 'Képek',
 	'quickstats-totals-label' => 'Összesítés',
 	'quickstats-see-more-stats-link' => '[[Special:Insights|Részletes statisztika]]',
-	'quickstats-number-shortening' => '$1 ezer',
-	'quickstats-number-shortening-millions' => '$1 millió',
-	'quickstats-number-shortening-billions' => '$1 milliárd',
 );
 
 /** Interlingua (interlingua)
@@ -714,9 +603,6 @@ $messages['ia'] = array(
 	'quickstats-header-photos' => 'Photos',
 	'quickstats-totals-label' => 'Totales',
 	'quickstats-see-more-stats-link' => '[[Special:Insights|Vider plus statisticas]]',
-	'quickstats-number-shortening' => '$1K',
-	'quickstats-number-shortening-millions' => '$1mln',
-	'quickstats-number-shortening-billions' => '$1mld',
 );
 
 /** Indonesian (Bahasa Indonesia)
@@ -732,9 +618,6 @@ $messages['id'] = array(
 	'quickstats-header-photos' => 'Foto',
 	'quickstats-totals-label' => 'Total',
 	'quickstats-see-more-stats-link' => '[[Special:Insights|Lihat lebih banyak statistik]]',
-	'quickstats-number-shortening' => '$1K',
-	'quickstats-number-shortening-millions' => '$1M',
-	'quickstats-number-shortening-billions' => '$1B',
 );
 
 /** Ingush (ГӀалгӀай)
@@ -760,9 +643,6 @@ $messages['it'] = array(
 	'quickstats-header-photos' => 'Foto',
 	'quickstats-totals-label' => 'Totale',
 	'quickstats-see-more-stats-link' => '[[Special:Insights|Visualizza statistiche complete]]',
-	'quickstats-number-shortening' => '$1K',
-	'quickstats-number-shortening-millions' => '$1 mln',
-	'quickstats-number-shortening-billions' => '$1B',
 );
 
 /** Japanese (日本語)
@@ -778,9 +658,6 @@ $messages['ja'] = array(
 	'quickstats-date-format' => 'n月j日',
 	'quickstats-totals-label' => '合計',
 	'quickstats-see-more-stats-link' => '[[Special:Insights|さらに詳しい統計をみる]]',
-	'quickstats-number-shortening' => '$1K',
-	'quickstats-number-shortening-millions' => '$1M',
-	'quickstats-number-shortening-billions' => '$1B',
 );
 
 /** Georgian (ქართული)
@@ -802,9 +679,6 @@ $messages['kn'] = array(
 	'quickstats-header-photos' => 'ಭಾವಚಿತ್ರಗಳು',
 	'quickstats-totals-label' => 'ಒತ್ತುಗಳು',
 	'quickstats-see-more-stats-link' => '[[Special:Insights|ಇನ್ನೂ ಆನ್ಕಡೆಗಳನ್ನು ]]',
-	'quickstats-number-shortening' => '$1 ಸಾವಿರ',
-	'quickstats-number-shortening-millions' => '$1 ದಶಲಕ್ಷ',
-	'quickstats-number-shortening-billions' => '$1 ಶತಕೋಟಿ',
 );
 
 /** Korean (한국어)
@@ -824,9 +698,6 @@ $messages['ko'] = array(
 	'quickstats-date-format' => 'M d일',
 	'quickstats-totals-label' => '합계',
 	'quickstats-see-more-stats-link' => '[[Special:Insights|더 많은 통계 보기]]',
-	'quickstats-number-shortening' => '$1천',
-	'quickstats-number-shortening-millions' => '$1백만',
-	'quickstats-number-shortening-billions' => '$1B',
 );
 
 /** Colognian (Ripoarisch)
@@ -868,9 +739,6 @@ $messages['lb'] = array(
 	'quickstats-header-photos' => 'Fotoen',
 	'quickstats-totals-label' => 'Total',
 	'quickstats-see-more-stats-link' => '[[Special:Insights|Méi Statistiken]]',
-	'quickstats-number-shortening' => '$1k',
-	'quickstats-number-shortening-millions' => '$1M',
-	'quickstats-number-shortening-billions' => '$1 Mrd',
 );
 
 /** Lezghian (лезги)
@@ -880,9 +748,6 @@ $messages['lez'] = array(
 	'quickstats-header-edits' => 'Дегишарин',
 	'quickstats-header-photos' => 'Фото',
 	'quickstats-totals-label' => 'Мандни',
-	'quickstats-number-shortening' => '$1K',
-	'quickstats-number-shortening-millions' => '$1M',
-	'quickstats-number-shortening-billions' => '$1B',
 );
 
 /** Northern Luri (لوری مینجایی)
@@ -896,9 +761,6 @@ $messages['lrc'] = array(
 	'quickstats-header-photos' => 'عسكيا',
 	'quickstats-totals-label' => 'همه',
 	'quickstats-see-more-stats-link' => '[[Special:ويكی امار|آماريا بيشتر بوينيتو]]', # Fuzzy
-	'quickstats-number-shortening' => '$1ك',
-	'quickstats-number-shortening-millions' => '$1 م',
-	'quickstats-number-shortening-billions' => '$1 ب',
 );
 
 /** Lithuanian (lietuvių)
@@ -914,9 +776,6 @@ $messages['lt'] = array(
 	'quickstats-header-photos' => 'Nuotraukos',
 	'quickstats-totals-label' => 'Viso',
 	'quickstats-see-more-stats-link' => '[[Special:WikiStats|Pamatyti daugiau statistikų]]',
-	'quickstats-number-shortening' => '$1K',
-	'quickstats-number-shortening-millions' => '$1M',
-	'quickstats-number-shortening-billions' => '$1B',
 );
 
 /** Latvian (latviešu)
@@ -931,9 +790,6 @@ $messages['lv'] = array(
 	'quickstats-header-photos' => 'Fotogrāfijas',
 	'quickstats-totals-label' => 'Kopsummas',
 	'quickstats-see-more-stats-link' => '[[Special:Insights|Skatīt vairāk stats]]',
-	'quickstats-number-shortening' => '$1K',
-	'quickstats-number-shortening-millions' => '$1M',
-	'quickstats-number-shortening-billions' => '$1B',
 );
 
 /** Literary Chinese (文言)
@@ -943,8 +799,6 @@ $messages['lzh'] = array(
 	'quickstats-header-date' => '期',
 	'quickstats-header-views' => '覽',
 	'quickstats-header-edits' => '纂',
-	'quickstats-number-shortening' => '$1千',
-	'quickstats-number-shortening-millions' => '$1百萬',
 );
 
 /** Basa Banyumasan (Basa Banyumasan)
@@ -958,9 +812,6 @@ $messages['map-bms'] = array(
 	'quickstats-header-photos' => 'Foto',
 	'quickstats-totals-label' => 'Total',
 	'quickstats-see-more-stats-link' => '[[Special:Insights|Deleng lewih akeh maning statistike]]',
-	'quickstats-number-shortening' => '$1K',
-	'quickstats-number-shortening-millions' => '$1Jt',
-	'quickstats-number-shortening-billions' => '$1M',
 );
 
 /** Macedonian (македонски)
@@ -975,9 +826,6 @@ $messages['mk'] = array(
 	'quickstats-date-format' => 'd M',
 	'quickstats-totals-label' => 'Вкупно',
 	'quickstats-see-more-stats-link' => '[[Special:Insights|Повеќе статистики]]',
-	'quickstats-number-shortening' => '$1 К',
-	'quickstats-number-shortening-millions' => '$1 млн.',
-	'quickstats-number-shortening-billions' => '$1 млд',
 );
 
 /** Malayalam (മലയാളം)
@@ -989,9 +837,6 @@ $messages['ml'] = array(
 	'quickstats-header-edits' => 'തിരുത്തുകൾ',
 	'quickstats-header-photos' => 'ചിത്രങ്ങൾ',
 	'quickstats-totals-label' => 'ആകെ',
-	'quickstats-number-shortening' => '$1 ആയിരം',
-	'quickstats-number-shortening-millions' => '$1 ദശലക്ഷം',
-	'quickstats-number-shortening-billions' => '$1 ആയിരം കോടി',
 );
 
 /** Marathi (मराठी)
@@ -1005,7 +850,6 @@ $messages['mr'] = array(
 	'quickstats-header-photos' => 'छायाचित्रे',
 	'quickstats-totals-label' => 'एकूण',
 	'quickstats-see-more-stats-link' => '[[Special:Insights|अधिक आकडेवारी बघा]]',
-	'quickstats-number-shortening' => '$1के',
 );
 
 /** Malay (Bahasa Melayu)
@@ -1020,9 +864,6 @@ $messages['ms'] = array(
 	'quickstats-date-format' => 'd M',
 	'quickstats-totals-label' => 'Jumlah',
 	'quickstats-see-more-stats-link' => '[[Special:Insights|Lihat banyak lagi statistik]]',
-	'quickstats-number-shortening' => '$1K',
-	'quickstats-number-shortening-millions' => '$1J',
-	'quickstats-number-shortening-billions' => '$1B',
 );
 
 /** Maltese (Malti)
@@ -1036,9 +877,6 @@ $messages['mt'] = array(
 	'quickstats-header-photos' => 'Ritratti',
 	'quickstats-totals-label' => 'Total',
 	'quickstats-see-more-stats-link' => '[[Special:Insights|Aktar statistika]]',
-	'quickstats-number-shortening' => '$1K',
-	'quickstats-number-shortening-millions' => '$1M',
-	'quickstats-number-shortening-billions' => '$1B',
 );
 
 /** Min Nan Chinese (Bân-lâm-gú)
@@ -1052,9 +890,6 @@ $messages['nan'] = array(
 	'quickstats-header-photos' => '圖像數量',
 	'quickstats-totals-label' => '合計',
 	'quickstats-see-more-stats-link' => '[[Special:WikiStats|閣看其他的統計]]',
-	'quickstats-number-shortening' => '$1K',
-	'quickstats-number-shortening-millions' => '$1M',
-	'quickstats-number-shortening-billions' => '$1B',
 );
 
 /** Norwegian Bokmål (norsk bokmål)
@@ -1069,9 +904,6 @@ $messages['nb'] = array(
 	'quickstats-date-format' => 'M d',
 	'quickstats-totals-label' => 'Totalt',
 	'quickstats-see-more-stats-link' => '[[Special:Insights|Se mer statistikk]]',
-	'quickstats-number-shortening' => '$1K',
-	'quickstats-number-shortening-millions' => '$1 M',
-	'quickstats-number-shortening-billions' => '$1 B',
 );
 
 /** Nepali (नेपाली)
@@ -1086,9 +918,6 @@ $messages['ne'] = array(
 	'quickstats-header-photos' => 'चित्र',
 	'quickstats-totals-label' => 'कुल',
 	'quickstats-see-more-stats-link' => '[[Special:Insights|थप तथ्याङ्क हेर्नुहोस्]]',
-	'quickstats-number-shortening' => '$1 हजार',
-	'quickstats-number-shortening-millions' => '$1 मिलियन',
-	'quickstats-number-shortening-billions' => '$1 बिलियन',
 );
 
 /** Dutch (Nederlands)
@@ -1105,9 +934,6 @@ $messages['nl'] = array(
 	'quickstats-date-format' => 'M d',
 	'quickstats-totals-label' => 'Totalen',
 	'quickstats-see-more-stats-link' => '[[Special:Insights|Meer statistieken bekijken]]',
-	'quickstats-number-shortening' => '$1K',
-	'quickstats-number-shortening-millions' => '$1*10ˆ6',
-	'quickstats-number-shortening-billions' => '$1*10ˆ9',
 );
 
 /** Occitan (occitan)
@@ -1122,9 +948,6 @@ $messages['oc'] = array(
 	'quickstats-header-photos' => 'Imatges',
 	'quickstats-totals-label' => 'Totals',
 	'quickstats-see-more-stats-link' => "[[Special:Insights|Veire mai d'estat.]]",
-	'quickstats-number-shortening' => '$1K',
-	'quickstats-number-shortening-millions' => '$1 M',
-	'quickstats-number-shortening-billions' => '$1 Mrd',
 );
 
 /** Palatine German (Pälzisch)
@@ -1138,9 +961,6 @@ $messages['pfl'] = array(
 	'quickstats-header-photos' => 'Fodos',
 	'quickstats-totals-label' => 'Gsoamd',
 	'quickstats-see-more-stats-link' => '[[Special:Insights|Waidari Schdadischdige]]',
-	'quickstats-number-shortening' => '$1k',
-	'quickstats-number-shortening-millions' => '$1Mill.',
-	'quickstats-number-shortening-billions' => '$1Mrd.',
 );
 
 /** Polish (polski)
@@ -1159,9 +979,6 @@ $messages['pl'] = array(
 	'quickstats-date-format' => 'M d',
 	'quickstats-totals-label' => 'Łącznie',
 	'quickstats-see-more-stats-link' => '[[Special:Insights|Więcej statystyk]]',
-	'quickstats-number-shortening' => '$1 tys.',
-	'quickstats-number-shortening-millions' => '$1 mln',
-	'quickstats-number-shortening-billions' => '$1 mld',
 );
 
 /** Piedmontese (Piemontèis)
@@ -1176,9 +993,6 @@ $messages['pms'] = array(
 	'quickstats-header-photos' => 'Fòto',
 	'quickstats-totals-label' => 'Totaj',
 	'quickstats-see-more-stats-link' => '[[Special:Insights|Vëdde pi dë statìstiche]]',
-	'quickstats-number-shortening' => '$1K',
-	'quickstats-number-shortening-millions' => '$1M',
-	'quickstats-number-shortening-billions' => '$1Mrd',
 );
 
 /** Pashto (پښتو)
@@ -1192,9 +1006,6 @@ $messages['ps'] = array(
 	'quickstats-header-photos' => 'انځورونه',
 	'quickstats-totals-label' => 'ټولټال',
 	'quickstats-see-more-stats-link' => '[[Special:Insights|نورې شمارنې وگورئ]]',
-	'quickstats-number-shortening' => '$1زر',
-	'quickstats-number-shortening-millions' => '$1ميليون',
-	'quickstats-number-shortening-billions' => '$1بيليون',
 );
 
 /** Portuguese (português)
@@ -1211,9 +1022,6 @@ $messages['pt'] = array(
 	'quickstats-header-photos' => 'Imagens',
 	'quickstats-totals-label' => 'Totais',
 	'quickstats-see-more-stats-link' => '[[Special:Insights|Ver mais estatísticas]]',
-	'quickstats-number-shortening' => '$1K',
-	'quickstats-number-shortening-millions' => '$1M',
-	'quickstats-number-shortening-billions' => '$1B',
 );
 
 /** Brazilian Portuguese (português do Brasil)
@@ -1232,9 +1040,6 @@ $messages['pt-br'] = array(
 	'quickstats-header-photos' => 'Fotos',
 	'quickstats-totals-label' => 'Totais',
 	'quickstats-see-more-stats-link' => '[[Special:Insights|Ver mais estatísticas]]',
-	'quickstats-number-shortening' => '$1K',
-	'quickstats-number-shortening-millions' => '$1M',
-	'quickstats-number-shortening-billions' => '$1B',
 );
 
 /** tarandíne (tarandíne)
@@ -1249,9 +1054,6 @@ $messages['roa-tara'] = array(
 	'quickstats-header-photos' => 'Foto',
 	'quickstats-totals-label' => 'Totele',
 	'quickstats-see-more-stats-link' => '[[Special:Insights|Vide cchiù statisteche]]',
-	'quickstats-number-shortening' => '$1K',
-	'quickstats-number-shortening-millions' => '$1M',
-	'quickstats-number-shortening-billions' => '$1B',
 );
 
 /** Russian (русский)
@@ -1265,9 +1067,6 @@ $messages['ru'] = array(
 	'quickstats-header-photos' => 'Фото',
 	'quickstats-totals-label' => 'Итого',
 	'quickstats-see-more-stats-link' => '[[Special:Insights|Ещё статистика]]',
-	'quickstats-number-shortening' => '$1K',
-	'quickstats-number-shortening-millions' => '$1милл.',
-	'quickstats-number-shortening-billions' => '$1миллиард',
 );
 
 /** Sanskrit (संस्कृतम्)
@@ -1279,9 +1078,6 @@ $messages['sa'] = array(
 	'quickstats-header-edits' => 'सम्पादनानि',
 	'quickstats-header-photos' => 'चित्राणि',
 	'quickstats-totals-label' => 'योगः',
-	'quickstats-number-shortening' => '$1 सहस्राणि',
-	'quickstats-number-shortening-millions' => '$1 कोटिः',
-	'quickstats-number-shortening-billions' => '$1 अर्बुदं',
 );
 
 /** Scots (Scots)
@@ -1295,9 +1091,6 @@ $messages['sco'] = array(
 	'quickstats-header-photos' => 'Photæs',
 	'quickstats-totals-label' => 'Tôtals',
 	'quickstats-see-more-stats-link' => '[[Special:Insights|See mair stats]]',
-	'quickstats-number-shortening' => '$1K',
-	'quickstats-number-shortening-millions' => '$1M',
-	'quickstats-number-shortening-billions' => '$1B',
 );
 
 /** Serbo-Croatian (srpskohrvatski / српскохрватски)
@@ -1325,7 +1118,6 @@ $messages['si'] = array(
 	'quickstats-header-edits' => 'සංස්කරණ',
 	'quickstats-header-photos' => 'පින්තූර',
 	'quickstats-totals-label' => 'සියල්ල',
-	'quickstats-number-shortening' => '$1K',
 );
 
 /** Slovenian (slovenščina)
@@ -1340,9 +1132,6 @@ $messages['sl'] = array(
 	'quickstats-header-photos' => 'Fotografije',
 	'quickstats-totals-label' => 'Skupaj',
 	'quickstats-see-more-stats-link' => '[[Special:Insights|Oglejte si več statistik]]',
-	'quickstats-number-shortening' => '$1 tis.',
-	'quickstats-number-shortening-millions' => '$1 mio.',
-	'quickstats-number-shortening-billions' => '$1 mia.',
 );
 
 /** Somali (Soomaaliga)
@@ -1356,9 +1145,6 @@ $messages['so'] = array(
 	'quickstats-header-photos' => 'Sawirro',
 	'quickstats-totals-label' => 'Wadarta',
 	'quickstats-see-more-stats-link' => '[[Special:Insights|sii eeg tirakoobyeda]]',
-	'quickstats-number-shortening' => '$1K',
-	'quickstats-number-shortening-millions' => '$1M',
-	'quickstats-number-shortening-billions' => '$1B',
 );
 
 /** Serbian (Cyrillic script) (српски (ћирилица)‎)
@@ -1373,9 +1159,6 @@ $messages['sr-ec'] = array(
 	'quickstats-date-format' => 'd M',
 	'quickstats-totals-label' => 'Укупно',
 	'quickstats-see-more-stats-link' => '[[Special:Insights|Више статистика]]',
-	'quickstats-number-shortening' => '$1 хиљ.',
-	'quickstats-number-shortening-millions' => '$1 мил.',
-	'quickstats-number-shortening-billions' => '$1 млрд.',
 );
 
 /** Swedish (svenska)
@@ -1390,9 +1173,6 @@ $messages['sv'] = array(
 	'quickstats-date-format' => 'd M',
 	'quickstats-totals-label' => 'Totalt',
 	'quickstats-see-more-stats-link' => '[[Special:Insights|Se mer statistik]]',
-	'quickstats-number-shortening' => '$1K',
-	'quickstats-number-shortening-millions' => '$1M',
-	'quickstats-number-shortening-billions' => '$1B',
 );
 
 /** Silesian (ślůnski)
@@ -1406,9 +1186,6 @@ $messages['szl'] = array(
 	'quickstats-header-photos' => 'Uobrozy',
 	'quickstats-totals-label' => 'Cuzamyn',
 	'quickstats-see-more-stats-link' => '[[Special:Insights|Wjyncyj sztatystyk]]',
-	'quickstats-number-shortening' => '$1 tyś.',
-	'quickstats-number-shortening-millions' => '$1 mln',
-	'quickstats-number-shortening-billions' => '$1 mld',
 );
 
 /** Tamil (தமிழ்)
@@ -1435,9 +1212,6 @@ $messages['te'] = array(
 	'quickstats-header-photos' => 'ఫోటోలు',
 	'quickstats-totals-label' => 'మొత్తాలు',
 	'quickstats-see-more-stats-link' => '[[Special:Insights|మరిన్ని గణాంకాలను చూడండి]]',
-	'quickstats-number-shortening' => '$1K',
-	'quickstats-number-shortening-millions' => '$1మిలియన్',
-	'quickstats-number-shortening-billions' => '$1బిలియన్',
 );
 
 /** Thai (ไทย)
@@ -1451,9 +1225,6 @@ $messages['th'] = array(
 	'quickstats-header-photos' => 'รูปภาพ',
 	'quickstats-totals-label' => 'รวม',
 	'quickstats-see-more-stats-link' => '[[Special:WikiStats|See more stats]]',
-	'quickstats-number-shortening' => '$1หมื่น',
-	'quickstats-number-shortening-millions' => '$1ล้าน',
-	'quickstats-number-shortening-billions' => '$1พันล้าน',
 );
 
 /** Tagalog (Tagalog)
@@ -1468,9 +1239,6 @@ $messages['tl'] = array(
 	'quickstats-date-format' => 'B a',
 	'quickstats-totals-label' => 'Mga kabuoan',
 	'quickstats-see-more-stats-link' => '[[Special:Insights|Tumingin ng marami pang estadistika]]',
-	'quickstats-number-shortening' => '$1,000',
-	'quickstats-number-shortening-millions' => '$1 Milyon',
-	'quickstats-number-shortening-billions' => '$1 Bilyon',
 );
 
 /** Talysh (толышә зывон)
@@ -1481,7 +1249,6 @@ $messages['tly'] = array(
 	'quickstats-header-views' => 'Тәмшо кардеј',
 	'quickstats-header-edits' => 'Дәгишон',
 	'quickstats-header-photos' => 'Шикилон',
-	'quickstats-number-shortening' => '$1K',
 );
 
 /** Turkish (Türkçe)
@@ -1495,9 +1262,6 @@ $messages['tr'] = array(
 	'quickstats-header-photos' => 'Fotoğraflar',
 	'quickstats-totals-label' => 'Toplam',
 	'quickstats-see-more-stats-link' => '[[Special:Insights|Daha fazla istatislik gör]]',
-	'quickstats-number-shortening' => '$1K',
-	'quickstats-number-shortening-millions' => '$1M',
-	'quickstats-number-shortening-billions' => '$1B',
 );
 
 /** Tatar (Cyrillic script) (татарча)
@@ -1512,9 +1276,6 @@ $messages['tt-cyrl'] = array(
 	'quickstats-date-format' => 'M d',
 	'quickstats-totals-label' => 'Барысы',
 	'quickstats-see-more-stats-link' => '[[Special:Insights|Тагын статистика...]]',
-	'quickstats-number-shortening' => '$1K',
-	'quickstats-number-shortening-millions' => '$1милл.',
-	'quickstats-number-shortening-billions' => '$1миллиард',
 );
 
 /** Muslim Tat (Tati)
@@ -1548,9 +1309,6 @@ $messages['uk'] = array(
 	'quickstats-header-photos' => 'Фото',
 	'quickstats-totals-label' => 'Підсумки',
 	'quickstats-see-more-stats-link' => '[[Special:Insights|Більше статистики]]',
-	'quickstats-number-shortening' => '$1 тис.',
-	'quickstats-number-shortening-millions' => '$1 млн',
-	'quickstats-number-shortening-billions' => '$1 млрд',
 );
 
 /** Veps (vepsän kel’)
@@ -1572,9 +1330,6 @@ $messages['vi'] = array(
 	'quickstats-header-photos' => 'Hình ảnh',
 	'quickstats-totals-label' => 'Tổng cộng',
 	'quickstats-see-more-stats-link' => '[[Special:Insights|Xem thêm các số liệu thống kê]]',
-	'quickstats-number-shortening' => '$1K',
-	'quickstats-number-shortening-millions' => '$1M',
-	'quickstats-number-shortening-billions' => '$1B',
 );
 
 /** Waray (Winaray)
@@ -1609,9 +1364,6 @@ $messages['zh-hans'] = array(
 	'quickstats-header-photos' => '照片',
 	'quickstats-totals-label' => '总计',
 	'quickstats-see-more-stats-link' => '[[Special:Insights|查看更多统计]]',
-	'quickstats-number-shortening' => '$1千',
-	'quickstats-number-shortening-millions' => '$1百万',
-	'quickstats-number-shortening-billions' => '$10亿',
 );
 
 /** Traditional Chinese (中文（繁體）‎)
@@ -1628,9 +1380,6 @@ $messages['zh-hant'] = array(
 	'quickstats-header-photos' => '圖片張數',
 	'quickstats-totals-label' => '總計',
 	'quickstats-see-more-stats-link' => '[[Special:Insights|檢視更多統計]]',
-	'quickstats-number-shortening' => '$1 千',
-	'quickstats-number-shortening-millions' => '$1 百萬',
-	'quickstats-number-shortening-billions' => '$10 億',
 );
 
 /** Chinese (Hong Kong) (中文（香港）‎)
@@ -1644,7 +1393,4 @@ $messages['zh-hk'] = array(
 	'quickstats-header-photos' => '圖片數',
 	'quickstats-totals-label' => '總計',
 	'quickstats-see-more-stats-link' => '[[Special:Insights|查看更多統計]]',
-	'quickstats-number-shortening' => '$1K',
-	'quickstats-number-shortening-millions' => '$1M',
-	'quickstats-number-shortening-billions' => '$1B',
 );

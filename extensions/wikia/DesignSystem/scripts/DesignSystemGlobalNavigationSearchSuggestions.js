@@ -1,18 +1,25 @@
-require(
-	['jquery', 'wikia.window'],
-	function ($, window) {
-		'use strict';
+$(function () {
+	'use strict';
 
-		var $searchInput = $('#searchInput'),
-			$searchInputWrapper = $('#searchInputWrapper'),
-			searchSuggestionsUrl = $searchInput.data('suggestions-url');
+	var $searchInput = $('#searchInput'),
+		$searchInputWrapper = $('#searchInputWrapper'),
+		searchSuggestionsUrl = $searchInput.data('suggestions-url');
 
-		function initSuggestions() {
-			mw.loader.using('jquery.autocomplete').then(function () {
-				var autocompleteReEscape = new RegExp('(\\' + ['/', '.', '*', '+', '?', '|', '(', ')',
-						'[', ']', '{', '}', '\\'].join('|\\') + ')', 'g');
+	function initSuggestions() {
+		mw.loader.using('jquery.autocomplete').then(function () {
+			var autocompleteReEscape = new RegExp('(\\' + ['/', '.', '*', '+', '?', '|', '(', ')',
+					'[', ']', '{', '}', '\\'].join('|\\') + ')', 'g');
 
-				$searchInput.autocomplete({
+			$searchInput
+				.on({
+					suggestShow: function () {
+						$searchInputWrapper.addClass('wds-is-active');
+					},
+					suggestHide: function () {
+						$searchInputWrapper.removeClass('wds-is-active');
+					}
+				})
+				.autocomplete({
 					serviceUrl: searchSuggestionsUrl,
 					queryParamName: $searchInput.data('suggestions-param-name'),
 					appendTo: '.wds-global-navigation__search-input-wrapper',
@@ -22,9 +29,7 @@ require(
 					onSelect: function (value, data, event) {
 						var valueEncoded = encodeURIComponent(value.replace(/ /g, '_')),
 							// slashes can't be urlencoded because they break routing
-							location = window.wgArticlePath.
-								replace(/\$1/, valueEncoded).
-								replace(encodeURIComponent('/'), '/');
+							location = window.wgArticlePath.replace(/\$1/, valueEncoded).replace(encodeURIComponent('/'), '/');
 
 						window.Wikia.Tracker.track({
 							eventName: 'search_start_suggest',
@@ -44,7 +49,7 @@ require(
 								action: Wikia.Tracker.ACTIONS.CLICK,
 								category: 'navigation',
 								trackingMethod: 'analytics',
-								label: 'global-navigation-search-suggestion'
+								label: $searchInput.data('suggestions-tracking-label')
 							});
 
 							window.location.href = location;
@@ -56,9 +61,11 @@ require(
 					setPosition: false,
 					suggestionWrapperElement: 'li',
 					fnContainerMarkup: function (mainContainerId, autocompleteElId) {
-						return '<div id="' + mainContainerId + '" class="wds-dropdown__content wds-global-navigation__search-suggestions">' +
-								'<ul id="' + autocompleteElId + '" class="wds-list wds-has-ellipsis wds-is-linked"></ul>' +
-								'</div>';
+						return '<div id="' + mainContainerId +
+							'" class="wds-dropdown__content wds-global-navigation__search-suggestions">' +
+							'<ul id="' + autocompleteElId +
+							'" class="wds-list wds-has-ellipsis wds-is-linked"></ul>' +
+							'</div>';
 					},
 					fnFormatResult: function (value, data, currentValue) {
 						var pattern = '(' + currentValue.replace(autocompleteReEscape, '\\$1') + ')';
@@ -68,26 +75,14 @@ require(
 							'</a>';
 					}
 				});
-			});
-		}
+		});
+	}
 
-		if (searchSuggestionsUrl) {
-			$searchInput.one('focus', function () {
-				initSuggestions();
+	if (searchSuggestionsUrl) {
+		$searchInput.one('focus', initSuggestions);
 
-				$searchInput.bind({
-					suggestShow: function () {
-						$searchInputWrapper.addClass('wds-is-active');
-					},
-					suggestHide: function () {
-						$searchInputWrapper.removeClass('wds-is-active');
-					}
-				});
-			});
-
-			if ($searchInput.is(':focus')) {
-				initSuggestions();
-			}
+		if ($searchInput.is(':focus')) {
+			initSuggestions();
 		}
 	}
-);
+});

@@ -17,11 +17,14 @@ class GlobalTitleTest extends WikiaBaseTest {
 				[ 'wgServer', 113, 'http://memory-alpha.wikia.com' ],
 				[ 'wgServer', 490, 'http://wowwiki.wikia.com' ],
 				[ 'wgServer', 1686, 'http://spolecznosc.wikia.com' ],
-				[ 'wgExtraNamespacesLocal', 490, [ 116 => 'Portal' ] ],
 				[ 'wgLanguageCode', 177, 'en' ],
 				[ 'wgLanguageCode', 113, 'en' ],
 				[ 'wgLanguageCode', 490, 'en' ],
 				[ 'wgLanguageCode', 1686, 'pl' ],
+				[ 'wgExtraNamespacesLocal', 177, false, [], [] ],
+				[ 'wgExtraNamespacesLocal', 113, false, [], [] ],
+				[ 'wgExtraNamespacesLocal', 490, false, [], [ 116 => 'Portal' ] ],
+				[ 'wgExtraNamespacesLocal', 1686, false, [], [] ],
 			] );
 	}
 

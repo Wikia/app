@@ -133,6 +133,7 @@ $config['recirculation_js'] = [
 		'//extensions/wikia/Recirculation/js/helpers/ContentLinksHelper.js',
 		'//extensions/wikia/Recirculation/js/helpers/FandomHelper.js',
 		'//extensions/wikia/Recirculation/js/helpers/DataHelper.js',
+		'//extensions/wikia/Recirculation/js/helpers/DiscussionsHelper.js',
 		'//extensions/wikia/Recirculation/js/helpers/CakeRelatedContentHelper.js',
 		'//extensions/wikia/Recirculation/js/helpers/CuratedContentHelper.js',
 		'//extensions/wikia/Recirculation/js/views/incontent.js',
@@ -140,19 +141,8 @@ $config['recirculation_js'] = [
 		'//extensions/wikia/Recirculation/js/views/footer.js',
 		'//extensions/wikia/Recirculation/js/views/scroller.js',
 		'//extensions/wikia/Recirculation/js/views/impactFooter.js',
-		'//extensions/wikia/Recirculation/js/experiments/placement.js',
-		'//extensions/wikia/Recirculation/js/experiments/placement/impactFooter.js',
-		'//extensions/wikia/Recirculation/js/experiments/placement/fandomTopic.js',
-		'//extensions/wikia/Recirculation/js/experiments/placement/control.js',
-		'//extensions/wikia/Recirculation/js/scrolldepth.js',
+		'//extensions/wikia/Recirculation/js/experiments/mix.js',
 		'//extensions/wikia/Recirculation/js/libs/perfect-scrollbar.js',
-	],
-];
-
-$config['recirculation_discussions_js'] = [
-	'type' => AssetsManager::TYPE_JS,
-	'skin' => [ 'oasis' ],
-	'assets' => [
 		'//extensions/wikia/Recirculation/js/discussions.js',
 	],
 ];
@@ -353,7 +343,6 @@ $config['oasis_jquery'] = [
 		'//resources/wikia/libraries/jquery/store/jquery.store.js',
 		'//resources/wikia/libraries/jquery/throttle-debounce/jquery.throttle-debounce.js',
 		'//resources/wikia/libraries/jquery/floating-scrollbar/jquery.floating-scrollbar.js',
-		'//resources/wikia/libraries/jquery/scrolldepth/jquery.scrolldepth.js',
 
 		// Wikia plugins
 		'//resources/wikia/jquery.wikia.js',
@@ -3070,5 +3059,22 @@ $config['crosslink_module_scss'] = [
 	'skin' => [ 'oasis' ],
 	'assets' => [
 		'//extensions/wikia/CrosslinkModule/styles/CrosslinkModule.scss',
+	],
+];
+
+/* StoriesLinkTag */
+$config['storieslink_tag_scss'] = [
+	'type' => AssetsManager::TYPE_SCSS,
+	'skin' => [ 'oasis' ],
+	'assets' => [
+		'//extensions/wikia/StoriesLinkTag/styles/StoriesLinkTag.scss',
+	],
+];
+
+$config['storieslink_tag_js'] = [
+	'type' => AssetsManager::TYPE_JS,
+	'skin' => [ 'oasis' ],
+	'assets' => [
+		'//extensions/wikia/StoriesLinkTag/scripts/StoriesLinkTag.js',
 	],
 ];
