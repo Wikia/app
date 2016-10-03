@@ -1610,7 +1610,7 @@ $messages['es'] = array(
 	'autocreatewiki-haveaccount-question' => '¿Ya tienes una cuenta en Fandom?',
 	'autocreatewiki-info-birthdate' => 'Fandom solicita a todos los usuarios que pongan su fecha real de nacimiento como medida de seguridad y como forma de preservar la integridad del sitio mientras cumple con las regulaciones federales.',
 	'autocreatewiki-info-email-address' => 'Tu dirección de correo electrónico no será mostrada a nadie en Fandom.',
-	'autocreatewiki-info-terms-agree' => 'Al crear un wiki y una cuenta de usuario, aceptas los {{#NewWindowLink: w:c:es:Términos de uso|Términos de uso de Fandom}}',
+	'autocreatewiki-info-terms-agree' => 'Al crear un wiki y una cuenta de usuario, aceptas los {{#NewWindowLink: w:c:es:Términos de uso|términos de uso de Fandom}}',
 	'autocreatewiki-limit-day' => 'Fandom ha superado el número máximo de creaciones de wikis de hoy ($1).',
 	'autocreatewiki-name-taken' => 'Ya existe un wiki con esta dirección. Comienza a editar en <a href="http://$1.wikia.com">http://$1.wikia.com</a> o escoge otra dirección.',
 	'autocreatewiki-title-template' => '$ comunidad',
@@ -1691,7 +1691,7 @@ Ten en cuenta que tendrás $1 {{PLURAL:$1|día|días}} después de hacer el pedi
 	'contact' => 'Contáctate con Fandom',
 	'content-warning-body' => 'El wiki $1 puede contener contenido ofensivo como representaciones de violencia, sugerencia sexual, humor negro u otros materiales no destinados a un público general. 
 
-En general, Fandom no revisa ni está de acuerdo con el contenido de este o de cualquier wiki. Para obtener más información acerca de nuestras políticas, por favor visita los [http://www.wikia.com/Terms_of_Use Wikia, Inc términos de uso].',
+En general, Fandom no revisa ni está de acuerdo con el contenido de este o de cualquier wiki. Para obtener más información acerca de nuestras políticas, por favor visita los [http://es.wikia.com/T%C3%A9rminos_de_Uso términos de Uso].',
 	'cookie-policy-description' => 'Según una ley de la Unión Europea, los usuarios de un sitio web deben ser notificados sobre el uso de cookies una vez llegan al sitio por primera vez. Esta extensión permite a Fandom estar en conformidad con la ley.',
 	'cookie-policy-notification-message' => 'Fandom utiliza cookies para darte la mejor experiencia posible en nuestros sitios web. Al continuar usando Fandom, asumimos que aceptas el uso de estas cookies. [[w:c:es:Política_de_Privacidad#Cookies|Lee más sobre el uso de cookies]]',
 	'create-account-new' => 'Crea tu cuenta de Fandom',
@@ -1721,7 +1721,7 @@ En general, Fandom no revisa ni está de acuerdo con el contenido de este o de c
 	'emailext-founder-3-days-extended-summary' => 'Estamos contactándonos para asegurarnos de que estás teniendo una gran experiencia en Fandom. ¿Necesitas ayuda para averiguar cómo funciona algo? ¡Nosotros te ayudaremos!',
 	'emailext-founder-3-days-subject' => '¿Cómo te va en $1? ¡Estamos aquí para ayudar!',
 	'emailext-founder-3-days-summary' => '¿Puedes creer que han pasado tres días desde que empezaste [$1 $2]?',
-	'emailext-founder-3-days-update-theme-details' => '¡Temas, colores, logos! Utiliza el [diseñador de temas de Wikia $1] para crear un diseño que coincida perfectamente con tu wiki.',
+	'emailext-founder-3-days-update-theme-details' => '¡Temas, colores, logos! Utiliza el [$1 diseñador de temas de Wikia] para crear un diseño que coincida perfectamente con tu wiki.',
 	'emailext-founder-3-days-wam-details' => 'Obtén inspiración de algunas de nuestras [$1 comunidades favoritas]. ¡Estas representan los mejores y más populares sitios de fans!',
 	'emailext-founder-active-footer-1' => 'Si todavía no lo has hecho, puedes ver todo el gran trabajo que está ocurriendo en la página de actividades de tu comunidad. Como son demasiadas cosas, piensa que puedes cambiar tus preferencias de correo electrónico a modo de resumen. En este modo recibirás un mensaje de correo electrónico que incluye toda la actividad de tu wiki cada día.',
 	'emailext-founder-active-footer-2' => '¡Qué buena manera de crear una comunidad de fans tan activa!',
@@ -1925,7 +1925,7 @@ Si crees que es un error, por favor [[Especial:Contactar|contáctate con Fandom]
 	'phalanx-user-block-withreason-similar' => 'Tu nombre de usuario ha sido bloqueado para editar en toda la red de Fandom debido a vandalismo, spam u otro problema por un usuario con un nombre similar. 
 Por favor [[Especial:Contactar|contáctate con Fandom]] para hablar sobre este problema.<br />El bloqueador colocó esta información adicional: $1.',
 	'prefs-help-birthinfo' => 'Fandom solicita a todos los usuarios que pongan su fecha real de nacimiento como medida de seguridad y como forma de preservar la integridad del sitio mientras cumple con las regulaciones federales.',
-	'prefs-help-terms' => 'Al crear un wiki y una cuenta de usuario, aceptas los {{#NewWindowLink: w:c:es:Términos de uso|Términos de uso de Fandom}}',
+	'prefs-help-terms' => 'Al crear un wiki y una cuenta de usuario, aceptas los {{#NewWindowLink: w:c:es:Términos de uso|términos de uso de Fandom}}',
 	'question_asked_by_a_wikia_user' => 'Pregunta hecha por un usuario de Fandom',
 	'registerintro-title' => '¡Cuando creas una cuenta en Fandom, te conviertes en parte de la comunidad!',
 	'shared_help_edit_info' => 'El texto de ayuda se encuentra dentro de [[w:c:Ayuda:$1|Ayuda:$1]] en $2. Revisa [[Ayuda:Ayuda compartida]] para más información.
@@ -1978,7 +1978,7 @@ Esperamos que encuentres otro wiki que forme parte de Fandom, en el que particip
 ¡Diviértete editando!',
 	'specialcontact-intro-content-issue' => 'El contenido de este wiki es creado por su comunidad, y controlado por los [[Special:ListAdmins|administradores locales]], no por Fandom. Si deseas discutir sobre el contenido del wiki, lo mejor es que contactes primero a los [[Special:ListAdmins|administradores]].
 
-Si piensas que el contenido viola nuestros [http://comunidad.wikia.com/wiki/Project:Términos_de_uso Términos de uso], puedes contactarte con el equipo de soporte comunitario directamente [[Special:Contact/general|desde aquí]].',
+Si piensas que el contenido viola nuestros [http://comunidad.wikia.com/wiki/Project:Términos_de_uso términos de uso], puedes contactarte con el equipo de soporte comunitario directamente [[Special:Contact/general|desde aquí]].',
 	'specialcontact-intro-content-issue-mobile' => 'El contenido de este wiki es creado por su comunidad, y controlado por los administradores locales, no por Fandom. Si deseas discutir sobre el contenido del wiki, lo mejor es que contactes primero a los administradores.
 
 Si piensas que el contenido viola nuestros Términos de uso, puedes contactarte con el equipo de soporte comunitario directamente.',
@@ -2015,7 +2015,7 @@ Una vez leas esa página de ayuda y estés seguro de que el nuevo nombre de usua
 ¡Diviértete editando!',
 	'specialcontact-intro-security' => 'Si has encontrado o crees que has encontrado un problema de seguridad en el código de Fandom o en una de las comunidades de Fandom, por favor avísanos. Apreciamos tu ayuda en mantener a salvo a Fandom para todos al revelarlo de una [[wikipedia:Responsible disclosure|manera responsable]]. 
 
-Si quieres informar de un error general u otro tipo de problema, por favor utiliza una de las [[Especial: Contactar|otras formas de contacto]]. 
+Si quieres informar de un error general u otro tipo de problema, por favor utiliza una de las [[Especial:Contactar|otras formas de contacto]]. 
 
 Al realizar pruebas de seguridad, debes: 
 
@@ -2036,7 +2036,7 @@ En respuesta a informes de seguridad usando este formulario, Fandom:
 * No tomará acciones legales contra cualquier persona que reporte y que cumpla con todas las pautas para el análisis y registro de problemas de seguridad',
 	'specialcontact-intro-user-conflict' => 'Los wikis son espacios comunitarios donde cada persona tiene que trabajar codo a codo con otros usuarios para que todo salga bien. Mientras trabajan juntos pueden surgir conflictos, y la mejor forma de resolverlos suele ser teniendo una conversación abierta y respetuosa.
 
-Si necesitas ayuda, primero contacta con tus [[Special:ListAdmins|administradores locales]]. Los administradores son expertos sobre el tema del wiki y la comunidad, así que lo mejor es hablar con ellos antes. Si los administradores no pueden ayudar, o piensas que un usuario rompe los [http://comunidad.wikia.com/wiki/Project:T%C3%A9rminos_de_uso Términos de uso], puedes contactarte con el equipo de soporte comunitario directamente [[Special:Contact/general|aquí]].
+Si necesitas ayuda, primero contacta con tus [[Special:ListAdmins|administradores locales]]. Los administradores son expertos sobre el tema del wiki y la comunidad, así que lo mejor es hablar con ellos antes. Si los administradores no pueden ayudar, o piensas que un usuario rompe los [http://comunidad.wikia.com/wiki/Project:T%C3%A9rminos_de_uso términos de uso], puedes contactarte con el equipo de soporte comunitario directamente [[Special:Contact/general|aquí]].
 
 ¡Y no olvides que los wikis son para divertirse mientras se edita!',
 	'specialcontact-intro-using-wikia' => 'Ahora que formas parte de la comunidad, puedes editar y contribuir en cualquier página de Fandom. Comprueba nuestras [[Ayuda:Contenidos|páginas de ayuda]] para obtener una introducción de ayuda. Son un magnífico lugar donde aprender los conceptos básicos para editar, dar formato y mucho más.
@@ -2183,7 +2183,7 @@ Y no te olvides de revisar [[w:c:comunidad:Universidad_de_Fandom]] para videos e
 Estamos trabajando para solucionar el problema, gracias por tu comprensión! Si ves este mensaje por un largo período de tiempo, no dudes en contactarte con Fandom a través de community@wikia.com.',
 	'wikia-version-code' => 'Código de Fandom',
 	'wikia-version-config' => 'Configuración de Fandom',
-	'wikia-visualeditor-dialog-wikiamediainsert-policy-message' => 'Por favor respeta las políticas sobre imágenes de {{SITENAME}} y los [http://es.wikia.com/T%C3%A9rminos_de_Uso Términos de Uso] de Fandom cuando incorpores videos e imágenes nuevas.',
+	'wikia-visualeditor-dialog-wikiamediainsert-policy-message' => 'Por favor respeta las políticas sobre imágenes de {{SITENAME}} y los [http://es.wikia.com/T%C3%A9rminos_de_Uso términos de Uso] de Fandom cuando incorpores videos e imágenes nuevas.',
 	'wikia-visualeditor-media-photo-policy' => 'Por favor respeta las políticas sobre imágenes de este wiki al subir nuevas imágenes.',
 	'wikia-visualeditor-notification-media-only-premium-videos-allowed' => 'Esta wikiasolo permite contenido con licencia de la <a href="http://video.wikia.com" target="_blank">Videoteca de Fandom</a> para ser agregado. Por favor, ve a <a href="http://video.wikia.com" target="_blank">video.wikia.com</a> para buscar videos.',
 	'wikiacuratedcontent-content-title' => 'Herramienta para la gestión del Mantenimiento de contenido de Fandom',
@@ -2291,16 +2291,17 @@ Bonjour !
 
 Nous sommes heureux d'accueillir $4 dans la communauté Fandom ! Voici quelques liens et astuces utiles qui vous permettront de dynamiser et gérer votre wiki :
 
-*Vous n'êtes pas sûr de savoir par où commencer ? Arrêtez-vous sur le [[w:fr:Accueil|Centre des communautés]] et lisez le blog « [[w:fr:Blog:Conseils pour fondateurs/administrateurs|Conseils pour fondateurs et administrateurs]] ». Vous y trouverez des astuces pour démarrer votre wiki et le faire évoluer.
+*Vous n'êtes pas sûr de savoir par où commencer ? Allez sur le [[w:fr:Accueil|Centre des communautés]] et lisez le blog [[w:fr:Blog:Conseils pour fondateurs/administrateurs|Conseils pour fondateurs et administrateurs]]. Vous y trouverez des astuces pour démarrer votre wiki et le faire évoluer.
 *Consultez l'[[w:fr:Blog:Actualité Wikia|actualité]] pour vous tenir informé des derniers événements.
 *Explorez le [[w:fr:Special:Forum|forum]] sur le Centre des communautés pour voir quelles questions posent les autres administrateurs.
+*Regardez les vidéos de l'[[w:c:communaute:Université_Fandom|Université Fandom]] pour vous former.
 *Personnalisez l'apparence de votre wiki en visitant le [[Special:ThemeDesigner|Concepteur de thème]] : ajoutez des couleurs, modifiez l'arrière-plan et le logo etc.
 *Consultez la page [[Special:WikiFeatures|Composants de wiki]] pour découvrir quelles fonctionnalités vous pouvez activer sur votre wiki.
 *Pour finir, parcourez les [[Aide:Contenu|pages d'aide]] pour trouver des réponses à vos questions.
 
 Tous les liens ci-dessus sont un bon moyen de commencer à naviguer sur Fandom. Si vous êtes bloqué ou si vous avez toujours des questions, [[Special:Contact|contactez-nous]]. Mais le plus important est que vous vous amusiez !
 
-Bonnes contributions !
+Bonnes modifications !
 
 — [[User:$2|$3]] <staff /></div>",
 	'autocreatewiki-welcometalk-wall' => "Bonjour, l'équipe de support souhaite la bienvenue à {{subst:SITENAME}} dans la communauté Fandom !
@@ -2415,7 +2416,7 @@ D'une manière générale, Fandom ne vérifie pas ni n'approuve le contenu de ce
 	'emailext-watchedpage-diff-button-text' => 'Aller à la page',
 	'emailext-weeklydigest-subject' => 'Voir les mises à jour de vos fandoms favoris de cette semaine',
 	'emailext-weeklydigest-summary' => 'Depuis votre dernière visite, les utilisateurs de Fandom ont apporté des changements aux pages que vous suivez :',
-	'emailext-welcome-basics-url' => 'http://communaute.wikia.com/wiki/Universit%C3%A9_Wikia',
+	'emailext-welcome-basics-url' => 'http://communaute.wikia.com/wiki/Universit%C3%A9_Fandom',
 	'emailext-welcome-fandom-description' => 'Découvrez des communautés à travers des films, TV, jeux vidéo et plus encore. Laissez un commentaire ou suivez votre discussion préférée.',
 	'emailext-welcome-footer-closing' => "Merci d'avoir rejoint Fandom !",
 	'emailext-welcome-footer-community' => "Besoin de plus d'informations ? Consultez le [http://communaute.wikia.com/wiki/Centre_des_communaut%C3%A9s Centre des communautés de Fandom] pour y trouver des conseils, des réponses et des visages familiers !",
@@ -2621,7 +2622,7 @@ Si vous avez décidé que vous souhaitez vraiment désactiver votre compte, sach
 Si vous avez besoin de plus d'informations sur ce que signifie réellement la désactivation d'un compte, vous pouvez visiter notre [[Aide:Fermer mon compte|page d'aide sur la désactivation des comptes]]. Pour confirmer la désactivation de votre compte, veuillez remplir le formulaire ci-dessous.",
 	'specialcontact-intro-close-wiki' => "Merci d'avoir contacté Fandom. Nous ne supprimons généralement pas les wikis qui ont été créés. Les wikis appartiennent aux communautés, et un wiki qui ne vous intéresse plus peut être repris plus tard par une autre personne souhaitant l'[[Special:Contact/adoption|adopter]].
 
-Si vous voulez renommer votre wiki ou corriger des fautes d'orthographe ou de grammaire, veuillez d'abord consulter la section [[Aide:Renommer]], pour renommer des pages, et la section [[Aide:Concepteur_de_thème]], pour changer le titre de votre wiki. Il est facile de changer le nom des wikis sans avoir à tout recommencer. Si vous voulez changer d'URL de wiki, [[Special:Contact/general|écrivez-nous]]. Nous serions ravis de le faire pour vous, inutile de fermer votre Fandom.
+Si vous voulez renommer votre wiki ou corriger des fautes d'orthographe ou de grammaire, veuillez d'abord consulter la section [[w:c:communaute:Aide:Renommer|Aide:Renommer]], pour renommer des pages, et la section [[w:c:communaute:Aide:Concepteur_de_thème|Aide:Concepteur de thème]], pour changer le titre de votre wiki. Il est facile de changer le nom des wikis sans avoir à tout recommencer. Si vous voulez changer d'URL de wiki, [[Special:Contact/general|écrivez-nous]]. Nous serions ravis de le faire pour vous, inutile de fermer votre Fandom.
 
 Si vous pensez que ce wiki parle d'un sujet qui n'intéresse aucun autre utilisateur (tel qu'un projet personnel), veuillez soumettre une demande via le formulaire ci-dessous. Cette demande doit être effectuée depuis le wiki à fermer.
 
@@ -2634,7 +2635,7 @@ Si vous pensez que le contenu ne respecte pas nos [http://fr.wikia.com/Condition
 	'specialcontact-intro-content-issue-mobile' => "Le contenu de ce wiki est créé par la communauté présente ici. Il ne l'est pas par les administrateurs ni Fandom. Si vous souhaitez discuter du contenu, nous vous invitons à contacter les administrateurs du wiki dans un premier temps.
 
 Si vous pensez que le contenu ne respecte pas nos Conditions d'utilisation, vous pouvez contacter le staff de Fandom.",
-	'specialcontact-intro-design' => "Les administrateurs locaux de votre communauté peuvent mettre à jour l'apparence d'un wiki via le [[Aide:Concepteur_de_thème|Concepteur de thème]]. Si vous n'êtes pas administrateur et souhaitez participer à cette mise à jour, veuillez d'abord contacter vos [[Special:ListAdmins|administrateurs locaux]].
+	'specialcontact-intro-design' => "Les administrateurs locaux de votre communauté peuvent mettre à jour l'apparence d'un wiki via le [[w:c:communaute:Aide:Concepteur_de_thème|Aide:Concepteur de thème]]. Si vous n'êtes pas administrateur et souhaitez participer à cette mise à jour, veuillez d'abord contacter vos [[Special:ListAdmins|administrateurs locaux]].
 
 Si vous avez besoin d'aide pour créer un style plus personnalisé, vous pouvez soumettre une demande à l'équipe Contenu de Fandom [[w:c:communaute:Sous-forum:Demandes_de_ressources|ici]]. Veillez à lire attentivement les instructions avant d'envoyer la demande.
 
@@ -2771,7 +2772,7 @@ Bonjour et bienvenue à {{SITENAME}} ! Je suis membre de l'équipe de support de
 
 Il semble qu'aucun des administrateurs de cette communauté ne soit actif en ce moment, mais si vous avez besoin d'aide, vous pouvez consulter nos [[Aide:Contenu|pages d'aide]] ou vous rendre dans le [[w:c:communaute|Centre des communautés]] pour accéder aux [[w:c:communaute:Special:Forum|forums]].
 
-Vous pouvez également suivre [[w:c:communaute:Blog:Actualité_Wikia|blog]] afin de vous tenir informé des dernières actualités et événements ayant trait à Fandom. Et n'oubliez pas de visiter l'[[w:c:communaute:Université_Wikia|Université Fandom]] pour y voir de courtes vidéos d'utilisation.
+Vous pouvez également suivre [[w:c:communaute:Blog:Actualité_Wikia|ce blog]] afin de vous tenir informé des dernières actualités et événements ayant trait à Fandom. Et n'oubliez pas de visiter l'[[w:c:communaute:Université_Wikia|Université Fandom]] pour y voir de courtes vidéos d'utilisation.
 
 Veuillez [[$2|me laisser un message]] si vous avez besoin d'aide supplémentaire.
 
@@ -2792,7 +2793,7 @@ Bonjour et bienvenue à {{SITENAME}} ! Je suis membre de l'équipe de support de
 
 Il semble qu'aucun des administrateurs de cette communauté ne soit actif en ce moment, mais si vous avez besoin d'aide, vous pouvez consulter nos [[Aide:Contenu|pages d'aide]] ou vous rendre dans le [[w:c:communaute|Centre des communautés]] pour explorer nos [[w:c:communaute:Special:Forum|forums]].
 
-Vous pouvez également suivre [[w:c:communaute:Blog:Actualité_Wikia|ce blog]] afin de vous tenir informé des dernières actualités et événements ayant trait à Fandom. Et n'oubliez pas de visiter l'[[w:c:communaute:Université_Wikia|Université Wikia]] pour y voir de courtes vidéos d'utilisation.
+Vous pouvez également suivre [[w:c:communaute:Blog:Actualité_Wikia|ce blog]] afin de vous tenir informé des dernières actualités et événements ayant trait à Fandom. Et n'oubliez pas de visiter l'[[w:c:communaute:Université_Wikia|Université Fandom]] pour y voir de courtes vidéos d'utilisation.
 
 Veuillez [[$2|me laisser un message]] si vous avez besoin d'aide supplémentaire.
 
@@ -2812,7 +2813,7 @@ Passez un bon moment sur {{SITENAME}} !",
 
 Il semble qu'aucun des administrateurs de cette communauté ne soit actif en ce moment, mais si vous avez besoin d'aide, vous pouvez consulter nos [[Aide:Contenu|pages d'aide]] ou vous rendre dans le [[w:c:communaute|Centre des communautés]] pour accéder aux [[w:c:communaute:Special:Forum|forums]] .
 
-Vous pouvez également suivre et les [[w:c:communaute:Blog:Actualité_Wikia|blogs]] afin de vous tenir informé des dernières actualités et événements ayant trait à Fandom. Et n'oubliez pas de visiter l'[[w:c:communaute:Université_Wikia|Université Wikia]] pour y voir de courtes vidéos d'utilisation.
+Vous pouvez également suivre [[w:c:communaute:Blog:Actualité_Wikia|ce blog]] afin de vous tenir informé des dernières actualités et événements ayant trait à Fandom. Et n'oubliez pas de visiter l'[[w:c:communaute:Université_Wikia|Université Fandom]] pour y voir de courtes vidéos d'utilisation.
 
 Passez un bon moment sur {{SITENAME}} !",
 	'welcome-message-wall-user' => "Bonjour, je suis administrateur de la communauté {{SITENAME}}. Bienvenue et merci pour votre contribution à [[:$1]] !
@@ -2824,7 +2825,7 @@ Passez un bon moment sur {{SITENAME}} !",
 
 Il semble qu'aucun des administrateurs de cette communauté ne soit actif en ce moment, mais si vous avez besoin d'aide, vous pouvez consulter nos [[Aide:Contenu|pages d'aide]] ou vous rendre dans le [[w:c:communaute|Centre des communautés]] pour explorer nos [[w:c:communaute:Special:Forum|forums]].
 
-Et n'oubliez pas de visiter l'[[w:c:communaute:Université_Wikia|Université Wikia]] pour y voir de courtes vidéos d'utilisation.
+Et n'oubliez pas de visiter l'[[w:c:communaute:Université_Wikia|Université Fandom]] pour y voir de courtes vidéos d'utilisation.
 
 Passez un bon moment sur {{SITENAME}} !",
 	'widget-desc-wikiamessages' => 'Messages de Fandom',
@@ -3004,7 +3005,7 @@ In generale, Fandom non rivede né avvalla il contenuto di questa o di qualsiasi
 	'emailext-anonymous-editor' => 'Un utente Fandom',
 	'emailext-emailconfirmation-changed-footer-2' => 'Ci vediamo su Fandom!',
 	'emailext-emailconfirmation-changed-subject' => 'Conferma il tuo cambio di indirizzo email su Fandom',
-	'emailext-emailconfirmation-changed-summary' => "Clicca sul link di seguito per confermare il tuo cambio d'indirizzo email su Fandom. In questo modo potrai continuare a far aumentare il numero dei tuoi fan.",
+	'emailext-emailconfirmation-changed-summary' => 'Clicca sul link di seguito per confermare il tuo cambio di indirizzo email su Fandom in modo da continuare a poter contribuire alle tue passioni.',
 	'emailext-emailconfirmation-community-team' => 'Il team della community di Fandom',
 	'emailext-emailconfirmation-reminder-summary' => "È già passato qualche giorno e sembra che tu non abbia ancora confermato il tuo account su Fandom. Non vediamo l'ora di farti conoscere il nostro universo! Clicca semplicemente sul link di seguito e il gioco è fatto:",
 	'emailext-emailconfirmation-subject' => 'Conferma il tuo indirizzo email per cominciare con Fandom!',
@@ -3016,7 +3017,7 @@ In generale, Fandom non rivede né avvalla il contenuto di questa o di qualsiasi
 	'emailext-founder-10-days-email-google-details' => "Internet è un posto pazzesco. Tuttavia, abbiamo alcuni suggerimenti su come fare in modo che funzioni per te. Dai un'occhiata alla nostra Guida per il SEO!",
 	'emailext-founder-10-days-email-power-details' => "Vuoi trovare dei collaboratori per la tua comunità? Invitali con un'email. Più siamo e meglio è!",
 	'emailext-founder-10-days-email-what-next' => "Siamo lieti che tu faccia parte della comunità Fandom. Cosa farai dopo? Non vediamo l'ora di scoprirlo!",
-	'emailext-founder-10-days-extended-summary' => 'Ora è un ottimo momento per guadagnare trazione per la tua comunità. Ecco alcuni consigli su come spargere la notizia e incoraggiare gli altri a scorprirla.',
+	'emailext-founder-10-days-extended-summary' => 'Ora è un ottimo momento per impegnarsi a guadagnare popolarità per la tua comunità. Ecco alcuni consigli su come spargere la notizia e incoraggiare gli altri a scorprirla.',
 	'emailext-founder-10-days-sharing-details' => 'Usa i pulsanti Condividi in qualsiasi pagina per parlare ai tuoi amici della tua comunità su Facebook, Twitter e Reddit.',
 	'emailext-founder-10-days-summary' => 'Sono passati dieci giorni da quando hai creato [$1 $2].',
 	'emailext-founder-3-days-add-videos-details' => 'Migliora la tua pagina e rendila interessante aggiungendo i tuoi video preferiti. A chi non piace un buon video?',
@@ -3027,10 +3028,10 @@ In generale, Fandom non rivede né avvalla il contenuto di questa o di qualsiasi
 	'emailext-founder-3-days-wam-details' => "Prendi l'ispirazione da alcune delle nostre [$1 comunità preferite]. Sono i siti fan migliori e più popolari!",
 	'emailext-founder-active-footer-1' => "Se non l'hai ancora fatto, puoi vedere tutti i nuovi contributi sulla pagina delle attività della tua community. Dal momento che c'è molto da leggere, tieni presente che puoi selezionare la modalità digest nelle tue preferenze di Email. In modalità digest, riceverai un'email che contiene una lista di tutte le attività giornaliere sulla tua wiki.",
 	'emailext-founder-active-footer-2' => 'Ottimo lavoro nel creare una comunità così attiva!',
-	'emailext-founder-activity-digest-footer' => 'Ricevi più consigli su come contruire la tua comunità e poni domande sula [http://it.community.wikia.com Wiki della Community].',
+	'emailext-founder-activity-digest-footer' => 'Ricevi più consigli su come contruire la tua comunità e poni domande sulla [http://it.community.wikia.com Wiki della Community].',
 	'emailext-founder-activity-digest-link-label' => 'Attività recente della wiki',
-	'emailext-founder-add-photos-details' => 'Arricchisci la tua wiki con media incredibili! Aggiungi foto e video interessanti alla tua wiki che coinvolgano sempre di più i tuoi fan.',
-	'emailext-founder-anon-encourage' => 'Gli utenti di Fandom sono persone che fanno modifiche agli articoli senza accedere al servizio con un account registrato. Controlla che cosa ha aggiunto alla tua wikia questo amico misterioso!',
+	'emailext-founder-add-photos-details' => 'Arricchisci la tua wiki con media incredibili! Aggiungi immagini e video alla tua wiki che coinvolgano sempre di più gli utenti.',
+	'emailext-founder-anon-encourage' => 'Gli utenti di Fandom sono persone che fanno modifiche agli articoli senza accedere al servizio con un account registrato. Controlla che cosa ha aggiunto alla tua wiki questo amico misterioso!',
 	'emailext-founder-body' => 'Questa è la prima modifica di [$1 $2] sulla tua wiki. Aiuta i collaboratori a sentirsi parte della comunità e incoraggiali a partecipare!',
 	'emailext-founder-customize-details' => 'Quali sono le ultime novità sulla tua comunità? Presenta i tuoi contenuti migliori sulla pagina principale per fare colpo sui tuoi lettori!',
 	'emailext-founder-digest-edits-description' => 'Assicurati di ringraziare chi contribuisce così che si senta apprezzato!',
@@ -3050,7 +3051,7 @@ In generale, Fandom non rivede né avvalla il contenuto di questa o di qualsiasi
 	'emailext-password-unrequested' => 'Se non hai richiesto una nuova password, non preoccuparti! Il tuo account è al sicuro. Puoi ignorare questo messaggio e accedere a Fandom con la tua solita password.',
 	'emailext-reactivate-account-subject' => 'Riattiva il tuo account Fandom',
 	'emailext-reactivate-account-summary' => 'Ti manca poco per riattivare il tuo account su Fandom. Clicca sul link di seguito per confermare la tua richiesta e ripartire.',
-	'emailext-reactivate-account-welcome-back' => 'Bentornato in Fandom, $1!',
+	'emailext-reactivate-account-welcome-back' => 'Bentornato in Fandom!',
 	'emailext-recipient-notice' => 'Email inviata a $1 da Fandom',
 	'emailext-unsubscribe' => 'Per non ricevere più email da Fandom clicca [$1 qui].',
 	'emailext-usernamechange-closing' => "Non vediamo l'ora di vederti in giro,",
@@ -3064,11 +3065,11 @@ In generale, Fandom non rivede né avvalla il contenuto di questa o di qualsiasi
 	'emailext-welcome-basics-url' => 'http://community.wikia.com/wiki/Fandom_University',
 	'emailext-welcome-fandom-description' => 'Scopri le comunità di cinema, TV, giochi e altro ancora. Lascia un commento o segui la tua discussione preferita.',
 	'emailext-welcome-footer-closing' => 'Grazie per esserti unito a Fandom!',
-	'emailext-welcome-footer-community' => 'Vuoi maggiori informazioni? Trova ulteriori consigli, risposte e un servizio amichevole sulla [http://it.community.wikia.com/wiki/Wiki_della_Community Wiki della Community].',
+	'emailext-welcome-footer-community' => 'Vuoi maggiori informazioni? Trova ulteriori consigli, risposte e un servizio amichevole sulla [http://it.community.wikia.com/ Wiki della Community].',
 	'emailext-welcome-mobile-description' => 'Scarica le tue app di Fandom preferite per [$1 iOS] o [$2 Android] e non smettere più di pensare ai tuoi fandom.',
 	'emailext-welcome-mobile-header' => 'Porta Fandom ovunque',
 	'emailext-welcome-profile-description' => 'Costruisci la tua identità su Fandom. Connettiti con altri e condividi i tuoi fandom.',
-	'emailext-welcome-subject' => 'Benvenuto in Fandom, $1!',
+	'emailext-welcome-subject' => 'Benvenuto su Fandom, $1!',
 	'emailext-welcome-summary' => 'Benvenuto su Fandom! Fai ora parte della più grande raccolta al mondo di comunità di intrattenimento. Condividi le tue conoscenze, discuti delle opinioni e scopri ottimi contenuti.',
 	'emailext-welcome-summary-extended' => 'Cosa facciamo adesso?',
 	'emailext-wikia-home-url' => 'http://fandom.wikia.com/',
@@ -3877,7 +3878,7 @@ ja.wikia.com<br /><hr />
 {{SITENAME}}にのみ適用できる使用法、スタイル、ポリシーについての説明を追加する場合は、このページにテキストを配置します。この編集ボックスに追加したテキストは、ボックス内のヘルプテキストの上に表示されます。",
 	'specialcontact-ccheader' => 'これはFandomサポートに送信されたメッセージのコピーです',
 	'specialcontact-form-header' => 'Fandomへのお問い合わせ',
-	'specialcontact-formtitle' => 'Fancomサポートスタッフへのお問い合わせ',
+	'specialcontact-formtitle' => 'Fandomサポートスタッフへのお問い合わせ',
 	'specialcontact-intro-adoption' => 'このコミュニティのアドミン(管理者)になることにご興味がある場合、まず[[Special:Listusers/sysop|コミュニティのアドミン]]ページで現在アクティブなアドミンがいるかを確認してください。アクティブなアドミンが存在する場合、アドミンになりたい旨のリクエストをアドミン宛にメッセージで送信してください。また、コミュニティ・フォーラム上でもアドミンになりたい旨を共有し、コミュニティメンバーたちからの支援を募ることをおすすめします。
 
 コミュニティのアドミンがアクティブでない場合は、アドミン権限の引継ぎをFandomへリクエストすることができます。詳細な条件やリクエスト送信方法については、[[w:c:ja:アダプション:リクエスト|アダプション・リクエスト]]ページをご覧ください。リクエストには、アドミン権限を希望するコミュニティへのリンクを必ず記載してください。
@@ -3989,7 +3990,7 @@ http://ja.community.wikia.com/wiki/ヘルプ:ユーザー名を変更する
 	'specialcontact-mail' => 'Fandomに送信',
 	'specialcontact-mailsub' => 'Fandomサポート',
 	'specialcontact-mailsubcc' => 'Fandomお問い合わせメールのコピー',
-	'specialcontact-pagetitle' => 'Fancomサポートスタッフへのお問い合わせ',
+	'specialcontact-pagetitle' => 'Fandomサポートスタッフへのお問い合わせ',
 	'specialcontact-secheader-editing' => 'Fandomへの参加',
 	'specialcontact-secheader-onwiki' => 'このwikiに関するの質問',
 	'specialcontact-secheader-setting' => 'このwikiへの変更',
@@ -4199,10 +4200,10 @@ Fandomチーム<br /><br />
 $messages['pl'] = array(
 	'action-multiwikifinder' => 'szukaj tytułu strony w całym portalu Fandom',
 	'all_the_wikia' => 'Cały Fandom',
-	'authmodal-registration-success' => 'Witaj, $1! Twoje konto w Fandom zostało utworzone.',
+	'authmodal-registration-success' => 'Witaj, $1! Twoje konto w Fandomie zostało utworzone.',
 	'autocreatewiki-haveaccount-question' => 'Czy masz już konto na portalu Fandom?',
 	'autocreatewiki-info-birthdate' => 'Fandom wymaga od wszystkich użytkowników podania rzeczywistej daty urodzenia ze względów bezpieczeństwa oraz dla zachowania spójności strony, przy zapewnieniu zgodności z przepisami federalnymi.',
-	'autocreatewiki-info-email-address' => 'Twój adres e-mail nie będzie widoczny dla nikogo innego na portalu Fandom.',
+	'autocreatewiki-info-email-address' => 'Twój adres e-mail nie będzie widoczny dla użytkowników portalu Fandom.',
 	'autocreatewiki-info-terms-agree' => 'Tworząc wiki i konto użytkownika, akceptujesz {{#NewWindowLink: w:c.pl:Zasady Użytkowania | Zasady Użytkowania portalu Fandom}}',
 	'autocreatewiki-limit-day' => 'Maksymalna dzienna liczba wiki utworzonych na portalu Fandom została przekroczona ($1).',
 	'autocreatewiki-name-taken' => 'Wiki o tym adresie już istnieje. Przyłącz się do jej edytowania na <a href="http://$1.wikia.com">http://$1.wikia.com</a> lub wybierz inny adres.',
@@ -5500,15 +5501,15 @@ Você pode <a href="$3">desinscrever-se</a> das alterações desta lista aqui: $
 );
 
 $messages['ru'] = array(
-	'action-multiwikifinder' => 'поиск конкретного названия в Фэндоме',
+	'action-multiwikifinder' => 'поиск названия по Фэндому',
 	'all_the_wikia' => 'Весь Фэндом',
 	'authmodal-registration-success' => 'Добро пожаловать, $1! Ваша учётная запись на Фэндоме была успешно создана.',
 	'autocreatewiki-haveaccount-question' => 'У вас уже есть учётная запись на Фэндоме?',
 	'autocreatewiki-info-birthdate' => 'Согласно требованиям Фэндома, все пользователи должны указывать свою настоящую дату рождения. Эта мера позволяет обеспечить безопасность и соответствие сайта требованиям федеральных нормативных актов США.',
 	'autocreatewiki-info-email-address' => 'Фэндом никогда и никому не показывает адрес вашей электронной почты.',
-	'autocreatewiki-info-terms-agree' => 'Создавая вики или учётную запись, вы соглашаетесь с {{#NewWindowLink: w:c:ru.community:Викия:Условия_использования| Условиями использования Фэндома}}',
+	'autocreatewiki-info-terms-agree' => 'Создавая вики или учётную запись, вы соглашаетесь с {{#NewWindowLink: w:c:ru.community:Викия:Условия_использования|Условиями использования Фэндома}}',
 	'autocreatewiki-limit-day' => 'Сегодня Фэндом превысил максимальное число создаваемых вики ($1).',
-	'autocreatewiki-name-taken' => 'Вики с таким адресом уже существует. Вы можете присоединиться к проекту <a href="http://$1.wikia.com">http://$1.wikia.com</a> или выбрать другой адрес.',
+	'autocreatewiki-name-taken' => 'Вики с таким адресом уже существует. Вы можете присоединиться к проекту <a href="http://$1.wikia.com">http://$1.wikia.com</a> или выбрать другой URL.',
 	'autocreatewiki-title-template' => 'Сообщество $1',
 	'autocreatewiki-welcomebody' => 'Здравствуйте, $2!
 
@@ -5535,7 +5536,7 @@ ___________________________________________
 Мы рады, что «$4» стала частью сообществ Фэндома. Вам ещё многое предстоит сделать, поэтому позвольте дать несколько советов и полезных ссылок, которые помогут вам начать работу.
 
 *Посетите страницу [[Special:WikiFeatures|расширений]], чтобы узнать о том, какие расширения (чат, достижения и многие другие) можно подключить на вашей вики.
-*Загляните на [[w:c:ru.community|Вики Сообщества]], чтобы найти последние новости из [[w:c:ru.community.wikia.com/wiki/Блог:Блоги_сотрудников|блогов сотрудников]]. Вы можете задать вопросы на нашем [[w:c:ru.community:Special:Forum|Форуме]], посмотреть видеоуроки [[w:c:ru.community:Университет Викия|Университета Фэндома]] или общаться в [[w:c:ru.community:Special:Chat|Чате]] с другими участниками.
+*Загляните на [[w:c:ru.community|Вики Сообщества]], чтобы найти последние новости из [[w:c:ru.community.wikia.com/wiki/Блог:Блоги_сотрудников|блогов сотрудников]]. Вы можете задать вопросы на нашем [[w:c:ru.community:Special:Forum|форуме]], посмотреть видеоуроки [[w:c:ru.community:Университет Викия|Университета Фэндома]] или общаться в [[w:c:ru.community:Special:Chat|чате]] с другими участниками.
 *Наконец, не забывайте о [[w:c:ru.community:Справка:Содержание|Справке]], на страницах которой вы узнаете обо всех особенностях использования Фэндома.
 
 Все вышеприведённые ссылки помогут вам начать изучение основ создания вики. И помните, что самое главное — получать удовольствие от своей вики!
@@ -5548,7 +5549,7 @@ ___________________________________________
 
 *Посетите страницу [[Special:WikiFeatures|расширений вики]], чтобы подключить специальные расширения, в том числе любимый всеми чат.
 *Настройте Страницу сообщества с помощью [[Special:ThemeDesigner|Конструктора тем]].
-*Загляните на [[w:c:ru.community|Вики Сообщества]], чтобы ознакомиться с [[w:c:ru.community.wikia.com/wiki/Блог:Блоги_сотрудников|блогами сотрудников]] и задайте свои вопросы на [[w:c:ru.community:Special:Forum|Форуме]].
+*Загляните на [[w:c:ru.community|Вики Сообщества]], чтобы ознакомиться с [[w:c:ru.community.wikia.com/wiki/Блог:Блоги_сотрудников|блогами сотрудников]] и задайте свои вопросы на [[w:c:ru.community:Special:Forum|форуме]].
 *Наконец, не забывайте о [[w:c:ru.community:Справка:Содержание|Справке]], на страницах которой вы узнаете обо всех особенностях использования Фэндома, или посмотрите видеоуроки [[w:c:ru.community:Университет Викия|Университета Фэндома]].
 
 Удачи!',
@@ -5558,7 +5559,7 @@ ___________________________________________
 	'closemyaccount-intro-text' => 'Нам очень жаль, что вы хотите отключить вашу учётную запись. На Фэндоме есть множество википроектов на разные темы, и мы очень надеемся, что вы передумаете и найдёте ту вики, которая подходит именно вам. Если у вас возникли проблемы на вики, пожалуйста, не стесняйтесь обращаться за помощью к [[Special:ListUsers/sysop|местным администраторам]].
 
 Если вы всё-таки точно решили, что хотите отключить вашу учётную запись, пожалуйста, учтите следующее:
-* Фэндом не имеет технической возможности полностью удалить учётную запись, но может отключить её. В этом случае ваш аккаунт будет заблокирован и вы больше не сможете его использовать.
+* Фэндом не имеет технической возможности полностью удалить учётную запись, но может её отключить. В этом случае ваш аккаунт будет заблокирован и вы больше не сможете его использовать.
 * Этот процесс является необратимым по прошествии $1 {{PLURAL:$1|дня|дней}}, и если вы захотите вернуться на Фэндом, вам придётся создать новую учётную запись.
 * Закрытие учётной записи не приведёт к удалению ваших правок и вашего вклада в википроекты Фэндома, так как этот контент принадлежит вики-сообществу.
 
@@ -5584,7 +5585,7 @@ ___________________________________________
 	'cnw-userauth-marketing-body' => 'Чтобы создать вики на Фэндоме, необходима учётная запись. Регистрация займёт всего одну минуту!',
 	'cnw-welcome-instruction1' => 'Нажмите на кнопку ниже, чтобы начать добавлять страницы на вики.',
 	'contact' => 'Связаться с Фэндомом',
-	'content-warning-body' => 'Возможно на вики $1 есть материалы сомнительного содержания, например сцены насилия, пародии в жанре «чёрного юмора» или другой контент, не предназначенный для широкой аудитории.
+	'content-warning-body' => 'Возможно, на вики $1 есть материалы сомнительного содержания, например сцены насилия, пародии в жанре «чёрного юмора» или другой контент, не предназначенный для широкой аудитории.
 
 Как правило, Фэндом не занимается ни проверкой, ни одобрением содержания этой или какой-либо другой вики. Подробнее о наших правилах читайте на странице [w:c:ru.community:Викия:Условия_использования Условия использования, установленные компанией Wikia, Inc].',
 	'cookie-policy-description' => 'В Европейском союзе действует закон, согласно которому пользователи при первом посещении веб-сайта должны быть уведомлены об использовании на нём файлов cookies. Это расширение позволяет Фэндому выполнять требование данного закона.',
@@ -5617,18 +5618,18 @@ ___________________________________________
 	'emailext-founder-3-days-subject' => 'Как дела на $1? Мы всегда готовы помочь.',
 	'emailext-founder-3-days-summary' => 'Прошло уже три дня с момента основания вашей вики [$1 $2]!',
 	'emailext-founder-3-days-update-theme-details' => 'Темы, цвета, логотипы — столько всего! Воспользуйтесь конструктором тем, чтобы создать уникальный дизайн для своей вики.',
-	'emailext-founder-3-days-wam-details' => 'Возможно вас вдохновят примеры наших [$1 самых активных сообществ]. Это самые успешные и самые популярные википроекты.',
+	'emailext-founder-3-days-wam-details' => 'Возможно, вас вдохновят примеры наших [$1 самых активных сообществ]. Это самые успешные и самые популярные википроекты.',
 	'emailext-founder-active-footer-1' => 'Если вы ещё не видели всего, что было создано на странице вашего сообщества, — самое время сделать это сейчас. Помните, что вы можете сэкономить время, установив режим кратких оповещений в настройках электронной почты. В этом режиме вы будете получать одно электронное письмо в день со списком всех изменений на вашей вики.',
 	'emailext-founder-active-footer-2' => 'Продолжайте создавать ваше сообщество в том же духе!',
 	'emailext-founder-activity-digest-footer' => 'Вы можете получить советы по развитию сообщества и задать вопросы на [http://ru.community.wikia.com Вики Сообщества].',
 	'emailext-founder-activity-digest-link-label' => 'Недавняя вики-деятельность',
-	'emailext-founder-add-photos-details' => 'Добавьте интересные изображения и видео на вашу вики. Участникам это понравится и они будут ещё чаще посещать вашу вики.',
+	'emailext-founder-add-photos-details' => 'Добавьте интересные изображения и видео на вашу вики. Участникам это понравится, и они будут ещё чаще посещать вашу вики.',
 	'emailext-founder-anon-encourage' => 'На Фэндоме есть множество участников, которые редактируют анонимно. Посмотрите, что написал неизвестный участник на вашей вики!',
 	'emailext-founder-body' => '[$1 $2] {{GENDER:$2|совершил|совершила}} первую правку на вашей вики. Сделайте так, чтобы [$1 $2] {{GENDER:$2|почувствовал|почувствовала}} себя частью этого сообщества и поощряйте {{GENDER:$2|его|её}} старания!',
 	'emailext-founder-customize-details' => 'Что нового в вашем сообществе? Разместите самые интересные статьи на заглавной странице, чтобы произвести хорошее впечатление.',
 	'emailext-founder-digest-edits-description' => 'Не забудьте благодарить тех, кто делает вклад в ваше сообщество, чтобы их усилия не остались без внимания.',
 	'emailext-founder-digest-users-description' => 'Поддерживайте новых участников. Поощряйте их активное участие в вашем замечательном сообществе.',
-	'emailext-founder-digest-users-header' => 'Новые участники сообщества $1',
+	'emailext-founder-digest-users-header' => 'Новых участников в сообществе: $1',
 	'emailext-founder-digest-views-description-1' => 'Продолжайте добавлять интересные страницы, темы обсуждений, изображения и видео.',
 	'emailext-founder-digest-views-description-2' => 'Продолжайте добавлять интересные страницы, темы обсуждений, изображения и видео.',
 	'emailext-founder-encourage' => '[$1 $2] {{GENDER:$2|совершил|совершила}} первую правку на вашей вики. Сделайте так, чтобы [$1 $2] {{GENDER:$2|почувствовал|почувствовала}} себя частью этого сообщества и поощряйте {{GENDER:$2|его|её}} старания!',
@@ -5666,10 +5667,10 @@ ___________________________________________
 	'emailext-welcome-summary-extended' => 'А что же дальше?',
 	'emailext-wikia-home-url' => 'http://fandom.wikia.com/',
 	'fbconnect-connect-msg' => 'Поздравляем! Вы подключили учётную запись на Фэндоме к Facebook.',
-	'fbconnect-disconnect-account-link' => 'Ваша учётная запись на Фэндоме подключена к Facebook. Вы можете [[#|отключить]] её и продолжать использовать сервис Фэндома как обычно, при этом история ваших действий (правки, достижения) останется без изменений.',
+	'fbconnect-disconnect-account-link' => 'Ваша учётная запись на Фэндоме подключена к Facebook. Вы можете её [[#|отключить]] и продолжать использовать сервис Фэндома как обычно, при этом история ваших действий (правки, достижения) останется без изменений.',
 	'fbconnect-disconnect-info' => 'Your Facebook account has been successfully disconnected from your Fandom account.',
 	'fbconnect-error-already-connected' => 'Эта учётная запись на Фэндоме уже подключена к Facebook. Пожалуйста, отключите её перед подключением к новому аккаунту Facebook.',
-	'fbconnect-error-fb-account-in-use' => 'Этот аккаунт Facebook уже подключён к учётной записи другого участника на Фэндоме. Пожалуйста, подключите другой аккаунт или войдите в свою учётную запись на Фэндоме через Facebook и отключите её, чтобы соединить его с новой учётной записью $1.',
+	'fbconnect-error-fb-account-in-use' => 'Этот аккаунт на Facebook уже подключён к учётной записи другого участника на Фэндоме. Пожалуйста, подключите другой аккаунт или войдите в свою учётную запись на Фэндоме через Facebook и отвяжите её, чтобы соединить свой аккаунт на Facebook с новой учётной записью $1.',
 	'fbconnect-passwordremindertext' => "Hi,
 It looks like you've just disconnected your Fandom account from Facebook. We've kept all of your history, edit points and achievements intact, so don't worry!
 
@@ -5779,7 +5780,7 @@ The Fandom Community Team",
 	'option-ck-editor' => 'Классический редактор форматированного текста Фэндома (если есть)',
 	'option-visual-editor' => 'Визуальный редактор',
 	'passwordremindertext' => 'Здравствуйте,
-Новый пароль для участника «$2» — «$3».
+Новый пароль для учётной записи «$2» — «$3».
 Если вы не запрашивали смену пароля, не переживайте. Новый пароль был отправлен только вам на этот адрес электронной почты. Ваша учётная запись надежно защищена и вы можете продолжать использовать ваш старый пароль.
 
 Команда Фэндома
@@ -5790,7 +5791,7 @@ ___________________________________________________________
     *Запрос на отправку этого письма был получен с адреса $1.
 ',
 	'passwordremindertext-HTML' => '<p>Здравствуйте,<br /><br />
-Новый пароль для участника «$2» — «$3».<br /><br />
+Новый пароль для учётной записи «$2» — «$3».<br /><br />
 Если вы не запрашивали смену пароля, не переживайте. Новый пароль был отправлен только вам на этот адрес электронной почты. Ваша учётная запись надежно защищена и вы можете продолжать использовать ваш старый пароль.<br /><br />
 Команда Фэндома<br /><br />
 www.wikia.com<br /><br />
@@ -5817,7 +5818,7 @@ www.wikia.com<br /><br />
 	'prefs-help-terms' => 'Создавая вики или учётную запись, вы соглашаетесь с {{#NewWindowLink: w:c:ru.community:Викия:Условия_использования| Условиями использования, установленными компанией Wikia, Inc.}}',
 	'question_asked_by_a_wikia_user' => 'Вопрос от участника Фэндома',
 	'registerintro-title' => 'Создайте учётную запись и присоединитесь к сообществу Фэндома!',
-	'shared_help_edit_info' => 'Оригинальный текст справки находится на странице [[w:c:ru.community:Справка:$1|Справка:$1]] на Вики Сообщества. Подробнее смотрите [[w:c:ru.community:Справка:Общая_Справка|Справка:Общая_Справка]].
+	'shared_help_edit_info' => 'Оригинальный текст справки находится на странице [[w:c:ru.community:Справка:$1|Справка:$1]] на Вики Сообщества. Подробнее смотрите [[w:c:ru.community:Справка:Общая_справка|Справка:Общая_справка]].
 
 Если хотите внести изменения в текст именно этой статьи, предложите свои правки здесь.
 
@@ -5825,7 +5826,7 @@ www.wikia.com<br /><br />
 	'specialcontact-ccheader' => 'Это копия вашего сообщения, которое было отправлено в службу поддержки Фэндома',
 	'specialcontact-form-header' => 'Связаться с Фэндомом',
 	'specialcontact-formtitle' => 'Связаться со службой поддержки Фэндома',
-	'specialcontact-intro-adoption' => 'Хотите администратором этой вики? Для начала проверьте, есть ли здесь активные [[Служебная:Listusers/sysop|администраторы]]. Если есть, отправьте им сообщение с запросом на статус администратора. Советуем вам рассказать другим участникам сообщества о вашем желании и заручиться их поддержкой. Сообщите о ваших намерениях на форуме сообщества. 
+	'specialcontact-intro-adoption' => 'Хотите стать администратором этой вики? Для начала проверьте, есть ли здесь активные [[Special:Listusers/sysop|администраторы]]. Если есть, отправьте им сообщение с запросом на статус администратора. Советуем вам рассказать другим участникам сообщества о вашем желании и заручиться их поддержкой. Сообщите о ваших намерениях на форуме сообщества. 
 
 Если в сообществе нет активных администраторов, вы можете отправить запрос на получение статуса администратора. Форму запроса и дополнительную информацию о критериях выдачи статуса можно найти на [[w:c:ru.community:Викия:_Запросы_на_статус_администратора/бюрократа|этой странице]]. Не забудьте указать ссылку на сообщество, где вы хотите стать администратором.
 
@@ -5835,12 +5836,12 @@ www.wikia.com<br /><br />
 Обязательно укажите, на какой вики вы увидели эту рекламу и почему она вам не понравилась. Приложите к запросу снимок экрана с рекламой и ссылку на сайт, куда ведёт рекламный блок. Инструкцию по поиску URL рекламы можно найти здесь: http://ru.community.wikia.com/wiki/Справка:Плохая_реклама
 
 Спасибо и счастливого редактирования!',
-	'specialcontact-intro-blocked' => 'Обычно блокировки участников производятся администраторами вики, а не сотрудниками Фэндома. Вы можете найти имя заблокировавшего вас администратора в уведомлении о блокировке и связаться с этим администратором на вашей Стене обсуждения, поскольку на большинстве вики даже заблокированные участники могут оставлять сообщения на своей стене. Активность на вашей стене будет отображаться в списке вики-деятельности, и ваше сообщение заметят другие участники и администраторы. Чтобы попасть на вашу Стену обсуждения, перейдите по соответствующей ссылке в правом верхнем углу любой страницы.
+	'specialcontact-intro-blocked' => 'Обычно блокировки участников производятся администраторами вики, а не сотрудниками Фэндома. Вы можете найти имя заблокировавшего вас администратора в уведомлении о блокировке и связаться с этим администратором на вашей стене обсуждения, поскольку на большинстве вики даже заблокированные участники могут оставлять сообщения на своей стене. Активность на вашей стене будет отображаться в списке вики-деятельности, и ваше сообщение заметят другие участники и администраторы. Чтобы попасть на вашу стену обсуждения, перейдите по соответствующей ссылке в правом верхнем углу любой страницы.
 
 Если этот способ вам не подходит, то мы советуем дождаться истечения действия блокировки или просто найти другое сообщество, в жизни которого вы можете участвовать.
 
 Если вы хотите обсудить вашу блокировку с сотрудниками Фэндома, оставьте своё сообщение [[Special:Contact/general|здесь]].',
-	'specialcontact-intro-bug' => 'Мы сожалеем, что вы обнаружили баг на Фэндоме. Пожалуйста, предоставьте нам полную информацию об этой проблеме, чтобы мы могли исследовать её. Очень важно включить в своё сообщение следующее:
+	'specialcontact-intro-bug' => 'Мы сожалеем, что вы обнаружили баг на Фэндоме. Пожалуйста, предоставьте нам полную информацию об этой проблеме, чтобы мы могли с ней разобраться. Очень важно включить в своё сообщение следующее:
 *Ваше имя участника
 *Ссылку на вики, где был обнаружен баг
 *Информацию о вашем браузере, включая название и его версию ([[w:c:ru.community:Справка:Поддерживаемые браузеры|список поддерживаемых браузеров]])
@@ -5861,7 +5862,7 @@ www.wikia.com<br /><br />
 Обратите внимание, что после отправки этого запроса у вас будет $1 {{PLURAL:$1|день|дня|дней}}, чтобы вернуться и восстановить учётную запись. Для этого войдите в свою учётную запись и следуйте инструкциям по остановке процесса отключения аккаунта. По истечении периода ожидания учётная запись будет закрыта окончательно и не сможет быть восстановлена.',
 	'specialcontact-intro-close-wiki' => 'Спасибо, что обратились в службу поддержки Фэндома. Обычно мы не удаляем уже существующие вики, потому что на каждой вики работают другие участники и кто-то другой всегда может [[w:c:ru.community:Викия:_Запросы_на_статус_администратора/бюрократа|возглавить]] её вместо вас.
 
-Если вы хотите переименовать вики или исправить ошибки в названии, то для начала прочтите страницы [[Справка:Название вики]] и [[Справка:Конструктор тем]], чтобы получить представление о том, как работает название вики и как изменить логотип. Название вики очень легко изменить, поэтому не нужно переживать по этому поводу. Если вы хотите изменить URL-адрес вашей вики, оставьте запрос [[Special:Contact/generalздесь]].
+Если вы хотите переименовать вики или исправить ошибки в названии, то для начала прочтите страницы [[Справка:Название вики]] и [[Справка:Конструктор тем]], чтобы получить представление о том, как работает название вики и как изменить логотип. Название вики очень легко изменить, поэтому не нужно переживать по этому поводу. Если вы хотите изменить URL-адрес вашей вики, оставьте запрос [[Special:Contact/general|здесь]].
 
 Если вы считаете, что ваша вики не сможет заинтересовать других участников (например, если это ваша тестовая вики), отправьте запрос через форму ниже. Пожалуйста, сделайте запрос с той вики, которая должна быть закрыта, или просто пришлите ссылку на вики, которую вы хотите удалить.
 
@@ -5874,7 +5875,7 @@ www.wikia.com<br /><br />
 	'specialcontact-intro-content-issue-mobile' => 'Содержание на этой вики создаётся участниками этого сообщества, а не администраторами или сайтом Фэндом. Если у вас есть замечания по этому контенту, обсудите их с администраторами вики.
 
 Если вы считаете, что в контенте есть нарушения Условий использования, вы можете связаться с сотрудниками Фэндома.',
-	'specialcontact-intro-design' => 'Дизайн вики может изменить любой администратор сообщества в [[Help:Theme_designer|Конструкторе тем]]. Если вы хотите помочь с оформлением вики, но не имеете прав администратора, то свяжитесь с [[Special:ListAdmins|администрацией вики]].
+	'specialcontact-intro-design' => 'Дизайн вики может изменить любой администратор сообщества в [[Справка:Конструктор_тем|Конструкторе тем]]. Если вы хотите помочь с оформлением вики, но не имеете прав администратора, то свяжитесь с [[Special:ListAdmins|администрацией вики]].
 
 Если вы хотите придать вики уникальный вид, вы можете отправить запрос команде Фэндома по контенту [[w:Community_Central:Content_Team/Requests|здесь]]. Перед отправкой запроса, пожалуйста, ознакомьтесь с правилами.
 
@@ -5883,7 +5884,7 @@ www.wikia.com<br /><br />
 Счастливого редактирования!',
 	'specialcontact-intro-features' => 'Фэндом предлагает множество расширений, большинство из которых включены по умолчанию на страницах всех сообществ. 
 
-Если вы являетесь администратором сообщества и считаете, что какое-то расширение вам не нужно, то вы можете обсудить этот вопрос с другими участниками вашей вики и узнать, не хотят ли они его отключить. Получив их согласие, вы можете отключить или подключить снова расширения на странице [[Special:WikiFeatures|Wiki Features]] в [[Special:AdminDashboard|кабинете администратора]]. Если в этом разделе нет нужного вам расширения, [[Special:Contact/general|свяжитесь с нами]] с запросом его подключить.
+Если вы являетесь администратором сообщества и считаете, что какое-то расширение вам не нужно, то вы можете обсудить этот вопрос с другими участниками вашей вики и узнать, не хотят ли они его отключить. Получив их согласие, вы можете отключить или снова подключить расширение на странице [[Special:WikiFeatures|Wiki Features]] в [[Special:AdminDashboard|кабинете администратора]]. Если в этом разделе нет нужного вам расширения, [[Special:Contact/general|свяжитесь с нами]] с запросом его подключить.
 
 Администраторы, заинтересованные в тестировании новых расширений в стадии разработки, могут проверить просмотреть раздел «Лаборатория» на странице [[Special:WikiFeatures|Wiki Features]].
 
@@ -5984,7 +5985,7 @@ www.wikia.com<br /><br />
 	'videohomepage-header-search-placeholder' => 'Поиск видео на Фэндоме',
 	'videopagetool-page-title' => 'Инструмент Фэндома для видео',
 	'videopagetool-section-fan' => 'Медиаматериалы участников Фэндома',
-	'wall-message-not-found' => 'Это сообщение не найдено. Если вы видете это сообщение об ошибке, свяжитесь с сотрудниками Фэндома через [[Служебная:Contact]] и сообщите подробности, чтобы мы могли решить проблему.',
+	'wall-message-not-found' => 'Это сообщение не найдено. Если вы видите это сообщение об ошибке, свяжитесь с сотрудниками Фэндома через [[Служебная:Contact|форму обратной связи]] и сообщите подробности, чтобы мы могли решить проблему.',
 	'wall-message-staff-text' => 'Этот участник является сотрудником Фэндома',
 	'wam-html-title' => 'Мониторинг активности вики (WAM)',
 	'wam-index-header-wiki-name' => 'URL',
@@ -6063,7 +6064,7 @@ $2",
 Надеюсь, что вам понравится на {{SITENAME}}.',
 	'welcome-message-wall-user-staff' => 'Здравствуйте и добро пожаловать на {{SITENAME}}. Я представляю команду поддержки Фэндома. Спасибо за правку на странице [[:$1]]!
 
-В настоящее время на этой вики нет активных администраторов, и если вам нужна помощь, посетите [[w:c:ru.community:Справка:Содержание|страницы Справки]] или [[w:c:ru.community:Служебная:Forum|форум]] на [[w:c:ru.community|Вики Сообщества]].
+В настоящее время на этой вики нет активных администраторов, и если вам нужна помощь, посетите [[w:c:ru.community:Справка:Содержание|страницы справки]] или [[w:c:ru.community:Служебная:Forum|форум]] на [[w:c:ru.community|Вики Сообщества]].
 
 Также, посмотрите видеоуроки [[w:c:ru.community:Университет Викия|Университета Фэндома]], которые помогут вам быстро освоить редактирование.
 
@@ -6076,8 +6077,8 @@ $2",
 	'wikia-read-only-mode' => 'Наш главный центр обработки данных в данный момент недоступен, поэтому вы подключены к резервному центру. К сожалению, это означает, что некоторые функции (редактирование, загрузка файлов или чат) могут быть временно недоступны.
 Пожалуйста, наберитесь терпения — мы работаем над устранением этой проблемы. Если вы продолжаете видеть эту ошибку в течение долгого периода времени, сообщите об этом нам по адресу community@wikia.com.',
 	'wikia-version-code' => 'Код Фэндома',
-	'wikia-version-config' => 'Конфигурации Fandom',
-	'wikia-visualeditor-dialog-wikiamediainsert-policy-message' => 'Пожалуйста, придерживайтесь правил загрузки изображений на {{SITENAME}} и соблюдайте [http://www.wikia.com/Terms_of_Use условия использования] Фэндома при вставке новых видео и загрузке новых изображений.',
+	'wikia-version-config' => 'Конфигурации Фэндома',
+	'wikia-visualeditor-dialog-wikiamediainsert-policy-message' => 'Пожалуйста, придерживайтесь правил загрузки изображений на {{SITENAME}} и соблюдайте [http://www.wikia.com/Terms_of_Use Условия использования] Фэндома при вставке новых видео и загрузке новых изображений.',
 	'wikia-visualeditor-media-photo-policy' => 'Пожалуйста, соблюдайте правила этого сообщества при загрузке новых изображений.',
 	'wikia-visualeditor-notification-media-only-premium-videos-allowed' => 'В эту вики можно добавлять только лицензированный контент из <a href="http://video.wikia.com" target="_blank">Видеотеки Фэндома</a>. Пожалуйста, перейдите на <a href="http://video.wikia.com" target="_blank">video.wikia.com</a> для поиска видео.',
 	'wikiacuratedcontent-content-title' => 'Управление инструментом курирования контента Фэндома',
@@ -6264,7 +6265,7 @@ Fandom社区团队<br /></p>',
 	'emailext-founder-10-days-sharing-details' => '点击页面上的“分享”按钮，让你在Facebook、Twitter以及其他社交网站上告诉您的朋友有关这个社区的情况。',
 	'emailext-founder-10-days-summary' => '自您创建[$1 $2]起已经有10天了。',
 	'emailext-founder-3-days-add-videos-details' => '添加粉丝最喜欢的视频，让您的社区妙趣横生。谁不喜欢看有趣的视频呢？',
-	'emailext-founder-3-days-extended-summary' => '我们想看看您在Fandom上是否得到了最佳体验。如果您有任何问题弄不清楚，请随时和我们联系！',
+	'emailext-founder-3-days-extended-summary' => '我们想知道您在Fandom上是否得到了最佳体验。如果您有任何问题，请和我们联系！',
 	'emailext-founder-3-days-subject' => '$1发展得怎么样了？我们随时可以帮忙！',
 	'emailext-founder-3-days-summary' => '您相信吗？自您开始创建[$1 $2]起已经过了三天了！',
 	'emailext-founder-3-days-update-theme-details' => '主题、颜色、标志……！借助于[$1 Fandom主题设计器]来创建完全符合粉丝们心愿的设计。',
@@ -6523,7 +6524,7 @@ Fandom拥有大量不同主题的社区，我们希望您可以通过浏览其�
 ',
 	'specialcontact-intro-content-issue' => '维基内容全部来自于维基各个社区，由维基社区[[Special:ListAdmins|管理员]]进行统一管理。Fandom不负责任何相关内容的发布和社区的管理。如果您有任何关于内容的问题，我们建议您可以直接联系此维基的[[Special:ListAdmins|管理员]]。
 
-如果您认为相关内容违反了我们的“[http://zh.community.wikia.com/wiki/Wikia%E4%B8%AD%E6%96%87:%E4%BD%BF%E7%94%A8%E6%9D%A1%E6%AC%BE 维基社区使用规定]”，您可以点击[[Special:Contact/general|这里]]直接联系Fandom员工。
+如果您认为相关内容违反了我们的“[http://zh.wikia.com/wiki/%E4%BD%BF%E7%94%A8%E6%9D%A1%E6%AC%BE 社区使用条款]”，您可以点击[[Special:Contact/general|这里]]直接联系Fandom员工。
 ',
 	'specialcontact-intro-content-issue-mobile' => '维基内容全部来自于维基各个社区，由维基社区管理员进行管理。Fandom不负责任何相关内容的发布和社区的管理。如果您有任何关于内容的问题，我们建议您可以直接联系此维基的管理员。
 
