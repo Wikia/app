@@ -33,6 +33,7 @@ return [
 			'wikia.window',
 			'wikia.abTest',
 			'underscore',
+			'moment',
 		],
 		'position' => 'top', // needs to be loaded before AssetsManager files
 	],
@@ -178,6 +179,13 @@ return [
 	],
 	'underscore' => [
 		'scripts' => 'resources/wikia/libraries/underscore/underscore-min.js',
+		'dependencies' => [
+			'amd',
+		],
+	],
+
+	'moment' => [
+		'scripts' => 'resources/wikia/libraries/moment/moment.js',
 		'dependencies' => [
 			'amd',
 		],
