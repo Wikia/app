@@ -81,26 +81,15 @@ class NavigationModel extends WikiaModel {
 	 * @param int|bool $cityId city ID (false - default to current wiki)
 	 * @return string memcache key
 	 */
-	private function getMemcKey( $messageName, $cityId = false ) {
-		if ( $this->useSharedMemcKey ) {
-			$wikiId = wfWikiID();
-		} else {
-			$wikiId = ( is_numeric($cityId)) ? $cityId : intval( $this->wg->CityId );
-
-			// fix for internal and staff (BugId:15149)
-			if ($wikiId == 0) {
-				$wikiId = $this->wg->DBname;
-			}
-		}
-
+	private function getMemcKey( $messageName ) {
 		$messageName = str_replace(' ', '_', $messageName);
 
-		return wfSharedMemcKey( __CLASS__, $wikiId, $this->wg->Lang->getCode(), $messageName, self::version );
+		return wfMemcKey( __CLASS__, $this->wg->Lang->getCode(), $messageName, self::version );
 	}
 
-	public function clearMemc( $key = self::WIKIA_GLOBAL_VARIABLE, $city_id = false ){
+	public function clearMemc( $key = self::WIKIA_GLOBAL_VARIABLE ) {
 		$this->wg->Memc->delete(
-			$this->getMemcKey( $key, $city_id )
+			$this->getMemcKey( $key )
 		);
 	}
 
@@ -159,7 +148,7 @@ class NavigationModel extends WikiaModel {
 					),
 					self::CACHE_TTL,
 					true // $forContent
-				) : array() );
+				) : [] );
 		}
 		$this->setShouldTranslateContent(true);
 
@@ -314,36 +303,40 @@ class NavigationModel extends WikiaModel {
 			$cacheKey .= ':forUserLang';
 		}
 
-		$nodes = $this->wg->Memc->get( $cacheKey );
+		$nodes = WikiaDataAccess::cacheWithOptions(
+			$cacheKey,
+			function () use ($type, $source, $maxChildrenAtLevel, $forContent, $filterInactiveSpecialPages) {
+				wfProfileIn( __METHOD__  . '::miss' );
 
-		if ( empty( $nodes ) ) {
-			wfProfileIn( __METHOD__  . '::miss' );
+				// get wikitext from given source
+				switch( $type ) {
+					case self::TYPE_MESSAGE:
+						$text = $this->forContent ? wfMsgForContent( $source ) : wfMsg( $source );
+						break;
 
-			// get wikitext from given source
-			switch( $type ) {
-				case self::TYPE_MESSAGE:
-					$text = $this->forContent ? wfMsgForContent( $source ) : wfMsg( $source );
-					break;
+					case self::TYPE_VARIABLE:
+						// try to use "local" value
+						$text = $this->app->getGlobal( $source );
 
-				case self::TYPE_VARIABLE:
-					// try to use "local" value
-					$text = $this->app->getGlobal( $source );
+						// fallback to WikiFactory value from community (city id 177)
+						if ( !is_string( $text ) ) {
+							$text = WikiFactory::getVarValueByName( $source, self::COMMUNITY_WIKI_ID );
+						}
+						break;
+					default:
+						$text = '';
+				}
 
-					// fallback to WikiFactory value from community (city id 177)
-					if ( !is_string( $text ) ) {
-						$text = WikiFactory::getVarValueByName( $source, self::COMMUNITY_WIKI_ID );
-					}
-					break;
-				default:
-					$text = '';
-			}
-
-			// and parse it
-			$nodes = $this->parseText( $text, $maxChildrenAtLevel, $forContent, $filterInactiveSpecialPages );
-			$this->wg->Memc->set( $cacheKey, $nodes, $duration );
-
-			wfProfileOut( __METHOD__  . '::miss');
-		}
+				// and parse it
+				wfProfileOut( __METHOD__  . '::miss');
+				return $this->parseText( $text, $maxChildrenAtLevel, $forContent, $filterInactiveSpecialPages );
+			},
+			[
+				'cacheTTl' => $duration,
+				'negativeCacheTTl' => -1,
+				'command' => WikiaDataAccess::SKIP_CACHE
+			]
+		);
 
 		wfProfileOut( __METHOD__ . ":$type");
 		return $nodes;

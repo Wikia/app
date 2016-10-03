@@ -98,8 +98,7 @@ HEADER;
 			$model = new NavigationModel();
 
 			$model->clearMemc(
-				NavigationModel::WIKIA_GLOBAL_VARIABLE,
-				$city_id
+				NavigationModel::WIKIA_GLOBAL_VARIABLE
 			);
 
 			wfDebug(__METHOD__ . ": purging the cache for wiki #{$city_id}\n");
