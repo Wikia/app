@@ -33,7 +33,7 @@ class PhalanxContentModel extends PhalanxModel {
 	public function getText() {
 		return !is_null( $this->text ) ? $this->text : $this->title->getFullText();
 	}
-	
+
 	public function displayBlock() {
 		$this->wg->Out->setPageTitle( wfMsg( 'spamprotectiontitle' ) );
 		$this->wg->Out->setRobotPolicy( 'noindex,nofollow' );
@@ -42,7 +42,11 @@ class PhalanxContentModel extends PhalanxModel {
 		$this->wg->Out->addWikiMsg( 'spamprotectiontext' );
 		$this->wg->Out->addHTML( Html::element( 'p', array(), wfMsg( 'phalanx-stats-table-id' ) . " #{$this->block->id}" ) );
 		$this->wg->Out->addWikiMsg( 'spamprotectionmatch', "<nowiki>{$this->block->text}</nowiki>" );
-		$this->wg->Out->addWikiMsg( 'phalanx-content-spam-summary' );
+
+		if ( $this->block->type === Phalanx::TYPE_SUMMARY ) {
+			$this->wg->Out->addWikiMsg( 'phalanx-content-spam-summary' );
+		}
+
 		$this->wg->Out->returnToMain( false, $this->title );
 		$this->wg->Out->addHTML( Html::closeElement( 'div' ) );
 		$this->logBlock();
@@ -57,15 +61,6 @@ class PhalanxContentModel extends PhalanxModel {
 	public function contentBlock() {
 		$msg = "{$this->block->text} (Block #{$this->block->id})";
 		$this->logBlock();
-		return $msg;
-	}
-	
-	public function reasonBlock() {
-		$msg = wfMsgExt( 'phalanx-title-move-summary', 'parseinline' );
-		$msg .= Html::element( 'p', array(), wfMsg( 'phalanx-stats-table-id' ) . " #{$this->block->id}" );
-		$msg .= wfMsgExt( 'spamprotectionmatch', 'parseinline', "<nowiki>{$this->block->text}</nowiki>" );
-		$this->logBlock();
-		
 		return $msg;
 	}
 	
