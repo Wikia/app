@@ -160,7 +160,6 @@
 		},
 
 		initCk: function(editor) {
-
 			if (editor.config.minHeight) {
 				RTE.config.height = editor.config.minHeight;
 			}

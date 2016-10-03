@@ -7,8 +7,8 @@
 		initEditor: function( editor ) {
 			require(['wikia.flowTracking', 'wikia.querystring', 'mw'], function(flowTrack, QueryString, mw) {
 
-				// Track only creating articles from namespace 0
-				// IMPORTANT: on Special:CreatePage even after providing article title the namespace is set to -1
+				// Track only creating articles from namespace 0 (Main)
+				// IMPORTANT: on Special:CreatePage even after providing article title the namespace is set to -1 (Special Page)
 				if (mw.config.get('wgNamespaceNumber') === 0 && mw.config.get('wgArticleId') === 0) {
 					var qs = new QueryString(window.location.href);
 
@@ -16,14 +16,15 @@
 					var flowParam = qs.getVal('flow', false);
 
 					if (!flowParam && !document.referrer) {
-						flowTrack.beginFlow('direct-url');
+						flowTrack.beginFlow('direct-url', {editor: editor.mode});
 					} else {
 						//TODO: track middle step for other flows
 						console.log('flow='+flowParam);
+						console.log('editor: ' + editor.mode);
 					}
 				}
 
-			})
+			});
 		}
 	});
 })(this,jQuery);
