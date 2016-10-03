@@ -50,7 +50,7 @@ class GlobalNavigationHelper {
 		$exploreWikiaLabel = wfMessage( 'global-navigation-explore-wikia-link-label');
 
 		if ( $wgLang->getCode() === self::DEFAULT_LANG ) {
-			$hubsNodes = (new NavigationModel(true /* useSharedMemcKey */))->getTree(
+			$hubsNodes = (new NavigationModel())->getTree(
 				NavigationModel::TYPE_MESSAGE,
 				'global-navigation-menu-hubs',
 				[3] // max 3 links

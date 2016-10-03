@@ -60,16 +60,8 @@ class NavigationModel extends WikiaModel {
 
 	private $shouldTranslateContent = true;
 
-	private $useSharedMemcKey = false;
-
 	// list of errors encountered when parsing the wikitext
 	private $errors = array();
-
-	public function __construct( $useSharedMemcKey = false ) {
-		parent::__construct();
-
-		$this->useSharedMemcKey = $useSharedMemcKey;
-	}
 
 	/**
 	 * Return memcache key used for given message / variable
@@ -87,7 +79,7 @@ class NavigationModel extends WikiaModel {
 	}
 
 	public function clearMemc( $key = self::WIKIA_GLOBAL_VARIABLE ) {
-		$this->wg->Memc->delete(
+		WikiaDataAccess::cachePurge(
 			$this->getMemcKey( $key )
 		);
 	}
