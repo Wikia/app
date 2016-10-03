@@ -54,18 +54,26 @@ define('ext.wikia.adEngine.domElementTweaker', [
 		}
 	}
 
-	function recursiveMoveStylesToInline(element) {
+	function cleanInlineStyles(element) {
+		if (isElement(element)) {
+			element.removeAttribute('style');
+			element.style.cssText = null;
+		}
+	}
+
+	function recursiveRun(action, element) {
 		var i;
 		for (i = 0; i < element.childNodes.length; i++) {
-			recursiveMoveStylesToInline(element.childNodes[i]);
+			recursiveRun(action, element.childNodes[i]);
 		}
-		moveStylesToInline(element);
+		action(element);
 	}
 
 	return {
+		cleanInlineStyles: cleanInlineStyles,
 		isElement: isElement,
 		moveStylesToInline: moveStylesToInline,
-		recursiveMoveStylesToInline: recursiveMoveStylesToInline,
-		removeClass: removeClass
+		removeClass: removeClass,
+		recursiveRun: recursiveRun
 	};
 });

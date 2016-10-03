@@ -147,6 +147,12 @@ define('ext.wikia.adEngine.slotTweaker', [
 		}
 	}
 
+	function tweakRecoveredSlotOnResize(slotName, aspectRatio, container) {
+		DOMElementTweaker.recursiveRun(DOMElementTweaker.cleanInlineStyles, container);
+		makeResponsive(slotName, aspectRatio);
+		tweakRecoveredSlot(container);
+	}
+
 	function tweakRecoveredSlot(adContainer) {
 		var className = 'virtual-slot';
 
@@ -155,7 +161,7 @@ define('ext.wikia.adEngine.slotTweaker', [
 		}
 
 		adContainer.classList.add(className);
-		DOMElementTweaker.recursiveMoveStylesToInline(adContainer);
+		DOMElementTweaker.recursiveRun(DOMElementTweaker.moveStylesToInline, adContainer);
 		adContainer.classList.remove(className);
 	}
 
@@ -231,6 +237,7 @@ define('ext.wikia.adEngine.slotTweaker', [
 		removeDefaultHeight: removeDefaultHeight,
 		removeTopButtonIfNeeded: removeTopButtonIfNeeded,
 		show: show,
-		tweakRecoveredSlot: tweakRecoveredSlot
+		tweakRecoveredSlot: tweakRecoveredSlot,
+		tweakRecoveredSlotOnResize: tweakRecoveredSlotOnResize
 	};
 });

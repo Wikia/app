@@ -135,7 +135,13 @@ define('ext.wikia.adEngine.template.bfaa', [
 			wrapper.style.opacity = '';
 
 			if (recoveryHelper.isBlocking()) {
-				slotTweaker.tweakRecoveredSlot(iframe.parentNode.parentNode.parentNode.parentNode);
+				var adContainer = iframe.parentNode.parentNode.parentNode.parentNode;
+
+				win.addEventListener('resize', function () {
+					slotTweaker.tweakRecoveredSlotOnResize(params.slotName, params.aspectRatio, adContainer);
+				});
+
+				slotTweaker.tweakRecoveredSlot(adContainer);
 			}
 		});
 
