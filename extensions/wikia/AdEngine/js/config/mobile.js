@@ -41,6 +41,10 @@ define('ext.wikia.adEngine.config.mobile', [
 			return [];
 		}
 
+		return [
+			netzAthleten
+		];
+
 		switch (context.forcedProvider) {
 			case 'evolve2':
 				return [evolve2];
