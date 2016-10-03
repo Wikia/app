@@ -137,6 +137,7 @@ define('ext.wikia.adEngine.template.bfaa', [
 			if (recoveryHelper.isBlocking()) {
 				var adContainer = iframe.parentNode.parentNode.parentNode.parentNode;
 
+				slotTweaker.removeDefaultHeight(params.slotname);
 				win.addEventListener('resize', function () {
 					slotTweaker.tweakRecoveredSlotOnResize(params.slotName, params.aspectRatio, adContainer);
 				});
