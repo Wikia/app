@@ -79,7 +79,7 @@ class Track {
 //			'_utmht' => '',
 //			'_u' => '',
 //			'jid' => '',
-//			'cid' => '', //TODO: get client id from cookie (_ga field?)
+			'cid' => explode( ".", $_COOKIE[ '_ga' ] )[ 2 ],
 			'tid' => $wgDevelEnvironment ? 'UA-32129070-2' : 'UA-32129070-1',
 			// custom dimensions
 			'cd1' => $wgDBname,
