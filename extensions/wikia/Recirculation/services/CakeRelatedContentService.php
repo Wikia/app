@@ -106,6 +106,7 @@ class CakeRelatedContentService {
 								'title' => $this->formatTitle( $content ),
 								'publishDate' => $content->getModified(),
 								'author' => $this->getAuthor( $content->getContentMetadata() ),
+								'authors' => $this->getAuthors( $content ),
 								'isVideo' => false,
 								'meta' => $content->getContentMetadata(),
 								'source' => $this->getRecirculationContentType( $content->getContentType() ),
@@ -151,6 +152,32 @@ class CakeRelatedContentService {
 		}
 
 		return $content->getTitle();
+	}
+
+	private function getAuthors( Content $content ) {
+		$authors = [];
+		$authorObjects = $content->getAuthors();
+		if ( !is_array( $authorObjects ) ) {
+			return $authors;
+		}
+
+		foreach ($authorObjects as $author) {
+			$avatar = null;
+			$avatarContainer = $author->getAvatar();
+			if ( is_array( $avatarContainer ) ) {
+				$avatar = $avatarContainer["src"];
+			}
+
+			$authors[] = [
+				'id' => $author->getId(),
+				'external_user_id' => $author->getExternalUserId(),
+				'username' => $author->getUsername(),
+				'usertype' => $author->getUserType(),
+				'avatar' => $avatar,
+			];
+		}
+
+		return $authors;
 	}
 
 	private function getAuthor( $metadata ) {
