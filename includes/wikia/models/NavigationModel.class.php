@@ -332,9 +332,9 @@ class NavigationModel extends WikiaModel {
 				return $this->parseText( $text, $maxChildrenAtLevel, $forContent, $filterInactiveSpecialPages );
 			},
 			[
-				'cacheTTl' => $duration,
-				'negativeCacheTTl' => -1,
-				'command' => WikiaDataAccess::SKIP_CACHE
+				'cacheTTL' => $duration,
+				// cache ttl is set for 1 second (the shortest possible) for empty results case
+				'negativeCacheTTL' => 1,
 			]
 		);
 
