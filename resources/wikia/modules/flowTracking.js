@@ -2,7 +2,6 @@ define('wikia.flowTracking', ['wikia.tracker', 'wikia.window', 'mw', 'jquery'], 
 
 	var track = tracker.buildTrackingFunction({
 			category: 'flow-tracking',
-			eventName: 'flowtracking',
 			trackingMethod: 'analytics'
 
 		}),
@@ -51,7 +50,6 @@ define('wikia.flowTracking', ['wikia.tracker', 'wikia.window', 'mw', 'jquery'], 
 
 	return {
 		beginFlow: beginFlow,
-		endFlow: endFlow,
 		trackFlowStep: trackFlowStep
 	}
 });
