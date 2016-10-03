@@ -32,7 +32,7 @@
 					if (flowParam || document.referrer) {
 						//TODO: track middle step for other flows
 					} else {
-						flowTrack.beginFlow('direct-url', {editor: editorName(editor.mode)});
+						flowTrack.beginFlow('create-page-direct-url', {editor: editorName(editor.mode)});
 					}
 				}
 
