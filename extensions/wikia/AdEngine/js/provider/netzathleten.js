@@ -4,9 +4,8 @@ define('ext.wikia.adEngine.provider.netzathleten', [
 	'ext.wikia.adEngine.utils.eventDispatcher',
 	'wikia.document',
 	'wikia.lazyqueue',
-	'wikia.window',
-	'wikia.querystring'
-], function (slotTweaker, eventDispatcher, doc, lazyQueue, win, QueryString) {
+	'wikia.window'
+], function (slotTweaker, eventDispatcher, doc, lazyQueue, win) {
 	'use strict';
 
 	var initialized = false,
@@ -19,8 +18,7 @@ define('ext.wikia.adEngine.provider.netzathleten', [
 			MOBILE_TOP_LEADERBOARD: 'TOP',
 			MOBILE_IN_CONTENT: 'MID',
 			MOBILE_PREFOOTER: 'BOTTOM'
-		},
-		qs = new QueryString();
+		};
 
 	function loadLibrary() {
 		var script = doc.createElement('script');
@@ -35,17 +33,11 @@ define('ext.wikia.adEngine.provider.netzathleten', [
 	}
 
 	function init() {
-		var async = qs.getVal('na_async', null);
-
 		lazyQueue.makeQueue(cmdQueue, function (callback) {
 			callback();
 		});
 
-		if (!!async) {
-			loadLibrary();
-		} else {
-			cmdQueue.start();
-		}
+		loadLibrary();
 
 		eventDispatcher.dispatch('wikia.not_uap');
 		cmdQueue.push(function () {
