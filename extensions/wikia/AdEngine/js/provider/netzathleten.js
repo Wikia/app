@@ -53,6 +53,10 @@ define('ext.wikia.adEngine.provider.netzathleten', [
 	function fillInSlot(slot) {
 		var container = doc.createElement('div');
 
+		if (!initialized) {
+			init();
+		}
+
 		slotTweaker.show(slot.name);
 		slotTweaker.removeDefaultHeight(slot.name);
 		container.id = 'naMediaAd_' + slotMap[slot.name];
@@ -62,8 +66,6 @@ define('ext.wikia.adEngine.provider.netzathleten', [
 			win.naMediaAd.includeAd(slotMap[slot.name]);
 		});
 	}
-
-	init();
 
 	return {
 		name: 'NetzAthleten',

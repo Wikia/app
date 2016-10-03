@@ -64,6 +64,10 @@ define('ext.wikia.adEngine.config.desktop', [
 			return [];
 		}
 
+		return [
+			adProviderNetzAthleten
+		];
+
 		// Force provider
 		if (context.forcedProvider && !!forcedProviders[context.forcedProvider]) {
 			log(['getProvider', slotName, context.forcedProvider + ' (wgAdDriverForcedProvider)'], 'info', logGroup);
