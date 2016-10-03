@@ -189,7 +189,7 @@ class NavigationModel extends WikiaModel {
 	public function getTree( $type, $source, Array $maxChildrenAtLevel = [], $refreshCache = false ) {
 		$menuData = WikiaDataAccess::cache(
 			$this->getTreeMemcKey( $type, $source, implode( $maxChildrenAtLevel, '-' ) ),
-			self::CACHE_TTL /* 3 hours */,
+			self::CACHE_TTL,
 			function () use ( $type, $source, $maxChildrenAtLevel ) {
 				$menuData = [];
 
@@ -197,7 +197,7 @@ class NavigationModel extends WikiaModel {
 					$type,
 					$source,
 					$maxChildrenAtLevel,
-					self::CACHE_TTL /* 3 hours */
+					self::CACHE_TTL
 				);
 
 				foreach ( $this->menuNodes[0]['children'] as $id ) {
