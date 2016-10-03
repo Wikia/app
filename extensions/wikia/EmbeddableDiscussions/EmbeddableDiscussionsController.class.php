@@ -46,8 +46,8 @@ class EmbeddableDiscussionsController {
 			$args['mostrecent'] !== 'true' &&
 			$args['mostrecent'] !== 'false'
 		) {
-			$errorMessage = wfMessage( 'embeddable-discussions-parameter-error', 'mostrecent' )->plain() .
-				wfMessage( 'embeddable-discussions-parameter-error-boolean' )->plain();
+			$errorMessage = wfMessage( 'embeddable-discussions-parameter-error', 'mostrecent',
+				wfMessage( 'embeddable-discussions-parameter-error-boolean' )->plain() )->plain();
 
 			return false;
 		}
@@ -60,10 +60,9 @@ class EmbeddableDiscussionsController {
 				intval( $size ) > self::ITEMS_MAX ||
 				intval( $size ) < self::ITEMS_MIN
 			) {
-				// TODO: Refactor error messages to avoid direct concatenation, see JPN-657
-				$errorMessage = wfMessage( 'embeddable-discussions-parameter-error', 'size' )->plain() .
+				$errorMessage = wfMessage( 'embeddable-discussions-parameter-error', 'size',
 					wfMessage( 'embeddable-discussions-parameter-error-range',
-						self::ITEMS_MIN , self::ITEMS_MAX )->plain();
+						self::ITEMS_MIN , self::ITEMS_MAX )->plain() )->plain();
 
 				return false;
 			}
@@ -77,9 +76,9 @@ class EmbeddableDiscussionsController {
 				intval( $columns ) > self::COLUMNS_MAX ||
 				intval( $columns ) < self::COLUMNS_MIN
 			) {
-				// TODO: Refactor error messages to avoid direct concatenation, see JPN-657
-				$errorMessage = wfMessage( 'embeddable-discussions-parameter-error', 'columns' )->plain() .
-					wfMessage( 'embeddable-discussions-parameter-error-range', self::COLUMNS_MIN , self::COLUMNS_MAX )->plain();
+				$errorMessage = wfMessage( 'embeddable-discussions-parameter-error', 'columns',
+						wfMessage( 'embeddable-discussions-parameter-error-range',
+							self::COLUMNS_MIN , self::COLUMNS_MAX )->plain() )->plain();
 
 				return false;
 			}
@@ -87,9 +86,8 @@ class EmbeddableDiscussionsController {
 
 		// category must be a valid category
 		if ( $modelData['invalidCategory'] ) {
-			// TODO: Refactor error messages to avoid direct concatenation, see JPN-657
-			$errorMessage = wfMessage( 'embeddable-discussions-parameter-error', $args['category'] )->plain() .
-				wfMessage( 'embeddable-discussions-parameter-error-category' )->plain();
+			$errorMessage = wfMessage( 'embeddable-discussions-parameter-error', $args['catid'],
+				wfMessage( 'embeddable-discussions-parameter-error-category' )->plain() )->plain();
 
 			return false;
 		}
@@ -148,9 +146,9 @@ class EmbeddableDiscussionsController {
 		$showLatest = !empty( $args['mostrecent'] ) && filter_var( $args['mostrecent'], FILTER_VALIDATE_BOOLEAN );
 		$itemCount = empty( $args['size'] ) ? self::ITEMS_DEFAULT : intval( $args['size'] );
 		$columns = empty( $args['columns'] ) ? self::COLUMNS_DEFAULT : intval( $args['columns'] );
-		$category = empty( $args['category'] ) ? '' :  $args['category'];
+		$categoryId = empty( $args['catid'] ) ? '' :  $args['catid'];
 
-		$modelData = ( new DiscussionsThreadModel( $wgCityId ) )->getData( $showLatest, $itemCount, $category );
+		$modelData = ( new DiscussionsThreadModel( $wgCityId ) )->getData( $showLatest, $itemCount, $categoryId );
 
 		if ( !$this->checkArguments( $args, $modelData, $errorMessage ) ) {
 			return $this->templateEngine->clearData()
@@ -163,7 +161,7 @@ class EmbeddableDiscussionsController {
 		if ( F::app()->checkSkin( 'wikiamobile' ) ) {
 			return $this->renderMobile( $modelData, $showLatest, $itemCount );
 		} else {
-			return $this->renderDesktop( $modelData, $showLatest, $category, $columns );
+			return $this->renderDesktop( $modelData, $showLatest, $modelData['categoryName'], $columns );
 		}
 	}
 }
