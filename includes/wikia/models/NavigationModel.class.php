@@ -58,7 +58,6 @@ class NavigationModel extends WikiaModel {
 		'topusers' => 'GetTopFiveUsers'
 	);
 
-	private $forContent = false;
 	private $shouldTranslateContent = true;
 
 	private $useSharedMemcKey = false;
@@ -158,18 +157,6 @@ class NavigationModel extends WikiaModel {
 		);
 	}
 
-	public function getGlobalNavigationTree( $messageName ) {
-		return $this->getTree(
-			NavigationModel::TYPE_MESSAGE,
-			$messageName,
-			[
-				self::GLOBALNAV_LEVEL_1_ITEMS_COUNT,
-				self::GLOBALNAV_LEVEL_2_ITEMS_COUNT,
-				self::GLOBALNAV_LEVEL_3_ITEMS_COUNT
-			]
-		);
-	}
-
 	public function getLocalNavigationTree( $messageName, $refreshCache = false ) {
 		return $this->getTree(
 			NavigationModel::TYPE_MESSAGE,
@@ -179,7 +166,6 @@ class NavigationModel extends WikiaModel {
 				self::LOCALNAV_LEVEL_2_ITEMS_COUNT,
 				self::LOCALNAV_LEVEL_3_ITEMS_COUNT
 			],
-			true,
 			$refreshCache
 		);
 	}
@@ -210,19 +196,18 @@ class NavigationModel extends WikiaModel {
 	 * @param bool $refreshCache pass true to refresh the cache which stores parsed navigation tree
 	 * @return Mixed|null
 	 */
-	public function getTree( $type, $source, Array $maxChildrenAtLevel = [], $forContent = false, $refreshCache = false ) {
+	public function getTree( $type, $source, Array $maxChildrenAtLevel = [], $refreshCache = false ) {
 		$menuData = WikiaDataAccess::cache(
-			$this->getTreeMemcKey( $type, $source, implode($maxChildrenAtLevel, '-'), $forContent ),
+			$this->getTreeMemcKey( $type, $source, implode($maxChildrenAtLevel, '-') ),
 			self::CACHE_TTL /* 3 hours */,
-			function() use ( $type, $source, $maxChildrenAtLevel, $forContent ) {
+			function() use ( $type, $source, $maxChildrenAtLevel ) {
 				$menuData = [];
 
 				$this->menuNodes = $this->parse(
 					$type,
 					$source,
 					$maxChildrenAtLevel,
-					self::CACHE_TTL /* 3 hours */,
-					$forContent
+					self::CACHE_TTL /* 3 hours */
 				);
 
 				foreach( $this->menuNodes[0]['children'] as $id ) {
@@ -289,30 +274,21 @@ class NavigationModel extends WikiaModel {
 	 * @param string $source name of message / variable to be parsed
 	 * @param array $maxChildrenAtLevel allowed number of items on each menu level
 	 * @param int $duration cache duration
-	 * @param boolean $forContent use content language when parsing messages?
 	 * @param boolean $filterInactiveSpecialPages ignore item linking to not existing special pages?
 	 * @return array parsed menu wikitext
 	 */
-	public function parse( $type, $source, Array $maxChildrenAtLevel = array(), $duration = 3600, $forContent = false, $filterInactiveSpecialPages = false ) {
+	public function parse( $type, $source, Array $maxChildrenAtLevel = array(), $duration = 3600, $filterInactiveSpecialPages = false ) {
 		wfProfileIn( __METHOD__ . ":$type");
 
-		$this->forContent = $forContent;
-
-		$cacheKey = $this->getMemcKey( $source );
-		if ( $forContent === false) {
-			$cacheKey .= ':forUserLang';
-		}
-
 		$nodes = WikiaDataAccess::cacheWithOptions(
-			$cacheKey,
-			function () use ($type, $source, $maxChildrenAtLevel, $forContent, $filterInactiveSpecialPages) {
+			$this->getMemcKey( $source ),
+			function () use ($type, $source, $maxChildrenAtLevel, $filterInactiveSpecialPages) {
 				wfProfileIn( __METHOD__  . '::miss' );
 
 				// get wikitext from given source
 				switch( $type ) {
 					case self::TYPE_MESSAGE:
-						$message = $this->forContent ? wfMessage( $source )->inContentLanguage() : wfMessage( $source );
-						$text = $message->text();
+						$text = wfMessage( $source )->inContentLanguage()->text();
 						break;
 
 					case self::TYPE_VARIABLE:
@@ -343,11 +319,10 @@ class NavigationModel extends WikiaModel {
 		return $nodes;
 	}
 
-	public function parseText($text, Array $maxChildrenAtLevel = array(), $forContent = false, $filterInactiveSpecialPages = false) {
+	public function parseText($text, Array $maxChildrenAtLevel = array(), $filterInactiveSpecialPages = false) {
 		wfProfileIn( __METHOD__ );
 
 		$lines = explode("\n", $text);
-		$this->forContent = $forContent;
 
 		$this->errors = array();
 
@@ -514,7 +489,7 @@ class NavigationModel extends WikiaModel {
 
 		if ( count( $lineArr ) == 2 && $lineArr[1] != '' ) {
 			// * Foo|Bar - links with label
-			$link = trim( wfMsgForContent( $lineArr[0] ) );
+			$link = trim( wfMessage( $lineArr[0] )->inContentLanguage()->text() );
 			$desc = trim( $lineArr[1] );
 		} else {
 			// * Foo
@@ -531,7 +506,7 @@ class NavigationModel extends WikiaModel {
 		$text = null;
 
 		if ($this->getShouldTranslateContent()) {
-			$text = $this->forContent ? wfMsgForContent( $desc ) : wfMsg( $desc );
+			$text = wfMessage( $desc )->inContentLanguage()->text();
 		}
 
 		if ( empty($text) || wfEmptyMsg( $desc, $text ) ) {
