@@ -143,3 +143,15 @@ $color-storieslink-grey: #555;
 	}
 
 }
+
+.WikiaArticleComments {
+	.storieslink-tag {
+		ul {
+			margin-left: 0;
+		}
+
+		.wikia-button.secondary {
+			float: left;
+		}
+	}
+}
