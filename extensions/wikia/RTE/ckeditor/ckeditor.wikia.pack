@@ -201,6 +201,7 @@ packages :
 					'../js/plugins/dialog/plugin.js',
 					'../js/plugins/dragdrop/plugin.js',
 					'../js/plugins/entities/plugin.js',
+					'../js/plugins/flowtracking/plugin.js'
 					'../js/plugins/gallery/plugin.js',
 					'../js/plugins/justify/plugin.js',
 					'../js/plugins/link/plugin.js',

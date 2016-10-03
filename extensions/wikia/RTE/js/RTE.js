@@ -73,7 +73,8 @@
 				'rte-template,' +
 				'rte-temporary-save,' +
 				'rte-toolbar,' +
-				'rte-tools',
+				'rte-tools,' +
+				'rte-flowtracking,',
 			// TODO: Too buggy. Try to use this after we update to 3.6.2 (BugId:23061)
 			//readOnly: true,
 			resize_enabled: false,
@@ -160,14 +161,14 @@
 		},
 
 		initCk: function(editor) {
-
-			require(['wikia.flowTracking', 'mw'], function(track, mw) {
-
-				// Track begin of the flow for creating new page via direct url
-				if (mw.config.get('wgNamespaceNumber') === 0 && mw.config.get('wgArticleId') === 0 && !document.referrer) {
-					track.beginFlow('direct-url');
-				}
-			});
+			//
+			// require(['wikia.flowTracking', 'mw'], function(track, mw) {
+			//
+			// 	// Track begin of the flow for creating new page via direct url
+			// 	if (mw.config.get('wgNamespaceNumber') === 0 && mw.config.get('wgArticleId') === 0 && !document.referrer) {
+			// 		track.beginFlow('direct-url');
+			// 	}
+			// });
 
 			if (editor.config.minHeight) {
 				RTE.config.height = editor.config.minHeight;
