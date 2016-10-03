@@ -14,8 +14,7 @@ define('wikia.flowTracking', ['wikia.tracker', 'wikia.window', 'mw', 'jquery'], 
 	 * @param extraParams additional parameters to track
 	 */
 	function beginFlow(flow, extraParams) {
-		var params = prepareParams(tracker.ACTIONS.FLOW_START, flow, extraParams);
-		track(params);
+		track(prepareParams(tracker.ACTIONS.FLOW_START, flow, extraParams));
 	}
 
 	/**
@@ -25,11 +24,8 @@ define('wikia.flowTracking', ['wikia.tracker', 'wikia.window', 'mw', 'jquery'], 
 	 * @param extraParams additional parameters to track
 	 */
 	function trackFlowStep(flow, extraParams) {
-		var params = {};
-
 		if (isContentPage()) {
-			params = prepareParams(tracker.ACTIONS.FLOW_MID_STEP, flow, extraParams);
-			track(params);
+			track(prepareParams(tracker.ACTIONS.FLOW_MID_STEP, flow, extraParams));
 		}
 	}
 
@@ -45,7 +41,7 @@ define('wikia.flowTracking', ['wikia.tracker', 'wikia.window', 'mw', 'jquery'], 
 		};
 
 		extraParams = extraParams || {};
-		return $.extend(params, extraParams, { user_agent: userAgent });
+		return $.extend(params, extraParams, { useragent: userAgent });
 	}
 
 	return {
