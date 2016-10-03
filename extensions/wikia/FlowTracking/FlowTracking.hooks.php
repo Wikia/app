@@ -20,6 +20,7 @@ class FlowTrackingHooks {
 			// transforms "a=1&b=2&c=3" into [ 'a' => 1, 'b' => 2, 'c' => 3 ]
 			parse_str( parse_url( getallheaders()[ 'Referer' ], PHP_URL_QUERY ), $params );
 			Track::event( 'trackingevent', $params );
+			Track::eventGA( 'create-flow', 'impression', 'flow-end' );
 		}
 		return false;
 	}
