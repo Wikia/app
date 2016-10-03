@@ -112,7 +112,6 @@ class NavigationModel extends WikiaModel {
 				$this->wg->maxLevelThreeNavElements
 			],
 			self::CACHE_TTL,
-			true, // $forContent,
 			true
 		);
 
@@ -124,8 +123,7 @@ class NavigationModel extends WikiaModel {
 					$this->wg->maxLevelOneNavElements,
 					$this->wg->maxLevelTwoNavElements,
 					$this->wg->maxLevelThreeNavElements
-				],
-				true /* $forContent */
+				]
 			);
 		} else {
 			$wiki = ( $this->wg->User->isAllowed( 'read' ) ?
@@ -138,8 +136,7 @@ class NavigationModel extends WikiaModel {
 						$this->wg->maxLevelTwoNavElements,
 						$this->wg->maxLevelThreeNavElements
 					],
-					self::CACHE_TTL,
-					true // $forContent
+					self::CACHE_TTL
 				) : [] );
 		}
 		$this->setShouldTranslateContent( true );
@@ -172,7 +169,6 @@ class NavigationModel extends WikiaModel {
 				self::LOCALNAV_LEVEL_2_ITEMS_COUNT,
 				self::LOCALNAV_LEVEL_3_ITEMS_COUNT
 			],
-			true,
 			$refreshCache
 		);
 	}
@@ -308,7 +304,7 @@ class NavigationModel extends WikiaModel {
 				// and parse it
 				wfProfileOut( __METHOD__ . '::miss' );
 
-				return $this->parseText( $text, $maxChildrenAtLevel, $forContent, $filterInactiveSpecialPages );
+				return $this->parseText( $text, $maxChildrenAtLevel, $filterInactiveSpecialPages );
 			},
 			[
 				'cacheTTL' => $duration,
