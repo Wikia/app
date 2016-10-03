@@ -17,10 +17,10 @@ $messages['en'] = array(
 	'embeddable-discussions-loading' => 'Loading Discussions...',
 	'embeddable-discussions-error-loading' => 'Error loading discussions',
 	'embeddable-discussions-cancel-button' => 'Cancel',
-	'embeddable-discussions-parameter-error' => "Error rendering discussions tag: '$1' is incorrect. ",
+	'embeddable-discussions-parameter-error' => "Error rendering discussions tag: '$1' is incorrect. $2",
 	'embeddable-discussions-parameter-error-range' => 'It must be an integer in the range $1 to $2.',
 	'embeddable-discussions-parameter-error-boolean' => 'It must be either true or false.',
-	'embeddable-discussions-parameter-error-category' => 'It must be a valid category name.',
+	'embeddable-discussions-parameter-error-category' => 'It must be a valid category id.',
 );
 
 $messages['qqq'] = array(
@@ -39,7 +39,7 @@ $messages['qqq'] = array(
 	'embeddable-discussions-loading' => 'Text to show when loading discussions cards (used on mobile only)',
 	'embeddable-discussions-error-loading' => 'Error message to show if loading of discussions items failed',
 	'embeddable-discussions-cancel-button' => 'Text for Share modal cancel button',
-	'embeddable-discussions-parameter-error' => 'Error message to show when an incorrect parameter is given. $1 is the parameter name',
+	'embeddable-discussions-parameter-error' => 'Error message to show when an incorrect parameter is given. $1 is the parameter name. $2 is the error message',
 	'embeddable-discussions-parameter-error-range' => 'Supplemental error message for numerical parameters.',
 	'embeddable-discussions-parameter-error-boolean' => 'Supplemental error message for boolean parameters. "true" and "false" should be verbatim, not translated.',
 	'embeddable-discussions-parameter-error-category' => 'Supplemental error message for showing when an incorrect category paremeter was given.',
