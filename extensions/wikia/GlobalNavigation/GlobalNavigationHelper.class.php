@@ -53,7 +53,7 @@ class GlobalNavigationHelper {
 			$hubsNodes = (new NavigationModel())->getTree(
 				NavigationModel::TYPE_MESSAGE,
 				'global-navigation-menu-hubs',
-				[3] // max 3 links
+				[3]
 			);
 		} else {
 			$hubsNodes = [];
