@@ -5,7 +5,7 @@ $messages = [];
 $messages['en'] = [
 	'emailext-watchedpage-article-restored-subject' => '$1 on {{SITENAME}} has been restored by $2.',
 	'emailext-watchedpage-article-restored-summary' => '$2 on {{SITENAME}} has been restored. Check it out!',
-	'emailext-watchedpage-article-restored-button-text' => 'See Article',
+	'emailext-watchedpage-article-restored-button-text' => 'Go to page',
 ];
 
 $messages['qqq'] = [
@@ -17,31 +17,31 @@ $messages['qqq'] = [
 $messages['de'] = [
 	'emailext-watchedpage-article-restored-subject' => '{{SITENAME}}: Der Artikel $1 wurde von $2 wiederhergestellt.',
 	'emailext-watchedpage-article-restored-summary' => '{{SITENAME}}: Der Artikel $2 wurde wiederhergestellt. Sieh ihn dir an!',
-	'emailext-watchedpage-article-restored-button-text' => 'Artikel ansehen',
+	'emailext-watchedpage-article-restored-button-text' => 'Zurück zur Seite',
 ];
 
 $messages['es'] = [
 	'emailext-watchedpage-article-restored-subject' => 'La página $1 en {{SITENAME}} ha sido restaurada por $2.',
 	'emailext-watchedpage-article-restored-summary' => 'La página $2 en {{SITENAME}} ha sido restaurada. ¡Échale un vistazo!',
-	'emailext-watchedpage-article-restored-button-text' => 'Ver artículo',
+	'emailext-watchedpage-article-restored-button-text' => 'Ir a la página',
 ];
 
 $messages['fr'] = [
 	'emailext-watchedpage-article-restored-subject' => 'Restauration de l\'article $1 par $2 sur {{SITENAME}} !',
 	'emailext-watchedpage-article-restored-summary' => 'L\'article $2 de {{SITENAME}} a été restauré. Allez y jeter un œil !',
-	'emailext-watchedpage-article-restored-button-text' => 'Voir l\'article',
+	'emailext-watchedpage-article-restored-button-text' => 'Aller à la page',
 ];
 
 $messages['it'] = [
 	'emailext-watchedpage-article-restored-subject' => '$1 in {{SITENAME}} è stato ripristinato da $2.',
 	'emailext-watchedpage-article-restored-summary' => '$2 in {{SITENAME}} è stato ripristinato. Dagli un\'occhiata!',
-	'emailext-watchedpage-article-restored-button-text' => 'Vedi articolo',
+	'emailext-watchedpage-article-restored-button-text' => 'Vai alla pagina',
 ];
 
 $messages['ja'] = [
 	'emailext-watchedpage-article-restored-subject' => '$2さんが{{SITENAME}}の$1を復元したようです',
 	'emailext-watchedpage-article-restored-summary' => '{{SITENAME}}の$2が復元されました。早速チェックしてみましょう！',
-	'emailext-watchedpage-article-restored-button-text' => '記事を見る',
+	'emailext-watchedpage-article-restored-button-text' => 'ページに移動',
 ];
 
 $messages['nl'] = [
@@ -53,31 +53,31 @@ $messages['nl'] = [
 $messages['pl'] = [
 	'emailext-watchedpage-article-restored-subject' => 'Artykuł $1 na {{SITENAME}} został przywrócony przez użytkownika $2.',
 	'emailext-watchedpage-article-restored-summary' => '$2 na {{SITENAME}} został przywrócony. Sprawdź!',
-	'emailext-watchedpage-article-restored-button-text' => 'Zobacz artykuł',
+	'emailext-watchedpage-article-restored-button-text' => 'Idź do strony',
 ];
 
 $messages['pt'] = [
 	'emailext-watchedpage-article-restored-subject' => '$1 na {{SITENAME}} foi restaurado por $2.',
 	'emailext-watchedpage-article-restored-summary' => '$2 na {{SITENAME}} foi restaurado. Confira!',
-	'emailext-watchedpage-article-restored-button-text' => 'Ver artigo',
+	'emailext-watchedpage-article-restored-button-text' => 'Ir para página',
 ];
 
 $messages['ru'] = [
 	'emailext-watchedpage-article-restored-subject' => '$2 восстановил(а) страницу $1 на {{SITENAME}}.',
 	'emailext-watchedpage-article-restored-summary' => 'Страница $2 на {{SITENAME}} была восстановлена. Просмотрите её!',
-	'emailext-watchedpage-article-restored-button-text' => 'Просмотреть статью',
+	'emailext-watchedpage-article-restored-button-text' => 'Перейти на страницу',
 ];
 
 $messages['zh-hans'] = [
 	'emailext-watchedpage-article-restored-subject' => '{{SITENAME}}网站上题为$1的文章已被$2还原。',
 	'emailext-watchedpage-article-restored-summary' => '{{SITENAME}}网站上题为$1的文章已被还原。赶快查看...',
-	'emailext-watchedpage-article-restored-button-text' => '查看文章',
+	'emailext-watchedpage-article-restored-button-text' => '转至页面',
 ];
 
 $messages['zh-hant'] = [
 	'emailext-watchedpage-article-restored-subject' => '{{SITENAME}}網站上標題為$1的文章已被$2恢復。',
 	'emailext-watchedpage-article-restored-summary' => '{{SITENAME}}網站上標題為$1的文章已被恢復。趕快查看...',
-	'emailext-watchedpage-article-restored-button-text' => '參閲文章',
+	'emailext-watchedpage-article-restored-button-text' => '轉到頁面',
 ];
 
 $messages['zh-tw'] = [
