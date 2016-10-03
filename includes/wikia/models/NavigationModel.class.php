@@ -8,7 +8,8 @@
 class NavigationModel extends WikiaModel {
 	const WIKIA_GLOBAL_VARIABLE = 'wgOasisGlobalNavigation';
 	const WIKI_LOCAL_MESSAGE = 'Wiki-navigation';
-	const CACHE_TTL = 10800; // 3 hours
+	// 3 hours
+	const CACHE_TTL = 10800;
 
 	const version = '1';
 	const ORIGINAL = 'original';
@@ -659,7 +660,8 @@ class NavigationModel extends WikiaModel {
 
 			$this->biggestCategories = WikiaDataAccess::cache(
 				wfMemcKey( 'biggest', $limit ),
-				604800, // a week
+				// a week
+				604800,
 				function () use ( $blackList, $limit ) {
 					$filterWordsA = [];
 
