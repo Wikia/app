@@ -11,7 +11,7 @@ class NavigationModel extends WikiaModel {
 	// 3 hours
 	const CACHE_TTL = 10800;
 
-	const version = '1';
+	const CACHE_VERSION = '1';
 	const ORIGINAL = 'original';
 	const PARENT_INDEX = 'parentIndex';
 	const CHILDREN = 'children';
@@ -76,7 +76,7 @@ class NavigationModel extends WikiaModel {
 	private function getMemcKey( $messageName ) {
 		$messageName = str_replace( ' ', '_', $messageName );
 
-		return wfMemcKey( __CLASS__, $this->wg->Lang->getCode(), $messageName, self::version );
+		return wfMemcKey( __CLASS__, $this->wg->Lang->getCode(), $messageName, self::CACHE_VERSION );
 	}
 
 	public function clearMemc( $key = self::WIKIA_GLOBAL_VARIABLE ) {
