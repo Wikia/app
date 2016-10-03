@@ -1,21 +1,32 @@
-/*global define*/
 define('ext.wikia.recirculation.views.impactFooter', [
 	'jquery',
 	'wikia.window',
 	'ext.wikia.recirculation.tracker',
 	'ext.wikia.recirculation.utils'
 ], function ($, w, tracker, utils) {
+	'use strict';
 
 	var imageRatio = 9/16,
 		options = {};
 
 	function render(data) {
-		var renderData = {};
+		var renderData = {},
+			structuredData = structureData(data.items);
+
 		renderData.title = data.title;
-		renderData.items = organizeItems(data);
-		renderData.discussions = data.discussions;
+		renderData.items = structuredData.items;
+
+		if (structuredData.discussions && structuredData.discussions.length > 0) {
+			renderData.discussions = {
+				discussionsUrl: getDiscussionsUrl(structuredData.discussions),
+				posts: structuredData.discussions
+			};
+		}
 
 		renderData.i18n = {
+			title: $.msg('recirculation-impact-footer-title'),
+			discussionsTitle: $.msg('recirculation-discussion-title'),
+			discussionsLinkText: $.msg('recirculation-discussion-link-text'),
 			discussionsNew: $.msg('recirculation-discussions-new'),
 			discussionsPosts: $.msg('recirculation-discussions-posts'),
 			discussionsReplies: $.msg('recirculation-discussions-replies'),
@@ -28,6 +39,7 @@ define('ext.wikia.recirculation.views.impactFooter', [
 		return utils.renderTemplate('impactFooter.mustache', renderData).then(function($html) {
 			$('#WikiaFooter').html($html).find('.discussion-timestamp').timeago();
 			adjustFeatureItem($html);
+			renderDiscussionHeaderImage($html);
 
 			return $html;
 		});
@@ -54,19 +66,77 @@ define('ext.wikia.recirculation.views.impactFooter', [
 		$feature.css('margin-top', -move);
 	}
 
-	function organizeItems(data) {
-		var items = [];
+	function renderDiscussionHeaderImage($html) {
+		var $discussionHeader = $html.find('.discussion-header');
 
-		items.push(data.fandom.items.shift());
-		items = items.concat(data.articles.splice(0, 2));
-		items = items.concat(data.fandom.items);
-		items = items.concat(data.articles);
+		if ($discussionHeader.length > 0) {
+			var cityId = mw.config.get('wgCityId'),
+				requestUrl = servicesUrl() + '/site-attribute/site/' + cityId + '/attr/heroImage';
 
-		items.forEach(function(item, index) {
-			items[index].index = index;
+			$.ajax({
+				type: 'GET',
+				url: requestUrl,
+				xhrFields: {
+					withCredentials: true
+				},
+			}).done(function (data) {
+				if (data.value) {
+					$discussionHeader.css('background-image', 'url(' + data.value + ')');
+				}
+			}).fail(function () {
+				// Silent fail. It's alright to show the discussions header without an image
+			});
+		}
+	}
+
+	function servicesUrl() {
+		if (mw.config.get('wgDevelEnvironment')) {
+			return 'https://services.wikia-dev.com';
+		}
+
+		return 'https://services.wikia.com';
+	}
+
+	function structureData(items) {
+		var fandom = items.filter(function(element) {
+			return element.source === 'fandom';
 		});
 
-		return items;
+		var wiki = items.filter(function(element) {
+			return element.source === 'wiki';
+		});
+
+		var discussions = items.filter(function(element) {
+			return element.source === 'discussions';
+		});
+
+		items = [];
+
+		if (fandom.length > 0) {
+			items.push(fandom.shift());
+		}
+
+		items = items.concat(wiki.splice(0, 2));
+		items = items.concat(fandom);
+		items = items.concat(wiki);
+
+		items.forEach(function(item, index) {
+			if (items[index]) {
+				items[index].index = index;
+			}
+		});
+
+		return {
+			items: items.slice(0,12),
+			discussions: discussions
+		};
+	}
+
+	function getDiscussionsUrl(posts) {
+		var parser = document.createElement('a');
+		parser.href = posts[0].url;
+
+		return parser.protocol + '//' + parser.hostname + '/d/f';
 	}
 
 	function setupTracking(experimentName) {

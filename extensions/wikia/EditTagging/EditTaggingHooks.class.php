@@ -211,11 +211,11 @@ class EditTaggingHooks {
 	 */
 	private static function getHandlers() {
 		$handlers = new ArrayObject();
-		$handlers->append( [ self, 'tagRevisionIfCategoryEdit' ] );
-		$handlers->append( [ self, 'tagRevisionIfGalleryEdit' ] );
-		$handlers->append( [ self, 'tagRevisionIfRTESourceEdit' ] );
-		$handlers->append( [ self, 'tagRevisionIfRTEWysiwygEdit' ] );
-		$handlers->append( [ self, 'tagRevisionIfSourceEdit' ] );
+		$handlers->append( [ self::class, 'tagRevisionIfCategoryEdit' ] );
+		$handlers->append( [ self::class, 'tagRevisionIfGalleryEdit' ] );
+		$handlers->append( [ self::class, 'tagRevisionIfRTESourceEdit' ] );
+		$handlers->append( [ self::class, 'tagRevisionIfRTEWysiwygEdit' ] );
+		$handlers->append( [ self::class, 'tagRevisionIfSourceEdit' ] );
 		return $handlers;
 	}
 }

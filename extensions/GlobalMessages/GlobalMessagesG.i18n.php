@@ -1,13 +1,8 @@
 <?php
-/**
- * Internationalisation file for extension GlobalMessages.
- *
- * @file
- * @ingroup Extensions
- */
-$messages = array();
+/** Internationalization file for /extensions/GlobalMessages/GlobalMessagesG extension. */
+$messages = [];
 
-$messages['en'] = array(
+$messages['en'] = [
 	'go' => 'Go',
 	'gotaccount' => 'Already have an account? $1.',
 	'gotaccountlink' => 'Log in',
@@ -71,9 +66,6 @@ $messages['en'] = array(
 	'group-reviewer' => 'Image Reviewers',
 	'group-reviewer-member' => 'Image Reviewer',
 	'grouppage-reviewer' => 'wikia:Community_Central:Image_review',
-	'group-wikiastars' => 'Wikia Stars',
-	'group-wikiastars-member' => 'Wikia Star',
-	'grouppage-wikiastars' => 'wikia:Help:WikiaStars',
 	'group-vanguard' => 'Vanguards',
 	'group-vanguard-member' => 'Vanguard',
 	'group-voldev' => 'Volunteer Developers',
@@ -85,9 +77,9 @@ $messages['en'] = array(
 	'group-fancontributor-contributor-member' => 'Fan Contributor',
 	'group-fancontributor-staff' => 'Fan Contributor Staff',
 	'group-fancontributor-staff-member' => 'Fan Contributor Staff',
-);
+];
 
-$messages['qqq'] = array(
+$messages['qqq'] = [
 	'go' => '{{Identical|Go}}',
 	'gotaccount' => 'A message shown in the account creation form. $1 is a link to the log in form, and the text of it is "[[MediaWiki:Gotaccountlink/{{SUBPAGENAME}}|{{int:gotaccountlink}}]]".',
 	'gotaccountlink' => 'Text of the link to the log in form. Before that link, the message [[MediaWiki:Gotaccount/{{SUBPAGENAME}}]] appears.
@@ -132,25 +124,25 @@ $messages['qqq'] = array(
 	'group-voldev' => '{{doc-group|voldev}}',
 	'group-voldev-member' => '{{doc-group|voldev|member}}',
 	'grouppage-voldev' => '{{doc-group|voldev|page}}',
-);
+];
 
-$messages['ab'] = array(
+$messages['ab'] = [
 	'group-user' => 'Алахәылацәа',
 	'group-user-member' => '{{GENDER:$1|алахәыла}}',
 	'grouppage-sysop' => '{{ns:project}}:Администраторцәа',
-);
+];
 
-$messages['ace'] = array(
+$messages['ace'] = [
 	'go' => 'Jak u',
-	'gotaccount' => "Ka lheuëh neudapeuta? '''$1'''.",
+	'gotaccount' => 'Ka lheuëh neudapeuta? \'\'\'$1\'\'\'.',
 	'gotaccountlink' => 'Tamong',
 	'group-sysop' => 'Ureuëng urôh',
 	'grouppage-sysop' => '{{ns:project}}:Ureuëng urôh',
-);
+];
 
-$messages['af'] = array(
+$messages['af'] = [
 	'go' => 'Wys',
-	'gotaccount' => "Het u reeds 'n rekening? '''$1'''.",
+	'gotaccount' => 'Het u reeds \'n rekening? \'\'\'$1\'\'\'.',
 	'gotaccountlink' => 'Teken in',
 	'guesstimezone' => 'Vul in vanaf webblaaier',
 	'gender-unknown' => 'Nie gespesifiseer',
@@ -176,15 +168,15 @@ $messages['af'] = array(
 	'grouppage-sysop' => '{{ns:project}}:Administrateurs',
 	'grouppage-bureaucrat' => '{{ns:project}}:Burokrate',
 	'grouppage-suppress' => '{{ns:project}}:Toesig',
-);
+];
 
-$messages['ak'] = array(
+$messages['ak'] = [
 	'go' => 'Kɔ',
-);
+];
 
-$messages['aln'] = array(
+$messages['aln'] = [
 	'go' => 'Shko',
-	'gotaccount' => "Ke llogari? '''$1'''.",
+	'gotaccount' => 'Ke llogari? \'\'\'$1\'\'\'.',
 	'gotaccountlink' => 'Kyçu',
 	'guesstimezone' => 'Mbush prej shfletuesit:',
 	'gender-unknown' => 'Pacaktue',
@@ -210,11 +202,11 @@ $messages['aln'] = array(
 	'grouppage-sysop' => '{{ns:project}}:Administruesit',
 	'grouppage-bureaucrat' => '{{ns:project}}:Burokratë',
 	'grouppage-suppress' => '{{ns:project}}:Kujdestari',
-);
+];
 
-$messages['als'] = array(
+$messages['als'] = [
 	'go' => 'Shko',
-	'gotaccount' => "Ke llogari? '''$1'''.",
+	'gotaccount' => 'Ke llogari? \'\'\'$1\'\'\'.',
 	'gotaccountlink' => 'Kyçu',
 	'guesstimezone' => 'Mbush prej shfletuesit:',
 	'gender-unknown' => 'Pacaktue',
@@ -240,11 +232,11 @@ $messages['als'] = array(
 	'grouppage-sysop' => '{{ns:project}}:Administruesit',
 	'grouppage-bureaucrat' => '{{ns:project}}:Burokratë',
 	'grouppage-suppress' => '{{ns:project}}:Kujdestari',
-);
+];
 
-$messages['am'] = array(
+$messages['am'] = [
 	'go' => 'ሂድ',
-	'gotaccount' => "(አባልነት አሁን ካለዎ፥ '''$1''' ይግቡ)",
+	'gotaccount' => '(አባልነት አሁን ካለዎ፥ \'\'\'$1\'\'\' ይግቡ)',
 	'gotaccountlink' => 'በዚህ',
 	'guesstimezone' => 'ከኮምፒውተርዎ መዝገብ ልዩነቱ ይገኝ',
 	'gender-unknown' => ' አታምር',
@@ -266,13 +258,13 @@ $messages['am'] = array(
 	'grouppage-bot' => '{{ns:project}}:BOTS',
 	'grouppage-sysop' => '{{ns:project}}:መጋቢዎች',
 	'grouppage-bureaucrat' => '{{ns:project}}:አስተዳዳሪዎች',
-);
+];
 
-$messages['an'] = array(
+$messages['an'] = [
 	'go' => 'Ir-ie',
-	'gotaccount' => "Tiene ya una cuenta? '''$1'''.",
+	'gotaccount' => 'Tiene ya una cuenta? \'\'\'$1\'\'\'.',
 	'gotaccountlink' => 'Identificar-se y encetar sesión',
-	'guesstimezone' => "Emplir-lo con a hora d'o navegador",
+	'guesstimezone' => 'Emplir-lo con a hora d\'o navegador',
 	'gender-unknown' => 'No especificato',
 	'gender-male' => 'Hombre',
 	'gender-female' => 'Muller',
@@ -296,17 +288,17 @@ $messages['an'] = array(
 	'grouppage-sysop' => '{{ns:project}}:Almenistradors',
 	'grouppage-bureaucrat' => '{{ns:project}}:Burocratas',
 	'grouppage-suppress' => '{{ns:project}}:Supervisors',
-	'group-autoconfirmed.css' => "/* Os estilos CSS colocaus aquí s'aplicarán nomás a os usuarios autoconfirmatos*/",
-	'group-bot.css' => "/* Os estilos CSS colocaus aquí s'aplicarán nomás a os bots*/",
-	'group-sysop.css' => "/* Os estilos CSS colocaus aquí s'aplicarán nomás a os administradors*/",
-	'group-bureaucrat.css' => "/* Os estilos CSS colocaus aquí s'aplicarán nomás a os burocratas*/",
+	'group-autoconfirmed.css' => '/* Os estilos CSS colocaus aquí s\'aplicarán nomás a os usuarios autoconfirmatos*/',
+	'group-bot.css' => '/* Os estilos CSS colocaus aquí s\'aplicarán nomás a os bots*/',
+	'group-sysop.css' => '/* Os estilos CSS colocaus aquí s\'aplicarán nomás a os administradors*/',
+	'group-bureaucrat.css' => '/* Os estilos CSS colocaus aquí s\'aplicarán nomás a os burocratas*/',
 	'group-autoconfirmed.js' => '/* Qualsiquier codigo Javascript escrito aquí se cargará nomás ta os usuarios autoconfirmatos */',
 	'group-bot.js' => '/* Qualsiquier codigo Javascript escrito aquí se cargará nomás ta os bots */',
 	'group-sysop.js' => '/* Qualsiquier codigo Javascript escrito aquí se cargará nomás ta os administradors */',
 	'group-bureaucrat.js' => '/* Qualsiquier codigo Javascript escrito aquí se cargará nomás ta os burocratas */',
-);
+];
 
-$messages['ang'] = array(
+$messages['ang'] = [
 	'go' => 'Gā',
 	'gotaccountlink' => 'Inmeldian',
 	'gender-male' => 'Ƿer',
@@ -323,16 +315,16 @@ $messages['ang'] = array(
 	'group-sysop-member' => 'beƿitend',
 	'group-suppress-member' => 'oferȝesiht',
 	'grouppage-sysop' => '{{ns:project}}:Beƿitendas',
-);
+];
 
-$messages['anp'] = array(
+$messages['anp'] = [
 	'group-sysop' => 'प्रचालक',
 	'grouppage-sysop' => '{{ns:project}}:प्रचालक',
-);
+];
 
-$messages['ar'] = array(
+$messages['ar'] = [
 	'go' => 'اذهب',
-	'gotaccount' => "تمتلك حسابا بالفعل؟ '''$1'''.",
+	'gotaccount' => 'تمتلك حسابا بالفعل؟ \'\'\'$1\'\'\'.',
 	'gotaccountlink' => 'لُج',
 	'guesstimezone' => 'أدخل التوقيت من المتصفح',
 	'gender-unknown' => 'غير محدد',
@@ -366,11 +358,11 @@ $messages['ar'] = array(
 	'group-bot.js' => '/* أي جافاسكريبت هنا سيتم تحميلها للبوتات فقط */',
 	'group-sysop.js' => '/* أي جافاسكريبت هنا سيتم تحميلها للإداريين فقط */',
 	'group-bureaucrat.js' => '/* أي جافاسكريبت هنا سيتم تحميلها للبيروقراطيين فقط */',
-);
+];
 
-$messages['arc'] = array(
+$messages['arc'] = [
 	'go' => 'ܙܠ',
-	'gotaccount' => "ܐܝܬ ܠܟ ܚܘܫܒܢܐ؟ '''$1'''.",
+	'gotaccount' => 'ܐܝܬ ܠܟ ܚܘܫܒܢܐ؟ \'\'\'$1\'\'\'.',
 	'gotaccountlink' => 'ܥܘܠ',
 	'gender-unknown' => 'ܠܐ ܦܣܝܩܐ',
 	'gender-male' => 'ܕܟܪܐ',
@@ -394,9 +386,9 @@ $messages['arc'] = array(
 	'grouppage-sysop' => '{{ns:project}}:ܡܕܒܪ̈ܢܐ',
 	'grouppage-bureaucrat' => '{{ns:project}}:ܒܝܪܘܩܪ̈ܛܐ',
 	'grouppage-suppress' => '{{ns:project}}:ܚܝܘܪܐ',
-);
+];
 
-$messages['arn'] = array(
+$messages['arn'] = [
 	'go' => 'Amupe',
 	'gotaccount' => 'Dew nieymi konün? $1.',
 	'gotaccountlink' => 'Konün',
@@ -408,16 +400,16 @@ $messages['arn'] = array(
 	'group-all' => '(kom pu che)',
 	'group-user-member' => '{{GENDER:$1|Kellufe}}',
 	'grouppage-user' => '{{ns:project}}: Pu kellufe',
-);
+];
 
-$messages['ary'] = array(
+$messages['ary'] = [
 	'go' => 'Sir',
 	'gotaccount' => 'aandk deja cont ? $1',
 	'gotaccountlink' => 'Ṫkonékta',
 	'guesstimezone' => 'dkhl twqit mn navigateur',
 	'gender-unknown' => 'mamhddch',
 	'gender-male' => 'Dikr',
-	'gender-female' => "Mo'enaṫ",
+	'gender-female' => 'Mo\'enaṫ',
 	'group' => 'majmoaa:',
 	'group-user' => 'Mosṫeĥdimon',
 	'group-autoconfirmed' => 'mostakhdimon maakadon automatikiyan',
@@ -427,7 +419,7 @@ $messages['ary'] = array(
 	'group-suppress' => 'noddar',
 	'group-all' => '(kolchi)',
 	'group-user-member' => '{{GENDER:$1|Mosṫeĥdim}}',
-	'group-autoconfirmed-member' => "Mosṫeĥdim moakkad tilqa'iyan",
+	'group-autoconfirmed-member' => 'Mosṫeĥdim moakkad tilqa\'iyan',
 	'group-bot-member' => 'bot',
 	'group-sysop-member' => 'Wébmodirin',
 	'group-bureaucrat-member' => 'biroqrat',
@@ -438,11 +430,11 @@ $messages['ary'] = array(
 	'grouppage-sysop' => '{{ns:project}}:Wébmodirin',
 	'grouppage-bureaucrat' => '{{ns:project}}:biroqratiyon',
 	'grouppage-suppress' => '{{ns:project}}:Ouversayt',
-);
+];
 
-$messages['arz'] = array(
+$messages['arz'] = [
 	'go' => 'روح',
-	'gotaccount' => "عندك حساب؟ '''$1'''.",
+	'gotaccount' => 'عندك حساب؟ \'\'\'$1\'\'\'.',
 	'gotaccountlink' => 'دخول',
 	'guesstimezone' => 'دخل التوقيت من البراوزر',
 	'gender-unknown' => 'مش متحدد',
@@ -468,11 +460,11 @@ $messages['arz'] = array(
 	'grouppage-sysop' => '{{ns:project}}:اداريين',
 	'grouppage-bureaucrat' => '{{ns:project}}:بيروقراطيين',
 	'grouppage-suppress' => '{{ns:project}}:أوفرسايت',
-);
+];
 
-$messages['as'] = array(
+$messages['as'] = [
 	'go' => 'যাওক',
-	'gotaccount' => "আপুনি সদস্য হয়নে? '''$1'''",
+	'gotaccount' => 'আপুনি সদস্য হয়নে? \'\'\'$1\'\'\'',
 	'gotaccountlink' => 'প্ৰৱেশ',
 	'guesstimezone' => 'ব্ৰাউজাৰৰ পৰা ভৰাওক',
 	'gender-unknown' => 'অনিধাৰ্য্য',
@@ -498,11 +490,11 @@ $messages['as'] = array(
 	'grouppage-sysop' => '{{ns:project}}:প্ৰশাসকবৃন্দ',
 	'grouppage-bureaucrat' => '{{ns:project}}:কূটনীতিজ্ঞসকল',
 	'grouppage-suppress' => '{{ns:project}}:অনৱেক্ষা',
-);
+];
 
-$messages['ast'] = array(
+$messages['ast'] = [
 	'go' => 'Dir',
-	'gotaccount' => "¿Ya tienes una cuenta? '''$1'''.",
+	'gotaccount' => '¿Ya tienes una cuenta? \'\'\'$1\'\'\'.',
 	'gotaccountlink' => 'Aniciar sesión',
 	'guesstimezone' => 'Obtener del navegador',
 	'gender-unknown' => 'Non especificáu',
@@ -536,11 +528,11 @@ $messages['ast'] = array(
 	'group-bot.js' => '/* Cualesquier JavaScript que tea equí se cargará pa los bots namái */',
 	'group-sysop.js' => '/* Cualesquier JavaScript que tea equí se cargará pa los sysops namái */',
 	'group-bureaucrat.js' => '/* Cualesquier JavaScript que tea equí se cargará pa los burócrates namái */',
-);
+];
 
-$messages['avk'] = array(
+$messages['avk'] = [
 	'go' => 'Rupera',
-	'gotaccount' => "Kas va pata ixam digil ? '''$1'''.",
+	'gotaccount' => 'Kas va pata ixam digil ? \'\'\'$1\'\'\'.',
 	'gotaccountlink' => 'Dogluyara',
 	'guesstimezone' => 'Favera va voda ke exulesiki',
 	'group' => 'Lospa :',
@@ -563,15 +555,15 @@ $messages['avk'] = array(
 	'grouppage-sysop' => '{{ns:project}}:Ristusikeem',
 	'grouppage-bureaucrat' => '{{ns:project}}:Stujesikeem',
 	'grouppage-suppress' => '{{ns:project}}:Rokla',
-);
+];
 
-$messages['ay'] = array(
+$messages['ay'] = [
 	'go' => 'Saraña',
-);
+];
 
-$messages['az'] = array(
+$messages['az'] = [
 	'go' => 'Keç',
-	'gotaccount' => "Giriş hesabınız varsa '''$1'''.",
+	'gotaccount' => 'Giriş hesabınız varsa \'\'\'$1\'\'\'.',
 	'gotaccountlink' => 'Daxil olun',
 	'guesstimezone' => 'Brouzerdən götür',
 	'gender-unknown' => 'göstərmə',
@@ -605,11 +597,11 @@ $messages['az'] = array(
 	'group-bot.js' => '/* Burada istənilən JavaScript yalnız botlar üçün yüklənəcək */',
 	'group-sysop.js' => '/* Burada istənilən JavaScript yalnız idarəçilər üçün yüklənəcək */',
 	'group-bureaucrat.js' => '/* Burada istənilən JavaScript yalnız bürokratlar üçün yüklənəcək */',
-);
+];
 
-$messages['ba'] = array(
+$messages['ba'] = [
 	'go' => 'Күсеү',
-	'gotaccount' => "Әгәр Һеҙ теркәлеү үткән булһағыҙ? '''$1'''.",
+	'gotaccount' => 'Әгәр Һеҙ теркәлеү үткән булһағыҙ? \'\'\'$1\'\'\'.',
 	'gotaccountlink' => 'Үҙегеҙ менән таныштырығыҙ',
 	'guesstimezone' => 'Браузерҙан алырға',
 	'gender-unknown' => 'күрһәтелмәгән',
@@ -635,11 +627,11 @@ $messages['ba'] = array(
 	'grouppage-sysop' => '{{ns:project}}:Хәкимдәр',
 	'grouppage-bureaucrat' => '{{ns:project}}:Бюрократтар',
 	'grouppage-suppress' => '{{ns:project}}:Тикшереүселәр',
-);
+];
 
-$messages['bar'] = array(
+$messages['bar'] = [
 	'go' => 'Ausfyrn',
-	'gotaccount' => "Du host schoh a Benutzerkonto? '''$1'''.",
+	'gotaccount' => 'Du host schoh a Benutzerkonto? \'\'\'$1\'\'\'.',
 	'gotaccountlink' => 'Åmöden',
 	'guesstimezone' => 'Vom Browser ywernemmer',
 	'group-sysop' => 'Administratorn',
@@ -658,11 +650,11 @@ $messages['bar'] = array(
 	'grouppage-sysop' => '{{ns:project}}:Administraatorn',
 	'grouppage-bureaucrat' => '{{ns:project}}:Byrókraaten',
 	'grouppage-suppress' => '{{ns:project}}:Oversighter',
-);
+];
 
-$messages['bat-smg'] = array(
+$messages['bat-smg'] = [
 	'go' => 'Ausfyrn',
-	'gotaccount' => "Du host schoh a Benutzerkonto? '''$1'''.",
+	'gotaccount' => 'Du host schoh a Benutzerkonto? \'\'\'$1\'\'\'.',
 	'gotaccountlink' => 'Åmöden',
 	'guesstimezone' => 'Vom Browser ywernemmer',
 	'group-sysop' => 'Administratorn',
@@ -681,11 +673,11 @@ $messages['bat-smg'] = array(
 	'grouppage-sysop' => '{{ns:project}}:Administraatorn',
 	'grouppage-bureaucrat' => '{{ns:project}}:Byrókraaten',
 	'grouppage-suppress' => '{{ns:project}}:Oversighter',
-);
+];
 
-$messages['bcc'] = array(
+$messages['bcc'] = [
 	'go' => 'برو',
-	'gotaccount' => "یک حساب الان هست؟'''$1'''.",
+	'gotaccount' => 'یک حساب الان هست؟\'\'\'$1\'\'\'.',
 	'gotaccountlink' => 'ورود',
 	'guesstimezone' => 'پرکن چه بروزر',
 	'gender-unknown' => 'نامعلوم',
@@ -711,13 +703,13 @@ $messages['bcc'] = array(
 	'grouppage-sysop' => '{{ns:project}}:مدیران',
 	'grouppage-bureaucrat' => '{{ns:project}}:دیواندارآن',
 	'grouppage-suppress' => '{{ns:project}}:رویت',
-);
+];
 
-$messages['bcl'] = array(
+$messages['bcl'] = [
 	'go' => 'Dumanán',
-	'gotaccount' => "Igwa ka na nin account? '''$1'''.",
+	'gotaccount' => 'Igwa ka na nin account? \'\'\'$1\'\'\'.',
 	'gotaccountlink' => 'Maglaog',
-	'guesstimezone' => "Bugtakan an ''browser''",
+	'guesstimezone' => 'Bugtakan an \'\'browser\'\'',
 	'gender-male' => 'Lalaki',
 	'gender-female' => 'Babai',
 	'group' => 'Grupo:',
@@ -733,11 +725,11 @@ $messages['bcl'] = array(
 	'grouppage-bot' => '{{ns:project}}:Mga bot',
 	'grouppage-sysop' => '{{ns:project}}:Mga tagamató',
 	'grouppage-bureaucrat' => '{{ns:project}}:Mga bureaucrat',
-);
+];
 
-$messages['be'] = array(
+$messages['be'] = [
 	'go' => 'Пераход',
-	'gotaccount' => "Ужо маеце рахунак? '''$1'''.",
+	'gotaccount' => 'Ужо маеце рахунак? \'\'\'$1\'\'\'.',
 	'gotaccountlink' => 'Увайсці ў сістэму',
 	'guesstimezone' => 'Як у браўзеры',
 	'gender-unknown' => 'Нявызначаны',
@@ -763,11 +755,11 @@ $messages['be'] = array(
 	'grouppage-sysop' => '{{ns:project}}:Адміністратары',
 	'grouppage-bureaucrat' => '{{ns:project}}:Бюракраты',
 	'grouppage-suppress' => '{{ns:project}}:Звышнаглядчыкі',
-);
+];
 
-$messages['be-tarask'] = array(
+$messages['be-tarask'] = [
 	'go' => 'Старонка',
-	'gotaccount' => "Ужо маеце рахунак? '''$1'''.",
+	'gotaccount' => 'Ужо маеце рахунак? \'\'\'$1\'\'\'.',
 	'gotaccountlink' => 'Увайдзіце',
 	'guesstimezone' => 'Запоўніць з браўзэра',
 	'gender-unknown' => 'не пазначаны',
@@ -793,11 +785,11 @@ $messages['be-tarask'] = array(
 	'grouppage-sysop' => '{{ns:project}}:Адміністрацыя',
 	'grouppage-bureaucrat' => '{{ns:project}}:Бюракраты',
 	'grouppage-suppress' => '{{ns:project}}:Рэвізоры',
-);
+];
 
-$messages['be-x-old'] = array(
+$messages['be-x-old'] = [
 	'go' => 'Старонка',
-	'gotaccount' => "Ужо маеце рахунак? '''$1'''.",
+	'gotaccount' => 'Ужо маеце рахунак? \'\'\'$1\'\'\'.',
 	'gotaccountlink' => 'Увайдзіце',
 	'guesstimezone' => 'Запоўніць з браўзэра',
 	'gender-unknown' => 'не пазначаны',
@@ -823,11 +815,11 @@ $messages['be-x-old'] = array(
 	'grouppage-sysop' => '{{ns:project}}:Адміністрацыя',
 	'grouppage-bureaucrat' => '{{ns:project}}:Бюракраты',
 	'grouppage-suppress' => '{{ns:project}}:Рэвізоры',
-);
+];
 
-$messages['bg'] = array(
+$messages['bg'] = [
 	'go' => 'Отваряне',
-	'gotaccount' => "Имате ли вече сметка? '''$1'''.",
+	'gotaccount' => 'Имате ли вече сметка? \'\'\'$1\'\'\'.',
 	'gotaccountlink' => 'Влизане',
 	'guesstimezone' => 'Попълване чрез браузъра',
 	'gender-unknown' => 'Не е посочено',
@@ -853,11 +845,11 @@ $messages['bg'] = array(
 	'grouppage-sysop' => '{{ns:project}}:Администратори',
 	'grouppage-bureaucrat' => '{{ns:project}}:Бюрократи',
 	'grouppage-suppress' => '{{ns:project}}:Ревизори',
-);
+];
 
-$messages['bh'] = array(
+$messages['bh'] = [
 	'go' => 'Отваряне',
-	'gotaccount' => "Имате ли вече сметка? '''$1'''.",
+	'gotaccount' => 'Имате ли вече сметка? \'\'\'$1\'\'\'.',
 	'gotaccountlink' => 'Влизане',
 	'guesstimezone' => 'Попълване чрез браузъра',
 	'gender-unknown' => 'Не е посочено',
@@ -883,15 +875,15 @@ $messages['bh'] = array(
 	'grouppage-sysop' => '{{ns:project}}:Администратори',
 	'grouppage-bureaucrat' => '{{ns:project}}:Бюрократи',
 	'grouppage-suppress' => '{{ns:project}}:Ревизори',
-);
+];
 
-$messages['bho'] = array(
+$messages['bho'] = [
 	'go' => 'जाईं',
 	'gotaccount' => 'का पहिले से एगो खाता बा? $1.',
 	'gotaccountlink' => 'खाता में प्रवेश',
-);
+];
 
-$messages['bjn'] = array(
+$messages['bjn'] = [
 	'go' => 'Tulak',
 	'gotaccount' => 'Sudah baisi sabuah akun? $1.',
 	'gotaccountlink' => 'Babuat log',
@@ -919,15 +911,15 @@ $messages['bjn'] = array(
 	'grouppage-sysop' => '{{ns:project}}:Pambakal',
 	'grouppage-bureaucrat' => '{{ns:project}}:Birukrat',
 	'grouppage-suppress' => '{{ns:project}}:Pangawas',
-);
+];
 
-$messages['bm'] = array(
+$messages['bm'] = [
 	'go' => 'Taa',
-);
+];
 
-$messages['bn'] = array(
+$messages['bn'] = [
 	'go' => 'চলো',
-	'gotaccount' => "আপনার কি ইতিমধ্যে একটি অ্যাকাউন্ট তৈরি করা আছে? '''$1''' করুন।",
+	'gotaccount' => 'আপনার কি ইতিমধ্যে একটি অ্যাকাউন্ট তৈরি করা আছে? \'\'\'$1\'\'\' করুন।',
 	'gotaccountlink' => 'প্রবেশ',
 	'guesstimezone' => 'ব্রাউজার থেকে পূরণ করো',
 	'gender-unknown' => 'অনুল্লেখিত',
@@ -953,9 +945,9 @@ $messages['bn'] = array(
 	'grouppage-sysop' => '{{ns:project}}:প্রশাসক',
 	'grouppage-bureaucrat' => '{{ns:project}}:ব্যুরোক্র্যাট',
 	'grouppage-suppress' => '{{ns:project}}:ওভারসাইট',
-);
+];
 
-$messages['bo'] = array(
+$messages['bo'] = [
 	'go' => 'སོང་།',
 	'gotaccountlink' => 'ནང་འཛུལ།',
 	'gender-male' => 'ཕོ།',
@@ -966,11 +958,11 @@ $messages['bo'] = array(
 	'group-all' => '(ཚང་མ།)',
 	'grouppage-user' => '{{ns:project}}:ཁོངས་མི།',
 	'grouppage-sysop' => '{{ns:project}}:དོ་དམ་པ།',
-);
+];
 
-$messages['bpy'] = array(
+$messages['bpy'] = [
 	'go' => 'হাত',
-	'gotaccount' => "মান্নাপা একাউন্ট আহান আগেত্তর আসে? '''$1'''।",
+	'gotaccount' => 'মান্নাপা একাউন্ট আহান আগেত্তর আসে? \'\'\'$1\'\'\'।',
 	'gotaccountlink' => 'লগইন',
 	'gender-male' => 'মুনি',
 	'gender-female' => 'জেলা',
@@ -986,22 +978,22 @@ $messages['bpy'] = array(
 	'group-autoconfirmed-member' => 'তারতাই তা লেপকরিসে আতাকুরা',
 	'group-bot-member' => 'বট',
 	'grouppage-sysop' => '{{ns:project}}:প্রশাসকগি',
-);
+];
 
-$messages['bqi'] = array(
-	'gotaccount' => "آیا تقریبا یه حساب کاربری دارین? '''$1'''.",
+$messages['bqi'] = [
+	'gotaccount' => 'آیا تقریبا یه حساب کاربری دارین? \'\'\'$1\'\'\'.',
 	'gotaccountlink' => 'اویدن به',
 	'grouppage-sysop' => '{{ns:project}}:مدیران',
-);
+];
 
-$messages['br'] = array(
+$messages['br'] = [
 	'go' => 'Kas',
-	'gotaccount' => "Ur gont zo ganeoc'h dija ? '''$1'''.",
+	'gotaccount' => 'Ur gont zo ganeoc\'h dija ? \'\'\'$1\'\'\'.',
 	'gotaccountlink' => 'Kevreañ',
 	'guesstimezone' => 'Ober gant talvoudenn ar merdeer',
 	'gender-unknown' => 'Anresisaet',
 	'gender-male' => 'Paotr',
-	'gender-female' => "Plac'h",
+	'gender-female' => 'Plac\'h',
 	'group' => 'Strollad :',
 	'group-user' => 'Implijerien',
 	'group-autoconfirmed' => 'Implijerien bet kadarnaet ent emgefre',
@@ -1026,16 +1018,16 @@ $messages['br'] = array(
 	'group-bot.css' => '/* Talvezout a raio ar CSS lakaet amañ evit ar robotoù hepken */',
 	'group-sysop.css' => '/* Talvezout a raio ar CSS lakaet amañ evit ar verourien hepken */',
 	'group-bureaucrat.css' => '/* Talvezout a raio ar CSS lakaet amañ evit ar vureveien hepken */',
-);
+];
 
-$messages['brh'] = array(
+$messages['brh'] = [
 	'group-sysop' => 'Amaldár ák',
 	'grouppage-sysop' => '{{ns:project}}:Amaldár ák',
-);
+];
 
-$messages['bs'] = array(
+$messages['bs'] = [
 	'go' => 'Idi',
-	'gotaccount' => "Imate nalog? '''$1'''.",
+	'gotaccount' => 'Imate nalog? \'\'\'$1\'\'\'.',
 	'gotaccountlink' => 'Prijavi se',
 	'guesstimezone' => 'Popuni iz preglednika',
 	'gender-unknown' => 'neodređen',
@@ -1061,11 +1053,11 @@ $messages['bs'] = array(
 	'grouppage-sysop' => '{{ns:project}}:Administratori',
 	'grouppage-bureaucrat' => '{{ns:project}}:Birokrati',
 	'grouppage-suppress' => '{{ns:project}}:Nadzornici',
-);
+];
 
-$messages['bug'] = array(
+$messages['bug'] = [
 	'go' => 'Lao',
-	'gotaccount' => "Purani eŋka akun? '''$1'''.",
+	'gotaccount' => 'Purani eŋka akun? \'\'\'$1\'\'\'.',
 	'gotaccountlink' => 'Log attama',
 	'group-sysop' => 'Puŋgawa',
 	'group-all' => '(sininna)',
@@ -1073,9 +1065,9 @@ $messages['bug'] = array(
 	'group-sysop-member' => 'Puŋgawa',
 	'grouppage-user' => '{{ns:project}}:Pappaké',
 	'grouppage-sysop' => '{{ns:project}}:Puŋgawa',
-);
+];
 
-$messages['ca'] = array(
+$messages['ca'] = [
 	'go' => 'Vés-hi',
 	'gotaccount' => 'Ja teniu un compte? $1.',
 	'gotaccountlink' => 'Inicia una sessió',
@@ -1103,11 +1095,11 @@ $messages['ca'] = array(
 	'grouppage-sysop' => '{{ns:project}}:Administradors',
 	'grouppage-bureaucrat' => '{{ns:project}}:Buròcrates',
 	'grouppage-suppress' => '{{ns:project}}:Oversight',
-);
+];
 
-$messages['cdo'] = array(
+$messages['cdo'] = [
 	'go' => 'Kó̤',
-	'gotaccount' => "Ī-gĭng ô dióng-hô lāu? '''$1'''.",
+	'gotaccount' => 'Ī-gĭng ô dióng-hô lāu? \'\'\'$1\'\'\'.',
 	'gotaccountlink' => 'Láuk-diē',
 	'group' => 'Cū:',
 	'group-bot' => 'Gĭ-ké-nè̤ng',
@@ -1116,11 +1108,11 @@ $messages['cdo'] = array(
 	'group-bot-member' => 'Gĭ-ké-nè̤ng',
 	'group-sysop-member' => 'Guāng-lī-uòng',
 	'group-bureaucrat-member' => 'Guăng-lièu-cū',
-);
+];
 
-$messages['ce'] = array(
+$messages['ce'] = [
 	'go' => 'Дехьа вала',
-	'gotaccount' => "Дlавазвелла вуй хьо? '''$1'''.",
+	'gotaccount' => 'Дlавазвелла вуй хьо? \'\'\'$1\'\'\'.',
 	'gotaccountlink' => 'Вовзийта хьой',
 	'gender-unknown' => 'хlоттийна яц',
 	'gender-male' => 'борша',
@@ -1142,11 +1134,11 @@ $messages['ce'] = array(
 	'grouppage-sysop' => '{{ns:project}}:Адаманкуьйгалхой',
 	'grouppage-bureaucrat' => '{{ns:project}}:Даржахой',
 	'grouppage-suppress' => '{{ns:project}}:Левисорхой',
-);
+];
 
-$messages['ceb'] = array(
+$messages['ceb'] = [
 	'go' => 'Sige',
-	'gotaccount' => "Naa ka nay akawnt? '''$1'''.",
+	'gotaccount' => 'Naa ka nay akawnt? \'\'\'$1\'\'\'.',
 	'gotaccountlink' => 'Dayon',
 	'guesstimezone' => 'Ibutang gikan sa brawser',
 	'gender-unknown' => 'Wala gi-specify',
@@ -1154,23 +1146,23 @@ $messages['ceb'] = array(
 	'gender-female' => 'Babaye',
 	'group-sysop' => 'Mga tagdumala',
 	'grouppage-sysop' => '{{ns:project}}:Mga tigdumala',
-);
+];
 
-$messages['ch'] = array(
+$messages['ch'] = [
 	'go' => 'Hånao',
-	'gotaccount' => "Guåha esta kuenta-mu? '''$1'''.",
+	'gotaccount' => 'Guåha esta kuenta-mu? \'\'\'$1\'\'\'.',
 	'gotaccountlink' => 'Log in',
 	'group' => 'Grupu:',
 	'grouppage-sysop' => '{{ns:project}}:Atministradot siha',
-);
+];
 
-$messages['chr'] = array(
+$messages['chr'] = [
 	'go' => 'ᎮᎦ',
-);
+];
 
-$messages['ckb'] = array(
+$messages['ckb'] = [
 	'go' => 'بڕۆ',
-	'gotaccount' => "خاوه‌نی هه‌ژماری خۆتی؟ '''$1'''.",
+	'gotaccount' => 'خاوه‌نی هه‌ژماری خۆتی؟ \'\'\'$1\'\'\'.',
 	'gotaccountlink' => 'چوونه‌ ژووره‌وه‌',
 	'guesstimezone' => 'لە وێبگەڕەکە بیگرە',
 	'gender-unknown' => 'ئاشکرا نەکراو',
@@ -1196,9 +1188,9 @@ $messages['ckb'] = array(
 	'grouppage-sysop' => '{{ns:project}}:بەڕێوبەران',
 	'grouppage-bureaucrat' => '{{ns:project}}:بورووکراتەکان',
 	'grouppage-suppress' => '{{ns:project}}:چاودێر',
-);
+];
 
-$messages['co'] = array(
+$messages['co'] = [
 	'gotaccountlink' => 'Cunnessione',
 	'group' => 'Gruppu:',
 	'group-bot' => 'Boti',
@@ -1211,27 +1203,27 @@ $messages['co'] = array(
 	'grouppage-bot' => '{{ns:project}}:Boti',
 	'grouppage-sysop' => '{{ns:project}}:Amministratori',
 	'grouppage-bureaucrat' => '{{ns:project}}:Burocrati',
-);
+];
 
-$messages['cps'] = array(
+$messages['cps'] = [
 	'go' => 'Padayun',
-	'gotaccount' => "May account ka na bala? '''$1'''.",
+	'gotaccount' => 'May account ka na bala? \'\'\'$1\'\'\'.',
 	'gotaccountlink' => 'Magsulod',
 	'group-sysop' => 'Mga manugdumala',
 	'grouppage-sysop' => '{{ns:project}}:Mga manugdumala',
-);
+];
 
-$messages['crh'] = array(
+$messages['crh'] = [
 	'go' => 'Padayun',
-	'gotaccount' => "May account ka na bala? '''$1'''.",
+	'gotaccount' => 'May account ka na bala? \'\'\'$1\'\'\'.',
 	'gotaccountlink' => 'Magsulod',
 	'group-sysop' => 'Mga manugdumala',
 	'grouppage-sysop' => '{{ns:project}}:Mga manugdumala',
-);
+];
 
-$messages['crh-cyrl'] = array(
+$messages['crh-cyrl'] = [
 	'go' => 'Бар',
-	'gotaccount' => "Даа эвель эсап ачкъан эдинъизми? '''$1'''.",
+	'gotaccount' => 'Даа эвель эсап ачкъан эдинъизми? \'\'\'$1\'\'\'.',
 	'gotaccountlink' => 'Отурым ачынъыз',
 	'guesstimezone' => 'Браузеринъиз сизинъ еринъизге коре толдурсын',
 	'gender-unknown' => 'Бильдирильмеген',
@@ -1257,11 +1249,11 @@ $messages['crh-cyrl'] = array(
 	'grouppage-sysop' => '{{ns:project}}:Идареджилер',
 	'grouppage-bureaucrat' => '{{ns:project}}:Бюрократлар',
 	'grouppage-suppress' => '{{ns:project}}:Тефтишчилер',
-);
+];
 
-$messages['crh-latn'] = array(
+$messages['crh-latn'] = [
 	'go' => 'Bar',
-	'gotaccount' => "Daa evel esap açqan ediñizmi? '''$1'''.",
+	'gotaccount' => 'Daa evel esap açqan ediñizmi? \'\'\'$1\'\'\'.',
 	'gotaccountlink' => 'Oturım açıñız',
 	'guesstimezone' => 'Brauzeriñiz siziñ yeriñizge köre toldursın',
 	'gender-unknown' => 'Bildirilmegen',
@@ -1287,11 +1279,11 @@ $messages['crh-latn'] = array(
 	'grouppage-sysop' => '{{ns:project}}:İdareciler',
 	'grouppage-bureaucrat' => '{{ns:project}}:Bürokratlar',
 	'grouppage-suppress' => '{{ns:project}}:Teftişçiler',
-);
+];
 
-$messages['cs'] = array(
+$messages['cs'] = [
 	'go' => 'Jít na',
-	'gotaccount' => "Už jste registrováni? '''$1'''.",
+	'gotaccount' => 'Už jste registrováni? \'\'\'$1\'\'\'.',
 	'gotaccountlink' => 'Přihlaste se',
 	'guesstimezone' => 'Načíst z prohlížeče',
 	'gender-unknown' => 'Neurčeno',
@@ -1325,11 +1317,11 @@ $messages['cs'] = array(
 	'group-bot.js' => '/* Zde uvedený JavaScript bude použit pouze pro boty */',
 	'group-sysop.js' => '/* Zde uvedený JavaScript bude použit pouze pro správce */',
 	'group-bureaucrat.js' => '/* Zde uvedený JavaScript bude použit pouze pro byrokraty */',
-);
+];
 
-$messages['csb'] = array(
+$messages['csb'] = [
 	'go' => 'Biôj!',
-	'gotaccount' => "Masz ju kònto? '''$1'''.",
+	'gotaccount' => 'Masz ju kònto? \'\'\'$1\'\'\'.',
 	'gotaccountlink' => 'Wlogùjë',
 	'guesstimezone' => 'Wezmi z przezérnika',
 	'gender-male' => 'Chłop',
@@ -1354,9 +1346,9 @@ $messages['csb'] = array(
 	'grouppage-sysop' => '{{ns:project}}:Sprôwnicë',
 	'grouppage-bureaucrat' => '{{ns:project}}:Biurokracë',
 	'grouppage-suppress' => '{{ns:project}}:Rewizorzë',
-);
+];
 
-$messages['cu'] = array(
+$messages['cu'] = [
 	'go' => 'прѣиди',
 	'gotaccount' => 'мѣсто ти ѥстъ ли? $1',
 	'gotaccountlink' => 'въниди',
@@ -1375,11 +1367,11 @@ $messages['cu'] = array(
 	'grouppage-bot' => '{{ns:project}}:Аѵтомати',
 	'grouppage-sysop' => '{{ns:project}}:Съмотритєлє',
 	'grouppage-bureaucrat' => '{{ns:project}}:Чинодатєлє',
-);
+];
 
-$messages['cv'] = array(
+$messages['cv'] = [
 	'go' => 'Куç',
-	'gotaccount' => "Эсир регистрациленсе-и? '''$1'''.",
+	'gotaccount' => 'Эсир регистрациленсе-и? \'\'\'$1\'\'\'.',
 	'gotaccountlink' => 'Сайта кĕр',
 	'group' => 'Ушкăн:',
 	'group-autoconfirmed' => 'Автоподтверждённые участники',
@@ -1398,11 +1390,11 @@ $messages['cv'] = array(
 	'grouppage-sysop' => '{{ns:project}}:Администраторсем',
 	'grouppage-bureaucrat' => '{{ns:project}}:Бюрократсем',
 	'grouppage-suppress' => '{{ns:project}}:Ревизоры',
-);
+];
 
-$messages['cy'] = array(
+$messages['cy'] = [
 	'go' => 'Eler',
-	'gotaccount' => "Oes cyfrif gennych eisoes? '''$1'''.",
+	'gotaccount' => 'Oes cyfrif gennych eisoes? \'\'\'$1\'\'\'.',
 	'gotaccountlink' => 'Mewngofnodwch',
 	'guesstimezone' => 'Llenwi oddi wrth y porwr',
 	'gender-unknown' => 'Heb ei nodi',
@@ -1410,29 +1402,29 @@ $messages['cy'] = array(
 	'gender-female' => 'Benyw',
 	'group' => 'Grŵp:',
 	'group-user' => 'Defnyddwyr',
-	'group-autoconfirmed' => "Defnyddwyr wedi eu cadarnhau'n awtomatig",
+	'group-autoconfirmed' => 'Defnyddwyr wedi eu cadarnhau\'n awtomatig',
 	'group-bot' => 'Botiau',
 	'group-sysop' => 'Gweinyddwyr',
 	'group-bureaucrat' => 'Biwrocratiaid',
 	'group-suppress' => 'Goruchwylwyr',
 	'group-all' => '(pawb)',
 	'group-user-member' => '{{GENDER:$1|defnyddiwr}}',
-	'group-autoconfirmed-member' => "{{GENDER:$1|defnyddiwr wedi ei gadarnhau'n awtomatig}}",
+	'group-autoconfirmed-member' => '{{GENDER:$1|defnyddiwr wedi ei gadarnhau\'n awtomatig}}',
 	'group-bot-member' => '{{GENDER:$1|bot}}',
 	'group-sysop-member' => '{{GENDER:$1|gweinyddwr}}',
 	'group-bureaucrat-member' => '{{GENDER:$1|biwrocrat}}',
 	'group-suppress-member' => '{{GENDER:$1|goruchwyliwr}}',
 	'grouppage-user' => '{{ns:project}}:Defnyddwyr',
-	'grouppage-autoconfirmed' => "{{ns:project}}:Defnyddwyr wedi eu cadarnhau'n awtomatig",
+	'grouppage-autoconfirmed' => '{{ns:project}}:Defnyddwyr wedi eu cadarnhau\'n awtomatig',
 	'grouppage-bot' => '{{ns:project}}:Botiau',
 	'grouppage-sysop' => '{{ns:project}}:Gweinyddwyr',
 	'grouppage-bureaucrat' => '{{ns:project}}:Biwrocratiaid',
 	'grouppage-suppress' => '{{ns:project}}:Goruchwylio',
-);
+];
 
-$messages['da'] = array(
+$messages['da'] = [
 	'go' => 'Gå til',
-	'gotaccount' => "Du har allerede en brugerkonto? '''$1'''.",
+	'gotaccount' => 'Du har allerede en brugerkonto? \'\'\'$1\'\'\'.',
 	'gotaccountlink' => 'Log på',
 	'guesstimezone' => 'Hent tidszone fra browseren',
 	'gender-unknown' => 'Uspecificeret',
@@ -1458,11 +1450,11 @@ $messages['da'] = array(
 	'grouppage-sysop' => '{{ns:project}}:Administratorer',
 	'grouppage-bureaucrat' => '{{ns:project}}:Bureaukrater',
 	'grouppage-suppress' => '{{ns:project}}:Logskjulere',
-);
+];
 
-$messages['de'] = array(
+$messages['de'] = [
 	'go' => 'Ausführen',
-	'gotaccount' => "Du hast bereits ein Benutzerkonto? '''$1'''.",
+	'gotaccount' => 'Du hast bereits ein Benutzerkonto? \'\'\'$1\'\'\'.',
 	'gotaccountlink' => 'Anmelden',
 	'guesstimezone' => 'Vom Browser übernehmen',
 	'gender-unknown' => 'Nicht angegeben',
@@ -1498,13 +1490,15 @@ $messages['de'] = array(
 	'group-bureaucrat.js' => '/* Das folgende JavaScript wird nur für Bürokraten geladen. */',
 	'group-content-moderator' => 'Inhalts-Moderatoren',
 	'group-content-moderator-member' => 'Inhalts-Moderator',
-);
+	'group-helper' => 'Helfer',
+	'group-helper-member' => 'Helfer',
+];
 
-$messages['de-formal'] = array(
-	'gotaccount' => "Haben Sie bereits ein Benutzerkonto? '''$1'''.",
-);
+$messages['de-formal'] = [
+	'gotaccount' => 'Haben Sie bereits ein Benutzerkonto? \'\'\'$1\'\'\'.',
+];
 
-$messages['de-weigsbrag'] = array(
+$messages['de-weigsbrag'] = [
 	'go' => 'Auswühr',
 	'gotaccount' => 'Haddar schon eines Benudsesgond? $1.',
 	'gotaccountlink' => 'Anmeld',
@@ -1529,11 +1523,11 @@ $messages['de-weigsbrag'] = array(
 	'grouppage-sysop' => '{{ns:project}}:Adminisdradores',
 	'grouppage-bureaucrat' => '{{ns:project}}:Bürogrades',
 	'grouppage-suppress' => '{{ns:project}}:Oversighter',
-);
+];
 
-$messages['diq'] = array(
+$messages['diq'] = [
 	'go' => 'Şo',
-	'gotaccount' => "Hesabê şıma esto? '''$1'''.",
+	'gotaccount' => 'Hesabê şıma esto? \'\'\'$1\'\'\'.',
 	'gotaccountlink' => 'Cı kewe',
 	'guesstimezone' => 'Browser ra pırr ke',
 	'gender-unknown' => 'Cınsiyet nêvato',
@@ -1559,11 +1553,11 @@ $messages['diq'] = array(
 	'grouppage-sysop' => '{{ns:project}}:İdarekeri',
 	'grouppage-bureaucrat' => '{{ns:project}}:Burokrati',
 	'grouppage-suppress' => '{{ns:project}}:Kontrol',
-);
+];
 
-$messages['dsb'] = array(
+$messages['dsb'] = [
 	'go' => 'Nastawk',
-	'gotaccount' => "Maš južo wužywarske konto? '''$1'''.",
+	'gotaccount' => 'Maš južo wužywarske konto? \'\'\'$1\'\'\'.',
 	'gotaccountlink' => 'Pśizjawiś se',
 	'guesstimezone' => 'Z browsera pśewześ',
 	'gender-unknown' => 'Njepódany',
@@ -1589,29 +1583,29 @@ $messages['dsb'] = array(
 	'grouppage-sysop' => '{{ns:project}}:Administratory',
 	'grouppage-bureaucrat' => '{{ns:project}}:Běrokraty',
 	'grouppage-suppress' => '{{ns:project}}:Doglědowanje',
-);
+];
 
-$messages['dtp'] = array(
+$messages['dtp'] = [
 	'go' => 'Ongoi',
 	'gotaccount' => 'Kitakaun? $1',
 	'gotaccountlink' => 'Sumuang log',
 	'group-sysop' => 'Mandur',
 	'grouppage-sysop' => '{{ns:project}}:Mandur',
-);
+];
 
-$messages['dv'] = array(
+$messages['dv'] = [
 	'go' => 'ދުރުވޭ',
-);
+];
 
-$messages['dz'] = array(
-	'gotaccount' => "ཧེ་མ་ལས་རྩིས་ཐོ་ཡོད་ག? '''$1'''",
+$messages['dz'] = [
+	'gotaccount' => 'ཧེ་མ་ལས་རྩིས་ཐོ་ཡོད་ག? \'\'\'$1\'\'\'',
 	'gotaccountlink' => 'ནང་བསྐྱོད།',
 	'grouppage-sysop' => '{{ns:project}}:བདག་སྐྱོང་པ།',
-);
+];
 
-$messages['ee'] = array(
+$messages['ee'] = [
 	'go' => 'Yi',
-	'gotaccount' => "Wò ŋlɔ ŋkɔ xoxoa? '''$1'''.",
+	'gotaccount' => 'Wò ŋlɔ ŋkɔ xoxoa? \'\'\'$1\'\'\'.',
 	'gotaccountlink' => 'Ge ɖe eme',
 	'gender-male' => 'Ŋutsu',
 	'gender-female' => 'Nyɔnu',
@@ -1619,11 +1613,11 @@ $messages['ee'] = array(
 	'group-bot' => 'Bɔtwo',
 	'group-sysop' => 'Dɔdzikpɔlawo',
 	'group-all' => '(wokatã)',
-);
+];
 
-$messages['el'] = array(
+$messages['el'] = [
 	'go' => 'Μετάβαση',
-	'gotaccount' => "Έχετε ήδη έναν λογαριασμό; '''$1'''.",
+	'gotaccount' => 'Έχετε ήδη έναν λογαριασμό; \'\'\'$1\'\'\'.',
 	'gotaccountlink' => 'Είσοδος',
 	'guesstimezone' => 'Συμπλήρωση μέσω του browser',
 	'gender-unknown' => 'Αδιευκρίνιστο',
@@ -1649,11 +1643,11 @@ $messages['el'] = array(
 	'grouppage-sysop' => '{{ns:project}}:Διαχειριστές',
 	'grouppage-bureaucrat' => '{{ns:project}}:Γραφειοκράτες',
 	'grouppage-suppress' => '{{ns:project}}:Παρόραμα',
-);
+];
 
-$messages['eo'] = array(
+$messages['eo'] = [
 	'go' => 'Ek!',
-	'gotaccount' => "Ĉu vi jam havas konton? '''$1'''.",
+	'gotaccount' => 'Ĉu vi jam havas konton? \'\'\'$1\'\'\'.',
 	'gotaccountlink' => 'Ensaluti',
 	'guesstimezone' => 'Plenigita el la foliumilo',
 	'gender-unknown' => 'Nespecifita',
@@ -1679,9 +1673,9 @@ $messages['eo'] = array(
 	'grouppage-sysop' => '{{ns:project}}:Administrantoj',
 	'grouppage-bureaucrat' => '{{ns:project}}:Burokratoj',
 	'grouppage-suppress' => '{{ns:project}}:Superrigardo',
-);
+];
 
-$messages['es'] = array(
+$messages['es'] = [
 	'go' => 'Ir',
 	'gotaccount' => '¿Ya tienes una cuenta? $1.',
 	'gotaccountlink' => 'Entrar',
@@ -1711,11 +1705,12 @@ $messages['es'] = array(
 	'grouppage-suppress' => '{{ns:project}}:Supresores de ediciones',
 	'group-content-moderator' => 'Moderadores de contenido',
 	'group-content-moderator-member' => 'Moderador de contenido',
-);
+	'group-helper-member' => 'helper',
+];
 
-$messages['et'] = array(
+$messages['et'] = [
 	'go' => 'Mine',
-	'gotaccount' => "Kui sul on juba konto, '''$1'''.",
+	'gotaccount' => 'Kui sul on juba konto, \'\'\'$1\'\'\'.',
 	'gotaccountlink' => 'logi sisse',
 	'guesstimezone' => 'Loe aeg brauserist',
 	'gender-unknown' => 'Määramata',
@@ -1741,11 +1736,11 @@ $messages['et'] = array(
 	'grouppage-sysop' => '{{ns:project}}:Administraatorid',
 	'grouppage-bureaucrat' => '{{ns:project}}:Bürokraadid',
 	'grouppage-suppress' => '{{ns:project}}:Varjaja',
-);
+];
 
-$messages['eu'] = array(
+$messages['eu'] = [
 	'go' => 'Joan',
-	'gotaccount' => "Baduzu erabiltzaile kontua? '''$1'''.",
+	'gotaccount' => 'Baduzu erabiltzaile kontua? \'\'\'$1\'\'\'.',
 	'gotaccountlink' => 'Saioa hasi',
 	'guesstimezone' => 'Nabigatzailetik jaso',
 	'gender-unknown' => 'Zehaztugabea',
@@ -1771,11 +1766,11 @@ $messages['eu'] = array(
 	'grouppage-sysop' => '{{ns:project}}:Administratzaileak',
 	'grouppage-bureaucrat' => '{{ns:project}}:Burokratak',
 	'grouppage-suppress' => '{{ns:project}}:Gainikuspena',
-);
+];
 
-$messages['ext'] = array(
+$messages['ext'] = [
 	'go' => 'Dil',
-	'gotaccount' => "Ya tiinis una cuenta? '''$1'''.",
+	'gotaccount' => 'Ya tiinis una cuenta? \'\'\'$1\'\'\'.',
 	'gotaccountlink' => 'Entral',
 	'guesstimezone' => 'Estrael la ora el escrucaol',
 	'gender-unknown' => 'Nu especificau',
@@ -1798,11 +1793,11 @@ $messages['ext'] = array(
 	'grouppage-bot' => '{{ns:project}}:Bots',
 	'grouppage-sysop' => '{{ns:project}}:Çahorilis',
 	'grouppage-bureaucrat' => '{{ns:project}}:Alministraoris',
-);
+];
 
-$messages['fa'] = array(
+$messages['fa'] = [
 	'go' => 'برو',
-	'gotaccount' => "حساب کاربری دارید؟ '''$1'''.",
+	'gotaccount' => 'حساب کاربری دارید؟ \'\'\'$1\'\'\'.',
 	'gotaccountlink' => 'وارد شوید',
 	'guesstimezone' => 'از مرورگر گرفته شود',
 	'gender-unknown' => 'مشخص‌نشده',
@@ -1828,11 +1823,12 @@ $messages['fa'] = array(
 	'grouppage-sysop' => '{{ns:project}}:مدیران',
 	'grouppage-bureaucrat' => '{{ns:project}}:دیوان‌سالاران',
 	'grouppage-suppress' => '{{ns:project}}:نظارت',
-);
+	'group-helper-member' => 'یاور',
+];
 
-$messages['fi'] = array(
+$messages['fi'] = [
 	'go' => 'Siirry',
-	'gotaccount' => "Jos sinulla on jo tunnus, voit '''$1'''.",
+	'gotaccount' => 'Jos sinulla on jo tunnus, voit \'\'\'$1\'\'\'.',
 	'gotaccountlink' => 'kirjautua sisään',
 	'guesstimezone' => 'Utele selaimelta',
 	'gender-unknown' => 'Määrittelemätön',
@@ -1866,11 +1862,13 @@ $messages['fi'] = array(
 	'group-bot.js' => '/* Tämän sivun JavaScript-koodi liitetään vain boteille */',
 	'group-sysop.js' => '/* Tämän sivun JavaScript-koodi liitetään vain ylläpitäjille */',
 	'group-bureaucrat.js' => '/* Tämän sivun JavaScript-koodi liitetään vain byrokraateille */',
-);
+	'group-helper' => 'Apulaiset',
+	'group-helper-member' => 'Apulainen',
+];
 
-$messages['fiu-vro'] = array(
+$messages['fiu-vro'] = [
 	'go' => 'Siirry',
-	'gotaccount' => "Jos sinulla on jo tunnus, voit '''$1'''.",
+	'gotaccount' => 'Jos sinulla on jo tunnus, voit \'\'\'$1\'\'\'.',
 	'gotaccountlink' => 'kirjautua sisään',
 	'guesstimezone' => 'Utele selaimelta',
 	'gender-unknown' => 'Määrittelemätön',
@@ -1904,16 +1902,16 @@ $messages['fiu-vro'] = array(
 	'group-bot.js' => '/* Tämän sivun JavaScript-koodi liitetään vain boteille */',
 	'group-sysop.js' => '/* Tämän sivun JavaScript-koodi liitetään vain ylläpitäjille */',
 	'group-bureaucrat.js' => '/* Tämän sivun JavaScript-koodi liitetään vain byrokraateille */',
-);
+];
 
-$messages['fj'] = array(
+$messages['fj'] = [
 	'go' => 'Lako',
 	'gotaccountlink' => 'Curu mai',
-);
+];
 
-$messages['fo'] = array(
+$messages['fo'] = [
 	'go' => 'Far til',
-	'gotaccount' => "Hevur tú longu eina kontu? '''$1'''.",
+	'gotaccount' => 'Hevur tú longu eina kontu? \'\'\'$1\'\'\'.',
 	'gotaccountlink' => 'Rita inn',
 	'guesstimezone' => 'Fyll út við kagara',
 	'gender-male' => 'Maður',
@@ -1937,11 +1935,11 @@ $messages['fo'] = array(
 	'grouppage-sysop' => '{{ns:project}}:Umboðsstjórar',
 	'grouppage-bureaucrat' => '{{ns:project}}:Embætismenn',
 	'grouppage-suppress' => '{{ns:project}}:Eftirlit',
-);
+];
 
-$messages['fr'] = array(
+$messages['fr'] = [
 	'go' => 'Consulter',
-	'gotaccount' => "Vous avez déjà un compte ? '''$1'''.",
+	'gotaccount' => 'Vous avez déjà un compte ? \'\'\'$1\'\'\'.',
 	'gotaccountlink' => 'Connectez-vous',
 	'guesstimezone' => 'Utiliser la valeur du navigateur',
 	'gender-unknown' => 'Non renseigné',
@@ -1971,19 +1969,21 @@ $messages['fr'] = array(
 	'group-sysop.js' => '/* Le JavaScript inclus ici n’affectera que les administrateurs */',
 	'group-content-moderator' => 'Modérateurs de contenu',
 	'group-content-moderator-member' => 'Modérateur de contenu',
-);
+	'group-helper' => 'Assistants',
+	'group-helper-member' => '{{GENDER:$1|Assistant|Assistante}}',
+];
 
-$messages['frc'] = array(
+$messages['frc'] = [
 	'go' => 'Aller',
-	'gotaccount' => "Vous avez un compte déjà? '''$1'''.",
+	'gotaccount' => 'Vous avez un compte déjà? \'\'\'$1\'\'\'.',
 	'gotaccountlink' => 'Connectez',
 	'gender-male' => 'Male',
 	'gender-female' => 'Female',
-);
+];
 
-$messages['frp'] = array(
+$messages['frp'] = [
 	'go' => 'Alar trovar',
-	'gotaccount' => "Vos avéd ja un compto ? '''$1'''.",
+	'gotaccount' => 'Vos avéd ja un compto ? \'\'\'$1\'\'\'.',
 	'gotaccountlink' => 'Branchiéd-vos',
 	'guesstimezone' => 'Utilisar la valor du navigator',
 	'gender-unknown' => 'Pas rensègnê',
@@ -2017,11 +2017,11 @@ $messages['frp'] = array(
 	'group-bot.js' => '/* Tot code JavaScript betâ ique serat chargiê ren que por los bots. */',
 	'group-sysop.js' => '/* Tot code JavaScript betâ ique serat chargiê ren que por los administrators. */',
 	'group-bureaucrat.js' => '/* Tot code JavaScript betâ ique serat chargiê ren que por los grata-papiérs. */',
-);
+];
 
-$messages['frr'] = array(
+$messages['frr'] = [
 	'go' => 'Ütfääre',
-	'gotaccount' => "Dü hääst ål en brükerkonto? '''$1'''.",
+	'gotaccount' => 'Dü hääst ål en brükerkonto? \'\'\'$1\'\'\'.',
 	'gotaccountlink' => 'Önjmälde',
 	'group-user' => 'Brükere',
 	'group-autoconfirmed' => 'Registriirde brükere',
@@ -2041,11 +2041,11 @@ $messages['frr'] = array(
 	'grouppage-sysop' => '{{ns:project}}:Administratoore',
 	'grouppage-bureaucrat' => '{{ns:project}}:Bürokraate',
 	'grouppage-suppress' => '{{ns:project}}:Oversighter',
-);
+];
 
-$messages['fur'] = array(
+$messages['fur'] = [
 	'go' => 'Va',
-	'gotaccount' => "Âstu za une identitât? '''$1'''.",
+	'gotaccount' => 'Âstu za une identitât? \'\'\'$1\'\'\'.',
 	'gotaccountlink' => 'Jentre',
 	'guesstimezone' => 'Cjape impostazions dal sgarfadôr',
 	'gender-unknown' => 'No specificât',
@@ -2058,11 +2058,11 @@ $messages['fur'] = array(
 	'group-all' => 'Utents',
 	'group-user-member' => '{{GENDER:$1|Utent}}',
 	'grouppage-sysop' => '{{ns:project}}:Aministradôrs',
-);
+];
 
-$messages['fy'] = array(
+$messages['fy'] = [
 	'go' => 'Side',
-	'gotaccount' => "Hawwe jo jo al as meidogger oanmelde? '''$1'''.",
+	'gotaccount' => 'Hawwe jo jo al as meidogger oanmelde? \'\'\'$1\'\'\'.',
 	'gotaccountlink' => 'Oanmelde',
 	'guesstimezone' => 'Freegje de blêder',
 	'gender-unknown' => 'Net oanjûn',
@@ -2088,11 +2088,11 @@ $messages['fy'] = array(
 	'grouppage-sysop' => '{{ns:project}}:Behearders',
 	'grouppage-bureaucrat' => '{{ns:project}}:Rjochtenútfurders',
 	'grouppage-suppress' => '{{ns:project}}:Tafersjoch',
-);
+];
 
-$messages['ga'] = array(
+$messages['ga'] = [
 	'go' => 'Gabh',
-	'gotaccount' => "An bhfuil cuntas agat cheana féin? '''$1'''.",
+	'gotaccount' => 'An bhfuil cuntas agat cheana féin? \'\'\'$1\'\'\'.',
 	'gotaccountlink' => 'Logáil isteach',
 	'guesstimezone' => 'Líon ón mbrabhsálaí',
 	'gender-unknown' => 'Gan sonrú',
@@ -2111,19 +2111,19 @@ $messages['ga'] = array(
 	'grouppage-bot' => '{{ns:project}}:Róbónna',
 	'grouppage-sysop' => '{{ns:project}}:Riarthóirí',
 	'grouppage-bureaucrat' => '{{ns:project}}:Maorlathaigh',
-);
+];
 
-$messages['gag'] = array(
+$messages['gag'] = [
 	'go' => 'Git',
-	'gotaccount' => "Taa ilerdä esap açtınızmı? '''$1'''.",
+	'gotaccount' => 'Taa ilerdä esap açtınızmı? \'\'\'$1\'\'\'.',
 	'gotaccountlink' => 'Herliim ilerdän esap açtıysanız girin bu baalantıdan.',
 	'group-sysop' => 'Administratorlar',
 	'grouppage-sysop' => '{{ns:project}}:Önderciler',
-);
+];
 
-$messages['gan-hans'] = array(
+$messages['gan-hans'] = [
 	'go' => '去',
-	'gotaccount' => "有喽帐户？ '''$1'''.",
+	'gotaccount' => '有喽帐户？ \'\'\'$1\'\'\'.',
 	'gotaccountlink' => '登入',
 	'guesstimezone' => '到浏览器上填',
 	'group' => '群:',
@@ -2140,11 +2140,11 @@ $messages['gan-hans'] = array(
 	'grouppage-bot' => '{{ns:project}}:机器人',
 	'grouppage-sysop' => '{{ns:project}}:操作员',
 	'grouppage-bureaucrat' => '{{ns:project}}:行政员',
-);
+];
 
-$messages['gan-hant'] = array(
+$messages['gan-hant'] = [
 	'go' => '去',
-	'gotaccount' => "有帳戶哩？ '''$1'''。",
+	'gotaccount' => '有帳戶哩？ \'\'\'$1\'\'\'。',
 	'gotaccountlink' => '登入',
 	'guesstimezone' => '到瀏覽器上填',
 	'group' => '群:',
@@ -2161,19 +2161,19 @@ $messages['gan-hant'] = array(
 	'grouppage-bot' => '{{ns:project}}:機器人',
 	'grouppage-sysop' => '{{ns:project}}:操作員',
 	'grouppage-bureaucrat' => '{{ns:project}}:行政員',
-);
+];
 
-$messages['gd'] = array(
+$messages['gd'] = [
 	'go' => 'Rach',
 	'gotaccount' => 'A bheil cunntas agad mu thràth? $1.',
 	'gotaccountlink' => 'Log a-steach',
 	'group-sysop' => 'Rianadairean',
 	'grouppage-sysop' => '{{ns:project}}:Rianadairean',
-);
+];
 
-$messages['gl'] = array(
+$messages['gl'] = [
 	'go' => 'Mostrar',
-	'gotaccount' => "Xa ten unha conta? '''$1'''.",
+	'gotaccount' => 'Xa ten unha conta? \'\'\'$1\'\'\'.',
 	'gotaccountlink' => 'Acceda ao sistema',
 	'guesstimezone' => 'Encher desde o navegador',
 	'gender-unknown' => 'Non especificado',
@@ -2207,27 +2207,27 @@ $messages['gl'] = array(
 	'group-bot.js' => '/* Calquera JavaScript que haxa aquí será cargado soamente para os bots */',
 	'group-sysop.js' => '/* Calquera JavaScript que haxa aquí será cargado soamente para os administradores */',
 	'group-bureaucrat.js' => '/* Calquera JavaScript que haxa aquí será cargado soamente para os burócratas */',
-);
+];
 
-$messages['glk'] = array(
+$messages['glk'] = [
 	'go' => 'بوشو',
-);
+];
 
-$messages['gn'] = array(
+$messages['gn'] = [
 	'go' => 'Ha',
 	'group-all' => '(opaite)',
-);
+];
 
-$messages['got'] = array(
+$messages['got'] = [
 	'go' => '𐌲𐌰𐌲𐌲𐌰',
-	'gotaccount' => "Habiþ þu niutandis? '''$1'''",
+	'gotaccount' => 'Habiþ þu niutandis? \'\'\'$1\'\'\'',
 	'gotaccountlink' => 'Atgaggan',
 	'grouppage-sysop' => '{{ns:project}}:𐍃𐌴𐌹𐌳𐍉𐍆𐌰𐌸𐍃',
-);
+];
 
-$messages['grc'] = array(
+$messages['grc'] = [
 	'go' => 'Ἰέναι',
-	'gotaccount' => "Ἆρα λογισμὸν ἤδη τινὰ ἔχεις; '''$1'''.",
+	'gotaccount' => 'Ἆρα λογισμὸν ἤδη τινὰ ἔχεις; \'\'\'$1\'\'\'.',
 	'gotaccountlink' => 'Συνδεῖσθαι',
 	'guesstimezone' => 'Συμπλήρωσις μέσῳ τοῦ πλοηγητηρίου',
 	'gender-unknown' => 'Ἀπροσδιόριστον',
@@ -2253,11 +2253,11 @@ $messages['grc'] = array(
 	'grouppage-sysop' => '{{ns:project}}:Γέροντες',
 	'grouppage-bureaucrat' => '{{ns:project}}:Ἔφοροι',
 	'grouppage-suppress' => '{{ns:project}}:Ἐποπτεία',
-);
+];
 
-$messages['gsw'] = array(
+$messages['gsw'] = [
 	'go' => 'Site',
-	'gotaccount' => "Du häsch scho a Konto? '''$1'''",
+	'gotaccount' => 'Du häsch scho a Konto? \'\'\'$1\'\'\'',
 	'gotaccountlink' => '»Login fir Benutzer, wu scho aagmäldet sin«',
 	'guesstimezone' => 'Vom Browser la ysetze',
 	'gender-unknown' => 'Kei Aagab',
@@ -2283,11 +2283,11 @@ $messages['gsw'] = array(
 	'grouppage-sysop' => '{{ns:project}}:Ammanne',
 	'grouppage-bureaucrat' => '{{ns:project}}:Bürokrate',
 	'grouppage-suppress' => '{{ns:project}}:Oversighter',
-);
+];
 
-$messages['gu'] = array(
+$messages['gu'] = [
 	'go' => 'જાઓ',
-	'gotaccount' => "પહેલેથી ખાતું ખોલેલું છે? '''$1'''.",
+	'gotaccount' => 'પહેલેથી ખાતું ખોલેલું છે? \'\'\'$1\'\'\'.',
 	'gotaccountlink' => 'પ્રવેશ કરો',
 	'guesstimezone' => 'બ્રાઉઝરમાંથી દાખલ કરો',
 	'gender-unknown' => 'અનિર્દિષ્ટ',
@@ -2313,11 +2313,11 @@ $messages['gu'] = array(
 	'grouppage-sysop' => '{{ns:project}}:પ્રબંધકો',
 	'grouppage-bureaucrat' => '{{ns:project}}: રાજનૈતિક',
 	'grouppage-suppress' => '{{ns:project}}:દુર્લક્ષ',
-);
+];
 
-$messages['gv'] = array(
+$messages['gv'] = [
 	'go' => 'Gow',
-	'gotaccount' => "Vel coontys ayd hannah? '''$1'''.",
+	'gotaccount' => 'Vel coontys ayd hannah? \'\'\'$1\'\'\'.',
 	'gotaccountlink' => 'Log stiagh',
 	'gender-unknown' => 'Neuhoilshit',
 	'gender-male' => 'Firrinagh',
@@ -2337,16 +2337,16 @@ $messages['gv'] = array(
 	'grouppage-user' => '{{ns:project}}:Ymmydeyryn',
 	'grouppage-bot' => '{{ns:project}}:Robotyn',
 	'grouppage-sysop' => '{{ns:project}}:Reireyderyn',
-);
+];
 
-$messages['ha'] = array(
+$messages['ha'] = [
 	'group-sysop' => 'Masu hukunci',
 	'grouppage-sysop' => '{{ns:project}}:Masu hukunci',
-);
+];
 
-$messages['hak'] = array(
+$messages['hak'] = [
 	'go' => 'Chin-ngi̍p',
-	'gotaccount' => "Yí-kîn yúng-yû chong-ho? '''$1'''.",
+	'gotaccount' => 'Yí-kîn yúng-yû chong-ho? \'\'\'$1\'\'\'.',
 	'gotaccountlink' => 'Tên-ngi̍p',
 	'guesstimezone' => 'Chhiùng hi-khí thiàm-mân',
 	'group' => 'Khiùn-chû:',
@@ -2359,11 +2359,11 @@ $messages['hak'] = array(
 	'group-bureaucrat-member' => 'Hàng-chṳn-yèn',
 	'grouppage-bot' => '{{ns:project}}:Kî-hi-ngìn',
 	'grouppage-sysop' => '{{ns:project}}:Kón-lî-yèn',
-);
+];
 
-$messages['haw'] = array(
+$messages['haw'] = [
 	'go' => 'E huli',
-	'gotaccount' => "He moʻokāki kāu? '''$1'''.",
+	'gotaccount' => 'He moʻokāki kāu? \'\'\'$1\'\'\'.',
 	'gotaccountlink' => 'ʻEʻe',
 	'gender-male' => 'Kāne',
 	'gender-female' => 'Wahine',
@@ -2373,9 +2373,9 @@ $messages['haw'] = array(
 	'group-sysop-member' => 'Kahu',
 	'group-bureaucrat-member' => 'Kuhina',
 	'grouppage-sysop' => '{{ns:project}}:Nā kahu',
-);
+];
 
-$messages['he'] = array(
+$messages['he'] = [
 	'go' => 'הצגה',
 	'gotaccount' => 'כבר נרשמתם? $1.',
 	'gotaccountlink' => 'כניסה לחשבון',
@@ -2411,11 +2411,11 @@ $messages['he'] = array(
 	'group-bot.js' => '/* כל סקריפט JavaScript שנכתב כאן ירוץ רק עבור בוטים */',
 	'group-sysop.js' => '/* כל סקריפט JavaScript שנכתב כאן ירוץ רק עבור מפעילי מערכת */',
 	'group-bureaucrat.js' => '/* כל סקריפט JavaScript שנכתב כאן ירוץ רק עבור ביורוקרטים */',
-);
+];
 
-$messages['hi'] = array(
+$messages['hi'] = [
 	'go' => 'जा',
-	'gotaccount' => "पहलेसे आपका खाता हैं? '''$1'''.",
+	'gotaccount' => 'पहलेसे आपका खाता हैं? \'\'\'$1\'\'\'.',
 	'gotaccountlink' => 'लॉग इन',
 	'guesstimezone' => 'ब्राउज़रसे भरें',
 	'gender-unknown' => 'अनिर्दिष्ट',
@@ -2441,11 +2441,11 @@ $messages['hi'] = array(
 	'grouppage-sysop' => '{{ns:project}}:प्रबंधक',
 	'grouppage-bureaucrat' => '{{ns:project}}:प्रशासक',
 	'grouppage-suppress' => '{{ns:project}}:ओवरसाईट',
-);
+];
 
-$messages['hif'] = array(
+$messages['hif'] = [
 	'go' => 'जा',
-	'gotaccount' => "पहलेसे आपका खाता हैं? '''$1'''.",
+	'gotaccount' => 'पहलेसे आपका खाता हैं? \'\'\'$1\'\'\'.',
 	'gotaccountlink' => 'लॉग इन',
 	'guesstimezone' => 'ब्राउज़रसे भरें',
 	'gender-unknown' => 'अनिर्दिष्ट',
@@ -2471,11 +2471,11 @@ $messages['hif'] = array(
 	'grouppage-sysop' => '{{ns:project}}:प्रबंधक',
 	'grouppage-bureaucrat' => '{{ns:project}}:प्रशासक',
 	'grouppage-suppress' => '{{ns:project}}:ओवरसाईट',
-);
+];
 
-$messages['hif-latn'] = array(
+$messages['hif-latn'] = [
 	'go' => 'Jao',
-	'gotaccount' => "Aap ke pas pahile se account hai ki nai? '''$1'''.",
+	'gotaccount' => 'Aap ke pas pahile se account hai ki nai? \'\'\'$1\'\'\'.',
 	'gotaccountlink' => 'Log in',
 	'guesstimezone' => 'Browser se bharo',
 	'gender-unknown' => 'Khaas ruup nai dewa gais hae',
@@ -2501,9 +2501,9 @@ $messages['hif-latn'] = array(
 	'grouppage-sysop' => '{{ns:project}}:Administrators',
 	'grouppage-bureaucrat' => '{{ns:project}}:Bureaucrats',
 	'grouppage-suppress' => '{{ns:project}}:Oversight',
-);
+];
 
-$messages['hil'] = array(
+$messages['hil'] = [
 	'go' => 'Lakat',
 	'gotaccount' => 'May yara ka na sang akawnt? $1.',
 	'gotaccountlink' => 'Mag sulod',
@@ -2514,11 +2514,11 @@ $messages['hil'] = array(
 	'group' => 'Grupo:',
 	'group-sysop' => 'Mga Administrador',
 	'grouppage-sysop' => '{{ns:project}}:Mga Administrador',
-);
+];
 
-$messages['hr'] = array(
+$messages['hr'] = [
 	'go' => 'Kreni',
-	'gotaccount' => "Već imate suradnički račun? '''$1'''.",
+	'gotaccount' => 'Već imate suradnički račun? \'\'\'$1\'\'\'.',
 	'gotaccountlink' => 'Prijavite se',
 	'guesstimezone' => 'Vrijeme dobiveno od preglednika',
 	'gender-unknown' => 'Neodređeno',
@@ -2544,9 +2544,9 @@ $messages['hr'] = array(
 	'grouppage-sysop' => '{{ns:project}}:Administratori',
 	'grouppage-bureaucrat' => '{{ns:project}}:Birokrati',
 	'grouppage-suppress' => '{{ns:project}}:Nadzor',
-);
+];
 
-$messages['hsb'] = array(
+$messages['hsb'] = [
 	'go' => 'Pytać',
 	'gotaccount' => 'Maš hižo wužiwarske konto? $1.',
 	'gotaccountlink' => 'Přizjewić',
@@ -2574,20 +2574,20 @@ $messages['hsb'] = array(
 	'grouppage-sysop' => '{{ns:project}}:Administratorojo',
 	'grouppage-bureaucrat' => '{{ns:project}}:Běrokraća',
 	'grouppage-suppress' => '{{ns:project}}:Dohladowanje',
-);
+];
 
-$messages['ht'] = array(
+$messages['ht'] = [
 	'go' => 'Ale',
-	'gotaccount' => "Ou deja genyen yon kont ? '''$1'''.",
+	'gotaccount' => 'Ou deja genyen yon kont ? \'\'\'$1\'\'\'.',
 	'gotaccountlink' => 'Idantifye ou',
 	'gender-male' => 'Maskilen',
 	'group-sysop' => 'Administratè yo',
 	'grouppage-sysop' => '{{ns:project}}:Administratè',
-);
+];
 
-$messages['hu'] = array(
+$messages['hu'] = [
 	'go' => 'Menj',
-	'gotaccount' => "Ha már korábban regisztráltál, '''$1'''!",
+	'gotaccount' => 'Ha már korábban regisztráltál, \'\'\'$1\'\'\'!',
 	'gotaccountlink' => 'Bejelentkezés',
 	'guesstimezone' => 'Töltse ki a böngésző',
 	'gender-unknown' => 'Nincs megadva',
@@ -2621,11 +2621,11 @@ $messages['hu'] = array(
 	'group-bot.js' => '/* Az ide elhelyezett JavaScript csak botoknak töltődik be */',
 	'group-sysop.js' => '/* Az ide elhelyezett JavaScript csak adminisztrátoroknak töltődik be */',
 	'group-bureaucrat.js' => '/* Az ide elhelyezett JavaScript csak bürokratáknak töltődik be */',
-);
+];
 
-$messages['hy'] = array(
+$messages['hy'] = [
 	'go' => 'Անցնել',
-	'gotaccount' => "Դուք արդեն գրանցվա՞ծ եք։ '''$1'''։",
+	'gotaccount' => 'Դուք արդեն գրանցվա՞ծ եք։ \'\'\'$1\'\'\'։',
 	'gotaccountlink' => 'Մուտք գործեք համակարգ',
 	'guesstimezone' => 'Լրացնել բրաուզերից',
 	'gender-unknown' => 'Չնշված',
@@ -2651,11 +2651,11 @@ $messages['hy'] = array(
 	'grouppage-sysop' => '{{ns:project}}:Ադմինիստրատոր',
 	'grouppage-bureaucrat' => '{{ns:project}}:Բյուրոկրատ',
 	'grouppage-suppress' => '{{ns:project}}:Հսկիչ',
-);
+];
 
-$messages['ia'] = array(
+$messages['ia'] = [
 	'go' => 'Va',
-	'gotaccount' => "Tu jam ha un conto? '''$1'''.",
+	'gotaccount' => 'Tu jam ha un conto? \'\'\'$1\'\'\'.',
 	'gotaccountlink' => 'Aperir session',
 	'guesstimezone' => 'Obtener del navigator',
 	'gender-unknown' => 'Non specificate',
@@ -2681,11 +2681,11 @@ $messages['ia'] = array(
 	'grouppage-sysop' => '{{ns:project}}:Administratores',
 	'grouppage-bureaucrat' => '{{ns:project}}:Bureaucrates',
 	'grouppage-suppress' => '{{ns:project}}:Supervisores',
-);
+];
 
-$messages['id'] = array(
+$messages['id'] = [
 	'go' => 'Tuju ke',
-	'gotaccount' => "Sudah terdaftar sebagai pengguna? '''$1'''.",
+	'gotaccount' => 'Sudah terdaftar sebagai pengguna? \'\'\'$1\'\'\'.',
 	'gotaccountlink' => 'Masuk log',
 	'guesstimezone' => 'Isikan dari penjelajah web',
 	'gender-unknown' => 'Tak dinyatakan',
@@ -2711,9 +2711,9 @@ $messages['id'] = array(
 	'grouppage-sysop' => '{{ns:project}}:Pengurus',
 	'grouppage-bureaucrat' => '{{ns:project}}:Birokrat',
 	'grouppage-suppress' => '{{ns:project}}:Pengawas',
-);
+];
 
-$messages['ie'] = array(
+$messages['ie'] = [
 	'go' => 'Ear',
 	'gotaccount' => 'Ja have un conto? $1.',
 	'gotaccountlink' => 'Intrar',
@@ -2724,9 +2724,9 @@ $messages['ie'] = array(
 	'grouppage-sysop' => '{{ns:project}}:Administratores',
 	'grouppage-bureaucrat' => '{{ns:project}}:Burócrates',
 	'grouppage-suppress' => '{{ns:project}}:Vigilatores',
-);
+];
 
-$messages['ig'] = array(
+$messages['ig'] = [
 	'go' => 'Gá',
 	'gotaccount' => 'I nwerecha buwa? $1.',
 	'gotaccountlink' => 'Banyé',
@@ -2734,35 +2734,35 @@ $messages['ig'] = array(
 	'gender-male' => 'Nwoke',
 	'gender-female' => 'Nwanyi/Okpoho',
 	'group' => 'Ọtú:',
-	'group-user' => "Ọ'bànifé",
+	'group-user' => 'Ọ\'bànifé',
 	'group-bot' => 'Bot',
 	'group-sysop' => 'Ndi íshí',
-	'group-bureaucrat' => "Ọdọzị'obodo",
+	'group-bureaucrat' => 'Ọdọzị\'obodo',
 	'group-suppress' => 'Aghọ',
 	'group-all' => '(háníle)',
-	'group-user-member' => "ọ'bànifé",
-	'group-autoconfirmed-member' => "ọ'bànifé kwé'nà'áká",
+	'group-user-member' => 'ọ\'bànifé',
+	'group-autoconfirmed-member' => 'ọ\'bànifé kwé\'nà\'áká',
 	'group-bot-member' => 'bot',
 	'group-sysop-member' => 'onye íshí',
-	'group-bureaucrat-member' => "ọdọzị'obodo",
+	'group-bureaucrat-member' => 'ọdọzị\'obodo',
 	'group-suppress-member' => 'aghọ',
-	'grouppage-user' => "{{ns:project}}:Ọ'bànifé",
+	'grouppage-user' => '{{ns:project}}:Ọ\'bànifé',
 	'grouppage-bot' => '{{ns:project}}:Bot',
 	'grouppage-sysop' => '{{ns:project}}:Ndi Íshí wiki',
-);
+];
 
-$messages['ike-cans'] = array(
+$messages['ike-cans'] = [
 	'go' => 'ᐊᐃᕗᖅ',
 	'gotaccountlink' => 'ᐊᑯᓐᓇᐳᖅ',
-);
+];
 
-$messages['ike-latn'] = array(
+$messages['ike-latn'] = [
 	'go' => 'aivuq',
-);
+];
 
-$messages['ilo'] = array(
+$messages['ilo'] = [
 	'go' => 'Inkan',
-	'gotaccount' => "Addaanka kadin ti pakabilangam? '''$1'''.",
+	'gotaccount' => 'Addaanka kadin ti pakabilangam? \'\'\'$1\'\'\'.',
 	'gotaccountlink' => 'Sumrek',
 	'guesstimezone' => 'Ikabil idiay pabasabasam',
 	'gender-unknown' => 'Saan a naibagbaga',
@@ -2788,11 +2788,11 @@ $messages['ilo'] = array(
 	'grouppage-sysop' => '{{ns:project}}:Dagiti administrador',
 	'grouppage-bureaucrat' => '{{ns:project}}:Dagiti burokrata',
 	'grouppage-suppress' => '{{ns:project}}:Pagpansin',
-);
+];
 
-$messages['inh'] = array(
+$messages['inh'] = [
 	'go' => 'Дехьавала',
-	'gotaccount' => "Укхаза дӀаязабенна дий шо? '''$1'''.",
+	'gotaccount' => 'Укхаза дӀаязабенна дий шо? \'\'\'$1\'\'\'.',
 	'gotaccountlink' => 'Чувала/яла',
 	'gender-male' => 'МаIа',
 	'gender-female' => 'Кхал',
@@ -2807,11 +2807,11 @@ $messages['inh'] = array(
 	'grouppage-user' => '{{ns:project}}:Дакъалаьцархой',
 	'grouppage-bot' => '{{ns:project}}:БIаташ',
 	'grouppage-sysop' => '{{ns:project}}:Мазакулгалхой',
-);
+];
 
-$messages['io'] = array(
+$messages['io'] = [
 	'go' => 'Irar',
-	'gotaccount' => "Ka vu ja havas konto? '''$1'''.",
+	'gotaccount' => 'Ka vu ja havas konto? \'\'\'$1\'\'\'.',
 	'gotaccountlink' => 'Enirar',
 	'guesstimezone' => 'Obtenar la kloko dil "browser"',
 	'gender-unknown' => 'Nespecigita',
@@ -2831,11 +2831,11 @@ $messages['io'] = array(
 	'grouppage-bot' => '{{ns:project}}:Roboti',
 	'grouppage-sysop' => '{{ns:project}}:Administranti',
 	'grouppage-bureaucrat' => '{{ns:project}}:Burokrati',
-);
+];
 
-$messages['is'] = array(
+$messages['is'] = [
 	'go' => 'Áfram',
-	'gotaccount' => "Nú þegar með notandanafn? '''$1'''.",
+	'gotaccount' => 'Nú þegar með notandanafn? \'\'\'$1\'\'\'.',
 	'gotaccountlink' => 'Skráðu þig inn',
 	'guesstimezone' => 'Fylla inn frá vafranum',
 	'gender-unknown' => 'Óskilgreint',
@@ -2861,13 +2861,13 @@ $messages['is'] = array(
 	'grouppage-sysop' => '{{ns:project}}:Stjórnendur',
 	'grouppage-bureaucrat' => '{{ns:project}}:Möppudýr',
 	'grouppage-suppress' => '{{ns:project}}:Umsjón',
-);
+];
 
-$messages['it'] = array(
+$messages['it'] = [
 	'go' => 'Vai',
-	'gotaccount' => "Hai già un accesso? '''$1'''.",
+	'gotaccount' => 'Hai già un accesso? \'\'\'$1\'\'\'.',
 	'gotaccountlink' => 'Entra',
-	'guesstimezone' => "Usa l'ora del browser",
+	'guesstimezone' => 'Usa l\'ora del browser',
 	'gender-unknown' => 'Non specificato',
 	'gender-male' => 'Maschile',
 	'gender-female' => 'Femminile',
@@ -2901,13 +2901,13 @@ $messages['it'] = array(
 	'group-bureaucrat.js' => '/ * Il codice JavaScript inserito qui viene caricato solo per i burocrati * /',
 	'group-content-moderator' => 'Moderatori di contenuti',
 	'group-content-moderator-member' => 'Moderatore di contenuti',
-);
+];
 
-$messages['iu'] = array(
+$messages['iu'] = [
 	'go' => 'Vai',
-	'gotaccount' => "Hai già un accesso? '''$1'''.",
+	'gotaccount' => 'Hai già un accesso? \'\'\'$1\'\'\'.',
 	'gotaccountlink' => 'Entra',
-	'guesstimezone' => "Usa l'ora del browser",
+	'guesstimezone' => 'Usa l\'ora del browser',
 	'gender-unknown' => 'Non specificato',
 	'gender-male' => 'Maschile',
 	'gender-female' => 'Femminile',
@@ -2941,9 +2941,9 @@ $messages['iu'] = array(
 	'group-bureaucrat.js' => '/ * Il codice JavaScript inserito qui viene caricato solo per i burocrati * /',
 	'group-content-moderator' => 'Moderatori di contenuti',
 	'group-content-moderator-member' => 'Moderatore di contenuti',
-);
+];
 
-$messages['ja'] = array(
+$messages['ja'] = [
 	'go' => '表示',
 	'gotaccount' => '既にアカウントを持っている場合、$1。',
 	'gotaccountlink' => 'ログインしてください',
@@ -2981,30 +2981,34 @@ $messages['ja'] = array(
 	'group-bureaucrat.js' => '/* ここにあるすべてのJavaScriptは、ビューロクラットのみに対して読み込まれます */',
 	'group-content-moderator' => 'コンテンツ・モデレーター',
 	'group-content-moderator-member' => 'コンテンツ・モデレーター',
-);
+	'group-helper' => 'ウィキアヘルパー',
+	'group-helper-member' => 'ウィキアヘルパー',
+	'group-util' => 'ウィキアユーティリティース',
+	'group-util-member' => 'ウィキアユーティリティース',
+];
 
-$messages['jam'] = array(
+$messages['jam'] = [
 	'go' => 'Gwaan',
 	'gotaccount' => 'Aredi gat akount? $1.',
 	'gotaccountlink' => 'Lag iin',
 	'group-sysop' => 'Adminischrieta',
 	'grouppage-sysop' => '{{ns:project}}:Adminischrieta',
-);
+];
 
-$messages['jbo'] = array(
-	'gotaccountlink' => "co'a se jaspu",
-);
+$messages['jbo'] = [
+	'gotaccountlink' => 'co\'a se jaspu',
+];
 
-$messages['jut'] = array(
+$messages['jut'] = [
 	'go' => 'Gå til',
-	'gotaccount' => "Du har ålerede en brugerkonto? '''$1'''.",
+	'gotaccount' => 'Du har ålerede en brugerkonto? \'\'\'$1\'\'\'.',
 	'gotaccountlink' => 'Loĝ på',
 	'grouppage-sysop' => '{{ns:project}}:Administråtorer',
-);
+];
 
-$messages['jv'] = array(
+$messages['jv'] = [
 	'go' => 'Nuju menyang',
-	'gotaccount' => "Wis kagungan akun? '''$1'''.",
+	'gotaccount' => 'Wis kagungan akun? \'\'\'$1\'\'\'.',
 	'gotaccountlink' => 'Mlebu',
 	'guesstimezone' => 'Isinen saka panjlajah wèb',
 	'gender-unknown' => 'Ora dinyatakaké',
@@ -3016,25 +3020,25 @@ $messages['jv'] = array(
 	'group-bot' => 'Bot',
 	'group-sysop' => 'Pangurus',
 	'group-bureaucrat' => 'Birokrat',
-	'group-suppress' => "Para pangawas (''oversight'')",
+	'group-suppress' => 'Para pangawas (\'\'oversight\'\')',
 	'group-all' => '(kabèh)',
 	'group-user-member' => 'Panganggo',
 	'group-autoconfirmed-member' => 'Panganggo sing otomatis didhedhes (dikonfirmasi)',
 	'group-bot-member' => 'Bot',
 	'group-sysop-member' => 'Pangurus',
 	'group-bureaucrat-member' => 'Birokrat',
-	'group-suppress-member' => "Pangawas (''oversight'')",
+	'group-suppress-member' => 'Pangawas (\'\'oversight\'\')',
 	'grouppage-user' => '{{ns:project}}:Para panganggo',
 	'grouppage-autoconfirmed' => '{{ns:project}}:Panganggo sing otomatis didhedhes (dikonfirmasi)',
 	'grouppage-bot' => '{{ns:project}}:Bot',
 	'grouppage-sysop' => '{{ns:project}}:Pangurus',
 	'grouppage-bureaucrat' => '{{ns:project}}:Birokrat',
 	'grouppage-suppress' => '{{ns:project}}:Oversight',
-);
+];
 
-$messages['ka'] = array(
+$messages['ka'] = [
 	'go' => 'სტატია',
-	'gotaccount' => "უკვე რეგისტრირებული ხართ? '''$1'''",
+	'gotaccount' => 'უკვე რეგისტრირებული ხართ? \'\'\'$1\'\'\'',
 	'gotaccountlink' => 'შესვლა',
 	'guesstimezone' => 'ბრაუზერიდან შევსება',
 	'gender-unknown' => 'არ არის მითითებული',
@@ -3060,35 +3064,35 @@ $messages['ka'] = array(
 	'grouppage-sysop' => '{{ns:project}}:ადმინისტრატორები',
 	'grouppage-bureaucrat' => '{{ns:project}}:ბიუროკრატები',
 	'grouppage-suppress' => '{{ns:project}}:ზედამხედველები',
-);
+];
 
-$messages['kaa'] = array(
-	'go' => "O'tiw",
-	'gotaccount' => "Akkauntın'ız barma? '''$1'''.",
+$messages['kaa'] = [
+	'go' => 'O\'tiw',
+	'gotaccount' => 'Akkauntın\'ız barma? \'\'\'$1\'\'\'.',
 	'gotaccountlink' => 'Kir',
 	'guesstimezone' => 'Brauzerden alıp toltırıw',
 	'group' => 'Topar:',
 	'group-user' => 'Paydalanıwshılar',
-	'group-autoconfirmed' => "O'zi tastıyıqlang'anlar",
+	'group-autoconfirmed' => 'O\'zi tastıyıqlang\'anlar',
 	'group-bot' => 'Botlar',
 	'group-sysop' => 'Administratorlar',
 	'group-bureaucrat' => 'Byurokratlar',
-	'group-all' => "(ha'mmesi)",
+	'group-all' => '(ha\'mmesi)',
 	'group-user-member' => 'paydalanıwshı',
-	'group-autoconfirmed-member' => "O'zi tastıyıqlang'an",
+	'group-autoconfirmed-member' => 'O\'zi tastıyıqlang\'an',
 	'group-bot-member' => 'Bot',
 	'group-sysop-member' => 'Administrator',
 	'group-bureaucrat-member' => 'Byurokrat',
 	'grouppage-user' => '{{ns:project}}:Paydalanıwshılar',
-	'grouppage-autoconfirmed' => "{{ns:project}}:O'zi tastıyıqlang'an paydalanıwshılar",
+	'grouppage-autoconfirmed' => '{{ns:project}}:O\'zi tastıyıqlang\'an paydalanıwshılar',
 	'grouppage-bot' => '{{ns:project}}:Botlar',
 	'grouppage-sysop' => '{{ns:project}}:Administratorlar',
 	'grouppage-bureaucrat' => '{{ns:project}}:Byurokratlar',
-);
+];
 
-$messages['kab'] = array(
+$messages['kab'] = [
 	'go' => 'Ẓer',
-	'gotaccount' => "Tesɛiḍ yagi isem n wemseqdac? '''$1'''.",
+	'gotaccount' => 'Tesɛiḍ yagi isem n wemseqdac? \'\'\'$1\'\'\'.',
 	'gotaccountlink' => 'Kcem',
 	'guesstimezone' => 'Sseqdec azal n browser/explorateur',
 	'group' => 'Adrum:',
@@ -3096,11 +3100,11 @@ $messages['kab'] = array(
 	'group-all' => '(akk)',
 	'group-sysop-member' => 'Anedbal',
 	'grouppage-sysop' => '{{ns:project}}:Inedbalen',
-);
+];
 
-$messages['kbd'] = array(
+$messages['kbd'] = [
 	'go' => 'Ẓer',
-	'gotaccount' => "Tesɛiḍ yagi isem n wemseqdac? '''$1'''.",
+	'gotaccount' => 'Tesɛiḍ yagi isem n wemseqdac? \'\'\'$1\'\'\'.',
 	'gotaccountlink' => 'Kcem',
 	'guesstimezone' => 'Sseqdec azal n browser/explorateur',
 	'group' => 'Adrum:',
@@ -3108,33 +3112,33 @@ $messages['kbd'] = array(
 	'group-all' => '(akk)',
 	'group-sysop-member' => 'Anedbal',
 	'grouppage-sysop' => '{{ns:project}}:Inedbalen',
-);
+];
 
-$messages['kbd-cyrl'] = array(
+$messages['kbd-cyrl'] = [
 	'go' => 'ЕкӀуэкӀын',
-	'gotaccount' => "Аккаунт щыӀу щыт?  '''$1'''.",
+	'gotaccount' => 'Аккаунт щыӀу щыт?  \'\'\'$1\'\'\'.',
 	'gotaccountlink' => 'Системэм зыкъегъэцӀыху',
 	'group-sysop' => 'Тхьэмадэхэр',
 	'grouppage-sysop' => '{{ns:project}}:Тхьэмадэхэр',
-);
+];
 
-$messages['kg'] = array(
+$messages['kg'] = [
 	'gotaccountlink' => 'Kota',
-);
+];
 
-$messages['khw'] = array(
+$messages['khw'] = [
 	'go' => 'Go/بوغے',
-	'gotaccount' => "پروشٹی تان کھاتا ساوزینو بیتی شیر؟'''$1'''.",
+	'gotaccount' => 'پروشٹی تان کھاتا ساوزینو بیتی شیر؟\'\'\'$1\'\'\'.',
 	'gotaccountlink' => 'لاگن بوس',
 	'group-sysop' => 'کھوار ویکیپیڈیو منتظمین',
 	'grouppage-sysop' => '{{ns:project}}:کھوار ویکیپیڈیو منتظمین',
-);
+];
 
-$messages['kiu'] = array(
+$messages['kiu'] = [
 	'go' => 'So',
-	'gotaccount' => "Hesabê sıma ke esto? '''$1'''.",
+	'gotaccount' => 'Hesabê sıma ke esto? \'\'\'$1\'\'\'.',
 	'gotaccountlink' => 'Cı kuye',
-	'guesstimezone' => "''Browser''i ra pırr ke",
+	'guesstimezone' => '\'\'Browser\'\'i ra pırr ke',
 	'gender-male' => 'Cüamêrd',
 	'gender-female' => 'Cüanıke',
 	'group' => 'Kom:',
@@ -3151,11 +3155,11 @@ $messages['kiu'] = array(
 	'grouppage-bot' => '{{ns:project}}:Boti',
 	'grouppage-sysop' => '{{ns:project}}:İdarekeri',
 	'grouppage-bureaucrat' => '{{ns:project}}:Burokrati',
-);
+];
 
-$messages['kk-arab'] = array(
+$messages['kk-arab'] = [
 	'go' => 'ٴوتۋ',
-	'gotaccount' => "الداقاشان تىركەلگىىڭىز بار ما? '''$1'''.",
+	'gotaccount' => 'الداقاشان تىركەلگىىڭىز بار ما? \'\'\'$1\'\'\'.',
 	'gotaccountlink' => 'كىرىڭىز',
 	'guesstimezone' => 'شولعىشتان الىپ تولتىرۋ',
 	'group' => 'توپ:',
@@ -3178,11 +3182,11 @@ $messages['kk-arab'] = array(
 	'grouppage-sysop' => '{{ns:project}}:اكىمشىلەر',
 	'grouppage-bureaucrat' => '{{ns:project}}:بىتىكشىلەر',
 	'grouppage-suppress' => '{{ns:project}}:شەتتەتۋشىلەر',
-);
+];
 
-$messages['kk-cn'] = array(
+$messages['kk-cn'] = [
 	'go' => 'ٴوتۋ',
-	'gotaccount' => "الداقاشان تىركەلگىىڭىز بار ما? '''$1'''.",
+	'gotaccount' => 'الداقاشان تىركەلگىىڭىز بار ما? \'\'\'$1\'\'\'.',
 	'gotaccountlink' => 'كىرىڭىز',
 	'guesstimezone' => 'شولعىشتان الىپ تولتىرۋ',
 	'group' => 'توپ:',
@@ -3205,11 +3209,11 @@ $messages['kk-cn'] = array(
 	'grouppage-sysop' => '{{ns:project}}:اكىمشىلەر',
 	'grouppage-bureaucrat' => '{{ns:project}}:بىتىكشىلەر',
 	'grouppage-suppress' => '{{ns:project}}:شەتتەتۋشىلەر',
-);
+];
 
-$messages['kk-cyrl'] = array(
+$messages['kk-cyrl'] = [
 	'go' => 'Өту',
-	'gotaccount' => "Бұған дейін тіркеліп пе едіңіз бе? '''$1'''.",
+	'gotaccount' => 'Бұған дейін тіркеліп пе едіңіз бе? \'\'\'$1\'\'\'.',
 	'gotaccountlink' => 'Кіріңіз',
 	'guesstimezone' => 'Шолғыштан алып толтыру',
 	'gender-unknown' => 'Көрсетілмеген',
@@ -3235,11 +3239,11 @@ $messages['kk-cyrl'] = array(
 	'grouppage-sysop' => '{{ns:project}}:Әкімшілер',
 	'grouppage-bureaucrat' => '{{ns:project}}:Бітікшілер',
 	'grouppage-suppress' => '{{ns:project}}:Шеттетушілер',
-);
+];
 
-$messages['kk-kz'] = array(
+$messages['kk-kz'] = [
 	'go' => 'Өту',
-	'gotaccount' => "Бұған дейін тіркеліп пе едіңіз бе? '''$1'''.",
+	'gotaccount' => 'Бұған дейін тіркеліп пе едіңіз бе? \'\'\'$1\'\'\'.',
 	'gotaccountlink' => 'Кіріңіз',
 	'guesstimezone' => 'Шолғыштан алып толтыру',
 	'gender-unknown' => 'Көрсетілмеген',
@@ -3265,11 +3269,11 @@ $messages['kk-kz'] = array(
 	'grouppage-sysop' => '{{ns:project}}:Әкімшілер',
 	'grouppage-bureaucrat' => '{{ns:project}}:Бітікшілер',
 	'grouppage-suppress' => '{{ns:project}}:Шеттетушілер',
-);
+];
 
-$messages['kk-latn'] = array(
+$messages['kk-latn'] = [
 	'go' => 'Ötw',
-	'gotaccount' => "Aldaqaşan tirkelgiiñiz bar ma? '''$1'''.",
+	'gotaccount' => 'Aldaqaşan tirkelgiiñiz bar ma? \'\'\'$1\'\'\'.',
 	'gotaccountlink' => 'Kiriñiz',
 	'guesstimezone' => 'Şolğıştan alıp toltırw',
 	'group' => 'Top:',
@@ -3292,11 +3296,11 @@ $messages['kk-latn'] = array(
 	'grouppage-sysop' => '{{ns:project}}:Äkimşiler',
 	'grouppage-bureaucrat' => '{{ns:project}}:Bitikşiler',
 	'grouppage-suppress' => '{{ns:project}}:Şettetwşiler',
-);
+];
 
-$messages['kk-tr'] = array(
+$messages['kk-tr'] = [
 	'go' => 'Ötw',
-	'gotaccount' => "Aldaqaşan tirkelgiiñiz bar ma? '''$1'''.",
+	'gotaccount' => 'Aldaqaşan tirkelgiiñiz bar ma? \'\'\'$1\'\'\'.',
 	'gotaccountlink' => 'Kiriñiz',
 	'guesstimezone' => 'Şolğıştan alıp toltırw',
 	'group' => 'Top:',
@@ -3319,18 +3323,18 @@ $messages['kk-tr'] = array(
 	'grouppage-sysop' => '{{ns:project}}:Äkimşiler',
 	'grouppage-bureaucrat' => '{{ns:project}}:Bitikşiler',
 	'grouppage-suppress' => '{{ns:project}}:Şettetwşiler',
-);
+];
 
-$messages['kl'] = array(
+$messages['kl'] = [
 	'go' => 'Ikunnarit',
-	'gotaccount' => "Kontomik peqareerpit? '''$1'''.",
+	'gotaccount' => 'Kontomik peqareerpit? \'\'\'$1\'\'\'.',
 	'gotaccountlink' => 'Iserit',
 	'group-sysop' => 'Administratorit',
-);
+];
 
-$messages['km'] = array(
+$messages['km'] = [
 	'go' => 'ទៅ',
-	'gotaccount' => "បើលោកអ្នកមានគណនីសម្រាប់ប្រើហើយ  សូម'''$1'''។",
+	'gotaccount' => 'បើលោកអ្នកមានគណនីសម្រាប់ប្រើហើយ  សូម\'\'\'$1\'\'\'។',
 	'gotaccountlink' => 'កត់ឈ្មោះចូល',
 	'guesstimezone' => 'បំពេញពីកម្មវិធីរាវរក',
 	'gender-unknown' => 'មិនបញ្ជាក់',
@@ -3356,11 +3360,11 @@ $messages['km'] = array(
 	'grouppage-sysop' => '{{ns:project}}:អភិបាល',
 	'grouppage-bureaucrat' => '{{ns:project}}:អ្នកការិយាល័យ',
 	'grouppage-suppress' => '{{ns:project}}:អធិការ',
-);
+];
 
-$messages['kn'] = array(
+$messages['kn'] = [
 	'go' => 'ಹೋಗು',
-	'gotaccount' => "ಈಗಾಗಲೇ ಖಾತೆಯಿದೆಯೇ? '''$1'''.",
+	'gotaccount' => 'ಈಗಾಗಲೇ ಖಾತೆಯಿದೆಯೇ? \'\'\'$1\'\'\'.',
 	'gotaccountlink' => 'ಲಾಗ್ ಇನ್',
 	'guesstimezone' => 'ಬ್ರೌಸರ್ ಇಂದ ತುಂಬು',
 	'gender-male' => 'ಗಂಡಸು',
@@ -3385,11 +3389,11 @@ $messages['kn'] = array(
 	'grouppage-sysop' => '{{ns:project}}:ನಿರ್ವಾಹಕರು',
 	'grouppage-bureaucrat' => '{{ns:project}}:ಮೇಲ್ವಿಚಾರಕರು',
 	'grouppage-suppress' => '{{ns:project}}:ನಿಗ ಇಡುವವ',
-);
+];
 
-$messages['ko'] = array(
+$messages['ko'] = [
 	'go' => '가기',
-	'gotaccount' => "계정이 이미 있다면, '''$1'''.",
+	'gotaccount' => '계정이 이미 있다면, \'\'\'$1\'\'\'.',
 	'gotaccountlink' => '로그인하세요',
 	'guesstimezone' => '웹 브라우저 설정에서 가져오기',
 	'gender-unknown' => '무응답',
@@ -3415,11 +3419,15 @@ $messages['ko'] = array(
 	'grouppage-sysop' => '{{ns:project}}:관리자',
 	'grouppage-bureaucrat' => '{{ns:project}}:사무관',
 	'grouppage-suppress' => '{{ns:project}}:오버사이트',
-);
+	'group-helper' => '위키아 헬퍼',
+	'group-helper-member' => '위키아 헬퍼',
+	'group-util' => '위키아 유틸리티',
+	'group-util-member' => '위키아 유틸리티',
+];
 
-$messages['ko-kp'] = array(
+$messages['ko-kp'] = [
 	'go' => '가기',
-	'gotaccount' => "계정이 이미 있다면, '''$1'''.",
+	'gotaccount' => '계정이 이미 있다면, \'\'\'$1\'\'\'.',
 	'gotaccountlink' => '로그인하세요',
 	'guesstimezone' => '웹 브라우저 설정에서 가져오기',
 	'gender-unknown' => '무응답',
@@ -3445,9 +3453,9 @@ $messages['ko-kp'] = array(
 	'grouppage-sysop' => '{{ns:project}}:관리자',
 	'grouppage-bureaucrat' => '{{ns:project}}:사무관',
 	'grouppage-suppress' => '{{ns:project}}:오버사이트',
-);
+];
 
-$messages['koi'] = array(
+$messages['koi'] = [
 	'go' => 'Осьтны',
 	'gotaccountlink' => 'Пырны ним увтын',
 	'gender-unknown' => 'Мыччавтöм',
@@ -3456,9 +3464,9 @@ $messages['koi'] = array(
 	'group-sysop' => 'Веськöтлiссез',
 	'group-all' => '(быдöс)',
 	'grouppage-sysop' => '{{ns:project}}:Веськöтлiссез',
-);
+];
 
-$messages['krc'] = array(
+$messages['krc'] = [
 	'go' => 'Бар',
 	'gotaccount' => 'Тергеу джазыуугъуз (аккаунтугъуз) энди бармыды? $1.',
 	'gotaccountlink' => 'Кир',
@@ -3486,21 +3494,21 @@ $messages['krc'] = array(
 	'grouppage-sysop' => '{{ns:project}}:Администраторла',
 	'grouppage-bureaucrat' => '{{ns:project}}:Бюрократла',
 	'grouppage-suppress' => '{{ns:project}}:Ревизорла',
-);
+];
 
-$messages['kri'] = array(
+$messages['kri'] = [
 	'go' => 'Go',
-	'gotaccount' => "Yu dohn mek yu yuza login? '''$1'''.",
+	'gotaccount' => 'Yu dohn mek yu yuza login? \'\'\'$1\'\'\'.',
 	'gotaccountlink' => 'Login',
-);
+];
 
-$messages['krj'] = array(
+$messages['krj'] = [
 	'go' => 'Agto',
-);
+];
 
-$messages['ksh'] = array(
+$messages['ksh'] = [
 	'go' => 'Lohß Jonn!',
-	'gotaccount' => "Do bes ald aanjemeldt {{GRAMMAR:en|{{SITENAME}}}}? Dann jangk nohm '''$1'''.",
+	'gotaccount' => 'Do bes ald aanjemeldt {{GRAMMAR:en|{{SITENAME}}}}? Dann jangk nohm \'\'\'$1\'\'\'.',
 	'gotaccountlink' => 'Enlogge',
 	'guesstimezone' => 'Fingk et erus üvver dä Brauser',
 	'gender-unknown' => 'wesse mer nit',
@@ -3534,11 +3542,11 @@ $messages['ksh'] = array(
 	'group-bot.js' => '/* De JavaSkreppte fun hee krijje bloß de Bots jescheck */',
 	'group-sysop.js' => '/* De JavaSkreppte fun hee krijje bloß de Wiki_Köbeße jescheck */',
 	'group-bureaucrat.js' => '/* De JavaSkreppte fun hee krijje bloß de Bürrokraate jescheck */',
-);
+];
 
-$messages['ku'] = array(
+$messages['ku'] = [
 	'go' => 'Lohß Jonn!',
-	'gotaccount' => "Do bes ald aanjemeldt {{GRAMMAR:en|{{SITENAME}}}}? Dann jangk nohm '''$1'''.",
+	'gotaccount' => 'Do bes ald aanjemeldt {{GRAMMAR:en|{{SITENAME}}}}? Dann jangk nohm \'\'\'$1\'\'\'.',
 	'gotaccountlink' => 'Enlogge',
 	'guesstimezone' => 'Fingk et erus üvver dä Brauser',
 	'gender-unknown' => 'wesse mer nit',
@@ -3572,11 +3580,11 @@ $messages['ku'] = array(
 	'group-bot.js' => '/* De JavaSkreppte fun hee krijje bloß de Bots jescheck */',
 	'group-sysop.js' => '/* De JavaSkreppte fun hee krijje bloß de Wiki_Köbeße jescheck */',
 	'group-bureaucrat.js' => '/* De JavaSkreppte fun hee krijje bloß de Bürrokraate jescheck */',
-);
+];
 
-$messages['ku-latn'] = array(
+$messages['ku-latn'] = [
 	'go' => 'Here',
-	'gotaccount' => "Hesabê te heye? '''$1'''.",
+	'gotaccount' => 'Hesabê te heye? \'\'\'$1\'\'\'.',
 	'gotaccountlink' => 'Têkeve',
 	'guesstimezone' => 'Ji lêgerokê tevlî bike',
 	'gender-male' => 'Nêr',
@@ -3595,15 +3603,15 @@ $messages['ku-latn'] = array(
 	'grouppage-bot' => '{{ns:project}}:Bot',
 	'grouppage-sysop' => '{{ns:project}}:Admînistrator',
 	'grouppage-bureaucrat' => '{{ns:project}}:Burokrat',
-);
+];
 
-$messages['kv'] = array(
+$messages['kv'] = [
 	'gotaccountlink' => 'Висьтасьӧй',
-);
+];
 
-$messages['kw'] = array(
+$messages['kw'] = [
 	'go' => 'Ke',
-	'gotaccount' => "Eus acont genowgh seulabres? '''$1'''.",
+	'gotaccount' => 'Eus acont genowgh seulabres? \'\'\'$1\'\'\'.',
 	'gotaccountlink' => 'Omgelmy',
 	'gender-male' => 'Gorow',
 	'gender-female' => 'Benow',
@@ -3618,20 +3626,20 @@ $messages['kw'] = array(
 	'grouppage-user' => '{{ns:project}}:Devnydhyoryon',
 	'grouppage-bot' => '{{ns:project}}:Botow',
 	'grouppage-sysop' => '{{ns:project}}:Menysteryon',
-);
+];
 
-$messages['ky'] = array(
+$messages['ky'] = [
 	'go' => 'Таап бер',
 	'gotaccount' => 'Катталгансызбы? $1.',
 	'gotaccountlink' => 'Кирүү',
 	'group' => 'Топ:',
 	'group-bureaucrat' => 'Бюрократтар',
 	'group-bureaucrat-member' => 'Бюрократ',
-);
+];
 
-$messages['la'] = array(
+$messages['la'] = [
 	'go' => 'Ire',
-	'gotaccount' => "Habesne iam rationem? '''$1'''.",
+	'gotaccount' => 'Habesne iam rationem? \'\'\'$1\'\'\'.',
 	'gotaccountlink' => 'Conventum aperi',
 	'guesstimezone' => 'Hora ex navigatro scribere',
 	'gender-unknown' => 'Indefinitus',
@@ -3657,21 +3665,21 @@ $messages['la'] = array(
 	'grouppage-sysop' => '{{ns:project}}:Magistratus',
 	'grouppage-bureaucrat' => '{{ns:project}}:Grapheocrates',
 	'grouppage-suppress' => '{{ns:project}}:Observator',
-);
+];
 
-$messages['lad'] = array(
+$messages['lad'] = [
 	'go' => 'Vate',
-	'gotaccount' => "¿Ya tienes un cuento? '''$1'''.",
+	'gotaccount' => '¿Ya tienes un cuento? \'\'\'$1\'\'\'.',
 	'gotaccountlink' => 'Entrar',
 	'group-user' => 'Usadorers',
 	'group-sysop' => 'Administradores',
 	'group-all' => '(todos)',
 	'grouppage-sysop' => '{{ns:project}}:Administradores',
-);
+];
 
-$messages['lb'] = array(
+$messages['lb'] = [
 	'go' => 'Lass',
-	'gotaccount' => "Dir hutt schonn e Benotzerkont? '''$1'''.",
+	'gotaccount' => 'Dir hutt schonn e Benotzerkont? \'\'\'$1\'\'\'.',
 	'gotaccountlink' => 'Umellen',
 	'guesstimezone' => 'Vum Browser iwwerhuelen',
 	'gender-unknown' => 'Net uginn',
@@ -3697,9 +3705,9 @@ $messages['lb'] = array(
 	'grouppage-sysop' => '{{ns:project}}:Administrateuren',
 	'grouppage-bureaucrat' => '{{ns:project}}:Bürokraten',
 	'grouppage-suppress' => '{{ns:project}}:Iwwersiicht',
-);
+];
 
-$messages['lez'] = array(
+$messages['lez'] = [
 	'go' => 'ЭлячIун',
 	'gotaccount' => 'Квез аакаунт авайд я?$1',
 	'gotaccountlink' => 'Гьахьун',
@@ -3710,11 +3718,11 @@ $messages['lez'] = array(
 	'group-bot-member' => '{{GENDER:$1|бот}}',
 	'grouppage-user' => '{{ns:project}}:Иштиракчияр',
 	'grouppage-sysop' => '{{ns:project}}:Къавхаяр',
-);
+];
 
-$messages['lfn'] = array(
+$messages['lfn'] = [
 	'go' => 'Vade',
-	'gotaccount' => "Tu ave ja un conta? '''$1'''.",
+	'gotaccount' => 'Tu ave ja un conta? \'\'\'$1\'\'\'.',
 	'gotaccountlink' => 'Sinia per entra',
 	'gender-male' => 'Mas',
 	'gender-female' => 'Fema',
@@ -3725,20 +3733,20 @@ $messages['lfn'] = array(
 	'group-user-member' => 'Usor',
 	'grouppage-user' => '{{ns:project}}:Usores',
 	'grouppage-sysop' => '{{ns:project}}:Dirijores',
-);
+];
 
-$messages['lg'] = array(
+$messages['lg'] = [
 	'go' => 'Nona',
-	'gotaccount' => "Akawunti wafuna? '''$1'''.",
+	'gotaccount' => 'Akawunti wafuna? \'\'\'$1\'\'\'.',
 	'gotaccountlink' => 'Yingira',
 	'guesstimezone' => 'Kalambulanetti etegeke obudde',
 	'group-sysop' => 'Abateesiteesi',
 	'grouppage-sysop' => '{{ns:project}}:Abateesiteesi',
-);
+];
 
-$messages['li'] = array(
+$messages['li'] = [
 	'go' => 'OK',
-	'gotaccount' => "Höbs te al 'ne gebroekersnaam? '''$1'''.",
+	'gotaccount' => 'Höbs te al \'ne gebroekersnaam? \'\'\'$1\'\'\'.',
 	'gotaccountlink' => 'Inlogge',
 	'guesstimezone' => 'Invulle van browser',
 	'gender-unknown' => 'Neet aangegaeve',
@@ -3764,65 +3772,65 @@ $messages['li'] = array(
 	'grouppage-sysop' => '{{ns:project}}:Beheerders',
 	'grouppage-bureaucrat' => '{{ns:project}}:Bureaucrate',
 	'grouppage-suppress' => '{{ns:project}}:Euverzich',
-);
+];
 
-$messages['lij'] = array(
+$messages['lij'] = [
 	'go' => 'Vanni',
-	'gotaccount' => "Ti ghe l'æ za 'n conto d'aceizo? '''$1'''.",
+	'gotaccount' => 'Ti ghe l\'æ za \'n conto d\'aceizo? \'\'\'$1\'\'\'.',
 	'gotaccountlink' => 'Intra',
 	'group-user' => 'Ûtenti',
 	'grouppage-sysop' => '{{ns:project}}:Amministratoî',
-);
+];
 
-$messages['liv'] = array(
-	'gotaccount' => "Až täddõn jubā um eņtš konto, '''$1'''.",
+$messages['liv'] = [
+	'gotaccount' => 'Až täddõn jubā um eņtš konto, \'\'\'$1\'\'\'.',
 	'gotaccountlink' => 'Log sīezõ',
 	'group-sysop' => 'Administrātord',
 	'grouppage-sysop' => '{{ns:project}}:Administrātord',
-);
+];
 
-$messages['lmo'] = array(
+$messages['lmo'] = [
 	'go' => 'Inanz',
-	'gotaccount' => "Gh'hee-t giamò un cünt? '''$1'''.",
+	'gotaccount' => 'Gh\'hee-t giamò un cünt? \'\'\'$1\'\'\'.',
 	'gotaccountlink' => 'Va dent in del sistema',
 	'guesstimezone' => 'Catá l urari dal sèrver',
 	'gender-unknown' => 'Mía specifegaa',
-	'gender-male' => "Mas'c",
+	'gender-male' => 'Mas\'c',
 	'gender-female' => 'Femena',
 	'group-user' => 'Druvadur',
-	'group-autoconfirmed' => "Druvadur che i s'henn cunvalidaa deperlur",
+	'group-autoconfirmed' => 'Druvadur che i s\'henn cunvalidaa deperlur',
 	'group-sysop' => 'Aministradur',
 	'group-user-member' => 'Dovratt',
 	'grouppage-user' => '{{ns:project}}:Druvadur',
 	'grouppage-sysop' => '{{ns:project}}:Aministradur',
-);
+];
 
-$messages['ln'] = array(
+$messages['ln'] = [
 	'go' => 'Kokɛndɛ',
-	'gotaccount' => "Omíkomísí naíno ? '''$1'''.",
+	'gotaccount' => 'Omíkomísí naíno ? \'\'\'$1\'\'\'.',
 	'gotaccountlink' => 'komíkitola (log in)',
 	'group-sysop' => 'Bayángeli',
 	'group-sysop-member' => 'Moyángeli',
-);
+];
 
-$messages['lo'] = array(
+$messages['lo'] = [
 	'go' => 'ໄປ',
-	'gotaccount' => "ມີ ບັນຊີແລ້ວບໍ? '''$1'''.",
+	'gotaccount' => 'ມີ ບັນຊີແລ້ວບໍ? \'\'\'$1\'\'\'.',
 	'gotaccountlink' => 'ເຊັນເຂົ້າ',
 	'guesstimezone' => 'ເອົາເວລາຈາກໂປຣແກຣມທ່ອງເວັບ',
-);
+];
 
-$messages['loz'] = array(
+$messages['loz'] = [
 	'go' => 'Afi',
-	'gotaccount' => "Xete a sa sebelu? '''$1'''.",
+	'gotaccount' => 'Xete a sa sebelu? \'\'\'$1\'\'\'.',
 	'gotaccountlink' => 'Menuhile',
 	'group-all' => '(xete)',
 	'grouppage-sysop' => '{{ns:project}}:Sesop',
-);
+];
 
-$messages['lt'] = array(
+$messages['lt'] = [
 	'go' => 'Rodyti',
-	'gotaccount' => "Jau turite paskyrą? '''$1'''.",
+	'gotaccount' => 'Jau turite paskyrą? \'\'\'$1\'\'\'.',
 	'gotaccountlink' => 'Prisijunkite',
 	'guesstimezone' => 'Paimti iš naršyklės',
 	'gender-unknown' => 'Nenurodyta',
@@ -3848,9 +3856,9 @@ $messages['lt'] = array(
 	'grouppage-sysop' => '{{ns:project}}:Administratoriai',
 	'grouppage-bureaucrat' => '{{ns:project}}:Biurokratai',
 	'grouppage-suppress' => '{{ns:project}}:Peržiūra',
-);
+];
 
-$messages['ltg'] = array(
+$messages['ltg'] = [
 	'go' => 'Ruodeit',
 	'gotaccountlink' => 'Dasaslāgt',
 	'gender-unknown' => 'Nava nūruodeits',
@@ -3867,11 +3875,11 @@ $messages['ltg'] = array(
 	'grouppage-user' => '{{ns:project}}:Lītuotuoji',
 	'grouppage-bot' => '{{ns:project}}:Boti',
 	'grouppage-sysop' => '{{ns:project}}:Administratori',
-);
+];
 
-$messages['lv'] = array(
+$messages['lv'] = [
 	'go' => 'Aiziet!',
-	'gotaccount' => "Tev jau ir lietotājvārds? '''$1'''!",
+	'gotaccount' => 'Tev jau ir lietotājvārds? \'\'\'$1\'\'\'!',
 	'gotaccountlink' => 'Dodies iekšā',
 	'guesstimezone' => 'Izmantot datora sistēmas laiku',
 	'gender-unknown' => 'Nav norādīts',
@@ -3897,9 +3905,9 @@ $messages['lv'] = array(
 	'grouppage-sysop' => '{{ns:project}}:Administratori',
 	'grouppage-bureaucrat' => '{{ns:project}}:Birokrāti',
 	'grouppage-suppress' => '{{ns:project}}:Novērotājs',
-);
+];
 
-$messages['lzh'] = array(
+$messages['lzh'] = [
 	'go' => '往',
 	'gotaccount' => '有簿矣哉？往$1。',
 	'gotaccountlink' => '登簿',
@@ -3927,18 +3935,18 @@ $messages['lzh'] = array(
 	'grouppage-sysop' => '{{ns:project}}:有秩',
 	'grouppage-bureaucrat' => '{{ns:project}}:門下',
 	'grouppage-suppress' => '{{ns:project}}:監',
-);
+];
 
-$messages['lzz'] = array(
+$messages['lzz'] = [
 	'go' => 'İgzali',
-	'gender-male' => "Biç'i",
-	'gender-female' => "Bozo (K'ulani)",
+	'gender-male' => 'Biç\'i',
+	'gender-female' => 'Bozo (K\'ulani)',
 	'group' => 'Grubi:',
 	'group-sysop' => 'Adminepe',
 	'grouppage-sysop' => '{{ns:project}}:Adminepe',
-);
+];
 
-$messages['mai'] = array(
+$messages['mai'] = [
 	'go' => 'जाउ',
 	'gotaccount' => 'पहिनहियेसँ खाता अछि? $1',
 	'gotaccountlink' => 'सम्प्रवेश',
@@ -3966,9 +3974,9 @@ $messages['mai'] = array(
 	'grouppage-sysop' => '{{ns:project}}:माइनजन सभ',
 	'grouppage-bureaucrat' => '{{ns:project}}:अधिकारी सभ',
 	'grouppage-suppress' => '{{ns:project}}:नजरिपर नै आएल',
-);
+];
 
-$messages['map-bms'] = array(
+$messages['map-bms'] = [
 	'go' => 'golet',
 	'gotaccount' => 'Wis duwe akun? $1.',
 	'gotaccountlink' => 'Mlebu log',
@@ -3996,11 +4004,11 @@ $messages['map-bms'] = array(
 	'grouppage-sysop' => '{{ns:project}}:Pangurus',
 	'grouppage-bureaucrat' => '{{ns:project}}:Birokrat',
 	'grouppage-suppress' => '{{ns:project}}:Pangawas',
-);
+];
 
-$messages['mdf'] = array(
+$messages['mdf'] = [
 	'go' => 'Аре',
-	'gotaccount' => "Сёрматфтыть ни? '''$1'''.",
+	'gotaccount' => 'Сёрматфтыть ни? \'\'\'$1\'\'\'.',
 	'gotaccountlink' => 'Сувамс',
 	'guesstimezone' => 'Сёрмадомс интернет полатксста',
 	'gender-unknown' => 'Аф содаф',
@@ -4026,14 +4034,14 @@ $messages['mdf'] = array(
 	'grouppage-sysop' => '{{ns:project}}:Системонь вятиксне',
 	'grouppage-bureaucrat' => '{{ns:project}}:Бюрократт',
 	'grouppage-suppress' => '{{ns:project}}:Ревизорхт',
-);
+];
 
-$messages['mg'] = array(
+$messages['mg'] = [
 	'go' => 'Ndao',
-	'gotaccount' => "Efa manana kaonty? '''$1'''.",
+	'gotaccount' => 'Efa manana kaonty? \'\'\'$1\'\'\'.',
 	'gotaccountlink' => 'Midira',
-	'guesstimezone' => "
-Fenoy araka ny datin'ny solosainan'ny mpitsidika",
+	'guesstimezone' => '
+Fenoy araka ny datin\'ny solosainan\'ny mpitsidika',
 	'gender-unknown' => 'Tsy voalaza',
 	'gender-male' => 'Lehilahy',
 	'gender-female' => 'Vehivavy',
@@ -4057,11 +4065,11 @@ Fenoy araka ny datin'ny solosainan'ny mpitsidika",
 	'grouppage-sysop' => '{{ns:project}}:Mpandrindra',
 	'grouppage-bureaucrat' => '{{ns:project}}:Borōkraty',
 	'grouppage-suppress' => '{{ns:project}}:Oversight',
-);
+];
 
-$messages['mhr'] = array(
+$messages['mhr'] = [
 	'go' => 'Куснаш',
-	'gotaccount' => "Тый регистрацийым эртенат? '''$1'''.",
+	'gotaccount' => 'Тый регистрацийым эртенат? \'\'\'$1\'\'\'.',
 	'gotaccountlink' => 'Шке денет палымым ыште',
 	'gender-male' => 'Пӧръеҥ',
 	'gender-female' => 'Ӱдырамаш',
@@ -4071,23 +4079,23 @@ $messages['mhr'] = array(
 	'group-bot-member' => 'бот',
 	'grouppage-bot' => '{{ns:project}}:Бот-влак',
 	'grouppage-sysop' => '{{ns:project}}:Сайтвиктарыше-влак',
-);
+];
 
-$messages['mi'] = array(
+$messages['mi'] = [
 	'go' => 'Haere',
-);
+];
 
-$messages['min'] = array(
+$messages['min'] = [
 	'go' => 'Tuju',
-	'gotaccount' => "Alah tadaftar sabagai pangguno? '''$1'''.",
+	'gotaccount' => 'Alah tadaftar sabagai pangguno? \'\'\'$1\'\'\'.',
 	'gotaccountlink' => 'Masuak log',
 	'group-sysop' => 'Pengurus',
 	'grouppage-sysop' => '{{ns:project}}:Pengurus',
-);
+];
 
-$messages['mk'] = array(
+$messages['mk'] = [
 	'go' => 'Оди',
-	'gotaccount' => "Веќе имате корисничка сметка? '''$1'''.",
+	'gotaccount' => 'Веќе имате корисничка сметка? \'\'\'$1\'\'\'.',
 	'gotaccountlink' => 'Најавете се',
 	'guesstimezone' => 'Пополни од прелистувачот',
 	'gender-unknown' => 'непосочен',
@@ -4121,11 +4129,11 @@ $messages['mk'] = array(
 	'group-bot.js' => '/* Тука поставениот JavaScript  ќе им се вчитува само на ботовите */',
 	'group-sysop.js' => '/* Тука поставениот JavaScript  ќе им се вчитува само на системските оператори */',
 	'group-bureaucrat.js' => '/* Тука поставениот JavaScript  ќе им се вчитува само на бирократите */',
-);
+];
 
-$messages['ml'] = array(
+$messages['ml'] = [
 	'go' => 'പോകൂ',
-	'gotaccount' => "താങ്കൾക്ക് അംഗത്വമുണ്ടോ? '''$1'''.",
+	'gotaccount' => 'താങ്കൾക്ക് അംഗത്വമുണ്ടോ? \'\'\'$1\'\'\'.',
 	'gotaccountlink' => 'പ്രവേശിക്കുക',
 	'guesstimezone' => 'സമയവ്യത്യാസം ബ്രൗസറിൽ നിന്നും ശേഖരിക്കൂ',
 	'gender-unknown' => 'വ്യക്തമാക്കിയിട്ടില്ല',
@@ -4151,11 +4159,11 @@ $messages['ml'] = array(
 	'grouppage-sysop' => '{{ns:project}}:കാര്യനിർവാഹകർ',
 	'grouppage-bureaucrat' => '{{ns:project}}:ബ്യൂറോക്രാറ്റ്',
 	'grouppage-suppress' => '{{ns:project}}:മേൽനോട്ടം',
-);
+];
 
-$messages['mn'] = array(
+$messages['mn'] = [
 	'go' => 'Явах',
-	'gotaccount' => "Та бүртгэлтэй юу? '''$1'''",
+	'gotaccount' => 'Та бүртгэлтэй юу? \'\'\'$1\'\'\'',
 	'gotaccountlink' => 'Нэвтрэх',
 	'guesstimezone' => 'Броузераас бөглөх',
 	'gender-unknown' => 'Тодорхойгүй',
@@ -4181,16 +4189,16 @@ $messages['mn'] = array(
 	'grouppage-sysop' => '{{ns:project}}:Администраторууд',
 	'grouppage-bureaucrat' => '{{ns:project}}:Албаны ажилтангууд',
 	'grouppage-suppress' => '{{ns:project}}:Хянан зохицуулагчид',
-);
+];
 
-$messages['mo'] = array(
+$messages['mo'] = [
 	'group-sysop' => 'Администраторь',
 	'grouppage-sysop' => '{{ns:project}}:Администраторь',
-);
+];
 
-$messages['mr'] = array(
+$messages['mr'] = [
 	'go' => 'चला',
-	'gotaccount' => "जुने खाते आहे? '''$1'''.",
+	'gotaccount' => 'जुने खाते आहे? \'\'\'$1\'\'\'.',
 	'gotaccountlink' => 'प्रवेश करा',
 	'guesstimezone' => 'विचरकातून भरा',
 	'gender-unknown' => 'अज्ञात',
@@ -4216,16 +4224,16 @@ $messages['mr'] = array(
 	'grouppage-sysop' => '{{ns:project}}:प्रचालक',
 	'grouppage-bureaucrat' => '{{ns:project}}:स्विकृती अधिकारी',
 	'grouppage-suppress' => '{{ns:project}}:झापडबंद',
-);
+];
 
-$messages['mrj'] = array(
+$messages['mrj'] = [
 	'group-sysop' => 'Администраторвлӓ',
 	'grouppage-sysop' => '{{ns:project}}:Администраторвлӓ',
-);
+];
 
-$messages['ms'] = array(
+$messages['ms'] = [
 	'go' => 'Pergi',
-	'gotaccount' => "Sudah mempunyai akaun? '''$1'''.",
+	'gotaccount' => 'Sudah mempunyai akaun? \'\'\'$1\'\'\'.',
 	'gotaccountlink' => 'Log masuk',
 	'guesstimezone' => 'Gunakan tetapan pelayar saya',
 	'gender-unknown' => 'Tidak dinyatakan',
@@ -4251,13 +4259,13 @@ $messages['ms'] = array(
 	'grouppage-sysop' => '{{ns:project}}:Pentadbir',
 	'grouppage-bureaucrat' => '{{ns:project}}:Birokrat',
 	'grouppage-suppress' => '{{ns:project}}:Penyemak',
-);
+];
 
-$messages['mt'] = array(
+$messages['mt'] = [
 	'go' => 'Mur',
-	'gotaccount' => "Diġa għandhek kont? '''$1'''.",
+	'gotaccount' => 'Diġa għandhek kont? \'\'\'$1\'\'\'.',
 	'gotaccountlink' => 'Idħol',
-	'guesstimezone' => "Uża l-ħin tal-''browser'' tiegħek",
+	'guesstimezone' => 'Uża l-ħin tal-\'\'browser\'\' tiegħek',
 	'gender-unknown' => 'Mhux speċifikat',
 	'gender-male' => 'Maskil',
 	'gender-female' => 'Femminil',
@@ -4267,7 +4275,7 @@ $messages['mt'] = array(
 	'group-bot' => 'Bot',
 	'group-sysop' => 'Amministraturi',
 	'group-bureaucrat' => 'Burokrati',
-	'group-suppress' => "''Oversight''",
+	'group-suppress' => '\'\'Oversight\'\'',
 	'group-all' => '(kollha)',
 	'group-user-member' => 'utent',
 	'group-autoconfirmed-member' => 'utent konfermat awtomatikament',
@@ -4281,11 +4289,11 @@ $messages['mt'] = array(
 	'grouppage-sysop' => '{{ns:project}}:Amminstraturi',
 	'grouppage-bureaucrat' => '{{ns:project}}:Burokrati',
 	'grouppage-suppress' => '{{ns:project}}:Oversight',
-);
+];
 
-$messages['mwl'] = array(
+$messages['mwl'] = [
 	'go' => 'Bota',
-	'gotaccount' => "Yá tenes ua cuonta? '''$1'''.",
+	'gotaccount' => 'Yá tenes ua cuonta? \'\'\'$1\'\'\'.',
 	'gotaccountlink' => 'Antrar',
 	'gender-unknown' => 'Nun specificado',
 	'gender-male' => 'Home',
@@ -4300,9 +4308,9 @@ $messages['mwl'] = array(
 	'group-bureaucrat-member' => 'Burocrata',
 	'grouppage-bot' => '{{ns:project}}:Rubós',
 	'grouppage-sysop' => '{{ns:project}}:Admenistradores',
-);
+];
 
-$messages['my'] = array(
+$messages['my'] = [
 	'go' => 'သွား​ပါ​',
 	'gotaccount' => 'အကောင့်ရှိပြီးသားလား။ $1။',
 	'gotaccountlink' => 'Log in ဝင်ရန်',
@@ -4327,11 +4335,11 @@ $messages['my'] = array(
 	'grouppage-bot' => '{{ns:project}}:ဘော့များ',
 	'grouppage-sysop' => '{{ns:project}}: အက်ဒမင်များ',
 	'grouppage-bureaucrat' => '{{ns:project}}:ဗျူရိုကရက်များ',
-);
+];
 
-$messages['myv'] = array(
+$messages['myv'] = [
 	'go' => 'Адя',
-	'gotaccount' => "Совамотаркат ули? '''$1'''.",
+	'gotaccount' => 'Совамотаркат ули? \'\'\'$1\'\'\'.',
 	'gotaccountlink' => 'Совамс',
 	'guesstimezone' => 'Пештемс интернет икельксстэть',
 	'gender-unknown' => 'апак невте',
@@ -4353,24 +4361,24 @@ $messages['myv'] = array(
 	'grouppage-bot' => '{{ns:project}}:Ботт',
 	'grouppage-sysop' => '{{ns:project}}:Администраторт',
 	'grouppage-bureaucrat' => '{{ns:project}}:Бюрократт',
-);
+];
 
-$messages['mzn'] = array(
+$messages['mzn'] = [
 	'go' => 'بـور',
 	'gotaccount' => 'عضو هسنی؟ $1.',
 	'gotaccountlink' => 'بورین دله',
 	'group-sysop' => 'مدیرون',
 	'group-all' => '(همه)',
 	'grouppage-sysop' => '{{ns:project}}:مدیرون',
-);
+];
 
-$messages['na'] = array(
+$messages['na'] = [
 	'go' => 'Nuwa ko!',
-);
+];
 
-$messages['nah'] = array(
+$messages['nah'] = [
 	'go' => 'Yāuh',
-	'gotaccount' => "¿Ye ticpiya cē cuentah? '''$1'''.",
+	'gotaccount' => '¿Ye ticpiya cē cuentah? \'\'\'$1\'\'\'.',
 	'gotaccountlink' => 'Ximocalaqui',
 	'gender-male' => 'Oquichtli',
 	'gender-female' => 'Cihuātl',
@@ -4385,11 +4393,11 @@ $messages['nah'] = array(
 	'grouppage-user' => '{{ns:project}}:Tlatequitiltilīlli',
 	'grouppage-bot' => '{{ns:project}}:Tepoztlācah',
 	'grouppage-sysop' => '{{ns:project}}:Tlahcuilōlpixqueh',
-);
+];
 
-$messages['nan'] = array(
+$messages['nan'] = [
 	'go' => 'Lâi-khì',
-	'gotaccount' => "Í-keng ū kháu-chō? '''$1'''.",
+	'gotaccount' => 'Í-keng ū kháu-chō? \'\'\'$1\'\'\'.',
 	'gotaccountlink' => 'Teng-ji̍p',
 	'guesstimezone' => 'Tùi liû-lám-khì chhau--lâi',
 	'gender-unknown' => '無表明',
@@ -4415,15 +4423,15 @@ $messages['nan'] = array(
 	'grouppage-sysop' => '{{ns:project}}:Hêng-chèng jîn-oân',
 	'grouppage-bureaucrat' => '{{ns:project}}:行政人員',
 	'grouppage-suppress' => '{{ns:project}}:監督',
-);
+];
 
-$messages['nap'] = array(
+$messages['nap'] = [
 	'go' => 'Vàje',
-	'gotaccount' => "Tiene già nu cunto? '''$1'''.",
+	'gotaccount' => 'Tiene già nu cunto? \'\'\'$1\'\'\'.',
 	'gotaccountlink' => 'Tràse',
-);
+];
 
-$messages['nb'] = array(
+$messages['nb'] = [
 	'go' => 'Gå',
 	'gotaccount' => 'Har du allerede en konto? $1.',
 	'gotaccountlink' => 'Logg inn',
@@ -4451,11 +4459,11 @@ $messages['nb'] = array(
 	'grouppage-sysop' => '{{ns:project}}:Administratorer',
 	'grouppage-bureaucrat' => '{{ns:project}}:Byråkrater',
 	'grouppage-suppress' => '{{ns:project}}:Historikkrydding',
-);
+];
 
-$messages['nds'] = array(
+$messages['nds'] = [
 	'go' => 'Gah',
-	'gotaccount' => "Hest Du al en Brukerkonto? '''$1'''.",
+	'gotaccount' => 'Hest Du al en Brukerkonto? \'\'\'$1\'\'\'.',
 	'gotaccountlink' => 'Anmellen',
 	'guesstimezone' => 'Ut den Browser övernehmen',
 	'gender-unknown' => 'Nich angeven',
@@ -4481,11 +4489,11 @@ $messages['nds'] = array(
 	'grouppage-sysop' => '{{ns:project}}:Administraters',
 	'grouppage-bureaucrat' => '{{ns:project}}:Bürokraten',
 	'grouppage-suppress' => '{{ns:project}}:Oversight',
-);
+];
 
-$messages['nds-nl'] = array(
+$messages['nds-nl'] = [
 	'go' => 'Artikel',
-	'gotaccount' => "Stao'j al in-eschreven? '''$1'''.",
+	'gotaccount' => 'Stao\'j al in-eschreven? \'\'\'$1\'\'\'.',
 	'gotaccountlink' => 'Anmelden',
 	'guesstimezone' => 'Vanuut webkieker overnemen',
 	'gender-unknown' => 'Niet an-egeven',
@@ -4511,11 +4519,11 @@ $messages['nds-nl'] = array(
 	'grouppage-sysop' => '{{ns:project}}:Beheerder',
 	'grouppage-bureaucrat' => '{{ns:project}}:Beheerder',
 	'grouppage-suppress' => '{{ns:project}}:Toezichte',
-);
+];
 
-$messages['ne'] = array(
+$messages['ne'] = [
 	'go' => 'जाउ',
-	'gotaccount' => "के तपाईँसँग पहिले देखि नै खाता छ ? '''$1''' ।",
+	'gotaccount' => 'के तपाईँसँग पहिले देखि नै खाता छ ? \'\'\'$1\'\'\' ।',
 	'gotaccountlink' => 'लग इन',
 	'guesstimezone' => 'ब्राउजरबाट भराउनुहोस्',
 	'gender-unknown' => 'नखुलेको',
@@ -4541,21 +4549,21 @@ $messages['ne'] = array(
 	'grouppage-sysop' => '{{ns:project}}: प्रशासकहरु',
 	'grouppage-bureaucrat' => '{{ns:project}}:कुटनितिज्ञ',
 	'grouppage-suppress' => '{{ns:project}}:अतिदृष्टि',
-);
+];
 
-$messages['new'] = array(
+$messages['new'] = [
 	'go' => 'झासँ',
 	'gotaccountlink' => 'दुहां झासँ',
 	'group-user' => 'छ्य्‌लामित',
 	'group-bot' => 'बोत',
-);
+];
 
-$messages['niu'] = array(
+$messages['niu'] = [
 	'go' => 'Fano',
 	'gotaccountlink' => 'Hu ki loto',
-);
+];
 
-$messages['nl'] = array(
+$messages['nl'] = [
 	'go' => 'OK',
 	'gotaccount' => 'Hebt u al een gebruikersnaam? $1.',
 	'gotaccountlink' => 'Aanmelden',
@@ -4593,15 +4601,15 @@ $messages['nl'] = array(
 	'group-bureaucrat.js' => '/* JavaScript die hier wordt geplaatst heeft alleen invloed op bureaucraten */',
 	'group-content-moderator' => 'Inhoudmoderatoren',
 	'group-content-moderator-member' => 'Inhoudmoderator',
-);
+];
 
-$messages['nl-informal'] = array(
-	'gotaccount' => "Heb je al een gebruikersnaam? '''$1'''.",
-);
+$messages['nl-informal'] = [
+	'gotaccount' => 'Heb je al een gebruikersnaam? \'\'\'$1\'\'\'.',
+];
 
-$messages['nn'] = array(
+$messages['nn'] = [
 	'go' => 'Vis',
-	'gotaccount' => "Har du ein brukarkonto? '''$1'''.",
+	'gotaccount' => 'Har du ein brukarkonto? \'\'\'$1\'\'\'.',
 	'gotaccountlink' => 'Logg inn',
 	'guesstimezone' => 'Hent tidssone frå nettlesaren',
 	'gender-unknown' => 'Ikkje oppgjeve',
@@ -4627,11 +4635,11 @@ $messages['nn'] = array(
 	'grouppage-sysop' => '{{ns:project}}:Administratorar',
 	'grouppage-bureaucrat' => '{{ns:project}}:Byråkratar',
 	'grouppage-suppress' => '{{ns:project}}:Historikkfjerning',
-);
+];
 
-$messages['no'] = array(
+$messages['no'] = [
 	'go' => 'Vis',
-	'gotaccount' => "Har du ein brukarkonto? '''$1'''.",
+	'gotaccount' => 'Har du ein brukarkonto? \'\'\'$1\'\'\'.',
 	'gotaccountlink' => 'Logg inn',
 	'guesstimezone' => 'Hent tidssone frå nettlesaren',
 	'gender-unknown' => 'Ikkje oppgjeve',
@@ -4657,31 +4665,33 @@ $messages['no'] = array(
 	'grouppage-sysop' => '{{ns:project}}:Administratorar',
 	'grouppage-bureaucrat' => '{{ns:project}}:Byråkratar',
 	'grouppage-suppress' => '{{ns:project}}:Historikkfjerning',
-);
+	'group-helper' => 'Hjelpere',
+	'group-helper-member' => 'Hjelper',
+];
 
-$messages['nov'] = array(
+$messages['nov'] = [
 	'go' => 'Vada',
 	'gotaccountlink' => 'Ensignata',
-);
+];
 
-$messages['nso'] = array(
+$messages['nso'] = [
 	'go' => 'Sepela',
-	'gotaccount' => "O šetše o nale tšhupaleloko? '''$1'''.",
+	'gotaccount' => 'O šetše o nale tšhupaleloko? \'\'\'$1\'\'\'.',
 	'gotaccountlink' => 'Tsena',
 	'group' => 'Sehlopha:',
 	'group-sysop' => 'Bahlapetši',
 	'group-all' => '(ka moka)',
 	'grouppage-sysop' => '{{ns:project}}:Balaudi',
-);
+];
 
-$messages['nv'] = array(
+$messages['nv'] = [
 	'group-sysop' => 'Administratorsígíí',
 	'grouppage-sysop' => '{{ns:project}}:Administratorsígíí',
-);
+];
 
-$messages['oc'] = array(
+$messages['oc'] = [
 	'go' => 'Consultar',
-	'gotaccount' => "Ja avètz un compte ? '''$1'''.",
+	'gotaccount' => 'Ja avètz un compte ? \'\'\'$1\'\'\'.',
 	'gotaccountlink' => 'Identificatz-vos',
 	'guesstimezone' => 'Utilizar la valor del navigador',
 	'gender-unknown' => 'Pas entresenhat',
@@ -4707,14 +4717,14 @@ $messages['oc'] = array(
 	'grouppage-sysop' => '{{ns:project}}:Administrators',
 	'grouppage-bureaucrat' => '{{ns:project}}:Burocratas',
 	'grouppage-suppress' => '{{ns:project}}:Supervisor',
-);
+];
 
-$messages['om'] = array(
+$messages['om'] = [
 	'go' => 'Fufi',
 	'gotaccountlink' => 'Seenu',
-);
+];
 
-$messages['or'] = array(
+$messages['or'] = [
 	'go' => 'ଯିବା',
 	'gotaccount' => 'ଆଗରୁ ଖାତାଟିଏ ଅଛି କି? $1.',
 	'gotaccountlink' => 'ଲଗଇନ',
@@ -4742,9 +4752,9 @@ $messages['or'] = array(
 	'grouppage-sysop' => '{{ns:project}}:ପରିଛା',
 	'grouppage-bureaucrat' => '{{ns:project}}:ପ୍ରଶାସକଗଣ',
 	'grouppage-suppress' => '{{ns:project}}:ଅଜାଣତ ଅଣଦେଖା',
-);
+];
 
-$messages['os'] = array(
+$messages['os'] = [
 	'go' => 'Статьямæ',
 	'gotaccount' => 'Регистрацигонд дæ? $1.',
 	'gotaccountlink' => 'Бахизын',
@@ -4769,27 +4779,27 @@ $messages['os'] = array(
 	'grouppage-sysop' => '{{ns:project}}:Администратортæ',
 	'grouppage-bureaucrat' => '{{ns:project}}:Бюрократтæ',
 	'grouppage-suppress' => '{{ns:project}}:Радгæстæ',
-);
+];
 
-$messages['pa'] = array(
+$messages['pa'] = [
 	'go' => 'ਜਾਓ',
-	'gotaccount' => "ਪਹਿਲਾਂ ਹੀ ਇੱਕ ਅਕਾਊਂਟ ਹੈ? '''$1'''.",
+	'gotaccount' => 'ਪਹਿਲਾਂ ਹੀ ਇੱਕ ਅਕਾਊਂਟ ਹੈ? \'\'\'$1\'\'\'.',
 	'gotaccountlink' => 'ਲਾਗਇਨ',
 	'guesstimezone' => 'ਬਰਾਊਜ਼ਰ ਤੋਂ ਭਰੋ',
 	'group' => 'ਗਰੁੱਪ:',
 	'group-user' => 'ਮੈਂਬਰ',
 	'group-all' => '(ਸਭ)',
 	'group-user-member' => 'ਮੈਂਬਰ',
-);
+];
 
-$messages['pag'] = array(
+$messages['pag'] = [
 	'go' => 'Ula',
 	'gotaccountlink' => 'Onloob',
-);
+];
 
-$messages['pam'] = array(
+$messages['pam'] = [
 	'go' => 'Sulung',
-	'gotaccount' => "Atin na kang account? '''$1'''.",
+	'gotaccount' => 'Atin na kang account? \'\'\'$1\'\'\'.',
 	'gotaccountlink' => 'Mag log in',
 	'guesstimezone' => 'Pakibatan ya manibat king browser',
 	'group' => 'Grupu:',
@@ -4812,11 +4822,11 @@ $messages['pam'] = array(
 	'grouppage-sysop' => '{{ns:project}}:Talapanibala',
 	'grouppage-bureaucrat' => '{{ns:project}}:Burukrata',
 	'grouppage-suppress' => '{{ns:project}}:Alakton',
-);
+];
 
-$messages['pcd'] = array(
+$messages['pcd'] = [
 	'go' => 'Aller',
-	'gotaccount' => "Jou qu'os avez piécha un conpte? '''$1'''.",
+	'gotaccount' => 'Jou qu\'os avez piécha un conpte? \'\'\'$1\'\'\'.',
 	'gotaccountlink' => 'Intrer',
 	'gender-male' => 'Marle',
 	'gender-female' => 'Femelle',
@@ -4825,9 +4835,9 @@ $messages['pcd'] = array(
 	'group-sysop-member' => '{{GENDER:$1|aménistrateu|aménistratriche}}',
 	'group-bureaucrat-member' => '{{GENDER:$1|buroécrate}}',
 	'grouppage-sysop' => '{{ns:project}}:Aménistrateus',
-);
+];
 
-$messages['pdc'] = array(
+$messages['pdc'] = [
 	'go' => 'Geh',
 	'gotaccountlink' => 'Kumm nei',
 	'gender-female' => 'Weiblich',
@@ -4842,15 +4852,15 @@ $messages['pdc'] = array(
 	'grouppage-user' => '{{ns:project}}:Yuuser',
 	'grouppage-bot' => '{{ns:project}}:Waddefresser',
 	'grouppage-sysop' => '{{ns:project}}:Verwalter',
-);
+];
 
-$messages['pdt'] = array(
+$messages['pdt'] = [
 	'go' => 'Go',
-	'gotaccount' => "Hast aul een Bruckakonto? '''$1'''.",
+	'gotaccount' => 'Hast aul een Bruckakonto? \'\'\'$1\'\'\'.',
 	'gotaccountlink' => 'Aunmalde',
-);
+];
 
-$messages['pfl'] = array(
+$messages['pfl'] = [
 	'go' => 'Adiggel',
 	'guesstimezone' => 'Aus em Browser iwwernemme',
 	'group' => 'Grubb:',
@@ -4862,11 +4872,11 @@ $messages['pfl'] = array(
 	'group-sysop-member' => 'Adminischdrador',
 	'group-bureaucrat-member' => 'Birokrad',
 	'grouppage-sysop' => '{{ns:project}}:Adminischtratore',
-);
+];
 
-$messages['pl'] = array(
+$messages['pl'] = [
 	'go' => 'Przejdź',
-	'gotaccount' => "Masz już konto? '''$1'''.",
+	'gotaccount' => 'Masz już konto? \'\'\'$1\'\'\'.',
 	'gotaccountlink' => 'Zaloguj się',
 	'guesstimezone' => 'Pobierz z przeglądarki',
 	'gender-unknown' => 'nie określono',
@@ -4894,41 +4904,43 @@ $messages['pl'] = array(
 	'grouppage-suppress' => '{{ns:project}}:Rewizorzy',
 	'group-content-moderator' => 'Moderatorzy treści',
 	'group-content-moderator-member' => 'Moderator treści',
-);
+	'group-helper' => 'Helperzy',
+	'group-helper-member' => 'Helper',
+];
 
-$messages['pms'] = array(
+$messages['pms'] = [
 	'go' => 'Va',
-	'gotaccount' => "Ha-lo già un sò cont? '''$1'''.",
+	'gotaccount' => 'Ha-lo già un sò cont? \'\'\'$1\'\'\'.',
 	'gotaccountlink' => 'Rintré ant ël sistema',
-	'guesstimezone' => "Ciapa sù l'ora da 'nt ël mè programa ëd navigassion (browser)",
+	'guesstimezone' => 'Ciapa sù l\'ora da \'nt ël mè programa ëd navigassion (browser)',
 	'gender-unknown' => 'Nen spessificà',
 	'gender-male' => 'Òm',
 	'gender-female' => 'Fomna',
 	'group' => 'Partìa:',
 	'group-user' => 'Utent',
-	'group-autoconfirmed' => "Utent ch'a son convalidasse daspërlor",
+	'group-autoconfirmed' => 'Utent ch\'a son convalidasse daspërlor',
 	'group-bot' => 'Trigomiro',
 	'group-sysop' => 'Aministrator',
 	'group-bureaucrat' => 'Mangiapapé',
 	'group-suppress' => 'Supervisor',
 	'group-all' => '(utent)',
 	'group-user-member' => '{{GENDER:$1|utent}}',
-	'group-autoconfirmed-member' => "{{GENDER:$1|utent ch'a l'é convalidasse daspërchiel|utent ch'a l'é convalidasse daspërchila}}",
+	'group-autoconfirmed-member' => '{{GENDER:$1|utent ch\'a l\'é convalidasse daspërchiel|utent ch\'a l\'é convalidasse daspërchila}}',
 	'group-bot-member' => '{{GENDER:$1|trigomiro}}',
 	'group-sysop-member' => '{{GENDER:$1|aministrator|aministratris}}',
 	'group-bureaucrat-member' => '{{GENDER:$1|mangiapapé}}',
 	'group-suppress-member' => '{{GENDER:$1|supervisor}}',
 	'grouppage-user' => '{{ns:project}}:Utent',
-	'grouppage-autoconfirmed' => "{{ns:project}}:Utent ch'a son convalidasse daspërlor",
+	'grouppage-autoconfirmed' => '{{ns:project}}:Utent ch\'a son convalidasse daspërlor',
 	'grouppage-bot' => '{{ns:project}}:Trigomiro',
 	'grouppage-sysop' => '{{ns:project}}:Aministrator',
 	'grouppage-bureaucrat' => '{{ns:project}}:Mangiapapé',
 	'grouppage-suppress' => '{{ns:project}}:Supervisor',
-);
+];
 
-$messages['pnb'] = array(
+$messages['pnb'] = [
 	'go' => 'جاؤ',
-	'gotaccount' => "تواڈا پہلے توں کھاتہ ہے؟ '''$1'''",
+	'gotaccount' => 'تواڈا پہلے توں کھاتہ ہے؟ \'\'\'$1\'\'\'',
 	'gotaccountlink' => 'اندر آؤ',
 	'guesstimezone' => 'براؤزر توں پعرو۔',
 	'gender-unknown' => 'نئیں دسیا گیا۔',
@@ -4954,11 +4966,11 @@ $messages['pnb'] = array(
 	'grouppage-sysop' => '{{ns:project}}:ایڈمنسٹریٹر',
 	'grouppage-bureaucrat' => '{{ns:project}}:بیوروکریٹ',
 	'grouppage-suppress' => '{{ns:project}}:چھڈیا گیا',
-);
+];
 
-$messages['pnt'] = array(
+$messages['pnt'] = [
 	'go' => 'Δέβα',
-	'gotaccount' => "Λογαρίαν έχετε; '''$1'''.",
+	'gotaccount' => 'Λογαρίαν έχετε; \'\'\'$1\'\'\'.',
 	'gotaccountlink' => 'Εμπάτε',
 	'gender-unknown' => 'Aναγνώριμον',
 	'gender-male' => 'Αρσενικόν',
@@ -4981,11 +4993,11 @@ $messages['pnt'] = array(
 	'grouppage-sysop' => '{{ns:project}}:Νοματέοι',
 	'grouppage-bureaucrat' => '{{ns:project}}:Γεροντάδες',
 	'grouppage-suppress' => '{{ns:project}}:Επόπτες',
-);
+];
 
-$messages['prg'] = array(
+$messages['prg'] = [
 	'go' => 'Jaīs',
-	'gotaccount' => "Turri tū jāu rekkenan? '''$1'''!",
+	'gotaccount' => 'Turri tū jāu rekkenan? \'\'\'$1\'\'\'!',
 	'gotaccountlink' => 'Enjaīs',
 	'guesstimezone' => 'Paimmais iz lasātlin',
 	'gender-unknown' => 'Ni patikrinā di',
@@ -5005,9 +5017,9 @@ $messages['prg'] = array(
 	'grouppage-autoconfirmed' => '{{ns:project}}:Autōmatiskai padrūktintai tērpautajai',
 	'grouppage-bot' => '{{ns:project}}:Bōtai',
 	'grouppage-sysop' => '{{ns:project}}:Perwaldītajai',
-);
+];
 
-$messages['ps'] = array(
+$messages['ps'] = [
 	'go' => 'ورځه',
 	'gotaccount' => 'آيا وار دمخې يو ګڼون لری؟ $1.',
 	'gotaccountlink' => 'ننوتل',
@@ -5032,11 +5044,11 @@ $messages['ps'] = array(
 	'grouppage-sysop' => '{{ns:project}}:پازوالان',
 	'grouppage-bureaucrat' => '{{ns:project}}:بيوروکراټان',
 	'grouppage-suppress' => '{{ns:project}}:څارن',
-);
+];
 
-$messages['pt'] = array(
+$messages['pt'] = [
 	'go' => 'Prosseguir',
-	'gotaccount' => "Já possui uma conta? '''$1'''.",
+	'gotaccount' => 'Já possui uma conta? \'\'\'$1\'\'\'.',
 	'gotaccountlink' => 'Autentique-se',
 	'guesstimezone' => 'Preencher a partir do browser',
 	'gender-unknown' => 'Não especificado',
@@ -5064,11 +5076,11 @@ $messages['pt'] = array(
 	'grouppage-suppress' => '{{ns:project}}:Supervisores',
 	'group-content-moderator' => 'Moderadores de conteúdo',
 	'group-content-moderator-member' => 'Moderador de conteúdo',
-);
+];
 
-$messages['pt-br'] = array(
+$messages['pt-br'] = [
 	'go' => 'Ir',
-	'gotaccount' => "Já possui uma conta? '''$1'''.",
+	'gotaccount' => 'Já possui uma conta? \'\'\'$1\'\'\'.',
 	'gotaccountlink' => 'Autenticar-se',
 	'guesstimezone' => 'Preencher a partir do navegador',
 	'gender-unknown' => 'Não especificado',
@@ -5094,11 +5106,11 @@ $messages['pt-br'] = array(
 	'grouppage-sysop' => '{{ns:project}}:Administradores',
 	'grouppage-bureaucrat' => '{{ns:project}}:Burocratas',
 	'grouppage-suppress' => '{{ns:project}}:Oversight',
-);
+];
 
-$messages['qu'] = array(
+$messages['qu'] = [
 	'go' => 'Riy',
-	'gotaccount' => "Rakiqunaykiñachu kachkan? '''$1'''.",
+	'gotaccount' => 'Rakiqunaykiñachu kachkan? \'\'\'$1\'\'\'.',
 	'gotaccountlink' => 'Rakiqunaykita willaway',
 	'guesstimezone' => 'Pacha suyuta chaskimuy',
 	'gender-unknown' => 'Mana riqsisqa',
@@ -5124,34 +5136,34 @@ $messages['qu'] = array(
 	'grouppage-sysop' => '{{ns:project}}:Kamachiq',
 	'grouppage-bureaucrat' => '{{ns:project}}:Burukrata',
 	'grouppage-suppress' => '{{ns:project}}:Rikurpariy',
-);
+];
 
-$messages['qug'] = array(
+$messages['qug'] = [
 	'go' => 'Rina',
-	'gotaccount' => "Ñachu rurak shutita charinchu ? '''$1'''.",
+	'gotaccount' => 'Ñachu rurak shutita charinchu ? \'\'\'$1\'\'\'.',
 	'gotaccountlink' => 'Yaykuna',
 	'group-sysop' => 'Kamachikkuna',
 	'grouppage-sysop' => '{{ns:project}}:Kamachik',
-);
+];
 
-$messages['rgn'] = array(
+$messages['rgn'] = [
 	'group-sysop' => 'Aministradór',
 	'grouppage-sysop' => '{{ns:project}}:Aministradór',
-);
+];
 
-$messages['rif'] = array(
+$messages['rif'] = [
 	'go' => 'Raḥ ɣa',
-	'gotaccount' => "ɣark  amiḍan? '''$1'''.",
+	'gotaccount' => 'ɣark  amiḍan? \'\'\'$1\'\'\'.',
 	'gotaccountlink' => 'Adeff',
 	'group-sysop' => 'Indbaln',
 	'group-all' => '(maṛṛa)',
 	'grouppage-sysop' => '{{ns:project}}:inedbalen',
-);
+];
 
-$messages['rm'] = array(
+$messages['rm'] = [
 	'go' => 'Artitgel',
-	'gotaccount' => "Gia in conto d'utilisader? '''$1'''.",
-	'gotaccountlink' => "T'annunziar",
+	'gotaccount' => 'Gia in conto d\'utilisader? \'\'\'$1\'\'\'.',
+	'gotaccountlink' => 'T\'annunziar',
 	'guesstimezone' => 'Surprender dal navigatur',
 	'gender-unknown' => 'Betg inditgà',
 	'gender-male' => 'Masculin',
@@ -5176,11 +5188,11 @@ $messages['rm'] = array(
 	'grouppage-sysop' => '{{ns:project}}:Administraturs',
 	'grouppage-bureaucrat' => '{{ns:project}}:Birocrats',
 	'grouppage-suppress' => '{{ns:project}}:Supervisurs',
-);
+];
 
-$messages['rmy'] = array(
+$messages['rmy'] = [
 	'go' => 'Ja',
-	'gotaccount' => "Si tuke akana ekh akonto? '''$1'''.",
+	'gotaccount' => 'Si tuke akana ekh akonto? \'\'\'$1\'\'\'.',
 	'gotaccountlink' => 'De andre',
 	'guesstimezone' => 'Le les katar o browser',
 	'group' => 'Grupo:',
@@ -5193,11 +5205,11 @@ $messages['rmy'] = array(
 	'grouppage-bot' => '{{ns:project}}:Boturya',
 	'grouppage-sysop' => '{{ns:project}}:Administratorurya',
 	'grouppage-bureaucrat' => '{{ns:project}}:Birokraturya',
-);
+];
 
-$messages['ro'] = array(
+$messages['ro'] = [
 	'go' => 'Salt',
-	'gotaccount' => "Aveți deja un cont de utilizator? '''$1'''.",
+	'gotaccount' => 'Aveți deja un cont de utilizator? \'\'\'$1\'\'\'.',
 	'gotaccountlink' => 'Autentificați-vă',
 	'guesstimezone' => 'Încearcă determinarea automată a diferenței',
 	'gender-unknown' => 'Nespecificat',
@@ -5223,18 +5235,18 @@ $messages['ro'] = array(
 	'grouppage-sysop' => '{{ns:project}}:Administratori',
 	'grouppage-bureaucrat' => '{{ns:project}}:Birocrați',
 	'grouppage-suppress' => '{{ns:project}}:Oversight',
-);
+];
 
-$messages['roa-rup'] = array(
+$messages['roa-rup'] = [
 	'go' => 'Du-vã',
 	'gotaccountlink' => 'Ligats-vã',
-);
+];
 
-$messages['roa-tara'] = array(
+$messages['roa-tara'] = [
 	'go' => 'Véje',
-	'gotaccount' => "Tine già 'nu cunde? '''$1'''.",
+	'gotaccount' => 'Tine già \'nu cunde? \'\'\'$1\'\'\'.',
 	'gotaccountlink' => 'Tràse',
-	'guesstimezone' => "Jnghie da 'u browser",
+	'guesstimezone' => 'Jnghie da \'u browser',
 	'gender-unknown' => 'No specificate',
 	'gender-male' => 'Maschele',
 	'gender-female' => 'Femmene',
@@ -5258,19 +5270,19 @@ $messages['roa-tara'] = array(
 	'grouppage-sysop' => '{{ns:project}}:Amministratore',
 	'grouppage-bureaucrat' => '{{ns:project}}:Burocrate',
 	'grouppage-suppress' => '{{ns:project}}:Supervisionatore',
-	'group-autoconfirmed.css' => "/* 'U CSS ca se iacchie aqquà ave effettue seulamende sus a le utinde autoconfirmatarie */",
-	'group-bot.css' => "/* 'U CSS ca se iacchie aqquà ave effettue seulamende sus a le bot */",
-	'group-sysop.css' => "/* 'U CSS ca se iacchie aqquà ave effettue seulamende sus a le utinde amministrature */",
-	'group-bureaucrat.css' => "/* 'U CSS ca se iacchie aqquà ave effettue seulamende sus a le utinde burocrate */",
+	'group-autoconfirmed.css' => '/* \'U CSS ca se iacchie aqquà ave effettue seulamende sus a le utinde autoconfirmatarie */',
+	'group-bot.css' => '/* \'U CSS ca se iacchie aqquà ave effettue seulamende sus a le bot */',
+	'group-sysop.css' => '/* \'U CSS ca se iacchie aqquà ave effettue seulamende sus a le utinde amministrature */',
+	'group-bureaucrat.css' => '/* \'U CSS ca se iacchie aqquà ave effettue seulamende sus a le utinde burocrate */',
 	'group-autoconfirmed.js' => '/* Ogne JavaScript aqquà avène carecate pe le utinde autoconfirmatarie */',
 	'group-bot.js' => '/* Ogne JavaScript aqquà avène carecate pe le bot */',
 	'group-sysop.js' => '/* Ogne JavaScript aqquà avène carecate pe le utinde amministrature */',
 	'group-bureaucrat.js' => '/* Ogne JavaScript aqquà avène carecate pe le utinde burocrate */',
-);
+];
 
-$messages['ru'] = array(
+$messages['ru'] = [
 	'go' => 'Перейти',
-	'gotaccount' => "Вы уже зарегистрированы? '''$1'''.",
+	'gotaccount' => 'Вы уже зарегистрированы? \'\'\'$1\'\'\'.',
 	'gotaccountlink' => 'Представьтесь',
 	'guesstimezone' => 'Заполнить из браузера',
 	'gender-unknown' => 'не указан',
@@ -5302,11 +5314,11 @@ $messages['ru'] = array(
 	'group-bureaucrat.css' => '/* Размещённый здесь CSS будет применяться только для бюрократов */',
 	'group-content-moderator' => 'Модераторы контента',
 	'group-content-moderator-member' => 'Модератор контента',
-);
+];
 
-$messages['rue'] = array(
+$messages['rue'] = [
 	'go' => 'Перейти',
-	'gotaccount' => "Уж сьте реґістрованы? '''$1'''.",
+	'gotaccount' => 'Уж сьте реґістрованы? \'\'\'$1\'\'\'.',
 	'gotaccountlink' => 'Приголошіня',
 	'guesstimezone' => 'Начітати з переглядача',
 	'gender-unknown' => 'Нешпеціфіковано',
@@ -5332,19 +5344,19 @@ $messages['rue'] = array(
 	'grouppage-sysop' => '{{ns:project}}:Адміністраторы',
 	'grouppage-bureaucrat' => '{{ns:project}}:Бірократы',
 	'grouppage-suppress' => '{{ns:project}}:Ревізоры',
-);
+];
 
-$messages['rup'] = array(
+$messages['rup'] = [
 	'go' => 'Du-vã',
 	'gotaccountlink' => 'Ligats-vã',
-);
+];
 
-$messages['ruq'] = array(
+$messages['ruq'] = [
 	'go' => 'Du-vã',
 	'gotaccountlink' => 'Ligats-vã',
-);
+];
 
-$messages['sa'] = array(
+$messages['sa'] = [
 	'go' => 'गम्यताम्',
 	'gotaccount' => 'पूर्वमेव योजकः अस्ति किम् ? $1।',
 	'gotaccountlink' => 'प्रविश्यताम्',
@@ -5357,11 +5369,11 @@ $messages['sa'] = array(
 	'group-user-member' => '{{GENDER:$1|योजक}}',
 	'grouppage-user' => '{{ns:project}}:योजक',
 	'grouppage-sysop' => '{{ns:project}}:प्रचालकाः',
-);
+];
 
-$messages['sah'] = array(
+$messages['sah'] = [
 	'go' => 'Бар',
-	'gotaccount' => "Бэлиэтэммитиҥ дуо? '''$1'''.",
+	'gotaccount' => 'Бэлиэтэммитиҥ дуо? \'\'\'$1\'\'\'.',
 	'gotaccountlink' => 'Аатыҥ',
 	'guesstimezone' => 'Интэриниэтим бырагыраамматыттан ылан толор',
 	'gender-unknown' => 'Ыйыллыбатах',
@@ -5387,9 +5399,9 @@ $messages['sah'] = array(
 	'grouppage-sysop' => '{{ns:project}}:Дьаһабыллар',
 	'grouppage-bureaucrat' => '{{ns:project}}:Бюрокрааттар',
 	'grouppage-suppress' => '{{ns:project}}:Алҕас',
-);
+];
 
-$messages['sc'] = array(
+$messages['sc'] = [
 	'go' => 'Bae',
 	'gotaccount' => 'Tenes giai unu account? $1.',
 	'gotaccountlink' => 'Identifica·ti',
@@ -5413,13 +5425,13 @@ $messages['sc'] = array(
 	'grouppage-bot' => '{{ns:project}}:Bots',
 	'grouppage-sysop' => '{{ns:project}}:Amministradores',
 	'grouppage-bureaucrat' => '{{ns:project}}:Burocrates',
-);
+];
 
-$messages['scn'] = array(
+$messages['scn'] = [
 	'go' => 'Trova',
-	'gotaccount' => "Hai già nu cuntu? '''$1'''.",
+	'gotaccount' => 'Hai già nu cuntu? \'\'\'$1\'\'\'.',
 	'gotaccountlink' => 'Trasi',
-	'guesstimezone' => "Usa l'ura dû tò browser",
+	'guesstimezone' => 'Usa l\'ura dû tò browser',
 	'gender-unknown' => 'Nun specificatu',
 	'gender-male' => 'Masculu',
 	'gender-female' => 'Fimmina',
@@ -5443,11 +5455,11 @@ $messages['scn'] = array(
 	'grouppage-sysop' => '{{ns:project}}:Amministratura',
 	'grouppage-bureaucrat' => '{{ns:project}}:Buròcrati',
 	'grouppage-suppress' => '{{ns:project}}:Oversight',
-);
+];
 
-$messages['sco'] = array(
+$messages['sco'] = [
 	'go' => 'Gang',
-	'gotaccount' => "Got an accoont afore? '''$1'''.",
+	'gotaccount' => 'Got an accoont afore? \'\'\'$1\'\'\'.',
 	'gotaccountlink' => 'Log in',
 	'guesstimezone' => 'Fill in frae brouser',
 	'group-user' => 'Uisers',
@@ -5455,22 +5467,22 @@ $messages['sco'] = array(
 	'group-all' => '(aw)',
 	'group-user-member' => 'Uiser',
 	'group-bot-member' => 'Bot',
-);
+];
 
-$messages['sd'] = array(
+$messages['sd'] = [
 	'go' => 'کوليو',
-	'gotaccount' => "ڇا اڳي ئي کاتو رکو ٿا؟ '''$1'''.",
+	'gotaccount' => 'ڇا اڳي ئي کاتو رکو ٿا؟ \'\'\'$1\'\'\'.',
 	'gotaccountlink' => 'لاگ اِن',
 	'group' => 'گروپ:',
 	'group-user' => 'يوزرس',
 	'grouppage-sysop' => '{{ns:project}}:منتظمين',
-);
+];
 
-$messages['sdc'] = array(
+$messages['sdc'] = [
 	'go' => 'Vai',
-	'gotaccount' => "Ài già'na registhrazioni? '''$1'''.",
+	'gotaccount' => 'Ài già\'na registhrazioni? \'\'\'$1\'\'\'.',
 	'gotaccountlink' => 'Intra',
-	'guesstimezone' => "Usa l'ora di lu tóiu nabiggadori",
+	'guesstimezone' => 'Usa l\'ora di lu tóiu nabiggadori',
 	'gender-unknown' => 'Nò ippizzificaddu',
 	'gender-male' => 'Maschurinu',
 	'gender-female' => 'Femmininu',
@@ -5492,11 +5504,11 @@ $messages['sdc'] = array(
 	'grouppage-bot' => '{{ns:project}}:Bot',
 	'grouppage-sysop' => '{{ns:project}}:Amministhradori',
 	'grouppage-bureaucrat' => '{{ns:project}}:Buròcrati',
-);
+];
 
-$messages['se'] = array(
+$messages['se'] = [
 	'go' => 'Mana',
-	'gotaccount' => "Jus dus lea jo geavaheaddjidovddaldat, sáhtát '''$1'''.",
+	'gotaccount' => 'Jus dus lea jo geavaheaddjidovddaldat, sáhtát \'\'\'$1\'\'\'.',
 	'gotaccountlink' => 'čálligoahtit sisa',
 	'guesstimezone' => 'Jeara neahttabláđejeaddjis',
 	'group' => 'Joavku',
@@ -5511,13 +5523,13 @@ $messages['se'] = array(
 	'grouppage-bot' => '{{ns:project}}:Bohtat',
 	'grouppage-sysop' => '{{ns:project}}:Bájasdoallit',
 	'grouppage-bureaucrat' => '{{ns:project}}:Byrokráhtat',
-);
+];
 
-$messages['sei'] = array(
+$messages['sei'] = [
 	'go' => 'Caátemöx',
-	'gotaccount' => "Mecaápo? '''$1'''.",
+	'gotaccount' => 'Mecaápo? \'\'\'$1\'\'\'.',
 	'gotaccountlink' => 'Caápo',
-	'guesstimezone' => "Xuniimyabuatlecaún dai'browser",
+	'guesstimezone' => 'Xuniimyabuatlecaún dai\'browser',
 	'group' => 'Polám:',
 	'group-autoconfirmed' => 'Autoconfirmám',
 	'group-bot' => 'Botám',
@@ -5532,15 +5544,15 @@ $messages['sei'] = array(
 	'grouppage-bot' => '{{ns:project}}:Botam',
 	'grouppage-sysop' => '{{ns:project}}:Sysopam',
 	'grouppage-bureaucrat' => '{{ns:project}}:Bureaucrátam',
-);
+];
 
-$messages['sg'] = array(
+$messages['sg'] = [
 	'go' => 'Bâa',
-);
+];
 
-$messages['sgs'] = array(
+$messages['sgs'] = [
 	'go' => 'Ēk',
-	'gotaccount' => "Jau torėt paskīra? '''$1'''.",
+	'gotaccount' => 'Jau torėt paskīra? \'\'\'$1\'\'\'.',
 	'gotaccountlink' => 'Prisėjonkėt',
 	'guesstimezone' => 'Paimtė ėš naršīklės',
 	'gender-unknown' => 'Nier nuruodīta',
@@ -5562,11 +5574,11 @@ $messages['sgs'] = array(
 	'grouppage-bot' => '{{ns:project}}:Robuotā',
 	'grouppage-sysop' => '{{ns:project}}:Adminėstratuorē',
 	'grouppage-bureaucrat' => '{{ns:project}}:Biorokratā',
-);
+];
 
-$messages['sh'] = array(
+$messages['sh'] = [
 	'go' => 'Idi',
-	'gotaccount' => "Imate račun? '''$1'''.",
+	'gotaccount' => 'Imate račun? \'\'\'$1\'\'\'.',
 	'gotaccountlink' => 'Prijavi se',
 	'guesstimezone' => 'Popuni iz preglednika',
 	'gender-unknown' => 'neodređen',
@@ -5592,9 +5604,9 @@ $messages['sh'] = array(
 	'grouppage-sysop' => '{{ns:project}}:Administratori',
 	'grouppage-bureaucrat' => '{{ns:project}}:Birokrati',
 	'grouppage-suppress' => '{{ns:project}}:Nadzornici',
-);
+];
 
-$messages['shi'] = array(
+$messages['shi'] = [
 	'go' => 'Balak',
 	'gotaccount' => 'Is nit dark amidan(lkunt)? $1.',
 	'gotaccountlink' => 'Kcm',
@@ -5604,11 +5616,11 @@ $messages['shi'] = array(
 	'gender-female' => 'lont',
 	'group-sysop' => 'Anedbalen n unagraw',
 	'grouppage-sysop' => '{{ns:project}}: Inedbalen',
-);
+];
 
-$messages['si'] = array(
+$messages['si'] = [
 	'go' => 'යන්න',
-	'gotaccount' => "දැනටමත් ගිණුමක් තිබේද? '''$1'''.",
+	'gotaccount' => 'දැනටමත් ගිණුමක් තිබේද? \'\'\'$1\'\'\'.',
 	'gotaccountlink' => 'පිවිසෙන්න',
 	'guesstimezone' => 'බ්‍රවුසරයෙන් පුරවන්න',
 	'gender-unknown' => 'හෙළි නොකරයි',
@@ -5634,11 +5646,11 @@ $messages['si'] = array(
 	'grouppage-sysop' => '{{ns:project}}:පරිපාලකවරු',
 	'grouppage-bureaucrat' => '{{ns:project}}:නිලබලධාරියෝ',
 	'grouppage-suppress' => '{{ns:project}}:ප්‍රමාද දෝෂය',
-);
+];
 
-$messages['sk'] = array(
+$messages['sk'] = [
 	'go' => 'Vykonať',
-	'gotaccount' => "Máte už vytvorený účet? '''$1'''.",
+	'gotaccount' => 'Máte už vytvorený účet? \'\'\'$1\'\'\'.',
 	'gotaccountlink' => 'Prihlásiť',
 	'guesstimezone' => 'Prevziať z prehliadača',
 	'gender-unknown' => 'Neuvedené',
@@ -5672,9 +5684,9 @@ $messages['sk'] = array(
 	'group-bot.js' => '/* Tu sa nachádzajúci JavaScript sa načíta len robotom */',
 	'group-sysop.js' => '/* Tu sa nachádzajúci JavaScript sa načíta len správcom */',
 	'group-bureaucrat.js' => '/* Tu sa nachádzajúci JavaScript sa načíta len byrokratom */',
-);
+];
 
-$messages['sl'] = array(
+$messages['sl'] = [
 	'go' => 'Pojdi na',
 	'gotaccount' => 'Račun že imate? $1.',
 	'gotaccountlink' => 'Prijavite se',
@@ -5702,11 +5714,11 @@ $messages['sl'] = array(
 	'grouppage-sysop' => '{{ns:project}}:Administratorji',
 	'grouppage-bureaucrat' => '{{ns:project}}:Birokrati',
 	'grouppage-suppress' => '{{ns:project}}:Nadzorniki',
-);
+];
 
-$messages['sli'] = array(
+$messages['sli'] = [
 	'go' => 'Ausfiehrn',
-	'gotaccount' => "Du hast bereits a Benutzerkonto? '''$1'''.",
+	'gotaccount' => 'Du hast bereits a Benutzerkonto? \'\'\'$1\'\'\'.',
 	'gotaccountlink' => 'Oanmelda',
 	'guesstimezone' => 'Vum Browser iebernahma',
 	'gender-unknown' => 'ne oagagahn',
@@ -5719,17 +5731,17 @@ $messages['sli'] = array(
 	'grouppage-autoconfirmed' => '{{ns:project}}:Automatisch bestätigte Nutzer',
 	'grouppage-sysop' => '{{ns:project}}:Administratora',
 	'grouppage-bureaucrat' => '{{ns:project}}:Bierokrata',
-);
+];
 
-$messages['sm'] = array(
+$messages['sm'] = [
 	'go' => 'Alu',
-	'gotaccountlink' => "Fa'aola",
-	'group-all' => "(mea 'uma)",
-);
+	'gotaccountlink' => 'Fa\'aola',
+	'group-all' => '(mea \'uma)',
+];
 
-$messages['sma'] = array(
+$messages['sma'] = [
 	'go' => 'Vaadtsa',
-	'gotaccount' => "Åtna dov joe nuhtjiennomme? '''$1'''.",
+	'gotaccount' => 'Åtna dov joe nuhtjiennomme? \'\'\'$1\'\'\'.',
 	'gotaccountlink' => 'Logge sïjse',
 	'group' => 'Tjïerte:',
 	'group-bot' => 'Jïjtjesvïhtjije',
@@ -5737,25 +5749,25 @@ $messages['sma'] = array(
 	'group-bot-member' => 'Jïjtjesvïhtjije',
 	'group-sysop-member' => 'Reerien',
 	'grouppage-sysop' => '{{ns:project}}:Reeredh',
-);
+];
 
-$messages['sn'] = array(
+$messages['sn'] = [
 	'go' => 'Enda',
-);
+];
 
-$messages['so'] = array(
+$messages['so'] = [
 	'go' => 'Soco',
-	'gotaccount' => "Waan heystaa gudagale? '''$1'''.",
+	'gotaccount' => 'Waan heystaa gudagale? \'\'\'$1\'\'\'.',
 	'gotaccountlink' => 'Gudaha gal',
 	'gender-unknown' => 'Aana la qeexin',
 	'gender-male' => 'Lab',
 	'gender-female' => 'Dhedig',
 	'group' => 'Koox:',
-);
+];
 
-$messages['sq'] = array(
+$messages['sq'] = [
 	'go' => 'Shko',
-	'gotaccount' => "Keni një llogari? '''$1'''.",
+	'gotaccount' => 'Keni një llogari? \'\'\'$1\'\'\'.',
 	'gotaccountlink' => 'Hyni',
 	'guesstimezone' => 'Gjeje nga shfletuesi',
 	'gender-unknown' => 'e pacaktuar',
@@ -5781,11 +5793,11 @@ $messages['sq'] = array(
 	'grouppage-sysop' => '{{ns:project}}:Administruesit',
 	'grouppage-bureaucrat' => '{{ns:project}}:Burokratë',
 	'grouppage-suppress' => '{{ns:project}}:Kujdestari',
-);
+];
 
-$messages['sr'] = array(
+$messages['sr'] = [
 	'go' => 'Shko',
-	'gotaccount' => "Keni një llogari? '''$1'''.",
+	'gotaccount' => 'Keni një llogari? \'\'\'$1\'\'\'.',
 	'gotaccountlink' => 'Hyni',
 	'guesstimezone' => 'Gjeje nga shfletuesi',
 	'gender-unknown' => 'e pacaktuar',
@@ -5811,9 +5823,9 @@ $messages['sr'] = array(
 	'grouppage-sysop' => '{{ns:project}}:Administruesit',
 	'grouppage-bureaucrat' => '{{ns:project}}:Burokratë',
 	'grouppage-suppress' => '{{ns:project}}:Kujdestari',
-);
+];
 
-$messages['sr-ec'] = array(
+$messages['sr-ec'] = [
 	'go' => 'Иди',
 	'gotaccount' => 'Већ имате налог? Идите на страницу „$1“.',
 	'gotaccountlink' => 'Пријава',
@@ -5849,9 +5861,9 @@ $messages['sr-ec'] = array(
 	'group-bot.js' => '/* Јаваскрипт постављен овде ће се учитати само за ботове */',
 	'group-sysop.js' => '/* Јаваскрипт постављен овде ће се учитати само за системске операторе */',
 	'group-bureaucrat.js' => '/* Јаваскрипт постављен овде ће се учитати само за бирократе */',
-);
+];
 
-$messages['sr-el'] = array(
+$messages['sr-el'] = [
 	'go' => 'Idi',
 	'gotaccount' => 'Imate nalog? $1.',
 	'gotaccountlink' => 'Prijavi me',
@@ -5879,11 +5891,11 @@ $messages['sr-el'] = array(
 	'grouppage-sysop' => '{{ns:project}}:Spisak administratora',
 	'grouppage-bureaucrat' => '{{ns:project}}:Birokrate',
 	'grouppage-suppress' => '{{ns:project}}:Revizori',
-);
+];
 
-$messages['srn'] = array(
+$messages['srn'] = [
 	'go' => 'Go',
-	'gotaccount' => "Abi wan kebroikiman nen kba? '''$1'''.",
+	'gotaccount' => 'Abi wan kebroikiman nen kba? \'\'\'$1\'\'\'.',
 	'gotaccountlink' => 'Psa kon',
 	'guesstimezone' => 'Fu a browser presi',
 	'group' => 'Guru:',
@@ -5900,19 +5912,19 @@ $messages['srn'] = array(
 	'grouppage-bot' => '{{ns:project}}:Bot',
 	'grouppage-sysop' => '{{ns:project}}:Admin',
 	'grouppage-bureaucrat' => '{{ns:project}}:Burokrati',
-);
+];
 
-$messages['ss'] = array(
+$messages['ss'] = [
 	'go' => 'Hamba',
-);
+];
 
-$messages['st'] = array(
-	'gotaccount' => "O se o ingodisitse? '''$1'''.",
-);
+$messages['st'] = [
+	'gotaccount' => 'O se o ingodisitse? \'\'\'$1\'\'\'.',
+];
 
-$messages['stq'] = array(
+$messages['stq'] = [
 	'go' => 'Uutfiere',
-	'gotaccount' => "Du hääst al n Konto? '''$1'''.",
+	'gotaccount' => 'Du hääst al n Konto? \'\'\'$1\'\'\'.',
 	'gotaccountlink' => 'Hier gungt dät ätter dän Login',
 	'guesstimezone' => 'Ienföigje uut dän Browser',
 	'gender-unknown' => 'Nit anroat',
@@ -5938,11 +5950,11 @@ $messages['stq'] = array(
 	'grouppage-sysop' => '{{ns:project}}:Administratore',
 	'grouppage-bureaucrat' => '{{ns:project}}:Bürokraten',
 	'grouppage-suppress' => '{{ns:project}}:Uursicht',
-);
+];
 
-$messages['su'] = array(
+$messages['su'] = [
 	'go' => 'Jung',
-	'gotaccount' => "Geus boga akun? '''$1'''.",
+	'gotaccount' => 'Geus boga akun? \'\'\'$1\'\'\'.',
 	'gotaccountlink' => 'Asup log',
 	'guesstimezone' => 'Eusian ti panyungsi',
 	'gender-unknown' => 'Teu nyebutkeun',
@@ -5968,11 +5980,11 @@ $messages['su'] = array(
 	'grouppage-sysop' => '{{ns:project}}:Kuncén',
 	'grouppage-bureaucrat' => '{{ns:project}}:Birokrat',
 	'grouppage-suppress' => '{{ns:project}}:Oversight',
-);
+];
 
-$messages['sv'] = array(
+$messages['sv'] = [
 	'go' => 'Gå till',
-	'gotaccount' => "Har du redan ett användarkonto? '''$1'''.",
+	'gotaccount' => 'Har du redan ett användarkonto? \'\'\'$1\'\'\'.',
 	'gotaccountlink' => 'Logga in',
 	'guesstimezone' => 'Fyll i från webbläsare',
 	'gender-unknown' => 'Ospecificerat',
@@ -5998,11 +6010,11 @@ $messages['sv'] = array(
 	'grouppage-sysop' => '{{ns:project}}:Administratörer',
 	'grouppage-bureaucrat' => '{{ns:project}}:Byråkrater',
 	'grouppage-suppress' => '{{ns:project}}:Censur',
-);
+];
 
-$messages['sw'] = array(
+$messages['sw'] = [
 	'go' => 'Nenda',
-	'gotaccount' => "Unayo akaunti tayari? '''$1'''",
+	'gotaccount' => 'Unayo akaunti tayari? \'\'\'$1\'\'\'',
 	'gotaccountlink' => 'Ingia',
 	'guesstimezone' => 'kivinjari kiweke saa',
 	'gender-unknown' => 'Haitajwi',
@@ -6028,11 +6040,11 @@ $messages['sw'] = array(
 	'grouppage-sysop' => '{{ns:project}}:Wakabidhi',
 	'grouppage-bureaucrat' => '{{ns:project}}:Warasimu',
 	'grouppage-suppress' => '{{ns:project}}:Usimamizi',
-);
+];
 
-$messages['szl'] = array(
+$messages['szl'] = [
 	'go' => 'Przyńdź',
-	'gotaccount' => "Mosz już kůnto? '''$1'''.",
+	'gotaccount' => 'Mosz już kůnto? \'\'\'$1\'\'\'.',
 	'gotaccountlink' => 'Naloguj śe',
 	'guesstimezone' => 'Pobjer z přeglůndarki',
 	'gender-male' => 'chop',
@@ -6057,11 +6069,11 @@ $messages['szl'] = array(
 	'grouppage-sysop' => '{{ns:project}}:Admińistratory',
 	'grouppage-bureaucrat' => '{{ns:project}}:Bjurokraty',
 	'grouppage-suppress' => '{{ns:project}}:Rewizoře',
-);
+];
 
-$messages['ta'] = array(
+$messages['ta'] = [
 	'go' => 'செல்',
-	'gotaccount' => "ஏற்கனவே பயனர் கணக்கு உள்ளதா? '''$1'''.",
+	'gotaccount' => 'ஏற்கனவே பயனர் கணக்கு உள்ளதா? \'\'\'$1\'\'\'.',
 	'gotaccountlink' => 'புகுபதிகை',
 	'guesstimezone' => 'உலாவியிலிருந்து நிரப்பு',
 	'gender-unknown' => 'குறிப்பிடப்படவில்லை',
@@ -6087,11 +6099,11 @@ $messages['ta'] = array(
 	'grouppage-sysop' => '{{ns:project}}:நிர்வாகிகள்',
 	'grouppage-bureaucrat' => '{{ns:project}}:அதிகாரிகள்',
 	'grouppage-suppress' => '{{ns:project}}: மேற்பார்வை',
-);
+];
 
-$messages['tcy'] = array(
+$messages['tcy'] = [
 	'go' => 'ಪೋ',
-	'gotaccount' => "ಈರೆನ ಖಾತೆ ಉಂಡೇ?'''$1'''",
+	'gotaccount' => 'ಈರೆನ ಖಾತೆ ಉಂಡೇ?\'\'\'$1\'\'\'',
 	'gotaccountlink' => 'ಲಾಗಿನ್ ಆಲೆ',
 	'gender-male' => 'ಆಣ್',
 	'gender-female' => 'ಪೊಣ್ಣು',
@@ -6100,11 +6112,11 @@ $messages['tcy'] = array(
 	'group-sysop' => 'ನಿರ್ವಾಹಕೆರ್',
 	'group-all' => 'ಮಾತಾ',
 	'grouppage-sysop' => '{{ns:project}}:ನಿರ್ವಾಹಕೆರ್',
-);
+];
 
-$messages['te'] = array(
+$messages['te'] = [
 	'go' => 'వెళ్లు',
-	'gotaccount' => "ఇప్పటికే మీకు ఖాతా ఉందా? '''$1'''.",
+	'gotaccount' => 'ఇప్పటికే మీకు ఖాతా ఉందా? \'\'\'$1\'\'\'.',
 	'gotaccountlink' => 'ప్రవేశించండి',
 	'guesstimezone' => 'విహారిణి నుండి తీసుకో',
 	'gender-unknown' => 'వెల్లడించకండి',
@@ -6130,61 +6142,61 @@ $messages['te'] = array(
 	'grouppage-sysop' => '{{ns:project}}:నిర్వాహకులు',
 	'grouppage-bureaucrat' => '{{ns:project}}:అధికార్లు',
 	'grouppage-suppress' => '{{ns:project}}:పరాకు',
-);
+];
 
-$messages['tet'] = array(
+$messages['tet'] = [
 	'go' => 'Bá',
-	'gotaccount' => "Ó iha konta ona? '''$1'''.",
+	'gotaccount' => 'Ó iha konta ona? \'\'\'$1\'\'\'.',
 	'gotaccountlink' => 'Log in',
 	'gender-male' => 'Mane',
 	'gender-female' => 'Feto',
 	'group' => 'Grupu:',
-	'group-user' => "Uza-na'in sira",
+	'group-user' => 'Uza-na\'in sira',
 	'group-bot' => 'Bot sira',
 	'group-sysop' => 'Administradór sira',
 	'group-bureaucrat' => 'Burokrata sira',
-	'group-suppress' => "Oversight-na'in sira",
+	'group-suppress' => 'Oversight-na\'in sira',
 	'group-all' => '(hotu)',
-	'group-user-member' => "{{GENDER:$1|Uza-na'in}}",
+	'group-user-member' => '{{GENDER:$1|Uza-na\'in}}',
 	'group-bot-member' => '{{GENDER:$1|Bot}}',
 	'group-sysop-member' => '{{GENDER:$1|Administradór|Administradóra}}',
 	'group-bureaucrat-member' => '{{GENDER:$1|Burokrata}}',
-	'group-suppress-member' => "{{GENDER:$1|Oversight-na'in}}",
-	'grouppage-user' => "{{ns:project}}:Uza-na'in sira",
+	'group-suppress-member' => '{{GENDER:$1|Oversight-na\'in}}',
+	'grouppage-user' => '{{ns:project}}:Uza-na\'in sira',
 	'grouppage-bot' => '{{ns:project}}:Bot sira',
 	'grouppage-sysop' => '{{ns:project}}:Administradór sira',
 	'grouppage-bureaucrat' => '{{ns:project}}:Burokrata sira',
 	'grouppage-suppress' => '{{ns:project}}:Oversight',
-);
+];
 
-$messages['tg'] = array(
+$messages['tg'] = [
 	'go' => 'Bá',
-	'gotaccount' => "Ó iha konta ona? '''$1'''.",
+	'gotaccount' => 'Ó iha konta ona? \'\'\'$1\'\'\'.',
 	'gotaccountlink' => 'Log in',
 	'gender-male' => 'Mane',
 	'gender-female' => 'Feto',
 	'group' => 'Grupu:',
-	'group-user' => "Uza-na'in sira",
+	'group-user' => 'Uza-na\'in sira',
 	'group-bot' => 'Bot sira',
 	'group-sysop' => 'Administradór sira',
 	'group-bureaucrat' => 'Burokrata sira',
-	'group-suppress' => "Oversight-na'in sira",
+	'group-suppress' => 'Oversight-na\'in sira',
 	'group-all' => '(hotu)',
-	'group-user-member' => "{{GENDER:$1|Uza-na'in}}",
+	'group-user-member' => '{{GENDER:$1|Uza-na\'in}}',
 	'group-bot-member' => '{{GENDER:$1|Bot}}',
 	'group-sysop-member' => '{{GENDER:$1|Administradór|Administradóra}}',
 	'group-bureaucrat-member' => '{{GENDER:$1|Burokrata}}',
-	'group-suppress-member' => "{{GENDER:$1|Oversight-na'in}}",
-	'grouppage-user' => "{{ns:project}}:Uza-na'in sira",
+	'group-suppress-member' => '{{GENDER:$1|Oversight-na\'in}}',
+	'grouppage-user' => '{{ns:project}}:Uza-na\'in sira',
 	'grouppage-bot' => '{{ns:project}}:Bot sira',
 	'grouppage-sysop' => '{{ns:project}}:Administradór sira',
 	'grouppage-bureaucrat' => '{{ns:project}}:Burokrata sira',
 	'grouppage-suppress' => '{{ns:project}}:Oversight',
-);
+];
 
-$messages['tg-cyrl'] = array(
+$messages['tg-cyrl'] = [
 	'go' => 'Рав',
-	'gotaccount' => "Ҳисоби корбарӣ доред? '''$1'''.",
+	'gotaccount' => 'Ҳисоби корбарӣ доред? \'\'\'$1\'\'\'.',
 	'gotaccountlink' => 'Вуруд шавед',
 	'guesstimezone' => 'Аз мурургар гирифта шавад',
 	'gender-unknown' => 'Мушаххаснашуда',
@@ -6210,11 +6222,11 @@ $messages['tg-cyrl'] = array(
 	'grouppage-sysop' => '{{ns:project}}:Мудирон',
 	'grouppage-bureaucrat' => '{{ns:project}}:Девонсолорҳо',
 	'grouppage-suppress' => '{{ns:project}}:Назорат',
-);
+];
 
-$messages['tg-latn'] = array(
+$messages['tg-latn'] = [
 	'go' => 'Rav',
-	'gotaccount' => "Hisobi korbarī dored? '''$1'''.",
+	'gotaccount' => 'Hisobi korbarī dored? \'\'\'$1\'\'\'.',
 	'gotaccountlink' => 'Vurud şaved',
 	'guesstimezone' => 'Az mururgar girifta şavad',
 	'gender-unknown' => 'Muşaxxasnaşuda',
@@ -6222,29 +6234,29 @@ $messages['tg-latn'] = array(
 	'gender-female' => 'Zan',
 	'group' => 'Gurūh:',
 	'group-user' => 'Korbaron',
-	'group-autoconfirmed' => "Korbaroni ta'jidşuda",
+	'group-autoconfirmed' => 'Korbaroni ta\'jidşuda',
 	'group-bot' => 'Robotho',
 	'group-sysop' => 'Administratorho',
 	'group-bureaucrat' => 'Bjurokratho',
 	'group-suppress' => 'Nozirot',
 	'group-all' => '(hama)',
 	'group-user-member' => 'Korbar',
-	'group-autoconfirmed-member' => "Korbari ta'jidşuda",
+	'group-autoconfirmed-member' => 'Korbari ta\'jidşuda',
 	'group-bot-member' => 'Robot',
 	'group-sysop-member' => 'Administrator',
 	'group-bureaucrat-member' => 'Bjurokrat',
 	'group-suppress-member' => 'Nazar',
 	'grouppage-user' => '{{ns:project}}:Korbaron',
-	'grouppage-autoconfirmed' => "{{ns:project}}:Korbaroni ta'jidşuda",
+	'grouppage-autoconfirmed' => '{{ns:project}}:Korbaroni ta\'jidşuda',
 	'grouppage-bot' => '{{ns:project}}:Robotho',
 	'grouppage-sysop' => '{{ns:project}}:Mudiron',
 	'grouppage-bureaucrat' => '{{ns:project}}:Devonsolorho',
 	'grouppage-suppress' => '{{ns:project}}:Nazorat',
-);
+];
 
-$messages['th'] = array(
+$messages['th'] = [
 	'go' => 'ไป',
-	'gotaccount' => "มีบัญชีผู้ใช้แล้วหรือไม่ '''$1'''",
+	'gotaccount' => 'มีบัญชีผู้ใช้แล้วหรือไม่ \'\'\'$1\'\'\'',
 	'gotaccountlink' => 'ล็อกอิน',
 	'guesstimezone' => 'เรียกค่าจากเว็บเบราว์เซอร์',
 	'gender-unknown' => 'ไม่ระบุ',
@@ -6270,17 +6282,17 @@ $messages['th'] = array(
 	'grouppage-sysop' => '{{ns:project}}:ผู้ดูแล',
 	'grouppage-bureaucrat' => '{{ns:project}}:ผู้ดูแลสิทธิแต่งตั้ง',
 	'grouppage-suppress' => '{{ns:project}}:ผู้ดูแลระดับสูง',
-);
+];
 
-$messages['ti'] = array(
+$messages['ti'] = [
 	'group' => 'ብሓበር:',
 	'group-sysop' => 'ሲሶፓት',
 	'group-sysop-member' => 'ሲሶፕ',
-);
+];
 
-$messages['tk'] = array(
+$messages['tk'] = [
 	'go' => 'Git',
-	'gotaccount' => "Eýýäm hasap açdyňyzmy? '''$1'''.",
+	'gotaccount' => 'Eýýäm hasap açdyňyzmy? \'\'\'$1\'\'\'.',
 	'gotaccountlink' => 'Onda giriberiň!',
 	'guesstimezone' => 'Brauzerden doldur',
 	'gender-unknown' => 'Görkezilmedik',
@@ -6306,20 +6318,20 @@ $messages['tk'] = array(
 	'grouppage-sysop' => '{{ns:project}}:Administratorlar',
 	'grouppage-bureaucrat' => '{{ns:project}}:Býurokratlar',
 	'grouppage-suppress' => '{{ns:project}}:Esewan',
-);
+];
 
-$messages['tl'] = array(
+$messages['tl'] = [
 	'go' => 'Gawin',
 	'gotaccount' => 'May kuwenta ka na ba? $1.',
 	'gotaccountlink' => 'Lumagda',
-	'guesstimezone' => "Punuin ng mula sa pantingin-tingin (''browser'')",
+	'guesstimezone' => 'Punuin ng mula sa pantingin-tingin (\'\'browser\'\')',
 	'gender-unknown' => 'Hindi tinukoy',
 	'gender-male' => 'Lalaki',
 	'gender-female' => 'Babae',
 	'group' => 'Pangkat:',
 	'group-user' => 'Mga tagagamit',
 	'group-autoconfirmed' => 'Mga tagagamit na nakompirma sa kusang paraan (autokompirmasyon)',
-	'group-bot' => "Mga ''bot''",
+	'group-bot' => 'Mga \'\'bot\'\'',
 	'group-sysop' => 'Mga tagapangasiwa',
 	'group-bureaucrat' => 'Mga burokrato',
 	'group-suppress' => 'Mga tagapagingat-tago',
@@ -6332,19 +6344,19 @@ $messages['tl'] = array(
 	'group-suppress-member' => 'Tagapagingat-tago',
 	'grouppage-user' => '{{ns:project}}:Mga tagagamit',
 	'grouppage-autoconfirmed' => '{{ns:project}}:Kusang nakumpirmang mga tagagamit',
-	'grouppage-bot' => "{{ns:project}}:Mga ''bot''",
+	'grouppage-bot' => '{{ns:project}}:Mga \'\'bot\'\'',
 	'grouppage-sysop' => '{{ns:project}}:Mga tagapangasiwa',
 	'grouppage-bureaucrat' => '{{ns:project}}:Mga burokrato',
 	'grouppage-suppress' => '{{ns:project}}:Mga tagapagingat-tago<!---katulad ng "ingat-yaman"-->',
-);
+];
 
-$messages['tn'] = array(
+$messages['tn'] = [
 	'go' => 'Tsamaya',
-);
+];
 
-$messages['to'] = array(
+$messages['to'] = [
 	'go' => 'Fai ā',
-	'gotaccount' => "ʻOsi maʻu ʻa e tohi-kau-ki-ai? '''$1'''.",
+	'gotaccount' => 'ʻOsi maʻu ʻa e tohi-kau-ki-ai? \'\'\'$1\'\'\'.',
 	'gotaccountlink' => 'Kau ki ai',
 	'group' => 'Pupunga:',
 	'group-bot' => 'Ngaahi fatu fakamīsini',
@@ -6354,13 +6366,13 @@ $messages['to'] = array(
 	'group-bot-member' => 'Fakamīsini',
 	'group-sysop-member' => 'Pule fakafounga',
 	'group-bureaucrat-member' => 'Pulelahi',
-);
+];
 
-$messages['tokipona'] = array(
+$messages['tokipona'] = [
 	'go' => 'o tawa',
-);
+];
 
-$messages['tpi'] = array(
+$messages['tpi'] = [
 	'go' => 'Go',
 	'gotaccountlink' => 'Log in',
 	'gender-male' => 'Man',
@@ -6373,11 +6385,11 @@ $messages['tpi'] = array(
 	'group-bot-member' => 'bot',
 	'grouppage-user' => '{{ns:project}}:Ol yusa',
 	'grouppage-bot' => '{{ns:project}}:Ol bot',
-);
+];
 
-$messages['tr'] = array(
+$messages['tr'] = [
 	'go' => 'Git',
-	'gotaccount' => "Çoktan kayıt oldunuz mu? '''$1'''.",
+	'gotaccount' => 'Çoktan kayıt oldunuz mu? \'\'\'$1\'\'\'.',
 	'gotaccountlink' => 'Oturum açın',
 	'guesstimezone' => 'Tarayıcınız sizin yerinize doldursun',
 	'gender-unknown' => 'Belirtilmemiş',
@@ -6403,15 +6415,15 @@ $messages['tr'] = array(
 	'grouppage-sysop' => '{{ns:project}}:Hizmetliler',
 	'grouppage-bureaucrat' => '{{ns:project}}:Bürokratlar',
 	'grouppage-suppress' => '{{ns:project}}:Gözetmen',
-);
+];
 
-$messages['ts'] = array(
+$messages['ts'] = [
 	'go' => 'Nghena',
-);
+];
 
-$messages['tt-cyrl'] = array(
+$messages['tt-cyrl'] = [
 	'go' => 'Күчү',
-	'gotaccount' => "Сез инде теркәлдегезме? '''$1'''.",
+	'gotaccount' => 'Сез инде теркәлдегезме? \'\'\'$1\'\'\'.',
 	'gotaccountlink' => 'Керү',
 	'guesstimezone' => 'Браузердан тутыру',
 	'gender-unknown' => 'билгесез',
@@ -6437,11 +6449,11 @@ $messages['tt-cyrl'] = array(
 	'grouppage-sysop' => '{{ns:project}}:Идарәчеләр',
 	'grouppage-bureaucrat' => '{{ns:project}}:Бюрократлар',
 	'grouppage-suppress' => '{{ns:project}}:Тикшерүчеләр',
-);
+];
 
-$messages['tt-latn'] = array(
+$messages['tt-latn'] = [
 	'go' => 'Küçü',
-	'gotaccount' => "Sez inde terkäldegezme? '''$1'''.",
+	'gotaccount' => 'Sez inde terkäldegezme? \'\'\'$1\'\'\'.',
 	'gotaccountlink' => 'Kerü',
 	'guesstimezone' => 'Brauzerdan tutıru',
 	'gender-unknown' => 'bilgesez',
@@ -6467,9 +6479,9 @@ $messages['tt-latn'] = array(
 	'grouppage-sysop' => '{{ns:project}}:İdaräçelär',
 	'grouppage-bureaucrat' => '{{ns:project}}:Byurokratlar',
 	'grouppage-suppress' => '{{ns:project}}:Tikşerüçelär',
-);
+];
 
-$messages['tyv'] = array(
+$messages['tyv'] = [
 	'go' => 'Баары',
 	'gotaccountlink' => 'Кирер',
 	'gender-male' => 'Эр',
@@ -6490,11 +6502,11 @@ $messages['tyv'] = array(
 	'grouppage-sysop' => '{{ns:project}}:Эргелекчилер',
 	'grouppage-bureaucrat' => '{{ns:project}}:Бюрократтар',
 	'grouppage-suppress' => '{{ns:project}}:Хынакчы',
-);
+];
 
-$messages['ug-arab'] = array(
+$messages['ug-arab'] = [
 	'go' => 'يۆتكەل',
-	'gotaccount' => "ھېساباتىم بار؟ '''$1'''.",
+	'gotaccount' => 'ھېساباتىم بار؟ \'\'\'$1\'\'\'.',
 	'gotaccountlink' => 'تىزىمغا كىر',
 	'guesstimezone' => 'توركۆرگۈدىن تولدۇر',
 	'gender-unknown' => 'بەلگىلەنمىگەن',
@@ -6520,16 +6532,16 @@ $messages['ug-arab'] = array(
 	'grouppage-sysop' => '{{ns:project}}:باشقۇرغۇچى',
 	'grouppage-bureaucrat' => '{{ns:project}}:باشقۇرغۇچى',
 	'grouppage-suppress' => '{{ns:project}}: نازارەتچىلەر',
-);
+];
 
-$messages['ug-latn'] = array(
+$messages['ug-latn'] = [
 	'go' => 'Kuchush',
 	'gotaccountlink' => 'Kirish',
-);
+];
 
-$messages['uk'] = array(
+$messages['uk'] = [
 	'go' => 'Перейти',
-	'gotaccount' => "Ви вже зареєстровані? '''$1'''.",
+	'gotaccount' => 'Ви вже зареєстровані? \'\'\'$1\'\'\'.',
 	'gotaccountlink' => 'Увійдіть',
 	'guesstimezone' => 'Заповнити з браузера',
 	'gender-unknown' => 'не зазначена',
@@ -6563,11 +6575,11 @@ $messages['uk'] = array(
 	'group-bot.js' => '/* Розміщений тут код JavaScript буде завантажений тільки для ботів */',
 	'group-sysop.js' => '/* Розміщений тут код JavaScript буде завантажений тільки для адміністраторів */',
 	'group-bureaucrat.js' => '/* Розміщений тут код JavaScript буде завантажений тільки для бюрократів */',
-);
+];
 
-$messages['ur'] = array(
+$messages['ur'] = [
 	'go' => 'چلو',
-	'gotaccount' => "پہلے سے کھاتہ بنا ہوا ہے? '''$1'''.",
+	'gotaccount' => 'پہلے سے کھاتہ بنا ہوا ہے? \'\'\'$1\'\'\'.',
 	'gotaccountlink' => 'داخل ہوجائیے',
 	'gender-unknown' => 'غیرمختص شدہ',
 	'gender-male' => 'مرد',
@@ -6582,17 +6594,17 @@ $messages['ur'] = array(
 	'group-bot-member' => 'خودکار صارف',
 	'group-sysop-member' => 'منتظم',
 	'grouppage-sysop' => '{{ns:project}}:منتظمین',
-);
+];
 
-$messages['uz'] = array(
-	'go' => "O'tish",
-	'gotaccount' => "Hisobingiz bormi? '''$1'''.",
+$messages['uz'] = [
+	'go' => 'O\'tish',
+	'gotaccount' => 'Hisobingiz bormi? \'\'\'$1\'\'\'.',
 	'gotaccountlink' => 'Kirish',
 	'group-sysop' => 'Administratorlar',
 	'grouppage-sysop' => '{{ns:project}}:Administratorlar',
-);
+];
 
-$messages['val'] = array(
+$messages['val'] = [
 	'go' => 'Anar',
 	'gotaccount' => 'Ya tens un conte? $1.',
 	'gotaccountlink' => 'Inicia una sessió',
@@ -6608,15 +6620,15 @@ $messages['val'] = array(
 	'grouppage-bot' => 'Proyecte:Bots',
 	'grouppage-sysop' => 'Proyecte:Administradors',
 	'grouppage-bureaucrat' => 'Proyecte:Burócrates',
-	'getimagelist' => " obtenint el llistat d'images",
-	'groups' => "Grups d'usuaris",
-);
+	'getimagelist' => ' obtenint el llistat d\'images',
+	'groups' => 'Grups d\'usuaris',
+];
 
-$messages['vec'] = array(
+$messages['vec'] = [
 	'go' => 'Va',
-	'gotaccount' => "Sito zà iscrito? '''$1'''.",
+	'gotaccount' => 'Sito zà iscrito? \'\'\'$1\'\'\'.',
 	'gotaccountlink' => 'Entra',
-	'guesstimezone' => "Dòpara l'ora del to browser",
+	'guesstimezone' => 'Dòpara l\'ora del to browser',
 	'gender-unknown' => 'Mia spesificà',
 	'gender-male' => 'Mas-cio',
 	'gender-female' => 'Fémena',
@@ -6640,11 +6652,11 @@ $messages['vec'] = array(
 	'grouppage-sysop' => '{{ns:project}}:Aministradori',
 	'grouppage-bureaucrat' => '{{ns:project}}:Burocrati',
 	'grouppage-suppress' => '{{ns:project}}:Supervision',
-);
+];
 
-$messages['vep'] = array(
+$messages['vep'] = [
 	'go' => 'Mända',
-	'gotaccount' => "Ku teil om jo registracii, '''$1'''.",
+	'gotaccount' => 'Ku teil om jo registracii, \'\'\'$1\'\'\'.',
 	'gotaccountlink' => 'Kirjutagatoiš sistemha',
 	'guesstimezone' => 'Täutta kaclimespäi',
 	'gender-unknown' => 'Ei ole ozutadud',
@@ -6670,11 +6682,11 @@ $messages['vep'] = array(
 	'grouppage-sysop' => '{{ns:project}}:Administratorad',
 	'grouppage-bureaucrat' => '{{ns:project}}:Bürokratad',
 	'grouppage-suppress' => '{{ns:project}}:Revizorad',
-);
+];
 
-$messages['vi'] = array(
+$messages['vi'] = [
 	'go' => 'Xem',
-	'gotaccount' => "Đã mở tài khoản rồi? '''$1'''.",
+	'gotaccount' => 'Đã mở tài khoản rồi? \'\'\'$1\'\'\'.',
 	'gotaccountlink' => 'Đăng nhập',
 	'guesstimezone' => 'Dùng giờ của trình duyệt',
 	'gender-unknown' => 'Không chỉ rõ',
@@ -6708,17 +6720,21 @@ $messages['vi'] = array(
 	'group-bot.js' => '/* Mã JavaScript tại đây sẽ chỉ được tải cho các bot */',
 	'group-sysop.js' => '/* Mã JavaScript tại đây sẽ chỉ được tải cho các bảo quản viên */',
 	'group-bureaucrat.js' => '/* Mã JavaScript tại đây sẽ chỉ được tải cho các hành chính viên */',
-);
+	'group-helper' => 'Hỗ trợ viên Wikia',
+	'group-helper-member' => 'Hỗ trợ viên Wikia',
+	'group-util' => 'Thỏa dụng viên Wikia',
+	'group-util-member' => 'Thỏa dụng viên Wikia',
+];
 
-$messages['vmf'] = array(
+$messages['vmf'] = [
 	'guesstimezone' => 'Fom brausa iwârneem',
 	'group-sysop' => 'Adminisdradoorn',
 	'grouppage-sysop' => '{{ns:project}}:Adminisdradoorn',
-);
+];
 
-$messages['vo'] = array(
+$messages['vo'] = [
 	'go' => 'Gololöd',
-	'gotaccount' => "Ya labol-li kali? '''$1'''.",
+	'gotaccount' => 'Ya labol-li kali? \'\'\'$1\'\'\'.',
 	'gotaccountlink' => 'Nunädolös obi',
 	'guesstimezone' => 'Benüpenolös yufü befüresodatävöm',
 	'gender-male' => 'Manik',
@@ -6743,16 +6759,16 @@ $messages['vo'] = array(
 	'grouppage-sysop' => '{{ns:project}}:Guvans',
 	'grouppage-bureaucrat' => '{{ns:project}}:Bürans',
 	'grouppage-suppress' => '{{ns:project}}:Lovelogam',
-);
+];
 
-$messages['vot'] = array(
+$messages['vot'] = [
 	'group-sysop' => 'Praviťeľad',
 	'grouppage-sysop' => '{{ns:project}}:Praviťeľad',
-);
+];
 
-$messages['vro'] = array(
+$messages['vro'] = [
 	'go' => 'Mineq',
-	'gotaccount' => "Ku sul jo om uma pruukjanimi, sis '''$1'''.",
+	'gotaccount' => 'Ku sul jo om uma pruukjanimi, sis \'\'\'$1\'\'\'.',
 	'gotaccountlink' => 'võit nimega sisse minnäq',
 	'guesstimezone' => 'Võtaq aig võrgokaejast',
 	'group' => 'Rühm:',
@@ -6775,13 +6791,13 @@ $messages['vro'] = array(
 	'grouppage-sysop' => '{{ns:project}}:Kõrraldajaq',
 	'grouppage-bureaucrat' => '{{ns:project}}:Pääkõrraldajaq',
 	'grouppage-suppress' => '{{ns:project}}:Perräkaeja',
-);
+];
 
-$messages['wa'] = array(
+$messages['wa'] = [
 	'go' => 'Potchî',
-	'gotaccount' => "Vos avoz ddja on conte so ç' wiki ci? '''$1'''.",
+	'gotaccount' => 'Vos avoz ddja on conte so ç\' wiki ci? \'\'\'$1\'\'\'.',
 	'gotaccountlink' => 'Elodjîz vs',
-	'guesstimezone' => "Prinde d' après l' betchteu",
+	'guesstimezone' => 'Prinde d\' après l\' betchteu',
 	'group' => 'Groupe:',
 	'group-bot' => 'Robots',
 	'group-sysop' => 'Manaedjeus',
@@ -6793,9 +6809,9 @@ $messages['wa'] = array(
 	'grouppage-bot' => '{{ns:project}}:Robots',
 	'grouppage-sysop' => '{{ns:project}}:Manaedjeus',
 	'grouppage-bureaucrat' => '{{ns:project}}:Mwaisse-manaedjeus',
-);
+];
 
-$messages['war'] = array(
+$messages['war'] = [
 	'go' => 'Kadto-a',
 	'gotaccount' => '¿Mayda kana akawnt? $1.',
 	'gotaccountlink' => 'Sakob',
@@ -6813,11 +6829,11 @@ $messages['war'] = array(
 	'group-sysop-member' => 'magdudumara',
 	'grouppage-user' => '{{ns:project}}:Mga gumaramit',
 	'grouppage-sysop' => '{{ns:project}}:Mga magdudumara',
-);
+];
 
-$messages['wo'] = array(
+$messages['wo'] = [
 	'go' => 'Ayca',
-	'gotaccount' => "Sos nga am sàq? '''$1'''.",
+	'gotaccount' => 'Sos nga am sàq? \'\'\'$1\'\'\'.',
 	'gotaccountlink' => 'Dugg',
 	'guesstimezone' => 'Jëfandikoo waxtuw sa joowukaay',
 	'gender-unknown' => 'Waxeesu ko',
@@ -6840,11 +6856,11 @@ $messages['wo'] = array(
 	'grouppage-bot' => '{{ns:project}}:Bot',
 	'grouppage-sysop' => '{{ns:project}}:Yorkat',
 	'grouppage-suppress' => '{{ns:project}}:Saytukat',
-);
+];
 
-$messages['wuu'] = array(
+$messages['wuu'] = [
 	'go' => '走',
-	'gotaccount' => "已经有仔帐号哉？ '''$1'''。",
+	'gotaccount' => '已经有仔帐号哉？ \'\'\'$1\'\'\'。',
 	'gotaccountlink' => '登录',
 	'guesstimezone' => '从浏览器填写',
 	'group-bot' => '机器人',
@@ -6857,11 +6873,11 @@ $messages['wuu'] = array(
 	'grouppage-bot' => '{{ns:project}}:机器人',
 	'grouppage-sysop' => '{{ns:project}}:管理员',
 	'grouppage-bureaucrat' => '{{ns:project}}:行政员',
-);
+];
 
-$messages['xal'] = array(
+$messages['xal'] = [
 	'go' => 'Ор',
-	'gotaccount' => "Бичгдлһтә? '''$1'''.",
+	'gotaccount' => 'Бичгдлһтә? \'\'\'$1\'\'\'.',
 	'gotaccountlink' => 'Харһтн',
 	'guesstimezone' => 'Хәләлгчәс авх',
 	'gender-unknown' => 'Бичсн уга',
@@ -6884,25 +6900,25 @@ $messages['xal'] = array(
 	'grouppage-bot' => '{{ns:project}}:Көдлврүд',
 	'grouppage-sysop' => '{{ns:project}}:Закрачуд',
 	'grouppage-bureaucrat' => '{{ns:project}}:Нойнчуд',
-);
+];
 
-$messages['xh'] = array(
+$messages['xh'] = [
 	'go' => 'Hamba',
-);
+];
 
-$messages['xmf'] = array(
+$messages['xmf'] = [
 	'go' => 'სტატია',
-	'gotaccount' => "უკვე რეგისტრირებული რეთო? '''$1'''",
+	'gotaccount' => 'უკვე რეგისტრირებული რეთო? \'\'\'$1\'\'\'',
 	'gotaccountlink' => 'მინულა',
 	'group-user' => 'მახვარებუეფი',
 	'group-sysop' => 'ადმინისტრატორეფი',
 	'grouppage-user' => '{{ns:project}}:მახვარებუეფ',
 	'grouppage-sysop' => '{{ns:project}}:ხემანჯღვერეფი',
-);
+];
 
-$messages['yi'] = array(
+$messages['yi'] = [
 	'go' => 'גיין',
-	'gotaccount' => "האסט שוין א קאנטע? '''$1'''.",
+	'gotaccount' => 'האסט שוין א קאנטע? \'\'\'$1\'\'\'.',
 	'gotaccountlink' => 'אריינלאגירן',
 	'guesstimezone' => 'אנפֿילן פֿון בלעטערער',
 	'gender-unknown' => 'נישט ספעציפֿיצירט',
@@ -6928,12 +6944,12 @@ $messages['yi'] = array(
 	'grouppage-sysop' => '{{ns:project}}:אדמיניסטראטורן',
 	'grouppage-bureaucrat' => '{{ns:project}}:ביראקראט',
 	'grouppage-suppress' => '{{ns:project}}:אויפֿזעער',
-);
+];
 
-$messages['yo'] = array(
+$messages['yo'] = [
 	'go' => 'Rìnsó',
-	'gotaccount' => "Ṣé ẹ ti ní àpamọ́ tẹ́lẹ̀? '''$1'''.",
-	'gotaccountlink' => "Ẹ w'ọlé",
+	'gotaccount' => 'Ṣé ẹ ti ní àpamọ́ tẹ́lẹ̀? \'\'\'$1\'\'\'.',
+	'gotaccountlink' => 'Ẹ w\'ọlé',
 	'gender-unknown' => 'Àláìtọ́kasí',
 	'gender-male' => 'Akọ',
 	'gender-female' => 'Abo',
@@ -6956,9 +6972,9 @@ $messages['yo'] = array(
 	'grouppage-sysop' => '{{ns:project}}:Àwọn alámùójútó',
 	'grouppage-bureaucrat' => '{{ns:project}}:Àwọn aláàmúṣe',
 	'grouppage-suppress' => '{{ns:project}}:Alábẹ̀wò',
-);
+];
 
-$messages['yue'] = array(
+$messages['yue'] = [
 	'go' => '去',
 	'gotaccount' => '已經有戶口？ $1。',
 	'gotaccountlink' => '登入',
@@ -6986,16 +7002,16 @@ $messages['yue'] = array(
 	'grouppage-sysop' => '{{ns:project}}:管理員',
 	'grouppage-bureaucrat' => '{{ns:project}}:事務員',
 	'grouppage-suppress' => '{{ns:project}}:監督',
-);
+];
 
-$messages['za'] = array(
+$messages['za'] = [
 	'go' => 'Bae',
 	'group-user-member' => '{{GENDER:$1|Bouxsawjyungq}}',
-);
+];
 
-$messages['zea'] = array(
+$messages['zea'] = [
 	'go' => 'OK',
-	'gotaccount' => "È je a een gebrukersnaem? '''$1'''.",
+	'gotaccount' => 'È je a een gebrukersnaem? \'\'\'$1\'\'\'.',
 	'gotaccountlink' => 'Anmelden',
 	'guesstimezone' => 'Vanuut de browser toevoehen',
 	'group' => 'Hroep:',
@@ -7013,11 +7029,11 @@ $messages['zea'] = array(
 	'grouppage-autoconfirmed' => '{{ns:project}}:Herehistreerde gebrukers',
 	'grouppage-bot' => '{{ns:project}}:Bots',
 	'grouppage-sysop' => '{{ns:project}}:Opzichters',
-	'grouppage-bureaucrat' => "{{ns:project}}:Bureaucraot'n",
+	'grouppage-bureaucrat' => '{{ns:project}}:Bureaucraot\'n',
 	'grouppage-suppress' => '{{ns:project}}:Toezicht',
-);
+];
 
-$messages['zh-hans'] = array(
+$messages['zh-hans'] = [
 	'go' => '进入',
 	'gotaccount' => '已经拥有账户？请$1。',
 	'gotaccountlink' => '登录',
@@ -7047,9 +7063,9 @@ $messages['zh-hans'] = array(
 	'grouppage-suppress' => '{{ns:project}}:监督员',
 	'group-content-moderator' => '内容版主',
 	'group-content-moderator-member' => '内容版主',
-);
+];
 
-$messages['zh-hant'] = array(
+$messages['zh-hant'] = [
 	'go' => '進入',
 	'gotaccount' => '已經擁有帳號？$1。',
 	'gotaccountlink' => '登入',
@@ -7079,48 +7095,48 @@ $messages['zh-hant'] = array(
 	'grouppage-suppress' => '{{ns:project}}:監督',
 	'group-content-moderator' => '內容版主',
 	'group-content-moderator-member' => '內容版主',
-);
+];
 
-$messages['zh-hk'] = array(
+$messages['zh-hk'] = [
 	'group-bot' => '機械人',
 	'group-bot-member' => '機械人',
 	'grouppage-bot' => '{{ns:project}}:機械人',
-);
+];
 
-$messages['zh-min-nan'] = array(
+$messages['zh-min-nan'] = [
 	'group-bot' => '機械人',
 	'group-bot-member' => '機械人',
 	'grouppage-bot' => '{{ns:project}}:機械人',
-);
+];
 
-$messages['zh-mo'] = array(
+$messages['zh-mo'] = [
 	'group-bot' => '機械人',
 	'group-bot-member' => '機械人',
 	'grouppage-bot' => '{{ns:project}}:機械人',
-);
+];
 
-$messages['zh-my'] = array(
+$messages['zh-my'] = [
 	'group-bot' => '機械人',
 	'group-bot-member' => '機械人',
 	'grouppage-bot' => '{{ns:project}}:機械人',
-);
+];
 
-$messages['zh-tw'] = array(
+$messages['zh-tw'] = [
 	'gotaccount' => '已經擁有帳號？$1。',
 	'group-autoconfirmed' => '自動確認使用者',
 	'group-autoconfirmed-member' => '自動確認使用者',
 	'grouppage-autoconfirmed' => '{{ns:project}}:自動確認使用者',
-);
+];
 
-$messages['zh-yue'] = array(
+$messages['zh-yue'] = [
 	'gotaccount' => '已經擁有帳號？$1。',
 	'group-autoconfirmed' => '自動確認使用者',
 	'group-autoconfirmed-member' => '自動確認使用者',
 	'grouppage-autoconfirmed' => '{{ns:project}}:自動確認使用者',
-);
+];
 
-$messages['zu'] = array(
+$messages['zu'] = [
 	'go' => 'Hamba',
 	'gotaccountlink' => 'Ngena',
-);
+];
 

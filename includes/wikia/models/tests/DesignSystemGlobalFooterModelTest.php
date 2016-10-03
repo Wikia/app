@@ -55,6 +55,7 @@ class DesignSystemGlobalFooterModelTest extends WikiaBaseTest {
 									'value' => 'CC-BY-SA'
 								],
 								'href' => 'http://www.wikia.com/Licensing',
+								'tracking_label' => 'license',
 							],
 						],
 					],
@@ -85,6 +86,7 @@ class DesignSystemGlobalFooterModelTest extends WikiaBaseTest {
 									'value' => 'CC-BY-NC-SA'
 								],
 								'href' => 'http://memory-alpha.wikia.com/wiki/Project:Licensing',
+								'tracking_label' => 'license',
 							],
 						],
 					],
@@ -124,16 +126,18 @@ class DesignSystemGlobalFooterModelTest extends WikiaBaseTest {
 		$footerModel = new DesignSystemGlobalFooterModel( DesignSystemGlobalFooterModel::PRODUCT_WIKIS, 1234, 'en' );
 		$result = $footerModel->getData();
 
-		$this->assertNotEmpty( $result['wikia'] );
-		$this->assertNotEmpty( $result['fandom'] );
+		$this->assertNotEmpty( $result['header'] );
+		$this->assertArrayNotHasKey( 'wikia', $result );
+		$this->assertArrayNotHasKey( 'fandom', $result );
 		$this->assertArrayNotHasKey( 'international_header', $result );
 
 		$footerModel = new DesignSystemGlobalFooterModel( DesignSystemGlobalFooterModel::PRODUCT_WIKIS, 1234, 'de' );
 		$result = $footerModel->getData();
 
-		$this->assertNotEmpty( $result['international_header'] );
+		$this->assertNotEmpty( $result['header'] );
 		$this->assertArrayNotHasKey( 'wikia', $result );
 		$this->assertArrayNotHasKey( 'fandom', $result );
+		$this->assertArrayNotHasKey( 'international_header', $result );
 	}
 
 	public function testGetFandomOverview() {

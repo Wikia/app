@@ -29,7 +29,7 @@ class DiscussionsThreadModel {
 		return self::DISCUSSIONS_API_BASE_DEV . "$this->cityId/forums?responseGroup=small&viewableOnly=true";
 	}
 
-	public function getCategoryId( $category ) {
+	public function getCategoryName( $categoryId ) {
 		$memcKey = wfMemcKey( __METHOD__, self::MCACHE_VER );
 		$rawData = WikiaDataAccess::cache(
 			$memcKey,
@@ -39,15 +39,15 @@ class DiscussionsThreadModel {
 			}
 		);
 
-		return $this->categoryLookup( $category, $rawData );
+		return $this->categoryNameLookup( $categoryId, $rawData );
 	}
 
-	private function categoryLookup( $category, $rawData ) {
+	private function categoryNameLookup( $categoryId, $rawData ) {
 		$categories = $rawData['_embedded']['doc:forum'];
 		if ( is_array( $categories ) ) {
 			foreach ( $categories as $value ) {
-				if ( $value['name'] === $category ) {
-					return $value['id'];
+				if ( $value['id'] === $categoryId ) {
+					return $value['name'];
 				}
 			}
 		}
@@ -57,8 +57,7 @@ class DiscussionsThreadModel {
 
 	private function getRequestUrl( $showLatest, $limit, $category ) {
 		$sortKey = $showLatest ? self::SORT_LATEST : self::SORT_TRENDING;
-		$categoryId = $this->getCategoryId( $category );
-		$categoryKey = $categoryId ? '&forumId=' . $categoryId : '';
+		$categoryKey = $category ? '&forumId=' . $category : '';
 
 		return "/$this->cityId/threads?sortKey=$sortKey&limit=$limit&viewableOnly=false" . $categoryKey;
 	}
@@ -67,16 +66,16 @@ class DiscussionsThreadModel {
 		return "/$this->cityId/votes/post/";
 	}
 
-	public function getData( $showLatest, $limit, $category ) {
+	public function getData( $showLatest, $limit, $categoryId ) {
 		$sortKey = $showLatest ? self::SORT_LATEST_LINK : self::SORT_TRENDING_LINK;
-		$categoryId = false;
 		$invalidCategory = false;
 		$discussionsUrl = false;
+		$categoryName = false;
 
-		if ( !empty( $category ) ) {
-			$categoryId = $this->getCategoryId( $category );
+		if ( !empty( $categoryId ) ) {
+			$categoryName = $this->getCategoryName( $categoryId );
 
-			if ( $categoryId ) {
+			if ( $categoryName ) {
 				$discussionsUrl = "/d/f?catId=$categoryId&sort=$sortKey";
 			} else {
 				$invalidCategory = true;
@@ -88,9 +87,10 @@ class DiscussionsThreadModel {
 		return [
 			'siteId' => $this->cityId,
 			'discussionsUrl' => $discussionsUrl,
-			'requestUrl' => $this->getRequestUrl( $showLatest, $limit, $category ),
+			'requestUrl' => $this->getRequestUrl( $showLatest, $limit, $categoryId ),
 			'upvoteRequestUrl' => $this->getUpvoteRequestUrl(),
 			'invalidCategory' => $invalidCategory,
+			'categoryName' => $categoryName,
 			'categoryId' => $categoryId,
 		];
 	}
