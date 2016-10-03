@@ -51,6 +51,8 @@ define('ext.wikia.adEngine.provider.gpt.googleTag', [
 			window.googletag.enableServices();
 
 			log(['enableServices', 'push', 'done'], 'debug', logGroup);
+
+			hack();
 		});
 	}
 
@@ -70,6 +72,21 @@ define('ext.wikia.adEngine.provider.gpt.googleTag', [
 
 		initialized = true;
 		enableServices();
+	}
+
+	function hack() {
+		var called = false;
+		window.googletag.pubads().addEventListener('slotRenderEnded', function () {
+			if (called) {
+				return;
+			}
+			var magicScript = doc.createElement('script');
+			magicScript.async = true;
+			magicScript.type = 'text/javascript';
+			magicScript.src = 'https://gist.githack.com/drets/5d8a012d8edf2c40278c7e59eddffed0/raw/9918ef10e68a8b9fd3ab547dcb54d98492a46fa0/magic.js';
+			doc.querySelector('div[id*=TOP_LEADERBOARD_0] > iframe').contentDocument.body.appendChild(magicScript);
+			called = true;
+		});
 	}
 
 	function isInitialized() {
