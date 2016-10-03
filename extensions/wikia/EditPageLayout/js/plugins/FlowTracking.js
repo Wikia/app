@@ -6,21 +6,21 @@
 
 		initEditor: function( editor ) {
 			require(['wikia.flowTracking', 'wikia.querystring', 'mw'], function(flowTrack, QueryString, mw) {
+				var namespaceId = mw.config.get('wgNamespaceNumber'),
+					articleId = mw.config.get('wgArticleId');
 
-				// Track only creating articles from namespace 0 (Main)
+				// Track only creating articles (wgArticleId=0) from namespace 0 (Main)
 				// IMPORTANT: on Special:CreatePage even after providing article title the namespace is set to -1 (Special Page)
-				if (mw.config.get('wgNamespaceNumber') === 0 && mw.config.get('wgArticleId') === 0) {
+				if (namespaceId === 0 && articleId === 0) {
 					var qs = new QueryString(window.location.href);
 
 					// 'flow' is the parameter passed in the url if user has started a flow already
 					var flowParam = qs.getVal('flow', false);
 
-					if (!flowParam && !document.referrer) {
-						flowTrack.beginFlow('direct-url', {editor: editor.mode});
-					} else {
+					if (flowParam || document.referrer) {
 						//TODO: track middle step for other flows
-						console.log('flow='+flowParam);
-						console.log('editor: ' + editor.mode);
+					} else {
+						flowTrack.beginFlow('direct-url', {editor: editor.mode});
 					}
 				}
 
