@@ -73,8 +73,7 @@
 				'rte-template,' +
 				'rte-temporary-save,' +
 				'rte-toolbar,' +
-				'rte-tools,' +
-				'rte-flowtracking,',
+				'rte-tools',
 			// TODO: Too buggy. Try to use this after we update to 3.6.2 (BugId:23061)
 			//readOnly: true,
 			resize_enabled: false,

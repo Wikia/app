@@ -1,7 +1,10 @@
-CKEDITOR.plugins.add('rte-flowtracking', {
+(function(window,$){
 
-	init : function( editor ) {
-		GlobalTriggers.bind('rteinit', function() {
+	var WE = window.WikiaEditor = window.WikiaEditor || (new Observable());
+
+	WE.plugins.flowtracking = $.createClass(WE.plugin,{
+
+		initEditor: function( editor ) {
 			require(['wikia.flowTracking', 'wikia.querystring', 'mw'], function(flowTrack, QueryString, mw) {
 
 				// Track only creating articles from namespace 0
@@ -21,7 +24,6 @@ CKEDITOR.plugins.add('rte-flowtracking', {
 				}
 
 			})
-		});
-	}
-
-});
+		}
+	});
+})(this,jQuery);
