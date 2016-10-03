@@ -1,10 +1,10 @@
 <?php
+
 /**
  * Model for Wiki Navigation
  *
  * @author Jakub "Student" Olek
  */
-
 class NavigationModel extends WikiaModel {
 	const WIKIA_GLOBAL_VARIABLE = 'wgOasisGlobalNavigation';
 	const WIKI_LOCAL_MESSAGE = 'Wiki-navigation';
@@ -50,18 +50,18 @@ class NavigationModel extends WikiaModel {
 
 	private $biggestCategories;
 	private $lastExtraIndex = 1000;
-	private $extraWordsMap = array(
+	private $extraWordsMap = [
 		'voted' => 'GetTopVotedArticles',
 		'popular' => 'GetMostPopularArticles',
 		'visited' => 'GetMostVisitedArticles',
 		'newlychanged' => 'GetNewlyChangedArticles',
 		'topusers' => 'GetTopFiveUsers'
-	);
+	];
 
 	private $shouldTranslateContent = true;
 
 	// list of errors encountered when parsing the wikitext
-	private $errors = array();
+	private $errors = [];
 
 	/**
 	 * Return memcache key used for given message / variable
@@ -69,11 +69,11 @@ class NavigationModel extends WikiaModel {
 	 * City ID can be specified to return key for different wiki
 	 *
 	 * @param string $messageName message / variable name
-	 * @param int|bool $cityId city ID (false - default to current wiki)
+	 *
 	 * @return string memcache key
 	 */
 	private function getMemcKey( $messageName ) {
-		$messageName = str_replace(' ', '_', $messageName);
+		$messageName = str_replace( ' ', '_', $messageName );
 
 		return wfMemcKey( __CLASS__, $this->wg->Lang->getCode(), $messageName, self::version );
 	}
@@ -84,7 +84,7 @@ class NavigationModel extends WikiaModel {
 		);
 	}
 
-	private function setShouldTranslateContent($shouldTranslateContent) {
+	private function setShouldTranslateContent( $shouldTranslateContent ) {
 		$this->shouldTranslateContent = $shouldTranslateContent;
 	}
 
@@ -101,52 +101,53 @@ class NavigationModel extends WikiaModel {
 		return $this->errors;
 	}
 
-	public function getWiki( $msgName = false, $wikiText = ''){
+	public function getWiki( $msgName = false, $wikiText = '' ) {
 
 		$wikia = $this->parse(
 			self::TYPE_VARIABLE,
 			self::WIKIA_GLOBAL_VARIABLE,
-			array(
+			[
 				1,
 				$this->wg->maxLevelTwoNavElements,
 				$this->wg->maxLevelThreeNavElements
-			),
+			],
 			self::CACHE_TTL,
 			true, // $forContent,
 			true
 		);
 
-		$this->setShouldTranslateContent(false);
-		if( !empty( $msgName ) && $msgName == self::WIKI_LOCAL_MESSAGE && !empty( $wikiText ) ) {
-			 $wiki = $this->parseText(
-				 $wikiText,
-				 array(
-					 $this->wg->maxLevelOneNavElements,
-					 $this->wg->maxLevelTwoNavElements,
-					 $this->wg->maxLevelThreeNavElements
-				 ),
-				 true /* $forContent */
-			 );
+		$this->setShouldTranslateContent( false );
+		if ( !empty( $msgName ) && $msgName == self::WIKI_LOCAL_MESSAGE && !empty( $wikiText ) ) {
+			$wiki = $this->parseText(
+				$wikiText,
+				[
+					$this->wg->maxLevelOneNavElements,
+					$this->wg->maxLevelTwoNavElements,
+					$this->wg->maxLevelThreeNavElements
+				],
+				true /* $forContent */
+			);
 		} else {
-			$wiki = ( $this->wg->User->isAllowed( 'read' ) ? // Only show menu items if user is allowed to view wiki content (BugId:44632)
+			$wiki = ( $this->wg->User->isAllowed( 'read' ) ?
+				// Only show menu items if user is allowed to view wiki content (BugId:44632)
 				$this->parse(
 					self::TYPE_MESSAGE,
 					self::WIKI_LOCAL_MESSAGE,
-					array(
+					[
 						$this->wg->maxLevelOneNavElements,
 						$this->wg->maxLevelTwoNavElements,
 						$this->wg->maxLevelThreeNavElements
-					),
+					],
 					self::CACHE_TTL,
 					true // $forContent
 				) : [] );
 		}
-		$this->setShouldTranslateContent(true);
+		$this->setShouldTranslateContent( true );
 
-		return array(
+		return [
 			'wikia' => $wikia,
 			'wiki' => $wiki
-		);
+		];
 	}
 
 	public function getLocalNavigationTree( $messageName, $refreshCache = false ) {
@@ -177,7 +178,7 @@ class NavigationModel extends WikiaModel {
 	}
 
 	private function getTreeMemcKey( /* args */ ) {
-		return $this->getMemcKey(implode('-', func_get_args() + [self::MEMC_VERSION]));
+		return $this->getMemcKey( implode( '-', func_get_args() + [ self::MEMC_VERSION ] ) );
 	}
 
 	/**
@@ -186,13 +187,14 @@ class NavigationModel extends WikiaModel {
 	 * @param array $maxChildrenAtLevel
 	 * @param bool $forContent
 	 * @param bool $refreshCache pass true to refresh the cache which stores parsed navigation tree
+	 *
 	 * @return Mixed|null
 	 */
 	public function getTree( $type, $source, Array $maxChildrenAtLevel = [], $refreshCache = false ) {
 		$menuData = WikiaDataAccess::cache(
-			$this->getTreeMemcKey( $type, $source, implode($maxChildrenAtLevel, '-') ),
+			$this->getTreeMemcKey( $type, $source, implode( $maxChildrenAtLevel, '-' ) ),
 			self::CACHE_TTL /* 3 hours */,
-			function() use ( $type, $source, $maxChildrenAtLevel ) {
+			function () use ( $type, $source, $maxChildrenAtLevel ) {
 				$menuData = [];
 
 				$this->menuNodes = $this->parse(
@@ -202,7 +204,7 @@ class NavigationModel extends WikiaModel {
 					self::CACHE_TTL /* 3 hours */
 				);
 
-				foreach( $this->menuNodes[0]['children'] as $id ) {
+				foreach ( $this->menuNodes[0]['children'] as $id ) {
 					$menuData[] = $this->recursiveConvertMenuNodeToArray( $id );
 				}
 
@@ -229,7 +231,7 @@ class NavigationModel extends WikiaModel {
 	 * @param $index integer of menuitem index to generate data from
 	 * @return array tree of menu nodes for given index
 	 */
-	private function recursiveConvertMenuNodeToArray($index) {
+	private function recursiveConvertMenuNodeToArray( $index ) {
 		$node = $this->menuNodes[$index];
 		$returnValue = [
 			'text' => $node['text'],
@@ -249,8 +251,8 @@ class NavigationModel extends WikiaModel {
 		if ( isset( $node['children'] ) ) {
 			$children = [];
 
-			foreach ($node['children'] as $childId) {
-				$children[] = $this->recursiveConvertMenuNodeToArray($childId);
+			foreach ( $node['children'] as $childId ) {
+				$children[] = $this->recursiveConvertMenuNodeToArray( $childId );
 			}
 
 			$returnValue['children'] = $children;
@@ -267,18 +269,25 @@ class NavigationModel extends WikiaModel {
 	 * @param array $maxChildrenAtLevel allowed number of items on each menu level
 	 * @param int $duration cache duration
 	 * @param boolean $filterInactiveSpecialPages ignore item linking to not existing special pages?
+	 *
 	 * @return array parsed menu wikitext
 	 */
-	public function parse( $type, $source, Array $maxChildrenAtLevel = array(), $duration = 3600, $filterInactiveSpecialPages = false ) {
-		wfProfileIn( __METHOD__ . ":$type");
+	public function parse(
+		$type,
+		$source,
+		Array $maxChildrenAtLevel = [],
+		$duration = 3600,
+		$filterInactiveSpecialPages = false
+	) {
+		wfProfileIn( __METHOD__ . ":$type" );
 
 		$nodes = WikiaDataAccess::cacheWithOptions(
 			$this->getMemcKey( $source ),
-			function () use ($type, $source, $maxChildrenAtLevel, $filterInactiveSpecialPages) {
-				wfProfileIn( __METHOD__  . '::miss' );
+			function () use ( $type, $source, $maxChildrenAtLevel, $filterInactiveSpecialPages ) {
+				wfProfileIn( __METHOD__ . '::miss' );
 
 				// get wikitext from given source
-				switch( $type ) {
+				switch ( $type ) {
 					case self::TYPE_MESSAGE:
 						$text = wfMessage( $source )->inContentLanguage()->text();
 						break;
@@ -297,7 +306,8 @@ class NavigationModel extends WikiaModel {
 				}
 
 				// and parse it
-				wfProfileOut( __METHOD__  . '::miss');
+				wfProfileOut( __METHOD__ . '::miss' );
+
 				return $this->parseText( $text, $maxChildrenAtLevel, $forContent, $filterInactiveSpecialPages );
 			},
 			[
@@ -307,16 +317,17 @@ class NavigationModel extends WikiaModel {
 			]
 		);
 
-		wfProfileOut( __METHOD__ . ":$type");
+		wfProfileOut( __METHOD__ . ":$type" );
+
 		return $nodes;
 	}
 
-	public function parseText($text, Array $maxChildrenAtLevel = array(), $filterInactiveSpecialPages = false) {
+	public function parseText( $text, Array $maxChildrenAtLevel = [], $filterInactiveSpecialPages = false ) {
 		wfProfileIn( __METHOD__ );
 
-		$lines = explode("\n", $text);
+		$lines = explode( "\n", $text );
 
-		$this->errors = array();
+		$this->errors = [];
 
 		$nodes = $this->stripTags(
 			$this->filterSpecialPages(
@@ -327,58 +338,57 @@ class NavigationModel extends WikiaModel {
 
 		// Add hash for cache busting purposes
 		if ( isset( $nodes[0] ) ) {
-			$nodes[0][ self::HASH ] = md5( serialize( $nodes ) );
+			$nodes[0][self::HASH] = md5( serialize( $nodes ) );
 		}
 
 		wfProfileOut( __METHOD__ );
+
 		return $nodes;
 	}
 
-	private function stripTags($nodes) {
+	private function stripTags( $nodes ) {
 		wfProfileIn( __METHOD__ );
 
-		foreach($nodes as &$node) {
-			$text = !empty($node['text']) ? $node['text'] : null;
-			if( !is_null( $text ) ) {
+		foreach ( $nodes as &$node ) {
+			$text = !empty( $node['text'] ) ? $node['text'] : null;
+			if ( !is_null( $text ) ) {
 				$node['text'] = strip_tags( $text, self::ALLOWABLE_TAGS );
 			}
 		}
 
 		wfProfileOut( __METHOD__ );
+
 		return $nodes;
 	}
 
-	private function filterSpecialPages( $nodes, $filterInactiveSpecialPages ){
-		if( !$filterInactiveSpecialPages ) {
+	private function filterSpecialPages( $nodes, $filterInactiveSpecialPages ) {
+		if ( !$filterInactiveSpecialPages ) {
 			return $nodes;
 		}
 
 		wfProfileIn( __METHOD__ );
 
 		// filters out every special page that is not defined
-		foreach( $nodes as $key => &$node ){
-			if (
-				isset( $node[ self::ORIGINAL ] ) &&
-				stripos( $node[ self::ORIGINAL ], 'special:' ) === 0
-			) {
+		foreach ( $nodes as $key => &$node ) {
+			if ( isset( $node[self::ORIGINAL] ) && stripos( $node[self::ORIGINAL], 'special:' ) === 0 ) {
 
-				list(, $specialPageName) = explode( ':', $node[ self::ORIGINAL ] );
+				list( , $specialPageName ) = explode( ':', $node[self::ORIGINAL] );
 
-				if ( !SpecialPageFactory::exists( $specialPageName ) ){
-					$inParentKey = array_search( $key, $nodes[ $node[ self::PARENT_INDEX ] ][ self::CHILDREN ]);
+				if ( !SpecialPageFactory::exists( $specialPageName ) ) {
+					$inParentKey = array_search( $key, $nodes[$node[self::PARENT_INDEX]][self::CHILDREN] );
 					// remove from parent's child list
-					unset( $nodes[ $node[ self::PARENT_INDEX ] ][ self::CHILDREN ][$inParentKey] );
+					unset( $nodes[$node[self::PARENT_INDEX]][self::CHILDREN][$inParentKey] );
 					// remove node
-					unset( $nodes[ $key ] );
-				}
-				else {
+					unset( $nodes[$key] );
+				} else {
 					// store special page canonical name for click tracking
-					$node[ self::CANONICAL_NAME ] = $specialPageName;
+					$node[self::CANONICAL_NAME] = $specialPageName;
 				}
 			}
 		}
 
 		wfProfileOut( __METHOD__ );
+
 		return $nodes;
 	}
 
@@ -386,19 +396,19 @@ class NavigationModel extends WikiaModel {
 	 *
 	 * @author: Inez Korczyński
 	 */
-	public function parseLines($lines, $maxChildrenAtLevel = array()) {
+	public function parseLines( $lines, $maxChildrenAtLevel = [] ) {
 		wfProfileIn( __METHOD__ );
 
-		$nodes = array();
+		$nodes = [];
 
-		if ( is_array( $lines ) && count( $lines ) > 0) {
+		if ( is_array( $lines ) && count( $lines ) > 0 ) {
 
 			$parentIndex = 0;
 			$lastDepth = 0;
 			$i = 0;
 			$lastSkip = null;
 
-			foreach( $lines as $line ) {
+			foreach ( $lines as $line ) {
 
 				// we are interested only in lines that are not empty and start with asterisk
 				if ( trim( $line ) != '' && $line{0} == '*' ) {
@@ -414,23 +424,23 @@ class NavigationModel extends WikiaModel {
 					if ( $depth == $lastDepth + 1 ) {
 						$parentIndex = $i;
 					} else if ( $depth == $lastDepth ) {
-						$parentIndex = $nodes[$i][ self::PARENT_INDEX ];
+						$parentIndex = $nodes[$i][self::PARENT_INDEX];
 					} else {
-						for( $x = $i; $x >= 0; $x-- ) {
+						for ( $x = $i; $x >= 0; $x-- ) {
 							if ( $x == 0 ) {
 								$parentIndex = 0;
 								break;
 							}
-							if ( $nodes[$x][ self::DEPTH ] <= $depth - 1 ) {
+							if ( $nodes[$x][self::DEPTH] <= $depth - 1 ) {
 								$parentIndex = $x;
 								break;
 							}
 						}
 					}
 
-					if ( isset( $maxChildrenAtLevel[$depth-1] ) ) {
-						if ( isset( $nodes[ $parentIndex ][ self::CHILDREN ] ) ) {
-							if ( count( $nodes[ $parentIndex ][ self::CHILDREN ] ) >= $maxChildrenAtLevel[$depth-1] ) {
+					if ( isset( $maxChildrenAtLevel[$depth - 1] ) ) {
+						if ( isset( $nodes[$parentIndex][self::CHILDREN] ) ) {
+							if ( count( $nodes[$parentIndex][self::CHILDREN] ) >= $maxChildrenAtLevel[$depth - 1] ) {
 								$lastSkip = $depth;
 								continue;
 							}
@@ -438,18 +448,17 @@ class NavigationModel extends WikiaModel {
 					}
 
 					$node = $this->parseOneLine( $line );
-					$node[ self::PARENT_INDEX ] = $parentIndex;
-					$node[ self::DEPTH ] = $depth;
+					$node[self::PARENT_INDEX] = $parentIndex;
+					$node[self::DEPTH] = $depth;
 
 					$ret = $this->handleExtraWords( $node, $nodes, $depth );
 
 					if ( $ret === false ) {
 						$this->errors[self::ERR_MAGIC_WORD_IN_LEVEL_1] = true;
-					}
-					else {
-						$nodes[$node[ self::PARENT_INDEX ]][ self::CHILDREN ][] = $i + 1;
-						$nodes[$i+1] = $node;
-						$lastDepth = $node[ self::DEPTH ];
+					} else {
+						$nodes[$node[self::PARENT_INDEX]][self::CHILDREN][] = $i + 1;
+						$nodes[$i + 1] = $node;
+						$lastDepth = $node[self::DEPTH];
 						$i++;
 					}
 				}
@@ -457,19 +466,20 @@ class NavigationModel extends WikiaModel {
 		}
 
 		wfProfileOut( __METHOD__ );
+
 		return $nodes;
 	}
 
 	/**
 	 * @author: Inez Korczyński
 	 */
-	public function parseOneLine($line) {
+	public function parseOneLine( $line ) {
 		wfProfileIn( __METHOD__ );
 
 		// trim spaces and asterisks from line and then split it to maximum two chunks
-		$lineArr = explode( '|', trim($line, '* '), 3 );
+		$lineArr = explode( '|', trim( $line, '* ' ), 3 );
 
-		if ( isset( $lineArr[2] ) ){
+		if ( isset( $lineArr[2] ) ) {
 			$specialParam = trim( addslashes( $lineArr[2] ) );
 			unset( $lineArr[2] );
 		} else {
@@ -489,19 +499,18 @@ class NavigationModel extends WikiaModel {
 
 			// handle __NOLINK__ magic words (BugId:15189)
 			if ( substr( $link, 0, 10 ) == self::NOLINK ) {
-				$link = $desc = substr($link, 10);
+				$link = $desc = substr( $link, 10 );
 				$doNotLink = true;
 			}
 		}
 
-
 		$text = null;
 
-		if ($this->getShouldTranslateContent()) {
+		if ( $this->getShouldTranslateContent() ) {
 			$text = wfMessage( $desc )->inContentLanguage()->text();
 		}
 
-		if ( empty($text) || wfEmptyMsg( $desc, $text ) ) {
+		if ( empty( $text ) || wfEmptyMsg( $desc, $text ) ) {
 			$text = $desc;
 		}
 
@@ -517,16 +526,16 @@ class NavigationModel extends WikiaModel {
 			} else {
 				if ( empty( $link ) ) {
 					$href = '#';
-				} else if( $link{0} == '#' ) {
+				} else if ( $link{0} == '#' ) {
 					$href = '#';
 				} else {
 					//BugId:51034 - URL-encoded article titles break inter-wiki links
 					//in global Nav (but work correctly in the article body)
 					$title = Title::newFromText( urldecode( $link ) );
 
-					if ( $title instanceof Title  ) {
+					if ( $title instanceof Title ) {
 						$href = $title->fixSpecialName()->getLocalURL();
-						$pos = strpos($link, '#');
+						$pos = strpos( $link, '#' );
 						if ( $pos !== false ) {
 							$sectionUrl = substr( $link, $pos + 1 );
 							if ( $sectionUrl !== '' ) {
@@ -538,18 +547,18 @@ class NavigationModel extends WikiaModel {
 					}
 				}
 			}
-		}
-		else {
+		} else {
 			$href = '#';
 		}
 
 		wfProfileOut( __METHOD__ );
-		return array(
+
+		return [
 			self::ORIGINAL => $lineArr[0],
 			self::TEXT => $text,
 			self::HREF => $href,
 			self::SPECIAL => $specialParam
-		);
+		];
 	}
 
 	/**
@@ -560,22 +569,23 @@ class NavigationModel extends WikiaModel {
 	private function handleExtraWords( &$node, &$nodes, $depth ) {
 		wfProfileIn( __METHOD__ );
 
-		$originalLower = strtolower( $node[ self::ORIGINAL ] );
+		$originalLower = strtolower( $node[self::ORIGINAL] );
 
 		if ( substr( $originalLower, 0, 9 ) == '#category' ) {
 			// ignore magic words in Level 1 (BugId:15240)
 			if ( $depth == 1 ) {
 				wfProfileOut( __METHOD__ );
+
 				return false;
 			}
 
-			$param = trim( substr( $node[ self::ORIGINAL ], 9 ), '#' );
+			$param = trim( substr( $node[self::ORIGINAL], 9 ), '#' );
 
 			if ( is_numeric( $param ) ) {
 				$category = $this->getBiggestCategory( $param );
 				$name = $category['name'];
 			} else {
-				$name = substr($param, 1);
+				$name = substr( $param, 1 );
 			}
 
 			//if the name is still empty abort and display it to user
@@ -583,16 +593,16 @@ class NavigationModel extends WikiaModel {
 			//most it was something like: #category or #category_
 			if ( !empty( $name ) ) {
 
-				$node[ self::HREF ] = Title::makeTitle( NS_CATEGORY, $name )->getLocalURL();
+				$node[self::HREF] = Title::makeTitle( NS_CATEGORY, $name )->getLocalURL();
 
-				if ( strpos( $node[ self::TEXT ], '#' ) === 0 ) {
-					$node[ self::TEXT ] = str_replace( '_', ' ', $name );
+				if ( strpos( $node[self::TEXT], '#' ) === 0 ) {
+					$node[self::TEXT] = str_replace( '_', ' ', $name );
 				}
 
 				$data = getMenuHelper( $name );
 
-				foreach( $data as $val ) {
-					$title = Title::newFromId($val);
+				foreach ( $data as $val ) {
+					$title = Title::newFromId( $val );
 
 					if ( is_object( $title ) ) {
 						$this->addChildNode( $node, $nodes, $title->getText(), $title->getLocalUrl() );
@@ -604,8 +614,8 @@ class NavigationModel extends WikiaModel {
 
 			if ( isset( $this->extraWordsMap[$extraWord] ) ) {
 
-				if ( $node[ self::TEXT ]{0} == '#' ) {
-					$node[ self::TEXT ] = wfMsg( trim( $node[ self::ORIGINAL], ' *' ) );
+				if ( $node[self::TEXT]{0} == '#' ) {
+					$node[self::TEXT] = wfMsg( trim( $node[self::ORIGINAL], ' *' ) );
 				}
 
 				$fname = $this->extraWordsMap[$extraWord];
@@ -614,28 +624,30 @@ class NavigationModel extends WikiaModel {
 				if ( !empty( $data ) ) {
 					// ignore magic words in Level 1 (BugId:15240)
 					if ( $depth == 1 ) {
-						wfProfileOut(__METHOD__);
+						wfProfileOut( __METHOD__ );
+
 						return false;
 					}
 
-					foreach( $data as $val ) {
-						$this->addChildNode( $node, $nodes, $val[ self::TEXT ], $val['url'] );
+					foreach ( $data as $val ) {
+						$this->addChildNode( $node, $nodes, $val[self::TEXT], $val['url'] );
 					}
 				}
 			}
 		}
 
 		wfProfileOut( __METHOD__ );
+
 		return true;
 	}
 
 	/**
 	 * Add menu item as a child of given node
 	 */
-	private function addChildNode(&$node, &$nodes, $text, $url) {
-		$node[ self::CHILDREN ][] = $this->lastExtraIndex;
-		$nodes[$this->lastExtraIndex][ self::TEXT ] = $text;
-		$nodes[$this->lastExtraIndex][ self::HREF ] = $url;
+	private function addChildNode( &$node, &$nodes, $text, $url ) {
+		$node[self::CHILDREN][] = $this->lastExtraIndex;
+		$nodes[$this->lastExtraIndex][self::TEXT] = $text;
+		$nodes[$this->lastExtraIndex][self::HREF] = $url;
 		$this->lastExtraIndex++;
 	}
 
@@ -652,24 +664,24 @@ class NavigationModel extends WikiaModel {
 			$this->biggestCategories = WikiaDataAccess::cache(
 				wfMemcKey( 'biggest', $limit ),
 				604800, // a week
-				function() use ( $blackList, $limit ) {
-					$filterWordsA = array();
+				function () use ( $blackList, $limit ) {
+					$filterWordsA = [];
 
-					foreach( $blackList as $word) {
-						$filterWordsA[] = '(cl_to not like "%'.$word.'%")';
+					foreach ( $blackList as $word ) {
+						$filterWordsA[] = '(cl_to not like "%' . $word . '%")';
 					}
 
 					$dbr =& wfGetDB( DB_SLAVE );
-					$tables = array( "categorylinks" );
-					$fields = array( "cl_to, COUNT(*) AS cnt" );
-					$where = count( $filterWordsA) > 0 ? array( implode(' AND ', $filterWordsA ) ) : array();
-					$options = array( "ORDER BY" => "cnt DESC", "GROUP BY" => "cl_to", "LIMIT" => $limit );
+					$tables = [ "categorylinks" ];
+					$fields = [ "cl_to, COUNT(*) AS cnt" ];
+					$where = count( $filterWordsA ) > 0 ? [ implode( ' AND ', $filterWordsA ) ] : [];
+					$options = [ "ORDER BY" => "cnt DESC", "GROUP BY" => "cl_to", "LIMIT" => $limit ];
 
 					$res = $dbr->select( $tables, $fields, $where, __METHOD__, $options );
 
-					$ret = array();
-					while ($row = $dbr->fetchObject($res)) {
-						$ret[] = array( 'name' => $row->cl_to, 'count' => $row->cnt );
+					$ret = [];
+					while ( $row = $dbr->fetchObject( $res ) ) {
+						$ret[] = [ 'name' => $row->cl_to, 'count' => $row->cnt ];
 					}
 
 					return $ret;
@@ -677,16 +689,17 @@ class NavigationModel extends WikiaModel {
 			);
 		}
 
-		return isset( $this->biggestCategories[$index-1] ) ? $this->biggestCategories[$index-1] : null;
+		return isset( $this->biggestCategories[$index - 1] ) ? $this->biggestCategories[$index - 1] : null;
 	}
 
 	/**
 	 * Check if given title refers to wiki nav messages
 	 *
 	 * @param $title Title title to check
+	 *
 	 * @return bool
 	 */
-	public static function isWikiNavMessage(Title $title) {
-		return ($title->getNamespace() === NS_MEDIAWIKI) && ($title->getText() === self::WIKI_LOCAL_MESSAGE);
+	public static function isWikiNavMessage( Title $title ) {
+		return ( $title->getNamespace() === NS_MEDIAWIKI ) && ( $title->getText() === self::WIKI_LOCAL_MESSAGE );
 	}
 }
