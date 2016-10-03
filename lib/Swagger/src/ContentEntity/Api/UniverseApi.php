@@ -1,6 +1,6 @@
 <?php
 /**
- * ContentApi
+ * UniverseApi
  * PHP version 5
  *
  * @category Class
@@ -44,7 +44,7 @@ use \Swagger\Client\ApiException;
 use \Swagger\Client\ObjectSerializer;
 
 /**
- * ContentApi Class Doc Comment
+ * UniverseApi Class Doc Comment
  *
  * @category Class
  * @package  Swagger\Client
@@ -52,7 +52,7 @@ use \Swagger\Client\ObjectSerializer;
  * @license  http://www.apache.org/licenses/LICENSE-2.0 Apache Licene v2
  * @link     https://github.com/swagger-api/swagger-codegen
  */
-class ContentApi
+class UniverseApi
 {
 
     /**
@@ -92,7 +92,7 @@ class ContentApi
      *
      * @param \Swagger\Client\ApiClient $apiClient set the API client
      *
-     * @return ContentApi
+     * @return UniverseApi
      */
     public function setApiClient(\Swagger\Client\ApiClient $apiClient)
     {
@@ -103,41 +103,33 @@ class ContentApi
     /**
      * Operation create
      *
-     * creates a new content entry by its url if it doesn't exist. If the version is unknown or if the content is new, adds it to the pipeline to be properly identified.
+     * creates a new universe
      *
-     * @param string $url  (required)
-     * @param bool $force_refresh  (optional, default to false)
-     * @return \Swagger\Client\ContentEntity\Models\Content
+     * @param string $name  (optional)
+     * @param string $language  (optional)
+     * @return \Swagger\Client\ContentEntity\Models\Universe
      * @throws \Swagger\Client\ApiException on non-2xx response
      */
-    public function create($url, $force_refresh = null)
+    public function create($name = null, $language = null)
     {
-        list($response) = $this->createWithHttpInfo($url, $force_refresh);
+        list($response) = $this->createWithHttpInfo($name, $language);
         return $response;
     }
 
     /**
      * Operation createWithHttpInfo
      *
-     * creates a new content entry by its url if it doesn't exist. If the version is unknown or if the content is new, adds it to the pipeline to be properly identified.
+     * creates a new universe
      *
-     * @param string $url  (required)
-     * @param bool $force_refresh  (optional, default to false)
-     * @return Array of \Swagger\Client\ContentEntity\Models\Content, HTTP status code, HTTP response headers (array of strings)
+     * @param string $name  (optional)
+     * @param string $language  (optional)
+     * @return Array of \Swagger\Client\ContentEntity\Models\Universe, HTTP status code, HTTP response headers (array of strings)
      * @throws \Swagger\Client\ApiException on non-2xx response
      */
-    public function createWithHttpInfo($url, $force_refresh = null)
+    public function createWithHttpInfo($name = null, $language = null)
     {
-        // verify the required parameter 'url' is set
-        if ($url === null) {
-            throw new \InvalidArgumentException('Missing the required parameter $url when calling create');
-        }
-        if (!preg_match(".+", $url)) {
-            throw new \InvalidArgumentException('invalid value for "url" when calling ContentApi.create, must conform to the pattern .+.');
-        }
-
         // parse inputs
-        $resourcePath = "/content/{url}";
+        $resourcePath = "/universe";
         $httpBody = '';
         $queryParams = array();
         $headerParams = array();
@@ -146,23 +138,19 @@ class ContentApi
         if (!is_null($_header_accept)) {
             $headerParams['Accept'] = $_header_accept;
         }
-        $headerParams['Content-Type'] = $this->apiClient->selectHeaderContentType(array());
+        $headerParams['Content-Type'] = $this->apiClient->selectHeaderContentType(array('application/x-www-form-urlencoded'));
 
-        // query params
-        if ($force_refresh !== null) {
-            $queryParams['forceRefresh'] = $this->apiClient->getSerializer()->toQueryValue($force_refresh);
-        }
-        // path params
-        if ($url !== null) {
-            $resourcePath = str_replace(
-                "{" . "url" . "}",
-                $this->apiClient->getSerializer()->toPathValue($url),
-                $resourcePath
-            );
-        }
         // default format to json
         $resourcePath = str_replace("{format}", "json", $resourcePath);
 
+        // form params
+        if ($name !== null) {
+            $formParams['name'] = $this->apiClient->getSerializer()->toFormValue($name);
+        }
+        // form params
+        if ($language !== null) {
+            $formParams['language'] = $this->apiClient->getSerializer()->toFormValue($language);
+        }
         
         // for model (json/xml)
         if (isset($_tempBody)) {
@@ -179,23 +167,19 @@ class ContentApi
         try {
             list($response, $statusCode, $httpHeader) = $this->apiClient->callApi(
                 $resourcePath,
-                'PUT',
+                'POST',
                 $queryParams,
                 $httpBody,
                 $headerParams,
-                '\Swagger\Client\ContentEntity\Models\Content',
-                '/content/{url}'
+                '\Swagger\Client\ContentEntity\Models\Universe',
+                '/universe'
             );
 
-            return array($this->apiClient->getSerializer()->deserialize($response, '\Swagger\Client\ContentEntity\Models\Content', $httpHeader), $statusCode, $httpHeader);
+            return array($this->apiClient->getSerializer()->deserialize($response, '\Swagger\Client\ContentEntity\Models\Universe', $httpHeader), $statusCode, $httpHeader);
         } catch (ApiException $e) {
             switch ($e->getCode()) {
                 case 200:
-                    $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), '\Swagger\Client\ContentEntity\Models\Content', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
-                case 400:
-                    $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), '\Swagger\Client\ContentEntity\Models\ResponseObj', $e->getResponseHeaders());
+                    $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), '\Swagger\Client\ContentEntity\Models\Universe', $e->getResponseHeaders());
                     $e->setResponseObject($data);
                     break;
             }
@@ -205,41 +189,37 @@ class ContentApi
     }
 
     /**
-     * Operation deleteWithUrl
+     * Operation delete
      *
-     * delete the content with the given url
+     * deletes an universe
      *
-     * @param string $url  (required)
+     * @param string $universe_id  (required)
      * @return void
      * @throws \Swagger\Client\ApiException on non-2xx response
      */
-    public function deleteWithUrl($url)
+    public function delete($universe_id)
     {
-        list($response) = $this->deleteWithUrlWithHttpInfo($url);
+        list($response) = $this->deleteWithHttpInfo($universe_id);
         return $response;
     }
 
     /**
-     * Operation deleteWithUrlWithHttpInfo
+     * Operation deleteWithHttpInfo
      *
-     * delete the content with the given url
+     * deletes an universe
      *
-     * @param string $url  (required)
+     * @param string $universe_id  (required)
      * @return Array of null, HTTP status code, HTTP response headers (array of strings)
      * @throws \Swagger\Client\ApiException on non-2xx response
      */
-    public function deleteWithUrlWithHttpInfo($url)
+    public function deleteWithHttpInfo($universe_id)
     {
-        // verify the required parameter 'url' is set
-        if ($url === null) {
-            throw new \InvalidArgumentException('Missing the required parameter $url when calling deleteWithUrl');
+        // verify the required parameter 'universe_id' is set
+        if ($universe_id === null) {
+            throw new \InvalidArgumentException('Missing the required parameter $universe_id when calling delete');
         }
-        if (!preg_match(".+", $url)) {
-            throw new \InvalidArgumentException('invalid value for "url" when calling ContentApi.deleteWithUrl, must conform to the pattern .+.');
-        }
-
         // parse inputs
-        $resourcePath = "/content/{url}";
+        $resourcePath = "/universe/{universeId}";
         $httpBody = '';
         $queryParams = array();
         $headerParams = array();
@@ -251,10 +231,10 @@ class ContentApi
         $headerParams['Content-Type'] = $this->apiClient->selectHeaderContentType(array());
 
         // path params
-        if ($url !== null) {
+        if ($universe_id !== null) {
             $resourcePath = str_replace(
-                "{" . "url" . "}",
-                $this->apiClient->getSerializer()->toPathValue($url),
+                "{" . "universeId" . "}",
+                $this->apiClient->getSerializer()->toPathValue($universe_id),
                 $resourcePath
             );
         }
@@ -282,13 +262,17 @@ class ContentApi
                 $httpBody,
                 $headerParams,
                 null,
-                '/content/{url}'
+                '/universe/{universeId}'
             );
 
             return array(null, $statusCode, $httpHeader);
         } catch (ApiException $e) {
             switch ($e->getCode()) {
                 case 400:
+                    $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), '\Swagger\Client\ContentEntity\Models\ResponseObj', $e->getResponseHeaders());
+                    $e->setResponseObject($data);
+                    break;
+                case 404:
                     $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), '\Swagger\Client\ContentEntity\Models\ResponseObj', $e->getResponseHeaders());
                     $e->setResponseObject($data);
                     break;
@@ -299,41 +283,37 @@ class ContentApi
     }
 
     /**
-     * Operation getByUrl
+     * Operation getById
      *
-     * gets a content entry by its url
+     * gets an universe by its id
      *
-     * @param string $url  (required)
-     * @return \Swagger\Client\ContentEntity\Models\Content
+     * @param string $universe_id  (required)
+     * @return \Swagger\Client\ContentEntity\Models\Universe
      * @throws \Swagger\Client\ApiException on non-2xx response
      */
-    public function getByUrl($url)
+    public function getById($universe_id)
     {
-        list($response) = $this->getByUrlWithHttpInfo($url);
+        list($response) = $this->getByIdWithHttpInfo($universe_id);
         return $response;
     }
 
     /**
-     * Operation getByUrlWithHttpInfo
+     * Operation getByIdWithHttpInfo
      *
-     * gets a content entry by its url
+     * gets an universe by its id
      *
-     * @param string $url  (required)
-     * @return Array of \Swagger\Client\ContentEntity\Models\Content, HTTP status code, HTTP response headers (array of strings)
+     * @param string $universe_id  (required)
+     * @return Array of \Swagger\Client\ContentEntity\Models\Universe, HTTP status code, HTTP response headers (array of strings)
      * @throws \Swagger\Client\ApiException on non-2xx response
      */
-    public function getByUrlWithHttpInfo($url)
+    public function getByIdWithHttpInfo($universe_id)
     {
-        // verify the required parameter 'url' is set
-        if ($url === null) {
-            throw new \InvalidArgumentException('Missing the required parameter $url when calling getByUrl');
+        // verify the required parameter 'universe_id' is set
+        if ($universe_id === null) {
+            throw new \InvalidArgumentException('Missing the required parameter $universe_id when calling getById');
         }
-        if (!preg_match(".+", $url)) {
-            throw new \InvalidArgumentException('invalid value for "url" when calling ContentApi.getByUrl, must conform to the pattern .+.');
-        }
-
         // parse inputs
-        $resourcePath = "/content/{url}";
+        $resourcePath = "/universe/{universeId}";
         $httpBody = '';
         $queryParams = array();
         $headerParams = array();
@@ -345,10 +325,10 @@ class ContentApi
         $headerParams['Content-Type'] = $this->apiClient->selectHeaderContentType(array());
 
         // path params
-        if ($url !== null) {
+        if ($universe_id !== null) {
             $resourcePath = str_replace(
-                "{" . "url" . "}",
-                $this->apiClient->getSerializer()->toPathValue($url),
+                "{" . "universeId" . "}",
+                $this->apiClient->getSerializer()->toPathValue($universe_id),
                 $resourcePath
             );
         }
@@ -370,17 +350,123 @@ class ContentApi
                 $queryParams,
                 $httpBody,
                 $headerParams,
-                '\Swagger\Client\ContentEntity\Models\Content',
-                '/content/{url}'
+                '\Swagger\Client\ContentEntity\Models\Universe',
+                '/universe/{universeId}'
             );
 
-            return array($this->apiClient->getSerializer()->deserialize($response, '\Swagger\Client\ContentEntity\Models\Content', $httpHeader), $statusCode, $httpHeader);
+            return array($this->apiClient->getSerializer()->deserialize($response, '\Swagger\Client\ContentEntity\Models\Universe', $httpHeader), $statusCode, $httpHeader);
         } catch (ApiException $e) {
             switch ($e->getCode()) {
                 case 200:
-                    $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), '\Swagger\Client\ContentEntity\Models\Content', $e->getResponseHeaders());
+                    $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), '\Swagger\Client\ContentEntity\Models\Universe', $e->getResponseHeaders());
                     $e->setResponseObject($data);
                     break;
+                case 400:
+                    $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), '\Swagger\Client\ContentEntity\Models\ResponseObj', $e->getResponseHeaders());
+                    $e->setResponseObject($data);
+                    break;
+                case 404:
+                    $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), '\Swagger\Client\ContentEntity\Models\ResponseObj', $e->getResponseHeaders());
+                    $e->setResponseObject($data);
+                    break;
+            }
+
+            throw $e;
+        }
+    }
+
+    /**
+     * Operation update
+     *
+     * updates an universe
+     *
+     * @param string $universe_id  (required)
+     * @param string $name  (optional)
+     * @param string $language  (optional)
+     * @return void
+     * @throws \Swagger\Client\ApiException on non-2xx response
+     */
+    public function update($universe_id, $name = null, $language = null)
+    {
+        list($response) = $this->updateWithHttpInfo($universe_id, $name, $language);
+        return $response;
+    }
+
+    /**
+     * Operation updateWithHttpInfo
+     *
+     * updates an universe
+     *
+     * @param string $universe_id  (required)
+     * @param string $name  (optional)
+     * @param string $language  (optional)
+     * @return Array of null, HTTP status code, HTTP response headers (array of strings)
+     * @throws \Swagger\Client\ApiException on non-2xx response
+     */
+    public function updateWithHttpInfo($universe_id, $name = null, $language = null)
+    {
+        // verify the required parameter 'universe_id' is set
+        if ($universe_id === null) {
+            throw new \InvalidArgumentException('Missing the required parameter $universe_id when calling update');
+        }
+        // parse inputs
+        $resourcePath = "/universe/{universeId}";
+        $httpBody = '';
+        $queryParams = array();
+        $headerParams = array();
+        $formParams = array();
+        $_header_accept = $this->apiClient->selectHeaderAccept(array('application/json'));
+        if (!is_null($_header_accept)) {
+            $headerParams['Accept'] = $_header_accept;
+        }
+        $headerParams['Content-Type'] = $this->apiClient->selectHeaderContentType(array());
+
+        // path params
+        if ($universe_id !== null) {
+            $resourcePath = str_replace(
+                "{" . "universeId" . "}",
+                $this->apiClient->getSerializer()->toPathValue($universe_id),
+                $resourcePath
+            );
+        }
+        // default format to json
+        $resourcePath = str_replace("{format}", "json", $resourcePath);
+
+        // form params
+        if ($name !== null) {
+            $formParams['name'] = $this->apiClient->getSerializer()->toFormValue($name);
+        }
+        // form params
+        if ($language !== null) {
+            $formParams['language'] = $this->apiClient->getSerializer()->toFormValue($language);
+        }
+        
+        // for model (json/xml)
+        if (isset($_tempBody)) {
+            $httpBody = $_tempBody; // $_tempBody is the method argument, if present
+        } elseif (count($formParams) > 0) {
+            $httpBody = $formParams; // for HTTP post (form)
+        }
+        // this endpoint requires API key authentication
+        $apiKey = $this->apiClient->getApiKeyWithPrefix('AUTH-SECRET');
+        if (strlen($apiKey) !== 0) {
+            $headerParams['AUTH-SECRET'] = $apiKey;
+        }
+        // make the API Call
+        try {
+            list($response, $statusCode, $httpHeader) = $this->apiClient->callApi(
+                $resourcePath,
+                'POST',
+                $queryParams,
+                $httpBody,
+                $headerParams,
+                null,
+                '/universe/{universeId}'
+            );
+
+            return array(null, $statusCode, $httpHeader);
+        } catch (ApiException $e) {
+            switch ($e->getCode()) {
                 case 400:
                     $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), '\Swagger\Client\ContentEntity\Models\ResponseObj', $e->getResponseHeaders());
                     $e->setResponseObject($data);

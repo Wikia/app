@@ -1,6 +1,6 @@
 <?php
 /**
- * FilteredRelatedContent
+ * Author
  *
  * PHP version 5
  *
@@ -42,7 +42,7 @@ namespace Swagger\Client\ContentEntity\Models;
 use \ArrayAccess;
 
 /**
- * FilteredRelatedContent Class Doc Comment
+ * Author Class Doc Comment
  *
  * @category    Class */
 /** 
@@ -51,24 +51,24 @@ use \ArrayAccess;
  * @license     http://www.apache.org/licenses/LICENSE-2.0 Apache Licene v2
  * @link        https://github.com/swagger-api/swagger-codegen
  */
-class FilteredRelatedContent implements ArrayAccess
+class Author implements ArrayAccess
 {
     /**
       * The original name of the model.
       * @var string
       */
-    protected static $swaggerModelName = 'FilteredRelatedContent';
+    protected static $swaggerModelName = 'Author';
 
     /**
       * Array of property to type mappings. Used for (de)serialization
       * @var string[]
       */
     protected static $swaggerTypes = array(
-        'fandom_articles' => '\Swagger\Client\ContentEntity\Models\RelatedContent[]',
-        'discussion_threads' => '\Swagger\Client\ContentEntity\Models\RelatedContent[]',
-        'wiki_articles' => '\Swagger\Client\ContentEntity\Models\RelatedContent[]',
-        'wiki_images' => '\Swagger\Client\ContentEntity\Models\RelatedContent[]',
-        'wiki_videos' => '\Swagger\Client\ContentEntity\Models\RelatedContent[]'
+        'id' => 'string',
+        'username' => 'string',
+        'user_type' => 'string',
+        'external_user_id' => 'string',
+        'avatar' => 'map[string,string]'
     );
 
     public static function swaggerTypes()
@@ -81,11 +81,11 @@ class FilteredRelatedContent implements ArrayAccess
      * @var string[]
      */
     protected static $attributeMap = array(
-        'fandom_articles' => 'fandomArticles',
-        'discussion_threads' => 'discussionThreads',
-        'wiki_articles' => 'wikiArticles',
-        'wiki_images' => 'wikiImages',
-        'wiki_videos' => 'wikiVideos'
+        'id' => 'id',
+        'username' => 'username',
+        'user_type' => 'userType',
+        'external_user_id' => 'externalUserId',
+        'avatar' => 'avatar'
     );
 
     public static function attributeMap()
@@ -98,11 +98,11 @@ class FilteredRelatedContent implements ArrayAccess
      * @var string[]
      */
     protected static $setters = array(
-        'fandom_articles' => 'setFandomArticles',
-        'discussion_threads' => 'setDiscussionThreads',
-        'wiki_articles' => 'setWikiArticles',
-        'wiki_images' => 'setWikiImages',
-        'wiki_videos' => 'setWikiVideos'
+        'id' => 'setId',
+        'username' => 'setUsername',
+        'user_type' => 'setUserType',
+        'external_user_id' => 'setExternalUserId',
+        'avatar' => 'setAvatar'
     );
 
     public static function setters()
@@ -115,11 +115,11 @@ class FilteredRelatedContent implements ArrayAccess
      * @var string[]
      */
     protected static $getters = array(
-        'fandom_articles' => 'getFandomArticles',
-        'discussion_threads' => 'getDiscussionThreads',
-        'wiki_articles' => 'getWikiArticles',
-        'wiki_images' => 'getWikiImages',
-        'wiki_videos' => 'getWikiVideos'
+        'id' => 'getId',
+        'username' => 'getUsername',
+        'user_type' => 'getUserType',
+        'external_user_id' => 'getExternalUserId',
+        'avatar' => 'getAvatar'
     );
 
     public static function getters()
@@ -143,11 +143,11 @@ class FilteredRelatedContent implements ArrayAccess
      */
     public function __construct(array $data = null)
     {
-        $this->container['fandom_articles'] = isset($data['fandom_articles']) ? $data['fandom_articles'] : null;
-        $this->container['discussion_threads'] = isset($data['discussion_threads']) ? $data['discussion_threads'] : null;
-        $this->container['wiki_articles'] = isset($data['wiki_articles']) ? $data['wiki_articles'] : null;
-        $this->container['wiki_images'] = isset($data['wiki_images']) ? $data['wiki_images'] : null;
-        $this->container['wiki_videos'] = isset($data['wiki_videos']) ? $data['wiki_videos'] : null;
+        $this->container['id'] = isset($data['id']) ? $data['id'] : null;
+        $this->container['username'] = isset($data['username']) ? $data['username'] : null;
+        $this->container['user_type'] = isset($data['user_type']) ? $data['user_type'] : null;
+        $this->container['external_user_id'] = isset($data['external_user_id']) ? $data['external_user_id'] : null;
+        $this->container['avatar'] = isset($data['avatar']) ? $data['avatar'] : null;
     }
 
     /**
@@ -174,106 +174,106 @@ class FilteredRelatedContent implements ArrayAccess
 
 
     /**
-     * Gets fandom_articles
-     * @return \Swagger\Client\ContentEntity\Models\RelatedContent[]
+     * Gets id
+     * @return string
      */
-    public function getFandomArticles()
+    public function getId()
     {
-        return $this->container['fandom_articles'];
+        return $this->container['id'];
     }
 
     /**
-     * Sets fandom_articles
-     * @param \Swagger\Client\ContentEntity\Models\RelatedContent[] $fandom_articles
+     * Sets id
+     * @param string $id
      * @return $this
      */
-    public function setFandomArticles($fandom_articles)
+    public function setId($id)
     {
-        $this->container['fandom_articles'] = $fandom_articles;
+        $this->container['id'] = $id;
 
         return $this;
     }
 
     /**
-     * Gets discussion_threads
-     * @return \Swagger\Client\ContentEntity\Models\RelatedContent[]
+     * Gets username
+     * @return string
      */
-    public function getDiscussionThreads()
+    public function getUsername()
     {
-        return $this->container['discussion_threads'];
+        return $this->container['username'];
     }
 
     /**
-     * Sets discussion_threads
-     * @param \Swagger\Client\ContentEntity\Models\RelatedContent[] $discussion_threads
+     * Sets username
+     * @param string $username
      * @return $this
      */
-    public function setDiscussionThreads($discussion_threads)
+    public function setUsername($username)
     {
-        $this->container['discussion_threads'] = $discussion_threads;
+        $this->container['username'] = $username;
 
         return $this;
     }
 
     /**
-     * Gets wiki_articles
-     * @return \Swagger\Client\ContentEntity\Models\RelatedContent[]
+     * Gets user_type
+     * @return string
      */
-    public function getWikiArticles()
+    public function getUserType()
     {
-        return $this->container['wiki_articles'];
+        return $this->container['user_type'];
     }
 
     /**
-     * Sets wiki_articles
-     * @param \Swagger\Client\ContentEntity\Models\RelatedContent[] $wiki_articles
+     * Sets user_type
+     * @param string $user_type
      * @return $this
      */
-    public function setWikiArticles($wiki_articles)
+    public function setUserType($user_type)
     {
-        $this->container['wiki_articles'] = $wiki_articles;
+        $this->container['user_type'] = $user_type;
 
         return $this;
     }
 
     /**
-     * Gets wiki_images
-     * @return \Swagger\Client\ContentEntity\Models\RelatedContent[]
+     * Gets external_user_id
+     * @return string
      */
-    public function getWikiImages()
+    public function getExternalUserId()
     {
-        return $this->container['wiki_images'];
+        return $this->container['external_user_id'];
     }
 
     /**
-     * Sets wiki_images
-     * @param \Swagger\Client\ContentEntity\Models\RelatedContent[] $wiki_images
+     * Sets external_user_id
+     * @param string $external_user_id
      * @return $this
      */
-    public function setWikiImages($wiki_images)
+    public function setExternalUserId($external_user_id)
     {
-        $this->container['wiki_images'] = $wiki_images;
+        $this->container['external_user_id'] = $external_user_id;
 
         return $this;
     }
 
     /**
-     * Gets wiki_videos
-     * @return \Swagger\Client\ContentEntity\Models\RelatedContent[]
+     * Gets avatar
+     * @return map[string,string]
      */
-    public function getWikiVideos()
+    public function getAvatar()
     {
-        return $this->container['wiki_videos'];
+        return $this->container['avatar'];
     }
 
     /**
-     * Sets wiki_videos
-     * @param \Swagger\Client\ContentEntity\Models\RelatedContent[] $wiki_videos
+     * Sets avatar
+     * @param map[string,string] $avatar
      * @return $this
      */
-    public function setWikiVideos($wiki_videos)
+    public function setAvatar($avatar)
     {
-        $this->container['wiki_videos'] = $wiki_videos;
+        $this->container['avatar'] = $avatar;
 
         return $this;
     }

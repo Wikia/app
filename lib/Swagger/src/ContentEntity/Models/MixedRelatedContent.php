@@ -1,6 +1,6 @@
 <?php
 /**
- * FilteredRelatedContent
+ * MixedRelatedContent
  *
  * PHP version 5
  *
@@ -42,7 +42,7 @@ namespace Swagger\Client\ContentEntity\Models;
 use \ArrayAccess;
 
 /**
- * FilteredRelatedContent Class Doc Comment
+ * MixedRelatedContent Class Doc Comment
  *
  * @category    Class */
 /** 
@@ -51,24 +51,21 @@ use \ArrayAccess;
  * @license     http://www.apache.org/licenses/LICENSE-2.0 Apache Licene v2
  * @link        https://github.com/swagger-api/swagger-codegen
  */
-class FilteredRelatedContent implements ArrayAccess
+class MixedRelatedContent implements ArrayAccess
 {
     /**
       * The original name of the model.
       * @var string
       */
-    protected static $swaggerModelName = 'FilteredRelatedContent';
+    protected static $swaggerModelName = 'MixedRelatedContent';
 
     /**
       * Array of property to type mappings. Used for (de)serialization
       * @var string[]
       */
     protected static $swaggerTypes = array(
-        'fandom_articles' => '\Swagger\Client\ContentEntity\Models\RelatedContent[]',
-        'discussion_threads' => '\Swagger\Client\ContentEntity\Models\RelatedContent[]',
-        'wiki_articles' => '\Swagger\Client\ContentEntity\Models\RelatedContent[]',
-        'wiki_images' => '\Swagger\Client\ContentEntity\Models\RelatedContent[]',
-        'wiki_videos' => '\Swagger\Client\ContentEntity\Models\RelatedContent[]'
+        'content' => '\Swagger\Client\ContentEntity\Models\RelatedContent[]',
+        'empty' => 'bool'
     );
 
     public static function swaggerTypes()
@@ -81,11 +78,8 @@ class FilteredRelatedContent implements ArrayAccess
      * @var string[]
      */
     protected static $attributeMap = array(
-        'fandom_articles' => 'fandomArticles',
-        'discussion_threads' => 'discussionThreads',
-        'wiki_articles' => 'wikiArticles',
-        'wiki_images' => 'wikiImages',
-        'wiki_videos' => 'wikiVideos'
+        'content' => 'content',
+        'empty' => 'empty'
     );
 
     public static function attributeMap()
@@ -98,11 +92,8 @@ class FilteredRelatedContent implements ArrayAccess
      * @var string[]
      */
     protected static $setters = array(
-        'fandom_articles' => 'setFandomArticles',
-        'discussion_threads' => 'setDiscussionThreads',
-        'wiki_articles' => 'setWikiArticles',
-        'wiki_images' => 'setWikiImages',
-        'wiki_videos' => 'setWikiVideos'
+        'content' => 'setContent',
+        'empty' => 'setEmpty'
     );
 
     public static function setters()
@@ -115,11 +106,8 @@ class FilteredRelatedContent implements ArrayAccess
      * @var string[]
      */
     protected static $getters = array(
-        'fandom_articles' => 'getFandomArticles',
-        'discussion_threads' => 'getDiscussionThreads',
-        'wiki_articles' => 'getWikiArticles',
-        'wiki_images' => 'getWikiImages',
-        'wiki_videos' => 'getWikiVideos'
+        'content' => 'getContent',
+        'empty' => 'getEmpty'
     );
 
     public static function getters()
@@ -143,11 +131,8 @@ class FilteredRelatedContent implements ArrayAccess
      */
     public function __construct(array $data = null)
     {
-        $this->container['fandom_articles'] = isset($data['fandom_articles']) ? $data['fandom_articles'] : null;
-        $this->container['discussion_threads'] = isset($data['discussion_threads']) ? $data['discussion_threads'] : null;
-        $this->container['wiki_articles'] = isset($data['wiki_articles']) ? $data['wiki_articles'] : null;
-        $this->container['wiki_images'] = isset($data['wiki_images']) ? $data['wiki_images'] : null;
-        $this->container['wiki_videos'] = isset($data['wiki_videos']) ? $data['wiki_videos'] : null;
+        $this->container['content'] = isset($data['content']) ? $data['content'] : null;
+        $this->container['empty'] = isset($data['empty']) ? $data['empty'] : false;
     }
 
     /**
@@ -174,106 +159,43 @@ class FilteredRelatedContent implements ArrayAccess
 
 
     /**
-     * Gets fandom_articles
+     * Gets content
      * @return \Swagger\Client\ContentEntity\Models\RelatedContent[]
      */
-    public function getFandomArticles()
+    public function getContent()
     {
-        return $this->container['fandom_articles'];
+        return $this->container['content'];
     }
 
     /**
-     * Sets fandom_articles
-     * @param \Swagger\Client\ContentEntity\Models\RelatedContent[] $fandom_articles
+     * Sets content
+     * @param \Swagger\Client\ContentEntity\Models\RelatedContent[] $content
      * @return $this
      */
-    public function setFandomArticles($fandom_articles)
+    public function setContent($content)
     {
-        $this->container['fandom_articles'] = $fandom_articles;
+        $this->container['content'] = $content;
 
         return $this;
     }
 
     /**
-     * Gets discussion_threads
-     * @return \Swagger\Client\ContentEntity\Models\RelatedContent[]
+     * Gets empty
+     * @return bool
      */
-    public function getDiscussionThreads()
+    public function getEmpty()
     {
-        return $this->container['discussion_threads'];
+        return $this->container['empty'];
     }
 
     /**
-     * Sets discussion_threads
-     * @param \Swagger\Client\ContentEntity\Models\RelatedContent[] $discussion_threads
+     * Sets empty
+     * @param bool $empty
      * @return $this
      */
-    public function setDiscussionThreads($discussion_threads)
+    public function setEmpty($empty)
     {
-        $this->container['discussion_threads'] = $discussion_threads;
-
-        return $this;
-    }
-
-    /**
-     * Gets wiki_articles
-     * @return \Swagger\Client\ContentEntity\Models\RelatedContent[]
-     */
-    public function getWikiArticles()
-    {
-        return $this->container['wiki_articles'];
-    }
-
-    /**
-     * Sets wiki_articles
-     * @param \Swagger\Client\ContentEntity\Models\RelatedContent[] $wiki_articles
-     * @return $this
-     */
-    public function setWikiArticles($wiki_articles)
-    {
-        $this->container['wiki_articles'] = $wiki_articles;
-
-        return $this;
-    }
-
-    /**
-     * Gets wiki_images
-     * @return \Swagger\Client\ContentEntity\Models\RelatedContent[]
-     */
-    public function getWikiImages()
-    {
-        return $this->container['wiki_images'];
-    }
-
-    /**
-     * Sets wiki_images
-     * @param \Swagger\Client\ContentEntity\Models\RelatedContent[] $wiki_images
-     * @return $this
-     */
-    public function setWikiImages($wiki_images)
-    {
-        $this->container['wiki_images'] = $wiki_images;
-
-        return $this;
-    }
-
-    /**
-     * Gets wiki_videos
-     * @return \Swagger\Client\ContentEntity\Models\RelatedContent[]
-     */
-    public function getWikiVideos()
-    {
-        return $this->container['wiki_videos'];
-    }
-
-    /**
-     * Sets wiki_videos
-     * @param \Swagger\Client\ContentEntity\Models\RelatedContent[] $wiki_videos
-     * @return $this
-     */
-    public function setWikiVideos($wiki_videos)
-    {
-        $this->container['wiki_videos'] = $wiki_videos;
+        $this->container['empty'] = $empty;
 
         return $this;
     }
