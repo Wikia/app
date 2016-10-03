@@ -21,6 +21,7 @@ class NavigationModel extends WikiaModel {
 	const TEXT = 'text';
 	const SPECIAL = 'specialAttr';
 	const CANONICAL_NAME = 'canonicalName';
+	const CANONICAL_ATTR = 'canonicalAttr';
 
 	const TYPE_MESSAGE = 'message';
 	const TYPE_VARIABLE = 'variable';
@@ -230,18 +231,18 @@ class NavigationModel extends WikiaModel {
 	private function recursiveConvertMenuNodeToArray( $index ) {
 		$node = $this->menuNodes[$index];
 		$returnValue = [
-			'text' => $node['text'],
-			'textEscaped' => htmlspecialchars( $node['text'], ENT_QUOTES | ENT_HTML5, 'UTF-8' ),
-			'href' => $node['href'],
+			'text' => $node[self::TEXT],
+			'textEscaped' => htmlspecialchars( $node[self::TEXT], ENT_QUOTES | ENT_HTML5, 'UTF-8' ),
+			'href' => $node[self::HREF],
 		];
-		if ( !empty( $node['specialAttr'] ) ) {
-			$returnValue['specialAttr'] = $node['specialAttr'];
+		if ( !empty( $node[self::SPECIAL] ) ) {
+			$returnValue[self::SPECIAL] = $node[self::SPECIAL];
 		}
-		if ( !empty( $node['canonicalName'] ) ) {
-			$returnValue['canonicalName'] = $node['canonicalName'];
-			$returnValue['canonicalAttr'] = 'data-canonical="' . strtolower( $node['canonicalName'] ) . '" ';
+		if ( !empty( $node[self::CANONICAL_NAME] ) ) {
+			$returnValue[self::CANONICAL_NAME] = $node[self::CANONICAL_NAME];
+			$returnValue[self::CANONICAL_ATTR] = 'data-canonical="' . strtolower( $node[self::CANONICAL_NAME] ) . '" ';
 		} else {
-			$returnValue['canonicalAttr'] = null;
+			$returnValue[self::CANONICAL_ATTR] = null;
 		}
 
 		if ( isset( $node[self::CHILDREN] ) ) {
@@ -346,9 +347,9 @@ class NavigationModel extends WikiaModel {
 		wfProfileIn( __METHOD__ );
 
 		foreach ( $nodes as &$node ) {
-			$text = !empty( $node['text'] ) ? $node['text'] : null;
+			$text = !empty( $node[self::TEXT] ) ? $node[self::TEXT] : null;
 			if ( !is_null( $text ) ) {
-				$node['text'] = strip_tags( $text, self::ALLOWABLE_TAGS );
+				$node[self::TEXT] = strip_tags( $text, self::ALLOWABLE_TAGS );
 			}
 		}
 
