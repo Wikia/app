@@ -38,7 +38,7 @@ var CreatePage = {
 
 	requestDialog: function( e, titleText ) {
 		'use strict';
-		console.log('requestDialog', e.data.flow);
+		console.log('requestDialog', e.data);
 
 		var rs, dialogCallback;
 
@@ -289,6 +289,13 @@ var CreatePage = {
 	init: function( context ) {
 		'use strict';
 		CreatePage.context = context;
+
+		$( '#contribute-button-create-page' ).click({flow: 'create-page-contribute-button'}, function() {
+			require(['wikia.flowTracking'], function (flowTracking) {
+				flowTracking.beginFlow('create-page-contribute-button');
+			});
+		});
+
 		if ( window.WikiaEnableNewCreatepage ) {
 			$().log( 'init', 'CreatePage' );
 
@@ -302,7 +309,7 @@ var CreatePage = {
 			}
 
 			// CreatePage chicklet ( Oasis )
-			$( '.createpage' ).click( {flow: this.id}, CreatePage.requestDialog );
+			$( '.createpage' ).click(CreatePage.requestDialog );
 
 			// macbre: RT #38478
 			var addRecipeTab = $( '#add_recipe_tab' ),
