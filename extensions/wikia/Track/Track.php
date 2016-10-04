@@ -94,19 +94,21 @@ class Track {
 			$params[ 'uid' ] = md5( $wgUser->getId() . $wgGAUserIdSalt );
 		}
 		$params = array_merge( $params, $extraParams );
-		$url = static::GA_URL . '/collect?' .
+
+		return static::GA_URL . '/collect?' .
 			   implode( $for_html ? '&amp;' : '&', array_map( function ( $k, $v ) {
 				   return "{$k}={$v}";
 			   }, array_keys( $params ), $params ) );
-
-		return $url;
 	}
 
 	private static function getGATrackingIds() {
 		global $wgDevelEnvironment, $wgIsGASpecialWiki, $wgUser;
 
 		$tids = [ ];
-		$tids[] = $wgDevelEnvironment ? 'UA-32129070-2' : 'UA-32129070-1';
+		// 10% sampling for general account
+		if ( mt_rand( 0, 9 ) === 0 ) {
+			$tids[] = $wgDevelEnvironment ? 'UA-32129070-2' : 'UA-32129070-1';
+		}
 		if ( $wgIsGASpecialWiki ) {
 			$tids[] = $wgDevelEnvironment ? 'UA-32132943-2' : 'UA-32132943-1';
 		}
@@ -172,6 +174,7 @@ SCRIPT1;
 			return true;
 		} else {
 			wfProfileOut( __METHOD__ );
+			\Wikia\Logger\WikiaLogger::instance()->error( 'Internal tracking failed', [ 'url' => $url ] );
 			return false;
 		}
 	}
