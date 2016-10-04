@@ -116,7 +116,7 @@ var ChatView = Backbone.View.extend({
 				return this;
 			}
 			params.unshift(msgId);
-			var i18nText = mw.message.apply(msgId, params).text();
+			var i18nText = mw.message.apply(null, params).text();
 			this.model.set({text: i18nText});
 		}
 
