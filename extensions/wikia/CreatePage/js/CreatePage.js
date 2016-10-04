@@ -288,7 +288,12 @@ var CreatePage = {
 	init: function( context ) {
 		'use strict';
 		CreatePage.context = context;
-		console.info('track flow start here');
+		$( '#WikiaArticle' ).on( 'click', 'a.new', function( e ) {
+			require(['wikia.flowTracking'], function (flowTrack) {
+				flowTrack.beginFlow(flowTrack.flows.CREATE_PAGE_REDLINK, {});
+			});
+		});
+
 		if ( window.WikiaEnableNewCreatepage ) {
 			$().log( 'init', 'CreatePage' );
 
