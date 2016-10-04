@@ -140,7 +140,8 @@ class StoriesLinkTagController extends WikiaController {
 		$urls = array_slice( array_filter( $urls ), 0, self::MAX_URLS );
 		foreach ( $urls as $url ) {
 			$urlParts = parse_url( trim( $url ) );
-			if ( !empty( $urlParts['host'] ) && strtolower( $urlParts['host'] ) == StoriesLinkTagHelper::VALID_HOST
+			if ( !empty( $urlParts['scheme'] ) && strtolower( $urlParts['scheme'] ) == 'http'
+				&& !empty( $urlParts['host'] ) && strtolower( $urlParts['host'] ) == StoriesLinkTagHelper::VALID_HOST
 				&& !empty( $urlParts['path'] ) && preg_match( '/^\/([^\/]+)\/(.+)/', $urlParts['path'], $matches )
 			) {
 				$article = $helper->getArticleDataBySlug( $matches[2], $matches[1] );
