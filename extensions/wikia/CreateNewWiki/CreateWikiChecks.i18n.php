@@ -1164,7 +1164,7 @@ $messages['es'] = [
 	'autocreatewiki-info-realname' => 'Si optas por proporcionarlo, se usará para dar atribución a tu trabajo.',
 	'autocreatewiki-info-birthdate' => 'Fandom solicita a todos los usuarios que pongan su fecha real de nacimiento como medida de seguridad y como forma de preservar la integridad del sitio mientras cumple con las regulaciones federales.',
 	'autocreatewiki-info-blurry-word' => 'Para ayudar a protegernos contra la creación de cuentas automáticas, escribe la palabra borrosa que ves en este campo, por favor.',
-	'autocreatewiki-info-terms-agree' => 'Al crear un wiki y una cuenta de usuario, aceptas los {{#NewWindowLink: w:c:es:Términos de uso|Términos de uso de Fandom}}',
+	'autocreatewiki-info-terms-agree' => 'Al crear un wiki y una cuenta de usuario, aceptas los {{#NewWindowLink: w:c:es:Términos de uso|términos de uso de Fandom}}',
 	'autocreatewiki-info-staff-username' => '<b>Solamente Staff:</b> El usuario especificado figurará como el fundador de la wikia.',
 	'autocreatewiki-title-template' => '$ comunidad',
 	'autocreatewiki-limit-day' => 'Fandom ha superado el número máximo de creaciones de wikis de hoy ($1).',
@@ -1633,16 +1633,17 @@ Bonjour !
 
 Nous sommes heureux d\'accueillir $4 dans la communauté Fandom ! Voici quelques liens et astuces utiles qui vous permettront de dynamiser et gérer votre wiki :
 
-*Vous n\'êtes pas sûr de savoir par où commencer ? Arrêtez-vous sur le [[w:fr:Accueil|Centre des communautés]] et lisez le blog « [[w:fr:Blog:Conseils pour fondateurs/administrateurs|Conseils pour fondateurs et administrateurs]] ». Vous y trouverez des astuces pour démarrer votre wiki et le faire évoluer.
+*Vous n\'êtes pas sûr de savoir par où commencer ? Allez sur le [[w:fr:Accueil|Centre des communautés]] et lisez le blog [[w:fr:Blog:Conseils pour fondateurs/administrateurs|Conseils pour fondateurs et administrateurs]]. Vous y trouverez des astuces pour démarrer votre wiki et le faire évoluer.
 *Consultez l\'[[w:fr:Blog:Actualité Wikia|actualité]] pour vous tenir informé des derniers événements.
 *Explorez le [[w:fr:Special:Forum|forum]] sur le Centre des communautés pour voir quelles questions posent les autres administrateurs.
+*Regardez les vidéos de l\'[[w:c:communaute:Université_Fandom|Université Fandom]] pour vous former.
 *Personnalisez l\'apparence de votre wiki en visitant le [[Special:ThemeDesigner|Concepteur de thème]] : ajoutez des couleurs, modifiez l\'arrière-plan et le logo etc.
 *Consultez la page [[Special:WikiFeatures|Composants de wiki]] pour découvrir quelles fonctionnalités vous pouvez activer sur votre wiki.
 *Pour finir, parcourez les [[Aide:Contenu|pages d\'aide]] pour trouver des réponses à vos questions.
 
 Tous les liens ci-dessus sont un bon moyen de commencer à naviguer sur Fandom. Si vous êtes bloqué ou si vous avez toujours des questions, [[Special:Contact|contactez-nous]]. Mais le plus important est que vous vous amusiez !
 
-Bonnes contributions !
+Bonnes modifications !
 
 — [[User:$2|$3]] <staff /></div>',
 	'autocreatewiki-tagline' => '',
@@ -3256,7 +3257,7 @@ $messages['pl'] = [
 	'autocreatewiki-info-category-default' => 'Pomoże to odnaleźć odwiedzającym Twoją wiki.',
 	'autocreatewiki-info-category-answers' => 'Pomoże to odnaleźć odwiedzającym Twoją Zapytaj wiki.',
 	'autocreatewiki-info-language' => 'Będzie to domyślny język dla odwiedzających Twoją wiki.',
-	'autocreatewiki-info-email-address' => 'Twój adres e-mail nie będzie widoczny dla nikogo innego na portalu Fandom.',
+	'autocreatewiki-info-email-address' => 'Twój adres e-mail nie będzie widoczny dla użytkowników portalu Fandom.',
 	'autocreatewiki-info-realname' => 'Jeśli zdecydujesz się go podać, zostanie użyty, żeby oznaczyć Ciebie jako autora.',
 	'autocreatewiki-info-birthdate' => 'Fandom wymaga od wszystkich użytkowników podania rzeczywistej daty urodzenia ze względów bezpieczeństwa oraz dla zachowania spójności strony, przy zapewnieniu zgodności z przepisami federalnymi.',
 	'autocreatewiki-info-blurry-word' => 'Ze względu na ochronę przed automatycznym tworzeniem kont, przepisz zamazane słowo widoczne w tym polu.',
@@ -3838,7 +3839,7 @@ $messages['ru'] = [
 	'autocreatewiki-info-realname' => 'Если вы решите предоставить его, он будет использован для указания авторства вашей работы.',
 	'autocreatewiki-info-birthdate' => 'Согласно требованиям Фэндома, все пользователи должны указывать свою настоящую дату рождения. Эта мера позволяет обеспечить безопасность и соответствие сайта требованиям федеральных нормативных актов США.',
 	'autocreatewiki-info-blurry-word' => 'Введите размытое слово, которое вы видите, в это поле. Это делается для защиты от автоматического создания учётных записей.',
-	'autocreatewiki-info-terms-agree' => 'Создавая вики или учётную запись, вы соглашаетесь с {{#NewWindowLink: w:c:ru.community:Викия:Условия_использования| Условиями использования Фэндома}}',
+	'autocreatewiki-info-terms-agree' => 'Создавая вики или учётную запись, вы соглашаетесь с {{#NewWindowLink: w:c:ru.community:Викия:Условия_использования|Условиями использования Фэндома}}',
 	'autocreatewiki-info-staff-username' => '<b>Только для сотрудников:</b> указанный участник будет показан как основатель.',
 	'autocreatewiki-title-template' => 'Сообщество $1',
 	'autocreatewiki-limit-day' => 'Сегодня Фэндом превысил максимальное число создаваемых вики ($1).',
@@ -3847,7 +3848,7 @@ $messages['ru'] = [
 	'autocreatewiki-bad-name' => 'Название не может содержать специальные символы (например, $ или @) и должно быть представлено одним словом, написанным строчными буквами без пробелов.',
 	'autocreatewiki-invalid-wikiname' => 'Название не может содержать специальные символы (например, $ или @) и является обязательным для заполнения.',
 	'autocreatewiki-violate-policy' => 'Название вики содержит слово, нарушающее наши правила именования.',
-	'autocreatewiki-name-taken' => 'Вики с таким адресом уже существует. Вы можете присоединиться к проекту <a href="http://$1.wikia.com">http://$1.wikia.com</a> или выбрать другой адрес.',
+	'autocreatewiki-name-taken' => 'Вики с таким адресом уже существует. Вы можете присоединиться к проекту <a href="http://$1.wikia.com">http://$1.wikia.com</a> или выбрать другой URL.',
 	'autocreatewiki-name-too-short' => 'Слишком короткий адрес. Выберите адрес длиной не менее 3 символов.',
 	'autocreatewiki-name-too-long' => 'Слишком длинный адрес. Выберите адрес длиной не более 50 символов.',
 	'autocreatewiki-similar-wikis' => 'Ниже приведены уже существующие вики по этой теме. Рекомендуется редактировать одну из них.',
@@ -3918,7 +3919,7 @@ ___________________________________________
 
 *Посетите страницу [[Special:WikiFeatures|расширений вики]], чтобы подключить специальные расширения, в том числе любимый всеми чат.
 *Настройте Страницу сообщества с помощью [[Special:ThemeDesigner|Конструктора тем]].
-*Загляните на [[w:c:ru.community|Вики Сообщества]], чтобы ознакомиться с [[w:c:ru.community.wikia.com/wiki/Блог:Блоги_сотрудников|блогами сотрудников]] и задайте свои вопросы на [[w:c:ru.community:Special:Forum|Форуме]].
+*Загляните на [[w:c:ru.community|Вики Сообщества]], чтобы ознакомиться с [[w:c:ru.community.wikia.com/wiki/Блог:Блоги_сотрудников|блогами сотрудников]] и задайте свои вопросы на [[w:c:ru.community:Special:Forum|форуме]].
 *Наконец, не забывайте о [[w:c:ru.community:Справка:Содержание|Справке]], на страницах которой вы узнаете обо всех особенностях использования Фэндома, или посмотрите видеоуроки [[w:c:ru.community:Университет Викия|Университета Фэндома]].
 
 Удачи!',
@@ -3928,7 +3929,7 @@ ___________________________________________
 Мы рады, что «$4» стала частью сообществ Фэндома. Вам ещё многое предстоит сделать, поэтому позвольте дать несколько советов и полезных ссылок, которые помогут вам начать работу.
 
 *Посетите страницу [[Special:WikiFeatures|расширений]], чтобы узнать о том, какие расширения (чат, достижения и многие другие) можно подключить на вашей вики.
-*Загляните на [[w:c:ru.community|Вики Сообщества]], чтобы найти последние новости из [[w:c:ru.community.wikia.com/wiki/Блог:Блоги_сотрудников|блогов сотрудников]]. Вы можете задать вопросы на нашем [[w:c:ru.community:Special:Forum|Форуме]], посмотреть видеоуроки [[w:c:ru.community:Университет Викия|Университета Фэндома]] или общаться в [[w:c:ru.community:Special:Chat|Чате]] с другими участниками.
+*Загляните на [[w:c:ru.community|Вики Сообщества]], чтобы найти последние новости из [[w:c:ru.community.wikia.com/wiki/Блог:Блоги_сотрудников|блогов сотрудников]]. Вы можете задать вопросы на нашем [[w:c:ru.community:Special:Forum|форуме]], посмотреть видеоуроки [[w:c:ru.community:Университет Викия|Университета Фэндома]] или общаться в [[w:c:ru.community:Special:Chat|чате]] с другими участниками.
 *Наконец, не забывайте о [[w:c:ru.community:Справка:Содержание|Справке]], на страницах которой вы узнаете обо всех особенностях использования Фэндома.
 
 Все вышеприведённые ссылки помогут вам начать изучение основ создания вики. И помните, что самое главное — получать удовольствие от своей вики!

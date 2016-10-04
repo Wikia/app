@@ -82,7 +82,7 @@ $messages['fr'] = [
 	'emailext-welcome-profile-description' => 'Construisez votre identité sur Fandom. Connectez-vous aux autres et partagez vos fandoms.',
 	'emailext-welcome-mobile-header' => 'Emportez Fandom partout avec vous.',
 	'emailext-welcome-mobile-description' => 'Téléchargez les applications de vos communautés Fandom préférées sur [$1 iOS] ou [$2 Android] afin de vous tenir informé à tout moment des sujets qui vous passionnent.',
-	'emailext-welcome-basics-url' => 'http://communaute.wikia.com/wiki/Universit%C3%A9_Wikia',
+	'emailext-welcome-basics-url' => 'http://communaute.wikia.com/wiki/Universit%C3%A9_Fandom',
 	'emailext-welcome-basics-header' => 'Apprenez les bases de Wikia.',
 	'emailext-welcome-basics-description' => 'Vous souhaitez savoir comment modifier une page, lancer une discussion ou importer du contenu ? Consultez ces [$1 didacticiels] .',
 	'emailext-welcome-fandom-header' => 'Explorez votre univers de fans préféré.',
@@ -92,7 +92,7 @@ $messages['fr'] = [
 ];
 
 $messages['it'] = [
-	'emailext-welcome-subject' => 'Benvenuto in Fandom, $1!',
+	'emailext-welcome-subject' => 'Benvenuto su Fandom, $1!',
 	'emailext-welcome-summary' => 'Benvenuto su Fandom! Fai ora parte della più grande raccolta al mondo di comunità di intrattenimento. Condividi le tue conoscenze, discuti delle opinioni e scopri ottimi contenuti.',
 	'emailext-welcome-summary-extended' => 'Cosa facciamo adesso?',
 	'emailext-welcome-profile-header' => 'Crea il tuo profilo',
@@ -104,7 +104,7 @@ $messages['it'] = [
 	'emailext-welcome-basics-description' => 'Hai bisogno di un tutorial veloce su come modificare una pagina, dare inizio a una discussione o caricare materiali? Guarda questi [$1 tutorial].',
 	'emailext-welcome-fandom-header' => 'Trova il tuo fandom preferito',
 	'emailext-welcome-fandom-description' => 'Scopri le comunità di cinema, TV, giochi e altro ancora. Lascia un commento o segui la tua discussione preferita.',
-	'emailext-welcome-footer-community' => 'Vuoi maggiori informazioni? Trova ulteriori consigli, risposte e un servizio amichevole sulla [http://it.community.wikia.com/wiki/Wiki_della_Community Wiki della Community].',
+	'emailext-welcome-footer-community' => 'Vuoi maggiori informazioni? Trova ulteriori consigli, risposte e un servizio amichevole sulla [http://it.community.wikia.com/ Wiki della Community].',
 	'emailext-welcome-footer-closing' => 'Grazie per esserti unito a Fandom!',
 ];
 
