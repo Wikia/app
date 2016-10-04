@@ -255,9 +255,9 @@ used for automated conversion or learning the format.
      *
      * @access public
      */
-    function PEAR_Command_Package(&$ui, &$config)
+    function __construct(&$ui, &$config)
     {
-        parent::PEAR_Command_Common($ui, $config);
+        parent::__construct($ui, $config);
     }
 
     // }}}
@@ -287,7 +287,7 @@ used for automated conversion or learning the format.
         if (!class_exists('PEAR_Packager')) {
             require_once 'PEAR/Packager.php';
         }
-        $a = &new PEAR_Packager;
+        $a = new PEAR_Packager;
         return $a;
     }
 
@@ -299,7 +299,7 @@ used for automated conversion or learning the format.
         if (!class_exists('PEAR/PackageFile.php')) {
             require_once 'PEAR/PackageFile.php';
         }
-        $a = &new PEAR_PackageFile($config, $debug, $tmpdir);
+        $a = new PEAR_PackageFile($config, $debug, $tmpdir);
         $common = new PEAR_Common;
         $common->ui = $this->ui;
         $a->setLogger($common);
@@ -350,7 +350,7 @@ used for automated conversion or learning the format.
             $info = $obj->fromPackageFile($params[0], PEAR_VALIDATE_NORMAL);
         } else {
             $archive = $info->getArchiveFile();
-            $tar = &new Archive_Tar($archive);
+            $tar = new Archive_Tar($archive);
             $tar->extract(dirname($info->getPackageFile()));
             $info->setPackageFile(dirname($info->getPackageFile()) . DIRECTORY_SEPARATOR .
                 $info->getPackage() . '-' . $info->getVersion() . DIRECTORY_SEPARATOR .
@@ -727,7 +727,7 @@ used for automated conversion or learning the format.
         if (!class_exists('PEAR_Installer')) {
             require_once 'PEAR/Installer.php';
         }
-        $a = &new PEAR_Installer($ui);
+        $a = new PEAR_Installer($ui);
         return $a;
     }
     
@@ -741,7 +741,7 @@ used for automated conversion or learning the format.
         }
         
         if (class_exists('PEAR_Command_Packaging')) {
-            $a = &new PEAR_Command_Packaging($ui, $config);
+            $a = new PEAR_Command_Packaging($ui, $config);
         } else {
             $a = null;
         }

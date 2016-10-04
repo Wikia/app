@@ -24,7 +24,7 @@ OO.inheritClass( ve.ui.WikiaImageInsertDialog, ve.ui.WikiaMediaInsertDialog );
 
 ve.ui.WikiaImageInsertDialog.static.name = 'wikiaImageInsert';
 
-ve.ui.WikiaImageInsertDialog.static.title = OO.ui.deferMsg( 'visualeditor-dialog-image-insert-title' );
+ve.ui.WikiaImageInsertDialog.static.title = OO.ui.deferMsg( 'wikia-visualeditor-dialog-image-insert-title' );
 
 ve.ui.WikiaImageInsertDialog.static.trackingLabel = 'dialog-image-insert';
 

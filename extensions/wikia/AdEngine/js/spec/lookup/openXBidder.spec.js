@@ -46,6 +46,26 @@ describe('ext.wikia.adEngine.lookup.openXBidder', function () {
 					return 'en';
 				}
 			},
+			openXHelper: {
+				setSlots: function () {},
+				getSlots: function() {
+					return {
+						TOP_LEADERBOARD: {
+							sizes: ['728x90', '970x250']
+						}
+					}
+				},
+				setupSlots: function() {},
+				getPagePath: function() {
+					return '/5441/wka.life/_dragonball//article'
+				},
+				getSlotPath: function() {
+					return 'wikia_gpt/5441/wka.life/_dragonball//article/gpt/TOP_LEADERBOARD'
+				},
+				isSlotSupported: function() {
+					return true;
+				}
+			},
 			doc: {
 				node: {
 					parentNode: {
@@ -68,6 +88,9 @@ describe('ext.wikia.adEngine.lookup.openXBidder', function () {
 				}
 			},
 			log: noop,
+			recoveryHelper: {
+				addOnBlockingCallback: noop
+			},
 			tiers: [],
 			win: {
 				OX: {
@@ -92,6 +115,7 @@ describe('ext.wikia.adEngine.lookup.openXBidder', function () {
 		return modules['ext.wikia.adEngine.lookup.lookupFactory'](
 			mocks.adContext,
 			mocks.adTracker,
+			mocks.recoveryHelper,
 			mocks.lazyQueue,
 			mocks.log
 		);
@@ -99,10 +123,9 @@ describe('ext.wikia.adEngine.lookup.openXBidder', function () {
 
 	function getOpenXBidder() {
 		return modules['ext.wikia.adEngine.lookup.openXBidder'](
-			mocks.adContext,
 			getFactory(),
 			mocks.adSlot,
-			mocks.adLogicZoneParams,
+			mocks.openXHelper,
 			mocks.doc,
 			mocks.log,
 			mocks.win

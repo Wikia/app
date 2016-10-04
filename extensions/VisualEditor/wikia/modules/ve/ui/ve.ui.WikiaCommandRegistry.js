@@ -5,6 +5,10 @@
  * @license The MIT License (MIT); see LICENSE.txt
  */
 
+ve.ui.CommandRegistry.prototype.getCommandByName = function ( name ) {
+	return this.lookup( name );
+};
+
 /* Wikia Command Registrations */
 
 ve.ui.commandRegistry.register(
@@ -67,5 +71,12 @@ ve.ui.commandRegistry.register(
 	new ve.ui.Command(
 		'wikiaTemplateInsert', 'window', 'open',
 		{ args: ['wikiaTemplateInsert'] }
+	)
+);
+
+ve.ui.commandRegistry.register(
+	new ve.ui.Command(
+		'wikiaInfoboxBuilder', 'window', 'open',
+		{ args: ['wikiaInfoboxBuilder'] }
 	)
 );

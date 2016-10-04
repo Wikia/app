@@ -94,7 +94,7 @@ class CrossWikiCoreTest extends BaseTest
 
 		$mwService = $this->getMock( 'Wikia\Search\MediaWikiService', [ 'getWikiId', 'getGlobal', 'getLanguageCode', 'getHubForWikiId', 'getHostName', 'getDomainsForWikiId' ] );
 
-		$mockMessage = $this->getMockBuilder( 'WfMessage' )
+		$mockMessage = $this->getMockBuilder( 'Message' )
 							->disableOriginalConstructor()
 							->setMethods( [ 'text' ] )
 							->getMock();
@@ -156,7 +156,7 @@ class CrossWikiCoreTest extends BaseTest
 				'wiki_pagetitle_txt' => 'Foo Wiki - Bar, Baz and More!',
 				];
 		$this->mockClass( 'WikiFactory', $mockWiki, 'getWikiById' );
-		$this->mockGlobalFunction( 'WfMessage', $mockMessage );
+		$this->mockGlobalFunction( 'wfMessage', $mockMessage );
 		$ref = new ReflectionMethod( $service, 'getWikiBasics' );
 		$ref->setAccessible( true );
 		$this->assertEquals(

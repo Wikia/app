@@ -6,14 +6,18 @@
 @import 'GlobalNavigationMixins';
 @import 'GlobalNavigationVariables';
 
+.global-navigation-wrapper {
+	height: $global-navigation-height;
+}
+
 .global-navigation {
 	background-color: $global-wikia-background-color;
 	box-shadow: 0 0 0 2px rgba(0, 0, 0, .3);
 	box-sizing: border-box;
 	color: $nav-foreground-dark-color;
 	height: $global-navigation-height;
-	margin-top: -$global-navigation-negative-top-margin;
 	position: fixed;
+	top: 0;
 	transition-duration: .5s;
 	transition-property: background-color;
 	width: 100%;
@@ -25,6 +29,11 @@
 
 	&.static {
 		position: absolute;
+		top: 0;
+	}
+
+	&.bfaa-pinned {
+		position: relative;
 	}
 
 	.global-navigation-container {
@@ -152,11 +161,6 @@
 			}
 		}
 	}
-}
-
-
-.WikiaSiteWrapper {
-	padding-top: $global-navigation-height + 1px;
 }
 
 .ve .global-navigation {

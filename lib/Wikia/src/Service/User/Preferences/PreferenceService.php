@@ -18,6 +18,7 @@ interface PreferenceService {
 	public function deleteLocalPreference( $userId, $name, $wikiId );
 	public function deleteAllPreferences( $userId );
 	public function findWikisWithLocalPreferenceValue( $preferenceName, $value );
+	public function findUsersWithGlobalPreferenceValue( $preferenceName, $value = null );
 	public function save( $userId );
 	public function getGlobalDefault( $pref );
 	public function deleteFromCache( $userId );

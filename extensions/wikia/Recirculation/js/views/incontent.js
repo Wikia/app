@@ -1,4 +1,3 @@
-/*global define*/
 define('ext.wikia.recirculation.views.incontent', [
 	'jquery',
 	'wikia.window',
@@ -6,6 +5,7 @@ define('ext.wikia.recirculation.views.incontent', [
 	'ext.wikia.recirculation.tracker',
 	'ext.wikia.recirculation.utils'
 ], function ($, w, log, tracker, utils) {
+	'use strict';
 
 	var logGroup = 'ext.wikia.recirculation.views.incontent',
 		$container = $('#mw-content-text'),
@@ -24,26 +24,49 @@ define('ext.wikia.recirculation.views.incontent', [
 		}
 
 		// The idea is to show links above the first section under an infobox
-		width = $container.outerWidth();
+		width = $container.outerWidth(false);
 		firstSuitableSection = sections.filter(function(index, element) {
 			return element.offsetWidth === width;
 		}).first();
 
+		if (firstSuitableSection.length === 0) {
+			return false;
+		}
+
 		return firstSuitableSection;
 	}
 
-	function render(data) {
-		var deferred = $.Deferred(),
-			section = findSuitableSection();
+	function waitForToc() {
+		var $toc = $('#toc'),
+			deferred = $.Deferred(),
+			args = Array.prototype.slice.call(arguments);
 
-		if (!section) {
-			return deferred.reject();
+		if ($toc.length === 0 || $toc.data('loaded') === true || !$toc.hasClass( 'show' )) {
+			deferred.resolve.apply(null, args);
+		} else {
+			$toc.one('afterLoad.toc', function() {
+				deferred.resolve.apply(null, args);
+			});
 		}
 
-		utils.renderTemplate('incontent.mustache', data).then(function($html) {
-			section.before($html);
-			deferred.resolve($html);
-		});
+		return deferred.promise();
+	}
+
+	function render(data) {
+		var deferred = $.Deferred();
+
+		utils.renderTemplate('incontent.mustache', data)
+			.then(waitForToc)
+			.then(function($html) {
+				var section = findSuitableSection();
+
+				if (!section) {
+					return deferred.reject('Recirculation in-content widget not shown. Not enough sections in article');
+				}
+
+				section.before($html);
+				deferred.resolve($html);
+			});
 
 		return deferred.promise();
 	}
@@ -55,7 +78,7 @@ define('ext.wikia.recirculation.views.incontent', [
 			$html.on('mousedown', 'a', function() {
 				tracker.trackVerboseClick(experimentName, utils.buildLabel(this, 'in-content'));
 			});
-		}
+		};
 	}
 
 	return function() {
@@ -64,6 +87,6 @@ define('ext.wikia.recirculation.views.incontent', [
 			render: render,
 			setupTracking: setupTracking,
 			findSuitableSection: findSuitableSection
-		}
-	}
+		};
+	};
 });

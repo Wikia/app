@@ -241,8 +241,6 @@ width: 310px; padding: 10px; text-align: left; float: right; margin-bottom:15px;
 |}<noinclude>
 <br clear="all">
 
-{{Quote|Write the first paragraph of your page here.}}
-
 =Test article=
 <div class="coolStyling">
 ==Section heading==
@@ -330,7 +328,6 @@ anything here -->
 					  'JsonFormatTextNode' => [ ]
 				  ],
 				  'JsonFormatTextNode:1' => [ ],
-				  'JsonFormatQuoteNode' => [ 'text', 'author' ],
 				  'JsonFormatSectionNode' => [
 					  'level', 'title',
 					  'JsonFormatTextNode' => [ ],

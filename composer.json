@@ -22,6 +22,6 @@
     "doctrine/cache": "~1.0",
     "ocramius/proxy-manager": "~1.0",
     "sensiolabs/consul-php-sdk": "^1.0",
-    "ramsey/uuid": "^3.3"
+    "wikia/phpflickr": "^3.1"
   }
 }

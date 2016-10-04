@@ -1,0 +1,17 @@
+<section class="community-page-contributors-module-section community-page-recently-joined">
+	{{#haveNewMembers}}
+		<div class="community-page-module-section-title">{{recentlyJoinedHeaderText}}</div>
+		<div class="community-page-recently-joined-members">
+			{{#members}}
+				<div class="user-avatar-wrapper">
+					<div class="badge-container" title="{{badge.badgeText}}">{{{badge.badgeMarkup}}}</div>
+					<div class="avatar-container">
+						<a data-tracking="recently-joined-user-avatar" href="{{profilePage}}" title="{{userName}}">
+							{{{avatar}}}
+						</a>
+					</div>
+				</div>
+			{{/members}}
+		</div>
+	{{/haveNewMembers}}
+</section>

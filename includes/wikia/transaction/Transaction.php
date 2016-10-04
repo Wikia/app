@@ -39,6 +39,7 @@ class Transaction {
 	const PARAM_API_LIST = 'api_list';
 	const PARAM_WIKI = 'wiki';
 	const PARAM_DPL = 'dpl';
+	const PARAM_SEMANTIC_MEDIAWIKI = 'semantic_mediawiki';
 	const PARAM_AB_PERFORMANCE_TEST = 'perf_test';
 	const PARAM_MAINTENANCE_SCRIPT = 'maintenance_script';
 
@@ -214,6 +215,43 @@ class Transaction {
 	}
 
 	/**
+	 * Mark SemanticMediaWiki requests (they will always call smwfGetStore() function)
+	 *
+	 * @param SMWStore $store
+	 * @return bool
+	 */
+	public static function onAfterSmwfGetStore( $store ) {
+		self::setAttribute( self::PARAM_SEMANTIC_MEDIAWIKI, true );
+		return true;
+	}
+
+	/**
+	 * Extract given header value from the list of all response headers provided by headers_list() function
+	 *
+	 * @param $headerName
+	 * @param array $headers
+	 * @return string|null
+	 */
+	private static function getHeaderValue( $headerName, array $headers ) {
+		/**
+		 * $headers will have entries like the following ones:
+		 *
+		 * 'X-Served-By: dev-macbre'
+		 * 'X-Trace-Id: 2d425caa-19a9-4f78-a5e7-8bdda3286f0d'
+		 */
+		$headerName = strtolower( $headerName );
+
+		foreach( $headers as $header ) {
+			if ( startsWith( strtolower( $header ), $headerName . ':' ) ) {
+				list( $_, $val ) = explode( ':', $header, 2 );
+				return $val;
+			}
+		}
+
+		return null;
+	}
+
+	/**
 	 * Given the list of respons headers detect whether the response can be cached on CDN
 	 *
 	 * We assume that the response is cacheable if s-maxage entry in Cache-Control header
@@ -225,15 +263,15 @@ class Transaction {
 	 * - Cache-Control: public, max-age=2592000 (AssetsManager, cacheable)
 	 * - Cache-Control: private, must-revalidate, max-age=0 (special page, not cacheable)
 	 *
-	 * @param array $headers key - value list of HTTP response headers
+	 * @param array $headers list of headers to be sent as returned by headers_list()
 	 * @return bool|null will return null for maintenance / CLI scripts
 	 */
-	public static function isCacheable( $headers ) {
-		if ( empty( $headers['Cache-Control'] ) ) {
+	public static function isCacheable( array $headers ) {
+		$cacheControl = self::getHeaderValue( 'Cache-Control', $headers );
+		if ( is_null( $cacheControl ) ) {
 			return null;
 		}
 
-		$cacheControl = $headers['Cache-Control'];
 		$sMaxAge = 0;
 
 		// has "private" entry?
@@ -256,15 +294,13 @@ class Transaction {
 	/**
 	 * Analyze the response header and set "cacheablity" flag
 	 *
-	 * @return bool true (hook handler
+	 * @return bool true (hook handler)
 	 */
 	public static function onRestInPeace() {
-		if ( function_exists( 'apache_response_headers' ) ) {
-			$isCacheable = self::isCacheable( apache_response_headers() );
+		$isCacheable = self::isCacheable( headers_list() );
 
-			if ( is_bool( $isCacheable ) ) {
-				self::setAttribute( 'cacheable', $isCacheable );
-			}
+		if ( is_bool( $isCacheable ) ) {
+			self::setAttribute( 'cacheable', $isCacheable );
 		}
 		return true;
 	}

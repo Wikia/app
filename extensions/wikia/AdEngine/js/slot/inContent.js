@@ -1,9 +1,10 @@
 /*global define*/
 define('ext.wikia.adEngine.slot.inContent', [
 	'ext.wikia.adEngine.adTracker',
+	'JSMessages',
 	'wikia.log',
 	'wikia.window'
-], function (adTracker, log, win) {
+], function (adTracker, msg, log, win) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.slot.inContent',
@@ -13,8 +14,8 @@ define('ext.wikia.adEngine.slot.inContent', [
 	/**
 	 * Adds dynamically new slot in the right place and sends tracking data
 	 */
-	function init(slotName) {
-		var adHtml = '<div id="' + slotName + '" class="wikia-ad default-height"></div>',
+	function init(slotName, onSuccessCallback) {
+		var adHtml = '<div id="INCONTENT_WRAPPER"><div id="' + slotName + '" class="wikia-ad default-height" data-label="' + msg('adengine-advertisement') + '"></div></div>',
 			logMessage,
 			logWikiData = '(wikiId: ' + win.wgCityId + ' articleId: ' + win.wgArticleId + ')',
 			$header,
@@ -49,7 +50,10 @@ define('ext.wikia.adEngine.slot.inContent', [
 		log('insertSlot()', 'debug', logGroup);
 		$header.before(adHtml);
 		adTracker.track('slot/' + slotNameGA + '/success');
-		win.adslots2.push(slotName);
+		win.adslots2.push({
+			slotName: slotName,
+			onSuccess: onSuccessCallback
+		});
 	}
 
 	return {

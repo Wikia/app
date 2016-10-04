@@ -97,8 +97,6 @@ $wgAjaxExportList[] = "CreateBlogListingPage::axBlogListingCheckMatches";
  */
 $wgHooks[ 'AlternateEdit' ][] = 'BlogArticle::alternateEditHook';
 $wgHooks[ 'ArticleFromTitle' ][] = 'BlogArticle::ArticleFromTitle';
-$wgHooks[ 'CategoryViewer::getOtherSection' ][] = 'BlogArticle::getOtherSection';
-$wgHooks[ 'CategoryViewer::addPage' ][] = 'BlogArticle::addCategoryPage';
 $wgHooks[ 'onSkinTemplateNavigation' ][] = 'BlogArticle::skinTemplateTabs';
 $wgHooks[ 'EditPage::showEditForm:checkboxes' ][] = 'BlogArticle::editPageCheckboxes';
 $wgHooks[ 'LinksUpdate' ][] = 'BlogArticle::linksUpdate';
@@ -111,6 +109,9 @@ $wgHooks[ 'TitleMoveComplete' ][] = 'BlogsHelper::onTitleMoveComplete';
 
 // Usages of images on blogs on file pages
 $wgHooks['FilePageImageUsageSingleLink'][] = 'BlogsHelper::onFilePageImageUsageSingleLink';
+
+// Checking that user is permitted to delete blog articles
+$wgHooks['BeforeDeletePermissionErrors'][] = 'BlogLockdown::onBeforeDeletePermissionErrors';
 
 /**
  * load other parts

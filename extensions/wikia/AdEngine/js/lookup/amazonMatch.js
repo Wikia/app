@@ -16,8 +16,8 @@ define('ext.wikia.adEngine.lookup.amazonMatch', [
 				HUB_TOP_LEADERBOARD: ['7x9', '9x2'],
 				HUB_TOP_RIGHT_BOXAD: ['3x2', '3x6'],
 				INCONTENT_BOXAD_1: ['3x2', '1x6', '3x6'],
-				LEFT_SKYSCRAPER_2: ['1x6', '3x6'],
-				LEFT_SKYSCRAPER_3: ['1x6', '3x6'],
+				LEFT_SKYSCRAPER_2: ['1x6', '3x2', '3x6'],
+				LEFT_SKYSCRAPER_3: ['1x6', '3x2', '3x6'],
 				TOP_LEADERBOARD: ['7x9', '9x2'],
 				TOP_RIGHT_BOXAD: ['3x2', '3x6']
 			},

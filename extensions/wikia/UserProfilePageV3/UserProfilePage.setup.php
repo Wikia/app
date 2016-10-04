@@ -36,9 +36,7 @@ $wgAutoloadClasses['UserAvatarsService'] =  $dir . '/api/UserAvatarsService.clas
 /**
  * helper classes (strategies)
  */
-$wgAutoloadClasses['UserTagsStrategyBase'] = $dir . '/strategies/UserTagsStrategyBase.class.php';
-$wgAutoloadClasses['UserOneTagStrategy'] = $dir . '/strategies/UserOneTagStrategy.class.php';
-$wgAutoloadClasses['UserTwoTagsStrategy'] = $dir . '/strategies/UserTwoTagsStrategy.class.php';
+$wgAutoloadClasses['UserTagsStrategy'] = $dir . '/UserTagsStrategy.class.php';
 
 /**
  * helpers
@@ -49,6 +47,11 @@ $wgAutoloadClasses['UserWikisFilterDecorator'] = $dir . '/filters/UserWikisFilte
 $wgAutoloadClasses['UserWikisFilterUniqueDecorator'] = $dir . '/filters/UserWikisFilterUniqueDecorator.class.php';
 $wgAutoloadClasses['UserWikisFilterRestrictedDecorator'] = $dir . '/filters/UserWikisFilterRestrictedDecorator.class.php';
 $wgAutoloadClasses['UserWikisFilterPrivateDecorator'] = $dir . '/filters/UserWikisFilterPrivateDecorator.class.php';
+
+/**
+ * helpers - discussion
+ */
+$wgAutoloadClasses['UserIdentityBoxDiscussionInfo'] = $dir . '/UserIdentityBoxDiscussionInfo.class.php';
 
 /**
  * hooks

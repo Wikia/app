@@ -96,7 +96,8 @@ class Parser {
 	const OT_PLAIN = 4; # like extractSections() - portions of the original are returned unchanged.
 
 	# Marker Suffix needs to be accessible staticly.
-	const MARKER_SUFFIX = "-QINU\x7f";
+	const MARKER_SUFFIX = "-QINU`\"'\x7f";
+	const MARKER_PREFIX = "\x7f'\"`UNIQ";
 
 	# Persistent:
 	var $mTagHooks = array();
@@ -297,7 +298,7 @@ class Parser {
 		 */
 		# $this->mUniqPrefix = "\x07UNIQ" . Parser::getRandomString();
 		# Changed to \x7f to allow XML double-parsing -- TS
-		$this->mUniqPrefix = "\x7fUNIQ" . self::getRandomString();
+		$this->mUniqPrefix = self::MARKER_PREFIX . self::getRandomString();
 		$this->mStripState = new StripState( $this->mUniqPrefix );
 
 
@@ -1972,7 +1973,7 @@ class Parser {
 				$might_be_img = true;
 				$text = $m[2];
 				if ( strpos( $m[1], '%' ) !== false ) {
-					$m[1] = rawurldecode( $m[1] );
+					$m[1] = str_replace( [ '<', '>' ], [ '&lt;', '&gt;' ], rawurldecode( $m[1] ) );
 				}
 				$trail = "";
 			} else { # Invalid form; output directly
@@ -3758,10 +3759,7 @@ class Parser {
 		}
 
 		# wikia start
-		global $wgEnableContextLinkTemplateParsing, $wgEnableInfoIconTemplateParsing;
-		if ( $wgEnableContextLinkTemplateParsing || $wgEnableInfoIconTemplateParsing ) {
-			wfRunHooks( 'Parser::endBraceSubstitution', array( $originalTitle, &$ret['text'], &$this ) );
-		}
+		wfRunHooks( 'Parser::endBraceSubstitution', array( $originalTitle, &$ret['text'], &$this ) );
 		# wikia end
 
 		wfProfileOut( __METHOD__ );
@@ -4029,9 +4027,14 @@ class Parser {
 
 		$text = Http::get( $url );
 		if ( !$text ) {
-			# wikia start
-			Wikia::log(__METHOD__, false, "Scary transclusion failed for <{$url}>");
-			# wikia end
+			// Wikia change - begin
+			if ( $text === '' ) {
+				Wikia\Logger\WikiaLogger::instance()->error( __METHOD__ . ' - empty response', [
+					'url' => $url,
+				] );
+			}
+			// Wikia change - end
+
 			return wfMsgForContent( 'scarytranscludefailed', $url );
 		}
 

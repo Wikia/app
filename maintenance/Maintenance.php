@@ -119,6 +119,8 @@ abstract class Maintenance {
 	 */
 	protected static $mCoreScripts = null;
 
+	private $runtimeStatistics = [];
+
 	/**
 	 * Default constructor. Children should call this *first* if implementing
 	 * their own constructors
@@ -1279,6 +1281,13 @@ abstract class Maintenance {
 		}
 		print $prompt;
 		return fgets( STDIN, 1024 );
+	}
+
+	public function addRuntimeStatistics( array $runtimeStatistics ) {
+		$this->runtimeStatistics = array_merge($this->runtimeStatistics, $runtimeStatistics );
+	}
+	public function getRuntimeStatistics() {
+		return $this->runtimeStatistics;
 	}
 }
 

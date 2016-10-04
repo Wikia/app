@@ -4,7 +4,12 @@
 describe('AdLogicPageParams', function () {
 	'use strict';
 
-	var logMock = function () { return; };
+	var logMock = function () { return; },
+		geoMock = {
+			getCountryCode: function() {
+				return 'PL';
+			}
+		};
 
 	function mockAdContext(targeting) {
 		return {
@@ -110,9 +115,10 @@ describe('AdLogicPageParams', function () {
 			mockAdContext(targeting),
 			mockPageViewCounter(opts.pvCount),
 			mockAdLogicZoneParams(),
-			logMock,
 			windowMock.document,
+			geoMock,
 			windowMock.location,
+			logMock,
 			windowMock,
 			abTestMock,
 			kruxMock
@@ -131,6 +137,7 @@ describe('AdLogicPageParams', function () {
 		expect(params.dmn).toBe('zone_domain');
 		expect(params.hostpre).toBe('zone_hostname_prefix');
 		expect(params.lang).toBe('zl');
+		expect(params.geo).toBe('PL');
 	});
 
 	it('getPageLevelParams wpage param', function () {
@@ -232,30 +239,14 @@ describe('AdLogicPageParams', function () {
 		expect(params.ksgmnt).toBeUndefined('No Krux on COPPA wiki');
 	});
 
-	it('getPageLevelParams esrb + COPPA', function () {
-		var params;
-
-		params = getParams({
+	it('decodeLegacyDartParams should skip esrb', function () {
+		var params = getParams({
 			wikiCustomKeyValues: 'key1=value1;esrb=rating;key2=value2'
 		});
-		expect(params.esrb.toString()).toBe('rating', 'esrb=yes, COPPA=no');
 
-		params = getParams({
-			wikiCustomKeyValues: 'key1=value1;esrb=rating;key2=value2',
-			wikiDirectedAtChildren: true
-		});
-		expect(params.esrb.toString()).toBe('rating', 'esrb=yes, COPPA=yes');
-
-		params = getParams({
-			wikiCustomKeyValues: 'key1=value1;key2=value2'
-		});
-		expect(params.esrb.toString()).toBe('teen', 'esrb=null, COPPA=no');
-
-		params = getParams({
-			wikiCustomKeyValues: 'key1=value1;key2=value2',
-			wikiDirectedAtChildren: true
-		});
-		expect(params.esrb.toString()).toBe('ec', 'esrb=null, COPPA=yes');
+		expect(params.esrb).not.toBeDefined();
+		expect(params.key1.toString()).toBe('value1');
+		expect(params.key2.toString()).toBe('value2');
 	});
 
 	it('getPageLevelParams pv param - oasis', function () {
@@ -352,5 +343,12 @@ describe('AdLogicPageParams', function () {
 		});
 
 		expect(params.ar).toBe('3:4');
+	});
+
+	it('geo is set only when Wikia.Geo.getCountryCode returns value', function () {
+		geoMock.getCountryCode = function() { return; };
+		var params = getParams();
+
+		expect(params.geo).toBe('none');
 	});
 });

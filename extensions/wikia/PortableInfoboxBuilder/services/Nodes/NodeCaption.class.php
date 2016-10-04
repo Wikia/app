@@ -10,8 +10,11 @@ class NodeCaption extends Node {
 	protected $allowedAttributes = [ 'source' => [] ];
 
 	public function asJsonObject() {
-		$object = new \StdClass();
-		$object->caption = [ 'source' => (string)$this->xmlNode->attributes()['source'] ];
+		$object = new \stdClass();
+		$caption = new \stdClass();
+		$caption->source = (string)$this->xmlNode->attributes()['source'];
+		$object->caption = $caption;
+
 		return $object;
 	}
 }

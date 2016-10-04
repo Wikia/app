@@ -77,7 +77,7 @@ $phalanxhooks = array(
 		),
 	'PhalanxWikiCreationBlock' =>
 		array(
-			'AutoCreateWiki::checkBadWords'   => 'isAllowedText'
+			'CreateWikiChecks::checkBadWords' => 'isAllowedText'
 		),
 	'PhalanxHooks' =>
 		array(

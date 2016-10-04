@@ -11,47 +11,48 @@
  *
  */
 
-$messages = array();
+$messages = [];
 
-$messages['en'] = array(
-	'interwikiedit-desc'            => 'Special:InterwikiEdit for web-based handling of interwiki links',
-	'interwikiedit'                 => 'Interwiki Editor',
-	'iwedit-title'                  => 'Interwiki Editor',
-	'iwedit-language-interwikis'    => 'language interwikis only',
-	'iwedit-all-interwikis'         => 'all interwikis',
-	'iwedit-update'                 => 'Update',
-	'iwedit-error'                  => 'An error occurred.',
-	'iwedit-success'                => 'Link creation successful.',
-	'iwedit-local'                  => 'Local-only interwiki? (i.e. not global)',
-	'iwedit-trans'                  => 'Enable scary transclusion',
-);
+$messages['en'] = [
+	'interwikiedit-desc' => 'Special:InterwikiEdit for web-based handling of interwiki links',
+	'interwikiedit' => 'Interwiki Editor',
+	'iwedit-title' => 'Interwiki Editor',
+	'iwedit-language-interwikis' => 'language interwikis only',
+	'iwedit-all-interwikis' => 'all interwikis',
+	'iwedit-update' => 'Update',
+	'iwedit-error' => 'An error occurred.',
+	'iwedit-success' => 'Link creation successful.',
+	'iwedit-local' => 'Local-only interwiki? (i.e. not global)',
+	'iwedit-trans' => 'Enable scary transclusion',
+	'right-InterwikiEdit' => 'Allows access to Special:InterwikiEdit',
+];
 
 /** Message documentation (Message documentation)
  * @author EugeneZelenko
  * @author LWChris
  * @author Translationista
  */
-$messages['qqq'] = array(
+$messages['qqq'] = [
 	'interwikiedit-desc' => '{{desc}}',
 	'iwedit-update' => '{{Identical|Update}}',
-);
+];
 
 /** Afrikaans (Afrikaans)
  * @author Naudefj
  */
-$messages['af'] = array(
+$messages['af'] = [
 	'iwedit-title' => 'Wysig Interwikitabel',
 	'iwedit-all-interwikis' => "alle interwiki's",
 	'iwedit-update' => 'Opdateer',
 	'iwedit-error' => "'n Fout het voorgekom.",
 	'iwedit-success' => 'Die skakel is geskep.',
-);
+];
 
 /** Arabic (العربية)
  * @author Achraf94
  * @author OsamaK
  */
-$messages['ar'] = array(
+$messages['ar'] = [
 	'interwikiedit' => 'محرر الإنترويكي',
 	'iwedit-title' => 'محرر الإنترويكي',
 	'iwedit-language-interwikis' => 'روابط إنترويكي للغات فقط',
@@ -59,29 +60,29 @@ $messages['ar'] = array(
 	'iwedit-update' => 'حدّث',
 	'iwedit-error' => 'حدث خطأ.',
 	'iwedit-success' => 'تم إنشاء رابط بنجاح.',
-);
+];
 
 /** Assamese (অসমীয়া)
  * @author Bishnu Saikia
  */
-$messages['as'] = array(
+$messages['as'] = [
 	'interwikiedit' => 'আন্তঃৱিকি সম্পাদক',
 	'iwedit-title' => 'আন্তঃৱিকি সম্পাদক',
 	'iwedit-update' => 'আপডেট',
-);
+];
 
 /** Azerbaijani (azərbaycanca)
  * @author Cekli829
  */
-$messages['az'] = array(
+$messages['az'] = [
 	'iwedit-title' => 'İnterviki redaktoru',
 	'iwedit-all-interwikis' => 'bütün intervikilər',
-);
+];
 
 /** Bavarian (Boarisch)
  * @author Mucalexx
  */
-$messages['bar'] = array(
+$messages['bar'] = [
 	'interwikiedit' => 'Interwiki-Editor',
 	'iwedit-title' => 'Interwiki-Editor',
 	'iwedit-language-interwikis' => 'netter Sprooch-Interwikis',
@@ -89,14 +90,14 @@ $messages['bar'] = array(
 	'iwedit-update' => 'Aktualisiern',
 	'iwedit-error' => 'A Feeler is afdreen.',
 	'iwedit-success' => 'Link-Erzeigung erfoigreich.',
-);
+];
 
 /** Belarusian (Taraškievica orthography) (беларуская (тарашкевіца)‎)
  * @author EugeneZelenko
  * @author Jim-by
  * @author Red Winged Duck
  */
-$messages['be-tarask'] = array(
+$messages['be-tarask'] = [
 	'interwikiedit' => 'Рэдактар інтэрвікі',
 	'iwedit-title' => 'Рэдактар інтэрвікі',
 	'iwedit-language-interwikis' => 'толькі моўныя інтэрвікі',
@@ -104,33 +105,33 @@ $messages['be-tarask'] = array(
 	'iwedit-update' => 'Абнавіць',
 	'iwedit-error' => 'Узьнікла памылка.',
 	'iwedit-success' => 'Спасылка створаная пасьпяхова.',
-);
+];
 
 /** Bulgarian (български)
  * @author DCLXVI
  */
-$messages['bg'] = array(
+$messages['bg'] = [
 	'iwedit-all-interwikis' => 'всички междууикита',
 	'iwedit-update' => 'Обновяване',
-);
+];
 
 /** Breton (brezhoneg)
  * @author Gwenn-Ael
  * @author Y-M D
  */
-$messages['br'] = array(
+$messages['br'] = [
 	'iwedit-title' => 'Embanner Interwiki',
 	'iwedit-language-interwikis' => 'interwikioù yezhoù hepken',
 	'iwedit-all-interwikis' => 'An holl wikioù',
 	'iwedit-update' => 'Hizivaat',
 	'iwedit-error' => "ur fazi zo c'hoarvezet",
 	'iwedit-success' => 'Liamm krouet gant berzh.',
-);
+];
 
 /** Catalan (català)
  * @author Marcmpujol
  */
-$messages['ca'] = array(
+$messages['ca'] = [
 	'interwikiedit' => "Editor d'interwikis",
 	'iwedit-title' => "Editor d'Interwiki",
 	'iwedit-language-interwikis' => 'només interwikis de llengua',
@@ -138,12 +139,12 @@ $messages['ca'] = array(
 	'iwedit-update' => 'Actualitzar',
 	'iwedit-error' => "S'ha produït un error.",
 	'iwedit-success' => "Creació d'enllaç amb èxit.",
-);
+];
 
 /** Chechen (нохчийн)
  * @author Умар
  */
-$messages['ce'] = array(
+$messages['ce'] = [
 	'interwikiedit' => 'Юкъарвикин хьажоргаш тайо гӀирс',
 	'iwedit-title' => 'Юкъарвикеш та йе гӀирс',
 	'iwedit-language-interwikis' => 'Меттанийн юкъарвикеш бен',
@@ -151,13 +152,13 @@ $messages['ce'] = array(
 	'iwedit-update' => 'Карлаяккха',
 	'iwedit-error' => 'ГӀалат даьлла.',
 	'iwedit-success' => 'Хьажорг кхиамца кхоьллина.',
-);
+];
 
 /** Czech (čeština)
  * @author Dontlietome7
  * @author Utar
  */
-$messages['cs'] = array(
+$messages['cs'] = [
 	'interwikiedit' => 'Interwiki Editor',
 	'iwedit-title' => 'Editor Interwiki',
 	'iwedit-language-interwikis' => 'pouze jazyková interwiki',
@@ -165,21 +166,21 @@ $messages['cs'] = array(
 	'iwedit-update' => 'Aktualizovat',
 	'iwedit-error' => 'Nastala chyba.',
 	'iwedit-success' => 'Odkaz byl úspěšně vytvořen.',
-);
+];
 
 /** Chuvash (Чӑвашла)
  * @author Chuvash2014
  */
-$messages['cv'] = array(
+$messages['cv'] = [
 	'iwedit-update' => 'Çĕнет',
-);
+];
 
 /** German (Deutsch)
  * @author Claudia Hattitten
  * @author LWChris
  * @author Metalhead64
  */
-$messages['de'] = array(
+$messages['de'] = [
 	'interwikiedit-desc' => 'Special:InterwikiEdit für eine webbasierte Verwaltung von Interwiki-Links',
 	'interwikiedit' => 'Interwiki-Editor',
 	'iwedit-title' => 'Interwiki-Editor',
@@ -190,25 +191,25 @@ $messages['de'] = array(
 	'iwedit-success' => 'Link-Erzeugung erfolgreich.',
 	'iwedit-local' => 'Nur lokales Interwiki? (z.&nbsp;B. nicht global)',
 	'iwedit-trans' => 'Scary-Einbindung aktivieren',
-);
+];
 
 /** Zazaki (Zazaki)
  * @author Erdemaslancan
  * @author Mirzali
  */
-$messages['diq'] = array(
+$messages['diq'] = [
 	'interwikiedit' => 'Vurnkarê interwiki',
 	'iwedit-title' => 'Vurnkarê interwiki',
 	'iwedit-all-interwikis' => 'interwikiy pêro',
 	'iwedit-update' => 'Rocane ke',
-);
+];
 
 /** Spanish (español)
  * @author Macofe
  * @author Translationista
  * @author VegaDark
  */
-$messages['es'] = array(
+$messages['es'] = [
 	'interwikiedit-desc' => 'Especial:InterwikiEdit para la web basado en el manejo de interwikis',
 	'interwikiedit' => 'Editor de interwikis',
 	'iwedit-title' => 'Editor de Interwiki',
@@ -219,20 +220,20 @@ $messages['es'] = array(
 	'iwedit-success' => 'El vínculo se creó correctamente.',
 	'iwedit-local' => '¿interwiki sólo local? (es decir, no global)',
 	'iwedit-trans' => 'Activar la transclusión temeraria',
-);
+];
 
 /** Basque (euskara)
  * @author Subi
  */
-$messages['eu'] = array(
+$messages['eu'] = [
 	'iwedit-all-interwikis' => 'interwiki guztiak',
 	'iwedit-update' => 'Eguneratu',
-);
+];
 
 /** Persian (فارسی)
  * @author Mjbmr
  */
-$messages['fa'] = array(
+$messages['fa'] = [
 	'interwikiedit' => 'ویرایشگر میان‌ویکی',
 	'iwedit-title' => 'ویرایشگر میان‌ویکی',
 	'iwedit-language-interwikis' => 'فقط میان‌ویکی‌های زبان',
@@ -240,22 +241,22 @@ $messages['fa'] = array(
 	'iwedit-update' => 'به روز رسانی',
 	'iwedit-error' => 'خطایی رخ داده است.',
 	'iwedit-success' => 'ایجاد پیوند موفق بود.',
-);
+];
 
 /** Finnish (suomi)
  * @author Centerlink
  */
-$messages['fi'] = array(
+$messages['fi'] = [
 	'iwedit-title' => 'Interwiki-editori',
 	'iwedit-update' => 'Päivitä',
 	'iwedit-error' => 'Tapahtui virhe.',
 	'iwedit-success' => 'Linkin luominen onnistui.',
-);
+];
 
 /** Faroese (føroyskt)
  * @author EileenSanda
  */
-$messages['fo'] = array(
+$messages['fo'] = [
 	'interwikiedit' => 'Interwiki-rættari',
 	'iwedit-title' => 'Interwiki-rættari',
 	'iwedit-language-interwikis' => 'bert mál-interwiki leinkjur',
@@ -263,14 +264,14 @@ $messages['fo'] = array(
 	'iwedit-update' => 'Dagfør',
 	'iwedit-error' => 'Ein feilur hendi.',
 	'iwedit-success' => 'Leinkja er upprættað.',
-);
+];
 
 /** French (français)
  * @author Gomoko
  * @author Peter17
  * @author Wyz
  */
-$messages['fr'] = array(
+$messages['fr'] = [
 	'interwikiedit-desc' => 'Special:InterwikiEdit pour la gestion des liens interwiki basée sur le web',
 	'interwikiedit' => 'Éditeur interwiki',
 	'iwedit-title' => 'Éditeur Interwiki',
@@ -281,12 +282,12 @@ $messages['fr'] = array(
 	'iwedit-success' => 'Le lien a été créé avec succès.',
 	'iwedit-local' => 'Interwiki uniquement local (i.e. non global) ?',
 	'iwedit-trans' => 'Activer la super-inclusion',
-);
+];
 
 /** Galician (galego)
  * @author Toliño
  */
-$messages['gl'] = array(
+$messages['gl'] = [
 	'interwikiedit' => 'Editor de interwiki',
 	'iwedit-title' => 'Editor de interwiki',
 	'iwedit-language-interwikis' => 'só interwikis de linguas',
@@ -294,12 +295,12 @@ $messages['gl'] = array(
 	'iwedit-update' => 'Actualizar',
 	'iwedit-error' => 'Houbo un erro.',
 	'iwedit-success' => 'A ligazón creouse con éxito.',
-);
+];
 
 /** Hebrew (עברית)
  * @author Yona b
  */
-$messages['he'] = array(
+$messages['he'] = [
 	'interwikiedit' => 'עורך קישורי שפה',
 	'iwedit-title' => 'עורך קישורי שפה',
 	'iwedit-language-interwikis' => 'שפות קישורי שפה בלבד',
@@ -307,13 +308,13 @@ $messages['he'] = array(
 	'iwedit-update' => 'עדכון',
 	'iwedit-error' => 'אירעה שגיאה.',
 	'iwedit-success' => 'יצירת קישור עברה בהצלחה.',
-);
+];
 
 /** Hungarian (magyar)
  * @author Dj
  * @author Glanthor Reviol
  */
-$messages['hu'] = array(
+$messages['hu'] = [
 	'interwikiedit' => 'Wikiközi hivatkozás szerkesztő',
 	'iwedit-title' => 'Wikiközi hivatkozás szerkesztő',
 	'iwedit-language-interwikis' => 'csak a nyelvi wikiközi hivatkozások',
@@ -321,24 +322,24 @@ $messages['hu'] = array(
 	'iwedit-update' => 'Frissítés',
 	'iwedit-error' => 'Hiba történt.',
 	'iwedit-success' => 'A hivatkozás létrehozása sikerült.',
-);
+];
 
 /** Armenian (Հայերեն)
  * @author Pandukht
  */
-$messages['hy'] = array(
+$messages['hy'] = [
 	'iwedit-title' => 'Ինտերվիքիի խմբագիր',
 	'iwedit-language-interwikis' => 'միայն լեզվային ինտերվիքիներ',
 	'iwedit-all-interwikis' => 'բոլոր ինտերվիքիները',
 	'iwedit-update' => 'Թարմացնել',
 	'iwedit-error' => 'Սխալ է տեղի ունեցել:',
 	'iwedit-success' => 'Հղումը հաջողությամբ ստեղծված է',
-);
+];
 
 /** Interlingua (interlingua)
  * @author McDutchie
  */
-$messages['ia'] = array(
+$messages['ia'] = [
 	'interwikiedit' => 'Editor interwiki',
 	'iwedit-title' => 'Editor interwiki',
 	'iwedit-language-interwikis' => 'interwikis de linguas solmente',
@@ -346,13 +347,13 @@ $messages['ia'] = array(
 	'iwedit-update' => 'Actualisar',
 	'iwedit-error' => 'Un error ha occurrite.',
 	'iwedit-success' => 'Creation de ligamine succedite.',
-);
+];
 
 /** Indonesian (Bahasa Indonesia)
  * @author Aldnonymous
  * @author Irwangatot
  */
-$messages['id'] = array(
+$messages['id'] = [
 	'interwikiedit' => 'Interwiki Editor',
 	'iwedit-title' => 'Penyunting interwiki',
 	'iwedit-language-interwikis' => 'hanya interwiki bahasa',
@@ -360,18 +361,18 @@ $messages['id'] = array(
 	'iwedit-update' => 'Perbarui',
 	'iwedit-error' => 'Sebuah kesalahan terjadi.',
 	'iwedit-success' => 'Membuat pranala berhasil.',
-);
+];
 
 /** Italian (italiano)
  */
-$messages['it'] = array(
+$messages['it'] = [
 	'iwedit-update' => 'Aggiorna',
-);
+];
 
 /** Japanese (日本語)
  * @author Tommy6
  */
-$messages['ja'] = array(
+$messages['ja'] = [
 	'interwikiedit' => 'インターウィキの編集',
 	'iwedit-title' => 'インターウィキの編集',
 	'iwedit-language-interwikis' => '言語間インターウィキのみ',
@@ -379,46 +380,46 @@ $messages['ja'] = array(
 	'iwedit-update' => '更新',
 	'iwedit-error' => 'エラーが発生しました。',
 	'iwedit-success' => 'リンクの作成に成功しました。',
-);
+];
 
 /** Kazakh (Cyrillic script) (қазақша (кирил)‎)
  * @author Arystanbek
  */
-$messages['kk-cyrl'] = array(
+$messages['kk-cyrl'] = [
 	'interwikiedit' => 'Интеруики өңдеуші',
 	'iwedit-title' => 'Интеруики өңдеуші',
-);
+];
 
 /** Kannada (ಕನ್ನಡ)
  * @author Nayvik
  */
-$messages['kn'] = array(
+$messages['kn'] = [
 	'iwedit-title' => 'ಇಂಟರ್ವಿಕಿ ಸಂಪಾದಕ',
 	'iwedit-language-interwikis' => 'ಭಾಷಾ ಇಂಟರ್ವಿಕಿಗಳು ಮಾತ್ರ',
 	'iwedit-all-interwikis' => 'ಎಲ್ಲಾ ಇಂಟರ್ವಿಕಿಗಳು',
-);
+];
 
 /** Korean (한국어)
  * @author Miri-Nae
  */
-$messages['ko'] = array(
+$messages['ko'] = [
 	'interwikiedit' => '인터위키 편집기',
 	'iwedit-title' => '인터위키 편집기',
 	'iwedit-all-interwikis' => '모든 인터위키',
 	'iwedit-local' => '해당 언어 사이의 인터위키입니까?',
-);
+];
 
 /** Karachay-Balkar (къарачай-малкъар)
  * @author Iltever
  */
-$messages['krc'] = array(
+$messages['krc'] = [
 	'iwedit-update' => 'Джангырт',
-);
+];
 
 /** Luxembourgish (Lëtzebuergesch)
  * @author Robby
  */
-$messages['lb'] = array(
+$messages['lb'] = [
 	'interwikiedit' => 'Interwiki Editeur',
 	'iwedit-title' => 'Interwiki Editeur',
 	'iwedit-language-interwikis' => 'nëmme Sproochen-Interwikien',
@@ -426,26 +427,26 @@ $messages['lb'] = array(
 	'iwedit-update' => 'Aktualiséieren',
 	'iwedit-error' => 'Et ass e Feeler geschitt.',
 	'iwedit-success' => 'De Link gouf ugeluecht.',
-);
+];
 
 /** Northern Luri (لوری مینجایی)
  * @author Mogoeilor
  */
-$messages['lrc'] = array(
+$messages['lrc'] = [
 	'iwedit-update' => 'روزآمد كردن',
-);
+];
 
 /** Latgalian (latgaļu)
  * @author Dark Eagle
  */
-$messages['ltg'] = array(
+$messages['ltg'] = [
 	'iwedit-update' => 'Atjaunynuot',
-);
+];
 
 /** Macedonian (македонски)
  * @author Bjankuloski06
  */
-$messages['mk'] = array(
+$messages['mk'] = [
 	'interwikiedit' => 'Уредник на интервикија',
 	'iwedit-title' => 'Уредник на интервикија',
 	'iwedit-language-interwikis' => 'само јазични интервикија',
@@ -453,12 +454,12 @@ $messages['mk'] = array(
 	'iwedit-update' => 'Поднови',
 	'iwedit-error' => 'Се појави грешка.',
 	'iwedit-success' => 'Врската е успешно создадена.',
-);
+];
 
 /** Malay (Bahasa Melayu)
  * @author Anakmalaysia
  */
-$messages['ms'] = array(
+$messages['ms'] = [
 	'interwikiedit-desc' => 'Special:InterwikiEdit untuk pengendalian pautan antarawiki berasaskan web',
 	'interwikiedit' => 'Penyunting Antara Wiki',
 	'iwedit-title' => 'Penyunting Antara Wiki',
@@ -469,12 +470,12 @@ $messages['ms'] = array(
 	'iwedit-success' => 'Pautan berjaya dicipta.',
 	'iwedit-local' => 'Antarawiki tempatan sahaja? (iaitu bukan sejagat)',
 	'iwedit-trans' => 'Bolehkan transklusi menggerunkan',
-);
+];
 
 /** Norwegian Bokmål (norsk bokmål)
  * @author Nghtwlkr
  */
-$messages['nb'] = array(
+$messages['nb'] = [
 	'interwikiedit' => 'Interwiki-editor',
 	'iwedit-title' => 'Interwiki Editor',
 	'iwedit-language-interwikis' => 'kun språkinterwikier',
@@ -482,12 +483,12 @@ $messages['nb'] = array(
 	'iwedit-update' => 'Oppdater',
 	'iwedit-error' => 'En feil oppsto.',
 	'iwedit-success' => 'Opprettet lenke.',
-);
+];
 
 /** Dutch (Nederlands)
  * @author Siebrand
  */
-$messages['nl'] = array(
+$messages['nl'] = [
 	'interwikiedit' => 'Interwikitabel bewerken',
 	'iwedit-title' => 'Interwikitabel bewerken',
 	'iwedit-language-interwikis' => "alleen taalinterwiki's",
@@ -497,12 +498,12 @@ $messages['nl'] = array(
 	'iwedit-success' => 'De koppeling is aangemaakt.',
 	'iwedit-local' => 'Alleen lokale interwiki? (dus niet globaal)',
 	'iwedit-trans' => 'Enge transclusie inschakelen',
-);
+];
 
 /** Occitan (occitan)
  * @author Cedric31
  */
-$messages['oc'] = array(
+$messages['oc'] = [
 	'interwikiedit' => 'Editor Interwiki',
 	'iwedit-title' => 'Editor Interwiki',
 	'iwedit-language-interwikis' => 'interwikis de lengas solament',
@@ -510,7 +511,7 @@ $messages['oc'] = array(
 	'iwedit-update' => 'Metre a jorn',
 	'iwedit-error' => "Una error s'es producha.",
 	'iwedit-success' => 'Lo ligam es estat creat amb succès.',
-);
+];
 
 /** Polish (polski)
  * @author Matik7
@@ -518,7 +519,7 @@ $messages['oc'] = array(
  * @author Sovq
  * @author Sp5uhe
  */
-$messages['pl'] = array(
+$messages['pl'] = [
 	'interwikiedit-desc' => 'Special:InterwikiEdit służąca do obsługi linków interwiki',
 	'interwikiedit' => 'Edycja interwiki',
 	'iwedit-title' => 'Edycja interwiki',
@@ -529,13 +530,13 @@ $messages['pl'] = array(
 	'iwedit-success' => 'Utworzono link.',
 	'iwedit-local' => 'Lokalna interwiki? (tzn. nie globalna)',
 	'iwedit-trans' => 'Włącz przerażającą transkluzję',
-);
+];
 
 /** Piedmontese (Piemontèis)
  * @author Borichèt
  * @author Dragonòt
  */
-$messages['pms'] = array(
+$messages['pms'] = [
 	'interwikiedit' => 'Editor Interwiki',
 	'iwedit-title' => 'Editor Interwiki',
 	'iwedit-language-interwikis' => 'mach lenghe interwiki',
@@ -543,21 +544,21 @@ $messages['pms'] = array(
 	'iwedit-update' => 'Modìfica',
 	'iwedit-error' => "A l'é capitaje n'eror.",
 	'iwedit-success' => 'Creassion dël colegament andàit bin.',
-);
+];
 
 /** Pashto (پښتو)
  * @author Ahmed-Najib-Biabani-Ibrahimkhel
  */
-$messages['ps'] = array(
+$messages['ps'] = [
 	'iwedit-language-interwikis' => 'يوازې ويکيخپلمنځي ژبه',
 	'iwedit-update' => 'اوسمهالول',
-);
+];
 
 /** Portuguese (português)
  * @author Hamilton Abreu
  * @author Luckas
  */
-$messages['pt'] = array(
+$messages['pt'] = [
 	'interwikiedit' => 'Editor de Links Interwikis',
 	'iwedit-title' => 'Editor de Links Interwikis',
 	'iwedit-language-interwikis' => 'só links interlínguas',
@@ -565,14 +566,14 @@ $messages['pt'] = array(
 	'iwedit-update' => 'Atualizar',
 	'iwedit-error' => 'Ocorreu um erro.',
 	'iwedit-success' => 'Os links foram criados corretamente.',
-);
+];
 
 /** Brazilian Portuguese (português do Brasil)
  * @author Giro720
  * @author JM Pessanha
  * @author Luckas Blade
  */
-$messages['pt-br'] = array(
+$messages['pt-br'] = [
 	'interwikiedit' => 'Editor de Interwikis',
 	'iwedit-title' => 'Editor de Interwikis',
 	'iwedit-language-interwikis' => 'só interwikis de língua',
@@ -580,19 +581,19 @@ $messages['pt-br'] = array(
 	'iwedit-update' => 'Atualizar',
 	'iwedit-error' => 'Ocorreu um erro.',
 	'iwedit-success' => 'Criação de link com sucesso.',
-);
+];
 
 /** Quechua (Runa Simi)
  * @author AlimanRuna
  */
-$messages['qu'] = array(
+$messages['qu'] = [
 	'iwedit-update' => 'Musuqchay',
-);
+];
 
 /** tarandíne (tarandíne)
  * @author Joetaras
  */
-$messages['roa-tara'] = array(
+$messages['roa-tara'] = [
 	'interwikiedit-desc' => "Special:InterwikiEdit pa gestione web de le collegaminde 'mbrà uicchi",
 	'interwikiedit' => 'Cangiatore InderUicchi',
 	'iwedit-title' => 'Cangiatore InderUicchi',
@@ -603,14 +604,14 @@ $messages['roa-tara'] = array(
 	'iwedit-success' => 'Collegamende ccrejate cu successe.',
 	'iwedit-local' => 'Sulamende inderuicchi locale? (p.e. none globbale)',
 	'iwedit-trans' => "Abbilite 'nglusione paurose",
-);
+];
 
 /** Russian (русский)
  * @author Kuzura
  * @author Lockal
  * @author Okras
  */
-$messages['ru'] = array(
+$messages['ru'] = [
 	'interwikiedit' => 'Редактор интервики ссылок',
 	'iwedit-title' => 'Редактор интервики',
 	'iwedit-language-interwikis' => 'только языковые интервики',
@@ -620,37 +621,37 @@ $messages['ru'] = array(
 	'iwedit-success' => 'Ссылка успешно создана.',
 	'iwedit-local' => 'Локальная интервики? (т.е. не глобальная)',
 	'iwedit-trans' => 'Включить межвики-включения',
-);
+];
 
 /** Sinhala (සිංහල)
  * @author Singhalawap
  * @author බිඟුවා
  */
-$messages['si'] = array(
+$messages['si'] = [
 	'iwedit-title' => 'අනතර්විකි සංස්කාරක',
 	'iwedit-language-interwikis' => 'භාෂා අන්තර්විකි පමණක්',
 	'iwedit-update' => 'යාවත්කාලීන',
-);
+];
 
 /** Serbian (Cyrillic script) (српски (ћирилица)‎)
  * @author Charmed94
  * @author Rancher
  * @author Verlor
  */
-$messages['sr-ec'] = array(
+$messages['sr-ec'] = [
 	'iwedit-title' => 'Међувики уређивач',
 	'iwedit-language-interwikis' => 'само језички међувикији',
 	'iwedit-all-interwikis' => 'сви међувикији',
 	'iwedit-update' => 'Ажурирај',
 	'iwedit-error' => 'Дошло је до грешке.',
 	'iwedit-success' => 'Стварање везе је успело.',
-);
+];
 
 /** Swedish (svenska)
  * @author Sertion
  * @author WikiPhoenix
  */
-$messages['sv'] = array(
+$messages['sv'] = [
 	'interwikiedit-desc' => 'Special:InterwikiEdit för webbaserad hantering av interwikilänkar',
 	'interwikiedit' => 'Interwiki-redigerare',
 	'iwedit-title' => 'Interwikiredigerare',
@@ -661,19 +662,19 @@ $messages['sv'] = array(
 	'iwedit-success' => 'Länk skapad.',
 	'iwedit-local' => 'Endast lokal interwiki? (d.v.s. inte global)',
 	'iwedit-trans' => 'Aktivera skrämmande mallinkludering',
-);
+];
 
 /** Telugu (తెలుగు)
  * @author Veeven
  */
-$messages['te'] = array(
+$messages['te'] = [
 	'iwedit-all-interwikis' => 'అన్ని అంతర్వికీలు',
-);
+];
 
 /** Tagalog (Tagalog)
  * @author AnakngAraw
  */
-$messages['tl'] = array(
+$messages['tl'] = [
 	'interwikiedit' => 'Patnugot ng Ugnayang-Wiki',
 	'iwedit-title' => 'Pamatnugot na Interwiki',
 	'iwedit-language-interwikis' => 'mga interwiking pangwika lang',
@@ -681,25 +682,25 @@ $messages['tl'] = array(
 	'iwedit-update' => 'Isapanahon',
 	'iwedit-error' => 'Naganap ang isang kamalian.',
 	'iwedit-success' => 'Matagumpay ang paglikha ng kawing.',
-);
+];
 
 /** Turkish (Türkçe)
  * @author Manco Capac
  */
-$messages['tr'] = array(
+$messages['tr'] = [
 	'iwedit-title' => 'İnterviki Editörü',
 	'iwedit-language-interwikis' => 'sadece dil intervikileri',
 	'iwedit-all-interwikis' => 'tüm intervikiler',
 	'iwedit-update' => 'Güncelle',
 	'iwedit-error' => 'Bir hata oluştu.',
 	'iwedit-success' => 'Bağlantı yaratımı başarılı',
-);
+];
 
 /** Ukrainian (українська)
  * @author Base
  * @author Капитан Джон Шепард
  */
-$messages['uk'] = array(
+$messages['uk'] = [
 	'interwikiedit-desc' => 'Спеціальна:InterwikiEdit для web на основі обробки інтервікі-посилань',
 	'interwikiedit' => 'Редактор інтервікі',
 	'iwedit-title' => 'Редактор інтервікі',
@@ -710,12 +711,12 @@ $messages['uk'] = array(
 	'iwedit-success' => 'Посилання успішно створено.',
 	'iwedit-local' => 'Локальна інтервікі? (тобто не глобальна)',
 	'iwedit-trans' => 'Включити межвікі-включення',
-);
+];
 
 /** Vietnamese (Tiếng Việt)
  * @author Baonguyen21022003
  */
-$messages['vi'] = array(
+$messages['vi'] = [
 	'interwikiedit' => 'Interwiki biên tập',
 	'iwedit-title' => 'Interwiki biên tập',
 	'iwedit-language-interwikis' => 'ngôn ngữ interwikis chỉ',
@@ -723,7 +724,7 @@ $messages['vi'] = array(
 	'iwedit-update' => 'Cập nhật',
 	'iwedit-error' => 'Lỗi đã xảy ra.',
 	'iwedit-success' => 'Tạo liên kết thành công.',
-);
+];
 
 /** Simplified Chinese (中文（简体）‎)
  * @author Dimension
@@ -731,7 +732,7 @@ $messages['vi'] = array(
  * @author Liuxinyu970226
  * @author Yfdyh000
  */
-$messages['zh-hans'] = array(
+$messages['zh-hans'] = [
 	'interwikiedit-desc' => 'Special:InterwikiEdit提供基于网页的跨维基链接处理',
 	'interwikiedit' => '跨维基链接编辑器',
 	'iwedit-title' => '跨维基链接编辑器',
@@ -742,13 +743,13 @@ $messages['zh-hans'] = array(
 	'iwedit-success' => '链接创建成功。',
 	'iwedit-local' => '仅本地的跨wiki链接？（即不是全域的）',
 	'iwedit-trans' => '启用危险的嵌入（scary transclusion）',
-);
+];
 
 /** Traditional Chinese (中文（繁體）‎)
  * @author Ffaarr
  * @author LNDDYL
  */
-$messages['zh-hant'] = array(
+$messages['zh-hant'] = [
 	'interwikiedit' => '跨語言連結編輯器',
 	'iwedit-title' => '跨語言連結編輯器',
 	'iwedit-language-interwikis' => '只限跨語言連結',
@@ -756,4 +757,4 @@ $messages['zh-hant'] = array(
 	'iwedit-update' => '更新',
 	'iwedit-error' => '<p>發生錯誤。</p>',
 	'iwedit-success' => '<p>連結建立成功</p>',
-);
+];

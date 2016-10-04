@@ -37,7 +37,7 @@ class DatabaseMysqli extends DatabaseMysqlBase {
 
 	/**
 	 * @param string $sql
-	 * @return resource
+	 * @return mysqli_result|bool
 	 */
 	protected function doQuery( $sql ) {
 		if ( $this->bufferResults() ) {
@@ -242,6 +242,16 @@ class DatabaseMysqli extends DatabaseMysqlBase {
 		Assert::true( $res instanceof mysqli_result, __METHOD__, [ 'sql' => $this->lastQuery() ] );
 		$field = $res->fetch_field_direct( $n );
 		return $field->name;
+	}
+
+	/**
+	 * @param mysqli_result $res
+	 * @param int $n
+	 * @return mixed
+	 */
+	protected function mysqlFieldType( $res, $n ) {
+		$field = $res->fetch_field_direct( $n );
+		return $field->type;
 	}
 
 	/**

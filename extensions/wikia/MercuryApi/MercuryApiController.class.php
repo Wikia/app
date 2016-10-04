@@ -44,8 +44,8 @@ class MercuryApiController extends WikiaController {
 			];
 
 			$smartBannerConfig[ 'appScheme' ] = [
-				'ios' => $meta[ 'ios-scheme' ],
-				'android' => $meta[ 'android-scheme' ]
+				'ios' => $meta[ 'ios-scheme' ] ?? null,
+				'android' => $meta[ 'android-scheme' ] ?? null,
 			];
 
 			return $smartBannerConfig;
@@ -164,8 +164,9 @@ class MercuryApiController extends WikiaController {
 	private function prepareWikiVariables() {
 		$wikiVariables = $this->mercuryApi->getWikiVariables();
 		$navigation = $this->getNavigation();
-		if ( empty( $navData ) ) {
-			\Wikia\Logger\WikiaLogger::instance()->error(
+
+		if ( empty( $navigation ) ) {
+			\Wikia\Logger\WikiaLogger::instance()->notice(
 				'Fallback to empty navigation'
 			);
 		}
@@ -201,8 +202,12 @@ class MercuryApiController extends WikiaController {
 			$wikiVariables[ 'specialRobotPolicy' ] = $robotPolicy;
 		}
 
-		// template for non-main pages (use $1 for article name)
-		$wikiVariables['htmlTitleTemplate'] = ( new WikiaHtmlTitle() )->setParts( ['$1'] )->getTitle();
+		$htmlTitle = new WikiaHtmlTitle();
+		$wikiVariables[ 'htmlTitle' ] = [
+			'separator' => $htmlTitle->getSeparator(),
+			'parts' => $htmlTitle->getAllParts(),
+		];
+
 		return $wikiVariables;
 	}
 
@@ -242,10 +247,10 @@ class MercuryApiController extends WikiaController {
 
 			$adContext = ( new AdEngine2ContextService() )->getContext( $title, 'mercury' );
 			$dimensions[3] = $adContext['targeting']['wikiVertical'];
-			$dimensions[14] = $adContext['opts']['showAds'] ? 'yes' : 'no';
+			$dimensions[14] = $adContext['opts']['showAds'] ? 'Yes' : 'No';
 			$dimensions[19] = WikiaPageType::getArticleType( $title );
 			$dimensions[25] = strval( $title->getNamespace() );
-		} catch (Exception $ex) {
+		} catch ( Exception $ex ) {
 			// In case of exception - don't set the dimensions
 		}
 
@@ -260,11 +265,16 @@ class MercuryApiController extends WikiaController {
 		$dimensions[4] = 'mercury';
 		$dimensions[5] = $wgUser->isAnon() ? 'anon' : 'user';
 		$dimensions[9] = $wgCityId;
+		$dimensions[13] = AdTargeting::getEsrbRating();
 		$dimensions[15] = WikiaPageType::isCorporatePage() ? 'yes' : 'no';
 		$dimensions[17] = WikiFactoryHub::getInstance()->getWikiVertical( $wgCityId )['short'];
 		$dimensions[18] = $wikiCategoryNames;
 		$dimensions[23] = in_array( 'poweruser_lifetime', $powerUserTypes ) ? 'yes' : 'no';
 		$dimensions[24] = in_array( 'poweruser_frequent', $powerUserTypes ) ? 'yes' : 'no';
+
+		if ( !empty( $this->request->getBool( 'isanon' ) ) ) {
+			$this->response->setCacheValidity( WikiaResponse::CACHE_STANDARD );
+		}
 
 		$this->response->setFormat( WikiaResponse::FORMAT_JSON );
 		$this->response->setVal( 'dimensions', $dimensions );
@@ -340,7 +350,6 @@ class MercuryApiController extends WikiaController {
 			$data['isMainPage'] = $isMainPage;
 			$data['ns'] = $title->getNamespace();
 
-			$titleBuilder = new WikiaHtmlTitle();
 			if ( MercuryApiMainPageHandler::shouldGetMainPageData( $isMainPage ) ) {
 				$data['mainPageData'] = MercuryApiMainPageHandler::getMainPageData( $this->mercuryApi );
 
@@ -356,39 +365,37 @@ class MercuryApiController extends WikiaController {
 						$data['nsSpecificContent'] = MercuryApiCategoryHandler::getCategoryContent( $title );
 
 						if ( MercuryApiCategoryHandler::hasArticle( $this->request, $article ) ) {
-							$data['article'] = MercuryApiArticleHandler::getArticleJson( $this->request, $article );
 							$data['details'] = MercuryApiArticleHandler::getArticleDetails( $article );
-							$titleBuilder->setParts( [ $data['article']['displayTitle'] ] );
+							$data['article'] = MercuryApiArticleHandler::getArticleJson( $this->request, $article );
+
+							// Remove namespace prefix from displayTitle, so it can be consistent with title
+							// Prefix shows only if page doesn't have {{DISPLAYTITLE:title} in it's markup
+							$data['article']['displayTitle'] = Title::newFromText($data['article']['displayTitle'])->getText();
 						} elseif ( !empty( $data['nsSpecificContent']['members']['sections'] ) ) {
 							$data['details'] = MercuryApiCategoryHandler::getCategoryMockedDetails( $title );
-							$titleBuilder->setParts( [ $title->getPrefixedText() ] );
 						} else {
 							throw new NotFoundApiException( 'Article is empty and category has no members' );
 						}
+
 						break;
-					// Handling content namespaces
 					default:
-						if ( $title->isContentPage() && $title->isKnown() && $articleExists ) {
-							$data = array_merge(
-								$data,
-								MercuryApiArticleHandler::getArticleData( $this->request, $this->mercuryApi, $article )
-							);
+						if ( $title->isContentPage() ) {
+							if ( $title->isKnown() && $articleExists ) {
+								$data = array_merge(
+									$data,
+									MercuryApiArticleHandler::getArticleData( $this->request, $this->mercuryApi, $article )
+								);
+							} else {
+								\Wikia\Logger\WikiaLogger::instance()->error(
+									'$article should be an instance of an Article',
+									['article' => $article]
+								);
 
-							if ( !$isMainPage ) {
-								$titleBuilder->setParts( [ $data['article']['displayTitle'] ] );
+								throw new NotFoundApiException( 'Article is empty' );
 							}
-						} else {
-							\Wikia\Logger\WikiaLogger::instance()->error(
-								'$article should be an instance of an Article',
-								[ 'article' => $article ]
-							);
-
-							throw new NotFoundApiException( 'Article is empty' );
 						}
 				}
 			}
-
-			$data['htmlTitle'] = $titleBuilder->getTitle();
 		} catch ( WikiaHttpException $exception ) {
 			$this->response->setCode( $exception->getCode() );
 
@@ -531,7 +538,7 @@ class MercuryApiController extends WikiaController {
 				'articleTitle' => str_replace( '_', ' ', $articleTitle ),
 				'url' => $url,
 			];
-		}, array_keys( $links ), array_values( $links ) );
+		} , array_keys( $links ), array_values( $links ) );
 
 		// Sort by localized language name
 		$c = Collator::create( 'en_US.UTF-8' );

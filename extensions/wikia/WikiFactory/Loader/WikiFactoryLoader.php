@@ -186,12 +186,12 @@ class WikiFactoryLoader {
 	 * @todo change new Database to LoadBalancer factory
 	 *
 	 * @param int $type
-	 * @return Database    database handler
+	 * @return DatabaseBase database handler
 	 */
 	public function getDB( $type = DB_SLAVE ) {
 		global $wgDBserver, $wgDBuser, $wgDBpassword;
 
-		if( $this->mDBhandler instanceof Database ) {
+		if( $this->mDBhandler instanceof DatabaseBase ) {
 			return $this->mDBhandler;
 		}
 
@@ -207,7 +207,7 @@ class WikiFactoryLoader {
 		 */
 		if( !$this->mDBhandler || !$this->mDBhandler->isOpen() ) {
 			error_log( "WikiFactoryLoader[{$this->mCityID}]: fallback to {$wgDBserver}" );
-			$this->mDBhandler = new DatabaseMysql( $wgDBserver, $wgDBuser, $wgDBpassword, $this->mDBname );
+			$this->mDBhandler = new DatabaseMysqli( $wgDBserver, $wgDBuser, $wgDBpassword, $this->mDBname );
 			$this->debug( "fallback to wgDBserver {$wgDBserver}" );
 		}
 
@@ -224,10 +224,10 @@ class WikiFactoryLoader {
 	 * @return integer: wikia id or null if wikia is not handled by WikiFactory
 	 */
 	public function execute() {
+		global $wgCityId, $wgDevelEnvironment,
+			$wgDBservers, $wgLBFactoryConf, $wgDBserver, $wgContLang, $wgWikiaBaseDomain;
 
 		wfProfileIn(__METHOD__);
-		global $wgCityId, $wgDevelEnvironment,
-			$wgDBservers, $wgLBFactoryConf, $wgDBserver, $wgContLang;
 
 		/**
 		 * Hook to allow extensions to alter the initialization.  For example,
@@ -431,7 +431,17 @@ class WikiFactoryLoader {
 				$url[ "path" ] = "/{$path}" . $url[ "path" ];
 			}
 
-			$target = WikiFactory::getLocalEnvURL( $url[ "scheme" ] . "://" . $host . $url[ "path" ] );
+			// Special treatment for paragon.wiki
+			// For URLs starting with upper-case letter (/Something) redirect to /wiki/Something
+			$wikiPrefix = '';
+			if ( $host == 'paragon.wikia.com' ) {
+				$firstLetter = substr( $url['path'], 1, 1 );
+				if ( is_string( $firstLetter ) && ctype_upper( $firstLetter ) ) {
+					$wikiPrefix = '/wiki';
+				}
+			}
+
+			$target = WikiFactory::getLocalEnvURL( $url[ "scheme" ] . "://" . $host . $wikiPrefix . $url[ "path" ] );
 			$target = isset( $url[ "query" ] ) ? $target . "?" . $url[ "query" ] : $target;
 
 			$this->debug( "redirected from {$url[ "url" ]} to {$target}" );
@@ -450,14 +460,15 @@ class WikiFactoryLoader {
 		if( empty( $this->mWikiID ) || $this->mIsWikiaActive == -1 ) {
 			if( ! $this->mCommandLine ) {
 				global $wgNotAValidWikia;
-				$this->debug( "redirected to {$wgNotAValidWikia}, {$this->mWikiID} {$this->mIsWikiaActive}" );
+				$redirect = $wgNotAValidWikia . '?from=' . rawurlencode( $this->mServerName );
+				$this->debug( "redirected to {$redirect}, {$this->mWikiID} {$this->mIsWikiaActive}" );
 				if( $this->mIsWikiaActive < 0 ) {
 					header( "X-Redirected-By-WF: MarkedForClosing" );
 				}
 				else {
 					header( "X-Redirected-By-WF: NotAValidWikia" );
 				}
-				header("Location: $wgNotAValidWikia");
+				header( "Location: $redirect" );
 				wfProfileOut( __METHOD__ );
 				exit(0);
 			}
@@ -474,12 +485,12 @@ class WikiFactoryLoader {
 					$database = strtolower( $this->mCityDB );
 					$redirect = sprintf(
 						"http://%s/wiki/Special:CloseWiki/information/%s",
-						($wgDevelEnvironment) ? "www.awc.wikia-inc.com" : "community.wikia.com",
+						($wgDevelEnvironment) ? "www.awc.wikia-inc.com" : "community.{$wgWikiaBaseDomain}",
 						$database
 					);
 				}
 				else {
-					$redirect = $wgNotAValidWikia;
+					$redirect = $wgNotAValidWikia . '?from=' . rawurlencode( $this->mServerName );
 				}
 				$this->debug( "disabled and not commandline, redirected to {$redirect}, {$this->mWikiID} {$this->mIsWikiaActive}" );
 				header( "X-Redirected-By-WF: Dump" );
@@ -684,13 +695,13 @@ class WikiFactoryLoader {
 				}
 
 				if ($key == 'wgServer') {
-					$headers = Wikia::getAllHeaders();
-					if (array_key_exists('X-Original-Host', $headers) &&
-					    !empty($headers['X-Original-Host'])) {
+					if ( !empty( $_SERVER['HTTP_X_ORIGINAL_HOST'] ) ) {
 						global $wgConf;
-						$tValue = 'http://'.$headers['X-Original-Host'];
-						$wgConf->localVHosts = array_merge($wgConf->localVHosts,
-										   array( $headers['X-Original-Host'] ));
+
+						$stagingServer = $_SERVER['HTTP_X_ORIGINAL_HOST'];
+
+						$tValue = 'http://'.$stagingServer;
+						$wgConf->localVHosts = array_merge( $wgConf->localVHosts, [ $stagingServer ] );
 					}
 				}
 

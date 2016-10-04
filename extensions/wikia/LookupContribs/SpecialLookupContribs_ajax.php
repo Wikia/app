@@ -2,7 +2,7 @@
 
 class LookupContribsAjax {
 
-	function axData() {
+	public static function axData() {
 		global $wgRequest, $wgUser;
 
 		$username 	= $wgRequest->getVal( 'username' );

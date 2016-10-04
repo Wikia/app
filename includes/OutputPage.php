@@ -309,6 +309,16 @@ class OutputPage extends ContextSource {
 	 * @param $val String tag value
 	 */
 	function addMeta( $name, $val ) {
+		/** Wikia change begin: SEO-361: Investigate <meta name="description" content=" " /> */
+		if ( $name === 'description' && $val === ' ' ) {
+			array_push( $this->mMetatags, array( 'debug-description', 'SPACE' ) );
+			\Wikia\Logger\WikiaLogger::instance()->warning(
+				'Meta description containing just a space', [
+					'ex' => new Exception(),
+				]
+			);
+		}
+		/** Wikia change end */
 		array_push( $this->mMetatags, array( $name, $val ) );
 	}
 
@@ -1824,6 +1834,20 @@ class OutputPage extends ContextSource {
 	}
 
 	/**
+	 * Return a Vary: header on which to vary caches. Based on the keys of $mVaryHeader,
+	 * such as Accept-Encoding or Cookie
+	 *
+	 * @return string
+	 */
+	public function getVaryHeader() {
+		// If we vary on cookies, let's make sure it's always included here too.
+		if ( $this->getCacheVaryCookies() ) {
+			$this->addVaryHeader( 'Cookie' );
+		}
+		return 'Vary: ' . join( ', ', array_keys( $this->mVaryHeader ) );
+	}
+
+	/**
 	 * Get a complete X-Vary-Options header
 	 *
 	 * @return String
@@ -3105,6 +3129,7 @@ $templates
 	public function userCanPreview() {
 		if ( $this->getRequest()->getVal( 'action' ) != 'submit'
 			|| !$this->getRequest()->wasPosted()
+			|| !$this->getUser()->isLoggedIn()
 			|| !$this->getUser()->matchEditToken(
 				$this->getRequest()->getVal( 'wpEditToken' ) )
 		) {
@@ -3735,7 +3760,9 @@ $templates
 			}
 		}
 	}
+
 	/**
+	 * @param string|array $keyArr Surrogate keys (array or space-delimited string)
 	 * @author Wikia
 	 */
 	public function tagWithSurrogateKeys( $keyArr ) {

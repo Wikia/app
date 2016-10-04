@@ -24,9 +24,8 @@
 		classes = Object.keys(types).join(' '),
 		closeImageSource = window.stylepath + '/oasis/images/icon_close.png',
 		$pageContainer,
-		headerHeight,
+		$header,
 		modal,
-		backendNotification,
 		template = '<div class="banner-notification">' +
 			'<button class="close wikia-chiclet-button"><img></button>' +
 			'<div class="msg">{{{content}}}</div>' +
@@ -171,13 +170,25 @@
 	 * Called once to instantiate this feature
 	 */
 	function init() {
+		$header = $('#globalNavigation');
+
 		if (window.skin === 'monobook') {
 			$pageContainer = $('#content');
 		} else {
 			$pageContainer = $('.WikiaPageContentWrapper');
-			headerHeight = $('#globalNavigation').height();
 			require(['wikia.onScroll'], function (onScroll) {
 				onScroll.bind(handleScrolling);
+			});
+		}
+
+		// SUS-726: hide notifications if VisualEditor is loaded and show them again once it's closed
+		if (mw.config.get('wgVisualEditor') && mw.config.get('wgIsArticle')) {
+			mw.hook('ve.activationComplete').add(function() {
+				$('.banner-notification').fadeOut(400);
+			});
+
+			mw.hook('ve.cancelButton').add(function() {
+				$('.banner-notification').fadeIn(400);
 			});
 		}
 		createBackendNotifications();
@@ -200,17 +211,26 @@
 	 */
 	function handleScrolling() {
 		var containerTop,
-			notificationWrapper = $pageContainer.children('.banner-notifications-wrapper');
+			notificationWrapper = $pageContainer.children('.banner-notifications-wrapper'),
+			headerBottom;
 
 		if (!$pageContainer.length || !notificationWrapper.length) {
 			return;
 		}
 
 		// get the position of the wrapper element relative to the top of the viewport
-		containerTop = $pageContainer[0].getBoundingClientRect().top;
+		containerTop = $pageContainer.get(0).getBoundingClientRect().top;
+		headerBottom = $header.length > 0 ? $header.get(0).getBoundingClientRect().bottom : 0;
 
-		if (containerTop < headerHeight) {
-			notificationWrapper.addClass('float');
+		if (containerTop < headerBottom) {
+			if (!notificationWrapper.hasClass('float')) {
+				notificationWrapper.addClass('float');
+
+				// if element has no inline top style let's put it to make sure container is positioned correctly
+				if (!notificationWrapper.prop('style').top) {
+					notificationWrapper.css('top', headerBottom);
+				}
+			}
 		} else {
 			notificationWrapper.removeClass('float');
 		}

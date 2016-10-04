@@ -498,6 +498,9 @@ class DifferenceEngine extends ContextSource {
 		wfProfileIn( __METHOD__ );
 		$out = $this->getOutput();
 		$revHeader = $this->getRevisionHeader( $this->mNewRev );
+
+		wfRunHooks( 'AfterDiffRevisionHeader', [ $this, $this->mNewRev, &$out ] );
+
 		# Add "current version as of X" title
 		$out->addHTML( "<hr class='diff-hr' />
 		<h2 class='diff-currentversion-title'>{$revHeader}</h2>\n" );
@@ -740,7 +743,7 @@ class DifferenceEngine extends ContextSource {
 		if ( $wgExternalDiffEngine != 'wikidiff3' && $wgExternalDiffEngine !== false ) {
 			# Wikia change - begin
 			# PLATFORM-1668: log fallback to external diff engine
-			Wikia\Logger\WikiaLogger::instance()->warning( 'External diff engine used', [
+			Wikia\Logger\WikiaLogger::instance()->error( 'External diff engine used', [
 				'engine' => $wgExternalDiffEngine
 			] );
 			# Wikia change - end

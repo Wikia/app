@@ -576,7 +576,7 @@ class WallBaseController extends WikiaController {
 		// only use realname if user made edits (use logic from masthead)
 		$userStatsService = new UserStatsService( $this->helper->getUser()->getID() );
 		$userStats = $userStatsService->getStats();
-		if ( empty( $userStats[ 'edits' ] ) || $userStats[ 'edits' ] == 0 ) {
+		if ( empty( $userStats[ 'editcount' ] ) || $userStats[ 'editcount' ] == 0 ) {
 			$wall_username = $this->helper->getUser()->getName();
 		}
 
@@ -595,6 +595,8 @@ class WallBaseController extends WikiaController {
 			$wall_message = User::isIP( $wall_username ) ? wfMessage( 'wall-placeholder-message-anon' )->escaped() : wfMessage( 'wall-placeholder-message', $wall_username )->escaped();
 			$this->response->setVal( 'wall_message', $wall_message );
 		}
+
+		$this->response->setVal( 'showMiniEditor', $this->wg->EnableMiniEditorExtForWall && $this->app->checkSkin( 'oasis' ) );
 
 		$this->checkAndSetUserBlockedStatus( $this->helper->getUser() );
 	}

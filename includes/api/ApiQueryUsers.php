@@ -155,18 +155,23 @@ class ApiQueryUsers extends ApiQueryBase {
 				if ( isset( $this->prop['rights'] ) ) {
 					$data[$name]['rights'] = $user->getRights();
 				}
-				if ( $row->ipb_deleted ) {
+				if ( isset( $row->ipb_deleted ) /* Wikia change */ && $row->ipb_deleted ) {
 					$data[$name]['hidden'] = '';
 				}
+
 				/* Wikia change begin - SUS-92 */
-				if ( isset( $this->prop['blockinfo'] ) && $user->isBlocked( true, false ) ) {
-					$blockInfo = $user->getBlock( true, false );
-				/* Wikia change end */
+				if ( isset( $this->prop['blockinfo'] ) || isset( $this->prop['localblockinfo'] ) ) {
+					$isGlobalBlockCheck = !isset( $this->prop['localblockinfo'] );
+					$isBlocked = $user->isBlocked( true, false, $isGlobalBlockCheck );
 					
-					$data[$name]['blockedby'] = $blockInfo->getByName();
-					$data[$name]['blockreason'] = $blockInfo->mReason;
-					$data[$name]['blockexpiry'] = $blockInfo->getExpiry();
+					if ($isBlocked) {
+						$blockInfo = $user->getBlock( true, false, $isGlobalBlockCheck );
+						$data[$name]['blockedby'] = $blockInfo->getByName();
+						$data[$name]['blockreason'] = $blockInfo->mReason;
+						$data[$name]['blockexpiry'] = $blockInfo->getExpiry();
+					}
 				}
+				/* Wikia change end */
 
 				if ( isset( $this->prop['emailable'] ) && $user->canReceiveEmail() ) {
 					$data[$name]['emailable'] = '';
@@ -274,6 +279,7 @@ class ApiQueryUsers extends ApiQueryBase {
 				ApiBase::PARAM_ISMULTI => true,
 				ApiBase::PARAM_TYPE => array(
 					'blockinfo',
+					'localblockinfo',
 					'groups',
 					'implicitgroups',
 					'rights',

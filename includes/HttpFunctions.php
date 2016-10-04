@@ -77,6 +77,9 @@ class Http {
 		// log all the requests we make
 		$caller =  wfGetCallerClassMethod( [ __CLASS__, 'Hooks', 'ApiService', 'Solarium_Client', 'Solarium_Client_Adapter_Curl', 'ExternalHttp' ] );
 		$isOk = $status->isOK();
+
+		wfRunHooks( 'AfterHttpRequest', [ $method, $url, $caller, $requestTime, $req ] ); # Wikia change
+
 		if ( class_exists( 'Wikia\\Logger\\WikiaLogger' ) ) {
 
 			$requestTime = (int)( ( microtime( true ) - $requestTime ) * 1000.0 );
@@ -84,6 +87,7 @@ class Http {
 
 			$params = [
 				'statusCode' => $req->getStatus(),
+				'served-by' => $req->getResponseHeader('x-served-by') ?: '',
 				'reqMethod' => $method,
 				'reqUrl' => $url,
 				'caller' => $caller,
@@ -853,7 +857,7 @@ class CurlHttpRequest extends MWHttpRequest {
 			if ( !curl_setopt( $curlHandle, $option, $value ) ) {
 				$e = new MWException( "Error setting curl options." );
 				if ( class_exists( 'Wikia\\Logger\\WikiaLogger' ) ) {
-					\Wikia\Logger\WikiaLogger::instance()->debug(
+					\Wikia\Logger\WikiaLogger::instance()->error(
 						'PLATFORM-1317' ,
 						[
 							'option'     => $option,
@@ -1078,6 +1082,7 @@ class ExternalHttp {
 	 * @return string|bool|MWHttpRequest
 	 */
 	public static function get( $url, $timeout = 'default', array $options = array() ) {
+		$options['timeout'] = $timeout;
 		return self::request( 'GET', $url, $options );
 	}
 

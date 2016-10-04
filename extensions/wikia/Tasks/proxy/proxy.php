@@ -3,8 +3,7 @@ set_time_limit( 0 );
 ini_set('display_errors', 0);
 
 # SEC-21: make sure that this is called internally
-$headers = apache_request_headers();
-if ( empty( $headers['X-Wikia-Internal-Request'] ) ) {
+if ( empty( $_SERVER['HTTP_X_WIKIA_INTERNAL_REQUEST'] ) ) {
 	$ip = isset( $_SERVER['REMOTE_ADDR'] ) ? $_SERVER['REMOTE_ADDR'] : null;
 	trigger_error( "X-Wikia-Internal-Request header is missing (request from {$ip})", E_USER_WARNING );
 

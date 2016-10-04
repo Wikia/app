@@ -80,6 +80,9 @@ abstract class File implements UrlGeneratorInterface {
 
 	var $lastError, $redirected, $redirectedTitle;
 
+	/** @var Title */
+	protected $redirectTitle;
+
 	/**
 	 * @var FSFile|false
 	 */

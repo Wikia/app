@@ -6,17 +6,26 @@ class DiscussionsDataService {
 	const DISCUSSIONS_API_SORT_KEY = 'trending';
 	const DISCUSSIONS_API_SORT_DIRECTION = 'descending';
 
-	const MCACHE_VER = '1.0';
+	const MCACHE_VER = '1.2';
 
-	/**
-	 * Get posts for a specific type. Uses cache if available
-	 * @param string $type
-	 * @return an array of posts
-	 */
-	public function getPosts() {
-		$memcKey = wfMemcKey( __METHOD__, $type, self::MCACHE_VER );
+	private $cityId;
 
-		$rawPosts = WikiaDataAccess::cache(
+	public function __construct( $cityId ) {
+		$discussionsAlias = WikiFactory::getVarValueByName( 'wgRecirculationDiscussionsAlias', $cityId );
+
+		if ( !empty( $discussionsAlias ) ) {
+			$this->cityId = $discussionsAlias;
+		} else {
+			$this->cityId = $cityId;
+		}
+
+		$this->server = WikiFactory::getVarValueByName( 'wgServer', $this->cityId );
+	}
+
+	public function getData( $type ) {
+		$memcKey = wfMemcKey( __METHOD__, $this->cityId, $type, self::MCACHE_VER );
+
+		$rawData = WikiaDataAccess::cache(
 			$memcKey,
 			WikiaResponse::CACHE_VERY_SHORT,
 			function() {
@@ -24,15 +33,43 @@ class DiscussionsDataService {
 			}
 		);
 
-		$posts = [];
+		if ( $type === 'posts' ) {
+			$data = $this->getPosts( $rawData );
+		} else {
+			$data = $this->formatData( $rawData );
+		}
+
+		return $data;
+	}
+
+	/**
+	 * Get posts for discussions
+	 * @return an array of posts
+	 */
+	private function getPosts( $rawData ) {
+		$data = [
+			'posts' => []
+		];
+
+		$rawPosts = $rawData['_embedded']['threads'];
 
 		if ( is_array( $rawPosts ) && count( $rawPosts ) > 0 ) {
 			foreach ( $rawPosts as $key => $value ) {
-				$posts[] = $this->buildPost( $value );
+				$data['posts'][] = $this->buildPost( $value, $key );
 			}
 		}
 
-		return $posts;
+		return $data;
+	}
+
+	private function formatData( $rawData ) {
+		$data = [];
+
+		$data['discussionsUrl'] = $this->server . '/d/f';
+		$data['postCount'] = $rawData['threadCount'];
+		$data['posts'] = $this->getPosts( $rawData )['posts'];
+
+		return $data;
 	}
 
 	/**
@@ -41,19 +78,17 @@ class DiscussionsDataService {
 	 * @return an array of posts
 	 */
 	private function apiRequest() {
-		global $wgCityId;
 		$options = [];
-		$endpoint = $wgCityId . '/forums/' . $wgCityId;
+		$endpoint = $this->cityId . '/threads';
 
 		$url = $this->buildUrl( $endpoint, $options );
 		$data = Http::get( $url );
 
-		$obj = json_decode( $data, true );
-		return $obj['_embedded']['doc:threads'];
+		return json_decode( $data, true );
 	}
 
 	/**
-	 * Build a complete url to the parsely API
+	 * Build a complete url to the discussions API
 	 * @param string $endpoint
 	 * @param array $options
 	 * @return string
@@ -65,24 +100,26 @@ class DiscussionsDataService {
 			'sortDirection' => self::DISCUSSIONS_API_SORT_DIRECTION,
 		];
 
-		$params = array_merge($defaultParams, $options);
+		$params = array_merge( $defaultParams, $options );
 
-		$url = self::DISCUSSIONS_API_BASE . $endpoint . '?' . http_build_query( $params );
-
-		return $url;
+		return self::DISCUSSIONS_API_BASE . $endpoint . '?' . http_build_query( $params );
 	}
 
-	private function buildPost( $rawPost ) {
-		global $wgContLang;
-		$post = [];
-		$post['author'] = $rawPost['createdBy']['name'];
-		$post['authorAvatar'] = $rawPost['createdBy']['avatarUrl'];
-		$post['content'] = $wgContLang->truncate($rawPost['_embedded']['firstPost'][0]['rawContent'], 120);
-		$post['upvoteCount'] = $rawPost['upvoteCount'];
-		$post['commentCount'] = $rawPost['postCount'];
-		$post['createdAt'] = wfTimestamp( TS_ISO_8601, $rawPost['creationDate']['epochSecond'] );
-		$post['link'] = '/d/p/' . $rawPost['id'];
+	private function buildPost( $rawPost, $index ) {
+		$meta = [];
+		$meta['authorAvatarUrl'] = $rawPost['createdBy']['avatarUrl'];
+		$meta['upvoteCount'] = $rawPost['upvoteCount'];
+		$meta['postCount'] = $rawPost['postCount'];
 
-		return $post;
+		return new RecirculationContent( [
+			'url' => $this->server . '/d/p/' . $rawPost['id'],
+			'index' => $index,
+			'title' =>  wfShortenText( $rawPost['rawContent'], 120 ),
+			'publishDate' => wfTimestamp( TS_ISO_8601, $rawPost['creationDate']['epochSecond'] ),
+			'author' => $rawPost['createdBy']['name'],
+			'source' => 'discussions',
+			'isVideo' => false,
+			'meta' => $meta,
+		] );
 	}
 }

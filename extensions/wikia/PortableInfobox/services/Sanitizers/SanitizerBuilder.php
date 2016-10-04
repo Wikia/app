@@ -20,6 +20,7 @@ class SanitizerBuilder {
 				return new NodeImageSanitizer();
 			case 'hero-mobile':
 			case 'hero-mobile-experimental':
+			case 'hero-mobile-wikiamobile':
 				return new NodeHeroImageSanitizer();
 			default:
 				return new PassThroughSanitizer();

@@ -12,26 +12,26 @@ class MustacheService {
 
 	const REGEX_PARTIALS = '/{{>\s*([^{}]*?)}}/';
 
-	const INFO_TEMPLATE = 'template';
-	const INFO_DEPENDENCIES = 'dependencies';
+	const TEMPLATE = 'template';
+	const DEPENDENCIES = 'dependencies';
 
-	protected $cache = array();
+	private $cache = array();
 
 	/**
 	 * Singleton - use MustacheService::getInstance() instead
 	 */
-	protected function __construct() {}
+	private function __construct() {}
 
 	/**
 	 * Get a converted template contents and its dependency list
 	 *
 	 * @param $fileName string File path (absolute)
 	 * @return array Array containing requested data, keys are:
-	 * - MustacheService::INFO_TEMPLATE - contains template contents
-	 * - MustacheService::INFO_DEPENDENCIES - list of all partials that may be included
+	 * - MustacheService::TEMPLATE - contains template contents
+	 * - MustacheService::DEPENDENCIES - list of all partials that may be included
 	 * @throws Exception Thrown if any partial cannot be found
 	 */
-	protected function getTemplateInfo( $fileName ) {
+	private function getTemplateInfo( $fileName ) {
 		if ( !empty($this->cache[$fileName] ) ) {
 			return $this->cache[$fileName];
 		}
@@ -54,8 +54,8 @@ class MustacheService {
 			$template);
 
 		$templateInfo = array(
-			self::INFO_TEMPLATE => $template,
-			self::INFO_DEPENDENCIES => $dependencies,
+			self::TEMPLATE => $template,
+			self::DEPENDENCIES => $dependencies,
 		);
 		$this->cache[$fileName] = $templateInfo;
 
@@ -71,7 +71,7 @@ class MustacheService {
 	 * @return bool
 	 * @throws Exception Thrown if any partial cannot be found
 	 */
-	protected function addDependencies( &$partials, $fileName ) {
+	private function addDependencies( &$partials, $fileName ) {
 		if ( !empty($partials[$fileName])) {
 			return true;
 		}
@@ -81,8 +81,8 @@ class MustacheService {
 			return false;
 		}
 
-		$partials[$fileName] = $templateInfo[self::INFO_TEMPLATE];
-		foreach ($templateInfo[self::INFO_DEPENDENCIES] as $depFileName) {
+		$partials[$fileName] = $templateInfo[self::TEMPLATE];
+		foreach ($templateInfo[self::DEPENDENCIES] as $depFileName) {
 			$this->addDependencies($partials,$depFileName);
 		}
 
@@ -141,12 +141,7 @@ class MustacheService {
 	 * @throws Exception Thrown if any partial cannot be found
 	 */
 	public function render( $fileName, $data ) {
-		$realFileName = realpath($fileName);
-		if ( empty( $realFileName ) ) {
-			throw new Exception("Template \"{$fileName}\" was not found.");
-		}
-		$partials = $this->getDependencies($realFileName);
-		$template = $partials[$realFileName];
+		list( $template, $partials ) = $this->getTemplateAndPartials( $fileName );
 
 		// Note: php-mustache segfaults when objects are present in data
 		// so pre-process them before sending to renderer
@@ -159,6 +154,24 @@ class MustacheService {
 		}
 
 		return $mustache->render($template,$data,$partials);
+	}
+
+	/**
+	 * Get a template along with all partials used for use anywhere
+	 *
+	 * @param $fileName string
+	 * @return array [ $template, $partials ]
+	 * @throws Exception
+	 */
+	public function getTemplateAndPartials( $fileName ) {
+		$realFileName = realpath( $fileName );
+		if ( empty( $realFileName ) ) {
+			throw new Exception( "Template \"{$fileName}\" was not found." );
+		}
+		$partials = $this->getDependencies( $realFileName );
+		$template = $partials[$realFileName];
+
+		return array( $template, $partials );
 	}
 
 	/**

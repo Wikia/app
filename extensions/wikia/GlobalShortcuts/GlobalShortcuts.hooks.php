@@ -7,10 +7,12 @@ class Hooks {
 	 * Register hooks for the extension
 	 */
 	public static function register() {
-		$hooks = new self();
-		\Hooks::register( 'BeforePageDisplay', [ $hooks, 'onBeforePageDisplay' ] );
-		\Hooks::register( 'MakeGlobalVariablesScript', [ $hooks, 'onMakeGlobalVariablesScript' ] );
-		\Hooks::register( 'BeforeToolbarMenu', [ $hooks, 'onBeforeToolbarMenu' ] );
+		if ( Helper::shouldDisplayGlobalShortcuts() ) {
+			$hooks = new self();
+			\Hooks::register( 'BeforePageDisplay', [ $hooks, 'onBeforePageDisplay' ] );
+			\Hooks::register( 'MakeGlobalVariablesScript', [ $hooks, 'onMakeGlobalVariablesScript' ] );
+			\Hooks::register( 'BeforeToolbarMenu', [ $hooks, 'onBeforeToolbarMenu' ] );
+		}
 	}
 
 
@@ -53,26 +55,21 @@ class Hooks {
 	}
 
 	public function onBeforeToolbarMenu( &$items, $type ) {
-		global $wgEnableGlobalShortcutsExt;
-		$user = \RequestContext::getMain()->getUser();
+		$html = \Html::rawElement(
+			'a',
+			[
+				'href' => '#',
+				'class' => 'global-shortcuts-help-entry-point',
+				'title' => wfMessage( 'global-shortcuts-title-help-entry-point' )->plain()
+			],
+			wfMessage( 'global-shortcuts-name' )->escaped()
+		);
 
-		if ( $user->isLoggedIn() && !empty( $wgEnableGlobalShortcutsExt ) ) {
-			$html = \Html::rawElement(
-				'a',
-				[
-					'href' => '#',
-					'class' => 'global-shortcuts-help-entry-point',
-					'title' => wfMessage( 'global-shortcuts-title-help-entry-point' )->plain()
-				],
-				wfMessage( 'global-shortcuts-name' )->escaped()
-			);
-
-			if ( $type == 'main' ) {
-				$items[] = [
-					'type' => 'html',
-					'html' => $html
-				];
-			}
+		if ( $type == 'main' ) {
+			$items[] = [
+				'type' => 'html',
+				'html' => $html
+			];
 		}
 
 		return true;

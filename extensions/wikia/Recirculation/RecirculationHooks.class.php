@@ -15,7 +15,7 @@ class RecirculationHooks {
 
 		// Check if we're on a page where we want to show a recirculation module.
 		// If we're not, stop right here.
-		if ( !self::isCorrectPageType() ) {
+		if ( !static::isCorrectPageType() ) {
 			wfProfileOut( __METHOD__ );
 			return true;
 		}
@@ -46,12 +46,10 @@ class RecirculationHooks {
 	 * @return bool
 	 */
 	public static function onOasisSkinAssetGroups( &$jsAssets ) {
-		if ( self::isCorrectPageType() ) {
-			$jsAssets[] = 'recirculation_js';
+		global $wgCityId;
 
-			if ( self::canShowDiscussions() ) {
-				$jsAssets[] = 'recirculation_discussions_js';
-			}
+		if ( static::isCorrectPageType() ) {
+			$jsAssets[] = 'recirculation_js';
 		}
 
 		return true;
@@ -78,12 +76,20 @@ class RecirculationHooks {
 		}
 	}
 
-	static public function canShowDiscussions() {
-		$wg = F::app()->wg;
-		if ( !empty( $wg->EnableDiscussions ) && !empty( $wg->EnableRecirculationDiscussions ) ) {
+	static public function canShowDiscussions( $cityId ) {
+		$discussionsAlias = WikiFactory::getVarValueByName( 'wgRecirculationDiscussionsAlias', $cityId );
+
+		if ( !empty( $discussionsAlias ) ) {
+			$cityId = $discussionsAlias;
+		}
+
+		$discussionsEnabled = WikiFactory::getVarValueByName( 'wgEnableDiscussions', $cityId );
+		$recirculationDiscussionsEnabled = WikiFactory::getVarValueByName( 'wgEnableRecirculationDiscussions', $cityId );
+
+		if ( !empty( $discussionsEnabled ) && !empty( $recirculationDiscussionsEnabled ) ) {
 			return true;
 		} else {
 			return false;
-		}		
+		}
 	}
 }

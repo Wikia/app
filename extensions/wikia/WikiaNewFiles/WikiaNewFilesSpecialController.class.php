@@ -1,4 +1,5 @@
 <?php
+use Wikia\Paginator\Paginator;
 
 /**
  * @ingroup SpecialPage
@@ -6,7 +7,6 @@
 class WikiaNewFilesSpecialController extends WikiaSpecialPageController {
 	const DEFAULT_LIMIT = 48;
 	const PAGE_PARAM = 'page';
-	const PAGINATOR_URL = '?page=%s';
 
 	public function __construct() {
 		parent::__construct( 'Images', '', false );
@@ -49,9 +49,10 @@ class WikiaNewFilesSpecialController extends WikiaSpecialPageController {
 		$imageCount = $newFilesModel->getImageCount();
 
 		// Pagination
-		$paginator = Paginator::newFromArray( $imageCount, self::DEFAULT_LIMIT );
-		$paginator->setActivePage( $pageNumber - 1 );
-		$output->addHeadItem( 'Paginator', $paginator->getHeadItem( self::PAGINATOR_URL ) );
+		$url = $this->specialPage->getFullTitle()->getFullURL();
+		$paginator = new Paginator( $imageCount, self::DEFAULT_LIMIT, $url );
+		$paginator->setActivePage( $pageNumber );
+		$output->addHeadItem( 'Paginator', $paginator->getHeadItem() );
 
 		// Hook for ContentFeeds::specialNewImagesHook
 		wfRunHooks( 'SpecialNewImages::beforeDisplay', array( $images ) );
@@ -65,7 +66,7 @@ class WikiaNewFilesSpecialController extends WikiaSpecialPageController {
 			'gallery' => $gallery,
 			'noImages' => !$imageCount,
 			'emptyPage' => count( $images ) === 0,
-			'pagination' => $paginator->getBarHTML( self::PAGINATOR_URL ),
+			'pagination' => $paginator->getBarHTML(),
 		] );
 	}
 }

@@ -129,19 +129,11 @@ ENDFORM;
 }
 
 function acRedirect( $title, $action ) {
-	global $wgRequest, $wgOut, $wgUser;
-
-	$actionParam = 'action';
-
-	if ( EditorPreference::isVisualEditorPrimary() && $wgUser->isLoggedIn() ) {
-		$actionParam = 'veaction';
-	}
-
-	$query = "{$actionParam}={$action}"
+	global $wgRequest, $wgOut;
+	$query = "action={$action}"
 		. '&preload=' . $wgRequest->getVal( 'preload' )
 		. '&editintro=' . $wgRequest->getVal( 'editintro' )
 		. '&section=' . $wgRequest->getVal( 'section' );
-
 	$wgOut->setSquidMaxage( 1200 );
 	$wgOut->redirect( $title->getFullURL( $query ), '301' );
 }

@@ -1,5 +1,5 @@
 <?php
-set_time_limit( 0 );
+set_time_limit( 3600 ); // PLATFORM-2039
 $wgCommandLineSilentMode = true; // suppress output from Wikia::log calls
 
 require_once( dirname( __FILE__ ) . '/../Maintenance.php' );

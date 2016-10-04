@@ -336,11 +336,14 @@ class SpecialContributions extends SpecialPage {
 		}
 
 		# Add a link to change user rights for privileged users
-		if ( $id !== null && UserrightsPage::userCanChangeRights($target, false ) ) {
-			$tools[] = Linker::linkKnown(
-				SpecialPage::getTitleFor( 'Userrights', $username ),
-				$this->msg( 'sp-contributions-userrights' )->escaped()
-			);
+		if ( !empty( $this->getUser()->getId() ) && !empty( $id ) ) {
+			$isself = $id === $this->getUser()->getId();
+			if ( UserrightsPage::userCanChangeRights( $this->getUser(), $isself, true ) ) {
+				$tools[] = Linker::linkKnown(
+					SpecialPage::getTitleFor( 'Userrights', $username ),
+					$this->msg( 'sp-contributions-userrights' )->escaped()
+				);
+			}
 		}
 
 		wfRunHooks( 'ContributionsToolLinks', array( $id, $userpage, &$tools ) );

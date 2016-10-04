@@ -1,7 +1,7 @@
 <?php
 
 class AnalyticsProviderComscore implements iAnalyticsProvider {
-	
+
 	private static $COMSCORE_KEYWORD_KEYNAME = 'comscorekw';
 	private static $PARTNER_ID = 6177433;
 
@@ -43,6 +43,12 @@ class AnalyticsProviderComscore implements iAnalyticsProvider {
 		global $wgCityId;
 
 		$verticalName = HubService::getVerticalNameForComscore( $wgCityId );
+
+		$categoryOverride = HubService::getComscoreCategoryOverride( $wgCityId );
+		if ( $categoryOverride ) {
+			$verticalName = $categoryOverride;
+		}
+
 		if ( !$verticalName ) {
 			\Wikia\Logger\WikiaLogger::instance()->error( 'Vertical not set for comscore', [
 				'cityId' => $wgCityId,
@@ -56,7 +62,7 @@ class AnalyticsProviderComscore implements iAnalyticsProvider {
 
 	private function getC7ParamAndValue() {
 		global $wgRequest;
-		
+
 		$requestUrl = $wgRequest->getFullRequestURL();
 		$c7Value = $this->getC7Value();
 		if ($c7Value) {

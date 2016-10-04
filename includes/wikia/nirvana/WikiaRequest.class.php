@@ -11,18 +11,21 @@
  */
 class WikiaRequest implements Wikia\Interfaces\IRequest {
 
+	// default = "wrap and throw" for internal requests, "return" for external requests
+	const EXCEPTION_MODE_DEFAULT = -1;
 	const EXCEPTION_MODE_RETURN = 0;
 	const EXCEPTION_MODE_WRAP_AND_THROW = 1;
 	const EXCEPTION_MODE_THROW = 2;
 
 	static private $exceptionModes = [
+		self::EXCEPTION_MODE_DEFAULT,
 		self::EXCEPTION_MODE_RETURN,
 		self::EXCEPTION_MODE_WRAP_AND_THROW,
 		self::EXCEPTION_MODE_THROW,
 	];
 
 	private $isInternal = false;
-	private $exceptionMode = self::EXCEPTION_MODE_WRAP_AND_THROW;
+	private $exceptionMode = self::EXCEPTION_MODE_DEFAULT;
 	protected $params = array();
 
 	/**
@@ -56,6 +59,7 @@ class WikiaRequest implements Wikia\Interfaces\IRequest {
 			return $this->params[$key];
 		}
 
+		taint( $default );
 		return $default;
 	}
 
@@ -102,6 +106,19 @@ class WikiaRequest implements Wikia\Interfaces\IRequest {
 			throw new InvalidArgumentException( 'Exception mode is invalid' );
 		}
 		$this->exceptionMode = $value;
+	}
+
+	/**
+	 * returns the effective exception mode (resolved the "default" mode depending on "isInternal" flag)
+	 * @return int One of WikiaRequest::EXCEPTION_MODE_*
+	 */
+	public function getEffectiveExceptionMode() {
+		$exceptionMode = $this->getExceptionMode();
+		if ( $exceptionMode == self::EXCEPTION_MODE_DEFAULT ) {
+			$exceptionMode = $this->isInternal() ? self::EXCEPTION_MODE_WRAP_AND_THROW : self::EXCEPTION_MODE_RETURN;
+		}
+
+		return $exceptionMode;
 	}
 
 	/**
@@ -257,7 +274,7 @@ class WikiaRequest implements Wikia\Interfaces\IRequest {
 	public function setSessionData( $key, $data ) {
 		$_SESSION[$key] = $data;
 	}
-	
+
 	/*
 	 * Get data from $_SERVER['SCRIPT_URL'], which is original path of the request, before mod_rewrite changed it.
 	 * Please be aware how our URL rewrites work before you think about using this.
@@ -276,7 +293,7 @@ class WikiaRequest implements Wikia\Interfaces\IRequest {
 	 * @return mixed
 	 * @throws BadRequestException
 	 */
-	public function isValidWriteRequest( \User $user ) {
+	public function assertValidWriteRequest( \User $user ) {
 		if ( !$this->wasPosted() || !$user->matchEditToken( $this->getVal( 'token' ) ) ) {
 			throw new BadRequestException( 'Request must be POSTed and provide a valid edit token.' );
 		}

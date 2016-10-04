@@ -4,10 +4,12 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 	'wikia.log',
 	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.adLogicPageParams',
+	'ext.wikia.adEngine.context.uapContext',
 	'ext.wikia.adEngine.provider.gpt.adDetect',
 	'ext.wikia.adEngine.provider.gpt.adElement',
 	'ext.wikia.adEngine.provider.gpt.googleTag',
-	'ext.wikia.adEngine.recovery.helper',
+	'ext.wikia.adEngine.slot.slotTargeting',
+	'ext.wikia.aRecoveryEngine.recovery.helper',
 	'ext.wikia.adEngine.slotTweaker',
 	require.optional('ext.wikia.adEngine.provider.gpt.sraHelper'),
 	require.optional('ext.wikia.adEngine.slot.scrollHandler')
@@ -15,9 +17,11 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 	log,
 	adContext,
 	adLogicPageParams,
+	uapContext,
 	adDetect,
 	AdElement,
-	GoogleTag,
+	googleTag,
+	slotTargeting,
 	recoveryHelper,
 	slotTweaker,
 	sraHelper,
@@ -26,39 +30,9 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.provider.gpt.helper',
-		googleApi = new GoogleTag(),
 		hiddenSlots = [
 			'INCONTENT_LEADERBOARD'
-		],
-		recoveryInitialized = false;
-
-	function loadRecovery() {
-		if (recoveryInitialized) {
-			return;
-		}
-		log('SourcePoint recovery enabled', 'debug', logGroup);
-		recoveryInitialized = true;
-		googleApi = recoveryHelper.createSourcePointTag();
-		recoveryHelper.recoverSlots();
-	}
-
-	function loadSourcePoint() {
-		if (recoveryHelper.isBlocking()) {
-			loadRecovery();
-		} else {
-			recoveryHelper.addOnBlockingCallback(function () {
-				loadRecovery();
-			});
-		}
-	}
-
-	function collapseElement(element) {
-		slotTweaker.removeDefaultHeight(element.getSlotName());
-		slotTweaker.hide(
-			element.getSlotContainerId(),
-			recoveryHelper.isBlocking() && recoveryHelper.isRecoveryEnabled()
-		);
-	}
+		];
 
 	function isHiddenOnStart(slotName) {
 		return hiddenSlots.indexOf(slotName) !== -1;
@@ -69,20 +43,27 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 	 *
 	 * @param {Object}   slot               - slot (ext.wikia.adEngine.slot.adSlot::create instance)
 	 * @param {string}   slotPath           - slot path
-	 * @param {Object}   slotTargeting      - slot targeting details
+	 * @param {Object}   slotTargetingData  - slot targeting details
 	 * @param {Object}   extra              - optional parameters
 	 * @param {boolean}  extra.sraEnabled   - whether to use Single Request Architecture
 	 * @param {string}   extra.forcedAdType - ad type for callbacks info
 	 */
-	function pushAd(slot, slotPath, slotTargeting, extra) {
+	function pushAd(slot, slotPath, slotTargetingData, extra) {
 		extra = extra || {};
-		var count,
-			element,
+		var element,
 			recoverableSlots = extra.recoverableSlots || [],
-			shouldPush = !recoveryHelper.isBlocking() ||
-				(recoveryHelper.isBlocking() && recoveryHelper.isRecoverable(slot.name, recoverableSlots));
+			shouldPushRecoverableAd = recoveryHelper.isBlocking() &&
+				recoveryHelper.isRecoverable(slot.name, recoverableSlots),
+			shouldPush = !recoveryHelper.isBlocking() || shouldPushRecoverableAd,
+			uapId = uapContext.getUapId();
 
-		slotTargeting = JSON.parse(JSON.stringify(slotTargeting)); // copy value
+		log(['shouldPush',
+			slot.name,
+			recoveryHelper.isBlocking(),
+			recoverableSlots,
+			recoveryHelper.isRecoverable(slot.name, recoverableSlots)], 'debug', logGroup);
+
+		slotTargetingData = JSON.parse(JSON.stringify(slotTargetingData)); // copy value
 
 		if (isHiddenOnStart(slot.name)) {
 			slotTweaker.hide(slot.name);
@@ -90,30 +71,32 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 				slotTweaker.show(slot.name);
 			});
 		}
-		if (scrollHandler) {
-			count = scrollHandler.getReloadedViewCount(slot.name);
-			if (count !== null) {
-				slotTargeting.rv = count.toString();
-			}
-		}
 
-		element = new AdElement(slot.name, slotPath, slotTargeting);
+		setAdditionalTargeting(slotTargetingData);
 
-		slot.pre('collapse', function () {
-			collapseElement(element);
-		});
-		slot.pre('hop', function () {
-			slotTweaker.hide(
-				element.getSlotContainerId(),
-				recoveryHelper.isBlocking() && recoveryHelper.isRecoveryEnabled()
-			);
-		});
+		element = new AdElement(slot.name, slotPath, slotTargetingData);
 
 		function queueAd() {
 			log(['queueAd', slot.name, element], 'debug', logGroup);
 			slot.container.appendChild(element.getNode());
 
-			googleApi.addSlot(element);
+			googleTag.addSlot(element);
+		}
+
+		function setAdditionalTargeting(slotTargetingData) {
+			if (scrollHandler) {
+				var count = scrollHandler.getReloadedViewCount(slot.name);
+				if (count !== null) {
+					slotTargetingData.rv = count.toString();
+				}
+			}
+
+			if (shouldPushRecoverableAd) {
+				slotTargetingData.src = 'rec';
+			}
+
+			slotTargetingData.wsi = slotTargeting.getWikiaSlotId(slot.name, slotTargetingData.src);
+			slotTargetingData.uap = uapId ? uapId.toString() : 'none';
 		}
 
 		function onAdLoadCallback(slotElementId, gptEvent, iframe) {
@@ -128,16 +111,12 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 		function gptCallback(gptEvent) {
 			log(['gptCallback', element.getId(), gptEvent], 'info', logGroup);
 			element.updateDataParams(gptEvent);
-			googleApi.onAdLoad(slot.name, element, gptEvent, onAdLoadCallback);
+			googleTag.onAdLoad(slot.name, element, gptEvent, onAdLoadCallback);
 		}
 
-		if (!googleApi.isInitialized()) {
-			if (recoveryHelper.isRecoveryEnabled()) {
-				googleApi.init(loadSourcePoint);
-			} else {
-				googleApi.init();
-			}
-			googleApi.setPageLevelParams(adLogicPageParams.getPageLevelParams());
+		if (!googleTag.isInitialized()) {
+			googleTag.init();
+			googleTag.setPageLevelParams(adLogicPageParams.getPageLevelParams());
 		}
 
 		if (!shouldPush) {
@@ -146,29 +125,26 @@ define('ext.wikia.adEngine.provider.gpt.helper', [
 			return;
 		}
 
-		if (!recoveryHelper.isBlocking() && recoveryHelper.isRecoveryEnabled()) {
-			recoveryHelper.addSlotToRecover(slot.name);
-		}
-
 		log(['pushAd', slot.name], 'info', logGroup);
-		if (!slotTargeting.flushOnly) {
-			googleApi.registerCallback(element.getId(), gptCallback);
-			googleApi.push(queueAd);
+		if (!slotTargetingData.flushOnly) {
+			googleTag.registerCallback(element.getId(), gptCallback);
+			googleTag.push(queueAd);
 		}
 
 		if (!sraHelper || !extra.sraEnabled || sraHelper.shouldFlush(slot.name)) {
 			log('flushing', 'debug', logGroup);
-			googleApi.flush();
+			googleTag.flush();
 		}
 
-		if (slotTargeting.flushOnly) {
+		if (slotTargetingData.flushOnly) {
 			slot.success();
 		}
 	}
 
 	adContext.addCallback(function () {
-		if (googleApi.isInitialized()) {
-			googleApi.setPageLevelParams(adLogicPageParams.getPageLevelParams());
+		if (googleTag.isInitialized()) {
+			googleTag.setPageLevelParams(adLogicPageParams.getPageLevelParams());
+			uapContext.reset();
 		}
 	});
 

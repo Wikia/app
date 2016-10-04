@@ -214,6 +214,10 @@ describe("Querystring", function () {
 		expect(qs.toString()).toContain('prefixA=a&prefixB=b');
 		expect(qs.toString()).toContain('0=val1&1=val2');
 		expect(qs.toString()).toContain('prefix0=val1&prefix1=val2');
+		expect(qs.toString()).toContain('val=val%26val');
+
+		qs.setVal('val', 'val val');
+		expect(qs.toString()).toContain('val=val%20val');
 
 		qs.clearVals();
 

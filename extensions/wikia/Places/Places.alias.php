@@ -4,17 +4,20 @@ $specialPageAliases = [];
 
 /** English */
 $specialPageAliases['en'] = [
-	'Places' => [ 'Places' ]
+	'Places' => [ 'Places' ],
+	'Nearby' => [ 'Nearby' ]
 ];
 
 /** Polish (Polski) */
 $specialPageAliases['pl'] = [
 	'Places' => [ 'Miejsca' ],
+	'Nearby' => [ 'W pobliżu' ],
 ];
 
 /** German (Deutsch) */
 $specialPageAliases['de'] = [
 	'Places' => [ 'Orte' ],
+	'Nearby' => [ 'In der Nähe' ],
 ];
 
 /** French (Francais) */

@@ -127,6 +127,9 @@ class ForumController extends WallBaseController {
 
 			$this->response->setVal( 'destinationBoards', $destinationBoards );
 		}
+
+		// MAIN-7865: Don't render MiniEditor on Monobook
+		$this->response->setVal( 'showMiniEditor', $this->wg->EnableMiniEditorExt && $this->app->checkSkin( 'oasis' ) );
 	}
 
 	public function boardThread() {
@@ -362,31 +365,4 @@ class ForumController extends WallBaseController {
 	public function messageTopic() {
 		// stub function
 	}
-
-	/**
-	 * render html for old forum info
-	 */
-
-	public function oldForumInfo() {
-		// TODO: include some css build some urls
-		$this->response->addAsset( 'extensions/wikia/Forum/css/ForumOld.scss' );
-
-		$forumTitle = SpecialPage::getTitleFor( 'Forum' );
-		$this->response->setVal( 'forumUrl', $forumTitle->getLocalUrl() );
-		return true;
-	}
-
-	private function addAssets() {
-		$this->response->addAsset( 'forum_js' );
-		$this->response->addAsset( 'extensions/wikia/Forum/css/ForumBoard.scss' );
-
-		// VOLDEV-36: separate monobook styling
-		if ( $this->app->checkSkin( 'monobook' ) ) {
-			$this->response->addAsset( 'extensions/wikia/Forum/css/monobook/ForumMonobook.scss' );
-			$this->response->addAsset( 'extensions/wikia/Forum/css/monobook/ForumBoardMonobook.scss' );
-		}
-
-		$this->addMiniEditorAssets();
-	}
-
 }

@@ -23,10 +23,3 @@ $digitTransformTable = array(
 	'9' => '९', # &#x096f;
 );
 
-$messages = array(
-'help' => 'मदद',
-
-# Recent changes
-'recentchanges' => 'नवि तबदीली',
-
-);

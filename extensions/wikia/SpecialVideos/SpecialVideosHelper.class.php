@@ -1,4 +1,5 @@
 <?php
+use Wikia\Paginator\Paginator;
 
 /**
  * SpecialVideos Helper
@@ -209,20 +210,19 @@ class SpecialVideosHelper extends WikiaModel {
 		$totalVideos = $this->getTotalVideos( $videoParams );
 
 		if ( $totalVideos > self::VIDEOS_PER_PAGE ) {
-			// Paginator::newFromArray allows array and integer param
-			$pages = Paginator::newFromArray( $totalVideos, self::VIDEOS_PER_PAGE );
-			$pages->setActivePage( $videoParams['page'] - 1 );
-
-			$urlTemplate = SpecialPage::getTitleFor( 'Videos' )->escapeLocalUrl();
-			$urlTemplate .= '?page=%s';
+			$urlParams = [];
 			foreach( [ 'sort', 'category', 'provider'] as $key ) {
 				if ( !empty( $videoParams[$key] ) ) {
-					$urlTemplate .= "&$key=" . urlencode( $videoParams[$key] );
+					$urlParams[$key] = $videoParams[$key];
 				}
 			}
+			$url = SpecialPage::getTitleFor( 'Videos' )->escapeLocalUrl( $urlParams );
 
-			$body = $pages->getBarHTML( $urlTemplate );
-			$head = $pages->getHeadItem( $urlTemplate );
+			$pages = new Paginator( $totalVideos, self::VIDEOS_PER_PAGE, $url );
+			$pages->setActivePage( $videoParams['page'] );
+
+			$body = $pages->getBarHTML();
+			$head = $pages->getHeadItem();
 
 			// check if we're on the last page
 			if ( $videoParams['page'] < $pages->getPagesCount() ) {

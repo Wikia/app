@@ -10,7 +10,7 @@ abstract class EmailController extends \WikiaController {
 
 	const TRACKED_LANGUAGES = [ 'EN', 'PL', 'DE', 'ES', 'FR', 'IT', 'JA', 'NL', 'PT', 'RU', 'ZH' ];
 
-	const AVATAR_SIZE = 50;
+	const AVATAR_SIZE = 40;
 
 	/** CSS used for the main content section of each email. Used by getContent()
 	 * and intended to be overridden by child classes. */
@@ -69,8 +69,8 @@ abstract class EmailController extends \WikiaController {
 				return;
 			}
 
-			$this->currentUser = $this->findUserFromRequest( 'currentUser', $this->wg->User );
-			$this->targetUser = $this->findUserFromRequest( 'targetUser', $this->wg->User );
+			$this->currentUser = $this->findUserFromRequest( 'currentUser',  'currentUserId' );
+			$this->targetUser = $this->findUserFromRequest( 'targetUser',  'targetUserId' );
 			$this->targetLang = $this->getVal( 'targetLang', $this->targetUser->getGlobalPreference( 'language' ) );
 			$this->test = $this->getVal( 'test', false );
 			$this->marketingFooter = $this->request->getBool( 'marketingFooter' );
@@ -175,6 +175,7 @@ abstract class EmailController extends \WikiaController {
 					$sourceType = 'email-ext' // Remove when this is the only sourceType sent
 				);
 				$this->assertGoodStatus( $status );
+				$this->afterSuccess();
 			}
 		} catch ( \Exception $e ) {
 			$this->setErrorResponse( $e );
@@ -217,14 +218,6 @@ abstract class EmailController extends \WikiaController {
 			'result' => $result,
 			'msg' => $e->getMessage(),
 		] );
-	}
-
-	/**
-	 * Whether to show a TM next to the tagline in this country
-	 * At some point we may want to return the symbol instead of a bool
-	 */
-	protected function getUseTrademark() {
-		return $this->targetLang == 'en';
 	}
 
 	/**
@@ -275,9 +268,6 @@ abstract class EmailController extends \WikiaController {
 				'content' => $this->getContent(),
 				'footerMessages' => $this->getFooterMessages(),
 				'marketingFooter' => $this->marketingFooter,
-				'tagline' => $this->getTagline(),
-				'useTrademark' => $this->getUseTrademark(),
-				'hubsMessages' => $this->getHubsMessages(),
 				'socialMessages' => $this->getSocialMessages(),
 				'icons' => ImageHelper::getIconInfo(),
 				'disableInit' => true,
@@ -387,38 +377,6 @@ abstract class EmailController extends \WikiaController {
 	}
 
 	/**
-	 * Tagline text that appears in the email footer
-	 * @return String
-	 */
-	protected function getTagline() {
-		return $this->getMessage( 'emailext-fans-tagline' )->text();
-	}
-
-	/**
-	 * Get localized strings for hubs names and their URLs
-	 * @return array
-	 * @throws \MWException
-	 */
-	protected function getHubsMessages() {
-		return [
-			'tv' => $this->getMessage( 'oasis-label-wiki-vertical-id-1' )->text(),
-			'tvURL' => $this->getMessage( 'oasis-label-wiki-vertical-id-1-link' )->text(),
-			'videoGames' => $this->getMessage( 'oasis-label-wiki-vertical-id-2' )->text(),
-			'videoGamesURL' => $this->getMessage( 'oasis-label-wiki-vertical-id-2-link' )->text(),
-			'books' => $this->getMessage( 'oasis-label-wiki-vertical-id-3' )->text(),
-			'booksURL' => $this->getMessage( 'oasis-label-wiki-vertical-id-3-link' )->text(),
-			'comics' => $this->getMessage( 'oasis-label-wiki-vertical-id-4' )->text(),
-			'comicsURL' => $this->getMessage( 'oasis-label-wiki-vertical-id-4-link' )->text(),
-			'lifestyle' => $this->getMessage( 'oasis-label-wiki-vertical-id-5' )->text(),
-			'lifestyleURL' => $this->getMessage( 'oasis-label-wiki-vertical-id-5-link' )->text(),
-			'music' => $this->getMessage( 'oasis-label-wiki-vertical-id-6' )->text(),
-			'musicURL' => $this->getMessage( 'oasis-label-wiki-vertical-id-6-link' )->text(),
-			'movies' => $this->getMessage( 'oasis-label-wiki-vertical-id-7' )->text(),
-			'moviesURL' => $this->getMessage( 'oasis-label-wiki-vertical-id-7-link' )->text(),
-		];
-	}
-
-	/**
 	 * Get localized strings for social networks and their URLs
 	 * @return array
 	 * @throws \MWException
@@ -431,6 +389,10 @@ abstract class EmailController extends \WikiaController {
 			'twitter-link' => $this->getMessage( 'oasis-social-twitter-link' )->text(),
 			'youtube' => $this->getMessage( 'oasis-social-youtube' )->text(),
 			'youtube-link' => $this->getMessage( 'oasis-social-youtube-link' )->text(),
+			'reddit' => $this->getMessage( 'oasis-social-reddit' )->text(),
+			'reddit-link' => $this->getMessage( 'oasis-social-reddit-link' )->text(),
+			'instagram' => $this->getMessage( 'oasis-social-instagram' )->text(),
+			'instagram-link' => $this->getMessage( 'oasis-social-instagram-link' )->text(),
 		];
 	}
 
@@ -479,18 +441,28 @@ abstract class EmailController extends \WikiaController {
 		return \AvatarService::getAvatarUrl( $user, self::AVATAR_SIZE );
 	}
 
-	protected function findUserFromRequest( $paramName, \User $default = null ) {
-		$userName = $this->getRequest()->getVal( $paramName );
-		if ( empty( $userName ) ) {
-			return $default;
+	/**
+	 * Clients to these email controllers can specify the acting and target
+	 * user using either userName or userId.
+	 *
+	 * @param $userNameParam
+	 * @param $userIdParam
+	 * @return \User
+	 * @throws Fatal
+	 */
+	protected function findUserFromRequest( $userNameParam, $userIdParam ) {
+		$userName = $this->getRequest()->getVal( $userNameParam );
+		$userId = $this->getRequest()->getVal( $userIdParam );
+
+		if ( !empty( $userName ) ) {
+			return $this->getUserFromName( $userName );
 		}
 
-		// Allow an anonymous user to be specified
-		if ( $userName == self::ANONYMOUS_USER_ID ) {
-			return \User::newFromId( 0 );
+		if ( !empty( $userId ) ) {
+			return \User::newFromId( $userId );
 		}
 
-		return $this->getUserFromName( $userName );
+		return $this->wg->User;
 	}
 
 	/**
@@ -504,6 +476,11 @@ abstract class EmailController extends \WikiaController {
 	protected function getUserFromName( $username ) {
 		if ( !$username ) {
 			throw new Fatal( 'Required username has been left empty' );
+		}
+
+		// Allow an anonymous user to be specified
+		if ( $username == self::ANONYMOUS_USER_ID ) {
+			return \User::newFromId( 0 );
 		}
 
 		if ( $username instanceof \User ) {
@@ -541,6 +518,7 @@ abstract class EmailController extends \WikiaController {
 	public function assertCanEmail() {
 		$this->assertUserHasEmail();
 		$this->assertUserWantsEmail();
+		$this->assertEmailIsConfirmed();
 		$this->assertUserNotBlocked();
 	}
 
@@ -595,6 +573,17 @@ abstract class EmailController extends \WikiaController {
 	}
 
 	/**
+	 * This checks if the user has confirmed their email address
+	 *
+	 * @throws \Email\Check
+	 */
+	public function assertEmailIsConfirmed() {
+		if ( !$this->targetUser->isEmailConfirmed() ) {
+			throw new Check( 'User does not have a confirmed email address' );
+		}
+	}
+
+	/**
 	 * This checks to see if the current user is blocked
 	 *
 	 * @throws \Email\Check
@@ -604,6 +593,12 @@ abstract class EmailController extends \WikiaController {
 			throw new Check( 'User is blocked from taking this action' );
 		}
 	}
+
+	/**
+	 * Allow child classes to perform actions after an email is successfully
+	 * sent
+	 */
+	protected function afterSuccess() {}
 
 	/**
 	 * Get the form field for this email to be used on Special:SendEmail

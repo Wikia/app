@@ -82,11 +82,16 @@ class PhalanxSpecialController extends WikiaSpecialPageController {
 			$this->wg->Out->redirect($this->title->getFullURL());
 
 			wfProfileOut( __METHOD__ );
-			return;
+
+			// SUS-1078: Don't render template when handling a POST request (block save) to prevent warnings
+			// We will be redirected back to Special:Phalanx anyways
+			$this->skipRendering();
+			return false;
 		}
 
 		/* set pager */
 		$pager = new PhalanxPager();
+		$pager->setContext( $this->getContext() );
 		$listing  = $pager->getNavigationBar();
 		$listing .= $pager->getBody();
 		$listing .= $pager->getNavigationBar();
@@ -137,6 +142,9 @@ class PhalanxSpecialController extends WikiaSpecialPageController {
 		$this->setVal( 'type', $this->wg->Request->getInt('type') );
 		$this->setVal( 'typeSections', $typeSections);
 
+		// SUS-270: preload username into filter search box
+		$this->setVal( 'checkBlocker', $data['checkBlocker'] !== '' ? $data['checkBlocker'] : $data['text'] );
+
 		wfProfileOut( __METHOD__ );
 	}
 
@@ -159,20 +167,6 @@ class PhalanxSpecialController extends WikiaSpecialPageController {
 		if ($blockText !== '') {
 			$this->setVal( 'listing', $this->handleBlockTest($blockText) );
 		}
-	}
-
-	/**
-	 * Renders navigation tabs on special page
-	 */
-	public function tabs() {
-		if ( !$this->userCanExecute( $this->wg->User ) ) {
-			$this->displayRestrictionError();
-			return;
-		}
-
-		$this->setVal('currentTab', $this->getVal('currentTab'));
-		$this->setVal('phalanxMainTitle', $this->title);
-		$this->setVal('phalanxTestTitle', SpecialPage::getTitleFor('Phalanx', 'test'));
 	}
 
 	/**
@@ -281,6 +275,7 @@ class PhalanxSpecialController extends WikiaSpecialPageController {
 			$noMatches = false;
 
 			$pager = new PhalanxBlockTestPager($blockType);
+			$pager->setContext( $this->getContext() );
 			$pager->setRows($res);
 			$listing .= $pager->getHeader();
 			$listing .= $pager->getBody();

@@ -2,9 +2,10 @@
 define('ext.wikia.adEngine.lookup.lookupFactory', [
 	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.adTracker',
+	'ext.wikia.aRecoveryEngine.recovery.helper',
 	'wikia.lazyqueue',
 	'wikia.log'
-], function (adContext, adTracker, lazyQueue, log) {
+], function (adContext, adTracker, helper, lazyQueue, log) {
 	'use strict';
 
 	function create(module) {
@@ -22,7 +23,12 @@ define('ext.wikia.adEngine.lookup.lookupFactory', [
 			response = true;
 			onResponseCallbacks.start();
 
-			adTracker.track(module.name + '/lookup_end', module.getPrices(), 0, 'nodata');
+			if (module.name === 'prebid') {
+				module.trackAdaptersOnLookupEnd();
+			} else {
+				adTracker.track(module.name + '/lookup_end', module.getPrices(), 0, 'nodata');
+			}
+
 		}
 
 		function addResponseListener(callback) {
@@ -43,6 +49,8 @@ define('ext.wikia.adEngine.lookup.lookupFactory', [
 			// in mercury ad context is being reloaded after XHR call that's why at this point we don't have skin
 			module.call(context.targeting.skin || 'mercury', onResponse);
 			called = true;
+
+			helper.addOnBlockingCallback(onResponseCallbacks.start);
 		}
 
 		function wasCalled() {
@@ -61,11 +69,15 @@ define('ext.wikia.adEngine.lookup.lookupFactory', [
 				return;
 			}
 
-			encodedParams = module.encodeParamsForTracking(params);
-			eventName = encodedParams ? 'lookup_success' : 'lookup_error';
-			category = module.name + '/' + eventName + '/' + providerName;
+			if (module.name === 'prebid') {
+				module.trackAdaptersSlotState(providerName, slotName, params);
+			} else {
+				encodedParams = module.encodeParamsForTracking(params);
+				eventName = encodedParams ? 'lookup_success' : 'lookup_error';
+				category = module.name + '/' + eventName + '/' + providerName;
 
-			adTracker.track(category, slotName, 0, encodedParams || 'nodata');
+				adTracker.track(category, slotName, 0, encodedParams || 'nodata');
+			}
 		}
 
 		function getSlotParams(slotName) {

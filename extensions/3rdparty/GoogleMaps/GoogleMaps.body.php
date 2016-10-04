@@ -100,7 +100,7 @@ class GoogleMaps {
 	 * @param $pJsMimeType string - the Javascript mime type
 	 * @param $pLanguageCode string - the language identifier ('en', 'fr', etc.)
 	 **/
-	function GoogleMaps (
+	function __construct (
 		&$pApiKey,
 		&$pUrlPath,
 		&$pEnablePaths,

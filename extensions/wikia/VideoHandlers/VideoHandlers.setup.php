@@ -119,9 +119,7 @@ if ( !empty( $wgUseVideoVerticalFilters ) ) {
 	$wgHooks['CategorySelectSave'][] = 'VideoInfoHooksHelper::onCategorySelectSave';
 }
 
-if ( !empty($wgVideoHandlersVideosMigrated) ) {
-	$wgHooks['ParserFirstCallInit'][] = 'VideoHandlerHooks::initParserHook';
-}
+$wgHooks['ParserFirstCallInit'][] = 'VideoHandlerHooks::initParserHook';
 
 $wgHooks['VideoInfoSaveToCache'][] = 'VideoHandlerHooks::clearVideoCache';
 $wgHooks['VideoInfoInvalidateCache'][] = 'VideoHandlerHooks::clearVideoCache';

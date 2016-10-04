@@ -27,13 +27,12 @@ $dir = dirname(__FILE__) . '/';
 $app = F::app();
 
 // classes
-$wgAutoloadClasses['Wikia\\Tasks\\Tasks\\ImageReviewTask'] = "{$dir}ImageReviewTask.class.php";
-
 $wgAutoloadClasses['ImageReviewSpecialController'] =  $dir . 'ImageReviewSpecialController.class.php';
 $wgAutoloadClasses['ImageReviewHelperBase'] =  $dir . 'ImageReviewHelperBase.class.php';
 $wgAutoloadClasses['ImageReviewHelper'] =  $dir . 'ImageReviewHelper.class.php';
 $wgAutoloadClasses['ImageReviewDatabaseHelper'] =  $dir . 'ImageReviewDatabaseHelper.class.php';
 $wgAutoloadClasses['ImageReviewHooks'] =  $dir . 'ImageReview.hooks.php';
+$wgAutoloadClasses['ImageReviewStatsCache'] =  $dir . 'ImageReviewStatsCache.class.php';
 
 $wgSpecialPages['ImageReview'] = 'ImageReviewSpecialController';
 

@@ -4,17 +4,19 @@ define('ext.wikia.adEngine.adLogicPageParams', [
 	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.adLogicPageViewCounter',
 	'ext.wikia.adEngine.utils.adLogicZoneParams',
-	'wikia.log',
 	'wikia.document',
+	'wikia.geo',
 	'wikia.location',
+	'wikia.log',
 	'wikia.window',
 	require.optional('wikia.abTest'),
 	require.optional('wikia.krux')
-], function (adContext, pvCounter, zoneParams, log, doc, loc, win, abTest, krux) {
+], function (adContext, pvCounter, zoneParams, doc, geo, loc, log, win, abTest, krux) {
 	'use strict';
 
 	var context = {},
 		logGroup = 'ext.wikia.adEngine.adLogicPageParams',
+		runtimeParams = {},
 		skin = adContext.getContext().targeting.skin;
 
 	function updateContext() {
@@ -64,6 +66,10 @@ define('ext.wikia.adEngine.adLogicPageParams', [
 		return target;
 	}
 
+	function addParam(key, value) {
+		runtimeParams[key] = value;
+	}
+
 	/**
 	 * Decode legacy dart string
 	 *
@@ -87,7 +93,7 @@ define('ext.wikia.adEngine.adLogicPageParams', [
 				kv = kvs[i].split('=');
 				key = kv[0];
 				value = kv[1];
-				if (key && value) {
+				if (key && value && key !== 'esrb') {
 					params[key] = params[key] || [];
 					params[key].push(value);
 				}
@@ -181,7 +187,9 @@ define('ext.wikia.adEngine.adLogicPageParams', [
 			skin: targeting.skin,
 			lang: zoneParams.getLanguage(),
 			wpage: targeting.pageName && targeting.pageName.toLowerCase(),
-			ref: getRefParam()
+			ref: getRefParam(),
+			esrb: targeting.esrbRating,
+			geo: geo.getCountryCode() || 'none'
 		};
 
 		if (pvs) {
@@ -202,10 +210,7 @@ define('ext.wikia.adEngine.adLogicPageParams', [
 		}
 
 		extend(params, decodeLegacyDartParams(targeting.wikiCustomKeyValues));
-
-		if (!params.esrb) {
-			params.esrb = targeting.wikiDirectedAtChildren ? 'ec' : 'teen';
-		}
+		extend(params, runtimeParams);
 
 		log(params, 9, logGroup);
 		return params;
@@ -219,6 +224,7 @@ define('ext.wikia.adEngine.adLogicPageParams', [
 	adContext.addCallback(updateContext);
 
 	return {
+		add: addParam,
 		getPageLevelParams: getPageLevelParams
 	};
 });

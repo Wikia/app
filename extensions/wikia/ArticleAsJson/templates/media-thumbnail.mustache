@@ -1,6 +1,10 @@
 <figure class="article-media-thumbnail"{{#mediaAttrs}} data-component="article-media-thumbnail" data-attrs="{{mediaAttrs}}"{{/mediaAttrs}} data-ref="{{ref}}">
 	<a href="{{#link}}{{link}}{{/link}}{{^link}}{{url}}{{/link}}">
-		<img src="data:image/svg+xml;charset=utf-8,%3Csvg xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg' viewBox%3D'0 0 {{width}} {{height}}'%2F%3E" alt="{{title}}"{{#width}} width="{{width}}"{{/width}}{{#height}} height="{{height}}"{{/height}}>
+		<img class="article-media-placeholder"
+			src="data:image/svg+xml;charset=utf-8,%3Csvg xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg' viewBox%3D'0 0 {{width}} {{height}}'%2F%3E"
+			alt="{{title}}"
+			{{#width}} width="{{width}}"{{/width}}
+			{{#height}} height="{{height}}"{{/height}}>
 		<noscript>
 			<img src="{{url}}" alt="{{title}}"{{#width}} width="{{width}}"{{/width}}{{#height}} height="{{height}}"{{/height}}>
 		</noscript>

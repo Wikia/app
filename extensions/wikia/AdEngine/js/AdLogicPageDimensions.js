@@ -244,6 +244,7 @@ define('ext.wikia.adEngine.adLogicPageDimensions', [
 
 	return {
 		addSlot: add,
-		isApplicable: isApplicable
+		isApplicable: isApplicable,
+		shouldBeShown: shouldBeShown
 	};
 });

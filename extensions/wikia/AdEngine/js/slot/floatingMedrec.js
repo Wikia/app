@@ -2,10 +2,12 @@
 define('ext.wikia.adEngine.slot.floatingMedrec', [
 	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.adHelper',
+	'ext.wikia.adEngine.adLogicPageDimensions',
+	'ext.wikia.adEngine.adTracker',
 	'jquery',
 	'wikia.log',
 	'wikia.window'
-], function (adContext, adHelper, $, log, win) {
+], function (adContext, adHelper, adLogicPageDimensions, adTracker, $, log, win) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.slot.floatingMedrec';
@@ -15,7 +17,7 @@ define('ext.wikia.adEngine.slot.floatingMedrec', [
 			isEnoughSpace = false,
 			enabled = false,
 			adPushed = false,
-			globalNavigationHeight = $('#globalNavigation').height(),
+			globalNavigationHeight = $('#globalNavigation').outerHeight(true),
 			margin = 10,
 			minDistance = 800,
 			leftSkyscraper3Selector = '#LEFT_SKYSCRAPER_3',
@@ -76,6 +78,9 @@ define('ext.wikia.adEngine.slot.floatingMedrec', [
 			if (enabled && !isEnoughSpace) {
 				log(['handleFloatingMedrec',
 					 'Disabling floating medrec: not enough space in right rail'], 'debug', logGroup);
+				if (adLogicPageDimensions.shouldBeShown(slotName)) {
+					adTracker.track('floating_medrec/disabling');
+				}
 
 				win.removeEventListener('scroll', update);
 				win.removeEventListener('resize', update);

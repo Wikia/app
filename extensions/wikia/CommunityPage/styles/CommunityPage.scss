@@ -1,0 +1,53 @@
+// Variables for general Community Page styles
+@import 'skins/shared/color';
+@import 'skins/oasis/css/core/breakpoints-variables';
+// Components
+@import 'components/variables';
+@import 'components/rail';
+@import 'components/textborder';
+@import 'components/header';
+@import 'components/avatar';
+@import 'components/list';
+@import 'components/admins-module';
+@import 'components/moderators-module';
+@import 'components/contributors-module';
+@import 'components/modal';
+@import 'components/card-module';
+@import 'components/recently-joined';
+@import 'components/todo-list-module';
+@import 'components/help';
+@import 'components/cards-module';
+
+.CommunityPageContainer {
+	@include flexbox();
+
+	box-sizing: border-box;
+	padding: 0;
+	width: 100%;
+}
+
+.CommunityPageMainContent {
+	@include flex-grow(1);
+
+	box-sizing: inherit;
+	padding-top: 32px;
+	.community-page-cards-module,
+	.community-page-todo-list-module {
+		margin-left: auto;
+		margin-right: 0;
+		// 3 biggest card size with margins
+		max-width: 3 * $community-page-card-module-width-regular + 3 * $content-spacing-regular;
+	}
+}
+
+.WikiaArticle {
+	overflow: visible;
+
+	.community-page-top-contributors h2 {
+		margin-top: 0;
+	}
+}
+
+.WikiaArticleFooter {
+	padding: 0;
+}

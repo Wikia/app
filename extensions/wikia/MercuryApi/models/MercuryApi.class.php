@@ -104,13 +104,14 @@ class MercuryApi {
 	 * @return mixed
 	 */
 	public function getWikiVariables() {
-		global $wgAnalyticsDriverIVW3Countries, $wgCacheBuster, $wgCityId, $wgContLang, $wgDBname, $wgDefaultSkin,
-			$wgDisableAnonymousEditing, $wgDisableAnonymousUploadForMercury, $wgDisableMobileSectionEditor,
-			$wgEnableCommunityData, $wgEnableDiscussions, $wgEnableNewAuth, $wgLanguageCode, $wgSitename,
-			$wgWikiDirectedAtChildrenByFounder, $wgWikiDirectedAtChildrenByStaff;
+		global $wgAnalyticsDriverIVW3Countries, $wgCacheBuster, $wgCityId, $wgContLang, $wgContentNamespaces, $wgDBname,
+			$wgDefaultSkin, $wgDisableAnonymousEditing, $wgDisableAnonymousUploadForMercury,
+			$wgDisableMobileSectionEditor, $wgEnableCommunityData, $wgEnableDiscussions, $wgEnableNewAuth,
+			$wgLanguageCode, $wgSitename, $wgWikiDirectedAtChildrenByFounder, $wgWikiDirectedAtChildrenByStaff;
 
 		return [
 			'cacheBuster' => (int)$wgCacheBuster,
+			'contentNamespaces' => array_values( $wgContentNamespaces ),
 			'dbName' => $wgDBname,
 			'defaultSkin' => $wgDefaultSkin,
 			'disableAnonymousEditing' => $wgDisableAnonymousEditing,
@@ -133,7 +134,7 @@ class MercuryApi {
 			'namespaces' => $wgContLang->getNamespaces(),
 			'siteMessage' => $this->getSiteMessage(),
 			'siteName' => $wgSitename,
-			'theme' => SassUtil::getOasisSettings(),
+			'theme' => SassUtil::normalizeThemeColors( SassUtil::getOasisSettings() ),
 			'tracking' => [
 				'vertical' => HubService::getVerticalNameForComscore( $wgCityId ),
 				'ivw3' => [
@@ -142,6 +143,11 @@ class MercuryApi {
 				],
 				'nielsen' => [
 					'enabled' => AnalyticsProviderNielsen::isEnabled(),
+					'apid' => AnalyticsProviderNielsen::getApid()
+				],
+				'ubisoft' => [
+					'enabled' => AnalyticsProviderUbisoft::isEnabled(),
+					'url' => AnalyticsProviderUbisoft::URL
 				]
 			],
 			'wikiCategories' => WikiFactoryHub::getInstance()->getWikiCategoryNames( $wgCityId ),
@@ -280,12 +286,8 @@ class MercuryApi {
 	 * @return array|null Article Ad context
 	 */
 	public function getAdsContext( Title $title ) {
-		global $wgEnableAdEngineExt;
-		if ( !empty( $wgEnableAdEngineExt ) ) {
-			$adContext = new AdEngine2ContextService();
-			return $adContext->getContext( $title, self::MERCURY_SKIN_NAME );
-		}
-		return null;
+		$adContext = new AdEngine2ContextService();
+		return $adContext->getContext( $title, self::MERCURY_SKIN_NAME );
 	}
 
 	/**

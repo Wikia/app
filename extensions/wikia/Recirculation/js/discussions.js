@@ -1,40 +1,47 @@
-/*global require*/
-require([
+define('ext.wikia.recirculation.discussions', [
 	'jquery',
+	'wikia.window',
 	'wikia.abTest',
 	'wikia.nirvana',
 	'ext.wikia.recirculation.tracker'
-], function ($, abTest, nirvana, tracker) {
-	var experimentName = 'RECIRCULATION_DISCUSSIONS';
+], function ($, w, abTest, nirvana, tracker) {
+	'use strict';
 
-	function injectDiscussions(done) {
+	function injectDiscussions(experimentName) {
 		nirvana.sendRequest({
 			controller: 'Recirculation',
 			method: 'discussions',
 			format: 'html',
 			type: 'get',
+			data: {
+				cityId: w.wgCityId
+			},
 			callback: function (response) {
-				$('#WikiaArticle').append(response);
-				done();
+				var $WikiaArticleFooter = $('#WikiaArticleFooter'),
+					$response = $(response);
+
+				if ($WikiaArticleFooter.length) {
+					$WikiaArticleFooter.before($response);
+				} else {
+					$('#WikiaArticleBottomAd').before($response);
+				}
+
+				tracker.trackVerboseImpression(experimentName, 'discussions');
+				$response.find('.discussion-timestamp').timeago();
+
+				$response.find('.discussion-thread').click(function () {
+					var slot = $(this).index() + 1,
+						label = 'discussions-tile=slot-' + slot + '=discussions';
+					tracker.trackVerboseClick(experimentName, label);
+					w.location = $(this).data('link');
+				});
+
+				$response.find('.discussion-link').mousedown(function() {
+					tracker.trackVerboseClick(experimentName, 'discussions-link');
+				});
 			}
 		});
 	}
 
-	if (abTest.inGroup(experimentName, 'ARTICLE_FOOTER')) {
-		injectDiscussions(function () {
-			tracker.trackVerboseImpression(experimentName, 'discussions');
-			$('.discussion-timestamp').timeago();
-
-			$('.discussion-thread').click(function () {
-				var slot = $(this).index() + 1,
-					label = 'discussions-tile=slot-' + slot;
-				tracker.trackVerboseClick(experimentName, label);
-				window.location = $(this).data('link');
-			});
-
-			$('.discussion-link').mousedown(function() {
-				tracker.trackVerboseClick(experimentName, 'discussions-link');
-			});
-		});
-	}
+	return injectDiscussions;
 });

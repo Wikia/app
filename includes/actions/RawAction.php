@@ -33,7 +33,7 @@ class RawAction extends FormlessAction {
 	}
 
 	function onView() {
-		global $wgGroupPermissions, $wgSquidMaxage, $wgForcedRawSMaxage, $wgJsMimeType;
+		global $wgGroupPermissions, $wgSquidMaxage, $wgForcedRawSMaxage, $wgJsMimeType, $wgUseXVO;
 
 		$this->getOutput()->disable();
 		$request = $this->getRequest();
@@ -83,6 +83,12 @@ class RawAction extends FormlessAction {
 		}
 
 		$response = $request->response();
+
+		// Set standard Vary headers so cache varies on cookies and such (T125283)
+		$response->header( $this->getOutput()->getVaryHeader() );
+		if ( $wgUseXVO ) {
+			$response->header( $this->getOutput()->getXVO() );
+		}
 
 		$response->header( 'Content-type: ' . $contentType . '; charset=UTF-8' );
 		# Output may contain user-specific data;

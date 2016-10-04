@@ -244,11 +244,10 @@ class ParserCache {
 
 			if ( !$wgArticleAsJson ) {
 				$info = "Saved in parser cache with key $parserOutputKey";
+				wfDebug( "$info\n" );
 
 				$parserOutput->mText .= "\n<!-- $info -->\n";
 			}
-
-			wfDebug( "$info\n" );
 			// Wikia change - end
 
 			// Save the parser output

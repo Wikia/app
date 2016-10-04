@@ -1,6 +1,7 @@
 <?php
 namespace Wikia\Service\Helios;
 
+use Wikia\Tracer\WikiaTracer;
 use Wikia\Util\GlobalStateWrapper;
 use Wikia\Service\Constants;
 
@@ -13,19 +14,22 @@ use Wikia\Service\Constants;
 class HeliosClientImpl implements HeliosClient
 {
 	const BASE_URI = "helios_base_uri";
-
+	const SCHWARTZ_TOKEN = "schwartz_token";
+	const SCHWARTZ_HEADER_NAME = 'THE-SCHWARTZ';
 	protected $baseUri;
 	protected $status;
+	protected $schwartzToken;
 
 	/**
 	 * @Inject({
-	 *   Wikia\Service\Helios\HeliosClientImpl::BASE_URI})
+	 *   Wikia\Service\Helios\HeliosClientImpl::BASE_URI,
+	 *   Wikia\Service\Helios\HeliosClientImpl::SCHWARTZ_TOKEN})
 	 * The constructor.
 	 * @param string $baseUri
 	 */
-	public function __construct( $baseUri )
-	{
+	public function __construct( $baseUri, $schwartzToken ) {
 		$this->baseUri = $baseUri;
+		$this->schwartzToken = $schwartzToken;
 	}
 
 	/**
@@ -58,6 +62,9 @@ class HeliosClientImpl implements HeliosClient
 
 		global $wgRequest;
 		$headers['X-Forwarded-For'] = $wgRequest->getIP();
+
+		// adding internal headers
+		WikiaTracer::instance()->setRequestHeaders( $headers, true );
 
 		// Request options pre-processing.
 		$options = [
@@ -137,6 +144,25 @@ class HeliosClientImpl implements HeliosClient
 		);
 
 		return [$this->status, $response];
+	}
+
+	/**
+	 * A shortcut method to remove all tokens for user in helios
+	 *
+	 * @param $userId int for remove user tokens
+	 * @internal param $username
+	 * @return null
+	 */
+	public function forceLogout( $userId ) {
+		return $this->request(
+			sprintf( 'users/%s/tokens', $userId ),
+			[ ],
+			[ ],
+			[
+				'method' => 'DELETE',
+				'headers' => [ self::SCHWARTZ_HEADER_NAME => $this->schwartzToken ]
+			]
+		);
 	}
 
 	/**

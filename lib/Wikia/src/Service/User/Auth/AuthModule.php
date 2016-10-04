@@ -16,6 +16,10 @@ class AuthModule implements Module {
 			->bind( AuthService::class )->toClass( MediaWikiAuthService::class )
 			->bind( HeliosClient::class )->toClass( HeliosClientImpl::class )
 			->bind( CookieHelper::class )->toClass( HeliosCookieHelper::class )
+			->bind( HeliosClientImpl::SCHWARTZ_TOKEN )->to( function () {
+				global $wgTheSchwartzSecretToken;
+				return $wgTheSchwartzSecretToken;
+			} )
 			->bind( HeliosClientImpl::BASE_URI )->to( function ( Container $c ) {
 					global $wgAuthServiceName;
 

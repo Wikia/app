@@ -108,8 +108,6 @@ $messages['en'] = array(
 	'editpagelayout-preview-dropdown-item-tablet' => 'Tablet Portrait',
 	'editpagelayout-preview-dropdown-item-desktop' => 'Desktop',
 	'editpagelayout-preview-dropdown-item-desktopxl' => 'Desktop XL',
-	'infoboxpreview-entrypoint-message' => 'Use the Infobox Preview feature to quickly build and design your infobox. Instantly preview your changes with zero risk of breaking any pages to readers. [[w:Help:Infobox_preview|Learn more.]]',
-	'infoboxpreview-entrypoint-button' => 'Open Infobox Preview'
 );
 
 /** Message documentation (Message documentation)
