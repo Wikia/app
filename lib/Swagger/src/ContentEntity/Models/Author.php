@@ -1,6 +1,6 @@
 <?php
 /**
- * Universe
+ * Author
  *
  * PHP version 5
  *
@@ -40,7 +40,7 @@ namespace Swagger\Client\ContentEntity\Models;
 use \ArrayAccess;
 
 /**
- * Universe Class Doc Comment
+ * Author Class Doc Comment
  *
  * @category    Class */
 /** 
@@ -49,13 +49,13 @@ use \ArrayAccess;
  * @license     http://www.apache.org/licenses/LICENSE-2.0 Apache Licene v2
  * @link        https://github.com/swagger-api/swagger-codegen
  */
-class Universe implements ArrayAccess
+class Author implements ArrayAccess
 {
     /**
       * The original name of the model.
       * @var string
       */
-    protected static $swaggerModelName = 'Universe';
+    protected static $swaggerModelName = 'Author';
 
     /**
       * Array of property to type mappings. Used for (de)serialization
@@ -63,8 +63,10 @@ class Universe implements ArrayAccess
       */
     protected static $swaggerTypes = array(
         'id' => 'string',
-        'name' => 'string',
-        'language' => 'string'
+        'username' => 'string',
+        'user_type' => 'string',
+        'external_user_id' => 'string',
+        'avatar' => 'map[string,string]'
     );
 
     public static function swaggerTypes()
@@ -78,8 +80,10 @@ class Universe implements ArrayAccess
      */
     protected static $attributeMap = array(
         'id' => 'id',
-        'name' => 'name',
-        'language' => 'language'
+        'username' => 'username',
+        'user_type' => 'userType',
+        'external_user_id' => 'externalUserId',
+        'avatar' => 'avatar'
     );
 
     public static function attributeMap()
@@ -93,8 +97,10 @@ class Universe implements ArrayAccess
      */
     protected static $setters = array(
         'id' => 'setId',
-        'name' => 'setName',
-        'language' => 'setLanguage'
+        'username' => 'setUsername',
+        'user_type' => 'setUserType',
+        'external_user_id' => 'setExternalUserId',
+        'avatar' => 'setAvatar'
     );
 
     public static function setters()
@@ -108,8 +114,10 @@ class Universe implements ArrayAccess
      */
     protected static $getters = array(
         'id' => 'getId',
-        'name' => 'getName',
-        'language' => 'getLanguage'
+        'username' => 'getUsername',
+        'user_type' => 'getUserType',
+        'external_user_id' => 'getExternalUserId',
+        'avatar' => 'getAvatar'
     );
 
     public static function getters()
@@ -134,8 +142,10 @@ class Universe implements ArrayAccess
     public function __construct(array $data = null)
     {
         $this->container['id'] = isset($data['id']) ? $data['id'] : null;
-        $this->container['name'] = isset($data['name']) ? $data['name'] : null;
-        $this->container['language'] = isset($data['language']) ? $data['language'] : null;
+        $this->container['username'] = isset($data['username']) ? $data['username'] : null;
+        $this->container['user_type'] = isset($data['user_type']) ? $data['user_type'] : null;
+        $this->container['external_user_id'] = isset($data['external_user_id']) ? $data['external_user_id'] : null;
+        $this->container['avatar'] = isset($data['avatar']) ? $data['avatar'] : null;
     }
 
     /**
@@ -183,43 +193,85 @@ class Universe implements ArrayAccess
     }
 
     /**
-     * Gets name
+     * Gets username
      * @return string
      */
-    public function getName()
+    public function getUsername()
     {
-        return $this->container['name'];
+        return $this->container['username'];
     }
 
     /**
-     * Sets name
-     * @param string $name
+     * Sets username
+     * @param string $username
      * @return $this
      */
-    public function setName($name)
+    public function setUsername($username)
     {
-        $this->container['name'] = $name;
+        $this->container['username'] = $username;
 
         return $this;
     }
 
     /**
-     * Gets language
+     * Gets user_type
      * @return string
      */
-    public function getLanguage()
+    public function getUserType()
     {
-        return $this->container['language'];
+        return $this->container['user_type'];
     }
 
     /**
-     * Sets language
-     * @param string $language
+     * Sets user_type
+     * @param string $user_type
      * @return $this
      */
-    public function setLanguage($language)
+    public function setUserType($user_type)
     {
-        $this->container['language'] = $language;
+        $this->container['user_type'] = $user_type;
+
+        return $this;
+    }
+
+    /**
+     * Gets external_user_id
+     * @return string
+     */
+    public function getExternalUserId()
+    {
+        return $this->container['external_user_id'];
+    }
+
+    /**
+     * Sets external_user_id
+     * @param string $external_user_id
+     * @return $this
+     */
+    public function setExternalUserId($external_user_id)
+    {
+        $this->container['external_user_id'] = $external_user_id;
+
+        return $this;
+    }
+
+    /**
+     * Gets avatar
+     * @return map[string,string]
+     */
+    public function getAvatar()
+    {
+        return $this->container['avatar'];
+    }
+
+    /**
+     * Sets avatar
+     * @param map[string,string] $avatar
+     * @return $this
+     */
+    public function setAvatar($avatar)
+    {
+        $this->container['avatar'] = $avatar;
 
         return $this;
     }

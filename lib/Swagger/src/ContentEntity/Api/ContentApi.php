@@ -104,12 +104,13 @@ class ContentApi
      * creates a new content entry by its url if it doesn't exist. If the version is unknown or if the content is new, adds it to the pipeline to be properly identified.
      *
      * @param string $url  (required)
+     * @param bool $force_refresh  (optional, default to false)
      * @return \Swagger\Client\ContentEntity\Models\Content
      * @throws \Swagger\Client\ApiException on non-2xx response
      */
-    public function create($url)
+    public function create($url, $force_refresh = null)
     {
-        list($response) = $this->createWithHttpInfo($url);
+        list($response) = $this->createWithHttpInfo($url, $force_refresh);
         return $response;
     }
 
@@ -119,10 +120,11 @@ class ContentApi
      * creates a new content entry by its url if it doesn't exist. If the version is unknown or if the content is new, adds it to the pipeline to be properly identified.
      *
      * @param string $url  (required)
+     * @param bool $force_refresh  (optional, default to false)
      * @return Array of \Swagger\Client\ContentEntity\Models\Content, HTTP status code, HTTP response headers (array of strings)
      * @throws \Swagger\Client\ApiException on non-2xx response
      */
-    public function createWithHttpInfo($url)
+    public function createWithHttpInfo($url, $force_refresh = null)
     {
         // verify the required parameter 'url' is set
         if ($url === null) {
@@ -144,6 +146,10 @@ class ContentApi
         }
         $headerParams['Content-Type'] = $this->apiClient->selectHeaderContentType(array());
 
+        // query params
+        if ($force_refresh !== null) {
+            $queryParams['forceRefresh'] = $this->apiClient->getSerializer()->toQueryValue($force_refresh);
+        }
         // path params
         if ($url !== null) {
             $resourcePath = str_replace(
@@ -161,6 +167,11 @@ class ContentApi
             $httpBody = $_tempBody; // $_tempBody is the method argument, if present
         } elseif (count($formParams) > 0) {
             $httpBody = $formParams; // for HTTP post (form)
+        }
+        // this endpoint requires API key authentication
+        $apiKey = $this->apiClient->getApiKeyWithPrefix('AUTH-SECRET');
+        if (strlen($apiKey) !== 0) {
+            $headerParams['AUTH-SECRET'] = $apiKey;
         }
         // make the API Call
         try {
@@ -254,6 +265,11 @@ class ContentApi
             $httpBody = $_tempBody; // $_tempBody is the method argument, if present
         } elseif (count($formParams) > 0) {
             $httpBody = $formParams; // for HTTP post (form)
+        }
+        // this endpoint requires API key authentication
+        $apiKey = $this->apiClient->getApiKeyWithPrefix('AUTH-SECRET');
+        if (strlen($apiKey) !== 0) {
+            $headerParams['AUTH-SECRET'] = $apiKey;
         }
         // make the API Call
         try {
