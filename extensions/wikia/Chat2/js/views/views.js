@@ -109,8 +109,6 @@ var ChatView = Backbone.View.extend({
 
 		// Inline Alerts have may have i18n messages in them. If so (and they don't have 'text' yet), process the message and cache it in 'text'.
 		// This needs to be done before the template processing below so that 'text' will be set by then.
-		//console.log(this.model.get('text'));
-		console.log(this.model.get('wfMsg'));
 		if(this.model.get('text') == ''){
 			var params = this.model.get('msgParams'),
 				msgId = this.model.get('wfMsg');
