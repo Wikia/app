@@ -300,8 +300,8 @@ class NavigationModel extends WikiaModel {
 			},
 			[
 				'cacheTTL' => $duration,
-				// cache ttl is set for 1 second (the shortest possible) for empty results case
-				'negativeCacheTTL' => 1,
+				// cache ttl is set for 5 second, so if DB is down it will have some time to recover
+				'negativeCacheTTL' => 5,
 			]
 		);
 
