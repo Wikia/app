@@ -267,7 +267,7 @@ var CreatePage = {
 			namespace = title.getNamespacePrefix().replace( ':', '' ),
 			visualEditorActive = $( 'html' ).hasClass( 've-activated' );
 
-		CreatePage.redlinkParam = '&redlink=1';
+		CreatePage.redlinkParam = '&redlink=1&flowName=redlink';
 
 		if ( CreatePage.canUseVisualEditor() ) {
 			CreatePage.track( { action: 'click', label: 've-redlink-click' } );
@@ -288,6 +288,7 @@ var CreatePage = {
 	init: function( context ) {
 		'use strict';
 		CreatePage.context = context;
+		console.info('track flow start here');
 		if ( window.WikiaEnableNewCreatepage ) {
 			$().log( 'init', 'CreatePage' );
 
@@ -338,6 +339,12 @@ var CreatePage = {
 						return true;
 					}
 				}
+			});
+		} else {
+			// in case create page modal is disabled
+			$( '#WikiaArticle' ).on( 'click', 'a.new', function( e ) {
+				e.preventDefault();
+				window.location.href = e.currentTarget.href + "&flowName=redlink";
 			});
 		}
 	},
