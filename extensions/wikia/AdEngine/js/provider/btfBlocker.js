@@ -89,7 +89,7 @@ define('ext.wikia.adEngine.provider.btfBlocker', [
 			log(['fillInSlotWithDelay', slot.name], 'debug', logGroup);
 
 			function fillInSlotOnResponse() {
-				onSlotResponse(slot.name, fillInSlot);
+				onSlotResponse(slot.name);
 			}
 
 			if (!adContext.getContext().opts.delayBtf) {

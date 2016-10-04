@@ -22,15 +22,6 @@ describe('ext.wikia.adEngine.provider.btfBlocker', function () {
 				return false;
 			}
 		},
-		lazyQueue: {
-			makeQueue: function (queue, callback) {
-				queue.start = function () {
-					console.log(queue);
-					queue.forEach(callback);
-				};
-				spyOn(queue, 'start').and.callThrough();
-			}
-		},
 		win: {}
 	};
 

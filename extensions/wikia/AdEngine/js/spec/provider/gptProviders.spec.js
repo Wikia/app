@@ -82,6 +82,8 @@ describe('ext.wikia.adEngine.provider.*', function () {
 				return modules['ext.wikia.adEngine.provider.' + providerName](
 					getFactory()
 				);
+			default:
+				return null;
 		}
 	}
 
