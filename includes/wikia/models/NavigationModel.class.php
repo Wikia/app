@@ -68,8 +68,6 @@ class NavigationModel extends WikiaModel {
 	/**
 	 * Return memcache key used for given message / variable
 	 *
-	 * City ID can be specified to return key for different wiki
-	 *
 	 * @param string $messageName message / variable name
 	 *
 	 * @return string memcache key
