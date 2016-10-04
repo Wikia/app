@@ -38,6 +38,7 @@ var CreatePage = {
 
 	requestDialog: function( e, titleText ) {
 		'use strict';
+		console.log('requestDialog', e.data.flow);
 
 		var rs, dialogCallback;
 
@@ -301,7 +302,7 @@ var CreatePage = {
 			}
 
 			// CreatePage chicklet ( Oasis )
-			$( '.createpage' ).click( CreatePage.requestDialog );
+			$( '.createpage' ).click( {flow: this.id}, CreatePage.requestDialog );
 
 			// macbre: RT #38478
 			var addRecipeTab = $( '#add_recipe_tab' ),
@@ -350,7 +351,7 @@ var CreatePage = {
 			defaultData = {
 				category: 'article',
 				trackingMethod: 'internal'
-			}
+			};
 
 			$.extend( defaultData, data );
 

@@ -14,6 +14,11 @@ define('wikia.flowTracking.createPage',
 				flowParam = qs.getVal('flow', false);
 
 			if (flowParam || d.referrer) {
+				// track middle step for contribute button flow
+				if (flowParam === flowTrack.flows.CONTRIBUTE_BUTTON) {
+					flowTrack.trackFlowStep(flowParam, {editor: editor})
+				}
+
 				//TODO: track middle step for other flows
 			} else {
 				flowTrack.beginFlow(flowTrack.flows.CREATE_PAGE_DIRECT_URL, {editor: editor});

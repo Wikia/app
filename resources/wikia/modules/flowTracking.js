@@ -1,7 +1,8 @@
 define('wikia.flowTracking', ['wikia.tracker', 'wikia.window', 'mw', 'jquery'], function (tracker, w, mw, $) {
 
 	var flows = {
-			CREATE_PAGE_DIRECT_URL: 'create-page-direct-url'
+			CREATE_PAGE_DIRECT_URL: 'create-page-direct-url',
+			CONTRIBUTE_BUTTON: 'contribute-button'
 		},
 		track = tracker.buildTrackingFunction({
 			category: 'flow-tracking',
