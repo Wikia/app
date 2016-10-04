@@ -28,7 +28,7 @@ define('ext.wikia.adEngine.lookup.amazonMatch', [
 			}
 		},
 		rendered = false,
-		paramPattern = /^a([0-9]x[0-9])p([0-9]+)$/,
+		paramPattern = /([0-9]x[0-9])/,
 		amazonId = '3115',
 		priceMap = {},
 		slots = [];
@@ -67,7 +67,6 @@ define('ext.wikia.adEngine.lookup.amazonMatch', [
 
 	function calculatePrices() {
 		var size,
-			tier,
 			tokens,
 			m;
 
@@ -78,11 +77,10 @@ define('ext.wikia.adEngine.lookup.amazonMatch', [
 			m = param.match(paramPattern);
 			if (m) {
 				size = m[1];
-				tier = parseInt(m[2], 10);
-
-				if (!priceMap[size] || tier < priceMap[size]) {
-					priceMap[size] = tier;
+				if (!priceMap[size]) {
+					priceMap[size] = [];
 				}
+				priceMap[size].push(param);
 			}
 		});
 	}
@@ -105,11 +103,13 @@ define('ext.wikia.adEngine.lookup.amazonMatch', [
 
 		slots[slotName].forEach(function (size) {
 			if (priceMap[size]) {
-				params.push('a' + size + 'p' + priceMap[size]);
+				priceMap[size].forEach(function (price) {
+					params.push(price);
+				});
 			}
 		});
 
-		return params.length > 0 ? {amznslots: params} : {};
+		return params.length > 0 ? { amznslots: params.sort() } : {};
 	}
 
 	function getPrices() {
