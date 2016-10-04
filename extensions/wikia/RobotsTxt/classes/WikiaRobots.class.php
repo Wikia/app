@@ -74,6 +74,8 @@ class WikiaRobots {
 	private $blockedPaths = [
 		'/d/u/', // User pages for discussions
 		'/fandom?p=', // Fandom old URLs
+		'/wikia.php?controller=ARecoveryEngineApi', // logging for ad-recovery (ADEN-3930)
+		'/api/v1/ARecoveryEngine' // logging for ad-recovery (ADEN-3930)
 	];
 
 	/**

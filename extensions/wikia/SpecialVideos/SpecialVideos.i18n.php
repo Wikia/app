@@ -1,10 +1,5 @@
 <?php
-/**
- * Internationalisation file for the SpecialVideos extension.
- *
- * @addtogroup Languages
- */
-
+/** Internationalization file for /extensions/wikia/SpecialVideos/SpecialVideos extension. */
 $messages = [];
 
 $messages['en'] = [
@@ -17,7 +12,7 @@ $messages['en'] = [
 	'specialvideos-sort-latest' => 'Latest',
 	'specialvideos-sort-most-popular' => 'Most Popular',
 	'specialvideos-sort-trending' => 'Trending',
-	'specialvideos-sort-featured' => 'Source: Wikia Library',
+	'specialvideos-sort-featured' => 'Source: Fandom Library',
 	'specialvideos-uploadby' => 'by $1',
 	'specialvideos-posted-in' => 'Posted in $1',
 	'special-videos-add-video' => 'Add a Video',
@@ -48,7 +43,7 @@ $messages['qqq'] = [
 	'specialvideos-sort-latest' => 'Dropdown option to sort videos by most recent first in Special:Videos.',
 	'specialvideos-sort-most-popular' => 'Dropdown option to sort videos by most viewed first in Special:Videos.',
 	'specialvideos-sort-trending' => 'Dropdown option to sort videos by the videos that are currently trending (i.e. most viewed in the last 30 days) in Special:Videos.',
-	'specialvideos-sort-featured' => 'Dropdown option to filter videos by premium, wiki-library sourced, videos in Special:Videos.',
+	'specialvideos-sort-featured' => 'Missing documentation',
 	'specialvideos-uploadby' => 'text displayed below a video to indicate which user uploaded the video',
 	'specialvideos-posted-in' => 'text displayed below a video to indicate which articles the video is posted in.  Can be a truncated list.',
 	'special-videos-add-video' => 'Button text to click to add a video to a wiki.',
@@ -59,7 +54,6 @@ $messages['qqq'] = [
 	'specialvideos-remove-modal-title' => 'Modal dialog title to delete video',
 	'specialvideos-remove-modal-message' => 'Modal dialog message to confirm whether or not user wants to delete',
 	'specialvideos-no-videos' => 'Message shown when there are no videos added to the wiki',
-
 	'specialvideos-filter-games' => 'Label that appears in sort/filter pulldown to show only trending gaming videos',
 	'specialvideos-filter-lifestyle' => 'Label that appears in sort/filter pulldown to show only trending lifestyle videos',
 	'specialvideos-filter-entertainment' => 'Label that appears in sort/filter pulldown to show only trending entertainment videos',
@@ -75,7 +69,7 @@ $messages['de'] = [
 	'specialvideos-sort-latest' => 'Neueste',
 	'specialvideos-sort-most-popular' => 'Populärste',
 	'specialvideos-sort-trending' => 'Trends',
-	'specialvideos-sort-featured' => 'Quelle: Wikia-Bibliothek',
+	'specialvideos-sort-featured' => 'Quelle: Fandom-Bibliothek',
 	'specialvideos-uploadby' => 'von $1',
 	'specialvideos-posted-in' => 'Veröffentlicht auf $1',
 	'special-videos-add-video' => 'Video hinzufügen',
@@ -90,7 +84,7 @@ $messages['es'] = [
 	'specialvideos-sort-latest' => 'Más Recientes',
 	'specialvideos-sort-most-popular' => 'Más Populares',
 	'specialvideos-sort-trending' => 'Creciendo Ahora',
-	'specialvideos-sort-featured' => 'Fuente: Biblioteca Wikia',
+	'specialvideos-sort-featured' => 'Fuente: Biblioteca de Fandom',
 	'specialvideos-uploadby' => 'por $1',
 	'specialvideos-posted-in' => 'Publicado en $1',
 	'special-videos-add-video' => 'Añade un video',
@@ -105,7 +99,7 @@ $messages['fr'] = [
 	'specialvideos-sort-latest' => 'Dernières',
 	'specialvideos-sort-most-popular' => 'Les plus populaires',
 	'specialvideos-sort-trending' => 'Tendances',
-	'specialvideos-sort-featured' => 'Source : Librairie Wikia',
+	'specialvideos-sort-featured' => 'Source : Bibliothèque de Fandom',
 	'specialvideos-uploadby' => 'par $1',
 	'specialvideos-posted-in' => 'Postée sur $1',
 	'special-videos-add-video' => 'Ajouter une vidéo',
@@ -148,7 +142,7 @@ $messages['pl'] = [
 	'specialvideos-sort-latest' => 'Najnowsze',
 	'specialvideos-sort-most-popular' => 'Najpopularniejsze',
 	'specialvideos-sort-trending' => 'Na fali',
-	'specialvideos-sort-featured' => 'Źródło: Wikia Library',
+	'specialvideos-sort-featured' => 'Źródło: Biblioteka Fandomu',
 	'specialvideos-uploadby' => 'dodał(a) $1',
 	'specialvideos-posted-in' => 'Użyto w $1',
 	'special-videos-add-video' => 'Dodaj film',
@@ -163,7 +157,7 @@ $messages['ru'] = [
 	'specialvideos-sort-latest' => 'Самому новому',
 	'specialvideos-sort-most-popular' => 'Самому просматриваемому',
 	'specialvideos-sort-trending' => 'Самому популярному',
-	'specialvideos-sort-featured' => 'Источник: Библиотека Викия',
+	'specialvideos-sort-featured' => 'Источник: библиотека Фэндома',
 	'specialvideos-uploadby' => 'от $1',
 	'specialvideos-posted-in' => 'Опубликовано в $1',
 	'special-videos-add-video' => 'Добавить видео',
@@ -186,9 +180,41 @@ $messages['it'] = [
 	'specialvideos-sort-latest' => 'Più recenti',
 	'specialvideos-sort-most-popular' => 'Più popolari',
 	'specialvideos-sort-trending' => 'Tendenza',
-	'specialvideos-sort-featured' => 'Fonte: Wikia Library',
+	'specialvideos-sort-featured' => 'Fonte: Libreria Fandom',
 	'specialvideos-uploadby' => 'da $1',
 	'specialvideos-posted-in' => 'Pubblicato in $1',
 	'special-videos-add-video' => 'Carica un video',
-
 ];
+
+$messages['fi'] = [
+	'specialvideos-sort-featured' => 'Lähde: Wikia Library',
+];
+
+$messages['ja'] = [
+	'specialvideos-sort-featured' => '出典：Fandomライブラリ',
+];
+
+$messages['ko'] = [
+	'specialvideos-sort-featured' => '위키아 동영상 라이브러리에서 가져옴',
+];
+
+$messages['pt'] = [
+	'specialvideos-sort-featured' => 'Fonte: biblioteca do Fandom',
+];
+
+$messages['pt-br'] = [
+	'specialvideos-sort-featured' => 'Fonte: Biblioteca da Wikia',
+];
+
+$messages['zh'] = [
+	'specialvideos-sort-featured' => '来源: 维基图书馆',
+];
+
+$messages['zh-hans'] = [
+	'specialvideos-sort-featured' => '资料来源：Fandom资料库',
+];
+
+$messages['zh-hant'] = [
+	'specialvideos-sort-featured' => '資料來源: Fandom資料庫',
+];
+

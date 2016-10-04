@@ -3,11 +3,12 @@
 /*jslint regexp:true*/
 define('ext.wikia.adEngine.provider.gpt.adDetect', [
 	'ext.wikia.adEngine.adContext',
+	'ext.wikia.adEngine.context.uapContext',
 	'ext.wikia.adEngine.messageListener',
 	'ext.wikia.adEngine.slotTweaker',
 	'wikia.log',
 	'wikia.window'
-], function (adContext, messageListener, slotTweaker, log, win) {
+], function (adContext, uapContext, messageListener, slotTweaker, log, win) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.provider.gpt.adDetect',
@@ -242,6 +243,10 @@ define('ext.wikia.adEngine.provider.gpt.adDetect', [
 					});
 					break;
 			}
+		}
+
+		if (uapContext.shouldDispatchEvent(slot.name)) {
+			uapContext.dispatchEvent();
 		}
 
 		if (['openx', 'rubicon', 'saymedia', 'turtle', 'evolve2'].indexOf(adType) !== -1 || isPartnerAdType(adType)) {

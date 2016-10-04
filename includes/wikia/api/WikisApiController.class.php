@@ -20,12 +20,11 @@ class WikisApiController extends WikiaApiController {
 	const LANGUAGES_LIMIT = 10;
 	const DEFAULT_TOP_EDITORS_NUMBER = 10;
 	const DEFAULT_WIDTH = 250;
-	const DEFAULT_HEIGHT = null;
+	const DEFAULT_HEIGHT = 140;
 	const DEFAULT_SNIPPET_LENGTH = null;
 	const CACHE_VERSION = 3;
 	const WORDMARK = 'Wiki-wordmark.png';
 	const MAX_WIKIS = 250;
-	private static $flagsBlacklist = array( 'blocked', 'promoted' );
 
 	private $keys;
 	private $service;
@@ -293,9 +292,9 @@ class WikisApiController extends WikiaApiController {
 
 	protected function getDetailsParams() {
 		return [
-			'imageWidth' => $this->request->getVal( 'width', null ),
-			'imageHeight' => $this->request->getVal( 'height', null ),
-			'length' => $this->request->getVal( 'snippet', static::DEFAULT_SNIPPET_LENGTH )
+			'imageWidth' => $this->request->getInt( 'width' ) ?: static::DEFAULT_WIDTH,
+			'imageHeight' => $this->request->getInt( 'height' ) ?:  static::DEFAULT_HEIGHT,
+			'length' => $this->request->getInt( 'snippet' ) ?: static::DEFAULT_SNIPPET_LENGTH,
 		];
 	}
 

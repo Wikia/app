@@ -2,41 +2,56 @@
 define('ext.wikia.adEngine.video.vastBuilder', [
 	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.adLogicPageParams',
+	'ext.wikia.adEngine.slot.adUnitBuilder',
 	'wikia.location',
 	'wikia.log'
-], function (adContext, page, loc, log) {
+], function (adContext, page, adUnitBuilder, loc, log) {
 	'use strict';
-	var adUnitId = '/5441/VIDEO_ATG',
-		adSize = '640x480',
+	var adSizes = {
+			vertical: '320x480',
+			horizontal: '640x480'
+		},
 		baseUrl = 'https://pubads.g.doubleclick.net/gampad/ads?',
 		correlator = Math.round(Math.random() * 10000000000),
+		defaultAdUnit = '/5441/VIDEO_ATG',
 		logGroup = 'ext.wikia.adEngine.video.vastBuilder';
 
-	function getCustomParameters() {
-		var pageLevelParams = page.getPageLevelParams(),
-			customParameters = [];
+	function getCustomParameters(slotName, src) {
+		var customParameters = [],
+			params = page.getPageLevelParams();
 
-		Object.keys(pageLevelParams).forEach(function (key) {
-			if (pageLevelParams[key]) {
-				customParameters.push(key + '=' + pageLevelParams[key]);
+		params.pos = slotName;
+		params.src = src;
+
+		Object.keys(params).forEach(function (key) {
+			if (params[key]) {
+				customParameters.push(key + '=' + params[key]);
 			}
 		});
 
 		return encodeURIComponent(customParameters.join('&'));
 	}
 
-	function build() {
+	function isNumeric(n) {
+		return !isNaN(parseFloat(n)) && isFinite(n);
+	}
+
+	function getSize(aspectRatio) {
+		return aspectRatio >= 1 || !isNumeric(aspectRatio) ? adSizes.horizontal : adSizes.vertical;
+	}
+
+	function build(src, slotName, aspectRatio) {
 		var params = [
 				'output=vast',
 				'env=vp',
 				'gdfp_req=1',
 				'impl=s',
 				'unviewed_position_start=1',
-				'iu=' + adUnitId,
-				'sz=' + adSize,
+				'iu=' + (src && slotName ?  adUnitBuilder.build(slotName, src) : defaultAdUnit),
+				'sz=' + getSize(aspectRatio),
 				'url=' + loc.href,
 				'correlator=' + correlator,
-				'cust_params=' + getCustomParameters()
+				'cust_params=' + getCustomParameters(slotName, src)
 			],
 			url = baseUrl + params.join('&');
 

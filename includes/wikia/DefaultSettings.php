@@ -362,6 +362,7 @@ $wgAutoloadClasses['PortableInfoboxBuilderHelper'] = $IP . '/extensions/wikia/Po
 $wgAutoloadClasses['TemplateClassificationService'] = $IP . '/includes/wikia/services/TemplateClassificationService.class.php';
 $wgAutoloadClasses['CommunityDataService'] = $IP . '/includes/wikia/services/CommunityDataService.class.php';
 $wgAutoloadClasses['InspectletService'] = $IP . '/includes/wikia/services/InspectletService.class.php';
+$wgAutoloadClasses['SiteAttributeService'] = $IP . '/includes/wikia/services/SiteAttributeService.class.php';
 
 // services hooks
 $wgHooks['ArticleEditUpdates'][] = 'MediaQueryService::onArticleEditUpdates';
@@ -642,7 +643,6 @@ include_once( "$IP/extensions/wikia/AuthModal/AuthModal.setup.php" );
 include_once( "$IP/extensions/wikia/LatestPhotos/LatestPhotos.setup.php" );
 include_once( "$IP/extensions/wikia/PowerUser/PowerUser.setup.php" );
 include_once( "$IP/extensions/wikia/AutoFollow/AutoFollow.setup.php" );
-include_once( "$IP/extensions/wikia/GlobalFooter/GlobalFooter.setup.php" );
 include_once( "$IP/extensions/wikia/WikiaLogo/WikiaLogo.setup.php" );
 include_once( "$IP/extensions/wikia/Rail/Rail.setup.php" );
 include_once( "$IP/extensions/wikia/PageShare/PageShare.setup.php" );
@@ -1093,7 +1093,7 @@ $wgHooks['ArticleDelete'][] = 'ArticlesUsingMediaQuery::onArticleDelete';
 /**
  * Password reminder name
  */
-$wgPasswordSenderName = 'Wikia';
+$wgPasswordSenderName = 'Fandom';
 
 /**
  * Defines the mapping for per-skin Common.js/css
@@ -1804,11 +1804,6 @@ $wgProfilerSendViaScribe = true;
  */
 $wgDisableWAMOnHubs = false;
 
-/* @name wgIncludeWikiInCorporateFooterDropdown
- * Include link to this wiki in the Corporate Footer dropdown (the one with flags).
- */
-$wgIncludeWikiInCorporateFooterDropdown = false;
-
 /**
  * Force ImageServing to return an empty list
  * see PLATFORM-392
@@ -1828,12 +1823,6 @@ $wgOasisTypography = true;
  * todo Remove when removing responsive
  */
 $wgOasisBreakpoints = true;
-
-/**
- * Enable updated GlobalFooter
- * @TODO CONCF-444 - remove this variable
- */
-$wgEnableUpdatedGlobalFooter = true;
 
 /**
  * @name $wgPaidAssetDropConfig

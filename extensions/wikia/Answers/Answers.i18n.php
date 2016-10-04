@@ -1,18 +1,8 @@
 <?php
+/** Internationalization file for /extensions/wikia/Answers/Answers extension. */
+$messages = [];
 
-/**
- * Internationalization for Answer extension
- *
- * @package MediaWiki
- * @subpackage Extensions
- *
- * @license http://www.gnu.org/copyleft/gpl.html GNU General Public License 2.0 or later
- *
- */
-
-$messages = array();
-
-$messages['en'] = array(
+$messages['en'] = [
 	'answers-desc' => 'Wikia\'s Answer site extension',
 	'answer_title' => 'Answer',
 	'answered_by' => 'Answered by',
@@ -25,7 +15,7 @@ $messages['en'] = array(
 	'ask_button' => 'Ask',
 	'ask_thanks' => 'Thanks for the rockin\' question!',
 	'question_asked_by' => 'Question asked by',
-	'question_asked_by_a_wikia_user' => 'Question asked by a Wikia user',
+	'question_asked_by_a_wikia_user' => 'Question asked by a Fandom user',
 	'new_question_comment' => 'new question',
 	'answers_toolbox' => 'Wikianswers toolbox',
 	'improve_this_answer' => 'Improve this answer',
@@ -49,20 +39,20 @@ $messages['en'] = array(
 	'see_all_changes' => 'See all changes',
 	'toolbox_anon_message' => '<i>"Wikianswers leverages the unique characterstics of a wiki to form the very best answers to any question."</i><br /><br /> <b>Jimmy Wales</b><br /> founder of Wikipedia and Wikianswers',
 	'no_questions_found' => 'No questions found',
-	'widget_settings'	=> 'Question Settings',
-	'style_settings'	=> 'Style Settings',
+	'widget_settings' => 'Question Settings',
+	'style_settings' => 'Style Settings',
 	'get_widget_title' => 'Add Questions to your site',
 	'background_color' => 'Background color',
 	'widget_category' => 'Type of Questions',
 	'category' => 'Category Name',
 	'custom_category' => 'Custom Category',
 	'number_of_items' => 'Number of items to show',
-	'width'		=> 'Width',
-	'next_page'		=> 'Next &raquo;',
-	'prev_page'		=> '&laquo; Prev',
-	'see_all'		=> 'See all',
-	'get_code'	=> 'Grab Code',
-	'link_color'	=> 'Question Link Color',
+	'width' => 'Width',
+	'next_page' => 'Next &raquo;',
+	'prev_page' => '&laquo; Prev',
+	'see_all' => 'See all',
+	'get_code' => 'Grab Code',
+	'link_color' => 'Question Link Color',
 	'widget_order' => 'Question Order',
 	'widget_ask_box' => 'Include ask box',
 	'question_redirected_help_page' => 'Why was my question redirected here',
@@ -110,7 +100,7 @@ $messages['en'] = array(
 	'q' => '<!-- -->',
 	'a' => 'Answer:',
 	'?' => '?',
-	'answering_tips' => "<h3>Tips for answering:</h3> When contributing an answer, try to be as accurate as you can. If you're getting information from another source such as Wikipedia, put a link to this in the text. And thank you for contributing to {{SITENAME}}!",
+	'answering_tips' => '<h3>Tips for answering:</h3> When contributing an answer, try to be as accurate as you can. If you\'re getting information from another source such as Wikipedia, put a link to this in the text. And thank you for contributing to {{SITENAME}}!',
 	'header_questionmark_pre' => '',
 	'header_questionmark_post' => '?',
 	'plus_x_more_helpers' => '... plus $1 more helpers',
@@ -127,9 +117,7 @@ $messages['en'] = array(
 	'anwb-thatisall-text' => 'That\'s it - you\'re ready to roll!<br /><br />Now it\'s time to start writing more questions and answers, so that your site can be found more easily in search engines.<br /><br />The list of questions added in the last step has been put into your questions site. Head in to answer your questions, and start your own answers community!',
 	'anwb-logo-preview' => 'Here\'s a preview of your logo',
 	'anwb-save-tagline' => 'Save tagline',
-	'badWords' => 'fuck', // testing a bug
-
-	// toolbox
+	'badWords' => 'fuck',
 	'qa-toolbox-button' => 'Answer a random question',
 	'qa-toolbox-share' => 'Share',
 	'qa-toolbox-tools' => 'Advanced tools»',
@@ -137,8 +125,6 @@ $messages['en'] = array(
 	'qa-toolbox-delete' => 'Delete this question',
 	'qa-toolbox-history' => 'Past versions of this page',
 	'qa-featured-sites' => '-',
-
-	// Skin Chooser
 	'answers_skins' => 'Answers',
 	'answers-bluebell' => 'Bluebell',
 	'answers-leaf' => 'Leaf',
@@ -150,30 +136,22 @@ $messages['en'] = array(
 	'answers-carbon' => 'Carbon',
 	'answers-obsession' => 'Obsession',
 	'answers-custom' => 'Custom',
-);
+];
 
-/** Message documentation (Message documentation)
- * @author Siebrand
- */
-$messages['qqq'] = array(
+$messages['qqq'] = [
 	'answers-desc' => '{{desc}}',
 	'answers-category-count-answered' => 'Parameters:
 * $1 is the number of answered questions.',
 	'answers-category-count-unanswered' => 'Parameters:
 * $1 is the number of unanswered questions.',
-);
+	'question_asked_by_a_wikia_user' => 'Missing documentation',
+];
 
-/** Afrikaans (Afrikaans) */
-$messages['af'] = array(
+$messages['af'] = [
 	'research_this' => 'Vors dit na',
-);
+];
 
-/** Azerbaijani (Azərbaycanca)
- * @author Cekli829
- * @author Melikov Memmed
- * @author Vago
- */
-$messages['az'] = array(
+$messages['az'] = [
 	'answer_title' => 'Cavab',
 	'question_asked_by' => 'Sualı verən',
 	'question_asked_by_a_wikia_user' => 'Sualı verən Viki istifadəçisi',
@@ -185,13 +163,9 @@ $messages['az'] = array(
 	'facebook_send_request' => 'Birbaşa dostlarına göndər',
 	'ask_friends' => 'Cavab üçün dostlarından kömək istə',
 	'answers_skins' => 'Cavablar',
-);
+];
 
-/** Breton (Brezhoneg)
- * @author Fulup
- * @author Y-M D
- */
-$messages['br'] = array(
+$messages['br'] = [
 	'answer_title' => 'Respont',
 	'answered_by' => 'Respontet gant',
 	'unregistered' => 'Dienroll',
@@ -208,7 +182,7 @@ $messages['br'] = array(
 	'research_this' => 'Klask-se',
 	'see_all_changes' => 'Gwelet an holl gemmoù',
 	'width' => 'Ledander',
-	'next_page' => "War-lerc'h &raquo;",
+	'next_page' => 'War-lerc\'h &raquo;',
 	'prev_page' => '&laquo; Kent',
 	'ads_by_google' => 'Bruderezh gant Google',
 	'you_can' => 'Gallout a rit :',
@@ -220,16 +194,9 @@ $messages['br'] = array(
 	'answers-sky' => 'Oabl',
 	'answers-spring' => 'Nevezamzer',
 	'answers-forest' => 'Koadeg',
-);
+];
 
-/** German (Deutsch)
- * @author George Animal
- * @author Kghbln
- * @author LWChris
- * @author SVG
- * @author Tiin
- */
-$messages['de'] = array(
+$messages['de'] = [
 	'answer_title' => 'Antwort',
 	'answered_by' => 'Beantwortet von',
 	'unregistered' => 'Nicht registriert',
@@ -241,7 +208,7 @@ $messages['de'] = array(
 	'ask_button' => 'Fragen',
 	'ask_thanks' => 'Danke für deine klasse Frage!',
 	'question_asked_by' => 'Frage gestellt von',
-	'question_asked_by_a_wikia_user' => 'Frage gestellt von einem Wikia Benutzer',
+	'question_asked_by_a_wikia_user' => 'Frage eines Fandom-Benutzers',
 	'new_question_comment' => 'neue Frage',
 	'answers_toolbox' => 'Wikianswers Toolbox',
 	'improve_this_answer' => 'Diese Antwort verbessern',
@@ -347,40 +314,28 @@ $messages['de'] = array(
 	'answers-carbon' => 'Karbon',
 	'answers-obsession' => 'Besessenheit',
 	'answers-custom' => 'Benutzerdefiniert',
-);
+];
 
-/** German (formal address) (‪Deutsch (Sie-Form)‬)
- * @author Tiin
- */
-$messages['de-formal'] = array(
+$messages['de-formal'] = [
 	'auto_friend_request_body' => 'Wollen Sie mich als Freund hinzufügen?',
 	'answering_tips' => '<h3>Tipps für das Antworten:</h3> Wenn Sie eine Antwort geben, versuchen Sie so präzise wie möglich zu sein. Wenn Sie die Informationen aus einer anderen Quelle wie der Wikipedia beziehen, ergänzen Sie einen entsprechenden Link im Text. Und vielen Dank für Ihren Beitrag zum {{SITENAME}}!',
 	'qa-toolbox-button' => 'Beantworten Sie eine zufällige Frage',
 	'qa-toolbox-protect' => 'Schützen Sie diese Frage',
 	'qa-toolbox-delete' => 'Löschen Sie diese Frage',
-);
+];
 
-/** Zazaki (Zazaki)
- * @author Erdemaslancan
- */
-$messages['diq'] = array(
+$messages['diq'] = [
 	'ask_a_question' => 'çiyê pers bike',
 	'ask_a_question-widget' => 'çiyê pers bike',
 	'see_all_changes' => 'vurnayışe heme',
 	'see_all' => 'Bewni hemi',
-);
+];
 
-/** Greek (Ελληνικά) */
-$messages['el'] = array(
+$messages['el'] = [
 	'research_this' => 'Αναζητήστε αυτό',
-);
+];
 
-/** Spanish (Español)
- * @author Armando-Martin
- * @author Bola
- * @author Rodrigo Molinero
- */
-$messages['es'] = array(
+$messages['es'] = [
 	'answer_title' => 'Respuesta',
 	'answered_by' => 'Contestado por',
 	'unregistered' => 'No registrado',
@@ -451,18 +406,14 @@ $messages['es'] = array(
 	'a' => 'Respuesta:',
 	'anwb-step1-headline' => 'De qué trata tí Wiki?',
 	'anwb-choose-logo' => 'Elija su logo',
-);
+	'question_asked_by_a_wikia_user' => 'Pregunta hecha por un usuario de Fandom',
+];
 
-/** Finnish (Suomi) */
-$messages['fi'] = array(
+$messages['fi'] = [
 	'research_this' => 'Tutki tätä',
-);
+];
 
-/** French (Français)
- * @author McDutchie
- * @author Wyz
- */
-$messages['fr'] = array(
+$messages['fr'] = [
 	'answer_title' => 'Réponse',
 	'answered_by' => 'Réponse de',
 	'unregistered' => 'Non inscrit',
@@ -474,7 +425,7 @@ $messages['fr'] = array(
 	'ask_button' => 'Demander',
 	'ask_thanks' => 'Merci pour cette question intéressante !',
 	'question_asked_by' => 'Question posée par',
-	'question_asked_by_a_wikia_user' => 'Question posée par un utilisateur de Wikia',
+	'question_asked_by_a_wikia_user' => 'Question posée par un utilisateur de Fandom',
 	'new_question_comment' => 'nouvelle question',
 	'answers_toolbox' => 'Boîte à outils Wikiréponses',
 	'improve_this_answer' => 'Améliorer cette réponse',
@@ -589,12 +540,9 @@ $messages['fr'] = array(
 	'answers-carbon' => 'Carbone',
 	'answers-obsession' => 'Obsession',
 	'answers-custom' => 'Personnalisé',
-);
+];
 
-/** Galician (Galego)
- * @author Toliño
- */
-$messages['gl'] = array(
+$messages['gl'] = [
 	'answer_title' => 'Resposta',
 	'answered_by' => 'Respondida por',
 	'unregistered' => 'Non rexistrado',
@@ -721,12 +669,9 @@ $messages['gl'] = array(
 	'answers-carbon' => 'Carbono',
 	'answers-obsession' => 'Obsesión',
 	'answers-custom' => 'Personalizado',
-);
+];
 
-/** Hungarian (Magyar)
- * @author TK-999
- */
-$messages['hu'] = array(
+$messages['hu'] = [
 	'answer_title' => 'Válasz',
 	'answered_by' => 'Válaszolt:',
 	'unregistered' => 'Nem regisztrált',
@@ -798,12 +743,9 @@ $messages['hu'] = array(
 	'categorize' => 'Kategorizáció',
 	'categorize_help' => 'Soronként egy kategória',
 	'answers_widget_admin_note' => '<b>Adminisztrátorok:</b> Ha adminisztrátor szeretnél lenni a <a href="http://answers.wikia.com" target="_blank">Wikianswersen</a>, <a href="http://answers.wikia.com/wiki/Wikianswers:Become_an_admin" target="_blank">kattints ide</a>.',
-);
+];
 
-/** Interlingua (Interlingua)
- * @author McDutchie
- */
-$messages['ia'] = array(
+$messages['ia'] = [
 	'answer_title' => 'Responsa',
 	'answered_by' => 'Respondite per',
 	'unregistered' => 'Non registrate',
@@ -930,12 +872,9 @@ $messages['ia'] = array(
 	'answers-carbon' => 'Carbon',
 	'answers-obsession' => 'Obsession',
 	'answers-custom' => 'Personalisate',
-);
+];
 
-/** Indonesian (Bahasa Indonesia)
- * @author Aldnonymous
- */
-$messages['id'] = array(
+$messages['id'] = [
 	'answer_title' => 'Jawaban',
 	'answered_by' => 'Dijawab oleh',
 	'unregistered' => 'Tidak terdaftar',
@@ -1034,13 +973,9 @@ $messages['id'] = array(
 	'answers-carbon' => 'Karbon',
 	'answers-obsession' => 'Obsesi',
 	'answers-custom' => 'Kustom',
-);
+];
 
-/** Italian (Italiano)
- * @author Leviathan 89
- * @author Nemo bis
- */
-$messages['it'] = array(
+$messages['it'] = [
 	'answer_title' => 'Risposta',
 	'answered_by' => 'Risposta da',
 	'unregistered' => 'Non registrato',
@@ -1052,14 +987,14 @@ $messages['it'] = array(
 	'ask_button' => 'Chiedi',
 	'ask_thanks' => 'Grazie per la domanda sconvolgente!',
 	'question_asked_by' => 'Domanda posta da',
-	'question_asked_by_a_wikia_user' => 'Domanda posta da un utente di Wikia',
+	'question_asked_by_a_wikia_user' => 'Domanda posta da un utente Fandom',
 	'new_question_comment' => 'nuova domanda',
 	'answers_toolbox' => 'Casella degli strumenti di Wikirisposte',
 	'improve_this_answer' => 'Migliora questa risposta',
 	'answer_this_question' => 'Rispondi a questa domanda:',
-	'notify_improved' => "Mandami un'e-mail quando viene migliorata",
+	'notify_improved' => 'Mandami un\'e-mail quando viene migliorata',
 	'research_this' => 'Ricerca questo',
-	'notify_answered' => "Mandami un'e-mail quando viene risposta",
+	'notify_answered' => 'Mandami un\'e-mail quando viene risposta',
 	'recent_asked_questions' => 'Domande poste di recente',
 	'recent_answered_questions' => 'Domande risolte di recente',
 	'recent_edited_questions' => 'Domande modificate di recente',
@@ -1138,17 +1073,17 @@ $messages['it'] = array(
 	'answering_tips' => '<h3>Suggerimenti per rispondere:</h3> Quando fornisci una risposta, cerca di essere il più accurato possibile. Se le tue informazioni provengono da un altro sito come Wikipedia, aggiungi il link della fonte nel testo. Grazie per contribuire a {{SITENAME}}!',
 	'plus_x_more_helpers' => '... oltre a  $1  più aiutanti',
 	'anwb-step1-headline' => 'Di cosa tratta la tua wiki?',
-	'anwb-step1-text' => "Il tuo sito Wikirisposte ha bisogno di una <strong>tagline</strong>.<br /><br />La tua tagline aiuterà le persone a trovare il tuo sito nei motori di ricerca, quindi cerca di essere chairo sull'argomento del tuo sito.",
+	'anwb-step1-text' => 'Il tuo sito Wikirisposte ha bisogno di una <strong>tagline</strong>.<br /><br />La tua tagline aiuterà le persone a trovare il tuo sito nei motori di ricerca, quindi cerca di essere chairo sull\'argomento del tuo sito.',
 	'anwb-step1-example' => 'Risposte a tutte le tue domande sul Pro-Wrestling!',
 	'anwb-choose-logo' => 'Scegli il tuo logo',
-	'anwb-step2-text' => "Dopo, scegli un logo per {{SITENAME}}. È meglio caricare l'immagine che pensi rappresenta al meglio il tuo sito di risposte.<br />Puoi saltare questo passo se non vuoi farlo adesso.<br /><br/ >",
+	'anwb-step2-text' => 'Dopo, scegli un logo per {{SITENAME}}. È meglio caricare l\'immagine che pensi rappresenta al meglio il tuo sito di risposte.<br />Puoi saltare questo passo se non vuoi farlo adesso.<br /><br/ >',
 	'anwb-step2-example' => 'Questo sarebbe un buon logo per un sito di risposte sullo skateboard.',
 	'anwb-fp-headline' => 'Crea alcune domande!',
 	'anwb-fp-text' => 'Il tuo sito di risposte dovrebbe iniziare con alcune domande!<br /><br />Aggiugni una lsita di domande, e fornisci le risposte tu stesso. È importante aggiugnere alcune informazioni importanti sul sito, cosicché le persone possano trovarlo e chiedere ancora più domande.',
-	'anwb-fp-example' => "<strong>Esempio</strong><br /><br />Per un sito di risposte riguardo animali domestici:<br /><br /><ul><li>Devo comprare una lettiera per gatti?</li><li>Qual è la miglior razza di cani?</li><li>Qual è il modo migliore di addestrare un gatto?</li><li></ul><br /><br />Per un sito di salute e benessere:<br /><br /><ul><li>Quali sono i benefici dell'esercizio fisico?</li><li>Come posso trovare un buon medico nella mia zona?</li><li>Come posso perdere facilmente peso?</li></ul>",
+	'anwb-fp-example' => '<strong>Esempio</strong><br /><br />Per un sito di risposte riguardo animali domestici:<br /><br /><ul><li>Devo comprare una lettiera per gatti?</li><li>Qual è la miglior razza di cani?</li><li>Qual è il modo migliore di addestrare un gatto?</li><li></ul><br /><br />Per un sito di salute e benessere:<br /><br /><ul><li>Quali sono i benefici dell\'esercizio fisico?</li><li>Come posso trovare un buon medico nella mia zona?</li><li>Come posso perdere facilmente peso?</li></ul>',
 	'nwb-thatisall-headline' => 'Questo è tutto - hai finito!',
-	'anwb-thatisall-text' => "Questo è tutto - sei pronto ad iniziare!<br /><br />Adesso è ora di scrivere più domande e risposte, in modo che il tuo sito venga trovato più facilmente dai motori di ricerca.<br /><br />La lista di domande aggiunte nell'ultimo passo sono state aggiunte al tuo sito. Precipitati a rispondere alle tue domande e dai il via alla tua comunità!",
-	'anwb-logo-preview' => "Ecco un'anteprima del tuo logo",
+	'anwb-thatisall-text' => 'Questo è tutto - sei pronto ad iniziare!<br /><br />Adesso è ora di scrivere più domande e risposte, in modo che il tuo sito venga trovato più facilmente dai motori di ricerca.<br /><br />La lista di domande aggiunte nell\'ultimo passo sono state aggiunte al tuo sito. Precipitati a rispondere alle tue domande e dai il via alla tua comunità!',
+	'anwb-logo-preview' => 'Ecco un\'anteprima del tuo logo',
 	'anwb-save-tagline' => 'Salva tagline',
 	'qa-toolbox-button' => 'Rispondi ad una domanda casuale',
 	'qa-toolbox-share' => 'Condividi',
@@ -1167,17 +1102,14 @@ $messages['it'] = array(
 	'answers-carbon' => 'Carbone',
 	'answers-obsession' => 'Ossessione',
 	'answers-custom' => 'Personalizzato',
-);
+];
 
-/** Japanese (日本語) */
-$messages['ja'] = array(
+$messages['ja'] = [
 	'research_this' => 'この質問について調べる',
-);
+	'question_asked_by_a_wikia_user' => 'Fandomユーザーからの質問',
+];
 
-/** Luxembourgish (Lëtzebuergesch)
- * @author Robby
- */
-$messages['lb'] = array(
+$messages['lb'] = [
 	'answer_title' => 'Äntwert',
 	'ask_a_question' => 'Eng Fro stellen...',
 	'ask_a_question-widget' => 'Eng Fro stellen...',
@@ -1192,12 +1124,9 @@ $messages['lb'] = array(
 	'category' => 'Numm vun der Kategorie',
 	'ads_by_google' => 'Reklamme vu Google',
 	'reword_this' => '<a href="$1" $2>Dës Fro nei formuléieren</a>',
-);
+];
 
-/** Lithuanian (Lietuvių)
- * @author Eitvys200
- */
-$messages['lt'] = array(
+$messages['lt'] = [
 	'answer_title' => 'Atsakyti',
 	'answered_by' => 'Atsakė',
 	'unregistered' => 'Neregistruotas',
@@ -1275,12 +1204,9 @@ $messages['lt'] = array(
 	'answers-forest' => 'Miškas',
 	'answers-moonlight' => 'Mėnesiena',
 	'answers-custom' => 'Pasirinktinis',
-);
+];
 
-/** Macedonian (Македонски)
- * @author Bjankuloski06
- */
-$messages['mk'] = array(
+$messages['mk'] = [
 	'answer_title' => 'Одговори',
 	'answered_by' => 'Одговорено од',
 	'unregistered' => 'Нерегистрирани',
@@ -1410,12 +1336,9 @@ $messages['mk'] = array(
 	'answers-carbon' => 'Јаглерод',
 	'answers-obsession' => 'Опсесија',
 	'answers-custom' => 'Прилагодено',
-);
+];
 
-/** Malay (Bahasa Melayu)
- * @author Anakmalaysia
- */
-$messages['ms'] = array(
+$messages['ms'] = [
 	'answer_title' => 'Jawapan',
 	'answered_by' => 'Dijawab oleh',
 	'unregistered' => 'Tidak berdaftar',
@@ -1542,12 +1465,9 @@ $messages['ms'] = array(
 	'answers-carbon' => 'Karbon',
 	'answers-obsession' => 'Obsesi',
 	'answers-custom' => 'Tersuai',
-);
+];
 
-/** Norwegian Bokmål (‪Norsk (bokmål)‬)
- * @author Audun
- */
-$messages['nb'] = array(
+$messages['nb'] = [
 	'answer_title' => 'Svar',
 	'answered_by' => 'Besvart av',
 	'unregistered' => 'Uregistrert',
@@ -1677,15 +1597,9 @@ $messages['nb'] = array(
 	'answers-carbon' => 'Karbon',
 	'answers-obsession' => 'Besettelse',
 	'answers-custom' => 'Egendefinert',
-);
+];
 
-/** Dutch (Nederlands)
- * @author MarkvA
- * @author McDutchie
- * @author SPQRobin
- * @author Siebrand
- */
-$messages['nl'] = array(
+$messages['nl'] = [
 	'answer_title' => 'Antwoord',
 	'answered_by' => 'Beantwoord door',
 	'unregistered' => 'Niet-geregistreerd',
@@ -1812,26 +1726,18 @@ $messages['nl'] = array(
 	'answers-carbon' => 'Koolstof',
 	'answers-obsession' => 'Obsessie',
 	'answers-custom' => 'Aangepast',
-);
+];
 
-/** ‪Nederlands (informeel)‬ (‪Nederlands (informeel)‬)
- * @author Siebrand
- */
-$messages['nl-informal'] = array(
+$messages['nl-informal'] = [
 	'answers_widget_user_note' => 'Kan jij helpen door een <a href="http://answers.wikia.com/wiki/Wikianswers:Sign_up_for_a_category" target="_blank">categorieredacteur</a> te worden op <a href="http://answers.wikia.com" target="_blank">WikiaAntwoorden</a>?',
 	'answers_widget_no_questions' => '<a href="http://answers.wikia.com" target="_blank">WikiAntwoorden</a> is een site waar je vragen kunt stellen en kunt bijdragen aan antwoorden. We willen graag het beste antwoord op iedere vraag hebben. <a href="http://answers.wikia.com/wiki/Special:Search" target="_blank">Zoek</a> en beantwoord <a href="http://answers.wikia.com/wiki/Category:Un-answered_questions">vragen</a>. Het is een wiki, dus doe het gewoon!',
-);
+];
 
-/** Occitan (Occitan) */
-$messages['oc'] = array(
+$messages['oc'] = [
 	'research_this' => 'Recercar aquò',
-);
+];
 
-/** Polish (Polski)
- * @author Sovq
- * @author Woytecr
- */
-$messages['pl'] = array(
+$messages['pl'] = [
 	'answer_title' => 'Odpowiedz',
 	'answered_by' => 'Odpowiedział',
 	'unregistered' => 'Niezarejestrowany',
@@ -1842,7 +1748,7 @@ $messages['pl'] = array(
 	'ask_button' => 'Zapytaj',
 	'ask_thanks' => 'Dziękujemy za pytanie!',
 	'question_asked_by' => 'Pytanie zadał',
-	'question_asked_by_a_wikia_user' => 'Pytanie zadana przez użytkownika Wikia',
+	'question_asked_by_a_wikia_user' => 'Pytanie zadane przez użytkownika Fandomu',
 	'new_question_comment' => 'nowe pytanie',
 	'answers_toolbox' => 'Narzędzia Wikianswers',
 	'improve_this_answer' => 'Popraw tą odpowiedź',
@@ -1900,17 +1806,13 @@ $messages['pl'] = array(
 	'ask_friends_on_twitter' => 'Zapytaj znajomych na <a href="$1" $2>Twitterze</a>',
 	'categorize' => 'Określ kategorię',
 	'categorize_help' => 'Jedna kategoria na linię',
-);
+];
 
-/** Piedmontese (Piemontèis) */
-$messages['pms'] = array(
+$messages['pms'] = [
 	'research_this' => 'Sërché sòn',
-);
+];
 
-/** Pashto (پښتو)
- * @author Ahmed-Najib-Biabani-Ibrahimkhel
- */
-$messages['ps'] = array(
+$messages['ps'] = [
 	'answer_title' => 'ځواب',
 	'answered_by' => 'ځوابوونکی',
 	'ask_a_question' => 'يوه پوښتنه پوښتل',
@@ -1925,29 +1827,23 @@ $messages['ps'] = array(
 	'answers-sky' => 'اسمان',
 	'answers-forest' => 'ځنګل',
 	'answers-carbon' => 'کاربون',
-);
+];
 
-/** Portuguese (Português) */
-$messages['pt'] = array(
+$messages['pt'] = [
 	'research_this' => 'Investigar isto',
-);
+	'question_asked_by_a_wikia_user' => 'Pergunta feita por um usuário do Fandom',
+];
 
-/** Brazilian Portuguese (Português do Brasil) */
-$messages['pt-br'] = array(
+$messages['pt-br'] = [
 	'research_this' => 'Pesquisar isto',
-);
+	'question_asked_by_a_wikia_user' => 'Pergunta feita por um usuário da Wikia',
+];
 
-/** Tarandíne (Tarandíne) */
-$messages['roa-tara'] = array(
+$messages['roa-tara'] = [
 	'research_this' => 'Cerche quiste',
-);
+];
 
-/** Russian (Русский)
- * @author Eleferen
- * @author Kuzura
- * @author Lvova
- */
-$messages['ru'] = array(
+$messages['ru'] = [
 	'answer_title' => 'Ответ',
 	'answered_by' => 'Ответил',
 	'unregistered' => 'Аноним',
@@ -1959,7 +1855,7 @@ $messages['ru'] = array(
 	'ask_button' => 'Спросить',
 	'ask_thanks' => 'Спасибо за хороший вопрос!',
 	'question_asked_by' => 'Вопрос задал',
-	'question_asked_by_a_wikia_user' => 'Вопрос задал участник Викия',
+	'question_asked_by_a_wikia_user' => 'Вопрос от участника Фэндома',
 	'new_question_comment' => 'новый вопрос',
 	'answers_toolbox' => 'Инструменты Вики Ответов',
 	'improve_this_answer' => 'Улучшить этот ответ',
@@ -2074,12 +1970,9 @@ $messages['ru'] = array(
 	'answers-carbon' => 'Углерод',
 	'answers-obsession' => 'Одержимость',
 	'answers-custom' => 'Настройка',
-);
+];
 
-/** Serbian (Cyrillic script) (‪Српски (ћирилица)‬)
- * @author Rancher
- */
-$messages['sr-ec'] = array(
+$messages['sr-ec'] = [
 	'answer_title' => 'Одговор',
 	'answered_by' => 'Одговорено од',
 	'unregistered' => 'Нерегистровано',
@@ -2087,12 +1980,9 @@ $messages['sr-ec'] = array(
 	'q' => '<!-- -->',
 	'?' => '?',
 	'header_questionmark_post' => '?',
-);
+];
 
-/** Swedish (Svenska)
- * @author WikiPhoenix
- */
-$messages['sv'] = array(
+$messages['sv'] = [
 	'answer_title' => 'Svar',
 	'answered_by' => 'Besvarad av',
 	'unregistered' => 'Oregistrerad',
@@ -2219,47 +2109,33 @@ $messages['sv'] = array(
 	'answers-carbon' => 'Karbon',
 	'answers-obsession' => 'Besatthet',
 	'answers-custom' => 'Anpassad',
-);
+];
 
-/** Tamil (தமிழ்)
- * @author Shanmugamp7
- */
-$messages['ta'] = array(
+$messages['ta'] = [
 	'answer_title' => 'பதில்',
 	'ask_button' => 'கேள்',
-);
+];
 
-/** Telugu (తెలుగు)
- * @author Veeven
- */
-$messages['te'] = array(
+$messages['te'] = [
 	'new_question_comment' => 'కొత్త ప్రశ్న',
 	'width' => 'వెడల్పు',
 	'answers-sky' => 'ఆకాశం',
 	'answers-forest' => 'అడవి',
-);
+];
 
-/** Tagalog (Tagalog) */
-$messages['tl'] = array(
+$messages['tl'] = [
 	'research_this' => 'Saliksikin ito',
-);
+];
 
-/** Tatar (Cyrillic script) (Татарча)
- * @author Ajdar
- */
-$messages['tt-cyrl'] = array(
+$messages['tt-cyrl'] = [
 	'answer_title' => 'Җавап',
-);
+];
 
-/** Ukrainian (Українська) */
-$messages['uk'] = array(
+$messages['uk'] = [
 	'research_this' => 'Дослідити',
-);
+];
 
-/** Veps (Vepsän kel')
- * @author Игорь Бродский
- */
-$messages['vep'] = array(
+$messages['vep'] = [
 	'answer_title' => 'Vastuz',
 	'width' => 'Leveduz',
 	'you_can' => 'Tö sat:',
@@ -2267,16 +2143,12 @@ $messages['vep'] = array(
 	'a' => 'Vastuz:',
 	'answers-leaf' => 'Lehtez',
 	'answers-sky' => 'Taivaz',
-	'answers-spring' => "Keväz'",
+	'answers-spring' => 'Keväz\'',
 	'answers-forest' => 'Mec',
 	'answers-moonlight' => 'Kudmavauktuz',
-);
+];
 
-/** Simplified Chinese (‪中文(简体)‬)
- * @author Anakmalaysia
- * @author Hzy980512
- */
-$messages['zh-hans'] = array(
+$messages['zh-hans'] = [
 	'answer_title' => '回答',
 	'answered_by' => '作答者',
 	'unregistered' => '未注册',
@@ -2298,5 +2170,14 @@ $messages['zh-hans'] = array(
 	'next_page' => '下一页 &raquo;',
 	'prev_page' => '&laquo; 上一页',
 	'ads_by_google' => 'Google广告',
-);
+	'question_asked_by_a_wikia_user' => 'Fandom用户的提问',
+];
+
+$messages['no'] = [
+	'question_asked_by_a_wikia_user' => 'Spørsmål stilt av en Wikia-bruker',
+];
+
+$messages['zh-hant'] = [
+	'question_asked_by_a_wikia_user' => ' Fandom用戶的提問',
+];
 

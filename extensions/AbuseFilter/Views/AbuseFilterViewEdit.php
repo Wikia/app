@@ -403,11 +403,11 @@ class AbuseFilterViewEdit extends AbuseFilterView {
 					wfMsgExt( 'abusefilter-edit-test-link', 'parseinline' )
 				)
 			);
+			$userName = User::getUsername( $row->af_user, $row->af_user_text );
 			// Last modification details
 			$userLink =
-				$sk->userLink( $row->af_user, $row->af_user_text ) .
-				$sk->userToolLinks( $row->af_user, $row->af_user_text );
-			$userName = $row->af_user_text;
+				$sk->userLink( $row->af_user, $userName ) .
+				$sk->userToolLinks( $row->af_user, $userName );
 			$fields['abusefilter-edit-lastmod'] =
 				wfMsgExt(
 					'abusefilter-edit-lastmod-text',

@@ -29,7 +29,7 @@ class DiscussionsThreadModel {
 		return self::DISCUSSIONS_API_BASE_DEV . "$this->cityId/forums?responseGroup=small&viewableOnly=true";
 	}
 
-	public function getCategoryId( $category ) {
+	public function getCategoryName( $categoryId ) {
 		$memcKey = wfMemcKey( __METHOD__, self::MCACHE_VER );
 		$rawData = WikiaDataAccess::cache(
 			$memcKey,
@@ -39,15 +39,15 @@ class DiscussionsThreadModel {
 			}
 		);
 
-		return $this->categoryLookup( $category, $rawData );
+		return $this->categoryNameLookup( $categoryId, $rawData );
 	}
 
-	private function categoryLookup( $category, $rawData ) {
+	private function categoryNameLookup( $categoryId, $rawData ) {
 		$categories = $rawData['_embedded']['doc:forum'];
 		if ( is_array( $categories ) ) {
 			foreach ( $categories as $value ) {
-				if ( $value['name'] === $category ) {
-					return $value['id'];
+				if ( $value['id'] === $categoryId ) {
+					return $value['name'];
 				}
 			}
 		}
@@ -56,47 +56,30 @@ class DiscussionsThreadModel {
 	}
 
 	private function getRequestUrl( $showLatest, $limit, $category ) {
-		global $wgDevelEnvironment;
-
 		$sortKey = $showLatest ? self::SORT_LATEST : self::SORT_TRENDING;
-		$categoryId = $this->getCategoryId( $category );
-		$categoryKey = $categoryId ? '&forumId=' . $categoryId : '';
+		$categoryKey = $category ? '&forumId=' . $category : '';
 
-		if ( empty( $wgDevelEnvironment ) ) {
-			return self::DISCUSSIONS_API_BASE .
-				"$this->cityId/threads?sortKey=$sortKey&limit=$limit&viewableOnly=false" . $categoryKey;
-		}
-
-		return self::DISCUSSIONS_API_BASE_DEV .
-			"$this->cityId/threads?sortKey=$sortKey&limit=$limit&viewableOnly=false" . $categoryKey;
+		return "/$this->cityId/threads?sortKey=$sortKey&limit=$limit&viewableOnly=false" . $categoryKey;
 	}
 
 	private function getUpvoteRequestUrl() {
-		global $wgDevelEnvironment;
-
-		if ( empty( $wgDevelEnvironment ) ) {
-			return "/$this->cityId/votes/post/";
-		}
-
 		return "/$this->cityId/votes/post/";
 	}
 
-	private function getBaseUrl() {
-		global $wgDevelEnvironment;
-
-		if ( empty( $wgDevelEnvironment ) ) {
-			return self::DISCUSSIONS_API_BASE;
-		}
-
-		return self::DISCUSSIONS_API_BASE_DEV;
-	}
-
-	public function getData( $showLatest, $limit, $category ) {
+	public function getData( $showLatest, $limit, $categoryId ) {
 		$sortKey = $showLatest ? self::SORT_LATEST_LINK : self::SORT_TRENDING_LINK;
-		$categoryId = $this->getCategoryId( $category );
+		$invalidCategory = false;
+		$discussionsUrl = false;
+		$categoryName = false;
 
-		if ( $categoryId ) {
-			$discussionsUrl = "/d/f?catId=$categoryId&sort=$sortKey";
+		if ( !empty( $categoryId ) ) {
+			$categoryName = $this->getCategoryName( $categoryId );
+
+			if ( $categoryName ) {
+				$discussionsUrl = "/d/f?catId=$categoryId&sort=$sortKey";
+			} else {
+				$invalidCategory = true;
+			}
 		} else {
 			$discussionsUrl = "/d/f?sort=$sortKey";
 		}
@@ -104,9 +87,11 @@ class DiscussionsThreadModel {
 		return [
 			'siteId' => $this->cityId,
 			'discussionsUrl' => $discussionsUrl,
-			'requestUrl' => $this->getRequestUrl( $showLatest, $limit, $category ),
-			'baseUrl' => $this->getBaseUrl(),
+			'requestUrl' => $this->getRequestUrl( $showLatest, $limit, $categoryId ),
 			'upvoteRequestUrl' => $this->getUpvoteRequestUrl(),
+			'invalidCategory' => $invalidCategory,
+			'categoryName' => $categoryName,
+			'categoryId' => $categoryId,
 		];
 	}
 }
