@@ -47,8 +47,8 @@ class Track {
 		return $url;
 	}
 
-	private static function getGAURL( $type, $category, $action, $label, $extraParams = [ ], $for_html = null ) {
-		global $wgTitle, $wgContLanguageCode, $wgDBname, $wgUser, $wgCityId, $wgGAUserIdSalt, $wgDevelEnvironment;
+	private static function getGAURL( $type, $category, $action, $label, $tid, $extraParams = [ ], $for_html = null ) {
+		global $wgTitle, $wgContLanguageCode, $wgDBname, $wgUser, $wgCityId, $wgGAUserIdSalt;
 
 		$skinName = RequestContext::getMain()->getSkin()->getSkinName();
 		$adContext = ( new AdEngine2ContextService() )->getContext( $wgTitle, $skinName );
@@ -69,7 +69,7 @@ class Track {
 			'_utma' => $_COOKIE[ '__utma' ] ?? '',
 			'_utmz' => $_COOKIE[ '__utmz' ] ?? '',
 			'cid' => $_COOKIE[ '_ga' ] ? explode( ".", $_COOKIE[ '_ga' ] )[ 2 ] : uniqid(),
-			'tid' => $wgDevelEnvironment ? 'UA-32129070-2' : 'UA-32129070-1',
+			'tid' => $tid,
 			// custom dimensions
 			'cd1' => $wgDBname,
 			'cd2' => $wgContLanguageCode,
@@ -99,6 +99,21 @@ class Track {
 			   }, array_keys( $params ), $params ) );
 
 		return $url;
+	}
+
+	private static function getGATrackingIds() {
+		global $wgDevelEnvironment, $wgIsGASpecialWiki, $wgUser;
+
+		$tids = [ ];
+		$tids[] = $wgDevelEnvironment ? 'UA-32129070-2' : 'UA-32129070-1';
+		if ( $wgIsGASpecialWiki ) {
+			$tids[] = $wgDevelEnvironment ? 'UA-32132943-2' : 'UA-32132943-1';
+		}
+		if ( !$wgUser->isAnon() ) {
+			$tids[] = $wgDevelEnvironment ? 'UA-32132943-8' : 'UA-32132943-7';
+		}
+
+		return $tids;
 	}
 
 	private static function getViewJS( $param = null ) {
@@ -165,7 +180,13 @@ SCRIPT1;
 			return false;
 		}
 
-		$url = Track::getGAURL( 'event', $category, $action, $label, $params );
+		foreach ( static::getGATrackingIds() as $tid ) {
+			$url = Track::getGAURL( 'event', $category, $action, $label, $tid, $params );
+			static::sendTracking( $url );
+		}
+	}
+
+	private static function sendTracking( $url ) {
 		if ( ExternalHttp::post( $url ) !== false ) {
 			wfProfileOut( __METHOD__ );
 			return true;
