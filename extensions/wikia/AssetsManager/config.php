@@ -3059,6 +3059,14 @@ $config['crosslink_module_scss'] = [
 	],
 ];
 
+/* Flow tracking */
+$config['flow_tracking_js'] = [
+	'type' => AssetsManager::TYPE_JS,
+	'assets' => [
+		'//resources/wikia/modules/flowTracking.js'
+	],
+];
+
 /* StoriesLinkTag */
 $config['storieslink_tag_scss'] = [
 	'type' => AssetsManager::TYPE_SCSS,
