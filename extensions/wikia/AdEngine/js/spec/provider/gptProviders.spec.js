@@ -43,7 +43,7 @@ describe('ext.wikia.adEngine.provider.*', function () {
 		beforeSuccess: noop,
 		beforeHop: noop,
 		btfBlocker: {
-			decorate: function(atfSlots, fillInSlot) {
+			decorate: function(fillInSlot) {
 				return fillInSlot;
 			}
 		}
