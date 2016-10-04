@@ -47,7 +47,7 @@ class Track {
 		return $url;
 	}
 
-	private static function getGAURL( $type, $category, $action, $label, $tid, $extraParams = [ ], $for_html = null ) {
+	private static function getGAURL( $type, $category, $action, $label, $value, $tid, $extraParams = [ ], $for_html = null ) {
 		global $wgTitle, $wgContLanguageCode, $wgDBname, $wgUser, $wgCityId, $wgGAUserIdSalt;
 
 		$skinName = RequestContext::getMain()->getSkin()->getSkinName();
@@ -66,6 +66,7 @@ class Track {
 			'ec' => $category,
 			'ea' => $action,
 			'el' => $label,
+			'ev' => $value,
 			'_utma' => $_COOKIE[ '__utma' ] ?? '',
 			'_utmz' => $_COOKIE[ '__utmz' ] ?? '',
 			'cid' => $_COOKIE[ '_ga' ] ? explode( ".", $_COOKIE[ '_ga' ] )[ 2 ] : uniqid(),
@@ -93,7 +94,7 @@ class Track {
 			$params[ 'uid' ] = md5( $wgUser->getId() . $wgGAUserIdSalt );
 		}
 		$params = array_merge( $params, $extraParams );
-		$url = static::GA_URL . '/debug/collect?' .
+		$url = static::GA_URL . '/collect?' .
 			   implode( $for_html ? '&amp;' : '&', array_map( function ( $k, $v ) {
 				   return "{$k}={$v}";
 			   }, array_keys( $params ), $params ) );
@@ -175,13 +176,13 @@ SCRIPT1;
 		}
 	}
 
-	public static function eventGA( $category, $action, $label, $params = null ) {
+	public static function eventGA( $category, $action, $label, $value = 1, $params = null ) {
 		if ( !self::shouldTrackEvents() ) {
 			return false;
 		}
 
 		foreach ( static::getGATrackingIds() as $tid ) {
-			$url = Track::getGAURL( 'event', $category, $action, $label, $tid, $params );
+			$url = Track::getGAURL( 'event', $category, $action, $label, $value, $tid, $params );
 			static::sendTracking( $url );
 		}
 	}
@@ -192,6 +193,7 @@ SCRIPT1;
 			return true;
 		} else {
 			wfProfileOut( __METHOD__ );
+			\Wikia\Logger\WikiaLogger::instance()->error( 'GA tracking failed', [ 'url' => $url ] );
 			return false;
 		}
 	}
