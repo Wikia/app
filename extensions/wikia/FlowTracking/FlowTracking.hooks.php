@@ -8,20 +8,49 @@ class FlowTrackingHooks {
 	}
 
 	/**
-	 * @param WikiPage $page
-	 * @param Revision $revision
-	 * @param $parentRevisionId
-	 * @param User $user
+	 * @param  Page     $page          The created page object
+	 * @param  User     $user          The user who created the page
+	 * @param  string   $text          Text of the new article
+	 * @param  string   $summary       Edit summary
+	 * @param  int      $minoredit     Minor edit flag
+	 * @param  boolean  $watchThis     Whether or not the user should watch the page
+	 * @param  null     $sectionAnchor Not used, set to null
+	 * @param  int      $flags         Flags for this page
+	 * @param  Revision $revision      The newly inserted revision object
 	 * @return bool
 	 */
-	public static function onNewRevisionFromEditComplete( $page, $revision, $parentRevisionId, $user ) {
+	public static function onArticleInsertComplete( Page $page, User $user, $text, $summary, $minoredit,
+													$watchThis, $sectionAnchor, &$flags, Revision $revision ) {
 		$title = $revision->getTitle();
-		if ( !$parentRevisionId && $title && $title->inNamespace( NS_MAIN ) ) {
+		if ( $title && $title->inNamespace( NS_MAIN ) ) {
+			$request = RequestContext::getMain()->getRequest();
+			$headers = $request->getAllHeaders();
+
 			// transforms "a=1&b=2&c=3" into [ 'a' => 1, 'b' => 2, 'c' => 3 ]
-			parse_str( parse_url( getallheaders()[ 'Referer' ], PHP_URL_QUERY ), $params );
-			Track::event( 'trackingevent', $params );
-			Track::eventGA( 'create-flow', 'impression', 'flow-end' );
+			parse_str( parse_url( $headers[ 'REFERER' ], PHP_URL_QUERY ), $params );
+			if ( isset( $params['flow'] ) ) {
+				Track::event( 'trackingevent', [
+					'ga_action' => 'flow-end',
+					'editor' => static::getEditor( $request->getValues(), $params ),
+					'flowname' => $params[ 'flow' ],
+					'useragent' => $headers[ 'USER-AGENT' ]
+				] );
+				Track::eventGA( 'flow-tracking', 'flow-end', $params[ 'flow' ] );
+			}
 		}
-		return false;
+		return true;
+	}
+
+	private static function getEditor( $values, $params ) {
+		$editor = '';
+
+		if ( isset( $params[ 'veaction' ] ) ) {
+			$editor = 'visualeditor';
+		} elseif ( !empty( $values[ 'RTEMode' ] ) ) {
+			$editor = $values[ 'RTEMode' ];
+		} elseif ( !empty( $values[ 'isMediaWikiEditor' ] ) ) {
+			$editor = 'sourceedit';
+		}
+		return $editor;
 	}
 }
