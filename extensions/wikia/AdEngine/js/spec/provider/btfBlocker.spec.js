@@ -159,6 +159,7 @@ describe('ext.wikia.adEngine.provider.btfBlocker', function () {
 	it('Process HIVI BTF slot when BTF is disabled and unblocking HIVI slots is enabled', function () {
 		var fillInSlot,
 			btfBlocker = getBtfBlocker(),
+			btfSlot = getFakeSlot('BTF_SLOT'),
 			fakeProvider = getFakeProvider();
 
 		fillInSlot = btfBlocker.decorate(fakeProvider.fillInSlot, fakeProvider.config);
@@ -166,7 +167,9 @@ describe('ext.wikia.adEngine.provider.btfBlocker', function () {
 		mocks.win.ads.runtime.disableBtf = true;
 		mocks.win.ads.runtime.unblockHighlyViewableSlots = true;
 		fillInSlot(getFakeSlot('HIVI_BTF_SLOT'));
+		fillInSlot(btfSlot);
 
 		expect(mocks.methodCalledInsideFillInSlot.calls.count()).toEqual(2);
+		expect(btfSlot.collapse).toHaveBeenCalled();
 	});
 });
