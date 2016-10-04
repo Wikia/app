@@ -4,8 +4,6 @@
  * Special:Discussions
  */
 
-$dir = dirname( __FILE__ ) . '/';
-
 $wgExtensionCredits['specialpage'][] = [
 	'name' => 'Discussions',
 	'author' => 'Wikia',
@@ -14,13 +12,14 @@ $wgExtensionCredits['specialpage'][] = [
 ];
 
 // classes
-$wgAutoloadClasses['SpecialDiscussionsController'] = $dir . 'SpecialDiscussionsController.class.php';
+$wgAutoloadClasses['SpecialDiscussionsController'] = __DIR__ . '/SpecialDiscussionsController.class.php';
+$wgAutoloadClasses['SpecialDiscussionsHelper'] = __DIR__ . '/SpecialDiscussionsHelper.php';
 
 // special page
 $wgSpecialPages['Discussions'] = 'SpecialDiscussionsController';
 
 // message files
-$wgExtensionMessagesFiles['SpecialDiscussions'] = $dir . 'SpecialDiscussions.i18n.php';
+$wgExtensionMessagesFiles['SpecialDiscussions'] = __DIR__ . '/SpecialDiscussions.i18n.php';
 
 // permissions
 $wgAvailableRights[] = 'specialdiscussions';

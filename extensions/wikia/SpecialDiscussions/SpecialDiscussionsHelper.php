@@ -43,11 +43,17 @@ class SpecialDiscussionsHelper {
 			self::getDiscussionsSitesApi()->createSite( $siteInput, F::app()->wg->TheSchwartzSecretToken );
 			WikiFactory::setVarByName( "wgEnableDiscussions", $siteId, true );
 		} catch ( ApiException $e ) {
+			$res = $e->getResponseObject();
+			$title = $detail = '';
+			if ( $res instanceof \Swagger\Client\Discussion\Models\HalProblem )
+				$title = $res->getTitle();
+				$detail = $res->getDetail();
+			}
 			Wikia\Logger\WikiaLogger::instance()->error(
 				'Creating site caused an error',
 				[
 					'siteId' => $siteId,
-					'error' => $e->getMessage(),
+					'error' => empty ( $title ) ? $e->getMessage() : $title . ': ' . $detail,
 				]
 			);
 			return false;

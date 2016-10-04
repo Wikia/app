@@ -27,15 +27,16 @@ class EnableDiscussionsWithNoForums extends Maintenance {
 		while ( !empty( $wikiId = trim( fgets( $fh ) ) ) ) {
 			$wiki = WikiFactory::getWikiByID( $wikiId );
 
-			if ( $this->getForumThreadCount( $wiki ) > 0 ) {
-				$this->error( $wikiId . ' has more than 0 forum threads, skipping!' );
+			$count = $this->getForumThreadCount( $wiki );
+			if ( $count > 0 ) {
+				$this->error( $wikiId . ' has ' . $count . ' forum threads, skipping!' );
 			}
 
 			if ( SpecialDiscussionsHelper::activateDiscussions(
 					$wikiId,
 					$wiki->city_lang,
-					$wiki->city_sitename ) ) {
-				$this->output( 'Enabled discussions on ' . $wikiId );
+					$wiki->city_title ) ) {
+				$this->output( 'Enabled discussions on ' . $wikiId . "\n" );
 			} else {
 				$this->error( 'Creating site ' . $wikiId . ' caused an error' );
 			}
