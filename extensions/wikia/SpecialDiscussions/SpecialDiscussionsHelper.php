@@ -45,7 +45,7 @@ class SpecialDiscussionsHelper {
 		} catch ( ApiException $e ) {
 			$res = $e->getResponseObject();
 			$title = $detail = '';
-			if ( $res instanceof \Swagger\Client\Discussion\Models\HalProblem )
+			if ( $res instanceof \Swagger\Client\Discussion\Models\HalProblem ) {
 				$title = $res->getTitle();
 				$detail = $res->getDetail();
 			}
