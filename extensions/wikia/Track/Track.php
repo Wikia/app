@@ -47,7 +47,7 @@ class Track {
 		return $url;
 	}
 
-	private static function getGAURL( $type, $category, $action, $label, $value, $tid, $extraParams = [ ], $for_html = null ) {
+	private static function getGAURL( $type, $category, $action, $label, $value, $tid, $extraParams = [ ] ) {
 		global $wgTitle, $wgContLanguageCode, $wgDBname, $wgUser, $wgCityId, $wgGAUserIdSalt;
 
 		$skinName = RequestContext::getMain()->getSkin()->getSkinName();
@@ -96,7 +96,7 @@ class Track {
 		$params = array_merge( $params, $extraParams );
 
 		return static::GA_URL . '/collect?' .
-			   implode( $for_html ? '&amp;' : '&', array_map( function ( $k, $v ) {
+			   implode( '&', array_map( function ( $k, $v ) {
 				   return "{$k}={$v}";
 			   }, array_keys( $params ), $params ) );
 	}
