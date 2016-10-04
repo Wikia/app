@@ -562,10 +562,10 @@ Sigue los enlaces que hay debajo para aprender más sobre cómo usar Fandom, hac
 	'specialcontact-sectitle-close-wiki' => 'Cerrar este wiki',
 	'specialcontact-intro-content-issue' => 'El contenido de este wiki es creado por su comunidad, y controlado por los [[Special:ListAdmins|administradores locales]], no por Fandom. Si deseas discutir sobre el contenido del wiki, lo mejor es que contactes primero a los [[Special:ListAdmins|administradores]].
 
-Si piensas que el contenido viola nuestros [http://comunidad.wikia.com/wiki/Project:Términos_de_uso Términos de uso], puedes contactarte con el equipo de soporte comunitario directamente [[Special:Contact/general|desde aquí]].',
+Si piensas que el contenido viola nuestros [http://comunidad.wikia.com/wiki/Project:Términos_de_uso términos de uso], puedes contactarte con el equipo de soporte comunitario directamente [[Special:Contact/general|desde aquí]].',
 	'specialcontact-intro-user-conflict' => 'Los wikis son espacios comunitarios donde cada persona tiene que trabajar codo a codo con otros usuarios para que todo salga bien. Mientras trabajan juntos pueden surgir conflictos, y la mejor forma de resolverlos suele ser teniendo una conversación abierta y respetuosa.
 
-Si necesitas ayuda, primero contacta con tus [[Special:ListAdmins|administradores locales]]. Los administradores son expertos sobre el tema del wiki y la comunidad, así que lo mejor es hablar con ellos antes. Si los administradores no pueden ayudar, o piensas que un usuario rompe los [http://comunidad.wikia.com/wiki/Project:T%C3%A9rminos_de_uso Términos de uso], puedes contactarte con el equipo de soporte comunitario directamente [[Special:Contact/general|aquí]].
+Si necesitas ayuda, primero contacta con tus [[Special:ListAdmins|administradores locales]]. Los administradores son expertos sobre el tema del wiki y la comunidad, así que lo mejor es hablar con ellos antes. Si los administradores no pueden ayudar, o piensas que un usuario rompe los [http://comunidad.wikia.com/wiki/Project:T%C3%A9rminos_de_uso términos de uso], puedes contactarte con el equipo de soporte comunitario directamente [[Special:Contact/general|aquí]].
 
 ¡Y no olvides que los wikis son para divertirse mientras se edita!',
 	'specialcontact-intro-adoption' => '¿Quieres ser administrador del wiki? Antes de eso, asegúrate de comprobar la lista de [[Special:Listusers/sysop|administradores locales]] para ver si están activos. Si lo están, déjales un mensaje con tu petición. También es buena idea hablar con los usuarios sobre tu petición para que te ayuden a convertirte en administrador. Quizás deberías dejar un mensaje en el foro de la comunidad.
@@ -706,7 +706,7 @@ Recuerda que puedes encontrar ayuda también en nuestro [[w:c:comunidad:Foro:Ín
 	'specialcontact-sectitle-security' => 'Informe de problemas de seguridad',
 	'specialcontact-intro-security' => 'Si has encontrado o crees que has encontrado un problema de seguridad en el código de Fandom o en una de las comunidades de Fandom, por favor avísanos. Apreciamos tu ayuda en mantener a salvo a Fandom para todos al revelarlo de una [[wikipedia:Responsible disclosure|manera responsable]]. 
 
-Si quieres informar de un error general u otro tipo de problema, por favor utiliza una de las [[Especial: Contactar|otras formas de contacto]]. 
+Si quieres informar de un error general u otro tipo de problema, por favor utiliza una de las [[Especial:Contactar|otras formas de contacto]]. 
 
 Al realizar pruebas de seguridad, debes: 
 
@@ -821,7 +821,7 @@ Si vous avez décidé que vous souhaitez vraiment désactiver votre compte, sach
 Si vous avez besoin de plus d\'informations sur ce que signifie réellement la désactivation d\'un compte, vous pouvez visiter notre [[Aide:Fermer mon compte|page d\'aide sur la désactivation des comptes]]. Pour confirmer la désactivation de votre compte, veuillez remplir le formulaire ci-dessous.',
 	'specialcontact-intro-close-wiki' => 'Merci d\'avoir contacté Fandom. Nous ne supprimons généralement pas les wikis qui ont été créés. Les wikis appartiennent aux communautés, et un wiki qui ne vous intéresse plus peut être repris plus tard par une autre personne souhaitant l\'[[Special:Contact/adoption|adopter]].
 
-Si vous voulez renommer votre wiki ou corriger des fautes d\'orthographe ou de grammaire, veuillez d\'abord consulter la section [[Aide:Renommer]], pour renommer des pages, et la section [[Aide:Concepteur_de_thème]], pour changer le titre de votre wiki. Il est facile de changer le nom des wikis sans avoir à tout recommencer. Si vous voulez changer d\'URL de wiki, [[Special:Contact/general|écrivez-nous]]. Nous serions ravis de le faire pour vous, inutile de fermer votre Fandom.
+Si vous voulez renommer votre wiki ou corriger des fautes d\'orthographe ou de grammaire, veuillez d\'abord consulter la section [[w:c:communaute:Aide:Renommer|Aide:Renommer]], pour renommer des pages, et la section [[w:c:communaute:Aide:Concepteur_de_thème|Aide:Concepteur de thème]], pour changer le titre de votre wiki. Il est facile de changer le nom des wikis sans avoir à tout recommencer. Si vous voulez changer d\'URL de wiki, [[Special:Contact/general|écrivez-nous]]. Nous serions ravis de le faire pour vous, inutile de fermer votre Fandom.
 
 Si vous pensez que ce wiki parle d\'un sujet qui n\'intéresse aucun autre utilisateur (tel qu\'un projet personnel), veuillez soumettre une demande via le formulaire ci-dessous. Cette demande doit être effectuée depuis le wiki à fermer.
 
@@ -831,7 +831,7 @@ Bonnes contributions !',
 	'specialcontact-intro-content-issue' => 'Le contenu de ce wiki est créé par la communauté présente ici. Il n\'est pas géré par Fandom, mais par les [[Special:ListAdmins|administrateurs locaux]]. Si vous souhaitez discuter du contenu, nous vous invitons à contacter les [[Special:ListAdmins|administrateurs du wiki ici]] dans un premier temps.
 
 Si vous pensez que le contenu ne respecte pas nos [http://fr.wikia.com/Conditions_d%27utilisation Conditions d\'utilisation], vous pouvez contacter le staff de Fandom directement [[Special:Contact/general|ici]].',
-	'specialcontact-intro-design' => 'Les administrateurs locaux de votre communauté peuvent mettre à jour l\'apparence d\'un wiki via le [[Aide:Concepteur_de_thème|Concepteur de thème]]. Si vous n\'êtes pas administrateur et souhaitez participer à cette mise à jour, veuillez d\'abord contacter vos [[Special:ListAdmins|administrateurs locaux]].
+	'specialcontact-intro-design' => 'Les administrateurs locaux de votre communauté peuvent mettre à jour l\'apparence d\'un wiki via le [[w:c:communaute:Aide:Concepteur_de_thème|Aide:Concepteur de thème]]. Si vous n\'êtes pas administrateur et souhaitez participer à cette mise à jour, veuillez d\'abord contacter vos [[Special:ListAdmins|administrateurs locaux]].
 
 Si vous avez besoin d\'aide pour créer un style plus personnalisé, vous pouvez soumettre une demande à l\'équipe Contenu de Fandom [[w:c:communaute:Sous-forum:Demandes_de_ressources|ici]]. Veillez à lire attentivement les instructions avant d\'envoyer la demande.
 
@@ -1068,7 +1068,7 @@ Ricorda che puoi anche trovare aiuto nel nostro [[w:it:Special:Forum|Forum della
 $messages['ja'] = [
 	'contact' => 'Fandomへのお問い合わせ',
 	'specialcontact-wikia' => 'Fandomへのお問い合わせ',
-	'specialcontact-pagetitle' => 'Fancomサポートスタッフへのお問い合わせ',
+	'specialcontact-pagetitle' => 'Fandomサポートスタッフへのお問い合わせ',
 	'specialcontact-intro-main-head' => '<big>サポートが必要なときは、Fandomコミュニティがサポートします。</big><br/>下のリンクでは、Fandomの使い方や更新方法、アカウント設定の変更方法の詳細がご確認いただけます。',
 	'specialcontact-intro-main-local' => '',
 	'specialcontact-intro-main-foot' => '\'\'\'このページで充分な回答は得られましたか?\'\'\' そうでなければ [[Special:contact/general|連絡をとる]] で問題点を解決しましょう。またいつでも \'\'\'[[w:c:community:Help:Index|ヘルプページ]]\'\'\', [[w:c:community:Blog:Wikia_Staff_Blog|スタッフブログ]]  もしくは \'\'\'[[w:c:community:Forum:Community_Central_Forum|コミュニティーヘルプフォーラム]]\'\'\'. 管理者からのヘルプもしくはアドバイスが欲しい場合は, ここから [[w:c:community:Admin_Central:Main_Page|管理者のページ]].',
@@ -1220,7 +1220,7 @@ Fandomには様々なトピックのコミュニティがあります。ぜひ�
 	'specialcontact-notyou' => 'これはあなたのアカウントではない?',
 	'specialcontact-captchainfo' => '画像の文字を入力してください。.',
 	'specialcontact-captchatitle' => '曖昧な言葉',
-	'specialcontact-formtitle' => 'Fancomサポートスタッフへのお問い合わせ',
+	'specialcontact-formtitle' => 'Fandomサポートスタッフへのお問い合わせ',
 	'specialcontact-label-screenshot' => 'もしスクリーンショットがあるのであれば添付してください。',
 	'specialcontact-label-additionalscreenshot' => '他にスクリーンショットがあるのであればここで添付してください',
 	'specialcontact-label-bad-ad-description' => 'この広告の問題点を教えてください',
@@ -1788,7 +1788,7 @@ $messages['ru'] = [
 	'specialcontact-ccheader' => 'Это копия вашего сообщения, которое было отправлено в службу поддержки Фэндома',
 	'specialcontact-form-header' => 'Связаться с Фэндомом',
 	'specialcontact-formtitle' => 'Связаться со службой поддержки Фэндома',
-	'specialcontact-intro-adoption' => 'Хотите администратором этой вики? Для начала проверьте, есть ли здесь активные [[Служебная:Listusers/sysop|администраторы]]. Если есть, отправьте им сообщение с запросом на статус администратора. Советуем вам рассказать другим участникам сообщества о вашем желании и заручиться их поддержкой. Сообщите о ваших намерениях на форуме сообщества. 
+	'specialcontact-intro-adoption' => 'Хотите стать администратором этой вики? Для начала проверьте, есть ли здесь активные [[Special:Listusers/sysop|администраторы]]. Если есть, отправьте им сообщение с запросом на статус администратора. Советуем вам рассказать другим участникам сообщества о вашем желании и заручиться их поддержкой. Сообщите о ваших намерениях на форуме сообщества. 
 
 Если в сообществе нет активных администраторов, вы можете отправить запрос на получение статуса администратора. Форму запроса и дополнительную информацию о критериях выдачи статуса можно найти на [[w:c:ru.community:Викия:_Запросы_на_статус_администратора/бюрократа|этой странице]]. Не забудьте указать ссылку на сообщество, где вы хотите стать администратором.
 
@@ -1798,7 +1798,7 @@ $messages['ru'] = [
 Обязательно укажите, на какой вики вы увидели эту рекламу и почему она вам не понравилась. Приложите к запросу снимок экрана с рекламой и ссылку на сайт, куда ведёт рекламный блок. Инструкцию по поиску URL рекламы можно найти здесь: http://ru.community.wikia.com/wiki/Справка:Плохая_реклама
 
 Спасибо и счастливого редактирования!',
-	'specialcontact-intro-bug' => 'Мы сожалеем, что вы обнаружили баг на Фэндоме. Пожалуйста, предоставьте нам полную информацию об этой проблеме, чтобы мы могли исследовать её. Очень важно включить в своё сообщение следующее:
+	'specialcontact-intro-bug' => 'Мы сожалеем, что вы обнаружили баг на Фэндоме. Пожалуйста, предоставьте нам полную информацию об этой проблеме, чтобы мы могли с ней разобраться. Очень важно включить в своё сообщение следующее:
 *Ваше имя участника
 *Ссылку на вики, где был обнаружен баг
 *Информацию о вашем браузере, включая название и его версию ([[w:c:ru.community:Справка:Поддерживаемые браузеры|список поддерживаемых браузеров]])
@@ -1819,7 +1819,7 @@ $messages['ru'] = [
 Обратите внимание, что после отправки этого запроса у вас будет $1 {{PLURAL:$1|день|дня|дней}}, чтобы вернуться и восстановить учётную запись. Для этого войдите в свою учётную запись и следуйте инструкциям по остановке процесса отключения аккаунта. По истечении периода ожидания учётная запись будет закрыта окончательно и не сможет быть восстановлена.',
 	'specialcontact-intro-close-wiki' => 'Спасибо, что обратились в службу поддержки Фэндома. Обычно мы не удаляем уже существующие вики, потому что на каждой вики работают другие участники и кто-то другой всегда может [[w:c:ru.community:Викия:_Запросы_на_статус_администратора/бюрократа|возглавить]] её вместо вас.
 
-Если вы хотите переименовать вики или исправить ошибки в названии, то для начала прочтите страницы [[Справка:Название вики]] и [[Справка:Конструктор тем]], чтобы получить представление о том, как работает название вики и как изменить логотип. Название вики очень легко изменить, поэтому не нужно переживать по этому поводу. Если вы хотите изменить URL-адрес вашей вики, оставьте запрос [[Special:Contact/generalздесь]].
+Если вы хотите переименовать вики или исправить ошибки в названии, то для начала прочтите страницы [[Справка:Название вики]] и [[Справка:Конструктор тем]], чтобы получить представление о том, как работает название вики и как изменить логотип. Название вики очень легко изменить, поэтому не нужно переживать по этому поводу. Если вы хотите изменить URL-адрес вашей вики, оставьте запрос [[Special:Contact/general|здесь]].
 
 Если вы считаете, что ваша вики не сможет заинтересовать других участников (например, если это ваша тестовая вики), отправьте запрос через форму ниже. Пожалуйста, сделайте запрос с той вики, которая должна быть закрыта, или просто пришлите ссылку на вики, которую вы хотите удалить.
 
@@ -1829,7 +1829,7 @@ $messages['ru'] = [
 	'specialcontact-intro-content-issue' => 'Содержание этой вики создают участники сообщества и проверяется [[Special:ListAdmins|администраторами]], а не платформой Фэндом. Если у вас есть замечания по контенту вики, сначала обсудите их с администраторами вики.
 
 Если вы считаете, что нашли нарушения наших [http://ru.community.wikia.com/wiki/Викия:Условия_использования Условий использования], вы можете связаться напрямую с сотрудниками Фэндома [[Special:Contact/general|здесь]].',
-	'specialcontact-intro-design' => 'Дизайн вики может изменить любой администратор сообщества в [[Help:Theme_designer|Конструкторе тем]]. Если вы хотите помочь с оформлением вики, но не имеете прав администратора, то свяжитесь с [[Special:ListAdmins|администрацией вики]].
+	'specialcontact-intro-design' => 'Дизайн вики может изменить любой администратор сообщества в [[Справка:Конструктор_тем|Конструкторе тем]]. Если вы хотите помочь с оформлением вики, но не имеете прав администратора, то свяжитесь с [[Special:ListAdmins|администрацией вики]].
 
 Если вы хотите придать вики уникальный вид, вы можете отправить запрос команде Фэндома по контенту [[w:Community_Central:Content_Team/Requests|здесь]]. Перед отправкой запроса, пожалуйста, ознакомьтесь с правилами.
 
@@ -1838,7 +1838,7 @@ $messages['ru'] = [
 Счастливого редактирования!',
 	'specialcontact-intro-features' => 'Фэндом предлагает множество расширений, большинство из которых включены по умолчанию на страницах всех сообществ. 
 
-Если вы являетесь администратором сообщества и считаете, что какое-то расширение вам не нужно, то вы можете обсудить этот вопрос с другими участниками вашей вики и узнать, не хотят ли они его отключить. Получив их согласие, вы можете отключить или подключить снова расширения на странице [[Special:WikiFeatures|Wiki Features]] в [[Special:AdminDashboard|кабинете администратора]]. Если в этом разделе нет нужного вам расширения, [[Special:Contact/general|свяжитесь с нами]] с запросом его подключить.
+Если вы являетесь администратором сообщества и считаете, что какое-то расширение вам не нужно, то вы можете обсудить этот вопрос с другими участниками вашей вики и узнать, не хотят ли они его отключить. Получив их согласие, вы можете отключить или снова подключить расширение на странице [[Special:WikiFeatures|Wiki Features]] в [[Special:AdminDashboard|кабинете администратора]]. Если в этом разделе нет нужного вам расширения, [[Special:Contact/general|свяжитесь с нами]] с запросом его подключить.
 
 Администраторы, заинтересованные в тестировании новых расширений в стадии разработки, могут проверить просмотреть раздел «Лаборатория» на странице [[Special:WikiFeatures|Wiki Features]].
 
@@ -1878,7 +1878,7 @@ $messages['ru'] = [
 	'specialcontact-sectitle-using-wikia' => 'Использование Фэндома',
 	'specialcontact-sectitle-wiki-name-change' => 'Изменение названия сообщества',
 	'specialcontact-wikia' => 'Связаться с Фэндомом',
-	'specialcontact-intro-blocked' => 'Обычно блокировки участников производятся администраторами вики, а не сотрудниками Фэндома. Вы можете найти имя заблокировавшего вас администратора в уведомлении о блокировке и связаться с этим администратором на вашей Стене обсуждения, поскольку на большинстве вики даже заблокированные участники могут оставлять сообщения на своей стене. Активность на вашей стене будет отображаться в списке вики-деятельности, и ваше сообщение заметят другие участники и администраторы. Чтобы попасть на вашу Стену обсуждения, перейдите по соответствующей ссылке в правом верхнем углу любой страницы.
+	'specialcontact-intro-blocked' => 'Обычно блокировки участников производятся администраторами вики, а не сотрудниками Фэндома. Вы можете найти имя заблокировавшего вас администратора в уведомлении о блокировке и связаться с этим администратором на вашей стене обсуждения, поскольку на большинстве вики даже заблокированные участники могут оставлять сообщения на своей стене. Активность на вашей стене будет отображаться в списке вики-деятельности, и ваше сообщение заметят другие участники и администраторы. Чтобы попасть на вашу стену обсуждения, перейдите по соответствующей ссылке в правом верхнем углу любой страницы.
 
 Если этот способ вам не подходит, то мы советуем дождаться истечения действия блокировки или просто найти другое сообщество, в жизни которого вы можете участвовать.
 
@@ -1982,7 +1982,7 @@ Fandom拥有大量不同主题的社区，我们希望您可以通过浏览其�
 ',
 	'specialcontact-intro-content-issue' => '维基内容全部来自于维基各个社区，由维基社区[[Special:ListAdmins|管理员]]进行统一管理。Fandom不负责任何相关内容的发布和社区的管理。如果您有任何关于内容的问题，我们建议您可以直接联系此维基的[[Special:ListAdmins|管理员]]。
 
-如果您认为相关内容违反了我们的“[http://zh.community.wikia.com/wiki/Wikia%E4%B8%AD%E6%96%87:%E4%BD%BF%E7%94%A8%E6%9D%A1%E6%AC%BE 维基社区使用规定]”，您可以点击[[Special:Contact/general|这里]]直接联系Fandom员工。
+如果您认为相关内容违反了我们的“[http://zh.wikia.com/wiki/%E4%BD%BF%E7%94%A8%E6%9D%A1%E6%AC%BE 社区使用条款]”，您可以点击[[Special:Contact/general|这里]]直接联系Fandom员工。
 ',
 	'specialcontact-intro-design' => '管理员可以通过维基[[Help:主題設計器|界面设计]]功能更改社区页面的设计风格。如果您不是该维基的管理员但是希望更改版面设计，请首先联系此维基的[[Special:ListAdmins|管理员]]。
 

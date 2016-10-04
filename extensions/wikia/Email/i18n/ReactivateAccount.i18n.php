@@ -41,7 +41,7 @@ $messages['it'] = [
 	'emailext-reactivate-account-subject' => 'Riattiva il tuo account Fandom',
 	'emailext-reactivate-account-summary' => 'Ti manca poco per riattivare il tuo account su Fandom. Clicca sul link di seguito per confermare la tua richiesta e ripartire.',
 	'emailext-reactivate-account-button-text' => 'Riattiva ora',
-	'emailext-reactivate-account-welcome-back' => 'Bentornato in Fandom, $1!',
+	'emailext-reactivate-account-welcome-back' => 'Bentornato in Fandom!',
 ];
 
 $messages['ja'] = [
