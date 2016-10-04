@@ -274,13 +274,9 @@ class NavigationModel extends WikiaModel {
 		$duration = 3600,
 		$filterInactiveSpecialPages = false
 	) {
-		wfProfileIn( __METHOD__ . ":$type" );
-
 		$nodes = WikiaDataAccess::cacheWithOptions(
 			$this->getMemcKey( $source ),
 			function () use ( $type, $source, $maxChildrenAtLevel, $filterInactiveSpecialPages ) {
-				wfProfileIn( __METHOD__ . '::miss' );
-
 				// get wikitext from given source
 				switch ( $type ) {
 					case self::TYPE_MESSAGE:
@@ -300,9 +296,6 @@ class NavigationModel extends WikiaModel {
 						$text = '';
 				}
 
-				// and parse it
-				wfProfileOut( __METHOD__ . '::miss' );
-
 				return $this->parseText( $text, $maxChildrenAtLevel, $filterInactiveSpecialPages );
 			},
 			[
@@ -312,14 +305,10 @@ class NavigationModel extends WikiaModel {
 			]
 		);
 
-		wfProfileOut( __METHOD__ . ":$type" );
-
 		return $nodes;
 	}
 
 	public function parseText( $text, Array $maxChildrenAtLevel = [], $filterInactiveSpecialPages = false ) {
-		wfProfileIn( __METHOD__ );
-
 		$lines = explode( "\n", $text );
 
 		$this->errors = [];
@@ -336,22 +325,16 @@ class NavigationModel extends WikiaModel {
 			$nodes[0][self::HASH] = md5( serialize( $nodes ) );
 		}
 
-		wfProfileOut( __METHOD__ );
-
 		return $nodes;
 	}
 
 	private function stripTags( $nodes ) {
-		wfProfileIn( __METHOD__ );
-
 		foreach ( $nodes as &$node ) {
 			$text = !empty( $node[self::TEXT] ) ? $node[self::TEXT] : null;
 			if ( !is_null( $text ) ) {
 				$node[self::TEXT] = strip_tags( $text, self::ALLOWABLE_TAGS );
 			}
 		}
-
-		wfProfileOut( __METHOD__ );
 
 		return $nodes;
 	}
@@ -360,8 +343,6 @@ class NavigationModel extends WikiaModel {
 		if ( !$filterInactiveSpecialPages ) {
 			return $nodes;
 		}
-
-		wfProfileIn( __METHOD__ );
 
 		// filters out every special page that is not defined
 		foreach ( $nodes as $key => &$node ) {
@@ -382,8 +363,6 @@ class NavigationModel extends WikiaModel {
 			}
 		}
 
-		wfProfileOut( __METHOD__ );
-
 		return $nodes;
 	}
 
@@ -392,8 +371,6 @@ class NavigationModel extends WikiaModel {
 	 * @author: Inez Korczyński
 	 */
 	public function parseLines( $lines, $maxChildrenAtLevel = [] ) {
-		wfProfileIn( __METHOD__ );
-
 		$nodes = [];
 
 		if ( is_array( $lines ) && count( $lines ) > 0 ) {
@@ -460,8 +437,6 @@ class NavigationModel extends WikiaModel {
 			}
 		}
 
-		wfProfileOut( __METHOD__ );
-
 		return $nodes;
 	}
 
@@ -469,8 +444,6 @@ class NavigationModel extends WikiaModel {
 	 * @author: Inez Korczyński
 	 */
 	public function parseOneLine( $line ) {
-		wfProfileIn( __METHOD__ );
-
 		// trim spaces and asterisks from line and then split it to maximum two chunks
 		$lineArr = explode( '|', trim( $line, '* ' ), 3 );
 
@@ -546,8 +519,6 @@ class NavigationModel extends WikiaModel {
 			$href = '#';
 		}
 
-		wfProfileOut( __METHOD__ );
-
 		return [
 			self::ORIGINAL => $lineArr[0],
 			self::TEXT => $text,
@@ -562,15 +533,11 @@ class NavigationModel extends WikiaModel {
 	 * Return false when given submenu should not be added in a given place
 	 */
 	private function handleExtraWords( &$node, &$nodes, $depth ) {
-		wfProfileIn( __METHOD__ );
-
 		$originalLower = strtolower( $node[self::ORIGINAL] );
 
 		if ( substr( $originalLower, 0, 9 ) == '#category' ) {
 			// ignore magic words in Level 1 (BugId:15240)
 			if ( $depth == 1 ) {
-				wfProfileOut( __METHOD__ );
-
 				return false;
 			}
 
@@ -619,8 +586,6 @@ class NavigationModel extends WikiaModel {
 				if ( !empty( $data ) ) {
 					// ignore magic words in Level 1 (BugId:15240)
 					if ( $depth == 1 ) {
-						wfProfileOut( __METHOD__ );
-
 						return false;
 					}
 
@@ -630,8 +595,6 @@ class NavigationModel extends WikiaModel {
 				}
 			}
 		}
-
-		wfProfileOut( __METHOD__ );
 
 		return true;
 	}
