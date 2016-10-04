@@ -39,9 +39,7 @@ define('ext.wikia.adEngine.provider.btfBlocker', [
 			log(['processBtfSlot', slot.name], 'debug', logGroup);
 
 			if (win.ads.runtime.unblockHighlyViewableSlots && config.highlyViewableSlots) {
-				config.highlyViewableSlots.forEach(function (slotName) {
-					unblock(slotName);
-				});
+				config.highlyViewableSlots.map(unblock);
 			}
 
 			if (unblockedSlots.indexOf(slot.name) > -1 || !win.ads.runtime.disableBtf) {
