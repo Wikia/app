@@ -3,6 +3,7 @@ define('ext.wikia.adEngine.config.mobile', [
 	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.provider.directGptMobile',
 	'ext.wikia.adEngine.provider.evolve2',
+	'ext.wikia.adEngine.provider.netzathleten',
 	'ext.wikia.adEngine.provider.paidAssetDrop',
 	'ext.wikia.adEngine.provider.remnantGptMobile',
 	'ext.wikia.adEngine.provider.rubiconFastlane',
@@ -11,6 +12,7 @@ define('ext.wikia.adEngine.config.mobile', [
 	adContext,
 	directGptMobile,
 	evolve2,
+	netzAthleten,
 	paidAssetDrop,
 	remnantGptMobile,
 	rubiconFastlane,
@@ -38,6 +40,10 @@ define('ext.wikia.adEngine.config.mobile', [
 		if (!pageTypesWithAdsOnMobile[context.opts.pageType]) {
 			return [];
 		}
+
+		return [
+			netzAthleten
+		];
 
 		switch (context.forcedProvider) {
 			case 'evolve2':

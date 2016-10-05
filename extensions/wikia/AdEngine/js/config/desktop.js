@@ -12,6 +12,7 @@ define('ext.wikia.adEngine.config.desktop', [
 	'ext.wikia.adEngine.provider.directGpt',
 	'ext.wikia.adEngine.provider.evolve2',
 	'ext.wikia.adEngine.provider.monetizationService',
+	'ext.wikia.adEngine.provider.netzathleten',
 	'ext.wikia.adEngine.provider.remnantGpt',
 	'ext.wikia.adEngine.provider.rubiconFastlane',
 	'ext.wikia.adEngine.provider.turtle',
@@ -30,6 +31,7 @@ define('ext.wikia.adEngine.config.desktop', [
 	adProviderDirectGpt,
 	adProviderEvolve2,
 	adProviderMonetizationService,
+	adProviderNetzAthleten,
 	adProviderRemnantGpt,
 	adProviderRubiconFastlane,
 	adProviderTurtle,
@@ -62,6 +64,10 @@ define('ext.wikia.adEngine.config.desktop', [
 			return [];
 		}
 
+		return [
+			adProviderNetzAthleten
+		];
+
 		// Force provider
 		if (context.forcedProvider && !!forcedProviders[context.forcedProvider]) {
 			log(['getProvider', slotName, context.forcedProvider + ' (wgAdDriverForcedProvider)'], 'info', logGroup);
@@ -92,6 +98,8 @@ define('ext.wikia.adEngine.config.desktop', [
 			providerList.push(adProviderTurtle);
 		} else if (context.providers.evolve2 && adProviderEvolve2.canHandleSlot(slotName)) {
 			providerList.push(adProviderEvolve2);
+		} else if (context.providers.netzAthleten && adProviderNetzAthleten.canHandleSlot(slotName)) {
+			providerList.push(adProviderNetzAthleten);
 		} else if (gptEnabled) {
 			providerList.push(adProviderDirectGpt);
 		}

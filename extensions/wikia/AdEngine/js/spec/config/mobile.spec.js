@@ -14,6 +14,12 @@ describe('ext.wikia.adEngine.config.mobile', function () {
 				return true;
 			}
 		},
+		adProviderNetzAthletenMock = {
+			name: 'NetzAthletenMock',
+			canHandleSlot: function () {
+				return false;
+			}
+		},
 		adProviderPaidAssetDropMock = {
 			name: 'PaidAssetDropMock',
 			canHandleSlot: function () {
@@ -62,6 +68,7 @@ describe('ext.wikia.adEngine.config.mobile', function () {
 			mocks.adContext,
 			adProviderDirectMock,
 			adProviderEvolveMock,
+			adProviderNetzAthletenMock,
 			adProviderPaidAssetDropMock,
 			adProviderRemnantMock,
 			adProviderRubiconFastlaneMock,
