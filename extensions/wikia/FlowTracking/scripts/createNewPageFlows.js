@@ -1,4 +1,6 @@
-define('wikia.flowTracking.createPage', ['wikia.flowTracking', 'wikia.querystring', 'mw', 'wikia.document'],
+define(
+	'wikia.flowTracking.createPage',
+	['wikia.flowTracking', 'wikia.querystring', 'mw', 'wikia.document'],
 	function (flowTrack, QueryString, mw, document) {
 		var namespaceId = mw.config.get('wgNamespaceNumber'),
 			articleId = mw.config.get('wgArticleId');
@@ -17,9 +19,9 @@ define('wikia.flowTracking.createPage', ['wikia.flowTracking', 'wikia.querystrin
 					flowTrack.beginFlow(flowTrack.flows.CREATE_PAGE_DIRECT_URL, {editor: editor});
 				}
 			}
+		}
 
-			return {
-				trackOnEditPageLoad: trackOnEditPageLoad
-			}
+		return {
+			trackOnEditPageLoad: trackOnEditPageLoad
 		}
 	});
