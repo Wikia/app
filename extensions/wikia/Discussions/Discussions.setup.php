@@ -11,6 +11,8 @@ $wgExtensionCredits['specialpage'][] = [
 	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/SpecialDiscussions',
 ];
 
+$dir = dirname( __FILE__ ) . '/';
+
 // load classes
 $wgAutoloadClasses['SpecialDiscussionsController'] = $dir . 'controllers/SpecialDiscussionsController.class.php';
 $wgAutoloadClasses['EnableDiscussionsController'] = $dir . 'controllers/EnableDiscussionsController.class.php';
@@ -21,6 +23,7 @@ $wgAutoloadClasses['DiscussionsVarTogglerException'] = $dir . 'DiscussionsVarTog
 // register special page
 $wgSpecialPages['Discussions'] = 'SpecialDiscussionsController';
 
+// message files
 $wgExtensionMessagesFiles['SpecialDiscussions'] = $dir . 'i18n/SpecialDiscussions.i18n.php';
 
 // permissions

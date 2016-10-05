@@ -4,7 +4,6 @@ class SpecialDiscussionsController extends WikiaSpecialPageController {
 
 	const DISCUSSIONS_LINK = '/d/f';
 	const DISCUSSIONS_ACTION = 'specialdiscussions';
-	const EDIT_TOKEN = 'editToken';
 
 	const DEFAULT_TEMPLATE_ENGINE = \WikiaResponse::TEMPLATE_ENGINE_MUSTACHE;
 
@@ -52,7 +51,7 @@ class SpecialDiscussionsController extends WikiaSpecialPageController {
 			[
 				'discussionsInactiveMessage' => wfMessage( 'discussions-not-active' )->escaped(),
 				'activateDiscussions' => wfMessage( 'discussions-activate' )->escaped(),
-				'editToken' => $this->getUser()->getEditToken(),
+				'token' => $this->getUser()->getEditToken(),
 			]
 		);
 	}
