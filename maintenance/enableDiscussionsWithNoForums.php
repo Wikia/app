@@ -29,8 +29,14 @@ class EnableDiscussionsWithNoForums extends Maintenance {
 
 			$count = $this->getForumThreadCount( $wiki );
 			if ( $count > 0 ) {
-				$this->error( $wikiId . ' has ' . $count . ' forum threads, skipping!' );
-			}
+                $this->error( $wikiId . ' has ' . $count . ' forum threads, skipping!' );
+                continue;
+            }
+
+            if ( WikiFactory::getVarByName( 'wgEnableDiscussions', $wikiId ) ) {
+                $this->error( 'Discussions are already enabled on ' . $wikiId . ', skipping!' );
+                continue;
+            }
 
 			try {
 				$this->activateDiscussions( $wikiId, $wiki->city_lang, $wiki->city_title );
