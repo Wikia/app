@@ -6,6 +6,7 @@ var CreatePage = {
 	context: null,
 	wgArticlePath: mw.config.get( 'wgArticlePath' ),
 	redlinkParam: '',
+	flowName: '',
 
 	canUseVisualEditor: function() {
 		return mw.libs && mw.libs.ve ? mw.libs.ve.canCreatePageUsingVE() : false;
@@ -20,15 +21,18 @@ var CreatePage = {
 		},
 		function( response ) {
 			var articlePath;
+			var flowParam = CreatePage.flowName === '' ? '' : '&flow=' + CreatePage.flowName;
+
 			if ( response.result === 'ok' ) {
 				if ( CreatePage.canUseVisualEditor() && mw.libs.ve.isInValidNamespace( title ) ) {
 					articlePath = CreatePage.wgArticlePath.replace( '$1', encodeURIComponent( title ) );
-					location.href = articlePath + '?veaction=edit' + CreatePage.redlinkParam;
+					location.href = articlePath + '?veaction=edit' + CreatePage.redlinkParam + flowParam;
 				} else {
 					location.href = CreatePage.options[ CreatePage.canUseVisualEditor() ? 'blank' :
 						CreatePage.pageLayout ].submitUrl.replace( '$1', encodeURIComponent( title ) ) +
-						CreatePage.redlinkParam;
+						CreatePage.redlinkParam + flowParam;
 				}
+				CreatePage.flowName = '';
 			}
 			else {
 				CreatePage.displayError( response.msg );
@@ -38,7 +42,6 @@ var CreatePage = {
 
 	requestDialog: function( e, titleText ) {
 		'use strict';
-		console.log('requestDialog', e.data);
 
 		var rs, dialogCallback;
 
@@ -290,10 +293,11 @@ var CreatePage = {
 		'use strict';
 		CreatePage.context = context;
 
-		$( '#contribute-button-create-page' ).click({flow: 'create-page-contribute-button'}, function() {
+		$( '#contribute-button-create-page' ).click(function() {
 			require(['wikia.flowTracking'], function (flowTracking) {
-				flowTracking.beginFlow('create-page-contribute-button');
+				flowTracking.beginFlow(flowTracking.flows.CONTRIBUTE_BUTTON);
 			});
+			CreatePage.flowName = 'create-page-contribute-button';
 		});
 
 		if ( window.WikiaEnableNewCreatepage ) {
