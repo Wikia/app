@@ -69,7 +69,23 @@ define('ext.wikia.adEngine.domElementTweaker', [
 		action(element);
 	}
 
+	function bubbleRun(action, childElement, parentElement) {
+		var list = [];
+
+		while (childElement && childElement !== parentElement) {
+			list.push(childElement);
+			childElement = childElement.parentNode;
+		}
+
+		list.push(parentElement);
+
+		list.forEach(function (element) {
+			action(element);
+		});
+	}
+
 	return {
+		bubbleRun: bubbleRun,
 		cleanInlineStyles: cleanInlineStyles,
 		isElement: isElement,
 		moveStylesToInline: moveStylesToInline,

@@ -137,12 +137,11 @@ define('ext.wikia.adEngine.template.bfaa', [
 			if (recoveryHelper.isBlocking()) {
 				var adContainer = iframe.parentNode.parentNode.parentNode.parentNode;
 
-				slotTweaker.removeDefaultHeight(params.slotname);
 				win.addEventListener('resize', function () {
-					slotTweaker.tweakRecoveredSlotOnResize(params.slotName, params.aspectRatio, adContainer);
+					slotTweaker.tweakRecoveredSlotOnResize(params.slotName, params.aspectRatio, iframe, adContainer);
 				});
 
-				slotTweaker.tweakRecoveredSlot(adContainer);
+				slotTweaker.tweakRecoveredSlot(iframe, adContainer);
 			}
 		});
 

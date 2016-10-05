@@ -99,8 +99,8 @@ define('ext.wikia.adEngine.slotTweaker', [
 	}
 
 	function getRecoveredIframe(slotName) {
-		var nodeList = document.querySelectorAll('div[id="' + slotName + '"] div'),
-			fallbackId = nodeList[1] && win._sp_.getElementId(nodeList[1].id),
+		var node = document.querySelector('div[id="' + slotName + '"] > div > div'),
+			fallbackId = node && win._sp_.getElementId(node.id),
 			elementById = fallbackId && doc.getElementById(fallbackId);
 
 		if (elementById) {
@@ -147,13 +147,13 @@ define('ext.wikia.adEngine.slotTweaker', [
 		}
 	}
 
-	function tweakRecoveredSlotOnResize(slotName, aspectRatio, container) {
-		DOMElementTweaker.recursiveRun(DOMElementTweaker.cleanInlineStyles, container);
+	function tweakRecoveredSlotOnResize(slotName, aspectRatio, iframe, container) {
+		DOMElementTweaker.bubbleRun(DOMElementTweaker.cleanInlineStyles, iframe, container);
 		makeResponsive(slotName, aspectRatio);
-		tweakRecoveredSlot(container);
+		tweakRecoveredSlot(iframe, container);
 	}
 
-	function tweakRecoveredSlot(adContainer) {
+	function tweakRecoveredSlot(iframe, adContainer) {
 		var className = 'virtual-slot';
 
 		if (browser.isIE() || browser.isEdge()) {
@@ -161,7 +161,7 @@ define('ext.wikia.adEngine.slotTweaker', [
 		}
 
 		adContainer.classList.add(className);
-		DOMElementTweaker.recursiveRun(DOMElementTweaker.moveStylesToInline, adContainer);
+		DOMElementTweaker.bubbleRun(DOMElementTweaker.moveStylesToInline, iframe, adContainer);
 		adContainer.classList.remove(className);
 	}
 
