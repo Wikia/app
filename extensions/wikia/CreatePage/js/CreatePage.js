@@ -271,7 +271,8 @@ var CreatePage = {
 			namespace = title.getNamespacePrefix().replace( ':', '' ),
 			visualEditorActive = $( 'html' ).hasClass( 've-activated' );
 
-		CreatePage.redlinkParam = '&redlink=1';
+		CreatePage.redlinkParam = '&redlink=1&flowName=redlink';
+		CreatePage.trackCreatePageStart();
 
 		if ( CreatePage.canUseVisualEditor() ) {
 			CreatePage.track( { action: 'click', label: 've-redlink-click' } );
@@ -351,7 +352,21 @@ var CreatePage = {
 					}
 				}
 			});
+		} else {
+			// in case create page modal is disabled
+			$( '#WikiaArticle' ).on( 'click', 'a.new', function( e ) {
+				CreatePage.trackCreatePageStart();
+				e.preventDefault();
+				window.location.href = e.currentTarget.href + "&flowName=redlink";
+			});
 		}
+	},
+
+	// create page flow tracking
+	trackCreatePageStart: function () {
+		require(['wikia.flowTracking'], function (flowTrack) {
+			flowTrack.beginFlow(flowTrack.flows.CREATE_PAGE_REDLINK, {});
+		})
 	},
 
 	// Tracking for VE dialog only

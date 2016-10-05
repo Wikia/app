@@ -2,7 +2,8 @@ define('wikia.flowTracking', ['wikia.tracker', 'wikia.window', 'mw', 'jquery'], 
 
 	var flows = {
 			CREATE_PAGE_DIRECT_URL: 'create-page-direct-url',
-			CREATE_PAGE_CONTRIBUTE_BUTTON: 'create-page-contribute-button'
+			CREATE_PAGE_CONTRIBUTE_BUTTON: 'create-page-contribute-button',
+			CREATE_PAGE_REDLINK: 'create-page-redlink'
 		},
 		track = tracker.buildTrackingFunction({
 			category: 'flow-tracking',
