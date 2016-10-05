@@ -282,16 +282,7 @@ class NavigationModelTest extends WikiaBaseTest {
 	 * @slowExecutionTime 0.022 ms
 	 */
 	function testParseOneLineWithoutTranslation() {
-		$messageMock = $this->getMock( 'stdClass', array( 'text' ) );
-		$messageMock->expects( $this->any() )
-			->method( 'text' )
-			->will( $this->returnValue( 'mocked text' ) );
-		$this->getGlobalFunctionMock( 'wfMessage' )
-			->expects( $this->never() )
-			->method( 'wfMessage' )
-			->will(
-				$this->returnValue( $messageMock )
-			);
+		$this->mockMessage('whatever', 'mocked text');
 
 		$method = new ReflectionMethod(
 			'NavigationModel', 'setShouldTranslateContent'
@@ -310,7 +301,7 @@ class NavigationModelTest extends WikiaBaseTest {
 		];
 		$this->assertEquals(
 			$case,
-			$model->parseOneLine( "*whatever" )
+			$model->parseOneLine( '*whatever' )
 		);
 	}
 
