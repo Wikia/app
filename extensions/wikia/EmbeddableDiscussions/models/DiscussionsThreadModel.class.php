@@ -44,7 +44,7 @@ class DiscussionsThreadModel {
 
 	private function categoryNameLookup( $categoryIds, $rawData ) {
 		$explodedIds = explode( ',', $categoryIds );
-		$ret = array();
+		$ret = [];
 
 		$categories = $rawData['_embedded']['doc:forum'];
 		if ( is_array( $categories ) ) {
@@ -79,31 +79,36 @@ class DiscussionsThreadModel {
 		return "/$this->cityId/votes/post/";
 	}
 
-	public function getData( $showLatest, $limit, $categoryId ) {
+	public function getData( $showLatest, $limit, $categoryIds ) {
 		$sortKey = $showLatest ? self::SORT_LATEST_LINK : self::SORT_TRENDING_LINK;
 		$invalidCategory = false;
 		$discussionsUrl = false;
 		$categoryName = false;
+		// This will be populated to only include verified valid category ids
+		$filteredCategoryIds = [];
 
-		if ( !empty( $categoryId ) ) {
-			$categoryNames = $this->getCategoryNames( $categoryId );
+		if ( !empty( $categoryIds ) ) {
+			$categoryData = $this->getCategoryNames( $categoryIds );
 
-			if ( count ( $categoryNames ) === 0 ) {
+			if ( count ( $categoryData ) === 0 ) {
 				// No valid categories specified, show error message
 				$invalidCategory = true;
-			} elseif ( count ( $categoryNames ) === 1 ) {
+			} elseif ( count ( $categoryData ) === 1 ) {
 				// A single category specified, use its name
-				$categoryName = $categoryNames[0]['name'];
-				$discussionsUrl = "/d/f?sort=$sortKey&catId=$categoryId";
+				$categoryName = $categoryData[0]['name'];
+				$discussionsUrl = "/d/f?sort=$sortKey&catId=$categoryIds";
+				$filteredCategoryIds[] = $categoryData[0]['id'];
 			} else {
 				// Multiple categories specified, don't use name
 				$categoryName = false;
 				$catIdUrl = '&catId=';
 				$separator = '';
 
-				foreach ( $categoryNames as $category ) {
+				foreach ( $categoryData as $category ) {
 					$catIdUrl .= $separator . $category['id'];
 					$separator = urlencode( ',' );
+
+					$filteredCategoryIds[] = $category['id'];
 				}
 
 				$discussionsUrl = "/d/f?sort=$sortKey$catIdUrl";
@@ -115,11 +120,11 @@ class DiscussionsThreadModel {
 		return [
 			'siteId' => $this->cityId,
 			'discussionsUrl' => $discussionsUrl,
-			'requestUrl' => $this->getRequestUrl( $showLatest, $limit, $categoryId ),
+			'requestUrl' => $this->getRequestUrl( $showLatest, $limit, $categoryIds ),
 			'upvoteRequestUrl' => $this->getUpvoteRequestUrl(),
 			'invalidCategory' => $invalidCategory,
 			'categoryName' => $categoryName,
-			'categoryId' => $categoryId,
+			'categoryIds' => $filteredCategoryIds,
 		];
 	}
 }

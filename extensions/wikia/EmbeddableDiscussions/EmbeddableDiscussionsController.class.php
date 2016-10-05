@@ -99,7 +99,7 @@ class EmbeddableDiscussionsController {
 		// In Mercury, discussions are rendered client side as an Ember component
 		$modelData = [
 			'mercuryComponentAttrs' => json_encode( [
-				'category' => $modelData['categoryId'],
+				'categoryIds' => $modelData['categoryIds'],
 				'show' => $showLatest ? 'latest' : 'trending',
 				'itemCount' => $itemCount,
 			] ),
@@ -112,20 +112,20 @@ class EmbeddableDiscussionsController {
 			->render( 'DiscussionThreadMobile.mustache' );
 	}
 
-	private function renderDesktop( $modelData, $showLatest, $category, $columns ) {
+	private function renderDesktop( $modelData, $showLatest, $categoryName, $columns ) {
 		$modelData['requestData'] = json_encode( [
-			'category' => $category,
+			'category' => $categoryName,
 			'columns' => $columns,
 			'showLatest' => $showLatest,
 			'upvoteRequestUrl' => $modelData['upvoteRequestUrl'],
 		] );
 
-		if ( $showLatest && $category ) {
-			$heading = wfMessage( 'embeddable-discussions-show-latest-in-category', $category )->plain();
+		if ( $showLatest && $categoryName ) {
+			$heading = wfMessage( 'embeddable-discussions-show-latest-in-category', $categoryName )->plain();
 		} elseif ( $showLatest ) {
 			$heading = wfMessage( 'embeddable-discussions-show-latest' )->plain();
-		} elseif ( $category ) {
-			$heading = wfMessage( 'embeddable-discussions-show-trending-in-category', $category )->plain();
+		} elseif ( $categoryName ) {
+			$heading = wfMessage( 'embeddable-discussions-show-trending-in-category', $categoryName )->plain();
 		} else {
 			$heading = wfMessage( 'embeddable-discussions-show-trending' )->plain();
 		}
@@ -146,9 +146,9 @@ class EmbeddableDiscussionsController {
 		$showLatest = !empty( $args['mostrecent'] ) && filter_var( $args['mostrecent'], FILTER_VALIDATE_BOOLEAN );
 		$itemCount = empty( $args['size'] ) ? self::ITEMS_DEFAULT : intval( $args['size'] );
 		$columns = empty( $args['columns'] ) ? self::COLUMNS_DEFAULT : intval( $args['columns'] );
-		$categoryId = empty( $args['catid'] ) ? '' :  $args['catid'];
+		$categoryIds = empty( $args['catid'] ) ? '' :  $args['catid'];
 
-		$modelData = ( new DiscussionsThreadModel( $wgCityId ) )->getData( $showLatest, $itemCount, $categoryId );
+		$modelData = ( new DiscussionsThreadModel( $wgCityId ) )->getData( $showLatest, $itemCount, $categoryIds );
 
 		if ( !$this->checkArguments( $args, $modelData, $errorMessage ) ) {
 			return $this->templateEngine->clearData()
