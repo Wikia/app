@@ -1,6 +1,8 @@
 <?php
 
 class FlowTrackingHooks {
+	const CREATE_PAGE_UNRECOGNIZED_FLOW = 'create-page-unrecognized';
+
 	public static function onBeforePageDisplay( \OutputPage $out, \Skin $skin ) {
 		\Wikia::addAssetsToOutput( 'flow_tracking_create_page_js' );
 
@@ -36,11 +38,11 @@ class FlowTrackingHooks {
 		}
 
 		$title = $revision->getTitle();
-		if ( $title && $title->inNamespace( NS_MAIN ) && isset( $queryParams['flow'] ) ) {
+		if ( $title && $title->inNamespace( NS_MAIN ) ) {
 			Track::event( 'trackingevent', [
 				'ga_action' => 'flow-end',
 				'editor' => static::getEditor( $request->getValues(), $queryParams ),
-				'flowname' => $queryParams[ 'flow' ],
+				'flowname' => $queryParams[ 'flow' ] ?? static::CREATE_PAGE_UNRECOGNIZED_FLOW,
 				'useragent' => $headers[ 'USER-AGENT' ]
 			] );
 			Track::eventGA( 'flow-tracking', 'flow-end', $queryParams[ 'flow' ] );
