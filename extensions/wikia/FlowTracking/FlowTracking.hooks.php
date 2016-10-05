@@ -21,13 +21,13 @@ class FlowTrackingHooks {
 	 */
 	public static function onArticleInsertComplete( Page $page, User $user, $text, $summary, $minoredit,
 													$watchThis, $sectionAnchor, &$flags, Revision $revision ) {
-		$params = [];
+		$queryParams = [];
 		$request = RequestContext::getMain()->getRequest();
 		$headers = $request->getAllHeaders();
 
 		// transforms "a=1&b=2&c=3" into [ 'a' => 1, 'b' => 2, 'c' => 3 ]
 		if ( isset( $headers[ 'REFERER' ] ) ) {
-			$params = static::getParamsFromUrlQuery( $headers[ 'REFERER' ] );
+			$queryParams = static::getParamsFromUrlQuery( $headers[ 'REFERER' ] );
 		} else {
 			Wikia\Logger\WikiaLogger::instance()->warning( 'Flow Tracking - Referer header is not set', [
 				'useragent' => $headers[ 'USER-AGENT' ]
@@ -36,32 +36,32 @@ class FlowTrackingHooks {
 		}
 
 		$title = $revision->getTitle();
-		if ( $title && $title->inNamespace( NS_MAIN ) && isset( $params['flow'] ) ) {
+		if ( $title && $title->inNamespace( NS_MAIN ) && isset( $queryParams['flow'] ) ) {
 			Track::event( 'trackingevent', [
 				'ga_action' => 'flow-end',
-				'editor' => static::getEditor( $request->getValues(), $params ),
-				'flowname' => $params[ 'flow' ],
+				'editor' => static::getEditor( $request->getValues(), $queryParams ),
+				'flowname' => $queryParams[ 'flow' ],
 				'useragent' => $headers[ 'USER-AGENT' ]
 			] );
-			Track::eventGA( 'flow-tracking', 'flow-end', $params[ 'flow' ] );
+			Track::eventGA( 'flow-tracking', 'flow-end', $queryParams[ 'flow' ] );
 		}
 
 		return true;
 	}
 
 	public static function getParamsFromUrlQuery( $url ) {
-		parse_str( parse_url( $url, PHP_URL_QUERY ), $params );
-		return $params;
+		parse_str( parse_url( $url, PHP_URL_QUERY ), $queryParams );
+		return $queryParams;
 	}
 
-	private static function getEditor( $values, $params ) {
+	private static function getEditor( $requestValues, $queryParams ) {
 		$editor = '';
 
-		if ( isset( $params[ 'veaction' ] ) ) {
+		if ( isset( $queryParams[ 'veaction' ] ) ) {
 			$editor = 'visualeditor';
-		} elseif ( !empty( $values[ 'RTEMode' ] ) ) {
-			$editor = $values[ 'RTEMode' ];
-		} elseif ( !empty( $values[ 'isMediaWikiEditor' ] ) ) {
+		} elseif ( !empty( $requestValues[ 'RTEMode' ] ) ) {
+			$editor = $requestValues[ 'RTEMode' ];
+		} elseif ( !empty( $requestValues[ 'isMediaWikiEditor' ] ) ) {
 			$editor = 'sourceedit';
 		}
 		return $editor;
