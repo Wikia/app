@@ -1,6 +1,7 @@
 define('wikia.flowTracking', ['wikia.tracker', 'wikia.window', 'mw', 'jquery'], function (tracker, w, mw, $) {
 
 	var flows = {
+			// when updating, remember to update also constants in CreatePage.js
 			CREATE_PAGE_DIRECT_URL: 'create-page-direct-url',
 			CREATE_PAGE_CONTRIBUTE_BUTTON: 'create-page-contribute-button',
 			CREATE_PAGE_REDLINK: 'create-page-redlink'

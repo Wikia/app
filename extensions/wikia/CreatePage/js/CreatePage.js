@@ -1,7 +1,9 @@
 /* global $ */
 var CreatePage = {
-	FLOW_CONTRIBUTE_BUTTON: 'contribute-button',
-	FLOW_REDLINK: 'redlink',
+	// keep these constants up to date with wikia.flowTracking.flows
+	CREATE_PAGE_CONTRIBUTE_BUTTON: 'create-page-contribute-button',
+	CREATE_PAGE_REDLINK: 'create-page-redlink',
+
 	pageLayout: null,
 	options: {},
 	loading: false,
@@ -276,7 +278,7 @@ var CreatePage = {
 		CreatePage.redlinkParam = '&redlink=1';
 
 		CreatePage.flowName = 'create-page-redlink';
-		CreatePage.trackCreatePageStart(CreatePage.FLOW_REDLINK);
+		CreatePage.trackCreatePageStart(CreatePage.CREATE_PAGE_REDLINK);
 
 		if ( CreatePage.canUseVisualEditor() ) {
 			CreatePage.track( { action: 'click', label: 've-redlink-click' } );
@@ -299,7 +301,7 @@ var CreatePage = {
 		CreatePage.context = context;
 
 		$( '#contribute-button-create-page' ).click(function() {
-			CreatePage.trackCreatePageStart(CreatePage.FLOW_CONTRIBUTE_BUTTON);
+			CreatePage.trackCreatePageStart(CreatePage.CREATE_PAGE_CONTRIBUTE_BUTTON);
 			CreatePage.flowName = 'create-page-contribute-button';
 		});
 
@@ -364,18 +366,10 @@ var CreatePage = {
 	},
 
 	// create page flow tracking
-	trackCreatePageStart: function (flow) {
+	trackCreatePageStart: function (flowName) {
 		require(['wikia.flowTracking'], function (flowTrack) {
-			var flowName = '';
-
-			if (flow === CreatePage.FLOW_REDLINK) {
-				flowName = flowTrack.flows.CREATE_PAGE_REDLINK;
-			} else if (flow === CreatePage.FLOW_CONTRIBUTE_BUTTON) {
-				flowName = flowTrack.flows.CREATE_PAGE_CONTRIBUTE_BUTTON
-			}
-
 			flowTrack.beginFlow(flowName, {});
-		})
+		});
 	},
 
 	// Tracking for VE dialog only
