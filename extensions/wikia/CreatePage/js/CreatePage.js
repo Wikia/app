@@ -277,7 +277,7 @@ var CreatePage = {
 
 		CreatePage.redlinkParam = '&redlink=1';
 
-		CreatePage.flowName = 'create-page-redlink';
+		CreatePage.flowName = CreatePage.CREATE_PAGE_REDLINK;
 		CreatePage.trackCreatePageStart(CreatePage.CREATE_PAGE_REDLINK);
 
 		if ( CreatePage.canUseVisualEditor() ) {
@@ -302,12 +302,12 @@ var CreatePage = {
 
 		$( '#contribute-button-create-page' ).click(function() {
 			CreatePage.trackCreatePageStart(CreatePage.CREATE_PAGE_CONTRIBUTE_BUTTON);
-			CreatePage.flowName = 'create-page-contribute-button';
+			CreatePage.flowName = CreatePage.CREATE_PAGE_CONTRIBUTE_BUTTON;
 		});
 
 		$( function() {
 			$( '#WikiaArticle').find( 'a.new' ).toArray().forEach(function(redlink) {
-				redlink.href = redlink.href + '&flow=create-page-redlink';
+				redlink.href = redlink.href + '&flow=' + CreatePage.CREATE_PAGE_REDLINK;
 			});
 		});
 
