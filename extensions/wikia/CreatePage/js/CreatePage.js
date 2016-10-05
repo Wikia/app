@@ -1,5 +1,7 @@
 /* global $ */
 var CreatePage = {
+	FLOW_CONTRIBUTE_BUTTON: 'contribute-button',
+	FLOW_REDLINK: 'redlink',
 	pageLayout: null,
 	options: {},
 	loading: false,
@@ -271,8 +273,10 @@ var CreatePage = {
 			namespace = title.getNamespacePrefix().replace( ':', '' ),
 			visualEditorActive = $( 'html' ).hasClass( 've-activated' );
 
-		CreatePage.redlinkParam = '&redlink=1&flowName=redlink';
-		CreatePage.trackCreatePageStart();
+		CreatePage.redlinkParam = '&redlink=1';
+
+		CreatePage.flowName = 'create-page-redlink';
+		CreatePage.trackCreatePageStart(CreatePage.FLOW_REDLINK);
 
 		if ( CreatePage.canUseVisualEditor() ) {
 			CreatePage.track( { action: 'click', label: 've-redlink-click' } );
@@ -295,9 +299,7 @@ var CreatePage = {
 		CreatePage.context = context;
 
 		$( '#contribute-button-create-page' ).click(function() {
-			require(['wikia.flowTracking'], function (flowTracking) {
-				flowTracking.beginFlow(flowTracking.flows.CREATE_PAGE_CONTRIBUTE_BUTTON);
-			});
+			CreatePage.trackCreatePageStart(CreatePage.FLOW_CONTRIBUTE_BUTTON);
 			CreatePage.flowName = 'create-page-contribute-button';
 		});
 
@@ -355,17 +357,25 @@ var CreatePage = {
 		} else {
 			// in case create page modal is disabled
 			$( '#WikiaArticle' ).on( 'click', 'a.new', function( e ) {
-				CreatePage.trackCreatePageStart();
+				CreatePage.trackCreatePageStart(CreatePage.FLOW_REDLINK);
 				e.preventDefault();
-				window.location.href = e.currentTarget.href + "&flowName=redlink";
+				window.location.href = e.currentTarget.href + "&flow=redlink";
 			});
 		}
 	},
 
 	// create page flow tracking
-	trackCreatePageStart: function () {
+	trackCreatePageStart: function (flow) {
 		require(['wikia.flowTracking'], function (flowTrack) {
-			flowTrack.beginFlow(flowTrack.flows.CREATE_PAGE_REDLINK, {});
+			var flowName = '';
+
+			if (flow == CreatePage.FLOW_REDLINK) {
+				flowName = flowTrack.flows.CREATE_PAGE_REDLINK;
+			} else if (flow = CreatePage.FLOW_CONTRIBUTE_BUTTON) {
+				flowName = flowTrack.flows.CREATE_PAGE_CONTRIBUTE_BUTTON
+			}
+
+			flowTrack.beginFlow(flowName, {});
 		})
 	},
 
