@@ -49,7 +49,7 @@ $(function () {
 								action: Wikia.Tracker.ACTIONS.CLICK,
 								category: 'navigation',
 								trackingMethod: 'analytics',
-								label: 'global-navigation-search-suggestion'
+								label: $searchInput.data('suggestions-tracking-label')
 							});
 
 							window.location.href = location;

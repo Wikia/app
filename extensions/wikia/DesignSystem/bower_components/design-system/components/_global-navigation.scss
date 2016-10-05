@@ -62,6 +62,7 @@ $hover-transition-duration: 300ms !default;
 	&__dropdown-link {
 		color: $color-dark-blue-gray;
 		text-decoration: none;
+		transition: color $search-transition-duration;
 
 		&:hover,
 		&:active,
@@ -106,6 +107,9 @@ $hover-transition-duration: 300ms !default;
 	&__account-menu,
 	&__user-menu,
 	&__notifications-menu {
+		transition-duration: $search-transition-duration;
+		transition-property: background-color, border-color, color;
+
 		&:hover {
 			color: $color-link;
 		}
@@ -168,7 +172,7 @@ $hover-transition-duration: 300ms !default;
 	&__link,
 	&__wikis-menu {
 		transition-duration: $search-transition-duration;
-		transition-property: color, flex, font-size, padding;
+		transition-property: background-color, color, flex, font-size, padding;
 	}
 
 	&__link {
@@ -240,6 +244,7 @@ $hover-transition-duration: 300ms !default;
 
 	&__search-label-icon {
 		cursor: pointer;
+		transition: color $search-transition-duration;
 		z-index: 1;
 
 		&:hover {
@@ -448,7 +453,7 @@ $hover-transition-duration: 300ms !default;
 		&__search-submit {
 			max-width: 100%;
 			padding: 5px 9px;
-			transition: background-color $hover-transition-duration, border-color $hover-transition-duration, color $hover-transition-duration, max-width $search-buttons-transition-duration $search-buttons-transition-delay, padding $search-buttons-transition-duration $search-buttons-transition-delay;
+			transition: background-color $hover-transition-duration, border-color $hover-transition-duration, color $hover-transition-duration, max-width $search-buttons-transition-duration $search-buttons-transition-delay, opacity $hover-transition-duration, padding $search-buttons-transition-duration $search-buttons-transition-delay;
 		}
 	}
 

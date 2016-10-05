@@ -1,10 +1,9 @@
 <?php
+/** Internationalization file for /extensions/wikia/Lightbox/Lightbox extension. */
+$messages = [];
 
-$messages = array();
-
-$messages['en'] = array(
+$messages['en'] = [
 	'lightbox-desc' => 'Lightbox extension',
-	/* new stuff for new lightbox */
 	'lightbox-header-more-info-button' => 'More Info',
 	'lightbox-header-share-button' => 'Share',
 	'lightbox-header-add-video-button' => 'Add to article',
@@ -15,7 +14,7 @@ $messages['en'] = array(
 	'lightbox-more-info-caption-heading' => 'Caption:',
 	'lightbox-more-info-description-heading' => 'Description:',
 	'lightbox-more-info-filelinks-heading' => 'File Links:',
-	'lightbox-carousel-progress' => "'''$1-$2''' of '''$3'''",
+	'lightbox-carousel-progress' => '\'\'\'$1-$2\'\'\' of \'\'\'$3\'\'\'',
 	'lightbox-embed-url' => 'Embed URL',
 	'lightbox-file-page-url' => 'File Page URL',
 	'lightbox-email-label' => 'Email this to a friend',
@@ -29,22 +28,19 @@ $messages['en'] = array(
 	'lightbox-email-form-header' => 'Email',
 	'lightbox-pin-carousel-tooltip' => 'Pin top and bottom bars in place',
 	'lightbox-unpin-carousel-tooltip' => 'Unpin top and bottom bars',
-	'lightbox-carousel-more-items' => "'''$1''' {{PLURAL:$1|more item|more items}} on this wiki",
-
-	/* /new stuff */
-
+	'lightbox-carousel-more-items' => '\'\'\'$1\'\'\' {{PLURAL:$1|more item|more items}} on this wiki',
 	'lightbox_details_tooltip' => 'View photo details',
 	'lightbox-forum' => 'Forum',
 	'lightbox-standard-link' => 'Standard link',
 	'lightbox-blog-link' => 'Blog link',
 	'lightbox-send' => 'Send',
 	'lightbox-share-description' => 'Photo in $1 on $2',
-	'lightbox-share-email-subject' => '$1 has sent you a photo on Wikia',
+	'lightbox-share-email-subject' => '$1 has sent you a photo on Fandom',
 	'lightbox-share-salutation' => 'Hi,',
-	'lightbox-share-email-body' => 'Someone wanted to show you a photo on Wikia. Check it out:<br /><br />$1',
+	'lightbox-share-email-body' => 'Someone wanted to show you a photo on Fandom. Check it out:<br /><br />$1',
 	'lightbox-share-description-video' => 'Video in $1 on $2',
-	'lightbox-share-email-subject-video' => '$1 has sent you a video on Wikia',
-	'lightbox-share-email-body-video' => 'Someone wanted to show you a video on Wikia. Check it out:<br /><br />$1',
+	'lightbox-share-email-subject-video' => '$1 has sent you a video on Fandom',
+	'lightbox-share-email-body-video' => 'Someone wanted to show you a video on Fandom. Check it out:<br /><br />$1',
 	'lightbox-share-button-email' => 'Email',
 	'lightbox-share-button-www' => 'Share',
 	'lightbox-share-button-embed' => 'Embed',
@@ -53,15 +49,11 @@ $messages['en'] = array(
 	'lightbox-share-email-page-label-address' => 'Email address',
 	'lightbox-share-email-ok-content' => '{{PLURAL:$1|Email has|Emails have}} been sent.',
 	'lightbox-share-email-error-noaddress' => 'No addresses have been specified.',
-	'lightbox-visit-the-wiki' => 'Visit the wiki:'
-);
+	'lightbox-visit-the-wiki' => 'Visit the wiki:',
+];
 
-/** Message documentation (Message documentation)
- * @author Siebrand
- */
-$messages['qqq'] = array(
+$messages['qqq'] = [
 	'lightbox-desc' => '{{desc}}',
-	/* new stuff for new lightbox */
 	'lightbox-header-more-info-button' => 'Click this button to view more information about an image or video, like where it\'s posted.',
 	'lightbox-header-share-button' => 'Click this button to go to a screen where you can email a video or image to a friend and get permalinks to the media.',
 	'lightbox-header-add-video-button' => 'Click this button to add the current video to an article page. It will take the user to the editor with the video in place.',
@@ -87,9 +79,6 @@ $messages['qqq'] = array(
 	'lightbox-pin-carousel-tooltip' => 'Tooltip text when hovering over the icon that, when clicked, holds the lightbox carousel in place',
 	'lightbox-unpin-carousel-tooltip' => 'Tooltip text when hovering over the icon that, when clicked, unpins the lightbox carousel',
 	'lightbox-carousel-more-items' => 'Label to indicate the following thumbnails are not the ones specifically requested, but do exist on the wiki',
-	/* /new stuff */
-
-
 	'lightbox-share-description' => 'Parameters:
 * $1 is the current page,
 * $2 is the site name.',
@@ -105,71 +94,54 @@ $messages['qqq'] = array(
 * $1 is a username.',
 	'lightbox-share-email-body-video' => 'Parameters:
 * $1 is a link to the suggested image.',
-);
+];
 
-/** Azerbaijani (Azərbaycanca)
- * @author Cekli829
- */
-$messages['az'] = array(
+$messages['az'] = [
 	'lightbox-share-button-email' => 'E-məktub',
-);
+];
 
-/** German (Deutsch)
- * @author George Animal
- * @author Tiin
- */
-$messages['de'] = array(
+$messages['de'] = [
 	'lightbox_details_tooltip' => 'Foto-Details anzeigen',
 	'lightbox-forum' => 'Forum',
 	'lightbox-standard-link' => 'Standard-Link',
 	'lightbox-blog-link' => 'Blog-Link',
 	'lightbox-send' => 'Senden',
 	'lightbox-share-description' => 'Foto auf $1 im $2',
-	'lightbox-share-email-subject' => '$1 hat dir ein Foto auf Wikia geschickt.',
+	'lightbox-share-email-subject' => '$1 hat dir bei Fandom ein Foto geschickt',
 	'lightbox-share-email-salutation' => 'Hallo,',
-	'lightbox-share-email-body' => 'jemand will dir ein Foto auf Wikia zeigen. Sieh es dir an:<br /><br />$1',
+	'lightbox-share-email-body' => 'Jemand möchte dir bei Fandom ein Foto zeigen. Sieh es dir an:<br /><br />$1',
 	'lightbox-share-button-email' => 'E-Mail',
 	'lightbox-share-button-www' => 'Teilen',
 	'lightbox-share-button-embed' => 'Einbinden',
 	'lightbox-share-email-label' => 'Dieses Bild an einen Freund senden',
 	'lightbox-share-email-page-label-address' => 'E-Mail-Adresse',
 	'lightbox-share-email-ok-content' => 'Die {{PLURAL:$1|E-Mail wurde|E-Mails wurden}} gesendet.',
-	'lightbox-share-email-error-noaddress' => 'Es wurden keine Adressen angegeben.'
-);
+	'lightbox-share-email-error-noaddress' => 'Es wurden keine Adressen angegeben.',
+	'lightbox-share-email-body-video' => 'Jemand möchte dir bei Fandom ein Video zeigen. Sieh es dir an:<br /><br />$1',
+	'lightbox-share-email-subject-video' => '$1 has sent you a video on Fandom',
+];
 
-/** German (formal address) (Deutsch (Sie-Form))
- * @author Tiin
- */
-$messages['de-formal'] = array(
+$messages['de-formal'] = [
 	'lightbox-share-email-subject' => '$1 hat Ihnen ein Foto auf Wikia geschickt.',
 	'lightbox-share-email-salutation' => 'Hallo,',
-	'lightbox-share-email-body' => 'jemand will Ihnen ein Foto auf Wikia zeigen. Sehen Sie es sich an:<br /><br />$1'
-);
+	'lightbox-share-email-body' => 'jemand will Ihnen ein Foto auf Wikia zeigen. Sehen Sie es sich an:<br /><br />$1',
+];
 
-/** Zazaki (Zazaki)
- * @author Erdemaslancan
- */
-$messages['diq'] = array(
+$messages['diq'] = [
 	'lightbox-send' => 'Bırş',
 	'lightbox-share-button-embed' => 'Embed',
-);
+];
 
-/** Spanish (Español)
- * @author Armando-Martin
- * @author Benfutbol10
- * @author Ciencia Al Poder
- * @author VegaDark
- */
-$messages['es'] = array(
+$messages['es'] = [
 	'lightbox_details_tooltip' => 'Ver detalles de la imagen',
 	'lightbox-forum' => 'Foro',
 	'lightbox-standard-link' => 'Enlace estándar',
 	'lightbox-blog-link' => 'Enlace de blog',
 	'lightbox-send' => 'Enviar',
 	'lightbox-share-description' => 'Imagen de $1 en $2',
-	'lightbox-share-email-subject' => '$1 te ha enviado una imagen en Wikia',
+	'lightbox-share-email-subject' => '$1 te ha enviado una imagen en Fandom',
 	'lightbox-share-email-salutation' => 'Hola,',
-	'lightbox-share-email-body' => 'Alguien quería mostrarte una imagen en Wikia. Mírala:<br /><br />$1',
+	'lightbox-share-email-body' => 'Alguien quería mostrarte una imagen en Fandom. Mírala:<br /><br />$1',
 	'lightbox-share-button-email' => 'Email',
 	'lightbox-share-button-www' => 'Compartir',
 	'lightbox-share-button-embed' => 'Insertar',
@@ -179,14 +151,11 @@ $messages['es'] = array(
 	'lightbox-share-email-ok-content' => '{{PLURAL:$1|correo ha|correos han}} sido enviado.',
 	'lightbox-share-email-error-noaddress' => 'No has especificado ninguna dirección.',
 	'lightbox-visit-the-wiki' => 'Visita el wiki:',
-);
+	'lightbox-share-email-body-video' => 'Alguien quería mostrarte un video en Fandom. Mírala:<br /><br />$1',
+	'lightbox-share-email-subject-video' => '$1 te ha enviado un video en Fandom',
+];
 
-/** Finnish (Suomi)
- * @author Ilkea
- * @author Nike
- * @author VezonThunder
- */
-$messages['fi'] = array(
+$messages['fi'] = [
 	'lightbox_details_tooltip' => 'Näytä kuvan tiedot',
 	'lightbox-forum' => 'Foorumi',
 	'lightbox-standard-link' => 'Tavallinen linkki',
@@ -205,22 +174,18 @@ $messages['fi'] = array(
 	'lightbox-share-email-ok-content' => '{{PLURAL:$1|Sähköposti|Sähköpostit}} lähetettiin.',
 	'lightbox-share-email-error-noaddress' => 'Osoitteita ei ole määritetty.',
 	'lightbox-visit-the-wiki' => 'Siirry wikiin:',
-);
+];
 
-/** French (Français)
- * @author Gomoko
- * @author Wyz
- */
-$messages['fr'] = array(
+$messages['fr'] = [
 	'lightbox_details_tooltip' => 'Afficher les détails de l’image',
 	'lightbox-forum' => 'Forum',
 	'lightbox-standard-link' => 'Lien standard',
 	'lightbox-blog-link' => 'Lien de blog',
 	'lightbox-send' => 'Envoyer',
 	'lightbox-share-description' => 'Photo de $1 sur $2',
-	'lightbox-share-email-subject' => '$1 vous a envoyé une photo sur Wikia',
+	'lightbox-share-email-subject' => '$1 vous a envoyé une photo sur Fandom',
 	'lightbox-share-email-salutation' => 'Bonjour,',
-	'lightbox-share-email-body' => "Quelqu'un souhaite vous montrer une photo sur Wikia. Regardez-la :<br /><br />$1",
+	'lightbox-share-email-body' => 'Quelqu\'un souhaite vous montrer une photo sur Fandom. Regardez-la :<br /><br />$1',
 	'lightbox-share-button-email' => 'Envoyer',
 	'lightbox-share-button-www' => 'Partager',
 	'lightbox-share-button-embed' => 'Intégrer',
@@ -230,12 +195,11 @@ $messages['fr'] = array(
 	'lightbox-share-email-ok-content' => '{{PLURAL:$1|Le courriel a été envoyé|Les courriels ont été envoyés}}.',
 	'lightbox-share-email-error-noaddress' => 'Vous n’avez spécifié aucune adresse.',
 	'lightbox-visit-the-wiki' => 'Visiter le wiki :',
-);
+	'lightbox-share-email-body-video' => 'Quelqu\'un souhaite vous montrer une vidéo sur Fandom. Regardez-la :<br /><br />$1',
+	'lightbox-share-email-subject-video' => '$1 vous a envoyé une vidéo sur Fandom',
+];
 
-/** Galician (Galego)
- * @author Toliño
- */
-$messages['gl'] = array(
+$messages['gl'] = [
 	'lightbox_details_tooltip' => 'Ollar os detalles da foto',
 	'lightbox-forum' => 'Foro',
 	'lightbox-standard-link' => 'Ligazón estándar',
@@ -254,12 +218,9 @@ $messages['gl'] = array(
 	'lightbox-share-email-ok-content' => '{{PLURAL:$1|Enviouse o correo|Enviáronse os correos}}.',
 	'lightbox-share-email-error-noaddress' => 'Non se especificou ningún enderezo.',
 	'lightbox-visit-the-wiki' => 'Visite o wiki:',
-);
+];
 
-/** Interlingua (Interlingua)
- * @author McDutchie
- */
-$messages['ia'] = array(
+$messages['ia'] = [
 	'lightbox_details_tooltip' => 'Vider detalios del photo',
 	'lightbox-forum' => 'Foro',
 	'lightbox-standard-link' => 'Ligamine standard',
@@ -278,22 +239,18 @@ $messages['ia'] = array(
 	'lightbox-share-email-ok-content' => '{{PLURAL:$1|Un message|Messages}} de e-mail ha essite inviate.',
 	'lightbox-share-email-error-noaddress' => 'Nulle adresse ha essite specificate.',
 	'lightbox-visit-the-wiki' => 'Visita le wiki:',
-);
+];
 
-/** Japanese (日本語)
- * @author Tommy6
- */
-$messages['ja'] = array(
+$messages['ja'] = [
 	'lightbox_details_tooltip' => '画像の詳細を見る',
 	'lightbox-forum' => 'フォーラム',
 	'lightbox-standard-link' => '標準リンク',
 	'lightbox-blog-link' => 'ブログリンク',
 	'lightbox-send' => '送信',
 	'lightbox-share-description' => '$2 のページ $1 の画像',
-	'lightbox-share-email-subject' => '$1 がウィキア上であなたに画像を送信しました',
+	'lightbox-share-email-subject' => 'Fandomで$1さんから写真が送信されました',
 	'lightbox-share-email-salutation' => 'こんにちは、',
-	'lightbox-share-email-body' => 'どなたかが、あなたに見せたいウィキア上の画像の紹介メッセージを送信しました。<br /><br />
-次のURLをチェックしてみてください:<br /><br />$1',
+	'lightbox-share-email-body' => 'Fandomであなたに見てほしい写真があるようです。次のURLをチェックしてみましょう。<br /><br />$1',
 	'lightbox-share-button-email' => 'メール',
 	'lightbox-share-button-www' => '共有',
 	'lightbox-share-button-embed' => '埋め込み',
@@ -302,12 +259,11 @@ $messages['ja'] = array(
 	'lightbox-share-email-page-label-address' => 'メールアドレス',
 	'lightbox-share-email-ok-content' => 'メールを送信しました。',
 	'lightbox-share-email-error-noaddress' => 'メールアドレスが指定されていません',
-);
+	'lightbox-share-email-body-video' => 'Fandom上であなたに見てほしい動画があるようです。次のURLをチェックしてみましょう。<br /><br />$1',
+	'lightbox-share-email-subject-video' => 'Fandomで$1さんから動画が送信されました',
+];
 
-/** Macedonian (Македонски)
- * @author Bjankuloski06
- */
-$messages['mk'] = array(
+$messages['mk'] = [
 	'lightbox_details_tooltip' => 'Подробности за сликата',
 	'lightbox-forum' => 'Форум',
 	'lightbox-standard-link' => 'Стандардна врска',
@@ -326,12 +282,9 @@ $messages['mk'] = array(
 	'lightbox-share-email-ok-content' => '{{PLURAL:$1|Пораката е испратена.|Пораките се испратени}}.',
 	'lightbox-share-email-error-noaddress' => 'Немате наведено адреси.',
 	'lightbox-visit-the-wiki' => 'Посетете го викито:',
-);
+];
 
-/** Malay (Bahasa Melayu)
- * @author Anakmalaysia
- */
-$messages['ms'] = array(
+$messages['ms'] = [
 	'lightbox_details_tooltip' => 'Lihat butiran gambar',
 	'lightbox-forum' => 'Forum',
 	'lightbox-standard-link' => 'Pautan standard',
@@ -350,12 +303,9 @@ $messages['ms'] = array(
 	'lightbox-share-email-ok-content' => '{{PLURAL:$1|E-mel|Beberapa e-mel}} telah dihantar.',
 	'lightbox-share-email-error-noaddress' => 'Tiada alamat yang dinyatakan.',
 	'lightbox-visit-the-wiki' => 'Lawati wiki:',
-);
+];
 
-/** Norwegian Bokmål (Norsk (bokmål))
- * @author Audun
- */
-$messages['nb'] = array(
+$messages['nb'] = [
 	'lightbox_details_tooltip' => 'Vis bildedetaljer',
 	'lightbox-forum' => 'Forum',
 	'lightbox-standard-link' => 'Standard lenke',
@@ -374,13 +324,9 @@ $messages['nb'] = array(
 	'lightbox-share-email-ok-content' => '{{PLURAL:$1|E-posten|E-postene}} ble sendt.',
 	'lightbox-share-email-error-noaddress' => 'Ingen adresse har blitt spesifisert.',
 	'lightbox-visit-the-wiki' => 'Besøk wikien:',
-);
+];
 
-/** Dutch (Nederlands)
- * @author Saruman
- * @author Siebrand
- */
-$messages['nl'] = array(
+$messages['nl'] = [
 	'lightbox_details_tooltip' => 'Bestandsgegevens bekijken',
 	'lightbox-forum' => 'Forum',
 	'lightbox-standard-link' => 'Standaardverwijzing',
@@ -399,21 +345,18 @@ $messages['nl'] = array(
 	'lightbox-share-email-ok-content' => 'Er {{PLURAL:$1|is $1 e-mail|zijn $1 e-mails}} verzonden.',
 	'lightbox-share-email-error-noaddress' => 'Er zijn geen adressen opgegeven.',
 	'lightbox-visit-the-wiki' => 'Bezoek de wiki:',
-);
+];
 
-/** Polish (Polski)
- * @author Sovq
- */
-$messages['pl'] = array(
+$messages['pl'] = [
 	'lightbox_details_tooltip' => 'Pokaż szczegóły zdjęcia',
 	'lightbox-forum' => 'Forum',
 	'lightbox-standard-link' => 'Standardowy link',
 	'lightbox-blog-link' => 'Link do bloga',
 	'lightbox-send' => 'Wyślij',
 	'lightbox-share-description' => 'Zdjęcie na stronie $1 na $2',
-	'lightbox-share-email-subject' => '$1 wysłał ci zdjęcie na Wikia',
+	'lightbox-share-email-subject' => 'Użytkownik $1 wysłał ci zdjęcie na portalu Fandom',
 	'lightbox-share-email-salutation' => 'Cześć,',
-	'lightbox-share-email-body' => 'Ktoś chciał pokazać Ci obraz na Wikii. Zobacz:<br /><br />$1',
+	'lightbox-share-email-body' => 'Ktoś chciał pokazać Ci obraz na portalu Fandom. Zobacz:<br /><br />$1',
 	'lightbox-share-button-email' => 'E-mail',
 	'lightbox-share-button-www' => 'Podziel się',
 	'lightbox-share-button-embed' => 'Osadź',
@@ -423,32 +366,28 @@ $messages['pl'] = array(
 	'lightbox-share-email-ok-content' => '{{PLURAL:$1|E-mail został wysłany|E-maile zostały wysłane|E-maili zostało wysłanych}}.',
 	'lightbox-share-email-error-noaddress' => 'Adresy nie zostały określone.',
 	'lightbox-visit-the-wiki' => 'Odwiedź wiki:',
-);
+	'lightbox-share-email-body-video' => 'Ktoś chciał pokazać Ci film na portalu Fandom. Zobacz:<br /><br />$1',
+	'lightbox-share-email-subject-video' => 'Użytkownik $1 wysłał ci film na portalu Fandom',
+];
 
-/** Pashto (پښتو)
- * @author Ahmed-Najib-Biabani-Ibrahimkhel
- */
-$messages['ps'] = array(
+$messages['ps'] = [
 	'lightbox-forum' => 'فورم',
 	'lightbox-send' => 'لېږل',
 	'lightbox-share-button-email' => 'برېښليک',
 	'lightbox-share-button-www' => 'شريکول',
-	'lightbox-share-email-page-label-address' => 'برېښليک پته'
-);
+	'lightbox-share-email-page-label-address' => 'برېښليک پته',
+];
 
-/** Russian (Русский)
- * @author Kuzura
- */
-$messages['ru'] = array(
+$messages['ru'] = [
 	'lightbox_details_tooltip' => 'Просмотр сведений об изображении',
 	'lightbox-forum' => 'Форум',
 	'lightbox-standard-link' => 'Стандартная ссылка',
 	'lightbox-blog-link' => 'Ссылка в блог',
 	'lightbox-send' => 'Отправить',
 	'lightbox-share-description' => 'Изображение в $1 на $2',
-	'lightbox-share-email-subject' => '$1 прислал вам фото на Викия',
+	'lightbox-share-email-subject' => '$1 {{GENDER:$2|прислал|прислала}} вам фото на Фэндоме',
 	'lightbox-share-email-salutation' => 'Привет.',
-	'lightbox-share-email-body' => 'Кто-то хочет показать вам фотографии на Викия. Посмотреть:<br /><br />$1',
+	'lightbox-share-email-body' => 'Кто-то хочет показать вам фотографии на Фэндоме. Посмотреть:<br /><br />$1',
 	'lightbox-share-button-email' => 'Email',
 	'lightbox-share-button-www' => 'Поделиться',
 	'lightbox-share-button-embed' => 'Вставить',
@@ -458,12 +397,11 @@ $messages['ru'] = array(
 	'lightbox-share-email-ok-content' => '{{PLURAL:$1|эл. письма}} были отправлены.',
 	'lightbox-share-email-error-noaddress' => 'Не был указан адрес(а).',
 	'lightbox-visit-the-wiki' => 'Посетите вики:',
-);
+	'lightbox-share-email-body-video' => 'Кто-то хочет показать вам видео на Фэндоме. Посмотреть:<br /><br />$1',
+	'lightbox-share-email-subject-video' => '$1 {{GENDER:$2|прислал|прислала}} вам видео на Фэндоме',
+];
 
-/** Swedish (Svenska)
- * @author WikiPhoenix
- */
-$messages['sv'] = array(
+$messages['sv'] = [
 	'lightbox_details_tooltip' => 'Visa fotodetaljer',
 	'lightbox-forum' => 'Forum',
 	'lightbox-standard-link' => 'Standardlänk',
@@ -482,13 +420,123 @@ $messages['sv'] = array(
 	'lightbox-share-email-ok-content' => '{{PLURAL:$1|E-postmeddelande|E-postmeddelanden}} har skickats.',
 	'lightbox-share-email-error-noaddress' => 'Inga adresser har angivits.',
 	'lightbox-visit-the-wiki' => 'Besök wikin:',
-);
+];
 
-/** Simplified Chinese (中文(简体))
- * @author Dimension
- */
-$messages['zh-hans'] = array(
+$messages['zh-hans'] = [
 	'lightbox_details_tooltip' => '查看图片细节',
 	'lightbox-share-button-www' => '分享',
-);
+	'lightbox-share-email-body' => '有人想要给你展示一张Fandom上的图片。去看一下吧：<br /><br />$1',
+	'lightbox-share-email-body-video' => '有人想要给你展示一段Fandom上的视频。去看一下吧：<br /><br />$1',
+	'lightbox-share-email-subject' => '$1给你发送了一张Fandom上的图片',
+	'lightbox-share-email-subject-video' => '$1给你发送了一段Fandom上的视频',
+];
+
+$messages['it'] = [
+	'lightbox-share-email-body' => 'Qualcuno desiderava mostrarti una foto su Fandom. Dalle un\'occhiata:<br /><br />$1',
+	'lightbox-share-email-body-video' => 'Qualcuno desiderava mostrarti un video su Fandom. Dagli un\'occhiata:<br /><br />$1',
+	'lightbox-share-email-subject' => '$1 ti ha inviato una foto su Fandom',
+	'lightbox-share-email-subject-video' => '$1 ti ha inviato un video su Fandom',
+];
+
+$messages['ko'] = [
+	'lightbox-share-email-body' => '안녕하세요. 누군가가 당신에게 위키아 산하 위키의 그림을 보여주고 싶어합니다. 다음을 확인해보세요: $1 - 위키아 드림',
+	'lightbox-share-email-body-video' => '안녕하세요. 
+
+누군가가 당신에게 위키아 산하 위키의 동영상을 보여주고 싶어합니다. 다음을 확인해보세요: 
+
+$1 
+
+- 위키아 드림',
+	'lightbox-share-email-subject' => '위키아의 $1 사용자가 위키아 산하 위키의 그림을 보냈습니다.',
+	'lightbox-share-email-subject-video' => '위키아의 $1 사용자가 위키아 산하 위키의 동영상을 보냈습니다.',
+];
+
+$messages['zh'] = [
+	'lightbox-share-email-body' => '您好！
+
+您的朋友想要让您看一张Wikia上的图片。请点击查看：
+
+$1
+
+- Wikia团队
+
+___________________________________________
+* 在社区中心寻求协助和建议：http://community.wikia.com',
+	'lightbox-share-email-body-video' => '您好！
+
+您的朋友想要讓您看一段Wikia上的視頻。請點擊查看：
+
+$1
+
+- Wikia團隊
+
+___________________________________________
+* 在社區中心尋求協助和建議：http://community.wikia.com',
+	'lightbox-share-email-subject' => '$1 从Wikia寄了一张图片给你',
+	'lightbox-share-email-subject-video' => '$1 从Wikia寄给您一段视频',
+];
+
+$messages['zh-hant'] = [
+	'lightbox-share-email-body' => '有人想要給你展示一張Fandom上的照片。去看一下吧：<br /><br />$1',
+	'lightbox-share-email-body-video' => '有人想要給你展示一個Fandom上的影片。去看一下吧：<br /><br />$1',
+	'lightbox-share-email-subject' => '$1給你發送了一張Fandom上的圖片',
+	'lightbox-share-email-subject-video' => '$1給你發送了一個Fandom上的影片',
+];
+
+$messages['zh-hk'] = [
+	'lightbox-share-email-body' => '您好！
+
+您的朋友想要讓您看一張Wikia上的圖片。請點擊查看：
+
+$1
+
+- Wikia團隊
+
+___________________________________________
+* 在社區中心尋求協助和建議：http://community.wikia.com',
+	'lightbox-share-email-body-video' => '您好！
+
+您的朋友想要讓您看一段Wikia上的影片。請點擊查看：
+
+$1
+
+- Wikia團隊
+
+___________________________________________
+* 在社區中心尋求協助和建議：http://community.wikia.com',
+	'lightbox-share-email-subject' => '$1 從Wikia寄了一張圖片給你',
+	'lightbox-share-email-subject-video' => '$1 從Wikia寄給您一段影片',
+];
+
+$messages['zh-tw'] = [
+	'lightbox-share-email-body' => '您好！
+
+您的朋友想要讓您看一張Wikia上的圖片。請點擊查看：
+
+$1
+
+- Wikia團隊
+
+___________________________________________
+* 在社區中心尋求協助和建議：http://community.wikia.com',
+	'lightbox-share-email-body-video' => '您好！
+
+您的朋友想要讓您看一段Wikia上的影片。請點擊查看：
+
+$1
+
+- Wikia團隊
+
+___________________________________________
+* 在社區中心尋求協助和建議：http://community.wikia.com',
+	'lightbox-share-email-subject' => '$1 從Wikia寄了一張圖片給你',
+	'lightbox-share-email-subject-video' => '$1 從Wikia寄給您一段影片',
+];
+
+$messages['pt'] = [
+	'lightbox-share-email-body' => 'Alguém queria te mostrar uma foto no Fandom. Confira:<br />< br />$1',
+	'lightbox-share-email-body-video' => 'Alguém queria te mostrar um vídeo no Fandom. Confira:<br />< br />$1',
+	'lightbox-share-email-subject' => '$1 enviou-lhe uma foto no Fandom',
+	'lightbox-share-email-subject-video' => '$1 enviou-lhe um vídeo no Fandom',
+];
 

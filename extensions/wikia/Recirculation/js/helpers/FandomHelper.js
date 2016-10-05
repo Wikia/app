@@ -1,11 +1,10 @@
-/*global define*/
 define('ext.wikia.recirculation.helpers.fandom', [
 	'jquery',
 	'wikia.window',
 	'wikia.abTest',
-	'wikia.nirvana',
-	'wikia.mustache'
-], function ($, w, abTest, nirvana, Mustache) {
+	'wikia.nirvana'
+], function ($, w, abTest, nirvana) {
+	'use strict';
 
 	return function(config) {
 		var defaults = {
@@ -36,14 +35,13 @@ define('ext.wikia.recirculation.helpers.fandom', [
 					if (data.items && data.items.length >= options.limit ) {
 						deferred.resolve(data);
 					} else {
-
 						if (options.ignoreError) {
 							deferred.resolve({
 								title: data.title,
 								items: []
 							});
 						} else {
-							deferred.reject('Recirculation widget not shown - Not enough items returned from Fandom API');
+							deferred.reject('Recirc widget not shown. Not enough items returned from Fandom API');
 						}
 					}
 				}
@@ -83,6 +81,6 @@ define('ext.wikia.recirculation.helpers.fandom', [
 
 		return {
 			loadData: loadData
-		}
-	}
+		};
+	};
 });
