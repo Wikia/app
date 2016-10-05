@@ -10,7 +10,7 @@ define(
 			// IMPORTANT: on Special:CreatePage even after providing article title the namespace is set to -1 (Special Page)
 			if (namespaceId === 0 && articleId === 0) {
 				var qs = new QueryString(),
-					// 'flow' is the parameter passed in the url if user has started a flow already
+				// 'flow' is the parameter passed in the url if user has started a flow already
 					flowParam = qs.getVal('flow', false);
 
 				if (flowParam || document.referrer) {
@@ -18,9 +18,12 @@ define(
 				} else {
 					flowTrack.beginFlow(flowTrack.flows.CREATE_PAGE_DIRECT_URL, {editor: editor});
 					window.history.replaceState({}, '',
-						window.location.href +
+						window.location.origin +
+						window.location.pathname +
+						window.location.search +
 						(window.location.search === "" ? "?" : "&") +
-						"flow=" + flowTrack.flows.CREATE_PAGE_DIRECT_URL
+						"flow=" + flowTrack.flows.CREATE_PAGE_DIRECT_URL +
+						window.location.hash
 					)
 				}
 			}
