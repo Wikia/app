@@ -5,8 +5,18 @@ define('ext.wikia.adEngine.domElementTweaker', [
 ], function (log, win) {
 	'use strict';
 
-	var logGroup = 'ext.wikia.adEngine.domElementTweaker',
+	var hiddenElementClass = 'hidden',
+		logGroup = 'ext.wikia.adEngine.domElementTweaker',
 		rclass = /[\t\r\n]/g;
+
+	function hide(element, useInline) {
+		if (element && useInline) {
+			element.style.display = 'none';
+		} else if (element) {
+			removeClass(element, hiddenElementClass);
+			element.className += hiddenElementClass;
+		}
+	}
 
 	function removeClass(element, cls) {
 		var oldClasses,
@@ -69,15 +79,15 @@ define('ext.wikia.adEngine.domElementTweaker', [
 		action(element);
 	}
 
-	function bubbleRun(action, childElement, parentElement) {
+	function bubbleRun(action, deepestElement, topElement) {
 		var list = [];
 
-		while (childElement && childElement !== parentElement) {
-			list.push(childElement);
-			childElement = childElement.parentNode;
+		while (deepestElement && deepestElement !== topElement) {
+			list.push(deepestElement);
+			deepestElement = deepestElement.parentNode;
 		}
 
-		list.push(parentElement);
+		list.push(topElement);
 
 		list.forEach(function (element) {
 			action(element);
@@ -87,6 +97,7 @@ define('ext.wikia.adEngine.domElementTweaker', [
 	return {
 		bubbleRun: bubbleRun,
 		cleanInlineStyles: cleanInlineStyles,
+		hide: hide,
 		isElement: isElement,
 		moveStylesToInline: moveStylesToInline,
 		removeClass: removeClass,

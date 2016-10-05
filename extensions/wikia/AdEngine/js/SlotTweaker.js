@@ -2,11 +2,10 @@
 define('ext.wikia.adEngine.slotTweaker', [
 	'ext.wikia.adEngine.domElementTweaker',
 	'ext.wikia.aRecoveryEngine.recovery.helper',
-	'wikia.browserDetect',
 	'wikia.document',
 	'wikia.log',
 	'wikia.window'
-], function (DOMElementTweaker, recoveryHelper, browser, doc, log, win) {
+], function (DOMElementTweaker, recoveryHelper, doc, log, win) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.slotTweaker',
@@ -15,15 +14,7 @@ define('ext.wikia.adEngine.slotTweaker', [
 
 	function hide(slotname, useInline) {
 		log('hide ' + slotname + ' using class hidden', 6, logGroup);
-
-		var slot = doc.getElementById(slotname);
-
-		if (slot && useInline) {
-			slot.style.display = 'none';
-		} else if (slot) {
-			DOMElementTweaker.removeClass(slot, 'hidden');
-			slot.className += ' hidden';
-		}
+		DOMElementTweaker.hide(doc.getElementById(slotname), useInline);
 	}
 
 	function show(slotname) {
@@ -155,10 +146,6 @@ define('ext.wikia.adEngine.slotTweaker', [
 
 	function tweakRecoveredSlot(iframe, adContainer) {
 		var className = 'virtual-slot';
-
-		if (browser.isIE() || browser.isEdge()) {
-			return;
-		}
 
 		adContainer.classList.add(className);
 		DOMElementTweaker.bubbleRun(DOMElementTweaker.moveStylesToInline, iframe, adContainer);
