@@ -21,30 +21,31 @@ class FlowTrackingHooks {
 	 */
 	public static function onArticleInsertComplete( Page $page, User $user, $text, $summary, $minoredit,
 													$watchThis, $sectionAnchor, &$flags, Revision $revision ) {
-		$title = $revision->getTitle();
-		if ( $title && $title->inNamespace( NS_MAIN ) ) {
-			$params = [];
-			$request = RequestContext::getMain()->getRequest();
-			$headers = $request->getAllHeaders();
+		$params = [];
+		$request = RequestContext::getMain()->getRequest();
+		$headers = $request->getAllHeaders();
 
-			// transforms "a=1&b=2&c=3" into [ 'a' => 1, 'b' => 2, 'c' => 3 ]
-			if ( isset( $headers[ 'REFERER' ] ) ) {
-				$params = static::getParamsFromUrlQuery( $headers[ 'REFERER' ] );
-			} else {
-				Wikia\Logger\WikiaLogger::instance()->warning( 'Flow Tracking - Referer header is not set', [
-					'useragent' => $headers[ 'USER-AGENT' ]
-				] );
-			}
-			if ( isset( $params['flow'] ) ) {
-				Track::event( 'trackingevent', [
-					'ga_action' => 'flow-end',
-					'editor' => static::getEditor( $request->getValues(), $params ),
-					'flowname' => $params[ 'flow' ],
-					'useragent' => $headers[ 'USER-AGENT' ]
-				] );
-				Track::eventGA( 'flow-tracking', 'flow-end', $params[ 'flow' ] );
-			}
+		// transforms "a=1&b=2&c=3" into [ 'a' => 1, 'b' => 2, 'c' => 3 ]
+		if ( isset( $headers[ 'REFERER' ] ) ) {
+			$params = static::getParamsFromUrlQuery( $headers[ 'REFERER' ] );
+		} else {
+			Wikia\Logger\WikiaLogger::instance()->warning( 'Flow Tracking - Referer header is not set', [
+				'useragent' => $headers[ 'USER-AGENT' ]
+			] );
+			return true;
 		}
+
+		$title = $revision->getTitle();
+		if ( $title && $title->inNamespace( NS_MAIN ) && isset( $params['flow'] ) ) {
+			Track::event( 'trackingevent', [
+				'ga_action' => 'flow-end',
+				'editor' => static::getEditor( $request->getValues(), $params ),
+				'flowname' => $params[ 'flow' ],
+				'useragent' => $headers[ 'USER-AGENT' ]
+			] );
+			Track::eventGA( 'flow-tracking', 'flow-end', $params[ 'flow' ] );
+		}
+
 		return true;
 	}
 
