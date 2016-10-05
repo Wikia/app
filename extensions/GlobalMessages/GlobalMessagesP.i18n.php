@@ -9635,7 +9635,7 @@ A continuación se muestra la última entrada de registro para referencia:',
 	'patrol-log-header' => 'Este es un registro de revisiones patrulladas.',
 	'previousdiff' => '← Edición anterior',
 	'prefs-help-birthinfo' => 'Fandom solicita a todos los usuarios que pongan su fecha real de nacimiento como medida de seguridad y como forma de preservar la integridad del sitio mientras cumple con las regulaciones federales.',
-	'prefs-help-terms' => 'Al crear un wiki y una cuenta de usuario, aceptas los {{#NewWindowLink: w:c:es:Términos de uso|Términos de uso de Fandom}}',
+	'prefs-help-terms' => 'Al crear un wiki y una cuenta de usuario, aceptas los {{#NewWindowLink: w:c:es:Términos de uso|términos de uso de Fandom}}',
 ];
 
 $messages['et'] = [
@@ -31139,7 +31139,7 @@ $messages['ru'] = [
 	'password-login-forbidden' => 'Использование этого имени участника и пароля запрещено.',
 	'passwordremindertitle' => 'Напоминание о пароле от Фэндома',
 	'passwordremindertext' => 'Здравствуйте,
-Новый пароль для участника «$2» — «$3».
+Новый пароль для учётной записи «$2» — «$3».
 Если вы не запрашивали смену пароля, не переживайте. Новый пароль был отправлен только вам на этот адрес электронной почты. Ваша учётная запись надежно защищена и вы можете продолжать использовать ваш старый пароль.
 
 Команда Фэндома

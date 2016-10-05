@@ -35,7 +35,7 @@ $messages['es'] = [
 	'content-warning-title' => 'Alerta de contenido',
 	'content-warning-body' => 'El wiki $1 puede contener contenido ofensivo como representaciones de violencia, sugerencia sexual, humor negro u otros materiales no destinados a un público general. 
 
-En general, Fandom no revisa ni está de acuerdo con el contenido de este o de cualquier wiki. Para obtener más información acerca de nuestras políticas, por favor visita los [http://www.wikia.com/Terms_of_Use Wikia, Inc términos de uso].',
+En general, Fandom no revisa ni está de acuerdo con el contenido de este o de cualquier wiki. Para obtener más información acerca de nuestras políticas, por favor visita los [http://es.wikia.com/T%C3%A9rminos_de_Uso términos de Uso].',
 	'content-warning-button-continue' => 'LO COMPRENDO Y DESEO CONTINUAR',
 	'content-warning-button-cancel' => 'No deseo continuar',
 ];
@@ -51,7 +51,7 @@ D\'une manière générale, Fandom ne vérifie pas ni n\'approuve le contenu de 
 
 $messages['ru'] = [
 	'content-warning-title' => 'Опасный контент',
-	'content-warning-body' => 'Возможно на вики $1 есть материалы сомнительного содержания, например сцены насилия, пародии в жанре «чёрного юмора» или другой контент, не предназначенный для широкой аудитории.
+	'content-warning-body' => 'Возможно, на вики $1 есть материалы сомнительного содержания, например сцены насилия, пародии в жанре «чёрного юмора» или другой контент, не предназначенный для широкой аудитории.
 
 Как правило, Фэндом не занимается ни проверкой, ни одобрением содержания этой или какой-либо другой вики. Подробнее о наших правилах читайте на странице [w:c:ru.community:Викия:Условия_использования Условия использования, установленные компанией Wikia, Inc].',
 	'content-warning-button-continue' => 'Я ПОНИМАЮ ЭТО И ХОЧУ ПРОДОЛЖИТЬ',

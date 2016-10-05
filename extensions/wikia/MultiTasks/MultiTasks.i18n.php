@@ -3068,7 +3068,7 @@ $messages['ru'] = [
 	'multiwikienterpagename' => 'Введите название страницы:',
 	'multiwikirecords' => 'найдено $1 {{PLURAL:$1|wiki|wikis}}',
 	'multiwikifinder-redirect' => 'перенаправление',
-	'action-multiwikifinder' => 'поиск конкретного названия в Фэндоме',
+	'action-multiwikifinder' => 'поиск названия по Фэндому',
 ];
 
 $messages['sco'] = [

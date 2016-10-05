@@ -1,6 +1,6 @@
 <?php
 /**
- * Universe
+ * MixedRelatedContent
  *
  * PHP version 5
  *
@@ -40,7 +40,7 @@ namespace Swagger\Client\ContentEntity\Models;
 use \ArrayAccess;
 
 /**
- * Universe Class Doc Comment
+ * MixedRelatedContent Class Doc Comment
  *
  * @category    Class */
 /** 
@@ -49,22 +49,21 @@ use \ArrayAccess;
  * @license     http://www.apache.org/licenses/LICENSE-2.0 Apache Licene v2
  * @link        https://github.com/swagger-api/swagger-codegen
  */
-class Universe implements ArrayAccess
+class MixedRelatedContent implements ArrayAccess
 {
     /**
       * The original name of the model.
       * @var string
       */
-    protected static $swaggerModelName = 'Universe';
+    protected static $swaggerModelName = 'MixedRelatedContent';
 
     /**
       * Array of property to type mappings. Used for (de)serialization
       * @var string[]
       */
     protected static $swaggerTypes = array(
-        'id' => 'string',
-        'name' => 'string',
-        'language' => 'string'
+        'content' => '\Swagger\Client\ContentEntity\Models\RelatedContent[]',
+        'empty' => 'bool'
     );
 
     public static function swaggerTypes()
@@ -77,9 +76,8 @@ class Universe implements ArrayAccess
      * @var string[]
      */
     protected static $attributeMap = array(
-        'id' => 'id',
-        'name' => 'name',
-        'language' => 'language'
+        'content' => 'content',
+        'empty' => 'empty'
     );
 
     public static function attributeMap()
@@ -92,9 +90,8 @@ class Universe implements ArrayAccess
      * @var string[]
      */
     protected static $setters = array(
-        'id' => 'setId',
-        'name' => 'setName',
-        'language' => 'setLanguage'
+        'content' => 'setContent',
+        'empty' => 'setEmpty'
     );
 
     public static function setters()
@@ -107,9 +104,8 @@ class Universe implements ArrayAccess
      * @var string[]
      */
     protected static $getters = array(
-        'id' => 'getId',
-        'name' => 'getName',
-        'language' => 'getLanguage'
+        'content' => 'getContent',
+        'empty' => 'getEmpty'
     );
 
     public static function getters()
@@ -133,9 +129,8 @@ class Universe implements ArrayAccess
      */
     public function __construct(array $data = null)
     {
-        $this->container['id'] = isset($data['id']) ? $data['id'] : null;
-        $this->container['name'] = isset($data['name']) ? $data['name'] : null;
-        $this->container['language'] = isset($data['language']) ? $data['language'] : null;
+        $this->container['content'] = isset($data['content']) ? $data['content'] : null;
+        $this->container['empty'] = isset($data['empty']) ? $data['empty'] : false;
     }
 
     /**
@@ -162,64 +157,43 @@ class Universe implements ArrayAccess
 
 
     /**
-     * Gets id
-     * @return string
+     * Gets content
+     * @return \Swagger\Client\ContentEntity\Models\RelatedContent[]
      */
-    public function getId()
+    public function getContent()
     {
-        return $this->container['id'];
+        return $this->container['content'];
     }
 
     /**
-     * Sets id
-     * @param string $id
+     * Sets content
+     * @param \Swagger\Client\ContentEntity\Models\RelatedContent[] $content
      * @return $this
      */
-    public function setId($id)
+    public function setContent($content)
     {
-        $this->container['id'] = $id;
+        $this->container['content'] = $content;
 
         return $this;
     }
 
     /**
-     * Gets name
-     * @return string
+     * Gets empty
+     * @return bool
      */
-    public function getName()
+    public function getEmpty()
     {
-        return $this->container['name'];
+        return $this->container['empty'];
     }
 
     /**
-     * Sets name
-     * @param string $name
+     * Sets empty
+     * @param bool $empty
      * @return $this
      */
-    public function setName($name)
+    public function setEmpty($empty)
     {
-        $this->container['name'] = $name;
-
-        return $this;
-    }
-
-    /**
-     * Gets language
-     * @return string
-     */
-    public function getLanguage()
-    {
-        return $this->container['language'];
-    }
-
-    /**
-     * Sets language
-     * @param string $language
-     * @return $this
-     */
-    public function setLanguage($language)
-    {
-        $this->container['language'] = $language;
+        $this->container['empty'] = $empty;
 
         return $this;
     }

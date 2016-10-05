@@ -675,7 +675,7 @@ Bonjour et bienvenue à {{SITENAME}} ! Je suis membre de l\'équipe de support d
 
 Il semble qu\'aucun des administrateurs de cette communauté ne soit actif en ce moment, mais si vous avez besoin d\'aide, vous pouvez consulter nos [[Aide:Contenu|pages d\'aide]] ou vous rendre dans le [[w:c:communaute|Centre des communautés]] pour explorer nos [[w:c:communaute:Special:Forum|forums]].
 
-Vous pouvez également suivre [[w:c:communaute:Blog:Actualité_Wikia|ce blog]] afin de vous tenir informé des dernières actualités et événements ayant trait à Fandom. Et n\'oubliez pas de visiter l\'[[w:c:communaute:Université_Wikia|Université Wikia]] pour y voir de courtes vidéos d\'utilisation.
+Vous pouvez également suivre [[w:c:communaute:Blog:Actualité_Wikia|ce blog]] afin de vous tenir informé des dernières actualités et événements ayant trait à Fandom. Et n\'oubliez pas de visiter l\'[[w:c:communaute:Université_Wikia|Université Fandom]] pour y voir de courtes vidéos d\'utilisation.
 
 Veuillez [[$2|me laisser un message]] si vous avez besoin d\'aide supplémentaire.
 
@@ -690,7 +690,7 @@ Bonjour et bienvenue à {{SITENAME}} ! Je suis membre de l\'équipe de support d
 
 Il semble qu\'aucun des administrateurs de cette communauté ne soit actif en ce moment, mais si vous avez besoin d\'aide, vous pouvez consulter nos [[Aide:Contenu|pages d\'aide]] ou vous rendre dans le [[w:c:communaute|Centre des communautés]] pour accéder aux [[w:c:communaute:Special:Forum|forums]].
 
-Vous pouvez également suivre [[w:c:communaute:Blog:Actualité_Wikia|blog]] afin de vous tenir informé des dernières actualités et événements ayant trait à Fandom. Et n\'oubliez pas de visiter l\'[[w:c:communaute:Université_Wikia|Université Fandom]] pour y voir de courtes vidéos d\'utilisation.
+Vous pouvez également suivre [[w:c:communaute:Blog:Actualité_Wikia|ce blog]] afin de vous tenir informé des dernières actualités et événements ayant trait à Fandom. Et n\'oubliez pas de visiter l\'[[w:c:communaute:Université_Wikia|Université Fandom]] pour y voir de courtes vidéos d\'utilisation.
 
 Veuillez [[$2|me laisser un message]] si vous avez besoin d\'aide supplémentaire.
 
@@ -708,7 +708,7 @@ Passez un bon moment sur {{SITENAME}} !',
 
 Il semble qu\'aucun des administrateurs de cette communauté ne soit actif en ce moment, mais si vous avez besoin d\'aide, vous pouvez consulter nos [[Aide:Contenu|pages d\'aide]] ou vous rendre dans le [[w:c:communaute|Centre des communautés]] pour explorer nos [[w:c:communaute:Special:Forum|forums]].
 
-Et n\'oubliez pas de visiter l\'[[w:c:communaute:Université_Wikia|Université Wikia]] pour y voir de courtes vidéos d\'utilisation.
+Et n\'oubliez pas de visiter l\'[[w:c:communaute:Université_Wikia|Université Fandom]] pour y voir de courtes vidéos d\'utilisation.
 
 Passez un bon moment sur {{SITENAME}} !',
 	'welcome-message-wall-anon' => 'Bonjour, je suis administrateur de la communauté {{SITENAME}}. Bienvenue et merci pour votre contribution à [[:$1]] !
@@ -724,7 +724,7 @@ Passez un bon moment sur {{SITENAME}} !',
 
 Il semble qu\'aucun des administrateurs de cette communauté ne soit actif en ce moment, mais si vous avez besoin d\'aide, vous pouvez consulter nos [[Aide:Contenu|pages d\'aide]] ou vous rendre dans le [[w:c:communaute|Centre des communautés]] pour accéder aux [[w:c:communaute:Special:Forum|forums]] .
 
-Vous pouvez également suivre et les [[w:c:communaute:Blog:Actualité_Wikia|blogs]] afin de vous tenir informé des dernières actualités et événements ayant trait à Fandom. Et n\'oubliez pas de visiter l\'[[w:c:communaute:Université_Wikia|Université Wikia]] pour y voir de courtes vidéos d\'utilisation.
+Vous pouvez également suivre [[w:c:communaute:Blog:Actualité_Wikia|ce blog]] afin de vous tenir informé des dernières actualités et événements ayant trait à Fandom. Et n\'oubliez pas de visiter l\'[[w:c:communaute:Université_Wikia|Université Fandom]] pour y voir de courtes vidéos d\'utilisation.
 
 Passez un bon moment sur {{SITENAME}} !',
 	'welcome-description' => 'Envoie un message d’accueil aux utilisateurs après leurs premières modifications',
@@ -1909,7 +1909,7 @@ $2',
 Надеюсь, что вам понравится на {{SITENAME}}.',
 	'welcome-message-wall-user-staff' => 'Здравствуйте и добро пожаловать на {{SITENAME}}. Я представляю команду поддержки Фэндома. Спасибо за правку на странице [[:$1]]!
 
-В настоящее время на этой вики нет активных администраторов, и если вам нужна помощь, посетите [[w:c:ru.community:Справка:Содержание|страницы Справки]] или [[w:c:ru.community:Служебная:Forum|форум]] на [[w:c:ru.community|Вики Сообщества]].
+В настоящее время на этой вики нет активных администраторов, и если вам нужна помощь, посетите [[w:c:ru.community:Справка:Содержание|страницы справки]] или [[w:c:ru.community:Служебная:Forum|форум]] на [[w:c:ru.community|Вики Сообщества]].
 
 Также, посмотрите видеоуроки [[w:c:ru.community:Университет Викия|Университета Фэндома]], которые помогут вам быстро освоить редактирование.
 

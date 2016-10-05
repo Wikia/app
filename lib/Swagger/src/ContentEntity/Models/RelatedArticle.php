@@ -1,6 +1,6 @@
 <?php
 /**
- * Universe
+ * RelatedArticle
  *
  * PHP version 5
  *
@@ -40,7 +40,7 @@ namespace Swagger\Client\ContentEntity\Models;
 use \ArrayAccess;
 
 /**
- * Universe Class Doc Comment
+ * RelatedArticle Class Doc Comment
  *
  * @category    Class */
 /** 
@@ -49,22 +49,21 @@ use \ArrayAccess;
  * @license     http://www.apache.org/licenses/LICENSE-2.0 Apache Licene v2
  * @link        https://github.com/swagger-api/swagger-codegen
  */
-class Universe implements ArrayAccess
+class RelatedArticle implements ArrayAccess
 {
     /**
       * The original name of the model.
       * @var string
       */
-    protected static $swaggerModelName = 'Universe';
+    protected static $swaggerModelName = 'RelatedArticle';
 
     /**
       * Array of property to type mappings. Used for (de)serialization
       * @var string[]
       */
     protected static $swaggerTypes = array(
-        'id' => 'string',
-        'name' => 'string',
-        'language' => 'string'
+        'title' => 'string',
+        'url' => 'string'
     );
 
     public static function swaggerTypes()
@@ -77,9 +76,8 @@ class Universe implements ArrayAccess
      * @var string[]
      */
     protected static $attributeMap = array(
-        'id' => 'id',
-        'name' => 'name',
-        'language' => 'language'
+        'title' => 'title',
+        'url' => 'url'
     );
 
     public static function attributeMap()
@@ -92,9 +90,8 @@ class Universe implements ArrayAccess
      * @var string[]
      */
     protected static $setters = array(
-        'id' => 'setId',
-        'name' => 'setName',
-        'language' => 'setLanguage'
+        'title' => 'setTitle',
+        'url' => 'setUrl'
     );
 
     public static function setters()
@@ -107,9 +104,8 @@ class Universe implements ArrayAccess
      * @var string[]
      */
     protected static $getters = array(
-        'id' => 'getId',
-        'name' => 'getName',
-        'language' => 'getLanguage'
+        'title' => 'getTitle',
+        'url' => 'getUrl'
     );
 
     public static function getters()
@@ -133,9 +129,8 @@ class Universe implements ArrayAccess
      */
     public function __construct(array $data = null)
     {
-        $this->container['id'] = isset($data['id']) ? $data['id'] : null;
-        $this->container['name'] = isset($data['name']) ? $data['name'] : null;
-        $this->container['language'] = isset($data['language']) ? $data['language'] : null;
+        $this->container['title'] = isset($data['title']) ? $data['title'] : null;
+        $this->container['url'] = isset($data['url']) ? $data['url'] : null;
     }
 
     /**
@@ -162,64 +157,43 @@ class Universe implements ArrayAccess
 
 
     /**
-     * Gets id
+     * Gets title
      * @return string
      */
-    public function getId()
+    public function getTitle()
     {
-        return $this->container['id'];
+        return $this->container['title'];
     }
 
     /**
-     * Sets id
-     * @param string $id
+     * Sets title
+     * @param string $title
      * @return $this
      */
-    public function setId($id)
+    public function setTitle($title)
     {
-        $this->container['id'] = $id;
+        $this->container['title'] = $title;
 
         return $this;
     }
 
     /**
-     * Gets name
+     * Gets url
      * @return string
      */
-    public function getName()
+    public function getUrl()
     {
-        return $this->container['name'];
+        return $this->container['url'];
     }
 
     /**
-     * Sets name
-     * @param string $name
+     * Sets url
+     * @param string $url
      * @return $this
      */
-    public function setName($name)
+    public function setUrl($url)
     {
-        $this->container['name'] = $name;
-
-        return $this;
-    }
-
-    /**
-     * Gets language
-     * @return string
-     */
-    public function getLanguage()
-    {
-        return $this->container['language'];
-    }
-
-    /**
-     * Sets language
-     * @param string $language
-     * @return $this
-     */
-    public function setLanguage($language)
-    {
-        $this->container['language'] = $language;
+        $this->container['url'] = $url;
 
         return $this;
     }
