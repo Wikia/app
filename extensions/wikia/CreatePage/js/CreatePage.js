@@ -303,6 +303,12 @@ var CreatePage = {
 			CreatePage.flowName = 'create-page-contribute-button';
 		});
 
+		$( function() {
+			$( '#WikiaArticle').find( 'a.new' ).toArray().forEach(function(redlink) {
+				redlink.href = redlink.href + '&flow=create-page-redlink';
+			});
+		});
+
 		if ( window.WikiaEnableNewCreatepage ) {
 			$().log( 'init', 'CreatePage' );
 
@@ -354,13 +360,6 @@ var CreatePage = {
 					}
 				}
 			});
-		} else {
-			// in case create page modal is disabled
-			$( '#WikiaArticle' ).on( 'click', 'a.new', function( e ) {
-				CreatePage.trackCreatePageStart(CreatePage.FLOW_REDLINK);
-				e.preventDefault();
-				window.location.href = e.currentTarget.href + "&flow=create-page-redlink";
-			});
 		}
 	},
 
@@ -369,9 +368,9 @@ var CreatePage = {
 		require(['wikia.flowTracking'], function (flowTrack) {
 			var flowName = '';
 
-			if (flow == CreatePage.FLOW_REDLINK) {
+			if (flow === CreatePage.FLOW_REDLINK) {
 				flowName = flowTrack.flows.CREATE_PAGE_REDLINK;
-			} else if (flow = CreatePage.FLOW_CONTRIBUTE_BUTTON) {
+			} else if (flow === CreatePage.FLOW_CONTRIBUTE_BUTTON) {
 				flowName = flowTrack.flows.CREATE_PAGE_CONTRIBUTE_BUTTON
 			}
 
