@@ -47,7 +47,8 @@ class EmbeddableDiscussionsController {
 			$args['mostrecent'] !== 'false'
 		) {
 			$errorMessage = wfMessage( 'embeddable-discussions-parameter-error', 'mostrecent',
-				wfMessage( 'embeddable-discussions-parameter-error-boolean' )->plain() )->plain();
+				wfMessage( 'embeddable-discussions-parameter-error-boolean' )->inContentLanguage()->plain()
+			)->inContentLanguage()->plain();
 
 			return false;
 		}
@@ -62,7 +63,8 @@ class EmbeddableDiscussionsController {
 			) {
 				$errorMessage = wfMessage( 'embeddable-discussions-parameter-error', 'size',
 					wfMessage( 'embeddable-discussions-parameter-error-range',
-						self::ITEMS_MIN , self::ITEMS_MAX )->plain() )->plain();
+						self::ITEMS_MIN , self::ITEMS_MAX )->inContentLanguage()->plain()
+				)->inContentLanguage()->plain();
 
 				return false;
 			}
@@ -77,8 +79,9 @@ class EmbeddableDiscussionsController {
 				intval( $columns ) < self::COLUMNS_MIN
 			) {
 				$errorMessage = wfMessage( 'embeddable-discussions-parameter-error', 'columns',
-						wfMessage( 'embeddable-discussions-parameter-error-range',
-							self::COLUMNS_MIN , self::COLUMNS_MAX )->plain() )->plain();
+					wfMessage( 'embeddable-discussions-parameter-error-range',
+						self::COLUMNS_MIN , self::COLUMNS_MAX )->inContentLanguage()->plain()
+				)->inContentLanguage()->plain();
 
 				return false;
 			}
@@ -87,7 +90,8 @@ class EmbeddableDiscussionsController {
 		// category must be a valid category
 		if ( $modelData['invalidCategory'] ) {
 			$errorMessage = wfMessage( 'embeddable-discussions-parameter-error', $args['catid'],
-				wfMessage( 'embeddable-discussions-parameter-error-category' )->plain() )->plain();
+				wfMessage( 'embeddable-discussions-parameter-error-category' )->inContentLanguage()->plain()
+			)->inContentLanguage()->plain();
 
 			return false;
 		}
@@ -103,7 +107,7 @@ class EmbeddableDiscussionsController {
 				'show' => $showLatest ? 'latest' : 'trending',
 				'itemCount' => $itemCount,
 			] ),
-			'loading' => wfMessage( 'embeddable-discussions-loading' )->plain()
+			'loading' => wfMessage( 'embeddable-discussions-loading' )->inContentLanguage()->plain()
 		];
 
 		// In mercury, discussions app is rendered client side in an Ember container
@@ -121,19 +125,21 @@ class EmbeddableDiscussionsController {
 		] );
 
 		if ( $showLatest && $category ) {
-			$heading = wfMessage( 'embeddable-discussions-show-latest-in-category', $category )->plain();
+			$heading = wfMessage( 'embeddable-discussions-show-latest-in-category',
+				$category )->inContentLanguage()->plain();
 		} elseif ( $showLatest ) {
-			$heading = wfMessage( 'embeddable-discussions-show-latest' )->plain();
+			$heading = wfMessage( 'embeddable-discussions-show-latest' )->inContentLanguage()->plain();
 		} elseif ( $category ) {
-			$heading = wfMessage( 'embeddable-discussions-show-trending-in-category', $category )->plain();
+			$heading = wfMessage( 'embeddable-discussions-show-trending-in-category',
+				$category )->inContentLanguage()->plain();
 		} else {
-			$heading = wfMessage( 'embeddable-discussions-show-trending' )->plain();
+			$heading = wfMessage( 'embeddable-discussions-show-trending' )->inContentLanguage()->plain();
 		}
 
 		$modelData['columnsWrapperClass'] = $columns === 2 ? 'embeddable-discussions-threads-columns' : '';
 		$modelData['heading'] = $heading;
-		$modelData['showAll'] = wfMessage( 'embeddable-discussions-show-all' )->plain();
-		$modelData['loading'] = wfMessage( 'embeddable-discussions-loading' )->plain();
+		$modelData['showAll'] = wfMessage( 'embeddable-discussions-show-all' )->inContentLanguage()->plain();
+		$modelData['loading'] = wfMessage( 'embeddable-discussions-loading' )->inContentLanguage()->plain();
 
 		return $this->templateEngine->clearData()
 			->setData( $modelData )
