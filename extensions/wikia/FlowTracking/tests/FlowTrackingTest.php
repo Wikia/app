@@ -36,6 +36,14 @@ class FlowTrackingTest extends WikiaBaseTest {
 			[
 				'http://www.wikia.com',
 				[]
+			],
+			[
+				'http://www.wikia.com?a=1&b=2&c[]=3&c[]=4&c[]=5',
+				[
+					'a' => '1',
+					'b' => '2',
+					'c' => [ '3', '4', '5' ]
+				]
 			]
 		];
 	}
