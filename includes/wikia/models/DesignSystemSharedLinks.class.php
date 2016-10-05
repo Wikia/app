@@ -80,7 +80,7 @@ class DesignSystemSharedLinks {
 			'games' => 'http://fandom.wikia.com/games',
 			'movies' => 'http://fandom.wikia.com/movies',
 			'tv' => 'http://fandom.wikia.com/tv',
-			'fandom-university' => 'http://community.wikia.com/wiki/Wikia_University',
+			'fandom-university' => 'http://community.wikia.com/wiki/Fandom_University',
 			'user-signin' => 'https://www.wikia.com/signin',
 			'user-register' => 'https://www.wikia.com/register',
 		],
