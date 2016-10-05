@@ -140,21 +140,7 @@ class NavigationModelTest extends WikiaBaseTest {
 	function testParseMessage() {
 		$messageName = 'test' . rand();
 
-		$messageMock = $this->getMock( 'stdClass', array( 'text', 'inContentLanguage' ) );
-		$messageMock->expects( $this->any() )
-			->method( 'text' )
-			->will( $this->returnValue( '*whatever' ) );
-
-		$messageMock->expects( $this->any() )
-			->method( 'inContentLanguage' )
-			->will( $this->returnValue( $messageMock ) );
-
-		$this->getGlobalFunctionMock( 'wfMessage' )
-			->expects( $this->exactly( 2 ) )
-			->method( 'wfMessage' )
-			->will(
-				$this->returnValue( $messageMock )
-			);
+		$this->mockMessage($messageName, '*whatever');
 
 		$model = new NavigationModel();
 
