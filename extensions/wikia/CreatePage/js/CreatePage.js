@@ -359,7 +359,7 @@ var CreatePage = {
 			$( '#WikiaArticle' ).on( 'click', 'a.new', function( e ) {
 				CreatePage.trackCreatePageStart(CreatePage.FLOW_REDLINK);
 				e.preventDefault();
-				window.location.href = e.currentTarget.href + "&flow=redlink";
+				window.location.href = e.currentTarget.href + "&flow=create-page-redlink";
 			});
 		}
 	},
