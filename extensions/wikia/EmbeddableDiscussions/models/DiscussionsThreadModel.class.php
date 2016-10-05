@@ -29,6 +29,11 @@ class DiscussionsThreadModel {
 		return self::DISCUSSIONS_API_BASE_DEV . "$this->cityId/forums?responseGroup=small&viewableOnly=true";
 	}
 
+	/**
+	 * Get category names for all requested categoryIds
+	 * @param $categoryIds requested category ids
+	 * @return array with name and id pairs for all valid requested categories
+	 */
 	public function getCategoryNames( $categoryIds ) {
 		$memcKey = wfMemcKey( __METHOD__, self::MCACHE_VER );
 		$rawData = WikiaDataAccess::cache(
@@ -42,6 +47,12 @@ class DiscussionsThreadModel {
 		return $this->categoryNameLookup( $categoryIds, $rawData );
 	}
 
+	/**
+	 * Helper function for matching category data from API with requested Ids
+	 * @param $categoryIds requested category ids
+	 * @param $rawData response from API
+	 * @return array
+	 */
 	private function categoryNameLookup( $categoryIds, $rawData ) {
 		$explodedIds = explode( ',', $categoryIds );
 		$ret = [];
