@@ -32,13 +32,12 @@ class EnableDiscussionsWithNoForums extends Maintenance {
 				$this->error( $wikiId . ' has ' . $count . ' forum threads, skipping!' );
 			}
 
-			if ( SpecialDiscussionsHelper::activateDiscussions(
-					$wikiId,
-					$wiki->city_lang,
-					$wiki->city_title ) ) {
+			try {
+				$this->activateDiscussions( $wikiId, $wiki->city_lang, $wiki->city_title );
+				$this->enableDiscussions( $wikiId );
 				$this->output( 'Enabled discussions on ' . $wikiId . "\n" );
-			} else {
-				$this->error( 'Creating site ' . $wikiId . ' caused an error' );
+			} catch ( Exception $e ) {
+				$this->error( 'Creating site ' . $wikiId . ' caused an error: ' . $e->getMessage() );
 			}
 		}
 	}
@@ -61,6 +60,19 @@ class EnableDiscussionsWithNoForums extends Maintenance {
 		);
 
 		return intval( $row->cnt );
+	}
+
+	private function activateDiscussions( $cityId, $cityName, $cityLang ) {
+		( new \DiscussionsActivator( $cityId, $cityName, $cityLang ) )->activateDiscussions();
+	}
+
+	private function enableDiscussions( $cityId ) {
+		( new \DiscussionsVarToggler( $cityId ) )
+			->setEnableDiscussions( true )
+			->setEnableDiscussionsNav( true )
+			->setEnableForums( false )
+			->setArchiveWikiForums( true )
+			->save();
 	}
 }
 

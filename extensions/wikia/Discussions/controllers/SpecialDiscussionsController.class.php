@@ -1,22 +1,24 @@
 <?php
 
-/**
- * Discussion user log page
- */
 class SpecialDiscussionsController extends WikiaSpecialPageController {
 
+	const DISCUSSIONS_LINK = '/d/f';
 	const DISCUSSIONS_ACTION = 'specialdiscussions';
+	const EDIT_TOKEN = 'editToken';
 
 	const DEFAULT_TEMPLATE_ENGINE = \WikiaResponse::TEMPLATE_ENGINE_MUSTACHE;
 
-	private $siteId;
-	private $siteName;
+	private $activator;
+	private $toggler;
 
 	public function __construct() {
 		parent::__construct( 'Discussions', '', false );
-
-		$this->siteId = F::app()->wg->CityId;
-		$this->siteName = F::app()->wg->Sitename;
+		$this->toggler = new DiscussionsVarToggler( $this->wg->CityId );
+		$this->activator = new DiscussionsActivator(
+			$this->wg->CityId,
+			$this->wg->Sitename,
+			$this->wg->ContLang->getCode()
+		);
 	}
 
 	public function index() {
@@ -24,19 +26,25 @@ class SpecialDiscussionsController extends WikiaSpecialPageController {
 
 		$this->setHeaders();
 		$this->response->addAsset( 'special_discussions_scss' );
-
 		$this->wg->Out->setPageTitle( wfMessage( 'discussions-pagetitle' )->escaped() );
 
 		if ( $this->checkWriteRequest() ) {
-			if ( !SpecialDiscussionsHelper::activateDiscussions(
-					$this->siteId,
-					$this->app->wg->ContLang->getCode(),
-					$this->siteName ) ) {
-				throw new ErrorPageError( 'unknown-error', 'discussions-activate-error' );
-			}
+			$this->activator->activateDiscussions();
+			$this->toggler->setEnableDiscussions( true )->save();
 		}
 
 		$this->setIndexOutput();
+	}
+
+	private function assertCanAccess() {
+		if ( !$this->wg->User->isAllowed( self::DISCUSSIONS_ACTION ) ) {
+			throw new \PermissionsError( self::DISCUSSIONS_ACTION );
+		}
+	}
+
+	private function setIndexOutput() {
+		$callMethod = $this->activator->isDiscussionsActive() ? 'discussionsLink' : 'inputForm';
+		$this->response->setVal( 'content', $this->sendSelfRequest( $callMethod ) );
 	}
 
 	public function inputForm() {
@@ -44,7 +52,7 @@ class SpecialDiscussionsController extends WikiaSpecialPageController {
 			[
 				'discussionsInactiveMessage' => wfMessage( 'discussions-not-active' )->escaped(),
 				'activateDiscussions' => wfMessage( 'discussions-activate' )->escaped(),
-				'token' => $this->getUser()->getEditToken(),
+				'editToken' => $this->getUser()->getEditToken(),
 			]
 		);
 	}
@@ -53,20 +61,17 @@ class SpecialDiscussionsController extends WikiaSpecialPageController {
 		$this->response->setValues(
 			[
 				'discussionsActiveMessage' => wfMessage( 'discussions-active' )->escaped(),
-				'discussionsLink' => SpecialDiscussionsHelper::DISCUSSIONS_LINK,
+				'discussionsLink' => self::DISCUSSIONS_LINK,
 				'discussionsLinkCaption' => wfMessage( 'discussions-navigate' )->escaped(),
 			]
 		);
 	}
 
-	private function setIndexOutput() {
-		$callMethod = SpecialDiscussionsHelper::isDiscussionsActive( $this->siteId ) ? 'discussionsLink' : 'inputForm';
-		$this->response->setVal( 'content', $this->sendSelfRequest( $callMethod ) );
-	}
-
-	private function assertCanAccess() {
-		if ( !$this->wg->User->isAllowed( self::DISCUSSIONS_ACTION ) ) {
-			throw new \PermissionsError( self::DISCUSSIONS_ACTION );
-		}
+	/**
+	 * Override directory where Nirvana looks for templates
+	 * @return string
+	 */
+	public static function getTemplateDir() {
+		return __DIR__ . '/../templates';
 	}
 }
