@@ -23,11 +23,18 @@ class FlowTrackingHooks {
 													$watchThis, $sectionAnchor, &$flags, Revision $revision ) {
 		$title = $revision->getTitle();
 		if ( $title && $title->inNamespace( NS_MAIN ) ) {
+			$params = [];
 			$request = RequestContext::getMain()->getRequest();
 			$headers = $request->getAllHeaders();
 
 			// transforms "a=1&b=2&c=3" into [ 'a' => 1, 'b' => 2, 'c' => 3 ]
-			parse_str( parse_url( $headers[ 'REFERER' ], PHP_URL_QUERY ), $params );
+			if ( isset( $headers[ 'REFERER' ] ) ) {
+				$params = static::getParamsFromUrlQuery( $headers[ 'REFERER' ] );
+			} else {
+				Wikia\Logger\WikiaLogger::instance()->warning( 'Flow Tracking - Referer header is not set', [
+					'useragent' => $headers[ 'USER-AGENT' ]
+				] );
+			}
 			if ( isset( $params['flow'] ) ) {
 				Track::event( 'trackingevent', [
 					'ga_action' => 'flow-end',
@@ -39,6 +46,11 @@ class FlowTrackingHooks {
 			}
 		}
 		return true;
+	}
+
+	public static function getParamsFromUrlQuery( $url ) {
+		parse_str( parse_url( $url, PHP_URL_QUERY ), $params );
+		return $params;
 	}
 
 	private static function getEditor( $values, $params ) {
