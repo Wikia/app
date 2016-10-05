@@ -28,13 +28,7 @@ define('wikia.flowTracking', ['wikia.tracker', 'wikia.window', 'mw', 'jquery'], 
 	 * @param extraParams additional parameters to track
 	 */
 	function trackFlowStep(flow, extraParams) {
-		if (isContentPage()) {
-			track(prepareParams(tracker.ACTIONS.FLOW_MID_STEP, flow, extraParams));
-		}
-	}
-
-	function isContentPage() {
-		return mw.config.get('wgNamespaceNumber') === 0;
+		track(prepareParams(tracker.ACTIONS.FLOW_MID_STEP, flow, extraParams));
 	}
 
 	function prepareParams(action, flow, extraParams) {
