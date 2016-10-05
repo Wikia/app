@@ -27,7 +27,8 @@ class SpecialDiscussionsController extends WikiaSpecialPageController {
 		$this->response->addAsset( 'special_discussions_scss' );
 		$this->wg->Out->setPageTitle( wfMessage( 'discussions-pagetitle' )->escaped() );
 
-		if ( $this->checkWriteRequest() ) {
+		if ( $this->request->wasPosted() ) {
+			$this->checkWriteRequest();
 			$this->activator->activateDiscussions();
 			$this->toggler->setEnableDiscussions( true )->save();
 		}
