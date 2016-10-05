@@ -42,6 +42,7 @@ class ContributeMenuController extends WikiaController {
 			 */
 			if ( $specialPageName === 'CreatePage' ) {
 				$attrs[ 'id' ] = 'contribute-button-create-page';
+				// TODO: move param name and flow name  to consts
 				$attrs[ 'href' ] = $attrs[ 'href' ] . '?flow=create-page-contribute-button';
 			}
 

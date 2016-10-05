@@ -21,7 +21,7 @@ var CreatePage = {
 		},
 		function( response ) {
 			var articlePath;
-			var flowParam = CreatePage.flowName === '' ? '' : '&flow=' + CreatePage.flowName;
+			var flowParam = ( CreatePage.flowName === '' ) ? '' : '&flow=' + CreatePage.flowName;
 
 			if ( response.result === 'ok' ) {
 				if ( CreatePage.canUseVisualEditor() && mw.libs.ve.isInValidNamespace( title ) ) {
@@ -295,7 +295,7 @@ var CreatePage = {
 
 		$( '#contribute-button-create-page' ).click(function() {
 			require(['wikia.flowTracking'], function (flowTracking) {
-				flowTracking.beginFlow(flowTracking.flows.CONTRIBUTE_BUTTON);
+				flowTracking.beginFlow(flowTracking.flows.CREATE_PAGE_CONTRIBUTE_BUTTON);
 			});
 			CreatePage.flowName = 'create-page-contribute-button';
 		});
@@ -313,7 +313,7 @@ var CreatePage = {
 			}
 
 			// CreatePage chicklet ( Oasis )
-			$( '.createpage' ).click(CreatePage.requestDialog );
+			$( '.createpage' ).click( CreatePage.requestDialog );
 
 			// macbre: RT #38478
 			var addRecipeTab = $( '#add_recipe_tab' ),
