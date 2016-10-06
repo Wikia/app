@@ -6275,6 +6275,7 @@ Bitte bestätige, dass Du diese Seite tatsächlich neu anlegen möchtest.',
 	'contris' => 'Beiträge',
 	'contris_s' => 'Beiträge',
 	'createwikipagetitle' => 'Erstelle ein neues Wiki',
+	'custom_info' => 'Angepasste Schemata können erstellt werden, indem du oben "Angepasst" auswählst und dann editierst.',
 ];
 
 $messages['de-formal'] = [
@@ -7527,6 +7528,7 @@ Este código de confirmación caducará el $4.',
 	'contris' => 'Contribuciones',
 	'contris_s' => 'Contribuciones',
 	'createwikipagetitle' => 'Crear un nuevo wiki',
+	'custom_info' => 'Los temas personalizados pueden ser creados seleccionando "Personalizado" más arriba y luego editandolo',
 ];
 
 $messages['et'] = [
@@ -8344,6 +8346,7 @@ Varmista, että haluat luoda sivun uudelleen.',
 	'contris' => 'Muokkaukset',
 	'contris_s' => 'Muokkaukset',
 	'createwiki' => 'Luo uusi wiki',
+	'custom_info' => 'Itsetehtyjä teemoja voi rakentaa valitsemalla "Custom" ylhäältä ja sitten muokkaamalla',
 ];
 
 $messages['fiu-vro'] = [
@@ -13465,6 +13468,7 @@ $5
 	'corporatepage-update-fqr' => '一時間ごとに更新',
 	'corporatepage-watchlist' => 'ウォッチリスト',
 	'corporatepage-words-added' => 'ワードの追加（先週分）',
+	'custom_info' => 'カスタムテーマは、上記の「カスタム」を選択して、スタイルシートを編集することで利用できます。',
 ];
 
 $messages['jam'] = [
@@ -21095,6 +21099,7 @@ Du må stadfeste at du verkeleg vil nyopprette denne sida.',
 	'createwikisubmitcomplete' => 'Innsendelsen er fullført. Hvis du oppgav en e-postadresse vil du bli kontaktet vedrørende den nye Wikien. Takk for at du bruker {{SITENAME}}.',
 	'createwikitext' => 'Du kan sende en forespørsel om opprettelsen av en ny Wiki på denne siden. Bare fyll ut skjemaet',
 	'createwikititle' => 'Tittel for wikien',
+	'custom_info' => 'Egendefinerte temaer kan bygges ved å velge «Egendefinert» over og så endre',
 ];
 
 $messages['nov'] = [
@@ -24170,6 +24175,7 @@ $5
 	'createwikipagetitle' => 'Запросить новую вики',
 	'createwikitext' => 'Вы можете запросить новую вики, создав эту страницу. Просто заполните форму',
 	'createwikititle' => 'Заголовок вики',
+	'custom_info' => 'Настроить тему можно выбрав "Настройка" выше, а затем можно перейти к редактированию',
 ];
 
 $messages['rue'] = [

@@ -1404,6 +1404,7 @@ $messages['ja'] = [
 	'ask_a_question' => '新しく質問する場合はここに入力',
 	'ask_button' => '質問する',
 	'createaccount-captcha' => '下の文字列を入力してください',
+	'custom_category' => 'カスタムカテゴリ',
 ];
 
 $messages['lb'] = [
@@ -2538,6 +2539,7 @@ $messages['no'] = [
 	'categorize_help' => 'Én kategori per linje',
 	'category' => 'Kategorinavn',
 	'createaccount-captcha' => 'Vennligst skriv ordet under',
+	'custom_category' => 'Egendefinert kategori',
 ];
 
 $messages['zh-hant'] = [
