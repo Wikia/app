@@ -3631,6 +3631,7 @@ $messages['bg'] = [
 	'api-error-uploaddisabled' => 'Достъпът за качване на файлове в това уики е прекратен.',
 	'api-error-verification-error' => 'Файлът може би е повреден или има грешно разширение.',
 	'addnewtalksection-link' => 'Започване на нов раздел',
+	'add_comment' => 'Оставяне на съобщение',
 ];
 
 $messages['bh'] = [
@@ -6495,6 +6496,7 @@ Bitte besuche die Seiten [//www.mediawiki.org/wiki/Localisation MediaWiki-Lokali
 	'addnewtalksection-link' => 'Neuen Abschnitt beginnen',
 	'all_the_wikia' => 'Überall in Fandom',
 	'achievements-leaderboard-navigation-item' => 'Herausforderungen',
+	'add_comment' => 'Kommentieren',
 ];
 
 $messages['de-ch'] = [
@@ -7649,6 +7651,7 @@ Por favor visita [//www.mediawiki.org/wiki/Localisation Localización MediaWiki]
 	'addnewtalksection-link' => 'Inicie una nueva sección',
 	'all_the_wikia' => 'Todo Fandom',
 	'achievements-leaderboard-navigation-item' => 'Tablón de líderes del wiki',
+	'add_comment' => 'Dejar un mensaje',
 ];
 
 $messages['et'] = [
@@ -8257,6 +8260,7 @@ $messages['fa'] = [
 	'api-error-verification-error' => 'ممکن است پرونده آسیب دیده باشد، یا دارای پسوند نادرست باشد.',
 	'addnewtalksection-link' => 'یک بخش جدید ایجاد کنید',
 	'all_the_wikia' => 'کل ویکیا',
+	'add_comment' => 'شروع بحث جدید',
 ];
 
 $messages['ff'] = [
@@ -8438,6 +8442,7 @@ Jos haluat muokata MediaWikin yleistä kotoistusta, käy [//www.mediawiki.org/wi
 	'api-error-verification-error' => 'Tiedosto voi olla vioittunut, tai sillä saattaa olla väärä tiedostopääte.',
 	'addnewtalksection-link' => 'Lisää uusi osio',
 	'all_the_wikia' => 'Kaikki wikiat',
+	'add_comment' => 'Jätä viesti',
 ];
 
 $messages['fiu-vro'] = [
@@ -8904,6 +8909,7 @@ Veuillez visiter la [//www.mediawiki.org/wiki/Localisation Localisation de Media
 	'addnewtalksection-link' => 'Commencer une nouvelle section',
 	'all_the_wikia' => 'Tout Fandom',
 	'achievements-leaderboard-navigation-item' => 'Classement du wikia',
+	'add_comment' => 'Laisser un message',
 ];
 
 $messages['frc'] = [
@@ -15246,6 +15252,7 @@ $1 사용자가 차단된 이유는 다음과 같습니다: "$2"',
 	'addnewtalksection-link' => '내용 추가하기',
 	'all_the_wikia' => '위키아 전체',
 	'achievements-leaderboard-navigation-item' => '위키 리더보드',
+	'add_comment' => '새 주제',
 ];
 
 $messages['ko-kp'] = [
@@ -21075,6 +21082,7 @@ Vitja [//www.mediawiki.org/wiki/Localisation MediaWiki Localisation] og [//trans
 	'api-error-verification-error' => 'Fila kan vera øydelagd eller ha rang filending.',
 	'addnewtalksection-link' => 'Start ny seksjon',
 	'all_the_wikia' => 'Hele wikia',
+	'add_comment' => 'Legg igjen beskjed',
 ];
 
 $messages['nov'] = [
@@ -24151,6 +24159,7 @@ $messages['ru'] = [
 	'addnewtalksection-link' => 'Создать новый раздел',
 	'all_the_wikia' => 'Весь Фэндом',
 	'achievements-leaderboard-navigation-item' => 'Доска лидеров вики',
+	'add_comment' => 'Оставить сообщение',
 ];
 
 $messages['rue'] = [
@@ -31717,6 +31726,7 @@ $1被封禁的理由是：“$2”',
 	'addnewtalksection-link' => '开始一个新小节',
 	'all_the_wikia' => '所有Fandom',
 	'achievements-leaderboard-navigation-item' => '维基排行榜',
+	'add_comment' => '留言',
 ];
 
 $messages['zh-hant'] = [
@@ -31894,6 +31904,7 @@ $1被封禁的理由是“$2”',
 	'addnewtalksection-link' => '開始一個新小節',
 	'all_the_wikia' => '所有Fandom',
 	'achievements-leaderboard-navigation-item' => '維基排行榜',
+	'add_comment' => '留言',
 ];
 
 $messages['zh-hk'] = [
@@ -31903,6 +31914,7 @@ $messages['zh-hk'] = [
 	'activeusers-hidebots' => '隱藏機械人',
 	'achievements-leaderboard-navigation-item' => '維基排行榜',
 	'activeusers' => '活躍用戶名單',
+	'add_comment' => '留言',
 ];
 
 $messages['zh-min-nan'] = [
@@ -31964,6 +31976,7 @@ $messages['zh-tw'] = [
 	'addnewtalksection-link' => '於本討論頁增加新的討論主題',
 	'achievements-leaderboard-navigation-item' => '維基排行榜',
 	'activeusers' => '活躍用戶名單',
+	'add_comment' => '留言',
 ];
 
 $messages['zh-yue'] = [
@@ -32018,10 +32031,16 @@ $messages['zh'] = [
 	'achievements-leaderboard-navigation-item' => '维基排行榜',
 	'accountcreated' => '账户已创建',
 	'accountcreatedtext' => '已创建账户 $1 。',
+	'add_comment' => '留言',
 ];
 
 $messages['zh-cn'] = [
 	'accountcreated' => '账户已创建',
 	'accountcreatedtext' => '已创建账户 $1 。',
+	'add_comment' => '留言',
+];
+
+$messages['zh-sg'] = [
+	'add_comment' => '留言',
 ];
 
