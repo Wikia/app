@@ -6506,6 +6506,7 @@ Diese automatisch erstellte Spezialseite bietet eine \'\'\'alphabetische Übersi
 * \'\'Kursiv\'\' dargestellte Einträge sind Weiterleitungen auf andere Seitentitel. 
 * Alternativ zu dieser automatisch erstellten Auflistung gibt es noch die [[:Kategorie:Inhalt|\'\'\'Kategorienübersicht\'\'\' als thematisch gegliederten Einstieg]].
 |}',
+	'already_a_member' => 'Bereits Wikia-Nutzer?',
 ];
 
 $messages['de-ch'] = [
@@ -7664,6 +7665,7 @@ Por favor visita [//www.mediawiki.org/wiki/Localisation Localización MediaWiki]
 	'addsection' => 'Dejar un mensaje',
 	'admin_skin' => 'Opciones de administración',
 	'adminskin_ds' => 'Predeterminada',
+	'already_a_member' => '¿Ya estás registrado?',
 ];
 
 $messages['et'] = [
@@ -8275,6 +8277,7 @@ $messages['fa'] = [
 	'add_comment' => 'شروع بحث جدید',
 	'admin_skin' => 'اختیارات مدیر',
 	'adminskin_ds' => 'پیش‌فرض',
+	'already_a_member' => 'حساب کاربری دارید؟',
 ];
 
 $messages['ff'] = [
@@ -8460,6 +8463,7 @@ Jos haluat muokata MediaWikin yleistä kotoistusta, käy [//www.mediawiki.org/wi
 	'addsection' => 'Lisää kommentti',
 	'admin_skin' => 'Ylläpitäjän vaihtoehdot',
 	'adminskin_ds' => 'Oletus',
+	'already_a_member' => 'Jo jäsen?',
 ];
 
 $messages['fiu-vro'] = [
@@ -8930,6 +8934,7 @@ Veuillez visiter la [//www.mediawiki.org/wiki/Localisation Localisation de Media
 	'addsection' => 'Laisser un message',
 	'admin_skin' => 'Options administrateurs',
 	'adminskin_ds' => 'Par défaut',
+	'already_a_member' => 'Déjà membre ?',
 ];
 
 $messages['frc'] = [
@@ -13534,6 +13539,7 @@ $1のブロックの理由は「$2」です。',
 	'addsection' => 'メッセージを追加する',
 	'admin_skin' => '管理者向け設定',
 	'adminskin_ds' => '初期設定',
+	'already_a_member' => 'アカウントはお持ちですか?',
 ];
 
 $messages['jam'] = [
@@ -15277,6 +15283,7 @@ $1 사용자가 차단된 이유는 다음과 같습니다: "$2"',
 	'achievements-leaderboard-navigation-item' => '위키 리더보드',
 	'add_comment' => '새 주제',
 	'admin_skin' => '관리자 옵션',
+	'already_a_member' => '이미 계정이 있으신가요?',
 ];
 
 $messages['ko-kp'] = [
@@ -21109,6 +21116,7 @@ Vitja [//www.mediawiki.org/wiki/Localisation MediaWiki Localisation] og [//trans
 	'add_comment' => 'Legg igjen beskjed',
 	'admin_skin' => 'Administratoralternativer',
 	'adminskin_ds' => 'Standard',
+	'already_a_member' => 'Allerede medlem?',
 ];
 
 $messages['nov'] = [
@@ -24190,6 +24198,7 @@ $messages['ru'] = [
 	'add_comment' => 'Оставить сообщение',
 	'admin_skin' => 'настройки администратора',
 	'adminskin_ds' => 'по-умолчанию',
+	'already_a_member' => 'Уже участник?',
 ];
 
 $messages['rue'] = [
