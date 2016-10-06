@@ -24,8 +24,7 @@ $messages['en'] = [
 As a result, visitors using this IP address cannot create any more accounts at the moment.',
 	'accountcreated' => 'Account created',
 	'accountcreatedtext' => 'The user account for $1 has been created.',
-	'anoneditwarning' => '\'\'\'Warning:\'\'\' You are not logged in.
-Your IP address will be recorded in this page\'s edit history.',
+	'anoneditwarning' => 'You are not logged in.',
 	'anonpreviewwarning' => '\'\'You are not logged in. Saving will record your IP address in this page\'s edit history.\'\'',
 	'autoblockedtext' => 'Your IP address has been automatically blocked because it was used by another user, who was blocked by $1.
 The reason given is this:
@@ -46,10 +45,15 @@ Please include all above details in any queries you make.',
 	'accmailtext' => 'A randomly generated password for [[User talk:$1|$1]] has been sent to $2.
 
 The password for this new account can be changed on the \'\'[[Special:ChangePassword|change password]]\'\' page upon logging in.',
-	'anontalkpagetext' => '----\'\'This is the discussion page for an anonymous user who has not created an account yet, or who does not use it.
-We therefore have to use the numerical IP address to identify him/her.
-Such an IP address can be shared by several users.
-If you are an anonymous user and feel that irrelevant comments have been directed at you, please [[Special:UserLogin/signup|create an account]] or [[Special:UserLogin|log in]] to avoid future confusion with other anonymous users.\'\'',
+	'anontalkpagetext' => '<br style="clear:both;" />
+----
+{| id="anontalktext" class="plainlinks noeditsection" style="font-size:90%; border: 1px solid #B8B8B8; margin:1em 1em 0em 1em; padding:0.25em 1em 0.25em 1em; clear: both;" 
+| \'\'\'This is the discussion page for an anonymous user  who has not created an account yet or who does not use it, identified by the user\'s numerical [[wikipedia:IP address|IP address]].\'\'\'
+
+Some IP addresses change periodically, and may be shared by several users. If you are an anonymous user, you may [[{{ns:Special}}:Signup|create an account or log in]] to avoid future confusion with other anonymous users. Registering also hides your IP address.
+
+\'\'\'Help:\'\'\' [[Help:Why create an account?|Why create an account?]] &bull; [[Help:Create an account|How to create an account]] &bull; [http://whatismyipaddress.com/ip/$1 WHOIS]
+|}',
 	'addsection-preload' => '',
 	'addsection-editintro' => '',
 	'allowemail' => 'Enable email from other users',
@@ -6335,7 +6339,19 @@ Bitte versuche es in ein paar Minuten erneut.',
 	'acct_creation_throttle_hit' => 'Du hast schon $1 Benutzerkonten angelegt und kannst vorerst keine weiteren mehr anlegen.',
 	'accountcreated' => 'Benutzerkonto erstellt',
 	'accountcreatedtext' => 'Das Benutzerkonto $1 wurde erstellt.',
-	'anoneditwarning' => 'Du bearbeitest diese Seite unangemeldet. Wenn du speicherst, wird deine aktuelle IP-Adresse in der Versionsgeschichte aufgezeichnet und ist damit unwiderruflich \'\'\'öffentlich\'\'\' einsehbar.',
+	'anoneditwarning' => '<table align=center width=75% cellpadding=5 style="background: #D3E1F2; border: 1px solid #aaa; color: black;">
+<tr>
+<td valign="top" colspan="2"> \'\'\'Hast du vergessen dich anzumelden?\'\'\' Ein Benutzername hilft dir dabei deine Änderungen nachzuvollziehen und mit anderen Nutzern zu kommunizieren. Wenn du dich nicht anmeldest, wird deine aktuelle IP-Adresse in der Versionsgeschichte aufgezeichnet und ist damit unwiderruflich \'\'\'öffentlich\'\'\' einsehbar.
+</td>
+</tr>
+<tr>
+<td class="plainlinks" align="center" rowspan="2"> [{{FULLURL:Special:Userlogin}} http://images3.wikia.nocookie.net/messaging/images/f/f1/Greenbutton.png] \'\'\'[[Special:Userlogin|Hier zum Anmelden klicken]]\'\'\'
+</td>
+<td class="plainlinks" align="left"> [{{SERVER}}/index.php?title=Special:Userlogin&type=signup http://images3.wikia.nocookie.net/messaging/images/f/f1/Greenbutton.png] \'\'\'[{{SERVER}}/index.php?title=Special:Userlogin&type=signup Benutzerkonto erstellen]\'\'\'
+</td>
+</tr>
+</table>
+<br />',
 	'anonpreviewwarning' => '\'\'Du bist nicht angemeldet. Beim Speichern wird deine IP-Adresse in der Versionsgeschichte aufgezeichnet.\'\'',
 	'autoblockedtext' => 'Deine IP-Adresse wurde automatisch gesperrt, da sie von einem anderen Benutzer genutzt wurde, der von $1 gesperrt wurde.
 Als Grund wurde angegeben:
@@ -6356,7 +6372,13 @@ Bitte füge alle Informationen jeder Anfrage hinzu, die du stellt.',
 	'accmailtext' => 'Ein zufällig generiertes Passwort für [[User talk:$1|$1]] wurde an $2 versandt.
 
 Das Passwort für dieses neue Benutzerkonto kann auf der Spezialseite „[[Special:ChangePassword|Passwort ändern]]“ geändert werden.',
-	'anontalkpagetext' => '----\'\'Diese Seite dient dazu, einem nicht angemeldeten Benutzer Nachrichten zu hinterlassen. Es wird seine IP-Adresse zur Identifizierung verwendet. IP-Adressen können von mehreren Benutzern gemeinsam verwendet werden. Wenn du mit den Kommentaren auf dieser Seite nichts anfangen kannst, richten sie sich vermutlich an einen früheren Inhaber deiner IP-Adresse und du kannst sie ignorieren. Du kannst dir auch ein [[Special:UserLogin/signup|Benutzerkonto erstellen]] oder dich [[Special:UserLogin|anmelden]], um künftig Verwechslungen mit anderen anonymen Benutzern zu vermeiden.\'\'',
+	'anontalkpagetext' => '<br style="clear:both;" />
+----
+{| id="anontalktext" class="plainlinks noeditsection" style="font-size:90%; border: 1px solid #B8B8B8; margin:1em 1em 0em 1em; padding:0.25em 1em 0.25em 1em; clear: both;" 
+| \'\'\'Diese Seite dient dazu, einem nicht angemeldeten Benutzer an seine [[wikipedia:de:IP-Adresse|IP-Adresse]] Nachrichten zu hinterlassen.\'\'\'
+
+Einige IP-Adressen wechseln dynamisch und können von mehreren Nutzern belegt werden. Falls du ein nicht-angemeldeter Nutzer bist, solltest du ein [[{{ns:Special}}:Signup|Benutzerkonto erstellen]] oder dich anmelden um nicht mit anderen Nutzern verwechselt zu werden. Nach einer Anmeldung wird deine IP-Adresse auch nicht mehr angezeigt.
+|}',
 	'allowemail' => 'E-Mail-Empfang von anderen Benutzern ermöglichen',
 	'action-read' => 'die Seite zu lesen',
 	'action-edit' => 'die Seite zu bearbeiten',
@@ -6442,7 +6464,7 @@ Wenn Du die Seite wieder von der Beobachtungsliste entfernen möchtest, klicke a
 	'allmessages-prefix' => 'Präfixfilter:',
 	'allmessages-language' => 'Sprache:',
 	'allmessages-filter-submit' => 'Los',
-	'anonymous' => '{{PLURAL:$1|Unangemeldeter Benutzer|Unangemeldete Benutzer}} auf {{SITENAME}}',
+	'anonymous' => 'Unregistrierte(r) Benutzer',
 	'anonuser' => 'Anonymer {{SITENAME}}-Benutzer $1',
 	'anonusers' => '{{PLURAL:$2|unangemeldetem|unangemeldeten}} {{SITENAME}}-{{PLURAL:$2|Benutzer|Benutzern}} $1',
 	'ago' => 'vor $1',
@@ -13031,7 +13053,7 @@ Si prega di specificare tutti i dettagli qui inclusi nel compilare qualsiasi ric
 	'accmailtext' => 'Una password generata casualmente per [[User talk:$1|$1]] è stata inviata a $2.
 
 La password per questo nuovo account può essere modificata all\'accesso nella pagina per \'\'[[Special:ChangePassword|cambiare la password]]\'\'.',
-	'anontalkpagetext' => '----\'\'Questa è la pagina di discussione di un utente anonimo, che non ha ancora creato un accesso o comunque non lo usa. Per identificarlo è quindi necessario usare il numero del suo indirizzo IP. Gli indirizzi IP possono però essere condivisi da più utenti. Se sei un utente anonimo e ritieni che i commenti presenti in questa pagina non si riferiscano a te, [[Special:UserLogin/signup|crea un nuovo accesso]] o [[Special:UserLogin|entra con quello che già hai]] per evitare di essere confuso con altri utenti anonimi in futuro.\'\'',
+	'anontalkpagetext' => '----\'\'Questa è la pagina di discussione di un utente anonimo, che non ha ancora creato un account o comunque non lo usa. Per identificarlo è quindi necessario usare il numero del suo indirizzo IP. Gli indirizzi IP possono però essere condivisi da più utenti. Se sei un utente anonimo e ritieni che i commenti presenti in questa pagina non si riferiscano a te, [[Special:UserLogin/signup|crea un nuovo account]] o [[Special:UserLogin|entra con quello che già hai]] per evitare di essere confuso con altri utenti anonimi in futuro.\'\'',
 	'allowemail' => 'Abilita la ricezione di messaggi e-mail da altri utenti',
 	'action-read' => 'leggere questa pagina',
 	'action-edit' => 'modificare questa pagina',
@@ -13372,8 +13394,17 @@ $messages['ja'] = [
 そのため、現在このIPアドレスの利用者はアカウントをこれ以上作成できません。',
 	'accountcreated' => 'アカウントを作成しました',
 	'accountcreatedtext' => '利用者アカウント：$1が作成されました。',
-	'anoneditwarning' => '\'\'\'警告：\'\'\'ログインしていません。
-このまま投稿を行った場合、使用中のIPアドレスがこのページの編集履歴に記録されます。',
+	'anoneditwarning' => '<table class="plainlinks" align="center" cellpadding="5" style="width:75%; background:#D3E1F2; border:1px solid #aaa; color:#000; text-align:center;">
+<tr>
+<td rowspan="2">http://images.wikia.com/messaging/images/6/68/Login.png</td>
+<td colspan="3" style="vertical-align:top;"> \'\'\'現在ログインしておりません。\'\'\' ログインしてから編集すると、編集履歴をあとで確認することができます。ログインしない場合は、IPアドレスが履歴他に表示されることになります。</td>
+</tr>
+<tr>
+<td style="width:40%; text-align:right;"> [{{fullurl:Special:Userlogin|returnto={{FULLPAGENAMEE}}}} http://images.wikia.com/messaging/images/f/f1/Greenbutton.png] \'\'\'<span class="plainlinks>[{{fullurl:Special:Userlogin|returnto={{FULLPAGENAMEE}}}} ログインする場合はこちら]</span> \'\'\'</td>
+<td></td>
+<td style="width:40%; text-align:left;"> [{{SERVER}}/index.php?title=Special:Userlogin&type=signup http://images.wikia.com/messaging/images/f/f1/Greenbutton.png] \'\'\'[{{SERVER}}/index.php?title=Special:Userlogin&type=signup アカウントを作成する場合はこちら]\'\'\'</td>
+</tr>
+</table>',
 	'anonpreviewwarning' => '\'\'ログインしていません。投稿を保存すると、このページの履歴に使用中のIPアドレスが記録されます。\'\'',
 	'autoblockedtext' => '利用中のIPアドレスは、$1によって投稿をブロックされた利用者によって使用されたために自動的にブロックされています。
 理由は次の通りです。
@@ -13394,10 +13425,13 @@ $1または他の[[{{MediaWiki:Grouppage-sysop}}|管理者]]にこの件につ�
 	'accmailtext' => '[[User talk:$1|$1]]のために無作為に生成したパスワードを、$2に送信しました。
 
 この新アカウントのパスワードは、ログインした際に\'\'[[Special:ChangePassword|パスワード変更]]\'\'ページで変更できます。',
-	'anontalkpagetext' => '----\'\'このページはアカウントをまだ作成していないか使用していない匿名利用者のための議論ページです。
-匿名利用者を識別するために、利用者名のかわりにIPアドレスが使用されています。
-IPアドレスは複数の利用者の間で共有されていることがあります。
-もし、自身が匿名利用者であり、自分に関係のないコメントが寄せられている考えられる場合は、[[Special:UserLogin/signup|アカウントを作成する]]か[[Special:UserLogin|ログインして]]他の匿名利用者と間違えられないようにしてください。\'\'',
+	'anontalkpagetext' => '<br style="clear:both;" />
+----
+{| id="anontalktext" class="plainlinks noeditsection" style="font-size:90%; border: 1px solid #B8B8B8; margin:1em 1em 0em 1em; padding:0.25em 1em 0.25em 1em; clear: both;" 
+|\'\'\'これはアカウントをまだ作成していないか、あるいは使っていない匿名利用者のための会話ページです。\'\'\'
+
+{{SITENAME}}では匿名利用者の識別は利用者名のかわりにIPアドレスを用います。IPアドレスは何人かで共有されることがあります。もしも、あなたが匿名利用者で無関係なコメントがここに寄せられる場合は、[[Special:Userlogin|アカウントを作成するかログインして]]他の匿名利用者と間違えられないようにしてくださるようお願いします。詳細は、[[w:c:ja:Help:アカウントを作る理由|Help:アカウントを作る理由]]をお読みください。
+|}',
 	'allowemail' => '他の利用者からの電子メールの受信を有効化する',
 	'action-read' => 'このページの閲覧',
 	'action-edit' => 'このページの編集',
@@ -20583,10 +20617,10 @@ Probeer het over een aantal minuten opnieuw.',
 Daarom kun je als vanaf jouw IP-adres op dit moment geen nieuwe gebruiker registreren.',
 	'accountcreated' => 'Gebruiker aangemaakt',
 	'accountcreatedtext' => 'De gebruiker $1 is aangemaakt.',
-	'anoneditwarning' => '\'\'\'Waarschuwing:\'\'\' u bent niet aangemeld.
-Uw IP-adres wordt opgeslagen als u wijzigingen op deze pagina maakt.',
-	'anonpreviewwarning' => '\'\'U bent niet aangemeld.\'\'
-\'\'Door uw bewerking op te slaan wordt uw IP-adres opgeslagen in de paginageschiedenis.\'\'',
+	'anoneditwarning' => '\'\'\'Waarschuwing:\'\'\' je bent niet aangemeld.
+Je IP-adres wordt opgeslagen als je wijzigingen op deze pagina maakt.',
+	'anonpreviewwarning' => '\'\'Je bent niet aangemeld.\'\'
+\'\'Door je bewerking op te slaan wordt je IP-adres opgeslagen in de paginageschiedenis.\'\'',
 	'autoblockedtext' => 'Uw IP-adres is automatisch geblokkeerd, omdat het is gebruikt door een andere gebruiker, die is geblokkeerd door $1.
 De opgegeven reden is:
 
@@ -20609,8 +20643,8 @@ Het wachtwoord voor deze nieuwe gebruiker kan gewijzigd worden via de pagina \'\
 	'anontalkpagetext' => '----\'\'Deze overlegpagina hoort bij een anonieme gebruiker die hetzij geen gebruikersnaam heeft, hetzij deze niet gebruikt.
 Daarom wordt het IP-adres ter identificatie gebruikt.
 Het is mogelijk dat meerdere personen hetzelfde IP-adres gebruiken.
-Mogelijk ontvangt u hier berichten die niet voor u bedoeld zijn.
-Als u dat wilt voorkomen, [[Special:UserLogin/signup|registreer u]] of [[Special:UserLogin|meld u aan]] om verwarring met andere anonieme gebruikers te voorkomen.\'\'',
+Mogelijk ontvang je hier berichten die niet voor je bedoeld zijn.
+Als je dat wilt voorkomen, [[Special:UserLogin/signup|registreer je]] of [[Special:UserLogin|meld je aan]] om verwarring met andere anonieme gebruikers te voorkomen.\'\'',
 	'allowemail' => 'E-mail van andere gebruikers toestaan',
 	'action-read' => 'deze pagina te bekijken',
 	'action-edit' => 'deze pagina te bewerken',
@@ -27352,8 +27386,11 @@ $messages['sv'] = [
 Som ett resultat kan besökare som använder den här IP-adressen inte skapa några fler användarkonton just nu.',
 	'accountcreated' => 'Användarkontot har skapats',
 	'accountcreatedtext' => 'Användarkontot $1 har skapats.',
-	'anoneditwarning' => '\'\'\'Varning:\'\'\' Du är inte inloggad.
-Din IP-adress kommer att sparas i historiken för den här sidan.',
+	'anoneditwarning' => '<table class="plainlinks" align="center" cellpadding="5" style="width:75%; background:#D3E1F2; border:1px solid #99C; text-align:center; font-size:120%;" >
+<tr>
+<td>http://images1.wikia.nocookie.net/__cb1/messaging/images/f/f1/Greenbutton.png &nbsp; \'\'\'[{{fullurl:Special:Signup|returnto={{FULLPAGENAMEE}}}} KLICKA HÄR FÖR ATT LOGGA IN ELLER SKAPA ETT KONTO]\'\'\' &nbsp; http://images1.wikia.nocookie.net/__cb1/messaging/images/f/f1/Greenbutton.png</td>
+</tr>
+</table>',
 	'anonpreviewwarning' => '\'\'Du är inte inloggad. Om du sparar kommer din IP-adress registreras på denna sidas redigeringshistorik.\'\'',
 	'autoblockedtext' => 'Din IP-adress har blockerats automatiskt eftersom den har använts av en annan användare som blockerats av $1.
 Motiveringen av blockeringen var:
@@ -27374,10 +27411,15 @@ Vänligen ange informationen ovan i alla förfrågningar som du gör i ärendet.
 	'accmailtext' => 'Ett slumpgenererat lösenord för [[User talk:$1|$1]] har skickats till $2.
 
 Lösenordet för det här nya användarkontot kan ändras på sidan \'\'[[Special:ChangePassword|ändra lösenord]]\'\' när du loggar in.',
-	'anontalkpagetext' => '----\'\'Detta är diskussionssidan för en anonym användare som inte ännu skapat ett konto, eller som inte använder det.
-Därför måste vi använda den numeriska IP-adressen för att identifiera honom/henne.
-En sådan IP-adress kan delas av flera användare.
-Om du är en anonym användare och känner att irrelevanta kommentarer har riktats mot dig, vänligen [[Special:UserLogin/signup|skapa ett konto]] eller [[Special:UserLogin|logga in]] för att undvika framtida förväxlingar med andra anonyma användare.\'\'',
+	'anontalkpagetext' => '<br style="clear:both;" />
+----
+{| id="anontalktext" class="plainlinks noeditsection" style="font-size:90%; border: 1px solid #B8B8B8; margin:1em 1em 0em 1em; padding:0.25em 1em 0.25em 1em; clear: both;" 
+| \'\'\'Detta är en diskussionssida för en anonym användare som inte skapat ett konto ännu, eller som inte använder det, som identifierats av användarens numeriska [[wikipedia:IP address|IP-adress]].\'\'\'
+
+Vissa IP-adresser ändras regelbundet, och kan delas av flera användare. Om du är en anonym användare kan du [[{{ns:Special}}:Userlogin|skapa ett konto eller logga in]] för att undvika framtida förväxlingar användare. Registrera också döljer din IP-adress.
+
+\'\'\'Hjälp:\'\'\' [[Help:Why create an account?|Varför skapa ett konto?]] &bull; [[Help:Create an account|Hur man skapar ett konto]] &bull; [http://samspade.org/whois?query={{PAGENAMEE}} WHOIS]
+|}',
 	'allowemail' => 'Tillåt e-post från andra användare',
 	'action-read' => 'läsa denna sida',
 	'action-edit' => 'redigera denna sida',
@@ -31968,6 +32010,7 @@ $messages['zh-hk'] = [
 	'allnotinnamespace' => '所有頁面 (不包括 $1 名字空間)',
 	'allowemail' => '允許其他用戶寄發電子郵件給您',
 	'allpagesfrom' => '顯示頁面開始自：',
+	'anononlyblock' => '僅限匿名用戶',
 ];
 
 $messages['zh-min-nan'] = [
@@ -32012,7 +32055,7 @@ $messages['zh-tw'] = [
 	'activeusers-hidebots' => '隱藏機器人',
 	'addedwatchtext' => '頁面「[[:$1]]」已經被加入到您的[[Special:Watchlist|監視清單]]中。將來有關此頁面及其討論頁的任何修改將會在那裡列出，而且還會在[[Special:RecentChanges|近期變動]]中以\'\'\'粗體\'\'\'形式列出以使起更容易識別。',
 	'alreadyrolled' => '無法恢復由[[User:$2|$2]] ([[User talk:$2|討論]])進行的[[$1]]的最後編輯；其他人已經編輯或是恢復了該頁。 最後編輯者: [[User:$3|$3]] ([[User talk:$3|討論]])。',
-	'anononlyblock' => '僅限匿名使用者',
+	'anononlyblock' => '僅限匿名用戶',
 	'allmessages' => '系統介面',
 	'allmessagestext' => '這裡列出所有可定製的系統介面。',
 	'allmessagesnotsupportedDB' => '系統介面功能處於關閉狀態 (wgUseDatabaseMessages)。',
@@ -32033,6 +32076,7 @@ $messages['zh-tw'] = [
 	'allarticles' => '所有頁面',
 	'allnotinnamespace' => '所有頁面 (不包括 $1 名字空間)',
 	'allpagesfrom' => '顯示頁面開始自：',
+	'anoneditwarning' => '\'\'\'注意:\'\'\' 你尚未登入本站，你的IP位置會被記錄在本頁的修訂歷史頁中。',
 ];
 
 $messages['zh-yue'] = [
@@ -32095,6 +32139,7 @@ $messages['zh'] = [
 	'allnotinnamespace' => '所有页面 (不包括 $1 名字空间)',
 	'allowemail' => '允许其他用户给您发送电子邮件',
 	'allpagesfrom' => '显示页面开始自:',
+	'anoneditwarning' => '\'\'\'注意:\'\'\' 你尚未登入本站，你的IP位置會被記錄在本頁的修訂歷史頁中。',
 ];
 
 $messages['zh-cn'] = [
@@ -32108,6 +32153,8 @@ $messages['zh-cn'] = [
 	'allnotinnamespace' => '所有页面 (不包括 $1 名字空间)',
 	'allowemail' => '允许其他用户给您发送电子邮件',
 	'allpagesfrom' => '显示页面开始自:',
+	'anoneditwarning' => '\'\'\'注意:\'\'\' 你尚未登入本站，你的IP位置會被記錄在本頁的修訂历史页中。',
+	'anononlyblock' => '仅限匿名用户',
 ];
 
 $messages['zh-sg'] = [

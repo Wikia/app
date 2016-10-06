@@ -407,6 +407,7 @@ $messages['es'] = [
 	'anwb-step1-headline' => 'De qué trata tí Wiki?',
 	'anwb-choose-logo' => 'Elija su logo',
 	'question_asked_by_a_wikia_user' => 'Pregunta hecha por un usuario de Fandom',
+	'anonymous_edit_points' => '$1 {{PLURAL:$1|colaboración|colaboraciones}}',
 ];
 
 $messages['fi'] = [
@@ -980,7 +981,7 @@ $messages['it'] = [
 	'answer_title' => 'Risposta',
 	'answered_by' => 'Risposta da',
 	'unregistered' => 'Non registrato',
-	'anonymous_edit_points' => '$1 {{PLURAL:$1|contributore|contributori}}',
+	'anonymous_edit_points' => '$1 {{PLURAL:$1|collaboratore|collaboratori}}',
 	'edit_points' => '{{PLURAL:$1|modifica punto|modifica punti}}',
 	'ask_a_question' => 'Fai una domanda...',
 	'ask_a_question-widget' => 'Fai una domanda...',
@@ -1109,6 +1110,7 @@ $messages['ja'] = [
 	'research_this' => 'この質問について調べる',
 	'question_asked_by_a_wikia_user' => 'Fandomユーザーからの質問',
 	'a' => 'Answer:',
+	'anonymous_edit_points' => '$1 のヘルパー',
 ];
 
 $messages['lb'] = [
@@ -2179,6 +2181,7 @@ $messages['zh-hans'] = [
 $messages['no'] = [
 	'question_asked_by_a_wikia_user' => 'Spørsmål stilt av en Wikia-bruker',
 	'ads_by_google' => 'Ads fra Google',
+	'anonymous_edit_points' => '$1 {{PLURAL:$1|hjelper|hjelpere}}',
 ];
 
 $messages['zh-hant'] = [
@@ -2188,6 +2191,7 @@ $messages['zh-hant'] = [
 $messages['ko'] = [
 	'a' => '답변:',
 	'ads_by_google' => 'Google 광고',
+	'anonymous_edit_points' => '$1명의 익명 기여자',
 ];
 
 $messages['bg'] = [
