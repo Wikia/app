@@ -123,39 +123,53 @@ load the link in your browser to confirm that your email address is valid.',
 if you recently created your account, you may wish to wait a few minutes for it to arrive before trying to request a new code.',
 	'confirmemail_send' => 'Mail a confirmation code',
 	'confirmemail_sent' => 'Confirmation email sent.',
-	'confirmemail_oncreate' => 'A confirmation code was sent to your email address.
-This code is not required to log in, but you will need to provide it before enabling any email-based features in the wiki.',
+	'confirmemail_oncreate' => 'A confirmation code was sent to your e-mail address.
+This code is not required to log in, but you will need to provide it before enabling any e-mail-based features in the wiki. If you do not receive the email, remember to check your spam and junk mail folders. Please allow (or \'\'whitelist\'\') emails from community@wikia.com to be received.',
 	'confirmemail_sendfailed' => '{{SITENAME}} could not send your confirmation mail.
 Please check your email address for invalid characters.
 
 Mailer returned: $1',
-	'confirmemail_invalid' => 'Invalid confirmation code.
-The code may have expired.',
+	'confirmemail_invalid' => '<center>Thanks for confirming your email, but your confirmation code has expired or is invalid.<br/>
+You will need to receive a new code to confirm your account.
+
+<span class="wikia-button big">[[Special:ConfirmEmail|<span>Request new code via email</span>]]</span></center>  
+<br>',
 	'confirmemail_needlogin' => 'You need to $1 to confirm your email address.',
 	'confirmemail_success' => 'Your email address has been confirmed.
 You may now [[Special:UserLogin|log in]] and enjoy the wiki.',
-	'confirmemail_loggedin' => 'Your email address has now been confirmed.',
+	'confirmemail_loggedin' => '\'\'\'Your e-mail address has now been confirmed.\'\'\'
+
+Welcome!
+
+With thousands of communities on Wikia, there are many ways to have fun here. 
+
+Spend some time getting to know Wikia by [[w:c:help:Help:Contents|visiting our help wiki]], reading interesting and cool pages, writing content on your favorite subjects, or meeting other members of the community.
+
+The Wikia Community Team',
 	'confirmemail_error' => 'Something went wrong saving your confirmation.',
-	'confirmemail_subject' => 'Welcome to Wikia!',
+	'confirmemail_subject' => 'Please confirm your Wikia account',
 	'confirmemail_body' => 'Hi $2,
 
-Welcome to Wikia!
+Thanks for registering on Wikia!
 
-With thousands of communities on Wikia, there are many ways to have fun here. Spend some time getting to know Wikia by visiting the home page (www.wikia.com), taking a tutorial (<http://www.wikia.com/wiki/Help:Tutorial_1>), reading interesting and cool pages, writing content on your favorite subjects, or meeting other members of the community.
+Please take a minute to activate your new account: $3
+
+Ready to get started?
+
+Look at all of the recent activity of the community you just joined! Start contributing by leaving comments or editing pages.
+
+Watch the Wikia video at http://wikia.com/go and start exploring some of our favorite wikis in Gaming, Entertainment, and Lifestyles.
+
+Meet the Wikia community, learn about what\'s happening, and find help - all at Community Central.
+
+Have fun!
+
+- Wikia Community Support
 
 
-To fully activate your account, please confirm your email by clicking on the link below or pasting it into your browser.
-
-$3
-
-This confirmation link will expire in 7 days.
-
-(For your information, this username was created from the following address: $1)
-
-We look forward to seeing you on Wikia!
-The Wikia Community Team
-www.wikia.com
-',
+___________________________________________
+* Find help and advice on Community Central: http://community.wikia.com
+* Want to receive fewer messages from us? You can unsubscribe or change your email preferences here: http://community.wikia.com/Special:Preferences',
 	'confirmemail_body_changed' => 'Someone, probably you, from IP address $1,
 has changed the email address of the account "$2" to this address on {{SITENAME}}.
 
@@ -6142,7 +6156,9 @@ var ShowHideConfig = {
 	'creditspage' => 'Seiteninformationen',
 	'confirmemail' => 'E-Mail-Adresse bestätigen (Authentifizierung)',
 	'confirmemail_noemail' => 'Du hast keine gültige E-Mail-Adresse in deinen [[Special:Preferences|persönlichen Einstellungen]] eingetragen.',
-	'confirmemail_text' => '{{SITENAME}} erfordert, dass du deine E-Mail-Adresse bestätigst (authentifizieren), bevor du die erweiterten E-Mail-Funktionen benutzen kannst. Klicke bitte auf die unten stehende, mit „Bestätigungscode zuschicken“ beschriftete Schaltfläche, damit eine automatisch erstellte E-Mail an die angegebene Adresse geschickt wird. Diese E-Mail enthält eine Web-Adresse mit einem Bestätigungscode. Indem du diese Webseite in deinem Webbrowser öffnest, bestätigst du, dass die angegebene E-Mail-Adresse korrekt und gültig ist.',
+	'confirmemail_text' => 'Dieses Wiki erfordert, dass du deine E-Mail-Adresse bestätigst (authentifizierst), bevor du die E-Mail-Funktionen benutzen kannst. Durch einen Klick auf die Schaltfläche unten wird eine automatische E-Mail an dich gesendet. Diese E-Mail enthält einen Link mit einem Bestätigungscode. Durch Klicken auf diesen Link kannst du dann bestätigen, dass deine E-Mail-Adresse tatsächlich korrekt und gültig ist.
+
+Falls du keine E-Mail erhältst, prüfe bitte in [[{{ns:special}}:Preferences|Deinen Einstellungen]], ob du eine gültige E-Mail-Adresse eingetragen hast.',
 	'confirmemail_pending' => 'Es wurde dir bereits ein Bestätigungscode per E-Mail zugeschickt.
 Wenn du dein Benutzerkonto erst vor kurzem erstellt hast, warte bitte noch ein paar Minuten auf die E-Mail, bevor du einen neuen Code anforderst.',
 	'confirmemail_send' => 'Bestätigungscode zuschicken',
@@ -6152,28 +6168,31 @@ Wenn du dein Benutzerkonto erst vor kurzem erstellt hast, warte bitte noch ein p
 Bitte prüfe die E-Mail-Adresse auf ungültige Zeichen.
 
 Rückmeldung des Mailservers: $1',
-	'confirmemail_invalid' => 'Ungültiger Bestätigungscode. Möglicherweise ist der Bestätigungszeitraum verstrichen. Versuche bitte, die Bestätigung zu wiederholen.',
+	'confirmemail_invalid' => 'Ungültiger Bestätigungscode. Möglicherweise ist der Bestätigungszeitraum verstrichen.
+
+Du kannst dir [[Special:ConfirmEmail|hier]] einen neuen Code zuschicken lassen.',
 	'confirmemail_needlogin' => 'Du musst dich $1, um deine E-Mail-Adresse zu bestätigen.',
-	'confirmemail_success' => 'Deine E-Mail-Adresse wurde erfolgreich bestätigt. Du kannst dich jetzt [[Special:UserLogin|anmelden]].',
+	'confirmemail_success' => 'Deine E-Mail-Adresse wurde erfolgreich bestätigt.',
 	'confirmemail_loggedin' => 'Deine E-Mail-Adresse wurde erfolgreich bestätigt.',
 	'confirmemail_error' => 'Es gab einen Fehler bei der Bestätigung deiner E-Mail-Adresse.',
-	'confirmemail_subject' => '[{{SITENAME}}] Bestätigung der E-Mail-Adresse',
+	'confirmemail_subject' => '[{{SITENAME}}] Bestätigung deiner E-Mail-Adresse',
 	'confirmemail_body' => 'Hallo,
 
-jemand mit der IP-Adresse $1, wahrscheinlich du selbst, hat das Benutzerkonto „$2“ in {{SITENAME}} registriert.
+dies ist eine automatisch erstellte Nachricht. 
 
-Um die E-Mail-Funktion von {{SITENAME}} (wieder) zu aktivieren und um zu bestätigen,
-dass dieses Benutzerkonto wirklich zu deiner E-Mail-Adresse und damit zu dir gehört, öffne bitte die folgende Web-Adresse:
+Jemand mit der IP-Adresse $1, wahrscheinlich Du selbst, hat eine Bestätigung dieser E-Mail-Adresse für das Benutzerkonto "$2" für {{SITENAME}} angefordert.
 
-$3
+Um die E-Mail-Funktion für {{SITENAME}} (wieder) zu aktivieren und um zu bestätigen, dass dieses Benutzerkonto wirklich zu Deiner E-Mail-Adresse und damit zu Dir gehört, öffne bitte folgenden Link in Deinem Browser: $3
 
-Sollte die vorstehende Adresse in deinem E-Mail-Programm über mehrere Zeilen gehen, musst du sie eventuell per Hand in die Adresszeile deines Web-Browsers einfügen.
+Sollte der vorstehende Link in Deinem E-Mail-Programm über mehrere Zeilen gehen, musst du ihn eventuell per Hand in die URL-Zeile des Browsers einfügen. 
 
-Wenn du das genannte Benutzerkonto *nicht* registriert hast, folge diesem Link, um den Bestätigungsprozess abzubrechen:
+Der Bestätigungscode ist bis zum folgenden Zeitpunkt gültig: $4
 
-$5
+Wenn diese E-Mail-Adresse *nicht* zu dem genannten Benutzerkonto gehört, folge diesem Link bitte *nicht*.
 
-Dieser Bestätigungscode ist gültig bis $6, $7 Uhr.',
+----
+
+{{SITENAME}}: {{fullurl:{{Mediawiki:mainpage}}}}',
 	'confirmemail_body_changed' => 'Jemand mit der IP-Adresse $1, wahrscheinlich du selbst,
 hat die E-Mail-Adresse des Benutzerkontos „$2“ zu dieser Adresse auf {{SITENAME}} geändert.
 
@@ -7332,32 +7351,40 @@ alguien más puede haber deshecho el borrado antes.',
 	'confirmemail_noemail' => 'No tienes una dirección de correo electrónico válida en tus [[Special:Preferences|preferencias de usuario]].',
 	'confirmemail_text' => '{{SITENAME}} requiere la validación de tu dirección de correo antes de usarlo. Pulsa el botón de abajo para enviar la confirmación.
 El correo incluirá un enlace con un código. Introdúcelo para confirmar la validez de tu dirección.',
-	'confirmemail_pending' => 'Ya se te ha enviado un código de confirmación; si creaste una cuenta recientemente, puede que tengas que esperar unos minutos para que te llegue antes de intentar pedir un nuevo código.',
+	'confirmemail_pending' => '<div class="error"> Ya te hemos enviado un código de confirmación por correo electrónico; si creaste una cuenta recientemente, puede que tengas que esperar unos minutos a que te llegue antes de intentar pedir un nuevo código.</div>',
 	'confirmemail_send' => 'Envíar el código de confimación.',
 	'confirmemail_sent' => 'Confirmación de correo enviada.',
-	'confirmemail_oncreate' => 'Se ha enviado un código de confirmación a tu dirección de correo electrónico.
-Este código no es necesario para iniciar sesión, pero necesitarás proporcionarlo antes de activar cualquier función basada en correo electrónico en el wiki.',
-	'confirmemail_sendfailed' => 'No fue posible enviar el correo de confirmación. Por favor, comprueba la validez de la dirección de correo.
+	'confirmemail_oncreate' => 'Se ha enviado un código de confirmación a tu dirección de correo electrónico. Este código no es necesario para entrar, pero necesitarás ingresarlo antes de activar cualquier función basada en correo electrónico en el wiki.',
+	'confirmemail_sendfailed' => 'No fue posible enviar el correo de confirmación. Por favor, comprueba que no haya caracteres inválidos en la dirección de correo que has ingresado. El error del mensajero fue: $1',
+	'confirmemail_invalid' => 'Código de confirmación incorrecto. El código puede haber expirado.
 
-El servidor indicó el error: $1',
-	'confirmemail_invalid' => 'Código de confirmación incorrecto. El código debe haber expirado.',
+Enviar un nuevo código haciendo clic [[Special:ConfirmEmail|aquí]].',
 	'confirmemail_needlogin' => 'Necesitas $1 para confirmar tu dirección electrónica.',
 	'confirmemail_success' => 'Su dirección de correo ha sido confirmada
 Ahora puedes [[Special:UserLogin|identificarte]] y colaborar en el wiki.',
 	'confirmemail_loggedin' => 'Tu dirección de correo electrónico ha sido confirmada.',
 	'confirmemail_error' => 'Algo salió mal al guardar su confirmación.',
-	'confirmemail_subject' => 'confirmación de la dirección de correo de {{SITENAME}}',
-	'confirmemail_body' => 'Alguien, probablemente usted mismo, ha registrado desde la dirección IP $1 la cuenta "$2" en {{SITENAME}}, utilizando esta dirección de correo.
+	'confirmemail_subject' => 'Por favor, confirma tu cuenta de Wikia',
+	'confirmemail_body' => 'Hola $2,
 
-Para confirmar que esta cuenta realmente le pertenece y activar el correo en {{SITENAME}}, siga este enlace:
+¡Te damos la bienvenida a Wikia!
 
-$3
+Por favor, tómate un descanso para activar tu nueva cuenta: $3
 
-Si la cuenta *no* es suya, siga este otro enlace para cancelar la confirmación de la dirección de correo:
+Y ahora, llegó el momento... ¡hora de empezar la aventura!
 
-$5
+Echa un vistazo a la actividad reciente de la comunidad en la que acabas de participar. Comienza a contribuir mejorando las páginas que ya hay o creando nuevas páginas.
 
-El código de confirmación expirará en $4.',
+Explora nuestras comunidades sobre videojuegos, entretenimiento o cualquier otro tema y diviértete descubriendo cosas nuevas.
+
+Descubre qué sucede en Wikia y conoce a otros usuarios de Wikia en nuestro wiki comunitario.
+
+¡Diviértete!
+- Equipo comunitario de Wikia
+
+___________________________________________
+* Si necesitas ayuda o consejos, visita nuestra comunidad central http://comunidad.wikia.com
+* ¿Quieres dejar de recibir estos mensajes? Puedes darte de baja en el servicio de emails desde tus preferencias aquí: http://comunidad.wikia.com/Especial:Preferencias',
 	'confirmemail_body_changed' => 'Alguien, probablemente tú,
 ha modificado la dirección de correo electrónico asociado a la cuenta "$2" hacia esta en {{SITENAME}}, desde la dirección IP $1.
 
@@ -7957,27 +7984,40 @@ $2',
 نشانی پست الکترونیکی را از نظر وجود نویسه‌های نامعتبر بررسی کنید.
 
 پاسخ سامانه ارسال پست الکترونیکی: $1',
-	'confirmemail_invalid' => 'کد تأیید نامعتبر است. ممکن است که منقضی شده باشد.',
+	'confirmemail_invalid' => '<center>متشکر از تأییدکردن آدرس الکترونیکی خود، ولی کد تأیید شما منقضی شده یا نامعتبر می‌باشد.<br/>
+شما برای تأیید حساب کاربری خود نیاز به کد جدید دارید.  
+
+<span class="wikia-button big">[[Special:ConfirmEmail|<span>کد تایید جدید را از طریق پست الکترونیکی درخواست کنید</span>]]</span></center>  
+<br>',
 	'confirmemail_needlogin' => 'برای تأیید نشانی پست الکترونیکی‌تان نیاز به $1 دارید.',
 	'confirmemail_success' => 'نشانی پست الکترونیکی شما تأیید شده‌است.
 
 اینک می‌توانید [[Special:UserLogin|به سامانه وارد شوید]] و از ویکی لذت ببرید.',
 	'confirmemail_loggedin' => 'نشانی پست الکترونیکی شما تأیید شد.',
 	'confirmemail_error' => 'هنگام ذخیرهٔ تأیید شما به مشکلی برخورده شد.',
-	'confirmemail_subject' => 'تأیید نشانی پست الکترونیکی شما {{SITENAME}}',
-	'confirmemail_body' => 'یک نفر، احتمالاً خود شما، از نشانی آی‌پی $1 حساب کاربری‌ای با نام «$2» و این نشانی پست الکترونیکی در {{SITENAME}} ایجاد کرده‌است.
+	'confirmemail_subject' => 'لطفا حساب کاربری ویکیای خود را تایید کنید',
+	'confirmemail_body' => 'سلام $2،
 
-برای تأیید این که این حساب واقعاً متعلق به شماست و نیز برای فعال‌سازی امکانات پست الکترونیک {{SITENAME}} پیوند زیر را در مرورگر اینترنت خود باز کنید:
+از ثبت‌نام شما در ویکیا متشکریم!
 
-$3
+لطفا یک دقیقه صرف فعال‌سازی حساب کاربری خود کنید: $3
 
-اگر شما این حساب کاربری را ثبت *نکرده‌اید*، لطفاً پیوند زیر را
-دنبال کنید تا تأیید نشانی پست الکترونیکی لغو شود:
+آماده‌اید برای شروع؟
 
-$5
+یک نگاهی به تمام فعالیت‌های اخیر جامعه‌ای که پیوسته‌اید بکنید! فعالیت خود را با گذاشتن پیغام و یا ویرایش صفحات آغاز کنید.
 
-این کدِ تأیید در تاریخ $4 منقضی خواهد شد.
-</div>',
+ویدیوی ویکیا را در http://wikia.com/go تماشا کنید و و شروع کنید به کاوش‌کردن در یکی از ویکی‌های مورد علاقۀ ما در بازی‌ها، سرگرمی‌ها، و شیوۀ زندگی.  
+
+با جامعۀ ویکیا دیدار داشته‌باشید، آنچه در حال اتفاق افتادن است را بیاموزید، و کمک پیدا کنید - همه را در ویکیای مرکزی.
+
+خوش باشید!
+
+- بخش پشتبانی جامعۀ ویکیا 
+
+___________________________________________
+* Find help and advice on Community Central: http://community.wikia.com
+* Want to control which emails you receive? Go to: {{fullurl:{{ns:special}}:Preferences}}.
+* Click the following link to unsubscribe from all Wikia emails: $UNSUBSCRIBEURL',
 	'confirmemail_body_changed' => 'یک نفر، احتمالاً خود شما، از نشانی آی‌پی $1 نشانی پست الکترونیکی حساب «$2» در {{SITENAME}} را تغییر داده‌است.
 
 برای تأیید این که این حساب واقعاً به شما تعلق دارد و فعال کردن دوبارهٔ ویژگی پست الکترونیک در {{SITENAME}}، پیوند زیر را در مرورگرتان باز کنید:
@@ -8597,50 +8637,55 @@ un autre utilisateur a probablement déjà restauré la page.',
 .allpagesredirects, .watchlistredir { font-style: italic;  }',
 	'common.js' => '/* Tout JavaScript ici sera chargé pour chaque page visitée par n’importe quel utilisateur. */',
 	'creditspage' => 'Crédits de la page',
-	'confirmemail' => 'Confirmer l’adresse de courriel',
-	'confirmemail_noemail' => 'Vous n’avez pas défini une adresse de courriel valide dans vos [[Special:Preferences|préférences]].',
-	'confirmemail_text' => 'Ce wiki nécessite la vérification de votre adresse de courriel avant de pouvoir utiliser toute fonction de messagerie.
-Utilisez le bouton ci-dessous pour envoyer un courriel de confirmation à votre adresse.
-Le courriel inclura un lien comportant un code à usage unique et limité dans le temps ;
-chargez ce lien dans votre navigateur pour confirmer que votre adresse de courriel est valide.',
-	'confirmemail_pending' => 'Un code de confirmation vous a déjà été envoyé par courriel ;
-si vous venez de créer votre compte, veuillez attendre quelques minutes que le courriel arrive avant de demander un nouveau code.',
+	'confirmemail' => 'Confirmer l’adresse e-mail',
+	'confirmemail_noemail' => 'Vous n’avez pas défini une adresse e-mail valide dans vos [[Special:Preferences|préférences]].',
+	'confirmemail_text' => 'Ce wikia nécessite la vérification de votre adresse e-mail avant de pouvoir utiliser toute fonction de messagerie.
+Utilisez le bouton ci-dessous pour envoyer un e-mail de confirmation à votre adresse.
+L\'e-mail inclura un lien comportant un code à usage unique et limité dans le temps ;
+chargez ce lien dans votre navigateur pour confirmer que votre adresse e-mail est valide.',
+	'confirmemail_pending' => 'Un code de confirmation vous a déjà été envoyé par e-mail ;
+si vous venez de créer votre compte, veuillez attendre quelques minutes que l\'email arrive avant de demander un nouveau code.',
 	'confirmemail_send' => 'Envoyer un code de confirmation',
-	'confirmemail_sent' => 'Courriel de confirmation envoyé',
-	'confirmemail_oncreate' => 'Un code de confirmation a été envoyé à votre adresse de courriel.
-Ce code n’est pas requis pour vous identifier sur ce wiki, mais vous devrez le fournir pour activer toute fonction de messagerie.',
-	'confirmemail_sendfailed' => '{{SITENAME}} n’a pas pu vous envoyer le courriel de confirmation.
-Veuillez vérifiez que votre adresse de courriel ne comprend aucun caractère incorrect.
+	'confirmemail_sent' => 'E-mail de confirmation envoyé',
+	'confirmemail_oncreate' => 'Un code de confirmation a été envoyé à votre adresse e-mail.
+Ce code n’est pas requis pour vous identifier sur ce wikia, mais vous devrez le fournir pour activer toute fonction de messagerie.',
+	'confirmemail_sendfailed' => '{{SITENAME}} n’a pas pu vous envoyer l\'e-mail de confirmation.
+Veuillez vérifiez que votre adresse e-mail ne comprend aucun caractère incorrect.
 
-Le programme d’envoi de courriel a retourné l’indication suivante : $1',
+Le serveur de messagerie a retourné l’indication suivante : $1',
 	'confirmemail_invalid' => 'Code de confirmation incorrect.
-Celui-ci a peut-être expiré.',
-	'confirmemail_needlogin' => 'Vous devez vous $1 pour confirmer votre adresse de courriel.',
-	'confirmemail_success' => 'Votre adresse de courriel a été confirmée.
-Vous pouvez maintenant vous [[Special:UserLogin|{{MediaWiki:Loginreqlink}}]] et profiter du wiki.',
-	'confirmemail_loggedin' => 'Votre adresse de courriel est maintenant confirmée.',
+Celui-ci a peut-être expiré.
+
+Un nouveau code peut être envoyé via [[Special:ConfirmEmail|cette page]].',
+	'confirmemail_needlogin' => 'Vous devez vous $1 pour confirmer votre adresse e-mail.',
+	'confirmemail_success' => 'Votre adresse e-mail a été confirmée. Vous pouvez maintenant vous [[Special:UserLogin|connecter]] et profiter du wikia.',
+	'confirmemail_loggedin' => 'Votre adresse e-mail est maintenant confirmée.',
 	'confirmemail_error' => 'Un problème est survenu lors de l’enregistrement de votre confirmation.',
-	'confirmemail_subject' => 'Confirmation d’adresse de courriel pour {{SITENAME}}',
-	'confirmemail_body' => 'Quelqu’un, probablement vous, à partir de l’adresse IP $1,
-a enregistré un compte « $2 » avec cette adresse de courriel
-sur le site {{SITENAME}}.
+	'confirmemail_subject' => 'Veuillez confirmer votre compte Wikia',
+	'confirmemail_body' => 'Bonjour $2,
 
-Pour confirmer que ce compte vous appartient vraiment et afin
-d’activer les fonctions de messagerie sur {{SITENAME}},
-veuillez suivre ce lien dans votre navigateur :
+Merci de vous êtes inscrit sur Wikia !
 
-$3
+Veuillez prendre une minute pour activer votre nouveau compte en confirmant votre adresse e-mail : $3.
 
-Si vous n’avez *pas* enregistré ce compte, n’ouvrez pas ce lien ;
-vous pouvez suivre l’autre lien ci-dessous pour annuler la
-confirmation de votre adresse courriel :
+Prêt à commencer ?
 
-$5
+Regardez l\'activité récente de la communauté que vous venez de rejoindre ! Commencez à contribuer en laissant des commentaires ou en modifiant des pages.
 
-Ce code de confirmation expirera le $4.',
+Découvrez quelques wikias de jeux vidéo, divertissement et mode de vie sur http://fr.wikia.com/Wikia.
+
+Rencontrez la communauté Wikia, restez informé des derniers évènements et trouvez de l\'aide, tout cela sur le Centre des communautés (http://communaute.wikia.com/wiki/Centre_des_communautés).
+
+Bonnes modifications !
+
+— L’équipe Wikia
+
+___________________________________________
+* Pour voir les derniers évènements sur Wikia, rendez-vous sur http://communaute.wikia.com
+* Vous souhaitez contrôler les e-mails que vous recevez ? Rendez-vous sur : {{fullurl:{{ns:special}}:Preferences}}.',
 	'confirmemail_body_changed' => 'Quelqu’un, probablement vous, à partir de l’adresse IP $1,
-a modifié l’adresse de courriel associée au compte « $2 » de {{SITENAME}}
-en cette adresse.
+a modifié l’adresse e-mail associée au compte « $2 » de {{SITENAME}}
+avec cette adresse.
 
 Pour confirmer que ce compte vous appartient vraiment et afin
 de réactiver les fonctions de messagerie sur {{SITENAME}},
@@ -8650,23 +8695,23 @@ $3
 
 Si ce compte ne vous appartient *pas*, n’ouvrez pas ce lien ;
 vous pouvez suivre l’autre lien ci-dessous pour annuler la
-confirmation de votre adresse courriel :
+confirmation de votre adresse e-mail :
 
 $5
 
 Ce code de confirmation expirera le $4.',
-	'confirmemail_body_set' => 'Quelqu’un, probablement vous, de l’adresse IP $1, a modifié l’adresse de courriel du compte « $2 » en celle-ci sur {{SITENAME}}.
+	'confirmemail_body_set' => 'Quelqu’un, probablement vous, de l’adresse IP $1, a modifié l’adresse e-mail du compte « $2 » avec celle-ci sur {{SITENAME}}.
 
-Pour confirmer que ce compte vous appartient et réactiver les fonctions de courriel sur {{SITENAME}}, ouvrez ce lien dans votre navigateur Web :
+Pour confirmer que ce compte vous appartient et réactiver les fonctions d\'e-mail sur {{SITENAME}}, ouvrez ce lien dans votre navigateur Web :
 
 $3
 
 Ce code de confirmation expirera le $4.
 
-Si le compte ne vous appartient PAS, suivez plutôt ce lien pour annuler la confirmation de l’adresse de courriel :
+Si le compte ne vous appartient PAS, suivez plutôt ce lien pour annuler la confirmation de l’adresse e-mail :
 
 $5',
-	'confirmemail_invalidated' => 'Confirmation de l’adresse courriel annulée',
+	'confirmemail_invalidated' => 'Confirmation de l’adresse e-mail annulée',
 	'confirmrecreate' => 'L’utilisateur [[User:$1|$1]] ([[User talk:$1|Discussion]]) a supprimé cette page, alors que vous aviez commencé à l’éditer, pour le motif suivant :
 : \'\'$2\'\'
 Veuillez confirmer que vous désirez réellement recréer cette page.',
@@ -9226,21 +9271,20 @@ D\'fhreagair an clár ríomhphoist: $1',
 	'confirmemail_success' => 'Deimhníodh do ríomhsheoladh. Is féidir leat logáil isteach anois agus sult a bhaint as an vicí!',
 	'confirmemail_loggedin' => 'Deimhníodh do sheoladh ríomhphoist.',
 	'confirmemail_error' => 'Tharlaigh botún éigin le sabháil do dheimhniú.',
-	'confirmemail_subject' => 'Deimhniú do ríomhsheoladh ar an {{SITENAME}}',
-	'confirmemail_body' => 'Chláraigh duine éigin (tusa is dócha) an cuntas "$2" ar {{SITENAME}}
-agus rinneadh é seo ón seoladh IP $1, ag úsáid an ríomhsheolta seo.
+	'confirmemail_subject' => 'Deimhniú sheoladh ríomhphoist as {{SITENAME}}',
+	'confirmemail_body' => 'Chláraigh duine éigin an cuntas "$2" le húsáid an seolaidh
 
-Chun deimhniú gur leatsa an cuntas seo, agus chun gnéithe ríomhphoist
-a chur i ngníomh ag {{SITENAME}}, oscail an nasc seo i do bhrabhsálaí:
+ríomhphoist seo ar {{SITENAME}} - is dócha gur rinne tú féin é seo, ón seoladh IP $1.
+
+Chun deimhniú a dhéanamh gur leatsa é an cuntas seo, agus chun gnéithe ríomhphoist a chur
+
+i ngníomh ag {{SITENAME}}, oscail an nasc seo i do bhrabhsalaí:
 
 $3
 
-<nowiki>*</nowiki>Mura* tusa a chláraigh an cuntas, lean an nasc seo chun
-deimhniú an ríomhsheolta a chur ar cheal:
+Murar tusa an duine atá i gceist, ná roghnaigh an nasc. Rachfaidh an cód deimhnithe
 
-$5
-
-Rachaidh an cód deimhnithe seo as feidhm ag $4.',
+seo as feidhm ag $4.',
 	'confirm_purge_button' => 'Tá',
 	'confirm-purge-top' => 'An bhfuil tú cinnte go dteastaíonn uait taisce an leathanaigh seo a bhánú?',
 ];
@@ -12779,7 +12823,7 @@ Messaggio di errore del mailer: $1',
 	'confirmemail_loggedin' => 'L\'indirizzo e-mail è stato confermato.',
 	'confirmemail_error' => 'Errore nel salvataggio della conferma.',
 	'confirmemail_subject' => '{{SITENAME}}: richiesta di conferma dell\'indirizzo',
-	'confirmemail_body' => 'Qualcuno, probabilmente tu stesso dall\'indirizzo IP $1, ha registrato l\'account "$2" su {{SITENAME}} indicando questo indirizzo e-mail.
+	'confirmemail_body' => 'Qualcuno, probabilmente tu stesso, dall\'indirizzo IP $1, ha registrato l\'account "$2" su {{SITENAME}} indicando questo indirizzo e-mail.
 
 Per confermare che l\'account ti appartiene veramente e attivare le funzioni relative all\'invio di e-mail su {{SITENAME}}, apri il collegamento seguente con il tuo browser:
 
@@ -13160,25 +13204,32 @@ hideuser権限を持っていないため、この利用者のブロックを閲
 	'confirmemail_invalid' => '確認用コードが正しくありません。
 このコードの有効期限が切れている可能性があります。',
 	'confirmemail_needlogin' => 'メールアドレスを確認するために$1が必要です。',
-	'confirmemail_success' => 'メールアドレスは確認されました。
-[[Special:UserLogin|ログイン]]してウィキを使用できます。',
-	'confirmemail_loggedin' => 'メールアドレスは確認されました。',
+	'confirmemail_success' => 'あなたのメールアドレスを確認しました。ログインしてウィキを利用できます。',
+	'confirmemail_loggedin' => 'あなたのメールアドレスを確認しました。',
 	'confirmemail_error' => '確認情報を保存する際にエラーが発生しました。',
-	'confirmemail_subject' => '{{SITENAME}} メールアドレスの確認',
-	'confirmemail_body' => 'だれかが、IPアドレス$1から、
-このメールアドレスで{{SITENAME}}のアカウント「$2」を登録しました。
+	'confirmemail_subject' => 'ウィキアのアカウントの確認をお願いします',
+	'confirmemail_body' => 'こんにちは、$2 さん
 
-このアカウントが本当に自分のものであるか確認して、
-{{SITENAME}}のメール機能を有効にするには、以下のURLをブラウザーで開いてください：
+ウィキアへの登録ありがとうございます！
 
-$3
+あなたの新しいアカウントを有効にするため少し時間をください: $3
 
-もしアカウントの登録をした覚えがない場合は、
-次のURLをブラウザーで開いて、メール確認を中止してください：
+用意はできましたか？
 
-$5
+たった今あなたが参加したコミュニティの最近の活動のすべてを見てください！ コメントを残すかページを編集することによって投稿を初めてみてください。
 
-この確認用コードは、$4に期限切れになります。',
+http://wikia.com/go でウィキアビデオを見て、ゲーム、エンターテイメント、ライフスタイルの中からお気に入りのウィキアを探索してみてください。
+
+ウィキアのコミュニティと接触し、何が起きているを知り、ヘルプを探してみてください - コミュニティーセントラルにはすべてがあります。
+
+大いに楽しんでください！
+
+- ウィキアコミュニティーサポート
+
+
+___________________________________________
+* コミュニティーセントラルでヘルプやアドバイスを探してみましょう: http://ja.community.wikia.com
+* 私たちからのメッセージの受信を減らしたいですか？ Eメールの設定をこちらで変更するか登録解除することができます: http://ja.community.wikia.com/Special:Preferences',
 	'confirmemail_body_changed' => 'だれかが、IPアドレス$1から
 {{SITENAME}}でアカウント「$2」の電子メールアドレスをこのアドレスに変更しました。
 
@@ -15135,18 +15186,29 @@ $2',
 	'confirmemail_success' => '이메일 주소가 인증되었습니다. 이제 로그인해서 위키를 사용하세요.',
 	'confirmemail_loggedin' => '이메일 주소가 인증되었습니다.',
 	'confirmemail_error' => '당신의 인증을 저장하는 도중 오류가 발생했습니다.',
-	'confirmemail_subject' => '{{SITENAME}} 이메일 주소 인증',
-	'confirmemail_body' => '$1 아이피 주소를 사용하는 사용자가 {{SITENAME}}의 ‘$2’ 계정에 이메일 인증 신청을 했습니다.
+	'confirmemail_subject' => '계정을 활성화해 주세요!',
+	'confirmemail_body' => '안녕하세요, $2 님.
 
-이 계정이 당신의 계정이라면, 아래 주소를 열어서 이메일 인증을 해 주세요.
+위키아에 가입해주셔서 감사합니다!
 
-$3
+귀하의 계정을 활성화시키기 위해서 잠깐만 시간을 투자해 주세요: $3
 
-당신의 계정이 아니라면, 이메일 인증 신청을 취소하기 위해 아래의 주소를 열어주세요.
+시작할 준비가 되셨나요?
 
-$5
+귀하가 참여한 커뮤니티에서 최근 일어난 일들을 알아 보세요! 댓글을 남기거나 문서를 편집해 기여를 시작하실 수 있습니다.
 
-인증 코드는 $4에 만료됩니다.',
+http://wikia.com/go (영어)에서 영상을 시청하시고 저희가 추천해드리는, 게임, 엔터테인먼트, 생활 등 다양한 분야의 위키를 탐방해 보시는 건 어떨까요?
+
+위키아 중앙 커뮤니티에서 다양한 사람들과 대화를 나누고, 도움을 구해 보세요.
+
+즐거운 위키아 이용 되세요!
+
+- 위키아 커뮤니티 지원팀
+
+
+___________________________________________
+* 위키아 중앙 커뮤니티에서 도움을 구하실 수 있습니다: http://ko.community.wikia.com
+* 알림을 받고 싶지 않으신가요? 이곳에서 알림 설정을 변경하실 수 있습니다: http://ko.community.wikia.com/특수기능:환경설정',
 	'confirmemail_body_changed' => '$1 IP 주소를 사용하는 사용자가 {{SITENAME}}의 "$2" 계정의 이메일 주소를 바꾸었습니다.
 
 이 계정이 당신의 계정인지 확인하고 {{SITENAME}}의 이메일 기능을 활성화하려면 아래 링크를 클릭하여 이메일 인증을 해 주세요.
@@ -20388,49 +20450,49 @@ Omdat je het recht \'hideuser\' niet hebt, kun je de blokkade van de gebruiker n
 	'common.js' => '/* JavaScript die hier wordt geplaatst heeft invloed op alle pagina\'s voor alle gebruikers */',
 	'creditspage' => 'Auteurspagina',
 	'confirmemail' => 'E-mailadres bevestigen',
-	'confirmemail_noemail' => 'U hebt geen geldig e-mailadres ingegeven in uw [[Special:Preferences|gebruikersvoorkeuren]].',
-	'confirmemail_text' => '{{SITENAME}} eist bevestiging van uw e-mailadres voordat u de e-mailmogelijkheden kunt gebruiken.
+	'confirmemail_noemail' => 'Je hebt geen geldig e-mailadres ingegeven in je [[Special:Preferences|gebruikersvoorkeuren]].',
+	'confirmemail_text' => '{{SITENAME}} eist bevestiging van je e-mailadres voordat je de e-mailmogelijkheden kunt gebruiken.
 Klik op de onderstaande knop om een bevestigingsbericht te ontvangen.
 Dit bericht bevat een verwijzing met een code.
-Open die verwijzing om uw e-mailadres te bevestigen.',
-	'confirmemail_pending' => 'Er is al een bevestigingsbericht aan u verzonden.
-Als u recentelijk uw gebruiker hebt aangemaakt, wacht dan een paar minuten totdat die aankomt voordat u opnieuw een e-mail laat sturen.',
+Open die verwijzing om je e-mailadres te bevestigen.',
+	'confirmemail_pending' => 'Er is al een bevestigingsbericht aan je verzonden.
+Als je recentelijk je gebruiker hebt aangemaakt, wacht dan een paar minuten totdat die aankomt voordat je opnieuw een e-mail laat sturen.',
 	'confirmemail_send' => 'Een bevestigingscode verzenden',
 	'confirmemail_sent' => 'Bevestigingscode verzonden.',
-	'confirmemail_oncreate' => 'Er is een bevestigingscode naar uw e-mailadres verzonden.
-Deze code is niet nodig om u aan te melden, maar u dient deze wel te bevestigen voordat u de e-mailmogelijkheden van deze wiki kunt gebruiken.',
-	'confirmemail_sendfailed' => '{{SITENAME}} kon uw bevestigingscode niet verzenden.
-Controleer uw e-mailadres op ongeldige tekens.
+	'confirmemail_oncreate' => 'Er is een bevestigingscode naar je e-mailadres verzonden.
+Deze code is niet nodig om je aan te melden, maar je dient deze wel te bevestigen voordat je de e-mailmogelijkheden van deze wiki kunt gebruiken.',
+	'confirmemail_sendfailed' => '{{SITENAME}} kon je bevestigingscode niet verzenden.
+Controleer je e-mailadres op ongeldige tekens.
 
 Het e-mailprogramma meldde: $1',
 	'confirmemail_invalid' => 'Ongeldige bevestigingscode.
 Mogelijk is de code verlopen.',
-	'confirmemail_needlogin' => 'U moet $1 om uw e-mailadres te bevestigen.',
-	'confirmemail_success' => 'Uw e-mailadres is bevestigd.
-U kunt zich nu [[Special:UserLogin|aanmelden]] en de wiki gebruiken.',
-	'confirmemail_loggedin' => 'Uw e-mailadres is nu bevestigd.',
-	'confirmemail_error' => 'Er is iets verkeerd gegaan tijdens het opslaan van uw bevestiging.',
+	'confirmemail_needlogin' => 'Je moet $1 om je e-mailadres te bevestigen.',
+	'confirmemail_success' => 'Je e-mailadres is bevestigd.
+Je kunt jezelf nu [[Special:UserLogin|aanmelden]] en {{SITENAME}} gebruiken.',
+	'confirmemail_loggedin' => 'Je e-mailadres is nu bevestigd.',
+	'confirmemail_error' => 'Er is iets verkeerd gegaan tijdens het opslaan van je bevestiging.',
 	'confirmemail_subject' => 'Bevestiging e-mailadres voor {{SITENAME}}',
-	'confirmemail_body' => 'Iemand, waarschijnlijk u, met het IP-adres $1,
+	'confirmemail_body' => 'Iemand, waarschijnlijk jijzelf, met het IP-adres $1,
 heeft zich met dit e-mailadres geregistreerd als gebruiker "$2" op {{SITENAME}}.
 
-Open de volgende verwijzing in uw webbrowser om te bevestigen dat u deze gebruiker bent en om de e-mailmogelijkheden op {{SITENAME}} te activeren:
+Open de volgende verwijzing in je webbrowser om te bevestigen dat je deze gebruiker bent en om de e-mailmogelijkheden op {{SITENAME}} te activeren:
 
 $3
 
-Als u uzelf *niet* hebt aangemeld, volg dan de volgende verwijzing om de bevestiging van uw e-mailadres te annuleren:
+Als je jezelf *niet* hebt aangemeld, volg dan de volgende verwijzing om de bevestiging van je e-mailadres te annuleren:
 
 $5
 
 De bevestigingscode vervalt op $4.',
-	'confirmemail_body_changed' => 'Iemand, waarschijnlijk u, met het IP-adres $1,
+	'confirmemail_body_changed' => 'Iemand, waarschijnlijk jijzelf, met het IP-adres $1,
 heeft het het e-mailadres geregistreerd voor gebruiker "$2" op {{SITENAME}} gewijzigd naar dit e-mailadres.
 
-Open de volgende verwijzing in uw webbrowser om te bevestigen dat u deze gebruiker bent en om de e-mailmogelijkheden op {{SITENAME}} opnieuw te activeren:
+Open de volgende verwijzing in je webbrowser om te bevestigen dat je deze gebruiker bent en om de e-mailmogelijkheden op {{SITENAME}} opnieuw te activeren:
 
 $3
 
-Als u uzelf *niet* hebt aangemeld, volg dan de volgende verwijzing om de bevestiging van uw e-mailadres te annuleren:
+Als je jezelf *niet* hebt aangemeld, volg dan de volgende verwijzing om de bevestiging van je e-mailadres te annuleren:
 
 $5
 
@@ -27033,17 +27095,18 @@ Du kan nu [[Special:UserLogin|logga in]] och använda wikin.',
 	'confirmemail_loggedin' => 'Din e-postadress är nu bekräftad.',
 	'confirmemail_error' => 'Någonting gick fel när din bekräftelse skulle sparas.',
 	'confirmemail_subject' => 'Bekräftelse av e-postadress på {{SITENAME}}',
-	'confirmemail_body' => 'Någon, troligen du, har från IP-adressen $1 registrerat användarkontot "$2" med denna e-postadress på {{SITENAME}}.
+	'confirmemail_body' => 'Hej $2,
 
-För att bekräfta att detta konto verkligen är ditt, och för att aktivera funktionerna för e-post på {{SITENAME}}, öppna denna länk i din webbläsare:
+Tack för att du registrerar dig på Wikia.
 
+Vänligen aktivera ditt nya konto genom att bekräfta din e-postadress här:
 $3
 
-Om det *inte* är du som registrerat kontot, följ denna länk för att avbryta bekräftelsen av e-postadressen:
 
-$5
+Vi ser fram emot att se dig snart!
 
-Denna bekräftelsekod kommer inte att fungera efter $4.',
+Wikia Community Team
+http://community.wikia.com/',
 	'confirmemail_body_changed' => 'Någon, troligen du, har från IP-adressen $1
 registrerat användarkontot "$2" med denna e-postadress på {{SITENAME}}.
 
@@ -31237,6 +31300,18 @@ $messages['zh'] = [
 	'changed' => '被改变',
 	'community' => '社群',
 	'compareselectedversions' => '比较被选版本',
+	'confirmemail' => '确认电子邮件地址',
+	'confirmemail_error' => '你的确认过程发生错误.',
+	'confirmemail_invalid' => '不正确的确认码. 这个确认码已经过期.
+
+Send a new code by clicking [[Special:ConfirmEmail|here]].',
+	'confirmemail_loggedin' => '您的电子邮件已被确认.',
+	'confirmemail_noemail' => '你没有在账户的[[Special:Preferences|参数设置]]中验证你的电子邮件地址。',
+	'confirmemail_send' => '寄出确认码',
+	'confirmemail_sendfailed' => '不能发出确认信件. 请检查地址中是否包括不可用的字符.',
+	'confirmemail_sent' => '确认信已发出',
+	'confirmemail_success' => '您的电子邮件地址已经确认. 您现在可以登入并开始享受您的Wikia之旅了.',
+	'confirmemail_text' => '您需要先确认电子邮件地址，您才能收到通过Wikia送出的电子邮件。请点击下方的确认按钮，这将会向您所登记的地址发出确认信件。确认信包括一个含有确认码的超连结，您在浏览器中打开这个连结即可完成确认。如果你已经通过验证，请参看[[Special:Preferences|您的参数设置]]。',
 ];
 
 $messages['zh-classical'] = [
@@ -31251,6 +31326,18 @@ $messages['zh-cn'] = [
 	'category-media-header' => '“$1”分类中的媒体文件',
 	'community' => '社区',
 	'compareselectedversions' => '比较被选版本',
+	'confirmemail' => '确认电子邮件地址',
+	'confirmemail_error' => '你的确认过程发生错误.',
+	'confirmemail_invalid' => '不正确的确认码. 这个确认码已经过期.
+
+Send a new code by clicking [[Special:ConfirmEmail|here]].',
+	'confirmemail_loggedin' => '您的电子邮件已被确认.',
+	'confirmemail_noemail' => '你没有在账户的[[Special:Preferences|参数设置]]中验证你的电子邮件地址。',
+	'confirmemail_send' => '寄出确认码',
+	'confirmemail_sendfailed' => '不能发出确认信件. 请检查地址中是否包括不可用的字符.',
+	'confirmemail_sent' => '确认信已发出',
+	'confirmemail_success' => '您的电子邮件地址已经确认. 您现在可以登入并开始享受您的Wikia之旅了.',
+	'confirmemail_text' => '您需要先确认电子邮件地址，您才能收到通过Wikia送出的电子邮件。请点击下方的确认按钮，这将会向您所登记的地址发出确认信件。确认信包括一个含有确认码的超连结，您在浏览器中打开这个连结即可完成确认。如果你已经通过验证，请参看[[Special:Preferences|您的参数设置]]。',
 ];
 
 $messages['zh-hans'] = [
@@ -31642,6 +31729,18 @@ $messages['zh-hk'] = [
 	'cascadeprotectedwarning' => '{{MediaWiki:Cascadeprotectedwarning}}',
 	'category-media-header' => '類別「$1」中的媒體檔',
 	'compareselectedversions' => '比較被選版本',
+	'confirmemail' => '確認電子郵件地址',
+	'confirmemail_error' => '你的確認過程發生錯誤.',
+	'confirmemail_invalid' => '不正確的確認碼. 這個確認碼已經過期.
+
+Send a new code by clicking [[Special:ConfirmEmail|here]].',
+	'confirmemail_loggedin' => '您的電子郵件已被確認.',
+	'confirmemail_noemail' => '你没有在賬户的[[Special:Preferences|參數設置]]中驗證你的電子郵件地址。',
+	'confirmemail_send' => '寄出確認碼',
+	'confirmemail_sendfailed' => '不能發出確認信件. 請檢查地址中是否包括不可用的字符.',
+	'confirmemail_sent' => '確認信已發出',
+	'confirmemail_success' => '您的電子郵件地址已經確認. 您現在可以登入并開始享受您的Wikia之旅了.',
+	'confirmemail_text' => '您需要先確認電子郵件地址，您才能收到通過Wikia送出的電子郵件。請點撃下方的確認按鈕，這將會向您所登記的地址發出確認信件。確認信包括一個含有確認碼的超連結，您在瀏覧器中打開這個連結即可完成確認。如果你已經通過驗證，請參看[[Special:Preferences|您的參數設置]]。',
 ];
 
 $messages['zh-min-nan'] = [
@@ -31666,6 +31765,18 @@ $messages['zh-sg'] = [
 	'cascadeprotectedwarning' => '{{MediaWiki:Cascadeprotectedwarning}}',
 	'category-media-header' => '“$1”分类中的媒体文件',
 	'compareselectedversions' => '比较被选版本',
+	'confirmemail' => '确认电子邮件地址',
+	'confirmemail_error' => '你的确认过程发生错误.',
+	'confirmemail_invalid' => '不正确的确认码. 这个确认码已经过期.
+
+Send a new code by clicking [[Special:ConfirmEmail|here]].',
+	'confirmemail_loggedin' => '您的电子邮件已被确认.',
+	'confirmemail_noemail' => '你没有在账户的[[Special:Preferences|参数设置]]中验证你的电子邮件地址。',
+	'confirmemail_send' => '寄出确认码',
+	'confirmemail_sendfailed' => '不能发出确认信件. 请检查地址中是否包括不可用的字符.',
+	'confirmemail_sent' => '确认信已发出',
+	'confirmemail_success' => '您的电子邮件地址已经确认. 您现在可以登入并开始享受您的Wikia之旅了.',
+	'confirmemail_text' => '您需要先确认电子邮件地址，您才能收到通过Wikia送出的电子邮件。请点击下方的确认按钮，这将会向您所登记的地址发出确认信件。确认信包括一个含有确认码的超连结，您在浏览器中打开这个连结即可完成确认。如果你已经通过验证，请参看[[Special:Preferences|您的参数设置]]。',
 ];
 
 $messages['zh-tw'] = [
@@ -31693,16 +31804,12 @@ $messages['zh-tw'] = [
 	'contribsub2' => '$1的編修記錄 ($2)',
 	'createaccountblock' => '禁止建立帳號',
 	'confirmemail' => '確認電子郵件地址',
-	'confirmemail_noemail' => '您沒有在您的[[Special:Preferences|使用者設定]]裡面輸入一個有效的 email 位址。',
-	'confirmemail_text' => '此網站要求您在使用郵件功能之前驗證您的電子郵件地址。
-點擊以下按鈕可向您的郵箱發送一封確認郵件。該郵件包含有一行代碼連結；
-請在您的瀏覽器中加載此連結以確認您的電子郵件地址是有效的。',
-	'confirmemail_sendfailed' => '不能發送確認郵件，請檢查電子郵件地址是否包含非法字元。
-
-郵件傳送員回應: $1',
+	'confirmemail_noemail' => '你没有在賬户的[[Special:Preferences|參數設置]]中驗證你的電子郵件地址。',
+	'confirmemail_text' => '您需要先確認電子郵件地址，您才能收到通過Wikia送出的電子郵件。請點撃下方的確認按鈕，這將會向您所登記的地址發出確認信件。確認信包括一個含有確認碼的超連結，您在瀏覧器中打開這個連結即可完成確認。如果你已經通過驗證，請參看[[Special:Preferences|您的參數設置]]。',
+	'confirmemail_sendfailed' => '不能發出確認信件. 請檢查地址中是否包括不可用的字符.',
 	'confirmemail_needlogin' => '您需要$1以確認您的電子郵件地址。',
-	'confirmemail_success' => '您的郵箱已經被確認。您現下可以登錄並使用此網站了。',
-	'confirmemail_loggedin' => '您的電子郵件地址現下已被確認。',
+	'confirmemail_success' => '您的電子郵件地址已經確認. 您現在可以登入並開始享受您的Wikia之旅了.',
+	'confirmemail_loggedin' => '您的電子郵件已被確認.',
 	'confirmemail_subject' => '{{SITENAME}}電子郵件地址確認',
 	'confirmrecreate' => '在您編輯這個頁面後，使用者[[User:$1|$1]]([[User talk:$1|對話]])以下列原因刪除了這個頁面: $2。請在重新建立頁面前三思。',
 	'create_an_account' => '開啟新用戶帳號',
@@ -31712,6 +31819,15 @@ $messages['zh-tw'] = [
 	'cascadeprotected' => '{{MediaWiki:Cascadeprotected}}',
 	'category-media-header' => '「$1」分類中的媒體檔',
 	'community' => '社群',
+	'confirmemail_error' => '你的確認過程發生錯誤.',
+	'confirmemail_invalid' => '不正確的確認碼. 這個確認碼已經過期.
+
+Send a new code by clicking [[Special:ConfirmEmail|here]].',
+	'confirmemail_pending' => '<div class="error">
+一個確認代碼已經被發送到您的郵箱，您可能需要等幾分鐘才能收到。如果無法收到，請再申請一個新的確認碼！
+</div>',
+	'confirmemail_send' => '寄出確認碼',
+	'confirmemail_sent' => '確認信已發出',
 ];
 
 $messages['zh-yue'] = [

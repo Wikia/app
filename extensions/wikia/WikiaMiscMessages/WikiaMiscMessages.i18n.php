@@ -9,12 +9,24 @@ We have added some information and tips on your <a href="$5">user talk Page</a> 
 Good luck with the project,<br /><br />
 <a href="http://community.wikia.com/wiki/User:$4">$3</a><br />
 Fandom Community Team<br /></p>',
-	'confirmemail_body-HTML' => '<p>Hello $2,<br /><br />
-Thank you for registering with Wikia.<br /><br />
-Please activate your new account by <a href="$3">confirming your e-mail address here</a>.<br /><br /><br />
-We look forward to seeing you soon!<br /><br />
-The Wikia Community Team<br />
-<a href="http://community.wikia.com/">community.wikia.com</a><br /></p>',
+	'confirmemail_body-HTML' => 'Hi $2,
+<br /><br />
+Thanks for registering on Wikia!
+<br /><br />
+Please take a minute to activate your new account by <a href="$3">confirming your email address</a>.
+<br /><br />
+Ready to get started?<br>
+<ul><li>Look at all of the <a href="{{fullurl:{{ns:special}}:WikiActivity}}">recent activity</a> of the community you just joined! Start contributing by leaving comments or editing pages.</li>
+<li><a href="http://www.wikia.com/Special:LandingPage">Watch</a> the Wikia video and start exploring some of our favorite wikis in Gaming, Entertainment, and Lifestyles.</li>
+<li>Meet the Wikia community, learn about what\'s happening, and find help - all at <a href="http://community.wikia.com/wiki/Community_Central">Community Central</a>.</li></ul>
+<br />
+Have fun!<br>
+- Wikia Community Support
+<br /><hr />
+<p>
+<ul>
+<li>Find help and advice on <a href="http://community.wikia.com">Community Central</a>.</li>
+<li>Want to receive fewer messages from us? You can unsubscribe or change your email preferences <a href="http://community.wikia.com/Special:Preferences">here</a>.</li>',
 	'confirmemailreminder_body-HTML' => '<p>Hello $1,<br /><br />
 Last week you joined Wikia, but you still need to confirm your account. Please do so by clicking <a href="$2">here</a>.<br /><br />
 We look forward to seeing you soon!<br /><br />
@@ -449,6 +461,24 @@ Wir haben dir auf deiner <a href="$5">Benutzer-Diskussionsseite</a> ein paar Inf
 Viel Glück mit deinem Projekt, <br /><br />
 <a href="http://de.community.wikia.com/wiki/User:$4">$3</a><br />
 Das Fandom Community-Team<br /></p>',
+	'confirmemail_body-HTML' => '<p>
+Hallo,<br /><br />
+
+dies ist eine automatisch erstellte Nachricht. <br /><br />
+
+Jemand mit der IP-Adresse $1, wahrscheinlich Du selbst, hat eine Bestätigung dieser E-Mail-Adresse für das Benutzerkonto "$2" für {{SITENAME}} angefordert.<br /><br />
+
+Um die E-Mail-Funktion für {{SITENAME}} (wieder) zu aktivieren und um zu bestätigen, dass dieses Benutzerkonto wirklich zu Deiner E-Mail-Adresse und damit zu Dir gehört, öffne bitte folgenden Link in Deinem Browser: <a href="$3">$3</a><br /><br />
+
+Sollte der vorstehende Link in Deinem E-Mail-Programm über mehrere Zeilen gehen, musst du ihn eventuell per Hand in die URL-Zeile des Browsers einfügen. <br /><br />
+
+Der Bestätigungscode ist bis zum folgenden Zeitpunkt gültig: $4<br /><br />
+
+Wenn diese E-Mail-Adresse *nicht* zu dem genannten Benutzerkonto gehört, folge diesem Link bitte *nicht*.<br /><br />
+<hr />
+<br />
+{{SITENAME}}: <a href="{{fullurl:{{Mediawiki:mainpage}}}}">{{fullurl:{{Mediawiki:mainpage}}}}</a>
+</p>',
 ];
 
 $messages['es'] = [
@@ -550,6 +580,26 @@ www.fandom.com<br /><hr />
 <li>Para cambiar tus preferencias o contraseña, ingresa a: <a href="http://www.fandom.com/wiki/Especial:Preferencias">Preferencias de usuario</a>.</li> 
 <li>Esta contraseña temporal fue pedida por la siguiente dirección de correo electrónico: $1.</li>
 </ul></p>',
+	'confirmemail_body-HTML' => 'Hola $2,
+<br /><br />
+¡Te damos la bienvenida a Wikia!
+<br /><br />
+Por favor, tómate un descanso para activar tu nueva cuenta <a href="$3">confirmando tu dirección de correo electrónico</a>.
+<br /><br />
+Y ahora, llegó el momento... ¡hora de empezar la aventura!<br>
+<ul><li>Echa un vistazo a la <a href="{{fullurl:{{ns:special}}:WikiActivity}}">actividad reciente</a> de la comunidad en la que acabas de participar. Comienza a contribuir mejorando las páginas que ya hay o creando nuevas páginas.</li>
+<li>Explora <a href="http://comunidad.wikia.com/wiki/Lista_de_Wikis">nuestras comunidades</a> sobre videojuegos, entretenimiento o cualquier otro tema y diviértete descubriendo cosas nuevas.</li>
+<li>Descubre qué sucede en Wikia y conoce a otros usuarios de Wikia en nuestro <a href="http://comunidad.wikia.com/wiki/Wikia">wiki comunitario</a>.</li></ul>
+<br />
+¡Diviértete!<br>
+- Equipo comunitario de Wikia
+<br /><hr />
+<p>
+<ul>
+<li>Si necesitas ayuda o consejos, visita nuestra <a href="http://comunidad.wikia.com">comunidad central</a>.</li>
+<li>¿Quieres dejar de recibir estos mensajes? Puedes darte de baja en el servicio de emails desde tus preferencias <a href="http://comunidad.wikia.com/Especial:Preferencias">aquí</a>.</li>
+</ul>
+</p>',
 ];
 
 $messages['fr'] = [
@@ -682,6 +732,26 @@ www.wikia.com<br /><hr />
 <li>Pour modifier vos préférences ou changer de mot de passe, accédez à la page des <a href="http://community.wikia.com/wiki/Special:Preferences">préférences utilisateur</a>.</li>
 <li>Cette demande de rappel de mot de passe a été envoyée depuis l\'adresse suivante : $1.</li>
 </ul></p>',
+	'confirmemail_body-HTML' => '<p>Bonjour $2,
+<br /><br />
+Merci de vous êtes inscrit sur Wikia !
+<br /><br />
+Veuillez prendre une minute pour activer votre nouveau compte en <a href="$3">confirmant votre adresse e-mail</a>.
+<br /><br />
+Prêt à commencer ?<br>
+<ul><li>Regardez l\'<a href="{{fullurl:{{ns:special}}:WikiActivity}}">activité récente</a> de la communauté que vous venez de rejoindre ! Commencez à contribuer en laissant des commentaires ou en modifiant des pages.</li>
+<li><a href="http://fr.wikia.com/Wikia">Découvrez</a> quelques wikias de jeux vidéo, divertissement et mode de vie.</li>
+<li>Rencontrez la communauté Wikia, restez informé des derniers évènements et trouvez de l\'aide, tout cela sur le <a href="http://communaute.wikia.com/wiki/Centre_des_communautés">Centre des communautés</a>.</li></ul>
+<br />
+Bonnes modifications !<br>
+— L’équipe Wikia</p>
+<br /><hr />
+<p>
+<ul>
+<li><a href="http://communaute.wikia.com">Venez voir les derniers évènements sur Wikia !</a></li>
+<li>Vous souhaitez contrôler les e-mails que vous recevez ? Rendez-vous sur vos <a href="{{fullurl:{{ns:special}}:Preferences}}">préférences</a></li>
+</ul>
+</p>',
 ];
 
 $messages['it'] = [
@@ -744,6 +814,19 @@ www.wikia.com<br /><hr />
 <li>Per modificare le tue preferenze o la password, vai su: <a href="http://it.community.wikia.com/wiki/Speciale:Preferenze">Preferenze Utente</a>.</li>
 <li>Questo promemoria sulla password è stato richiesto dal seguente indirizzo: $1.</li>
 </ul></p>',
+	'confirmemail_body-HTML' => '<p>
+Qualcuno, probabilmente tu stesso dall\'indirizzo IP $1, ha registrato l\'account "$2" su {{SITENAME}} indicando questo indirizzo e-mail.
+<br /><br />
+Per confermare che l\'account ti appartiene veramente e attivare le funzioni relative all\'invio di e-mail su {{SITENAME}}, apri il collegamento seguente con il tuo browser:
+<br /><br />
+<a href="$3">$3</a>
+<br /><br />
+Se *non* hai registrato tu l\'account, segui questo collegamento per annullare la conferma dell\'indirizzo e-mail:
+<br /><br />
+<a href="$5">$5</a>
+<br /><br />
+Questo codice di conferma scadrà automaticamente alle $4.
+</p>',
 ];
 
 $messages['pl'] = [
@@ -816,6 +899,23 @@ Do twojej <a href="$5">strony dyskusji</a> dodaliśmy przydatne informacje i por
 Powodzenia,<br /><br />
 <a href="http://community.wikia.com/wiki/User:$4">$3</a><br />
 Zespół Społeczności portalu Fandom<br /></p>',
+	'confirmemail_body-HTML' => '<p>
+Ktoś łącząc się z komputera o adresie IP $1<br/ >
+zarejestrował w {{GRAMMAR:MS.lp|{{SITENAME}}}} konto „$2” podając niniejszy adres e‐mail.<br />
+<br />
+Aby potwierdzić, że to Ty zarejestrowałeś to konto oraz, aby włączyć<br />
+wszystkie funkcje korzystające z poczty elektronicznej, otwórz w swojej<br />
+przeglądarce ten link:<br />
+<br /><br />
+<a href="$3">$3</a >
+<br /><br />
+Jeśli to *nie* Ty zarejestrowałeś konto, otwórz w swojej przeglądarce<br />
+poniższy link, aby anulować potwierdzenie adresu e‐mail:<br />
+<br /><br />
+<a href="$5">$5</a>
+<br /><br />
+Kod zawarty w linku straci ważność $4.
+<br /></p>',
 ];
 
 $messages['sv'] = [
@@ -848,6 +948,19 @@ www.wikia.com
 <li>Detta lösenord påminnelse begärdes från följande adress: $1.</li>
 </ul>
 </p>',
+	'confirmemail_body-HTML' => '<p>
+Hej $2,<br />
+<br />
+Tack för din registrering med Wikia.<br />
+<br />
+Vänligen aktivera det nya kontot genom att <a href="$3">bekräftar din e-postadress här</a>.<br />
+<br />
+<br />
+Vi ser fram emot att se dig snart!<br />
+<br />
+Wikia Community Team<br />
+<a href="http://community.wikia.com/">community.wikia.com</a><br />
+</p>',
 ];
 
 $messages['zh'] = [
@@ -867,6 +980,12 @@ www.wikia.com<br /><hr />
 <li>要改更您的个人设定或密码，请进入: <a href="http://zh.community.wikia.com/wiki/Special:Preferences">用户设定</li>
 <li>这个密码提醒是由以下IP位址所申请发送： $1.</li>
 </ul></p>',
+	'confirmemail_body-HTML' => '<p> $2您好,<br /><br />
+谢谢您在Wikia注册帐号。<br /><br />
+请<a href="$3">点击这里确认您的电子邮件地址confirming your e-mail </a>以激活您的帐号<br /><br /><br />
+我们期待很快能见到您！<br /><br />
+Wikia支持团队<br />
+<a href="http://zh.community.wikia.com/">zh.community.wikia.com</a><br /></p>',
 ];
 
 $messages['zh-hans'] = [
@@ -886,6 +1005,12 @@ www.wikia.com<br /><br />
 <li>若要更改您的个人设置或密码，请访问：<a href="http://zh.community.wikia.com/wiki/Special:Preferences">个人设置</a>。</li>
 <li>密码提醒来源于以下地址：$1。</li>
 </ul></p>',
+	'confirmemail_body-HTML' => '<p> $2您好,<br /><br />
+谢谢您在Wikia注册帐号。<br /><br />
+请<a href="$3">点击这里确认您的电子邮件地址confirming your e-mail </a>以激活您的帐号<br /><br /><br />
+我们期待很快能见到您！<br /><br />
+Wikia支持团队<br />
+<a href="http://zh.community.wikia.com/">zh.community.wikia.com</a><br /></p>',
 ];
 
 $messages['zh-hant'] = [
@@ -905,6 +1030,12 @@ www.wikia.com<br /><br />
 <li>若要更改您的個人設置或密碼，請訪問：<a href="http://community.wikia.com/wiki/Special:Preferences">個人設置</a>。</li>
 <li>密碼提醒來源於以下地址：$1。</li>
 </ul></p>',
+	'confirmemail_body-HTML' => '<p> $2您好,<br /><br />
+謝謝您在Wikia註冊帳號。<br /><br />
+請<a href="$3">點擊這裡確認您的電子郵件地址confirming your e-mail </a>以啟用您的帳號<br /><br /><br />
+我們期待很快能見到您！<br /><br />
+Wikia支持團隊<br />
+<a href="http://zh.community.wikia.com/">zh.community.wikia.com</a><br /></p>',
 ];
 
 $messages['zh-hk'] = [
@@ -924,6 +1055,12 @@ www.wikia.com<br /><hr />
 <li>要改更您的個人設定或密碼，請進入: <a href="http://zh.community.wikia.com/wiki/Special:Preferences">用戶設定</li>
 <li>這個密碼提醒是由以下IP位址所申請發送： $1.</li>
 </ul></p>',
+	'confirmemail_body-HTML' => '<p> $2您好,<br /><br />
+謝謝您在Wikia註冊帳號。<br /><br />
+請<a href="$3">點擊這裡確認您的電子郵件地址confirming your e-mail </a>以啟用您的帳號<br /><br /><br />
+我們期待很快能見到您！<br /><br />
+Wikia支持團隊<br />
+<a href="http://zh.community.wikia.com/">zh.community.wikia.com</a><br /></p>',
 ];
 
 $messages['zh-tw'] = [
@@ -943,6 +1080,12 @@ www.wikia.com<br /><hr />
 <li>要改更您的個人設定或密碼，請進入: <a href="http://zh.community.wikia.com/wiki/Special:Preferences">用戶設定</li>
 <li>這個密碼提醒是由以下IP位址所申請發送： $1.</li>
 </ul></p>',
+	'confirmemail_body-HTML' => '<p> $2您好,<br /><br />
+謝謝您在Wikia註冊帳號。<br /><br />
+請<a href="$3">點擊這裡確認您的電子郵件地址confirming your e-mail </a>以啟用您的帳號<br /><br /><br />
+我們期待很快能見到您！<br /><br />
+Wikia支持團隊<br />
+<a href="http://zh.community.wikia.com/">zh.community.wikia.com</a><br /></p>',
 ];
 
 $messages['ja'] = [
@@ -962,6 +1105,26 @@ ja.wikia.com<br /><hr />
 今後ともFandomをよろしくお願いいたします。<br /><br />
 <a href="http://ja.community.wikia.com/wiki/ユーザー:$4">$3</a><br />
 Fandomコミュニティ・チーム<br /></p>',
+	'confirmemail_body-HTML' => 'こんにちは、$2 さん
+<br /><br />
+ウィキアに登録していただきありがとうございます！
+<br /><br />
+<a href="$3">あなたのメールアドレスの確認</a>によってあなたの新しいアカウントを有効にするため少し時間をください。
+<br /><br />
+始める用意はできましたか？<br>
+<ul><li>あなたがたったいま参加したコミュニティの<a href="{{fullurl:{{ns:special}}:WikiActivity}}">最近の活動</a>のすべてを見てください！ コメントを残すかページを編集することで投稿を始めてみてください。</li>
+<li>ウィキアビデオを<a href="http://www.wikia.com/Special:LandingPage">見て</a>ゲーム、エンターテイメント、ライフスタイルの中からお気に入りのウィキアを探索してみてください。</li>
+<li>ウィキアのコミュニティと接触し、何が起きているかを知り、ヘルプを探してみてください - <a href="http://ja.community.wikia.com/wiki/コミュニティセントラル">コミュニティセントラル</a>にはそれがすべてあります</li></ul>
+<br />
+大いに楽しんでください！<br />
+- ウィキア・コミュニティサポート
+<br /><hr />
+<p>
+<ul>
+<li><a href="http://ja.community.wikia.com/wiki/">コミュニティセントラル</a>でヘルプやアドバイスを探してみましょう。</li>
+<li>私たちからのメッセージの受信を減らしたいですか？ Eメールの設定を<a href="http://ja.community.wikia.com/Special:Preferences">こちら</a>で変更するか登録解除することができます。</li>
+</ul>
+</p>',
 ];
 
 $messages['qqq'] = [
@@ -1004,5 +1167,55 @@ www.wikia.com<br /><br />
 </li>
 <li>Запрос на отправку этого письма был получен с адреса $1.</li>
 </ul></p>',
+];
+
+$messages['fa'] = [
+	'confirmemail_body-HTML' => 'سلام $2،
+
+از ثبت‌نام شما در ویکیا متشکریم! <br>
+
+لطفا با <a href="$3">تایید آدرس پست الکترونیکی خود</a> یک دقیقه صرف فعال‌سازی حساب کاربری جدید خود کنید.<br>
+
+آماده‌اید برای شروع؟<br>
+
+<ul><li>یک نگاهی به تمام <a href="{{fullurl:{{ns:special}}:WikiActivity}}">فعالیت‌های اخیر</a> جامعه‌ای که پیوسته‌اید بکنید! فعالیت خود را با گذاشتن پیغام و یا ویرایش صفحات آغاز کنید.</li>
+<li>ویدیوی ویکیا را <a href="http://www.wikia.com/Special:LandingPage">تماشا</a> و شروع کنید به کاوش‌کردن در یکی از ویکی‌های مورد علاقۀ ما در بازی‌ها، سرگرمی‌ها، و شیوۀ زندگی.
+</li>
+<li>با جامعۀ ویکیا دیدار داشته‌باشید، آنچه در حال اتفاق افتادن است را بیاموزید، و کمک پیدا کنید - همه را در<a href="http://community.wikia.com/wiki/Community_Central">ویکیای مرکزی</a>.</li></ul>
+
+
+خوش باشید!<br/>
+
+- بخش پشتبانی جامعۀ ویکیا<br>
+
+<br /><hr />
+<p>
+<ul>
+<li>Find help and advice on <a href="http://community.wikia.com">Community Central</a>.</li>
+<li>Want to control which emails you receive? Go to <a href="{{fullurl:{{ns:special}}:Preferences}}">User Preferences</a></li>
+</ul>
+</p>
+<div style="font-size: 70%;margin-top: 25px;text-align: center;">Click <a href="$UNSUBSCRIBEURL">here</a> to unsubscribe from all Wikia emails.</div>',
+];
+
+$messages['ko'] = [
+	'confirmemail_body-HTML' => '안녕하세요, $2 님.
+<br /><br />
+위키아에 가입해주셔서 감사합니다!
+<br /><br />
+<a href="$3">이곳</a>에서 이메일 주소를 인증해 계정을 활성화해 주세요.
+<br /><br />
+시작할 준비가 되셨나요?<br>
+<ul><li>귀하가 참여한 커뮤니티에서 <a href="{{fullurl:{{ns:special}}:WikiActivity}}">최근 일어난 일</a>들을 알아 보세요! 댓글을 남기거나 문서를 편집해 기여를 시작하실 수 있습니다.</li>
+<li><a href="http://www.wikia.com/Special:LandingPage">영상</a>을 시청하시고 저희가 추천해드리는, 게임, 엔터테인먼트, 생활 등 다양한 분야의 위키를 탐방해 보시는 건 어떨까요?</li>
+<li><a href="http://ko.community.wikia.com/wiki/">위키아 중앙 커뮤니티</a>에서 다양한 사람들과 대화를 나누고, 도움을 구해 보세요.</li></ul>
+<br />
+즐거운 위키아 이용 되세요!<br>
+- 위키아 커뮤니티 지원팀
+<br /><hr />
+<p>
+<ul>
+<li>위키아 중앙 커뮤니티에서 도움을 구하실 수 있습니다: <a href="http://ko.community.wikia.com">위키아 중앙 커뮤니티</a>.</li>
+<li>알림을 받고 싶지 않으신가요? 이곳에서 알림 설정을 변경하실 수 있습니다: <a href="http://ko.community.wikia.com/특수기능:환경설정">특수기능:환경설정</a></li>',
 ];
 
