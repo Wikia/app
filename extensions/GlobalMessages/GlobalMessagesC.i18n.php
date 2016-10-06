@@ -21833,6 +21833,7 @@ Czy na pewno chcesz ją ponownie utworzyć?',
 	'contris' => 'Edycje',
 	'cockpit_hide' => 'Ukryj kokpit',
 	'create-account-new' => 'Stwórz konto na portalu Fandom',
+	'cięta-riposta' => 'Ojtam ojtam',
 ];
 
 $messages['pms'] = [
