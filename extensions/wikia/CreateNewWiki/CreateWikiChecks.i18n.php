@@ -4031,7 +4031,7 @@ $messages['sv'] = [
 	'autocreatewiki-desc' => 'Create wiki in WikiFactory by user requests',
 	'autocreatewiki-page-title-default' => 'Skapa en ny wiki',
 	'autocreatewiki-page-title-answers' => 'Skapa en ny Svar-sida',
-	'createwiki' => 'Skapa en ny wiki',
+	'createwiki' => 'Begär en ny wiki',
 	'autocreatewiki-chooseone' => 'Välj en',
 	'autocreatewiki-required' => '$1 = nödvändig',
 	'autocreatewiki-web-address' => 'Webbadress:',
@@ -4624,7 +4624,7 @@ $messages['zh-hans'] = [
 	'autocreatewiki-desc' => '按用户的请求在维基出厂配置中创建维基',
 	'autocreatewiki-page-title-default' => '创建新的维基',
 	'autocreatewiki-page-title-answers' => '创建新的问答网站',
-	'createwiki' => '创建新的维基',
+	'createwiki' => '申请wiki',
 	'autocreatewiki-chooseone' => '选择一个',
 	'autocreatewiki-required' => '$1 = 必选项',
 	'autocreatewiki-web-address' => '网站地址：',
@@ -4750,7 +4750,7 @@ $messages['zh-hant'] = [
 	'autocreatewiki-desc' => '通過使用者的請求，在 WikiFactory 中創建 wiki',
 	'autocreatewiki-page-title-default' => '建立一個新的維基',
 	'autocreatewiki-page-title-answers' => '創建一個新的問答網站',
-	'createwiki' => '建立一個新的維基',
+	'createwiki' => '申請wiki',
 	'autocreatewiki-chooseone' => '請選擇一個',
 	'autocreatewiki-web-address' => '網址',
 	'autocreatewiki-category-select' => '選擇一個',
@@ -4878,7 +4878,7 @@ $messages['zh-sg'] = [
 
 $messages['zh-tw'] = [
 	'autocreatewiki-page-title-default' => '創建新的維基',
-	'createwiki' => '創建新的維基',
+	'createwiki' => '申請wiki',
 	'autocreatewiki' => '創建新的維基',
 	'autocreatewiki-desc' => '按用戶的請求在維基出廠配置中創建維基',
 	'autocreatewiki-page-title-answers' => '創建新的問答網站',
@@ -5022,6 +5022,7 @@ $messages['no'] = [
 	'autocreatewiki-welcomesubject' => '$1 har blitt opprettet!',
 	'autocreatewiki-welcometalk-log' => 'Velkomstmelding',
 	'autocreatewiki' => 'Opprett en ny Wiki',
+	'createwiki' => 'Opprett en ny Wiki',
 ];
 
 $messages['aa'] = [

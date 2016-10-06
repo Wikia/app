@@ -313,8 +313,8 @@ Please confirm that you really want to recreate this article.',
 	'corporatepage-words-added' => 'words added in the last week',
 	'custom_info' => 'Custom themes can be built by selecting "Custom" above and then editing ',
 	'contris' => 'Contributions',
-	'createwiki' => 'Request a new wiki',
-	'createwikipagetitle' => 'Request a new wiki',
+	'createwiki' => 'Create a new wiki',
+	'createwikipagetitle' => 'Create a new wiki',
 	'createwikitext' => 'You can request a new wiki be created on this page.  Just fill out the form',
 	'createwikititle' => 'Title for the wiki',
 	'createwikiname' => 'Name for the wiki',
@@ -3476,6 +3476,8 @@ $5
 	'compare-invalid-title' => 'Посоченото заглавие е невалидно',
 	'compare-title-not-exists' => 'Посоченото заглавие не съществува.',
 	'compare-revision-not-exists' => 'Посочената версия не съществува.',
+	'createwiki' => 'Създаване на уики',
+	'createwikipagetitle' => 'Заявка за ново уики',
 ];
 
 $messages['bh'] = [
@@ -6271,6 +6273,7 @@ Bitte bestätige, dass Du diese Seite tatsächlich neu anlegen möchtest.',
 	'corporatepage-watchlist' => 'Beobachtungsliste',
 	'contris' => 'Beiträge',
 	'contris_s' => 'Beiträge',
+	'createwikipagetitle' => 'Erstelle ein neues Wiki',
 ];
 
 $messages['de-formal'] = [
@@ -7522,6 +7525,7 @@ Este código de confirmación caducará el $4.',
 	'corporatepage-words-added' => 'palabras añadidas en la última semana',
 	'contris' => 'Contribuciones',
 	'contris_s' => 'Contribuciones',
+	'createwikipagetitle' => 'Crear un nuevo wiki',
 ];
 
 $messages['et'] = [
@@ -8147,6 +8151,8 @@ $5
 	'contris' => 'مشارکت‌ها',
 	'contris_s' => 'مشارکت‌ها',
 	'createpage' => 'ایجاد مقاله جدید',
+	'createwiki' => 'ایجاد ویکی جدید',
+	'createwikipagetitle' => 'ایجاد ویکی جدید',
 ];
 
 $messages['ff'] = [
@@ -8335,6 +8341,7 @@ Varmista, että haluat luoda sivun uudelleen.',
 	'community' => 'Yhteisö',
 	'contris' => 'Muokkaukset',
 	'contris_s' => 'Muokkaukset',
+	'createwiki' => 'Luo uusi wiki',
 ];
 
 $messages['fiu-vro'] = [
@@ -8868,6 +8875,7 @@ Veuillez confirmer que vous désirez réellement recréer cette page.',
 	'corporatepage-wikia-overview-headline' => 'Aperçu de Wikia',
 	'corporatepage-wikia-wide-stats-headline' => 'Statistiques sur Wikia',
 	'corporatepage-words-added' => 'mots ajoutés la semaine dernière',
+	'createwikipagetitle' => 'Créer un wiki',
 ];
 
 $messages['frc'] = [
@@ -13018,6 +13026,7 @@ Per favore, conferma che desideri veramente ricreare questa pagina.',
 	'community' => 'Community',
 	'contris' => 'Contributi',
 	'contris_s' => 'Contributi',
+	'createwikipagetitle' => 'Crea un nuova wiki',
 ];
 
 $messages['iu'] = [
@@ -13420,7 +13429,7 @@ $5
 	'compare-revision-not-exists' => '指定された版は存在しません。',
 	'contris' => '投稿記録',
 	'createwiki' => '新しいウィキを申請する',
-	'createwikipagetitle' => '新しいウィキを申請する',
+	'createwikipagetitle' => '新しいウィキアを作成',
 	'createwikitext' => 'このページで新しいウィキの申請ができます。以下の入力欄を埋めてください。',
 	'createwikititle' => 'ウィキのタイトル',
 	'createwikiname' => 'ウィキの名前(URL)',
@@ -15413,6 +15422,8 @@ $5
 	'contris' => '사용자 기여',
 	'contris_s' => '사용자 기여',
 	'createpage' => '새 문서 만들기',
+	'createwiki' => '새 위키 만들기',
+	'createwikipagetitle' => '새 위키 만들기',
 ];
 
 $messages['ko-kp'] = [
@@ -21070,6 +21081,17 @@ Du må stadfeste at du verkeleg vil nyopprette denne sida.',
 	'community' => 'Fellesskap',
 	'contris' => 'Bidrag',
 	'contris_s' => 'Bidrag',
+	'createwiki' => 'Opprett en ny Wiki',
+	'createwikiaddtnl' => 'Øvrig informasjon',
+	'createwikidesc' => 'Beskrivelse av Wikien',
+	'createwikilang' => 'Standardspråk for denne wikien',
+	'createwikimailsub' => 'Foreslå en ny Wikia',
+	'createwikiname' => 'Navn til wikien',
+	'createwikinamevstitle' => 'Navnet på wikien skiller seg fra tittelen ved at navnet er det som vil brukes som standard nettadresse. For eksempel, navnet «starwars» vil være tilgjengelig på http://starwars.wikia.com/. Wikiens tittel inneholder mellomrom, mens navnet bare bør inneholde bokstaver og tall.',
+	'createwikipagetitle' => 'Opprett en ny Wiki',
+	'createwikisubmitcomplete' => 'Innsendelsen er fullført. Hvis du oppgav en e-postadresse vil du bli kontaktet vedrørende den nye Wikien. Takk for at du bruker {{SITENAME}}.',
+	'createwikitext' => 'Du kan sende en forespørsel om opprettelsen av en ny Wiki på denne siden. Bare fyll ut skjemaet',
+	'createwikititle' => 'Tittel for wikien',
 ];
 
 $messages['nov'] = [
@@ -22081,6 +22103,8 @@ Czy na pewno chcesz ją ponownie utworzyć?',
 	'community' => 'Społeczność',
 	'corporatepage-go-to-wiki' => 'Idź do $1',
 	'contris_s' => 'Edycje',
+	'createwikilang' => 'Domyślny język dla tej wiki',
+	'createwikipagetitle' => 'Utwórz nową wiki',
 ];
 
 $messages['pms'] = [
@@ -24134,6 +24158,15 @@ $5
 * Languages|More...',
 	'contris' => 'Вклад',
 	'contris_s' => 'Вклад',
+	'createwikiaddtnl' => 'Дополнительная информация',
+	'createwikidesc' => 'Описание вики',
+	'createwikilang' => 'Язык по умолчанию для этой вики',
+	'createwikimailsub' => 'Запросить новую Вики',
+	'createwikiname' => 'Название для вики',
+	'createwikinamevstitle' => 'Название вики отличается от заголовка вики. Название будет использоваться как URL по умолчанию. Например, название "starwars" будет использовано как http://starwars.wikia.com/. Заголовок вики может содержать пробелы, а название - только буквы и цифры.',
+	'createwikipagetitle' => 'Запросить новую вики',
+	'createwikitext' => 'Вы можете запросить новую вики, создав эту страницу. Просто заполните форму',
+	'createwikititle' => 'Заголовок вики',
 ];
 
 $messages['rue'] = [
@@ -27329,6 +27362,8 @@ Bekräfta att du verkligen vill återskapa sidan.',
 	'create_an_account' => 'Skapa ett konto',
 	'createpage' => 'Påbörja en artikel',
 	'choose_reason' => 'Välj anledning',
+	'createwiki' => 'Begär en ny wiki',
+	'createwikipagetitle' => 'Begär en ny wiki',
 ];
 
 $messages['sw'] = [
@@ -31500,6 +31535,7 @@ Send a new code by clicking [[Special:ConfirmEmail|here]].',
 <strong>请不要在未获授权的情况下发表受版权保护的作品！</strong>',
 	'createpage' => '新增文章',
 	'createaccountblock' => '禁止创建帐户',
+	'createwikipagetitle' => '申请wiki',
 ];
 
 $messages['zh-classical'] = [
@@ -31536,6 +31572,8 @@ Send a new code by clicking [[Special:ConfirmEmail|here]].',
 <strong>请不要在未获授权的情况下发表受版权保护的作品！</strong>',
 	'createpage' => '新增文章',
 	'createaccountblock' => '禁止创建帐户',
+	'createwiki' => '申请wiki',
+	'createwikipagetitle' => '申请wiki',
 ];
 
 $messages['zh-hans'] = [
@@ -31722,6 +31760,8 @@ $5
 	'contris' => '用户贡献',
 	'contris_s' => '用户贡献',
 	'createpage' => '新增文章',
+	'createwiki' => '申请wiki',
+	'createwikipagetitle' => '申请wiki',
 ];
 
 $messages['zh-hant'] = [
@@ -31907,6 +31947,8 @@ $5
 	'contris' => '用戶貢獻',
 	'contris_s' => '用戶貢獻',
 	'createpage' => '新增文章',
+	'createwiki' => '申請wiki',
+	'createwikipagetitle' => '申請wiki',
 ];
 
 $messages['zh-hk'] = [
@@ -31957,6 +31999,8 @@ Send a new code by clicking [[Special:ConfirmEmail|here]].',
 <strong>請不要在未獲授權的情况下發表受版權保護的作品！</strong>',
 	'createpage' => '新增文章',
 	'createaccountblock' => '禁止創建帳户',
+	'createwiki' => '申請wiki',
+	'createwikipagetitle' => '申請wiki',
 ];
 
 $messages['zh-min-nan'] = [
@@ -32002,6 +32046,8 @@ Send a new code by clicking [[Special:ConfirmEmail|here]].',
 你也必须向我们保证你所写的一切都出自你自己的笔下, 或者是复制于公共领域或其他类似的自由来源(详情请参见 $1).
 <strong>请不要在未获授权的情况下发表受版权保护的作品！</strong>',
 	'createaccountblock' => '禁止创建帐户',
+	'createwiki' => '申请wiki',
+	'createwikipagetitle' => '申请wiki',
 ];
 
 $messages['zh-tw'] = [
@@ -32061,6 +32107,8 @@ Send a new code by clicking [[Special:ConfirmEmail|here]].',
 如果您不想您寫的文章被他人修改, 請不要在這裏提交.<br />
 你也必須向我們保證你所寫的一切都出自你自己的筆下, 或者是復制于公共領域或其他類似的自由來源(詳情請參見 $1).
 <strong>請不要在未獲授權的情况下發表受版權保護的作品！</strong>',
+	'createwiki' => '申請wiki',
+	'createwikipagetitle' => '申請wiki',
 ];
 
 $messages['zh-yue'] = [
