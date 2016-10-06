@@ -48,12 +48,11 @@ You may ignore this message, if this account was created in error.',
 	'changeemail-cancel' => 'Cancel',
 	'confirmedittext' => 'You must confirm your e-mail address before editing pages.
 Please set and validate your e-mail address through your [[Special:Preferences|user preferences]].',
-	'clearyourcache' => '\'\'\'Note:\'\'\' After saving, you may have to bypass your browser\'s cache to see the changes.
-* \'\'\'Firefox / Safari:\'\'\' Hold \'\'Shift\'\' while clicking \'\'Reload\'\', or press either \'\'Ctrl-F5\'\' or \'\'Ctrl-R\'\' (\'\'⌘-R\'\' on a Mac)
-* \'\'\'Google Chrome:\'\'\' Press \'\'Ctrl-Shift-R\'\' (\'\'⌘-Shift-R\'\' on a Mac)
-* \'\'\'Internet Explorer:\'\'\' Hold \'\'Ctrl\'\' while clicking \'\'Refresh\'\', or press \'\'Ctrl-F5\'\'
-* \'\'\'Konqueror:\'\'\' Click \'\'Reload\'\' or press \'\'F5\'\'
-* \'\'\'Opera:\'\'\' Clear the cache in \'\'Tools → Preferences\'\'',
+	'clearyourcache' => '\'\'\'Note:\'\'\' After saving, you may have to [[Help:Bypass your cache|bypass your browser\'s cache]] to see the changes.
+* \'\'\'Chrome\'\'\' - Windows: Hold the \'\'Ctrl\'\' key and press the \'\'F5\'\' key. OS X: Hold both the \'\'⌘ Cmd\'\' and \'\'⇧ Shift\'\' keys and press the \'\'R\'\' key.
+* \'\'\'Safari\'\'\' - Hold down the \'\'⇧ Shift\'\' key and click the \'\'Reload\'\' toolbar button.
+* \'\'\'Firefox\'\'\' - Windows: Hold the \'\'Ctrl\'\' key, and press \'\'F5\'\'. OS X: Hold the \'\'⌘ Cmd\'\' and \'\'⇧ Shift\'\' keys, and then press \'\'R\'\'.
+* \'\'\'Internet Explorer\'\'\' - Hold the \'\'Ctrl\'\' key, and press \'\'F5\'\' (or click the \'\'Refresh\'\' button).',
 	'copyrightwarning' => 'Please note that all contributions to {{SITENAME}} are considered to be released under the $2 (see $1 for details).
 If you do not want your writing to be edited mercilessly and redistributed at will, then do not submit it here.<br />
 You are also promising us that you wrote this yourself, or copied it from a public domain or similar free resource.
@@ -6126,12 +6125,12 @@ Falls das Benutzerkonto irrtümlich angelegt wurde, kannst du diese Nachricht ig
 	'changeemail-submit' => 'E-Mail-Adresse ändern',
 	'changeemail-cancel' => 'Abbrechen',
 	'confirmedittext' => 'Du musst deine E-Mail-Adresse erst bestätigen, bevor du Bearbeitungen durchführen kannst. Bitte ergänze und bestätige deine E-Mail in den [[Special:Preferences|Einstellungen]].',
-	'clearyourcache' => '\'\'\'Hinweis:\'\'\' Leere nach dem Speichern den Browser-Cache, um die Änderungen sehen zu können.
-* \'\'\'Firefox/Safari:\'\'\' \'\'Umschalttaste\'\' drücken und gleichzeitig \'\'Aktualisieren\'\' anklicken oder entweder \'\'Strg+F5\'\' oder \'\'Strg+R\'\' (\'\'⌘+R\'\' auf dem Mac) drücken
-* \'\'\'Google Chrome:\'\'\' \'\'Umschalttaste+Strg+R\'\' (\'\'⌘+Umschalttaste+R\'\' auf dem Mac) drücken
-* \'\'\'Internet Explorer:\'\'\' \'\'Strg+F5\'\' drücken oder \'\'Strg\'\' drücken und gleichzeitig \'\'Aktualisieren\'\' anklicken
-* \'\'\'Opera:\'\'\' \'\'Extras → Internetspuren löschen … → Individuelle Auswahl → Den kompletten Cache löschen\'\'
-* \'\'\'Konqueror:\'\'\' \'\'Aktualisieren\'\' anklicken oder \'\'F5\'\' drücken',
+	'clearyourcache' => '\'\'\'Hinweis - Leere nach dem Speichern den Browser-Cache, um die Änderungen sehen zu können:\'\'\' 
+*\'\'\'Mozilla/Firefox/Safari:\'\'\' \'\'Shift\'\' gedrückt halten und auf \'\'Aktualisieren\'\' klicken oder alternativ entweder \'\'Strg-F5\'\' oder \'\'Strg-R\'\' (\'\'Befehlstaste-R\'\' bei Macintosh) drücken;
+*\'\'\'Konqueror: \'\'\'Auf \'\'Aktualisieren\'\' klicken oder \'\'F5\'\' drücken; 
+*\'\'\'Opera:\'\'\' Cache unter \'\'Extras → Einstellungen\'\' leeren; 
+*\'\'\'Internet Explorer:\'\'\' \'\'Strg-F5\'\' drücken oder \'\'Strg\'\' gedrückt halten und dabei \'\'Aktualisieren\'\' anklicken.
+*\'\'\'Chrome:\'\'\' \'\'\'Strg\'\'\' und \'\'\'F5\'\'\';',
 	'copyrightwarning' => '\'\'\'Bitte kopiere keine Webseiten, die nicht deine eigenen sind, benutze keine urheberrechtlich geschützten Werke ohne Erlaubnis des Urhebers!\'\'\'<br />
 Du gibst uns hiermit deine Zusage, dass du den Text \'\'\'selbst verfasst\'\'\' hast, dass der Text Allgemeingut \'\'\'(public domain)\'\'\' ist, oder dass der \'\'\'Urheber\'\'\' seine \'\'\'Zustimmung\'\'\' gegeben hat. Falls dieser Text bereits woanders veröffentlicht wurde, weise bitte auf der Diskussionsseite darauf hin.
 <i>Bitte beachte, dass alle {{SITENAME}}-Beiträge automatisch unter der „$2“ stehen (siehe $1 für Details). Falls du nicht möchtest, dass deine Arbeit hier von anderen verändert und verbreitet wird, dann drücke nicht auf „Seite speichern“.</i>',
@@ -8554,12 +8553,12 @@ Ignorez ce message si ce compte a été créé par erreur.',
 	'changeemail-cancel' => 'Annuler',
 	'confirmedittext' => 'Vous devez confirmer votre adresse de courriel avant de modifier les pages.
 Veuillez entrer et valider votre adresse de courriel dans vos [[Special:Preferences|préférences]].',
-	'clearyourcache' => '\'\'\'Note :\'\'\' après avoir enregistré vos préférences, vous devrez forcer le rechargement complet du cache de votre navigateur pour voir les changements.
-* \'\'\'Firefox / Safari :\'\'\' Maintenez la touche \'\'Maj\'\' (\'\'Shift\'\') en cliquant sur le bouton \'\'Actualiser\'\' ou pressez \'\'Ctrl-F5\'\' ou \'\'Ctrl-R\'\' (\'\'⌘-R\'\' sur un Mac) ;
-* \'\'\'Google Chrome :\'\'\' Appuyez sur \'\'Ctrl-Maj-R\'\' (\'\'⌘-Shift-R\'\' sur un Mac) ;
-* \'\'\'Internet Explorer :\'\'\' Maintenez la touche \'\'Ctrl\'\' en cliquant sur le bouton \'\'Actualiser\'\' ou pressez \'\'Ctrl-F5\'\' ;
-* \'\'\'Konqueror :\'\'\' Cliquez sur \'\'Actualiser\'\' ou pressez \'\'F5\'\' ;
-* \'\'\'Opera :\'\'\' Videz le cache dans \'\'Outils → Préférences\'\'.',
+	'clearyourcache' => '\'\'\'Note :\'\'\' Après publication, il peut être nécessaire de [[w:fr:Aide:Cache|purger le cache]] pour voir les modifications.
+
+* \'\'\'Chrome\'\'\' - Windows : Maintenez la touche Ctrl enfoncée et appuyez sur la touche F5 ; OS X : Maintenez les touches Cmd (⌘) et Shift (⇧) enfoncées et appuyez sur la touche R.
+* \'\'\'Safari\'\'\' - Maintenez la touche Shift (⇧) enfoncée et cliquez sur le bouton « Recharger » de la barre d\'outils.
+* \'\'\'Firefox\'\'\' - Windows : Maintenez la touche Ctrl enfoncée et appuyez sur la touche F5 ; OS X : Maintenez les touches Cmd (⌘) et Shift (⇧) enfoncées et appuyez sur la touche R.
+* \'\'\'Internet Explorer\'\'\' : Maintenez la touche Ctrl enfoncée et appuyez sur la touche F5 (ou cliquez sur le bouton « Actualiser »).',
 	'copyrightwarning' => 'Toutes les contributions à {{SITENAME}} sont considérées comme publiées sous les termes de la $2 (voir $1 pour plus de détails). Si vous ne désirez pas que vos écrits soient modifiés et distribués à volonté, merci de ne pas les soumettre ici.<br />
 Vous nous promettez aussi que vous avez écrit ceci vous-même, ou que vous l’avez copié d’une source provenant du domaine public, ou d’une ressource libre. \'\'\'N’UTILISEZ PAS DE TRAVAUX SOUS DROIT D’AUTEUR SANS AUTORISATION EXPRESSE !\'\'\'',
 	'copyrightwarning2' => 'Toutes les contributions à {{SITENAME}} peuvent être modifiées ou supprimées par d’autres utilisateurs. Si vous ne désirez pas que vos écrits soient modifiés et distribués à volonté, merci de ne pas les soumettre ici.<br />
@@ -20312,12 +20311,12 @@ Negeer dit bericht als deze gebruiker zonder uw medeweten is aangemaakt.',
 	'changeemail-cancel' => 'Annuleren',
 	'confirmedittext' => 'U moet uw e-mailadres bevestigen voor u kunt bewerken.
 Voer uw e-mailadres in en bevestig het via [[Special:Preferences|uw voorkeuren]].',
-	'clearyourcache' => '\'\'\'Let op!\'\'\' Nadat u de wijzigingen hebt opgeslagen is het wellicht nodig uw browsercache te legen.
-* \'\'\'Firefox / Safari:\'\'\' houd \'\'Shift\'\' ingedrukt terwijl u op \'\'Vernieuwen\'\' klikt of druk op \'\'Ctrl-F5\'\' of \'\'Ctrl-R\'\' (\'\'⌘-Shift-R\'\' op een Mac)
-* \'\'\'Google Chrome:\'\'\' druk op \'\'Ctrl-Shift-R\'\' (\'\'⌘-Shift-R\'\' op een Mac)
-* \'\'\'Internet Explorer:\'\'\' houd \'\'Ctrl\'\' ingedrukt terwijl u op \'\'Vernieuwen\'\' klikt of druk op \'\'Ctrl-F5\'\'
-* \'\'\'Konqueror: \'\'\'klik op \'\'Reload\'\' of druk op \'\'F5\'\'
-* \'\'\'Opera:\'\'\' leeg uw cache in \'\'Extra → Voorkeuren\'\'',
+	'clearyourcache' => '\'\'\'Let op! Nadat je de wijzigingen hebt opgeslagen is het wellicht nodig je browsercache te legen.\'\'\'
+
+\'\'\'Mozilla / Firefox / Safari:\'\'\' houd \'\'Shift\'\' ingedrukt terwijl je op \'\'Huidige pagina vernieuwen\'\' klikt of typ \'\'Ctrl-F5\'\' of \'\'Ctrl-R\'\' (\'\'Command-R\'\' op eenMacintosh);
+\'\'\'Konqueror: \'\'\'klik \'\'Reload\'\' of typ \'\'F5;\'\'
+\'\'\'Opera:\'\'\' leeg je cache in \'\'Extra → Voorkeuren;\'\'
+\'\'\'Internet Explorer:\'\'\' houd \'\'Ctrl\'\' ingedrukt terwijl je op \'\'Vernieuwen\'\' klikt of type \'\'Ctrl-F5.\'\'',
 	'copyrightwarning' => 'Let op: alle bijdragen aan {{SITENAME}} worden geacht te zijn vrijgegeven onder de $2 (zie $1 voor details).
 Als u niet wilt dat uw tekst door anderen naar believen bewerkt en verspreid kan worden, kies dan niet voor "Pagina opslaan".<br />
 Hierbij belooft u ons tevens dat u deze tekst zelf hebt geschreven of overgenomen uit een vrije, openbare bron.<br />
@@ -21687,12 +21686,12 @@ Możesz zignorować tę wiadomość, jeśli konto zostało utworzone przez pomy�
 	'changeemail-cancel' => 'Anuluj',
 	'confirmedittext' => 'Edytowanie jest możliwe dopiero po zweryfikowaniu adresu e‐mail.
 Podaj adres e‐mail i potwierdź go w swoich [[Special:Preferences|ustawieniach użytkownika]].',
-	'clearyourcache' => '\'\'\'Uwaga:\'\'\' aby zobaczyć zmiany po zapisaniu, może zajść potrzeba wyczyszczenia pamięci podręcznej przeglądarki.
-* \'\'\'Firefox / Safari:\'\'\' Przytrzymaj \'\'Shift\'\' podczas klikania \'\'Odśwież bieżącą stronę\'\', lub naciśnij klawisze \'\'Ctrl+F5\'\' lub \'\'Ctrl+R\'\' (\'\'⌘-R\'\' na komputerze Mac)
-* \'\'\'Google Chrome:\'\'\' Naciśnij \'\'Ctrl-Shift-R\'\' (\'\'⌘-Shift-R\'\' na komputerze Mac)
-* \'\'\'Internet Explorer:\'\'\' Przytrzymaj \'\'Ctrl\'\' jednocześnie klikając \'\'Odśwież\'\' lub naciśnij klawisze \'\'Ctrl+F5\'\'
-* \'\'\'Konqueror:\'\'\' Kliknij polecenie \'\'Odśwież\'\' lub naciśnij klawisz \'\'F5\'\'
-* \'\'\'Opera:\'\'\' Wyczyść pamięć podręczną w \'\'Narzędzia → Preferencje\'\'',
+	'clearyourcache' => '\'\'\'Uwaga:\'\'\' aby zobaczyć zmiany po zapisaniu, może zajść potrzeba [[Help:Bypass your cache|odświeżenia pamięci podręcznej przeglądarki]].
+
+* \'\'\'Chrome\'\'\' - Windows: Przytrzymaj \'\'Ctrl\'\' i wciśnij \'\'F5\'\'. OS X: Przytrzymaj \'\'⌘ Cmd\'\' oraz \'\'⇧ Shift\'\' i wciśnij \'\'R\'\'.
+* \'\'\'Safari\'\'\' - Przytrzymaj \'\'⇧ Shift\'\' i kliknij na przycisk \'\'Odśwież\'\' na pasku narzędzi.
+* \'\'\'Firefox\'\'\' - Windows: Przytrzymaj \'\'Ctrl\'\' i wciśnij \'\'F5\'\'. OS X: Przytrzymaj \'\'⌘ Cmd\'\' oraz \'\'⇧ Shift\'\' i wciśnij \'\'R\'\'.
+* \'\'\'Internet Explorer\'\'\' - Przytrzymaj \'\'Ctrl\'\' i wciśnij \'\'F5\'\' (lub kliknij przycisk \'\'Odśwież\'\' na pasku narzędzi).',
 	'copyrightwarning' => 'Wkład do {{GRAMMAR:D.lp|{{SITENAME}}}} jest udostępniany na licencji $2 (szczegóły w $1). Jeśli nie chcesz, żeby Twój tekst był dowolnie zmieniany przez każdego i rozpowszechniany bez ograniczeń, nie umieszczaj go tutaj.<br />
 Zapisując swoją edycję, oświadczasz, że ten tekst jest Twoim dziełem lub pochodzi z materiałów dostępnych na warunkach \'\'domeny publicznej\'\' lub kompatybilnych.
 \'\'\'PROSZĘ NIE WPROWADZAĆ MATERIAŁÓW CHRONIONYCH PRAWEM AUTORSKIM BEZ POZWOLENIA WŁAŚCICIELA!\'\'\'',
@@ -23733,7 +23732,7 @@ $2',
 Пожалуйста, введите и подтвердите свой адрес электронной почты в своих [[Special:Preferences|персональных настройках]].',
 	'clearyourcache' => '\'\'\'Замечание.\'\'\' Возможно, после сохранения вам придётся очистить кеш своего браузера, чтобы увидеть изменения.
 * \'\'\'Firefox / Safari:\'\'\' Удерживая клавишу \'\'Shift\'\', нажмите на панели инструментов \'\'Обновить\'\', или нажмите \'\'Ctrl-F5\'\' или \'\'Ctrl-R\'\' (\'\'⌘-R\'\' на Mac)
-* \'\'\'Google Chrome:\'\'\' Нажмите \'\'Ctrl-Shift-R\'\' (\'\'⌘-Shift-R\'\' на Mac)
+* \'\'\'Google Chrome + Яндекс.Браузер:\'\'\' Нажмите \'\'Ctrl-Shift-R\'\' (\'\'⌘-Shift-R\'\' на Mac)
 * \'\'\'Internet Explorer:\'\'\' Удерживая \'\'Ctrl\'\' нажмите \'\'Обновить\'\', или нажмите \'\'Ctrl-F5\'\'
 * \'\'\'Konqueror:\'\'\' Нажмите \'\'Обновить\'\' или \'\'F5\'\'
 * \'\'\'Opera:\'\'\' Выберите очистку кеша в меню \'\'Инструменты → Настройки\'\'',
@@ -26940,12 +26939,12 @@ Du kan ignorera detta meddelande om kontot skapats av misstag.',
 	'changeemail-submit' => 'Ändra e-post',
 	'changeemail-cancel' => 'Avbryt',
 	'confirmedittext' => 'Du måste bekräfta din e-postadress innan du kan redigera sidor. Var vänlig ställ in och validera din e-postadress genom dina [[Special:Preferences|användarinställningar]].',
-	'clearyourcache' => '\'\'\'OBS:\'\'\' Sedan du sparat sidan kan du behöva tömma din webbläsares cache för att se ändringarna.
-*\'\'\'Firefox / Safari:\'\'\' Håll ned \'\'Skift\'\' och klicka på \'\'Uppdatera sidan\'\' eller tryck antingen \'\'Ctrl-F5\'\' eller \'\'Ctrl-R\'\' (\'\'⌘-R\'\' på Mac)
-*\'\'\'Google Chrome:\'\'\' Tryck \'\'Ctrl-Skift-R\'\'  (\'\'⌘-Shift-R\'\' på Mac)
-*\'\'\'Internet Explorer:\'\'\'  Håll ned \'\'Ctrl\'\' och klicka på \'\'Uppdatera\'\' eller tryck \'\'Ctrl-F5\'\'
-*\'\'\'Konqueror:\'\'\' Klicka på \'\'Reload\'\' eller tryck på \'\'F5\'\'
-*\'\'\'Opera:\'\'\' Rensa cachen i \'\'Verktyg → Inställningar\'\'',
+	'clearyourcache' => '\'\'\'Observera:\'\'\' Efter att spara måste du tömma din webbläsares cache för att se ändringarna
+*\'\'\'Internet Explorer:\'\'\' hålla ned \'\'Ctrl\'\' knappen och klicka \'\'Refresh\'\' eller \'\'Reload\'\' knappen, eller tryck \'\'Ctrl+F5\'\'.
+*\'\'\'Firefox:\'\'\' hålla ned \'\'Shift\'\' knappen och klicka på Reload; tryck alternativt \'\'Ctrl+F5\'\' eller \'\'Ctrl-Shift-R\'\'.
+*\'\'\'Opera\'\'\' användare måste tömma sina cacher genom \'\'Verktyg→Inställningar\'\'
+*\'\'\'Konqueror\'\'\' och \'\'\'Safari\'\'\' användare kan klicka \'\'Reload\'\' knappen.
+*\'\'\'Chrome\'\'\': tryck Ctrl+F5 eller Shift+F5',
 	'copyrightwarning' => 'Observera att alla bidrag till {{SITENAME}} är att betrakta som utgivna under $2 (se $1 för detaljer). Om du inte vill att din text ska redigeras eller kopieras efter andras gottfinnande skall du inte skriva något här.<br />
 Du lovar oss också att du skrev texten själv, eller kopierade från kulturellt allmängods som inte skyddas av upphovsrätt, eller liknande källor. \'\'\'LÄGG INTE UT UPPHOVSRÄTTSSKYDDAT MATERIAL HÄR UTAN TILLÅTELSE!\'\'\'',
 	'copyrightwarning2' => 'Observera att alla bidrag till {{SITENAME}} kan komma att redigeras, ändras, eller tas bort av andra deltagare. Om du inte vill se din text förändrad efter andras gottfinnade skall du inte skriva in någon text här.<br />
