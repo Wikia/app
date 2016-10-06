@@ -10,7 +10,13 @@ define(
 		function trackOnEditPageLoad(editor) {
 			var qs = new QueryString(),
 				// 'flow' is the parameter passed in the url if user has started a flow already
-				flowParam = qs.getVal('flow', false);
+				flowParam = qs.getVal('flow', false),
+				tracked = qs.getVal('tracked', false);
+
+			// Do not track if the step was tracked already
+			if (tracked) {
+				return;
+			}
 
 			// Track only creating articles (wgArticleId=0) from namespace 0 (Main)
 			// IMPORTANT: on Special:CreatePage even after providing article title the namespace is set to -1 (Special Page)
@@ -32,6 +38,10 @@ define(
 					// TODO: direct-url to Special:CreatePage (WW-351)
 				}
 			}
+
+			// set 'tracked' query param to prevent tracking the same event when page is reloaded
+			qs.setVal('tracked', 'true');
+			window.history.replaceState({}, '', qs.toString());
 		}
 
 		return {
