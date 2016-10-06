@@ -10,12 +10,12 @@ define('ext.wikia.recirculation.utils', [
 	// returns a gaussian random function with the given mean and stdev.
 	function gaussian(mean, stdev) {
 		var y2,
-			use_last = false;
+			useLast = false;
 		return function() {
 			var y1;
-			if (use_last) {
+			if (useLast) {
 				y1 = y2;
-				use_last = false;
+				useLast = false;
 			} else {
 				var x1, x2, w;
 
@@ -28,7 +28,7 @@ define('ext.wikia.recirculation.utils', [
 				w = Math.sqrt((-2.0 * Math.log(w))/w);
 				y1 = x1 * w;
 				y2 = x2 * w;
-				use_last = true;
+				useLast = true;
 			}
 
 			var retval = mean + stdev * y1;
@@ -156,6 +156,18 @@ define('ext.wikia.recirculation.utils', [
 		return deferred.promise();
 	}
 
+	function sortThumbnails(a, b) {
+		if (a.thumbnail && !b.thumbnail) {
+			return -1;
+		}
+
+		if (!a.thumbnail && b.thumbnail) {
+			return 1;
+		}
+
+		return 0;
+	}
+
 	return {
 		buildLabel: buildLabel,
 		loadTemplate: loadTemplate,
@@ -163,6 +175,7 @@ define('ext.wikia.recirculation.utils', [
 		addUtmTracking: addUtmTracking,
 		afterRailLoads: afterRailLoads,
 		waitForRail: waitForRail,
-		ditherResults: ditherResults
+		ditherResults: ditherResults,
+		sortThumbnails: sortThumbnails
 	};
 });

@@ -29,7 +29,12 @@ class DiscussionsThreadModel {
 		return self::DISCUSSIONS_API_BASE_DEV . "$this->cityId/forums?responseGroup=small&viewableOnly=true";
 	}
 
-	public function getCategoryId( $category ) {
+	/**
+	 * Get category names for all requested categoryIds
+	 * @param $categoryIds requested category ids
+	 * @return array with name and id pairs for all valid requested categories
+	 */
+	public function getCategoryNames( $categoryIds ) {
 		$memcKey = wfMemcKey( __METHOD__, self::MCACHE_VER );
 		$rawData = WikiaDataAccess::cache(
 			$memcKey,
@@ -39,26 +44,44 @@ class DiscussionsThreadModel {
 			}
 		);
 
-		return $this->categoryLookup( $category, $rawData );
+		return $this->categoryNameLookup( $categoryIds, $rawData );
 	}
 
-	private function categoryLookup( $category, $rawData ) {
+	/**
+	 * Helper function for matching category data from API with requested Ids
+	 * @param $categoryIds requested category ids
+	 * @param $rawData response from API
+	 * @return array
+	 */
+	private function categoryNameLookup( $categoryIds, $rawData ) {
+		$explodedIds = explode( ',', $categoryIds );
+		$ret = [];
+
 		$categories = $rawData['_embedded']['doc:forum'];
 		if ( is_array( $categories ) ) {
 			foreach ( $categories as $value ) {
-				if ( $value['name'] === $category ) {
-					return $value['id'];
+				if ( in_array( $value['id'], $explodedIds ) ) {
+					$ret[] = [
+						'id' => $value['id'],
+						'name' => $value['name'],
+					];
 				}
 			}
 		}
 
-		return false;
+		return $ret;
 	}
 
-	private function getRequestUrl( $showLatest, $limit, $category ) {
+	private function getRequestUrl( $showLatest, $limit, $categoryIds ) {
 		$sortKey = $showLatest ? self::SORT_LATEST : self::SORT_TRENDING;
-		$categoryId = $this->getCategoryId( $category );
-		$categoryKey = $categoryId ? '&forumId=' . $categoryId : '';
+		$categoryKey = null;
+
+		if ( !empty( $categoryIds ) ) {
+			$allCategoryIds = explode( ',', $categoryIds );
+			$categoryKey = array_reduce( $allCategoryIds, function( $carry, $item ) {
+				return $carry . '&forumId=' . $item;
+			} );
+		}
 
 		return "/$this->cityId/threads?sortKey=$sortKey&limit=$limit&viewableOnly=false" . $categoryKey;
 	}
@@ -67,19 +90,39 @@ class DiscussionsThreadModel {
 		return "/$this->cityId/votes/post/";
 	}
 
-	public function getData( $showLatest, $limit, $category ) {
+	public function getData( $showLatest, $limit, $categoryIds ) {
 		$sortKey = $showLatest ? self::SORT_LATEST_LINK : self::SORT_TRENDING_LINK;
-		$categoryId = false;
 		$invalidCategory = false;
 		$discussionsUrl = false;
+		$categoryName = false;
+		// This will be populated to only include verified valid category ids
+		$filteredCategoryIds = [];
 
-		if ( !empty( $category ) ) {
-			$categoryId = $this->getCategoryId( $category );
+		if ( !empty( $categoryIds ) ) {
+			$categoryData = $this->getCategoryNames( $categoryIds );
 
-			if ( $categoryId ) {
-				$discussionsUrl = "/d/f?catId=$categoryId&sort=$sortKey";
-			} else {
+			if ( count ( $categoryData ) === 0 ) {
+				// No valid categories specified, show error message
 				$invalidCategory = true;
+			} elseif ( count ( $categoryData ) === 1 ) {
+				// A single category specified, use its name
+				$categoryName = $categoryData[0]['name'];
+				$discussionsUrl = "/d/f?sort=$sortKey&catId=$categoryIds";
+				$filteredCategoryIds[] = $categoryData[0]['id'];
+			} else {
+				// Multiple categories specified, don't use name
+				$categoryName = false;
+				$catIdUrl = '&catId=';
+				$separator = '';
+
+				foreach ( $categoryData as $category ) {
+					$catIdUrl .= $separator . $category['id'];
+					$separator = urlencode( ',' );
+
+					$filteredCategoryIds[] = $category['id'];
+				}
+
+				$discussionsUrl = "/d/f?sort=$sortKey$catIdUrl";
 			}
 		} else {
 			$discussionsUrl = "/d/f?sort=$sortKey";
@@ -88,10 +131,11 @@ class DiscussionsThreadModel {
 		return [
 			'siteId' => $this->cityId,
 			'discussionsUrl' => $discussionsUrl,
-			'requestUrl' => $this->getRequestUrl( $showLatest, $limit, $category ),
+			'requestUrl' => $this->getRequestUrl( $showLatest, $limit, $categoryIds ),
 			'upvoteRequestUrl' => $this->getUpvoteRequestUrl(),
 			'invalidCategory' => $invalidCategory,
-			'categoryId' => $categoryId,
+			'categoryName' => $categoryName,
+			'categoryIds' => $filteredCategoryIds,
 		];
 	}
 }

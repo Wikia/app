@@ -1,21 +1,16 @@
 <?php
-/**
- * Internationalisation file for extension GlobalMessages.
- *
- * @file
- * @ingroup Extensions
- */
-$messages = array();
+/** Internationalization file for /extensions/GlobalMessages/GlobalMessagesW extension. */
+$messages = [];
 
-$messages['en'] = array(
+$messages['en'] = [
 	'wednesday' => 'Wednesday',
 	'wed' => 'Wed',
 	'wrong_wfQuery_params' => 'Incorrect parameters to wfQuery()<br />
 Function: $1<br />
 Query: $2',
-	'welcomecreation' => "== Welcome, $1! ==
+	'welcomecreation' => '== Welcome, $1! ==
 
-Your account has been created. Don't forget to change your {{SITENAME}} [[Special:Preferences|preferences]].",
+Your account has been created. Don\'t forget to change your {{SITENAME}} [[Special:Preferences|preferences]].',
 	'wrongpassword' => 'Incorrect password entered.
 Please try again.',
 	'wrongpasswordempty' => 'Password entered was blank.
@@ -49,11 +44,11 @@ Please try again.',
 	'watchnochange' => 'None of your watched items were edited in the time period displayed.',
 	'watchlist-details' => '{{PLURAL:$1|$1 page|$1 pages}} on your watchlist, not counting talk pages.',
 	'wlheader-enotif' => '* E-mail notification is enabled.',
-	'wlheader-showupdated' => "* Pages which have been changed since you last visited them are shown in '''bold'''",
+	'wlheader-showupdated' => '* Pages which have been changed since you last visited them are shown in \'\'\'bold\'\'\'',
 	'watchmethod-recent' => 'checking recent edits for watched pages',
 	'watchmethod-list' => 'checking watched pages for recent edits',
 	'watchlistcontains' => 'Your watchlist contains $1 {{PLURAL:$1|page|pages}}.',
-	'wlnote' => "Below {{PLURAL:$1|is the last change|are the last '''$1''' changes}} in the last {{PLURAL:$2|hour|'''$2''' hours}}, as of $3, $4.",
+	'wlnote' => 'Below {{PLURAL:$1|is the last change|are the last \'\'\'$1\'\'\' changes}} in the last {{PLURAL:$2|hour|\'\'\'$2\'\'\' hours}}, as of $3, $4.',
 	'wlshowlast' => 'Show last $1 hours $2 days $3',
 	'watchlist-options' => 'Watchlist options',
 	'watching' => 'Watching...',
@@ -98,7 +93,7 @@ You can also [[Special:EditWatchlist|use the standard editor]].',
 	'watchlisttools-edit' => 'View and edit watchlist',
 	'watchlisttools-raw' => 'Edit raw watchlist',
 	'wikipedia_skin' => 'Wikipedia skin',
-	'wikicitieshome' => 'Wikia Home',
+	'wikicitieshome' => 'Fandom Home',
 	'wikicitieshome-url' => 'http://www.wikia.com/',
 	'wikicitieshome-url/fr' => 'http://fr.wikia.com/',
 	'wikicities-nav' => 'wikia',
@@ -108,7 +103,7 @@ pl
 hu',
 	'widget-title-activetalkpages' => 'Active talk pages',
 	'widget-desc-activetalkpages' => 'A list of recently edited talk pages',
-	'widget-title-advertiser' => 'Wikia Spotlight',
+	'widget-title-advertiser' => 'Fandom Spotlight',
 	'widget-desc-advertiser' => 'Showing spotlights / ads',
 	'widget-title-ancientpages' => 'Stale pages',
 	'widget-desc-ancientpages' => 'See a list of pages that have not been edited in a long time',
@@ -127,7 +122,7 @@ hu',
 	'widget-title-languages' => 'Languages',
 	'widget-desc-languages' => 'Lanaguages',
 	'widget-title-lastwikis' => 'Last Wikis',
-	'widget-desc-lastwikis' => "Quickly jump back to wikis that you've visited in the past",
+	'widget-desc-lastwikis' => 'Quickly jump back to wikis that you\'ve visited in the past',
 	'widget-title-mostvisited' => 'Most visited',
 	'widget-desc-mostvisited' => 'A list of the most visited pages on this wiki',
 	'widget-title-needhelp' => 'Help needed',
@@ -143,7 +138,7 @@ hu',
 	'widget-title-relatedcommunities' => 'Related Communities',
 	'widget-desc-relatedcommunities' => 'Related communities',
 	'widget-title-shoutbox' => 'Shout Box',
-	'widget-desc-shoutbox' => "See who's online and chat with your friends",
+	'widget-desc-shoutbox' => 'See who\'s online and chat with your friends',
 	'widget-title-sidebar' => 'Sidebar',
 	'widget-desc-sidebar' => 'Sidebar',
 	'widget-title-slideshow' => 'Image Slideshow',
@@ -155,11 +150,11 @@ hu',
 	'widget-title-topusers' => 'Top users',
 	'widget-desc-topusers' => 'See a list of the most active users of this wiki',
 	'widget-title-topvoted' => 'Top voted',
-	'widget-desc-topvoted' => "See the highest rated pages, as voted by this wiki's community",
+	'widget-desc-topvoted' => 'See the highest rated pages, as voted by this wiki\'s community',
 	'widget-title-watchlist' => 'Watchlist',
 	'widget-desc-watchlist' => 'Easily keep an eye on your watched pages',
-	'widget-title-wikiamessages' => 'Wikia messages',
-	'widget-desc-wikiamessages' => 'Wikia messages',
+	'widget-title-wikiamessages' => 'Fandom messages',
+	'widget-desc-wikiamessages' => 'Fandom messages',
 	'widget-title-wikiapartners' => 'Our partners',
 	'widget-desc-wikiapartners' => 'Our partners',
 	'widget-title-wikiatoolbox' => 'Toolbox',
@@ -176,12 +171,12 @@ hu',
 	'wt_countdown_give_date' => 'Please give date in format YYYY-MM-DD HH:MM:SS (like 2007-03-28 13:56:00) or YYYY-MM-DD (like 2007-02-17) or HH:MM:SS (like 17:01:00)',
 	'wt_countdown_show_seconds' => 'Show seconds',
 	'wt_lastwikis_noresults' => 'There are no previously visited wikis to display. Visit our [[w:Category:Hubs|Hub list]] for other wikis to visit.',
-	'widgetwikipage' => "This ''message'' is a '''simple''' test of WikiPage widget. You can change this default message by simply [[Mediawiki:Widgetwikipage|editing a page]] in MediaWiki namespace.",
-	'widgetwikipagemissing' => "''failed to load '''$1'''''",
+	'widgetwikipage' => 'This \'\'message\'\' is a \'\'\'simple\'\'\' test of WikiPage widget. You can change this default message by simply [[Mediawiki:Widgetwikipage|editing a page]] in MediaWiki namespace.',
+	'widgetwikipagemissing' => '\'\'failed to load \'\'\'$1\'\'\'\'\'',
 	'widget-wikipage-title' => 'Title of widget',
 	'widget-wikipage-source' => 'Source page',
 	'wt_shoutbox_initial_message' => 'Hi... welcome to the chat!',
-	'wt_referers_empty_list' => "Currently we don't have statistics to generate top referrers cloud for this wiki. Please try later...",
+	'wt_referers_empty_list' => 'Currently we don\'t have statistics to generate top referrers cloud for this wiki. Please try later...',
 	'wt_show_referrers' => 'Show referrers',
 	'wt_show_period' => 'Show period',
 	'wt_show_external_urls' => 'Show only external urls',
@@ -198,11 +193,11 @@ hu',
 	'widget-contribs-limit' => 'Limit',
 	'widget-empty-list' => '(the list is empty)',
 	'wysiwygcaption' => 'Visual editing',
-	'whats_new' => "What's New",
+	'whats_new' => 'What\'s New',
 	'watchlist_s' => 'Watchlist',
 	'widget_name' => 'Name',
 	'widget_description' => 'Description',
-	'wikia_messages' => 'Wikia messages',
+	'wikia_messages' => 'Fandom messages',
 	'wikia-language-top-list' => 'de,en,es,he,fr,it,ja,no,pl,pt,pt-br,zh',
 	'wikia-language-top' => 'Top $1 languages',
 	'wikia-language-all' => 'All languages',
@@ -215,10 +210,10 @@ hu',
 	'wikia-pagetitle-brand' => 'Fandom powered by Wikia',
 	'wikia-pagetitle-sitename' => '{{SITENAME}}',
 	'wikia-read-only-mode' => 'Uh-oh! Our main datacenter is currently unavailable, so this is our backup. Unfortunately, this means you may not be able to do certain things like edit, upload, or chat.
-We are working to fix the problem, thank you for your patience! If you see this for an extended period of time, feel free to contact Wikia at community@wikia.com.',
-);
+We are working to fix the problem, thank you for your patience! If you see this for an extended period of time, feel free to contact Fandom at community@wikia.com.',
+];
 
-$messages['qqq'] = array(
+$messages['qqq'] = [
 	'wednesday' => 'Name of the day of the week.',
 	'wed' => 'Abbreviation for Wednesday, a day of the week.',
 	'welcomecreation' => 'The welcome message users see after registering a user account.$1is the username of the new user.',
@@ -234,9 +229,9 @@ $messages['qqq'] = array(
 	'withoutinterwiki-submit' => '{{Identical|Show}}',
 	'wantedcategories' => 'Name of special page displayed in [[Special:SpecialPages]]',
 	'wantedpages' => 'Name of special page displayed in [[Special:SpecialPages]]',
-	'wantedpages-badtitle' => "Error message shown when [[Special:WantedPages]] is listing a page with a title that shouldn't exist.
+	'wantedpages-badtitle' => 'Error message shown when [[Special:WantedPages]] is listing a page with a title that shouldn\'t exist.
 
-$1 is a page title",
+$1 is a page title',
 	'wantedfiles' => 'Name of special page displayed in [[Special:SpecialPages]] and title of [[Special:WantedFiles]].',
 	'wantedtemplates' => 'The page name of [[Special:WantedTemplates]].',
 	'watchlist' => '{{Identical|My watchlist}}',
@@ -250,11 +245,11 @@ $1 is a page title",
 	'watchthispage' => '{{Identical|Watch this page}}',
 	'watchlist-details' => 'Message on Special page: My watchlist. This is paired with the message [[Mediawiki:Nowatchlist]] which appears instead of Watchlist-details when $1 is 0.',
 	'wlheader-showupdated' => 'This message shows up near top of users watchlist page.',
-	'wlshowlast' => "Appears on [[Special:Watchlist]]. Variable $1 gives a choice of different numbers of hours, $2 gives a choice of different numbers of days and $3 is '{{int:watchlistall2}}' ([[Mediawiki:watchlistall2/{{SUBPAGENAME}}]]). Clicking on your choice changes the list of changes you see (without changing the default in my preferences).",
+	'wlshowlast' => 'Appears on [[Special:Watchlist]]. Variable $1 gives a choice of different numbers of hours, $2 gives a choice of different numbers of days and $3 is \'{{int:watchlistall2}}\' ([[Mediawiki:watchlistall2/{{SUBPAGENAME}}]]). Clicking on your choice changes the list of changes you see (without changing the default in my preferences).',
 	'watchlist-options' => 'Legend of the fieldset of [[Special:Watchlist]]',
 	'watching' => 'Text displayed when clicked on the watch tab: [[MediaWiki:Watch/{{SUBPAGENAME}}|{{int:watch}}]]. It means the wiki is adding that page to your watchlist.',
 	'whatlinkshere' => 'The text of the link in the toolbox (on the left, below the search menu) going to [[Special:WhatLinksHere]].',
-	'whatlinkshere-title' => "Title of the special page [[Special:WhatLinksHere]]. This page appears when you click on the 'What links here' button in the toolbox. $1 is the name of the page concerned.",
+	'whatlinkshere-title' => 'Title of the special page [[Special:WhatLinksHere]]. This page appears when you click on the \'What links here\' button in the toolbox. $1 is the name of the page concerned.',
 	'whatlinkshere-page' => '{{Identical|Page}}',
 	'whatlinkshere-backlink' => '{{optional}}',
 	'whatlinkshere-prev' => 'This is part of the navigation message on the top and bottom of Whatlinkshere pages, where it is used as the first argument of {{msg-mw|Viewprevnext}}.
@@ -290,7 +285,7 @@ Most languages use a space, but some Asian languages, such as Thai and Chinese, 
 
 {{optional}}',
 	'watchlistedit-numitems' => 'Message on Special page: Edit watchlist. This is paired with the message [[Mediawiki:Watchlistedit-noitems]] which appears instead of Watchlistedit-numitems when $1 is 0.',
-	'watchlistedit-noitems' => "Message on [[Special:Watchlist/edit]], which only appears when a user's watchlist is empty.",
+	'watchlistedit-noitems' => 'Message on [[Special:Watchlist/edit]], which only appears when a user\'s watchlist is empty.',
 	'watchlistedit-normal-title' => 'Title of [[Special:Watchlist/edit|special page]].',
 	'watchlistedit-normal-legend' => 'Heading of dialogue box on [[Special:Watchlist/edit]]',
 	'watchlistedit-normal-explain' => 'An introduction/explanation about the [[Special:Watchlist/edit|normal edit watchlist function]].
@@ -315,18 +310,24 @@ Hint: the text "Remove Titles" is in {{msg-mw|watchlistedit-normal-submit}}',
 
 {{Identical|Edit raw watchlist}}',
 	'wikia-pagetitle' => 'Wikia page title',
-	'wikia-read-only-mode' => 'A message shown to users when Wikia is in a read-only mode due to a maintenance work.',
-);
+	'wikia-read-only-mode' => 'Missing documentation',
+	'widget-desc-wikiamessages' => 'Missing documentation',
+	'widget-title-advertiser' => 'Missing documentation',
+	'widget-title-wikiamessages' => 'Missing documentation',
+	'wikia_messages' => 'Missing documentation',
+	'wikia-pagetitle-brand' => 'Missing documentation',
+	'wikicitieshome' => 'Missing documentation',
+];
 
-$messages['ab'] = array(
+$messages['ab'] = [
 	'wednesday' => 'ахаш',
 	'watchlist' => 'Ашклаҧшра асна',
 	'whatlinkshere' => 'Арахьтәи ахьарҧшқәа',
 	'whatlinkshere-page' => 'Адаҟьа:',
 	'watchlistall2' => 'зегьы',
-);
+];
 
-$messages['ace'] = array(
+$messages['ace'] = [
 	'wednesday' => 'Rabu',
 	'wed' => 'Rab',
 	'welcomecreation' => '== Seulamat trok teuka, $1! ==
@@ -359,9 +360,9 @@ Nan Droeneuh ka teupeugot. Neuato laju [[Special:Preferences|peue nyang neugalak
 	'watchlisttools-view' => 'Peuleumah neuubah meuhubông',
 	'watchlisttools-edit' => 'Peuleumah ngön andam dapeuta kaeunalön',
 	'watchlisttools-raw' => 'Andam dapeuta keunalön meuntah',
-);
+];
 
-$messages['af'] = array(
+$messages['af'] = [
 	'wednesday' => 'Woensdag',
 	'wed' => 'Wo',
 	'wrong_wfQuery_params' => 'Foutiewe parameters na wfQuery()<br />
@@ -396,11 +397,11 @@ wees om u dophoulys te verander.',
 	'watchnochange' => 'Geen item op die dophoulys is geredigeer in die gekose periode nie.',
 	'watchlist-details' => '{{PLURAL:$1|$1 bladsy|$1 bladsye}} in u dophoulys, besprekingsbladsye uitgesluit.',
 	'wlheader-enotif' => '* E-pos notifikasie is aangeskakel.',
-	'wlheader-showupdated' => "* Bladsye wat verander is sedert u hulle laas besoek het word in '''vetdruk''' uitgewys",
+	'wlheader-showupdated' => '* Bladsye wat verander is sedert u hulle laas besoek het word in \'\'\'vetdruk\'\'\' uitgewys',
 	'watchmethod-recent' => 'Kontroleer onlangse wysigings aan bladsye op dophoulys',
 	'watchmethod-list' => 'kontroleer bladsye op dophoulys vir wysigings',
 	'watchlistcontains' => 'U dophoulys bevat $1 {{PLURAL:$1|bladsy|bladsye}}.',
-	'wlnote' => "Hier volg die laaste {{PLURAL:$1|verandering|'''$1''' veranderings}} binne die laaste {{PLURAL:$2|uur|'''$2''' ure}}, soos vanaf $3 om $4.",
+	'wlnote' => 'Hier volg die laaste {{PLURAL:$1|verandering|\'\'\'$1\'\'\' veranderings}} binne die laaste {{PLURAL:$2|uur|\'\'\'$2\'\'\' ure}}, soos vanaf $3 om $4.',
 	'wlshowlast' => 'Wys afgelope $1 ure, $2 dae of $3',
 	'watchlist-options' => 'Opsies vir dophoulys',
 	'watching' => 'Plaas op dophoulys...',
@@ -441,14 +442,14 @@ U kan ook die [[Special:EditWatchlist|standaard opdaterigskerm gebruik]].',
 	'watchlisttools-view' => 'Besigtig veranderinge',
 	'watchlisttools-edit' => 'Bekyk en wysig dophoulys',
 	'watchlisttools-raw' => 'Wysig bronkode',
-);
+];
 
-$messages['ak'] = array(
+$messages['ak'] = [
 	'wednesday' => 'Wukuada',
 	'watch' => 'Hwɛ',
-);
+];
 
-$messages['aln'] = array(
+$messages['aln'] = [
 	'wednesday' => 'E mërkure',
 	'wed' => 'Mër',
 	'wrong_wfQuery_params' => 'Parametra gabim te wfQuery()<br />
@@ -472,7 +473,7 @@ Provo prap.',
 	'wlshowlast' => 'Trego $1 orët $2 ditët $3 e fundit',
 	'watchlist-options' => 'Opcionet e listës së mbikëqyrjes',
 	'watching' => 'Tuj mbikqyrë...',
-	'whatlinkshere' => "Lidhjet k'tu",
+	'whatlinkshere' => 'Lidhjet k\'tu',
 	'whatlinkshere-title' => 'Faqe që lidhen me "$1"',
 	'whatlinkshere-page' => 'Faqja:',
 	'whatlinkshere-prev' => '$1 {{PLURAL:$1|e përparme|të përparme}}',
@@ -486,9 +487,9 @@ Provo prap.',
 	'watchlisttools-view' => 'Shih ndryshimet relevante',
 	'watchlisttools-edit' => 'Shih dhe redakto listën e mbikëqyrjes.',
 	'watchlisttools-raw' => 'Redakto listën e mbikëqyrjes në kod',
-);
+];
 
-$messages['als'] = array(
+$messages['als'] = [
 	'wednesday' => 'E mërkure',
 	'wed' => 'Mër',
 	'wrong_wfQuery_params' => 'Parametra gabim te wfQuery()<br />
@@ -512,7 +513,7 @@ Provo prap.',
 	'wlshowlast' => 'Trego $1 orët $2 ditët $3 e fundit',
 	'watchlist-options' => 'Opcionet e listës së mbikëqyrjes',
 	'watching' => 'Tuj mbikqyrë...',
-	'whatlinkshere' => "Lidhjet k'tu",
+	'whatlinkshere' => 'Lidhjet k\'tu',
 	'whatlinkshere-title' => 'Faqe që lidhen me "$1"',
 	'whatlinkshere-page' => 'Faqja:',
 	'whatlinkshere-prev' => '$1 {{PLURAL:$1|e përparme|të përparme}}',
@@ -526,9 +527,9 @@ Provo prap.',
 	'watchlisttools-view' => 'Shih ndryshimet relevante',
 	'watchlisttools-edit' => 'Shih dhe redakto listën e mbikëqyrjes.',
 	'watchlisttools-raw' => 'Redakto listën e mbikëqyrjes në kod',
-);
+];
 
-$messages['am'] = array(
+$messages['am'] = [
 	'wednesday' => 'ረቡዕ',
 	'wed' => 'ረቡዕ',
 	'wrong_wfQuery_params' => 'ለwfQuery() ትክክለኛ ያልሆነ ግቤት<br />
@@ -559,7 +560,7 @@ $messages['am'] = array(
 	'watchnochange' => 'ከተካከሉት ገጾች አንዳችም በተወሰነው ጊዜ ውስጥ አልተለወጠም።',
 	'watchlist-details' => 'አሁን {{PLURAL:$1|$1 ገፅ|$1 ገፆች}} በምትከታተላቸው ገፆች ላይ አሉ (የውይይት ገፅ ሳይጨመር)።',
 	'wlheader-enotif' => '* የ-ኢሜል ማስታወቂያ እንዲሠራ ተደርጓል።',
-	'wlheader-showupdated' => "* መጨረሻ ከጎበኟቸው ጀምሮ የተቀየሩት ገጾች በ'''ጉልህ ፊደላት''' ይታያሉ",
+	'wlheader-showupdated' => '* መጨረሻ ከጎበኟቸው ጀምሮ የተቀየሩት ገጾች በ\'\'\'ጉልህ ፊደላት\'\'\' ይታያሉ',
 	'watchmethod-recent' => 'የቅርብ ለውጦችን ለሚከታተሉት ገጾች በመፈለግ',
 	'watchmethod-list' => 'የሚከታተሉትን ገጾች ለቅርብ ለውጦች በመፈለግ',
 	'watchlistcontains' => 'አሁን በሙሉ $1 ገጾች እየተከታተሉ ነው።',
@@ -601,24 +602,24 @@ $messages['am'] = array(
 	'watchlisttools-view' => 'የምከታተላቸው ለውጦች',
 	'watchlisttools-edit' => 'ዝርዝሩን ለማስተካከል',
 	'watchlisttools-raw' => 'የዝርዝሩ ጥሬ ኮድ',
-);
+];
 
-$messages['an'] = array(
+$messages['an'] = [
 	'wednesday' => 'miércols',
 	'wed' => 'mie',
 	'wrong_wfQuery_params' => 'Parametros incorrectos ta wfQuery()<br />
 Función: $1<br />
 Consulta: $2',
-	'welcomecreation' => "== ¡Bienveniu(da), $1! ==
-S'ha creyato a suya cuenta.
-No xublide de presonalizar [[Special:Preferences|as suyas preferencias en {{SITENAME}}]].",
+	'welcomecreation' => '== ¡Bienveniu(da), $1! ==
+S\'ha creyato a suya cuenta.
+No xublide de presonalizar [[Special:Preferences|as suyas preferencias en {{SITENAME}}]].',
 	'wrongpassword' => 'A clau indicata no ye correcta. Prebe unatra vegada.',
 	'wrongpasswordempty' => 'No ha escrito garra clau. Prebe unatra vegada.',
 	'watchthis' => 'Cosirar ista pachina',
 	'whitelistedittext' => 'Ha de $1 ta poder editar pachinas.',
 	'windows-nonascii-filename' => 'Iste wiki no admite nombres de fichero con caracters especials.',
 	'watchthisupload' => 'Cosirar iste fichero',
-	'withoutinterwiki' => "Pachinas sin d'interwikis",
+	'withoutinterwiki' => 'Pachinas sin d\'interwikis',
 	'withoutinterwiki-summary' => 'As pachinas siguients no tienen vinclos ta versions en atras luengas:',
 	'withoutinterwiki-legend' => 'Prefixo',
 	'withoutinterwiki-submit' => 'Amostrar',
@@ -626,28 +627,28 @@ No xublide de presonalizar [[Special:Preferences|as suyas preferencias en {{SITE
 	'wantedpages' => 'Pachinas requiestas',
 	'wantedpages-badtitle' => 'Títol no conforme en o conchunto de resultaus: $1',
 	'wantedfiles' => 'Fichers requiestos',
-	'wantedfiletext-cat' => "Os fichers siguients s'emplegan en as pachinas pero no existen. Ye posible que s'amuestren fichers d'atros repostes externos encara que existan. Qualsiquer falso positivo d'ixa mena se <del>tachará</del>. Antiparte, as pachinas que fan referencia a fichers que no existen se listan en [[:$1]].",
-	'wantedfiletext-nocat' => "Os fichers siguients s'emplegan en as pachinas pero no existen.  Ye posible que s'amuestren fichers d'atros repostes externos encara que existan. Qualsiquer falso positivo d'ixa mena se <del>tachará</del>.",
+	'wantedfiletext-cat' => 'Os fichers siguients s\'emplegan en as pachinas pero no existen. Ye posible que s\'amuestren fichers d\'atros repostes externos encara que existan. Qualsiquer falso positivo d\'ixa mena se <del>tachará</del>. Antiparte, as pachinas que fan referencia a fichers que no existen se listan en [[:$1]].',
+	'wantedfiletext-nocat' => 'Os fichers siguients s\'emplegan en as pachinas pero no existen.  Ye posible que s\'amuestren fichers d\'atros repostes externos encara que existan. Qualsiquer falso positivo d\'ixa mena se <del>tachará</del>.',
 	'wantedtemplates' => 'Plantillas requiestas',
 	'watchlist' => 'Lista de seguimiento',
 	'watchlistfor2' => 'De $1 $2',
-	'watchlistanontext' => "Ha de $1 ta veyer u editar as dentradas d'a suya lista de seguimiento.",
+	'watchlistanontext' => 'Ha de $1 ta veyer u editar as dentradas d\'a suya lista de seguimiento.',
 	'watchnologin' => 'No ha encetato a sesión',
-	'watchnologintext' => "Ha d'estar [[Special:UserLogin|identificato]] ta poder cambiar a suya lista de seguimiento.",
+	'watchnologintext' => 'Ha d\'estar [[Special:UserLogin|identificato]] ta poder cambiar a suya lista de seguimiento.',
 	'watch' => 'Cosirar',
 	'watchthispage' => 'Cosirar ista pachina',
-	'watchnochange' => "Dengún d'os articlos d'a suya lista de seguimiento no s'ha editato en o periodo de tiempo amostrato.",
+	'watchnochange' => 'Dengún d\'os articlos d\'a suya lista de seguimiento no s\'ha editato en o periodo de tiempo amostrato.',
 	'watchlist-details' => '{{PLURAL:$1|$1 pachina|$1 pachinas}} en a suya lista de seguimiento, sin contar-ie as pachinas de descusión.',
 	'wlheader-enotif' => '* A notificación por correu electronico ye activata',
-	'wlheader-showupdated' => "* Las pachinas cambiadas dende a suya zaguer vesita s'amuestran en '''negreta'''",
+	'wlheader-showupdated' => '* Las pachinas cambiadas dende a suya zaguer vesita s\'amuestran en \'\'\'negreta\'\'\'',
 	'watchmethod-recent' => 'Mirando pachinas cosiratas en os zaguers cambeos',
 	'watchmethod-list' => 'mirando edicions recients en as pachinas cosiratas',
 	'watchlistcontains' => 'A suya lista de seguimiento tiene $1 {{PLURAL:$1|pachina|pachinas}}.',
-	'wlnote' => "Contino se i {{PLURAL:$1|amuestra o solo cambeo|amuestran os zaguers '''$1''' cambeos}} feitos en {{PLURAL:$2|a zaguer hora|as zagueras '''$2''' horas}}, o $3 a las $4.",
+	'wlnote' => 'Contino se i {{PLURAL:$1|amuestra o solo cambeo|amuestran os zaguers \'\'\'$1\'\'\' cambeos}} feitos en {{PLURAL:$2|a zaguer hora|as zagueras \'\'\'$2\'\'\' horas}}, o $3 a las $4.',
 	'wlshowlast' => 'Amostrar as zagueras $1 horas, $2 días u $3',
-	'watchlist-options' => "Opcions d'a lista de seguimiento",
+	'watchlist-options' => 'Opcions d\'a lista de seguimiento',
 	'watching' => 'Cosirando...',
-	'watcherrortext' => "Ocurrió una error entre que se cambiaba a configuración d'a suya lista de seguimiento ta «$1».",
+	'watcherrortext' => 'Ocurrió una error entre que se cambiaba a configuración d\'a suya lista de seguimiento ta «$1».',
 	'whatlinkshere' => 'Pachinas que enlazan con ista',
 	'whatlinkshere-title' => 'Pachinas que tienen vinclos ta $1',
 	'whatlinkshere-page' => 'Pachina:',
@@ -664,28 +665,28 @@ No xublide de presonalizar [[Special:Preferences|as suyas preferencias en {{SITE
 	'watchlistedit-numitems' => 'A suya lista de seguimiento tiene {{PLURAL:$1|una pachina |$1 pachinas}}, sin contar-ie as pachinas de descusión.',
 	'watchlistedit-noitems' => 'A suya lista de seguimiento ye bueda.',
 	'watchlistedit-normal-title' => 'Editar a lista de seguimiento',
-	'watchlistedit-normal-legend' => "Borrar títols d'a lista de seguimiento",
-	'watchlistedit-normal-explain' => "Contino s'amuestran os títols de pachinas d'a suya lista de seguimiento.
-Ta sacar-ne una pachina, marque o quatrón que ye a o canto d'o suyo títol, y punche con o ratet en \"{{int:Watchlistedit-normal-submit}}\".
-Tamién puede [[Special:EditWatchlist/raw|editar dreitament a lista]].",
+	'watchlistedit-normal-legend' => 'Borrar títols d\'a lista de seguimiento',
+	'watchlistedit-normal-explain' => 'Contino s\'amuestran os títols de pachinas d\'a suya lista de seguimiento.
+Ta sacar-ne una pachina, marque o quatrón que ye a o canto d\'o suyo títol, y punche con o ratet en "{{int:Watchlistedit-normal-submit}}".
+Tamién puede [[Special:EditWatchlist/raw|editar dreitament a lista]].',
 	'watchlistedit-normal-submit' => 'Borrar pachinas',
-	'watchlistedit-normal-done' => "{{PLURAL:$1|S'ha borrato 1 pachina|s'han borrato $1 pachinas}} d'a suya lista de seguimiento:",
+	'watchlistedit-normal-done' => '{{PLURAL:$1|S\'ha borrato 1 pachina|s\'han borrato $1 pachinas}} d\'a suya lista de seguimiento:',
 	'watchlistedit-raw-title' => 'Editar a lista de seguimiento en formato texto',
 	'watchlistedit-raw-legend' => 'Editar a lista de seguimiento en formato texto',
-	'watchlistedit-raw-explain' => "Contino s'amuestran os títols d'as pachinas d'a suya lista de seguimiento. Puede editar ista lista adhibiendo u borrando líneas d'a lista; una pachina por linia.
-Quan remate, punche \"{{int:Watchlistedit-raw-submit}}\".
-Tamién puede fer servir o [[Special:EditWatchlist|editor estándar]].",
+	'watchlistedit-raw-explain' => 'Contino s\'amuestran os títols d\'as pachinas d\'a suya lista de seguimiento. Puede editar ista lista adhibiendo u borrando líneas d\'a lista; una pachina por linia.
+Quan remate, punche "{{int:Watchlistedit-raw-submit}}".
+Tamién puede fer servir o [[Special:EditWatchlist|editor estándar]].',
 	'watchlistedit-raw-titles' => 'Pachinas:',
 	'watchlistedit-raw-submit' => 'Esviellar a lista de seguimiento',
-	'watchlistedit-raw-done' => "S'ha esviellato a suya lista de seguimiento.",
-	'watchlistedit-raw-added' => "{{PLURAL:$1|S'ha esviellato una pachina|S'ha esviellato $1 pachinas}}:",
-	'watchlistedit-raw-removed' => "{{PLURAL:$1|S'ha borrato una pachina|S'ha borrato $1 pachinas}}:",
+	'watchlistedit-raw-done' => 'S\'ha esviellato a suya lista de seguimiento.',
+	'watchlistedit-raw-added' => '{{PLURAL:$1|S\'ha esviellato una pachina|S\'ha esviellato $1 pachinas}}:',
+	'watchlistedit-raw-removed' => '{{PLURAL:$1|S\'ha borrato una pachina|S\'ha borrato $1 pachinas}}:',
 	'watchlisttools-view' => 'Amostrar cambeos',
 	'watchlisttools-edit' => 'Veyer y editar a lista de seguimiento',
 	'watchlisttools-raw' => 'Editar a lista de seguimiento en formato texto',
-);
+];
 
-$messages['ang'] = array(
+$messages['ang'] = [
 	'wednesday' => 'Ƿēdnesdæȝ',
 	'wed' => 'Ƿēd',
 	'welcomecreation' => '== Ƿilcumen, $1! ==
@@ -724,9 +725,9 @@ $messages['ang'] = array(
 	'watchlisttools-view' => 'Ƿeorþliċe hƿearfas sēon',
 	'watchlisttools-edit' => 'Ƿæccȝetale sēon and ādihtan',
 	'watchlisttools-raw' => 'Grēne ƿæccȝetale ādihtan',
-);
+];
 
-$messages['anp'] = array(
+$messages['anp'] = [
 	'wednesday' => 'बुधवार',
 	'watchthis' => 'इ पन्ना ध्यानसूची में डालॊ',
 	'watchlist' => 'हमरॊ ध्यानसूची',
@@ -750,9 +751,9 @@ $messages['anp'] = array(
 	'watchlisttools-view' => 'प्रासंगिक बदलाव देखॊ',
 	'watchlisttools-edit' => 'ध्यानसूची देखॊ आरू संपादित करॊ.',
 	'watchlisttools-raw' => 'अनिर्मित ध्यानसूची देखॊ एवम्‌ संपादित करॊ',
-);
+];
 
-$messages['ar'] = array(
+$messages['ar'] = [
 	'wednesday' => 'الأربعاء',
 	'wed' => 'أربعاء',
 	'wrong_wfQuery_params' => 'محددات خاطئة في wfQuery()<br />
@@ -788,11 +789,11 @@ $messages['ar'] = array(
 	'watchnochange' => 'لم تُعدّل أي صفحة في قائمة مراقبتك خلال الفترة الزمنية المحددة.',
 	'watchlist-details' => '{{PLURAL:$1||صفحة واحدة|صفحتان|$1 صفحات|$1 صفحة}} في قائمة مراقبتك، بدون عد صفحات النقاش.',
 	'wlheader-enotif' => '* الإخطار بالبريد الإلكتروني مفعل.',
-	'wlheader-showupdated' => "* الصفحات التي تم تحريرها بعد زيارتك لها لآخر مرة معروضة بالخط '''الغليظ'''",
+	'wlheader-showupdated' => '* الصفحات التي تم تحريرها بعد زيارتك لها لآخر مرة معروضة بالخط \'\'\'الغليظ\'\'\'',
 	'watchmethod-recent' => 'فحص التعديلات الأخيرة للصفحات المراقبة',
 	'watchmethod-list' => 'فحص الصفحات المراقبة للتعديلات الحديثة',
 	'watchlistcontains' => 'تحتوي قائمة مراقبتك على {{PLURAL:$1|لا صفحات|صفحة واحدة|صفحتان|$1 صفحات|$1 صفحة}}.',
-	'wlnote' => "بالأسفل {{PLURAL:$1|لا توجد تغييرات|التغيير الأخير|آخر تغييرين|آخر '''$1''' تغييرات|آخر '''$1''' تغييرا|آخر '''$1''' تغيير}} في {{PLURAL:$2||'''الساعة''' الماضية|'''الساعتين''' الماضيتين|ال'''$2''' ساعات الماضية|ال'''$2''' ساعة الماضية}} وفقا ل$3، $4.",
+	'wlnote' => 'بالأسفل {{PLURAL:$1|لا توجد تغييرات|التغيير الأخير|آخر تغييرين|آخر \'\'\'$1\'\'\' تغييرات|آخر \'\'\'$1\'\'\' تغييرا|آخر \'\'\'$1\'\'\' تغيير}} في {{PLURAL:$2||\'\'\'الساعة\'\'\' الماضية|\'\'\'الساعتين\'\'\' الماضيتين|ال\'\'\'$2\'\'\' ساعات الماضية|ال\'\'\'$2\'\'\' ساعة الماضية}} وفقا ل$3، $4.',
 	'wlshowlast' => 'عرض آخر $1 ساعات $2 أيام $3',
 	'watchlist-options' => 'خيارات قائمة المراقبة',
 	'watching' => 'يراقب...',
@@ -832,9 +833,9 @@ $messages['ar'] = array(
 	'watchlisttools-view' => 'اعرض التغييرات المرتبطة',
 	'watchlisttools-edit' => 'اعرض قائمة المراقبة وعدلها',
 	'watchlisttools-raw' => 'عدل قائمة المراقبة الخام',
-);
+];
 
-$messages['arc'] = array(
+$messages['arc'] = [
 	'wednesday' => 'ܐܪܒܥܒܫܒܐ',
 	'wed' => 'ܐܪܒܥܒܫܒܐ',
 	'welcomecreation' => '== ܒܫܝܢܐ, $1! ==
@@ -876,9 +877,9 @@ $messages['arc'] = array(
 	'watchlistedit-raw-submit' => 'ܚܕܬ ܪ̈ܗܝܬܐ',
 	'watchlisttools-view' => 'ܚܘܝ ܫܘܚܠܦ̈ܐ ܕ̈ܡܝܐ',
 	'watchlisttools-edit' => 'ܚܙܝ ܘܫܚܠܦ ܪ̈ܗܝܬܐ',
-);
+];
 
-$messages['arn'] = array(
+$messages['arn'] = [
 	'wednesday' => 'Mierkole',
 	'wed' => 'mie',
 	'watchthis' => 'Llaytun tüfachi pakina',
@@ -908,9 +909,9 @@ $messages['arn'] = array(
 	'watchlisttools-view' => 'Adkintun kalekünun',
 	'watchlisttools-edit' => 'Pengelün ka kalekünun llaytun wif',
 	'watchlisttools-raw' => 'kümeelün llaytulu wülngiñ rüfngen mew',
-);
+];
 
-$messages['ary'] = array(
+$messages['ary'] = [
 	'wednesday' => 'L-Arbeĝ',
 	'wed' => 'Arbeĝ',
 	'wrong_wfQuery_params' => 'parametrat ġalta l-wfQuery()<br />
@@ -931,7 +932,7 @@ matnsach tbddl[[Special:Preferences|{{SITENAME}} tfdilat dyal]].',
 	'withoutinterwiki-submit' => 'Werri',
 	'wantedcategories' => 'tsnifat mtloba',
 	'wantedpages' => 'sfahi mtloba',
-	'wantedpages-badtitle' => "ĝonwan ma ṣḫiḫ-ċ f-mjmoĝṫ n-naṫa'ij: $1",
+	'wantedpages-badtitle' => 'ĝonwan ma ṣḫiḫ-ċ f-mjmoĝṫ n-naṫa\'ij: $1',
 	'wantedfiles' => 'milfat mtloba',
 	'wantedtemplates' => 'qwalb mtloba',
 	'watchlist' => 'L-Lista de s-suivi dyalṫi',
@@ -943,7 +944,7 @@ matnsach tbddl[[Special:Preferences|{{SITENAME}} tfdilat dyal]].',
 	'watchthispage' => 'Ṫebbeĝ had ṣ-ṣefḫa',
 	'watchlist-details' => '{{PLURAL:$1|ṣefḫa weḫda|$1 de ṣ-ṣefḫaṫ}} kaynin fe l-lista dyal s-suivi dyalṫek, bla ma nḫesbo ṣ-ṣefḫaṫ dyal n-niqaċ.',
 	'wlheader-enotif' => '* l-iĝlam bl-email mtloq.',
-	'wlheader-showupdated' => "* ṣ-ṣfaḫi lli ṫġyyeraṫ mn aĥir ẓiyaṛa ṫaĝk mkṫoba b-ĥatt '''ġliḍ'''",
+	'wlheader-showupdated' => '* ṣ-ṣfaḫi lli ṫġyyeraṫ mn aĥir ẓiyaṛa ṫaĝk mkṫoba b-ĥatt \'\'\'ġliḍ\'\'\'',
 	'wlshowlast' => 'Werri  l-$1 de s-swayeĝ o l-$2 iyam l-leĥĥrin, ola werri $3',
 	'watchlist-options' => 'Lé-Opsyon de l-lista dyal s-suivi',
 	'watching' => 'Kayraqeb...',
@@ -961,10 +962,10 @@ matnsach tbddl[[Special:Preferences|{{SITENAME}} tfdilat dyal]].',
 	'watchlistall2' => 'kolċi',
 	'watchlistedit-numitems' => 'lista d  s-suivi dyalk fiha  {{PLURAL:$1|1 onwan|$1 anawin}}, bla sfahi dniqach.',
 	'watchlistedit-noitems' => 'lista dyal ladressat dyalk mafihach ta onwan.',
-	'watchlistedit-normal-title' => "ĝddel qa'imaṫ l-moṛaqaḅa",
+	'watchlistedit-normal-title' => 'ĝddel qa\'imaṫ l-moṛaqaḅa',
 	'watchlistedit-normal-legend' => 'Mmḫiya men l-lista dyal s-suivi',
 	'watchlistedit-normal-submit' => 'hiyd ladressat',
-	'watchlistedit-normal-done' => "{{PLURAL:$1|1 l-ĝonwan ṫḫyyed|$1 dl-ĝanawin ṫḫyyedaṫ}} mn qa'imaṫ l-ṃoṛaqaba:",
+	'watchlistedit-normal-done' => '{{PLURAL:$1|1 l-ĝonwan ṫḫyyed|$1 dl-ĝanawin ṫḫyyedaṫ}} mn qa\'imaṫ l-ṃoṛaqaba:',
 	'watchlistedit-raw-title' => 'Ṣayeb l-lista dyal lkham',
 	'watchlistedit-raw-legend' => 'Ṣayeb l-lista dyal lkham',
 	'watchlistedit-raw-titles' => 'ladressat:',
@@ -972,9 +973,9 @@ matnsach tbddl[[Special:Preferences|{{SITENAME}} tfdilat dyal]].',
 	'watchlisttools-view' => 'Lista dyal s-suivi',
 	'watchlisttools-edit' => 'Ċof o ĝeddel l-lista dyal s-suivi',
 	'watchlisttools-raw' => 'Ṣayeb l-lista dyal s-suivi',
-);
+];
 
-$messages['arz'] = array(
+$messages['arz'] = [
 	'wednesday' => 'الاربع',
 	'wed' => 'الاربع',
 	'wrong_wfQuery_params' => 'محددات غلط فى wfQuery()<br />
@@ -1007,11 +1008,11 @@ $messages['arz'] = array(
 	'watchnochange' => 'مافيش ولا صفحة اتعدلت فى لستة مراقبتك فى الفترة الزمنية اللى حددتها.',
 	'watchlist-details' => '{{PLURAL:$1|$1 صفحه|$1 صفحه}} فى قايمه مراقبتك، بدون عد صفحات المناقشه.',
 	'wlheader-enotif' => '*خاصية الاعلام بالايميل متفعلة',
-	'wlheader-showupdated' => "* الصفحات اللى اتغيرت  بعد زيارتك ليها اخر مرة معروضة بالخط '''العريض'''",
+	'wlheader-showupdated' => '* الصفحات اللى اتغيرت  بعد زيارتك ليها اخر مرة معروضة بالخط \'\'\'العريض\'\'\'',
 	'watchmethod-recent' => 'التشييك على التعديلات الاخيرة للصفحات المتراقبة',
 	'watchmethod-list' => 'التشييك فى الصفحات المتراقبة على التعديلات الاخيرة',
 	'watchlistcontains' => 'لستة المراقبة بتاعتك فيها $1 {{PLURAL:$1|صفحة|صفحات}}.',
-	'wlnote' => "تحت فى {{PLURAL:$1|آخر تغيير|آخر '''$1''' تغيير}} فى آخر {{PLURAL:$2|ساعة|'''$2''' ساعة}}.",
+	'wlnote' => 'تحت فى {{PLURAL:$1|آخر تغيير|آخر \'\'\'$1\'\'\' تغيير}} فى آخر {{PLURAL:$2|ساعة|\'\'\'$2\'\'\' ساعة}}.',
 	'wlshowlast' => 'عرض اخر $1 ساعات $2 ايام $3',
 	'watchlist-options' => 'اختيارات قايمة المراقبة',
 	'watching' => 'بيراقب...',
@@ -1051,9 +1052,9 @@ $messages['arz'] = array(
 	'watchlisttools-view' => 'عرض التعديلات المرتبطه',
 	'watchlisttools-edit' => 'عرض وتعديل لستة الصفحات اللى باراقبها',
 	'watchlisttools-raw' => 'عدل لستة المراقبه الخام',
-);
+];
 
-$messages['as'] = array(
+$messages['as'] = [
 	'wednesday' => 'বুধবাৰ',
 	'wed' => 'বুধ',
 	'wrong_wfQuery_params' => 'wfQuery() ৰ কাৰণে ভুল মাপদণ্ড দিয়া হৈছে <br />
@@ -1086,11 +1087,11 @@ $messages['as'] = array(
 	'watchnochange' => 'আপুনি চকু ৰখা আইটেমসমূহ প্ৰদৰ্শিত সময়সীমাৰ ভিতৰত সম্পাদনা কৰা হোৱা নাই ।',
 	'watchlist-details' => 'আলোচনা পৃষ্ঠা সমূহ লেখত নধৰি {{PLURAL:$1|$1 খন পৃষ্ঠা|$1 খন পৃষ্ঠা}} আপোনাৰ লক্ষ্য-তালিকাত আছে ।',
 	'wlheader-enotif' => '* ই-পত্ৰ জাননী সক্ৰিয় কৰা হৈছে ।',
-	'wlheader-showupdated' => "* আপোনাৰ শেষ পৰিদৰ্শনৰ পিছত হোৱা পৰিৱৰ্তনসমূহ '''গাঢ়''' আখৰত দেখুওৱা হৈছে",
+	'wlheader-showupdated' => '* আপোনাৰ শেষ পৰিদৰ্শনৰ পিছত হোৱা পৰিৱৰ্তনসমূহ \'\'\'গাঢ়\'\'\' আখৰত দেখুওৱা হৈছে',
 	'watchmethod-recent' => 'লক্ষ্য কৰা পৃষ্ঠাসমূহ শেহতীয়া সম্পাদনাৰ বাবে পৰীক্ষা কৰা হৈছে',
 	'watchmethod-list' => 'লক্ষ্য কৰা পৃষ্ঠাসমূহ শেহতীয়া সম্পাদনাৰ বাবে পৰীক্ষা কৰা হৈছে',
 	'watchlistcontains' => 'আপোনাৰ লক্ষ্য-তালিকাত $1 খন {{PLURAL:$1|পৃষ্ঠা|পৃষ্ঠা}} আছে ।',
-	'wlnote' => "তলত {{PLURAL:$1| হ'ল সৰ্বশেষ পৰিৱৰ্তন|হ'ল সৰ্বশেষ '''$1''' পৰিৱৰ্তনসমূহ}} সৰ্বশেষ {{PLURAL:$2|ঘন্টা|'''$2''' ঘন্টা}}, $3, $4 -ৰ হিচাপে।",
+	'wlnote' => 'তলত {{PLURAL:$1| হ\'ল সৰ্বশেষ পৰিৱৰ্তন|হ\'ল সৰ্বশেষ \'\'\'$1\'\'\' পৰিৱৰ্তনসমূহ}} সৰ্বশেষ {{PLURAL:$2|ঘন্টা|\'\'\'$2\'\'\' ঘন্টা}}, $3, $4 -ৰ হিচাপে।',
 	'wlshowlast' => 'যোৱা $1 ঘণ্টা $2 দিন $3 চাওক',
 	'watchlist-options' => 'লক্ষ্য-তালিকা পছন্দসমূহ',
 	'watching' => 'চকু দিয়া হৈছে.....',
@@ -1116,7 +1117,7 @@ $messages['as'] = array(
 To remove a title, check the box next to it, and click "{{int:Watchlistedit-normal-submit}}".
 You can also [[Special:EditWatchlist/raw|edit the raw list]].',
 	'watchlistedit-normal-submit' => 'শিৰোনামা আঁতৰাওক',
-	'watchlistedit-normal-done' => "{{PLURAL:$1|এটা শিৰোনামা|$1 টা শিৰোনামা}} আপোনাৰ লক্ষ্যতালিকাৰ পৰা আঁতৰোৱা হ'ল:",
+	'watchlistedit-normal-done' => '{{PLURAL:$1|এটা শিৰোনামা|$1 টা শিৰোনামা}} আপোনাৰ লক্ষ্যতালিকাৰ পৰা আঁতৰোৱা হ\'ল:',
 	'watchlistedit-raw-title' => 'অশোধিত অনুসৰণ-তালিকা সম্পাদন কৰক',
 	'watchlistedit-raw-legend' => 'অশোধিত অনুসৰণ-তালিকা সম্পাদন কৰক',
 	'watchlistedit-raw-explain' => 'আপোনাৰ দৰ্শনতালিকাত থকা শীৰ্ষকসমূহ তলত দেখুৱা হৈছে, আৰু তালিকালে যোগ কৰি অথবা তালিকাৰ পৰা আতৰাই সম্পাদন কৰিব পাৰি;
@@ -1125,23 +1126,23 @@ You can also [[Special:EditWatchlist/raw|edit the raw list]].',
 আপুনি লগতে [[Special:EditWatchlist|প্ৰামাণিক সম্পাদকক ব্যৱহাৰ কৰিব পাৰে]]।',
 	'watchlistedit-raw-titles' => 'শিৰোনামা:',
 	'watchlistedit-raw-submit' => 'লক্ষ্য-তালিকা আপডেট কৰক',
-	'watchlistedit-raw-done' => "আপোনাৰ লক্ষ্য-তালিকা নবীকৰণ কৰা হ'ল",
-	'watchlistedit-raw-added' => "{{PLURAL:$1|এটা শিৰোনামা|$1-টা শিৰোনামা}} যোগ কৰা হ'ল:",
-	'watchlistedit-raw-removed' => "{{PLURAL:$1|এটা শিৰোনামা|$1-টা শিৰোনামা}} আঁতৰোৱা হ'ল:",
+	'watchlistedit-raw-done' => 'আপোনাৰ লক্ষ্য-তালিকা নবীকৰণ কৰা হ\'ল',
+	'watchlistedit-raw-added' => '{{PLURAL:$1|এটা শিৰোনামা|$1-টা শিৰোনামা}} যোগ কৰা হ\'ল:',
+	'watchlistedit-raw-removed' => '{{PLURAL:$1|এটা শিৰোনামা|$1-টা শিৰোনামা}} আঁতৰোৱা হ\'ল:',
 	'watchlisttools-view' => 'সংগতি থকা সাল-সলনিবোৰ চাওক',
 	'watchlisttools-edit' => 'লক্ষ্য-তালিকা চাওক আৰু সম্পাদনা কৰক',
 	'watchlisttools-raw' => 'অশোধিত লক্ষ্য-তালিকা সম্পাদনা কৰক',
-);
+];
 
-$messages['ast'] = array(
+$messages['ast'] = [
 	'wednesday' => 'miércoles',
 	'wed' => 'mié',
 	'wrong_wfQuery_params' => 'Parámetros incorreutos pa wfQuery()<br />
 Función: $1<br />
 Consulta: $2',
-	'welcomecreation' => "== Bienveníu, $1! ==
+	'welcomecreation' => '== Bienveníu, $1! ==
 Se creó la to cuenta.
-Nun t'escaezas d'escoyer les tos [[Special:Preferences|preferencies de {{SITENAME}}]].",
+Nun t\'escaezas d\'escoyer les tos [[Special:Preferences|preferencies de {{SITENAME}}]].',
 	'wrongpassword' => 'La conseña escrita ye incorreuta.
 Vuelvi a intentalo.',
 	'wrongpasswordempty' => 'La conseña taba en blanco.
@@ -1151,15 +1152,15 @@ Vuelvi a intentalo.',
 	'windows-nonascii-filename' => 'Esta wiki nun permite nomes de ficheru con caráuteres especiales.',
 	'watchthisupload' => 'Vixilar esti ficheru',
 	'withoutinterwiki' => 'Páxines ensin interwikis',
-	'withoutinterwiki-summary' => "Les páxines siguientes nun enllacien a versiones n'otres llingües:",
+	'withoutinterwiki-summary' => 'Les páxines siguientes nun enllacien a versiones n\'otres llingües:',
 	'withoutinterwiki-legend' => 'Prefixu',
 	'withoutinterwiki-submit' => 'Amosar',
 	'wantedcategories' => 'Categoríes buscaes',
 	'wantedpages' => 'Páxines buscaes',
 	'wantedpages-badtitle' => 'Títulu inválidu nel conxuntu de resultaos: $1',
 	'wantedfiles' => 'Archivos buscaos',
-	'wantedfiletext-cat' => "Los ficheros siguientes tan usándose, pero nun esisten. Ye posible qu'apaezan ficheros de repositorios esternos ensin qu'esistan. Cualesquier falsu positivu tará <del>tacháu</del>. Amás, les páxines qu'inxerten ficheros que nun esisten apaecen na llista de [[:$1]].",
-	'wantedfiletext-nocat' => "Los ficheros siguientes tan usándose, pero nun esisten. Ye posible qu'apaezan ficheros de repositorios esternos ensin qu'esistan. Cualesquier falsu positivu tará <del>tacháu</del>.",
+	'wantedfiletext-cat' => 'Los ficheros siguientes tan usándose, pero nun esisten. Ye posible qu\'apaezan ficheros de repositorios esternos ensin qu\'esistan. Cualesquier falsu positivu tará <del>tacháu</del>. Amás, les páxines qu\'inxerten ficheros que nun esisten apaecen na llista de [[:$1]].',
+	'wantedfiletext-nocat' => 'Los ficheros siguientes tan usándose, pero nun esisten. Ye posible qu\'apaezan ficheros de repositorios esternos ensin qu\'esistan. Cualesquier falsu positivu tará <del>tacháu</del>.',
 	'wantedtemplates' => 'Plantíes más buscaes',
 	'watchlist' => 'La mio páxina de vixilancia',
 	'watchlistfor2' => 'Pa $1 $2',
@@ -1169,18 +1170,18 @@ Vuelvi a intentalo.',
 	'watch' => 'Vixilar',
 	'watchthispage' => 'Vixilar esta páxina',
 	'watchnochange' => 'Nenguna de les tos páxines vixilaes foi editada nel periodu escoyíu.',
-	'watchlist-details' => "{{PLURAL:$1|$1 páxina|$1 páxines}} na to llista de vixilancia ensin cuntar les páxines d'alderique.",
+	'watchlist-details' => '{{PLURAL:$1|$1 páxina|$1 páxines}} na to llista de vixilancia ensin cuntar les páxines d\'alderique.',
 	'wlheader-enotif' => '* La notificación per corréu electrónicu ta activada.',
-	'wlheader-showupdated' => "* Les páxines camudaes dende la to última visita amuésense en '''negrina'''",
+	'wlheader-showupdated' => '* Les páxines camudaes dende la to última visita amuésense en \'\'\'negrina\'\'\'',
 	'watchmethod-recent' => 'comprobando páxines vixilaes nos cambios recientes',
 	'watchmethod-list' => 'comprobando ediciones recientes nes páxines vixilaes',
 	'watchlistcontains' => 'La to llista de vixilancia tien $1 {{PLURAL:$1|páxina|páxines}}.',
-	'wlnote' => "Abaxo {{PLURAL:$1|ta'l caberu cambiu|tán los caberos '''$1''' cambios}} {{PLURAL:$2|na cabera hora|nes caberes '''$2''' hores}}, el día $3 a les $4.",
+	'wlnote' => 'Abaxo {{PLURAL:$1|ta\'l caberu cambiu|tán los caberos \'\'\'$1\'\'\' cambios}} {{PLURAL:$2|na cabera hora|nes caberes \'\'\'$2\'\'\' hores}}, el día $3 a les $4.',
 	'wlshowlast' => 'Amosar les últimes $1 hores $2 díes $3',
 	'watchlist-options' => 'Opciones de la llista de vixilancia',
 	'watching' => 'Vixilando...',
 	'watcherrortext' => 'Hebo un fallu al camudar la configuración de la to llista de vixilancia pa «$1».',
-	'whatlinkshere' => "Lo qu'enllaza equí",
+	'whatlinkshere' => 'Lo qu\'enllaza equí',
 	'whatlinkshere-title' => 'Páxines qu\'enllacien a "$1"',
 	'whatlinkshere-page' => 'Páxina:',
 	'whatlinkshere-prev' => '{{PLURAL:$1|anterior|anteriores $1}}',
@@ -1189,24 +1190,24 @@ Vuelvi a intentalo.',
 	'whatlinkshere-hideredirs' => '$1 redireiciones',
 	'whatlinkshere-hidetrans' => '$1 tresclusiones',
 	'whatlinkshere-hidelinks' => '$1 enllaces',
-	'whatlinkshere-hideimages' => "$1 enllaces d'imaxe",
+	'whatlinkshere-hideimages' => '$1 enllaces d\'imaxe',
 	'whatlinkshere-filters' => 'Peñeres',
 	'widthheightpage' => '$1 × $2, $3 {{PLURAL:$3|páxina|páxines}}',
 	'watchlistall2' => 'too',
-	'watchlistedit-numitems' => "La to llista de vixilancia tien {{PLURAL:$1|1 títulu|$1 títulos}}, escluyendo les páxines d'alderique.",
+	'watchlistedit-numitems' => 'La to llista de vixilancia tien {{PLURAL:$1|1 títulu|$1 títulos}}, escluyendo les páxines d\'alderique.',
 	'watchlistedit-noitems' => 'La to llista de vixilancia nun tien títulos.',
 	'watchlistedit-normal-title' => 'Editar la llista de vixilancia',
 	'watchlistedit-normal-legend' => 'Eliminar títulos de la llista de vixilancia',
-	'watchlistedit-normal-explain' => "Abaxo s'amuesen los títulos de la to llista de vixilancia.
-Pa desaniciar un títulu, marca la caxella d'al llau d'él, y calca \"{{int:Watchlistedit-normal-submit}}\".
-Tamién pues [[Special:EditWatchlist/raw|editar la llista en bruto]].",
+	'watchlistedit-normal-explain' => 'Abaxo s\'amuesen los títulos de la to llista de vixilancia.
+Pa desaniciar un títulu, marca la caxella d\'al llau d\'él, y calca "{{int:Watchlistedit-normal-submit}}".
+Tamién pues [[Special:EditWatchlist/raw|editar la llista en bruto]].',
 	'watchlistedit-normal-submit' => 'Desaniciar títulos',
 	'watchlistedit-normal-done' => '{{PLURAL:$1|Eliminóse un títulu|Elimináronse $1 títulos}} de la to llista de vixilancia:',
 	'watchlistedit-raw-title' => 'Editar la llista de vixilancia en bruto',
 	'watchlistedit-raw-legend' => 'Editar la llista de vixilancia en bruto',
-	'watchlistedit-raw-explain' => "Abaxo s'amuesen los títulos de la to llista de vixilancia, y puen editase amestándolos o desaniciándolos de la llista; un títulu per llinia.
-N'acabando, calca \"{{int:Watchlistedit-raw-submit}}\".
-Tamién pues [[Special:EditWatchlist|usar l'editor estándar]].",
+	'watchlistedit-raw-explain' => 'Abaxo s\'amuesen los títulos de la to llista de vixilancia, y puen editase amestándolos o desaniciándolos de la llista; un títulu per llinia.
+N\'acabando, calca "{{int:Watchlistedit-raw-submit}}".
+Tamién pues [[Special:EditWatchlist|usar l\'editor estándar]].',
 	'watchlistedit-raw-titles' => 'Títulos:',
 	'watchlistedit-raw-submit' => 'Anovar llista de vixilancia',
 	'watchlistedit-raw-done' => 'La to llista de vixilancia foi actualizada.',
@@ -1215,16 +1216,16 @@ Tamién pues [[Special:EditWatchlist|usar l'editor estándar]].",
 	'watchlisttools-view' => 'Ver cambios relevantes',
 	'watchlisttools-edit' => 'Ver y editar la llista de vixilancia',
 	'watchlisttools-raw' => 'Editar la llista de vixilancia (en bruto)',
-);
+];
 
-$messages['av'] = array(
+$messages['av'] = [
 	'wednesday' => 'АрбагӀ',
 	'watchlist' => 'Дур халгьабиялъул сияхl',
 	'watch' => 'хал гьабизе',
 	'whatlinkshere' => 'Рехсей гьанибе',
-);
+];
 
-$messages['avk'] = array(
+$messages['avk'] = [
 	'wednesday' => 'balemeaviel',
 	'wed' => 'Bal-',
 	'wrong_wfQuery_params' => 'Mewadaf dor koe wfQuery() dirgara<br />
@@ -1247,7 +1248,7 @@ Me vulkul da rupeson va "Lodamaceem" bu va intaf {{SITENAME}} rotuilkal.',
 	'wantedfiles' => 'Erun iyeltak',
 	'wantedtemplates' => 'Eruna teza',
 	'watchlist' => 'Suzdasiki',
-	'watchlistfor' => "(tori '''$1''')",
+	'watchlistfor' => '(tori \'\'\'$1\'\'\')',
 	'watchlistanontext' => 'Ta wira ik betara va ra ke rinafi suzdasiki vay $1.',
 	'watchnologin' => 'Dogluyariskaf',
 	'watchnologintext' => 'Ta betara va suzdasiki gotil [[Special:UserLogin|dogluyarakiraf]].',
@@ -1256,11 +1257,11 @@ Me vulkul da rupeson va "Lodamaceem" bu va intaf {{SITENAME}} rotuilkal.',
 	'watchnochange' => 'Nedoyu rinafu suzdanu bu al zo betar bak bazena rekola',
 	'watchlist-details' => '{{PLURAL:$1|$1 bu|$1 bu}} koe rinafi suzdasiki rade prilarabueem.',
 	'wlheader-enotif' => '* Email walzera tir tegisa.',
-	'wlheader-showupdated' => "* Bu betayanu vielu rin ironokon worayal tir '''sulatcalakorafu'''.",
+	'wlheader-showupdated' => '* Bu betayanu vielu rin ironokon worayal tir \'\'\'sulatcalakorafu\'\'\'.',
 	'watchmethod-recent' => 'ageltara va noeltaf betakseem va suzdan bueem',
 	'watchmethod-list' => 'ageltara va suzdan bueem icde noeltafa betara',
 	'watchlistcontains' => 'Rinafi suzdasiki va $1 bu ruldar',
-	'wlnote' => "Vleveon tid tela '''$1''' ironokafa betara mali '''$2''' ironokaf bartiv.",
+	'wlnote' => 'Vleveon tid tela \'\'\'$1\'\'\' ironokafa betara mali \'\'\'$2\'\'\' ironokaf bartiv.',
 	'wlshowlast' => 'Nedira va ironokaf $1 bartiv isu $2 viel isu $3',
 	'watchlist-options' => 'Suzdasikiolkeem',
 	'watching' => 'Nedis...',
@@ -1293,15 +1294,15 @@ Me vulkul da rupeson va "Lodamaceem" bu va intaf {{SITENAME}} rotuilkal.',
 	'watchlisttools-view' => 'Wira va icdef betakseem',
 	'watchlisttools-edit' => 'Wira va suzdasiki isu betara',
 	'watchlisttools-raw' => 'Betara va suzdasiki',
-);
+];
 
-$messages['ay'] = array(
+$messages['ay'] = [
 	'wednesday' => 'mirkulisa',
 	'wed' => 'mir',
 	'watch' => 'Uñjaña',
-);
+];
 
-$messages['az'] = array(
+$messages['az'] = [
 	'wednesday' => 'Çərşənbə',
 	'wed' => 'Çərşənbə',
 	'wrong_wfQuery_params' => 'wfQuery() funksiyası üçün qəbuledilməz parametrlər <br />
@@ -1333,11 +1334,11 @@ Hesabınız yaradıldı.
 	'watchnochange' => 'Verilən vaxt ərzində heç bir izlədiyiniz səhifə redaktə edilməmişdir.',
 	'watchlist-details' => 'Müzakirə səhifələrini çıxmaq şərtilə {{PLURAL:$1|$1 səhifəni|$1 səhifəni}} izləyirsiniz.',
 	'wlheader-enotif' => '*  E-məktubla bildiriş aktivdir.',
-	'wlheader-showupdated' => "* Son ziyarətinizdən sonra edilən dəyişikliklər '''qalın şriftlərlə''' göstərilmişdir.",
+	'wlheader-showupdated' => '* Son ziyarətinizdən sonra edilən dəyişikliklər \'\'\'qalın şriftlərlə\'\'\' göstərilmişdir.',
 	'watchmethod-recent' => 'yeni dəyişikliklər izlənilən səhifələr üçün yoxlanılır',
 	'watchmethod-list' => 'izlənilən səhifələr yeni dəyişikliklər üçün yoxlanılır',
 	'watchlistcontains' => 'İzləmə siyahınızda $1 {{PLURAL:$1|səhifə|səhifə}} var.',
-	'wlnote' => "Aşağıdakı {{PLURAL:$1|'''$1''' dəyişiklik|'''$1''' dəyişiklik}} son {{PLURAL:$2|saatda|'''$2''' saatda}} edilmişdir.",
+	'wlnote' => 'Aşağıdakı {{PLURAL:$1|\'\'\'$1\'\'\' dəyişiklik|\'\'\'$1\'\'\' dəyişiklik}} son {{PLURAL:$2|saatda|\'\'\'$2\'\'\' saatda}} edilmişdir.',
 	'wlshowlast' => 'Bunları göstər: son $1 saatı $2 günü $3',
 	'watchlist-options' => 'İzlədiyim səhifələrin nizamlamaları',
 	'watching' => 'İzlənilir...',
@@ -1369,9 +1370,9 @@ Hesabınız yaradıldı.
 	'watchlisttools-view' => 'Siyahıdakı səhifələrdə edilən dəyişikliklər',
 	'watchlisttools-edit' => 'İzlədiyim səhifələri göstər və redaktə et',
 	'watchlisttools-raw' => 'Mətn kimi redaktə et',
-);
+];
 
-$messages['ba'] = array(
+$messages['ba'] = [
 	'wednesday' => 'Шаршамбы',
 	'wed' => 'Шаршамбы',
 	'wrong_wfQuery_params' => 'wfQuery() функцияһы өсөн рөхсәт ителмәгән параметрҙар<br />
@@ -1405,11 +1406,11 @@ $messages['ba'] = array(
 	'watchnochange' => 'Күрһәтелгән арауыҡта күҙәтеүҙәр исемлегенән бер ни ҙә үҙгәрмәгән.',
 	'watchlist-details' => 'Һеҙҙең күҙәтеү исемлегегеҙҙә, фекер алышыу биттәрен һанамағанда, {{PLURAL:$1|$1 бит|$1 бит}} бар.',
 	'wlheader-enotif' => '* Электрон почта аша белдереү һайланған',
-	'wlheader-showupdated' => "* Һеҙҙең аҙаҡҡы кереүегеҙҙән һуң үҙгәргән биттәр '''ҡалын''' шрифт менән күрһәтелгән.",
+	'wlheader-showupdated' => '* Һеҙҙең аҙаҡҡы кереүегеҙҙән һуң үҙгәргән биттәр \'\'\'ҡалын\'\'\' шрифт менән күрһәтелгән.',
 	'watchmethod-recent' => 'күҙәтелгән биттәр өсөн аҙаҡҡы үҙгәртеүҙәрҙе ҡарау',
 	'watchmethod-list' => 'аҙаҡҡы үҙгәртеүҙәр өсөн күҙәтелгән биттәрҙе ҡарау',
 	'watchlistcontains' => 'Һеҙҙең күҙәтеү исемлегендә $1 {{PLURAL:$1|бит|бит}}бар.',
-	'wlnote' => "Түбәндә $3 $4 ваҡытына тиклем аҙаҡҡы {{PLURAL:$2|сәғәт|'''$2''' сәғәт}} эсендә эшләнгән {{PLURAL:$1|үҙгәртеү|'''$1''' үҙгәртеү}} күрһәтелгән.",
+	'wlnote' => 'Түбәндә $3 $4 ваҡытына тиклем аҙаҡҡы {{PLURAL:$2|сәғәт|\'\'\'$2\'\'\' сәғәт}} эсендә эшләнгән {{PLURAL:$1|үҙгәртеү|\'\'\'$1\'\'\' үҙгәртеү}} күрһәтелгән.',
 	'wlshowlast' => 'Һуңғы $1 сәғәт $2 көн өсөн күрһәт $3',
 	'watchlist-options' => 'Күҙәтеү исемлеге көйләүҙәре',
 	'watching' => 'Күҙәтеү исемлегенә өҫтәү...',
@@ -1449,9 +1450,9 @@ $messages['ba'] = array(
 	'watchlisttools-view' => 'Исемлектәге биттәрҙәге үҙгәрештәр',
 	'watchlisttools-edit' => 'Күҙәтеү исемлеген ҡарарға/төҙәтергә',
 	'watchlisttools-raw' => 'Текст һымаҡ үҙгәртеү',
-);
+];
 
-$messages['bar'] = array(
+$messages['bar'] = [
 	'wednesday' => 'Midwoch',
 	'wed' => 'Mi',
 	'wrong_wfQuery_params' => 'Foische Parameeter fyr wfQuery()<br />
@@ -1463,11 +1464,11 @@ Deih Benutzerkontó is grood eihgrichtt worn.
 Vagiss bittscheh néd, deine [[Special:Preferences|{{SITENAME}}-Eishtellungen]] åzpassen',
 	'wrongpassword' => 'Des Posswort is foisch! Bitschee prowirs nuamoi.',
 	'wrongpasswordempty' => 'Es is koa Posswort ned aigeem worn. Bittschee prowirs nuamoi.',
-	'watchthis' => "D' Seiten beówochten",
-	'whitelistedittext' => "Du muasst de $1, um Saiten beorwaiten z' kenna.",
+	'watchthis' => 'D\' Seiten beówochten',
+	'whitelistedittext' => 'Du muasst de $1, um Saiten beorwaiten z\' kenna.',
 	'watchthisupload' => 'Dé Seiten beówochten',
 	'withoutinterwiki' => 'Seiten óne an Link zua åndre Sproochen',
-	'withoutinterwiki-summary' => "D' foiganden Seiten valinken néd auf a åndre Sproochversion",
+	'withoutinterwiki-summary' => 'D\' foiganden Seiten valinken néd auf a åndre Sproochversion',
 	'withoutinterwiki-legend' => 'Präfix',
 	'withoutinterwiki-submit' => 'Zoag',
 	'wantedcategories' => 'Bnutzde, ower néd åglégte Kategorien',
@@ -1477,19 +1478,19 @@ Vagiss bittscheh néd, deine [[Special:Preferences|{{SITENAME}}-Eishtellungen]] 
 	'wantedtemplates' => 'Fööhernde Vurlong',
 	'watchlist' => 'Beówochtungslisten',
 	'watchlistfor2' => 'Voh $1 $2',
-	'watchlistanontext' => "Du muasst dé $1, um deih Beówchtungslisten z' seeng óder Eihträg borweiten z' kenner.",
+	'watchlistanontext' => 'Du muasst dé $1, um deih Beówchtungslisten z\' seeng óder Eihträg borweiten z\' kenner.',
 	'watchnologin' => 'Du bist néd auhgmödt',
-	'watchnologintext' => "Du muasst [[Special:UserLogin|auhgmödt]] seih, um deih Beówochtungslisten beorweiten z' kenner.",
+	'watchnologintext' => 'Du muasst [[Special:UserLogin|auhgmödt]] seih, um deih Beówochtungslisten beorweiten z\' kenner.',
 	'watch' => 'Beówochten',
-	'watchthispage' => "D' Seiten beówochten",
+	'watchthispage' => 'D\' Seiten beówochten',
 	'watchnochange' => 'Koahne dé voh dir beówochterden Seiten san wärnd dém auhzoagten Zeidraum beorwatt worn.',
 	'watchlist-details' => 'Du bówochst {{PLURAL:$1|$1 Seiten}}, Diskussiónsseiten néd midzöd',
 	'wlheader-enotif' => '* Da E-Mail-Benoochrichtigungsdeanst is aktivierd.',
-	'wlheader-showupdated' => "* Seiten mid noh néd gseengne Änderrungen wern '''fett''' dorgstöd.",
-	'watchmethod-recent' => "Ywerpriaff d' létzden Beorwatungen fyr d' Beówochtungslisten",
+	'wlheader-showupdated' => '* Seiten mid noh néd gseengne Änderrungen wern \'\'\'fett\'\'\' dorgstöd.',
+	'watchmethod-recent' => 'Ywerpriaff d\' létzden Beorwatungen fyr d\' Beówochtungslisten',
 	'watchmethod-list' => 'Ywerpriaffm voh da Beówochtungslisten auf létzde Beorwatungen',
 	'watchlistcontains' => 'Deih Beówochtungslisten enthoitt $1 {{PLURAL:$1|Seiten|Seiten}}.',
-	'wlnote' => "Es {{PLURAL:$1|fóigt d' létzde Änderrung|fóing d' létzden '''$1''' Änderrungen}} voh da/dé {{PLURAL:$2|Stund| '''$2''' Stunden}}. Staund: $3, $4 Uar.",
+	'wlnote' => 'Es {{PLURAL:$1|fóigt d\' létzde Änderrung|fóing d\' létzden \'\'\'$1\'\'\' Änderrungen}} voh da/dé {{PLURAL:$2|Stund| \'\'\'$2\'\'\' Stunden}}. Staund: $3, $4 Uar.',
 	'wlshowlast' => 'Zoag dé Änderrungen voh dé létzden $1 Stunden, $2 Dog óder $3 (in dé létzden 30 Dog).',
 	'watchlist-options' => 'Åzoagópziónen',
 	'watching' => 'Beówochten ...',
@@ -1497,8 +1498,8 @@ Vagiss bittscheh néd, deine [[Special:Preferences|{{SITENAME}}-Eishtellungen]] 
 	'whatlinkshere' => 'Links auf dé Seiten',
 	'whatlinkshere-title' => 'Seiten, dé noch „$1“ valinken',
 	'whatlinkshere-page' => 'Seiten:',
-	'whatlinkshere-prev' => "{{PLURAL:$1|vorige|d'voring $1}}",
-	'whatlinkshere-next' => "{{PLURAL:$1|nexde|d'nexdn $1}}",
+	'whatlinkshere-prev' => '{{PLURAL:$1|vorige|d\'voring $1}}',
+	'whatlinkshere-next' => '{{PLURAL:$1|nexde|d\'nexdn $1}}',
 	'whatlinkshere-links' => '← Vaweise',
 	'whatlinkshere-hideredirs' => 'Weidaleitungen $1',
 	'whatlinkshere-hidetrans' => 'Vurlongeihbindung $1',
@@ -1509,7 +1510,7 @@ Vagiss bittscheh néd, deine [[Special:Preferences|{{SITENAME}}-Eishtellungen]] 
 	'watchlistedit-noitems' => 'Dei Beobachtungslistn is laar.',
 	'watchlistedit-normal-title' => 'Beobachtungslistn bearbatn',
 	'watchlistedit-normal-legend' => 'Eiträge vo da Beobachtungslistn wegnehma',
-	'watchlistedit-normal-explain' => "Des san de Eiträg vo deiner Beowochtungslisten. Um de Eiträg z' entferna, markir de Kastln neem de Eiträg und druck am End vo da Seiten auf „{{int:Watchlistedit-normal-submit}}“. Du kåst dei Beowochtungslisten aa im  [[Special:EditWatchlist/raw|Listenformat beorweiten]].",
+	'watchlistedit-normal-explain' => 'Des san de Eiträg vo deiner Beowochtungslisten. Um de Eiträg z\' entferna, markir de Kastln neem de Eiträg und druck am End vo da Seiten auf „{{int:Watchlistedit-normal-submit}}“. Du kåst dei Beowochtungslisten aa im  [[Special:EditWatchlist/raw|Listenformat beorweiten]].',
 	'watchlistedit-normal-submit' => 'Eiträge wegnehma',
 	'watchlistedit-raw-title' => 'Beówochtungslisten im Listenformaat beorweiten',
 	'watchlistedit-raw-legend' => 'Beówochtungslisten im Listenformaat beorweiten',
@@ -1518,9 +1519,9 @@ Vagiss bittscheh néd, deine [[Special:Preferences|{{SITENAME}}-Eishtellungen]] 
 	'watchlisttools-view' => 'Änderrungen vafóing',
 	'watchlisttools-edit' => 'normaal beorwaten',
 	'watchlisttools-raw' => 'Im Listenformaat beorwaten',
-);
+];
 
-$messages['bat-smg'] = array(
+$messages['bat-smg'] = [
 	'wednesday' => 'Midwoch',
 	'wed' => 'Mi',
 	'wrong_wfQuery_params' => 'Foische Parameeter fyr wfQuery()<br />
@@ -1532,11 +1533,11 @@ Deih Benutzerkontó is grood eihgrichtt worn.
 Vagiss bittscheh néd, deine [[Special:Preferences|{{SITENAME}}-Eishtellungen]] åzpassen',
 	'wrongpassword' => 'Des Posswort is foisch! Bitschee prowirs nuamoi.',
 	'wrongpasswordempty' => 'Es is koa Posswort ned aigeem worn. Bittschee prowirs nuamoi.',
-	'watchthis' => "D' Seiten beówochten",
-	'whitelistedittext' => "Du muasst de $1, um Saiten beorwaiten z' kenna.",
+	'watchthis' => 'D\' Seiten beówochten',
+	'whitelistedittext' => 'Du muasst de $1, um Saiten beorwaiten z\' kenna.',
 	'watchthisupload' => 'Dé Seiten beówochten',
 	'withoutinterwiki' => 'Seiten óne an Link zua åndre Sproochen',
-	'withoutinterwiki-summary' => "D' foiganden Seiten valinken néd auf a åndre Sproochversion",
+	'withoutinterwiki-summary' => 'D\' foiganden Seiten valinken néd auf a åndre Sproochversion',
 	'withoutinterwiki-legend' => 'Präfix',
 	'withoutinterwiki-submit' => 'Zoag',
 	'wantedcategories' => 'Bnutzde, ower néd åglégte Kategorien',
@@ -1546,19 +1547,19 @@ Vagiss bittscheh néd, deine [[Special:Preferences|{{SITENAME}}-Eishtellungen]] 
 	'wantedtemplates' => 'Fööhernde Vurlong',
 	'watchlist' => 'Beówochtungslisten',
 	'watchlistfor2' => 'Voh $1 $2',
-	'watchlistanontext' => "Du muasst dé $1, um deih Beówchtungslisten z' seeng óder Eihträg borweiten z' kenner.",
+	'watchlistanontext' => 'Du muasst dé $1, um deih Beówchtungslisten z\' seeng óder Eihträg borweiten z\' kenner.',
 	'watchnologin' => 'Du bist néd auhgmödt',
-	'watchnologintext' => "Du muasst [[Special:UserLogin|auhgmödt]] seih, um deih Beówochtungslisten beorweiten z' kenner.",
+	'watchnologintext' => 'Du muasst [[Special:UserLogin|auhgmödt]] seih, um deih Beówochtungslisten beorweiten z\' kenner.',
 	'watch' => 'Beówochten',
-	'watchthispage' => "D' Seiten beówochten",
+	'watchthispage' => 'D\' Seiten beówochten',
 	'watchnochange' => 'Koahne dé voh dir beówochterden Seiten san wärnd dém auhzoagten Zeidraum beorwatt worn.',
 	'watchlist-details' => 'Du bówochst {{PLURAL:$1|$1 Seiten}}, Diskussiónsseiten néd midzöd',
 	'wlheader-enotif' => '* Da E-Mail-Benoochrichtigungsdeanst is aktivierd.',
-	'wlheader-showupdated' => "* Seiten mid noh néd gseengne Änderrungen wern '''fett''' dorgstöd.",
-	'watchmethod-recent' => "Ywerpriaff d' létzden Beorwatungen fyr d' Beówochtungslisten",
+	'wlheader-showupdated' => '* Seiten mid noh néd gseengne Änderrungen wern \'\'\'fett\'\'\' dorgstöd.',
+	'watchmethod-recent' => 'Ywerpriaff d\' létzden Beorwatungen fyr d\' Beówochtungslisten',
 	'watchmethod-list' => 'Ywerpriaffm voh da Beówochtungslisten auf létzde Beorwatungen',
 	'watchlistcontains' => 'Deih Beówochtungslisten enthoitt $1 {{PLURAL:$1|Seiten|Seiten}}.',
-	'wlnote' => "Es {{PLURAL:$1|fóigt d' létzde Änderrung|fóing d' létzden '''$1''' Änderrungen}} voh da/dé {{PLURAL:$2|Stund| '''$2''' Stunden}}. Staund: $3, $4 Uar.",
+	'wlnote' => 'Es {{PLURAL:$1|fóigt d\' létzde Änderrung|fóing d\' létzden \'\'\'$1\'\'\' Änderrungen}} voh da/dé {{PLURAL:$2|Stund| \'\'\'$2\'\'\' Stunden}}. Staund: $3, $4 Uar.',
 	'wlshowlast' => 'Zoag dé Änderrungen voh dé létzden $1 Stunden, $2 Dog óder $3 (in dé létzden 30 Dog).',
 	'watchlist-options' => 'Åzoagópziónen',
 	'watching' => 'Beówochten ...',
@@ -1566,8 +1567,8 @@ Vagiss bittscheh néd, deine [[Special:Preferences|{{SITENAME}}-Eishtellungen]] 
 	'whatlinkshere' => 'Links auf dé Seiten',
 	'whatlinkshere-title' => 'Seiten, dé noch „$1“ valinken',
 	'whatlinkshere-page' => 'Seiten:',
-	'whatlinkshere-prev' => "{{PLURAL:$1|vorige|d'voring $1}}",
-	'whatlinkshere-next' => "{{PLURAL:$1|nexde|d'nexdn $1}}",
+	'whatlinkshere-prev' => '{{PLURAL:$1|vorige|d\'voring $1}}',
+	'whatlinkshere-next' => '{{PLURAL:$1|nexde|d\'nexdn $1}}',
 	'whatlinkshere-links' => '← Vaweise',
 	'whatlinkshere-hideredirs' => 'Weidaleitungen $1',
 	'whatlinkshere-hidetrans' => 'Vurlongeihbindung $1',
@@ -1578,7 +1579,7 @@ Vagiss bittscheh néd, deine [[Special:Preferences|{{SITENAME}}-Eishtellungen]] 
 	'watchlistedit-noitems' => 'Dei Beobachtungslistn is laar.',
 	'watchlistedit-normal-title' => 'Beobachtungslistn bearbatn',
 	'watchlistedit-normal-legend' => 'Eiträge vo da Beobachtungslistn wegnehma',
-	'watchlistedit-normal-explain' => "Des san de Eiträg vo deiner Beowochtungslisten. Um de Eiträg z' entferna, markir de Kastln neem de Eiträg und druck am End vo da Seiten auf „{{int:Watchlistedit-normal-submit}}“. Du kåst dei Beowochtungslisten aa im  [[Special:EditWatchlist/raw|Listenformat beorweiten]].",
+	'watchlistedit-normal-explain' => 'Des san de Eiträg vo deiner Beowochtungslisten. Um de Eiträg z\' entferna, markir de Kastln neem de Eiträg und druck am End vo da Seiten auf „{{int:Watchlistedit-normal-submit}}“. Du kåst dei Beowochtungslisten aa im  [[Special:EditWatchlist/raw|Listenformat beorweiten]].',
 	'watchlistedit-normal-submit' => 'Eiträge wegnehma',
 	'watchlistedit-raw-title' => 'Beówochtungslisten im Listenformaat beorweiten',
 	'watchlistedit-raw-legend' => 'Beówochtungslisten im Listenformaat beorweiten',
@@ -1587,9 +1588,9 @@ Vagiss bittscheh néd, deine [[Special:Preferences|{{SITENAME}}-Eishtellungen]] 
 	'watchlisttools-view' => 'Änderrungen vafóing',
 	'watchlisttools-edit' => 'normaal beorwaten',
 	'watchlisttools-raw' => 'Im Listenformaat beorwaten',
-);
+];
 
-$messages['bcc'] = array(
+$messages['bcc'] = [
 	'wednesday' => 'چارشنبه',
 	'wed' => 'چ.شنبه',
 	'wrong_wfQuery_params' => 'اشتباهین پارامتر به wfQuery()<br />
@@ -1621,11 +1622,11 @@ Query: $2',
 	'watchnochange' => 'هچ یک چه شمی چارتگین آیتم اصلاح نه بوتت ته ای دوره زمانی که پیش دارگ بیت.',
 	'watchlist-details' => '{{PLURAL:$1|$1 صفحه|$1 صفحات}} چارتگ بیت صفحات گپ حساب نه بیگن',
 	'wlheader-enotif' => '* اخطار ایمیل فعالنت.',
-	'wlheader-showupdated' => "* صفحات که عوض بوتگنت چه شمی آهری چارتن '''پررنگ''' پیش دراگ بنت.",
+	'wlheader-showupdated' => '* صفحات که عوض بوتگنت چه شمی آهری چارتن \'\'\'پررنگ\'\'\' پیش دراگ بنت.',
 	'watchmethod-recent' => 'کنترل نوکین اصلاحات په صفحاتی که چارگ بنت',
 	'watchmethod-list' => 'کنترل صفحاتی که چارگ بنت په نوکین اصلاحات',
 	'watchlistcontains' => 'شمی لیست چارگ شامل  $1 {{PLURAL:$1|صفحه|صفحات}}.',
-	'wlnote' => "جهلء {{PLURAL:$1|آهرین تغییر هست|آهرین هست'''$1''' تغییرات}} ته آهرین {{PLURAL:$2|ساعت|'''$2''' ساعات}}.",
+	'wlnote' => 'جهلء {{PLURAL:$1|آهرین تغییر هست|آهرین هست\'\'\'$1\'\'\' تغییرات}} ته آهرین {{PLURAL:$2|ساعت|\'\'\'$2\'\'\' ساعات}}.',
 	'wlshowlast' => 'پیش دار آهرین $1  ساعات $2 روچان $3',
 	'watchlist-options' => 'گزینه یان لیست چارگ',
 	'watching' => 'چارگ بین',
@@ -1665,17 +1666,17 @@ Query: $2',
 	'watchlisttools-view' => 'مربوطین تغییرات بچار',
 	'watchlisttools-edit' => 'به چار و اصلاح کن لیست چارگ آ',
 	'watchlisttools-raw' => 'هامین لیست چارگ آ اصلاح کن',
-);
+];
 
-$messages['bcl'] = array(
+$messages['bcl'] = [
 	'wednesday' => 'Miyerkoles',
 	'wed' => 'Miy',
 	'wrong_wfQuery_params' => 'Salâ na parámetro sa wfQuery()<br />
 Acción: $1<br />
 Hapót: $2',
-	'welcomecreation' => "== Maogmang Pagdagos, $1! ==
+	'welcomecreation' => '== Maogmang Pagdagos, $1! ==
 
-Nagibo na an ''account'' mo. Giromdomon tabi na ribayán an saimong mga kabôtan sa {{SITENAME}}.",
+Nagibo na an \'\'account\'\' mo. Giromdomon tabi na ribayán an saimong mga kabôtan sa {{SITENAME}}.',
 	'wrongpassword' => 'Salâ an pigtaták na sekretong panlaog. Probaran giraray tabì.',
 	'wrongpasswordempty' => 'Mayong pigkaag na sekretong panlaog. Probaran giraray tabì.',
 	'watchthis' => 'Bantayan an pahinang ini',
@@ -1694,12 +1695,12 @@ Nagibo na an ''account'' mo. Giromdomon tabi na ribayán an saimong mga kabôtan
 	'watchthispage' => 'Bantayan ining pahina',
 	'watchnochange' => 'Mayo sa saimong mga pigbabantayan an nahira sa laog nin pinahiling na pagkalawig.',
 	'watchlist-details' => '{{PLURAL:$1|$1 pahina|$1 mga pahina}} sa babantáyan mo an daí kabáli an mga olay na pahina.',
-	'wlheader-enotif' => "* Nakaandar an paising ''e''-surat.",
-	'wlheader-showupdated' => "* An mga páhinang pigbâgo poon kan huri mong bisita nakasurat nin '''mahîbog'''",
+	'wlheader-enotif' => '* Nakaandar an paising \'\'e\'\'-surat.',
+	'wlheader-showupdated' => '* An mga páhinang pigbâgo poon kan huri mong bisita nakasurat nin \'\'\'mahîbog\'\'\'',
 	'watchmethod-recent' => 'Pigsososog an mga kaaagi pa sanang hirá sa mga pigbabantayan na páhina',
 	'watchmethod-list' => 'Pigsososog an mga pigbabantayan na páhina para mahiling an mga kaaagi pa sanan paghirá',
 	'watchlistcontains' => 'An saimong lista nin pigbabantayan igwang $1 na {{PLURAL:$1|páhina|mga páhina}}.',
-	'wlnote' => "Mahihiling sa babâ an {{PLURAL:$1|huring pagriribay|mga huring'''$1''' pagriribay}} sa ultimong {{PLURAL:$2|oras|'''$2''' mga oras}}.",
+	'wlnote' => 'Mahihiling sa babâ an {{PLURAL:$1|huring pagriribay|mga huring\'\'\'$1\'\'\' pagriribay}} sa ultimong {{PLURAL:$2|oras|\'\'\'$2\'\'\' mga oras}}.',
 	'wlshowlast' => 'Ipahilíng an ultimong $1 na oras $2 na aldaw $3',
 	'watching' => 'Pigbabantayan...',
 	'whatlinkshere' => 'An nakatakód digdí',
@@ -1733,9 +1734,9 @@ Pwede mo man [[Special:EditWatchlist|gamiton an standard editor]].',
 	'watchlisttools-view' => 'Hilingón an mga katakód na pagbabàgo',
 	'watchlisttools-edit' => 'Hilingón asin ligwatón an pigbabantayan',
 	'watchlisttools-raw' => 'Hirahón an bàgong pigbabantayan',
-);
+];
 
-$messages['be'] = array(
+$messages['be'] = [
 	'wednesday' => 'Серада',
 	'wed' => 'Ср',
 	'wrong_wfQuery_params' => 'Недапушчальныя параметры wfQuery()<br />
@@ -1770,11 +1771,11 @@ $messages['be'] = array(
 	'watchnochange' => 'Ніводзін з назіраных складнікаў не быў зменены за паказаны перыяд.',
 	'watchlist-details' => 'Назіраю {{PLURAL:$1|$1 старонку|$1 старонак}} без уліку размоўных.',
 	'wlheader-enotif' => '* Працуе апавяшчанне праз эл.пошту.',
-	'wlheader-showupdated' => "* Старонкі, якія былі зменены пасля вашага апошняга іх наведвання, паказаны '''абрысам шрыфту'''.",
+	'wlheader-showupdated' => '* Старонкі, якія былі зменены пасля вашага апошняга іх наведвання, паказаны \'\'\'абрысам шрыфту\'\'\'.',
 	'watchmethod-recent' => 'правяраем нядаўнія праўкі ў назіраных старонках',
 	'watchmethod-list' => 'правяраем наяўнасць нядаўніх правак ў назіраных старонках',
 	'watchlistcontains' => 'У вашым спісе назіранага $1 {{PLURAL:$1|старонка|старонак}}.',
-	'wlnote' => "Ніжэй {{PLURAL:$1|паказана апошняе $1 змена|паказаны апошнія $1 змены|паказаны апошнія $1 змен}} за {{PLURAL:$2|апошнюю|апошнія|апошнія}} '''$2''' {{plural:$2|гадзіну|гадзіны|гадзіны}}, на момант часу $3 $4.",
+	'wlnote' => 'Ніжэй {{PLURAL:$1|паказана апошняе $1 змена|паказаны апошнія $1 змены|паказаны апошнія $1 змен}} за {{PLURAL:$2|апошнюю|апошнія|апошнія}} \'\'\'$2\'\'\' {{plural:$2|гадзіну|гадзіны|гадзіны}}, на момант часу $3 $4.',
 	'wlshowlast' => 'Паказваць апошнія $1 гадз. $2 дзён $3',
 	'watchlist-options' => 'Магчымасці назірання',
 	'watching' => 'Дапісваецца да назіранага...',
@@ -1811,9 +1812,9 @@ $messages['be'] = array(
 	'watchlisttools-edit' => 'Паказаць назіранае',
 	'watchlisttools-raw' => 'Паказаць нефарматаванае назіранае',
 	'wikia-pagetitle' => '$1 — Wikia',
-);
+];
 
-$messages['be-tarask'] = array(
+$messages['be-tarask'] = [
 	'wednesday' => 'серада',
 	'wed' => 'Ср',
 	'wrong_wfQuery_params' => 'Няслушныя парамэтры для wfQuery()<br />
@@ -1849,11 +1850,11 @@ $messages['be-tarask'] = array(
 	'watchnochange' => 'Нічога з Вашага сьпісу назіраньня не зьмянілася за паказаны пэрыяд.',
 	'watchlist-details' => 'У Вашым сьпісе назіраньня $1 {{PLURAL:$1|старонка|старонкі|старонак}} за выключэньнем старонак абмеркаваньня.',
 	'wlheader-enotif' => '* Дасылка паведамленьняў па электроннай пошце ўключаная.',
-	'wlheader-showupdated' => "* Старонкі, якія былі зьмененыя пасьля Вашага апошняга візыту, вылучаныя '''тлустым''' шрыфтам",
+	'wlheader-showupdated' => '* Старонкі, якія былі зьмененыя пасьля Вашага апошняга візыту, вылучаныя \'\'\'тлустым\'\'\' шрыфтам',
 	'watchmethod-recent' => 'прагляд апошніх зьменаў у старонках са сьпісу назіраньня',
 	'watchmethod-list' => 'прагляд старонак са сьпісу назіраньня дзеля апошніх зьменах',
 	'watchlistcontains' => 'Ваш сьпіс назіраньня зьмяшчае $1 {{PLURAL:$1|старонка|старонкі|старонак}}.',
-	'wlnote' => "Ніжэй {{PLURAL:$1|паказаная '''$1''' апошняя зьмена|паказаныя '''$1''' апошнія зьмены|паказаныя '''$1''' апошніх зьменаў}} за '''$2''' {{PLURAL:$2|гадзіну|гадзіны|гадзінаў}}, па стане на $3, $4.",
+	'wlnote' => 'Ніжэй {{PLURAL:$1|паказаная \'\'\'$1\'\'\' апошняя зьмена|паказаныя \'\'\'$1\'\'\' апошнія зьмены|паказаныя \'\'\'$1\'\'\' апошніх зьменаў}} за \'\'\'$2\'\'\' {{PLURAL:$2|гадзіну|гадзіны|гадзінаў}}, па стане на $3, $4.',
 	'wlshowlast' => 'Паказаць: за апошнія $1 гадзінаў, $2 дзён, $3',
 	'watchlist-options' => 'Налады сьпісу назіраньня',
 	'watching' => 'Дадаецца ў сьпіс назіраньня…',
@@ -1895,9 +1896,9 @@ $messages['be-tarask'] = array(
 	'watchlisttools-edit' => 'Праглядзець альбо рэдагаваць сьпіс назіраньня',
 	'watchlisttools-raw' => 'Рэдагаваць як тэкст',
 	'wikia-pagetitle' => '$1 — Wikia',
-);
+];
 
-$messages['be-x-old'] = array(
+$messages['be-x-old'] = [
 	'wednesday' => 'серада',
 	'wed' => 'Ср',
 	'wrong_wfQuery_params' => 'Няслушныя парамэтры для wfQuery()<br />
@@ -1933,11 +1934,11 @@ $messages['be-x-old'] = array(
 	'watchnochange' => 'Нічога з Вашага сьпісу назіраньня не зьмянілася за паказаны пэрыяд.',
 	'watchlist-details' => 'У Вашым сьпісе назіраньня $1 {{PLURAL:$1|старонка|старонкі|старонак}} за выключэньнем старонак абмеркаваньня.',
 	'wlheader-enotif' => '* Дасылка паведамленьняў па электроннай пошце ўключаная.',
-	'wlheader-showupdated' => "* Старонкі, якія былі зьмененыя пасьля Вашага апошняга візыту, вылучаныя '''тлустым''' шрыфтам",
+	'wlheader-showupdated' => '* Старонкі, якія былі зьмененыя пасьля Вашага апошняга візыту, вылучаныя \'\'\'тлустым\'\'\' шрыфтам',
 	'watchmethod-recent' => 'прагляд апошніх зьменаў у старонках са сьпісу назіраньня',
 	'watchmethod-list' => 'прагляд старонак са сьпісу назіраньня дзеля апошніх зьменах',
 	'watchlistcontains' => 'Ваш сьпіс назіраньня зьмяшчае $1 {{PLURAL:$1|старонка|старонкі|старонак}}.',
-	'wlnote' => "Ніжэй {{PLURAL:$1|паказаная '''$1''' апошняя зьмена|паказаныя '''$1''' апошнія зьмены|паказаныя '''$1''' апошніх зьменаў}} за '''$2''' {{PLURAL:$2|гадзіну|гадзіны|гадзінаў}}, па стане на $3, $4.",
+	'wlnote' => 'Ніжэй {{PLURAL:$1|паказаная \'\'\'$1\'\'\' апошняя зьмена|паказаныя \'\'\'$1\'\'\' апошнія зьмены|паказаныя \'\'\'$1\'\'\' апошніх зьменаў}} за \'\'\'$2\'\'\' {{PLURAL:$2|гадзіну|гадзіны|гадзінаў}}, па стане на $3, $4.',
 	'wlshowlast' => 'Паказаць: за апошнія $1 гадзінаў, $2 дзён, $3',
 	'watchlist-options' => 'Налады сьпісу назіраньня',
 	'watching' => 'Дадаецца ў сьпіс назіраньня…',
@@ -1979,9 +1980,9 @@ $messages['be-x-old'] = array(
 	'watchlisttools-edit' => 'Праглядзець альбо рэдагаваць сьпіс назіраньня',
 	'watchlisttools-raw' => 'Рэдагаваць як тэкст',
 	'wikia-pagetitle' => '$1 — Wikia',
-);
+];
 
-$messages['bg'] = array(
+$messages['bg'] = [
 	'wednesday' => 'сряда',
 	'wed' => 'ср',
 	'wrong_wfQuery_params' => 'Невалидни аргументи за wfQuery()<br />
@@ -2016,11 +2017,11 @@ $messages['bg'] = array(
 	'watchnochange' => 'Никоя от наблюдаваните страници не е била редактирана в показаното време.',
 	'watchlist-details' => '{{PLURAL:$1|Една наблюдавана страница|$1 наблюдавани страници}} от списъка ви за наблюдение (без беседи).',
 	'wlheader-enotif' => '* Известяването по електронна поща е включено.',
-	'wlheader-showupdated' => "* Страниците, които са били променени след последния път, когато сте ги посетили, са показани с '''получер''' шрифт.",
+	'wlheader-showupdated' => '* Страниците, които са били променени след последния път, когато сте ги посетили, са показани с \'\'\'получер\'\'\' шрифт.',
 	'watchmethod-recent' => 'проверка на последните редакции за наблюдавани страници',
 	'watchmethod-list' => 'проверка на наблюдаваните страници за скорошни редакции',
 	'watchlistcontains' => 'Списъкът ви за наблюдение съдържа {{PLURAL:$1|една страница|$1 страници}}.',
-	'wlnote' => "{{PLURAL:$1|Показана е последната промяна|Показани са последните '''$1''' промени}} през {{PLURAL:$2|последния час|последните '''$2''' часа}}.",
+	'wlnote' => '{{PLURAL:$1|Показана е последната промяна|Показани са последните \'\'\'$1\'\'\' промени}} през {{PLURAL:$2|последния час|последните \'\'\'$2\'\'\' часа}}.',
 	'wlshowlast' => 'Показване на последните $1 часа $2 дни $3',
 	'watchlist-options' => 'Опции на списъка за наблюдение',
 	'watching' => 'Наблюдение…',
@@ -2060,9 +2061,9 @@ $messages['bg'] = array(
 	'watchlisttools-edit' => 'Преглед и редактиране на списъка за наблюдение',
 	'watchlisttools-raw' => 'Редактиране на необработения списък за наблюдение',
 	'wikia-pagetitle' => '$1 — Wikia',
-);
+];
 
-$messages['bh'] = array(
+$messages['bh'] = [
 	'wednesday' => 'сряда',
 	'wed' => 'ср',
 	'wrong_wfQuery_params' => 'Невалидни аргументи за wfQuery()<br />
@@ -2097,11 +2098,11 @@ $messages['bh'] = array(
 	'watchnochange' => 'Никоя от наблюдаваните страници не е била редактирана в показаното време.',
 	'watchlist-details' => '{{PLURAL:$1|Една наблюдавана страница|$1 наблюдавани страници}} от списъка ви за наблюдение (без беседи).',
 	'wlheader-enotif' => '* Известяването по електронна поща е включено.',
-	'wlheader-showupdated' => "* Страниците, които са били променени след последния път, когато сте ги посетили, са показани с '''получер''' шрифт.",
+	'wlheader-showupdated' => '* Страниците, които са били променени след последния път, когато сте ги посетили, са показани с \'\'\'получер\'\'\' шрифт.',
 	'watchmethod-recent' => 'проверка на последните редакции за наблюдавани страници',
 	'watchmethod-list' => 'проверка на наблюдаваните страници за скорошни редакции',
 	'watchlistcontains' => 'Списъкът ви за наблюдение съдържа {{PLURAL:$1|една страница|$1 страници}}.',
-	'wlnote' => "{{PLURAL:$1|Показана е последната промяна|Показани са последните '''$1''' промени}} през {{PLURAL:$2|последния час|последните '''$2''' часа}}.",
+	'wlnote' => '{{PLURAL:$1|Показана е последната промяна|Показани са последните \'\'\'$1\'\'\' промени}} през {{PLURAL:$2|последния час|последните \'\'\'$2\'\'\' часа}}.',
 	'wlshowlast' => 'Показване на последните $1 часа $2 дни $3',
 	'watchlist-options' => 'Опции на списъка за наблюдение',
 	'watching' => 'Наблюдение…',
@@ -2141,9 +2142,9 @@ $messages['bh'] = array(
 	'watchlisttools-edit' => 'Преглед и редактиране на списъка за наблюдение',
 	'watchlisttools-raw' => 'Редактиране на необработения списък за наблюдение',
 	'wikia-pagetitle' => '$1 — Wikia',
-);
+];
 
-$messages['bho'] = array(
+$messages['bho'] = [
 	'wednesday' => 'बुधवार',
 	'wed' => 'बुध',
 	'wrongpassword' => 'गलत गुप्त-शब्द डलले बानी।
@@ -2164,15 +2165,15 @@ $messages['bho'] = array(
 	'whatlinkshere-hidelinks' => '$1 लिंक',
 	'whatlinkshere-hideimages' => '$1 तस्वीर लिंक',
 	'whatlinkshere-filters' => 'फिल्टर',
-);
+];
 
-$messages['bi'] = array(
+$messages['bi'] = [
 	'wednesday' => 'Wenesde',
 	'wed' => 'Wen',
 	'watchlistall2' => 'olgeta',
-);
+];
 
-$messages['bjn'] = array(
+$messages['bjn'] = [
 	'wednesday' => 'Arba',
 	'wed' => 'Arb',
 	'wrong_wfQuery_params' => 'Kada bujur ukuran ka wfQuery ()<br />
@@ -2208,17 +2209,17 @@ Muhun cubai pulang.',
 	'watchnochange' => 'Kadada nang Pian itihi dibabak parhatan jangka wayah ngitu.',
 	'watchlist-details' => '{{PLURAL:$1|$1 tungkaran|$1 tungkaran}} dalam daptar itihan Pian, kada mahitung tungkaran pamandiran.',
 	'wlheader-enotif' => 'Suril pamadahan dipajahi.',
-	'wlheader-showupdated' => "* Tutungkaran nang ba-ubah tumatan ilangan tauncit Pian ditampaiakan dalam '''hurup kandal'''",
+	'wlheader-showupdated' => '* Tutungkaran nang ba-ubah tumatan ilangan tauncit Pian ditampaiakan dalam \'\'\'hurup kandal\'\'\'',
 	'watchmethod-recent' => 'pariksa bababakan tahanyar gasan tungkaran nang diitihi.',
 	'watchmethod-list' => 'pariksa tutungkaran nang diitihi gasan bababakan tahanyar',
 	'watchlistcontains' => 'Paitihan Pian mangandung $1 {{PLURAL:$1|tungkaran|tutungkaran}}.',
-	'wlnote' => "Di bawah ni {{PLURAL:$1|adalah parubahan tauncit|adalah '''$1''' paparubahan tauncit}} dalam {{PLURAL:$2|jam|'''$2''' jam}} tauncit.",
+	'wlnote' => 'Di bawah ni {{PLURAL:$1|adalah parubahan tauncit|adalah \'\'\'$1\'\'\' paparubahan tauncit}} dalam {{PLURAL:$2|jam|\'\'\'$2\'\'\' jam}} tauncit.',
 	'wlshowlast' => 'Tampaiakan $1 jam $2 hari pahabisan $3',
 	'watchlist-options' => 'Pilihan daptar itihan',
 	'watching' => 'Maitihi...',
 	'watcherrortext' => 'Sabuah kasalahan tajadi parhatan setelan paitihan Pian diubah gasan "$1".',
 	'whatlinkshere' => 'Tautan apa di sia',
-	'whatlinkshere-title' => "Tungkaran-tungkaran nang batautan ka ''$1''",
+	'whatlinkshere-title' => 'Tungkaran-tungkaran nang batautan ka \'\'$1\'\'',
 	'whatlinkshere-page' => 'Tungkaran:',
 	'whatlinkshere-prev' => '$1 {{PLURAL:$1|sabalumnya|sabalumnya}}',
 	'whatlinkshere-next' => '{{PLURAL:$1|dudi|dudi $1}}',
@@ -2253,16 +2254,16 @@ Pian kawa jua [[Special:EditWatchlist|mamuruk si pambabak standar]].',
 	'watchlisttools-view' => 'Tampaiakan parubahan tarait',
 	'watchlisttools-edit' => 'Tiringi wan babak daptar itihan',
 	'watchlisttools-raw' => 'Babak daptar itihan mantah',
-);
+];
 
-$messages['bm'] = array(
+$messages['bm'] = [
 	'wednesday' => 'arabadon',
 	'watchthis' => 'Nyɛ tulomajɔ',
 	'watch' => 'Tulomajɔ',
 	'watchthispage' => 'Nyɛ tulomajɔ',
-);
+];
 
-$messages['bn'] = array(
+$messages['bn'] = [
 	'wednesday' => 'বুধবার',
 	'wed' => 'বুধবার',
 	'wrong_wfQuery_params' => 'wfQuery()-তে ভুল প্যারামিটার দেয়া হয়েছে<br />
@@ -2294,11 +2295,11 @@ $messages['bn'] = array(
 	'watchnochange' => 'প্রদর্শিত সময়সীমার মধ্যে আপনার নজরতালিকায় রাখা কোন পাতায় কোন রকম সম্পাদনা ঘটেনি।',
 	'watchlist-details' => 'নজরতালিকাতে {{PLURAL:$1|$1টি পাতা|$1টি পাতা}} আছে (আলাপ পাতাগুলি গণনায় না ধরে)।',
 	'wlheader-enotif' => '* ই-মেইল এর মাধমে নির্দেশনার ব্যবস্থা চালু করা আছে।',
-	'wlheader-showupdated' => "* আপনার শেষ আগমনের পর থেকে যেসব পাতায় পরিবর্তন হয়েছে সেগুলি '''গাঢ়''' করে দেখানো হয়েছে",
+	'wlheader-showupdated' => '* আপনার শেষ আগমনের পর থেকে যেসব পাতায় পরিবর্তন হয়েছে সেগুলি \'\'\'গাঢ়\'\'\' করে দেখানো হয়েছে',
 	'watchmethod-recent' => 'নজরে রাখা পাতাগুলিতে সাম্প্রতিক পরিবর্তন পরীক্ষা করা হচ্ছে',
 	'watchmethod-list' => 'নজরে রাখা পাতাগুলিতে সাম্প্রতিক পরিবর্তন পরীক্ষা করা হচ্ছে',
 	'watchlistcontains' => 'আপনার নজরতালিকায় $1 টি {{PLURAL:$1|পাতা|পাতা}} রয়েছে।',
-	'wlnote' => "নিচে $3, $4 তারিখ থেকে বিগত {{PLURAL:$2|১ ঘন্টায়|'''$2''' ঘন্টায়}} সংঘটিত {{PLURAL:$1|শেষ ১টি পরিবর্তন|শেষ '''$1'''টি পরিবর্তন}} দেখানো হল।",
+	'wlnote' => 'নিচে $3, $4 তারিখ থেকে বিগত {{PLURAL:$2|১ ঘন্টায়|\'\'\'$2\'\'\' ঘন্টায়}} সংঘটিত {{PLURAL:$1|শেষ ১টি পরিবর্তন|শেষ \'\'\'$1\'\'\'টি পরিবর্তন}} দেখানো হল।',
 	'wlshowlast' => 'দেখাও সর্বশেষ  $1 ঘন্টা $2 দিন $3',
 	'watchlist-options' => 'নজর তালিকা পছন্দসমূহ',
 	'watching' => 'নজর রাখা হচ্ছে...',
@@ -2333,9 +2334,9 @@ $messages['bn'] = array(
 	'watchlisttools-view' => 'সম্পর্কিত পরিবর্তনসমূহ দেখুন',
 	'watchlisttools-edit' => 'নজর তালিকা দেখুন এবং সম্পাদনা করুন',
 	'watchlisttools-raw' => 'অশোধিত নজরতালিকা সম্পাদনা করুন',
-);
+];
 
-$messages['bo'] = array(
+$messages['bo'] = [
 	'wednesday' => 'གཟའ་ལྷག་པ།',
 	'wed' => 'གཟའ་ལྷག་པ།',
 	'wrongpassword' => 'ལམ་ཡིག་ནོར་འདུག བསྐྱར་དུ་ཚོད་ལྟ་བྱོས།',
@@ -2359,9 +2360,9 @@ $messages['bo'] = array(
 	'watchlistall2' => 'ཚང་མ།',
 	'watchlisttools-edit' => 'མཉམ་འཇོག་ཐོར་ལྟ་བ་དང་བསྒྱུར་བཅོས་བྱེད་པ།',
 	'watchlisttools-raw' => 'ལྟ་ཐོའི་གོ་རིམ་བཅོས་སྒྲིག',
-);
+];
 
-$messages['bpy'] = array(
+$messages['bpy'] = [
 	'wednesday' => 'ইনসাইনসা',
 	'wed' => 'ইন',
 	'wrong_wfQuery_params' => 'wfQuery()-ত দিয়াসি প্যারামিটার অতা লালুইসে<br />
@@ -2402,9 +2403,9 @@ $messages['bpy'] = array(
 	'watchlisttools-view' => 'মিল আসে পতা চা',
 	'watchlisttools-edit' => 'তর তালাবির পাতা চা বারো পতা',
 	'watchlisttools-raw' => 'পেরকা তালাবির পাতা পতা',
-);
+];
 
-$messages['bqi'] = array(
+$messages['bqi'] = [
 	'wednesday' => 'چهارشنبه',
 	'wed' => 'چهارشنبه',
 	'wrongpassword' => 'رمز وارد وابیده درست نه.
@@ -2430,14 +2431,14 @@ $messages['bqi'] = array(
 	'watchlisttools-view' => 'نشودادن تغییرات مربوطه',
 	'watchlisttools-edit' => 'نشودادن واصلاح کردن لیست پیگیریها',
 	'watchlisttools-raw' => 'اصلاح لیست خام پی‌گیری‌ها',
-);
+];
 
-$messages['br'] = array(
-	'wednesday' => "Merc'her",
+$messages['br'] = [
+	'wednesday' => 'Merc\'her',
 	'wed' => 'Mer',
-	'wrong_wfQuery_params' => "Arventennoù faziek war an urzhiad wfQuery()<br />
-Arc'hwel : $1<br />
-Goulenn : $2",
+	'wrong_wfQuery_params' => 'Arventennoù faziek war an urzhiad wfQuery()<br />
+Arc\'hwel : $1<br />
+Goulenn : $2',
 	'welcomecreation' => '== Degemer mat, $1! ==
 
 Krouet eo bet ho kont implijer.
@@ -2445,36 +2446,36 @@ Na zisoñjit ket resisaat ho [[Special:Preferences|penndibaboù evit {{SITENAME}
 	'wrongpassword' => 'Ger-tremen kamm. Klaskit en-dro.',
 	'wrongpasswordempty' => 'Ger-tremen ebet. Lakait unan mar plij.',
 	'watchthis' => 'Evezhiañ ar pennad-mañ',
-	'whitelistedittext' => "Ret eo deoc'h en em $1 evit gallout skridaozañ.",
-	'windows-nonascii-filename' => "N'eo ket skoret anvioù ar restroù enno arouezennoù dibar gant ar wiki-mañ.",
+	'whitelistedittext' => 'Ret eo deoc\'h en em $1 evit gallout skridaozañ.',
+	'windows-nonascii-filename' => 'N\'eo ket skoret anvioù ar restroù enno arouezennoù dibar gant ar wiki-mañ.',
 	'watchthisupload' => 'Evezhiañ ar bajenn-mañ',
 	'withoutinterwiki' => 'Pajennoù hep liammoù yezh',
-	'withoutinterwiki-summary' => "Ar pajennoù da-heul n'int ket liammet ouzh yezh all ebet :",
+	'withoutinterwiki-summary' => 'Ar pajennoù da-heul n\'int ket liammet ouzh yezh all ebet :',
 	'withoutinterwiki-legend' => 'Rakger',
 	'withoutinterwiki-submit' => 'Diskouez',
 	'wantedcategories' => 'Rummadoù a vank',
 	'wantedpages' => 'Pajennoù goulennet ar muiañ',
-	'wantedpages-badtitle' => "Titl direizh er strollad disoc'hoù : $1",
+	'wantedpages-badtitle' => 'Titl direizh er strollad disoc\'hoù : $1',
 	'wantedfiles' => 'Restroù a vank',
-	'wantedfiletext-cat' => "Ober a reer gant ar restroù da-heul koulskoude n'eus ket anezho. Gallout a reer rollañ kavlec'hioù diavaez ha pa vefe anezho. <del>Barrennet</del> e vo an holl falspozitivoù-se. Ouzhpenn-se emañ renablet an holl bajennoù zo enno restroù n'eus ket anezho e [[:$1]].",
-	'wantedfiletext-nocat' => "Ober a reer gant ar restroù da-heul koulskoude n'eus ket anezho. Gallout a reer rollañ kavlec'hioù diavaez ha pa vefe anezho. <del>Barrennet</del> e vo an holl falspozitivoù-se.",
+	'wantedfiletext-cat' => 'Ober a reer gant ar restroù da-heul koulskoude n\'eus ket anezho. Gallout a reer rollañ kavlec\'hioù diavaez ha pa vefe anezho. <del>Barrennet</del> e vo an holl falspozitivoù-se. Ouzhpenn-se emañ renablet an holl bajennoù zo enno restroù n\'eus ket anezho e [[:$1]].',
+	'wantedfiletext-nocat' => 'Ober a reer gant ar restroù da-heul koulskoude n\'eus ket anezho. Gallout a reer rollañ kavlec\'hioù diavaez ha pa vefe anezho. <del>Barrennet</del> e vo an holl falspozitivoù-se.',
 	'wantedtemplates' => 'Patromoù a vank',
 	'watchlist' => 'Roll evezhiañ',
 	'watchlistfor2' => 'Evit $1 $2',
-	'watchlistanontext' => "Ret eo deoc'h $1 evit gwelet pe kemmañ an elfennoù zo en ho roll evezhiañ.",
+	'watchlistanontext' => 'Ret eo deoc\'h $1 evit gwelet pe kemmañ an elfennoù zo en ho roll evezhiañ.',
 	'watchnologin' => 'Digevreet',
-	'watchnologintext' => "Ret eo deoc'h bezañ [[Special:UserLogin|kevreet]]
-a-benn gellout kemmañ ho roll evezhiañ.",
+	'watchnologintext' => 'Ret eo deoc\'h bezañ [[Special:UserLogin|kevreet]]
+a-benn gellout kemmañ ho roll evezhiañ.',
 	'watch' => 'Evezhiañ',
 	'watchthispage' => 'Evezhiañ ar bajenn-mañ',
-	'watchnochange' => "Pajenn ebet eus ar re evezhiet ganeoc'h n'eo bet kemmet e-pad ar prantad spisaet",
-	'watchlist-details' => "Lakaet hoc'h eus {{PLURAL:$1|$1 bajenn|$1 pajenn}} dindan evezh, anez kontañ ar pajennoù kaozeal.",
-	'wlheader-enotif' => "* War enaou emañ ar c'has posteloù.",
-	'wlheader-showupdated' => "* E '''tev''' emañ merket ar pajennoù bet kemmet abaoe ar wezh ziwezhañ hoc'h eus sellet outo",
-	'watchmethod-recent' => "Gwiriañ ar c'hemmoù diwezhañ er pajennoù dindan evezh",
-	'watchmethod-list' => "Gwiriañ ar c'hemmoù diwezhañ evit ar pajennoù evezhiet",
+	'watchnochange' => 'Pajenn ebet eus ar re evezhiet ganeoc\'h n\'eo bet kemmet e-pad ar prantad spisaet',
+	'watchlist-details' => 'Lakaet hoc\'h eus {{PLURAL:$1|$1 bajenn|$1 pajenn}} dindan evezh, anez kontañ ar pajennoù kaozeal.',
+	'wlheader-enotif' => '* War enaou emañ ar c\'has posteloù.',
+	'wlheader-showupdated' => '* E \'\'\'tev\'\'\' emañ merket ar pajennoù bet kemmet abaoe ar wezh ziwezhañ hoc\'h eus sellet outo',
+	'watchmethod-recent' => 'Gwiriañ ar c\'hemmoù diwezhañ er pajennoù dindan evezh',
+	'watchmethod-list' => 'Gwiriañ ar c\'hemmoù diwezhañ evit ar pajennoù evezhiet',
 	'watchlistcontains' => '$1 {{PLURAL:$1|pajenn|pajenn}} zo en ho rollad evezhiañ',
-	'wlnote' => "Setu aze {{PLURAL:$1|ar c'hemm diwezhañ|ar '''$1''' kemm diwezhañ}} c'hoarvezet e-kerzh an {{PLURAL:$2|eurvezh|'''$2''' eurvezh}} ziwezhañ, evit an $3 da $4.",
+	'wlnote' => 'Setu aze {{PLURAL:$1|ar c\'hemm diwezhañ|ar \'\'\'$1\'\'\' kemm diwezhañ}} c\'hoarvezet e-kerzh an {{PLURAL:$2|eurvezh|\'\'\'$2\'\'\' eurvezh}} ziwezhañ, evit an $3 da $4.',
 	'wlshowlast' => 'Diskouez an $1 eurvezh $2 devezh diwezhañ $3',
 	'watchlist-options' => 'Dibarzhioù ar roll evezhiañ',
 	'watching' => 'Heuliet...',
@@ -2483,7 +2484,7 @@ a-benn gellout kemmañ ho roll evezhiañ.",
 	'whatlinkshere-title' => 'Pajennoù liammet ouzh "$1"',
 	'whatlinkshere-page' => 'Pajenn :',
 	'whatlinkshere-prev' => '{{PLURAL:$1|kent|kent $1}}',
-	'whatlinkshere-next' => "{{PLURAL:$1|war-lerc'h|war-lerc'h $1}}",
+	'whatlinkshere-next' => '{{PLURAL:$1|war-lerc\'h|war-lerc\'h $1}}',
 	'whatlinkshere-links' => '← liammoù',
 	'whatlinkshere-hideredirs' => '$1 adkas',
 	'whatlinkshere-hidetrans' => '$1 treuzkluzadur',
@@ -2493,7 +2494,7 @@ a-benn gellout kemmañ ho roll evezhiañ.",
 	'widthheightpage' => '$1 × $2, $3 {{PLURAL:$3|pajenn|pajenn}}',
 	'watchlistall2' => 'pep tra',
 	'watchlistedit-numitems' => '{{PLURAL:$1|1 pajenn|$1 pajenn}} zo war ho roll evezhiañ, hep kontañ ar pajennoù kaozeal.',
-	'watchlistedit-noitems' => "N'eus pajenn ebet war ho roll evezhiañ.",
+	'watchlistedit-noitems' => 'N\'eus pajenn ebet war ho roll evezhiañ.',
 	'watchlistedit-normal-title' => 'Kemmañ ar roll evezhiañ',
 	'watchlistedit-normal-legend' => 'Tennañ ar pajennoù a-ziwar ho roll evezhiañ',
 	'watchlistedit-normal-explain' => 'Dindan emañ diskouezet titloù ar pajennoù zo war ho roll evezhiañ.
@@ -2510,12 +2511,12 @@ Gallout a rit [[Special:EditWatchlist|implijout an aozer boutin ivez]].',
 	'watchlistedit-raw-done' => 'Nevesaet eo bet ho roll evezhiañ.',
 	'watchlistedit-raw-added' => 'Ouzhpennet ez eus bet {{PLURAL:$1|1 pajenn|$1 pajenn}} :',
 	'watchlistedit-raw-removed' => 'Tennet ez eus bet {{PLURAL:$1|1 pajenn|$1 pajenn}} :',
-	'watchlisttools-view' => "Gwelet ar c'hemmoù degaset",
+	'watchlisttools-view' => 'Gwelet ar c\'hemmoù degaset',
 	'watchlisttools-edit' => 'Gwelet ha kemmañ ar roll evezhiañ',
 	'watchlisttools-raw' => 'Kemmañ ar roll (mod diginkl)',
-);
+];
 
-$messages['brh'] = array(
+$messages['brh'] = [
 	'wednesday' => 'Cárşambe',
 	'wed' => 'Cárşambe',
 	'watchthis' => 'Dá panna ná xiálí mar',
@@ -2540,9 +2541,9 @@ $messages['brh'] = array(
 	'watchlisttools-view' => 'Đek kunoká radbadal áke ur',
 	'watchlisttools-edit' => 'Xiálí rid e ur o badal kar',
 	'watchlisttools-raw' => 'Bekacc á xiálírid aŧí radbadal kar',
-);
+];
 
-$messages['bs'] = array(
+$messages['bs'] = [
 	'wednesday' => 'srijeda',
 	'wed' => 'Sri',
 	'wrong_wfQuery_params' => 'Netačni parametri za wfQuery()<br />
@@ -2578,11 +2579,11 @@ Molimo Vas da pokušate ponovno.',
 	'watchnochange' => 'Ništa što pratite nije promjenjeno u prikazanom vremenu.',
 	'watchlist-details' => '{{PLURAL:$1|$1 stranica praćena|$1 stranice praćene|$1 stranica praćeno}} ne računajući stranice za razgovor.',
 	'wlheader-enotif' => '* Obavještavanje e-poštom je omogućeno.',
-	'wlheader-showupdated' => "* Stranice koje su izmijenjene od kad ste ih posljednji put posjetili su prikazane '''podebljanim slovima'''",
+	'wlheader-showupdated' => '* Stranice koje su izmijenjene od kad ste ih posljednji put posjetili su prikazane \'\'\'podebljanim slovima\'\'\'',
 	'watchmethod-recent' => 'provjerava se da li ima praćenih stranica u nedavnim izmjenama',
 	'watchmethod-list' => 'provjerava se da li ima nedavnih izmjena u praćenim stranicama',
 	'watchlistcontains' => 'Vaš spisak praćenih članaka sadrži $1 {{PLURAL:$1|stranicu|stranica}}.',
-	'wlnote' => "Ispod je {{PLURAL:$1|najskorija izmjena|'''$1''' najskorije izmjene|'''$1''' najskorijih izmjena}} načinjenih {{PLURAL:$2|posljednjeg sata|u posljednjih '''$2''' sata|u posljednjih '''$2''' sati}}.",
+	'wlnote' => 'Ispod je {{PLURAL:$1|najskorija izmjena|\'\'\'$1\'\'\' najskorije izmjene|\'\'\'$1\'\'\' najskorijih izmjena}} načinjenih {{PLURAL:$2|posljednjeg sata|u posljednjih \'\'\'$2\'\'\' sata|u posljednjih \'\'\'$2\'\'\' sati}}.',
 	'wlshowlast' => 'Prikaži posljednjih $1 sati $2 dana $3',
 	'watchlist-options' => 'Opcije spiska praćenja',
 	'watching' => 'Pratim...',
@@ -2622,9 +2623,9 @@ Također možete [[Special:EditWatchlist|koristiti standardni uređivač]].',
 	'watchlisttools-view' => 'Pregled promjena praćenih stranica',
 	'watchlisttools-edit' => 'Pogledaj i uredi listu praćenih članaka.',
 	'watchlisttools-raw' => 'Uređivanje praćenih stranica u okviru praćenja.',
-);
+];
 
-$messages['bug'] = array(
+$messages['bug'] = [
 	'wednesday' => 'Araba',
 	'wed' => 'Ara',
 	'watch' => 'Ampi',
@@ -2632,55 +2633,55 @@ $messages['bug'] = array(
 	'whatlinkshere-page' => 'Leppa:',
 	'whatlinkshere-links' => '← liŋke',
 	'watchlistall2' => 'maneŋ',
-);
+];
 
-$messages['ca'] = array(
+$messages['ca'] = [
 	'wednesday' => 'dimecres',
 	'wed' => 'dc',
 	'wrong_wfQuery_params' => 'Paràmetres incorrectes per a wfQuery()<br />
 Funció: $1<br />
 Consulta: $2',
-	'welcomecreation' => "== Us donem la benvinguda, $1! ==
+	'welcomecreation' => '== Us donem la benvinguda, $1! ==
 
-S'ha creat el vostre compte.
-No oblideu de canviar les vostres [[Special:Preferences|preferències de {{SITENAME}}]].",
+S\'ha creat el vostre compte.
+No oblideu de canviar les vostres [[Special:Preferences|preferències de {{SITENAME}}]].',
 	'wrongpassword' => 'La contrasenya que heu introduït és incorrecta. Torneu-ho a provar.',
-	'wrongpasswordempty' => "La contrasenya que s'ha introduït estava en blanc. Torneu-ho a provar.",
+	'wrongpasswordempty' => 'La contrasenya que s\'ha introduït estava en blanc. Torneu-ho a provar.',
 	'watchthis' => 'Vigila aquesta pàgina',
 	'whitelistedittext' => 'Heu de $1 per modificar pàgines.',
 	'windows-nonascii-filename' => 'Aquest wiki no permet noms de fitxer amb caràcters especials.',
 	'watchthisupload' => 'Vigila aquest fitxer',
 	'withoutinterwiki' => 'Pàgines sense enllaços a altres llengües',
-	'withoutinterwiki-summary' => "Les pàgines següents no enllacen a versions d'altres llengües:",
+	'withoutinterwiki-summary' => 'Les pàgines següents no enllacen a versions d\'altres llengües:',
 	'withoutinterwiki-legend' => 'Prefix',
 	'withoutinterwiki-submit' => 'Mostra',
 	'wantedcategories' => 'Categories demanades',
 	'wantedpages' => 'Pàgines demanades',
 	'wantedpages-badtitle' => 'Títol invàlid al conjunt de resultats: $1',
 	'wantedfiles' => 'Fitxers demanats',
-	'wantedfiletext-cat' => "Els fitxers següents s'utilitzen per no existeixen. Els fitxers de repositoris aliens poden ser llistats encara que existeixin. Aquells que siguin fals positius es <del>tatxaran</del>. A més, les pàgines que tinguin fitxers incrustats que no existeixin es llistaran a [[:$1]].",
-	'wantedfiletext-nocat' => "Els fitxers següents es fan servir però no existeixen. Els fitxers d'un repositori aliè poden ser llistats encara que existeixin. Tots aquells fals positius es <del>tatxaran</del>.",
+	'wantedfiletext-cat' => 'Els fitxers següents s\'utilitzen per no existeixen. Els fitxers de repositoris aliens poden ser llistats encara que existeixin. Aquells que siguin fals positius es <del>tatxaran</del>. A més, les pàgines que tinguin fitxers incrustats que no existeixin es llistaran a [[:$1]].',
+	'wantedfiletext-nocat' => 'Els fitxers següents es fan servir però no existeixen. Els fitxers d\'un repositori aliè poden ser llistats encara que existeixin. Tots aquells fals positius es <del>tatxaran</del>.',
 	'wantedtemplates' => 'Plantilles demanades',
 	'watchlist' => 'Llista de seguiment',
 	'watchlistfor2' => 'Per $1 $2',
 	'watchlistanontext' => 'Premeu $1 per a visualitzar o modificar elements de la vostra llista de seguiment.',
 	'watchnologin' => 'No heu iniciat la sessió',
-	'watchnologintext' => "Heu d'[[Special:UserLogin|entrar]]
-per modificar el vostre llistat de seguiment.",
+	'watchnologintext' => 'Heu d\'[[Special:UserLogin|entrar]]
+per modificar el vostre llistat de seguiment.',
 	'watch' => 'Vigila',
 	'watchthispage' => 'Vigila aquesta pàgina',
-	'watchnochange' => "No s'ha editat cap dels elements que vigileu en el període de temps que es mostra.",
+	'watchnochange' => 'No s\'ha editat cap dels elements que vigileu en el període de temps que es mostra.',
 	'watchlist-details' => '{{PLURAL:$1|$1 pàgina|$1 pàgines}} vigilades, sense comptar les pàgines de discussió',
-	'wlheader-enotif' => "* S'ha habilitat la notificació per correu electrònic.",
-	'wlheader-showupdated' => "* Les pàgines que s'han canviat des de la vostra darrera visita es mostren '''en negreta'''",
-	'watchmethod-recent' => "s'està comprovant si hi ha pàgines vigilades en les edicions recents",
-	'watchmethod-list' => "s'està comprovant si hi ha edicions recents en les pàgines vigilades",
+	'wlheader-enotif' => '* S\'ha habilitat la notificació per correu electrònic.',
+	'wlheader-showupdated' => '* Les pàgines que s\'han canviat des de la vostra darrera visita es mostren \'\'\'en negreta\'\'\'',
+	'watchmethod-recent' => 's\'està comprovant si hi ha pàgines vigilades en les edicions recents',
+	'watchmethod-list' => 's\'està comprovant si hi ha edicions recents en les pàgines vigilades',
 	'watchlistcontains' => 'La vostra llista de seguiment conté {{PLURAL:$1|una única pàgina|$1 pàgines}}.',
-	'wlnote' => "A sota hi ha {{PLURAL:$1|el darrer canvi|els darrers '''$1''' canvis}} en {{PLURAL:$2|la darrera hora|les  '''$2''' darreres hores}}, a $4 del $3.",
+	'wlnote' => 'A sota hi ha {{PLURAL:$1|el darrer canvi|els darrers \'\'\'$1\'\'\' canvis}} en {{PLURAL:$2|la darrera hora|les  \'\'\'$2\'\'\' darreres hores}}, a $4 del $3.',
 	'wlshowlast' => '<small>- Mostra les darreres $1 hores, els darrers $2 dies o $3</small>',
 	'watchlist-options' => 'Opcions de la llista de seguiment',
-	'watching' => "S'està vigilant...",
-	'watcherrortext' => "S'ha produït un error en canviar els paràmetres de la vostra llista de seguiment de «$1».",
+	'watching' => 'S\'està vigilant...',
+	'watcherrortext' => 'S\'ha produït un error en canviar els paràmetres de la vostra llista de seguiment de «$1».',
 	'whatlinkshere' => 'Què hi enllaça',
 	'whatlinkshere-title' => 'Pàgines que enllacen amb $1',
 	'whatlinkshere-page' => 'Pàgina:',
@@ -2701,28 +2702,28 @@ per modificar el vostre llistat de seguiment.",
 	'watchlistedit-normal-explain' => 'Els títols de les pàgines que estan en la vostra llista de seguiment es mostren a continuació.
 Per a eliminar algun element, marqueu el quadre del seu costat, i feu clic al botó «{{int:Watchlistedit-normal-submit}}». També podeu [[Special:EditWatchlist/raw|editar-ne la llista en text pla]].',
 	'watchlistedit-normal-submit' => 'Elimina entrades',
-	'watchlistedit-normal-done' => "{{PLURAL:$1|1 títol s'ha|$1 títols s'han}} eliminat de la vostra llista de seguiment:",
+	'watchlistedit-normal-done' => '{{PLURAL:$1|1 títol s\'ha|$1 títols s\'han}} eliminat de la vostra llista de seguiment:',
 	'watchlistedit-raw-title' => 'Edita la llista de seguiment crua',
 	'watchlistedit-raw-legend' => 'Edita la llista de seguiment crua',
-	'watchlistedit-raw-explain' => "Els títols de la vostra llista de seguiment es mostren a continuació, i poden modificar-se afegint-los o suprimint-los de la llista;
+	'watchlistedit-raw-explain' => 'Els títols de la vostra llista de seguiment es mostren a continuació, i poden modificar-se afegint-los o suprimint-los de la llista;
 un títol per línia.
 En acabar, feu clic a «{{int:Watchlistedit-raw-submit}}».
-També podeu [[Special:EditWatchlist|utilitzar l'editor estàndard]].",
+També podeu [[Special:EditWatchlist|utilitzar l\'editor estàndard]].',
 	'watchlistedit-raw-titles' => 'Títols:',
 	'watchlistedit-raw-submit' => 'Actualitza la llista de seguiment',
-	'watchlistedit-raw-done' => "S'ha actualitzat la vostra llista de seguiment.",
-	'watchlistedit-raw-added' => "{{PLURAL:$1|1 títol s'ha|$1 títols s'han}} afegit:",
-	'watchlistedit-raw-removed' => "{{PLURAL:$1|1 títol s'ha|$1 títols s'han}} eliminat:",
+	'watchlistedit-raw-done' => 'S\'ha actualitzat la vostra llista de seguiment.',
+	'watchlistedit-raw-added' => '{{PLURAL:$1|1 títol s\'ha|$1 títols s\'han}} afegit:',
+	'watchlistedit-raw-removed' => '{{PLURAL:$1|1 títol s\'ha|$1 títols s\'han}} eliminat:',
 	'watchlisttools-view' => 'Visualitza els canvis rellevants',
 	'watchlisttools-edit' => 'Visualitza i edita la llista de seguiment',
 	'watchlisttools-raw' => 'Edita la llista de seguiment sense format',
-);
+];
 
-$messages['cbk-zam'] = array(
+$messages['cbk-zam'] = [
 	'watch' => 'Vicia',
-);
+];
 
-$messages['cdo'] = array(
+$messages['cdo'] = [
 	'wednesday' => 'Buái săng',
 	'wed' => 'B3',
 	'welcomecreation' => '== Huăng-ngìng guŏng-lìng, $1! ==
@@ -2758,9 +2759,9 @@ Nṳ̄ gì dióng-hô̤ ī-gĭng kŭi hō̤ lāu. Dāng nṳ̄ â̤-sāi siŭ-g�
 	'watchlisttools-view' => 'Káng siŏng-guăng gāi-biéng',
 	'watchlisttools-edit' => 'Káng gâe̤ng siŭ-gāi gáng-sê-dăng',
 	'watchlisttools-raw' => 'Siŭ-gāi nguòng-sṳ̄ gáng-sê-dăng',
-);
+];
 
-$messages['ce'] = array(
+$messages['ce'] = [
 	'wednesday' => 'Кхаара',
 	'wed' => 'Кх',
 	'wrongpassword' => 'Ахьа язъйина йолу ишар нийса яц. Хьажа йуху цхьаъз.',
@@ -2797,9 +2798,9 @@ $messages['ce'] = array(
 	'watchlisttools-edit' => 'Хьажа/нисбé могlам',
 	'watchlisttools-raw' => 'Йоза санна нисдé',
 	'wikia-pagetitle' => '$1 — Wikia',
-);
+];
 
-$messages['ceb'] = array(
+$messages['ceb'] = [
 	'wednesday' => 'Miyerkules',
 	'wed' => 'Miy',
 	'wrong_wfQuery_params' => 'Sayop nga mga parametro sa wfQuery()<br />
@@ -2808,8 +2809,8 @@ Query: $2',
 	'welcomecreation' => '== Maayong pag-abot, $1! ==
 Nahimo na ang imong akawnt.
 Ayaw kalimot sa pag-usab sa imong [[Special:Preferences|{{SITENAME}} mga preperensiya]].',
-	'wrongpassword' => "Sayop nga pasword ang naentra.
-Palihog sulayi'g usab.",
+	'wrongpassword' => 'Sayop nga pasword ang naentra.
+Palihog sulayi\'g usab.',
 	'watchthis' => 'Bantayi kining maong panid',
 	'watchlist' => 'Akong gibantayan',
 	'watch' => 'Bantayi',
@@ -2832,44 +2833,44 @@ Palihog sulayi'g usab.",
 	'watchlisttools-view' => 'Tan-awa ang may kalabotan nga mga pag-usab',
 	'watchlisttools-edit' => 'Tan-awa ug usba ang mga gibantayan',
 	'watchlisttools-raw' => 'Usba ang hilaw nga talaan sa gibantayan',
-);
+];
 
-$messages['ch'] = array(
+$messages['ch'] = [
 	'wednesday' => 'Metkoles',
 	'wed' => 'Metk',
-	'welcomecreation' => "== Bienbenido, $1! ==
-Mafa'tinas i kuenta-mu.
-Munga mamalefa tumulaika ga'ña-mu {{SITENAME}}.",
-	'wrongpassword' => "Lachi i password ni tinige'-mu. Pot fabot, chagi fan ta'lo.",
-	'wrongpasswordempty' => "Ti mamo'lu hao password. Pot fabot, chagi fan ta'lo.",
+	'welcomecreation' => '== Bienbenido, $1! ==
+Mafa\'tinas i kuenta-mu.
+Munga mamalefa tumulaika ga\'ña-mu {{SITENAME}}.',
+	'wrongpassword' => 'Lachi i password ni tinige\'-mu. Pot fabot, chagi fan ta\'lo.',
+	'wrongpasswordempty' => 'Ti mamo\'lu hao password. Pot fabot, chagi fan ta\'lo.',
 	'watchthis' => 'Pulan este na påhina',
 	'whitelistedittext' => 'Un nesisita ma$1 para tumulaika påhina.',
-	'withoutinterwiki' => "Påhina siha tai'inachetton ni lengguahe",
-	'wantedcategories' => "Manmalago' na katigoria siha",
-	'wantedpages' => "Manmalago' na påhina siha",
+	'withoutinterwiki' => 'Påhina siha tai\'inachetton ni lengguahe',
+	'wantedcategories' => 'Manmalago\' na katigoria siha',
+	'wantedpages' => 'Manmalago\' na påhina siha',
 	'watchlist' => 'Listan pinilan-hu',
 	'watch' => 'Pulan',
 	'watchthispage' => 'Pulan este na påhina',
 	'watchlist-details' => '{{PLURAL:$1|$1 påhina|$1 na påhina siha}} un pupulan, sin i påhinan kombetsasion siha.',
-	'wlshowlast' => "Na'annok $1 na ora yan $2 na diha siha gi halacha $3",
+	'wlshowlast' => 'Na\'annok $1 na ora yan $2 na diha siha gi halacha $3',
 	'watching' => 'Mamulan...',
-	'whatlinkshere' => "Håfa ha na'chetton guini",
+	'whatlinkshere' => 'Håfa ha na\'chetton guini',
 	'whatlinkshere-title' => 'I påhina siha ni mana\'chetton yan "$1"',
-	'whatlinkshere-prev' => "{{PLURAL:$1|ni må'pos|$1 ni manmå'pos}}",
-	'whatlinkshere-next' => "{{PLURAL:$1|ni mamaila'|$1 ni manmamaila'}}",
+	'whatlinkshere-prev' => '{{PLURAL:$1|ni må\'pos|$1 ni manmå\'pos}}',
+	'whatlinkshere-next' => '{{PLURAL:$1|ni mamaila\'|$1 ni manmamaila\'}}',
 	'whatlinkshere-links' => '← inachetton',
 	'watchlistall2' => 'todu',
 	'watchlisttools-view' => 'Atan i mampettanesi na tinilaika siha',
 	'watchlisttools-edit' => 'Atan ya tulaika i listan pinilan',
-	'watchlisttools-raw' => "Tulaika i listan pinilan ti mana'finu",
-);
+	'watchlisttools-raw' => 'Tulaika i listan pinilan ti mana\'finu',
+];
 
-$messages['chr'] = array(
+$messages['chr'] = [
 	'watch' => 'WᎠᏥ',
 	'whatlinkshere' => 'ᎦᏙ ᎤᏍᏗ ᏗᏕᎬᏔᏛ ᎠᎭᏂ',
-);
+];
 
-$messages['ckb'] = array(
+$messages['ckb'] = [
 	'wednesday' => 'چوارشەممە',
 	'wed' => 'چوارشەممە',
 	'wrong_wfQuery_params' => 'پارامێتری ھەڵە بۆ wfQuery()<br />
@@ -2896,7 +2897,7 @@ $messages['ckb'] = array(
 	'wantedfiles' => 'پەڕگە داواکراوەکان',
 	'wantedtemplates' => 'قاڵبە داواکراوەکان',
 	'watchlist' => 'لیستی چاودێڕییەکانی من',
-	'watchlistfor' => "(بۆ '''$1''')",
+	'watchlistfor' => '(بۆ \'\'\'$1\'\'\')',
 	'watchlistanontext' => 'تکایە بۆ دیتن و دەستکاری بابەتەکانی لە ناو لیستی چاودێریەکەت‌دا $1.',
 	'watchnologin' => 'لە ژوورەوە نیت.',
 	'watchnologintext' => 'دەبی لە [[Special:UserLogin|ژوورەوە]] بیت بۆ ئەوەی بتوانی گۆڕانکاری بکەیت لە لیستی چاودێریەکەت‌دا.',
@@ -2905,11 +2906,11 @@ $messages['ckb'] = array(
 	'watchnochange' => 'لە کاتی دیاری کراو دا، بابەتە چاودێڕی کراوەکانت، دەستکاری نەکراون',
 	'watchlist-details' => '{{PLURAL:$1|$1 پەڕە|$1 پەڕە}} لە لیستی چاودێڕیەکەت دایە، بێجگە پەڕەکانی لێدوان.',
 	'wlheader-enotif' => '* ئەکرێ بە E-mail ئاگاداری بدەی',
-	'wlheader-showupdated' => "* ‏ئەو پەڕانە کە لە پاش دواین سەردانت دەستکاری کراون بە '''ئەستوور''' نیشان دراون",
+	'wlheader-showupdated' => '* ‏ئەو پەڕانە کە لە پاش دواین سەردانت دەستکاری کراون بە \'\'\'ئەستوور\'\'\' نیشان دراون',
 	'watchmethod-recent' => 'سەرنج‌دانی دوایین دەستکاریەکان بۆ لاپەڕە چاودێری‌کراوەکان',
 	'watchmethod-list' => 'سەرنج‌دانی لاپەڕە چاودێری‌کراوەکان بۆ دوایین دەستکاریەکان',
 	'watchlistcontains' => 'لیستی چاودێڕییەکانت $1 {{PLURAL:$1|پەڕە|پەڕە}}ی تێدایە.',
-	'wlnote' => "خوارەوە {{PLURAL:$1|دوایین گۆڕانکاریە|دوایین '''$1''' گۆڕانکارییەکانن}} لە دواین  {{PLURAL:$2|کاتژمێر|'''$2''' کاتژمێر}} دا.",
+	'wlnote' => 'خوارەوە {{PLURAL:$1|دوایین گۆڕانکاریە|دوایین \'\'\'$1\'\'\' گۆڕانکارییەکانن}} لە دواین  {{PLURAL:$2|کاتژمێر|\'\'\'$2\'\'\' کاتژمێر}} دا.',
 	'wlshowlast' => 'نیشان دانی دوایین $1 کاتژمێری، $2 ڕۆژ لە $3',
 	'watchlist-options' => 'ھەڵبژاردەکانی لیستی چاودێڕییەکان',
 	'watching' => 'چاودێری...',
@@ -2948,18 +2949,18 @@ $messages['ckb'] = array(
 	'watchlisttools-view' => 'دیتنی گۆڕانکارییە پەیوەندیدارەکان',
 	'watchlisttools-edit' => 'بینین و دەستکاری کردنی لیستی چاودێڕییەکان',
 	'watchlisttools-raw' => 'دەستکاری کردنی لیستی خامی چاودێڕییەکان',
-);
+];
 
-$messages['co'] = array(
+$messages['co'] = [
 	'wednesday' => 'mercuri',
 	'wed' => 'mer',
 	'watchlist' => 'Articuli seguitati',
 	'watch' => 'Seguità',
 	'watchlistall2' => 'tutti',
 	'watchlistedit-raw-titles' => 'Pagine:',
-);
+];
 
-$messages['cps'] = array(
+$messages['cps'] = [
 	'wednesday' => 'Miyerkules',
 	'wed' => 'Miy',
 	'wrong_wfQuery_params' => 'Sala nga mga parametro sa wfQuery()<br />
@@ -2994,9 +2995,9 @@ Palihog tistingan liwat.',
 	'watchlisttools-view' => 'Tan-awon ang mga kapareho nga ginbag-o',
 	'watchlisttools-edit' => 'Tan-awon kag islan ang listahan sang balantayan',
 	'watchlisttools-raw' => 'Liwaton ang hilaw nga listahan sang mga ginabantayan',
-);
+];
 
-$messages['crh'] = array(
+$messages['crh'] = [
 	'wednesday' => 'Miyerkules',
 	'wed' => 'Miy',
 	'wrong_wfQuery_params' => 'Sala nga mga parametro sa wfQuery()<br />
@@ -3031,9 +3032,9 @@ Palihog tistingan liwat.',
 	'watchlisttools-view' => 'Tan-awon ang mga kapareho nga ginbag-o',
 	'watchlisttools-edit' => 'Tan-awon kag islan ang listahan sang balantayan',
 	'watchlisttools-raw' => 'Liwaton ang hilaw nga listahan sang mga ginabantayan',
-);
+];
 
-$messages['crh-cyrl'] = array(
+$messages['crh-cyrl'] = [
 	'wednesday' => 'Чаршенбе',
 	'wed' => 'Чаршенбе',
 	'wrong_wfQuery_params' => 'wfQuery() функциясы ичюн изинсиз параметрлер<br />
@@ -3064,11 +3065,11 @@ $messages['crh-cyrl'] = array(
 	'watchnochange' => 'Косьтерильген заман аралыгъында козетюв джедвелинъиздеки саифелернинъ ич бири денъиштирильмеген.',
 	'watchlist-details' => 'Музакере саифелерини эсапкъа алмайып, козетюв джедвелинъизде {{PLURAL:$1|1|$1}} саифе бар.',
 	'wlheader-enotif' => '* E-mail иле хабер берюв ачылды.',
-	'wlheader-showupdated' => "* Сонъки зияретинъизден сонъ денъиштирильген саифелер '''къалын арифлернен''' косьтерильди.",
+	'wlheader-showupdated' => '* Сонъки зияретинъизден сонъ денъиштирильген саифелер \'\'\'къалын арифлернен\'\'\' косьтерильди.',
 	'watchmethod-recent' => 'сонъки денъишмелер арасында козеткен саифелеринъиз къыдырыла',
 	'watchmethod-list' => 'козетюв джедвелиндеки саифелер тешкериле',
 	'watchlistcontains' => 'Сизинъ козетюв джедвелинъизде {{PLURAL:$1|1|$1}} саифе бар.',
-	'wlnote' => "Ашагъыда саат $3, $4 ичюн сонъки {{PLURAL:$2|саат|'''$2''' саат}} ичинде япылгъан сонъки {{PLURAL:$1|денъишме|'''$1''' денъишме}} косьтериле.",
+	'wlnote' => 'Ашагъыда саат $3, $4 ичюн сонъки {{PLURAL:$2|саат|\'\'\'$2\'\'\' саат}} ичинде япылгъан сонъки {{PLURAL:$1|денъишме|\'\'\'$1\'\'\' денъишме}} косьтериле.',
 	'wlshowlast' => 'Сонъки $1 саат ичюн, $2 кунь ичюн я да $3 косьтер',
 	'watchlist-options' => 'Козетюв джедвели сазламалары',
 	'watching' => 'Козетюв джедвелине кирсетильмекте...',
@@ -3105,9 +3106,9 @@ $messages['crh-cyrl'] = array(
 	'watchlisttools-view' => 'Денъишикликлерни косьтер',
 	'watchlisttools-edit' => 'Козетюв джедвелини корь ве денъиштир',
 	'watchlisttools-raw' => 'Козетюв джедвелини адий метин оларакъ денъиштир',
-);
+];
 
-$messages['crh-latn'] = array(
+$messages['crh-latn'] = [
 	'wednesday' => 'Çarşenbe',
 	'wed' => 'Çarşenbe',
 	'wrong_wfQuery_params' => 'wrong_wfQuery_params - wfQuery() funktsiyası içün izinsiz parametrler<br />
@@ -3138,11 +3139,11 @@ Lütfen, tekrar etiñiz.',
 	'watchnochange' => 'Kösterilgen zaman aralığında közetüv cedveliñizdeki saifelerniñ iç biri deñiştirilmegen.',
 	'watchlist-details' => 'Muzakere saifelerini esapqa almayıp, közetüv cedveliñizde {{PLURAL:$1|1|$1}} saife bar.',
 	'wlheader-enotif' => '* E-mail ile haber berüv açıldı.',
-	'wlheader-showupdated' => "* Soñki ziyaretiñizden soñ deñiştirilgen saifeler '''qalın ariflernen''' kösterildi.",
+	'wlheader-showupdated' => '* Soñki ziyaretiñizden soñ deñiştirilgen saifeler \'\'\'qalın ariflernen\'\'\' kösterildi.',
 	'watchmethod-recent' => 'soñki deñişmeler arasında közetken saifeleriñiz qıdırıla',
 	'watchmethod-list' => 'közetüv cedvelindeki saifeler teşkerile',
 	'watchlistcontains' => 'Siziñ közetüv cedveliñizde {{PLURAL:$1|1|$1}} saife bar.',
-	'wlnote' => "Aşağıda saat $3, $4 içün soñki {{PLURAL:$2|saat|'''$2''' saat}} içinde yapılğan soñki {{PLURAL:$1|deñişme|'''$1''' deñişme}} kösterile.",
+	'wlnote' => 'Aşağıda saat $3, $4 içün soñki {{PLURAL:$2|saat|\'\'\'$2\'\'\' saat}} içinde yapılğan soñki {{PLURAL:$1|deñişme|\'\'\'$1\'\'\' deñişme}} kösterile.',
 	'wlshowlast' => 'Soñki $1 saat içün, $2 kün içün ya da $3 köster',
 	'watchlist-options' => 'Közetüv cedveli sazlamaları',
 	'watching' => 'Közetüv cedveline kirsetilmekte...',
@@ -3180,9 +3181,9 @@ Bitirgen soñ "{{int:Watchlistedit-raw-submit}}" yazısına basıñız.
 	'watchlisttools-view' => 'Deñişikliklerni köster',
 	'watchlisttools-edit' => 'Közetüv cedvelini kör ve deñiştir',
 	'watchlisttools-raw' => 'Közetüv cedvelini adiy metin olaraq deñiştir',
-);
+];
 
-$messages['cs'] = array(
+$messages['cs'] = [
 	'wednesday' => 'středa',
 	'wed' => 'st',
 	'wrong_wfQuery_params' => 'Nesprávné parametry do wfQuery()<br />
@@ -3218,11 +3219,11 @@ Nezapomeňte si upravit své [[Special:Preferences|nastavení {{grammar:2sg|{{SI
 	'watchnochange' => 'Žádná ze sledovaných položek nebyla editována v době, která je zobrazena.',
 	'watchlist-details' => 'Na svém seznamu sledovaných stránek máte $1 {{PLURAL:$1|stránku|stránky|stránek}}, nepočítají se diskusní stránky.',
 	'wlheader-enotif' => '* Upozorňování e-mailem je zapnuto.',
-	'wlheader-showupdated' => "* Stránky, které se změnily od vaší poslední návštěvy, jsou zobrazeny '''tučně'''",
+	'wlheader-showupdated' => '* Stránky, které se změnily od vaší poslední návštěvy, jsou zobrazeny \'\'\'tučně\'\'\'',
 	'watchmethod-recent' => 'hledají se sledované stránky mezi posledními změnami',
 	'watchmethod-list' => 'hledají se nejnovější editace sledovaných stránek',
 	'watchlistcontains' => 'Na svém seznamu sledovaných stránek máte $1 {{PLURAL:$1|položku|položky|položek}}.',
-	'wlnote' => "Níže {{PLURAL:$1|je poslední změna|jsou poslední '''$1''' změny|je posledních '''$1''' změn}} za {{PLURAL:$2|poslední hodinu|poslední '''$2''' hodiny|posledních '''$2''' hodin}} do $4, $3.",
+	'wlnote' => 'Níže {{PLURAL:$1|je poslední změna|jsou poslední \'\'\'$1\'\'\' změny|je posledních \'\'\'$1\'\'\' změn}} za {{PLURAL:$2|poslední hodinu|poslední \'\'\'$2\'\'\' hodiny|posledních \'\'\'$2\'\'\' hodin}} do $4, $3.',
 	'wlshowlast' => 'Ukázat posledních $1 hodin $2 dnů $3',
 	'watchlist-options' => 'Možnosti sledovaných stránek',
 	'watching' => 'Přidávám na seznam sledovaných stránek…',
@@ -3263,9 +3264,9 @@ Seznam editovaných stránek můžete také [[Special:EditWatchlist|editovat ve 
 	'watchlisttools-edit' => 'Zobrazit a editovat seznam sledovaných stránek',
 	'watchlisttools-raw' => 'Editovat textový soubor sledovaných stránek',
 	'wikia-pagetitle' => '$1 – Wikia',
-);
+];
 
-$messages['csb'] = array(
+$messages['csb'] = [
 	'wednesday' => 'strzoda',
 	'wed' => 'str',
 	'welcomecreation' => ' == Witôj, $1! ==
@@ -3283,10 +3284,10 @@ Spróbùjë znowa.',
 	'watch' => 'Ùzérôj',
 	'watchthispage' => 'Ùzérôj ną starnã',
 	'watchlist-details' => 'Ùzérôsz {{PLURAL:$1|$1 artikel|$1 artikle/-ów}}, nie rechùjąc diskùsëjów.',
-	'wlheader-showupdated' => "* Artiklë jakczé òsta zmienioné òd Twòji slédny wizytë są wëapratnioné '''pògrëbieniém'''",
+	'wlheader-showupdated' => '* Artiklë jakczé òsta zmienioné òd Twòji slédny wizytë są wëapratnioné \'\'\'pògrëbieniém\'\'\'',
 	'watchmethod-list' => 'szëkba ùzérónëch artiklów westrzód pòslédnëch edicëjów',
 	'watchlistcontains' => 'Na twòji lësce ùzérónëch artiklów {{PLURAL:$1|je 1 strana|są $1 starnë|je $1 starnów}}.',
-	'wlnote' => "Niżi môsz wëskrzënioné {{PLURAL:$1|slédną zmianã|'''$1''' slédnëch zmianów}} zrobioné òb {{PLURAL:$2|gòdzënã|'''$2''' gòdzënë/gòdzënów}}.",
+	'wlnote' => 'Niżi môsz wëskrzënioné {{PLURAL:$1|slédną zmianã|\'\'\'$1\'\'\' slédnëch zmianów}} zrobioné òb {{PLURAL:$2|gòdzënã|\'\'\'$2\'\'\' gòdzënë/gòdzënów}}.',
 	'wlshowlast' => 'Wëskrzëni zjinaczi z $1 gòdzënów $2 dni $3',
 	'watchlist-options' => 'Òptacëje ùzérónych',
 	'watching' => 'Ùzéróm...',
@@ -3304,9 +3305,9 @@ Spróbùjë znowa.',
 	'watchlisttools-view' => 'Òbaczë wôżnészé zmianë',
 	'watchlisttools-edit' => 'Òbaczë a editëjë lëstã ùzérónëch artiklów',
 	'watchlisttools-raw' => 'Editëjë sërą lëstã',
-);
+];
 
-$messages['cu'] = array(
+$messages['cu'] = [
 	'wednesday' => 'срѣда',
 	'wed' => 'с҃р',
 	'watchthis' => 'си страницѧ блюдєниѥ',
@@ -3323,9 +3324,9 @@ $messages['cu'] = array(
 	'whatlinkshere-hidelinks' => '$1 съвѧꙁи',
 	'watchlistall2' => 'вьсꙗ',
 	'wikia-pagetitle' => '$1 · Wikia',
-);
+];
 
-$messages['cv'] = array(
+$messages['cv'] = [
 	'wednesday' => 'Юнкун',
 	'wed' => 'Юнк',
 	'wrong_wfQuery_params' => 'wfQuery() функцине тĕрĕс мар параметрсем панă<br />
@@ -3352,22 +3353,22 @@ $messages['cv'] = array(
 	'watchlistall2' => 'пурте',
 	'watchlistedit-noitems' => 'Сирĕн сăнав списокĕ пушă.',
 	'watchlisttools-view' => 'Ку тӳрлетӳпе çыхăннăскерсем',
-);
+];
 
-$messages['cy'] = array(
+$messages['cy'] = [
 	'wednesday' => 'Dydd Mercher',
 	'wed' => 'Mer',
 	'wrong_wfQuery_params' => 'Paramedrau anghywir i wfQuery()<br />
 Ffwythiant: $1<br />
 Gofyniad: $2',
-	'welcomecreation' => "==Croeso, $1!==
-Mae eich cyfrif wedi'i greu.
-Cofiwch osod y [[Special:Preferences|dewisiadau]] sydd fwyaf hwylus i chi ar {{SITENAME}}.",
-	'wrongpassword' => "Nid yw'r cyfrinair a deipiwyd yn gywir. Rhowch gynnig arall arni, os gwelwch yn dda.",
+	'welcomecreation' => '==Croeso, $1!==
+Mae eich cyfrif wedi\'i greu.
+Cofiwch osod y [[Special:Preferences|dewisiadau]] sydd fwyaf hwylus i chi ar {{SITENAME}}.',
+	'wrongpassword' => 'Nid yw\'r cyfrinair a deipiwyd yn gywir. Rhowch gynnig arall arni, os gwelwch yn dda.',
 	'wrongpasswordempty' => 'Roedd y cyfrinair yn wag. Rhowch gynnig arall arni.',
 	'watchthis' => 'Gwylier y dudalen hon',
 	'whitelistedittext' => 'Rhaid $1 i olygu tudalennau.',
-	'windows-nonascii-filename' => "Nid yw'r wici hwn yn cynnal enwau ffeiliau sy'n cynnwys nodau arbennig.",
+	'windows-nonascii-filename' => 'Nid yw\'r wici hwn yn cynnal enwau ffeiliau sy\'n cynnwys nodau arbennig.',
 	'watchthisupload' => 'Gwylier y ffeil hon',
 	'withoutinterwiki' => 'Tudalennau heb gysylltiadau ag ieithoedd eraill',
 	'withoutinterwiki-summary' => 'Nid oes gysylltiad rhwng y tudalennau canlynol a thudalennau mewn ieithoedd eraill:',
@@ -3380,24 +3381,24 @@ Cofiwch osod y [[Special:Preferences|dewisiadau]] sydd fwyaf hwylus i chi ar {{S
 	'wantedtemplates' => 'Nodiadau sydd eu hangen',
 	'watchlist' => 'Fy rhestr wylio',
 	'watchlistfor2' => 'Yn ôl gofyn $1 $2',
-	'watchlistanontext' => "Rhaid $1 er mwyn gweld neu ddiwygio'ch rhestr wylio.",
+	'watchlistanontext' => 'Rhaid $1 er mwyn gweld neu ddiwygio\'ch rhestr wylio.',
 	'watchnologin' => 'Nid ydych wedi mewngofnodi',
-	'watchnologintext' => "Mae'n rhaid i chi [[Special:UserLogin|fewngofnodi]] er mwyn newid eich rhestr wylio.",
+	'watchnologintext' => 'Mae\'n rhaid i chi [[Special:UserLogin|fewngofnodi]] er mwyn newid eich rhestr wylio.',
 	'watch' => 'Gwylio',
 	'watchthispage' => 'Gwylier y dudalen hon',
-	'watchnochange' => "Ni olygwyd dim o'r erthyglau yr ydych yn cadw golwg arnynt yn ystod y cyfnod uchod.",
+	'watchnochange' => 'Ni olygwyd dim o\'r erthyglau yr ydych yn cadw golwg arnynt yn ystod y cyfnod uchod.',
 	'watchlist-details' => '{{PLURAL:$1|Nid oes dim tudalennau|Mae $1 dudalen|Mae $1 dudalen|Mae $1 tudalen|Mae $1 thudalen|Mae $1 o dudalennau}} ar eich rhestr wylio, heb gynnwys tudalennau sgwrs.',
 	'wlheader-enotif' => '* Galluogwyd hysbysiadau trwy e-bost.',
-	'wlheader-showupdated' => "* Mae tudalennau sydd wedi newid ers i chi ymweld ddiwethaf wedi'u '''hamlygu'''.",
-	'watchmethod-recent' => "yn chwilio'r diwygiadau diweddar am dudalennau ar y rhestr wylio",
-	'watchmethod-list' => "yn chwilio'r tudalennau ar y rhestr wylio am ddiwygiadau diweddar",
+	'wlheader-showupdated' => '* Mae tudalennau sydd wedi newid ers i chi ymweld ddiwethaf wedi\'u \'\'\'hamlygu\'\'\'.',
+	'watchmethod-recent' => 'yn chwilio\'r diwygiadau diweddar am dudalennau ar y rhestr wylio',
+	'watchmethod-list' => 'yn chwilio\'r tudalennau ar y rhestr wylio am ddiwygiadau diweddar',
 	'watchlistcontains' => '{{PLURAL:$1|Nid oes dim tudalennau|Mae $1 dudalen|Mae $1 dudalen|Mae $1 tudalen|Mae $1 thudalen|Mae $1 o dudalennau}} ar eich rhestr wylio.',
-	'wlnote' => "{{PLURAL:\$1|Ni fu unrhyw newid|Isod mae'r '''\$1''' newid diweddaraf|Isod mae'r '''\$1''' newid diweddaraf|Isod mae'r '''\$1''' newid diweddaraf|Isod mae'r '''\$1''' newid diweddaraf|Isod mae'r '''\$1''' newid diweddaraf}} yn ystod {{PLURAL:\$2||yr awr|y ddwyawr|y teirawr|y \"\$2\" awr|y(r) \"\$2\" awr}} ddiwethaf, fel ag yr oedd am \$4, \$3.",
-	'wlshowlast' => "Dangoser newidiadau'r $1 awr ddiwethaf neu'r $2 {{PLURAL:$2|diwrnod|diwrnod|ddiwrnod|diwrnod|diwrnod|diwrnod}} diwethaf neu'r $3 newidiadau.",
+	'wlnote' => '{{PLURAL:$1|Ni fu unrhyw newid|Isod mae\'r \'\'\'$1\'\'\' newid diweddaraf|Isod mae\'r \'\'\'$1\'\'\' newid diweddaraf|Isod mae\'r \'\'\'$1\'\'\' newid diweddaraf|Isod mae\'r \'\'\'$1\'\'\' newid diweddaraf|Isod mae\'r \'\'\'$1\'\'\' newid diweddaraf}} yn ystod {{PLURAL:$2||yr awr|y ddwyawr|y teirawr|y "$2" awr|y(r) "$2" awr}} ddiwethaf, fel ag yr oedd am $4, $3.',
+	'wlshowlast' => 'Dangoser newidiadau\'r $1 awr ddiwethaf neu\'r $2 {{PLURAL:$2|diwrnod|diwrnod|ddiwrnod|diwrnod|diwrnod|diwrnod}} diwethaf neu\'r $3 newidiadau.',
 	'watchlist-options' => 'Dewisiadau ar gyfer y rhestr wylio',
-	'watching' => "Wrthi'n ychwanegu...",
+	'watching' => 'Wrthi\'n ychwanegu...',
 	'watcherrortext' => 'Cafwyd gwall wrth newid y gosodiadau ar restr wylio "$1".',
-	'whatlinkshere' => "Beth sy'n cysylltu yma",
+	'whatlinkshere' => 'Beth sy\'n cysylltu yma',
 	'whatlinkshere-title' => 'Tudalennau sy\'n cysylltu â "$1"',
 	'whatlinkshere-page' => 'Tudalen:',
 	'whatlinkshere-prev' => '{{PLURAL:$1|cynt|cynt|$1 cynt|$1 cynt|$1 cynt|$1 cynt}}',
@@ -3411,13 +3412,13 @@ Cofiwch osod y [[Special:Preferences|dewisiadau]] sydd fwyaf hwylus i chi ar {{S
 	'widthheightpage' => '$1 × $2, $3 {{PLURAL:$3|tudalen|dudalen|dudalen|tudalen|thudalen|tudalen}}',
 	'watchlistall2' => 'holl',
 	'watchlistedit-numitems' => 'Mae {{PLURAL:$1|$1 tudalen|$1 dudalen|$1 dudalen|$1 tudalen|$1 thudalen|$1 o dudalennau}} ar eich rhestr wylio, heb gynnwys tudalennau sgwrs.',
-	'watchlistedit-noitems' => "Mae'ch rhestr wylio'n wag.",
-	'watchlistedit-normal-title' => "Golygu'r rhestr wylio",
+	'watchlistedit-noitems' => 'Mae\'ch rhestr wylio\'n wag.',
+	'watchlistedit-normal-title' => 'Golygu\'r rhestr wylio',
 	'watchlistedit-normal-legend' => 'Tynnu tudalennau oddi ar y rhestr wylio',
 	'watchlistedit-normal-explain' => 'Rhestrir y teitlau ar eich rhestr wylio isod.
 I dynnu teitl oddi ar y rhestr, ticiwch y blwch ar ei gyfer, yna cliciwch "{{int:Watchlistedit-normal-submit}}".
 Gallwch hefyd ddewis golygu\'r rhestr wylio ar ei [[Special:EditWatchlist/raw|ffurf syml]].',
-	'watchlistedit-normal-submit' => "Tynnu'r tudalennau",
+	'watchlistedit-normal-submit' => 'Tynnu\'r tudalennau',
 	'watchlistedit-normal-done' => 'Tynnwyd {{PLURAL:$1|$1 tudalen|$1 dudalen|$1 dudalen|$1 tudalen|$1 thudalen|$1 tudalen}} oddi ar eich rhestr wylio:',
 	'watchlistedit-raw-title' => 'Golygu ffeil y rhestr wylio',
 	'watchlistedit-raw-legend' => 'Golygu ffeil y rhestr wylio',
@@ -3430,11 +3431,11 @@ Gallwch hefyd [[Special:EditWatchlist|ddefnyddio\'r rhestr arferol]].',
 	'watchlistedit-raw-added' => 'Ychwanegwyd {{PLURAL:$1|1 teitl|$1 teitl|$1 deitl|$1 theitl|$1 theitl|$1 o deitlau}}:',
 	'watchlistedit-raw-removed' => 'Tynnwyd {{PLURAL:$1|1 teitl|$1 teitl|$1 deitl|$1 theitl|$1 theitl|$1 o deitlau}}:',
 	'watchlisttools-view' => 'Gweld newidiadau perthnasol',
-	'watchlisttools-edit' => "Gweld a golygu'r rhestr wylio",
-	'watchlisttools-raw' => "Golygu'r rhestr wylio syml",
-);
+	'watchlisttools-edit' => 'Gweld a golygu\'r rhestr wylio',
+	'watchlisttools-raw' => 'Golygu\'r rhestr wylio syml',
+];
 
-$messages['da'] = array(
+$messages['da'] = [
 	'wednesday' => 'onsdag',
 	'wed' => 'ons',
 	'wrong_wfQuery_params' => 'Ugyldig parameter til wfQuery()<br />
@@ -3470,11 +3471,11 @@ Din konto er blevet oprettet. Glem ikke at personliggøre dine [[Special:Prefere
 	'watchnochange' => 'Ingen af siderne i din overvågningsliste er ændret i den valgte periode.',
 	'watchlist-details' => 'Du har $1 {{PLURAL:$1|side|sider}} på din overvågningsliste (ekskl. diskussionssider).',
 	'wlheader-enotif' => '* E-mail-underretning er slået til.',
-	'wlheader-showupdated' => "* Sider der er ændret siden dit sidste besøg, er '''fremhævet'''",
+	'wlheader-showupdated' => '* Sider der er ændret siden dit sidste besøg, er \'\'\'fremhævet\'\'\'',
 	'watchmethod-recent' => 'Tjekker seneste ændringer for sider i din overvågningsliste',
 	'watchmethod-list' => 'Tjekker seneste ændringer for sider i din overvågningsliste',
 	'watchlistcontains' => 'Din overvågningsliste indeholder $1 {{PLURAL:$1|side|sider}}.',
-	'wlnote' => "Nedenfor ses {{PLURAL:$1|den seneste ændring|de seneste '''$1''' ændringer}} i {{PLURAL:$2|den sidste time|'''de sidste $2 timer}}''' fra den $3, kl. $4.",
+	'wlnote' => 'Nedenfor ses {{PLURAL:$1|den seneste ændring|de seneste \'\'\'$1\'\'\' ændringer}} i {{PLURAL:$2|den sidste time|\'\'\'de sidste $2 timer}}\'\'\' fra den $3, kl. $4.',
 	'wlshowlast' => 'Vis de seneste $1 timer $2 dage $3',
 	'watchlist-options' => 'Indstillinger for overvågningslisten',
 	'watching' => 'Tilføjer overvågning …',
@@ -3515,9 +3516,9 @@ Du kan også [[Special:EditWatchlist|bruge standard editoren]].',
 	'watchlisttools-view' => 'Se ændrede sider i overvågningslisten',
 	'watchlisttools-edit' => 'Rediger overvågningsliste',
 	'watchlisttools-raw' => 'Rediger rå overvågningsliste',
-);
+];
 
-$messages['de'] = array(
+$messages['de'] = [
 	'wednesday' => 'Mittwoch',
 	'wed' => 'Mi',
 	'wrong_wfQuery_params' => 'Falsche Parameter für wfQuery()<br />
@@ -3554,11 +3555,11 @@ Vergiss nicht, deine [[Special:Preferences|{{SITENAME}}-Einstellungen]] anzupass
 	'watchnochange' => 'Keine der von dir beobachteten Seiten wurde während des angezeigten Zeitraums bearbeitet.',
 	'watchlist-details' => 'Du beobachtest {{PLURAL:$1|1 Seite|$1 Seiten}}.',
 	'wlheader-enotif' => '* Der E-Mail-Benachrichtigungsdienst ist aktiviert.',
-	'wlheader-showupdated' => "* Seiten mit noch nicht gesehenen Änderungen werden '''fett''' dargestellt.",
+	'wlheader-showupdated' => '* Seiten mit noch nicht gesehenen Änderungen werden \'\'\'fett\'\'\' dargestellt.',
 	'watchmethod-recent' => 'Überprüfen der letzten Bearbeitungen für die Beobachtungsliste',
 	'watchmethod-list' => 'Überprüfen der Beobachtungsliste nach letzten Bearbeitungen',
 	'watchlistcontains' => 'Deine Beobachtungsliste enthält $1 {{PLURAL:$1|Seite|Seiten}}.',
-	'wlnote' => "Es {{PLURAL:$1|folgt die letzte Änderung|folgen die letzten '''$1''' Änderungen}} der letzten {{PLURAL:$2|Stunde|'''$2''' Stunden}}. Stand: $3, $4 Uhr.",
+	'wlnote' => 'Es {{PLURAL:$1|folgt die letzte Änderung|folgen die letzten \'\'\'$1\'\'\' Änderungen}} der letzten {{PLURAL:$2|Stunde|\'\'\'$2\'\'\' Stunden}}. Stand: $3, $4 Uhr.',
 	'wlshowlast' => 'Zeige die Änderungen der letzten $1 Stunden, $2 Tage oder $3.',
 	'watchlist-options' => 'Anzeigeoptionen',
 	'watching' => 'Beobachten …',
@@ -3598,11 +3599,16 @@ Du kannst auch die [[Special:EditWatchlist|Standardseite]] zum Bearbeiten benutz
 	'watchlisttools-raw' => 'im Listenformat bearbeiten (Import/Export)',
 	'watchlist_s' => 'Beobachtungsliste',
 	'wikia-pagetitle' => '$1 – Wikia',
-	'wikia-read-only-mode' => 'Ohje! Unser Hauptdatenzentrum ist derzeit nicht verfügbar, darum müssen wir unser Backup verwenden. Leider bedeutet das für dich, dass du möglicherweise bestimmte Funktionen wie Bearbeiten, Hochladen oder Chatten nicht nutzen kannst.
- +Wir arbeiten daran, dieses Problem zu beheben, vielen Dank für deine Geduld! Wenn dir diese Nachricht über einen längeren Zeitraum hinweg angezeigt wird, kannst du gerne über community@wikia.com Kontakt zum Wikia-Team aufnehmen.',
-);
+	'wikia-read-only-mode' => 'Ohje! Unser Hauptdatenzentrum ist derzeit nicht verfügbar, darum müssen wir unseren Backup verwenden. Leider bedeutet das für dich, dass du möglicherweise bestimmte Funktionen wie Bearbeiten, Hochladen oder Chatten nicht nutzen kannst. 
+Wir arbeiten daran, dieses Problem zu beheben, vielen Dank für deine Geduld! Wenn dir diese Nachricht über einen längeren Zeitraum hinweg angezeigt wird, kannst du gerne über community@wikia.com Kontakt zum Fandom-Team aufnehmen.',
+	'widget-title-advertiser' => 'Fandom-Spotlight',
+	'wikia_messages' => 'Fandom-Nachrichten',
+	'wikicitieshome' => 'Fandom Startseite',
+	'widget-desc-wikiamessages' => 'Fandom-Nachrichten',
+	'widget-title-wikiamessages' => 'Fandom-Nachrichten',
+];
 
-$messages['de-formal'] = array(
+$messages['de-formal'] = [
 	'welcomecreation' => '== Willkommen, $1! ==
 
 Ihr Benutzerkonto wurde eingerichtet.
@@ -3624,9 +3630,9 @@ Vergessen Sie nicht, Ihre [[Special:Preferences|{{SITENAME}}-Einstellungen]] anz
 Pro Zeile ist ein Eintrag erlaubt. Wenn Sie fertig sind, klicken Sie auf „{{int:Watchlistedit-raw-submit}}“.
 Sie können auch die [[Special:Watchlist/edit|Standard-Bearbeitungsseite]] benutzen.',
 	'watchlistedit-raw-done' => 'Ihre Beobachtungsliste wurde gespeichert.',
-);
+];
 
-$messages['de-weigsbrag'] = array(
+$messages['de-weigsbrag'] = [
 	'wednesday' => 'Midwog',
 	'wed' => 'Mi',
 	'wrong_wfQuery_params' => 'Walsches Baramed wür wfQuery()<br />
@@ -3654,7 +3660,7 @@ Haddar Benudsesgond einrigd. Noggs werges dose Einschdeles anbas.',
 	'wantedpages' => 'Gewünschdes Seides',
 	'wantedpages-summary' => 'Dose Schbesialseid ales Seides auwlisd, wo nog noggs gebdar, auw dose aba anderes Seides wo geb werweis.',
 	'watchlist' => 'Beobagdlisd',
-	'watchlistfor' => "(wür '''$1''')",
+	'watchlistfor' => '(wür \'\'\'$1\'\'\')',
 	'watchlistanontext' => 'Musdar $1, das gön Deines Beobagdlisd seddar od Eindräges auw dose bearbeid.',
 	'watchnologin' => 'Noggs angemeldedes sei',
 	'watchnologintext' => 'Musdar [[Special:Userlogin|angemeldedes]] sei, das gön Deines Beobagdlisd bearbeid.',
@@ -3663,11 +3669,11 @@ Haddar Benudsesgond einrigd. Noggs werges dose Einschdeles anbas.',
 	'watchnochange' => 'Haddar noggs won Seides wo beobagd, in dose Dseidraum wo anseig bearbeid.',
 	'watchlist-details' => 'Du {{PLURAL:$1|1 Seid|$1 Seides}} beobagd.',
 	'wlheader-enotif' => '* Dose I-Mehl-Benagrigdigdiensd agdiwärdes sei.',
-	'wlheader-showupdated' => "* Seides wo haddar Ändes wo nog noggs seddar, in '''weddes''' Schriwd darschdel.",
+	'wlheader-showupdated' => '* Seides wo haddar Ändes wo nog noggs seddar, in \'\'\'weddes\'\'\' Schriwd darschdel.',
 	'watchmethod-recent' => 'Übbrüw won dose ledsdes Bearbeides wür dose Beobagdlisd',
 	'watchmethod-list' => 'Übbrüw won dose Beobagdlisd nag ledsdes Bearbeides',
 	'watchlistcontains' => 'Deines Beobagdlisd haddar $1 {{PLURAL:$1|Seid|Seides}} drin.',
-	'wlnote' => "Jedsd gom {{PLURAL:$1|dose ledsdes Änd|dose ledsdes '''$1''' Ändes}} won dose ledsdes {{PLURAL:$2|Schdund|'''$2''' Schdundes}}.",
+	'wlnote' => 'Jedsd gom {{PLURAL:$1|dose ledsdes Änd|dose ledsdes \'\'\'$1\'\'\' Ändes}} won dose ledsdes {{PLURAL:$2|Schdund|\'\'\'$2\'\'\' Schdundes}}.',
 	'wlshowlast' => 'Seig dose Ändes won ledsdes $1 Schdundes, $2 Däges od $3 (in dose ledsdes 30 Däges).',
 	'watchlist-show-bots' => 'Bod-Ändes einblend',
 	'watchlist-hide-bots' => 'Bod-Ändes ausblend',
@@ -3711,9 +3717,9 @@ Haddar Benudsesgond einrigd. Noggs werges dose Einschdeles anbas.',
 	'watchlisttools-view' => 'Beobagdlisd: Ändes',
 	'watchlisttools-edit' => 'normales bearbeid',
 	'watchlisttools-raw' => 'Lisdeswormad bearbeid (Imbord/Egsbord)',
-);
+];
 
-$messages['diq'] = array(
+$messages['diq'] = [
 	'wednesday' => 'Çarşeme',
 	'wed' => 'Çrş',
 	'wrong_wfQuery_params' => 'wfQuery() parametreyo şaş<br />
@@ -3747,11 +3753,11 @@ Hesabê şıma biyo a.
 	'watchnochange' => 'pelê listeya temaşakerdışê şıma ye wextê nişane biyaye de rocane nêbiyo.',
 	'watchlist-details' => '{{PLURAL:$1|$1 pele|$1 peleyan}} listeyê seyr-kerdışi şıma dı, peleyanê vurnayışi dahil niyo.',
 	'wlheader-enotif' => 'pê * E-mail xeber dayiş biyo a.',
-	'wlheader-showupdated' => "* ziyaretê şıma ye peyini de vuryayişê peli pê '''nuşteyo qalıni''' mocyayo.",
+	'wlheader-showupdated' => '* ziyaretê şıma ye peyini de vuryayişê peli pê \'\'\'nuşteyo qalıni\'\'\' mocyayo.',
 	'watchmethod-recent' => 'pel ê ke şıma temaşa kenî vuryayişê peyinê ey konrol beno',
 	'watchmethod-list' => 'pel ê ke şıma temaşa kenî vuryayişê peyinê ey konrol beno',
 	'watchlistcontains' => 'listeya seyrkerdışê şıma de $1 tene {{PLURAL:$1|peli|peli}} estî.',
-	'wlnote' => "{{PLURAL:$2|na seeta peyin de|'''$2''' na seeta peyin de}} {{PLURAL:$1|vurnayişo peyin o ke biyo|'''$1''' vurnayişo peyin o ke biyo}} cêr de yo.",
+	'wlnote' => '{{PLURAL:$2|na seeta peyin de|\'\'\'$2\'\'\' na seeta peyin de}} {{PLURAL:$1|vurnayişo peyin o ke biyo|\'\'\'$1\'\'\' vurnayişo peyin o ke biyo}} cêr de yo.',
 	'wlshowlast' => 'bımoc $1 seat $2 rocan $3',
 	'watchlist-options' => 'Tercihanê listey seyrkerdışi',
 	'watching' => 'Seyr ke...',
@@ -3790,9 +3796,9 @@ Ti hem zi eşkeno [[Special:EditWatchlist|use the standard editor]].',
 	'watchlisttools-view' => 'vurnayışanê eleqadari bıvin',
 	'watchlisttools-edit' => 'listey seyrkerdışi bevin u edit bık',
 	'watchlisttools-raw' => 'Listeyê seyr-kerdışi bıvin',
-);
+];
 
-$messages['dsb'] = array(
+$messages['dsb'] = [
 	'wednesday' => 'Srjoda',
 	'wed' => 'Srj',
 	'wrong_wfQuery_params' => 'Njedobre parametery za wfQuery()<br />
@@ -3828,11 +3834,11 @@ Twójo konto jo se załožyło. Njezabydni změniś swóje [[Special:Preferences
 	'watchnochange' => 'Žeden wót tebje wobglědowany bok njejo se we wótpowědujucem casu wobźěłał.',
 	'watchlist-details' => 'Wobglědujoš {{PLURAL:$1|$1 bok|$1 boka|$1 boki|$1 bokow}}, bźez diskusijnych bokow.',
 	'wlheader-enotif' => '* E-mailowe powěsće su aktiwizěrowane.',
-	'wlheader-showupdated' => "* Boki, kótarež su wót twójogo slědnego woglěda se změnili, pokazuju se '''tucnje'''.",
+	'wlheader-showupdated' => '* Boki, kótarež su wót twójogo slědnego woglěda se změnili, pokazuju se \'\'\'tucnje\'\'\'.',
 	'watchmethod-recent' => 'Kontrolěrowanje aktualnych změnow we wobglědowańce',
 	'watchmethod-list' => 'Pśepytanje wobglědowanych bokow za aktualnymi změnami',
 	'watchlistcontains' => 'Twója wobglědowańka wopśimujo $1 {{PLURAL:$1|bok|boka|boki|bokow}}.',
-	'wlnote' => "{{PLURAL:$1|Slědujo slědna změna|slědujotej '''$1''' slědnej změnje|slěduju slědne '''$1''' změny}} {{PLURAL:$2|slědneje góźiny|slědneju '''$2''' góźinowu|slědnych '''$2''' góźinow}}, staw: $3, $4.",
+	'wlnote' => '{{PLURAL:$1|Slědujo slědna změna|slědujotej \'\'\'$1\'\'\' slědnej změnje|slěduju slědne \'\'\'$1\'\'\' změny}} {{PLURAL:$2|slědneje góźiny|slědneju \'\'\'$2\'\'\' góźinowu|slědnych \'\'\'$2\'\'\' góźinow}}, staw: $3, $4.',
 	'wlshowlast' => 'Pokaž změny slědnych $1 góźinow, $2 dnjow abo $3 (w slědnych 30 dnjach).',
 	'watchlist-options' => 'Opcije wobglědowańki',
 	'watching' => 'Wobglědowaś …',
@@ -3870,9 +3876,9 @@ Móžoš teke [[Special:EditWatchlist|standardny wobźěłowański bok wužywaś
 	'watchlisttools-view' => 'Změny wobglědaś',
 	'watchlisttools-edit' => 'Wobglědowańku pokazaś a wobźěłaś',
 	'watchlisttools-raw' => 'Wobglědowańku wobźěłaś',
-);
+];
 
-$messages['dtp'] = array(
+$messages['dtp'] = [
 	'wednesday' => 'Daumansa',
 	'wed' => 'DMad',
 	'wrong_wfQuery_params' => 'Nokosilap tangaparamito mongoi wfQuery()<br />
@@ -3909,9 +3915,9 @@ Umbalai gia kaagu.',
 	'watchlisttools-view' => 'Intaai kinoolonon di kosudong',
 	'watchlisttools-edit' => 'Intaai om idito lis piintangan',
 	'watchlisttools-raw' => 'Idito lis piintangan it mata',
-);
+];
 
-$messages['dv'] = array(
+$messages['dv'] = [
 	'wednesday' => 'ބުދަ',
 	'wed' => 'ބުދަ',
 	'welcomecreation' => '== މަރުހަބާ، $1 ! ==
@@ -3928,9 +3934,9 @@ $messages['dv'] = array(
 	'wlnote' => 'ތިރީގައި މިވަނީ އެއީ ފާއިތުވި <b>$2</b> ގަޑި އިރުގެ ތެރޭގައިގެނެވިފައިވާ ފަހު $1 ބަދަލެވެ.',
 	'whatlinkshere' => 'މިއާ ގުޅެނީ ކޮންއެއްޗެއް',
 	'watchlistall2' => 'ހުރިހާ',
-);
+];
 
-$messages['dz'] = array(
+$messages['dz'] = [
 	'wednesday' => 'འབྲུག་གཟའ་ཕུརཔ་',
 	'wed' => 'ཕུརཔ།',
 	'wrongpassword' => 'མ་བདེན་པའི་ཆོག་ཡིག་བཙུགས་ཡོདཔ། ལོག་འབད་རྩོལ་བསྐྱེད།',
@@ -3954,16 +3960,16 @@ $messages['dz'] = array(
 	'watchlisttools-view' => 'འབྲེལ་བ་ཡོད་པའི་བསྒྱུར་བཅོས་ཚུ་སྟོན།',
 	'watchlisttools-edit' => 'བལྟ་སྟེ་བལྟ་ཞིབ་ཐོ་ཡིག་ཞུན་དག་འབད།',
 	'watchlisttools-raw' => 'རགས་ཙམ་གྱི་བལྟ་ཞིབ་ཐོ་ཡིག་ ཞུན་དག་འབད་',
-);
+];
 
-$messages['ee'] = array(
+$messages['ee'] = [
 	'wednesday' => 'Kuɖagbe',
 	'wed' => 'Kuɖ',
 	'watchthis' => 'Le ŋku ɖe axa sia ŋu',
 	'wantedpages' => 'Axawo siwo le hahĩam',
 	'watch' => 'Le ŋku ɖe eŋu',
 	'watchthispage' => 'Le ŋku ɖe axa sia ŋu',
-	'wlnote' => "Afisia wofia {{PLURAL:$1|tɔtrɔ '''1''' mamlea|tɔtrɔ '''$1''' mamleawo}} le {{PLURAL:$2|gaƒoƒo mamlea si|gaƒoƒo '''$2''' mamleawo siwo}} vayi la me.",
+	'wlnote' => 'Afisia wofia {{PLURAL:$1|tɔtrɔ \'\'\'1\'\'\' mamlea|tɔtrɔ \'\'\'$1\'\'\' mamleawo}} le {{PLURAL:$2|gaƒoƒo mamlea si|gaƒoƒo \'\'\'$2\'\'\' mamleawo siwo}} vayi la me.',
 	'wlshowlast' => 'Fia gaƒoƒo $1 ŋkeke $2 mamleawo. $3',
 	'whatlinkshere' => 'Nusiwo kaa afii ŋu',
 	'whatlinkshere-title' => 'Axawo siwo ku ɖe "$1" ŋu',
@@ -3972,9 +3978,9 @@ $messages['ee'] = array(
 	'whatlinkshere-next' => '{{PLURAL:$1|eyome|$1 eyome}}',
 	'watchlistall2' => 'katã',
 	'watchlisttools-view' => 'Kpɔ tɔtrɔ siwo hiã la',
-);
+];
 
-$messages['el'] = array(
+$messages['el'] = [
 	'wednesday' => 'Τετάρτη',
 	'wed' => 'Τε',
 	'wrong_wfQuery_params' => 'Λανθασμένες παράμετροι στο wfQuery()<br />
@@ -4008,11 +4014,11 @@ $messages['el'] = array(
 	'watchnochange' => 'Δεν υπήρξε δραστηριότητα επεξεργασίας στις σελίδες που παρακολουθείτε κατά την εμφανιζόμενη χρονική περίοδο.',
 	'watchlist-details' => '{{PLURAL:$1|$1 σελίδα|$1 σελίδες}} είναι στη λίστα παρακολούθησης σας, χωρίς τις σελίδες συζήτησης.',
 	'wlheader-enotif' => '* Η ειδοποίηση με ηλεκτρονικό ταχυδρομείο έχει ενεργοποιηθεί.',
-	'wlheader-showupdated' => "* Σελίδες που έχουν υποστεί αλλαγές από την τελευταία φορά που τις επισκεφθήκατε εμφανίζονται με '''έντονους χαρακτήρες'''.",
+	'wlheader-showupdated' => '* Σελίδες που έχουν υποστεί αλλαγές από την τελευταία φορά που τις επισκεφθήκατε εμφανίζονται με \'\'\'έντονους χαρακτήρες\'\'\'.',
 	'watchmethod-recent' => 'Έλεγχος πρόσφατων αλλαγών σε σελίδες υπό παρακολούθηση',
 	'watchmethod-list' => 'Έλεγχος σελίδων υπό παρακολούθηση για πρόσφατες αλλαγές',
 	'watchlistcontains' => 'Η λίστα παρακολούθησής σας περιέχει $1 {{PLURAL:$1|σελίδα|σελίδες}}.',
-	'wlnote' => "Ακολουθούν {{PLURAL:$1|η πιο πρόσφατη αλλαγή|οι '''$1''' πιο πρόσφατες αλλαγές}} κατά τη διάρκεια {{PLURAL:$2|της τελευταίας ώρας|των '''$2''' τελευταίων ωρών}}.",
+	'wlnote' => 'Ακολουθούν {{PLURAL:$1|η πιο πρόσφατη αλλαγή|οι \'\'\'$1\'\'\' πιο πρόσφατες αλλαγές}} κατά τη διάρκεια {{PLURAL:$2|της τελευταίας ώρας|των \'\'\'$2\'\'\' τελευταίων ωρών}}.',
 	'wlshowlast' => 'Εμφάνιση των τελευταίων $1 ωρών $2 ημερών $3',
 	'watchlist-options' => 'Επιλογές λίστας παρακολούθησης',
 	'watching' => 'Παρακολούθηση...',
@@ -4050,19 +4056,19 @@ $messages['el'] = array(
 	'watchlisttools-view' => 'Δείτε τις σχετικές αλλαγές',
 	'watchlisttools-edit' => 'Δείτε και επεξεργαστείτε τη λίστα παρακολούθησης',
 	'watchlisttools-raw' => 'Επεξεργαστείτε την πρωτογενή λίστα παρακολούθησης',
-);
+];
 
-$messages['eml'] = array(
+$messages['eml'] = [
 	'wednesday' => 'Merculdè',
-	'wrongpassword' => "La password ch'et méss l'è sbajèda. Pròva ancàrra.",
-	'watchthis' => "Tîn a drê a c'la pàgina chè",
+	'wrongpassword' => 'La password ch\'et méss l\'è sbajèda. Pròva ancàrra.',
+	'watchthis' => 'Tîn a drê a c\'la pàgina chè',
 	'watchlist' => 'Al còsi ca guèrd',
 	'watch' => 'Tîn a drê',
-	'watchthispage' => "Tîn a drê a c'la pàgina chè",
+	'watchthispage' => 'Tîn a drê a c\'la pàgina chè',
 	'whatlinkshere' => 'I pùnten chè',
-);
+];
 
-$messages['eo'] = array(
+$messages['eo'] = [
 	'wednesday' => 'merkredo',
 	'wed' => 'Mer',
 	'wrong_wfQuery_params' => 'Malĝustaj parametroj por wfQuery()<br />
@@ -4096,11 +4102,11 @@ Ne forgesu fari viajn [[Special:Preferences|{{SITENAME}}-preferojn]].',
 	'watchnochange' => 'Neniu artikolo en via atentaro redaktiĝis dum la prispektita tempoperiodo.',
 	'watchlist-details' => '{{PLURAL:$1|$1 paĝon|$1 paĝojn}} en via atentaro, krom diskutpaĝoj.',
 	'wlheader-enotif' => '* Retpoŝta sciigo estas ebligita',
-	'wlheader-showupdated' => "* Montriĝas per '''dikaj literoj''' tiuj paĝoj, kiujn oni ŝanĝis ekde kiam vi laste vizitis ilin",
+	'wlheader-showupdated' => '* Montriĝas per \'\'\'dikaj literoj\'\'\' tiuj paĝoj, kiujn oni ŝanĝis ekde kiam vi laste vizitis ilin',
 	'watchmethod-recent' => 'traserĉas lastajn redaktojn',
 	'watchmethod-list' => 'traserĉas priatentitajn',
 	'watchlistcontains' => 'Via atentaro enhavas $1 {{PLURAL:$1|paĝon|paĝojn}}.',
-	'wlnote' => "Jen la {{PLURAL:$1|lasta redakto|lastaj '''$1''' redaktoj}} dum la {{PLURAL:$2|lasta horo|lastaj '''$2''' horoj}}, ekde $3, $4.",
+	'wlnote' => 'Jen la {{PLURAL:$1|lasta redakto|lastaj \'\'\'$1\'\'\' redaktoj}} dum la {{PLURAL:$2|lasta horo|lastaj \'\'\'$2\'\'\' horoj}}, ekde $3, $4.',
 	'wlshowlast' => 'Montri el lastaj $1 horoj $2 tagoj $3',
 	'watchlist-options' => 'Opcioj por atentaro',
 	'watching' => 'Aldonante al la atentaro...',
@@ -4139,9 +4145,9 @@ Vi povas ankaŭ [[Special:EditWatchlist|redakti norme]].',
 	'watchlisttools-view' => 'Rigardi koncernajn ŝanĝojn',
 	'watchlisttools-edit' => 'Rigardi kaj redakti atentaron',
 	'watchlisttools-raw' => 'Redakti krudan atentaron',
-);
+];
 
-$messages['es'] = array(
+$messages['es'] = [
 	'wednesday' => 'miércoles',
 	'wed' => 'mie',
 	'wrong_wfQuery_params' => 'Parámetros incorrectos para wfQuery()<br />
@@ -4180,11 +4186,11 @@ Por favor, inténtalo de nuevo.',
 	'watchnochange' => 'Ninguno de los artículos de tu lista de seguimiento fue editado en el periodo de tiempo mostrado.',
 	'watchlist-details' => '{{PLURAL:$1|$1 página|$1 páginas}} en su lista de seguimiento, sin contar las de discusión.',
 	'wlheader-enotif' => '* La notificación por correo electrónico está activada.',
-	'wlheader-showupdated' => "* Las páginas modificadas desde su última visita aparecen en '''negrita'''",
+	'wlheader-showupdated' => '* Las páginas modificadas desde su última visita aparecen en \'\'\'negrita\'\'\'',
 	'watchmethod-recent' => 'revisando cambios recientes en páginas vigiladas',
 	'watchmethod-list' => 'revisando las páginas vigiladas en busca de cambios recientes',
 	'watchlistcontains' => 'Tu lista de seguimiento posee $1 {{PLURAL:$1|página|páginas}}.',
-	'wlnote' => "A continuación {{PLURAL:$1|se muestra el último cambio|se muestran los últimos '''$1''' cambios}} en {{PLURAL:$2|la última hora|las últimas '''$2''' horas}} a fecha de $4 $3.",
+	'wlnote' => 'A continuación {{PLURAL:$1|se muestra el último cambio|se muestran los últimos \'\'\'$1\'\'\' cambios}} en {{PLURAL:$2|la última hora|las últimas \'\'\'$2\'\'\' horas}} a fecha de $4 $3.',
 	'wlshowlast' => 'Ver los cambios de las últimas $1 horas, $2 días  $3',
 	'watchlist-options' => 'Opciones de la lista de seguimiento',
 	'watching' => 'Vigilando...',
@@ -4225,11 +4231,16 @@ También puedes [[Special:EditWatchlist|usar el editor estándar]].',
 	'watchlisttools-view' => 'Ver cambios',
 	'watchlisttools-edit' => 'Ver y editar tu lista de seguimiento',
 	'watchlisttools-raw' => 'Editar lista de seguimiento en crudo',
-	'wikia-read-only-mode' => 'Nuestro centro de datos principal no se encuentra disponible en estos momentos, esta es nuestra copia de seguridad. Desgraciadamente, esto significa que no puedes ser capaz de hacer ciertas cosas como editar, subir archivos o chatear.
-+ ¡Estamos trabajando para solucionar el problema, gracias por tu comprensión! Si ves este mensaje por un largo período de tiempo, no dudes en contactarte con Wikia a través de community@wikia.com.',
-);
+	'wikia-read-only-mode' => 'Nuestro centro de datos principal no se encuentra disponible en estos momentos, esta es nuestra copia de seguridad. Desgraciadamente, esto significa que no puedes ser capaz de hacer ciertas cosas como editar, subir archivos o chatear. 
+Estamos trabajando para solucionar el problema, gracias por tu comprensión! Si ves este mensaje por un largo período de tiempo, no dudes en contactarte con Fandom a través de community@wikia.com.',
+	'widget-desc-wikiamessages' => 'Mensajes de Fandom',
+	'widget-title-wikiamessages' => 'Mensajes de Fandom',
+	'wikia_messages' => 'Mensajes de Fandom',
+	'widget-title-advertiser' => 'Spotlights de Fandom',
+	'wikicitieshome' => 'Casa de Fandom',
+];
 
-$messages['et'] = array(
+$messages['et'] = [
 	'wednesday' => 'kolmapäev',
 	'wed' => 'K',
 	'wrong_wfQuery_params' => 'Valed parameeterid funktsioonile wfQuery()<br />
@@ -4266,11 +4277,11 @@ Sinu konto on loodud.
 	'watchnochange' => 'Valitud ajavahemiku jooksul pole ühelgi jälgitaval leheküljel muudatusi tehtud.',
 	'watchlist-details' => 'Jälgimisloendis on {{PLURAL:$1|$1 lehekülg|$1 lehekülge}} (ei arvestata arutelulehekülgi).',
 	'wlheader-enotif' => '* E-posti teel teavitamine on aktiveeritud.',
-	'wlheader-showupdated' => "* Leheküljed, mida on muudetud peale sinu viimast külastust, on '''rasvases kirjas'''.",
+	'wlheader-showupdated' => '* Leheküljed, mida on muudetud peale sinu viimast külastust, on \'\'\'rasvases kirjas\'\'\'.',
 	'watchmethod-recent' => 'jälgitud lehekülgedel tehtud viimaste muudatuste läbivaatamine',
 	'watchmethod-list' => 'jälgitavate lehekülgede viimased muudatused',
 	'watchlistcontains' => 'Sinu jälgimisloendis on $1 {{PLURAL:$1|lehekülg|lehekülge}}.',
-	'wlnote' => "Allpool on {{PLURAL:$1|viimane muudatus|viimased '''$1''' muudatust}} viimase {{PLURAL:$2|tunni|'''$2''' tunni}} jooksul seisuga $3, $4.",
+	'wlnote' => 'Allpool on {{PLURAL:$1|viimane muudatus|viimased \'\'\'$1\'\'\' muudatust}} viimase {{PLURAL:$2|tunni|\'\'\'$2\'\'\' tunni}} jooksul seisuga $3, $4.',
 	'wlshowlast' => 'Näita viimast $1 tundi $2 päeva. $3',
 	'watchlist-options' => 'Jälgimisloendi võimalused',
 	'watching' => 'Jälgimine...',
@@ -4311,9 +4322,9 @@ Sa võid [[Special:EditWatchlist|kasutada ka harilikku tekstiredaktorit]].',
 	'watchlisttools-edit' => 'Vaata ja redigeeri jälgimisloendit',
 	'watchlisttools-raw' => 'Muuda lähteteksti',
 	'wikia-pagetitle' => '$1 – Wikia',
-);
+];
 
-$messages['eu'] = array(
+$messages['eu'] = [
 	'wednesday' => 'Asteazkena',
 	'wed' => 'Asz',
 	'wrong_wfQuery_params' => 'Baliogabeko parametroak eman zaizkio wfQuery() funtzioari<br />
@@ -4346,11 +4357,11 @@ Zure kontua sortu egin da. Ez ahaztu [[Special:Preferences|{{SITENAME}}(e)ko hob
 	'watchnochange' => 'Hautatutako denbora tartean ez da aldaketarik izan zure jarraipen zerrendako orrialdeetan.',
 	'watchlist-details' => '{{PLURAL:$1|Orrialde $1|$1 orrialde}} jarraitzen, eztabaida orrialdeak kontuan hartu gabe.',
 	'wlheader-enotif' => '* Posta bidezko ohartarazpena gaituta dago.',
-	'wlheader-showupdated' => "* Bisitatu zenituen azken alditik aldaketak izan dituzten orrialdeak '''beltzez''' nabarmenduta daude",
+	'wlheader-showupdated' => '* Bisitatu zenituen azken alditik aldaketak izan dituzten orrialdeak \'\'\'beltzez\'\'\' nabarmenduta daude',
 	'watchmethod-recent' => 'Aldaketa berriak aztertzen jarraipen zerrendako orrialdeen bila',
 	'watchmethod-list' => 'jarraipen zerrendako orrialdeak aldaketa berrien bila aztertzen',
 	'watchlistcontains' => 'Zure jarraipen zerrendak {{PLURAL:$1|orrialde $1 du|$1 orrialde ditu}}.',
-	'wlnote' => "Jarraian {{PLURAL:$2|ikus daiteke azken orduko|ikus daitezke azken '''$2''' orduetako}} azken {{PLURAL:$1|aldaketa|'''$1''' aldaketak}}, $3, $4 gisa.",
+	'wlnote' => 'Jarraian {{PLURAL:$2|ikus daiteke azken orduko|ikus daitezke azken \'\'\'$2\'\'\' orduetako}} azken {{PLURAL:$1|aldaketa|\'\'\'$1\'\'\' aldaketak}}, $3, $4 gisa.',
 	'wlshowlast' => 'Erakutsi azken $1 orduak $2 egunak $3',
 	'watchlist-options' => 'Jarraitze-zerrendaren aukerak',
 	'watching' => 'Zerrendan gehitzen...',
@@ -4390,16 +4401,16 @@ Halaber [[Special:EditWatchlist|aldatzaile estandarra]] erabil dezakezu.',
 	'watchlisttools-view' => 'Aldaketa garrantzitsuak ikusi',
 	'watchlisttools-edit' => 'Zerrenda ikusi eta aldatu',
 	'watchlisttools-raw' => 'Zerrenda idatziz aldatu',
-);
+];
 
-$messages['ext'] = array(
+$messages['ext'] = [
 	'wednesday' => 'Miércuris',
 	'wed' => 'Mié',
 	'wrong_wfQuery_params' => 'Parametrus a wfQuery()<br /> Hunción: $1<br /> Pregunta: $2 encorretus',
-	'welcomecreation' => "== Bienviniu, $1! ==
+	'welcomecreation' => '== Bienviniu, $1! ==
 
-La tu cuenta d'ussuáriu á siu criá.
-Alcuerdati de chambal las tus [[Special:Preferences|preferéncias de {{SITENAME}}]].",
+La tu cuenta d\'ussuáriu á siu criá.
+Alcuerdati de chambal las tus [[Special:Preferences|preferéncias de {{SITENAME}}]].',
 	'wrongpassword' => 'La consínia escrebia nu es correta. Pol favol, preba otra vezi.',
 	'wrongpasswordempty' => 'As ehau en brancu la consínia. Pol favol, preba otra vezi.',
 	'watchthis' => 'Vehilal esta páhina',
@@ -4421,11 +4432,11 @@ Alcuerdati de chambal las tus [[Special:Preferences|preferéncias de {{SITENAME}
 	'watchnochange' => 'Nu s´eitó denguna e las tus páhinas vehilás nel períu lihiu.',
 	'watchlist-details' => '{{PLURAL:$1|$1 artículu|$1 artículus}} vehilaus (sin contal las carabas).',
 	'wlheader-enotif' => '* Se premitin notificacionis pol email.',
-	'wlheader-showupdated' => "* Las páhinas que s'án emburacau dendi la úrtima vezi que las visoreasti son muestrás en '''negrina'''",
+	'wlheader-showupdated' => '* Las páhinas que s\'án emburacau dendi la úrtima vezi que las visoreasti son muestrás en \'\'\'negrina\'\'\'',
 	'watchmethod-recent' => 'comprebandu las úrtimas eicionis en páhinas vehilás',
 	'watchmethod-list' => 'Revisandu las páhinas vehilás en cata los úrtimus chambus',
 	'watchlistcontains' => 'Ai $1 {{PLURAL:$1|páhina|páhinas}} ena tu lista e seguimientu.',
-	'wlnote' => "Embahu {{PLURAL:$1|es el úrtimu chambu|son los úrtimus '''$1''' chambus}} enas úrtimas {{PLURAL:$2|oras|'''$2''' oras}}.",
+	'wlnote' => 'Embahu {{PLURAL:$1|es el úrtimu chambu|son los úrtimus \'\'\'$1\'\'\' chambus}} enas úrtimas {{PLURAL:$2|oras|\'\'\'$2\'\'\' oras}}.',
 	'wlshowlast' => 'Muestral úrtimus $1 oras $2 dias $3',
 	'watchlist-options' => 'Ocionis de la mi lista e seguimientu',
 	'watching' => 'Vehilandu...',
@@ -4462,9 +4473,9 @@ Alcuerdati de chambal las tus [[Special:Preferences|preferéncias de {{SITENAME}
 	'watchlisttools-view' => 'Vel chambus emportantis',
 	'watchlisttools-edit' => 'Vel i eital la lista e seguimientu',
 	'watchlisttools-raw' => 'Eital lista e seguimientu',
-);
+];
 
-$messages['fa'] = array(
+$messages['fa'] = [
 	'wednesday' => 'چهارشنبه',
 	'wed' => 'چهارشنبه',
 	'wrong_wfQuery_params' => 'پارامترهای wfQuery()‎ نادرست است<br />
@@ -4502,11 +4513,11 @@ $messages['fa'] = array(
 	'watchnochange' => 'هیچ یک از موارد در حال پی‌گیری شما در دورهٔ زمانی نمایش‌یافته ویرایش نشده است.',
 	'watchlist-details' => 'بدون احتساب صفحه‌های بحث، {{PLURAL:$1|$1 صفحه|$1 صفحه}} در فهرست پی‌گیری‌های شما قرار {{PLURAL:$1|دارد|دارند}}.',
 	'wlheader-enotif' => '*اطلاع‌رسانی از طریق پست الکترونیکی امکان‌پذیر است.',
-	'wlheader-showupdated' => "*صفحه‌هایی که پس از آخرین سرزدنتان به آنها تغییر کرده‌اند '''پررنگ''' نشان داده شده‌اند.",
+	'wlheader-showupdated' => '*صفحه‌هایی که پس از آخرین سرزدنتان به آنها تغییر کرده‌اند \'\'\'پررنگ\'\'\' نشان داده شده‌اند.',
 	'watchmethod-recent' => 'بررسی ویرایش‌های اخیر برای صفحه‌های مورد پی‌گیری',
 	'watchmethod-list' => 'بررسی صفحه‌های مورد پی‌گیری برای ویرایش‌های اخیر',
 	'watchlistcontains' => 'فهرست پی‌گیری‌های شما حاوی $1 {{PLURAL:$1|صفحه|صفحه}} است.',
-	'wlnote' => "در زیر {{PLURAL:$1|آخرین تغییرات موجود است|آخرین تغییرات  '''$1''' موجود است }} آخرین  {{PLURAL:$2|ساعت|'''$2''' ساعت}}, در تاریخ $3, $4.",
+	'wlnote' => 'در زیر {{PLURAL:$1|آخرین تغییرات موجود است|آخرین تغییرات  \'\'\'$1\'\'\' موجود است }} آخرین  {{PLURAL:$2|ساعت|\'\'\'$2\'\'\' ساعت}}, در تاریخ $3, $4.',
 	'wlshowlast' => 'نمایش آخرین $1 ساعت $2 روز $3',
 	'watchlist-options' => 'گزینه‌های پیگیری',
 	'watching' => 'پی‌گیری...',
@@ -4547,13 +4558,15 @@ $messages['fa'] = array(
 	'watchlisttools-view' => 'فهرست پی‌گیری‌ها',
 	'watchlisttools-edit' => 'مشاهده و ویرایش فهرست پی‌گیری‌ها',
 	'watchlisttools-raw' => 'ویرایش فهرست خام پی‌گیری‌ها',
-);
+	'widget-title-wikiamessages' => 'پیغام‌های ویکیا',
+	'wikia_messages' => 'پیغام‌های ویکیا',
+];
 
-$messages['ff'] = array(
+$messages['ff'] = [
 	'watch' => 'Rewindaande',
-);
+];
 
-$messages['fi'] = array(
+$messages['fi'] = [
 	'wednesday' => 'keskiviikko',
 	'wed' => 'ke',
 	'wrong_wfQuery_params' => 'Virheelliset parametrit wfQuery()<br />Funktio: $1<br />Tiedustelu: $2',
@@ -4585,11 +4598,11 @@ Käyttäjätunnuksesi on luotu.
 	'watchnochange' => 'Valittuna ajanjaksona yhtäkään tarkkailemistasi sivuista ei muokattu.',
 	'watchlist-details' => 'Tarkkailulistalla on {{PLURAL:$1|$1 sivu|$1 sivua}} keskustelusivuja mukaan laskematta.',
 	'wlheader-enotif' => '* Sähköposti-ilmoitukset ovat käytössä.',
-	'wlheader-showupdated' => "* Sivut, joita on muokattu viimeisen käyntisi jälkeen on '''lihavoitu'''.",
+	'wlheader-showupdated' => '* Sivut, joita on muokattu viimeisen käyntisi jälkeen on \'\'\'lihavoitu\'\'\'.',
 	'watchmethod-recent' => 'tarkistetaan tuoreimpia muutoksia tarkkailluille sivuille',
 	'watchmethod-list' => 'tarkistetaan tarkkailtujen sivujen tuoreimmat muutokset',
 	'watchlistcontains' => 'Tarkkailulistallasi on {{PLURAL:$1|yksi sivu|$1 sivua}}.',
-	'wlnote' => "Alla on {{PLURAL:$1|yksi muutos|'''$1''' muutosta}} viimeisen {{PLURAL:$2|tunnin|'''$2''' tunnin}} ajalta $3 kello $4 asti.",
+	'wlnote' => 'Alla on {{PLURAL:$1|yksi muutos|\'\'\'$1\'\'\' muutosta}} viimeisen {{PLURAL:$2|tunnin|\'\'\'$2\'\'\' tunnin}} ajalta $3 kello $4 asti.',
 	'wlshowlast' => 'Näytä viimeiset $1 tuntia tai $2 päivää$3',
 	'watchlist-options' => 'Tarkkailulistan asetukset',
 	'watching' => 'Lisätään tarkkailulistalle...',
@@ -4628,9 +4641,13 @@ Voit myös muokata listaa [[Special:EditWatchlist|tavalliseen tapaan]].',
 	'watchlisttools-edit' => 'Muokkaa listaa',
 	'watchlisttools-raw' => 'Lista raakamuodossa',
 	'wikia-pagetitle' => '$1 – Wikia',
-);
+	'widget-desc-wikiamessages' => 'Wikian viestit',
+	'widget-title-wikiamessages' => 'Wikian viestit',
+	'wikia_messages' => 'Wikian viestit',
+	'wikicitieshome' => 'Wikian kotisivu',
+];
 
-$messages['fiu-vro'] = array(
+$messages['fiu-vro'] = [
 	'wednesday' => 'keskiviikko',
 	'wed' => 'ke',
 	'wrong_wfQuery_params' => 'Virheelliset parametrit wfQuery()<br />Funktio: $1<br />Tiedustelu: $2',
@@ -4662,11 +4679,11 @@ Käyttäjätunnuksesi on luotu.
 	'watchnochange' => 'Valittuna ajanjaksona yhtäkään tarkkailemistasi sivuista ei muokattu.',
 	'watchlist-details' => 'Tarkkailulistalla on {{PLURAL:$1|$1 sivu|$1 sivua}} keskustelusivuja mukaan laskematta.',
 	'wlheader-enotif' => '* Sähköposti-ilmoitukset ovat käytössä.',
-	'wlheader-showupdated' => "* Sivut, joita on muokattu viimeisen käyntisi jälkeen on '''lihavoitu'''.",
+	'wlheader-showupdated' => '* Sivut, joita on muokattu viimeisen käyntisi jälkeen on \'\'\'lihavoitu\'\'\'.',
 	'watchmethod-recent' => 'tarkistetaan tuoreimpia muutoksia tarkkailluille sivuille',
 	'watchmethod-list' => 'tarkistetaan tarkkailtujen sivujen tuoreimmat muutokset',
 	'watchlistcontains' => 'Tarkkailulistallasi on {{PLURAL:$1|yksi sivu|$1 sivua}}.',
-	'wlnote' => "Alla on {{PLURAL:$1|yksi muutos|'''$1''' muutosta}} viimeisen {{PLURAL:$2|tunnin|'''$2''' tunnin}} ajalta $3 kello $4 asti.",
+	'wlnote' => 'Alla on {{PLURAL:$1|yksi muutos|\'\'\'$1\'\'\' muutosta}} viimeisen {{PLURAL:$2|tunnin|\'\'\'$2\'\'\' tunnin}} ajalta $3 kello $4 asti.',
 	'wlshowlast' => 'Näytä viimeiset $1 tuntia tai $2 päivää$3',
 	'watchlist-options' => 'Tarkkailulistan asetukset',
 	'watching' => 'Lisätään tarkkailulistalle...',
@@ -4705,9 +4722,9 @@ Voit myös muokata listaa [[Special:EditWatchlist|tavalliseen tapaan]].',
 	'watchlisttools-edit' => 'Muokkaa listaa',
 	'watchlisttools-raw' => 'Lista raakamuodossa',
 	'wikia-pagetitle' => '$1 – Wikia',
-);
+];
 
-$messages['fj'] = array(
+$messages['fj'] = [
 	'wednesday' => 'Vukelulu',
 	'wed' => 'Vukelulu',
 	'watchthis' => 'Vakaraica toka na tabana oqo',
@@ -4716,9 +4733,9 @@ $messages['fj'] = array(
 	'watch' => 'Vakaraica mada',
 	'watchthispage' => 'Vakaraica toka na tabana oqo',
 	'whatlinkshere' => 'Sema cava oqo',
-);
+];
 
-$messages['fo'] = array(
+$messages['fo'] = [
 	'wednesday' => 'mikudagur',
 	'wed' => 'mik',
 	'wrong_wfQuery_params' => '↓ Skeiv parametir til wfQuery()<br />
@@ -4749,7 +4766,7 @@ Gloym ikki at broyta tínar [[Special:Preferences|{{SITENAME}} innstillingar]].'
 	'watchlist-details' => '{{PLURAL:$1|$1 síða|$1 síður}} á tínum vaktarlista, kjaksíður ikki íroknaðar.',
 	'watchmethod-list' => 'kannar síður undir eftirliti fyri feskar broytingar',
 	'watchlistcontains' => 'Títt eftirlit inniheldur {{PLURAL:$1|eina síðu|$1 síður}}.',
-	'wlnote' => "Niðanfyri {{PLURAL:$1|stendur seinasta broytingin|standa seinastu '''$1''' broytingarnar}} seinasta/u {{PLURAL:$2| tíman|'''$2''' tímarnar}} hin $3 kl. $4",
+	'wlnote' => 'Niðanfyri {{PLURAL:$1|stendur seinasta broytingin|standa seinastu \'\'\'$1\'\'\' broytingarnar}} seinasta/u {{PLURAL:$2| tíman|\'\'\'$2\'\'\' tímarnar}} hin $3 kl. $4',
 	'wlshowlast' => 'Vís seinastu $1 tímar $2 dagar $3',
 	'watchlist-options' => 'Møguleikar í ansingarlistanum',
 	'watching' => 'Eftirlitir...',
@@ -4771,9 +4788,9 @@ Gloym ikki at broyta tínar [[Special:Preferences|{{SITENAME}} innstillingar]].'
 	'watchlisttools-view' => 'Vís viðkomandi broytingar',
 	'watchlisttools-edit' => 'Vís og rætta eftirlit',
 	'watchlisttools-raw' => 'Rætta rátt eftirlit',
-);
+];
 
-$messages['fr'] = array(
+$messages['fr'] = [
 	'wednesday' => 'mercredi',
 	'wed' => 'mer',
 	'wrong_wfQuery_params' => 'Paramètres incorrects sur wfQuery()<br />
@@ -4797,8 +4814,8 @@ N’oubliez pas de personnaliser vos [[Special:Preferences|préférences sur {{S
 	'wantedpages' => 'Pages les plus demandées',
 	'wantedpages-badtitle' => 'Titre invalide dans les résultats : $1',
 	'wantedfiles' => 'Fichiers les plus demandés',
-	'wantedfiletext-cat' => "Les fichiers suivants sont utilisés, mais il n'existent pas. Les fichiers de dépôts à distance peuvent être listés malgré qu'ils existent. Tout ces faux positifs seront <del>barrés</del>. En outre, les pages qui intègrent des fichiers qui n'existent pas sont répertoriés dans [[:$1]].",
-	'wantedfiletext-nocat' => "Les fichiers suivants sont utilisés, mais n'existent pas. Les fichiers de dépôts à distance peuvent être listés malgré qu'ils existent. Tout ces faux positifs seront <del>barrés</del>.",
+	'wantedfiletext-cat' => 'Les fichiers suivants sont utilisés, mais il n\'existent pas. Les fichiers de dépôts à distance peuvent être listés malgré qu\'ils existent. Tout ces faux positifs seront <del>barrés</del>. En outre, les pages qui intègrent des fichiers qui n\'existent pas sont répertoriés dans [[:$1]].',
+	'wantedfiletext-nocat' => 'Les fichiers suivants sont utilisés, mais n\'existent pas. Les fichiers de dépôts à distance peuvent être listés malgré qu\'ils existent. Tout ces faux positifs seront <del>barrés</del>.',
 	'wantedtemplates' => 'Modèles demandés',
 	'watchlist' => 'Liste de suivi',
 	'watchlistfor2' => 'Pour $1 $2',
@@ -4810,15 +4827,15 @@ N’oubliez pas de personnaliser vos [[Special:Preferences|préférences sur {{S
 	'watchnochange' => 'Aucun des éléments que vous suivez n’a été modifié durant la période affichée.',
 	'watchlist-details' => 'Votre liste de suivi référence $1 page{{PLURAL:$1||s}}, sans compter les pages de discussion.',
 	'wlheader-enotif' => '* La notification par courriel est activée.',
-	'wlheader-showupdated' => "* Les pages qui ont été modifiées depuis votre dernière visite sont affichées en '''gras'''.",
+	'wlheader-showupdated' => '* Les pages qui ont été modifiées depuis votre dernière visite sont affichées en \'\'\'gras\'\'\'.',
 	'watchmethod-recent' => 'vérification des modifications récentes pour y trouver des pages suivies',
 	'watchmethod-list' => 'vérification des pages suivies pour y trouver des modifications récentes',
 	'watchlistcontains' => 'Votre liste de suivi référence $1 page{{PLURAL:$1||s}}.',
-	'wlnote' => "Ci-dessous {{PLURAL:$1|figure la dernière modification effectuée|figurent les '''$1''' dernières modifications effectuées}} durant {{PLURAL:$2|la dernière heure|les '''$2''' dernières heures}}, depuis $3, $4.",
+	'wlnote' => 'Ci-dessous {{PLURAL:$1|figure la dernière modification effectuée|figurent les \'\'\'$1\'\'\' dernières modifications effectuées}} durant {{PLURAL:$2|la dernière heure|les \'\'\'$2\'\'\' dernières heures}}, depuis $3, $4.',
 	'wlshowlast' => 'Montrer les dernières $1 heures, les derniers $2 jours ou bien $3',
 	'watchlist-options' => 'Options de la liste de suivi',
 	'watching' => 'Suivi…',
-	'watcherrortext' => "Une erreur s'est produite lors de la modification des paramètres de votre liste de suivi pour « $1 ».",
+	'watcherrortext' => 'Une erreur s\'est produite lors de la modification des paramètres de votre liste de suivi pour « $1 ».',
 	'whatlinkshere' => 'Pages liées',
 	'whatlinkshere-title' => 'Pages qui pointent vers « $1 »',
 	'whatlinkshere-page' => 'Page :',
@@ -4854,11 +4871,16 @@ Vous pouvez aussi [[Special:EditWatchlist|utiliser l’éditeur normal]].',
 	'watchlisttools-view' => 'Liste de suivi',
 	'watchlisttools-edit' => 'Voir et modifier la liste de suivi',
 	'watchlisttools-raw' => 'Modifier la liste de suivi en mode brut',
-	'wikia-read-only-mode' => "Oups. Ceci est notre sauvegarde car notre principal centre de données est actuellement indisponible. Il se peut donc que vous ne puissiez malheureusement pas effectuer certaines tâches comme apporter des modifications, importer ou tchatter.
- +Nous essayons de résoudre le problème et vous remercions de votre patience. S'il persiste pendant une période prolongée, n'hésitez pas à contacter Wikia à l'adresse e-mail community@wikia.com.",
-);
+	'wikia-read-only-mode' => 'Oups. Ceci est notre sauvegarde car notre principal centre de données est actuellement indisponible. Il se peut donc que vous ne puissiez malheureusement pas effectuer certaines tâches comme apporter des modifications, importer ou tchatter.
+Nous essayons de résoudre le problème et vous remercions de votre patience. S\'il persiste pendant une période prolongée, n\'hésitez pas à contacter Fandom à l\'adresse e-mail community@wikia.com.',
+	'widget-title-advertiser' => 'À la une de Fandom',
+	'wikia_messages' => 'Messages de Fandom',
+	'wikicitieshome' => 'Accueil de Fandom',
+	'widget-desc-wikiamessages' => 'Messages de Fandom',
+	'widget-title-wikiamessages' => 'Messages de Fandom',
+];
 
-$messages['frc'] = array(
+$messages['frc'] = [
 	'wednesday' => 'mercredi',
 	'wed' => 'mer',
 	'wrong_wfQuery_params' => 'Informaton incorrecte sus le wfQuery()<br />
@@ -4867,15 +4889,15 @@ Demande: $2',
 	'welcomecreation' => '== Bonjour, $1! ==
 
 Votre compte a été créé.  Oubliez pas de changer votre réglage sus {{SITENAME}}.',
-	'wrongpassword' => "Mauvais mot de passe.  Assayez encore s'il vous plaît.",
-	'wrongpasswordempty' => "Le mot de passe était vide.  Assayez encore s'il vous plaît.",
+	'wrongpassword' => 'Mauvais mot de passe.  Assayez encore s\'il vous plaît.',
+	'wrongpasswordempty' => 'Le mot de passe était vide.  Assayez encore s\'il vous plaît.',
 	'watchthis' => 'Guetter cette page',
 	'whitelistedittext' => 'Il faut $1 pour faire des changements.',
 	'watchlist' => 'Mes pages guettées',
 	'watch' => 'Guetter',
-);
+];
 
-$messages['frp'] = array(
+$messages['frp'] = [
 	'wednesday' => 'demécro',
 	'wed' => 'dc',
 	'wrong_wfQuery_params' => 'Paramètres fôx dessus wfQuery()<br />
@@ -4913,11 +4935,11 @@ Volyéd tornar èprovar.',
 	'watchnochange' => 'Nion des èlèments que vos siude at étâ changiê pendent lo temps montrâ.',
 	'watchlist-details' => 'Voutra lista de survelyence contint $1 pâge{{PLURAL:$1||s}}, sen comptar les pâges de discussion.',
 	'wlheader-enotif' => '* La notificacion per mèssageria èlèctronica est activâ.',
-	'wlheader-showupdated' => "* Les pâges qu’ont étâ changiês dês voutra dèrriére visita sont montrâs en '''grâs'''.",
+	'wlheader-showupdated' => '* Les pâges qu’ont étâ changiês dês voutra dèrriére visita sont montrâs en \'\'\'grâs\'\'\'.',
 	'watchmethod-recent' => 'contrôlo des novéls changements por y trovar des pâges siuvues',
 	'watchmethod-list' => 'contrôlo de les pâges siuvues por y trovar des novéls changements',
 	'watchlistcontains' => 'Voutra lista de survelyence contint $1 pâge{{PLURAL:$1||s}}.',
-	'wlnote' => "Vê-que {{PLURAL:$1|lo dèrriér changement fêt|los '''$1''' dèrriérs changements fêts}} pendent {{PLURAL:$2|l’hora passâ|les '''$2''' hores passâs}}, dês $3, $4.",
+	'wlnote' => 'Vê-que {{PLURAL:$1|lo dèrriér changement fêt|los \'\'\'$1\'\'\' dèrriérs changements fêts}} pendent {{PLURAL:$2|l’hora passâ|les \'\'\'$2\'\'\' hores passâs}}, dês $3, $4.',
 	'wlshowlast' => 'Fâre vêre les $1 hores passâs, los $2 jorns passâs ou ben $3 ;',
 	'watchlist-options' => 'Chouèx de la lista de survelyence',
 	'watching' => 'Survelyence...',
@@ -4958,9 +4980,9 @@ Vos pouede asse-ben utilisar l’[[Special:EditWatchlist|èditor normal]].',
 	'watchlisttools-view' => 'Lista de survelyence',
 	'watchlisttools-edit' => 'Vêre et changiér la lista de survelyence',
 	'watchlisttools-raw' => 'Changiér la lista de survelyence en fôrma bruta',
-);
+];
 
-$messages['frr'] = array(
+$messages['frr'] = [
 	'wednesday' => 'Weensdi',
 	'wed' => 'We',
 	'wrong_wfQuery_params' => 'Ferkiirde parameetere for wfQuery()<br />
@@ -4999,9 +5021,9 @@ Wees sü gödje än fersäk dåt nuch iinjsen.',
 	'watchlisttools-edit' => 'normåål beårbe',
 	'watchlisttools-raw' => 'Listeformoot beårbe (import/äksport)',
 	'wikia-pagetitle' => '$1 – Wikia',
-);
+];
 
-$messages['fur'] = array(
+$messages['fur'] = [
 	'wednesday' => 'Miercus',
 	'wed' => 'mie',
 	'welcomecreation' => '== Mandi e benvignût $1! ==
@@ -5022,15 +5044,15 @@ No stâ dismenteâti di gambiâ lis [[Special:Preferences|preferencis di {{SITEN
 	'watchlist' => 'Tignûts di voli',
 	'watchlistfor2' => 'Par $1 $2',
 	'watchnologin' => 'No tu sês jentrât',
-	'watchnologintext' => "Tu 'nd âs di [[Special:UserLogin|jentrâ]] par modificâ la liste des pagjinis tignudis di voli.",
+	'watchnologintext' => 'Tu \'nd âs di [[Special:UserLogin|jentrâ]] par modificâ la liste des pagjinis tignudis di voli.',
 	'watch' => 'Ten di voli',
 	'watchthispage' => 'Ten di voli cheste pagjine',
 	'watchnochange' => 'Nissun element di chei tignûts di voli al è stât cambiât tal periodi mostrât.',
 	'watchlist-details' => '{{PLURAL:$1|E je $1 pagjine tignude|A son $1 pagjinis tignudis}} di voli, cence contâ lis pagjinis di discussion.',
 	'wlheader-enotif' => '* Notifiche par pueste eletroniche ativade.',
-	'wlheader-showupdated' => "* Lis pagjinis gambiadis de ultime volte che tu lis âs cjaladis a son mostradis in '''gruessut'''",
+	'wlheader-showupdated' => '* Lis pagjinis gambiadis de ultime volte che tu lis âs cjaladis a son mostradis in \'\'\'gruessut\'\'\'',
 	'watchlistcontains' => 'Tu stâs tignint di voli $1 {{PLURAL:$1|pagjine|pagjinis}}.',
-	'wlnote' => "Ca sot {{PLURAL:$1|al è il cambiament plui recent|a son i '''$1''' cambiaments plui recents}} {{PLURAL:$2|inte ultime ore|intes '''$2''' oris passadis}}.",
+	'wlnote' => 'Ca sot {{PLURAL:$1|al è il cambiament plui recent|a son i \'\'\'$1\'\'\' cambiaments plui recents}} {{PLURAL:$2|inte ultime ore|intes \'\'\'$2\'\'\' oris passadis}}.',
 	'wlshowlast' => 'Mostre ultimis $1 oris $2 zornadis $3',
 	'watchlist-options' => 'Opzions pe liste dai tignûts di voli',
 	'watching' => 'Daûr a zontâ aes pagjinis tignudis di voli...',
@@ -5056,9 +5078,9 @@ No stâ dismenteâti di gambiâ lis [[Special:Preferences|preferencis di {{SITEN
 	'watchlisttools-view' => 'Cjale i cambiaments rilevants',
 	'watchlisttools-edit' => 'Cjale e cambie la liste des pagjinis tignudis di voli',
 	'watchlisttools-raw' => 'Modifiche la liste des pagjinis tignudis di voli in formât testuâl',
-);
+];
 
-$messages['fy'] = array(
+$messages['fy'] = [
 	'wednesday' => 'woansdei',
 	'wed' => 'wo',
 	'wrong_wfQuery_params' => 'Ferkearde parameters foar wfQuery()<br />
@@ -5066,7 +5088,7 @@ Funksje: $1<br />
 Query: $2',
 	'welcomecreation' => '<h2>Wolkom, $1!</h2><p>Jo ynstellings binne oanmakke.
 Ferjit net se oan jo foarkar oan te passen.',
-	'wrongpassword' => "Meidochnamme en wachtwurd hearre net by elkoar. Besykje op 'e nij, of fier it wachtwurd twa kear yn en meitsje nije meidoggersynstellings.",
+	'wrongpassword' => 'Meidochnamme en wachtwurd hearre net by elkoar. Besykje op \'e nij, of fier it wachtwurd twa kear yn en meitsje nije meidoggersynstellings.',
 	'wrongpasswordempty' => 'It opjûne wachtwurd wie leech. Besykje it nochris.',
 	'watchthis' => 'Folgje dizze side',
 	'whitelistedittext' => 'Jo moatte $1 om siden te bewurkjen.',
@@ -5084,14 +5106,14 @@ Ferjit net se oan jo foarkar oan te passen.',
 	'watchnologintext' => 'Jo moatte [[Special:UserLogin|oanmeld]] wêze om jo folchlist te feroarjen.',
 	'watch' => 'Folgje',
 	'watchthispage' => 'Folgje dizze side',
-	'watchnochange' => "Fan de siden dy't jo folgje is der yn dizze perioade net ien feroare.",
+	'watchnochange' => 'Fan de siden dy\'t jo folgje is der yn dizze perioade net ien feroare.',
 	'watchlist-details' => 'Jo folchlist hat {{PLURAL:$1|$1 side|$1 siden}}, oerlissiden net meiteld.',
 	'watchmethod-recent' => 'Koartlyn feroare ...',
 	'watchmethod-list' => 'Folge ...',
 	'watchlistcontains' => 'Jo folgje op it stuit $1 {{PLURAL:$1|side|siden}}.',
-	'wlnote' => "Dit {{PLURAL:$1|is de lêste feroaring|binne de lêste '''$1''' feroarings}} yn de lêste {{PLURAL:$2|oer|'''$2''' oeren}}.",
+	'wlnote' => 'Dit {{PLURAL:$1|is de lêste feroaring|binne de lêste \'\'\'$1\'\'\' feroarings}} yn de lêste {{PLURAL:$2|oer|\'\'\'$2\'\'\' oeren}}.',
 	'wlshowlast' => 'Lit feroarings sjen fan de lêste $1 oeren $2 dagen $3',
-	'watching' => "Dwaande mei op'e folchlist te setten ...",
+	'watching' => 'Dwaande mei op\'e folchlist te setten ...',
 	'whatlinkshere' => 'Wat is hjirmei keppele?',
 	'whatlinkshere-title' => 'Siden dy\'t keppele binne mei "$1"',
 	'whatlinkshere-page' => 'Side:',
@@ -5111,9 +5133,9 @@ Ferjit net se oan jo foarkar oan te passen.',
 	'watchlisttools-view' => 'Folchlist besjen',
 	'watchlisttools-edit' => 'Folchlist besjen en bewurkje',
 	'watchlisttools-raw' => 'Rûge folchlist bewurkje',
-);
+];
 
-$messages['ga'] = array(
+$messages['ga'] = [
 	'wednesday' => 'an Chéadaoin',
 	'wed' => 'Céad',
 	'wrong_wfQuery_params' => 'Paraiméadair mhíchearta don wfQuery()<br />
@@ -5122,8 +5144,8 @@ Iarratas: $2',
 	'welcomecreation' => '== Tá fáilte romhat, $1! ==
 
 Cruthaíodh do chuntas. Ná déan dearmad athrú a dhéanamh ar do chuid [[Special:Preferences|sainroghanna {{GRAMMAR:genitive|{{SITENAME}}}}]].',
-	'wrongpassword' => "D'iontráil tú focal faire mícheart.<br />
-Bain triail eile as.",
+	'wrongpassword' => 'D\'iontráil tú focal faire mícheart.<br />
+Bain triail eile as.',
 	'wrongpasswordempty' => 'Níor iontráil tú focal faire. Bain triail eile as.',
 	'watchthis' => 'Déan faire ar an lch seo',
 	'whitelistedittext' => 'Ní mór duit $1 chun ailt a athrú.',
@@ -5134,7 +5156,7 @@ Bain triail eile as.",
 	'wantedcategories' => 'Catagóirí agus iarraidh ag gabháil leis',
 	'wantedpages' => 'Leathanaigh de dhíth',
 	'watchlist' => 'Mo liosta faire',
-	'watchlistanontext' => "$1, le d'thoil, chun míreanna ar do liosta faire a fheiceáil ná a athrú.",
+	'watchlistanontext' => '$1, le d\'thoil, chun míreanna ar do liosta faire a fheiceáil ná a athrú.',
 	'watchnologin' => 'Níl tú logáilte isteach',
 	'watchnologintext' => 'Tá ort a bheith [[Special:UserLogin|logáilte isteach]] chun do liosta faire a athrú.',
 	'watch' => 'Déan faire',
@@ -5143,11 +5165,11 @@ Bain triail eile as.",
 taobh istigh den tréimhse atá roghnaithe agat.',
 	'watchlist-details' => 'Tá tú ag faire ar {{PLURAL:$1|leathanach amháin|$1 leathanaigh}}, gan leathanaigh phlé a chur san áireamh.',
 	'wlheader-enotif' => '* Cumasaíodh fógraí riomhphoist.',
-	'wlheader-showupdated' => "* Tá '''cló trom''' ar leathanaigh a athraíodh ón uair is deireanaí a d'fhéach tú orthu.",
+	'wlheader-showupdated' => '* Tá \'\'\'cló trom\'\'\' ar leathanaigh a athraíodh ón uair is deireanaí a d\'fhéach tú orthu.',
 	'watchmethod-recent' => 'ag seiceáil na athruithe deireanacha ar do chuid leathanaigh faire',
 	'watchmethod-list' => 'ag seiceáil na leathanaigh faire ar do chuid athruithe deireanacha',
 	'watchlistcontains' => 'Tá {{PLURAL:$1|leathanach amháin|$1 leathanaigh}} ar do liosta faire.',
-	'wlnote' => "Is {{PLURAL:$1|é seo thíos an t-athrú deireanach|iad seo thíos na '''$1''' athruithe deireanacha}} {{PLURAL:$2|san uair deireanach|sna '''$2''' uaire deireanacha}}.",
+	'wlnote' => 'Is {{PLURAL:$1|é seo thíos an t-athrú deireanach|iad seo thíos na \'\'\'$1\'\'\' athruithe deireanacha}} {{PLURAL:$2|san uair deireanach|sna \'\'\'$2\'\'\' uaire deireanacha}}.',
 	'wlshowlast' => 'Líon na n-uair is déanaí le taispeáint: $1. Líon na laethanta is déanaí le taispeáint: $2. Taispeáin $3.',
 	'watchlist-options' => 'Roghanna don liosta faire',
 	'watching' => 'Ag faire...',
@@ -5176,9 +5198,9 @@ taobh istigh den tréimhse atá roghnaithe agat.',
 	'watchlisttools-view' => 'Féach ar na hathruithe ábhartha',
 	'watchlisttools-edit' => 'Féach ar do liosta faire ná cuir in eagar é',
 	'watchlisttools-raw' => 'Cuir do amhliosta faire in eagar',
-);
+];
 
-$messages['gag'] = array(
+$messages['gag'] = [
 	'wednesday' => 'Çarşamba',
 	'wed' => 'Çar',
 	'welcomecreation' => '== Hoş geldiniz $1! ==
@@ -5212,9 +5234,9 @@ Esapınız açıldı. Unutmayın [[Special:Preferences|{{SITENAME}} preferences]
 	'watchlisttools-view' => 'İlgili diişmäkleri göster',
 	'watchlisttools-edit' => 'Siir listasını gör hem düzelt',
 	'watchlisttools-raw' => 'Ham siir listasını düz',
-);
+];
 
-$messages['gan-hans'] = array(
+$messages['gan-hans'] = [
 	'wednesday' => '礼拜三',
 	'wed' => '礼拜三',
 	'wrong_wfQuery_params' => '参数错误斢到嘞 wfQuery()<br />
@@ -5244,11 +5266,11 @@ $messages['gan-hans'] = array(
 	'watchnochange' => '一径到显示𠮶时间之内，倷眏到𠮶页面冇改动。',
 	'watchlist-details' => '$1只页面（伓算讨论页） 拖眏到哩',
 	'wlheader-enotif' => '* 启动嘞email通知功能。',
-	'wlheader-showupdated' => "* 上回倷眵𠮶页面改动𠮶部分用'''粗体'''显到",
+	'wlheader-showupdated' => '* 上回倷眵𠮶页面改动𠮶部分用\'\'\'粗体\'\'\'显到',
 	'watchmethod-recent' => '眵吖拖眏到𠮶页面𠮶最近编辑',
 	'watchmethod-list' => '望吖监视页里头最晏𠮶改动',
 	'watchlistcontains' => '倷𠮶监视列表包含$1只页面。',
-	'wlnote' => "下底系最近'''$2'''钟头内𠮶最晏'''$1'''道修改:",
+	'wlnote' => '下底系最近\'\'\'$2\'\'\'钟头内𠮶最晏\'\'\'$1\'\'\'道修改:',
 	'wlshowlast' => '显示近来$1钟头$2日$3𠮶改动',
 	'watchlist-options' => '监视清单选项',
 	'watching' => '眏到...',
@@ -5283,9 +5305,9 @@ $messages['gan-hans'] = array(
 	'watchlisttools-view' => '眵吖相关更改',
 	'watchlisttools-edit' => '眵吖同到编写监视列表',
 	'watchlisttools-raw' => '编写原始监视列表',
-);
+];
 
-$messages['gan-hant'] = array(
+$messages['gan-hant'] = [
 	'wednesday' => '禮拜三',
 	'wed' => '禮拜三',
 	'wrong_wfQuery_params' => '參數錯誤斢到嘞 wfQuery()<br />
@@ -5315,11 +5337,11 @@ $messages['gan-hant'] = array(
 	'watchnochange' => '一徑到顯示嗰時間之內，倷眏到嗰頁面冇改動。',
 	'watchlist-details' => '$1隻頁面（伓算討論頁） 拕眏到哩',
 	'wlheader-enotif' => '* 啟動嘞email通知功能。',
-	'wlheader-showupdated' => "* 上回倷眵嗰頁面改動嗰部分用'''粗體'''顯到",
+	'wlheader-showupdated' => '* 上回倷眵嗰頁面改動嗰部分用\'\'\'粗體\'\'\'顯到',
 	'watchmethod-recent' => '眵吖拕眏到嗰頁面嗰最近編輯',
 	'watchmethod-list' => '望吖監視頁裡頭最晏嗰改動',
 	'watchlistcontains' => '倷嗰監視列表包含$1隻頁面。',
-	'wlnote' => "下底係最近'''$2'''鐘頭內嗰最晏'''$1'''道修改:",
+	'wlnote' => '下底係最近\'\'\'$2\'\'\'鐘頭內嗰最晏\'\'\'$1\'\'\'道修改:',
 	'wlshowlast' => '顯示近來$1鐘頭$2日$3嗰改動',
 	'watchlist-options' => '監視清單選項',
 	'watching' => '眏到...',
@@ -5354,9 +5376,9 @@ $messages['gan-hant'] = array(
 	'watchlisttools-view' => '望吖相關更改',
 	'watchlisttools-edit' => '望吖同到編寫監視列表',
 	'watchlisttools-raw' => '編寫原始監視列表',
-);
+];
 
-$messages['gd'] = array(
+$messages['gd'] = [
 	'wednesday' => 'DiCiadain',
 	'wed' => 'DiC',
 	'wrong_wfQuery_params' => 'Paramatairean mì-cheart airson wfQuery()<br />
@@ -5374,16 +5396,16 @@ Feuch ris a-rithist.',
 	'watchlistfor2' => 'Do $1 $2',
 	'watch' => 'Cum sùil air',
 	'watchthispage' => 'Cum sùil air an duilleag seo',
-	'watchnochange' => "Cha deach na duilleagan air d' fhaire a dheasachadh anns a' chuairt ùine taisbeanta.",
+	'watchnochange' => 'Cha deach na duilleagan air d\' fhaire a dheasachadh anns a\' chuairt ùine taisbeanta.',
 	'watchlist-details' => 'Tha {{PLURAL:$1|$1 duilleag|$1 dhuilleag||$1 duilleag|$1 dhuilleag|$1 duilleagan|$1 duilleag}} air do chlàr-faire, gun luaidh air na duilleagan deasbaireachd.',
-	'watchmethod-recent' => "A' sgrùdadh deasachaidhean ùra airson duilleagan air d' fhaire",
-	'watchmethod-list' => "A' sgrùdadh duilleagan air d' fhaire airson deasachaidhean ùra",
+	'watchmethod-recent' => 'A\' sgrùdadh deasachaidhean ùra airson duilleagan air d\' fhaire',
+	'watchmethod-list' => 'A\' sgrùdadh duilleagan air d\' fhaire airson deasachaidhean ùra',
 	'watchlistcontains' => 'Tha $1 {{PLURAL:$1|duilleag|dhuilleag|duilleag|dhuilleag|duilleagan|duilleag}} air do chlàr-faire.',
 	'wlnote' => 'Seo $1 {{PLURAL:$1|mhùthadh mu dheireadh|mhùthadh mu dheireadh|na mùthaidhean mu dheireadh|mùthadh mu dheireadh}} anns na $2 {{PLURAL:$2|uair|uair|uairean|uair}} mu dheireadh.',
 	'wlshowlast' => 'Seall na $1 uairean a thìde mu dheireadh $2 làithean mu dheireadh $3',
 	'watchlist-options' => 'Roghainnean mo chlàir-faire',
-	'watching' => "'Ga chur air a' chlàr-fhaire...",
-	'whatlinkshere' => "Na tha a' ceangal a-nall an-seo",
+	'watching' => '\'Ga chur air a\' chlàr-fhaire...',
+	'whatlinkshere' => 'Na tha a\' ceangal a-nall an-seo',
 	'whatlinkshere-title' => 'Duilleagan a tha a\' ceangal ri "$1"',
 	'whatlinkshere-page' => 'Duilleag:',
 	'whatlinkshere-prev' => '{{PLURAL:$1|roimhe|$1 roimhe|roimhe|$1 roimhe|$1 roimhe|$1 roimhe}}',
@@ -5399,10 +5421,10 @@ Feuch ris a-rithist.',
 	'watchlistedit-raw-submit' => 'Ùraich an clàr-faire',
 	'watchlisttools-view' => 'Seall na mùthaidhean iomchaidh',
 	'watchlisttools-edit' => 'Seall is deasaich mo chlàr-faire',
-	'watchlisttools-raw' => "Deasaich còd a' chlàir-fhaire",
-);
+	'watchlisttools-raw' => 'Deasaich còd a\' chlàir-fhaire',
+];
 
-$messages['gl'] = array(
+$messages['gl'] = [
 	'wednesday' => 'mércores',
 	'wed' => 'mér',
 	'wrong_wfQuery_params' => 'Parámetros incorrectos para wfQuery()<br />
@@ -5440,11 +5462,11 @@ Por favor, inténteo de novo.',
 	'watchnochange' => 'Ningún dos elementos baixo vixilancia foi editado no período de tempo indicado.',
 	'watchlist-details' => 'Hai {{PLURAL:$1|unha páxina|$1 páxinas}} na súa lista de vixilancia, sen contar as de conversa.',
 	'wlheader-enotif' => '* Está dispoñible a notificación por correo electrónico.',
-	'wlheader-showupdated' => "* As páxinas que cambiaron desde a súa última visita móstranse en '''negra'''",
+	'wlheader-showupdated' => '* As páxinas que cambiaron desde a súa última visita móstranse en \'\'\'negra\'\'\'',
 	'watchmethod-recent' => 'comprobando as edicións recentes na procura de páxinas vixiadas',
 	'watchmethod-list' => 'comprobando as páxinas vixiadas na procura de edicións recentes',
 	'watchlistcontains' => 'A súa lista de vixilancia ten $1 {{PLURAL:$1|páxina|páxinas}}.',
-	'wlnote' => "A continuación {{PLURAL:$1|está a última modificación|están as últimas '''$1''' modificacións}} {{PLURAL:$2|na última hora|nas últimas '''$2''' horas}} ata o $3 ás $4.",
+	'wlnote' => 'A continuación {{PLURAL:$1|está a última modificación|están as últimas \'\'\'$1\'\'\' modificacións}} {{PLURAL:$2|na última hora|nas últimas \'\'\'$2\'\'\' horas}} ata o $3 ás $4.',
 	'wlshowlast' => 'Mostrar as últimas $1 horas, os últimos $2 días ou $3',
 	'watchlist-options' => 'Opcións de vixilancia',
 	'watching' => 'Vixiando...',
@@ -5484,9 +5506,9 @@ Tamén pode [[Special:EditWatchlist|empregar o editor normal]].',
 	'watchlisttools-view' => 'Ver as modificacións relevantes',
 	'watchlisttools-edit' => 'Ver e editar a lista de vixilancia',
 	'watchlisttools-raw' => 'Editar a lista de vixilancia simple',
-);
+];
 
-$messages['gn'] = array(
+$messages['gn'] = [
 	'wednesday' => 'ararundy',
 	'wed' => 'ararundy',
 	'watchthis' => 'Toñeñangareko ko tembiapóre',
@@ -5495,7 +5517,7 @@ $messages['gn'] = array(
 	'wantedpages' => 'Kuatiarogue oñekotevẽva',
 	'watchlist' => 'Tapykueho rysýi',
 	'watch' => 'Ñangareko',
-	'whatlinkshere' => "Oñembojoajukuaáva ko'ápe",
+	'whatlinkshere' => 'Oñembojoajukuaáva ko\'ápe',
 	'whatlinkshere-title' => 'Kuatiarogue ojoajúva "$1" rehe',
 	'whatlinkshere-page' => 'Kuatiarogue:',
 	'whatlinkshere-prev' => 'mboyvegua $1',
@@ -5503,14 +5525,14 @@ $messages['gn'] = array(
 	'whatlinkshere-links' => '← joajukuéra',
 	'watchlistedit-numitems' => 'Tu lista de seguimiento tiene $1 páginas, excluyendo las páginas de discusión.',
 	'watchlistedit-normal-title' => 'Moambue tapykueho rysýi',
-	'watchlistedit-normal-submit' => "Mboje'o kuatiarogue",
+	'watchlistedit-normal-submit' => 'Mboje\'o kuatiarogue',
 	'watchlistedit-normal-done' => '$1 páginas han sido borradas de tu lista de seguimiento:',
 	'watchlistedit-raw-titles' => 'Kuatiarogue:',
 	'watchlistedit-raw-added' => 'Se han añadido $1 páginas:',
 	'watchlistedit-raw-removed' => '$1 páginas han sido borradas:',
-);
+];
 
-$messages['got'] = array(
+$messages['got'] = [
 	'wednesday' => 'Midiwiko',
 	'wed' => 'Mid',
 	'watchthis' => '𐍅𐌰𐍂𐌰𐌽 𐍃𐌴𐌹𐌳𐍉',
@@ -5527,9 +5549,9 @@ $messages['got'] = array(
 	'whatlinkshere-next' => '{{PLURAL:$1|iftuma|iftumans $1}}',
 	'whatlinkshere-links' => '← táikajanbandja',
 	'watchlistall2' => 'allis',
-);
+];
 
-$messages['grc'] = array(
+$messages['grc'] = [
 	'wednesday' => 'Τετάρτη',
 	'wed' => 'Τε',
 	'wrong_wfQuery_params' => 'Ἐσφαλμέναι παράμετροι εἰς τὸ wfQuery()<br />
@@ -5555,7 +5577,7 @@ $messages['grc'] = array(
 	'wantedfiles' => 'Αἰτούμενα ἀρχεῖα',
 	'wantedtemplates' => 'Ζητούμενα πρότυπα',
 	'watchlist' => 'Τὰ ἐφορώμενά μου',
-	'watchlistfor' => "(διὰ '''$1''')",
+	'watchlistfor' => '(διὰ \'\'\'$1\'\'\')',
 	'watchlistanontext' => '$1 πρὸ τοῦ ὁρᾶν ἢ τοῦ μεταγράφειν τεμάχια τινὰ ἐν τῇ ἐφοροδιαλογῇ σου.',
 	'watchnologin' => 'Μὴ συνδεδεμένος',
 	'watchnologintext' => 'Δεῖ σε [[Special:UserLogin|συνδεῖσθαι]] πρὸ τοῦ μεταβάλλειν τὴν ἐφοροδιαλογήν σου.',
@@ -5567,7 +5589,7 @@ $messages['grc'] = array(
 	'watchmethod-recent' => 'ἐλέγχειν προσφάτους μεταγραφὰς περὶ ἐφορωμένων δέλτων',
 	'watchmethod-list' => 'ἐλέγχειν ἐφορωμένας δέλτους περὶ μεταγραφὰς προσφάτους',
 	'watchlistcontains' => 'Ἡ ἐφοροδιαλογὴ σου περιέχει $1 {{PLURAL:$1|δέλτον|δέλτους}}.',
-	'wlnote' => "Κατωτέρω {{PLURAL:$1|ἐστὶν ἡ ὑστάτη μεταβολὴ|εἰσὶν αἱ ὑστάται  '''$1'''  μεταβολαὶ}} ἐν {{PLURAL:$2|τῇ ὑστάτῃ μίᾳ ὥρᾳ|ταῖς ὑστάταις '''$2''' ὥραις}}.",
+	'wlnote' => 'Κατωτέρω {{PLURAL:$1|ἐστὶν ἡ ὑστάτη μεταβολὴ|εἰσὶν αἱ ὑστάται  \'\'\'$1\'\'\'  μεταβολαὶ}} ἐν {{PLURAL:$2|τῇ ὑστάτῃ μίᾳ ὥρᾳ|ταῖς ὑστάταις \'\'\'$2\'\'\' ὥραις}}.',
 	'wlshowlast' => 'Ἐμφάνισις τῶν τελευταίων $1 ὡρῶν $2 ἡμερῶν $3',
 	'watchlist-options' => 'Ἐπιλογαὶ ἐφοροδιαλογῆς',
 	'watching' => 'Ἐφορῶν...',
@@ -5600,9 +5622,9 @@ $messages['grc'] = array(
 	'watchlisttools-view' => 'Ὁρᾶν τὰς συναφεῖς μεταβολὰς',
 	'watchlisttools-edit' => 'Ὁρᾶν τε καὶ μεταγράφειν τὰ ἐφορωμένα',
 	'watchlisttools-raw' => 'Μεταγράφειν τὸν πρωτογενῆ κατάλογον ἐφορωμένων',
-);
+];
 
-$messages['gsw'] = array(
+$messages['gsw'] = [
 	'wednesday' => 'Mittwuche',
 	'wed' => 'Mit',
 	'wrong_wfQuery_params' => 'Falschi Parameter fir wfQuery()<br />
@@ -5636,11 +5658,11 @@ Vergiss nid, dyni [[Special:Preferences|{{SITENAME}}-Yystellige]] aazpasse.',
 	'watchnochange' => 'Vo den Artikle, wo du beobachtisch, isch im aazeigte Zytruum kene veränderet worde.',
 	'watchlist-details' => '{{PLURAL:$1|1 Syte wird|$1 Sytene wärde}} beobachtet (Diskussionssyte nid zelt, aber ou beobachtet).',
 	'wlheader-enotif' => '* Dr E-Mail-Benochrichtigungsdienscht isch aktiviert.',
-	'wlheader-showupdated' => "* Syte mit Anderige, wu no nit aagluegt sin, sin '''fett''' dargstellt.",
+	'wlheader-showupdated' => '* Syte mit Anderige, wu no nit aagluegt sin, sin \'\'\'fett\'\'\' dargstellt.',
 	'watchmethod-recent' => 'Iberpriefe vu dr letschte Bearbeitige fir d Beobachtigslischt',
 	'watchmethod-list' => 'Iberpriefe vu dr Beobachtigslischt no letschte Bearbeitige',
 	'watchlistcontains' => 'In Dyynere Beobachtigslischt het s $1 {{PLURAL:$1|Syte|Syte}}.',
-	'wlnote' => "Do {{PLURAL:$1|chunnt di letscht Änderig|chemme di letschte '''$1''' Änderige}} vu dr letschte {{PLURAL:$2|Stund|'''$2''' Stunde}}.",
+	'wlnote' => 'Do {{PLURAL:$1|chunnt di letscht Änderig|chemme di letschte \'\'\'$1\'\'\' Änderige}} vu dr letschte {{PLURAL:$2|Stund|\'\'\'$2\'\'\' Stunde}}.',
 	'wlshowlast' => 'Zeig di letschte $1 Stunde $2 Tage $3',
 	'watchlist-options' => 'Aazeigoptione',
 	'watching' => 'Am beobachte …',
@@ -5678,9 +5700,9 @@ Du chasch au d [[Special:EditWatchlist|Standard-Bearbeitigssyte]] bruuche.',
 	'watchlisttools-view' => 'Beobachtigsliste: Änderige',
 	'watchlisttools-edit' => 'normal bearbeite',
 	'watchlisttools-raw' => 'imene große Textfäld bearbeite',
-);
+];
 
-$messages['gu'] = array(
+$messages['gu'] = [
 	'wednesday' => 'બુધવાર',
 	'wed' => 'બુધ',
 	'wrong_wfQuery_params' => 'wfQuery() માટે અયોગ્ય વિકલ્પો<br />
@@ -5718,11 +5740,11 @@ Query: $2',
 	'watchnochange' => 'તમારા દ્વારા નિરીક્ષિત પાના આપેલ સમય ગાળામાં ફેરફારીત થયા',
 	'watchlist-details' => 'ચર્ચાનાં પાનાં ન ગણતા {{PLURAL:$1|$1 પાનું|$1 પાનાં}} ધ્યાનસૂચીમાં છે.',
 	'wlheader-enotif' => '*ઈ-મેલા સૂચના પદ્ધતિ સક્રીય કરાઈ',
-	'wlheader-showupdated' => "*તમારી મુલાકાત લીધા પછી બદલાયેલા પાના  '''ઘાટા''' અક્ષરો વડે દર્શાવ્યાં છે",
+	'wlheader-showupdated' => '*તમારી મુલાકાત લીધા પછી બદલાયેલા પાના  \'\'\'ઘાટા\'\'\' અક્ષરો વડે દર્શાવ્યાં છે',
 	'watchmethod-recent' => 'હાલમાં ફેરફાર થયેલ પાનાની ચકાસણી જારી',
 	'watchmethod-list' => 'હાલમાં થયેલ ફેરફાર માટે નીરીક્ષીત પાના તપાસાય છે',
 	'watchlistcontains' => 'તમારી ધ્યાનસૂચીમાં $1 {{PLURAL:$1|પાનું|પાનાં}} છે.',
-	'wlnote' => "નીચે $3, $4 વાગ્યા સુધીના છેલ્લા {{PLURAL:$2|એક કલાક|'''$2''' કલાક}}માં થયેલા {{PLURAL:$1|ફેરફાર|'''$1''' ફેરફારો }} દર્શાવ્યા છે.",
+	'wlnote' => 'નીચે $3, $4 વાગ્યા સુધીના છેલ્લા {{PLURAL:$2|એક કલાક|\'\'\'$2\'\'\' કલાક}}માં થયેલા {{PLURAL:$1|ફેરફાર|\'\'\'$1\'\'\' ફેરફારો }} દર્શાવ્યા છે.',
 	'wlshowlast' => 'છેલ્લા $1 કલાક $2 દિવસ $3 બતાવો',
 	'watchlist-options' => 'ધ્યાનસૂચિના વિકલ્પો',
 	'watching' => 'નજર રાખી રહ્યાં છો...',
@@ -5763,17 +5785,17 @@ Query: $2',
 	'watchlisttools-view' => 'બંધબેસતાં ફેરફારો નિહાળો',
 	'watchlisttools-edit' => 'ધ્યાનસૂચી જુઓ અને બદલો',
 	'watchlisttools-raw' => 'કાચી ધ્યાનસૂચિમાં ફેરફાર કરો',
-);
+];
 
-$messages['gv'] = array(
+$messages['gv'] = [
 	'wednesday' => 'Jecrean',
 	'wed' => 'Crean',
 	'welcomecreation' => '== Failt ort, $1! ==
 Ta dty choontys chrooit nish.<br />
 Ny jean jarrood dty [[Special:Preferences|{{SITENAME}} hosheeaghtyn]] y arraghey.',
 	'wrongpassword' => 'Va fockle arrey neuchiart screeuit. Screeu eh reesht eh.',
-	'wrongpasswordempty' => "Va'n fockle arrey screeuit bane.
-Aascreeu, my sailliu.",
+	'wrongpasswordempty' => 'Va\'n fockle arrey screeuit bane.
+Aascreeu, my sailliu.',
 	'watchthis' => 'Freill arrey er y duillag shoh',
 	'watchthisupload' => 'Freill arrey er y choadan shoh',
 	'withoutinterwiki' => 'Duillagyn gyn kianglaghyn eddyrwiki',
@@ -5784,14 +5806,14 @@ Aascreeu, my sailliu.",
 	'wantedfiles' => 'Coadanyn ry-laccal',
 	'wantedtemplates' => 'Clowanyn ry-laccal',
 	'watchlist' => 'My rolley arrey',
-	'watchlistfor' => "(son '''$1''')",
+	'watchlistfor' => '(son \'\'\'$1\'\'\')',
 	'watchnologin' => 'Cha nel oo loggit stiagh',
 	'watch' => 'Freill arrey',
 	'watchthispage' => 'Freill arrey er y duillag shoh',
 	'watchlist-details' => 'Ta {{PLURAL:$1|$1 duillag|$1 duillag|$1 ghuillag|$1 duillagyn}} er dty rolley arrey, faagail magh duillagyn resoonaght.',
 	'watchlistcontains' => 'Ta $1 {{PLURAL:$1|duillag|duillagyn}} ayns dty rolley arrey.',
-	'wlshowlast' => "Taishbyney ny $1 ooryn $2 laaghyn $3 s'jerree",
-	'watchlist-options' => "Reihyn da'n rolley arrey",
+	'wlshowlast' => 'Taishbyney ny $1 ooryn $2 laaghyn $3 s\'jerree',
+	'watchlist-options' => 'Reihyn da\'n rolley arrey',
 	'watching' => 'Jannoo arrey...',
 	'whatlinkshere' => 'Cre ta kianglt lesh shoh',
 	'whatlinkshere-title' => 'Duillagyn ta kianglt lesh $1',
@@ -5815,9 +5837,9 @@ Aascreeu, my sailliu.",
 	'watchlisttools-view' => 'Jeeagh er caghlaaghyn bentynagh',
 	'watchlisttools-edit' => 'Jeeagh er as reaghey yn rolley arrey',
 	'watchlisttools-raw' => 'Reaghey aw-rolley arrey',
-);
+];
 
-$messages['ha'] = array(
+$messages['ha'] = [
 	'wednesday' => 'Laraba',
 	'wed' => 'Lar',
 	'watchthis' => 'Bi sawun wannan shafi',
@@ -5843,9 +5865,9 @@ $messages['ha'] = array(
 	'watchlisttools-view' => 'Duba sauye-sauyen da suka dace',
 	'watchlisttools-edit' => 'Duba kuma gyara jerin bin sawu',
 	'watchlisttools-raw' => 'Gyara jerin bin sawu',
-);
+];
 
-$messages['hak'] = array(
+$messages['hak'] = [
 	'wednesday' => 'Lî-pai-sâm',
 	'wed' => 'Lî-pai-sâm',
 	'wrong_wfQuery_params' => 'Chho-ngu ke chhâm-su thô-chṳ wfQuery（）<br />
@@ -5870,7 +5892,7 @@ Chhà-khon: $2',
 	'watchnochange' => 'Chhai hién-sṳ ke sṳ̀-kiên thon-nui ngì só kam-sṳ ke vùn-chông mò-yû kiên-kói.',
 	'watchlist-details' => 'Put pâu-hàm thó-lun-hong, ngì-ke kam-sṳ lie̍t-péu khiung-yû $1-hong.',
 	'wlheader-enotif' => '* Yí-kîn khí-thung email thûng-tî kûng-nèn.',
-	'wlheader-showupdated' => "* Chhai ngì song-chhṳ kiám-sṳ heu yû pûn chhùng-siû ko ke vùn-chông chiông-voi hién-sṳ vi '''chhû-thí'''.",
+	'wlheader-showupdated' => '* Chhai ngì song-chhṳ kiám-sṳ heu yû pûn chhùng-siû ko ke vùn-chông chiông-voi hién-sṳ vi \'\'\'chhû-thí\'\'\'.',
 	'watchmethod-recent' => 'Kiám-chhà pûn kam-sṳ hong-mien ke chui-khiûn phiên-cho',
 	'watchmethod-list' => 'Kiám-chhà chui-khiûn phiên-cho ke pûn kam-sṳ hong-mien.',
 	'watchlistcontains' => 'Ngì-ke kam-sṳ lie̍t-péu pâu-hàm $1-ke hong-mien.',
@@ -5892,9 +5914,9 @@ Chhà-khon: $2',
 	'watchlisttools-view' => 'Kiám-sṳ yû-kôan kiên-kói',
 	'watchlisttools-edit' => 'Kiám-sṳ lâu phiên-sip kam-sṳ lie̍t-péu',
 	'watchlisttools-raw' => 'Phiên-sip ngièn-sṳ́ kam-sṳ lie̍t-péu',
-);
+];
 
-$messages['haw'] = array(
+$messages['haw'] = [
 	'wednesday' => 'Pō‘akolu',
 	'wed' => 'Pō‘akolu',
 	'welcomecreation' => '== E komo mai, $1! ==
@@ -5922,11 +5944,11 @@ E ʻoluʻolu, e kūlia hou.',
 	'whatlinkshere-filters' => 'Kānana',
 	'watchlistall2' => 'apau',
 	'watchlistedit-normal-title' => 'E ho‘opololei i ka‘u papa nānā pono',
-);
+];
 
-$messages['he'] = array(
+$messages['he'] = [
 	'wednesday' => 'רביעי',
-	'wed' => "ד'",
+	'wed' => 'ד\'',
 	'wrong_wfQuery_params' => 'הפרמטרים שהוזנו ל־wfQuery()‎ אינם נכונים:<br />
 פונקציה: $1<br />
 שאילתה: $2',
@@ -5962,11 +5984,11 @@ $messages['he'] = array(
 	'watchnochange' => 'אף אחד מהדפים ברשימת המעקב לא עודכן בפרק הזמן המצוין למעלה.',
 	'watchlist-details' => 'ברשימת המעקב יש {{PLURAL:$1|דף אחד|$1 דפים}} (לא כולל דפי שיחה).',
 	'wlheader-enotif' => '* הודעות דוא"ל מאופשרות.',
-	'wlheader-showupdated' => "* דפים שהשתנו מאז ביקורכם האחרון בהם מוצגים ב'''הדגשה'''.",
+	'wlheader-showupdated' => '* דפים שהשתנו מאז ביקורכם האחרון בהם מוצגים ב\'\'\'הדגשה\'\'\'.',
 	'watchmethod-recent' => 'בודק את הדפים שברשימת המעקב לשינויים אחרונים.',
 	'watchmethod-list' => 'בודק את העריכות האחרונות בדפים שברשימת המעקב',
 	'watchlistcontains' => 'רשימת המעקב כוללת {{PLURAL:$1|דף אחד|$1 דפים}}.',
-	'wlnote' => "להלן {{PLURAL:$1|השינוי האחרון|'''$1''' השינויים האחרונים}} {{PLURAL:$2|בשעה האחרונה|ב־'''$2''' השעות האחרונות|בשעתיים האחרונות}}, עד $4, $3.",
+	'wlnote' => 'להלן {{PLURAL:$1|השינוי האחרון|\'\'\'$1\'\'\' השינויים האחרונים}} {{PLURAL:$2|בשעה האחרונה|ב־\'\'\'$2\'\'\' השעות האחרונות|בשעתיים האחרונות}}, עד $4, $3.',
 	'wlshowlast' => '(הצגת $1 שעות אחרונות | $2 ימים אחרונים | $3)',
 	'watchlist-options' => 'אפשרויות ברשימת המעקב',
 	'watching' => 'בהוספה לרשימת המעקב…',
@@ -6008,9 +6030,9 @@ $messages['he'] = array(
 	'watchlisttools-edit' => 'הצגה ועריכה של רשימת המעקב',
 	'watchlisttools-raw' => 'עריכת הרשימה הגולמית',
 	'wikia-pagetitle' => '$1 – Wikia',
-);
+];
 
-$messages['hi'] = array(
+$messages['hi'] = [
 	'wednesday' => 'बुधवार',
 	'wed' => 'बुध',
 	'wrong_wfQuery_params' => 'wfQuery() के लिये गलत मापदण्ड दियें हैं<br />
@@ -6033,7 +6055,7 @@ $messages['hi'] = array(
 	'wantedfiles' => 'वांछित संचिकाएँ',
 	'wantedtemplates' => 'वांछित साँचे',
 	'watchlist' => 'मेरी ध्यानसूची',
-	'watchlistfor' => "('''$1''' के लिये)",
+	'watchlistfor' => '(\'\'\'$1\'\'\' के लिये)',
 	'watchlistanontext' => 'अपने ध्यानसूचीमें होने वाले लेख देखने या फिर संपादित करने के लिये कॄपया $1 करें।',
 	'watchnologin' => 'लॉग इन नहीं किया हैं',
 	'watchnologintext' => 'ध्यानसूचीमें बदलाव के लिये आपने [[Special:UserLogin|लॉग इन]] किया होना आवश्यक हैं।',
@@ -6042,11 +6064,11 @@ $messages['hi'] = array(
 	'watchnochange' => 'दिये गये समयमें आपके ध्यानसूचीमें होने वाले लेखोंमें कोई भी बदलाव नहीं हुए हैं।',
 	'watchlist-details' => 'वार्ता पन्नों के अलावा {{PLURAL:$1|$1 पन्ना|$1 पन्ने}} आपकी ध्यानसूचीमें हैं।',
 	'wlheader-enotif' => '* इ-मेल नोटिफिकेशन उपल्ब्ध हैं।',
-	'wlheader-showupdated' => "* लेख, जो आपके द्वारा देखे जाने के बाद बदले गये हैं, '''बोल्ड''' दिखेंगे।",
+	'wlheader-showupdated' => '* लेख, जो आपके द्वारा देखे जाने के बाद बदले गये हैं, \'\'\'बोल्ड\'\'\' दिखेंगे।',
 	'watchmethod-recent' => 'ध्यानसूचीमें दिये गये लेखोंमें हाल में हुए बदलाव देख रहें हैं',
 	'watchmethod-list' => 'ध्यानसूचीमें दिये गये लेखोंमें हाल में हुए बदलाव देख रहें हैं',
 	'watchlistcontains' => 'आपकी ध्यानसूचीमें $1 {{PLURAL:$1|लेख|पन्ने}} हैं।',
-	'wlnote' => "नीचे पीछले {{PLURAL:$2|घंटेमें|'''$2''' घंटोंमें}} हुए {{PLURAL:$1|आखिरी बदलाव|आखिरी '''$1''' बदलाव}} दिये हुए हैं।",
+	'wlnote' => 'नीचे पीछले {{PLURAL:$2|घंटेमें|\'\'\'$2\'\'\' घंटोंमें}} हुए {{PLURAL:$1|आखिरी बदलाव|आखिरी \'\'\'$1\'\'\' बदलाव}} दिये हुए हैं।',
 	'wlshowlast' => 'पिछले $1 घंटे $2 दिन $3 देखें',
 	'watchlist-options' => 'ध्यानसूची विकल्प',
 	'watching' => 'ध्यान दे रहे हैं...',
@@ -6086,9 +6108,9 @@ $messages['hi'] = array(
 	'watchlisttools-view' => 'आधारित बदलाव देखें',
 	'watchlisttools-edit' => 'ध्यानसूची देखें एवं संपादित करें',
 	'watchlisttools-raw' => 'रॉ ध्यानसूची देखें एवम्‌ संपादित करें',
-);
+];
 
-$messages['hif'] = array(
+$messages['hif'] = [
 	'wednesday' => 'बुधवार',
 	'wed' => 'बुध',
 	'wrong_wfQuery_params' => 'wfQuery() के लिये गलत मापदण्ड दियें हैं<br />
@@ -6111,7 +6133,7 @@ $messages['hif'] = array(
 	'wantedfiles' => 'वांछित संचिकाएँ',
 	'wantedtemplates' => 'वांछित साँचे',
 	'watchlist' => 'मेरी ध्यानसूची',
-	'watchlistfor' => "('''$1''' के लिये)",
+	'watchlistfor' => '(\'\'\'$1\'\'\' के लिये)',
 	'watchlistanontext' => 'अपने ध्यानसूचीमें होने वाले लेख देखने या फिर संपादित करने के लिये कॄपया $1 करें।',
 	'watchnologin' => 'लॉग इन नहीं किया हैं',
 	'watchnologintext' => 'ध्यानसूचीमें बदलाव के लिये आपने [[Special:UserLogin|लॉग इन]] किया होना आवश्यक हैं।',
@@ -6120,11 +6142,11 @@ $messages['hif'] = array(
 	'watchnochange' => 'दिये गये समयमें आपके ध्यानसूचीमें होने वाले लेखोंमें कोई भी बदलाव नहीं हुए हैं।',
 	'watchlist-details' => 'वार्ता पन्नों के अलावा {{PLURAL:$1|$1 पन्ना|$1 पन्ने}} आपकी ध्यानसूचीमें हैं।',
 	'wlheader-enotif' => '* इ-मेल नोटिफिकेशन उपल्ब्ध हैं।',
-	'wlheader-showupdated' => "* लेख, जो आपके द्वारा देखे जाने के बाद बदले गये हैं, '''बोल्ड''' दिखेंगे।",
+	'wlheader-showupdated' => '* लेख, जो आपके द्वारा देखे जाने के बाद बदले गये हैं, \'\'\'बोल्ड\'\'\' दिखेंगे।',
 	'watchmethod-recent' => 'ध्यानसूचीमें दिये गये लेखोंमें हाल में हुए बदलाव देख रहें हैं',
 	'watchmethod-list' => 'ध्यानसूचीमें दिये गये लेखोंमें हाल में हुए बदलाव देख रहें हैं',
 	'watchlistcontains' => 'आपकी ध्यानसूचीमें $1 {{PLURAL:$1|लेख|पन्ने}} हैं।',
-	'wlnote' => "नीचे पीछले {{PLURAL:$2|घंटेमें|'''$2''' घंटोंमें}} हुए {{PLURAL:$1|आखिरी बदलाव|आखिरी '''$1''' बदलाव}} दिये हुए हैं।",
+	'wlnote' => 'नीचे पीछले {{PLURAL:$2|घंटेमें|\'\'\'$2\'\'\' घंटोंमें}} हुए {{PLURAL:$1|आखिरी बदलाव|आखिरी \'\'\'$1\'\'\' बदलाव}} दिये हुए हैं।',
 	'wlshowlast' => 'पिछले $1 घंटे $2 दिन $3 देखें',
 	'watchlist-options' => 'ध्यानसूची विकल्प',
 	'watching' => 'ध्यान दे रहे हैं...',
@@ -6164,9 +6186,9 @@ $messages['hif'] = array(
 	'watchlisttools-view' => 'आधारित बदलाव देखें',
 	'watchlisttools-edit' => 'ध्यानसूची देखें एवं संपादित करें',
 	'watchlisttools-raw' => 'रॉ ध्यानसूची देखें एवम्‌ संपादित करें',
-);
+];
 
-$messages['hif-latn'] = array(
+$messages['hif-latn'] = [
 	'wednesday' => 'Budh',
 	'wed' => 'Wed',
 	'wrong_wfQuery_params' => 'Galat parameters to wfQuery()<br />
@@ -6191,7 +6213,7 @@ Aapan [[Special:Preferences|{{SITENAME}} pasand]]  ke badle nai bhulna.',
 	'wantedfiles' => 'Maange waala files',
 	'wantedtemplates' => 'Maange waala templates',
 	'watchlist' => 'Hamaar dhyan suchi',
-	'watchlistfor' => "('''$1''' ke khatir)",
+	'watchlistfor' => '(\'\'\'$1\'\'\' ke khatir)',
 	'watchlistanontext' => 'Aapan dhyan suchi me ke dekhe nai to badle ke khatir meharbani kar ke $1 karo.',
 	'watchnologin' => 'Logged in nai hai',
 	'watchnologintext' => 'Aapan dhyan suchi ke badle ke khatir aap ke [[Special:UserLogin|logged in]] rahe ke chaahi.',
@@ -6200,11 +6222,11 @@ Aapan [[Special:Preferences|{{SITENAME}} pasand]]  ke badle nai bhulna.',
 	'watchnochange' => 'Aap ke koi bhi dhyan me rakkhaa gae chij ke ii time me badla nai gais hai.',
 	'watchlist-details' => '{{PLURAL:$1|$1 panna|$1 panna}} pe dhyan dewa jae hai, baat waala panna ke chhorr ke.',
 	'wlheader-enotif' => '* E-mail notification ke enable kar dewa gais hai.',
-	'wlheader-showupdated' => "* Panna jiske aap ke pichhla visit ke ke baad badal dewa gais hia ke '''bold''' me dekhawa gais hai",
+	'wlheader-showupdated' => '* Panna jiske aap ke pichhla visit ke ke baad badal dewa gais hia ke \'\'\'bold\'\'\' me dekhawa gais hai',
 	'watchmethod-recent' => 'Dhyan me rakkhaa gais panna ke nawaa badlao ke check karaa jaawe hai',
 	'watchmethod-list' => 'dhyan me rakkha gais panna ke nawaa badlao ke khatir check karaa jaawe hai',
 	'watchlistcontains' => 'Aap ke dhyan suchi me  $1 {{PLURAL:$1|panna|panna}} hai.',
-	'wlnote' => "Niche {{PLURAL:$1|pahile waala badlao hai| pahile'''$1''' badlao hai}} pichhle {{PLURAL:$2|ghanta|'''$2''' ghanta}} me.",
+	'wlnote' => 'Niche {{PLURAL:$1|pahile waala badlao hai| pahile\'\'\'$1\'\'\' badlao hai}} pichhle {{PLURAL:$2|ghanta|\'\'\'$2\'\'\' ghanta}} me.',
 	'wlshowlast' => 'Pichhla $1 ghanta $2 din $3 ke dekhao',
 	'watchlist-options' => 'Dhyan suchi ke options',
 	'watching' => 'Dekhtaa...',
@@ -6226,9 +6248,9 @@ Aapan [[Special:Preferences|{{SITENAME}} pasand]]  ke badle nai bhulna.',
 	'watchlisttools-view' => 'Jaruri badlao dekho',
 	'watchlisttools-edit' => 'Dhyan suchi ke dekho aur badlo',
 	'watchlisttools-raw' => 'Dhyan suchi ke apne sampadan karo',
-);
+];
 
-$messages['hil'] = array(
+$messages['hil'] = [
 	'wednesday' => 'Miyerkoles',
 	'wed' => 'Miy',
 	'wrong_wfQuery_params' => 'Indi insakto nga mga parametro sa wfQuery()<br />
@@ -6266,9 +6288,9 @@ Palihog tilawi liwat butang.',
 	'watchlisttools-view' => 'Tan-awon ang kaparehas nga ginbag-o',
 	'watchlisttools-edit' => 'Tan-awon kag islan ang listahan nga ginalantaw',
 	'watchlisttools-raw' => 'Islan ang hindi pa tapos na listahan sang nagalantaw',
-);
+];
 
-$messages['hr'] = array(
+$messages['hr'] = [
 	'wednesday' => 'srijeda',
 	'wed' => 'Sri',
 	'wrong_wfQuery_params' => 'Neispravni parametri poslani u wfQuery()<br />
@@ -6304,11 +6326,11 @@ za promjene u popisu praćenja.',
 	'watchnochange' => 'Niti jedna od praćenih stranica nije promijenjena od Vašeg zadnjeg posjeta.',
 	'watchlist-details' => '{{PLURAL:$1|$1 stranica|$1 stranice|$1 stranica}} se nalazi na popisu praćenja, ne brojeći stranice za razgovor.',
 	'wlheader-enotif' => '* Uključeno je izvješćivanje e-mailom.',
-	'wlheader-showupdated' => "* Stranice koje su promijenjene od Vašeg zadnjeg posjeta prikazane su '''podebljano'''",
+	'wlheader-showupdated' => '* Stranice koje su promijenjene od Vašeg zadnjeg posjeta prikazane su \'\'\'podebljano\'\'\'',
 	'watchmethod-recent' => 'provjera nedavnih promjena praćenih stranica',
 	'watchmethod-list' => 'provjera praćanih stranica za nedavne promjene',
 	'watchlistcontains' => 'Vaš popis praćenja sadrži $1 {{PLURAL:$1|stranicu|stranice|stranica}}.',
-	'wlnote' => "Ovdje {{PLURAL:$1|je posljednja $1 promjena|su posljednje $1 promjene|je posljednjih $1 promjena}} u {{PLURAL:$2|posljednjem '''$2''' satu|posljednja '''$2''' sata|posljednjih '''$2''' sati}}, od $3, $4.",
+	'wlnote' => 'Ovdje {{PLURAL:$1|je posljednja $1 promjena|su posljednje $1 promjene|je posljednjih $1 promjena}} u {{PLURAL:$2|posljednjem \'\'\'$2\'\'\' satu|posljednja \'\'\'$2\'\'\' sata|posljednjih \'\'\'$2\'\'\' sati}}, od $3, $4.',
 	'wlshowlast' => 'Prikaži zadnjih $1 sati $2 dana $3',
 	'watchlist-options' => 'Izbornik popisa praćenja',
 	'watching' => 'Pratim...',
@@ -6348,9 +6370,9 @@ Također možete koristiti [[Special:EditWatchlist|standardni editor]].',
 	'watchlisttools-view' => 'Pregled promjena praćenih stranica',
 	'watchlisttools-edit' => 'Pregled i uređivanje praćenih stranica',
 	'watchlisttools-raw' => 'Uređivanje praćenih stranica u okviru za uređivanje',
-);
+];
 
-$messages['hsb'] = array(
+$messages['hsb'] = [
 	'wednesday' => 'Srjeda',
 	'wed' => 'Srj',
 	'wrong_wfQuery_params' => 'Njeprawe parametry za wfQuery()<br />
@@ -6390,7 +6412,7 @@ Twoje konto bu wutworjene. Njezabudź swoje nastajenja za [[Special:Preferences|
 	'watchmethod-recent' => 'Aktualne změny za wobkedźbowane strony přepruwować',
 	'watchmethod-list' => 'Wobkedźbowanki za aktualnymi změnami přepruwować',
 	'watchlistcontains' => 'Maš $1 {{PLURAL:$1|stronu|stronje|strony|stronow}} w swojich wobkedźbowankach.',
-	'wlnote' => "Deleka {{PLURAL:$1|je '''1''' změna|stej poslednjej '''$1''' změnje|su poslednje '''$1''' změny|je poslednich '''$1''' změnow}} za {{PLURAL:$2|poslednju hodźinu|poslednje '''$2''' hodźinje|poslednje '''$2''' hodźiny|poslednje '''$2''' hodźin}}, staw : $3, $4.",
+	'wlnote' => 'Deleka {{PLURAL:$1|je \'\'\'1\'\'\' změna|stej poslednjej \'\'\'$1\'\'\' změnje|su poslednje \'\'\'$1\'\'\' změny|je poslednich \'\'\'$1\'\'\' změnow}} za {{PLURAL:$2|poslednju hodźinu|poslednje \'\'\'$2\'\'\' hodźinje|poslednje \'\'\'$2\'\'\' hodźiny|poslednje \'\'\'$2\'\'\' hodźin}}, staw : $3, $4.',
 	'wlshowlast' => 'Poslednje $1 hodź. - $2 dnjow - $3 pokazać',
 	'watchlist-options' => 'Opcije wobkedźbowankow',
 	'watching' => 'Wobkedźbuju…',
@@ -6430,9 +6452,9 @@ Móžeš tež [[Special:EditWatchlist|standardnu wobdźěłowansku stronu]] wuž
 	'watchlisttools-view' => 'Wobkedźbowanki: Změny',
 	'watchlisttools-edit' => 'normalnje wobdźěłać',
 	'watchlisttools-raw' => 'Lisćinowy format wobdźěłać (import/eksport)',
-);
+];
 
-$messages['ht'] = array(
+$messages['ht'] = [
 	'wednesday' => 'mèkredi',
 	'wed' => 'mèk',
 	'wrong_wfQuery_params' => 'Paramèt sa yo pa bon sou wfQuery()<br />
@@ -6469,9 +6491,9 @@ Kont ou an kreye. Pa bliye pèsonalize l nan  [[Special:Preferences|preferans ou
 	'watchlisttools-view' => 'Wè chanjman enpòtan yo',
 	'watchlisttools-edit' => 'Wè epi modifye tou lis swivi',
 	'watchlisttools-raw' => 'Modifye lis swivi (mòd bazik)',
-);
+];
 
-$messages['hu'] = array(
+$messages['hu'] = [
 	'wednesday' => 'szerda',
 	'wed' => 'sze',
 	'wrong_wfQuery_params' => 'A wfQuery() függvény paraméterei hibásak<br />
@@ -6507,11 +6529,11 @@ Ne felejtsd el átnézni a [[Special:Preferences|személyes beállításaidat]].
 	'watchnochange' => 'Egyik figyelt lap sem változott a megadott időintervallumon belül.',
 	'watchlist-details' => 'A vitalapokon kívül {{PLURAL:$1|egy|$1}} lap van a figyelőlistádon.',
 	'wlheader-enotif' => '* Az e-mailen keresztül történő értesítés engedélyezve.',
-	'wlheader-showupdated' => "* Azok a lapok, amelyek megváltoztak, mióta utoljára megnézted őket, '''vastagon''' láthatóak.",
+	'wlheader-showupdated' => '* Azok a lapok, amelyek megváltoztak, mióta utoljára megnézted őket, \'\'\'vastagon\'\'\' láthatóak.',
 	'watchmethod-recent' => 'a figyelt lapokon belüli legfrissebb szerkesztések',
 	'watchmethod-list' => 'a legfrissebb szerkesztésekben található figyelt lapok',
 	'watchlistcontains' => 'A figyelőlistádon {{PLURAL:$1|egy|$1}} lap szerepel.',
-	'wlnote' => "Alább az utolsó '''{{PLURAL:$2|egy|$2}}''' óra '''{{PLURAL:$1|egy|$1}}''' változtatása látható. A lap generálásának ideje $3, $4.",
+	'wlnote' => 'Alább az utolsó \'\'\'{{PLURAL:$2|egy|$2}}\'\'\' óra \'\'\'{{PLURAL:$1|egy|$1}}\'\'\' változtatása látható. A lap generálásának ideje $3, $4.',
 	'wlshowlast' => 'Az elmúlt $1 órában | $2 napon | $3 történt változtatások legyenek láthatóak',
 	'watchlist-options' => 'A figyelőlista beállításai',
 	'watching' => 'Figyelés...',
@@ -6592,9 +6614,9 @@ minden egyes sor egy figyelt lap címe. Ha kész vagy, kattints a lista alatt ta
 	'widget-desc-watchlist' => 'Könnyedén szemmel tarthatod a megfigyelt lapokat.',
 	'widget-title-wikipage' => 'Wikioldal a kiegészítõben',
 	'widget-desc-wikipage' => 'Egy szócikk jeleníthetõ meg a kiegészítõben. Remek lehetõség saját kiegészítõ létrehozására!',
-);
+];
 
-$messages['hy'] = array(
+$messages['hy'] = [
 	'wednesday' => 'Չորեքշաբթի',
 	'wed' => 'Չոր',
 	'wrong_wfQuery_params' => 'Անթույլատրելի պարամետրեր wfQuery() ֆունկցիայի համար<br />
@@ -6625,11 +6647,11 @@ $messages['hy'] = array(
 	'watchnochange' => 'Ոչ մի հսկվող էջ չի փոփոխվել ցուցադրվող ժամանակահատվածում։',
 	'watchlist-details' => 'Ձեր հսկացանկում կա {{PLURAL:$1|$1 էջ|$1 էջ}}` քննարկման էջերը չհաշված։',
 	'wlheader-enotif' => '* Էլ-փոստով տեղեկացումը միացված է։',
-	'wlheader-showupdated' => "* Էջերը, որոնք փոփոխվել են ձեր դրանց վերջին այցից հետո բերված են '''թավատառ'''։",
+	'wlheader-showupdated' => '* Էջերը, որոնք փոփոխվել են ձեր դրանց վերջին այցից հետո բերված են \'\'\'թավատառ\'\'\'։',
 	'watchmethod-recent' => 'վերջին փոփոխությունները հսկվող էջերի համար',
 	'watchmethod-list' => 'հսկվող էջերի վերջին փոփոխությունները',
 	'watchlistcontains' => 'Ձեր հսկացանկում կա $1 {{PLURAL:$1|էջ|էջ}}։',
-	'wlnote' => "Ստորև բերված {{PLURAL:$1|է վերջին փոփոխությունը|են վերջին '''$1''' փոփոխությունները}} վերջին <strong>$2</strong> ժամվա ընթացքում։",
+	'wlnote' => 'Ստորև բերված {{PLURAL:$1|է վերջին փոփոխությունը|են վերջին \'\'\'$1\'\'\' փոփոխությունները}} վերջին <strong>$2</strong> ժամվա ընթացքում։',
 	'wlshowlast' => 'Ցուցադրել վերջին $1 ժամերը $2 օրերը $3',
 	'watchlist-options' => 'Հսկացանկի նախընտրություններ',
 	'watching' => 'Հսկվում է...',
@@ -6666,9 +6688,9 @@ $messages['hy'] = array(
 	'watchlisttools-edit' => 'Դիտել և խմբագրել հսկացանկը',
 	'watchlisttools-raw' => 'Խմբագրել հում հսկացանկը',
 	'wikia-pagetitle' => '$1 — Wikia',
-);
+];
 
-$messages['ia'] = array(
+$messages['ia'] = [
 	'wednesday' => 'mercuridi',
 	'wed' => 'mer',
 	'wrong_wfQuery_params' => 'Parametros incorrecte a wfQuery()<br />
@@ -6704,11 +6726,11 @@ Non oblida personalisar tu [[Special:Preferences|preferentias in {{SITENAME}}]].
 	'watchnochange' => 'Nulle articulo que tu observa esseva modificate durante le periodo de tempore indicate.',
 	'watchlist-details' => '{{PLURAL:$1|$1 pagina|$1 paginas}} es in tu observatorio, sin contar le paginas de discussion.',
 	'wlheader-enotif' => '* Le notificationes via e-mail es active.',
-	'wlheader-showupdated' => "* Le paginas que ha essite modificate post tu ultime visita se monstra in litteras '''grasse'''",
+	'wlheader-showupdated' => '* Le paginas que ha essite modificate post tu ultime visita se monstra in litteras \'\'\'grasse\'\'\'',
 	'watchmethod-recent' => 'cerca paginas sub observation in modificationes recente',
 	'watchmethod-list' => 'cerca modificationes recente in paginas sub observation',
 	'watchlistcontains' => 'Tu observatorio contine $1 {{PLURAL:$1|pagina|paginas}}.',
-	'wlnote' => "Ecce le ultime {{PLURAL:$1|modification|'''$1''' modificationes}} durante le ultime {{PLURAL:$2|hora|'''$2''' horas}}, a partir del $3 a $4.",
+	'wlnote' => 'Ecce le ultime {{PLURAL:$1|modification|\'\'\'$1\'\'\' modificationes}} durante le ultime {{PLURAL:$2|hora|\'\'\'$2\'\'\' horas}}, a partir del $3 a $4.',
 	'wlshowlast' => 'Revelar ultime $1 horas $2 dies $3',
 	'watchlist-options' => 'Optiones del observatorio',
 	'watching' => 'Observation in curso...',
@@ -6749,9 +6771,9 @@ Tu pote etiam [[Special:EditWatchlist|usar le editor standard]].',
 	'watchlisttools-view' => 'Vider modificationes pertinente',
 	'watchlisttools-edit' => 'Vider e modificar le observatorio',
 	'watchlisttools-raw' => 'Modificar observatorio crude',
-);
+];
 
-$messages['id'] = array(
+$messages['id'] = [
 	'wednesday' => 'Rabu',
 	'wed' => 'Rab',
 	'wrong_wfQuery_params' => 'Parameter salah ke wfQuery()<br />Fungsi: $1<br />Permintaan: $2',
@@ -6783,11 +6805,11 @@ Akun Anda telah dibuat. Jangan lupa mengatur konfigurasi [[Special:Preferences|p
 	'watchnochange' => 'Tak ada halaman pantauan Anda yang telah berubah dalam jangka waktu yang dipilih.',
 	'watchlist-details' => 'Terdapat {{PLURAL:$1|$1 halaman|$1 halaman}} di daftar pantauan Anda, tidak termasuk halaman pembicaraan.',
 	'wlheader-enotif' => '* Notifikasi surel diaktifkan.',
-	'wlheader-showupdated' => "* Halaman-halaman yang telah berubah sejak kunjungan terakhir Anda ditampilkan dengan '''huruf tebal'''",
+	'wlheader-showupdated' => '* Halaman-halaman yang telah berubah sejak kunjungan terakhir Anda ditampilkan dengan \'\'\'huruf tebal\'\'\'',
 	'watchmethod-recent' => 'periksa daftar perubahan terbaru terhadap halaman yang dipantau',
 	'watchmethod-list' => 'periksa halaman yang dipantau terhadap perubahan terbaru',
 	'watchlistcontains' => 'Daftar pantauan Anda berisi $1 {{PLURAL:$1|halaman|halaman}}.',
-	'wlnote' => "Di bawah ini adalah $1 {{PLURAL:$1|perubahan|perubahan}} terakhir dalam '''$2''' jam terakhir.",
+	'wlnote' => 'Di bawah ini adalah $1 {{PLURAL:$1|perubahan|perubahan}} terakhir dalam \'\'\'$2\'\'\' jam terakhir.',
 	'wlshowlast' => 'Tampilkan $1 jam $2 hari terakhir $3',
 	'watchlist-options' => 'Opsi daftar pantauan',
 	'watching' => 'Memantau...',
@@ -6828,9 +6850,9 @@ Anda juga dapat [[Special:EditWatchlist|menggunakan penyunting standar Anda]].',
 	'watchlisttools-view' => 'Tampilkan perubahan terkait',
 	'watchlisttools-edit' => 'Tampilkan dan sunting daftar pantauan',
 	'watchlisttools-raw' => 'Sunting daftar pantauan mentah',
-);
+];
 
-$messages['ie'] = array(
+$messages['ie'] = [
 	'wednesday' => 'mercurdí',
 	'wed' => 'mer',
 	'wrong_wfQuery_params' => 'Normes íncorect por wfQuery()<br />
@@ -6865,11 +6887,11 @@ Pleser prova denov.',
 	'watchnochange' => 'Nequant de tui tui partes vigilat esset redactet in li periode de témpor monstrat.',
 	'watchlist-details' => '{{PLURAL:$1|$1 págine|$1 págines}} in tui liste de págines vigilat, sin págines de discussion.',
 	'wlheader-enotif' => '* Li notification de e-mail es permisset.',
-	'wlheader-showupdated' => "* Págines quel hat esset mutat desde tui ultim visitation es monstrat in '''nigri'''",
+	'wlheader-showupdated' => '* Págines quel hat esset mutat desde tui ultim visitation es monstrat in \'\'\'nigri\'\'\'',
 	'watchmethod-recent' => 'controlant nov redactiones por págines vigilat',
 	'watchmethod-list' => 'controlant págines vigilat por nov redactiones',
 	'watchlistcontains' => 'Tui liste de págines vigilat contene $1 {{PLURAL:$1|págine|págines}}.',
-	'wlnote' => "Infra {{PLURAL:$1|es li ultim change|es li ultim '''$1''' changes}} in li ultim {{PLURAL:$2|hor|'''$2''' hores}}.",
+	'wlnote' => 'Infra {{PLURAL:$1|es li ultim change|es li ultim \'\'\'$1\'\'\' changes}} in li ultim {{PLURAL:$2|hor|\'\'\'$2\'\'\' hores}}.',
 	'wlshowlast' => 'Monstra ultim $1 hores $2 dies $3',
 	'watchlist-options' => 'Optiones de liste de págines vigilat',
 	'watching' => 'Vigilant...',
@@ -6908,9 +6930,9 @@ Vu posse anc [[Special:EditWatchlist|usar li redactor uniform]].',
 	'watchlisttools-view' => 'Vider changes aplicabil',
 	'watchlisttools-edit' => 'Vider e redacter liste de págines vigilat',
 	'watchlisttools-raw' => 'Redacter liste de págines vigilat vulnerosi',
-);
+];
 
-$messages['ig'] = array(
+$messages['ig'] = [
 	'wednesday' => 'Wensdè',
 	'wed' => 'Wen',
 	'wrong_wfQuery_params' => 'Okè nke défiere gá Ájújúwf()<br />
@@ -6956,35 +6978,35 @@ Biko meríáríá ya.',
 	'watchlisttools-view' => 'Zi ihe gbanwere dí mkpà na ngá',
 	'watchlisttools-edit' => 'Lé na rü na ndetù ńlé',
 	'watchlisttools-raw' => 'Rüo ndetù nlènlé mèpòrò',
-);
+];
 
-$messages['ike-cans'] = array(
+$messages['ike-cans'] = [
 	'wednesday' => 'ᐱᖓᔪᐊ',
 	'wed' => 'ᐱᖓ',
-	'welcomecreation' => "== ᐊᕆᐅᙵᐃᐹ, $1! ==
-ᐱᒋᕗᖅ ᖃᑕᙳᑎ ᐅᐃᑭᐱᑎᐊ ᑮᓇᐅᔭᖁᑎᖃᕐᕕᒃ ᐃᓱᐃᓪᓕᖓᐃᑦᔭᐹ. ᐃᖅᑑ ᓱᖁᓯᖅᐹ {{SITENAME}} ᐃᓐᓂᐊᑐᖅ «''ᓂᐱ ᐊᒥ''»",
+	'welcomecreation' => '== ᐊᕆᐅᙵᐃᐹ, $1! ==
+ᐱᒋᕗᖅ ᖃᑕᙳᑎ ᐅᐃᑭᐱᑎᐊ ᑮᓇᐅᔭᖁᑎᖃᕐᕕᒃ ᐃᓱᐃᓪᓕᖓᐃᑦᔭᐹ. ᐃᖅᑑ ᓱᖁᓯᖅᐹ {{SITENAME}} ᐃᓐᓂᐊᑐᖅ «\'\'ᓂᐱ ᐊᒥ\'\'»',
 	'watchthis' => 'ᐅᕝᕙ',
 	'watchthisupload' => 'ᐅᕝᕙ',
 	'watchlist' => 'ᐅᕝᕙ ᒪᑉᐱᑕᖅ',
 	'watch' => 'ᐅᕝᕙ',
 	'watchthispage' => 'ᐅᕝᕙ',
 	'whatlinkshere' => 'ᐅᖅᓯᖅ ᒪᐅᖓ',
-);
+];
 
-$messages['ike-latn'] = array(
+$messages['ike-latn'] = [
 	'wednesday' => 'pingajua',
 	'wed' => 'pinga',
-	'welcomecreation' => "== ariunngaipaa, $1! ==
-pigivuq qatannguti uikipitia kiinaujaqutiqarvik isuillingaitjapaa. iqtuu suqusiqpa{{SITENAME}} inniatuq—«''nipi ami''»",
+	'welcomecreation' => '== ariunngaipaa, $1! ==
+pigivuq qatannguti uikipitia kiinaujaqutiqarvik isuillingaitjapaa. iqtuu suqusiqpa{{SITENAME}} inniatuq—«\'\'nipi ami\'\'»',
 	'watchthis' => 'uvva',
 	'watchthisupload' => 'uvva',
 	'watchlist' => 'uvva mappitaq',
 	'watch' => 'uvva',
 	'watchthispage' => 'uvva',
 	'whatlinkshere' => 'uqsiq maungu',
-);
+];
 
-$messages['ilo'] = array(
+$messages['ilo'] = [
 	'wednesday' => 'Mierkoles',
 	'wed' => 'Mie',
 	'wrong_wfQuery_params' => 'Kamali a parametro iti wfQuery()<br />
@@ -7020,11 +7042,11 @@ Dimo liplipatan a sukatan dagita kaykayatmo idiay [[Special:Preferences|{{SITENA
 	'watchnochange' => 'Awan dagiti binambantayam ket naurnos dita panawen a naipakita.',
 	'watchlist-details' => '{{PLURAL:$1|$1 panid|$1 dagiti panid}} a bambantayam, saan a mairaman dagiti panid ti tungtongan.',
 	'wlheader-enotif' => '* Napabaelan ti pakiammo ti e-surat.',
-	'wlheader-showupdated' => "* Dagiti panid a nasukatan idi kinaudi a pinagbisitam ket naipakita iti '''napuskol'''",
+	'wlheader-showupdated' => '* Dagiti panid a nasukatan idi kinaudi a pinagbisitam ket naipakita iti \'\'\'napuskol\'\'\'',
 	'watchmethod-recent' => 'kitkitaen dagiti kinaudi nga inurnos kadagiti bambantayan a panid',
 	'watchmethod-list' => 'kitkitaen dagiti bambantayan a panid kadagiti kinaudi nga inurnos',
 	'watchlistcontains' => 'Addaan ti listaan ti bambantayam iti $1 {{PLURAL:$1|a panid|a pampanid}}.',
-	'wlnote' => "Adda dita baba {{PLURAL:$1|ti kaudian a pinagsukat|dagiti kaudian '''$1''' a pinagsukat}} iti naudi a {{PLURAL:$2|oras|'''$2''' oras}}, sipud idi $3, $4.",
+	'wlnote' => 'Adda dita baba {{PLURAL:$1|ti kaudian a pinagsukat|dagiti kaudian \'\'\'$1\'\'\' a pinagsukat}} iti naudi a {{PLURAL:$2|oras|\'\'\'$2\'\'\' oras}}, sipud idi $3, $4.',
 	'wlshowlast' => 'Ipakita dagiti naudi a $1 nga or-oras $2 nga al-aldaw $3',
 	'watchlist-options' => 'Dagiti pagpilian ti listaan a bambantayan',
 	'watching' => 'Bambantayan...',
@@ -7065,9 +7087,9 @@ Mabalin mo met a [[Special:EditWatchlist|usaren ti dati a pinagurnos]].',
 	'watchlisttools-view' => 'Kitaen dagiti napatpateg a sinukatan',
 	'watchlisttools-edit' => 'Kitaen ken baliwan ti listaan ti bambantayan',
 	'watchlisttools-raw' => 'Urnosen ti kilaw a bambantayan',
-);
+];
 
-$messages['inh'] = array(
+$messages['inh'] = [
 	'wednesday' => 'Кхаьра',
 	'wed' => 'Кха',
 	'watchthis' => 'Укх оагӀува теркам бе',
@@ -7095,9 +7117,9 @@ $messages['inh'] = array(
 	'watchlisttools-view' => 'Дагарчера оагIувнаш тIа хувцамаш',
 	'watchlisttools-edit' => 'Дагарче хьажа/хувца',
 	'watchlisttools-raw' => 'Яздам мо хувца',
-);
+];
 
-$messages['io'] = array(
+$messages['io'] = [
 	'wednesday' => 'merkurdio',
 	'wed' => 'mer',
 	'welcomecreation' => '== Bonveno, $1! ==
@@ -7124,7 +7146,7 @@ Voluntez, ne obliviez chanjor vua [[Special:Preferences|preferaji en {{SITENAME}
 	'watchmethod-recent' => 'serchante recenta chanji en la listo di surveyaji',
 	'watchmethod-list' => 'serchante recenta redakti en la listo di surveyaji',
 	'watchlistcontains' => 'Vua listo di surveyaji kontenas $1 {{PLURAL:$1|pagino|pagini}}.',
-	'wlnote' => "Infre esas la lasta {{PLURAL:$1|chanjo|'''$1''' chanji}} dum la lasta {{PLURAL:$2|horo|'''$2''' hori}}.",
+	'wlnote' => 'Infre esas la lasta {{PLURAL:$1|chanjo|\'\'\'$1\'\'\' chanji}} dum la lasta {{PLURAL:$2|horo|\'\'\'$2\'\'\' hori}}.',
 	'wlshowlast' => 'Montrar la lasta $1 hori $2 dii $3',
 	'watchlist-options' => 'Surveryo-listo selekti',
 	'watching' => 'Surveyanta…',
@@ -7146,9 +7168,9 @@ Voluntez, ne obliviez chanjor vua [[Special:Preferences|preferaji en {{SITENAME}
 	'watchlisttools-view' => 'Vidar relatanta chanji',
 	'watchlisttools-edit' => 'Vidar e redaktar surveyo-listo',
 	'watchlisttools-raw' => 'Redaktar texto di surveyo-listo',
-);
+];
 
-$messages['is'] = array(
+$messages['is'] = [
 	'wednesday' => 'miðvikudagur',
 	'wed' => 'mið',
 	'wrong_wfQuery_params' => 'Röng færibreyta fyrir wfQuery()<br />
@@ -7184,11 +7206,11 @@ Ekki gleyma að breyta [[Special:Preferences|{{SITENAME}}-stillingunum]] þínum
 	'watchnochange' => 'Engri síðu á vaktlistanum þínum hefur verið breytt á tilgreindu tímabili.',
 	'watchlist-details' => '{{PLURAL:$1|$1 síða|$1 síður}} á vaktlistanum þínum, fyrir utan spjallsíður.',
 	'wlheader-enotif' => '* Tilkynning með tölvupósti er virk.',
-	'wlheader-showupdated' => "* Síðum sem hefur verið breytt síðan þú skoðaðir þær síðast eru '''feitletraðar'''",
+	'wlheader-showupdated' => '* Síðum sem hefur verið breytt síðan þú skoðaðir þær síðast eru \'\'\'feitletraðar\'\'\'',
 	'watchmethod-recent' => 'kanna hvort nýlegar breytingar innihalda vaktaðar síður',
 	'watchmethod-list' => 'leita að breytingum í vöktuðum síðum',
 	'watchlistcontains' => 'Vaktlistinn þinn inniheldur {{PLURAL:$1|$1 síðu|$1 síður}}.',
-	'wlnote' => "Hér fyrir neðan {{PLURAL:$1|er síðasta breyting|eru síðustu '''$1''' breytingar}} {{PLURAL:$2|síðastliðinn klukkutímann|síðastliðna '''$2''' klukkutímana}}, frá $3, $4.",
+	'wlnote' => 'Hér fyrir neðan {{PLURAL:$1|er síðasta breyting|eru síðustu \'\'\'$1\'\'\' breytingar}} {{PLURAL:$2|síðastliðinn klukkutímann|síðastliðna \'\'\'$2\'\'\' klukkutímana}}, frá $3, $4.',
 	'wlshowlast' => 'Sýna síðustu $1 klukkutíma, $2 daga, $3',
 	'watchlist-options' => 'Vaktlistastillingar',
 	'watching' => 'Vakta...',
@@ -7228,17 +7250,17 @@ einn titil í hverri línu.
 	'watchlisttools-view' => 'Sýna viðeigandi breytingar',
 	'watchlisttools-edit' => 'Skoða og breyta vaktlistanum',
 	'watchlisttools-raw' => 'Breyta opnum vaktlistanum',
-);
+];
 
-$messages['it'] = array(
+$messages['it'] = [
 	'wednesday' => 'mercoledì',
 	'wed' => 'mer',
 	'wrong_wfQuery_params' => 'Errore nei parametri inviati alla funzione wfQuery()<br />
 Funzione: $1<br />
 Query: $2',
-	'welcomecreation' => "== Benvenuto, $1! ==
+	'welcomecreation' => '== Benvenuto, $1! ==
 
-L'account è stato creato correttamente. Non dimenticare di personalizzare le [[Special:Preferences|preferenze di {{SITENAME}}]].",
+L\'account è stato creato correttamente. Non dimenticare di personalizzare le [[Special:Preferences|preferenze di {{SITENAME}}]].',
 	'wrongpassword' => 'La password inserita non è corretta. Riprovare.',
 	'wrongpasswordempty' => 'Non è stata inserita alcuna password. Riprovare.',
 	'watchthis' => 'Aggiungi agli osservati speciali',
@@ -7257,20 +7279,20 @@ L'account è stato creato correttamente. Non dimenticare di personalizzare le [[
 	'wantedfiletext-nocat' => 'I seguenti file sono richiamati da wikilink, ma non esistono. I file ospitati su repository esterni potrebbero essere elencati anche se di fatto esistenti. Questi falsi positivi saranno <del>barrati</del>.',
 	'wantedtemplates' => 'Template richiesti',
 	'watchlist' => 'Osservati speciali',
-	'watchlistfor2' => "Dell'utente $1 $2",
-	'watchlistanontext' => "Per visualizzare e modificare l'elenco degli osservati speciali è necessario $1.",
+	'watchlistfor2' => 'Dell\'utente $1 $2',
+	'watchlistanontext' => 'Per visualizzare e modificare l\'elenco degli osservati speciali è necessario $1.',
 	'watchnologin' => 'Accesso non effettuato',
-	'watchnologintext' => "Per modificare la lista degli osservati speciali è necessario prima eseguire l'[[Special:UserLogin|accesso al sito]].",
+	'watchnologintext' => 'Per modificare la lista degli osservati speciali è necessario prima eseguire l\'[[Special:UserLogin|accesso al sito]].',
 	'watch' => 'Segui',
 	'watchthispage' => 'Segui questa pagina',
 	'watchnochange' => 'Nessuna delle pagine osservate è stata modificata nel periodo selezionato.',
 	'watchlist-details' => 'La lista degli osservati speciali contiene {{PLURAL:$1|una pagina (e la rispettiva pagina di discussione)|$1 pagine (e le rispettive pagine di discussione)}}.',
 	'wlheader-enotif' => '* La notifica via e-mail è attiva.',
-	'wlheader-showupdated' => "* Le pagine che sono state modificate dopo l'ultima visita sono evidenziate in '''grassetto'''.",
+	'wlheader-showupdated' => '* Le pagine che sono state modificate dopo l\'ultima visita sono evidenziate in \'\'\'grassetto\'\'\'.',
 	'watchmethod-recent' => 'controllo delle modifiche recenti per gli osservati speciali',
 	'watchmethod-list' => 'controllo degli osservati speciali per modifiche recenti',
 	'watchlistcontains' => 'La lista degli osservati speciali contiene {{PLURAL:$1|una pagina|$1 pagine}}.',
-	'wlnote' => "Di seguito {{PLURAL:$1|è elencata la modifica più recente apportata|sono elencate le '''$1''' modifiche più recenti apportate}} {{PLURAL:$2|nella scorsa ora|nelle scorse '''$2''' ore}}; i dati sono aggiornati alle $4 del $3.",
+	'wlnote' => 'Di seguito {{PLURAL:$1|è elencata la modifica più recente apportata|sono elencate le \'\'\'$1\'\'\' modifiche più recenti apportate}} {{PLURAL:$2|nella scorsa ora|nelle scorse \'\'\'$2\'\'\' ore}}; i dati sono aggiornati alle $4 del $3.',
 	'wlshowlast' => 'Mostra le ultime $1 ore $2 giorni $3',
 	'watchlist-options' => 'Opzioni osservati speciali',
 	'watching' => 'Aggiunta agli osservati speciali...',
@@ -7310,19 +7332,24 @@ Si noti che è anche possibile [[Special:EditWatchlist|modificare la lista con l
 	'watchlisttools-view' => 'Visualizza le modifiche pertinenti',
 	'watchlisttools-edit' => 'Visualizza e modifica la lista degli osservati speciali',
 	'watchlisttools-raw' => 'Modifica la lista in formato testo',
-	'wikia-read-only-mode' => "Oh! Il nostro centro dati principale non è al momento disponibile, così come il nostro backup. Sfortunatamente, ciò significa che non puoi fare cose come modificare, caricare o chattare.
-+Stiamo lavorando alla risoluzione del problema, ti ringraziamo per la pazienza! Se visualizzi questo messaggio per un periodo di tempo prolungato, contatta pure Wikia all'indirizzo community@wikia.com.",
-);
+	'wikia-read-only-mode' => 'Oh! Il nostro centro dati principale non è al momento disponibile, così come il nostro backup. Sfortunatamente, ciò significa che non puoi fare cose come modificare, caricare o chattare. 
++Stiamo lavorando alla risoluzione del problema, ti ringraziamo per la pazienza! Se visualizzi questo messaggio per un periodo di tempo prolungato, contatta pure Fandom all\'indirizzo community@wikia.com.',
+	'wikia_messages' => 'Messaggi di Fandom',
+	'widget-desc-wikiamessages' => 'Messaggi di Fandom',
+	'widget-title-advertiser' => 'Fandom Spotlight',
+	'widget-title-wikiamessages' => 'Messaggi di Fandom',
+	'wikicitieshome' => 'Pagina principale di Fandom',
+];
 
-$messages['iu'] = array(
+$messages['iu'] = [
 	'wednesday' => 'mercoledì',
 	'wed' => 'mer',
 	'wrong_wfQuery_params' => 'Errore nei parametri inviati alla funzione wfQuery()<br />
 Funzione: $1<br />
 Query: $2',
-	'welcomecreation' => "== Benvenuto, $1! ==
+	'welcomecreation' => '== Benvenuto, $1! ==
 
-L'account è stato creato correttamente. Non dimenticare di personalizzare le [[Special:Preferences|preferenze di {{SITENAME}}]].",
+L\'account è stato creato correttamente. Non dimenticare di personalizzare le [[Special:Preferences|preferenze di {{SITENAME}}]].',
 	'wrongpassword' => 'La password inserita non è corretta. Riprovare.',
 	'wrongpasswordempty' => 'Non è stata inserita alcuna password. Riprovare.',
 	'watchthis' => 'Aggiungi agli osservati speciali',
@@ -7341,20 +7368,20 @@ L'account è stato creato correttamente. Non dimenticare di personalizzare le [[
 	'wantedfiletext-nocat' => 'I seguenti file sono richiamati da wikilink, ma non esistono. I file ospitati su repository esterni potrebbero essere elencati anche se di fatto esistenti. Questi falsi positivi saranno <del>barrati</del>.',
 	'wantedtemplates' => 'Template richiesti',
 	'watchlist' => 'Osservati speciali',
-	'watchlistfor2' => "Dell'utente $1 $2",
-	'watchlistanontext' => "Per visualizzare e modificare l'elenco degli osservati speciali è necessario $1.",
+	'watchlistfor2' => 'Dell\'utente $1 $2',
+	'watchlistanontext' => 'Per visualizzare e modificare l\'elenco degli osservati speciali è necessario $1.',
 	'watchnologin' => 'Accesso non effettuato',
-	'watchnologintext' => "Per modificare la lista degli osservati speciali è necessario prima eseguire l'[[Special:UserLogin|accesso al sito]].",
+	'watchnologintext' => 'Per modificare la lista degli osservati speciali è necessario prima eseguire l\'[[Special:UserLogin|accesso al sito]].',
 	'watch' => 'Segui',
 	'watchthispage' => 'Segui questa pagina',
 	'watchnochange' => 'Nessuna delle pagine osservate è stata modificata nel periodo selezionato.',
 	'watchlist-details' => 'La lista degli osservati speciali contiene {{PLURAL:$1|una pagina (e la rispettiva pagina di discussione)|$1 pagine (e le rispettive pagine di discussione)}}.',
 	'wlheader-enotif' => '* La notifica via e-mail è attiva.',
-	'wlheader-showupdated' => "* Le pagine che sono state modificate dopo l'ultima visita sono evidenziate in '''grassetto'''.",
+	'wlheader-showupdated' => '* Le pagine che sono state modificate dopo l\'ultima visita sono evidenziate in \'\'\'grassetto\'\'\'.',
 	'watchmethod-recent' => 'controllo delle modifiche recenti per gli osservati speciali',
 	'watchmethod-list' => 'controllo degli osservati speciali per modifiche recenti',
 	'watchlistcontains' => 'La lista degli osservati speciali contiene {{PLURAL:$1|una pagina|$1 pagine}}.',
-	'wlnote' => "Di seguito {{PLURAL:$1|è elencata la modifica più recente apportata|sono elencate le '''$1''' modifiche più recenti apportate}} {{PLURAL:$2|nella scorsa ora|nelle scorse '''$2''' ore}}; i dati sono aggiornati alle $4 del $3.",
+	'wlnote' => 'Di seguito {{PLURAL:$1|è elencata la modifica più recente apportata|sono elencate le \'\'\'$1\'\'\' modifiche più recenti apportate}} {{PLURAL:$2|nella scorsa ora|nelle scorse \'\'\'$2\'\'\' ore}}; i dati sono aggiornati alle $4 del $3.',
 	'wlshowlast' => 'Mostra le ultime $1 ore $2 giorni $3',
 	'watchlist-options' => 'Opzioni osservati speciali',
 	'watching' => 'Aggiunta agli osservati speciali...',
@@ -7394,11 +7421,11 @@ Si noti che è anche possibile [[Special:EditWatchlist|modificare la lista con l
 	'watchlisttools-view' => 'Visualizza le modifiche pertinenti',
 	'watchlisttools-edit' => 'Visualizza e modifica la lista degli osservati speciali',
 	'watchlisttools-raw' => 'Modifica la lista in formato testo',
-	'wikia-read-only-mode' => "Oh! Il nostro centro dati principale non è al momento disponibile, così come il nostro backup. Sfortunatamente, ciò significa che non puoi fare cose come modificare, caricare o chattare.
-+Stiamo lavorando alla risoluzione del problema, ti ringraziamo per la pazienza! Se visualizzi questo messaggio per un periodo di tempo prolungato, contatta pure Wikia all'indirizzo community@wikia.com.",
-);
+	'wikia-read-only-mode' => 'Oh! Il nostro centro dati principale non è al momento disponibile, così come il nostro backup. Sfortunatamente, ciò significa che non puoi fare cose come modificare, caricare o chattare.
++Stiamo lavorando alla risoluzione del problema, ti ringraziamo per la pazienza! Se visualizzi questo messaggio per un periodo di tempo prolungato, contatta pure Wikia all\'indirizzo community@wikia.com.',
+];
 
-$messages['ja'] = array(
+$messages['ja'] = [
 	'wednesday' => '水曜日',
 	'wed' => '水',
 	'wrong_wfQuery_params' => 'wfQuery()へ誤った引数が渡されました。<br />
@@ -7434,11 +7461,11 @@ $messages['ja'] = array(
 	'watchnochange' => 'ウォッチリストに登録しているページで、指定期間内に編集されたものはありません。',
 	'watchlist-details' => 'ウォッチリストには$1ページが登録されています（トークページは数えません）。',
 	'wlheader-enotif' => '* メール通知が有効になっています',
-	'wlheader-showupdated' => "* 最後に訪問したあとに変更されたページは、'''太字'''で表示されます",
+	'wlheader-showupdated' => '* 最後に訪問したあとに変更されたページは、\'\'\'太字\'\'\'で表示されます',
 	'watchmethod-recent' => '最近の更新内のウォッチされているページを確認中',
 	'watchmethod-list' => 'ウォッチされているページ内の最近の更新を確認中',
 	'watchlistcontains' => 'ウォッチリストには、$1ページが登録されています。',
-	'wlnote' => "$3 $4までの{{PLURAL:$2|'''$2'''時間}}になされた'''$1'''件の変更は以下のとおりです。",
+	'wlnote' => '$3 $4までの{{PLURAL:$2|\'\'\'$2\'\'\'時間}}になされた\'\'\'$1\'\'\'件の変更は以下のとおりです。',
 	'wlshowlast' => '次の期間で表示：$1時間、$2日間、$3',
 	'watchlist-options' => 'ウォッチリストのオプション',
 	'watching' => 'ウォッチリストに追加しています・・・',
@@ -7481,18 +7508,22 @@ $messages['ja'] = array(
 	'watchlisttools-view' => '関連する変更の表示',
 	'watchlisttools-edit' => 'ウォッチリストの表示と編集',
 	'watchlisttools-raw' => 'ウォッチリストをそのまま編集',
-	'wikicitieshome' => 'メインページ',
+	'wikicitieshome' => 'Fandomホーム',
 	'wikicitieshome-url' => 'http://ja.wikia.com/',
 	'wikicitieshome-url/fr' => 'http://fr.wikia.com/',
 	'wikicities-nav' => 'wikia',
 	'wysiwygcaption' => 'グラフィカルに編集する',
 	'whats_new' => '新着',
 	'watchlist_s' => 'ウォッチリスト',
-	'wikia-read-only-mode' => 'Wikiaのメイン・データセンターは現在、ご利用いただけなくなっているため、バックアップを表示しています。このため、編集、アップロード、チャットなどの特定の操作を行えない可能性があります。
- 現在、Wikiaでは問題の修正に取り組んでおりますので、もうしばらくお待ちください。しばらくたっても引き続きこのメッセージが表示される場合は、Wikia（community@wikia.com）までお気軽にお問い合わせください。',
-);
+	'wikia-read-only-mode' => 'Fandomのメインサーバーは現在利用不可となっており、バックアップ版を表示しています。そのため、編集、アップロード、チャットなどの一部操作が行えない可能性があります。
+現在、Fandomでは問題の修正に取り組んでおりますので、もうしばらくお待ちください。しばらくたってもこのメッセージが表示される場合は、Fandom（community@fandom.com）までお気軽にお問い合わせください。',
+	'wikia_messages' => 'Fandomのメッセージ',
+	'widget-desc-wikiamessages' => 'Fandomのメッセージ',
+	'widget-title-advertiser' => 'Fandomスポットライト',
+	'widget-title-wikiamessages' => 'Fandomのメッセージ',
+];
 
-$messages['jam'] = array(
+$messages['jam'] = [
 	'wednesday' => 'Wenzde',
 	'wed' => 'Wen',
 	'wrong_wfQuery_params' => 'Inkarek paramita tu wfQuery()<br />
@@ -7528,26 +7559,26 @@ Begyu chrai agen.',
 	'watchlisttools-view' => 'Vyuu rilivant chienjdem',
 	'watchlisttools-edit' => 'Vyuu ahn edit wachlis',
 	'watchlisttools-raw' => 'Edit raa wachlis',
-);
+];
 
-$messages['jbo'] = array(
+$messages['jbo'] = [
 	'wednesday' => 'la cedjed.',
 	'watchthis' => 'zgana ti',
 	'watchlist' => 'selzgaste',
 	'watch' => 'jundi',
 	'watchthispage' => 'zgana ti',
-	'watching' => "co'a jundi",
+	'watching' => 'co\'a jundi',
 	'whatlinkshere' => 'ma jorne ti',
-);
+];
 
-$messages['jut'] = array(
+$messages['jut'] = [
 	'wednesday' => 'ønsdåg',
 	'wed' => 'øns',
 	'wrong_wfQuery_params' => 'Ugyldeg paramæter til wfQuery()<br />
 Funksje: $1<br />
 Førespørgsel: $2',
-	'wrongpassword' => "Den endtastede adgangskode var førkert. Prøv ig'n.",
-	'wrongpasswordempty' => "Du glemte at endtaste password. Prøv ig'n.",
+	'wrongpassword' => 'Den endtastede adgangskode var førkert. Prøv ig\'n.',
+	'wrongpasswordempty' => 'Du glemte at endtaste password. Prøv ig\'n.',
 	'watchthis' => 'Åvervåg denne ertikel',
 	'withoutinterwiki' => 'Sider uden henvesnenger til andre språĝ',
 	'wantedcategories' => 'Brugte men ekke ånlagte klynger',
@@ -7564,12 +7595,12 @@ Førespørgsel: $2',
 	'whatlinkshere-next' => '{{PLURAL:$1|nægste|nægste $1}}',
 	'whatlinkshere-links' => '← henvesnenger',
 	'watchlistall2' => 'åle',
-	'watchlisttools-view' => "Se ændrede sider i'n åvervågnengsliste",
+	'watchlisttools-view' => 'Se ændrede sider i\'n åvervågnengsliste',
 	'watchlisttools-edit' => 'Redigær åvervågnengsliste',
 	'watchlisttools-raw' => 'Redigær rå åvervågnengsliste',
-);
+];
 
-$messages['jv'] = array(
+$messages['jv'] = [
 	'wednesday' => 'Rebo',
 	'wed' => 'Rab',
 	'wrong_wfQuery_params' => 'Parameter salah menyang wfQuery()<br />Fungsi: $1<br />Panyuwunan: $2',
@@ -7592,7 +7623,7 @@ Akun panjenengan wis kacipta. Aja lali nata konfigurasi [[Special:Preferences|pr
 	'wantedfiles' => 'Berkas sing diperlokaké',
 	'wantedtemplates' => 'Cithakan sing diperlokaké',
 	'watchlist' => 'Daftar artikel pilihan',
-	'watchlistfor' => "(kanggo '''$1''')",
+	'watchlistfor' => '(kanggo \'\'\'$1\'\'\')',
 	'watchlistanontext' => 'Mangga $1 kanggo mirsani utawa nyunting daftar pangawasan panjenengan.',
 	'watchnologin' => 'Durung mlebu log',
 	'watchnologintext' => 'Panjenengan kudu [[Special:UserLogin|mlebu log]] kanggo ngowahi daftar artikel pilihan.',
@@ -7601,11 +7632,11 @@ Akun panjenengan wis kacipta. Aja lali nata konfigurasi [[Special:Preferences|pr
 	'watchnochange' => 'Ora ana kaca ing daftar pangawasan panjenengan sing diowahi ing mangsa wektu sing dipilih.',
 	'watchlist-details' => 'Ngawasaké {{PLURAL:$1|$1 kaca|$1 kaca}}, ora kalebu kaca-kaca dhiskusi.',
 	'wlheader-enotif' => '* Notifikasi e-mail diaktifaké.',
-	'wlheader-showupdated' => "* Kaca-kaca sing wis owah wiwit ditiliki panjenengan kaping pungkasan, dituduhaké mawa '''aksara kandel'''",
+	'wlheader-showupdated' => '* Kaca-kaca sing wis owah wiwit ditiliki panjenengan kaping pungkasan, dituduhaké mawa \'\'\'aksara kandel\'\'\'',
 	'watchmethod-recent' => 'priksa daftar owah-owahan anyar kanggo kaca sing diawasi',
 	'watchmethod-list' => 'priksa kaca sing diawasi kanggo owah-owahan anyar',
 	'watchlistcontains' => 'Daftar pangawasan panjenengan isiné ana $1 {{PLURAL:$1|kaca|kaca}}.',
-	'wlnote' => "Ing ngisor iki kapacak $1 {{PLURAL:$1|owah-owahan|owah-owahan}} pungkasan ing '''$2''' jam kapungkur.",
+	'wlnote' => 'Ing ngisor iki kapacak $1 {{PLURAL:$1|owah-owahan|owah-owahan}} pungkasan ing \'\'\'$2\'\'\' jam kapungkur.',
 	'wlshowlast' => 'Tuduhna $1 jam $2 dina $3 pungkasan',
 	'watchlist-options' => 'Opsi daftar pangawasan',
 	'watching' => 'Ngawasi...',
@@ -7644,9 +7675,9 @@ Panjenengan uga bisa [[Special:Watchlist/edit|nganggo éditor standar panjenenga
 	'watchlisttools-view' => 'Tuduhna owah-owahan sing ana gandhèngané',
 	'watchlisttools-edit' => 'Tuduhna lan sunting daftar pangawasan',
 	'watchlisttools-raw' => 'Sunting daftar pangawasan mentah',
-);
+];
 
-$messages['ka'] = array(
+$messages['ka'] = [
 	'wednesday' => 'ოთხშაბათი',
 	'wed' => 'ოთხ',
 	'wrong_wfQuery_params' => 'არასწორი პარამეტრები ფუნქციისათვის wfQuery()<br />
@@ -7671,7 +7702,7 @@ $messages['ka'] = array(
 	'wantedfiles' => 'მოთხოვნილი ფაილები',
 	'wantedtemplates' => 'მოთხოვნილი თარგები',
 	'watchlist' => 'ჩემი კონტროლის სია',
-	'watchlistfor' => "('''$1'''-თვის)",
+	'watchlistfor' => '(\'\'\'$1\'\'\'-თვის)',
 	'watchlistanontext' => '$1
 
 იხილეთ ან რედაქტირება გაუკეთეთ თქვენი კონტროლის სიაში შეტანილ ერთეულებს.',
@@ -7707,9 +7738,9 @@ $messages['ka'] = array(
 	'watchlistedit-noitems' => 'თქვენი კონტროლის სია ცარიელია.',
 	'watchlistedit-normal-title' => 'კონტროლის სიის რედაქტირება',
 	'watchlistedit-normal-legend' => 'მოხსენით სათაურები კონტროლის სიიდან',
-	'watchlistedit-normal-explain' => "ქვემოთ წარმოდგენილია თქვენი კონტროლის სიის გვერდები.
-წაშლისთვის მონიშნეთ გვერდები დაა დააჭირეთ '''«ჩანაწერების წაშლას»'''.
-თქვენ ასევე შეგიძლიათ მისი  [[Special:Watchlist/raw|ტექსტად შესწორება]].",
+	'watchlistedit-normal-explain' => 'ქვემოთ წარმოდგენილია თქვენი კონტროლის სიის გვერდები.
+წაშლისთვის მონიშნეთ გვერდები დაა დააჭირეთ \'\'\'«ჩანაწერების წაშლას»\'\'\'.
+თქვენ ასევე შეგიძლიათ მისი  [[Special:Watchlist/raw|ტექსტად შესწორება]].',
 	'watchlistedit-normal-submit' => 'სათაურების წაშლა',
 	'watchlistedit-normal-done' => '$1 სათაური მოიხსნა თქვენი კონტროლის სიიდან.',
 	'watchlistedit-raw-title' => 'კონტროლის სიის რედაქტირება ტექსტის ფორმატში',
@@ -7726,77 +7757,77 @@ $messages['ka'] = array(
 	'watchlisttools-view' => 'დაკავშირებული ცვლილებების ხილვა',
 	'watchlisttools-edit' => 'კონტროლის სიის ხილვა და რედაქტირება',
 	'watchlisttools-raw' => 'კონტროლის სიის რედაქტირება ტექსტის ფორმატში',
-);
+];
 
-$messages['kaa'] = array(
-	'wednesday' => "Sa'rshenbi",
-	'wed' => "Sa'r",
+$messages['kaa'] = [
+	'wednesday' => 'Sa\'rshenbi',
+	'wed' => 'Sa\'r',
 	'wrong_wfQuery_params' => 'wfQuery() funktsiyası ushın natuwrı parametrler berilgen<br />
 Funktsiya: $1<br />
 Soraw: $2',
-	'welcomecreation' => "== Xosh keldin'iz, $1! ==
+	'welcomecreation' => '== Xosh keldin\'iz, $1! ==
 
-Akkauntın'ız jaratıldı.
-[[Special:Preferences|{{SITENAME}} sazlawların'ızdı]] o'zgertiwdi umıtpan'.",
-	'wrongpassword' => "Qate parol kiritlgen. Qaytadan kiritin'.",
-	'wrongpasswordempty' => "Parol kiritilmegen. Qaytadan ha'reket etin'.",
+Akkauntın\'ız jaratıldı.
+[[Special:Preferences|{{SITENAME}} sazlawların\'ızdı]] o\'zgertiwdi umıtpan\'.',
+	'wrongpassword' => 'Qate parol kiritlgen. Qaytadan kiritin\'.',
+	'wrongpasswordempty' => 'Parol kiritilmegen. Qaytadan ha\'reket etin\'.',
 	'watchthis' => 'Bul betti baqlaw',
-	'whitelistedittext' => "Betterdi o'zgertiw ushın $1 sha'rt.",
+	'whitelistedittext' => 'Betterdi o\'zgertiw ushın $1 sha\'rt.',
 	'watchthisupload' => 'Bul fayldı baqlaw',
-	'withoutinterwiki' => "Hesh tilge siltemeytug'ın betler",
-	'withoutinterwiki-summary' => "To'mendegi betler basqa tillerdegi nusqalarına siltemeydi.",
+	'withoutinterwiki' => 'Hesh tilge siltemeytug\'ın betler',
+	'withoutinterwiki-summary' => 'To\'mendegi betler basqa tillerdegi nusqalarına siltemeydi.',
 	'withoutinterwiki-legend' => 'Prefiks:',
-	'withoutinterwiki-submit' => "Ko'rset",
-	'wantedcategories' => "Talap qılıng'an kategoriyalar",
-	'wantedpages' => "Talap qılıng'an betler",
+	'withoutinterwiki-submit' => 'Ko\'rset',
+	'wantedcategories' => 'Talap qılıng\'an kategoriyalar',
+	'wantedpages' => 'Talap qılıng\'an betler',
 	'wantedfiles' => 'Kerekli fayllar',
 	'wantedtemplates' => 'Kerekli shablonlar',
 	'watchlist' => 'Betlerdi baqlaw dizimi',
-	'watchlistanontext' => "Baqlaw dizimin'izdegilerdi qaraw yamasa o'zgertiw ushın $1 kerek.",
+	'watchlistanontext' => 'Baqlaw dizimin\'izdegilerdi qaraw yamasa o\'zgertiw ushın $1 kerek.',
 	'watchnologin' => 'Kirilmegen',
-	'watchnologintext' => "Baqlaw dizimin'izdi o'zgertiw ushın [[Special:UserLogin|kiriwin'iz]] kerek.",
+	'watchnologintext' => 'Baqlaw dizimin\'izdi o\'zgertiw ushın [[Special:UserLogin|kiriwin\'iz]] kerek.',
 	'watch' => 'Baqlaw',
 	'watchthispage' => 'Bul betti baqlaw',
-	'watchlist-details' => "Baqlaw dizimin'izde (sa'wbet betlerin esapqa almag'anda) {{PLURAL:$1|1 bet|$1 bet}} bar.",
-	'wlheader-enotif' => "* E-mail arqalı eskertiw qosılg'an.",
-	'watchlistcontains' => "Sizin' baqlaw dizimin'izde {{PLURAL:$1|1 bet|$1 bet}} bar.",
-	'wlnote' => "To'mende aqırg'ı {{PLURAL:$2|saattag'ı|'''$2''' saattag'ı}} {{PLURAL:$1|aqırg'ı o'zgeris bar|aqırg'ı '''$1''' o'zgeris bar}}.",
-	'wlshowlast' => "Aqırg'ı $1 saat, $2 ku'n, $3 ko'rset",
-	'watchlist-options' => "Baqlaw diziminin' sazlawları",
+	'watchlist-details' => 'Baqlaw dizimin\'izde (sa\'wbet betlerin esapqa almag\'anda) {{PLURAL:$1|1 bet|$1 bet}} bar.',
+	'wlheader-enotif' => '* E-mail arqalı eskertiw qosılg\'an.',
+	'watchlistcontains' => 'Sizin\' baqlaw dizimin\'izde {{PLURAL:$1|1 bet|$1 bet}} bar.',
+	'wlnote' => 'To\'mende aqırg\'ı {{PLURAL:$2|saattag\'ı|\'\'\'$2\'\'\' saattag\'ı}} {{PLURAL:$1|aqırg\'ı o\'zgeris bar|aqırg\'ı \'\'\'$1\'\'\' o\'zgeris bar}}.',
+	'wlshowlast' => 'Aqırg\'ı $1 saat, $2 ku\'n, $3 ko\'rset',
+	'watchlist-options' => 'Baqlaw diziminin\' sazlawları',
 	'watching' => 'Baqlaw...',
 	'whatlinkshere' => 'Siltelgen betler',
 	'whatlinkshere-title' => '"$1" betine siltelgen betler',
 	'whatlinkshere-page' => 'Bet:',
-	'whatlinkshere-prev' => "{{PLURAL:$1|aldıng'ı|aldıng'ı $1}}",
+	'whatlinkshere-prev' => '{{PLURAL:$1|aldıng\'ı|aldıng\'ı $1}}',
 	'whatlinkshere-next' => '{{PLURAL:$1|keyingi|keyingi $1}}',
 	'whatlinkshere-links' => '← siltewler',
-	'whatlinkshere-hideredirs' => "qayta bag'ıtlawshılardı $1",
-	'whatlinkshere-hidetrans' => "qosılg'anlardı $1",
+	'whatlinkshere-hideredirs' => 'qayta bag\'ıtlawshılardı $1',
+	'whatlinkshere-hidetrans' => 'qosılg\'anlardı $1',
 	'whatlinkshere-hidelinks' => 'siltewlerdi $1',
-	'whatlinkshere-hideimages' => "su'wret siltewlerin $1",
+	'whatlinkshere-hideimages' => 'su\'wret siltewlerin $1',
 	'whatlinkshere-filters' => 'Filtrler',
 	'widthheight' => '$1 × $2',
 	'widthheightpage' => '$1 × $2, $3 {{PLURAL:$3|bet|bet}}',
-	'watchlistall2' => "ha'mmesin",
-	'watchlistedit-numitems' => "Sizin' baqlaw dizimin'izde, sa'wbet betlerin esapqa almag'anda {{PLURAL:$1|1 atama|$1 atama}} bar.",
-	'watchlistedit-noitems' => "Baqlaw dizimin'izde atamalar joq.",
-	'watchlistedit-normal-title' => "Baqlaw dizimin o'zgertiw",
-	'watchlistedit-normal-legend' => "Baqlaw diziminen atamalardi o'shıriw",
-	'watchlistedit-normal-submit' => "Atamalardı O'shir",
-	'watchlistedit-normal-done' => "Baqlaw dizimin'izden {{PLURAL:$1|1 atama|$1 atama}} o'shirildi:",
+	'watchlistall2' => 'ha\'mmesin',
+	'watchlistedit-numitems' => 'Sizin\' baqlaw dizimin\'izde, sa\'wbet betlerin esapqa almag\'anda {{PLURAL:$1|1 atama|$1 atama}} bar.',
+	'watchlistedit-noitems' => 'Baqlaw dizimin\'izde atamalar joq.',
+	'watchlistedit-normal-title' => 'Baqlaw dizimin o\'zgertiw',
+	'watchlistedit-normal-legend' => 'Baqlaw diziminen atamalardi o\'shıriw',
+	'watchlistedit-normal-submit' => 'Atamalardı O\'shir',
+	'watchlistedit-normal-done' => 'Baqlaw dizimin\'izden {{PLURAL:$1|1 atama|$1 atama}} o\'shirildi:',
 	'watchlistedit-raw-title' => '"Shiyki" baqlaw dizimin o\'zgertiw',
 	'watchlistedit-raw-legend' => '"Shiyki" baqlaw dizimin o\'zgertiw',
 	'watchlistedit-raw-titles' => 'Atamalar:',
-	'watchlistedit-raw-submit' => "Baqlaw dizimin jan'ala",
-	'watchlistedit-raw-done' => "Baqılaw dizimin'iz jan'alandı.",
-	'watchlistedit-raw-added' => "{{PLURAL:$1|1 atama|$1 atama}} qosilg'an:",
-	'watchlistedit-raw-removed' => "{{PLURAL:$1|1 atama|$1 atama}} o'shirildi:",
-	'watchlisttools-view' => "Baylanıslı o'zgerislerdi qaraw",
-	'watchlisttools-edit' => "Baqlaw dizimin ko'riw ha'm o'zgertiw",
+	'watchlistedit-raw-submit' => 'Baqlaw dizimin jan\'ala',
+	'watchlistedit-raw-done' => 'Baqılaw dizimin\'iz jan\'alandı.',
+	'watchlistedit-raw-added' => '{{PLURAL:$1|1 atama|$1 atama}} qosilg\'an:',
+	'watchlistedit-raw-removed' => '{{PLURAL:$1|1 atama|$1 atama}} o\'shirildi:',
+	'watchlisttools-view' => 'Baylanıslı o\'zgerislerdi qaraw',
+	'watchlisttools-edit' => 'Baqlaw dizimin ko\'riw ha\'m o\'zgertiw',
 	'watchlisttools-raw' => '"Shiyki" baqlaw dizimin o\'zgertiw',
-);
+];
 
-$messages['kab'] = array(
+$messages['kab'] = [
 	'wednesday' => 'Larebɛa',
 	'wed' => 'Larebɛa',
 	'wrong_wfQuery_params' => 'Imsektayen mačči ṣaḥiḥ deg wfQuery()<br />
@@ -7823,11 +7854,11 @@ Isem n wemseqdac inek yettwaxleq. Ur tettuḍ ara ad tbeddleḍ Isemyifiyen n {{
 	'watchnochange' => 'Ulaḥedd n yiferdas n wumuɣ n uɛessi inek ma yettubeddel deg tawala i textareḍ.',
 	'watchlist-details' => 'ttɛassaɣ {{PLURAL:$1|$1 usebter|$1 n isebtar}} mebla isebtar "amyannan".',
 	'wlheader-enotif' => '* Yeǧǧa Email n talɣut.',
-	'wlheader-showupdated' => "* Isebtar ttubeddlen segwasmi tkecmeḍ tikelt taneggarut ttbanen-d s '''uḍris aberbuz'''",
+	'wlheader-showupdated' => '* Isebtar ttubeddlen segwasmi tkecmeḍ tikelt taneggarut ttbanen-d s \'\'\'uḍris aberbuz\'\'\'',
 	'watchmethod-recent' => 'yessenqed ibeddlen imaynuten n isebtar i ttɛasseɣ',
 	'watchmethod-list' => 'yessenqed isebtar i ttɛassaɣ i ibeddlen imaynuten',
 	'watchlistcontains' => 'Umuɣ n uɛessi inek ɣur-s $1 n {{PLURAL:$1|usebter|isebtar}}.',
-	'wlnote' => "Deg ukessar {{PLURAL:$1|yella yiwen ubeddel aneggaru|llan '''$1''' n yibeddlen ineggura}} deg {{PLURAL:$2|saɛa taneggarut|'''$2''' swayeɛ tineggura}}.",
+	'wlnote' => 'Deg ukessar {{PLURAL:$1|yella yiwen ubeddel aneggaru|llan \'\'\'$1\'\'\' n yibeddlen ineggura}} deg {{PLURAL:$2|saɛa taneggarut|\'\'\'$2\'\'\' swayeɛ tineggura}}.',
 	'wlshowlast' => 'Ssken $1 n swayeɛ $2 n wussan neɣ $3 ineggura',
 	'watching' => 'Ad iɛass...',
 	'whatlinkshere' => 'Ayen i d-yettawi ɣer da',
@@ -7851,9 +7882,9 @@ Isem n wemseqdac inek yettwaxleq. Ur tettuḍ ara ad tbeddleḍ Isemyifiyen n {{
 	'watchlisttools-view' => 'Umuɣ n uɛessi',
 	'watchlisttools-edit' => 'Ẓer u beddel umuɣ n uɛessi',
 	'watchlisttools-raw' => 'Beddel umuɣ n uɛessi (raw)',
-);
+];
 
-$messages['kbd'] = array(
+$messages['kbd'] = [
 	'wednesday' => 'Larebɛa',
 	'wed' => 'Larebɛa',
 	'wrong_wfQuery_params' => 'Imsektayen mačči ṣaḥiḥ deg wfQuery()<br />
@@ -7880,11 +7911,11 @@ Isem n wemseqdac inek yettwaxleq. Ur tettuḍ ara ad tbeddleḍ Isemyifiyen n {{
 	'watchnochange' => 'Ulaḥedd n yiferdas n wumuɣ n uɛessi inek ma yettubeddel deg tawala i textareḍ.',
 	'watchlist-details' => 'ttɛassaɣ {{PLURAL:$1|$1 usebter|$1 n isebtar}} mebla isebtar "amyannan".',
 	'wlheader-enotif' => '* Yeǧǧa Email n talɣut.',
-	'wlheader-showupdated' => "* Isebtar ttubeddlen segwasmi tkecmeḍ tikelt taneggarut ttbanen-d s '''uḍris aberbuz'''",
+	'wlheader-showupdated' => '* Isebtar ttubeddlen segwasmi tkecmeḍ tikelt taneggarut ttbanen-d s \'\'\'uḍris aberbuz\'\'\'',
 	'watchmethod-recent' => 'yessenqed ibeddlen imaynuten n isebtar i ttɛasseɣ',
 	'watchmethod-list' => 'yessenqed isebtar i ttɛassaɣ i ibeddlen imaynuten',
 	'watchlistcontains' => 'Umuɣ n uɛessi inek ɣur-s $1 n {{PLURAL:$1|usebter|isebtar}}.',
-	'wlnote' => "Deg ukessar {{PLURAL:$1|yella yiwen ubeddel aneggaru|llan '''$1''' n yibeddlen ineggura}} deg {{PLURAL:$2|saɛa taneggarut|'''$2''' swayeɛ tineggura}}.",
+	'wlnote' => 'Deg ukessar {{PLURAL:$1|yella yiwen ubeddel aneggaru|llan \'\'\'$1\'\'\' n yibeddlen ineggura}} deg {{PLURAL:$2|saɛa taneggarut|\'\'\'$2\'\'\' swayeɛ tineggura}}.',
 	'wlshowlast' => 'Ssken $1 n swayeɛ $2 n wussan neɣ $3 ineggura',
 	'watching' => 'Ad iɛass...',
 	'whatlinkshere' => 'Ayen i d-yettawi ɣer da',
@@ -7908,9 +7939,9 @@ Isem n wemseqdac inek yettwaxleq. Ur tettuḍ ara ad tbeddleḍ Isemyifiyen n {{
 	'watchlisttools-view' => 'Umuɣ n uɛessi',
 	'watchlisttools-edit' => 'Ẓer u beddel umuɣ n uɛessi',
 	'watchlisttools-raw' => 'Beddel umuɣ n uɛessi (raw)',
-);
+];
 
-$messages['kbd-cyrl'] = array(
+$messages['kbd-cyrl'] = [
 	'wednesday' => 'Бэрэжьей',
 	'wed' => 'Бржь',
 	'wrong_wfQuery_params' => 'Параметыр емыкӀу wfQuery-м()<br />
@@ -7946,15 +7977,15 @@ $messages['kbd-cyrl'] = array(
 	'watchlisttools-view' => 'Тхылъым хэт напэкIуэцIхэм щыщу хъуэжахэр',
 	'watchlisttools-edit' => 'Еплъын/гъэтэрэзын тхылъыр',
 	'watchlisttools-raw' => 'Тхылъ хуэдэу гъэтэрэзын',
-);
+];
 
-$messages['kg'] = array(
+$messages['kg'] = [
 	'wednesday' => 'Kitatu',
 	'wed' => 'ki-3',
 	'whatlinkshere' => 'Balukaya ke songa awa',
-);
+];
 
-$messages['khw'] = array(
+$messages['khw'] = [
 	'wednesday' => 'چار شمبے',
 	'wed' => 'چار شمبے',
 	'welcomecreation' => '== رحمت عزیز چترالی تتے خوشان گیے ریران، $1 ! ==
@@ -7991,9 +8022,9 @@ $messages['khw'] = array(
 	'watchlisttools-view' => 'موقعی تبدیلیان لوڑے',
 	'watchlisttools-edit' => 'لوڑے یا واچ لسٹہ ترمیم کورے',
 	'watchlisttools-raw' => 'نوغ واچ لسٹان ایڈیٹ کورے',
-);
+];
 
-$messages['kiu'] = array(
+$messages['kiu'] = [
 	'wednesday' => 'Çarseme',
 	'wed' => 'Çar',
 	'wrong_wfQuery_params' => 'Parametreo ğelet serba wfPers()<br />
@@ -8033,9 +8064,9 @@ Kerem ke, oncia bıcerrebne.',
 	'watchlisttools-view' => 'Vurnaisunê alaqadaru bımısne',
 	'watchlisttools-edit' => 'Lista şêrkerdene bıvêne u vıraze',
 	'watchlisttools-raw' => 'Lista şêrkerdena xame vıraze',
-);
+];
 
-$messages['kk-arab'] = array(
+$messages['kk-arab'] = [
 	'wednesday' => 'سارسەنبى',
 	'wed' => 'ٴسار',
 	'wrong_wfQuery_params' => 'wfQuery() فۋنكتسىيياسى ٴۇشىن بۇرىس باپتالىمدارى بار<br />
@@ -8064,11 +8095,11 @@ $messages['kk-arab'] = array(
 	'watchnochange' => 'كورسەتىلگەن مەرزىمدە ەش باقىلانعان دانا وڭدەلگەن جوق.',
 	'watchlist-details' => 'تالقىلاۋ بەتتەرىن ساناماعاندا $1 بەت باقلانىلادى.',
 	'wlheader-enotif' => '* ەسكەرتۋ حات جىبەرۋى قوسىلعان.',
-	'wlheader-showupdated' => "* سوڭعى كەلىپ-كەتۋىڭىزدەن بەرى وزگەرتىلگەن بەتتەردى '''جۋان''' قارىپىمەن كورسەت",
+	'wlheader-showupdated' => '* سوڭعى كەلىپ-كەتۋىڭىزدەن بەرى وزگەرتىلگەن بەتتەردى \'\'\'جۋان\'\'\' قارىپىمەن كورسەت',
 	'watchmethod-recent' => 'باقىلاۋلى بەتتەر ٴۇشىن جۋىقتاعى وزگەرىستەردى تەكسەرۋ',
 	'watchmethod-list' => 'جۋىقتاعى وزگەرىستەر ٴۇشىن باقىلاۋلى بەتتەردى تەكسەرۋ',
 	'watchlistcontains' => 'باقىلاۋ تىزىمىڭىزدە $1 بەت بار.',
-	'wlnote' => "تومەندە سوڭعى {{PLURAL:$2|ساعاتتا|'''$2''' ساعاتتا}} بولعان, {{PLURAL:$1|جۋىقتاعى وزگەرىس|جۋىقتاعى '''$1''' وزگەرىس}} كورسەتىلەدى.",
+	'wlnote' => 'تومەندە سوڭعى {{PLURAL:$2|ساعاتتا|\'\'\'$2\'\'\' ساعاتتا}} بولعان, {{PLURAL:$1|جۋىقتاعى وزگەرىس|جۋىقتاعى \'\'\'$1\'\'\' وزگەرىس}} كورسەتىلەدى.',
 	'wlshowlast' => 'سوڭعى $1 ساعاتتاعى, $2 كۇندەگى, $3 بولعان وزگەرىستى كورسەتۋ',
 	'watching' => 'باقىلاۋدا…',
 	'whatlinkshere' => 'سىلتەلگەن بەتتەر',
@@ -8109,9 +8140,9 @@ $messages['kk-arab'] = array(
 	'watchlisttools-edit' => 'باقىلاۋ ٴتىزىمدى قاراۋ جانە وڭدەۋ',
 	'watchlisttools-raw' => 'قام باقىلاۋ ٴتىزىمدى وڭدەۋ',
 	'wikia-pagetitle' => '$1 — Wikia',
-);
+];
 
-$messages['kk-cn'] = array(
+$messages['kk-cn'] = [
 	'wednesday' => 'سارسەنبى',
 	'wed' => 'ٴسار',
 	'wrong_wfQuery_params' => 'wfQuery() فۋنكتسىيياسى ٴۇشىن بۇرىس باپتالىمدارى بار<br />
@@ -8140,11 +8171,11 @@ $messages['kk-cn'] = array(
 	'watchnochange' => 'كورسەتىلگەن مەرزىمدە ەش باقىلانعان دانا وڭدەلگەن جوق.',
 	'watchlist-details' => 'تالقىلاۋ بەتتەرىن ساناماعاندا $1 بەت باقلانىلادى.',
 	'wlheader-enotif' => '* ەسكەرتۋ حات جىبەرۋى قوسىلعان.',
-	'wlheader-showupdated' => "* سوڭعى كەلىپ-كەتۋىڭىزدەن بەرى وزگەرتىلگەن بەتتەردى '''جۋان''' قارىپىمەن كورسەت",
+	'wlheader-showupdated' => '* سوڭعى كەلىپ-كەتۋىڭىزدەن بەرى وزگەرتىلگەن بەتتەردى \'\'\'جۋان\'\'\' قارىپىمەن كورسەت',
 	'watchmethod-recent' => 'باقىلاۋلى بەتتەر ٴۇشىن جۋىقتاعى وزگەرىستەردى تەكسەرۋ',
 	'watchmethod-list' => 'جۋىقتاعى وزگەرىستەر ٴۇشىن باقىلاۋلى بەتتەردى تەكسەرۋ',
 	'watchlistcontains' => 'باقىلاۋ تىزىمىڭىزدە $1 بەت بار.',
-	'wlnote' => "تومەندە سوڭعى {{PLURAL:$2|ساعاتتا|'''$2''' ساعاتتا}} بولعان, {{PLURAL:$1|جۋىقتاعى وزگەرىس|جۋىقتاعى '''$1''' وزگەرىس}} كورسەتىلەدى.",
+	'wlnote' => 'تومەندە سوڭعى {{PLURAL:$2|ساعاتتا|\'\'\'$2\'\'\' ساعاتتا}} بولعان, {{PLURAL:$1|جۋىقتاعى وزگەرىس|جۋىقتاعى \'\'\'$1\'\'\' وزگەرىس}} كورسەتىلەدى.',
 	'wlshowlast' => 'سوڭعى $1 ساعاتتاعى, $2 كۇندەگى, $3 بولعان وزگەرىستى كورسەتۋ',
 	'watching' => 'باقىلاۋدا…',
 	'whatlinkshere' => 'سىلتەلگەن بەتتەر',
@@ -8185,9 +8216,9 @@ $messages['kk-cn'] = array(
 	'watchlisttools-edit' => 'باقىلاۋ ٴتىزىمدى قاراۋ جانە وڭدەۋ',
 	'watchlisttools-raw' => 'قام باقىلاۋ ٴتىزىمدى وڭدەۋ',
 	'wikia-pagetitle' => '$1 — Wikia',
-);
+];
 
-$messages['kk-cyrl'] = array(
+$messages['kk-cyrl'] = [
 	'wednesday' => 'Сәрсенбі',
 	'wed' => 'Сәр',
 	'wrong_wfQuery_params' => 'wfQuery() функциясы үшін бұрыс бапталымдары бар<br />
@@ -8217,11 +8248,11 @@ $messages['kk-cyrl'] = array(
 	'watchnochange' => 'Көрсетілген мерзімде еш бақыланған дана өңделген жоқ.',
 	'watchlist-details' => 'Тізіміңізде $1 бет бар (талқылау беттері саналмайды).',
 	'wlheader-enotif' => '* Ескерту хат жіберуі қосылған.',
-	'wlheader-showupdated' => "* Соңғы келіп-кетуіңізден бері өзгертілген беттерді '''жуан''' қаріпімен көрсет",
+	'wlheader-showupdated' => '* Соңғы келіп-кетуіңізден бері өзгертілген беттерді \'\'\'жуан\'\'\' қаріпімен көрсет',
 	'watchmethod-recent' => 'бақылаулы беттер үшін жуықтағы өзгерістерді тексеру',
 	'watchmethod-list' => 'жуықтағы өзгерістер үшін бақылаулы беттерді тексеру',
 	'watchlistcontains' => 'Бақылау тізіміңізде $1 бет бар.',
-	'wlnote' => "Төменде соңғы {{PLURAL:$2|сағатта|'''$2''' сағатта}} болған, {{PLURAL:$1|жуықтағы өзгеріс|жуықтағы '''$1''' өзгеріс}} көрсетіледі.",
+	'wlnote' => 'Төменде соңғы {{PLURAL:$2|сағатта|\'\'\'$2\'\'\' сағатта}} болған, {{PLURAL:$1|жуықтағы өзгеріс|жуықтағы \'\'\'$1\'\'\' өзгеріс}} көрсетіледі.',
 	'wlshowlast' => 'Соңғы $1 сағаттағы, $2 күндегі, $3 болған өзгерісті көрсету',
 	'watchlist-options' => 'Бақылау тізім баптаулары',
 	'watching' => 'Бақылауда…',
@@ -8263,9 +8294,9 @@ $messages['kk-cyrl'] = array(
 	'watchlisttools-edit' => 'Бақылау тізімді қарау және өңдеу',
 	'watchlisttools-raw' => 'Қам бақылау тізімді өңдеу',
 	'wikia-pagetitle' => '$1 — Wikia',
-);
+];
 
-$messages['kk-kz'] = array(
+$messages['kk-kz'] = [
 	'wednesday' => 'Сәрсенбі',
 	'wed' => 'Сәр',
 	'wrong_wfQuery_params' => 'wfQuery() функциясы үшін бұрыс бапталымдары бар<br />
@@ -8295,11 +8326,11 @@ $messages['kk-kz'] = array(
 	'watchnochange' => 'Көрсетілген мерзімде еш бақыланған дана өңделген жоқ.',
 	'watchlist-details' => 'Тізіміңізде $1 бет бар (талқылау беттері саналмайды).',
 	'wlheader-enotif' => '* Ескерту хат жіберуі қосылған.',
-	'wlheader-showupdated' => "* Соңғы келіп-кетуіңізден бері өзгертілген беттерді '''жуан''' қаріпімен көрсет",
+	'wlheader-showupdated' => '* Соңғы келіп-кетуіңізден бері өзгертілген беттерді \'\'\'жуан\'\'\' қаріпімен көрсет',
 	'watchmethod-recent' => 'бақылаулы беттер үшін жуықтағы өзгерістерді тексеру',
 	'watchmethod-list' => 'жуықтағы өзгерістер үшін бақылаулы беттерді тексеру',
 	'watchlistcontains' => 'Бақылау тізіміңізде $1 бет бар.',
-	'wlnote' => "Төменде соңғы {{PLURAL:$2|сағатта|'''$2''' сағатта}} болған, {{PLURAL:$1|жуықтағы өзгеріс|жуықтағы '''$1''' өзгеріс}} көрсетіледі.",
+	'wlnote' => 'Төменде соңғы {{PLURAL:$2|сағатта|\'\'\'$2\'\'\' сағатта}} болған, {{PLURAL:$1|жуықтағы өзгеріс|жуықтағы \'\'\'$1\'\'\' өзгеріс}} көрсетіледі.',
 	'wlshowlast' => 'Соңғы $1 сағаттағы, $2 күндегі, $3 болған өзгерісті көрсету',
 	'watchlist-options' => 'Бақылау тізім баптаулары',
 	'watching' => 'Бақылауда…',
@@ -8341,9 +8372,9 @@ $messages['kk-kz'] = array(
 	'watchlisttools-edit' => 'Бақылау тізімді қарау және өңдеу',
 	'watchlisttools-raw' => 'Қам бақылау тізімді өңдеу',
 	'wikia-pagetitle' => '$1 — Wikia',
-);
+];
 
-$messages['kk-latn'] = array(
+$messages['kk-latn'] = [
 	'wednesday' => 'Särsenbi',
 	'wed' => 'Sär',
 	'wrong_wfQuery_params' => 'wfQuery() fwnkcïyası üşin burıs baptalımdarı bar<br />
@@ -8372,11 +8403,11 @@ Jaña tirkelgiñiz jasaldı.
 	'watchnochange' => 'Körsetilgen merzimde eş baqılanğan dana öñdelgen joq.',
 	'watchlist-details' => 'Talqılaw betterin sanamağanda $1 bet baqlanıladı.',
 	'wlheader-enotif' => '* Eskertw xat jiberwi qosılğan.',
-	'wlheader-showupdated' => "* Soñğı kelip-ketwiñizden beri özgertilgen betterdi '''jwan''' qaripimen körset",
+	'wlheader-showupdated' => '* Soñğı kelip-ketwiñizden beri özgertilgen betterdi \'\'\'jwan\'\'\' qaripimen körset',
 	'watchmethod-recent' => 'baqılawlı better üşin jwıqtağı özgeristerdi tekserw',
 	'watchmethod-list' => 'jwıqtağı özgerister üşin baqılawlı betterdi tekserw',
 	'watchlistcontains' => 'Baqılaw tizimiñizde $1 bet bar.',
-	'wlnote' => "Tömende soñğı {{PLURAL:$2|sağatta|'''$2''' sağatta}} bolğan, {{PLURAL:$1|jwıqtağı özgeris|jwıqtağı '''$1''' özgeris}} körsetiledi.",
+	'wlnote' => 'Tömende soñğı {{PLURAL:$2|sağatta|\'\'\'$2\'\'\' sağatta}} bolğan, {{PLURAL:$1|jwıqtağı özgeris|jwıqtağı \'\'\'$1\'\'\' özgeris}} körsetiledi.',
 	'wlshowlast' => 'Soñğı $1 sağattağı, $2 kündegi, $3 bolğan özgeristi körsetw',
 	'watching' => 'Baqılawda…',
 	'whatlinkshere' => 'Mında silteýtin better',
@@ -8417,9 +8448,9 @@ Tağı da [[Special:EditWatchlist|qalıpalğan öñdewişti paýdalana]] alasız
 	'watchlisttools-edit' => 'Baqılaw tizimdi qaraw jäne öñdew',
 	'watchlisttools-raw' => 'Qam baqılaw tizimdi öñdew',
 	'wikia-pagetitle' => '$1 — Wikia',
-);
+];
 
-$messages['kk-tr'] = array(
+$messages['kk-tr'] = [
 	'wednesday' => 'Särsenbi',
 	'wed' => 'Sär',
 	'wrong_wfQuery_params' => 'wfQuery() fwnkcïyası üşin burıs baptalımdarı bar<br />
@@ -8448,11 +8479,11 @@ Jaña tirkelgiñiz jasaldı.
 	'watchnochange' => 'Körsetilgen merzimde eş baqılanğan dana öñdelgen joq.',
 	'watchlist-details' => 'Talqılaw betterin sanamağanda $1 bet baqlanıladı.',
 	'wlheader-enotif' => '* Eskertw xat jiberwi qosılğan.',
-	'wlheader-showupdated' => "* Soñğı kelip-ketwiñizden beri özgertilgen betterdi '''jwan''' qaripimen körset",
+	'wlheader-showupdated' => '* Soñğı kelip-ketwiñizden beri özgertilgen betterdi \'\'\'jwan\'\'\' qaripimen körset',
 	'watchmethod-recent' => 'baqılawlı better üşin jwıqtağı özgeristerdi tekserw',
 	'watchmethod-list' => 'jwıqtağı özgerister üşin baqılawlı betterdi tekserw',
 	'watchlistcontains' => 'Baqılaw tizimiñizde $1 bet bar.',
-	'wlnote' => "Tömende soñğı {{PLURAL:$2|sağatta|'''$2''' sağatta}} bolğan, {{PLURAL:$1|jwıqtağı özgeris|jwıqtağı '''$1''' özgeris}} körsetiledi.",
+	'wlnote' => 'Tömende soñğı {{PLURAL:$2|sağatta|\'\'\'$2\'\'\' sağatta}} bolğan, {{PLURAL:$1|jwıqtağı özgeris|jwıqtağı \'\'\'$1\'\'\' özgeris}} körsetiledi.',
 	'wlshowlast' => 'Soñğı $1 sağattağı, $2 kündegi, $3 bolğan özgeristi körsetw',
 	'watching' => 'Baqılawda…',
 	'whatlinkshere' => 'Mında silteýtin better',
@@ -8493,9 +8524,9 @@ Tağı da [[Special:EditWatchlist|qalıpalğan öñdewişti paýdalana]] alasız
 	'watchlisttools-edit' => 'Baqılaw tizimdi qaraw jäne öñdew',
 	'watchlisttools-raw' => 'Qam baqılaw tizimdi öñdew',
 	'wikia-pagetitle' => '$1 — Wikia',
-);
+];
 
-$messages['kl'] = array(
+$messages['kl'] = [
 	'wednesday' => 'Pingasunngorneq',
 	'wed' => 'Pin',
 	'wrongpassword' => 'Isissutissaq kukkusumik allanneqarsimavoq. Misileqqiuk.',
@@ -8507,9 +8538,9 @@ $messages['kl'] = array(
 	'whatlinkshere' => 'Suna maangamut innersuussisoq',
 	'whatlinkshere-prev' => '{{PLURAL:$1|siulia|siulii $1}}',
 	'whatlinkshere-next' => '{{PLURAL:$1|tullia|tullii $1}}',
-);
+];
 
-$messages['km'] = array(
+$messages['km'] = [
 	'wednesday' => 'ថ្ងៃពុធ',
 	'wed' => 'ពុធ',
 	'wrong_wfQuery_params' => 'ប៉ារ៉ា​មែត្រ​មិន​ត្រឹម​ត្រូវ​ចំពោះ​ wfQuery()<br />
@@ -8548,11 +8579,11 @@ $messages['km'] = array(
 	'watchnochange' => 'មិនមានរបស់ដែលអ្នកកំពុងតាមដានណាមួយត្រូវបានគេកែប្រែក្នុងកំលុងពេលដូលដែលបានបង្ហាញទេ។',
 	'watchlist-details' => '{{PLURAL:$1|$1 page|ទំព័រ $1}}នៅក្នុងបញ្ជីតាមដានរបស់អ្នក ដោយមិនរាប់បញ្ចូលទំព័រពិភាក្សា។',
 	'wlheader-enotif' => '* អនុញ្ញាតឱ្យមានការផ្ដល់ដំណឹងតាមរយៈអ៊ីមែល',
-	'wlheader-showupdated' => "* ទំព័រដែលត្រូវបានផ្លាស់ប្តូរតាំងពីពេលចូលមើលចុងក្រោយរបស់អ្នក ត្រូវបានបង្ហាញជា '''អក្សរដិត'''",
+	'wlheader-showupdated' => '* ទំព័រដែលត្រូវបានផ្លាស់ប្តូរតាំងពីពេលចូលមើលចុងក្រោយរបស់អ្នក ត្រូវបានបង្ហាញជា \'\'\'អក្សរដិត\'\'\'',
 	'watchmethod-recent' => 'ឆែកមើលកំណែប្រែថ្មីៗចំពោះទំព័រត្រូវបានតាមដាន',
 	'watchmethod-list' => 'ឆែកមើលទំព័រត្រូវបានតាមដានចំពោះកំណែប្រែថ្មីៗ',
 	'watchlistcontains' => 'បញ្ជីតាមដាន របស់អ្នក មាន $1 {{PLURAL:$1|ទំព័រ|ទំព័រ}}។',
-	'wlnote' => "ខាងក្រោមនេះជា {{PLURAL:$1|បំលាស់ប្តូរចុងក្រោយ|'''$1'''បំលាស់ប្តូរចុងក្រោយ}}ក្នុងរយះពេល{{PLURAL:$2|'''$2'''ម៉ោង}}ចុងក្រោយ គិតចាប់ពី $3, $4។",
+	'wlnote' => 'ខាងក្រោមនេះជា {{PLURAL:$1|បំលាស់ប្តូរចុងក្រោយ|\'\'\'$1\'\'\'បំលាស់ប្តូរចុងក្រោយ}}ក្នុងរយះពេល{{PLURAL:$2|\'\'\'$2\'\'\'ម៉ោង}}ចុងក្រោយ គិតចាប់ពី $3, $4។',
 	'wlshowlast' => 'បង្ហាញ $1ម៉ោងចុងក្រោយ $2ថ្ងៃចុងក្រោយ ឬ$3',
 	'watchlist-options' => 'ជម្រើសនានាក្នុងបញ្ជីតាមដាន',
 	'watching' => 'កំពុង​តាមដាន...',
@@ -8595,9 +8626,9 @@ $messages['km'] = array(
 	'watchlisttools-view' => 'មើលបំលាស់ប្ដូរពាក់ព័ន្ធ',
 	'watchlisttools-edit' => 'មើលនិងកែប្រែបញ្ជីតាមដាន',
 	'watchlisttools-raw' => 'កែប្រែបញ្ជីតាមដានឆៅ',
-);
+];
 
-$messages['kn'] = array(
+$messages['kn'] = [
 	'wednesday' => 'ಬುಧವಾರ',
 	'wed' => 'ಬುಧ',
 	'welcomecreation' => '== ಸುಸ್ವಾಗತ, $1! ==
@@ -8622,7 +8653,7 @@ $messages['kn'] = array(
 	'watch' => 'ವೀಕ್ಷಿಸಿ',
 	'watchthispage' => 'ಈ ಪುಟವನ್ನು ವೀಕ್ಷಿಸಿ',
 	'watchlist-details' => 'ಚರ್ಚೆ ಪುಟಗಳನ್ನು ಹೊರತುಪಡಿಸಿ, ನಿಮ್ಮ ವೀಕ್ಷಣಾಪಟ್ಟಿಯಲ್ಲಿ {{PLURAL:$1|$1 ಪುಟ ಇದೆ|$1 ಪುಟಗಳು ಇವೆ}}.',
-	'wlheader-showupdated' => "* ನೀವು ಕೊನೆಯ ಬಾರಿ ಭೇಟಿ ನೀಡಿದ ನಂತರ ಬದಲಾವಣೆಗಳು ಆಗಿರುವ ಪುಟಗಳು '''ದಪ್ಪ ಅಕ್ಷರಗಳಲ್ಲಿ''' ತೋರಿಸಲಾಗಿದೆ",
+	'wlheader-showupdated' => '* ನೀವು ಕೊನೆಯ ಬಾರಿ ಭೇಟಿ ನೀಡಿದ ನಂತರ ಬದಲಾವಣೆಗಳು ಆಗಿರುವ ಪುಟಗಳು \'\'\'ದಪ್ಪ ಅಕ್ಷರಗಳಲ್ಲಿ\'\'\' ತೋರಿಸಲಾಗಿದೆ',
 	'watchmethod-recent' => 'ಇತ್ತೀಚಿನ ಸಂಪಾದನೆಗಳಲ್ಲಿ ವೀಕ್ಷಣಾಪಟ್ಟಿಗೆ ಸೇರುವ ಪುಟಗಳ ಹುಡುಕು',
 	'watchmethod-list' => 'ವೀಕ್ಷಣಾಪಟ್ಟಿಗೆ ಸೇರುವ ಪುಟಗಳಲ್ಲಿ ಇತ್ತೀಚಿನ ಸಂಪಾದನೆಗಳಿಗೆ ಹುಡುಕು',
 	'watchlistcontains' => 'ನಿಮ್ಮ ವೀಕ್ಷಣಾಪಟ್ಟಿಯಲ್ಲಿ $1 {{PLURAL:$1|ಪುಟ|ಪುಟಗಳು}} ಇವೆ.',
@@ -8658,9 +8689,9 @@ $messages['kn'] = array(
 	'watchlisttools-view' => 'ಸೂಚಿಸಲ್ಪಟ್ಟ ಬದಲಾವಣೆಗಳನ್ನು ವೀಕ್ಷಿಸಿ',
 	'watchlisttools-edit' => 'ವೀಕ್ಷಣಾಪಟ್ಟಿಯನ್ನು ನೋಡು ಮತ್ತು ಸಂಪಾದಿಸು',
 	'watchlisttools-raw' => 'ಮೂಲ ವೀಕ್ಷಣಾಪಟ್ಟಿಯನ್ನು ಸಂಪಾದಿಸು',
-);
+];
 
-$messages['ko'] = array(
+$messages['ko'] = [
 	'wednesday' => '수요일',
 	'wed' => '수',
 	'wrong_wfQuery_params' => 'wfQuery()에서 잘못된 매개변수 발생<br />함수: $1<br />쿼리: $2',
@@ -8695,11 +8726,11 @@ $messages['ko'] = array(
 	'watchnochange' => '주어진 기간 중에 바뀐 주시문서가 없습니다.',
 	'watchlist-details' => '토론을 제외하고 문서 $1개를 주시하고 있습니다.',
 	'wlheader-enotif' => '* 이메일 알림 기능이 활성화되었습니다.',
-	'wlheader-showupdated' => "* 마지막으로 방문한 이후에 바뀐 문서들은 '''굵은 글씨'''로 표시됩니다.",
+	'wlheader-showupdated' => '* 마지막으로 방문한 이후에 바뀐 문서들은 \'\'\'굵은 글씨\'\'\'로 표시됩니다.',
 	'watchmethod-recent' => '주시된 문서를 확인하고자 최근 편집을 확인',
 	'watchmethod-list' => '최근 편집을 확인하고자 주시된 문서 확인',
 	'watchlistcontains' => '문서 $1개를 주시하고 있습니다.',
-	'wlnote' => "다음은 최근 '''$2'''시간 동안 바뀐 문서 '''$1'''개 입니다. ($3 $4 기준)",
+	'wlnote' => '다음은 최근 \'\'\'$2\'\'\'시간 동안 바뀐 문서 \'\'\'$1\'\'\'개 입니다. ($3 $4 기준)',
 	'wlshowlast' => '최근 $1 시간 $2 일 또는 $3 동안에 바뀐 문서',
 	'watchlist-options' => '주시문서 목록 설정',
 	'watching' => '주시 추가 중…',
@@ -8721,16 +8752,16 @@ $messages['ko'] = array(
 	'watchlistedit-noitems' => '주시문서 목록이 비어 있습니다.',
 	'watchlistedit-normal-title' => '주시문서 목록 편집하기',
 	'watchlistedit-normal-legend' => '주시목록에서 문서 제거하기',
-	'watchlistedit-normal-explain' => "주시문서 목록에 있는 문서의 제목이 아래에 나열되어 있습니다.
-주시문서 목록에서 제거하려는 문서가 있으면, 각 항목의 체크박스를 선택한 다음 '{{int:Watchlistedit-normal-submit}}'를 클릭해주세요.
-또는 [[Special:EditWatchlist/raw|목록을 직접 편집]]할 수도 있습니다.",
+	'watchlistedit-normal-explain' => '주시문서 목록에 있는 문서의 제목이 아래에 나열되어 있습니다.
+주시문서 목록에서 제거하려는 문서가 있으면, 각 항목의 체크박스를 선택한 다음 \'{{int:Watchlistedit-normal-submit}}\'를 클릭해주세요.
+또는 [[Special:EditWatchlist/raw|목록을 직접 편집]]할 수도 있습니다.',
 	'watchlistedit-normal-submit' => '항목 삭제',
 	'watchlistedit-normal-done' => '주시문서 목록에서 다음 {{PLURAL:$1|항목}}을 주시하지 않습니다:',
 	'watchlistedit-raw-title' => '주시문서 목록 직접 편집하기',
 	'watchlistedit-raw-legend' => '주시문서 목록 직접 편집하기',
-	'watchlistedit-raw-explain' => "주시문서 목록의 각 항목이 나와 있습니다. 필요한 항목을 직접 추가하거나 제거할 수 있습니다.
-각 줄마다 하나의 제목을 쓰고, 수정을 마쳤다면 '{{int:Watchlistedit-raw-submit}}'을 누르면 됩니다.
-또는 [[Special:EditWatchlist|일반적인 편집기]]를 쓸 수도 있습니다.",
+	'watchlistedit-raw-explain' => '주시문서 목록의 각 항목이 나와 있습니다. 필요한 항목을 직접 추가하거나 제거할 수 있습니다.
+각 줄마다 하나의 제목을 쓰고, 수정을 마쳤다면 \'{{int:Watchlistedit-raw-submit}}\'을 누르면 됩니다.
+또는 [[Special:EditWatchlist|일반적인 편집기]]를 쓸 수도 있습니다.',
 	'watchlistedit-raw-titles' => '목록:',
 	'watchlistedit-raw-submit' => '주시문서 목록 갱신',
 	'watchlistedit-raw-done' => '주시문서 목록을 갱신했습니다.',
@@ -8739,9 +8770,11 @@ $messages['ko'] = array(
 	'watchlisttools-view' => '주시문서 최근 바뀜',
 	'watchlisttools-edit' => '주시문서 목록 보기/편집하기',
 	'watchlisttools-raw' => '주시문서 목록 직접 편집하기',
-);
+	'wikia_messages' => '위키아 메시지',
+	'wikicitieshome' => '위키아 한국어 중앙 커뮤니티',
+];
 
-$messages['ko-kp'] = array(
+$messages['ko-kp'] = [
 	'wednesday' => '수요일',
 	'wed' => '수',
 	'wrong_wfQuery_params' => 'wfQuery()에서 잘못된 매개변수 발생<br />함수: $1<br />쿼리: $2',
@@ -8776,11 +8809,11 @@ $messages['ko-kp'] = array(
 	'watchnochange' => '주어진 기간 중에 바뀐 주시문서가 없습니다.',
 	'watchlist-details' => '토론을 제외하고 문서 $1개를 주시하고 있습니다.',
 	'wlheader-enotif' => '* 이메일 알림 기능이 활성화되었습니다.',
-	'wlheader-showupdated' => "* 마지막으로 방문한 이후에 바뀐 문서들은 '''굵은 글씨'''로 표시됩니다.",
+	'wlheader-showupdated' => '* 마지막으로 방문한 이후에 바뀐 문서들은 \'\'\'굵은 글씨\'\'\'로 표시됩니다.',
 	'watchmethod-recent' => '주시된 문서를 확인하고자 최근 편집을 확인',
 	'watchmethod-list' => '최근 편집을 확인하고자 주시된 문서 확인',
 	'watchlistcontains' => '문서 $1개를 주시하고 있습니다.',
-	'wlnote' => "다음은 최근 '''$2'''시간 동안 바뀐 문서 '''$1'''개 입니다. ($3 $4 기준)",
+	'wlnote' => '다음은 최근 \'\'\'$2\'\'\'시간 동안 바뀐 문서 \'\'\'$1\'\'\'개 입니다. ($3 $4 기준)',
 	'wlshowlast' => '최근 $1 시간 $2 일 또는 $3 동안에 바뀐 문서',
 	'watchlist-options' => '주시문서 목록 설정',
 	'watching' => '주시 추가 중…',
@@ -8802,16 +8835,16 @@ $messages['ko-kp'] = array(
 	'watchlistedit-noitems' => '주시문서 목록이 비어 있습니다.',
 	'watchlistedit-normal-title' => '주시문서 목록 편집하기',
 	'watchlistedit-normal-legend' => '주시목록에서 문서 제거하기',
-	'watchlistedit-normal-explain' => "주시문서 목록에 있는 문서의 제목이 아래에 나열되어 있습니다.
-주시문서 목록에서 제거하려는 문서가 있으면, 각 항목의 체크박스를 선택한 다음 '{{int:Watchlistedit-normal-submit}}'를 클릭해주세요.
-또는 [[Special:EditWatchlist/raw|목록을 직접 편집]]할 수도 있습니다.",
+	'watchlistedit-normal-explain' => '주시문서 목록에 있는 문서의 제목이 아래에 나열되어 있습니다.
+주시문서 목록에서 제거하려는 문서가 있으면, 각 항목의 체크박스를 선택한 다음 \'{{int:Watchlistedit-normal-submit}}\'를 클릭해주세요.
+또는 [[Special:EditWatchlist/raw|목록을 직접 편집]]할 수도 있습니다.',
 	'watchlistedit-normal-submit' => '항목 삭제',
 	'watchlistedit-normal-done' => '주시문서 목록에서 다음 {{PLURAL:$1|항목}}을 주시하지 않습니다:',
 	'watchlistedit-raw-title' => '주시문서 목록 직접 편집하기',
 	'watchlistedit-raw-legend' => '주시문서 목록 직접 편집하기',
-	'watchlistedit-raw-explain' => "주시문서 목록의 각 항목이 나와 있습니다. 필요한 항목을 직접 추가하거나 제거할 수 있습니다.
-각 줄마다 하나의 제목을 쓰고, 수정을 마쳤다면 '{{int:Watchlistedit-raw-submit}}'을 누르면 됩니다.
-또는 [[Special:EditWatchlist|일반적인 편집기]]를 쓸 수도 있습니다.",
+	'watchlistedit-raw-explain' => '주시문서 목록의 각 항목이 나와 있습니다. 필요한 항목을 직접 추가하거나 제거할 수 있습니다.
+각 줄마다 하나의 제목을 쓰고, 수정을 마쳤다면 \'{{int:Watchlistedit-raw-submit}}\'을 누르면 됩니다.
+또는 [[Special:EditWatchlist|일반적인 편집기]]를 쓸 수도 있습니다.',
 	'watchlistedit-raw-titles' => '목록:',
 	'watchlistedit-raw-submit' => '주시문서 목록 갱신',
 	'watchlistedit-raw-done' => '주시문서 목록을 갱신했습니다.',
@@ -8820,9 +8853,9 @@ $messages['ko-kp'] = array(
 	'watchlisttools-view' => '주시문서 최근 바뀜',
 	'watchlisttools-edit' => '주시문서 목록 보기/편집하기',
 	'watchlisttools-raw' => '주시문서 목록 직접 편집하기',
-);
+];
 
-$messages['koi'] = array(
+$messages['koi'] = [
 	'wednesday' => 'Шöрлун',
 	'wed' => 'Шл',
 	'watchthis' => 'Синмавны этiйö листбок',
@@ -8847,9 +8880,9 @@ $messages['koi'] = array(
 	'watchlisttools-view' => 'Видзöт лöсялана вильмöтöммез',
 	'watchlisttools-edit' => 'Видзöтны/мöдкодьсьöтны нимлёдз',
 	'watchlisttools-raw' => 'Нимлёдз пöртны текстö',
-);
+];
 
-$messages['krc'] = array(
+$messages['krc'] = [
 	'wednesday' => 'Барас кюн',
 	'wed' => 'Барас кюн',
 	'wrong_wfQuery_params' => 'wfQuery()<br /> функциягъа джарамагъан параметрле<br />
@@ -8882,11 +8915,11 @@ $messages['krc'] = array(
 	'watchnochange' => 'Къаралгъан кёзюуде, кёзде тургъан тизмеден бир бет да тюрленмегенди.',
 	'watchlist-details' => 'Кёзюгюзде тургъан тизмегизде, сюзюу бетлери саналмай {{PLURAL:$1|$1 бет|$1 бет}} барды.',
 	'wlheader-enotif' => '* Эл. почта бла хапар бериу джандырылыбды.',
-	'wlheader-showupdated' => "* Ахыр кириуюгюзден сора бетни тюрлениулери '''къалын''' джазыу бла кёргюзюлгенди.",
+	'wlheader-showupdated' => '* Ахыр кириуюгюзден сора бетни тюрлениулери \'\'\'къалын\'\'\' джазыу бла кёргюзюлгенди.',
 	'watchmethod-recent' => 'кёзде тургъан бетледе этилген ахыр тюрлениуле кёрюу',
 	'watchmethod-list' => 'кёзде тургъан бетледе этилген ахыр тюрлениуле кёрюу',
 	'watchlistcontains' => 'Кёзюгюзде тургъан тизмегизде $1 {{PLURAL:$1|бет|бет}} барды.',
-	'wlnote' => "Ахыр {{PLURAL:$2|бир сагъатха|'''$2''' сагъатха}} этилген {{PLURAL:$1|ахыр тюрлениу|ахыр '''$1''' тюрлениу}} тюбюндеди.",
+	'wlnote' => 'Ахыр {{PLURAL:$2|бир сагъатха|\'\'\'$2\'\'\' сагъатха}} этилген {{PLURAL:$1|ахыр тюрлениу|ахыр \'\'\'$1\'\'\' тюрлениу}} тюбюндеди.',
 	'wlshowlast' => 'Арт $1 сагъат $2 кюннге $3 кёргюз',
 	'watchlist-options' => 'Кёзде тургъан тизмени джарашдырыулары',
 	'watching' => 'Кёзде тургъан тизмеге къошуу...',
@@ -8926,9 +8959,9 @@ $messages['krc'] = array(
 	'watchlisttools-view' => 'Списокдан бетледе тюрлениуле',
 	'watchlisttools-edit' => 'Къара/тюрлендир списокну',
 	'watchlisttools-raw' => 'Текстча тюрлендириу',
-);
+];
 
-$messages['kri'] = array(
+$messages['kri'] = [
 	'wednesday' => 'Wenzde',
 	'wed' => 'Wen',
 	'watchthis' => 'Wach dis pej-ya',
@@ -8942,16 +8975,16 @@ $messages['kri'] = array(
 	'whatlinkshere' => 'Wetin de link kam ya',
 	'whatlinkshere-page' => 'Pej',
 	'watchlisttools-edit' => 'Luk en edit wachlist',
-);
+];
 
-$messages['krj'] = array(
+$messages['krj'] = [
 	'wednesday' => 'Miyerkoles',
 	'wed' => 'Miy',
 	'withoutinterwiki-submit' => 'Ipakita',
 	'whatlinkshere-page' => 'Pahina:',
-);
+];
 
-$messages['ksh'] = array(
+$messages['ksh'] = [
 	'wednesday' => 'Meddwoch',
 	'wed' => 'Me.',
 	'wrong_wfQuery_params' => 'Verkihrte Parameter för: <strong><code>wfQuery()</code></strong><br />
@@ -8962,7 +8995,7 @@ Dinge Zojang för heh es do.
 Do bes jetz aanjemeldt.
 Denk dran, Do künnts Der [[Special:Preferences|Ding Enstellunge heh för {{GRAMMAR:Akk|{{SITENAME}}}} zeräächmaache]].',
 	'wrongpassword' => 'Dat Passwood oder dä Metmaacher Name wor verkihrt. Jetz muss De et noch ens versöke.',
-	'wrongpasswordempty' => "Dat Passwood ka'mer nit fottlooße. Jetz muss De et noch ens versöke.",
+	'wrongpasswordempty' => 'Dat Passwood ka\'mer nit fottlooße. Jetz muss De et noch ens versöke.',
 	'watchthis' => 'Op die Sigg heh oppasse',
 	'whitelistedittext' => 'Do mööts ald $1, öm heh em Wiki Sigge ändere ze dürfe.',
 	'windows-nonascii-filename' => 'Heh dat Wiki löht kein Datteiname met Sönderzeische zoh.',
@@ -9020,12 +9053,12 @@ De kanns Ding Oppassliss och [[Special:EditWatchlist/raw|en rüh beärbeide]].',
 	'watchlistedit-normal-done' => '{{PLURAL:$1|Eine Sigge-Tittel es|<strong>$1</strong> Sigge-Tittele sin|Keine Sigge-Tittel es}} us Dinge Opassliss erus jefloore:',
 	'watchlistedit-raw-title' => 'Rüh Oppassliss beärbeide',
 	'watchlistedit-raw-legend' => 'Rüh Oppassliss beärbeide',
-	'watchlistedit-raw-explain' => "Dat sin de Endräch in Dinge Oppassliss en rüh.
+	'watchlistedit-raw-explain' => 'Dat sin de Endräch in Dinge Oppassliss en rüh.
 Öm einzel Titelle loss ze wääde, kanns de de Reije met inne eruß schmieße, ov leddich maache.
 Öm neu Titelle  dobei ze don, schriev neu Reije dobei. Jede Titel moß en en Reih för sijj_allein shtonn.
 Wanns De fädig bes, dann deuß De dä Knopp „{{int:Watchlistedit-raw-submit}}“.
-Natörlech kanns De di Liss och — met Dingem Brauser singe ''<span lang=\"en\">Copy&amp;Paste</span>''-Funkßjohn — komplett kopeere odder ußtuusche.
-De könnts Ding Oppassliss ävver och [[Special:EditWatchlist|övver e Fomulaa met Kässjer un Hökscher beärbeide]].",
+Natörlech kanns De di Liss och — met Dingem Brauser singe \'\'<span lang="en">Copy&amp;Paste</span>\'\'-Funkßjohn — komplett kopeere odder ußtuusche.
+De könnts Ding Oppassliss ävver och [[Special:EditWatchlist|övver e Fomulaa met Kässjer un Hökscher beärbeide]].',
 	'watchlistedit-raw-titles' => 'Endräch:',
 	'watchlistedit-raw-submit' => 'Oppassliss neu fasshallde',
 	'watchlistedit-raw-done' => 'Ding Oppassliss es fassjehallde.',
@@ -9035,9 +9068,9 @@ De könnts Ding Oppassliss ävver och [[Special:EditWatchlist|övver e Fomulaa m
 	'watchlisttools-edit' => 'beloore un beärbede',
 	'watchlisttools-raw' => 'rüh beärbeijde | expochteere | empochteere',
 	'wikia-pagetitle' => '$1 — Wikia',
-);
+];
 
-$messages['ku'] = array(
+$messages['ku'] = [
 	'wednesday' => 'Meddwoch',
 	'wed' => 'Me.',
 	'wrong_wfQuery_params' => 'Verkihrte Parameter för: <strong><code>wfQuery()</code></strong><br />
@@ -9048,7 +9081,7 @@ Dinge Zojang för heh es do.
 Do bes jetz aanjemeldt.
 Denk dran, Do künnts Der [[Special:Preferences|Ding Enstellunge heh för {{GRAMMAR:Akk|{{SITENAME}}}} zeräächmaache]].',
 	'wrongpassword' => 'Dat Passwood oder dä Metmaacher Name wor verkihrt. Jetz muss De et noch ens versöke.',
-	'wrongpasswordempty' => "Dat Passwood ka'mer nit fottlooße. Jetz muss De et noch ens versöke.",
+	'wrongpasswordempty' => 'Dat Passwood ka\'mer nit fottlooße. Jetz muss De et noch ens versöke.',
 	'watchthis' => 'Op die Sigg heh oppasse',
 	'whitelistedittext' => 'Do mööts ald $1, öm heh em Wiki Sigge ändere ze dürfe.',
 	'windows-nonascii-filename' => 'Heh dat Wiki löht kein Datteiname met Sönderzeische zoh.',
@@ -9106,12 +9139,12 @@ De kanns Ding Oppassliss och [[Special:EditWatchlist/raw|en rüh beärbeide]].',
 	'watchlistedit-normal-done' => '{{PLURAL:$1|Eine Sigge-Tittel es|<strong>$1</strong> Sigge-Tittele sin|Keine Sigge-Tittel es}} us Dinge Opassliss erus jefloore:',
 	'watchlistedit-raw-title' => 'Rüh Oppassliss beärbeide',
 	'watchlistedit-raw-legend' => 'Rüh Oppassliss beärbeide',
-	'watchlistedit-raw-explain' => "Dat sin de Endräch in Dinge Oppassliss en rüh.
+	'watchlistedit-raw-explain' => 'Dat sin de Endräch in Dinge Oppassliss en rüh.
 Öm einzel Titelle loss ze wääde, kanns de de Reije met inne eruß schmieße, ov leddich maache.
 Öm neu Titelle  dobei ze don, schriev neu Reije dobei. Jede Titel moß en en Reih för sijj_allein shtonn.
 Wanns De fädig bes, dann deuß De dä Knopp „{{int:Watchlistedit-raw-submit}}“.
-Natörlech kanns De di Liss och — met Dingem Brauser singe ''<span lang=\"en\">Copy&amp;Paste</span>''-Funkßjohn — komplett kopeere odder ußtuusche.
-De könnts Ding Oppassliss ävver och [[Special:EditWatchlist|övver e Fomulaa met Kässjer un Hökscher beärbeide]].",
+Natörlech kanns De di Liss och — met Dingem Brauser singe \'\'<span lang="en">Copy&amp;Paste</span>\'\'-Funkßjohn — komplett kopeere odder ußtuusche.
+De könnts Ding Oppassliss ävver och [[Special:EditWatchlist|övver e Fomulaa met Kässjer un Hökscher beärbeide]].',
 	'watchlistedit-raw-titles' => 'Endräch:',
 	'watchlistedit-raw-submit' => 'Oppassliss neu fasshallde',
 	'watchlistedit-raw-done' => 'Ding Oppassliss es fassjehallde.',
@@ -9121,9 +9154,9 @@ De könnts Ding Oppassliss ävver och [[Special:EditWatchlist|övver e Fomulaa m
 	'watchlisttools-edit' => 'beloore un beärbede',
 	'watchlisttools-raw' => 'rüh beärbeijde | expochteere | empochteere',
 	'wikia-pagetitle' => '$1 — Wikia',
-);
+];
 
-$messages['ku-latn'] = array(
+$messages['ku-latn'] = [
 	'wednesday' => 'Çarşem',
 	'wed' => 'Çarş',
 	'wrong_wfQuery_params' => 'Parametreyên şaş ji bo wfQuery()<br />
@@ -9153,9 +9186,9 @@ Hesabê te hate afirandin. Tu dikarî niha [[Special:Preferences|tercîhên xwe 
 	'watchnochange' => 'Ne rûpelek, yê tu dişopînê, hate xeyrandin di vê wextê da, yê tu dixazê bibînê.',
 	'watchlist-details' => '* {{PLURAL:$1|Rûpelek tê|$1 rûpel tên}} şopandin, rûpelên guftûgoyê netên jimartin.',
 	'wlheader-enotif' => '* Agahdariya E-nameyê pêk tê.',
-	'wlheader-showupdated' => "* Ew rûpel yê hatin xeyrandin jilkî te li wan sekir di '''nivîsa estûr''' tên pêşandin.",
+	'wlheader-showupdated' => '* Ew rûpel yê hatin xeyrandin jilkî te li wan sekir di \'\'\'nivîsa estûr\'\'\' tên pêşandin.',
 	'watchlistcontains' => 'Di lîsteya şopandina te de {{PLURAL:$1|rûpelek heye|$1 rûpel hene}}.',
-	'wlnote' => "Niha {{PLURAL:$1|xeyrandinê|'''$1''' xeyrandinên}} dawî yê {{PLURAL:$2|seetê|'''$2''' seetên}} dawî {{PLURAL:$1|tê|tên}} dîtin.",
+	'wlnote' => 'Niha {{PLURAL:$1|xeyrandinê|\'\'\'$1\'\'\' xeyrandinên}} dawî yê {{PLURAL:$2|seetê|\'\'\'$2\'\'\' seetên}} dawî {{PLURAL:$1|tê|tên}} dîtin.',
 	'wlshowlast' => 'Guhertinên berî $1 saetan, $2 rojan, ya $3 (di sih rojên dawî de)',
 	'watchlist-options' => 'Vebijarkên lîsteya şopandinê',
 	'watching' => 'Bişopîne...',
@@ -9181,15 +9214,15 @@ Hesabê te hate afirandin. Tu dikarî niha [[Special:Preferences|tercîhên xwe 
 	'watchlistedit-raw-titles' => 'Sernav:',
 	'watchlistedit-raw-removed' => '{{PLURAL:$1|1 gotar hate|$1 gotar hatin}} jêbirin:',
 	'watchlisttools-edit' => 'Lîsteya şopandinê bibîne û biguherîne',
-);
+];
 
-$messages['kv'] = array(
+$messages['kv'] = [
 	'wednesday' => 'середа',
 	'whatlinkshere' => 'Ыстӧдъяс татчӧ',
-);
+];
 
-$messages['kw'] = array(
-	'wednesday' => "De' Merher",
+$messages['kw'] = [
+	'wednesday' => 'De\' Merher',
 	'wed' => 'Mer',
 	'welcomecreation' => '== Dynnargh, $1! ==
 Gwruthys ew agas acont.
@@ -9207,7 +9240,7 @@ Assayowgh arta.',
 	'watchthispage' => 'Golyas an folen-ma',
 	'watchlist-options' => 'Etholyow an rol golyas',
 	'watching' => 'Ow colyas...',
-	'whatlinkshere' => "Pandr'eus ow kevredna obma",
+	'whatlinkshere' => 'Pandr\'eus ow kevredna obma',
 	'whatlinkshere-title' => 'Folednow ow kevredna bys "$1"',
 	'whatlinkshere-page' => 'Folen:',
 	'whatlinkshere-prev' => '{{PLURAL:$1|kens|kens $1}}',
@@ -9221,9 +9254,9 @@ Assayowgh arta.',
 	'watchlisttools-view' => 'Gweles chanjyow longus',
 	'watchlisttools-edit' => 'Gweles ha chanjya an rol golyas',
 	'watchlisttools-raw' => 'Chanjya restren an rol golyas',
-);
+];
 
-$messages['ky'] = array(
+$messages['ky'] = [
 	'wednesday' => 'Шаршемби',
 	'wed' => 'Шршмб',
 	'welcomecreation' => '== Кош келиңиз, $1! ==
@@ -9255,9 +9288,9 @@ $messages['ky'] = array(
 	'watchlisttools-view' => 'Тийиштүү өзгөрүүлөрдү көрсөт',
 	'watchlisttools-edit' => 'Көзөмөл тизмени кара жана оңдо',
 	'watchlisttools-raw' => 'Жетиле элек көзөмөл тизмени оңдо',
-);
+];
 
-$messages['la'] = array(
+$messages['la'] = [
 	'wednesday' => 'dies Mercurii',
 	'wed' => 'Mer',
 	'wrong_wfQuery_params' => 'Parametri incorrectae pro wfQuery()<br />
@@ -9291,7 +9324,7 @@ Noli oblivisci [[Special:Preferences|praeferentias tuas]] apud {{grammar:accusat
 	'watchmethod-recent' => 'recensita recenta quaerens pro pagina custodita',
 	'watchmethod-list' => 'paginas custoditas quaerens pro recensitis recentibus',
 	'watchlistcontains' => 'Index paginarum custoditarum tuus $1 {{PLURAL:$1|paginam|paginas}} habet.',
-	'wlnote' => "Subter {{PLURAL:$1|est mutatio proxima|sunt '''$1''' mutationes proximae}} in {{PLURAL:$2|proxima hora|proximis '''$2''' horis}} ex $4, $3.",
+	'wlnote' => 'Subter {{PLURAL:$1|est mutatio proxima|sunt \'\'\'$1\'\'\' mutationes proximae}} in {{PLURAL:$2|proxima hora|proximis \'\'\'$2\'\'\' horis}} ex $4, $3.',
 	'wlshowlast' => 'Monstrare proximas $1 horas $2 dies $3',
 	'watchlist-options' => 'Indicis paginarum custoditarum praeferentiae',
 	'watching' => 'Custodiens...',
@@ -9318,9 +9351,9 @@ Noli oblivisci [[Special:Preferences|praeferentias tuas]] apud {{grammar:accusat
 	'watchlisttools-view' => 'Mutationes paginarum custoditarum monstrare',
 	'watchlisttools-edit' => 'Indicem paginarum custoditarum inspicere vel recensere',
 	'watchlisttools-raw' => 'Indicem paginarum custoditarum quasi textum recensere',
-);
+];
 
-$messages['lad'] = array(
+$messages['lad'] = [
 	'wednesday' => 'Miércoles',
 	'wed' => 'Mie',
 	'watchthis' => 'Cudia esta hoja',
@@ -9346,9 +9379,9 @@ $messages['lad'] = array(
 	'watchlisttools-view' => 'Ver los trocamientos',
 	'watchlisttools-edit' => 'Ver i trocar tu lista de escogidas',
 	'watchlisttools-raw' => 'Troca tu lista de escogidas en crudo',
-);
+];
 
-$messages['lb'] = array(
+$messages['lb'] = [
 	'wednesday' => 'Mëttwoch',
 	'wed' => 'Mët',
 	'wrong_wfQuery_params' => 'Falsche Parameter fir wfQuery()<br />
@@ -9358,10 +9391,10 @@ Ufro: $2',
 Äre Kont gouf kreéiert.
 Denkt drun, Är [[Special:Preferences|{{SITENAME}}-Astellungen]] unzepassen.',
 	'wrongpassword' => 'Dir hutt e falscht (oder kee) Passwuert aginn. Probéiert w.e.g. nach eng Kéier.',
-	'wrongpasswordempty' => "D'Passwuert dat Dir aginn hutt war eidel. Probéiert w.e.g. nach eng Kéier.",
+	'wrongpasswordempty' => 'D\'Passwuert dat Dir aginn hutt war eidel. Probéiert w.e.g. nach eng Kéier.',
 	'watchthis' => 'Dës Säit iwwerwaachen',
 	'whitelistedittext' => 'Dir musst Iech $1, fir Säiten änneren ze kënnen.',
-	'windows-nonascii-filename' => "Dës Wiki ënnerstëtzt d'Spezialzeechen an de Fichiersnimm net.",
+	'windows-nonascii-filename' => 'Dës Wiki ënnerstëtzt d\'Spezialzeechen an de Fichiersnimm net.',
 	'watchthisupload' => 'Dëse Fichier iwwerwaachen',
 	'withoutinterwiki' => 'Säiten ouni Interwiki-Linken',
 	'withoutinterwiki-summary' => 'Op dëser Spezialsäit stinn all déi Säiten déi keng Interwikilinken hunn.',
@@ -9374,20 +9407,20 @@ Denkt drun, Är [[Special:Preferences|{{SITENAME}}-Astellungen]] unzepassen.',
 	'wantedtemplates' => 'Gewënschte Schablounen',
 	'watchlist' => 'Meng Iwwerwaachungslëscht',
 	'watchlistfor2' => 'Vum $1 $2',
-	'watchlistanontext' => "Dir musst $1 fir Säiten op ärer Iwwerwaachungslëscht ze gesinn oder z'änneren.",
+	'watchlistanontext' => 'Dir musst $1 fir Säiten op ärer Iwwerwaachungslëscht ze gesinn oder z\'änneren.',
 	'watchnologin' => 'Net ageloggt',
-	'watchnologintext' => "Dir musst [[Special:UserLogin|ugemellt]] sinn, fir Är Iwwerwaachungslëscht z'änneren.",
+	'watchnologintext' => 'Dir musst [[Special:UserLogin|ugemellt]] sinn, fir Är Iwwerwaachungslëscht z\'änneren.',
 	'watch' => 'Iwwerwaachen',
 	'watchthispage' => 'Dës Säit iwwerwaachen',
 	'watchnochange' => 'Keng vun Ären iwwerwaachte Säite gouf während der ugewisener Zäit verännert.',
-	'watchlist-details' => "{{PLURAL:$1|1 Säit|$1 Säiten}} sinn op ärer Iwwerwaachungsklëscht (d'Diskussiounssäite net matgezielt).",
+	'watchlist-details' => '{{PLURAL:$1|1 Säit|$1 Säiten}} sinn op ärer Iwwerwaachungsklëscht (d\'Diskussiounssäite net matgezielt).',
 	'wlheader-enotif' => '* E-Mail-Bescheed ass aktivéiert.',
-	'wlheader-showupdated' => "* Säiten déi zënter ärer leschter Visite geännert goufen, si '''fett''' geschriwwen",
+	'wlheader-showupdated' => '* Säiten déi zënter ärer leschter Visite geännert goufen, si \'\'\'fett\'\'\' geschriwwen',
 	'watchmethod-recent' => 'Rezent Ännerunge ginn op iwwerwaacht Säiten iwwerpréift',
 	'watchmethod-list' => 'Iwwerwaachte Säite ginn op rezent Ännerungen iwwerpréift',
 	'watchlistcontains' => 'Op ärer Iwwerwaachungslëscht $1 {{PLURAL:$1|steet $1 Säit|stinn $1 Säiten}}.',
-	'wlnote' => "Hei {{PLURAL:$1|ass déi lescht Ännerung|sinn déi lescht '''$1''' Ännerunge}} vun {{PLURAL:$2|der leschter Stonn|de leschte(n) '''$2''' Stonnen}}, Stand: $3 ëm $4 Auer.",
-	'wlshowlast' => "D'Ännerunge vun de leschte(n) $1 Stonnen, $2 Deeg oder $3 (an de leschten 30 Deeg) weisen.",
+	'wlnote' => 'Hei {{PLURAL:$1|ass déi lescht Ännerung|sinn déi lescht \'\'\'$1\'\'\' Ännerunge}} vun {{PLURAL:$2|der leschter Stonn|de leschte(n) \'\'\'$2\'\'\' Stonnen}}, Stand: $3 ëm $4 Auer.',
+	'wlshowlast' => 'D\'Ännerunge vun de leschte(n) $1 Stonnen, $2 Deeg oder $3 (an de leschten 30 Deeg) weisen.',
 	'watchlist-options' => 'Optioune vun der Iwwerwaachungslëscht',
 	'watching' => 'Iwwerwaachen …',
 	'watcherrortext' => 'Beim Ännere vun den Astellunge vun der Iwwerwaachungslëscht fir "$1" ass e Feeler geschitt.',
@@ -9404,7 +9437,7 @@ Denkt drun, Är [[Special:Preferences|{{SITENAME}}-Astellungen]] unzepassen.',
 	'whatlinkshere-filters' => 'Filteren',
 	'widthheightpage' => '$1 × $2, $3 {{PLURAL:$3|Säit|Säiten}}',
 	'watchlistall2' => 'all',
-	'watchlistedit-numitems' => "Op Ärer Iwwerwaachungslëscht {{PLURAL:$1|steet 1 Säit|stinn $1 Säiten}}, ouni d'Diskussiounssäiten.",
+	'watchlistedit-numitems' => 'Op Ärer Iwwerwaachungslëscht {{PLURAL:$1|steet 1 Säit|stinn $1 Säiten}}, ouni d\'Diskussiounssäiten.',
 	'watchlistedit-noitems' => 'Är Iwwerwaachungslëscht ass eidel.',
 	'watchlistedit-normal-title' => 'Iwwerwaachungslëscht änneren',
 	'watchlistedit-normal-legend' => 'Säite vun der Iwwerwaachungslëscht erofhuelen',
@@ -9415,9 +9448,9 @@ Dir kënnt och [[Special:EditWatchlist/raw|déi net formatéiert Iwwerwaachungsl
 	'watchlistedit-normal-done' => '{{PLURAL:$1|1 Säit gouf|$1 Säite goufe}} vun ärer Iwwerwaachungslëscht erofgeholl:',
 	'watchlistedit-raw-title' => 'Iwwerwaachungslëscht onformatéiert änneren',
 	'watchlistedit-raw-legend' => 'Iwwerwaachungslëscht onformatéiert änneren',
-	'watchlistedit-raw-explain' => "D'Säite vun Ärer Iwwerwaachungslëscht ginn hei drënner gewisen a kënne geännert ginn andeems der d'Säiten op d'Lëscht derbäisetze oder erofhuelt; eng Säit pro Linn.
-Wann Dir fäerdeg sidd, klickt \"{{int:Watchlistedit-raw-submit}}\".
-Dir kënnt och [[Special:EditWatchlist|de Standard Editeur benotzen]].",
+	'watchlistedit-raw-explain' => 'D\'Säite vun Ärer Iwwerwaachungslëscht ginn hei drënner gewisen a kënne geännert ginn andeems der d\'Säiten op d\'Lëscht derbäisetze oder erofhuelt; eng Säit pro Linn.
+Wann Dir fäerdeg sidd, klickt "{{int:Watchlistedit-raw-submit}}".
+Dir kënnt och [[Special:EditWatchlist|de Standard Editeur benotzen]].',
 	'watchlistedit-raw-titles' => 'Säiten:',
 	'watchlistedit-raw-submit' => 'Iwwerwaachungslëscht aktualiséieren',
 	'watchlistedit-raw-done' => 'Är Iwwerwaachungslëscht gouf aktualiséiert.',
@@ -9426,15 +9459,15 @@ Dir kënnt och [[Special:EditWatchlist|de Standard Editeur benotzen]].",
 	'watchlisttools-view' => 'Iwwerwaachungslëscht: Ännerungen',
 	'watchlisttools-edit' => 'Iwwerwaachungslëscht weisen an änneren',
 	'watchlisttools-raw' => 'Net-formatéiert Iwwerwaachungslëscht änneren',
-);
+];
 
-$messages['lbe'] = array(
+$messages['lbe'] = [
 	'watchthis' => 'Ва лажин ябитаврил сияхӀравун ххи дан',
 	'watchlist' => 'Ябитаврил сияхӀ',
 	'watch' => 'Хъирив агьан',
-);
+];
 
-$messages['lez'] = array(
+$messages['lez'] = [
 	'wednesday' => 'Арбе',
 	'wed' => 'Aрб',
 	'watchthis' => 'И ччин гуьзетун',
@@ -9461,9 +9494,9 @@ $messages['lez'] = array(
 	'watchlisttools-view' => 'Сиягьда авай ччинра дегишвилер',
 	'watchlisttools-edit' => 'Гьузетунин сиягь килигун ва дуьзар хъувун',
 	'watchlisttools-raw' => 'Текст хьиз дуьзар хъувун',
-);
+];
 
-$messages['lfn'] = array(
+$messages['lfn'] = [
 	'wednesday' => 'mercurdi',
 	'wed' => 'Mer',
 	'wrongpassword' => 'La sinia de entra no es coreta. Per favore, atenta ancora.',
@@ -9493,19 +9526,19 @@ $messages['lfn'] = array(
 	'watchlisttools-view' => 'Vide cambias pertinente',
 	'watchlisttools-edit' => 'Vide e edita la lista de pajes oservada',
 	'watchlisttools-raw' => 'Edita la lista rua de pajes oservada',
-);
+];
 
-$messages['lg'] = array(
+$messages['lg'] = [
 	'wednesday' => 'Lwakusatu',
 	'wed' => 'Lw3',
 	'wrong_wfQuery_params' => 'wfQuery() kirimu paramita ensobu zino<br />
 Mukolo: $1<br />
 Ekiragiro ekinoonyeza mu ggwanika lya data: $2',
-	'welcomecreation' => "== $1 tukwanirizza! == <br />
+	'welcomecreation' => '== $1 tukwanirizza! == <br />
 Akawunti yo ekoledwa.<br />
-Tewerabira kwetereereza [[Special:Preferences|enteekateeka yo ey'oku {{SITENAME}}]].",
-	'wrongpassword' => "Ekigambo ekikuumi ky'oyingizza ssi kituufu.<br />
-Ddamu ogezeeko.",
+Tewerabira kwetereereza [[Special:Preferences|enteekateeka yo ey\'oku {{SITENAME}}]].',
+	'wrongpassword' => 'Ekigambo ekikuumi ky\'oyingizza ssi kituufu.<br />
+Ddamu ogezeeko.',
 	'wrongpasswordempty' => 'Tewawandise kigambo kikuumi.<br />
 Ddamu ogezeeko.',
 	'watchthis' => 'Goberera olupapula luno',
@@ -9513,9 +9546,9 @@ Ddamu ogezeeko.',
 	'watchlist' => 'Empapula zengoberera',
 	'watch' => 'Goberera olupapula luno',
 	'watchthispage' => 'Goberera olupapula luno',
-	'watchlist-details' => "Olina {{PLURAL:$1|olupapula $1|empapula $1}} z'ogoberera, nga tobalideko n'eza yogera-nange.",
-	'wlshowlast' => "Ndaga ez'omu ssaawa $1 n'ennaku $2 eziyise oba $3",
-	'watchlist-options' => "Enteetakeeka y'endaga ya mpapula zengoberera",
+	'watchlist-details' => 'Olina {{PLURAL:$1|olupapula $1|empapula $1}} z\'ogoberera, nga tobalideko n\'eza yogera-nange.',
+	'wlshowlast' => 'Ndaga ez\'omu ssaawa $1 n\'ennaku $2 eziyise oba $3',
+	'watchlist-options' => 'Enteetakeeka y\'endaga ya mpapula zengoberera',
 	'watching' => 'Kikolebwako...',
 	'whatlinkshere' => 'Empapula ezikuggusa ku luno',
 	'whatlinkshere-title' => 'Empapula eziriko enyunzi ezigguka ku $1',
@@ -9529,11 +9562,11 @@ Ddamu ogezeeko.',
 	'whatlinkshere-filters' => 'Ensunsula',
 	'watchlistall2' => 'Zonna',
 	'watchlisttools-view' => 'Kebera ebikyuse',
-	'watchlisttools-edit' => "Kola ku lukalala lwe'mpapula z'ogoberera",
+	'watchlisttools-edit' => 'Kola ku lukalala lwe\'mpapula z\'ogoberera',
 	'watchlisttools-raw' => 'Wandika enkyukakyuka mu lukalala luno',
-);
+];
 
-$messages['li'] = array(
+$messages['li'] = [
 	'wednesday' => 'goonsdig',
 	'wed' => 'woo',
 	'wrong_wfQuery_params' => 'Verkeerde paramaeters veur wfQuery()<br />
@@ -9542,38 +9575,38 @@ Query: $2',
 	'welcomecreation' => '== Wèlkóm, $1! ==
 Diene gebroeker is noe vaerdig.
 Vergaet neet dien [[Special:Preferences|veurkäöre veur {{SITENAME}}]] aan te passe.',
-	'wrongpassword' => "'t Ingegaeve wachwaord is neet zjus. Perbeer 't obbenuujts.",
-	'wrongpasswordempty' => "'t Ingegaeve wachwoord waor laeg. Perbeer 't obbenuujts.",
+	'wrongpassword' => '\'t Ingegaeve wachwaord is neet zjus. Perbeer \'t obbenuujts.',
+	'wrongpasswordempty' => '\'t Ingegaeve wachwoord waor laeg. Perbeer \'t obbenuujts.',
 	'watchthis' => 'Volg dees pazjena',
 	'whitelistedittext' => 'Geer mót uch $1 óm pajzená te bewirke.',
 	'windows-nonascii-filename' => 'Deze wiki ongersteunt gein bestandjsname mit speciaal teikes.',
 	'watchthisupload' => 'Volg dit bestandj',
-	'withoutinterwiki' => "Pazjena's zónger interwiki's",
-	'withoutinterwiki-summary' => "De volgende pagina's linke neet nao versies in 'n anger taal:",
+	'withoutinterwiki' => 'Pazjena\'s zónger interwiki\'s',
+	'withoutinterwiki-summary' => 'De volgende pagina\'s linke neet nao versies in \'n anger taal:',
 	'withoutinterwiki-legend' => 'Veurvoegsel',
 	'withoutinterwiki-submit' => 'Toean',
 	'wantedcategories' => 'Gewunsjde categorieë',
-	'wantedpages' => "Gewunsjde pazjena's",
-	'wantedpages-badtitle' => "Verkeerde titel in 't rizzeltaot gezatj: $1",
+	'wantedpages' => 'Gewunsjde pazjena\'s',
+	'wantedpages-badtitle' => 'Verkeerde titel in \'t rizzeltaot gezatj: $1',
 	'wantedfiles' => 'Neet-bestaonde bestenj mit verwiezinge',
-	'wantedfiletext-cat' => "De volgendje bestenj waere gebroek meh bestaon neet. Bestenj van extern repository's kinne zeen opgenómmen in de lies, óndanks det ze bestaon. Dergelik valsj positieve waere <del>doorgehaoldj waergaeve</del>. Pagina's die neet-bestaondje bestenj insloete staon op de pagina [[:$1]].",
-	'wantedfiletext-nocat' => "De volgendje bestenj waere gebroek meh bestaon neet. Bestenj van extern repository's kinne zeen opgenómmen in de lies, óndanks det ze bestaon. Dergelik valsj positieve waere <del>doorgehaoldj waergaeve</del>.",
+	'wantedfiletext-cat' => 'De volgendje bestenj waere gebroek meh bestaon neet. Bestenj van extern repository\'s kinne zeen opgenómmen in de lies, óndanks det ze bestaon. Dergelik valsj positieve waere <del>doorgehaoldj waergaeve</del>. Pagina\'s die neet-bestaondje bestenj insloete staon op de pagina [[:$1]].',
+	'wantedfiletext-nocat' => 'De volgendje bestenj waere gebroek meh bestaon neet. Bestenj van extern repository\'s kinne zeen opgenómmen in de lies, óndanks det ze bestaon. Dergelik valsj positieve waere <del>doorgehaoldj waergaeve</del>.',
 	'wantedtemplates' => 'Neet-bestaonde sjablone mit verwiezinge',
 	'watchlist' => 'Volglies',
 	'watchlistfor2' => 'Veur $1 $2',
 	'watchlistanontext' => '$1 is verplich om dien volglies in te zeen of te wiezige.',
 	'watchnologin' => 'De bis neet aangemèld',
-	'watchnologintext' => "De mós [[Special:UserLogin|aangemèld]] zeen veur 't verangere van dien volglies.",
+	'watchnologintext' => 'De mós [[Special:UserLogin|aangemèld]] zeen veur \'t verangere van dien volglies.',
 	'watch' => 'Volg',
 	'watchthispage' => 'Volg dees pazjena',
 	'watchnochange' => 'Gein van dien gevolgde items is aangepas in dees periode.',
-	'watchlist-details' => "D'r {{PLURAL:$1|sjteit ein pazjena|sjtaon $1 pazjena's}} op dien volglies mit oetzunjering van de euverlèkpazjena's.",
+	'watchlist-details' => 'D\'r {{PLURAL:$1|sjteit ein pazjena|sjtaon $1 pazjena\'s}} op dien volglies mit oetzunjering van de euverlèkpazjena\'s.',
 	'wlheader-enotif' => '* Doe wörs per e-mail gewaarsjuwd',
-	'wlheader-showupdated' => "* Pazjena's die verangerd zeen saers doe ze veur 't lètste bekeeks sjtaon '''vet'''",
-	'watchmethod-recent' => "Controleer recènte verangere veur gevolgde pazjena's",
-	'watchmethod-list' => "controlere van gevolgde pazjena's veur recènte verangeringe",
-	'watchlistcontains' => "Dien volglies bevat $1 {{PLURAL:$1|pazjena|pazjena's}}.",
-	'wlnote' => "Hieónger {{PLURAL:$1|steit de lètste verangering|staon de lètste $1 verangeringe}} van {{PLURAL:$2|'t lètste oer|de lètste <b>$2</b> oer}} óp $3 óm $4.",
+	'wlheader-showupdated' => '* Pazjena\'s die verangerd zeen saers doe ze veur \'t lètste bekeeks sjtaon \'\'\'vet\'\'\'',
+	'watchmethod-recent' => 'Controleer recènte verangere veur gevolgde pazjena\'s',
+	'watchmethod-list' => 'controlere van gevolgde pazjena\'s veur recènte verangeringe',
+	'watchlistcontains' => 'Dien volglies bevat $1 {{PLURAL:$1|pazjena|pazjena\'s}}.',
+	'wlnote' => 'Hieónger {{PLURAL:$1|steit de lètste verangering|staon de lètste $1 verangeringe}} van {{PLURAL:$2|\'t lètste oer|de lètste <b>$2</b> oer}} óp $3 óm $4.',
 	'wlshowlast' => 'Tuin lètste $1 ore $2 daag $3',
 	'watchlist-options' => 'Opties veur volglies',
 	'watching' => 'Bezig mit plaatse op de volglies...',
@@ -9589,59 +9622,59 @@ Vergaet neet dien [[Special:Preferences|veurkäöre veur {{SITENAME}}]] aan te p
 	'whatlinkshere-hidelinks' => '$1 links',
 	'whatlinkshere-hideimages' => '$1 bestandjslinker',
 	'whatlinkshere-filters' => 'Filters',
-	'widthheightpage' => "$1 × $2, $3 {{PLURAL:$3|pazjena|pazjena's}}",
+	'widthheightpage' => '$1 × $2, $3 {{PLURAL:$3|pazjena|pazjena\'s}}',
 	'watchlistall2' => 'al',
-	'watchlistedit-numitems' => "Op dien volglies sjtaon {{PLURAL:$1|1 pazjena|$1 pazjena's}}, exclusief euverlèkpazjena's.",
-	'watchlistedit-noitems' => "Dao sjtaon gein pazjena's op dien volglies.",
+	'watchlistedit-numitems' => 'Op dien volglies sjtaon {{PLURAL:$1|1 pazjena|$1 pazjena\'s}}, exclusief euverlèkpazjena\'s.',
+	'watchlistedit-noitems' => 'Dao sjtaon gein pazjena\'s op dien volglies.',
 	'watchlistedit-normal-title' => 'Volglies bewirke',
-	'watchlistedit-normal-legend' => "Pazjena's ewegsjaffe van dien volglies",
-	'watchlistedit-normal-explain' => "Pazjena's op dien volglies waere hiejónger getuind.
-Klik op 't veerkentje d'rnaeve óm 'n pazjena eweg te sjaffe. Klik daonao op '{{int:Watchlistedit-normal-submit}}'.
-De kèns ouch [[Special:EditWatchlist/raw|de roew lies bewirke]].",
-	'watchlistedit-normal-submit' => "Pazjena's ewegsjaffe",
-	'watchlistedit-normal-done' => "{{PLURAL:$1|1 pazjena is|$1 pazjena's zeen}} eweggesjaf van dien volglies:",
+	'watchlistedit-normal-legend' => 'Pazjena\'s ewegsjaffe van dien volglies',
+	'watchlistedit-normal-explain' => 'Pazjena\'s op dien volglies waere hiejónger getuind.
+Klik op \'t veerkentje d\'rnaeve óm \'n pazjena eweg te sjaffe. Klik daonao op \'{{int:Watchlistedit-normal-submit}}\'.
+De kèns ouch [[Special:EditWatchlist/raw|de roew lies bewirke]].',
+	'watchlistedit-normal-submit' => 'Pazjena\'s ewegsjaffe',
+	'watchlistedit-normal-done' => '{{PLURAL:$1|1 pazjena is|$1 pazjena\'s zeen}} eweggesjaf van dien volglies:',
 	'watchlistedit-raw-title' => 'Roew volglies bewirke',
 	'watchlistedit-raw-legend' => 'Roew volglies bewirke',
-	'watchlistedit-raw-explain' => "Hiejónger sjtaon pazjena's op dien volglies. De kèns de lies bewirke door pazjena's eweg te sjaffe en d'rbie te doon. Ein pazjena per regel.
-Wens te vaerdig bis, klik dan op '{{int:Watchlistedit-raw-submit}}'.
-De kèns ouch [[Special:EditWatchlist|'t sjtanderd bewirkingssjirm gebroeke]].",
-	'watchlistedit-raw-titles' => "Pazjena's:",
+	'watchlistedit-raw-explain' => 'Hiejónger sjtaon pazjena\'s op dien volglies. De kèns de lies bewirke door pazjena\'s eweg te sjaffe en d\'rbie te doon. Ein pazjena per regel.
+Wens te vaerdig bis, klik dan op \'{{int:Watchlistedit-raw-submit}}\'.
+De kèns ouch [[Special:EditWatchlist|\'t sjtanderd bewirkingssjirm gebroeke]].',
+	'watchlistedit-raw-titles' => 'Pazjena\'s:',
 	'watchlistedit-raw-submit' => 'Volglies biewirke',
 	'watchlistedit-raw-done' => 'Dien volglies is biegewirk.',
-	'watchlistedit-raw-added' => "{{PLURAL:$1|1 pazjena is|$1 pazjena's zeen}} toegevoog:",
-	'watchlistedit-raw-removed' => "{{PLURAL:$1|1 pazjena is|$1 pazjena's zeen}} eweggesjaf:",
+	'watchlistedit-raw-added' => '{{PLURAL:$1|1 pazjena is|$1 pazjena\'s zeen}} toegevoog:',
+	'watchlistedit-raw-removed' => '{{PLURAL:$1|1 pazjena is|$1 pazjena\'s zeen}} eweggesjaf:',
 	'watchlisttools-view' => 'Volglies bekieke',
 	'watchlisttools-edit' => 'Volglies bekieke en bewirke',
 	'watchlisttools-raw' => 'Roew volglies bewirke',
-);
+];
 
-$messages['lij'] = array(
+$messages['lij'] = [
 	'wednesday' => 'Mäcordì',
 	'wed' => 'Mäc',
-	'welcomecreation' => "== Benvegnûo, $1! ==
+	'welcomecreation' => '== Benvegnûo, $1! ==
 
-O teu account o l'è stæto creòu bén. No te ascordâ de cangiâ e teu {{SITENAME}}.[[Special:Preferences|preferençe de {{SITENAME}}]].",
-	'wrongpassword' => "Ti gh'æ scrîo 'na paròlla d'ordine sbaliâ. Tenta torna.",
-	'wrongpasswordempty' => "No ti g'hæ scrîo nisciûnn-a paròlla d'ordine. Tenta torna.",
+O teu account o l\'è stæto creòu bén. No te ascordâ de cangiâ e teu {{SITENAME}}.[[Special:Preferences|preferençe de {{SITENAME}}]].',
+	'wrongpassword' => 'Ti gh\'æ scrîo \'na paròlla d\'ordine sbaliâ. Tenta torna.',
+	'wrongpasswordempty' => 'No ti g\'hæ scrîo nisciûnn-a paròlla d\'ordine. Tenta torna.',
 	'watchthis' => 'Azzonze a-i osservæ speçiâli',
 	'whitelistedittext' => 'Pe cangia sta pagina devvi $1.',
 	'withoutinterwiki' => 'Paggine sensa interwiki',
-	'withoutinterwiki-summary' => "'Ste paggine chì inzû no g'han nisciûn collegamento co-e verscioîn in âtre lengoe:",
+	'withoutinterwiki-summary' => '\'Ste paggine chì inzû no g\'han nisciûn collegamento co-e verscioîn in âtre lengoe:',
 	'wantedcategories' => 'Categorîe domandæ',
 	'wantedpages' => 'Paggine domandæ',
 	'watchlist' => 'A mæ lista in osservassion',
 	'watchlistfor2' => 'Pe $1 $2',
-	'watchnologin' => "Non ti t'æ entroö",
+	'watchnologin' => 'Non ti t\'æ entroö',
 	'watchnologintext' => 'Devvi [[Special:UserLogin|entrâ]] pe cangiâ a toa lista in osservaçion.',
 	'watch' => 'Inta lista in oservaçion',
-	'watchthispage' => "Vigilâ 'sta paggina",
-	'watchlist-details' => "A lista d'oservaçión speçiâle a contegne {{PLURAL:$1|inna pàgina (co-a seu pàgina de discusción)|$1 pàgine (co-e lòro pàgine de discusción)}}.",
-	'watchlistcontains' => "A lista in osservaçion g'ha $1 {{PLURAL:$1|pagine|pagina}}.",
+	'watchthispage' => 'Vigilâ \'sta paggina',
+	'watchlist-details' => 'A lista d\'oservaçión speçiâle a contegne {{PLURAL:$1|inna pàgina (co-a seu pàgina de discusción)|$1 pàgine (co-e lòro pàgine de discusción)}}.',
+	'watchlistcontains' => 'A lista in osservaçion g\'ha $1 {{PLURAL:$1|pagine|pagina}}.',
 	'wlshowlast' => 'Famme vedde e ûrtime $1 ôe $2 giorni $3',
 	'watchlist-options' => 'Inpostaçioìn di oservæ speciâli',
 	'watching' => 'Inti osservæ speçiâli...',
 	'whatlinkshere' => 'Cöse o se colega chì',
-	'whatlinkshere-title' => "Pàgine c'apontàn a $1",
+	'whatlinkshere-title' => 'Pàgine c\'apontàn a $1',
 	'whatlinkshere-page' => 'Pàgina:',
 	'whatlinkshere-prev' => '{{PLURAL:$1|preçedente|preçedenti $1}}',
 	'whatlinkshere-next' => '{{PLURAL:$1|sûccescivo|sûccescivi $1}}',
@@ -9655,9 +9688,9 @@ O teu account o l'è stæto creòu bén. No te ascordâ de cangiâ e teu {{SITEN
 	'watchlisttools-view' => 'Veddi e modiffiche pertinenti',
 	'watchlisttools-edit' => 'Veddi e modiffica a lista',
 	'watchlisttools-raw' => 'Modiffica a lista in formato testo',
-);
+];
 
-$messages['liv'] = array(
+$messages['liv'] = [
 	'wednesday' => 'kuolmõndpǟva',
 	'wed' => 'Kuo',
 	'watchthis' => 'Vaņ iļ siedā līedpūoltõ',
@@ -9684,26 +9717,26 @@ $messages['liv'] = array(
 	'watchlisttools-view' => 'Nägţ sīe mõitõkši',
 	'watchlisttools-edit' => 'Vaņ ja redigīer iļ-vaņtlimiz nimkerrõ',
 	'watchlisttools-raw' => 'Mõitiņt ovāt-tekstõ',
-);
+];
 
-$messages['lmo'] = array(
+$messages['lmo'] = [
 	'wednesday' => 'Merculdí',
 	'wed' => 'Ven',
-	'welcomecreation' => "== Benvegnüü, $1! ==
-'L to cünt l'è staa pruntaa. Desmenteghet mía de mudifegà i to [[Special:Preferences|preferenz de {{SITENAME}}]].",
-	'wrongpassword' => "La ciav che t'hee metüü denter l'è nò giüsta. Pröva turna per piasè.",
-	'wrongpasswordempty' => "T'hee no metüü denter la parola ciav. Pröva turna per piasè.",
-	'watchthis' => "Tegn d'ögg quela pagina chì",
+	'welcomecreation' => '== Benvegnüü, $1! ==
+\'L to cünt l\'è staa pruntaa. Desmenteghet mía de mudifegà i to [[Special:Preferences|preferenz de {{SITENAME}}]].',
+	'wrongpassword' => 'La ciav che t\'hee metüü denter l\'è nò giüsta. Pröva turna per piasè.',
+	'wrongpasswordempty' => 'T\'hee no metüü denter la parola ciav. Pröva turna per piasè.',
+	'watchthis' => 'Tegn d\'ögg quela pagina chì',
 	'wantedcategories' => 'Categurij ricercaa',
 	'wantedpages' => 'Pagin ricercaa',
-	'watchlist' => "Paginn ch'a tegni d'ögg",
-	'watch' => "Tegn d'öcc",
-	'watchthispage' => "Tegn d'ögg quela pagina chì",
-	'watchnochange' => "Nissün cambiament l'è stai faa ins i pàginn che te tegn d'ögg ind 'l períud de temp indicaa.",
+	'watchlist' => 'Paginn ch\'a tegni d\'ögg',
+	'watch' => 'Tegn d\'öcc',
+	'watchthispage' => 'Tegn d\'ögg quela pagina chì',
+	'watchnochange' => 'Nissün cambiament l\'è stai faa ins i pàginn che te tegn d\'ögg ind \'l períud de temp indicaa.',
 	'watchlist-details' => '{{PLURAL:$1|$1 pagina|$1 paginn}} tegnüü sot ögg, fö che i paginn de discüssión.',
 	'wlshowlast' => 'Fa vidé i ültim $1 ur $2 dì $3',
-	'watchlist-options' => "Upzión lista d'ussevazión",
-	'watching' => "Giuntà ai pagin da ten d'ögg...",
+	'watchlist-options' => 'Upzión lista d\'ussevazión',
+	'watching' => 'Giuntà ai pagin da ten d\'ögg...',
 	'whatlinkshere' => 'Pagin che se culeghen chì',
 	'whatlinkshere-title' => 'Paginn che menen a "$1"',
 	'whatlinkshere-page' => 'Pagina:',
@@ -9718,9 +9751,9 @@ $messages['lmo'] = array(
 	'watchlisttools-view' => 'Varda i mudifegh impurtant',
 	'watchlisttools-edit' => 'Varda e mudifega la lista di paginn che te tegnet sut ögg',
 	'watchlisttools-raw' => 'Mudifega la lista in furmaa test',
-);
+];
 
-$messages['ln'] = array(
+$messages['ln'] = [
 	'wednesday' => 'mokɔlɔ ya mísáto',
 	'wed' => 'Mís',
 	'watchthis' => 'Kolanda lonkásá óyo',
@@ -9728,7 +9761,7 @@ $messages['ln'] = array(
 	'watch' => 'Kolanda',
 	'watchthispage' => 'Kolanda lonkásá óyo',
 	'watchlist-details' => '{{PLURAL:$1|Lonkásá $1 elandámí|Nkásá $1 bilandámí}}, longola nkásá ya ntembe.',
-	'wlnote' => "Áwa o nsé {{PLURAL:$1|ezalí mbóngwana ya nsúka|izalí mbóngwana '''$1''' ya nsúka}} o {{PLURAL:$2|ngonga|ngonga '''$2'''}} ya nsúka.",
+	'wlnote' => 'Áwa o nsé {{PLURAL:$1|ezalí mbóngwana ya nsúka|izalí mbóngwana \'\'\'$1\'\'\' ya nsúka}} o {{PLURAL:$2|ngonga|ngonga \'\'\'$2\'\'\'}} ya nsúka.',
 	'wlshowlast' => 'Komɔ́nisa ngónga $1 ya nsúka, mikɔlɔ $2 mya nsúka tǒ $3',
 	'watching' => 'Kolanda...',
 	'whatlinkshere' => 'Ekangísí áwa',
@@ -9743,9 +9776,9 @@ $messages['ln'] = array(
 	'watchlisttools-view' => 'Komɔ́nisela mbóngwana ya ntína',
 	'watchlisttools-edit' => 'Komɔ́nisela mpé kobóngola nkásá nalandí',
 	'watchlisttools-raw' => 'Kobimisela nkásá nalandí (na pɛpɛ)',
-);
+];
 
-$messages['lo'] = array(
+$messages['lo'] = [
 	'wednesday' => 'ວັນພຸດ',
 	'wed' => 'ພຸດ',
 	'welcomecreation' => '== ຍິນດີຕ້ອນຮັບ, $1! ==
@@ -9766,7 +9799,7 @@ $messages['lo'] = array(
 	'watch' => 'ຕິດຕາມ',
 	'watchthispage' => 'ຕິດຕາມໜ້ານີ້',
 	'watchnochange' => 'ບໍ່ມີໜ້າທີ່ທ່ານຕິດຕາມໃດໆ ຖືກດັດແປງໃນໄລຍະສະແດງຂ້າງເທິງນີ້.',
-	'wlheader-showupdated' => "* ບັນດາ ໜ້າ ທີ່ມີການປ່ຽນແປງ ຫຼັງຈາກທີ່ທ່ານ ເຂົ້າຊົມຫຼ້າສຸດ ຈະຖືກສະແດງເປັນ ໂຕໜັງສື  '''ເຂັ້ມ'''",
+	'wlheader-showupdated' => '* ບັນດາ ໜ້າ ທີ່ມີການປ່ຽນແປງ ຫຼັງຈາກທີ່ທ່ານ ເຂົ້າຊົມຫຼ້າສຸດ ຈະຖືກສະແດງເປັນ ໂຕໜັງສື  \'\'\'ເຂັ້ມ\'\'\'',
 	'wlshowlast' => 'ສະແດງ $1 ຊົ່ວໂມງຫຼ້າສຸດ $2 ມື້ຫຼ້າສຸດ $3',
 	'watching' => 'ພວມຕິດຕາມ...',
 	'whatlinkshere' => 'ໜ້າທີ່ເຊື່ອມຕໍ່ມາ',
@@ -9778,56 +9811,56 @@ $messages['lo'] = array(
 	'watchlistedit-raw-title' => 'ດັດແກ້ລາຍການຕິດຕາມດິບ',
 	'watchlisttools-view' => 'ເບິ່ງການປ່ຽນແປງທີ່ກ່ຽວຂ້ອງ',
 	'watchlisttools-edit' => 'ເບິ່ງ ແລະ ດັດແກ້ ລາຍການຕິດຕາມ',
-);
+];
 
-$messages['loz'] = array(
+$messages['loz'] = [
 	'wednesday' => 'La Bulalu',
 	'wed' => 'Bul',
-	'wrong_wfQuery_params' => "Inkorrekt parameteri di wfQuery()<br />
-Fung'ksyun: $1<br />
-Query: $2",
+	'wrong_wfQuery_params' => 'Inkorrekt parameteri di wfQuery()<br />
+Fung\'ksyun: $1<br />
+Query: $2',
 	'wrongpassword' => 'Bufosi sebu dafi. Tembile.',
 	'wrongpasswordempty' => 'No sebu dafi. Tembile.',
 	'watchthis' => 'Kantezi bye petulo',
-	'whitelistedittext' => "A sa $1 di hloli ye ng'i petulo.",
+	'whitelistedittext' => 'A sa $1 di hloli ye ng\'i petulo.',
 	'watchthisupload' => 'Kentezi bye petulo',
 	'withoutinterwiki' => 'Petulo dicon interwikina',
-	'wantedcategories' => "Ni sa kattegorina con ling'ki",
-	'wantedpages' => "Ni sa petulo con ling'ki",
+	'wantedcategories' => 'Ni sa kattegorina con ling\'ki',
+	'wantedpages' => 'Ni sa petulo con ling\'ki',
 	'watchlist' => 'Zwa mukoloko di kentezi',
 	'watchnologin' => 'A ni sa menuhile',
-	'watchnologintext' => "A sa [[Special:UserLogin|menuhile]] di hloli ye ng'i zwa mukoloko di kentezi.",
+	'watchnologintext' => 'A sa [[Special:UserLogin|menuhile]] di hloli ye ng\'i zwa mukoloko di kentezi.',
 	'watch' => 'Kentezi',
 	'watchthispage' => 'Kentezi bye petulo',
 	'watchlist-details' => '{{PLURAL:$1|$1 petulo|$1 petulo}} sa kentezi e no bulelezi.',
 	'wlshowlast' => 'Kamukile lapu-lila $1 holani $2 dia $3',
 	'watching' => 'Kentezi...',
-	'whatlinkshere' => "Ling'ki di bye petulo",
-	'whatlinkshere-title' => "Petulo bye ling'ki di $1",
+	'whatlinkshere' => 'Ling\'ki di bye petulo',
+	'whatlinkshere-title' => 'Petulo bye ling\'ki di $1',
 	'whatlinkshere-page' => 'Petulo:',
 	'whatlinkshere-prev' => '{{PLURAL:$1|kona|kona $1}}',
 	'whatlinkshere-next' => '{{PLURAL:$1|lila|lila $1}}',
-	'whatlinkshere-links' => "← ling'ki",
+	'whatlinkshere-links' => '← ling\'ki',
 	'widthheightpage' => '$1 × $2, $3 petulo',
 	'watchlistall2' => 'xeti',
 	'watchlistedit-numitems' => 'Zwa mukoloko di kentezi sa pozefisize {{PLURAL:$1|1 petulo|$1 petulo}}, dicon bulelezina.',
 	'watchlistedit-noitems' => 'Zwa mukoloko di kentezi sa pozefisize 0 petulo.',
-	'watchlistedit-normal-title' => "Hloli ye ng'i mukoloko di kentezi",
+	'watchlistedit-normal-title' => 'Hloli ye ng\'i mukoloko di kentezi',
 	'watchlistedit-normal-legend' => 'Afi kulobala petulo di mukoloko di kentezi',
 	'watchlistedit-normal-submit' => 'Afi kulobala petulo',
 	'watchlistedit-normal-done' => '{{PLURAL:$1|1 petulo|$1 petulo}} sa afi kulobala di zwa mukoloko di kentezi:',
-	'watchlistedit-raw-title' => "Hloli ye ng'i ro mukoloko di kentezi",
-	'watchlistedit-raw-legend' => "Hloli ye ng'i ro mukoloko di kentezi",
+	'watchlistedit-raw-title' => 'Hloli ye ng\'i ro mukoloko di kentezi',
+	'watchlistedit-raw-legend' => 'Hloli ye ng\'i ro mukoloko di kentezi',
 	'watchlistedit-raw-titles' => 'Petulo:',
 	'watchlistedit-raw-submit' => 'Updetisize mukoloko di kentezi',
 	'watchlistedit-raw-done' => 'Zwa mukoloko di kentezi sa updetisize.',
 	'watchlistedit-raw-removed' => '{{PLURAL:$1|1 petulo|$1 petulo}} sa afi kulobala:',
 	'watchlisttools-view' => 'Kamukile petuho desi imepotani',
-	'watchlisttools-edit' => "Kamukile e hloli ye ng'i mukoloko di kentezi",
-	'watchlisttools-raw' => "Hloli ye ng'i ro mukoloko di kentezi",
-);
+	'watchlisttools-edit' => 'Kamukile e hloli ye ng\'i mukoloko di kentezi',
+	'watchlisttools-raw' => 'Hloli ye ng\'i ro mukoloko di kentezi',
+];
 
-$messages['lt'] = array(
+$messages['lt'] = [
 	'wednesday' => 'trečiadienis',
 	'wed' => 'Tre',
 	'wrong_wfQuery_params' => 'Neteisingi parametrai į funkciją wfQuery()<br />
@@ -9863,11 +9896,11 @@ Jūsų paskyra buvo sukurta. Nepamirškite pakeisti savo [[Special:Preferences|{
 	'watchnochange' => 'Pasirinktu laikotarpiu nebuvo redaguotas nei vienas stebimas puslapis.',
 	'watchlist-details' => 'Stebima {{PLURAL:$1|$1 puslapis|$1 puslapiai|$1 puslapių}} neskaičiuojant aptarimų puslapių.',
 	'wlheader-enotif' => '* El. pašto priminimai yra įjungti.',
-	'wlheader-showupdated' => "* Puslapiai pakeisti nuo tada, kai paskutinį kartą apsilankėte juose, yra pažymėti '''pastorintai'''",
+	'wlheader-showupdated' => '* Puslapiai pakeisti nuo tada, kai paskutinį kartą apsilankėte juose, yra pažymėti \'\'\'pastorintai\'\'\'',
 	'watchmethod-recent' => 'tikrinami paskutiniai keitimai stebimiems puslapiams',
 	'watchmethod-list' => 'ieškoma naujausių keitimų stebimuose puslapiuose',
 	'watchlistcontains' => 'Jūsų stebimųjų sąraše yra $1 {{PLURAL:$1|puslapis|puslapiai|puslapių}}.',
-	'wlnote' => "{{PLURAL:$1|Rodomas '''$1''' paskutinis pakeitimas, atliktas|Rodomi '''$1''' paskutiniai pakeitimai, atlikti|Rodoma '''$1''' paskutinių pakeitimų, atliktų}} per '''$2''' {{PLURAL:$2|paskutinę valandą|paskutines valandas|paskutinių valandų}}, nuo $3 $4.",
+	'wlnote' => '{{PLURAL:$1|Rodomas \'\'\'$1\'\'\' paskutinis pakeitimas, atliktas|Rodomi \'\'\'$1\'\'\' paskutiniai pakeitimai, atlikti|Rodoma \'\'\'$1\'\'\' paskutinių pakeitimų, atliktų}} per \'\'\'$2\'\'\' {{PLURAL:$2|paskutinę valandą|paskutines valandas|paskutinių valandų}}, nuo $3 $4.',
 	'wlshowlast' => 'Rodyti paskutinių $1 valandų, $2 dienų ar $3 pakeitimus',
 	'watchlist-options' => 'Stebimųjų sąrašo parinktys',
 	'watching' => 'Įtraukiama į stebimųjų sąrašą...',
@@ -9908,9 +9941,9 @@ Jūs taip pat galite [[Special:EditWatchlist|naudoti standartinį redaktorių]].
 	'watchlisttools-view' => 'Rodyti susijusius keitimus',
 	'watchlisttools-edit' => 'Rodyti ir redaguoti stebimųjų sąrašą',
 	'watchlisttools-raw' => 'Redaguoti grynąjį sąrašą',
-);
+];
 
-$messages['ltg'] = array(
+$messages['ltg'] = [
 	'wednesday' => 'Trešdīne',
 	'wed' => 'Tr',
 	'watchthis' => 'Puorraudzeit itū lopu',
@@ -9935,9 +9968,9 @@ $messages['ltg'] = array(
 	'watchlisttools-view' => 'Apsavērt atbylstūšuos izmainis',
 	'watchlisttools-edit' => 'Apsavērt i pamaineit puorraugamū rokstu listi',
 	'watchlisttools-raw' => 'Maineit puorraugamūs rokstu listes kodu',
-);
+];
 
-$messages['lv'] = array(
+$messages['lv'] = [
 	'wednesday' => 'trešdiena',
 	'wed' => 'Tr',
 	'wrong_wfQuery_params' => 'Nekorekti wfQuery() parametri<br />
@@ -9953,7 +9986,7 @@ Tavs lietotāja konts ir izveidots. Neaizmirsti, ka ir iespējams mainīt [[Spec
 	'windows-nonascii-filename' => 'Šī viki neatbalsta failu nosaukumus ar īpašām rakstzīmēm.',
 	'watchthisupload' => 'Uzraudzīt šo failu',
 	'withoutinterwiki' => 'Lapas bez interwiki',
-	'withoutinterwiki-summary' => "Šajās lapās nav saišu uz citu valodu projektiem (''interwiki''):",
+	'withoutinterwiki-summary' => 'Šajās lapās nav saišu uz citu valodu projektiem (\'\'interwiki\'\'):',
 	'withoutinterwiki-legend' => 'Prefikss',
 	'withoutinterwiki-submit' => 'Rādīt',
 	'wantedcategories' => 'Sarkanas kategorijas',
@@ -9969,7 +10002,7 @@ Tavs lietotāja konts ir izveidots. Neaizmirsti, ka ir iespējams mainīt [[Spec
 	'watchnochange' => 'Neviena no tevis uzraudzītajām lapām nav mainīta parādītajā laika posmā.',
 	'watchlist-details' => '(Tu uzraugi $1 {{PLURAL:$1|lapu|lapas}}, neieskaitot diskusiju lapas.)',
 	'wlheader-enotif' => 'E-pasta paziņojumi ir ieslēgti.',
-	'wlheader-showupdated' => "* Lapas, kuras ir tikušas izmainītas, kopš tu tās pēdējoreiz apskatījies, te rādās ar '''pustrekniem''' burtiem",
+	'wlheader-showupdated' => '* Lapas, kuras ir tikušas izmainītas, kopš tu tās pēdējoreiz apskatījies, te rādās ar \'\'\'pustrekniem\'\'\' burtiem',
 	'watchlistcontains' => 'Tavā uzraugāmo lapu sarakstā ir $1 {{PLURAL:$1|lapa|lapas}}.',
 	'wlshowlast' => 'Parādīt izmaiņas pēdējo $1 stundu laikā vai $2 dienu laikā, vai arī $3.',
 	'watchlist-options' => 'Uzraugāmo rakstu saraksta opcijas',
@@ -10010,9 +10043,9 @@ Var arī lietot [[Special:EditWatchlist|standarta izmainīšanas lapu]].',
 	'watchlisttools-view' => 'Skatīt atbilstošās izmaiņas',
 	'watchlisttools-edit' => 'Apskatīt un izmainīt uzraugāmo rakstu sarakstu',
 	'watchlisttools-raw' => 'Izmainīt uzraugāmo rakstu saraksta kodu',
-);
+];
 
-$messages['lzh'] = array(
+$messages['lzh'] = [
 	'wednesday' => '週三',
 	'wed' => '周三',
 	'wrong_wfQuery_params' => 'wfQuery（）參數謬然<br />
@@ -10044,7 +10077,7 @@ $messages['lzh'] = array(
 	'watchnochange' => '皆無易也',
 	'watchlist-details' => '哨上有$1，不含議論。',
 	'wlheader-enotif' => '*准報信。',
-	'wlheader-showupdated' => "*易者'''粗體'''。",
+	'wlheader-showupdated' => '*易者\'\'\'粗體\'\'\'。',
 	'watchmethod-recent' => '哨近易。',
 	'watchmethod-list' => '報近易…',
 	'watchlistcontains' => '共$1哨。',
@@ -10085,9 +10118,9 @@ $messages['lzh'] = array(
 	'watchlisttools-view' => '察易',
 	'watchlisttools-edit' => '治哨站',
 	'watchlisttools-raw' => '治源哨',
-);
+];
 
-$messages['lzz'] = array(
+$messages['lzz'] = [
 	'wednesday' => 'Cumaçxa',
 	'wed' => 'Cum',
 	'watchthis' => 'Butkʼa gatxozi',
@@ -10112,9 +10145,9 @@ $messages['lzz'] = array(
 	'watchlisttools-view' => 'Am tema kʼala alakʼali na renan oktirobape ko3ʼiri',
 	'watchlisttools-edit' => 'Gotxozu listʼe koz*iri do doktiri',
 	'watchlisttools-raw' => 'Kʼobo gotxozu listʼe doktiri',
-);
+];
 
-$messages['mai'] = array(
+$messages['mai'] = [
 	'wednesday' => 'बुध',
 	'wed' => 'बुध',
 	'wrong_wfQuery_params' => 'अमान्य परिमिति ऐ लेल wfQuery()<br />
@@ -10150,11 +10183,11 @@ $messages['mai'] = array(
 	'watchnochange' => 'अहाँक साकांक्ष सूचीमे सँ कोनोमे ऐ अवधिमे सम्पादन नै कएल गेल।',
 	'watchlist-details' => '{{PLURAL:$1|$1 पन्ना|$1 पन्ना सभ}} अहाँक साकांक्षसूचीमे, चौबटिया पन्ना नै गानल गेल।',
 	'wlheader-enotif' => '* ई-पत्र सूचना लागू अछि।',
-	'wlheader-showupdated' => "* पन्ना सभ जे अहाँक एतए अन्तिम बेर अएलाक बाद बदलल अछि तकर सूची देल अछि '''गाढ़''' मे",
+	'wlheader-showupdated' => '* पन्ना सभ जे अहाँक एतए अन्तिम बेर अएलाक बाद बदलल अछि तकर सूची देल अछि \'\'\'गाढ़\'\'\' मे',
 	'watchmethod-recent' => 'साकांक्ष सूचीक हालक सम्पादन जाँचि रहल छी',
 	'watchmethod-list' => 'साकांक्ष-सूचीक हालक सम्पादनकेँ देखि रहल छी',
 	'watchlistcontains' => 'अहाँक साकांक्ष-सूचीमे अछि $1 {{PLURAL:$1|पन्ना|पन्ना}}।',
-	'wlnote' => "नीचाँ {{PLURAL:$1|is the last change|are the last '''$1''' changes}} अन्तिम {{PLURAL:$2|hour|'''$2''' hours}} $3, $4 जेना।",
+	'wlnote' => 'नीचाँ {{PLURAL:$1|is the last change|are the last \'\'\'$1\'\'\' changes}} अन्तिम {{PLURAL:$2|hour|\'\'\'$2\'\'\' hours}} $3, $4 जेना।',
 	'wlshowlast' => 'देखाउ अन्तिम $1 घण्टा $2 दिन $3',
 	'watchlist-options' => 'साकांक्षसूचीक विकल्प सभ',
 	'watching' => 'ताकिमे...',
@@ -10196,9 +10229,9 @@ $messages['mai'] = array(
 	'watchlisttools-view' => 'सम्बन्धित परिवर्तन सभकेँ देखू',
 	'watchlisttools-edit' => 'साकांक्षसूचीकेँ देखू आ सम्पादित करू',
 	'watchlisttools-raw' => 'काँच साकांक्षसूची संपादित करू',
-);
+];
 
-$messages['map-bms'] = array(
+$messages['map-bms'] = [
 	'wednesday' => 'Rebo',
 	'wed' => 'Reb',
 	'wrong_wfQuery_params' => 'Parameter salah maring wfQuery()<br />
@@ -10243,9 +10276,9 @@ Monggo dijajal sepisan maning.',
 	'watchlisttools-view' => 'Tidokna owahan sing ana gandhèngané',
 	'watchlisttools-edit' => 'Tidokna lan sunting daftar pangawasan',
 	'watchlisttools-raw' => 'Sunting daftar pangawasan mentah',
-);
+];
 
-$messages['mdf'] = array(
+$messages['mdf'] = [
 	'wednesday' => 'Вержи',
 	'wed' => 'Вр',
 	'wrong_wfQuery_params' => 'Аф кондясти параметратне функцияса wfQuery()<br />
@@ -10276,11 +10309,11 @@ $messages['mdf'] = array(
 	'watchnochange' => 'Мезеге изь полафтов тонь мельгеванома лувомастот тя пингеёткса.',
 	'watchlist-details' => '{{PLURAL:$1|$1 лопа|$1 лопат}} мельгеваномацень ала корхнема лопат аф лувомок.',
 	'wlheader-enotif' => '* Электрононь сёрма вельде пачфнема нолдаф тевс.',
-	'wlheader-showupdated' => "* Лопат конань полафтозь тонь мекольце сувсемадот меле няфтевсть '''эчке тяшкса'''.",
+	'wlheader-showupdated' => '* Лопат конань полафтозь тонь мекольце сувсемадот меле няфтевсть \'\'\'эчке тяшкса\'\'\'.',
 	'watchmethod-recent' => 'мельге ванома ала лопатнень коряс мекольце петнематнень ванондома',
 	'watchmethod-list' => 'мекольце петнематнень коряс мельге ванома ала лопат ванондома',
 	'watchlistcontains' => 'Тонь мельгеваномасот $1 {{PLURAL:$1|лопа|лопат}}.',
-	'wlnote' => "Ала {{PLURAL:$1|мекольце полафнема|'''$1''' мекольце полафнемат}} ётай {{PLURAL:$2| ойста (часста)|'''$2''' ойста (часста)}}.",
+	'wlnote' => 'Ала {{PLURAL:$1|мекольце полафнема|\'\'\'$1\'\'\' мекольце полафнемат}} ётай {{PLURAL:$2| ойста (часста)|\'\'\'$2\'\'\' ойста (часста)}}.',
 	'wlshowlast' => 'Няфтемс мекольце $1 ойхть (част) $2 шит $3',
 	'watchlist-options' => 'Мельгеваномать латцемасна',
 	'watching' => 'Ванома...',
@@ -10320,14 +10353,14 @@ $messages['mdf'] = array(
 	'watchlisttools-view' => 'Няфтемс полафнематне лувомастонь лопапотмова',
 	'watchlisttools-edit' => 'Няфтемс эди петнемс мельгеваномать',
 	'watchlisttools-raw' => 'Петнемс казяма мельгеваномать',
-);
+];
 
-$messages['mg'] = array(
+$messages['mg'] = [
 	'wednesday' => 'Alarobia',
 	'wed' => 'Ala',
-	'wrong_wfQuery_params' => "Misy tsy fetezana amin'ny wfQuery()<br />
+	'wrong_wfQuery_params' => 'Misy tsy fetezana amin\'ny wfQuery()<br />
 Asa : $1<br />
-fangatahana : $2",
+fangatahana : $2',
 	'welcomecreation' => '== Tonga soa, $1! ==
 
 Voaforona soa aman-tsara ny kaontinao.
@@ -10335,39 +10368,39 @@ Aza hadino ny manova ny [[Special:Preferences|safidinao]]',
 	'wrongpassword' => 'Diso ny tenimiafina. Manandrama tenimiafina hafa azafady.',
 	'wrongpasswordempty' => 'Tsy nampiditra tenimiafina ianao, azafady mba avereno indray.',
 	'watchthis' => 'Araho maso ity pejy ity',
-	'whitelistedittext' => "Mila $1 aloha ianao vao afaka manova/mamorona pejy eto amin'ity wiki ity.",
+	'whitelistedittext' => 'Mila $1 aloha ianao vao afaka manova/mamorona pejy eto amin\'ity wiki ity.',
 	'windows-nonascii-filename' => 'Tsy mahazaka anaran-drakitra misy tarehintsoratra manokana ity wiki ity.',
 	'watchthisupload' => 'Araho maso ity rakitra ity',
 	'withoutinterwiki' => 'Pejy tsy manan-drohi-piteny',
-	'withoutinterwiki-summary' => "Ireo pejy ireo dia tsy manan-drohy makany amin'ny fiteny hafa :",
+	'withoutinterwiki-summary' => 'Ireo pejy ireo dia tsy manan-drohy makany amin\'ny fiteny hafa :',
 	'withoutinterwiki-legend' => 'Tovona',
 	'withoutinterwiki-submit' => 'Aseho',
 	'wantedcategories' => 'Vondrona tokony hoforonina',
 	'wantedpages' => 'Pejy tokony hoforonina',
-	'wantedpages-badtitle' => "Lohateny tsy ekena amin'ny valiny : $1",
+	'wantedpages-badtitle' => 'Lohateny tsy ekena amin\'ny valiny : $1',
 	'wantedfiles' => 'Rakitra tadiavina',
 	'wantedtemplates' => 'Endrika tadiavina',
 	'watchlist' => 'Narahiko maso',
-	'watchlistfor2' => "Ho an'i $1 $2",
-	'watchlistanontext' => "Andana $1 hahafahanao mijery na manova zavatra ao amin'ny pejy arahanao.",
+	'watchlistfor2' => 'Ho an\'i $1 $2',
+	'watchlistanontext' => 'Andana $1 hahafahanao mijery na manova zavatra ao amin\'ny pejy arahanao.',
 	'watchnologin' => 'Tsy niditra',
 	'watchnologintext' => 'Mila [[Special:UserLogin|miditra]] ianao vao afaka manova ny lisitry ny pejy arahanao.',
 	'watch' => 'Arahana',
 	'watchthispage' => 'Hanaraka ity pejy ity',
 	'watchnochange' => 'Tsy niova nandritra ny fe-potoana miseho ny zavatra arahanao',
-	'watchlist-details' => "Pejy $1{{PLURAL:}} ao amin'ny lisitry ny pejy arahanao, tsy isaina ny pejin-dresaka.",
-	'wlheader-enotif' => "* Mandeha ny fampilazana amin'ny alalan'ny imailaka.",
-	'wlheader-showupdated' => "* <b>Voasorabaventy</b> ny pejy niova taorian'ny famangianao farany.",
+	'watchlist-details' => 'Pejy $1{{PLURAL:}} ao amin\'ny lisitry ny pejy arahanao, tsy isaina ny pejin-dresaka.',
+	'wlheader-enotif' => '* Mandeha ny fampilazana amin\'ny alalan\'ny imailaka.',
+	'wlheader-showupdated' => '* <b>Voasorabaventy</b> ny pejy niova taorian\'ny famangianao farany.',
 	'watchmethod-recent' => 'fanamarinana ny fanovana farany hahitana pejy arahana',
 	'watchmethod-list' => 'fanamarinana ny pejy arahana ahitana fanovana farany',
-	'watchlistcontains' => "Ao amin'ny pejy arahanao dia ahitana pejy $1{{PLURAL:}}.",
-	'wlnote' => "Eo ambany eo ny {{PLURAL:}}fanovana farany $1 natao tanatin'ny $2 ora farany teo.",
+	'watchlistcontains' => 'Ao amin\'ny pejy arahanao dia ahitana pejy $1{{PLURAL:}}.',
+	'wlnote' => 'Eo ambany eo ny {{PLURAL:}}fanovana farany $1 natao tanatin\'ny $2 ora farany teo.',
 	'wlshowlast' => 'Haneho ny $1 ora farany, ny $2 andro farany na $3',
 	'watchlist-options' => 'Safidy ny lisitry ny pejy arahana',
 	'watching' => 'Fanarahana...',
-	'watcherrortext' => "Nisy hadisoana nitranga teo ampanovana ny safidy ny lisitry ny pejy arahanao ho an'i « $1 ».",
+	'watcherrortext' => 'Nisy hadisoana nitranga teo ampanovana ny safidy ny lisitry ny pejy arahanao ho an\'i « $1 ».',
 	'whatlinkshere' => 'Iza avy no mirohy eto',
-	'whatlinkshere-title' => "Pejy makany amin'ny « $1 »",
+	'whatlinkshere-title' => 'Pejy makany amin\'ny « $1 »',
 	'whatlinkshere-page' => 'Pejy :',
 	'whatlinkshere-prev' => '$1 taloha{{PLURAL:$1||}}',
 	'whatlinkshere-next' => '$1 manaraka{{PLURAL:$1||}}',
@@ -10382,19 +10415,19 @@ Aza hadino ny manova ny [[Special:Preferences|safidinao]]',
 	'watchlistedit-numitems' => 'Ny lisitry ny pejy arahanao maso dia misy {{PLURAL:$1|lohateny iray|lohateny $1}}, raha tsy kaontiana ny pejin-dresaka.',
 	'watchlistedit-noitems' => 'Tsy misy lohateny ny lisitrao.',
 	'watchlistedit-normal-title' => 'Hanova ny lisitra ny pejy arahako maso',
-	'watchlistedit-normal-legend' => "Hanala lohateny ao amin'ny lisitra",
+	'watchlistedit-normal-legend' => 'Hanala lohateny ao amin\'ny lisitra',
 	'watchlistedit-normal-submit' => 'Hanala ireo lohateny nosafidiana ireo',
-	'watchlistedit-raw-title' => "Hanova ny lisitra ny pejy arahako maso amin'ny fomba akorany",
-	'watchlistedit-raw-legend' => "Fanovana ilay lisitry ny pejy arahina maso amin'ny fomba akorany",
+	'watchlistedit-raw-title' => 'Hanova ny lisitra ny pejy arahako maso amin\'ny fomba akorany',
+	'watchlistedit-raw-legend' => 'Fanovana ilay lisitry ny pejy arahina maso amin\'ny fomba akorany',
 	'watchlistedit-raw-titles' => 'Lohateny :',
 	'watchlistedit-raw-submit' => 'Havaozina ny lisitra',
 	'watchlistedit-raw-done' => 'Voavao ny lisitrao.',
 	'watchlisttools-view' => 'pejy arahako maso',
 	'watchlisttools-edit' => 'Jereo sy ovao ny lisitra ny pejy fanaraha-maso',
 	'watchlisttools-raw' => 'Ovay ilay pejy arahako maso amizao',
-);
+];
 
-$messages['mhr'] = array(
+$messages['mhr'] = [
 	'wednesday' => 'Вӱргече',
 	'wed' => 'Вр',
 	'wrongpassword' => 'Тый йоҥылыш шолыпмутым пуртенат.
@@ -10431,17 +10464,17 @@ $messages['mhr'] = array(
 	'watchlisttools-view' => 'Келшыше тӧрлатымаш-влакым ончалаш',
 	'watchlisttools-edit' => 'Эскерыме лӱмерым ончалаш да тӧрлаташ',
 	'watchlisttools-raw' => 'Эскерыме лӱмерым текст семын тӧрлаш',
-);
+];
 
-$messages['mi'] = array(
+$messages['mi'] = [
 	'wednesday' => 'Rāapa',
 	'watchlist' => 'Rārangi mātaki',
 	'watch' => 'Mātaki',
 	'whatlinkshere' => 'Ngā hononga mai',
-);
+];
 
-$messages['min'] = array(
-	'wednesday' => "Raba'a",
+$messages['min'] = [
+	'wednesday' => 'Raba\'a',
 	'wed' => 'Rab',
 	'wrong_wfQuery_params' => 'Parameter salah ka wfQuery()<br />Fungsi: $1<br />Pamintaan: $2',
 	'welcomecreation' => '== Salamaik datang, $1! ==
@@ -10474,9 +10507,9 @@ Akun Sanak alah dibuek. Jan lupo maatur konfigurasi [[Special:Preferences|prefer
 	'watchlisttools-view' => 'Tampilkan parubahan takaik',
 	'watchlisttools-edit' => 'Tampilkan dan suntiang senarai pantauan',
 	'watchlisttools-raw' => 'Suntiang senarai pantauan mentah',
-);
+];
 
-$messages['mk'] = array(
+$messages['mk'] = [
 	'wednesday' => 'среда',
 	'wed' => 'сре',
 	'wrong_wfQuery_params' => 'Грешни параметри до wfQuery()<br />
@@ -10512,11 +10545,11 @@ $messages['mk'] = array(
 	'watchnochange' => 'Ниту едно од вашите набљудувања не било уредувано во прикажаниот период.',
 	'watchlist-details' => '{{PLURAL:$1|$1 страница|$1 страници}} во вашиот список на набљудувања, не броејќи ги страниците за разговор.',
 	'wlheader-enotif' => '* Известување по е-пошта е овозможено.',
-	'wlheader-showupdated' => "* Страници кои се променети од вашата последна посета се прикажани со '''задебелени''' букви",
+	'wlheader-showupdated' => '* Страници кои се променети од вашата последна посета се прикажани со \'\'\'задебелени\'\'\' букви',
 	'watchmethod-recent' => 'Проверка на скорешните уредувања на набљудуваните страници',
 	'watchmethod-list' => 'Проверерка на набљудуваните страници во скорешните уредувања',
 	'watchlistcontains' => 'Вашиот список на набљудувања содржи $1 {{PLURAL:$1|страница|страници}}.',
-	'wlnote' => "Подолу {{PLURAL:$1|е прикажана последната промена|се прикажани последните '''$1''' промени}} во {{PLURAL:$2|последниов час|последниве '''$2''' часа}}, заклучно со $3, $4 ч.",
+	'wlnote' => 'Подолу {{PLURAL:$1|е прикажана последната промена|се прикажани последните \'\'\'$1\'\'\' промени}} во {{PLURAL:$2|последниов час|последниве \'\'\'$2\'\'\' часа}}, заклучно со $3, $4 ч.',
 	'wlshowlast' => 'Прикажи ги последните $1 часа, $2 дена, $3',
 	'watchlist-options' => 'Поставки за список на набљудувања',
 	'watching' => 'Набљудување...',
@@ -10558,9 +10591,9 @@ $messages['mk'] = array(
 	'watchlisttools-view' => 'Преглед на релевантни промени',
 	'watchlisttools-edit' => 'Погледај и уреди список на набљудувања',
 	'watchlisttools-raw' => 'Напредно уредување на списокот на набљудувања',
-);
+];
 
-$messages['ml'] = array(
+$messages['ml'] = [
 	'wednesday' => 'ബുധൻ',
 	'wed' => 'ബു.',
 	'wrong_wfQuery_params' => 'wfQuery()എന്നതിലേക്ക് തെറ്റായ പരാമീറ്ററുകൾ<br />
@@ -10594,11 +10627,11 @@ $messages['ml'] = array(
 	'watchnochange' => 'താങ്കൾ ശ്രദ്ധിക്കുന്ന താളുകൾ ഒന്നും തന്നെ ഇക്കാലയളവിൽ തിരുത്തപ്പെട്ടിട്ടില്ല.',
 	'watchlist-details' => 'സം‌വാദം താളുകൾ അല്ലാത്ത {{PLURAL:$1|ഒരു താൾ|$1 താളുകൾ}} താങ്കൾ ശ്രദ്ധിക്കുന്നവയുടെ പട്ടികയിലുണ്ട്.',
 	'wlheader-enotif' => '* ഇമെയിൽ വിജ്ഞാപനം സാധ്യമാക്കിയിരിക്കുന്നു.',
-	'wlheader-showupdated' => "* താങ്കളുടെ അവസാന സന്ദർശനത്തിനു ശേഷം തിരുത്തപ്പെട്ട താളുകൾ  '''കടുപ്പിച്ച്''' കാണിച്ചിരിക്കുന്നു",
+	'wlheader-showupdated' => '* താങ്കളുടെ അവസാന സന്ദർശനത്തിനു ശേഷം തിരുത്തപ്പെട്ട താളുകൾ  \'\'\'കടുപ്പിച്ച്\'\'\' കാണിച്ചിരിക്കുന്നു',
 	'watchmethod-recent' => 'ശ്രദ്ധിക്കുന്ന താളുകൾക്കുവേണ്ടി പുതിയ മാറ്റങ്ങൾ പരിശോധിക്കുന്നു',
 	'watchmethod-list' => 'ശ്രദ്ധിക്കുന്ന താളുകളിലെ പുതിയ മാറ്റങ്ങൾ പരിശോധിക്കുന്നു',
 	'watchlistcontains' => 'താങ്കൾ {{PLURAL:$1|താൾ|താളുകൾ}} ശ്രദ്ധിക്കുന്നുണ്ട്.',
-	'wlnote' => "$3, $4-നു കഴിഞ്ഞ {{PLURAL:$2|മണിക്കൂറിൽ|'''$2''' മണിക്കൂറിൽ}} നടന്ന {{PLURAL:$1|ഒരു പുതിയ മാറ്റം|'''$1''' പുതിയ മാറ്റങ്ങൾ}} താഴെ പ്രദർശിപ്പിച്ചിരിക്കുന്നു.",
+	'wlnote' => '$3, $4-നു കഴിഞ്ഞ {{PLURAL:$2|മണിക്കൂറിൽ|\'\'\'$2\'\'\' മണിക്കൂറിൽ}} നടന്ന {{PLURAL:$1|ഒരു പുതിയ മാറ്റം|\'\'\'$1\'\'\' പുതിയ മാറ്റങ്ങൾ}} താഴെ പ്രദർശിപ്പിച്ചിരിക്കുന്നു.',
 	'wlshowlast' => 'ഒടുവിലത്തെ $1 മണിക്കൂറുകൾ $2 ദിനങ്ങൾ, $3 പ്രദർശിപ്പിക്കുക',
 	'watchlist-options' => 'ശ്രദ്ധിക്കുന്ന താളുകളുടെ സജ്ജീകരണങ്ങൾ',
 	'watching' => 'ശ്രദ്ധിക്കുന്നു...',
@@ -10620,7 +10653,7 @@ $messages['ml'] = array(
 	'watchlistedit-noitems' => 'താങ്കൾ നിലവിൽ ഒരു താളും ശ്രദ്ധിക്കുന്നില്ല.',
 	'watchlistedit-normal-title' => 'ശ്രദ്ധിക്കുന്ന താളുകളുടെ പട്ടിക തിരുത്തുക',
 	'watchlistedit-normal-legend' => 'ശ്രദ്ധിക്കുന്ന താളുകളുടെ പട്ടികയിൽ നിന്നും ഒഴിവാക്കുക',
-	'watchlistedit-normal-explain' => "താങ്കൾ ശ്രദ്ധിക്കുന്ന താളുകൾ താഴെ കൊടുത്തിരിക്കുന്നു. നീക്കം ചെയ്യേണ്ടവ തിരഞ്ഞെടുത്ത ശേഷം '''{{int:Watchlistedit-normal-submit}}''' എന്ന ബട്ടണിൽ ഞെക്കിയാൽ നീക്കം ചെയ്യപ്പെടുന്നതാണ്‌. താങ്കൾക്ക് [[Special:EditWatchlist/raw|പട്ടികയുടെ മൂല രൂപം]] തിരുത്തുകയും ചെയ്യാവുന്നതാണ്‌.",
+	'watchlistedit-normal-explain' => 'താങ്കൾ ശ്രദ്ധിക്കുന്ന താളുകൾ താഴെ കൊടുത്തിരിക്കുന്നു. നീക്കം ചെയ്യേണ്ടവ തിരഞ്ഞെടുത്ത ശേഷം \'\'\'{{int:Watchlistedit-normal-submit}}\'\'\' എന്ന ബട്ടണിൽ ഞെക്കിയാൽ നീക്കം ചെയ്യപ്പെടുന്നതാണ്‌. താങ്കൾക്ക് [[Special:EditWatchlist/raw|പട്ടികയുടെ മൂല രൂപം]] തിരുത്തുകയും ചെയ്യാവുന്നതാണ്‌.',
 	'watchlistedit-normal-submit' => 'തിരഞ്ഞെടുത്തവ നീക്കുക',
 	'watchlistedit-normal-done' => '{{PLURAL:$1|ഒരു താൾ|$1 താളുകൾ}} താങ്കൾ ശ്രദ്ധിക്കുന്ന താളുകളുടെ പട്ടികയിൽ നിന്നും ഒഴിവാക്കിയിരിക്കുന്നു:',
 	'watchlistedit-raw-title' => 'ശ്രദ്ധിക്കുന്ന താളുകളുടെ പട്ടികയുടെ മൂലരൂപം തിരുത്തുക',
@@ -10636,9 +10669,9 @@ $messages['ml'] = array(
 	'watchlisttools-view' => 'ബന്ധപ്പെട്ട മാറ്റങ്ങൾ കാട്ടുക',
 	'watchlisttools-edit' => 'ശ്രദ്ധിക്കുന്ന താളുകളുടെ പട്ടിക കാട്ടുക, തിരുത്തുക',
 	'watchlisttools-raw' => 'താങ്കൾ ശ്രദ്ധിക്കുന്ന താളുകളുടെ പട്ടികയുടെ മൂലരൂപം തിരുത്തുക',
-);
+];
 
-$messages['mn'] = array(
+$messages['mn'] = [
 	'wednesday' => 'Лхагва',
 	'wed' => 'Лх.',
 	'wrong_wfQuery_params' => 'wfQuery()-д буруу параметр оруулсан байна<br />
@@ -10672,11 +10705,11 @@ $messages['mn'] = array(
 	'watchnochange' => 'Дурьдагдсан хугацаанд таны хянаж буй хуудсуудад өөрчлөлт ороогүй байна.',
 	'watchlist-details' => 'Хяналтын жагсаалтад {{PLURAL:$1|$1 хуудас|$1 хуудаснууд}} байна.',
 	'wlheader-enotif' => '* И-мэйл мэдэгдэл хүчинтэй боллоо.',
-	'wlheader-showupdated' => "* Таны хамгийн сүүлд айлчилснаас хойш өөрчлөгдсөн хуудсууд '''тодоор''' бичигдсэн байгаа",
+	'wlheader-showupdated' => '* Таны хамгийн сүүлд айлчилснаас хойш өөрчлөгдсөн хуудсууд \'\'\'тодоор\'\'\' бичигдсэн байгаа',
 	'watchmethod-recent' => 'хяналтад буй хуудсуудад шинэ өөрчлөлт орсон эсэхийг шалгаж байна',
 	'watchmethod-list' => 'хяналтад буй хуудсуудад саяхан өөрчлөлт орсон эсэхийг шалгаж байна',
 	'watchlistcontains' => 'Таны хянах жагсаалтанд $1 хуудас байна.',
-	'wlnote' => "Доорх нь сүүлийн {{PLURAL:$2|цагт|'''$2''' цагт}} хийгдсэн {{PLURAL:$1|сүүлийн|сүүлийн '''$1'''}} өөрчлөлт юм.",
+	'wlnote' => 'Доорх нь сүүлийн {{PLURAL:$2|цагт|\'\'\'$2\'\'\' цагт}} хийгдсэн {{PLURAL:$1|сүүлийн|сүүлийн \'\'\'$1\'\'\'}} өөрчлөлт юм.',
 	'wlshowlast' => 'Сүүлийн $1 цагийн $2 өдрийн $3-г харуул',
 	'watchlist-options' => 'Хянаж буй хуудсуудын жагсаалтны сонголтууд',
 	'watching' => 'Хянаж байна...',
@@ -10715,9 +10748,9 @@ $messages['mn'] = array(
 	'watchlisttools-view' => 'Холбогдох өөрчлөлтүүдийг үзэх',
 	'watchlisttools-edit' => 'Хянаж буй хуудсуудын жагсаалтаа үзэж засварлах',
 	'watchlisttools-raw' => 'Хянаж буй хуудсуудын жагсаалтаа текстээр засварлах',
-);
+];
 
-$messages['mo'] = array(
+$messages['mo'] = [
 	'watchthis' => 'Привеште ачастэ паӂинэ',
 	'watchlist' => 'Паӂинь привите',
 	'watch' => 'Привеште',
@@ -10739,9 +10772,9 @@ $messages['mo'] = array(
 	'watchlisttools-view' => 'Везь скимбэриле релеванте',
 	'watchlisttools-edit' => 'Везь ши модификэ листа паӂинилор привите',
 	'watchlisttools-raw' => 'Модификэ листа брутэ а паӂинилор привите',
-);
+];
 
-$messages['mr'] = array(
+$messages['mr'] = [
 	'wednesday' => 'बुधवार',
 	'wed' => 'बुध',
 	'wrong_wfQuery_params' => 'wfQuery()साठी चुकीचे पॅरेमीटर्स दिलेले आहेत<br />
@@ -10778,11 +10811,11 @@ $messages['mr'] = array(
 	'watchnochange' => 'प्रदर्शित कालावधीत, तुम्ही नित्य पहाण्यासाठी ठेवलेली कोणतीही बाब संपादित झाली नाही.',
 	'watchlist-details' => '{{PLURAL:$1|$1 पान|$1 पाने}} पहाऱ्याच्या सूचीमध्ये, चर्चा पाने मोजलेले नाहीत.',
 	'wlheader-enotif' => '* विपत्र सूचना सुविधा ऊपलब्ध केली.',
-	'wlheader-showupdated' => "* तुम्ही पानांस दिलेल्या शेवटच्या भेटी पासून बदललेली पाने '''ठळक''' दाखवली आहेत.",
+	'wlheader-showupdated' => '* तुम्ही पानांस दिलेल्या शेवटच्या भेटी पासून बदललेली पाने \'\'\'ठळक\'\'\' दाखवली आहेत.',
 	'watchmethod-recent' => 'पहाऱ्यातील पानांकरिता अलीकडील बदलांचा तपास',
 	'watchmethod-list' => 'अलीकडील बदलांकरिता पहाऱ्यातील पानांचा तपास',
 	'watchlistcontains' => 'तुमचा $1 {{PLURAL:$1|पानावर|पानांवर}} पहारा आहे.',
-	'wlnote' => "खाली $3, $4 पर्यंतचे गेल्या {{PLURAL:$2| '''१''' तासातील|'''$2''' तासातील}} {{PLURAL:$1|शेवटचा बदल दिला आहे|शेवटाचे '''$1'''बदल दिले आहेत}}.",
+	'wlnote' => 'खाली $3, $4 पर्यंतचे गेल्या {{PLURAL:$2| \'\'\'१\'\'\' तासातील|\'\'\'$2\'\'\' तासातील}} {{PLURAL:$1|शेवटचा बदल दिला आहे|शेवटाचे \'\'\'$1\'\'\'बदल दिले आहेत}}.',
 	'wlshowlast' => 'मागील $1 तास $2 दिवस $3 पहा',
 	'watchlist-options' => 'पहाऱ्याच्या सूचीचे पर्याय',
 	'watching' => 'पाहताहे...',
@@ -10820,9 +10853,9 @@ $messages['mr'] = array(
 	'watchlisttools-view' => 'सुयोग्य बदल पहा',
 	'watchlisttools-edit' => 'पहाऱ्याची  सूची पहा आणि संपादित करा',
 	'watchlisttools-raw' => 'कच्ची नित्य पहाण्याची सूची संपादित करा',
-);
+];
 
-$messages['mrj'] = array(
+$messages['mrj'] = [
 	'wednesday' => 'вӹргечӹ',
 	'wed' => 'вӹ',
 	'watchthis' => 'Ти ӹлыштӓшӹм вӓнгӓш манын списокыш пырташ',
@@ -10847,9 +10880,9 @@ $messages['mrj'] = array(
 	'watchlisttools-view' => 'Список гӹц нӓлмӹ ӹлӹштӓшӹштӹш вашталтымашвлӓ',
 	'watchlisttools-edit' => 'Анжалаш/списокым тӧрлӓш',
 	'watchlisttools-raw' => 'Текст семӹнь тӧрлӓш',
-);
+];
 
-$messages['ms'] = array(
+$messages['ms'] = [
 	'wednesday' => 'Rabu',
 	'wed' => 'Rab',
 	'wrong_wfQuery_params' => 'Parameter salah bagi wfQuery()<br />
@@ -10885,11 +10918,11 @@ Akaun anda telah dibuka. Jangan lupa untuk mengubah [[Special:Preferences|keutam
 	'watchnochange' => 'Tiada perubahan pada laman-laman yang dipantau dalam tempoh yang ditunjukkan.',
 	'watchlist-details' => '$1 laman dipantau (tidak termasuk laman perbincangan).',
 	'wlheader-enotif' => '* Pemberitahuan melalui e-mel diaktifkan.',
-	'wlheader-showupdated' => "* Laman-laman yang telah diubah sejak kunjungan terakhir anda dipaparkan dalam '''teks tebal'''",
+	'wlheader-showupdated' => '* Laman-laman yang telah diubah sejak kunjungan terakhir anda dipaparkan dalam \'\'\'teks tebal\'\'\'',
 	'watchmethod-recent' => 'menyemak laman yang dipantau dalam suntingan-suntingan terkini',
 	'watchmethod-list' => 'menyemak suntingan terkini pada laman-laman yang dipantau',
 	'watchlistcontains' => 'Terdapat $1 laman dalam senarai pantau anda.',
-	'wlnote' => "Berikut ialah {{PLURAL:$1|perubahan|'''$1''' perubahan}} yang terkini dalam {{PLURAL:$2|sejam|'''$2''' jam}} yang lalu, tepat pada $3, $4.",
+	'wlnote' => 'Berikut ialah {{PLURAL:$1|perubahan|\'\'\'$1\'\'\' perubahan}} yang terkini dalam {{PLURAL:$2|sejam|\'\'\'$2\'\'\' jam}} yang lalu, tepat pada $3, $4.',
 	'wlshowlast' => 'Tunjukkan $1 jam / $2 hari yang lalu / $3.',
 	'watchlist-options' => 'Pilihan senarai pantau',
 	'watching' => 'Memantau...',
@@ -10930,54 +10963,54 @@ Anda juga boleh [[Special:EditWatchlist|menggunakan penyunting piawai]].',
 	'watchlisttools-view' => 'Lihat perubahan',
 	'watchlisttools-edit' => 'Sunting senarai pantau',
 	'watchlisttools-raw' => 'Sunting senarai pantau mentah',
-);
+];
 
-$messages['mt'] = array(
+$messages['mt'] = [
 	'wednesday' => 'L-Erbgħa',
 	'wed' => 'Erb',
 	'wrong_wfQuery_params' => 'Parametri skoretti għal wfQuery()<br />
 Funżjoni: $1<br />
 Rikjesta: $2',
-	'welcomecreation' => "== Merħba, $1! ==
+	'welcomecreation' => '== Merħba, $1! ==
 Il-kont tiegħek ġie maħluq.<br />
-Tinsiex tippersonalizza l-[[Special:Preferences|preferenzi]] ta' {{SITENAME}}.",
-	'wrongpassword' => "Il-password li daħħalt mhijiex tajba.
-Jekk jogħġbok, erġa' pprova.",
-	'wrongpasswordempty' => "Ma ddaħlet l-ebda password.
-Jekk jogħġbok, erġa' pprova.",
+Tinsiex tippersonalizza l-[[Special:Preferences|preferenzi]] ta\' {{SITENAME}}.',
+	'wrongpassword' => 'Il-password li daħħalt mhijiex tajba.
+Jekk jogħġbok, erġa\' pprova.',
+	'wrongpasswordempty' => 'Ma ddaħlet l-ebda password.
+Jekk jogħġbok, erġa\' pprova.',
 	'watchthis' => 'Segwi din il-paġna',
-	'whitelistedittext' => "Int trid $1 biex tkun tista' timodifika l-paġni.",
-	'windows-nonascii-filename' => "Din il-wiki ma taċċettax ismijiet tal-fajls b'karattri speċjali.",
+	'whitelistedittext' => 'Int trid $1 biex tkun tista\' timodifika l-paġni.',
+	'windows-nonascii-filename' => 'Din il-wiki ma taċċettax ismijiet tal-fajls b\'karattri speċjali.',
 	'watchthisupload' => 'Segwi dan il-fajl',
 	'withoutinterwiki' => 'Paġni bla interwiki',
-	'withoutinterwiki-summary' => "Il-paġni segwenti m'għandhomx links għal verżjonijiet ta' lingwi oħrajn:",
+	'withoutinterwiki-summary' => 'Il-paġni segwenti m\'għandhomx links għal verżjonijiet ta\' lingwi oħrajn:',
 	'withoutinterwiki-legend' => 'Prefiss',
 	'withoutinterwiki-submit' => 'Uri',
 	'wantedcategories' => 'Kategoriji rikjesti',
 	'wantedpages' => 'Paġni rikjesti',
-	'wantedpages-badtitle' => "Titlu invalidu fil-grupp ta' riżultati: $1",
+	'wantedpages-badtitle' => 'Titlu invalidu fil-grupp ta\' riżultati: $1',
 	'wantedfiles' => 'Fajls rikjesti',
 	'wantedtemplates' => 'Mudelli rikjesti',
-	'watchlist' => "Lista ta' osservazzjoni tiegħi",
+	'watchlist' => 'Lista ta\' osservazzjoni tiegħi',
 	'watchlistfor2' => 'Tal-utent $1 $2',
-	'watchlistanontext' => "Sabiex tara u timmodifika l-lista ta' osservazzjoni tiegħek, hemm bżonn li $1.",
+	'watchlistanontext' => 'Sabiex tara u timmodifika l-lista ta\' osservazzjoni tiegħek, hemm bżonn li $1.',
 	'watchnologin' => 'Għadek ma dħaltx ġewwa',
-	'watchnologintext' => "Biex tagħmel modifika fil-lista t'osservazzjoni speċjali huwa neċessarju li l-ewwel [[Special:UserLogin|tidħol]] fil-kont tiegħek.",
+	'watchnologintext' => 'Biex tagħmel modifika fil-lista t\'osservazzjoni speċjali huwa neċessarju li l-ewwel [[Special:UserLogin|tidħol]] fil-kont tiegħek.',
 	'watch' => 'Segwi',
 	'watchthispage' => 'Segwi din il-paġna',
 	'watchnochange' => 'L-ebda waħda mill-paġni osservati tiegħek ma ġiet modifikata fil-ħin stipulat.',
-	'watchlist-details' => "Il-lista ta' osservazzjoni fiha {{PLURAL:$1|paġna waħda (u l-paġna ta' diskussjoni tagħha)|$1 paġni (u l-paġni ta' diskussjoni tagħhom)}}.",
+	'watchlist-details' => 'Il-lista ta\' osservazzjoni fiha {{PLURAL:$1|paġna waħda (u l-paġna ta\' diskussjoni tagħha)|$1 paġni (u l-paġni ta\' diskussjoni tagħhom)}}.',
 	'wlheader-enotif' => '* In-notifikazzjoni bl-użu tal-posta elettronika hija attivata.',
-	'wlheader-showupdated' => "* Il-paġni li ġew editjati wara l-aħħar żjara tiegħek qed jiġu murija b'tipa '''ħoxna'''",
-	'watchmethod-recent' => "Kontroll ta' modifiki riċenti għall-osservati speċjali.",
+	'wlheader-showupdated' => '* Il-paġni li ġew editjati wara l-aħħar żjara tiegħek qed jiġu murija b\'tipa \'\'\'ħoxna\'\'\'',
+	'watchmethod-recent' => 'Kontroll ta\' modifiki riċenti għall-osservati speċjali.',
 	'watchmethod-list' => 'Kontroll tal-osservati speċjali għal modifiki riċenti',
-	'watchlistcontains' => "Il-lista ta' osservazzjoni fiha {{PLURAL:$1|paġna|$1 paġni}}.",
-	'wlnote' => "Hawn taħt hawn {{PLURAL:$1|l-aħħar modifika|l-aħħar '''$1''' modifiki}} fl-aħħar {{PLURAL:$2|siegħa|'''$2''' siegħat}}, sal-$3, fil-$4.",
+	'watchlistcontains' => 'Il-lista ta\' osservazzjoni fiha {{PLURAL:$1|paġna|$1 paġni}}.',
+	'wlnote' => 'Hawn taħt hawn {{PLURAL:$1|l-aħħar modifika|l-aħħar \'\'\'$1\'\'\' modifiki}} fl-aħħar {{PLURAL:$2|siegħa|\'\'\'$2\'\'\' siegħat}}, sal-$3, fil-$4.',
 	'wlshowlast' => 'Uri l-aħħar $1 siegħat $2 ġranet $3',
-	'watchlist-options' => "Opzjonijiet tal-lista ta' osservazzjoni",
+	'watchlist-options' => 'Opzjonijiet tal-lista ta\' osservazzjoni',
 	'watching' => 'Imsegwi...',
 	'watcherrortext' => 'Ġara żball waqt it-tibdil tal-lista ta\' osservazzjonijiet għal "$1".',
-	'whatlinkshere' => "Li jwasslu 'l hawn",
+	'whatlinkshere' => 'Li jwasslu \'l hawn',
 	'whatlinkshere-title' => 'Paġni li jippuntaw lejn $1',
 	'whatlinkshere-page' => 'Paġna:',
 	'whatlinkshere-prev' => '{{PLURAL:$1|preċedent|$1 preċedenti}}',
@@ -10990,32 +11023,32 @@ Jekk jogħġbok, erġa' pprova.",
 	'whatlinkshere-filters' => 'Filtri',
 	'widthheightpage' => '$1 × $2, $3 {{PLURAL:$3|paġna|paġni}}',
 	'watchlistall2' => 'kollha',
-	'watchlistedit-numitems' => "Il-lista ta' osservazzjoni tiegħek fiha {{PLURAL:$1|titlu|$1 titli}}, minbarra l-paġni ta' diskussjoni.",
-	'watchlistedit-noitems' => "Il-lista ta' osservazzjoni tiegħek hija vojta.",
+	'watchlistedit-numitems' => 'Il-lista ta\' osservazzjoni tiegħek fiha {{PLURAL:$1|titlu|$1 titli}}, minbarra l-paġni ta\' diskussjoni.',
+	'watchlistedit-noitems' => 'Il-lista ta\' osservazzjoni tiegħek hija vojta.',
 	'watchlistedit-normal-title' => 'Modifika l-lista tal-osservazzjonijiet speċjali',
 	'watchlistedit-normal-legend' => 'Neħħi titli mil-lista tal-osservazzjonijiet speċjali',
-	'watchlistedit-normal-explain' => "Titli fil-lista ta' osservazzjoni tiegħek huma murija hawn taħt.
-Biex tneħħi titlu, agħżel il-kaxxa ħdejn l-istess titlu, u agħfas \"{{int:Watchlistedit-normal-submit}}\".
-Int tista' wkoll [[Special:EditWatchlist/raw|timmodifika l-lista f'format testwali]].",
+	'watchlistedit-normal-explain' => 'Titli fil-lista ta\' osservazzjoni tiegħek huma murija hawn taħt.
+Biex tneħħi titlu, agħżel il-kaxxa ħdejn l-istess titlu, u agħfas "{{int:Watchlistedit-normal-submit}}".
+Int tista\' wkoll [[Special:EditWatchlist/raw|timmodifika l-lista f\'format testwali]].',
 	'watchlistedit-normal-submit' => 'Neħħi t-titli',
 	'watchlistedit-normal-done' => '{{PLURAL:$1|Titlu kien imħassar|$1 titli kienu mħassra}} mil-lista tal-osservazzjonijiet speċjali tiegħek:',
 	'watchlistedit-raw-title' => 'Modifiki osservazzjonijiet speċjali fil-forma testwali',
 	'watchlistedit-raw-legend' => 'Modifika osservazzjonijiet speċjali testwali',
-	'watchlistedit-raw-explain' => "Titli fil-lista tal-osservazzjonijiet speċjali huma murija hawn taħt, u jistgħu jiġu modifikati billi żżid u tneħħi mil-lista;
-titlu f'kull linja.
-Meta tlesti, agħfas fuq \"{{int:Watchlistedit-raw-submit}}\".
-Inti tista' wkoll tuża' l-[[Special:EditWatchlist|editur bl-interfaċċa standard]].",
+	'watchlistedit-raw-explain' => 'Titli fil-lista tal-osservazzjonijiet speċjali huma murija hawn taħt, u jistgħu jiġu modifikati billi żżid u tneħħi mil-lista;
+titlu f\'kull linja.
+Meta tlesti, agħfas fuq "{{int:Watchlistedit-raw-submit}}".
+Inti tista\' wkoll tuża\' l-[[Special:EditWatchlist|editur bl-interfaċċa standard]].',
 	'watchlistedit-raw-titles' => 'Titli:',
 	'watchlistedit-raw-submit' => 'Aġġorna l-lista',
-	'watchlistedit-raw-done' => "Il-lista ta' osservazzjoni tiegħek ġiet aġġornata.",
+	'watchlistedit-raw-done' => 'Il-lista ta\' osservazzjoni tiegħek ġiet aġġornata.',
 	'watchlistedit-raw-added' => '{{PLURAL:$1|Titlu kien miżjud|$1 titli kienu miżjuda}}:',
 	'watchlistedit-raw-removed' => '{{PLURAL:$1|Titlu tneħħa|$1 titli tneħħew}}:',
 	'watchlisttools-view' => 'Uri l-modifiki relevanti',
 	'watchlisttools-edit' => 'Uri u mmodifika l-lista tal-osservazzjoni',
-	'watchlisttools-raw' => "Immodifika l-lista f'format testwali",
-);
+	'watchlisttools-raw' => 'Immodifika l-lista f\'format testwali',
+];
 
-$messages['mwl'] = array(
+$messages['mwl'] = [
 	'wednesday' => 'Quarta',
 	'wed' => 'qua',
 	'wrongpassword' => 'La palabra chabe ye ambálida.
@@ -11050,9 +11083,9 @@ Por fabor, spurmenta outra beç.',
 	'watchlisttools-view' => 'Ber altaraçones amportantes',
 	'watchlisttools-edit' => 'Ber i eiditar ls mius begiados',
 	'watchlisttools-raw' => 'Ediçon bruta da lhista de ls bigiados',
-);
+];
 
-$messages['my'] = array(
+$messages['my'] = [
 	'wednesday' => 'ဗုဒ္ဓဟူး',
 	'wed' => 'ဟူး',
 	'welcomecreation' => '== မင်္ဂလာပါ $1! ==
@@ -11100,9 +11133,9 @@ $messages['my'] = array(
 	'watchlisttools-view' => 'ကိုက်ညီသော အပြောင်းအလဲများကို ကြည့်ရန်',
 	'watchlisttools-edit' => 'စောင့်ကြည့်စာရင်းများကို ကြည့်ပြီး တည်းဖြတ်ပါ။',
 	'watchlisttools-raw' => 'စောင့်ကြည့်စာရင်း အကြမ်းကို တည်းဖြတ်ရန်',
-);
+];
 
-$messages['myv'] = array(
+$messages['myv'] = [
 	'wednesday' => 'Куншкачи',
 	'wed' => 'Кун',
 	'welcomecreation' => '== Совак, инеськеть, $1! ==
@@ -11155,9 +11188,9 @@ $messages['myv'] = array(
 	'watchlisttools-view' => 'Лиякстоматьне лопатнесэ потмоксстонть',
 	'watchlisttools-edit' => 'Ваномс ды витнемс-петнемс мезе мельга ванстнят',
 	'watchlisttools-raw' => 'Витнеме-петнеме верек ваномалопанть',
-);
+];
 
-$messages['mzn'] = array(
+$messages['mzn'] = [
 	'wednesday' => 'چارشنبه',
 	'wed' => 'چارشنبه',
 	'wrong_wfQuery_params' => 'پارامترون wfQuery()‎ غلطه<br />
@@ -11175,8 +11208,8 @@ $messages['mzn'] = array(
 	'watchnochange' => 'هیچ‌کادوم از چیزایی که شِما دمبال کانـّی چن وقته عوض نینه.',
 	'watchlist-details' => 'بدون حیساب گپ ولگ‌ئون، {{PLURAL:$1|$1 صفحه|$1 صفحه}} شمه دمبال‌هاکردنی‌ئون میون قرار {{PLURAL:$1|دارنه|دانه}}.',
 	'wlheader-enotif' => '*تونی ایمیل جه مطلع بواشین.',
-	'wlheader-showupdated' => "*صفحه‌ئونی که بعد از آخرین سربزوئنتون عوض بینه '''پر رنگ''' نشون هدائه بیّه.",
-	'wlnote' => "ایجه {{PLURAL:$1|پایانی دأچیه‌ن|پایانی '''$1''' دأچیه‌ن‌ئونی}} هأسه که ای $2 ساعت ده‌له دأکه‌ته.",
+	'wlheader-showupdated' => '*صفحه‌ئونی که بعد از آخرین سربزوئنتون عوض بینه \'\'\'پر رنگ\'\'\' نشون هدائه بیّه.',
+	'wlnote' => 'ایجه {{PLURAL:$1|پایانی دأچیه‌ن|پایانی \'\'\'$1\'\'\' دأچیه‌ن‌ئونی}} هأسه که ای $2 ساعت ده‌له دأکه‌ته.',
 	'watching' => 'ده‌مـبـال هـه‌کـارده‌ن...',
 	'whatlinkshere' => 'لینک‌ئون ِاینتا صفحه',
 	'whatlinkshere-title' => 'وألـگ‌ئونی که "$1" ره لـیـنک هه‌دانه',
@@ -11185,14 +11218,14 @@ $messages['mzn'] = array(
 	'whatlinkshere-next' => '{{PLURAL:$1|پَس|$1 تا پَس‌تر}}',
 	'whatlinkshere-links' => '← لـیـنـک‌ئون',
 	'watchlistall2' => 'هـأمـه',
-);
+];
 
-$messages['na'] = array(
+$messages['na'] = [
 	'wednesday' => 'Mitwok',
 	'watch' => 'Aea',
-);
+];
 
-$messages['nah'] = array(
+$messages['nah'] = [
 	'wednesday' => 'ic nāhuilhuitl',
 	'wed' => 'nāhuilhui',
 	'welcomecreation' => '== ¡Ximopanōlti, $1! ==
@@ -11236,9 +11269,9 @@ Timitztlātlauhtia xicchīhua occeppa.',
 	'watchlistedit-raw-added' => '{{PLURAL:$1|Ōmocentili cē zāzanilli|Ōmocentilih $1 zāzaniltin}}:',
 	'watchlisttools-view' => 'Tiquinttāz huēyi tlapatlaliztli',
 	'watchlisttools-edit' => 'Tiquittāz auh ticpatlāz motlachiyaliz',
-);
+];
 
-$messages['nan'] = array(
+$messages['nan'] = [
 	'wednesday' => 'Pài-saⁿ',
 	'wed' => 'Saⁿ',
 	'wrong_wfQuery_params' => 'Chhò-ngō͘ ê chham-sò͘ chhoân hō͘ wfQuery（）<br />
@@ -11270,7 +11303,7 @@ Cha-sûn: $2',
 	'watchmethod-recent' => 'tng teh kíam-cha choè-kīn ê siu-kái, khoàⁿ ū kàm-sī ê ia̍h bô',
 	'watchmethod-list' => 'tng teh kiám-cha kàm-sī ê ia̍h khoàⁿ chòe-kīn ū siu-kái bô',
 	'watchlistcontains' => 'Lí ê kàm-sī-toaⁿ siu {{PLURAL:$1|ia̍h|ia̍h}} .',
-	'wlnote' => "Ē-kha sī '''$2''' tiám-cheng í-lāi siōng sin ê $1 ê kái-piàn.",
+	'wlnote' => 'Ē-kha sī \'\'\'$2\'\'\' tiám-cheng í-lāi siōng sin ê $1 ê kái-piàn.',
 	'wlshowlast' => 'Hián-sī chêng $1 tiám-cheng $2 ji̍t $3',
 	'watchlist-options' => '監視單的選項',
 	'watching' => '共監視',
@@ -11295,22 +11328,22 @@ Cha-sûn: $2',
 	'watchlisttools-view' => '看相關的修改',
 	'watchlisttools-edit' => 'Khoàⁿ koh kái kàm-sī-toaⁿ',
 	'watchlisttools-raw' => 'Kái tshing-chheng ê kàm-sī-toaⁿ',
-);
+];
 
-$messages['nap'] = array(
+$messages['nap'] = [
 	'wednesday' => 'miercurì',
 	'wed' => 'mier',
-	'welcomecreation' => "== Bemmenuto, $1! ==
+	'welcomecreation' => '== Bemmenuto, $1! ==
 
-'O cunto è stato criato currettamente.  Nun scurdà 'e perzonalizzà 'e ppreferenze 'e {{SITENAME}}.",
-	'watchthis' => "Tiene d'uocchio chesta paggena",
+\'O cunto è stato criato currettamente.  Nun scurdà \'e perzonalizzà \'e ppreferenze \'e {{SITENAME}}.',
+	'watchthis' => 'Tiene d\'uocchio chesta paggena',
 	'wantedpages' => 'Paggene cchiù addemannate',
 	'watch' => 'Secuta',
 	'whatlinkshere' => 'Paggene ca cullegano a chesta',
 	'whatlinkshere-title' => 'Paggene ca cullegano a $1',
-);
+];
 
-$messages['nb'] = array(
+$messages['nb'] = [
 	'wednesday' => 'onsdag',
 	'wed' => 'ons',
 	'wrong_wfQuery_params' => 'Gale paramtere til wfQuery()<br />
@@ -11346,11 +11379,11 @@ Ikke glem å endre [[Special:Preferences|innstillingene]] dine.',
 	'watchnochange' => 'Ingen av sidene i overvåkningslisten er endret i den valgte perioden.',
 	'watchlist-details' => '{{PLURAL:$1|Én side|$1 sider}} på din overvåkningsliste, teller ikke diskusjonssider.',
 	'wlheader-enotif' => '* E-postnotifikasjon er slått på.',
-	'wlheader-showupdated' => "* Sider som har blitt forandret siden du sist besøkte dem vises i '''fet tekst'''",
+	'wlheader-showupdated' => '* Sider som har blitt forandret siden du sist besøkte dem vises i \'\'\'fet tekst\'\'\'',
 	'watchmethod-recent' => 'sjekker siste endringer for sider i overvåkningslisten',
 	'watchmethod-list' => 'sjekker siste endringer for sider i overvåkningslisten',
 	'watchlistcontains' => 'Overvåkningslisten inneholder $1 {{PLURAL:$1|side|sider}}.',
-	'wlnote' => "Nedenfor er {{PLURAL:$1|den siste endringen|de siste '''$1''' endringene}} {{PLURAL:$2|den siste timen|de siste '''$2''' timene}}, fra den $3, kl. $4",
+	'wlnote' => 'Nedenfor er {{PLURAL:$1|den siste endringen|de siste \'\'\'$1\'\'\' endringene}} {{PLURAL:$2|den siste timen|de siste \'\'\'$2\'\'\' timene}}, fra den $3, kl. $4',
 	'wlshowlast' => 'Vis siste $1 timer $2 dager $3',
 	'watchlist-options' => 'Alternativ for overvåkningslisten',
 	'watching' => 'Overvåker…',
@@ -11391,9 +11424,9 @@ Du kan også [[Special:EditWatchlist|bruke standardverktøyet]].',
 	'watchlisttools-view' => 'Vis relevante endringer',
 	'watchlisttools-edit' => 'Vis og rediger overvåkningsliste',
 	'watchlisttools-raw' => 'Rediger rå overvåkningsliste',
-);
+];
 
-$messages['nds'] = array(
+$messages['nds'] = [
 	'wednesday' => 'Merrweek',
 	'wed' => 'Mi',
 	'wrong_wfQuery_params' => 'Falschen Parameter för wfQuery()<br />
@@ -11426,11 +11459,11 @@ Vergeet nich, de Sied för di persönlich [[Special:Preferences|intostellen]].',
 	'watchnochange' => 'Kene Siet op dien Oppasslist is in den wiesten Tietruum ännert worrn.',
 	'watchlist-details' => '{{PLURAL:$1|Ene Siet is|$1 Sieden sünd}} op dien Oppasslist (ahn Diskuschoonssieden).',
 	'wlheader-enotif' => 'Benarichtigen per E-Mail is anstellt.',
-	'wlheader-showupdated' => "* Sieden, de siet dien letzten Besöök ännert worrn sünd, warrt '''fett''' wiest.",
+	'wlheader-showupdated' => '* Sieden, de siet dien letzten Besöök ännert worrn sünd, warrt \'\'\'fett\'\'\' wiest.',
 	'watchmethod-recent' => 'letzte Ännern no Oppasslist pröven',
 	'watchmethod-list' => 'Oppasslist na letzte Ännern nakieken',
 	'watchlistcontains' => 'Diene Oppasslist bargt {{PLURAL:$1|ene Siet|$1 Sieden}}.',
-	'wlnote' => "Ünnen {{PLURAL:$1|steiht de letzte Ännern|staht de letzten $1 Ännern}} vun de {{PLURAL:$2|letzte Stünn|letzten '''$2''' Stünnen}}.",
+	'wlnote' => 'Ünnen {{PLURAL:$1|steiht de letzte Ännern|staht de letzten $1 Ännern}} vun de {{PLURAL:$2|letzte Stünn|letzten \'\'\'$2\'\'\' Stünnen}}.',
 	'wlshowlast' => 'Wies de letzten $1 Stünnen $2 Daag $3',
 	'watchlist-options' => 'Optionen för de Oppasslist',
 	'watching' => 'warrt op de Oppasslist ropsett...',
@@ -11467,9 +11500,9 @@ Du kannst ok de [[Special:EditWatchlist|normale Sied to’n Ännern]] bruken.',
 	'watchlisttools-view' => 'Oppasslist ankieken',
 	'watchlisttools-edit' => 'Oppasslist ankieken un ännern',
 	'watchlisttools-raw' => 'Oppasslist as Textlist ännern',
-);
+];
 
-$messages['nds-nl'] = array(
+$messages['nds-nl'] = [
 	'wednesday' => 'woonsdag',
 	'wed' => 'woo',
 	'wrong_wfQuery_params' => 'Parameters veur wfQuery() waren verkeerd<br />
@@ -11481,34 +11514,34 @@ Vergeet niet joew [[Special:Preferences|veurkeuren veur {{SITENAME}}]] in te ste
 	'wrongpassword' => 'verkeerd wachtwoord, probeer t opniej.',
 	'wrongpasswordempty' => 'Gien wachtwoord in-evoerd. Probeer t opniej.',
 	'watchthis' => 'volg disse pagina',
-	'whitelistedittext' => "Um pagina's te kunnen wiezigen, mö'j $1 ween",
+	'whitelistedittext' => 'Um pagina\'s te kunnen wiezigen, mö\'j $1 ween',
 	'windows-nonascii-filename' => 'Disse wiki ondersteunt gien bestaandsnamen mit spesiale tekens.',
 	'watchthisupload' => 'Volg dit bestaand',
-	'withoutinterwiki' => "Pagina's zonder verwiezingen naor aandere talen",
-	'withoutinterwiki-summary' => "De volgende pagina's verwiezen niet naor versies in n aandere taal.",
+	'withoutinterwiki' => 'Pagina\'s zonder verwiezingen naor aandere talen',
+	'withoutinterwiki-summary' => 'De volgende pagina\'s verwiezen niet naor versies in n aandere taal.',
 	'withoutinterwiki-legend' => 'Veurvoegsel',
 	'withoutinterwiki-submit' => 'Bekieken',
 	'wantedcategories' => 'Gewunste kategorieën',
-	'wantedpages' => "Gewunste pagina's",
+	'wantedpages' => 'Gewunste pagina\'s',
 	'wantedpages-badtitle' => 'Ongeldige paginanaam in resultaot: $1',
 	'wantedfiles' => 'Gewunste bestaanden',
-	'wantedfiletext-cat' => "De volgende bestaanden wörden gebruukt mer bestaon niet. Bestaanden van externe databanken kunnen op-eneumen ween in de lieste, ondanks dat ze bestaon. Soortgelieke vals positieven wörden <del>deurehaold weeregeven</del>. Pagina's die niet-bestaonde bestaanden insluten staon op de pagina [[:$1]].",
+	'wantedfiletext-cat' => 'De volgende bestaanden wörden gebruukt mer bestaon niet. Bestaanden van externe databanken kunnen op-eneumen ween in de lieste, ondanks dat ze bestaon. Soortgelieke vals positieven wörden <del>deurehaold weeregeven</del>. Pagina\'s die niet-bestaonde bestaanden insluten staon op de pagina [[:$1]].',
 	'wantedfiletext-nocat' => 'De volgende bestaanden wörden gebruukt mer bestaon niet. Bestaanden van externe databanken kunnen op-eneumen ween in de lieste, ondanks dat ze bestaon. Soortgelieke vals positieven wörden <del>deurehaold weeregeven</del>.',
 	'wantedtemplates' => 'Gewunste mallen',
 	'watchlist' => 'Volglieste',
 	'watchlistfor2' => 'Veur $1 ($2)',
 	'watchlistanontext' => '$1 is verplicht um joew volglieste te bekieken of te wiezigen.',
 	'watchnologin' => 'Niet an-emeld',
-	'watchnologintext' => "Um je volglieste an te passen mö'j eers [[Special:UserLogin|an-emeld]] ween.",
+	'watchnologintext' => 'Um je volglieste an te passen mö\'j eers [[Special:UserLogin|an-emeld]] ween.',
 	'watch' => 'Volgen',
 	'watchthispage' => 'Volg disse pagina',
-	'watchnochange' => "Gien van de pagina's op joew volglieste is in disse periode ewiezigd",
-	'watchlist-details' => "Der {{PLURAL:$1|steet één pagina|staon $1 pagina's}} op joew volglieste, zonder de overlegpagina's mee-erekend.",
+	'watchnochange' => 'Gien van de pagina\'s op joew volglieste is in disse periode ewiezigd',
+	'watchlist-details' => 'Der {{PLURAL:$1|steet één pagina|staon $1 pagina\'s}} op joew volglieste, zonder de overlegpagina\'s mee-erekend.',
 	'wlheader-enotif' => 'Je kriegen bericht per netpost',
-	'wlheader-showupdated' => "* Pagina's die sinds joew leste bezeuk bie-ewörken bin, staon '''vet-edrokt'''.",
-	'watchmethod-recent' => "leste wiezigingen an t naokieken op pagina's die'j volgen",
+	'wlheader-showupdated' => '* Pagina\'s die sinds joew leste bezeuk bie-ewörken bin, staon \'\'\'vet-edrokt\'\'\'.',
+	'watchmethod-recent' => 'leste wiezigingen an t naokieken op pagina\'s die\'j volgen',
 	'watchmethod-list' => 'Kik joew nao volglieste veur de leste wiezigingen',
-	'watchlistcontains' => "Der {{PLURAL:$1|steet 1 pagina|staon $1 pagina's}} op joew volglieste.",
+	'watchlistcontains' => 'Der {{PLURAL:$1|steet 1 pagina|staon $1 pagina\'s}} op joew volglieste.',
 	'wlnote' => 'Hieronder {{PLURAL:$1|steet de leste wieziging|staon de leste $1 wiezigingen}} in {{PLURAL:$2|t aofeleupen ure|de leste $2 uren}} vanaof $3 um $4.',
 	'wlshowlast' => 'Laot de aofeleupen $1 ure $2 dagen $3 zien',
 	'watchlist-options' => 'Opsies veur de volglieste',
@@ -11525,34 +11558,34 @@ Vergeet niet joew [[Special:Preferences|veurkeuren veur {{SITENAME}}]] in te ste
 	'whatlinkshere-hidelinks' => '$1 verwiezingen',
 	'whatlinkshere-hideimages' => '$1 bestaandsverwiezingen',
 	'whatlinkshere-filters' => 'Filters',
-	'widthheightpage' => "$1 × $2, $3 {{PLURAL:$3|pagina|pagina's}}",
+	'widthheightpage' => '$1 × $2, $3 {{PLURAL:$3|pagina|pagina\'s}}',
 	'watchlistall2' => 'alles',
-	'watchlistedit-numitems' => "Der {{PLURAL:$1|steet 1 pagina|staon $1 pagina's}} op joew volglieste, zonder overlegpagina's.",
+	'watchlistedit-numitems' => 'Der {{PLURAL:$1|steet 1 pagina|staon $1 pagina\'s}} op joew volglieste, zonder overlegpagina\'s.',
 	'watchlistedit-noitems' => 'Joew volglieste is leeg.',
 	'watchlistedit-normal-title' => 'Volglieste bewarken',
-	'watchlistedit-normal-legend' => "Disse pagina's van mien volglieste aofhaolen.",
-	'watchlistedit-normal-explain' => "Pagina's die op joew volglieste staon, zie'j hieronder.
-Um n pagina van joew volglieste aof te haolen mö'j t vakjen dernaost anklikken, en klik dan op \"{{int:Watchlistedit-normal-submit}}\".
-Je kunnen oek [[Special:EditWatchlist/raw|de roewe lieste bewarken]].",
-	'watchlistedit-normal-submit' => "Pagina's deraof haolen",
-	'watchlistedit-normal-done' => "Der {{PLURAL:$1|is 1 pagina|bin $1 pagina's}} vortedaon uut joew volglieste:",
+	'watchlistedit-normal-legend' => 'Disse pagina\'s van mien volglieste aofhaolen.',
+	'watchlistedit-normal-explain' => 'Pagina\'s die op joew volglieste staon, zie\'j hieronder.
+Um n pagina van joew volglieste aof te haolen mö\'j t vakjen dernaost anklikken, en klik dan op "{{int:Watchlistedit-normal-submit}}".
+Je kunnen oek [[Special:EditWatchlist/raw|de roewe lieste bewarken]].',
+	'watchlistedit-normal-submit' => 'Pagina\'s deraof haolen',
+	'watchlistedit-normal-done' => 'Der {{PLURAL:$1|is 1 pagina|bin $1 pagina\'s}} vortedaon uut joew volglieste:',
 	'watchlistedit-raw-title' => 'Roewe volglieste bewarken',
 	'watchlistedit-raw-legend' => 'Roewe volglieste bewarken',
-	'watchlistedit-raw-explain' => "Pagina's die op joew volglieste staon, zie'j hieronder. Je kunnen de lieste bewarken deur pagina's deruut vort te haolen en derbie te te zetten.
+	'watchlistedit-raw-explain' => 'Pagina\'s die op joew volglieste staon, zie\'j hieronder. Je kunnen de lieste bewarken deur pagina\'s deruut vort te haolen en derbie te te zetten.
 Eén pagina per regel.
-A'j klaor bin, klik dan op \"{{int:Watchlistedit-raw-submit}}\".
-Je kunnen oek [[Special:EditWatchlist|t standardbewarkingsscharm gebruken]].",
+A\'j klaor bin, klik dan op "{{int:Watchlistedit-raw-submit}}".
+Je kunnen oek [[Special:EditWatchlist|t standardbewarkingsscharm gebruken]].',
 	'watchlistedit-raw-titles' => 'Titels:',
 	'watchlistedit-raw-submit' => 'Volglieste biewarken',
 	'watchlistedit-raw-done' => 'Joew volglieste is bie-ewörken.',
-	'watchlistedit-raw-added' => "Der {{PLURAL:$1|is 1 pagina|bin $1 pagina's}} bie edaon:",
-	'watchlistedit-raw-removed' => "Der {{PLURAL:$1|is 1 pagina|bin $1 pagina's}} vortedaon:",
+	'watchlistedit-raw-added' => 'Der {{PLURAL:$1|is 1 pagina|bin $1 pagina\'s}} bie edaon:',
+	'watchlistedit-raw-removed' => 'Der {{PLURAL:$1|is 1 pagina|bin $1 pagina\'s}} vortedaon:',
 	'watchlisttools-view' => 'Wiezigingen bekieken',
 	'watchlisttools-edit' => 'Volglieste bekieken en bewarken',
 	'watchlisttools-raw' => 'Roewe volglieste bewarken',
-);
+];
 
-$messages['ne'] = array(
+$messages['ne'] = [
 	'wednesday' => 'बुधबार',
 	'wed' => 'वुध',
 	'wrong_wfQuery_params' => 'गलत प्यारामेटर  wfQuery()को लागि <br />
@@ -11576,14 +11609,14 @@ $messages['ne'] = array(
 	'wantedfiles' => 'माग भएका फाइलहरु',
 	'wantedtemplates' => 'माग भएका टेम्प्लेटहरु',
 	'watchlist' => 'मेरो अवलोकन',
-	'watchlistfor' => "('''$1''' को लागि)",
+	'watchlistfor' => '(\'\'\'$1\'\'\' को लागि)',
 	'watchnologin' => 'प्रवेश (लग ईन) नगरिएको',
 	'watchnologintext' => 'आफ्नो अवलोकनलाइ परिवर्तन गर्नको लागि त तपाइ यसमा [[Special:UserLogin|प्रवेश(लगइन)]] गर्नुपर्छ।',
 	'watch' => 'अवलोकन',
 	'watchthispage' => 'यो पृष्ठ अवलोकन गर्नुहोस्',
 	'watchlist-details' => 'तपाईको निगरानी सूचीमा रहेका{{PLURAL:$1|$1 पृष्ठ|$1 पृष्ठहरु}}वार्तालापमा पृष्ठमा गनिएका छैनन् ।',
 	'wlheader-enotif' => '* ईमेलद्वारा जानकारी गराउने तरिका enable गरियो ।',
-	'wlheader-showupdated' => "* तपाइले पछिल्लो पल्ट भ्रमण गरेपछि परिवर्तन भएका पृष्ठहरूलाई '''गाढा''' गरेर देखाइएको छ ।",
+	'wlheader-showupdated' => '* तपाइले पछिल्लो पल्ट भ्रमण गरेपछि परिवर्तन भएका पृष्ठहरूलाई \'\'\'गाढा\'\'\' गरेर देखाइएको छ ।',
 	'wlshowlast' => 'पछिल्ला $2 दिनहरूका $3 $1 घण्टाहरूका देखाउनुहोस्',
 	'watchlist-options' => 'निगरानि सूची विकल्प',
 	'watching' => 'निगरानी गर्दै...',
@@ -11610,9 +11643,9 @@ $messages['ne'] = array(
 	'watchlisttools-view' => 'मिल्दो परिवर्तनहरु हेर्ने',
 	'watchlisttools-edit' => 'निगरानी सूची हेर्नुहोस् र सम्पादन गर्नुहोस्',
 	'watchlisttools-raw' => 'कच्चा निगरानी सूची सम्पादन गर्नुहोस् ।',
-);
+];
 
-$messages['new'] = array(
+$messages['new'] = [
 	'wednesday' => 'बुधबाः',
 	'wed' => 'बुध',
 	'welcomecreation' => '== लसकुस, $1! ==
@@ -11620,9 +11653,9 @@ $messages['new'] = array(
 छिगु [[Special:Preferences|{{SITENAME}} प्राथमिकता]] हिलिगु लुमंकादिसँ।',
 	'withoutinterwiki-submit' => 'क्यनादिसँ',
 	'whatlinkshere' => 'थन छु स्वाई',
-);
+];
 
-$messages['niu'] = array(
+$messages['niu'] = [
 	'wednesday' => 'Aho Lotu',
 	'welcomecreation' => '== Fakalofa atu, kua fiafia ke hu mai $1 ==
 Kua talaga e haau a poko.
@@ -11634,9 +11667,9 @@ Ua nimo ke hiki e haau tau [[Special:Preferences|manako {{SITENAME}}]].',
 	'watch' => 'Kitekite',
 	'watchthispage' => 'Onoono e lau e',
 	'whatlinkshere' => 'Ko e tau matutakiaga he mena e',
-);
+];
 
-$messages['nl'] = array(
+$messages['nl'] = [
 	'wednesday' => 'woensdag',
 	'wed' => 'wo',
 	'wrong_wfQuery_params' => 'Verkeerde parameters voor wfQuery()<br />
@@ -11650,18 +11683,18 @@ Probeer het opnieuw.',
 	'wrongpasswordempty' => 'Het opgegeven wachtwoord was leeg.
 Probeer het opnieuw.',
 	'watchthis' => 'Deze pagina volgen',
-	'whitelistedittext' => "U moet $1 om pagina's te bewerken.",
+	'whitelistedittext' => 'U moet $1 om pagina\'s te bewerken.',
 	'windows-nonascii-filename' => 'Deze wiki ondersteunt geen bestandsnamen met speciale tekens.',
 	'watchthisupload' => 'Dit bestand volgen',
-	'withoutinterwiki' => "Pagina's zonder taalverwijzingen",
-	'withoutinterwiki-summary' => "De volgende pagina's verwijzen niet naar versies in een andere taal.",
+	'withoutinterwiki' => 'Pagina\'s zonder taalverwijzingen',
+	'withoutinterwiki-summary' => 'De volgende pagina\'s verwijzen niet naar versies in een andere taal.',
 	'withoutinterwiki-legend' => 'Voorvoegsel',
 	'withoutinterwiki-submit' => 'Bekijken',
 	'wantedcategories' => 'Niet-bestaande categorieën met de meeste verwijzingen',
-	'wantedpages' => "Niet-bestaande pagina's met verwijzingen",
+	'wantedpages' => 'Niet-bestaande pagina\'s met verwijzingen',
 	'wantedpages-badtitle' => 'Ongeldige paginanaam in resultaat: $1',
 	'wantedfiles' => 'Niet-bestaande bestanden met verwijzingen',
-	'wantedfiletext-cat' => "De volgende bestanden worden gebruikt maar bestaan niet. Bestanden van externe repositories kunnen zijn opgenomen in de lijst, ondanks dat ze bestaan. Dergelijke vals positieven worden <del>doorgehaald weergegeven</del>. Pagina's die niet-bestaande bestanden insluiten staan op de pagina [[:$1]].",
+	'wantedfiletext-cat' => 'De volgende bestanden worden gebruikt maar bestaan niet. Bestanden van externe repositories kunnen zijn opgenomen in de lijst, ondanks dat ze bestaan. Dergelijke vals positieven worden <del>doorgehaald weergegeven</del>. Pagina\'s die niet-bestaande bestanden insluiten staan op de pagina [[:$1]].',
 	'wantedfiletext-nocat' => 'De volgende bestanden worden gebruikt maar bestaan niet. Bestanden van externe repositories kunnen zijn opgenomen in de lijst, ondanks dat ze bestaan. Dergelijke vals positieven worden <del>doorgehaald weergegeven</del>.',
 	'wantedtemplates' => 'Niet-bestaande sjablonen met verwijzingen',
 	'watchlist' => 'Volglijst',
@@ -11671,13 +11704,13 @@ Probeer het opnieuw.',
 	'watchnologintext' => 'U dient [[Special:UserLogin|aangemeld]] te zijn om uw volglijst te bewerken.',
 	'watch' => 'Volgen',
 	'watchthispage' => 'Pagina volgen',
-	'watchnochange' => "Geen van de pagina's op uw volglijst is in deze periode bewerkt.",
-	'watchlist-details' => "Er {{PLURAL:$1|staat één pagina|staan $1 pagina's}} op uw volglijst, exclusief overlegpagina's.",
+	'watchnochange' => 'Geen van de pagina\'s op uw volglijst is in deze periode bewerkt.',
+	'watchlist-details' => 'Er {{PLURAL:$1|staat één pagina|staan $1 pagina\'s}} op uw volglijst, exclusief overlegpagina\'s.',
 	'wlheader-enotif' => '* U wordt per e-mail gewaarschuwd',
-	'wlheader-showupdated' => "* Pagina's die zijn bewerkt sinds uw laatste bezoek worden '''vet''' weergegeven",
-	'watchmethod-recent' => "controleer recente wijzigingen op pagina's op volglijst",
-	'watchmethod-list' => "controleer pagina's op volglijst op wijzigingen",
-	'watchlistcontains' => "Er {{PLURAL:$1|staat 1 pagina|staan $1 pagina's}} op uw volglijst.",
+	'wlheader-showupdated' => '* Pagina\'s die zijn bewerkt sinds uw laatste bezoek worden \'\'\'vet\'\'\' weergegeven',
+	'watchmethod-recent' => 'controleer recente wijzigingen op pagina\'s op volglijst',
+	'watchmethod-list' => 'controleer pagina\'s op volglijst op wijzigingen',
+	'watchlistcontains' => 'Er {{PLURAL:$1|staat 1 pagina|staan $1 pagina\'s}} op uw volglijst.',
 	'wlnote' => 'Hieronder {{PLURAL:$1|staat de laaste wijziging|staan de laatste $1 wijzigingen}} in {{PLURAL:$2|het laatste uur|de laatste $2 uur}} per $3 om $4.',
 	'wlshowlast' => 'Laatste $1 uur, $2 dagen bekijken ($3)',
 	'watchlist-options' => 'Opties voor volglijst',
@@ -11695,7 +11728,7 @@ Probeer het opnieuw.',
 	'whatlinkshere-hideimages' => 'bestandsverwijzingen $1',
 	'whatlinkshere-filters' => 'Filters',
 	'widthheight' => '$1 × $2',
-	'widthheightpage' => "$1 × $2, $3 {{PLURAL:$3|pagina|pagina's}}",
+	'widthheightpage' => '$1 × $2, $3 {{PLURAL:$3|pagina|pagina\'s}}',
 	'watchlistall2' => 'alles',
 	'watchlistedit-numitems' => 'Uw volglijst bevat {{PLURAL:$1|1 pagina|$1 pagina’s}}, zonder overlegpagina’s.',
 	'watchlistedit-noitems' => 'Uw volglijst bevat geen pagina’s.',
@@ -11704,7 +11737,7 @@ Probeer het opnieuw.',
 	'watchlistedit-normal-explain' => 'Hieronder worden de pagina’s op uw volglijst weergegeven.
 Klik op het vierkantje ernaast en daarna op "{{int:Watchlistedit-normal-submit}}" om een pagina te verwijderen.
 U kunt ook de [[Special:EditWatchlist/raw|ruwe lijst bewerken]].',
-	'watchlistedit-normal-submit' => "Pagina's verwijderen",
+	'watchlistedit-normal-submit' => 'Pagina\'s verwijderen',
 	'watchlistedit-normal-done' => 'Er {{PLURAL:$1|is 1 pagina|zijn $1 pagina’s}} verwijderd van uw volglijst:',
 	'watchlistedit-raw-title' => 'Ruwe volglijst bewerken',
 	'watchlistedit-raw-legend' => 'Ruwe volglijst bewerken',
@@ -11721,19 +11754,19 @@ U kunt ook [[Special:EditWatchlist|het standaard bewerkingsscherm gebruiken]].',
 	'watchlisttools-view' => 'Relevante wijzigingen bekijken',
 	'watchlisttools-edit' => 'Volglijst bekijken en bewerken',
 	'watchlisttools-raw' => 'Ruwe volglijst bewerken',
-);
+];
 
-$messages['nl-informal'] = array(
+$messages['nl-informal'] = [
 	'welcomecreation' => '== Welkom, $1! ==
 Je gebruiker is geregistreerd.
 Vergeet niet je [[Special:Preferences|voorkeuren voor {{SITENAME}}]] aan te passen.',
-	'whitelistedittext' => "Je moet $1 om pagina's te bewerken.",
+	'whitelistedittext' => 'Je moet $1 om pagina\'s te bewerken.',
 	'watchlistanontext' => 'Om je volglijst te bekijken of te bewerken moet je je $1.',
 	'watchnologintext' => 'Je dient [[Special:UserLogin|aangemeld]] te zijn om je volglijst te bewerken.',
-	'watchnochange' => "Geen van de pagina's op je volglijst is in deze periode bewerkt.",
-	'watchlist-details' => "Er {{PLURAL:$1|staat één pagina|staan $1 pagina's}} op je volglijst, exclusief overlegpagina's.",
-	'wlheader-showupdated' => "* Pagina's die zijn bewerkt sinds je laatste bezoek worden '''vet''' weergegeven",
-	'watchlistcontains' => "Er {{PLURAL:$1|staat 1 pagina|staan $1 pagina's}} op je volglijst.",
+	'watchnochange' => 'Geen van de pagina\'s op je volglijst is in deze periode bewerkt.',
+	'watchlist-details' => 'Er {{PLURAL:$1|staat één pagina|staan $1 pagina\'s}} op je volglijst, exclusief overlegpagina\'s.',
+	'wlheader-showupdated' => '* Pagina\'s die zijn bewerkt sinds je laatste bezoek worden \'\'\'vet\'\'\' weergegeven',
+	'watchlistcontains' => 'Er {{PLURAL:$1|staat 1 pagina|staan $1 pagina\'s}} op je volglijst.',
 	'watchlistedit-numitems' => 'Je volglijst bevat {{PLURAL:$1|1 pagina|$1 pagina’s}}, zonder overlegpagina’s.',
 	'watchlistedit-noitems' => 'Je volglijst bevat geen pagina’s.',
 	'watchlistedit-normal-explain' => 'Hieronder worden de pagina’s op je volglijst weergegeven.
@@ -11746,9 +11779,9 @@ Eén pagina per regel.
 Als je klaar bent, klik dan op "{{int:Watchlistedit-raw-submit}}".
 Je kunt ook [[Special:EditWatchlist|het standaard bewerkingsscherm gebruiken]].',
 	'watchlistedit-raw-done' => 'Jr volglijst is bijgewerkt.',
-);
+];
 
-$messages['nn'] = array(
+$messages['nn'] = [
 	'wednesday' => 'onsdag',
 	'wed' => 'ons',
 	'wrong_wfQuery_params' => 'Feil parameter gjevne til wfQuery()<br />Funksjon: $1<br />Førespurnad: $2',
@@ -11780,11 +11813,11 @@ Hugs at du kan endre på [[Special:Preferences|innstillingane]] dine.',
 	'watchnochange' => 'Ingen av sidene i overvakingslista er endra i den valde perioden.',
 	'watchlist-details' => '{{PLURAL:$1|Éi side|$1 sider}} er overvaka, utanom diskusjonssider.',
 	'wlheader-enotif' => '* Funksjonen for endringsmeldingar per e-post er på.',
-	'wlheader-showupdated' => "* Sider som er vortne endra sidan du sist såg på dei er '''utheva'''",
+	'wlheader-showupdated' => '* Sider som er vortne endra sidan du sist såg på dei er \'\'\'utheva\'\'\'',
 	'watchmethod-recent' => 'sjekkar siste endringar for dei overvaka sidene',
 	'watchmethod-list' => 'sjekkar om dei overvaka sidene er vortne endra i det siste',
 	'watchlistcontains' => 'Overvakingslista di inneheld {{PLURAL:$1|éi side|$1 sider}}.',
-	'wlnote' => "Nedanfor er {{PLURAL:$1|den siste endringa|dei siste '''$1''' endringane}} {{PLURAL:$2|den siste timen|dei siste '''$2''' timane}}, for $3, kl. $4.",
+	'wlnote' => 'Nedanfor er {{PLURAL:$1|den siste endringa|dei siste \'\'\'$1\'\'\' endringane}} {{PLURAL:$2|den siste timen|dei siste \'\'\'$2\'\'\' timane}}, for $3, kl. $4.',
 	'wlshowlast' => 'Vis siste $1 timar $2 dagar $3',
 	'watchlist-options' => 'Alternativ for overvakingslista',
 	'watching' => 'Overvakar...',
@@ -11824,9 +11857,9 @@ Du kan òg [[Special:EditWatchlist|nytte standardverktøyet]].',
 	'watchlisttools-view' => 'Vis relevante endringar',
 	'watchlisttools-edit' => 'Vis og endre overvakingslista',
 	'watchlisttools-raw' => 'Endre på overvakingslista i råformat',
-);
+];
 
-$messages['no'] = array(
+$messages['no'] = [
 	'wednesday' => 'onsdag',
 	'wed' => 'ons',
 	'wrong_wfQuery_params' => 'Feil parameter gjevne til wfQuery()<br />Funksjon: $1<br />Førespurnad: $2',
@@ -11858,11 +11891,11 @@ Hugs at du kan endre på [[Special:Preferences|innstillingane]] dine.',
 	'watchnochange' => 'Ingen av sidene i overvakingslista er endra i den valde perioden.',
 	'watchlist-details' => '{{PLURAL:$1|Éi side|$1 sider}} er overvaka, utanom diskusjonssider.',
 	'wlheader-enotif' => '* Funksjonen for endringsmeldingar per e-post er på.',
-	'wlheader-showupdated' => "* Sider som er vortne endra sidan du sist såg på dei er '''utheva'''",
+	'wlheader-showupdated' => '* Sider som er vortne endra sidan du sist såg på dei er \'\'\'utheva\'\'\'',
 	'watchmethod-recent' => 'sjekkar siste endringar for dei overvaka sidene',
 	'watchmethod-list' => 'sjekkar om dei overvaka sidene er vortne endra i det siste',
 	'watchlistcontains' => 'Overvakingslista di inneheld {{PLURAL:$1|éi side|$1 sider}}.',
-	'wlnote' => "Nedanfor er {{PLURAL:$1|den siste endringa|dei siste '''$1''' endringane}} {{PLURAL:$2|den siste timen|dei siste '''$2''' timane}}, for $3, kl. $4.",
+	'wlnote' => 'Nedanfor er {{PLURAL:$1|den siste endringa|dei siste \'\'\'$1\'\'\' endringane}} {{PLURAL:$2|den siste timen|dei siste \'\'\'$2\'\'\' timane}}, for $3, kl. $4.',
 	'wlshowlast' => 'Vis siste $1 timar $2 dagar $3',
 	'watchlist-options' => 'Alternativ for overvakingslista',
 	'watching' => 'Overvakar...',
@@ -11902,9 +11935,9 @@ Du kan òg [[Special:EditWatchlist|nytte standardverktøyet]].',
 	'watchlisttools-view' => 'Vis relevante endringar',
 	'watchlisttools-edit' => 'Vis og endre overvakingslista',
 	'watchlisttools-raw' => 'Endre på overvakingslista i råformat',
-);
+];
 
-$messages['nov'] = array(
+$messages['nov'] = [
 	'wednesday' => 'merkurdie',
 	'wed' => 'mer',
 	'watchthis' => 'Observa disi pagine',
@@ -11916,26 +11949,26 @@ $messages['nov'] = array(
 	'whatlinkshere' => 'Tum kel kupla hir',
 	'whatlinkshere-page' => 'Pagine:',
 	'whatlinkshere-links' => '← linkes',
-);
+];
 
-$messages['nso'] = array(
+$messages['nso'] = [
 	'wednesday' => 'Laboraro',
 	'wed' => 'Laboraro',
-	'welcomecreation' => "Oa amogelwa, $1! ==
+	'welcomecreation' => 'Oa amogelwa, $1! ==
 
-Tšhupaleloko (''account'') ya gago e tlhodilwe. O seke wa lebala go fetola [[Special:Preferences|{{SITENAME}} dikgetho/thato tša gago]].",
+Tšhupaleloko (\'\'account\'\') ya gago e tlhodilwe. O seke wa lebala go fetola [[Special:Preferences|{{SITENAME}} dikgetho/thato tša gago]].',
 	'wrongpassword' => 'O loketše ditlhaka-tša-siphiri tšeo e sego tšona. Ka kgopelo, leka gape.',
 	'wrongpasswordempty' => 'Ga wa lokela ditlhaka-tša-siphiri. Ka kgopelo, leka gape.',
 	'watchthis' => 'Tlhapetša letlakala le',
 	'whitelistedittitle' => 'O swanela ke go tsena go fetola',
 	'whitelistedittext' => 'O swanela ke go $1 go fetola matlakala.',
-	'watchthisupload' => "Tlhapetša ''faele'' ye",
+	'watchthisupload' => 'Tlhapetša \'\'faele\'\' ye',
 	'withoutinterwiki' => 'Matlakala a senago dihlomaganyo tša dipolelo',
 	'withoutinterwiki-submit' => 'Bontšha',
 	'wantedcategories' => 'Dihlopha tšago nyakega',
 	'wantedpages' => 'Matlakala ago nyakega',
 	'watchlist' => 'Lenano la ditlhapetšo tša ka',
-	'watchlistfor' => "(ya '''$1''')",
+	'watchlistfor' => '(ya \'\'\'$1\'\'\')',
 	'watch' => 'Tlhapetša',
 	'watchthispage' => 'Tlhapetša letlakala le',
 	'watchlist-details' => '{{PLURAL:$1|$1 ya letlakala|$1 ya matlakala}} a lenano la ditlhapetšo tša gago, re sa bale matlakala a dipoledišano (dipolelo).',
@@ -11961,10 +11994,10 @@ Tšhupaleloko (''account'') ya gago e tlhodilwe. O seke wa lebala go fetola [[Sp
 	'watchlistedit-normal-submit' => 'Tloša thaetlele',
 	'watchlisttools-view' => 'Nyakoretša diphetogo tša gona',
 	'watchlisttools-edit' => 'Lebelela lego fetola lenano la ditlhapetšo',
-	'watchlisttools-raw' => "Fetola lenano le letala (''raw'') la ditlhapetšo",
-);
+	'watchlisttools-raw' => 'Fetola lenano le letala (\'\'raw\'\') la ditlhapetšo',
+];
 
-$messages['nv'] = array(
+$messages['nv'] = [
 	'wednesday' => 'Damóodóó tágí jį́',
 	'watchthis' => 'shinááł nisin',
 	'watchlist' => 'bikʼi déshʼį́į́ʼígíí',
@@ -11991,24 +12024,24 @@ $messages['nv'] = array(
 	'watchlisttools-view' => 'łahgo ályaaígíí yishʼį́ nisin',
 	'watchlisttools-edit' => 'naaltsoos bikʼi déshʼį́į́ʼígíí bikáaʼgi hólónígíí yishʼį́ dóó łahgo áshłééh nisin',
 	'watchlisttools-raw' => 'XML yishʼį́ dóó łahgo áshłééh nisin',
-);
+];
 
-$messages['oc'] = array(
+$messages['oc'] = [
 	'wednesday' => 'dimècres',
 	'wed' => 'Dimè',
 	'wrong_wfQuery_params' => 'Paramètres incorrèctes sus wfQuery()<br />
 Foncion : $1<br />
 Requèsta : $2',
-	'welcomecreation' => "== Benvenguda, $1 ! ==
-Vòstre compte d'utilizaire es estat creat.
-Doblidetz pas de personalizar vòstras [[Special:Preferences|{{SITENAME}} preferéncias]].",
+	'welcomecreation' => '== Benvenguda, $1 ! ==
+Vòstre compte d\'utilizaire es estat creat.
+Doblidetz pas de personalizar vòstras [[Special:Preferences|{{SITENAME}} preferéncias]].',
 	'wrongpassword' => 'Lo senhal es incorrècte. Ensajatz tornarmai.',
 	'wrongpasswordempty' => 'Lo senhal picat èra void. Se vos plai, ensajatz tornarmai.',
 	'watchthis' => 'Seguir aquesta pagina',
 	'whitelistedittext' => 'Vos cal èsser $1 per modificar las paginas.',
 	'watchthisupload' => 'Seguir aqueste fichièr',
 	'withoutinterwiki' => 'Paginas sens ligams interlengas',
-	'withoutinterwiki-summary' => "Las paginas seguentas an pas de ligams cap a las versions dins d'autras lengas.",
+	'withoutinterwiki-summary' => 'Las paginas seguentas an pas de ligams cap a las versions dins d\'autras lengas.',
 	'withoutinterwiki-legend' => 'Prefix',
 	'withoutinterwiki-submit' => 'Afichar',
 	'wantedcategories' => 'Categorias mai demandadas',
@@ -12066,14 +12099,14 @@ per modificar vòstra lista de seguiment.',
 	'watchlisttools-view' => 'Lista de seguiment',
 	'watchlisttools-edit' => 'Veire e modificar la lista de seguiment',
 	'watchlisttools-raw' => 'Modificar la lista (mòde brut)',
-);
+];
 
-$messages['om'] = array(
+$messages['om'] = [
 	'wednesday' => 'Roobii',
 	'wed' => 'Rob',
-);
+];
 
-$messages['or'] = array(
+$messages['or'] = [
 	'wednesday' => 'ବୁଧବାର',
 	'wed' => 'ବୁଧବାର',
 	'wrong_wfQuery_params' => 'wfQuery() ପାଇଁ ଭୁଲ ପାରାମିଟର<br />
@@ -12108,11 +12141,11 @@ $messages['or'] = array(
 	'watchnochange' => 'ଆପଣଙ୍କ ଦେଇ ଦେଖାଯାଇଥିବା ସମୟ ସୀମା ଭିତରେ କୌଣସିଟି ପୃଷ୍ଠାର ବଦଳ କରାଯାଇନାହିଁ ।',
 	'watchlist-details' => 'ଆପଣଙ୍କ ଦେଖଣା ତାଲିକାରେ ଆଲୋଚନା ପୃଷ୍ଠାକୁ ଛାଡ଼ି {{PLURAL:$1|$1 ଟି ପୃଷ୍ଠା|$1 ଟି ପୃଷ୍ଠା}} ଅଛି ।',
 	'wlheader-enotif' => '* ଇ-ମେଲ ସୂଚନାକୁ ସଚଳ କରାଗଲା ।',
-	'wlheader-showupdated' => "* ଆପଣ ଶେଷଥର ଦେଖିଥିବା ପୃଷ୍ଠାଗୁଡ଼ିକ '''ମୋଟା ଅକ୍ଷର'''ରେ ଦେଖାଯାଇଅଛି ।",
+	'wlheader-showupdated' => '* ଆପଣ ଶେଷଥର ଦେଖିଥିବା ପୃଷ୍ଠାଗୁଡ଼ିକ \'\'\'ମୋଟା ଅକ୍ଷର\'\'\'ରେ ଦେଖାଯାଇଅଛି ।',
 	'watchmethod-recent' => 'ଏଡଖାଯାଇଥିବା ପୃଷ୍ଠାର ନଗଦ ବଦଳ ପରଖୁଛୁଁ',
 	'watchmethod-list' => 'ନଗଦ ବଦଳ ନିମନ୍ତେ ଦେଖାଯାଇଥିବା ପୃଷ୍ଠାମାନ ପରଖୁଛୁଁ',
 	'watchlistcontains' => 'ଆପଣଙ୍କ ଦେଖଣାତାଲିକାରେ $1 {{PLURAL:$1|ଗୋଟି ପୃଷ୍ଠା|ଗୋଟି ପୃଷ୍ଠା}} ରହିଅଛି ।',
-	'wlnote' => "$3, $4 ସୁଦ୍ଧା ବିଗତ {{PLURAL:$2|ଘଣ୍ଟେ ଭିତରେ|'''$2''' ଘଣ୍ଟା ଭିତରେ}} ଘଟିଥିବା {{PLURAL:$1|ଶେଷ ବଦଳଟି ଅଛି|ଶେଷ '''$1''' ଟି ବଦଳ}} ତଳେ ଦିଆଯାଇଛି ।",
+	'wlnote' => '$3, $4 ସୁଦ୍ଧା ବିଗତ {{PLURAL:$2|ଘଣ୍ଟେ ଭିତରେ|\'\'\'$2\'\'\' ଘଣ୍ଟା ଭିତରେ}} ଘଟିଥିବା {{PLURAL:$1|ଶେଷ ବଦଳଟି ଅଛି|ଶେଷ \'\'\'$1\'\'\' ଟି ବଦଳ}} ତଳେ ଦିଆଯାଇଛି ।',
 	'wlshowlast' => 'ଶେଷ $1 ଘଣ୍ଟା $2 ଦିନ $3 ଦେଖାଇବେ',
 	'watchlist-options' => 'ଦେଖଣା ବିକଳ୍ପସବୁ',
 	'watching' => 'ଦେଖୁଛି...',
@@ -12153,9 +12186,9 @@ $messages['or'] = array(
 	'watchlisttools-view' => 'ଦରକାରୀ ବଦଳଗୁଡ଼ିକ ଦେଖାଇବେ',
 	'watchlisttools-edit' => 'ଦେଖିବା ତାଲିକାଟିକୁ ଦେଖିବେ ଓ ବଦଳାଇବେ',
 	'watchlisttools-raw' => 'ଫାଙ୍କା ଦେଖଣା ତାଲିକାଟିର ସମ୍ପାଦନା କରିବେ',
-);
+];
 
-$messages['os'] = array(
+$messages['os'] = [
 	'wednesday' => 'æртыццæг',
 	'wed' => 'Æрт',
 	'welcomecreation' => '<h2>Æгас цу, $1!</h2><p>Регистрацигонд æрцыдтæ.',
@@ -12177,7 +12210,7 @@ $messages['os'] = array(
 	'watchnochange' => 'Дæ цæстдард статьятæй иу дæр ивд не ’рцыдис.',
 	'watchlist-details' => '{{PLURAL:$1|$1 фарсмæ|$1 фарсмæ}} дæ цæст дарыс, тæрхоны фæрстæ нæ нымайгæйæ.',
 	'watchlistcontains' => 'Дæ цæст $1 {{PLURAL:$1|фарсмæ|фарсмæ}} дарыс.',
-	'wlnote' => "Дæлæ афæстаг '''$2 сахаты дæргъы''' цы $1 {{PLURAL:$1|ивддзинад|ивддзинады}} æрцыди.",
+	'wlnote' => 'Дæлæ афæстаг \'\'\'$2 сахаты дæргъы\'\'\' цы $1 {{PLURAL:$1|ивддзинад|ивддзинады}} æрцыди.',
 	'wlshowlast' => 'Фæстæг $1 сахаты, $2 боны дæргъы; $3.',
 	'watchlist-options' => 'Цæстдард рæгъы фадæттæ',
 	'watching' => 'Цæстдард фæрсты номхыгъдмæ афтауын...',
@@ -12203,9 +12236,9 @@ $messages['os'] = array(
 	'watchlisttools-edit' => 'Бакæсын æмæ ивын цæстдард рæгъ',
 	'watchlisttools-raw' => 'Ивын цæстдард рæгъы бындуртекст',
 	'wikia-pagetitle' => '$1 — Wikia',
-);
+];
 
-$messages['pa'] = array(
+$messages['pa'] = [
 	'wednesday' => 'ਬੁੱਧਵਾਰ',
 	'wed' => 'ਬੁੱਧ',
 	'welcomecreation' => '== $1 ਜੀ ਆਇਆਂ ਨੂੰ! ==
@@ -12237,9 +12270,9 @@ $messages['pa'] = array(
 	'watchlistedit-raw-added' => '{{PLURAL:$1|1 title was|$1 titles were}} ਸ਼ਾਮਲ:',
 	'watchlistedit-raw-removed' => '{{PLURAL:$1|1 title was|$1 titles were}} ਹਟਾਓ:',
 	'watchlisttools-edit' => 'ਵਾਚਲਿਸਟ ਵੇਖੋ ਤੇ ਸੋਧੋ',
-);
+];
 
-$messages['pag'] = array(
+$messages['pag'] = [
 	'watchthis' => 'Bantayan yan bolong',
 	'whitelistedittext' => 'Nakaukulan mo ya $1 umpian nabalo o nadagdagan ray bolobolong.',
 	'watchthisupload' => 'Bantayan yan bolong',
@@ -12253,9 +12286,9 @@ $messages['pag'] = array(
 	'whatlinkshere-title' => 'Saray bolong ya aka-gawing ed $1',
 	'whatlinkshere-page' => 'Bolong:',
 	'watchlistall2' => 'amin',
-);
+];
 
-$messages['pam'] = array(
+$messages['pam'] = [
 	'wednesday' => 'Mierkulis',
 	'wed' => 'Mie',
 	'wrong_wfQuery_params' => 'E la ustu deng sukad (parameter) king wfQuery()<br />
@@ -12282,15 +12315,15 @@ Melalang ne ing kekang account. E mo kakalingwan alilan deng kekang piniling {{S
 	'watch' => 'Banten',
 	'watchthispage' => 'Banten ya ining bulung',
 	'watchnochange' => 'Alang me-edit kareng kekang babanten ketang panaun a makabili keti.',
-	'watchlist-details' => "{{PLURAL:$1|$1 bulung|$1 bulung}} king kekang watchlist, e la kayabe deng ''talk pages''.",
+	'watchlist-details' => '{{PLURAL:$1|$1 bulung|$1 bulung}} king kekang watchlist, e la kayabe deng \'\'talk pages\'\'.',
 	'wlheader-enotif' => '* Makasalangi (enabled) ing pamipabalu kapamilatan ning e-mail.',
-	'wlheader-showupdated' => "* '''Makapal''' la pangasulat deng bulung a miyalilan manibat aniang tauli mu lang pintalan.",
+	'wlheader-showupdated' => '* \'\'\'Makapal\'\'\' la pangasulat deng bulung a miyalilan manibat aniang tauli mu lang pintalan.',
 	'watchmethod-recent' => 'sisimen/susurian la reng bayung mengayalili para kareng bulung a babanten',
 	'watchmethod-list' => 'susurian la reng bulung a babanten para kareng bayung mengayalili',
 	'watchlistcontains' => 'Atin yang $1 {{PLURAL:$1|a bulung|bulung}} ing kekang tala ring babanten (watchlist).',
-	'wlnote' => "{{PLURAL:$1|Ing makatuki ing tauling|Ding makatuki ring tauling '''$1''' miyalilan}} kilub {{PLURAL:$2|ning tauling metung a oras|ding tauling '''$2''' oras}}.",
+	'wlnote' => '{{PLURAL:$1|Ing makatuki ing tauling|Ding makatuki ring tauling \'\'\'$1\'\'\' miyalilan}} kilub {{PLURAL:$2|ning tauling metung a oras|ding tauling \'\'\'$2\'\'\' oras}}.',
 	'wlshowlast' => 'Pakit la reng tauling $1 oras $2 aldo $3',
-	'watchlist-options' => "Deng maliaring gawan kareng listaan da reng babanten (''watchlist'')",
+	'watchlist-options' => 'Deng maliaring gawan kareng listaan da reng babanten (\'\'watchlist\'\')',
 	'watching' => 'Babanten...',
 	'whatlinkshere' => 'Deng pakasuglung keti',
 	'whatlinkshere-title' => 'Deng bulung a makasuglung king "$1"',
@@ -12315,9 +12348,9 @@ Melalang ne ing kekang account. E mo kakalingwan alilan deng kekang piniling {{S
 	'watchlisttools-view' => 'Lon la reng miyalilan a makaugne kaniti',
 	'watchlisttools-edit' => 'Lon ya ampong i-edit ing tala ding babanten (watchlist)',
 	'watchlisttools-raw' => 'I-edit ya ing e pa metagin a tala ding babanten (raw watchlist)',
-);
+];
 
-$messages['pap'] = array(
+$messages['pap'] = [
 	'wednesday' => 'djarason',
 	'welcomecreation' => '== Bon bini, $1! ==
 Bo kuenta ta trahá.
@@ -12335,16 +12368,16 @@ No lubidá di kambia bo [[Special:Preferences|{{SITENAME}} preferensianan]].',
 	'wlshowlast' => 'Mustra último $1 oranan $2 dianan $3',
 	'whatlinkshere' => 'Kiko ta link aki',
 	'watchlistall2' => 'tur',
-);
+];
 
-$messages['pcd'] = array(
+$messages['pcd'] = [
 	'wednesday' => 'Mérkédi',
 	'wed' => 'Mér',
-	'watchthis' => "Suire l'pache-lo",
+	'watchthis' => 'Suire l\'pache-lo',
 	'watchlist' => 'Em lisse à suire',
 	'watch' => 'Suire',
-	'watchthispage' => "Suire l'pache-lo",
-	'watchlist-details' => "{{PLURAL:$1|$1 pache|$1 paches}} din vote lisse à suire, chés paches éd disqhuchon n'sont poin conptées.",
+	'watchthispage' => 'Suire l\'pache-lo',
+	'watchlist-details' => '{{PLURAL:$1|$1 pache|$1 paches}} din vote lisse à suire, chés paches éd disqhuchon n\'sont poin conptées.',
 	'wlshowlast' => 'Montrer darin $1 eûres $2 jours $3',
 	'watchlist-options' => 'Opchons del lisse à suire',
 	'watching' => 'Suire…',
@@ -12352,7 +12385,7 @@ $messages['pcd'] = array(
 	'whatlinkshere-title' => 'Paches qu\'il ont des loïens aveuc "$1"',
 	'whatlinkshere-page' => 'Pache:',
 	'whatlinkshere-prev' => '{{PLURAL:$1|édvant|édvants $1}}',
-	'whatlinkshere-next' => "{{PLURAL:$1|d'apreu|d'apreu $1}}",
+	'whatlinkshere-next' => '{{PLURAL:$1|d\'apreu|d\'apreu $1}}',
 	'whatlinkshere-links' => '← loïens',
 	'whatlinkshere-hideredirs' => '$1 érdireccions',
 	'whatlinkshere-hidetrans' => 'transclusions éd $1',
@@ -12361,18 +12394,18 @@ $messages['pcd'] = array(
 	'whatlinkshere-filters' => 'Filtes',
 	'watchlistall2' => 'tertous',
 	'watchlisttools-view' => 'Vir chés consécants cangemints',
-	'watchlisttools-edit' => "Vir pi éditer l'lisse à suire",
+	'watchlisttools-edit' => 'Vir pi éditer l\'lisse à suire',
 	'watchlisttools-raw' => 'Éditer eune brute lisse à suire',
-);
+];
 
-$messages['pdc'] = array(
+$messages['pdc'] = [
 	'wednesday' => 'Mittwoch',
 	'wed' => 'Mi',
 	'watchthis' => 'Watsch des Blatt',
 	'watchthisupload' => 'Watsch des Blatt',
 	'withoutinterwiki-submit' => 'Zeig',
 	'watchlist' => 'Mei Watsch-Lischt',
-	'watchlistfor' => "(fer '''$1''')",
+	'watchlistfor' => '(fer \'\'\'$1\'\'\')',
 	'watch' => 'watsche',
 	'watchthispage' => 'watsch des Blatt',
 	'watchlist-details' => '{{PLURAL:$1|$1 Blatt|$1 Bledder}} uff dei Watch-Lischt, ohne Gschwetz-Bledder',
@@ -12389,9 +12422,9 @@ $messages['pdc'] = array(
 	'widthheightpage' => '$1×$2, {{PLURAL:$3|1 Blatt|$3 Bledder}}',
 	'watchlistall2' => 'all',
 	'watchlistedit-normal-title' => 'Watsch-Lischt ennere',
-);
+];
 
-$messages['pdt'] = array(
+$messages['pdt'] = [
 	'wednesday' => 'Medwäakj',
 	'wed' => 'Med',
 	'watchthis' => 'Paus op dise Sied op',
@@ -12404,9 +12437,9 @@ $messages['pdt'] = array(
 	'whatlinkshere-page' => 'Sied:',
 	'whatlinkshere-links' => '← Links',
 	'watchlistall2' => 'aule',
-);
+];
 
-$messages['pfl'] = array(
+$messages['pfl'] = [
 	'watchthis' => 'Die Said beowachde',
 	'watchlist' => 'Beowachdungslischd',
 	'watch' => 'Beowachde',
@@ -12429,13 +12462,13 @@ $messages['pfl'] = array(
 	'watchlisttools-view' => 'Die wichdiche Ännerunge aagucke',
 	'watchlisttools-edit' => 'D Beowachdunglischt aagucke un bearwaide',
 	'watchlisttools-raw' => 'ime große Textfeld bearwaide',
-);
+];
 
-$messages['pih'] = array(
+$messages['pih'] = [
 	'whatlinkshere' => 'Wata link hiia',
-);
+];
 
-$messages['pl'] = array(
+$messages['pl'] = [
 	'wednesday' => 'środa',
 	'wed' => 'Śro',
 	'wrong_wfQuery_params' => 'Nieprawidłowe parametry przekazane do wfQuery()<br />
@@ -12471,11 +12504,11 @@ Nie zapomnij dostosować [[Special:Preferences|preferencji dla {{GRAMMAR:D.lp|{{
 	'watchnochange' => 'Żadna z obserwowanych stron nie była edytowana w podanym okresie.',
 	'watchlist-details' => 'Na liście obserwowanych {{PLURAL:$1|jest 1 strona|są $1 strony|jest $1 stron}}, nie licząc stron dyskusji.',
 	'wlheader-enotif' => '* Wysyłanie powiadomień na adres e‐mail jest włączone.',
-	'wlheader-showupdated' => "* '''Wytłuszczone''' zostały strony, które zostały zmodyfikowane od Twojej ostatniej na nich wizyty.",
+	'wlheader-showupdated' => '* \'\'\'Wytłuszczone\'\'\' zostały strony, które zostały zmodyfikowane od Twojej ostatniej na nich wizyty.',
 	'watchmethod-recent' => 'poszukiwanie ostatnich zmian wśród obserwowanych stron',
 	'watchmethod-list' => 'poszukiwanie obserwowanych stron wśród ostatnich zmian',
 	'watchlistcontains' => 'Na liście obserwowanych przez Ciebie stron {{PLURAL:$1|znajduje się 1 pozycja|znajdują się $1 pozycje|znajduje się $1 pozycji}}.',
-	'wlnote' => "Poniżej pokazano {{PLURAL:$1|ostatnią zmianę wykonaną|ostatnie '''$1''' zmiany wykonane|ostatnich '''$1''' zmian wykonanych}} w ciągu {{PLURAL:$2|ostatniej godziny|ostatnich '''$2''' godzin}}, licząc od $4 dnia $3.",
+	'wlnote' => 'Poniżej pokazano {{PLURAL:$1|ostatnią zmianę wykonaną|ostatnie \'\'\'$1\'\'\' zmiany wykonane|ostatnich \'\'\'$1\'\'\' zmian wykonanych}} w ciągu {{PLURAL:$2|ostatniej godziny|ostatnich \'\'\'$2\'\'\' godzin}}, licząc od $4 dnia $3.',
 	'wlshowlast' => 'Pokaż ostatnie $1 godzin, $2 dni ($3)',
 	'watchlist-options' => 'Opcje obserwowanych',
 	'watching' => 'Dodaję do obserwowanych...',
@@ -12521,7 +12554,7 @@ Możesz także użyć [[Special:EditWatchlist|standardowego edytora obserwowanyc
 	'wt_help_sidebar' => '|Pole widgetów||Kliknij "edytuj", aby zmienić ustawienia widgetów. Widgety możesz zamykać klikając na ikonkę x',
 	'wt_countdown_give_date' => 'Proszę podać datę w formacie RRRR-MM-DD GG:MM:SS (np. 2007-03-28 13:56:00) lub RRRR-MM-DD (np. 2007-02-17) lub GG:MM:SS (17:01:00)',
 	'wt_countdown_show_seconds' => 'Pokazuj sekundy',
-	'widgetwikipage' => "Ten ''tekst'' jest '''prostym''' testem widżeta strona wiki. Możesz '''edytować zawartość widżeta''' [[Mediawiki:$1|edytując stronę]] w przestrzeni MediaWiki.",
+	'widgetwikipage' => 'Ten \'\'tekst\'\' jest \'\'\'prostym\'\'\' testem widżeta strona wiki. Możesz \'\'\'edytować zawartość widżeta\'\'\' [[Mediawiki:$1|edytując stronę]] w przestrzeni MediaWiki.',
 	'widget-wikipage-title' => 'Tytuł widżeta',
 	'widget-wikipage-source' => 'Strona źródłowa',
 	'widget-bookmark-empty' => 'Dodawaj swoje ulubione artykuły klikając na powyższą ikonkę',
@@ -12572,7 +12605,7 @@ Zmień [[Special:Preferences#prefsection-1|swoje preferencje]], aby używać wid
 	'widget-desc-topvoted' => 'Lista najwyżej ocenionych artykułów na tej wiki',
 	'widget-title-watchlist' => 'Obserwowane',
 	'widget-desc-watchlist' => 'Lista obserwowanych stron na tej wiki',
-	'widget-title-wikiamessages' => 'Komunikaty Wikii',
+	'widget-title-wikiamessages' => 'Wiadomości Fandomu',
 	'widget-title-wikiapartners' => 'Nasi partnerzy',
 	'widget-desc-wikiapartners' => 'Nasi partnerzy',
 	'widget-title-wikipage' => 'Strona wiki w widżecie',
@@ -12581,11 +12614,15 @@ Zmień [[Special:Preferences#prefsection-1|swoje preferencje]], aby używać wid
 	'widget_name' => 'Nazwa',
 	'widget_description' => 'Opis',
 	'wikia-pagetitle' => '$1 – Wikia',
-	'wikia-read-only-mode' => 'Ojej! Nasze główne centrum danych jest w tej chwili niedostępne, a to jest nasza kopia zapasowa. Niestety oznacza to, że możesz nie być w stanie wykonać niektórych czynności takich jak edycja, przesyłanie plików lub korzystanie z czatu.
- +Pracujemy właśnie nad rozwiązeniem tego problemu i dziękujemy za cierpliwość! Jeśli ta wiadomość jest widoczna przez dłuższy okres czasu, możesz skontaktować się z Wikią poprzez community@wikia.com.',
-);
+	'wikia-read-only-mode' => 'O nie! Nasze główne centrum danych jest w tej chwili niedostępne, a to jest nasza kopia zapasowa. Niestety oznacza to, że możesz mieć problem przy wykonywaniu niektórych czynności, takich jak edycja, przesyłanie plików lub korzystanie z czatu. 
+Dziękujemy za cierpliwość! Właśnie pracujemy nad rozwiązaniem tego problemu. Jeżeli ta wiadomość jest widoczna przez dłuższy czas, możesz skontaktować się z Fandomem pisząc na adres community@wikia.com.',
+	'widget-desc-wikiamessages' => 'Wiadomości Fandomu',
+	'widget-title-advertiser' => 'Wyróżnione w Fandom',
+	'wikia_messages' => 'Wiadomości Fandomu',
+	'wikicitieshome' => 'Strona główna Fandom',
+];
 
-$messages['pms'] = array(
+$messages['pms'] = [
 	'wednesday' => 'Merco',
 	'wed' => 'Mer',
 	'wrong_wfQuery_params' => 'Paràmetro nen giust për wfQuery()<br />
@@ -12594,48 +12631,48 @@ Arcesta: $2',
 	'welcomecreation' => '==Bin ëvnù, $1!==
 Sò cont a l\'é stàit creà.
 Che as dësmentia pa ëd cambié ij [[Special:Preferences|"sò gust" an {{SITENAME}}]].',
-	'wrongpassword' => "La ciav batùa a l'é pa giusta.<br /><br />Che a preuva torna, për piasì.",
-	'wrongpasswordempty' => "A l'ha butà na ciav veujda. Për piasì, che a preuva torna.",
-	'watchthis' => "Ten sot euj st'artìcol-sì",
+	'wrongpassword' => 'La ciav batùa a l\'é pa giusta.<br /><br />Che a preuva torna, për piasì.',
+	'wrongpasswordempty' => 'A l\'ha butà na ciav veujda. Për piasì, che a preuva torna.',
+	'watchthis' => 'Ten sot euj st\'artìcol-sì',
 	'whitelistedittext' => 'A venta $1 për podèj fé dle modìfiche.',
-	'windows-nonascii-filename' => "Sta wiki-sì a manten pa ij nòm d'archivi con caràter speciaj.",
-	'watchthisupload' => "Ten-e d'euj s'archivi.",
-	'withoutinterwiki' => "Pàgine ch'a l'han gnun-a anliura interwiki",
-	'withoutinterwiki-summary' => "Le pàgine ambelessì-sota a l'han gnun-a anliura a dj'àotre lenghe:",
+	'windows-nonascii-filename' => 'Sta wiki-sì a manten pa ij nòm d\'archivi con caràter speciaj.',
+	'watchthisupload' => 'Ten-e d\'euj s\'archivi.',
+	'withoutinterwiki' => 'Pàgine ch\'a l\'han gnun-a anliura interwiki',
+	'withoutinterwiki-summary' => 'Le pàgine ambelessì-sota a l\'han gnun-a anliura a dj\'àotre lenghe:',
 	'withoutinterwiki-legend' => 'Prefiss',
 	'withoutinterwiki-submit' => 'Smon-e',
 	'wantedcategories' => 'Categorìe dont a fa da manca',
 	'wantedpages' => 'Artìcoj pì ciamà',
-	'wantedpages-badtitle' => "Tìtol nen vàlid ant l'ansema dj'arzultà: $1",
+	'wantedpages-badtitle' => 'Tìtol nen vàlid ant l\'ansema dj\'arzultà: $1',
 	'wantedfiles' => 'Archivi pì ciamà',
-	'wantedfiletext-cat' => "J'archivi ch'a ven-o a son dovrà ma a esisto pa. J'archivi dai sò depòsit estern a peulo esse listà sensa consideré l'esistensa. Chèich fàuss positiv a saran <del>sganfà</del>. An pi, le pàgine ch'a conten-o dj'archivi ch'a esisto pa a son listà an [[:$1]].",
-	'wantedfiletext-nocat' => "J'archivi sì-dapress a son dovrà ma a esisto pa. J'archivi da depòsit estern a peulo esse listà sensa considerene l'esistensa. Tùit costi fàuss positiv a saran <del>ësganfà</del>.",
+	'wantedfiletext-cat' => 'J\'archivi ch\'a ven-o a son dovrà ma a esisto pa. J\'archivi dai sò depòsit estern a peulo esse listà sensa consideré l\'esistensa. Chèich fàuss positiv a saran <del>sganfà</del>. An pi, le pàgine ch\'a conten-o dj\'archivi ch\'a esisto pa a son listà an [[:$1]].',
+	'wantedfiletext-nocat' => 'J\'archivi sì-dapress a son dovrà ma a esisto pa. J\'archivi da depòsit estern a peulo esse listà sensa considerene l\'esistensa. Tùit costi fàuss positiv a saran <del>ësganfà</del>.',
 	'wantedtemplates' => 'Stamp ciamà',
 	'watchlist' => 'Ròba che im ten-o sot-euj',
 	'watchlistfor2' => 'Për $1 $2',
-	'watchlistanontext' => "Për piasì, $1 për ës-ciairé ò pura modifiché j'element ëd soa lista dla ròba che as ten sot-euj.",
-	'watchnologin' => "A l'é ancó nen rintrà ant ël sistema",
-	'watchnologintext' => "A l'ha da manca prima ëd tut ëd [[Special:UserLogin|rintré ant ël sistema]]
-për podèj modifiché soa lista dla ròba dë tnì sot-euj.",
+	'watchlistanontext' => 'Për piasì, $1 për ës-ciairé ò pura modifiché j\'element ëd soa lista dla ròba che as ten sot-euj.',
+	'watchnologin' => 'A l\'é ancó nen rintrà ant ël sistema',
+	'watchnologintext' => 'A l\'ha da manca prima ëd tut ëd [[Special:UserLogin|rintré ant ël sistema]]
+për podèj modifiché soa lista dla ròba dë tnì sot-euj.',
 	'watch' => 'ten-e sot-euj',
 	'watchthispage' => 'Ten-e sot-euj cost artìcol-sì',
-	'watchnochange' => "Gnun-a dle ròbe che as ten sot-euj a l'é staita modificà ant ël periòd ësmonù.",
-	'watchlist-details' => "A l'é dëmentrè ch'as ten sot-euj {{PLURAL:$1|$1 pàgina|$1 pàgine}}, nen contand cole ëd discussion.",
+	'watchnochange' => 'Gnun-a dle ròbe che as ten sot-euj a l\'é staita modificà ant ël periòd ësmonù.',
+	'watchlist-details' => 'A l\'é dëmentrè ch\'as ten sot-euj {{PLURAL:$1|$1 pàgina|$1 pàgine}}, nen contand cole ëd discussion.',
 	'wlheader-enotif' => '* Le notìfiche për pòsta eletrònica a son abilità.',
-	'wlheader-showupdated' => "* Cole pàgine che a son ëstàite modificà da quand che a l'é passaje ansima l'ùltima vira a resto marcà an '''grassèt'''",
-	'watchmethod-recent' => "contròl a j'ùltime modìfiche fàite a le pàgine che as ten sot-euj",
+	'wlheader-showupdated' => '* Cole pàgine che a son ëstàite modificà da quand che a l\'é passaje ansima l\'ùltima vira a resto marcà an \'\'\'grassèt\'\'\'',
+	'watchmethod-recent' => 'contròl a j\'ùltime modìfiche fàite a le pàgine che as ten sot-euj',
 	'watchmethod-list' => 'contròl ëd le pàgine che as ten sot-euj për vëdde se a-i sio staje dle modìfiche recente',
-	'watchlistcontains' => "Soa lista dla ròba ch'as ten sot-euj a l'ha andrinta {{PLURAL:$1|na pàgina|$1 pàgine}}.",
-	'wlnote' => "Ambelessì sota a-i {{PLURAL:$1|é l'ùltima modìfica|son j'ùltime '''$1''' modìfiche}} ant {{PLURAL:$2|l'ùltima ora|j'ùltime '''$2''' ore}}, a parte da $3, $4.",
-	'wlshowlast' => "Smon-e j'ùltime $1 ore $2 dì $3",
-	'watchlist-options' => "Opsion ëd la lista dla ròba ch'as ten sot-euj",
+	'watchlistcontains' => 'Soa lista dla ròba ch\'as ten sot-euj a l\'ha andrinta {{PLURAL:$1|na pàgina|$1 pàgine}}.',
+	'wlnote' => 'Ambelessì sota a-i {{PLURAL:$1|é l\'ùltima modìfica|son j\'ùltime \'\'\'$1\'\'\' modìfiche}} ant {{PLURAL:$2|l\'ùltima ora|j\'ùltime \'\'\'$2\'\'\' ore}}, a parte da $3, $4.',
+	'wlshowlast' => 'Smon-e j\'ùltime $1 ore $2 dì $3',
+	'watchlist-options' => 'Opsion ëd la lista dla ròba ch\'as ten sot-euj',
 	'watching' => 'Sot-euj...',
-	'watcherrortext' => "A l'é capitaje n'eror durant la modìfica ëd j'ampostassion ëd lòn ch'as ten sot-euj për «$1».",
-	'whatlinkshere' => "Pàgine con dj'anliure che a men-o a costa-sì",
-	'whatlinkshere-title' => "Pàgine ch'a men-o a «$1»",
+	'watcherrortext' => 'A l\'é capitaje n\'eror durant la modìfica ëd j\'ampostassion ëd lòn ch\'as ten sot-euj për «$1».',
+	'whatlinkshere' => 'Pàgine con dj\'anliure che a men-o a costa-sì',
+	'whatlinkshere-title' => 'Pàgine ch\'a men-o a «$1»',
 	'whatlinkshere-page' => 'Pàgina:',
-	'whatlinkshere-prev' => "{{PLURAL:$1|d'un andré|andré ëd $1}}",
-	'whatlinkshere-next' => "{{PLURAL:$1|d'un anans|anans ëd $1}}",
+	'whatlinkshere-prev' => '{{PLURAL:$1|d\'un andré|andré ëd $1}}',
+	'whatlinkshere-next' => '{{PLURAL:$1|d\'un anans|anans ëd $1}}',
 	'whatlinkshere-links' => '← anliure',
 	'whatlinkshere-hideredirs' => '$1 le ridiression',
 	'whatlinkshere-hidetrans' => '$1 anclusion',
@@ -12644,29 +12681,29 @@ për podèj modifiché soa lista dla ròba dë tnì sot-euj.",
 	'whatlinkshere-filters' => 'Filtr',
 	'widthheightpage' => '$1 × $2, $3 {{PLURAL:$3|pàgina|pàgine}}',
 	'watchlistall2' => 'tute',
-	'watchlistedit-numitems' => "A l'é antramentr ch'a ten sot ëuj {{PLURAL:$1|1 tìtol|$1 tìtoj}}, nen contand le pàgine ëd discussion.",
-	'watchlistedit-noitems' => "A-i é pa gnun tìtol ch'as ten-a sot euj.",
-	'watchlistedit-normal-title' => "Modifiché la lista ëd lòn ch'as ten sot euj",
-	'watchlistedit-normal-legend' => "Gavé via ij tìtoj da 'nt la lista ëd lòn ch'as ten sot euj",
-	'watchlistedit-normal-explain' => "Ij tìtoj ch'a ten sot euj a son ësmonù ambelessì-sota. Për gavene via un ch'a-i fasa la crosëtta ant la casela ch'a l'ha aranda, e peuj ch'ai bata ansima a «{{int:Watchlistedit-normal-submit}}». As peul ëdcò [[Special:EditWatchlist/raw|modifiché la lista ampressa]].",
+	'watchlistedit-numitems' => 'A l\'é antramentr ch\'a ten sot ëuj {{PLURAL:$1|1 tìtol|$1 tìtoj}}, nen contand le pàgine ëd discussion.',
+	'watchlistedit-noitems' => 'A-i é pa gnun tìtol ch\'as ten-a sot euj.',
+	'watchlistedit-normal-title' => 'Modifiché la lista ëd lòn ch\'as ten sot euj',
+	'watchlistedit-normal-legend' => 'Gavé via ij tìtoj da \'nt la lista ëd lòn ch\'as ten sot euj',
+	'watchlistedit-normal-explain' => 'Ij tìtoj ch\'a ten sot euj a son ësmonù ambelessì-sota. Për gavene via un ch\'a-i fasa la crosëtta ant la casela ch\'a l\'ha aranda, e peuj ch\'ai bata ansima a «{{int:Watchlistedit-normal-submit}}». As peul ëdcò [[Special:EditWatchlist/raw|modifiché la lista ampressa]].',
 	'watchlistedit-normal-submit' => 'Gavé via ij tìtoj',
-	'watchlistedit-normal-done' => "{{PLURAL:$1|1 tìtol a l'é|$1 tìtoj a son}} stait gavà via da 'nt la lista ëd lòn ch'as ten sot euj:",
-	'watchlistedit-raw-title' => "Modifiché ampressa la lista ëd lòn ch'as ten sot euj",
-	'watchlistedit-raw-legend' => "Modifiché ampressa la lista ëd lòn ch'as ten sot euj",
-	'watchlistedit-raw-explain' => "Ij tìtoj ch'a l'é antramentr ch'as ten sot euj a son ambelessì-sota, e a peulo modifichesse ën giontand-ne e gavand-ne via da 'nt la lista; un tìtol për riga.
-Quand a l'ha finì, ch'a-i bata ansima a \"{{int:Watchlistedit-raw-submit}}\".
-As peul ëdcò [[Special:EditWatchlist|dovré l'editor sòlit]].",
+	'watchlistedit-normal-done' => '{{PLURAL:$1|1 tìtol a l\'é|$1 tìtoj a son}} stait gavà via da \'nt la lista ëd lòn ch\'as ten sot euj:',
+	'watchlistedit-raw-title' => 'Modifiché ampressa la lista ëd lòn ch\'as ten sot euj',
+	'watchlistedit-raw-legend' => 'Modifiché ampressa la lista ëd lòn ch\'as ten sot euj',
+	'watchlistedit-raw-explain' => 'Ij tìtoj ch\'a l\'é antramentr ch\'as ten sot euj a son ambelessì-sota, e a peulo modifichesse ën giontand-ne e gavand-ne via da \'nt la lista; un tìtol për riga.
+Quand a l\'ha finì, ch\'a-i bata ansima a "{{int:Watchlistedit-raw-submit}}".
+As peul ëdcò [[Special:EditWatchlist|dovré l\'editor sòlit]].',
 	'watchlistedit-raw-titles' => 'Tìtoj:',
 	'watchlistedit-raw-submit' => 'Agiorné la Lista',
-	'watchlistedit-raw-done' => "La lista ëd lòn ch'as ten sot euj a l'é staita agiornà.",
-	'watchlistedit-raw-added' => "A {{PLURAL:$1|l'é|son}} giontasse {{PLURAL:$1|1 tìtol|$1 tìtoj}}:",
-	'watchlistedit-raw-removed' => "A {{PLURAL:$1|l'é|son}} gavasse via {{PLURAL:$1|1 tìtol|$1 tìtoj}}:",
+	'watchlistedit-raw-done' => 'La lista ëd lòn ch\'as ten sot euj a l\'é staita agiornà.',
+	'watchlistedit-raw-added' => 'A {{PLURAL:$1|l\'é|son}} giontasse {{PLURAL:$1|1 tìtol|$1 tìtoj}}:',
+	'watchlistedit-raw-removed' => 'A {{PLURAL:$1|l\'é|son}} gavasse via {{PLURAL:$1|1 tìtol|$1 tìtoj}}:',
 	'watchlisttools-view' => 'S-ciairé le modifiché amportante',
-	'watchlisttools-edit' => "Vardé e modifiché la lista ëd lòn ch'as ten sot euj",
-	'watchlisttools-raw' => "Modifiché ampressa la lista ëd lòn ch'as ten sot euj",
-);
+	'watchlisttools-edit' => 'Vardé e modifiché la lista ëd lòn ch\'as ten sot euj',
+	'watchlisttools-raw' => 'Modifiché ampressa la lista ëd lòn ch\'as ten sot euj',
+];
 
-$messages['pnb'] = array(
+$messages['pnb'] = [
 	'wednesday' => 'بدھ',
 	'wed' => 'بدھ',
 	'wrong_wfQuery_params' => 'غلط پیرامیٹرز وفکویریدے()<br />
@@ -12708,7 +12745,7 @@ $messages['pnb'] = array(
 	'watchmethod-recent' => 'نیڑے ہویاں تبدیلیاں چائیدے صفیاں دیاں ویکھے جان والے صفیاں لئی۔',
 	'watchmethod-list' => 'ویکھے کے صفے نیڑے ہون والیاں تبدیلیاں دی پڑتال',
 	'watchlistcontains' => 'تھواڈی اکھ تھلے رکھی لسٹ چ $1 {{PLURAL:$1|صفہ|صفے}}  نیں۔',
-	'wlnote' => "تھلے {{PLURAL:\$1|آخری تبدیلی|آخری تبدیلیاں '''1\$''' }} آخر تے {{PLURAL:\$2|کینٹہ|'''2\$''' کینٹے}} 3\$، 4\$.",
+	'wlnote' => 'تھلے {{PLURAL:$1|آخری تبدیلی|آخری تبدیلیاں \'\'\'1$\'\'\' }} آخر تے {{PLURAL:$2|کینٹہ|\'\'\'2$\'\'\' کینٹے}} 3$، 4$.',
 	'wlshowlast' => 'آخری $1 گھنٹے $2 دن $3 وکھاؤ',
 	'watchlist-options' => 'نظر تھلے رکھن دیاں راہواں',
 	'watching' => 'نظر تھلے۔۔۔۔',
@@ -12750,35 +12787,35 @@ $messages['pnb'] = array(
 	'watchlisttools-view' => 'ملدیاں ہوئیاں تبدیلیاں ویکھو',
 	'watchlisttools-edit' => 'اکھ تھلے رکھے ہوۓ صفحیاں نوں ویکھو تے تبدیل کرو',
 	'watchlisttools-raw' => 'کچی اکھ تھلے رکھی ہوئی نو تبدیل کرو',
-);
+];
 
-$messages['pnt'] = array(
+$messages['pnt'] = [
 	'wednesday' => 'Τετάρτ',
 	'wed' => 'Τετ',
-	'welcomecreation' => "== Καλώς έρθετεν, $1! ==
+	'welcomecreation' => '== Καλώς έρθετεν, $1! ==
 Η λογαρίαν εσουν εγέντον.
-Τ' άλλαγμαν τη [[Special:Preferences|{{SITENAME}} προτιμησίων]] εσουν μη νεσπάλετε.",
-	'wrongpassword' => "Το σημάδιν 'κ εν σωστόν.
-Ποισέστεν άλλο γράσεμαν.",
+Τ\' άλλαγμαν τη [[Special:Preferences|{{SITENAME}} προτιμησίων]] εσουν μη νεσπάλετε.',
+	'wrongpassword' => 'Το σημάδιν \'κ εν σωστόν.
+Ποισέστεν άλλο γράσεμαν.',
 	'wrongpasswordempty' => 'Το σημάδιν έτον εύκαιρον.
 Ποισέστεν άλλο γράσεμαν.',
 	'watchthis' => 'Ωρίαγμαν τη σελίδας',
-	'whitelistedittext' => "Πρέπ να $1 για ν' επορείτε ν' επεξεργάσκεστε τα σελίδας.",
+	'whitelistedittext' => 'Πρέπ να $1 για ν\' επορείτε ν\' επεξεργάσκεστε τα σελίδας.',
 	'watchthisupload' => 'Ωρίαγμαν τη αρχείου',
-	'withoutinterwiki' => "Σελίδας ντο κ' έχνε συνδέσμ",
+	'withoutinterwiki' => 'Σελίδας ντο κ\' έχνε συνδέσμ',
 	'withoutinterwiki-legend' => 'Προθέκεμαν',
 	'withoutinterwiki-submit' => 'Δείξον',
 	'wantedcategories' => 'Κατηγορίας το θέλουμε',
 	'wantedpages' => 'Σελίδας το θέλουμε',
-	'watchlist' => "Σελίδας ντ' ωριάζω",
-	'watchnologin' => "'Κ είστουν συνδεμένος",
+	'watchlist' => 'Σελίδας ντ\' ωριάζω',
+	'watchnologin' => '\'Κ είστουν συνδεμένος',
 	'watch' => 'Ωρίαγμαν',
 	'watchthispage' => 'Ωρίαν τη σελίδαν',
 	'watchlist-details' => '{{PLURAL:$1|$1 σελίδα|$1 σελίδας}} ωριάσκουνταν, θέγα τα σελίδας καλατσεματί.',
-	'wlshowlast' => "Φανέρωμαν τ' υστερναίων $1 ωρίων $2 ημερίων $3",
+	'wlshowlast' => 'Φανέρωμαν τ\' υστερναίων $1 ωρίων $2 ημερίων $3',
 	'watchlist-options' => 'Επιλογάς ωριαγματί',
 	'watching' => 'Ωριάζω...',
-	'whatlinkshere' => "Ντο δεκνίζ' αδακές",
+	'whatlinkshere' => 'Ντο δεκνίζ\' αδακές',
 	'whatlinkshere-title' => 'Σελίδας ντο συνδέουν ση σελίδαν $1',
 	'whatlinkshere-page' => 'Σελίδαν:',
 	'whatlinkshere-prev' => '{{PLURAL:$1|προτεσνή|προτεσνά $1}}',
@@ -12795,9 +12832,9 @@ $messages['pnt'] = array(
 	'watchlisttools-view' => 'Τερέστεν σοβαρά αλλαγάς',
 	'watchlisttools-edit' => 'Τέρεν κι άλλαξον κατάλογον ωρίαγματι',
 	'watchlisttools-raw' => 'Επεξεργαστείτε την πρωτογενή τη λίσταν ωριαγματί',
-);
+];
 
-$messages['prg'] = array(
+$messages['prg'] = [
 	'wednesday' => 'pussisawaiti',
 	'wed' => 'Pus',
 	'wrong_wfQuery_params' => 'Nitikrōmiskai parāmeterei perlaīstan wfQuery()<br />
@@ -12829,11 +12866,11 @@ Ni izmīrstais kitawīdintun Twajjans [[Special:Preferences|pirminiskwans per {{
 	'watchnochange' => 'Niaīnan iz nadirītans pāusans ni bēi redigītan en padātan kērdasetrapan.',
 	'watchlist-details' => 'Ast {{PLURAL:$1|$1 pāusan|$1 pāusai}} en twajjai listin stēisan nadirītan, ni gīrbawintei diskusiōnis pāusans.',
 	'wlheader-enotif' => '* E-mail pawakīsenei ast enklaūtan.',
-	'wlheader-showupdated' => "* Pastāi '''pastarīntan''' pāusai,  kawīdai bēi kitawīdintan ezze Twajjai panzdauman tenēisan kāimalukisnan..",
+	'wlheader-showupdated' => '* Pastāi \'\'\'pastarīntan\'\'\' pāusai,  kawīdai bēi kitawīdintan ezze Twajjai panzdauman tenēisan kāimalukisnan..',
 	'watchmethod-recent' => 'Izbandasnā stēisan panzdauman kitawīdisnan sirzdau nadirītans pāusans',
 	'watchmethod-list' => 'Izbandasnā stēisan nadirītan pāusan laukīntei panzdaumans kitawīdisnans',
 	'watchlistcontains' => 'En twajjai listin stēisan nadirītan ast $1 {{PLURAL:$1|pāusan|pāusai}}.',
-	'wlnote' => "Zemmais pawaidinnā di {{PLURAL:$1|panzdauman kitawīdinsnan|panzdaumans '''$1''' kitawīdinsnans}} en {{PLURAL:$2|panzdauman stundin|'''$2''' panzdaumans stundins}}.",
+	'wlnote' => 'Zemmais pawaidinnā di {{PLURAL:$1|panzdauman kitawīdinsnan|panzdaumans \'\'\'$1\'\'\' kitawīdinsnans}} en {{PLURAL:$2|panzdauman stundin|\'\'\'$2\'\'\' panzdaumans stundins}}.',
 	'wlshowlast' => 'Waidinnais panzdaumans $1 stūndins, $2 dēinans ($3)',
 	'watchlist-options' => 'Nadirītan listis mazīngiskwas',
 	'watching' => 'As nadirēi...',
@@ -12873,9 +12910,9 @@ Tu mazzi dīgi [[Special:EditWatchlist|tērpautun stāndardiskan editōran]].',
 	'watchlisttools-view' => 'Waidinnais kitawīdinsnans en listin stēisan nadirītan',
 	'watchlisttools-edit' => 'Wīdais be redigīs listin stēisan nadirītan',
 	'watchlisttools-raw' => 'Redigīs listis appun sen tekstas ēnrankin',
-);
+];
 
-$messages['ps'] = array(
+$messages['ps'] = [
 	'wednesday' => 'شورو',
 	'wed' => 'شورو',
 	'welcomecreation' => '==$1 ښه راغلاست! ==
@@ -12902,7 +12939,7 @@ $messages['ps'] = array(
 	'watchthispage' => 'همدا مخ کتل',
 	'watchlist-details' => 'ستاسې کتنلړ کې {{PLURAL:$1|$1 مخ دی|$1 مخونه دي}}، د خبرو اترو مخونه مو پکې نه دي شمېرلي.',
 	'wlheader-enotif' => 'د برېښليک له لارې خبرول چارن شوی.*',
-	'wlheader-showupdated' => "* هغه مخونه چې وروستی ځل ستاسو د کتلو نه وروسته بدلون موندلی په '''روڼ''' ليک نښه شوي.",
+	'wlheader-showupdated' => '* هغه مخونه چې وروستی ځل ستاسو د کتلو نه وروسته بدلون موندلی په \'\'\'روڼ\'\'\' ليک نښه شوي.',
 	'watchlistcontains' => 'ستاسې کتنلړ $1 {{PLURAL:$1|مخ|مخونه}} لري.',
 	'wlshowlast' => 'وروستي $1 ساعتونه $2 ورځې $3 ښکاره کړه',
 	'watchlist-options' => 'د کتنلړ خوښنې',
@@ -12935,9 +12972,9 @@ $messages['ps'] = array(
 	'watchlisttools-view' => 'اړونده بدلونونه کتل',
 	'watchlisttools-edit' => 'کتنلړ ليدل او سمول',
 	'watchlisttools-raw' => 'خام کتنلړ سمول',
-);
+];
 
-$messages['pt'] = array(
+$messages['pt'] = [
 	'wednesday' => 'Quarta-feira',
 	'wed' => 'Qua',
 	'wrong_wfQuery_params' => 'Parâmetros incorrectos para wfQuery()<br />
@@ -12971,11 +13008,11 @@ Não se esqueça de personalizar as suas [[Special:Preferences|preferências na 
 	'watchnochange' => 'Nenhuma das páginas vigiadas foi editada no período apresentado.',
 	'watchlist-details' => '{{PLURAL:$1|Existe $1 página|Existem $1 páginas}} na sua lista de páginas vigiadas, excluindo páginas de discussão.',
 	'wlheader-enotif' => '* A notificação por correio electrónico está activada.',
-	'wlheader-showupdated' => "* As páginas modificadas desde a última vez que as visitou aparecem destacadas a '''negrito'''",
+	'wlheader-showupdated' => '* As páginas modificadas desde a última vez que as visitou aparecem destacadas a \'\'\'negrito\'\'\'',
 	'watchmethod-recent' => 'a procurar páginas vigiadas nas mudanças recentes',
 	'watchmethod-list' => 'a procurar mudanças recentes nas páginas vigiadas',
 	'watchlistcontains' => 'A sua lista de páginas vigiadas contém $1 {{PLURAL:$1|página|páginas}}.',
-	'wlnote' => "A seguir {{PLURAL:$1|está a última alteração ocorrida|estão as últimas '''$1''' alterações ocorridas}} {{PLURAL:$2|na última hora|nas últimas '''$2''' horas}} até $3, $4.",
+	'wlnote' => 'A seguir {{PLURAL:$1|está a última alteração ocorrida|estão as últimas \'\'\'$1\'\'\' alterações ocorridas}} {{PLURAL:$2|na última hora|nas últimas \'\'\'$2\'\'\' horas}} até $3, $4.',
 	'wlshowlast' => 'Ver últimas $1 horas $2 dias $3',
 	'watchlist-options' => 'Opções da lista de páginas vigiadas',
 	'watching' => 'A vigiar...',
@@ -13016,11 +13053,16 @@ Também pode [[Special:EditWatchlist|editar a lista da maneira convencional]].',
 	'watchlisttools-view' => 'Ver alterações relevantes',
 	'watchlisttools-edit' => 'Ver e editar a lista de páginas vigiadas',
 	'watchlisttools-raw' => 'Editar a lista de páginas vigiadas em forma de texto',
-	'wikia-read-only-mode' => 'Nosso centro de dados principal está indisponível, então este é o nosso backup. Infelizmente, isto significa que talvez você não possa fazer certas coisas como editar, carregar ou entrar no chat.
- + Estamos trabalhando para corrigir o problema, obrigado por sua paciência! Se isso demorar muito, entre em contato com a Wikia na community@wikia.com.',
-);
+	'wikia-read-only-mode' => 'Ops! Nosso centro de dados principal está indisponível, então este é o nosso backup. Infelizmente, isto significa que talvez você não possa fazer certas coisas como editar, carregar ou entrar no chat.
+Estamos trabalhando para corrigir o problema, obrigado por sua paciência! Se isso demorar muito, entre em contato com o Fandom em comunidade@wikia.com.',
+	'widget-desc-wikiamessages' => 'Mensagens do Fandom',
+	'widget-title-advertiser' => 'Fandom Spotlight',
+	'widget-title-wikiamessages' => 'Mensagens do Fandom',
+	'wikia_messages' => 'Mensagens do Fandom',
+	'wikicitieshome' => 'Página inicial do Fandom',
+];
 
-$messages['pt-br'] = array(
+$messages['pt-br'] = [
 	'wednesday' => 'quarta-feira',
 	'wed' => 'qua',
 	'wrong_wfQuery_params' => 'Parâmetros incorretos para wfQuery()<br />
@@ -13057,11 +13099,11 @@ Tente novamente.',
 	'watchnochange' => 'Nenhuma das páginas vigiadas foi editada no período exibido.',
 	'watchlist-details' => '{{PLURAL:$1|$1 página|$1 páginas}} na sua lista de páginas vigiadas, excluindo páginas de discussão.',
 	'wlheader-enotif' => '* A notificação por email encontra-se ativada.',
-	'wlheader-showupdated' => "* As páginas modificadas desde a sua última visita são mostradas em '''negrito'''",
+	'wlheader-showupdated' => '* As páginas modificadas desde a sua última visita são mostradas em \'\'\'negrito\'\'\'',
 	'watchmethod-recent' => 'verificando edições recentes para as páginas vigiadas',
 	'watchmethod-list' => 'verificando páginas vigiadas para edições recentes',
 	'watchlistcontains' => 'Sua lista de páginas vigiadas contém $1 {{PLURAL:$1|página|páginas}}.',
-	'wlnote' => "A seguir {{PLURAL:$1|está a última alteração ocorrida|estão as últimas '''$1''' alterações ocorridas}} {{PLURAL:$2|na última hora|nas últimas '''$2''' horas}} a partir de $3, $4.",
+	'wlnote' => 'A seguir {{PLURAL:$1|está a última alteração ocorrida|estão as últimas \'\'\'$1\'\'\' alterações ocorridas}} {{PLURAL:$2|na última hora|nas últimas \'\'\'$2\'\'\' horas}} a partir de $3, $4.',
 	'wlshowlast' => 'Ver últimas $1 horas $2 dias $3',
 	'watchlist-options' => 'Opções da lista de páginas vigiadas',
 	'watching' => 'Vigiando...',
@@ -13101,9 +13143,9 @@ Você também pode [[Special:EditWatchlist|editar a lista da maneira convenciona
 	'watchlisttools-view' => 'Ver alterações relevantes',
 	'watchlisttools-edit' => 'Ver e editar a lista de páginas vigiadas',
 	'watchlisttools-raw' => 'Edição crua da lista de páginas vigiadas',
-);
+];
 
-$messages['qu'] = array(
+$messages['qu'] = [
 	'wednesday' => 'Quyllurchaw',
 	'wed' => 'Quy',
 	'wrong_wfQuery_params' => 'Kaypa pantasqa kuskanachina tupunkuna: wfQuery()<br />
@@ -13115,73 +13157,73 @@ Ama qunqaychu [[Special:Preferences|{{SITENAME}} allinkachinaykikunata]] kikinch
 	'wrongpassword' => 'Qillqamusqayki yaykuna rimaqa manam allinchu. Huk kutita ruraykachay.',
 	'wrongpasswordempty' => 'Yaykuna rimaykita qillqamuyta qunqarqunkim, huk kutita ruraykachay.',
 	'watchthis' => 'Kay qillqata watiqay',
-	'whitelistedittext' => "$1ta ruranaykim tiyan qillqakunata llamk'apunaykipaq.",
-	'windows-nonascii-filename' => "Kay wikiqa sapaq sananchayuq willañiqi sutikunata manam q'iminchu.",
+	'whitelistedittext' => '$1ta ruranaykim tiyan qillqakunata llamk\'apunaykipaq.',
+	'windows-nonascii-filename' => 'Kay wikiqa sapaq sananchayuq willañiqi sutikunata manam q\'iminchu.',
 	'watchthisupload' => 'Kay willañiqita watiqay',
-	'withoutinterwiki' => "Interwiki t'inkinnaq p'anqakuna",
-	'withoutinterwiki-summary' => "Kay p'anqakunaqa manam huk rimaykunapi p'anqakunaman t'inkinchu:",
-	'withoutinterwiki-legend' => "Ñawpaq k'askaq",
+	'withoutinterwiki' => 'Interwiki t\'inkinnaq p\'anqakuna',
+	'withoutinterwiki-summary' => 'Kay p\'anqakunaqa manam huk rimaykunapi p\'anqakunaman t\'inkinchu:',
+	'withoutinterwiki-legend' => 'Ñawpaq k\'askaq',
 	'withoutinterwiki-submit' => 'Rikuchiy',
 	'wantedcategories' => 'Muchusqa katiguriyakuna',
-	'wantedpages' => "Muchusqa p'anqakuna",
-	'wantedpages-badtitle' => "Mana allin p'anqa suti kay taripay tawqapi: $1",
+	'wantedpages' => 'Muchusqa p\'anqakuna',
+	'wantedpages-badtitle' => 'Mana allin p\'anqa suti kay taripay tawqapi: $1',
 	'wantedfiles' => 'Munakusqa willañiqikuna',
-	'wantedfiletext-cat' => "Kay qatiq willañiqikunaqa llamk'achisqa kaspapas manam kanchu. Hawa qullqapi kaq willañiqikunaqa kaspapas manachá rikuchisqa kanmanchu. Ima kay hina pantasqa kaqkunapas <del>tachasqam</del> kanqa. Ñataq, mana kaq willañiqita khakaq willañiqikunam [[:$1]] nisqapi rikuna kachkan.",
-	'wantedfiletext-nocat' => "Kay qatiq willañiqikunaqa llamk'achisqa kaspapas manam kanchu. Hawa qullqapi kaq willañiqikunaqa kaspapas manachá rikuchisqa kanmanchu. Ima kay hina pantasqa kaqkunapas <del>tachasqam</del> kanqa.",
+	'wantedfiletext-cat' => 'Kay qatiq willañiqikunaqa llamk\'achisqa kaspapas manam kanchu. Hawa qullqapi kaq willañiqikunaqa kaspapas manachá rikuchisqa kanmanchu. Ima kay hina pantasqa kaqkunapas <del>tachasqam</del> kanqa. Ñataq, mana kaq willañiqita khakaq willañiqikunam [[:$1]] nisqapi rikuna kachkan.',
+	'wantedfiletext-nocat' => 'Kay qatiq willañiqikunaqa llamk\'achisqa kaspapas manam kanchu. Hawa qullqapi kaq willañiqikunaqa kaspapas manachá rikuchisqa kanmanchu. Ima kay hina pantasqa kaqkunapas <del>tachasqam</del> kanqa.',
 	'wantedtemplates' => 'Munakusqa plantillakuna',
-	'watchlist' => "Watiqasqa p'anqakuna",
+	'watchlist' => 'Watiqasqa p\'anqakuna',
 	'watchlistfor2' => '$1-paq $2',
 	'watchlistanontext' => 'Ama hina kaspa, $1 watiqana sutisuyuykipi imakunatapas qhawanaykipaq icha hukchanaykipaq.',
 	'watchnologin' => 'Manam yaykurqankichu',
 	'watchnologintext' => '[[Special:UserLogin|Yaykunaykim]] tiyan watiqana sutisuyuykita hukchanaykipaq.',
 	'watch' => 'Watiqay',
-	'watchthispage' => "Kay p'anqata watiqay",
-	'watchnochange' => "Manam ima watiqasqayki qillqapas llamk'apusqachu karqan rikuchisqa mit'api.",
-	'watchlist-details' => "Watiqana sutisuyuykipiqa {{PLURAL:$1|huk p'anqam|$1 p'anqakunam}}, rimanakuna p'anqakunata mana yupaspa.",
+	'watchthispage' => 'Kay p\'anqata watiqay',
+	'watchnochange' => 'Manam ima watiqasqayki qillqapas llamk\'apusqachu karqan rikuchisqa mit\'api.',
+	'watchlist-details' => 'Watiqana sutisuyuykipiqa {{PLURAL:$1|huk p\'anqam|$1 p\'anqakunam}}, rimanakuna p\'anqakunata mana yupaspa.',
 	'wlheader-enotif' => '* E-chaskimanta musyachinaman arí nisqañam.',
-	'wlheader-showupdated' => "* Qayna watukamusqaykimantapacha hukchasqa p'anqakunataqa '''yanasapa''' nisqapim rikunki.",
-	'watchmethod-recent' => "watiqasqayki p'anqakunapaq ñaqha hukchasqakunata llanchispa",
-	'watchmethod-list' => "watiqasqayki p'anqakunata ñaqha hukchasqakunapaq llanchispa",
-	'watchlistcontains' => "Watiqana sutisuyuykipiqa $1 {{PLURAL:$1|p'anqam|p'anqakunam}} kachkan.",
-	'wlnote' => "Kay qatiqpiqa {{PLURAL:$1|qhipaq hukchasqam|'''$1''' qhipaq hukchasqakunam}} qhipaq {{PLURAL:$2|urapim|'''$2''' urakunapim}}, musuqchasqa $3, $4.",
-	'wlshowlast' => "$1 ura, $2 p'unchaw $3-mantapacha hukchasqakunata rikuchiy",
+	'wlheader-showupdated' => '* Qayna watukamusqaykimantapacha hukchasqa p\'anqakunataqa \'\'\'yanasapa\'\'\' nisqapim rikunki.',
+	'watchmethod-recent' => 'watiqasqayki p\'anqakunapaq ñaqha hukchasqakunata llanchispa',
+	'watchmethod-list' => 'watiqasqayki p\'anqakunata ñaqha hukchasqakunapaq llanchispa',
+	'watchlistcontains' => 'Watiqana sutisuyuykipiqa $1 {{PLURAL:$1|p\'anqam|p\'anqakunam}} kachkan.',
+	'wlnote' => 'Kay qatiqpiqa {{PLURAL:$1|qhipaq hukchasqam|\'\'\'$1\'\'\' qhipaq hukchasqakunam}} qhipaq {{PLURAL:$2|urapim|\'\'\'$2\'\'\' urakunapim}}, musuqchasqa $3, $4.',
+	'wlshowlast' => '$1 ura, $2 p\'unchaw $3-mantapacha hukchasqakunata rikuchiy',
 	'watchlist-options' => 'Watiqana sutisuyupaq allinkachinakuna',
 	'watching' => 'Watiqasqakunaman yapaspa...',
 	'watcherrortext' => '"$1"-paq watiqana sutisuyup kachkayninta hukchaptiyki pantasqam tukurqan.',
-	'whatlinkshere' => "Kayman t'inkimuq",
-	'whatlinkshere-title' => "$1 sutiyuq p'anqaman t'inkimuqkuna",
-	'whatlinkshere-page' => "P'anqa:",
+	'whatlinkshere' => 'Kayman t\'inkimuq',
+	'whatlinkshere-title' => '$1 sutiyuq p\'anqaman t\'inkimuqkuna',
+	'whatlinkshere-page' => 'P\'anqa:',
 	'whatlinkshere-prev' => '{{PLURAL:$1|ñawpaq|$1 ñawpaq}}',
 	'whatlinkshere-next' => '{{PLURAL:$1|qatiq|$1 qatiq}}',
-	'whatlinkshere-links' => "← t'inkikuna",
+	'whatlinkshere-links' => '← t\'inkikuna',
 	'whatlinkshere-hideredirs' => '$1 pusapunakuna',
-	'whatlinkshere-hidetrans' => "$1 plantilla ch'aqtanakuna",
-	'whatlinkshere-hidelinks' => "$1 t'inkikuna",
-	'whatlinkshere-hideimages' => "$1 rikcha t'inkikuna",
-	'whatlinkshere-filters' => "Ch'illchinakuna",
-	'widthheightpage' => "$1 × $2, $3 {{PLURAL:$3|p'anqa|p'anqakuna}}",
+	'whatlinkshere-hidetrans' => '$1 plantilla ch\'aqtanakuna',
+	'whatlinkshere-hidelinks' => '$1 t\'inkikuna',
+	'whatlinkshere-hideimages' => '$1 rikcha t\'inkikuna',
+	'whatlinkshere-filters' => 'Ch\'illchinakuna',
+	'widthheightpage' => '$1 × $2, $3 {{PLURAL:$3|p\'anqa|p\'anqakuna}}',
 	'watchlistall2' => 'lliw',
-	'watchlistedit-numitems' => "Watiqana sutisuyuykiqa {{PLURAL:$1|huk p'anqayuqmi|$1 p'anqayuqmi}} kachkan, rimanakuy p'anqakunata mana yupaptinchik.",
-	'watchlistedit-noitems' => "Manam ima p'anqatapas watiqachkankichu.",
-	'watchlistedit-normal-title' => "Watiqana sutisuyuta llamk'apuy",
-	'watchlistedit-normal-legend' => "P'anqa sutikunata watiqana sutisuyumanta qichuy",
-	'watchlistedit-normal-explain' => "Kay qatiqpiqa watiqana sutisuyuykipi p'anqa sutikunatam rikunki. P'anqa sutita qichunaykipaqqa chay sutip kinrayninpi kaq k'itichata ñit'iywan sananchaspa \"{{int:Watchlistedit-normal-submit}}\" nisqata ñit'iy. [[Special:EditWatchlist/raw|Chawa watiqana sutisuyuta llamk'apuy]] nisqata ñit'iytapas atinkim.",
-	'watchlistedit-normal-submit' => "P'anqa sutikunata qichuy",
+	'watchlistedit-numitems' => 'Watiqana sutisuyuykiqa {{PLURAL:$1|huk p\'anqayuqmi|$1 p\'anqayuqmi}} kachkan, rimanakuy p\'anqakunata mana yupaptinchik.',
+	'watchlistedit-noitems' => 'Manam ima p\'anqatapas watiqachkankichu.',
+	'watchlistedit-normal-title' => 'Watiqana sutisuyuta llamk\'apuy',
+	'watchlistedit-normal-legend' => 'P\'anqa sutikunata watiqana sutisuyumanta qichuy',
+	'watchlistedit-normal-explain' => 'Kay qatiqpiqa watiqana sutisuyuykipi p\'anqa sutikunatam rikunki. P\'anqa sutita qichunaykipaqqa chay sutip kinrayninpi kaq k\'itichata ñit\'iywan sananchaspa "{{int:Watchlistedit-normal-submit}}" nisqata ñit\'iy. [[Special:EditWatchlist/raw|Chawa watiqana sutisuyuta llamk\'apuy]] nisqata ñit\'iytapas atinkim.',
+	'watchlistedit-normal-submit' => 'P\'anqa sutikunata qichuy',
 	'watchlistedit-normal-done' => '{{PLURAL:$1|1 página ha sido borrada|$1 páginas han sido borradas}} de tu lista de seguimiento:',
-	'watchlistedit-raw-title' => "Chawa watiqana sutisuyuta llamk'apuy",
-	'watchlistedit-raw-legend' => "Chawa watiqana sutisuyuta llamk'apuy",
-	'watchlistedit-raw-explain' => "Kay qatiqpiqa watiqana sutisuyuykipi p'anqa sutikunatam rikunki. Sutisuyuta llamk'apuytam atinki sutikunata yapaspa icha qichuspa, huk sutim sapa siq'iman. Tukuspaykiqa, \"{{int:Watchlistedit-raw-submit}}\" nisqata ñit'iy. [[Special:EditWatchlist|Sapsi llamk'apunaykitapas]] llamk'achiytam atinki.",
-	'watchlistedit-raw-titles' => "P'anqakuna:",
+	'watchlistedit-raw-title' => 'Chawa watiqana sutisuyuta llamk\'apuy',
+	'watchlistedit-raw-legend' => 'Chawa watiqana sutisuyuta llamk\'apuy',
+	'watchlistedit-raw-explain' => 'Kay qatiqpiqa watiqana sutisuyuykipi p\'anqa sutikunatam rikunki. Sutisuyuta llamk\'apuytam atinki sutikunata yapaspa icha qichuspa, huk sutim sapa siq\'iman. Tukuspaykiqa, "{{int:Watchlistedit-raw-submit}}" nisqata ñit\'iy. [[Special:EditWatchlist|Sapsi llamk\'apunaykitapas]] llamk\'achiytam atinki.',
+	'watchlistedit-raw-titles' => 'P\'anqakuna:',
 	'watchlistedit-raw-submit' => 'Watiqana sutisuyuta musuqchay',
 	'watchlistedit-raw-done' => 'Watiqana sutisuyuykiqa musuqchasqañam.',
-	'watchlistedit-raw-added' => "{{PLURAL:$1|Huk yapasqa p'anqa suti|$1 yapasqa p'anqa sutikuna}}:",
-	'watchlistedit-raw-removed' => "{{PLURAL:$1|Huk qichusqa p'anqa suti|$1 qichusqa p'anqa sutikuna}}:",
+	'watchlistedit-raw-added' => '{{PLURAL:$1|Huk yapasqa p\'anqa suti|$1 yapasqa p\'anqa sutikuna}}:',
+	'watchlistedit-raw-removed' => '{{PLURAL:$1|Huk qichusqa p\'anqa suti|$1 qichusqa p\'anqa sutikuna}}:',
 	'watchlisttools-view' => 'Hukchasqakunata qhaway',
-	'watchlisttools-edit' => "Watiqana sutisuyuta qhawaspa llamk'apuy",
-	'watchlisttools-raw' => "Chawa watiqana sutisuyuta llamk'apuy",
-);
+	'watchlisttools-edit' => 'Watiqana sutisuyuta qhawaspa llamk\'apuy',
+	'watchlisttools-raw' => 'Chawa watiqana sutisuyuta llamk\'apuy',
+];
 
-$messages['qug'] = array(
+$messages['qug'] = [
 	'wednesday' => 'Haway',
 	'wed' => 'Mie',
 	'watchthis' => 'Kay pankata rikukuna',
@@ -13208,36 +13250,36 @@ $messages['qug'] = array(
 	'watchlisttools-view' => 'Mushuk killkaykunata rikuna',
 	'watchlisttools-edit' => 'Rikukushka pankakunata rikuna, shukchinapash',
 	'watchlisttools-raw' => 'Mana yanapawan rikukushka pankakunata akllapay',
-);
+];
 
-$messages['rgn'] = array(
+$messages['rgn'] = [
 	'wednesday' => 'Mircual',
 	'wed' => 'Mir',
-	'watchthis' => "Tèn d'öcc 'sta pàgina què",
-	'watchlist' => "Pàgin ch'a ten d'öcc",
-	'watch' => "Tèn d'öcc",
-	'watchthispage' => "Ten d'öcc sta pagina",
-	'watchlist-details' => "J è, int la lèsta dal pàgin da tnì d'öcc, {{PLURAL:$1|$1 pàgina|$1 pàgin}}, senza cuntê al pàgin d'cunversaziòn.",
-	'wlshowlast' => "Fam avdé agl'ultum $1 ör $2 dè $3",
-	'watchlist-options' => "Scielt int la lèsta d'pàgin da tnì d'öcc",
-	'watching' => "Mêt insèn al pàgin da t'nì d'öcc...",
-	'whatlinkshere' => "Pagin ch'j è atachedi a questa",
+	'watchthis' => 'Tèn d\'öcc \'sta pàgina què',
+	'watchlist' => 'Pàgin ch\'a ten d\'öcc',
+	'watch' => 'Tèn d\'öcc',
+	'watchthispage' => 'Ten d\'öcc sta pagina',
+	'watchlist-details' => 'J è, int la lèsta dal pàgin da tnì d\'öcc, {{PLURAL:$1|$1 pàgina|$1 pàgin}}, senza cuntê al pàgin d\'cunversaziòn.',
+	'wlshowlast' => 'Fam avdé agl\'ultum $1 ör $2 dè $3',
+	'watchlist-options' => 'Scielt int la lèsta d\'pàgin da tnì d\'öcc',
+	'watching' => 'Mêt insèn al pàgin da t\'nì d\'öcc...',
+	'whatlinkshere' => 'Pagin ch\'j è atachedi a questa',
 	'whatlinkshere-title' => 'Pagin atachédi a "$1"',
 	'whatlinkshere-page' => 'Pàgina:',
 	'whatlinkshere-prev' => '{{PLURAL:$1|quel prèma|i $1 prèma}}',
 	'whatlinkshere-next' => '{{PLURAL:$1|quel dòp|i $1 dòp}}',
 	'whatlinkshere-links' => '← culegamént',
-	'whatlinkshere-hideredirs' => "$1 u t' rmanda",
+	'whatlinkshere-hideredirs' => '$1 u t\' rmanda',
 	'whatlinkshere-hidetrans' => '$1 inclusiòn',
 	'whatlinkshere-hidelinks' => '$1 culegamént',
 	'whatlinkshere-filters' => 'Filtar',
 	'watchlistall2' => 'tòt',
 	'watchlisttools-view' => 'Fam avdè al mudèfich impurtènti',
-	'watchlisttools-edit' => "Guèrda e mudèfica la lèsta d'pàgin da tnì d'öcc",
-	'watchlisttools-raw' => "Mudèfiga la lèsta - scrètta - dal pàgin da tnì d'öcc",
-);
+	'watchlisttools-edit' => 'Guèrda e mudèfica la lèsta d\'pàgin da tnì d\'öcc',
+	'watchlisttools-raw' => 'Mudèfiga la lèsta - scrètta - dal pàgin da tnì d\'öcc',
+];
 
-$messages['rif'] = array(
+$messages['rif'] = [
 	'wed' => 'Akras',
 	'wrongpassword' => 'Taguri n wadaf war tceni ca. Sideff tenni nican.',
 	'wrongpasswordempty' => 'Taguri n wadaf i tucid texwa. Sideff tenni nican.',
@@ -13264,9 +13306,9 @@ $messages['rif'] = array(
 	'watchlisttools-view' => 'Sicen ibeddilen i ssaɣan ɣar wayawya',
 	'watchlisttools-edit' => 'Ẓar d tẓṛegd Tabdart uḥṭṭu',
 	'watchlisttools-raw' => 'Ẓṛeg Tabdart uḥṭṭu tamenzut',
-);
+];
 
-$messages['rm'] = array(
+$messages['rm'] = [
 	'wednesday' => 'mesemna',
 	'wed' => 'mes',
 	'wrong_wfQuery_params' => 'Parameters fauss per wfQuery()<br />
@@ -13275,13 +13317,13 @@ Query: $2',
 	'welcomecreation' => '==Bainvegni, $1! ==
 Tes conto è vegni creà.
 Betg emblida da midar tias [[Special:Preferences|preferenzas da {{SITENAME}}]].',
-	'wrongpassword' => "Quai n'era betg il pled-clav correct. Prova anc ina giada.",
+	'wrongpassword' => 'Quai n\'era betg il pled-clav correct. Prova anc ina giada.',
 	'wrongpasswordempty' => 'Ti as emblidà da scriver tes pled-clav. Prova anc ina giada.',
 	'watchthis' => 'Observar quest artitgel',
 	'whitelistedittext' => 'Ti stos $1 per pudair modifitgar paginas.',
 	'watchthisupload' => 'Observar questa datoteca',
 	'withoutinterwiki' => 'Artitgels senza colliaziuns ad autras linguas',
-	'withoutinterwiki-summary' => "Suandantas paginas n'han naginas colliaziuns a versiuns d'autras linguas.",
+	'withoutinterwiki-summary' => 'Suandantas paginas n\'han naginas colliaziuns a versiuns d\'autras linguas.',
 	'withoutinterwiki-legend' => 'Prefix',
 	'withoutinterwiki-submit' => 'Mussar',
 	'wantedcategories' => 'Categorias giavischadas',
@@ -13289,23 +13331,23 @@ Betg emblida da midar tias [[Special:Preferences|preferenzas da {{SITENAME}}]].'
 	'wantedpages-badtitle' => 'Titel nunvalid en il resultat: $1',
 	'wantedfiles' => 'Datotecas giavischadas',
 	'wantedtemplates' => 'Models giavischads',
-	'watchlist' => "Mia glista d'observaziun",
+	'watchlist' => 'Mia glista d\'observaziun',
 	'watchlistfor2' => 'Per $1 $2',
-	'watchlistanontext' => "Ti stos $1 per vesair u modifitgar elements sin tia glista d'observaziun",
-	'watchnologin' => "Ti n'es betg t'annunzià!",
-	'watchnologintext' => "Ti stos [[Special:UserLogin|t'annunziar]] per midar tia glista d'observaziun.",
+	'watchlistanontext' => 'Ti stos $1 per vesair u modifitgar elements sin tia glista d\'observaziun',
+	'watchnologin' => 'Ti n\'es betg t\'annunzià!',
+	'watchnologintext' => 'Ti stos [[Special:UserLogin|t\'annunziar]] per midar tia glista d\'observaziun.',
 	'watch' => 'Observar',
 	'watchthispage' => 'Observar questa pagina!',
 	'watchnochange' => 'Nagin dals artitgels che ti observeschas è vegnì midà durant la perioda da temp inditgada.',
-	'watchlist-details' => "{{PLURAL:$1|Ina pagina|$1 paginas}} èn sin tia glista d'observaziun (senza dumbrar las paginas da discussiun).",
-	'wlheader-enotif' => "* Il servetsch d'infurmaziun per e-mail è activà.",
-	'wlheader-showupdated' => "* Artitgels ch'èn vegnids midads suenter che ti has vis els la davosa giada èn mussads '''grass'''",
-	'watchmethod-recent' => "intercurir las davosas midadas per la glista d'observaziun",
+	'watchlist-details' => '{{PLURAL:$1|Ina pagina|$1 paginas}} èn sin tia glista d\'observaziun (senza dumbrar las paginas da discussiun).',
+	'wlheader-enotif' => '* Il servetsch d\'infurmaziun per e-mail è activà.',
+	'wlheader-showupdated' => '* Artitgels ch\'èn vegnids midads suenter che ti has vis els la davosa giada èn mussads \'\'\'grass\'\'\'',
+	'watchmethod-recent' => 'intercurir las davosas midadas per la glista d\'observaziun',
 	'watchmethod-list' => 'intercurir las paginas observadas davart novas midadas',
-	'watchlistcontains' => "Tia glista d'observaziun cuntegna $1 {{PLURAL:$1|pagina|paginas}}.",
-	'wlnote' => "Sutvart {{PLURAL:$1|è l'ultima midada|èn las ultimas '''$1''' midadas}} entaifer {{PLURAL:$2|l'ultima ura|las ultimas '''$2''' uras}}.",
+	'watchlistcontains' => 'Tia glista d\'observaziun cuntegna $1 {{PLURAL:$1|pagina|paginas}}.',
+	'wlnote' => 'Sutvart {{PLURAL:$1|è l\'ultima midada|èn las ultimas \'\'\'$1\'\'\' midadas}} entaifer {{PLURAL:$2|l\'ultima ura|las ultimas \'\'\'$2\'\'\' uras}}.',
 	'wlshowlast' => 'Mussar: las ultimas $1 uras, ils ultims $2 dis u $3.',
-	'watchlist-options' => "Opziuns per la glista d'observaziun",
+	'watchlist-options' => 'Opziuns per la glista d\'observaziun',
 	'watching' => 'observ...',
 	'watcherrortext' => 'Ina errur è capitada durant midar tia configuraziun da tia glista d\'observaziun per "$1".',
 	'whatlinkshere' => 'Colliaziuns sin questa pagina',
@@ -13321,31 +13363,31 @@ Betg emblida da midar tias [[Special:Preferences|preferenzas da {{SITENAME}}]].'
 	'whatlinkshere-filters' => 'Filters',
 	'widthheightpage' => '$1 × $2, $3 {{PLURAL:$3|pagina|paginas}}',
 	'watchlistall2' => 'tut',
-	'watchlistedit-numitems' => "Tia glista d'observaziun cuntegna {{PLURAL:$1|1 endataziun|$1 endataziuns}}; las paginas da discussiun na vegnan betg dumbradas.",
-	'watchlistedit-noitems' => "Tia glista d'observaziun na cuntegna naginas endataziuns.",
-	'watchlistedit-normal-title' => "Modifitgar la glista d'observaziun",
-	'watchlistedit-normal-legend' => "Allontanar da la glista d'observaziun",
+	'watchlistedit-numitems' => 'Tia glista d\'observaziun cuntegna {{PLURAL:$1|1 endataziun|$1 endataziuns}}; las paginas da discussiun na vegnan betg dumbradas.',
+	'watchlistedit-noitems' => 'Tia glista d\'observaziun na cuntegna naginas endataziuns.',
+	'watchlistedit-normal-title' => 'Modifitgar la glista d\'observaziun',
+	'watchlistedit-normal-legend' => 'Allontanar da la glista d\'observaziun',
 	'watchlistedit-normal-explain' => 'Las endataziuns da tia glista d\'observaziun èn mussadas sutvart.
 Per allontanar ina endataziun, tscherna il quadert dasperas e clicca sin "{{int:Watchlistedit-normal-submit}}".
 Ti pos era modifitgar tia glista d\'observaziun en il [[Special:EditWatchlist/raw|format da glistas]].',
 	'watchlistedit-normal-submit' => 'Allontanar endataziuns',
-	'watchlistedit-normal-done' => "{{PLURAL:$1|1 endataziun è vegnida|$1 endataziuns èn vegnidas}} allontanadas da la glista d'observaziun:",
-	'watchlistedit-raw-title' => "Modifitgar la glista d'observaziun en il format da la glista",
-	'watchlistedit-raw-legend' => "Modifitgar la glista d'observaziun en il format da la glista",
+	'watchlistedit-normal-done' => '{{PLURAL:$1|1 endataziun è vegnida|$1 endataziuns èn vegnidas}} allontanadas da la glista d\'observaziun:',
+	'watchlistedit-raw-title' => 'Modifitgar la glista d\'observaziun en il format da la glista',
+	'watchlistedit-raw-legend' => 'Modifitgar la glista d\'observaziun en il format da la glista',
 	'watchlistedit-raw-explain' => 'Quai èn las endataziuns da tia glista d\'observaziun en il format da glista. Ti pos agiuntar ed allontanar endataziuns da la glista. Fa dentant attenziun che ti pos be inditgar ina endataziun per lingia.
 Sche ti has terminà tia lavur, clicca sin "{{int:Watchlistedit-raw-submit}}".
 Ti pos era utilisar [[Special:EditWatchlist|la pagina da standard]].',
 	'watchlistedit-raw-titles' => 'Endataziuns:',
-	'watchlistedit-raw-submit' => "Actualisar la glista d'observaziun",
-	'watchlistedit-raw-done' => "Tia glista d'observaziun è vegnida actualisada.",
+	'watchlistedit-raw-submit' => 'Actualisar la glista d\'observaziun',
+	'watchlistedit-raw-done' => 'Tia glista d\'observaziun è vegnida actualisada.',
 	'watchlistedit-raw-added' => '{{PLURAL:$1|1 endataziun è vegnida agiuntada|$1 endataziuns èn vegnidas agiuntadas}}:',
 	'watchlistedit-raw-removed' => '{{PLURAL:$1|1 endataziun è vegnida allontanada|$1 endataziuns èn vegnidas allontanadas}}:',
 	'watchlisttools-view' => 'Mussar las midadas relevantas',
-	'watchlisttools-edit' => "Mussar e modifitgar la glista d'observaziun",
+	'watchlisttools-edit' => 'Mussar e modifitgar la glista d\'observaziun',
 	'watchlisttools-raw' => 'Modifitgar il format da la glista (import/export)',
-);
+];
 
-$messages['rmy'] = array(
+$messages['rmy'] = [
 	'wednesday' => 'tetradī',
 	'wrong_wfQuery_params' => 'Doshalo gin le parametrengo ko wfQuery()<br />I function: $1<br />Query: $2',
 	'welcomecreation' => '== Mishto avilyan, $1! ==
@@ -13360,9 +13402,9 @@ Akana si tuke ekh akont. Te na bistares te paruves, kana trebul tuke, tire kamim
 	'wlnote' => 'Tele si le palutne $1 paruvimata ande palutne <b>$2</b> ore.',
 	'whatlinkshere' => 'So phandel pes kathe',
 	'watchlistall2' => 'savore',
-);
+];
 
-$messages['ro'] = array(
+$messages['ro'] = [
 	'wednesday' => 'miercuri',
 	'wed' => 'mie',
 	'wrong_wfQuery_params' => 'Număr incorect de parametri pentru wfQuery()<br />
@@ -13398,11 +13440,11 @@ Contul dumneavoatră a fost creat. Nu uitați să vă personalizați [[Special:P
 	'watchnochange' => 'Nici una dintre paginile pe care le urmăriți nu a fost modificată în perioada de timp afișată.',
 	'watchlist-details' => '{{PLURAL:$1|O pagină|$1 pagini urmărite|$1 de pagini urmărite}}, excluzând paginile de discuție.',
 	'wlheader-enotif' => '*Notificarea email este activată',
-	'wlheader-showupdated' => "* Paginile care au fost modificate după ultima dumneavoastră vizită sunt afișate '''îngroșat'''",
+	'wlheader-showupdated' => '* Paginile care au fost modificate după ultima dumneavoastră vizită sunt afișate \'\'\'îngroșat\'\'\'',
 	'watchmethod-recent' => 'căutarea schimbărilor recente pentru paginile urmărite',
 	'watchmethod-list' => 'căutarea paginilor urmărite pentru schimbări recente',
 	'watchlistcontains' => 'Lista de pagini urmărite conține $1 {{PLURAL:$1|element|elemente|de elemente}}.',
-	'wlnote' => "Mai jos se află {{PLURAL:$1|ultima schimbare|ultimele $1 schimbări|ultimele $1 de schimbări}} din {{PLURAL:$2|ultima oră|ultimele '''$2''' ore|ultimele '''$2''' de ore}}, așa cum era situația la $3, $4.",
+	'wlnote' => 'Mai jos se află {{PLURAL:$1|ultima schimbare|ultimele $1 schimbări|ultimele $1 de schimbări}} din {{PLURAL:$2|ultima oră|ultimele \'\'\'$2\'\'\' ore|ultimele \'\'\'$2\'\'\' de ore}}, așa cum era situația la $3, $4.',
 	'wlshowlast' => 'Arată ultimele $1 ore $2 zile $3',
 	'watchlist-options' => 'Opțiuni listă de pagini urmărite',
 	'watching' => 'Se urmărește...',
@@ -13443,9 +13485,9 @@ Puteți folosi în schimb [[Special:EditWatchlist|editorul standard]].',
 	'watchlisttools-view' => 'Vizualizează schimbările relevante',
 	'watchlisttools-edit' => 'Vezi și modifică lista paginilor urmărite',
 	'watchlisttools-raw' => 'Modifică lista brută a paginilor urmărite',
-);
+];
 
-$messages['roa-rup'] = array(
+$messages['roa-rup'] = [
 	'wednesday' => 'Njercure',
 	'welcomecreation' => '== Ghine vinish, $1 ==
 
@@ -13458,21 +13500,21 @@ Isape a vostrã ira adratã. Nu agãrshits s-le alãxits alidzerle-a vostre ti {
 	'watch' => 'Videts',
 	'watchthispage' => 'Mutrits-u frãndzã aistã',
 	'whatlinkshere' => 'Tsi s-leadze cu aistu',
-);
+];
 
-$messages['roa-tara'] = array(
+$messages['roa-tara'] = [
 	'wednesday' => 'Mercrudìe',
 	'wed' => 'Mer',
-	'wrong_wfQuery_params' => "Parametre incorrette sus 'a wfQuery()<br />
+	'wrong_wfQuery_params' => 'Parametre incorrette sus \'a wfQuery()<br />
 Function: $1<br />
-Query: $2",
-	'welcomecreation' => "== Bovegne, $1! ==
-'U cunde tue ha state ccrejete.
-No te sce scurdanne de cangià le [[Special:Preferences|{{SITENAME}} preferenze tue]].",
-	'wrongpassword' => "E mise 'na passuor sbagliete.
-Prueve n'otra vote.",
-	'wrongpasswordempty' => "'A passuord 'nzerite jè vianghe.
-Mitta n'otra vota.",
+Query: $2',
+	'welcomecreation' => '== Bovegne, $1! ==
+\'U cunde tue ha state ccrejete.
+No te sce scurdanne de cangià le [[Special:Preferences|{{SITENAME}} preferenze tue]].',
+	'wrongpassword' => 'E mise \'na passuor sbagliete.
+Prueve n\'otra vote.',
+	'wrongpasswordempty' => '\'A passuord \'nzerite jè vianghe.
+Mitta n\'otra vota.',
 	'watchthis' => 'Condrolle sta pàgene',
 	'whitelistedittext' => 'Tu ha $1 pàggene da cangià.',
 	'windows-nonascii-filename' => 'Sta Uicchi non ge supporte le nome de le file cu le carattere speciale.',
@@ -13483,7 +13525,7 @@ Mitta n'otra vota.",
 	'withoutinterwiki-submit' => 'Fà vedè',
 	'wantedcategories' => 'Categorije cerchete',
 	'wantedpages' => 'Pàggene cchiù cerchete',
-	'wantedpages-badtitle' => "Titele invalide in mmienze a l'inzieme de le resultate: $1",
+	'wantedpages-badtitle' => 'Titele invalide in mmienze a l\'inzieme de le resultate: $1',
 	'wantedfiles' => 'File cchiù cerchete',
 	'wantedtemplates' => 'Template cchiù ausete',
 	'watchlist' => 'Pàggene condrollete',
@@ -13493,18 +13535,18 @@ Mitta n'otra vota.",
 	'watchnologintext' => 'Tu a essere [[Special:UserLogin|colleghete]] pe cangià le pàggene condrollete tue.',
 	'watch' => 'Condrolle',
 	'watchthispage' => 'Condrolle sta pàgene',
-	'watchnochange' => "Niscune de le vôsce condrollete onne state cangete jndr'à 'u periode visualizzate.",
-	'watchlist-details' => "{{PLURAL:$1|$1 pàgene|$1 pàggene}} jndr'à liste de le pàggene condrollete, scartanne le pàggene de le 'ngazzaminde.",
-	'wlheader-enotif' => "* 'A notifiche de le e-mail notification jè abbilitete.",
-	'wlheader-showupdated' => "* Le pàggene ca onne cangete da quanne tu l'è visitate sonde visualizzate in '''grascette'''",
+	'watchnochange' => 'Niscune de le vôsce condrollete onne state cangete jndr\'à \'u periode visualizzate.',
+	'watchlist-details' => '{{PLURAL:$1|$1 pàgene|$1 pàggene}} jndr\'à liste de le pàggene condrollete, scartanne le pàggene de le \'ngazzaminde.',
+	'wlheader-enotif' => '* \'A notifiche de le e-mail notification jè abbilitete.',
+	'wlheader-showupdated' => '* Le pàggene ca onne cangete da quanne tu l\'è visitate sonde visualizzate in \'\'\'grascette\'\'\'',
 	'watchmethod-recent' => 'verifiche de le cangiaminde recende pe le pàggene condrollete',
 	'watchmethod-list' => 'stoche a condrolle le pàggene condrollete pe le urteme cangiaminde',
-	'watchlistcontains' => "'A liste de le pàggene condrollete toje condene $1 {{PLURAL:$1|pàgene|pàggene}}.",
-	'wlnote' => "Aqquà sotte {{PLURAL:$1|ste l'urteme cangiamende|stonne l'urteme '''$1''' cangiaminde}} jndr'à {{PLURAL:$2|l'urtema ore|l'urteme '''$2''' ore}}, jndr'à $3, $4.",
-	'wlshowlast' => "Vide l'urteme $1 ore $2 sciurne $3",
-	'watchlist-options' => "Opzione d'a liste de le pàggene condrollete",
+	'watchlistcontains' => '\'A liste de le pàggene condrollete toje condene $1 {{PLURAL:$1|pàgene|pàggene}}.',
+	'wlnote' => 'Aqquà sotte {{PLURAL:$1|ste l\'urteme cangiamende|stonne l\'urteme \'\'\'$1\'\'\' cangiaminde}} jndr\'à {{PLURAL:$2|l\'urtema ore|l\'urteme \'\'\'$2\'\'\' ore}}, jndr\'à $3, $4.',
+	'wlshowlast' => 'Vide l\'urteme $1 ore $2 sciurne $3',
+	'watchlist-options' => 'Opzione d\'a liste de le pàggene condrollete',
 	'watching' => 'Fà vedè...',
-	'watcherrortext' => "'N'errore s'a verificate quanne ste cangiave le 'mbostaziune de le pàggene condrollate pe \"\$1\".",
+	'watcherrortext' => '\'N\'errore s\'a verificate quanne ste cangiave le \'mbostaziune de le pàggene condrollate pe "$1".',
 	'whatlinkshere' => 'Appondene aqquà',
 	'whatlinkshere-title' => 'Pàggene ca appondene a "$1"',
 	'whatlinkshere-page' => 'Pàgene:',
@@ -13520,32 +13562,32 @@ Mitta n'otra vota.",
 	'widthheightpage' => '$1 × $2, $3 {{PLURAL:$3|pàgene|pàggene}}',
 	'watchlistall2' => 'tutte',
 	'word-separator' => '&#32;',
-	'watchlistedit-numitems' => "'A liste de le pàggene condrollate tène {{PLURAL:$1|1 titele|$1 titele}}, 'scudenne le pàggne de le 'ngazzaminde.",
-	'watchlistedit-noitems' => "'A lista de le pàggene condrollete toja no tène 'na vosce.",
+	'watchlistedit-numitems' => '\'A liste de le pàggene condrollate tène {{PLURAL:$1|1 titele|$1 titele}}, \'scudenne le pàggne de le \'ngazzaminde.',
+	'watchlistedit-noitems' => '\'A lista de le pàggene condrollete toja no tène \'na vosce.',
 	'watchlistedit-normal-title' => 'Vide le pàggene condrollete',
-	'watchlistedit-normal-legend' => "Live le titele da 'a liste de le pàggene condrollete",
-	'watchlistedit-normal-explain' => "Le titele sus a 'a liste de le pàggene condrollate avènene fatte vedè aqquà sotte. <br />
-Pe luà 'nu titele, smarche 'a sckatele affianghe a jidde e cazze \"{{int:Watchlistedit-normal-submit}}\".<br />
-Tu puè pure [[Special:EditWatchlist/raw|cangià 'a liste a mane]].",
+	'watchlistedit-normal-legend' => 'Live le titele da \'a liste de le pàggene condrollete',
+	'watchlistedit-normal-explain' => 'Le titele sus a \'a liste de le pàggene condrollate avènene fatte vedè aqquà sotte. <br />
+Pe luà \'nu titele, smarche \'a sckatele affianghe a jidde e cazze "{{int:Watchlistedit-normal-submit}}".<br />
+Tu puè pure [[Special:EditWatchlist/raw|cangià \'a liste a mane]].',
 	'watchlistedit-normal-submit' => 'Live le titele',
-	'watchlistedit-normal-done' => "{{PLURAL:$1|1 titele ha state|$1 titele onne state}} scangellete da 'a liste de le pàggene condrollete toje:",
-	'watchlistedit-raw-title' => "Cange 'a liste de le pàggene condrollete grezze",
-	'watchlistedit-raw-legend' => "Cange 'a liste de le pàggene condrollete grezze",
-	'watchlistedit-raw-explain' => "Le titele sus a liste de le pàggene condrollate avènene fatte vedè aqquà sotte e ponne essere cangiate aggiunggenne o luannele da 'a liste; <br />
-'nu titele pe linèe.<br />
-Quanne è spicciate, cazze sus a \"{{int:Watchlistedit-raw-submit}}\".<br />
-Tu puè pure [[Special:EditWatchlist|ausà 'u cangiatore standàrd]].",
+	'watchlistedit-normal-done' => '{{PLURAL:$1|1 titele ha state|$1 titele onne state}} scangellete da \'a liste de le pàggene condrollete toje:',
+	'watchlistedit-raw-title' => 'Cange \'a liste de le pàggene condrollete grezze',
+	'watchlistedit-raw-legend' => 'Cange \'a liste de le pàggene condrollete grezze',
+	'watchlistedit-raw-explain' => 'Le titele sus a liste de le pàggene condrollate avènene fatte vedè aqquà sotte e ponne essere cangiate aggiunggenne o luannele da \'a liste; <br />
+\'nu titele pe linèe.<br />
+Quanne è spicciate, cazze sus a "{{int:Watchlistedit-raw-submit}}".<br />
+Tu puè pure [[Special:EditWatchlist|ausà \'u cangiatore standàrd]].',
 	'watchlistedit-raw-titles' => 'Titele:',
-	'watchlistedit-raw-submit' => "Aggiorne 'a liste de le pàggene condrollete",
-	'watchlistedit-raw-done' => "'A liste de le pàggene condrollete ha state aggiornete.",
-	'watchlistedit-raw-added' => "{{PLURAL:$1|'nu titele ha|$1 titele onne}} state aggiunde:",
-	'watchlistedit-raw-removed' => "{{PLURAL:$1|'nu titele ha|$1 titele onne}} state scangillete:",
-	'watchlisttools-view' => "Vide le cangiaminde 'mbortande",
+	'watchlistedit-raw-submit' => 'Aggiorne \'a liste de le pàggene condrollete',
+	'watchlistedit-raw-done' => '\'A liste de le pàggene condrollete ha state aggiornete.',
+	'watchlistedit-raw-added' => '{{PLURAL:$1|\'nu titele ha|$1 titele onne}} state aggiunde:',
+	'watchlistedit-raw-removed' => '{{PLURAL:$1|\'nu titele ha|$1 titele onne}} state scangillete:',
+	'watchlisttools-view' => 'Vide le cangiaminde \'mbortande',
 	'watchlisttools-edit' => 'Vide e cange le pàggene condrollete',
 	'watchlisttools-raw' => 'Cange le pàggene condrollete grezze grezze',
-);
+];
 
-$messages['ru'] = array(
+$messages['ru'] = [
 	'wednesday' => 'среда',
 	'wed' => 'Ср',
 	'wrong_wfQuery_params' => 'Недопустимые параметры для функции wfQuery()<br />
@@ -13581,11 +13623,11 @@ $messages['ru'] = array(
 	'watchnochange' => 'За этот период ни одна страница из списка наблюдения не менялась.',
 	'watchlist-details' => 'В вашем списке наблюдения $1 {{PLURAL:$1|страница|страницы|страниц}}, не считая страниц обсуждения.',
 	'wlheader-enotif' => '* Уведомление по эл. почте включено.',
-	'wlheader-showupdated' => "* Страницы, изменившиеся с вашего последнего их посещения, выделены '''жирным''' шрифтом.",
+	'wlheader-showupdated' => '* Страницы, изменившиеся с вашего последнего их посещения, выделены \'\'\'жирным\'\'\' шрифтом.',
 	'watchmethod-recent' => 'просмотр последних изменений для наблюдаемых страниц',
 	'watchmethod-list' => 'просмотр наблюдаемых страниц для последних изменений',
 	'watchlistcontains' => 'Ваш список наблюдения содержит $1 {{PLURAL:$1|страница|страницы|страниц}}.',
-	'wlnote' => "Ниже {{PLURAL:$1|показано последнее $1 изменение|показаны последние $1 изменения|показаны последние $1 изменений}} за {{PLURAL:$2|последний|последние|последние}} '''$2''' {{plural:$2|час|часа|часов}}, на момент времени $3 $4.",
+	'wlnote' => 'Ниже {{PLURAL:$1|показано последнее $1 изменение|показаны последние $1 изменения|показаны последние $1 изменений}} за {{PLURAL:$2|последний|последние|последние}} \'\'\'$2\'\'\' {{plural:$2|час|часа|часов}}, на момент времени $3 $4.',
 	'wlshowlast' => 'Показать за последние $1 часов $2 дней $3',
 	'watchlist-options' => 'Настройки списка наблюдения',
 	'watching' => 'Добавление в список наблюдения…',
@@ -13627,11 +13669,16 @@ $messages['ru'] = array(
 	'watchlisttools-edit' => 'Смотреть/править список',
 	'watchlisttools-raw' => 'Править как текст',
 	'wikia-pagetitle' => '$1 — Wikia',
-	'wikia-read-only-mode' => 'Оу... Наш главный дата-центр недоступен в данный момент, потому в данный момент вы подключены к резервному дата-центру. К сожалению, это означает, что некоторые функции Викия, вроде редактирования, загрузок файлов или чата, будут временно недоступны.
- +Мы работаем над устранением этой проблемы! Если у вас есть вопросы или дополнительная информация, напишите нам на эл. почту: community@wikia.com.',
-);
+	'wikia-read-only-mode' => 'Наш главный центр обработки данных в данный момент недоступен, поэтому вы подключены к резервному центру. К сожалению, это означает, что некоторые функции (редактирование, загрузка файлов или чат) могут быть временно недоступны.
+Пожалуйста, наберитесь терпения — мы работаем над устранением этой проблемы. Если вы продолжаете видеть эту ошибку в течение долгого периода времени, сообщите об этом нам по адресу community@wikia.com.',
+	'widget-desc-wikiamessages' => 'Сообщения Фэндома',
+	'widget-title-advertiser' => 'Баннер для вики',
+	'widget-title-wikiamessages' => 'Сообщения Фэндома',
+	'wikia_messages' => 'Сообщения Фэндома',
+	'wikicitieshome' => 'Заглавная страница Фэндома',
+];
 
-$messages['rue'] = array(
+$messages['rue'] = [
 	'wednesday' => 'середа',
 	'wed' => 'Ср',
 	'wrong_wfQuery_params' => 'Неправилны параметры функцій wfQuery()<br />
@@ -13665,7 +13712,7 @@ $messages['rue'] = array(
 	'watchnochange' => 'Жадна із слїдованых положок не была едітована в часї, котрый є указаный.',
 	'watchlist-details' => '{{PLURAL:$1|Єдна слїдована сторінка|слїдованы сторінкы|слїдованых сторінок}} (не рахувчі діскузны сторінкы).',
 	'wlheader-enotif' => 'Упозорнїня  ел. поштов є запнуте.',
-	'wlheader-showupdated' => "Сторінкы, котры ся змінили од вашой послїднёй навщівы суть вказаны '''грубо'''",
+	'wlheader-showupdated' => 'Сторінкы, котры ся змінили од вашой послїднёй навщівы суть вказаны \'\'\'грубо\'\'\'',
 	'watchmethod-recent' => 'глядають ся слїдованы сторінкы міджі послїднїма змінами',
 	'watchmethod-list' => 'глядають ся найновшы едітованя слїдованых сторінок',
 	'watchlistcontains' => 'На своїм списку слїдованых сторінок маєте $1 {{PLURAL:$1|положку|положкы|положок}}.',
@@ -13709,9 +13756,9 @@ $messages['rue'] = array(
 	'watchlisttools-view' => 'Зміны на сторінках зо списку',
 	'watchlisttools-edit' => 'Нагляд і едітованя списку',
 	'watchlisttools-raw' => 'Едітовати як текст',
-);
+];
 
-$messages['rup'] = array(
+$messages['rup'] = [
 	'wednesday' => 'Njercure',
 	'welcomecreation' => '== Ghine vinish, $1 ==
 
@@ -13723,9 +13770,9 @@ Isape a vostrã ira adratã. Nu agãrshits s-le alãxits alidzerle-a vostre ti {
 	'watch' => 'Videts',
 	'watchthispage' => 'Mutrits-u frãndzã aistã',
 	'whatlinkshere' => 'Tsi s-leadze cu aistu',
-);
+];
 
-$messages['ruq'] = array(
+$messages['ruq'] = [
 	'wednesday' => 'Njercure',
 	'welcomecreation' => '== Ghine vinish, $1 ==
 
@@ -13737,9 +13784,9 @@ Isape a vostrã ira adratã. Nu agãrshits s-le alãxits alidzerle-a vostre ti {
 	'watch' => 'Videts',
 	'watchthispage' => 'Mutrits-u frãndzã aistã',
 	'whatlinkshere' => 'Tsi s-leadze cu aistu',
-);
+];
 
-$messages['ruq-cyrl'] = array(
+$messages['ruq-cyrl'] = [
 	'wed' => 'Мие',
 	'watchthis' => 'Клајаере це пажу',
 	'watchlist' => 'Мај клајаеру',
@@ -13749,9 +13796,9 @@ $messages['ruq-cyrl'] = array(
 	'whatlinkshere-title' => 'Пажус легајтулент а $1',
 	'whatlinkshere-links' => '← легајтулс',
 	'watchlistall2' => 'тоат',
-);
+];
 
-$messages['ruq-latn'] = array(
+$messages['ruq-latn'] = [
 	'wed' => 'Mie',
 	'watchthis' => 'klăaere ce pažu',
 	'watchlist' => 'Maj klăaeru',
@@ -13761,9 +13808,9 @@ $messages['ruq-latn'] = array(
 	'whatlinkshere-title' => 'Paži legǎtulent a $1',
 	'whatlinkshere-links' => '← legătuls',
 	'watchlistall2' => 'toat',
-);
+];
 
-$messages['sa'] = array(
+$messages['sa'] = [
 	'wednesday' => 'बुधवासरः',
 	'wed' => 'बुधः',
 	'wrong_wfQuery_params' => 'wfQuery() इत्येतस्य अशुद्धः मानदण्डः दत्तः अस्ति<br />
@@ -13803,9 +13850,9 @@ $messages['sa'] = array(
 	'watchlisttools-view' => 'उचितानि परिवर्तनानि दृश्यन्ताम्',
 	'watchlisttools-edit' => 'अवेक्षणसूची दृश्यतां सम्पाद्यतां च',
 	'watchlisttools-raw' => 'अपरिष्कृता अवेक्षणसूची सम्पाद्यताम्',
-);
+];
 
-$messages['sah'] = array(
+$messages['sah'] = [
 	'wednesday' => 'Сэрэдэ',
 	'wed' => 'Сэр',
 	'wrong_wfQuery_params' => 'wfQuery() сыыһа киллэриилээх<br />
@@ -13841,11 +13888,11 @@ $messages['sah'] = array(
 	'watchnochange' => 'Кэтиир сирэйдэргиттэн этиллибит кэмҥэ биир да уларыйбатах.',
 	'watchlist-details' => '{{PLURAL:$1|$1 сирэйи кэтиигин|$1 сирэй кэтэбилгэ сылдьар}}, ырытыы сирэйдэрин аахпатахха.',
 	'wlheader-enotif' => '* эл. почтанан биллэрии холбоммут.',
-	'wlheader-showupdated' => "* Бүтэһик киириигит кэннэ уларыйбыт сирэйдэр '''модьу''' бичигинэн бэлиэтэннилэр",
+	'wlheader-showupdated' => '* Бүтэһик киириигит кэннэ уларыйбыт сирэйдэр \'\'\'модьу\'\'\' бичигинэн бэлиэтэннилэр',
 	'watchmethod-recent' => 'кэтээн көрүү бүтэһик уларыйыыларын көрүү',
 	'watchmethod-list' => 'кэтээһин бүтэһик уларыйыылара',
 	'watchlistcontains' => '$1 сирэйи кэтээн көрөҕүн.',
-	'wlnote' => "Манна кэлиҥҥи {{PLURAL:$2|чаас|'''$2''' чаас}} иһигэр оҥоһуллубут бүтэһик $1 уларытыы көрдөрүлүннэ, бу кэмҥэ туругунан $3 $4.",
+	'wlnote' => 'Манна кэлиҥҥи {{PLURAL:$2|чаас|\'\'\'$2\'\'\' чаас}} иһигэр оҥоһуллубут бүтэһик $1 уларытыы көрдөрүлүннэ, бу кэмҥэ туругунан $3 $4.',
 	'wlshowlast' => 'бүтэһик $1 чааска $2 күҥҥэ $3 көрдөр',
 	'watchlist-options' => 'Кэтээн көрүү туруоруутун уларытыы',
 	'watching' => 'Кэтээ...',
@@ -13885,14 +13932,14 @@ $messages['sah'] = array(
 	'watchlisttools-view' => 'Атыҥҥа сабыдыаллаах уларытыылар',
 	'watchlisttools-edit' => 'Кэтэбил испииһэгин көрүү/уларытыы',
 	'watchlisttools-raw' => '"Сиикэй" испииһэги уларытыы',
-);
+];
 
-$messages['sc'] = array(
+$messages['sc'] = [
 	'wednesday' => 'Mèrcuris',
 	'wed' => 'Mèr',
-	'welcomecreation' => "== Benènnidu, $1! ==
-S'account tuo est istadu creadu.
-No iscaressa de personalizare sas [[Special:Preferences|preferèntzias de {{SITENAME}}]].",
+	'welcomecreation' => '== Benènnidu, $1! ==
+S\'account tuo est istadu creadu.
+No iscaressa de personalizare sas [[Special:Preferences|preferèntzias de {{SITENAME}}]].',
 	'wrongpassword' => 'Sa password insertada no est bona. Prova torra.',
 	'wrongpasswordempty' => 'No as scritu sa password.
 Prova torra.',
@@ -13927,21 +13974,21 @@ per modificare la tua lista di osservati speciali.',
 	'watchlisttools-view' => 'Càstia mudàntzias de importu',
 	'watchlisttools-edit' => 'Càstia e acontza sa watchlist',
 	'watchlisttools-raw' => 'Acontza sa watchlist dae su testu',
-);
+];
 
-$messages['scn'] = array(
+$messages['scn'] = [
 	'wednesday' => 'Mercuridìa',
 	'wed' => 'mer',
 	'wrong_wfQuery_params' => 'Paràmitri errati pi wfQuery()<br />
 Funzioni: $1<br />
 Query: $2',
-	'welcomecreation' => "== Bonvinutu, $1! ==
+	'welcomecreation' => '== Bonvinutu, $1! ==
 
-L'account hà statu criatu currettamenti. Nun ti scurdari di pirsunalizzari li [[Special:Preferences|prifirenzi di {{SITENAME}}]].",
-	'wrongpassword' => "La ''password'' chi mittisti nun è giusta. Prova n'àutra vota.",
+L\'account hà statu criatu currettamenti. Nun ti scurdari di pirsunalizzari li [[Special:Preferences|prifirenzi di {{SITENAME}}]].',
+	'wrongpassword' => 'La \'\'password\'\' chi mittisti nun è giusta. Prova n\'àutra vota.',
 	'wrongpasswordempty' => 'Nun hà statu nzirita arcuna password. Ripruvari.',
 	'watchthis' => 'talìa sta pàggina',
-	'whitelistedittext' => "Hai a $1 pi canciari l'artìculi.",
+	'whitelistedittext' => 'Hai a $1 pi canciari l\'artìculi.',
 	'watchthisupload' => 'Talìa stu file',
 	'withoutinterwiki' => 'Pàggini senza interwiki',
 	'withoutinterwiki-summary' => 'Li pàggini nnicati ccà nun hànnu liami ê virsioni nta àutri lingui:',
@@ -13953,7 +14000,7 @@ L'account hà statu criatu currettamenti. Nun ti scurdari di pirsunalizzari li [
 	'wantedfiles' => 'File addumannati',
 	'wantedtemplates' => 'Template addumannati',
 	'watchlist' => 'Lista taliata mia',
-	'watchlistanontext' => "Pi visualizzari e canciari l'alencu di l'ossirvati spiciali è nicissariu $1.",
+	'watchlistanontext' => 'Pi visualizzari e canciari l\'alencu di l\'ossirvati spiciali è nicissariu $1.',
 	'watchnologin' => 'Nun hai effittuatu lu login',
 	'watchnologintext' => 'Hai a fari prima lu [[Special:UserLogin|login]] pi canciari la tò lista di ossirvati spiciali.',
 	'watch' => 'talìa',
@@ -13961,14 +14008,14 @@ L'account hà statu criatu currettamenti. Nun ti scurdari di pirsunalizzari li [
 	'watchnochange' => 'Nudda dî pàggini ossirvati hà statu canciata ntô pirìudu cunzidiratu.',
 	'watchlist-details' => 'La lista dê pàggini taliati cunteni {{PLURAL:$1|na pàggina (cu la rispittiva pàggina di discussioni)|$1 pàggini (cu li rispittivi pàggini di discussioni)}}.',
 	'wlheader-enotif' => '* La nutìfica via e-mail è attivata.',
-	'wlheader-showupdated' => "* Li pàggini ca hannu statu canciati dâ tò ùrtima vìsita sunnu evidinziati 'n '''grassettu'''",
-	'watchmethod-recent' => "cuntrollu dî canciamenti ricenti pi l'ossirvati spiciali",
-	'watchmethod-list' => "cuntrollu di l'ossirvati spiciali pi canciamenti ricenti",
+	'wlheader-showupdated' => '* Li pàggini ca hannu statu canciati dâ tò ùrtima vìsita sunnu evidinziati \'n \'\'\'grassettu\'\'\'',
+	'watchmethod-recent' => 'cuntrollu dî canciamenti ricenti pi l\'ossirvati spiciali',
+	'watchmethod-list' => 'cuntrollu di l\'ossirvati spiciali pi canciamenti ricenti',
 	'watchlistcontains' => 'La tò lista di ossirvati spiciali cunteni {{PLURAL:$1|na pàggina|$1 pàggini}}.',
-	'wlnote' => "Sutta attrovi l'ùrtim{{PLURAL:$1|u canciamentu|i $1 canciamenti}}, nta l'ùrtim{{PLURAL:$1|a ura|i '''$2''' uri}}.",
-	'wlshowlast' => "Ammustra l'ùrtimi $1 uri $2 jorna $3",
+	'wlnote' => 'Sutta attrovi l\'ùrtim{{PLURAL:$1|u canciamentu|i $1 canciamenti}}, nta l\'ùrtim{{PLURAL:$1|a ura|i \'\'\'$2\'\'\' uri}}.',
+	'wlshowlast' => 'Ammustra l\'ùrtimi $1 uri $2 jorna $3',
 	'watchlist-options' => 'Opzioni ussirvati spiciali',
-	'watching' => "Junta a l'ussirvati spiciali...",
+	'watching' => 'Junta a l\'ussirvati spiciali...',
 	'whatlinkshere' => 'Chi punta ccà',
 	'whatlinkshere-title' => 'Pàggini ca pùntanu a "$1"',
 	'whatlinkshere-page' => 'Pàggina:',
@@ -13986,12 +14033,12 @@ L'account hà statu criatu currettamenti. Nun ti scurdari di pirsunalizzari li [
 	'watchlistedit-noitems' => 'La lista dê pàggini taliati è vacanti.',
 	'watchlistedit-normal-title' => 'Cancia pàggini taliati',
 	'watchlistedit-normal-legend' => 'Eliminazzioni di pàggini dâ lista dê pàggini taliati',
-	'watchlistedit-normal-explain' => "Ccà sutta sugnu alincati tutti li pàggine taliati. Pi eliminari una o cchiù pàggini dâ lista, silizziunari li casiddi accantu e fari clic supra lu buttuni 'Elìmina pàggini' 'n fundu all'alencu. Accura ca è puru possibbili [[Special:EditWatchlist/raw|canciari la lista 'n forma testuali]].",
+	'watchlistedit-normal-explain' => 'Ccà sutta sugnu alincati tutti li pàggine taliati. Pi eliminari una o cchiù pàggini dâ lista, silizziunari li casiddi accantu e fari clic supra lu buttuni \'Elìmina pàggini\' \'n fundu all\'alencu. Accura ca è puru possibbili [[Special:EditWatchlist/raw|canciari la lista \'n forma testuali]].',
 	'watchlistedit-normal-submit' => 'Elìmina pàggini',
 	'watchlistedit-normal-done' => 'Dâ lista dê pàggini taliati hà{{PLURAL:$1|&nbsp;stata eliminata na pàggina|nnu stati eliminati $1 pàggini}}:',
-	'watchlistedit-raw-title' => "Cancia li pàggini taliati 'n forma testuali",
+	'watchlistedit-raw-title' => 'Cancia li pàggini taliati \'n forma testuali',
 	'watchlistedit-raw-legend' => 'Canciamentu testuali pàggini taliati',
-	'watchlistedit-raw-explain' => "Ccà sutta sugnu alincati tutti li pàggine taliati. Pi canciari la lista agghiunciri o rimòviri li rispettivi tituli, unu pi riga. Quannu funisci, fà clic supra 'Aggiorna la lista' 'n fundu all'alencu. Accura ca è puru possibbili [[Special:EditWatchlist|canciari la lista câ 'nterfaccia standard]].",
+	'watchlistedit-raw-explain' => 'Ccà sutta sugnu alincati tutti li pàggine taliati. Pi canciari la lista agghiunciri o rimòviri li rispettivi tituli, unu pi riga. Quannu funisci, fà clic supra \'Aggiorna la lista\' \'n fundu all\'alencu. Accura ca è puru possibbili [[Special:EditWatchlist|canciari la lista câ \'nterfaccia standard]].',
 	'watchlistedit-raw-titles' => 'Pàggini:',
 	'watchlistedit-raw-submit' => 'Aggiorna la lista',
 	'watchlistedit-raw-done' => 'La tò lista dê pàggini taliati vinni aggiurnata.',
@@ -13999,10 +14046,10 @@ L'account hà statu criatu currettamenti. Nun ti scurdari di pirsunalizzari li [
 	'watchlistedit-raw-removed' => '{{PLURAL:$1|&nbsp;Vinni scancillata na pàggina|Foru scancillati $1 pàggini}}:',
 	'watchlisttools-view' => 'Talìa li canciamenti rilivanti',
 	'watchlisttools-edit' => 'Talìa e cancia la lista',
-	'watchlisttools-raw' => "Cancia la lista 'n forma testuali",
-);
+	'watchlisttools-raw' => 'Cancia la lista \'n forma testuali',
+];
 
-$messages['sco'] = array(
+$messages['sco'] = [
 	'wednesday' => 'Wadensday',
 	'wed' => 'Wed',
 	'wrong_wfQuery_params' => 'Wrang parameters tae wfQuery()<br />
@@ -14028,9 +14075,9 @@ Mynd an chynge yer [[Special:Preferences|{{SITENAME}} preferences]].',
 	'watch' => 'Watch',
 	'watchthispage' => 'Leuk ower this page',
 	'watchnochange' => 'Nane o yer watched items were edited in the time period displayed.',
-	'watchlist-details' => "{{PLURAL:$1|$1 page|$1 pages}} on yer watchleet, nae countin' collogue pages.",
+	'watchlist-details' => '{{PLURAL:$1|$1 page|$1 pages}} on yer watchleet, nae countin\' collogue pages.',
 	'watchlistcontains' => 'Yer watchleet contains $1 {{PLURAL:$1|page|pages}}.',
-	'wlnote' => "Ablo is the lest $1 {{PLURAL:$1|chynge|chynges}} in the lest {{PLURAL:$2|hour|'''$2''' hours}}.",
+	'wlnote' => 'Ablo is the lest $1 {{PLURAL:$1|chynge|chynges}} in the lest {{PLURAL:$2|hour|\'\'\'$2\'\'\' hours}}.',
 	'wlshowlast' => 'Shaw lest $1 hours $2 days $3',
 	'watchlist-options' => 'Watchleet options',
 	'watching' => 'Watchin...',
@@ -14049,9 +14096,9 @@ Mynd an chynge yer [[Special:Preferences|{{SITENAME}} preferences]].',
 	'watchlisttools-view' => 'View relevant changes',
 	'watchlisttools-edit' => 'View an edit watchleet',
 	'watchlisttools-raw' => 'Edit raw watchleet',
-);
+];
 
-$messages['sd'] = array(
+$messages['sd'] = [
 	'wednesday' => 'اربع',
 	'wed' => 'اربع',
 	'wrongpassword' => 'ڏنل ڳجھو لفظ غير درست آهي. مهرباني ڪري ٻيهر ڪوشش ڪندا.',
@@ -14075,44 +14122,44 @@ $messages['sd'] = array(
 	'watchlisttools-view' => 'لاڳاپيل تبديليون ڏسو',
 	'watchlisttools-edit' => 'ٽيٽ فهرست ڏسو ۽ سنواريو',
 	'watchlisttools-raw' => 'ڪچي ٽيٽ فهرست سنواريو',
-);
+];
 
-$messages['sdc'] = array(
+$messages['sdc'] = [
 	'wednesday' => 'Màrchuri',
 	'wed' => 'Màr',
-	'wrong_wfQuery_params' => "Errori i' li parametri inviaddi a la funzioni wfQuery()<br />
+	'wrong_wfQuery_params' => 'Errori i\' li parametri inviaddi a la funzioni wfQuery()<br />
 funzioni: $1<br />
-Interrogazioni: $2",
+Interrogazioni: $2',
 	'welcomecreation' => '== Binvinuddu, $1! ==
 
 La registhrazioni è isthadda criadda currettamenti. No dimintiggà di passunarizzà li prifirenzi di {{SITENAME}}.',
-	'wrongpassword' => "La paràura d'órdhini insiridda nò è curretta. Riprubà.",
-	'wrongpasswordempty' => "La paràura d'órdhini insiridda è biodda. Riprubà.",
-	'watchthis' => "Aggiungi a l'abbaidaddi ippiziari",
+	'wrongpassword' => 'La paràura d\'órdhini insiridda nò è curretta. Riprubà.',
+	'wrongpasswordempty' => 'La paràura d\'órdhini insiridda è biodda. Riprubà.',
+	'watchthis' => 'Aggiungi a l\'abbaidaddi ippiziari',
 	'whitelistedittext' => 'Pa mudìfiggà li pàgini è nezzessàriu $1.',
-	'watchthisupload' => "Aggiungi a l'abbaidaddi ippiziari",
-	'withoutinterwiki' => "Pàgini chena cullegamenti p'althri linghi",
+	'watchthisupload' => 'Aggiungi a l\'abbaidaddi ippiziari',
+	'withoutinterwiki' => 'Pàgini chena cullegamenti p\'althri linghi',
 	'withoutinterwiki-summary' => 'Li sighenti pàgini so chena cullegamenti a versioni in althri linghi (interwiki):',
 	'withoutinterwiki-submit' => 'Musthra',
 	'wantedcategories' => 'Categuri dumandaddi',
 	'wantedpages' => 'Pàgini più dumandaddi',
 	'watchlist' => 'Abbaidaddi ippiziari',
-	'watchlistanontext' => "Pa visuarizzà e mudìfiggà l'erencu di l'abbaidaddi ippiziari è nezzessàriu $1.",
+	'watchlistanontext' => 'Pa visuarizzà e mudìfiggà l\'erencu di l\'abbaidaddi ippiziari è nezzessàriu $1.',
 	'watchnologin' => 'Intradda nò effettuadda',
-	'watchnologintext' => "Pa mudìfiggà la listha di l'abbaidaddi ippiziari è nezzessàriu primma [[Special:UserLogin|intrà]].",
+	'watchnologintext' => 'Pa mudìfiggà la listha di l\'abbaidaddi ippiziari è nezzessàriu primma [[Special:UserLogin|intrà]].',
 	'watch' => 'Sighi',
 	'watchthispage' => 'Sighi chistha pàgina',
-	'watchnochange' => "Nisciuna di li pàgini abbaidaddi è isthadda mudìfiggadda i' lu perìodu cunsidaraddu.",
-	'watchlist-details' => "La listha di l'abbaidaddi ippiziari cunteni {{PLURAL:$1|una pagina (e la rippettiba pagina di dischussioni)|$1 pagini (e li rippettibi pagini di dischussioni)}}.",
+	'watchnochange' => 'Nisciuna di li pàgini abbaidaddi è isthadda mudìfiggadda i\' lu perìodu cunsidaraddu.',
+	'watchlist-details' => 'La listha di l\'abbaidaddi ippiziari cunteni {{PLURAL:$1|una pagina (e la rippettiba pagina di dischussioni)|$1 pagini (e li rippettibi pagini di dischussioni)}}.',
 	'wlheader-enotif' => '* La nutìfica via postha erettrònica è attiba.',
-	'wlheader-showupdated' => "* Li pàgini chi so isthaddi mudìfiggaddi daboi l'ulthima vìsita so evidenziaddi in '''grasseddu'''",
-	'watchmethod-recent' => "cuntrollu di li mudìfigghi rizzenti pa l'abbaidaddi ippiziari",
-	'watchmethod-list' => "cuntrollu di l'abbaidaddi ippiziari pa mudìfigghi rizzenti",
-	'watchlistcontains' => "La listha di l'abbaidaddi ippiziari cunteni {{PLURAL:$1|una pàgina|$1 pàgini}}.",
-	'wlnote' => "Inogghi {{PLURAL:$1|è erencadda la mudìfigga più rizzenti arriggadda|so erencaddi li '''$1''' mudìfigghi più rizzenti arriggaddi}} {{PLURAL:$2|i' la ulthima ora|i' li ulthimi '''$2''' ori}}.",
+	'wlheader-showupdated' => '* Li pàgini chi so isthaddi mudìfiggaddi daboi l\'ulthima vìsita so evidenziaddi in \'\'\'grasseddu\'\'\'',
+	'watchmethod-recent' => 'cuntrollu di li mudìfigghi rizzenti pa l\'abbaidaddi ippiziari',
+	'watchmethod-list' => 'cuntrollu di l\'abbaidaddi ippiziari pa mudìfigghi rizzenti',
+	'watchlistcontains' => 'La listha di l\'abbaidaddi ippiziari cunteni {{PLURAL:$1|una pàgina|$1 pàgini}}.',
+	'wlnote' => 'Inogghi {{PLURAL:$1|è erencadda la mudìfigga più rizzenti arriggadda|so erencaddi li \'\'\'$1\'\'\' mudìfigghi più rizzenti arriggaddi}} {{PLURAL:$2|i\' la ulthima ora|i\' li ulthimi \'\'\'$2\'\'\' ori}}.',
 	'wlshowlast' => 'Musthra li ulthimi $1 ori $2 dì $3',
 	'watchlist-options' => 'Opzioni abbaidaddi ippiziari',
-	'watching' => "Aggiunta a l'abbaidaddi ippiziari...",
+	'watching' => 'Aggiunta a l\'abbaidaddi ippiziari...',
 	'whatlinkshere' => 'Puntani inogghi',
 	'whatlinkshere-title' => 'Pàgini chi pùntani a "$1"',
 	'whatlinkshere-page' => 'Pàgina:',
@@ -14125,27 +14172,27 @@ La registhrazioni è isthadda criadda currettamenti. No dimintiggà di passunari
 	'whatlinkshere-filters' => 'Filthri',
 	'widthheightpage' => '$1 × $2, $3 {{PLURAL:$3|pàgina|pàgini}}',
 	'watchlistall2' => 'tutti',
-	'watchlistedit-numitems' => "La listha di l'abbaidaddi ippiziari cunteni {{PLURAL:$1|una pàgina (e la rippettiba pàgina di dischussioni)|$1 pàgini (e li rippettibi pàgini di dischussioni)}}.",
-	'watchlistedit-noitems' => "La listha di l'abbaidaddi ippiziari è biodda.",
+	'watchlistedit-numitems' => 'La listha di l\'abbaidaddi ippiziari cunteni {{PLURAL:$1|una pàgina (e la rippettiba pàgina di dischussioni)|$1 pàgini (e li rippettibi pàgini di dischussioni)}}.',
+	'watchlistedit-noitems' => 'La listha di l\'abbaidaddi ippiziari è biodda.',
 	'watchlistedit-normal-title' => 'Mudìfigga abbaidaddi ippiziari',
-	'watchlistedit-normal-legend' => "Eliminiazioni di pàgini da l'abbaidaddi ippiziari",
-	'watchlistedit-normal-explain' => "Inogghi so erencaddi tutti li pàgini abbaidaddi. Pà canzellà una o più pàgini di la listha, isciubarà li caselli reratibi e fà clic i' lu buttoni '''Elimina pàgini''' in giossu a l'erencu. Pói puru [[Special:EditWatchlist/raw|mudìfiggalla in fuimmaddu testhu]].",
+	'watchlistedit-normal-legend' => 'Eliminiazioni di pàgini da l\'abbaidaddi ippiziari',
+	'watchlistedit-normal-explain' => 'Inogghi so erencaddi tutti li pàgini abbaidaddi. Pà canzellà una o più pàgini di la listha, isciubarà li caselli reratibi e fà clic i\' lu buttoni \'\'\'Elimina pàgini\'\'\' in giossu a l\'erencu. Pói puru [[Special:EditWatchlist/raw|mudìfiggalla in fuimmaddu testhu]].',
 	'watchlistedit-normal-submit' => 'Elimina pàgini',
-	'watchlistedit-normal-done' => "Da la listha di l'abbaidaddi ippiziari {{PLURAL:$1|è isthadda eliminadda una pàgina|so isthaddi eliminaddi $1 pàgini}}:",
-	'watchlistedit-raw-title' => "Mudìfigga l'abbaidaddi ippiziari in fuimmaddu testhu",
+	'watchlistedit-normal-done' => 'Da la listha di l\'abbaidaddi ippiziari {{PLURAL:$1|è isthadda eliminadda una pàgina|so isthaddi eliminaddi $1 pàgini}}:',
+	'watchlistedit-raw-title' => 'Mudìfigga l\'abbaidaddi ippiziari in fuimmaddu testhu',
 	'watchlistedit-raw-legend' => 'Mudìfigga testhuari abbaidaddi ippiziari',
-	'watchlistedit-raw-explain' => "Inogghi so erencaddi tutti li pàgini abbaidaddi. Pà mudìfiggà la listha aggiugnì o buggà li tìturi, unu pa riga. Cand'ài finiddu, fa clic i' '''Aggiorna la listha''' in giossu a l'erencu. Pói puru [[Special:EditWatchlist|mudìfiggà la listha cu' l'interfàccia standard]].",
+	'watchlistedit-raw-explain' => 'Inogghi so erencaddi tutti li pàgini abbaidaddi. Pà mudìfiggà la listha aggiugnì o buggà li tìturi, unu pa riga. Cand\'ài finiddu, fa clic i\' \'\'\'Aggiorna la listha\'\'\' in giossu a l\'erencu. Pói puru [[Special:EditWatchlist|mudìfiggà la listha cu\' l\'interfàccia standard]].',
 	'watchlistedit-raw-titles' => 'Pàgini:',
 	'watchlistedit-raw-submit' => 'Aggiorna la listha',
-	'watchlistedit-raw-done' => "La listha di l'abbaidaddi ippiziari è isthadda aggiornadda.",
+	'watchlistedit-raw-done' => 'La listha di l\'abbaidaddi ippiziari è isthadda aggiornadda.',
 	'watchlistedit-raw-added' => '{{PLURAL:$1|È isthadda aggiunta una pàgina|So isthaddi aggiunti $1 pàgini}}:',
 	'watchlistedit-raw-removed' => '{{PLURAL:$1|È isthadda eliminadda una pàgina|So isthaddi eliminaddi $1 pàgini}}:',
 	'watchlisttools-view' => 'Visuarizza li mudìfigghi attinenti',
 	'watchlisttools-edit' => 'Visuarizza e mudìfigga la listha',
 	'watchlisttools-raw' => 'Mudìfigga la listha in fuimmaddu testhu',
-);
+];
 
-$messages['se'] = array(
+$messages['se'] = [
 	'wednesday' => 'gaskavahkku',
 	'wed' => 'ga',
 	'welcomecreation' => '== Bures boahtin, $1! ==
@@ -14169,11 +14216,11 @@ Du geavaheaddjidovddaldat lea dál anus.
 	'watchnochange' => 'Válljejuvvon áigodagas oktage du čuovvunlisttui gullevaš siidu leat rievdaduvvon.',
 	'watchlist-details' => 'Du čuovvunlisttus {{PLURAL:$1|lea $1 siidu|leat $1 siiddu}}. Lohkui eai leat váldojuvvon ságastallansiidduid.',
 	'wlheader-enotif' => '* E-poastaalmmuhusat leat anus.',
-	'wlheader-showupdated' => "* Siiddut, mat leat rievdaduvvon du maŋimus geavahangearddi maŋŋá leat merkojuvvon '''buoiddes teavsttain'''",
+	'wlheader-showupdated' => '* Siiddut, mat leat rievdaduvvon du maŋimus geavahangearddi maŋŋá leat merkojuvvon \'\'\'buoiddes teavsttain\'\'\'',
 	'watchmethod-recent' => 'dárkistuvvo varas rievdadusat čuovvunlisttu siidduide',
 	'watchmethod-list' => 'dárkistuvvo čuovvunlisttu siidduid varas rievdadusat',
 	'watchlistcontains' => 'Du čuovvunlisttus {{PLURAL:$1|lea okta siidu|leat $1 siiddu}}.',
-	'wlnote' => "Vuolábealde lea '''$1''' {{PLURAL:$1|rievdadus|rievdadusa}} maŋimus {{PLURAL:$2||'''$2'''}} diimma siste.",
+	'wlnote' => 'Vuolábealde lea \'\'\'$1\'\'\' {{PLURAL:$1|rievdadus|rievdadusa}} maŋimus {{PLURAL:$2||\'\'\'$2\'\'\'}} diimma siste.',
 	'wlshowlast' => 'Čájet maŋimus $1 diimmu dahje $2 beaivvi $3',
 	'watching' => 'Lasihuvvo čuovvunlistui...',
 	'whatlinkshere' => 'Siiddut mat čujuhit deike',
@@ -14192,17 +14239,17 @@ Du geavaheaddjidovddaldat lea dál anus.
 	'watchlistedit-raw-removed' => '{{PLURAL:$1|Okta siidu|$1 siiddu}} sihkkojuvvui:',
 	'watchlisttools-view' => 'Čájet rievdadusaid',
 	'watchlisttools-edit' => 'Ođasmahte listtu',
-);
+];
 
-$messages['sei'] = array(
+$messages['sei'] = [
 	'wednesday' => 'Mizxolino',
 	'wed' => 'Miz',
 	'wrong_wfQuery_params' => 'Parameterám incorrectámde wfQuery()<br />
 Funccion: $1<br />
 Query: $2',
-	'welcomecreation' => "== Q'$1! ==
+	'welcomecreation' => '== Q\'$1! ==
 
-Mecaitom coccebj creatöx. Quiix hequáatlaácde {{SITENAME}} pos-poop.",
+Mecaitom coccebj creatöx. Quiix hequáatlaácde {{SITENAME}} pos-poop.',
 	'wrongpassword' => 'Römjde quimx canj. Vanquimx canj.',
 	'wrongpasswordempty' => 'Quimx canj blankanj. Vanquimx canj.',
 	'watchthis' => 'Cáminot jan páhina',
@@ -14218,9 +14265,9 @@ Mecaitom coccebj creatöx. Quiix hequáatlaácde {{SITENAME}} pos-poop.",
 	'whatlinkshere-links' => '← linkám',
 	'widthheightpage' => '$1 × $2, $3 páhinám',
 	'watchlistall2' => 'jöxdem',
-);
+];
 
-$messages['sg'] = array(
+$messages['sg'] = [
 	'wednesday' => 'bïkuatâ',
 	'wed' => 'bk3',
 	'watchthis' => 'Bâa pekô tî lêmbëtï sô',
@@ -14229,9 +14276,9 @@ $messages['sg'] = array(
 	'watch' => 'bâa pekô nî',
 	'watchthispage' => 'bâa lo ânde sô lêmbëtï',
 	'whatlinkshere' => 'Gbegbêe lêmbëtï',
-);
+];
 
-$messages['sgs'] = array(
+$messages['sgs'] = [
 	'wednesday' => 'trečiadėinis',
 	'wed' => 'Treč',
 	'wrong_wfQuery_params' => 'Netaisingė parametrā i funkcėjė wfQuery()<br />
@@ -14262,11 +14309,11 @@ Tamstas paskīra bova sokorta. Neožmėrškėt pakeistė sava {{SITENAME}} nusta
 	'watchnochange' => 'Pasėrėnkto čieso nebova redagouts nė vėins keravuojams straipsnis.',
 	'watchlist-details' => 'Keravuojama $1 {{PLURAL:$1|poslapis|$1 poslapē|$1 poslapiu}} neskaitlioujant aptarėmu poslapiu.',
 	'wlheader-enotif' => '* El. pašta primėnėmā ijongtė īr.',
-	'wlheader-showupdated' => "* Poslapē, katrėi pakeistė nu Tamstas paskotėnė apsėlonkėma čiesa anūs, īr pažīmietė '''pastuorintā'''",
+	'wlheader-showupdated' => '* Poslapē, katrėi pakeistė nu Tamstas paskotėnė apsėlonkėma čiesa anūs, īr pažīmietė \'\'\'pastuorintā\'\'\'',
 	'watchmethod-recent' => 'tėkrėnamė vielībė̅jė pakeitėmā keravuojamiems poslapiams',
 	'watchmethod-list' => 'Ėiškuoma vielībūju pakeitėmu keravuojamūs poslapiūs',
 	'watchlistcontains' => 'Tamstas kervuojamu sārašė īr $1 {{PLURAL:$1|poslapis|poslapē|poslapiu}}.',
-	'wlnote' => "Ruoduoma '''$1''' paskotėniu pakeitėmu, atlėktū par '''$2''' paskotėniu adīnu.",
+	'wlnote' => 'Ruoduoma \'\'\'$1\'\'\' paskotėniu pakeitėmu, atlėktū par \'\'\'$2\'\'\' paskotėniu adīnu.',
 	'wlshowlast' => 'Ruodītė paskotėniu $1 adīnu, $2 dėinū a $3 pakeitėmus',
 	'watchlist-options' => 'Keravuojamu sāroša pasėrinkėmā',
 	'watching' => 'Itraukiama i keravuojamu sāraša...',
@@ -14303,9 +14350,9 @@ Tamsta tēpuogi galėt [[Special:EditWatchlist/raw|redagoutė grīnaji keravuoja
 	'watchlisttools-view' => 'Veizietė sosėjosius pakeitėmus',
 	'watchlisttools-edit' => 'Veizietė ėr keistė keravuojamu straipsniu sāraša',
 	'watchlisttools-raw' => 'Keistė nebėngta keravuojamu straipsniu sāraša',
-);
+];
 
-$messages['sh'] = array(
+$messages['sh'] = [
 	'wednesday' => 'srijeda',
 	'wed' => 'Sri',
 	'wrong_wfQuery_params' => 'Netačni parametri za wfQuery()<br />
@@ -14343,11 +14390,11 @@ Molimo Vas da pokušate ponovno.',
 	'watchnochange' => 'Ništa što pratite nije promjenjeno u prikazanom vremenu.',
 	'watchlist-details' => '{{PLURAL:$1|$1 stranica praćena|$1 stranice praćene|$1 stranica praćeno}} ne računajući stranice za razgovor.',
 	'wlheader-enotif' => '* Obavještavanje e-poštom je omogućeno.',
-	'wlheader-showupdated' => "* Stranice koje su izmijenjene od kad ste ih posljednji put posjetili su prikazane '''podebljanim slovima'''",
+	'wlheader-showupdated' => '* Stranice koje su izmijenjene od kad ste ih posljednji put posjetili su prikazane \'\'\'podebljanim slovima\'\'\'',
 	'watchmethod-recent' => 'provjerava se da li ima praćenih stranica u nedavnim izmjenama',
 	'watchmethod-list' => 'provjerava se da li ima nedavnih izmjena u praćenim stranicama',
 	'watchlistcontains' => 'Vaš spisak praćenih članaka sadrži $1 {{PLURAL:$1|stranicu|stranica}}.',
-	'wlnote' => "Ispod {{PLURAL:$1|je posljednja izmjena|su posljednje '''$1''' izmjene|je posljednjih '''$1''' izmjena}} u {{PLURAL:$2|prethodnom satu|prethodna '''$2''' sata|prethodnih '''$2''' sati}}, zaključno sa $3, $4.",
+	'wlnote' => 'Ispod {{PLURAL:$1|je posljednja izmjena|su posljednje \'\'\'$1\'\'\' izmjene|je posljednjih \'\'\'$1\'\'\' izmjena}} u {{PLURAL:$2|prethodnom satu|prethodna \'\'\'$2\'\'\' sata|prethodnih \'\'\'$2\'\'\' sati}}, zaključno sa $3, $4.',
 	'wlshowlast' => 'Prikaži posljednjih $1 sati $2 dana $3',
 	'watchlist-options' => 'Opcije liste praćenja',
 	'watching' => 'Pratim…',
@@ -14387,9 +14434,9 @@ Također možete [[Special:EditWatchlist|koristiti standardni uređivač]].',
 	'watchlisttools-view' => 'Vidi relevantne promjene',
 	'watchlisttools-edit' => 'Vidi i uredi listu praćenja',
 	'watchlisttools-raw' => 'Uredi grubu listu praćenja',
-);
+];
 
-$messages['shi'] = array(
+$messages['shi'] = [
 	'wednesday' => 'Akras',
 	'wed' => 'Akras',
 	'welcomecreation' => '== Brrkat,  $1! ==
@@ -14423,9 +14470,9 @@ lcont nek  tuyskar .
 	'watchlisttools-view' => '↓ Umuɣ n imtfrn',
 	'watchlisttools-edit' => '↓ Ẓr tẓṛgt umuɣ lli tuytfarn',
 	'watchlisttools-raw' => '↓ Ẓṛig umuɣ n tisniwin',
-);
+];
 
-$messages['si'] = array(
+$messages['si'] = [
 	'wednesday' => 'බදාදා',
 	'wed' => 'බදාදා',
 	'wrong_wfQuery_params' => ' wfQuery() සඳහා සාවද්‍ය පරාමිතිකයන්<br />
@@ -14462,11 +14509,11 @@ $messages['si'] = array(
 	'watchnochange' => 'ඔබ විසින් මුරකෙරෙන කිසිදු අයිතමයක් දක්වා ඇති කාල සීමාවෙහිදී  සංස්කරණයට භාජනය වී නොමැත.',
 	'watchlist-details' => 'සාකච්ඡා පිටු නොගිණුනු කල, ඔබගේ මුර-ලැයිස්තුවෙහි {{PLURAL:$1|එක් පිටුවක්|පිටු $1 ක්}} ඇත.',
 	'wlheader-enotif' => '* විද්‍යුත්-තැපැල් දැනුම්දීම සක්‍රීය කෙරිණි.',
-	'wlheader-showupdated' => "* ඔබ විසින් ඒවාට අවසන් වරට පිවිසුනු පසුව වෙනස්කෙරුනු පිටු  '''තදකුරු''' වලින් පෙන්වා ඇත",
+	'wlheader-showupdated' => '* ඔබ විසින් ඒවාට අවසන් වරට පිවිසුනු පසුව වෙනස්කෙරුනු පිටු  \'\'\'තදකුරු\'\'\' වලින් පෙන්වා ඇත',
 	'watchmethod-recent' => 'මුර-කෙරෙන පිටු සඳහා මෑත සංස්කරණයන් පරික්‍ෂා කරමින්',
 	'watchmethod-list' => 'මෑත සංස්කරණයන් සඳහා මුර-කෙරෙන පිටු පරික්‍ෂා කරමින්',
 	'watchlistcontains' => 'ඔබගේ මුර-ලැයිස්තුවෙහි  {{PLURAL:$1|එක් පිටුවක්|පිටු $1 ක්}} අඩංගුය.',
-	'wlnote' => "පහත දැක්වෙන්නේ $3, $4 මෙන්, අවසන් {{PLURAL:$2|පැය|පැය '''$2''' }} තුලදී සිදු කෙරී ඇති {{PLURAL:$1|අවසන් වෙනස්වීම්යි |අවසන් වෙනස්වීම්  '''$1''' යි}}.",
+	'wlnote' => 'පහත දැක්වෙන්නේ $3, $4 මෙන්, අවසන් {{PLURAL:$2|පැය|පැය \'\'\'$2\'\'\' }} තුලදී සිදු කෙරී ඇති {{PLURAL:$1|අවසන් වෙනස්වීම්යි |අවසන් වෙනස්වීම්  \'\'\'$1\'\'\' යි}}.',
 	'wlshowlast' => 'පසුගිය පැය  $1 දින  $2  $3 පෙන්වන්න',
 	'watchlist-options' => 'තෝරාගතහැකි මුර ලැයිස්තු සැකසුම්',
 	'watching' => 'මුර කරමින්...',
@@ -14506,9 +14553,9 @@ $messages['si'] = array(
 	'watchlisttools-view' => 'අදාල වෙනස්වීම් නරඹන්න',
 	'watchlisttools-edit' => 'මුර-ලැයිස්තුව නැරඹීම හා සංස්කරණය',
 	'watchlisttools-raw' => 'නොනිමි මුර-ලැයිස්තුව සංස්කරණය කරන්න',
-);
+];
 
-$messages['sk'] = array(
+$messages['sk'] = [
 	'wednesday' => 'streda',
 	'wed' => 'Str',
 	'wrong_wfQuery_params' => 'Nesprávny parameter pre wfQuery()<br />
@@ -14545,11 +14592,11 @@ Nezabudnite si nastaviť svoje [[Special:Preferences|používateľské nastaveni
 	'watchnochange' => 'V rámci zobrazeného času nebola upravená žiadna z vašich sledovaných stránok.',
 	'watchlist-details' => '{{PLURAL:$1|Jedna sledovaná stránka|$1 sledované stránky|$1 sledovaných stránok}}, nepočítajúc diskusné stránky.',
 	'wlheader-enotif' => '* Upozorňovanie e-mailom je zapnuté.',
-	'wlheader-showupdated' => "* Stránky, ktoré boli zmené od vašej poslednej návštevy sú zobrazené '''tučne'''.",
+	'wlheader-showupdated' => '* Stránky, ktoré boli zmené od vašej poslednej návštevy sú zobrazené \'\'\'tučne\'\'\'.',
 	'watchmethod-recent' => 'kontrolujú sa sledované stránky v posledných úpravách',
 	'watchmethod-list' => 'kontrolujú posledné úpravy v sledovaných stránkach',
 	'watchlistcontains' => 'Váš zoznam sledovaných obsahuje {{PLURAL:$1|jednu stránku|$1 stránky|$1 stránok}}.',
-	'wlnote' => "Nižšie {{PLURAL:$1|je posledná jedna zmena|sú posledné '''$1''' zmeny|je posledných '''$1''' zmien}} za {{PLURAL:$2|poslednú hodinu|posledné '''$2''' hodiny|posledných '''$2''' hodín}} do $4, $3.",
+	'wlnote' => 'Nižšie {{PLURAL:$1|je posledná jedna zmena|sú posledné \'\'\'$1\'\'\' zmeny|je posledných \'\'\'$1\'\'\' zmien}} za {{PLURAL:$2|poslednú hodinu|posledné \'\'\'$2\'\'\' hodiny|posledných \'\'\'$2\'\'\' hodín}} do $4, $3.',
 	'wlshowlast' => 'Zobraziť posledných $1 hodín $2 dní $3',
 	'watchlist-options' => 'Nastavenia zoznamu sledovaných',
 	'watching' => 'Pridávam do zoznamu sledovaných...',
@@ -14589,9 +14636,9 @@ Tiež môžete [[Special:EditWatchlist|použiť štandardný editor]].',
 	'watchlisttools-view' => 'Zobraziť súvisiace zmeny',
 	'watchlisttools-edit' => 'Zobraziť a upraviť zoznam sledovaných stránok',
 	'watchlisttools-raw' => 'Upraviť nespracovaný zoznam sledovaných stránok',
-);
+];
 
-$messages['sl'] = array(
+$messages['sl'] = [
 	'wednesday' => 'sreda',
 	'wed' => 'sre',
 	'wrong_wfQuery_params' => 'Nepravilni parametri za wfQuery()<br />
@@ -14627,11 +14674,11 @@ Ne pozabite si prilagoditi vaših [[Special:Preferences|nastavitev {{GRAMMAR:rod
 	'watchnochange' => 'V prikazanem časovnem obdobju se ni spremenila nobena med nadzorovanimi stranmi.',
 	'watchlist-details' => 'Spremljate $1 {{PLURAL:$1|stran|strani|strani|strani|strani}} (pogovorne strani niso vštete).',
 	'wlheader-enotif' => '* Obveščanje po elektronski pošti je omogočeno.',
-	'wlheader-showupdated' => "* Od vašega zadnjega ogleda spremenjene strani so prikazanje '''krepko'''.",
+	'wlheader-showupdated' => '* Od vašega zadnjega ogleda spremenjene strani so prikazanje \'\'\'krepko\'\'\'.',
 	'watchmethod-recent' => 'med nedavnimi urejanji iščem spremljane strani',
 	'watchmethod-list' => 'med spremljanimi stranmi iščem nedavna urejanja',
 	'watchlistcontains' => 'Spremljate $1 {{PLURAL:$1|stran|strani}}.',
-	'wlnote' => "{{PLURAL:$1|Navedena je zadnja|Navedeni sta zadnji|Navedene so zadnje|Navedenih je zadnjih}} '''$1''' {{PLURAL:$1|sprememba|spremembi|spremembe|sprememb}} v {{PLURAL:$2|zadnji '''$2''' uri|zadnjih '''$2''' urah}}, od $3, $4.",
+	'wlnote' => '{{PLURAL:$1|Navedena je zadnja|Navedeni sta zadnji|Navedene so zadnje|Navedenih je zadnjih}} \'\'\'$1\'\'\' {{PLURAL:$1|sprememba|spremembi|spremembe|sprememb}} v {{PLURAL:$2|zadnji \'\'\'$2\'\'\' uri|zadnjih \'\'\'$2\'\'\' urah}}, od $3, $4.',
 	'wlshowlast' => 'Prikaži zadnjih $1 ur; $2 dni; $3;',
 	'watchlist-options' => 'Možnosti spiska nadzorov',
 	'watching' => 'Nadziranje ...',
@@ -14673,9 +14720,9 @@ Uporabite lahko tudi [[Special:EditWatchlist|standardni urejevalnik]].',
 	'watchlisttools-edit' => 'Poglej in uredi spisek nadzorov',
 	'watchlisttools-raw' => 'Uredi gol spisek nadzorov',
 	'wikia-pagetitle' => '$1 – Wikia',
-);
+];
 
-$messages['sli'] = array(
+$messages['sli'] = [
 	'wednesday' => 'Mietwuch',
 	'wed' => 'Mi',
 	'wrong_wfQuery_params' => 'Foalsche Parameter fier wfQuery()<br />
@@ -14706,11 +14753,11 @@ Vergiss nä, denne [[Special:Preferences|{{SITENAME}}-Eistellunga]] oazupoassa.'
 	'watchnochange' => 'Kenne dar vu dir beobachteta Seyta wurde während des oagezeigta Zeitraums beoarbeetet.',
 	'watchlist-details' => 'Du beobachtest {{PLURAL:$1|1 Seite|$1 Seita}}.',
 	'wlheader-enotif' => '* Dar E-Mail-Benoachrichtigungsdienst ies aktiviert.',
-	'wlheader-showupdated' => "* Seyta miet noo ne gesehenen Änderunga waan '''fett''' dargestellt.",
+	'wlheader-showupdated' => '* Seyta miet noo ne gesehenen Änderunga waan \'\'\'fett\'\'\' dargestellt.',
 	'watchmethod-recent' => 'Ieberprifa dar letzta Beoarbeetunga fier de Beobachtungsliste',
 	'watchmethod-list' => 'Ieberpriefa dar Beobachtungsliste noach letzta Beoarbeetunga',
 	'watchlistcontains' => 'Denne Beobachtungsliste enthält $1 {{PLURAL:$1|Seite|Seita}}.',
-	'wlnote' => "Is {{PLURAL:$1|folgt de letzte Änderung|folga de letzta '''$1''' Änderunga}} dar letzta {{PLURAL:$2|Stunde|'''$2''' Stunda}}.",
+	'wlnote' => 'Is {{PLURAL:$1|folgt de letzte Änderung|folga de letzta \'\'\'$1\'\'\' Änderunga}} dar letzta {{PLURAL:$2|Stunde|\'\'\'$2\'\'\' Stunda}}.',
 	'wlshowlast' => 'Zeige de Änneronga dar letzta $1 Stonda, $2 Taage oder $3.',
 	'watchlist-options' => 'Oazeegeoptiona',
 	'watching' => 'Beobachta …',
@@ -14745,22 +14792,22 @@ Du koast au de [[Special:EditWatchlist|Standard-Beoarbeetungsseyte]] benutza.',
 	'watchlisttools-view' => 'Beobachtungsliste: Änneronga',
 	'watchlisttools-edit' => 'normal bearbta',
 	'watchlisttools-raw' => 'eim Listenfurmat bearbta (Import/Export)',
-);
+];
 
-$messages['sm'] = array(
+$messages['sm'] = [
 	'wednesday' => 'Aso lulu',
 	'wed' => 'Aso lulu',
 	'watchthis' => 'Matau lenei itulau',
 	'watchthisupload' => 'Matau lenei itulau',
-	'watchlist' => "Lo'u lisi va'ava'aia",
-	'watchnologin' => "Le'i fa'aolaina",
-	'watch' => "Va'ai",
+	'watchlist' => 'Lo\'u lisi va\'ava\'aia',
+	'watchnologin' => 'Le\'i fa\'aolaina',
+	'watch' => 'Va\'ai',
 	'watchthispage' => 'Matau lenei itulau',
-	'whatlinkshere' => "Nofoaga e soso'o mai",
-	'watchlistall2' => "mea 'uma",
-);
+	'whatlinkshere' => 'Nofoaga e soso\'o mai',
+	'watchlistall2' => 'mea \'uma',
+];
 
-$messages['sma'] = array(
+$messages['sma'] = [
 	'wednesday' => 'Gaske-våhkoe',
 	'wed' => 'Gas',
 	'wrongpassword' => 'Loevesbaakoe lea gåarhmede. Vuejnedh vihth.',
@@ -14785,9 +14832,9 @@ $messages['sma'] = array(
 	'watchlisttools-view' => 'Sïektjedhlästoe',
 	'watchlisttools-edit' => 'Vuesehte jih värrhtoedimmie sïektjedhlästoe',
 	'watchlisttools-raw' => 'Värrhtordimmie saajpe sïektjedhlästoe',
-);
+];
 
-$messages['sn'] = array(
+$messages['sn'] = [
 	'wednesday' => 'Chitatu',
 	'welcomecreation' => '== Tigashire, $1! ==
 Akaunzi yako yagadzirwa.
@@ -14798,14 +14845,14 @@ Usakanganwe kuchinga [[Special:Preferences|mapreferences ako {{SITENAME}}]].',
 	'watch' => 'Rinda',
 	'watchthispage' => 'Ringa peji rino',
 	'whatlinkshere' => 'Zvakakochekera pano',
-);
+];
 
-$messages['so'] = array(
+$messages['so'] = [
 	'wednesday' => 'Arbaco',
 	'wed' => 'Arb',
-	'welcomecreation' => "== Soo dhawoow, $1! ==
+	'welcomecreation' => '== Soo dhawoow, $1! ==
 Gudagalahaaga waa la sameeyey.
-Ha' hilmaamin in aad wax ka bedesho [[Special:Preferences|{{SITENAME}} dooqaaga]].",
+Ha\' hilmaamin in aad wax ka bedesho [[Special:Preferences|{{SITENAME}} dooqaaga]].',
 	'wrongpassword' => 'Ereysirka waa qalad. Fadlan iskuday markale.',
 	'wrongpasswordempty' => 'Ereysir aan waxba ku jirin lama ogola. Fadlan iskuday markale.',
 	'watchthis' => 'Boggaan waardiyey',
@@ -14821,9 +14868,9 @@ Ha' hilmaamin in aad wax ka bedesho [[Special:Preferences|{{SITENAME}} dooqaaga]
 	'watchlistcontains' => 'Liiskaaga waardiyeynta waxaa ku jiro $1 {{PLURAL:$1|bog|boggag}}.',
 	'wlshowlast' => 'Fiiri $1 saacadood ama $2 maalmood $3 ee ugu dambeeyay',
 	'watchlistall2' => 'dhamaan',
-);
+];
 
-$messages['sq'] = array(
+$messages['sq'] = [
 	'wednesday' => 'E mërkurë',
 	'wed' => 'Më',
 	'wrong_wfQuery_params' => 'Parametrat gabim tek wfQuery()<br />
@@ -14857,11 +14904,11 @@ Query: $2',
 	'watchnochange' => 'Asnjë nga artikujt nën mbikqyrje nuk është redaktuar gjatë kohës së dhënë.',
 	'watchlist-details' => '{{PLURAL:$1|$1 faqe|$1 faqe}} nën mbikqyrje duke mos numëruar faqet e diskutimit.',
 	'wlheader-enotif' => '* Njoftimi me email është lejuar.',
-	'wlheader-showupdated' => "* Faqet që kanë ndryshuar nga vizita juaj e fundit do të tregohen të '''trasha'''",
+	'wlheader-showupdated' => '* Faqet që kanë ndryshuar nga vizita juaj e fundit do të tregohen të \'\'\'trasha\'\'\'',
 	'watchmethod-recent' => 'duke parë ndryshimet e fundit për faqet nën mbikqyrje',
 	'watchmethod-list' => 'duke parë faqet nën mbikqyrje për ndryshimet e fundit',
 	'watchlistcontains' => 'Lista mbikqyrëse e juaj ka $1 {{PLURAL:$1|faqe|faqe}}.',
-	'wlnote' => "Më poshtë {{PLURAL:$1|është ndryshimi i fundit|janë '''$1''' ndryshimet e fundit}} në {{PLUARAL:$2:orën e fundit|'''$2''' orët e fundit}}, që nga $3, $4.",
+	'wlnote' => 'Më poshtë {{PLURAL:$1|është ndryshimi i fundit|janë \'\'\'$1\'\'\' ndryshimet e fundit}} në {{PLUARAL:$2:orën e fundit|\'\'\'$2\'\'\' orët e fundit}}, që nga $3, $4.',
 	'wlshowlast' => 'Trego $1 orët $2 ditët $3',
 	'watchlist-options' => 'Mundësitë e listës mbikqyrëse',
 	'watching' => 'Duke mbikqyrur...',
@@ -14901,9 +14948,9 @@ Ju gjithashtu mund [[Special:EditWatchlist|të përdorni redaktuesin standart]].
 	'watchlisttools-view' => 'Shih ndryshimet e rëndësishme',
 	'watchlisttools-edit' => 'Shih dhe redakto listën mbikqyrëse.',
 	'watchlisttools-raw' => 'Redaktoje drejtpërdrejt listën',
-);
+];
 
-$messages['sr'] = array(
+$messages['sr'] = [
 	'wednesday' => 'E mërkurë',
 	'wed' => 'Më',
 	'wrong_wfQuery_params' => 'Parametrat gabim tek wfQuery()<br />
@@ -14937,11 +14984,11 @@ Query: $2',
 	'watchnochange' => 'Asnjë nga artikujt nën mbikqyrje nuk është redaktuar gjatë kohës së dhënë.',
 	'watchlist-details' => '{{PLURAL:$1|$1 faqe|$1 faqe}} nën mbikqyrje duke mos numëruar faqet e diskutimit.',
 	'wlheader-enotif' => '* Njoftimi me email është lejuar.',
-	'wlheader-showupdated' => "* Faqet që kanë ndryshuar nga vizita juaj e fundit do të tregohen të '''trasha'''",
+	'wlheader-showupdated' => '* Faqet që kanë ndryshuar nga vizita juaj e fundit do të tregohen të \'\'\'trasha\'\'\'',
 	'watchmethod-recent' => 'duke parë ndryshimet e fundit për faqet nën mbikqyrje',
 	'watchmethod-list' => 'duke parë faqet nën mbikqyrje për ndryshimet e fundit',
 	'watchlistcontains' => 'Lista mbikqyrëse e juaj ka $1 {{PLURAL:$1|faqe|faqe}}.',
-	'wlnote' => "Më poshtë {{PLURAL:$1|është ndryshimi i fundit|janë '''$1''' ndryshimet e fundit}} në {{PLUARAL:$2:orën e fundit|'''$2''' orët e fundit}}, që nga $3, $4.",
+	'wlnote' => 'Më poshtë {{PLURAL:$1|është ndryshimi i fundit|janë \'\'\'$1\'\'\' ndryshimet e fundit}} në {{PLUARAL:$2:orën e fundit|\'\'\'$2\'\'\' orët e fundit}}, që nga $3, $4.',
 	'wlshowlast' => 'Trego $1 orët $2 ditët $3',
 	'watchlist-options' => 'Mundësitë e listës mbikqyrëse',
 	'watching' => 'Duke mbikqyrur...',
@@ -14981,9 +15028,9 @@ Ju gjithashtu mund [[Special:EditWatchlist|të përdorni redaktuesin standart]].
 	'watchlisttools-view' => 'Shih ndryshimet e rëndësishme',
 	'watchlisttools-edit' => 'Shih dhe redakto listën mbikqyrëse.',
 	'watchlisttools-raw' => 'Redaktoje drejtpërdrejt listën',
-);
+];
 
-$messages['sr-ec'] = array(
+$messages['sr-ec'] = [
 	'wednesday' => 'среда',
 	'wed' => 'сре',
 	'wrong_wfQuery_params' => 'Неисправни параметри за wfQuery()<br />
@@ -15020,11 +15067,11 @@ $messages['sr-ec'] = array(
 	'watchnochange' => 'Ништа што надгледате није промењено у приказаном времену.',
 	'watchlist-details' => '{{PLURAL:$1|$1 страница|$1 странице|$1 страница}} на вашем списку надгледања, не рачунајући странице за разговор.',
 	'wlheader-enotif' => '* Е-обавештење је омогућено.',
-	'wlheader-showupdated' => "* Странице које су измењене откад сте их последњи пут посетили су '''подебљане'''",
+	'wlheader-showupdated' => '* Странице које су измењене откад сте их последњи пут посетили су \'\'\'подебљане\'\'\'',
 	'watchmethod-recent' => 'проверава се да ли има надгледаних страница у скорашњим изменама',
 	'watchmethod-list' => 'проверава се да ли има скорашњих измена у надгледаним страницама',
 	'watchlistcontains' => 'Ваш списак надгледања садржи $1 {{PLURAL:$1|страницу|странице|страница}}.',
-	'wlnote' => "Испод {{PLURAL:$1|је последња измена|су последње '''$1''' измене|је последњих '''$1''' измена}} у {{PLURAL:$2|претходном сату|претходна '''$2''' сата|претходних '''$2''' сати}}, закључно са $3, $4.",
+	'wlnote' => 'Испод {{PLURAL:$1|је последња измена|су последње \'\'\'$1\'\'\' измене|је последњих \'\'\'$1\'\'\' измена}} у {{PLURAL:$2|претходном сату|претходна \'\'\'$2\'\'\' сата|претходних \'\'\'$2\'\'\' сати}}, закључно са $3, $4.',
 	'wlshowlast' => 'Прикажи последњих $1 сати, $2 дана, $3',
 	'watchlist-options' => 'Поставке списка надгледања',
 	'watching' => 'Надгледање…',
@@ -15068,9 +15115,9 @@ $messages['sr-ec'] = array(
 	'watchlisttools-edit' => 'прикажи и уреди списак надгледања',
 	'watchlisttools-raw' => 'измени сиров списак надгледања',
 	'wikia-pagetitle' => '$1 – Wikia',
-);
+];
 
-$messages['sr-el'] = array(
+$messages['sr-el'] = [
 	'wednesday' => 'sreda',
 	'wed' => 'sre',
 	'wrong_wfQuery_params' => 'Netačni parametri za wfQuery()<br />
@@ -15096,7 +15143,7 @@ Ne zaboravite da prilagodite sebi svoja [[Special:Preferences|{{SITENAME}} pode�
 	'wantedfiles' => 'Traženi fajlovi',
 	'wantedtemplates' => 'Traženi šabloni',
 	'watchlist' => 'Moj spisak nadgledanja',
-	'watchlistfor' => "(za '''$1''')",
+	'watchlistfor' => '(za \'\'\'$1\'\'\')',
 	'watchlistanontext' => 'Molimo $1 da biste gledali ili menjali stavke na vašem spisku nadgledanja.',
 	'watchnologin' => 'Niste prijavljeni',
 	'watchnologintext' => 'Morate biti [[Special:UserLogin|prijavljeni]] da biste menjali spisak nadgledanja.',
@@ -15105,7 +15152,7 @@ Ne zaboravite da prilagodite sebi svoja [[Special:Preferences|{{SITENAME}} pode�
 	'watchnochange' => 'Ništa što nadgledate nije promenjeno u prikazanom vremenu.',
 	'watchlist-details' => '{{PLURAL:$1|$1 stranica|$1 stranice|$1 stranica}} na vašem spisku nadgledanja, ne računajući stranice za razgovor.',
 	'wlheader-enotif' => '* Obaveštavanje e-poštom je omogućeno.',
-	'wlheader-showupdated' => "* Stranice koje su izmenjene od kada ste ih poslednji put posetili su prikazane '''podebljano'''",
+	'wlheader-showupdated' => '* Stranice koje su izmenjene od kada ste ih poslednji put posetili su prikazane \'\'\'podebljano\'\'\'',
 	'watchmethod-recent' => 'proveravam ima li nadgledanih stranica u skorašnjim izmenama',
 	'watchmethod-list' => 'proveravam ima li skorašnjih izmena u nadgledanim stranicama',
 	'watchlistcontains' => 'Vaš spisak nadgledanja sadrži $1 stranica.',
@@ -15149,9 +15196,9 @@ Takođe, možete [[Special:Watchlist/edit|koristiti standardan uređivač spiska
 	'watchlisttools-view' => 'Pogledaj srodne promene',
 	'watchlisttools-edit' => 'Pogledaj i izmeni spisak nadgledanja',
 	'watchlisttools-raw' => 'Izmeni sirov spisak nadgledanja',
-);
+];
 
-$messages['srn'] = array(
+$messages['srn'] = [
 	'wednesday' => 'dridewroko',
 	'wed' => 'dri',
 	'welcomecreation' => '== Welkom, $1! ==
@@ -15178,27 +15225,27 @@ Pruberi baka.',
 	'whatlinkshere' => 'San e miti kon dyaso',
 	'whatlinkshere-title' => 'Papira di e sori go na $1',
 	'whatlinkshere-prev' => '{{PLURAL:$1|a wan|den $1}} di psa',
-	'whatlinkshere-next' => "{{PLURAL:$1|a wan|den $1}} d'e kon",
+	'whatlinkshere-next' => '{{PLURAL:$1|a wan|den $1}} d\'e kon',
 	'whatlinkshere-links' => '← miti kon dyaso',
 	'widthheightpage' => '$1 × $2, $3 peprewoysi',
 	'watchlistall2' => 'ala',
 	'watchlisttools-view' => 'Sori Tan Luku réy',
 	'watchlisttools-edit' => 'Luku nanga kenki my Tan Luku réy',
 	'watchlisttools-raw' => 'Kenki a lala Tan Luku réy',
-);
+];
 
-$messages['ss'] = array(
+$messages['ss'] = [
 	'wednesday' => 'Lesitsatfu',
 	'wed' => 'Lesitsatfu',
 	'withoutinterwiki-submit' => 'Khomba',
 	'watch' => 'Gadza',
-);
+];
 
-$messages['st'] = array(
+$messages['st'] = [
 	'wednesday' => 'Laboraro',
-);
+];
 
-$messages['stq'] = array(
+$messages['stq'] = [
 	'wednesday' => 'Midwiek',
 	'wed' => 'Mid',
 	'wrong_wfQuery_params' => 'Falske Parameter foar wfQuery()<br />
@@ -15232,11 +15279,11 @@ Ferjeet nit, dien [[Special:Preferences|{{SITENAME}}-Ienstaalengen]] antoupaasje
 	'watchnochange' => 'Neen fon do Sieden, do du beooboachtest, wuude in dän läästen Tiedruum beoarbaided.',
 	'watchlist-details' => 'Jie beooboachtje {{PLURAL:$1|1 Siede|$1 Sieden}} (Diskussionssieden wuuden hier nit meetäld).',
 	'wlheader-enotif' => '* E-Mail-Beskeed is aktivierd.',
-	'wlheader-showupdated' => "* Sieden, do ätter dien lääste Besäik annerd wuuden sunt, wäide '''fat''' deerstoald.",
+	'wlheader-showupdated' => '* Sieden, do ätter dien lääste Besäik annerd wuuden sunt, wäide \'\'\'fat\'\'\' deerstoald.',
 	'watchmethod-recent' => 'Uurpröiwjen fon do lääste Beoarbaidengen foar ju Beooboachtengslieste',
 	'watchmethod-list' => 'Uurpröiwjen fon ju Beooboachtengslieste ätter lääste Beoarbaidengen',
 	'watchlistcontains' => 'Jou Beooboachtengslieste änthaalt $1 {{PLURAL:$1|Siede|Sieden}}.',
-	'wlnote' => "Hier {{PLURAL:$1|foulget do lääste Annerenge|foulgje do lääste '''$1''' Annerengen}} fon do lääste {{PLURAL:$2|Uur|'''$2''' Uuren}}.",
+	'wlnote' => 'Hier {{PLURAL:$1|foulget do lääste Annerenge|foulgje do lääste \'\'\'$1\'\'\' Annerengen}} fon do lääste {{PLURAL:$2|Uur|\'\'\'$2\'\'\' Uuren}}.',
 	'wlshowlast' => 'Wies do lääste $1 Uuren, $2 Deege, of $3 (in do lääste 30 Deege).',
 	'watchlist-options' => 'Anwiesoptione',
 	'watching' => 'Beooboachtje …',
@@ -15274,9 +15321,9 @@ Du koast dien Beooboachtengslieste uk in dät [[Special:EditWatchlist/raw|Lieste
 	'watchlisttools-view' => 'Beooboachtengslieste: Annerengen',
 	'watchlisttools-edit' => 'normoal beoarbaidje',
 	'watchlisttools-raw' => 'Liestenformoat beoarbaidje (Import/Export)',
-);
+];
 
-$messages['su'] = array(
+$messages['su'] = [
 	'wednesday' => 'Rebo',
 	'wed' => 'Reb',
 	'wrong_wfQuery_params' => 'Parameter salah ka wfQuery()<br />Fungsi: $1<br />Pamenta: $2',
@@ -15307,11 +15354,11 @@ Tong hilap ngarobih [[Special:Preferences|{{SITENAME}} préferénsi]] anjeun.',
 	'watchnochange' => 'Sadaya awaseun anjeun taya nu diédit dina jangka wanci nu ditémbongkeun.',
 	'watchlist-details' => 'Aya {{PLURAL:$1|$1 kaca|$1 kaca}} nu ku anjeun diawaskeun, teu kaasup kaca obrolan/sawala.',
 	'wlheader-enotif' => '* Pangémbar surélék difungsikeun.',
-	'wlheader-showupdated' => "* Kaca nu robah ti panungtungan anjeun sindang ditémbongkeun kalawan '''kandel'''",
+	'wlheader-showupdated' => '* Kaca nu robah ti panungtungan anjeun sindang ditémbongkeun kalawan \'\'\'kandel\'\'\'',
 	'watchmethod-recent' => 'mariksa nu anyar robah na kaca nu diawaskeun',
 	'watchmethod-list' => 'mariksa nu anyar robah na kaca nu diawaskeun',
 	'watchlistcontains' => 'Anjeun ngawaskeun $1 {{PLURAL:$1|kaca|kaca}}.',
-	'wlnote' => "Di handap ieu mangrupa $1 {{PLURAL:$1|robahan|robahan}} ahir salila '''$2''' jam.",
+	'wlnote' => 'Di handap ieu mangrupa $1 {{PLURAL:$1|robahan|robahan}} ahir salila \'\'\'$2\'\'\' jam.',
 	'wlshowlast' => 'Témbongkeun $1 jam $2 poé $3 ahir',
 	'watchlist-options' => 'Pilihan awaskeuneun',
 	'watching' => 'Ngawaskeun...',
@@ -15344,9 +15391,9 @@ Tong hilap ngarobih [[Special:Preferences|{{SITENAME}} préferénsi]] anjeun.',
 	'watchlisttools-view' => 'Témbongkeun parobahan nu patali',
 	'watchlisttools-edit' => 'Témbongkeun sarta édit béréndélan awaskeuneun',
 	'watchlisttools-raw' => 'Robah béréndélan awaskeuneun',
-);
+];
 
-$messages['sv'] = array(
+$messages['sv'] = [
 	'wednesday' => 'onsdag',
 	'wed' => 'ons',
 	'wrong_wfQuery_params' => 'Felaktiga parametrar för wfQuery()<br /> Funktion: $1<br /> Förfrågan: $2',
@@ -15380,11 +15427,11 @@ Glöm inte att justera dina [[Special:Preferences|{{SITENAME}}-inställningar]].
 	'watchnochange' => 'Inga av dina bevakade sidor har ändrats inom den visade tidsperioden.',
 	'watchlist-details' => 'Du har $1 {{PLURAL:$1|sida|sidor}} på din bevakningslista (diskussionssidor är inte medräknade).',
 	'wlheader-enotif' => '* Bekräftelse per e-post är aktiverad.',
-	'wlheader-showupdated' => "* Sidor som har ändrats sedan ditt senaste besök visas i '''fetstil.'''",
+	'wlheader-showupdated' => '* Sidor som har ändrats sedan ditt senaste besök visas i \'\'\'fetstil.\'\'\'',
 	'watchmethod-recent' => 'letar efter bevakade sidor bland senaste ändringar',
 	'watchmethod-list' => 'letar efter nyligen gjorda ändringar bland bevakade sidor',
 	'watchlistcontains' => 'Din bevakningslista innehåller $1 {{PLURAL:$1|sida|sidor}}.',
-	'wlnote' => "Nedan finns {{PLURAL:$1|den senaste ändringen|de senaste '''$1''' ändringarna}} under {{PLURAL:$2|den senaste timmen|de senaste '''$2''' timmarna}} från den $3, kl. $4.",
+	'wlnote' => 'Nedan finns {{PLURAL:$1|den senaste ändringen|de senaste \'\'\'$1\'\'\' ändringarna}} under {{PLURAL:$2|den senaste timmen|de senaste \'\'\'$2\'\'\' timmarna}} från den $3, kl. $4.',
 	'wlshowlast' => 'Visa senaste $1 timmarna $2 dygnen $3',
 	'watchlist-options' => 'Alternativ för bevakningslistan',
 	'watching' => 'Bevakar...',
@@ -15425,9 +15472,11 @@ Du kan också [[Special:EditWatchlist|använda standardeditorn]].',
 	'watchlisttools-view' => 'Visa relevanta ändringar',
 	'watchlisttools-edit' => 'Visa och redigera bevakningslistan',
 	'watchlisttools-raw' => 'Redigera bevakningslistan i råformat',
-);
+	'widget-desc-wikiamessages' => 'Wikia meddelande',
+	'widget-title-wikiamessages' => 'Wikia meddelande',
+];
 
-$messages['sw'] = array(
+$messages['sw'] = [
 	'wednesday' => 'Jumatano',
 	'wed' => 'Jtano',
 	'wrong_wfQuery_params' => 'Parameta za ulizio zilizoingizwa wfQuery() na zisizo sahihi ni<br />
@@ -15462,11 +15511,11 @@ Jaribu tena.',
 	'watchnochange' => 'Hakuna kitu kati ya maangalizi yako kilichohaririwa katika kipindi kilichotajwa.',
 	'watchlist-details' => 'Unafuatilia {{PLURAL:$1|ukurasa $1|kurasa $1}} bila kuzingatia kurasa za majadiliano.',
 	'wlheader-enotif' => '* Huduma ya kuarifu kwa barua pepe imewezeshwa.',
-	'wlheader-showupdated' => "* Kurasa zilizobadilika tangu ulipoziona mwishoni zinaonyeshwa '''kooze'''",
+	'wlheader-showupdated' => '* Kurasa zilizobadilika tangu ulipoziona mwishoni zinaonyeshwa \'\'\'kooze\'\'\'',
 	'watchmethod-recent' => 'kupitia madabiliko ya karibuni ili kupata kurasa za maangalizi',
 	'watchmethod-list' => 'kupitia kurasa za maangalizi ili kupata madabiliko ya karibuni',
 	'watchlistcontains' => 'Orodha ya maangalizi yako ina {{PLURAL:$1|kitu|vitu}} $1.',
-	'wlnote' => "{{PLURAL:$1|Badiliko la|Mabadiliko '''$1''' ya}} mwisho katika {{PLURAL:$2|saa iliyopita linaonyeshwa|masaa '''$2''' yaliyopita yanaonyeshwa}} chini.",
+	'wlnote' => '{{PLURAL:$1|Badiliko la|Mabadiliko \'\'\'$1\'\'\' ya}} mwisho katika {{PLURAL:$2|saa iliyopita linaonyeshwa|masaa \'\'\'$2\'\'\' yaliyopita yanaonyeshwa}} chini.',
 	'wlshowlast' => 'Onyesha kutoka masaa $1 siku $2 $3',
 	'watchlist-options' => 'Hitiari za maangalizi',
 	'watching' => 'Unafuatilia...',
@@ -15506,9 +15555,9 @@ Pia unaweza [[Special:EditWatchlist|kutumia kihariri cha kawaida]].',
 	'watchlisttools-view' => 'Tazama mabadiliko yanayohusiana',
 	'watchlisttools-edit' => 'Tazama na hariri maangalizi',
 	'watchlisttools-raw' => 'Hariri maangalizi ghafi',
-);
+];
 
-$messages['szl'] = array(
+$messages['szl'] = [
 	'wednesday' => 'Strzoda',
 	'wed' => 'Str',
 	'wrong_wfQuery_params' => 'Felerne parametry překozane do wfQuery()<br />
@@ -15540,11 +15589,11 @@ Uotwarli my sam lo Ćebje kůnto.
 	'watchnochange' => 'Žodno ze zajtůw, na kere dowoš pozůr, ńy bůua sprowjano w podanym uokreśe.',
 	'watchlist-details' => 'Na pozorliśće {{PLURAL:$1|je 1 artikel|sům $1 artikle|je $1 artikli}} ńy rachujůnc zajtůw godek.',
 	'wlheader-enotif' => '* Wysůuańy powjadůmjyń na adres e-brif je zouůnčůne',
-	'wlheader-showupdated' => "* Zajty, kere bouy sprowjane uod Twoi uostatńi wizyty na ńych zostoy naškryflane '''tuustym'''",
+	'wlheader-showupdated' => '* Zajty, kere bouy sprowjane uod Twoi uostatńi wizyty na ńych zostoy naškryflane \'\'\'tuustym\'\'\'',
 	'watchmethod-recent' => 'šnupańy za půmjyńanymi na uostatku w zajtach, na kere dowoš pozůr',
 	'watchmethod-list' => 'šnupańy w zajtach, na kere dowoš pozůr pośrůd půmjyńanych na uostatku',
 	'watchlistcontains' => 'Lista zajtůw, na kere dowoš pozůr mo {{PLURAL:$1|jedna pozycja|$1 pozycje|$1 pozycyji}}.',
-	'wlnote' => "Půńižy pokazano {{PLURAL:$1|ostatńy sprawjyńy dokůnane|ostatńy '''$1''' sprawjyńe dokůnane|ostatńych '''$1''' sprawjyń dokůnanych}} bez {{PLURAL:$2|uostatńo godźina|uostatńich '''$2''' godźin}}.",
+	'wlnote' => 'Půńižy pokazano {{PLURAL:$1|ostatńy sprawjyńy dokůnane|ostatńy \'\'\'$1\'\'\' sprawjyńe dokůnane|ostatńych \'\'\'$1\'\'\' sprawjyń dokůnanych}} bez {{PLURAL:$2|uostatńo godźina|uostatńich \'\'\'$2\'\'\' godźin}}.',
 	'wlshowlast' => 'Pokož uostatńy $1 godźin $2 dńi ($3)',
 	'watchlist-options' => 'Uopcyje artikli na kere dowosz pozůr',
 	'watching' => 'Dowom pozor...',
@@ -15582,9 +15631,9 @@ Možeš tyž [[Special:EditWatchlist|užyć standardowygo edytora]].',
 	'watchlisttools-view' => 'Pokož wažńijše pomjyńańo',
 	'watchlisttools-edit' => 'Pokož i zmjyńoj pozorliste',
 	'watchlisttools-raw' => 'Zmjyńoj surowo pozorlista',
-);
+];
 
-$messages['ta'] = array(
+$messages['ta'] = [
 	'wednesday' => 'புதன்',
 	'wed' => 'புத',
 	'wrong_wfQuery_params' => 'பிழையான அளபுருக்கள் wfQuery()<br />
@@ -15617,11 +15666,11 @@ $messages['ta'] = array(
 	'watchnochange' => 'காட்சிப்படுத்தப்பட்ட கால இடைவெளியில், கவனிப்பிலுள்ள, உங்கள் விடயமெதுவும் தொகுக்கப்பட்டிருக்கவில்லை.',
 	'watchlist-details' => 'பேச்சுப் பக்கங்களைக் தவிர்த்து, {{PLURAL:$1|$1 பக்கம் கவனிக்கப்பட்டது.|$1 பக்கங்கள் கவனிக்கப்பட்டன.}}',
 	'wlheader-enotif' => '* மின்னஞ்சல் அறிவித்தல்கள் செயல்படுத்தப்பட்டுள்ளன.',
-	'wlheader-showupdated' => "* உமது கடைசி வருகைக்குப் பின்னர் மாற்றங்கள் செய்யப்பட்ட பக்கங்கள் '''தடித்த எழுத்துக்களால்''' காட்டப்பட்டுள்ளன",
+	'wlheader-showupdated' => '* உமது கடைசி வருகைக்குப் பின்னர் மாற்றங்கள் செய்யப்பட்ட பக்கங்கள் \'\'\'தடித்த எழுத்துக்களால்\'\'\' காட்டப்பட்டுள்ளன',
 	'watchmethod-recent' => 'கவனிக்கப்படுகின்ற பக்கங்களுக்காக, அண்மைய தொகுப்புகள் தேடிப் பார்க்கப்படுகிறன',
 	'watchmethod-list' => 'அண்மைய தொகுப்புகளுக்காக, கவனிக்கப்படுகின்ற பக்கங்கள் தேடிப் பார்க்கப்படுகிறன',
 	'watchlistcontains' => 'உங்கள் கவனிப்புப் பட்டியல் {{PLURAL:$1|ஒரு பக்கத்தைக்|$1 பக்கங்களைக்}} கொண்டுள்ளது.',
-	'wlnote' => "பின்வருவன கடைசி {{PLURAL:$2|மணித்தியாலத்தில்|'''$2''' மணித்தியாலங்களில்}} செய்யப்பட்ட {{PLURAL:$1|கடைசி ஒரு மாற்றமாகும்|கடைசி $1 மாற்றங்களாகும்}}.",
+	'wlnote' => 'பின்வருவன கடைசி {{PLURAL:$2|மணித்தியாலத்தில்|\'\'\'$2\'\'\' மணித்தியாலங்களில்}} செய்யப்பட்ட {{PLURAL:$1|கடைசி ஒரு மாற்றமாகும்|கடைசி $1 மாற்றங்களாகும்}}.',
 	'wlshowlast' => 'கடைசி $1 மணித்தியாலங்கள் $2 நாட்களைக் காட்டு $3',
 	'watchlist-options' => 'கவனிப்பு பட்டியலின் விருப்பத் தேர்வுகள்',
 	'watching' => 'கவனிக்கப்படுகிறது...',
@@ -15661,9 +15710,9 @@ $messages['ta'] = array(
 	'watchlisttools-view' => 'தொடர்பான மாற்றங்களைப் பார்',
 	'watchlisttools-edit' => 'என்கவனிப்பு பட்டியலை பார்த்து தொகு',
 	'watchlisttools-raw' => 'விக்கி நிரலற்றக் கவனிப்புப் பட்டியலைத் தொகு',
-);
+];
 
-$messages['tcy'] = array(
+$messages['tcy'] = [
 	'wednesday' => 'ಬುಧವಾರ',
 	'wed' => 'ಬುಧ',
 	'welcomecreation' => '== ಸುಸ್ವಾಗತೊ, $1! ==
@@ -15691,9 +15740,9 @@ $messages['tcy'] = array(
 	'watchlistall2' => 'ಪೂರ',
 	'watchlisttools-view' => 'ಪ್ರಸ್ತುತ ಬದಲಾವಣೆಲ್ ತೋಜಾಲೆ',
 	'watchlisttools-edit' => 'ವೀಕ್ಷಣಾಪಟ್ಟಿನ್ ತೂಲೆ ಬೊಕ್ಕ ಎಡಿಟ್ ಮಲ್ಪುಲೆ',
-);
+];
 
-$messages['te'] = array(
+$messages['te'] = [
 	'wednesday' => 'బుధవారం',
 	'wed' => 'బుధ',
 	'wrong_wfQuery_params' => 'wfQuery()కి తప్పుడు పారామీటర్లు వచ్చాయి<br />
@@ -15728,11 +15777,11 @@ $messages['te'] = array(
 	'watchnochange' => 'మీ వీక్షణ జాబితాలోని ఏ పేజీలోనూ ఈ కాల అవధిలో మార్పులు జరగలేదు.',
 	'watchlist-details' => 'మీ వీక్షణ జాబితాలో {{PLURAL:$1|ఒక పేజీ ఉంది|$1 పేజీలు ఉన్నాయి}}, చర్చా పేజీలని వదిలేసి.',
 	'wlheader-enotif' => '* ఈ-మెయిలు ప్రకటనలు పంపబడతాయి.',
-	'wlheader-showupdated' => "* మీ గత సందర్శన తరువాత మారిన పేజీలు '''బొద్దు'''గా చూపించబడ్డాయి.",
+	'wlheader-showupdated' => '* మీ గత సందర్శన తరువాత మారిన పేజీలు \'\'\'బొద్దు\'\'\'గా చూపించబడ్డాయి.',
 	'watchmethod-recent' => 'వీక్షణ జాబితాలోని పేజీల కొరకు ఇటీవలి మార్పులు పరిశీలించబడుతున్నాయి',
 	'watchmethod-list' => 'ఇటీవలి మార్పుల కొరకు వీక్షణ జాబితాలోని పేజీలు పరిశీలించబడుతున్నాయి',
 	'watchlistcontains' => 'మీ వీక్షణ జాబితాలో {{PLURAL:$1|ఒక పేజీ ఉంది|$1 పేజీలు ఉన్నాయి}}.',
-	'wlnote' => "గత {{PLURAL:$2|గంట సేపటిలో|'''$2''' గంటలలో}} జరిగిన చివరి {{PLURAL:$1|ఒక్క మార్పూ కింద ఉంది|'''$1''' మార్పులూ కింద ఉన్నాయి}}.",
+	'wlnote' => 'గత {{PLURAL:$2|గంట సేపటిలో|\'\'\'$2\'\'\' గంటలలో}} జరిగిన చివరి {{PLURAL:$1|ఒక్క మార్పూ కింద ఉంది|\'\'\'$1\'\'\' మార్పులూ కింద ఉన్నాయి}}.',
 	'wlshowlast' => 'గత $1 గంటలు $2 రోజులు $3 చూపించు',
 	'watchlist-options' => 'వీక్షణ జాబితా ఎంపికలు',
 	'watching' => 'గమనిస్తున్నాం...',
@@ -15771,25 +15820,25 @@ $messages['te'] = array(
 	'watchlisttools-view' => 'సంబంధిత మార్పులను చూపించు',
 	'watchlisttools-edit' => 'వీక్షణ జాబితాను చూపించు, మార్చు',
 	'watchlisttools-raw' => 'ముడి వీక్షణ జాబితాలో మార్పులు చెయ్యి',
-);
+];
 
-$messages['tet'] = array(
+$messages['tet'] = [
 	'wednesday' => 'Loron-kuarta',
 	'wed' => 'Kua',
-	'welcomecreation' => "== Loron di'ak, $1! ==
-Agora Ita iha konta iha ne'e.
-La haluha muda Ita-nia [[Special:Preferences|preferénsia]].",
-	'watchthis' => "Hateke pájina ne'e",
+	'welcomecreation' => '== Loron di\'ak, $1! ==
+Agora Ita iha konta iha ne\'e.
+La haluha muda Ita-nia [[Special:Preferences|preferénsia]].',
+	'watchthis' => 'Hateke pájina ne\'e',
 	'whitelistedittext' => 'Ó tenke $1 ba edita pájina sira.',
-	'watchthisupload' => "Hateke pájina ne'e",
-	'withoutinterwiki' => "Pájina sira-ne'ebé la iha ligasaun ba lian seluk",
-	'watchlist' => "Ha'u-nia lista hateke",
+	'watchthisupload' => 'Hateke pájina ne\'e',
+	'withoutinterwiki' => 'Pájina sira-ne\'ebé la iha ligasaun ba lian seluk',
+	'watchlist' => 'Ha\'u-nia lista hateke',
 	'watch' => 'Hateke',
-	'watchthispage' => "Hateke pájina ne'e",
+	'watchthispage' => 'Hateke pájina ne\'e',
 	'watchlist-details' => '{{PLURAL:$1|Pájina ida (1)|Pájina $1}} iha Ita-nia "lista hateke" (la ho pájina diskusaun).',
 	'wlshowlast' => 'Hatudu $1 hora $2 loron ikus $3',
 	'watching' => 'Hateke...',
-	'whatlinkshere' => "Artigu sira ne'ebé bá iha ne'e",
+	'whatlinkshere' => 'Artigu sira ne\'ebé bá iha ne\'e',
 	'whatlinkshere-title' => 'Pájina sira ne\'ebé bá "$1".',
 	'whatlinkshere-page' => 'Pájina:',
 	'whatlinkshere-prev' => '{{PLURAL:$1|oinmai|oinmai $1}}',
@@ -15802,25 +15851,25 @@ La haluha muda Ita-nia [[Special:Preferences|preferénsia]].",
 	'watchlistedit-raw-added' => '{{PLURAL:$1|Títulu ida|Títulu $1}} tau tan tiha:',
 	'watchlistedit-raw-removed' => '{{PLURAL:$1|Títulu ida|Títulu $1}} hasai tiha:',
 	'watchlisttools-edit' => 'Haree no edita lista hateke',
-);
+];
 
-$messages['tg'] = array(
+$messages['tg'] = [
 	'wednesday' => 'Loron-kuarta',
 	'wed' => 'Kua',
-	'welcomecreation' => "== Loron di'ak, $1! ==
-Agora Ita iha konta iha ne'e.
-La haluha muda Ita-nia [[Special:Preferences|preferénsia]].",
-	'watchthis' => "Hateke pájina ne'e",
+	'welcomecreation' => '== Loron di\'ak, $1! ==
+Agora Ita iha konta iha ne\'e.
+La haluha muda Ita-nia [[Special:Preferences|preferénsia]].',
+	'watchthis' => 'Hateke pájina ne\'e',
 	'whitelistedittext' => 'Ó tenke $1 ba edita pájina sira.',
-	'watchthisupload' => "Hateke pájina ne'e",
-	'withoutinterwiki' => "Pájina sira-ne'ebé la iha ligasaun ba lian seluk",
-	'watchlist' => "Ha'u-nia lista hateke",
+	'watchthisupload' => 'Hateke pájina ne\'e',
+	'withoutinterwiki' => 'Pájina sira-ne\'ebé la iha ligasaun ba lian seluk',
+	'watchlist' => 'Ha\'u-nia lista hateke',
 	'watch' => 'Hateke',
-	'watchthispage' => "Hateke pájina ne'e",
+	'watchthispage' => 'Hateke pájina ne\'e',
 	'watchlist-details' => '{{PLURAL:$1|Pájina ida (1)|Pájina $1}} iha Ita-nia "lista hateke" (la ho pájina diskusaun).',
 	'wlshowlast' => 'Hatudu $1 hora $2 loron ikus $3',
 	'watching' => 'Hateke...',
-	'whatlinkshere' => "Artigu sira ne'ebé bá iha ne'e",
+	'whatlinkshere' => 'Artigu sira ne\'ebé bá iha ne\'e',
 	'whatlinkshere-title' => 'Pájina sira ne\'ebé bá "$1".',
 	'whatlinkshere-page' => 'Pájina:',
 	'whatlinkshere-prev' => '{{PLURAL:$1|oinmai|oinmai $1}}',
@@ -15833,9 +15882,9 @@ La haluha muda Ita-nia [[Special:Preferences|preferénsia]].",
 	'watchlistedit-raw-added' => '{{PLURAL:$1|Títulu ida|Títulu $1}} tau tan tiha:',
 	'watchlistedit-raw-removed' => '{{PLURAL:$1|Títulu ida|Títulu $1}} hasai tiha:',
 	'watchlisttools-edit' => 'Haree no edita lista hateke',
-);
+];
 
-$messages['tg-cyrl'] = array(
+$messages['tg-cyrl'] = [
 	'wednesday' => 'Чоршанбе',
 	'wed' => 'Чш',
 	'wrong_wfQuery_params' => 'Параметрҳои нодуруст ба wfQuery()<br />
@@ -15867,11 +15916,11 @@ $messages['tg-cyrl'] = array(
 	'watchnochange' => 'Ягон мавриди пайгириҳои шумо дар давраи замони намоишёфта вироиш нашуда аст.',
 	'watchlist-details' => '{{PLURAL:$1|$1 саҳифаи|$1 саҳифаҳои}} дар феҳристи пайгириҳои шумо, бидуни ҳисоби саҳифаҳои баҳс.',
 	'wlheader-enotif' => '* Иттилоорасонии тариқи почтаи электронӣ (E-mail) имконпазир аст.',
-	'wlheader-showupdated' => "* Саҳифаҳое, ки пас аз охирин сар заданатон ба онҳо тағйир кардаанд '''пурранг''' нишон дода шудаанд",
+	'wlheader-showupdated' => '* Саҳифаҳое, ки пас аз охирин сар заданатон ба онҳо тағйир кардаанд \'\'\'пурранг\'\'\' нишон дода шудаанд',
 	'watchmethod-recent' => 'баррасии вироишҳои охир барои саҳифаҳои пайгиришуда',
 	'watchmethod-list' => 'баррасии саҳифаҳои пайгиришуда барои вироишҳои охир',
 	'watchlistcontains' => 'Феҳристи пайгириҳои шумо $1 {{PLURAL:$1|саҳифаро|саҳифаҳоро}} дар бар мегирад.',
-	'wlnote' => "Дар зер {{PLURAL:$1|охирин тағйир|'''$1''' охирин тағйирот}} дар $2 соати охир {{PLURAL:омадааст|омадаанд}}.",
+	'wlnote' => 'Дар зер {{PLURAL:$1|охирин тағйир|\'\'\'$1\'\'\' охирин тағйирот}} дар $2 соати охир {{PLURAL:омадааст|омадаанд}}.',
 	'wlshowlast' => 'Намоиши охирин $1 соат $2 рӯзҳо $3',
 	'watchlist-options' => 'Ихтиёроти феҳристи пайгириҳо',
 	'watching' => 'Пайгири...',
@@ -15908,9 +15957,9 @@ $messages['tg-cyrl'] = array(
 	'watchlisttools-view' => 'Намоиши тағйироти алоқаманди феҳристи пайгириҳо',
 	'watchlisttools-edit' => 'Мушоҳида ва вироиши феҳристи пайгириҳо',
 	'watchlisttools-raw' => 'Вироиши феҳристи хоми пайгириҳо',
-);
+];
 
-$messages['tg-latn'] = array(
+$messages['tg-latn'] = [
 	'wednesday' => 'Corşanbe',
 	'wed' => 'Cş',
 	'wrong_wfQuery_params' => 'Parametrhoi nodurust ba wfQuery()<br />
@@ -15941,11 +15990,11 @@ Tanzim kardani [[Special:Preferences|tarçihoti {{SITENAME}}]] xudro faromūş n
 	'watchnochange' => 'Jagon mavridi pajgirihoi şumo dar davrai zamoni namoişjofta viroiş naşuda ast.',
 	'watchlist-details' => '{{PLURAL:$1|$1 sahifai|$1 sahifahoi}} dar fehristi pajgirihoi şumo, biduni hisobi sahifahoi bahs.',
 	'wlheader-enotif' => '* Ittiloorasoniji tariqi poctai elektronī (E-mail) imkonpazir ast.',
-	'wlheader-showupdated' => "* Sahifahoe, ki pas az oxirin sar zadanaton ba onho taƣjir kardaand '''purrang''' nişon doda şudaand",
+	'wlheader-showupdated' => '* Sahifahoe, ki pas az oxirin sar zadanaton ba onho taƣjir kardaand \'\'\'purrang\'\'\' nişon doda şudaand',
 	'watchmethod-recent' => 'barrasiji viroişhoi oxir baroi sahifahoi pajgirişuda',
 	'watchmethod-list' => 'barrasiji sahifahoi pajgirişuda baroi viroişhoi oxir',
 	'watchlistcontains' => 'Fehristi pajgirihoi şumo $1 {{PLURAL:$1|sahifaro|sahifahoro}} dar bar megirad.',
-	'wlnote' => "Dar zer {{PLURAL:$1|oxirin taƣjir|'''$1''' oxirin taƣjirot}} dar $2 soati oxir {{PLURAL:omadaast|omadaand}}.",
+	'wlnote' => 'Dar zer {{PLURAL:$1|oxirin taƣjir|\'\'\'$1\'\'\' oxirin taƣjirot}} dar $2 soati oxir {{PLURAL:omadaast|omadaand}}.',
 	'wlshowlast' => 'Namoişi oxirin $1 soat $2 rūzho $3',
 	'watchlist-options' => 'Ixtijoroti fehristi pajgiriho',
 	'watching' => 'Pajgiri...',
@@ -15953,7 +16002,7 @@ Tanzim kardani [[Special:Preferences|tarçihoti {{SITENAME}}]] xudro faromūş n
 	'whatlinkshere-title' => 'Sahifahoe ki ba $1 pajvand dorand',
 	'whatlinkshere-page' => 'Sahifa:',
 	'whatlinkshere-prev' => '{{PLURAL:$1|qablī|qablī $1}}',
-	'whatlinkshere-next' => "{{PLURAL:$1|ba'dī|ba'dī $1}}",
+	'whatlinkshere-next' => '{{PLURAL:$1|ba\'dī|ba\'dī $1}}',
 	'whatlinkshere-links' => '← pajvandho',
 	'whatlinkshere-hideredirs' => '$1 taƣjiri masir',
 	'whatlinkshere-hidetrans' => '$1 transgunçoişho',
@@ -15965,9 +16014,9 @@ Tanzim kardani [[Special:Preferences|tarçihoti {{SITENAME}}]] xudro faromūş n
 	'watchlistedit-noitems' => 'Fehristi pajgirihoi şumo xolī ast.',
 	'watchlistedit-normal-title' => 'Viroişi fehristi pajgiriho',
 	'watchlistedit-normal-legend' => 'Hazfi unvonho az fehristi pajgiriho',
-	'watchlistedit-normal-explain' => "Unvonhoi mavçud dar fehristi pajgirihoi şumo dar pojon namoiş doda şudaand.
-Baroi hazfi jak unvon, ça'bai kūcaki kanori onro tik bizanid.
-Şumo metavoned [[Special:EditWatchlist/raw|fehristi xomi pajgirihoro viroiş kuned]].",
+	'watchlistedit-normal-explain' => 'Unvonhoi mavçud dar fehristi pajgirihoi şumo dar pojon namoiş doda şudaand.
+Baroi hazfi jak unvon, ça\'bai kūcaki kanori onro tik bizanid.
+Şumo metavoned [[Special:EditWatchlist/raw|fehristi xomi pajgirihoro viroiş kuned]].',
 	'watchlistedit-normal-submit' => 'Unvonho hazf şavand',
 	'watchlistedit-normal-done' => '$1 unvon az fehristi pajgirihoi şumo hazf {{PLURAL:$1|şud|şudand}}:',
 	'watchlistedit-raw-title' => 'Viroişi fehristi xomī pajgiriho',
@@ -15982,9 +16031,9 @@ Tavaççūh kuned, ki şumo metavoned az [[Special:EditWatchlist|viroişgari sta
 	'watchlisttools-view' => 'Namoişi taƣjiroti aloqamandi fehristi pajgiriho',
 	'watchlisttools-edit' => 'Muşohida va viroişi fehristi pajgiriho',
 	'watchlisttools-raw' => 'Viroişi fehristi xomi pajgiriho',
-);
+];
 
-$messages['th'] = array(
+$messages['th'] = [
 	'wednesday' => 'วันพุธ',
 	'wed' => 'พ.',
 	'wrong_wfQuery_params' => 'พารามิเตอร์ที่ส่งไป wfQuery() ไม่ถูกต้อง<br />
@@ -16019,7 +16068,7 @@ $messages['th'] = array(
 	'watchnochange' => 'ไม่มีการแก้ไขในรายการเฝ้าดูในช่วงเวลาที่กำหนด',
 	'watchlist-details' => 'มี {{PLURAL:$1|$1 หน้า|$1 หน้า}}อยู่ในรายชื่อเฝ้าดูของคุณ ไม่รวมหน้าอภิปราย',
 	'wlheader-enotif' => '* แจ้งเตือนผ่านอีเมลถูกเปิดใช้งาน',
-	'wlheader-showupdated' => "* หน้าที่ถูกเปลี่ยนแปลงตั้งแต่การใช้งานครั้งล่าสุดแสดงใน'''ตัวหนา'''",
+	'wlheader-showupdated' => '* หน้าที่ถูกเปลี่ยนแปลงตั้งแต่การใช้งานครั้งล่าสุดแสดงใน\'\'\'ตัวหนา\'\'\'',
 	'watchmethod-recent' => 'ตรวจสอบการปรับปรุงล่าสุดกับหน้าเฝ้าดู',
 	'watchmethod-list' => 'ตรวจสอบหน้าเฝ้าดูกับการแก้ไขล่าสุด',
 	'watchlistcontains' => 'รายการเฝ้าดูของคุณมี $1 หน้า',
@@ -16062,14 +16111,14 @@ $messages['th'] = array(
 	'watchlisttools-view' => 'ดูการเปลี่ยนแปลงที่เกี่ยวข้อง',
 	'watchlisttools-edit' => 'ดูและแก้ไขรายการเฝ้าดู',
 	'watchlisttools-raw' => 'แก้ไขรายการเฝ้าดูทั้งหมด',
-);
+];
 
-$messages['ti'] = array(
+$messages['ti'] = [
 	'wednesday' => 'ረብዓ',
 	'wed' => 'ረቡዕ',
-);
+];
 
-$messages['tk'] = array(
+$messages['tk'] = [
 	'wednesday' => 'Çarşenbe',
 	'wed' => 'Çar',
 	'wrong_wfQuery_params' => 'wfQuery() funksiýasyna nädogry parametrler<br />
@@ -16103,11 +16152,11 @@ Hasabyňyz açyldy.
 	'watchnochange' => 'Gözegçilik edýän sahypalaryňyzyň hiç birisi görkezilen wagtyň dowamynda redaktirlenmändir.',
 	'watchlist-details' => 'Çekişme sahypalaryny hasap etmäniňde, gözegçilik sanawyňyzda {{PLURAL:$1|$1 sahypa|$1 sahypa}} bar.',
 	'wlheader-enotif' => '* E-poçta bilen habar beriş açyk.',
-	'wlheader-showupdated' => "* Soňky gezek baryp görenizden soňra üýtgedilen sahypalar '''goýy şrift''' bilen görkezilýär.",
+	'wlheader-showupdated' => '* Soňky gezek baryp görenizden soňra üýtgedilen sahypalar \'\'\'goýy şrift\'\'\' bilen görkezilýär.',
 	'watchmethod-recent' => 'soňky özgerdişlerdäki gözegçilikde saklaýan sahypalaryňyz barlanylýar',
 	'watchmethod-list' => 'gözegçilikde saklaýan sahypalaryňyzdaky soňky özgerdişler barlanylýar',
 	'watchlistcontains' => 'Gözegçilik sanawyňyzda $1 sany {{PLURAL:$1|sahypa|sahypa}} bar.',
-	'wlnote' => "Aşakda soňky {{PLURAL:$2|bir sagatda|'''$2''' sagatda}} edilen {{PLURAL:$1|soňky üýtgeşme|soňky '''$1''' üýtgeşme}} görkezilýär.",
+	'wlnote' => 'Aşakda soňky {{PLURAL:$2|bir sagatda|\'\'\'$2\'\'\' sagatda}} edilen {{PLURAL:$1|soňky üýtgeşme|soňky \'\'\'$1\'\'\' üýtgeşme}} görkezilýär.',
 	'wlshowlast' => 'Soňky $1 sagady $2 güni görkez $3',
 	'watchlist-options' => 'Gözegçilik sanawynyň opsiýalary',
 	'watching' => 'Gözegçilige alynýar...',
@@ -16146,9 +16195,9 @@ Bolanyňyzdan soňra "{{int:Watchlistedit-raw-submit}}" düwmesine basyň.
 	'watchlisttools-view' => 'Degişli üýtgeşmeleri görkez',
 	'watchlisttools-edit' => 'Gözegçilik sanawyna göz aýla we redaktirle',
 	'watchlisttools-raw' => 'Işlenmedik gözegçilik sanawyny redaktirle',
-);
+];
 
-$messages['tl'] = array(
+$messages['tl'] = [
 	'wednesday' => 'Miyerkules',
 	'wed' => 'Miy',
 	'wrong_wfQuery_params' => 'Maling mga parametro sa wfQuery()<br />
@@ -16183,11 +16232,11 @@ Pakisubok muli.',
 	'watchnochange' => 'Wala sa binabantayan mo ang binago sa oras na nakikita.',
 	'watchlist-details' => '{{PLURAL:$1|$1 pahinang|$1 mga pahinang}} nasa iyong talaan ng mga binabantayan, hindi binibilang ang mga pahina ng usapan.',
 	'wlheader-enotif' => '* Umiiral ang pagpapahayag sa pamamagitan ng e-liham.',
-	'wlheader-showupdated' => "* Ipinapakitang may '''makakapal na mga panitik''' ang nabagong/binagong mga pahina mula pa noong huli mong pagdalaw sa kanila",
+	'wlheader-showupdated' => '* Ipinapakitang may \'\'\'makakapal na mga panitik\'\'\' ang nabagong/binagong mga pahina mula pa noong huli mong pagdalaw sa kanila',
 	'watchmethod-recent' => 'sinusuri ang kamakailan lamang na mga pagbabago para sa binabantayang mga pahina',
 	'watchmethod-list' => 'sinusuri ang binabantayang mga pahina para sa mga kamakailan lamang na mga pagbabago',
 	'watchlistcontains' => 'Naglalaman ng $1 {{PLURAL:$1|pahina|mga pahina}} ang iyong talaan ng mga binabantayan.',
-	'wlnote' => "Nasa ibaba ang {{PLURAL:$1|pinakahuling pagbabago|pinakahuling '''$1''' mga pagbabago}} sa loob ng huling {{PLURAL:$2|oras|'''$2''' mga oras}}.",
+	'wlnote' => 'Nasa ibaba ang {{PLURAL:$1|pinakahuling pagbabago|pinakahuling \'\'\'$1\'\'\' mga pagbabago}} sa loob ng huling {{PLURAL:$2|oras|\'\'\'$2\'\'\' mga oras}}.',
 	'wlshowlast' => 'Ipakita ang huling $1 mga oras $2 mga araw $3',
 	'watchlist-options' => 'Mga pagpipilian para sa talaan ng mga binabantayan',
 	'watching' => 'Isinasama sa mga binabantayan...',
@@ -16227,9 +16276,9 @@ Maaari mo ring [[Special:EditWatchlist|gamitin ang pangkaraniwang pampatnugot]].
 	'watchlisttools-view' => 'Tingnan ang kaugnay na mga pagbabago',
 	'watchlisttools-edit' => 'Tingnan at baguhin ang talaan ng mga binabantayan',
 	'watchlisttools-raw' => 'Baguhin ang hilaw na talaan ng mga binabantayan',
-);
+];
 
-$messages['tn'] = array(
+$messages['tn'] = [
 	'wednesday' => 'Laboraro',
 	'welcomecreation' => '== Amogelesega, $1! ==
 
@@ -16240,14 +16289,14 @@ O ipuletse akhaonte. O seka wa lebala go fetola tse o di dikgatlhegelo tsa gago 
 	'watch' => 'Lebelela',
 	'watchthispage' => 'Lebelela tsebe e',
 	'whatlinkshere' => 'Ke eng se se gokaganang fa',
-);
+];
 
-$messages['to'] = array(
+$messages['to'] = [
 	'wednesday' => 'Pulelulu',
 	'wed' => 'Pul',
-	'wrong_wfQuery_params' => "Ngaahi mahuʻinga ʻikai totonu ki he ''wfQuery()''<br />
+	'wrong_wfQuery_params' => 'Ngaahi mahuʻinga ʻikai totonu ki he \'\'wfQuery()\'\'<br />
 Lakanga: $1<br />
-Eke: $2",
+Eke: $2',
 	'welcomecreation' => '== Tali fiefia, $1! ==
 
 Kuo fakatupu hoʻo tohi kau-ki-ai. ʻOua ʻe ngalo ke liliu hoʻo faʻiteliha {{SITENAME}}.',
@@ -16284,18 +16333,18 @@ Kuo fakatupu hoʻo tohi kau-ki-ai. ʻOua ʻe ngalo ke liliu hoʻo faʻiteliha {{
 	'watchlisttools-view' => 'Sio ki he ngaahi liliu maʻongoʻonga',
 	'watchlisttools-edit' => 'Sio pea fatu ʻete hokohoko leʻo',
 	'watchlisttools-raw' => 'Fatu ʻa e hokohoko leʻo taʻengaohi',
-);
+];
 
-$messages['tokipona'] = array(
+$messages['tokipona'] = [
 	'watchthis' => 'mi wile sona e ante ale pi lipu ni lon tenpo kama',
 	'watchlist' => 'mi sona e ante pi lipu seme',
 	'watch' => 'o sona e ante',
 	'watchthispage' => 'mi wile sona e ante ale pi lipu ni lon tenpo kama',
 	'watchnochange' => 'None of your watched items was edited in the time period displayed.',
 	'whatlinkshere' => 'lipu seme li tawa ni?',
-);
+];
 
-$messages['tpi'] = array(
+$messages['tpi'] = [
 	'wednesday' => 'Trinde',
 	'wed' => 'Tri',
 	'watchthis' => 'Putim dispela pes long lukautbuk bilong mi',
@@ -16310,7 +16359,7 @@ $messages['tpi'] = array(
 	'watch' => 'Lukautim',
 	'watchthispage' => 'Lukautim dispela pes',
 	'watchlist-details' => '$1 pes istap long lukautbuk (dispela namba i no kaunim ol pes bilong toktok).',
-	'wlheader-showupdated' => "* Ol pes i senis pinis bihain long taim yu lukim ol igat nem i '''strongpela'''",
+	'wlheader-showupdated' => '* Ol pes i senis pinis bihain long taim yu lukim ol igat nem i \'\'\'strongpela\'\'\'',
 	'wlshowlast' => 'Lukim dispela $1 aua $2 de $3',
 	'watchlist-options' => 'Ol laik bilong Lukautbuk',
 	'watching' => 'Wet liklik, i go insait long lukautbuk nau...',
@@ -16341,9 +16390,9 @@ $messages['tpi'] = array(
 	'watchlisttools-view' => 'Lukim ol senis',
 	'watchlisttools-edit' => 'Lukim na senisim lukautbuk',
 	'watchlisttools-raw' => 'Senisim lukautbuk insait long wanpela bokis',
-);
+];
 
-$messages['tr'] = array(
+$messages['tr'] = [
 	'wednesday' => 'Çarşamba',
 	'wed' => 'Çrş',
 	'wrong_wfQuery_params' => 'wfQuery() ye yanlış parametre<br />
@@ -16378,11 +16427,11 @@ Hesabınız açıldı.
 	'watchnochange' => 'İzleme listenizdeki sayfaların hiçbiri, gösterilen zaman aralığında güncellenmemiş.',
 	'watchlist-details' => 'Tartışma sayfaları hariç {{PLURAL:$1|$1 sayfa|$1 sayfa}} izleme listenizdedir.',
 	'wlheader-enotif' => '* E-mail ile haber verme açılmıştır.',
-	'wlheader-showupdated' => "* Son ziyaretinizden sonraki sayfa değişiklikleri '''kalın yazıyla''' gösterilmiştir.",
+	'wlheader-showupdated' => '* Son ziyaretinizden sonraki sayfa değişiklikleri \'\'\'kalın yazıyla\'\'\' gösterilmiştir.',
 	'watchmethod-recent' => 'izlediğiniz sayfalarda yapılan son değişiklikler kontrol ediliyor',
 	'watchmethod-list' => 'izlediğiniz sayfalarda yapılan son değişiklikler kontrol ediliyor',
 	'watchlistcontains' => 'İzleme listenizde $1 tane {{PLURAL:$1|sayfa|sayfa}} var.',
-	'wlnote' => "Son {{PLURAL:$2|bir saatte|'''$2''' saatte}} yapılan {{PLURAL:$1|son değişiklik|son '''$1''' değişiklik}} aşağıdadır.",
+	'wlnote' => 'Son {{PLURAL:$2|bir saatte|\'\'\'$2\'\'\' saatte}} yapılan {{PLURAL:$1|son değişiklik|son \'\'\'$1\'\'\' değişiklik}} aşağıdadır.',
 	'wlshowlast' => 'Son $1 saati $2 günü göster $3',
 	'watchlist-options' => 'İzleme listesi seçenekleri',
 	'watching' => 'İzleniyor...',
@@ -16422,9 +16471,9 @@ Ayrıca [[Special:EditWatchlist|standart düzenleme sayfasını]] da kullanabili
 	'watchlisttools-view' => 'İlgili değişiklikleri göster',
 	'watchlisttools-edit' => 'İzleme listesini gör ve düzenle',
 	'watchlisttools-raw' => 'Ham izleme listesini düzenle',
-);
+];
 
-$messages['ts'] = array(
+$messages['ts'] = [
 	'wed' => 'Ravunharhu',
 	'watchthis' => 'Langutisa tluka leri',
 	'watchlist' => 'Leswi ndziswilanguteke',
@@ -16432,9 +16481,9 @@ $messages['ts'] = array(
 	'watchthispage' => 'Languta tluka leri',
 	'watching' => 'Ulangutile...',
 	'whatlinkshere' => 'Leswi khwekelaka laha',
-);
+];
 
-$messages['tt-cyrl'] = array(
+$messages['tt-cyrl'] = [
 	'wednesday' => 'Чәршәмбе',
 	'wed' => 'Чәр',
 	'wrong_wfQuery_params' => 'wfQuery() функция өчен ярамаган параметрлар<br />
@@ -16483,9 +16532,9 @@ $messages['tt-cyrl'] = array(
 	'watchlisttools-edit' => 'Күзәтү исемлегене карау һәм үзгәртү',
 	'watchlisttools-raw' => 'Текст сыман үзгәртү',
 	'wikia-pagetitle' => '$1 — Wikia',
-);
+];
 
-$messages['tt-latn'] = array(
+$messages['tt-latn'] = [
 	'wednesday' => 'Çärşämbe',
 	'wed' => 'Çär',
 	'wrong_wfQuery_params' => 'wfQuery() funksiä öçen yaramağan parametrlar<br />
@@ -16534,16 +16583,16 @@ Saytnıñ şäxsi [[Special:Preferences|köylänmälären]] qararğa onıtmağı
 	'watchlisttools-edit' => 'Küzätü isemlegene qaraw häm üzgärtü',
 	'watchlisttools-raw' => 'Tekst sıman üzgärtü',
 	'wikia-pagetitle' => '$1 — Wikia',
-);
+];
 
-$messages['ty'] = array(
+$messages['ty'] = [
 	'wednesday' => 'mahana toru',
 	'wed' => 'mahana toru',
 	'watch' => 'Ha’apa’o',
 	'whatlinkshere' => 'Te mau ’api i tū’atihia mai',
-);
+];
 
-$messages['tyv'] = array(
+$messages['tyv'] = [
 	'wednesday' => 'Үш дугаар хүн',
 	'watchthis' => 'Бо арынны хайгаараары',
 	'watchthisupload' => 'Бо арынны хайгаараары',
@@ -16567,25 +16616,25 @@ $messages['tyv'] = array(
 	'watchlistedit-raw-titles' => 'Адар:',
 	'watchlisttools-edit' => 'Хайгаарылга даңзызын көөрү болгаш өскертири',
 	'watchlisttools-raw' => 'Чиг хайгаарылга даңзызын өскертири',
-);
+];
 
-$messages['udm'] = array(
+$messages['udm'] = [
 	'wednesday' => 'вирнунал',
 	'wed' => 'Врн',
 	'watchlist' => 'Чаклано статьяос',
 	'watch' => 'Чаклано',
 	'whatlinkshere' => 'Татчы линкъёс',
-);
+];
 
-$messages['ug'] = array(
+$messages['ug'] = [
 	'wednesday' => 'вирнунал',
 	'wed' => 'Врн',
 	'watchlist' => 'Чаклано статьяос',
 	'watch' => 'Чаклано',
 	'whatlinkshere' => 'Татчы линкъёс',
-);
+];
 
-$messages['ug-arab'] = array(
+$messages['ug-arab'] = [
 	'wednesday' => 'چارشەنبە',
 	'wed' => 'چ',
 	'wrong_wfQuery_params' => 'خاتا پارامېتىر  wfQuery()<br />غا يوللاندى
@@ -16625,11 +16674,11 @@ $messages['ug-arab'] = array(
 	'watchnochange' => 'كۆرسەتكەن ۋاقىت بۆلىكىدە سىزنىڭ كۆزەت بېتىڭىزدە ئۆزگىرىش بولمىدى.',
 	'watchlist-details' => 'كۆزەت تىزىملىكىڭىزدە {{PLURAL:$1|$1 بەت|$1 بەت}}  بار، مۇنازىرە بېتىنى ئۆز ئىچىگە ئالمايدۇ.',
 	'wlheader-enotif' => '* ئېلخەتتە ئەسكەرتىش ئىقتىدارى قوزغىتىلدى.',
-	'wlheader-showupdated' => "* سىز ئالدىنقى قېتىم كۆرگەندىن كېيىن ئۆزگەرتىلگەن بەتلەر '''توم''' كۆرۈنىدۇ",
+	'wlheader-showupdated' => '* سىز ئالدىنقى قېتىم كۆرگەندىن كېيىن ئۆزگەرتىلگەن بەتلەر \'\'\'توم\'\'\' كۆرۈنىدۇ',
 	'watchmethod-recent' => 'كۆزىتىۋاتقان بەتنىڭ يېقىنقى ئۆزگەرتىشىنى تەكشۈر',
 	'watchmethod-list' => 'كۆزىتىۋاتقان بەتنىڭ يېقىنقى ئۆزگەرتىشىنى تەكشۈر',
 	'watchlistcontains' => 'كۆزەت تىزىملىكىڭىزدە $1 {{PLURAL:$1|بەت|بەت}} بار.',
-	'wlnote' => "تۆۋەندىكىسى يېقىنقى {{PLURAL:$2|سائەت|'''$2''' سائەت}} ئىچىدىكى ئاخىرقى '{{PLURAL:$1|'''$1''' قېتىملىق|قېتىملىق}}  ئۆزگەرتىش.",
+	'wlnote' => 'تۆۋەندىكىسى يېقىنقى {{PLURAL:$2|سائەت|\'\'\'$2\'\'\' سائەت}} ئىچىدىكى ئاخىرقى \'{{PLURAL:$1|\'\'\'$1\'\'\' قېتىملىق|قېتىملىق}}  ئۆزگەرتىش.',
 	'wlshowlast' => 'يېقىنقى $1 سائەت $2 كۈن $3 نىڭ ئۆزگەرتىشىنى كۆرسەت',
 	'watchlist-options' => 'كۆزەت تىزىملىك تاللانما',
 	'watching' => 'كۆزەت قىلىۋاتىدۇ…',
@@ -16670,9 +16719,9 @@ $messages['ug-arab'] = array(
 	'watchlisttools-view' => 'مۇناسىۋەتلىك ئۆزگەرتىشنى كۆرسەت',
 	'watchlisttools-edit' => 'كۆزەت تىزىملىكىنى كۆرۈپ تەھرىرلەش',
 	'watchlisttools-raw' => 'ئەسلى كۆزەت تىزىملىك تەھرىرى',
-);
+];
 
-$messages['ug-latn'] = array(
+$messages['ug-latn'] = [
 	'wednesday' => 'Charshenbe',
 	'watchthis' => 'Bu Batka Kharang',
 	'watchthisupload' => 'Bu Batka Kharang',
@@ -16681,9 +16730,9 @@ $messages['ug-latn'] = array(
 	'watchthispage' => 'Bu Batka Kharang',
 	'whatlinkshere' => 'Bashqa tor betler',
 	'whatlinkshere-page' => 'Bet:',
-);
+];
 
-$messages['uk'] = array(
+$messages['uk'] = [
 	'wednesday' => 'середа',
 	'wed' => 'Ср',
 	'wrong_wfQuery_params' => 'Неприпустима параметри функцій wfQuery()<br />
@@ -16719,7 +16768,7 @@ $messages['uk'] = array(
 	'watchnochange' => 'За вказаний період в статтях з списку спостереження нічого не змінено.',
 	'watchlist-details' => 'У вашому списку спостереження $1 {{PLURAL:$1|сторінка|сторінки|сторінок}} (не враховуючи сторінок обговорення).',
 	'wlheader-enotif' => '* Звістка електронною поштою ввімкнена.',
-	'wlheader-showupdated' => "* Сторінки, що змінилися після вашого останнього їх відвідування, виділені '''жирним''' шрифтом.",
+	'wlheader-showupdated' => '* Сторінки, що змінилися після вашого останнього їх відвідування, виділені \'\'\'жирним\'\'\' шрифтом.',
 	'watchmethod-recent' => 'перегляд останніх редагувань статей за якими ведеться спостереження',
 	'watchmethod-list' => 'перегляд статей за якими ведеться спостереження',
 	'watchlistcontains' => 'Ваш список спостереження містить $1 {{PLURAL:$1|сторінку|сторінки|сторінок}}.',
@@ -16765,9 +16814,9 @@ $messages['uk'] = array(
 	'watchlisttools-edit' => 'Переглянути/редагувати список',
 	'watchlisttools-raw' => 'Редагувати як текст',
 	'wikia-pagetitle' => '$1 — Wikia',
-);
+];
 
-$messages['ur'] = array(
+$messages['ur'] = [
 	'wednesday' => 'بدھ',
 	'wed' => 'بدھ',
 	'welcomecreation' => '== خوش آمدید، $1 ! ==
@@ -16799,9 +16848,9 @@ $messages['ur'] = array(
 	'watchlisttools-view' => 'متعلقہ تبدیلیاں دیکھیں',
 	'watchlisttools-edit' => 'زیرِنظرفہرست دیکھیں اور تدوین کریں',
 	'watchlisttools-raw' => 'خام زیرِنظرفہرست تدوین کریں',
-);
+];
 
-$messages['uz'] = array(
+$messages['uz'] = [
 	'wednesday' => 'Chorshanba',
 	'wed' => 'Chr',
 	'wrongpassword' => 'Kiritgan mahfiy soʻzingiz notoʻgʻri. Iltimos, qaytadan kiritib koʻring.',
@@ -16810,50 +16859,50 @@ $messages['uz'] = array(
 	'watchlist' => 'Kuzatuv roʻyxatim',
 	'watch' => 'kuzatish',
 	'watchthispage' => 'Sahifani kuzatish',
-	'wlnote' => "Below {{PLURAL:$1|is the last change|are the last '''$1''' changes}} in the last {{PLURAL:$2|hour|'''$2''' hours}}, as of $3, $4.",
-	'wlshowlast' => "Oxirgi $1 soatdagi $2 kundagi tahrirlarni ko'rsatish. $3 tahrirlarni ko'rsatish",
-	'whatlinkshere' => "Bu sahifaga bog'langan sahifalar",
+	'wlnote' => 'Below {{PLURAL:$1|is the last change|are the last \'\'\'$1\'\'\' changes}} in the last {{PLURAL:$2|hour|\'\'\'$2\'\'\' hours}}, as of $3, $4.',
+	'wlshowlast' => 'Oxirgi $1 soatdagi $2 kundagi tahrirlarni ko\'rsatish. $3 tahrirlarni ko\'rsatish',
+	'whatlinkshere' => 'Bu sahifaga bog\'langan sahifalar',
 	'whatlinkshere-title' => '"$1"ga bogʻlangan sahifalar',
 	'whatlinkshere-links' => '← ishoratlar',
 	'watchlistall2' => 'Barcha',
-);
+];
 
-$messages['val'] = array(
+$messages['val'] = [
 	'wednesday' => 'dimecres',
 	'wed' => 'dc',
 	'wrong_wfQuery_params' => 'Paràmetros incorrectes per a wfQuery()<br />
 Funció: $1<br />
 Consulta: $2',
-	'welcomecreation' => "== Te donem la benvinguda, $1! ==
+	'welcomecreation' => '== Te donem la benvinguda, $1! ==
 
-S'ha creat el teu conte. No oblides de canviar les teues preferències.",
+S\'ha creat el teu conte. No oblides de canviar les teues preferències.',
 	'wrongpassword' => 'La contrasenya que has introduït es incorrecta. Torneu-ho a provar.',
-	'wrongpasswordempty' => "La contrasenya que s'ha introduït era en blanc. Torneu-ho a provar.",
+	'wrongpasswordempty' => 'La contrasenya que s\'ha introduït era en blanc. Torneu-ho a provar.',
 	'watchthis' => 'Vigila este artícul.',
 	'whitelistedittitle' => 'Tens que iniciar una sessió per a poder editar',
 	'whitelistedittext' => 'tens que $1 per editar pàgines.',
 	'whitelistreadtitle' => 'Tens que iniciar una sessió per a llegir-lo',
 	'whitelistreadtext' => 'Tens que [[Special:Userlogin|indentificar-te]] per llegir les pàgines.',
 	'whitelistacctitle' => 'No tens permissos per a crear un conte',
-	'whitelistacctext' => "Per estar autorisat a crear contes en esta Uiquipédia has d'[[Special:Userlogin|identificar-te]] i tenir els permissos apropiats.",
+	'whitelistacctext' => 'Per estar autorisat a crear contes en esta Uiquipédia has d\'[[Special:Userlogin|identificar-te]] i tenir els permissos apropiats.',
 	'watchthisupload' => 'Vigila esta pàgina',
 	'wantedcategories' => 'Categories demanades',
 	'wantedpages' => 'Pàgines demanades',
 	'watchlist' => 'Llista de seguiment',
-	'watchlistfor' => "(per a '''$1''')",
+	'watchlistfor' => '(per a \'\'\'$1\'\'\')',
 	'watchlistanontext' => 'Fes clic $1 per a visualisar o editar elements de la teua llista de seguiment.',
-	'watchlistcount' => "'''Tens {{PLURAL:$1|$1 element|$1 elements}} en la teua llista de seguiment, incloent-hi les pàgines de discussió.'''",
+	'watchlistcount' => '\'\'\'Tens {{PLURAL:$1|$1 element|$1 elements}} en la teua llista de seguiment, incloent-hi les pàgines de discussió.\'\'\'',
 	'watchnologin' => 'No has iniciat la sessió',
 	'watchnologintext' => 'Tens que [[Special:Userlogin|entrar]]
 per modificar el teu llistat de seguiment.',
 	'watch' => 'Vigila',
 	'watchthispage' => 'Vigila esta pàgina',
-	'watchnochange' => "No s'ha editat cap dels elements que vigila en el periodo de temps que se mostra.",
+	'watchnochange' => 'No s\'ha editat cap dels elements que vigila en el periodo de temps que se mostra.',
 	'watchlist-details' => '{{PLURAL:$1|$1 pàgina|$1 pàgines}} vigilades, sense contar les pàgines de discussió',
-	'wlheader-enotif' => "* S'ha habilitat la notificació per correu electrònic.",
-	'wlheader-showupdated' => "* Les pàgines que s'han canviat des de la teua última visita se mostren '''en negreta'''",
-	'watchmethod-recent' => "s'està comprovant si ha pàgines vigilades en les edicions recents",
-	'watchmethod-list' => "s'està comprovant si hi ha edicions recents en les pàgines vigilades",
+	'wlheader-enotif' => '* S\'ha habilitat la notificació per correu electrònic.',
+	'wlheader-showupdated' => '* Les pàgines que s\'han canviat des de la teua última visita se mostren \'\'\'en negreta\'\'\'',
+	'watchmethod-recent' => 's\'està comprovant si ha pàgines vigilades en les edicions recents',
+	'watchmethod-list' => 's\'està comprovant si hi ha edicions recents en les pàgines vigilades',
 	'watchlistcontains' => 'La teua llista de seguiment conté $1 pàgines.',
 	'wlnote' => 'A baix hi ha els últims $1 canvis en les últimes <b>$2</b> hores.',
 	'wlshowlast' => '<small>- Mostra les últimes $1 hores, els últims $2 dies o $3</small>',
@@ -16864,12 +16913,12 @@ per modificar el teu llistat de seguiment.',
 	'watchlist-hide-own' => 'Amaga les edicions pròpies',
 	'watchlist-show-minor' => 'Mostra les edicions menors',
 	'watchlist-hide-minor' => 'Amaga les edicions menors',
-	'watching' => "S'està vigilant...",
+	'watching' => 'S\'està vigilant...',
 	'whatlinkshere' => 'Qué enllaça ací',
 	'watchlistall2' => 'totes',
-);
+];
 
-$messages['vec'] = array(
+$messages['vec'] = [
 	'wednesday' => 'Mercore',
 	'wed' => 'mer',
 	'wrong_wfQuery_params' => 'Erore ne i parametri invià a ła funsion wfQuery()<br />
@@ -16881,9 +16930,9 @@ El to nome utente el xe stà creà.
 Te poli sistemarte come te vol le to [[Special:Preferences|prefarense de {{SITENAME}}]].',
 	'wrongpassword' => 'Ła password inseria no a xè coreta. Riprovare.',
 	'wrongpasswordempty' => 'No xè sta inseria alcuna password. Riprovare.',
-	'watchthis' => "Tien d'ocio sta pagina",
+	'watchthis' => 'Tien d\'ocio sta pagina',
 	'whitelistedittext' => 'Te ghè da $1 par canbiar le pagine.',
-	'watchthisupload' => "Tien d'ocio sto file",
+	'watchthisupload' => 'Tien d\'ocio sto file',
 	'withoutinterwiki' => 'Pagine che no gà interwiki',
 	'withoutinterwiki-summary' => 'Le pagine indicà de seguito no le gà colegamenti a le version in altre lengue:',
 	'withoutinterwiki-legend' => 'Prefisso',
@@ -16893,26 +16942,26 @@ Te poli sistemarte come te vol le to [[Special:Preferences|prefarense de {{SITEN
 	'wantedpages-badtitle' => 'Titolo mia valido nel grupo de risultati: $1',
 	'wantedfiles' => 'File domandà',
 	'wantedtemplates' => 'Modèi domandà',
-	'watchlist' => "Pagine tegnùe d'ocio",
+	'watchlist' => 'Pagine tegnùe d\'ocio',
 	'watchlistfor2' => 'De $1 $2',
-	'watchlistanontext' => "Per vardar e modifegar l'ełenco de i osservati speciałi bisogna $1.",
+	'watchlistanontext' => 'Per vardar e modifegar l\'ełenco de i osservati speciałi bisogna $1.',
 	'watchnologin' => 'Acesso mia efetuà',
 	'watchnologintext' => 'Te ghè prima da far el [[Special:UserLogin|login]] par modificar la to lista de osservati speciali.',
-	'watch' => "Tien d'ocio",
-	'watchthispage' => "Tien d'ocio sta pagina",
-	'watchnochange' => "Nissuna pagina tegnùa d'ocio la xe stà canbià nel periodo mostrà.",
-	'watchlist-details' => "Te sì drio tegner d'ocio {{PLURAL:$1|una pagina (e la so pagina de discussion)|$1 pagine (e le so pagine de discussion)}}.",
+	'watch' => 'Tien d\'ocio',
+	'watchthispage' => 'Tien d\'ocio sta pagina',
+	'watchnochange' => 'Nissuna pagina tegnùa d\'ocio la xe stà canbià nel periodo mostrà.',
+	'watchlist-details' => 'Te sì drio tegner d\'ocio {{PLURAL:$1|una pagina (e la so pagina de discussion)|$1 pagine (e le so pagine de discussion)}}.',
 	'wlheader-enotif' => '* Xe ativà la notifica via e-mail.',
-	'wlheader-showupdated' => "* Le pagine che xe stà canbià da la to ultima visita le xe segnà in '''grosso'''",
+	'wlheader-showupdated' => '* Le pagine che xe stà canbià da la to ultima visita le xe segnà in \'\'\'grosso\'\'\'',
 	'watchmethod-recent' => 'controło de łe ultime modifeghe par i osservati speciałi',
 	'watchmethod-list' => 'controło de i osservati speciałi par modifeghe recenti',
 	'watchlistcontains' => 'La lista de i osservati speciałi la contien {{PLURAL:$1|una pagina|$1 pagine}}.',
-	'wlnote' => "Qua soto te cati {{PLURAL:$1|l'ultimo canbiamento|i ultimi '''$1''' canbiamenti}} ne {{PLURAL:$2|l'ultima ora|le ultime '''$2''' ore}}.",
+	'wlnote' => 'Qua soto te cati {{PLURAL:$1|l\'ultimo canbiamento|i ultimi \'\'\'$1\'\'\' canbiamenti}} ne {{PLURAL:$2|l\'ultima ora|le ultime \'\'\'$2\'\'\' ore}}.',
 	'wlshowlast' => 'Mostra le ultime $1 ore $2 zorni $3',
-	'watchlist-options' => "Inpostassion de le pagine tegnùe d'ocio",
-	'watching' => "Taco a tegner d'ocio...",
+	'watchlist-options' => 'Inpostassion de le pagine tegnùe d\'ocio',
+	'watching' => 'Taco a tegner d\'ocio...',
 	'whatlinkshere' => 'Punta qua',
-	'whatlinkshere-title' => "Pagine che ponta a ''$1''",
+	'whatlinkshere-title' => 'Pagine che ponta a \'\'$1\'\'',
 	'whatlinkshere-page' => 'Pagina:',
 	'whatlinkshere-prev' => '{{PLURAL:$1|quel prima|i $1 prima}}',
 	'whatlinkshere-next' => '{{PLURAL:$1|quel dopo|i $1 dopo}}',
@@ -16935,21 +16984,21 @@ Nota che se pol anca [[Special:EditWatchlist/raw|modificar la lista in formato t
 	'watchlistedit-normal-done' => 'Da la lista dei osservati speciali xe stà eliminà {{PLURAL:$1|una pagina|$1 pagine}}:',
 	'watchlistedit-raw-title' => 'Modifica dei osservati speciali in forma testual',
 	'watchlistedit-raw-legend' => 'Modifica testual osservati speciali',
-	'watchlistedit-raw-explain' => "De seguito xe elencàe tute le pagine tegnùe d'ocio.
+	'watchlistedit-raw-explain' => 'De seguito xe elencàe tute le pagine tegnùe d\'ocio.
 Par modificar la lista, zónteghe o càveghe i rispetivi titoli, uno par riga.
-Na olta che the ghè finìo, struca el boton \"{{int:Watchlistedit-raw-submit}}\" in fondo all'elenco.
-Nota che te pol anca [[Special:EditWatchlist|modificar la lista con l'interfacia standard]].",
+Na olta che the ghè finìo, struca el boton "{{int:Watchlistedit-raw-submit}}" in fondo all\'elenco.
+Nota che te pol anca [[Special:EditWatchlist|modificar la lista con l\'interfacia standard]].',
 	'watchlistedit-raw-titles' => 'Pagine:',
 	'watchlistedit-raw-submit' => 'Agiorna la lista',
 	'watchlistedit-raw-done' => 'La lista dei osservati speciali la xe stà agiornà.',
 	'watchlistedit-raw-added' => 'Xe stà zontà {{PLURAL:$1|una pagina|$1 pagine}}:',
 	'watchlistedit-raw-removed' => 'Xe stà eliminà {{PLURAL:$1|una pagina|$1 pagine}}:',
 	'watchlisttools-view' => 'Varda i canbiamenti',
-	'watchlisttools-edit' => "Varda e canbia le pagine tegnùe d'ocio",
+	'watchlisttools-edit' => 'Varda e canbia le pagine tegnùe d\'ocio',
 	'watchlisttools-raw' => 'Canbia la lista in formato testo',
-);
+];
 
-$messages['vep'] = array(
+$messages['vep'] = [
 	'wednesday' => 'koumanz’päiv',
 	'wed' => 'koum',
 	'wrong_wfQuery_params' => 'Värad parametrad necen funkcijan täht: wfQuery()<br />
@@ -16960,18 +17009,18 @@ Teiden registracii om loptud.
 Algat unohtagoi [[Special:Preferences|järgeta personaližikš]] sait.',
 	'wrongpassword' => 'Peitsana om vär.
 Kirjutagat se völ kerdan.',
-	'wrongpasswordempty' => "Nece peitsana om pall'az.
-Kirjutagat toine peitsana.",
-	'watchthis' => "Kacelta necidä lehtpol't",
+	'wrongpasswordempty' => 'Nece peitsana om pall\'az.
+Kirjutagat toine peitsana.',
+	'watchthis' => 'Kacelta necidä lehtpol\'t',
 	'whitelistedittext' => 'Teile pidab $1, miše redaktiruida lehtpolid.',
 	'watchthisupload' => 'Kacelta necidä failad',
-	'withoutinterwiki' => "Lehtpoled kel'kosketusita",
+	'withoutinterwiki' => 'Lehtpoled kel\'kosketusita',
 	'withoutinterwiki-summary' => 'Nenil lehtpolil ei ole interwiki-kosketusid.',
 	'withoutinterwiki-legend' => 'Prefiks',
 	'withoutinterwiki-submit' => 'Ozutada',
 	'wantedcategories' => 'Ectud kategorijad',
 	'wantedpages' => 'Ectud lehtpoled',
-	'wantedpages-badtitle' => "Petuzline pälkirjutez küzumižen rezul'tatoiš: $1",
+	'wantedpages-badtitle' => 'Petuzline pälkirjutez küzumižen rezul\'tatoiš: $1',
 	'wantedfiles' => 'Ectud failad',
 	'wantedtemplates' => 'Ectud šablonad',
 	'watchlist' => 'Kaclendnimikirjutez',
@@ -16979,27 +17028,27 @@ Kirjutagat toine peitsana.",
 	'watchlistanontext' => 'Olgat hüväd, $1, miše lugeda vai redaktiruida teiden kaclendnimikirjutez.',
 	'watchnologin' => 'Pidab kirjutadas sistemha',
 	'watch' => 'Pida sil’miš',
-	'watchthispage' => "Kacelta necidä lehtpol't",
-	'watchlist-details' => "Teiden kaclendnimikirjuteses om {{PLURAL:$1|$1 lehtpol'|$1 lehtpol't}}. Lodulehtpoled ei olgoi neciš lugus.",
+	'watchthispage' => 'Kacelta necidä lehtpol\'t',
+	'watchlist-details' => 'Teiden kaclendnimikirjuteses om {{PLURAL:$1|$1 lehtpol\'|$1 lehtpol\'t}}. Lodulehtpoled ei olgoi neciš lugus.',
 	'wlheader-enotif' => '* Tedotand e-počtadme om kävutamas.',
 	'watchmethod-recent' => 'ozutadas kaceltud lehtpoliden tantoižed toižetused',
 	'watchmethod-list' => 'kaceltud lehtpoliden kodvind tantoižid toižetusid ectes',
-	'watchlistcontains' => "Teiden kaclendnimikirjuteses om $1 {{PLURAL:$1|lehtpol'|lehtpol't}}.",
-	'wlshowlast' => "Ozutada jäl'gmäižiš $1 časuiš da $2 päiviš $3",
+	'watchlistcontains' => 'Teiden kaclendnimikirjuteses om $1 {{PLURAL:$1|lehtpol\'|lehtpol\'t}}.',
+	'wlshowlast' => 'Ozutada jäl\'gmäižiš $1 časuiš da $2 päiviš $3',
 	'watchlist-options' => 'Kaclendnimikirjutesen järgendused',
 	'watching' => 'Ližaduz kaclendnimikirjuteshe...',
 	'whatlinkshere' => 'Kosketused - nakhu',
 	'whatlinkshere-title' => 'Lehtpoled, kudambad kosketadas "$1"-lehtpolen',
 	'whatlinkshere-page' => 'Lehtpol’:',
-	'whatlinkshere-prev' => "{{PLURAL:$1|edeline lehtpol'|$1 edelišt lehtpol't}}",
-	'whatlinkshere-next' => "{{PLURAL:$1|jäl'ghine lehtpol'|$1 jäl'ghišt lehtpol't}}",
+	'whatlinkshere-prev' => '{{PLURAL:$1|edeline lehtpol\'|$1 edelišt lehtpol\'t}}',
+	'whatlinkshere-next' => '{{PLURAL:$1|jäl\'ghine lehtpol\'|$1 jäl\'ghišt lehtpol\'t}}',
 	'whatlinkshere-links' => '← kosketused',
 	'whatlinkshere-hideredirs' => '$1 oigendused',
 	'whatlinkshere-hidetrans' => '$1 mülütandad',
 	'whatlinkshere-hidelinks' => '$1 kosketused',
 	'whatlinkshere-hideimages' => '$1 kosketused kuvišpäi',
-	'whatlinkshere-filters' => "Fil'trad",
-	'widthheightpage' => "$1 × $2, $3 {{PLURAL:$3|lehtpol'|lehtpol't}}",
+	'whatlinkshere-filters' => 'Fil\'trad',
+	'widthheightpage' => '$1 × $2, $3 {{PLURAL:$3|lehtpol\'|lehtpol\'t}}',
 	'watchlistall2' => 'kaik',
 	'watchlistedit-numitems' => 'Teiden kaclendnimikirjuteses om {{PLURAL:$1|1 kirjutuz|$1 kirjutust}} lodulehtpolita.',
 	'watchlistedit-noitems' => 'Teiden kaclendnimikirjuteses ei ole kirjutusid.',
@@ -17017,9 +17066,9 @@ Kirjutagat toine peitsana.",
 	'watchlisttools-view' => 'Ozutada toižetused lehtpolil nimikirjutesespäi',
 	'watchlisttools-edit' => 'Lugeda da redaktiruida nimikirjutez',
 	'watchlisttools-raw' => 'Redaktiruida kut tekst',
-);
+];
 
-$messages['vi'] = array(
+$messages['vi'] = [
 	'wednesday' => 'thứ Tư',
 	'wed' => 'thứ 4',
 	'wrong_wfQuery_params' => 'Tham số sai trong wfQuery()<br />
@@ -17055,11 +17104,11 @@ Tài khoản của bạn đã mở.
 	'watchnochange' => 'Không có trang nào bạn theo dõi được sửa đổi.',
 	'watchlist-details' => 'Bạn đang theo dõi {{PLURAL:$1|$1 trang|$1 trang}}, không kể các trang thảo luận.',
 	'wlheader-enotif' => '* Đã bật thông báo qua thư điện tử.',
-	'wlheader-showupdated' => "* Các trang đã thay đổi từ lần cuối bạn xem chúng được in '''đậm'''",
+	'wlheader-showupdated' => '* Các trang đã thay đổi từ lần cuối bạn xem chúng được in \'\'\'đậm\'\'\'',
 	'watchmethod-recent' => 'Dưới đây hiện thay đổi mới với các trang theo dõi.',
 	'watchmethod-list' => 'Dưới đây hiện danh sách các trang theo dõi.',
 	'watchlistcontains' => 'Danh sách theo dõi của bạn có $1 {{PLURAL:$1|trang|trang}}.',
-	'wlnote' => "Dưới đây là {{PLURAL:$1|thay đổi '''duy nhất'''|'''$1''' thay đổi gần nhất}} trong {{PLURAL:$2|giờ|'''$2''' giờ}} qua, tính tới $3 lúc $4.",
+	'wlnote' => 'Dưới đây là {{PLURAL:$1|thay đổi \'\'\'duy nhất\'\'\'|\'\'\'$1\'\'\' thay đổi gần nhất}} trong {{PLURAL:$2|giờ|\'\'\'$2\'\'\' giờ}} qua, tính tới $3 lúc $4.',
 	'wlshowlast' => 'Hiển thị $1 giờ $2 ngày gần đây $3',
 	'watchlist-options' => 'Tùy chọn về danh sách theo dõi',
 	'watching' => 'Đang theo dõi…',
@@ -17098,15 +17147,15 @@ Bạn cũng có thể [[Special:EditWatchlist|dùng trang sửa đổi bình th�
 	'watchlisttools-edit' => 'Xem và sửa danh sách theo dõi',
 	'watchlisttools-raw' => 'Sửa danh sách theo dõi dạng thô',
 	'wikia-pagetitle' => '$1 – Wikia',
-);
+];
 
-$messages['vls'] = array(
+$messages['vls'] = [
 	'wednesday' => 'woesdag',
 	'wed' => 'woe',
 	'watch' => 'Volgn',
-);
+];
 
-$messages['vmf'] = array(
+$messages['vmf'] = [
 	'watchthis' => 'Dii sajdn undâr beoobachdung nämma',
 	'watchlist' => 'Maj beoobachdungs-lisdn',
 	'watch' => 'Beoobachdn',
@@ -17129,10 +17178,10 @@ $messages['vmf'] = array(
 	'watchlistall2' => 'ale',
 	'watchlisttools-view' => 'Ändrunga in där beoobachdungslisdn',
 	'watchlisttools-edit' => 'Beobachdungslisdn dsajchn un ändârn',
-	'watchlisttools-raw' => "In där beoobachdungslisdn ds'fuâs rumworschdln",
-);
+	'watchlisttools-raw' => 'In där beoobachdungslisdn ds\'fuâs rumworschdln',
+];
 
-$messages['vo'] = array(
+$messages['vo'] = [
 	'wednesday' => 'vedel',
 	'wed' => 'ved',
 	'wrong_wfQuery_params' => 'Paramets neverätik lü wfQuery()<br />
@@ -17156,7 +17205,7 @@ No glömolöd ad votükön [[Special:Preferences|buükamis olik in {{SITENAME}}]
 	'wantedfiles' => 'Ragivs mekabik',
 	'wantedtemplates' => 'Samafomots mekabik',
 	'watchlist' => 'Galädalised obik',
-	'watchlistfor' => "(tefü '''$1''')",
+	'watchlistfor' => '(tefü \'\'\'$1\'\'\')',
 	'watchlistanontext' => '$1 ad logön u redakön lienis galädaliseda olik',
 	'watchnologin' => 'No enunädon oki',
 	'watchnologintext' => 'Mutol [[Special:UserLogin|nunädön oli]] büä kanol votükön galädalisedi olik.',
@@ -17165,11 +17214,11 @@ No glömolöd ad votükön [[Special:Preferences|buükamis olik in {{SITENAME}}]
 	'watchnochange' => 'Nonik padas pagalädöl olik peredakon dü period löpo pejonöl.',
 	'watchlist-details' => '{{PLURAL:$1|pad $1|pads $1}} su galädalised, plä bespikapads.',
 	'wlheader-enotif' => '* Nunam medü pot leäktronik pemögükon.',
-	'wlheader-showupdated' => "* Pads pos visit lätik ola pevotüköls papenons '''me tonats bigik'''",
+	'wlheader-showupdated' => '* Pads pos visit lätik ola pevotüköls papenons \'\'\'me tonats bigik\'\'\'',
 	'watchmethod-recent' => 'vestigam redakamas brefabüik padas galädaliseda',
 	'watchmethod-list' => 'vestigam votükamas brefabüik padas galädaliseda',
 	'watchlistcontains' => 'Galädalised olik labon {{PLURAL:$1|padi|padis}} $1.',
-	'wlnote' => "Is palisedons votükam{{PLURAL:$1| lätik|s lätik '''$1'''}} dü düp{{PLURAL:$2| lätik|s lätik '''$2'''}}.",
+	'wlnote' => 'Is palisedons votükam{{PLURAL:$1| lätik|s lätik \'\'\'$1\'\'\'}} dü düp{{PLURAL:$2| lätik|s lätik \'\'\'$2\'\'\'}}.',
 	'wlshowlast' => 'Jonolöd: düpis lätik $1, delis lätik $2, $3',
 	'watchlist-options' => 'Paramets galädaliseda',
 	'watching' => 'Papladon ini galädalised...',
@@ -17207,9 +17256,9 @@ Kanol i [[Special:Watchlist/edit|gebön redakametodi kösömik]].',
 	'watchlisttools-view' => 'Logön votükamis teföl',
 	'watchlisttools-edit' => 'Logön e redakön galädalisedi',
 	'watchlisttools-raw' => 'Redakön galädalisedi nen fomät',
-);
+];
 
-$messages['vot'] = array(
+$messages['vot'] = [
 	'watchthis' => 'Lissä kattsõspiiskaa',
 	'watchlist' => 'Minu kattsõspiiska',
 	'watch' => 'Katso',
@@ -17232,9 +17281,9 @@ $messages['vot'] = array(
 	'watchlisttools-view' => 'Näüt muutuhsõd',
 	'watchlisttools-edit' => 'Muuttaa spiiskaa',
 	'watchlisttools-raw' => 'Muut lähtefaili',
-);
+];
 
-$messages['vro'] = array(
+$messages['vro'] = [
 	'wednesday' => 'kolmapäiv',
 	'wed' => 'K',
 	'wrong_wfQuery_params' => 'Võlss suurusõq tallitusõlõ wfQuery()<br />
@@ -17259,11 +17308,11 @@ Perräküsümine: $2',
 	'watchnochange' => 'Taa ao seen olõ-i üttegi perräkaetavat lehte muudõt.',
 	'watchlist-details' => 'Perräkaemisnimekirän om {{PLURAL:$1|$1 leht|$1 lehte}}, rehkendämäldä arotuslehti.',
 	'wlheader-enotif' => '* E-postiga teedäqandmisõq ommaq käügin.',
-	'wlheader-showupdated' => "* Leheq, midä om muudõt päält su viimäst käümist, ommaq '''paksun kirän'''",
+	'wlheader-showupdated' => '* Leheq, midä om muudõt päält su viimäst käümist, ommaq \'\'\'paksun kirän\'\'\'',
 	'watchmethod-recent' => 'kontrollitas perräkaetavidõ lehti perämäidsi muutmiisi',
 	'watchmethod-list' => 'perräkaetavidõ lehti perämädseq muutmisõq',
 	'watchlistcontains' => 'Perräkaemisnimekirän om $1 {{PLURAL:$1|leht|lehte}}.',
-	'wlnote' => "Tan om '''$1''' {{PLURAL:$1|muutminõ|muutmist}} viimädse '''$2''' tunni ao seen.",
+	'wlnote' => 'Tan om \'\'\'$1\'\'\' {{PLURAL:$1|muutminõ|muutmist}} viimädse \'\'\'$2\'\'\' tunni ao seen.',
 	'wlshowlast' => 'Näütäq viimädseq $1 tunni $2 päivä $3',
 	'watchlist-options' => 'Perräkaemisnimekirä säädmine',
 	'watching' => 'Pandas perräkaemisnimekirjä...',
@@ -17291,9 +17340,9 @@ Perräküsümine: $2',
 	'watchlisttools-view' => 'Näütäq muutmiisi',
 	'watchlisttools-edit' => 'Kaeq ja toimõndaq perräkaemisnimekirjä',
 	'watchlisttools-raw' => 'Toimõndaq lätteteedüstüt',
-);
+];
 
-$messages['wa'] = array(
+$messages['wa'] = [
 	'wednesday' => 'mierkidi',
 	'wed' => 'mie',
 	'wrong_wfQuery_params' => 'Parametes incoreks po wfQuery()<br />
@@ -17303,24 +17352,24 @@ Cweraedje: $2',
 
 Vosse conte a stî ahivé.
 Èn rovyîz nén di candjî les preferinces di {{SITENAME}} a vosse môde.',
-	'wrongpassword' => "Li scret ki vs avoz dné est måva. Rissayîz s' i vs plait.",
-	'wrongpasswordempty' => "Vos avoz dné on vude sicret. Rissayîz s' i vs plait.",
+	'wrongpassword' => 'Li scret ki vs avoz dné est måva. Rissayîz s\' i vs plait.',
+	'wrongpasswordempty' => 'Vos avoz dné on vude sicret. Rissayîz s\' i vs plait.',
 	'watchthis' => 'Shuve cist årtike',
 	'whitelistedittext' => 'I vs fåt $1 po pleur candjî les årtikes.',
 	'wantedcategories' => 'Categoreyes les pus rcwerowes',
 	'wantedpages' => 'Pådjes les pus rcwerowes',
 	'watchlist' => 'Pådjes shuvowes',
 	'watchlistanontext' => 'I vs fåt $1 po vey ou candjî les cayets di vosse djivêye des shuvous.',
-	'watchnologin' => "Vos n' estoz nén elodjî",
+	'watchnologin' => 'Vos n\' estoz nén elodjî',
 	'watchnologintext' => 'I vs fåt esse [[Special:UserLogin|elodjî]] po pleur candjî vosse djivêye des pådjes a shuve.',
 	'watch' => 'Shuve',
 	'watchthispage' => 'Shuve cisse pådje',
-	'watchnochange' => "Nole des pådjes di vosse djivêye di pådjes a shuve n' a stî candjeye dins l' termene di tins dmandêye.",
+	'watchnochange' => 'Nole des pådjes di vosse djivêye di pådjes a shuve n\' a stî candjeye dins l\' termene di tins dmandêye.',
 	'watchlist-details' => '{{PLURAL:$1|$1 pådje shuvowe|$1 pådjes shuvowes}} (sins conter les pådjes di copene).',
 	'wlheader-enotif' => '* Li notifiaedje pa emile est en alaedje.',
-	'wlheader-showupdated' => "* Les pådjes k' ont candjî dispoy vosse dierinne vizite sont metowes e '''cråssès letes'''",
-	'watchmethod-recent' => "Cwerant après les pådjes k' ont stî candjeyes dierinnmint ki sont eto des pådjes shuvowes",
-	'watchmethod-list' => "Cwerant après les pådjes shuvowes k' ont stî candjeyes dierinnmint",
+	'wlheader-showupdated' => '* Les pådjes k\' ont candjî dispoy vosse dierinne vizite sont metowes e \'\'\'cråssès letes\'\'\'',
+	'watchmethod-recent' => 'Cwerant après les pådjes k\' ont stî candjeyes dierinnmint ki sont eto des pådjes shuvowes',
+	'watchmethod-list' => 'Cwerant après les pådjes shuvowes k\' ont stî candjeyes dierinnmint',
 	'watchlistcontains' => 'I gn a {{PLURAL:$1|$1 pådje|$1 pådjes}} e vosse djivêye des pådjes a shuve.',
 	'wlnote' => 'Chal pa dzo les $1 dierins candjmints des <b>$2</b> dierinnès eures.',
 	'wlshowlast' => 'Mostrer les dierin(nè)s $1 eures, $2 djoûs $3',
@@ -17329,13 +17378,13 @@ Vosse conte a stî ahivé.
 	'whatlinkshere-links' => '← loyaedjes',
 	'whatlinkshere-hideredirs' => '$1 ridjiblaedjes',
 	'whatlinkshere-hidelinks' => '$1 loyaedjes',
-	'whatlinkshere-hideimages' => "$1 fitchîs k' eploynut cist imådje ci",
+	'whatlinkshere-hideimages' => '$1 fitchîs k\' eploynut cist imådje ci',
 	'whatlinkshere-filters' => 'Passettes',
 	'watchlistall2' => 'totafwait',
 	'watchlistedit-raw-titles' => 'Tites:',
-);
+];
 
-$messages['war'] = array(
+$messages['war'] = [
 	'wednesday' => 'Miyerkoles',
 	'wed' => 'Mi',
 	'welcomecreation' => '== ¡Uswag ngan Dayon, $1! ==
@@ -17377,9 +17426,9 @@ Alayon pagutro pagbutang.',
 	'watchlisttools-view' => 'Kitaa an mga nanginginlabot nga mga pagbabag-o',
 	'watchlisttools-edit' => 'Kitaa ngan igliwat an talaan han binabantayan',
 	'watchlisttools-raw' => 'Igliwat an hilaw nga talaan han binabantayan',
-);
+];
 
-$messages['wo'] = array(
+$messages['wo'] = [
 	'wednesday' => 'àllarba',
 	'wed' => 'àll',
 	'wrong_wfQuery_params' => 'Njuumte ci xibaar yi ci wfQuery()<br />
@@ -17412,7 +17461,7 @@ Bul fatte soppi say [[Special:Preferences|{{SITENAME}} tànneef]].',
 	'wlheader-showupdated' => '* Xët yi ñu soppiwoon ca sa duggu bu mujj ñoom la ñu fesal ñu <b>xëm</b>',
 	'watchmethod-recent' => 'saytug coppite yu mujj yu xët yi ngay topp',
 	'watchmethod-list' => 'saytug xët yi ñuy topp ngir ay coppite yu mujj',
-	'watchlistcontains' => "Sa limu toppte am na '''$1''' {{PLURAL:$1|xët|xët}}.",
+	'watchlistcontains' => 'Sa limu toppte am na \'\'\'$1\'\'\' {{PLURAL:$1|xët|xët}}.',
 	'wlnote' => 'Fii ci suuf {{PLURAL:$1| ngay gis coppite yu mujj yi|ngay gis $1 coppite yu mujj}} ci {{PLURAL:$2|waxtu gu mujj gi|<b>$2</b> waxtu yu mujj}}.',
 	'wlshowlast' => 'wone $1 waxtu yu mujj, $2 bess yu mujj, walla $3.',
 	'watchlist-options' => 'Tànneefi limu toppte bi',
@@ -17449,9 +17498,9 @@ Man nga tamit  [[Special:EditWatchlist/raw|soppi ko]].',
 	'watchlisttools-view' => 'Limu toppte',
 	'watchlisttools-edit' => 'Xool te soppi limu toppte gi',
 	'watchlisttools-raw' => 'Soppi lim gi',
-);
+];
 
-$messages['wuu'] = array(
+$messages['wuu'] = [
 	'wednesday' => '礼拜三',
 	'wed' => '三',
 	'wrong_wfQuery_params' => '错误个参数拨传递到 wfQuery（）<br />
@@ -17489,9 +17538,9 @@ $messages['wuu'] = array(
 	'watchlisttools-view' => '查看搭界个修改',
 	'watchlisttools-edit' => '查看并编辑监控列表',
 	'watchlisttools-raw' => '编辑源监控列表',
-);
+];
 
-$messages['xal'] = array(
+$messages['xal'] = [
 	'wednesday' => 'Үлмҗ',
 	'wed' => 'Үлм',
 	'welcomecreation' => '== Ирхитн эрҗәнәвидн, $1! ==
@@ -17526,9 +17575,9 @@ $messages['xal'] = array(
 	'watchlisttools-view' => 'Бүртклин халхна сольлһн',
 	'watchlisttools-edit' => 'Сеткүлиг хәләх аль чиклх',
 	'watchlisttools-raw' => 'Бичг мет чиклх',
-);
+];
 
-$messages['xh'] = array(
+$messages['xh'] = [
 	'wednesday' => 'ULwesithathu',
 	'welcomecreation' => '== Wamkelekile, $1! ==
 
@@ -17538,9 +17587,9 @@ I Account yakhgo ivuliwe, ungalibali ukutshitsha izinto ozithandayo ngo {{SITENA
 	'watchlist' => 'Endizibukeleyo',
 	'watch' => 'Bukela',
 	'watchthispage' => 'Bukela le Page',
-);
+];
 
-$messages['xmf'] = array(
+$messages['xmf'] = [
 	'wednesday' => 'ჯუმაშხა',
 	'wed' => 'ჯუმ.',
 	'watchthis' => 'თე ხასჷლაშ კონტროლი',
@@ -17568,11 +17617,11 @@ $messages['xmf'] = array(
 	'watchlisttools-view' => 'მერცხილ თირაფეფიშ ძირაფა',
 	'watchlisttools-edit' => 'ოკონტროლებელ ხასილეფიშ ძირაფა დო რედაქტირაფა',
 	'watchlisttools-raw' => 'კონტროლიშ ერკებულიშ რედაქტირაფა ტექსტიშ ფორმატის',
-);
+];
 
-$messages['yi'] = array(
+$messages['yi'] = [
 	'wednesday' => 'מיטװאָך',
-	'wed' => "מיט'",
+	'wed' => 'מיט\'',
 	'wrong_wfQuery_params' => 'די פארעמעטערס אריינגפיטערט צו wfQuery() זענען נישט ריכטיג:<br />
 פֿונקיציע: $1<br />
 פֿארלאנג: $2',
@@ -17605,12 +17654,12 @@ $messages['yi'] = array(
 	'watchnochange' => 'קיינע פֿון אײַערע אויפֿגעפאַסטע בלעטער זענען באַאַרבעט געווארן אין דעם צײַט פעריאד געוויזן.',
 	'watchlist-details' => '{{PLURAL:$1|איין בלאט|$1 בלעטער}} אין אייער אויפֿפאסן ליסטע (נישט רעכענען  רעדן בלעטער).',
 	'wlheader-enotif' => '* ע-פאסט מעלדונג ערמעגליכט.',
-	'wlheader-showupdated' => "* בלעטער געענדערט זײַט אײַער לעצטן וויזיט זען געוויזן '''דיק'''",
+	'wlheader-showupdated' => '* בלעטער געענדערט זײַט אײַער לעצטן וויזיט זען געוויזן \'\'\'דיק\'\'\'',
 	'watchmethod-recent' => 'קאנטראלירן לעצטע ענדערונגען פֿאַר אויפֿגעפאַסטע בלעטער',
 	'watchmethod-list' => 'קאנטראלירן בלעטער אין אַכטגעבן־ליסטע פֿאַר נײַע רעדאַקטירונגען',
 	'watchlistcontains' => 'אייער אויפֿפאסונג ליסטע אנטהאלט {{PLURAL:$1|איין בלאט|$1 בלעטער}}.',
-	'wlnote' => "אונטן {{PLURAL:$1|איז די לעצטע ענדערונג|זענען די לעצטע '''$1''' ענדערונגען}} אין {{PLURAL:$2|דער לעצטער שעה|די לעצטע '''$2''' שעה'ן}} ביז $3, $4.",
-	'wlshowlast' => "(ווײַזן די לעצטע $1 שעה'ן | $2 טעג | $3)",
+	'wlnote' => 'אונטן {{PLURAL:$1|איז די לעצטע ענדערונג|זענען די לעצטע \'\'\'$1\'\'\' ענדערונגען}} אין {{PLURAL:$2|דער לעצטער שעה|די לעצטע \'\'\'$2\'\'\' שעה\'ן}} ביז $3, $4.',
+	'wlshowlast' => '(ווײַזן די לעצטע $1 שעה\'ן | $2 טעג | $3)',
 	'watchlist-options' => 'אויפֿפאַסן ליסטע ברירות',
 	'watching' => 'אויפפאסענדונג…',
 	'watcherrortext' => 'א גרײַז האט פאסירט ביים ענדערן אײַערע אויפֿפאסן ליסטע אײַנשטעלונגען פֿאר "$1".',
@@ -17642,26 +17691,26 @@ $messages['yi'] = array(
 	'watchlisttools-view' => 'ווייזן שייכדיגע ענדערונגען',
 	'watchlisttools-edit' => 'זען און רעדאקטירן די אויפֿפאסונג ליסטע',
 	'watchlisttools-raw' => 'רעדאקטירן די רויע אויפֿפאסונג ליסטע',
-);
+];
 
-$messages['yo'] = array(
+$messages['yo'] = [
 	'wednesday' => 'Ọjọ́rú',
 	'wed' => 'Rú',
 	'wrong_wfQuery_params' => 'Àwọn pàrámítà àìtọ́ sí wfQuery()<br />
 Ìlò: $1<br />
 Ìtọrọ: $2',
-	'welcomecreation' => "== Ẹ kú àbọ̀, $1! ==
+	'welcomecreation' => '== Ẹ kú àbọ̀, $1! ==
 
-A ti ṣ'èdá àpamọ́ yín.
-Ẹ mọ́ gbàgbé l'áti ṣ'àtúnṣe àwọn [[Special:Preferences|{{SITENAME}} ìfẹ́ràn]] yín.",
+A ti ṣ\'èdá àpamọ́ yín.
+Ẹ mọ́ gbàgbé l\'áti ṣ\'àtúnṣe àwọn [[Special:Preferences|{{SITENAME}} ìfẹ́ràn]] yín.',
 	'wrongpassword' => 'Ọ̀rọ̀ìpamọ́ tí ẹ kìbọlé kòtọ́.
 Ẹ jọ̀wọ́ ẹ gbìyànjú lẹ́ẹ̀kansí.',
 	'wrongpasswordempty' => 'Ọ̀ròìpamọ́ jẹ́ òfo.
 Ẹ gbìyànjú lẹ́ ẹ̀kan síi.',
-	'watchthis' => "M'ójútó ojúewé yìí",
-	'whitelistedittitle' => "Ìwọlé ṣe dandan láti ṣ'àtúnṣe",
-	'whitelistedittext' => "Ẹ gbọ́dọ̀ $1 láti ṣ'àtúnṣe àwọn ojúewé.",
-	'watchthisupload' => "M'ójútó fáilì yìí",
+	'watchthis' => 'M\'ójútó ojúewé yìí',
+	'whitelistedittitle' => 'Ìwọlé ṣe dandan láti ṣ\'àtúnṣe',
+	'whitelistedittext' => 'Ẹ gbọ́dọ̀ $1 láti ṣ\'àtúnṣe àwọn ojúewé.',
+	'watchthisupload' => 'M\'ójútó fáilì yìí',
 	'withoutinterwiki' => 'Àwọn ojúewé tí kò ní ìjápọ̀ èdè',
 	'withoutinterwiki-legend' => 'Àlẹ̀mọ́wájú',
 	'withoutinterwiki-submit' => 'Ìfihàn',
@@ -17670,20 +17719,20 @@ A ti ṣ'èdá àpamọ́ yín.
 	'wantedfiles' => 'Àwọn fáìlì àìsí',
 	'wantedtemplates' => 'Àwọn àdàkọ àìsí',
 	'watchlist' => 'Ìmójútó mi',
-	'watchlistfor' => "(fún '''$1''')",
+	'watchlistfor' => '(fún \'\'\'$1\'\'\')',
 	'watchlistanontext' => 'Ẹ jọ̀wọ́ $1 láti wò tàbí ṣàtúnṣe àwọn ohun inú ìmójútó yín.',
 	'watchnologin' => 'Ẹ kò tíì wọlé',
 	'watchnologintext' => 'Ẹ gbọ́dọ̀ [[Special:UserLogin|wọlè]] láti ṣàtúnṣe ìmójútó yín.',
 	'watch' => 'Ìmójútó',
-	'watchthispage' => "M'ójútó ojúewé yi",
+	'watchthispage' => 'M\'ójútó ojúewé yi',
 	'watchnochange' => 'Kò sí ìkankan nínú àwọn ohun ìmójútó yín tó jẹ́ títúnṣe láàrin àsìkò títẹ́kalẹ̀.',
 	'watchlist-details' => '{{PLURAL:$1|Ojúewé $1|Àwọn ojúewé $1}} ló wà nínú ìmójútó yín, tí a kò bá ka àwọn ojúewé ọ̀rọ̀.',
 	'wlheader-enotif' => '* Ìfitónilétí e-mail wà ní gbígbàláyè.',
-	'wlheader-showupdated' => "* Àwọn ojúewé tí wọn ti yípadà látìgbà tí ẹ ṣàbẹ̀wò wọn gbẹ̀yìn jẹ́ fífihàn ní ''kedere'''",
+	'wlheader-showupdated' => '* Àwọn ojúewé tí wọn ti yípadà látìgbà tí ẹ ṣàbẹ̀wò wọn gbẹ̀yìn jẹ́ fífihàn ní \'\'kedere\'\'\'',
 	'watchmethod-recent' => 'únwo àwọn àtúnṣe tuntun fún àwọn ojúewé mímójútó',
 	'watchmethod-list' => 'únwo àwọn ojúewé mímójútó fún àwọn àtúnṣe tuntun',
 	'watchlistcontains' => 'Àwọn ìmójútó yín ní {{PLURAL:$1|ojúewé|àwọn ojúewé}} $1 nínú.',
-	'wlnote' => "Lábẹ́ {{PLURAL:$1|ni àtúnṣe tó gbẹ̀yìn wà|ni àwọn àtúnṣe '''$1''' tí wọn gbẹ̀yìn wà}} láàrin {{PLURAL:$2|wákàtí kan|wákàtí '''$2'''}} sẹ́yìn.",
+	'wlnote' => 'Lábẹ́ {{PLURAL:$1|ni àtúnṣe tó gbẹ̀yìn wà|ni àwọn àtúnṣe \'\'\'$1\'\'\' tí wọn gbẹ̀yìn wà}} láàrin {{PLURAL:$2|wákàtí kan|wákàtí \'\'\'$2\'\'\'}} sẹ́yìn.',
 	'wlshowlast' => 'Ìfihàn wákàtí $1 sẹ́yìn ọjọ́ $2 sẹ́yìn $3',
 	'watchlist-options' => 'Àṣàyàn ìmójútọ́',
 	'watching' => 'Ó ún mójútó...',
@@ -17706,10 +17755,10 @@ A ti ṣ'èdá àpamọ́ yín.
 	'watchlistedit-raw-titles' => 'Àwọn àkọlé:',
 	'watchlisttools-view' => 'Ẹ wo àwon àtúnṣe tóbaamu',
 	'watchlisttools-edit' => 'Ìwò àti àtúnṣe ìmójútó',
-	'watchlisttools-raw' => "Ẹ ṣ'àtúnṣe àkójọ ìmójútó látìbẹ̀rẹ̀",
-);
+	'watchlisttools-raw' => 'Ẹ ṣ\'àtúnṣe àkójọ ìmójútó látìbẹ̀rẹ̀',
+];
 
-$messages['yue'] = array(
+$messages['yue'] = [
 	'wednesday' => '星期三',
 	'wed' => '三',
 	'wrong_wfQuery_params' => 'wfQuery() 嘅參數錯誤<br />
@@ -17742,11 +17791,11 @@ $messages['yue'] = array(
 	'watchnochange' => '響顯示嘅時間之內，你所監視嘅頁面並無任何嘅更改。',
 	'watchlist-details' => '唔計討論頁，有 $1 版響你個監視清單度。',
 	'wlheader-enotif' => '* 電子郵件通知已經啟用。',
-	'wlheader-showupdated' => "* '''粗體字'''嘅頁響你上次嚟之後被人改過",
+	'wlheader-showupdated' => '* \'\'\'粗體字\'\'\'嘅頁響你上次嚟之後被人改過',
 	'watchmethod-recent' => '睇緊最近修改中有邊頁監視緊',
 	'watchmethod-list' => '睇緊被監視頁有乜新修改',
 	'watchlistcontains' => '你嘅監視清單裏面有$1頁。',
-	'wlnote' => "以下係最近'''$2'''個鐘之內嘅最新$1次修改。",
+	'wlnote' => '以下係最近\'\'\'$2\'\'\'個鐘之內嘅最新$1次修改。',
 	'wlshowlast' => '顯示最近 $1 個鐘 $2 日 $3 嘅修改',
 	'watchlist-options' => '監視清單選項',
 	'watching' => '監視緊...',
@@ -17782,9 +17831,9 @@ $messages['yue'] = array(
 	'watchlisttools-view' => '睇吓有關嘅更改',
 	'watchlisttools-edit' => '睇吓同埋編輯監視清單',
 	'watchlisttools-raw' => '編輯原始監視清單',
-);
+];
 
-$messages['za'] = array(
+$messages['za'] = [
 	'wednesday' => 'Swnggeiz Sam',
 	'wed' => 'Sam',
 	'watchthis' => 'Gamyawj yieb neix',
@@ -17798,9 +17847,9 @@ $messages['za'] = array(
 	'whatlinkshere-page' => 'Yieb：',
 	'watchlistall2' => 'cenzbu',
 	'watchlisttools-view' => 'Cazyawj gaij mizgven',
-);
+];
 
-$messages['zea'] = array(
+$messages['zea'] = [
 	'wednesday' => 'weusdag',
 	'wed' => 'weu',
 	'wrong_wfQuery_params' => 'Foute parameters voe wfQuery()<br />
@@ -17809,10 +17858,10 @@ Zoekopdracht: $2',
 	'welcomecreation' => '== Welkom, $1! ==
 Jen account is anemikt.
 Vergeet nie je [[Special:Preferences|vòkeuren voe {{SITENAME}}]] an te passen.',
-	'wrongpassword' => "Wachtwoôrd onjuust. Probeer 't opnieuw.",
-	'wrongpasswordempty' => "'t Opeheven wachtwoôrd was leeg. Probeer 't opnieuw.",
+	'wrongpassword' => 'Wachtwoôrd onjuust. Probeer \'t opnieuw.',
+	'wrongpasswordempty' => '\'t Opeheven wachtwoôrd was leeg. Probeer \'t opnieuw.',
 	'watchthis' => 'Volg deêze bladzie',
-	'whitelistedittext' => "Je mò $1 om pagina's te bewerken.",
+	'whitelistedittext' => 'Je mò $1 om pagina\'s te bewerken.',
 	'watchthisupload' => 'Volg deêze bladzie',
 	'watchlist' => 'Volglieste',
 	'watchlistfor2' => 'Vò $1 $2',
@@ -17820,8 +17869,8 @@ Vergeet nie je [[Special:Preferences|vòkeuren voe {{SITENAME}}]] an te passen.'
 	'watchnologintext' => 'Je moe [[Special:UserLogin|angemolde]] weze om je volglieste an te passen.',
 	'watch' => 'Volg',
 	'watchthispage' => 'Bekiek deêze bladzie',
-	'watchnochange' => "D'r is in d'n opgevrogen tied niks op je volglieste veranderd.",
-	'watchlist-details' => "Er {{PLURAL:$1|sti eên pagina|staen $1 pagina's}} op je volglieste, exclusief overlegpagina's.",
+	'watchnochange' => 'D\'r is in d\'n opgevrogen tied niks op je volglieste veranderd.',
+	'watchlist-details' => 'Er {{PLURAL:$1|sti eên pagina|staen $1 pagina\'s}} op je volglieste, exclusief overlegpagina\'s.',
 	'watchlistcontains' => 'Uw volglieste bevat $1 {{PLURAL:$1|bladzie|bladzies}}.',
 	'wlshowlast' => 'Laetste $1 uur, $2 daegen bekieken ($3)',
 	'watchlist-options' => 'Opties vò volglieste',
@@ -17839,10 +17888,10 @@ Vergeet nie je [[Special:Preferences|vòkeuren voe {{SITENAME}}]] an te passen.'
 	'watchlistall2' => 'aol',
 	'watchlisttools-view' => 'Relevante wiezigiengen bekieken',
 	'watchlisttools-edit' => 'Bekiek en bewark ju volglieste',
-	'watchlisttools-raw' => "Rieuwe volglieste bewark'n",
-);
+	'watchlisttools-raw' => 'Rieuwe volglieste bewark\'n',
+];
 
-$messages['zh-hans'] = array(
+$messages['zh-hans'] = [
 	'wednesday' => '星期三',
 	'wed' => '三',
 	'wrong_wfQuery_params' => '错误的参数被传递到 wfQuery（）<br />
@@ -17877,11 +17926,11 @@ $messages['zh-hans'] = array(
 	'watchnochange' => '在显示的时间段内您所监视的页面没有更改。',
 	'watchlist-details' => '不计讨论页面，你的监视列表中有$1个页面。',
 	'wlheader-enotif' => '* 已经启动电子邮件通知功能。',
-	'wlheader-showupdated' => "* 在你上次查看后有被修改过的页面会显示为'''粗体'''",
+	'wlheader-showupdated' => '* 在你上次查看后有被修改过的页面会显示为\'\'\'粗体\'\'\'',
 	'watchmethod-recent' => '检查被监视页面的最近编辑',
 	'watchmethod-list' => '查看监视页中的最新修改',
 	'watchlistcontains' => '您的监视列表包含$1个页面。',
-	'wlnote' => "截至$3 $4，以下是最近'''$2'''小时内的最后'''$1'''次修改。",
+	'wlnote' => '截至$3 $4，以下是最近\'\'\'$2\'\'\'小时内的最后\'\'\'$1\'\'\'次修改。',
 	'wlshowlast' => '显示最近$1小时、$2天或$3的更改',
 	'watchlist-options' => '监视列表选项',
 	'watching' => '正在监视...',
@@ -17919,10 +17968,16 @@ $messages['zh-hans'] = array(
 	'watchlisttools-edit' => '查看并编辑监视列表',
 	'watchlisttools-raw' => '编辑原始监视列表',
 	'wikia-read-only-mode' => '很抱歉！当前数据中心不可用，只能显示为备份状态。这意味着您可能无法执行某些操作，例如编辑、上传文件或在线聊天。
-+我们正在努力解决这个问题，请您耐心等待！如果您遇到超时浏览，请发送邮件至community@wikia.com与我们联系。',
-);
 
-$messages['zh-hant'] = array(
+我们正在努力解决这个问题，请您耐心等待！如果您遇到超时浏览，请发送邮件至community@wikia.com与Fandom联系。',
+	'widget-desc-wikiamessages' => 'Fandom消息',
+	'widget-title-advertiser' => 'Fandom聚光灯',
+	'widget-title-wikiamessages' => 'Fandom消息',
+	'wikia_messages' => 'Fandom消息',
+	'wikicitieshome' => 'Fandom之家',
+];
+
+$messages['zh-hant'] = [
 	'wednesday' => '星期三',
 	'wed' => '三',
 	'wrong_wfQuery_params' => '錯誤的參數被傳遞到 wfQuery（）<br />
@@ -17959,11 +18014,11 @@ $messages['zh-hant'] = array(
 	'watchnochange' => '在顯示的時間段內您所監視的頁面沒有更改。',
 	'watchlist-details' => '不包含討論頁，有 $1 頁在您的監視列表上。',
 	'wlheader-enotif' => '* 已經啟動電子郵件通知功能。',
-	'wlheader-showupdated' => "* 在{{GENDER:|你|妳|你}}上次檢視後有被修改過的頁面會顯示為'''粗體'''",
+	'wlheader-showupdated' => '* 在{{GENDER:|你|妳|你}}上次檢視後有被修改過的頁面會顯示為\'\'\'粗體\'\'\'',
 	'watchmethod-recent' => '檢查被監視頁面的最近編輯',
 	'watchmethod-list' => '檢查最近編輯的被監視頁面',
 	'watchlistcontains' => '您的監視列表包含$1個頁面。',
-	'wlnote' => "截至$3 $4，以下是最近'''$2'''小時內的最後'''$1'''次修改。",
+	'wlnote' => '截至$3 $4，以下是最近\'\'\'$2\'\'\'小時內的最後\'\'\'$1\'\'\'次修改。',
 	'wlshowlast' => '顯示最近$1小時；$2天；$3的修改。',
 	'watchlist-options' => '監視列表選項',
 	'watching' => '正在監視...',
@@ -18000,11 +18055,16 @@ $messages['zh-hant'] = array(
 	'watchlisttools-view' => '檢視有關更改',
 	'watchlisttools-edit' => '檢視並編輯監視列表',
 	'watchlisttools-raw' => '編輯原始監視列表',
-	'wikia-read-only-mode' => '很抱歉！當前資料中心不可用，只能顯示為備份狀態。 這意味著您可能無法執行某些操作，例如編輯、上傳文檔或線上聊天。
-+我們正在努力解決這個問題，請您耐心等待！如果您遇到超時流覽，請發送郵件至community@wikia.com與我們聯繫。',
-);
+	'wikia-read-only-mode' => '很抱歉！目前無法使用資料中心，目前顯示的是資料的備份。這意味著您可能無法執行某些操作，例如編輯、上傳檔案或線上聊天。
+我們正在努力解決這個問題，請您耐心等待！如果您持續遇到這個問題，請發送郵件至community@wikia.com與我們聯絡。',
+	'widget-desc-wikiamessages' => 'Fandom訊息',
+	'widget-title-advertiser' => 'Fandom聚光燈',
+	'widget-title-wikiamessages' => 'Fandom訊息',
+	'wikia_messages' => 'Fandom訊息',
+	'wikicitieshome' => 'Fandom家園',
+];
 
-$messages['zh-tw'] = array(
+$messages['zh-tw'] = [
 	'wed' => '三',
 	'welcomecreation' => '== 歡迎，$1！ ==
 您的帳號已經建立。
@@ -18013,9 +18073,9 @@ $messages['zh-tw'] = array(
 	'withoutinterwiki-summary' => '以下的頁面是未有語言鏈接到其它語言版本:',
 	'watchlist-details' => '不包含討論頁，您的監視列表共有 $1 頁。',
 	'whatlinkshere-title' => '鏈接到$1的頁面',
-);
+];
 
-$messages['zh-yue'] = array(
+$messages['zh-yue'] = [
 	'wed' => '三',
 	'welcomecreation' => '== 歡迎，$1！ ==
 您的帳號已經建立。
@@ -18024,9 +18084,9 @@ $messages['zh-yue'] = array(
 	'withoutinterwiki-summary' => '以下的頁面是未有語言鏈接到其它語言版本:',
 	'watchlist-details' => '不包含討論頁，您的監視列表共有 $1 頁。',
 	'whatlinkshere-title' => '鏈接到$1的頁面',
-);
+];
 
-$messages['zu'] = array(
+$messages['zu'] = [
 	'wednesday' => 'uLwesithathu',
 	'welcomecreation' => '== Umbingelelo, $1! ==
 
@@ -18034,5 +18094,5 @@ ikhawundi lakho liyadalwa. musa ukukhohlwa ukuguqula amakhethelo a-{{SITENAME}} 
 	'watchthis' => 'Bukela ngalelikhasi',
 	'watchlist' => 'Uhlelo ubukelwa wami',
 	'watch' => 'Bukela',
-);
+];
 
