@@ -53,10 +53,7 @@ Please set and validate your e-mail address through your [[Special:Preferences|u
 * \'\'\'Safari\'\'\' - Hold down the \'\'⇧ Shift\'\' key and click the \'\'Reload\'\' toolbar button.
 * \'\'\'Firefox\'\'\' - Windows: Hold the \'\'Ctrl\'\' key, and press \'\'F5\'\'. OS X: Hold the \'\'⌘ Cmd\'\' and \'\'⇧ Shift\'\' keys, and then press \'\'R\'\'.
 * \'\'\'Internet Explorer\'\'\' - Hold the \'\'Ctrl\'\' key, and press \'\'F5\'\' (or click the \'\'Refresh\'\' button).',
-	'copyrightwarning' => 'Please note that all contributions to {{SITENAME}} are considered to be released under the $2 (see $1 for details).
-If you do not want your writing to be edited mercilessly and redistributed at will, then do not submit it here.<br />
-You are also promising us that you wrote this yourself, or copied it from a public domain or similar free resource.
-\'\'\'Do not submit copyrighted work without permission!\'\'\'',
+	'copyrightwarning' => 'All contributions to {{SITENAME}} are considered to be released under the  $2 (see $1 for details).<br/>',
 	'copyrightwarning2' => 'Please note that all contributions to {{SITENAME}} may be edited, altered, or removed by other contributors.
 If you do not want your writing to be edited mercilessly, then do not submit it here.<br />
 You are also promising us that you wrote this yourself, or copied it from a public domain or similar free resource (see $1 for details).
@@ -4559,7 +4556,7 @@ $messages['ca'] = [
 	'category-file-count-limited' => '{{PLURAL:$1|El següent fitxer és|Els següents $1 fitxers són}} dins la categoria actual.',
 	'cancel' => 'Anuŀla',
 	'create' => 'Crea',
-	'copyright' => 'El contingut és disponible sota els termes d\'una llicència $1',
+	'copyright' => 'El contingut està disponible sota $1',
 	'copyrightpage' => 'w:Wikia:Licensing|Wikia:Licensing',
 	'currentevents' => 'Actualitat',
 	'currentevents-url' => 'Project:Actualitat',
@@ -6061,8 +6058,8 @@ $messages['de'] = [
 	'category-file-count-limited' => 'Folgende {{PLURAL:$1|Datei ist|$1 Dateien sind}} in dieser Kategorie enthalten:',
 	'cancel' => 'Abbrechen',
 	'create' => 'Erstellen',
-	'copyright' => 'Der Inhalt ist verfügbar unter der Lizenz $1.',
-	'copyrightpage' => 'w:Wikia:Licensing|Wikia:Licensing',
+	'copyright' => 'Lizenz: $1',
+	'copyrightpage' => 'w:c:de:Lizenz|Wikia:Lizenz',
 	'currentevents' => 'Aktuelle Ereignisse',
 	'currentevents-url' => 'Project:Aktuelle Ereignisse',
 	'collapsible-collapse' => 'Einklappen',
@@ -6099,9 +6096,7 @@ Falls das Benutzerkonto irrtümlich angelegt wurde, kannst du diese Nachricht ig
 *\'\'\'Opera:\'\'\' Cache unter \'\'Extras → Einstellungen\'\' leeren; 
 *\'\'\'Internet Explorer:\'\'\' \'\'Strg-F5\'\' drücken oder \'\'Strg\'\' gedrückt halten und dabei \'\'Aktualisieren\'\' anklicken.
 *\'\'\'Chrome:\'\'\' \'\'\'Strg\'\'\' und \'\'\'F5\'\'\';',
-	'copyrightwarning' => '\'\'\'Bitte kopiere keine Webseiten, die nicht deine eigenen sind, benutze keine urheberrechtlich geschützten Werke ohne Erlaubnis des Urhebers!\'\'\'<br />
-Du gibst uns hiermit deine Zusage, dass du den Text \'\'\'selbst verfasst\'\'\' hast, dass der Text Allgemeingut \'\'\'(public domain)\'\'\' ist, oder dass der \'\'\'Urheber\'\'\' seine \'\'\'Zustimmung\'\'\' gegeben hat. Falls dieser Text bereits woanders veröffentlicht wurde, weise bitte auf der Diskussionsseite darauf hin.
-<i>Bitte beachte, dass alle {{SITENAME}}-Beiträge automatisch unter der „$2“ stehen (siehe $1 für Details). Falls du nicht möchtest, dass deine Arbeit hier von anderen verändert und verbreitet wird, dann drücke nicht auf „Seite speichern“.</i>',
+	'copyrightwarning' => 'Alle Beiträge zu {{SITENAME}} werden unter der $2 veröffentlicht (siehe $1 für weitere Informationen).',
 	'copyrightwarning2' => 'Bitte beachte, dass alle Beiträge zu {{SITENAME}} von anderen Mitwirkenden bearbeitet, geändert oder gelöscht werden können.
 Reiche hier keine Texte ein, falls du nicht willst, dass diese ohne Einschränkung geändert werden können.
 
@@ -7282,7 +7277,7 @@ $messages['es'] = [
 	'cancel' => 'Cancelar',
 	'create' => 'Crear',
 	'copyright' => 'El contenido está disponible bajo los términos de la $1.',
-	'copyrightpage' => 'w:Wikia:Licensing|Wikia:Licensing',
+	'copyrightpage' => 'w:c:es:Wikia:Licencia|Wikia:Licencia',
 	'currentevents' => 'Actualidad',
 	'currentevents-url' => 'Project:Actualidad',
 	'collapsible-collapse' => 'Ocultar',
@@ -7320,9 +7315,8 @@ Puedes ignorar este mensaje si esta cuenta fue creada por error.',
 * \'\'\'Internet Explorer:\'\'\' mantén presionada \'\'Ctrl\'\' mientras pulsas \'\'Actualizar\'\', o presiona \'\'Ctrl+F5\'\'
 * \'\'\'Konqueror:\'\'\' pulsa \'\'Recargar\'\' o presiona \'\'F5\'\'
 * \'\'\'Opera:\'\'\' vacía la caché en \'\'Herramientas → Preferencias\'\'',
-	'copyrightwarning' => 'Por favor observa que todas las contribuciones a {{SITENAME}} se consideran hechas públicas bajo la $2 (véase $1 para más detalles). Si no deseas la modificación y distribución libre de tu obra, entonces no la pongas aquí.<br />También nos aseguras que tú escribiste esto y te pertenecen de los derechos de autor, o lo copiaste desde el dominio público u otra fuente libre. \'\'\'¡No uses escritos con copyright sin permiso!\'\'\'',
-	'copyrightwarning2' => 'Por favor, ten en cuenta que todas las contribuciones a {{SITENAME}} pueden ser editadas, modificadas o eliminadas por otros colaboradores. Si no deseas que las modifiquen sin limitaciones y las distribuyan libremente, entonces no las pongas aquí.<br />También nos aseguras que tú escribiste esto y te pertenecen de los derechos de autor, o lo copiaste desde el dominio público u otra fuente libre. (véase $1 para más detalles).
-\'\'\'¡No uses escritos con copyright sin permiso!\'\'\'',
+	'copyrightwarning' => 'Todas las contribuciones a {{SITENAME}} se consideran publicadas bajo la  $2 (ver detalles en $1).',
+	'copyrightwarning2' => 'Por favor, ten en cuenta que todas las contribuciones a {{SITENAME}} pueden ser editadas, modificadas o eliminadas por otros colaboradores. Si no deseas que los demás corrijan sin piedad lo que escribas y que sea distribuido libremente, entonces no lo ingreses aquí. <br />También nos estás asegurando que tú mismo lo has escrito y que eres dueño de los derechos de autor, o lo copiaste desde una fuente en el dominio público o de otra fuente libre (véase $1 para detalles).<br /><strong>¡NO USES ESCRITOS CON DERECHOS DE AUTOR SIN PERMISO!</strong>',
 	'cascadeprotectedwarning' => '\'\'\'Aviso:\'\'\' Esta página está protegida, solo los administradores pueden editarla porque está incluida en  {{PLURAL:$1|la siguiente página protegida|las siguientes páginas protegidas}} en cascada:',
 	'cantcreateaccounttitle' => 'No se puede crear la cuenta',
 	'cantcreateaccount-text' => 'La creación de cuentas para esta IP (<b>$1</b>) ha sido bloqueada por [[User:$3|$3]].
@@ -7942,7 +7936,7 @@ $messages['fa'] = [
 	'cancel' => 'لغو',
 	'create' => 'ایجاد',
 	'copyright' => 'محتوا تحت اجازه‌نامهٔ $1 در دسترس است.',
-	'copyrightpage' => 'w:Wikia:Licensing|Wikia:Licensing',
+	'copyrightpage' => 'w:Wikia:Licensing|ویکیا:حق تکثیر',
 	'currentevents' => 'رویدادهای کنونی',
 	'currentevents-url' => 'Project:رویدادهای کنونی',
 	'collapsible-collapse' => 'نهفتن',
@@ -7980,10 +7974,7 @@ $2',
 *\'\'\'اینترنت اکسپلورر:\'\'\' کلید \'\'Ctrl\'\' را نگه‌دارید و روی دکمهٔ \'\'Refresh\'\' کلیک‌ کنید، یا کلید‌های \'\'Ctrl-F5\'\' را با هم فشار دهید
 *\'\'\'کانکوئرر:\'\'\' روی دکمهٔ \'\'Reload\'\' کلیک کنید و یا کلید \'\'F5\'\' را فشار دهید
 *\'\'\'اپرا:\'\'\' حافظهٔ نهانی مرورگر را از طریق منوی \'\'Tools &rarr; Preferences\'\' پاک کنید',
-	'copyrightwarning' => 'لطفاً توجه داشته باشید که فرض می‌شود کلیهٔ مشارکت‌های شما با {{SITENAME}} تحت «$2» منتشر می‌شوند (برای جزئیات بیشتر به $1 مراجعه کنید).
-اگر نمی‌خواهید نوشته‌هایتان بی‌رحمانه ویرایش شده و به دلخواه توزیع شود، اینجا نفرستیدشان.<br />
-همچنین شما دارید به ما قول می‌دهید که خودتان این را نوشته‌اید، یا آن را از یک منبع آزاد با مالکیت عمومی یا مشابه آن برداشته‌اید.
-\'\'\'کارهای دارای حق تکثیر (copyright) را بی‌اجازه نفرستید!\'\'\'',
+	'copyrightwarning' => 'لطفاً توجه داشته باشید که فرض می‌شود کلیهٔ مشارکت‌های شما با {{SITENAME}} تحت «$2» منتشر می‌شوند (برای جزئیات بیشتر به $1 مراجعه کنید).<br/>',
 	'copyrightwarning2' => 'لطفاً توجه داشته باشید که فرض می‌شود کلیهٔ مشارکت‌های شما با {{SITENAME}} ممکن است توسط دیگر مشارکت‌کنندگان ویرایش شوند، تغییر یابند یا حذف شوند.
 اگر نمی‌خواهید نوشته‌هایتان بی‌رحمانه ویرایش شود، اینجا نفرستیدشان.<br />
 همچنین شما دارید به ما قول می‌دهید که خودتان این را نوشته‌اید، یا آن را از یک منبع آزاد با مالکیت عمومی یا مشابه آن برداشته‌اید (برای جزئیات بیشتر به $1 مراجعه کنید).
@@ -8158,7 +8149,7 @@ $messages['fi'] = [
 	'cancel' => 'Peruuta',
 	'create' => 'Luo sivu',
 	'copyright' => 'Sisältö on käytettävissä lisenssillä $1.',
-	'copyrightpage' => 'w:Wikia:Licensing|Wikia:Licensing',
+	'copyrightpage' => 'w:c:fi:Suomen Wikia:Lisenssointi|Wikia:Lisenssointi',
 	'currentevents' => 'Ajankohtaista',
 	'currentevents-url' => 'Project:Ajankohtaista',
 	'collapsible-collapse' => 'Piilota',
@@ -8196,7 +8187,8 @@ Sinun ei tarvitse huomioida tätä viestiä, jos tunnus on luotu virheellisesti.
 * \'\'\'Internet Explorer:\'\'\' Napsauta \'\'Ctrl\'\'-näppäin pohjassa \'\'Päivitä\'\' tai paina \'\'Ctrl-F5\'\'
 * \'\'\'Konqueror\'\'\': Napsauta \'\'Päivitä\'\' tai paina \'\'F5\'\'
 * \'\'\'Opera:\'\'\' Tyhjennä välimuisti: \'\'Tools→Preferences\'\'',
-	'copyrightwarning' => '\'\'\'Muutoksesi astuvat voimaan välittömästi.\'\'\' Kaikki {{GRAMMAR:illative|{{SITENAME}}}} tehtävät tuotokset katsotaan julkaistuksi $2 -lisenssin mukaisesti ($1). Jos et halua, että kirjoitustasi muokataan armottomasti ja uudelleenkäytetään vapaasti, älä tallenna kirjoitustasi. Tallentamalla muutoksesi lupaat, että kirjoitit tekstisi itse, tai kopioit sen jostain vapaasta lähteestä. \'\'\'ÄLÄ KÄYTÄ TEKIJÄNOIKEUDEN ALAISTA MATERIAALIA ILMAN LUPAA!\'\'\'',
+	'copyrightwarning' => 'Kaikki muokkaukset sivustoon {{SITENAME}} katsotaan julkaistuksi $2-lisenssin alaisena (katso $1 saadaksesi lisätietoa). Mikäli et halua, että sisältöäsi muokataan tai levitetään, älä julkaise sitä.<br />
+\'\'\'Ethän myöskään julkaise tekijänoikeussuojattua materiaalia luvattomasti!\'\'\'',
 	'copyrightwarning2' => 'Huomaa, että kuka tahansa voi muokata, muuttaa ja poistaa kaikkia sivustolle tekemiäsi lisäyksiä ja muutoksia. Muokkaamalla sivustoa luovutat sivuston käyttäjille tämän oikeuden ja takaat, että lisäämäsi aineisto on joko itse kirjoittamaasi tai peräisin jostain vapaasta lähteestä. Lisätietoja sivulla $1. \'\'\'TEKIJÄNOIKEUDEN ALAISEN MATERIAALIN KÄYTTÄMINEN ILMAN LUPAA ON EHDOTTOMASTI KIELLETTYÄ!\'\'\'',
 	'cascadeprotectedwarning' => '<strong>Vain ylläpitäjät voivat muokata tätä sivua, koska se on sisällytetty alla {{PLURAL:$1|olevaan laajennetusti suojattuun sivuun|oleviin laajennetusti suojattuihin sivuihin}}</strong>:',
 	'cantcreateaccounttitle' => 'Tunnuksen luominen epäonnistui',
@@ -8627,8 +8619,8 @@ $messages['fr'] = [
 	'category-file-count-limited' => '{{PLURAL:$1|Le fichier suivant figure|Les $1 fichiers suivants figurent}} dans la présente catégorie.',
 	'cancel' => 'Annuler',
 	'create' => 'Créer',
-	'copyright' => 'Contenu disponible sous $1.',
-	'copyrightpage' => 'w:Wikia:Licensing|Wikia:Licensing',
+	'copyright' => 'Sous licence $1',
+	'copyrightpage' => 'homepage:fr:Licence|Wikia : Licence',
 	'currentevents' => 'Actualités',
 	'currentevents-url' => 'Project:Actualités',
 	'collapsible-collapse' => 'masquer',
@@ -13204,8 +13196,8 @@ $messages['ja'] = [
 	'category-file-count-limited' => '以下の{{PLURAL:$1|$1ファイル}}が、現在のカテゴリに含まれています。',
 	'cancel' => '中止',
 	'create' => '作成',
-	'copyright' => '内容は$1のライセンスで利用することができます。',
-	'copyrightpage' => 'w:Wikia:Licensing|Wikia:Licensing',
+	'copyright' => 'コンテンツは$1のもとで利用できます。',
+	'copyrightpage' => 'w:c:ja:ライセンス|ライセンス',
 	'currentevents' => '最近の出来事',
 	'currentevents-url' => 'Project:最近の出来事',
 	'collapsible-collapse' => '折り畳む',
@@ -13244,10 +13236,7 @@ $2',
 * \'\'\'Internet Explorer:\'\'\' \'\'Ctrl\'\' を押しながら \'\'最新の情報に更新\'\' をクリックする、もしくは \'\'Ctrl-F5\'\' を押してください
 * \'\'\'Konqueror:\'\'\' \'\'再読み込み\'\' をクリックするか、 \'\'F5\'\' を押してください。
 * \'\'\'Opera:\'\'\' \'\'ツール → 設定\'\' からキャッシュをクリアしてください。',
-	'copyrightwarning' => '{{SITENAME}}への投稿は、すべて$2（詳細は$1を参照）のもとで公開されたと見なされることにご注意ください。
-投稿されたものが、他人によって遠慮なく編集され、自由に配布されることを望まない場合は、ここには投稿しないでください。<br />
-また、投稿されるものは、自身によって書かれたものであるか、パブリック・ドメイン、またはそれに類するフリーな資料からの複製であることを約束してください。
-\'\'\'著作権保護されている作品を、許諾なしに投稿しないでください！\'\'\'',
+	'copyrightwarning' => '{{SITENAME}} への投稿は、すべて $2 のもとでリリースされているとみなされます (詳細は $1 を参照)。<br />',
 	'copyrightwarning2' => '{{SITENAME}}への全ての投稿は、他の利用者によって編集、変更、除去される可能性があります。
 自信の投稿が他人によって遠慮なく編集されることを望まない場合は、ここには投稿しないでください。<br />
 また、投稿されるものは、自身によって書かれたものであるか、パブリック・ドメイン、またはそれに類するフリーな資料からの複製であることを約束してください（詳細は$1を参照）。
@@ -20529,14 +20518,14 @@ Voer je e-mailadres in en bevestig het via [[Special:Preferences|je voorkeuren]]
 \'\'\'Konqueror: \'\'\'klik \'\'Reload\'\' of typ \'\'F5;\'\'
 \'\'\'Opera:\'\'\' leeg je cache in \'\'Extra → Voorkeuren;\'\'
 \'\'\'Internet Explorer:\'\'\' houd \'\'Ctrl\'\' ingedrukt terwijl je op \'\'Vernieuwen\'\' klikt of type \'\'Ctrl-F5.\'\'',
-	'copyrightwarning' => 'Let op: alle bijdragen aan {{SITENAME}} worden geacht te zijn vrijgegeven onder de $2 (zie $1 voor details).
-Als u niet wilt dat uw tekst door anderen naar believen bewerkt en verspreid kan worden, kies dan niet voor "Pagina opslaan".<br />
-Hierbij belooft u ons tevens dat u deze tekst zelf hebt geschreven of overgenomen uit een vrije, openbare bron.<br />
-\'\'\'Gebruik geen materiaal dat beschermd wordt door auteursrecht, tenzij u daarvoor toestemming hebt!\'\'\'',
-	'copyrightwarning2' => 'Al uw bijdragen aan {{SITENAME}} kunnen bewerkt, gewijzigd of verwijderd worden door andere gebruikers.
-Als u niet wilt dat uw teksten rigoureus aangepast worden door anderen, plaats ze hier dan niet.<br />
-U belooft ook dat u de oorspronkelijke auteur bent van dit materiaal of dat u het hebt gekopieerd uit een bron in het publieke domein of een soortgelijke vrije bron (zie $1 voor details).
-\'\'\'Gebruik geen materiaal dat beschermd wordt door auteursrecht, tenzij u daarvoor toestemming hebt!\'\'\'',
+	'copyrightwarning' => 'Opgelet: alle bijdragen aan {{SITENAME}} worden geacht te zijn vrijgegeven onder de $2 (zie $1 voor details).
+Als je niet wilt dat je tekst door anderen naar believen bewerkt en verspreid kan worden, kies dan niet voor ‘Pagina opslaan’.<br />
+Hierbij beloof je ons tevens dat je deze tekst zelf hebt geschreven of overgenomen uit een vrije, openbare bron.<br />
+\'\'\'GEBRUIK GEEN MATERIAAL DAT BESCHERMD WORDT DOOR AUTEURSRECHT, TENZIJ JE DAAR TOESTEMMING VOOR HEBT!\'\'\'',
+	'copyrightwarning2' => 'Al je bijdragen aan {{SITENAME}} kunnen bewerkt, gewijzigd of verwijderd worden door andere gebruikers.
+Als je niet wilt dat je teksten rigoureus aangepast worden door anderen, plaats ze hier dan niet.<br />
+Je belooft ook dat je de oorspronkelijke auteur bent van dit materiaal of dat je het hebt gekopieerd uit een bron in het publieke domein of een soortgelijke vrije bron (zie $1 voor details).
+\'\'\'GEBRUIK GEEN MATERIAAL DAT BESCHERMD WORDT DOOR AUTEURSRECHT, TENZIJ JE DAARVOOR TOESTEMMING HEBT!\'\'\'',
 	'cascadeprotectedwarning' => '\'\'\'Waarschuwing:\'\'\' deze pagina is beveiligd en kan alleen door beheerders bewerkt worden, omdat deze is opgenomen in de volgende {{PLURAL:$1|pagina|pagina\'s}} die beveiligd {{PLURAL:$1|is|zijn}} met de cascade-optie:',
 	'cantcreateaccounttitle' => 'Registreren is mislukt.',
 	'cantcreateaccount-text' => 'Registreren vanaf dit IP-adres (\'\'\'$1\'\'\') is geblokkeerd door [[User:$3|$3]].
@@ -21879,8 +21868,8 @@ $messages['pl'] = [
 	'category-file-count-limited' => 'W tej kategorii {{PLURAL:$1|jest 1 plik|są $1 pliki|jest $1 plików}}.',
 	'cancel' => 'Anuluj',
 	'create' => 'Utwórz',
-	'copyright' => 'Treść udostępniana na licencji $1.',
-	'copyrightpage' => 'w:Wikia:Licensing|Wikia:Licensing',
+	'copyright' => 'Licencja: $1',
+	'copyrightpage' => 'w:c:pl:Licencja|Licencja – Wikia',
 	'currentevents' => 'Bieżące wydarzenia',
 	'currentevents-url' => 'Project:Aktualności',
 	'collapsible-collapse' => 'Zwiń',
@@ -21919,9 +21908,7 @@ Podaj adres e‐mail i potwierdź go w swoich [[Special:Preferences|ustawieniach
 * \'\'\'Safari\'\'\' - Przytrzymaj \'\'⇧ Shift\'\' i kliknij na przycisk \'\'Odśwież\'\' na pasku narzędzi.
 * \'\'\'Firefox\'\'\' - Windows: Przytrzymaj \'\'Ctrl\'\' i wciśnij \'\'F5\'\'. OS X: Przytrzymaj \'\'⌘ Cmd\'\' oraz \'\'⇧ Shift\'\' i wciśnij \'\'R\'\'.
 * \'\'\'Internet Explorer\'\'\' - Przytrzymaj \'\'Ctrl\'\' i wciśnij \'\'F5\'\' (lub kliknij przycisk \'\'Odśwież\'\' na pasku narzędzi).',
-	'copyrightwarning' => 'Wkład do {{GRAMMAR:D.lp|{{SITENAME}}}} jest udostępniany na licencji $2 (szczegóły w $1). Jeśli nie chcesz, żeby Twój tekst był dowolnie zmieniany przez każdego i rozpowszechniany bez ograniczeń, nie umieszczaj go tutaj.<br />
-Zapisując swoją edycję, oświadczasz, że ten tekst jest Twoim dziełem lub pochodzi z materiałów dostępnych na warunkach \'\'domeny publicznej\'\' lub kompatybilnych.
-\'\'\'PROSZĘ NIE WPROWADZAĆ MATERIAŁÓW CHRONIONYCH PRAWEM AUTORSKIM BEZ POZWOLENIA WŁAŚCICIELA!\'\'\'',
+	'copyrightwarning' => 'Wkład do {{GRAMMAR:D.lp|{{SITENAME}}}} jest udostępniany na licencji $2 (szczegóły w $1).',
 	'copyrightwarning2' => 'Wszelki wkład w {{GRAMMAR:B.lp|{{SITENAME}}}} może być edytowany, zmieniany lub usunięty przez innych użytkowników.
 Jeśli nie chcesz, żeby Twój tekst był dowolnie zmieniany przez każdego i rozpowszechniany bez ograniczeń, nie umieszczaj go tutaj.<br />
 Zapisując swoją edycję, oświadczasz, że ten tekst jest Twoim dziełem lub pochodzi z materiałów dostępnych na warunkach \'\'domeny publicznej\'\' lub kompatybilnych (zobacz także $1).
@@ -27150,7 +27137,7 @@ $messages['sv'] = [
 	'cancel' => 'Avbryt',
 	'create' => 'Skapa',
 	'copyright' => 'Innehållet är tillgängligt under $1.',
-	'copyrightpage' => 'w:Wikia:Licensing|Wikia:Licensing',
+	'copyrightpage' => 'w:Wikia:Licensing|Wikia:Licensiering',
 	'currentevents' => 'Aktuella händelser',
 	'currentevents-url' => 'Project:Aktuella händelser',
 	'collapsible-collapse' => 'Göm',
@@ -27187,8 +27174,7 @@ Du kan ignorera detta meddelande om kontot skapats av misstag.',
 *\'\'\'Opera\'\'\' användare måste tömma sina cacher genom \'\'Verktyg→Inställningar\'\'
 *\'\'\'Konqueror\'\'\' och \'\'\'Safari\'\'\' användare kan klicka \'\'Reload\'\' knappen.
 *\'\'\'Chrome\'\'\': tryck Ctrl+F5 eller Shift+F5',
-	'copyrightwarning' => 'Observera att alla bidrag till {{SITENAME}} är att betrakta som utgivna under $2 (se $1 för detaljer). Om du inte vill att din text ska redigeras eller kopieras efter andras gottfinnande skall du inte skriva något här.<br />
-Du lovar oss också att du skrev texten själv, eller kopierade från kulturellt allmängods som inte skyddas av upphovsrätt, eller liknande källor. \'\'\'LÄGG INTE UT UPPHOVSRÄTTSSKYDDAT MATERIAL HÄR UTAN TILLÅTELSE!\'\'\'',
+	'copyrightwarning' => 'Alla bidrag till {{SITENAME}} är att betrakta som utgivna under  $2 (se $1 för detaljer).<br/>',
 	'copyrightwarning2' => 'Observera att alla bidrag till {{SITENAME}} kan komma att redigeras, ändras, eller tas bort av andra deltagare. Om du inte vill se din text förändrad efter andras gottfinnade skall du inte skriva in någon text här.<br />
 Du lovar oss också att du skrev texten själv, eller kopierade från kulturellt allmängods som inte skyddas av upphovsrätt, eller liknande källor - se $1 för detaljer.
 \'\'\'LÄGG INTE UT UPPHOVSRÄTTSSKYDDAT MATERIAL HÄR UTAN TILLÅTELSE!\'\'\'',
@@ -30134,8 +30120,8 @@ $messages['vi'] = [
 	'category-file-count-limited' => '{{PLURAL:$1|Tập tin|$1 tập tin}} sau nằm trong thể loại hiện hành.',
 	'cancel' => 'Hủy bỏ',
 	'create' => 'Tạo',
-	'copyright' => 'Bản quyền $1.',
-	'copyrightpage' => 'w:Wikia:Licensing|Wikia:Licensing',
+	'copyright' => 'Văn bản được phát hành theo <a href="http://congdong.wikia.com/wiki/Giấy_phép">Giấy phép Creative Commons Ghi công–Chia sẻ tương tự</a>.',
+	'copyrightpage' => 'w:vi:Wikia:Giấy phép|Wikia:Giấy phép',
 	'currentevents' => 'Tin tức',
 	'currentevents-url' => 'Project:Thời sự',
 	'collapsible-collapse' => 'Thu gọn',
@@ -30171,9 +30157,9 @@ Xin hãy bỏ qua thông báo này nếu tài khoản này không phải do bạ
 * \'\'\'Internet Explorer:\'\'\' Giữ phím \'\'Ctrl\'\' trong khi nhấn \'\'Refresh\'\', hoặc nhấn tổ hợp \'\'Ctrl-F5\'\'
 * \'\'\'Konqueror:\'\'\' Nhấn nút \'\'Reload\'\' hoặc nhấn \'\'F5\'\'
 * \'\'\'Opera:\'\'\' Xóa bộ nhớ đệm trong \'\'Tools → Preferences\'\'',
-	'copyrightwarning' => 'Xin chú ý rằng tất cả các đóng góp của bạn tại {{SITENAME}} được xem là sẽ phát hành theo giấy phép $2 (xem $1 để biết thêm chi tiết). Nếu bạn không muốn trang của bạn bị sửa đổi không thương tiếc và không sẵn lòng cho phép phát hành lại, đừng đăng trang ở đây.<br />
+	'copyrightwarning' => 'Xin chú ý rằng tất cả các đóng góp của bạn tại \'\'\'{{SITENAME}}\'\'\' được xem là sẽ phát hành theo giấy phép $2 (xem [[w:c:congdong:Giấy phép|Giấy phép]] để biết thêm chi tiết). Nếu bạn không muốn trang của mình bị sửa đổi không thương tiếc và không sẵn lòng cho phép phát hành lại, đừng đăng trang ở đây.<br />
 Bạn phải đảm bảo với chúng tôi rằng chính bạn là người viết nên, hoặc chép nó từ một nguồn thuộc phạm vi công cộng hoặc tự do tương đương.
-\'\'\'ĐỪNG ĐĂNG TÁC PHẨM CÓ BẢN QUYỀN MÀ CHƯA XIN PHÉP!\'\'\'',
+\'\'\'XIN ĐỪNG ĐĂNG TÁC PHẨM CÓ BẢN QUYỀN MÀ CHƯA XIN PHÉP!\'\'\'',
 	'copyrightwarning2' => 'Xin chú ý rằng tất cả các đóng góp của bạn tại {{SITENAME}} có thể được sửa đổi, thay thế, hoặc xóa bỏ bởi các thành viên khác. Nếu bạn không muốn trang của bạn bị sửa đổi không thương tiếc, đừng đăng trang ở đây.<br />
 Bạn phải đảm bảo với chúng tôi rằng chính bạn là người viết nên, hoặc chép nó từ một nguồn thuộc phạm vi công cộng hoặc tự do tương đương (xem $1 để biết thêm chi tiết).
 \'\'\'ĐỪNG ĐĂNG TÁC PHẨM CÓ BẢN QUYỀN MÀ CHƯA XIN PHÉP!\'\'\'',
@@ -31473,6 +31459,15 @@ Send a new code by clicking [[Special:ConfirmEmail|here]].',
 请在重新创建条目前三思.',
 	'contris' => '用户贡献',
 	'contris_s' => '用户贡献',
+	'copyrightwarning' => '若您不希望您貢獻的內容被任意修改或被他人再度分發，請不要提交這些內容。
+
+* {{SITENAME}}的所有文本資料均依創作共同-姓名標示-相同方式分享（cc-by-sa 3.0）的條款釋出(請見$1）。
+* 在未得到著作權利人准許的情況下，\'\'\'請勿發佈受著作權保護的資料\'\'\'。
+* 只有公有領域的資料，才可在無須授權下複製到本站；大多數的網頁都不在此範圍內。',
+	'copyrightwarning2' => '请注意您在{{SITENAME}}所做出的所有贡献都可能被其他贡献者编辑, 修改或删除.
+如果您不想您写的文章被他人修改, 请不要在这里提交.<br />
+你也必须向我们保证你所写的一切都出自你自己的笔下, 或者是复制于公共领域或其他类似的自由来源(详情请参见 $1).
+<strong>请不要在未获授权的情况下发表受版权保护的作品！</strong>',
 ];
 
 $messages['zh-classical'] = [
@@ -31503,6 +31498,10 @@ Send a new code by clicking [[Special:ConfirmEmail|here]].',
 	'confirmrecreate' => '在你编辑这个条目後, 用户[[User:$1|$1]]([[User talk:$1|讨论]])以下列原因删除了这个条目:
 : \'\'$2\'\'
 请在重新创建条目前三思.',
+	'copyrightwarning2' => '请注意您在{{SITENAME}}所做出的所有贡献都可能被其他贡献者编辑, 修改或删除.
+如果您不想您写的文章被他人修改, 请不要在这里提交.<br />
+你也必须向我们保证你所写的一切都出自你自己的笔下, 或者是复制于公共领域或其他类似的自由来源(详情请参见 $1).
+<strong>请不要在未获授权的情况下发表受版权保护的作品！</strong>',
 ];
 
 $messages['zh-hans'] = [
@@ -31916,6 +31915,10 @@ Send a new code by clicking [[Special:ConfirmEmail|here]].',
 請在重新創建條目前三思.',
 	'contris' => '用戶貢獻',
 	'contris_s' => '用戶貢獻',
+	'copyrightwarning2' => '請注意您在{{SITENAME}}所做出的所有貢獻都可能被其他貢獻者編輯, 修改或删除.
+如果您不想您寫的文章被他人修改, 請不要在這裏提交.<br />
+你也必須向我們保證你所寫的一切都出自你自己的筆下, 或者是復制于公共領域或其他類似的自由來源(詳情請參見 $1).
+<strong>請不要在未獲授權的情况下發表受版權保護的作品！</strong>',
 ];
 
 $messages['zh-min-nan'] = [
@@ -31956,6 +31959,10 @@ Send a new code by clicking [[Special:ConfirmEmail|here]].',
 	'confirmrecreate' => '在你编辑这个条目後, 用户[[User:$1|$1]]([[User talk:$1|讨论]])以下列原因删除了这个条目:
 : \'\'$2\'\'
 请在重新创建条目前三思.',
+	'copyrightwarning2' => '请注意您在{{SITENAME}}所做出的所有贡献都可能被其他贡献者编辑, 修改或删除.
+如果您不想您写的文章被他人修改, 请不要在这里提交.<br />
+你也必须向我们保证你所写的一切都出自你自己的笔下, 或者是复制于公共领域或其他类似的自由来源(详情请参见 $1).
+<strong>请不要在未获授权的情况下发表受版权保护的作品！</strong>',
 ];
 
 $messages['zh-tw'] = [
@@ -32011,6 +32018,10 @@ Send a new code by clicking [[Special:ConfirmEmail|here]].',
 	'confirmemail_sent' => '確認信已發出',
 	'contris' => '用戶貢獻',
 	'contris_s' => '用戶貢獻',
+	'copyrightwarning2' => '請注意您在{{SITENAME}}所做出的所有貢獻都可能被其他貢獻者編輯, 修改或删除.
+如果您不想您寫的文章被他人修改, 請不要在這裏提交.<br />
+你也必須向我們保證你所寫的一切都出自你自己的筆下, 或者是復制于公共領域或其他類似的自由來源(詳情請參見 $1).
+<strong>請不要在未獲授權的情况下發表受版權保護的作品！</strong>',
 ];
 
 $messages['zh-yue'] = [
