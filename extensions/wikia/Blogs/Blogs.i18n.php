@@ -979,7 +979,7 @@ $messages['cy'] = [
 
 $messages['de'] = [
 	'blog-file-page' => 'Beitrag von <a href=\'$1\'>$2</a> im Blog von <a href=\'$3\'>$4</a>',
-	'createblogpage' => 'Blog anlegen',
+	'createblogpage' => 'Erstelle Blog-Beitrag',
 	'createbloglistingpage' => 'Erstelle Blog-Aggregationsseite',
 	'create-blog-spam' => 'Tut uns leid, aber deine Bearbeitung konnte nicht gespeichert werden.',
 	'create-blog-cant-edit' => 'Konnte Bearbeitung nicht durchführen',
@@ -2890,8 +2890,8 @@ $messages['kn'] = [
 
 $messages['ko'] = [
 	'blog-file-page' => '<a href=\'$3\'>$4</a> 사용자의 블로그에 올라온 글, <a href=\'$1\'>$2</a>',
-	'createblogpage' => '블로그 만들기',
-	'createbloglistingpage' => '블로그 목록 만들기',
+	'createblogpage' => '블로그 글 쓰기',
+	'createbloglistingpage' => '블로그 글 목록 만들기',
 	'create-blog-spam' => '스팸으로 보입니다',
 	'create-blog-cant-edit' => '편집하신 내용을 저장할 수 없습니다.',
 	'create-blog-post-category' => '블로그 글',
@@ -6027,6 +6027,7 @@ $messages['no'] = [
 	'create-blog-post-title' => 'Opprett et nytt blogginnlegg',
 	'create-blog-save' => 'Lagre side',
 	'create-blog-updated' => 'Blogginnlegg opprettet eller oppdatert.',
+	'create-listing-confirm-info' => 'Kopier og lim inn følgende kode:',
 ];
 
 $messages['zh'] = [

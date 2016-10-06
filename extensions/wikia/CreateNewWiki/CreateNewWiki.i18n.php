@@ -1561,7 +1561,7 @@ $messages['kn'] = [
 ];
 
 $messages['ko'] = [
-	'createnewwiki-desc' => '위키 만들기 마법사',
+	'createnewwiki-desc' => '[[Special:CreateNewWiki|위키 생성 마법사]]',
 	'cnw-next' => '다음',
 	'cnw-back' => '이전',
 	'cnw-or' => '또는',

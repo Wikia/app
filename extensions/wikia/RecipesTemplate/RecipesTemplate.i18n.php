@@ -1,8 +1,8 @@
 <?php
+/** Internationalization file for /extensions/wikia/RecipesTemplate/RecipesTemplate extension. */
+$messages = [];
 
-$messages = array();
-
-$messages['en'] = array(
+$messages['en'] = [
 	'recipiestemplate-desc' => 'Adds forms to help people add recipes and ingredients pages to Recipes wikis',
 	'createingredient' => 'Create an ingredient page',
 	'createrecipe' => 'Create a recipe page',
@@ -56,14 +56,13 @@ $messages['en'] = array(
 	'recipes-template-toggle-recipe-label' => 'Recipe Page',
 	'recipes-template-yields-hint' => 'How many servings, or how many individual items?',
 	'recipes-template-yields-label' => 'Yields:',
+	'recipes-template-recipe-wikitext' => '[[<<wpPhoto>>|thumb|300px]]
 
-	'recipes-template-recipe-wikitext' => "[[<<wpPhoto>>|thumb|300px]]
+\'\'\'Prep Time:\'\'\' <<wpPrepTime>>
 
-'''Prep Time:''' <<wpPrepTime>>
+\'\'\'Cook Time:\'\'\' <<wpCookTime>>
 
-'''Cook Time:''' <<wpCookTime>>
-
-'''Yields:''' <<wpYields>>
+\'\'\'Yields:\'\'\' <<wpYields>>
 
 == Description ==
 
@@ -77,9 +76,8 @@ $messages['en'] = array(
 
 <<wpDirections>>
 
-<<wpCategories>>",
-
-	'recipe-menus' => "* Course
+<<wpCategories>>',
+	'recipe-menus' => '* Course
 ** Appetizer Recipes
 ** Main Dish Recipes
 ** Side Dish Recipes
@@ -112,9 +110,8 @@ $messages['en'] = array(
 ** Romantic Recipes
 ** Easter Recipes
 ** Thanksgiving Recipes
-** Christmas Recipes",
-
-	'recipes-template-ingredient-wikitext' => "[[<<wpPhoto>>|thumb|300px]]
+** Christmas Recipes',
+	'recipes-template-ingredient-wikitext' => '[[<<wpPhoto>>|thumb|300px]]
 
 == Description ==
 
@@ -136,14 +133,19 @@ $messages['en'] = array(
 
 <<wpNutrition>>
 
-<<wpCategories>>",
-
-	'ingredient-menus' => "* Ingredient
+<<wpCategories>>',
+	'ingredient-menus' => '* Ingredient
 ** Fruits and Vegetables
 ** Meat
 ** Dairy
 ** Legumes and Nuts
 ** Sweets
 ** Grains
-** Spices",
-);
+** Spices',
+];
+
+$messages['de'] = [
+	'createfromtemplate' => '<!-- deprecated recipes ext? -->Create a page from a template',
+	'createingredient' => '<!-- deprecated recipes ext? -->Create an ingredient page',
+];
+

@@ -324,7 +324,7 @@ Please confirm that you really want to recreate this article.',
 	'createwikimailsub' => 'Request for a new Wikia',
 	'createwikisubmitcomplete' => 'Your submission is complete.  If you gave an email address, you will be contacted regarding the new Wiki.  Thank you for using {{SITENAME}}.',
 	'createwikilang' => 'Default language for this wiki',
-	'create_an_account' => 'Create an account',
+	'create_an_account' => 'Sign up',
 	'createpage' => 'Create a new page',
 	'choose_reason' => 'Choose reason',
 	'community' => 'Community',
@@ -3478,6 +3478,7 @@ $5
 	'compare-revision-not-exists' => 'Посочената версия не съществува.',
 	'createwiki' => 'Създаване на уики',
 	'createwikipagetitle' => 'Заявка за ново уики',
+	'create_an_account' => 'Създаване на сметка',
 ];
 
 $messages['bh'] = [
@@ -6257,7 +6258,7 @@ Bitte bestätige, dass Du diese Seite tatsächlich neu anlegen möchtest.',
 	'compare-invalid-title' => 'Der angegebene Seitenname ist ungültig.',
 	'compare-title-not-exists' => 'Der angegebene Seitenname ist nicht vorhanden.',
 	'compare-revision-not-exists' => 'Die angegebene Version ist nicht vorhanden.',
-	'create_an_account' => 'Neues Benutzerkonto erstellen',
+	'create_an_account' => 'Benutzerkonto erstellen',
 	'createpage' => 'Neue Seite anlegen',
 	'choose_reason' => 'Wähle einen Grund',
 	'community' => 'Community',
@@ -7463,7 +7464,7 @@ Este código de confirmación caducará el $4.',
 	'compare-invalid-title' => 'El título especificado es inválido.',
 	'compare-title-not-exists' => 'El título especificado no existe.',
 	'compare-revision-not-exists' => 'La revisión especificada no existe.',
-	'create_an_account' => 'Crea una cuenta',
+	'create_an_account' => 'crea una cuenta',
 	'createpage' => 'Crea un nuevo artículo',
 	'choose_reason' => 'Elegir la razón',
 	'create-account-new' => 'Crea tu cuenta de Fandom',
@@ -8153,6 +8154,7 @@ $5
 	'createpage' => 'ایجاد مقاله جدید',
 	'createwiki' => 'ایجاد ویکی جدید',
 	'createwikipagetitle' => 'ایجاد ویکی جدید',
+	'create_an_account' => 'ایجاد حساب کاربری',
 ];
 
 $messages['ff'] = [
@@ -15424,6 +15426,7 @@ $5
 	'createpage' => '새 문서 만들기',
 	'createwiki' => '새 위키 만들기',
 	'createwikipagetitle' => '새 위키 만들기',
+	'create_an_account' => '계정 만들기',
 ];
 
 $messages['ko-kp'] = [
@@ -31536,6 +31539,7 @@ Send a new code by clicking [[Special:ConfirmEmail|here]].',
 	'createpage' => '新增文章',
 	'createaccountblock' => '禁止创建帐户',
 	'createwikipagetitle' => '申请wiki',
+	'created' => '已被创建',
 ];
 
 $messages['zh-classical'] = [
@@ -31574,6 +31578,7 @@ Send a new code by clicking [[Special:ConfirmEmail|here]].',
 	'createaccountblock' => '禁止创建帐户',
 	'createwiki' => '申请wiki',
 	'createwikipagetitle' => '申请wiki',
+	'created' => '已被创建',
 ];
 
 $messages['zh-hans'] = [
@@ -32001,6 +32006,7 @@ Send a new code by clicking [[Special:ConfirmEmail|here]].',
 	'createaccountblock' => '禁止創建帳户',
 	'createwiki' => '申請wiki',
 	'createwikipagetitle' => '申請wiki',
+	'created' => '已被創建',
 ];
 
 $messages['zh-min-nan'] = [
@@ -32048,6 +32054,7 @@ Send a new code by clicking [[Special:ConfirmEmail|here]].',
 	'createaccountblock' => '禁止创建帐户',
 	'createwiki' => '申请wiki',
 	'createwikipagetitle' => '申请wiki',
+	'created' => '已被创建',
 ];
 
 $messages['zh-tw'] = [
@@ -32109,6 +32116,7 @@ Send a new code by clicking [[Special:ConfirmEmail|here]].',
 <strong>請不要在未獲授權的情况下發表受版權保護的作品！</strong>',
 	'createwiki' => '申請wiki',
 	'createwikipagetitle' => '申請wiki',
+	'created' => '已被創建',
 ];
 
 $messages['zh-yue'] = [
