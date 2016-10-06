@@ -14,7 +14,7 @@ $messages['en'] = [
 	'anontalk' => 'Talk for this IP address',
 	'and' => '&#32;and',
 	'actions' => 'Actions',
-	'addsection' => '+',
+	'addsection' => 'Leave message',
 	'aboutsite' => 'About {{SITENAME}}',
 	'aboutpage' => 'Project:About',
 	'anonnotice' => '-',
@@ -6495,6 +6495,7 @@ Bitte besuche die Seiten [//www.mediawiki.org/wiki/Localisation MediaWiki-Lokali
 	'all_the_wikia' => 'Überall in Fandom',
 	'achievements-leaderboard-navigation-item' => 'Herausforderungen',
 	'add_comment' => 'Kommentieren',
+	'addsection' => 'Kommentieren',
 ];
 
 $messages['de-ch'] = [
@@ -7650,6 +7651,7 @@ Por favor visita [//www.mediawiki.org/wiki/Localisation Localización MediaWiki]
 	'all_the_wikia' => 'Todo Fandom',
 	'achievements-leaderboard-navigation-item' => 'Tablón de líderes del wiki',
 	'add_comment' => 'Dejar un mensaje',
+	'addsection' => 'Dejar un mensaje',
 ];
 
 $messages['et'] = [
@@ -8441,6 +8443,7 @@ Jos haluat muokata MediaWikin yleistä kotoistusta, käy [//www.mediawiki.org/wi
 	'addnewtalksection-link' => 'Lisää uusi osio',
 	'all_the_wikia' => 'Kaikki wikiat',
 	'add_comment' => 'Jätä viesti',
+	'addsection' => 'Lisää kommentti',
 ];
 
 $messages['fiu-vro'] = [
@@ -8908,6 +8911,7 @@ Veuillez visiter la [//www.mediawiki.org/wiki/Localisation Localisation de Media
 	'all_the_wikia' => 'Tout Fandom',
 	'achievements-leaderboard-navigation-item' => 'Classement du wikia',
 	'add_comment' => 'Laisser un message',
+	'addsection' => 'Laisser un message',
 ];
 
 $messages['frc'] = [
@@ -13509,6 +13513,7 @@ $1のブロックの理由は「$2」です。',
 	'add_comment' => 'コメントを追加する',
 	'addnewtalksection-link' => '新しいセクションを開始する',
 	'achievements-leaderboard-navigation-item' => 'アチーブメントランキング',
+	'addsection' => 'メッセージを追加する',
 ];
 
 $messages['jam'] = [
@@ -22125,6 +22130,7 @@ Odwiedź [//www.mediawiki.org/wiki/Localisation Tłumaczenie MediaWiki] oraz [//
 	'addnewtalksection-link' => 'Dodaj nowy wątek.',
 	'all_the_wikia' => 'Cały Fandom',
 	'achievements-leaderboard-navigation-item' => 'Ranking wiki',
+	'addsection' => 'Dodaj wiadomość',
 ];
 
 $messages['pms'] = [
@@ -27471,6 +27477,7 @@ Besök [//www.mediawiki.org/wiki/Localisation MediaWiki Localisation] eller [//t
 	'api-error-uploaddisabled' => 'Uppladdning är inaktiverad på denna wiki.',
 	'api-error-verification-error' => 'Denna fil kan vara skadad eller har fel filändelse.',
 	'addnewtalksection-link' => 'Starta ett nytt avsnitt',
+	'addsection' => 'Lämna meddelande',
 ];
 
 $messages['sw'] = [
@@ -31723,6 +31730,7 @@ $1被封禁的理由是：“$2”',
 	'all_the_wikia' => '所有Fandom',
 	'achievements-leaderboard-navigation-item' => '维基排行榜',
 	'add_comment' => '留言',
+	'addsection' => '留言',
 ];
 
 $messages['zh-hant'] = [
@@ -31901,6 +31909,7 @@ $1被封禁的理由是“$2”',
 	'all_the_wikia' => '所有Fandom',
 	'achievements-leaderboard-navigation-item' => '維基排行榜',
 	'add_comment' => '留言',
+	'addsection' => '留言',
 ];
 
 $messages['zh-hk'] = [
@@ -31911,6 +31920,7 @@ $messages['zh-hk'] = [
 	'achievements-leaderboard-navigation-item' => '維基排行榜',
 	'activeusers' => '活躍用戶名單',
 	'add_comment' => '留言',
+	'addsection' => '留言',
 ];
 
 $messages['zh-min-nan'] = [
@@ -31973,6 +31983,7 @@ $messages['zh-tw'] = [
 	'achievements-leaderboard-navigation-item' => '維基排行榜',
 	'activeusers' => '活躍用戶名單',
 	'add_comment' => '留言',
+	'addsection' => '留言',
 ];
 
 $messages['zh-yue'] = [
@@ -32028,15 +32039,18 @@ $messages['zh'] = [
 	'accountcreated' => '账户已创建',
 	'accountcreatedtext' => '已创建账户 $1 。',
 	'add_comment' => '留言',
+	'addsection' => '留言',
 ];
 
 $messages['zh-cn'] = [
 	'accountcreated' => '账户已创建',
 	'accountcreatedtext' => '已创建账户 $1 。',
 	'add_comment' => '留言',
+	'addsection' => '留言',
 ];
 
 $messages['zh-sg'] = [
 	'add_comment' => '留言',
+	'addsection' => '留言',
 ];
 
