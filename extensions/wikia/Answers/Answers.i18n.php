@@ -379,7 +379,7 @@ $messages['es'] = [
 	'twitter_ask' => 'Preguntar en Twitter',
 	'facebook_ask' => 'Preguntar en Facebook',
 	'facebook_send_request' => 'Mandar directamente a Amigos',
-	'ads_by_google' => 'Anuncios de Google',
+	'ads_by_google' => 'Publicidad de Google',
 	'magic_answer_headline' => 'Contesta esto a tú pregunta?',
 	'magic_answer_yes' => 'Si, usa esto como punto de partida',
 	'magic_answer_no' => 'No, no use esto',
@@ -411,6 +411,7 @@ $messages['es'] = [
 
 $messages['fi'] = [
 	'research_this' => 'Tutki tätä',
+	'ads_by_google' => 'Google mainokset',
 ];
 
 $messages['fr'] = [
@@ -2177,6 +2178,7 @@ $messages['zh-hans'] = [
 
 $messages['no'] = [
 	'question_asked_by_a_wikia_user' => 'Spørsmål stilt av en Wikia-bruker',
+	'ads_by_google' => 'Ads fra Google',
 ];
 
 $messages['zh-hant'] = [
@@ -2185,5 +2187,10 @@ $messages['zh-hant'] = [
 
 $messages['ko'] = [
 	'a' => '답변:',
+	'ads_by_google' => 'Google 광고',
+];
+
+$messages['bg'] = [
+	'ads_by_google' => 'Реклами от Google',
 ];
 
