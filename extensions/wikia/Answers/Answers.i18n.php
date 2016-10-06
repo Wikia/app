@@ -124,7 +124,247 @@ $messages['en'] = [
 	'anwb-thatisall-text' => 'Now it\'s time to start writing more questions and answers, so that your site can be found more easily in search engines, and people can find <strong>you</strong>.<br /><br />The list of questions added in the last step has been put into your site, so head in to answer your questions, and start your own answers community!',
 	'anwb-logo-preview' => 'Here\'s a preview of your logo',
 	'anwb-save-tagline' => 'Save tagline',
-	'badWords' => 'fuck',
+	'badWords' => 'arse
+arsehole
+ass
+assbag
+assbandit
+assbanger
+assbite
+assclown
+asscock
+asscracker
+asses
+assface
+assfuck
+assfucker
+assgoblin
+asshat
+asshead
+asshole
+asshopper
+assjacker
+asslick
+asslicker
+assmunch
+assmuncher
+asspirate
+assshole
+asswipe
+bampot
+bastard
+beaner
+bitch
+bitchass
+bitchtits
+bitchy
+blow job
+blowjob
+boner
+brotherfucker
+bullshit
+bumblefuck
+butt plug
+butt-pirate
+buttfucka
+buttfucker
+camel toe
+carpetmuncher
+chinc
+choad
+chode
+clitface
+clitfuck
+cockbite
+cockface
+cockfucker
+cockknoker
+cockmaster
+cockmongler
+cockmongruel
+cockmonkey
+cockmuncher
+cockshit
+cocksmith
+cocksmoker
+cocksucker
+coochie
+coochy
+coon
+cooter
+cum
+cumbubble
+cumjockey
+cumtart
+cunt
+cunthole
+deggo
+dickbag
+dickbeaters
+dickface
+dickfuck
+dickhead
+dickhole
+dickmonger
+dickweasel
+dickweed
+dickwod
+dipshit
+dookie
+douche-fag
+douchebag
+douchewaffle
+dumass
+dumb ass
+dumbass
+dumbfuck
+dumbshit
+dumshit
+fagbag
+fagfucker
+faggit
+faggot
+fagtard
+fatass
+fellatio
+feltch
+flamer
+fuck
+fuckass
+fuckbrain
+fuckbutt
+fucked
+fucker
+fuckface
+fuckhead
+fuckhole
+fuckin
+fucking
+fucknut
+fucks
+fuckstick
+fucktard
+fuckup
+fuckwad
+fuckwit
+fuckwitt
+fudgepacker
+gaybob
+gaydo
+gayfuck
+gayfuckist
+gaytard
+gaywad
+goddamn
+goddamnit
+gooch
+gook
+gringo
+guido
+handjob
+heeb
+homo
+homodumbshit
+honkey
+humping
+jackass
+jap
+jerk off
+jigaboo
+jizz
+jungle bunny
+junglebunny
+kike
+kooch
+kootch
+kyke
+lesbo
+lezzie
+mcfagget
+minge
+mothafucka
+motherfucker
+motherfucking
+muff
+muffdiver
+munging
+negro
+nigga
+nigger
+niglet
+nut sack
+nutsack
+paki
+panooch
+pecker
+peckerhead
+penisfucker
+piss
+poon
+poonani
+poonany
+porch monkey
+porchmonkey
+punanny
+punta
+pussylicking
+puto
+queef
+queer
+queerbait
+queerhole
+renob
+rimjob
+ruski
+sand nigger
+sandnigger
+schlong
+scrote
+shit
+shitbagger
+shitcunt
+shitdick
+shitface
+shitfaced
+shithead
+shithole
+shithouse
+shitspitter
+shitstain
+shitter
+shittiest
+shitting
+shitty
+shiz
+shiznit
+skank
+skeet
+skullfuck
+slut
+slutbag
+snatch
+spic
+spick
+splooge
+tard
+thundercunt
+tit
+titfuck
+tits
+tittyfuck
+twat
+twatlips
+twats
+twatwaffle
+va-j-j
+vag
+vjayjay
+wank
+wetback
+whore
+whorebag
+wop
+хуя',
 	'qa-toolbox-button' => 'Answer a random question',
 	'qa-toolbox-share' => 'Share',
 	'qa-toolbox-tools' => 'Advanced tools»',
@@ -1907,6 +2147,7 @@ $messages['pt'] = [
 	'ask_friends' => 'Peça aos seus amigos para ajudar a responder:',
 	'ask_friends_on_twitter' => 'Pergunte aos seus amigos no <a href="$1">Twitter</a>',
 	'ask_thanks' => 'Obrigado pela otima pergunta!',
+	'badWords' => 'merda filhodaputa bunda',
 ];
 
 $messages['pt-br'] = [
@@ -1930,6 +2171,7 @@ $messages['pt-br'] = [
 	'ask_friends' => 'Peça aos seus amigos para ajudar a responder:',
 	'ask_friends_on_twitter' => 'Pergunte aos seus amigos no <a href="$1">Twitter</a>',
 	'ask_thanks' => 'Obrigado pela otima pergunta!',
+	'badWords' => 'merda filhodaputa bunda',
 ];
 
 $messages['roa-tara'] = [
