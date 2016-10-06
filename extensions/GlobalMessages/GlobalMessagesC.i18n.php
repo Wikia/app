@@ -316,7 +316,7 @@ Please confirm that you really want to recreate this article.',
 	'createwikisubmitcomplete' => 'Your submission is complete.  If you gave an email address, you will be contacted regarding the new Wiki.  Thank you for using {{SITENAME}}.',
 	'createwikilang' => 'Default language for this wiki',
 	'create_an_account' => 'Create an account',
-	'createpage' => 'Start new page',
+	'createpage' => 'Create a new page',
 	'choose_reason' => 'Choose reason',
 	'community' => 'Community',
 	'contris_s' => 'Contributions',
@@ -7443,7 +7443,7 @@ Este código de confirmación caducará el $4.',
 	'compare-title-not-exists' => 'El título especificado no existe.',
 	'compare-revision-not-exists' => 'La revisión especificada no existe.',
 	'create_an_account' => 'Crea una cuenta',
-	'createpage' => 'Empieza un artículo nuevo',
+	'createpage' => 'Crea un nuevo artículo',
 	'choose_reason' => 'Elegir la razón',
 	'create-account-new' => 'Crea tu cuenta de Fandom',
 	'cockpit_hide' => 'Ocultar cabina',
@@ -8128,6 +8128,7 @@ $5
 	'compare-revision-not-exists' => 'پالایهٔ مشخص شده وجود ندارد.',
 	'contris' => 'مشارکت‌ها',
 	'contris_s' => 'مشارکت‌ها',
+	'createpage' => 'ایجاد مقاله جدید',
 ];
 
 $messages['ff'] = [
@@ -8310,7 +8311,7 @@ Varmista, että haluat luoda sivun uudelleen.',
 	'compare-title-not-exists' => 'Määrittämääsi otsikkoa ei ole.',
 	'compare-revision-not-exists' => 'Määrittämääsi muutosta ei ole olemassa.',
 	'create_an_account' => 'Luo tunnus',
-	'createpage' => 'Aloita uusi artikkeli',
+	'createpage' => 'Luo uusi artikkeli',
 	'choose_reason' => 'Valitse syy',
 	'cockpit_hide' => 'Piilota ohjaamo',
 	'community' => 'Yhteisö',
@@ -8803,7 +8804,7 @@ Veuillez confirmer que vous désirez réellement recréer cette page.',
 	'compare-title-not-exists' => 'Le titre que vous avez spécifié n\'existe pas.',
 	'compare-revision-not-exists' => 'La révision que vous avez indiquée n\'existe pas.',
 	'create_an_account' => 'Créer un compte',
-	'createpage' => 'Créer un nouvel article',
+	'createpage' => 'Créer une page',
 	'choose_reason' => 'Choisissez la raison',
 	'create-account-new' => 'Créer un compte Fandom',
 	'cockpit_hide' => 'Masquer cockpit',
@@ -13412,7 +13413,7 @@ $5
 	'contactwikiname' => 'ウィキの名前',
 	'contactintro' => '詳しくは、<a href=http://www.wikia.com/wiki/Report_a_problem>問題の報告</a>のページをお読みの上、連絡用フォームをお使いになって報告をお願いします。また、ウィキアのコミュニティへは、<a href=http://www.wikia.com/wiki/Community_portal>Community portal</a>からコンタクトをとれます。ソフトウェアのバグに関しては、<a href=http://bugs.wikia.com>bugs.wikia.com</a>にお願いします。<p>もし、<a href=http://ja.wikia.com/wiki/Wikia>ウィキア</a>に個人的なメッセージを送りたいのであれば、下記連絡用フォームを使ってください。<i>全ての入力欄は、必須ではありません。</i>',
 	'create_an_account' => 'アカウントを作成する',
-	'createpage' => '新しい記事を作成する',
+	'createpage' => '新規ページを作成',
 	'choose_reason' => '理由を選択する',
 	'community' => 'コミュニティ',
 	'contris_s' => '投稿記録',
@@ -15383,6 +15384,7 @@ $5
 	'corporatepage-wikia-international' => '다른 언어',
 	'contris' => '사용자 기여',
 	'contris_s' => '사용자 기여',
+	'createpage' => '새 문서 만들기',
 ];
 
 $messages['ko-kp'] = [
@@ -31468,6 +31470,7 @@ Send a new code by clicking [[Special:ConfirmEmail|here]].',
 如果您不想您写的文章被他人修改, 请不要在这里提交.<br />
 你也必须向我们保证你所写的一切都出自你自己的笔下, 或者是复制于公共领域或其他类似的自由来源(详情请参见 $1).
 <strong>请不要在未获授权的情况下发表受版权保护的作品！</strong>',
+	'createpage' => '新增文章',
 ];
 
 $messages['zh-classical'] = [
@@ -31502,6 +31505,7 @@ Send a new code by clicking [[Special:ConfirmEmail|here]].',
 如果您不想您写的文章被他人修改, 请不要在这里提交.<br />
 你也必须向我们保证你所写的一切都出自你自己的笔下, 或者是复制于公共领域或其他类似的自由来源(详情请参见 $1).
 <strong>请不要在未获授权的情况下发表受版权保护的作品！</strong>',
+	'createpage' => '新增文章',
 ];
 
 $messages['zh-hans'] = [
@@ -31687,6 +31691,7 @@ $5
 	'community' => '社区',
 	'contris' => '用户贡献',
 	'contris_s' => '用户贡献',
+	'createpage' => '新增文章',
 ];
 
 $messages['zh-hant'] = [
@@ -31871,6 +31876,7 @@ $5
 	'community' => '社群',
 	'contris' => '用戶貢獻',
 	'contris_s' => '用戶貢獻',
+	'createpage' => '新增文章',
 ];
 
 $messages['zh-hk'] = [
@@ -31919,6 +31925,7 @@ Send a new code by clicking [[Special:ConfirmEmail|here]].',
 如果您不想您寫的文章被他人修改, 請不要在這裏提交.<br />
 你也必須向我們保證你所寫的一切都出自你自己的筆下, 或者是復制于公共領域或其他類似的自由來源(詳情請參見 $1).
 <strong>請不要在未獲授權的情况下發表受版權保護的作品！</strong>',
+	'createpage' => '新增文章',
 ];
 
 $messages['zh-min-nan'] = [
@@ -32001,7 +32008,7 @@ $messages['zh-tw'] = [
 : \'\'$2\'\'
 請在重新創建條目前三思.',
 	'create_an_account' => '開啟新用戶帳號',
-	'createpage' => '開啟新文章',
+	'createpage' => '新增文章',
 	'choose_reason' => '選擇原因',
 	'copyrightpage' => 'w:Wikia:Licensing|Wikia:Licensing',
 	'cascadeprotected' => '{{MediaWiki:Cascadeprotected}}',
