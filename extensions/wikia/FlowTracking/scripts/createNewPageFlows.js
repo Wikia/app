@@ -3,7 +3,7 @@ define(
 	['wikia.flowTracking', 'wikia.querystring', 'mw', 'wikia.document', 'wikia.window'],
 	function (flowTrack, QueryString, mw, document, window) {
 		'use strict';
-		
+
 		var namespaceId = mw.config.get('wgNamespaceNumber'),
 			articleId = mw.config.get('wgArticleId');
 
