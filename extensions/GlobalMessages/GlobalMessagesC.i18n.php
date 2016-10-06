@@ -6165,7 +6165,7 @@ Siehe auch die Liste der [[Special:WantedCategories|gewünschten Kategorien]].',
 	'confirm' => 'Bestätigen',
 	'confirmdeletetext' => 'Du bist dabei, eine Seite mit allen zugehörigen älteren Versionen zu löschen. Bitte bestätige dazu, dass du dir der Konsequenzen bewusst bist, und dass du in Übereinstimmung mit den [[{{MediaWiki:Policy-url}}|Richtlinien]] handelst.',
 	'cantrollback' => 'Die Änderung kann nicht zurückgesetzt werden, da es keine früheren Autoren gibt.',
-	'cannotundelete' => 'Wiederherstellung fehlgeschlagen; jemand anderes hat die Seite bereits wiederhergestellt.',
+	'cannotundelete' => 'Wiederherstellung fehlgeschlagen; die Seite oder Datei wurde bereits wiederhergestellt.',
 	'contributions' => 'Benutzerbeiträge',
 	'contributions-title' => 'Benutzerbeiträge von „$1“',
 	'contribsub2' => 'Von $1 ($2)',
@@ -7291,7 +7291,7 @@ $messages['es'] = [
 	'collapsible-expand' => 'Mostrar',
 	'cannotdelete' => 'La página o archivo «$1» no se pudo borrar.
 Puede que ya haya sido borrado por alguien más.',
-	'cannotdelete-title' => 'No se pudede borrar la página «$1»',
+	'cannotdelete-title' => 'No se puede borrar la página «$1»',
 	'cascadeprotected' => 'Esta página ha sido protegida para su edición, porque está incluida en {{PLURAL:$1|la siguiente página|las siguientes páginas}}, que están protegidas con la opción de «cascada»:
 $2',
 	'customcssprotected' => 'No tienes permiso para editar esta página CSS, porque contiene configuraciones personales de otro usuario.',
@@ -8539,7 +8539,7 @@ $2',
 	'createaccountmail' => 'par courriel',
 	'createaccountreason' => 'Motif :',
 	'createaccounterror' => 'Impossible de créer le compte : $1',
-	'cannotchangeemail' => 'Les adresses de courriel des comptes ne peuvent pas être modifiées sur ce wiki.',
+	'cannotchangeemail' => 'Les adresses e-mail des comptes ne peuvent pas être modifiées sur ce wiki.',
 	'createaccount-title' => 'Création d’un compte pour {{SITENAME}}',
 	'createaccount-text' => 'Quelqu’un a créé un compte pour votre adresse de courriel sur {{SITENAME}} ($4) intitulé « $2 », avec le mot de passe « $3 ».
 Vous devriez ouvrir une session et modifier dès à présent votre mot de passe.
@@ -31192,6 +31192,7 @@ Also see [[Special:WantedCategories|wanted categories]].',
 
 $messages['zh'] = [
 	'copyrightpage' => 'w:Wikia:Licensing|Wikia:Licensing',
+	'cannotundelete' => '恢复失败；可能先前已经被人恢复。',
 ];
 
 $messages['zh-classical'] = [
@@ -31568,6 +31569,7 @@ $5
 $messages['zh-hk'] = [
 	'contribslink' => '貢獻',
 	'copyrightpage' => 'w:Wikia:Licensing|Wikia:Licensing',
+	'cannotundelete' => '恢復失敗；可能先前已經被人恢復。',
 ];
 
 $messages['zh-min-nan'] = [
