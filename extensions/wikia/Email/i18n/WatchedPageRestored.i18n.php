@@ -88,5 +88,7 @@ $messages['zh-tw'] = [
 
 $messages['ko'] = [
 	'emailext-watchedpage-article-restored-button-text' => '문서 보기',
+	'emailext-watchedpage-article-restored-subject' => '$2 님이 {{SITENAME}}의 $1 문서를 복구했습니다',
+	'emailext-watchedpage-article-restored-summary' => '{{SITENAME}}의 $2 문서가 복구되었습니다. 직접 가서 확인해 보시는 건 어떨까요?',
 ];
 
