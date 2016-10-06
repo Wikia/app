@@ -7410,6 +7410,7 @@ Confirma que realmente quieres volver a crear esta página.',
 	'choose_reason' => 'Elegir la razón',
 	'create-account-new' => 'Crea tu cuenta de Fandom',
 	'cockpit_hide' => 'Ocultar cabina',
+	'community' => 'Comunidad',
 ];
 
 $messages['et'] = [
@@ -8206,6 +8207,7 @@ Varmista, että haluat luoda sivun uudelleen.',
 	'createpage' => 'Aloita uusi artikkeli',
 	'choose_reason' => 'Valitse syy',
 	'cockpit_hide' => 'Piilota ohjaamo',
+	'community' => 'Yhteisö',
 ];
 
 $messages['fiu-vro'] = [
@@ -8692,6 +8694,7 @@ Veuillez confirmer que vous désirez réellement recréer cette page.',
 	'choose_reason' => 'Choisissez la raison',
 	'create-account-new' => 'Créer un compte Fandom',
 	'cockpit_hide' => 'Masquer cockpit',
+	'community' => 'Communauté',
 ];
 
 $messages['frc'] = [
@@ -12840,6 +12843,7 @@ Per favore, conferma che desideri veramente ricreare questa pagina.',
 	'createpage' => 'Crea nuova pagina',
 	'create_an_account' => 'Crea un account',
 	'create-account-new' => 'Crea il tuo account Fandom',
+	'community' => 'Community',
 ];
 
 $messages['iu'] = [
@@ -15187,6 +15191,7 @@ $5
 	'compare-invalid-title' => '당신이 입력한 제목이 잘못되었습니다.',
 	'compare-title-not-exists' => '당신이 입력한 문서가 존재하지 않습니다.',
 	'compare-revision-not-exists' => '당신이 지정한 판이 없습니다.',
+	'community' => '커뮤니티',
 ];
 
 $messages['ko-kp'] = [
@@ -18366,6 +18371,7 @@ $5
 	'compare-invalid-title' => 'Наведениот наслов е неважечки.',
 	'compare-title-not-exists' => 'Наведениот наслов не постои.',
 	'compare-revision-not-exists' => 'Наведената ревизија не постои.',
+	'community' => 'Заедница',
 ];
 
 $messages['ml'] = [
@@ -20840,6 +20846,7 @@ Du må stadfeste at du verkeleg vil nyopprette denne sida.',
 	'createpage' => 'Start en ny artikkel',
 	'choose_reason' => 'Velg grunn',
 	'cockpit_hide' => 'Skjul cockpit',
+	'community' => 'Fellesskap',
 ];
 
 $messages['nov'] = [
@@ -21850,6 +21857,7 @@ Czy na pewno chcesz ją ponownie utworzyć?',
 	'cockpit_hide' => 'Ukryj kokpit',
 	'create-account-new' => 'Stwórz konto na portalu Fandom',
 	'cięta-riposta' => 'Ojtam ojtam',
+	'community' => 'Społeczność',
 ];
 
 $messages['pms'] = [
@@ -23892,6 +23900,7 @@ $5
 	'createpage' => 'Создать новую страницу',
 	'choose_reason' => 'Выберите причину',
 	'create-account-new' => 'Создайте учётную запись на Фэндоме',
+	'community' => 'Сообщество',
 ];
 
 $messages['rue'] = [
@@ -31226,6 +31235,7 @@ $messages['zh'] = [
 	'cascadeprotectedwarning' => '\'\'\'警告：\'\'\'本頁已經被保護，只有擁有管理員權限的用戶才可修改，因為本頁已被以下連鎖保護的頁面所包含：',
 	'category-media-header' => '類別「$1」中的媒體檔',
 	'changed' => '被改变',
+	'community' => '社群',
 ];
 
 $messages['zh-classical'] = [
@@ -31238,6 +31248,7 @@ $messages['zh-cn'] = [
 	'cascadeprotected' => '{{MediaWiki:Cascadeprotected}}',
 	'cascadeprotectedwarning' => '{{MediaWiki:Cascadeprotectedwarning}}',
 	'category-media-header' => '“$1”分类中的媒体文件',
+	'community' => '社区',
 ];
 
 $messages['zh-hans'] = [
@@ -31420,6 +31431,7 @@ $5
 	'compare-title-not-exists' => '您指定的标题不存在。',
 	'compare-revision-not-exists' => '你指定的版本不存在。',
 	'create-account-new' => '创建您的Fandom帐户',
+	'community' => '社区',
 ];
 
 $messages['zh-hant'] = [
@@ -31601,6 +31613,7 @@ $5
 	'compare-title-not-exists' => '所指定的話題不存在。',
 	'compare-revision-not-exists' => '所指定的修訂不存在。',
 	'create-account-new' => '創建您的Fandom帳戶',
+	'community' => '社群',
 ];
 
 $messages['zh-hk'] = [
@@ -31694,6 +31707,7 @@ $messages['zh-tw'] = [
 	'copyrightpage' => 'w:Wikia:Licensing|Wikia:Licensing',
 	'cascadeprotected' => '{{MediaWiki:Cascadeprotected}}',
 	'category-media-header' => '「$1」分類中的媒體檔',
+	'community' => '社群',
 ];
 
 $messages['zh-yue'] = [
