@@ -21,6 +21,7 @@ class ImportMessagingWiki extends Maintenance {
 
 		$this->addOption( 'dry-run', 'Don\'t make any changes to i18n files - print output in /tmp/ folder.' );
 		$this->addOption( 'message', 'Message name to process', false, true /* $withArg */ );
+		$this->addOption( 'prefix', 'Prefix for messages to process (e.g. "achievements-")', false, true /* $withArg */ );
 	}
 
 	/**
@@ -62,6 +63,13 @@ class ImportMessagingWiki extends Maintenance {
 		if ($msg) {
 			# AND page_title LIKE 'Autocreatewiki-welcomebody/%'
 			$sql->AND_('page_title')->LIKE( ucfirst( $msg ) . '/%' );
+		}
+
+		# handle --prefix argument
+		$prefix = $this->getOption('prefix');
+		if ($prefix) {
+			# AND page_title LIKE 'Achievements-%'
+			$sql->AND_('page_title')->LIKE( ucfirst( $prefix ) . '%' );
 		}
 
 		$res = $sql->runLoop( $db, function ( &$res, $row ) use ( &$i, $wgContLang ) {
