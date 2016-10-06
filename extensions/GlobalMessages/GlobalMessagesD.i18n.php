@@ -18469,6 +18469,7 @@ $messages['zh-hk'] = [
 “$1”
 來自于函數“$2”。
 MySQL返回錯誤“$3: $4”。',
+	'datedefault' => '默認值',
 ];
 
 $messages['zh-min-nan'] = [
@@ -18506,6 +18507,7 @@ $messages['zh-tw'] = [
 “$1”
 來自于函數“$2”。
 MySQL返回錯誤“$3: $4”。',
+	'datedefault' => '默認值',
 ];
 
 $messages['zh-yue'] = [
@@ -18554,6 +18556,7 @@ $messages['zh-cn'] = [
 “$1”
 来自于函数“$2”。
 MySQL返回错误“$3: $4”。',
+	'datedefault' => '默认值',
 ];
 
 $messages['zh-sg'] = [
@@ -18562,5 +18565,6 @@ $messages['zh-sg'] = [
 “$1”
 来自于函数“$2”。
 MySQL返回错误“$3: $4”。',
+	'datedefault' => '默认值',
 ];
 
