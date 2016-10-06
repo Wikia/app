@@ -2290,6 +2290,7 @@ $messages['no'] = [
 	'ask_friends_on_twitter' => 'Spør venner på <a href="$1" $2>Twitter</a>',
 	'ask_thanks' => 'Takk for det råbra spørsmålet!',
 	'auto_friend_request_body' => 'Vil du legge meg til som venn?',
+	'background_color' => 'Bakgrunnsfarge',
 ];
 
 $messages['zh-hant'] = [
@@ -2310,6 +2311,7 @@ $messages['ko'] = [
 	'ask_a_question-widget' => '질문을 입력해주세요...',
 	'ask_a_question' => '{{SITENAME}}에 오신 것을 환영합니다. 무엇을 알고 싶으신가요?',
 	'ask_button' => '질문하기',
+	'background_color' => '배경색',
 ];
 
 $messages['bg'] = [

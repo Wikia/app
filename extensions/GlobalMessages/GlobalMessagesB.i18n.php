@@ -3907,6 +3907,7 @@ Siehe die [[Special:BlockList|Liste der gesperrten IP-Adressen und Benutzernamen
 Nur Zeilen, die mit einem * anfangen, werden ausgewertet. Als erstes nach dem * muss ein Link auf eine unerwünschte Datei stehen.
 Darauf folgende Seitenlinks in derselben Zeile definieren Ausnahmen, in deren Kontext die Datei trotzdem erscheinen darf.',
 	'blankpage' => 'Leere Seite',
+	'back' => 'Zurück',
 ];
 
 $messages['de-formal'] = [
@@ -4676,6 +4677,7 @@ Solo se reconocen elementos de lista (líneas que comienzan con «*»).
 El primer enlace de cada línea debe ser un enlace al archivo que se quiere bloquear.
 Todos los demás enlaces en la misma línea se tomarán como excepciones (es decir, páginas donde sí se puede usar el archivo).',
 	'blankpage' => 'Página vacía',
+	'back' => 'Atrás',
 ];
 
 $messages['et'] = [
@@ -5159,6 +5161,7 @@ Vain *-merkillä alkavat rivit otetaan huomioon.
 Rivin ensimmäisen linkin on osoitettava tiedostoon.
 Kaikki muut linkit ovat poikkeuksia eli toisin sanoen sivuja, joissa tiedostoa saa käyttää.',
 	'blankpage' => 'Tyhjä sivu',
+	'back' => 'Takaisin',
 ];
 
 $messages['fiu-vro'] = [
@@ -5453,6 +5456,7 @@ Consultez la [[Special:BlockList|liste des IP bloquées]] pour voir les bannisse
 Seules les listes d’énumération (commençant par *) sont prises en compte. Le premier lien d’une ligne doit être celui d’une mauvaise image.
 Les autres liens sur la même ligne sont considérés comme des exceptions, par exemple des pages sur lesquelles l’image peut apparaître.',
 	'blankpage' => 'Page vide',
+	'back' => 'Retour',
 ];
 
 $messages['frc'] = [
@@ -8162,6 +8166,7 @@ Consultare la [[Special:BlockList|lista degli IP bloccati]] per vedere i blocchi
 Vengono considerati soltanto gli elenchi puntati (righe che cominciano con il carattere *). Il primo collegamento su ciascuna riga dev\'essere un collegamento a un file indesiderato.
 I collegamenti successivi, sulla stessa riga, sono considerati come eccezioni (ovvero, pagine nelle quali il file può essere richiamato normalmente).',
 	'blankpage' => 'Pagina vuota',
+	'back' => 'Indietro',
 ];
 
 $messages['iu'] = [
@@ -8326,7 +8331,7 @@ HTMLタグを見直してください。',
 	'backend-fail-closetemp' => '一時ファイルを閉じることができませんでした。',
 	'backend-fail-read' => 'ファイル $1 を読み込めませんでした。',
 	'backend-fail-create' => 'ファイル $1 を作成できませんでした。',
-	'backend-fail-readonly' => 'ストレージバックエンド「$1」は現在読み取り専用です。理由:「$2」',
+	'backend-fail-readonly' => '申し訳ありません、「$1」は現在読み取り専用となっています。理由:「$2」',
 	'backend-fail-synced' => 'ファイル「$1」は、ストレージバックエンド内部において不一致の状態にあります。',
 	'backend-fail-contenttype' => '「$1」に保存するコンテンツの種類が判断できませんでした。',
 	'brokenredirects' => '迷子のリダイレクト',
@@ -8387,6 +8392,7 @@ HTMLタグを見直してください。',
 各行最初のリンクは、好ましくないファイルへのリンクとしてください。
 同じ行でそれ以降にあるリンクは例外、つまりインライン挿入されてもよいページとみなされます。',
 	'blankpage' => '白紙ページ',
+	'back' => '戻る',
 ];
 
 $messages['jam'] = [
@@ -9585,6 +9591,7 @@ $1, 또는 [[{{MediaWiki:Grouppage-sysop}}|다른 관리자]]에게 차단에 �
 매 줄의 첫번째 링크는 부적절한 파일을 가리켜야 합니다.
 같은 줄에 따라오는 모든 링크는 예외로 봅니다. (예: 파일이 사용되어야 하는 문서)',
 	'blankpage' => '빈 문서',
+	'back' => '뒤로',
 ];
 
 $messages['ko-kp'] = [
@@ -13242,6 +13249,7 @@ Berre liner som startar med asterisk (*) vert tekne med.
 Den fyrste lenkja på ei line må gå til ei uønskt fil.
 Alle andre lenkjer på same line vert sett på som unnatak, med andre ord sider der fila kan brukast.',
 	'blankpage' => 'Tom side',
+	'back' => 'Tilbake',
 ];
 
 $messages['nov'] = [
@@ -13879,6 +13887,7 @@ Jedynie elementy listy (linie zaczynające się od znaku gwiazdki *) brane są p
 Pierwszy link w linii musi być linkiem do zabronionego pliku.
 Następne linki w linii są traktowane jako wyjątki – są to nazwy stron, na których plik o zabronionej nazwie może być użyty.',
 	'blankpage' => 'Pusta strona',
+	'back' => 'Powrót',
 ];
 
 $messages['pms'] = [
@@ -15186,6 +15195,7 @@ $messages['ru'] = [
 	'bitrate-gigabits' => '$1 Гб/с',
 	'bitrate-terabits' => '$1 Тб/с',
 	'blankpage' => 'Пустая страница',
+	'back' => 'Назад',
 ];
 
 $messages['rue'] = [
@@ -19014,6 +19024,7 @@ Nó không được dài quá $1 ký tự.',
 Chỉ có những mục được liệt kê (những dòng bắt đầu bằng *) mới được tính tới. Liên kết đầu tiên tại một dòng phải là liên kết đến tập tin phản cảm.
 Các liên kết sau đó trên cùng một dòng được xem là các ngoại lệ, có nghĩa là các trang mà tại đó có thể dùng được tập tin.',
 	'blankpage' => 'Trang trắng',
+	'back' => 'Trở lại',
 ];
 
 $messages['vmf'] = [
