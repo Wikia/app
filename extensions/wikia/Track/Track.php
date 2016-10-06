@@ -35,7 +35,8 @@ class Track {
 			   's=' . RequestContext::getMain()->getSkin()->getSkinName() .
 			   ( $wgTitle && !is_object( $wgArticle ) ? $sep . 'pg=' . urlencode( $wgTitle->getPrefixedDBkey() ) : '' ) .
 			   ( $wgTitle ? $sep . 'n=' . $wgTitle->getNamespace() : '' ) .
-			   ( !empty( $wgAdServerTest ) ? $sep . 'db_test=1' : '' );
+			   ( !empty( $wgAdServerTest ) ? $sep . 'db_test=1' : '' ) .
+				'beacon=' . wfGetBeaconId();
 
 		// Handle any parameters passed to us
 		if ( $param ) {
