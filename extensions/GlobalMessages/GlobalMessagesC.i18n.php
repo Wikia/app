@@ -7327,9 +7327,9 @@ Puedes ignorar este mensaje si esta cuenta fue creada por error.',
 \'\'\'¡No uses escritos con copyright sin permiso!\'\'\'',
 	'cascadeprotectedwarning' => '\'\'\'Aviso:\'\'\' Esta página está protegida, solo los administradores pueden editarla porque está incluida en  {{PLURAL:$1|la siguiente página protegida|las siguientes páginas protegidas}} en cascada:',
 	'cantcreateaccounttitle' => 'No se puede crear la cuenta',
-	'cantcreateaccount-text' => 'La creación de cuentas desde esta dirección IP (\'\'\'$1\'\'\') ha sido bloqueada por [[User:$3|$3]].
+	'cantcreateaccount-text' => 'La creación de cuentas para esta IP (<b>$1</b>) ha sido bloqueada por [[User:$3|$3]].
 
-El motivo dado por $3 es \'\'$2\'\'',
+La razón dada por $3 es \'\'$2\'\'',
 	'currentrev' => 'Revisión actual',
 	'currentrev-asof' => 'Última revisión de $1',
 	'currentrevisionlink' => 'Revisión actual',
@@ -7361,9 +7361,9 @@ alguien más puede haber deshecho el borrado antes.',
 	'contribslink' => 'contribuciones',
 	'cant-block-while-blocked' => 'No puedes bloquear a otros usuarios mientras estás bloqueado.',
 	'cant-see-hidden-user' => 'El usuario que está intentando bloquear ya ha sido bloqueado y oculto. Puesto que usted no tiene el derecho hideuser, usted no puede ver o editar los bloqueos del usuario.',
-	'cant-move-user-page' => 'No tienes permiso para mover páginas de usuario (excepto subpáginas).',
-	'cant-move-to-user-page' => 'No tienes permiso para mover una página a una página de usuario (excepto a subpáginas de usuario).',
-	'cantmove-titleprotected' => 'No puedes mover la página a esta ubicación, porque el nuevo título ha sido protegido para evitar su creación.',
+	'cant-move-user-page' => 'No tienes permiso para renombrar páginas de usuario (excepto subpáginas).',
+	'cant-move-to-user-page' => 'No tienes permiso para renombrar una página a una página de usuario (excepto a subpáginas de usuario).',
+	'cantmove-titleprotected' => 'No puedes renombrar la página a esta ubicación, porque el nuevo título ha sido protegido para evitar su creación.',
 	'common.css' => '/* Los estilos CSS definidos aquí aplicarán a todas las pieles (skins) */',
 	'common.js' => '/* Cualquier código JavaScript escrito aquí se cargará para todos los usuarios en cada carga de página */',
 	'creditspage' => 'Créditos de la página',
@@ -13119,8 +13119,7 @@ $3が示した理由は \'\'$2\'\' です。',
 	'confirm' => '確認',
 	'confirmdeletetext' => 'ページをすべての履歴とともに削除しようとしています。
 本当にこの操作を行いたいか、操作の結果を理解しているか、およびこの操作が[[{{MediaWiki:Policy-url}}|方針]]に従っているかどうか、確認をしてください。',
-	'cantrollback' => '編集を差し戻せません。
-最後の投稿者が、このページの唯一の作者です。',
+	'cantrollback' => '投稿者が一人しかいないため、編集を差し戻せません。',
 	'cannotundelete' => '復帰に失敗しました。
 誰かが、既にこのページを復帰した可能性があります。',
 	'contributions' => '利用者の投稿記録',
@@ -20361,12 +20360,12 @@ Misschien heeft een andere gebruiker de pagina al teruggeplaatst.',
 	'createaccountblock' => 'registreren gebruikers geblokkeerd',
 	'change-blocklink' => 'blokkade wijzigen',
 	'contribslink' => 'bijdragen',
-	'cant-block-while-blocked' => 'U kunt andere gebruikers niet blokkeren terwijl u zelf geblokkeerd bent.',
-	'cant-see-hidden-user' => 'De gebruiker die u probeert te blokken is al geblokkeerd en verborgen.
-Omdat u het recht \'hideuser\' niet hebt, kunt u de blokkade van de gebruiker niet bekijken of bewerken.',
-	'cant-move-user-page' => 'U hebt geen rechten om gebruikerspagina\'s te hernoemen (met uitzondering van subpagina\'s).',
-	'cant-move-to-user-page' => 'U hebt geen rechten om een pagina naar een gebruikerspagina te hernoemen. Hernoemen naar een subpagina is wel mogelijk.',
-	'cantmove-titleprotected' => 'U kunt geen pagina naar deze paginanaam hernoemen, omdat deze paginaam beveiligd is tegen het aanmaken ervan.',
+	'cant-block-while-blocked' => 'Je kunt andere gebruikers niet blokkeren terwijl je zelf geblokkeerd bent.',
+	'cant-see-hidden-user' => 'De gebruiker die je probeert te blokken is al geblokkeerd en verborgen.
+Omdat je het recht \'hideuser\' niet hebt, kun je de blokkade van de gebruiker niet bekijken of bewerken.',
+	'cant-move-user-page' => 'Je hebt geen rechten om gebruikerspagina\'s te hernoemen (met uitzondering van subpagina\'s).',
+	'cant-move-to-user-page' => 'Je hebt geen rechten om een pagina naar een gebruikerspagina te hernoemen. Hernoemen naar een subpagina is wel mogelijk.',
+	'cantmove-titleprotected' => 'Je kunt geen pagina naar deze paginaam hernoemen, omdat deze paginanaam beveiligd is tegen het aanmaken ervan.',
 	'common.css' => '/** CSS die hier wordt geplaatst heeft invloed op alle skins */',
 	'common.js' => '/* JavaScript die hier wordt geplaatst heeft invloed op alle pagina\'s voor alle gebruikers */',
 	'creditspage' => 'Auteurspagina',
@@ -31193,6 +31192,8 @@ Also see [[Special:WantedCategories|wanted categories]].',
 $messages['zh'] = [
 	'copyrightpage' => 'w:Wikia:Licensing|Wikia:Licensing',
 	'cannotundelete' => '恢复失败；可能先前已经被人恢复。',
+	'cantcreateaccounttitle' => '不能创建帐户',
+	'cantrollback' => '无法恢复编辑；最后的参与者是本文的唯一作者。',
 ];
 
 $messages['zh-classical'] = [
@@ -31201,6 +31202,7 @@ $messages['zh-classical'] = [
 
 $messages['zh-cn'] = [
 	'copyrightpage' => 'w:Wikia:Licensing|Wikia:Licensing',
+	'cantcreateaccounttitle' => '不能创建帐户',
 ];
 
 $messages['zh-hans'] = [
@@ -31570,6 +31572,8 @@ $messages['zh-hk'] = [
 	'contribslink' => '貢獻',
 	'copyrightpage' => 'w:Wikia:Licensing|Wikia:Licensing',
 	'cannotundelete' => '恢復失敗；可能先前已經被人恢復。',
+	'cantcreateaccounttitle' => '不能創建帳户',
+	'cantrollback' => '無法恢復編輯；最後的參與者是本文的唯一作者。',
 ];
 
 $messages['zh-min-nan'] = [
@@ -31589,6 +31593,7 @@ $messages['zh-my'] = [
 
 $messages['zh-sg'] = [
 	'copyrightpage' => 'w:Wikia:Licensing|Wikia:Licensing',
+	'cantcreateaccounttitle' => '{{MediaWiki:Cantcreateaccounttitle}}',
 ];
 
 $messages['zh-tw'] = [
@@ -31603,14 +31608,14 @@ $messages['zh-tw'] = [
 	'confirmedittext' => '在編輯此頁之前您必須確認您的電子郵件地址。請透過[[Special:Preferences|參數設定]]設定並驗証您的電子郵件地址。',
 	'clearyourcache' => '\'\'\'注意:\'\'\' 在儲存以後, 您必須清除瀏覽器的快取才能看到所作出的改變。 \'\'\'Mozilla / Firefox / Safari:\'\'\' 按著 \'\'Shift\'\' 再點擊\'\'重新整理\'\'(或按下\'\'Ctrl-Shift-R\'\'，在蘋果Mac上按下\'\'Cmd-Shift-R\'\')；\'\'\'IE:\'\'\' 按著 \'\'Ctrl\'\' 再點擊 \'\'重新整理\'\'，或按下 \'\'Ctrl-F5\'\'；\'\'\'Konqueror:\'\'\' 只需點擊 \'\'重新整理\'\'；\'\'\'Opera:\'\'\' 使用者需要在 \'\'工具-設定\'\' 中完整地清除它們的快取。',
 	'cascadeprotectedwarning' => '警告: 本頁已經被保護，只有擁有管理員權限的使用者才可修改，因為本頁已被以下連鎖保護的{{PLURAL:$1|一個|多個}}頁面所包含:',
-	'cantcreateaccounttitle' => '無法建立帳號',
+	'cantcreateaccounttitle' => '無法創建帳戶',
 	'cantcreateaccount-text' => '從這個IP地址 (<b>$1</b>) 建立帳號已經被[[User:$3|$3]]禁止。
 
 當中被$3封鎖的原因是\'\'$2\'\'',
 	'compareselectedversions' => '比較選定的版本',
 	'confirmdeletetext' => '您即將從資料庫中永遠刪除一個頁面或圖片以及其歷史。
 請確定您要進行此項操作，並且了解其後果，同時您的行為符合[[{{MediaWiki:Policy-url}}]]。',
-	'cantrollback' => '無法復原編輯；最後的貢獻者是本文的唯一作者。',
+	'cantrollback' => '無法恢復編輯；最後的參與者是本文的唯一作者。',
 	'cannotundelete' => '復原失敗；可能之前已經被其他人復原。',
 	'contributions' => '使用者編修記錄',
 	'contribsub2' => '$1的編修記錄 ($2)',
