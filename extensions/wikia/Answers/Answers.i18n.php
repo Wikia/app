@@ -516,7 +516,7 @@ $messages['de'] = [
 	'receive_email' => '<a href="$1" $2>Eine E-Mail erhalten</a> wenn diese Frage beantwortet wird',
 	'ask_friends_on_twitter' => 'Frage Freunde auf <a href="$1" $2>Twitter</a>',
 	'categorize' => 'Kategorisieren',
-	'categorize_help' => 'Eine Kategorie pro Zeile',
+	'categorize_help' => 'Kategoriename',
 	'answers_widget_admin_note' => '{{int:Answers widget user note}}',
 	'answers_widget_user_note' => 'Stelle deine Fragen auf <a href="http://frag.wikia.com/" target="_blank">Wikianswers</a> oder <a href="http://www.wikia.com/Special:CreateAnswers?uselang=de">erstelle deine eigene Frage-Antwort-Seite</a>!',
 	'answers_widget_anon_note' => '{{int:Answers widget user note}}',
@@ -2100,7 +2100,7 @@ $messages['pl'] = [
 	'you_can' => 'Możesz:',
 	'answer_this' => '<a href="$1">Odpowiedz na to pytanie</a>, nawet jeśli nie znasz pełnej odpowiedzi',
 	'ask_friends_on_twitter' => 'Zapytaj znajomych na <a href="$1" $2>Twitterze</a>',
-	'categorize' => 'Określ kategorię',
+	'categorize' => 'Dodaj kategorię',
 	'categorize_help' => 'Jedna kategoria na linię',
 	'a' => 'Odpowiedź:',
 ];
@@ -2533,6 +2533,8 @@ $messages['no'] = [
 	'ask_thanks' => 'Takk for det råbra spørsmålet!',
 	'auto_friend_request_body' => 'Vil du legge meg til som venn?',
 	'background_color' => 'Bakgrunnsfarge',
+	'categorize' => 'Kategoriser',
+	'categorize_help' => 'Én kategori per linje',
 ];
 
 $messages['zh-hant'] = [
