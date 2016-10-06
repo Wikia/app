@@ -18,7 +18,7 @@ define(
 				} else {
 					flowTrack.beginFlow(flowTrack.flows.CREATE_PAGE_DIRECT_URL, {editor: editor});
 					qs.setVal('flow', flowTrack.flows.CREATE_PAGE_DIRECT_URL);
-					window.history.replaceState({}, '', qs.toString())
+					window.history.replaceState({}, '', qs.toString());
 				}
 			}
 		}
