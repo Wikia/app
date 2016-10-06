@@ -8,10 +8,10 @@ $messages['en'] = [
 	'badaccess-group0' => 'You are not allowed to execute the action you have requested.',
 	'badaccess-groups' => 'The action you have requested is limited to users in {{PLURAL:$2|the group|one of the groups}}: $1.',
 	'backlinksubtitle' => '← $1',
-	'badarticleerror' => 'This action cannot be performed on this page.',
+	'badarticleerror' => 'This action cannot be performed on this page. This page may have been deleted since your request was submitted.',
 	'badtitle' => 'Bad title',
 	'badtitletext' => 'The requested page title was invalid, empty, or an incorrectly linked inter-language or inter-wiki title.
-It may contain one or more characters which cannot be used in titles.',
+It may contain one or more characters that can\'t be used in titles.',
 	'badretype' => 'The passwords you entered do not match.',
 	'blocked-mailpassword' => 'Your IP address is blocked from editing, and so is not allowed to use the password recovery function to prevent abuse.',
 	'bold_sample' => 'Bold text',
@@ -3827,7 +3827,7 @@ Zur Information folgt ein aktueller Auszug aus dem Benutzersperr-Logbuch:',
 	'badsig' => 'Die Syntax der Signatur ist ungültig; bitte HTML überprüfen.',
 	'badsiglength' => 'Die Signatur darf maximal $1 {{PLURAL:$1|Zeichen|Zeichen}} lang sein.',
 	'boteditletter' => 'B',
-	'badfilename' => 'Der Dateiname wurde in „$1“ geändert.',
+	'badfilename' => 'Der Dateiname wurde zu „$1“ abgeändert.',
 	'backend-fail-stream' => 'Die Datei $1 konnte nicht übertragen werden.',
 	'backend-fail-backup' => 'Die Datei $1 konnte nicht gesichert werden.',
 	'backend-fail-notexists' => 'Die Datei $1 ist nicht vorhanden.',
@@ -17168,7 +17168,7 @@ $messages['sv'] = [
 	'badaccess' => 'Behörighetsfel',
 	'badaccess-group0' => 'Du har inte behörighet att utföra den handling du begärt.',
 	'badaccess-groups' => 'Den handling du har begärt kan enbart utföras av användare i {{PLURAL:$2|gruppen|grupperna}} $1.',
-	'badarticleerror' => 'Den åtgärden kan inte utföras på den här sidan.',
+	'badarticleerror' => 'Denna åtgärd kan inte utföras på denna sida. Sidan kan ha tagits bort sedan din ansökan lämnades in.',
 	'badtitle' => 'Felaktig titel',
 	'badtitletext' => 'Den begärda sidtiteln är antingen ogiltig eller tom, eller så är titeln felaktigt länkad från en annan wiki.
 Den kan innehålla ett eller flera tecken som inte får användas i sidtitlar.',
@@ -20076,10 +20076,15 @@ $messages['zh'] = [
 	'badaccess-group0' => '你所请求执行的操作被禁止。',
 	'badaccess-groups' => '你所请求执行的操作仅限于 $1 组成员。',
 	'badaccess' => '拒绝访问',
+	'badsig' => '错误的原始签名；请检查HTML标签。',
 ];
 
 $messages['zh-hk'] = [
 	'badaccess-group0' => '您剛才的請求不允許執行。',
 	'badaccess-groups' => '您剛才的請求只有$1用戶組的用戶才能使用。',
+];
+
+$messages['zh-cn'] = [
+	'badsig' => '{{MediaWiki:Badsig}}',
 ];
 
