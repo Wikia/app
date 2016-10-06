@@ -116,7 +116,6 @@ $config['adengine2_desktop_js'] = [
 		'//extensions/wikia/AdEngine/js/TaboolaHelper.js',
 		'//extensions/wikia/AdEngine/js/utils/scriptLoader.js',
 		'//extensions/wikia/AdEngine/js/provider/evolve2.js',
-		'//extensions/wikia/AdEngine/js/provider/monetizationService.js',
 
 		'//extensions/wikia/AdEngine/js/run/desktop.run.js',
 	],
