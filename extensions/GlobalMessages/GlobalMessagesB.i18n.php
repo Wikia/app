@@ -13005,7 +13005,7 @@ Deze moet minder dan $1 {{PLURAL:$1|karakters|karakters}} bevatten.',
 	'booksources' => 'Boekinformatie',
 	'booksources-search-legend' => 'Bronnen en gegevens over een boek zoeken',
 	'booksources-go' => 'OK',
-	'booksources-text' => 'Hieronder staat een lijst met koppelingen naar andere websites die nieuwe of gebruikte boeken verkopen, en die wellicht meer informatie over het boek dat u zoekt hebben:',
+	'booksources-text' => 'Hieronder staat een lijst met koppelingen naar andere websites die nieuwe of gebruikte boeken verkopen, en die wellicht meer informatie over het boek dat je zoekt hebben:',
 	'booksources-invalid-isbn' => 'Het ingegeven ISBN lijkt niet geldig te zijn.
 Controleer of u wellicht een fout hebt gemaakt bij de invoer.',
 	'blanknamespace' => '(Hoofdnaamruimte)',
@@ -20066,6 +20066,7 @@ $messages['zh-tw'] = [
 然後在同一行的連結會考慮作例外，即是幅圖片可以在哪一個頁面中同時顯示。',
 	'badaccess-group0' => '{{MediaWiki:Badaccess-group0}}',
 	'badaccess' => '沒有權限',
+	'booksources' => '站外書源',
 ];
 
 $messages['zh-yue'] = [
@@ -20107,6 +20108,8 @@ $messages['zh'] = [
 	'blocked-mailpassword' => '你的IP地址已经被查封而无法编辑，为了防止滥用而停用了你的密码恢复功能。',
 	'blocklogtext' => '这是关于用户查封和解封操作的日志。 
 被自动查封的IP地址没有被列出。请参看[[Special:Ipblocklist|被查封的IP地址和用户列表]]。',
+	'booksources-text' => '以下是一份销售新书或二手书的列表，并可能有你正寻找的书的进一步信息：',
+	'booksources' => '站外书源',
 ];
 
 $messages['zh-hk'] = [
@@ -20118,10 +20121,12 @@ Avatar3.jpg
 Avatar4.jpg
 Avatar5.jpg
 Avatar6.jpg',
+	'booksources' => '站外書源',
 ];
 
 $messages['zh-cn'] = [
 	'badsig' => '{{MediaWiki:Badsig}}',
 	'block-log-flags-anononly' => '仅匿名用戶',
+	'booksources' => '站外书源',
 ];
 
