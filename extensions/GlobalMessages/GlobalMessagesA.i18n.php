@@ -289,7 +289,7 @@ Please visit [//www.mediawiki.org/wiki/Localisation MediaWiki Localisation] and 
 	'already_a_member' => 'Already a member?',
 	'add_comment' => 'Leave message',
 	'achievements-leaderboard-navigation-item' => 'Wiki Leaderboard',
-	'atom' => 'Wikia Atom',
+	'atom' => 'Atom',
 	'addnewtalksection-link' => 'Leave a new message',
 ];
 
