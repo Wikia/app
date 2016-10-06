@@ -484,7 +484,7 @@ $messages['de'] = [
 	'get_widget_title' => 'Fragen zu deiner Seite hinzufügen',
 	'background_color' => 'Hintergrundfarbe',
 	'widget_category' => 'Art der Fragen',
-	'category' => 'Kategoriename',
+	'category' => 'Eine Kategorie pro Zeile',
 	'custom_category' => 'Benutzerdefinierte Kategorie',
 	'number_of_items' => 'Anzahl sichtbarer Elemente',
 	'width' => 'Breite',
@@ -2535,6 +2535,7 @@ $messages['no'] = [
 	'background_color' => 'Bakgrunnsfarge',
 	'categorize' => 'Kategoriser',
 	'categorize_help' => 'Én kategori per linje',
+	'category' => 'Kategorinavn',
 ];
 
 $messages['zh-hant'] = [
@@ -2575,6 +2576,7 @@ $messages['zh'] = [
 	'answers_widget_user_note' => '尋找由{{SITENAME}}讀者在<a href="http://zh.answers.wikia.com">{{SITENAME}}</a>上發問的問題！',
 	'ask_a_question-widget' => '發問一條問題',
 	'ask_a_question' => '發問一條問題',
+	'category' => '分类名称',
 ];
 
 $messages['nn'] = [
@@ -2585,5 +2587,13 @@ $messages['nn'] = [
 	'answers_widget_user_note' => 'Kan du hjelpe med med å bli ein <a href="http://svar.wikia.com/wiki/Hvordan_blir_jeg_en_kategoriansvarlig" target="_blank">kategoriansvarlig</a> på <a href="http://svar.wikia.com" target="_blank">WikiSvar</a>?',
 	'ask_a_question-widget' => 'Spør på WikiSvar',
 	'ask_a_question' => 'Spør på WikiSvar',
+];
+
+$messages['zh-hk'] = [
+	'category' => '分類名稱',
+];
+
+$messages['zh-tw'] = [
+	'category' => '分類名稱',
 ];
 

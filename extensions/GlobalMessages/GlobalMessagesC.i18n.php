@@ -3,7 +3,7 @@
 $messages = [];
 
 $messages['en'] = [
-	'category_header' => 'Pages in category "$1"',
+	'category_header' => '<span style="font-size: 80%;">Pages in category "$1"</span>',
 	'category-media-header' => '<span style="font-size: 80%;">Media in category "$1"</span>',
 	'category-empty' => '\'\'This category currently contains no pages or media.\'\'',
 	'category-subcat-count' => '{{PLURAL:$2|This category has only the following subcategory.|This category has the following {{PLURAL:$1|subcategory|$1 subcategories}}, out of $2 total.}}',
