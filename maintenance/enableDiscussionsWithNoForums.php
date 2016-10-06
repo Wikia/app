@@ -18,7 +18,7 @@ class EnableDiscussionsWithNoForums extends Maintenance {
 	}
 
 	public function execute() {
-		$fh = fopen( $this->getArg() , 'r' );
+		$fh = fopen( $this->getArg(), 'r' );
 
 		if ( !$fh ) {
 			$this->error( 'Unable to read from input file, exiting', true );
@@ -29,14 +29,14 @@ class EnableDiscussionsWithNoForums extends Maintenance {
 
 			$count = $this->getForumThreadCount( $wiki );
 			if ( $count > 0 ) {
-                $this->error( $wikiId . ' has ' . $count . ' forum threads, skipping!' );
-                continue;
-            }
+				$this->error( $wikiId . ' has ' . $count . ' forum threads, skipping!' );
+				continue;
+			}
 
-            if ( WikiFactory::getVarByName( 'wgEnableDiscussions', $wikiId ) ) {
-                $this->error( 'Discussions are already enabled on ' . $wikiId . ', skipping!' );
-                continue;
-            }
+			if ( WikiFactory::getVarByName( 'wgEnableDiscussions', $wikiId ) ) {
+				$this->error( 'Discussions are already enabled on ' . $wikiId . ', skipping!' );
+				continue;
+			}
 
 			try {
 				$this->activateDiscussions( $wikiId, $wiki->city_lang, $wiki->city_title );
