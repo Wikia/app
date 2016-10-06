@@ -4297,7 +4297,7 @@ La página de destino ("[[:$1]]") ya existe. ¿Quiere borrarla para permitir al 
 	'deletedwhileediting' => '\'\'\'Aviso\'\'\': ¡Esta página fue borrada después de que usted empezara a editar!',
 	'descending_abbrev' => 'desc',
 	'duplicate-defaultsort' => '\'\'\'Atención:\'\'\' La clave de ordenamiento predeterminada «$2» anula la clave de ordenamiento anterior «$1».',
-	'dberr-header' => 'Este wiki tiene un problema',
+	'dberr-header' => 'Este wiki tiene problemas',
 	'dberr-problems' => 'Lo sentimos.
 Este sitio está experimentando dificultades técnicas.',
 	'dberr-again' => 'Prueba a recargar dentro de unos minutos.',
@@ -12009,7 +12009,7 @@ Wilt u deze verwijderen om plaats te maken voor de te hernoemen pagina?',
 	'dberr-problems' => 'Onze excuses. Deze site ondervindt op het moment technische problemen.',
 	'dberr-again' => 'Wacht een aantal minuten en probeer het daarna opnieuw.',
 	'dberr-info' => '(Kan geen verbinding maken met de databaseserver: $1)',
-	'dberr-usegoogle' => 'Wellicht kunt u in de tussentijd zoeken via Google.',
+	'dberr-usegoogle' => 'Wellicht kun je in de tussentijd zoeken via Google.',
 	'dberr-outofdate' => 'Let op: hun indexen van onze pagina\'s zijn wellicht niet recent.',
 	'dberr-cachederror' => 'Deze pagina is een kopie uit de cache en is wellicht niet de meest recente versie.',
 	'discuss' => 'Overleg',
@@ -18464,6 +18464,11 @@ Template:消除歧義',
 
 $messages['zh-hk'] = [
 	'december' => '十二月',
+	'dberrortextcl' => '發生了一個數據庫查詢語法錯誤。
+最後一次的數據庫查詢是：
+“$1”
+來自于函數“$2”。
+MySQL返回錯誤“$3: $4”。',
 ];
 
 $messages['zh-min-nan'] = [
@@ -18496,6 +18501,11 @@ $messages['zh-tw'] = [
 所有的時間都是使用伺服器時間。',
 	'deletecomment' => '原因：',
 	'discuss' => '討論',
+	'dberrortextcl' => '發生了一個數據庫查詢語法錯誤。
+最後一次的數據庫查詢是：
+“$1”
+來自于函數“$2”。
+MySQL返回錯誤“$3: $4”。',
 ];
 
 $messages['zh-yue'] = [
@@ -18528,5 +18538,29 @@ $messages['zu'] = [
 	'databasenotlocked' => 'Idatabheyisi alikhiyiwi.',
 	'delete_and_move' => 'Sula futhi sunduza',
 	'delete_and_move_confirm' => 'Yebo, sula ikhasi',
+];
+
+$messages['zh'] = [
+	'dberrortextcl' => '发生了一个数据库查询语法错误。
+最后一次的数据库查询是：
+“$1”
+来自于函数“$2”。
+MySQL返回错误“$3: $4”。',
+];
+
+$messages['zh-cn'] = [
+	'dberrortextcl' => '发生了一个数据库查询语法错误。
+最后一次的数据库查询是：
+“$1”
+来自于函数“$2”。
+MySQL返回错误“$3: $4”。',
+];
+
+$messages['zh-sg'] = [
+	'dberrortextcl' => '发生了一个数据库查询语法错误。
+最后一次的数据库查询是：
+“$1”
+来自于函数“$2”。
+MySQL返回错误“$3: $4”。',
 ];
 
