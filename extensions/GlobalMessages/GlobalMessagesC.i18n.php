@@ -4,7 +4,7 @@ $messages = [];
 
 $messages['en'] = [
 	'category_header' => 'Pages in category "$1"',
-	'category-media-header' => 'Media in category "$1"',
+	'category-media-header' => '<span style="font-size: 80%;">Media in category "$1"</span>',
 	'category-empty' => '\'\'This category currently contains no pages or media.\'\'',
 	'category-subcat-count' => '{{PLURAL:$2|This category has only the following subcategory.|This category has the following {{PLURAL:$1|subcategory|$1 subcategories}}, out of $2 total.}}',
 	'category-subcat-count-limited' => 'This category has the following {{PLURAL:$1|subcategory|$1 subcategories}}.',
@@ -31208,6 +31208,7 @@ $messages['zh'] = [
 您可以在以下的頁面找到有關的資訊：
 }}',
 	'cascadeprotectedwarning' => '\'\'\'警告：\'\'\'本頁已經被保護，只有擁有管理員權限的用戶才可修改，因為本頁已被以下連鎖保護的頁面所包含：',
+	'category-media-header' => '類別「$1」中的媒體檔',
 ];
 
 $messages['zh-classical'] = [
@@ -31219,6 +31220,7 @@ $messages['zh-cn'] = [
 	'cantcreateaccounttitle' => '不能创建帐户',
 	'cascadeprotected' => '{{MediaWiki:Cascadeprotected}}',
 	'cascadeprotectedwarning' => '{{MediaWiki:Cascadeprotectedwarning}}',
+	'category-media-header' => '“$1”分类中的媒体文件',
 ];
 
 $messages['zh-hans'] = [
@@ -31606,6 +31608,7 @@ $messages['zh-hk'] = [
 您可以在以下的頁面找到有關的資訊：
 }}',
 	'cascadeprotectedwarning' => '{{MediaWiki:Cascadeprotectedwarning}}',
+	'category-media-header' => '類別「$1」中的媒體檔',
 ];
 
 $messages['zh-min-nan'] = [
@@ -31628,6 +31631,7 @@ $messages['zh-sg'] = [
 	'cantcreateaccounttitle' => '{{MediaWiki:Cantcreateaccounttitle}}',
 	'cascadeprotected' => '{{MediaWiki:Cascadeprotected}}',
 	'cascadeprotectedwarning' => '{{MediaWiki:Cascadeprotectedwarning}}',
+	'category-media-header' => '“$1”分类中的媒体文件',
 ];
 
 $messages['zh-tw'] = [
@@ -31672,6 +31676,7 @@ $messages['zh-tw'] = [
 	'choose_reason' => '選擇原因',
 	'copyrightpage' => 'w:Wikia:Licensing|Wikia:Licensing',
 	'cascadeprotected' => '{{MediaWiki:Cascadeprotected}}',
+	'category-media-header' => '「$1」分類中的媒體檔',
 ];
 
 $messages['zh-yue'] = [
