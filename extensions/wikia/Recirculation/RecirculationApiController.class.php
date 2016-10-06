@@ -62,7 +62,14 @@ class RecirculationApiController extends WikiaApiController {
 		$this->response->setCacheValidity( WikiaResponse::CACHE_VERY_SHORT );
 		$this->response->setData( [
 				'title' => wfMessage( 'recirculation-fandom-subtitle' )->plain(),
-				'items' => ( new CakeRelatedContentService() )->getContentRelatedTo( $target, $namespaceId, $this->wg->sitename, $limit, $ignore ),
+				'items' => ( new CakeRelatedContentService() )->getContentRelatedTo(
+						$target,
+						$namespaceId,
+						$this->wg->sitename,
+						$this->wg->cityId,
+						$limit,
+						$ignore
+				),
 		] );
 	}
 

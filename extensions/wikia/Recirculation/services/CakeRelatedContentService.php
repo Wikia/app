@@ -18,20 +18,25 @@ class CakeRelatedContentService {
 
 	/**
 	 * @param $title
-	 * @param $ignore
+	 * @param $namespaceId
+	 * @param $wikiId
+	 * @param null $universeName
+	 * @param int $limit
+	 * @param null $ignore
 	 * @return RecirculationContent[]
 	 */
-	public function getContentRelatedTo( $title, $namespaceId, $universeName = null, $limit = 5, $ignore = null ) {
+	public function getContentRelatedTo($title, $namespaceId, $wikiId, $universeName = null, $limit = 5, $ignore = null ) {
 		$items = [];
 
-		if ( !$this->onValidWiki() || !$this->onValidPage( $title ) || !$this->isValidNamespace($namespaceId) ) {
+		if ( !$this->onValidWiki($wikiId) || !$this->onValidPage( $title ) ) {
 			return $items;
 		}
 
 		$api = $this->relatedContentApi();
+		$entityName = $this->isValidNamespace($namespaceId) ? $title : $universeName;
 
 		try {
-			$filteredRelatedContent = $api->getRelatedContentFromEntityName( $title, $universeName, $limit + 1, "true" );
+			$filteredRelatedContent = $api->getRelatedContentFromEntityName( $entityName, $universeName, $limit + 1, "true" );
 			if ( is_null( $filteredRelatedContent ) ) {
 				$this->warning( "getRelatedContentFromEntityName failed to retrieve recommendations", [
 						"title" => $title,
@@ -175,11 +180,9 @@ class CakeRelatedContentService {
 		}
 	}
 
-	private function onValidWiki() {
-		global $wgCityId;
-
+	private function onValidWiki($wikiId) {
 		return in_array(
-				$wgCityId,
+				$wikiId,
 				[
 						147,    // starwars
 						130814, // gameofthrones
