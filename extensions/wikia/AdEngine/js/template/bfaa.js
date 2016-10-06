@@ -58,7 +58,7 @@ define('ext.wikia.adEngine.template.bfaa', [
 			}
 		},
 
-		show: function (iframe) {
+		show: function (iframe, params) {
 			var spotlightFooter = doc.getElementById('SPOTLIGHT_FOOTER');
 			nav.style.top = '';
 			page.classList.add('bfaa-template');
@@ -77,12 +77,17 @@ define('ext.wikia.adEngine.template.bfaa', [
 			if (spotlightFooter) {
 				spotlightFooter.parentNode.style.display = 'none';
 			}
+
+			if (recoveryHelper.isBlocking()) {
+				recoverSlot(iframe, params);
+			}
 		}
 	};
 
 	mobileHandler =  {
-		show: function (iframe, aspectRatio) {
-			var adsModule = win.Mercury.Modules.Ads.getInstance(),
+		show: function (iframe, params) {
+			var aspectRatio = params.aspectRatio,
+				adsModule = win.Mercury.Modules.Ads.getInstance(),
 				height,
 				viewPortWidth,
 				adjustPadding = function () {
@@ -155,12 +160,8 @@ define('ext.wikia.adEngine.template.bfaa', [
 		wrapper.style.opacity = '0';
 		slotTweaker.makeResponsive(params.slotName, params.aspectRatio);
 		slotTweaker.onReady(params.slotName, function (iframe) {
-			handler.show(iframe, params.aspectRatio);
+			handler.show(iframe, params);
 			wrapper.style.opacity = '';
-
-			if (recoveryHelper.isBlocking()) {
-				recoverSlot(iframe, params);
-			}
 		});
 
 		log(['show', params.uap], 'info', logGroup);
