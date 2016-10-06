@@ -100,70 +100,17 @@ Since you do not have the hideuser right, you cannot see or edit the user\'s blo
 	'cant-move-to-user-page' => 'You do not have permission to move a page to a user page (except to a user subpage).',
 	'cantmove-titleprotected' => 'You cannot move a page to this location, because the new title has been protected from creation',
 	'common.css' => '/***** CSS placed here will be applied to all skins on the entire site. *****/
-/* See also: [[MediaWiki:Monobook.css]] */
-/* <pre> */
 
 /* Mark redirects in Special:Allpages and Special:Watchlist */
-.allpagesredirect { font-style: italic; }
-.watchlistredir { font-style: italic; }
-
-/* Infobox template style */
-.infobox {
-   border: 1px solid #aaaaaa;
-   background-color: #f9f9f9;
-   color: black;
-   margin-bottom: 0.5em;
-   margin-left: 1em;
-   padding: 0.2em;
-   float: right;
-   clear: right;
+.allpagesredirect {
+   font-style: italic;
 }
-.infobox td,
-.infobox th {
-   vertical-align: top;
+.allpagesredirect:after {
+   color: #808080; content: " (redirect)"
 }
-.infobox caption {
-   font-size: larger;
-   margin-left: inherit;
-}
-.infobox.bordered {
-   border-collapse: collapse;
-}
-.infobox.bordered td,
-.infobox.bordered th {
-   border: 1px solid #aaaaaa;
-}
-.infobox.bordered .borderless td,
-.infobox.bordered .borderless th {
-   border: 0;
-}
-
-/* Forum formatting (by -Algorithm & -Splaka) */
-.forumheader {
-     border: 1px solid #aaa;
-     background-color: #f9f9f9; margin-top: 1em; padding: 12px;
-}
-.forumlist td.forum_edited a {
-     color: black; text-decoration: none
-}
-.forumlist td.forum_title a {
-     padding-left: 20px;
-}
-.forumlist td.forum_title a.forum_new {
-     font-weight: bold; background: url(/images/4/4e/Forum_new.gif)
-     center left no-repeat; padding-left: 20px;
-}
-.forumlist td.forum_title a.forum_new:visited {
-     font-weight: normal; background: none; padding-left: 20px;
-}
-.forumlist th.forum_title {
-     padding-left: 20px;
-}
-
-/* Recent changes byte indicators */
-.mw-plusminus-pos { color: #006500; }
-.mw-plusminus-neg { color: #8B0000; }
-/* </pre> */',
+.watchlistredir {
+   font-style: italic;
+}',
 	'common.js' => '/* Any JavaScript here will be loaded for all users on every page load. */',
 	'creditspage' => 'Page credits',
 	'confirmemail' => 'Confirm email address',
@@ -6174,8 +6121,24 @@ Siehe auch die Liste der [[Special:WantedCategories|gewünschten Kategorien]].',
 	'cant-move-user-page' => 'Du hast nicht die erforderliche Berechtigung, Benutzerhauptseiten verschieben zu können.',
 	'cant-move-to-user-page' => 'Du hast nicht die Berechtigung, Seiten auf eine Benutzerseite zu verschieben (mit Ausnahme von Benutzerunterseiten).',
 	'cantmove-titleprotected' => 'Die Verschiebung kann nicht durchgeführt werden, da der Zieltitel zur Erstellung gesperrt ist.',
-	'common.css' => '/* Das folgende CSS wird für alle Benutzeroberflächen geladen. */',
-	'common.js' => '/* Das folgende JavaScript wird für alle Benutzer geladen. */',
+	'common.css' => '/* <pre><nowiki> */
+/** CSS an dieser Stelle wirkt sich nur auf den Monobook-Skin aus. Der Standard-Skin (Wikia) wird durch [[MediaWiki:Wikia.css]] beeinflusst. */
+
+/* </pre></nowiki> */',
+	'common.js' => '/* Jedes JavaScript hier wird für alle Benutzer für jede Seite geladen. */
+
+importScriptPage(\'ShowHide/code.js\', \'dev\');
+
+var ShowHideConfig = { 
+    autoCollapse: 3, 
+    userLang: false, 
+    en: {
+	show: "anzeigen",
+	hide: "ausblenden",
+	showAll: "alle anzeigen",
+	hideAll: "alle ausblenden"
+    }
+};',
 	'creditspage' => 'Seiteninformationen',
 	'confirmemail' => 'E-Mail-Adresse bestätigen (Authentifizierung)',
 	'confirmemail_noemail' => 'Du hast keine gültige E-Mail-Adresse in deinen [[Special:Preferences|persönlichen Einstellungen]] eingetragen.',
@@ -7362,8 +7325,8 @@ alguien más puede haber deshecho el borrado antes.',
 	'cant-move-user-page' => 'No tienes permiso para renombrar páginas de usuario (excepto subpáginas).',
 	'cant-move-to-user-page' => 'No tienes permiso para renombrar una página a una página de usuario (excepto a subpáginas de usuario).',
 	'cantmove-titleprotected' => 'No puedes renombrar la página a esta ubicación, porque el nuevo título ha sido protegido para evitar su creación.',
-	'common.css' => '/* Los estilos CSS definidos aquí aplicarán a todas las pieles (skins) */',
-	'common.js' => '/* Cualquier código JavaScript escrito aquí se cargará para todos los usuarios en cada carga de página */',
+	'common.css' => '/* Los estilos CSS definidos aquí se aplicarán a todas las pieles (skins) */',
+	'common.js' => '/* Cualquier código JavaScript escrito aquí se cargará para todos los usuarios en cada carga de página. */',
 	'creditspage' => 'Créditos de la página',
 	'confirmemail' => 'Confirmar dirección de correo electrónico',
 	'confirmemail_noemail' => 'No tienes una dirección de correo electrónico válida en tus [[Special:Preferences|preferencias de usuario]].',
@@ -7963,7 +7926,23 @@ $2',
 	'cant-move-user-page' => 'شما اجازه ندارید صفحه‌های کاربری سرشاخه را انتقال دهید.',
 	'cant-move-to-user-page' => 'شما اجازه ندارید که یک صفحه را به یک صفحهٔ کاربر انتقال دهید (به استثنای زیر صفحه‌های کاربری).',
 	'cantmove-titleprotected' => 'شما نمی‌توانید صفحه را به این نشانی انتقال دهید، چرا که عنوان جدید در برابر ایجاد محافظت شده‌است',
-	'common.css' => '/* دستورات این بخش همهٔ کاربران را تحت تاثیر قرار می‌دهند. */',
+	'common.css' => '/* <pre><nowiki> */
+
+/** دستورات این بخش همهٔ کاربران را تحت تاثیر قرار می‌دهند. **/
+
+
+/* تغییر مسیرها را در ویژه:تمام صفحه‌ها و ویژه:پیگیری‌ها به صورت ایتالیک نمایش می‌دهد */
+.allpagesredirect {
+   font-style: italic;
+}
+.allpagesredirect:after {
+   color: #808080; content: " (redirect)"
+}
+.watchlistredir {
+   font-style: italic;
+}
+
+/* </pre></nowiki> */',
 	'creditspage' => 'اعتبارات این صفحه',
 	'confirmemail' => 'تأیید نشانی پست الکترونیکی',
 	'confirmemail_noemail' => 'شما در صفحهٔ [[Special:Preferences|ترجیحات کاربری]] خود نشانی پست الکترونیکی معتبری وارد نکرده‌اید.',
@@ -8139,7 +8118,15 @@ Katso myös [[Special:WantedCategories|halutut luokat]].',
 	'cant-move-user-page' => 'Sinulla ei ole lupaa siirtää käyttäjäsivuja (lukuun ottamatta alasivuja).',
 	'cant-move-to-user-page' => 'Sinulla ei ole lupaa siirtää sivuja käyttäjäsivuiksi (paitsi alasivuiksi).',
 	'cantmove-titleprotected' => 'Sivua ei voi siirtää tälle nimelle, koska tämän nimisen sivun luonti on estetty.',
-	'common.css' => '/* Tämä sivu sisältää koko sivustoa muuttavia tyylejä. */',
+	'common.css' => '/***** Tämä sivu sisältää koko sivustoa muuttavia tyylejä. *****/
+/* Katso myös: [[MediaWiki:Monobook.css]] */
+/* <pre> */
+
+/* Merkitse uudelleenohjaukset sivuilla Toiminnot:Kaikki sivut ja Toiminnot:Tarkkailulista */
+.allpagesredirect { font-style: italic; }
+.watchlistredir { font-style: italic; }
+
+/* </pre> */',
 	'common.js' => '/* Tämän sivun JavaScript-koodi liitetään jokaiseen sivulataukseen */',
 	'creditspage' => 'Sivun tekijäluettelo',
 	'confirmemail' => 'Varmenna sähköpostiosoite',
@@ -8604,8 +8591,9 @@ un autre utilisateur a probablement déjà restauré la page.',
 	'cant-move-user-page' => 'Vous n’avez pas la permission de renommer les pages principales d’utilisateurs (en dehors de leurs sous-pages).',
 	'cant-move-to-user-page' => 'Vous n’avez pas la permission de renommer une page vers une page utilisateur (à l’exception d’une sous-page).',
 	'cantmove-titleprotected' => 'Vous ne pouvez pas déplacer une page vers cet emplacement car la création de page avec ce nouveau titre a été protégée.',
-	'common.css' => '/* Le CSS placé ici sera appliqué à tous les habillages. */',
-	'common.js' => '/* Tout JavaScript ici sera chargé avec chaque page accédée par n’importe quel utilisateur. */',
+	'common.css' => '/** Met en italique les redirections dans Special:Allpages et Special:Watchlist **/
+.allpagesredirects, .watchlistredir { font-style: italic;  }',
+	'common.js' => '/* Tout JavaScript ici sera chargé pour chaque page visitée par n’importe quel utilisateur. */',
 	'creditspage' => 'Crédits de la page',
 	'confirmemail' => 'Confirmer l’adresse de courriel',
 	'confirmemail_noemail' => 'Vous n’avez pas défini une adresse de courriel valide dans vos [[Special:Preferences|préférences]].',
@@ -13135,7 +13123,18 @@ hideuser権限を持っていないため、この利用者のブロックを閲
 	'cant-move-user-page' => '利用者ページを移動させる権限がありません（下位ページ内は除く）。',
 	'cant-move-to-user-page' => '利用者下位ページ以外の利用者ページに、ページを移動させる権限がありません。',
 	'cantmove-titleprotected' => '新しいページ名が作成保護されているため、この場所にページを移動できません。',
-	'common.css' => '/* ここに書いたCSSはすべての外装に反映されます */',
+	'common.css' => '/***** ここに書いたCSSはサイト全体のすべてのスキンに適用されます *****/
+
+/* 特別:全ページと特別:ウォッチリストでリダイレクトとしてマーク */
+.allpagesredirect {
+   font-style: italic;
+}
+.allpagesredirect:after {
+   color: #808080; content: " (リダイレクト)"
+}
+.watchlistredir {
+   font-style: italic;
+}',
 	'common.js' => '/* ここにあるすべてのJavaScriptは、すべてのページ読み込みですべての利用者に対して読み込まれます */',
 	'creditspage' => 'ページの帰属表示',
 	'confirmemail' => 'メールアドレスの確認',
@@ -20368,7 +20367,18 @@ Omdat je het recht \'hideuser\' niet hebt, kun je de blokkade van de gebruiker n
 	'cant-move-user-page' => 'Je hebt geen rechten om gebruikerspagina\'s te hernoemen (met uitzondering van subpagina\'s).',
 	'cant-move-to-user-page' => 'Je hebt geen rechten om een pagina naar een gebruikerspagina te hernoemen. Hernoemen naar een subpagina is wel mogelijk.',
 	'cantmove-titleprotected' => 'Je kunt geen pagina naar deze paginaam hernoemen, omdat deze paginanaam beveiligd is tegen het aanmaken ervan.',
-	'common.css' => '/** CSS die hier wordt geplaatst heeft invloed op alle skins */',
+	'common.css' => '/***** CSS die hier wordt geplaatst heeft invloed op alle skins op de hele site *****/
+
+/* Markeert doorverwijzingen in Speciaal:AllePaginas en Speciaal:Volglijst  */
+.allpagesredirect {
+   font-style: italic;
+}
+.allpagesredirect:after {
+   color: #808080; content: " (doorverwijzing)"
+}
+.watchlistredir {
+   font-style: italic;
+}',
 	'common.js' => '/* JavaScript die hier wordt geplaatst heeft invloed op alle pagina\'s voor alle gebruikers */',
 	'creditspage' => 'Auteurspagina',
 	'confirmemail' => 'E-mailadres bevestigen',
