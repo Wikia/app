@@ -21,10 +21,10 @@ class CakeRelatedContentService {
 	 * @param $ignore
 	 * @return RecirculationContent[]
 	 */
-	public function getContentRelatedTo( $title, $universeName = null, $limit = 5, $ignore = null ) {
+	public function getContentRelatedTo( $title, $namespaceId, $universeName = null, $limit = 5, $ignore = null ) {
 		$items = [];
 
-		if ( !$this->onValidWiki() || !$this->onValidPage( $title ) ) {
+		if ( !$this->onValidWiki() || !$this->onValidPage( $title ) || !$this->isValidNamespace($namespaceId) ) {
 			return $items;
 		}
 
@@ -187,11 +187,18 @@ class CakeRelatedContentService {
 						2237,   // dc
 						2233,   // marvel
 						208733, // darksouls
+						1706, 	// elderscrolls
+						1071836,// overwatch
+						509,		// harrypotter
 				]
 		);
 	}
 
 	private function onValidPage( $title ) {
 		return $title != "Main Page";
+	}
+
+	private function isValidNamespace($namespaceId) {
+		return $namespaceId == NS_MAIN;
 	}
 }

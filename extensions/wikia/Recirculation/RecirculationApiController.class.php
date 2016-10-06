@@ -57,11 +57,12 @@ class RecirculationApiController extends WikiaApiController {
 
 		$limit = trim( $this->request->getVal( 'limit' ) );
 		$ignore = trim( $this->request->getVal( 'ignore' ) );
+		$namespaceId = trim( $this->request->getVal( 'namespaceId' ) );
 
 		$this->response->setCacheValidity( WikiaResponse::CACHE_VERY_SHORT );
 		$this->response->setData( [
 				'title' => wfMessage( 'recirculation-fandom-subtitle' )->plain(),
-				'items' => ( new CakeRelatedContentService() )->getContentRelatedTo( $target, $this->wg->sitename, $limit, $ignore ),
+				'items' => ( new CakeRelatedContentService() )->getContentRelatedTo( $target, $namespaceId, $this->wg->sitename, $limit, $ignore ),
 		] );
 	}
 
