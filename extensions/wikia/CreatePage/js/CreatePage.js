@@ -300,7 +300,6 @@ var CreatePage = {
 		'use strict';
 		CreatePage.context = context;
 
-		// Create Page flow tracking, contribute -> add page
 		$( '.WikiaMenuElement .createpage' ).click(function() {
 			CreatePage.trackCreatePageStart(CreatePage.CREATE_PAGE_CONTRIBUTE_BUTTON);
 			CreatePage.flowName = CreatePage.CREATE_PAGE_CONTRIBUTE_BUTTON;
@@ -308,10 +307,11 @@ var CreatePage = {
 
 		$( function() {
 			require(['wikia.querystring'], function(QueryString) {
-				// Create Page flow tracking, adding flow param in redlinks
+				// Create Page flow tracking, adding flow param in redlinks href.
+				// This parameter is added here to avoid reparsing all articles.
 				$( '#WikiaArticle').find( 'a.new' ).toArray().forEach(function(redlink) {
 					var qs = QueryString(redlink.href);
-					qs.setVal('flow', CreatePage.CREATE_PAGE_REDLINK)
+					qs.setVal('flow', CreatePage.CREATE_PAGE_REDLINK);
 					redlink.href = qs.toString();
 				});
 			});
