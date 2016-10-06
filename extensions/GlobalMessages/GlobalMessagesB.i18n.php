@@ -3900,6 +3900,7 @@ Nur Zeilen, die mit einem * anfangen, werden ausgewertet. Als erstes nach dem * 
 Darauf folgende Seitenlinks in derselben Zeile definieren Ausnahmen, in deren Kontext die Datei trotzdem erscheinen darf.',
 	'blankpage' => 'Leere Seite',
 	'back' => 'Zurück',
+	'button-createpage' => 'Neue Seite',
 ];
 
 $messages['de-formal'] = [
@@ -4676,6 +4677,7 @@ Avatar3.jpg
 Avatar4.jpg
 Avatar5.jpg
 Avatar6.jpg',
+	'button-createpage' => 'Crear una página',
 ];
 
 $messages['et'] = [
@@ -5455,6 +5457,7 @@ Seules les listes d’énumération (commençant par *) sont prises en compte. L
 Les autres liens sur la même ligne sont considérés comme des exceptions, par exemple des pages sur lesquelles l’image peut apparaître.',
 	'blankpage' => 'Page vide',
 	'back' => 'Retour',
+	'button-createpage' => 'Créer page',
 ];
 
 $messages['frc'] = [
@@ -8403,6 +8406,7 @@ Avatar3.jpg
 Avatar4.jpg
 Avatar5.jpg
 Avatar6.jpg',
+	'button-createpage' => '次へ',
 ];
 
 $messages['jam'] = [
@@ -9602,6 +9606,7 @@ $1, 또는 [[{{MediaWiki:Grouppage-sysop}}|다른 관리자]]에게 차단에 �
 같은 줄에 따라오는 모든 링크는 예외로 봅니다. (예: 파일이 사용되어야 하는 문서)',
 	'blankpage' => '빈 문서',
 	'back' => '뒤로',
+	'button-createpage' => '새 문서 만들기',
 ];
 
 $messages['ko-kp'] = [
@@ -13258,6 +13263,7 @@ Den fyrste lenkja på ei line må gå til ei uønskt fil.
 Alle andre lenkjer på same line vert sett på som unnatak, med andre ord sider der fila kan brukast.',
 	'blankpage' => 'Tom side',
 	'back' => 'Tilbake',
+	'button-createpage' => 'Legg til side',
 ];
 
 $messages['nov'] = [
@@ -13895,6 +13901,7 @@ Pierwszy link w linii musi być linkiem do zabronionego pliku.
 Następne linki w linii są traktowane jako wyjątki – są to nazwy stron, na których plik o zabronionej nazwie może być użyty.',
 	'blankpage' => 'Pusta strona',
 	'back' => 'Powrót',
+	'button-createpage' => 'Dodaj stronę',
 ];
 
 $messages['pms'] = [
@@ -15215,6 +15222,7 @@ Avatar3.jpg
 Avatar4.jpg
 Avatar5.jpg
 Avatar6.jpg',
+	'button-createpage' => 'Добавить страницу',
 ];
 
 $messages['rue'] = [
@@ -20113,6 +20121,7 @@ $messages['zh'] = [
 	'broken-file-category' => '含有损坏文件链接的页面',
 	'brokenredirects-delete' => '(删除)',
 	'brokenredirects-edit' => '(编辑)',
+	'button-createpage' => '添加页面',
 ];
 
 $messages['zh-hk'] = [
