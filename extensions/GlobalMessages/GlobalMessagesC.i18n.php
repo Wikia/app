@@ -86,7 +86,7 @@ The reason given by $3 is \'\'$2\'\'',
 last contributor is only author of this page.',
 	'cannotundelete' => 'Undelete failed;
 someone else may have undeleted the page first.',
-	'contributions' => 'User contributions',
+	'contributions' => 'Contributions',
 	'contributions-title' => 'User contributions for $1',
 	'contribsub2' => 'For $1 ($2)',
 	'createaccountblock' => 'account creation blocked',
@@ -4740,6 +4740,7 @@ Confirmeu que realment voleu tornar-la a crear.',
 * http://pl.wikia.com|Polski
 * http://fr.wikia.com|Français
 * Languages|Més...',
+	'contris_s' => 'Contribucions',
 ];
 
 $messages['cbk-zam'] = [
@@ -5871,6 +5872,7 @@ Cadarnhewch eich bod chi wir am ail-greu\'r dudalen.',
 	'compare-invalid-title' => 'Ysgrifennwyd teitl annilys.',
 	'compare-title-not-exists' => 'Nid yw\'r teitl a enwyd ar gael.',
 	'compare-revision-not-exists' => 'Nid yw\'r diwygiad a enwyd ar gael.',
+	'contris_s' => 'Cyfraniadau',
 ];
 
 $messages['da'] = [
@@ -6129,7 +6131,7 @@ Siehe auch die Liste der [[Special:WantedCategories|gewünschten Kategorien]].',
 	'confirmdeletetext' => 'Du bist dabei, eine Seite oder Datei und alle zugehörigen älteren Versionen zu löschen. Bitte bestätige dazu, dass Du Dir der Konsequenzen bewusst bist, und dass Du in Übereinstimmung mit den [[{{ns:project}}:Leitlinien|Projektleitlinien]] handelst.',
 	'cantrollback' => 'Die Änderung kann nicht zurückgesetzt werden, da es keine früheren Autoren gibt.',
 	'cannotundelete' => 'Wiederherstellung fehlgeschlagen; die Seite oder Datei wurde bereits wiederhergestellt.',
-	'contributions' => 'Benutzerbeiträge',
+	'contributions' => 'Beiträge',
 	'contributions-title' => 'Benutzerbeiträge von „$1“',
 	'contribsub2' => 'Von $1 ($2)',
 	'createaccountblock' => 'Erstellung von Benutzerkonten gesperrt',
@@ -6263,6 +6265,8 @@ Bitte bestätige, dass Du diese Seite tatsächlich neu anlegen möchtest.',
 	'corporatepage-find-a-wiki' => 'Nach einem Wiki suchen',
 	'corporatepage-go-to-wiki' => 'Besuche $1',
 	'corporatepage-watchlist' => 'Beobachtungsliste',
+	'contris' => 'Beiträge',
+	'contris_s' => 'Beiträge',
 ];
 
 $messages['de-formal'] = [
@@ -7504,6 +7508,8 @@ Este código de confirmación caducará el $4.',
 <p>¡Come lo necesario para conseguir un cuerpo perfecto para este verano! ¡Visita <a href=\'http://healthyrecipes.wikia.com\'> Healthy Recipes Wiki </a> para ideas sobre recetas de cocina saludables!</p>',
 	'corporatepage-wikia-wide-stats-headline' => 'Estadísticas de toda Wikia',
 	'corporatepage-words-added' => 'palabras añadidas en la última semana',
+	'contris' => 'Contribuciones',
+	'contris_s' => 'Contribuciones',
 ];
 
 $messages['et'] = [
@@ -8129,6 +8135,8 @@ $5
 	'compare-invalid-title' => 'عنوان تعیین‌شده نامعتبر است.',
 	'compare-title-not-exists' => 'عنوان مشخص شده وجود ندارد.',
 	'compare-revision-not-exists' => 'پالایهٔ مشخص شده وجود ندارد.',
+	'contris' => 'مشارکت‌ها',
+	'contris_s' => 'مشارکت‌ها',
 ];
 
 $messages['ff'] = [
@@ -8314,6 +8322,8 @@ Varmista, että haluat luoda sivun uudelleen.',
 	'choose_reason' => 'Valitse syy',
 	'cockpit_hide' => 'Piilota ohjaamo',
 	'community' => 'Yhteisö',
+	'contris' => 'Muokkaukset',
+	'contris_s' => 'Muokkaukset',
 ];
 
 $messages['fiu-vro'] = [
@@ -12995,6 +13005,8 @@ Per favore, conferma che desideri veramente ricreare questa pagina.',
 	'create_an_account' => 'Crea un account',
 	'create-account-new' => 'Crea il tuo account Fandom',
 	'community' => 'Community',
+	'contris' => 'Contributi',
+	'contris_s' => 'Contributi',
 ];
 
 $messages['iu'] = [
@@ -15380,6 +15392,8 @@ $5
 	'corporatepage-wikia-hot-spots-desc' => '다음은 위키아 전체에서 이번 주에 가장 편집이 많은 문서의 목록입니다.',
 	'corporatepage-wikia-hot-spots' => '위키아 핫 스팟',
 	'corporatepage-wikia-international' => '다른 언어',
+	'contris' => '사용자 기여',
+	'contris_s' => '사용자 기여',
 ];
 
 $messages['ko-kp'] = [
@@ -21035,6 +21049,8 @@ Du må stadfeste at du verkeleg vil nyopprette denne sida.',
 	'choose_reason' => 'Velg grunn',
 	'cockpit_hide' => 'Skjul cockpit',
 	'community' => 'Fellesskap',
+	'contris' => 'Bidrag',
+	'contris_s' => 'Bidrag',
 ];
 
 $messages['nov'] = [
@@ -22047,6 +22063,7 @@ Czy na pewno chcesz ją ponownie utworzyć?',
 	'cięta-riposta' => 'Ojtam ojtam',
 	'community' => 'Społeczność',
 	'corporatepage-go-to-wiki' => 'Idź do $1',
+	'contris_s' => 'Edycje',
 ];
 
 $messages['pms'] = [
@@ -22879,6 +22896,7 @@ Confirme que deseja realmente recriar esta página, por favor.',
 	'createpage' => 'Criar uma página nova',
 	'choose_reason' => 'Escolha a razão',
 	'create-account-new' => 'Crie a sua conta no Fandom',
+	'contris_s' => 'Contribuições',
 ];
 
 $messages['pt-br'] = [
@@ -23071,6 +23089,7 @@ Por favor, confirme que realmente deseja recriar esta página.',
 	'compare-invalid-title' => 'O título que você especificou é inválido.',
 	'compare-title-not-exists' => 'O título que você especificou não existe.',
 	'compare-revision-not-exists' => 'A revisão que você especificou não existe.',
+	'contris_s' => 'Contribuições',
 ];
 
 $messages['qu'] = [
@@ -24096,6 +24115,8 @@ $5
 * http://fr.wikia.com/wiki/Accueil|Français
 * http://pl.wikia.com/wiki/Wikia_Polska|Polski
 * Languages|More...',
+	'contris' => 'Вклад',
+	'contris_s' => 'Вклад',
 ];
 
 $messages['rue'] = [
@@ -29662,6 +29683,7 @@ $5
 	'create_an_account' => 'Зареєструватися',
 	'createpage' => 'Створити нову статтю',
 	'choose_reason' => 'Оберіть причину',
+	'contris_s' => 'Внесок',
 ];
 
 $messages['ur'] = [
@@ -30284,6 +30306,7 @@ Xin hãy xác nhận bạn thực sự muốn tạo lại trang này.',
 	'compare-revision-not-exists' => 'Phiên bản chỉ định không tồn tại.',
 	'create_an_account' => 'Mở tài khoản',
 	'choose_reason' => 'Chọn lý do',
+	'contris_s' => 'Đóng góp',
 ];
 
 $messages['vls'] = [
@@ -31448,6 +31471,8 @@ Send a new code by clicking [[Special:ConfirmEmail|here]].',
 	'confirmrecreate' => '在你编辑这个条目後, 用户[[User:$1|$1]]([[User talk:$1|讨论]])以下列原因删除了这个条目:
 : \'\'$2\'\'
 请在重新创建条目前三思.',
+	'contris' => '用户贡献',
+	'contris_s' => '用户贡献',
 ];
 
 $messages['zh-classical'] = [
@@ -31661,6 +31686,8 @@ $5
 	'compare-revision-not-exists' => '你指定的版本不存在。',
 	'create-account-new' => '创建您的Fandom帐户',
 	'community' => '社区',
+	'contris' => '用户贡献',
+	'contris_s' => '用户贡献',
 ];
 
 $messages['zh-hant'] = [
@@ -31843,6 +31870,8 @@ $5
 	'compare-revision-not-exists' => '所指定的修訂不存在。',
 	'create-account-new' => '創建您的Fandom帳戶',
 	'community' => '社群',
+	'contris' => '用戶貢獻',
+	'contris_s' => '用戶貢獻',
 ];
 
 $messages['zh-hk'] = [
@@ -31885,6 +31914,8 @@ Send a new code by clicking [[Special:ConfirmEmail|here]].',
 	'confirmrecreate' => '在你編輯這個條目後, 用户[[User:$1|$1]]([[User talk:$1|討論]])以下列原因删除了這個條目:
 : \'\'$2\'\'
 請在重新創建條目前三思.',
+	'contris' => '用戶貢獻',
+	'contris_s' => '用戶貢獻',
 ];
 
 $messages['zh-min-nan'] = [
@@ -31978,6 +32009,8 @@ Send a new code by clicking [[Special:ConfirmEmail|here]].',
 </div>',
 	'confirmemail_send' => '寄出確認碼',
 	'confirmemail_sent' => '確認信已發出',
+	'contris' => '用戶貢獻',
+	'contris_s' => '用戶貢獻',
 ];
 
 $messages['zh-yue'] = [
