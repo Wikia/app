@@ -6497,6 +6497,7 @@ Bitte besuche die Seiten [//www.mediawiki.org/wiki/Localisation MediaWiki-Lokali
 	'api-error-verification-error' => 'Die hochzuladende Datei ist entweder fehlerhaft oder hat keine Dateinamenserweiterung.',
 	'addnewtalksection-link' => 'Neuen Abschnitt beginnen',
 	'all_the_wikia' => 'Überall in Fandom',
+	'achievements-leaderboard-navigation-item' => 'Herausforderungen',
 ];
 
 $messages['de-ch'] = [
@@ -7651,6 +7652,7 @@ Por favor visita [//www.mediawiki.org/wiki/Localisation Localización MediaWiki]
 	'api-error-verification-error' => 'Este archivo puede estar dañado, o tiene una extensión incorrecta.',
 	'addnewtalksection-link' => 'Inicie una nueva sección',
 	'all_the_wikia' => 'Todo Fandom',
+	'achievements-leaderboard-navigation-item' => 'Tablón de líderes del wiki',
 ];
 
 $messages['et'] = [
@@ -8905,6 +8907,7 @@ Veuillez visiter la [//www.mediawiki.org/wiki/Localisation Localisation de Media
 	'api-error-verification-error' => 'Ce fichier peut être corrompu, ou son extension est incorrecte.',
 	'addnewtalksection-link' => 'Commencer une nouvelle section',
 	'all_the_wikia' => 'Tout Fandom',
+	'achievements-leaderboard-navigation-item' => 'Classement du wikia',
 ];
 
 $messages['frc'] = [
@@ -13506,6 +13509,7 @@ $1のブロックの理由は「$2」です。',
 	'all_the_wikia' => 'Fandom全体',
 	'add_comment' => 'コメントを追加する',
 	'addnewtalksection-link' => '新しいセクションを開始する',
+	'achievements-leaderboard-navigation-item' => 'アチーブメントランキング',
 ];
 
 $messages['jam'] = [
@@ -15245,6 +15249,7 @@ $1 사용자가 차단된 이유는 다음과 같습니다: "$2"',
 	'api-error-verification-error' => '파일이 손상되었거나 잘못된 확장자를 사용하고 있습니다.',
 	'addnewtalksection-link' => '내용 추가하기',
 	'all_the_wikia' => '위키아 전체',
+	'achievements-leaderboard-navigation-item' => '위키 리더보드',
 ];
 
 $messages['ko-kp'] = [
@@ -22118,6 +22123,7 @@ Odwiedź [//www.mediawiki.org/wiki/Localisation Tłumaczenie MediaWiki] oraz [//
 	'add_widgets' => 'Dodaj widgety',
 	'addnewtalksection-link' => 'Dodaj nowy wątek.',
 	'all_the_wikia' => 'Cały Fandom',
+	'achievements-leaderboard-navigation-item' => 'Ranking wiki',
 ];
 
 $messages['pms'] = [
@@ -24148,6 +24154,7 @@ $messages['ru'] = [
 	'api-error-verification-error' => 'Возможно, этот файл повреждён или имеет неправильное расширение.',
 	'addnewtalksection-link' => 'Создать новый раздел',
 	'all_the_wikia' => 'Весь Фэндом',
+	'achievements-leaderboard-navigation-item' => 'Доска лидеров вики',
 ];
 
 $messages['rue'] = [
@@ -31713,6 +31720,7 @@ $1被封禁的理由是：“$2”',
 	'api-error-verification-error' => '此文件可能已损坏，或有错误的扩展名。',
 	'addnewtalksection-link' => '开始一个新小节',
 	'all_the_wikia' => '所有Fandom',
+	'achievements-leaderboard-navigation-item' => '维基排行榜',
 ];
 
 $messages['zh-hant'] = [
@@ -31889,6 +31897,7 @@ $1被封禁的理由是“$2”',
 	'api-error-verification-error' => '本檔案可能已損壞，或副檔名錯誤。',
 	'addnewtalksection-link' => '開始一個新小節',
 	'all_the_wikia' => '所有Fandom',
+	'achievements-leaderboard-navigation-item' => '維基排行榜',
 ];
 
 $messages['zh-hk'] = [
@@ -31896,6 +31905,7 @@ $messages['zh-hk'] = [
 	'august' => '八月',
 	'aboutpage' => 'Project:關於我們',
 	'activeusers-hidebots' => '隱藏機械人',
+	'achievements-leaderboard-navigation-item' => '維基排行榜',
 ];
 
 $messages['zh-min-nan'] = [
@@ -31955,6 +31965,7 @@ $messages['zh-tw'] = [
 	'autoredircomment' => '正在重定向到 [[$1]]',
 	'autosumm-new' => '新頁面: $1',
 	'addnewtalksection-link' => '於本討論頁增加新的討論主題',
+	'achievements-leaderboard-navigation-item' => '維基排行榜',
 ];
 
 $messages['zh-yue'] = [
@@ -32003,5 +32014,9 @@ $messages['zu'] = [
 	'allinnamespace' => 'Onke amakhasi ($1 namespace)',
 	'allpagessubmit' => 'Hamba',
 	'allmessagesname' => 'Igama',
+];
+
+$messages['zh'] = [
+	'achievements-leaderboard-navigation-item' => '维基排行榜',
 ];
 
