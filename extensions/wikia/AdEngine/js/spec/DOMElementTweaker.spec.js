@@ -47,6 +47,20 @@ describe('DOMElementTweaker', function () {
 		expect(mocks.element.classList.length).toEqual(3);
 	});
 
+	it('Test remove duplicated class', function () {
+		var domElementTweaker = getModule();
+
+		mocks.element.className += ' a a a';
+
+		domElementTweaker.removeClass(mocks.element, 'a');
+
+		expect(mocks.element.classList).toContain('b');
+		expect(mocks.element.classList).toContain('c');
+		expect(mocks.element.classList).not.toContain('x');
+		expect(mocks.element.classList.length).toEqual(2);
+		expect(mocks.element.className.trim()).toEqual('b c');
+	});
+
 	it('Test bubble action call', function () {
 		var domElementTweaker = getModule();
 

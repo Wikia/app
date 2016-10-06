@@ -6,30 +6,19 @@ define('ext.wikia.adEngine.domElementTweaker', [
 	'use strict';
 
 	var hiddenElementClass = 'hidden',
-		logGroup = 'ext.wikia.adEngine.domElementTweaker',
-		rclass = /[\t\r\n]/g;
+		logGroup = 'ext.wikia.adEngine.domElementTweaker';
 
 	function hide(element, useInline) {
 		if (element && useInline) {
 			element.style.display = 'none';
 		} else if (element) {
-			removeClass(element, hiddenElementClass);
-			element.className += hiddenElementClass;
+			element.classList.add(hiddenElementClass);
 		}
 	}
 
 	function removeClass(element, cls) {
-		var oldClasses,
-			newClasses = ' ' + element.className.replace(rclass, ' ') + ' ';
-
-		// Remove all instances of class in the className string
-		while (oldClasses !== newClasses) {
-			oldClasses = newClasses;
-			newClasses = oldClasses.replace(' ' + cls + ' ', ' ');
-		}
-
 		log(['removeClass ' + cls, element], 8, logGroup);
-		element.className = newClasses;
+		element.classList.remove(cls);
 	}
 
 	function isElement(obj) {
@@ -71,14 +60,6 @@ define('ext.wikia.adEngine.domElementTweaker', [
 		}
 	}
 
-	function recursiveRun(action, element) {
-		var i;
-		for (i = 0; i < element.childNodes.length; i++) {
-			recursiveRun(action, element.childNodes[i]);
-		}
-		action(element);
-	}
-
 	function bubbleRun(action, deepestElement, topElement) {
 		var list = [];
 
@@ -100,7 +81,6 @@ define('ext.wikia.adEngine.domElementTweaker', [
 		hide: hide,
 		isElement: isElement,
 		moveStylesToInline: moveStylesToInline,
-		removeClass: removeClass,
-		recursiveRun: recursiveRun
+		removeClass: removeClass
 	};
 });

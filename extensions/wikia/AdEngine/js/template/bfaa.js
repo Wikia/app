@@ -122,9 +122,10 @@ define('ext.wikia.adEngine.template.bfaa', [
 			return;
 		}
 
-		win.addEventListener('resize', function () {
+
+		win.addEventListener('resize', adHelper.throttle(function () {
 			slotTweaker.tweakRecoveredSlotOnResize(params.slotName, params.aspectRatio, iframe, adContainer);
-		});
+		}));
 
 		slotTweaker.tweakRecoveredSlot(iframe, adContainer);
 	}
