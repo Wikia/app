@@ -27,7 +27,7 @@ class CommunityPageSpecialHelpModel {
 		global $wgUser;
 
 		$title = Title::newFromText(
-			wfMessage( 'communitypage-policy-module-link-page-name' )->plain(),
+			wfMessage( 'communitypage-policy-module-link-page-name' )->inContentLanguage()->plain(),
  			NS_MAIN
 		);
 
