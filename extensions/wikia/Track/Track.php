@@ -33,10 +33,10 @@ class Track {
 			   'u=' . $wgUser->getID() . $sep .
 			   'a=' . ( is_object( $wgArticle ) ? $wgArticle->getID() : null ) . $sep .
 			   's=' . RequestContext::getMain()->getSkin()->getSkinName() .
+			   'beacon=' . wfGetBeaconId() .
 			   ( $wgTitle && !is_object( $wgArticle ) ? $sep . 'pg=' . urlencode( $wgTitle->getPrefixedDBkey() ) : '' ) .
 			   ( $wgTitle ? $sep . 'n=' . $wgTitle->getNamespace() : '' ) .
-			   ( !empty( $wgAdServerTest ) ? $sep . 'db_test=1' : '' ) .
-				'beacon=' . wfGetBeaconId();
+			   ( !empty( $wgAdServerTest ) ? $sep . 'db_test=1' : '' );
 
 		// Handle any parameters passed to us
 		if ( $param ) {
