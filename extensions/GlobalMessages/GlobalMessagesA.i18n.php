@@ -120,10 +120,9 @@ It may contain one or more characters which cannot be used in titles.',
 	'addedwatchtext' => 'The page "[[:$1]]" has been added to your [[Special:Watchlist|watchlist]].',
 	'actioncomplete' => 'Action complete',
 	'actionfailed' => 'Action failed',
-	'alreadyrolled' => 'Cannot rollback last edit of [[:$1]] by [[User:$2|$2]] ([[User talk:$2|talk]]{{int:pipe-separator}}[[Special:Contributions/$2|{{int:contribslink}}]]);
-someone else has edited or rolled back the page already.
+	'alreadyrolled' => 'Cannot roll back edit to [[:$1]] by [[User:$2|$2]] ([[User talk:$2|talk]] · [[special:blockip/$2|block]] · [[Special:Contributions/$2|contribs]]) because someone else has edited the page.
 
-The last edit to the page was by [[User:$3|$3]] ([[User talk:$3|talk]]{{int:pipe-separator}}[[Special:Contributions/$3|{{int:contribslink}}]]).',
+The last revision was by [[User:$3|$3]] ([[User talk:$3|talk]] · [[Special:Contributions/$3|contribs]]).',
 	'autoblockid' => 'Autoblock #$1',
 	'anononlyblock' => 'anon. only',
 	'autoblocker' => 'Autoblocked because your IP address has been recently used by "[[User:$1|$1]]".
@@ -6423,9 +6422,8 @@ Spätere Änderungen an dieser Seite und der zugehörigen Diskussionsseite werde
 Wenn Du die Seite wieder von der Beobachtungsliste entfernen möchtest, klicke auf der jeweiligen Seite auf „Nicht beobachten“.',
 	'actioncomplete' => 'Aktion beendet',
 	'actionfailed' => 'Aktion fehlgeschlagen',
-	'alreadyrolled' => 'Das Zurücksetzen der Änderungen von [[User:$2|$2]] ([[User talk:$2|Diskussion]]{{int:pipe-separator}}[[Special:Contributions/$2|{{int:contribslink}}]]) an [[:$1]] ist gescheitert, da in der Zwischenzeit ein anderer Benutzer die Seite geändert hat.
-
-Die letzte Änderung stammt von [[User:$3|$3]] ([[User talk:$3|Diskussion]]{{int:pipe-separator}}[[Special:Contributions/$3|{{int:contribslink}}]]).',
+	'alreadyrolled' => 'Das Zurücksetzen der Änderungen von [[{{ns:user}}:$2|$2]] <span style=\'font-size: smaller\'>([[{{ns:user_talk}}:$2|Diskussion]], [[{{ns:special}}:Contributions/$2|Beiträge]])</span> am Artikel [[:$1]] war nicht erfolgreich, da in der Zwischenzeit bereits ein anderer Benutzer 
+Änderungen an diesem Artikel vorgenommen hat.<br />Die letzte Änderung stammt von [[{{ns:user}}:$3|$3]] <span style=\'font-size: smaller\'>([[{{ns:user_talk}}:$3|Diskussion]])</span>.',
 	'autoblockid' => 'Automatische Sperrung #$1',
 	'anononlyblock' => 'nur Anonyme',
 	'autoblocker' => 'Automatische Sperre, da du eine gemeinsame IP-Adresse mit [[User:$1|$1]] benutzt. Grund der Benutzersperre: „$2“.',
@@ -32012,10 +32010,7 @@ $messages['zh-tw'] = [
 	'alllogstext' => '綜合顯示上傳、刪除、保護、封鎖以及站務日誌。',
 	'activeusers-hidebots' => '隱藏機器人',
 	'addedwatchtext' => '頁面「[[:$1]]」已經被加入到您的[[Special:Watchlist|監視清單]]中。將來有關此頁面及其討論頁的任何修改將會在那裡列出，而且還會在[[Special:RecentChanges|近期變動]]中以\'\'\'粗體\'\'\'形式列出以使起更容易識別。',
-	'alreadyrolled' => '無法復原由[[User:$2|$2]] ([[User talk:$2|討論]])進行的[[$1]]的最後編輯；
-其他人已經編輯或是復原了該頁。
-
-最後編輯者: [[User:$3|$3]] ([[User talk:$3|討論]]{{int:pipe-separator}}[[Special:Contributions/$3|{{int:contribslink}}]])。',
+	'alreadyrolled' => '無法恢復由[[User:$2|$2]] ([[User talk:$2|討論]])進行的[[$1]]的最後編輯；其他人已經編輯或是恢復了該頁。 最後編輯者: [[User:$3|$3]] ([[User talk:$3|討論]])。',
 	'anononlyblock' => '僅限匿名使用者',
 	'allmessages' => '系統介面',
 	'allmessagestext' => '這裡列出所有可定製的系統介面。',
