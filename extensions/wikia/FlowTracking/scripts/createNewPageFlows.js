@@ -2,6 +2,8 @@ define(
 	'wikia.flowTracking.createPage',
 	['wikia.flowTracking', 'wikia.querystring', 'mw', 'wikia.document'],
 	function (flowTrack, QueryString, mw, document) {
+		'use strict';
+
 		var namespaceId = mw.config.get('wgNamespaceNumber'),
 			articleId = mw.config.get('wgArticleId');
 
