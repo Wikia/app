@@ -131,8 +131,7 @@ The last revision was by [[User:$3|$3]] ([[User talk:$3|talk]] · [[Special:Cont
 	'anononlyblock' => 'anon. only',
 	'autoblocker' => 'Autoblocked because your IP address has been recently used by "[[User:$1|$1]]".
 The reason given for $1\'s block is: "$2"',
-	'articleexists' => 'A page of that name already exists, or the name you have chosen is not valid.
-Please choose another name.',
+	'articleexists' => '\'\'\'The page could not be moved:\'\'\' a page of that name already exists, or the name you have chosen is not valid. Please choose another name, or ask an [[Project:Administrators|administrator]] to help you with the move.<br/>Please do not manually move the article by copying and pasting it; the page history must be moved along with the article text.',
 	'allmessages' => 'System messages',
 	'allmessagesname' => 'Name',
 	'allmessagesdefault' => 'Default message text',
@@ -6449,7 +6448,8 @@ Wenn Du die Seite wieder von der Beobachtungsliste entfernen möchtest, klicke a
 	'autoblockid' => 'Automatische Sperrung #$1',
 	'anononlyblock' => 'nur Anonyme',
 	'autoblocker' => 'Automatische Sperre, da du eine gemeinsame IP-Adresse mit [[User:$1|$1]] benutzt. Grund der Benutzersperre: „$2“.',
-	'articleexists' => 'Unter diesem Namen existiert bereits eine Seite. Bitte wähle einen anderen Namen.',
+	'articleexists' => 'Unter diesem Namen existiert bereits eine Seite.
+Bitte wähle einen anderen Titel.',
 	'allmessages' => 'MediaWiki-Systemnachrichten',
 	'allmessagesname' => 'Name',
 	'allmessagesdefault' => 'Standardtext',
@@ -32140,6 +32140,7 @@ $messages['zh'] = [
 	'allowemail' => '允许其他用户给您发送电子邮件',
 	'allpagesfrom' => '显示页面开始自:',
 	'anoneditwarning' => '\'\'\'注意:\'\'\' 你尚未登入本站，你的IP位置會被記錄在本頁的修訂歷史頁中。',
+	'article' => '文章',
 ];
 
 $messages['zh-cn'] = [
