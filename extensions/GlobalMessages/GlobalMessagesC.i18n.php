@@ -31209,6 +31209,7 @@ $messages['zh'] = [
 }}',
 	'cascadeprotectedwarning' => '\'\'\'警告：\'\'\'本頁已經被保護，只有擁有管理員權限的用戶才可修改，因為本頁已被以下連鎖保護的頁面所包含：',
 	'category-media-header' => '類別「$1」中的媒體檔',
+	'changed' => '被改变',
 ];
 
 $messages['zh-classical'] = [
