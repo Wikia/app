@@ -6266,6 +6266,7 @@ Bitte bestätige, dass du diese Seite wirklich neu erstellen möchten.',
 	'choose_reason' => 'Wähle einen Grund',
 	'community' => 'Community',
 	'create-account-new' => 'Benutzerkonto bei Fandom erstellen',
+	'cockpit_hide' => 'Cockpit verstecken',
 ];
 
 $messages['de-formal'] = [
@@ -7445,6 +7446,7 @@ Confirma que realmente quieres volver a crear esta página.',
 	'createpage' => 'Empieza un artículo nuevo',
 	'choose_reason' => 'Elegir la razón',
 	'create-account-new' => 'Crea tu cuenta de Fandom',
+	'cockpit_hide' => 'Ocultar cabina',
 ];
 
 $messages['et'] = [
@@ -8216,6 +8218,7 @@ Varmista, että haluat luoda sivun uudelleen.',
 	'create_an_account' => 'Luo tunnus',
 	'createpage' => 'Aloita uusi artikkeli',
 	'choose_reason' => 'Valitse syy',
+	'cockpit_hide' => 'Piilota ohjaamo',
 ];
 
 $messages['fiu-vro'] = [
@@ -8700,6 +8703,7 @@ Veuillez confirmer que vous désirez réellement recréer cette page.',
 	'createpage' => 'Créer un nouvel article',
 	'choose_reason' => 'Choisissez la raison',
 	'create-account-new' => 'Créer un compte Fandom',
+	'cockpit_hide' => 'Masquer cockpit',
 ];
 
 $messages['frc'] = [
@@ -13252,6 +13256,7 @@ $5
 	'community' => 'コミュニティ',
 	'contris_s' => '投稿記録',
 	'create-account-new' => 'Fandomアカウントを作成',
+	'cockpit_hide' => '非表示',
 ];
 
 $messages['jam'] = [
@@ -20824,6 +20829,7 @@ Du må stadfeste at du verkeleg vil nyopprette denne sida.',
 	'create_an_account' => 'Start bruker',
 	'createpage' => 'Start en ny artikkel',
 	'choose_reason' => 'Velg grunn',
+	'cockpit_hide' => 'Skjul cockpit',
 ];
 
 $messages['nov'] = [
