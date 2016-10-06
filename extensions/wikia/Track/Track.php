@@ -95,10 +95,8 @@ class Track {
 		}
 		$params = array_merge( $params, $extraParams );
 
-		return static::GA_URL . '/collect?' .
-			   implode( '&', array_map( function ( $k, $v ) {
-				   return "{$k}={$v}";
-			   }, array_keys( $params ), $params ) );
+
+		return static::GA_URL . '/collect?' . http_build_query( $params );
 	}
 
 	private static function getGATrackingIds() {
