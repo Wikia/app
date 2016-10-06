@@ -63,21 +63,17 @@ If you\'d like to see My Home, please visit \'\'\'[[Special:Preferences|your Pre
 	'myhome-community-corner-header' => 'Community Messages',
 	'oasis-myhome-community-corner-edit' => 'edit message &gt;',
 	'myhome-community-corner-edit' => 'edit message',
-	'community-corner' => '\'\'\'Welcome to My Home!\'\'\'
+	'community-corner' => '\'\'\'Welcome to Wiki Activity!\'\'\' 
 
-This page helps you stay up to date with what\'s happening on the wiki.
+This page helps you stay up to date with what\'s happening on the wiki. 
 
-If you\'re the founder or an admin on this wiki, you can change this message to talk to the community about important things happening on the site.
-For example, you could:
+
+If you\'re the founder or an admin on this wiki, you can change this message to talk to the community about important things happening on the site. For example, you could:
 
 * Organize a project to build up an area of the wiki
-
 * Show off some new pages that everyone should see
-
 * Get people involved in a discussion that\'s happening on the site
-
 * Give a shout-out to a contributor who\'s added something special to the wiki
-
 * Or just post some words of encouragement!',
 	'myhome-hot-spots-definition' => 'Pages with the most editors in the last {{PLURAL:$1|day|$1 days}}.',
 	'myhome-default-view-checkbox' => 'Make $1 my default view',
@@ -734,20 +730,16 @@ Wenn du deine Startseite sehen möchtest, gehe bitte zu \'\'\'[[Special:Preferen
 	'myhome-community-corner-header' => 'Gemeinschafts-Nachrichten',
 	'oasis-myhome-community-corner-edit' => 'Bearbeiten &gt;',
 	'myhome-community-corner-edit' => 'Bearbeiten',
-	'community-corner' => '\'\'\'Willkommen auf deiner Startseite!\'\'\'
+	'community-corner' => '\'\'\'Willkommen im Community-Bereich!\'\'\'
 
-Diese Seite hilft dir, den Überblick über alle wichtigen Vorgänge im Wiki zu behalten.
+Hier findest du aktuelle Nachrichten, die dir dabei helfen, den Überblick über alle wichtigen Vorgänge im Wiki zu behalten.
 
-Wenn du der Gründer oder ein Admin dieses Wikis bist, kannst du diese Nachricht ändern um der Gemeinschaft wichtige Dinge mitzuteilen. Zum Beispiel:
+Wenn du der Gründer oder ein Admin dieses Wikis bist, kannst du diese Nachricht ändern um der Community wichtige Dinge mitzuteilen. Zum Beispiel: 
 
 * Einige Seiten aufführen, die jeder sehen sollte.
-
-* Benutzer dazu bringen, sich an einer aktiven Diskussion zu beteiligen.
-
 * Ein Projekt organisieren, um einen neuen Bereich im Wiki aufzubauen.
-
 * Einen Benutzer vorstellen, der etwas Spezielles zum Wiki beigetragen hat.
-
+* Auf [[w:c:frag:Kategorie:{{SITENAME}}|Fragen zum Wiki]] verlinken.
 * Oder einfach ein paar Worte zur Motivation!',
 	'myhome-hot-spots-definition' => 'Seiten mit den meisten Bearbeitern {{PLURAL:$1|am letzten Tag|in den letzten $1 Tagen}}.',
 	'myhome-default-view-checkbox' => '$1 zu meiner Standardansicht machen',
@@ -1229,21 +1221,13 @@ Jos haluat nähdä My Homen, käy \'\'\'[[Special:Preferences|asetuksissasi]]\'\
 	'myhome-community-corner-header' => 'Yhteisön viestit',
 	'oasis-myhome-community-corner-edit' => 'muokkaa viestiä &gt;',
 	'myhome-community-corner-edit' => 'muokkaa viestiä',
-	'community-corner' => '\'\'\'Tervetuloa kotisivulle!\'\'\'
+	'community-corner' => '\'\'\'Tervetuloa My Home:en! \'\'\'Tämä sivu auttaa sinua pysymään ajantasalla siitä mitä wikissä tapahtuu. <br />Jos olet perustaja tai ylläpitäjä tässä wikissä, voit vaihtaa tätä viestiä kertoaksesi tärkeitä asioita mitä tapahtuu sivulla. Esimerkiksi, sinä voit:<br />
 
-Tämä sivu auttaa sinua pysymään ajan tasalla wikin tapahtumista.
-
-Jos olet tämän wikin perustaja tai olet ylläpitäjänä tässä wikissä, voit muokata tätä viestiä kertoaksesi yhteisölle tärkeistä asioista tässä wikiaaä. Esimerkiksi, voit:
-
-* Järjestää projektin uuden alueen tekoon.
-
-* Esitellä uusia sivuja jotka jokaisen tulisi nähdä.
-
-* Saada ihmisiä mukaan keskusteluun sivuston tapahtumista.
-
-* Antaa koko yhteisön tietää muokkaajasta, joka on lisännyt wikiin jotain erityistä.
-
-* Tai vain lähettää muutamia rohkaisevia sanoja!',
+*Järjestää projektin tekemään tietyn alueen wikiin
+*Esitellä uusia sivuja jotka jokaisen pitäisi nähdä
+*Saada ihmiset mukaan keskusteluun sivustolla tapahtuvista asioista
+*Antaa kaikkien tietää kirjoittajan joka on lisännyt jotain erityistä wikiin
+*Tai vain lähettää jotain sanoja rohkaisuksi!',
 	'myhome-hot-spots-definition' => 'Sivut, joilla eniten muokkaajia viimeisen {{PLURAL:$1|päivän|$1 päivän}} aikana.',
 	'myhome-default-view-checkbox' => 'Tee sivusta $1 oletusnäkymäni.',
 	'myhome-default-view-success' => 'Ok, tämä on uusi oletusnäkymäsi nyt.',
@@ -1559,21 +1543,17 @@ Amennyiben szeretnéd látni, változtasd meg az alapértelmezett felületedet \
 	'myhome-community-corner-header' => 'Közösségi sarok',
 	'oasis-myhome-community-corner-edit' => 'üzenet szerkesztése &gt;',
 	'myhome-community-corner-edit' => 'üzenet szerkesztése',
-	'community-corner' => '\'\'\'Üdvözlünk a Kezdőlapon!\'\'\'
+	'community-corner' => 'Üdvözöllek a \'\'\'SajátLapom\'\'\'-on! Ez az oldal mindig naprakészen tart a wikin történtekről.
 
-Ez az oldal segít, hogy képben maradj a wiki történéseivel kapcsolatban.
 
-Ha te vagy a wiki alapítója vagy egyik adminisztrátora, megváltoztathatod ezt az üzenetet, hogy értesítsd a közösséget az oldalon történő fontos eseményekről. Például:
 
-* Szervezhetsz projektet a wiki egyik részének fejlesztésére
+Ha az oldal alapítója vagy adminisztrátora vagy, megváltoztathatod ezt a feliratot.
 
-* Bemutathatsz néhány új oldalt, amelyet mindenkinek látnia kell
- 
-* Rábírhatod az embereket egy, a wikin zajló megbeszélésben való részvételre
 
-* Köszönetet mondhatsz egy szerkesztőnek, aki valamilyen különleges dolgot adott a wikinek
-
-* Vagy egyszerűen kiírhatsz néhány bátorító szót!',
+*Új feladatokat adhatsz.
+*Közleményeket tehetsz ki.
+*Vitára hívhatod a szerkesztőket.
+*Vagy csak buzdíthatod is őket!',
 	'myhome-hot-spots-definition' => 'Oldalak a legtöbb szerkesztővel az elmúlt {{PLURAL:$1||$1}} napban.',
 	'myhome-default-view-checkbox' => 'Legyen $1 a saját alapértelmezett nézet',
 	'myhome-default-view-success' => 'Rendben, most már ez az alapértelmezés',
@@ -1877,16 +1857,17 @@ $messages['ja'] = [
 	'myhome-community-corner-header' => 'コミュニティメッセージ',
 	'oasis-myhome-community-corner-edit' => 'メッセージを編集 &gt;',
 	'myhome-community-corner-edit' => 'メッセージを編集',
-	'community-corner' => '\'\'\'My Home にようこそ！\'\'\'
+	'community-corner' => '\'\'\'ウィキアクティビティへようこそ！\'\'\' 
 
-このページは、ウィキで何が起きているのかをわかりやすく示し、あなたがこのウィキに居続ける手助けとするためのものです。
+このページは、このウィキアコミュニティで何が起きているかに関する情報に追いついていくのに役立ちます。
 
-もしあなたがこのウィキの設立者や管理者であるのなら、コミュニティに対してサイトについての重要なことを伝えるために、このメッセージを編集できます。例えば、以下のような使い方ができます:
+もしあなたがこのウィキアの設立者や管理者であるのなら、コミュニティに対してサイトで起きている重要なことを伝えるために、このメッセージを編集できます。例えば、以下のような使い方ができます :
 
 * ウィキのある領域を強化するため、プロジェクトを組織する
 * すべての人に見てほしい新規ページを示す
-* サイトで起こっている議論に参加してくれる人を獲得する
-* その他、参加を促すようなもの',
+* サイトで起こっているディスカッションに参加してくれる人を獲得する
+* このウィキアに特に何かを加筆した投稿者に挨拶する
+* その他、激励の言葉を載せる！',
 	'myhome-hot-spots-definition' => 'ここ$1日間で編集を行ったユーザー数の多いページ',
 	'myhome-default-view-checkbox' => '$1をデフォルトの表示にする',
 	'myhome-default-view-success' => 'このページがデフォルトに設定されました',
@@ -1996,6 +1977,17 @@ $messages['ko'] = [
 	'myhome-default-view-checkbox' => '$1을 기본으로 보기',
 	'myhome-default-view-success' => '설정이 변경되었습니다.',
 	'activityfeed' => '최근 바뀜',
+	'community-corner' => '\'\'\'위키 활동 내역에 오신 것을 환영합니다!\'\'\'
+
+이 페이지에서는 현재 커뮤니티에 무슨 일들이 일어나고 있는지 알 수 있도록 도와줍니다.
+
+이 위키의 관리자는 이곳을 편집해서 다른 사용자들에게 커뮤니티 무슨 일이 일어나고 있는지 알릴 수 있습니다. 다음과 같이 이곳을 활용할 수 있습니다.
+
+* 위키의 성장을 위한 프로젝트 조직.
+* 모든 사람이 봐야 할 문서 나열.
+* 활발한 논의가 이루어지고 있는 토론 문서에 다른 사용자들의 참여 권장.
+* 중요한 기여를 한 사용자 칭찬.
+* 편집에 도움이 될 수 있도록 격려.',
 ];
 
 $messages['ksh'] = [
@@ -2437,9 +2429,9 @@ Als u "Mijn startpagina" wilt bekijken, wijzig in \'\'\'[[Special:Preferences|uw
 	'myhome-community-corner-edit' => 'bericht bewerken',
 	'community-corner' => '\'\'\'Welkom bij Mijn startpagina!\'\'\'
 
-Deze pagina helpt u om op de hoogte te blijven van wat er gebeurt in de wiki.
+Deze pagina helpt je om op de hoogte te blijven van wat er gebeurt in de wiki.
 
-Als u de oprichter of een beheerder van deze wiki bent, kunt u dit bericht gebruiken om gemeenschap informatie te geven over wat er momenteel gebeurt op de site. U kunt bijvoorbeeld:
+Als je de oprichter of een beheerder van deze wiki bent, kan je dit bericht gebruiken om gemeenschap informatie te geven over wat er momenteel gebeurt op de site. Je kunt bijvoorbeeld:
 
 * Een project organiseren om een gebied van de wiki op te bouwen
 
@@ -3255,13 +3247,13 @@ Om du vill se Mitt hem, går du till \'\'\'[[Special:Preferences|dina Inställni
 	'myhome-community-corner-header' => 'Gemenskapsmeddelanden',
 	'oasis-myhome-community-corner-edit' => 'redigera meddelande &gt;',
 	'myhome-community-corner-edit' => 'ändra meddelande',
-	'community-corner' => '\'\'\'Välkommen till Mitt hem!\'\'\'
+	'community-corner' => '\'\'\'Välkommen till My Home!\'\'\'
 
 Den här sidan hjälper dig att hålla dig uppdaterad med vad som händer på wikin.
 
 Om du är grundaren eller en administratör på denna wiki kan du ändra detta budskap att tala med community om viktiga saker som händer på sajten. Till exempel kan du:
 
-* Ordna ett projekt för att bygga upp ett område i wiki
+* Ordna ett projekt för att bygga upp ett område i wiki 
 
 * Visa upp några nya sidor som alla borde se
 
