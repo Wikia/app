@@ -62,19 +62,26 @@ require([
 
 			require([helperString], function (helper) {
 				helper(experiment.options).loadData()
-					.then(function(data) {
+					.done(function(data) {
 						deferred.resolve(data);
+					})
+					.fail(function(err) {
+						deferred.reject(err);
 					});
 			});
 		}
 
 		if (experiment.source && saved[experiment.source]) {
-			saved[experiment.source].then(function(data) {
-				deferred.resolve({
-					title: data.title,
-					items: data.items.slice(experiment.options.offset)
+			saved[experiment.source]
+				.done(function(data) {
+					deferred.resolve({
+						title: data.title,
+						items: data.items.slice(experiment.options.offset)
+					});
+				})
+				.fail(function(err) {
+					deferred.reject(err);
 				});
-			});
 		}
 
 		views[experiment.placement].push(deferred);
@@ -86,7 +93,7 @@ require([
 		log('Initializing View: ' + key, 'info', logGroup);
 		require([viewString], function (viewFactory) {
 			$.when.apply($, value)
-				.then(function () {
+				.done(function () {
 					var view = viewFactory(),
 						args = Array.prototype.slice.call(arguments),
 						data = {
@@ -112,6 +119,9 @@ require([
 
 					view.render(data)
 						.then(view.setupTracking(experimentName));
+				})
+				.fail(function(err) {
+					console.log(err);
 				});
 		});
 	});
