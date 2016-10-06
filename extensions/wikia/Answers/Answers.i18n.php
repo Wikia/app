@@ -1107,6 +1107,7 @@ $messages['it'] = [
 $messages['ja'] = [
 	'research_this' => 'この質問について調べる',
 	'question_asked_by_a_wikia_user' => 'Fandomユーザーからの質問',
+	'a' => 'Answer:',
 ];
 
 $messages['lb'] = [
@@ -1806,6 +1807,7 @@ $messages['pl'] = [
 	'ask_friends_on_twitter' => 'Zapytaj znajomych na <a href="$1" $2>Twitterze</a>',
 	'categorize' => 'Określ kategorię',
 	'categorize_help' => 'Jedna kategoria na linię',
+	'a' => 'Odpowiedź:',
 ];
 
 $messages['pms'] = [
@@ -2179,5 +2181,9 @@ $messages['no'] = [
 
 $messages['zh-hant'] = [
 	'question_asked_by_a_wikia_user' => ' Fandom用戶的提問',
+];
+
+$messages['ko'] = [
+	'a' => '답변:',
 ];
 
