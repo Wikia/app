@@ -300,14 +300,20 @@ var CreatePage = {
 		'use strict';
 		CreatePage.context = context;
 
-		$( '#contribute-button-create-page' ).click(function() {
+		// contribute -> add page
+		$( '.WikiaMenuElement .createpage' ).click(function() {
 			CreatePage.trackCreatePageStart(CreatePage.CREATE_PAGE_CONTRIBUTE_BUTTON);
 			CreatePage.flowName = CreatePage.CREATE_PAGE_CONTRIBUTE_BUTTON;
 		});
 
 		$( function() {
-			$( '#WikiaArticle').find( 'a.new' ).toArray().forEach(function(redlink) {
-				redlink.href = redlink.href + '&flow=' + CreatePage.CREATE_PAGE_REDLINK;
+			require(['wikia.querystring'], function(QueryString) {
+				// redlinks
+				$( '#WikiaArticle').find( 'a.new' ).toArray().forEach(function(redlink) {
+					var qs = QueryString(redlink.href);
+					qs.setVal('flow', CreatePage.CREATE_PAGE_REDLINK)
+					redlink.href = qs.toString();
+				});
 			});
 		});
 
