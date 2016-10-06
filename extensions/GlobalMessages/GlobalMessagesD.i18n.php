@@ -4283,9 +4283,7 @@ Base de datos retornó error «$3: $4».',
 	'download' => 'descargar',
 	'disambiguations' => 'Páginas que enlazan con páginas de desambiguación',
 	'disambiguationspage' => 'Template:Desambiguación',
-	'disambiguations-text' => 'Las siguientes páginas enlazan con una \'\'\'página de desambiguación\'\'\'.
-En lugar de ello deberían enlazar con  el tema apropiado.<br />
-Una página es considerada página de desambiguación si utiliza la plantilla que está enlazada desde [[MediaWiki:Disambiguationspage]].',
+	'disambiguations-text' => 'Las siguientes páginas enlazan a una \'\'\'página de desambiguación\'\'\'. En lugar de ello deberían enlazar con el tema apropiado.<br />Una página es considerada página de desambiguación si utiliza la plantilla que está enlazada desde [[MediaWiki:disambiguationspage]].',
 	'doubleredirects' => 'Redirecciones dobles',
 	'doubleredirectstext' => 'Esta página contiene una lista de páginas que redirigen a otras páginas de redirección.
 Cada fila contiene enlaces a la segunda y tercera redirección, así como la primera línea de la segunda redirección, en la que usualmente se encontrará el artículo «real» al que la primera redirección debería apuntar.
@@ -8959,7 +8957,7 @@ $messages['ko'] = [
 	'destfilename' => '파일의 새 이름:',
 	'duplicatesoffile' => '다음 파일 $1개가 이 파일과 중복됩니다 ([[Special:FileDuplicateSearch/$2|자세한 정보]]):',
 	'download' => '다운로드',
-	'disambiguations' => '동음이의 문서를 가리키는 문서 목록',
+	'disambiguations' => '동음이의어를 가리키는 문서 목록',
 	'disambiguationspage' => 'Template:Disambig',
 	'disambiguations-text' => '다음의 문서들은 \'\'\'동음이의 문서\'\'\'를 가리키고 있습니다.
 그 링크를 다른 적절한 문서로 연결해 주어야 합니다.<br />
@@ -12792,7 +12790,8 @@ Baza danych zgłosiła błąd „$3: $4”',
 	'duplicatesoffile' => '{{PLURAL:$1|Następujący plik jest kopią|Następujące pliki są kopiami}} pliku ([[Special:FileDuplicateSearch/$2|więcej informacji]]):',
 	'download' => 'pobierz',
 	'disambiguations' => 'Strony linkujące do stron ujednoznaczniających',
-	'disambiguationspage' => 'Template:disambig',
+	'disambiguationspage' => '* Template:disambig
+* Template:ujednoznacznienie',
 	'disambiguations-text' => 'Poniższe strony odwołują się do \'\'\'stron ujednoznaczniających\'\'\',
 a powinny odwoływać się bezpośrednio do stron treści.<br />
 Strona uznawana jest za ujednoznaczniającą, jeśli zawiera szablon linkowany przez stronę [[MediaWiki:Disambiguationspage]]',
