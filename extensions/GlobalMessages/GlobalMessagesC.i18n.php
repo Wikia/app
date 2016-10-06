@@ -75,11 +75,9 @@ The reason given by $3 is \'\'$2\'\'',
 	'changepassword' => 'Change password',
 	'columns' => 'Columns:',
 	'copyuploaddisabled' => 'Upload by URL disabled.',
-	'categories' => 'Categories',
+	'categories' => 'Categories list',
 	'categories-summary' => '',
-	'categoriespagetext' => 'The following {{PLURAL:$1|category contains|categories contain}} pages or media.
-[[Special:UnusedCategories|Unused categories]] are not shown here.
-Also see [[Special:WantedCategories|wanted categories]].',
+	'categoriespagetext' => '<div style="margin-top: -10px;" class="emptymwmsg mediawiki_categoriespagetext"></div>',
 	'categoriesfrom' => 'Display categories starting at:',
 	'changed' => 'changed',
 	'created' => 'created',
@@ -13109,7 +13107,7 @@ $3が示した理由は \'\'$2\'\' です。',
 	'changepassword' => 'パスワードの変更',
 	'columns' => '列数：',
 	'copyuploaddisabled' => 'URLからのアップロードは無効になっています。',
-	'categories' => 'カテゴリ',
+	'categories' => 'カテゴリの一覧',
 	'categoriespagetext' => '以下の{{PLURAL:$1|カテゴリ}}にはページまたはメディアが存在します。
 [[Special:UnusedCategories|未使用のカテゴリ]]はここには表示されていません。
 [[Special:WantedCategories|望まれるカテゴリ]]も参照してください。',
