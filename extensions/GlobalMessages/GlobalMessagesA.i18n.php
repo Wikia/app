@@ -117,8 +117,7 @@ It may contain one or more characters which cannot be used in titles.',
 	'activeusers-hidesysops' => 'Hide administrators',
 	'activeusers-noresult' => 'No users found.',
 	'addwatch' => 'Add to watchlist',
-	'addedwatchtext' => 'The page "[[:$1]]" has been added to your [[Special:Watchlist|watchlist]].
-Future changes to this page and its associated talk page will be listed there, and the page will appear \'\'\'bolded\'\'\' in the [[Special:RecentChanges|list of recent changes]] to make it easier to pick out.',
+	'addedwatchtext' => 'The page "[[:$1]]" has been added to your [[Special:Watchlist|watchlist]].',
 	'actioncomplete' => 'Action complete',
 	'actionfailed' => 'Action failed',
 	'alreadyrolled' => 'Cannot rollback last edit of [[:$1]] by [[User:$2|$2]] ([[User talk:$2|talk]]{{int:pipe-separator}}[[Special:Contributions/$2|{{int:contribslink}}]]);
@@ -6420,10 +6419,9 @@ Die Ausgabe kann durch die Auswahl des Logbuchtyps, des Benutzers oder des Seite
 	'activeusers-hidesysops' => 'Administratoren ausblenden',
 	'activeusers-noresult' => 'Keine Benutzer gefunden.',
 	'addwatch' => 'Zur Beobachtungsliste hinzufügen',
-	'addedwatchtext' => 'Die Seite „[[:$1]]“ wurde zu deiner [[Special:Watchlist|Beobachtungsliste]] hinzugefügt.
-
-Spätere Änderungen an dieser Seite und der dazugehörigen Diskussionsseite werden dort gelistet und
-in der Übersicht der [[Special:RecentChanges|letzten Änderungen]] in Fettschrift dargestellt.',
+	'addedwatchtext' => 'Die Seite „$1“ wurde zu Deiner [[{{ns:special}}:Watchlist|Beobachtungsliste]] hinzugefügt. <br />
+Spätere Änderungen an dieser Seite und der zugehörigen Diskussionsseite werden dort gelistet und die Seite wird in der [[{{ns:special}}:Recentchanges|Liste der letzten Änderungen]] in \'\'\'Fettschrift\'\'\' angezeigt. 
+Wenn Du die Seite wieder von der Beobachtungsliste entfernen möchtest, klicke auf der jeweiligen Seite auf „Nicht beobachten“.',
 	'actioncomplete' => 'Aktion beendet',
 	'actionfailed' => 'Aktion fehlgeschlagen',
 	'alreadyrolled' => 'Das Zurücksetzen der Änderungen von [[User:$2|$2]] ([[User talk:$2|Diskussion]]{{int:pipe-separator}}[[Special:Contributions/$2|{{int:contribslink}}]]) an [[:$1]] ist gescheitert, da in der Zwischenzeit ein anderer Benutzer die Seite geändert hat.
@@ -13436,8 +13434,7 @@ IPアドレスは複数の利用者の間で共有されていることがあり
 	'activeusers-hidesysops' => '管理者を隠す',
 	'activeusers-noresult' => '利用者が見つかりませんでした。',
 	'addwatch' => 'ウォッチリストに追加',
-	'addedwatchtext' => 'ページ 「[[:$1]]」を[[Special:Watchlist|ウォッチリスト]]に追加しました。
-このページと付属のトークページに変更があった際には、ウォッチリストに表示されます。また、ウォッチリストに登録されているページは[[Special:RecentChanges|最近の更新の一覧]]に\'\'\'太字\'\'\'で表示され、見つけやすくなります。',
+	'addedwatchtext' => 'ページ 「[[:$1]]」をあなたの[[Special:Watchlist|ウォッチリスト]]に追加しました。このページと付属のノートページに変更があった際には、ウォッチリストに表示されます。また、ウォッチリストに登録されているページは[[Special:RecentChanges|最近の更新の一覧]]に\'\'\'太字\'\'\'で表示され、見つけやすくなります。',
 	'actioncomplete' => '完了しました',
 	'actionfailed' => '操作失敗',
 	'alreadyrolled' => 'ページ[[:$1]]の[[User:$2|$2]]（[[User talk:$2|トーク]]{{int:pipe-separator}}[[Special:Contributions/$2|{{int:contribslink}}]]）による編集を巻き戻せません。
@@ -20643,8 +20640,8 @@ Mogelijk bevatte de naam karakters die niet gebruikt mogen worden in paginanamen
 	'activeusers-hidesysops' => 'Beheerders verbergen',
 	'activeusers-noresult' => 'Geen actieve gebruikers gevonden.',
 	'addwatch' => 'Toevoegen aan volglijst',
-	'addedwatchtext' => 'De pagina "[[:$1]]" is toegevoegd aan uw [[Special:Watchlist|volglijst]].
-Toekomstige bewerkingen van deze pagina en de bijbehorende overlegpagina worden op [[Special:Watchlist|uw volglijst]] vermeld en worden \'\'\'vet\'\'\' weergegeven in de [[Special:RecentChanges|lijst van recente wijzigingen]].',
+	'addedwatchtext' => 'De pagina "[[:$1]]" is toegevoegd aan je [[Special:Watchlist|volglijst]].
+Toekomstige bewerkingen van deze pagina en de bijbehorende overlegpagina worden op [[Special:Watchlist|je volglijst]] vermeld en worden \'\'\'vet\'\'\' weergegeven in de [[Special:RecentChanges|lijst van recente wijzigingen]].',
 	'actioncomplete' => 'Handeling voltooid',
 	'actionfailed' => 'De handeling is mislukt.',
 	'alreadyrolled' => 'Het is niet mogelijk om de bewerking van de pagina [[:$1]] door [[User:$2|$2]] ([[User talk:$2|overleg]]{{int:pipe-separator}}[[Special:Contributions/$2|bijdragen]]) ongedaan te maken.
@@ -27401,8 +27398,7 @@ Du kan avgränsa sökningen och få färre träffar genom att ange typ av logg, 
 	'activeusers-hidesysops' => 'Dölj administratörer',
 	'activeusers-noresult' => 'Inga användare funna.',
 	'addwatch' => 'Lägg till i bevakningslistan',
-	'addedwatchtext' => 'Sidan "[[:$1]]" har lagts till på din [[Special:Watchlist|bevakningslista]].
-Framtida ändringar av den här sidan och dess diskussionssida kommer att listas där, och sidan kommer att markeras med \'\'\'fetstil\'\'\' i [[Special:RecentChanges|listan över de senaste ändringarna]] för att lättare kunna hittas.',
+	'addedwatchtext' => 'Sidan "[[:$1]]" har lagts till i din [[Special:Watchlist|bevakningslista]].',
 	'actioncomplete' => 'Genomfört',
 	'actionfailed' => 'Handlingen misslyckades',
 	'alreadyrolled' => 'Det gick inte att rulla tillbaka den senaste redigeringen av [[User:$2|$2]] ([[User talk:$2|diskussion]]{{int:pipe-separator}}[[Special:Contributions/$2|{{int:contribslink}}]]) på sidan [[:$1|$1]]. Någon annan har redan rullat tillbaka eller redigerat sidan.
