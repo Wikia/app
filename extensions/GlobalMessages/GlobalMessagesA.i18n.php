@@ -246,7 +246,12 @@ Please visit [//www.mediawiki.org/wiki/Localisation MediaWiki Localisation] and 
 *205.188.208.0/23
 *205.188.112.0/20
 *205.188.146.144/30
-*207.200.112.0/21',
+*207.200.112.0/21
+*10.6.0.0/16
+*10.7.0.0/16
+*10.8.0.0/16
+*199.102.47.71
+*199.102.47.72',
 	'api-error-badaccess-groups' => 'You are not permitted to upload files to this wiki.',
 	'api-error-badtoken' => 'Internal error: Bad token.',
 	'api-error-copyuploaddisabled' => 'Uploading by URL is disabled on this server.',
@@ -8805,7 +8810,7 @@ La raison invoquée est :
 
 Vous pouvez contacter $1 ou l’un des autres [[{{MediaWiki:Grouppage-sysop}}|administrateurs]] pour discuter de ce blocage.
 
-Notez que vous ne pourrez utiliser la fonctionnalité d’envoi de courriel que si vous avez une adresse de courriel validée dans vos [[Special:Preferences|préférences]] et que la fonctionnalité n’a pas été désactivée.
+Notez que vous ne pourrez utiliser la fonctionnalité d’envoi d\'e-mail que si vous avez une adresse e-mail validée dans vos [[Special:Preferences|préférences]] et que la fonctionnalité n’a pas été désactivée.
 
 Votre adresse IP actuelle est $3, et le numéro de blocage est $5.
 Veuillez préciser ces indications dans toutes les requêtes que vous ferez.',
@@ -20621,7 +20626,7 @@ Daarom kun je als vanaf jouw IP-adres op dit moment geen nieuwe gebruiker regist
 Je IP-adres wordt opgeslagen als je wijzigingen op deze pagina maakt.',
 	'anonpreviewwarning' => '\'\'Je bent niet aangemeld.\'\'
 \'\'Door je bewerking op te slaan wordt je IP-adres opgeslagen in de paginageschiedenis.\'\'',
-	'autoblockedtext' => 'Uw IP-adres is automatisch geblokkeerd, omdat het is gebruikt door een andere gebruiker, die is geblokkeerd door $1.
+	'autoblockedtext' => 'Je IP-adres is automatisch geblokkeerd, omdat het is gebruikt door een andere gebruiker, die is geblokkeerd door $1.
 De opgegeven reden is:
 
 :\'\'$2\'\'
@@ -20630,12 +20635,12 @@ De opgegeven reden is:
 * Einde blokkade: $6
 * Bedoeld te blokkeren: $7
 
-U kunt deze blokkade bespreken met $1 of een andere [[{{MediaWiki:Grouppage-sysop}}|beheerder]].
+Je kunt deze blokkade bespreken met $1 of een andere [[{{MediaWiki:Grouppage-sysop}}|beheerder]].
 
-U kunt geen gebruik maken van de functie "Deze gebruiker e-mailen", tenzij u een geldig e-mailadres hebt opgegeven in uw [[Special:Preferences|voorkeuren]] en het gebruik van deze functie niet is geblokkeerd.
+Je kunt geen gebruik maken van de functie "Deze gebruiker e-mailen", tenzij je een geldig e-mailadres hebt opgegeven in je [[Special:Preferences|voorkeuren]] en het gebruik van deze functie niet is geblokkeerd.
 
-Uw huidige IP-adres is $3 en het blokkadenummer is #$5.
-Vermeld alle bovenstaande gegevens als u ergens op deze blokkade reageert.',
+Je huidige IP-adres is $3 en het blokkadenummer is #$5.
+Vermeld alle bovenstaande gegevens als je ergens op deze blokkade reageert.',
 	'accmailtitle' => 'Wachtwoord verzonden.',
 	'accmailtext' => 'Een willekeurig wachtwoord voor [[User talk:$1|$1]] is naar $2 gestuurd.
 
@@ -24067,18 +24072,16 @@ $messages['ru'] = [
 	'anoneditwarning' => '\'\'\'Внимание:\'\'\' Вы не представились системе.
 Ваш IP-адрес будет записан в историю изменений этой страницы.',
 	'anonpreviewwarning' => '\'\'Вы не представились системе. Сохранение приведёт к записи вашего IP-адреса в историю изменений страницы.\'\'',
-	'autoblockedtext' => 'Ваш IP-адрес автоматически заблокирован в связи с тем, что он ранее использовался кем-то из участников, заблокированных {{GENDER:$4|участником|участницей}} $1.
+	'autoblockedtext' => 'Ваш IP-адрес автоматически заблокирован в связи с тем, что он ранее использовался кем-то из участников, заблокированных {{GENDER:$4|участником|участницей}} $1. 
 Была указана следующая причина блокировки:
 
 : «$2».
 
 * Начало блокировки: $8
 * Окончание блокировки: $6
-* Цель блокировки: $7
+* Причина блокировки: $7
 
 Вы можете связаться с $1 или любым другим [[{{MediaWiki:Grouppage-sysop}}|администратором]], чтобы обсудить блокировку.
-
-Обратите внимание, что не сможете использовать функцию «письмо участнику», если в своих [[Special:Preferences|персональных настройках]] не задали или не подтвердили корректный адрес электронной почты, или если ваша блокировка включает запрет отправки писем подобным образом.
 
 Ваш IP-адрес — $3, идентификатор блокировки — #$5.
 Пожалуйста, указывайте эти сведения в любых своих обращениях.',
