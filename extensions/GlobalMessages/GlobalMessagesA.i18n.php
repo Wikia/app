@@ -6330,7 +6330,7 @@ $messages['de'] = [
 	'and' => '&#32;und',
 	'actions' => 'Aktionen',
 	'aboutsite' => 'Über {{SITENAME}}',
-	'aboutpage' => 'Project:Über',
+	'aboutpage' => '{{ns:project}}:Über_dieses_Wiki',
 	'actionthrottled' => 'Aktionsanzahl limitiert',
 	'actionthrottledtext' => 'Im Rahmen einer Anti-Spam-Maßnahme kann diese Aktion in einem kurzen Zeitabstand nur begrenzt oft ausgeführt werden. Diese Grenze hast du überschritten.
 Bitte versuche es in ein paar Minuten erneut.',
