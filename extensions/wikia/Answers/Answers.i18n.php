@@ -293,7 +293,7 @@ $messages['de'] = [
 <input name="editintro" value="" type="hidden">
 <input class="createboxInput" name="title" value="" size="50" type="text">
 <input name="create" class="createboxButton" value="Frage eingeben und klicken" type="submit"></form></div>',
-	'auto_friend_request_body' => 'Willst du mich als Freund hinzufügen?',
+	'auto_friend_request_body' => 'Wirst du mich als Freund hinzufügen?',
 	'tog-hidefromattribution' => 'Verstecke meinen Avatar und meinen Namen auf der Namensnennung-Liste',
 	'a' => 'Antwort:',
 	'answering_tips' => '<h3>Tipps fürs Beantworten:</h3> Wenn du eine Frage beantwortest, versuche so genau wie möglich zu sein. Wenn du Informationen von einer anderen Seite als Wikipedia beziehst, gib einen Link an. Vielen Dank für deinen Beitrag zu {{SITENAME}}!',
@@ -2289,6 +2289,7 @@ $messages['no'] = [
 	'ask_friends' => 'Spør vennen din om å besvare:',
 	'ask_friends_on_twitter' => 'Spør venner på <a href="$1" $2>Twitter</a>',
 	'ask_thanks' => 'Takk for det råbra spørsmålet!',
+	'auto_friend_request_body' => 'Vil du legge meg til som venn?',
 ];
 
 $messages['zh-hant'] = [
