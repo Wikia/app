@@ -61,7 +61,7 @@ class FlowTrackingHooks {
 		if ( isset( $queryParams[ 'veaction' ] ) ) {
 			$editor = 'visualeditor';
 		} elseif ( !empty( $requestValues[ 'RTEMode' ] ) ) {
-			$editor = $requestValues[ 'RTEMode' ];
+			$editor = 'rte-' . $requestValues[ 'RTEMode' ];
 		} elseif ( !empty( $requestValues[ 'isMediaWikiEditor' ] ) ) {
 			$editor = 'sourceedit';
 		}
