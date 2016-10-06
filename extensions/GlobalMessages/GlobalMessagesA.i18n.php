@@ -52,7 +52,7 @@ Such an IP address can be shared by several users.
 If you are an anonymous user and feel that irrelevant comments have been directed at you, please [[Special:UserLogin/signup|create an account]] or [[Special:UserLogin|log in]] to avoid future confusion with other anonymous users.\'\'',
 	'addsection-preload' => '',
 	'addsection-editintro' => '',
-	'allowemail' => 'Enable e-mail from other users',
+	'allowemail' => 'Enable email from other users',
 	'action-read' => 'read this page',
 	'action-edit' => 'edit this page',
 	'action-createpage' => 'create pages',
@@ -6396,20 +6396,19 @@ Das Passwort für dieses neue Benutzerkonto kann auf der Spezialseite „[[Speci
 	'action-sendemail' => 'E-Mails zu senden',
 	'ancientpages' => 'Seit längerem unbearbeitete Seiten',
 	'all-logs-page' => 'Alle öffentlichen Logbücher',
-	'alllogstext' => 'Dies ist die kombinierte Anzeige aller in {{SITENAME}} geführten Logbücher.
-Die Ausgabe kann durch die Auswahl des Logbuchtyps, des Benutzers oder des Seitentitels eingeschränkt werden (Groß-/Kleinschreibung muss beachtet werden).',
+	'alllogstext' => 'Diese Spezialseite bietet eine kombinierte Anzeige verschiedener Logbücher. Sie können nach Typ, Benutzernamen und nach betroffener Seite bzw. betroffenem Benutzer gefiltert werden.',
 	'allpages' => 'Alle Seiten',
 	'alphaindexline' => '$1 bis $2',
 	'allpagesfrom' => 'Seiten anzeigen ab:',
 	'allpagesto' => 'Seiten anzeigen bis:',
 	'allarticles' => 'Alle Seiten',
-	'allinnamespace' => 'Alle Seiten (Namensraum: $1)',
-	'allnotinnamespace' => 'Alle Seiten (nicht im $1 Namensraum)',
+	'allinnamespace' => 'Alle Seiten im Namensraum „$1“',
+	'allnotinnamespace' => 'Alle Seiten (nicht im Namensraum „$1“)',
 	'allpagesprev' => 'Vorherige',
 	'allpagesnext' => 'Nächste',
 	'allpagessubmit' => 'Anwenden',
 	'allpagesprefix' => 'Seiten anzeigen mit Präfix:',
-	'allpagesbadtitle' => 'Der eingegebene Seitenname ist ungültig: Er hat entweder ein vorangestelltes Sprach-, ein Interwiki-Kürzel oder enthält ein oder mehrere Zeichen, welche in Seitennamen nicht verwendet werden dürfen.',
+	'allpagesbadtitle' => 'Der angegeben Seitentitel war ungültig oder hatte einen Interlanguage- oder Interwiki-Präfix. Eventuell enthält er auch ein Zeichen, das nicht in einem Seitentitel verwendet werden kann.',
 	'allpages-bad-ns' => 'Der Namensraum „$1“ ist in {{SITENAME}} nicht vorhanden.',
 	'activeusers' => 'Aktive Benutzer',
 	'activeusers-intro' => 'Dies ist eine Liste von Benutzern, die innerhalb {{PLURAL:$1|des letzten Tages|der letzten $1 Tage}} Aktivitäten aufwiesen.',
@@ -6435,8 +6434,7 @@ Die letzte Änderung stammt von [[User:$3|$3]] ([[User talk:$3|Diskussion]]{{int
 	'allmessagesname' => 'Name',
 	'allmessagesdefault' => 'Standardtext',
 	'allmessagescurrent' => 'Aktueller Text',
-	'allmessagestext' => 'Dies ist eine Liste der MediaWiki-Systemtexte.
-Bitte besuche die Seiten [//www.mediawiki.org/wiki/Localisation MediaWiki-Lokalisierung] und [//translatewiki.net translatewiki.net], sofern du dich an der Lokalisierung von MediaWiki beteiligen möchtest.',
+	'allmessagestext' => 'Dies ist eine Liste aller Systemnachrichten im MediaWiki-Namensraum. Diese werden von der MediaWiki-Software verwendet und können nur von Administratoren geändert werden.',
 	'allmessagesnotsupportedDB' => 'Diese Spezialseite steht nicht zur Verfügung, da sie über den Parameter <tt>$wgUseDatabaseMessages</tt> deaktiviert wurde.',
 	'allmessages-filter-legend' => 'Filter',
 	'allmessages-filter' => 'Filter für angepassten Zustand:',
@@ -6498,6 +6496,16 @@ Bitte besuche die Seiten [//www.mediawiki.org/wiki/Localisation MediaWiki-Lokali
 	'addsection' => 'Kommentieren',
 	'admin_skin' => 'Admin-Optionen',
 	'adminskin_ds' => 'Voreinstellung',
+	'allpages-summary' => '{| cellpadding="4px" style="width:100%; background-color:#f9f9f9; border-style:solid; border-color:#e9e9e9; border-width:4px; margin:auto; margin-top:4px; margin-bottom:4px; clear:both; position:relative; color:black;"
+|<div style="float:right">http://images.wikia.com/de/images/4/47/Allpages-summary-de.png</div>
+<span style="font-weight:bold; font-size:140%;">Inhalt von A–Z</span>
+
+Diese automatisch erstellte Spezialseite bietet eine \'\'\'alphabetische Übersicht aller Seiten\'\'\' in diesem Wiki. Aktuell gibt es bereits \'\'\'{{NUMBEROFARTICLES}} Seiten\'\'\', die als „Artikel“ gelten. 
+
+* Mit dem Auswahlfeld lassen sich Seiten in bestimmten [[w:c:hilfe:Hilfe:Namensräume|Namensräumen]] anzeigen.
+* \'\'Kursiv\'\' dargestellte Einträge sind Weiterleitungen auf andere Seitentitel. 
+* Alternativ zu dieser automatisch erstellten Auflistung gibt es noch die [[:Kategorie:Inhalt|\'\'\'Kategorienübersicht\'\'\' als thematisch gegliederten Einstieg]].
+|}',
 ];
 
 $messages['de-ch'] = [
@@ -7554,21 +7562,21 @@ La contraseña para esta nueva cuenta puede cambiarse en [[Special:ChangePasswor
 	'action-sendemail' => 'enviar correos electrónicos',
 	'ancientpages' => 'Artículos más antiguos',
 	'all-logs-page' => 'Todos los registros públicos',
-	'alllogstext' => 'Vista combinada de todos los registros de {{SITENAME}}.
-Puedes filtrar la vista seleccionando un tipo de registro, el nombre del usuario o la página afectada. Se distinguen mayúsculas de minúsculas.',
+	'alllogstext' => 'Vista combinada de todos los registros disponibles de {{SITENAME}}.
+Puedes filtrar la vista seleccionando un tipo de registro, el nombre del usuario o la página afectada.',
 	'allpages' => 'Todas las páginas',
 	'alphaindexline' => '$1 a $2',
 	'allpagesfrom' => 'Mostrar páginas que empiecen por:',
 	'allpagesto' => 'Mostrar páginas terminadas con:',
 	'allarticles' => 'Todos los artículos',
-	'allinnamespace' => 'Todas las páginas (espacio de nombres $1)',
-	'allnotinnamespace' => 'Todas las páginas que no están en el espacio de nombres $1',
+	'allinnamespace' => 'Todas las páginas (espacio de nombre $1)',
+	'allnotinnamespace' => 'Todas las páginas (fuera del espacio de nombre $1)',
 	'allpagesprev' => 'Anterior',
 	'allpagesnext' => 'Siguiente',
 	'allpagessubmit' => 'Mostrar',
 	'allpagesprefix' => 'Mostrar páginas con el prefijo:',
 	'allpagesbadtitle' => 'El título dado era inválido o tenía un prefijo de enlace inter-idioma o inter-wiki. Puede contener uno o más caracteres que no se pueden usar en títulos.',
-	'allpages-bad-ns' => '{{SITENAME}} no tiene un espacio de nombres llamado «$1».',
+	'allpages-bad-ns' => '{{SITENAME}} no tiene el espacio de nombre "$1".',
 	'activeusers' => 'Lista de usuarios activos',
 	'activeusers-intro' => 'Esta es una lista de usuarios que han tenido alguna actividad en los últimos $1 {{PLURAL:$1|día|días}}.',
 	'activeusers-count' => '$1 {{PLURAL:$1|edición|ediciones}} en los últimos {{PLURAL:$3|día|$3 días}}',
@@ -8780,7 +8788,7 @@ Veuillez préciser ces indications dans toutes les requêtes que vous ferez.',
 	'accmailtext' => 'Un mot de passe généré aléatoirement pour [[User talk:$1|$1]] a été envoyé à $2.
 Le mot de passe pour ce nouveau compte peut être changé sur la page \'\'[[Special:ChangePassword|de changement de mot de passe]]\'\' après s’être connecté.',
 	'anontalkpagetext' => '---- \'\'Vous êtes sur la page de discussion d’un utilisateur anonyme qui n’a pas encore créé de compte ou qui n’en utilise pas. Pour cette raison, nous devons utiliser son adresse IP pour l’identifier. Une adresse IP peut être partagée par plusieurs utilisateurs. Si vous êtes un{{GENDER:||e|}} utilisat{{GENDER:|eur|rice|eur}} anonyme et si vous constatez que des commentaires qui ne vous concernent pas vous ont été adressés, vous pouvez [[Special:UserLogin/signup|créer un compte]] ou [[Special:UserLogin|vous connecter]] afin d’éviter toute confusion future avec d’autres contributeurs anonymes.\'\'',
-	'allowemail' => 'Autoriser l’envoi de courriels venant d’autres utilisateurs',
+	'allowemail' => 'Autoriser l’envoi d\'e-mails provenant d’autres utilisateurs',
 	'action-read' => 'lire cette page',
 	'action-edit' => 'modifier cette page',
 	'action-createpage' => 'créer des pages',
@@ -13462,7 +13470,7 @@ $1のブロックの理由は「$2」です。',
 	'articleexists' => '指定された移動先には既にページが存在するか、名前が不適切です。
 別の名前を選択してください。',
 	'allmessages' => 'システムメッセージの一覧',
-	'allmessagesname' => '名前',
+	'allmessagesname' => '名称',
 	'allmessagesdefault' => '既定のメッセージ文',
 	'allmessagescurrent' => '現在のメッセージ文',
 	'allmessagestext' => 'これはMediaWiki名前空間で利用可能なシステムメッセージの一覧です。
@@ -15208,7 +15216,8 @@ $1 사용자가 차단된 이유는 다음과 같습니다: "$2"',
 	'allmessagesname' => '이름',
 	'allmessagesdefault' => '기본 내용',
 	'allmessagescurrent' => '현재 내용',
-	'allmessagestext' => '미디어위키 이름공간에 있는 모든 시스템 메시지의 목록입니다. 미디어위키의 번역 작업에 관심이 있으면 [//www.mediawiki.org/wiki/Localisation 미디어위키 지역화]나 [//translatewiki.net translatewiki.net]에 참가해주세요.',
+	'allmessagestext' => '미디어위키 이름공간에 있는 모든 시스템 메시지의 목록입니다. 미디어위키의 번역 작업에 관심이 있으면 [http://www.mediawiki.org/wiki/Localisation 미디어위키 지역화]나 [http://translatewiki.net translatewiki.net]에 참가해주세요.
+<div class="toc">위키아의 한국어 번역 작업이 진행중입니다. 위키아에서 사용되는 시스템 메시지는 [http://translatewiki.net translatewiki.net]에서 직접 번역하실 수 있습니다. [[w:c:ko|한국어 중앙 커뮤니티]]의 포럼에 있는 번역 커뮤니티에도 참여해주세요.</div>',
 	'allmessagesnotsupportedDB' => '\'\'\'$wgUseDatabaseMessages\'\'\'가 해제되어 있어서 이 문서는 쓸 수 없습니다.',
 	'allmessages-filter-legend' => '필터',
 	'allmessages-filter' => '수정 상태로 거르기:',
@@ -18445,7 +18454,7 @@ $messages['mk'] = [
 	'allpagessubmit' => 'Оди',
 	'allpagesprefix' => 'Прикажи страници со префикс:',
 	'allpagesbadtitle' => 'Дадениот наслов е неважечки или има меѓујазичен или интервики префикс. Може да содржи повеќе знаци кои не смеат да се користат во наслови.',
-	'allpages-bad-ns' => 'Википедија не содржи именски простор „$1“.',
+	'allpages-bad-ns' => 'Викија не содржи именски простор „$1“.',
 	'activeusers' => 'Список на активни корисници',
 	'activeusers-intro' => 'Ова е список на корисници кои биле на некој начин активни во последните $1 {{PLURAL:$1|ден|дена}}.',
 	'activeusers-count' => '$1 {{PLURAL:$1|уредување|уредувања}} {{PLURAL:$3|денес|во последните $3 дена}}',
@@ -20635,7 +20644,7 @@ Als u dat wilt voorkomen, [[Special:UserLogin/signup|registreer u]] of [[Special
 	'ancientpages' => 'Oudste pagina\'s',
 	'all-logs-page' => 'Alle openbare logboeken',
 	'alllogstext' => 'Dit is het gecombineerde logboek van {{SITENAME}}.
-U kunt ook kiezen voor specifieke logboeken en filteren op gebruiker (hoofdlettergevoelig) en paginanaam (hoofdlettergevoelig).',
+Je kunt ook kiezen voor specifieke logboeken en filteren op gebruiker (hoofdlettergevoelig) en paginanaam (hoofdlettergevoelig).',
 	'allpages' => 'Alle pagina\'s',
 	'alphaindexline' => '$1 tot $2',
 	'allpagesfrom' => 'Pagina\'s bekijken vanaf:',
@@ -20676,7 +20685,7 @@ Kies een andere paginanaam.',
 	'allmessagesdefault' => 'Standaardinhoud',
 	'allmessagescurrent' => 'Huidige inhoud',
 	'allmessagestext' => 'Hieronder staan de systeemberichten uit de MediaWiki-naamruimte.
-Ga naar [//www.mediawiki.org/wiki/Localisation MediaWiki-lokalisatie] en [//translatewiki.net translatewiki.net] als u wilt bijdragen aan de algemene vertaling voor MediaWiki.',
+Ga naar [http://www.mediawiki.org/wiki/Localisation MediaWiki-lokalisatie] en [http://translatewiki.net translatewiki.net] als je wilt bijdragen aan de algemene vertaling voor MediaWiki.',
 	'allmessagesnotsupportedDB' => 'Deze pagina kan niet gebruikt worden, omdat \'\'\'$wgUseDatabaseMessages\'\'\' is uitgeschakeld.',
 	'allmessages-filter-legend' => 'Filter',
 	'allmessages-filter' => 'Filteren op aangepast:',
@@ -31947,6 +31956,10 @@ $messages['zh-hk'] = [
 	'addsection' => '留言',
 	'admin_skin' => '管理員功能',
 	'adminskin_ds' => '預設',
+	'allarticles' => '所有頁面',
+	'allnotinnamespace' => '所有頁面 (不包括 $1 名字空間)',
+	'allowemail' => '允許其他用戶寄發電子郵件給您',
+	'allpagesfrom' => '顯示頁面開始自：',
 ];
 
 $messages['zh-min-nan'] = [
@@ -31986,7 +31999,7 @@ $messages['zh-tw'] = [
 
 這個新帳號的密碼可以在登入後的\'\'[[Special:ChangePassword|更改密碼]]\'\'頁面中更改。',
 	'anontalkpagetext' => '---- \'\'這是一個還未建立帳號的匿名使用者的對話頁。我們因此只能用IP地址來與他／她聯絡。該IP地址可能由幾名使用者共享。如果您是一名匿名使用者並認為本頁上的評語與您無關，請[[Special:UserLogin|建立新帳號或登入]]以避免在未來於其他匿名使用者混淆。\'\'',
-	'allowemail' => '接受來自其他使用者的郵件',
+	'allowemail' => '允許其他用戶寄發電子郵件給您',
 	'alllogstext' => '綜合顯示上傳、刪除、保護、封鎖以及站務日誌。',
 	'activeusers-hidebots' => '隱藏機器人',
 	'addedwatchtext' => '頁面「[[:$1]]」已經被加入到您的[[Special:Watchlist|監視清單]]中。將來有關此頁面及其討論頁的任何修改將會在那裡列出，而且還會在[[Special:RecentChanges|近期變動]]中以\'\'\'粗體\'\'\'形式列出以使起更容易識別。',
@@ -32012,6 +32025,9 @@ $messages['zh-tw'] = [
 	'addsection' => '留言',
 	'admin_skin' => '管理員功能',
 	'adminskin_ds' => '預設值',
+	'allarticles' => '所有頁面',
+	'allnotinnamespace' => '所有頁面 (不包括 $1 名字空間)',
+	'allpagesfrom' => '顯示頁面開始自：',
 ];
 
 $messages['zh-yue'] = [
@@ -32070,6 +32086,10 @@ $messages['zh'] = [
 	'addsection' => '留言',
 	'admin_skin' => '管理员功能',
 	'adminskin_ds' => '默认',
+	'allmessagesdefault' => '缺省的翻译',
+	'allnotinnamespace' => '所有页面 (不包括 $1 名字空间)',
+	'allowemail' => '允许其他用户给您发送电子邮件',
+	'allpagesfrom' => '显示页面开始自:',
 ];
 
 $messages['zh-cn'] = [
@@ -32077,6 +32097,12 @@ $messages['zh-cn'] = [
 	'accountcreatedtext' => '已创建账户 $1 。',
 	'add_comment' => '留言',
 	'addsection' => '留言',
+	'allarticles' => '所有页面',
+	'allmessagesdefault' => '缺省的翻译',
+	'allmessagesname' => '名称',
+	'allnotinnamespace' => '所有页面 (不包括 $1 名字空间)',
+	'allowemail' => '允许其他用户给您发送电子邮件',
+	'allpagesfrom' => '显示页面开始自:',
 ];
 
 $messages['zh-sg'] = [
