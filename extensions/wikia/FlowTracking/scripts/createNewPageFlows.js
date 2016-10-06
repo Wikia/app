@@ -17,14 +17,8 @@ define(
 					//TODO: track middle step for other flows
 				} else {
 					flowTrack.beginFlow(flowTrack.flows.CREATE_PAGE_DIRECT_URL, {editor: editor});
-					window.history.replaceState({}, '',
-						window.location.origin +
-						window.location.pathname +
-						window.location.search +
-						(window.location.search === "" ? "?" : "&") +
-						"flow=" + flowTrack.flows.CREATE_PAGE_DIRECT_URL +
-						window.location.hash
-					)
+					qs.setVal('flow', flowTrack.flows.CREATE_PAGE_DIRECT_URL);
+					window.history.replaceState({}, '', qs.toString())
 				}
 			}
 		}
