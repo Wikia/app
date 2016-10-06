@@ -4083,7 +4083,7 @@ $messages['el'] = [
 	'datedefault' => 'Χωρίς προτίμηση',
 	'defaultns' => 'Ειδάλλως αναζήτηση σε αυτές τις περιοχές ονομάτων:',
 	'default' => 'προεπιλογή',
-	'diff' => '\'διαφορά\'',
+	'diff' => 'διαφορά',
 	'destfilename' => 'Όνομα αρχείου προορισμού:',
 	'duplicatesoffile' => '{{PLURAL:$1|Το ακόλουθο αρχείο είναι διπλότυπο|Τα $1 ακόλουθα αρχεία είναι διπλότυπα}} αυτού του αρχείου ([[Special:FileDuplicateSearch/$2|περισσότερες λεπτομέρειες]]):',
 	'download' => 'λήψη',
@@ -4272,7 +4272,7 @@ Base de datos retornó error «$3: $4».',
 	'deletedhist' => 'Historial borrado',
 	'difference' => '(Diferencias entre revisiones)',
 	'difference-multipage' => '(Diferencia entre las páginas)',
-	'diff-multi' => '(No se {{PLURAL:$1|muestra una edición intermedia realizada|muestran $1 ediciones intermedias realizadas}} por {{PLURAL:$2|un usuario|$2 usuarios}})',
+	'diff-multi' => '({{plural:$1|Una edición intermedia no se muestra|$1 ediciones intermedias no se muestran}}.)',
 	'diff-multi-manyusers' => '(No se {{PLURAL:$1|muestra una edición intermedia|muestran $1 ediciones intermedias}} de {{PLURAL:$2|un usuario|$2 usuarios}})',
 	'datedefault' => 'Sin preferencia',
 	'defaultns' => 'Buscar en estos espacios de nombres por defecto:',
@@ -18619,6 +18619,7 @@ MySQL返回錯誤“$3: $4”。',
 
 目標頁面 "[[$1]]"已經存在。你確認需要删除原頁面並以進行移動嗎？',
 	'deletedcontributions' => '被删除的用户貢獻',
+	'diff-multi' => '({{plural:$1|一個中途的修訂版本|$1 個中途的修訂版本}}沒有顯示。)',
 ];
 
 $messages['zh-min-nan'] = [
@@ -18668,6 +18669,7 @@ MySQL返回錯誤“$3: $4”。',
 
 目標頁面 "[[$1]]"已經存在。你確認需要删除原頁面並以進行移動嗎？',
 	'deletedcontributions' => '被删除的用户貢獻',
+	'diff-multi' => '({{plural:$1|一個中途的修訂版本|$1 個中途的修訂版本}}沒有顯示。)',
 ];
 
 $messages['zh-yue'] = [
@@ -18718,6 +18720,7 @@ MySQL返回错误“$3: $4”。',
 
 目标页面 "[[$1]]"已经存在。你确认需要删除原页面并以进行移动吗？',
 	'deletedcontributions' => '被删除的用户贡献',
+	'diff-multi' => '({{plural:$1|一個中途的修訂版本|$1 個中途的修訂版本}}沒有顯示。)',
 ];
 
 $messages['zh-cn'] = [
@@ -18739,6 +18742,7 @@ MySQL返回错误“$3: $4”。',
 
 目标页面 "[[$1]]"已经存在。你确认需要删除原页面并以进行移动吗？',
 	'deletedcontributions' => '被删除的用户贡献',
+	'diff-multi' => '({{plural:$1|一個中途的修訂版本|$1 個中途的修訂版本}}沒有顯示。)',
 ];
 
 $messages['zh-sg'] = [
@@ -18757,5 +18761,6 @@ MySQL返回错误“$3: $4”。',
 
 目标页面 "[[$1]]"已经存在。你确认需要删除原页面并以进行移动吗？',
 	'deletedcontributions' => '被删除的用户贡献',
+	'diff-multi' => '({{plural:$1|一個中途的修訂版本|$1 個中途的修訂版本}}沒有顯示。)',
 ];
 
