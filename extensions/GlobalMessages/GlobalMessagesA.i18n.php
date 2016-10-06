@@ -6338,7 +6338,7 @@ Bitte versuche es in ein paar Minuten erneut.',
 
 Besucher, die diese IP-Adresse verwenden, können momentan keine Benutzerkonten mehr erstellen.',
 	'accountcreated' => 'Benutzerkonto erstellt',
-	'accountcreatedtext' => 'Das Benutzerkonto $1 wurde eingerichtet.',
+	'accountcreatedtext' => 'Das Benutzerkonto $1 wurde erstellt.',
 	'anoneditwarning' => 'Du bearbeitest diese Seite unangemeldet. Wenn du speicherst, wird deine aktuelle IP-Adresse in der Versionsgeschichte aufgezeichnet und ist damit unwiderruflich \'\'\'öffentlich\'\'\' einsehbar.',
 	'anonpreviewwarning' => '\'\'Du bist nicht angemeldet. Beim Speichern wird deine IP-Adresse in der Versionsgeschichte aufgezeichnet.\'\'',
 	'autoblockedtext' => 'Deine IP-Adresse wurde automatisch gesperrt, da sie von einem anderen Benutzer genutzt wurde, der von $1 gesperrt wurde.
@@ -12982,8 +12982,8 @@ $messages['it'] = [
 	'actionthrottledtext' => 'Come misura di sicurezza contro lo spam, l\'esecuzione di alcune azioni è limitata a un numero massimo di volte in un determinato periodo di tempo, limite che in questo caso è stato superato. Si prega di riprovare tra qualche minuto.',
 	'acct_creation_throttle_hit' => 'I visitatori del sito che usano il tuo indirizzo IP hanno creato {{PLURAL:$1|1 account|$1 account}} nell\'ultimo giorno, che è il massimo consentito in questo periodo di tempo.
 Perciò, gli utenti che usano questo indirizzo IP non possono creare altri account per il momento.',
-	'accountcreated' => 'Accesso creato',
-	'accountcreatedtext' => 'È stato creato un accesso per l\'utente $1.',
+	'accountcreated' => 'Account creato',
+	'accountcreatedtext' => 'È stato creato un account per l\'utente $1.',
 	'anoneditwarning' => '\'\'\'Attenzione:\'\'\' Accesso non effettuato. Nella cronologia della pagina verrà registrato l\'indirizzo IP.',
 	'anonpreviewwarning' => '\'\'Non hai eseguito il login. Salvando il tuo indirizzo IP sarà registrato nella cronologia di questa voce.\'\'',
 	'autoblockedtext' => 'Questo indirizzo IP è stato bloccato automaticamente perché condiviso con un altro utente, a sua volta bloccato da $1.
@@ -32018,5 +32018,12 @@ $messages['zu'] = [
 
 $messages['zh'] = [
 	'achievements-leaderboard-navigation-item' => '维基排行榜',
+	'accountcreated' => '账户已创建',
+	'accountcreatedtext' => '已创建账户 $1 。',
+];
+
+$messages['zh-cn'] = [
+	'accountcreated' => '账户已创建',
+	'accountcreatedtext' => '已创建账户 $1 。',
 ];
 
