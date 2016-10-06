@@ -1,7 +1,9 @@
 define(
 	'wikia.flowTracking.createPage',
-	['wikia.flowTracking', 'wikia.querystring', 'mw', 'wikia.document'],
-	function (flowTrack, QueryString, mw, document) {
+	['wikia.flowTracking', 'wikia.querystring', 'mw', 'wikia.document', 'wikia.window'],
+	function (flowTrack, QueryString, mw, document, window) {
+		'use strict';
+
 		var namespaceId = mw.config.get('wgNamespaceNumber'),
 			articleId = mw.config.get('wgArticleId');
 
@@ -18,7 +20,7 @@ define(
 				} else {
 					flowTrack.beginFlow(flowTrack.flows.CREATE_PAGE_DIRECT_URL, {editor: editor});
 					qs.setVal('flow', flowTrack.flows.CREATE_PAGE_DIRECT_URL);
-					window.history.replaceState({}, '', qs.toString())
+					window.history.replaceState({}, '', qs.toString());
 				}
 			}
 		}

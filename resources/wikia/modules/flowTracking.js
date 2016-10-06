@@ -1,4 +1,5 @@
 define('wikia.flowTracking', ['wikia.tracker', 'wikia.window', 'mw', 'jquery'], function (tracker, w, mw, $) {
+	'use strict';
 
 	var flows = {
 			CREATE_PAGE_DIRECT_URL: 'create-page-direct-url'

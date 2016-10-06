@@ -48,7 +48,7 @@ class Track {
 		return $url;
 	}
 
-	private static function getGAURL( $type, $category, $action, $label, $value, $tid, $extraParams = [ ] ) {
+	private static function getGAURL( $type, $category, $action, $label, $value, $tid, array $extraParams = [ ] ) {
 		global $wgTitle, $wgContLanguageCode, $wgDBname, $wgUser, $wgCityId, $wgGAUserIdSalt;
 
 		$skinName = RequestContext::getMain()->getSkin()->getSkinName();
@@ -96,25 +96,22 @@ class Track {
 		}
 		$params = array_merge( $params, $extraParams );
 
-		return static::GA_URL . '/collect?' .
-			   implode( '&', array_map( function ( $k, $v ) {
-				   return "{$k}={$v}";
-			   }, array_keys( $params ), $params ) );
+		return static::GA_URL . '/collect?' . http_build_query( $params );
 	}
 
 	private static function getGATrackingIds() {
-		global $wgDevelEnvironment, $wgIsGASpecialWiki, $wgUser;
+		global $wgDevelEnvironment, $wgStagingEnvironment, $wgIsGASpecialWiki, $wgUser;
 
 		$tids = [ ];
 		// 10% sampling for general account
 		if ( mt_rand( 0, 9 ) === 0 ) {
-			$tids[] = $wgDevelEnvironment ? 'UA-32129070-2' : 'UA-32129070-1';
+			$tids[] = $wgDevelEnvironment || $wgStagingEnvironment ? 'UA-32129070-2' : 'UA-32129070-1';
 		}
 		if ( $wgIsGASpecialWiki ) {
-			$tids[] = $wgDevelEnvironment ? 'UA-32132943-2' : 'UA-32132943-1';
+			$tids[] = $wgDevelEnvironment || $wgStagingEnvironment ? 'UA-32132943-2' : 'UA-32132943-1';
 		}
 		if ( !$wgUser->isAnon() ) {
-			$tids[] = $wgDevelEnvironment ? 'UA-32132943-8' : 'UA-32132943-7';
+			$tids[] = $wgDevelEnvironment || $wgStagingEnvironment ? 'UA-32132943-8' : 'UA-32132943-7';
 		}
 
 		return $tids;
@@ -180,7 +177,7 @@ SCRIPT1;
 		}
 	}
 
-	public static function eventGA( $category, $action, $label, $value = 1, $params = null ) {
+	public static function eventGA( $category, $action, $label, $value = 1, array $params = [ ] ) {
 		if ( !self::shouldTrackEvents() ) {
 			return false;
 		}
@@ -194,6 +191,7 @@ SCRIPT1;
 	private static function sendTracking( $url ) {
 		if ( ExternalHttp::post( $url ) !== false ) {
 			wfProfileOut( __METHOD__ );
+			\Wikia\Logger\WikiaLogger::instance()->info( 'GA tracking sent', [ 'url' => $url ] );
 			return true;
 		} else {
 			wfProfileOut( __METHOD__ );
