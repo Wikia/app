@@ -31194,6 +31194,22 @@ $messages['zh'] = [
 	'cannotundelete' => '恢复失败；可能先前已经被人恢复。',
 	'cantcreateaccounttitle' => '不能创建帐户',
 	'cantrollback' => '无法恢复编辑；最后的参与者是本文的唯一作者。',
+	'cascadeprotected' => '{{#ifexist:{{FULLPAGENAME}}|這個頁面已經被保護，因為這個頁面被以下已標註「連鎖保護」的被保護頁-{面}-包含：|
+<div style="background-color: #eee; border: 1px solid #aa8; margin: 0.5em; padding: 0.5em;" class="plainlinks">\'\'\'本页已经被删除，并被[[wikipedia:頁面保護方針|保护]]以防止重复创建。除非您有正当的理由，请不要新建该条目。\'\'\'
+[[Image:Icono archivo borrar.png|80px|right|]]
+如果您正在搜寻关于这个题目的信息，你可以[http://zh.wikipedia.org/wiki/Special:Search?search={{FULLPAGENAMEE}}&fulltext=Search 搜索“{{FULLPAGENAME}}”]其他条目。
+
+*删除的原因请参见[[Wikipedia:可以快速删除的条目的标准|可以快速删除的条目的标准]]，[[Wikipedia:删除投票/侵权]]，[[Wikipedia:删除投票和请求|删除投票和请求]]。 
+*本页被删除的历史记录可以在\'\'\'[{{fullurl:Special:Log|page={{FULLPAGENAMEE}}}} 它的活动日志]\'\'\'中找到。或者也可以联系保护本页的[[wikipedia:管理员|管理员]]了解详情。
+*如果你是从其他条目的链接中来到本页，你可以帮助维基百科移除这个[[Special:Whatlinkshere/{{FULLPAGENAME}}|错误的链接]]。
+*恢复或者编辑这个条目，请在{{#switch:{{NAMESPACE}}
+|Category|Help|Portal|Template|Image|User|Wikipedia|=[[{{TALKPAGENAME}}|讨论页]]}}或者[[wikipedia:删除检讨|删除检讨]]中提出请求。
+*管理员可以在[[Special:Undelete/{{FULLPAGENAME}}]]查看页面的历史和内容。
+</div>
+
+您可以在以下的頁面找到有關的資訊：
+}}',
+	'cascadeprotectedwarning' => '\'\'\'警告：\'\'\'本頁已經被保護，只有擁有管理員權限的用戶才可修改，因為本頁已被以下連鎖保護的頁面所包含：',
 ];
 
 $messages['zh-classical'] = [
@@ -31203,6 +31219,8 @@ $messages['zh-classical'] = [
 $messages['zh-cn'] = [
 	'copyrightpage' => 'w:Wikia:Licensing|Wikia:Licensing',
 	'cantcreateaccounttitle' => '不能创建帐户',
+	'cascadeprotected' => '{{MediaWiki:Cascadeprotected}}',
+	'cascadeprotectedwarning' => '{{MediaWiki:Cascadeprotectedwarning}}',
 ];
 
 $messages['zh-hans'] = [
@@ -31574,6 +31592,22 @@ $messages['zh-hk'] = [
 	'cannotundelete' => '恢復失敗；可能先前已經被人恢復。',
 	'cantcreateaccounttitle' => '不能創建帳户',
 	'cantrollback' => '無法恢復編輯；最後的參與者是本文的唯一作者。',
+	'cascadeprotected' => '{{#ifexist:{{FULLPAGENAME}}|這個頁面已經被保護，因為這個頁面被以下已標註「連鎖保護」的被保護頁-{面}-包含：|
+<div style="background-color: #eee; border: 1px solid #aa8; margin: 0.5em; padding: 0.5em;" class="plainlinks">\'\'\'本頁已經被删除，并被[[wikipedia:頁面保護方針|保護]]以防止重復創建。除非您有正當的理由，請不要新建該條目。\'\'\'
+[[Image:Icono archivo borrar.png|80px|right|]]
+如果您正在搜尋關于這個題目的信息，你可以[http://zh-hk.wikipedia.org/wiki/Special:Search?search={{FULLPAGENAMEE}}&fulltext=Search 搜索“{{FULLPAGENAME}}”]其他條目。
+
+*删除的原因請參見[[Wikipedia:可以快速删除的條目的標准|可以快速删除的條目的標准]]，[[Wikipedia:删除投票/侵權]]，[[Wikipedia:删除投票和請求|删除投票和請求]]。 
+*本頁被删除的歷史記録可以在\'\'\'[{{fullurl:Special:Log|page={{FULLPAGENAMEE}}}} 它的活動日志]\'\'\'中找到。或者也可以聯系保護本頁的[[wikipedia:管理員|管理員]]了解詳情。
+*如果你是從其他條目的鏈接中來到本頁，你可以幫助維基百科移除這個[[Special:Whatlinkshere/{{FULLPAGENAME}}|錯誤的鏈接]]。
+*恢復或者編輯這個條目，請在{{#switch:{{NAMESPACE}}
+|Category|Help|Portal|Template|Image|User|Wikipedia|=[[{{TALKPAGENAME}}|討論頁]]}}或者[[wikipedia:删除檢討|删除檢討]]中提出請求。
+*管理員可以在[[Special:Undelete/{{FULLPAGENAME}}]]查看頁面的歷史和内容。
+</div>
+
+您可以在以下的頁面找到有關的資訊：
+}}',
+	'cascadeprotectedwarning' => '{{MediaWiki:Cascadeprotectedwarning}}',
 ];
 
 $messages['zh-min-nan'] = [
@@ -31594,6 +31628,8 @@ $messages['zh-my'] = [
 $messages['zh-sg'] = [
 	'copyrightpage' => 'w:Wikia:Licensing|Wikia:Licensing',
 	'cantcreateaccounttitle' => '{{MediaWiki:Cantcreateaccounttitle}}',
+	'cascadeprotected' => '{{MediaWiki:Cascadeprotected}}',
+	'cascadeprotectedwarning' => '{{MediaWiki:Cascadeprotectedwarning}}',
 ];
 
 $messages['zh-tw'] = [
@@ -31607,7 +31643,7 @@ $messages['zh-tw'] = [
 如果該帳號建立錯誤的話，您可以忽略此訊息。',
 	'confirmedittext' => '在編輯此頁之前您必須確認您的電子郵件地址。請透過[[Special:Preferences|參數設定]]設定並驗証您的電子郵件地址。',
 	'clearyourcache' => '\'\'\'注意:\'\'\' 在儲存以後, 您必須清除瀏覽器的快取才能看到所作出的改變。 \'\'\'Mozilla / Firefox / Safari:\'\'\' 按著 \'\'Shift\'\' 再點擊\'\'重新整理\'\'(或按下\'\'Ctrl-Shift-R\'\'，在蘋果Mac上按下\'\'Cmd-Shift-R\'\')；\'\'\'IE:\'\'\' 按著 \'\'Ctrl\'\' 再點擊 \'\'重新整理\'\'，或按下 \'\'Ctrl-F5\'\'；\'\'\'Konqueror:\'\'\' 只需點擊 \'\'重新整理\'\'；\'\'\'Opera:\'\'\' 使用者需要在 \'\'工具-設定\'\' 中完整地清除它們的快取。',
-	'cascadeprotectedwarning' => '警告: 本頁已經被保護，只有擁有管理員權限的使用者才可修改，因為本頁已被以下連鎖保護的{{PLURAL:$1|一個|多個}}頁面所包含:',
+	'cascadeprotectedwarning' => '{{MediaWiki:Cascadeprotectedwarning}}',
 	'cantcreateaccounttitle' => '無法創建帳戶',
 	'cantcreateaccount-text' => '從這個IP地址 (<b>$1</b>) 建立帳號已經被[[User:$3|$3]]禁止。
 
@@ -31637,6 +31673,7 @@ $messages['zh-tw'] = [
 	'createpage' => '開啟新文章',
 	'choose_reason' => '選擇原因',
 	'copyrightpage' => 'w:Wikia:Licensing|Wikia:Licensing',
+	'cascadeprotected' => '{{MediaWiki:Cascadeprotected}}',
 ];
 
 $messages['zh-yue'] = [
