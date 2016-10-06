@@ -17,7 +17,7 @@ $messages['en'] = [
 	'question_asked_by' => 'Question asked by',
 	'question_asked_by_a_wikia_user' => 'Question asked by a Fandom user',
 	'new_question_comment' => 'new question',
-	'answers_toolbox' => 'Wikianswers toolbox',
+	'answers_toolbox' => '{{SITENAME}} toolbox',
 	'improve_this_answer' => 'Improve this answer',
 	'answer_this_question' => 'Answer this question:',
 	'notify_improved' => 'Email me when improved',
@@ -72,20 +72,20 @@ $messages['en'] = [
 	'rephrase_this' => '<a href="$1" $2>Reword the question</a>',
 	'question_not_answered' => 'This question has not been answered',
 	'you_can' => 'You can:',
-	'answer_this' => '<a href="$1">Answer this question</a>, even if you don\'t know the whole answer',
+	'answer_this' => '<a class="huge_button huge_button_green hbg_white" href="$1" style="font-size:200%;"><div></div>Answer this question</a><br /><br /><hr /><br /><br />',
 	'research_this_on_wikipedia' => '<a href="$1">Research this question</a> on Wikipedia',
 	'receive_email' => '<a href="$1" $2>Receive an email</a> when this question is answered',
 	'ask_friends_on_twitter' => 'Ask Friends on <a href="$1" $2>Twitter</a>',
 	'quick_action_panel' => 'Quick Action Panel',
 	'categorize' => 'Categorize',
 	'categorize_help' => 'One category per line',
-	'answers_widget_admin_note' => '<b>Admins:</b> If you\'d like to be an admin on <a href="http://answers.wikia.com" target="_blank">Wikianswers</a>, <a href="http://answers.wikia.com/wiki/Wikianswers:Become_an_admin" target="_blank">click here</a>.',
-	'answers_widget_user_note' => 'Can you help by becoming a <a href="http://answers.wikia.com/wiki/Wikianswers:Sign_up_for_a_category" target="_blank">category editor</a> on <a href="http://answers.wikia.com" target="_blank">Wikianswers</a>?',
-	'answers_widget_anon_note' => '<a href="http://answers.wikia.com" target="_blank">Wikianswers</a> is a Q&amp;A wiki where answers are improved, wiki-style.',
-	'answers-category-count-answered' => 'This category contains $1 answered {{PLURAL:$1|question|questions}}.',
-	'answers-category-count-unanswered' => 'This category contains $1 unanswered {{PLURAL:$1|question|questions}}.',
-	'answers_widget_no_questions' => '<a href="http://answers.wikia.com" target="_blank">Wikianswers</a> is a site where you can ask questions and contribute answers. We\'re aiming to create the best answer to any question. <a href="http://answers.wikia.com/wiki/Special:Search" target="_blank">Find</a> and answer <a href="http://answers.wikia.com/wiki/Category:Un-answered_questions">unanswered</a> questions. It\'s a wiki - so be bold!',
-	'answers_widget_no_questions_askabout' => '<br /><br />Get started by asking a question about "{{PAGENAME}}"',
+	'answers_widget_admin_note' => '{{int:Answers widget user note}}',
+	'answers_widget_user_note' => 'Ask a question on <a href="http://answers.wikia.com/wiki/Wikianswers">Wikianswers</a> or <a href="http://www.wikia.com/Special:CreateAnswers">start your own answers site</a>.',
+	'answers_widget_anon_note' => '{{int:Answers widget user note}}',
+	'answers-category-count-answered' => 'Here are $1 answered questions.',
+	'answers-category-count-unanswered' => 'Here are $1 unanswered questions.',
+	'answers_widget_no_questions' => 'Help us create the best answer to any question!',
+	'answers_widget_no_questions_askabout' => '<!-- -->',
 	'reword_this' => '<a href="$1" $2>Reword this question</a>',
 	'no_related_answered_questions' => 'There are no related questions yet. Get a <a href="http://answers.wikia.com/wiki/Special:Randomincategory/answered_questions">random answered question instead</a>, or ask a new one!<br />
 	<div class="createbox" align="center">
@@ -198,7 +198,7 @@ $messages['br'] = [
 
 $messages['de'] = [
 	'answer_title' => 'Antwort',
-	'answered_by' => 'Beantwortet von',
+	'answered_by' => 'Bearbeitet von',
 	'unregistered' => 'Nicht registriert',
 	'anonymous_edit_points' => '$1 {{PLURAL:$1|Helfer|Helfer}}',
 	'edit_points' => '{{PLURAL:$1|Bearbeitungspunkt|Bearbeitungspunkte}}',
@@ -210,9 +210,9 @@ $messages['de'] = [
 	'question_asked_by' => 'Frage gestellt von',
 	'question_asked_by_a_wikia_user' => 'Frage eines Fandom-Benutzers',
 	'new_question_comment' => 'neue Frage',
-	'answers_toolbox' => 'Wikianswers Toolbox',
+	'answers_toolbox' => 'Wikianswers-Toolbox',
 	'improve_this_answer' => 'Diese Antwort verbessern',
-	'answer_this_question' => 'Diese Frage beantworten:',
+	'answer_this_question' => 'Beantworte diese Frage',
 	'notify_improved' => 'E-Mail bei Verbesserung',
 	'research_this' => 'Das hier recherchieren',
 	'notify_answered' => 'E-Mail bei Antwort',
@@ -264,19 +264,19 @@ $messages['de'] = [
 	'rephrase_this' => '<a href="$1" $2>Die Frage umformulieren</a>',
 	'question_not_answered' => 'Diese Frage wurde nicht beantwortet',
 	'you_can' => 'Du kannst:',
-	'answer_this' => '<a href="$1">Diese Frage beantworten</a>, auch wenn du nicht die ganze Antwort weißt',
+	'answer_this' => '<a href="$1">Beantworte diese Frage</a>, selbst wenn du sie nicht komplett zu beantworten weißt.',
 	'research_this_on_wikipedia' => '<a href="$1">Die Frage recherchieren</a> auf Wikipedia',
 	'receive_email' => '<a href="$1" $2>Eine E-Mail erhalten</a> wenn diese Frage beantwortet wird',
 	'ask_friends_on_twitter' => 'Freunde bei <a href="$1" $2>Twitter</a> fragen',
 	'categorize' => 'Kategorisieren',
 	'categorize_help' => 'Eine Kategorie pro Zeile',
-	'answers_widget_admin_note' => '<b>Administratoren:</b> Wenn du gerne ein Administrator von <a href="http://answers.wikia.com" target="_blank">Wikianswers</a> werden würdest, <a href="http://answers.wikia.com/wiki/Wikianswers:Become_an_admin" target="_blank">klicke hier</a>.',
-	'answers_widget_user_note' => 'Kannst du helfen, indem du ein <a href="http://answers.wikia.com/wiki/Wikianswers:Sign_up_for_a_category" target="_blank">Kategorie-Editor</a> auf <a href="http://answers.wikia.com" target="_blank">Wikianswers</a> wirst?',
-	'answers_widget_anon_note' => '<a href="http://answers.wikia.com" target="_blank">Wikianswers</a> ist ein Q&amp;A-Wiki, wo Antworten nach dem Wiki-Prinzip verbessert werden.',
-	'answers-category-count-answered' => 'Diese Kategorie enthält $1 beantwortete {{PLURAL:$1|Frage|Fragen}}.',
-	'answers-category-count-unanswered' => 'Diese Kategorie enthält $1 unbeantwortete {{PLURAL:$1|Frage|Fragen}}.',
-	'answers_widget_no_questions' => '<a href="http://answers.wikia.com" target="_blank">Wikianswers</a> ist eine Seite, auf der du Fragen stellen und Antworten bearbeiten kannst. Wir zielen darauf ab, die beste Antwort zu jeder Frage zu geben. <a href="http://answers.wikia.com/wiki/Special:Search" target="_blank">Finde</a> und beantworte <a href="http://answers.wikia.com/wiki/Category:Un-answered_questions">unbeantwortete</a> Fragen. Dies ist ein Wiki - also traue dich!',
-	'answers_widget_no_questions_askabout' => '<br /><br />Beginne, indem du eine Frage über "{{PAGENAME}}" stellst',
+	'answers_widget_admin_note' => '{{int:Answers widget user note}}',
+	'answers_widget_user_note' => 'Stelle deine Fragen auf <a href="http://frag.wikia.com/" target="_blank">Wikianswers</a> oder <a href="http://www.wikia.com/Special:CreateAnswers?uselang=de">erstelle deine eigene Frage-Antwort-Seite</a>!',
+	'answers_widget_anon_note' => '{{int:Answers widget user note}}',
+	'answers-category-count-answered' => 'Diese Kategorie enthält $1 beantwortete Fragen.',
+	'answers-category-count-unanswered' => 'Diese Kategorie enthält $1 unbeantwortete Fragen.',
+	'answers_widget_no_questions' => 'Hilf uns dabei, die besten Antworten auf alle Fragen zu finden!',
+	'answers_widget_no_questions_askabout' => '<br><br>Mach mit und stelle eine Frage über "{{PAGENAME}}"',
 	'reword_this' => '<a href="$1" $2>Frage umformulieren</a>',
 	'no_related_answered_questions' => 'Es gibt noch keine ähnliche Fragen. Erhalte stattdessen eine <a href="http://answers.wikia.com/wiki/Special:Randomincategory/answered_questions">zufällig beantwortete Frage</a> oder stelle eine Neue!<br />
 <div class="createbox" align="center">
@@ -289,7 +289,7 @@ $messages['de'] = [
 	'auto_friend_request_body' => 'Willst du mich als Freund hinzufügen?',
 	'tog-hidefromattribution' => 'Verstecke meinen Avatar und meinen Namen auf der Namensnennung-Liste',
 	'a' => 'Antwort:',
-	'answering_tips' => '<h3>Tipps für das Antworten:</h3> Wenn du eine Antwort gibst, versuche so präzise wie möglich zu sein. Wenn du die Informationen aus einer anderen Quelle wie der Wikipedia beziehst, ergänze einen entsprechenden Link im Text. Und vielen Dank für den Beitrag zum {{SITENAME}}!',
+	'answering_tips' => '<h3>Tipps fürs Beantworten:</h3> Wenn du eine Frage beantwortest, versuche so genau wie möglich zu sein. Wenn du Informationen von einer anderen Seite als Wikipedia beziehst, gib einen Link an. Vielen Dank für deinen Beitrag zu {{SITENAME}}!',
 	'plus_x_more_helpers' => '... sowie $1 weitere Helfer',
 	'anwb-step1-headline' => 'Worum geht es in deinem Wiki?',
 	'anwb-choose-logo' => 'Wähle dein Logo',
@@ -313,7 +313,7 @@ $messages['de'] = [
 	'answers-moonlight' => 'Mondschein',
 	'answers-carbon' => 'Karbon',
 	'answers-obsession' => 'Besessenheit',
-	'answers-custom' => 'Benutzerdefiniert',
+	'answers-custom' => 'Angepasst',
 ];
 
 $messages['de-formal'] = [
@@ -337,14 +337,14 @@ $messages['el'] = [
 
 $messages['es'] = [
 	'answer_title' => 'Respuesta',
-	'answered_by' => 'Contestado por',
+	'answered_by' => 'Respondido por',
 	'unregistered' => 'No registrado',
 	'ask_a_question' => 'Haz una pregunta...',
 	'ask_a_question-widget' => 'Haz una pregunta...',
 	'question_asked_by' => 'Pregunta hecha por',
 	'new_question_comment' => 'nueva pregunta',
 	'improve_this_answer' => 'Mejora esta contestación',
-	'answer_this_question' => 'Responde a esta pregunta:',
+	'answer_this_question' => 'Responder esta pregunta',
 	'notify_improved' => 'Envíeme un email cuando la mejore',
 	'research_this' => 'Investigar esto',
 	'notify_answered' => 'Envíame un mail cuando seas contestado',
@@ -352,7 +352,7 @@ $messages['es'] = [
 	'recent_answered_questions' => 'Preguntas recién contestadas',
 	'recent_edited_questions' => 'Preguntas recién editadas',
 	'unanswered_category' => 'Preguntas no contestadas',
-	'answered_category' => 'Preguntas contestadas',
+	'answered_category' => 'Preguntas respondidas',
 	'related_questions' => 'Preguntas relacionadas',
 	'related_answered_questions' => 'Preguntas relacionadas que poseen respuesta',
 	'popular_categories' => 'Categorías populares',
@@ -393,13 +393,13 @@ $messages['es'] = [
 	'quick_action_panel' => 'Panel de Acción Rápida',
 	'categorize' => 'Categorizar',
 	'categorize_help' => 'Una categoría por línea',
-	'answers_widget_admin_note' => '<b>Administradores:</b> Si queréis ser administradores de <a href="http://respuestas.wikia.com" target="_blank">WikiRespuestas</a>, <a href="http://respuestas.wikia.com/wiki/WikiRespuestas:Administradores" target="_blank">haz clic aquí</a>.',
-	'answers_widget_user_note' => '¿Quieres ayudarnos <a href="http://respuestas.wikia.com/wiki/C%C3%B3mo_cambio_la_categor%C3%ADa_de_una_pregunta" target="_blank">categorizando preguntas</a> en <a href="http://respuestas.wikia.com" target="_blank">WikiRespuestas</a>?',
-	'answers_widget_anon_note' => '<a href="http://respuestas.wikia.com" target="_blank">WikiRespuestas</a> es un Q&amp;A wiki donde se pueden mejorar las respuestas a las preguntas, con un estilo wiki.',
-	'answers-category-count-answered' => 'Esta categoría contiene $1 {{PLURAL:$1|pregunta respondida|preguntas respondidas}}.',
-	'answers-category-count-unanswered' => 'Esta categoría contiene $1 {{PLURAL:$1|pregunta sin responder|preguntas sin responder}}.',
-	'answers_widget_no_questions' => '<a href="http://respuestas.wikia.com" target="_blank">WikiRespuestas</a> es un sitio donde puedes hacer preguntas y contribuir dando respuestas. Nuestro objetivo es crear la mejor respuesta para cada pregunta. <a href="http://respuestas.wikia.com/wiki/Special:Search" target="_blank">Busca</a> y responde <a href="http://respuestas.wikia.com/wiki/Category:Un-answered_questions">preguntas sin responder</a>. Es un wiki - ¡se valiente!',
-	'answers_widget_no_questions_askabout' => '<br /><br />Comienza preguntando sobre  "{{PAGENAME}}"',
+	'answers_widget_admin_note' => '{{int:Answers widget user note}}',
+	'answers_widget_user_note' => 'Haz una pregunta en <a href="http://respuestas.wikia.com/">WikiRespuestas</a> o <a href="http://www.wikia.com/Special:CreateAnswers?uselang=es">comienza tu propio sitio de respuestas</a>.',
+	'answers_widget_anon_note' => '{{int:Answers widget user note}}',
+	'answers-category-count-answered' => 'Esta categoría contiene $1 preguntas respondidas.',
+	'answers-category-count-unanswered' => 'Esta categoría contiene $1 pregunta/s sin responder.',
+	'answers_widget_no_questions' => 'Ayúdanos a dar la mejor respuesta a cualquier pregunta.',
+	'answers_widget_no_questions_askabout' => '<!-- -->',
 	'reword_this' => '<a href="$1" $2>Reformula esta pregunta</a>',
 	'auto_friend_request_body' => '¿Me añadirás como amigo?',
 	'tog-hidefromattribution' => 'Ocultar mi avatar y nombre en la lista de atribuciones',
@@ -408,11 +408,19 @@ $messages['es'] = [
 	'anwb-choose-logo' => 'Elija su logo',
 	'question_asked_by_a_wikia_user' => 'Pregunta hecha por un usuario de Fandom',
 	'anonymous_edit_points' => '$1 {{PLURAL:$1|colaboración|colaboraciones}}',
+	'answers-custom' => 'Personalizada',
 ];
 
 $messages['fi'] = [
 	'research_this' => 'Tutki tätä',
 	'ads_by_google' => 'Google mainokset',
+	'answer_this' => '<a href="$1">Vastaa tähän kysymykseen</a>, vaikka et tiedä koko vastausta',
+	'answer_this_question' => 'Vastaa tähän kysymykseen',
+	'answer_title' => 'Vastaus',
+	'answered_by' => 'Vastannut',
+	'answered_category' => 'Vastauksen saaneet kysymykset',
+	'answers-category-count-answered' => 'Tämä luokka sisältää $1 vastattuja kysymyksiä.',
+	'answers-category-count-unanswered' => 'Tämä luokka sisältää $1 vastaamattomia kysymyksiä.',
 ];
 
 $messages['fr'] = [
@@ -979,7 +987,7 @@ $messages['id'] = [
 
 $messages['it'] = [
 	'answer_title' => 'Risposta',
-	'answered_by' => 'Risposta da',
+	'answered_by' => 'Risposta data da',
 	'unregistered' => 'Non registrato',
 	'anonymous_edit_points' => '$1 {{PLURAL:$1|collaboratore|collaboratori}}',
 	'edit_points' => '{{PLURAL:$1|modifica punto|modifica punti}}',
@@ -1053,12 +1061,12 @@ $messages['it'] = [
 	'quick_action_panel' => 'Pannello di azione rapida',
 	'categorize' => 'Categorizza',
 	'categorize_help' => 'Una categoria per riga',
-	'answers_widget_admin_note' => '<b>Amministratori:</b> Se vuoi diventare un\'amministratore su <a href="http://answers.wikia.com" target="_blank">Wikirisposte</a>, <a href="http://answers.wikia.com/wiki/Wikianswers:Become_an_admin" target="_blank">clicca qui</a>.',
-	'answers_widget_user_note' => 'Puoi aiutare diventando un <a href="http://answers.wikia.com/wiki/Wikianswers:Sign_up_for_a_category" target="_blank">editore di categorie</a> su <a href="http://answers.wikia.com" target="_blank">Wikirisposte</a>?',
-	'answers_widget_anon_note' => '<a href="http://answers.wikia.com" target="_blank">Wikirisposte</a> è una D&amp;R wiki dove le risposte sono migliorate, in stile wiki.',
+	'answers_widget_admin_note' => '{{int:Answers widget user note}}',
+	'answers_widget_user_note' => '<a href="http://risposte.wikia.com" target="_blank"><b>WikiRisposte</b></a> è una wiki dove le risposte alle varie domande vengono perfezionate in modo collaborativo.',
+	'answers_widget_anon_note' => '{{int:Answers widget user note}}',
 	'answers-category-count-answered' => 'Questa categoria contiene $1 {{PLURAL:$1|domanda|domande}} risolte.',
 	'answers-category-count-unanswered' => 'Questa categoria contiente $1 {{PLURAL:$1|domanda|domande}} senza risposta.',
-	'answers_widget_no_questions' => '<a href="http://answers.wikia.com" target="_blank">Wikirisposte</a> è un sito dove puoi porre domande e contribuire rispondendo. Il nostro obiettivo è fornire le risposte migliori a qualunque domanda. <a href="http://answers.wikia.com/wiki/Special:Search" target="_blank">Trova</a> e rispondi alle domande <a href="http://answers.wikia.com/wiki/Category:Un-answered_questions">senza risposta</a>. È una wiki - quindi sii audace!',
+	'answers_widget_no_questions' => 'Aiutaci a trovare la migliore risposta ad ogni <a href="http://risposte.wikia.com/wiki/Categoria:Domande_senza_risposta" target="_blank">domanda</a> su <b><a href="http://risposte.wikia.com/wiki/WikiRisposte" target="_blank">WikiRisposte</a>.</b><br><br><a href="http://risposte.wikia.com/wiki/Speciale:Ricerca" target="_blank">Trova</a> le <a href="http://risposte.wikia.com/wiki/Categoria:Domande_senza_risposta" target="_blank">domande irrisolte</a> e scrivi la tua risposta.<br><br>Inizia facendo una domanda su "{{PAGENAME}}".',
 	'answers_widget_no_questions_askabout' => '<br /><br />Inizia chiedendo qualcosa su "{{PAGENAME}}"',
 	'reword_this' => '<a href="$1" $2>Riformula questa domanda</a>',
 	'no_related_answered_questions' => 'Non ci sono ancora domande correlate. Ottieni <a href="http://answers.wikia.com/wiki/Special:Randomincategory/answered_questions">una risposta ad una domanda casuale invece</a>, o chiedi una nuova domanda!<br />
@@ -1111,6 +1119,21 @@ $messages['ja'] = [
 	'question_asked_by_a_wikia_user' => 'Fandomユーザーからの質問',
 	'a' => 'Answer:',
 	'anonymous_edit_points' => '$1 のヘルパー',
+	'answer_this' => '<a href="$1">この質問に回答する</a>。完璧な答えでなくてもかまいません。',
+	'answer_this_question' => 'この質問に回答',
+	'answer_title' => '回答',
+	'answered_by' => '回答したユーザー',
+	'answered_category' => '回答済みの質問',
+	'answering_tips' => '<h3>回答する際には:</h3>
+回答を投稿する際には、できるだけ正確なものにするようにしてください。もし、Wikipediaのような外部のサイトからの情報をもとにするのであれば、そのサイトへのリンクをテキスト中に含めるようにしてください。',
+	'answers-category-count-answered' => 'このカテゴリには $1 の回答済みの質問が属しています。',
+	'answers-category-count-unanswered' => 'このカテゴリには $1 の回答待ちの質問が属しています。',
+	'answers_toolbox' => 'ツールボックス',
+	'answers_widget_admin_note' => '{{int:Answers widget user note}}',
+	'answers_widget_anon_note' => '{{int:Answers widget user note}}',
+	'answers_widget_no_questions' => '<b><a href="http://ja.answers.wikia.com/wiki/" target="_blank">ウィキ・アンサーズ</a></b>の<a href="http://ja.answers.wikia.com/wiki/Category:%e5%9b%9e%e7%ad%94%e5%be%85%e3%81%a1%e3%81%ae%e8%b3%aa%e5%95%8f" target="_blank">質問</a>により良い回答を提供するお手伝いをしてみませんか？<br /><br /><a href="http://ja.answers.wikia.com/wiki/Special:Search" target="_blank">質問を検索</a>し<a href="http://ja.answers.wikia.com/wiki/Category:%e5%9b%9e%e7%ad%94%e5%be%85%e3%81%a1%e3%81%ae%e8%b3%aa%e5%95%8f" target="_blank">回答待ちの質問</a>に回答してみてください。',
+	'answers_widget_no_questions_askabout' => '<div class="emptymwmsg mediawiki_widget-no-questions"></div>',
+	'answers_widget_user_note' => '{{SITENAME}}の訪問者による質問を<a href="http://answers.wikia.com">ウィキ・アンサーズ</a>で探して回答してみましょう。',
 ];
 
 $messages['lb'] = [
@@ -1547,13 +1570,13 @@ $messages['nb'] = [
 	'quick_action_panel' => 'Hurtighandlingspanel',
 	'categorize' => 'Kategorisér',
 	'categorize_help' => 'Én kategori per linje',
-	'answers_widget_admin_note' => '<b>Administratorer:</b> Hvis du ønsker å bli en administrator på <a href="http://answers.wikia.com" target="_blank">WikiSvar</a>, <a href="http://answers.wikia.com/wiki/Wikianswers:Become_an_admin" target="_blank">klikk her</a>.',
-	'answers_widget_user_note' => 'Kan du hjelpe til ved å bli en <a href="http://answers.wikia.com/wiki/Wikianswers:Sign_up_for_a_category" target="_blank">kategoriredaktør</a> på <a href="http://answers.wikia.com" target="_blank">WikiSvar</a>?',
-	'answers_widget_anon_note' => '<a href="http://answers.wikia.com" target="_blank">WikiSvar</a> er en spør-og-svar-wiki hvor svarene forbedres på wiki-vis.',
+	'answers_widget_admin_note' => '<a href="http://svar.wikia.com">WikiSvar</a> trenger flere administratorer. <a href="http://svar.wikia.com/wiki/WikiSvar:Administratorer">Finn ut mer her.</a>',
+	'answers_widget_user_note' => 'Kan du hjelpe til med å bli en <a href="http://svar.wikia.com/wiki/Hvordan_blir_jeg_en_kategoriansvarlig" target="_blank">kategoriansvarlig</a> på <a href="http://svar.wikia.com" target="_blank">WikiSvar</a>?',
+	'answers_widget_anon_note' => '<a href="http://svar.wikia.com" target="_blank">WikiSvar er en spør-og-svar-wiki der alle svar kan forbedres, av hvem som helst.</a>',
 	'answers-category-count-answered' => 'Denne kategorien inneholder $1 besvarte {{PLURAL:$1|spørsmål|spørsmål}}.',
 	'answers-category-count-unanswered' => 'Denne kategorien inneholder $1 ubesvarte {{PLURAL:$1|spørsmål|spørsmål}}.',
-	'answers_widget_no_questions' => '<a href="http://answers.wikia.com" target="_blank">WikiSvar</a> er en side hvor du kan stille spørsmål og bidra med svar. Vi tar sikte på å ha det beste svaret på ethvert spørsmål. <a href="http://answers.wikia.com/wiki/Special:Search" target="_blank">Finn</a> og besvar <a href="http://answers.wikia.com/wiki/Kategori:Ubesvarte_spørsmål">ubesvarte</a> spørsmål. Det er en wiki – så vær modig!',
-	'answers_widget_no_questions_askabout' => '<br /><br />Kom i gang ved å stille spørsmål om «{{PAGENAME}}»',
+	'answers_widget_no_questions' => 'Hjelp oss å skape det beste svaret til hvilket som helst <a href="http://svar.wikia.com/wiki/Kategori:Ubesvarte_spørsmål" target="_blank">spørsmål</a> på <a href="http://svar.wikia.com/" target="_blank">WikiSvar</a>.<br/><br/><a href="http://svar.wikia.com/wiki/Spesial:Søk" target="_blank">Finn</a> og besvar <a href="http://svar.wikia.com/wiki/Kategori:Ubesvarte_spørsmål" target="_blank">ubesvarte spørsmål</a>.',
+	'answers_widget_no_questions_askabout' => '<br /><br />Kom i gang ved å stille spørsmål om "{{PAGENAME}}"',
 	'reword_this' => '<a href="$1" $2>Omformuler dette spørsmålet</a>',
 	'no_related_answered_questions' => 'Det er ingen relaterte spørsmål ennå. Få et <a href="http://answers.wikia.com/wiki/Special:Randomincategory/answered_questions">tilfeldig besvart spørsmål istedenfor</a>, eller still et nytt!<br />
 <div class="createbox" align="center">
@@ -1617,7 +1640,7 @@ $messages['nl'] = [
 	'question_asked_by' => 'Vraag gesteld door',
 	'question_asked_by_a_wikia_user' => 'Vraag gesteld door een Wikia-gebruiker',
 	'new_question_comment' => 'nieuwe vraag',
-	'answers_toolbox' => 'Wikiantwoordenpaneel',
+	'answers_toolbox' => 'Wikianswers toolbox',
 	'improve_this_answer' => 'Dit antwoord verbeteren',
 	'answer_this_question' => 'Deze vraag beantwoorden:',
 	'notify_improved' => 'E-mail mij als een antwoord wordt verbeterd',
@@ -1679,13 +1702,13 @@ $messages['nl'] = [
 	'quick_action_panel' => 'Snelle handelingen',
 	'categorize' => 'Categorie toewijzen',
 	'categorize_help' => 'Eén categorie per regel',
-	'answers_widget_admin_note' => '<b>Beheerders:</b> als u beheerder wilt worden op <a href="http://answers.wikia.com" target="_blank">Wikiantwoorden</a>, <a href="http://answers.wikia.com/wiki/Wikianswers:Become_an_admin" target="_blank">klik hier</a>.',
-	'answers_widget_user_note' => 'Kunt u helpen door een <a href="http://answers.wikia.com/wiki/Wikianswers:Sign_up_for_a_category" target="_blank">categorieredacteur</a> te worden op <a href="http://answers.wikia.com" target="_blank">WikiAntwoorden</a>?',
-	'answers_widget_anon_note' => '<a href="http://answers.wikia.com" target="_blank">WikiAntwoorden</a> is een vraag en antwoordwiki waar antwoorden op wikiwijze worden verbeterd.',
+	'answers_widget_admin_note' => '{{int:Answers widget user note}}',
+	'answers_widget_user_note' => 'Stel een vraag op <a href="http://antwoorden.wikia.com/wiki/Wikiantwoorden">Wikiantwoorden</a> of <a href="http://www.wikia.com/Special:CreateAnswers?uselang=nl">begin je eigen antwoorden site</a>.',
+	'answers_widget_anon_note' => '{{int:Answers widget user note}}',
 	'answers-category-count-answered' => 'Deze categorie bevat $1 beantwoorde {{PLURAL:$1|vraag|vragen}}.',
 	'answers-category-count-unanswered' => 'Deze categorie bevat $1 onbeantwoorde {{PLURAL:$1|vraag|vragen}}.',
-	'answers_widget_no_questions' => '<a href="http://answers.wikia.com" target="_blank">WikiAntwoorden</a> is een site waar u vragen kunt stellen en kunt bijdragen aan antwoorden. We willen graag het beste antwoord op iedere vraag hebben. <a href="http://answers.wikia.com/wiki/Special:Search" target="_blank">Zoek</a> en beantwoord <a href="http://answers.wikia.com/wiki/Category:Un-answered_questions">vragen</a>. Het is een wiki, dus doe het gewoon!',
-	'answers_widget_no_questions_askabout' => '<br /><br />Begin door een vraag te stellen over "{{PAGENAME}}"',
+	'answers_widget_no_questions' => 'Help ons om het beste antwoord te maken voor <a href="http://antwoorden.wikia.com/wiki/Categorie:Onbeantwoorde_vragen" target="_blank">vragen</a> op <b><a href="http://antwoorden.wikia.com/wiki/Wikiantwoorden" target="_blank">Wikiantwoorden</a>.</b><br><br><a href="http://antwoorden.wikia.com/wiki/Special:Search" target="_blank">Vind</a> en beantwoord <a href="http://antwoorden.wikia.com/wiki/Categorie:Onbeantwoorde_vragen" target="_blank">onbeantwoorde vragen</a>.',
+	'answers_widget_no_questions_askabout' => '<br><br>Begin door een vraag te stellen over "{{PAGENAME}}"',
 	'reword_this' => '<a href="$1" $2>Vraag herformuleren</a>',
 	'no_related_answered_questions' => 'Er zijn nog geen gerelateerde vragen. Bekijk in plaats daarvan <a href="http://answers.wikia.com/wiki/Special:Randomincategory/answered_questions">een willekeurige beantwoorde vraag</a> of stel een nieuwe vraag!<br />
 <div class="createbox" align="center">
@@ -1837,11 +1860,35 @@ $messages['ps'] = [
 $messages['pt'] = [
 	'research_this' => 'Investigar isto',
 	'question_asked_by_a_wikia_user' => 'Pergunta feita por um usuário do Fandom',
+	'answer_this' => '<a class="huge_button huge_button_green hbg_white" href="$1" style="font-size:200%;"><div></div>Responder esta pergunta</a><br /><br /><hr /><br /><br />',
+	'answer_this_question' => 'Responder esta pergunta',
+	'answer_title' => 'Resposta',
+	'answered_category' => 'Perguntas respondidas',
+	'answers-category-count-answered' => 'Esta categoria contem $1 pergunta/s respondida/s',
+	'answers-category-count-unanswered' => 'Esta categoria contem $1 pergunta/s sem resposta.',
+	'answers_toolbox' => 'WikiRespostas toolbox',
+	'answers_widget_admin_note' => '<a href="http://respostas.wikia.com" target="_blank">WikiRespostas</a> é uma wiki de Perguntas e Respostas em que todos participam.',
+	'answers_widget_anon_note' => '<a href="http://respostas.wikia.com" target="_blank">WikiRespostas</a> é uma wiki de Perguntas e Respostas em que todos participam.',
+	'answers_widget_no_questions' => 'Nos ajude a criar a melhor resposta para alguma das <a href="http://respostas.wikia.com/wiki/Categoria:Perguntas_sem_respostas" target="_blank">perguntas</a> na <b><a href="http://respostas.wikia.com/wiki/WikiRespostas" target="_blank">WikiRespostas</a>.</b><br><br><a href="http://respostas.wikia.com/wiki/Especial:Busca" target="_blank">Find</a> e responda as  <a href="http://respostas.wikia.com/wiki/Categoria:Perguntas_sem_respostas" target="_blank">perguntas sem respostas</a>.',
+	'answers_widget_no_questions_askabout' => '<br><br>Comece fazendo uma pergunta sobre "{{PAGENAME}}"',
+	'answers_widget_user_note' => '<a href="http://respostas.wikia.com" target="_blank">WikiRespostas</a> é uma wiki de Perguntas e Respostas em que todos participam.',
 ];
 
 $messages['pt-br'] = [
 	'research_this' => 'Pesquisar isto',
 	'question_asked_by_a_wikia_user' => 'Pergunta feita por um usuário da Wikia',
+	'answer_this' => '<a class="huge_button huge_button_green hbg_white" href="$1" style="font-size:200%;"><div></div>Responder esta pergunta</a><br /><br /><hr /><br /><br />',
+	'answer_this_question' => 'Responder esta pergunta',
+	'answer_title' => 'Resposta',
+	'answered_category' => 'Perguntas respondidas',
+	'answers-category-count-answered' => 'Esta categoria contem $1 pergunta/s respondida/s',
+	'answers-category-count-unanswered' => 'Esta categoria contem $1 pergunta/s sem resposta.',
+	'answers_toolbox' => 'WikiRespostas toolbox',
+	'answers_widget_admin_note' => '<a href="http://respostas.wikia.com" target="_blank">WikiRespostas</a> é uma wiki de Perguntas e Respostas em que todos participam.',
+	'answers_widget_anon_note' => '<a href="http://respostas.wikia.com" target="_blank">WikiRespostas</a> é uma wiki de Perguntas e Respostas em que todos participam.',
+	'answers_widget_no_questions' => 'Nos ajude a criar a melhor resposta para alguma das <a href="http://respostas.wikia.com/wiki/Categoria:Perguntas_sem_respostas" target="_blank">perguntas</a> na <b><a href="http://respostas.wikia.com/wiki/WikiRespostas" target="_blank">WikiRespostas</a>.</b><br><br><a href="http://respostas.wikia.com/wiki/Especial:Busca" target="_blank">Find</a> e responda as  <a href="http://respostas.wikia.com/wiki/Categoria:Perguntas_sem_respostas" target="_blank">perguntas sem respostas</a>.',
+	'answers_widget_no_questions_askabout' => '<br><br>Comece fazendo uma pergunta sobre "{{PAGENAME}}"',
+	'answers_widget_user_note' => '<a href="http://respostas.wikia.com" target="_blank">WikiRespostas</a> é uma wiki de Perguntas e Respostas em que todos participam.',
 ];
 
 $messages['roa-tara'] = [
@@ -1989,7 +2036,7 @@ $messages['sr-ec'] = [
 
 $messages['sv'] = [
 	'answer_title' => 'Svar',
-	'answered_by' => 'Besvarad av',
+	'answered_by' => 'Besvaras av',
 	'unregistered' => 'Oregistrerad',
 	'anonymous_edit_points' => '$1 {{PLURAL:$1|hjälpare|hjälpare}}',
 	'edit_points' => '{{PLURAL:$1|redigeringspoäng|redigeringspoäng}}',
@@ -2011,7 +2058,7 @@ $messages['sv'] = [
 	'recent_answered_questions' => 'Nyligen besvarade frågor',
 	'recent_edited_questions' => 'Nyligen redigerade frågor',
 	'unanswered_category' => 'Obesvarade frågor',
-	'answered_category' => 'Besvarade frågor',
+	'answered_category' => 'Answered questions',
 	'related_questions' => 'Relaterade frågor',
 	'related_answered_questions' => 'Relaterade besvarade frågor',
 	'recent_unanswered_questions' => 'Nyligen obesvarade frågor',
@@ -2182,6 +2229,19 @@ $messages['no'] = [
 	'question_asked_by_a_wikia_user' => 'Spørsmål stilt av en Wikia-bruker',
 	'ads_by_google' => 'Ads fra Google',
 	'anonymous_edit_points' => '$1 {{PLURAL:$1|hjelper|hjelpere}}',
+	'answer_this' => 'Svar på dette spørsmålet',
+	'answer_this_question' => '<a href="$1">Svar på dette spørsmålet</a>, selv om du ikke vet hele svaret',
+	'answer_title' => 'Svar',
+	'answered_by' => 'Besvart av',
+	'answered_category' => 'Besvarte spørsmål',
+	'answers-category-count-answered' => 'Denne kategorien inneholder $1 besvarte spørsmål.',
+	'answers-category-count-unanswered' => 'Denne kategorien inneholder $1 ubesvarte spørsmål.',
+	'answers_toolbox' => 'Wikisvar verktøy',
+	'answers_widget_admin_note' => '<a href="http://svar.wikia.com">WikiSvar</a> trenger flere administratorer. <a href="http://svar.wikia.com/wiki/WikiSvar:Administratorer">Finn ut mer her.</a>',
+	'answers_widget_anon_note' => '<a href="http://svar.wikia.com" target="_blank">WikiSvar er en spør-og-svar-wiki der alle svar kan forbedres, av hvem som helst.</a>',
+	'answers_widget_no_questions' => 'Hjelp oss å skape det beste svaret til hvilket som helst <a href="http://svar.wikia.com/wiki/Kategori:Ubesvarte_spørsmål" target="_blank">spørsmål</a> på <a href="http://svar.wikia.com/" target="_blank">WikiSvar</a>.<br/><br/><a href="http://svar.wikia.com/wiki/Spesial:Søk" target="_blank">Finn</a> og besvar <a href="http://svar.wikia.com/wiki/Kategori:Ubesvarte_spørsmål" target="_blank">ubesvarte spørsmål</a>.',
+	'answers_widget_no_questions_askabout' => '<br /><br />Kom i gang ved å stille spørsmål om «{{PAGENAME}}»',
+	'answers_widget_user_note' => 'Kan du hjelpe til med å bli en <a href="http://svar.wikia.com/wiki/Hvordan_blir_jeg_en_kategoriansvarlig" target="_blank">kategoriansvarlig</a> på <a href="http://svar.wikia.com" target="_blank">WikiSvar</a>?',
 ];
 
 $messages['zh-hant'] = [
@@ -2192,9 +2252,37 @@ $messages['ko'] = [
 	'a' => '답변:',
 	'ads_by_google' => 'Google 광고',
 	'anonymous_edit_points' => '$1명의 익명 기여자',
+	'answer_this' => '이 질문에 대한 총체적인 답변을 잘 모르시더라도 <a href="$1">답변을 달아보세요</a>',
+	'answer_this_question' => '이 질문에 답변하기:',
+	'answer_title' => '답변',
+	'answered_category' => '답변이 등록된 질문',
+	'answering_tips' => '<h3>답변 달기 팁:</h3> 답변을 다실 때는 최대한 분명하게 하셔야 합니다. 위키백과와 같은 다른 곳을 출처로 하실 수도 있으며, 이런 경우에는 참조한 곳의 링크를 넣어주시는 것이 좋습니다. {{SITENAME}}에 기여해주셔서 감사합니다!',
+	'answers-category-count-answered' => '이 분류에는 $1개의 답변이 등록된 질문이 있습니다.',
+	'answers-category-count-unanswered' => '이 분류에는 $1개의 답변이 등록되지 않은 질문이 있습니다.',
 ];
 
 $messages['bg'] = [
 	'ads_by_google' => 'Реклами от Google',
+];
+
+$messages['ro'] = [
+	'answered_category' => 'Answered questions',
+];
+
+$messages['zh'] = [
+	'answered_category' => '已回答的問題',
+	'answers_widget_admin_note' => '{{int:Answers widget user note}}',
+	'answers_widget_anon_note' => '{{int:Answers widget user note}}',
+	'answers_widget_no_questions' => '請到<b><a href="http://zh.answers.wikia.com/" target="_blank">Wikia知識</a></b>提供<a href="http://zh.answers.wikia.com/wiki/Category:未回答的問題" target="_blank">問題</a>的最佳答案。<br><br><a href="http://zh.answers.wikia.com/wiki/Special:Search" target="_blank">尋找</a>並回答<a href="http://zhanswers.wikia.com/wiki/Category:未回答的問題" target="_blank">未回答的問題</a>.',
+	'answers_widget_no_questions_askabout' => '<br><br>立即發問一條關於「{{PAGENAME}}」的問題。',
+	'answers_widget_user_note' => '尋找由{{SITENAME}}讀者在<a href="http://zh.answers.wikia.com">{{SITENAME}}</a>上發問的問題！',
+];
+
+$messages['nn'] = [
+	'answers_widget_admin_note' => '<a href="http://svar.wikia.com">WikiSvar</a> treng fleire administratorar. <a href="http://svar.wikia.com/wiki/WikiSvar:Administratorer">Finn ut meir her.</a>',
+	'answers_widget_anon_note' => '<a href="http://svar.wikia.com" target="_blank">WikiSvar er ein spør-og-svar-wiki der alle svar kan forbedras, av kven som helst.</a>',
+	'answers_widget_no_questions' => 'Hjelp oss å skape det beste svaret til hvilket som helst <a href="http://svar.wikia.com/wiki/Kategori:Ubesvarte_spørsmål" target="_blank">spørsmål</a> på <a href="http://svar.wikia.com/" target="_blank">WikiSvar</a>.<br/><br/><a href="http://svar.wikia.com/wiki/Spesial:Søk" target="_blank">Finn</a> og besvar <a href="http://svar.wikia.com/wiki/Kategori:Ubesvarte_spørsmål" target="_blank">ubesvarte spørsmål</a>.',
+	'answers_widget_no_questions_askabout' => '<br /><br />Kom i gang ved å stille spørsmål om "{{PAGENAME}}"',
+	'answers_widget_user_note' => 'Kan du hjelpe med med å bli ein <a href="http://svar.wikia.com/wiki/Hvordan_blir_jeg_en_kategoriansvarlig" target="_blank">kategoriansvarlig</a> på <a href="http://svar.wikia.com" target="_blank">WikiSvar</a>?',
 ];
 
