@@ -47,7 +47,7 @@ class Track {
 		return $url;
 	}
 
-	private static function getGAURL( $type, $category, $action, $label, $value, $tid, $extraParams = [ ] ) {
+	private static function getGAURL( $type, $category, $action, $label, $value, $tid, array $extraParams = [ ] ) {
 		global $wgTitle, $wgContLanguageCode, $wgDBname, $wgUser, $wgCityId, $wgGAUserIdSalt;
 
 		$skinName = RequestContext::getMain()->getSkin()->getSkinName();
@@ -179,7 +179,7 @@ SCRIPT1;
 		}
 	}
 
-	public static function eventGA( $category, $action, $label, $value = 1, $params = null ) {
+	public static function eventGA( $category, $action, $label, $value = 1, array $params = [ ] ) {
 		if ( !self::shouldTrackEvents() ) {
 			return false;
 		}
