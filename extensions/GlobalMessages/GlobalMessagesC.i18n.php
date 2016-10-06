@@ -31541,6 +31541,8 @@ Send a new code by clicking [[Special:ConfirmEmail|here]].',
 	'createwikipagetitle' => '申请wiki',
 	'created' => '已被创建',
 	'creditspage' => '页面作者',
+	'currentevents-url' => 'Portal:新聞動態',
+	'currentrevisionlink' => '查看当前版本',
 ];
 
 $messages['zh-classical'] = [
@@ -31581,6 +31583,8 @@ Send a new code by clicking [[Special:ConfirmEmail|here]].',
 	'createwikipagetitle' => '申请wiki',
 	'created' => '已被创建',
 	'creditspage' => '页面作者',
+	'currentevents-url' => 'Portal:新聞動態',
+	'currentrevisionlink' => '查看当前版本',
 ];
 
 $messages['zh-hans'] = [
@@ -32010,6 +32014,8 @@ Send a new code by clicking [[Special:ConfirmEmail|here]].',
 	'createwikipagetitle' => '申請wiki',
 	'created' => '已被創建',
 	'creditspage' => '頁面作者',
+	'currentevents-url' => 'Portal:新聞動態',
+	'currentrevisionlink' => '查看當前版本',
 ];
 
 $messages['zh-min-nan'] = [
@@ -32059,6 +32065,8 @@ Send a new code by clicking [[Special:ConfirmEmail|here]].',
 	'createwikipagetitle' => '申请wiki',
 	'created' => '已被创建',
 	'creditspage' => '页面作者',
+	'currentevents-url' => 'Portal:新聞動態',
+	'currentrevisionlink' => '查看当前版本',
 ];
 
 $messages['zh-tw'] = [
@@ -32122,6 +32130,8 @@ Send a new code by clicking [[Special:ConfirmEmail|here]].',
 	'createwikipagetitle' => '申請wiki',
 	'created' => '已被創建',
 	'creditspage' => '頁面作者',
+	'currentevents-url' => 'Portal:新聞動態',
+	'currentrevisionlink' => '查看當前版本',
 ];
 
 $messages['zh-yue'] = [
