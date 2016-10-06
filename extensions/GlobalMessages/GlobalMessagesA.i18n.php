@@ -6334,9 +6334,7 @@ $messages['de'] = [
 	'actionthrottled' => 'Aktionsanzahl limitiert',
 	'actionthrottledtext' => 'Im Rahmen einer Anti-Spam-Maßnahme kann diese Aktion in einem kurzen Zeitabstand nur begrenzt oft ausgeführt werden. Diese Grenze hast du überschritten.
 Bitte versuche es in ein paar Minuten erneut.',
-	'acct_creation_throttle_hit' => 'Besucher dieses Wikis, die deine IP-Adresse verwenden, haben innerhalb des letzten Tages {{PLURAL:$1|1 Benutzerkonto|$1 Benutzerkonten}} erstellt, was die maximal erlaubte Anzahl in dieser Zeitperiode ist.
-
-Besucher, die diese IP-Adresse verwenden, können momentan keine Benutzerkonten mehr erstellen.',
+	'acct_creation_throttle_hit' => 'Du hast schon $1 Benutzerkonten angelegt und kannst vorerst keine weiteren mehr anlegen.',
 	'accountcreated' => 'Benutzerkonto erstellt',
 	'accountcreatedtext' => 'Das Benutzerkonto $1 wurde erstellt.',
 	'anoneditwarning' => 'Du bearbeitest diese Seite unangemeldet. Wenn du speicherst, wird deine aktuelle IP-Adresse in der Versionsgeschichte aufgezeichnet und ist damit unwiderruflich \'\'\'öffentlich\'\'\' einsehbar.',
@@ -7490,8 +7488,7 @@ $messages['es'] = [
 	'aboutpage' => 'Project:Acerca de',
 	'actionthrottled' => 'Acción bloqueada',
 	'actionthrottledtext' => 'Como medida contra el \'\'spam\'\', la acción que estás realizando está limitada a un número determinado de veces en un periodo corto de tiempo, y has excedido ese límite. Por favor inténtalo de nuevo en unos minutos.',
-	'acct_creation_throttle_hit' => 'Los visitantes a este wiki usando tu dirección IP han creado {{PLURAL:$1|una cuenta|$1 cuentas}} en el último día, lo cual es lo máximo permitido en este periodo de tiempo.
-Como resultado, los visitantes usando esta dirección IP no pueden crear más cuentas en este momento.',
+	'acct_creation_throttle_hit' => '{{PLURAL:$1|Un visitante|Los visitantes}} de este wiki, usando tu dirección IP, {{PLURAL:$1|ha creado una cuenta|han creado $1 cuentas}} en el último día, lo cual es lo máximo permitido en este periodo de tiempo. Como resultado, los visitantes usando esta dirección IP no pueden crear más cuentas en este momento',
 	'accountcreated' => 'Cuenta creada',
 	'accountcreatedtext' => 'La cuenta de usuario para $1 ha sido creada.',
 	'anoneditwarning' => '\'\'\'Aviso:\'\'\' No has iniciado sesión con una cuenta de usuario.
@@ -20546,8 +20543,8 @@ $messages['nl'] = [
 	'actionthrottledtext' => 'Als maatregel tegen spam is het aantal keren per tijdseenheid dat u deze handeling kunt verrichten beperkt.
 De limiet is overschreden.
 Probeer het over een aantal minuten opnieuw.',
-	'acct_creation_throttle_hit' => 'Bezoekers van deze wiki met hetzelfde IP-adres als u hebben de afgelopen dag {{PLURAL:$1|al 1 gebruiker|al $1 gebruikers}} geregistreerd, wat het maximale aantal in deze periode is.
-Daarom kunt u als vanaf uw IP-adres op dit moment geen nieuwe gebruiker registreren.',
+	'acct_creation_throttle_hit' => 'Bezoekers van deze wiki met hetzelfde IP-adres als jij hebben de afgelopen dag {{PLURAL:$1|al 1 gebruiker|al $1 gebruikers}} geregistreerd, wat het maximale aantal in deze periode is.
+Daarom kun je als vanaf jouw IP-adres op dit moment geen nieuwe gebruiker registreren.',
 	'accountcreated' => 'Gebruiker aangemaakt',
 	'accountcreatedtext' => 'De gebruiker $1 is aangemaakt.',
 	'anoneditwarning' => '\'\'\'Waarschuwing:\'\'\' u bent niet aangemeld.
