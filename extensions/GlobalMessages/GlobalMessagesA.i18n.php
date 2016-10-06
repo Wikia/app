@@ -6497,6 +6497,7 @@ Bitte besuche die Seiten [//www.mediawiki.org/wiki/Localisation MediaWiki-Lokali
 	'add_comment' => 'Kommentieren',
 	'addsection' => 'Kommentieren',
 	'admin_skin' => 'Admin-Optionen',
+	'adminskin_ds' => 'Voreinstellung',
 ];
 
 $messages['de-ch'] = [
@@ -7654,6 +7655,7 @@ Por favor visita [//www.mediawiki.org/wiki/Localisation Localización MediaWiki]
 	'add_comment' => 'Dejar un mensaje',
 	'addsection' => 'Dejar un mensaje',
 	'admin_skin' => 'Opciones de administración',
+	'adminskin_ds' => 'Predeterminada',
 ];
 
 $messages['et'] = [
@@ -8264,6 +8266,7 @@ $messages['fa'] = [
 	'all_the_wikia' => 'کل ویکیا',
 	'add_comment' => 'شروع بحث جدید',
 	'admin_skin' => 'اختیارات مدیر',
+	'adminskin_ds' => 'پیش‌فرض',
 ];
 
 $messages['ff'] = [
@@ -8448,6 +8451,7 @@ Jos haluat muokata MediaWikin yleistä kotoistusta, käy [//www.mediawiki.org/wi
 	'add_comment' => 'Jätä viesti',
 	'addsection' => 'Lisää kommentti',
 	'admin_skin' => 'Ylläpitäjän vaihtoehdot',
+	'adminskin_ds' => 'Oletus',
 ];
 
 $messages['fiu-vro'] = [
@@ -8917,6 +8921,7 @@ Veuillez visiter la [//www.mediawiki.org/wiki/Localisation Localisation de Media
 	'add_comment' => 'Laisser un message',
 	'addsection' => 'Laisser un message',
 	'admin_skin' => 'Options administrateurs',
+	'adminskin_ds' => 'Par défaut',
 ];
 
 $messages['frc'] = [
@@ -13520,6 +13525,7 @@ $1のブロックの理由は「$2」です。',
 	'achievements-leaderboard-navigation-item' => 'アチーブメントランキング',
 	'addsection' => 'メッセージを追加する',
 	'admin_skin' => '管理者向け設定',
+	'adminskin_ds' => '初期設定',
 ];
 
 $messages['jam'] = [
@@ -21093,6 +21099,7 @@ Vitja [//www.mediawiki.org/wiki/Localisation MediaWiki Localisation] og [//trans
 	'all_the_wikia' => 'Hele wikia',
 	'add_comment' => 'Legg igjen beskjed',
 	'admin_skin' => 'Administratoralternativer',
+	'adminskin_ds' => 'Standard',
 ];
 
 $messages['nov'] = [
@@ -22139,6 +22146,7 @@ Odwiedź [//www.mediawiki.org/wiki/Localisation Tłumaczenie MediaWiki] oraz [//
 	'all_the_wikia' => 'Cały Fandom',
 	'achievements-leaderboard-navigation-item' => 'Ranking wiki',
 	'addsection' => 'Dodaj wiadomość',
+	'adminskin_ds' => 'Domyślna',
 ];
 
 $messages['pms'] = [
@@ -24172,6 +24180,7 @@ $messages['ru'] = [
 	'achievements-leaderboard-navigation-item' => 'Доска лидеров вики',
 	'add_comment' => 'Оставить сообщение',
 	'admin_skin' => 'настройки администратора',
+	'adminskin_ds' => 'по-умолчанию',
 ];
 
 $messages['rue'] = [
@@ -30349,6 +30358,7 @@ Mời vào [//www.mediawiki.org/wiki/Localisation Địa phương hóa MediaWiki
 	'api-error-verification-error' => 'Tập tin này có thể bị hỏng hoặc có phần mở rộng sai.',
 	'addnewtalksection-link' => 'Bắt đầu một đề mục mới',
 	'admin_skin' => 'Tùy chọn bảo quản viên',
+	'adminskin_ds' => 'Mặc định',
 ];
 
 $messages['vls'] = [
@@ -31742,6 +31752,7 @@ $1被封禁的理由是：“$2”',
 	'add_comment' => '留言',
 	'addsection' => '留言',
 	'admin_skin' => '管理员功能',
+	'adminskin_ds' => '默认',
 ];
 
 $messages['zh-hant'] = [
@@ -31922,6 +31933,7 @@ $1被封禁的理由是“$2”',
 	'add_comment' => '留言',
 	'addsection' => '留言',
 	'admin_skin' => '管理員功能',
+	'adminskin_ds' => '預設',
 ];
 
 $messages['zh-hk'] = [
@@ -31934,6 +31946,7 @@ $messages['zh-hk'] = [
 	'add_comment' => '留言',
 	'addsection' => '留言',
 	'admin_skin' => '管理員功能',
+	'adminskin_ds' => '預設',
 ];
 
 $messages['zh-min-nan'] = [
@@ -31998,6 +32011,7 @@ $messages['zh-tw'] = [
 	'add_comment' => '留言',
 	'addsection' => '留言',
 	'admin_skin' => '管理員功能',
+	'adminskin_ds' => '預設值',
 ];
 
 $messages['zh-yue'] = [
@@ -32055,6 +32069,7 @@ $messages['zh'] = [
 	'add_comment' => '留言',
 	'addsection' => '留言',
 	'admin_skin' => '管理员功能',
+	'adminskin_ds' => '默认',
 ];
 
 $messages['zh-cn'] = [
