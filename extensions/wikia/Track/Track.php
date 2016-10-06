@@ -193,6 +193,7 @@ SCRIPT1;
 	private static function sendTracking( $url ) {
 		if ( ExternalHttp::post( $url ) !== false ) {
 			wfProfileOut( __METHOD__ );
+			\Wikia\Logger\WikiaLogger::instance()->info( 'GA tracking sent', [ 'url' => $url ] );
 			return true;
 		} else {
 			wfProfileOut( __METHOD__ );
