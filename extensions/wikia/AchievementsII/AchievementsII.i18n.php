@@ -1,4 +1,5 @@
 <?php
+/** Internationalization file for /extensions/wikia/AchievementsII/AchievementsII extension. */
 $messages = [];
 
 $messages['en'] = [
@@ -40,8 +41,8 @@ Please try another one!',
 	'achievements-points' => '$1 {{PLURAL:$1|point|points}}',
 	'achievements-points-with-break' => '$1<br />{{PLURAL:$1|point|points}}',
 	'achievements-earned' => 'This badge has been earned by {{PLURAL:$1|1 user|$1 users}}.',
-	'achievements-profile-title' => "$1's $2 earned {{PLURAL:$2|badge|badges}}",
-	'achievements-profile-title-no' => "$1's badges",
+	'achievements-profile-title' => '$1\'s $2 earned {{PLURAL:$2|badge|badges}}',
+	'achievements-profile-title-no' => '$1\'s badges',
 	'achievements-profile-title-challenges' => 'More badges you can earn!',
 	'achievements-profile-customize' => 'Customize badges',
 	'achievements-ranked' => 'Ranked #$1 on this wiki',
@@ -57,9 +58,9 @@ Please try another one!',
 	'leaderboard-intro-hide' => 'hide',
 	'leaderboard-intro-open' => 'open',
 	'leaderboard-intro-headline' => 'What are Achievements?',
-	'leaderboard-intro' => "You can earn badges on this wiki by editing pages, uploading photos and leaving comments. Each badge earns you points - the more points you get, the higher up the leaderboard you go! You'll find the badges you've earned on your [[$1|user profile page]].
+	'leaderboard-intro' => 'You can earn badges on this wiki by editing pages, uploading photos and leaving comments. Each badge earns you points - the more points you get, the higher up the leaderboard you go! You\'ll find the badges you\'ve earned on your [[$1|user profile page]].
 
-	'''What are badges worth?'''",
+	\'\'\'What are badges worth?\'\'\'',
 	'leaderboard' => 'Achievements leaderboard',
 	'achievements-title' => 'Achievements',
 	'leaderboard-title' => 'Leaderboard',
@@ -120,14 +121,14 @@ Try it out!',
 	'achievements-create-edit-plus-category' => 'Create this track',
 	'platinum' => 'Platinum',
 	'achievements-community-platinum-awarded-email-subject' => 'You have been awarded a new Platinum badge!',
-	'achievements-community-platinum-awarded-email-body-text' => "Congratulations $1!
+	'achievements-community-platinum-awarded-email-body-text' => 'Congratulations $1!
 
-You have just been awarded with the '$2' Platinum badge on $4 ($3).
+You have just been awarded with the \'$2\' Platinum badge on $4 ($3).
 This adds 250 points to your score!
 
 Check out your fancy new badge on your user profile page:
 
-$5",
+$5',
 	'achievements-community-platinum-awarded-email-body-html' => '<strong>Congratulations $1!</strong><br /><br />
 You have just been awarded with the \'<strong>$2</strong>\' Platinum badge on <a href="$3">$4</a>.
 This adds 250 points to your score!<br /><br />
@@ -264,10 +265,10 @@ on $1 different {{PLURAL:$1|blog post|blog posts}}!',
 	'achievements-badge-hover-desc-welcome' => 'Awarded for joining the wiki!',
 	'achievements-badge-hover-desc-introduction' => 'Awarded for adding to<br />
 your own user page!',
-	'achievements-badge-hover-desc-sayhi' => "Awarded for leaving a message<br />
-on someone else's talk page!",
+	'achievements-badge-hover-desc-sayhi' => 'Awarded for leaving a message<br />
+on someone else\'s talk page!',
 	'achievements-badge-hover-desc-creator' => 'Awarded for creating the wiki!',
-	'achievements-badge-hover-desc-pounce' => "Awarded for making an edit within an hour of a page's creation, one hundred times!",
+	'achievements-badge-hover-desc-pounce' => 'Awarded for making an edit within an hour of a page\'s creation, one hundred times!',
 	'achievements-badge-hover-desc-caffeinated' => 'Awarded for making 100 edits on articles in a single day!',
 	'achievements-badge-hover-desc-luckyedit' => 'Awarded for making the Lucky $1th Edit on the wiki!',
 	'achievements-badge-hover-desc-community-platinum' => 'This is a special Platinum badge that is only available for a limited time!',
@@ -281,9 +282,9 @@ on someone else's talk page!",
 	'achievements-badge-your-desc-love' => 'Awarded for contributing to the wiki every day for {{PLURAL:$1|one day|$1 days}}!',
 	'achievements-badge-your-desc-welcome' => 'Awarded for joining the wiki!',
 	'achievements-badge-your-desc-introduction' => 'Awarded for adding to your own user page!',
-	'achievements-badge-your-desc-sayhi' => "Awarded for leaving a message on someone else's talk page!",
+	'achievements-badge-your-desc-sayhi' => 'Awarded for leaving a message on someone else\'s talk page!',
 	'achievements-badge-your-desc-creator' => 'Awarded for creating the wiki!',
-	'achievements-badge-your-desc-pounce' => "Awarded for making edits on 100 articles within an hour of the page's creation!",
+	'achievements-badge-your-desc-pounce' => 'Awarded for making edits on 100 articles within an hour of the page\'s creation!',
 	'achievements-badge-your-desc-caffeinated' => 'Awarded for making 100 edits on pages in a single day!',
 	'achievements-badge-your-desc-luckyedit' => 'Awarded for making the Lucky $1th edit on the wiki!',
 	'achievements-badge-desc-sharing' => 'Awarded {{#ifeq:$1|0|for sharing one link|for getting {{PLURAL:$1|one person|$1 people}} to click on shared links}}',
@@ -296,32 +297,19 @@ on someone else's talk page!",
 	'achievements-badge-desc-love' => 'Awarded for contributing to the wiki every day for {{PLURAL:$1|a day|$1 days}}!',
 	'achievements-badge-desc-welcome' => 'Awarded for joining the wiki!',
 	'achievements-badge-desc-introduction' => 'Awarded for adding to your own user page!',
-	'achievements-badge-desc-sayhi' => "Awarded for leaving a message on someone else's talk page!",
+	'achievements-badge-desc-sayhi' => 'Awarded for leaving a message on someone else\'s talk page!',
 	'achievements-badge-desc-creator' => 'Awarded for creating the wiki!',
-	'achievements-badge-desc-pounce' => "Awarded for making edits on 100 pages within an hour of the page's creation!",
+	'achievements-badge-desc-pounce' => 'Awarded for making edits on 100 pages within an hour of the page\'s creation!',
 	'achievements-badge-desc-caffeinated' => 'Awarded for making 100 edits on pages in a single day!',
 	'achievements-badge-desc-luckyedit' => 'Awarded for making the Lucky $1th edit on the wiki!',
-	'achievements-userprofile-title-no' => "$1's Earned Badges",
-	'achievements-userprofile-title' => "$1's Earned {{PLURAL:$2|Badge|Badges}} ($2)",
+	'achievements-userprofile-title-no' => '$1\'s Earned Badges',
+	'achievements-userprofile-title' => '$1\'s Earned {{PLURAL:$2|Badge|Badges}} ($2)',
 	'achievements-userprofile-no-badges-owner' => 'Check out the list below to see the badges that you can earn on this wiki!',
-	'achievements-userprofile-no-badges-visitor' => "This user hasn't earned any badge yet.",
+	'achievements-userprofile-no-badges-visitor' => 'This user hasn\'t earned any badge yet.',
 	'achievements-userprofile-profile-score' => '<em>$1</em> Achievement<br />points',
 	'achievements-userprofile-ranked' => '[[Special:Leaderboard|Ranked #$1]]<br />on this wiki',
 ];
 
-/** Message documentation (Message documentation)
- * @author Ajdar
- * @author Aldnonymous
- * @author Avatar
- * @author Claudia Hattitten
- * @author EugeneZelenko
- * @author LWChris
- * @author McDutchie
- * @author Nike
- * @author Rancher
- * @author Siebrand
- * @author TK-999
- */
 $messages['qqq'] = [
 	'achievementsii-desc' => '{{desc}}',
 	'achievements-upload-error' => 'Гафу итегез!
@@ -386,11 +374,11 @@ All messages for the triggers: {{msg-mw|achievements-badge-your-desc-blogcomment
 	'achievements-ranked' => 'Parameter:
 * $1 is the rank number of a user on a wiki with regards to achievement points.',
 	'achievements-viewless' => '{{Identical|Close}}',
-	'achievements-ranked-oasis' => "Parameters:
+	'achievements-ranked-oasis' => 'Parameters:
 * $1 is a user name
-* $2 is the user's position on the leaderboard
+* $2 is the user\'s position on the leaderboard
 Example:
-* John is Ranked #3 on this wiki",
+* John is Ranked #3 on this wiki',
 	'leaderboard-intro-hide' => '{{Identical|Hide}}',
 	'leaderboard-intro-open' => '{{Identical|Open}}',
 	'achievements-recent-earned-badges' => '{{doc-important|Capitalization has been requested by Product Management of Wikia. Please do not change it in English.}}',
@@ -519,15 +507,12 @@ $4 is any of:
 * $1 is number of pages added to categories',
 	'achievements-badge-desc-luckyedit' => 'Parameters:
 * $1 is the so manieth edit that was made to the wiki',
-	'achievements-userprofile-title' => "*$1 is the user's name
-*$2 is the number of badges the user has earned",
+	'achievements-userprofile-title' => '*$1 is the user\'s name
+*$2 is the number of badges the user has earned',
 	'achievements-userprofile-ranked' => '*$1 is the ranking of the user.',
 	'action-platinum' => '{{doc-action|platinum}}',
 ];
 
-/** Afrikaans (Afrikaans)
- * @author Naudefj
- */
 $messages['af'] = [
 	'achievements-platinum' => 'Platinum',
 	'achievements-gold' => 'Goud',
@@ -547,13 +532,6 @@ $messages['af'] = [
 	'achievements-badge-name-picture-7' => 'Kurator',
 ];
 
-/** Arabic (العربية)
- * @author Achraf94
- * @author Ali1
- * @author AwamerT
- * @author Houcinee1
- * @author OsamaK
- */
 $messages['ar'] = [
 	'achievementsii-desc' => 'نظام الشارات الإنجاز لمستخدمي ويكي',
 	'achievements-upload-error' => 'آسف! N! تلك الصورة لا يعمل! N! تأكد أنه هو ملف. jpg أو بابوا نيو غينيا.! N! إذا كان لا يزال لا يعمل ، ثم أن الصورة قد تكون كبيرة جدا.! N! الرجاء المحاولة واحد آخر!',
@@ -607,9 +585,6 @@ $messages['ar'] = [
 	'achievements-community-platinum-cancel' => 'ألغِ',
 ];
 
-/** Assamese (অসমীয়া)
- * @author Jaminianurag
- */
 $messages['as'] = [
 	'achievements-upload-error' => 'দুঃখিত!
 এই ছবিখন কাৰ্য্যক্ষম নহয় |
@@ -619,11 +594,6 @@ $messages['as'] = [
 	'achievements-non-existing-category' => 'উল্লেখিত শ্রেনীটোৰ  কোনো অস্তিত্ব নাই।',
 ];
 
-/** Azerbaijani (azərbaycanca)
- * @author Cekli829
- * @author Ebrahimi-amir
- * @author Vago
- */
 $messages['az'] = [
 	'achievementsii-desc' => 'Wiki istifadəçilər üçün bir nailiyyət döş nişanları sistemi',
 	'achievements-upload-error' => 'Bağışlayın!
@@ -696,9 +666,6 @@ Başqa bir cəhd edin!',
 	'achievements-badge-to-get-luckyedit' => 'bəxtiyar ol',
 ];
 
-/** Bashkir (Башҡортса)
- * @author Sagan
- */
 $messages['ba'] = [
 	'achievementsii-desc' => 'Вики-сайт ҡулланыусыларының ҡаҙаныштары систамаһы',
 	'achievements-upload-error' => 'Ғафү итегеҙ!
@@ -709,17 +676,10 @@ $messages['ba'] = [
 	'achievements-non-existing-category' => 'Был категория юҡ.',
 ];
 
-/** Belarusian (беларуская)
- * @author Тест
- */
 $messages['be'] = [
 	'achievements-viewless' => 'Закрыць',
 ];
 
-/** Belarusian (Taraškievica orthography) (‪Беларуская (тарашкевіца)‬)
- * @author EugeneZelenko
- * @author Jim-by
- */
 $messages['be-tarask'] = [
 	'achievementsii-desc' => 'Сыстэма дасягненьняў для вікі-карыстальнікаў',
 	'achievements-upload-error' => 'Прабачце!
@@ -771,9 +731,9 @@ $messages['be-tarask'] = [
 	'leaderboard-intro-hide' => 'схаваць',
 	'leaderboard-intro-open' => 'адкрыць',
 	'leaderboard-intro-headline' => 'Якія дасягненьні?',
-	'leaderboard-intro' => "Вы можаце атрымаць ўзнагароды ў {{GRAMMAR:месны|{{SITENAME}}}} за рэдагаваньне старонак, загрузку фатаграфіяў і за камэнтары. Кожная ўзнагарода, якую Вы атрымаеце, дадае ачкі да Вашага агульнага ліку! Вы можаце знайсьці Вашыя атрыманыя ўзнагароды на [[$1|старонцы профілю]].
+	'leaderboard-intro' => 'Вы можаце атрымаць ўзнагароды ў {{GRAMMAR:месны|{{SITENAME}}}} за рэдагаваньне старонак, загрузку фатаграфіяў і за камэнтары. Кожная ўзнагарода, якую Вы атрымаеце, дадае ачкі да Вашага агульнага ліку! Вы можаце знайсьці Вашыя атрыманыя ўзнагароды на [[$1|старонцы профілю]].
 
-'''Што такое ўзнагароды?'''",
+\'\'\'Што такое ўзнагароды?\'\'\'',
 	'leaderboard' => 'Дошка гонару',
 	'achievements-title' => 'Дасягненьні',
 	'leaderboard-title' => 'Дошка гонару',
@@ -816,14 +776,14 @@ $messages['be-tarask'] = [
 	'achievements-create-edit-plus-category' => 'Стварыць шлях',
 	'platinum' => 'Плятына',
 	'achievements-community-platinum-awarded-email-subject' => 'Вы атрымалі новую плятынавую ўзнагароду!',
-	'achievements-community-platinum-awarded-email-body-text' => "Віншуем, $1!
+	'achievements-community-platinum-awarded-email-body-text' => 'Віншуем, $1!
 
-Вас толькі што узнагародзілі '$2' плятынавай узнагародай на $4 ($3).
+Вас толькі што узнагародзілі \'$2\' плятынавай узнагародай на $4 ($3).
 Да Вашага рахунку дадаецца 250 пунктаў!
 
 Вы можаце ўбачыць Вашую новую ўзнагароду ў Вашым профілі:
 
-$5",
+$5',
 	'achievements-community-platinum-awarded-email-body-html' => '<strong>Віншуем, $1!</strong><br /><br />
 Вы былі ўзнагароджаны плятынавай узнагародай \'<strong>$2</strong>\' на <a href="$3">$4</a>.
 Да Вашага рахунку дадаецца 250 ачкоў!<br /><br />
@@ -900,9 +860,6 @@ $5",
 	'achievements-badge-desc-pounce' => 'за рэдагаваньне 100 старонак на працягу гадзіны пасьля стварэньня старонкі!',
 ];
 
-/** Bulgarian (български)
- * @author DCLXVI
- */
 $messages['bg'] = [
 	'achievements-non-existing-category' => 'Посочената категория не съществува.',
 	'achievements-platinum' => 'Платина',
@@ -958,35 +915,26 @@ $messages['bg'] = [
 	'achievements-userprofile-no-badges-owner' => 'Вижте списъка по-долу, за да видите всички значки, които можете да спечелите в това уики!',
 ];
 
-/** Bengali (বাংলা)
- * @author RIPENDIL
- */
 $messages['bn'] = [
 	'achievements-non-existing-category' => 'উল্লেখিত শ্রেনীটির কোন অস্তিত্ব নেই।',
 ];
 
-/** Breton (brezhoneg)
- * @author Fohanno
- * @author Fulup
- * @author Gwenn-Ael
- * @author Y-M D
- */
 $messages['br'] = [
 	'achievementsii-desc' => 'Ur sistem badjoù evit implijerien ar wiki',
-	'achievements-upload-error' => "Digarezit !
-Ar skeudenn-mañ ne 'z a ket en-dro.
+	'achievements-upload-error' => 'Digarezit !
+Ar skeudenn-mañ ne \'z a ket en-dro.
 Bezit sur ez eo ur restr .jpg pe .png
-Ma ne 'z a ket en-dro c'hoazh ez eo marteze peogwir eo re bounner ar skeudenn.
-Mar plij klaskit gant unan all !",
+Ma ne \'z a ket en-dro c\'hoazh ez eo marteze peogwir eo re bounner ar skeudenn.
+Mar plij klaskit gant unan all !',
 	'achievements-upload-not-allowed' => 'Gellout a ra ar verourien kemm anvioù ha skeudennoù badjoù an tournamantoù en ur vont war pajenn [[Special:AchievementsCustomize|personelaat an tournamantoù]].',
-	'achievements-non-existing-category' => "N'eus ket eus ar rummad meneget.",
+	'achievements-non-existing-category' => 'N\'eus ket eus ar rummad meneget.',
 	'achievements-edit-plus-category-track-exists' => 'Ar rummad meneget he deus dija un <a href="#" onclick="$(window).scrollTo(\'#section$1\', 2500); return false;" title="Mont d\'an tournamant">tournamant kevelet</a>.',
 	'achievements-no-stub-category' => 'Mar plij na grouit ket a dournamant evit an divrazoù.',
 	'right-platinum' => 'Krouiñ ha kemmañ badjoù Platinum',
 	'right-sponsored-achievements' => 'Merañ ar sevenidigezhioù paeroniet',
 	'achievements-platinum' => 'Platin',
 	'achievements-gold' => 'Aour',
-	'achievements-silver' => "Arc'hant",
+	'achievements-silver' => 'Arc\'hant',
 	'achievements-bronze' => 'Arem',
 	'achievements-gold-points' => '100<br />poent',
 	'achievements-silver-points' => '50<br />poent',
@@ -995,7 +943,7 @@ Mar plij klaskit gant unan all !",
 	'leaderboard-button' => 'Taolenn an tournamantoù',
 	'achievements-masthead-points' => '$1 <small>poent{{PLURAL:$1||}}</small>',
 	'achievements-profile-title-no' => 'Badjoù $1',
-	'achievements-no-badges' => "Taolit ur sell d'ar roll amañ a-is evit gwelet ar badjoù a c'hellit gounid war ar wiki-mañ !",
+	'achievements-no-badges' => 'Taolit ur sell d\'ar roll amañ a-is evit gwelet ar badjoù a c\'hellit gounid war ar wiki-mañ !',
 	'achievements-track-name-edit' => 'Tournamantoù embann',
 	'achievements-track-name-picture' => 'Tournamant skeudennaouiñ',
 	'achievements-track-name-category' => 'Tournamant rummadoù',
@@ -1003,14 +951,14 @@ Mar plij klaskit gant unan all !",
 	'achievements-track-name-blogcomment' => 'Tournamant evezhiadennoù diwar-benn ur blog',
 	'achievements-track-name-love' => 'Tournamant "Karantez evit ar Wiki"',
 	'achievements-track-name-sharing' => 'Heuliañ ar rannañ',
-	'achievements-notification-title' => "War an hent mat emaoc'h, $1 !",
+	'achievements-notification-title' => 'War an hent mat emaoc\'h, $1 !',
 	'achievements-notification-subtitle' => 'Emoc\'h o paouez gounit ar badj "$1" $2',
-	'achievements-notification-link' => "<strong><big>[[Special:MyPage|Sellit ouzh muioc'h a badjoù a c'hellit gounid]] !</big></strong>",
+	'achievements-notification-link' => '<strong><big>[[Special:MyPage|Sellit ouzh muioc\'h a badjoù a c\'hellit gounid]] !</big></strong>',
 	'achievements-points' => '$1 poent{{PLURAL:$1||}}',
 	'achievements-points-with-break' => '$1<br />{{PLURAL:$1|poent|poent}}',
 	'achievements-earned' => 'Gounezet eo bet ar badj-mañ gant {{PLURAL:$1|1|$1}} implijer.',
 	'achievements-profile-title' => 'An $2 {{PLURAL:$2||badj|badj}} gounezet gant $1',
-	'achievements-profile-title-challenges' => "Badjoù all hag a c'hallit gounit !",
+	'achievements-profile-title-challenges' => 'Badjoù all hag a c\'hallit gounit !',
 	'achievements-profile-customize' => 'Personelaat ar badjoù',
 	'achievements-ranked' => 'Renket #$1 war ar wiki-mañ',
 	'achievements-viewall' => 'Gwelet pep tra',
@@ -1022,32 +970,32 @@ Mar plij klaskit gant unan all !",
 	'leaderboard-intro-hide' => 'kuzhat',
 	'leaderboard-intro-open' => 'digeriñ',
 	'leaderboard-intro-headline' => 'Petra eo ar garedonoù ?',
-	'leaderboard-intro' => "''Petra eo ar sevenidigezhioù ?''
+	'leaderboard-intro' => '\'\'Petra eo ar sevenidigezhioù ?\'\'
 Gallout a rit gounit badjoù dibar en ur gemer perzh er wiki-mañ !
-Kement badj gounezet ganeoc'h a zegas poentoù ouzhpenn d'ho skor hollek :
-10 poent e talvez ar badjoù arem, 50 ar badjoù arc'hant ha 100 poent ar badjoù aour.
+Kement badj gounezet ganeoc\'h a zegas poentoù ouzhpenn d\'ho skor hollek :
+10 poent e talvez ar badjoù arem, 50 ar badjoù arc\'hant ha 100 poent ar badjoù aour.
 
-P'en em enskrivit war ar wiki e tiskouez ho profil implijer an niver a vadjoù gounezet ganeoc'h ha dispakañ a ra ur roll palioù a c'hallit kas da benn.
-[[$1|Kit da deuler ur sell war ho profil]] !",
+P\'en em enskrivit war ar wiki e tiskouez ho profil implijer an niver a vadjoù gounezet ganeoc\'h ha dispakañ a ra ur roll palioù a c\'hallit kas da benn.
+[[$1|Kit da deuler ur sell war ho profil]] !',
 	'leaderboard' => 'Taolenn an tournamantoù',
 	'achievements-title' => 'Garedonoù',
 	'leaderboard-title' => 'Renkadur',
 	'achievements-recent-earned-badges' => 'Badjoù gounezet nevez zo',
 	'achievements-recent-info' => '<strong>$3</strong><br />$4<br />gounezet gant <a href="$1">$2</a><br />$5',
 	'achievements-activityfeed-info' => 'en deus gounezet ar badj <strong><a href="$3" class="badgeName">$1</a></strong><br />$2',
-	'achievements-leaderboard-disclaimer' => "Diskouez a ra taolenn al levierien ar c'hemmoù c'hoarvezet abaoe dec'h.",
+	'achievements-leaderboard-disclaimer' => 'Diskouez a ra taolenn al levierien ar c\'hemmoù c\'hoarvezet abaoe dec\'h.',
 	'achievements-leaderboard-rank-label' => 'Renk',
 	'achievements-leaderboard-member-label' => 'Ezel',
 	'achievements-leaderboard-points-label' => 'Poentoù',
 	'achievements-leaderboard-points' => '{{PLURAL:$1|poent|poent}}',
 	'achievements-leaderboard-most-recently-earned-label' => 'Resevet da ziwezhañ',
 	'achievements-send' => 'Enrollañ ar skeudenn',
-	'achievements-save' => "Enrollañ ar c'hemmoù",
-	'achievements-reverted' => "Distroet eo ar badj d'an orin",
+	'achievements-save' => 'Enrollañ ar c\'hemmoù',
+	'achievements-reverted' => 'Distroet eo ar badj d\'an orin',
 	'achievements-customize' => 'Personelaat ar skeudenn',
 	'achievements-customize-new-category-track' => 'Krouiñ un tournamant nevez evit ar rummad-mañ',
 	'achievements-enable-track' => 'gweredekaet',
-	'achievements-revert' => "Distreiñ d'ar stumm dre ziouer",
+	'achievements-revert' => 'Distreiñ d\'ar stumm dre ziouer',
 	'achievements-special-saved' => 'Kemmoù enrollet.',
 	'achievements-special' => 'Tournamantoù ispisial',
 	'achievements-secret' => 'Tournamantoù sekred',
@@ -1057,7 +1005,7 @@ P'en em enskrivit war ar wiki e tiskouez ho profil implijer an niver a vadjoù g
 	'achievements-create-edit-plus-category-title' => 'Krouiñ un tournamant embann nevez',
 	'achievements-create-edit-plus-category' => 'Krouiñ an tournamant-se',
 	'platinum' => 'Platin',
-	'achievements-community-platinum-awarded-email-subject' => "Gounezet hoc'h eus ur badj platin nevez !",
+	'achievements-community-platinum-awarded-email-subject' => 'Gounezet hoc\'h eus ur badj platin nevez !',
 	'achievements-community-platinum-awarded-email-body-text' => 'Gourc\'hemennoù $1 !
 
 Emaoc\'h o paouez gounid ar badj platin "$2" e $4 ($3).
@@ -1086,12 +1034,12 @@ Taolit ur sell d\'ho badj dispar nevez war ho <a href="$5">pajenn implijer</a>.'
 	'achievements-community-platinum-save' => 'enrollañ',
 	'achievements-community-platinum-cancel' => 'nullañ',
 	'achievements-community-platinum-sponsored-label' => 'Garedon sponsoret',
-	'achievements-community-platinum-sponsored-badge-impression-pixel-url-label' => "Chomlec'h URL evezhiañ evit ar moullañ badjoù :",
+	'achievements-community-platinum-sponsored-badge-impression-pixel-url-label' => 'Chomlec\'h URL evezhiañ evit ar moullañ badjoù :',
 	'achievements-community-platinum-sponsored-badge-click-url-label' => 'Liamm ar badj <small>(URL an urzhias klik DART) </small>:',
-	'achievements-community-platinum-sponsored-badge-click-tooltip' => "Klikit evit gouzout hiroc'h",
-	'achievements-badge-name-edit-0' => "A ra an diforc'h",
-	'achievements-badge-name-edit-1' => "N'eo nemet ar pennkentañ",
-	'achievements-badge-name-edit-3' => "Mignon d'ar wiki",
+	'achievements-community-platinum-sponsored-badge-click-tooltip' => 'Klikit evit gouzout hiroc\'h',
+	'achievements-badge-name-edit-0' => 'A ra an diforc\'h',
+	'achievements-badge-name-edit-1' => 'N\'eo nemet ar pennkentañ',
+	'achievements-badge-name-edit-3' => 'Mignon d\'ar wiki',
 	'achievements-badge-name-edit-4' => 'Kenlabourer',
 	'achievements-badge-name-edit-5' => 'Saver Wiki',
 	'achievements-badge-name-edit-6' => 'Levier ar Wiki',
@@ -1117,7 +1065,7 @@ Taolit ur sell d\'ho badj dispar nevez war ho <a href="$5">pajenn implijer</a>.'
 	'achievements-badge-name-blogpost-3' => 'Buhez ar strollad',
 	'achievements-badge-name-blogpost-4' => 'Prezeger',
 	'achievements-badge-name-blogcomment-0' => 'Displeger',
-	'achievements-badge-name-blogcomment-1' => "Hag un dra all c'hoazh",
+	'achievements-badge-name-blogcomment-1' => 'Hag un dra all c\'hoazh',
 	'achievements-badge-name-love-0' => 'Diwanad yaouank ar wiki !',
 	'achievements-badge-name-love-1' => 'Div sizhun war ar wiki',
 	'achievements-badge-name-love-2' => 'Gredus',
@@ -1126,33 +1074,33 @@ Taolit ur sell d\'ho badj dispar nevez war ho <a href="$5">pajenn implijer</a>.'
 	'achievements-badge-name-love-5' => 'Ur Wiki-buhez',
 	'achievements-badge-name-love-6' => 'Haroz ar Wiki !',
 	'achievements-badge-name-sharing-0' => 'Ranner',
-	'achievements-badge-name-sharing-1' => "Deus amañ 'ta",
+	'achievements-badge-name-sharing-1' => 'Deus amañ \'ta',
 	'achievements-badge-name-sharing-2' => 'Prezeger',
 	'achievements-badge-name-sharing-3' => 'Kemenner',
 	'achievements-badge-name-sharing-4' => 'Avielour',
-	'achievements-badge-name-welcome' => "Deuet mat oc'h war ar Wiki",
+	'achievements-badge-name-welcome' => 'Deuet mat oc\'h war ar Wiki',
 	'achievements-badge-name-introduction' => 'Digoradur',
 	'achievements-badge-name-sayhi' => 'Demat en ur dremen',
-	'achievements-badge-name-creator' => "Ar C'hrouer",
-	'achievements-badge-name-pounce' => "Loc'het eo",
+	'achievements-badge-name-creator' => 'Ar C\'hrouer',
+	'achievements-badge-name-pounce' => 'Loc\'het eo',
 	'achievements-badge-name-caffeinated' => 'Gant kafein',
 	'achievements-badge-name-luckyedit' => 'Kemm gant chañs',
 	'achievements-badge-to-get-sharing' => '{{#ifeq:$1|0|rannañ ul liamm|lakaat {{PLURAL:$1|un|$1}} den da glikañ war al liamm ho peus rannet}}',
 	'achievements-badge-to-get-edit' => 'ober $1 kemm war {{PLURAL:$1|ur bajenn|pajennoù}}',
-	'achievements-badge-to-get-edit-plus-category' => "ober {{PLURAL:$1|ur c'hemm|$1 kemm}} war {{PLURAL:$1|ur bajenn|pajennoù}} $2",
-	'achievements-badge-to-get-picture' => "ouzhpennañ $1 skeudenn{{PLURAL:$1||}} {{PLURAL:$1|d'ur bajenn|da pajennoù}}",
-	'achievements-badge-to-get-category' => "ouzhpennañ $1 pajenn{{PLURAL:$1||}} {{PLURAL:$1|d'ur rummad|da rummadoù}}",
+	'achievements-badge-to-get-edit-plus-category' => 'ober {{PLURAL:$1|ur c\'hemm|$1 kemm}} war {{PLURAL:$1|ur bajenn|pajennoù}} $2',
+	'achievements-badge-to-get-picture' => 'ouzhpennañ $1 skeudenn{{PLURAL:$1||}} {{PLURAL:$1|d\'ur bajenn|da pajennoù}}',
+	'achievements-badge-to-get-category' => 'ouzhpennañ $1 pajenn{{PLURAL:$1||}} {{PLURAL:$1|d\'ur rummad|da rummadoù}}',
 	'achievements-badge-to-get-blogpost' => 'skrivañ $1 {{PLURAL:$1|blogadenn|blogadenn}}',
 	'achievements-badge-to-get-blogcomment' => 'ober un evezhiadenn diwar-benn {{PLURAL:$1|ur blogadenn|$1 blogadenn}}',
 	'achievements-badge-to-get-love' => 'kemer perzh er wiki bemdez e-pad $1 devezh{{PLURAL:}}',
 	'achievements-badge-to-get-welcome' => 'dont war ar wiki',
-	'achievements-badge-to-get-introduction' => "ouzhpennañ d'ho pajenn implijer",
-	'achievements-badge-to-get-sayhi' => "leuskel ur gemennadenn d'unan bennak war e bajenn implijer",
+	'achievements-badge-to-get-introduction' => 'ouzhpennañ d\'ho pajenn implijer',
+	'achievements-badge-to-get-sayhi' => 'leuskel ur gemennadenn d\'unan bennak war e bajenn implijer',
 	'achievements-badge-to-get-creator' => 'bezañ krouer ar wiki',
 	'achievements-badge-to-get-pounce' => 'bezañ prim',
-	'achievements-badge-to-get-caffeinated' => "ober {{PLURAL:$1|ur c'hemm|$1 kemm}} er pajennoù en un devezh",
+	'achievements-badge-to-get-caffeinated' => 'ober {{PLURAL:$1|ur c\'hemm|$1 kemm}} er pajennoù en un devezh',
 	'achievements-badge-to-get-luckyedit' => 'kaout chañs',
-	'achievements-badge-to-get-sharing-details' => "Rannit liammoù ha grit d'ar re all klikañ warno !",
+	'achievements-badge-to-get-sharing-details' => 'Rannit liammoù ha grit d\'ar re all klikañ warno !',
 	'achievements-badge-to-get-edit-details' => 'Un dra bennak a vank ?
 ur fazi \'zo ?
 Na vezit ket lent.
@@ -1166,9 +1114,9 @@ Gellout a rit ouzhpennañ ur skeudenn adalek ho urzhiataer pe adalek ur bajenn a
 Klikit war bouton "{{int:categoryselect-addcategory-button}}" ur bajenn evit rollañ ar bajenn-mañ en ur rummad.',
 	'achievements-badge-to-get-blogpost-details' => 'Skrivit ho alioù hag ho koulennoù !
 Klikit war "{{int:blogs-recent-url-text}}" ar barenn kostez ha goude war al liamm a gleiz evit "{{int:create-blog-post-title}}".',
-	'achievements-badge-to-get-blogcomment-details' => "Kemerit perzh !
-Lennit ur blogadenn eus ar re nevez ha roit oc'h ali e maezienn an evezhiadennoù.",
-	'achievements-badge-to-get-love-details' => "Adderaouekaat e vez ar c'honter ma c'hwitit un devezh. Bezit sur distreiñ bemdez war ar wiki !",
+	'achievements-badge-to-get-blogcomment-details' => 'Kemerit perzh !
+Lennit ur blogadenn eus ar re nevez ha roit oc\'h ali e maezienn an evezhiadennoù.',
+	'achievements-badge-to-get-love-details' => 'Adderaouekaat e vez ar c\'honter ma c\'hwitit un devezh. Bezit sur distreiñ bemdez war ar wiki !',
 	'achievements-badge-to-get-welcome-details' => 'Klikit war ar bouton "{{int:oasis-signup}}" en nec\'h a zehou evit dont er gumuniezh.
 Gellout a rit kregiñ da c\'hounid ho badjoù !',
 	'achievements-badge-to-get-introduction-details' => 'Goullo eo ho pajenn implijer ?
@@ -1176,24 +1124,24 @@ Klikit war ho anv implijer e penn uhelañ ar skramm evit gwelet.
 Klikit war "{{int:edit}}" evit ouzhpennañ titouroù diwar ho penn !',
 	'achievements-badge-to-get-sayhi-details' => 'Gellout a rit leuskel kemennadennoù d\'an implijerien all en ur klikañ war "{{int:tooltip-ca-addsection}}", war o fajenn implijer.
 Goulennit sikour, trugarekait anezho evit o labour, pe saludit anezho hepken !',
-	'achievements-badge-to-get-creator-details' => "Roet e vez ar badj-mañ d'an den hag a grou ar wiki.
-Klikit war ar bouton \"{{int:createwiki}}\" e penn uhelañ ar skramm evit krouiñ ul lec'hienn war ar pezh a blij deoc'h ar muiañ !",
+	'achievements-badge-to-get-creator-details' => 'Roet e vez ar badj-mañ d\'an den hag a grou ar wiki.
+Klikit war ar bouton "{{int:createwiki}}" e penn uhelañ ar skramm evit krouiñ ul lec\'hienn war ar pezh a blij deoc\'h ar muiañ !',
 	'achievements-badge-to-get-pounce-details' => 'Rankout a rit bezañ prim evit gounid ar badj-mañ.
 Klikit war ar bouton "{{int:activityfeed}}" evit gwelet ar pajennoù nevez hag a vez krouet gant an implijerien !',
-	'achievements-badge-to-get-caffeinated-details' => "Un devezh pad a zo ezhomm evit gounid ar badj-mañ.
-Kendalc'hit da gemmañ !",
-	'achievements-badge-to-get-luckyedit-details' => "Chañs a rankit kaout evit gounid ar badj-mañ.
-Kendalc'hit da gemmañ !",
+	'achievements-badge-to-get-caffeinated-details' => 'Un devezh pad a zo ezhomm evit gounid ar badj-mañ.
+Kendalc\'hit da gemmañ !',
+	'achievements-badge-to-get-luckyedit-details' => 'Chañs a rankit kaout evit gounid ar badj-mañ.
+Kendalc\'hit da gemmañ !',
 	'achievements-badge-to-get-community-platinum-details' => 'Ur badj dibar e platin eo hemañ, ha ne vez outañ nemet e-pad ur prantad termenet !',
 	'achievements-badge-hover-desc-sharing' => '{{#ifeq:$1|0|evit bezañ rannet ul liamm|evit bezañ lakaet {{PLURAL:$1|un den|$1 den}} da glikañ war liammoù rannet}}',
-	'achievements-badge-hover-desc-edit' => "evit bezañ degaset $1 {{PLURAL:$1|c'hemm|kemm}}<br />
-war {{PLURAL:$1|ur bajenn|pajennoù}} !",
-	'achievements-badge-hover-desc-edit-plus-category' => "evit bezañ degaset $1 {{PLURAL:$1|c'hemm|kemm}}<br />
-war {{PLURAL:$1|un $2 pajenn|$2 pajenn}} !",
+	'achievements-badge-hover-desc-edit' => 'evit bezañ degaset $1 {{PLURAL:$1|c\'hemm|kemm}}<br />
+war {{PLURAL:$1|ur bajenn|pajennoù}} !',
+	'achievements-badge-hover-desc-edit-plus-category' => 'evit bezañ degaset $1 {{PLURAL:$1|c\'hemm|kemm}}<br />
+war {{PLURAL:$1|un $2 pajenn|$2 pajenn}} !',
 	'achievements-badge-hover-desc-picture' => 'evit bezañ ouzhpennet $1 {{PLURAL:$1|skeudenn|skeudenn}}<br />
 war {{PLURAL:$1ur bajenn|pajennoù}} !',
-	'achievements-badge-hover-desc-category' => "evit bezañ ouzhpennet $1 {{PLURAL:$1|bajenn|pajenn}}<br />
-{{PLURAL:$1|d'ur rummad|da rummadoù}} !",
+	'achievements-badge-hover-desc-category' => 'evit bezañ ouzhpennet $1 {{PLURAL:$1|bajenn|pajenn}}<br />
+{{PLURAL:$1|d\'ur rummad|da rummadoù}} !',
 	'achievements-badge-hover-desc-blogpost' => 'evit bezañ skrivet $1 {{PLURAL:$1|blogadenn|blogadenn}}',
 	'achievements-badge-hover-desc-blogcomment' => 'evit bezañ graet un evezhiadenn</br>
 war {{PLURAL:$1|ur|$1}} blogadenn !',
@@ -1212,7 +1160,7 @@ war pajenn kaozeal unan bennak all !',
 	'achievements-badge-your-desc-edit' => 'Evit bezañ degaset ho {{PLURAL:$1|kemm gentañ|$1 kemm}} war {{PLURAL:$1|ur bajenn|pajennoù}} !',
 	'achievements-badge-your-desc-edit-plus-category' => 'evit bezañ degaset {{PLURAL:$1|ho kemm gentañ|$1 kemm}} war {{PLURAL:$1|ur bajenn|$2 pajenn}}!',
 	'achievements-badge-your-desc-picture' => 'Evit bezañ degaset ho {{PLURAL:$1|skeudenn gentañ|$1 skeudenn}} war {{PLURAL:$1|ur bajenn|pajennoù}} !',
-	'achievements-badge-your-desc-category' => "evit bezañ ouzhpennet {{PLURAL:$1|ho pajenn gentañ|$1 pajenn}} {{PLURAL:$1|d'ur rummad|da rummadoù}} !",
+	'achievements-badge-your-desc-category' => 'evit bezañ ouzhpennet {{PLURAL:$1|ho pajenn gentañ|$1 pajenn}} {{PLURAL:$1|d\'ur rummad|da rummadoù}} !',
 	'achievements-badge-your-desc-blogpost' => 'evit bezañ skrivet {{PLURAL:$1|ho plogadenn gentañ|$1 blogadenn}} !',
 	'achievements-badge-your-desc-blogcomment' => 'evit bezañ graet evezhiadennoù diwar-benn {{PLURAL:$1|ur|$1}} bloagadenn !',
 	'achievements-badge-your-desc-love' => 'evit bezañ graet degasadennoù bemdez war ar wiki e-pad {{PLURAL:$1|un devezh|$1 devezh}} !',
@@ -1224,15 +1172,15 @@ war pajenn kaozeal unan bennak all !',
 	'achievements-badge-your-desc-caffeinated' => 'evit bezañ degaset 100 kemm e pajennoù en un devezh !',
 	'achievements-badge-your-desc-luckyedit' => 'evit bezañ degaset ar $1vet kemm gant chañs war ar wiki !',
 	'achievements-badge-desc-sharing' => '{{#ifeq:$1|0|evit bezañ rannet ul liamm|evit bezañ lakaet {{PLURAL:$1|un den|$1 den}} da glikañ war liammoù rannet}}',
-	'achievements-badge-desc-edit' => "evit bezañ degaset $1 {{PLURAL:$1|c'hemm|kemm}} war {{PLURAL:$1|ur bajenn|pajennoù}} !",
+	'achievements-badge-desc-edit' => 'evit bezañ degaset $1 {{PLURAL:$1|c\'hemm|kemm}} war {{PLURAL:$1|ur bajenn|pajennoù}} !',
 	'achievements-badge-desc-edit-plus-category' => 'evit bezañ degaset $1 kemm war {{PLURAL:$1|ur bajenn|$2 pajenn}}!',
 	'achievements-badge-desc-picture' => 'evit bezañ ouzhpennet $1 {{PLURAL:$1|skeudenn|skeudenn}} war {{PLURAL:$1ur bajenn|pajennoù}} !',
-	'achievements-badge-desc-category' => "evit bezañ ouzhpennet $1 {{PLURAL:$1|bajenn|pajenn}} {{PLURAL:$1|d'ur rummad|da rummadoù}} !",
+	'achievements-badge-desc-category' => 'evit bezañ ouzhpennet $1 {{PLURAL:$1|bajenn|pajenn}} {{PLURAL:$1|d\'ur rummad|da rummadoù}} !',
 	'achievements-badge-desc-blogpost' => 'evit bezañ skrivet $1 {{PLURAL:$1|blogadenn|blogadenn}}',
 	'achievements-badge-desc-blogcomment' => 'evit bezañ graet evezhiadennoù diwar-benn {{PLURAL:$1|ur|$1}} bloagadenn !',
 	'achievements-badge-desc-love' => 'evit bezañ kemeret perzh er wiki bemdez e-pad {{PLURAL:$1|un devezh|$1 devezh}} !',
 	'achievements-badge-desc-welcome' => 'evit bezañ deuet war ar wiki !',
-	'achievements-badge-desc-introduction' => "evit bezañ ouzhpennet d'ho pajenn implijer !",
+	'achievements-badge-desc-introduction' => 'evit bezañ ouzhpennet d\'ho pajenn implijer !',
 	'achievements-badge-desc-sayhi' => 'evit bezañ laosket ur gemennadenn war pajenn kaozeal unan bennak all !',
 	'achievements-badge-desc-creator' => 'evit bezañ krouet ar wiki !',
 	'achievements-badge-desc-pounce' => 'evit bezañ degaset kemmoù war 100 pajenn en eurvezh goude krouidigezh ar bajenn !',
@@ -1240,16 +1188,12 @@ war pajenn kaozeal unan bennak all !',
 	'achievements-badge-desc-luckyedit' => 'evit bezañ degaset ar $1vet kemm gant chañs war ar wiki !',
 	'achievements-userprofile-title-no' => 'Badjoù gounezet gant $1',
 	'achievements-userprofile-title' => '{{PLURAL:$2|Badj|Badjoù}} gounezet gant $1 ($2)',
-	'achievements-userprofile-no-badges-owner' => "Taolit ur sell war ar roll amañ dindan evit gwelet peseurt badjoù a c'hallit gounit er wiki-mañ !",
-	'achievements-userprofile-no-badges-visitor' => "An implijer-mañ n'en deus gounezet badj ebet evit ar mare",
+	'achievements-userprofile-no-badges-owner' => 'Taolit ur sell war ar roll amañ dindan evit gwelet peseurt badjoù a c\'hallit gounit er wiki-mañ !',
+	'achievements-userprofile-no-badges-visitor' => 'An implijer-mañ n\'en deus gounezet badj ebet evit ar mare',
 	'achievements-userprofile-profile-score' => '<em>$1</em> poentoù<br /> garedon',
 	'achievements-userprofile-ranked' => '[[Special:Leaderboard|gant ar renk #$1]] war ar wiki-mañ',
 ];
 
-/** Bosnian (bosanski)
- * @author CERminator
- * @author Palapa
- */
 $messages['bs'] = [
 	'right-platinum' => 'Napravi i uredi Platinaste bedževe',
 	'achievements-platinum' => 'platina',
@@ -1342,10 +1286,6 @@ $messages['bs'] = [
 	'achievements-badge-desc-creator' => 'za pravljenje wiki!',
 ];
 
-/** Catalan (català)
- * @author BroOk
- * @author SMP
- */
 $messages['ca'] = [
 	'right-platinum' => 'Crear i editar medalles de Platí',
 	'achievements-platinum' => 'Platí',
@@ -1360,12 +1300,12 @@ $messages['ca'] = [
 	'achievements-masthead-points' => '$1 <small>{{PLURAL:$1|punt|punts}}</small>',
 	'achievements-profile-title-no' => 'Medalles de $1',
 	'achievements-no-badges' => 'Fes una ullada a la següent llista per veure les medalles que pots guanyar en aquest wiki!',
-	'achievements-track-name-edit' => "Seguiment d'Edicions",
-	'achievements-track-name-picture' => "Seguiment d'Imatges",
+	'achievements-track-name-edit' => 'Seguiment d\'Edicions',
+	'achievements-track-name-picture' => 'Seguiment d\'Imatges',
 	'achievements-track-name-category' => 'Seguiment de Categories',
 	'achievements-track-name-blogpost' => 'Seguiment de Blog Post',
 	'achievements-track-name-blogcomment' => 'Seguiment de Comentaris en Blogs',
-	'achievements-track-name-love' => "Seguiment de l'Amor al Wiki",
+	'achievements-track-name-love' => 'Seguiment de l\'Amor al Wiki',
 	'achievements-track-name-sharing' => 'Seguiment de Compartir',
 	'achievements-notification-title' => 'Camí per recórrer, $1!',
 	'achievements-notification-subtitle' => 'Acabes de guanyar la medalla "$1" $2',
@@ -1404,14 +1344,14 @@ També pots donar nous noms a les medalles que reflecteixen el tema de la wiki.
 Quan hagis canviat el nom de la medalla, fes clic a "{{int:achievements-save}}" per guardar els canvis.
 Que et diverteixis!',
 	'platinum' => 'Platí',
-	'achievements-community-platinum-awarded-email-body-text' => "Felicitats$1 !
+	'achievements-community-platinum-awarded-email-body-text' => 'Felicitats$1 !
 
-Acabes de ser guardonat amb la medalla Platí '$2' de $4 ( $3 ).
+Acabes de ser guardonat amb la medalla Platí \'$2\' de $4 ( $3 ).
 Això afegeix 250 punts a la teva puntuació!
 
-Fes un cop d'ull a la teva nova insígnia de luxe a la teva pàgina de perfil d'usuari:
+Fes un cop d\'ull a la teva nova insígnia de luxe a la teva pàgina de perfil d\'usuari:
 
-$5",
+$5',
 	'achievements-userprofile-title-no' => 'Medalles Guanyades per $1',
 	'achievements-userprofile-title' => '{{PLURAL:$2|Medalla|Medalles}} {{PLURAL:$2|Guanyada|Guanyades}} per $1 ($2)',
 	'achievements-userprofile-no-badges-visitor' => 'Aquest usuari encara no ha guanyat cap medalla.',
@@ -1419,19 +1359,10 @@ $5",
 	'achievements-userprofile-ranked' => '[[Special:Leaderboard|Número #$1]]<br />en aquest wiki',
 ];
 
-/** Chechen (Нохчийн)
- * @author Sasan700
- */
 $messages['ce'] = [
 	'achievements-leaderboard-member-label' => 'Декъашхо',
 ];
 
-/** Czech (česky)
- * @author Darth Daron
- * @author Jkjk
- * @author Mr. Richard Bolla
- * @author Spiffyk
- */
 $messages['cs'] = [
 	'achievementsii-desc' => 'Systém odznaků úspěchů pro uživatele wiki',
 	'achievements-upload-error' => 'Omlouváme se!
@@ -1483,9 +1414,9 @@ Prosím zkuste jiný!',
 	'leaderboard-intro-hide' => 'skrýt',
 	'leaderboard-intro-open' => 'otevřít',
 	'leaderboard-intro-headline' => 'Co jsou úspěchy?',
-	'leaderboard-intro' => "Odznaky na této wiki můžete získat za editování stránek, nahrávání obrázků a komentováním příspěvků. Za každý odznak získáváte body - čím více bodů máte, tím výše jste v pořadí. Získané odznaky můžete najít na [[$1|uživatelské stránce]].
+	'leaderboard-intro' => 'Odznaky na této wiki můžete získat za editování stránek, nahrávání obrázků a komentováním příspěvků. Za každý odznak získáváte body - čím více bodů máte, tím výše jste v pořadí. Získané odznaky můžete najít na [[$1|uživatelské stránce]].
 
-'''Jaký mají odznaky smysl?'''",
+\'\'\'Jaký mají odznaky smysl?\'\'\'',
 	'leaderboard' => 'Žebříček úspěchů',
 	'achievements-title' => 'Úspěchy',
 	'leaderboard-title' => 'Žebříček',
@@ -1546,12 +1477,12 @@ Vyzkoušejte to!',
 	'achievements-create-edit-plus-category' => 'Vytvořit tuto stopu',
 	'platinum' => 'Platina',
 	'achievements-community-platinum-awarded-email-subject' => 'Byl vám udělen nový platinový odznak!',
-	'achievements-community-platinum-awarded-email-body-text' => "Blahopřejeme!
+	'achievements-community-platinum-awarded-email-body-text' => 'Blahopřejeme!
 
-Právě jste na $4 ($3) získali '$2' platinový odznak.
+Právě jste na $4 ($3) získali \'$2\' platinový odznak.
 Získáváte navíc 250 bodů k vašemu celkovému skóre.
 
-Prohlédněte si svůj báječný nový odznak na své profilové stránce:",
+Prohlédněte si svůj báječný nový odznak na své profilové stránce:',
 	'achievements-community-platinum-awarded-email-body-html' => '<strong>Blahopřejeme, $1!</strong><br /><br />
 Právě jste byli odměněni Platinovým odznakem \'<strong>$2</strong>\' na stránce <a href="$3">$4</a>.
 Tímto jste získali 250 bodů k vašemu skóre!<br /><br />
@@ -1677,27 +1608,10 @@ vaší uživatelskou stránku!',
 	'achievements-userprofile-ranked' => '[[Special:Leaderboard|Hodnocení #$1]]<br />na této wiki',
 ];
 
-/** Danish (dansk)
- * @author DaneOfScandinavy
- */
 $messages['da'] = [
 	'achievements-badge-name-edit-1' => 'Bare begyndelsen',
 ];
 
-/** German (Deutsch)
- * @author Avatar
- * @author ChrisiPK
- * @author Claudia Hattitten
- * @author Dardio
- * @author Dennis07
- * @author Diebuche
- * @author Geitost
- * @author Kghbln
- * @author Kjell
- * @author LWChris
- * @author MF-Warburg
- * @author The Evil IP address
- */
 $messages['de'] = [
 	'achievementsii-desc' => 'Leistungsbasierte Abzeichen für Wiki-Benutzer',
 	'achievements-upload-error' => 'Entschuldigung!
@@ -1749,9 +1663,9 @@ Bitte versuche es mit einem anderen!',
 	'leaderboard-intro-hide' => 'Ausblenden',
 	'leaderboard-intro-open' => 'Öffnen',
 	'leaderboard-intro-headline' => 'Was sind Herausforderungen?',
-	'leaderboard-intro' => "In diesem Wiki kannst du Abzeichen verdienen, indem du Seiten bearbeitest, Fotos hochlädst und Kommentare hinterlässt. Mit jedem Abzeichen verdienst du Punkte - und je mehr Punkte du hast, desto höher kletterst du auf der Rangliste! Du findest die Abzeichen, die du verdient hast, auf deiner [[$1|Benutzerseite]].
+	'leaderboard-intro' => 'In diesem Wiki kannst du Abzeichen verdienen, indem du Seiten bearbeitest, Fotos hochlädst und Kommentare hinterlässt. Mit jedem Abzeichen verdienst du Punkte - und je mehr Punkte du hast, desto höher kletterst du auf der Rangliste! Du findest die Abzeichen, die du verdient hast, auf deiner [[$1|Benutzerseite]].
 
-'''Was sind Abzeichen wert?'''",
+\'\'\'Was sind Abzeichen wert?\'\'\'',
 	'leaderboard' => 'Rangliste',
 	'achievements-title' => 'Herausforderungen',
 	'leaderboard-title' => 'Leaderboard',
@@ -1811,14 +1725,14 @@ Versuchs mal!',
 	'achievements-create-edit-plus-category' => 'Diese Laufbahn erstellen',
 	'platinum' => 'Platin',
 	'achievements-community-platinum-awarded-email-subject' => 'Du hast ein neues Platin-Abzeichen erhalten!',
-	'achievements-community-platinum-awarded-email-body-text' => "Herzlichen Glückwunsch $1!
+	'achievements-community-platinum-awarded-email-body-text' => 'Herzlichen Glückwunsch $1!
 
-Du bist gerade mit dem '$2' Platin-Abzeichen bei $4 ($3) versehen worden.
+Du bist gerade mit dem \'$2\' Platin-Abzeichen bei $4 ($3) versehen worden.
 Dafür gibt es 250 Punkte auf dein Konto!
 
 Schau dir dein hübsches neues Abzeichen auf deiner Benutzerseite an:
 
-$5",
+$5',
 	'achievements-community-platinum-awarded-email-body-html' => '<strong>Herzlichen Glückwunsch $1!</strong><br /><br />
 Du bist gerade mit dem \'<strong>$2</strong>\' Platin-Abzeichen bei <a href="$3">$4</a> versehen worden.
 Dafür gibt es 250 Punkte auf dein Konto!<br /><br />
@@ -1928,8 +1842,7 @@ Du kannst dir dann sofort eigene Auszeichnungen verdienen.',
 	'achievements-badge-to-get-introduction-details' => 'Ist deine Benutzerseite leer?
 Klicke auf deinen Benutzernamen oben rechts, um nachzusehen!
 Klicke auf „{{int:edit}}“, um ein paar Informationen zu dir einzugeben!',
-	'achievements-badge-to-get-sayhi-details' => 'Du kannst anderen Benutzern Nachrichten hinterlassen, indem du auf „{{int:addsection}}“ auf ihrer Diskussionsseite klickst.
-Frage sie um Hilfe, danke ihnen für ihre Arbeit oder sag einfach mal Hallo!',
+	'achievements-badge-to-get-sayhi-details' => 'Du kannst anderen Nutzern Nachrichten auf ihre Diskussionsseite schreiben. Frage nach Hilfe, danke ihnen für ihre Arbeit oder sag einfach Hallo!',
 	'achievements-badge-to-get-creator-details' => 'Die Auszeichnung geht an die Person, die das Wiki gegründet hat.
 Klicke auf den „{{int:createwiki}}“-Button oben, um dein eigenes Wiki zu einem beliebigen Thema zu erstellen!',
 	'achievements-badge-to-get-pounce-details' => 'Du musst schnell sein, um diese Auszeichnung zu erhalten.
@@ -2003,11 +1916,6 @@ auf der Diskussionsseite eines anderen!',
 	'achievements-prev-oasis' => 'Vorherige',
 ];
 
-/** German (formal address) (‪Deutsch (Sie-Form)‬)
- * @author Claudia Hattitten
- * @author Geitost
- * @author The Evil IP address
- */
 $messages['de-formal'] = [
 	'achievements-upload-error' => 'Verzeihung,
 dieses Bild funktioniert nicht.
@@ -2021,9 +1929,9 @@ Bitte versuchen Sie ein anderes Bild!',
 	'achievements-notification-subtitle' => 'Sie haben gerade die Auszeichnung „$1“ erhalten $2',
 	'achievements-notification-link' => '<strong><big>[[Special:MyPage|Weitere erreichbare Abzeichen ansehen]]</big></strong>',
 	'achievements-profile-title-challenges' => 'Mehr von Ihnen verdienbare Abzeichen',
-	'leaderboard-intro' => "In diesem Wiki können Sie Abzeichen verdienen, indem Sie Artikel bearbeiten, Fotos hochladen und Kommentare hinterlassen. Mit jedem Abzeichen verdienen Sie Punkte steigen auf der Rangliste auf. Verdiente Abzeichen finden Sie auf Ihrer [[$1|Benutzerseite]].
+	'leaderboard-intro' => 'In diesem Wiki können Sie Abzeichen verdienen, indem Sie Artikel bearbeiten, Fotos hochladen und Kommentare hinterlassen. Mit jedem Abzeichen verdienen Sie Punkte steigen auf der Rangliste auf. Verdiente Abzeichen finden Sie auf Ihrer [[$1|Benutzerseite]].
 
-'''Was sind Abzeichen wert?'''",
+\'\'\'Was sind Abzeichen wert?\'\'\'',
 	'achievements-about-content' => 'Administratoren in diesem Wiki können die Namen und Bilder der Auszeichnungen in diesem Wiki anpassen.
 
 Sie können ein beliebiges .jpg- oder .png-Bild hochladen, und Ihr Bild wird automatisch in den Rahmen passen.
@@ -2055,14 +1963,14 @@ Benutzer, die Auszeichnungen für diese Verknüpfung erhalten haben, werden ihre
 Dies kann helfen, eine weitere Ebene an Spaß zu den Auszeichnungen hinzuzufügen.
 Versuchen Sie es!',
 	'achievements-community-platinum-awarded-email-subject' => 'Sie haben ein neues Platin-Abzeichen erhalten.',
-	'achievements-community-platinum-awarded-email-body-text' => "Herzlichen Glückwunsch, $1,
+	'achievements-community-platinum-awarded-email-body-text' => 'Herzlichen Glückwunsch, $1,
 
-Sie sind gerade mit dem Platin-Abzeichen '$2' auf $4 ($3) versehen worden.
+Sie sind gerade mit dem Platin-Abzeichen \'$2\' auf $4 ($3) versehen worden.
 Dafür erhalten Sie 250 Punkte auf Ihr Konto.
 
 Sie können das neue Abzeichen auf ihrer Benutzerseite einsehen:
 
-$5",
+$5',
 	'achievements-community-platinum-awarded-email-body-html' => 'Herzlichen Glückwunsch, $1,<br /><br />
 Sie sind gerade mit dem Platin-Abzeichen \'$2\' auf <a href="$3">$4</a> versehen worden.
 Dafür erhalten Sie 250 Punkte auf Ihr Konto.<br /><br />
@@ -2101,10 +2009,6 @@ Geben Sie nicht nach!',
 	'achievements-userprofile-no-badges-owner' => 'Erreichbare Auszeichnungen können Sie untenstehender Liste entnehmen.',
 ];
 
-/** Zazaki (Zazaki)
- * @author Erdemaslancan
- * @author Mirzali
- */
 $messages['diq'] = [
 	'achievements-platinum' => 'Platinyum',
 	'achievements-gold' => 'Altun',
@@ -2138,12 +2042,6 @@ $messages['diq'] = [
 	'achievements-userprofile-profile-score' => '<em>$1</em>Puanê<br />qezenci',
 ];
 
-/** Greek (Ελληνικά)
- * @author Crazymadlover
- * @author Evropi
- * @author Glavkos
- * @author Omnipaedista
- */
 $messages['el'] = [
 	'achievementsii-desc' => 'Ένα σύστημα επιτεύξεων με κονκάρδες για τους χρήστες wiki',
 	'achievements-upload-error' => 'Συγγνώμη! N! Η εικόνα δεν λειτουργεί.!Βεβαιωθείτε ότι είναι. Jpg ή. Png αρχείο.! Αν εξακολουθεί να μην λειτουργεί, τότε η εικόνα μπορεί να είναι πολύ μεγάλη.! Παρακαλώ δοκιμάστε μια άλλη!',
@@ -2237,9 +2135,6 @@ $messages['el'] = [
 	'achievements-badge-desc-creator' => 'για τη δημιουργία του wiki!',
 ];
 
-/** Esperanto (Esperanto)
- * @author Tradukisto
- */
 $messages['eo'] = [
 	'achievements-upload-error' => 'Tiu dosiero ne funkcias.
 Certiĝu, ke ĝi estas formatp .jpg aŭ .png.
@@ -2249,15 +2144,6 @@ Provu kun la alia!',
 	'achievements-badge-name-welcome' => 'Bonvenon al la Vikio',
 ];
 
-/** Spanish (español)
- * @author Absay
- * @author Armando-Martin
- * @author Bola
- * @author Crazymadlover
- * @author Peter17
- * @author Sanbec
- * @author VegaDark
- */
 $messages['es'] = [
 	'achievementsii-desc' => 'Un sistema de logros para los usuarios de la wikia',
 	'achievements-upload-error' => '¡Lo sentimos!
@@ -2309,9 +2195,9 @@ Por favor, inténtalo con otra imagen.',
 	'leaderboard-intro-hide' => 'ocultar',
 	'leaderboard-intro-open' => 'abrir',
 	'leaderboard-intro-headline' => '¿Qué son los logros?',
-	'leaderboard-intro' => "Puedes ganar insignias al participar (haciendo ediciones, subiendo imágenes) en esta wikia. Cada insignia te gana puntos, los cuales pueden llevarte más arriba en la clasificación. Podrás encontrar las insignias que has ganado en tu [[$1|página de usuario]].
+	'leaderboard-intro' => 'Puedes ganar insignias al participar (haciendo ediciones, subiendo imágenes) en esta wikia. Cada insignia te gana puntos, los cuales pueden llevarte más arriba en la clasificación. Podrás encontrar las insignias que has ganado en tu [[$1|página de usuario]].
 
-'''¿Cuánto valen las insignias?'''",
+\'\'\'¿Cuánto valen las insignias?\'\'\'',
 	'leaderboard' => 'Tabla de líderes con más logros',
 	'achievements-title' => 'Logros',
 	'leaderboard-title' => 'Tabla de líderes',
@@ -2372,13 +2258,13 @@ Todo esto te puede ayudar a dar un pequeño impulso a la diversión que se puede
 	'achievements-create-edit-plus-category' => 'Crear este grupo',
 	'platinum' => 'Platino',
 	'achievements-community-platinum-awarded-email-subject' => '¡Has conseguido una nueva insignia de Platino!',
-	'achievements-community-platinum-awarded-email-body-text' => "¡Felicidades $1!
+	'achievements-community-platinum-awarded-email-body-text' => '¡Felicidades $1!
 
-Has conseguido la insignia de Platino '$2' en $4 ($3). ¡Con esta insignia has conseguido 250 puntos para tu puntuación total!
+Has conseguido la insignia de Platino \'$2\' en $4 ($3). ¡Con esta insignia has conseguido 250 puntos para tu puntuación total!
 
 Echa un vistazo a esta insignia de lujo en tu perfil de usuario:
 
-$5",
+$5',
 	'achievements-community-platinum-awarded-email-body-html' => '<strong>¡Felicidades $1!</strong><br /><br />
 Has conseguido la insignia de Platino \'<strong>$2</strong>\' en <a href="$3">$4</a>. ¡Con esta insignia has conseguido 250 puntos para tu puntuación total!<br /><br />
 Echa un vistazo a esta insignia de lujo en tu <a href="$5">perfil de usuario</a>.',
@@ -2553,9 +2439,6 @@ a {{PLURAL:$1|una categoría|varias categorías}}!',
 	'achievements-prev-oasis' => 'Anterior',
 ];
 
-/** Estonian (eesti)
- * @author Cylly1512
- */
 $messages['et'] = [
 	'achievementsii-desc' => 'Saavutusembleemidesüsteem viki kasutajatele',
 	'achievements-upload-error' => 'Vabandust!
@@ -2586,9 +2469,6 @@ Palun proovi mõnda teist pilti!',
 	'achievements-track-name-category' => 'Kategooriate tee',
 ];
 
-/** Basque (euskara)
- * @author An13sa
- */
 $messages['eu'] = [
 	'achievements-platinum' => 'Platinoa',
 	'achievements-gold' => 'Urrea',
@@ -2626,13 +2506,6 @@ $messages['eu'] = [
 	'achievements-badge-name-creator' => 'Sortzailea',
 ];
 
-/** Persian (فارسی)
- * @author BlueDevil
- * @author Ebraminio
- * @author Persianizer
- * @author Wayiran
- * @author ZxxZxxZ
- */
 $messages['fa'] = [
 	'achievementsii-desc' => 'سامانه‌ای برای مدال‌های افتخار کاربران ویکی',
 	'achievements-upload-error' => 'با پوزش!
@@ -2683,9 +2556,9 @@ $messages['fa'] = [
 	'leaderboard-intro-hide' => 'نهفتن',
 	'leaderboard-intro-open' => 'گشودن',
 	'leaderboard-intro-headline' => 'دستاوردها چه هستند؟',
-	'leaderboard-intro' => "شما می‌توانید با ویرایش صفحات، بارگذاری عکس‌ها و نظردهی در این ویکی، نشان بدست آورید. هر نشان برایتان امتیاز کسب می‌کند - هرچه امتیازهای بیش‌تری کسب کنید، در تابلوی رهبری بالاتر خواهید رفت! شما می‌توانید نشان‌هایی را که بدست آورده‌اید در [[$1|صفحهٔ مشخصات کاربری]] بیابید.
+	'leaderboard-intro' => 'شما می‌توانید با ویرایش صفحات، بارگذاری عکس‌ها و نظردهی در این ویکی، نشان بدست آورید. هر نشان برایتان امتیاز کسب می‌کند - هرچه امتیازهای بیش‌تری کسب کنید، در تابلوی رهبری بالاتر خواهید رفت! شما می‌توانید نشان‌هایی را که بدست آورده‌اید در [[$1|صفحهٔ مشخصات کاربری]] بیابید.
 
-'''ارزش مدال‌ها چیست؟'''",
+\'\'\'ارزش مدال‌ها چیست؟\'\'\'',
 	'leaderboard' => 'تابلوی رهبری دستاوردها',
 	'achievements-title' => 'دستاوردها',
 	'leaderboard-title' => 'تابلوی رهبری',
@@ -2866,14 +2739,6 @@ $messages['fa'] = [
 	'achievements-badge-desc-welcome' => 'برای پیوستن به ویکی!',
 ];
 
-/** Finnish (suomi)
- * @author Crt
- * @author Ilkea
- * @author Kulmalukko
- * @author Nike
- * @author Tm T
- * @author Tofu II
- */
 $messages['fi'] = [
 	'achievementsii-desc' => 'Kunniamerkkijärjestelmä wikin käyttäjille',
 	'achievements-upload-error' => 'Tämä kuva ei toimi.
@@ -2912,9 +2777,9 @@ Kokeile toista kuvaa.',
 	'leaderboard-intro-hide' => 'piilota',
 	'leaderboard-intro-open' => 'avaa',
 	'leaderboard-intro-headline' => 'Mitä kunniamerkinnät ovat?',
-	'leaderboard-intro' => "Voit ansaita kunniamerkkejä tässä wikissä muokkaamalla sivuja, lataamalla kuvia ja jättämällä kommentteja. Saat jokaisesta kunniamerkistä pisteitä – mitä enemmän pisteitä ansaitset sitä ylemmäs pääset arvoasteikolla! Löydät ansaitsemasi kunniamerkit [[$1|käyttäjäsivultasi]].
+	'leaderboard-intro' => 'Voit ansaita kunniamerkkejä tässä wikissä muokkaamalla sivuja, lataamalla kuvia ja jättämällä kommentteja. Saat jokaisesta kunniamerkistä pisteitä – mitä enemmän pisteitä ansaitset sitä ylemmäs pääset arvoasteikolla! Löydät ansaitsemasi kunniamerkit [[$1|käyttäjäsivultasi]].
 
-'''Minkä arvoisia kunniamerkit ovat?'''",
+\'\'\'Minkä arvoisia kunniamerkit ovat?\'\'\'',
 	'leaderboard' => 'Kunniamerkkien  top-lista',
 	'achievements-title' => 'Kunniamerkit',
 	'leaderboard-title' => 'Top-lista',
@@ -2974,9 +2839,6 @@ jonkun henkilön keskustelusivulle!',
 	'achievements-userprofile-title-no' => 'Käyttäjän $1 ansaitsemat kunniamerkit',
 ];
 
-/** Faroese (føroyskt)
- * @author EileenSanda
- */
 $messages['fo'] = [
 	'achievementsii-desc' => 'Ein avriks kort skipan fyri wiki brúkarar',
 	'achievements-upload-error' => 'Orsaka!
@@ -3012,7 +2874,7 @@ Vinarliga royn við aðrari mynd!',
 	'achievements-points' => '$1 {{PLURAL:$1|stig|stig}}',
 	'achievements-points-with-break' => '$1<br />{{PLURAL:$1|stig|stig}}',
 	'achievements-earned' => 'Hetta kortið hava {{PLURAL:$1|1 brukari|$1 brúkarar}} vunnið.',
-	'achievements-profile-title' => "$1'sa $2 vunnin {{PLURAL:$2|kort|kort}}",
+	'achievements-profile-title' => '$1\'sa $2 vunnin {{PLURAL:$2|kort|kort}}',
 	'achievements-profile-title-challenges' => 'Fleiri kort ið tú kanst vinna!',
 	'achievements-profile-customize' => 'Tillagaði kort',
 	'achievements-ranked' => 'Flokkað #$1 á hesi wiki',
@@ -3025,9 +2887,9 @@ Vinarliga royn við aðrari mynd!',
 	'leaderboard-intro-hide' => 'fjal',
 	'leaderboard-intro-open' => 'lat upp',
 	'leaderboard-intro-headline' => 'Hvar merkir Avrik',
-	'leaderboard-intro' => "Tú kanst vinna kort (badges) á hesi wiki við at rætta síður, upplóta myndir og við at gera viðmerkingar. Hvørt kort gevur tær stig - jú fleiri stig tú fær, jú hægri kemur tú upp á stigatalvuna! [[$1|brúkara vangamynd]].
+	'leaderboard-intro' => 'Tú kanst vinna kort (badges) á hesi wiki við at rætta síður, upplóta myndir og við at gera viðmerkingar. Hvørt kort gevur tær stig - jú fleiri stig tú fær, jú hægri kemur tú upp á stigatalvuna! [[$1|brúkara vangamynd]].
 
-'''Hvat virði hava kortini?'''",
+\'\'\'Hvat virði hava kortini?\'\'\'',
 	'leaderboard' => 'Avriks stigatalvan',
 	'achievements-title' => 'Avrik',
 	'leaderboard-title' => 'Stigatalva',
@@ -3058,24 +2920,15 @@ Vinarliga royn við aðrari mynd!',
 	'achievements-badge-name-edit-1' => 'Bert byrjanin',
 ];
 
-/** French (français)
- * @author Gomoko
- * @author IAlex
- * @author Peter17
- * @author Urhixidur
- * @author Verdy p
- * @author Wyz
- * @author Zetud
- */
 $messages['fr'] = [
 	'achievementsii-desc' => 'Un système de badges pour les utilisateurs du wiki',
-	'achievements-upload-error' => "Désolé !
+	'achievements-upload-error' => 'Désolé !
 Cette image ne fonctionne pas.
-Veuillez vous assurer qu’il s'agit bien d'un fichier .jpg ou .png.
-Si cela ne fonctionne toujours pas, c'est peut-être que l’image est trop lourde.
-Merci d'en essayer une autre !",
+Veuillez vous assurer qu’il s\'agit bien d\'un fichier .jpg ou .png.
+Si cela ne fonctionne toujours pas, c\'est peut-être que l’image est trop lourde.
+Merci d\'en essayer une autre !',
 	'achievements-upload-not-allowed' => 'Les administrateurs peuvent changer les noms et images des badges des récompenses en visitant [[Special:AchievementsCustomize|la page de personnalisations des récompenses]].',
-	'achievements-non-existing-category' => "La catégorie spécifiée n'existe pas.",
+	'achievements-non-existing-category' => 'La catégorie spécifiée n\'existe pas.',
 	'achievements-edit-plus-category-track-exists' => 'La catégorie spécifiée a déjà un <a href="#" onclick="$(window).scrollTo(\'#section$1\', 2500); return false;" title="Aller au suivi">suivi associé</a>.',
 	'achievements-no-stub-category' => 'Veuillez ne pas créer de groupes pour les ébauches.',
 	'right-platinum' => 'Créer et modifier des badges de platine',
@@ -3118,9 +2971,9 @@ Merci d'en essayer une autre !",
 	'leaderboard-intro-hide' => 'masquer',
 	'leaderboard-intro-open' => 'ouvrir',
 	'leaderboard-intro-headline' => 'Que sont les récompenses ?',
-	'leaderboard-intro' => "Sur ce wiki vous pouvez gagner des badges en modifiant des articles, téléversant des photos et en laissant des commentaires. Chaque badge vous rapporte des points — plus vous aurez de points et plus haut vous serez dans le classement ! Vous trouverez les badges que vous avez récoltés sur votre [[$1|page utilisateur]].
+	'leaderboard-intro' => 'Sur ce wiki vous pouvez gagner des badges en modifiant des articles, téléversant des photos et en laissant des commentaires. Chaque badge vous rapporte des points — plus vous aurez de points et plus haut vous serez dans le classement ! Vous trouverez les badges que vous avez récoltés sur votre [[$1|page utilisateur]].
 
-'''Que valent les badges ?'''",
+\'\'\'Que valent les badges ?\'\'\'',
 	'leaderboard' => 'Tableau des récompenses',
 	'achievements-title' => 'Récompenses',
 	'leaderboard-title' => 'Classement',
@@ -3135,7 +2988,7 @@ Merci d'en essayer une autre !",
 	'achievements-leaderboard-most-recently-earned-label' => 'Dernier reçu',
 	'achievements-send' => 'Enregistrer l’image',
 	'achievements-save' => 'Enregistrer les modifications',
-	'achievements-reverted' => "Le badge est revenu à l'original.",
+	'achievements-reverted' => 'Le badge est revenu à l\'original.',
 	'achievements-customize' => 'Personnaliser l’image',
 	'achievements-customize-new-category-track' => 'Créer un nouveau suivi pour la catégorie :',
 	'achievements-enable-track' => 'activé',
@@ -3190,7 +3043,7 @@ $5',
 Vous venez de gagner le badge de platine « <strong>$2</strong> » sur <a href="$3">$4</a>. Ceci ajoute 250 points à votre score !<br /><br />
 Venez jeter un œil à votre super nouveau badge sur votre <a href="$5">page utilisateur</a>.',
 	'achievements-community-platinum-awarded-for' => 'Décerné pour :',
-	'achievements-community-platinum-how-to-earn' => "Comment l'obtenir :",
+	'achievements-community-platinum-how-to-earn' => 'Comment l\'obtenir :',
 	'achievements-community-platinum-awarded-for-example' => 'ex : « pour faire... »',
 	'achievements-community-platinum-how-to-earn-example' => 'ex : « faire 3 modifications... »',
 	'achievements-community-platinum-badge-image' => 'Image du badge :',
@@ -3220,7 +3073,7 @@ Venez jeter un œil à votre super nouveau badge sur votre <a href="$5">page uti
 	'achievements-badge-name-picture-1' => 'Paparazzi',
 	'achievements-badge-name-picture-2' => 'Illustrateur',
 	'achievements-badge-name-picture-3' => 'Collectionneur',
-	'achievements-badge-name-picture-4' => "Amateur d'art",
+	'achievements-badge-name-picture-4' => 'Amateur d\'art',
 	'achievements-badge-name-picture-5' => 'Décorateur',
 	'achievements-badge-name-picture-6' => 'Concepteur',
 	'achievements-badge-name-picture-7' => 'Conservateur',
@@ -3321,8 +3174,8 @@ sur {{PLURAL:$1|une page|des pages}} $2 !',
 	'achievements-badge-hover-desc-welcome' => 'Distingué pour avoir rejoint le wiki !',
 	'achievements-badge-hover-desc-introduction' => 'Distingué pour avoir ajouté des informations sur<br />
 votre propre page utilisateur !',
-	'achievements-badge-hover-desc-sayhi' => "Distingué pour avoir laissé un message<br />
-sur la page de discussion de quelqu’un d'autre !",
+	'achievements-badge-hover-desc-sayhi' => 'Distingué pour avoir laissé un message<br />
+sur la page de discussion de quelqu’un d\'autre !',
 	'achievements-badge-hover-desc-creator' => 'Distingué pour avoir créé le wiki !',
 	'achievements-badge-hover-desc-pounce' => 'Distingué pour avoir fait des modifications sur 100 pages dans l’heure suivant la création de la page !',
 	'achievements-badge-hover-desc-caffeinated' => 'Distingué pour avoir fait 100 modifications sur des pages en un seul jour !',
@@ -3338,7 +3191,7 @@ sur la page de discussion de quelqu’un d'autre !",
 	'achievements-badge-your-desc-love' => 'Distingué pour avoir contribué au wiki tous les jours pendant {{PLURAL:$1|un jour|$1 jours}}!',
 	'achievements-badge-your-desc-welcome' => 'Distingué pour avoir rejoint le wiki !',
 	'achievements-badge-your-desc-introduction' => 'Distingué pour avoir ajouté des informations sur votre propre page utilisateur !',
-	'achievements-badge-your-desc-sayhi' => "Distingué pour avoir laissé un message sur la page de discussion de quelqu’un d'autre !",
+	'achievements-badge-your-desc-sayhi' => 'Distingué pour avoir laissé un message sur la page de discussion de quelqu’un d\'autre !',
 	'achievements-badge-your-desc-creator' => 'Distingué pour avoir créé le wiki !',
 	'achievements-badge-your-desc-pounce' => 'Distingué pour avoir fait des modifications sur 100 pages dans l’heure suivant la création de la page !',
 	'achievements-badge-your-desc-caffeinated' => 'Distingué pour avoir fait 100 modifications sur des pages en un seul jour !',
@@ -3353,7 +3206,7 @@ sur la page de discussion de quelqu’un d'autre !",
 	'achievements-badge-desc-love' => 'Distingué pour avoir contribué au wiki tous les jours pendant {{PLURAL:$1|un jour|$1 jours}} !',
 	'achievements-badge-desc-welcome' => 'Distingué pour avoir rejoint le wiki !',
 	'achievements-badge-desc-introduction' => 'Distingué pour avoir ajouté des informations sur votre propre page utilisateur !',
-	'achievements-badge-desc-sayhi' => "Distingué pour avoir laissé un message sur la page de discussion de quelqu’un d'autre !",
+	'achievements-badge-desc-sayhi' => 'Distingué pour avoir laissé un message sur la page de discussion de quelqu’un d\'autre !',
 	'achievements-badge-desc-creator' => 'Distingué pour avoir créé le wiki !',
 	'achievements-badge-desc-pounce' => 'Distingué pour avoir fait des modifications sur 100 pages dans l’heure suivant la création de la page !',
 	'achievements-badge-desc-caffeinated' => 'Distingué pour avoir fait 100 modifications sur des pages en un seul jour !',
@@ -3369,9 +3222,6 @@ sur la page de discussion de quelqu’un d'autre !",
 	'achievements-prev-oasis' => 'Précédent',
 ];
 
-/** Galician (Galego)
- * @author Toliño
- */
 $messages['gl'] = [
 	'achievementsii-desc' => 'Un sistema de insignias para os usuarios do wiki',
 	'achievements-upload-error' => 'Sentímolo!
@@ -3423,9 +3273,9 @@ Inténteo con outra imaxe!',
 	'leaderboard-intro-hide' => 'agochar',
 	'leaderboard-intro-open' => 'abrir',
 	'leaderboard-intro-headline' => 'Que son os logros?',
-	'leaderboard-intro' => "Pode gañar insignias neste wiki editando páxinas, cargando fotos e deixando comentarios. Con cada insignia obterá puntos que o poden levar máis arriba no taboleiro de logros! Atopará as insignias que gañou na [[$1|páxina do seu perfil de usuario]].
+	'leaderboard-intro' => 'Pode gañar insignias neste wiki editando páxinas, cargando fotos e deixando comentarios. Con cada insignia obterá puntos que o poden levar máis arriba no taboleiro de logros! Atopará as insignias que gañou na [[$1|páxina do seu perfil de usuario]].
 
-'''Canto valen os logros?'''",
+\'\'\'Canto valen os logros?\'\'\'',
 	'leaderboard' => 'Taboleiro de logros',
 	'achievements-title' => 'Logros',
 	'leaderboard-title' => 'Taboleiro de logros',
@@ -3675,19 +3525,10 @@ na páxina de conversa de alguén!',
 	'achievements-userprofile-ranked' => '[[Special:Leaderboard|Posto nº$1]]<br />neste wiki',
 ];
 
-/** Ancient Greek (Ἀρχαία ἑλληνικὴ)
- * @author Crazymadlover
- */
 $messages['grc'] = [
 	'achievements-community-platinum-cancel' => 'Ἀκυροῦν',
 ];
 
-/** Hebrew (עברית)
- * @author Amire80
- * @author Deror avi
- * @author Ofekalef
- * @author Yova
- */
 $messages['he'] = [
 	'achievementsii-desc' => 'מערכת מתן תגי הוכרה למשתמשי ויקי',
 	'achievements-upload-error' => 'מצטערים!
@@ -3738,9 +3579,9 @@ $messages['he'] = [
 	'leaderboard-intro-hide' => 'הסתרה',
 	'leaderboard-intro-open' => 'פתיחה',
 	'leaderboard-intro-headline' => 'מה הם "הישגים"?',
-	'leaderboard-intro' => "הנכם יכולים לזכות בתגים בויקי זה באמצעות עריכת דפים, העלאת תמונות, או השארת הערות. כל תג יזכה בנקודות. ככל שתזכו ביותר נקודות, תופיעו במיקום גבוה יותר בלוח ההישגים! ניתן לצפות בתגים בהם זכיתם [[$1|בדף שלכם]].
+	'leaderboard-intro' => 'הנכם יכולים לזכות בתגים בויקי זה באמצעות עריכת דפים, העלאת תמונות, או השארת הערות. כל תג יזכה בנקודות. ככל שתזכו ביותר נקודות, תופיעו במיקום גבוה יותר בלוח ההישגים! ניתן לצפות בתגים בהם זכיתם [[$1|בדף שלכם]].
 
-'''מה שוויים של התגים?'''",
+\'\'\'מה שוויים של התגים?\'\'\'',
 	'leaderboard' => 'לוח מובילי ההישגים',
 	'achievements-title' => 'הישגים',
 	'leaderboard-title' => 'לוח המובילים',
@@ -3781,9 +3622,6 @@ $messages['he'] = [
 	'achievements-badge-your-desc-edit' => 'עבור ביצוע {{PLURAL:$1|העריכה הראשונה|$1 העריכות}} ב{{PLURAL:$1|דף|דפים}}!',
 ];
 
-/** Hindi (हिन्दी)
- * @author Rajivkurjee
- */
 $messages['hi'] = [
 	'achievements-upload-error' => 'क्षमा करें!
 वह तस्वीर काम नहीं करता है!
@@ -3796,10 +3634,6 @@ $messages['hi'] = [
 	'achievements-you-must' => 'इस बैज अर्जित करने के लिए आपको $1 की जरूरत है।',
 ];
 
-/** Hungarian (magyar)
- * @author Dani
- * @author TK-999
- */
 $messages['hu'] = [
 	'achievementsii-desc' => 'Eredményalapú jelvényrendszer a wiki felhasználói számára',
 	'achievements-upload-error' => 'Hoppá!
@@ -3844,9 +3678,9 @@ Ellenőrizd, hogy .jpg vagy .png fájl-e. Ha még mindig nem működik, valósz�
 	'leaderboard-intro-hide' => 'elrejtés',
 	'leaderboard-intro-open' => 'kinyit',
 	'leaderboard-intro-headline' => 'Mik a kitüntetések?',
-	'leaderboard-intro' => "A wikin oldalak szerkesztésével, képek feltöltésével és hozzászólások írásával szerezhetsz jelvényeket. Minden jelvény pontokat ér&mdash;minél több pontot szerzel, annál magasabbra jutsz a toplistán! A már a birtokodban lévő jelvényeket megtekintheted [[$1|a profilodon]].
+	'leaderboard-intro' => 'A wikin oldalak szerkesztésével, képek feltöltésével és hozzászólások írásával szerezhetsz jelvényeket. Minden jelvény pontokat ér&mdash;minél több pontot szerzel, annál magasabbra jutsz a toplistán! A már a birtokodban lévő jelvényeket megtekintheted [[$1|a profilodon]].
 
-	'''Mennyit érnek a jelvények?'''",
+	\'\'\'Mennyit érnek a jelvények?\'\'\'',
 	'leaderboard' => 'Eredmények toplistája',
 	'achievements-title' => 'Kitüntetések',
 	'leaderboard-title' => 'Ranglista',
@@ -4000,10 +3834,10 @@ Kattints a "{{int:edit}}" gombra és bármelyik oldalt szerkesztheted!',
 	'achievements-badge-to-get-edit-plus-category-details' => 'A(z) <strong>$1</strong> oldalaknak szükségük van rád!
 Kattints a "{{int:edit}}" gombra a kategória bármelyik oldalán, hogy segíts.
 Mutasd meg, hogy támogatod a(z) $1 oldalakat!',
-	'achievements-badge-to-get-picture-details' => "Kattins a ''{{int:edit}}'', majd a ''{{int:rte-ck-image-add}}'' gombra.
-Ezzel hozzáaddhatsz egy képet a számítógépedről vagy a wiki egy másik lapjáról.",
-	'achievements-badge-to-get-category-details' => "A kategóriák címkék, amelyek segítik az olvasókat a hasonló oldalak megtalálásában.
-Kattints a ''{{int:categoryselect-addcategory-button}}'' gombra az oldal alján hogy hozzáadd az oldalt egy kategóriához.",
+	'achievements-badge-to-get-picture-details' => 'Kattins a \'\'{{int:edit}}\'\', majd a \'\'{{int:rte-ck-image-add}}\'\' gombra.
+Ezzel hozzáaddhatsz egy képet a számítógépedről vagy a wiki egy másik lapjáról.',
+	'achievements-badge-to-get-category-details' => 'A kategóriák címkék, amelyek segítik az olvasókat a hasonló oldalak megtalálásában.
+Kattints a \'\'{{int:categoryselect-addcategory-button}}\'\' gombra az oldal alján hogy hozzáadd az oldalt egy kategóriához.',
 	'achievements-badge-to-get-blogpost-details' => 'Írd meg véleményedet és kérdéseidet!
 Kattints a "{{int:blogs-recent-url-text}}" hivatkozásra az oldalsávban, majd a baloldali linkre, hogy "{{int:create-blog-post-title}}".',
 	'achievements-badge-to-get-love-details' => 'A számláló nullázódik, ha kihagysz egy napot, úgyhogy térj vissza a wikihez minden nap!',
@@ -4077,9 +3911,6 @@ más vitalapján hagyott üzenetért kaptál!',
 	'achievements-userprofile-ranked' => '[[Special:Leaderboard|$1. helyezett]]<br />ezen a wikin.',
 ];
 
-/** Interlingua (interlingua)
- * @author McDutchie
- */
 $messages['ia'] = [
 	'achievementsii-desc' => 'Un systema de insignias de merito pro usatores del wiki',
 	'achievements-upload-error' => 'Guai!
@@ -4131,9 +3962,9 @@ Per favor essaya un altere!',
 	'leaderboard-intro-hide' => 'celar',
 	'leaderboard-intro-open' => 'aperir',
 	'leaderboard-intro-headline' => 'Que es Successos?',
-	'leaderboard-intro' => "Tu pote ganiar insignias in iste wiki per modificar articulos, incargar photos e lassar commentos. Con cata insignia, tu gania punctos. Quanto plus punctos tu recipe, tanto plus alte tu position in le classamento! Le insignias que tu ha ganiate se trova in tu [[$1|profilo de usator]].
+	'leaderboard-intro' => 'Tu pote ganiar insignias in iste wiki per modificar articulos, incargar photos e lassar commentos. Con cata insignia, tu gania punctos. Quanto plus punctos tu recipe, tanto plus alte tu position in le classamento! Le insignias que tu ha ganiate se trova in tu [[$1|profilo de usator]].
 
-'''Quanto vale le insignias?'''",
+\'\'\'Quanto vale le insignias?\'\'\'',
 	'leaderboard' => 'Classamento de successos',
 	'achievements-title' => 'Successos',
 	'leaderboard-title' => 'Classamento',
@@ -4192,13 +4023,13 @@ Proba lo!',
 	'achievements-create-edit-plus-category' => 'Crear iste tracia',
 	'platinum' => 'Platino',
 	'achievements-community-platinum-awarded-email-subject' => 'Tu ha meritate un nove insignia de Platino!',
-	'achievements-community-platinum-awarded-email-body-text' => "Felicitationes, $1!
+	'achievements-community-platinum-awarded-email-body-text' => 'Felicitationes, $1!
 
-Tu ha justo recipite le insignia de Platino '$2' in $4 ($3). Isto adde 250 punctos a tu score!
+Tu ha justo recipite le insignia de Platino \'$2\' in $4 ($3). Isto adde 250 punctos a tu score!
 
 Reguarda tu nove insignia fantastic in le pagina de tu profilo de usator:
 
-$5",
+$5',
 	'achievements-community-platinum-awarded-email-body-html' => '<strong>Felicitationes, $1!</strong><br /><br />
 Tu ha justo recipite le insignia de Platino \'<strong>$2</strong>\' in <a href="$3">$4</a>. Isto adde 250 punctos a tu score!<br /><br />
 Reguarda tu nove insignia fantastic in le <a href="$5">pagina de tu profilo de usator</a>.',
@@ -4379,10 +4210,6 @@ in le pagina de discussion de un altere persona!',
 	'achievements-userprofile-ranked' => '[[Special:Leaderboard|Rango №$1]]<br />in iste wiki',
 ];
 
-/** Indonesian (Bahasa Indonesia)
- * @author Aldnonymous
- * @author Farras
- */
 $messages['id'] = [
 	'achievementsii-desc' => 'System lencana prestasi untuk pengguna wiki',
 	'achievements-upload-error' => 'Maaf!
@@ -4432,9 +4259,9 @@ Silahkan coba yang lain.',
 	'leaderboard-intro-hide' => 'Sembunyikan',
 	'leaderboard-intro-open' => 'Buka',
 	'leaderboard-intro-headline' => 'Apakah prestasi?',
-	'leaderboard-intro' => "Anda bisa mendapatkan lencana di wiki ini dengan mengedit halaman, meng-upload foto dan meninggalkan komentar. Lencana setiap Anda mendapatkan poin - semakin banyak Anda mendapatkan poin, semakin tinggi peringkat Anda!, Anda akan menemukan lencana yang Anda telah diterima pada [[$1|user profile page]].
+	'leaderboard-intro' => 'Anda bisa mendapatkan lencana di wiki ini dengan mengedit halaman, meng-upload foto dan meninggalkan komentar. Lencana setiap Anda mendapatkan poin - semakin banyak Anda mendapatkan poin, semakin tinggi peringkat Anda!, Anda akan menemukan lencana yang Anda telah diterima pada [[$1|user profile page]].
 
-	''' Apa harga lencana?'' '",
+	\'\'\' Apa harga lencana?\'\' \'',
 	'leaderboard' => 'Papan prestasi',
 	'achievements-title' => 'Prestasi',
 	'achievements-recent-earned-badges' => 'Lencana yang baru-baru ini diterima',
@@ -4542,17 +4369,11 @@ Cobalah!',
 	'achievements-badge-to-get-creator' => 'jadilah pencipta wiki ini',
 ];
 
-/** Igbo (Igbo)
- * @author Ukabia
- */
 $messages['ig'] = [
 	'achievements-viewless' => 'Mèchié',
 	'achievements-badge-name-category-4' => 'Ọtúzọr',
 ];
 
-/** Ingush (ГӀалгӀай)
- * @author Sapral Mikail
- */
 $messages['inh'] = [
 	'achievements-non-existing-category' => 'Лаьрха цатег йоацаш я',
 	'achievements-gold' => 'Дошув',
@@ -4577,20 +4398,13 @@ $messages['inh'] = [
 	'achievements-community-platinum-cancel' => 'дIадаккха',
 ];
 
-/** Italian (italiano)
- * @author Beta16
- * @author Lexaeus 94
- * @author Minerva Titani
- * @author Valepert
- * @author Ximo17
- */
 $messages['it'] = [
 	'achievementsii-desc' => 'Un sistema di medaglie per i successi degli utenti',
-	'achievements-upload-error' => "Spiacenti!
+	'achievements-upload-error' => 'Spiacenti!
 Questa immagine non funziona.
 Assicurati che sia un file .jpg o .png.
 Se non funziona comunque, allora potrebbe essere troppo grande.
-Per favore, provane un'altra!",
+Per favore, provane un\'altra!',
 	'achievements-upload-not-allowed' => 'Gli amministratori possono cambiare i nomi e le immagini delle medaglie tramite la pagina [[Special:AchievementsCustomize|per personalizzare i successi]].',
 	'achievements-non-existing-category' => 'La categoria indicata non esiste.',
 	'achievements-edit-plus-category-track-exists' => 'La categoria specificata ha già un <a href="#" onclick="$(window).scrollTo(\'#section$1\', 2500); return false;" title="Go to the track">percorso associato</a>.',
@@ -4608,7 +4422,7 @@ Per favore, provane un'altra!",
 	'leaderboard-button' => 'Classifica dei successi',
 	'achievements-masthead-points' => '$1 <small>{{PLURAL:$1|punto|punti}}</small>',
 	'achievements-profile-title-no' => 'Medaglie di $1',
-	'achievements-no-badges' => "Controlla l'elenco qui sotto per vedere le medaglie che puoi ottenere su questa wiki!",
+	'achievements-no-badges' => 'Controlla l\'elenco qui sotto per vedere le medaglie che puoi ottenere su questa wiki!',
 	'achievements-track-name-edit' => 'Modifica percorso',
 	'achievements-track-name-picture' => 'Percorso Immagini',
 	'achievements-track-name-category' => 'Percorso Categoria',
@@ -4635,9 +4449,9 @@ Per favore, provane un'altra!",
 	'leaderboard-intro-hide' => 'nascondi',
 	'leaderboard-intro-open' => 'mostra',
 	'leaderboard-intro-headline' => 'Cosa sono le Medaglie?',
-	'leaderboard-intro' => "Su questa wiki puoi ottenere le medaglie modificando pagine, caricando immagini e lasciando commenti. Ogni medaglia ti fa guadagnare punti - più punti ottieni, più in alto sarai nella classifica! Trovi l'elenco delle medaglie che hai ottenuto nel tuo [[$1|profilo utente]].
+	'leaderboard-intro' => 'Su questa wiki puoi ottenere le medaglie modificando pagine, caricando immagini e lasciando commenti. Ogni medaglia ti fa guadagnare punti - più punti ottieni, più in alto sarai nella classifica! Trovi l\'elenco delle medaglie che hai ottenuto nel tuo [[$1|profilo utente]].
 
-'''Quanto valgono le medaglie?'''",
+\'\'\'Quanto valgono le medaglie?\'\'\'',
 	'leaderboard' => 'Classifica dei successi',
 	'achievements-title' => 'Successi',
 	'leaderboard-title' => 'Classifica',
@@ -4652,7 +4466,7 @@ Per favore, provane un'altra!",
 	'achievements-leaderboard-most-recently-earned-label' => 'Ottenuta di recente',
 	'achievements-send' => 'Salva immagine',
 	'achievements-save' => 'Salva modifiche',
-	'achievements-reverted' => "Medaglia ripristinata all'originale.",
+	'achievements-reverted' => 'Medaglia ripristinata all\'originale.',
 	'achievements-customize' => 'Personalizza immagine',
 	'achievements-customize-new-category-track' => 'Crea un nuovo percorso per la categoria:',
 	'achievements-enable-track' => 'attivato',
@@ -4662,19 +4476,19 @@ Per favore, provane un'altra!",
 	'achievements-secret' => 'Successi segreti',
 	'achievementscustomize' => 'Personalizza le medaglie',
 	'achievements-about-title' => 'Su questa pagina...',
-	'achievements-about-content' => "Gli amministratori di questa wiki possono personalizzare i nomi e le immagini delle medaglie.
+	'achievements-about-content' => 'Gli amministratori di questa wiki possono personalizzare i nomi e le immagini delle medaglie.
 
-Puoi caricare qualsiasi immagine .jpg o .png e l'immagine si adatterà automaticamente all'interno della cornice.
-Funziona meglio quando l'immagine è quadrata, e quando la parte più importante dell'immagine è proprio al centro.
+Puoi caricare qualsiasi immagine .jpg o .png e l\'immagine si adatterà automaticamente all\'interno della cornice.
+Funziona meglio quando l\'immagine è quadrata, e quando la parte più importante dell\'immagine è proprio al centro.
 
-Puoi utilizzare anche un'immagine rettangolare, ma una parte potrebbe essere un po' tagliata dalla cornice.
-Se possiedi un programma di grafica, puoi ritagliare l'immagine in modo da posizionare la sua parte più importante al centro.
+Puoi utilizzare anche un\'immagine rettangolare, ma una parte potrebbe essere un po\' tagliata dalla cornice.
+Se possiedi un programma di grafica, puoi ritagliare l\'immagine in modo da posizionare la sua parte più importante al centro.
 Se non hai un programma di grafica, prova diverse immagini fino a trovare quelle che vanno bene per te!
-Se non ti piace l'immagine che hai scelto, clicca su \"{{int:achievements-ripristinare}}\" per tornare alla grafica originale.
+Se non ti piace l\'immagine che hai scelto, clicca su "{{int:achievements-ripristinare}}" per tornare alla grafica originale.
 
-Puoi anche dare alle medaglie nuovi nomi che riflettono l'argomento della wiki.
-Quando hai cambiato i nomi delle medaglie, clicca su \"{{int:achievements-salvare}}\" per salvare le modifiche.
-Buon divertimento!",
+Puoi anche dare alle medaglie nuovi nomi che riflettono l\'argomento della wiki.
+Quando hai cambiato i nomi delle medaglie, clicca su "{{int:achievements-salvare}}" per salvare le modifiche.
+Buon divertimento!',
 	'achievements-edit-plus-category-track-name' => 'Percorso modifiche $1',
 	'achievements-create-edit-plus-category-title' => 'Crea un nuovo percorso Modifiche',
 	'achievements-create-edit-plus-category-content' => 'È possibile creare un nuovo set di medaglie per premiare gli utenti che modificano le pagine in una determinata categoria, per evidenziare un\'area particolare del sito a cui gli utenti si divertirebbero a collaborare.
@@ -4694,14 +4508,14 @@ Questa funzione aggiungerà divertimento alla conquista delle medaglie. Provala!
 	'achievements-create-edit-plus-category' => 'Crea questo percorso',
 	'platinum' => 'Platino',
 	'achievements-community-platinum-awarded-email-subject' => 'Hai ottenuto una nuova medaglia di Platino!',
-	'achievements-community-platinum-awarded-email-body-text' => "Congratulazioni $1!
+	'achievements-community-platinum-awarded-email-body-text' => 'Congratulazioni $1!
 
-Hai appena ottenuto la medaglia di Platino '$2' su $4 ($3).
+Hai appena ottenuto la medaglia di Platino \'$2\' su $4 ($3).
 Questa aggiunge 250 punti al tuo punteggio!
 
 Vedi la tua nuova medaglia nel tuo profilo utente:
 
-$5",
+$5',
 	'achievements-community-platinum-awarded-email-body-html' => '<strong>Congratulazioni $1!</strong><br /><br />
 Hai appena ottenuto la medaglia di Platino \'<strong>$2</strong>\' su <a href="$3">$4</a>.
 Questa aggiunge 250 punti al tuo punteggio!<br /><br />
@@ -4721,12 +4535,12 @@ Vedi la tua nuova medaglia nel <a href="$5">tuo profilo utente</a>.',
 	'achievements-community-platinum-cancel' => 'annulla',
 	'achievements-community-platinum-sponsored-label' => 'successo sponsorizzato',
 	'achievements-community-platinum-sponsored-hover-content-label' => 'Immagine al passaggio del mouse <small>(dimensioni minime: 270px x 100px)</small>:',
-	'achievements-community-platinum-sponsored-badge-impression-pixel-url-label' => "Rileva l'URL per impressioni distintive:",
-	'achievements-community-platinum-sponsored-hover-impression-pixel-url-label' => "Rileva l'URL per impressioni incerte:",
-	'achievements-community-platinum-sponsored-badge-click-url-label' => "Link distintivo <small>(DART click sull'URL di comando)</small>:",
+	'achievements-community-platinum-sponsored-badge-impression-pixel-url-label' => 'Rileva l\'URL per impressioni distintive:',
+	'achievements-community-platinum-sponsored-hover-impression-pixel-url-label' => 'Rileva l\'URL per impressioni incerte:',
+	'achievements-community-platinum-sponsored-badge-click-url-label' => 'Link distintivo <small>(DART click sull\'URL di comando)</small>:',
 	'achievements-community-platinum-sponsored-badge-click-tooltip' => 'Clicca qui per maggiori informazioni',
 	'achievements-badge-name-edit-0' => 'Fai la differenza',
-	'achievements-badge-name-edit-1' => "E' solo l'inizio",
+	'achievements-badge-name-edit-1' => 'E\' solo l\'inizio',
 	'achievements-badge-name-edit-2' => 'Lascia la tua traccia',
 	'achievements-badge-name-edit-3' => 'Amico della Wiki',
 	'achievements-badge-name-edit-4' => 'Collaboratore',
@@ -4737,7 +4551,7 @@ Vedi la tua nuova medaglia nel <a href="$5">tuo profilo utente</a>.',
 	'achievements-badge-name-picture-1' => 'Paparazzo',
 	'achievements-badge-name-picture-2' => 'Illustratore',
 	'achievements-badge-name-picture-3' => 'Collezionista',
-	'achievements-badge-name-picture-4' => "Amante dell'arte",
+	'achievements-badge-name-picture-4' => 'Amante dell\'arte',
 	'achievements-badge-name-picture-5' => 'Decoratore',
 	'achievements-badge-name-picture-6' => 'Designer',
 	'achievements-badge-name-picture-7' => 'Curatore',
@@ -4754,7 +4568,7 @@ Vedi la tua nuova medaglia nel <a href="$5">tuo profilo utente</a>.',
 	'achievements-badge-name-blogpost-3' => 'Animatore della festa',
 	'achievements-badge-name-blogpost-4' => 'Oratore',
 	'achievements-badge-name-blogcomment-0' => 'Opinionista',
-	'achievements-badge-name-blogcomment-1' => "E un'altra cosa",
+	'achievements-badge-name-blogcomment-1' => 'E un\'altra cosa',
 	'achievements-badge-name-love-0' => 'Chiavi della wiki!',
 	'achievements-badge-name-love-1' => 'Due settimane nella wiki',
 	'achievements-badge-name-love-2' => 'Devoto',
@@ -4841,7 +4655,7 @@ la propria pagina utente!',
 	'achievements-badge-hover-desc-sayhi' => 'per aver lasciato un messaggio<br />
 nella pagina di discussione di un altro utente!',
 	'achievements-badge-hover-desc-creator' => 'per aver creato la wiki!',
-	'achievements-badge-hover-desc-pounce' => "per aver effettuato modifiche in 100 pagine nell'arco di un'ora dalla creazione della pagina!",
+	'achievements-badge-hover-desc-pounce' => 'per aver effettuato modifiche in 100 pagine nell\'arco di un\'ora dalla creazione della pagina!',
 	'achievements-badge-hover-desc-caffeinated' => 'per aver effettuato 100 modifiche nelle pagine in un solo giorno!',
 	'achievements-badge-hover-desc-luckyedit' => 'per aver effettuato la modifica fortunata n. $1 nella wiki!',
 	'achievements-badge-hover-desc-community-platinum' => 'Questa è una medaglia speciale di platino disponibile sono per un periodo limitato!',
@@ -4857,7 +4671,7 @@ nella pagina di discussione di un altro utente!',
 	'achievements-badge-your-desc-introduction' => 'per aver modificato la propria pagina utente!',
 	'achievements-badge-your-desc-sayhi' => 'per aver lasciato un messaggio nella pagina di discussione di un altro utente!',
 	'achievements-badge-your-desc-creator' => 'per aver creato la wiki!',
-	'achievements-badge-your-desc-pounce' => "per aver effettuato modifiche in 100 pagine nell'arco di un'ora dalla creazione della pagina!",
+	'achievements-badge-your-desc-pounce' => 'per aver effettuato modifiche in 100 pagine nell\'arco di un\'ora dalla creazione della pagina!',
 	'achievements-badge-your-desc-caffeinated' => 'per aver effettuato 100 modifiche nelle pagine in un solo giorno!',
 	'achievements-badge-your-desc-luckyedit' => 'per aver effettuato la modifica fortunata n. $1 nella wiki!',
 	'achievements-badge-desc-sharing' => '{{#ifeq:$1|0|per aver condiviso un link|per aver fatto in modo che {{PLURAL:$1|una persona cliccasse|$1 persone cliccassero}} sui link condivisi}}',
@@ -4872,12 +4686,12 @@ nella pagina di discussione di un altro utente!',
 	'achievements-badge-desc-introduction' => 'per aver modificato la propria pagina utente!',
 	'achievements-badge-desc-sayhi' => 'per aver lasciato un messaggio nella pagina di discussione di un altro utente!',
 	'achievements-badge-desc-creator' => 'per aver creato la wiki!',
-	'achievements-badge-desc-pounce' => "per aver effettuato modifiche in 100 pagine nell'arco di un'ora dalla creazione della pagina!",
+	'achievements-badge-desc-pounce' => 'per aver effettuato modifiche in 100 pagine nell\'arco di un\'ora dalla creazione della pagina!',
 	'achievements-badge-desc-caffeinated' => 'per aver effettuato 100 modifiche nelle pagine in un solo giorno!',
 	'achievements-badge-desc-luckyedit' => 'per aver effettuato la modifica fortunata n. $1 nella wiki!',
 	'achievements-userprofile-title-no' => 'Medaglie di $1',
 	'achievements-userprofile-title' => '{{PLURAL:$2|Medaglia|Medaglie}} di $1 ($2)',
-	'achievements-userprofile-no-badges-owner' => "Controlla l'elenco qui sotto per vedere le medaglie che puoi ottenere su questa wiki!",
+	'achievements-userprofile-no-badges-owner' => 'Controlla l\'elenco qui sotto per vedere le medaglie che puoi ottenere su questa wiki!',
 	'achievements-userprofile-no-badges-visitor' => 'Questo utente non ha ancora ottenuto alcuna medaglia.',
 	'achievements-userprofile-profile-score' => '<em>$1</em> Punti<br />successi',
 	'achievements-userprofile-ranked' => '[[Special:Leaderboard|Alla posizione #$1]]<br />in questa wiki',
@@ -4886,10 +4700,6 @@ nella pagina di discussione di un altro utente!',
 	'achievements-prev-oasis' => 'Precedente',
 ];
 
-/** Japanese (日本語)
- * @author Shirayuki
- * @author Tommy6
- */
 $messages['ja'] = [
 	'achievementsii-desc' => 'コミュニティ編集者のためのアチーブメント・バッジシステム',
 	'achievements-upload-error' => '申し訳ありません、この画像は使用できません。
@@ -5093,14 +4903,14 @@ $1 枚の画像の追加を達成',
 新しいトラッキング機能で、アチーブメントがより一層楽しくなりました。
 早速試してみよう！',
 	'achievements-community-platinum-awarded-email-subject' => '新しいプラチナバッジを獲得しました！',
-	'achievements-community-platinum-awarded-email-body-text' => "$1さん、おめでとうございます！
+	'achievements-community-platinum-awarded-email-body-text' => '$1さん、おめでとうございます！
 
-$4（$3）で'$2'のプラチナバッジを獲得しました。
+$4（$3）で\'$2\'のプラチナバッジを獲得しました。
 スコアに250ポイントが追加されます。
 
 新しいバッジはユーザー・プロフィールのページでご確認いただけます。
 
-$5",
+$5',
 	'achievements-community-platinum-awarded-email-body-html' => '<strong>$さん、おめでとうございます！</strong><br /><br />
 <a href="$3">$4</a>で\'<strong>$2</strong>\'のプラチナバッジを獲得しました。
 スコアに250ポイントが追加されます。<br /><br />
@@ -5189,9 +4999,6 @@ $5",
 	'achievements-badge-desc-sharing' => '{{#ifeq:$1|0|リンク1個のシェア|シェアしたリンクの{{PLURAL:$1|1|$1}} クリック}} を達成',
 ];
 
-/** Georgian (ქართული)
- * @author David1010
- */
 $messages['ka'] = [
 	'achievementsii-desc' => 'ვიკი მომხმარებლების მიღწევების სისტემა',
 	'achievements-upload-error' => 'უკაცრავად!
@@ -5239,16 +5046,10 @@ $messages['ka'] = [
 	'achievements-profile-title-oasis' => 'მიღწევების <br /> ქულები',
 ];
 
-/** Khowar (کھوار)
- * @author Rachitrali
- */
 $messages['khw'] = [
 	'achievements-gold' => 'سوروم',
 ];
 
-/** Khmer (ភាសាខ្មែរ)
- * @author T-Rithy
- */
 $messages['km'] = [
 	'achievements-platinum' => 'ប្លាទីន',
 	'achievements-gold' => 'មាស',
@@ -5273,10 +5074,6 @@ $messages['km'] = [
 	'achievements-badge-to-get-welcome' => 'ចូលរួមវិគី',
 ];
 
-/** Kannada (ಕನ್ನಡ)
- * @author Nayvik
- * @author VASANTH S.N.
- */
 $messages['kn'] = [
 	'achievements-platinum' => 'ಪ್ಲಾಟಿನಂ',
 	'achievements-gold' => 'ಸ್ವರ್ಣ',
@@ -5292,11 +5089,6 @@ $messages['kn'] = [
 	'achievements-community-platinum-save' => 'ಉಳಿಸಿ',
 ];
 
-/** Korean (한국어)
- * @author Cwt96
- * @author Infinity
- * @author 아라
- */
 $messages['ko'] = [
 	'achievementsii-desc' => '위키 사용자의 기여도를 배지로 환산해주는 시스템',
 	'achievements-upload-error' => '죄송합니다!
@@ -5326,7 +5118,7 @@ $messages['ko'] = [
 	'achievements-track-name-blogcomment' => '블로그 댓글 트랙',
 	'achievements-track-name-love' => '위키 사랑 트랙',
 	'achievements-notification-title' => '$1님 축하드립니다!',
-	'achievements-notification-subtitle' => "당신은 $2 '$1' 배지를 얻었습니다.",
+	'achievements-notification-subtitle' => '당신은 $2 \'$1\' 배지를 얻었습니다.',
 	'achievements-notification-link' => '<strong><big>[[Special:MyPage|얻을 수 있는 더 많은 배지 보기]]</big></strong>',
 	'achievements-points' => '$1 포인트',
 	'achievements-points-with-break' => '$1<br />포인트',
@@ -5340,9 +5132,9 @@ $messages['ko'] = [
 	'achievements-viewall-oasis' => '전체 보기',
 	'leaderboard-intro-hide' => '숨기기',
 	'leaderboard-intro-open' => '보이기',
-	'leaderboard-intro' => "위키에서 문서를 편집하고 파일을 올리고 댓글을 남김으로서 배지를 얻으실 수 있습니다. 배지를 얻게 되면 그에 대응하는 포인트도 획득하실 수 있으며 많은 포인트를 얻을수록 리더보드에서 더 높은 자리에 위치할 수 있게 됩니다. 얻으신 배지는 당신의 [[$1|사용자 문서]]에서 확인하실 수 있습니다.
+	'leaderboard-intro' => '위키에서 문서를 편집하고 파일을 올리고 댓글을 남김으로서 배지를 얻으실 수 있습니다. 배지를 얻게 되면 그에 대응하는 포인트도 획득하실 수 있으며 많은 포인트를 얻을수록 리더보드에서 더 높은 자리에 위치할 수 있게 됩니다. 얻으신 배지는 당신의 [[$1|사용자 문서]]에서 확인하실 수 있습니다.
 
-'''배지는 얼마나 가치가 있나요?'''",
+\'\'\'배지는 얼마나 가치가 있나요?\'\'\'',
 	'leaderboard' => '배지 현황판',
 	'leaderboard-title' => '배지 현황판',
 	'achievements-recent-earned-badges' => '최근에 수여된 배지',
@@ -5363,7 +5155,7 @@ $messages['ko'] = [
 	'platinum' => '플래티넘',
 	'achievements-community-platinum-awarded-email-subject' => '당신은 방금 새로운 플래티넘 배지를 받았습니다!',
 	'achievements-community-platinum-how-to-earn' => '얻는 방법 :',
-	'achievements-community-platinum-awarded-for-example' => "예시 : '~을(를) 함으로써...'",
+	'achievements-community-platinum-awarded-for-example' => '예시 : \'~을(를) 함으로써...\'',
 	'achievements-community-platinum-how-to-earn-example' => '예시 : "기여 3회"',
 	'achievements-community-platinum-badge-image' => '배지 그림:',
 	'achievements-community-platinum-create-badge' => '배지 만들기',
@@ -5429,11 +5221,10 @@ $messages['ko'] = [
 	'achievements-userprofile-no-badges-visitor' => '이 사용자는 아직 아무 배지도 획득하지 않았습니다.',
 	'achievements-userprofile-profile-score' => '<em>$1</em> <br />포인트',
 	'achievements-userprofile-ranked' => '이 위키에서<br />[[Special:Leaderboard|$1위]]입니다',
+	'achievements-badge-to-get-sayhi-details' => '\'{{int:tooltip-ca-addsection}}\' 링크를 클릭하시면 다른 사용자에게 메시지를 남길 수 있습니다.
+도움을 요청하거나, 그들의 기여에 감사하거나, 안부를 전하세요.',
 ];
 
-/** Kinaray-a (Kinaray-a)
- * @author Datu
- */
 $messages['krj'] = [
 	'achievements-upload-error' => 'Pasaylo!
 Ang litrato wara naga gana.
@@ -5451,9 +5242,6 @@ Palihog tirawi nga mag gamit ka iba nga litrato!',
 	'achievements-leaderboard-member-label' => 'Imaw',
 ];
 
-/** Colognian (Ripoarisch)
- * @author Purodha
- */
 $messages['ksh'] = [
 	'achievementsii-desc' => 'E Süßteem för Afzeische för Leißtunge em Wiki verdeene.',
 	'achievements-upload-not-allowed' => 'Dem Wiki sing Köbeße künne de Naame un Belder vun de [[Special:AchievementsCustomize|Afzeische ändere]].',
@@ -5604,9 +5392,6 @@ op sing Klaafsigg jedonn ze han!',
 	'achievements-userprofile-no-badges-visitor' => 'Dä Metmaacher hät noch kein Afzeische verdeent.',
 ];
 
-/** Kurdish (Latin script) (‪Kurdî (latînî)‬)
- * @author George Animal
- */
 $messages['ku-latn'] = [
 	'achievements-gold' => 'Zêr',
 	'achievements-silver' => 'Zîv',
@@ -5624,9 +5409,6 @@ $messages['ku-latn'] = [
 	'achievements-badge-name-category-2' => 'Explorer',
 ];
 
-/** Latin (Latina)
- * @author Rsa23899
- */
 $messages['la'] = [
 	'achievements-gold' => 'Aurum',
 	'achievements-silver' => 'Argentum',
@@ -5634,9 +5416,6 @@ $messages['la'] = [
 	'achievements-badge-hover-desc-creator' => 'nam vicium creāns!',
 ];
 
-/** Luxembourgish (Lëtzebuergesch)
- * @author Robby
- */
 $messages['lb'] = [
 	'achievements-non-existing-category' => 'Déi Kategorie déi ugi gouf gëtt et net.',
 	'achievements-platinum' => 'Platin',
@@ -5685,7 +5464,7 @@ $messages['lb'] = [
 	'achievements-badge-name-blogpost-0' => 'Huet eppes ze soen',
 	'achievements-badge-name-blogpost-1' => 'Fënnef Saachen ze soen',
 	'achievements-badge-name-blogcomment-1' => 'An dann nach eppes',
-	'achievements-badge-name-love-0' => "Schlëssel fir d'Wiki!",
+	'achievements-badge-name-love-0' => 'Schlëssel fir d\'Wiki!',
 	'achievements-badge-name-love-1' => 'Zwou Wochen op der Wiki',
 	'achievements-badge-name-love-6' => 'Wiki Held!',
 	'achievements-badge-name-welcome' => 'Wëllkomm op der Wiki',
@@ -5699,24 +5478,16 @@ $messages['lb'] = [
 Ass eppes net richteg?
 Sidd net schei.
 Klickt op de Knäppchen "{{int:edit}}" an Dir kënnt all Säit änneren!',
-	'achievements-badge-hover-desc-introduction' => "Ausgezeechent fir d'Derbaissetzen<br />
-vun Ärer eegener Benotzersäit!",
+	'achievements-badge-hover-desc-introduction' => 'Ausgezeechent fir d\'Derbaissetzen<br />
+vun Ärer eegener Benotzersäit!',
 	'achievements-badge-desc-caffeinated' => 'Ausgezeechent fir 100 Ännerungen op Säiten an engem eenzegen Dag gemaach ze hunn!',
 ];
 
-/** Lezghian (Лезги)
- * @author Namik
- */
 $messages['lez'] = [
 	'achievements-community-platinum-edit' => 'Дегишарун',
 	'achievements-badge-name-category-4' => 'Къекъуьн',
 ];
 
-/** Lithuanian (lietuvių)
- * @author Cyklopas
- * @author Eitvys200
- * @author Perkunas
- */
 $messages['lt'] = [
 	'achievementsii-desc' => 'Viki naudotojų pasiekimų raiščiai',
 	'achievements-platinum' => 'Platina',
@@ -5810,17 +5581,11 @@ $messages['lt'] = [
 	'achievements-badge-hover-desc-welcome' => 'už prisijungimą prie Wiki!',
 ];
 
-/** Latgalian (latgaļu)
- * @author Dark Eagle
- */
 $messages['ltg'] = [
 	'achievements-viewless' => 'Aizdareit',
 	'leaderboard-intro-hide' => 'nūglobuot',
 ];
 
-/** Basa Banyumasan (Basa Banyumasan)
- * @author StefanusRA
- */
 $messages['map-bms'] = [
 	'achievements-non-existing-category' => 'Kategori sing digoleti ora ana',
 	'achievements-gold' => 'Emas',
@@ -5831,9 +5596,6 @@ $messages['map-bms'] = [
 	'achievements-send' => 'Simpen gambar',
 ];
 
-/** Minangkabau (Baso Minangkabau)
- * @author VoteITP
- */
 $messages['min'] = [
 	'achievements-gold' => '↓ Ameh',
 	'achievements-silver' => '↓ Perak',
@@ -5844,10 +5606,6 @@ $messages['min'] = [
 	'achievements-you-must' => '↓ Awak ang mesti malakuan $1 untuak mandapek lencana ko.',
 ];
 
-/** Macedonian (македонски)
- * @author Bjankuloski06
- * @author Rancher
- */
 $messages['mk'] = [
 	'achievementsii-desc' => 'Систем на значки за достигнувања на вики-корисници',
 	'achievements-upload-error' => 'Жалиме!
@@ -5899,9 +5657,9 @@ $messages['mk'] = [
 	'leaderboard-intro-hide' => 'скриј',
 	'leaderboard-intro-open' => 'отвори',
 	'leaderboard-intro-headline' => 'Што се достигнувања?',
-	'leaderboard-intro' => "Учествувајќи (уредувајќи, подигајќи слики) на ова вики, добивате значки.<br />Значките носат бодови, и со нив се искачувате повисоко на таблата со предводници. Добиените значки ќе ги најдете на вашиот [[$1|кориснички профил]].
+	'leaderboard-intro' => 'Учествувајќи (уредувајќи, подигајќи слики) на ова вики, добивате значки.<br />Значките носат бодови, и со нив се искачувате повисоко на таблата со предводници. Добиените значки ќе ги најдете на вашиот [[$1|кориснички профил]].
 
-'''Колку вредат значките?'''",
+\'\'\'Колку вредат значките?\'\'\'',
 	'leaderboard' => 'Предводници',
 	'achievements-title' => 'Достигнувања',
 	'leaderboard-title' => 'Предводници',
@@ -6137,9 +5895,6 @@ $5',
 	'achievements-userprofile-ranked' => '[[Special:Leaderboard|На $1 место]]<br />на ова вики',
 ];
 
-/** Malayalam (മലയാളം)
- * @author Praveenp
- */
 $messages['ml'] = [
 	'achievements-platinum' => 'പ്ലാറ്റിനം',
 	'achievements-gold' => 'സ്വർണ്ണം',
@@ -6177,9 +5932,6 @@ $messages['ml'] = [
 	'achievements-badge-desc-welcome' => 'വിക്കിയിൽ ചേർന്നതിന്!',
 ];
 
-/** Marathi (मराठी)
- * @author Htt
- */
 $messages['mr'] = [
 	'achievements-platinum' => 'प्लॅटिनम',
 	'achievements-gold' => 'सोने',
@@ -6190,9 +5942,6 @@ $messages['mr'] = [
 	'achievements-bronze-points' => '१०<br /> गुण',
 ];
 
-/** Malay (Bahasa Melayu)
- * @author Anakmalaysia
- */
 $messages['ms'] = [
 	'achievementsii-desc' => 'Sistem lencana pencapaian untuk pengguna wiki',
 	'achievements-upload-error' => 'Maaf!
@@ -6244,9 +5993,9 @@ Sila cuba satu lagi!',
 	'leaderboard-intro-hide' => 'sorokkan',
 	'leaderboard-intro-open' => 'buka',
 	'leaderboard-intro-headline' => 'Pencapaian tu apa?',
-	'leaderboard-intro' => "Anda boleh meraih lencana di wiki ini dengan menyunting laman, memuat naik gambar dan membuat ulasan. Setiap lencana ada mata untuk anda – lebih banyak mata yang anda dapat, semakin tinggi kedudukan anda di papan teraju pencapaian. Anda boleh mencari lencana-lencana yang anda raih dalam [[$1|laman profil pengguna]] anda.
+	'leaderboard-intro' => 'Anda boleh meraih lencana di wiki ini dengan menyunting laman, memuat naik gambar dan membuat ulasan. Setiap lencana ada mata untuk anda – lebih banyak mata yang anda dapat, semakin tinggi kedudukan anda di papan teraju pencapaian. Anda boleh mencari lencana-lencana yang anda raih dalam [[$1|laman profil pengguna]] anda.
 
-'''Apakah nilai lencana ini?'''",
+\'\'\'Apakah nilai lencana ini?\'\'\'',
 	'leaderboard' => 'Papan teraju pencapaian',
 	'achievements-title' => 'Pencapaian',
 	'leaderboard-title' => 'Papan teraju',
@@ -6306,14 +6055,14 @@ Cubalah!',
 	'achievements-create-edit-plus-category' => 'Cipta jejak ini',
 	'platinum' => 'Platinum',
 	'achievements-community-platinum-awarded-email-subject' => 'Anda telah dianugerahkan lencana Platinum yang baru!',
-	'achievements-community-platinum-awarded-email-body-text' => "Tahniah, $1!
+	'achievements-community-platinum-awarded-email-body-text' => 'Tahniah, $1!
 
-Anda baru dianugerahkan dengan lencana Platinum '$2' di $4 ($3).
+Anda baru dianugerahkan dengan lencana Platinum \'$2\' di $4 ($3).
 Oleh itu, markah anda ditambah 250 mata lagi!
 
 Lihatlah lencana baru anda yang hebat ini dalam laman profil pengguna anda:
 
-$5",
+$5',
 	'achievements-community-platinum-awarded-email-body-html' => '<strong>Tahniah, $1!</strong><br /><br />
 Anda baru dianugerahkan lenana Platinum \'<strong>$2</strong>\' di <a href="$3">$4</a>.
 Oleh itu, markah anda ditambah 250 mata lagi!<br /><br />
@@ -6493,24 +6242,18 @@ dalam laman perbincangan orang lain!',
 	'achievements-userprofile-ranked' => '[[Special:Leaderboard|Tangga #$1]]<br />di wiki ini',
 ];
 
-/** Maltese (Malti)
- * @author Chrisportelli
- */
 $messages['mt'] = [
-	'achievements-upload-error' => "Jiddispjaċina!
+	'achievements-upload-error' => 'Jiddispjaċina!
 Din l-istampa ma taħdimx.
 Kun żgur li hija fajl .jpg jew .png.
-Jekk xorta ma taħdimx, allura jista' jkun li l-istampa hi wisq kbira.
-Jekk jogħġbok, ipprova oħra!",
+Jekk xorta ma taħdimx, allura jista\' jkun li l-istampa hi wisq kbira.
+Jekk jogħġbok, ipprova oħra!',
 	'achievements-non-existing-category' => 'Il-kategorija speċifikata ma teżistix.',
 	'achievements-gold-points' => '100<br />punt',
 	'achievements-silver-points' => '50<br />punt',
 	'achievements-bronze-points' => '10<br />punti',
 ];
 
-/** Burmese (မြန်မာဘာသာ)
- * @author Erikoo
- */
 $messages['my'] = [
 	'achievements-gold' => 'ရွှေ',
 	'achievements-silver' => 'ငွေထည်',
@@ -6524,16 +6267,10 @@ $messages['my'] = [
 	'achievements-save' => 'ပြင်​ဆင်​ထား​သည်​များ​ကို​ သိမ်းရန်',
 ];
 
-/** Mazanderani (مازِرونی)
- * @author محک
- */
 $messages['mzn'] = [
 	'achievements-community-platinum-edit' => 'دچی‌ین',
 ];
 
-/** Min Nan Chinese (Bân-lâm-gú)
- * @author Ianbu
- */
 $messages['nan'] = [
 	'achievementsii-desc' => '予Wiki用者的成就徽章系統',
 	'achievements-gold' => '金',
@@ -6557,10 +6294,6 @@ $messages['nan'] = [
 	'achievements-community-platinum-sponsored-badge-click-tooltip' => '點擊就通看另外的',
 ];
 
-/** Norwegian Bokmål (‪norsk (bokmål)‬)
- * @author Audun
- * @author Nghtwlkr
- */
 $messages['nb'] = [
 	'achievementsii-desc' => 'Et utmerkelsessystem for wikibrukere',
 	'achievements-upload-error' => 'Beklager!
@@ -6612,9 +6345,9 @@ Vennligst prøv et annet!',
 	'leaderboard-intro-hide' => 'skjul',
 	'leaderboard-intro-open' => 'åpne',
 	'leaderboard-intro-headline' => 'Hva er utmerkelser?',
-	'leaderboard-intro' => "Du kan motta utmerkelser på denne wikien ved å redigere sider, laste opp bilder og å legge inn kommentarer. Hver utmerkelse tjener deg poeng – jo fler poeng du får, jo høyere kommer du på topplista! Du finner utmerkelser du har mottatt på [[$1|brukerprofilen din]].
+	'leaderboard-intro' => 'Du kan motta utmerkelser på denne wikien ved å redigere sider, laste opp bilder og å legge inn kommentarer. Hver utmerkelse tjener deg poeng – jo fler poeng du får, jo høyere kommer du på topplista! Du finner utmerkelser du har mottatt på [[$1|brukerprofilen din]].
 
-'''Hva er utmerkelsene verdt?'''",
+\'\'\'Hva er utmerkelsene verdt?\'\'\'',
 	'leaderboard' => 'Toppliste over utmerkelser',
 	'achievements-title' => 'Utmerkelser',
 	'leaderboard-title' => 'Toppliste',
@@ -6672,13 +6405,13 @@ Prøv det ut!',
 	'achievements-create-edit-plus-category' => 'Opprett denne serien',
 	'platinum' => 'Platina',
 	'achievements-community-platinum-awarded-email-subject' => 'Du har blitt tildelt en ny Platinautmerkelse!',
-	'achievements-community-platinum-awarded-email-body-text' => "Gratulerer $1!
+	'achievements-community-platinum-awarded-email-body-text' => 'Gratulerer $1!
 
-Du har nettopp blitt tildelt '$2'-Platinautmerkelsen på $4 ($3). Dette legger 250 poeng til summen din!
+Du har nettopp blitt tildelt \'$2\'-Platinautmerkelsen på $4 ($3). Dette legger 250 poeng til summen din!
 
 Sjekk ut den stilige nye utmerkelsen din på brukerprofilen din:
 
-$5",
+$5',
 	'achievements-community-platinum-awarded-email-body-html' => '<strong>Gratulerer $1!</strong><br /><br />
 Du har nettopp blitt tildelt \'<strong>$2</strong>\'-Platinautmerkelsen på <a href="$3">$4</a>. Dette legger 250 poeng til den totale summen din!<br /><br />
 Sjekk ut den stilige nye utmerkelsen din på <a href="$5">brukerprofilen din</a>.',
@@ -6847,11 +6580,6 @@ på noen andres diskusjonsside!',
 	'achievements-userprofile-ranked' => '[[Special:Leaderboard|Plassert som #$1]]<br /> på denne wikien',
 ];
 
-/** Dutch (Nederlands)
- * @author AvatarTeam
- * @author McDutchie
- * @author Siebrand
- */
 $messages['nl'] = [
 	'achievementsii-desc' => 'Een speldjessysteem voor door wikigebruikers geleverde prestaties',
 	'achievements-upload-error' => 'Dat plaatje werkt niet.
@@ -6902,9 +6630,9 @@ Kies dan een ander plaatje.',
 	'leaderboard-intro-hide' => 'verbergen',
 	'leaderboard-intro-open' => 'openen',
 	'leaderboard-intro-headline' => 'Wat zijn speldjes?',
-	'leaderboard-intro' => "U kunt speldjes verdienen door pagina's te bewerken, foto's te uploaden en reacties achter te laten. Voor ieder speldje krijgt u punten. Hoe meer punten u verdient, hoe hoger u komt te staan op het scorebord! Speldjes die u hebt verdiend worden weergegeven op uw [[$1|profielpagina]].
+	'leaderboard-intro' => 'U kunt speldjes verdienen door pagina\'s te bewerken, foto\'s te uploaden en reacties achter te laten. Voor ieder speldje krijgt u punten. Hoe meer punten u verdient, hoe hoger u komt te staan op het scorebord! Speldjes die u hebt verdiend worden weergegeven op uw [[$1|profielpagina]].
 
-'''Wat zijn speldjes waard?'''",
+\'\'\'Wat zijn speldjes waard?\'\'\'',
 	'leaderboard' => 'Ranglijst voor prestaties',
 	'achievements-title' => 'Prestaties',
 	'leaderboard-title' => 'Ranglijst',
@@ -7043,10 +6771,10 @@ Bekijk uw glimmende nieuwe speldje op uw <a href="$5">gebruikersprofielpagina</a
 	'achievements-badge-name-caffeinated' => 'Overdosis koffie',
 	'achievements-badge-name-luckyedit' => 'Gelukkige bewerking',
 	'achievements-badge-to-get-sharing' => '{{#ifeq:$1|0|verwijzing delen|zorg dat {{PLURAL:$1|één gebruiker|$1 gebruikers}} klikt op de verwijzing die u hebt gedeeld}}',
-	'achievements-badge-to-get-edit' => "maak {{PLURAL:$1|één bewerking|$1 bewerkingen}} aan {{PLURAL:$1een pagina|pagina's}}",
-	'achievements-badge-to-get-edit-plus-category' => "maak {{PLURAL:$1|één bewerking|$1 bewerkingen}} aan $2 {{PLURAL:$2|pagina|pagina's}}",
-	'achievements-badge-to-get-picture' => "voeg {{PLURAL:$1|een afbeelding|$1 afbeeldingen}} toe aan {{PLURAL:$1|een pagina|pagina's}}",
-	'achievements-badge-to-get-category' => "voeg {{PLURAL:$1|één pagina|$1 pagina's}} toe aan {{PLURAL:$1|een categorie|categorieën}}",
+	'achievements-badge-to-get-edit' => 'maak {{PLURAL:$1|één bewerking|$1 bewerkingen}} aan {{PLURAL:$1een pagina|pagina\'s}}',
+	'achievements-badge-to-get-edit-plus-category' => 'maak {{PLURAL:$1|één bewerking|$1 bewerkingen}} aan $2 {{PLURAL:$2|pagina|pagina\'s}}',
+	'achievements-badge-to-get-picture' => 'voeg {{PLURAL:$1|een afbeelding|$1 afbeeldingen}} toe aan {{PLURAL:$1|een pagina|pagina\'s}}',
+	'achievements-badge-to-get-category' => 'voeg {{PLURAL:$1|één pagina|$1 pagina\'s}} toe aan {{PLURAL:$1|een categorie|categorieën}}',
 	'achievements-badge-to-get-blogpost' => 'schrijf {{PLURAL:$1|een blogbericht|$1 blogberichten}}',
 	'achievements-badge-to-get-blogcomment' => 'schrijf een reactie bij {{PLURAL:$1|een blogbericht|$1 verschillende blogberichten}}',
 	'achievements-badge-to-get-love' => 'draag iedere dag bij aan de wiki gedurende {{PLURAL:$1|één dag|$1 dagen}}',
@@ -7079,8 +6807,8 @@ U kunt nu beginnen met het verzamelen van speldjes!',
 	'achievements-badge-to-get-introduction-details' => 'Is uw gebruikerspagina leeg?
 Klik op uw gebruikersnaam bovenaan het scherm om te kijken of dat zo is.
 Klik op "{{int:edit}}" om wat informatie over uzelf toe te voegen!',
-	'achievements-badge-to-get-sayhi-details' => 'U kunt berichten voor andere gebruikers achterlaten door te klikken op "{{int:addsection}}" op hun overlegpagina.
-Vraag om hulp, bedank ze voor hun bijdragen of groet ze gewoon!',
+	'achievements-badge-to-get-sayhi-details' => 'Je kunt berichten voor andere gebruikers achterlaten door te klikken op "{{int:tooltip-ca-addsection}}" op hun overlegpagina.
+Vraag om hulp, bedank ze voor hun bijdragen of zeg gewoon hoi!',
 	'achievements-badge-to-get-creator-details' => 'Dit speldje wordt gegeven aan de oprichter van de wiki.
 Klik op de knop "{{int:createwiki}}" bovenaan om een site te beginnen over waar u van houdt!',
 	'achievements-badge-to-get-pounce-details' => 'U moet snel zijn om dit speldje te verdienen.
@@ -7091,14 +6819,14 @@ Blijf bewerkingen maken!',
 Blijf bewerkingen maken!',
 	'achievements-badge-to-get-community-platinum-details' => 'Dit is een speciaal platina speldje dat slechts voor beperkte tijd beschikbaar is!',
 	'achievements-badge-hover-desc-sharing' => '{{#ifeq:$1|0|voor het delen van één verwijzing|voor het overreden van {{PLURAL:$1|één gebruiker|$1 gebruikers}} op gedeelde verwijzingen te klikken}}',
-	'achievements-badge-hover-desc-edit' => "Toegekend voor het maken van {{PLURAL:$1|één bewerking|$1 bewerkingen}}<br />
-aan {{PLURAL:$1|een pagina|pagina's}}!",
-	'achievements-badge-hover-desc-edit-plus-category' => "Toegekend voor het maken van {{PLURAL:$1|één bewerking|$1 bewerkingen}}<br />
-aan {{PLURAL:$1|een $2pagina|$2pagina's}}!",
-	'achievements-badge-hover-desc-picture' => "Toegekend voor het toevoegen van {{PLURAL:$1|een afbeelding|$1 afbeeldingen}}<br />
-aan {{PLURAL:$1|een pagina|pagina's}}!",
-	'achievements-badge-hover-desc-category' => "Toegekend voor het toevoegen van {{PLURAL:$1|een pagina|$1 pagina's}}<br />
-aan {{PLURAL:$1|een categorie|categorieën}}!",
+	'achievements-badge-hover-desc-edit' => 'Toegekend voor het maken van {{PLURAL:$1|één bewerking|$1 bewerkingen}}<br />
+aan {{PLURAL:$1|een pagina|pagina\'s}}!',
+	'achievements-badge-hover-desc-edit-plus-category' => 'Toegekend voor het maken van {{PLURAL:$1|één bewerking|$1 bewerkingen}}<br />
+aan {{PLURAL:$1|een $2pagina|$2pagina\'s}}!',
+	'achievements-badge-hover-desc-picture' => 'Toegekend voor het toevoegen van {{PLURAL:$1|een afbeelding|$1 afbeeldingen}}<br />
+aan {{PLURAL:$1|een pagina|pagina\'s}}!',
+	'achievements-badge-hover-desc-category' => 'Toegekend voor het toevoegen van {{PLURAL:$1|een pagina|$1 pagina\'s}}<br />
+aan {{PLURAL:$1|een categorie|categorieën}}!',
 	'achievements-badge-hover-desc-blogpost' => 'Toegekend voor het schrijven van {{PLURAL:$1|een blogbericht|$1 blogberichten}}!',
 	'achievements-badge-hover-desc-blogcomment' => 'Toegekend voor het schrijven van een opmerking<br />
 bij {{PLURAL:$1|een blogbericht|$1 verschillende blogberichten}}!',
@@ -7109,15 +6837,15 @@ uw eigen gebruikerspagina!',
 	'achievements-badge-hover-desc-sayhi' => 'Toegekend voor het achterlaten van een bericht op<br />
 de overlegpagina van een andere gebruiker!',
 	'achievements-badge-hover-desc-creator' => 'Toegekend voor het oprichten van de wiki!',
-	'achievements-badge-hover-desc-pounce' => "Toegekend voor het maken van bewerkingen aan 100 pagina's binnen een uur van het aanmaken van de pagina!",
+	'achievements-badge-hover-desc-pounce' => 'Toegekend voor het maken van bewerkingen aan 100 pagina\'s binnen een uur van het aanmaken van de pagina!',
 	'achievements-badge-hover-desc-caffeinated' => 'Toegekend voor het maken van 100 bewerkingen op één dag.',
 	'achievements-badge-hover-desc-luckyedit' => 'Toegekend voor het maken van de gelukkige bewerking nummer $1 op de wiki!',
 	'achievements-badge-hover-desc-community-platinum' => 'Dit is een speciaal platina speldje dat slechts voor beperkte tijd beschikbaar is!',
 	'achievements-badge-your-desc-sharing' => 'Toegekend {{#ifeq:$1|0|voor het delen van één verwijzing|voor het overreden van {{PLURAL:$1|één gebruiker|$1 gebruikers}} op gedeelde verwijzingen te klikken}}',
-	'achievements-badge-your-desc-edit' => "Toegekend voor het maken van {{PLURAL:$1|uw eerste bewerking|$1 bewerkingen}} aan {{PLURAL:$1|een pagina|pagina's}}!",
-	'achievements-badge-your-desc-edit-plus-category' => "Toegekend voor het maken van {{PLURAL:$1|uw eerste bewerking|$1 bewerkingen}} aan {{PLURAL:$1|een $2pagina|$2pagina's}}!",
-	'achievements-badge-your-desc-picture' => "Toegekend voor het toevoegen van {{PLURAL:$1|uw eerste afbeelding|$1 afbeeldingen}} aan {{PLURAL:$1|een pagina|pagina's}}!",
-	'achievements-badge-your-desc-category' => "Toegekend voor het toevoegen van {{PLURAL:$1|uw eerste pagina|$1 pagina's}} aan {{PLURAL:$1|een categorie|categorieën}}!",
+	'achievements-badge-your-desc-edit' => 'Toegekend voor het maken van {{PLURAL:$1|uw eerste bewerking|$1 bewerkingen}} aan {{PLURAL:$1|een pagina|pagina\'s}}!',
+	'achievements-badge-your-desc-edit-plus-category' => 'Toegekend voor het maken van {{PLURAL:$1|uw eerste bewerking|$1 bewerkingen}} aan {{PLURAL:$1|een $2pagina|$2pagina\'s}}!',
+	'achievements-badge-your-desc-picture' => 'Toegekend voor het toevoegen van {{PLURAL:$1|uw eerste afbeelding|$1 afbeeldingen}} aan {{PLURAL:$1|een pagina|pagina\'s}}!',
+	'achievements-badge-your-desc-category' => 'Toegekend voor het toevoegen van {{PLURAL:$1|uw eerste pagina|$1 pagina\'s}} aan {{PLURAL:$1|een categorie|categorieën}}!',
 	'achievements-badge-your-desc-blogpost' => 'Toegekend voor het schrijven van {{PLURAL:$1|uw eerste blogbericht|$1 blogberichten}}!',
 	'achievements-badge-your-desc-blogcomment' => 'Toegekend voor het schrijven van een opmerking bij {{PLURAL:$1|een blogbericht|$1 verschillende blogberichten}}!',
 	'achievements-badge-your-desc-love' => 'Toegekend voor het iedere dag bijdragen aan de wiki gedurende {{PLURAL:$1|een dag|$1 dagen}}!',
@@ -7125,14 +6853,14 @@ de overlegpagina van een andere gebruiker!',
 	'achievements-badge-your-desc-introduction' => 'Toegekend voor het aanmaken van uw eigen gebruikerspagina!',
 	'achievements-badge-your-desc-sayhi' => 'Toegekend voor het achterlaten van een bericht op de overlegpagina van een andere gebruiker!',
 	'achievements-badge-your-desc-creator' => 'Toegekend voor het oprichten van de wiki!',
-	'achievements-badge-your-desc-pounce' => "Toegekend voor het maken van bewerkingen aan 100 pagina's binnen een uur na het aanmaken van de pagina!",
+	'achievements-badge-your-desc-pounce' => 'Toegekend voor het maken van bewerkingen aan 100 pagina\'s binnen een uur na het aanmaken van de pagina!',
 	'achievements-badge-your-desc-caffeinated' => 'Toegekend voor het maken van 100 bewerkingen op één dag.',
 	'achievements-badge-your-desc-luckyedit' => 'Toegekend voor het maken van de gelukkige bewerking nummer $1 op de wiki!',
 	'achievements-badge-desc-sharing' => 'Toegekend {{#ifeq:$1|0|voor het delen van één verwijzing|voor het overreden van {{PLURAL:$1|één gebruiker|$1 gebruikers}} op gedeelde verwijzingen te klikken}}',
-	'achievements-badge-desc-edit' => "Toegekend voor het maken van {{PLURAL:$1|een bewerking|$1 bewerkingen}} aan {{PLURAL:$1|een pagina|pagina's}}!",
-	'achievements-badge-desc-edit-plus-category' => "Toegekend voor het maken van {{PLURAL:$1|een bewerking|$1 bewerkingen}} aan {{PLURAL:$1|een $2pagina|$2pagina's}}!",
-	'achievements-badge-desc-picture' => "Toegekend voor het toevoegen van {{PLURAL:$1|een afbeelding|$1 afbeeldingen}} aan {{PLURAL:$1|een pagina|pagina's}}!",
-	'achievements-badge-desc-category' => "Toegekend voor het toevoegen van {{PLURAL:$1|een pagina|$1 pagina's}} aan {{PLURAL:$1|een categorie|categorieën}}!",
+	'achievements-badge-desc-edit' => 'Toegekend voor het maken van {{PLURAL:$1|een bewerking|$1 bewerkingen}} aan {{PLURAL:$1|een pagina|pagina\'s}}!',
+	'achievements-badge-desc-edit-plus-category' => 'Toegekend voor het maken van {{PLURAL:$1|een bewerking|$1 bewerkingen}} aan {{PLURAL:$1|een $2pagina|$2pagina\'s}}!',
+	'achievements-badge-desc-picture' => 'Toegekend voor het toevoegen van {{PLURAL:$1|een afbeelding|$1 afbeeldingen}} aan {{PLURAL:$1|een pagina|pagina\'s}}!',
+	'achievements-badge-desc-category' => 'Toegekend voor het toevoegen van {{PLURAL:$1|een pagina|$1 pagina\'s}} aan {{PLURAL:$1|een categorie|categorieën}}!',
 	'achievements-badge-desc-blogpost' => 'Toegekend voor het schrijven van {{PLURAL:$1|een blogbericht|$1 blogberichten}}!',
 	'achievements-badge-desc-blogcomment' => 'Toegekend voor het schrijven van een opmerking bij {{PLURAL:$1|een blogbericht|$1 verschillende blogberichten}}!',
 	'achievements-badge-desc-love' => 'Toegekend voor het iedere dag bijdragen aan de wiki gedurende {{PLURAL:$1|een dag|$1 dagen}}!',
@@ -7140,7 +6868,7 @@ de overlegpagina van een andere gebruiker!',
 	'achievements-badge-desc-introduction' => 'Toegekend voor het aanmaken van uw eigen gebruikerspagina!',
 	'achievements-badge-desc-sayhi' => 'Toegekend voor het achterlaten van een bericht op de overlegpagina van een andere gebruiker!',
 	'achievements-badge-desc-creator' => 'Toegekend voor het oprichten van de wiki!',
-	'achievements-badge-desc-pounce' => "Toegekend voor het maken van bewerkingen aan 100 pagina's binnen een uur van het aanmaken van de pagina!",
+	'achievements-badge-desc-pounce' => 'Toegekend voor het maken van bewerkingen aan 100 pagina\'s binnen een uur van het aanmaken van de pagina!',
 	'achievements-badge-desc-caffeinated' => 'Toegekend voor het maken van 100 bewerkingen op één dag.',
 	'achievements-badge-desc-luckyedit' => 'Toegekend voor het maken van de gelukkige bewerking nummer $1 op de wiki!',
 	'achievements-userprofile-title-no' => 'Door $1 verdiende speldjes',
@@ -7154,18 +6882,14 @@ de overlegpagina van een andere gebruiker!',
 	'achievements-prev-oasis' => 'Previous',
 ];
 
-/** ‪Nederlands (informeel)‬ (‪Nederlands (informeel)‬)
- * @author AvatarTeam
- * @author Siebrand
- */
 $messages['nl-informal'] = [
 	'achievements-you-must' => 'Je moet $1 om dit speldje te verdienen.',
 	'achievements-no-badges' => 'Hieronder staan de speldjes die je op deze wiki kunt verdienen!',
 	'achievements-notification-subtitle' => 'Je hebt zojuist het speldje "$1" verdiend $2',
 	'achievements-notification-link' => '<strong><big>[[Special:MyPage|Klik hier om meer speldjes te zien die je kunt verdienen]]!</big></strong>',
-	'leaderboard-intro' => "Je kunt speldjes verdienen door pagina's te bewerken, foto's te uploaden en reacties achter te laten. Voor ieder speldje krijg je punten. Hoe meer punten je verdient, hoe hoger je komt te staan op het scorebord! Speldjes die je hebt verdiend worden weergegeven op uw [[$1|profielpagina]].
+	'leaderboard-intro' => 'Je kunt speldjes verdienen door pagina\'s te bewerken, foto\'s te uploaden en reacties achter te laten. Voor ieder speldje krijg je punten. Hoe meer punten je verdient, hoe hoger je komt te staan op het scorebord! Speldjes die je hebt verdiend worden weergegeven op uw [[$1|profielpagina]].
 
-'''Wat zijn speldjes waard?'''",
+\'\'\'Wat zijn speldjes waard?\'\'\'',
 	'achievements-about-content' => 'Beheerders van deze wiki kunnen de namen en de afbeeldingen voor de prestatiespeldjes aanpassen.
 
 Je kunt .jpg- en .png-afbeeldingen uploaden en je afbeelding wordt automatisch aangepast aan het venster.
@@ -7236,20 +6960,16 @@ Klik op de knop "{{int:createwiki}}" bovenaan om een site te beginnen over waar 
 	'achievements-badge-to-get-luckyedit-details' => 'Je moet geluk hebben om dit speldje te verdienen. Blijf bewerkingen maken!',
 	'achievements-badge-hover-desc-introduction' => 'voor het aanmaken van<br />
 je eigen gebruikerspagina!',
-	'achievements-badge-your-desc-edit' => "voor het maken van {{PLURAL:$1|je eerste bewerking|$1 bewerkingen}} aan {{PLURAL:$1|een pagina|pagina's}}!",
-	'achievements-badge-your-desc-edit-plus-category' => "voor het maken van {{PLURAL:$1|je eerste bewerking|$1 bewerkingen}} aan {{PLURAL:$1|een $2pagina|$2pagina's}}!",
-	'achievements-badge-your-desc-picture' => "voor het toevoegen van {{PLURAL:$1|je eerste afbeelding|$1 afbeeldingen}} aan {{PLURAL:$1|een pagina|pagina's}}!",
-	'achievements-badge-your-desc-category' => "voor het toevoegen van {{PLURAL:$1|je eerste pagina|$1 pagina's}} aan {{PLURAL:$1|een categorie|categorieën}}!",
+	'achievements-badge-your-desc-edit' => 'voor het maken van {{PLURAL:$1|je eerste bewerking|$1 bewerkingen}} aan {{PLURAL:$1|een pagina|pagina\'s}}!',
+	'achievements-badge-your-desc-edit-plus-category' => 'voor het maken van {{PLURAL:$1|je eerste bewerking|$1 bewerkingen}} aan {{PLURAL:$1|een $2pagina|$2pagina\'s}}!',
+	'achievements-badge-your-desc-picture' => 'voor het toevoegen van {{PLURAL:$1|je eerste afbeelding|$1 afbeeldingen}} aan {{PLURAL:$1|een pagina|pagina\'s}}!',
+	'achievements-badge-your-desc-category' => 'voor het toevoegen van {{PLURAL:$1|je eerste pagina|$1 pagina\'s}} aan {{PLURAL:$1|een categorie|categorieën}}!',
 	'achievements-badge-your-desc-blogpost' => 'voor het schrijven van {{PLURAL:$1|je eerste|$1}} {{PLURAL:$1|blogbericht|blogberichten}}!',
 	'achievements-badge-your-desc-introduction' => 'voor het aanmaken van je eigen gebruikerspagina!',
 	'achievements-badge-desc-introduction' => 'voor het aanmaken van je eigen gebruikerspagina!',
 	'achievements-userprofile-no-badges-owner' => 'Hieronder staat de lijst met speldjes die je in deze wiki kunt verdienen!',
 ];
 
-/** Oriya (ଓଡ଼ିଆ)
- * @author Jnanaranjan Sahu
- * @author Psubhashish
- */
 $messages['or'] = [
 	'achievements-non-existing-category' => 'ଆପଣ ଖୋଜୁଥିବା ବିଭାଗଟି ମିଳୁନାହିଁ ।',
 	'achievements-platinum' => 'ହୀରକ',
@@ -7263,23 +6983,17 @@ $messages['or'] = [
 	'achievements-about-title' => 'ଏହି ପୃଷ୍ଠା ବିଷୟରେ ...',
 ];
 
-/** Deitsch (Deitsch)
- * @author Xqt
- */
 $messages['pdc'] = [
 	'achievements-community-platinum-save' => 'beilege',
 ];
 
-/** Pälzisch (Pälzisch)
- * @author Manuae
- */
 $messages['pfl'] = [
 	'achievementsii-desc' => 'Abzaische fa Laischdunge fa Wiki-Benudza',
-	'achievements-upload-error' => "Dschuldischung!
+	'achievements-upload-error' => 'Dschuldischung!
 Awa des Bild fungzioniad ned.
-S'gejen bloss .jpg- oda .png-Datei.
-Wonn's imma noch ned fungzioniere dud, donn isch's Bild vielaischd zu grooß.
-Vasuchs mol midm oanare!",
+S\'gejen bloss .jpg- oda .png-Datei.
+Wonn\'s imma noch ned fungzioniere dud, donn isch\'s Bild vielaischd zu grooß.
+Vasuchs mol midm oanare!',
 	'achievements-upload-not-allowed' => 'Adminischdradore kennen die Noame un Bilda vun Abzaische uffde Said [[Special:AchievementsCustomize|Abzaische änare]] änare.',
 	'achievements-non-existing-category' => 'Die oagewene Kadegorie hods ned.',
 	'achievements-edit-plus-category-track-exists' => 'Die oagewene Kadegorie hod schun ä dzugherische <a href="#" onclick="$(window).scrollTo(\'#section$1\', 2500); return false;" title="Go to the track">Weesch</a>.',
@@ -7306,11 +7020,11 @@ Vasuchs mol midm oanare!",
 	'achievements-track-name-love' => 'Wiki Liewe-Weesch',
 	'achievements-track-name-sharing' => 'Weesch deele',
 	'achievements-notification-title' => 'Guud gmachd, $1!',
-	'achievements-notification-subtitle' => "Du hoschda grad s'„$1“-Abzaische vadiend $2",
+	'achievements-notification-subtitle' => 'Du hoschda grad s\'„$1“-Abzaische vadiend $2',
 	'achievements-notification-link' => '<strong><big>[[Special:MyPage|Guggda waidari Abzaische oa, wuda vadiene konschd]]!</big></strong>',
 	'achievements-points' => '$1 {{PLURAL:$1|Pungd|Pingd}}',
 	'achievements-points-with-break' => '$1<br />{{PLURAL:$1|Pungd|Pingd}}',
-	'achievements-earned' => "S'Abzaische {{PLURAL:$1|hod sisch än Benudza|hawen sich $1 Benudza}} vadiend.",
+	'achievements-earned' => 'S\'Abzaische {{PLURAL:$1|hod sisch än Benudza|hawen sich $1 Benudza}} vadiend.',
 	'achievements-profile-title' => '$1 hod $2 {{PLURAL:$2|Abzaische|Abzaische}} krieschd',
 	'achievements-profile-title-challenges' => 'Waidari Abzaische, wuda vadiene konschd!',
 	'achievements-profile-customize' => 'Abzaische oapasse',
@@ -7333,18 +7047,10 @@ Vasuchs mol midm oanare!",
 	'achievements-community-platinum-save' => 'schbaischere',
 	'achievements-community-platinum-cancel' => 'Abbresche',
 	'achievements-badge-name-sharing-1' => 'Brings zrigg',
-	'achievements-badge-to-get-welcome' => "m'Wiki baidreede",
+	'achievements-badge-to-get-welcome' => 'm\'Wiki baidreede',
 	'achievements-badge-to-get-luckyedit' => 'Gligg hawe',
 ];
 
-/** Polish (polski)
- * @author Anoon6
- * @author BeginaFelicysym
- * @author Macbre
- * @author Ponurak
- * @author Sovq
- * @author Sp5uhe
- */
 $messages['pl'] = [
 	'achievementsii-desc' => 'System odznaczeń dla użytkowników wiki',
 	'achievements-upload-error' => 'Nie można wyświetlić tego obrazu.
@@ -7395,9 +7101,9 @@ Spróbuj dodać inny!',
 	'leaderboard-intro-hide' => 'ukryj',
 	'leaderboard-intro-open' => 'otwórz',
 	'leaderboard-intro-headline' => 'Czym są odznaczenia?',
-	'leaderboard-intro' => "Zdobywaj odznaczenia edytując strony, dodając obrazy oraz zostawiając komentarze na tej wiki. Każde odznaczenie powoduje przyznanie punktów - im więcej punktów posiadasz, tym wyżej znajdujesz się w rankingu użytkowników. Odznaczenia zdobyte przez ciebie możesz znaleźć na [[$1|swoim profilu]].
+	'leaderboard-intro' => 'Zdobywaj odznaczenia edytując strony, dodając obrazy oraz zostawiając komentarze na tej wiki. Każde odznaczenie powoduje przyznanie punktów - im więcej punktów posiadasz, tym wyżej znajdujesz się w rankingu użytkowników. Odznaczenia zdobyte przez ciebie możesz znaleźć na [[$1|swoim profilu]].
 
-'''Ile punktów są warte?'''",
+\'\'\'Ile punktów są warte?\'\'\'',
 	'leaderboard' => 'Ranking',
 	'achievements-title' => 'Odznaczenia',
 	'leaderboard-title' => 'Ranking',
@@ -7454,14 +7160,14 @@ To może dodać nowy wymiar zabawy do zbierania odznaczeń!',
 	'achievements-create-edit-plus-category' => 'Stwórz tę ścieżkę',
 	'platinum' => 'Platyna',
 	'achievements-community-platinum-awarded-email-subject' => 'Otrzymałeś nowe platynowe odznaczenie!',
-	'achievements-community-platinum-awarded-email-body-text' => "Gratulacje, $1!
+	'achievements-community-platinum-awarded-email-body-text' => 'Gratulacje, $1!
 
-Otrzymałeś właśnie platynowe odznaczenie '$2' na $4 ($3).
+Otrzymałeś właśnie platynowe odznaczenie \'$2\' na $4 ($3).
 Spowodowało to dodanie 250 punktów do twojego konta!
 
 Zobacz nowe odznaczenie na swoim profilu:
 
-$5",
+$5',
 	'achievements-community-platinum-awarded-email-body-html' => '<strong>Gratulacje, $1!</strong><br /><br />
 Otrzymałeś właśnie platynowe odznaczenie \'<strong>$2</strong>\' na <a href="$3">$4</a>.
 Spowodowało to dodanie 250 punktów do twojego konta!<br /><br />
@@ -7644,23 +7350,19 @@ na czyjejś stronie dyskusji!',
 	'achievements-prev-oasis' => 'Poprzedni',
 ];
 
-/** Piedmontese (Piemontèis)
- * @author Borichèt
- * @author Dragonòt
- */
 $messages['pms'] = [
-	'achievementsii-desc' => "Un sistema ëd distintiv dle realisassion për j'utent ëd la wiki",
-	'achievements-upload-error' => "Darmagi!
+	'achievementsii-desc' => 'Un sistema ëd distintiv dle realisassion për j\'utent ëd la wiki',
+	'achievements-upload-error' => 'Darmagi!
 Sta figura a marcia pa.
-Ch'as sigura ch'a sia n'archivi .jpg o .png.
-Se a marcia anco' pa, antlora la figura a peul esse tròp gròssa.
-Për piasì, ch'a preuva con n'àutra!",
-	'achievements-upload-not-allowed' => "J'aministrator a peulo cangé ij nòm e le figure dij distintiv dij Sucess an visitand la pàgina [[Special:AchievementsCustomize|ëd Përsonalisassion dij sucess]].",
+Ch\'as sigura ch\'a sia n\'archivi .jpg o .png.
+Se a marcia anco\' pa, antlora la figura a peul esse tròp gròssa.
+Për piasì, ch\'a preuva con n\'àutra!',
+	'achievements-upload-not-allowed' => 'J\'aministrator a peulo cangé ij nòm e le figure dij distintiv dij Sucess an visitand la pàgina [[Special:AchievementsCustomize|ëd Përsonalisassion dij sucess]].',
 	'achievements-non-existing-category' => 'La categorìa specificà a esist pa.',
 	'achievements-edit-plus-category-track-exists' => 'La categorìa specificà a l\'ha già na <a href="#" onclick="$(window).scrollTo(\'#section$1\', 2500); return false;" title="Andé a la dësfida">dësfida associà</a>.',
-	'achievements-no-stub-category' => "Për piasì, ch'a crea pa ëd dësfide për jë sbòss.",
+	'achievements-no-stub-category' => 'Për piasì, ch\'a crea pa ëd dësfide për jë sbòss.',
 	'right-platinum' => 'Creé e modifiché ël distintiv ëd plàtin',
-	'right-sponsored-achievements' => "Gestì j'obietiv sponsorisà",
+	'right-sponsored-achievements' => 'Gestì j\'obietiv sponsorisà',
 	'achievements-platinum' => 'Plàtin',
 	'achievements-gold' => 'Òr',
 	'achievements-silver' => 'Argent',
@@ -7672,7 +7374,7 @@ Për piasì, ch'a preuva con n'àutra!",
 	'leaderboard-button' => 'Tàula dij sucess',
 	'achievements-masthead-points' => '$1 <small>{{PLURAL:$1|pont|pont}}</small>',
 	'achievements-profile-title-no' => 'distintiv ëd $1',
-	'achievements-no-badges' => "Contròla la lista sota për vëdde ij distintiv ch'it peule anco' vagné su sta wiki!",
+	'achievements-no-badges' => 'Contròla la lista sota për vëdde ij distintiv ch\'it peule anco\' vagné su sta wiki!',
 	'achievements-track-name-edit' => 'Dësfida ëd modìfica',
 	'achievements-track-name-picture' => 'Dësfida ëd figure',
 	'achievements-track-name-category' => 'Dësfida ëd categorìa',
@@ -7680,30 +7382,30 @@ Për piasì, ch'a preuva con n'àutra!",
 	'achievements-track-name-blogcomment' => 'Dësfida ëd Coment ëd në scartari',
 	'achievements-track-name-love' => 'Dësfida Wiki Love',
 	'achievements-track-name-sharing' => 'Stòria dla condivision',
-	'achievements-notification-title' => "A l'é an sla bon-a stra, $1!",
+	'achievements-notification-title' => 'A l\'é an sla bon-a stra, $1!',
 	'achievements-notification-subtitle' => 'It l\'has mach vagnà ël distintiv "$1" $2',
-	'achievements-notification-link' => "<strong><big>[[Special:MyPage|Varda ij distintiv ch'it peule anco' vagné]]!</big></strong>",
+	'achievements-notification-link' => '<strong><big>[[Special:MyPage|Varda ij distintiv ch\'it peule anco\' vagné]]!</big></strong>',
 	'achievements-points' => '$1 {{PLURAL:$1|pont|pont}}',
 	'achievements-points-with-break' => '$1<br />{{PLURAL:$1|pont|pont}}',
-	'achievements-earned' => "Cost distintiv a l'é stàit vagnà da {{PLURAL:$1|1 utent|$1 utent}}.",
+	'achievements-earned' => 'Cost distintiv a l\'é stàit vagnà da {{PLURAL:$1|1 utent|$1 utent}}.',
 	'achievements-profile-title' => '$2 {{PLURAL:$2|distintiv|distintiv}} vagnà da $1',
-	'achievements-profile-title-challenges' => "Distintiv ch'it peule anco' vagné!",
+	'achievements-profile-title-challenges' => 'Distintiv ch\'it peule anco\' vagné!',
 	'achievements-profile-customize' => 'Përsonalisé ij distintiv',
 	'achievements-ranked' => 'Classificà al pòst $1 su sta wiki',
 	'achievements-viewall' => 'Varda tut',
 	'achievements-viewless' => 'Sara',
 	'achievements-profile-title-oasis' => 'realisassion <br /> pont',
-	'achievements-ranked-oasis' => "$1 a l'é [[Special:Leaderboard|Classificà al pòst $2]] su sta wiki",
+	'achievements-ranked-oasis' => '$1 a l\'é [[Special:Leaderboard|Classificà al pòst $2]] su sta wiki',
 	'achievements-viewall-oasis' => 'Varda tut',
 	'achievements-toggle-hide' => 'Mostré nen ij pont, ij distintiv e la clàssifica an mia pagina ëd profil',
 	'leaderboard-intro-hide' => 'stërma',
 	'leaderboard-intro-open' => 'duverté',
-	'leaderboard-intro-headline' => "Lòn ch'a son le Realisassion?",
-	'leaderboard-intro' => "A peul vagné dij distintiv ansima a costa wiki an modificand dle pàgine, an cariand dle fòto e an lassand dij coment.
+	'leaderboard-intro-headline' => 'Lòn ch\'a son le Realisassion?',
+	'leaderboard-intro' => 'A peul vagné dij distintiv ansima a costa wiki an modificand dle pàgine, an cariand dle fòto e an lassand dij coment.
 Minca distintiv a-j fa vagné dij pont - pi pont a vagna, pi àut a monta ant la classìfica!
-A trovrà ij distintiv ch'a l'ha vagnà an soa [[$1|pagina ëd profil dl'utent]].
+A trovrà ij distintiv ch\'a l\'ha vagnà an soa [[$1|pagina ëd profil dl\'utent]].
 
-'''Lòn ch'a valo ij distintiv?'''",
+\'\'\'Lòn ch\'a valo ij distintiv?\'\'\'',
 	'leaderboard' => 'Tàula dle realisassion',
 	'achievements-title' => 'Realisassion',
 	'leaderboard-title' => 'Classìfica',
@@ -7718,7 +7420,7 @@ A trovrà ij distintiv ch'a l'ha vagnà an soa [[$1|pagina ëd profil dl'utent]]
 	'achievements-leaderboard-most-recently-earned-label' => 'Arseivù pi ëd recent',
 	'achievements-send' => 'Salvé la figura',
 	'achievements-save' => 'Salvé ij cangiament',
-	'achievements-reverted' => "Distintiv butà torna a l'original.",
+	'achievements-reverted' => 'Distintiv butà torna a l\'original.',
 	'achievements-customize' => 'Përsonalisé la figura',
 	'achievements-customize-new-category-track' => 'Creé na dësfida neuva për la categorìa:',
 	'achievements-enable-track' => 'abilità',
@@ -7728,50 +7430,50 @@ A trovrà ij distintiv ch'a l'ha vagnà an soa [[$1|pagina ëd profil dl'utent]]
 	'achievements-secret' => 'Realisassion segrete',
 	'achievementscustomize' => 'Përsonalisé ij distintiv',
 	'achievements-about-title' => 'A propòsit dë sta pàgina...',
-	'achievements-about-content' => "J'aministrator ëd sa wiki a peulo përsonalisé ij nòm e le figure dij distintiv dle realisassion.
+	'achievements-about-content' => 'J\'aministrator ëd sa wiki a peulo përsonalisé ij nòm e le figure dij distintiv dle realisassion.
 
 A peul carié qualsëssìa figura .jpg o .png, e soa figura as rangërà automaticament andrinta al quàder.
-A marcia mej quand che soa figura a l'é quadra, e quand che la part pi amportanta dla figura a l'é pròpi ant ël mes.
+A marcia mej quand che soa figura a l\'é quadra, e quand che la part pi amportanta dla figura a l\'é pròpi ant ël mes.
 
 A peul dovré ëd figure retangolar, ma a podrìa trové che cheicòs a resta tajà fòra dal quàder.
-S'a l'ha un programa gràfich, a peul ritajé soa figura për buté la part pi amportanta dla figura ant ël mes.
-S'a l'ha pa un programa gràfich, antlora ch'a preuva pura con figure diferente fin ch'a treuva cola che për chiel a marcia!
-S'a-j pias pa la figura ch'a l'has sërnù, ch'a sgnaca \"{{int:achievements-revert}}\" për andé andré al gràfich original.
+S\'a l\'ha un programa gràfich, a peul ritajé soa figura për buté la part pi amportanta dla figura ant ël mes.
+S\'a l\'ha pa un programa gràfich, antlora ch\'a preuva pura con figure diferente fin ch\'a treuva cola che për chiel a marcia!
+S\'a-j pias pa la figura ch\'a l\'has sërnù, ch\'a sgnaca "{{int:achievements-revert}}" për andé andré al gràfich original.
 
-A peul ëdcò deje ai distintiv dij nòm neuv che a arfleto l'argoment ëd la wiki.
-Quand ch'a l'ha cangià ij nòm dij distintiv, ch'a sgnaca \"{{int:achievements-save}}\" për salvé ij sò cambi.
-Ch'as amusa bin!",
+A peul ëdcò deje ai distintiv dij nòm neuv che a arfleto l\'argoment ëd la wiki.
+Quand ch\'a l\'ha cangià ij nòm dij distintiv, ch\'a sgnaca "{{int:achievements-save}}" për salvé ij sò cambi.
+Ch\'as amusa bin!',
 	'achievements-edit-plus-category-track-name' => '$1 dësfida ëd modìfica',
 	'achievements-create-edit-plus-category-title' => 'Creé na neuva dësfida ëd modìfica',
-	'achievements-create-edit-plus-category-content' => "A peul creé un neuv ansema ëd distintiv che a premio j'utent ch'a modìfico dle pàgine ant na categorìa particolar, për valorisé na zòna particolar dël sit anté che a j'utent a podrìa piasèj-je travajeje ansima.
-A peul amposté pi che na dësfida ëd categorìa, parèj ch'a preuva a serne doe categorìe ch'a podrìo giuté j'utent a mostré soe specialisassion!
-Ch'a anvisca na rivalità tra j'utent ch'a modìfico le pàgine dij Vàmpir e j'utent ch'a modìfico le pàgine dij Luv mostro, o Mago e Muggles, o Autobot e Decepticon.
+	'achievements-create-edit-plus-category-content' => 'A peul creé un neuv ansema ëd distintiv che a premio j\'utent ch\'a modìfico dle pàgine ant na categorìa particolar, për valorisé na zòna particolar dël sit anté che a j\'utent a podrìa piasèj-je travajeje ansima.
+A peul amposté pi che na dësfida ëd categorìa, parèj ch\'a preuva a serne doe categorìe ch\'a podrìo giuté j\'utent a mostré soe specialisassion!
+Ch\'a anvisca na rivalità tra j\'utent ch\'a modìfico le pàgine dij Vàmpir e j\'utent ch\'a modìfico le pàgine dij Luv mostro, o Mago e Muggles, o Autobot e Decepticon.
 
-Për creé na neuva dësfida \"Modìfica ant la categorìa\", ch'a anserissa ël nòm dla categorìa ant ël camp sì-sota.
-La dësfida ëd Modìfica regolar a esisterà anco';
-sossì a creerà na dësfida separà ch'a peule përsonalisé separatament.
+Për creé na neuva dësfida "Modìfica ant la categorìa", ch\'a anserissa ël nòm dla categorìa ant ël camp sì-sota.
+La dësfida ëd Modìfica regolar a esisterà anco\';
+sossì a creerà na dësfida separà ch\'a peule përsonalisé separatament.
 
-Quand la dësfida a l'é creà, ij distintiv neuv a compariran ant la lista an sla snista, sota la dësfida regolar ëd Modìfica.
-Ch'a përsonalisa ij nòm e le figure për la neuva dësfida, an manera che j'utent a peulo vëdde la diferensa!
+Quand la dësfida a l\'é creà, ij distintiv neuv a compariran ant la lista an sla snista, sota la dësfida regolar ëd Modìfica.
+Ch\'a përsonalisa ij nòm e le figure për la neuva dësfida, an manera che j\'utent a peulo vëdde la diferensa!
 
-Na vira ch'a l'ha fàit la përsonalisassion, ch'a sgnaca la casela \"{{int:achievements-enable-track}}\" për rende ativa la neuva dësfida, e peui ch'a sgnaca \"{{int:achievements-save}}\".
-J'utent a vëddran che la neuva dësfida a compariss an sò profil utent, e a ancamineran a vagné dij distintiv quand che a modìfico dle pàgine an cola categorìa.
-A peule ëdcò disabilité la dësfida pi tard, s'a decid che comsëssìa a veul pa valorisé cola categorìa.
-J'utent ch'a l'han vagnà dij distintiv ant la dësfida a mantniran sempe ij sò distintiv, ëdcò se la dësfida a l'é disabilità.
+Na vira ch\'a l\'ha fàit la përsonalisassion, ch\'a sgnaca la casela "{{int:achievements-enable-track}}" për rende ativa la neuva dësfida, e peui ch\'a sgnaca "{{int:achievements-save}}".
+J\'utent a vëddran che la neuva dësfida a compariss an sò profil utent, e a ancamineran a vagné dij distintiv quand che a modìfico dle pàgine an cola categorìa.
+A peule ëdcò disabilité la dësfida pi tard, s\'a decid che comsëssìa a veul pa valorisé cola categorìa.
+J\'utent ch\'a l\'han vagnà dij distintiv ant la dësfida a mantniran sempe ij sò distintiv, ëdcò se la dësfida a l\'é disabilità.
 
-Sòn a peul giuté a buté n'àutr livel d'amusament për le realisassion.
-Ch'a lo preuva!",
+Sòn a peul giuté a buté n\'àutr livel d\'amusament për le realisassion.
+Ch\'a lo preuva!',
 	'achievements-create-edit-plus-category' => 'Creé costa dësfida',
 	'platinum' => 'Plàtin',
-	'achievements-community-platinum-awarded-email-subject' => "A l'é stàit premià con un neuv distintiv ëd Plàtin!",
-	'achievements-community-platinum-awarded-email-body-text' => "Congratulassion $1!
+	'achievements-community-platinum-awarded-email-subject' => 'A l\'é stàit premià con un neuv distintiv ëd Plàtin!',
+	'achievements-community-platinum-awarded-email-body-text' => 'Congratulassion $1!
 
-A l'é pen-a stàit premià con ël distintiv ëd Plàtin '$2' su $4 ($3).
+A l\'é pen-a stàit premià con ël distintiv ëd Plàtin \'$2\' su $4 ($3).
 Sòn a gionta 250 pont a sò pontegi!
 
-Ch'a daga n'ociada a sò distintiv neuv fiamengh an sla pàgina ëd sò profil utent:
+Ch\'a daga n\'ociada a sò distintiv neuv fiamengh an sla pàgina ëd sò profil utent:
 
-$5",
+$5',
 	'achievements-community-platinum-awarded-email-body-html' => '<strong>Congratulassion $1!</strong><br /><br />
 A l\'é pen-a stàit premià con ël distintiv ëd Plàtin \'<strong>$2</strong>\' su <a href="$3">$4</a>.
 Sòn a gionta 250 pont a sò pontegi!<br /><br />
@@ -7790,13 +7492,13 @@ Ch\'a daga n\'ociada a sò fiamengh distintiv neuv an soa <a href="$5">pàgina d
 	'achievements-community-platinum-save' => 'salva',
 	'achievements-community-platinum-cancel' => 'scancela',
 	'achievements-community-platinum-sponsored-label' => 'Obietiv sponsorisà',
-	'achievements-community-platinum-sponsored-hover-content-label' => "Figura da l'àut <small>(dimension mìnima dla vista: 270px x 100px)</small>:",
+	'achievements-community-platinum-sponsored-hover-content-label' => 'Figura da l\'àut <small>(dimension mìnima dla vista: 270px x 100px)</small>:',
 	'achievements-community-platinum-sponsored-badge-impression-pixel-url-label' => 'Anliura da andeje dapress për le visualisassion ëd distintiv:',
 	'achievements-community-platinum-sponsored-hover-impression-pixel-url-label' => 'Anliura da andeje dapress për le visualisassion dle viste:',
 	'achievements-community-platinum-sponsored-badge-click-url-label' => 'Colegament dël distintiv <small>(DART click command URL)</small>:',
 	'achievements-community-platinum-sponsored-badge-click-tooltip' => 'Sgnaca për savèjne ëd pi',
 	'achievements-badge-name-edit-0' => 'Fé la diferensa',
-	'achievements-badge-name-edit-1' => "Mach l'Inissi",
+	'achievements-badge-name-edit-1' => 'Mach l\'Inissi',
 	'achievements-badge-name-edit-2' => 'Fesse armarché',
 	'achievements-badge-name-edit-3' => 'Amis ëd la Wiki',
 	'achievements-badge-name-edit-4' => 'Colaborador',
@@ -7807,7 +7509,7 @@ Ch\'a daga n\'ociada a sò fiamengh distintiv neuv an soa <a href="$5">pàgina d
 	'achievements-badge-name-picture-1' => 'Paparass',
 	'achievements-badge-name-picture-2' => 'Ilustrador',
 	'achievements-badge-name-picture-3' => 'Colessionista',
-	'achievements-badge-name-picture-4' => "Amant ëd l'Art",
+	'achievements-badge-name-picture-4' => 'Amant ëd l\'Art',
 	'achievements-badge-name-picture-5' => 'Decorador',
 	'achievements-badge-name-picture-6' => 'Progetista',
 	'achievements-badge-name-picture-7' => 'Conservador',
@@ -7858,10 +7560,10 @@ Ch\'a daga n\'ociada a sò fiamengh distintiv neuv an soa <a href="$5">pàgina d
 	'achievements-badge-to-get-pounce' => 'esse lest',
 	'achievements-badge-to-get-caffeinated' => 'fé {{PLURAL:$1|na modìfica|$1 modìfiche}} an sle pàgine ant di sol',
 	'achievements-badge-to-get-luckyedit' => 'esse fortunà',
-	'achievements-badge-to-get-edit-details' => "A-i manca quaicòs?
-A-i é n'eror?
-Ch'a sia pa tìmid.
-Ch'a sgnaca ël boton \"{{int:edit}}\" e a peul amelioré qualsëssìa pàgina!",
+	'achievements-badge-to-get-edit-details' => 'A-i manca quaicòs?
+A-i é n\'eror?
+Ch\'a sia pa tìmid.
+Ch\'a sgnaca ël boton "{{int:edit}}" e a peul amelioré qualsëssìa pàgina!',
 	'achievements-badge-to-get-edit-plus-category-details' => 'La pàgina <strong>$1</strong> a l\'ha dabzògn ëd sò agiut!
 Ch\'a sgnaca ël boton "{{int:edit}}" su qualsëssìa pàgina an cola categorìa për giuté.
 Ch\'a mostra sò sostegn a le pàgina $1!',
@@ -7871,25 +7573,25 @@ A peul gionté na fòto da tò ordinator, o da n\'àutra pàgina ëd la wiki.',
 Ch\'a sgnaca ël boton "{{int:categoryselect-addcategory-button}}" an cò dla pàgina për listé cola pàgina ant na categorìa.',
 	'achievements-badge-to-get-blogpost-details' => 'Ch\'a scriva soe opinion e chestion!
 Ch\'a sgnaca su "{{int:blogs-recent-url-text}}" ant la bara lateral, e peui an sl\'anliura a snista për "{{int:create-blog-post-title}}".',
-	'achievements-badge-to-get-blogcomment-details' => "Ch'a gionta ij sò doi sòld!
-Ch'a un mëssagi recent ëd lë scartari, e ch'a scriva lòn ch'a pensa ant la casela dij coment.",
-	'achievements-badge-to-get-love-details' => "Ël conteur a part da zero s'it perde un di, parèj sigurte ëd torné a la wiki minca di!",
+	'achievements-badge-to-get-blogcomment-details' => 'Ch\'a gionta ij sò doi sòld!
+Ch\'a un mëssagi recent ëd lë scartari, e ch\'a scriva lòn ch\'a pensa ant la casela dij coment.',
+	'achievements-badge-to-get-love-details' => 'Ël conteur a part da zero s\'it perde un di, parèj sigurte ëd torné a la wiki minca di!',
 	'achievements-badge-to-get-welcome-details' => 'Ch\'a sgnaca ël boton "{{int:oasis-signup}}" an àut a drita për gionz-se a la comunità.
 A peul ancaminé a vagné ij sò distintiv!',
-	'achievements-badge-to-get-introduction-details' => "Soa pàgina utent a l'é veuida?
-Ch'a sgnaca su sò stranòm an cò dlë scren për vëdde.
-Ch'a sgnaca \"{{int:edit}}\" për gionté chèiche anformassion ëd chiel!",
-	'achievements-badge-to-get-sayhi-details' => "A peul lassé dij mëssagi a j'àutri utent an sgnacand \"{{int:tooltip-ca-addsection}}\" an soa pàgina ëd ciaciarade.
-Ch'a ciama agiut, ch'a-j aringrassie për sò travaj, o ch'a-j disa bele mach cerea!",
-	'achievements-badge-to-get-creator-details' => "Cost distintiv a l'é dàit a la përson-a che a l'ha fondà la wiki.
-Ch'a sgnaca ël boton \"{{int:createwiki}}\" an àut për ancaminé un sit a propòsit ëd lòn ch'a-j pias ëd pi!",
-	'achievements-badge-to-get-pounce-details' => "A dev esse lest për vagné cost distintiv-sì.
-Ch'a sgnaca ël boton «{{int:activityfeed}}» për vëdde le pàgine neuve che j'utent a creo!",
+	'achievements-badge-to-get-introduction-details' => 'Soa pàgina utent a l\'é veuida?
+Ch\'a sgnaca su sò stranòm an cò dlë scren për vëdde.
+Ch\'a sgnaca "{{int:edit}}" për gionté chèiche anformassion ëd chiel!',
+	'achievements-badge-to-get-sayhi-details' => 'A peul lassé dij mëssagi a j\'àutri utent an sgnacand "{{int:tooltip-ca-addsection}}" an soa pàgina ëd ciaciarade.
+Ch\'a ciama agiut, ch\'a-j aringrassie për sò travaj, o ch\'a-j disa bele mach cerea!',
+	'achievements-badge-to-get-creator-details' => 'Cost distintiv a l\'é dàit a la përson-a che a l\'ha fondà la wiki.
+Ch\'a sgnaca ël boton "{{int:createwiki}}" an àut për ancaminé un sit a propòsit ëd lòn ch\'a-j pias ëd pi!',
+	'achievements-badge-to-get-pounce-details' => 'A dev esse lest për vagné cost distintiv-sì.
+Ch\'a sgnaca ël boton «{{int:activityfeed}}» për vëdde le pàgine neuve che j\'utent a creo!',
 	'achievements-badge-to-get-caffeinated-details' => 'A-i va un di complet për vagné sto distintiv.
 Continua a modifiché!',
-	'achievements-badge-to-get-luckyedit-details' => "A dev avèj dël cavicc për vagné sto distitiv.
-Ch'a continua a modifiché!",
-	'achievements-badge-to-get-community-platinum-details' => "Cost-sì a l'é un distintiv special ëd Plàtin che a l'é mach disponìbil për un temp limità!",
+	'achievements-badge-to-get-luckyedit-details' => 'A dev avèj dël cavicc për vagné sto distitiv.
+Ch\'a continua a modifiché!',
+	'achievements-badge-to-get-community-platinum-details' => 'Cost-sì a l\'é un distintiv special ëd Plàtin che a l\'é mach disponìbil për un temp limità!',
 	'achievements-badge-hover-desc-edit' => 'për avèj fàit $1 {{PLURAL:$1|modìfica|modìfiche}}<br />
 su {{PLURAL:$1|na pàgina|dle pàgine}}!',
 	'achievements-badge-hover-desc-edit-plus-category' => 'për avèj fàit $1 {{PLURAL:$1|modìfica|modìfiche}}<br />
@@ -7908,22 +7610,22 @@ soa pàgina utent!',
 	'achievements-badge-hover-desc-sayhi' => 'për avèj lassà un mëssagi<br />
 an sla pàgina ëd discussion ëd quaidun!',
 	'achievements-badge-hover-desc-creator' => 'për avèj creà la wiki!',
-	'achievements-badge-hover-desc-pounce' => "për avèj fàit ëd modìfiche su 100 pàgine ant n'ora da la creassion dla pàgina!",
+	'achievements-badge-hover-desc-pounce' => 'për avèj fàit ëd modìfiche su 100 pàgine ant n\'ora da la creassion dla pàgina!',
 	'achievements-badge-hover-desc-caffeinated' => 'për avèj fàit 100 modìfiche a dle pàgine ant un di sol!',
 	'achievements-badge-hover-desc-luckyedit' => 'për avèj fàit la Modìfica Fortunà nùmer $1 an sla wiki!',
-	'achievements-badge-hover-desc-community-platinum' => "Sossì a l'é un distintiv special ëd Plàtin che a l'é mach disponìbil për un temp limità!",
+	'achievements-badge-hover-desc-community-platinum' => 'Sossì a l\'é un distintiv special ëd Plàtin che a l\'é mach disponìbil për un temp limità!',
 	'achievements-badge-your-desc-edit' => 'për avèj fàit {{PLURAL:$1|soa prima modìfica|$1 modìfiche}} su {{PLURAL:$1|na pàgina|dle pàgine}}!',
 	'achievements-badge-your-desc-edit-plus-category' => 'për avèj fàit {{PLURAL:$1|soa prima modìfica|$1 modìfiche}} su {{PLURAL:$1|na pàgina ëd $2|dle pàgine ëd $2}}!',
 	'achievements-badge-your-desc-picture' => 'për avèj giontà {{PLURAL:$1|soa prima figura|$1 figure}} su {{PLURAL:$1|na pàgina|dle pàgine}}!',
 	'achievements-badge-your-desc-category' => 'për avèj giontà {{PLURAL:$1|soa prima pàgina|$1 pàgine}} a {{PLURAL:$1|na categorìa|dle categorìe}}!',
 	'achievements-badge-your-desc-blogpost' => 'për avèj scrivù {{PLURAL:$1|sò prim artìcol dë scartari|$1 artìcoj dë scartari}}!',
-	'achievements-badge-your-desc-blogcomment' => "për avèj scrivù un coment a {{PLURAL:$1|n'artìcol dë scartari|$1 artìcoj dë scartari diferent}}!",
+	'achievements-badge-your-desc-blogcomment' => 'për avèj scrivù un coment a {{PLURAL:$1|n\'artìcol dë scartari|$1 artìcoj dë scartari diferent}}!',
 	'achievements-badge-your-desc-love' => 'për avèj contribuì a la wiki tuti ij di për {{PLURAL:$1|un di|$1 di}}!',
 	'achievements-badge-your-desc-welcome' => 'për ess-se unisse la wiki!',
 	'achievements-badge-your-desc-introduction' => 'për avèj anrichì soa pàgina utent!',
 	'achievements-badge-your-desc-sayhi' => 'për avèj lassà un mëssagi an sla pàgina ëd discussion ëd quaidun!',
 	'achievements-badge-your-desc-creator' => 'për avèj creà la wiki!',
-	'achievements-badge-your-desc-pounce' => "Për avèj fàit ëd modìfiche su 100 pàgine ant n'ora da soa creassion!",
+	'achievements-badge-your-desc-pounce' => 'Për avèj fàit ëd modìfiche su 100 pàgine ant n\'ora da soa creassion!',
 	'achievements-badge-your-desc-caffeinated' => 'për avèj fàit 100 modìfiche su dle pàgine ant un di sol!',
 	'achievements-badge-your-desc-luckyedit' => 'për avèj fàit la modìfica Fortunà nùmer $1 an sla wiki!',
 	'achievements-badge-desc-edit' => 'për avèj fàit $1 {{PLURAL:$1|modìfica|modìfiche}} su {{PLURAL:$1|na pàgina|dle pàgine}}!',
@@ -7931,21 +7633,17 @@ an sla pàgina ëd discussion ëd quaidun!',
 	'achievements-badge-desc-picture' => 'për avèj giontà $1 {{PLURAL:$1|figura|figure}} su {{PLURAL:$1|na pàgina|dle pàgine}}!',
 	'achievements-badge-desc-category' => 'për avèj giontà $1 {{PLURAL:$1|pàgina|pàgine}} a {{PLURAL:$1|na categorìa|dle categorìe}}!',
 	'achievements-badge-desc-blogpost' => 'për avèj scrivù $1 {{PLURAL:$1|artìcol dë scartari|artìcoj dë scartari}}!',
-	'achievements-badge-desc-blogcomment' => "për avèj scrivù un coment su {{PLURAL:$1|n'artìcol dë scartari|$1 artìcoj dë scartari diferent}}!",
+	'achievements-badge-desc-blogcomment' => 'për avèj scrivù un coment su {{PLURAL:$1|n\'artìcol dë scartari|$1 artìcoj dë scartari diferent}}!',
 	'achievements-badge-desc-love' => 'për avèj contribuì a la wiki minca di për {{PLURAL:$1|un di|$1 di}}!',
 	'achievements-badge-desc-welcome' => 'për ess-se giontasse a la wiki!',
 	'achievements-badge-desc-introduction' => 'për avèj anrichì soa pàgina utent!',
 	'achievements-badge-desc-sayhi' => 'për avèj lassà un mëssagi an sla pàgina ëd discussion ëd quaidun!',
 	'achievements-badge-desc-creator' => 'për avèj creà la wiki!',
-	'achievements-badge-desc-pounce' => "Për avèj fàit dle modìfiche su 100 pàgine ant n'ora da soa creassion!",
+	'achievements-badge-desc-pounce' => 'Për avèj fàit dle modìfiche su 100 pàgine ant n\'ora da soa creassion!',
 	'achievements-badge-desc-caffeinated' => 'për avèj fàit 100 modìfiche su dle pàgine ant un di sol!',
 	'achievements-badge-desc-luckyedit' => 'për avèj fàit la modìfica Fortunà nùmer $1 an sla wiki!',
 ];
 
-/** Pashto (پښتو)
- * @author Ahmed-Najib-Biabani-Ibrahimkhel
- * @author Wahidullah Kaleem
- */
 $messages['ps'] = [
 	'achievements-platinum' => 'پلاټېنيم',
 	'achievements-gold' => 'سره زر',
@@ -7988,14 +7686,6 @@ $messages['ps'] = [
 	'achievements-badge-your-desc-creator' => 'د ويکي جوړولو لپاره ورکړ شوی!',
 ];
 
-/** Portuguese (português)
- * @author Crazymadlover
- * @author Giro720
- * @author Hamilton Abreu
- * @author Malafaya
- * @author Rhaijin
- * @author Waldir
- */
 $messages['pt'] = [
 	'achievementsii-desc' => 'Um sistema de recompensa através de medalhas para os usuários da wikia',
 	'achievements-upload-error' => 'Desculpe!
@@ -8048,9 +7738,9 @@ Por favor, tente usar outra imagem!',
 	'leaderboard-intro-hide' => 'Ocultar',
 	'leaderboard-intro-open' => 'abrir',
 	'leaderboard-intro-headline' => 'O que são conquistas?',
-	'leaderboard-intro' => "Você pode ganhar medalhas nesta wikia ao editar páginas, ao fazer upload de imagens e deixar comentários. Você ganha pontos com cada medalha - quanto mais pontos obtiver, melhor será sua colocação na tabela de liderança! Encontre a lista das medalhas já obtidas na página [[$1|perfil de usuário]].
+	'leaderboard-intro' => 'Você pode ganhar medalhas nesta wikia ao editar páginas, ao fazer upload de imagens e deixar comentários. Você ganha pontos com cada medalha - quanto mais pontos obtiver, melhor será sua colocação na tabela de liderança! Encontre a lista das medalhas já obtidas na página [[$1|perfil de usuário]].
 
-'''Quanto valem as medalhas?'''",
+\'\'\'Quanto valem as medalhas?\'\'\'',
 	'leaderboard' => 'Tabela de liderança',
 	'achievements-title' => 'Conquistas',
 	'leaderboard-title' => 'Tabela de liderança',
@@ -8110,14 +7800,14 @@ Experimente!',
 	'achievements-create-edit-plus-category' => 'Criar este trajeto',
 	'platinum' => 'Platina',
 	'achievements-community-platinum-awarded-email-subject' => 'Você ganhou uma nova medalha de platina!',
-	'achievements-community-platinum-awarded-email-body-text' => "Parabéns, $1!
+	'achievements-community-platinum-awarded-email-body-text' => 'Parabéns, $1!
 
-Você acabou de ganhar a medalha de Platina '$2' em $4 ($3).
+Você acabou de ganhar a medalha de Platina \'$2\' em $4 ($3).
 Isto acrescenta 250 pontos ao seu total!
 
 Dê uma olhada na sua nova medalha na sua página de perfil de usuário:
 
-$5",
+$5',
 	'achievements-community-platinum-awarded-email-body-html' => '<strong>Parabéns, $1!</strong><br /><br />
 Você acaba de ganhar a medalha de platina \'<strong>$2</strong>\' na <a href="$3">$4</a>.
 Isto acrescenta 250 pontos ao seu total!<br /><br />
@@ -8306,11 +7996,6 @@ a {{PLURAL:$1|a $2 artigo|$2 artigos}}!',
 	'achievements-prev-oasis' => 'Anterior',
 ];
 
-/** Brazilian Portuguese (português do Brasil)
- * @author Aristóbulo
- * @author Luckas Blade
- * @author Rhaijin
- */
 $messages['pt-br'] = [
 	'achievementsii-desc' => 'Um sistema de recompensa através de medalhas para os usuários da wiki',
 	'achievements-upload-error' => 'Desculpe-nos!
@@ -8363,9 +8048,9 @@ Esconder as minhas conquistas no meu perfil de todos',
 	'leaderboard-intro-hide' => 'Ocultar',
 	'leaderboard-intro-open' => 'Mostrar',
 	'leaderboard-intro-headline' => 'O que são as Medalhas?',
-	'leaderboard-intro' => "Pode ganhar medalhas nesta wiki se editar páginas, fizer upload de imagens e deixar comentários. Com cada medalha recebe pontos - quanto mais pontos obtiver, melhor colocado ficará na tabela de liderança! Encontra a lista das medalhas que já ganhou, na página do seu [[$1|perfil de utilizador]].
+	'leaderboard-intro' => 'Pode ganhar medalhas nesta wiki se editar páginas, fizer upload de imagens e deixar comentários. Com cada medalha recebe pontos - quanto mais pontos obtiver, melhor colocado ficará na tabela de liderança! Encontra a lista das medalhas que já ganhou, na página do seu [[$1|perfil de utilizador]].
 
-'''Quanto valem as medalhas?'''",
+\'\'\'Quanto valem as medalhas?\'\'\'',
 	'leaderboard' => 'Tabela de liderança',
 	'achievements-title' => 'Objetivos',
 	'leaderboard-title' => 'Tabela de liderança',
@@ -8426,14 +8111,14 @@ Experimente!',
 	'achievements-create-edit-plus-category' => 'Criar este trajeto',
 	'platinum' => 'Platina',
 	'achievements-community-platinum-awarded-email-subject' => 'Você ganhou uma nova medalha de Platina!',
-	'achievements-community-platinum-awarded-email-body-text' => "Parabéns, $1!
+	'achievements-community-platinum-awarded-email-body-text' => 'Parabéns, $1!
 
-Você acabou de ganhar a medalha de Platina '$2' em $4 ($3).
+Você acabou de ganhar a medalha de Platina \'$2\' em $4 ($3).
 Isto acrescenta 250 pontos ao seu total!
 
 Dê uma olhada na sua nova medalha na sua página de perfil de usuário:
 
-$5",
+$5',
 	'achievements-community-platinum-awarded-email-body-html' => '<strong>Parabéns, $1!</strong><br /><br />
 Acaba de ganhar a medalha de Platina \'<strong>$2</strong>\' na <a href="$3">$4</a>.
 Isto acrescenta 250 pontos ao seu total!<br /><br />
@@ -8613,11 +8298,6 @@ página de discussão de outro utilizador!',
 	'achievements-userprofile-ranked' => '[[Special:Leaderboard|Posição #$1]]<br />nesta wiki',
 ];
 
-/** Romanian (română)
- * @author AddyC
- * @author Minisarm
- * @author Stelistcristi
- */
 $messages['ro'] = [
 	'achievementsii-desc' => 'Un sistem de medalii pentru reușitele utilizatorilor',
 	'achievements-upload-error' => 'Ne pare rău!
@@ -8669,9 +8349,9 @@ Vă rugăm să încercați alt fișier!',
 	'leaderboard-intro-hide' => 'ascunde',
 	'leaderboard-intro-open' => 'deschide',
 	'leaderboard-intro-headline' => 'Ce sunt Medaliile?',
-	'leaderboard-intro' => "Puteți câștiga medalii pe acest wiki editând paginile, încărcând imagini și comentând. Orice Medalie vă aduce puncte - cu cât ai mai multe, cu atât te ridici în clasament! Puteți vedea Medaliile pe care le-ați câștigat pe [[$1|pagina dumneavoastră de utilizator]].
+	'leaderboard-intro' => 'Puteți câștiga medalii pe acest wiki editând paginile, încărcând imagini și comentând. Orice Medalie vă aduce puncte - cu cât ai mai multe, cu atât te ridici în clasament! Puteți vedea Medaliile pe care le-ați câștigat pe [[$1|pagina dumneavoastră de utilizator]].
 
-'''Ce îmi aduc Medaliile?'''",
+\'\'\'Ce îmi aduc Medaliile?\'\'\'',
 	'leaderboard' => 'Pagina Liderilor în realizări',
 	'achievements-title' => 'Medalii',
 	'leaderboard-title' => 'Pagina Liderilor',
@@ -8921,11 +8601,8 @@ pe pagina cuiva de discuție!',
 	'achievements-userprofile-ranked' => 'Pe locul [[Special:Leaderboard|$1]]<br />pe wiki',
 ];
 
-/** tarandíne (tarandíne)
- * @author Joetaras
- */
 $messages['roa-tara'] = [
-	'achievements-non-existing-category' => "'A categorije specificate non g'esiste.",
+	'achievements-non-existing-category' => '\'A categorije specificate non g\'esiste.',
 	'achievements-platinum' => 'Platine',
 	'achievements-gold' => 'Ore',
 	'achievements-silver' => 'Argende',
@@ -8943,12 +8620,12 @@ $messages['roa-tara'] = [
 	'achievements-leaderboard-rank-label' => 'Posizione',
 	'achievements-leaderboard-member-label' => 'Membre',
 	'achievements-leaderboard-points-label' => 'Punde',
-	'achievements-send' => "Reggistre l'immaggine",
+	'achievements-send' => 'Reggistre l\'immaggine',
 	'achievements-save' => 'Reggistre le cangiaminde',
-	'achievements-customize' => "Personalizze l'immaggine",
+	'achievements-customize' => 'Personalizze l\'immaggine',
 	'achievements-enable-track' => 'abbilitate',
 	'achievements-special-saved' => 'Cnagiaminde reggistrate.',
-	'achievements-about-title' => "'Mbormaziune sus a sta pàgene...",
+	'achievements-about-title' => '\'Mbormaziune sus a sta pàgene...',
 	'platinum' => 'Platine',
 	'achievements-community-platinum-how-to-earn' => 'Cumme guadagnà:',
 	'achievements-community-platinum-awarded-for-example' => 'p.e. "pe fa..."',
@@ -8961,7 +8638,7 @@ $messages['roa-tara'] = [
 	'achievements-badge-name-picture-3' => 'Collezzioniste',
 	'achievements-badge-name-picture-5' => 'Decoratore',
 	'achievements-badge-name-picture-7' => 'Curatore',
-	'achievements-badge-name-category-0' => "Fà 'na connessione",
+	'achievements-badge-name-category-0' => 'Fà \'na connessione',
 	'achievements-badge-name-category-2' => 'Esploratore',
 	'achievements-badge-name-category-3' => 'Guide Turisteche',
 	'achievements-badge-name-category-4' => 'Navigatore',
@@ -8969,27 +8646,14 @@ $messages['roa-tara'] = [
 	'achievements-badge-name-blogpost-1' => 'Cinghe Cose da dicere',
 	'achievements-badge-name-blogcomment-0' => 'Opinioniste',
 	'achievements-badge-name-blogcomment-1' => 'E une o cchiù cose',
-	'achievements-badge-name-love-1' => "Doje sumàne sus 'a uicchi",
+	'achievements-badge-name-love-1' => 'Doje sumàne sus \'a uicchi',
 	'achievements-badge-name-love-2' => 'Devote',
 	'achievements-badge-name-love-3' => 'Dedicate',
 	'achievements-badge-name-sharing-4' => 'Evangeliste',
-	'achievements-badge-name-welcome' => "Bovègne jndr'à Uicchi",
-	'achievements-badge-name-introduction' => "'Ndroduzione",
+	'achievements-badge-name-welcome' => 'Bovègne jndr\'à Uicchi',
+	'achievements-badge-name-introduction' => '\'Ndroduzione',
 ];
 
-/** Russian (русский)
- * @author DCamer
- * @author Eleferen
- * @author EugeneZelenko
- * @author Exlex
- * @author JenVan
- * @author Kuzura
- * @author Lockal
- * @author Putnik
- * @author Strizh
- * @author Александр Сигачёв
- * @author Сrower
- */
 $messages['ru'] = [
 	'achievementsii-desc' => 'Система достижений пользователей вики-сайта',
 	'achievements-upload-error' => 'Простите!
@@ -9041,9 +8705,9 @@ $messages['ru'] = [
 	'leaderboard-intro-hide' => 'скрыть',
 	'leaderboard-intro-open' => 'открыть',
 	'leaderboard-intro-headline' => 'Что такое достижения?',
-	'leaderboard-intro' => "Вы можете зарабатывать значки на этой Вики редактируя страницы, загружая фотографий и оставляя комментарии. Каждый значок даёт очки — чем больше очков вы получите, тем выше вы будете в таблице лидеров! Значки, которые вы заработали, можно просмотреть на [[$1|странице профиля]]
+	'leaderboard-intro' => 'Вы можете зарабатывать значки на этой Вики редактируя страницы, загружая фотографий и оставляя комментарии. Каждый значок даёт очки — чем больше очков вы получите, тем выше вы будете в таблице лидеров! Значки, которые вы заработали, можно просмотреть на [[$1|странице профиля]]
 
-	'''Что такое значки?'''",
+	\'\'\'Что такое значки?\'\'\'',
 	'leaderboard' => 'Лидеры по наградам',
 	'achievements-title' => 'Достижения',
 	'leaderboard-title' => 'Доска лидеров',
@@ -9289,11 +8953,6 @@ $5',
 	'achievements-badge-desc-sharing' => 'Награда за {{#ifeq:$1|0|то, что вы поделились одной ссылкой|то, что {{PLURAL:$1|один посетитель|$1 посетителей}} кликнул(и) по ссылке, которой вы поделились}}',
 ];
 
-/** Sinhala (සිංහල)
- * @author Singhalawap
- * @author පසිඳු කාවින්ද
- * @author බිඟුවා
- */
 $messages['si'] = [
 	'achievements-platinum' => 'ප්ලැටිනම්',
 	'achievements-gold' => 'රත්‍රන්',
@@ -9312,9 +8971,6 @@ $messages['si'] = [
 	'achievements-community-platinum-cancel' => 'අත් හරින්න',
 ];
 
-/** Slovenian (slovenščina)
- * @author Irena Plahuta
- */
 $messages['sl'] = [
 	'achievements-platinum' => 'Platina',
 	'achievements-gold' => 'Zlata',
@@ -9331,16 +8987,10 @@ $messages['sl'] = [
 	'achievements-recent-earned-badges' => 'Nedavno pridobljene značke',
 ];
 
-/** Albanian (shqip)
- * @author Marinari
- */
 $messages['sq'] = [
 	'achievementsii-desc' => 'Një shenjë arritjeje e sistemit për wiki përdoruesit',
 ];
 
-/** Serbian (Cyrillic script) (‪српски (ћирилица)‬)
- * @author Rancher
- */
 $messages['sr-ec'] = [
 	'achievementsii-desc' => 'Систем значки за достигнућа корисника',
 	'achievements-upload-error' => 'Нажалост, та слика не ради. Проверите да ли је формата JPG или PNG.
@@ -9389,9 +9039,9 @@ $messages['sr-ec'] = [
 	'leaderboard-intro-hide' => 'сакриј',
 	'leaderboard-intro-open' => 'отвори',
 	'leaderboard-intro-headline' => 'Шта су достигнућа?',
-	'leaderboard-intro' => "Учествујући (уређујући, отпремајући слике) на овом викију, добијате значке.<br />Оне носе бодове, и с њима се пењете на табели. Добијене значке ћете наћи у свом [[$1|корисничком профилу]].
+	'leaderboard-intro' => 'Учествујући (уређујући, отпремајући слике) на овом викију, добијате значке.<br />Оне носе бодове, и с њима се пењете на табели. Добијене значке ћете наћи у свом [[$1|корисничком профилу]].
 
-'''Колико вреде значке?'''",
+\'\'\'Колико вреде значке?\'\'\'',
 	'leaderboard' => 'Предводници',
 	'achievements-title' => 'Достигнућа',
 	'leaderboard-title' => 'Предводници',
@@ -9520,11 +9170,6 @@ $5',
 	'achievements-userprofile-ranked' => '[[Special:Leaderboard|На $1 месту]]<br />на овом викију',
 ];
 
-/** Swedish (svenska)
- * @author Lokal Profil
- * @author Tobulos1
- * @author WikiPhoenix
- */
 $messages['sv'] = [
 	'achievementsii-desc' => 'En prestationsemblems-system för wiki-användare',
 	'achievements-upload-error' => 'Tyvärr!
@@ -9576,9 +9221,9 @@ Försök med en annan!',
 	'leaderboard-intro-hide' => 'göm',
 	'leaderboard-intro-open' => 'öppna',
 	'leaderboard-intro-headline' => 'Vad är Utmärkelser?',
-	'leaderboard-intro' => "Du kan tjäna emblem genom att ändra sidor på denna wiki, ladda upp foton och lämna kommentarer. För varje emblem kan du tjäna poäng - desto mer poäng du får, desto högre upp på topplistan går du! Du kan hitta alla intjänade emblem på din [[$1|användarsida]].
+	'leaderboard-intro' => 'Du kan tjäna emblem genom att ändra sidor på denna wiki, ladda upp foton och lämna kommentarer. För varje emblem kan du tjäna poäng - desto mer poäng du får, desto högre upp på topplistan går du! Du kan hitta alla intjänade emblem på din [[$1|användarsida]].
 
-	'''Vad är emblem värda?'''",
+	\'\'\'Vad är emblem värda?\'\'\'',
 	'leaderboard' => 'Topplistan för Utmärkelser',
 	'achievements-title' => 'Utmärkelser',
 	'leaderboard-title' => 'Topplista',
@@ -9639,14 +9284,14 @@ Prova ut den!',
 	'achievements-create-edit-plus-category' => 'Skapa denna serie',
 	'platinum' => 'Platina',
 	'achievements-community-platinum-awarded-email-subject' => 'Du har tilldelats ett nytt Platinaemblem!',
-	'achievements-community-platinum-awarded-email-body-text' => "Grattis $1!
+	'achievements-community-platinum-awarded-email-body-text' => 'Grattis $1!
 
-Du har just belönats med Platinaemblemet '$2' på $4 ($3).
+Du har just belönats med Platinaemblemet \'$2\' på $4 ($3).
 Detta lägger till 250 poäng till din poängsumma!
 
 Kolla in dina nya snygga emblem på din användarprofilsida:
 
-$5",
+$5',
 	'achievements-community-platinum-awarded-email-body-html' => '<strong>Grattis, $1!</strong><br /><br />
 Du har tjänat Platina-emblemet \'<strong>$2</strong>\' på <a href="$3">$4</a>.
 Detta lägger till 250 poäng till din poängställning!<br /><br />
@@ -9827,9 +9472,6 @@ på någon annans diskussionssida!',
 	'achievements-userprofile-ranked' => '[[Special:Leaderboard|Rankad som #$1]]<br />på denna wiki',
 ];
 
-/** Swahili (Kiswahili)
- * @author Muddyb Blast Producer
- */
 $messages['sw'] = [
 	'achievements-upload-error' => 'Pole!
 Picha hiyo haifanyi kazi.
@@ -9841,13 +9483,6 @@ Tafadhali jaribu nyingine!',
 	'achievements-community-platinum-save' => 'hifadhi',
 ];
 
-/** Tamil (தமிழ்)
- * @author Balajijagadesh
- * @author Krishnaprasaths
- * @author Shanmugamp7
- * @author TRYPPN
- * @author செல்வா
- */
 $messages['ta'] = [
 	'achievements-upload-error' => '↓மன்னிக்கவும்!</br>
 அந்த படம் வேலை செய்யவில்லை.</br>
@@ -9890,10 +9525,6 @@ $messages['ta'] = [
 	'achievements-badge-name-edit-1' => 'தொடக்கம் மட்டுமே',
 ];
 
-/** Telugu (తెలుగు)
- * @author Praveen Illa
- * @author Veeven
- */
 $messages['te'] = [
 	'achievements-platinum' => 'ప్లాటినం',
 	'achievements-gold' => 'స్వర్ణం',
@@ -9908,16 +9539,10 @@ $messages['te'] = [
 	'achievements-community-platinum-cancel' => 'రద్దుచేయి',
 ];
 
-/** Tetum (tetun)
- * @author MF-Warburg
- */
 $messages['tet'] = [
 	'achievements-community-platinum-edit' => 'edita',
 ];
 
-/** Thai (ไทย)
- * @author Ariesanywhere
- */
 $messages['th'] = [
 	'achievements-viewall' => 'เปิดดูทั้งหมด',
 	'achievements-viewless' => 'ปิด',
@@ -9939,9 +9564,6 @@ $messages['th'] = [
 	'achievements-community-platinum-sponsored-badge-click-tooltip' => 'คลิกดูรายละเอียดเพิ่มเติม',
 ];
 
-/** Tagalog (Tagalog)
- * @author AnakngAraw
- */
 $messages['tl'] = [
 	'achievementsii-desc' => 'Isang sistema ng mga tsapa ng naisagawa para sa mga tagagamit ng wiki',
 	'achievements-upload-error' => 'Paumanhin!
@@ -9993,9 +9615,9 @@ Pakisubukan ang iba pa!',
 	'leaderboard-intro-hide' => 'itago',
 	'leaderboard-intro-open' => 'buksan',
 	'leaderboard-intro-headline' => 'Ano ba ang mga Naisagawa?',
-	'leaderboard-intro' => "Magkakamit ka ng mga tsapa sa wiking ito sa pamamagitan ng pamamatnugot ng mga pahina, pagkakarga ng mga larawan at pag-iiwan ng mga puna. Bawat tsapa ay nagbibigay sa iyo ng mga puntos - kung mas marami ang mga puntos na nakuha mo, mas mataas ang kalalagyan mo sa pisara ng mga nangunguna! Matatagpuan mo ang mga tsapang nakamit mo doon sa iyong [[$1|pahina ng balangkas ng tagagamit]].
+	'leaderboard-intro' => 'Magkakamit ka ng mga tsapa sa wiking ito sa pamamagitan ng pamamatnugot ng mga pahina, pagkakarga ng mga larawan at pag-iiwan ng mga puna. Bawat tsapa ay nagbibigay sa iyo ng mga puntos - kung mas marami ang mga puntos na nakuha mo, mas mataas ang kalalagyan mo sa pisara ng mga nangunguna! Matatagpuan mo ang mga tsapang nakamit mo doon sa iyong [[$1|pahina ng balangkas ng tagagamit]].
 
-'''Ano ba ang halaga ng mga tsapa?'''",
+\'\'\'Ano ba ang halaga ng mga tsapa?\'\'\'',
 	'leaderboard' => 'Pinunong pisara ng mga nakamit',
 	'achievements-title' => 'Mga nagawa',
 	'leaderboard-title' => 'Pangunahing-pisara',
@@ -10142,9 +9764,6 @@ Magpatuloy sa pamamatnugot!',
 	'achievements-userprofile-no-badges-visitor' => 'Ang tagagamit na ito ay hindi pa nagkakamit ng anumang tsapa.',
 ];
 
-/** толышә зывон (толышә зывон)
- * @author Гусейн
- */
 $messages['tly'] = [
 	'achievements-gold' => 'Телы',
 	'achievements-silver' => 'Нығә',
@@ -10172,11 +9791,6 @@ $messages['tly'] = [
 	'achievements-badge-name-sayhi' => 'Вәсе "Сәлом" вотеј',
 ];
 
-/** Turkish (Türkçe)
- * @author 82-145
- * @author Emperyan
- * @author Gizemb
- */
 $messages['tr'] = [
 	'achievementsii-desc' => 'Viki kullanıcıları için bir başarı nişanı sistemi',
 	'achievements-upload-error' => 'Üzgünüz!
@@ -10196,7 +9810,7 @@ Lütfen bir başkasını deneyin.',
 	'achievements-profile-title-no' => '$1 kişisinin rozetleri',
 	'achievements-profile-title-challenges' => 'Daha fazla rozet kazanabilirsin!',
 	'achievements-profile-customize' => 'Rozetleri düzenle',
-	'achievements-ranked' => "Bu wiki'de #$1 oldun",
+	'achievements-ranked' => 'Bu wiki\'de #$1 oldun',
 	'achievements-viewall' => 'Hepsini göster',
 	'achievements-viewless' => 'Kapat',
 	'achievements-viewall-oasis' => 'Hepsini gör',
@@ -10252,7 +9866,7 @@ Lütfen bir başkasını deneyin.',
 	'achievements-badge-name-blogpost-1' => 'Söylenecek 5 şey',
 	'achievements-badge-name-blogpost-2' => 'Talk Show',
 	'achievements-badge-name-blogcomment-1' => 'Ve bir şey daha',
-	'achievements-badge-name-love-1' => "Wiki'de 2 hafta",
+	'achievements-badge-name-love-1' => 'Wiki\'de 2 hafta',
 	'achievements-badge-name-love-2' => 'Sadık',
 	'achievements-badge-name-love-3' => 'Adanmış',
 	'achievements-badge-name-love-4' => 'Bağımlı',
@@ -10261,16 +9875,16 @@ Lütfen bir başkasını deneyin.',
 	'achievements-badge-name-sharing-0' => 'Paylaşımcı',
 	'achievements-badge-name-sharing-1' => 'Geri getir',
 	'achievements-badge-name-sharing-2' => 'Konuşmacı',
-	'achievements-badge-name-welcome' => "Viki'ye hoşgeldiniz",
+	'achievements-badge-name-welcome' => 'Viki\'ye hoşgeldiniz',
 	'achievements-badge-name-introduction' => 'Giriş',
 	'achievements-badge-name-sayhi' => 'Selam vermek için durma',
 	'achievements-badge-name-luckyedit' => 'Şanslı düzenleme',
-	'achievements-badge-to-get-welcome' => "Viki'ye katıl",
+	'achievements-badge-to-get-welcome' => 'Viki\'ye katıl',
 	'achievements-badge-to-get-introduction' => 'kullanıcı sayfanızı ekleyin',
 	'achievements-badge-to-get-pounce' => 'hızlı ol',
 	'achievements-badge-to-get-luckyedit' => 'şanslı ol',
-	'achievements-badge-hover-desc-welcome' => "Viki'ye katılmak için!",
-	'achievements-badge-hover-desc-creator' => "Viki'yi yaratmak için!",
+	'achievements-badge-hover-desc-welcome' => 'Viki\'ye katılmak için!',
+	'achievements-badge-hover-desc-creator' => 'Viki\'yi yaratmak için!',
 	'achievements-badge-your-desc-welcome' => 'wikiye katıldığınız için!',
 	'achievements-badge-your-desc-introduction' => 'kendi kullanıcı sayfanızı eklediğiniz için!',
 	'achievements-badge-your-desc-sayhi' => 'başkasının tartışma penceresine mesaj bıraktığınız için!',
@@ -10284,10 +9898,6 @@ Lütfen bir başkasını deneyin.',
 	'achievements-badge-desc-creator' => 'wiki oluşturduğun için!',
 ];
 
-/** Tatar (Cyrillic script) (татарча)
- * @author Ajdar
- * @author Рашат Якупов
- */
 $messages['tt-cyrl'] = [
 	'achievementsii-desc' => 'Вики-сайт кулланучыларның казанышлар системасы',
 	'achievements-upload-error' => 'Гафу итегез!
@@ -10339,14 +9949,14 @@ $messages['tt-cyrl'] = [
 	'leaderboard-intro-hide' => 'яшерү',
 	'leaderboard-intro-open' => 'ачу',
 	'leaderboard-intro-headline' => 'Нәрсә ул казанышлар?',
-	'leaderboard-intro' => "Сез бу Викида мәкаләләрне төзәтеп, фотолар кертеп һәм шәрехләр калдырып, тамгалар казана аласыз. Һәр тамга баллар бирә - күбрәк баллар җыйган саен, лидерлар җәдвәлендә сез зуррак урында булачаксыз! Сез яулаган тамгаларыгызны [[$1|кулланучы битендә]] карый аласыз.
+	'leaderboard-intro' => 'Сез бу Викида мәкаләләрне төзәтеп, фотолар кертеп һәм шәрехләр калдырып, тамгалар казана аласыз. Һәр тамга баллар бирә - күбрәк баллар җыйган саен, лидерлар җәдвәлендә сез зуррак урында булачаксыз! Сез яулаган тамгаларыгызны [[$1|кулланучы битендә]] карый аласыз.
 
-'''Нәрсә ул тамгалар?'''",
+\'\'\'Нәрсә ул тамгалар?\'\'\'',
 	'leaderboard' => 'Казанышлар буенча лидерлар',
 	'achievements-title' => 'Казанышлар',
 	'leaderboard-title' => 'Җиңүчеләр исемлеге',
 	'achievements-recent-earned-badges' => 'Соңгы казанган тамгалар',
-	'achievements-recent-info' => "<strong>$3</strong><br />$4<br /> <a href=''$1''>$2</a><br />$5 казанды",
+	'achievements-recent-info' => '<strong>$3</strong><br />$4<br /> <a href=\'\'$1\'\'>$2</a><br />$5 казанды',
 	'achievements-activityfeed-info' => '<a href="$3" class="badgeName"><strong>$1</strong></a>  <br /> $2 тамгасын казанды',
 	'achievements-leaderboard-disclaimer' => 'Лидерлар җәдвәле кичәге көннән үзгәрешләрне күрсәтә',
 	'achievements-leaderboard-rank-label' => 'Дәрәҗә',
@@ -10366,7 +9976,7 @@ $messages['tt-cyrl'] = [
 	'achievements-secret' => 'Яшерен казанышлар',
 	'achievementscustomize' => 'Тамгаларны көйләү',
 	'achievements-about-title' => 'Бу бит турында...',
-	'achievements-about-content' => "Бу вики-сайт идарәчеләре казанышлар исемнәрен һәм рәсемнәрен көйли алалар.
+	'achievements-about-content' => 'Бу вики-сайт идарәчеләре казанышлар исемнәрен һәм рәсемнәрен көйли алалар.
 
 Сез JPG яки PNG форматында теләсә нинди рәсемне йөкли аласыз, һәм сезнең рәсем автомат рәвештә кыса эченә көйләнәчәк.
 Бу әгәр сезнең рәсем квадрат рәвешендә, һәм, рәсемнең иң мөһим өлеше уртада булганда, яхшырак эшләячәк
@@ -10374,11 +9984,11 @@ $messages['tt-cyrl'] = [
 Сез турыпочмаклы рәсемнәр куллана аласыз, ләкин алар кысаның зурлыгына бәйле рәвештә киселәчәкләр.
 Әгәр сездә теләсә нинди график редактор бар икән, сез рәсемнең иң мөһим өлеше уртада калырлык итеп, аны кисә аласыз.
 Әгәр сезнең график программа юк икән, сезгә туры килердәй рәсем тапканчы, төрле рәсемнәр белән экспериментлар үткәреп карагыз!
-Әгәр  сезгә үзегез сайлаган рәсем ошамый икән, оригиналь рәсемне кире кайтарыр өчен,  ''{{int:achievements-revert}}'' чирттерегез.
+Әгәр  сезгә үзегез сайлаган рәсем ошамый икән, оригиналь рәсемне кире кайтарыр өчен,  \'\'{{int:achievements-revert}}\'\' чирттерегез.
 
 Сез тамгаларга вики-сайтның темасын яктыртучы яңа исемнәр дә бирә аласыз.
-Тамганың исемен үзгәрткәч, үзгәртүләрне саклар өчен, ''{{int:achievements-save}}'' басыгыз.
-Уңышлар!",
+Тамганың исемен үзгәрткәч, үзгәртүләрне саклар өчен, \'\'{{int:achievements-save}}\'\' басыгыз.
+Уңышлар!',
 	'achievements-edit-plus-category-track-name' => '$1 трек үзгәртелгән',
 	'achievements-create-edit-plus-category-title' => 'Яңа трек ясау',
 	'achievements-create-edit-plus-category-content' => 'Сез ике төрле төркем өчен ике трек ясап, катнашучылар арасында бәйгеләр оештыра аласыз!
@@ -10434,7 +10044,7 @@ $5',
 	'achievements-badge-name-edit-0' => 'Үзгәртүләр кертх',
 	'achievements-badge-name-edit-1' => 'Бу әле башы гына',
 	'achievements-badge-name-edit-2' => 'Төзәтмә кую',
-	'achievements-badge-name-edit-3' => "Wiki'ның дусты",
+	'achievements-badge-name-edit-3' => 'Wiki\'ның дусты',
 	'achievements-badge-name-edit-4' => 'Хезмәттәш',
 	'achievements-badge-name-edit-5' => 'Wiki төзүчесе',
 	'achievements-badge-name-edit-6' => 'Wiki лидеры',
@@ -10517,13 +10127,6 @@ $5',
 	'achievements-userprofile-no-badges-owner' => 'Бу викида яулап алырга мөмкин булган тамгалар исемлеген карагыз!',
 ];
 
-/** Ukrainian (українська)
- * @author A1
- * @author AS
- * @author Microcell
- * @author Olvin
- * @author Тест
- */
 $messages['uk'] = [
 	'achievementsii-desc' => 'Система відзнак для користувачів',
 	'achievements-upload-error' => '↓Вибачте!
@@ -10607,9 +10210,6 @@ $messages['uk'] = [
 	'achievements-badge-to-get-luckyedit' => 'щасти',
 ];
 
-/** Veps (Vepsän kel’)
- * @author Игорь Бродский
- */
 $messages['vep'] = [
 	'achievements-viewall' => 'Kacta kaik',
 	'achievements-viewless' => 'Saubata',
@@ -10628,7 +10228,7 @@ $messages['vep'] = [
 	'achievements-badge-name-picture-7' => 'Kurator',
 	'achievements-badge-name-category-0' => 'Sidoi',
 	'achievements-badge-name-category-4' => 'Navigator',
-	'achievements-badge-name-love-6' => "Wiki-vägimez'",
+	'achievements-badge-name-love-6' => 'Wiki-vägimez\'',
 	'achievements-badge-name-sharing-2' => 'Pagižii',
 	'achievements-badge-name-welcome' => 'Tulgat tervhin Wikihe',
 	'achievements-badge-name-creator' => 'Sädai',
@@ -10636,14 +10236,6 @@ $messages['vep'] = [
 	'achievements-badge-your-desc-creator' => 'wikin sädmas!',
 ];
 
-/** Vietnamese (Tiếng Việt)
- * @author Minh Nguyen
- * @author Nglekhoi
- * @author Thanhtai2009
- * @author Trần Nguyễn Minh Huy
- * @author Xiao Qiao
- * @author XiaoQiaoGrace
- */
 $messages['vi'] = [
 	'achievementsii-desc' => 'Một hệ thống phù hiệu cho thành viên',
 	'achievements-upload-error' => 'Rấc tiếc!
@@ -10681,14 +10273,6 @@ Hãy thử những ảnh khác!',
 	'achievements-badge-name-picture-1' => 'Tay săn ảnh',
 ];
 
-/** Simplified Chinese (‪中文（简体）‬)
- * @author A911504820
- * @author Anakmalaysia
- * @author Dimension
- * @author Hydra
- * @author Hzy980512
- * @author Map it
- */
 $messages['zh-hans'] = [
 	'achievementsii-desc' => '一项为维基用户提供成就徽章的系统',
 	'achievements-upload-error' => '对不起！
@@ -10740,9 +10324,9 @@ $messages['zh-hans'] = [
 	'leaderboard-intro-hide' => '隐藏',
 	'leaderboard-intro-open' => '打开',
 	'leaderboard-intro-headline' => '成就是什么？',
-	'leaderboard-intro' => "您可以通过编辑网页、上传照片和留言赢取这个维基上的徽章。 每个徽章帮你获得更多的点数－积分越高，排名越高！ 你会在你的[[$1|用户设定页面]]看到已经获得的徽章。
+	'leaderboard-intro' => '您可以通过编辑网页、上传照片和留言赢取这个维基上的徽章。 每个徽章帮你获得更多的点数－积分越高，排名越高！ 你会在你的[[$1|用户设定页面]]看到已经获得的徽章。
 
-'''徽章的价值是什么?'''",
+\'\'\'徽章的价值是什么?\'\'\'',
 	'leaderboard' => '成就排行榜',
 	'achievements-title' => '成就',
 	'leaderboard-title' => '排行榜',
@@ -10804,14 +10388,14 @@ $messages['zh-hans'] = [
 	'achievements-create-edit-plus-category' => '创建轨道',
 	'platinum' => '铂',
 	'achievements-community-platinum-awarded-email-subject' => '你被授予了一枚新的铂徽章!',
-	'achievements-community-platinum-awarded-email-body-text' => "恭喜您，$1!
+	'achievements-community-platinum-awarded-email-body-text' => '恭喜您，$1!
 
-您在$4($3)上获得一枚白金徽章'$2'！
+您在$4($3)上获得一枚白金徽章\'$2\'！
 这将为您增添250点积分！
 
 快去看一下您的个人主页上的最新徽章吧！
 
-$5",
+$5',
 	'achievements-community-platinum-awarded-email-body-html' => '<strong>$1, 祝贺你！ </strong><br /><br />
 
 你刚刚在<a href="$3">$4</a>上被授予了一枚<strong>$2</strong>白金徽章，
@@ -10976,8 +10560,8 @@ $5",
 	'achievements-badge-to-get-love-details' => '如果你错过了一天将计数器将重置，所以记得每天都要回来社区看一下哟!',
 	'achievements-badge-to-get-welcome-details' => '单击顶部右侧的"{{int:oasis-signup}}"按钮加入社区。
 你就可以开始赢取徽章啦!',
-	'achievements-badge-to-get-sayhi-details' => '你可以通过点击对话页中的"{{int:addsection}}"给其他用户留言。
-寻求帮助，感谢他们的贡献，或者向他们问好!',
+	'achievements-badge-to-get-sayhi-details' => '你可以在其他用户的讨论页上点击 "{{int:addsection}}" 来留言。
+求助、谢谢他们的贡献，或是打个招呼都行！',
 	'achievements-badge-to-get-creator-details' => '这枚徽章是奖给维基社区创始人的。
 单击顶部"{{int:createwiki}}"按钮，开始创建你喜爱的社区网站!',
 	'achievements-badge-to-get-caffeinated-details' => '需要一天的忙碌才能获得这枚徽章！
@@ -10995,11 +10579,6 @@ $5",
 	'achievements-badge-desc-sharing' => '{{#ifeq:$1|0|由于分享了一个链接|由于{{PLURAL:$1|一个人|$1个人}}点击分享了这个链接}}而获得徽章。',
 ];
 
-/** Traditional Chinese (‪中文（繁體）‬)
- * @author Dream
- * @author Ffaarr
- * @author Lauhenry
- */
 $messages['zh-hant'] = [
 	'achievements-platinum' => '白金',
 	'achievements-gold' => '黃金',
@@ -11066,9 +10645,9 @@ $messages['zh-hant'] = [
 	'achievements-toggle-hide' => '在我的個人資料上隱藏我的成就不允許任何人查看',
 	'leaderboard-intro-open' => '打開',
 	'leaderboard-intro-headline' => '成就是什麼?',
-	'leaderboard-intro' => "您可以通過編輯網頁、上傳照片和留言贏取這個wiki上的徽章。每個徽章幫你獲得更多的點數－積分越高，排名越高！你會在你的[[$1|用戶設定頁面]]看到已經獲得的徽章。
+	'leaderboard-intro' => '您可以通過編輯網頁、上傳照片和留言贏取這個wiki上的徽章。每個徽章幫你獲得更多的點數－積分越高，排名越高！你會在你的[[$1|用戶設定頁面]]看到已經獲得的徽章。
 
- '''徽章的價值是什麼?'''",
+ \'\'\'徽章的價值是什麼?\'\'\'',
 	'leaderboard' => '成績排行榜',
 	'achievements-recent-earned-badges' => '最近獲得的徽章',
 	'achievements-recent-info' => '<strong>$3</strong>< br />$4< br />由<a href="$1">$2</a>< br />$5獲得',
@@ -11122,14 +10701,14 @@ $messages['zh-hant'] = [
 趕快去試一下吧！',
 	'achievements-create-edit-plus-category' => '創建此軌道',
 	'achievements-community-platinum-awarded-email-subject' => '你獲得了一個新的白金徽章!',
-	'achievements-community-platinum-awarded-email-body-text' => "恭喜，$1!
+	'achievements-community-platinum-awarded-email-body-text' => '恭喜，$1!
 
-您在$4($3)上獲得一枚白金徽章'$2'！
+您在$4($3)上獲得一枚白金徽章\'$2\'！
 這將為您增添250點積分！
 
 快去看一下您的個人主頁上的最新徽章吧！
 
-$5",
+$5',
 	'achievements-community-platinum-awarded-email-body-html' => '<strong>$1, 祝賀你！</strong><br /><br />
 
 你剛剛在<a href="$3">$4</a>上被授予了一枚<strong>$2</strong>白金徽章，
@@ -11236,8 +10815,8 @@ $5",
 	'achievements-badge-to-get-introduction-details' => '您的使用者頁空空如也？
 按一下螢幕頂部的使用者名稱進行查看。
 按一下"{{int:edit}}"添加一些關於您個人的資訊吧！',
-	'achievements-badge-to-get-sayhi-details' => '您可以通過點擊對話頁中的"{{int:addsection}}"給其他使用者留言。
-尋求説明，感謝他們的貢獻，或者向他們問好!',
+	'achievements-badge-to-get-sayhi-details' => '你可以在其他用戶的討論頁上點擊 "{{int:addsection}}" 來留言。
+求助、謝謝他們的貢獻，或是打個招呼都行！',
 	'achievements-badge-to-get-creator-details' => '這枚徽章是獎給wiki社區創始人的。
 按一下頂部"{{int:createwiki}}"按鈕，開始創建你喜愛的社區網站!',
 	'achievements-badge-to-get-pounce-details' => '要獲得這個徽章你得趕快啦。
@@ -11309,9 +10888,6 @@ $5",
 [[Special:Leaderboard|排名第$1]]',
 ];
 
-/** Chinese (Hong Kong) (‪中文（香港）‬)
- * @author C933103
- */
 $messages['zh-hk'] = [
 	'achievements-non-existing-category' => '指定的類別不存在。',
 	'achievements-platinum' => '白金',
@@ -11319,14 +10895,20 @@ $messages['zh-hk'] = [
 	'achievements-silver' => '銀',
 	'achievements-bronze' => '銅',
 	'leaderboard-button' => '成就排行榜',
+	'achievements-badge-to-get-sayhi-details' => '你可以在其他用戶的討論頁上點擊 "{{int:addsection}}" 來留言。
+求助、謝謝他們的貢獻，或是打個招呼都行！',
 ];
 
-/** Chinese (Taiwan) (‪中文（台灣）‬)
- * @author Ffaarr
- */
 $messages['zh-tw'] = [
 	'achievements-community-platinum-edit' => '編輯',
 	'achievements-community-platinum-save' => '儲存',
 	'achievements-community-platinum-cancel' => '取消',
+	'achievements-badge-to-get-sayhi-details' => '你可以在其他用戶的討論頁上點擊 "{{int:addsection}}" 來留言。
+求助、謝謝他們的貢獻，或是打個招呼都行！',
+];
+
+$messages['zh'] = [
+	'achievements-badge-to-get-sayhi-details' => '你可以在其他用户的讨论页上点击 "{{int:addsection}}" 来留言。
+求助、谢谢他们的贡献，或是打个招呼都行！',
 ];
 
