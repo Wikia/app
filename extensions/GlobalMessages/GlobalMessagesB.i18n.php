@@ -12935,7 +12935,7 @@ $messages['niu'] = [
 $messages['nl'] = [
 	'broken-file-category' => 'Pagina\'s met onjuiste bestandsverwijzingen',
 	'badaccess' => 'Geen toestemming',
-	'badaccess-group0' => 'U hebt geen rechten om de gevraagde handeling uit te voeren.',
+	'badaccess-group0' => 'Je hebt geen rechten om de gevraagde handeling uit te voeren.',
 	'badaccess-groups' => 'De gevraagde handeling is voorbehouden aan gebruikers in {{PLURAL:$2|de groep $1|een van de volgende groepen: $1}}.',
 	'badarticleerror' => 'Deze handeling kan niet op deze pagina worden uitgevoerd.',
 	'badtitle' => 'Ongeldige paginanaam',
@@ -15081,7 +15081,7 @@ Tutte le sottosequenze ca appondene a stessa linea sonde considerete eccezziune,
 $messages['ru'] = [
 	'broken-file-category' => 'Страницы с неработающими файловыми ссылками',
 	'badaccess' => 'Ошибка доступа',
-	'badaccess-group0' => 'Вы не можете выполнять запрошенное действие.',
+	'badaccess-group0' => 'У вас недостаточно прав на выполнение запрошенного действия.',
 	'badaccess-groups' => 'Запрошенное действие могут выполнять только участники из {{PLURAL:$2|группы|групп}} «$1».',
 	'badarticleerror' => 'Это действие не может быть выполнено на данной странице.',
 	'badtitle' => 'Недопустимое название',
@@ -20017,7 +20017,7 @@ $messages['zh-hant'] = [
 ];
 
 $messages['zh-tw'] = [
-	'badaccess-groups' => '您剛才的請求只有{{PLURAL:$2|這個|這些}}使用者組的使用者才能使用: $1',
+	'badaccess-groups' => '{{MediaWiki:Badaccess-groups}}',
 	'badretype' => '你所輸入的密碼並不相同。',
 	'blocked-mailpassword' => '由於這個使用者被封鎖，我們暫時禁止您請求申請新密碼。造成不便敬請見諒',
 	'blockedtitle' => '使用者被封鎖',
@@ -20039,6 +20039,8 @@ $messages['zh-tw'] = [
 
 只有列示項目（以 * 開頭的項目）會被考慮。第一個連結一定要連接去壞圖片中。
 然後在同一行的連結會考慮作例外，即是幅圖片可以在哪一個頁面中同時顯示。',
+	'badaccess-group0' => '{{MediaWiki:Badaccess-group0}}',
+	'badaccess' => '沒有權限',
 ];
 
 $messages['zh-yue'] = [
@@ -20068,5 +20070,16 @@ $messages['zh-yue'] = [
 
 $messages['zu'] = [
 	'blockip' => 'Vimbela lo msebenzisi',
+];
+
+$messages['zh'] = [
+	'badaccess-group0' => '你所请求执行的操作被禁止。',
+	'badaccess-groups' => '你所请求执行的操作仅限于 $1 组成员。',
+	'badaccess' => '拒绝访问',
+];
+
+$messages['zh-hk'] = [
+	'badaccess-group0' => '您剛才的請求不允許執行。',
+	'badaccess-groups' => '您剛才的請求只有$1用戶組的用戶才能使用。',
 ];
 
