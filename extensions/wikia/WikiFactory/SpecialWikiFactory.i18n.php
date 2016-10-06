@@ -1998,7 +1998,7 @@ $messages['fr'] = [
 	'closed-wiki-create-wiki' => 'Créer un nouveau wiki',
 	'closed-wiki-policy' => 'Voir la politique de fermeture de Fandom',
 	'closed-wiki-policy-url' => 'http://communaute.wikia.com/wiki/Wikia_fermé',
-	'closed-wiki-invalid-redirect-url' => 'Erreur : L’URL de redirection ne pointe pas vers un wiki existant : « $1 »',
+	'closed-wiki-invalid-redirect-url' => 'Erreur : l\'URL de redirection, $1, pointe vers un wikia inexistant',
 	'closed-create-dump' => 'Créer un dump de la base de données',
 	'closed-create-image-archive' => 'Créer une archive des images',
 	'closed-delete-database-images' => 'Supprimer la base de données et les images',
@@ -2642,9 +2642,15 @@ $messages['it'] = [
 	'awc-metrics-active' => 'attivo',
 	'awc-metrics-closed' => 'chiusa',
 	'awc-metrics-exact-match' => 'corrispondenza esatta',
-	'closed-wiki-create-wiki' => 'Crea un nuovo wiki',
+	'closed-wiki-create-wiki' => 'Crea una nuova wiki',
 	'closed-reason' => 'Motivo:',
 	'closed-wiki-policy' => 'Visualizza le politiche di chiusura di Fandom',
+	'closed-confirm-btn' => 'Conferma chiusura',
+	'closed-wiki-dump-exists' => 'Puoi recuperare il contenuto se vuoi.<br />(Se la wiki è stata chiusa di recente, può essere necessario un certo periodo di tempo prima che i file siano generati)',
+	'closed-wiki-dump-links' => '[$1 Pagine correnti] (questa versione di solito è meglio per i bot)<br />[$2 Pagine correnti e cronologia] (attenzione: questo file può essere molto grande)',
+	'closed-wiki-dump-noexists' => 'Questa wiki è stata chiusa. Il contenuto rimosso sarà disponibile entro 24 ore. Per favore ricontrolla.',
+	'closed-wiki-info' => 'Questa wiki è stata chiusa',
+	'closed-wiki' => 'Wiki chiusa',
 ];
 
 $messages['ja'] = [
@@ -2692,7 +2698,7 @@ $messages['ja'] = [
 	'awc-metrics-articles' => '記事',
 	'awc-metrics-images' => 'イメージ',
 	'awc-metrics-recordspager' => '\'\'\'$3\'\'\'件中\'\'\'$1\'\'\'件目から\'\'\'$2\'\'\'件目を表示中',
-	'closed-wiki-create-wiki' => '新しいWikiを作成する',
+	'closed-wiki-create-wiki' => '新しいウィキアを作成する',
 	'closed-create-dump' => 'データベース ダンプの作成',
 	'closed-create-image-archive' => 'イメージ アーカイブを作成',
 	'closed-delete-database-images' => 'データベースとイメージの削除',
@@ -2702,6 +2708,10 @@ $messages['ja'] = [
 	'closed-reason' => '理由：',
 	'newwikisgraph-param-all' => 'すべて',
 	'closed-wiki-policy' => 'Fandom閉鎖に関するポリシーを表示',
+	'closed-wiki-dump-exists' => 'もしお望みならば、自分のコンテンツを取り出すことができます。<br />(もしあなたのウィキアが最近クローズされたものならば、生成されたファイルは短期間で得られます)',
+	'closed-wiki-dump-links' => '[$1 現在のページ] (このバージョンは通常ボット利用に最適です)<br />[$2 現在のページと履歴] (警告: このファイルは容量が非常に大きくなっている可能性があります)',
+	'closed-wiki-dump-noexists' => 'このウィキアはクローズしています。コンテンツのダンプは24時間以内に利用できます。再度確認してください。',
+	'closed-wiki-info' => 'このウィキアコミュニティはクローズされています。',
 ];
 
 $messages['ka'] = [
@@ -2780,7 +2790,7 @@ $messages['ko'] = [
 	'disabled-wiki-info' => '이 위키는 비활성화되었습니다',
 	'closed-wiki-dump-exists' => '원하신다면 콘텐츠를 백업하실 수 있습니다.<br />(위키가 폐쇄된 지 얼마 지나지 않았다면 더 빠른 기간 내에 파일이 재생성됩니다)',
 	'closed-wiki-dump-links' => '[$1 현재 문서들] (봇이 사용하기에 가장 적절한 버전입니다)<br />[$2 현재 문서와 역사들] (주의: 이 파일은 용량이 매우 클 수 있습니다)',
-	'closed-wiki-dump-noexists' => '이 위키는 폐쇄되었습니다. 24시간 내로 콘텐츠 덤프가 가능할 것입니다. 잠시 후 다시 확인해 주세요.',
+	'closed-wiki-dump-noexists' => '이 위키는 폐쇄되었습니다. 24시간 내로 콘텐츠를 덮어씌울 수 있을 것입니다. 잠시 후 다시 확인해 주세요.',
 	'closed-wiki-create-wiki' => '새 위키 만들기',
 	'closed-wiki-policy' => '위키아 폐쇄 정책 보기',
 	'closed-reason' => '이유:',
@@ -3615,7 +3625,7 @@ paginagrootte',
 	'closed-wiki' => 'Gesloten wiki',
 	'closed-wiki-info' => 'Deze wiki is gesloten',
 	'disabled-wiki-info' => 'Deze wiki is uitgeschakeld',
-	'closed-wiki-dump-exists' => 'U kunt uw inhoud ophalen als u wilt.<br />Als uw wiki recent gesloten is, kan het een tijdje duren voordat de bestanden aangemaakt zijn.',
+	'closed-wiki-dump-exists' => 'Wil je [$1 de inhoud van je wiki downloaden]?',
 	'closed-wiki-dump-links' => '[$1 Huidige pagina\'s] (deze versie is in het algemeen het beste voor botgebruik)<br />[$2 Huidige pagina\'s en geschiedenis] (waarschuwing: dit bestand kan zeer groot zijn)',
 	'closed-wiki-dump-noexists' => 'Deze wiki is gesloten.
 Een dump van de inhoud wordt binnen 24 uur beschikbaar gemaakt.
@@ -3815,7 +3825,7 @@ $messages['pl'] = [
 	'disabled-wiki-info' => 'Ta wiki została wyłączona',
 	'closed-wiki-dump-exists' => 'Możesz pobrać stąd zawartość, jeśli chcesz.<br />(Jeśli wiki została niedawno zamknięta, może upłynąć jakiś czas zanim pliki zostaną wygenerowane)',
 	'closed-wiki-dump-links' => '[$1 Istniejące strony] (to zwykle zalecana wersja)<br />[$2 Istniejące strony i ich historia] (UWAGA: Plik może być bardzo duży)',
-	'closed-wiki-dump-noexists' => 'Ta wiki została zamknięta. Zrzut bazy danych będzie dostępny w ciągu 24 godzin. Prosimy spróbować ponownie.',
+	'closed-wiki-dump-noexists' => 'Ta wiki została zamknięta. Zrzut bazy danych będzie dostępny w ciągu 24 godzin. Prosimy spróbować ponownie później.',
 	'closed-wiki-create-wiki' => 'Utwórz nową wiki',
 	'closed-wiki-policy' => 'Pokaż zasady zamykania stron portalu Fandom',
 	'closed-wiki-invalid-redirect-url' => 'Błąd: Podany adres URL nie przekierowuje do żadnej istniejącej wiki: "$1"',
@@ -4498,8 +4508,8 @@ $messages['ru'] = [
 	'closed-wiki-info' => 'Эта вики закрыта',
 	'disabled-wiki-info' => 'Эта вики отключена',
 	'closed-wiki-dump-exists' => 'Вы можете получить ваше содержимое здесь, если вам оно нравится.<br />(Если ваша вики была закрыта недавно, то создание файла может занять короткий период времени)',
-	'closed-wiki-dump-links' => '[$1 Текущие страницы](эта версия обычно лучше всего подходит для использования ботов)<br />[ $2  Текущие страницы и история](предупреждение: этот файл может быть очень большим)',
-	'closed-wiki-dump-noexists' => 'Этот вики была закрыт. Снимок содержимого будет доступен в течение 24 часов. Пожалуйста, заходите позже.',
+	'closed-wiki-dump-links' => '[$1 Текущие страницы] (эта версия обычно лучше всего подходит для использования ботов)<br />[$2  Текущие страницы и история] (предупреждение: этот файл может быть очень большим)',
+	'closed-wiki-dump-noexists' => 'Эта вики была закрыта. Копия содержимого будет доступна в течение 24 часов. Пожалуйста, проверьте позже.',
 	'closed-wiki-create-wiki' => 'Создать новую вики',
 	'closed-wiki-policy' => 'Ознакомиться с правилами закрытия вики',
 	'closed-wiki-policy-url' => 'http://ru.community.wikia.com/wiki/Викия:Закрытие_вики',
@@ -5384,7 +5394,7 @@ $messages['zh-hans'] = [
 	'closed-wiki' => '已关闭的维基',
 	'closed-wiki-info' => '此维基已关闭',
 	'disabled-wiki-info' => '此维基已禁用',
-	'closed-wiki-dump-exists' => '您可以随您意愿检索您的内容。<br />（如果您的wiki最近才被关闭，它可能需要一点时间来生成文件）。',
+	'closed-wiki-dump-exists' => '如果需要，您可以申请恢复维基中的内容。<br/>（如果这个维基社区最近才关闭，可能需要一段时间生成文档）',
 	'closed-wiki-dump-links' => '[$1 当前页面]（此版本对机器人非常好）<br />[$2 当前页面和历史]（警告：此文件会非常大）',
 	'closed-wiki-dump-noexists' => '此wiki已关闭。内容转储将在24小时内提供。请重新检查。',
 	'closed-wiki-create-wiki' => '创造一个新维基',
@@ -5519,16 +5529,28 @@ $messages['zh-hant'] = [
 	'newwikisgraph-wikis-created' => '已建立的wiki',
 	'newwikisgraph-param-all' => '全部',
 	'newwikisgraph-param-other' => '其他',
+	'closed-wiki-dump-exists' => '如果需要，您可以申請恢復維基中的內容。 <br/>（如果這個維基社區最近才關閉，可能需要一段時間生成檔案）',
+	'closed-wiki-dump-links' => '[$1 現有頁面] (這個版本通常最適合機器人)<br />[$2 現有頁面及頁面歷史] (警告: 這個檔案可能非常大）',
 ];
 
 $messages['zh-hk'] = [
 	'awc-metrics-images' => '圖像',
 	'closed-delete-database-images' => '刪除資料庫和圖像',
 	'closed-wiki-policy-url' => 'http://zh.community.wikia.com/wiki/終止Wikia站台',
+	'closed-wiki-dump-exists' => '如果需要，您可以申請恢復維基中的內容。 <br/>（如果這個維基社區最近才關閉，可能需要一段時間生成檔案）',
+	'closed-wiki-dump-links' => '[$1 現有頁面] (這個版本通常最適合機器人)<br />[$2 現有頁面及頁面歷史] (警告: 這個檔案可能非常大）',
 ];
 
 $messages['zh-tw'] = [
 	'closed-wiki' => '關閉的圍紀',
 	'closed-wiki-policy-url' => 'http://zh.community.wikia.com/wiki/終止Wikia站台',
+	'closed-wiki-dump-exists' => '如果需要，您可以申請恢復維基中的內容。 <br/>（如果這個維基社區最近才關閉，可能需要一段時間生成檔案）',
+	'closed-wiki-dump-links' => '[$1 現有頁面] (這個版本通常最適合機器人)<br />[$2 現有頁面及頁面歷史] (警告: 這個檔案可能非常大）',
+];
+
+$messages['zh'] = [
+	'closed-wiki-create-wiki' => '创建一个新维基',
+	'closed-wiki-dump-exists' => '如果需要，您可以申请恢复维基中的内容。<br/>（如果这个维基社区最近才关闭，可能需要一段时间生成文档）',
+	'closed-wiki-dump-links' => '[$1 現有页面] (这个版本通常最适合机器人)<br />[$2 现有页面及页面历史] (警告: 这个档案可能非常大）',
 ];
 
