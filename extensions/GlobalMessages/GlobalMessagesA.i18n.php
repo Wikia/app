@@ -221,7 +221,7 @@ Please visit [//www.mediawiki.org/wiki/Localisation MediaWiki Localisation] and 
 	'ago' => '$1 ago',
 	'autocomment-prefix' => '-&#32;',
 	'ascending_abbrev' => 'asc',
-	'autosumm-blank' => 'Blanked the page',
+	'autosumm-blank' => 'Removing all content from page',
 	'autosumm-replace' => 'Replaced content with "$1"',
 	'autoredircomment' => 'Redirected page to [[$1]]',
 	'autosumm-new' => 'Created page with "$1"',
@@ -7647,7 +7647,7 @@ Por favor visita [//www.mediawiki.org/wiki/Localisation Localización MediaWiki]
 	'autosumm-blank' => 'Página blanqueada',
 	'autosumm-replace' => 'Página reemplazada por «$1»',
 	'autoredircomment' => 'Página redirigida a [[$1]]',
-	'autosumm-new' => 'Página creada con «$1»',
+	'autosumm-new' => 'Página nueva: $1',
 	'api-error-badaccess-groups' => 'No puedes cargar archivos en este wiki.',
 	'api-error-badtoken' => 'Error interno: Símbolo incorrecto.',
 	'api-error-copyuploaddisabled' => 'La subida por URL está desactivada en este servidor.',
@@ -22156,10 +22156,10 @@ Odwiedź [//www.mediawiki.org/wiki/Localisation Tłumaczenie MediaWiki] oraz [//
 	'ago' => '$1 temu',
 	'autocomment-prefix' => '–&#32;',
 	'ascending_abbrev' => 'rosn.',
-	'autosumm-blank' => 'UWAGA! Usunięcie treści (strona pozostała pusta)!',
-	'autosumm-replace' => 'UWAGA! Zastąpienie treści hasła bardzo krótkim tekstem: „$1”',
+	'autosumm-blank' => 'UWAGA! Usunięto treść strony!',
+	'autosumm-replace' => 'UWAGA! Zastąpiono treść hasła tekstem „$1”',
 	'autoredircomment' => 'Przekierowanie do [[$1]]',
-	'autosumm-new' => 'Utworzył nową stronę „$1”',
+	'autosumm-new' => 'Dodano nową stronę „$1”',
 	'api-error-badaccess-groups' => 'Nie masz uprawnień aby przesyłać pliki do tej wiki.',
 	'api-error-badtoken' => 'Błąd wewnętrzny – żeton wykorzystywany do identyfikacji użytkownika jest nieprawidłowy.',
 	'api-error-copyuploaddisabled' => 'Przesyłanie poprzez podanie adresu URL zostało na tym serwerze wyłączone.',
@@ -32014,6 +32014,8 @@ $messages['zh-hk'] = [
 	'allowemail' => '允許其他用戶寄發電子郵件給您',
 	'allpagesfrom' => '顯示頁面開始自：',
 	'anononlyblock' => '僅限匿名用戶',
+	'autoredircomment' => '重定向到[[$1]]',
+	'autosumm-blank' => '清空全部內容',
 ];
 
 $messages['zh-min-nan'] = [
@@ -32065,9 +32067,9 @@ $messages['zh-tw'] = [
 	'anonymous' => '{{SITENAME}}的匿名{{PLURAL:$1|使用者|使用者}}',
 	'anonuser' => '{{SITENAME}}匿名使用者$1',
 	'anonusers' => '{{SITENAME}}匿名{{PLURAL:$2|使用者|使用者}}$1',
-	'autosumm-blank' => '移除所有頁面內容',
+	'autosumm-blank' => '清空全部內容',
 	'autosumm-replace' => '正在將頁面替換為 \'$1\'',
-	'autoredircomment' => '正在重定向到 [[$1]]',
+	'autoredircomment' => '[[WP:AES|←]]重定向到[[$1]]',
 	'autosumm-new' => '新頁面: $1',
 	'addnewtalksection-link' => '於本討論頁增加新的討論主題',
 	'achievements-leaderboard-navigation-item' => '維基排行榜',
@@ -32144,6 +32146,9 @@ $messages['zh'] = [
 	'allpagesfrom' => '显示页面开始自:',
 	'anoneditwarning' => '\'\'\'注意:\'\'\' 你尚未登入本站，你的IP位置會被記錄在本頁的修訂歷史頁中。',
 	'article' => '文章',
+	'autoredircomment' => '[[WP:AES|←]]重定向到[[$1]]',
+	'autosumm-blank' => '清空全部内容',
+	'autosumm-new' => '新頁面: $1',
 ];
 
 $messages['zh-cn'] = [
@@ -32159,6 +32164,9 @@ $messages['zh-cn'] = [
 	'allpagesfrom' => '显示页面开始自:',
 	'anoneditwarning' => '\'\'\'注意:\'\'\' 你尚未登入本站，你的IP位置會被記錄在本頁的修訂历史页中。',
 	'anononlyblock' => '仅限匿名用户',
+	'autoredircomment' => '[[WP:AES|←]]重定向到[[$1]]',
+	'autosumm-blank' => '清空全部内容',
+	'autosumm-new' => '新頁面: $1',
 ];
 
 $messages['zh-sg'] = [
