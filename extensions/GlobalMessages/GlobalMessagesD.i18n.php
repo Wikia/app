@@ -4261,7 +4261,7 @@ Las entradas <del>tachadas</del> han sido resueltas.',
 	'double-redirect-fixed-maintenance' => 'Corrigiendo la doble redirección desde [[$1]] a [[$2]].',
 	'double-redirect-fixer' => 'Corrector de redirecciones',
 	'deadendpages' => 'Páginas sin salida',
-	'deadendpagestext' => 'Las siguientes páginas no enlazan a otras páginas de {{SITENAME}}.',
+	'deadendpagestext' => 'Las siguientes páginas no enlazan a otras páginas en este wiki.',
 	'deletedcontributions' => 'Contribuciones borradas de usuario',
 	'deletedcontributions-title' => 'Contribuciones borradas de usuario',
 	'defemailsubject' => 'Correo de {{SITENAME}} para el usuario $1',
@@ -18470,6 +18470,8 @@ $messages['zh-hk'] = [
 來自于函數“$2”。
 MySQL返回錯誤“$3: $4”。',
 	'datedefault' => '默認值',
+	'deadendpages' => '斷鏈頁面',
+	'deadendpagestext' => '以下頁面没有鏈接到本站的其他頁面。',
 ];
 
 $messages['zh-min-nan'] = [
@@ -18495,7 +18497,7 @@ $messages['zh-tw'] = [
 	'disambiguations-text' => '以下的頁面都有到<b>消歧義頁</b>的鏈接,
 但它們應該是連到適當的標題。<br />
 個頁面會被視為消含糊頁如果它是連自[[MediaWiki:Disambiguationspage]]。',
-	'deadendpagestext' => '以下頁面沒有連結到這個wiki中的其它頁面。',
+	'deadendpagestext' => '以下頁面没有鏈接到本站的其他頁面。',
 	'deletedtext' => '「$1」已經被刪除。
 最近刪除的紀錄請參見$2。',
 	'dellogpagetext' => '以下是最近刪除的紀錄列表。
@@ -18508,6 +18510,7 @@ $messages['zh-tw'] = [
 來自于函數“$2”。
 MySQL返回錯誤“$3: $4”。',
 	'datedefault' => '默認值',
+	'deadendpages' => '斷鏈頁面',
 ];
 
 $messages['zh-yue'] = [
@@ -18548,6 +18551,8 @@ $messages['zh'] = [
 “$1”
 来自于函数“$2”。
 MySQL返回错误“$3: $4”。',
+	'deadendpages' => '斷鏈頁面',
+	'deadendpagestext' => '以下页面没有链接到本站的其他页面。',
 ];
 
 $messages['zh-cn'] = [
@@ -18557,6 +18562,8 @@ $messages['zh-cn'] = [
 来自于函数“$2”。
 MySQL返回错误“$3: $4”。',
 	'datedefault' => '默认值',
+	'deadendpages' => '斷鏈頁面',
+	'deadendpagestext' => '以下页面没有链接到本站的其他页面。',
 ];
 
 $messages['zh-sg'] = [
@@ -18566,5 +18573,6 @@ $messages['zh-sg'] = [
 来自于函数“$2”。
 MySQL返回错误“$3: $4”。',
 	'datedefault' => '默认值',
+	'deadendpagestext' => '以下页面没有链接到本站的其他页面。',
 ];
 
