@@ -33,7 +33,6 @@ return [
 			'wikia.window',
 			'wikia.abTest',
 			'underscore',
-			'moment',
 		],
 		'position' => 'top', // needs to be loaded before AssetsManager files
 	],

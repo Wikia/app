@@ -26,6 +26,9 @@ class EmbeddableDiscussionsController {
 	}
 
 	public static function onBeforePageDisplay() {
+		global $wgOut;
+		$wgOut->addModules( 'moment' );
+
 		\Wikia::addAssetsToOutput( 'embeddable_discussions_js' );
 		\Wikia::addAssetsToOutput( 'embeddable_discussions_scss' );
 
