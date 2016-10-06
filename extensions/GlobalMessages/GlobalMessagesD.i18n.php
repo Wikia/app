@@ -9,7 +9,7 @@ $messages['en'] = [
 	'delete' => 'Delete',
 	'deletethispage' => 'Delete this page',
 	'disclaimers' => 'Disclaimers',
-	'disclaimerpage' => 'Project:General disclaimer',
+	'disclaimerpage' => '{{#ifexist:Project:General disclaimer|Project:General disclaimer| }}',
 	'databaseerror' => 'Database error',
 	'dberrortext' => 'A database query syntax error has occurred.
 This may indicate a bug in the software.
@@ -22,7 +22,9 @@ The last attempted database query was:
 "$1"
 from within function "$2".
 Database returned error "$3: $4"',
-	'directorycreateerror' => 'Could not create directory "$1".',
+	'directorycreateerror' => 'Could not create directory "$1".
+<br/>
+Please report the above error [[Special:Contact/bug|using this form]]',
 	'deletedhist' => 'Deleted history',
 	'difference' => '(Difference between revisions)',
 	'difference-multipage' => '(Difference between pages)',
@@ -3577,7 +3579,7 @@ $messages['de'] = [
 	'delete' => 'Löschen',
 	'deletethispage' => 'Diese Seite löschen',
 	'disclaimers' => 'Impressum',
-	'disclaimerpage' => 'Project:Impressum',
+	'disclaimerpage' => '{{ns:project}}:Lizenzbestimmungen',
 	'databaseerror' => 'Datenbankfehler',
 	'dberrortext' => 'Es ist ein Datenbankfehler aufgetreten.
 Der Grund kann ein Programmierfehler sein.
@@ -4268,7 +4270,9 @@ La última consulta a la base de datos que se intentó fue:
 «$1»
 desde la función «$2».
 Base de datos retornó error «$3: $4».',
-	'directorycreateerror' => 'No se pudo crear el directorio «$1».',
+	'directorycreateerror' => 'No se pudo crear el directorio "$1".
+<br/>
+Por favor, reporta el error anterior a través de [[Special:Contact/bug|este formulario]].',
 	'deletedhist' => 'Historial borrado',
 	'difference' => '(Diferencias entre revisiones)',
 	'difference-multipage' => '(Diferencia entre las páginas)',
@@ -4285,9 +4289,7 @@ Base de datos retornó error «$3: $4».',
 	'disambiguationspage' => 'Template:Desambiguación',
 	'disambiguations-text' => 'Las siguientes páginas enlazan a una \'\'\'página de desambiguación\'\'\'. En lugar de ello deberían enlazar con el tema apropiado.<br />Una página es considerada página de desambiguación si utiliza la plantilla que está enlazada desde [[MediaWiki:disambiguationspage]].',
 	'doubleredirects' => 'Redirecciones dobles',
-	'doubleredirectstext' => 'Esta página contiene una lista de páginas que redirigen a otras páginas de redirección.
-Cada fila contiene enlaces a la segunda y tercera redirección, así como la primera línea de la segunda redirección, en la que usualmente se encontrará el artículo «real» al que la primera redirección debería apuntar.
-Las entradas <del>tachadas</del> han sido resueltas.',
+	'doubleredirectstext' => '<b>Atención:</b> Esta lista puede contener enlaces falsos. Esto quiere decir normalmente que hay texto adicional con enlaces bajo el primer #REDIRECT.<br /> Cada fila contiene enlaces al segundo y tercer redirect, así como la primera línea del segundo redirect, en la que normalmente se encontrará el artículo "real" al que el primer redirect debería apuntar.',
 	'double-redirect-fixed-move' => '[[$1]] ha sido trasladado, ahora es una redirección a [[$2]]',
 	'double-redirect-fixed-maintenance' => 'Corrigiendo la doble redirección desde [[$1]] a [[$2]].',
 	'double-redirect-fixer' => 'Corrector de redirecciones',
@@ -7672,7 +7674,7 @@ $messages['ja'] = [
 	'defaultns' => 'その他の場合、次の名前空間でのみ検索する：',
 	'default' => '既定',
 	'diff' => '差分',
-	'destfilename' => '登録するファイル名：',
+	'destfilename' => '掲載するファイル名',
 	'duplicatesoffile' => '以下の$1ファイルが、このファイルと内容が同一です（[[Special:FileDuplicateSearch/$2|詳細]]）：',
 	'download' => 'ダウンロード',
 	'disambiguations' => '曖昧さ回避ページにリンクしているページ',
@@ -18502,6 +18504,7 @@ $messages['zh-hans'] = [
 	'dberr-outofdate' => '须注意他们索引出来的内容可能不是最新的。',
 	'dberr-cachederror' => '这是所请求页面的缓存副本，可能不是最新的。',
 	'defaultskin_choose' => '设定此站预设皮肤:',
+	'discuss' => '讨论这个页面',
 ];
 
 $messages['zh-hant'] = [
@@ -18597,6 +18600,7 @@ Template:消除歧義',
 	'dberr-outofdate' => '留意他們索引出來之內容可能不是最新的。',
 	'dberr-cachederror' => '這個是所要求出來的快取複本，可能不是最新的。',
 	'defaultskin_choose' => '設定此站預設面板:',
+	'discuss' => '討論這個頁面',
 ];
 
 $messages['zh-hk'] = [
@@ -18619,6 +18623,10 @@ MySQL返回錯誤“$3: $4”。',
 目標頁面 "[[$1]]"已經存在。你確認需要删除原頁面並以進行移動嗎？',
 	'deletedcontributions' => '被删除的用户貢獻',
 	'diff-multi' => '({{plural:$1|一個中途的修訂版本|$1 個中途的修訂版本}}沒有顯示。)',
+	'descending_abbrev' => '降序',
+	'disclaimerpage' => '{{ns:4}}:免責聲明',
+	'discuss' => '討論這個頁面',
+	'download' => '下載',
 ];
 
 $messages['zh-min-nan'] = [
@@ -18650,7 +18658,7 @@ $messages['zh-tw'] = [
 	'dellogpagetext' => '以下是最近刪除的紀錄列表。
 所有的時間都是使用伺服器時間。',
 	'deletecomment' => '原因：',
-	'discuss' => '討論',
+	'discuss' => '討論這個頁面',
 	'dberrortextcl' => '發生了一個數據庫查詢語法錯誤。
 最後一次的數據庫查詢是：
 “$1”
@@ -18669,6 +18677,10 @@ MySQL返回錯誤“$3: $4”。',
 目標頁面 "[[$1]]"已經存在。你確認需要删除原頁面並以進行移動嗎？',
 	'deletedcontributions' => '被删除的用户貢獻',
 	'diff-multi' => '({{plural:$1|一個中途的修訂版本|$1 個中途的修訂版本}}沒有顯示。)',
+	'descending_abbrev' => '降序',
+	'destfilename' => '重新命名檔案',
+	'disclaimerpage' => '{{ns:4}}:免責聲明',
+	'download' => '下載',
 ];
 
 $messages['zh-yue'] = [
@@ -18720,6 +18732,11 @@ MySQL返回错误“$3: $4”。',
 目标页面 "[[$1]]"已经存在。你确认需要删除原页面并以进行移动吗？',
 	'deletedcontributions' => '被删除的用户贡献',
 	'diff-multi' => '({{plural:$1|一個中途的修訂版本|$1 個中途的修訂版本}}沒有顯示。)',
+	'descending_abbrev' => '降序',
+	'destfilename' => '重新命名档案',
+	'disclaimerpage' => '{{ns:4}}:免责声明',
+	'discuss' => '讨论这个页面',
+	'doubleredirectstext' => '此页列出了所有重新定向到另一页面的原始页面。每一行都包含第一个和第二个重定向页面的链接，以及第二个重定向页面的最终指向页面。也就是或，这个页面是最终的定向页面，同时也是第一个重定向页面最后指向的页面。<del>已划去</del>的为已经解决的条目。',
 ];
 
 $messages['zh-cn'] = [
@@ -18742,6 +18759,10 @@ MySQL返回错误“$3: $4”。',
 目标页面 "[[$1]]"已经存在。你确认需要删除原页面并以进行移动吗？',
 	'deletedcontributions' => '被删除的用户贡献',
 	'diff-multi' => '({{plural:$1|一個中途的修訂版本|$1 個中途的修訂版本}}沒有顯示。)',
+	'descending_abbrev' => '降序',
+	'destfilename' => '重新命名档案',
+	'disclaimerpage' => '{{ns:4}}:免责声明',
+	'download' => '下载',
 ];
 
 $messages['zh-sg'] = [
@@ -18761,5 +18782,8 @@ MySQL返回错误“$3: $4”。',
 目标页面 "[[$1]]"已经存在。你确认需要删除原页面并以进行移动吗？',
 	'deletedcontributions' => '被删除的用户贡献',
 	'diff-multi' => '({{plural:$1|一個中途的修訂版本|$1 個中途的修訂版本}}沒有顯示。)',
+	'descending_abbrev' => '降序',
+	'disclaimerpage' => '{{ns:4}}:免责声明',
+	'download' => '下载',
 ];
 
