@@ -288,7 +288,7 @@ Please visit [//www.mediawiki.org/wiki/Localisation MediaWiki Localisation] and 
 	'add_comment' => 'Leave message',
 	'achievements-leaderboard-navigation-item' => 'Wiki Leaderboard',
 	'atom' => 'Wikia Atom',
-	'addnewtalksection-link' => 'Add new section',
+	'addnewtalksection-link' => 'Leave a new message',
 ];
 
 $messages['qqq'] = [
@@ -6491,7 +6491,7 @@ Bitte besuche die Seiten [//www.mediawiki.org/wiki/Localisation MediaWiki-Lokali
 	'api-error-unknownerror' => 'Unbekannter Fehler: „$1“',
 	'api-error-uploaddisabled' => 'Das Hochladen ist in diesem Wiki deaktiviert.',
 	'api-error-verification-error' => 'Die hochzuladende Datei ist entweder fehlerhaft oder hat keine Dateinamenserweiterung.',
-	'addnewtalksection-link' => 'Neuen Abschnitt beginnen',
+	'addnewtalksection-link' => 'Neuen Abschnitt erstellen',
 	'all_the_wikia' => 'Überall in Fandom',
 	'achievements-leaderboard-navigation-item' => 'Herausforderungen',
 	'add_comment' => 'Kommentieren',
@@ -7646,7 +7646,7 @@ Por favor visita [//www.mediawiki.org/wiki/Localisation Localización MediaWiki]
 	'api-error-unknownerror' => 'Error desconocido: «$1».',
 	'api-error-uploaddisabled' => 'Las subidas están desactivadas en este wiki.',
 	'api-error-verification-error' => 'Este archivo puede estar dañado, o tiene una extensión incorrecta.',
-	'addnewtalksection-link' => 'Inicie una nueva sección',
+	'addnewtalksection-link' => 'Comienza un tema nuevo',
 	'all_the_wikia' => 'Todo Fandom',
 	'achievements-leaderboard-navigation-item' => 'Tablón de líderes del wiki',
 	'add_comment' => 'Dejar un mensaje',
