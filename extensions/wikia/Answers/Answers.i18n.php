@@ -106,15 +106,22 @@ $messages['en'] = [
 	'plus_x_more_helpers' => '... plus $1 more helpers',
 	'anwb-step1-headline' => 'What\'s your wiki about?',
 	'anwb-step1-text' => 'Your Wikianswers site needs a <strong>tagline</strong>.<br /><br />Your tagline will help people find your site from search engines, so try to be clear about what your site is about.',
-	'anwb-step1-example' => 'Answers for all your pro-wrestling questions!',
+	'anwb-step1-example' => 'Answers for all your wildlife questions!',
 	'anwb-choose-logo' => 'Choose your logo',
 	'anwb-step2-text' => 'Next, choose a logo for {{SITENAME}}. It\'s best to upload a picture that you think represents your Answers site.<br />You can skip this step if you don\'t want to do it right now.<br /><br />',
 	'anwb-step2-example' => 'This would be a good logo for a skateboarding answers site.',
 	'anwb-fp-headline' => 'Create some questions!',
-	'anwb-fp-text' => 'Your Answers site should start off with some questions!<br /><br />Add a list of questions, and then provide the answers yourself. It\'s important to get some useful information on the site, so people can find it and ask and answer even more questions.',
-	'anwb-fp-example' => '<strong>Example</strong><br /><br />For a pet care answers site:<br /><br /><ul><li>Should I buy cat litter?</li><li>What\'s the best breed of dog?</li><li>What\'s the best way to train a cat?</li><li></ul><br /><br />For a health care answers site:<br /><br /><ul><li>What are the health benefits of exercise?</li><li>How can I find a good doctor in my area?</li><li>How can I lose weight easily?</li></ul>',
+	'anwb-fp-text' => 'Add a list of questions here. Later, you can add answers in for the ones you know. It\'s important to get some useful information on the site, so people can find it and ask and answer even more questions.<br /><br />',
+	'anwb-fp-example' => '<strong><big>Example</big></strong><br /><br />For a pet care answers site:<br />
+- Should I buy cat litter?<br />
+- What\'s the best breed of dog?<br />
+- What\'s the best way to train a cat?<br />
+<br />For a health care answers site:<br />
+- What are the health benefits of exercise?<br />
+- How can I find a good doctor in my area?<br />
+- How can I lose weight easily?<br />',
 	'nwb-thatisall-headline' => 'That\'s it - you\'re done!',
-	'anwb-thatisall-text' => 'That\'s it - you\'re ready to roll!<br /><br />Now it\'s time to start writing more questions and answers, so that your site can be found more easily in search engines.<br /><br />The list of questions added in the last step has been put into your questions site. Head in to answer your questions, and start your own answers community!',
+	'anwb-thatisall-text' => 'Now it\'s time to start writing more questions and answers, so that your site can be found more easily in search engines, and people can find <strong>you</strong>.<br /><br />The list of questions added in the last step has been put into your site, so head in to answer your questions, and start your own answers community!',
 	'anwb-logo-preview' => 'Here\'s a preview of your logo',
 	'anwb-save-tagline' => 'Save tagline',
 	'badWords' => 'fuck',
@@ -291,12 +298,12 @@ $messages['de'] = [
 	'a' => 'Antwort:',
 	'answering_tips' => '<h3>Tipps fürs Beantworten:</h3> Wenn du eine Frage beantwortest, versuche so genau wie möglich zu sein. Wenn du Informationen von einer anderen Seite als Wikipedia beziehst, gib einen Link an. Vielen Dank für deinen Beitrag zu {{SITENAME}}!',
 	'plus_x_more_helpers' => '... sowie $1 weitere Helfer',
-	'anwb-step1-headline' => 'Worum geht es in deinem Wiki?',
-	'anwb-choose-logo' => 'Wähle dein Logo',
-	'anwb-step2-text' => 'Als nächstes wähle ein Logo für {{SITENAME}}. Es empfiehlt sich, ein Bild hochzuladen, von dem du der Meinung bist, dass es Deine Antwort-Seite repräsentiert. <br /> Du kannst diesen Schritt überspringen, wenn du es nicht jetzt tun möchtest.',
-	'anwb-step2-example' => 'Dies wäre ein gutes Logo für eine Skateboard-Antwort-Seite.',
-	'anwb-fp-headline' => 'Erstelle ein paar Fragen!',
-	'anwb-logo-preview' => 'Hier ist eine Vorschau deines Logos',
+	'anwb-step1-headline' => 'Wovon handelt der Inhalt deiner Seite?',
+	'anwb-choose-logo' => 'Logo auswählen',
+	'anwb-step2-text' => 'Wähle als nächstes ein Logo für {{SITENAME}}. Am besten lädst du ein Bild hoch, von dem du denkst, dass es das Thema am besten rüber bringt.<br />Du kannst diesen Schritt überspringen, wenn du momentan noch kein Logo erstellen möchtest.<br /><br />',
+	'anwb-step2-example' => 'Dies könnte ein gutes Logo für eine Frage-Antwort-Seite zum Thema Skateboard sein.',
+	'anwb-fp-headline' => 'Erstelle einige Fragen!',
+	'anwb-logo-preview' => 'Vorschau des Logos',
 	'qa-toolbox-button' => 'Beantworte eine zufällige Frage',
 	'qa-toolbox-share' => 'Teilen',
 	'qa-toolbox-tools' => 'Erweiterte Optionen »',
@@ -314,6 +321,12 @@ $messages['de'] = [
 	'answers-carbon' => 'Karbon',
 	'answers-obsession' => 'Besessenheit',
 	'answers-custom' => 'Angepasst',
+	'anwb-fp-example' => '<strong>Beispiele</strong><br /><br />...für eine Frage-Antwort-Seite über Haustiere:<br /><br /><ul><li>Soll ich Katzenstreu kaufen</li><li>Welches Hundefutter ist das beste</li><li>Wie kann man eine Katze am besten erziehen</li><li></ul><br /><br />...für eine Frage-Antwort-Seite über Gesundheitsthemen:<br /><br /><ul><li>Welche gesundheitlichen Vorteile hat regelmäßiges Joggen</li><li>Wie finde ich einen guten Arzt in meiner Nähe</li><li>Wie kann ich am effektivsten abnehmen</li></ul>',
+	'anwb-fp-text' => 'Deine Frage-Antwort-Seite sollte mit ein paar Fragen starten!<br /><br />Füge eine Liste von Fragen hinzu und erstelle die ersten Antworten. Es ist wichtig, einige nützliche Informationen auf die Seite zu packen, damit andere sie finden und weitere Fragen stellen und beantworten können.',
+	'anwb-save-tagline' => 'Kurzerklärung speichern',
+	'anwb-step1-example' => '<strong>Beispiel:</strong><br /> Antworten auf alle deine Fragen zum Thema Wrestling!',
+	'anwb-step1-text' => 'Deine Frage-Antwort-Seite benötigt eine <strong>Kurzerklärung</strong> (ein Satz!).<br /><br />Die Kurzerklärung hilft anderen dein Angebot durch Suchmaschinen zu finden - versuche also möglichst präzise zu schreiben, welche Inhalte deine Seite behandelt.',
+	'anwb-thatisall-text' => 'Das wars auch schon - jetzt kann es losgehen!<br /><br />Du solltest damit beginnen, noch weitere Fragen und Antworten zu deiner Seite hinzuzufügen, so dass sie besser durch Suchmaschinen gefunden wird.<br /><br />Die Liste der Fragen aus dem letzten Schritt sind bereits auf deiner Frage-Antwort-Seite erstellt worden. Rufe sie auf, beantworte sie und starte deine eigene Community!',
 ];
 
 $messages['de-formal'] = [
@@ -404,11 +417,21 @@ $messages['es'] = [
 	'auto_friend_request_body' => '¿Me añadirás como amigo?',
 	'tog-hidefromattribution' => 'Ocultar mi avatar y nombre en la lista de atribuciones',
 	'a' => 'Respuesta:',
-	'anwb-step1-headline' => 'De qué trata tí Wiki?',
-	'anwb-choose-logo' => 'Elija su logo',
+	'anwb-step1-headline' => '¿Sobre qué tema se enfoca tu wiki?',
+	'anwb-choose-logo' => 'Elige tu logo',
 	'question_asked_by_a_wikia_user' => 'Pregunta hecha por un usuario de Fandom',
 	'anonymous_edit_points' => '$1 {{PLURAL:$1|colaboración|colaboraciones}}',
 	'answers-custom' => 'Personalizada',
+	'anwb-fp-example' => '<strong>Ejemplo</strong><br /><br />Para un wiki de respuestas sobre mascotas:<br /><br /><ul><li>¿Debo comprar un gato pequeño?</li><li>¿Cuál es la mejor forma para alimentar a un perro?</li><li>¿Cómo puedo entrenar a mi gato?</li></ul><br /><br />Para un wiki de respuestas sobre salud:<br /><br /><ul><li>¿Cuáles son los beneficios del ejercicio sobre la salud?</li><li>¿Cómo puedo encontrar a un buen doctor en mi zona?</li><li>¿Cómo puedo perder peso fácilmente?</li></ul>',
+	'anwb-fp-headline' => '¡Crea algunas preguntas!',
+	'anwb-fp-text' => '¡Tu wiki de Respuestas debe comenzar con algunas preguntas!<br /><br />Añade una lista de preguntas, y después dales una respuesta tú mismo. Es importante que des algo de información útil para tu wiki, así la gente podrá encontrarlo más fácilmente y preguntar y responder más preguntas.',
+	'anwb-logo-preview' => 'Aquí tienes una previsualización del logo',
+	'anwb-save-tagline' => 'Guardar tagline',
+	'anwb-step1-example' => '¡Responde a todas tus preguntas sobre Wrestling!',
+	'anwb-step1-text' => 'Tu sitio de Wiki Respuestas necesita un <strong>tagline</strong>.<br /><br />El tagline ayudará a que la gente encuentre tu wiki desde los motores de búsqueda, así que intenta ser claro sobre el tema que trata tu wiki.',
+	'anwb-step2-example' => 'Podría ser un buen logo para un wiki de respuestas sobre monopatines, ¿no estás de acuerdo?',
+	'anwb-step2-text' => 'Sigamos, elige un logo para {{SITENAME}}. Lo mejor es subir una imagen que pienses que representa tu sitio de Respuestas.<br />Puedes saltarte este paso si no quieres hacerlo ahora, más adelante lo podrás hacer.<br /><br />',
+	'anwb-thatisall-text' => '¡Eso es - el wiki ya está listo para revolucionar el mundo de las respuestas!<br /><br />Ahora es el momento de comenzar a escribir más preguntas y respuestas, así te asegurarás de que tu sitio pueda ser encontrado más fácilmente por los motores de búsqueda.<br /><br />La lista de preguntas que añadiste en el paso anterior ha sido incluida en tu sitio de preguntas. ¡Responde a tus propias preguntas, comienza tu propia comunidad de respuestas y demuéstrale a todos que tienes la respuesta que estaban buscando!',
 ];
 
 $messages['fi'] = [
