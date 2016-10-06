@@ -1837,7 +1837,7 @@ Schau dir deine schicke neue Auszeichnung auf deiner Benutzerseite an: $5',
 	'achievements-userprofile-no-badges-visitor' => 'Dieser Benutzer hat noch keine Abzeichen verdient.',
 	'achievements-userprofile-profile-score' => '<em>$1</em> Herausforderungs-<br />punkte',
 	'achievements-userprofile-ranked' => '[[Special:Leaderboard|Rang #$1]]<br />in diesem Wiki',
-	'action-platinum' => 'Platin-Abzeichen erstellen und bearbeiten',
+	'action-platinum' => 'erstelle und bearbeite Platin-Abzeichen',
 	'achievements-next-oasis' => 'Nächste',
 	'achievements-prev-oasis' => 'Vorherige',
 ];

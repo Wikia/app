@@ -19,8 +19,7 @@ $messages['en'] = [
 	'aboutpage' => 'Project:About',
 	'anonnotice' => '-',
 	'actionthrottled' => 'Action throttled',
-	'actionthrottledtext' => 'As an anti-spam measure, you are limited from performing this action too many times in a short space of time, and you have exceeded this limit.
-Please try again in a few minutes.',
+	'actionthrottledtext' => 'You can not perform this action right now. Please try again in a few minutes, or [[Special:Contact|contact Wikia]] if you are having difficulties.',
 	'acct_creation_throttle_hit' => 'Visitors to this wiki using your IP address have created {{PLURAL:$1|1 account|$1 accounts}} in the last day, which is the maximum allowed in this time period.
 As a result, visitors using this IP address cannot create any more accounts at the moment.',
 	'accountcreated' => 'Account created',
@@ -7521,10 +7520,10 @@ La contraseña para esta nueva cuenta puede cambiarse en [[Special:ChangePasswor
 	'action-createtalk' => 'crear páginas de discusión',
 	'action-createaccount' => 'crear esta cuenta de usuario',
 	'action-minoredit' => 'marcar este cambio como menor',
-	'action-move' => 'mover esta página',
-	'action-move-subpages' => 'mover esta página y sus subpáginas',
-	'action-move-rootuserpages' => 'mover páginas del usuario raíz',
-	'action-movefile' => 'mover este archivo',
+	'action-move' => 'renombrar esta página',
+	'action-move-subpages' => 'renombrar esta página y sus subpáginas',
+	'action-move-rootuserpages' => 'renombrar páginas del usuario raíz',
+	'action-movefile' => 'renombrar este archivo',
 	'action-upload' => 'subir este archivo',
 	'action-reupload' => 'reemplazar este archivo existente',
 	'action-reupload-shared' => 'reemplazar este archivo existente en un depósito compartido',
@@ -8802,7 +8801,7 @@ Le mot de passe pour ce nouveau compte peut être changé sur la page \'\'[[Spec
 	'action-userrights' => 'modifier tous les droits d’utilisateur',
 	'action-userrights-interwiki' => 'modifier les droits des utilisateurs sur d’autres wikis',
 	'action-siteadmin' => 'verrouiller ou déverrouiller la base de données',
-	'action-sendemail' => 'envoyer des courriels',
+	'action-sendemail' => 'envoyer des e-mails',
 	'ancientpages' => 'Pages les plus anciennement modifiées',
 	'all-logs-page' => 'Tous les journaux publics',
 	'alllogstext' => 'Affichage combiné de tous les journaux disponibles sur {{SITENAME}}.<br />
@@ -20540,7 +20539,7 @@ $messages['nl'] = [
 	'aboutsite' => 'Over {{SITENAME}}',
 	'aboutpage' => 'Project:Info',
 	'actionthrottled' => 'Handeling tegengehouden',
-	'actionthrottledtext' => 'Als maatregel tegen spam is het aantal keren per tijdseenheid dat u deze handeling kunt verrichten beperkt.
+	'actionthrottledtext' => 'Als maatregel tegen spam is het aantal keren per tijdseenheid dat je deze handeling kunt verrichten beperkt.
 De limiet is overschreden.
 Probeer het over een aantal minuten opnieuw.',
 	'acct_creation_throttle_hit' => 'Bezoekers van deze wiki met hetzelfde IP-adres als jij hebben de afgelopen dag {{PLURAL:$1|al 1 gebruiker|al $1 gebruikers}} geregistreerd, wat het maximale aantal in deze periode is.
