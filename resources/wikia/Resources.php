@@ -183,6 +183,13 @@ return [
 		],
 	],
 
+	'moment' => [
+		'scripts' => 'resources/wikia/libraries/moment/moment.js',
+		'dependencies' => [
+			'amd',
+		],
+	],
+
 	// AMD modules loaded on demand
 	'wikia.aim' => [
 		'scripts' => 'resources/wikia/modules/aim.js',

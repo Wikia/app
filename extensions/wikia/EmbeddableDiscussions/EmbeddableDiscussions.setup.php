@@ -33,4 +33,5 @@ JSMessages::registerPackage( 'EmbeddableDiscussions', [
 	'embeddable-discussions-forum-name',
 	'embeddable-discussions-error-loading',
 	'embeddable-discussions-cancel-button',
+	'embeddable-discussions-timestamp-now',
 ] );

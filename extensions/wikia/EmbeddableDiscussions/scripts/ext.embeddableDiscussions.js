@@ -1,5 +1,6 @@
 require([
 	'jquery',
+	'moment',
 	'wikia.tracker',
 	'wikia.ui.factory',
 	'wikia.mustache',
@@ -7,7 +8,7 @@ require([
 	'wikia.throbber',
 	'embeddablediscussions.templates.mustache',
 	'EmbeddableDiscussionsSharing'
-], function ($, tracker, uiFactory, mustache, window, throbber, templates, sharing) {
+], function ($, moment, tracker, uiFactory, mustache, window, throbber, templates, sharing) {
 	'use strict';
 
 	var track = tracker.buildTrackingFunction({
@@ -59,25 +60,37 @@ require([
 		});
 	}
 
+	function formatAgoString(unixTime, locale) {
+		var date = moment.unix(unixTime),
+			now = moment();
+
+		if (now.diff(date, 'days') > 5) {
+			return date.locale(locale).format('L');
+		} else if (now.diff(date, 'minutes') < 1) {
+			return $.msg('embeddable-discussions-timestamp-now');
+		} else {
+			return date.locale(locale).fromNow();
+		}
+	}
+
 	function processData(threads, upvoteUrl) {
 		var ret = [],
 			i,
 			thread,
 			userData,
-			date;
+			locale = mw.config.get('wgContentLanguage');
 
 		for (i in threads) {
 			thread = threads[i];
 			userData = thread._embedded.userData[0];
-			date = new Date(thread.creationDate.epochSecond * 1000);
 
 			ret.push({
 				author: thread.createdBy.name,
 				authorAvatar: thread.createdBy.avatarUrl,
 				commentCount: thread.postCount,
 				content: thread.rawContent,
-				createdAt: $.timeago(date),
-				timestamp: date.toLocaleString([mw.config.get('wgContentLanguage')]),
+				createdAt: formatAgoString(thread.creationDate.epochSecond, locale),
+				timestamp: moment().locale(locale).format('LLLL'),
 				forumName: $.msg( 'embeddable-discussions-forum-name', thread.forumName),
 				id: thread.id,
 				firstPostId: thread.firstPostId,
