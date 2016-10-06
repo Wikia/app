@@ -3845,7 +3845,7 @@ Zur Information folgt ein aktueller Auszug aus dem Benutzersperr-Logbuch:',
 	'backend-fail-contenttype' => 'Der Inhaltstyp, der im Pfad „$1“ zu speichernden Datei, konnte nicht bestimmt werden.',
 	'backend-fail-batchsize' => 'Eine Stapelverarbeitungsdatei, die {{PLURAL:$1|eine Operation|$1 Operationen}} enthält, wurde an das Speicher-Backend gesandt. Die Begrenzung liegt allerdings bei {{PLURAL:$2|einer Operation|$2 Operationen}}.',
 	'brokenredirects' => 'Defekte Weiterleitungen',
-	'brokenredirectstext' => 'Diese Spezialseite listet Weiterleitungen auf nicht existierende Seiten auf.',
+	'brokenredirectstext' => 'Die folgenden Weiterleitungen führen zu einer nicht (mehr) existenten Seite.',
 	'brokenredirects-edit' => 'bearbeiten',
 	'brokenredirects-delete' => 'löschen',
 	'booksources' => 'ISBN-Suche',
@@ -4615,8 +4615,8 @@ La última entrada del registro de bloqueos se proporciona debajo para mayor ref
 	'backend-fail-batchsize' => 'El servidor (back-end) de almacenamiento ha suministrado un lote de $1 {{PLURAL:$1|operación|operaciones}} de archivo; el límite es de $2 {{PLURAL:$2|operación|operaciones}}.',
 	'brokenredirects' => 'Redirecciones incorrectas',
 	'brokenredirectstext' => 'Las siguientes redirecciones enlazan a páginas que no existen:',
-	'brokenredirects-edit' => 'editar',
-	'brokenredirects-delete' => 'borrar',
+	'brokenredirects-edit' => '(editar)',
+	'brokenredirects-delete' => '(borrar)',
 	'booksources' => 'Fuentes de libros',
 	'booksources-search-legend' => 'Buscar fuentes de libros',
 	'booksources-go' => 'Ir',
@@ -20110,6 +20110,9 @@ $messages['zh'] = [
 被自动查封的IP地址没有被列出。请参看[[Special:Ipblocklist|被查封的IP地址和用户列表]]。',
 	'booksources-text' => '以下是一份销售新书或二手书的列表，并可能有你正寻找的书的进一步信息：',
 	'booksources' => '站外书源',
+	'broken-file-category' => '含有损坏文件链接的页面',
+	'brokenredirects-delete' => '(删除)',
+	'brokenredirects-edit' => '(编辑)',
 ];
 
 $messages['zh-hk'] = [
@@ -20122,6 +20125,8 @@ Avatar4.jpg
 Avatar5.jpg
 Avatar6.jpg',
 	'booksources' => '站外書源',
+	'brokenredirects-delete' => '(刪除)',
+	'brokenredirects-edit' => '(編輯)',
 ];
 
 $messages['zh-cn'] = [
