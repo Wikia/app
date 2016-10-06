@@ -31635,7 +31635,7 @@ $messages['zh-hans'] = [
 	'allpagesprefix' => '显示具有此前缀（名字空间）的页面：',
 	'allpagesbadtitle' => '给定的页面标题是非法的，或者具有一个内部语言或内部 wiki 的前缀。它可能包含一个或更多的不能用于标题的字符。',
 	'allpages-bad-ns' => '在{{SITENAME}}中没有一个叫做"$1"的名字空间。',
-	'activeusers' => '活跃用户列表',
+	'activeusers' => '活跃用户',
 	'activeusers-intro' => '这个列表列出了最近$1天进行过操作的用户。',
 	'activeusers-count' => '最近$3天编辑了$1次',
 	'activeusers-from' => '显示用户开始于：',
@@ -31812,7 +31812,7 @@ $messages['zh-hant'] = [
 	'allpagesprefix' => '顯示具有此前綴（名字空間）的頁面:',
 	'allpagesbadtitle' => '給定的頁面標題是非法的，或者具有一個內部語言或內部 wiki 的前綴。它可能包含一個或更多的不能用於標題的字元。',
 	'allpages-bad-ns' => '在{{SITENAME}}中沒有一個叫做"$1"的名字空間。',
-	'activeusers' => '活躍用戶列表',
+	'activeusers' => '活躍用戶',
 	'activeusers-intro' => '這個是在最近$1天之內有一些動作的用戶列表。',
 	'activeusers-count' => '於$3天內的$1次編輯',
 	'activeusers-from' => '顯示用戶開始於：',
@@ -31902,6 +31902,7 @@ $messages['zh-hk'] = [
 	'aboutpage' => 'Project:關於我們',
 	'activeusers-hidebots' => '隱藏機械人',
 	'achievements-leaderboard-navigation-item' => '維基排行榜',
+	'activeusers' => '活躍用戶名單',
 ];
 
 $messages['zh-min-nan'] = [
@@ -31962,6 +31963,7 @@ $messages['zh-tw'] = [
 	'autosumm-new' => '新頁面: $1',
 	'addnewtalksection-link' => '於本討論頁增加新的討論主題',
 	'achievements-leaderboard-navigation-item' => '維基排行榜',
+	'activeusers' => '活躍用戶名單',
 ];
 
 $messages['zh-yue'] = [
