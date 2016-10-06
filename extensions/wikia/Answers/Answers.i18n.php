@@ -9,7 +9,7 @@ $messages['en'] = [
 	'unregistered' => 'Unregistered',
 	'anonymous_edit_points' => '$1 {{PLURAL:$1|helper|helpers}}',
 	'edit_points' => '{{PLURAL:$1|edit point|edit points}}',
-	'ask_a_question' => 'Ask a question...',
+	'ask_a_question' => 'Welcome to {{SITENAME}}. What would you like to know?',
 	'ask_a_question-widget' => 'Ask a question...',
 	'in_category' => '...in category',
 	'ask_button' => 'Ask',
@@ -209,11 +209,11 @@ $messages['de'] = [
 	'unregistered' => 'Nicht registriert',
 	'anonymous_edit_points' => '$1 {{PLURAL:$1|Helfer|Helfer}}',
 	'edit_points' => '{{PLURAL:$1|Bearbeitungspunkt|Bearbeitungspunkte}}',
-	'ask_a_question' => 'Eine Frage stellen...',
-	'ask_a_question-widget' => 'Eine Frage stellen...',
+	'ask_a_question' => 'Gib deine Frage ein...',
+	'ask_a_question-widget' => 'Gib deine Frage ein...',
 	'in_category' => '...in der Kategorie',
 	'ask_button' => 'Fragen',
-	'ask_thanks' => 'Danke für deine klasse Frage!',
+	'ask_thanks' => 'Danke für diese tolle Frage!',
 	'question_asked_by' => 'Frage gestellt von',
 	'question_asked_by_a_wikia_user' => 'Frage eines Fandom-Benutzers',
 	'new_question_comment' => 'neue Frage',
@@ -259,7 +259,7 @@ $messages['de'] = [
 	'twitter_ask' => 'Auf Twitter fragen',
 	'facebook_ask' => 'Auf Facebook fragen',
 	'facebook_send_request' => 'Direkt an Freunde senden',
-	'ask_friends' => 'Bitte deine Freunde beim Beantworten zu helfen:',
+	'ask_friends' => 'Bitte deine Freunde um Hilfe bei der Antwort:',
 	'facebook_send_request_content' => 'Kannst du helfen das zu beantworten? $1',
 	'facebook_signed_in' => 'Du bist bei Facebook Connect angemeldet',
 	'ads_by_google' => 'Google-Anzeigen',
@@ -274,7 +274,7 @@ $messages['de'] = [
 	'answer_this' => '<a href="$1">Beantworte diese Frage</a>, selbst wenn du sie nicht komplett zu beantworten weißt.',
 	'research_this_on_wikipedia' => '<a href="$1">Die Frage recherchieren</a> auf Wikipedia',
 	'receive_email' => '<a href="$1" $2>Eine E-Mail erhalten</a> wenn diese Frage beantwortet wird',
-	'ask_friends_on_twitter' => 'Freunde bei <a href="$1" $2>Twitter</a> fragen',
+	'ask_friends_on_twitter' => 'Frage Freunde auf <a href="$1" $2>Twitter</a>',
 	'categorize' => 'Kategorisieren',
 	'categorize_help' => 'Eine Kategorie pro Zeile',
 	'answers_widget_admin_note' => '{{int:Answers widget user note}}',
@@ -352,7 +352,7 @@ $messages['es'] = [
 	'answer_title' => 'Respuesta',
 	'answered_by' => 'Respondido por',
 	'unregistered' => 'No registrado',
-	'ask_a_question' => 'Haz una pregunta...',
+	'ask_a_question' => 'Pregunta en {{SITENAME}}',
 	'ask_a_question-widget' => 'Haz una pregunta...',
 	'question_asked_by' => 'Pregunta hecha por',
 	'new_question_comment' => 'nueva pregunta',
@@ -402,7 +402,7 @@ $messages['es'] = [
 	'answer_this' => '<a href="$1">Responde esta pregunta</a>, incluso si no sabes la respuesta completa',
 	'research_this_on_wikipedia' => '<a href="$1">Investigar sobre esta pregunta</a> en Wikipedia',
 	'receive_email' => '<a href="$1" $2>Recibir un correo electrónico</a> cuando se responda a esta pregunta',
-	'ask_friends_on_twitter' => 'Pregunta a tus amigos por <a href="$1" $2>Twitter</a>',
+	'ask_friends_on_twitter' => 'Pregunta a tus amigos en <a href="$1" $2>Twitter</a>',
 	'quick_action_panel' => 'Panel de Acción Rápida',
 	'categorize' => 'Categorizar',
 	'categorize_help' => 'Una categoría por línea',
@@ -432,6 +432,9 @@ $messages['es'] = [
 	'anwb-step2-example' => 'Podría ser un buen logo para un wiki de respuestas sobre monopatines, ¿no estás de acuerdo?',
 	'anwb-step2-text' => 'Sigamos, elige un logo para {{SITENAME}}. Lo mejor es subir una imagen que pienses que representa tu sitio de Respuestas.<br />Puedes saltarte este paso si no quieres hacerlo ahora, más adelante lo podrás hacer.<br /><br />',
 	'anwb-thatisall-text' => '¡Eso es - el wiki ya está listo para revolucionar el mundo de las respuestas!<br /><br />Ahora es el momento de comenzar a escribir más preguntas y respuestas, así te asegurarás de que tu sitio pueda ser encontrado más fácilmente por los motores de búsqueda.<br /><br />La lista de preguntas que añadiste en el paso anterior ha sido incluida en tu sitio de preguntas. ¡Responde a tus propias preguntas, comienza tu propia comunidad de respuestas y demuéstrale a todos que tienes la respuesta que estaban buscando!',
+	'ask_button' => 'Pregunta',
+	'ask_friends' => 'Pide ayuda a tus amigos para responder esto:',
+	'ask_thanks' => '¡Gracias por la magnífica pregunta!',
 ];
 
 $messages['fi'] = [
@@ -1157,6 +1160,9 @@ $messages['ja'] = [
 	'answers_widget_no_questions' => '<b><a href="http://ja.answers.wikia.com/wiki/" target="_blank">ウィキ・アンサーズ</a></b>の<a href="http://ja.answers.wikia.com/wiki/Category:%e5%9b%9e%e7%ad%94%e5%be%85%e3%81%a1%e3%81%ae%e8%b3%aa%e5%95%8f" target="_blank">質問</a>により良い回答を提供するお手伝いをしてみませんか？<br /><br /><a href="http://ja.answers.wikia.com/wiki/Special:Search" target="_blank">質問を検索</a>し<a href="http://ja.answers.wikia.com/wiki/Category:%e5%9b%9e%e7%ad%94%e5%be%85%e3%81%a1%e3%81%ae%e8%b3%aa%e5%95%8f" target="_blank">回答待ちの質問</a>に回答してみてください。',
 	'answers_widget_no_questions_askabout' => '<div class="emptymwmsg mediawiki_widget-no-questions"></div>',
 	'answers_widget_user_note' => '{{SITENAME}}の訪問者による質問を<a href="http://answers.wikia.com">ウィキ・アンサーズ</a>で探して回答してみましょう。',
+	'ask_a_question-widget' => '新しく質問する場合はここに入力',
+	'ask_a_question' => '新しく質問する場合はここに入力',
+	'ask_button' => '質問する',
 ];
 
 $messages['lb'] = [
@@ -1523,8 +1529,8 @@ $messages['nb'] = [
 	'unregistered' => 'Uregistrert',
 	'anonymous_edit_points' => '$1 {{PLURAL:$1|hjelper|hjelpere}}',
 	'edit_points' => '{{PLURAL:$1|redigeringspoeng|redigeringspoeng}}',
-	'ask_a_question' => 'Still et spørsmål...',
-	'ask_a_question-widget' => 'Still et spørsmål...',
+	'ask_a_question' => 'Spør på WikiSvar',
+	'ask_a_question-widget' => 'Spør på WikiSvar',
 	'in_category' => '... i kategorien',
 	'ask_button' => 'Spør',
 	'ask_thanks' => 'Takk for det fantastiske spørsmålet!',
@@ -1895,6 +1901,12 @@ $messages['pt'] = [
 	'answers_widget_no_questions' => 'Nos ajude a criar a melhor resposta para alguma das <a href="http://respostas.wikia.com/wiki/Categoria:Perguntas_sem_respostas" target="_blank">perguntas</a> na <b><a href="http://respostas.wikia.com/wiki/WikiRespostas" target="_blank">WikiRespostas</a>.</b><br><br><a href="http://respostas.wikia.com/wiki/Especial:Busca" target="_blank">Find</a> e responda as  <a href="http://respostas.wikia.com/wiki/Categoria:Perguntas_sem_respostas" target="_blank">perguntas sem respostas</a>.',
 	'answers_widget_no_questions_askabout' => '<br><br>Comece fazendo uma pergunta sobre "{{PAGENAME}}"',
 	'answers_widget_user_note' => '<a href="http://respostas.wikia.com" target="_blank">WikiRespostas</a> é uma wiki de Perguntas e Respostas em que todos participam.',
+	'ask_a_question-widget' => 'Faça sua pergunta...',
+	'ask_a_question' => 'Faça sua pergunta...',
+	'ask_button' => 'Pergunte',
+	'ask_friends' => 'Peça aos seus amigos para ajudar a responder:',
+	'ask_friends_on_twitter' => 'Pergunte aos seus amigos no <a href="$1">Twitter</a>',
+	'ask_thanks' => 'Obrigado pela otima pergunta!',
 ];
 
 $messages['pt-br'] = [
@@ -1912,6 +1924,12 @@ $messages['pt-br'] = [
 	'answers_widget_no_questions' => 'Nos ajude a criar a melhor resposta para alguma das <a href="http://respostas.wikia.com/wiki/Categoria:Perguntas_sem_respostas" target="_blank">perguntas</a> na <b><a href="http://respostas.wikia.com/wiki/WikiRespostas" target="_blank">WikiRespostas</a>.</b><br><br><a href="http://respostas.wikia.com/wiki/Especial:Busca" target="_blank">Find</a> e responda as  <a href="http://respostas.wikia.com/wiki/Categoria:Perguntas_sem_respostas" target="_blank">perguntas sem respostas</a>.',
 	'answers_widget_no_questions_askabout' => '<br><br>Comece fazendo uma pergunta sobre "{{PAGENAME}}"',
 	'answers_widget_user_note' => '<a href="http://respostas.wikia.com" target="_blank">WikiRespostas</a> é uma wiki de Perguntas e Respostas em que todos participam.',
+	'ask_a_question-widget' => 'Faça sua pergunta...',
+	'ask_a_question' => 'Faça sua pergunta...',
+	'ask_button' => 'Pergunte',
+	'ask_friends' => 'Peça aos seus amigos para ajudar a responder:',
+	'ask_friends_on_twitter' => 'Pergunte aos seus amigos no <a href="$1">Twitter</a>',
+	'ask_thanks' => 'Obrigado pela otima pergunta!',
 ];
 
 $messages['roa-tara'] = [
@@ -1924,8 +1942,8 @@ $messages['ru'] = [
 	'unregistered' => 'Аноним',
 	'anonymous_edit_points' => '$1 {{PLURAL:$1|помощник|помощника|помощников}}',
 	'edit_points' => '{{PLURAL:$1|очко редактирования|очка редактирования|очков редактирования}}',
-	'ask_a_question' => 'Задать вопрос ...',
-	'ask_a_question-widget' => 'Задать вопрос ...',
+	'ask_a_question' => 'Задать вопрос…',
+	'ask_a_question-widget' => 'Задать вопрос…',
 	'in_category' => '...в категории',
 	'ask_button' => 'Спросить',
 	'ask_thanks' => 'Спасибо за хороший вопрос!',
@@ -2265,6 +2283,12 @@ $messages['no'] = [
 	'answers_widget_no_questions' => 'Hjelp oss å skape det beste svaret til hvilket som helst <a href="http://svar.wikia.com/wiki/Kategori:Ubesvarte_spørsmål" target="_blank">spørsmål</a> på <a href="http://svar.wikia.com/" target="_blank">WikiSvar</a>.<br/><br/><a href="http://svar.wikia.com/wiki/Spesial:Søk" target="_blank">Finn</a> og besvar <a href="http://svar.wikia.com/wiki/Kategori:Ubesvarte_spørsmål" target="_blank">ubesvarte spørsmål</a>.',
 	'answers_widget_no_questions_askabout' => '<br /><br />Kom i gang ved å stille spørsmål om «{{PAGENAME}}»',
 	'answers_widget_user_note' => 'Kan du hjelpe til med å bli en <a href="http://svar.wikia.com/wiki/Hvordan_blir_jeg_en_kategoriansvarlig" target="_blank">kategoriansvarlig</a> på <a href="http://svar.wikia.com" target="_blank">WikiSvar</a>?',
+	'ask_a_question-widget' => 'Spør på WikiSvar',
+	'ask_a_question' => 'Spør på WikiSvar',
+	'ask_button' => 'Spør',
+	'ask_friends' => 'Spør vennen din om å besvare:',
+	'ask_friends_on_twitter' => 'Spør venner på <a href="$1" $2>Twitter</a>',
+	'ask_thanks' => 'Takk for det råbra spørsmålet!',
 ];
 
 $messages['zh-hant'] = [
@@ -2282,6 +2306,9 @@ $messages['ko'] = [
 	'answering_tips' => '<h3>답변 달기 팁:</h3> 답변을 다실 때는 최대한 분명하게 하셔야 합니다. 위키백과와 같은 다른 곳을 출처로 하실 수도 있으며, 이런 경우에는 참조한 곳의 링크를 넣어주시는 것이 좋습니다. {{SITENAME}}에 기여해주셔서 감사합니다!',
 	'answers-category-count-answered' => '이 분류에는 $1개의 답변이 등록된 질문이 있습니다.',
 	'answers-category-count-unanswered' => '이 분류에는 $1개의 답변이 등록되지 않은 질문이 있습니다.',
+	'ask_a_question-widget' => '질문을 입력해주세요...',
+	'ask_a_question' => '{{SITENAME}}에 오신 것을 환영합니다. 무엇을 알고 싶으신가요?',
+	'ask_button' => '질문하기',
 ];
 
 $messages['bg'] = [
@@ -2299,6 +2326,8 @@ $messages['zh'] = [
 	'answers_widget_no_questions' => '請到<b><a href="http://zh.answers.wikia.com/" target="_blank">Wikia知識</a></b>提供<a href="http://zh.answers.wikia.com/wiki/Category:未回答的問題" target="_blank">問題</a>的最佳答案。<br><br><a href="http://zh.answers.wikia.com/wiki/Special:Search" target="_blank">尋找</a>並回答<a href="http://zhanswers.wikia.com/wiki/Category:未回答的問題" target="_blank">未回答的問題</a>.',
 	'answers_widget_no_questions_askabout' => '<br><br>立即發問一條關於「{{PAGENAME}}」的問題。',
 	'answers_widget_user_note' => '尋找由{{SITENAME}}讀者在<a href="http://zh.answers.wikia.com">{{SITENAME}}</a>上發問的問題！',
+	'ask_a_question-widget' => '發問一條問題',
+	'ask_a_question' => '發問一條問題',
 ];
 
 $messages['nn'] = [
@@ -2307,5 +2336,7 @@ $messages['nn'] = [
 	'answers_widget_no_questions' => 'Hjelp oss å skape det beste svaret til hvilket som helst <a href="http://svar.wikia.com/wiki/Kategori:Ubesvarte_spørsmål" target="_blank">spørsmål</a> på <a href="http://svar.wikia.com/" target="_blank">WikiSvar</a>.<br/><br/><a href="http://svar.wikia.com/wiki/Spesial:Søk" target="_blank">Finn</a> og besvar <a href="http://svar.wikia.com/wiki/Kategori:Ubesvarte_spørsmål" target="_blank">ubesvarte spørsmål</a>.',
 	'answers_widget_no_questions_askabout' => '<br /><br />Kom i gang ved å stille spørsmål om "{{PAGENAME}}"',
 	'answers_widget_user_note' => 'Kan du hjelpe med med å bli ein <a href="http://svar.wikia.com/wiki/Hvordan_blir_jeg_en_kategoriansvarlig" target="_blank">kategoriansvarlig</a> på <a href="http://svar.wikia.com" target="_blank">WikiSvar</a>?',
+	'ask_a_question-widget' => 'Spør på WikiSvar',
+	'ask_a_question' => 'Spør på WikiSvar',
 ];
 
