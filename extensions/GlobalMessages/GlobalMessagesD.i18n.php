@@ -3641,6 +3641,10 @@ Im [{{fullurl:{{#special:Log}}|type=delete&page={{FULLPAGENAMEE}}}} Lösch-Logbu
 	'dberr-outofdate' => 'Beachte, dass der Suchindex unserer Inhalte bei Google veraltet sein kann.',
 	'dberr-cachederror' => 'Folgendes ist eine Kopie des Caches der angeforderten Seite und kann veraltet sein.',
 	'discuss' => 'Diskussion',
+	'defaultskin1' => 'Die Admins dieses Wikis haben <b>$1</b> als Standard-Skin gewählt.',
+	'defaultskin2' => 'Die Admins dieses Wikis haben <b>$1</b> als Standard-Skin gewählt. Klicke <a href="$2">hier</a> um den Quellcode zu sehen.',
+	'defaultskin3' => 'Die Admins dieses Wikis haben keinen Standard-Skin gewählt. Benutzt wird der Standard-Skin von Wikia: <b>$1</b>.',
+	'defaultskin_choose' => 'Setze das Standard-Farbschema für dieses Wiki:',
 ];
 
 $messages['de-at'] = [
@@ -4306,6 +4310,10 @@ Este sitio está experimentando dificultades técnicas.',
 	'dberr-outofdate' => 'Ten en cuenta que su índice de nuestro contenido puede estar desactualizado.',
 	'dberr-cachederror' => 'La siguiente es una página guardada de la página solicitada, y puede no estar actualizada.',
 	'discuss' => 'Discusión',
+	'defaultskin1' => 'Los administradores de este wiki han elegido <b>$1</b> como piel predeterminada',
+	'defaultskin2' => 'Los administradores de este wiki han elegido <b>$1</b> como piel predeterminada. Haz clic <a href="$2">here</a> para ver el código.',
+	'defaultskin3' => 'Los administradores de este wiki no han elegido una piel predeterminada. Utilizando la predeterminada de Wikia: <b>$1</b>.',
+	'defaultskin_choose' => 'Configurar la piel predeterminada para este wiki:',
 ];
 
 $messages['et'] = [
@@ -4747,6 +4755,10 @@ Sivulla $2 on lista viimeaikaisista poistoista.',
 	'dberr-outofdate' => 'Googlen indeksi ei välttämättä ole ajan tasalla.',
 	'dberr-cachederror' => 'Alla on välimuistissa oleva sivun versio, joka ei välttämättä ole ajan tasalla.',
 	'discuss' => 'Keskustele',
+	'defaultskin1' => 'Tämän wikin ylläpitäjät ovat valinneet: <b>{{GRAMMAR:genitive|$1}}</b> oletusulkoasuksi.',
+	'defaultskin2' => 'Tämän wikin ylläpitäjät ovat valinneet: <b>{{GRAMMAR:genitive|$1}}</b> oletusulkoasuksi. Klikkaa <a href="$2">tästä</a> nähdäksesi koodin.',
+	'defaultskin3' => 'Tämän wikin ylläpitäjät eivät ole valinneet oletusulkoasua. Käytetään Wikian oletusta: <b>$1</b>.',
+	'defaultskin_choose' => 'Aseta tämän wikin oletusteema:',
 ];
 
 $messages['fiu-vro'] = [
@@ -4988,6 +5000,7 @@ La page de destination « [[:$1]] » existe déjà.
 	'dberr-outofdate' => 'Notez que leurs index de notre contenu peuvent être dépassés.',
 	'dberr-cachederror' => 'Ceci est une copie cachée de la page demandée et peut être dépassée.',
 	'discuss' => 'Discuter',
+	'defaultskin_choose' => 'Choisir le thème par défaut pour ce wiki :',
 ];
 
 $messages['frc'] = [
@@ -7679,6 +7692,10 @@ $messages['ja'] = [
 	'dberr-outofdate' => 'それらが収集した内容は古い可能性があることに注意してください。',
 	'dberr-cachederror' => 'これは要求されたページをキャッシュした複製であり、古くなっている可能性があります。',
 	'discuss' => 'このページについて話し合う',
+	'defaultskin1' => 'このウィキの管理者による設定:<b>$1</b>が現在のデフォルトの外装です。',
+	'defaultskin2' => 'このウィキの管理者による設定:<b>$1</b>が現在のデフォルトの外装です。<a href="$2">ここ</a>をクリックすると、スタイルシートのコードを見ることが出来ます。',
+	'defaultskin3' => 'このウィキの管理者は、デフォルトの外装を選択していません。デフォルトを使う場合は、<b>$1</b>になります。',
+	'defaultskin_choose' => 'このウィキのデフォルトの外装:',
 ];
 
 $messages['jam'] = [
@@ -8941,6 +8958,10 @@ $messages['ko'] = [
 	'dberr-usegoogle' => '그 동안 구글을 통해 검색할 수도 있습니다.',
 	'dberr-outofdate' => '참고로, 구글의 내용 개요는 오래된 것일 수도 있습니다.',
 	'dberr-cachederror' => '다음은 요청한 문서의 캐시된 복사본이며, 최신이 아닐 수도 있습니다.',
+	'defaultskin1' => '이 위키의 관리자가 설정한 이 위키의 기본 테마는 <b>$1</b>입니다.',
+	'defaultskin2' => '이 위키의 관리자가 설정한 이 위키의 기본 테마는 <b>$1</b>입니다. <a href="$2">여기</a>를 클릭하시면 소스를 보실 수 있습니다.',
+	'defaultskin3' => '이 위키의 관리자가 이 위키의 기본 테마를 설정하지 않아 기본값으로 위키아의 기본 스킨이 적용되어 있습니다. 위키아의 기본 스킨은 <b>$1</b>입니다.',
+	'defaultskin_choose' => '이 위키의 기본 테마:',
 ];
 
 $messages['ko-kp'] = [
@@ -12178,6 +12199,10 @@ Målsida «[[:$1]]» finst allereie. Vil du slette ho for å gje rom for flyttin
 	'dberr-outofdate' => 'Merk at versjonane deira av innhaldet vårt kan vera forelda.',
 	'dberr-cachederror' => 'Fylgjande er ein mellomlagra kopi av den etterspurde sida, og er, kan henda, ikkje den siste versjonen av ho.',
 	'discuss' => 'Diskuter',
+	'defaultskin1' => 'Ledelsen for denne wikien har valgt: <b>$1</b> som standardutseende.',
+	'defaultskin2' => 'Ledelsen for denne wikien har valgt: <b>$1</b> som standardutseende. Trykk <a href="$2">her</a> for å se koden.',
+	'defaultskin3' => 'Ledelsen for denne wikien har ikke valgt et standardutseende. Bruker Wikiastandarden: <b>$1</b>.',
+	'defaultskin_choose' => 'Velg standardutseende for denne wikien:',
 ];
 
 $messages['nov'] = [
@@ -13885,6 +13910,7 @@ $messages['ru'] = [
 	'dberr-outofdate' => 'Но имейте в виду, что его индекс может оказаться устаревшим.',
 	'dberr-cachederror' => 'Ниже представлена закэшированная версия запрашиваемой страницы, возможно, она не отражает последних изменений.',
 	'discuss' => 'Обсудить',
+	'defaultskin_choose' => 'Установка оформления по-умолчанию:',
 ];
 
 $messages['rue'] = [
@@ -18366,6 +18392,7 @@ $messages['zh-hans'] = [
 	'dberr-usegoogle' => '在此期间您可以尝试用Google来搜索。',
 	'dberr-outofdate' => '须注意他们索引出来的内容可能不是最新的。',
 	'dberr-cachederror' => '这是所请求页面的缓存副本，可能不是最新的。',
+	'defaultskin_choose' => '设定此站预设皮肤:',
 ];
 
 $messages['zh-hant'] = [
@@ -18460,6 +18487,7 @@ Template:消除歧義',
 	'dberr-usegoogle' => '在現階段您可以嘗試透過 Google 搜尋。',
 	'dberr-outofdate' => '留意他們索引出來之內容可能不是最新的。',
 	'dberr-cachederror' => '這個是所要求出來的快取複本，可能不是最新的。',
+	'defaultskin_choose' => '設定此站預設面板:',
 ];
 
 $messages['zh-hk'] = [
@@ -18472,6 +18500,7 @@ MySQL返回錯誤“$3: $4”。',
 	'datedefault' => '默認值',
 	'deadendpages' => '斷鏈頁面',
 	'deadendpagestext' => '以下頁面没有鏈接到本站的其他頁面。',
+	'defaultskin_choose' => '設定此站預設面板:',
 ];
 
 $messages['zh-min-nan'] = [
@@ -18511,6 +18540,8 @@ $messages['zh-tw'] = [
 MySQL返回錯誤“$3: $4”。',
 	'datedefault' => '默認值',
 	'deadendpages' => '斷鏈頁面',
+	'defaultskin1' => '管理員將<b>$1</b> 設為預設面板',
+	'defaultskin_choose' => '設定此站預設面板:',
 ];
 
 $messages['zh-yue'] = [
@@ -18564,6 +18595,7 @@ MySQL返回错误“$3: $4”。',
 	'datedefault' => '默认值',
 	'deadendpages' => '斷鏈頁面',
 	'deadendpagestext' => '以下页面没有链接到本站的其他页面。',
+	'defaultskin_choose' => '设定此站预设皮肤:',
 ];
 
 $messages['zh-sg'] = [
