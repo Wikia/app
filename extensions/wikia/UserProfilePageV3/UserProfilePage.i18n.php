@@ -110,9 +110,9 @@ $messages['en'] = [
 	'usermasthead-log-message' => 'added profile information',
 	'usermasthead-log-alt' => 'Logs of user masthead edits',
 	'useravatar-log' => 'User avatar log',
-	'blog-avatar-changed-log' => 'Added or changed avatar',
-	'blog-avatar-removed-log' => 'Removed $1\'s avatars',
-	'blog-avatar-alt' => 'Logs of user avatar additions or removals',
+	'blog-avatar-changed-log' => 'User avatar added or updated',
+	'blog-avatar-removed-log' => 'removed $1\'s avatar',
+	'blog-avatar-alt' => 'Logs of useravatar additions or removals',
 	'user-identity-remove-confirmation' => 'Are you sure you want to remove avatar?',
 	'user-identity-remove-fail' => 'There was some problem when removing the avatar!',
 	'user-identity-avatars-maintenance' => 'Upload and deletion of avatars temporarily disabled during maintenance!',
@@ -1416,7 +1416,7 @@ $messages['ia'] = [
 
 $messages['it'] = [
 	'user-identity-box-fb-prefs' => 'Feed delle Preferenze',
-	'blog-avatar-changed-log' => 'Avatar aggiunto o modificato',
+	'blog-avatar-changed-log' => '(Avatar aggiunto o modificato)',
 	'userprofilepage-edit-modal-header' => 'Modifica profilo',
 	'userprofilepage-question-caption' => 'Domanda $1/$2',
 	'userprofilepage-lightbox-interview-cancel' => 'Annulla',
@@ -1533,7 +1533,7 @@ $messages['it'] = [
 
 $messages['ja'] = [
 	'useravatar-log' => 'アバターのログ',
-	'blog-avatar-changed-log' => 'アバターが追加、または変更されました',
+	'blog-avatar-changed-log' => 'アバターが追加・変更されました',
 	'blog-avatar-removed-log' => '$1 のアバターを削除しました',
 	'blog-avatar-alt' => 'アバターの追加、または削除のログ',
 	'userprofilepage-edit-modal-header' => 'プロフィールの編集',
@@ -2281,7 +2281,7 @@ $messages['pl'] = [
 	'usermasthead-log-message' => 'dodano informacje do profilu',
 	'usermasthead-log-alt' => 'Rejestr operacji w profilu użytkownika',
 	'useravatar-log' => 'Awatary',
-	'blog-avatar-changed-log' => 'Zmiana lub dodanie awatara',
+	'blog-avatar-changed-log' => 'zmiana lub dodanie avatara',
 	'blog-avatar-removed-log' => 'Usunięto awatary użytkownika $1',
 	'blog-avatar-alt' => 'Rejestr zmian awatarów',
 	'user-identity-remove-confirmation' => 'Czy na pewno chcesz usunąć awatar?',
@@ -2650,9 +2650,9 @@ $messages['ru'] = [
 	'usermasthead-log-message' => 'добавить информацию в профайл',
 	'usermasthead-log-alt' => 'Журнал правок данных участника',
 	'useravatar-log' => 'Журнал аватаров участников',
-	'blog-avatar-changed-log' => 'Добавить или изменить аватар',
-	'blog-avatar-removed-log' => 'Удалён аватар участника $1',
-	'blog-avatar-alt' => 'Журналы добавлений или удалений аватаров участников',
+	'blog-avatar-changed-log' => 'Добавил или изменил аватар',
+	'blog-avatar-removed-log' => 'удалил аватары для $1',
+	'blog-avatar-alt' => 'аватар',
 	'user-identity-remove-confirmation' => 'Вы уверены, что хотите удалить аватар?',
 	'user-identity-remove-fail' => 'Возникли проблемы при удалении аватара.',
 	'user-identity-box-group-voldev' => 'Volunteer Developer',
@@ -2784,9 +2784,9 @@ $messages['sv'] = [
 	'usermasthead-log-message' => 'lade till profilinformation',
 	'usermasthead-log-alt' => 'Redigeringsloggar för redaktionsruta',
 	'useravatar-log' => 'Användaravatarslogg',
-	'blog-avatar-changed-log' => 'Lade till eller ändrade avatar',
-	'blog-avatar-removed-log' => 'Tog bort $1s avatarer',
-	'blog-avatar-alt' => 'Logbok över användares tillagda eller borttagna avatarer.',
+	'blog-avatar-changed-log' => 'Lagt till eller ändrats avatar',
+	'blog-avatar-removed-log' => 'Tagit bort $1s avatarer',
+	'blog-avatar-alt' => 'Loggar av användare avatar tillägg eller flyttning',
 	'user-identity-remove-confirmation' => 'Är du säker på att du vill ta bort avataren?',
 	'user-identity-remove-fail' => 'Det uppstod ett problem när avataren skulle tas bort!',
 ];
@@ -3225,9 +3225,9 @@ $messages['zh-hans'] = [
 	'usermasthead-log-message' => '添加个人设置信息',
 	'usermasthead-log-alt' => '用户刊头编辑日志',
 	'useravatar-log' => '用户头像记录',
-	'blog-avatar-changed-log' => '添加的或更改的头像',
-	'blog-avatar-removed-log' => '$1的头像已经被移除',
-	'blog-avatar-alt' => '用户头像添加或清除日志',
+	'blog-avatar-changed-log' => '添加或更改头像',
+	'blog-avatar-removed-log' => '移除 $1 的头像',
+	'blog-avatar-alt' => '关於用户头像添加和移除的日志',
 	'user-identity-remove-confirmation' => '你确定你想要删除个人头像吗？',
 	'user-identity-remove-fail' => '移除个人头像时遇到问题！',
 	'user-identity-avatars-maintenance' => '系统处于维护状态，上传和删除头像暂时不可用！',
@@ -3345,7 +3345,7 @@ $messages['zh-hant'] = [
 	'usermasthead-log-message' => '添加個人檔案資訊',
 	'usermasthead-log-alt' => '使用者刊頭編輯日誌',
 	'useravatar-log' => '使用者頭像日誌',
-	'blog-avatar-alt' => '用戶添加或移除頭像日誌',
+	'blog-avatar-alt' => '關於使用者頭像添加和移除的日誌',
 	'user-identity-remove-confirmation' => '你確定你想要移除個人頭像嗎?',
 	'user-identity-remove-fail' => '移除個人頭像時遇到問題！',
 	'user-identity-avatars-maintenance' => '系統處於維護狀態，上傳和刪除頭像暫時不可用！',
@@ -3461,7 +3461,7 @@ $messages['zh-tw'] = [
 	'useravatar-log' => '使用者頭像日誌',
 	'blog-avatar-changed-log' => '添加或更改頭像',
 	'blog-avatar-removed-log' => '刪除 $1 的頭像',
-	'blog-avatar-alt' => '使用者頭像添加或清除日誌',
+	'blog-avatar-alt' => '關於使用者頭像添加和移除的日誌',
 	'user-identity-remove-confirmation' => '你確定你想要刪除個人頭像嗎?',
 	'user-identity-remove-fail' => '移除個人頭像時遇到問題！',
 	'user-identity-avatars-maintenance' => '系統處於維護狀態，上傳和刪除頭像暫時不可用！',
@@ -3470,5 +3470,22 @@ $messages['zh-tw'] = [
 
 $messages['ko'] = [
 	'user-identity-box-wikia-contributor' => '익명 사용자',
+	'blog-avatar-alt' => '사용자의 아바타 추가나 삭제에 관한 기록입니다.',
+	'blog-avatar-changed-log' => '아바타가 추가 또는 수정됨',
+	'blog-avatar-removed-log' => '$1의 아바타가 제거됨',
+];
+
+$messages['no'] = [
+	'blog-avatar-removed-log' => 'Fjernet $1s avatarer',
+];
+
+$messages['zh'] = [
+	'blog-avatar-alt' => '关於用户头像添加和移除的日志',
+	'blog-avatar-changed-log' => '添加或更改头像',
+	'blog-avatar-removed-log' => '移除 $1 的头像',
+];
+
+$messages['zh-hk'] = [
+	'blog-avatar-alt' => '關於使用者頭像添加和移除的日誌',
 ];
 

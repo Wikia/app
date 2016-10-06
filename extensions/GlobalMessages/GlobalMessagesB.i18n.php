@@ -4670,6 +4670,12 @@ El primer enlace de cada línea debe ser un enlace al archivo que se quiere bloq
 Todos los demás enlaces en la misma línea se tomarán como excepciones (es decir, páginas donde sí se puede usar el archivo).',
 	'blankpage' => 'Página vacía',
 	'back' => 'Atrás',
+	'blog-avatar-defaults' => 'Avatar.jpg
+Avatar2.jpg
+Avatar3.jpg
+Avatar4.jpg
+Avatar5.jpg
+Avatar6.jpg',
 ];
 
 $messages['et'] = [
@@ -8159,6 +8165,12 @@ Vengono considerati soltanto gli elenchi puntati (righe che cominciano con il ca
 I collegamenti successivi, sulla stessa riga, sono considerati come eccezioni (ovvero, pagine nelle quali il file può essere richiamato normalmente).',
 	'blankpage' => 'Pagina vuota',
 	'back' => 'Indietro',
+	'blog-avatar-defaults' => 'Avatar.jpg
+Avatar2.jpg
+Avatar3.jpg
+Avatar4.jpg
+Avatar5.jpg
+Avatar6.jpg',
 ];
 
 $messages['iu'] = [
@@ -8385,6 +8397,12 @@ HTMLタグを見直してください。',
 同じ行でそれ以降にあるリンクは例外、つまりインライン挿入されてもよいページとみなされます。',
 	'blankpage' => '白紙ページ',
 	'back' => '戻る',
+	'blog-avatar-defaults' => 'Avatar.jpg
+Avatar2.jpg
+Avatar3.jpg
+Avatar4.jpg
+Avatar5.jpg
+Avatar6.jpg',
 ];
 
 $messages['jam'] = [
@@ -14423,6 +14441,12 @@ Só são reconhecidos elementos na forma de lista (linhas começadas por *).
 O primeiro link em cada linha deve apontar para o ficheiro que se pretende bloquear.
 Quaisquer outros links nessa mesma linha são considerados excepções (ou seja, páginas de onde se pode aceder ao ficheiro).',
 	'blankpage' => 'Página em branco',
+	'blog-avatar-defaults' => 'Avatar.jpg
+Avatar2.jpg
+Avatar3.jpg
+Avatar4.jpg
+Avatar5.jpg
+Avatar6.jpg',
 ];
 
 $messages['pt-br'] = [
@@ -15185,6 +15209,12 @@ $messages['ru'] = [
 	'bitrate-terabits' => '$1 Тб/с',
 	'blankpage' => 'Пустая страница',
 	'back' => 'Назад',
+	'blog-avatar-defaults' => 'Avatar.jpg
+Avatar2.jpg
+Avatar3.jpg
+Avatar4.jpg
+Avatar5.jpg
+Avatar6.jpg',
 ];
 
 $messages['rue'] = [
@@ -17267,6 +17297,12 @@ Listan tar enbart hänsyn till rader som börjar med asterisk (*).
 Den första länken på en rad måste vara en länk till en otillåten fil.
 Övriga länkar på samma rad kommer att hanteras som undantag, det vill säga sidor där filen tillåts användas.',
 	'blankpage' => 'Tom sida',
+	'blog-avatar-defaults' => 'Avatar.jpg
+Avatar2.jpg
+Avatar3.jpg
+Avatar4.jpg
+Avatar5.jpg
+Avatar6.jpg',
 ];
 
 $messages['sw'] = [
@@ -20076,6 +20112,12 @@ $messages['zh'] = [
 $messages['zh-hk'] = [
 	'badaccess-group0' => '您剛才的請求不允許執行。',
 	'badaccess-groups' => '您剛才的請求只有$1用戶組的用戶才能使用。',
+	'blog-avatar-defaults' => 'Avatar.jpg
+Avatar2.jpg
+Avatar3.jpg
+Avatar4.jpg
+Avatar5.jpg
+Avatar6.jpg',
 ];
 
 $messages['zh-cn'] = [

@@ -1,33 +1,30 @@
 <?php
-/**
- * Blogs extension message file
- */
-
+/** Internationalization file for /extensions/wikia/Blogs/Blogs extension. */
 $messages = [];
 
 $messages['en'] = [
-	'blog-file-page' => "<a href='$1'>$2</a> post on <a href='$3'>$4's</a> blog",
-
+	'blog-file-page' => '<a href=\'$1\'>$2</a> post on <a href=\'$3\'>$4\'s</a> blog',
 	'createblogpage' => 'Create blog',
 	'createbloglistingpage' => 'Create blog listing',
-	"create-blog-spam" => "Looks like spam",
-	"create-blog-cant-edit" => "Could not perform edit",
-	"create-blog-post-category" => 'Blog posts',
-	"create-blog-post-category-body" => "This is an automatically generated list of blog posts",
-	"create-blog-post-category-log" => "Created category article for blog posts",
-	"create-blog-post-recent-listing" => 'Recent posts',
-	"create-blog-post-recent-listing-title" => 'Recent posts',
-	"create-blog-post-recent-listing-log" => "Created article for recent blog posts",
+	'create-blog-spam' => 'Looks like spam',
+	'create-blog-cant-edit' => 'Could not perform edit',
+	'create-blog-post-category' => 'Blog posts',
+	'create-blog-post-category-body' => 'This is an automatically generated list of blog posts',
+	'create-blog-post-category-log' => 'Created category article for blog posts',
+	'create-blog-post-recent-listing' => 'Recent posts',
+	'create-blog-post-recent-listing-title' => 'Recent posts',
+	'create-blog-post-recent-listing-log' => 'Created article for recent blog posts',
 	'create-blog-post-title' => 'Create a new blog post',
 	'create-blog-post-title-edit' => 'Edit a blog post',
 	'create-blog-form-title' => 'What is a blog post?',
 	'create-blog-form-post-text' => 'Blog text',
-	'create-blog-form-info' => "Blog posts are a great way to share news, opinions, and creative pieces with the community.",
+	'create-blog-form-info' => 'Blog posts are a great way to share news, opinions, and creative pieces with the community.',
 	'create-blog-form-post-title' => 'Blog post title',
 	'create-blog-empty-title-error' => 'Title required',
 	'create-blog-empty-post-error' => 'Post body is empty',
-	'create-blog-empty-article' => "\n",
-	'create-blog-empty-article-log' => "Created article for blog listing",
+	'create-blog-empty-article' => '
+',
+	'create-blog-empty-article-log' => 'Created article for blog listing',
 	'create-blog-invalid-title-error' => 'Invalid title',
 	'create-listing-confirm-info' => 'Copy and paste the following code:',
 	'create-blog-no-login' => 'Not logged in',
@@ -60,83 +57,82 @@ Create blog listing pages for categories such as "Barack Obama", "Fan Fiction", 
 	'create-blog-listing-output-as-box' => 'Generate code for copying and pasting',
 	'create-blog-listing-output-as-page' => 'Create listing as new page',
 	'create-blog-listing-tag-format-not-recognized-on-page' => 'Blog listing tag not recognized on page',
-	'blog-header' => "Blog articles in category \"$1\"",
-	'blog-subheader' => "{{PLURAL:$1|There is one blog post|The following $1 blog articles are}} in this category.",
-	'blog-subheader-all' => "{{PLURAL:$1|There is one blog article in this category.|The following $1 blog articles are in this category, out of $2 total.}}",
-	'blog-invalidparam' => "Unknown parameter '$1' is ignored. Please use one of available parameters: <code>$2</code>.",
-	'blog-emptyparam' => "Name of parameter cannot be empty",
-	'blog-defaulttitle' => "Blogs",
-	'blog-continuereading' => "Continue reading &raquo;",
-	'blog-readfullpost' => "Read more",
-	'blog-olderposts' => "Older posts",
-	'blog-newerposts' => "Newer posts",
-	'blog-nbrcomments' => "{{PLURAL:$1|One comment|$1 comments}}",
-	'blog-nopostfound' => "No posts found.",
-	'blog-writeone' => "Write one!",
-	'blog-empty-user-blog' => "This user has not written any blog posts yet!",
-	"blog-added" => "added",
-	"blog-edited" => "edited",
-	"blog-page" => "Blog",
-	"blog-zero-comments" => "No comments yet!",
-	"blog-comment-post" => "Post comment",
-	"blog-comments" => "Comments",
-	"blog-rc-comments" => "Blog comments",
-	"blog-comments-new" => "New comment in blog",
-	"blog-comments-save" => "Save comment in blog",
-	"blog-comments-label" => "Commenting",
-	"blog-voting-label" => "Voting",
-	"blog-comments-info" => "This box uses wikitext-style input",
-	"blog-comments-login" => "<a href=\"$1\" rel=\"nofollow\">Log in</a> to comment",
-	"blog-comments-dsc" => "Newest first",
-	"blog-comments-asc" => "Newest last",
-	"blog-comments-anonymous" => "Anonymous user",
-	"blog-comment-delete" => "delete",
-	"blog-comment-hide" => "hide",
-	"blog-comment-unhide" => "unhide",
-	"blog-comment-history" => "history",
-	"blog-comment-edit" => "edit",
-	"blog-comment-error" => "Comment could not be saved",
-	"blog-comment-cannot-add" => "You cannot add comment to blog.",
-	"blug-cut-sign" => "…",
-	'blog-avatar-preferences-title' => "Avatar",
-	"blog-page-rate" => "Rate this article:",
-	"blog-create-post-label" => "Create blog post",
-	"blog-create-label" => "Create blog article",
-	"blog-create-next-label" => "Create new blog article",
-	"blog-create-listing-label" => "Create blog listing",
-	"blog-refresh-label" => "Refresh",
-	"blog-widgets-label" => "Widget dashboard",
-	"blog-listing-zero-self" => "",
-	"blog-listing-zero-other" => "This user has not written any blog posts yet!",
-	"blog-listing-created" => "Blog listing page created",
-	"blog-userblog" => "$1's blog",
-	"blog-fromsitename" => "From $1",
-	"blogs-reportproblem" => "Report problem",
-	"blogs-comment-hidden" => "Comment hidden.",
-	"right-blog-comments-toggle" => "Toggle comments on blog articles",
-	"right-blog-comments-delete" => "Delete comments on blog articles",
-	"right-blog-articles-edit" => "Edit blog articles",
-	"right-blog-articles-move" => "Move blog articles",
-	"right-blog-articles-protect" => "Protect blog articles",
-	"blogs-recent-url" => "Blog:Recent_posts",
-	"blogs-recent-url-text" => "Recent blog posts",
-	"blog-desc" => "Blog articles",
-	"blog-movepage-badtitle" => "Invalid blog post title.",
-	"blog-comment-sending" => "Sending...",
+	'blog-header' => 'Blog articles in category "$1"',
+	'blog-subheader' => '{{PLURAL:$1|There is one blog post|The following $1 blog articles are}} in this category.',
+	'blog-subheader-all' => '{{PLURAL:$1|There is one blog article in this category.|The following $1 blog articles are in this category, out of $2 total.}}',
+	'blog-invalidparam' => 'Unknown parameter \'$1\' is ignored. Please use one of available parameters: <code>$2</code>.',
+	'blog-emptyparam' => 'Name of parameter cannot be empty',
+	'blog-defaulttitle' => 'Blogs',
+	'blog-continuereading' => 'Continue reading &raquo;',
+	'blog-readfullpost' => 'Read more',
+	'blog-olderposts' => 'Older posts',
+	'blog-newerposts' => 'Newer posts',
+	'blog-nbrcomments' => '{{PLURAL:$1|One comment|$1 comments}}',
+	'blog-nopostfound' => 'No posts found.',
+	'blog-writeone' => 'Write one!',
+	'blog-empty-user-blog' => '<br/><big>\'\'\'No recent blog posts. [[Special:CreateBlogPage|Write one now!]]\'\'\'</big>
+
+
+<big>\'\'\'What are Wikia Blogs?\'\'\'</big>
+
+Wikia community blogs allow you to contribute a blog post to any wiki\'s [[{{MediaWiki:blogs-recent-url}}|Community Blog]].
+
+Blogs are used by wiki communities for fan fiction or original work, news and announcements, questions or recommendations to the community, or reviews or op-eds. Check out [[w:c:fallout:The Vault:News|Fallout Wiki\'s News Blog]] and [[w:c:Lostpedia:Blog:Recent posts|Lostpedia\'s Theories Blog]] to see two examples.',
+	'blog-added' => 'added',
+	'blog-edited' => 'edited',
+	'blog-page' => 'Blog',
+	'blog-zero-comments' => 'No comments yet!',
+	'blog-comment-post' => 'Post comment',
+	'blog-comments' => 'Comments',
+	'blog-rc-comments' => 'Blog comments',
+	'blog-comments-new' => 'New comment in blog',
+	'blog-comments-save' => 'Save comment in blog',
+	'blog-comments-label' => 'Commenting',
+	'blog-voting-label' => 'Voting',
+	'blog-comments-info' => 'This box uses wikitext-style input',
+	'blog-comments-login' => '<a href="$1" rel="nofollow">Log in</a> to comment',
+	'blog-comments-dsc' => 'Newest first',
+	'blog-comments-asc' => 'Newest last',
+	'blog-comments-anonymous' => 'Anonymous user',
+	'blog-comment-delete' => 'delete',
+	'blog-comment-hide' => 'hide',
+	'blog-comment-unhide' => 'unhide',
+	'blog-comment-history' => 'history',
+	'blog-comment-edit' => 'edit',
+	'blog-comment-error' => 'Comment could not be saved',
+	'blog-comment-cannot-add' => 'You cannot add comment to blog.',
+	'blug-cut-sign' => '…',
+	'blog-avatar-preferences-title' => 'Avatar',
+	'blog-page-rate' => 'Rate this article:',
+	'blog-create-post-label' => 'Create blog post',
+	'blog-create-label' => 'Create blog article',
+	'blog-create-next-label' => 'Create new blog article',
+	'blog-create-listing-label' => 'Create blog listing',
+	'blog-refresh-label' => 'Refresh',
+	'blog-widgets-label' => 'Widget dashboard',
+	'blog-listing-zero-self' => '',
+	'blog-listing-zero-other' => 'This user has not written any blog posts yet!',
+	'blog-listing-created' => 'Blog listing page created',
+	'blog-userblog' => '$1\'s blog',
+	'blog-fromsitename' => 'From $1',
+	'blogs-reportproblem' => 'Report problem',
+	'blogs-comment-hidden' => 'Comment hidden.',
+	'right-blog-comments-toggle' => 'Toggle comments on blog articles',
+	'right-blog-comments-delete' => 'Delete comments on blog articles',
+	'right-blog-articles-edit' => 'Edit blog articles',
+	'right-blog-articles-move' => 'Move blog articles',
+	'right-blog-articles-protect' => 'Protect blog articles',
+	'blogs-recent-url' => 'Blog:Recent_posts',
+	'blogs-recent-url-text' => 'Recent blog posts',
+	'blog-desc' => 'Blog articles',
+	'blog-movepage-badtitle' => 'Invalid blog post title.',
+	'blog-comment-sending' => 'Sending...',
 	'blog-by' => '$1 by $2',
 	'blogs-searchprofile' => 'Blogs',
 	'blogs-searchprofile-tooltip' => 'Search in Blog Articles and Blog Listings',
 	'user-blog-url-link' => 'User blog:$1',
 ];
 
-/** Message documentation (Message documentation)
- * @author EugeneZelenko
- * @author Liuxinyu970226
- * @author Lloffiwr
- * @author Shirayuki
- * @author Siebrand
- * @author Umherirrender
- */
 $messages['qqq'] = [
 	'blog-file-page' => 'Format of the file usage (see [[MediaWiki:Linkstoimage]]) entry on the file page if the file is used on a Blog article. To explain the parameters, use the following example - An image is used on the blog article "User blog:Foo/First post".
 Parameters:
@@ -201,11 +197,8 @@ Parameters:
 	'user-blog-url-link' => 'Link - links to users Blog main page',
 ];
 
-/** Afrikaans (Afrikaans)
- * @author Naudefj
- */
 $messages['af'] = [
-	'createblogpage' => "Skep 'n Blog",
+	'createblogpage' => 'Skep \'n Blog',
 	'create-blog-spam' => 'Lyk soos spam',
 	'create-blog-post-recent-listing' => 'Onlangse artikels',
 	'create-blog-post-recent-listing-title' => 'Onlangse artikels',
@@ -213,12 +206,12 @@ $messages['af'] = [
 	'create-blog-empty-post-error' => 'Die inhoud van die boodskap is leeg',
 	'create-blog-invalid-title-error' => 'Ongeldige titel',
 	'create-blog-no-login' => 'Nie aangeteken  nie',
-	'create-blog-categories-textinput' => "Voeg 'n nuwe kategorie by",
+	'create-blog-categories-textinput' => 'Voeg \'n nuwe kategorie by',
 	'create-blog-categories-submit' => 'Dien in',
 	'create-blog-save' => 'Stoor bladsy',
 	'create-blog-preview' => 'Wys voorskou',
-	'create-blog-article-already-exists' => "Daar bestaan reeds 'n blog-inskrywing met die naam.
-Kies asseblief 'n ander naam.",
+	'create-blog-article-already-exists' => 'Daar bestaan reeds \'n blog-inskrywing met die naam.
+Kies asseblief \'n ander naam.',
 	'create-blog-listing-preview' => 'Voorskou',
 	'create-blog-listing-matches' => 'Resultate',
 	'create-blog-listing-matches-calculate' => 'Bereken',
@@ -263,24 +256,12 @@ Kies asseblief 'n ander naam.",
 	'blog-by' => '$1 deur $2',
 ];
 
-/** Aragonese (aragonés)
- * @author Juanpabl
- */
 $messages['an'] = [
 	'blog-comment-history' => 'historial',
 ];
 
-/** Arabic (العربية)
- * @author Achraf94
- * @author Alexknight12
- * @author Claw eg
- * @author DRIHEM
- * @author Imksa
- * @author Meno25
- * @author OsamaK
- */
 $messages['ar'] = [
-	'blog-file-page' => "مشاركة <a href='$1'>$2</a> على مدونة <a href='$3'>$4</a>",
+	'blog-file-page' => 'مشاركة <a href=\'$1\'>$2</a> على مدونة <a href=\'$3\'>$4</a>',
 	'createblogpage' => 'إنشاء مدونة',
 	'createbloglistingpage' => 'إنشاء قائمة مدونات',
 	'create-blog-spam' => 'يبدو أن ما أدخلته غير مرغوب فيه',
@@ -335,7 +316,7 @@ $messages['ar'] = [
 	'blog-header' => 'مقالات المدونة في التصنيف "$1"',
 	'blog-subheader' => '{{PLURAL:$1|هناك مشاركة واحدة|هناك $1 مشاركات}} في هذا التصنيف.',
 	'blog-subheader-all' => '{{PLURAL:$1|هناك مقالة مدونة واحدة في هذا التصنيف|هناك $1 مقالات مدونة في هذا التصنيف, من $2 واحدة ككل.}}',
-	'blog-invalidparam' => "تم تجاهل تطبيق غير معروف '$1'. يرجى استخدام أحد التطبيقات المتوفرة: <code>$2</code>.",
+	'blog-invalidparam' => 'تم تجاهل تطبيق غير معروف \'$1\'. يرجى استخدام أحد التطبيقات المتوفرة: <code>$2</code>.',
 	'blog-emptyparam' => 'اسم التطبيق لا يمكن أن يكون فارغا',
 	'blog-defaulttitle' => 'مدونات',
 	'blog-continuereading' => 'مواصلة القراءة &raquo;',
@@ -397,17 +378,10 @@ $messages['ar'] = [
 	'user-blog-url-link' => 'مدونة المستخدم:$1',
 ];
 
-/** Aramaic (ܐܪܡܝܐ)
- * @author Basharh
- */
 $messages['arc'] = [
 	'create-blog-listing-sortby-author' => 'ܣܝܘܡܐ',
 ];
 
-/** Assamese (অসমীয়া)
- * @author Gitartha.bordoloi
- * @author Jaminianurag
- */
 $messages['as'] = [
 	'createblogpage' => 'ব্লগ সৃষ্টি কৰক',
 	'createbloglistingpage' => 'ব্লগ তালিকা সৃষ্টি কৰক',
@@ -440,14 +414,11 @@ $messages['as'] = [
 	'blog-create-next-label' => 'নতুন ব্লগ প্ৰবন্ধ সৃষ্টি কৰক',
 	'blog-create-listing-label' => 'ব্লগ তালিকা সৃষ্টি কৰক',
 	'blog-refresh-label' => 'ৰিফ্ৰেচ',
-	'blog-userblog' => "$1'ৰ ব্লগ",
+	'blog-userblog' => '$1\'ৰ ব্লগ',
 	'blog-fromsitename' => ' $1ৰ পৰা',
 	'blogs-reportproblem' => 'সমস্যা জনাওক',
 ];
 
-/** Azerbaijani (azərbaycanca)
- * @author Cekli829
- */
 $messages['az'] = [
 	'create-blog-categories-submit' => 'Yolla',
 	'create-blog-save' => 'Səhifəni qeyd et',
@@ -464,11 +435,8 @@ $messages['az'] = [
 	'blogs-searchprofile' => 'Bloqlar',
 ];
 
-/** Bikol Central (Bikol Central)
- * @author Geopoet
- */
 $messages['bcl'] = [
-	'blog-file-page' => "<a href='$1'>$2</a> magpaskil sa <a href='$3'>$4's</a> blog",
+	'blog-file-page' => '<a href=\'$1\'>$2</a> magpaskil sa <a href=\'$3\'>$4\'s</a> blog',
 	'createblogpage' => 'Magmukna nin blog',
 	'createbloglistingpage' => 'Magmukna kan listahan nin blog',
 	'create-blog-spam' => 'Garo baga espam',
@@ -523,7 +491,7 @@ Magmukna nin mga pahina kan listahan nin blog para sa mga kategoriya siring kan 
 	'blog-header' => 'Mga artikulo nin blog na yaon sa kategoriya "$1"',
 	'blog-subheader' => '{{PLURAL:$1|Igwa nin sarong paskil sa blog|An minasunod na $1 na mga artikulo nin blog iyo}} an yaon sa kategoriyang ini.',
 	'blog-subheader-all' => '{{PLURAL:$1|Igwas nin sarong artikulo sa blog na yaon sa kategoriyang ini.|An minasunod na $1 na mga artikulo nin blog na yaon sa kategoriyang ini, luwas kan $2 na kabilogan.}}',
-	'blog-invalidparam' => "An dae bistadong parametro '$1' pinagbalewala. Tabi man gumamit nin sarong yaon na mga parametro: <code>$2</code>.",
+	'blog-invalidparam' => 'An dae bistadong parametro \'$1\' pinagbalewala. Tabi man gumamit nin sarong yaon na mga parametro: <code>$2</code>.',
 	'blog-emptyparam' => 'Pangaran kan parametro dae puwedeng mayong laog',
 	'blog-defaulttitle' => 'Mga blog',
 	'blog-continuereading' => 'Magpadagos sa pagbabasa &raquo;',
@@ -585,17 +553,10 @@ Magmukna nin mga pahina kan listahan nin blog para sa mga kategoriya siring kan 
 	'user-blog-url-link' => 'An blog nin paragamit:$1',
 ];
 
-/** Belarusian (беларуская)
- * @author Тест
- */
 $messages['be'] = [
 	'blog-comment-history' => 'гісторыя',
 ];
 
-/** Belarusian (Taraškievica orthography) (беларуская (тарашкевіца)‎)
- * @author EugeneZelenko
- * @author Wizardist
- */
 $messages['be-tarask'] = [
 	'createblogpage' => 'Стварыць блог',
 	'create-blog-save' => 'Захаваць старонку',
@@ -605,9 +566,6 @@ $messages['be-tarask'] = [
 	'blog-comment-history' => 'гісторыя',
 ];
 
-/** Bulgarian (български)
- * @author DCLXVI
- */
 $messages['bg'] = [
 	'createblogpage' => 'Създаване на блог',
 	'create-blog-spam' => 'Прилича на спам',
@@ -646,9 +604,6 @@ $messages['bg'] = [
 	'blogs-searchprofile' => 'Блогове',
 ];
 
-/** Western Balochi (بلوچی رخشانی)
- * @author Baloch Afghanistan
- */
 $messages['bgn'] = [
 	'create-blog-categories-submit' => 'ثبت کورتین',
 	'create-blog-save' => 'ای تاکدیم ذخیره بیئت',
@@ -662,10 +617,6 @@ $messages['bgn'] = [
 	'blog-refresh-label' => 'نوک کورتین',
 ];
 
-/** Bengali (বাংলা)
- * @author Aftab1995
- * @author Aftabuzzaman
- */
 $messages['bn'] = [
 	'create-blog-save' => 'পাতা সংরক্ষণ',
 	'create-blog-preview' => 'প্রাকদর্শন দেখাও',
@@ -673,18 +624,12 @@ $messages['bn'] = [
 	'blog-defaulttitle' => 'ব্লগসমূহ',
 ];
 
-/** Breton (brezhoneg)
- * @author Fulup
- * @author Gwendal
- * @author Gwenn-Ael
- * @author Y-M D
- */
 $messages['br'] = [
-	'blog-file-page' => "<a href='$1'>$2</a> embannet e blog <a href='$3'>$4's</a>",
+	'blog-file-page' => '<a href=\'$1\'>$2</a> embannet e blog <a href=\'$3\'>$4\'s</a>',
 	'createblogpage' => 'Krouiñ ar blog',
 	'createbloglistingpage' => 'Roll ar blogoù krouet',
-	'create-blog-spam' => "Tennañ a ra d'ur strob",
-	'create-blog-cant-edit' => "Dibosupl eo seveniñ ar c'hemm",
+	'create-blog-spam' => 'Tennañ a ra d\'ur strob',
+	'create-blog-cant-edit' => 'Dibosupl eo seveniñ ar c\'hemm',
 	'create-blog-post-category' => 'Pennad ar blog',
 	'create-blog-post-category-body' => 'Hemañ zo ur roll blogadennoù ganet ent emgefre',
 	'create-blog-post-category-log' => 'Rummad krouet evit ar blogadennoù',
@@ -697,20 +642,20 @@ $messages['br'] = [
 	'create-blog-form-post-text' => 'Testenn ar blog',
 	'create-blog-form-info' => 'Blogadennoù a reer eus un doare dispar da rannañ keleier, soñjoù, pe danevelloù krouus gant ar gumuniezh.',
 	'create-blog-form-post-title' => 'Titl ar vlogadenn',
-	'create-blog-empty-title-error' => "Ezhomm 'zo eus un titl",
+	'create-blog-empty-title-error' => 'Ezhomm \'zo eus un titl',
 	'create-blog-empty-post-error' => 'Goullo eo korf ar vlogadenn',
 	'create-blog-empty-article-log' => 'Pennad krouet evit rollañ ar blog',
 	'create-blog-invalid-title-error' => 'Titl fall',
-	'create-listing-confirm-info' => "Eilañ ha pegañ ar c'hod da-heul :",
+	'create-listing-confirm-info' => 'Eilañ ha pegañ ar c\'hod da-heul :',
 	'create-blog-no-login' => 'Digevreet',
-	'create-blog-login-required' => "Ret eo deoc'h [{{fullurl:Special:Signup|$1}} kevreañ] evit skrivañ blogadennoù pe rolloù.",
+	'create-blog-login-required' => 'Ret eo deoc\'h [{{fullurl:Special:Signup|$1}} kevreañ] evit skrivañ blogadennoù pe rolloù.',
 	'create-blog-categories-title' => 'Ouzhpennañ ar vlogadenn-mañ er rummadoù-mañ (klikañ evit diuzañ anezho)',
 	'create-blog-categories-textinput' => 'Ouzhpennañ ur rummad nevez',
 	'create-blog-categories-submit' => 'Kas',
 	'create-blog-save' => 'Enrollañ ar bajenn',
 	'create-blog-preview' => 'Rakwelet',
 	'create-blog-updated' => 'Blogadenn krouet pe hizivaet.',
-	'create-blog-permission-denied' => "Fazi e-ser saveteiñ pajenn ar blogadenn : Aotre nac'het",
+	'create-blog-permission-denied' => 'Fazi e-ser saveteiñ pajenn ar blogadenn : Aotre nac\'het',
 	'create-blog-article-already-exists' => 'Ur vlogadenn dezhi an hevelep anv zo dija. Dibabit un anv disheñvel, mar plij',
 	'create-blog-listing-title' => 'Krouiñ ur bajenn nevez evit rollañ pajennoù ar blog',
 	'create-blog-listing-form-title' => 'Petra eo ur bajenn rollañ blogoù ?',
@@ -720,7 +665,7 @@ Gallout a reer krouiñ pajennadoù rollañ blogoù evit rummadoù evel "Barack O
 	'create-blog-listing-preview' => 'Rakwelet',
 	'create-blog-listing-authors' => 'Tapout blogadennoù savet gant an aozerien-mañ (dispartiet dre skejoù)',
 	'create-blog-listing-blog-post-categories-title' => 'Tapout ar blogadennoù er rummad-mañ',
-	'create-blog-listing-page-categories-title' => "Ouzhpennañ ar bajenn rollañ blogoù-mañ d'ar rummadoù-se",
+	'create-blog-listing-page-categories-title' => 'Ouzhpennañ ar bajenn rollañ blogoù-mañ d\'ar rummadoù-se',
 	'create-blog-listing-matches' => 'Klotadurioù',
 	'create-blog-listing-matches-calculate' => 'Jediñ',
 	'create-blog-listing-matches-recalculate' => 'Adjediñ',
@@ -731,21 +676,21 @@ Gallout a reer krouiñ pajennadoù rollañ blogoù evit rummadoù evel "Barack O
 	'create-blog-listing-sortby-comments' => 'Niver a evezhiadennoù',
 	'create-blog-listing-output-as-box' => 'Genel kod da eilañ ha pegañ',
 	'create-blog-listing-output-as-page' => 'Krouiñ ar rollañ evel ur bajenn nevez',
-	'create-blog-listing-tag-format-not-recognized-on-page' => "N'eo ket anavezet ar valizenn rollañ blogoù war ar bajenn-mañ",
+	'create-blog-listing-tag-format-not-recognized-on-page' => 'N\'eo ket anavezet ar valizenn rollañ blogoù war ar bajenn-mañ',
 	'blog-header' => 'Pennadoù ar blog eus ar rummad "$1"',
 	'blog-subheader' => 'Emañ {{PLURAL:$1|ar vlogadenn-mañ|ar $1 blogadenn-mañ}} er rummad-mañ.',
 	'blog-subheader-all' => 'Er rummad-mañ ez eus {{PLURAL:$1|ur vlogadenn|$1 blogadenn}} diwar un hollad a $2.',
-	'blog-invalidparam' => "N'eo ket anavezet an arventenn '$1' ha dianav eo. Implijit an arventenn da-heul : <code>$2</code>.",
-	'blog-emptyparam' => "Ne c'hell ket bezañ goullo anv an arventenn",
+	'blog-invalidparam' => 'N\'eo ket anavezet an arventenn \'$1\' ha dianav eo. Implijit an arventenn da-heul : <code>$2</code>.',
+	'blog-emptyparam' => 'Ne c\'hell ket bezañ goullo anv an arventenn',
 	'blog-defaulttitle' => 'Blogoù',
-	'blog-continuereading' => "Kenderc'hel da lenn &raquo;",
-	'blog-readfullpost' => "Lenn hiroc'h",
-	'blog-olderposts' => "Pennadoù koshoc'h",
-	'blog-newerposts' => "Pennadoù nevesoc'h",
+	'blog-continuereading' => 'Kenderc\'hel da lenn &raquo;',
+	'blog-readfullpost' => 'Lenn hiroc\'h',
+	'blog-olderposts' => 'Pennadoù koshoc\'h',
+	'blog-newerposts' => 'Pennadoù nevesoc\'h',
 	'blog-nbrcomments' => '{{PLURAL:$1|Un evezhiadenn|$1 evezhiadenn}}',
-	'blog-nopostfound' => "N'eus bet kavet pennad ebet.",
+	'blog-nopostfound' => 'N\'eus bet kavet pennad ebet.',
 	'blog-writeone' => 'Skrivañ unan !',
-	'blog-empty-user-blog' => "N'en deus ket an implijer-mañ embannet an disterañ pennad !",
+	'blog-empty-user-blog' => 'N\'en deus ket an implijer-mañ embannet an disterañ pennad !',
 	'blog-added' => 'ouzhpennet',
 	'blog-edited' => 'kemmet',
 	'blog-page' => 'Blog',
@@ -757,7 +702,7 @@ Gallout a reer krouiñ pajennadoù rollañ blogoù evit rummadoù evel "Barack O
 	'blog-comments-save' => 'Enrollañ an evezhiadenn war ar blog',
 	'blog-comments-label' => 'Aotren degas evezhiadennoù',
 	'blog-voting-label' => 'Votiñ',
-	'blog-comments-info' => "Aotreet eo ar c'hod wiki er c'hemennadennoù hag en evezhiadennoù.",
+	'blog-comments-info' => 'Aotreet eo ar c\'hod wiki er c\'hemennadennoù hag en evezhiadennoù.',
 	'blog-comments-login' => '<a href="$1" rel="nofollow">Kevreit</a> evit ober un evezhiadenn',
 	'blog-comments-dsc' => 'Kemennadennoù nevez da gentañ',
 	'blog-comments-asc' => 'Kemennadennoù nevez er fin',
@@ -767,8 +712,8 @@ Gallout a reer krouiñ pajennadoù rollañ blogoù evit rummadoù evel "Barack O
 	'blog-comment-unhide' => 'diskouez',
 	'blog-comment-history' => 'istor',
 	'blog-comment-edit' => 'kemmañ',
-	'blog-comment-error' => "N'eus ket bet gellet enrollañ an evezhiadenn",
-	'blog-comment-cannot-add' => "Ne c'helloc'h ket ouzhpennañ un evezhiadenn d'ar blog",
+	'blog-comment-error' => 'N\'eus ket bet gellet enrollañ an evezhiadenn',
+	'blog-comment-cannot-add' => 'Ne c\'helloc\'h ket ouzhpennañ un evezhiadenn d\'ar blog',
 	'blog-avatar-preferences-title' => 'Avatar',
 	'blog-page-rate' => 'Priziañ ar pennad-mañ :',
 	'blog-create-post-label' => 'Krouiñ ur pennad evit ar blog',
@@ -777,7 +722,7 @@ Gallout a reer krouiñ pajennadoù rollañ blogoù evit rummadoù evel "Barack O
 	'blog-create-listing-label' => 'Krouiñ ur roll eus ar blogoù',
 	'blog-refresh-label' => 'Freskaat',
 	'blog-widgets-label' => 'Taolenn-stur ar widgetoù',
-	'blog-listing-zero-other' => "N'en deus ket an implijer-mañ embannet an disterañ pennad !",
+	'blog-listing-zero-other' => 'N\'en deus ket an implijer-mañ embannet an disterañ pennad !',
 	'blog-listing-created' => 'Pajenn rollañ ar blogoù krouet',
 	'blog-userblog' => 'Blog $1',
 	'blog-fromsitename' => 'Diwar $1',
@@ -786,7 +731,7 @@ Gallout a reer krouiñ pajennadoù rollañ blogoù evit rummadoù evel "Barack O
 	'right-blog-comments-toggle' => 'Gwintañ an evezhiadennoù war pennadoù ar blog',
 	'right-blog-comments-delete' => 'Dilemel an evezhiadennoù war pennadoù ar blog',
 	'right-blog-articles-edit' => 'Kemmañ pennadoù ar blog',
-	'right-blog-articles-move' => "Dilerc'hiañ pennadoù ar blog",
+	'right-blog-articles-move' => 'Dilerc\'hiañ pennadoù ar blog',
 	'blogs-recent-url-text' => 'Blogadennoù nevez',
 	'blog-desc' => 'Pennadoù ar blog',
 	'blog-movepage-badtitle' => 'Titl blogadenn direizh',
@@ -797,40 +742,31 @@ Gallout a reer krouiñ pajennadoù rollañ blogoù evit rummadoù evel "Barack O
 	'user-blog-url-link' => 'Blog implijer : $1',
 ];
 
-/** Iriga Bicolano (Iriga Bicolano)
- * @author Filipinayzd
- */
 $messages['bto'] = [
 	'blog-comment-history' => 'kasaysayan',
 	'blog-comment-edit' => 'balyowan',
 ];
 
-/** Catalan (català)
- * @author BroOk
- * @author Paynekiller92
- * @author SMP
- * @author Unapersona
- */
 $messages['ca'] = [
-	'blog-file-page' => "<a href='$1'>$2</a> publicació en el blog de <a href='$3'>$4</a>",
+	'blog-file-page' => '<a href=\'$1\'>$2</a> publicació en el blog de <a href=\'$3\'>$4</a>',
 	'createblogpage' => 'Crear un blog',
 	'createbloglistingpage' => 'Crear una llista de blogs',
 	'create-blog-spam' => 'Sembla spam',
-	'create-blog-cant-edit' => "No s'ha pogut realitzar l'edició",
+	'create-blog-cant-edit' => 'No s\'ha pogut realitzar l\'edició',
 	'create-blog-post-category' => 'Entrades de blog',
 	'create-blog-post-category-body' => 'Aquesta llista de blogs es genera automàticament',
-	'create-blog-post-category-log' => "Categoria d'articles per a entrades de blog",
+	'create-blog-post-category-log' => 'Categoria d\'articles per a entrades de blog',
 	'create-blog-post-recent-listing' => 'Entrades recents',
 	'create-blog-post-recent-listing-title' => 'Entrades recents',
 	'create-blog-post-recent-listing-log' => 'Creat article per a les entrades de blog recents',
 	'create-blog-post-title' => 'Crea una entrada nova',
-	'create-blog-post-title-edit' => "Editar l'entrada de blog",
+	'create-blog-post-title-edit' => 'Editar l\'entrada de blog',
 	'create-blog-form-title' => 'Què és una entrada de blog?',
-	'create-blog-form-post-text' => "Contingut de l'entrada",
+	'create-blog-form-post-text' => 'Contingut de l\'entrada',
 	'create-blog-form-info' => 'Les entrades de blog són una bona manera per a compartir notícies, opinions i elements creatius amb la comunitat.',
-	'create-blog-form-post-title' => "Títol de l'entrada",
+	'create-blog-form-post-title' => 'Títol de l\'entrada',
 	'create-blog-empty-title-error' => 'Títol requerit',
-	'create-blog-empty-post-error' => "El contingut de l'entrada està buit",
+	'create-blog-empty-post-error' => 'El contingut de l\'entrada està buit',
 	'create-blog-empty-article-log' => 'Article creat per a la llista de blogs',
 	'create-blog-invalid-title-error' => 'Títol invàlid',
 	'create-listing-confirm-info' => 'Copia i enganxa el següent codi:',
@@ -850,12 +786,12 @@ $messages['ca'] = [
 	'create-blog-listing-page-title' => 'Títol de la llista de blogs',
 	'create-blog-listing-preview' => 'Previsualització',
 	'create-blog-listing-authors' => 'Obtenir les entrades creades per aquests autors (separats per comes)',
-	'create-blog-listing-blog-post-categories-title' => "Obtenir les entrades d'aquestes categories",
+	'create-blog-listing-blog-post-categories-title' => 'Obtenir les entrades d\'aquestes categories',
 	'create-blog-listing-page-categories-title' => 'Afegir aquesta llista de blogs a aquestes categories',
 	'create-blog-listing-matches' => 'Marcats',
 	'create-blog-listing-matches-calculate' => 'Calcular',
 	'create-blog-listing-matches-recalculate' => 'Recomptar',
-	'create-blog-listing-matches-info' => "marcant {{PLURAL:$1|l'entrada trobada|les entrades trobades}}",
+	'create-blog-listing-matches-info' => 'marcant {{PLURAL:$1|l\'entrada trobada|les entrades trobades}}',
 	'create-blog-listing-sortby' => 'Classificar per',
 	'create-blog-listing-sortby-date' => 'Més recents',
 	'create-blog-listing-sortby-author' => 'Autor',
@@ -865,8 +801,8 @@ $messages['ca'] = [
 	'create-blog-listing-tag-format-not-recognized-on-page' => 'Etiqueta de llista de blogs no reconeguda',
 	'blog-header' => 'Entrades de blog a la categoria "$1"',
 	'blog-subheader' => '{{PLURAL:$1|Hi ha una entrada|Els següents $1 articles de blog estan}} en aquesta categoria.',
-	'blog-subheader-all' => "{{PLURAL:$1|Hi ha un article del blog en aquesta categoria.|El següents $1 articles del blog són en aquesta categoria, d'un total de $2.}}",
-	'blog-invalidparam' => "Paràmetre desconegut '$1' ignorat. Si us plau, fes servir un dels paràmetres disponibles: <code>$2</code>.",
+	'blog-subheader-all' => '{{PLURAL:$1|Hi ha un article del blog en aquesta categoria.|El següents $1 articles del blog són en aquesta categoria, d\'un total de $2.}}',
+	'blog-invalidparam' => 'Paràmetre desconegut \'$1\' ignorat. Si us plau, fes servir un dels paràmetres disponibles: <code>$2</code>.',
 	'blog-emptyparam' => 'El nom del paràmetre no pot estar buit',
 	'blog-defaulttitle' => 'Blogs',
 	'blog-continuereading' => 'Continua llegint &raquo;',
@@ -898,7 +834,7 @@ $messages['ca'] = [
 	'blog-comment-unhide' => 'mostrar',
 	'blog-comment-history' => 'historial',
 	'blog-comment-edit' => 'editar',
-	'blog-comment-error' => "El comentari no s'ha pogut desar",
+	'blog-comment-error' => 'El comentari no s\'ha pogut desar',
 	'blog-comment-cannot-add' => 'No pots afegir un comentari al blog.',
 	'blug-cut-sign' => '...',
 	'blog-avatar-preferences-title' => 'Avatar',
@@ -921,7 +857,7 @@ $messages['ca'] = [
 	'right-blog-articles-move' => 'Moure articles del blog',
 	'blogs-recent-url-text' => 'Entrades de blog recents',
 	'blog-desc' => 'Articles del blog',
-	'blog-movepage-badtitle' => "Títol de l'entrada de blog invàlid",
+	'blog-movepage-badtitle' => 'Títol de l\'entrada de blog invàlid',
 	'blog-comment-sending' => 'Enviant...',
 	'blog-by' => '$1 per $2',
 	'blogs-searchprofile' => 'Blogs',
@@ -929,9 +865,6 @@ $messages['ca'] = [
 	'user-blog-url-link' => 'Usuari blog:$1',
 ];
 
-/** Chechen (нохчийн)
- * @author Умар
- */
 $messages['ce'] = [
 	'create-blog-save' => 'Ӏалашйе агӀо',
 	'create-blog-preview' => 'Хьалха хьажар',
@@ -941,19 +874,10 @@ $messages['ce'] = [
 	'blog-refresh-label' => 'Карлаяккха',
 ];
 
-/** Central Kurdish (کوردیی ناوەندی)
- */
 $messages['ckb'] = [
 	'blog-comment-delete' => 'سڕینەوە',
 ];
 
-/** Czech (čeština)
- * @author Aktron
- * @author Chmee2
- * @author H4nek
- * @author Jezevec
- * @author Vks
- */
 $messages['cs'] = [
 	'createblogpage' => 'Vytvořit blog',
 	'createbloglistingpage' => 'Vytvořit výpis blogu',
@@ -1046,24 +970,12 @@ $messages['cs'] = [
 	'user-blog-url-link' => 'Blog uživatele: $1',
 ];
 
-/** Welsh (Cymraeg)
- * @author Robin Owain
- */
 $messages['cy'] = [
 	'createblogpage' => 'Crewch flog',
 ];
 
-/** German (Deutsch)
- * @author Avatar
- * @author Das Schäfchen
- * @author Kghbln
- * @author LWChris
- * @author Metalhead64
- * @author PtM
- * @author The Evil IP address
- */
 $messages['de'] = [
-	'blog-file-page' => "Beitrag von <a href='$1'>$2</a> im Blog von <a href='$3'>$4</a>",
+	'blog-file-page' => 'Beitrag von <a href=\'$1\'>$2</a> im Blog von <a href=\'$3\'>$4</a>',
 	'createblogpage' => 'Blog anlegen',
 	'createbloglistingpage' => 'Erstelle Blog-Aggregationsseite',
 	'create-blog-spam' => 'Sieht aus wie Spam',
@@ -1114,21 +1026,32 @@ $messages['de'] = [
 	'create-blog-listing-output-as-box' => 'Code zum Einfügen generieren',
 	'create-blog-listing-output-as-page' => 'Neue Blog-Aggregationsseite erstellen',
 	'create-blog-listing-tag-format-not-recognized-on-page' => 'Blog-Listen Tag auf der Seite nicht gefunden',
-	'blog-header' => 'Blogbeiträge in der Kategorie „$1“',
-	'blog-subheader' => '{{PLURAL:$1|Es gibt einen Blogbeitrag|Die folgenden $1 Blogbeiträge sind}} in dieser Kategorie.',
-	'blog-subheader-all' => '{{PLURAL:$1|Es gibt einen Blogbeitrag|Die folgenden $1 Blogbeiträge von insgesamt $2 sind}} in dieser Kategorie.',
-	'blog-invalidparam' => 'Unbekannter Parameter „$1“ wird ignoriert. Bitte benutze einen der folgenden Parameter: <code>$2</code>.',
-	'blog-emptyparam' => 'Parameter-Name kann nicht leer sein',
+	'blog-header' => 'Blog-Beiträge in der Kategorie "$1"',
+	'blog-subheader' => 'Die folgenden $1 Blog-Beiträge sind in dieser Kategorie.',
+	'blog-subheader-all' => 'Die folgenden $1 Blog-Beiträge sind in dieser Kategorie (von insgesamt $2).',
+	'blog-invalidparam' => 'Unbekannter Parameter \'$1\' wird ignoriert. Bitte benutze einen der folgenden Parameter: <code>$2</code>.',
+	'blog-emptyparam' => 'Parameter-Name kann nicht leer sein.',
 	'blog-defaulttitle' => 'Blogs',
 	'blog-continuereading' => 'Weiterlesen &raquo;',
-	'blog-readfullpost' => 'Mehr lesen',
+	'blog-readfullpost' => 'Ganzen Beitrag lesen',
 	'blog-olderposts' => 'Ältere Beiträge',
 	'blog-newerposts' => 'Neuere Beiträge',
-	'blog-nbrcomments' => '{{PLURAL:$1|Ein Kommentar|$1 Kommentare}}',
-	'blog-nopostfound' => 'Keine Beiträge gefunden.',
-	'blog-writeone' => 'Schreibe einen!',
-	'blog-empty-user-blog' => 'Dieser Benutzer hat noch keine Blogbeiträge verfasst!',
-	'blog-added' => 'hinzugefügt',
+	'blog-nbrcomments' => '$1 Kommentare',
+	'blog-nopostfound' => 'Keine Beiträge gefunden',
+	'blog-writeone' => 'Beitrag verfassen!',
+	'blog-empty-user-blog' => '<br/>
+<big>\'\'\'Keine aktuellen Beiträge. [[Special:CreateBlogPage|Schreibe einen!]]\'\'\'</big>
+
+
+<big>\'\'\'Was sind Wikia Blogs?\'\'\'</big>
+
+Wikia Blogs ermöglichen es dir in deinem Wiki deinen Blog-Beitrag zu den [[Blog:Letzte Beiträge|Blogs der Wiki-Gemeinschaft]] hinzuzufügen.
+
+Blogs werden von Wiki-Gemeinschaften für Fanfictions, News und Ankündigungen, Fragen oder Anforderungen an die Community genutzt. Schau dir die folgenden Beispielblogs an! 
+*<span class="plainlinks">[http://bit.ly/animanga-newsblog Newsblog des Animanga-Wikis]</span>
+*[http://de.bakugan.wikia.com/wiki/Blog:Bakugan-Newsblog Bakupedia News-Blog]
+*[http://de.gta.wikia.com/wiki/Blog:GTA_Wiki_News GTA Wiki News]',
+	'blog-added' => 'geändert',
 	'blog-edited' => 'bearbeitet',
 	'blog-page' => 'Blog',
 	'blog-zero-comments' => 'Noch keine Kommentare!',
@@ -1136,53 +1059,50 @@ $messages['de'] = [
 	'blog-comments' => 'Kommentare',
 	'blog-rc-comments' => 'Blog-Kommentare',
 	'blog-comments-new' => 'Neuer Blog-Kommentar',
-	'blog-comments-save' => 'Kommentar im Blog speichern',
+	'blog-comments-save' => 'Speichere Blogkommentar',
 	'blog-comments-label' => 'Kommentare',
 	'blog-voting-label' => 'Bewertung',
-	'blog-comments-info' => 'Du kannst bei der Eingabe Wiki-Syntax benutzen',
-	'blog-comments-login' => 'Zum Kommentieren <a href="$1" rel="nofollow">anmelden</a>',
-	'blog-comments-dsc' => 'Neueste zuerst',
-	'blog-comments-asc' => 'Neueste zuletzt',
+	'blog-comments-info' => 'Du kannst bei der Eingabe Wiki-Syntax benutzen.',
+	'blog-comments-login' => 'Zum Kommentieren <a href="$1">anmelden</a>.',
+	'blog-comments-dsc' => 'Neue Beiträge oben',
+	'blog-comments-asc' => 'Neue Beiträge unten',
 	'blog-comments-anonymous' => 'Unangemeldeter Benutzer',
 	'blog-comment-delete' => 'löschen',
 	'blog-comment-hide' => 'verbergen',
 	'blog-comment-unhide' => 'wiederherstellen',
 	'blog-comment-history' => 'Versionen',
-	'blog-comment-edit' => 'Bearbeiten',
-	'blog-comment-error' => 'Dein Kommentar konnte nicht gespeichert werden',
+	'blog-comment-edit' => 'bearbeiten',
+	'blog-comment-error' => 'Dein Kommentar konnte nicht gespeichert werden.',
 	'blog-comment-cannot-add' => 'Du kannst keine Kommentare zum Blog hinzufügen.',
 	'blog-avatar-preferences-title' => 'Avatar',
-	'blog-page-rate' => 'Bewerte diesen Artikel:',
-	'blog-create-post-label' => 'Blogbeitrag erstellen',
-	'blog-create-label' => 'Blogbeitrag erstellen',
-	'blog-create-next-label' => 'Neuen Blogbeitrag erstellen',
+	'blog-page-rate' => 'Bewerte diesen Beitrag',
+	'blog-create-post-label' => 'Neuer Blog-Beitrag',
+	'blog-create-label' => 'Blog-Beitrag erstellen',
+	'blog-create-next-label' => 'Neuen Blog-Beitrag erstellen',
 	'blog-create-listing-label' => 'Blog-Aggregationsseite erstellen',
 	'blog-refresh-label' => 'Aktualisieren',
 	'blog-widgets-label' => 'Widget-Verwaltung',
-	'blog-listing-zero-other' => 'Dieser Benutzer hat noch keine Blogbeiträge verfasst!',
+	'blog-listing-zero-other' => 'Dieser Benutzer hat noch keine Blog-Beiträge verfasst!',
 	'blog-listing-created' => 'Blog-Aggregationsseite erstellt',
 	'blog-userblog' => 'Blog von $1',
 	'blog-fromsitename' => 'aus $1',
 	'blogs-reportproblem' => 'Problem melden',
-	'blogs-comment-hidden' => 'Kommentar ausgeblendet.',
+	'blogs-comment-hidden' => 'Ausgeblendeter Kommentar',
 	'right-blog-comments-toggle' => 'Kommentare zu Blogbeiträgen verstecken',
 	'right-blog-comments-delete' => 'Kommentare zu Blogbeiträgen löschen',
 	'right-blog-articles-edit' => 'Blogbeiträge bearbeiten',
 	'right-blog-articles-move' => 'Blogbeiträge verschieben',
-	'blogs-recent-url-text' => 'Neueste Blogbeiträge',
+	'blogs-recent-url-text' => 'Letzte Blog-Beiträge',
 	'blog-desc' => 'Blogeinträge',
 	'blog-movepage-badtitle' => 'Ungültiger Blogbeitrags-Titel.',
 	'blog-comment-sending' => 'Sende...',
 	'blog-by' => '$1 von $2',
 	'blogs-searchprofile' => 'Blogs',
-	'blogs-searchprofile-tooltip' => 'In Blogbeiträgen und Aggregationsseiten suchen',
+	'blogs-searchprofile-tooltip' => 'Nur nach Blogs suchen',
 	'user-blog-url-link' => 'Benutzer Blog:$1',
+	'blogs-recent-url' => 'Blog:Letzte_Beiträge',
 ];
 
-/** German (formal address) (Deutsch (Sie-Form)‎)
- * @author LWChris
- * @author The Evil IP address
- */
 $messages['de-formal'] = [
 	'create-blog-empty-post-error' => 'Ihr Eintrag enthält keinen Text',
 	'create-blog-no-login' => 'Sie sind nicht angemeldet',
@@ -1197,12 +1117,6 @@ $messages['de-formal'] = [
 	'blog-page-rate' => 'Bewerten Sie diesen Artikel:',
 ];
 
-/** Zazaki (Zazaki)
- * @author Erdemaslancan
- * @author Gorizon
- * @author Marmase
- * @author Mirzali
- */
 $messages['diq'] = [
 	'createblogpage' => 'Blog vırazê',
 	'createbloglistingpage' => 'Lista blogi vıraziyê',
@@ -1246,7 +1160,7 @@ $messages['diq'] = [
 	'blog-avatar-preferences-title' => 'Avatar',
 	'blog-refresh-label' => 'Newe ke',
 	'blog-listing-created' => 'Listeyê blog de pela vıraziya',
-	'blog-userblog' => "Blogê $1'i",
+	'blog-userblog' => 'Blogê $1\'i',
 	'blog-fromsitename' => '$1 ra',
 	'blogs-comment-hidden' => 'Vatışi bınımne',
 	'blog-comment-sending' => 'Rışêno...',
@@ -1254,19 +1168,12 @@ $messages['diq'] = [
 	'blogs-searchprofile' => 'Blogi',
 ];
 
-/** Ewe (eʋegbe)
- */
 $messages['ee'] = [
 	'blog-comment-delete' => 'tutui',
 ];
 
-/** Greek (Ελληνικά)
- * @author Dada
- * @author Evropi
- * @author Glavkos
- */
 $messages['el'] = [
-	'blog-file-page' => "<a href='$1'>$2</a> αναρτήστε στο <a href='$3'>$4's</a> blog",
+	'blog-file-page' => '<a href=\'$1\'>$2</a> αναρτήστε στο <a href=\'$3\'>$4\'s</a> blog',
 	'createblogpage' => 'Δημιουργία ιστολογίου',
 	'createbloglistingpage' => 'Δημιουργία blog λίστας',
 	'create-blog-spam' => 'Φαίνεται σαν spam',
@@ -1293,7 +1200,7 @@ $messages['el'] = [
 	'create-blog-preview' => 'Προεπισκόπηση',
 	'create-blog-updated' => 'Η καταχώρηση blog δημιουργήθηκε ή ενημερώθηκε.',
 	'create-blog-listing-preview' => 'Προεπισκόπηση',
-	'create-blog-listing-blog-post-categories-title' => "Δείτε αναρτήσεις blog απ'αυτές τις κατηγορίες",
+	'create-blog-listing-blog-post-categories-title' => 'Δείτε αναρτήσεις blog απ\'αυτές τις κατηγορίες',
 	'create-blog-listing-matches' => 'Ταιριάζει με',
 	'create-blog-listing-matches-calculate' => 'Υπολογίστε',
 	'create-blog-listing-matches-recalculate' => 'Επανυπολογίστε',
@@ -1345,7 +1252,7 @@ $messages['el'] = [
 	'blog-refresh-label' => 'Ανανέωση',
 	'blog-widgets-label' => 'Πίνακας widget',
 	'blog-listing-zero-other' => 'Αυτός ο χρήστης δεν έχει γράψει καμία ανάρτηση ακόμα!',
-	'blog-userblog' => "$1's blog",
+	'blog-userblog' => '$1\'s blog',
 	'blog-fromsitename' => 'Από $1',
 	'blogs-reportproblem' => 'Αναφορά του προβλήματος',
 	'blogs-comment-hidden' => 'Κρυμμένο σχόλιο.',
@@ -1361,34 +1268,16 @@ $messages['el'] = [
 	'user-blog-url-link' => 'Χρήστης blog:$1',
 ];
 
-/** British English (British English)
- * @author Shirayuki
- */
 $messages['en-gb'] = [
 	'create-blog-listing-tag-format-not-recognized-on-page' => 'Blog listing tag not recognised on page',
 ];
 
-/** Esperanto (Esperanto)
- * @author Objectivesea
- */
 $messages['eo'] = [
 	'blog-comment-history' => 'historio',
 ];
 
-/** Spanish (español)
- * @author Armando-Martin
- * @author Benfutbol10
- * @author Crazymadlover
- * @author Dalton2
- * @author Danke7
- * @author Fitoschido
- * @author Locos epraix
- * @author Macofe
- * @author Peter17
- * @author VegaDark
- */
 $messages['es'] = [
-	'blog-file-page' => "<a href='$1'>$2</a> publicación en el blog de <a href='$3'>$4</a>",
+	'blog-file-page' => '<a href=\'$1\'>$2</a> publicación en el blog de <a href=\'$3\'>$4</a>',
 	'createblogpage' => 'Crear blog',
 	'createbloglistingpage' => 'Crear lista de blogs',
 	'create-blog-spam' => 'Parece spam',
@@ -1441,19 +1330,20 @@ Crea páginas de listas de blogs para categorías como "Obama", "Humor", o varia
 	'create-blog-listing-output-as-page' => 'Crear lista en una página nueva',
 	'create-blog-listing-tag-format-not-recognized-on-page' => 'Etiqueta de lista de blogs no reconocida',
 	'blog-header' => 'Entradas de blogs en la categoría "$1"',
-	'blog-subheader' => '{{PLURAL:$1|Hay una entrada de blog|Los siguientes $1 artículos del blog están}} en esta categoría.',
-	'blog-subheader-all' => '{{PLURAL:$1|Hay un artículo del blog en esta categoría|Los siguientes $1 artículos del blog están en esta categoría, de un total de $2.}}',
-	'blog-invalidparam' => "Parámetro desconocido '$1' ignorado. Por favor, usa uno de los parámetros disponibles: $2.",
+	'blog-subheader' => 'Las siguientes $1 entradas de blog están en esta categoría.',
+	'blog-subheader-all' => 'Las siguientes $1 entradas de blog están en esta categoría, de $2 en total.',
+	'blog-invalidparam' => 'Parámetro desconocido \'$1\' ignorado. Por favor, usa uno de los parámetros disponibles: $2.',
 	'blog-emptyparam' => 'El nombre del parámetro no puede estar vacío',
 	'blog-defaulttitle' => 'Blogs',
 	'blog-continuereading' => 'Continúa leyendo »',
-	'blog-readfullpost' => 'Leer más',
+	'blog-readfullpost' => 'Leer entrada completa',
 	'blog-olderposts' => 'Antiguas entradas',
 	'blog-newerposts' => 'Nuevas entradas',
-	'blog-nbrcomments' => '{{PLURAL:$1|Un comentario|$1 comentarios}}',
+	'blog-nbrcomments' => '{{PLURAL:$1|1 Comentario|$1 Comentarios}}',
 	'blog-nopostfound' => 'No se encontraron entradas.',
 	'blog-writeone' => '¡Escribe uno!',
-	'blog-empty-user-blog' => '¡Este usuario aún no ha escrito ninguna entrada en su blog!',
+	'blog-empty-user-blog' => '<h1>¿Qué es una entrada de blog?</h1>
+Los blogs (o bitácoras) son usados por la comunidad dentro de un wiki para crear \'\'[[wikipedia:es:Fanfiction|fan fiction]]\'\' o trabajos originales, noticias o anuncios, preguntas o recomendaciones para la comunidad, o revisiones u opiniones editoriales. Revisa por ejemplo el [[w:c:comunidad:Blog:Noticias_de_Wikia|blog de noticias de Wikia en español]] para ver cómo funcionan los blogs y estar al tanto de las últimas noticias de Wikia.',
 	'blog-added' => 'agregado',
 	'blog-edited' => 'editado',
 	'blog-page' => 'Blog',
@@ -1466,7 +1356,7 @@ Crea páginas de listas de blogs para categorías como "Obama", "Humor", o varia
 	'blog-comments-label' => 'Comentarios',
 	'blog-voting-label' => 'Votación',
 	'blog-comments-info' => 'Usa esta caja para dejar un comentario, puedes darle estilo de wikitexto',
-	'blog-comments-login' => '<a href="$1" rel="nofollow">Identifícate</a> para dejar un comentario',
+	'blog-comments-login' => '<a href="$1">Identifícate</a> para dejar un comentario',
 	'blog-comments-dsc' => 'Los más nuevos al principio',
 	'blog-comments-asc' => 'Los más nuevos al final',
 	'blog-comments-anonymous' => 'Usuario anónimo',
@@ -1487,7 +1377,7 @@ Crea páginas de listas de blogs para categorías como "Obama", "Humor", o varia
 	'blog-refresh-label' => 'Actualizar',
 	'blog-widgets-label' => 'Tablero de widgets',
 	'blog-listing-zero-other' => '¡Este usuario aún no ha escrito ninguna entrada en su blog!',
-	'blog-listing-created' => 'Página de listado de blogs creado',
+	'blog-listing-created' => 'Creada o modificada página del listado de blog',
 	'blog-userblog' => 'Blog de $1',
 	'blog-fromsitename' => 'De $1',
 	'blogs-reportproblem' => 'Informar sobre un problema',
@@ -1504,11 +1394,9 @@ Crea páginas de listas de blogs para categorías como "Obama", "Humor", o varia
 	'blogs-searchprofile' => 'Blogs',
 	'blogs-searchprofile-tooltip' => 'Buscar en artículos de blog y listas de blog',
 	'user-blog-url-link' => 'Usuario blog:$1',
+	'blogs-recent-url' => 'Blog:Entradas_recientes',
 ];
 
-/** Estonian (eesti)
- * @author KalmerE.
- */
 $messages['et'] = [
 	'create-blog-invalid-title-error' => 'Vigane pealkiri',
 	'create-blog-preview' => 'Näita eelvaadet',
@@ -1550,10 +1438,6 @@ $messages['et'] = [
 	'blog-create-listing-label' => 'Loo blogi nimekiri',
 ];
 
-/** Basque (euskara)
- * @author An13sa
- * @author Subi
- */
 $messages['eu'] = [
 	'createblogpage' => 'Bloga sortu',
 	'create-blog-categories-submit' => 'Bidali',
@@ -1576,18 +1460,8 @@ $messages['eu'] = [
 	'blogs-searchprofile' => 'Blogak',
 ];
 
-/** Persian (فارسی)
- * @author Alirezaaa
- * @author BlueDevil
- * @author Ebraminio
- * @author Huji
- * @author Movyn
- * @author Reza1615
- * @author Taranet
- * @author پاناروما
- */
 $messages['fa'] = [
-	'blog-file-page' => "<a href='$1'>$2</a> ارسال در <a href='$3'>$4's</a> وبلاگ",
+	'blog-file-page' => '<a href=\'$1\'>$2</a> ارسال در <a href=\'$3\'>$4\'s</a> وبلاگ',
 	'createblogpage' => 'ایجاد وبلاگ',
 	'createbloglistingpage' => 'ایجاد فهرست وبلاگ',
 	'create-blog-spam' => 'اسپم به نظر می‌رسد',
@@ -1626,21 +1500,21 @@ $messages['fa'] = [
 	'blog-header' => 'پست‌های وبلاگ واقع در ردۀ "$1"',
 	'blog-subheader' => '$1 از پست‌های ذیل وبلاگ در این رده قرار دارند.',
 	'blog-subheader-all' => 'از میان $2 پست‌های وبلاگ، $1 آن‌ها در این رده قرار دارند.',
-	'blog-invalidparam' => "پارامتر نامعلوم '$1' نادیده گرفته‌شد. لطفاً از یکی از پارامترهای در دسترس استفاده کنید: <code>$2</code>",
-	'blog-emptyparam' => 'نام پارامتر نمی‌تواند خالی باشد',
+	'blog-invalidparam' => 'پارامتر نامعلوم \'$1\' نادیده گرفته‌شد. لطفا از یکی از پارامترهای در دسترس استفاده کنید: <code>$2</code>',
+	'blog-emptyparam' => 'نام پارامتر نمی تواند خالی باشد',
 	'blog-defaulttitle' => 'وبلاگ‌ها',
 	'blog-continuereading' => 'ادامه مطالب &raquo;',
-	'blog-readfullpost' => 'ادامه مطلب',
+	'blog-readfullpost' => 'نمایش کامل پست',
 	'blog-olderposts' => 'پست‌های قدیمی‌تر',
 	'blog-newerposts' => 'پست‌های جدیدتر',
 	'blog-nbrcomments' => '$1 نظر',
 	'blog-nopostfound' => 'هیچ پستی یافت نشد.',
-	'blog-writeone' => 'یک متن تازه بنویسید!',
+	'blog-writeone' => 'یک متن جدید بنویسید!',
 	'blog-empty-user-blog' => 'این کاربر هنوز پستی در وبلاگ خود ننوشته‌است!',
 	'blog-added' => 'اضافه شده',
 	'blog-edited' => 'ویرایش قبلی',
 	'blog-page' => 'وبلاگ',
-	'blog-zero-comments' => 'هیچ نظری نوشته نشده‌است!',
+	'blog-zero-comments' => 'هیچ نظری نوشته نشده است!',
 	'blog-comment-post' => 'ارسال نظر',
 	'blog-comments' => 'نظرات',
 	'blog-rc-comments' => 'نظرات وبلاگ',
@@ -1658,10 +1532,10 @@ $messages['fa'] = [
 	'blog-comment-edit' => 'ویرایش',
 	'blog-comment-error' => 'امکان ذخیره کردن نظر وجود ندارد',
 	'blog-comment-cannot-add' => 'اضافه کردن نظر در وبلاگ امکان‌پذیر نیست',
-	'blog-avatar-preferences-title' => 'چهره',
+	'blog-avatar-preferences-title' => 'آواتار',
 	'blog-page-rate' => 'به این مقاله رأی مثبت دهید:',
 	'blog-create-post-label' => 'ایجاد پست جدید',
-	'blog-create-label' => 'ایجاد پست تازه',
+	'blog-create-label' => 'ایجاد پست جدید',
 	'blog-create-next-label' => 'ایجاد مقاله تازه در وبلاگ',
 	'blog-create-listing-label' => 'ایجاد فهرست وبلاگ',
 	'blog-refresh-label' => 'بازخوانی',
@@ -1681,20 +1555,11 @@ $messages['fa'] = [
 	'blog-by' => '$1 توسط $2',
 	'blogs-searchprofile' => 'وبلاگ‌ها',
 	'blogs-searchprofile-tooltip' => 'جستجو در فهرست‌ها و پست‌های وبلاگ',
+	'blogs-recent-url' => 'وبلاگ:پست‌های_اخیر',
 ];
 
-/** Finnish (suomi)
- * @author Centerlink
- * @author Crt
- * @author Elseweyr
- * @author Ilkea
- * @author Lukkipoika
- * @author Nedergard
- * @author VezonThunder
- * @author Ville96
- */
 $messages['fi'] = [
-	'blog-file-page' => "Artikkeli <a href='$1'>$2</a> käyttäjän <a href='$3'>$4</a> blogilla",
+	'blog-file-page' => 'Artikkeli <a href=\'$1\'>$2</a> käyttäjän <a href=\'$3\'>$4</a> blogilla',
 	'createblogpage' => 'Luo blogi',
 	'createbloglistingpage' => 'Luo blogilistaus',
 	'create-blog-spam' => 'Vaikuttaa roskalta',
@@ -1749,7 +1614,7 @@ Luo blogilistauksia luokkien mukaan, kuten "Barack Obama" tai "Fanifiktiot". Voi
 	'blog-header' => 'Blogiartikkelit, jotka ovat luokassa"$1"',
 	'blog-subheader' => 'Seuraavat $1 blogiartikkelit ovat tässä luokassa.',
 	'blog-subheader-all' => 'Seuraavat $1 ovat tässä luokassa, poissa $2 koko tuloksista.',
-	'blog-invalidparam' => "Tuntematon parametri '$1' ohitetaan. Ole hyvä ja käytä yhtä seuraavaa saatavilla olevaa parametriä: <code>$2</code>.",
+	'blog-invalidparam' => 'Tuntematon parametri \'$1\' ohitetaan. Ole hyvä ja käytä yhtä seuraavaa saatavilla olevaa parametriä: <code>$2</code>.',
 	'blog-emptyparam' => 'Parametrin nimi ei voi olla tyhjä',
 	'blog-defaulttitle' => 'Blogit',
 	'blog-continuereading' => 'Jatka lukemista &raquo;',
@@ -1812,11 +1677,8 @@ Luo blogilistauksia luokkien mukaan, kuten "Barack Obama" tai "Fanifiktiot". Voi
 	'user-blog-url-link' => 'Käyttäjän blogi:$1',
 ];
 
-/** Faroese (føroyskt)
- * @author EileenSanda
- */
 $messages['fo'] = [
-	'blog-file-page' => "<a href='$1'>$2</a> sum postur á <a href='$3'>$4's</a> bloggi",
+	'blog-file-page' => '<a href=\'$1\'>$2</a> sum postur á <a href=\'$3\'>$4\'s</a> bloggi',
 	'createblogpage' => 'Upprætta blogg',
 	'createbloglistingpage' => 'Ger ein blogglista',
 	'create-blog-spam' => 'Sær út sum spamm',
@@ -1892,19 +1754,12 @@ $messages['fo'] = [
 	'user-blog-url-link' => 'Brúkarabloggur:$1',
 ];
 
-/** French (français)
- * @author Gomoko
- * @author IAlex
- * @author Peter17
- * @author Urhixidur
- * @author Wyz
- */
 $messages['fr'] = [
-	'blog-file-page' => "<a href='$1'>$2</a> publié sur le blog de <a href='$3'>$4</a>",
+	'blog-file-page' => '<a href=\'$1\'>$2</a> publié sur le blog de <a href=\'$3\'>$4</a>',
 	'createblogpage' => 'Créer un blog',
 	'createbloglistingpage' => 'Créer une liste de blogs',
 	'create-blog-spam' => 'Ressemble à du spam',
-	'create-blog-cant-edit' => "Impossible d'effectuer la modification",
+	'create-blog-cant-edit' => 'Impossible d\'effectuer la modification',
 	'create-blog-post-category' => 'Billets de blog',
 	'create-blog-post-category-body' => 'Ceci est une liste de billets de blog générée automatiquement',
 	'create-blog-post-category-log' => 'Catégorie créée pour les billets de blog',
@@ -1954,18 +1809,18 @@ Créez des pages de liste de blogs pour des catégories comme, par exemple, « B
 	'create-blog-listing-tag-format-not-recognized-on-page' => 'Balise de liste de blogs non reconnue sur cette page',
 	'blog-header' => 'Billets de blog de la catégorie « $1 »',
 	'blog-subheader' => '{{PLURAL:$1|L’article de blog suivant se trouve|Les $1 articles de blog suivants se trouvent}} dans cette catégorie.',
-	'blog-subheader-all' => '{{PLURAL:$1|L’article de blog suivant se trouve|Les $1 articles de blog suivants, sur un total de $2, se trouvent}} dans cette catégorie.',
-	'blog-invalidparam' => "Le paramètre '$1' est inconnu. Veuillez utiliser l’un des paramètres reconnus suivants : <code>$2</code>.",
+	'blog-subheader-all' => '{{PLURAL:$1|L’article de blog suivant se trouve|Les $1 articles de blog suivants se trouvent}} dans cette catégorie.',
+	'blog-invalidparam' => 'Le paramètre \'$1\' est inconnu. Veuillez utiliser l’un des paramètres reconnus suivants : <code>$2</code>.',
 	'blog-emptyparam' => 'Le nom du paramètre ne peut être vide',
 	'blog-defaulttitle' => 'Blogs',
 	'blog-continuereading' => 'Poursuivre la lecture &raquo;',
 	'blog-readfullpost' => 'Lire la suite',
 	'blog-olderposts' => 'Billets plus anciens',
 	'blog-newerposts' => 'Billets plus récents',
-	'blog-nbrcomments' => '$1 commentaire{{PLURAL:$1||s}}',
+	'blog-nbrcomments' => '{{PLURAL:$1|Un commentaire|$1 commentaires}}',
 	'blog-nopostfound' => 'Aucun billet trouvé.',
 	'blog-writeone' => 'Écrivez-en un !',
-	'blog-empty-user-blog' => 'Cet utilisateur n’a pas encore publié de billets de blog !',
+	'blog-empty-user-blog' => 'Aucun billet récent. [[Special:CreateBlogPage|Écrivez-en un !]]',
 	'blog-added' => 'ajouté',
 	'blog-edited' => 'modifié',
 	'blog-page' => 'Blog',
@@ -2013,14 +1868,12 @@ Créez des pages de liste de blogs pour des catégories comme, par exemple, « B
 	'blog-movepage-badtitle' => 'Titre du billet de blog invalide.',
 	'blog-comment-sending' => 'Envoi en cours...',
 	'blog-by' => '$1 par $2',
-	'blogs-searchprofile' => 'Blogs',
-	'blogs-searchprofile-tooltip' => 'Rechercher dans les articles et les listes de blog',
+	'blogs-searchprofile' => 'Billets',
+	'blogs-searchprofile-tooltip' => 'Rechercher dans les billets de blog et les listes de blog',
 	'user-blog-url-link' => 'Blog utilisateur: $1',
+	'blogs-recent-url' => 'Blog:Billets_récents',
 ];
 
-/** Western Frisian (Frysk)
- * @author Robin0van0der0vliet
- */
 $messages['fy'] = [
 	'create-blog-categories-submit' => 'Ferstjoere',
 	'create-blog-save' => 'Side bewarje',
@@ -2033,11 +1886,8 @@ $messages['fy'] = [
 	'blog-by' => '$1 troch $2',
 ];
 
-/** Galician (galego)
- * @author Toliño
- */
 $messages['gl'] = [
-	'blog-file-page' => "<a href='$1'>$2</a> publicou no blogue de <a href='$3'>$4</a>",
+	'blog-file-page' => '<a href=\'$1\'>$2</a> publicou no blogue de <a href=\'$3\'>$4</a>',
 	'createblogpage' => 'Crear un blogue',
 	'createbloglistingpage' => 'Lista de blogues creados',
 	'create-blog-spam' => 'Semella spam',
@@ -2154,10 +2004,6 @@ Cree páxinas de listas de blogues para categorías como "Barack Obama", "Galici
 	'user-blog-url-link' => 'Blogue de usuario:$1',
 ];
 
-/** Gujarati (ગુજરાતી)
- * @author Ashok modhvadia
- * @author Dsvyas
- */
 $messages['gu'] = [
 	'createblogpage' => 'બ્લૉગ બનાવો',
 	'createbloglistingpage' => 'બ્લૉગ નોંધાવો',
@@ -2185,16 +2031,10 @@ $messages['gu'] = [
 	'blog-edited' => 'બદલ્યું',
 ];
 
-/** Hausa (Hausa)
- */
 $messages['ha'] = [
 	'blog-comment-delete' => 'soke',
 ];
 
-/** Hebrew (עברית)
- * @author LaG roiL
- * @author שומבלע
- */
 $messages['he'] = [
 	'createblogpage' => 'יצירת בלוג',
 	'createbloglistingpage' => 'יצירת רישום של הבלוג',
@@ -2250,7 +2090,7 @@ $messages['he'] = [
 	'blog-header' => 'דפי הבלוג בקטגוריה "$1"',
 	'blog-subheader' => '{{PLURAL:$1|קיים פוסט אחד|$1 הדפים הבאים בבלוג הם}} בקטגוריה זו.',
 	'blog-subheader-all' => '{{PLURAL:$1|קיים דף בלוג אחד בקטגוריה זו|$1 הדפים הבאים בבלוג הם בקטגוריה זו, מתוך $2 סך הכל.}}',
-	'blog-invalidparam' => "הפרמטר הלא ידוע '$1' נדחה. נא להשתמש באחד הפרמטרים הזמינים: <code>$2</code>.",
+	'blog-invalidparam' => 'הפרמטר הלא ידוע \'$1\' נדחה. נא להשתמש באחד הפרמטרים הזמינים: <code>$2</code>.',
 	'blog-emptyparam' => 'שם הפרמטר אינו יכול להיות ריק',
 	'blog-defaulttitle' => 'בלוגים',
 	'blog-continuereading' => 'המשך קריאה &raquo;',
@@ -2312,9 +2152,6 @@ $messages['he'] = [
 	'user-blog-url-link' => 'בלוג:$1',
 ];
 
-/** Hunsrik (Hunsrik)
- * @author Paul Beppler
- */
 $messages['hrx'] = [
 	'createblogpage' => 'Blog oonlehn',
 	'createbloglistingpage' => 'Erstell Blog-Aggregationsseit',
@@ -2363,13 +2200,8 @@ $messages['hrx'] = [
 	'blog-comment-hide' => 'verberriche',
 ];
 
-/** Hungarian (magyar)
- * @author Dani
- * @author Glanthor Reviol
- * @author TK-999
- */
 $messages['hu'] = [
-	'blog-file-page' => "<a href='$1'>$2</a> bejegyzése <a href='$3'>$4</a> blogján",
+	'blog-file-page' => '<a href=\'$1\'>$2</a> bejegyzése <a href=\'$3\'>$4</a> blogján',
 	'createblogpage' => 'Blog létrehozása',
 	'createbloglistingpage' => 'Bloglista létrehozása',
 	'create-blog-spam' => 'Spamnak tűnik',
@@ -2423,7 +2255,7 @@ $messages['hu'] = [
 	'blog-header' => 'Blogbejegyzések az "$1" kategóriában',
 	'blog-subheader' => '{{PLURAL:$1|Egy|$1}} blogbejegyzés található a kategóriában',
 	'blog-subheader-all' => '{{PLURAL:$1|Egy blogbejegyzés van ebben a kategóriában|Az alábbi $1 blogbejegyzés van ebben a kategóriában az összesen $2-ből.}}',
-	'blog-invalidparam' => "Az ismeretlen '$1' paramétert figyelmen kívül lesz hagyva. Kérünk, használd az egyik rendelkezésre álló paramétert: <code>$2</code>",
+	'blog-invalidparam' => 'Az ismeretlen \'$1\' paramétert figyelmen kívül lesz hagyva. Kérünk, használd az egyik rendelkezésre álló paramétert: <code>$2</code>',
 	'blog-emptyparam' => 'A paraméter neve nem lehet üres',
 	'blog-defaulttitle' => 'Blogok',
 	'blog-continuereading' => 'Olvasás folytatása &raquo;',
@@ -2484,9 +2316,6 @@ $messages['hu'] = [
 	'user-blog-url-link' => 'Felhasználói blog:$1',
 ];
 
-/** Interlingua (interlingua)
- * @author McDutchie
- */
 $messages['ia'] = [
 	'createblogpage' => 'Crear blog',
 	'createbloglistingpage' => 'Crear lista de blogs',
@@ -2542,7 +2371,7 @@ Tu pote crear listas de blogs pro categorias como "Barack Obama", "libros", o me
 	'blog-header' => 'Articulos de blog in categoria "$1"',
 	'blog-subheader' => '{{PLURAL:$1|Il ha un articulo de blog|Le sequente $1 articulos de blog es}} in iste categoria.',
 	'blog-subheader-all' => '{{PLURAL:$1|Il ha un articulo de blog in iste categoria|Le sequente $1 articulos de blog es in iste categoria, ex $2 in total}}.',
-	'blog-invalidparam' => "Le parametro incognite '$1' es ignorate. Per favor usa un del parametros disponibile: <code>$2</code>.",
+	'blog-invalidparam' => 'Le parametro incognite \'$1\' es ignorate. Per favor usa un del parametros disponibile: <code>$2</code>.',
 	'blog-emptyparam' => 'Le nomine del parametro non pote esser vacue',
 	'blog-defaulttitle' => 'Blogs',
 	'blog-continuereading' => 'Continuar a leger &raquo;',
@@ -2603,16 +2432,8 @@ Tu pote crear listas de blogs pro categorias como "Barack Obama", "libros", o me
 	'blogs-searchprofile-tooltip' => 'Cercar in articulos e listas de blog',
 ];
 
-/** Indonesian (Bahasa Indonesia)
- * @author Aldnonymous
- * @author C5st4wr6ch
- * @author Farras
- * @author Fate Kage
- * @author Irwangatot
- * @author Riemogerz
- */
 $messages['id'] = [
-	'blog-file-page' => "<a href='$1'>$2</a> posting di <a href='$3'>$4's</a> blog",
+	'blog-file-page' => '<a href=\'$1\'>$2</a> posting di <a href=\'$3\'>$4\'s</a> blog',
 	'createblogpage' => 'Buat blog',
 	'createbloglistingpage' => 'Buat daftar blog',
 	'create-blog-spam' => 'Sepertinya spam',
@@ -2667,7 +2488,7 @@ Buat blog daftar halaman untuk kategori seperti "Barack Obama", "Penggemar Fiksi
 	'blog-header' => 'Artikel blog dalam kategori "$1"',
 	'blog-subheader' => '{{PLURAL:$1|Ada satu posting blog|berikut $1 artikel blog}} dalam kategori ini.',
 	'blog-subheader-all' => '{{PLURAL:$1|Ada satu artikel blog dalam kategori ini|Berikut $1 artikel dalam kategori blog ini, dari total sebesar $2.}}',
-	'blog-invalidparam' => "Parameter '$1' tidak diketahui telah di abaikan. Silahkan gunakan salah satu parameter yang tersedia: <code>$2</code>",
+	'blog-invalidparam' => 'Parameter \'$1\' tidak diketahui telah di abaikan. Silahkan gunakan salah satu parameter yang tersedia: <code>$2</code>',
 	'blog-emptyparam' => 'Nama parameter tidak boleh kosong',
 	'blog-defaulttitle' => 'Blog',
 	'blog-continuereading' => 'Lanjutkan membaca &raquo;',
@@ -2729,28 +2550,16 @@ Buat blog daftar halaman untuk kategori seperti "Barack Obama", "Penggemar Fiksi
 	'user-blog-url-link' => 'Blog pengguna:$1',
 ];
 
-/** Igbo (Igbo)
- * @author Ukabia
- */
 $messages['ig'] = [
 	'blog-comment-delete' => 'kàcha',
 	'blog-comment-hide' => 'zofù',
 	'blog-comment-edit' => 'mèzi',
 ];
 
-/** Ingush (ГӀалгӀай)
- * @author Sapral Mikail
- */
 $messages['inh'] = [
 	'blog-comment-history' => 'тархьар',
 ];
 
-/** Italian (italiano)
- * @author Beta16
- * @author Darth Kule
- * @author Leviathan 89
- * @author Minerva Titani
- */
 $messages['it'] = [
 	'createblogpage' => 'Crea blog',
 	'createbloglistingpage' => 'Crea lista blog',
@@ -2764,13 +2573,13 @@ $messages['it'] = [
 	'create-blog-post-recent-listing-log' => 'Creata la pagina per i blog post recenti',
 	'create-blog-post-title' => 'Crea un nuovo blog',
 	'create-blog-post-title-edit' => 'Modifica un blog',
-	'create-blog-form-title' => "Che cos'è un blog?",
+	'create-blog-form-title' => 'Che cos\'è un blog?',
 	'create-blog-form-post-text' => 'Testo blog',
 	'create-blog-form-info' => 'I blog sono un modo efficace per condividere notizie, opinioni e pensieri originali con la community.',
 	'create-blog-form-post-title' => 'Titolo del post',
 	'create-blog-empty-title-error' => 'Titolo richiesto',
 	'create-blog-empty-post-error' => 'Il corpo del post è vuoto',
-	'create-blog-empty-article-log' => "Articolo creato per l'elenco blog",
+	'create-blog-empty-article-log' => 'Articolo creato per l\'elenco blog',
 	'create-blog-invalid-title-error' => 'Titolo non valido',
 	'create-listing-confirm-info' => 'Copia e incolla il seguente codice:',
 	'create-blog-no-login' => 'Accesso non effettuato',
@@ -2784,7 +2593,7 @@ $messages['it'] = [
 	'create-blog-permission-denied' => 'Errore durante il salvataggio della pagina blog: permesso negato',
 	'create-blog-article-already-exists' => 'Un post con questo nome esiste già, per favore scegli un titolo diverso',
 	'create-blog-listing-title' => 'Crea una nuova lista blog',
-	'create-blog-listing-form-title' => "Che cos'è una lista blog?",
+	'create-blog-listing-form-title' => 'Che cos\'è una lista blog?',
 	'create-blog-listing-form-info' => 'Le liste blog hanno il compito di raccogliere assieme ed elencare in un\'unica pagina i blog di diversi autori.
 Crea una lista blog per categorie come "Barack Obama", "Fan Fiction" o combina più categorie.',
 	'create-blog-listing-page-title' => 'Titolo lista blog',
@@ -2804,16 +2613,16 @@ Crea una lista blog per categorie come "Barack Obama", "Fan Fiction" o combina p
 	'create-blog-listing-output-as-page' => 'Crea lista come nuova pagina',
 	'create-blog-listing-tag-format-not-recognized-on-page' => 'Tag lista blog non riconosciuto nella pagina',
 	'blog-header' => 'Post nella categoria "$1"',
-	'blog-subheader' => "{{PLURAL:$1|C'è un blog post|I seguenti $1 blog post sono}} in questa categoria.",
-	'blog-subheader-all' => "{{PLURAL:$1|C'è un blog in questa categoria|I seguenti $1 blog sono in questa categoria}} su un totale di $2.",
-	'blog-invalidparam' => "Il parametro '$1' è stato ignorato. Scegli uno dei parametri disponibili: <code>$2</code>.",
+	'blog-subheader' => 'I seguenti $1 post sono in questa categoria.',
+	'blog-subheader-all' => 'I seguenti $1 post sono in questa categoria, su un totale di $2',
+	'blog-invalidparam' => 'Il parametro \'$1\' è stato ignorato. Scegli uno dei parametri disponibili: <code>$2</code>.',
 	'blog-emptyparam' => 'Il parametro non può essere vuoto',
 	'blog-defaulttitle' => 'Blog',
 	'blog-continuereading' => 'Continua a leggere &raquo;',
-	'blog-readfullpost' => 'Leggi di più',
+	'blog-readfullpost' => 'Leggi il post',
 	'blog-olderposts' => 'Post più vecchi.',
 	'blog-newerposts' => 'Post più recenti.',
-	'blog-nbrcomments' => '{{PLURAL:$1|Un commento|$1 commenti}}',
+	'blog-nbrcomments' => '$1 commenti',
 	'blog-nopostfound' => 'Nessun post trovato.',
 	'blog-writeone' => 'Aggiungine uno!',
 	'blog-empty-user-blog' => 'Questo utente non ancora ha scritto nessun post!',
@@ -2823,18 +2632,18 @@ Crea una lista blog per categorie come "Barack Obama", "Fan Fiction" o combina p
 	'blog-zero-comments' => 'Nessun commento!',
 	'blog-comment-post' => 'Lascia un commento',
 	'blog-comments' => 'Commenti',
-	'blog-rc-comments' => 'Commenti blog',
+	'blog-rc-comments' => 'Commenti al blog',
 	'blog-comments-new' => 'Nuovo commento',
-	'blog-comments-save' => 'Salva commento nel blog',
+	'blog-comments-save' => 'Salva commento al blog',
 	'blog-comments-label' => 'Commenti',
 	'blog-voting-label' => 'Voti',
 	'blog-comments-info' => 'Questa casella utilizza il markup wiki',
-	'blog-comments-login' => '<a href="$1" rel="nofollow">Accedi per lasciare un commenti</a>',
+	'blog-comments-login' => '<a href="$1">Accedi per lasciare un commenti</a>',
 	'blog-comments-dsc' => 'Dal più recente',
 	'blog-comments-asc' => 'Dal più vecchio',
 	'blog-comments-anonymous' => 'Utente anonimo',
-	'blog-comment-delete' => 'cancella',
-	'blog-comment-hide' => 'nascondi',
+	'blog-comment-delete' => 'Cancella',
+	'blog-comment-hide' => 'Nascondi',
 	'blog-comment-unhide' => 'Mostra',
 	'blog-comment-history' => 'cronologia',
 	'blog-comment-edit' => 'modifica',
@@ -2849,7 +2658,7 @@ Crea una lista blog per categorie come "Barack Obama", "Fan Fiction" o combina p
 	'blog-refresh-label' => 'Aggiorna',
 	'blog-widgets-label' => 'Cruscotto widget',
 	'blog-listing-zero-other' => 'Questo utente non ancora ha scritto nessun post!',
-	'blog-listing-created' => 'Lista blog creata',
+	'blog-listing-created' => 'Lista di Blog creata',
 	'blog-userblog' => 'Blog di $1',
 	'blog-fromsitename' => 'Da $1',
 	'blogs-reportproblem' => 'Segnala un problema',
@@ -2858,23 +2667,18 @@ Crea una lista blog per categorie come "Barack Obama", "Fan Fiction" o combina p
 	'right-blog-comments-delete' => 'Cancella i commenti nelle pagine blog',
 	'right-blog-articles-edit' => 'Modifica le pagine blog',
 	'right-blog-articles-move' => 'Sposta le pagine blog',
-	'blogs-recent-url-text' => 'Blog recenti',
-	'blog-desc' => 'Pagine blog',
-	'blog-movepage-badtitle' => 'Titolo del blog non valido',
-	'blog-comment-sending' => 'Invio...',
-	'blog-by' => '$1 da $2',
+	'blogs-recent-url-text' => 'Post recenti dei blog',
+	'blog-desc' => 'Articoli di blog',
+	'blog-movepage-badtitle' => 'Titolo del post non valido.',
+	'blog-comment-sending' => 'Invio in corso...',
+	'blog-by' => '$1 di $2',
 	'blogs-searchprofile' => 'Blog',
+	'blogs-recent-url' => 'Blog:Recent_posts',
+	'blogs-searchprofile-tooltip' => 'Cerca nei blog posts e nelle liste di blog',
 ];
 
-/** Japanese (日本語)
- * @author BryghtShadow
- * @author McDutchie
- * @author Shirayuki
- * @author Tommy6
- * @author 青子守歌
- */
 $messages['ja'] = [
-	'blog-file-page' => "<a href='$3'>$4のブログ</a>の記事「<a href='$1'>$2</a>」",
+	'blog-file-page' => '<a href=\'$3\'>$4のブログ</a>の記事「<a href=\'$1\'>$2</a>」',
 	'createblogpage' => 'ブログの記事を作成',
 	'createbloglistingpage' => 'ブログのリストを作成',
 	'create-blog-spam' => 'スパムの可能性があると判定されました',
@@ -2928,7 +2732,7 @@ $messages['ja'] = [
 	'blog-header' => 'カテゴリ "$1" にあるブログ記事',
 	'blog-subheader' => 'このカテゴリには以下の $1 件のブログ記事が属しています。',
 	'blog-subheader-all' => '以下にこのカテゴリへ属しているブログ記事 $2 件中 $1 件を表示しています。',
-	'blog-invalidparam' => "不明なパラメータ '$1' が無視されました。有効なパラメータを使用してください: <code>$2</code>",
+	'blog-invalidparam' => '不明なパラメータ \'$1\' が無視されました。有効なパラメータを使用してください: <code>$2</code>',
 	'blog-emptyparam' => 'パラメータ名は空にはできません',
 	'blog-defaulttitle' => 'ブログ',
 	'blog-continuereading' => '全文を読む &raquo;',
@@ -2938,7 +2742,7 @@ $messages['ja'] = [
 	'blog-nbrcomments' => 'コメント ($1)',
 	'blog-nopostfound' => '一つも投稿が見つかりませんでした。',
 	'blog-writeone' => '記事を投稿する',
-	'blog-empty-user-blog' => 'この利用者はまだ1つも記事を投稿していません!',
+	'blog-empty-user-blog' => 'この利用者はまだ一つも記事を投稿していません',
 	'blog-added' => '追加',
 	'blog-edited' => '編集',
 	'blog-page' => 'ブログ',
@@ -2951,7 +2755,7 @@ $messages['ja'] = [
 	'blog-comments-label' => 'コメント機能を有効にする',
 	'blog-voting-label' => '評価機能を有効にする',
 	'blog-comments-info' => 'この入力欄ではウィキスタイルの入力が使用されます',
-	'blog-comments-login' => 'コメントするには<a href="$1" rel="nofollow">ログイン</a>する必要があります',
+	'blog-comments-login' => 'コメントするには<a href="$1">ログイン</a>する必要があります',
 	'blog-comments-dsc' => '新しいコメントから表示',
 	'blog-comments-asc' => '古いコメントから表示',
 	'blog-comments-anonymous' => '匿名利用者',
@@ -2975,7 +2779,7 @@ $messages['ja'] = [
 	'blog-userblog' => '$1のブログ',
 	'blog-fromsitename' => '$1 より',
 	'blogs-reportproblem' => '問題の報告',
-	'blogs-comment-hidden' => 'このコメントは非表示です。',
+	'blogs-comment-hidden' => 'このコメントは非表示になっています',
 	'right-blog-comments-toggle' => 'ブログの記事につけられたコメントの表示非表示を切り替え',
 	'right-blog-comments-delete' => 'ブログの記事へのコメントを削除',
 	'right-blog-articles-edit' => 'ブログの記事の編集',
@@ -2988,13 +2792,9 @@ $messages['ja'] = [
 	'blogs-searchprofile' => 'ブログ',
 	'blogs-searchprofile-tooltip' => 'ブログ記事とブログリストを検索',
 	'user-blog-url-link' => 'User blog:$1',
+	'blogs-recent-url' => 'Blog:最近の投稿',
 ];
 
-/** Georgian (ქართული)
- * @author DevaMK
- * @author GeorgeBarnick
- * @author Otogi
- */
 $messages['ka'] = [
 	'create-blog-categories-textinput' => 'ახალი კატეგორიის დამატება',
 	'create-blog-categories-submit' => 'მიღება',
@@ -3009,20 +2809,12 @@ $messages['ka'] = [
 	'blog-refresh-label' => 'განახლება',
 ];
 
-/** Khmer (ភាសាខ្មែរ)
- * @author Lovekhmer
- */
 $messages['km'] = [
 	'blog-comment-delete' => 'លុប',
 ];
 
-/** Kannada (ಕನ್ನಡ)
- * @author Dimension10
- * @author Nayvik
- * @author VASANTH S.N.
- */
 $messages['kn'] = [
-	'blog-file-page' => "<a href='$1'>$2</a> ಅನ್ನು  <a href='$3'>$4 ಇನ   </a> ಬ್ಲಾಗ್ ಮೇಲೆ ಹಾಕಿ.",
+	'blog-file-page' => '<a href=\'$1\'>$2</a> ಅನ್ನು  <a href=\'$3\'>$4 ಇನ   </a> ಬ್ಲಾಗ್ ಮೇಲೆ ಹಾಕಿ.',
 	'createblogpage' => 'ಬ್ಲಾಗ್ ನಿರ್ಮಾಣ ಮಾದಿ.',
 	'createbloglistingpage' => 'ಬ್ಲಾಗ್ ಲಿಸ್ಟಿಂಗ್ ನಿರ್ಮಾಣ ಮಾಡಿ.',
 	'create-blog-spam' => 'ಸ್ಪ್ಯಾಮ್ ಹಾಗೆ ಕಾನುತದೆ',
@@ -3092,21 +2884,8 @@ $messages['kn'] = [
 	'blogs-searchprofile' => 'ಬ್ಲಾಗ್‍ಗಳು',
 ];
 
-/** Korean (한국어)
- * @author Cafeinlove
- * @author Cwt96
- * @author Daisy2002
- * @author Hym411
- * @author Leehoy
- * @author Miri-Nae
- * @author Priviet
- * @author Revi
- * @author 관인생략
- * @author 아라
- * @author 한글화담당
- */
 $messages['ko'] = [
-	'blog-file-page' => "<a href='$3'>$4</a> 사용자의 블로그에 올라온 글, <a href='$1'>$2</a>",
+	'blog-file-page' => '<a href=\'$3\'>$4</a> 사용자의 블로그에 올라온 글, <a href=\'$1\'>$2</a>',
 	'createblogpage' => '블로그 만들기',
 	'createbloglistingpage' => '블로그 목록 만들기',
 	'create-blog-spam' => '스팸으로 보입니다',
@@ -3157,82 +2936,77 @@ $messages['ko'] = [
 	'create-blog-listing-sortby-comments' => '덧글 수',
 	'create-blog-listing-output-as-box' => '복사와 붙여넣기를 위한 코드 생성',
 	'create-blog-listing-output-as-page' => '새로운 페이지에 목록 추가',
-	'blog-header' => '"$1" 분류의 게시글',
-	'blog-subheader' => '이 분류에 속하는 블로그 글은 {{PLURAL:$1|$1개|$1개}}입니다.',
-	'blog-subheader-all' => '{{PLURAL:$1|이 분류에 한 개의 블로그 글이 속해 있습니다.|전체 블로그 글 $2 개 중, $1 개가 이 분류에 속해 있습니다.}}',
-	'blog-invalidparam' => "알려지지 않은 매개 변수 '$1'는 무시되었습니다. 정상적인 매개 변수를 사용해주세요: <code>$2</code>.",
-	'blog-emptyparam' => '매개 변수의 이름은 공백일 수 없습니다',
+	'blog-header' => '\'$1\' 분류에 속하는 블로그 글',
+	'blog-subheader' => '다음은 이 분류에 속하는 $1개의 블로그 글입니다.',
+	'blog-subheader-all' => '다음은 이 분류에 속하는 $2개의 블로그 글 중 $1개입니다.',
+	'blog-invalidparam' => '알 수 없는 \'$1\' 변수는 사용하실 수 없습니다. 사용 가능한 \'<code>$2</code>\' 변수를 사용하시기 바랍니다.',
+	'blog-emptyparam' => '모든 빈 칸을 채워주세요.',
 	'blog-defaulttitle' => '블로그',
-	'blog-continuereading' => '계속 보기 &raquo;',
-	'blog-readfullpost' => '더 읽어보기',
-	'blog-olderposts' => '오래된 게시글',
-	'blog-newerposts' => '새로운 게시글',
-	'blog-nbrcomments' => '$1 개의 {{PLURAL:$1|의견}}',
-	'blog-nopostfound' => '게시물이 없습니다.',
-	'blog-writeone' => '새 게시물 작성!',
-	'blog-empty-user-blog' => '이 사용자는 아직 어떤 블로그 글도 게시하지 않았습니다!',
+	'blog-continuereading' => '더 읽기 &raquo;',
+	'blog-readfullpost' => '본문 보기',
+	'blog-olderposts' => '오래된 글',
+	'blog-newerposts' => '새로 올라온 글',
+	'blog-nbrcomments' => '댓글 $1개',
+	'blog-nopostfound' => '블로그 글을 찾을 수 없습니다.',
+	'blog-writeone' => '글을 작성해보세요!',
+	'blog-empty-user-blog' => '이 사용자는 블로그에 작성한 글이 없습니다. (참고: 블로그 글은 [[Special:CreateBlogPage|특수기능:CreateBlogPage]]에서 작성하실 수 있습니다.)',
 	'blog-added' => '추가됨',
 	'blog-edited' => '편집됨',
 	'blog-page' => '블로그',
-	'blog-zero-comments' => '아직 덧글이 없습니다!',
-	'blog-comment-post' => '덧글 남기기',
-	'blog-comments' => '덧글',
-	'blog-rc-comments' => '블로그 덧글',
-	'blog-comments-new' => '블로그의 새 덧글',
+	'blog-zero-comments' => '댓글 없음',
+	'blog-comment-post' => '댓글 작성',
+	'blog-comments' => '댓글',
+	'blog-rc-comments' => '블로그 댓글',
+	'blog-comments-new' => '블로그의 새 댓글',
 	'blog-comments-save' => '블로그에 댓글 저장',
-	'blog-comments-label' => '의견',
+	'blog-comments-label' => '댓글',
 	'blog-voting-label' => '투표',
-	'blog-comments-info' => '이 상자는 위키 문법 입력 방식을 사용합니다',
-	'blog-comments-login' => '덧글을 남기려면 <a href="$1" rel="nofollow">로그인하세요</a>',
-	'blog-comments-dsc' => '최근 항목순',
-	'blog-comments-asc' => '오래된 항목순',
-	'blog-comments-anonymous' => '익명의 사용자',
+	'blog-comments-info' => '댓글에 위키 문법을 사용하실 수 있습니다.',
+	'blog-comments-login' => '댓글을 작성하시려면 <a href="$1">로그인</a>하세요.',
+	'blog-comments-dsc' => '오래된 순서대로',
+	'blog-comments-asc' => '최근에 작성된 순서대로',
+	'blog-comments-anonymous' => '익명 사용자',
 	'blog-comment-delete' => '삭제',
 	'blog-comment-hide' => '숨기기',
-	'blog-comment-unhide' => '숨기기 취소',
+	'blog-comment-unhide' => '보이기',
 	'blog-comment-history' => '역사',
 	'blog-comment-edit' => '편집',
-	'blog-comment-error' => '덧글을 저장할 수 없습니다',
-	'blog-comment-cannot-add' => '블로그에 덧글을 추가할 수 없습니다.',
-	'blog-avatar-preferences-title' => '아바타',
-	'blog-page-rate' => '이 글을 평가하기',
-	'blog-create-post-label' => '블로그 글 생성',
-	'blog-create-label' => '블로그 문서 만들기',
-	'blog-create-next-label' => '새 블로그 문서 만들기',
-	'blog-create-listing-label' => '블로그 목록 만들기',
-	'blog-refresh-label' => '새로 고침',
+	'blog-comment-error' => '댓글을 저장할 수 없습니다.',
+	'blog-comment-cannot-add' => '블로그에 댓글을 작성하실 수 없습니다.',
+	'blog-avatar-preferences-title' => '아바타 설정',
+	'blog-page-rate' => '별점 주기:',
+	'blog-create-post-label' => '블로그에 새 글 쓰기',
+	'blog-create-label' => '블로그에 글 쓰기',
+	'blog-create-next-label' => '블로그에 새 글 쓰기',
+	'blog-create-listing-label' => '블로그 글 목록 만들기',
+	'blog-refresh-label' => '새로고침',
 	'blog-widgets-label' => '위젯 대시보드',
-	'blog-listing-zero-other' => '이 사용자는 아직 어떤 블로그 글도 게시하지 않았습니다!',
-	'blog-listing-created' => '블로그 글 목록 페이지 생성',
+	'blog-listing-zero-other' => '이 사용자는 블로그에 작성한 글이 없습니다.',
+	'blog-listing-created' => '블로그 글 목록 문서가 생성되었습니다.',
 	'blog-userblog' => '$1의 블로그',
-	'blog-fromsitename' => '$1로부터',
-	'blogs-reportproblem' => '문제 보고',
-	'blogs-comment-hidden' => '숨겨진 댓글',
+	'blog-fromsitename' => '$1',
+	'blogs-reportproblem' => '오류 신고하기',
+	'blogs-comment-hidden' => '숨겨진 댓글입니다.',
 	'right-blog-comments-toggle' => '블로그 댓글 표시',
 	'right-blog-comments-delete' => '블로그 댓글 삭제',
 	'right-blog-articles-edit' => '블로그 문서 편집',
 	'right-blog-articles-move' => '블로그 문서 옮기기',
-	'blogs-recent-url-text' => '최근 블로그 게시물',
+	'blogs-recent-url-text' => '블로그 최근 글',
 	'blog-desc' => '블로그 문서',
-	'blog-movepage-badtitle' => '잘못된 블로그 문서 제목입니다.',
-	'blog-comment-sending' => '보내는 중...',
+	'blog-movepage-badtitle' => '존재하지 않는 블로그 글 제목입니다.',
+	'blog-comment-sending' => '저장하는 중...',
 	'blog-by' => '$2의 $1',
 	'blogs-searchprofile' => '블로그',
-	'blogs-searchprofile-tooltip' => '블로그 글, 블로그 목록에서 검색',
+	'blogs-searchprofile-tooltip' => '블로그 글과 블로그 글 목록에서 검색',
 	'user-blog-url-link' => '사용자 블로그:$1',
+	'blogs-recent-url' => 'Blog:최근 글',
 ];
 
-/** Karachay-Balkar (къарачай-малкъар)
- * @author Iltever
- */
 $messages['krc'] = [
 	'blog-comments-anonymous' => 'Аноним',
 	'blog-refresh-label' => 'Джангырт',
 ];
 
-/** Colognian (Ripoarisch)
- * @author Purodha
- */
 $messages['ksh'] = [
 	'blog-added' => 'dobei jedonn',
 	'blog-edited' => 'verändert',
@@ -3241,19 +3015,11 @@ $messages['ksh'] = [
 	'blug-cut-sign' => '&nbsp;…',
 ];
 
-/** Kurdish (Kurdî)
- * @author Gomada
- */
 $messages['ku'] = [
 	'blog-added' => 'lê hate zêdekirin',
 	'blog-edited' => 'hate guherandin',
 ];
 
-/** Kurdish (Latin script) (Kurdî (latînî)‎)
- * @author Bikarhêner
- * @author George Animal
- * @author Gomada
- */
 $messages['ku-latn'] = [
 	'createblogpage' => 'Blogek çêke',
 	'create-blog-empty-title-error' => 'Sernav pêwist e',
@@ -3276,10 +3042,6 @@ $messages['ku-latn'] = [
 	'blogs-searchprofile' => 'Blog',
 ];
 
-/** Luxembourgish (Lëtzebuergesch)
- * @author Les Meloures
- * @author Robby
- */
 $messages['lb'] = [
 	'create-blog-spam' => 'Gesäit aus wéi Spam',
 	'create-blog-empty-title-error' => 'Titel obligatoresch',
@@ -3305,15 +3067,15 @@ $messages['lb'] = [
 	'blog-zero-comments' => 'Nach keng Bemierkungen!',
 	'blog-comments' => 'Bemierkungen',
 	'blog-voting-label' => 'Ofstëmmen',
-	'blog-comments-dsc' => "Neist fir d'éischt",
-	'blog-comments-asc' => "Neist fir d'lescht",
+	'blog-comments-dsc' => 'Neist fir d\'éischt',
+	'blog-comments-asc' => 'Neist fir d\'lescht',
 	'blog-comments-anonymous' => 'Anonyme Benotzer',
 	'blog-comment-delete' => 'läschen',
 	'blog-comment-hide' => 'verstoppen',
 	'blog-comment-unhide' => 'nees weisen',
 	'blog-comment-history' => 'Versiounen',
 	'blog-comment-edit' => 'änneren',
-	'blog-comment-error' => "D'Bemierkung konnt net gespäichert ginn",
+	'blog-comment-error' => 'D\'Bemierkung konnt net gespäichert ginn',
 	'blog-avatar-preferences-title' => 'Avatar',
 	'blog-page-rate' => 'Dësen Artikel bewäerten:',
 	'blog-refresh-label' => 'Aktualiséieren',
@@ -3324,10 +3086,6 @@ $messages['lb'] = [
 	'blog-by' => '$1 vum $2',
 ];
 
-/** Northern Luri (لوری مینجایی)
- * @author Bonevarluri
- * @author Mogoeilor
- */
 $messages['lrc'] = [
 	'create-blog-spam' => 'وه نظر میا هرزنومه بوئه',
 	'create-blog-categories-submit' => 'كل كردن',
@@ -3367,11 +3125,6 @@ $messages['lrc'] = [
 $2',
 ];
 
-/** Lithuanian (lietuvių)
- * @author Eitvys200
- * @author Mantak111
- * @author Vilius
- */
 $messages['lt'] = [
 	'createblogpage' => 'Sukurti dienoraštį',
 	'createbloglistingpage' => '↓Kurti dienoraščio sarašą',
@@ -3448,17 +3201,10 @@ $messages['lt'] = [
 	'blog-comment-sending' => 'Siunčiama...',
 ];
 
-/** Latgalian (latgaļu)
- * @author Dark Eagle
- */
 $messages['ltg'] = [
 	'blog-comment-history' => 'viesture',
 ];
 
-/** Latvian (latviešu)
- * @author Papuass
- * @author Sg ghost
- */
 $messages['lv'] = [
 	'create-blog-categories-submit' => 'Iesniegt',
 	'create-blog-save' => 'Saglabāt lapu',
@@ -3466,9 +3212,6 @@ $messages['lv'] = [
 	'user-blog-url-link' => 'Lietotāja blogs:$1',
 ];
 
-/** Maithili (मैथिली)
- * @author Vinitutpal
- */
 $messages['mai'] = [
 	'createblogpage' => 'ब्लाग बनाऊ',
 	'createbloglistingpage' => 'लिस्टिंग ब्लाग बनाऊ',
@@ -3513,11 +3256,8 @@ $messages['mai'] = [
 	'blog-refresh-label' => 'रिफ्रेश करू',
 ];
 
-/** Macedonian (македонски)
- * @author Bjankuloski06
- */
 $messages['mk'] = [
-	'blog-file-page' => "Објава од <a href='$1'>$2</a> на блогот на <a href='$3'>$4</a>",
+	'blog-file-page' => 'Објава од <a href=\'$1\'>$2</a> на блогот на <a href=\'$3\'>$4</a>',
 	'createblogpage' => 'Создавање на блог',
 	'createbloglistingpage' => 'Создавање на попис на блогови',
 	'create-blog-spam' => 'Личи на спам',
@@ -3635,9 +3375,6 @@ $messages['mk'] = [
 	'user-blog-url-link' => 'Кориснички блог:$1',
 ];
 
-/** Malayalam (മലയാളം)
- * @author Praveenp
- */
 $messages['ml'] = [
 	'createblogpage' => 'ബ്ലോഗ് സൃഷ്ടിക്കുക',
 	'blog-readfullpost' => 'കൂടുതൽ വായിക്കുക',
@@ -3649,19 +3386,13 @@ $messages['ml'] = [
 	'blog-comment-sending' => 'അയയ്ക്കുന്നു...',
 ];
 
-/** Marathi (मराठी)
- * @author Prabodh1987
- */
 $messages['mr'] = [
 	'blog-added' => 'तयार केले',
 	'blog-edited' => 'संपादित केले',
 ];
 
-/** Malay (Bahasa Melayu)
- * @author Anakmalaysia
- */
 $messages['ms'] = [
-	'blog-file-page' => "Pos <a href='$1'>$2</a> pada blog <a href='$3'>$4's</a>",
+	'blog-file-page' => 'Pos <a href=\'$1\'>$2</a> pada blog <a href=\'$3\'>$4\'s</a>',
 	'createblogpage' => 'Cipta blog',
 	'createbloglistingpage' => 'Cipta senarai blog',
 	'create-blog-spam' => 'Nampak macam spam',
@@ -3716,7 +3447,7 @@ Cipta laman senarai blog untuk kategori-kategori seperti "Barack Obama", "Cereka
 	'blog-header' => 'Rencana blog dalam kategori "$1"',
 	'blog-subheader' => '{{PLURAL:$1|Terdapat satu kiriman blog|$1 rencana blog yang berikut terdapat}} dalam kategori ini.',
 	'blog-subheader-all' => '{{PLURAL:$1|Terdapat satu rencana blog dalam kategori ini|$1 rencana blog yang berikut terdapat dalam kategori ini, daripada $2 kesemuanya}}.',
-	'blog-invalidparam' => "Parameter '$1' yang tidak dikenali diabaikan. Sila guna salah satu daripada parameter yang ada: <code>$2</code>.",
+	'blog-invalidparam' => 'Parameter \'$1\' yang tidak dikenali diabaikan. Sila guna salah satu daripada parameter yang ada: <code>$2</code>.',
 	'blog-emptyparam' => 'Jangan biarkan nama parameter kosong',
 	'blog-defaulttitle' => 'Blog',
 	'blog-continuereading' => 'Teruskan membaca &raquo;',
@@ -3778,16 +3509,13 @@ Cipta laman senarai blog untuk kategori-kategori seperti "Barack Obama", "Cereka
 	'user-blog-url-link' => 'Blog pengguna:$1',
 ];
 
-/** Maltese (Malti)
- * @author Chrisportelli
- */
 $messages['mt'] = [
 	'createblogpage' => 'Oħloq blogg',
 	'create-blog-listing-matches-calculate' => 'Ikkalkula',
-	'create-blog-listing-matches-recalculate' => "Erġa' kkalkula",
+	'create-blog-listing-matches-recalculate' => 'Erġa\' kkalkula',
 	'create-blog-listing-sortby-date' => 'L-aktar riċenti',
 	'create-blog-listing-sortby-author' => 'Awtur',
-	'create-blog-listing-sortby-comments' => "Numru ta' kummenti",
+	'create-blog-listing-sortby-comments' => 'Numru ta\' kummenti',
 	'blog-defaulttitle' => 'Bloggs',
 	'blog-writeone' => 'Ikteb wieħed!',
 	'blog-comments-anonymous' => 'Utent anonimu',
@@ -3801,10 +3529,6 @@ $messages['mt'] = [
 	'blog-avatar-preferences-title' => 'Avatar',
 ];
 
-/** Norwegian Bokmål (norsk bokmål)
- * @author Audun
- * @author Nghtwlkr
- */
 $messages['nb'] = [
 	'blog-file-page' => 'Posten <a href="$1">$2</a> på <a href="$3">$4s</a> blogg',
 	'createblogpage' => 'Opprett blogg',
@@ -3861,7 +3585,7 @@ Opprett bloggoppføringssider for å kategorier som «Barack Obama», «Fan Fict
 	'blog-header' => 'Bloggartikler i kategori «$1»',
 	'blog-subheader' => '{{PLURAL:$1|Det er ett blogginnlegg|Følgende $1 blogginnlegg er}} i denne kategorien.',
 	'blog-subheader-all' => '{{PLURAL:$1|Det er et blogginnlegg i denne kategorien|Følgende $1 blogginnlegg er i denne kategorien, av $2 totalt}}.',
-	'blog-invalidparam' => "Ukjent parameter '$1' ignoreres. Vennligst bruk en av de tilgjengelige parametrene: <code>$2</code>.",
+	'blog-invalidparam' => 'Ukjent parameter \'$1\' ignoreres. Vennligst bruk en av de tilgjengelige parametrene: <code>$2</code>.',
 	'blog-emptyparam' => 'Navn på parameter kan ikke være tom',
 	'blog-defaulttitle' => 'Blogger',
 	'blog-continuereading' => 'Fortsett lesing »',
@@ -3923,11 +3647,6 @@ Opprett bloggoppføringssider for å kategorier som «Barack Obama», «Fan Fict
 	'user-blog-url-link' => 'Brukerblogg:$1',
 ];
 
-/** Nepali (नेपाली)
- * @author Bhawani Gautam
- * @author RajeshPandey
- * @author सरोज कुमार ढकाल
- */
 $messages['ne'] = [
 	'createblogpage' => 'ब्लग बनाउने',
 	'createbloglistingpage' => 'ब्लग सूची बनाउने',
@@ -3964,13 +3683,8 @@ $messages['ne'] = [
 	'blogs-searchprofile' => 'ब्लगहरू',
 ];
 
-/** Dutch (Nederlands)
- * @author SPQRobin
- * @author Siebrand
- * @author Yatalu
- */
 $messages['nl'] = [
-	'blog-file-page' => "<a href='$1'>$2</a> bericht op het blog van <a href='$3'>$4</a>",
+	'blog-file-page' => '<a href=\'$1\'>$2</a> bericht op het blog van <a href=\'$3\'>$4</a>',
 	'createblogpage' => 'Blog aanmaken',
 	'createbloglistingpage' => 'Bloglijst aanmaken',
 	'create-blog-spam' => 'Ziet eruit als spam',
@@ -4009,7 +3723,7 @@ Geef een andere naam op.',
 Maak bloglijsten aan voor categorieën zoals "Barack Obama", "Fan Fiction" of combineer categorieën.',
 	'create-blog-listing-page-title' => 'Titel voor de bloglijstpagina',
 	'create-blog-listing-preview' => 'Voorvertoning',
-	'create-blog-listing-authors' => "Blogberichten ophalen die door de volgende auteurs zijn aangemaakt (gescheiden door komma's)",
+	'create-blog-listing-authors' => 'Blogberichten ophalen die door de volgende auteurs zijn aangemaakt (gescheiden door komma\'s)',
 	'create-blog-listing-blog-post-categories-title' => 'Blogberichten uit de volgende categorieën ophalen',
 	'create-blog-listing-page-categories-title' => 'Deze bloglijstpagina toevoegen aan deze categorieën',
 	'create-blog-listing-matches' => 'Resultaten',
@@ -4025,7 +3739,7 @@ Maak bloglijsten aan voor categorieën zoals "Barack Obama", "Fan Fiction" of co
 	'create-blog-listing-tag-format-not-recognized-on-page' => 'Het label voor de bloglijst is niet aangetroffen op de pagina',
 	'blog-header' => 'Blogberichten in de categorie "$1"',
 	'blog-subheader' => 'Er {{PLURAL:$1|staat één blogbericht|staan $1 blogberichten}} in deze categorie.',
-	'blog-subheader-all' => "{{PLURAL:$1|Er staat één blogpagina in deze categorie|Er staan $1 blogpagina's in deze categorie van in totaal $2}}.",
+	'blog-subheader-all' => '{{PLURAL:$1|Er staat één blogpagina in deze categorie|Er staan $1 blogpagina\'s in deze categorie van in totaal $2}}.',
 	'blog-invalidparam' => 'De onbekende parameter "$1" wordt genegeerd.
 Gebruik een van de beschikbare parameters: <code>$2</code>.',
 	'blog-emptyparam' => 'De naam van de parameter moet opgegeven worden',
@@ -4060,7 +3774,7 @@ Gebruik een van de beschikbare parameters: <code>$2</code>.',
 	'blog-comment-history' => 'geschiedenis',
 	'blog-comment-edit' => 'bewerken',
 	'blog-comment-error' => 'De reactie kon niet worden opgeslagen',
-	'blog-comment-cannot-add' => 'U kunt geen opmerkingen bij blogberichten plaatsen',
+	'blog-comment-cannot-add' => 'Je kunt geen opmerkingen bij blogberichten plaatsen',
 	'blog-avatar-preferences-title' => 'Avatar',
 	'blog-page-rate' => 'Artikel waarderen:',
 	'blog-create-post-label' => 'Blogbericht aanmaken',
@@ -4077,8 +3791,8 @@ Gebruik een van de beschikbare parameters: <code>$2</code>.',
 	'blogs-comment-hidden' => 'Reactie verborgen.',
 	'right-blog-comments-toggle' => 'Opmerkingen bij blogberichten in- en uitschakelen',
 	'right-blog-comments-delete' => 'Opmerkingen bij blogberichten verwijderen',
-	'right-blog-articles-edit' => "Blogpagina's bewerken",
-	'right-blog-articles-move' => "Blogpagina's hernoemen",
+	'right-blog-articles-edit' => 'Blogpagina\'s bewerken',
+	'right-blog-articles-move' => 'Blogpagina\'s hernoemen',
 	'blogs-recent-url-text' => 'Recente blogberichten',
 	'blog-desc' => 'Blogberichten',
 	'blog-movepage-badtitle' => 'Ongeldige titel voor blogbericht.',
@@ -4089,22 +3803,16 @@ Gebruik een van de beschikbare parameters: <code>$2</code>.',
 	'user-blog-url-link' => 'Gebruikersblog:$1',
 ];
 
-/** Nederlands (informeel)‎ (Nederlands (informeel)‎)
- * @author Siebrand
- */
 $messages['nl-informal'] = [
 	'create-blog-login-required' => 'Je moet <span class="plainlinks">[{{fullurl:Special:Signup|$1}} aanmelden]</span> voordat je kunt bloggen of lijsten kunt aanmaken.',
 	'blog-comment-cannot-add' => 'Je kunt geen opmerkingen bij blogberichten plaatsen',
 ];
 
-/** Occitan (occitan)
- * @author Cedric31
- */
 $messages['oc'] = [
 	'createblogpage' => 'Crear un blog',
 	'createbloglistingpage' => 'Lista dels blogs creats',
-	'create-blog-spam' => "Sembla qu'es un corrièr indesirable",
-	'create-blog-cant-edit' => "Impossible d'efectuar la modificacion",
+	'create-blog-spam' => 'Sembla qu\'es un corrièr indesirable',
+	'create-blog-cant-edit' => 'Impossible d\'efectuar la modificacion',
 	'create-blog-post-category' => 'Article de blog',
 	'create-blog-post-category-log' => 'Categoria creada pels bilhets de blog',
 	'create-blog-post-recent-listing' => 'Bilhets recents',
@@ -4192,25 +3900,16 @@ $messages['oc'] = [
 	'user-blog-url-link' => 'Blog utilizaire : $1',
 ];
 
-/** Oriya (ଓଡ଼ିଆ)
- * @author Psubhashish
- */
 $messages['or'] = [
 	'blog-added' => 'ଯୋଡ଼ାଗଲା',
 	'blog-edited' => 'ବଦଳାଗଲା',
 ];
 
-/** Pennsylvania German (Deitsch)
- * @author Xqt
- */
 $messages['pdc'] = [
 	'blog-comments' => 'Aamaerickinge',
 	'blog-comment-delete' => 'verwische',
 ];
 
-/** Palatine German (Pälzisch)
- * @author Manuae
- */
 $messages['pfl'] = [
 	'create-blog-save' => 'Said schbaischare',
 	'blog-comment-delete' => 'lesche',
@@ -4218,15 +3917,8 @@ $messages['pfl'] = [
 	'blog-comment-sending' => 'Sende...',
 ];
 
-/** Polish (polski)
- * @author Pio387
- * @author Sovq
- * @author Sp5uhe
- * @author VerMa
- * @author Woytecr
- */
 $messages['pl'] = [
-	'blog-file-page' => "Wpis <a href='$1'>$2</a> na blogu <a href='$3'>$4</a>",
+	'blog-file-page' => 'Wpis <a href=\'$1\'>$2</a> na blogu <a href=\'$3\'>$4</a>',
 	'createblogpage' => 'Utwórz blog',
 	'createbloglistingpage' => 'Utwórz listę wpisów na blogach',
 	'create-blog-spam' => 'Wygląda jak spam',
@@ -4291,7 +3983,12 @@ Możesz stworzyć listę dla konkretnej kategorii, np. "Barack Obama", "Gry Komp
 	'blog-nbrcomments' => '{{PLURAL:$1|Jeden komentarz|$1 komentarze|$1 komentarzy}}',
 	'blog-nopostfound' => 'Nie znaleziono żadnych wpisów.',
 	'blog-writeone' => 'Napisz!',
-	'blog-empty-user-blog' => 'Ten użytkownik nie napisał jeszcze niczego na swoim blogu!',
+	'blog-empty-user-blog' => '<br/><big>\'\'\'Brak bieżących postów. [[Special:CreateBlogPage|Dodaj wpis!]]\'\'\'</big>
+
+
+<big>\'\'\'Czym są blogi?\'\'\'</big>
+
+Blogi wykorzystywane mogą być przez użytkowników do publikowania własnych prac czy przemyśleń, służyć mogą jako źródło informacji o nowościach lub aktualnych wydarzeniach na wiki albo jako nośnik wiadomości czy recenzji związanych z tematem wiki.',
 	'blog-added' => 'utworzona',
 	'blog-edited' => 'zmodyfikowana',
 	'blog-page' => 'Blog',
@@ -4341,37 +4038,34 @@ Możesz stworzyć listę dla konkretnej kategorii, np. "Barack Obama", "Gry Komp
 	'blogs-searchprofile' => 'Blogi',
 	'blogs-searchprofile-tooltip' => 'Szukaj na blogach i listach blogów',
 	'user-blog-url-link' => 'Blog użytkownika:$1',
+	'blogs-recent-url' => 'Blog:Ostatnie_wpisy',
 ];
 
-/** Piedmontese (Piemontèis)
- * @author Borichèt
- * @author Dragonòt
- */
 $messages['pms'] = [
-	'blog-file-page' => "<a href='$1'>$2</a> mëssagi dzor lë scartari ëd <a href='$3'>$4's</a>",
+	'blog-file-page' => '<a href=\'$1\'>$2</a> mëssagi dzor lë scartari ëd <a href=\'$3\'>$4\'s</a>',
 	'createblogpage' => 'Crea Scartari',
 	'createbloglistingpage' => 'Creé na Lista djë Scartari',
-	'create-blog-spam' => "A smija a 'd rumenta",
-	'create-blog-cant-edit' => "As peulo pa fé 'd modìfiche",
+	'create-blog-spam' => 'A smija a \'d rumenta',
+	'create-blog-cant-edit' => 'As peulo pa fé \'d modìfiche',
 	'create-blog-post-category' => 'Mëssagi dë Scartari',
-	'create-blog-post-category-body' => "Costa a l'é na lista generà automaticament dij mëssagi dë scartari",
-	'create-blog-post-category-log' => "Creà na categorìa d'artìcoj për ij mëssagi dë scartari",
+	'create-blog-post-category-body' => 'Costa a l\'é na lista generà automaticament dij mëssagi dë scartari',
+	'create-blog-post-category-log' => 'Creà na categorìa d\'artìcoj për ij mëssagi dë scartari',
 	'create-blog-post-recent-listing' => 'Mëssagi recent',
 	'create-blog-post-recent-listing-title' => 'Mëssagi recent',
 	'create-blog-post-recent-listing-log' => 'Artìcoj creà për mëssagi dë scartari recent',
 	'create-blog-post-title' => 'Crea un neuv mëssagi dë scartari',
 	'create-blog-post-title-edit' => 'Modìfica un mëssagi dë scartari',
-	'create-blog-form-title' => "Lòn ch'a l'é un mëssagi dë scartari?",
+	'create-blog-form-title' => 'Lòn ch\'a l\'é un mëssagi dë scartari?',
 	'create-blog-form-post-text' => 'Test dë scartari',
-	'create-blog-form-info' => "J'artìcoj dë scartari a son na gran manera ëd partagé neuve, opinion e tòch creativ con la comunità.",
+	'create-blog-form-info' => 'J\'artìcoj dë scartari a son na gran manera ëd partagé neuve, opinion e tòch creativ con la comunità.',
 	'create-blog-form-post-title' => 'Tìtol ëd mëssagi dë scartari',
 	'create-blog-empty-title-error' => 'Tìtol ciamà',
-	'create-blog-empty-post-error' => "Ël còrp dël mëssagi a l'é veuid",
+	'create-blog-empty-post-error' => 'Ël còrp dël mëssagi a l\'é veuid',
 	'create-blog-empty-article-log' => 'Artìcol creà për listé scartari',
 	'create-blog-invalid-title-error' => 'Tìtol pa bon',
 	'create-listing-confirm-info' => 'Copié e ancolé ël còdes sì-sota:',
 	'create-blog-no-login' => 'Pa andrinta al sistema',
-	'create-blog-login-required' => "A deuv esse [{{fullurl:Special:Signup|$1}} intrà ant ël sistema] për creé d'artìcoj dë scartari o dle liste.",
+	'create-blog-login-required' => 'A deuv esse [{{fullurl:Special:Signup|$1}} intrà ant ël sistema] për creé d\'artìcoj dë scartari o dle liste.',
 	'create-blog-categories-title' => 'Gionta sto mëssagi dë scartari-sì a ste categorìe-sì (sgnaca për selessioné)',
 	'create-blog-categories-textinput' => 'Gionta na neuva categorìa',
 	'create-blog-categories-submit' => 'Spediss',
@@ -4379,15 +4073,15 @@ $messages['pms'] = [
 	'create-blog-preview' => 'Mostra na preuva',
 	'create-blog-updated' => 'Creà o modificà mëssagi dë scartari.',
 	'create-blog-permission-denied' => 'Eror an salvand pàgina dë scartari: Përmess Negà',
-	'create-blog-article-already-exists' => "N'artìcol dë scartari con col nòm a esist già, për piasì, ch'a serna un nòm diferent",
+	'create-blog-article-already-exists' => 'N\'artìcol dë scartari con col nòm a esist già, për piasì, ch\'a serna un nòm diferent',
 	'create-blog-listing-title' => 'Creé na neuva pàgina ëd liste djë scartari',
-	'create-blog-listing-form-title' => "Lòn ch'a l'é na pàgina ëd liste dë scartari?",
+	'create-blog-listing-form-title' => 'Lòn ch\'a l\'é na pàgina ëd liste dë scartari?',
 	'create-blog-listing-form-info' => 'Pàgine ëd liste dë scartari a son dovrà për buté ansema liste dë scartari d\'autor diferent dzora a na pàgina sìngola. Ch\'a crea pàgine ëd liste dë scartari për categorìe com "Barack Obama", "Fan Fiction", o ëdcò për combiné categorìe mùltiple.',
-	'create-blog-listing-page-title' => "Tìtol ëd pàgina ch'a lista djë scartari",
+	'create-blog-listing-page-title' => 'Tìtol ëd pàgina ch\'a lista djë scartari',
 	'create-blog-listing-preview' => 'Preuva',
 	'create-blog-listing-authors' => 'Pija mëssagi dë scartari creà da sti autor-sì (separà da vìrgole)',
 	'create-blog-listing-blog-post-categories-title' => 'Pija mëssagi dë scartari da ste categorìe-sì',
-	'create-blog-listing-page-categories-title' => "Gionta sta pàgina ch'a lista scartari a ste categorìe-sì",
+	'create-blog-listing-page-categories-title' => 'Gionta sta pàgina ch\'a lista scartari a ste categorìe-sì',
 	'create-blog-listing-matches' => 'Corëspondense',
 	'create-blog-listing-matches-calculate' => 'Calcolé',
 	'create-blog-listing-matches-recalculate' => 'Calcolé torna',
@@ -4401,23 +4095,23 @@ $messages['pms'] = [
 	'create-blog-listing-tag-format-not-recognized-on-page' => 'Etichëtta ëd lista dë scartari pa arconossùa ant la pàgina',
 	'blog-header' => 'Artìcoj dë scartari ant la categorìa "$1"',
 	'blog-subheader' => '{{PLURAL:$1|A-i é un mëssagi dë scartari|Ij $1 artìcoj dë scartari sota a son}} an sta categorìa-sì',
-	'blog-subheader-all' => "{{PLURAL:$1|A-i é n'artìcol dë scartari an sta categorìa-sì|Ij $1 artìcoj dë scartari sota a son an sta categorìa-sì, su $2 an total.}}",
-	'blog-invalidparam' => "Ël paràmetr sconossù '$1' a l'é ignorà. Për piasì, ch'a deuvra un dij paràmetr disponìbij: <code>$2</code>.",
+	'blog-subheader-all' => '{{PLURAL:$1|A-i é n\'artìcol dë scartari an sta categorìa-sì|Ij $1 artìcoj dë scartari sota a son an sta categorìa-sì, su $2 an total.}}',
+	'blog-invalidparam' => 'Ël paràmetr sconossù \'$1\' a l\'é ignorà. Për piasì, ch\'a deuvra un dij paràmetr disponìbij: <code>$2</code>.',
 	'blog-emptyparam' => 'Ël nòm dël paràmetr a peul pa esse veuid.',
 	'blog-defaulttitle' => 'Scartari',
 	'blog-continuereading' => 'Continua a lese &raquo;',
-	'blog-readfullpost' => "Les anco'",
+	'blog-readfullpost' => 'Les anco\'',
 	'blog-olderposts' => 'Mëssagi pi vej',
 	'blog-newerposts' => 'Mëssagi pi neuv',
 	'blog-nbrcomments' => '{{PLURAL:$1|Un coment|$1 coment}}',
 	'blog-nopostfound' => 'Gnun mëssagi trovà.',
 	'blog-writeone' => 'Scrivne un!',
-	'blog-empty-user-blog' => "St'utent-sì a l'ha ancor pa scrivù ëd mëssagi dë scartari!",
+	'blog-empty-user-blog' => 'St\'utent-sì a l\'ha ancor pa scrivù ëd mëssagi dë scartari!',
 	'blog-added' => 'giontà',
 	'blog-edited' => 'modificà',
 	'blog-page' => 'Scartari',
 	'blog-zero-comments' => 'Pa gnun coment ancó!',
-	'blog-comment-post' => "Coment a l'artìcol",
+	'blog-comment-post' => 'Coment a l\'artìcol',
 	'blog-comments' => 'Coment',
 	'blog-rc-comments' => 'Coment dë scartari',
 	'blog-comments-new' => 'Coment neuv ant lë scartari',
@@ -4434,39 +4128,36 @@ $messages['pms'] = [
 	'blog-comment-unhide' => 'mostré',
 	'blog-comment-history' => 'stòria',
 	'blog-comment-edit' => 'modìfica',
-	'blog-comment-error' => "Ël coment a l'ha pa podù esse salvà",
+	'blog-comment-error' => 'Ël coment a l\'ha pa podù esse salvà',
 	'blog-comment-cannot-add' => 'It peule pa gionté coment a lë scartari',
 	'blog-avatar-preferences-title' => 'Avatar',
-	'blog-page-rate' => "Vàluta st'artìcol-sì:",
+	'blog-page-rate' => 'Vàluta st\'artìcol-sì:',
 	'blog-create-post-label' => 'Crea mëssagi dë scartari',
 	'blog-create-label' => 'Crea artìcol dë scartari',
 	'blog-create-next-label' => 'Crea neuv artìcol dë scartari',
 	'blog-create-listing-label' => 'Crea lista dë scartari',
 	'blog-refresh-label' => 'Agiorna',
 	'blog-widgets-label' => 'Cruscòt dij widget',
-	'blog-listing-zero-other' => "St'utent-sì a l'ha pa ancó scrivù gnun mëssagi dë scartari!",
+	'blog-listing-zero-other' => 'St\'utent-sì a l\'ha pa ancó scrivù gnun mëssagi dë scartari!',
 	'blog-listing-created' => 'Creà pàgina ëd lista dë scartari',
 	'blog-userblog' => 'Scartari ëd $1',
 	'blog-fromsitename' => 'Da $1',
 	'blogs-reportproblem' => 'Signalé un problema',
 	'blogs-comment-hidden' => 'Coment stërmà.',
-	'right-blog-comments-toggle' => "Spatara coment an sj'Artìcoj dë Scartari",
-	'right-blog-comments-delete' => "Scancelé ij coment ëd j'Artìcoj dlë Scartari",
-	'right-blog-articles-edit' => "Modifiché j'Artìcoj dlë Scartari",
-	'right-blog-articles-move' => "Tramudé j'Artìcoj dlë Scartari",
+	'right-blog-comments-toggle' => 'Spatara coment an sj\'Artìcoj dë Scartari',
+	'right-blog-comments-delete' => 'Scancelé ij coment ëd j\'Artìcoj dlë Scartari',
+	'right-blog-articles-edit' => 'Modifiché j\'Artìcoj dlë Scartari',
+	'right-blog-articles-move' => 'Tramudé j\'Artìcoj dlë Scartari',
 	'blogs-recent-url-text' => 'Mëssagi dë Scartari recent',
 	'blog-desc' => 'Artìcoj dë Scartari',
 	'blog-movepage-badtitle' => 'Tìtol ëd mëssagi dë scartari pa bon.',
 	'blog-comment-sending' => 'An spedission ...',
 	'blog-by' => '$1 da $2',
 	'blogs-searchprofile' => 'Scartari',
-	'blogs-searchprofile-tooltip' => "Sërché ant j'artìcoj e le Liste dë Scartari",
+	'blogs-searchprofile-tooltip' => 'Sërché ant j\'artìcoj e le Liste dë Scartari',
 	'user-blog-url-link' => 'Scartari utent:$1',
 ];
 
-/** Pashto (پښتو)
- * @author Ahmed-Najib-Biabani-Ibrahimkhel
- */
 $messages['ps'] = [
 	'createblogpage' => 'بلاگ جوړول',
 	'createbloglistingpage' => 'بلاگ لړليک جوړول',
@@ -4538,22 +4229,8 @@ $messages['ps'] = [
 	'user-blog-url-link' => 'کارن بلاگ:$1',
 ];
 
-/** Portuguese (português)
- * @author Crazymadlover
- * @author Giro720
- * @author Hamilton Abreu
- * @author Imperadeiro98
- * @author Luckas
- * @author Luckas Blade
- * @author McDutchie
- * @author Polyethylen
- * @author Rhaijin
- * @author SandroHc
- * @author Vitorvicentevalente
- * @author Waldir
- */
 $messages['pt'] = [
-	'blog-file-page' => "<a href='$1'>$2</a> publicação no blogue de <a href='$3'>$4</a>",
+	'blog-file-page' => '<a href=\'$1\'>$2</a> publicação no blogue de <a href=\'$3\'>$4</a>',
 	'createblogpage' => 'Criar blogue',
 	'createbloglistingpage' => 'Criar uma listagem de blogues',
 	'create-blog-spam' => 'Parece ser spam',
@@ -4604,11 +4281,11 @@ Crie páginas de listagem de blogues para categorias, tais como "Barack Obama" o
 	'create-blog-listing-sortby-comments' => 'Contagem de comentários',
 	'create-blog-listing-output-as-box' => 'Gerar código para copiar e inserir',
 	'create-blog-listing-output-as-page' => 'Criar listagem numa página nova',
-	'create-blog-listing-tag-format-not-recognized-on-page' => "O elemento ''(tag)'' de listagem de blogues não foi encontrado na página",
+	'create-blog-listing-tag-format-not-recognized-on-page' => 'O elemento \'\'(tag)\'\' de listagem de blogues não foi encontrado na página',
 	'blog-header' => 'Entradas na categoria "$1"',
 	'blog-subheader' => '{{PLURAL:$1|Há uma entrada de blogue|As seguintes $1 entradas de blogue estão}} nesta categoria.',
 	'blog-subheader-all' => '{{PLURAL:$1|Há uma entrada de blogue nesta categoria|As seguintes $1 entradas de blogue estão nesta categoria, de um total de $2.}}',
-	'blog-invalidparam' => "O parâmetro desconhecido '$1' é ignorado. Use um dos parâmetros disponíveis, por favor: <code>$2</code>.",
+	'blog-invalidparam' => 'O parâmetro desconhecido \'$1\' é ignorado. Use um dos parâmetros disponíveis, por favor: <code>$2</code>.',
 	'blog-emptyparam' => 'O nome do parâmetro não pode estar em branco',
 	'blog-defaulttitle' => 'Blogues',
 	'blog-continuereading' => 'Continuar a ler &raquo;',
@@ -4670,21 +4347,8 @@ Crie páginas de listagem de blogues para categorias, tais como "Barack Obama" o
 	'user-blog-url-link' => 'Blogue do utilizador: $1',
 ];
 
-/** Brazilian Portuguese (português do Brasil)
- * @author Aristóbulo
- * @author Caio1478
- * @author Giro720
- * @author JM Pessanha
- * @author Jesielt
- * @author Luckas
- * @author Luckas Blade
- * @author Matheus Sousa L.T
- * @author TheGabrielZaum
- * @author Tuliouel
- * @author 555
- */
 $messages['pt-br'] = [
-	'blog-file-page' => "<a href='$1'>$2</a> publicação no blog de <a href='$3'>$4's</a>",
+	'blog-file-page' => '<a href=\'$1\'>$2</a> publicação no blog de <a href=\'$3\'>$4\'s</a>',
 	'createblogpage' => 'Criar blog',
 	'createbloglistingpage' => 'Criar lista de blogs',
 	'create-blog-spam' => 'Isso parece spam',
@@ -4739,7 +4403,7 @@ Crie uma lista de blogs para categorias como "Barack Obama", "Humor" ou, até me
 	'blog-header' => 'Artigos de blog na categoria "$1"',
 	'blog-subheader' => '{{PLURAL:$1|Há um post de blog|Os $1 artigos de blog seguintes estão}} nessa categoria.',
 	'blog-subheader-all' => '{{PLURAL:$1|Há um artigo de blog nessa categoria.|Os $1 artigos de blogs seguintes estão nesta categoria, de um total de $2.}}',
-	'blog-invalidparam' => "O parâmetro desconhecido '$1' foi ignorado. Por favor, use um dos parâmetros disponíveis:  <code>$2</code>.",
+	'blog-invalidparam' => 'O parâmetro desconhecido \'$1\' foi ignorado. Por favor, use um dos parâmetros disponíveis:  <code>$2</code>.',
 	'blog-emptyparam' => 'O nome do parâmetro não pode estar vazio',
 	'blog-defaulttitle' => 'Blogs',
 	'blog-continuereading' => 'Continue lendo &raquo;',
@@ -4801,10 +4465,6 @@ Crie uma lista de blogs para categorias como "Barack Obama", "Humor" ou, até me
 	'user-blog-url-link' => 'Blog de usuário:$1',
 ];
 
-/** Romanian (română)
- * @author Minisarm
- * @author Stelistcristi
- */
 $messages['ro'] = [
 	'createblogpage' => 'Crează un blog',
 	'create-blog-post-category' => 'Postări pe blog',
@@ -4845,23 +4505,20 @@ $messages['ro'] = [
 	'blog-comment-sending' => 'Se trimite...',
 ];
 
-/** tarandíne (tarandíne)
- * @author Joetaras
- */
 $messages['roa-tara'] = [
-	'createblogpage' => "Ccreje 'nu blog",
+	'createblogpage' => 'Ccreje \'nu blog',
 	'create-blog-spam' => 'Videle cumme rummate',
-	'create-blog-post-category' => "Messàgge d'u blog",
+	'create-blog-post-category' => 'Messàgge d\'u blog',
 	'create-blog-post-recent-listing' => 'Messàgge recende',
 	'create-blog-post-recent-listing-title' => 'Messàgge recende',
-	'create-blog-form-post-text' => "Teste d'u blog",
+	'create-blog-form-post-text' => 'Teste d\'u blog',
 	'create-blog-invalid-title-error' => 'Titole invalide',
-	'create-listing-confirm-info' => "Copie e 'ngolle 'u codece seguende:",
-	'create-blog-categories-textinput' => "Aggiunge 'na categorije",
+	'create-listing-confirm-info' => 'Copie e \'ngolle \'u codece seguende:',
+	'create-blog-categories-textinput' => 'Aggiunge \'na categorije',
 	'create-blog-categories-submit' => 'Conferme',
-	'create-blog-save' => "Reggistre 'a vôsce",
-	'create-blog-preview' => "Vide l'andeprime",
-	'create-blog-updated' => "Messàgge d'u blog ccrejate o aggiornate.",
+	'create-blog-save' => 'Reggistre \'a vôsce',
+	'create-blog-preview' => 'Vide l\'andeprime',
+	'create-blog-updated' => 'Messàgge d\'u blog ccrejate o aggiornate.',
 	'create-blog-listing-preview' => 'Andeprime',
 	'create-blog-listing-matches' => 'Combronde',
 	'create-blog-listing-matches-calculate' => 'Calcolate',
@@ -4871,22 +4528,22 @@ $messages['roa-tara'] = [
 	'blog-readfullpost' => 'Ligge de cchiù',
 	'blog-olderposts' => 'Messàgge cchiù vecchie',
 	'blog-newerposts' => 'Messàgge cchiù nuève',
-	'blog-nbrcomments' => "{{PLURAL:$1|'Nu commende|$1 commende}}",
+	'blog-nbrcomments' => '{{PLURAL:$1|\'Nu commende|$1 commende}}',
 	'blog-nopostfound' => 'Nisciune messàgge acchiate.',
 	'blog-writeone' => 'Scrivene une!',
-	'blog-empty-user-blog' => "Stu utende non g'ha scritte nisciune messàgge d'u blog!",
+	'blog-empty-user-blog' => 'Stu utende non g\'ha scritte nisciune messàgge d\'u blog!',
 	'blog-added' => 'aggiunde',
 	'blog-edited' => 'cangiate',
 	'blog-page' => 'Blog',
 	'blog-zero-comments' => 'Angore nisciune commende!',
-	'blog-comment-post' => "Manne 'nu commende",
+	'blog-comment-post' => 'Manne \'nu commende',
 	'blog-comments' => 'Commende',
-	'blog-rc-comments' => "Commende d'u blog",
-	'blog-comments-new' => "Commende nuéve jndr'à 'u blog",
-	'blog-comments-save' => "Reggistre 'nu commende jndr'à 'u blog",
+	'blog-rc-comments' => 'Commende d\'u blog',
+	'blog-comments-new' => 'Commende nuéve jndr\'à \'u blog',
+	'blog-comments-save' => 'Reggistre \'nu commende jndr\'à \'u blog',
 	'blog-comments-label' => 'Stoche a commende',
 	'blog-voting-label' => 'Stoche a vote',
-	'blog-comments-info' => "Sta buatte ause 'nu 'ngresse de stile wikitext",
+	'blog-comments-info' => 'Sta buatte ause \'nu \'ngresse de stile wikitext',
 	'blog-comments-login' => '<a href="$1" rel="nofollow">Tràse</a> pe commendà',
 	'blog-comments-anonymous' => 'Utende anonime',
 	'blog-comment-delete' => 'scangille',
@@ -4896,25 +4553,17 @@ $messages['roa-tara'] = [
 	'blog-comment-edit' => 'cange',
 	'blog-avatar-preferences-title' => 'Immaggine',
 	'blog-page-rate' => 'Valute sta vôsce:',
-	'blog-create-post-label' => "Ccrejè 'nu messàgge d'u blog",
-	'blog-create-label' => "Ccreje 'na vôsce d'u blog",
+	'blog-create-post-label' => 'Ccrejè \'nu messàgge d\'u blog',
+	'blog-create-label' => 'Ccreje \'na vôsce d\'u blog',
 	'blog-refresh-label' => 'Aggiorne',
 	'blog-userblog' => 'Blog de $1',
 	'blog-fromsitename' => 'Da $1',
-	'blogs-reportproblem' => "Segnale 'nu probbleme",
+	'blogs-reportproblem' => 'Segnale \'nu probbleme',
 	'blogs-comment-hidden' => 'Commende scunnute.',
 ];
 
-/** Russian (русский)
- * @author DCamer
- * @author Eleferen
- * @author G0rn
- * @author Kuzura
- * @author Lockal
- * @author Александр Сигачёв
- */
 $messages['ru'] = [
-	'blog-file-page' => "<a href='$1'>$2</> пост в блоге <a href='$3'>$4</a>",
+	'blog-file-page' => '<a href=\'$1\'>$2</> пост в блоге <a href=\'$3\'>$4</a>',
 	'createblogpage' => 'Создание блога',
 	'createbloglistingpage' => 'Создать список блогов',
 	'create-blog-spam' => 'Похоже на спам',
@@ -5025,15 +4674,12 @@ $messages['ru'] = [
 	'blog-desc' => 'Статьи блога',
 	'blog-movepage-badtitle' => 'Неверное название записи в блоге.',
 	'blog-comment-sending' => 'Отправка…',
-	'blog-by' => '$1 от $2',
+	'blog-by' => '$1; $2',
 	'blogs-searchprofile' => 'Блоги',
 	'blogs-searchprofile-tooltip' => 'Поиск в блогах и в списках блогов',
 	'user-blog-url-link' => 'Блог участника:$1',
 ];
 
-/** Sanskrit (संस्कृतम्)
- * @author NehalDaveND
- */
 $messages['sa'] = [
 	'create-blog-invalid-title-error' => 'अमान्यं शीर्षकम्',
 	'create-blog-no-login' => 'प्रवेशः न कृतः',
@@ -5052,11 +4698,8 @@ $messages['sa'] = [
 	'blog-fromsitename' => '$1 इत्यस्मात्',
 ];
 
-/** Scots (Scots)
- * @author John Reid
- */
 $messages['sco'] = [
-	'blog-file-page' => "<a href='$1'>$2</a> post oan <a href='$3'>$4's</a> blog",
+	'blog-file-page' => '<a href=\'$1\'>$2</a> post oan <a href=\'$3\'>$4\'s</a> blog',
 	'createblogpage' => 'Creaut blog',
 	'createbloglistingpage' => 'Creaut blog leetin',
 	'create-blog-spam' => 'Luiks like spam',
@@ -5069,7 +4712,7 @@ $messages['sco'] = [
 	'create-blog-post-recent-listing-log' => 'Creautit airticle fer recynt blog posts',
 	'create-blog-post-title' => 'Creaut ae new blog post',
 	'create-blog-post-title-edit' => 'Eedit ae blog post',
-	'create-blog-form-title' => "Whit's ae blog post?",
+	'create-blog-form-title' => 'Whit\'s ae blog post?',
 	'create-blog-form-post-text' => 'Blog tex',
 	'create-blog-form-info' => 'Blog posts ar ae wunnerfu waa o shairin news, opeenions, n creauteev pieces wi the communitie.',
 	'create-blog-form-post-title' => 'Blog post title',
@@ -5089,7 +4732,7 @@ $messages['sco'] = [
 	'create-blog-permission-denied' => 'Mistak while hainin blog page: Permission denied',
 	'create-blog-article-already-exists' => 'Blog post wi that name awreadie exeests, please select different name',
 	'create-blog-listing-title' => 'Creautt ae new blog leetin page',
-	'create-blog-listing-form-title' => "Whit's ae blog leetin page?",
+	'create-blog-listing-form-title' => 'Whit\'s ae blog leetin page?',
 	'create-blog-listing-form-info' => 'Blog leetin pages ar uised tae aggregate blog leetins fae differant writers thegither oantae the ae page.
 Creaut blog leetin pages fer categeries like "Scots onthurlment", "The Corries", or even combine monie categeries.',
 	'create-blog-listing-page-title' => 'Blog leetin page title',
@@ -5109,9 +4752,9 @@ Creaut blog leetin pages fer categeries like "Scots onthurlment", "The Corries",
 	'create-blog-listing-output-as-page' => 'Craut leetin aes new page',
 	'create-blog-listing-tag-format-not-recognized-on-page' => 'Blog leetin tag no recognised oan page',
 	'blog-header' => 'Blog airticles in categerie "$1"',
-	'blog-subheader' => "{{PLURAL:$1|Thaur's yin blog post|The follaein $1 blog airticles ar}} in this categerie.",
-	'blog-subheader-all' => "{{PLURAL:$1|Thaur's yin blog airticle in this categerie.|The follaein $1 blog airticles ar in this categerie, oot o $2 total.}}",
-	'blog-invalidparam' => "Onkent boondin '$1' is ignored. Please uise yin o the available boondins: <code>$2</code>.",
+	'blog-subheader' => '{{PLURAL:$1|Thaur\'s yin blog post|The follaein $1 blog airticles ar}} in this categerie.',
+	'blog-subheader-all' => '{{PLURAL:$1|Thaur\'s yin blog airticle in this categerie.|The follaein $1 blog airticles ar in this categerie, oot o $2 total.}}',
+	'blog-invalidparam' => 'Onkent boondin \'$1\' is ignored. Please uise yin o the available boondins: <code>$2</code>.',
 	'blog-emptyparam' => 'Name o boondin canna be tuim',
 	'blog-defaulttitle' => 'Blogs',
 	'blog-continuereading' => 'Keep readin &raquo;',
@@ -5155,7 +4798,7 @@ Creaut blog leetin pages fer categeries like "Scots onthurlment", "The Corries",
 	'blog-widgets-label' => 'Widget controlbuird',
 	'blog-listing-zero-other' => 'This uiser haesna wrutten onie blog posts yet!',
 	'blog-listing-created' => 'Blog leetin page cræftit',
-	'blog-userblog' => "$1's blog",
+	'blog-userblog' => '$1\'s blog',
 	'blog-fromsitename' => 'Fae $1',
 	'blogs-reportproblem' => 'Report ae proablem',
 	'blogs-comment-hidden' => 'Comment skaukt.',
@@ -5173,26 +4816,14 @@ Creaut blog leetin pages fer categeries like "Scots onthurlment", "The Corries",
 	'user-blog-url-link' => 'Uiser blog:$1',
 ];
 
-/** Sinhala (සිංහල)
- * @author පසිඳු කාවින්ද
- */
 $messages['si'] = [
 	'blog-userblog' => '$1 ගේ බ්ලොගය',
 ];
 
-/** Slovenian (slovenščina)
- * @author Dbc334
- */
 $messages['sl'] = [
 	'blog-comment-history' => 'zgodovina',
 ];
 
-/** Serbian (Cyrillic script) (српски (ћирилица)‎)
- * @author Aktron
- * @author Milicevic01
- * @author Rancher
- * @author Verlor
- */
 $messages['sr-ec'] = [
 	'createblogpage' => 'Стварање блога',
 	'create-blog-post-recent-listing' => 'Скорашње поруке',
@@ -5265,14 +4896,8 @@ $messages['sr-ec'] = [
 	'user-blog-url-link' => 'Кориснички блог:$1',
 ];
 
-/** Swedish (svenska)
- * @author Jopparn
- * @author Lokal Profil
- * @author Tobulos1
- * @author WikiPhoenix
- */
 $messages['sv'] = [
-	'blog-file-page' => "<a href='$1'>$2</a> som inlägg på <a href='$3'>$4s</a> blogg",
+	'blog-file-page' => '<a href=\'$1\'>$2</a> som inlägg på <a href=\'$3\'>$4s</a> blogg',
 	'createblogpage' => 'Skapa blogg',
 	'createbloglistingpage' => 'Skapa blogglista',
 	'create-blog-spam' => 'Ser ut som spam',
@@ -5325,61 +4950,61 @@ Skapa blogglistor för kategorier som "Barack Obama", "Fan Fiction", eller kombi
 	'create-blog-listing-output-as-page' => 'Skapa lista som en ny sida',
 	'create-blog-listing-tag-format-not-recognized-on-page' => 'Taggen på blogglistan känns inte igen på sidan',
 	'blog-header' => 'Bloggartiklar i kategorin "$1"',
-	'blog-subheader' => '{{PLURAL:$1|Det finns ett blogginlägg|Följande bloggartiklar finns}} i denna kategori.',
-	'blog-subheader-all' => '{{PLURAL:$1|Det finns en bloggartikel i denna kategori|Följande $1 bloggartiklar finns i denna kategori, ut av $2 totalt.}}',
-	'blog-invalidparam' => "Okänd parameter '$1' ignoreras. Använd en av de tillgängliga parametrarna: <code>$2</code>.",
-	'blog-emptyparam' => 'Parameterns namn kan inte vara tom',
+	'blog-subheader' => 'Följande $1 blogg artiklar finns i denna kategori.',
+	'blog-subheader-all' => 'Följande $1 blogg artiklar finns i denna kategori av $2 totalt.',
+	'blog-invalidparam' => 'Okänd parameter \'$1\' ignoreras. Använd någon av tillgängliga parametrar: <code>$2</code>.',
+	'blog-emptyparam' => 'Namn på parameter kan inte vara tom',
 	'blog-defaulttitle' => 'Bloggar',
-	'blog-continuereading' => 'Fortsätt läsa &raquo;',
-	'blog-readfullpost' => 'Läs mer',
+	'blog-continuereading' => 'Fortsätt läsa »',
+	'blog-readfullpost' => 'Läs hela inlägget',
 	'blog-olderposts' => 'Äldre inlägg',
 	'blog-newerposts' => 'Nyare inlägg',
-	'blog-nbrcomments' => '{{PLURAL:$1|En kommentar|$1 kommentarer}}',
+	'blog-nbrcomments' => '{{PLURAL:$1|One kommenter|$1 kommenterar}}',
 	'blog-nopostfound' => 'Inga inlägg hittades.',
-	'blog-writeone' => 'Skriv en!',
-	'blog-empty-user-blog' => 'Denna användare har inte skrivit några blogginlägg ännu!',
+	'blog-writeone' => 'Skriva en!',
+	'blog-empty-user-blog' => 'Denna användare har inte skrivit några blogginlägg ännu! \'\'(Obs: att skriva blogginlägg, besök\' \'\'\'[[Special:CreateBlogPage]]\'\'\'.)\'\'',
 	'blog-added' => 'tillagd',
 	'blog-edited' => 'redigerad',
 	'blog-page' => 'Blogg',
 	'blog-zero-comments' => 'Inga kommentarer ännu!',
-	'blog-comment-post' => 'Skicka kommentar',
+	'blog-comment-post' => 'Inlägg kommentar',
 	'blog-comments' => 'Kommentarer',
 	'blog-rc-comments' => 'Bloggkommentarer',
-	'blog-comments-new' => 'Ny kommentar på bloggen',
+	'blog-comments-new' => 'Ny kommentar i bloggen',
 	'blog-comments-save' => 'Spara kommentar på bloggen',
-	'blog-comments-label' => 'Kommenterar',
+	'blog-comments-label' => 'Kommentering',
 	'blog-voting-label' => 'Röstning',
-	'blog-comments-info' => 'Detta fält använder wikitext-stil för indata',
-	'blog-comments-login' => '<a href="$1" rel="nofollow">Logga in</a> för att kommentera',
+	'blog-comments-info' => 'Detta fält använder wikitext-stil input',
+	'blog-comments-login' => '<a href="$1">Logga in</a> för att kommentera',
 	'blog-comments-dsc' => 'Nyaste först',
-	'blog-comments-asc' => 'Nyaste sist',
+	'blog-comments-asc' => 'Nyaste sista',
 	'blog-comments-anonymous' => 'Anonym användare',
 	'blog-comment-delete' => 'radera',
-	'blog-comment-hide' => 'göm',
-	'blog-comment-unhide' => 'ta fram',
+	'blog-comment-hide' => 'dölja',
+	'blog-comment-unhide' => 'ej dölja',
 	'blog-comment-history' => 'historik',
 	'blog-comment-edit' => 'redigera',
-	'blog-comment-error' => 'Kommentaren kunde inte sparas',
-	'blog-comment-cannot-add' => 'Du kan inte lägga till kommentarer på bloggen.',
+	'blog-comment-error' => 'Kommentar kan inte sparas',
+	'blog-comment-cannot-add' => 'Du kan inte lägga till kommentarer till bloggen.',
 	'blog-avatar-preferences-title' => 'Avatar',
-	'blog-page-rate' => 'Betygsätt den här artikeln:',
+	'blog-page-rate' => 'Poängsätt denna artikel:',
 	'blog-create-post-label' => 'Skapa blogginlägg',
 	'blog-create-label' => 'Skapa bloggartikel',
 	'blog-create-next-label' => 'Skapa ny bloggartikel',
 	'blog-create-listing-label' => 'Skapa blogglista',
 	'blog-refresh-label' => 'Uppdatera',
-	'blog-widgets-label' => 'Kontrollpanel för gränssnittskomponenter',
+	'blog-widgets-label' => 'Widget Instrumentbräda',
 	'blog-listing-zero-other' => 'Denna användare har inte skrivit några blogginlägg ännu!',
-	'blog-listing-created' => 'Blogglistsida skapades',
+	'blog-listing-created' => 'Blogglista sida skapats',
 	'blog-userblog' => '$1s blogg',
 	'blog-fromsitename' => 'Från $1',
 	'blogs-reportproblem' => 'Rapportera problem',
-	'blogs-comment-hidden' => 'Kommentar gömd.',
+	'blogs-comment-hidden' => 'Kommentar dold.',
 	'right-blog-comments-toggle' => 'Slå på/av kommentarer på bloggartiklar',
 	'right-blog-comments-delete' => 'Radera kommentarer på bloggartiklar',
 	'right-blog-articles-edit' => 'Redigera bloggartiklar',
 	'right-blog-articles-move' => 'Flytta bloggartiklar',
-	'blogs-recent-url-text' => 'Senaste blogginlägg',
+	'blogs-recent-url-text' => 'Senaste bloggarna',
 	'blog-desc' => 'Bloggartiklar',
 	'blog-movepage-badtitle' => 'Ogiltig titel för blogginlägget.',
 	'blog-comment-sending' => 'Skickar...',
@@ -5387,12 +5012,9 @@ Skapa blogglistor för kategorier som "Barack Obama", "Fan Fiction", eller kombi
 	'blogs-searchprofile' => 'Bloggar',
 	'blogs-searchprofile-tooltip' => 'Sök i bloggartiklar och blogglistor',
 	'user-blog-url-link' => 'Användarblogg: $1',
+	'blogs-recent-url' => 'Blog:Recent_posts',
 ];
 
-/** Swahili (Kiswahili)
- * @author Lloffiwr
- * @author Muddyb Blast Producer
- */
 $messages['sw'] = [
 	'createblogpage' => 'Anzisha blogu',
 	'createbloglistingpage' => 'Anzisha orodha ya blogu',
@@ -5475,10 +5097,6 @@ Anzisha kurasa za kuorodhesha blogu kwa ajili ya jamii fulani kama vile "Barack 
 	'blog-comment-sending' => 'Inatumwa...',
 ];
 
-/** Tamil (தமிழ்)
- * @author ElangoRamanujam
- * @author TRYPPN
- */
 $messages['ta'] = [
 	'create-blog-categories-submit' => 'சமர்ப்பி',
 	'create-blog-save' => 'பக்கத்தை சேமி',
@@ -5494,14 +5112,8 @@ $messages['ta'] = [
 	'blog-comment-sending' => 'அனுப்பப்படுகிறது...',
 ];
 
-/** Telugu (తెలుగు)
- * @author Chaduvari
- * @author Praveen Illa
- * @author Ravichandra
- * @author Veeven
- */
 $messages['te'] = [
-	'blog-file-page' => "<a href='$3'>$4's</a> బ్లాగులో <a href='$1'>$2</a> టపా",
+	'blog-file-page' => '<a href=\'$3\'>$4\'s</a> బ్లాగులో <a href=\'$1\'>$2</a> టపా',
 	'createblogpage' => 'బ్లాగును సృష్టించు',
 	'createbloglistingpage' => 'బ్లాగు జాబితాను సృష్టించు',
 	'create-blog-spam' => 'చెత్తలా అనిపిస్తుంది',
@@ -5552,7 +5164,7 @@ $messages['te'] = [
 	'blog-header' => '"$1" వర్గంలోని బ్లాగు వ్యాసాలు',
 	'blog-subheader' => 'ఈ వర్గంలో {{PLURAL:$1|ఒక బ్లాగు టపా ఉంది|కింది $1 బ్లాగు వ్యాసాలున్నాయి}}.',
 	'blog-subheader-all' => '{{PLURAL:$1|ఈ వర్గంలో ఒక బ్లాగు వ్యాసం ఉంది.|ఈ వర్గంలో కింది $1 బ్లాగు వ్యాసాలున్నాయి, మొత్తం $2 లో.}}',
-	'blog-invalidparam' => "తెలీని పరామితి '$1' ని విస్మరించాం. అందుబాటులో ఉన్న పరామితుల్లో ఒకదాన్ని వాడండి: <code>$2</code>.",
+	'blog-invalidparam' => 'తెలీని పరామితి \'$1\' ని విస్మరించాం. అందుబాటులో ఉన్న పరామితుల్లో ఒకదాన్ని వాడండి: <code>$2</code>.',
 	'blog-emptyparam' => 'పరామితి పేరు ఖాళీగా ఉండేందుకు వీల్లేదు',
 	'blog-defaulttitle' => 'బ్లాగులు',
 	'blog-continuereading' => 'కొనసాగించండి &raquo;',
@@ -5614,16 +5226,10 @@ $messages['te'] = [
 	'user-blog-url-link' => 'వాడుకరి బ్లాగు: $1',
 ];
 
-/** Tetum (tetun)
- * @author MF-Warburg
- */
 $messages['tet'] = [
 	'blog-comment-history' => 'istória',
 ];
 
-/** Tagalog (Tagalog)
- * @author AnakngAraw
- */
 $messages['tl'] = [
 	'createblogpage' => 'Lumikha ng blog',
 	'createbloglistingpage' => 'Lumikha ng talaan ng blog',
@@ -5678,7 +5284,7 @@ $messages['tl'] = [
 	'blog-header' => 'Mga artikulo ng blog na nasa loob ng kategoryang "$1"',
 	'blog-subheader' => '{{PLURAL:$1|May isang paskil na blog|Ang sumusunod na $1 mga artikulong pamblog ay}} nasa loob ng kategoryang ito.',
 	'blog-subheader-all' => '{{PLURAL:$1|May isang artikulo ng blog sa loob ng kategoryang ito|Ang sumusunod na mga $1 artikulong pamblog ay nasa loob ng kategoryang ito, mula sa kabuoang $2.}}',
-	'blog-invalidparam' => "Hindi pinansin ang hindi nalalamang parametrong '$1'.  Mangyaring gumamit ng isang makukuhang mga parametro:  <code>$2</code>.",
+	'blog-invalidparam' => 'Hindi pinansin ang hindi nalalamang parametrong \'$1\'.  Mangyaring gumamit ng isang makukuhang mga parametro:  <code>$2</code>.',
 	'blog-emptyparam' => 'Hindi maaaring walang laman ang pangalan ng parametro',
 	'blog-defaulttitle' => 'Mga blog',
 	'blog-continuereading' => 'Ipagpatuloy ang pagbasa ng &raquo;',
@@ -5740,10 +5346,6 @@ $messages['tl'] = [
 	'blogs-searchprofile-tooltip' => 'Maghanap sa loob ng Mga Artikulong Blog at Mga Kalistahan ng Blog',
 ];
 
-/** Talysh (толышә зывон)
- * @author Erdemaslancan
- * @author Гусейн
- */
 $messages['tly'] = [
 	'create-blog-invalid-title-error' => 'Сәрловһә сәростни',
 	'create-blog-categories-submit' => 'Вығандеј',
@@ -5760,12 +5362,6 @@ $messages['tly'] = [
 	'blog-comment-sending' => 'Вығандејдә…',
 ];
 
-/** Turkish (Türkçe)
- * @author Incelemeelemani
- * @author Sayginer
- * @author Sucsuzz
- * @author Suelnur
- */
 $messages['tr'] = [
 	'createblogpage' => 'Blog oluştur',
 	'create-blog-empty-title-error' => 'Başlık gerekli',
@@ -5813,9 +5409,6 @@ $messages['tr'] = [
 	'blog-comment-sending' => 'Gönderiliyor…',
 ];
 
-/** Tatar (Cyrillic script) (татарча)
- * @author Ajdar
- */
 $messages['tt-cyrl'] = [
 	'createblogpage' => 'Блог ясау',
 	'createbloglistingpage' => 'Блоглар исемлеге төзү',
@@ -5864,24 +5457,12 @@ $messages['tt-cyrl'] = [
 	'blogs-comment-hidden' => 'Фикер яшерелгән',
 ];
 
-/** Central Atlas Tamazight (ⵜⴰⵎⴰⵣⵉⵖⵜ)
- * @author Tifinaghes
- */
 $messages['tzm'] = [
 	'create-blog-listing-matches-calculate' => 'ⴰⵙⵍⴽⴰⵎ',
 ];
 
-/** Ukrainian (українська)
- * @author A1
- * @author Erami
- * @author Kerm68
- * @author Prima klasy4na
- * @author Steve.rusyn
- * @author SteveR
- * @author Тест
- */
 $messages['uk'] = [
-	'blog-file-page' => "<a href='$1'>$2</> пост у блозі <a href='$3'>$4</a>",
+	'blog-file-page' => '<a href=\'$1\'>$2</> пост у блозі <a href=\'$3\'>$4</a>',
 	'createblogpage' => 'Створити блог',
 	'createbloglistingpage' => 'Створити список блогів',
 	'create-blog-spam' => 'Схоже на спам',
@@ -5915,7 +5496,7 @@ $messages['uk'] = [
 	'create-blog-article-already-exists' => 'Запис блогу з такою назвою вже існує. Будь ласка, оберіть іншу назву',
 	'create-blog-listing-title' => 'Створення нового списку блогів',
 	'create-blog-listing-form-title' => 'Для чого потрібен список блогів?',
-	'create-blog-listing-form-info' => "Сторінки списків блогів використовуються для об'єднання записів блогів різних авторів на одній сторінці. Створіть сторінки списків блогів для таких категорій, як «Барак Обама», «Фанфік», або навіть об'єднайте кілька категорій.",
+	'create-blog-listing-form-info' => 'Сторінки списків блогів використовуються для об\'єднання записів блогів різних авторів на одній сторінці. Створіть сторінки списків блогів для таких категорій, як «Барак Обама», «Фанфік», або навіть об\'єднайте кілька категорій.',
 	'create-blog-listing-page-title' => 'Заголовок сторінки списку блогів',
 	'create-blog-listing-preview' => 'Попередній перегляд',
 	'create-blog-listing-authors' => 'Отримати записи блогів від цих авторів (розділяйте комами)',
@@ -5997,25 +5578,18 @@ $messages['uk'] = [
 	'user-blog-url-link' => 'Блог користувача:$1',
 ];
 
-/** Uzbek (oʻzbekcha/ўзбекча)
- * @author CoderSI
- * @author Sociologist
- */
 $messages['uz'] = [
 	'create-blog-categories-textinput' => 'Yangi turkum qoʻshish',
 	'create-blog-preview' => 'Ko‘rib chiqish',
 ];
 
-/** Veps (vepsän kel’)
- * @author Игорь Бродский
- */
 $messages['vep'] = [
 	'createblogpage' => 'Säta blog',
 	'create-blog-spam' => 'Nägub kuti spam',
 	'create-blog-post-recent-listing' => 'Tantoižed kirjutesed',
 	'create-blog-form-post-text' => 'Blogantekst',
 	'create-blog-invalid-title-error' => 'petuzline pälkirjutez',
-	'create-blog-save' => "Kirjutada lehtpol' muštho",
+	'create-blog-save' => 'Kirjutada lehtpol\' muštho',
 	'create-blog-listing-preview' => 'Ezikacund',
 	'create-blog-listing-matches-calculate' => 'Lugeda',
 	'create-blog-listing-matches-recalculate' => 'Lugeda udes',
@@ -6030,15 +5604,8 @@ $messages['vep'] = [
 	'blog-comment-edit' => 'redaktiruida',
 ];
 
-/** Vietnamese (Tiếng Việt)
- * @author Baonguyen21022003
- * @author KhangND
- * @author Minh Nguyen
- * @author Rémy Lee
- * @author Xiao Qiao
- */
 $messages['vi'] = [
-	'blog-file-page' => "<a href='$1'>$2</a> đăng vào blog <a href='$3'>của $4</a>",
+	'blog-file-page' => '<a href=\'$1\'>$2</a> đăng vào blog <a href=\'$3\'>của $4</a>',
 	'createblogpage' => 'Tạo blog',
 	'createbloglistingpage' => 'Tạo blog danh sách',
 	'create-blog-spam' => 'Trông giống thư rác',
@@ -6093,7 +5660,7 @@ Tạo trang danh sách blog cho thể loại chẳng hạn như "Tin tức", "Tr
 	'blog-header' => 'Bài viết blog trong thể loại "$1"',
 	'blog-subheader' => '{{PLURAL:$1|Chỉ có một bài đăng blog|$1 bài viết blog sau đây nằm}} trong thể loại này.',
 	'blog-subheader-all' => '{{PLURAL:$1|Chỉ có một bài viết blog trong thể loại này.|$1 bài viết blog sau đây nằm trong thể loại này, trên tổng số $2.}}',
-	'blog-invalidparam' => "Tham số không rõ '$1' bị bỏ qua. Xin vui lòng sử dụng một trong những tham số có sẵn: <code>$2</code>.",
+	'blog-invalidparam' => 'Tham số không rõ \'$1\' bị bỏ qua. Xin vui lòng sử dụng một trong những tham số có sẵn: <code>$2</code>.',
 	'blog-emptyparam' => 'Tên của tham số không thể để trống',
 	'blog-defaulttitle' => 'Blog',
 	'blog-continuereading' => 'Tiếp tục đọc &raquo;',
@@ -6155,25 +5722,13 @@ Tạo trang danh sách blog cho thể loại chẳng hạn như "Tin tức", "Tr
 	'user-blog-url-link' => 'Blog thành viên:$1',
 ];
 
-/** Walloon (walon)
- * @author Srtxg
- */
 $messages['wa'] = [
 	'blog-added' => 'radjoutêye',
 	'blog-edited' => 'candjeye',
 ];
 
-/** Simplified Chinese (中文（简体）‎)
- * @author Dimension
- * @author Ffaarr
- * @author Hydra
- * @author Hzy980512
- * @author Liangent
- * @author Liuxinyu970226
- * @author Wilsonmess
- */
 $messages['zh-hans'] = [
-	'blog-file-page' => "<a href='$3'>$4's</a>发表了新博客：<a href='$1'>$2</a>",
+	'blog-file-page' => '<a href=\'$3\'>$4\'s</a>发表了新博客：<a href=\'$1\'>$2</a>',
 	'createblogpage' => '创建博客',
 	'createbloglistingpage' => '创建博客列表',
 	'create-blog-spam' => '看起来像垃圾邮件',
@@ -6232,7 +5787,7 @@ $messages['zh-hans'] = [
 	'blog-emptyparam' => '参数名不能为空',
 	'blog-defaulttitle' => '博客',
 	'blog-continuereading' => '继续阅读 &raquo;',
-	'blog-readfullpost' => '读更多',
+	'blog-readfullpost' => '<span class="button">读更多</span>',
 	'blog-olderposts' => '较旧的帖子',
 	'blog-newerposts' => '较新的帖子',
 	'blog-nbrcomments' => '{{PLURAL:$1|一条评论|$1条评论}}',
@@ -6250,7 +5805,7 @@ $messages['zh-hans'] = [
 	'blog-comments-save' => '在博客中保存评论',
 	'blog-comments-label' => '正在评论',
 	'blog-voting-label' => '投票',
-	'blog-comments-info' => '此框使用wikitext风格输入',
+	'blog-comments-info' => '此框使用wiki文本格式输入',
 	'blog-comments-login' => '<a href="$1" rel="nofollow">登录</a>以发表评论',
 	'blog-comments-dsc' => '从最近开始',
 	'blog-comments-asc' => '最新后',
@@ -6291,15 +5846,8 @@ $messages['zh-hans'] = [
 	'user-blog-url-link' => '用户博客:$1',
 ];
 
-/** Traditional Chinese (中文（繁體）‎)
- * @author Citizen01
- * @author Cwlin0416
- * @author Ffaarr
- * @author LNDDYL
- * @author Liuxinyu970226
- */
 $messages['zh-hant'] = [
-	'blog-file-page' => "<a href='$1'>$2</a> 張貼於 <a href='$3'>$4's</a> 部落格",
+	'blog-file-page' => '<a href=\'$3\'>$4\'s</a>發表了新部落格文章：<a href=\'$1\'>$2</a>',
 	'createblogpage' => '建立部落格',
 	'createbloglistingpage' => '建立部落格清單',
 	'create-blog-spam' => '看起來像垃圾訊息',
@@ -6389,11 +5937,82 @@ $messages['zh-hant'] = [
 	'blog-movepage-badtitle' => '無效的部落格文章標題。',
 	'blog-comment-sending' => '正在發送...',
 	'blogs-searchprofile' => '部落格',
+	'blog-comments-info' => '此框使用wiki文本格式输入',
+	'blog-invalidparam' => '未知參數‘$1’被忽略。請用一個可使用的参數：<code>$2</code>。',
+	'blog-nbrcomments' => '{{PLURAL:$1|一則評論|$1則評論}}',
+	'blog-subheader-all' => '{{PLURAL:$1|這個分類中有一篇部落格文章|以下$2篇部落格文章中的$1篇在這個分類中。}}',
+	'blog-subheader' => '這個分類中{{PLURAL:$1|有一篇部落格文章|有$1篇部落格文章}}。',
+	'blogs-searchprofile-tooltip' => '在部落格文章和部落格列表中搜索',
 ];
 
-/** Chinese (Hong Kong) (中文（香港）‎)
- * @author Liuxinyu970226
- */
 $messages['zh-hk'] = [
 	'blog-comments-anonymous' => '匿名用戶',
+	'blog-comments-info' => '此框使用wiki文本格式输入',
+	'blog-comments-new' => '網誌的新評論',
+	'blog-comments-save' => '在網誌中儲存評論',
+	'blog-create-label' => '創建網誌文章',
+	'blog-create-listing-label' => '創建網誌清單',
+	'blog-create-next-label' => '創建新的網誌文章',
+	'blog-create-post-label' => '創建網誌文章',
+	'blog-defaulttitle' => '網誌',
+	'blog-desc' => '網誌文章',
+	'blog-file-page' => '<a href=\'$3\'>$4\'s</a>發表了新網誌：<a href=\'$1\'>$2</a>',
+	'blog-header' => '“$1”分類中的網誌文章',
+	'blog-invalidparam' => '未知參數‘$1’被忽略。請用一個可使用的参數：<code>$2</code>。',
+	'blog-listing-created' => '網誌列表已創建',
+	'blog-listing-zero-other' => '此使用者還未寫任何網誌文章 ！',
+	'blog-movepage-badtitle' => '無效的網誌文章標題。',
+	'blog-nbrcomments' => '{{PLURAL:$1|一則評論|$1則評論}}',
+	'blog-page' => '網誌',
+	'blog-subheader-all' => '{{PLURAL:$1|這個分類中有一篇網誌文章|以下$2篇網誌文章中的$1篇在這個分類中。}}',
+	'blog-subheader' => '這個分類中{{PLURAL:$1|有一篇網誌文章|有$1篇網誌文章}}。',
+	'blog-userblog' => '$1 的網誌',
+	'blogs-recent-url-text' => '最新網誌文章',
+	'blogs-searchprofile-tooltip' => '在網誌文章和網誌列表中搜索',
+	'blogs-searchprofile' => '網誌',
 ];
+
+$messages['no'] = [
+	'blog-added' => 'lagt til',
+	'blog-comment-delete' => 'slett',
+	'blog-comment-error' => 'Kommentar kunne ikke lagres',
+	'blog-comment-hide' => 'skjul',
+	'blog-comment-history' => 'historikk',
+	'blog-comment-post' => 'Post kommentar',
+	'blog-comment-unhide' => 'vis',
+	'blog-comments-anonymous' => 'Anonym bruker',
+	'blog-comments-asc' => 'Nyeste sist',
+	'blog-comments-dsc' => 'Nyeste først',
+	'blog-comments-login' => '<a href="$1">Logg inn</a> for å kommentere',
+	'blog-comments' => 'Kommentarer',
+	'blog-defaulttitle' => 'Blogger',
+	'blog-fromsitename' => 'Fra $1',
+	'blog-listing-zero-other' => 'Denne brukeren har ikke skrevet noen blogginnlegg ennå!',
+	'blog-newerposts' => 'Nyere innlegg',
+	'blog-nopostfound' => 'Ingen innlegg funnet.',
+	'blog-olderposts' => 'Eldre innlegg',
+	'blog-page' => 'Blogg',
+	'blog-rc-comments' => 'Bloggkommentarer',
+	'blog-refresh-label' => 'Oppdater',
+	'blog-userblog' => '$1s blogg',
+	'blog-writeone' => 'Skriv et!',
+	'blog-zero-comments' => 'Ingen kommentarer ennå!',
+	'blogs-comment-hidden' => 'Kommentar skjult.',
+	'blogs-reportproblem' => 'Rapporter problem',
+];
+
+$messages['zh'] = [
+	'blog-comments-info' => '此框使用wiki文本格式输入',
+	'blog-comments-label' => '允许评论',
+];
+
+$messages['zh-tw'] = [
+	'blog-comments-info' => '此框使用wiki文本格式输入',
+	'blog-file-page' => '<a href=\'$3\'>$4\'s</a>發表了新部落格文章：<a href=\'$1\'>$2</a>',
+	'blog-invalidparam' => '未知參數‘$1’被忽略。請用一個可使用的参數：<code>$2</code>。',
+	'blog-nbrcomments' => '{{PLURAL:$1|一則評論|$1則評論}}',
+	'blog-subheader-all' => '{{PLURAL:$1|這個分類中有一篇部落格文章|以下$2篇部落格文章中的$1篇在這個分類中。}}',
+	'blog-subheader' => '這個分類中{{PLURAL:$1|有一篇部落格文章|有$1篇部落格文章}}。',
+	'blogs-searchprofile-tooltip' => '在部落格文章和部落格列表中搜索',
+];
+

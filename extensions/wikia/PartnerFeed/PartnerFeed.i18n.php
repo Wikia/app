@@ -294,6 +294,7 @@ $messages['ia'] = [
 $messages['it'] = [
 	'partner-feed-achievements-leaderboard' => 'Classifica dei successi nella wiki',
 	'feed-main-title' => 'Feed partner Fandom',
+	'blog-posts-from-listing' => 'dalla lista: $1',
 ];
 
 $messages['ja'] = [
@@ -323,6 +324,7 @@ $messages['ko'] = [
 	'feed-title-leaderboard' => '배지 현황판',
 	'feed-main-title' => '위키아 파트너 피드',
 	'feed-title-recentchanges' => '최근 바뀜',
+	'blog-posts-from-listing' => '속한 글 목록: $1',
 ];
 
 $messages['ku-latn'] = [
@@ -735,5 +737,14 @@ $messages['zh-hant'] = [
 	'partner-feed-recent-changes' => '近期變動',
 	'feed-title-recentchanges' => '近期變動',
 	'feed-main-title' => 'Fandom合作夥伴新聞',
+	'blog-posts-from-listing' => '來自列表：$1',
+];
+
+$messages['zh-hk'] = [
+	'blog-posts-from-listing' => '來自列表：$1',
+];
+
+$messages['zh-tw'] = [
+	'blog-posts-from-listing' => '來自列表：$1',
 ];
 
