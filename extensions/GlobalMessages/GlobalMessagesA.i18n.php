@@ -6505,6 +6505,7 @@ Diese automatisch erstellte Spezialseite bietet eine \'\'\'alphabetische Übersi
 * Alternativ zu dieser automatisch erstellten Auflistung gibt es noch die [[:Kategorie:Inhalt|\'\'\'Kategorienübersicht\'\'\' als thematisch gegliederten Einstieg]].
 |}',
 	'already_a_member' => 'Bereits Wikia-Nutzer?',
+	'ancientpages-summary' => 'Diese Spezialseite zeigt eine Liste von Artikeln, die sehr lange nicht mehr geändert wurden. Sie ist hilfreich, um Artikel zu finden, die gegebenenfalls aktualisiert werden müssen.',
 ];
 
 $messages['de-ch'] = [
@@ -7559,7 +7560,7 @@ La contraseña para esta nueva cuenta puede cambiarse en [[Special:ChangePasswor
 	'action-userrights-interwiki' => 'modificar los derechos de usuarios en otros wikis',
 	'action-siteadmin' => 'bloquear o desbloquear la base de datos',
 	'action-sendemail' => 'enviar correos electrónicos',
-	'ancientpages' => 'Artículos más antiguos',
+	'ancientpages' => 'Páginas más antiguas',
 	'all-logs-page' => 'Todos los registros públicos',
 	'alllogstext' => 'Vista combinada de todos los registros disponibles de {{SITENAME}}.
 Puedes filtrar la vista seleccionando un tipo de registro, el nombre del usuario o la página afectada.',
