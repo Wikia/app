@@ -31540,6 +31540,7 @@ Send a new code by clicking [[Special:ConfirmEmail|here]].',
 	'createaccountblock' => '禁止创建帐户',
 	'createwikipagetitle' => '申请wiki',
 	'created' => '已被创建',
+	'creditspage' => '页面作者',
 ];
 
 $messages['zh-classical'] = [
@@ -31579,6 +31580,7 @@ Send a new code by clicking [[Special:ConfirmEmail|here]].',
 	'createwiki' => '申请wiki',
 	'createwikipagetitle' => '申请wiki',
 	'created' => '已被创建',
+	'creditspage' => '页面作者',
 ];
 
 $messages['zh-hans'] = [
@@ -32007,6 +32009,7 @@ Send a new code by clicking [[Special:ConfirmEmail|here]].',
 	'createwiki' => '申請wiki',
 	'createwikipagetitle' => '申請wiki',
 	'created' => '已被創建',
+	'creditspage' => '頁面作者',
 ];
 
 $messages['zh-min-nan'] = [
@@ -32055,6 +32058,7 @@ Send a new code by clicking [[Special:ConfirmEmail|here]].',
 	'createwiki' => '申请wiki',
 	'createwikipagetitle' => '申请wiki',
 	'created' => '已被创建',
+	'creditspage' => '页面作者',
 ];
 
 $messages['zh-tw'] = [
@@ -32117,6 +32121,7 @@ Send a new code by clicking [[Special:ConfirmEmail|here]].',
 	'createwiki' => '申請wiki',
 	'createwikipagetitle' => '申請wiki',
 	'created' => '已被創建',
+	'creditspage' => '頁面作者',
 ];
 
 $messages['zh-yue'] = [
