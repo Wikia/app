@@ -266,13 +266,13 @@ Please confirm that you really want to recreate this article.',
 * http://green.wikia.com/|Green
 * http://starwars.wikia.com/|Star Wars
 * http://solarcooking.wikia.com/|Solar Cooking',
-	'corporatepage-footer-leftcolumn' => '* http://de.wikia.com|Deutsch
-* http://it.wikia.com|Italiano
-* http://es.wikia.com|Espa&ntilde;ol
-* http://pl.wikia.com|Polski
-* http://fr.wikia.com|Français
+	'corporatepage-footer-leftcolumn' => '* http://de.wikia.com/wiki/Wikia|Deutsch
+* http://es.wikia.com/wiki/Wikia|Espa&ntilde;ol
+* http://fr.wikia.com/Wikia|Français
+* http://nl.wikia.com/wiki/Wikia_Nederland|Nederlands
+* http://pl.wikia.com/wiki/Wikia_Polska|Polski
 * Languages|More...',
-	'corporatepage-create-your-own-wiki' => 'Create your own wiki and find a community of people who all love what you love.',
+	'corporatepage-create-your-own-wiki' => 'Create your own wiki and meet people who love what you love.',
 	'corporatepage-create-button' => 'Create a wiki',
 	'corporatepage-rights' => '&copy; $1 Wikia, Inc. All rights reserved',
 	'corporatepage-more-link' => 'More Links',
@@ -4734,6 +4734,12 @@ Confirmeu que realment voleu tornar-la a crear.',
 	'create_an_account' => 'crea un compte',
 	'createpage' => 'Comença un article nou',
 	'choose_reason' => 'Tria un motiu',
+	'corporatepage-footer-leftcolumn' => '* http://ca.wikia.com|Català
+* http://de.wikia.com|Deutsch
+* http://es.wikia.com|Espa&ntilde;ol
+* http://pl.wikia.com|Polski
+* http://fr.wikia.com|Français
+* Languages|Més...',
 ];
 
 $messages['cbk-zam'] = [
@@ -6249,6 +6255,14 @@ Bitte bestätige, dass Du diese Seite tatsächlich neu anlegen möchtest.',
 	'community' => 'Community',
 	'create-account-new' => 'Benutzerkonto bei Fandom erstellen',
 	'cockpit_hide' => 'Cockpit verstecken',
+	'corporatepage-company-info-headline' => 'Firmeninformationen',
+	'corporatepage-create-button' => 'Erstelle ein Wiki',
+	'corporatepage-create-your-own-wiki' => 'Erstelle dein eigenes Wiki und erschaffe eine Community mit Leuten, die dasselbe mögen wie du.',
+	'corporatepage-edits-made' => 'Bearbeitungen Heute',
+	'corporatepage-featured-wikis-headline' => 'Vorgestellte Wikis',
+	'corporatepage-find-a-wiki' => 'Nach einem Wiki suchen',
+	'corporatepage-go-to-wiki' => 'Besuche $1',
+	'corporatepage-watchlist' => 'Beobachtungsliste',
 ];
 
 $messages['de-formal'] = [
@@ -7436,6 +7450,60 @@ Este código de confirmación caducará el $4.',
 	'create-account-new' => 'Crea tu cuenta de Fandom',
 	'cockpit_hide' => 'Ocultar cabina',
 	'community' => 'Comunidad',
+	'corporatepage-company-info-headline' => 'Información de la compañía',
+	'corporatepage-create-button' => 'Crear un wiki',
+	'corporatepage-create-your-own-wiki' => 'Crea tu propio wiki y encuentra una comunidad que comparta tus gustos.',
+	'corporatepage-edits-made' => 'ediciones hechas hoy',
+	'corporatepage-featured-wikis-headline' => 'Wikis destacados',
+	'corporatepage-find-a-wiki' => 'Encuentra un wiki',
+	'corporatepage-footer-bottom' => '* http://comunidad.wikia.com/wiki/Project:T%C3%A9rminos_de_uso|Términos de Uso
+* http://comunidad.wikia.com/wiki/Project:Pol%C3%ADtica_de_Privacidad|Políticas de Privacidad
+* http://recipes.wikia.com/|Recipes
+* http://green.wikia.com/|Green
+* http://starwars.wikia.com/|Star Wars
+* http://solarcooking.wikia.com/|Solar Cooking',
+	'corporatepage-footer-leftcolumn' => '* http://de.wikia.com|Deutsch
+* http://it.wikia.com|Italiano
+* http://comunidad.wikia.com|Espa&ntilde;ol
+* http://pl.wikia.com|Polski
+* http://fr.wikia.com|Français
+* Languages|Más...',
+	'corporatepage-footer-middlecolumn' => '* http://www.facebook.com/wikia.es|Hazte fan en Facebook|File:Icon.footer.facebook.32x32.png|new-window
+* https://twitter.com/es_wikia|Síguenos en Twitter|File:Icon.footer.twitter.32x32.png|new-window
+* http://comunidad.wikia.com/wiki/Blog:Noticias_de_Wikia|Lee nuestro blog|File:Icon.footer.wikia.32x32.png',
+	'corporatepage-footer-rightcolumn' => '* http://comunidad.wikia.com/wiki/Sobre_nosotros|Acerca de Wikia
+* Hiring|Trabajo
+* Special:Contact|Contacto
+* Advertising|Publicidad
+* http://comunidad.wikia.com/wiki/Project:Prensa|Prensa
+* http://ayuda.wikia.com/|Ayuda',
+	'corporatepage-from' => 'de',
+	'corporatepage-global-nav-headline' => 'Navegación Global de Wikia',
+	'corporatepage-go-to-wiki' => 'Ir a $1',
+	'corporatepage-hide' => 'Ocultar Página',
+	'corporatepage-homepage-feature-headline' => 'Destacado en Wikia',
+	'corporatepage-homepageintro' => '<div><h1>Bienvenidos a Wikia</h1>
+<h2>Colabora con personas con tus mismos gustos.</h2></div>
+<h2>¡Comienza hoy mismo!</h2>',
+	'corporatepage-in-the-know' => 'Noticias de Wikia',
+	'corporatepage-more-link' => 'Más Enlaces',
+	'corporatepage-pages-added' => 'páginas creadas en la última hora',
+	'corporatepage-rights' => '&copy; $1 Wikia, Inc. Todos los derechos reservados',
+	'corporatepage-search-title' => 'Introduce los términos de la búsqueda para encontrar los wikis.',
+	'corporatepage-update-fqr' => 'actualizado cada hora',
+	'corporatepage-watchlist' => 'Lista de seguimiento',
+	'corporatepage-wikia-editors' => 'editores',
+	'corporatepage-wikia-hot-spots-desc' => 'Estas son las páginas más populares de la semana, ordenadas por el número de editores.',
+	'corporatepage-wikia-hot-spots' => 'Anuncios de Wikia',
+	'corporatepage-wikia-international' => 'Wikia Internacional',
+	'corporatepage-wikia-overview-headline' => 'Información General',
+	'corporatepage-wikia-whats-up' => '<hgroup><h1>La comunidad habla</h1>
+<h2>Echa un vistazo a las comunidades de Wikia</h2></hgroup>
+<p>Visita el <a href=\'http://trueblood.wikia.com/wiki/True_Blood_Wiki\'>True Blood Wiki</a> y comparte tus pensamientos sobre la<a href=\'http://trueblood.wikia.com/wiki/Season_3\'> 3era temporada</a> </p>
+<p>Haz una parada por el <a href=\'http://naughtybear.wikia.com/wiki/Naughty_Bear_Wiki\'>Naughty Bear Wiki</a> y mira algunos de los vídeos que muestran algunas de las fechorías <a href=\'http://naughtybear.wikia.com/wiki/The_Book_of_Naughty\'>del Libro de Naughty</a>.</p>
+<p>¡Come lo necesario para conseguir un cuerpo perfecto para este verano! ¡Visita <a href=\'http://healthyrecipes.wikia.com\'> Healthy Recipes Wiki </a> para ideas sobre recetas de cocina saludables!</p>',
+	'corporatepage-wikia-wide-stats-headline' => 'Estadísticas de toda Wikia',
+	'corporatepage-words-added' => 'palabras añadidas en la última semana',
 ];
 
 $messages['et'] = [
@@ -8738,6 +8806,47 @@ Veuillez confirmer que vous désirez réellement recréer cette page.',
 	'create-account-new' => 'Créer un compte Fandom',
 	'cockpit_hide' => 'Masquer cockpit',
 	'community' => 'Communauté',
+	'corporatepage-company-info-headline' => 'Informations sur la société',
+	'corporatepage-create-button' => 'Créer un wiki',
+	'corporatepage-create-your-own-wiki' => 'Démarrez votre propre wiki et rencontrez des gens qui aiment les mêmes choses que vous.',
+	'corporatepage-edits-made' => 'modifications effectuées aujourd\'hui',
+	'corporatepage-featured-wikis-headline' => 'Wikis à la Une',
+	'corporatepage-find-a-wiki' => 'Trouver un wiki',
+	'corporatepage-footer-bottom' => '* Terms_of_Use|Conditions d’utilisation
+* Privacy_Policy|Politique de confidentialité',
+	'corporatepage-footer-leftcolumn' => '* http://de.wikia.com|Deutsch
+* http://it.wikia.com|Italiano
+* http://es.wikia.com|Espa&ntilde;ol
+* http://pl.wikia.com|Polski
+* http://fr.wikia.com|Français
+* Languages|Plus...',
+	'corporatepage-footer-rightcolumn' => '* About_Us|À propos de Wikia
+* Hiring|Emplois
+* Special:Contact|Contact
+* Advertising|Publicité
+* Press|Presse
+* http://communaute.wikia.com/wiki/Aide:Contenu|Aide',
+	'corporatepage-from' => 'de',
+	'corporatepage-global-nav-headline' => 'Navigation Wikia globale',
+	'corporatepage-go-to-wiki' => 'Aller à $1',
+	'corporatepage-hide' => 'Masquer la page',
+	'corporatepage-homepage-feature-headline' => 'À la une sur Wikia',
+	'corporatepage-homepageintro' => '<div><h1>Bienvenue sur Wikia</h1>
+<h2>Participez avec des gens qui aiment les mêmes choses que vous.</h2></div>
+<h2>Commencez dès aujourd\'hui !</h2>',
+	'corporatepage-in-the-know' => 'Information',
+	'corporatepage-more-link' => 'Plus de liens',
+	'corporatepage-pages-added' => 'pages créées dans l’heure',
+	'corporatepage-rights' => '&copy; $1 Wikia, Inc. Tous droits réservés.',
+	'corporatepage-search-title' => 'Saisissez les mots-clés pour rechercher les wikis',
+	'corporatepage-update-fqr' => 'mis à jour toutes les heures',
+	'corporatepage-watchlist' => 'Pages suivies',
+	'corporatepage-wikia-editors' => 'contributeurs',
+	'corporatepage-wikia-hot-spots-desc' => 'Ce sont les pages les plus actives de la semaine, triées par le nombre de contributeurs.',
+	'corporatepage-wikia-hot-spots' => 'Coups de cœur Wikia',
+	'corporatepage-wikia-overview-headline' => 'Aperçu de Wikia',
+	'corporatepage-wikia-wide-stats-headline' => 'Statistiques sur Wikia',
+	'corporatepage-words-added' => 'mots ajoutés la semaine dernière',
 ];
 
 $messages['frc'] = [
@@ -13308,6 +13417,13 @@ $5
 	'contris_s' => '投稿記録',
 	'create-account-new' => 'Fandomアカウントを作成',
 	'cockpit_hide' => '非表示',
+	'corporatepage-create-button' => '新しいウィキの作成',
+	'corporatepage-edits-made' => '回の編集（本日分）',
+	'corporatepage-go-to-wiki' => '$1 へ',
+	'corporatepage-pages-added' => 'ページの作成（直近一時間分）',
+	'corporatepage-update-fqr' => '一時間ごとに更新',
+	'corporatepage-watchlist' => 'ウォッチリスト',
+	'corporatepage-words-added' => 'ワードの追加（先週分）',
 ];
 
 $messages['jam'] = [
@@ -15251,6 +15367,19 @@ $5
 	'compare-title-not-exists' => '당신이 입력한 문서가 존재하지 않습니다.',
 	'compare-revision-not-exists' => '당신이 지정한 판이 없습니다.',
 	'community' => '커뮤니티',
+	'corporatepage-create-button' => '새 위키 만들기',
+	'corporatepage-create-your-own-wiki' => '새 위키를 만드셔서 당신이 선호하는 것을 같이 선호하는 사람들을 만나보세요.',
+	'corporatepage-find-a-wiki' => '위키 찾아보기',
+	'corporatepage-homepageintro' => '<div><h1>위키아에 어서 오세요</h1>
+<h2>당신이 선호하는 것을 같이 선호하는 사람들과 함께하세요.</h2></div>
+<h2>오늘 바로 시작하세요!</h2>',
+	'corporatepage-in-the-know' => '새 소식 보기',
+	'corporatepage-more-link' => '링크',
+	'corporatepage-watchlist' => '주시목록',
+	'corporatepage-wikia-editors' => '명',
+	'corporatepage-wikia-hot-spots-desc' => '다음은 위키아 전체에서 이번 주에 가장 편집이 많은 문서의 목록입니다.',
+	'corporatepage-wikia-hot-spots' => '위키아 핫 스팟',
+	'corporatepage-wikia-international' => '다른 언어',
 ];
 
 $messages['ko-kp'] = [
@@ -21917,6 +22046,7 @@ Czy na pewno chcesz ją ponownie utworzyć?',
 	'create-account-new' => 'Stwórz konto na portalu Fandom',
 	'cięta-riposta' => 'Ojtam ojtam',
 	'community' => 'Społeczność',
+	'corporatepage-go-to-wiki' => 'Idź do $1',
 ];
 
 $messages['pms'] = [
@@ -23960,6 +24090,12 @@ $5
 	'choose_reason' => 'Выберите причину',
 	'create-account-new' => 'Создайте учётную запись на Фэндоме',
 	'community' => 'Сообщество',
+	'corporatepage-footer-leftcolumn' => '* http://ru.wikia.com/wiki/%D0%92%D0%B8%D0%BA%D0%B8%D1%8F|Русский
+* http://de.wikia.com/wiki/Wikia|Deutsch
+* http://es.wikia.com/wiki/Wikia|Espa&ntilde;ol
+* http://fr.wikia.com/wiki/Accueil|Français
+* http://pl.wikia.com/wiki/Wikia_Polska|Polski
+* Languages|More...',
 ];
 
 $messages['rue'] = [
