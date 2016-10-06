@@ -49,25 +49,39 @@ If you do not need this account, you can ignore this message or contact communit
 <li>WWant to receive fewer messages from us? You can unsubscribe or change your email preferences <a href="http://community.wikia.com/Special:Preferences">here</a>.</li>
 </ul>
 </p>',
-	'enotif_body-HTML' => '<p>Dear $WATCHINGUSERNAME,<br /><br />
-There has been an edit to a page you are watching on {{SITENAME}}.<br /><br />
-See <a href="$PAGETITLE_URL">$PAGETITLE</a> for the current version.<br /><br />
-$NEWPAGEHTML<br /><br />
-$PAGESUMMARY<br /><br />
-Please visit and edit often...<br /><br />
-{{SITENAME}}<br /><hr />
+	'enotif_body-HTML' => 'Hi $WATCHINGUSERNAME,
+<br /><br />
+One of the pages you\'re following, $PAGETITLE on {{SITENAME}}, has been edited by $PAGEEDITOR.
+<br /><br />
+Interested in seeing what\'s changed?  See <a href="$PAGETITLE_URL">$PAGETITLE</a> for the current version.
+<br /><br />
+$NEWPAGEHTML
+<br /><br />
+$PAGESUMMARY
+<br /><br />
+- Wikia Community Support
+
+
+<br /><hr />
+<p>
 <ul>
-<li><a href="http://www.wikia.com">Check out our featured wikis!</a></li>
-<li>Want to control which e-mails you receive? Go to <a href="{{fullurl:{{ns:special}}:Preferences}}">User Preferences</a></li>
-</ul></p>',
-	'enotif_body_article_comment-HTML' => '<p>Dear $WATCHINGUSERNAME,<br /><br />
-An article you following, $PAGETITLE, has new comments.<br /><br />
-To see the comment thread, follow the link below: <a href="$PAGETITLE_URL#article-comments">$PAGETITLE</a> <br /><br />
-Please visit and edit often...<br /><br />
-{{SITENAME}}<br /><hr />
+<li>Find help and advice on <a href="http://www.community.wikia.com">Community Central</a>.</li>
+<li>Want to receive fewer messages from us? You can unsubscribe or change your email preferences <a href="http://community.wikia.com/Special:Preferences">here</a>.</li>
+</ul>
+</p>',
+	'enotif_body_article_comment-HTML' => 'Hi $WATCHINGUSERNAME,
+<br /><br />
+There\'s a new comment at $PAGETITLE on {{SITENAME}}. Use this link to see all of the comments: <a href="$PAGETITLE_URL#WikiaArticleComments">$PAGETITLE</a>
+<br /><br />
+- Wikia Community Support
+<br /><hr />
+<p>
 <ul>
-<li>Want to control which e-mails you receive? Go to: <a href="{{fullurl:{{ns:special}}:Preferences}}">{{ns:special}}:Preferences<a>.</li>
-</ul></p>',
+<li>Find help and advice on <a href="http://www.community.wikia.com">Community Central</a>.</li>
+<li>Want to receive fewer messages from us? You can unsubscribe or change your email preferences <a href="http://community.wikia.com/Special:Preferences">here</a>.
+</li>
+</ul>
+</p>',
 	'enotif_body_blogs_comment-HTML' => '<p>Dear $WATCHINGUSERNAME,<br /><br />
 $PAGEEDITOR made a comment on the blog post "$BLOGTITLE".<br /><br />
 <a href="$PAGETITLE_URL#comments">View the comments</a><br /><br />
@@ -498,6 +512,51 @@ Es wurde für dich ein Benutzerkonto „$2“ auf {{SITENAME}} ($4) erstellt. Da
 
 Falls das Benutzerkonto irrtümlich angelegt wurde, kannst du diese Nachricht ignorieren.
 <br /></p>',
+	'enotif_body-HTML' => '<p>
+Hallo $WATCHINGUSERNAME,<br />
+<br />
+die {{SITENAME}}-Seite "$PAGETITLE" wurde von $PAGEEDITOR am $PAGEEDITDATE $CHANGEDORCREATED.<br />
+<br />
+Aktuelle Version: <a href="$PAGETITLE_URL">$PAGETITLE</a><br />
+<br />
+$NEWPAGEHTML<br />
+<br />
+$PAGESUMMARY $PAGEMINOREDIT<br />
+<br />
+Kontakt zum Benutzer:<br />
+E-Mail: $PAGEEDITOR_EMAIL<br />
+Wiki: $PAGEEDITOR_WIKI<br />
+<br />
+Es werden solange keine weiteren Benachrichtigungsmails gesendet, bis Du die Seite wieder besucht hast. Auf Deiner Beobachtungsseite kannst Du alle Benachrichtigungsmarker zusammen zurücksetzen.<br />
+<br />
+Dein freundliches {{SITENAME}}-Benachrichtigungssystem<br />
+<br /><hr />
+Um die Einstellungen Deiner Beobachtungsliste anzupassen, besuche: <a href="{{fullurl:Special:Watchlist/edit}}">{{fullurl:Special:Watchlist/edit}}</a><br />
+<b>Folge uns auf</b><br />
+<ul>
+<li>Facebook: <a href="http://facebook.com/wikia.de">facebook.com/wikia.de</a></li>
+<li>Twitter: <a href="http://twitter.com/wikia_de">twitter.com/wikia_de</a></li>
+</ul>
+</p>',
+	'enotif_body_article_comment-HTML' => '<p>Hallo $WATCHINGUSERNAME,
+<br /><br />
+$PAGEEDITOR hat einen Kommentar auf der Seite "$PAGETITLE" hinterlassen.
+<br /><br />
+Um alle Kommentare zu sehen, folge diesem Link:
+<a href="$PAGETITLE_URL">$PAGETITLE</a>
+<br /><br />
+Dein freundliches {{SITENAME}}-Benachrichtigungssystem
+<br /><hr />
+<ul>
+<li>Um die Einstellungen deiner Beobachtungsliste anzupassen, besuche: <a href="{{fullurl:Special:Watchlist/edit}}">{{ns:special}}:Watchlist/edit<a>.</li>
+</ul><br />
+<b>Folge uns auf</b><br />
+<ul>
+<li>Facebook: <a href="http://facebook.com/wikia.de">facebook.com/wikia.de</a></li>
+<li>Twitter: <a href="http://twitter.com/wikia_de">twitter.com/wikia_de</a></li>
+</ul>
+</p>',
+	'enotif_lastvisited-HTML' => 'Für alle Änderungen auf einen Blick <a href="$1">klicke hier</a>.',
 ];
 
 $messages['es'] = [
@@ -635,6 +694,37 @@ Si no necesitas esta cuenta, puedes ignorar este mensaje o contactar con nosotro
 <li>¿Quieres dejar de recibir estos mensajes? Puedes darte de baja en el servicio de emails desde tus preferencias <a href="http://comunidad.wikia.com/Especial:Preferencias">aquí</a>.</li>
 </ul>
 </p>',
+	'enotif_body-HTML' => 'Hola $WATCHINGUSERNAME,
+<br /><br />
+Una de las páginas que estás siguiendo en {{SITENAME}}, $PAGETITLE, ha sido editada por $PAGEEDITOR.
+<br /><br />
+¿Quieres ver qué ha cambiado?  Visita <a href="$PAGETITLE_URL">$PAGETITLE</a> para ver la versión actual de la página.
+<br /><br />
+$NEWPAGEHTML
+<br /><br />
+$PAGESUMMARY
+<br /><br />
+- Equipo comunitario de Wikia
+<br /><hr />
+<p>
+<ul>
+<li>Si necesitas ayuda o consejos, visita nuestra <a href="http://comunidad.wikia.com">comunidad central</a>.</li>
+<li>¿Quieres dejar de recibir estos mensajes? Puedes darte de baja en el servicio de emails desde tus preferencias <a href="http://comunidad.wikia.com/Especial:Preferencias">aquí</a>.</li>
+</ul>
+</p>',
+	'enotif_body_article_comment-HTML' => 'Hola $WATCHINGUSERNAME,
+<br /><br />
+Hay nuevos comentarios en la página $PAGETITLE de {{SITENAME}}. Usa el siguiente enlace para ver todos los comentarios: <a href="$PAGETITLE_URL#article-comments">$PAGETITLE</a>
+<br /><br />
+- Equipo comunitario de Wikia
+<br /><hr />
+<p>
+<ul>
+<li>Si necesitas ayuda o consejos, visita nuestra <a href="http://comunidad.wikia.com">comunidad central</a>.</li>
+<li>¿Quieres dejar de recibir estos mensajes? Puedes darte de baja en el servicio de emails desde tus preferencias <a href="http://comunidad.wikia.com/Especial:Preferencias">aquí</a>.</li>
+</ul>
+</p>',
+	'enotif_lastvisited-HTML' => '<a href="$1">Visita</a> para ver todos los cambios en esta página desde tu última visita.',
 ];
 
 $messages['fr'] = [
@@ -793,6 +883,39 @@ Vous devriez ouvrir une session et modifier dès à présent votre mot de passe.
 <br />
 Ignorez ce message si ce compte a été créé par erreur.<br />
 </p>',
+	'enotif_body-HTML' => '<p>$WATCHINGUSERNAME,
+<br /><br />
+Une des pages que vous suivez sur {{SITENAME}}, $PAGETITLE, a été modifiée par $PAGEEDITOR.
+<br /><br />
+Voulez-vous savoir ce qui a été fait ?  Consultez <a href="$PAGETITLE_URL">$PAGETITLE</a> pour voir la version actuelle.
+<br /><br />
+$NEWPAGEHTML
+<br /><br />
+$PAGESUMMARY
+<br /><br />
+— L’équipe Wikia</p>
+<br /><hr />
+<p>
+<ul>
+<li><a href="http://communaute.wikia.com">Venez voir les derniers évènements sur Wikia !</a></li>
+<li>Vous souhaitez contrôler les e-mails que vous recevez ? Rendez-vous sur vos <a href="{{fullurl:{{ns:special}}:Preferences}}">préférences</a></li>
+</ul>
+</p>
+<div style="font-size: 70%;margin-top: 25px;text-align: center;">Cliquez <a href="$UNSUBSCRIBEURL">ici</a> pour vous désabonner de tous les e-mails de Wikia.</div>',
+	'enotif_body_article_comment-HTML' => '<p>$WATCHINGUSERNAME,
+<br /><br />
+Un nouveau commentaire a été laissé sur « $PAGETITLE » sur {{SITENAME}}. Utilisez <a href="$PAGETITLE_URL#WikiaArticleComments">ce lien</a> pour voir tous les commentaires.
+<br /><br />
+— L’équipe Wikia</p>
+<br /><hr />
+<p>
+<ul>
+<li><a href="http://communaute.wikia.com">Venez voir les derniers évènements sur Wikia !</a></li>
+<li>Vous souhaitez contrôler les e-mails que vous recevez ? Rendez-vous sur vos <a href="{{fullurl:{{ns:special}}:Preferences}}">préférences</a></li>
+</ul>
+</p>
+<div style="font-size: 70%;margin-top: 25px;text-align: center;">Cliquez <a href="http://communaute.wikia.com/Special:Preferences">ici</a> pour vous désabonner de tous les e-mails de Wikia.</div>',
+	'enotif_lastvisited-HTML' => 'Pour toutes les modifications depuis votre dernière visite, <a href="$1">cliquez ici</a>',
 ];
 
 $messages['it'] = [
@@ -873,6 +996,27 @@ Qualcuno ha creato un accesso a {{SITENAME}} ($4) a nome di $2, associato a ques
 È opportuno eseguire un accesso quanto prima e cambiare la password immediatamente.<br />
 <br /><br />
 Se l\'accesso è stato creato per errore, si può ignorare questo messaggio.<br />
+</p>',
+	'enotif_body-HTML' => '<p>
+Gentile $WATCHINGUSERNAME,<br />
+<br />
+la pagina $PAGETITLE di {{SITENAME}} è stata $CHANGEDORCREATED in data $PAGEEDITDATE da $PAGEEDITOR; la versione attuale si trova all\'indirizzo <a href="$PAGETITLE_URL">$PAGETITLE</a>.<br />
+<br />
+$NEWPAGEHTML<br />
+<br />
+Riassunto della modifica, inserito dall\'autore: $PAGESUMMARY $PAGEMINOREDIT<br />
+<br />
+Contatta l\'autore della modifica:<br />
+via e-mail: $PAGEEDITOR_EMAIL<br />
+sul sito: $PAGEEDITOR_WIKI<br />
+<br />
+Non verranno inviate altre notifiche in caso di ulteriori cambiamenti, a meno che tu non visiti la pagina. Inoltre, è possibile reimpostare l\'avviso di notifica per tutte le pagine nella lista degli osservati speciali.<br />
+<br />
+Il sistema di notifica di {{SITENAME}}, al tuo servizio<br />
+<hr/ >
+Per modificare le impostazioni della lista degli osservati speciali, visita <a href="{{fullurl:Special:Watchlist/edit}}">{{fullurl:Special:Watchlist/edit}}</a><br />
+<br />
+Per dare il tuo feedback e ricevere ulteriore assistenza: <a href="{{fullurl:Help:Aiuto}}">{{fullurl:Help:Aiuto}}</a>.<br />
 </p>',
 ];
 
@@ -969,6 +1113,39 @@ Zaloguj się teraz i je zmień.<br />
 <br />
 Możesz zignorować tę wiadomość, jeśli konto zostało utworzone przez pomyłkę.<br />
 </p>',
+	'enotif_body-HTML' => 'Witaj $WATCHINGUSERNAME,
+<br /><br />
+Strona $PAGETITLE na {{SITENAME}} została zmieniona przez użytkownika $PAGEEDITOR.
+<br /><br />
+Zobacz na stronie <a href="$PAGETITLE_URL">$PAGETITLE</a> aktualną wersję.
+<br /><br />
+$NEWPAGEHTML
+<br /><br />
+$PAGESUMMARY
+<br /><br />
+— Zespół Wikii
+
+
+<br /><hr />
+<p>
+<ul>
+<li>Aby uzyskać dodatkową pomoc od społeczności Wikii, odwiedź <a href="http://spolecznosc.wikia.com">Centrum Społeczności</a>.</li>
+<li>W celu zmiany ustawień powiadomień e-mail, odwiedź <a href="http://spolecznosc.wikia.com/wiki/Special:Preferences">tą stronę</a>.</li>
+</ul>
+</p>',
+	'enotif_body_article_comment-HTML' => '<p>Witaj $WATCHINGUSERNAME,
+<br /><br />
+Na {{SITENAME}} pojawił się nowy komentarz na stronie $PAGETITLE . Użyj tego linku aby zobaczyć wszystkie komentarze: <a href="$PAGETITLE_URL#WikiaArticleComments">$PAGETITLE</a>
+<br /><br />
+- Zespół Wikii
+<br /><br />
+___________________________________________
+<ul>
+<li>Aby uzyskać dodatkową pomoc od społeczności Wikii, odwiedź <a href="http://spolecznosc.wikia.com">Centrum Społeczności</a>.</li>
+<li>W celu zmiany ustawień powiadomień e-mail, odwiedź <a href="http://spolecznosc.wikia.com/wiki/Special:Preferences">tą stronę</a>.</li>
+</ul>
+</p>',
+	'enotif_lastvisited-HTML' => 'Aby zobaczyć wszystkie zmiany od Twojej ostatniej wizyty, <a href="$1">kliknij tutaj</a>',
 ];
 
 $messages['sv'] = [
@@ -1048,6 +1225,33 @@ Wikia支持团队<br />
 	'createaccount-text-HTML' => '<p>有人用你的电子邮件地址在{{SITENAME}} ($4) 创建了名为"$2"的帐号，密码为 "$3".<br />
 你应该立刻登入并更改你的密码。<br /><br />
 如果你并没有申请这个帐号，请直接忽略这个讯息。</p>',
+	'enotif_body-HTML' => '<p>亲爱的 $WATCHINGUSERNAME,<br /><br />
+有人编辑了你在{{SITENAME}}监视的页面。<br /><br />
+点击进入 <a href="$PAGETITLE_URL">$PAGETITLE</a>查看目前的版本。<br /><br />
+$NEWPAGEHTML<br /><br />
+$PAGESUMMARY<br /><br />
+请常访问和编辑<br /><br />
+{{SITENAME}}<br /><hr />
+<ul>
+<li><a href="http://zh.wikia.com">查看我们的特色Wiki社区！</a></li>
+<li>想要设定收到的电子邮件通知，请造访<a href="{{fullurl:{{ns:special}}:Preferences}}">用户设定</a></li>
+</ul></p>',
+	'enotif_body_article_comment-HTML' => '<p>Hi，$WATCHINGUSERNAME,
+<br /><br />
+{{SITENAME}}上的$PAGETITLE有评论哦。点击如下链接查看全部评论：
+<br /><br />
+依如下链接查看评论：<a href="$PAGETITLE_URL">$PAGETITLE</a>$PAGETITLE_URL#WikiaArticleComments
+<br /><br />
+- Wikia社区支持
+<br /><br />
+
+___________________________________________
+<ul>
+<li>在社区中心寻求帮助或建议：<a href="http://zh.community.wikia.com">http://zh.community.wikia.com</a><li>
+<li>管理您收到的邮件，退订或改变邮件设置请点击： <a href="http://zh.community.wikia.com/Special:Preferences">http://zh.community.wikia.com/Special:Preferences</a></li>
+</ul>
+</p>',
+	'enotif_lastvisited-HTML' => '<a href="$1">点击这里</a>来查看自从你上次造访该页面后的所有更改。',
 ];
 
 $messages['zh-hans'] = [
@@ -1076,6 +1280,33 @@ Wikia支持团队<br />
 	'createaccount-text-HTML' => '<p>有人用你的电子邮件地址在{{SITENAME}} ($4) 创建了名为"$2"的帐户，密码为 "$3".<br />
 你应该立刻登入并更改你的密码。<br /><br />
 如果你并没有申请这个帐户，请直接忽略这个讯息。</p>',
+	'enotif_body-HTML' => '<p>亲爱的 $WATCHINGUSERNAME,<br /><br />
+有人编辑了你在{{SITENAME}}监视的页面。<br /><br />
+点击进入 <a href="$PAGETITLE_URL">$PAGETITLE</a>查看目前的版本。<br /><br />
+$NEWPAGEHTML<br /><br />
+$PAGESUMMARY<br /><br />
+请常访问和编辑<br /><br />
+{{SITENAME}}<br /><hr />
+<ul>
+<li><a href="http://zh.wikia.com">查看我们的特色Wiki社区！</a></li>
+<li>想要设定收到的电子邮件通知，请造访<a href="{{fullurl:{{ns:special}}:Preferences}}">用户设定</a></li>
+</ul></p>',
+	'enotif_body_article_comment-HTML' => '<p>Hi，$WATCHINGUSERNAME,
+<br /><br />
+{{SITENAME}}上的$PAGETITLE有评论哦。点击如下链接查看全部评论：
+<br /><br />
+依如下链接查看评论：<a href="$PAGETITLE_URL">$PAGETITLE</a>$PAGETITLE_URL#WikiaArticleComments
+<br /><br />
+- Wikia社区支持
+<br /><br />
+
+___________________________________________
+<ul>
+<li>在社区中心寻求帮助或建议：<a href="http://zh.community.wikia.com">http://zh.community.wikia.com</a><li>
+<li>管理您收到的邮件，退订或改变邮件设置请点击： <a href="http://zh.community.wikia.com/Special:Preferences">http://zh.community.wikia.com/Special:Preferences</a></li>
+</ul>
+</p>',
+	'enotif_lastvisited-HTML' => '<a href="$1">点击这里</a>来查看自从你上次造访该页面后的所有更改。',
 ];
 
 $messages['zh-hant'] = [
@@ -1104,6 +1335,33 @@ Wikia支持團隊<br />
 	'createaccount-text-HTML' => '<p>有人用你的電子郵件地址在{{SITENAME}} ($4) 創建了名為"$2"的帳號，密碼為 "$3".<br />
 你應該立刻登入並更改你的密碼。<br /><br />
 如果你並沒有申請這個帳號，請直接忽略這個訊息。</p>',
+	'enotif_body-HTML' => '<p>親愛的 $WATCHINGUSERNAME,<br /><br />
+有人編輯了你在{{SITENAME}}監視的頁面。<br /><br />
+點擊進入 <a href="$PAGETITLE_URL">$PAGETITLE</a>查看目前的版本。<br /><br />
+$NEWPAGEHTML<br /><br />
+$PAGESUMMARY<br /><br />
+請常訪問和編輯<br /><br />
+{{SITENAME}}<br /><hr />
+<ul>
+<li><a href="http://zh-tw.wikia.com">查看我們的特色Wiki社區！</a></li>
+<li>想要設定收到的電子郵件通知，請造訪<a href="{{fullurl:{{ns:special}}:Preferences}}">用戶設定</a></li>
+</ul></p>',
+	'enotif_body_article_comment-HTML' => '<p>Hi，$WATCHINGUSERNAME,
+<br /><br />
+{{SITENAME}} 上的 $PAGETITLE 有新評論。
+<br /><br />
+點此連結查看評論：<a href="$PAGETITLE_URL">$PAGETITLE</a>$PAGETITLE_URL#WikiaArticleComments
+<br /><br />
+- Wikia 社群支援小組
+<br /><br />
+
+___________________________________________
+<ul>
+<li>您可在社區中心尋找協助和建議：<a href="http://zh.community.wikia.com">http://community.wikia.com</a><li>
+<li>不想收到這麼多訊息？您可以在以下頁面退訂或變更電子信箱設定：<a href="http://zh.community.wikia.com/Special:Preferences">http://zh.community.wikia.com/Special:Preferences</a></li>
+</ul>
+</p>',
+	'enotif_lastvisited-HTML' => '<a href="$1">點擊這裡</a>來查看自從你上次造訪該頁面後的所有更改。',
 ];
 
 $messages['zh-hk'] = [
@@ -1132,6 +1390,33 @@ Wikia支持團隊<br />
 	'createaccount-text-HTML' => '<p>有人用你的電子郵件地址在{{SITENAME}} ($4) 創建了名為"$2"的帳號，密碼為 "$3".<br />
 你應該立刻登入並更改你的密碼。<br /><br />
 如果你並沒有申請這個帳號，請直接忽略這個訊息。</p>',
+	'enotif_body-HTML' => '<p>親愛的 $WATCHINGUSERNAME,<br /><br />
+有人編輯了你在{{SITENAME}}監視的頁面。<br /><br />
+點擊進入 <a href="$PAGETITLE_URL">$PAGETITLE</a>查看目前的版本。<br /><br />
+$NEWPAGEHTML<br /><br />
+$PAGESUMMARY<br /><br />
+請常訪問和編輯<br /><br />
+{{SITENAME}}<br /><hr />
+<ul>
+<li><a href="http://zh-tw.wikia.com">查看我們的特色Wiki社區！</a></li>
+<li>想要設定收到的電子郵件通知，請造訪<a href="{{fullurl:{{ns:special}}:Preferences}}">用戶設定</a></li>
+</ul></p>',
+	'enotif_body_article_comment-HTML' => '<p>Hi，$WATCHINGUSERNAME,
+<br /><br />
+{{SITENAME}} 上的 $PAGETITLE 有新評論。
+<br /><br />
+點此連結查看評論：<a href="$PAGETITLE_URL">$PAGETITLE</a>$PAGETITLE_URL#WikiaArticleComments
+<br /><br />
+- Wikia 社群支援小組
+<br /><br />
+
+___________________________________________
+<ul>
+<li>您可在社區中心尋找協助和建議：<a href="http://zh.community.wikia.com">http://community.wikia.com</a><li>
+<li>不想收到這麼多訊息？您可以在以下頁面退訂或變更電子信箱設定：<a href="http://zh.community.wikia.com/Special:Preferences">http://zh.community.wikia.com/Special:Preferences</a></li>
+</ul>
+</p>',
+	'enotif_lastvisited-HTML' => '<a href="$1">點擊這裡</a>來查看自從你上次造訪該頁面後的所有更改。',
 ];
 
 $messages['zh-tw'] = [
@@ -1160,6 +1445,33 @@ Wikia支持團隊<br />
 	'createaccount-text-HTML' => '<p>有人用你的電子郵件地址在{{SITENAME}} ($4) 創建了名為"$2"的帳號，密碼為 "$3".<br />
 你應該立刻登入並更改你的密碼。<br /><br />
 如果你並沒有申請這個帳號，請直接忽略這個訊息。</p>',
+	'enotif_body-HTML' => '<p>親愛的 $WATCHINGUSERNAME,<br /><br />
+有人編輯了你在{{SITENAME}}監視的頁面。<br /><br />
+點擊進入 <a href="$PAGETITLE_URL">$PAGETITLE</a>查看目前的版本。<br /><br />
+$NEWPAGEHTML<br /><br />
+$PAGESUMMARY<br /><br />
+請常訪問和編輯<br /><br />
+{{SITENAME}}<br /><hr />
+<ul>
+<li><a href="http://zh-tw.wikia.com">查看我們的特色Wiki社區！</a></li>
+<li>想要設定收到的電子郵件通知，請造訪<a href="{{fullurl:{{ns:special}}:Preferences}}">用戶設定</a></li>
+</ul></p>',
+	'enotif_body_article_comment-HTML' => '<p>Hi，$WATCHINGUSERNAME,
+<br /><br />
+{{SITENAME}} 上的 $PAGETITLE 有新評論。
+<br /><br />
+點此連結查看評論：<a href="$PAGETITLE_URL">$PAGETITLE</a>$PAGETITLE_URL#WikiaArticleComments
+<br /><br />
+- Wikia 社群支援小組
+<br /><br />
+
+___________________________________________
+<ul>
+<li>您可在社區中心尋找協助和建議：<a href="http://zh.community.wikia.com">http://community.wikia.com</a><li>
+<li>不想收到這麼多訊息？您可以在以下頁面退訂或變更電子信箱設定：<a href="http://zh.community.wikia.com/Special:Preferences">http://zh.community.wikia.com/Special:Preferences</a></li>
+</ul>
+</p>',
+	'enotif_lastvisited-HTML' => '<a href="$1">點擊這裡</a>來查看自從你上次造訪該頁面後的所有更改。',
 ];
 
 $messages['ja'] = [
@@ -1216,6 +1528,39 @@ $4 でログインしてください<br /><br />
 <li>私たちが送信するメッセージの受信を減らしたいですか？ 電子メールの設定を<a href="http://ja.community.wikia.com/Special:Preferences">こちら</a>で変更するか登録解除することができます。</li>
 </ul>
 </p>',
+	'enotif_body-HTML' => 'こんにちは、$WATCHINGUSERNAME さん
+<br /><br />
+あなたがフォローしている {{SITENAME}} のページ $PAGETITLE が $PAGEEDITOR によって編集されました。
+<br /><br />
+何が更新されたのか興味がありますか？現在のバージョンの <a href="$PAGETITLE_URL">$PAGETITLE</a> をご覧ください。
+<br /><br />
+$NEWPAGEHTML
+<br /><br />
+$PAGESUMMARY
+<br /><br />
+- ウィキア・コミュニティサポート
+
+
+<br /><hr />
+<p>
+<ul>
+<li><a href="http://ja.community.wikia.com/wiki/">コミュニティセントラル</a>でヘルプやアドバイスを探してみましょう。</li>
+<li>私たちが送信するメッセージの受信を減らしたいですか？ 電子メールの設定を<a href="http://ja.community.wikia.com/Special:Preferences">こちら</a>で変更するか登録解除することができます。</li>
+</ul>
+</p>',
+	'enotif_body_article_comment-HTML' => 'こんにちは、$WATCHINGUSERNAME さん
+<br /><br />
+{{SITENAME}} の $PAGETITLE に新しいコメントがあります。すべてのコメントを閲覧するには次のリンクをご利用ください : <a href="$PAGETITLE_URL#WikiaArticleComments">$PAGETITLE</a>
+<br /><br />
+- ウィキア・コミュニティ・サポート
+<br /><hr />
+<p>
+<ul>
+<li><a href="http://ja.community.wikia.com/wiki/">コミュニティセントラル</a>でヘルプやアドバイスを探してみよう。</li>
+<li>私たちが送信するメッセージの受信を減らしたいですか？ <a href="http://ja.community.wikia.com/特別:Preferences">こちら</a>にて定期購読解除や電子メールの設定変更をすることができます。</li>
+</ul>
+</p>',
+	'enotif_lastvisited-HTML' => '最後にアクセスして以来のこのページのすべての変更を閲覧するには、<a href="$1">こちらをクリック</a>',
 ];
 
 $messages['qqq'] = [
@@ -1258,6 +1603,40 @@ www.wikia.com<br /><br />
 </li>
 <li>Запрос на отправку этого письма был получен с адреса $1.</li>
 </ul></p>',
+	'enotif_body-HTML' => 'Здравствуйте, $WATCHINGUSERNAME.
+<br /><br />
+Одна из страниц, которую Вы отслеживаете, $PAGETITLE на {{SITENAME}}, была отредактирована $PAGEEDITOR.
+<br /><br />
+Хотите узнать, что изменилось? Зайдите на <a href="$PAGETITLE_URL">$PAGETITLE</a>, чтобы увидеть текущую версию страницы.
+<br /><br />
+$NEWPAGEHTML
+<br /><br />
+$PAGESUMMARY
+<br /><br />
+- Команда Викия
+
+
+<br /><hr />
+<p>
+<ul>
+<li>Найти помощь и совет можно на <a href="http://www.community.wikia.com">Community Central</a> и <a href="http://www.ru.community.wikia.com">Вики Сообщества</a>.</li>
+<li>Хотите уменьшить количество данных писем? Вы можете отписаться от рассылки или внести в неё коррективы на <a href="http://community.wikia.com/Special:Preferences">странице личных настроек</a>.</li>
+</ul>
+</p>',
+	'enotif_body_article_comment-HTML' => '<p>Уважаемый $WATCHINGUSERNAME,
+<br /><br />
+Участник $PAGEEDITOR оставил комментарий на "$PAGETITLE".
+<br /><br />
+Чтобы увидеть данный комментарий, проследуйте по этой ссылке: <a href="$PAGETITLE_URL">$PAGETITLE</a>
+<br /><br />
+Викия
+<br /><hr />
+<ul>
+<li>Чтобы настроить уведомления по email, <a href="{{fullurl:Special:Preferences}}">обновите личные настройки<a>.</li>
+</ul>
+</p>',
+	'enotif_lastvisited-HTML' => 'Чтобы просмотреть все изменения, произошедшие с вашего последнего посещения 
+это страницы, <a href="$1">нажмите здесь</a>',
 ];
 
 $messages['fa'] = [
@@ -1308,5 +1687,23 @@ $messages['ko'] = [
 <ul>
 <li>위키아 중앙 커뮤니티에서 도움을 구하실 수 있습니다: <a href="http://ko.community.wikia.com">위키아 중앙 커뮤니티</a>.</li>
 <li>알림을 받고 싶지 않으신가요? 이곳에서 알림 설정을 변경하실 수 있습니다: <a href="http://ko.community.wikia.com/특수기능:환경설정">특수기능:환경설정</a></li>',
+	'enotif_body_article_comment-HTML' => '<p> $WATCHINGUSERNAME님, <br /><br /> $PAGEEDITOR 사용자가 "$PAGETITLE" 문서에 댓글을 남겼습니다. <br /><br /> 댓글을 보시려면 다음 링크로 들어가세요: <a href="$PAGETITLE_URL">$PAGETITLE</a> <br /><br /> 자주 방문해주시고 기여도 많이 부탁드립니다. <br /><br /> {{SITENAME}} <br /><hr /> <ul> <li>메일로 알림받는 항목들을 관리하고 싶으신가요? <a href="{{fullurl:{{ns:special}}:환경설정}}">{{ns:special}}:환경설정<a>에서 해주세요.</li> </ul> </p>',
+];
+
+$messages['nl'] = [
+	'enotif_body_article_comment-HTML' => '<p>Hoi $WATCHINGUSERNAME,
+<br /><br />
+$ PAGEEDITOR heeft een opmerking geplaatst bij "$PAGETITLE".
+<br /><br />
+Je kunt de discussie bekijken via de volgende verwijzing: <a href="$PAGETITLE_URL">$PAGETITLE</a> 
+<br /><br />
+Kom alsjeblieft vaak langs en bewerk veelvuldig...
+<br /><br />
+Wikia
+<br /><hr />
+<ul>
+<li>Wilt je bepalen welke e-mails je ontvangt? <a href="{{fullurl:{{ns:special}}:Preferences}}">Pas dan je Voorkeuren<a> aan.</li>
+</ul>
+</p>',
 ];
 
