@@ -81,8 +81,7 @@ The reason given by $3 is \'\'$2\'\'',
 	'changed' => 'changed',
 	'created' => 'created',
 	'confirm' => 'Confirm',
-	'confirmdeletetext' => 'You are about to delete a page along with all of its history.
-Please confirm that you intend to do this, that you understand the consequences, and that you are doing this in accordance with [[{{MediaWiki:Policy-url}}|the policy]].',
+	'confirmdeletetext' => 'You are about to delete a page along with all of its history. See also [[Help:Deletion]].',
 	'cantrollback' => 'Cannot revert edit;
 last contributor is only author of this page.',
 	'cannotundelete' => 'Undelete failed;
@@ -199,9 +198,9 @@ $5
 
 This confirmation code will expire at $4.',
 	'confirmemail_invalidated' => 'Email address confirmation canceled',
-	'confirmrecreate' => 'User [[User:$1|$1]] ([[User talk:$1|talk]]) deleted this page after you started editing with reason:
+	'confirmrecreate' => 'User [[User:$1|$1]] ([[User talk:$1|talk]]) deleted this article after you started editing it, with a reason of:
 : \'\'$2\'\'
-Please confirm that you really want to recreate this page.',
+Please confirm that you really want to recreate this article.',
 	'confirmrecreate-noreason' => 'User [[User:$1|$1]] ([[User talk:$1|talk]]) deleted this page after you started editing.  Please confirm that you really want to recreate this page.',
 	'confirm_purge_button' => 'Yes, I am not a robot',
 	'confirm-purge-top' => 'Would you like to clear the cache for this page?',
@@ -6085,7 +6084,7 @@ Falls das Benutzerkonto irrtümlich angelegt wurde, kannst du diese Nachricht ig
 	'changeemail-none' => '(keine)',
 	'changeemail-submit' => 'E-Mail-Adresse ändern',
 	'changeemail-cancel' => 'Abbrechen',
-	'confirmedittext' => 'Du musst deine E-Mail-Adresse erst bestätigen, bevor du Bearbeitungen durchführen kannst. Bitte ergänze und bestätige deine E-Mail in den [[Special:Preferences|Einstellungen]].',
+	'confirmedittext' => 'Du musst deine E-Mail-Adresse erst bestätigen, bevor du bearbeiten kannst. Bitte ergänze und bestätige deine E-Mail in den [[{{ns:special}}:Preferences|Einstellungen]].',
 	'clearyourcache' => '\'\'\'Hinweis - Leere nach dem Speichern den Browser-Cache, um die Änderungen sehen zu können:\'\'\' 
 *\'\'\'Mozilla/Firefox/Safari:\'\'\' \'\'Shift\'\' gedrückt halten und auf \'\'Aktualisieren\'\' klicken oder alternativ entweder \'\'Strg-F5\'\' oder \'\'Strg-R\'\' (\'\'Befehlstaste-R\'\' bei Macintosh) drücken;
 *\'\'\'Konqueror: \'\'\'Auf \'\'Aktualisieren\'\' klicken oder \'\'F5\'\' drücken; 
@@ -6121,7 +6120,7 @@ Siehe auch die Liste der [[Special:WantedCategories|gewünschten Kategorien]].',
 	'changed' => 'geändert',
 	'created' => 'erstellt',
 	'confirm' => 'Bestätigen',
-	'confirmdeletetext' => 'Du bist dabei, eine Seite mit allen zugehörigen älteren Versionen zu löschen. Bitte bestätige dazu, dass du dir der Konsequenzen bewusst bist, und dass du in Übereinstimmung mit den [[{{MediaWiki:Policy-url}}|Richtlinien]] handelst.',
+	'confirmdeletetext' => 'Du bist dabei, eine Seite oder Datei und alle zugehörigen älteren Versionen zu löschen. Bitte bestätige dazu, dass Du Dir der Konsequenzen bewusst bist, und dass Du in Übereinstimmung mit den [[{{ns:project}}:Leitlinien|Projektleitlinien]] handelst.',
 	'cantrollback' => 'Die Änderung kann nicht zurückgesetzt werden, da es keine früheren Autoren gibt.',
 	'cannotundelete' => 'Wiederherstellung fehlgeschlagen; die Seite oder Datei wurde bereits wiederhergestellt.',
 	'contributions' => 'Benutzerbeiträge',
@@ -6222,9 +6221,10 @@ $5
 
 Dieser Bestätigungscode ist gültig bis $4.',
 	'confirmemail_invalidated' => 'E-Mail-Adressbestätigung abbrechen',
-	'confirmrecreate' => 'Benutzer [[User:$1|$1]] ([[User talk:$1|Diskussion]]) hat diese Seite gelöscht, nachdem du angefangen hast, sie zu bearbeiten. Die Begründung lautete:
-:\'\'$2\'\'
-Bitte bestätige, dass du diese Seite wirklich neu erstellen möchten.',
+	'confirmrecreate' => 'Benutzer [[{{ns:user}}:$1|$1]] ([[{{ns:user_talk}}:$1|Diskussion]]) hat diese Seite gelöscht, nachdem Du angefangen hast, sie zu bearbeiten. Die Begründung lautete:<br />
+\'\'$2\'\'
+
+Bitte bestätige, dass Du diese Seite tatsächlich neu anlegen möchtest.',
 	'confirmrecreate-noreason' => 'Benutzer [[User:$1|$1 ]] ([[User talk:$1|Diskussion]]) hat diese Seite gelöscht, nachdem du mit der Bearbeitung begonnen hast. Bitte bestätige, dass du die Seite wirklich erneut erstellen möchtest.',
 	'confirm_purge_button' => 'OK',
 	'confirm-purge-top' => 'Diese Seite aus dem Server-Cache löschen?',
@@ -7410,9 +7410,7 @@ $5
 
 Este código de confirmación caducará el $4.',
 	'confirmemail_invalidated' => 'La confirmación de la dirección de correo electrónico ha sido cancelada',
-	'confirmrecreate' => 'El usuario [[User:$1|$1]] ([[User talk:$1|disc.]]) borró esta página después de que comenzaste a editarla, por el motivo:
-: \'\'$2\'\'
-Confirma que realmente quieres volver a crear esta página.',
+	'confirmrecreate' => 'El usuario [[User:$1|$1]] ([[User talk:$1|discusión]]) borró este artículo después de que tú empezaras a editarlo y dio esta razón: \'\'$2\'\' Por favor, confirma que realmente deseas crear de nuevo el artículo.',
 	'confirmrecreate-noreason' => 'El usuario [[User:$1|$1]] ([[User talk:$1|discusión]]) borró esta página después de que comenzaras a editarla. Por favor confirma que realmente quieres recrear esta página.',
 	'confirm_purge_button' => 'Aceptar',
 	'confirm-purge-top' => '¿Limpiar la caché de esta página?',
@@ -8583,8 +8581,8 @@ Ignorez ce message si ce compte a été créé par erreur.',
 	'changeemail-none' => '(aucune)',
 	'changeemail-submit' => 'Changer l’adresse e-mail',
 	'changeemail-cancel' => 'Annuler',
-	'confirmedittext' => 'Vous devez confirmer votre adresse de courriel avant de modifier les pages.
-Veuillez entrer et valider votre adresse de courriel dans vos [[Special:Preferences|préférences]].',
+	'confirmedittext' => 'Vous devez confirmer votre adresse e-mail avant de modifier les pages.
+Veuillez saisir et valider votre adresse e-mail dans vos [[Special:Preferences|préférences]].',
 	'clearyourcache' => '\'\'\'Note :\'\'\' Après publication, il peut être nécessaire de [[w:fr:Aide:Cache|purger le cache]] pour voir les modifications.
 
 * \'\'\'Chrome\'\'\' - Windows : Maintenez la touche Ctrl enfoncée et appuyez sur la touche F5 ; OS X : Maintenez les touches Cmd (⌘) et Shift (⇧) enfoncées et appuyez sur la touche R.
@@ -8617,7 +8615,7 @@ Voyez aussi [[Special:WantedCategories|les catégories demandées]].',
 	'changed' => 'modifiée',
 	'created' => 'créée',
 	'confirm' => 'Confirmer',
-	'confirmdeletetext' => 'Vous êtes sur le point de supprimer une page ou un fichier, ainsi que toutes ses versions antérieures historisées. Veuillez confirmer que c’est bien là ce que vous voulez faire, que vous en comprenez les conséquences et que vous faites ceci en accord avec les [[{{MediaWiki:Policy-url}}|règles internes]].',
+	'confirmdeletetext' => 'Vous êtes sur le point de supprimer une page avec tout son historique. Voir aussi [[w:c:communaute:Aide:Supprimer|Aide:Supprimer]].',
 	'cantrollback' => 'Impossible de révoquer la modification ;
 le dernier contributeur est le seul auteur de cette page.',
 	'cannotundelete' => 'La restauration a échoué ;
@@ -8712,10 +8710,10 @@ Si le compte ne vous appartient PAS, suivez plutôt ce lien pour annuler la conf
 
 $5',
 	'confirmemail_invalidated' => 'Confirmation de l’adresse e-mail annulée',
-	'confirmrecreate' => 'L’utilisateur [[User:$1|$1]] ([[User talk:$1|Discussion]]) a supprimé cette page, alors que vous aviez commencé à l’éditer, pour le motif suivant :
+	'confirmrecreate' => 'L’utilisateur [[{{ns:User}}:$1|$1]] ([[{{ns:User_talk}}:$1|Discussion]]) a supprimé cette page, alors que vous aviez commencé à la modifier, pour le motif suivant :
 : \'\'$2\'\'
 Veuillez confirmer que vous désirez réellement recréer cette page.',
-	'confirmrecreate-noreason' => 'L’utilisateur [[User:$1|$1]] ([[User talk:$1|Discussion]]) a supprimé cette page, alors que vous aviez commencé à l’éditer. Veuillez confirmer que vous désirez réellement recréer cette page.',
+	'confirmrecreate-noreason' => 'L’utilisateur [[User:$1|$1]] ([[User talk:$1|Discussion]]) a supprimé cette page, alors que vous aviez commencé à la modifier. Veuillez confirmer que vous désirez réellement recréer cette page.',
 	'confirm_purge_button' => 'Confirmer',
 	'confirm-purge-top' => 'Voulez-vous rafraîchir cette page (purger le cache) ?',
 	'confirm-purge-bottom' => 'Purger une page l’efface du cache de rendu et force sa dernière version à être régénérée et affichée.',
@@ -13154,8 +13152,7 @@ $3が示した理由は \'\'$2\'\' です。',
 	'changed' => '変更',
 	'created' => '作成',
 	'confirm' => '確認',
-	'confirmdeletetext' => 'ページをすべての履歴とともに削除しようとしています。
-本当にこの操作を行いたいか、操作の結果を理解しているか、およびこの操作が[[{{MediaWiki:Policy-url}}|方針]]に従っているかどうか、確認をしてください。',
+	'confirmdeletetext' => 'このページとその履歴を削除します。この操作を本当に行って良いかご確認いただくには、[[w:c:ja.community:ヘルプ:削除|削除に関するヘルプ]]をご覧ください。',
 	'cantrollback' => '投稿者が一人しかいないため、編集を差し戻せません。',
 	'cannotundelete' => '復帰に失敗しました。
 誰かが、既にこのページを復帰した可能性があります。',
@@ -20381,8 +20378,8 @@ Negeer dit bericht als deze gebruiker zonder uw medeweten is aangemaakt.',
 	'changeemail-none' => '(geen)',
 	'changeemail-submit' => 'E-mailadres wijzigen',
 	'changeemail-cancel' => 'Annuleren',
-	'confirmedittext' => 'U moet uw e-mailadres bevestigen voor u kunt bewerken.
-Voer uw e-mailadres in en bevestig het via [[Special:Preferences|uw voorkeuren]].',
+	'confirmedittext' => 'Je moet je e-mailadres bevestigen voor je kunt bewerken.
+Voer je e-mailadres in en bevestig het via [[Special:Preferences|je voorkeuren]].',
 	'clearyourcache' => '\'\'\'Let op! Nadat je de wijzigingen hebt opgeslagen is het wellicht nodig je browsercache te legen.\'\'\'
 
 \'\'\'Mozilla / Firefox / Safari:\'\'\' houd \'\'Shift\'\' ingedrukt terwijl je op \'\'Huidige pagina vernieuwen\'\' klikt of typ \'\'Ctrl-F5\'\' of \'\'Ctrl-R\'\' (\'\'Command-R\'\' op eenMacintosh);
@@ -20418,8 +20415,8 @@ Zie ook [[Special:WantedCategories|niet-bestaande categorieën met verwijzingen]
 	'changed' => 'gewijzigd',
 	'created' => 'aangemaakt',
 	'confirm' => 'Bevestigen',
-	'confirmdeletetext' => 'U staat op het punt een pagina te verwijderen, inclusief de geschiedenis.
-Bevestig hieronder dat dit inderdaad uw bedoeling is, dat u de gevolgen begrijpt en dat de verwijdering overeenstemt met het [[{{MediaWiki:Policy-url}}|beleid]].',
+	'confirmdeletetext' => 'Je staat op het punt een pagina te verwijderen, inclusief de geschiedenis.
+Bevestig hieronder dat dit inderdaad je bedoeling is, dat je de gevolgen begrijpt en dat de verwijdering overeenstemt met het [[{{MediaWiki:Policy-url}}|beleid]].',
 	'cantrollback' => 'Ongedaan maken van wijzigingen onmogelijk: deze pagina heeft slechts 1 auteur.',
 	'cannotundelete' => 'Het terugplaatsen is mislukt.
 Misschien heeft een andere gebruiker de pagina al teruggeplaatst.',
@@ -20510,9 +20507,9 @@ $5
 
 De bevestigingscode vervalt op $4.',
 	'confirmemail_invalidated' => 'De e-mailbevestiging is geannuleerd',
-	'confirmrecreate' => 'Nadat u begonnen bent met uw wijziging heeft [[User:$1|$1]] ([[User talk:$1|overleg]]) deze pagina verwijderd met opgave van de volgende reden:
+	'confirmrecreate' => 'Nadat je begonnen bent met je wijziging heeft [[User:$1|$1]] ([[User talk:$1|overleg]]) deze pagina verwijderd met opgave van de volgende reden:
 : \'\'$2\'\'
-Bevestig dat u de pagina opnieuw wilt aanmaken.',
+Bevestig dat je de pagina opnieuw wilt aanmaken.',
 	'confirmrecreate-noreason' => 'Nadat u begonnen bent met uw wijziging heeft [[User:$1|$1]] ([[User talk:$1|overleg]]) deze pagina verwijderd.
 Bevestig dat u de pagina opnieuw wilt aanmaken.',
 	'confirm_purge_button' => 'OK',
@@ -21806,7 +21803,7 @@ Zobacz również [[Special:WantedCategories|brakujące kategorie]].',
 	'created' => 'utworzona',
 	'confirm' => 'Potwierdź',
 	'confirmdeletetext' => 'Zamierzasz usunąć stronę razem z całą dotyczącą jej historią.
-Upewnij się, czy na pewno chcesz to zrobić, że rozumiesz konsekwencje i że robisz to w zgodzie z [[{{MediaWiki:Policy-url}}|zasadami]].',
+Upewnij się, czy na pewno chcesz to zrobić, że rozumiesz konsekwencje. Zobacz także: [[Pomoc:Usuwanie]].',
 	'cantrollback' => 'Nie można cofnąć edycji, ponieważ jest tylko jedna wersja tej strony.',
 	'cannotundelete' => 'Odtworzenie nie powiodło się.
 Ktoś inny prawdopodobnie odtworzył już tę stronę.',
@@ -27059,8 +27056,7 @@ Se även [[Special:WantedCategories|önskade kategorier]].',
 	'changed' => 'ändrad',
 	'created' => 'skapad',
 	'confirm' => 'Bekräfta',
-	'confirmdeletetext' => 'Du håller på att ta bort en sida med hela dess historik.
-Bekräfta att du förstår vad du håller på med och vilka konsekvenser detta leder till, och att du följer [[{{MediaWiki:Policy-url}}|riktlinjerna]].',
+	'confirmdeletetext' => 'Du håller på att ta bort en sida med all sin historia. Se även [[Help:Deletion|Hjälp:Radering]].',
 	'cantrollback' => 'Det gick inte att rulla tillbaka, då sidan endast redigerats av en användare.',
 	'cannotundelete' => 'Återställning misslyckades; kanske någon redan har återställt sidan.',
 	'contributions' => 'Användarbidrag',
@@ -31312,6 +31308,10 @@ Send a new code by clicking [[Special:ConfirmEmail|here]].',
 	'confirmemail_sent' => '确认信已发出',
 	'confirmemail_success' => '您的电子邮件地址已经确认. 您现在可以登入并开始享受您的Wikia之旅了.',
 	'confirmemail_text' => '您需要先确认电子邮件地址，您才能收到通过Wikia送出的电子邮件。请点击下方的确认按钮，这将会向您所登记的地址发出确认信件。确认信包括一个含有确认码的超连结，您在浏览器中打开这个连结即可完成确认。如果你已经通过验证，请参看[[Special:Preferences|您的参数设置]]。',
+	'confirmedittext' => '在编辑页面前你需要确认你的电子邮件地址。请在[[Special:Preferences|参数设定]]中设置并验证你的电子邮件地址。',
+	'confirmrecreate' => '在你编辑这个条目後, 用户[[User:$1|$1]]([[User talk:$1|讨论]])以下列原因删除了这个条目:
+: \'\'$2\'\'
+请在重新创建条目前三思.',
 ];
 
 $messages['zh-classical'] = [
@@ -31338,6 +31338,10 @@ Send a new code by clicking [[Special:ConfirmEmail|here]].',
 	'confirmemail_sent' => '确认信已发出',
 	'confirmemail_success' => '您的电子邮件地址已经确认. 您现在可以登入并开始享受您的Wikia之旅了.',
 	'confirmemail_text' => '您需要先确认电子邮件地址，您才能收到通过Wikia送出的电子邮件。请点击下方的确认按钮，这将会向您所登记的地址发出确认信件。确认信包括一个含有确认码的超连结，您在浏览器中打开这个连结即可完成确认。如果你已经通过验证，请参看[[Special:Preferences|您的参数设置]]。',
+	'confirmedittext' => '在编辑页面前你需要确认你的电子邮件地址。请在[[Special:Preferences|参数设定]]中设置并验证你的电子邮件地址。',
+	'confirmrecreate' => '在你编辑这个条目後, 用户[[User:$1|$1]]([[User talk:$1|讨论]])以下列原因删除了这个条目:
+: \'\'$2\'\'
+请在重新创建条目前三思.',
 ];
 
 $messages['zh-hans'] = [
@@ -31741,6 +31745,10 @@ Send a new code by clicking [[Special:ConfirmEmail|here]].',
 	'confirmemail_sent' => '確認信已發出',
 	'confirmemail_success' => '您的電子郵件地址已經確認. 您現在可以登入并開始享受您的Wikia之旅了.',
 	'confirmemail_text' => '您需要先確認電子郵件地址，您才能收到通過Wikia送出的電子郵件。請點撃下方的確認按鈕，這將會向您所登記的地址發出確認信件。確認信包括一個含有確認碼的超連結，您在瀏覧器中打開這個連結即可完成確認。如果你已經通過驗證，請參看[[Special:Preferences|您的參數設置]]。',
+	'confirmedittext' => '在編輯頁面前你需要確認你的電子郵件地址。請在[[Special:Preferences|參數設定]]中設置并驗證你的電子郵件地址。',
+	'confirmrecreate' => '在你編輯這個條目後, 用户[[User:$1|$1]]([[User talk:$1|討論]])以下列原因删除了這個條目:
+: \'\'$2\'\'
+請在重新創建條目前三思.',
 ];
 
 $messages['zh-min-nan'] = [
@@ -31777,6 +31785,10 @@ Send a new code by clicking [[Special:ConfirmEmail|here]].',
 	'confirmemail_sent' => '确认信已发出',
 	'confirmemail_success' => '您的电子邮件地址已经确认. 您现在可以登入并开始享受您的Wikia之旅了.',
 	'confirmemail_text' => '您需要先确认电子邮件地址，您才能收到通过Wikia送出的电子邮件。请点击下方的确认按钮，这将会向您所登记的地址发出确认信件。确认信包括一个含有确认码的超连结，您在浏览器中打开这个连结即可完成确认。如果你已经通过验证，请参看[[Special:Preferences|您的参数设置]]。',
+	'confirmedittext' => '在编辑页面前你需要确认你的电子邮件地址。请在[[Special:Preferences|参数设定]]中设置并验证你的电子邮件地址。',
+	'confirmrecreate' => '在你编辑这个条目後, 用户[[User:$1|$1]]([[User talk:$1|讨论]])以下列原因删除了这个条目:
+: \'\'$2\'\'
+请在重新创建条目前三思.',
 ];
 
 $messages['zh-tw'] = [
@@ -31788,7 +31800,7 @@ $messages['zh-tw'] = [
 	'createaccount-text' => '有人在{{SITENAME}}中為 $2 建立了一個新帳號($4)。 "$2" 的密碼是 "$3" 。您應該立即登入並更改密碼。
 
 如果該帳號建立錯誤的話，您可以忽略此訊息。',
-	'confirmedittext' => '在編輯此頁之前您必須確認您的電子郵件地址。請透過[[Special:Preferences|參數設定]]設定並驗証您的電子郵件地址。',
+	'confirmedittext' => '在編輯頁面前你需要確認你的電子郵件地址。請在[[Special:Preferences|參數設定]]中設置并驗證你的電子郵件地址。',
 	'clearyourcache' => '\'\'\'注意:\'\'\' 在儲存以後, 您必須清除瀏覽器的快取才能看到所作出的改變。 \'\'\'Mozilla / Firefox / Safari:\'\'\' 按著 \'\'Shift\'\' 再點擊\'\'重新整理\'\'(或按下\'\'Ctrl-Shift-R\'\'，在蘋果Mac上按下\'\'Cmd-Shift-R\'\')；\'\'\'IE:\'\'\' 按著 \'\'Ctrl\'\' 再點擊 \'\'重新整理\'\'，或按下 \'\'Ctrl-F5\'\'；\'\'\'Konqueror:\'\'\' 只需點擊 \'\'重新整理\'\'；\'\'\'Opera:\'\'\' 使用者需要在 \'\'工具-設定\'\' 中完整地清除它們的快取。',
 	'cascadeprotectedwarning' => '{{MediaWiki:Cascadeprotectedwarning}}',
 	'cantcreateaccounttitle' => '無法創建帳戶',
@@ -31811,7 +31823,9 @@ $messages['zh-tw'] = [
 	'confirmemail_success' => '您的電子郵件地址已經確認. 您現在可以登入並開始享受您的Wikia之旅了.',
 	'confirmemail_loggedin' => '您的電子郵件已被確認.',
 	'confirmemail_subject' => '{{SITENAME}}電子郵件地址確認',
-	'confirmrecreate' => '在您編輯這個頁面後，使用者[[User:$1|$1]]([[User talk:$1|對話]])以下列原因刪除了這個頁面: $2。請在重新建立頁面前三思。',
+	'confirmrecreate' => '在你編輯這個條目後, 用户[[User:$1|$1]]([[User talk:$1|討論]])以下列原因删除了這個條目:
+: \'\'$2\'\'
+請在重新創建條目前三思.',
 	'create_an_account' => '開啟新用戶帳號',
 	'createpage' => '開啟新文章',
 	'choose_reason' => '選擇原因',
