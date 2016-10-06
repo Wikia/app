@@ -28,15 +28,14 @@ class CakeRelatedContentService {
 	public function getContentRelatedTo($title, $namespaceId, $wikiId, $universeName = null, $limit = 5, $ignore = null ) {
 		$items = [];
 
-		if ( !$this->onValidWiki($wikiId) || !$this->onValidPage( $title ) ) {
+		if ( !$this->onValidWiki($wikiId) || !$this->onValidPage( $title ) || !$this->isValidNamespace($namespaceId) ) {
 			return $items;
 		}
 
 		$api = $this->relatedContentApi();
-		$entityName = $this->isValidNamespace($namespaceId) ? $title : $universeName;
 
 		try {
-			$filteredRelatedContent = $api->getRelatedContentFromEntityName( $entityName, $universeName, $limit + 1, "true" );
+			$filteredRelatedContent = $api->getRelatedContentFromEntityName( $title, $universeName, $limit + 1, "true" );
 			if ( is_null( $filteredRelatedContent ) ) {
 				$this->warning( "getRelatedContentFromEntityName failed to retrieve recommendations", [
 						"title" => $title,

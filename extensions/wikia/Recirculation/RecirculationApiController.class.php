@@ -65,8 +65,8 @@ class RecirculationApiController extends WikiaApiController {
 				'items' => ( new CakeRelatedContentService() )->getContentRelatedTo(
 						$target,
 						$namespaceId,
-						$this->wg->sitename,
 						$this->wg->cityId,
+						$this->wg->sitename,
 						$limit,
 						$ignore
 				),
