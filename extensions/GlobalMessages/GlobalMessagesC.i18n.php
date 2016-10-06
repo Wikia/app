@@ -8688,7 +8688,7 @@ Veuillez confirmer que vous désirez réellement recréer cette page.',
 	'compare-submit' => 'Comparer',
 	'compare-invalid-title' => 'Le titre que vous avez spécifié n\'est pas valide.',
 	'compare-title-not-exists' => 'Le titre que vous avez spécifié n\'existe pas.',
-	'compare-revision-not-exists' => 'La révision que vous avez spécifié n\'existe pas.',
+	'compare-revision-not-exists' => 'La révision que vous avez indiquée n\'existe pas.',
 	'create_an_account' => 'Créer un compte',
 	'createpage' => 'Créer un nouvel article',
 	'choose_reason' => 'Choisissez la raison',
@@ -31236,6 +31236,7 @@ $messages['zh'] = [
 	'category-media-header' => '類別「$1」中的媒體檔',
 	'changed' => '被改变',
 	'community' => '社群',
+	'compareselectedversions' => '比较被选版本',
 ];
 
 $messages['zh-classical'] = [
@@ -31249,6 +31250,7 @@ $messages['zh-cn'] = [
 	'cascadeprotectedwarning' => '{{MediaWiki:Cascadeprotectedwarning}}',
 	'category-media-header' => '“$1”分类中的媒体文件',
 	'community' => '社区',
+	'compareselectedversions' => '比较被选版本',
 ];
 
 $messages['zh-hans'] = [
@@ -31639,6 +31641,7 @@ $messages['zh-hk'] = [
 }}',
 	'cascadeprotectedwarning' => '{{MediaWiki:Cascadeprotectedwarning}}',
 	'category-media-header' => '類別「$1」中的媒體檔',
+	'compareselectedversions' => '比較被選版本',
 ];
 
 $messages['zh-min-nan'] = [
@@ -31662,6 +31665,7 @@ $messages['zh-sg'] = [
 	'cascadeprotected' => '{{MediaWiki:Cascadeprotected}}',
 	'cascadeprotectedwarning' => '{{MediaWiki:Cascadeprotectedwarning}}',
 	'category-media-header' => '“$1”分类中的媒体文件',
+	'compareselectedversions' => '比较被选版本',
 ];
 
 $messages['zh-tw'] = [
@@ -31680,7 +31684,7 @@ $messages['zh-tw'] = [
 	'cantcreateaccount-text' => '從這個IP地址 (<b>$1</b>) 建立帳號已經被[[User:$3|$3]]禁止。
 
 當中被$3封鎖的原因是\'\'$2\'\'',
-	'compareselectedversions' => '比較選定的版本',
+	'compareselectedversions' => '比較被選版本',
 	'confirmdeletetext' => '您即將從資料庫中永遠刪除一個頁面或圖片以及其歷史。
 請確定您要進行此項操作，並且了解其後果，同時您的行為符合[[{{MediaWiki:Policy-url}}]]。',
 	'cantrollback' => '無法恢復編輯；最後的參與者是本文的唯一作者。',
