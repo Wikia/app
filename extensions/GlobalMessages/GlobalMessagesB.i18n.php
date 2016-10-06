@@ -17,19 +17,21 @@ It may contain one or more characters that can\'t be used in titles.',
 	'bold_sample' => 'Bold text',
 	'bold_tip' => 'Bold text',
 	'blockedtitle' => 'User is blocked',
-	'blockedtext' => '\'\'\'Your username or IP address has been blocked.\'\'\'
+	'blockedtext' => '<big>\'\'\'Your user name or IP address has been blocked.\'\'\'</big>
 
+<div id="mw-message-blockedtext" style="border:1px solid black; padding-left:0.5em;">
 The block was made by $1.
-The reason given is \'\'$2\'\'.
 
+* Reason given: $2
 * Start of block: $8
 * Expiry of block: $6
 * Intended blockee: $7
+* Block ID: #$5
+* Current IP address: $3
+</div>
 
-You can contact $1 or another [[{{MediaWiki:Grouppage-sysop}}|administrator]] to discuss the block.
-You cannot use the \'e-mail this user\' feature unless a valid e-mail address is specified in your [[Special:Preferences|account preferences]] and you have not been blocked from using it.
-Your current IP address is $3, and the block ID is #$5.
-Please include all above details in any queries you make.',
+You can contact $1 or another [[Special:ListUsers|{{MediaWiki:group-sysop-member}}]] to discuss the block.
+Please include all details in the above box in any queries you make.',
 	'blockednoreason' => 'no reason given',
 	'blocked-notice-logextract' => 'This user is currently blocked.
 The latest block log entry is provided below for reference:',
@@ -78,9 +80,7 @@ It must not be more than $1 {{PLURAL:$1|character|characters}} long.',
 	'blockip' => 'Block user',
 	'blockip-title' => 'Block user',
 	'blockip-legend' => 'Block user',
-	'blockiptext' => 'Use the form below to block write access from a specific IP address or username.
-This should be done only to prevent vandalism, and in accordance with [[{{MediaWiki:Policy-url}}|policy]].
-Fill in a specific reason below (for example, citing particular pages that were vandalized).',
+	'blockiptext' => 'Use the form below to block editing access from a specific IP address or username. See also [[Help:Blocking]].',
 	'badipaddress' => 'Invalid IP address',
 	'blockipsuccesssub' => 'Block succeeded',
 	'blockipsuccesstext' => '[[Special:Contributions/$1|$1]] has been blocked.<br />
@@ -3808,19 +3808,13 @@ $messages['de'] = [
 	'bold_sample' => 'Fetter Text',
 	'bold_tip' => 'Fetter Text',
 	'blockedtitle' => 'Benutzer ist gesperrt',
-	'blockedtext' => '\'\'\'Dein Benutzername oder deine IP-Adresse wurde gesperrt.\'\'\'
+	'blockedtext' => 'Dein Benutzername oder Deine IP-Adresse wurde von $1 blockiert.
 
-Die Sperrung wurde von $1 durchgeführt.
-Als Grund wurde \'\'$2\'\' angegeben.
+Folgender Grund wurde angegeben: $2
 
-* Beginn der Sperre: $8
-* Ende der Sperre: $6
-* Sperre betrifft: $7
+Du kannst $1 oder andere [[Project:Administratoren|Administratoren]] kontaktieren, um über die Blockierung zu diskutieren. Bei Problemen kannst Du [[Special:Contact|Kontakt zu Wikia]] aufnehmen.
 
-Du kannst $1 oder einen der anderen [[{{MediaWiki:Grouppage-sysop}}|Administratoren]] kontaktieren, um über die Sperre zu diskutieren.
-Du kannst die „E-Mail an diesen Benutzer“-Funktion nicht nutzen, solange keine gültige E-Mail-Adresse in deinen [[Special:Preferences|Benutzerkonto-Einstellungen]] eingetragen ist, oder diese Funktion für dich gesperrt wurde.
-Deine aktuelle IP-Adresse ist $3, und die Sperr-ID ist $5.
-Bitte füge alle Informationen jeder Anfrage hinzu, die du stellt.',
+Bitte gib bei entsprechenden Anfragen immer Deine IP-Adresse ($3), den Namen dieses Wikis und das heutige Datum an.',
 	'blockednoreason' => 'keine Begründung angegeben',
 	'blocked-notice-logextract' => '{{GENDER:$1|Dieser Benutzer|Diese Benutzerin|Dieser Benutzer}} ist zurzeit gesperrt.
 Zur Information folgt ein aktueller Auszug aus dem Benutzersperr-Logbuch:',
@@ -3862,12 +3856,12 @@ Zur Information folgt ein aktueller Auszug aus dem Benutzersperr-Logbuch:',
 Bitte prüfe, ob sie korrekt von der Quelle übertragen wurde.',
 	'blanknamespace' => '(Seiten)',
 	'block' => 'Benutzer sperren',
-	'blockip' => 'IP-Adresse/Benutzer sperren',
+	'blockip' => 'Benutzer sperren',
 	'blockip-title' => 'Benutzer sperren',
 	'blockip-legend' => 'IP-Adresse/Benutzer sperren',
 	'blockiptext' => 'Mit diesem Formular sperrst du eine IP-Adresse oder einen Benutzernamen, so dass von dort keine Änderungen mehr vorgenommen werden können.
-Dies sollte nur erfolgen, um Vandalismus zu verhindern und in Übereinstimmung mit den [[{{MediaWiki:Policy-url}}|Richtlinien]].
-Bitte gib den Grund für die Sperre an.',
+Dies sollte nur erfolgen, um Vandalismus zu verhindern und in Übereinstimmung mit den [[{{ns:project}}:Leitlinien|Projektleitlinien]] geschehen.
+Bitte gib immer einen Grund für die Blockade an.',
 	'badipaddress' => 'Die IP-Adresse hat ein falsches Format.',
 	'blockipsuccesssub' => 'Sperre erfolgreich',
 	'blockipsuccesstext' => 'Der Benutzer/die IP-Adresse [[Special:Contributions/$1|$1]] wurde gesperrt.<br />
@@ -3890,9 +3884,7 @@ Zur Aufhebung der Sperre siehe die [[Special:BlockList|Liste aller aktiven Sperr
 	'blocklog-showsuppresslog' => '{{GENDER:$1|Dieser Benutzer|Diese Benutzerin|Dieser Benutzer}} wurde schon früher gesperrt und versteckt.
 Es folgt der Eintrag aus dem Unterdrückungs-Logbuch:',
 	'blocklogentry' => 'sperrte „[[$1]]“ für den Zeitraum: $2 $3',
-	'blocklogtext' => 'Dies ist das Logbuch über Sperrungen und Entsperrungen von Benutzern und IP-Adressen.
-Automatisch gesperrte IP-Adressen werden nicht erfasst.
-Siehe die [[Special:BlockList|Liste der gesperrten IP-Adressen und Benutzernamen]] für alle aktiven Sperren.',
+	'blocklogtext' => 'Dies ist das Logbuch über Sperrungen und Entsperrungen von Benutzern und IP-Adressen. Die Spezialseite [[Special:Ipblocklist|Liste gesperrter Benutzer/IP-Adressen]] führt alle aktuell gesperrten Benutzer auf, einschließlich automatisch geblockter IP-Adressen.',
 	'block-log-flags-anononly' => 'nur Anonyme',
 	'block-log-flags-nocreate' => 'Erstellung von Benutzerkonten gesperrt',
 	'block-log-flags-noautoblock' => 'Autoblock deaktiviert',
@@ -4669,7 +4661,7 @@ Consulte la [[Special:BlockList|lista de direcciones IP bloqueadas]] para ver la
 	'block-log-flags-nousertalk' => 'no puede editar su propia página de discusión',
 	'block-log-flags-angry-autoblock' => 'autobloqueo avanzado habilitado',
 	'block-log-flags-hiddenname' => 'nombre de usuario oculto',
-	'blockme' => 'Bloquearme',
+	'blockme' => 'Bloquéame',
 	'bydate' => 'por fecha',
 	'bad_image_list' => 'El formato es el siguiente:
 
@@ -5121,7 +5113,7 @@ Alla on viimeisin estolokin tapahtuma:',
 	'blockip' => 'Estä käyttäjä',
 	'blockip-title' => 'Estä käyttäjä',
 	'blockip-legend' => 'Estä käyttäjä',
-	'blockiptext' => 'Tällä lomakkeella voit estää käyttäjän tai IP-osoitteen muokkausoikeudet. Muokkausoikeuksien poistamiseen [[{{MediaWiki:Policy-url}}|pitää olla syy]], esimerkiksi sivujen vandalisointi. Kirjoita syy siihen varattuun kenttään.<br />Vapaamuotoisen vanhenemisajat noudattavat GNUn standardimuotoa, joka on kuvattu tar-manuaalissa ([http://www.gnu.org/software/tar/manual/html_node/Date-input-formats.html] [EN]), esimerkiksi ”1 hour”, ”2 days”, ”next Wednesday”, ”2014-08-29”.',
+	'blockiptext' => 'Tällä lomakkeella voit estää käyttäjän tai IP-osoitteen muokkausoikeudet. Muokkausoikeuksien poistamiseen pitää olla syy, esimerkiksi sivujen vandalisointi. Kirjoita syy siihen varattuun kenttään.<br />Vanhenemisajat noudattavat GNUn standardimuotoa, esimerkiksi ”1 hour”, ”2 days”, ”next Wednesday”, 2005-08-29”. Esto voi olla myös ”indefinite” tai ”infinite”, joka kestää kunnes se poistetaan.',
 	'badipaddress' => 'IP-osoite on väärin muotoiltu.',
 	'blockipsuccesssub' => 'Esto onnistui',
 	'blockipsuccesstext' => 'Käyttäjä tai IP-osoite [[Special:Contributions/$1|$1]] on estetty.<br />
@@ -5366,7 +5358,7 @@ La raison invoquée est la suivante : \'\'$2\'\'.
 * Compte bloqué : $7.
 
 Vous pouvez contacter $1 ou un autre [[{{MediaWiki:Grouppage-sysop}}|administrateur]] pour en discuter.
-Vous ne pouvez utiliser la fonction « {{MediaWiki:emailpage}} » que si une adresse de courriel valide est spécifiée dans vos [[Special:Preferences|préférences]] et que cette fonctionnalité n’a pas été bloquée.
+Vous ne pouvez utiliser la fonction « {{MediaWiki:emailpage}} » que si une adresse e-mail valide est spécifiée dans vos [[Special:Preferences|préférences]] et que cette fonctionnalité n’a pas été bloquée.
 Votre adresse IP actuelle est $3 et votre identifiant de blocage est $5.
 Veuillez préciser ces indications dans toutes les requêtes que vous ferez.',
 	'blockednoreason' => 'aucune raison donnée',
@@ -5445,7 +5437,7 @@ Consultez la [[Special:BlockList|liste des IP bloquées]] pour voir les bannisse
 	'block-log-flags-anononly' => 'utilisateurs anonymes seulement',
 	'block-log-flags-nocreate' => 'création de compte interdite',
 	'block-log-flags-noautoblock' => 'autoblocage des IP désactivé',
-	'block-log-flags-noemail' => 'envoi de courriel interdit',
+	'block-log-flags-noemail' => 'envoi d\'e-mails interdit',
 	'block-log-flags-nousertalk' => 'ne peut modifier sa propre page de discussion',
 	'block-log-flags-angry-autoblock' => 'autoblocage amélioré activé',
 	'block-log-flags-hiddenname' => 'nom d’utilisateur caché',
@@ -8126,7 +8118,7 @@ L\'ultimo elemento del registro dei blocchi è riportato di seguito per informaz
 	'block' => 'Blocca utente',
 	'blockip' => 'Blocco utente',
 	'blockip-title' => 'Blocca utente',
-	'blockip-legend' => 'Blocca l\'utente',
+	'blockip-legend' => 'Blocca l’utente',
 	'blockiptext' => 'Usare il modulo sottostante per bloccare l\'accesso in scrittura a uno specifico indirizzo IP o un utente registrato.
 Il blocco dev\'essere operato per prevenire atti di vandalismo e in stretta osservanza della [[{{MediaWiki:Policy-url}}|policy di {{SITENAME}}]].
 Indicare il motivo specifico per il quale si procede al blocco (per esempio, citando i titoli di eventuali pagine oggetto di vandalismo).',
@@ -11611,9 +11603,7 @@ $messages['mk'] = [
 	'blockip' => 'Блокирај корисник',
 	'blockip-title' => 'Блокирај корисник',
 	'blockip-legend' => 'Блокирај корисник',
-	'blockiptext' => 'Користете го долниот образец за да го забраните пристапот за пишување од одредена IP-адреса или корисничко име.
-Ова единствено треба да се прави за да се спречи вандализам, во согласност со [[{{MediaWiki:Policy-url}}|правилата на Википедија]].
-Изберете конкретна причина подолу (пример: цитирање на конкретни страници што биле вандализирани).',
+	'blockiptext' => 'Користете го долниот формулар да го забраните пристапот за пишување од одредена IP адреса или корисничко име.',
 	'badipaddress' => 'Неважечка IP-адреса',
 	'blockipsuccesssub' => 'Успешно блокирање',
 	'blockipsuccesstext' => 'IP-адресата [[Special:Contributions/$1|$1]] е блокирана.<br />
@@ -12942,12 +12932,12 @@ $messages['nl'] = [
 	'badtitletext' => 'De naam van de opgevraagde pagina was ongeldig, leeg of bevatte een verkeerde intertaal- of interwikinaamverwijzing.
 Wellicht bevat de paginanaam niet toegestane karakters.',
 	'badretype' => 'De ingevoerde wachtwoorden verschillen van elkaar.',
-	'blocked-mailpassword' => 'Uw IP-adres is geblokkeerd voor het maken van wijzigingen.
+	'blocked-mailpassword' => 'Je IP-adres is geblokkeerd voor het maken van wijzigingen.
 Om misbruik te voorkomen is het niet mogelijk om een nieuw wachtwoord aan te vragen.',
 	'bold_sample' => 'Vetgedrukte tekst',
 	'bold_tip' => 'Vet',
 	'blockedtitle' => 'Gebruiker is geblokkeerd',
-	'blockedtext' => '\'\'\'Uw gebruiker of IP-adres is geblokkeerd.\'\'\'
+	'blockedtext' => '\'\'\'Je gebruiker of IP-adres is geblokkeerd.\'\'\'
 
 De blokkade is uitgevoerd door $1.
 De opgegeven reden is \'\'$2\'\'.
@@ -12956,10 +12946,10 @@ De opgegeven reden is \'\'$2\'\'.
 * Einde blokkade: $6
 * Bedoeld te blokkeren: $7
 
-U kunt contact opnemen met $1 of een andere [[{{MediaWiki:Grouppage-sysop}}|beheerder]] om de blokkade te bespreken.
-U kunt geen gebruik maken van de functie "Deze gebruiker e-mailen", tenzij u een geldig e-mailadres hebt opgegeven in uw [[Special:Preferences|voorkeuren]] en het gebruik van deze functie niet geblokkeerd is.
-Uw huidige IP-adres is $3 en het blokkadenummer is #$5.
-Vermeld alle bovenstaande gegevens als u ergens op deze blokkade reageert.',
+Je kunt contact opnemen met $1 of een andere [[{{MediaWiki:Grouppage-sysop}}|beheerder]] om de blokkade te bespreken.
+Je kunt geen gebruik maken van de functie "Deze gebruiker e-mailen", tenzij je een geldig e-mailadres hebt opgegeven in uw [[Special:Preferences|voorkeuren]] en het gebruik van deze functie niet geblokkeerd is.
+Je huidige IP-adres is $3 en het blokkadenummer is #$5.
+Vermeld alle bovenstaande gegevens als je ergens op deze blokkade reageert.',
 	'blockednoreason' => 'geen reden opgegeven',
 	'blocked-notice-logextract' => 'Deze gebruiker is op het moment geblokkeerd.
 De laatste regel uit het blokkeerlogboek wordt hieronder ter referentie weergegeven:',
@@ -13798,7 +13788,6 @@ Podany powód to: \'\'$2\'\'.
 * Zablokowany został: $7
 
 W celu wyjaśnienia przyczyny zablokowania możesz się skontaktować z $1 lub innym [[{{MediaWiki:Grouppage-sysop}}|administratorem]].
-Nie możesz użyć funkcji „Wyślij e‐mail do tego użytkownika”, jeśli brak jest poprawnego adresu e‐mail w Twoich [[Special:Preferences|preferencjach]] lub jeśli taka możliwość została Ci zablokowana.
 Twój obecny adres IP to $3, a numer identyfikacyjny blokady to $5.
 Prosimy o podanie obu tych informacji przy wyjaśnianiu blokady.',
 	'blockednoreason' => 'nie podano przyczyny',
@@ -13846,7 +13835,7 @@ Dopuszczalna długość to $1 {{PLURAL:$1|znak|znaki|znaków}}.',
 	'blockip-title' => 'Zablokowanie użytkownika',
 	'blockip-legend' => 'Zablokuj użytkownika',
 	'blockiptext' => 'Użyj poniższego formularza do zablokowania możliwości edycji spod określonego adresu IP lub konkretnemu użytkownikowi.
-Blokować należy jedynie po to, by zapobiec wandalizmom, zgodnie z [[{{MediaWiki:Policy-url}}|przyjętymi zasadami]].
+Blokować należy jedynie po to, by zapobiec wandalizmom. Zobacz także: [[Pomoc:Blokowanie]].
 Podaj powód (np. umieszczając nazwy stron, na których dopuszczono się wandalizmu).',
 	'badipaddress' => 'Niepoprawny adres IP',
 	'blockipsuccesssub' => 'Zablokowanie powiodło się',
@@ -13860,7 +13849,7 @@ Przejdź do [[Special:BlockList|listy zablokowanych adresów IP]], by przejrzeć
 	'blocklist-timestamp' => 'Sygnatura czasowa',
 	'blocklist-target' => 'Cel',
 	'blocklist-expiry' => 'Upływa',
-	'blocklist-by' => 'Zarządzanie blokowaniem',
+	'blocklist-by' => 'Administrator blokujący',
 	'blocklist-params' => 'Parametry blokad',
 	'blocklist-reason' => 'Powód',
 	'blocklist-nousertalk' => 'nie mogą edytować własnych stron dyskusji',
@@ -15101,7 +15090,7 @@ $messages['ru'] = [
 * Цель блокировки: $7
 
 Вы можете связаться с $1 или любым другим [[{{MediaWiki:Grouppage-sysop}}|администратором]], чтобы обсудить блокировку.
-Обратите внимание, что не сможете использовать функцию «письмо участнику», если в своих [[Special:Preferences|персональных настройках]] не задали или не подтвердили корректный адрес электронной почты, или если ваша блокировка включает запрет отправки писем подобным образом.
+
 Ваш IP-адрес — $3, идентификатор блокировки — $5.
 Пожалуйста, указывайте эти сведения в любых своих обращениях.',
 	'blockednoreason' => 'причина не указана',
@@ -17177,19 +17166,21 @@ Den kan innehålla ett eller flera tecken som inte får användas i sidtitlar.',
 	'bold_sample' => 'Fet text',
 	'bold_tip' => 'Fet stil',
 	'blockedtitle' => 'Användaren är blockerad',
-	'blockedtext' => '\'\'\'Din IP-adress eller ditt användarnamn är blockerat.\'\'\'
+	'blockedtext' => '<big>\'\'\'Ditt användarnamn eller IP-adress har blockerats.\'\'\'</big>
 
-Blockeringen utfördes av $1 med motiveringen: \'\'$2\'\'.
+<div id="mw-message-blockedtext" style="border:1px solid black;">
+Blocket är gjord av $1.
 
-* Blockeringen startade $8
-* Blockeringen gäller till $6.
-* Blockeringen var avsedd för $7.
+* Anledningen till: $2
+* Start av blockera: $8
+* Upphörande av blockera: $6
+* Avsedd blockera: $7
+* Blockera ID: #$5
+* Aktuell IP-adress: $3
+</div>
 
-Du kan kontakta $1 eller någon annan av [[{{MediaWiki:Grouppage-sysop}}|administratörerna]] för att diskutera blockeringen.
-Om du är inloggad och har uppgivit en e-postadress i dina [[Special:Preferences|inställningar]] så kan du använda funktionen \'skicka e-post till den här användaren\', såvida du inte blivit blockerad från funktionen.
-
-Din IP-adress är $3 och blockerings-ID är #$5.
-Vänligen ange informationen ovan i alla förfrågningar som du gör i ärendet.',
+Du kan kontakta $1 eller annan [[Special:ListUsers|{{MediaWiki:group-sysop-member/sv}}]] att diskutera blocket.
+Ta med samtliga detaljer i ovanstående ruta på några frågor du gör.',
 	'blockednoreason' => 'ingen motivering angavs',
 	'blocked-notice-logextract' => 'Användaren är blockerad.
 Orsaken till senaste blockeringen kan ses nedan:',
@@ -17234,9 +17225,7 @@ Den får inte vara längre än $1 {{PLURAL:$1|tecken|tecken}}.',
 	'blockip' => 'Blockera användare',
 	'blockip-title' => 'Blockera användare',
 	'blockip-legend' => 'Blockera användare',
-	'blockiptext' => 'Använd formuläret nedan för att blockera möjligheten att redigera sidor från en specifik IP-adress eller ett användarnamn.
-Detta bör endast göras för att förhindra vandalisering, och i överensstämmelse med gällande [[{{MediaWiki:Policy-url}}|policy]].
-Ange orsak nedan (exempelvis genom att nämna sidor som blivit vandaliserade).',
+	'blockiptext' => 'Använd formuläret nedan för att blockera redigering tillgång från en specifik IP-adress eller användarnamn. Se även [[Help:BlockIP|Hjälp:BlockeraIP]] och [[Help:Blocking|Hjälp:Blockering]].',
 	'badipaddress' => 'Du har inte skrivit IP-adressen korrekt.',
 	'blockipsuccesssub' => 'Blockeringen är utförd',
 	'blockipsuccesstext' => '[[Special:Contributions/$1|$1]] har blockerats.
@@ -20031,7 +20020,7 @@ $messages['zh-tw'] = [
 	'blocklink' => '禁封',
 	'blocklogentry' => '[[$1]]已被封鎖 $3 ，終止時間為$2',
 	'blocklogtext' => '這是關於使用者封鎖和解除封鎖操作的記錄。被自動封鎖的IP地址沒有被列出。請參閱[[Special:BlockList|被封鎖的IP地址和使用者列表]]。',
-	'block-log-flags-anononly' => '僅限匿名使用者',
+	'block-log-flags-anononly' => '僅匿名用戶',
 	'block-log-flags-nocreate' => '禁止此IP/使用者建立新帳號',
 	'block-log-flags-noautoblock' => '停用自動封鎖',
 	'blockme' => '封鎖我',
@@ -20077,6 +20066,11 @@ $messages['zh'] = [
 	'badaccess-groups' => '你所请求执行的操作仅限于 $1 组成员。',
 	'badaccess' => '拒绝访问',
 	'badsig' => '错误的原始签名；请检查HTML标签。',
+	'block-log-flags-anononly' => '仅匿名用戶',
+	'block-log-flags-nocreate' => '创建账户已禁用',
+	'blocked-mailpassword' => '你的IP地址已经被查封而无法编辑，为了防止滥用而停用了你的密码恢复功能。',
+	'blocklogtext' => '这是关于用户查封和解封操作的日志。 
+被自动查封的IP地址没有被列出。请参看[[Special:Ipblocklist|被查封的IP地址和用户列表]]。',
 ];
 
 $messages['zh-hk'] = [
@@ -20086,5 +20080,6 @@ $messages['zh-hk'] = [
 
 $messages['zh-cn'] = [
 	'badsig' => '{{MediaWiki:Badsig}}',
+	'block-log-flags-anononly' => '仅匿名用戶',
 ];
 
