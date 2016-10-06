@@ -109,6 +109,12 @@ describe('ext.wikia.adEngine.video.vastBuilder', function () {
 		expect(vastUrl).toMatch(/&cust_params=uno%3Dfoo%26due%3D15%26tre%3Dbar%2Czero%26s0%3Dlife%26s1%3D_project43%26s2%3Darticle$/g);
 	});
 
+	it('Build VAST URL with page level params and slot level params', function () {
+		var vastUrl = getModule().build('test-source', 'TEST_SLOT', 1);
+
+		expect(vastUrl).toMatch(/&cust_params=uno%3Dfoo%26due%3D15%26tre%3Dbar%2Czero%26s0%3Dlife%26s1%3D_project43%26s2%3Darticle%26pos%3DTEST_SLOT%26src%3Dtest-source$/);
+	});
+
 	it('Build VAST URL with ad unit id', function () {
 		var vastUrl = getModule().build('a', 'b', 1);
 

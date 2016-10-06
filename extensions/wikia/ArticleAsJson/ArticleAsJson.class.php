@@ -389,7 +389,7 @@ class ArticleAsJson extends WikiaService {
 		return true;
 	}
 
-	public static function onShowEditLink( Parser &$this, &$showEditLink ) {
+	public static function onShowEditLink( Parser &$parser, &$showEditLink ) {
 		global $wgArticleAsJson;
 
 		//We don't have editing in this version

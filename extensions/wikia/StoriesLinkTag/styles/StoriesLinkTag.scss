@@ -143,3 +143,37 @@ $color-storieslink-grey: #555;
 	}
 
 }
+
+.WikiaArticleComments {
+	.storieslink-tag {
+		ul {
+			margin-left: 0;
+		}
+
+		.wikia-button.secondary {
+			float: left;
+		}
+
+		.description h2, .description p {
+			width: 180px;
+		}
+
+		@media(min-width: 1023px) {
+			.description h2, .description p {
+				width: 110px;
+			}
+		}
+
+		@media(min-width: 1082px) {
+			.description h2, .description p {
+				width: 150px;
+			}
+		}
+
+		@media(min-width: 1596px) {
+			.description h2, .description p {
+				width: 250px;
+			}
+		}
+	}
+}

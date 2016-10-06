@@ -16,27 +16,27 @@ $messages['en'] = [
 	'autocreatewiki-language-all' => 'All languages',
 	'autocreatewiki-remember' => 'Remember me',
 	'autocreatewiki-create-account' => 'Create an account',
-	'autocreatewiki-haveaccount-question' => 'Do you already have a Wikia account?',
+	'autocreatewiki-haveaccount-question' => 'Do you already have a Fandom account?',
 	'autocreatewiki-info-domain' => 'It\'s best to use a word likely to be a search keyword for your topic.',
 	'autocreatewiki-info-topic' => 'Add a short description such as \"Star Wars\" or \"TV shows\".',
 	'autocreatewiki-info-category-default' => 'This will help visitors find your wiki.',
 	'autocreatewiki-info-category-answers' => 'This will help visitors find your Answers site.',
 	'autocreatewiki-info-language' => 'This will be the default language for visitors to your wiki.',
-	'autocreatewiki-info-email-address' => 'Your email address is never shown to anyone on Wikia.',
+	'autocreatewiki-info-email-address' => 'Your email address is never shown to anyone on Fandom.',
 	'autocreatewiki-info-realname' => 'If you choose to provide it, this will be used for giving you attribution for your work.',
-	'autocreatewiki-info-birthdate' => 'Wikia requires all users to provide their real date of birth as both a safety precaution and as a means of preserving the integrity of the site while complying with federal regulations.',
+	'autocreatewiki-info-birthdate' => 'Fandom requires all users to provide their real date of birth as both a safety precaution and as a means of preserving the integrity of the site while complying with federal regulations.',
 	'autocreatewiki-info-blurry-word' => 'To help protect against automated account creation, please type the blurry word that you see into this field.',
-	'autocreatewiki-info-terms-agree' => 'By creating a wiki and a user account, you agree to the {{#NewWindowLink: w:Terms of use | Wikia\'s Terms of Use}}',
+	'autocreatewiki-info-terms-agree' => 'By creating a wiki and user account, you agree to the {{#NewWindowLink: w:Terms of use | Fandom\'s Terms of Use}}',
 	'autocreatewiki-info-staff-username' => '<b>Staff only:</b> The specified user will be listed as the founder.',
-	'autocreatewiki-title-template' => '$1 Wikia',
+	'autocreatewiki-title-template' => '$1 community',
 	'autocreatewiki-tagline' => '',
-	'autocreatewiki-limit-day' => 'Wikia has exceeded the maximum number of wiki creations today ($1).',
+	'autocreatewiki-limit-day' => 'Fandom has exceeded the maximum number of wiki creations today ($1).',
 	'autocreatewiki-limit-creation' => 'You have exceeded the maximum number of wiki creation in 24 hours ($1).',
 	'autocreatewiki-empty-field' => 'Please complete this field.',
 	'autocreatewiki-bad-name' => 'The name cannot contain special characters (like $ or @) and must be a single lower-case word without spaces.',
 	'autocreatewiki-invalid-wikiname' => 'The name cannot contain special characters (like $ or @) and cannot be empty',
 	'autocreatewiki-violate-policy' => 'This wikia name contains a word that violates our naming policy',
-	'autocreatewiki-name-taken' => 'There’s already a wikia with this address. Start editing at <a href=\"http://$1.wikia.com\">http://$1.wikia.com</a> or choose another address.',
+	'autocreatewiki-name-taken' => 'There’s already a wiki with this address. Start editing at <a href="http://$1.wikia.com">http://$1.wikia.com</a> or choose another address.',
 	'autocreatewiki-name-too-short' => 'This address is too short, choose an address with at least 3 characters.',
 	'autocreatewiki-name-too-long' => 'This address is too long. Please choose an address with maximum 50 characters.',
 	'autocreatewiki-similar-wikis' => 'Below are the wikis already created on this topic. We suggest editing one of them.',
@@ -85,36 +85,41 @@ Please select proper from dropdown list.',
 	'requestwiki-filter-language' => 'als,an,ang,ast,bar,de2,de-at,de-ch,de-formal,de-weigsbrag,dk,en-gb,eshelp,fihelp,frc,frhelp,ia,ie,ithelp,jahelp,kh,kohelp,kp,ksh,nb,nds,nds-nl,mu,mwl,nlhelp,pdc,pdt,pfl,pthelp,pt-brhelp,ruhelp,simple,tokipona,tp,zh-classical,zh-cn,zh-hans,zh-hant,zh-hk,zh-min-nan,zh-mo,zh-my,zh-sg,zh-tw,zh-yue',
 	'autocreatewiki-protect-reason' => 'Part of the official interface',
 	'autocreatewiki-welcomesubject' => '$1 has been created!',
-	'autocreatewiki-welcomebody' => 'Hello $2, 
+	'autocreatewiki-welcomebody' => 'Hello $2!
 
-The Wikia you created is now available at <$1>.  We hope to see you editing there soon! 
+Your wiki has been created! Take a look: <$1>
 
-We\'ve added some information and tips on your user talk Page (<$5>) to help you get started. If you have any questions, just reply to this email or browse our help pages at <http://help.wikia.com>. You can also check our Staff blog to keep up-to-date with the latest news and events around Wikia, which can be found here: <http://community.wikia.com/wiki/Blog:Wikia_Staff_Blog>
+Ready to get started? We’ve added some links to your talk page (<$5>) to help you get started and to encourage you to explore the many helpful areas around Fandom. If you have any questions or feel a bit lost, reply to this email or check out our Help pages <http://help.wikia.com>.
 
-Good luck with the project,
+You can also check out the Fandom Help pages for Community Management <http://http://community.wikia.com/wiki/Help:Community_Management> and the Fandom Staff blog <http://community.wikia.com/wiki/Blog:Wikia_Staff_Blog> where you’ll find tips and tricks, info about new features and new things happening at Fandom.
+
+Happy editing!
 
 $3
-Wikia Community Support
-<http://community.wikia.com/wiki/User:$4>',
+Fandom Community Support
+<http://community.wikia.com/wiki/User:$4>
+
+___________________________________________
+* Want to receive fewer messages from us? You can unsubscribe or change your email preferences here: http://community.wikia.com/Special:Preferences',
 	'autocreatewiki-welcometalk-wall-title' => 'Welcome!',
-	'autocreatewiki-welcometalk-wall' => 'Hello, We\'re excited to have {{subst:SITENAME}} as part of the Wikia community!
+	'autocreatewiki-welcometalk-wall' => 'Hello, I\'m a member of Fandom\'s Community Support team. We\'re excited to have {{subst:SITENAME}} as part of the Fandom community!
 
-There\'s still a lot to do; here are some helpful tips and links to get your wikia going:
-*Check out [[Special:WikiFeatures|Wiki Features]] to see which features you can enable on your wikia, including Chat, Achievements and many more.
-*Customize your wikia\'s look by visiting the [[Special:ThemeDesigner|Theme Designer]], where you can add color and style to your background and wordmark.
-*Stop by [[w:c:community|Community Central]] to stay informed through our [[w:c:community:Blog:Wikia_Staff_Blog|staff blog]], ask questions on our [[w:c:community:Special:Forum|community forum]], participate in our [[w:c:community:Help:Webinars|webinar series]], or [[w:c:community:Special:Chat|chat live]] with fellow Wikians.
-*Lastly, visit our [[Help:Contents|help pages]] to learn the ins and outs of using Wikia, including [[Help:New page|how to add a new page to your wikia]], [[Help:Attracting contributors|how to attract contributors]], and [[Help:User access levels|how to add other admins]].
-* You can also use all of these tools by visiting your Admin Dashboard, which can by found by clicking \"Admin\" on the bottom toolbar.
+It may seem like there’s a lot to do, but we’re here to help make getting started quick and easy. Here are some helpful tips and links to get your community going:
 
-All of the above links are a great place to start exploring, and have fun!',
+*Check out [[Special:WikiFeatures|Wiki Features]] to turn on some special features including our popular community Chat.
+*Customize your community’s color and style by visiting the [[Special:ThemeDesigner|Theme Designer]].
+*Stop by [[w:c:community|Community Central]] to check out the [[w:c:community:Blog:Wikia_Staff_Blog|staff blog]], and ask questions on our [[w:c:community:Special:Forum|community forum]].
+*Lastly, visit our [[Help:Contents|help pages]] to learn the ins and outs of using Fandom, or visit [[w:c:community:Wikia_University|Fandom University]] for quick how-to videos.
+
+Have fun!',
 	'autocreatewiki-welcometalk' => '==Welcome!==
 Hey there!
 
-We\'re excited to have $4 as part of the Wikia community! There\'s still a lot to do; here are some helpful tips and links to get your wikia going:
+We\'re excited to have $4 as part of the Fandom community! There\'s still a lot to do; here are some helpful tips and links to get your wiki going:
 
-*Check out [[Special:WikiFeatures|Wiki Features]] to see which features you can enable on your wikia, including chat, achievements and much more.
-*Stop by [[w:c:community|Community Central]] to stay informed through our [[w:c:community:Blog:Wikia_Staff_Blog|staff blog]], ask questions on our [[w:c:community:Special:Forum|community forum]], participate in our [[w:c:community:Help:Webinars|webinar series]], or chat live with fellow Wikians
-*Lastly, visit our [[Help:Contents|help pages]] to learn the ins and outs of using Wikia
+*Check out [[Special:WikiFeatures|Wiki Features]] to see which features you can enable on your wiki, including chat, achievements and much more.
+*Stop by [[w:c:community|Community Central]] to stay informed through our [[w:c:community:Blog:Wikia_Staff_Blog|staff blog]], ask questions on our [[w:c:community:Special:Forum|community forum]], watch videos on [[w:c:community:Wikia_university|Fandom University]], or chat live with fellow Fandom community members.
+*Lastly, visit our [[Help:Contents|help pages]] to learn the ins and outs of using Fandom.
 
 All of the above links are a great place to start exploring, and have fun!
 
@@ -141,6 +146,14 @@ Parameters:
 * $3 - Name of Wikia Community Support member who is signing the welcome message
 * $4 - <nowiki>{{SITENAME}}</nowiki> of the wiki welcome message is being left on',
 	'autocreatewiki-language-top-list' => 'Do not translate. List of the top 13 languages used for wiki creation.',
+	'autocreatewiki-haveaccount-question' => 'Missing documentation',
+	'autocreatewiki-info-birthdate' => 'Missing documentation',
+	'autocreatewiki-info-email-address' => 'Missing documentation',
+	'autocreatewiki-info-terms-agree' => 'Missing documentation',
+	'autocreatewiki-limit-day' => 'Missing documentation',
+	'autocreatewiki-name-taken' => 'Missing documentation',
+	'autocreatewiki-welcomebody' => 'Missing documentation',
+	'autocreatewiki-welcometalk-wall' => 'Missing documentation',
 ];
 
 $messages['af'] = [
@@ -827,26 +840,26 @@ $messages['de'] = [
 	'autocreatewiki-language-all' => 'Alle Sprachen',
 	'autocreatewiki-remember' => 'Automatische Anmeldung',
 	'autocreatewiki-create-account' => 'Benutzerkonto erstellen',
-	'autocreatewiki-haveaccount-question' => 'Hast du bereits ein Benutzerkonto bei Wikia?',
+	'autocreatewiki-haveaccount-question' => 'Hast du bereits ein Benutzerkonto bei Fandom?',
 	'autocreatewiki-info-domain' => 'Gib ein Wort ein, das am ehesten als Suchbegriff für dieses Thema verwendet wird.',
 	'autocreatewiki-info-topic' => 'Füge eine kurze Beschreibung hinzu (z. B. „Star Wars“ oder „Fernsehserien“).',
 	'autocreatewiki-info-category-default' => 'So können Besucher dein Wiki einfacher finden.',
 	'autocreatewiki-info-category-answers' => 'So können Besucher deine Frage-Antwort-Site einfacher finden.',
 	'autocreatewiki-info-language' => 'Dies wird die Standardsprache für Besucher deines Wikis.',
-	'autocreatewiki-info-email-address' => 'Deine E-Mail-Adresse wird niemandem angezeigt.',
+	'autocreatewiki-info-email-address' => 'Deine E-Mail-Adresse wird niemandem bei Fandom angezeigt.',
 	'autocreatewiki-info-realname' => 'Wenn du dich dafür entscheidest, deinen realen Namen anzugeben, wird dies dafür verwendet, dir deine Beiträge zuzuordnen.',
-	'autocreatewiki-info-birthdate' => 'Wikia bittet alle Benutzer darum, ihr echtes Geburtsdatum anzugeben, sowohl als Vorsichtsmaßnahme als auch um die Integrität der Site zu gewährleisten, während den US-Bundesgesetzen entsprochen wird.',
+	'autocreatewiki-info-birthdate' => 'Fandom verlangt von allen Nutzern, ihr tatsächliches Geburtsdatum anzugeben, sowohl als Sicherheitsmaßnahme, als auch als Mittel zur Wahrung der Integrität der Website unter Einhaltung der behördlichen Vorschriften.',
 	'autocreatewiki-info-blurry-word' => 'Um die automatische Erstellung von Benutzerkonten zu verhindern, tippe bitte das verschwommene Wort ein.',
-	'autocreatewiki-info-terms-agree' => 'Mit Erstellung eines Wikis und eines Benutzerkontos stimmst du Wikias <a href="http://de.wikia.com/Nutzungsbedingungen">Nutzungsbedingungen</a> zu.',
+	'autocreatewiki-info-terms-agree' => 'Mit Erstellung eines Wikis und eines Benutzerkontos stimmst du {{#NewWindowLink:homepage:de:Nutzungsbedingungen|Fandoms Nutzungsbedingungen}} zu',
 	'autocreatewiki-info-staff-username' => '<b>Nur für Mitarbeiter:</b> Der angegebene Benutzer wird als Gründer aufgeführt.',
-	'autocreatewiki-title-template' => '$1 Wikia',
-	'autocreatewiki-limit-day' => 'Wikia hat heute bereits die maximale Anzahl an Wiki-Gründungen erreicht ($1).',
+	'autocreatewiki-title-template' => '$1 Community',
+	'autocreatewiki-limit-day' => 'Fandom hat die maximale Anzahl von Wiki-Erstellungen für heute überschritten ($1).',
 	'autocreatewiki-limit-creation' => 'Du hast die maximale Anzahl an Wikis überschritten, die du in 24 Stunden erstellen kannst ($1).',
 	'autocreatewiki-empty-field' => 'Fülle bitte dieses Feld aus.',
 	'autocreatewiki-bad-name' => 'Der Name darf keine Sonderzeichen (wie $ oder @) enthalten und muss ein einzelnes Wort in Kleinbuchstaben ohne Leerzeichen sein.',
 	'autocreatewiki-invalid-wikiname' => 'Der Name darf keine Sonderzeichen (wie $ oder @) enthalten und muss ausgefüllt werden.',
 	'autocreatewiki-violate-policy' => 'Im Wikia-Namen ist ein Wort enthalten, dass unsere Richtlinien zur Namensgebung verletzt.',
-	'autocreatewiki-name-taken' => 'Ein Wiki mit diesem Namen existiert bereits. Du bist herzlich eingeladen, dich unter <a href="http://$1.wikia.com">http://$1.wikia.com</a> zu beteiligen.',
+	'autocreatewiki-name-taken' => 'Es gibt bereits ein Wiki mit dieser Adresse. Beteilige dich unter <a href="http://$1.wikia.com">http://$1.wikia.com</a> oder wähle eine andere Adresse.',
 	'autocreatewiki-name-too-short' => 'Diese Adresse ist zu kurz, bitte wähle eine Adresse mit mindestens 3 Buchstaben aus.',
 	'autocreatewiki-name-too-long' => 'Diese Adresse ist zu lang. Bitte wähle eine Adresse mit maximal 50 Zeichen aus.',
 	'autocreatewiki-similar-wikis' => 'Weiter unten findest du die Wikis, die bereits zu diesem Thema erstellt wurden. Wir schlagen vor, dass du dich an einem davon beteiligst.',
@@ -896,61 +909,42 @@ Bitte wähle eine Sprache aus der Dropdown-Liste aus.',
 	'autocreatewiki-welcomesubject' => '$1 wurde erstellt!',
 	'autocreatewiki-welcomebody' => 'Hallo $2,
 
-das von dir erstellte Wiki ist nun unter <$1> erreichbar. Hoffentlich sehen wir dich bald dort editieren :-)
+das von dir erstellte Wiki ist nun unter <$1> erreichbar.
 
-Wir haben auf deiner Diskussionsseite (<$5>) ein paar Tipps für den Start hinterlassen.
+Bereit loszulegen? Wir haben auf deiner Diskussionsseite (<$5>) ein paar Links hinterlassen, die dir für den Anfang helfen sollen und dich hoffentlich ermutigen, die Hilfebereiche bei Fandom zu nutzen. Falls du einmal eine Frage hast oder nicht weiter weißt, dann antworte auf diese E-Mail oder sieh dir die Hilfeseiten <http://hilfe.wikia.com> an.
 
-Falls du irgendwelche Probleme hast, stöber doch ein wenig in unseren Hilfe-Seiten <http://hilfe.wikia.com>. Du kannst auch im Forum von Zentralwikia die Community um Hilfe bitten <http://de.community.wikia.com/wiki/Forum:Übersicht> oder dich per E-Mail an community@wikia.com wenden.
+Du kannst dir auch die Fandom-Hilfeseiten für Community-Management <http://de.community.wikia.com/wiki/Hilfe:Community_Management> sowie das Fandom-Blog <http://de.community.wikia.com/wiki/Blog:Wikia_Deutschland_News> ansehen. Dort findest du Tipps und Tricks, Infos über neue Funktionen und Neuigkeiten rund um Fandom.
 
-Falls du sonst weitere Fragen oder Probleme hast, kannst du dich auch direkt per Mail oder Diskussionsseite an mich wenden.
-
-Viel Erfolg mit deinem neuen Wiki!
+Viel Spaß beim Schreiben!
 
 $3
+Fandom Community-Support
+<http://de.community.wikia.com/wiki/User:$4>
 
-Wikia Community Support
-
-<http://de.community.wikia.com/wiki/User:$4>',
+___________________________________________
+* Wenn du weniger Nachrichten von uns erhalten möchtest, kannst du hier deine E-Mail-Einstellungen ändern: http://de.community.wikia.com/Spezial:Einstellungen',
 	'autocreatewiki-welcometalk-wall-title' => 'Willkommen!',
-	'autocreatewiki-welcometalk-wall' => 'Hallo, $1! Wir freuen uns sehr, dich und das {{SITENAME}} in unserer Gemeinschaft willkommen heißen zu dürfen!
+	'autocreatewiki-welcometalk-wall' => 'Hallo, ich bin ein MItglied des Community Support-Teams von Fandom. Wir freuen uns sehr, dass {{subst:SITENAME}} jetzt ein Teil der Fandom-Community ist!
 
+Es kann den Anschein haben, dass wahnsinnig viel zu tun ist, aber wir helfen dir gerne dabei, schnell und problemlos den Einstieg zu finden. Wir haben dir hier ein paar Tipps und Tricks zusammengestellt, die dir hoffentlich dabei helfen werden, dass du mit deiner Community gleich durchstarten kannst:
 
-Der erste Schritt ist getan – und es gibt viel zu tun!
-* \'\'\'Design:\'\'\' Zu Beginn hat jedes Wikia ein Standard-Design. Um es deinen Wünschen anzupassen, kannst du im [[Hilfe:Theme-Designer|Theme-Designer]] viele Änderungen vornehmen. Wie es geht, erfährst du [[w:c:de.community:Einführung in den Theme-Designer|hier]].
-* \'\'\'Die Hauptseite gestalten:\'\'\' Die [[Hilfe:Hauptseite|Hauptseite]] ist meistens die erste Seite, die von Besuchern aufgerufen wird. Daher ist sie der perfekte Ort für dich, alles Wichtige zu deinem Thema vorzustellen und Leser zu ermutigen, in deinem Wikia weiterzulesen und auch mit dir an ihm zu arbeiten.
-* \'\'\'Seiten erstellen:\'\'\' Du solltest [[Hilfe:Neue Seite|ein paar Seiten erstellen]], damit dein Wikia nicht mehr so leer wirkt. So motivierst du außerdem auch andere Benutzer dazu, im Wikia mitzuarbeiten!
+*Unter [[Spezial:WikiFunktionen|Wiki-Funktionen]] erfährst du, wie du einige der Spezialfunktionen, wie zum Beispiel den allseits beliebten Community-Chat einschalten kannst.
+*Im [[Spezial:ThemeDesigner|Theme-Designer]] kannst du lernen, wie du das Farbschema und den Stil deiner Community anpassen kannst.
+*Schau auch mal in der [[w:c:de.community|Community Deutschland]] vorbei! Hier findest du das [[w:c:de.community:Blog:Fandom_Deutschland_News|Fandom-Blog]] und kannst in unserem [[w:c:de.community:Spezial:Forum|Community-Forum]] Fragen stellen.
+*Außerdem kannst du unsere [[Hilfe:Übersicht|Hilfeseiten]] besuchen, um alles über die Nutzung von Fandom zu erfahren oder kurz in der [[w:c:de.community:Wikia_Universität|Fandom-Universität]] Halt machen und dir ein paar hilfreiche Videos ansehen.
 
-
-Solltest du bei diesen Dingen einmal Hilfe benötigen, kannst du die zahlreichen [[w:c:de.community:Hilfe:Übersicht|Hilfeseiten]] im [[w:c:de.community|Community Deutschland]] Wikia durchstöbern. Außerdem bieten diese Seiten weitere Hilfe und Unterstützung:
-* Die [[w:c:de.community:Wikia-Universität|Wikia-Universität]] bietet mehrere Videos mit vielen Tipps für Anfänger und Fortgeschrittene.
-* Im [[w:c:de.community:Spezial:Forum|Community-Forum]] findest du Fragen und Antworten zu vielen verschiedenen Themen und wir helfen dir gerne auch bei deinen Fragen weiter.
-* In der [[w:c:de.community:Sprechstunde|Sprechstunde]] im [[w:c:de.community:Spezial:Chat|Community-Chat]], die immer donnerstags um 20 Uhr stattfindet, stehen dir Wikia-Mitarbeiter und erfahrene Benutzer mit Ratschlägen zur Seite.
-* Bei weiteren Fragen kannst du dich auch über das [[Spezial:Kontakt|Kontaktformular]] direkt mit den Wikia-Mitarbeitern in Verbindung setzen.
-
-
-Genug der Begrüßung – jetzt kannst du mit dem Bearbeiten starten! Wir freuen uns darauf, dieses Projekt gedeihen zu sehen. Viel Erfolg!',
+Viel Spaß!',
 	'autocreatewiki-welcometalk' => '== Willkommen! ==
-<div style="font-size:120%; line-height: 1.5em;">Hi $1 - wir freuen uns, dass \'\'\'$4\'\'\' jetzt Teil der [[w:c:de.community:Hauptseite|Wikia-Gemeinschaft]] ist!
 
-Jetzt hast du eine ganze Webseite, die du mit Informationen, Bildern und Videos über dein Thema füllen kannst. Aber im Moment gibt es nur leere Seiten, die dich anstarren... Gruselig, nicht wahr? Hier einige Anregungen, wie du anfangen kannst.
+Hallo! Wir freuen uns, dass {{subst:SITENAME}} jetzt auch Teil der Fandom-Gemeinschaft bist! Es gibt noch einiges zu tun, deshalb hier nun als Hilfe ein paar Tipps und Links, damit dein Wiki ordentlich in Fahrt kommt!
 
-* \'\'\'Stelle dein Thema vor\'\'\' - auf der Hauptseite. Diese Seite ist deine Chance, den Lesern alles über dein Thema zu verraten. Schreib so viel du willst! Deine Beschreibung kann zu allen wichtigen Seiten im Wiki verlinken. Schau auch im Community-Wiki vorbei, und [http://de.community.wikia.com/wiki/Projekt:Wiki-Eintrag_erstellen trage dein Wiki ein].
+* Sieh dir bei den [[Spezial:WikiFunktionen|Wiki-Funktionen]] an, welche Funktionen - wie zum Beispiel den Chat, oder die Herausforderungen - du in deinem Wiki aktivieren kannst.
+* Besuche die [[w:c:de.community|deutsche Fandom-Community]], um über das [[w:c:de.community:Blog:Fandom_Deutschland_News|Fandom-Blog]] immer informiert zu bleiben, Fragen im [[w:c:de.community:Spezial:Forum|Community-Forum]] zu stellen, in der [[w:c:de.community:Fandom_Universität|Fandom-Universität]] Videos anzusehen oder mit anderen Mitgliedern der Fandom-Community zu chatten.
+* Außerdem kannst du alles zur Nutzung von Fandom auf unseren [[Hilfe:Übersicht|Hilfeseiten]] lernen. 
 
-* \'\'\'Erstelle einige neue Seiten\'\'\' - nur ein oder zwei Sätze um anzufangen. Lass dich nicht von den leeren Seiten unterkriegen! Ein Wiki ist eine Webseite, auf der du immerwieder Dinge hinzufügen oder ändern kannst. Du kannst auch Bilder und Videos auf die Hauptseite packen, um sie interessanter zu machen.
+All diese Links sind gute Startpunkte, um sich zurechtzufinden und Spaß zu haben!
 
-Und im Anschluss mach einfach weiter! Leute mögen große Wikis, wenn man viel entdecken kann. Also füge weiterhin Inhalte hinzu, und du wirst neue Leser und Benutzer anziehen. Es gibt viel zu tun, aber sei unbesorgt - heute ist dein erster Tag, und du hast genügend Zeit. Jedes Wiki fängt auf die selbe Weise an - es braucht nur ein bisschen Zeit, und nach den ersten paar Seiten, wird das Wiki in  einer Weile wird das Wiki zu einer großen und beliebten Seite heranwachsen.
-
-Falls du Hilfe benötigst (und glaub mir: die haben wir alle gebraucht) findest du unsere Hilfe-Seiten unter [[w:c:hilfe:Hilfe:Übersicht|hilfe.wikia.com]] oder direkt hier im Wiki unter [[Hilfe:Übersicht]]. 
-
-Wenn du weitere Hilfe brauchst, kannst du 
-*uns eine Mail über unser [[Special:Contact|Kontaktformular]] schreiben,
-*unseren [http://de.c.wikia.com/wiki/Special:Chat Community-Chat] besuchen,
-*oder dich bei Fragen an unsere Foren wenden - das [[w:c:de.c:Forum:Index|Community-Forum]] für alle möglichen Themen und das [[w:c:de.c:Admin-Forum:Übersicht|Admin-Forum]] speziell für Fragen rund ums Admin-sein.
-
-Genug der Begrüßung - jetzt kannst du mit dem Bearbeiten starten! :-)
-Wir freuen uns darauf dieses Projekt gedeihen zu sehen!
-
-Viel Erfolg, [[User:$2|$3]] <staff /></div>',
+-- [[User:$2|$3]] <staff />',
 	'autocreatewiki-tagline' => '',
 	'requestwiki-filter-language' => 'als,an,ang,ast,bar,de2,de-at,de-ch,de-formal,de-weigsbrag,dk,en-gb,eshelp,fihelp,frc,frhelp,ia,ie,ithelp,jahelp,kh,kohelp,kp,ksh,nb,nds,nds-nl,mu,mwl,nlhelp,pdc,pdt,pfl,pthelp,pt-brhelp,ruhelp,simple,tokipona,tp,zh-classical,zh-cn,zh-hans,zh-hant,zh-hk,zh-min-nan,zh-mo,zh-my,zh-sg,zh-tw,zh-yue',
 	'autocreatewiki-language-top-list' => 'de,en,es,fr,it,ja,pl,pt-br,ru,zh',
@@ -1160,26 +1154,26 @@ $messages['es'] = [
 	'autocreatewiki-language-all' => 'Todos los idiomas',
 	'autocreatewiki-remember' => 'Recordarme',
 	'autocreatewiki-create-account' => 'Crear una cuenta',
-	'autocreatewiki-haveaccount-question' => '¿Ya tienes una cuenta en Wikia?',
+	'autocreatewiki-haveaccount-question' => '¿Ya tienes una cuenta en Fandom?',
 	'autocreatewiki-info-domain' => 'Lo mejor es usar una palabra que probablemente sea una palabra clave en las búsquedas sobre tu tema.',
 	'autocreatewiki-info-topic' => 'Añade una descripción corta como por ejemplo \"Star Wars\" o \"Series de TV\".',
 	'autocreatewiki-info-category-default' => 'Esto ayudará a los visitantes a encontrar tu wikia.',
 	'autocreatewiki-info-category-answers' => 'Esto ayudará a los visitantes a encontrar tu sitio de preguntas y respuestas.',
 	'autocreatewiki-info-language' => 'Este será el idioma por defecto para los visitantes de tu wikia.',
-	'autocreatewiki-info-email-address' => 'Tu dirección de correo electrónico no se mostrará a nadie en Wikia.',
+	'autocreatewiki-info-email-address' => 'Tu dirección de correo electrónico no será mostrada a nadie en Fandom.',
 	'autocreatewiki-info-realname' => 'Si optas por proporcionarlo, se usará para dar atribución a tu trabajo.',
-	'autocreatewiki-info-birthdate' => 'Wikia solicita a todos los usuarios que pongan su fecha real de nacimiento como medida de seguridad y como forma de preservar la integridad del sitio mientras cumple con las regulaciones federales.',
+	'autocreatewiki-info-birthdate' => 'Fandom solicita a todos los usuarios que pongan su fecha real de nacimiento como medida de seguridad y como forma de preservar la integridad del sitio mientras cumple con las regulaciones federales.',
 	'autocreatewiki-info-blurry-word' => 'Para ayudar a protegernos contra la creación de cuentas automáticas, escribe la palabra borrosa que ves en este campo, por favor.',
-	'autocreatewiki-info-terms-agree' => 'Con la creación de un wiki y una cuenta de usuario, aceptas los <a href="http://es.wikia.com/T%C3%A9rminos_de_Uso">Términos de Uso de Wikia</a>',
+	'autocreatewiki-info-terms-agree' => 'Al crear un wiki y una cuenta de usuario, aceptas los {{#NewWindowLink: w:c:es:Términos de uso|términos de uso de Fandom}}',
 	'autocreatewiki-info-staff-username' => '<b>Solamente Staff:</b> El usuario especificado figurará como el fundador de la wikia.',
-	'autocreatewiki-title-template' => 'Wikia $1',
-	'autocreatewiki-limit-day' => 'Wikia ha superado el número máximo de creaciones de wikias de hoy ($1).',
+	'autocreatewiki-title-template' => '$ comunidad',
+	'autocreatewiki-limit-day' => 'Fandom ha superado el número máximo de creaciones de wikis de hoy ($1).',
 	'autocreatewiki-limit-creation' => 'Has excedido el número máximo de creación de wikias en 24 horas ($1).',
 	'autocreatewiki-empty-field' => 'Por favor, completa este campo.',
 	'autocreatewiki-bad-name' => 'El nombre no puede contener caracteres especiales (como $ o @) y debe componerse por palabras en minúscula y sin espacios.',
 	'autocreatewiki-invalid-wikiname' => 'El nombre no puede contener caracteres especiales (como $ o @) y el campo no puede estar vacío.',
 	'autocreatewiki-violate-policy' => 'El nombre de esta wikia contiene una palabra que viola nuestra política de nombres',
-	'autocreatewiki-name-taken' => 'Ya existe un wiki con ese nombre. Eres bienvenido a participar con nosotros en <a href="http://$1.wikia.com">http://$1.wikia.com</a>',
+	'autocreatewiki-name-taken' => 'Ya existe un wiki con esta dirección. Comienza a editar en <a href="http://$1.wikia.com">http://$1.wikia.com</a> o escoge otra dirección.',
 	'autocreatewiki-name-too-short' => 'Esta dirección es demasiado corta, por favor, elige una dirección con al menos 3 caracteres.',
 	'autocreatewiki-name-too-long' => 'Esta dirección es demasiado larga, por favor, elige una dirección con un máximo de 50 caracteres.',
 	'autocreatewiki-similar-wikis' => 'Debajo están las wikias ya creadas sobre este tema. Te sugerimos editar en alguna de ellas.',
@@ -1225,75 +1219,44 @@ $messages['es'] = [
 	'autocreatewiki-step7-error' => '¡No se puede copiar el idioma de comienzo en la base de datos!',
 	'autocreatewiki-protect-reason' => 'Parte de la interfaz oficial',
 	'autocreatewiki-welcomesubject' => '¡$1 ha sido creada!',
-	'autocreatewiki-welcomebody' => 'Hola, $2,
+	'autocreatewiki-welcomebody' => '¡Hola, $2!
 
-¡Tu wiki ha sido creado! Aquí lo tienes: <$1>
+¡Tu comunidad ha sido creada! Échale un vistazo: <$1>
 
-¡Es el momento de comenzar la aventura! Hemos añadido algunos enlaces en tu página de discusión (<$5>) para ayudarte a comenzar y animarte a explorar sitios de Wikia en los que encontrarás páginas de ayuda que te podrían resultar interesantes. Si tienes preguntas o no sabes por dónde empezar, contéstanos a este email o echa un vistazo a nuestras páginas de ayuda en <http://ayuda.wikia.com>.
+¿Estás listo para comenzar? Hemos añadido algunos enlaces a tu muro de mensajes (<$5>) para ayudarte a comenzar y animarte a explorar las numerosas zonas útiles de Fandom. Si tienes alguna pregunta o estás un poco perdido responde a este correo electrónico o échale un vistazo a nuestras páginas de ayuda <http://comunidad.wikia.com/wiki/Ayuda:Contenido>.
 
-También puedes mirar nuestro blog de noticias <http://comunidad.wikia.com/wiki/Blog:Noticias_de_Wikia>, donde encontrarás consejos e información sobre las nuevas funcionalidades y herramientas que añadimos a los wikis.
+También puedes consultar el blog del Staff de Fandom <http://comunidad.wikia.com/wiki/Blog%3ANoticias_de_Fandom> para encontrar noticias, consejos y trucos, información sobre las nuevas funcionalidades y las últimas novedades sobre lo que ocurre en Fandom.
 
-¡Buena suerte con el wiki!
+¡Disfruta editando!
 
-$3 Equipo comunitario de Wikia <http:/comunidad.wikia.com/wiki/User:$4>
+$3
+El equipo comunitario de Fandom
+<http://comunidad.wikia.com/wiki/Usuario:$4>
 
 ___________________________________________
-* ¿Quieres dejar de recibir estos mensajes? Puedes darte de baja en el servicio de emails desde tus preferencias aquí: http://comunidad.wikia.com/Especial:Preferencias',
+* ¿Quieres recibir menos mensajes de nosotros? Puedes cancelar tu suscripción o cambiar tus preferencias de correo electrónico aquí: http://comunidad.wikia.com/wiki/Especial:Preferencias',
 	'autocreatewiki-welcometalk-wall-title' => '¡Bienvenido/a!',
-	'autocreatewiki-welcometalk-wall' => '<div style="float:right; margin-left:15px;margin-top:15px">http://images3.wikia.nocookie.net/__cb20130107120821/eswikia/images/thumb/3/3c/Wikia-logo-navy-tag-ES.png/250px-Wikia-logo-navy-tag-ES.png</div>
-¡Hola! 
+	'autocreatewiki-welcometalk-wall' => 'Hola, soy miembro del equipo de soporte comunitario de Fandom. ¡Estamos muy contentos de que {{subst:SITENAME}} forme parte de Fandom!
 
-Nos alegramos mucho de que {{SITENAME}} forme parte de la comunidad de Wikia. Además de darte las gracias por formar parte de Wikia, nos gustaría, de parte de todo el equipo de Wikia, darte algunos consejos que pueden ayudarte en tus primeros pasos. 
+Puede parecer que hayan muchas cosas por hacer, es por ello que estamos aquí para ayudarte a empezar de una manera rápida y simple. Aquí tienes algunos consejos útiles y enlaces que te ayudarán a construir tu comunidad:
 
-Incluso si no es la primera comunidad en la que participas, o si ya has creado algún wiki anteriormente, estos consejos te seguirán siendo de mucha ayuda.
+*Revisa las [[Special:WikiFeatures|Funcionalidades Wiki]] para habilitar algunas funcionalidades especiales, como el popular chat.
+*Personaliza el color y estilo de tu comunidad a través del [[Special:ThemeDesigner|Diseñador de Temas]].
+*Visita [[w:c:communidad|Comunidad Central]] y revisa [[w:c:comunidad:Blog:Noticias_de_Fandom|las entradas de blog publicadas por el staff]] además del [[w:c:comunidad:Especial:Foro|foro comunitario]].
+*Visita nuestras [[Ayuda:Contenido|páginas de ayuda]] para entender mejor esta plataforma, o visita la [[w:c:community:Fandom_University|Universidad de Fandom]] para revisar videos educacionales.',
+	'autocreatewiki-welcometalk' => '== ¡Recibe nuestra bienvenida! ==
+¡Hola!
 
-No hay comienzos fáciles, pero nosotros vamos a hacer todo lo que esté en nuestra mano por echarte un cable, y siempre que necesites ayuda, podrás avisarnos y pasaremos por aquí para ayudarte.
+¡Estamos muy contentos de que \'\'\'$4\'\'\' sea parte de la comunidad Wikia! Puede parecer que hayan muchas cosas por hacer, es por ello que estamos aquí para ayudarte a empezar de una manera rápida y simple. Aquí tienes algunos consejos útiles y enlaces que te ayudarán a construir tu comunidad:
 
-Bien, aquí tienes algunos consejos para empezar:
+*Revisa las [[Special:WikiFeatures|Funcionalidades Wiki]] para habilitar algunas funcionalidades especiales, como el popular chat.
+*Personaliza el color y estilo de tu comunidad a través del [[Special:ThemeDesigner|Diseñador de Temas]].
+*Visita [[w:c:communidad|Comunidad Central]] y revisa [[w:c:comunidad:Blog:Noticias_de_Fandom|las entradas de blog publicadas por el staff]] además del [[w:c:comunidad:Especial:Foro|foro comunitario]].
+*Visita nuestras [[Ayuda:Contenido|páginas de ayuda]] para entender mejor esta plataforma, o visita la [[w:c:community:Fandom_University|Universidad de Fandom]] para revisar videos educacionales.
 
-*Para comenzar deberías echar un vistazo al \'\'\'[[Special:AdminDashboard|Panel de administración]]\'\'\', ahí encontrarás enlaces útiles y una lista con algunas tareas que podrías ir completando para avanzar con paso firme. En la barra flotante que ves abajo de la pantalla hay un enlace hacia el Panel de administración, así no tendrás que aprenderte la dirección de memoria.
-*También deberías visitar la página de \'\'\'[[Special:WikiFeatures|funcionalidades wiki]]\'\'\'. Desde allí podrás activar \'\'\'el chat, los logros, y otras mejoras\'\'\' que te serán de mucha ayuda para fomentar la participación cuando haya una comunidad.
-*Ahora mismo el wiki se ve algo simple ¿no crees? Tu siguiente paso podría ser visitar el \'\'\'[[Special:ThemeDesigner|diseñador de temas]]\'\'\'. Podrás \'\'\'personalizar los colores, añadir un fondo y subir tu propio logo\'\'\'. \'\'\'Nota:\'\'\' Por cierto, si no sabes cómo hacer un buen diseño, puedes pedir ayuda \'\'\'[[w:c:es.community:Wikia:Diseños_y_portadas|aquí]]\'\'\', ¡en este proyecto puedes pedir un nuevo diseño para tu wiki!
-*Por supuesto, todo esto parece muy solitario ahora mismo, pero no estás solo, solo tienes que pasar por \'\'\'[[w:c:comunidad|la comunidad central de Wikia]]\'\'\' para comprobar que hay toda una comunidad dispuesta a ayudarte. Allí podrás seguir el \'\'\'[[w:c:comunidad:Blog:Noticias_de_Wikia|blog de noticias]]\'\'\' que tenemos en el que anunciamos novedades, o podrás preguntar por \'\'\'[[w:c:comunidad:special:forum|el foro]]\'\'\' si tienes cualquier duda, y por supuesto, si nos necesitas solo tienes que contactar con algún miembro del [[w:c:comunidad:Wikia:Equipo_de_Wikia_en_español|equipo de Wikia en español]] bien desde el muro de los miembros del equipo o bien [[special:contact|enviando un email]].
-*También puedes consultar directamente las \'\'\'[[ayuda:contenidos|páginas de ayuda]]\'\'\' que tenemos preparadas.
+Todos los enlaces anteriores son un gran lugar para comenzar a explorar, ¡así que diviértete!
 
-Bueno, ¿es mucha información? No te preocupes, poco a poco irás descubriendo cómo funciona todo, y si no es la primera vez que inicias una nueva comunidad, seguro que ya conoces todos esos enlaces, pero nunca viene mal recordarlos.
-
-Necesitarás hacer un gran esfuerzo para sacar adelante la nueva comunidad, pero con ilusión, podrás llegar muy lejos.
-
-Esperamos que estos consejos te sean de mucha ayuda si alguna vez te atascas y no sabes cómo seguir, y si necesitas \'\'algo más\'\', siempre puedes solicitar la ayuda de alguno de nuestros \'\'\'[[w:c:comunidad:Wikia:Mentores|mentores]]\'\'\'. Son \'\'\'voluntarios que enviamos a las comunidades\'\'\' en las que los administradores necesitan ayuda, y durante un tiempo estarán por aquí apoyando a la comunidad en lo que necesiten.
-
-Vaya, esto quedó algo largo ¿no crees? :P
-
-Pues algo más, ante todo: \'\'\'¡diviértete!\'\'\'
-
-Recibe nuestra felicitación por este proyecto que has iniciado, ya sabes dónde encontrarnos.
-
-¡A divertirse!
-
-<span style="font-size:8pt">\'\'Puedes contestar directamente a este mensaje si necesitas algo, te responderé encantado ;)\'\'</span>',
-	'autocreatewiki-welcometalk' => '== ¡Bienvenido! ==
-Hola $1. ¡Estamos muy felices de que \'\'\'$4\'\'\' forme parte de la comunidad de Wikia! Además de darte las gracias por unirte a Wikia, nos gustaría darte algunos consejos que pueden ayudarte a iniciar el wiki y hacerlo crecer:
-
-1. \'\'\'Crea tu [[Usuario:$1|página de usuario]]\'\'\': éste es el mejor lugar para presentarte y que los demás puedan conocerte (¡y además practicar la edición wiki!)
-
-2. \'\'\'Personaliza tu wiki\'\'\': aprende a personalizar tu wiki con nuestro [[Ayuda:Diseñador de Temas|Diseñador de Temas]].<div style="border: 1px solid black; margin: 0px 0px 5px 10px; padding: 5px; float: right; width: 230px;"><center>Crea un artículo en este wiki:</center>
-   <createbox>
-width=30
-</createbox></div>
-3. \'\'\'Crea tus 10 primeros artículos\'\'\': usa la caja de la derecha para crear diez páginas, comenzando cada una con unos pocos párrafos. Por ejemplo, si estás iniciando un wiki sobre un programa de TV, podrías crear un artículo para cada uno de los personajes principales. 
-
-4. \'\'\'Edita la Portada\'\'\': incluye enlaces internos (<nowiki>[[de esta forma]]</nowiki>) hacia los artículos que acabas de crear y añade alguna imagen para que se vea mejor.
-
-5. \'\'\'Visita la [[w:c:comunidad|Comunidad Central]]\'\'\' para buscar amigos a través del [[w:c:comunidad:Special:Chat|chat]] que te ayuden a editar en el wiki y aprende más sobre las últimas herramientas creadas por Wikia a través de nuestro [[w:c:comunidad:Blog:Noticias_de_Wikia|blog de noticias]]
-
-6. ¡\'\'\'Entra en el [[w:c:wikialabs:Special:WikiaLabs|Laboratorio de Wikia]]\'\'\' para activar las últimas novedades para tu wiki!
-
-7. Por último \'\'\'visita nuestro [[w:c:ayuda|wiki de ayuda]]\'\'\'. Allí encontrarás mucha información que te será útil para progresar en el wiki.
-
-Utiliza los enlaces que ves en pantalla para explorar Wikia. Si tienes alguna pregunta puedes dejarnos un mensaje a través de [[Special:Contact|esta página]]. ¡Pero ante todo, diviértete! :)
-
-Un saludo, [[User:$2|$3]] <staff />',
+-- [[User:$3|$3]] <staff />',
 	'autocreatewiki-tagline' => '',
 	'requestwiki-filter-language' => 'als,an,ang,ast,bar,de2,de-at,de-ch,de-formal,de-weigsbrag,dk,en-gb,eshelp,fihelp,frc,frhelp,ia,ie,ithelp,jahelp,kh,kohelp,kp,ksh,nb,nds,nds-nl,mu,mwl,nlhelp,pdc,pdt,pfl,pthelp,pt-brhelp,ruhelp,simple,tokipona,tp,zh-classical,zh-cn,zh-hans,zh-hant,zh-hk,zh-min-nan,zh-mo,zh-my,zh-sg,zh-tw,zh-yue',
 	'autocreatewiki-language-top-list' => 'de,en,es,fr,it,ja,pl,pt-br,ru,zh',
@@ -1571,26 +1534,26 @@ $messages['fr'] = [
 	'autocreatewiki-language-all' => 'Toutes les langues',
 	'autocreatewiki-remember' => 'Se souvenir de moi',
 	'autocreatewiki-create-account' => 'Créer un compte',
-	'autocreatewiki-haveaccount-question' => 'Vous avez déjà un compte Wikia ?',
+	'autocreatewiki-haveaccount-question' => 'Vous avez déjà un compte Fandom ?',
 	'autocreatewiki-info-domain' => 'Choisissez de préférence un mot qui sera utilisé par des utilisateurs effectuant une recherche sur ce sujet.',
 	'autocreatewiki-info-topic' => 'Ajoutez une courte description telle que « Star Wars » ou « séries ».',
 	'autocreatewiki-info-category-default' => 'Cela permettra aux visiteurs de trouver votre wikia.',
 	'autocreatewiki-info-category-answers' => 'Cela permettra aux visiteurs de trouver votre site de réponses.',
 	'autocreatewiki-info-language' => 'Il s\'agit de la langue par défaut de votre wikia.',
-	'autocreatewiki-info-email-address' => 'Personne sur Wikia ne peut voir votre adresse e-mail.',
+	'autocreatewiki-info-email-address' => 'Votre adresse e-mail n\'est pas visible sur Fandom.',
 	'autocreatewiki-info-realname' => 'Si vous choisissez de le partager, il sera utilisé pour vous attribuer les actions que vous avez effectuées.',
-	'autocreatewiki-info-birthdate' => 'Wikia demande à tous les utilisateurs de fournir leur date de naissance réelle ; ceci est une mesure de sécurité et permet également de préserver l’intégrité du site tout en respectant les lois fédérales américaines.',
+	'autocreatewiki-info-birthdate' => 'Fandom requiert que tous les utilisateurs fournissent leur date de naissance réelle ; ceci est une mesure de sécurité et permet également de préserver l’intégrité du site tout en respectant les lois fédérales américaines.',
 	'autocreatewiki-info-blurry-word' => 'Afin de nous aider à lutter contre la création de comptes automatisée, merci de saisir le mot flou dans ce champ.',
-	'autocreatewiki-info-terms-agree' => 'En créant un wiki et un compte utilisateur, vous acceptez les <a href="http://fr.wikia.com/Conditions_d\'utilisation">conditions d\'utilisation de Wikia</a>.',
+	'autocreatewiki-info-terms-agree' => 'En créant un wiki et un compte utilisateur, vous acceptez les {#NewWindowLink: w:Terms of use | Conditions d\'utilisation de Fandom}}.',
 	'autocreatewiki-info-staff-username' => '<b>Staff uniquement :</b> l\'utilisateur spécifié deviendra le fondateur du wikia.',
-	'autocreatewiki-title-template' => 'Wikia $1',
-	'autocreatewiki-limit-day' => 'Le nombre de nouveaux wikias pouvant être créés aujourd\'hui ($1) a été dépassé.',
+	'autocreatewiki-title-template' => 'Communauté $1',
+	'autocreatewiki-limit-day' => 'Le nombre de nouveaux wikis pouvant être créés aujourd\'hui ($1) a été dépassé.',
 	'autocreatewiki-limit-creation' => 'Vous avez dépassé le nombre maximum de wikias pouvant être créés en 24 heures ($1).',
 	'autocreatewiki-empty-field' => 'Merci de compléter ce champ.',
 	'autocreatewiki-bad-name' => 'Le nom ne doit pas contenir de caractères spéciaux (comme $ et @), doit être un mot unique, en minuscules et sans espaces.',
 	'autocreatewiki-invalid-wikiname' => 'Le nom ne doit pas contenir de caractères spéciaux (comme $ et @) et ne doit pas être vide.',
 	'autocreatewiki-violate-policy' => 'Le nom de ce wikia contient un mot qui enfreint notre règlement.',
-	'autocreatewiki-name-taken' => 'Cette URL est déjà prise. Participez sur <a href=\"http://$1.wikia.com\">http://$1.wikia.com</a> ou choisissez une autre URL.',
+	'autocreatewiki-name-taken' => 'Cette URL est déjà prise. Participez sur <a href="http://$1.wikia.com">http://$1.wikia.com</a> ou choisissez une autre URL.',
 	'autocreatewiki-name-too-short' => 'Cette URL est trop courte, choisissez une URL avec au moins 3 caractères.',
 	'autocreatewiki-name-too-long' => 'Cette URL est trop longue, choisissez une URL avec au maximum 50 caractères.',
 	'autocreatewiki-similar-wikis' => 'Vous trouverez ci-dessous une liste des wikias sur le même sujet. Peut-être pouvez-vous participer sur l\'un d\'entre eux ?',
@@ -1640,45 +1603,45 @@ Merci de sélectionner une valeur dans le menu déroulant.',
 	'autocreatewiki-welcomesubject' => '$1 vient d\'être créé !',
 	'autocreatewiki-welcomebody' => 'Bonjour $2 !
 
-Le wikia que vous avez créé est maintenant accessible via <$1>.
+Vous venez de créer un wiki ! Le voici : <$1>
 
-Prêt à commencer ? Nous avons ajouté quelques liens sur votre page de discussion (<$5>) pour vous aider à commencer et vous encourager à explorer les nombreuses zones d\'aide de Wikia. Si vous avez des questions ou vous sentez un peu perdu, répondez à ce message ou regardez nos pages d\'aide <http://communaute.wikia.com/wiki/Catégorie:Aide>.
+Vous êtes prêt à commencer ? Nous avons ajouté quelques liens sur votre page de discussion (<$5>) pour vous aider à faire vos premiers pas et vous rediriger vers les nombreuses pages d\'aide de Fandom. Si vous avez des questions ou vous sentez un peu perdu, répondez à ce message ou consultez nos pages d\'aide <http://communaute.wikia.com/wiki/Aide:Contenu>.
 
-Vous pouvez aussi regarder le blog d\'actualité <http://communaute.wikia.com/wiki/Blog:Actualit%C3%A9_Wikia> où vous trouverez des trucs et astuces, des informations sur les nouvelles fonctionnalités et les nouveautés sur Wikia.
+Nous vous encourageons également à lire les pages d\'aide de Fandom sur la gestion des communautés <http://communaute.wikia.com/wiki/Aide:Gestion_de_la_communaut%C3%A9> et le blog Actualité <http://communaute.wikia.com/wiki/Blog:Actualité_Wikia> ; vous y trouverez des astuces ainsi que des informations sur les nouvelles fonctionnalités de Fandom.
 
-Bonnes modifications !
+Merci d\'avance pour vos contributions !
 
-L’équipe Wikia
+$3
+L\'équipe de support de la communauté Fandom
+<http://communaute.wikia.com/wiki/Utilisateur:$4>
 
-$3 <http://communaute.wikia.com/wiki/Utilisateur:$4>',
+___________________________________________
+* Vous souhaitez recevoir moins de notifications de notre part ? Vous pouvez vous désabonner ou modifier vos préférences e-mail ici : http://community.wikia.com/Special:Preferences',
 	'autocreatewiki-welcometalk-wall-title' => 'Bienvenue !',
-	'autocreatewiki-welcometalk-wall' => 'Bonjour !
+	'autocreatewiki-welcometalk-wall' => 'Bonjour, l\'équipe de support souhaite la bienvenue à {{subst:SITENAME}} dans la communauté Fandom !
 
-Nous sommes heureux d\'accueillir {{SITENAME}} dans la communauté Wikia ! Voici quelques liens et astuces utiles qui vous permettront de dynamiser et gérer votre wikia :
+Voici quelques liens et astuces utiles qui vous permettront de dynamiser et gérer votre communauté :
 
-*Vous n\'êtes pas sûr de savoir par où commencer ? Arrêtez-vous sur le [[w:fr:Accueil|Centre des communautés]] et lisez le blog « [[w:fr:Blog:Conseils pour fondateurs/administrateurs|Conseils pour fondateurs et administrateurs]] ». Vous y trouverez des astuces pour commencer votre wikia et le faire évoluer !
-*Consultez l\'[[w:fr:Blog:Actualité Wikia|actualité Wikia]] pour vous tenir informé des derniers évènements sur Wikia.
-*Explorez le [[w:fr:Special:Forum|forum]] sur le Centre des communautés pour voir quelles questions posent les autres administrateurs.
-*Personnalisez l\'apparence de votre wikia en visitant le [[Special:ThemeDesigner|Concepteur de thème]] : ajoutez des couleurs, modifiez l\'arrière-plan et le logo, etc.
-*Consultez la page [[Special:WikiFeatures|Composants de wikia]] pour découvrir quelles fonctionnalités vous pouvez activer sur votre wikia.
-*Pour finir, parcourez les [[Aide:Contenu|pages d\'aide]] pour trouver des réponses à vos questions.
+*Consultez la page [[Special:WikiFeatures|Composants de wiki]] pour découvrir quelles fonctionnalités spéciales vous pouvez activer, dont notre tchat communautaire très prisé.
+*Personnalisez l\'apparence de votre communauté en visitant le [[Special:ThemeDesigner|Concepteur de thème]] : ajoutez des couleurs, choisissez un style, etc.
+*Accédez au [[w:fr:Accueil|Centre des communautés]] pour y lire l\'[[w:fr:Blog:Actualité Wikia|actualité]] et poser des questions sur notre [[w:fr:Special:Forum|forum]].
+*Parcourez les [[Aide:Contenu|pages d\'aide]] pour savoir comment utiliser Fandom ou visitez l\'[[w:c:communaute:Université_Wikia|Université Fandom]] pour regarder de courtes vidéos de présentation.
 
-Tous les liens ci-dessus sont un bon moyen de commencer à naviguer sur Wikia. Si vous êtes bloqué ou avez des questions auxquelles vous ne trouvez pas de réponse, [[Special:Contact|contactez-nous]]. Mais le plus important est que vous vous amusiez !
-
-Bonnes modifications !',
+C\'est parti !',
 	'autocreatewiki-welcometalk' => '==Bienvenue !==
-<div style="font-size:120%; line-height:1.4em;">Bonjour !
+Bonjour !
 
-Nous sommes heureux d\'accueillir $4 dans la communauté Wikia ! Voici quelques liens et astuces utiles qui vous permettront de dynamiser et gérer votre wikia :
+Nous sommes heureux d\'accueillir $4 dans la communauté Fandom ! Voici quelques liens et astuces utiles qui vous permettront de dynamiser et gérer votre wiki :
 
-*Vous n\'êtes pas sûr de savoir par où commencer ? Arrêtez-vous sur le [[w:fr:Accueil|Centre des communautés]] et lisez le blog « [[w:fr:Blog:Conseils pour fondateurs/administrateurs|Conseils pour fondateurs et administrateurs]] ». Vous y trouverez des astuces pour commencer votre wikia et le faire évoluer !
-*Consultez l\'[[w:fr:Blog:Actualité Wikia|actualité Wikia]] pour vous tenir informé des derniers évènements sur Wikia.
+*Vous n\'êtes pas sûr de savoir par où commencer ? Allez sur le [[w:fr:Accueil|Centre des communautés]] et lisez le blog [[w:fr:Blog:Conseils pour fondateurs/administrateurs|Conseils pour fondateurs et administrateurs]]. Vous y trouverez des astuces pour démarrer votre wiki et le faire évoluer.
+*Consultez l\'[[w:fr:Blog:Actualité Wikia|actualité]] pour vous tenir informé des derniers événements.
 *Explorez le [[w:fr:Special:Forum|forum]] sur le Centre des communautés pour voir quelles questions posent les autres administrateurs.
-*Personnalisez l\'apparence de votre wikia en visitant le [[Special:ThemeDesigner|Concepteur de thème]] : ajoutez des couleurs, modifiez l\'arrière-plan et le logo, etc.
-*Consultez la page [[Special:WikiFeatures|Composants de wikia]] pour découvrir quelles fonctionnalités vous pouvez activer sur votre wikia.
+*Regardez les vidéos de l\'[[w:c:communaute:Université_Fandom|Université Fandom]] pour vous former.
+*Personnalisez l\'apparence de votre wiki en visitant le [[Special:ThemeDesigner|Concepteur de thème]] : ajoutez des couleurs, modifiez l\'arrière-plan et le logo etc.
+*Consultez la page [[Special:WikiFeatures|Composants de wiki]] pour découvrir quelles fonctionnalités vous pouvez activer sur votre wiki.
 *Pour finir, parcourez les [[Aide:Contenu|pages d\'aide]] pour trouver des réponses à vos questions.
 
-Tous les liens ci-dessus sont un bon moyen de commencer à naviguer sur Wikia. Si vous êtes bloqué ou avez des questions auxquelles vous ne trouvez pas de réponse, [[Special:Contact|contactez-nous]]. Mais le plus important est que vous vous amusiez !
+Tous les liens ci-dessus sont un bon moyen de commencer à naviguer sur Fandom. Si vous êtes bloqué ou si vous avez toujours des questions, [[Special:Contact|contactez-nous]]. Mais le plus important est que vous vous amusiez !
 
 Bonnes modifications !
 
@@ -2210,26 +2173,26 @@ $messages['it'] = [
 	'autocreatewiki-language-all' => 'Tutte le lingue',
 	'autocreatewiki-remember' => 'Ricordami',
 	'autocreatewiki-create-account' => 'Crea un account',
-	'autocreatewiki-haveaccount-question' => 'Hai già un account su Wikia?',
+	'autocreatewiki-haveaccount-question' => 'Hai già un account Fandom?',
 	'autocreatewiki-info-domain' => 'È meglio usare una parola che sia una possibile parola chiave per le ricerche sul tuo argomento.',
 	'autocreatewiki-info-topic' => 'Aggiungi una breve descrizione come \"Guerre stellari\" o \"Spettacoli televisivi\".',
 	'autocreatewiki-info-category-default' => 'Aiuterà i visitatori a trovare la tua wikia.',
 	'autocreatewiki-info-category-answers' => 'Aiuterà i visitatori a trovare il tuo sito di Wiki risposte.',
 	'autocreatewiki-info-language' => 'Questa sarà la lingua di default per i visitatori della tua wikia.',
-	'autocreatewiki-info-email-address' => 'Il tuo indirizzo email non viene mai mostrato agli utenti di Wikia.',
+	'autocreatewiki-info-email-address' => 'Il tuo indirizzo e-mail non viene mai mostrato a nessuno su Fandom.',
 	'autocreatewiki-info-realname' => 'Se scegli di fornirlo, verrà usato per attribuirti il lavoro svolto.',
-	'autocreatewiki-info-birthdate' => 'Wikia richiede che tutti gli utenti forniscano la loro data di nascita effettiva, sia come misura di sicurezza sia come un modo per preservare l\'integrità del sito nel rispetto delle regole federali.',
+	'autocreatewiki-info-birthdate' => 'Fandom chiede a tutti gli utenti di fornire la loro data di nascita reale sia quale precauzione di sicurezza, sia quale mezzo per preservare l\'integrità del sito rispettando al contempo le disposizioni federali.',
 	'autocreatewiki-info-blurry-word' => 'Per aiutarci a contrastare la creazione automatica di account, inserisci la parola sfuocata che vedi in questo campo.',
-	'autocreatewiki-info-terms-agree' => 'Con la creazione di una wiki e di un account utente, accetti i <a href="http://it.community.wikia.com/wiki/Wiki_della_Community:Termini_di_utilizzo">Termini di utilizzo di Wikia</a>',
+	'autocreatewiki-info-terms-agree' => 'Con la creazione di una wiki e di un account utente, accetti i {{#NewWindowLink:w:it:Project:Termini di utilizzo|Termini di utilizzo di Fandom}}',
 	'autocreatewiki-info-staff-username' => '<b>Solo staff:</b> L\'utente specificato verrà indicato come il fondatore.',
-	'autocreatewiki-title-template' => '$1 Wikia',
-	'autocreatewiki-limit-day' => 'Oggi Wikia ha superato il numero massimo di creazione di wikia ($1).',
+	'autocreatewiki-title-template' => '$1 Wiki',
+	'autocreatewiki-limit-day' => 'Fandom ha superato il numero massimo di creazioni di wiki oggi ($1).',
 	'autocreatewiki-limit-creation' => 'Hai superato il numero massimo di creazione di wikia in 24 ore ($1).',
 	'autocreatewiki-empty-field' => 'Completa questo campo.',
 	'autocreatewiki-bad-name' => 'Il nome non può contenere caratteri speciali (come $ o @) e deve essere una singola parola minuscola senza spazi.',
 	'autocreatewiki-invalid-wikiname' => 'Il nome non può contenere caratteri speciali (come $ o @) e non può essere vuoto.',
 	'autocreatewiki-violate-policy' => 'Il nome di questa wikia contiene una parola che viola la nostra politica di denominazione.',
-	'autocreatewiki-name-taken' => 'C\'è già una wikia con questo indirizzo. Contribuisci a <a href=\"http://$1.wikia.com\">http://$1.wikia.com</a> o scegli un altro indirizzo.',
+	'autocreatewiki-name-taken' => 'C\'è già una wiki con questo indirizzo. Inizia a contribuire su <a href="http://$1.wikia.com">http://$1.wikia.com</a> o scegli un altro indirizzo.',
 	'autocreatewiki-name-too-short' => 'Questo indirizzo è troppo breve. Scegli un indirizzo di almeno 3 caratteri.',
 	'autocreatewiki-name-too-long' => 'Questo indirizzo è troppo lungo. Scegli un indirizzo con un massimo di 50 caratteri.',
 	'autocreatewiki-similar-wikis' => 'Di seguito trovi le wikia già create su questo argomento. Ti consigliamo di contribuire a una di queste.',
@@ -2277,29 +2240,47 @@ Scegline una dal menu a comparsa.',
 	'autocreatewiki-step7-error' => 'Impossibile copiare il database dei dati iniziali per la lingua!',
 	'autocreatewiki-protect-reason' => 'Parte dell\'interfaccia ufficiale',
 	'autocreatewiki-welcomesubject' => '$1 è stata creata!',
-	'autocreatewiki-welcomebody' => 'Ciao $2, 
+	'autocreatewiki-welcomebody' => 'Ciao $2!
 
-La wiki che hai creato è ora disponibile su <$1>. Speriamo di vedere i tuoi contributi al più presto! <br> Abbiamo aggiunto alcune informazioni e suggerimenti nella tua pagina di discussione (<$5>) per aiutarti a mettere in moto la tua wiki. Per qualunque domanda, puoi rispondere a questa email o leggere le pagine di aiuto sulla [[w:c:it.community:Aiuto:Contenuti|Wiki della Community]]. 
+La tua wiki è stata creata! Dai un\'occhiata: <$1>
 
-Buona fortuna per il tuo progetto, 
+Pronto a iniziare? Abbiamo aggiunto dei link alla tua pagina di discussione (<$5>) per aiutarti a iniziare e incoraggiarti a esplorare le numerose aree utili di Fandom. Se hai domande o ti senti un po\' perso, rispondi a questa e-mail o dai un\'occhiata alle pagine d\'aiuto <http://it.community.wikia.com/wiki/Aiuto:Contenuti>.
 
-$3 Wikia Community Support <http://www.wikia.com/wiki/User:$4>',
+Puoi anche dare un\'occhiata alle pagine d\'aiuto di Fandom sulla gestione delle comunità <http://it.community.wikia.com/wiki/Aiuto:Gestire_una_community> e al blog dello Staff di Fandom <http://it.community.wikia.com/wiki/Blog:Blog_ufficiale_di_Fandom_Italia>, in cui troverai suggerimenti e trucchi, informazioni su nuove funzionalità e le novità di Fandom.
+
+Happy editing!
+
+$3
+Supporto della community di Fandom
+<http://community.wikia.com/wiki/User:$4>
+
+___________________________________________
+* Desideri ricevere meno messaggi da noi? Puoi annullare la sottoscrizione o modificare le tue preferenze e-mail qui: http://it.community.wikia.com/wiki/Speciale:Preferenze',
 	'autocreatewiki-welcometalk-wall-title' => 'Ti diamo il benvenuto!',
 	'autocreatewiki-welcometalk' => '== Benvenuto! ==
-Ciao $1, siamo molto contenti di avere \'\'\'{{SITENAME}}\'\'\' nella nostra community di Wikia! C\'è ancora molto da fare, perciò ti vogliamo dare alcuni suggerimenti e consigli per aiutarti ad avviare la tua wiki.
-* Controlla [[Speciale:AdminDashboard|i tuoi strumenti di gestione]] (accessibili tramite il link "Pannello Admin" nella barra in fondo alle pagine) e in particolare le [[Speciale:WikiFunzioni|Wiki Funzioni]], tra cui Chat, Forum e Successi, che puoi attivare nella tua wiki.
-* Personalizza l\'aspetto della tua wiki tramite il [[Speciale:ThemeDesigner|Theme Designer]].
-* Fai un salto nella [[w:c:it.community|Wiki della Community]] per tenerti informato tramite il [[w:c:it.community:Blog:Blog_ufficiale_di_Wikia_Italia|Blog ufficiale di Wikia Italia]], fare delle domande nel [[w:c:it.community:Special:Forum|Forum della Community]] o [[w:c:it.community:Speciale:Chat|chattare con altri utenti]].
-* Visita [[w:c:it.community:Aiuto:Contenuti|le pagine di aiuto]] per scoprire come sfruttare al meglio le funzioni delle wiki.
-I link qui sopra sono un buon punto di partenza per esplorare il mondo di Wikia, ti auguriamo buon divertimento! -- [[User:$2|$3]] <staff />',
+Ciao!
+
+Siamo entusiasti che $4 faccia parte della comunità Fandom! C\'è ancora molto da fare; ecco alcuni utili consigli e link per mettere in moto la tua wiki:
+
+* Dai un\'occhiata a [[Special:WikiFeatures|Wiki Features]] per visualizzare le funzionalità che puoi attivare nella tua wiki, tra cui chat, successi e molto altro ancora.
+* Fai un salto sulla [[w:it:|Wiki della Community]] per restare informato tramite il nostro [[w:it:Blog:Blog ufficiale di Fandom Italia|blog ufficiale]] o porre domande nel nostro [[w:it:Special:Forum|forum]], guardare video su [[w:c:community:Wikia_university|Fandom University]] o chattare in tempo reale con altri membri della comunità Fandom.
+* Per finire, visita le nostre [[w:it:Aiuto:Contenuti|pagine d\'aiuto]] per imparare al meglio come usare Fandom.
+
+Tutti questi link sono un ottimo punto di partenza per iniziare ad esplorare e divertirsi!
+
+-- [[User:$2|$3]] <staff />',
 	'autocreatewiki-tagline' => '',
 	'requestwiki-filter-language' => 'als,an,ang,ast,bar,de2,de-at,de-ch,de-formal,de-weigsbrag,dk,en-gb,eshelp,fihelp,frc,frhelp,ia,ie,ithelp,jahelp,kh,kohelp,kp,ksh,nb,nds,nds-nl,mu,mwl,nlhelp,pdc,pdt,pfl,pthelp,pt-brhelp,ruhelp,simple,tokipona,tp,zh-classical,zh-cn,zh-hans,zh-hant,zh-hk,zh-min-nan,zh-mo,zh-my,zh-sg,zh-tw,zh-yue',
-	'autocreatewiki-welcometalk-wall' => 'Ciao, siamo molto contenti di avere {{SITENAME}} nella nostra community di Wikia! C\'è ancora molto da fare, perciò ti vogliamo dare alcuni suggerimenti e consigli per aiutarti ad avviare la tua wiki.
-* Controlla [[Speciale:AdminDashboard|i tuoi strumenti di gestione]] (accessibili tramite il link "Pannello Admin" nella barra in fondo alle pagine) e in particolare le [[Speciale:WikiFunzioni|Wiki Funzioni]], tra cui Chat, Forum e Successi, che puoi attivare nella tua wiki.
-* Personalizza l\'aspetto della tua wiki tramite il [[Speciale:ThemeDesigner|Theme Designer]].
-* Fai un salto nella [[w:c:it.community|Wiki della Community]] per tenerti informato tramite il [[w:c:it.community:Blog:Blog_ufficiale_di_Wikia_Italia|Blog ufficiale di Wikia Italia]], fare delle domande nel [[w:c:it.community:Special:Forum|Forum della Community]] o [[w:c:it.community:Speciale:Chat|chattare con altri utenti]].
-* Visita [[w:c:it.community:Aiuto:Contenuti|le pagine di aiuto]] per scoprire come sfruttare al meglio le funzioni delle wiki.
-I link qui sopra sono un buon punto di partenza per esplorare il mondo di Wikia, ti auguriamo buon divertimento!',
+	'autocreatewiki-welcometalk-wall' => 'Ciao, sono un membro del team supporto della community di Fandom. Siamo entusiasti di avere {{subst:SITENAME}} parte della comunità Fandom!
+
+Sembra che ci sia tanto da fare, me siamo qui per aiutare a iniziare in modo rapido e semplice. Ecco alcuni consigli utili e link per mettere in moto la tua comunità:
+
+* Dai un\'occhiata a [[Special:WikiFeatures|Wiki Features]] per attivare alcune funzionalità speciali, tra cui la nostra famosa Chat della comunità.
+* Personalizza il colore e lo stile della tua comunità, visitando [[Special:ThemeDesigner|Theme Designer]].
+* Fermati sulla [[w:it:|Wiki della Community]] per dare un\'occhiata al [[w:c:community:Blog:Wikia_Staff_Blog|blog dello staff]] e porre domande nel nostro [[w:it:Special:Forum|forum]].
+*Per finire, visita le nostre [[w:it:Aiuto:Contenuti|pagine d\'aiuto]] per conoscere i segreti dell\'utilizzo di Fandom o visita [[w:c:community:Wikia_University|Fandom University]] per visualizzare video tutorial rapidi.
+
+Buon divertimento!',
 	'autocreatewiki-language-top-list' => 'de,en,es,fr,it,ja,pl,pt-br,ru,zh',
 ];
 
@@ -2317,26 +2298,26 @@ $messages['ja'] = [
 	'autocreatewiki-language-all' => 'すべての言語',
 	'autocreatewiki-remember' => 'パスワードを記憶させる',
 	'autocreatewiki-create-account' => 'アカウントを作成',
-	'autocreatewiki-haveaccount-question' => '既にWikiaアカウントをお持ちですか？',
+	'autocreatewiki-haveaccount-question' => '既にFandomアカウントをお持ちですか？',
 	'autocreatewiki-info-domain' => 'ここでは、トピックの検索キーワードとなるような言葉を入力してください。',
 	'autocreatewiki-info-topic' => '「スター・ウォーズ」や「テレビ番組」など、簡単な説明を追加してください。',
 	'autocreatewiki-info-category-default' => '他のユーザーがこのWikiaコミュニティを見つけやすくなるような紹介文を書いてください。',
 	'autocreatewiki-info-category-answers' => 'あなたのアンサーサイトを見つかりやすくしましょう。',
 	'autocreatewiki-info-language' => 'ここで選択した言語があなたのWikiaコミュニティのデフォルト言語となります。',
-	'autocreatewiki-info-email-address' => 'あなたのメールアドレスがWikia上で誰かに表示されることはありません。',
+	'autocreatewiki-info-email-address' => 'あなたのメールアドレスがFandom上で公開されることは一切ありません。',
 	'autocreatewiki-info-realname' => '本名を入力すると、作者名を表示する際に使用されます。',
-	'autocreatewiki-info-birthdate' => 'Wikiaでは、アメリカ合衆国の法規定に則り、サイトの品質維持および安全対策として、すべてのユーザーに対して生年月日の入力を必須としています。',
+	'autocreatewiki-info-birthdate' => 'Fandomでは健全なサイト運営およびアメリカ合衆国の法規定に則るため、すべてのユーザーに対して生年月日の入力を必須としています。',
 	'autocreatewiki-info-blurry-word' => 'ボットなどによるアカウントの自動作成を防ぐため、表示されている文字を入力してください。',
-	'autocreatewiki-info-terms-agree' => 'Wikiaおよびユーザーアカウントを作成すると、{{#NewWindowLink: w:Terms of use | Wikiaの利用規約}}に同意したと見なされます。',
+	'autocreatewiki-info-terms-agree' => 'Wikiまたはユーザーアカウントを作成された場合、{{#NewWindowLink: w:Terms of use | Fandomの利用規約}}に同意したものと見なします。',
 	'autocreatewiki-info-staff-username' => '<b>スタッフのみ：</b>指定されたユーザーが設立者として表示されます。',
-	'autocreatewiki-title-template' => '$1 Wikia',
-	'autocreatewiki-limit-day' => '1日にWikiaで作成可能なコミュニティの上限数（$1）を超えました。',
+	'autocreatewiki-title-template' => '「$1」コミュニティ',
+	'autocreatewiki-limit-day' => 'Fandomで1日に作成できるwikiの上限数（$1個）を超えました。',
 	'autocreatewiki-limit-creation' => '24時間以内に作成可能なコミュニティの上限数（$1）を超えました。',
 	'autocreatewiki-empty-field' => 'この項目は必須です。',
 	'autocreatewiki-bad-name' => 'アドレスは、半角英数字の小文字のみを使用してください。¥や@などの記号、スペースは使用できません。',
 	'autocreatewiki-invalid-wikiname' => 'アドレスには、¥や@などの記号は使えません。また空欄にすることもできません。',
 	'autocreatewiki-violate-policy' => 'このコミュニティ名には、Wikiaのポリシーに違反する単語が含まれています。',
-	'autocreatewiki-name-taken' => 'このアドレスのWikiaコミュニティは既に存在します。まずは<a href=\"http://$1.wikia.com\">http://$1.wikia.com</a> を見てみましょう。',
+	'autocreatewiki-name-taken' => 'このアドレスのwikiは既に存在します。まずは<a href="http://$1.wikia.com">http://$1.wikia.com</a> を編集してみるか、別のアドレスをご指定ください。',
 	'autocreatewiki-name-too-short' => 'アドレスが短すぎるようです。3文字以上のアドレスを指定してください。',
 	'autocreatewiki-name-too-long' => 'アドレスが長すぎるようです。50文字以下のアドレスを指定してください。',
 	'autocreatewiki-similar-wikis' => 'このトピックを扱っているWikiaには、以下ようなのものもあります。これらの編集もぜひご検討ください。',
@@ -2386,43 +2367,44 @@ $messages['ja'] = [
 	'autocreatewiki-welcomesubject' => '「$1」の作成が完了しました！',
 	'autocreatewiki-welcomebody' => '$2さん
 
-この度は新しいWikiaコミュニティを作成していただきありがとうございます。早速<$1> をチェックしてみましょう！
-トークページ（<$5>）にてリンクをいくつかご紹介しています。Wikiaの便利なツールなど、ご利用のヒントとしてご参照ください。その他ご不明な点がありましたら、このメールにご返信いただくか、ヘルプページ（<http://ja.community.wikia.com/wiki/ヘルプ:コンテンツ>）をご覧ください。
+新しいwikiを作成していただきありがとうございます。早速<$1> をチェックしてみましょう！
 
-また、Wikiaのスタッフブログ（<http://ja.community.wikia.com/wiki/ブログ:ウィキアスタッフブログ>）も是非ともご覧ください。ご利用のヒント、新機能に関する情報、Wikiaの最新情報などをご紹介しています。
+トークページ（<$5>）には、Fandom利用のヒントとして、便利なツールなどを紹介するリンクがあります。その他ご不明な点ある場合、このメールにご返信いただくか、ヘルプページ（<http://ja.community.wikia.com/wiki/ヘルプ:コンテンツ>）をご覧ください。
 
-それでは、どうぞ編集をお楽しみください。
+また、コミュニティ管理に関するFandomヘルプページ（<http://ja.community.wikia.com/wiki/ヘルプ:コミュニティマネージメント>）ならびにFandomスタッフブログ（<http://ja.community.wikia.com/wiki/ブログ:ウィキアスタッフブログ>）もぜひご覧ください。ご利用のヒントや新機能に関する情報、Fandomの最新情報などをご紹介しています。
+
+今後とも、Fandomをよろしくお願いいたします。
 
 $3
-Wikia コミュニティ・サポート
+Fandomコミュニティ・サポート
 <http://ja.community.wikia.com/wiki/User:$4>
 
 ___________________________________________
-* Wikiaから送信される通知について変更をご希望の場合は、こちらでご登録を解除するか、メール設定をご変更ください：http://ja.community.wikia.com/Special:Preferences',
+* Fandomから送信される通知は、次のページで登録解除および設定変更ができます：http://ja.community.wikia.com/特別:個人設定',
 	'autocreatewiki-welcometalk' => '==ようこそ！==
 
-この度は、Wikiaで「$4」を立ち上げていただきありがとうございます！こちらに、Wikiaコミュニティを盛り上げていくためのヒントやリンクをご紹介します。ぜひご参照ください。
+Fandomにて「$4」を立ち上げていただきありがとうございます！このメールでは、wikiを盛り上げていくためのヒントやリンクをご紹介します。
 
-*[[特別:WikiFeatures|ウィキ・フィーチャーズ]]で、あなたのWikiaコミュニティで有効にできる機能（チャット、アチーブメントなど）をチェックしてみよう！
-*[[w:c:ja.communtiy|コミュニティ・セントラル]]の[[w:c:ja.communtiy:ブログ:ウィキアスタッフブログ|スタッフブログ]]で最新情報を入手したり、[[w:c:ja.communtiy:特別:Forum|コミュニティ・フォーラム]]で分からないことを質問してみよう！
-*[[ヘルプ:コンテンツ|ヘルプページ]]で、ウィキアについての様々な記事を見つけてみよう！
+*[[Special:WikiFeatures|Wikiフィーチャーズ]]では、あなたのwikiで有効にできる機能（チャット、アチーブメントなど）が確認できます。
+*Fandomの最新情報は、[[w:c:ja.communtiy|コミュニティ・セントラル]]の[[w:c:ja.communtiy:Blog:ウィキアスタッフブログ|スタッフブログ]]でご案内しています。わからないことがある時は、[[w:c:ja.communtiy:Special:Forum|コミュニティ・フォーラム]]で質問したり、[[w:c:ja.community:Wikia_ユニバーシティ|Fandomユニバーシティ]]で参考動画を見たり、Fandomのコミュニティ・メンバーとチャットしてみましょう。
+*[[ヘルプ:コンテンツ|ヘルプページ]]では、Fandomの活用法についてさまざまなヘルプ記事を掲載しています。
 
-このリンクを活用して、Wikiaをどんどんお楽しみください！
+Fandomをお楽しみいただく上で、ぜひこれらの記事を役立てていただけると幸いです。
 
--- [[User:$2|$3]] <staff />',
+-- [[ユーザー:$2|$3]]<staff />',
 	'autocreatewiki-tagline' => '',
 	'requestwiki-filter-language' => 'als,an,ang,ast,bar,de2,de-at,de-ch,de-formal,de-weigsbrag,dk,en-gb,eshelp,fihelp,frc,frhelp,ia,ie,ithelp,jahelp,kh,kohelp,kp,ksh,nb,nds,nds-nl,mu,mwl,nlhelp,pdc,pdt,pfl,pthelp,pt-brhelp,ruhelp,simple,tokipona,tp,zh-classical,zh-cn,zh-hans,zh-hant,zh-hk,zh-min-nan,zh-mo,zh-my,zh-sg,zh-tw,zh-yue',
 	'autocreatewiki-welcometalk-wall-title' => 'ようこそ！',
-	'autocreatewiki-welcometalk-wall' => 'こんにちは！この度は、Wikiaで{{subst:SITENAME}}を立ち上げていただき、ありがとうございます！
+	'autocreatewiki-welcometalk-wall' => 'こんにちは、Fandomコミュニティ・サポートチームです。このたびは、Fandomにて「{{subst:SITENAME}}」を立ち上げていただきありがとうございます。
 
-こちらに、Wikiaコミュニティを盛り上げていくためのヒントやリンクをご紹介します。ぜひご参照ください。
-*[[特別:WikiFeatures|ウィキ・フィーチャーズ]]で、あなたのWikiaコミュニティで有効にできる機能（チャット、アチーブメントなど）をチェックしてみよう！
-*[[特別:ThemeDesigner|テーマデザイナー]]を使って、背景、ロゴ、色、スタイルなど、コミュニティのデザインをカスタマイズしてみよう！
-*[[w:c:ja.communtiy|コミュニティ・セントラル]]の[[w:c:ja.communtiy:ブログ:ウィキアスタッフブログ|スタッフブログ]]で最新情報を入手したり、[[w:c:ja.communtiy:特別:Forum|コミュニティ・フォーラム]]で分からないことを質問してみよう！
-*[[ヘルプ:コンテンツ|ヘルプページ]]で、[[ヘルプ:新規ページ|新規しいページを追加する方法]]、[[ヘルプ:コミュニティを作り上げる|コミュニティを作り上げる方法]]、[[ヘルプ:ユーザーアクセスレベル|管理者を追加する方法]]など、コミュニティについての様々な記事を見つけてみよう！
-*管理者ダッシュボード（下部のツールバーの「管理作業」をクリック）で、上記のすべてのツールを見つけて使ってみよう！
+充実したwikiを作成するにあたり、コミュニティ・サポートチームでは様々なお手伝いをさせていただいております。下記にwikiを盛り上げていくためのヒントをご紹介しますので、ぜひご参考にしていただけると幸いです。
 
-このリンクを活用して、ウィキアをどんどんお楽しみください！',
+*[[Special:WikiFeatures|Wikiフィーチャーズ]]で、コミュニティチャットなど、有効にできる機能をチェックしてみましょう。
+*[[Special:ThemeDesigner|テーマデザイナー]]で、コミュニティの色やスタイルをカスタマイズしてみましょう。
+*[[w:c:ja.communtiy|コミュニティ・セントラル]]で[[w:c:ja.communtiy:Blog:ウィキアスタッフブログ|スタッフブログ]]を最新情報を収集したり、[[w:c:ja.communtiy:Special:Forum|コミュニティ・フォーラム]]でわからないことを質問したりしてみましょう。
+*[[ヘルプ:コンテンツ|ヘルプページ]]でFandomについての様々なヘルプ記事を読んだり、[[w:c:ja.community:Wikia_ユニバーシティ|Fandomユニバーシティ]]で使い方動画をチェックしてみましょう。
+
+今後ともFandomをよろしくお願いいたします。',
 	'autocreatewiki-language-top-list' => 'de,en,es,fr,it,ja,pl,pt-br,ru,zh',
 ];
 
@@ -3269,26 +3251,26 @@ $messages['pl'] = [
 	'autocreatewiki-language-all' => 'Wszystkie języki',
 	'autocreatewiki-remember' => 'Zapamiętaj mnie',
 	'autocreatewiki-create-account' => 'Utwórz konto',
-	'autocreatewiki-haveaccount-question' => 'Czy masz już konto na portalu Wikia?',
+	'autocreatewiki-haveaccount-question' => 'Czy masz już konto na portalu Fandom?',
 	'autocreatewiki-info-domain' => 'Najlepiej użyć słowa, które może być słowem kluczowym szukanego tematu.',
 	'autocreatewiki-info-topic' => 'Dodaj krótki opis, taki jak „Gwiezdne Wojny” lub „Seriale”.',
 	'autocreatewiki-info-category-default' => 'Pomoże to odnaleźć odwiedzającym Twoją wiki.',
 	'autocreatewiki-info-category-answers' => 'Pomoże to odnaleźć odwiedzającym Twoją Zapytaj wiki.',
 	'autocreatewiki-info-language' => 'Będzie to domyślny język dla odwiedzających Twoją wiki.',
-	'autocreatewiki-info-email-address' => 'Twój adres e-mail nigdy nie będzie widoczny dla nikogo na portalu Wikia.',
+	'autocreatewiki-info-email-address' => 'Twój adres e-mail nie będzie widoczny dla użytkowników portalu Fandom.',
 	'autocreatewiki-info-realname' => 'Jeśli zdecydujesz się go podać, zostanie użyty, żeby oznaczyć Ciebie jako autora.',
-	'autocreatewiki-info-birthdate' => 'Wikia wymaga od wszystkich użytkowników podania rzeczywistej daty urodzenia ze względów bezpieczeństwa oraz dla zachowania spójności strony, przy zapewnieniu zgodności z przepisami federalnymi.',
+	'autocreatewiki-info-birthdate' => 'Fandom wymaga od wszystkich użytkowników podania rzeczywistej daty urodzenia ze względów bezpieczeństwa oraz dla zachowania spójności strony, przy zapewnieniu zgodności z przepisami federalnymi.',
 	'autocreatewiki-info-blurry-word' => 'Ze względu na ochronę przed automatycznym tworzeniem kont, przepisz zamazane słowo widoczne w tym polu.',
-	'autocreatewiki-info-terms-agree' => 'Tworząc wiki i konto użytkownika, zgadzasz się na {{#NewWindowLink:w:c:pl:Zasady Użytkowania|Zasady Użytkowania Wikii}}',
+	'autocreatewiki-info-terms-agree' => 'Tworząc wiki i konto użytkownika, akceptujesz {{#NewWindowLink: w:c.pl:Zasady Użytkowania | Zasady Użytkowania portalu Fandom}}',
 	'autocreatewiki-info-staff-username' => '<b>Tylko dla pracowników:</b> Wybrany użytkownik zostanie wyszczególniony jako założyciel.',
-	'autocreatewiki-title-template' => '$1 Wikia',
-	'autocreatewiki-limit-day' => 'Wikia przekroczyła dzisiaj maksymalną liczbę utworzonych wiki ($1).',
+	'autocreatewiki-title-template' => 'Społeczność $1',
+	'autocreatewiki-limit-day' => 'Maksymalna dzienna liczba wiki utworzonych na portalu Fandom została przekroczona ($1).',
 	'autocreatewiki-limit-creation' => 'Przekroczyłeś maksymalną liczbę wiki, które możesz utworzyć w ciągu 24 godzin ($1).',
 	'autocreatewiki-empty-field' => 'Należy wypełnić to pole.',
 	'autocreatewiki-bad-name' => 'Nazwa nie może zawierać znaków specjalnych (np. $ czy @) oraz musi stanowić jedno słowo zapisane małymi literami bez odstępów.',
 	'autocreatewiki-invalid-wikiname' => 'Nazwa nie może zawierać znaków specjalnych (np. $ czy @) i nie może być pusta',
 	'autocreatewiki-violate-policy' => 'Nazwa wiki zawiera słowo, które narusza nasze zasady nadawania tytułów',
-	'autocreatewiki-name-taken' => 'Wiki o tym adresie już istnieje. Przyłącz się do edytowania na <a href=\"http://$1.wikia.com\">http://$1.wikia.com</a> lub wybierz inny adres.',
+	'autocreatewiki-name-taken' => 'Wiki o tym adresie już istnieje. Przyłącz się do jej edytowania na <a href="http://$1.wikia.com">http://$1.wikia.com</a> lub wybierz inny adres.',
 	'autocreatewiki-name-too-short' => 'Adres jest zbyt krótki. Wybierz adres, który zawiera przynajmniej 3 znaki.',
 	'autocreatewiki-name-too-long' => 'Adres jest zbyt długi. Wybierz adres, który zawiera maksymalnie 50 znaków.',
 	'autocreatewiki-similar-wikis' => 'Poniżej znajdują się istniejące wiki dotyczące tego tematu. Proponujemy edycję jednej z nich.',
@@ -3336,49 +3318,45 @@ Wybierz prawidłowy z listy.',
 	'autocreatewiki-step7-error' => 'Nie można skopiować do bazy danych początkowych wartości dla języka!',
 	'autocreatewiki-protect-reason' => 'Część oficjalnego interfejsu',
 	'autocreatewiki-welcomesubject' => '$1 została utworzona!',
-	'autocreatewiki-welcomebody' => 'Witaj $2,
+	'autocreatewiki-welcomebody' => 'Witaj $2!
 
-Wiki, którą utworzyłeś, jest aktualnie dostępna na stronie <$1>.
+Twoja wiki została utworzona! Możesz zobaczyć ją tutaj: <$1>
 
-Umieściliśmy na Twojej stronie dyskusji (<$5>) trochę informacji i porad, aby pomóc Ci na początku. Jeśli napotkasz jakieś problemy, możesz znaleźć pomoc na stronie <http://spolecznosc.wikia.com/wiki/Pomoc:Zawartość>.
+Do Twojej strony dyskusji (<$5>) dodaliśmy kilka przydatnych linków, które ułatwią Ci pierwsze kroki i pomogą odnaleźć wiele przydatnych miejsc na portalu Fandom. Jeżeli masz jakieś pytania lub czujesz się nieco zagubiony, odpowiedz na ten e-mail i opisz swój problem lub odwiedź stronę pomocy <http://pomoc.wikia.com>.
 
-Możesz także odwiedzić forum w Centrum Społeczności - <http://spolecznosc.wikia.com/wiki/Specjalna:Forum> aby znaleźć odpowiedzi na nurtujące Cię pytania.
+Zobacz również stronę pomocy poświęconą zarządzaniu społecznościami <http://spolecznosc.wikia.com/wiki/Pomoc:Administracja> oraz Fandom News <http://spolecznosc.wikia.com/wiki/Blog:Wikia_News>, gdzie znajdziesz porady, informacje o nowych funkcjach oraz aktualności dotyczące portalu Fandom.
 
-Życzymy powodzenia przy tworzeniu nowego projektu!
+Miłego edytowania!
 
 $3
-
-Zespół Wikia
-<http://www.wikia.com/wiki/User:$4>
+Wsparcie Społeczności Fandom
+<http://community.wikia.com/wiki/User:$4>
 
 ___________________________________________
-* Chcesz otrzymywać mniej wiadomości? Możesz wyłączyć lub zmienić ustawienia powiadomień tutaj: http://spolecznosc.wikia.com/Special:Preferences',
+* Chcesz otrzymywać od nas mniej wiadomości? Możesz zrezygnować z ich otrzymywania lub zmienić ich ustawienia tutaj: http://community.wikia.com/Special:Preferences',
 	'autocreatewiki-welcometalk-wall-title' => 'Witaj!',
-	'autocreatewiki-welcometalk-wall' => 'Gratulujemy rozpoczęcia edycji {{SITENAME}}. Jest to zupełnie nowy projekt, więc potrzebuje sporego zaangażowania. Oto kilka wskazówek na dobry początek:
+	'autocreatewiki-welcometalk-wall' => 'Witaj, jestem członkiem zespołu Wsparcia Społeczności w Fandom. Bardzo cieszymy się, że {{subst:SITENAME}} stała się częścią społeczności Fandomu!
 
-* Zajrzyj na [[Special:WikiFeatures|Rozszerzenia wiki]], aby dowiedzieć jakie dodatkowe rozszerzenia możesz włączyć na swojej wiki.
+Może się wydawać, że przed tobą jeszcze bardzo dużo pracy, ale jesteśmy tu po to, żeby ułatwić Ci postawienie pierwszych kroków w Fandom. Oto przydatne wskazówki i linki, które pomogą ci rozkręcić twoją społeczność:
 
-* Odwiedź [http://spolecznosc.wikia.com/wiki/ Centrum Społeczności] aby uzyskać więcej informacji o sprawnym edytowaniu wiki poprzez nasze [http://spolecznosc.wikia.com/wiki/Specjalna:Forum Forum].
+*Zobacz [[Special:WikiFeatures|rozszerzenia wiki]] i włącz dodatkowe funkcje, np. popularny w Fandom Czat dla społeczności.
+*Odwiedź [[Special:ThemeDesigner|kreator motywu]] i dostosuj styl i kolor swojej wiki.
+*Zajrzyj do [[w:c:community|centrum społeczności]] i zobacz co nowego w [[w:c:community:Blog:Wikia_Staff_Blog|Fandom News]] oraz zadawaj pytania na [[w:c:community:Special:Forum|forum społeczności]]. 
+*Nie zapomnij też odwiedzić [[Help:Contents|strony pomocy]] by poznać Fandom od podszewki oraz [[w:c:community:Wikia_University|Uniwersytet Fandomu]], gdzie znajdziesz krótkie filmy instruktażowe.
 
-*Na [[Pomoc:Zawartość|stronach pomocy]] znajdziesz więcej wskazówek dotyczących rozbudowy wiki.
+Miłej zabawy!',
+	'autocreatewiki-welcometalk' => '==Witaj!==
+Cześć!
 
-*Przejrzyj obecnie istniejące [[Special:Categories|kategorie]], aby dowiedzieć się jakie początkowe narzędzia masz do swojej dyspozycji.
+Cieszymy się, że $4 dołączyła do społeczności portalu Fandom. Wciąż jednak zostało wiele do zrobienia. Oto kilka wskazówek i linków na dobry początek:
 
-Życzymy powodzenia i dobrej zabawy!',
-	'autocreatewiki-welcometalk' => '== Witaj! ==
-Gratulujemy rozpoczęcia edycji $4. Jest to zupełnie nowy projekt, więc potrzebuje sporego zaangażowania. Oto kilka wskazówek na dobry początek:
+*Sprawdź [[Special:WikiFeatures|Rozszerzenia Wiki]], żeby zobaczyć, które funkcje możesz włączyć na swojej wiki, w tym Czat, Osiągnięcia i wiele innych. 
+*Zajrzyj do [[w:c:community|Centrum Społeczności]] i bądź na bierząco dzięki [[w:c:community:Blog:Wikia_Staff_Blog|Fandom News]]. Zadawaj pytania na [[w:c:community:Special:Forum|forum społeczności]], oglądaj filmy w [[w:c:community:Wikia_university|Fandom University]] i rozmawiaj na żywo z innymi członkami spółeczności Fandom.
+*Odwiedź też [[Help:Contents|strony pomocy]], aby poznać tajniki korzystania z portalu Fandom
 
-* Zajrzyj na [[Special:WikiFeatures|Rozszerzenia wiki]], aby dowiedzieć jakie dodatkowe rozszerzenia możesz włączyć na swojej wiki.
+Wszystkie powyższe linki to świetne miejsca, od których możesz rozpocząć swoją przygodę z Fandomem!
 
-* Odwiedź [http://spolecznosc.wikia.com/wiki/ Centrum Społeczności] aby uzyskać więcej informacji o sprawnym edytowaniu wiki poprzez nasze [http://spolecznosc.wikia.com/wiki/Specjalna:Forum Forum].
-
-*Na [[Pomoc:Zawartość|stronach pomocy]] znajdziesz więcej wskazówek dotyczących rozbudowy wiki.
-
-*Przejrzyj obecnie istniejące [[Special:Categories|kategorie]], aby dowiedzieć się jakie początkowe narzędzia masz do swojej dyspozycji.
-
-Życzymy powodzenia i dobrej zabawy!
-
--- [[User:$2|$3]] <staff />',
+-- [[Użytkownik:$2|$3]] <staff />',
 	'autocreatewiki-tagline' => '',
 	'requestwiki-filter-language' => 'als,an,ang,ast,bar,de2,de-at,de-ch,de-formal,de-weigsbrag,dk,en-gb,eshelp,fihelp,frc,frhelp,ia,ie,ithelp,jahelp,kh,kohelp,kp,ksh,nb,nds,nds-nl,mu,mwl,nlhelp,pdc,pdt,pfl,pthelp,pt-brhelp,ruhelp,simple,tokipona,tp,zh-classical,zh-cn,zh-hans,zh-hant,zh-hk,zh-min-nan,zh-mo,zh-my,zh-sg,zh-tw,zh-yue',
 	'autocreatewiki-language-top-list' => 'de,en,es,fr,it,ja,pl,pt-br,ru,zh',
@@ -3552,26 +3530,26 @@ $messages['pt'] = [
 	'autocreatewiki-language-all' => 'Todos os idiomas',
 	'autocreatewiki-remember' => 'Lembrar de mim',
 	'autocreatewiki-create-account' => 'Crie uma conta',
-	'autocreatewiki-haveaccount-question' => 'Você já tem uma conta Wikia?',
+	'autocreatewiki-haveaccount-question' => 'Você já tem uma conta no Fandom?',
 	'autocreatewiki-info-domain' => 'É melhor usar uma palavra que funcione como palavra-chave para facilitar a busca de seu tópico.',
 	'autocreatewiki-info-topic' => 'Adicione uma breve descrição como \"Star Wars\" ou \"Programas de TV\".',
 	'autocreatewiki-info-category-default' => 'Isto ajudará os visitantes a encontrar a sua wikia.',
 	'autocreatewiki-info-category-answers' => 'Isto ajudará os visitantes a encontrar o seu site de Respostas.',
 	'autocreatewiki-info-language' => 'Este será o idioma padrão para os visitantes da sua wikia.',
-	'autocreatewiki-info-email-address' => 'Seu e-mail nunca é mostrado para ninguém na Wikia.',
+	'autocreatewiki-info-email-address' => 'Seu e-mail nunca é mostrado para ninguém no Fandom.',
 	'autocreatewiki-info-realname' => 'Se você optar por fornecê-lo, isso será usado para dar atribuição por seu trabalho.',
-	'autocreatewiki-info-birthdate' => 'A Wikia exige que todos os usuários forneçam suas datas de nascimento verdadeiras como medida de segurança e para preservar a integridade do site, mantendo a conformidade com os regulamentos federais.',
+	'autocreatewiki-info-birthdate' => 'O Fandom exige que todos os usuários forneçam suas datas de nascimento verdadeiras como medida de segurança e para preservar a integridade do site, mantendo conformidade com os regulamentos federais.',
 	'autocreatewiki-info-blurry-word' => 'Para ajudar a proteger o site contra a criação automática de contas, digite a palavra borrada que você vê dentro deste campo.',
-	'autocreatewiki-info-terms-agree' => 'Ao criar uma wikia e uma conta de usuário, você está concordando com os {{#NewWindowLink: w: pt:Terms of use |Termos de Uso da Wikia}}',
+	'autocreatewiki-info-terms-agree' => 'Ao criar uma wiki e uma conta de usuário, você concorda com os {{#NewWindowLink: w: pt:Terms of use |Termos de Uso do Fandom}}',
 	'autocreatewiki-info-staff-username' => '<b>Apenas para o staff:</b> O usuário especificado será listado como fundador.',
-	'autocreatewiki-title-template' => 'Wikia $1',
-	'autocreatewiki-limit-day' => 'A Wikia excedeu o número máximo de criação de wikias hoje ($1).',
+	'autocreatewiki-title-template' => 'comunidade $1',
+	'autocreatewiki-limit-day' => 'O Fandom excedeu o número máximo de criações de wikis hoje ($1).',
 	'autocreatewiki-limit-creation' => 'Você excedeu o número máximo de criação de wikias em 24 horas ($1).',
 	'autocreatewiki-empty-field' => 'Por favor, preencha esse campo.',
 	'autocreatewiki-bad-name' => 'O nome não pode conter caracteres especiais (como $ ou @) nem espaços e precisa estar todo em minúsculas.',
 	'autocreatewiki-invalid-wikiname' => 'O nome não pode conter caracteres especiais (como $ ou @) e não pode estar vazio.',
 	'autocreatewiki-violate-policy' => 'Esse nome contém uma palavra que viola as nossas políticas de nomeação',
-	'autocreatewiki-name-taken' => 'Já existe uma wikia com este endereço. Você pode editá-la em <ahref=\"http://$1.wikia.com\">http://$1.wikia.com</a> ou escolher outro endereço.',
+	'autocreatewiki-name-taken' => 'Já existe uma wiki com este endereço. Você pode editá-la em <ahref="http://$1.wikia.com">http://$1.wikia.com</a> ou escolher outro endereço.',
 	'autocreatewiki-name-too-short' => 'Este endereço é muito curto, por favor escolha outro com no mímino 3 caracteres.',
 	'autocreatewiki-name-too-long' => 'Este endereço é muito longo. Escolha outro com no máximo 50 caracteres.',
 	'autocreatewiki-similar-wikis' => 'Abaixo estão as wikias já criadas sobre este tópico. Nós sugerimos que você edite uma delas.',
@@ -3623,41 +3601,41 @@ Selecione um apropriado da lista.',
 
 Sua wiki foi criada! Dê uma olhada: <$1>
 
-Pronto para começar? Adicionamos alguns links a sua página de discussão (<$5>) para o ajudar a começar e para encorajá-lo a explorar as variadas áreas úteis da Wikia. Caso tenha dúvidas ou se sinta um pouco perdido, responda a este e-mail ou confira nossas Páginas de Ajuda <http://help.wikia.com>.
+Pronto para começar? Adicionamos alguns links a sua página de conversas (<$5>) para ajudá-lo a começar e para encorajá-lo a explorar as varias áreas úteis do Fandom. Caso tenha dúvidas ou se sinta um pouco perdido, responda a este e-mail ou confira nossas páginas de ajuda <http://comunidade.wikia.com/Ajuda:Conteúdos>.
 
-Você também pode conferir o blog do Fundador & Administrador <http://community.wikia.com/wiki/Blog%3AWikia_Founders_%26_Admins> e o blog do staff da Wikia <http://community.wikia.com/wiki/Blog:Wikia_Staff_Blog>, onde você achará dicas, truques e informações sobre os novos recursos e novas coisas que estão acontecendo na Wikia.
+Você também pode conferir as páginas de ajuda do Fandom para o gerenciamento da comunidade <http://comunidade.wikia.com/wiki/Ajuda:Administra%C3%A7%C3%A3o_da_Comunidade> e o blog do staff do Fandom <http://comunidade.wikia.com/wiki/Categoria:Not%C3%ADcias_da_Comunidade>, onde você encontrará dicas e truques, informações sobre novos recursos e coisas novas que acontecem no Fandom.
 
-Boa edição!
+Boas edições!
 
 $3
-Suporte da Comunidade Wikia
-<http://community.wikia.com/wiki/User:$4>
+Suporte da Comunidade Fandom
+<http://comunidade.wikia.com/wiki/User:$4>
 
 ___________________________________________
-* Quer receber menos mensagens de nós? Você pode desinscrever-se ou configurar suas preferências de e-mail aqui: http://community.wikia.com/Special:Preferences',
+* Quer receber menos mensagens de nós? Você pode desinscrever-se ou configurar suas preferências de e-mail aqui: http://comunidade.wikia.com/Especial:Preferências',
 	'autocreatewiki-welcometalk-wall-title' => 'Bem-vindo!',
-	'autocreatewiki-welcometalk' => '== Bem-vindo! ==
+	'autocreatewiki-welcometalk' => '==Bem-vindo!==
 Olá!
 
-Estamos felizes em ter $4 como parte da comunidade Wikia! Ainda há muita coisa a fazer; aqui estão algumas dicas e links importantes para incrementar sua wikia:
+Estamos felizes em ter $4 como parte da comunidade Fandom! Ainda há muita coisa a fazer; aqui estão algumas dicas e links importantes para incrementar sua wiki:
 
-*Confira os [[Special:WikiFeatures|Recursos da Wiki]] para ver quais recursos você pode ativar em sua wikia, incluindo Chat, Medalhas e muito mais.
-*Pare na [[w:c:comunidade|Central da Comunidade]] para ficar informado através do nosso [[w:c:comunidade:Categoria:Notícias da Wikia|blog da equipe]], tenha suas dúvidas respondidas no nosso [[w:c:comunidade:Special:Forum|fórum da comunidade]], ou converse ao vivo com outros Wikianos.
-*Por último, visite nossas [[Ajuda:Conteúdos|páginas de ajuda]] para aprender mais sobre as manhas de como usar a Wikia.
+*Confira os [[Especial:WikiFeatures|Recursos da Wiki]] para ver quais recursos você pode ativar em sua wiki, incluindo chat, medalhas e muito mais.
+*Dê uma olhada na [[w:c:comunidade|Central da Comunidade]] para ficar informado através do nosso [[w:c:comunidade:Categoria:Notícias da Wikia|blog do staff]], tenha suas dúvidas respondidas no nosso [[w:c:comunidade:Especial:Forum|fórum da comunidade]], assista vídeos em [[w:c:comunidade:Universidade_da_Wikia|Universidade Fandom]], ou converse ao vivo com outros membros da comunidade Fandom.
+*Por último, visite nossas [[Ajuda:Conteúdos|páginas de ajuda]] para aprender mais sobre as manhas de como usar o Fandom.
 
-Todos os links acima são ótimos lugares para começar explorando, divirta-se!
+Todos os links acima são ótimos lugares para começar a explorar, divirta-se!
 
 -- [[User:$2|$3]] <staff />',
 	'autocreatewiki-tagline' => '',
 	'requestwiki-filter-language' => 'als,an,ang,ast,bar,de2,de-at,de-ch,de-formal,de-weigsbrag,dk,en-gb,eshelp,fihelp,frc,frhelp,ia,ie,ithelp,jahelp,kh,kohelp,kp,ksh,nb,nds,nds-nl,mu,mwl,nlhelp,pdc,pdt,pfl,pthelp,pt-brhelp,ruhelp,simple,tokipona,tp,zh-classical,zh-cn,zh-hans,zh-hant,zh-hk,zh-min-nan,zh-mo,zh-my,zh-sg,zh-tw,zh-yue',
-	'autocreatewiki-welcometalk-wall' => 'Olá, estamos felizes em ter Wikia Messaging como parte da comunidade Wikia!
+	'autocreatewiki-welcometalk-wall' => 'Olá, eu sou membro da equipe de suporte da comunidade do Fandom. Estamos felizes em ter {{subst:SITENAME}} como parte da comunidade Fandom!
 
-Ainda há muita coisa a fazer; aqui estão algumas dicas e links importantes para fluir sua wiki:
-*Confira os [[Special:WikiFeatures|Recursos da Wiki]] para ver quais recursos você pode ativar em sua wiki, incluindo Chat, Medalhas e mais.
-*Pare na [[w:c:comunidade|Central da Comunidade]] para ficar informado pelo nosso [[w:c:comunidade:Blog:Notícias da Comunidade|blog da staff]], tenha suas dúvidas respondidas no nosso [[w:c:comunidade:Special:Forum|fórum da comunidade]] ou [[w:c:comunidade:Special:Chat|converse ao vivo]] com nossos queridos Wikianos.
-*Por último, visite nossas [[Ajuda:Conteúdos|páginas de ajuda]] para aprender mais sobre as manhas de como usar a Wikia.
+Pode parecer que há muito o que fazer, mas estamos aqui para ajudá-lo a começar rápida e facilmente. Aqui estão algumas dicas úteis e links para iniciar sua comunidade:
 
-Todos os links acima são bons lugares para começar explorando, e divirta-se!',
+ *Confira os [[especial: WikiFeatures |Recursos wiki]] para ativar alguns recursos especiais, incluindo nossa comunidade popular de bate-papo.
+ *Personalize a cor e o estilo da sua comunidade, visitando o [Especial:ThemeDesigner|Designer de Tema]].
+ *Visite a [[w:c:comunidade|Central da Comunidade]] para dar uma olhada no [[w:c:comunidade:Categoria:Not%C3%ADcias_da_Comunidade|blog do staff] e fazer perguntas no [[w:c:comunidade:Especial:Forum|Fórum da comunidade]].
+*Por último, visite nossas [[Ajuda:Conteúdos|páginas de ajuda]] para aprender como utilizar o Fandom, ou visite [[w:c:comunidade:Universidade_da_Wikia|Universidade Fandom]] para assistir vídeos instrucionais. Divirta-se!',
 	'autocreatewiki-language-top-list' => 'de,en,es,fr,it,ja,pl,pt-br,ru,zh',
 ];
 
@@ -3851,26 +3829,26 @@ $messages['ru'] = [
 	'autocreatewiki-language-all' => 'Все языки',
 	'autocreatewiki-remember' => 'Запомнить меня',
 	'autocreatewiki-create-account' => 'Создание учётной записи',
-	'autocreatewiki-haveaccount-question' => 'Уже есть учётная запись?',
+	'autocreatewiki-haveaccount-question' => 'У вас уже есть учётная запись на Фэндоме?',
 	'autocreatewiki-info-domain' => 'Рекомендуется использовать такое слово, которое для вашей темы будет ключевым при поиске.',
 	'autocreatewiki-info-topic' => 'Добавьте краткое описание, например, «Звёздные войны» или «ТВ-шоу».',
 	'autocreatewiki-info-category-default' => 'Это поможет посетителям найти вашу вики.',
 	'autocreatewiki-info-category-answers' => 'Это поможет посетителям найти ваш сайт ответов.',
 	'autocreatewiki-info-language' => 'Язык по умолчанию для посетителей вашей вики.',
-	'autocreatewiki-info-email-address' => 'Адрес вашей электронной почты никому не показывается.',
+	'autocreatewiki-info-email-address' => 'Фэндом никогда и никому не показывает адрес вашей электронной почты.',
 	'autocreatewiki-info-realname' => 'Если вы решите предоставить его, он будет использован для указания авторства вашей работы.',
-	'autocreatewiki-info-birthdate' => 'Согласно требованиям Викия, все пользователи должны указывать свою настоящую дату рождения. Это мера позволяет обеспечить безопасность и соответствие сайта требованиям федеральных правил.',
+	'autocreatewiki-info-birthdate' => 'Согласно требованиям Фэндома, все пользователи должны указывать свою настоящую дату рождения. Эта мера позволяет обеспечить безопасность и соответствие сайта требованиям федеральных нормативных актов США.',
 	'autocreatewiki-info-blurry-word' => 'Введите размытое слово, которое вы видите, в это поле. Это делается для защиты от автоматического создания учётных записей.',
-	'autocreatewiki-info-terms-agree' => 'Создавая вики и учётную запись, вы соглашаетесь с <a href="http://ru.community.wikia.com/wiki/%D0%92%D0%B8%D0%BA%D0%B8%D1%8F:%D0%A3%D1%81%D0%BB%D0%BE%D0%B2%D0%B8%D1%8F_%D0%B8%D1%81%D0%BF%D0%BE%D0%BB%D1%8C%D0%B7%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D1%8F">Условиями использования Wikia</a>',
+	'autocreatewiki-info-terms-agree' => 'Создавая вики или учётную запись, вы соглашаетесь с {{#NewWindowLink: w:c:ru.community:Викия:Условия_использования|Условиями использования Фэндома}}',
 	'autocreatewiki-info-staff-username' => '<b>Только для сотрудников:</b> указанный участник будет показан как основатель.',
-	'autocreatewiki-title-template' => '$1 Вики',
-	'autocreatewiki-limit-day' => 'Сегодня Викия превысила максимальное число создаваемых вики ($1).',
+	'autocreatewiki-title-template' => 'Сообщество $1',
+	'autocreatewiki-limit-day' => 'Сегодня Фэндом превысил максимальное число создаваемых вики ($1).',
 	'autocreatewiki-limit-creation' => 'Вы превысили максимальное количество вики, которое можно создать за 24 часа ($1).',
 	'autocreatewiki-empty-field' => 'Пожалуйста, заполните это поле.',
 	'autocreatewiki-bad-name' => 'Название не может содержать специальные символы (например, $ или @) и должно быть представлено одним словом, написанным строчными буквами без пробелов.',
 	'autocreatewiki-invalid-wikiname' => 'Название не может содержать специальные символы (например, $ или @) и является обязательным для заполнения.',
 	'autocreatewiki-violate-policy' => 'Название вики содержит слово, нарушающее наши правила именования.',
-	'autocreatewiki-name-taken' => 'Вики с таким адресом уже существует. Вы можете присоединиться к проекту <a href=\"http://$1.wikia.com\">http://$1.wikia.com</a> или выбрать другой адрес.',
+	'autocreatewiki-name-taken' => 'Вики с таким адресом уже существует. Вы можете присоединиться к проекту <a href="http://$1.wikia.com">http://$1.wikia.com</a> или выбрать другой URL.',
 	'autocreatewiki-name-too-short' => 'Слишком короткий адрес. Выберите адрес длиной не менее 3 символов.',
 	'autocreatewiki-name-too-long' => 'Слишком длинный адрес. Выберите адрес длиной не более 50 символов.',
 	'autocreatewiki-similar-wikis' => 'Ниже приведены уже существующие вики по этой теме. Рекомендуется редактировать одну из них.',
@@ -3920,43 +3898,41 @@ $messages['ru'] = [
 	'autocreatewiki-welcomesubject' => '«$1» успешно создана!',
 	'autocreatewiki-welcomebody' => 'Здравствуйте, $2!
 
-Ваша вики была создана! Взгляните: <$1>.
+Ваша вики создана, и вы можете найти её по адресу: <$1>.
 
-Готовы начать? Мы добавили несколько ссылок на вашу страницу обсуждения (<$5>), которые помогут вам начать работу и покажут множество полезных областей Викия. Если у вас есть какие-либо вопросы или вы немного растеряны, ответьте на это письмо или ознакомьтесь с нашей Справкой <http://ru.community.wikia.com/wiki/Справка:Содержание>.
+Готовы приступить к работе? Мы добавили несколько ссылок на вашу стену обсуждения (<$5>), которые помогут вам начать развивать вики и ознакомиться с разными полезными расширениями Фэндома. Если у вас есть какие-либо вопросы или вы не уверены, что делать, ответьте на это письмо или ознакомьтесь с нашими страницами Справки <http://ru.community.wikia.com/wiki/Справка:Содержание>.
 
-Вы также можете посмотреть блог администраторов на Центральной Вики <http://community.wikia.com/wiki/Blog%3AWikia_Founders_%26_Admins> или блог сотрудников Викия <http://community.wikia.com/wiki/Blog:Wikia_Staff_Blog>, чтобы узнать новости, найти полезные советы и информацию о новых функциях Викия.
+Загляните в раздел «Управление сообществом» <http://ru.community.wikia.com/wiki/Справка:Управление сообществом> и проверьте блоги сотрудников <http://ru.community.wikia.com/wiki/Блог:Блоги_сотрудников>, где публикуются полезные советы, информация о новых расширениях и новости Фэндома. 
 
-Удачи в редактировании!
+Счастливого редактирования!
 
 $3
-
-Команда сообщества Викия
-
-<http://community.wikia.com/wiki/User:$4>
-
+Команда поддержки Фэндома
+<http://ru.community.wikia.com/wiki/User:$4>
 ___________________________________________
-* Хотите получать от нас меньше писем? Вы можете отписаться от рассылки или изменить её параметры по ссылке: http://community.wikia.com/Special:Preferences.',
+*Хотите получать от нас меньше сообщений? Вы можете отписаться или изменить параметры рассылок в своих настройках: http://ru.community.wikia.com/Служебная:Preferences',
 	'autocreatewiki-welcometalk-wall-title' => 'Добро пожаловать!',
-	'autocreatewiki-welcometalk-wall' => 'Привет!
+	'autocreatewiki-welcometalk-wall' => 'Здравствуйте,
+Я представляю команду поддержки Фэндома. Мы рады, что сообщество {{subst:SITENAME}} стала частью Фэндома. 
 
-Мы рады, что {{SITENAME}} стала частью сообщества Викия! Вам ещё многое предстоит сделать, поэтому мы хотим дать вам несколько советов и полезных ссылок, которые помогут вам начать:
-* Загляните на  [[w:c:ru.community|Вики Сообщества]] и посмотрите [[w:c:ru.community:Категория:Советы|список советов]] о том, как сделать так, чтобы вики росла.
-* Прочтите [[w:c:ru.community|последние записи в блогах]], чтобы узнать о новых возможностях и обновления Викия.
-* Если вы знаете английский, то вас обязательно заинтересуют [[w:c:community:Webinars|вебинары]], которые проводят сотрудники Викия. 
-* Не забудьте проверить страницу [[Special:WikiFeatures|приложений Викия]], где вы можете подключить новые возможности для своей вики. 
-* [[w:c:ru.community:Служебная:Forum|Наш Форум]] всегда открыт для вас. На нём вы можете задать любой вопрос и получить ответ на него от опытных участников разных викий. 
-* Наконец, помните о [[Справка:Содержание|страницах Справки]], где есть ответы на большинство простых вопросов.
-Все вышеприведённые страницы являются отличным местом, чтобы изучить основы создания вики. Если же вы всё-таки не нашли ответа на свой вопрос, вы всегда можете спросить непосредственно [[Special:Contact|сотрудников Викия]]. Самое главное помнить, что в первую очередь вы должны получать удовольствие от своей вики! :)
+Вам можем показаться, что перед вами много работы, но мы поможем вам сделать первые шаги. Позвольте предложить несколько советов и полезных ссылок, которые помогут вам в развитии вашей вики.
 
-Счастливого редактирования!',
+*Посетите страницу [[Special:WikiFeatures|расширений вики]], чтобы подключить специальные расширения, в том числе любимый всеми чат.
+*Настройте Страницу сообщества с помощью [[Special:ThemeDesigner|Конструктора тем]].
+*Загляните на [[w:c:ru.community|Вики Сообщества]], чтобы ознакомиться с [[w:c:ru.community.wikia.com/wiki/Блог:Блоги_сотрудников|блогами сотрудников]] и задайте свои вопросы на [[w:c:ru.community:Special:Forum|форуме]].
+*Наконец, не забывайте о [[w:c:ru.community:Справка:Содержание|Справке]], на страницах которой вы узнаете обо всех особенностях использования Фэндома, или посмотрите видеоуроки [[w:c:ru.community:Университет Викия|Университета Фэндома]].
+
+Удачи!',
 	'autocreatewiki-welcometalk' => '== Добро пожаловать! ==
-Приветствуем вас!
-Мы рады, что вики «$4» стала частью сообщества Викия! Вам ещё многое предстоит сделать, поэтому позвольте дать несколько советов и полезных ссылок, которые помогут вам начать работу.
+Привет,
 
-*Посетите страницу [[Special:WikiFeatures|Функции Вики]], чтобы узнать о том, какие функции можно активировать для вашей вики, включая чат, достижения и многие другие.
-*Загляните на [[w:c:community|Вики Сообщества]] и будьте в курсе новостей благодаря [[w:c:community:Blog:Wikia_Staff_Blog|блогу сотрудников Викия]]. Вы можете задать вопросы на нашем [[w:c:community:Special:Forum|Форуме сообщества]], поучаствовать в [[w:c:community:Help:Webinars|вебинарах]] или [[w:c:community:Special:Chat|живом чате]] с другими фанатами Викия.
-*Наконец, не забывайте о [[w:ru:Справка:Содержание|Справке]], на страницах которой вы узнаете обо всех особенностях использования Викия.
-Все перечисленные ресурсы позволят вам изучить основы создания вики и, самое главное, получать от нее удовольствие!
+Мы рады, что «$4» стала частью сообществ Фэндома. Вам ещё многое предстоит сделать, поэтому позвольте дать несколько советов и полезных ссылок, которые помогут вам начать работу.
+
+*Посетите страницу [[Special:WikiFeatures|расширений]], чтобы узнать о том, какие расширения (чат, достижения и многие другие) можно подключить на вашей вики.
+*Загляните на [[w:c:ru.community|Вики Сообщества]], чтобы найти последние новости из [[w:c:ru.community.wikia.com/wiki/Блог:Блоги_сотрудников|блогов сотрудников]]. Вы можете задать вопросы на нашем [[w:c:ru.community:Special:Forum|форуме]], посмотреть видеоуроки [[w:c:ru.community:Университет Викия|Университета Фэндома]] или общаться в [[w:c:ru.community:Special:Chat|чате]] с другими участниками.
+*Наконец, не забывайте о [[w:c:ru.community:Справка:Содержание|Справке]], на страницах которой вы узнаете обо всех особенностях использования Фэндома.
+
+Все вышеприведённые ссылки помогут вам начать изучение основ создания вики. И помните, что самое главное — получать удовольствие от своей вики!
 
 -- [[Участник:$2|$3]] <staff />',
 	'autocreatewiki-tagline' => '',
@@ -4619,16 +4595,16 @@ $messages['zh-hans'] = [
 	'autocreatewiki-language-all' => '所有语言',
 	'autocreatewiki-remember' => '记住我',
 	'autocreatewiki-create-account' => '创建帐户',
-	'autocreatewiki-haveaccount-question' => '已经有Wikia帐户？',
+	'autocreatewiki-haveaccount-question' => '您已经拥有Fandom帐户？',
 	'autocreatewiki-info-domain' => '最好使用一个可能会搜索到你的主题的关键字。',
 	'autocreatewiki-info-topic' => '添加简短的描述，如“星球大战”或“电视节目”。',
 	'autocreatewiki-info-category-default' => '这会帮助访客找到您的维基。',
 	'autocreatewiki-info-category-answers' => '这会帮助访客找到您的问答网站。',
 	'autocreatewiki-info-language' => '这将是您的维基访客的默认语言。',
-	'autocreatewiki-info-email-address' => '我们绝不会将您的电子邮件地址显示给Wikia上的任何人。',
+	'autocreatewiki-info-email-address' => '我们绝不会将您的电子邮件地址显示给Fandom上的任何人。',
 	'autocreatewiki-info-realname' => '如果您选择提供此信息，这将用来表明这些工作是由您完成的。',
-	'autocreatewiki-title-template' => '$1 Wiki',
-	'autocreatewiki-limit-day' => '今天已超过了Wikia每日维基创建数上限($1)。',
+	'autocreatewiki-title-template' => '$1社区',
+	'autocreatewiki-limit-day' => '今天已超过了每日Fandom维基社区创建数上限($1)。',
 	'autocreatewiki-limit-creation' => '您已超过了所允许的24小时维基创建数的上限($1)。',
 	'autocreatewiki-empty-field' => '请填写此栏。',
 	'autocreatewiki-bad-name' => '名称不能包含特殊字符（如$或@），且必须是不含空格、由小写字母组成的单词。',
@@ -4682,46 +4658,48 @@ $messages['zh-hans'] = [
 	'autocreatewiki-protect-reason' => '属於官方界面的一部分',
 	'autocreatewiki-welcomesubject' => '$1已创建！',
 	'autocreatewiki-welcometalk-wall-title' => '欢迎光临！',
-	'autocreatewiki-welcometalk-wall' => '您好！
-我们非常高兴这个维基能够成为Wikia社区的一部分！在您对维基进行编辑之前，我们为您提供了一些小提示和链接，或许对您建设维基有一些帮助：
-*不知从哪里开始？访问Wikia中文社区[http://zh.community.wikia.com/wiki/帮助中心 帮助中心]，查看[http://zh.community.wikia.com/wiki/%E7%BB%B4%E5%9F%BA%E8%AF%BE%E5%A0%82 维基课堂视频]。您也可以在[http://zh.community.wikia.com/wiki/Blog:%E7%A4%BE%E5%8C%BA%E4%B8%AD%E5%BF%83 社区中心博客]中探寻如何更好地发展您的维基！
-*使用[[Special:ThemeDesigner|界面设计]]更改维基的主题背景和颜色，或者添加主题标识。
-*登陆维基中文[http://zh.community.wikia.com 社区中心]了解Wikia最新发布的功能。您还可以使用[http://zh.community.wikia.com/wiki/Special:Chat 聊天工具]和[http://zh.community.wikia.com/wiki/Special:Forum 论坛功能]询问任何有关维基使用的问题。
-*点击查看您可以使用的[[Special:WikiFeatures|维基功能]]，随时对这些功能进行开通和关闭！
-*为了解除您所有的困难或问题，您可以查看维基帮助中心[http://zh.community.wikia.com/wiki/Help:内容 内容页面]，搜索相关问题。如果您依然无法解决某个问题，请您点击[http://zh.community.wikia.com/wiki/Special:Contact/general 这里]联系我们，Wikia的员工会尽快地帮您解决问题。
-希望您编辑愉快！',
-	'autocreatewiki-info-birthdate' => '作为安全预防措施，也为了遵守美国联邦法规而保持网站的完整性，Wikia要求所有用户提供自己的真实出生日期。',
+	'autocreatewiki-welcometalk-wall' => '您好，我是Fandom社区支持团队的员工。我们非常高兴{{subst:SITENAME}}将成为Fandom社区中的新成员！
+
+看起来似乎有许多工作要做，我们将帮助您尽快地掌握一切。这里有一些有帮助的提示和链接，希望能帮助您的维基运转起来：
+
+*查看[[Special:WikiFeatures|维基功能]]，看看您可以在您的维基上开启哪些功能，包括社区聊天功能在内。
+*使用[[Special:ThemeDesigner|界面设计]]对您的社区进行定制化和独特设计。
+*到[[w:c:zh.community|社区中心]]来看看，通过我们的[[w:c:zh.community:Category:社区中心博客|社区中心博客]]了解最新信息，在我们的[[w:c:zh.community:Special:Forum|社区论坛]]进行提问。
+*最后，请访问我们的[[Help:Contents|帮助页面]]了解如何使用Fandom的所有功能或者观看我们的[[w:c:zh.community:Fandom课堂|Fandom课堂视频]]了解如何快速进行编辑。
+
+祝你玩得开心！',
+	'autocreatewiki-info-birthdate' => '作为安全预防措施，也为了遵守美国联邦法规而保持网站的完整性，Fandom要求所有用户提供自己的真实出生日期。',
 	'autocreatewiki-info-blurry-word' => '为了避免自动创建帐户，请在此栏中键入您看到的模糊字词。',
-	'autocreatewiki-info-terms-agree' => '创建维基和用户账户，即表示您同意并接受此{{#NewWindowLink: w:Terms of use | Wikia 使用条款}}',
+	'autocreatewiki-info-terms-agree' => '创建维基和用户帐户，即表示您同意并接受此{{#NewWindowLink: w:c:zh:使用条款|Fandom使用条款}}',
 	'autocreatewiki-info-staff-username' => '<b>仅供工作人员使用：</b>指定的用户将被列为创始人。',
 	'autocreatewiki-tagline' => '',
-	'autocreatewiki-name-taken' => '已有用此地址创建的维基。可在<a href=\"http://$1.wikia.com\">http://$1.wikia.com</a>页面进行编辑或选择其他地址。',
+	'autocreatewiki-name-taken' => '已有用此地址创建的维基。可在<a href="http://$1.wikia.com">http://$1.wikia.com</a>页面进行编辑或选择其他地址。',
 	'requestwiki-filter-language' => 'als,an,ang,ast,bar,de2,de-at,de-ch,de-formal,de-weigsbrag,dk,en-gb,eshelp,fihelp,frc,frhelp,ia,ie,ithelp,jahelp,kh,kohelp,kp,ksh,nb,nds,nds-nl,mu,mwl,nlhelp,pdc,pdt,pfl,pthelp,pt-brhelp,ruhelp,simple,tokipona,tp,zh-classical,zh-cn,zh-hans,zh-hant,zh-hk,zh-min-nan,zh-mo,zh-my,zh-sg,zh-tw,zh-yue',
-	'autocreatewiki-welcomebody' => '嗨 $2!
+	'autocreatewiki-welcomebody' => '$2!，您好，
 
-您的wiki已经创建了! 欢迎造访: <$1>
+您的维基已创建！请点击<$1>查看 。
 
-准备好要开始了吗？我们已经增加了一些链接到您的对话页 (<$5>) 来帮助您，我们鼓励您浏览这些Wikia中有助益的页面。如果您有任何问题，回复本封邮件，或是查看我们的帮助页面<http://zh.community.wikia.com/wiki/help:contents>。
+准备好开始了吗？我们添加了一些链接到您的聊天页面（<$5>）帮助您开始，并鼓励您去探索与Fandom相关的许多有用信息。如有任何疑问或感到困惑，请回复此电子邮件或查看我们的帮助页面<http://zh.help.wikia.com>。
 
-您也可以造访社区中心的论坛 <http://zh.community.wikia.com/wiki/special:forum> 以及博客<http://zh.community.wikia.com/wiki/%E5%8D%9A%E5%AE%A2:%E5%8D%9A%E5%AE%A2%E5%B8%96%E5%AD%90>，您可以在那里获得一些编写的提示和协助，也可以了解Wikia的最新消息和功能。
+您还可以查阅一下社区管理帮助云<http://zh.community.wikia.com/wiki/Help:Community_Management >和Fandom社区中心博客<http://zh.community.wikia.com/wiki/Category:%E7%A4%BE%E5%8C%BA%E4%B8%AD%E5%BF%83%E5%8D%9A%E5%AE%A2>。在这里您会找到很多提示和技巧，以及关于Fandom新事物和新功能的信息。
 
-祝编辑愉快!
+祝您编辑愉快！
 
 $3
-Wikia 社区支持
-<http://community.wikia.com/wiki/User:$4>
+Fandom社区支持
+<http://zh.community.wikia.com/wiki/用户:$4>
 
 ___________________________________________
-* 不想要收到那么多通知吗？ 您可以在以下连结更改您的电子邮件通知设定：http://zh.community.wikia.com/Special:Preferences',
-	'autocreatewiki-welcometalk' => '==欢迎您==
+* 不再希望收到任何消息?您可以前往以下页面取消订阅或更改您的电子邮件偏好设置：http://zh.community.wikia.com/Special:Preferences',
+	'autocreatewiki-welcometalk' => '==欢迎==
 
-嘿！
+您好！
 
-我们很高兴$4能成为Wikia社区的一员！还有很多事情要做；这里有一些有用提示和链接，能让您的维基运转起来：
+我们很高兴$4能成为Fandom社区的一部分！还有很多事情要做；这里有一些有用的提示和链接，希望能帮助您的维基运转起来：
 
-*查看[[Special：WikiFeatures|维基功能]，看看您可以在您的维基上开启哪些功能，包括聊天、成就及更多功能。
-*到[[w:c:zh.community|社区中心]]来看看，通过我们的[[w:c:zh.community:Category:社区中心博客|社区中心博客]]了解最新信息、在我们的[[w:c:zh.community:Special:Forum|社区论坛]]提问、参与我们的[[w:c:community:Help:Webinars|网络研讨会系列]]（英文）或与其他wikia用户在线聊天
-*最后，请访问我们的[[Help:Contents|帮助页面]]了解如何使用Wikia的所有功能
+*查看[[Special:WikiFeatures|维基功能]]，看看您可以在您的维基上开启哪些功能，包括聊天、成就及更多功能。
+*到[[w:c:zh.community|社区中心]]来看看，通过我们的[[w:c:zh.community:Category:社区中心博客|社区中心博客]]了解最新信息、在我们的[[w:c:zh.community:Special:Forum|社区论坛]]提问、观看我们的[[w:c:zh.community:Fandom课堂|Fandom课堂视频]]或与其他Fandom社区用户在线聊天。
+*最后，请访问我们的[[Help:Contents|帮助页面]]了解如何使用Fandom的所有功能。
 
 上面列出的所有链接都是开始探索的好起点。祝你玩得开心！
 
@@ -4742,23 +4720,23 @@ $messages['zh-hant'] = [
 	'autocreatewiki-language-all' => '所有語言',
 	'autocreatewiki-remember' => '記住我：',
 	'autocreatewiki-create-account' => '創建帳戶',
-	'autocreatewiki-haveaccount-question' => '你已經有一個 Wikia 帳戶嗎？',
+	'autocreatewiki-haveaccount-question' => '已經有Fandom帳戶？',
 	'autocreatewiki-info-domain' => '最好使用一個最可能搜尋到你的主題的關鍵字。',
 	'autocreatewiki-info-topic' => '增加一个短的描述，如「星際大戰」或「電視節目」。',
 	'autocreatewiki-info-category-default' => '這將有助於訪客找到你的wiki',
 	'autocreatewiki-info-category-answers' => '這將有助於你的訪客找到你的問答網站',
 	'autocreatewiki-info-language' => '這將是你的 wiki 訪客的預設語言。',
-	'autocreatewiki-info-email-address' => '您的電子郵寄地址不會顯示給 Wikia 上的任何人。',
+	'autocreatewiki-info-email-address' => '我們絕不會把你的電子郵件地址顯示給Fandom上的任何人。',
 	'autocreatewiki-info-blurry-word' => '為了幫助防止創建自動化的帳戶，請鍵入您在下面的框中看到的這兩個字：',
-	'autocreatewiki-info-terms-agree' => '通過創建 wiki 和使用者帳戶，您同意<a href=\"http://www.wikia.com/wiki/Terms_of_use\">Wikia 的使用條款</a>',
-	'autocreatewiki-title-template' => '$1 Wiki',
-	'autocreatewiki-limit-day' => 'Wikia 今天超過了 wiki 創建的最大數量 （ $1 ）。',
+	'autocreatewiki-info-terms-agree' => '創建wiki和帳戶，即表示你同意{{#NewWindowLink: http://zh-tw.wikia.com/wiki/%E4%BD%BF%E7%94%A8%E6%A2%9D%E6%AC%BE|Fandom使用條款}}。',
+	'autocreatewiki-title-template' => '$1社區',
+	'autocreatewiki-limit-day' => '今天已超過了每日Fandom社區創建數上限($1)。',
 	'autocreatewiki-limit-creation' => '您已超出了 在一天內創建wiki 的最大數量 （ $1 ）。',
 	'autocreatewiki-empty-field' => '請填寫此欄位。',
 	'autocreatewiki-bad-name' => '名稱不能包含特殊字元 （如 $ 或 @），並且必須是一個小寫字母詞沒有空格。',
 	'autocreatewiki-invalid-wikiname' => '名稱不能包含特殊字元 （如 $ 或 @） 且不能為空白',
 	'autocreatewiki-violate-policy' => '此 wiki 名稱中包含了違反我們的命名政策的詞語',
-	'autocreatewiki-name-taken' => '已經有一個使用此網址的 wiki。可以在<a href=\"http://<span class=\" notranslate\"=\"\">$1.wikia.com\">http:// $1.wikia.com</a>開始編輯，或選擇另一個位址。',
+	'autocreatewiki-name-taken' => '已經有用此網址創建的Wiki。可在<a href="http://<span class=" notranslate"="">$1.wikia.com">http:// $1.wikia.com</a> 進行編輯或選擇另一個網址。',
 	'autocreatewiki-name-too-short' => '此網址太短，選擇一個具有至少 3 個字元的網址。',
 	'autocreatewiki-name-too-long' => '此網址太長，請另選擇一個網址，最多 50 個字元。',
 	'autocreatewiki-similar-wikis' => '下面是已經創建的關於這一主題的 wiki。我們建議您參與編輯其中之一。',
@@ -4806,7 +4784,46 @@ $messages['zh-hant'] = [
 	'autocreatewiki-step7-error' => '無法複製語言起動器資料庫 ！',
 	'autocreatewiki-protect-reason' => '官方介面的一部分',
 	'autocreatewiki-welcomesubject' => '$1已創建 ！',
-	'autocreatewiki-info-birthdate' => '作爲安全措施，也作爲保持網站完整性的手段，同時也爲了遵守美國聯邦法規，Wikia要求所有用戶提供自己的真實出生日期。',
+	'autocreatewiki-info-birthdate' => '作爲安全措施，也作爲保持網站完整性的手段，同時也爲了遵守美國聯邦法規，Fandom要求所有用戶提供自己的真實出生日期。',
+	'autocreatewiki-welcomebody' => '$2，你好！
+
+ 你的Wiki網站已創建！請點擊<$1>查看。
+
+準備好開始了嗎？我們在你的聊天頁面（<$5>）添加了一些連結以幫助你開始，並鼓勵你去探索與Fandom相關的很多有用資訊。如有任何疑問或感到困惑，請回覆此電子郵件或查看我們的幫助頁面<http://http://zh.community.wikia.com/wiki/Help:%E5%85%A7%E5%AE%B9>。
+
+ 你還可以查閲一下社區管理幫助頁<http:/zh.community.wikia.com/wiki/Help:Community_Management>和Fandom社區中心網誌<http://zh.community.wikia.com/wiki/Category:%E7%A4%BE%E5%8C%BA%E4%B8%AD%E5%BF%83%E5%8D%9A%E5%AE%A2>。在這裡你會找到很多提示和技巧，以及關於Fandom的新事物和新功能的資訊。
+
+ 祝你編輯愉快！
+
+ $3
+ Fandom社區支持
+<http://zh.community.wikia.com/wiki/使用者:$4>
+
+___________________________________________
+ * 不再希望收到任何消息？你可以前往以下頁面取消訂閲或更改你的電子郵件首選項： http://zh.community.wikia.com/Special:Preferences',
+	'autocreatewiki-welcometalk' => '==歡迎==
+
+您好！
+
+我們很高興$4能成為Fandom社群的一分子！接下來還有很多事情要做；這裡有一些有用的提示和連結，希望能幫助您的wiki運轉起來：
+
+*查看[[Special:WikiFeatures|Wiki功能]]，看看您可以在您的wiki上開啟哪些功能，包括聊天、成就及更多功能。
+*到[[w:c:zh.community|社區中心]]來看看，通過我們的[[w:c:zh.community:Category:社区中心博客|社區中心網誌]]了解最新訊息、在我們的[[w:c:zh.community:Special:Forum|社區論壇]]提問、觀看我們的[[w:c:zh.community:Fandom课堂|Fandom課堂影片]]或與其他Fandom社群用戶線上聊天。
+*最後，請訪問我們的[[Help:Contents|幫助頁面]]了解如何使用Fandom的所有功能。
+
+上面列出的內容都是開始發展社區的好方法。祝你玩得開心！
+
+-- [[User:$2|$3]] <staff />',
+	'autocreatewiki-welcometalk-wall' => '您好，我是Fandom社區支援團隊的員工。我們非常高興{{subst:SITENAME}}成為Fandom社區中的新成員！
+
+看起來似乎有許多工作要做，我們將幫助您盡快地掌握一切。這裡有一些有幫助的提示和連接，希望能幫助您的wiki運轉起來：
+
+*查看[[Special:WikiFeatures|Wiki功能]]，看看您可以在您的Wiki上開啟哪些功能，包括社區聊天功能在內。
+*使用[[Special:ThemeDesigner|主題設計器]]對您的社區進行定制化和獨特設計。
+*到[[w:c:zh.community|社區中心]]來看看，通過我們的[[w:c:zh.community:Category:社區中心博客|社區中心網誌]]了解最新訊息，在我們的[[w:c:zh.community:Special:Forum|社區論壇]]進行提問。
+*最後，請訪問我們的[[Help:Contents|幫助頁面]]了解如何使用Fandom的所有功能或者觀看我們的[[w:c:zh.community:Fandom课堂|Fandom課堂影片]]了解如何快速進行編輯。
+
+祝您玩得開心！',
 ];
 
 $messages['zh-hk'] = [

@@ -105,7 +105,7 @@ class CakeRelatedContentService {
 								'thumbnail' => $content->getImage(),
 								'title' => $this->formatTitle( $content ),
 								'publishDate' => $content->getModified(),
-								'author' => $this->getAuthor( $content->getContentMetadata() ),
+								'author' => $this->getAuthor( $content ),
 								'isVideo' => false,
 								'meta' => $content->getContentMetadata(),
 								'source' => $this->getRecirculationContentType( $content->getContentType() ),
@@ -153,13 +153,13 @@ class CakeRelatedContentService {
 		return $content->getTitle();
 	}
 
-	private function getAuthor( $metadata ) {
-		if ( array_key_exists( "authorName", $metadata ) ) {
-			return $metadata["authorName"];
-		} else {
+	private function getAuthor( Content $content ) {
+		$authorObjects = $content->getAuthors();
+		if ( !is_array( $authorObjects ) || empty( $authorObjects ) ) {
 			return "";
 		}
 
+		return $authorObjects[0]->getUsername();
 	}
 
 	private function getRecirculationContentType( $contentType ) {
@@ -173,7 +173,6 @@ class CakeRelatedContentService {
 			default:
 				return "undefined";
 		}
-
 	}
 
 	private function onValidWiki() {

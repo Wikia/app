@@ -1,4 +1,5 @@
 define('wikia.flowTracking', ['wikia.tracker', 'wikia.window', 'mw', 'jquery'], function (tracker, w, mw, $) {
+	'use strict';
 
 	var flows = {
 			// when updating, remember to update also constants in CreatePage.js

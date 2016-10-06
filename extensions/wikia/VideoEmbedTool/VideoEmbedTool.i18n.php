@@ -42,7 +42,7 @@ $messages['en'] = [
 	'vet-search-filter-caption' => 'Search filter',
 	'vet-search-label' => 'Find',
 	'vet-search-placeholder' => 'Search',
-	'vet-search-results-WVL' => 'We found $1 {{PLURAL:$1|result|results}} for "$2" on Wikia Video Library',
+	'vet-search-results-WVL' => 'We found $1 {{PLURAL:$1|result|results}} for "$2" on Fandom Video Library',
 	'vet-search-results-local' => 'We found $1 {{PLURAL:$1|result|results}} for "$2" on this Wiki',
 	'vet-single-success' => 'Your video has been added.',
 	'vet-style' => 'Caption',
@@ -54,9 +54,9 @@ $messages['en'] = [
 	'vet-update' => 'Update video',
 	'vet-upload-btn' => 'Add',
 	'vet-url-label' => 'URL',
-	'vet-video-add-intro' => 'Looking for videos for your wiki? Try searching at [http://video.wikia.com Wikia Video Library] for high quality videos licensed by Wikia.',
+	'vet-video-add-intro' => 'Looking for videos for your wiki? Try searching at [http://video.wikia.com Fandom Video Library] for high quality videos licensed by Fandom.',
 	'vet-video-replace-link' => 'To replace this video, please go to [[:$1]]',
-	'vet-video-wiki' => 'Wikia Video Library',
+	'vet-video-wiki' => 'Fandom Video Library',
 	'vet-warn2' => 'Please supply URL of the video you like to add',
 	'vet-warn3' => 'Please supply name of the video you like to add',
 	'vet-width' => 'Width',
@@ -515,9 +515,9 @@ $messages['de'] = [
 	'vet-right' => 'Rechts',
 	'vet-gallery' => 'Galerie',
 	'vet-protected' => 'Dieses Video ist geschützt',
-	'vet-search-results-WVL' => 'Wir fanden $1 {{PLURAL:$1|Ergebnis|Ergebnisse}} für "$2" in der Wikia Video-Bibliothek',
-	'vet-video-add-intro' => 'Suchst du nach Videos für dein Wiki? Unter [http://video.wikia.com video.wikia.com (englisch)] kannst du von Wikia lizenzierte englischsprachige Videos abrufen.',
-	'vet-video-wiki' => 'Wikia Video-Bibliothek',
+	'vet-search-results-WVL' => 'Wir haben in der Fandom-Videothek $1 {{PLURAL:$1|Ergebnis|Ergebnisse}} für "$2" gefunden',
+	'vet-video-add-intro' => 'Suchst du nach Videos für dein Wiki? Sieh dich doch einfach mal in der [http://video.wikia.com Fandom-Videothek] um! Dort findest du hochwertige Videos, die von Fandom lizenziert sind.',
+	'vet-video-wiki' => 'Fandom-Videothek',
 ];
 
 $messages['de-formal'] = [
@@ -646,9 +646,9 @@ $messages['es'] = [
 	'vet-right' => 'Derecha',
 	'vet-gallery' => 'Galería',
 	'vet-protected' => 'Este video está protegido',
-	'vet-search-results-WVL' => 'Encontramos $1 {{PLURAL:$1|resultado|resultados}} para "$2" en la Librería de Video de Wikia',
-	'vet-video-add-intro' => '¿Buscas videos para tu wikia? Busca en la [http://video.wikia.com Librería de Video de Wikia] videos de alta calidad licenciados por Wikia.',
-	'vet-video-wiki' => 'Videoteca de Wikia',
+	'vet-search-results-WVL' => 'Encontramos 1 $ {{PLURAL:$1|resultado|resultados}} para "$ 2" en la videoteca de Fandom',
+	'vet-video-add-intro' => '¿Buscas videos para tu wiki? Trata de buscar en la [http://video.wikia.com videoteca de Fandom] para tener videos de alta calidad con licencia de Fandom.',
+	'vet-video-wiki' => 'Videoteca de Fandom',
 ];
 
 $messages['eu'] = [
@@ -754,8 +754,9 @@ $messages['fr'] = [
 	'vet-right' => 'Droite',
 	'vet-gallery' => 'Galerie',
 	'vet-protected' => 'Cette vidéo est protégée',
-	'vet-search-results-WVL' => 'Nous avons trouvé $1 {{PLURAL:$1|résultat|résultats}} pour « $2 » sur Wikia Video Library.',
-	'vet-video-add-intro' => 'Vous recherchez des vidéos pour votre wiki ? Essayez de rechercher sur [http://video.wikia.com Wikia Video Library] pour des vidéos de bonne qualité autorisées par Wikia.',
+	'vet-search-results-WVL' => 'Il existe $1 {{PLURAL:$1|résultat|résultats}} pour "$2" dans la vidéothèque de Fandom.',
+	'vet-video-add-intro' => 'Vous cherchez des vidéos pour votre wiki ? Vous trouverez des vidéos de haute qualité sous licence Fandom dans la [http://video.wikia.com vidéothèque de Fandom].',
+	'vet-video-wiki' => 'Vidéothèque de Fandom',
 ];
 
 $messages['gl'] = [
@@ -1132,9 +1133,9 @@ $messages['it'] = [
 	'vet-right' => 'Giusto',
 	'vet-gallery' => 'Galleria',
 	'vet-protected' => 'Questo video è protetto',
-	'vet-search-results-WVL' => 'Abbiamo trovato $1 {{PLURAL:$1|risultato|risultati}} per "$2" nella Wikia Video Library',
-	'vet-video-add-intro' => 'Hai bisogno di video per la tua wiki? Prova a cercare nella [http://video.wikia.com Wikia Video Library] video di alta qualità con licenza Wikia.',
-	'vet-video-wiki' => 'Wikia Video Library',
+	'vet-search-results-WVL' => 'Abbiamo trovato $1 {{PLURAL:$1|risultato|risultati}} per "$2" su Fandom Video Library',
+	'vet-video-add-intro' => 'Cerchi video per la tua wiki? Prova a cercare su [http://video.wikia.com Fandom Video Library] per video di alta qualità concessi in licenza da Fandom.',
+	'vet-video-wiki' => 'Fandom Video Library',
 ];
 
 $messages['ja'] = [
@@ -1209,9 +1210,9 @@ $messages['ja'] = [
 	'vet-right' => '右寄せ',
 	'vet-gallery' => 'ギャラリー',
 	'vet-protected' => 'この動画は保護されています',
-	'vet-search-results-WVL' => 'ウィキア動画ライブラリで「$2」に一致する動画は $1 件でした',
-	'vet-video-add-intro' => '自分のウィキアコミュニティのビデオをお探しですか？　ウィキアに許諾された高品質のビデオを [http://video.wikia.com Wikia Video Library] にて検索してみてください。',
-	'vet-video-wiki' => 'ウィキア動画ライブラリ',
+	'vet-search-results-WVL' => 'Fandomライブラリで「$2」についての動画が $1 {{PLURAL:$1|件|件}}見つかりました',
+	'vet-video-add-intro' => 'Wikiに追加する動画をお探しの場合は、[http://video.wikia.com Fandom動画ライブラリ] で検索してみてください。Fandomで使用可能な高画質動画をご用意しています。',
+	'vet-video-wiki' => 'Fandom動画ライブラリ',
 ];
 
 $messages['kl'] = [
@@ -1733,9 +1734,9 @@ Podaj nazwę tego filmu. Może to być np. opis jego zawartości.',
 	'vet-gallery' => 'Galeria',
 	'vet-protected' => 'Ten film jest zabezpieczony.',
 	'vet-uploaddisabled' => 'Przesyłanie filmów zostało na tej wiki wyłączone.',
-	'vet-search-results-WVL' => 'Odnaleziono $1 wyników dla frazy "$2" w Filmotece Wikii',
-	'vet-video-add-intro' => 'Szukasz filmów do dodania na swoją wiki? Odwiedź [http://video.wikia.com Filmotekę Wikii] aby znaleźć filmy udostępnione Wikii.',
-	'vet-video-wiki' => 'Filmoteka Wikii',
+	'vet-search-results-WVL' => 'Znaleźliśmy $1 {{PLURAL:$1|wynik|wyniki|wyników}} dla „$2” w Wideotece Fandomu',
+	'vet-video-add-intro' => 'Szukasz filmów dla swojej wiki? W [http://video.wikia.com Wideotece Fandomu] znajdziesz licencjonowane przez Fandom filmy w wysokiej jakości.',
+	'vet-video-wiki' => 'Wideoteka Fandomu',
 ];
 
 $messages['pms'] = [
@@ -1909,9 +1910,9 @@ $messages['pt'] = [
 	'vet-right' => 'Direita',
 	'vet-gallery' => 'Galeria',
 	'vet-protected' => 'Este vídeo está protegido.',
-	'vet-search-results-WVL' => 'Nós encontramos $1 {{PLURAL:$1|resultado|resultados}} para "$2" na Videoteca da Wikia',
-	'vet-video-add-intro' => 'Procurando vídeos para a sua wiki? Tente procurar na [http://video.wikia.com Videoteca da Wikia] por vídeos de alta qualidade licenciados pela Wikia.',
-	'vet-video-wiki' => 'Videoteca da Wikia',
+	'vet-search-results-WVL' => 'Encontramos $1 {{PLURAL:$1|resultado|resultados}} para "$2" na videoteca do Fandom',
+	'vet-video-add-intro' => 'Procurando vídeos para a sua wiki? Tente pesquisar na [http://video.wikia.com Fandom videoteca] por vídeos de alta qualidade licenciados pelo Fandom.',
+	'vet-video-wiki' => 'Videoteca do Fandom',
 ];
 
 $messages['pt-br'] = [
@@ -2069,9 +2070,9 @@ $messages['ru'] = [
 	'vet-right' => 'Справа',
 	'vet-gallery' => 'Галерея',
 	'vet-protected' => 'Это видео защищено',
-	'vet-search-results-WVL' => 'Найдено $1 {{PLURAL:$1|видео}} для "$2" в Видео Библиотеке Викия',
-	'vet-video-add-intro' => 'Ищете видео для своей вики? Попробуйте поискать в [http://video.wikia.com Видео Библиотеке Викия], где находится качественное и лицензионное видео от Викия и её партнёров.',
-	'vet-video-wiki' => 'Видео Библиотека Викия',
+	'vet-search-results-WVL' => 'По запросу «$2» в Видеотеке Фэндома найдено $1 {{PLURAL:$1|результат|результата|результатов}}',
+	'vet-video-add-intro' => 'Ищете видео для вашего википроекта? Проверьте [http://video.wikia.com Видеотеку Фэндома], где собраны лицензионные видео высокого качества.',
+	'vet-video-wiki' => 'Видеотека Фэндома',
 ];
 
 $messages['sl'] = [
@@ -2359,6 +2360,9 @@ $messages['zh-hans'] = [
 	'vet-show-message' => '显示性息',
 	'vet-left' => '左',
 	'vet-right' => '右',
+	'vet-search-results-WVL' => '我们在Fandom视频库中找到了关于"$2"的$1项{{PLURAL:$1|结果|结果}}',
+	'vet-video-add-intro' => '为你的维基寻找视频吗？请尝试[http://video.wikia.com Fandom视频库]搜索更多高质量的视频。',
+	'vet-video-wiki' => 'Fandom视频库',
 ];
 
 $messages['ko'] = [
@@ -2374,9 +2378,9 @@ $messages['zh'] = [
 ];
 
 $messages['zh-hant'] = [
-	'vet-search-results-WVL' => '在Wikia影片庫中發現$1條關於"$2"的{{PLURAL:$1|結果|結果}}',
-	'vet-video-add-intro' => '正在為您的wiki尋找影片？試著在[http://video.wikia.com Wikia影片庫]搜尋授權許可的影片吧！',
-	'vet-video-wiki' => 'Wikia影片庫',
+	'vet-search-results-WVL' => '我們在Fandom影片庫中找到了關於"$2"的$1項{{PLURAL:$1|結果|結果}}',
+	'vet-video-add-intro' => '為你的wiki尋找影片嗎？請嘗試搜索[http://video.wikia.com Fandom影片庫]查詢更多高質量的影片。',
+	'vet-video-wiki' => 'Fandom影片庫',
 ];
 
 $messages['zh-hk'] = [
