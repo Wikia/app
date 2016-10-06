@@ -53,24 +53,40 @@ It now redirects to [[$2]].',
 	'deadendpages' => 'Dead-end pages',
 	'deadendpages-summary' => '',
 	'deadendpagestext' => 'The following pages do not link to other pages in {{SITENAME}}.',
-	'deletedcontributions' => 'Deleted user contributions',
+	'deletedcontributions' => 'Deleted contributions',
 	'deletedcontributions-title' => 'Deleted user contributions',
 	'defemailsubject' => 'You have a new email from a user at {{SITENAME}}',
 	'deletepage' => 'Delete page',
 	'delete-confirm' => 'Delete "$1"',
 	'delete-legend' => 'Delete',
-	'deletedtext' => '"$1" has been deleted.
-See $2 for a record of recent deletions.',
+	'deletedtext' => '\'\'\'"$1" has been deleted!\'\'\'
+
+* Please note, some pages may still [[Special:WhatLinksHere/$1|link to this page]].
+* You can continue to view the deleted page [[Special:Undelete/$1|here]].
+* See the $2 for a record of recent deletions.
+
+{{#ifeq:{{FULLPAGENAME}}|{{TALKPAGENAME}}||{{#ifeq:{{SUBJECTSPACE}}|User||{{#ifexist:{{TALKPAGENAME}}|
+<br />
+This page also has a \'\'\'[[{{TALKPAGENAME}}|talk page]]\'\'\' (<small class="plainlinks">[{{fullurl:{{TALKPAGENAMEE}}|action=delete&wpReason=Talk+page+of+a+deleted+page}} delete]</small>). You may wish to delete that as well.
+|}}}}}}',
 	'dellogpage' => 'Deletion log',
 	'dellogpagetext' => 'Below is a list of the most recent deletions.',
 	'deletionlog' => 'deletion log',
 	'deletecomment' => 'Reason:',
 	'deleteotherreason' => 'Other/additional reason:',
 	'deletereasonotherlist' => 'Other reason',
-	'deletereason-dropdown' => '*Common delete reasons
-** Author request
+	'deletereason-dropdown' => '*Vandalism and problems
 ** Copyright violation
-** Vandalism',
+** Spam
+** Vandalism
+*Maintenance
+** Author request
+** Housekeeping
+** Marked for deletion
+*Redirects
+** Broken redirect
+** Unused redirect
+** Redirect left from pagemove',
 	'delete-edit-reasonlist' => 'Edit deletion reasons',
 	'delete-toobig' => 'This page has a large edit history, over $1 {{PLURAL:$1|revision|revisions}}.
 Deletion of such pages has been restricted to prevent accidental disruption of {{SITENAME}}.',
@@ -89,7 +105,9 @@ Do you want to delete it to make way for the move?',
 	'deletedrevision' => 'Deleted old revision $1',
 	'days-abbrev' => '$1d',
 	'days' => '{{PLURAL:$1|$1 day|$1 days}}',
-	'deletedwhileediting' => '\'\'\'Warning\'\'\': This page was deleted after you started editing!',
+	'deletedwhileediting' => '<div id="mw-deletedwhileediting" class="plainlinks" style="margin: 0 0 1em; padding-left: .5em; border: solid #aaaaaa 1px">
+<span style="color: red">\'\'\'Warning\'\'\'</span>: an administrator deleted this page since you started editing it. You might want to check the [{{fullurl:Special:Log/delete|page={{FULLPAGENAMEE}}}} deletion log] to see why.
+</div>',
 	'descending_abbrev' => 'desc',
 	'duplicate-defaultsort' => '\'\'\'Warning:\'\'\' Default sort key "$2" overrides earlier default sort key "$1".',
 	'dberr-header' => 'This wiki has a problem',
@@ -3604,7 +3622,9 @@ Jede Zeile enthält Links zur ersten und zweiten Weiterleitung sowie dem Ziel de
 	'deletepage' => 'Seite löschen',
 	'delete-confirm' => 'Löschen von „$1“',
 	'delete-legend' => 'Löschen',
-	'deletedtext' => '„$1“ wurde gelöscht. Im $2 findest du eine Liste der letzten Löschungen.',
+	'deletedtext' => '„<nowiki>$1</nowiki>“ wurde gelöscht. Im $2 findest du eine Liste der letzten Löschungen.
+
+Je nach Grund für die Löschung ist es vielleicht auch sinnvoll, alle [[Special:WhatLinksHere/$1|Links auf diese Seite]] zu entfernen. Achte auch darauf ob die gelöschte Seite eine dazugehörige Diskussionsseite hatte.',
 	'dellogpage' => 'Lösch-Logbuch',
 	'dellogpagetext' => 'Dies ist das Logbuch der gelöschten Seiten und Dateien.',
 	'deletionlog' => 'Lösch-Logbuch',
@@ -3614,7 +3634,15 @@ Jede Zeile enthält Links zur ersten und zweiten Weiterleitung sowie dem Ziel de
 	'deletereason-dropdown' => '* Allgemeine Löschgründe
 ** Wunsch des Autors
 ** Urheberrechtsverletzung
-** Vandalismus',
+** Offensiv/Angriffe auf andere Benutzer oder Menschen
+* Inhaltsbezogen
+** Inhalt ist nicht im Wiki erwünscht
+** Löschantrag
+** Spam
+** Vandalismus
+* Seitenspezifisch
+** Existiert bereits
+** Falsche Schreibweise',
 	'delete-edit-reasonlist' => 'Löschgründe bearbeiten',
 	'delete-toobig' => 'Diese Seite hat mit mehr als $1 {{PLURAL:$1|Version|Versionen}} eine sehr lange Versionsgeschichte. Das Löschen solcher Seiten wurde eingeschränkt, um eine versehentliche Überlastung der Server zu verhindern.',
 	'delete-warning-toobig' => 'Diese Seite hat mit mehr als $1 {{PLURAL:$1|Version|Versionen}} eine sehr lange Versionsgeschichte. Das Löschen kann zu Störungen im Datenbankbetrieb führen.',
@@ -3645,6 +3673,7 @@ Im [{{fullurl:{{#special:Log}}|type=delete&page={{FULLPAGENAMEE}}}} Lösch-Logbu
 	'defaultskin2' => 'Die Admins dieses Wikis haben <b>$1</b> als Standard-Skin gewählt. Klicke <a href="$2">hier</a> um den Quellcode zu sehen.',
 	'defaultskin3' => 'Die Admins dieses Wikis haben keinen Standard-Skin gewählt. Benutzt wird der Standard-Skin von Wikia: <b>$1</b>.',
 	'defaultskin_choose' => 'Setze das Standard-Farbschema für dieses Wiki:',
+	'deletedarticle' => '"[[$1]]" gelöscht',
 ];
 
 $messages['de-at'] = [
@@ -4266,14 +4295,22 @@ Las entradas <del>tachadas</del> han sido resueltas.',
 	'double-redirect-fixer' => 'Corrector de redirecciones',
 	'deadendpages' => 'Páginas sin salida',
 	'deadendpagestext' => 'Las siguientes páginas no enlazan a otras páginas en este wiki.',
-	'deletedcontributions' => 'Contribuciones borradas de usuario',
+	'deletedcontributions' => 'Contribuciones de usuario borradas',
 	'deletedcontributions-title' => 'Contribuciones borradas de usuario',
 	'defemailsubject' => 'Has recibido un email desde {{SITENAME}}',
 	'deletepage' => 'Borrar esta página',
 	'delete-confirm' => 'Borrar «$1»',
 	'delete-legend' => 'Borrar',
-	'deletedtext' => '«$1» ha sido borrado.
-Véase $2 para un registro de los borrados recientes.',
+	'deletedtext' => '\'\'\'"$1" ha sido borrado!\'\'\'
+
+* Ten en cuenta que otras páginas pueden seguir [[Special:WhatLinksHere/$1|enlazando a esta página]].
+* Puedes seguir viendo la página borrada [[Special:Undelete/$1|aquí]].
+* Visita $2 para un registro de borrados recientes.
+
+{{#ifeq:{{FULLPAGENAME}}|{{TALKPAGENAME}}||{{#ifeq:{{SUBJECTSPACE}}|User||{{#ifexist:{{TALKPAGENAME}}|
+<br />
+Esta página tiene también una \'\'\'[[{{TALKPAGENAME}}|página de discusión]]\'\'\' (<small class="plainlinks">[{{fullurl:{{TALKPAGENAMEE}}|action=edit}} editar], [{{fullurl:{{TALKPAGENAMEE}}|action=delete&wpReason=Página+de+discusión+de+un+borrado}} delete]</small>). Quizás quieras borrarla también.
+|}}}}}}',
 	'dellogpage' => 'Registro de borrados',
 	'dellogpagetext' => 'A continuación se muestra una lista de los borrados más recientes.',
 	'deletionlog' => 'registro de borrados',
@@ -4288,7 +4325,7 @@ Véase $2 para un registro de los borrados recientes.',
 	'delete-toobig' => 'Esta página tiene un historial muy grande, con más de $1 {{PLURAL:$1|revisión|revisiones}}. Borrar este tipo de páginas ha sido restringido para prevenir posibles problemas en {{SITENAME}}.',
 	'delete-warning-toobig' => 'Esta página tiene un historial de más de $1 {{PLURAL:$1|revisión|revisiones}}. Eliminarla puede perturbar las operaciones de la base de datos de {{SITENAME}}. Ten cuidado al borrar.',
 	'databasenotlocked' => 'La base de datos no está bloqueada.',
-	'delete_and_move' => 'Borrar y trasladar',
+	'delete_and_move' => 'Borrar y renombrar',
 	'delete_and_move_text' => '==Se necesita borrado==
 
 La página de destino ("[[:$1]]") ya existe. ¿Quiere borrarla para permitir al traslado?',
@@ -4642,7 +4679,9 @@ $messages['fa'] = [
 	'deletereason-dropdown' => '*دلایل متداول حذف
 ** درخواست کاربر
 ** نقض حق تکثیر
-** خرابکاری',
+** خرابکاری
+**توهین
+**هرزنویسی',
 	'delete-edit-reasonlist' => 'ویرایش دلایل حذف',
 	'delete-toobig' => 'این صفحه تاریخچهٔ ویرایشی بزرگی دارد، که شامل بیش از $1 {{PLURAL:$1|نسخه|نسخه}} است.
 به منظور جلوگیری از اختلال ناخواسته در {{SITENAME}} حذف این گونه صفحه‌ها محدود شده‌است.',
@@ -4714,14 +4753,22 @@ Jokaisella rivillä on linkit ensimmäiseen ja toiseen ohjaukseen sekä toisen o
 	'double-redirect-fixer' => 'Ohjausten korjaaja',
 	'deadendpages' => 'Sivut, joilla ei ole linkkejä',
 	'deadendpagestext' => 'Seuraavat sivut eivät linkitä muihin sivuihin wikissä.',
-	'deletedcontributions' => 'Poistetut muokkaukset',
+	'deletedcontributions' => 'Käyttäjän poistetut muokkaukset',
 	'deletedcontributions-title' => 'Poistetut muokkaukset',
 	'defemailsubject' => 'Sähköpostia käyttäjältä $1 sivustolta {{SITENAME}}',
 	'deletepage' => 'Poista sivu',
 	'delete-confirm' => 'Sivun ”$1” poistaminen',
 	'delete-legend' => 'Sivun poisto',
-	'deletedtext' => '”$1” on poistettu.
-Sivulla $2 on lista viimeaikaisista poistoista.',
+	'deletedtext' => '\'\'\'"$1" on poistettu!\'\'\'
+
+* Ole hyvä ja muista, että jotkut sivut saattavat [[Special:WhatLinksHere/$1|linkittää tähän sivuun]].
+* Voit jatkaa poistetun sivun katsomista [[Special:Undelete/$1|täällä]].
+* Katso $2 saadaksesi tiedon tuoreista poistoista.
+
+{{#ifeq:{{FULLPAGENAME}}|{{TALKPAGENAME}}||{{#ifeq:{{SUBJECTSPACE}}|User||{{#ifexist:{{TALKPAGENAME}}|
+<br />
+Tällä sivulla on myös \'\'\'[[{{TALKPAGENAME}}|keskustelusivu]]\'\'\' (<small class="plainlinks">[{{fullurl:{{TALKPAGENAMEE}}|action=delete&wpReason=Poistetun+sivun+keskustelusivu}} poista]</small>). Voit halutessasi poistaa senkin.
+|}}}}}}',
 	'dellogpage' => 'Poistoloki',
 	'dellogpagetext' => 'Alla on loki viimeisimmistä poistoista.',
 	'deletionlog' => 'poistoloki',
@@ -7645,7 +7692,7 @@ $messages['ja'] = [
 	'double-redirect-fixer' => '転送修正係',
 	'deadendpages' => '行き止まりページ',
 	'deadendpagestext' => '以下のページは、{{SITENAME}}の他のページにリンクしていません。',
-	'deletedcontributions' => '利用者の削除された投稿',
+	'deletedcontributions' => '削除された記事を含む投稿履歴',
 	'deletedcontributions-title' => '利用者の削除された投稿',
 	'defemailsubject' => '{{SITENAME}} のユーザーからの新着メール',
 	'deletepage' => 'ページを削除',
@@ -7662,7 +7709,19 @@ $messages['ja'] = [
 	'deletereason-dropdown' => '*よくある削除理由
 ** 投稿者依頼
 ** 著作権侵害
-** 荒らし',
+** 荒らし
+* ヴァンダリズムと問題
+** 著作権侵害
+** スパム
+** ヴァンダリズム
+* メンテナンス
+** 作者による依頼
+** ハウスキーピング
+** 削除マーク
+* リダイレクト
+** 壊れたリダイレクト
+** 未使用のリダイレクト
+** ページ移動によるリダイレクトの残骸',
 	'delete-edit-reasonlist' => '削除理由を編集する',
 	'delete-toobig' => 'このページには、$1版より多い編集履歴があります。
 このようなページの削除は、{{SITENAME}}の偶発的な問題を避けるため、制限されています。',
@@ -12016,14 +12075,14 @@ Wees voorzichtig.',
 	'delete_and_move' => 'Verwijderen en hernoemen',
 	'delete_and_move_text' => '==Verwijdering nodig==
 Onder de naam "[[:$1]]" bestaat al een pagina.
-Wilt u deze verwijderen om plaats te maken voor de te hernoemen pagina?',
+Wil je deze verwijderen om plaats te maken voor de te hernoemen pagina?',
 	'delete_and_move_confirm' => 'Ja, de pagina verwijderen',
 	'delete_and_move_reason' => 'Verwijderd in verband met hernoeming van "[[$1]]"',
 	'djvu_page_error' => 'DjVu-pagina buiten bereik',
 	'djvu_no_xml' => 'De XML voor het DjVu-bestand kon niet opgehaald worden',
 	'deletedrevision' => 'De oude versie $1 is verwijderd',
 	'days' => '{{PLURAL:$1|$1 dag|$1 dagen}}',
-	'deletedwhileediting' => '\'\'\'Let op\'\'\': deze pagina is verwijderd terwijl u bezig was met uw bewerking!',
+	'deletedwhileediting' => '\'\'\'Let op\'\'\': deze pagina is verwijderd terwijl je bezig was met je bewerking!',
 	'descending_abbrev' => 'afl.',
 	'duplicate-defaultsort' => 'Waarschuwing: De standaardsortering "$2" krijgt voorrang voor de sortering "$1".',
 	'dberr-header' => 'Deze wiki heeft een probleem',
@@ -12763,7 +12822,9 @@ Zobacz na stronie $2 rejestr ostatnio wykonanych usunięć.',
 	'deletereason-dropdown' => '* Najczęstsze powody usunięcia
 ** Prośba autora
 ** Naruszenie praw autorskich
-** Wandalizm',
+** Wandalizm
+** Niepotrzebna strona
+** Zbędne przekierowanie',
 	'delete-edit-reasonlist' => 'Edytuj listę przyczyn usunięcia',
 	'delete-toobig' => 'Ta strona ma bardzo długą historię edycji, ponad $1 {{PLURAL:$1|zmianę|zmiany|zmian}}.
 Usunięcie jej mogłoby spowodować zakłócenia w pracy {{GRAMMAR:D.lp|{{SITENAME}}}} i dlatego zostało ograniczone.',
@@ -12791,6 +12852,7 @@ Czy chcesz ją usunąć, by zrobić miejsce dla przenoszonej strony?',
 	'dberr-outofdate' => 'Uwaga – indeksy zawartości serwisu mogą być nieaktualne.',
 	'dberr-cachederror' => 'Strona została pobrana z pamięci podręcznej i może być nieaktualna.',
 	'discuss' => 'Dyskutuj',
+	'deletedarticle' => 'usunięto [[$1]]',
 ];
 
 $messages['pms'] = [
@@ -13211,8 +13273,20 @@ Agora redirecciona para [[$2]].',
 	'deletepage' => 'Eliminar página',
 	'delete-confirm' => 'Eliminar "$1"',
 	'delete-legend' => 'Eliminar',
-	'deletedtext' => '"$1" foi eliminada.
-Consulte $2 para um registo de eliminações recentes.',
+	'deletedtext' => '"<nowiki>$1</nowiki>" foi eliminada.
+Consulte $2 para um registro de eliminações recentes.
+
+
+\'\'\'"$1" foi apagada.!\'\'\'
+
+* Por favor, atente que algumas paginas ainda podem [[Special:WhatLinksHere/$1|ligar a esta pagina]].
+* Voce pode ver a pagina apagada [[Special:Undelete/$1|aqui]].
+* Veja  $2 para um registro de eliminações recentes.
+
+{{#ifeq:{{FULLPAGENAME}}|{{TALKPAGENAME}}||{{#ifeq:{{SUBJECTSPACE}}|Usuario||{{#ifexist:{{TALKPAGENAME}}|
+<br />
+Esta pagina tambem tem uma \'\'\'[[{{TALKPAGENAME}}|pagina de discussão]]\'\'\' (<small class="plainlinks">[{{fullurl:{{TALKPAGENAMEE}}|action=delete&wpReason=Talk+page+of+a+deleted+page}} delete]</small>). Voce pode preferir apaga-la tambem.
+|}}}}}}',
 	'dellogpage' => 'Registo de eliminações',
 	'dellogpagetext' => 'Abaixo uma lista das eliminações mais recentes.',
 	'deletionlog' => 'registo de eliminações',
@@ -13222,7 +13296,14 @@ Consulte $2 para um registo de eliminações recentes.',
 	'deletereason-dropdown' => '* Motivos de eliminação comuns
 ** Pedido do autor
 ** Violação de direitos de autor
-** Vandalismo',
+** Vandalismo
+** SPAM 
+** Texto sem sentido
+** Duplicado
+** Obscenidade / Cconteudo inapropriado
+** O texto não é uma pergunta
+** Redirecionamento desnecessário
+** Atentado ortográfico',
 	'delete-edit-reasonlist' => 'Editar motivos de eliminação',
 	'delete-toobig' => 'Esta página tem um histórico longo, com mais de $1 {{PLURAL:$1|edição|edições}}.
 A eliminação de páginas como esta foi restringida na {{SITENAME}}, para evitar problemas acidentais.',
@@ -13306,8 +13387,20 @@ Entradas <del>riscadas</del> foram resolvidas.',
 	'deletepage' => 'Eliminar página',
 	'delete-confirm' => 'Eliminar "$1"',
 	'delete-legend' => 'Eliminar',
-	'deletedtext' => '"$1" foi eliminada.
-Consulte $2 para um registro de eliminações recentes.',
+	'deletedtext' => '"<nowiki>$1</nowiki>" foi eliminada.
+Consulte $2 para um registro de eliminações recentes.
+
+
+\'\'\'"$1" foi apagada.!\'\'\'
+
+* Por favor, atente que algumas paginas ainda podem [[Special:WhatLinksHere/$1|ligar a esta pagina]].
+* Voce pode ver a pagina apagada [[Special:Undelete/$1|aqui]].
+* Veja  $2 para um registro de eliminações recentes.
+
+{{#ifeq:{{FULLPAGENAME}}|{{TALKPAGENAME}}||{{#ifeq:{{SUBJECTSPACE}}|Usuario||{{#ifexist:{{TALKPAGENAME}}|
+<br />
+Esta pagina tambem tem uma \'\'\'[[{{TALKPAGENAME}}|pagina de discussão]]\'\'\' (<small class="plainlinks">[{{fullurl:{{TALKPAGENAMEE}}|action=delete&wpReason=Talk+page+of+a+deleted+page}} delete]</small>). Voce pode preferir apaga-la tambem.
+|}}}}}}',
 	'dellogpage' => 'Registro de eliminação',
 	'dellogpagetext' => 'Abaixo uma lista das eliminações mais recentes.',
 	'deletionlog' => 'registro de eliminação',
@@ -13317,7 +13410,14 @@ Consulte $2 para um registro de eliminações recentes.',
 	'deletereason-dropdown' => '* Motivos de eliminação comuns
 ** Pedido do autor
 ** Violação de direitos de autor
-** Vandalismo',
+** Vandalismo
+** SPAM 
+** Texto sem sentido
+** Duplicado
+** Obscenidade / Cconteudo inapropriado
+** O texto não é uma pergunta
+** Redirecionamento desnecessário
+** Atentado ortográfico',
 	'delete-edit-reasonlist' => 'Editar motivos de eliminação',
 	'delete-toobig' => 'Esta página possui um longo histórico de edições, com mais de $1 {{PLURAL:$1|edição|edições}}.
 A eliminação de tais páginas foi restrita, a fim de se evitarem problemas acidentais em {{SITENAME}}.',
@@ -15763,8 +15863,16 @@ En sida anses vara en förgreningssida om den inkluderar en mall som länkas til
 	'deletepage' => 'Ta bort sida',
 	'delete-confirm' => 'Radera "$1"',
 	'delete-legend' => 'Radera',
-	'deletedtext' => '"$1" har tagits bort.
-Se $2 för noteringar om de senaste raderingarna.',
+	'deletedtext' => '\'\'\'"$1" har tagits bort!\'\'\'
+
+* Observera kan vissa sidor länkar fortfarande [[Special:WhatLinksHere/$1|till den här sidan]].
+* Du kan fortsätta att visa den borttagna sidan [[Special:Undelete/$1|här]].
+* Se $2 för en information om nyligen borttagna.
+
+{{#ifeq:{{FULLPAGENAME}}|{{TALKPAGENAME}}||{{#ifeq:{{SUBJECTSPACE}}|Användare||{{#ifexist:{{TALKPAGENAME}}|
+<br />
+Sidan har även en \'\'\'[[{{TALKPAGENAME}}|diskussionsida]]\'\'\' (<small class="plainlinks">[{{fullurl:{{TALKPAGENAMEE}}|action=delete&wpReason=Talk+page+of+a+deleted+page}} delete]</small>). Du kanske vill ta bort det också.
+|}}}}}}',
 	'dellogpage' => 'Raderingslogg',
 	'dellogpagetext' => 'Nedan listas de senaste raderingarna.',
 	'deletionlog' => 'raderingsloggen',
@@ -15788,7 +15896,9 @@ Den titel du vill flytta sidan till, "[[:$1]]", finns redan. Vill du radera den 
 	'djvu_no_xml' => 'Kan inte hämta DjVu-filens XML',
 	'deletedrevision' => 'Raderade gammal sidversion $1',
 	'days' => '{{PLURAL:$1|$1 dag|$1 dagar}}',
-	'deletedwhileediting' => '\'\'\'Varning\'\'\': Denna sida raderades efter att du började redigera!',
+	'deletedwhileediting' => '<div id="mw-deletedwhileediting" class="plainlinks" style="margin: 0 0 1em; padding-left: .5em; border: solid #aaaaaa 1px">
+<span style="color: red">\'\'\'Varning\'\'\'</span>: en administratör raderade den här sidan sedan du började redigera den. Du kanske vill kontrollera [{{fullurl:Special:Log/delete|page={{FULLPAGENAMEE}}}} raderingsloggen] att se varför.
+</div>',
 	'descending_abbrev' => 'fallande',
 	'duplicate-defaultsort' => 'Varning: Standardsorteringsnyckeln "$2" tar över från den tidigare standardsorteringsnyckeln "$1".',
 	'dberr-header' => 'Den här wikin har ett problem',
@@ -18502,6 +18612,13 @@ MySQL返回錯誤“$3: $4”。',
 	'deadendpagestext' => '以下頁面没有鏈接到本站的其他頁面。',
 	'defaultskin_choose' => '設定此站預設面板:',
 	'defemailsubject' => '來自{{SITENAME}} 的用戶 "$1" 的電子郵件',
+	'delete_and_move' => '删除並移動',
+	'delete_and_move_confirm' => '確認删除本頁面',
+	'delete_and_move_reason' => '删除以便移動',
+	'delete_and_move_text' => '==删除請求==
+
+目標頁面 "[[$1]]"已經存在。你確認需要删除原頁面並以進行移動嗎？',
+	'deletedcontributions' => '被删除的用户貢獻',
 ];
 
 $messages['zh-min-nan'] = [
@@ -18544,6 +18661,13 @@ MySQL返回錯誤“$3: $4”。',
 	'defaultskin1' => '管理員將<b>$1</b> 設為預設面板',
 	'defaultskin_choose' => '設定此站預設面板:',
 	'defemailsubject' => '來自{{SITENAME}} 的用戶 "$1" 的電子郵件',
+	'delete_and_move' => '删除並移動',
+	'delete_and_move_confirm' => '確認删除本頁面',
+	'delete_and_move_reason' => '删除以便移動',
+	'delete_and_move_text' => '==删除請求==
+
+目標頁面 "[[$1]]"已經存在。你確認需要删除原頁面並以進行移動嗎？',
+	'deletedcontributions' => '被删除的用户貢獻',
 ];
 
 $messages['zh-yue'] = [
@@ -18587,6 +18711,13 @@ MySQL返回错误“$3: $4”。',
 	'deadendpages' => '斷鏈頁面',
 	'deadendpagestext' => '以下页面没有链接到本站的其他页面。',
 	'defemailsubject' => '来自{{SITENAME}} 的用户 "$1" 的电子邮件',
+	'delete' => '刪除',
+	'delete_and_move_confirm' => '确认删除本页面',
+	'delete_and_move_reason' => '删除以便移动',
+	'delete_and_move_text' => '==删除请求==
+
+目标页面 "[[$1]]"已经存在。你确认需要删除原页面并以进行移动吗？',
+	'deletedcontributions' => '被删除的用户贡献',
 ];
 
 $messages['zh-cn'] = [
@@ -18600,6 +18731,14 @@ MySQL返回错误“$3: $4”。',
 	'deadendpagestext' => '以下页面没有链接到本站的其他页面。',
 	'defaultskin_choose' => '设定此站预设皮肤:',
 	'defemailsubject' => 'Wikia电子邮件',
+	'delete' => '刪除',
+	'delete_and_move' => '删除并移动',
+	'delete_and_move_confirm' => '确认删除本页面',
+	'delete_and_move_reason' => '删除以便移动',
+	'delete_and_move_text' => '==删除请求==
+
+目标页面 "[[$1]]"已经存在。你确认需要删除原页面并以进行移动吗？',
+	'deletedcontributions' => '被删除的用户贡献',
 ];
 
 $messages['zh-sg'] = [
@@ -18611,5 +18750,12 @@ MySQL返回错误“$3: $4”。',
 	'datedefault' => '默认值',
 	'deadendpagestext' => '以下页面没有链接到本站的其他页面。',
 	'defemailsubject' => 'Wikia电子邮件',
+	'delete_and_move' => '删除并移动',
+	'delete_and_move_confirm' => '确认删除本页面',
+	'delete_and_move_reason' => '删除以便移动',
+	'delete_and_move_text' => '==删除请求==
+
+目标页面 "[[$1]]"已经存在。你确认需要删除原页面并以进行移动吗？',
+	'deletedcontributions' => '被删除的用户贡献',
 ];
 
