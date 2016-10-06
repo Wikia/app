@@ -8935,7 +8935,7 @@ Veuillez visiter la [//www.mediawiki.org/wiki/Localisation Localisation de Media
 	'api-error-missingresult' => 'Erreur interne : Nous n’avons pas pu déterminer si la copie avait réussi.',
 	'api-error-mustbeloggedin' => 'Vous devez être connecté pour télécharger des fichiers.',
 	'api-error-mustbeposted' => 'Il y a un bogue dans ce logiciel ; il n’utilise pas la méthode HTTP adéquate.',
-	'api-error-noimageinfo' => 'Le téléversement a réussi, mais le serveur n’a pas donné d’informations sur le fichier.',
+	'api-error-noimageinfo' => 'L\'importation a réussi, mais le serveur ne nous a pas donné d’informations sur le fichier.',
 	'api-error-nomodule' => 'Erreur interne : aucun module de versement défini.',
 	'api-error-ok-but-empty' => 'Erreur interne : Le serveur n’a pas répondu.',
 	'api-error-overwrite' => 'Écraser un fichier existant n’est pas autorisé.',
