@@ -6496,6 +6496,7 @@ Bitte besuche die Seiten [//www.mediawiki.org/wiki/Localisation MediaWiki-Lokali
 	'achievements-leaderboard-navigation-item' => 'Herausforderungen',
 	'add_comment' => 'Kommentieren',
 	'addsection' => 'Kommentieren',
+	'admin_skin' => 'Admin-Optionen',
 ];
 
 $messages['de-ch'] = [
@@ -7652,6 +7653,7 @@ Por favor visita [//www.mediawiki.org/wiki/Localisation Localización MediaWiki]
 	'achievements-leaderboard-navigation-item' => 'Tablón de líderes del wiki',
 	'add_comment' => 'Dejar un mensaje',
 	'addsection' => 'Dejar un mensaje',
+	'admin_skin' => 'Opciones de administración',
 ];
 
 $messages['et'] = [
@@ -8261,6 +8263,7 @@ $messages['fa'] = [
 	'addnewtalksection-link' => 'یک بخش جدید ایجاد کنید',
 	'all_the_wikia' => 'کل ویکیا',
 	'add_comment' => 'شروع بحث جدید',
+	'admin_skin' => 'اختیارات مدیر',
 ];
 
 $messages['ff'] = [
@@ -8444,6 +8447,7 @@ Jos haluat muokata MediaWikin yleistä kotoistusta, käy [//www.mediawiki.org/wi
 	'all_the_wikia' => 'Kaikki wikiat',
 	'add_comment' => 'Jätä viesti',
 	'addsection' => 'Lisää kommentti',
+	'admin_skin' => 'Ylläpitäjän vaihtoehdot',
 ];
 
 $messages['fiu-vro'] = [
@@ -8912,6 +8916,7 @@ Veuillez visiter la [//www.mediawiki.org/wiki/Localisation Localisation de Media
 	'achievements-leaderboard-navigation-item' => 'Classement du wikia',
 	'add_comment' => 'Laisser un message',
 	'addsection' => 'Laisser un message',
+	'admin_skin' => 'Options administrateurs',
 ];
 
 $messages['frc'] = [
@@ -13514,6 +13519,7 @@ $1のブロックの理由は「$2」です。',
 	'addnewtalksection-link' => '新しいセクションを開始する',
 	'achievements-leaderboard-navigation-item' => 'アチーブメントランキング',
 	'addsection' => 'メッセージを追加する',
+	'admin_skin' => '管理者向け設定',
 ];
 
 $messages['jam'] = [
@@ -15255,6 +15261,7 @@ $1 사용자가 차단된 이유는 다음과 같습니다: "$2"',
 	'all_the_wikia' => '위키아 전체',
 	'achievements-leaderboard-navigation-item' => '위키 리더보드',
 	'add_comment' => '새 주제',
+	'admin_skin' => '관리자 옵션',
 ];
 
 $messages['ko-kp'] = [
@@ -21085,6 +21092,7 @@ Vitja [//www.mediawiki.org/wiki/Localisation MediaWiki Localisation] og [//trans
 	'addnewtalksection-link' => 'Start ny seksjon',
 	'all_the_wikia' => 'Hele wikia',
 	'add_comment' => 'Legg igjen beskjed',
+	'admin_skin' => 'Administratoralternativer',
 ];
 
 $messages['nov'] = [
@@ -24163,6 +24171,7 @@ $messages['ru'] = [
 	'all_the_wikia' => 'Весь Фэндом',
 	'achievements-leaderboard-navigation-item' => 'Доска лидеров вики',
 	'add_comment' => 'Оставить сообщение',
+	'admin_skin' => 'настройки администратора',
 ];
 
 $messages['rue'] = [
@@ -30339,6 +30348,7 @@ Mời vào [//www.mediawiki.org/wiki/Localisation Địa phương hóa MediaWiki
 	'api-error-uploaddisabled' => 'Chức năng tải lên đã bị tắt trên wiki này.',
 	'api-error-verification-error' => 'Tập tin này có thể bị hỏng hoặc có phần mở rộng sai.',
 	'addnewtalksection-link' => 'Bắt đầu một đề mục mới',
+	'admin_skin' => 'Tùy chọn bảo quản viên',
 ];
 
 $messages['vls'] = [
@@ -31731,6 +31741,7 @@ $1被封禁的理由是：“$2”',
 	'achievements-leaderboard-navigation-item' => '维基排行榜',
 	'add_comment' => '留言',
 	'addsection' => '留言',
+	'admin_skin' => '管理员功能',
 ];
 
 $messages['zh-hant'] = [
@@ -31910,6 +31921,7 @@ $1被封禁的理由是“$2”',
 	'achievements-leaderboard-navigation-item' => '維基排行榜',
 	'add_comment' => '留言',
 	'addsection' => '留言',
+	'admin_skin' => '管理員功能',
 ];
 
 $messages['zh-hk'] = [
@@ -31921,6 +31933,7 @@ $messages['zh-hk'] = [
 	'activeusers' => '活躍用戶名單',
 	'add_comment' => '留言',
 	'addsection' => '留言',
+	'admin_skin' => '管理員功能',
 ];
 
 $messages['zh-min-nan'] = [
@@ -31984,6 +31997,7 @@ $messages['zh-tw'] = [
 	'activeusers' => '活躍用戶名單',
 	'add_comment' => '留言',
 	'addsection' => '留言',
+	'admin_skin' => '管理員功能',
 ];
 
 $messages['zh-yue'] = [
@@ -32040,6 +32054,7 @@ $messages['zh'] = [
 	'accountcreatedtext' => '已创建账户 $1 。',
 	'add_comment' => '留言',
 	'addsection' => '留言',
+	'admin_skin' => '管理员功能',
 ];
 
 $messages['zh-cn'] = [
