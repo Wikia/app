@@ -472,7 +472,7 @@ $messages['de'] = [
 	'related_answered_questions' => 'Ähnliche beantwortete Fragen',
 	'recent_unanswered_questions' => 'Aktuelle Offene Fragen',
 	'popular_categories' => 'Beliebte Kategorien',
-	'createaccount-captcha' => 'Bitte gib das Wort unten ein',
+	'createaccount-captcha' => 'Bitte gib das folgende Wort ein',
 	'inline-register-title' => 'Benachrichtige mich, wenn meine Frage beantwortet wird!',
 	'inline-welcome' => 'Willkommen bei Wikianswers',
 	'skip_this' => 'Überspringen',
@@ -609,7 +609,7 @@ $messages['es'] = [
 	'related_questions' => 'Preguntas relacionadas',
 	'related_answered_questions' => 'Preguntas relacionadas que poseen respuesta',
 	'popular_categories' => 'Categorías populares',
-	'createaccount-captcha' => 'Por favor introduce la palabra descrita debajo',
+	'createaccount-captcha' => 'Por favor escribe abajo la palabra',
 	'inline-register-title' => 'Informame cuando mi pregunta sea contestada!',
 	'inline-welcome' => 'Bienvenido a Wikianswers',
 	'skip_this' => 'Omitir esto',
@@ -1403,6 +1403,7 @@ $messages['ja'] = [
 	'ask_a_question-widget' => '新しく質問する場合はここに入力',
 	'ask_a_question' => '新しく質問する場合はここに入力',
 	'ask_button' => '質問する',
+	'createaccount-captcha' => '下の文字列を入力してください',
 ];
 
 $messages['lb'] = [
@@ -2061,7 +2062,7 @@ $messages['pl'] = [
 	'related_answered_questions' => 'Odpowiedzi na powiązane pytania',
 	'recent_unanswered_questions' => 'Ostatnie pytania bez odpowiedzi',
 	'popular_categories' => 'Popularne Kategorie',
-	'createaccount-captcha' => 'Wpisz słowo poniżej',
+	'createaccount-captcha' => 'Wpisz słowo z obrazka',
 	'inline-register-title' => 'Powiadom mnie gdy zostanie udzielona odpowiedź',
 	'inline-welcome' => 'Witamy w Wikianswers',
 	'skip_this' => 'Pomiń',
@@ -2536,6 +2537,7 @@ $messages['no'] = [
 	'categorize' => 'Kategoriser',
 	'categorize_help' => 'Én kategori per linje',
 	'category' => 'Kategorinavn',
+	'createaccount-captcha' => 'Vennligst skriv ordet under',
 ];
 
 $messages['zh-hant'] = [
@@ -2557,6 +2559,7 @@ $messages['ko'] = [
 	'ask_a_question' => '{{SITENAME}}에 오신 것을 환영합니다. 무엇을 알고 싶으신가요?',
 	'ask_button' => '질문하기',
 	'background_color' => '배경색',
+	'createaccount-captcha' => '아래에 단어를 입력하세요',
 ];
 
 $messages['bg'] = [

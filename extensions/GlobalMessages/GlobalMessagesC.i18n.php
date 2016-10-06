@@ -33,10 +33,19 @@ $2',
 	'createaccounterror' => 'Could not create account: $1',
 	'cannotchangeemail' => 'Account e-mail addresses cannot be changed on this wiki.',
 	'createaccount-title' => 'Account creation for {{SITENAME}}',
-	'createaccount-text' => 'Someone created an account for your e-mail address on {{SITENAME}} ($4) named "$2", with password "$3".
-You should log in and change your password now.
+	'createaccount-text' => 'Hello,
 
-You may ignore this message, if this account was created in error.',
+An account has been created for you created on {{SITENAME}} with the username "$2" and password "$3". 
+
+Please log in at $4
+
+If you do not need this account, you can ignore this message or contact community@wikia.com with any questions.
+
+- Wikia Community Support
+
+___________________________________________
+* Find help and advice on Community Central: http://community.wikia.com
+* Want to receive fewer messages from us? You can unsubscribe or change your email preferences here: http://community.wikia.com/Special:Preferences',
 	'changeemail' => 'Change e-mail address',
 	'changeemail-header' => 'Change account e-mail address',
 	'changeemail-text' => 'Complete this form to change your e-mail address. You will need to enter your password to confirm this change.',
@@ -6072,7 +6081,7 @@ $2',
 	'customcssprotected' => 'Du hast nicht die Berechtigung, diese CSS enthaltende Seite zu bearbeiten, da sie die persönlichen Einstellungen eines anderen Benutzers enthält.',
 	'customjsprotected' => 'Du hast nicht die Berechtigung diese JavaScript enthaltende Seite zu bearbeiten, da sie die persönlichen Einstellungen eines anderen Benutzers enthält.',
 	'createaccount' => 'Benutzerkonto anlegen',
-	'createaccountmail' => 'Benutzerkonto anlegen (mit Passwortzusendung)',
+	'createaccountmail' => 'per E-Mail',
 	'createaccountreason' => 'Grund:',
 	'createaccounterror' => 'Benutzerkonto konnte nicht erstellt werden: $1',
 	'cannotchangeemail' => 'E-Mail-Adressen können in diesem Wiki nicht geändert werden.',
@@ -7295,10 +7304,19 @@ $2',
 	'createaccounterror' => 'No se pudo crear la cuenta: $1',
 	'cannotchangeemail' => 'Las direcciones de la correo electrónico de las cuentas de usuario no puedes cambiarse en esta wiki.',
 	'createaccount-title' => 'Creación de cuenta para {{SITENAME}}',
-	'createaccount-text' => 'Alguien creó en {{SITENAME}} ($4) una cuenta asociada a este correo electrónico con el nombre «$2».
-La contraseña asignada automáticamente es «$3». Por favor entra ahora y cambia tu contraseña.
+	'createaccount-text' => 'Hola,
 
-Puedes ignorar este mensaje si esta cuenta fue creada por error.',
+Alguien creó una cuenta de usuario en {{SITENAME}} con el nombre "$2" y la contraseña "$3". 
+
+Por favor, identifícate en $4
+
+Si no necesitas esta cuenta, puedes ignorar este mensaje o contactar con nosotros a través de community@wikia.com para informarnos al respecto.
+
+- Equipo comunitario de Wikia
+
+___________________________________________
+* Si necesitas ayuda o consejos, visita nuestra comunidad central http://comunidad.wikia.com
+* ¿Quieres dejar de recibir estos mensajes? Puedes darte de baja en el servicio de emails desde tus preferencias aquí: http://comunidad.wikia.com/Especial:Preferencias',
 	'changeemail' => 'Cambiar la dirección de correo-e',
 	'changeemail-header' => 'Cambiar la dirección de correo-e de la cuenta',
 	'changeemail-text' => 'Rellena este formulario para cambiar tu dirección de correo electrónico. Debes introducir la contraseña para confirmar este cambio.',
@@ -8634,12 +8652,12 @@ $2',
 	'customcssprotected' => 'Vous n’avez pas la permission de modifier cette page de CSS, car elle contient les paramètres personnels d’un autre utilisateur.',
 	'customjsprotected' => 'Vous n\'avez pas la permission de modifier cette page de JavaScript, car elle contient les paramètres personnels d\'un autre utilisateur.',
 	'createaccount' => 'Créer un compte',
-	'createaccountmail' => 'par courriel',
+	'createaccountmail' => 'par e-mail',
 	'createaccountreason' => 'Motif :',
 	'createaccounterror' => 'Impossible de créer le compte : $1',
 	'cannotchangeemail' => 'Les adresses e-mail des comptes ne peuvent pas être modifiées sur ce wiki.',
 	'createaccount-title' => 'Création d’un compte pour {{SITENAME}}',
-	'createaccount-text' => 'Quelqu’un a créé un compte pour votre adresse de courriel sur {{SITENAME}} ($4) intitulé « $2 », avec le mot de passe « $3 ».
+	'createaccount-text' => 'Quelqu’un a créé un compte pour votre adresse e-mail sur {{SITENAME}} ($4), « $2 », avec le mot de passe « $3 ».
 Vous devriez ouvrir une session et modifier dès à présent votre mot de passe.
 
 Ignorez ce message si ce compte a été créé par erreur.',
@@ -12840,16 +12858,16 @@ Potrebbe essere stato già cancellato da qualcun altro.',
 $2',
 	'customcssprotected' => 'Non si dispone dei permessi necessari alla modifica di questa pagina CSS, in quanto contiene le impostazioni personali di un altro utente.',
 	'customjsprotected' => 'Non si dispone dei permessi necessari alla modifica di questa pagina JavaScript, in quanto contiene le impostazioni personali di un altro utente.',
-	'createaccount' => 'Crea un nuovo utente',
+	'createaccount' => 'Crea un nuovo account',
 	'createaccountmail' => 'via e-mail',
 	'createaccountreason' => 'Motivo:',
-	'createaccounterror' => 'Impossìbile creare s\'account: $1',
+	'createaccounterror' => 'Impossibile creare l\'account: $1',
 	'cannotchangeemail' => 'Gli indirizzi e-mail non possono essere modificati in questo wiki.',
 	'createaccount-title' => 'Creazione di un accesso a {{SITENAME}}',
-	'createaccount-text' => 'Qualcuno ha creato un accesso a {{SITENAME}} ($4) a nome di $2, associato a questo indirizzo di posta elettronica. La password per l\'utente "$2" è impostata a "$3".
+	'createaccount-text' => 'Qualcuno ha creato un account a {{SITENAME}} ($4) a nome di $2, associato a questo indirizzo di posta elettronica. La password per l\'utente "$2" è impostata a "$3".
 È opportuno eseguire un accesso quanto prima e cambiare la password immediatamente.
 
-Se l\'accesso è stato creato per errore, si può ignorare questo messaggio.',
+Se l\'account è stato creato per errore, si può ignorare questo messaggio.',
 	'changeemail' => 'Modifica l\'indirizzo e-mail',
 	'changeemail-header' => 'Modifica l\'indirizzo e-mail dell\'account',
 	'changeemail-text' => 'Completa questo modulo per cambiare il tuo indirizzo e-mail. Sarà necessario inserire la password per confermare la modifica.',
@@ -12901,7 +12919,7 @@ Vedi anche le [[Special:WantedCategories|categorie richieste]].',
 	'contributions' => 'Contributi utente',
 	'contributions-title' => 'Contributi di $1',
 	'contribsub2' => 'Per $1 ($2)',
-	'createaccountblock' => 'creazione account bloccata',
+	'createaccountblock' => 'Creazione account bloccata',
 	'change-blocklink' => 'cambia blocco',
 	'contribslink' => 'contributi',
 	'cant-block-while-blocked' => 'Non è possibile bloccare altri utenti mentre si è bloccati.',
@@ -13216,10 +13234,20 @@ $2',
 	'createaccounterror' => 'アカウントを作成できませんでした： $1',
 	'cannotchangeemail' => 'このウィキでは、アカウントの電子メールアドレスを変更できません。',
 	'createaccount-title' => '{{SITENAME}}のアカウント作成',
-	'createaccount-text' => '{{SITENAME}} ($4) に「$2」という名前のアカウントが、この電子メールアドレスを連絡先として作成されました。パスワードは「$3」です。
-今すぐログインし、パスワードを変更してください。
+	'createaccount-text' => 'こんにちは
 
-何かの手違いでアカウントが作成されたと思う場合、このメッセージは無視してください。',
+{{SITENAME}} にてユーザー名「$1」とパスワード「$3」であなたのアカウントが「$2」作成されました。
+
+
+$4 でログインしてください。
+
+もしこのアカウントを必要としない場合は、このメッセージを無視するか、community@wikia.com に質問の問い合わせができます。
+
+- ウィキア・コミュニティサポート
+
+___________________________________________
+* コミュニティセントラルでヘルプやアドバイスを探す: http://ja.community.wikia.com
+* 私たちが送信するメッセージを減らしたいですか？こちらで定期購読解除か電子メールの設定を変更できます: http://ja.community.wikia.com/Special:Preferences',
 	'changeemail' => 'メールアドレスの変更',
 	'changeemail-header' => 'アカウントのメールアドレスを変更',
 	'changeemail-text' => 'このフォームへ入力することで、メールアドレスを変更することができます。メールアドレスの変更を完了するためには、パスワードを入力する必要があります。',
@@ -20498,11 +20526,11 @@ $2',
 	'createaccounterror' => 'Het was niet mogelijk de gebruiker aan te maken: $1',
 	'cannotchangeemail' => 'Het e-mailadres voor een gebruiker kan op deze wiki niet gewijzigd worden.',
 	'createaccount-title' => 'Gebruikers registreren voor {{SITENAME}}',
-	'createaccount-text' => 'Iemand heeft een gebruiker op {{SITENAME}} ($4) aangemaakt met de naam "$2" en uw e-mailadres.
+	'createaccount-text' => 'Iemand heeft een gebruiker op {{SITENAME}} ($4) aangemaakt met de naam "$2" en jouw e-mailadres.
 Het wachtwoord voor "$2" is "$3".
-Meld u aan en wijzig uw wachtwoord.
+Meld je aan en wijzig je wachtwoord.
 
-Negeer dit bericht als deze gebruiker zonder uw medeweten is aangemaakt.',
+Negeer dit bericht als deze gebruiker zonder jouw medeweten is aangemaakt.',
 	'changeemail' => 'E-mailadres wijzigen',
 	'changeemail-header' => 'Het e-mailadres van mijn gebruiker wijzigen',
 	'changeemail-text' => 'Vul dit formulier in om uw e-mailadres te wijzigen. U moet uw wachtwoord invoeren om deze wijziging te bevestigen.',
@@ -23930,7 +23958,7 @@ $messages['ru'] = [
 $2',
 	'customcssprotected' => 'У вас нет разрешения редактировать эту CSS-страницу, так как она содержит личные настройки другого участника.',
 	'customjsprotected' => 'У вас нет разрешения редактировать эту JavaScript-страницу, так как она содержит личные настройки другого участника.',
-	'createaccount' => 'Зарегистрировать нового участника',
+	'createaccount' => 'Зарегистрироваться',
 	'createaccountmail' => 'Выслать пароль по эл. почте',
 	'createaccountreason' => 'Причина:',
 	'createaccounterror' => 'Невозможно создать учётную запись: $1',
@@ -31471,6 +31499,7 @@ Send a new code by clicking [[Special:ConfirmEmail|here]].',
 你也必须向我们保证你所写的一切都出自你自己的笔下, 或者是复制于公共领域或其他类似的自由来源(详情请参见 $1).
 <strong>请不要在未获授权的情况下发表受版权保护的作品！</strong>',
 	'createpage' => '新增文章',
+	'createaccountblock' => '禁止创建帐户',
 ];
 
 $messages['zh-classical'] = [
@@ -31506,6 +31535,7 @@ Send a new code by clicking [[Special:ConfirmEmail|here]].',
 你也必须向我们保证你所写的一切都出自你自己的笔下, 或者是复制于公共领域或其他类似的自由来源(详情请参见 $1).
 <strong>请不要在未获授权的情况下发表受版权保护的作品！</strong>',
 	'createpage' => '新增文章',
+	'createaccountblock' => '禁止创建帐户',
 ];
 
 $messages['zh-hans'] = [
@@ -31926,6 +31956,7 @@ Send a new code by clicking [[Special:ConfirmEmail|here]].',
 你也必須向我們保證你所寫的一切都出自你自己的筆下, 或者是復制于公共領域或其他類似的自由來源(詳情請參見 $1).
 <strong>請不要在未獲授權的情况下發表受版權保護的作品！</strong>',
 	'createpage' => '新增文章',
+	'createaccountblock' => '禁止創建帳户',
 ];
 
 $messages['zh-min-nan'] = [
@@ -31970,6 +32001,7 @@ Send a new code by clicking [[Special:ConfirmEmail|here]].',
 如果您不想您写的文章被他人修改, 请不要在这里提交.<br />
 你也必须向我们保证你所写的一切都出自你自己的笔下, 或者是复制于公共领域或其他类似的自由来源(详情请参见 $1).
 <strong>请不要在未获授权的情况下发表受版权保护的作品！</strong>',
+	'createaccountblock' => '禁止创建帐户',
 ];
 
 $messages['zh-tw'] = [
@@ -31995,7 +32027,7 @@ $messages['zh-tw'] = [
 	'cannotundelete' => '復原失敗；可能之前已經被其他人復原。',
 	'contributions' => '使用者編修記錄',
 	'contribsub2' => '$1的編修記錄 ($2)',
-	'createaccountblock' => '禁止建立帳號',
+	'createaccountblock' => '禁止創建帳户',
 	'confirmemail' => '確認電子郵件地址',
 	'confirmemail_noemail' => '你没有在賬户的[[Special:Preferences|參數設置]]中驗證你的電子郵件地址。',
 	'confirmemail_text' => '您需要先確認電子郵件地址，您才能收到通過Wikia送出的電子郵件。請點撃下方的確認按鈕，這將會向您所登記的地址發出確認信件。確認信包括一個含有確認碼的超連結，您在瀏覧器中打開這個連結即可完成確認。如果你已經通過驗證，請參看[[Special:Preferences|您的參數設置]]。',

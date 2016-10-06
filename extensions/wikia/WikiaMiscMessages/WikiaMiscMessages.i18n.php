@@ -32,9 +32,23 @@ Last week you joined Wikia, but you still need to confirm your account. Please d
 We look forward to seeing you soon!<br /><br />
 The Wikia Community Team<br />
 <a href="http://www.wikia.com/">www.wikia.com</a></p>',
-	'createaccount-text-HTML' => '<p>Someone created an account for your e-mail address on {{SITENAME}} ($4) named "$2", with password "$3".<br />
-You should log in and change your password now.<br /><br />
-You may ignore this message if this account was created in error.</p>',
+	'createaccount-text-HTML' => 'Hello,<br /><br />
+
+An account has been created for you created on {{SITENAME}} with the username "$2" and password "$3". <br /><br />
+
+Please log in at $4<br /><br />
+
+If you do not need this account, you can ignore this message or contact community@wikia.com with any questions.<br /><br />
+
+- Wikia Community Support
+
+<br /><hr />
+<p>
+<ul>
+<li>Find help and advice on <a href="http://www.community.wikia.com">Community Central</a>.</li>
+<li>WWant to receive fewer messages from us? You can unsubscribe or change your email preferences <a href="http://community.wikia.com/Special:Preferences">here</a>.</li>
+</ul>
+</p>',
 	'enotif_body-HTML' => '<p>Dear $WATCHINGUSERNAME,<br /><br />
 There has been an edit to a page you are watching on {{SITENAME}}.<br /><br />
 See <a href="$PAGETITLE_URL">$PAGETITLE</a> for the current version.<br /><br />
@@ -479,6 +493,11 @@ Wenn diese E-Mail-Adresse *nicht* zu dem genannten Benutzerkonto gehört, folge 
 <br />
 {{SITENAME}}: <a href="{{fullurl:{{Mediawiki:mainpage}}}}">{{fullurl:{{Mediawiki:mainpage}}}}</a>
 </p>',
+	'createaccount-text-HTML' => '<p>
+Es wurde für dich ein Benutzerkonto „$2“ auf {{SITENAME}} ($4) erstellt. Das automatisch generierte Passwort für „$2“ ist „$3“. Du solltest dich nun anmelden und das Passwort ändern.<br /><br />
+
+Falls das Benutzerkonto irrtümlich angelegt wurde, kannst du diese Nachricht ignorieren.
+<br /></p>',
 ];
 
 $messages['es'] = [
@@ -592,6 +611,22 @@ Y ahora, llegó el momento... ¡hora de empezar la aventura!<br>
 <li>Descubre qué sucede en Wikia y conoce a otros usuarios de Wikia en nuestro <a href="http://comunidad.wikia.com/wiki/Wikia">wiki comunitario</a>.</li></ul>
 <br />
 ¡Diviértete!<br>
+- Equipo comunitario de Wikia
+<br /><hr />
+<p>
+<ul>
+<li>Si necesitas ayuda o consejos, visita nuestra <a href="http://comunidad.wikia.com">comunidad central</a>.</li>
+<li>¿Quieres dejar de recibir estos mensajes? Puedes darte de baja en el servicio de emails desde tus preferencias <a href="http://comunidad.wikia.com/Especial:Preferencias">aquí</a>.</li>
+</ul>
+</p>',
+	'createaccount-text-HTML' => 'Hola,<br /><br />
+
+Alguien creó una cuenta de usuario en  {{SITENAME}} con el nombre "$2" y la contraseña "$3". <br /><br />
+
+Por favor, identifícate en $4<br /><br />
+
+Si no necesitas esta cuenta, puedes ignorar este mensaje o contactar con nosotros a través de community@wikia.com para informarnos al respecto.<br /><br />
+
 - Equipo comunitario de Wikia
 <br /><hr />
 <p>
@@ -752,6 +787,12 @@ Bonnes modifications !<br>
 <li>Vous souhaitez contrôler les e-mails que vous recevez ? Rendez-vous sur vos <a href="{{fullurl:{{ns:special}}:Preferences}}">préférences</a></li>
 </ul>
 </p>',
+	'createaccount-text-HTML' => '<p>
+Quelqu’un a créé un compte pour votre adresse e-mail sur {{SITENAME}} ($4), « $2 », avec le mot de passe « $3 ».<br />
+Vous devriez ouvrir une session et modifier dès à présent votre mot de passe.<br />
+<br />
+Ignorez ce message si ce compte a été créé par erreur.<br />
+</p>',
 ];
 
 $messages['it'] = [
@@ -826,6 +867,12 @@ Se *non* hai registrato tu l\'account, segui questo collegamento per annullare l
 <a href="$5">$5</a>
 <br /><br />
 Questo codice di conferma scadrà automaticamente alle $4.
+</p>',
+	'createaccount-text-HTML' => '<p>
+Qualcuno ha creato un accesso a {{SITENAME}} ($4) a nome di $2, associato a questo indirizzo di posta elettronica. La password per l\'utente "$2" è impostata a "$3".<br />
+È opportuno eseguire un accesso quanto prima e cambiare la password immediatamente.<br />
+<br /><br />
+Se l\'accesso è stato creato per errore, si può ignorare questo messaggio.<br />
 </p>',
 ];
 
@@ -916,6 +963,12 @@ poniższy link, aby anulować potwierdzenie adresu e‐mail:<br />
 <br /><br />
 Kod zawarty w linku straci ważność $4.
 <br /></p>',
+	'createaccount-text-HTML' => '<p>
+Ktoś utworzył w {{GRAMMAR:MS.lp|{{SITENAME}}}} ($4), podając Twój adres e‐mail, konto „$2”. Aktualnym hasłem jest „$3”.<br />
+Zaloguj się teraz i je zmień.<br />
+<br />
+Możesz zignorować tę wiadomość, jeśli konto zostało utworzone przez pomyłkę.<br />
+</p>',
 ];
 
 $messages['sv'] = [
@@ -961,6 +1014,12 @@ Vi ser fram emot att se dig snart!<br />
 Wikia Community Team<br />
 <a href="http://community.wikia.com/">community.wikia.com</a><br />
 </p>',
+	'createaccount-text-HTML' => '<p>
+Någon har skapat ett konto åt din e-postadress på {{SITENAME}} ($4) med namnet "$2" och lösenordet "$3".<br />
+Du bör nu logga in och ändra ditt lösenord.
+<br /><br />
+Du kan ignorera detta meddelande om kontot skapats av misstag.
+</p>',
 ];
 
 $messages['zh'] = [
@@ -986,6 +1045,9 @@ www.wikia.com<br /><hr />
 我们期待很快能见到您！<br /><br />
 Wikia支持团队<br />
 <a href="http://zh.community.wikia.com/">zh.community.wikia.com</a><br /></p>',
+	'createaccount-text-HTML' => '<p>有人用你的电子邮件地址在{{SITENAME}} ($4) 创建了名为"$2"的帐号，密码为 "$3".<br />
+你应该立刻登入并更改你的密码。<br /><br />
+如果你并没有申请这个帐号，请直接忽略这个讯息。</p>',
 ];
 
 $messages['zh-hans'] = [
@@ -1011,6 +1073,9 @@ www.wikia.com<br /><br />
 我们期待很快能见到您！<br /><br />
 Wikia支持团队<br />
 <a href="http://zh.community.wikia.com/">zh.community.wikia.com</a><br /></p>',
+	'createaccount-text-HTML' => '<p>有人用你的电子邮件地址在{{SITENAME}} ($4) 创建了名为"$2"的帐户，密码为 "$3".<br />
+你应该立刻登入并更改你的密码。<br /><br />
+如果你并没有申请这个帐户，请直接忽略这个讯息。</p>',
 ];
 
 $messages['zh-hant'] = [
@@ -1036,6 +1101,9 @@ www.wikia.com<br /><br />
 我們期待很快能見到您！<br /><br />
 Wikia支持團隊<br />
 <a href="http://zh.community.wikia.com/">zh.community.wikia.com</a><br /></p>',
+	'createaccount-text-HTML' => '<p>有人用你的電子郵件地址在{{SITENAME}} ($4) 創建了名為"$2"的帳號，密碼為 "$3".<br />
+你應該立刻登入並更改你的密碼。<br /><br />
+如果你並沒有申請這個帳號，請直接忽略這個訊息。</p>',
 ];
 
 $messages['zh-hk'] = [
@@ -1061,6 +1129,9 @@ www.wikia.com<br /><hr />
 我們期待很快能見到您！<br /><br />
 Wikia支持團隊<br />
 <a href="http://zh.community.wikia.com/">zh.community.wikia.com</a><br /></p>',
+	'createaccount-text-HTML' => '<p>有人用你的電子郵件地址在{{SITENAME}} ($4) 創建了名為"$2"的帳號，密碼為 "$3".<br />
+你應該立刻登入並更改你的密碼。<br /><br />
+如果你並沒有申請這個帳號，請直接忽略這個訊息。</p>',
 ];
 
 $messages['zh-tw'] = [
@@ -1086,6 +1157,9 @@ www.wikia.com<br /><hr />
 我們期待很快能見到您！<br /><br />
 Wikia支持團隊<br />
 <a href="http://zh.community.wikia.com/">zh.community.wikia.com</a><br /></p>',
+	'createaccount-text-HTML' => '<p>有人用你的電子郵件地址在{{SITENAME}} ($4) 創建了名為"$2"的帳號，密碼為 "$3".<br />
+你應該立刻登入並更改你的密碼。<br /><br />
+如果你並沒有申請這個帳號，請直接忽略這個訊息。</p>',
 ];
 
 $messages['ja'] = [
@@ -1123,6 +1197,23 @@ Fandomコミュニティ・チーム<br /></p>',
 <ul>
 <li><a href="http://ja.community.wikia.com/wiki/">コミュニティセントラル</a>でヘルプやアドバイスを探してみましょう。</li>
 <li>私たちからのメッセージの受信を減らしたいですか？ Eメールの設定を<a href="http://ja.community.wikia.com/Special:Preferences">こちら</a>で変更するか登録解除することができます。</li>
+</ul>
+</p>',
+	'createaccount-text-HTML' => 'こんにちは<br /><br />
+
+あなたが {{SITENAME}} でユーザー名「$2」、パスワード「$3」として作ろうとしたアカウントが作成されました。<br /><br />
+
+$4 でログインしてください<br /><br />
+
+もしこのアカウントが必要ない場合は、このメッセージを無視するか、 community@wikia.com に質問の問い合わせをすることができます。<br /><br />
+
+- ウィキアコミュニティーサポート
+
+<br /><hr />
+<p>
+<ul>
+<li><a href="http://ja.community.wikia.com/wiki/">コミュニティセントラル</a>でヘルプやアドバイスを探してみましょう。</li>
+<li>私たちが送信するメッセージの受信を減らしたいですか？ 電子メールの設定を<a href="http://ja.community.wikia.com/Special:Preferences">こちら</a>で変更するか登録解除することができます。</li>
 </ul>
 </p>',
 ];
