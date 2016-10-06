@@ -2793,6 +2793,7 @@ $messages['ja'] = [
 	'blogs-searchprofile-tooltip' => 'ブログ記事とブログリストを検索',
 	'user-blog-url-link' => 'User blog:$1',
 	'blogs-recent-url' => 'Blog:最近の投稿',
+	'blug-cut-sign' => ' ……',
 ];
 
 $messages['ka'] = [
@@ -5943,6 +5944,7 @@ $messages['zh-hant'] = [
 	'blog-subheader-all' => '{{PLURAL:$1|這個分類中有一篇部落格文章|以下$2篇部落格文章中的$1篇在這個分類中。}}',
 	'blog-subheader' => '這個分類中{{PLURAL:$1|有一篇部落格文章|有$1篇部落格文章}}。',
 	'blogs-searchprofile-tooltip' => '在部落格文章和部落格列表中搜索',
+	'blug-cut-sign' => '‧‧‧',
 ];
 
 $messages['zh-hk'] = [
@@ -5970,6 +5972,7 @@ $messages['zh-hk'] = [
 	'blogs-recent-url-text' => '最新網誌文章',
 	'blogs-searchprofile-tooltip' => '在網誌文章和網誌列表中搜索',
 	'blogs-searchprofile' => '網誌',
+	'blug-cut-sign' => '…',
 ];
 
 $messages['no'] = [
@@ -6004,6 +6007,7 @@ $messages['no'] = [
 $messages['zh'] = [
 	'blog-comments-info' => '此框使用wiki文本格式输入',
 	'blog-comments-label' => '允许评论',
+	'blug-cut-sign' => '...',
 ];
 
 $messages['zh-tw'] = [
@@ -6014,5 +6018,6 @@ $messages['zh-tw'] = [
 	'blog-subheader-all' => '{{PLURAL:$1|這個分類中有一篇部落格文章|以下$2篇部落格文章中的$1篇在這個分類中。}}',
 	'blog-subheader' => '這個分類中{{PLURAL:$1|有一篇部落格文章|有$1篇部落格文章}}。',
 	'blogs-searchprofile-tooltip' => '在部落格文章和部落格列表中搜索',
+	'blug-cut-sign' => '…',
 ];
 
