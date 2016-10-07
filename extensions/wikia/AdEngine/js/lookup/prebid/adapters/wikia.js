@@ -72,7 +72,7 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.wikia',[
 		creative.style.textAlign = 'center';
 		creative.style.width = '100%';
 
-		title.innerText = 'Wikia ad placement';
+		title.innerText = 'Wikia Creative';
 		title.style.fontWeight = 'bold';
 		title.style.margin = '0';
 		title.style.paddingTop = '10px';
