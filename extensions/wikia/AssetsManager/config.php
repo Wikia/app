@@ -3071,8 +3071,8 @@ $config['flow_tracking_js'] = [
 $config['flow_tracking_create_page_js'] = [
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => [
-		'//extensions/wikia/FlowTracking/scripts/createPageTracking.js',
-		'//extensions/wikia/FlowTracking/scripts/initCreatePageTracking.js',
+		'//extensions/wikia/FlowTracking/scripts/createNewPageFlows.js',
+		'//extensions/wikia/FlowTracking/scripts/createNewPageFlowsVE.js',
 		'#group_flow_tracking_js'
 	],
 ];

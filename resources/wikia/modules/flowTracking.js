@@ -1,7 +1,10 @@
 define('wikia.flowTracking', ['wikia.tracker', 'wikia.window', 'mw', 'jquery'], function (tracker, w, mw, $) {
 	'use strict';
 
-	var track = tracker.buildTrackingFunction({
+	var flows = {
+			CREATE_PAGE_DIRECT_URL: 'create-page-direct-url'
+		},
+		track = tracker.buildTrackingFunction({
 			category: 'flow-tracking',
 			trackingMethod: 'analytics'
 
@@ -25,7 +28,13 @@ define('wikia.flowTracking', ['wikia.tracker', 'wikia.window', 'mw', 'jquery'], 
 	 * @param extraParams additional parameters to track
 	 */
 	function trackFlowStep(flow, extraParams) {
-		track(prepareParams(tracker.ACTIONS.FLOW_MID_STEP, flow, extraParams));
+		if (isContentPage()) {
+			track(prepareParams(tracker.ACTIONS.FLOW_MID_STEP, flow, extraParams));
+		}
+	}
+
+	function isContentPage() {
+		return mw.config.get('wgNamespaceNumber') === 0;
 	}
 
 	function prepareParams(action, flow, extraParams) {
@@ -41,6 +50,7 @@ define('wikia.flowTracking', ['wikia.tracker', 'wikia.window', 'mw', 'jquery'], 
 
 	return {
 		beginFlow: beginFlow,
-		trackFlowStep: trackFlowStep
+		trackFlowStep: trackFlowStep,
+		flows: flows
 	}
 });

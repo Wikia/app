@@ -6,7 +6,6 @@ var CreatePage = {
 	context: null,
 	wgArticlePath: mw.config.get( 'wgArticlePath' ),
 	redlinkParam: '',
-	flowName: '',
 
 	canUseVisualEditor: function() {
 		return mw.libs && mw.libs.ve ? mw.libs.ve.canCreatePageUsingVE() : false;
@@ -21,18 +20,15 @@ var CreatePage = {
 		},
 		function( response ) {
 			var articlePath;
-			var flowParam = ( CreatePage.flowName === '' ) ? '' : '&flow=' + CreatePage.flowName;
-
 			if ( response.result === 'ok' ) {
 				if ( CreatePage.canUseVisualEditor() && mw.libs.ve.isInValidNamespace( title ) ) {
 					articlePath = CreatePage.wgArticlePath.replace( '$1', encodeURIComponent( title ) );
-					location.href = articlePath + '?veaction=edit' + CreatePage.redlinkParam + flowParam;
+					location.href = articlePath + '?veaction=edit' + CreatePage.redlinkParam;
 				} else {
 					location.href = CreatePage.options[ CreatePage.canUseVisualEditor() ? 'blank' :
 						CreatePage.pageLayout ].submitUrl.replace( '$1', encodeURIComponent( title ) ) +
-						CreatePage.redlinkParam + flowParam;
+						CreatePage.redlinkParam;
 				}
-				CreatePage.flowName = '';
 			}
 			else {
 				CreatePage.displayError( response.msg );
@@ -269,13 +265,9 @@ var CreatePage = {
 		'use strict';
 		var title = new mw.Title.newFromText( decodeURIComponent( titleText ) ),
 			namespace = title.getNamespacePrefix().replace( ':', '' ),
-			visualEditorActive = $( 'html' ).hasClass( 've-activated'),
-			redLinkFlowName = CreatePage.getRedLinkFlowName();
+			visualEditorActive = $( 'html' ).hasClass( 've-activated' );
 
 		CreatePage.redlinkParam = '&redlink=1';
-
-		CreatePage.flowName = redLinkFlowName;
-		CreatePage.trackCreatePageStart(redLinkFlowName);
 
 		if ( CreatePage.canUseVisualEditor() ) {
 			CreatePage.track( { action: 'click', label: 've-redlink-click' } );
@@ -296,12 +288,6 @@ var CreatePage = {
 	init: function( context ) {
 		'use strict';
 		CreatePage.context = context;
-
-		$( '.WikiaMenuElement .createpage' ).click(function() {
-			CreatePage.trackCreatePageStart(window.wgFlowTrackingFlows.CREATE_PAGE_CONTRIBUTE_BUTTON);
-			CreatePage.flowName = window.wgFlowTrackingFlows.CREATE_PAGE_CONTRIBUTE_BUTTON;
-		});
-
 		if ( window.WikiaEnableNewCreatepage ) {
 			$().log( 'init', 'CreatePage' );
 
@@ -356,19 +342,6 @@ var CreatePage = {
 		}
 	},
 
-	getRedLinkFlowName: function () {
-		return mw.config.get('wgNamespaceNumber') === -1
-			? window.wgFlowTrackingFlows.CREATE_PAGE_SPECIAL_REDLINK
-			: window.wgFlowTrackingFlows.CREATE_PAGE_ARTICLE_REDLINK;
-	},
-
-	// create page flow tracking
-	trackCreatePageStart: function (flowName) {
-		require(['wikia.flowTracking'], function (flowTrack) {
-			flowTrack.beginFlow(flowName, {});
-		});
-	},
-
 	// Tracking for VE dialog only
 	track: function( data ) {
 		var defaultData;
@@ -377,7 +350,7 @@ var CreatePage = {
 			defaultData = {
 				category: 'article',
 				trackingMethod: 'internal'
-			};
+			}
 
 			$.extend( defaultData, data );
 
