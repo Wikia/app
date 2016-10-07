@@ -10,7 +10,8 @@ require([
 		var $wikiaArticle = $('#WikiaArticle'),
 			redLinkFlow = mw.config.get('wgNamespaceNumber') === -1 ?
 				window.wgFlowTrackingFlows.CREATE_PAGE_SPECIAL_REDLINK :
-				window.wgFlowTrackingFlows.CREATE_PAGE_ARTICLE_REDLINK;
+				window.wgFlowTrackingFlows.CREATE_PAGE_ARTICLE_REDLINK,
+			createButtonFlow = window.wgFlowTrackingFlows.CREATE_PAGE_CREATE_BUTTON;
 
 		// Create Page flow tracking, adding flow param in redlinks href.
 		// This parameter is added here to avoid reparsing all articles.
@@ -29,6 +30,10 @@ require([
 
 			flowTracking.beginFlow(redLinkFlow, {});
 		});
+
+		$( '#ca-ve-edit' ).click(function() {
+			flowTracking.beginFlow(createButtonFlow, {});
+		});
 	}
 
 	function initVEHooks() {
@@ -44,6 +49,12 @@ require([
 				qs.removeVal('flow');
 				window.history.replaceState({}, '', qs.toString())
 			}
+		});
+
+		mw.hook('ve.afterVEInit').add(function(veEditUri) {
+			require(['ext.wikia.flowTracking.createPageTracking'], function(createPageTracking) {
+				createPageTracking.extendUri(veEditUri);
+			});
 		});
 	}
 
