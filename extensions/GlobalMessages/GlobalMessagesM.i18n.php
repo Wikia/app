@@ -214,7 +214,7 @@ Others will be hidden by default.
 	'most_emailed' => 'Most emailed',
 	'manage_widgets' => 'Manage widgets',
 	'magicfooterlinks' => '<b>Featured pages</b>',
-	'masthead-anonymous-user' => 'Anonymous contributor',
+	'masthead-anonymous-user' => 'A Wikia contributor',
 	'mobile-show' => 'Show',
 	'mobile-hide' => 'Hide',
 ];
@@ -7087,6 +7087,7 @@ Weitere werden standardmäßig nicht angezeigt.
 	'most_emailed' => 'Am häufigsten verschickt',
 	'magicfooterlinks' => '<b>Vorgestellte Seiten</b>',
 	'manage_widgets' => 'Widgets verwalten',
+	'masthead-anonymous-user' => 'nicht-angemeldeter Benutzer',
 ];
 
 $messages['de-ch'] = [
@@ -8447,6 +8448,7 @@ Existen otros campos que se mantendrán ocultos por defecto.
 	'most_emailed' => 'Los más contactados por e-mail',
 	'magicfooterlinks' => '<b>Páginas destacadas</b>',
 	'manage_widgets' => 'Organizar widgets',
+	'masthead-anonymous-user' => 'Editor no registrado',
 ];
 
 $messages['et'] = [
@@ -9104,6 +9106,7 @@ $messages['fa'] = [
 * gpslongitude
 * gpsaltitude',
 	'monthsall' => 'همهٔ ماه‌ها',
+	'masthead-anonymous-user' => 'کاربر ناشناس',
 ];
 
 $messages['ff'] = [
@@ -9282,6 +9285,7 @@ Suorittamalla sen järjestelmäsi voi muuttua epäluotettavaksi.',
 	'most_visited' => 'Käydyimmät',
 	'most_emailed' => 'Eniten lähetetyt',
 	'manage_widgets' => 'Hallinnoi vekottimia',
+	'masthead-anonymous-user' => 'Wikia-avustaja',
 ];
 
 $messages['fiu-vro'] = [
@@ -9771,6 +9775,7 @@ Si vous l’exécutez, votre système peut être compromis.',
 	'most_visited' => 'Les plus vus',
 	'most_emailed' => 'Les plus envoyés',
 	'manage_widgets' => 'Gérer les widgets',
+	'masthead-anonymous-user' => 'Contributeur Wikia',
 ];
 
 $messages['frc'] = [
@@ -13413,6 +13418,7 @@ míg a többi elem a táblázat összecsukása után alapértelmezett esetben re
 * gpslongitude
 * gpsaltitude',
 	'monthsall' => 'mind',
+	'masthead-anonymous-user' => 'Névtelen szerkesztő',
 ];
 
 $messages['hy'] = [
@@ -14755,6 +14761,7 @@ In questi casi, se lo si ritiene opportuno, occorre spostare o aggiungere manual
 * gpslongitude
 * gpsaltitude',
 	'monthsall' => 'tutti',
+	'masthead-anonymous-user' => 'Collaboratore non registrato',
 ];
 
 $messages['iu'] = [
@@ -15100,6 +15107,7 @@ contenttype/subtypeの形式で指定してください（例：<tt>image/jpeg</
 	'most_visited' => '閲覧順',
 	'most_emailed' => 'メールの使われた記事',
 	'manage_widgets' => 'ウィジェットの設定',
+	'masthead-anonymous-user' => '匿名ユーザー',
 ];
 
 $messages['jam'] = [
@@ -17583,6 +17591,7 @@ $messages['ko'] = [
 * gpslongitude
 * gpsaltitude',
 	'monthsall' => '모든 달',
+	'masthead-anonymous-user' => '익명 사용자',
 ];
 
 $messages['ko-kp'] = [
@@ -24208,6 +24217,7 @@ Andre er gøymde som standard.
 	'most_emailed' => 'Mest mailet',
 	'magicfooterlinks' => '<b>Utvalgte sider</b>',
 	'manage_widgets' => 'Administrer skjermelementer',
+	'masthead-anonymous-user' => 'Anonym bidragsyter',
 ];
 
 $messages['nov'] = [
@@ -25425,6 +25435,7 @@ Pozostałe pola zostaną domyślnie ukryte.
 	'most_visited' => 'Najczęściej odwiedzane',
 	'most_emailed' => 'Najczęściej przesyłane',
 	'manage_widgets' => 'Zarządzaj widgetami',
+	'masthead-anonymous-user' => 'Niezarejestrowany użytkownik',
 ];
 
 $messages['pms'] = [
@@ -27640,6 +27651,7 @@ $messages['ru'] = [
 	'most_visited' => 'Самые посещаемые',
 	'most_emailed' => 'Самые популярные по количеству электронных писем',
 	'magicfooterlinks' => '<b>Избранные страницы</b>',
+	'masthead-anonymous-user' => 'Незарегистрированный вкладчик',
 ];
 
 $messages['rue'] = [
@@ -31352,6 +31364,7 @@ Andra kommer att gömmas som standard
 	'most_popular' => 'Populäraste',
 	'most_visited' => 'Mest besökta',
 	'most_emailed' => 'Mest e-postade',
+	'masthead-anonymous-user' => 'Oregistrerat bidragsgivare',
 ];
 
 $messages['sw'] = [
