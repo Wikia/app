@@ -269,12 +269,13 @@ var CreatePage = {
 		'use strict';
 		var title = new mw.Title.newFromText( decodeURIComponent( titleText ) ),
 			namespace = title.getNamespacePrefix().replace( ':', '' ),
-			visualEditorActive = $( 'html' ).hasClass( 've-activated' );
+			visualEditorActive = $( 'html' ).hasClass( 've-activated'),
+			redLinkFlowName = CreatePage.getRedLinkFlowName();;
 
 		CreatePage.redlinkParam = '&redlink=1';
 
-		CreatePage.flowName = window.wgFlowTrackingFlows.CREATE_PAGE_ARTICLE_REDLINK;
-		CreatePage.trackCreatePageStart(window.wgFlowTrackingFlows.CREATE_PAGE_ARTICLE_REDLINK);
+		CreatePage.flowName = redLinkFlowName;
+		CreatePage.trackCreatePageStart(redLinkFlowName);
 
 		if ( CreatePage.canUseVisualEditor() ) {
 			CreatePage.track( { action: 'click', label: 've-redlink-click' } );
@@ -305,9 +306,11 @@ var CreatePage = {
 			require(['wikia.querystring'], function(QueryString) {
 				// Create Page flow tracking, adding flow param in redlinks href.
 				// This parameter is added here to avoid reparsing all articles.
-				$( '#WikiaArticle').find( 'a.new' ).toArray().forEach(function(redlink) {
-					var qs = QueryString(redlink.href);
-					qs.setVal('flow', window.wgFlowTrackingFlows.CREATE_PAGE_ARTICLE_REDLINK);
+				$( '#WikiaArticle').find( 'a.new' ).each(function(index, redlink) {
+					var qs = QueryString(redlink.href),
+						redLinkFlow = CreatePage.getRedLinkFlowName();
+
+					qs.setVal('flow', redLinkFlow);
 					redlink.href = qs.toString();
 				});
 			});
@@ -365,6 +368,12 @@ var CreatePage = {
 				}
 			});
 		}
+	},
+
+	getRedLinkFlowName: function () {
+		return mw.config.get('wgNamespaceNumber') === -1
+			? window.wgFlowTrackingFlows.CREATE_PAGE_SPECIAL_REDLINK
+			: window.wgFlowTrackingFlows.CREATE_PAGE_ARTICLE_REDLINK;
 	},
 
 	// create page flow tracking
