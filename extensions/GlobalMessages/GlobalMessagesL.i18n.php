@@ -5153,6 +5153,7 @@ Bitte die normale Vorschau nutzen.',
 	'log-in-new' => 'Konto vorhanden? Melde dich an!',
 	'logdelete-log-message' => '$1 für $2 {{PLURAL:$2|Event|Events}}',
 	'logdelete-logentry' => 'Sichtbarkeit für das Event "[[$1]]" geändert',
+	'log_in' => 'Anmelden',
 ];
 
 $messages['de-ch'] = [
@@ -6075,6 +6076,7 @@ Intenta usar la previsualización normal.',
 ** Permiso|Tiene copyright, pero se permite su uso por parte del dueño',
 	'limit' => 'Límite',
 	'log-in-new' => '¿Dispones de una cuenta? Identifícate',
+	'log_in' => 'Identifícate',
 ];
 
 $messages['et'] = [
@@ -6576,6 +6578,7 @@ $1',
 	'logentry-newusers-create2' => '$1 یک حساب کاربری ایجاد کرد $3',
 	'logentry-newusers-autocreate' => 'کاروری حساب $1  بساتن به شکل خودکار',
 	'log-in-new' => 'از قبل حساب کاربری دارید؟ وارد سیستم شوید.',
+	'log_in' => 'وارد سیستم شوید',
 ];
 
 $messages['fi'] = [
@@ -10592,6 +10595,7 @@ Usare l\'anteprima standard.',
 	'login_greeting' => 'Benvenuto su Wikia, [[User:$1|$1]]!',
 	'login_as_another' => 'Esegui il login come un\'altro user',
 	'log-in-new' => 'Sei già registrato? Accedi',
+	'log_in' => 'Login',
 ];
 
 $messages['iu'] = [
@@ -10906,6 +10910,7 @@ $1',
 ** PD|これはパブリックドメインです
 ** Permission|これは著作権がありますが、著作権保持者によって使用が許可されています',
 	'log-in-new' => 'アカウントを既にお持ちですか？ログイン',
+	'log_in' => 'ログイン',
 ];
 
 $messages['jam'] = [
@@ -12469,6 +12474,7 @@ $1',
 	'logentry-newusers-create2' => '$1 사용자가 $3 계정을 생성했습니다.',
 	'logentry-newusers-autocreate' => '$1 계정이 자동적으로 생성되었습니다.',
 	'log-in-new' => '계정이 이미 있다면, 로그인하세요.',
+	'log_in' => '로그인',
 ];
 
 $messages['ko-kp'] = [
@@ -19416,6 +19422,7 @@ $1',
 **FAL|Free Art License
 **CopyrightedFreeUse|Разрешено использование правообладателем',
 	'log-in-new' => 'Уже есть учётная запись? Войти',
+	'log_in' => 'Вход',
 ];
 
 $messages['rue'] = [
