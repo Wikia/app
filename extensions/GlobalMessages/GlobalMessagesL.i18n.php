@@ -5148,6 +5148,7 @@ Bitte die normale Vorschau nutzen.',
 * PD|gemeinfrei (public domain)
 * CC-by-sa|CC-BY-SA: Creative Commons Attribution-ShareAlike
 * Bildzitat|Das Bild wird ausschließlich zur inhaltlichen Erläuterung genutzt',
+	'lockdb-wikifactory-error' => 'Ein Fehler ist aufgetreten: Konnte nicht speichern oder den Cache leeren. Die Datenbank ist unter Umständen nicht gesperrt. Bitte versuche es nochmal oder kontaktiere das Technik-Team.',
 ];
 
 $messages['de-ch'] = [
@@ -16623,13 +16624,13 @@ Er kan [[{{MediaWiki:Listgrouprights-helppage}}|extra informatie]] over individu
 	'lockdb' => 'Database blokkeren',
 	'lockdbtext' => 'Waarschuwing: de database blokkeren heeft tot gevolg dat geen enkele gebruiker meer in staat is pagina\'s te bewerken, voorkeuren te wijzigen of iets anders te doen waarvoor wijzigingen in de database nodig zijn.
 
-Bevestig dat u deze handeling wilt uitvoeren en dat u de database vrijgeeft nadat het onderhoud is uitgevoerd.',
+Bevestig dat je deze handeling wilt uitvoeren en dat je de database vrijgeeft nadat het onderhoud is uitgevoerd.',
 	'lockconfirm' => 'Ja, ik wil de database blokkeren.',
 	'lockbtn' => 'Database blokkeren',
 	'locknoconfirm' => 'U hebt uw keuze niet bevestigd via het vinkvakje.',
 	'lockdbsuccesssub' => 'De database is afgesloten',
 	'lockdbsuccesstext' => 'De database is afgesloten.<br />
-Vergeet niet de [[Special:UnlockDB|database vrij te geven]] zodra u klaar bent met uw onderhoud.',
+Vergeet niet de [[Special:UnlockDB|database vrij te geven]] zodra je klaar bent met je onderhoud.',
 	'lockfilenotwritable' => 'Geen schrijfrechten op het databaselockbestand.
 Om de database te kunnen blokkeren of vrij te geven, dient de webserver schrijfrechten op dit bestand te hebben.',
 	'lockedbyandtime' => '(door $1 om $3 op $2)',
@@ -16939,6 +16940,7 @@ Ei [[Special:WhatLinksHere/$2|fullstendig liste]] er tilgjengeleg.',
 	'login_greeting' => 'Velkommen til Wikia, [[User:$1|$1]]!',
 	'login_as_another' => 'Logg inn som en annen bruker',
 	'limit' => 'Grense',
+	'lockdb-wikifactory-error' => 'En feil oppstod. Lagring eller fjerning av cache mislykket. Databasen er kanskje ikke låst. Vennligst prøv igjen eller kontakt teknikkansvarlig.',
 ];
 
 $messages['nov'] = [
