@@ -5114,8 +5114,8 @@ Zusätzliche Informationen über einzelne Rechte können [[{{MediaWiki:Listgroup
 	'lastmodifiedatby' => 'Diese Seite wurde zuletzt am $1 um $2 Uhr von $3 geändert.',
 	'log-show-hide-patrol' => 'Kontroll-Logbuch $1',
 	'limitall' => 'alle',
-	'livepreview-loading' => 'Am Laden …',
-	'livepreview-ready' => 'Laden … Fertig!',
+	'livepreview-loading' => 'Lädt…',
+	'livepreview-ready' => 'Lädt… Fertig!',
 	'livepreview-failed' => 'Die sofortige Vorschau ist nicht möglich!
 Bitte die normale Vorschau nutzen.',
 	'livepreview-error' => 'Verbindung nicht möglich: $1 „$2“. Bitte die normale Vorschau benutzen.',
