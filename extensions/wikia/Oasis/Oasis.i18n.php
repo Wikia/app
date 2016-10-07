@@ -714,8 +714,8 @@ $messages['de'] = [
 	'oasis-latest-activity-delete-details' => 'gelöscht von $1 $2',
 	'oasis-edit-this-menu' => 'Dieses Menü bearbeiten',
 	'oasis-interlang-languages' => 'Sprachen:',
-	'imageseo-featured-on' => 'Verwendet in:',
-	'imageseo-featured-more' => 'mehr...',
+	'imageseo-featured-on' => 'Verwendet in:&nbsp;',
+	'imageseo-featured-more' => 'mehr&hellip;',
 	'oasis-editpage-readonlywarning' => '<h2>Sorry!</h2>
 <p>Du kannst diese Seite im derzeit nicht bearbeiten. Es sollte aber in Kürze wieder alles normal laufen. Das ist das Problem:<br /><em>$1</em></p>
 <p>Bei <a href="https://twitter.com/wikia_de">Twitter</a> oder <a href="https://www.facebook.com/wikia.de/">Facebook</a> erhältst du nähere Informationen.</p>',
@@ -2166,8 +2166,8 @@ $messages['ja'] = [
 	'oasis-latest-activity-delete-details' => '$1さんが削除しました（$2）',
 	'oasis-edit-this-menu' => 'このメニューを編集',
 	'oasis-interlang-languages' => '言語:',
-	'imageseo-featured-on' => '掲載:',
-	'imageseo-featured-more' => 'もっと見る...',
+	'imageseo-featured-on' => '使用しているページ:',
+	'imageseo-featured-more' => 'さらに見る…',
 	'oasis-navigation-v2-create-page' => '新しいページをつくる',
 	'oasis-navigation-v2-edit-page' => 'このページを編集',
 	'oasis-navigation-v2-add-photo' => '写真を追加',
@@ -2284,6 +2284,8 @@ $messages['ko'] = [
 	'oasis-navigation-v2-edit-wikia-local-menu' => '위키아 제공 메뉴 편집하기',
 	'oasis-search-results-from-all-wikis' => '위키아 전체에서 가져온 결과입니다.',
 	'oasis-spotlights-footer-title' => '다른 위키 둘러보기<br /><a href="http://bit.ly/wikia-ko-spotlightreqestpage-ref-aroundthenetworksection"><span style="font-style: italic; font-size:80%;">이곳에서 여러분의 위키아를 알릴 수 있어요</span></a>',
+	'imageseo-featured-more' => '더 보기&hellip;',
+	'imageseo-featured-on' => '이 파일을 사용하는 문서:',
 ];
 
 $messages['ku-latn'] = [
