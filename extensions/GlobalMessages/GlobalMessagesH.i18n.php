@@ -2547,6 +2547,8 @@ $messages['de'] = [
 	'hub-Videospiele' => 'Videospiele',
 	'hub-Lifestyle' => 'Lifestyle',
 	'hub-Wikia' => 'Fandom',
+	'hidebots' => 'Bots ausblenden',
+	'hidesome' => 'Einige verbergen',
 ];
 
 $messages['de-formal'] = [
@@ -2947,6 +2949,8 @@ Prueba a [[Special:Search|buscar en el wiki]] nuevas páginas relevantes.',
 	'helpfaq' => 'Ayuda y preguntas frecuentes',
 	'highest_ratings' => 'Mejor puntuados',
 	'hub-Wikia' => 'Fandom',
+	'hidebots' => 'Ocultar bots',
+	'hidesome' => 'Ocultar Algo',
 ];
 
 $messages['et'] = [
@@ -3172,6 +3176,7 @@ $messages['fa'] = [
 	'htmlform-submit' => 'ارسال',
 	'htmlform-reset' => 'خنثی کردن تغییرات',
 	'htmlform-selectorother-other' => 'دیگر',
+	'hidebots' => 'نهفتن ربات‌ها',
 ];
 
 $messages['ff'] = [
@@ -3231,6 +3236,7 @@ Kokeile [[Special:Search|hakua]] löytääksesi asiaan liittyviä sivuja.',
 	'home' => 'Etusivu',
 	'helpfaq' => 'Ohje ja UKK',
 	'highest_ratings' => 'Korkeimmat arvosanat',
+	'hidesome' => 'Piilota joitakin',
 ];
 
 $messages['fiu-vro'] = [
@@ -3384,6 +3390,7 @@ Essayez de [[Special:Search|rechercher sur le wiki]] pour trouver des pages en r
 	'helpfaq' => 'Aide et FAQ',
 	'highest_ratings' => 'Les meilleurs notes',
 	'hub-Wikia' => 'Fandom',
+	'hidebots' => 'Masquer les robots',
 ];
 
 $messages['frc'] = [
@@ -8316,6 +8323,8 @@ $messages['no'] = [
 	'home' => 'Hovedside',
 	'helpfaq' => 'Hjelp & Ofte stilte spørsmål',
 	'highest_ratings' => 'Høyest rangert',
+	'hidebots' => 'Skjul roboter',
+	'hidesome' => 'Skjul noen',
 ];
 
 $messages['nov'] = [
@@ -9452,7 +9461,7 @@ $messages['ru'] = [
 	'history' => 'история',
 	'history_short' => 'история',
 	'helppage' => 'Help:Содержание',
-	'hidetoc' => 'убрать',
+	'hidetoc' => 'свернуть',
 	'headline_sample' => 'Текст заголовка',
 	'headline_tip' => 'Заголовок 2-го уровня',
 	'hr_tip' => 'Горизонтальная линия (не используйте часто)',
