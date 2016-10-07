@@ -17,8 +17,6 @@ class ContributeMenuController extends WikiaController {
 	];
 
 	public function executeIndex() {
-		global $wgEnableFlowTracking;
-
 		// add "edit this page" item
 		$dropdownItems = array();
 		$content_actions = $this->app->getSkinTemplateObj()->data[ 'content_actions' ];
