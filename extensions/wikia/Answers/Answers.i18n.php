@@ -458,7 +458,7 @@ $messages['de'] = [
 	'question_asked_by_a_wikia_user' => 'Frage eines Fandom-Benutzers',
 	'new_question_comment' => 'neue Frage',
 	'answers_toolbox' => 'Wikianswers-Toolbox',
-	'improve_this_answer' => 'Diese Antwort verbessern',
+	'improve_this_answer' => 'Verbessere diese Antwort',
 	'answer_this_question' => 'Beantworte diese Frage',
 	'notify_improved' => 'E-Mail bei Verbesserung',
 	'research_this' => 'Das hier recherchieren',
@@ -1409,6 +1409,7 @@ $messages['ja'] = [
 	'createaccount-captcha' => '下の文字列を入力してください',
 	'custom_category' => 'カスタムカテゴリ',
 	'edit_points' => '編集ポイント',
+	'improve_this_answer' => 'この回答を更新する',
 ];
 
 $messages['lb'] = [
@@ -2053,7 +2054,7 @@ $messages['pl'] = [
 	'question_asked_by_a_wikia_user' => 'Pytanie zadane przez użytkownika Fandomu',
 	'new_question_comment' => 'nowe pytanie',
 	'answers_toolbox' => 'Narzędzia Wikianswers',
-	'improve_this_answer' => 'Popraw tą odpowiedź',
+	'improve_this_answer' => 'Rozwiń odpowiedź',
 	'answer_this_question' => 'Odpowiedz na to pytanie:',
 	'notify_improved' => 'Wyślij e-mail przy poprawie',
 	'research_this' => 'Wyszukaj',
@@ -2158,6 +2159,7 @@ $messages['pt'] = [
 	'ask_friends_on_twitter' => 'Pergunte aos seus amigos no <a href="$1">Twitter</a>',
 	'ask_thanks' => 'Obrigado pela otima pergunta!',
 	'badWords' => 'merda filhodaputa bunda',
+	'improve_this_answer' => 'Melhore esta resposta',
 ];
 
 $messages['pt-br'] = [
@@ -2182,6 +2184,7 @@ $messages['pt-br'] = [
 	'ask_friends_on_twitter' => 'Pergunte aos seus amigos no <a href="$1">Twitter</a>',
 	'ask_thanks' => 'Obrigado pela otima pergunta!',
 	'badWords' => 'merda filhodaputa bunda',
+	'improve_this_answer' => 'Melhore esta resposta',
 ];
 
 $messages['roa-tara'] = [
@@ -2555,6 +2558,7 @@ $messages['no'] = [
 	'facebook_signed_in' => 'Du er logget inn i Facebook Connect',
 	'get_code' => 'Få kode',
 	'get_widget_title' => 'Legg til spørsmål på siden din',
+	'improve_this_answer' => 'Forbedre dette svaret',
 ];
 
 $messages['zh-hant'] = [
