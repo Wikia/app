@@ -5151,6 +5151,8 @@ Bitte die normale Vorschau nutzen.',
 	'lockdb-wikifactory-error' => 'Ein Fehler ist aufgetreten: Konnte nicht speichern oder den Cache leeren. Die Datenbank ist unter Umständen nicht gesperrt. Bitte versuche es nochmal oder kontaktiere das Technik-Team.',
 	'locked' => 'gesperrt',
 	'log-in-new' => 'Konto vorhanden? Melde dich an!',
+	'logdelete-log-message' => '$1 für $2 {{PLURAL:$2|Event|Events}}',
+	'logdelete-logentry' => 'Sichtbarkeit für das Event "[[$1]]" geändert',
 ];
 
 $messages['de-ch'] = [
