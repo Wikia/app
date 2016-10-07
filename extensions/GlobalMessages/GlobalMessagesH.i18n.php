@@ -2549,6 +2549,9 @@ $messages['de'] = [
 	'hub-Wikia' => 'Fandom',
 	'hidebots' => 'Bots ausblenden',
 	'hidesome' => 'Einige verbergen',
+	'hub-Food_and_Drink' => 'Essen und Trinken',
+	'hub-Video_Games' => 'Videospiele',
+	'hubs' => 'Portale',
 ];
 
 $messages['de-formal'] = [
@@ -3239,6 +3242,7 @@ Kokeile [[Special:Search|hakua]] löytääksesi asiaan liittyviä sivuja.',
 	'helpfaq' => 'Ohje ja UKK',
 	'highest_ratings' => 'Korkeimmat arvosanat',
 	'hidesome' => 'Piilota joitakin',
+	'hubs' => 'Hubit',
 ];
 
 $messages['fiu-vro'] = [
@@ -3393,6 +3397,11 @@ Essayez de [[Special:Search|rechercher sur le wiki]] pour trouver des pages en r
 	'highest_ratings' => 'Les mieux notées',
 	'hub-Wikia' => 'Fandom',
 	'hidebots' => 'Masquer les robots',
+	'hub-Entertainment' => 'Divertissement',
+	'hub-Gaming' => 'Jeux vidéo',
+	'hub-Lifestyle' => 'Mode de vie',
+	'hub-Video_Games' => 'Jeux vidéo',
+	'hubs' => 'Thèmes',
 ];
 
 $messages['frc'] = [
@@ -5092,8 +5101,13 @@ Legenda: \'\'\'({{int:cur}})\'\'\' = differenze con la versione attuale, \'\'\'(
 	'htmlform-submit' => 'Invia',
 	'htmlform-reset' => 'Annulla modifiche',
 	'htmlform-selectorother-other' => 'Altro',
-	'hub-Wikia' => 'Fandom',
+	'hub-Wikia' => 'Wikia',
 	'highest_ratings' => 'Valutazioni migliori',
+	'hub-Entertainment' => 'Intrattenimento',
+	'hub-Food_and_Drink' => 'Cibo e bevande',
+	'hub-Gaming' => 'Videogiochi',
+	'hub-Lifestyle' => 'Stili di vita',
+	'hub-Video_Games' => 'Videogiochi',
 ];
 
 $messages['iu'] = [
@@ -6086,6 +6100,11 @@ $messages['ko'] = [
 	'htmlform-reset' => '변경한 것을 되돌리기',
 	'htmlform-selectorother-other' => '기타',
 	'hub-Wikia' => '위키아',
+	'hub-Entertainment' => '엔터테인먼트',
+	'hub-Food_and_Drink' => '음식과 음료',
+	'hub-Gaming' => '게임',
+	'hub-Lifestyle' => '라이프스타일',
+	'hub-Video_Games' => '게임',
 ];
 
 $messages['ko-kp'] = [
@@ -8328,6 +8347,7 @@ $messages['no'] = [
 	'highest_ratings' => 'Høyest rangert',
 	'hidebots' => 'Skjul roboter',
 	'hidesome' => 'Skjul noen',
+	'hubs' => 'Hubber',
 ];
 
 $messages['nov'] = [
@@ -8774,10 +8794,11 @@ Spróbuj [[Special:Search|poszukać]] tej strony.',
 	'helpfaq' => 'Pomoc i FAQ',
 	'highest_ratings' => 'Najwyżej oceniane',
 	'hub-Entertainment' => 'Rozrywka',
-	'hub-Gaming' => 'Gry wideo',
+	'hub-Gaming' => 'Gry',
 	'hub-Video_Games' => 'Gry wideo',
 	'hub-Lifestyle' => 'Lifestyle',
 	'hub-Wikia' => 'Fandom',
+	'hubs' => 'Huby',
 ];
 
 $messages['pms'] = [
@@ -9539,7 +9560,13 @@ $messages['ru'] = [
 	'home' => 'Домой',
 	'helpfaq' => 'Помощь и FAQ',
 	'highest_ratings' => 'Самые высокие рейтинги',
-	'hub-Wikia' => 'Фэндом',
+	'hub-Wikia' => 'Викия',
+	'hub-Entertainment' => 'Entertainment',
+	'hub-Food_and_Drink' => 'Еда и напитки',
+	'hub-Gaming' => 'Видеоигры',
+	'hub-Lifestyle' => 'Увлечения',
+	'hub-Video_Games' => 'Видеоигры',
+	'hub-Videospiele' => 'Видеоигры',
 ];
 
 $messages['rue'] = [
@@ -11922,6 +11949,9 @@ Chú giải: (hiện) = khác với phiên bản hiện hành,
 	'htmlform-selectorother-other' => 'Khác',
 	'home' => 'trang chính',
 	'helpfaq' => 'Trợ giúp & Vấn đáp',
+	'hub-Entertainment' => 'Giải trí',
+	'hub-Gaming' => 'Trò chơi điện tử',
+	'hub-Lifestyle' => 'Lối sống',
 ];
 
 $messages['vls'] = [
