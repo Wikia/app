@@ -677,6 +677,7 @@ $messages['es'] = [
 	'ask_friends' => 'Pide ayuda a tus amigos para responder esto:',
 	'ask_thanks' => '¡Gracias por la magnífica pregunta!',
 	'edit_points' => '{{PLURAL:$1|punto de edición|puntos de edición}}',
+	'header_questionmark_pre' => '¿',
 ];
 
 $messages['fi'] = [
@@ -2132,6 +2133,7 @@ $messages['ps'] = [
 	'answers-sky' => 'اسمان',
 	'answers-forest' => 'ځنګل',
 	'answers-carbon' => 'کاربون',
+	'header_questionmark_post' => '؟',
 ];
 
 $messages['pt'] = [
