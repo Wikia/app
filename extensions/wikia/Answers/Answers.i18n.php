@@ -2566,6 +2566,7 @@ $messages['no'] = [
 	'in_category' => '...i kategorien',
 	'inline-register-title' => 'Meld fra til meg når spørsmålet mitt blir besvart!',
 	'inline-welcome' => 'Velkommen til Wikisvar',
+	'link_color' => 'Lenkefarge for spørsmål',
 ];
 
 $messages['zh-hant'] = [
