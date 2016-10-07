@@ -1,9 +1,5 @@
 /* global $ */
 var CreatePage = {
-	// keep these constants up to date with wikia.flowTracking.flows
-	CREATE_PAGE_CONTRIBUTE_BUTTON: 'create-page-contribute-button',
-	CREATE_PAGE_REDLINK: 'create-page-redlink',
-
 	pageLayout: null,
 	options: {},
 	loading: false,
@@ -273,12 +269,13 @@ var CreatePage = {
 		'use strict';
 		var title = new mw.Title.newFromText( decodeURIComponent( titleText ) ),
 			namespace = title.getNamespacePrefix().replace( ':', '' ),
-			visualEditorActive = $( 'html' ).hasClass( 've-activated' );
+			visualEditorActive = $( 'html' ).hasClass( 've-activated'),
+			redLinkFlowName = CreatePage.getRedLinkFlowName();
 
 		CreatePage.redlinkParam = '&redlink=1';
 
-		CreatePage.flowName = CreatePage.CREATE_PAGE_REDLINK;
-		CreatePage.trackCreatePageStart(CreatePage.CREATE_PAGE_REDLINK);
+		CreatePage.flowName = redLinkFlowName;
+		CreatePage.trackCreatePageStart(redLinkFlowName);
 
 		if ( CreatePage.canUseVisualEditor() ) {
 			CreatePage.track( { action: 'click', label: 've-redlink-click' } );
@@ -301,20 +298,8 @@ var CreatePage = {
 		CreatePage.context = context;
 
 		$( '.WikiaMenuElement .createpage' ).click(function() {
-			CreatePage.trackCreatePageStart(CreatePage.CREATE_PAGE_CONTRIBUTE_BUTTON);
-			CreatePage.flowName = CreatePage.CREATE_PAGE_CONTRIBUTE_BUTTON;
-		});
-
-		$( function() {
-			require(['wikia.querystring'], function(QueryString) {
-				// Create Page flow tracking, adding flow param in redlinks href.
-				// This parameter is added here to avoid reparsing all articles.
-				$( '#WikiaArticle').find( 'a.new' ).toArray().forEach(function(redlink) {
-					var qs = QueryString(redlink.href);
-					qs.setVal('flow', CreatePage.CREATE_PAGE_REDLINK);
-					redlink.href = qs.toString();
-				});
-			});
+			CreatePage.trackCreatePageStart(window.wgFlowTrackingFlows.CREATE_PAGE_CONTRIBUTE_BUTTON);
+			CreatePage.flowName = window.wgFlowTrackingFlows.CREATE_PAGE_CONTRIBUTE_BUTTON;
 		});
 
 		if ( window.WikiaEnableNewCreatepage ) {
@@ -369,6 +354,12 @@ var CreatePage = {
 				}
 			});
 		}
+	},
+
+	getRedLinkFlowName: function () {
+		return mw.config.get('wgNamespaceNumber') === -1
+			? window.wgFlowTrackingFlows.CREATE_PAGE_SPECIAL_REDLINK
+			: window.wgFlowTrackingFlows.CREATE_PAGE_ARTICLE_REDLINK;
 	},
 
 	// create page flow tracking
