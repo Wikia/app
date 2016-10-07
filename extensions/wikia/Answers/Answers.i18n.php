@@ -497,11 +497,11 @@ $messages['de'] = [
 	'question_redirected_help_page' => 'Warum wurde meine Frage hierhin weitergeleitet',
 	'twitter_hashtag' => 'Wikianswers',
 	'twitter_ask' => 'Auf Twitter fragen',
-	'facebook_ask' => 'Auf Facebook fragen',
-	'facebook_send_request' => 'Direkt an Freunde senden',
+	'facebook_ask' => 'Stelle diese Frage in Facebook',
+	'facebook_send_request' => 'Schicke direkt an meine Freunde',
 	'ask_friends' => 'Bitte deine Freunde um Hilfe bei der Antwort:',
-	'facebook_send_request_content' => 'Kannst du helfen das zu beantworten? $1',
-	'facebook_signed_in' => 'Du bist bei Facebook Connect angemeldet',
+	'facebook_send_request_content' => 'Kannst du mir helfen das zu beantworten? $1',
+	'facebook_signed_in' => 'Du bist über Facebook Connect eingeloggt',
 	'ads_by_google' => 'Google-Anzeigen',
 	'magic_answer_headline' => 'Ist deine Frage damit beantwortet?',
 	'magic_answer_yes' => 'Ja, dies als Ausgangspunkt verwenden',
@@ -2090,9 +2090,9 @@ $messages['pl'] = [
 	'twitter_hashtag' => 'wikianswers',
 	'twitter_ask' => 'Zapytaj na Twitterze',
 	'facebook_ask' => 'Zapytaj na Facebooku',
-	'facebook_send_request' => 'Wyślij do Znajomych',
+	'facebook_send_request' => 'Wyślij bezpośrednio do znajomych',
 	'ask_friends' => 'Poproś znajomych aby pomogli odpowiedzieć:',
-	'facebook_send_request_content' => 'Możesz pomóc w odpowiedzi? $1',
+	'facebook_send_request_content' => 'Możesz pomóc odpowiedzieć na to? $1',
 	'ads_by_google' => 'Reklamy Google',
 	'magic_answer_headline' => 'Czy to wystarczająca odpowiedź?',
 	'magic_answer_yes' => 'Tak, użyj tego jako punkt wyjścia',
@@ -2108,6 +2108,7 @@ $messages['pl'] = [
 	'categorize_help' => 'Jedna kategoria na linię',
 	'a' => 'Odpowiedź:',
 	'edit_points' => '{{PLURAL:$1|punkt edycji|punkty edycji|punktów edycji}}',
+	'facebook_signed_in' => 'Jesteś {{GENDER:|zalogowany|zalogowana|zalogowany/a}} przez Facebook Connect',
 ];
 
 $messages['pms'] = [
@@ -2544,6 +2545,10 @@ $messages['no'] = [
 	'createaccount-captcha' => 'Vennligst skriv ordet under',
 	'custom_category' => 'Egendefinert kategori',
 	'edit_points' => '{{PLURAL:$1|redigeringspoeng|redigeringspoeng}}',
+	'facebook_ask' => 'Spør på Facebook',
+	'facebook_send_request' => 'Send direkte til venner',
+	'facebook_send_request_content' => 'Kan du hjelpe til med å besvare dette? $1',
+	'facebook_signed_in' => 'Du er logget inn i Facebook Connect',
 ];
 
 $messages['zh-hant'] = [
@@ -2567,6 +2572,9 @@ $messages['ko'] = [
 	'background_color' => '배경색',
 	'createaccount-captcha' => '아래에 단어를 입력하세요',
 	'edit_points' => '포인트',
+	'facebook_ask' => 'Facebook에 문의하기',
+	'facebook_send_request' => 'Facebook 친구들에게 바로 보내기',
+	'facebook_signed_in' => 'Facebook 연동 기능을 사용하여 로그인했습니다.',
 ];
 
 $messages['bg'] = [
