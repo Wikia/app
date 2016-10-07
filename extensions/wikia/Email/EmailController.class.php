@@ -407,7 +407,7 @@ abstract class EmailController extends \WikiaController {
 
 	private function generateMobileApplicationsBadges() {
 		$linksGenerator = new MobileApplicationsLinksGenerator();
-		$mobileApplicationsLinks = $linksGenerator->generate();
+		$mobileApplicationsLinks = $linksGenerator->generate( $this->targetLang );
 		$hasMobileApplicationBadges = count( $mobileApplicationsLinks ) > 0;
 		$badges = null;
 
