@@ -60,14 +60,10 @@ class MobileApplicationsLinksGenerator {
 				$mobileApplications = json_decode( $response, true );
 				$mobileApplicationsLinks =
 					$this->traverseThrough( $mobileApplications, $storeLanguage );
-			} else {
-				$mobileApplicationsLinks[self::ANDROID_PLATFORM] =
-					sprintf( self::WIKIA_GOOGLE_PALY_URL,
-						$this->prepareLanguageForGooglePlay( $storeLanguage ) );
-				$mobileApplicationsLinks[self::IOS_PLATFORM] =
-					sprintf( self::WIKIA_APP_STORE_URL,
-						$this->prepareLanguageForAppStore( $storeLanguage ) );
 			}
+
+			$mobileApplicationsLinks =
+				$this->fillWithWikiaAccountLinksIfEmpty( $mobileApplicationsLinks, $storeLanguage );
 
 			// Even if response is not valid (for example there are some difficulties with mobile applications service)
 			// result will be cached to prevent too long delays in email generation
@@ -78,10 +74,41 @@ class MobileApplicationsLinksGenerator {
 		return $mobileApplicationsLinks;
 	}
 
+	/**
+	 * Fills array with wikia mobile application store link if application was not found
+	 *
+	 * @param array $mobileApplicationsLinks
+	 * @param string $storeLanguage
+	 * @return array with links to app store and google play
+	 */
+	private function fillWithWikiaAccountLinksIfEmpty( $mobileApplicationsLinks, $storeLanguage ) {
+		if ( empty ( $mobileApplicationsLinks[self::ANDROID_PLATFORM] ) ) {
+			$mobileApplicationsLinks[self::ANDROID_PLATFORM] =
+				sprintf( self::WIKIA_GOOGLE_PALY_URL,
+					$this->prepareLanguageForGooglePlay( $storeLanguage ) );
+		}
+
+		if ( empty( $mobileApplicationsLinks[self::IOS_PLATFORM] ) ) {
+			$mobileApplicationsLinks[self::IOS_PLATFORM] =
+				sprintf( self::WIKIA_APP_STORE_URL,
+					$this->prepareLanguageForAppStore( $storeLanguage ) );
+		}
+
+		return $mobileApplicationsLinks;
+	}
+
+	/**
+	 * @param string $language
+	 * @return string
+	 */
 	private function prepareLanguageForGooglePlay( $language ) {
 		return $language;
 	}
 
+	/**
+	 * @param string $language
+	 * @return string
+	 */
 	private function prepareLanguageForAppStore( $language ) {
 		return empty ( self::$appStoreLanguagesMapping[$language] ) ? 'us'
 			: self::$appStoreLanguagesMapping[$language];
