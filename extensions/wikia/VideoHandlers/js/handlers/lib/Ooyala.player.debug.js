@@ -20334,8 +20334,6 @@ OO.plugin("Librato", function(OO, _, $, W) {
     var protocol = OO.isSSL ? "https:" : "http:";
     var bootJsSrc = protocol + IMA_JS;
 
-    bootJsSrc = _sp_.getSafeUri(bootJsSrc);
-
     W.googleImaSdkLoadedCbList = W.googleImaSdkLoadedCbList  || [];
     W.googleImaSdkFailedCbList = W.googleImaSdkFailedCbList || [];
     W.googleImaSdkLoaded = false;

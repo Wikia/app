@@ -36,6 +36,7 @@ EOT;
 				'title' => $this->title,
 				'jsFile' => array(
 					$jsFile,
+					"extensions/wikia/VideoHandlers/js/handlers/lib/OoyalaIma.js",
 					"extensions/wikia/VideoHandlers/js/handlers/lib/OoyalaAgeGate.js",
 				),
 			),
