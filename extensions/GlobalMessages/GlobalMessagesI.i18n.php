@@ -179,7 +179,7 @@ Please try again.',
 	'imagereverted' => 'Revert to earlier version was successful. <strong>This change may take up to 2 minutes to be visible.</strong>',
 	'irc' => 'Live wiki help',
 	'irc-url' => 'http://irc.wikia.com/',
-	'insertimage' => 'Insert image',
+	'insertimage' => 'Insert photo',
 	'its_easy' => '...it\'s easy and free',
 	'import-article-missing-single' => '$1 was not found (requested by user-supplied javascript)',
 	'import-article-missing-multiple' => '$1 $2 were not found (requested by user-supplied javascript)',
@@ -5198,6 +5198,7 @@ Diese auf dem lokalen Rechner speichern und danach hier hochladen.',
 	'imgmultigoto' => 'Gehe zu Seite $1',
 	'intentionallyblankpage' => 'Diese Seite ist absichtlich ohne Inhalt. Sie wird für Benchmarks verwendet.',
 	'imagereverted' => 'Das Zurücksetzen auf eine vorherige Version war erfolgreich. <strong>Es kann einige Minuten dauern, bis die Änderung sichtbar wird.</strong>',
+	'insertimage' => 'Bild einfügen',
 ];
 
 $messages['de-ch'] = [
@@ -6802,6 +6803,7 @@ https://www.mediawiki.org/wiki/Manual:Image_Authorization را ببینید.',
 	'iranian-calendar-m11' => 'بهمن',
 	'iranian-calendar-m12' => 'اسفند',
 	'intentionallyblankpage' => 'این صفحه به طور عمدی خالی گذاشته شده است.',
+	'insertimage' => 'درج‌کردن تصویر',
 ];
 
 $messages['ff'] = [
@@ -6960,6 +6962,7 @@ Tallenna tiedot koneellesi ja tuo ne tällä sivulla.',
 	'imgmultigoto' => 'Sivu $1',
 	'intentionallyblankpage' => 'Tämä sivu on tarkoituksellisesti tyhjä.',
 	'imagereverted' => 'Palautus aiempaan versioon onnistui. <strong>Tällä muutoksella voi kestää jopa 2 minuuttia näkyä.</strong>',
+	'insertimage' => 'Sisällytä kuva',
 ];
 
 $messages['fiu-vro'] = [
@@ -11348,7 +11351,7 @@ CGI ベースであるため、img_auth に対応できない可能性もあり�
 	'intentionallyblankpage' => 'このページは意図的に白紙にされています。',
 	'irc' => 'IRCにるヘルプ',
 	'irc-url' => 'http://irc.wikia.com/',
-	'insertimage' => '画像を挿入する',
+	'insertimage' => '画像をインポートする',
 	'its_easy' => '簡単、無料',
 ];
 
@@ -17717,6 +17720,7 @@ For best tryggleik, er img_auth.php sett ut av funksjon.',
 	'imgmultigoto' => 'Gå til sida $1',
 	'intentionallyblankpage' => 'Denne sida er tom med vilje',
 	'imagereverted' => 'Tilbakestilling til tidligere versjon var vellykket. <strong>Denne endring kan ta opp til to mintter før den er synlig.</strong>',
+	'insertimage' => 'Sett inn bilde',
 ];
 
 $messages['nov'] = [
@@ -20287,6 +20291,7 @@ $messages['ru'] = [
 	'iranian-calendar-m11' => 'Бахман',
 	'iranian-calendar-m12' => 'Эсфанд',
 	'intentionallyblankpage' => 'Эта страница намеренно оставлена пустой',
+	'insertimage' => 'Вставить фото',
 ];
 
 $messages['rue'] = [
