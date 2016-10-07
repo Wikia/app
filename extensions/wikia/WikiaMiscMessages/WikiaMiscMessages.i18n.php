@@ -557,6 +557,9 @@ Dein freundliches {{SITENAME}}-Benachrichtigungssystem
 </ul>
 </p>',
 	'enotif_lastvisited-HTML' => 'Für alle Änderungen auf einen Blick <a href="$1">klicke hier</a>.',
+	'founderemails-email-user-registered-body-HTML' => 'Hallo $USERNAME,<br /><br />
+Es sieht so aus, als ob sich $EDITORNAME in deinem Wiki registriert hat! Warum besuchst du nicht seine <a href="$EDITORTALKPAGEURL">Diskussionsseite</a>, um Hallo zu sagen?<br /><br />
+<div style="font-style: italic; font-size: 120%;">-- Das Wikia-Team</div>',
 ];
 
 $messages['es'] = [
@@ -916,6 +919,18 @@ Un nouveau commentaire a été laissé sur « $PAGETITLE » sur {{SITENAME}}. Ut
 </p>
 <div style="font-size: 70%;margin-top: 25px;text-align: center;">Cliquez <a href="http://communaute.wikia.com/Special:Preferences">ici</a> pour vous désabonner de tous les e-mails de Wikia.</div>',
 	'enotif_lastvisited-HTML' => 'Pour toutes les modifications depuis votre dernière visite, <a href="$1">cliquez ici</a>',
+	'founderemails-email-user-registered-body-HTML' => 'Bonjour $USERNAME,<br /><br />
+On dirait que $EDITORNAME a créé un compte sur votre wikia ! Pourquoi ne pas passer lui dire bonjour sur sa <a href="$EDITORTALKPAGEURL">page de discussion</a> ?<br /><br />
+
+<p style="line-height: 150%;font-family:Arial,sans-serif;color: #333;">– L’équipe Wikia</p>
+<br /><hr />
+<p>
+<ul>
+<li><a href="http://communaute.wikia.com">Venez voir les derniers évènements sur Wikia !</a></li>
+<li>Vous souhaitez contrôler les e-mails que vous recevez ? Rendez-vous sur vos <a href="{{fullurl:{{ns:special}}:Preferences}}">préférences</a></li>
+</ul>
+</p>
+<div style="font-size: 70%;margin-top: 25px;text-align: center;">Cliquez <a href="$UNSUBSCRIBEURL">ici</a> pour vous désabonner à tous les e-mails de Wikia.</div>',
 ];
 
 $messages['it'] = [
@@ -1252,6 +1267,9 @@ ___________________________________________
 </ul>
 </p>',
 	'enotif_lastvisited-HTML' => '<a href="$1">点击这里</a>来查看自从你上次造访该页面后的所有更改。',
+	'founderemails-email-page-edited-body-HTML' => '<strong>嗨 $1,</strong><br /><br />
+$2 编辑了你的 wiki! 何不到他们的<a href="$3">用户页</a>打个招呼？<br /><br />
+<div style="font-style: italic; font-size: 120%;">-- The Wikia 团队</div>',
 ];
 
 $messages['zh-hans'] = [
@@ -1307,6 +1325,9 @@ ___________________________________________
 </ul>
 </p>',
 	'enotif_lastvisited-HTML' => '<a href="$1">点击这里</a>来查看自从你上次造访该页面后的所有更改。',
+	'founderemails-email-page-edited-body-HTML' => '<strong>嗨 $1,</strong><br /><br />
+$2 编辑了你的 wiki! 何不到他们的<a href="$3">用户页</a>打个招呼？<br /><br />
+<div style="font-style: italic; font-size: 120%;">-- The Wikia 团队</div>',
 ];
 
 $messages['zh-hant'] = [
@@ -1362,6 +1383,12 @@ ___________________________________________
 </ul>
 </p>',
 	'enotif_lastvisited-HTML' => '<a href="$1">點擊這裡</a>來查看自從你上次造訪該頁面後的所有更改。',
+	'founderemails-email-page-edited-body-HTML' => '<strong>嗨 $1,</strong><br /><br />
+$2 編輯了你的 wiki! 何不到他們的<a href="$3">用戶頁</a>打個招呼？<br /><br />
+<div style="font-style: italic; font-size: 120%;">-- The Wikia 團隊</div>',
+	'founderemails-email-user-registered-body-HTML' => '嗨$USERNAME,<br /><br />
+$EDITORNAME在你的Wiki上註冊了！何不訪問一下新成員的<a href="$EDITORTALKPAGEURL">對話頁</a>去打個招呼呢？<br /><br />
+<div style="font-style: italic; font-size: 120%;">-- Wikia團隊</div>',
 ];
 
 $messages['zh-hk'] = [
@@ -1417,6 +1444,12 @@ ___________________________________________
 </ul>
 </p>',
 	'enotif_lastvisited-HTML' => '<a href="$1">點擊這裡</a>來查看自從你上次造訪該頁面後的所有更改。',
+	'founderemails-email-page-edited-body-HTML' => '<strong>嗨 $1,</strong><br /><br />
+$2 編輯了你的 wiki! 何不到他們的<a href="$3">用戶頁</a>打個招呼？<br /><br />
+<div style="font-style: italic; font-size: 120%;">-- The Wikia 團隊</div>',
+	'founderemails-email-user-registered-body-HTML' => '嗨$USERNAME,<br /><br />
+$EDITORNAME在你的Wiki上註冊了！何不訪問一下新成員的<a href="$EDITORTALKPAGEURL">對話頁</a>去打個招呼呢？<br /><br />
+<div style="font-style: italic; font-size: 120%;">-- Wikia團隊</div>',
 ];
 
 $messages['zh-tw'] = [
@@ -1472,6 +1505,12 @@ ___________________________________________
 </ul>
 </p>',
 	'enotif_lastvisited-HTML' => '<a href="$1">點擊這裡</a>來查看自從你上次造訪該頁面後的所有更改。',
+	'founderemails-email-page-edited-body-HTML' => '<strong>嗨 $1,</strong><br /><br />
+$2 編輯了你的 wiki! 何不到他們的<a href="$3">用戶頁</a>打個招呼？<br /><br />
+<div style="font-style: italic; font-size: 120%;">-- The Wikia 團隊</div>',
+	'founderemails-email-user-registered-body-HTML' => '嗨$USERNAME,<br /><br />
+$EDITORNAME在你的Wiki上註冊了！何不訪問一下新成員的<a href="$EDITORTALKPAGEURL">對話頁</a>去打個招呼呢？<br /><br />
+<div style="font-style: italic; font-size: 120%;">-- Wikia團隊</div>',
 ];
 
 $messages['ja'] = [
@@ -1561,6 +1600,12 @@ $PAGESUMMARY
 </ul>
 </p>',
 	'enotif_lastvisited-HTML' => '最後にアクセスして以来のこのページのすべての変更を閲覧するには、<a href="$1">こちらをクリック</a>',
+	'founderemails-email-user-registered-body-HTML' => '$USERNAME さん、<br /><br />
+$EDITORNAME が $WIKINAME に参加しました。<br /><br />
+歓迎のメッセージを送るなどして、編集してもらえるように誘導してきましょう。参加者が多ければ多いほど、ウィキの成長は早まります。<br /><br />
+トークページ:<br />
+<a href="$EDITORTALKPAGEURL">$EDITORTALKPAGEURL</a><br /><br />
+-- ウィキアチーム',
 ];
 
 $messages['qqq'] = [
