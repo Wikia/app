@@ -26,12 +26,13 @@ Note that some pages may continue to be displayed as if you were still logged in
 Please wait before trying again.',
 	'login-abort-generic' => 'Your login was unsuccessful - Aborted',
 	'loginlanguagelabel' => 'Language: $1',
-	'loginlanguagelinks' => '* Deutsch|de
-* English|en
-* Esperanto|eo
-* Français|fr
+	'loginlanguagelinks' => '* English|en
+* Deutsch|de
 * Español|es
+* Français|fr
 * Italiano|it
+* 中文|zh
+* 日本語|ja
 * Nederlands|nl',
 	'link_sample' => 'Link title',
 	'link_tip' => 'Internal link',
@@ -188,7 +189,7 @@ Try normal preview.',
 	'logdelete-log-message' => '$1 for $2 {{PLURAL:$2|event|events}}',
 	'limit' => 'Limit',
 	'login-abort-readonly' => 'Site is currently in read-only mode. Users can not log in while the site is in read-only mode.',
-	'login_greeting' => 'Welcome, [[User:$1|$1]]!',
+	'login_greeting' => 'Welcome [[Special:MyPage|$1]]!',
 	'log_in' => 'Log in',
 	'login_as_another' => 'Login as another user',
 	'locked' => 'locked',
@@ -5142,7 +5143,7 @@ Bitte die normale Vorschau nutzen.',
 	'logentry-newusers-create' => '$1 erstellte ein Benutzerkonto',
 	'logentry-newusers-create2' => '$1 erstellte ein Benutzerkonto $3',
 	'logentry-newusers-autocreate' => 'Benutzerkonto $1 wurde automatisch erstellt',
-	'login_greeting' => 'Willkommen bei Wikia, [[User:$1|$1]]!',
+	'login_greeting' => 'Willkommen bei Wikia!',
 	'login_as_another' => 'Als anderer Benutzer anmelden',
 	'licenses' => '* LU|Lizenz unbekannt (ich weiß nicht genau)
 * PD|gemeinfrei (public domain)
@@ -5154,6 +5155,7 @@ Bitte die normale Vorschau nutzen.',
 	'logdelete-log-message' => '$1 für $2 {{PLURAL:$2|Event|Events}}',
 	'logdelete-logentry' => 'Sichtbarkeit für das Event "[[$1]]" geändert',
 	'log_in' => 'Anmelden',
+	'login-abort-readonly' => 'Wikia befindet sich momentam im "Nur-Lese-Modus". Benutzer können sich während dieser Zeitspanne nicht anmelden. Bitte versuche es später nochmal!',
 ];
 
 $messages['de-ch'] = [
@@ -5927,7 +5929,7 @@ Ten en cuenta que las páginas que tengas abiertas en otras ventanas o pestañas
 	'loginsuccess' => '\'\'\'Has iniciado sesión en {{SITENAME}} como «$1».\'\'\'',
 	'login-userblocked' => 'Este usuario está bloqueado. Inicio de sesión no permitido.',
 	'login-throttled' => 'Has intentado demasiadas veces iniciar sesión. Por favor espera antes de intentarlo nuevamente.',
-	'login-abort-generic' => 'Tu inicio de sesión no fue exitoso - Cancelado',
+	'login-abort-generic' => 'Tu inicio de sesión no se completó - Cancelado',
 	'loginlanguagelabel' => 'Idioma: $1',
 	'link_sample' => 'Título del enlace',
 	'link_tip' => 'Enlace interno',
@@ -6077,6 +6079,7 @@ Intenta usar la previsualización normal.',
 	'limit' => 'Límite',
 	'log-in-new' => '¿Dispones de una cuenta? Identifícate',
 	'log_in' => 'Identifícate',
+	'login-abort-readonly' => 'El sitio está en modo de solo lectura actualmente. Los usuarios no pueden identificarse mientras el sitio permanece en este modo.',
 ];
 
 $messages['et'] = [
@@ -6579,6 +6582,8 @@ $1',
 	'logentry-newusers-autocreate' => 'کاروری حساب $1  بساتن به شکل خودکار',
 	'log-in-new' => 'از قبل حساب کاربری دارید؟ وارد سیستم شوید.',
 	'log_in' => 'وارد سیستم شوید',
+	'login_as_another' => 'ورود به سیستم',
+	'login_greeting' => '!خوش‌آمدید [[User:$1|$1]]',
 ];
 
 $messages['fi'] = [
@@ -6728,7 +6733,7 @@ Yritä normaalia esikatselua.',
 	'logentry-newusers-create' => '$1 loi käyttäjätunnuksen',
 	'logentry-newusers-create2' => '$1 loi käyttäjätunnuksen $3',
 	'logentry-newusers-autocreate' => 'Käyttäjätunnus $1 luotiin automaattisesti',
-	'login_greeting' => 'Tervetuloa Wikia, [[User:$1|$1]]!',
+	'login_greeting' => 'Tervetuloa {{GRAMMAR:illative|{{SITENAME}}}}, [[User:$1|$1]]!',
 	'login_as_another' => 'Kirjaudu sisään toisena käyttäjänä',
 	'log-in-new' => 'Sinulla on jo käyttäjä? Kirjaudu sisään',
 ];
@@ -6971,7 +6976,7 @@ Vous pouvez continuer à utiliser {{SITENAME}} de façon anonyme, $1 sous le mê
 Notez que certaines pages peuvent être encore affichées comme si vous étiez toujours connecté(e), jusqu’à ce que vous effaciez le cache de votre navigateur.',
 	'logouttext-link-text' => 'vous reconnecter',
 	'login' => 'Connexion',
-	'loginprompt' => 'Vous devez activer les témoins (\'\'cookies\'\') pour vous connecter à {{SITENAME}}.',
+	'loginprompt' => 'Vous devez autoriser les \'\'cookies\'\' pour vous connecter à {{SITENAME}}.',
 	'logout' => 'Se déconnecter',
 	'loginerror' => 'Erreur de connexion',
 	'loginsuccesstitle' => 'Connexion réussie',
@@ -7130,6 +7135,7 @@ Essayez la prévisualisation normale.',
 ** Permission|Ce fichier est sous copyright mais son auteur a permis son utilisation',
 	'limit' => 'Limite',
 	'log-in-new' => 'Déjà un compte? Connectez vous!',
+	'login-abort-readonly' => 'Le site est actuellement en mode lecture seule. Les utilisateurs ne peuvent pas se connecter tant que le site reste dans ce mode.',
 ];
 
 $messages['frc'] = [
@@ -10452,21 +10458,21 @@ $messages['it'] = [
 Si può continuare ad usare {{SITENAME}} come utente anonimo oppure $1, con lo stesso nome utente o un nome diverso.
 Nota che alcune pagine potrebbero continuare ad apparire come se il logout non fosse avvenuto finché non viene pulita la cache del proprio browser.',
 	'logouttext-link-text' => 'eseguire un nuovo accesso',
-	'login' => 'Entra',
+	'login' => 'Accedi',
 	'loginprompt' => 'Per accedere a {{SITENAME}} è necessario abilitare i cookie.',
 	'logout' => 'Esci',
-	'loginerror' => 'Errore nell\'accesso',
-	'loginsuccesstitle' => 'Accesso effettuato',
-	'loginsuccess' => '\'\'\'Sei stato connesso al server di {{SITENAME}} con il nome utente di "$1".\'\'\'',
-	'login-userblocked' => 'Questa utenza è bloccata. Non è possibile effettuare il login.',
+	'loginerror' => 'Errore nel login',
+	'loginsuccesstitle' => 'Login effettuato',
+	'loginsuccess' => '\'\'\'Sei entrato nel server di {{SITENAME}} con l\'username "$1".\'\'\'',
+	'login-userblocked' => 'Questo utente è bloccato. Non è possibile effettuare il login.',
 	'login-throttled' => 'Sono stati effettuati troppi tentativi di accesso in breve tempo.
 Riprovare più tardi.',
 	'login-abort-generic' => 'Il tuo login non ha avuto successo - Annullato',
 	'loginlanguagelabel' => 'Lingua: $1',
 	'link_sample' => 'Titolo del collegamento',
 	'link_tip' => 'Collegamento interno',
-	'loginreqtitle' => 'Accesso richiesto',
-	'loginreqlink' => 'eseguire l\'accesso',
+	'loginreqtitle' => 'Login richiesto',
+	'loginreqlink' => 'effettuare il login',
 	'loginreqpagetext' => 'Per vedere altre pagine è necessario $1.',
 	'longpageerror' => '\'\'\'Errore: il testo inviato è lungo {{PLURAL:$1|1|$1}} kilobyte, che è maggiore della dimensione massima consentita ({{PLURAL:$2|1|$2}} kilobyte).\'\'\'
 Il testo non può essere salvato.',
@@ -10593,9 +10599,10 @@ Usare l\'anteprima standard.',
 	'logentry-newusers-create2' => '$1 ha creato un\'utenza $3',
 	'logentry-newusers-autocreate' => 'L\'utenza $1 è stata creata automaticamente',
 	'login_greeting' => 'Benvenuto su Wikia, [[User:$1|$1]]!',
-	'login_as_another' => 'Esegui il login come un\'altro user',
+	'login_as_another' => 'Esegui il login come un altro user',
 	'log-in-new' => 'Sei già registrato? Accedi',
 	'log_in' => 'Login',
+	'login-abort-readonly' => 'Il sito è attualmente in modalità di sola lettura. Gli utenti non possono effettuare il login quando il sito è in questa modalità.',
 ];
 
 $messages['iu'] = [
@@ -10911,6 +10918,7 @@ $1',
 ** Permission|これは著作権がありますが、著作権保持者によって使用が許可されています',
 	'log-in-new' => 'アカウントを既にお持ちですか？ログイン',
 	'log_in' => 'ログイン',
+	'login-abort-readonly' => '申し訳ありません。サイトは現在読み取り専用となっており、ログインしていただくことができません。しばらくしてからお試しください。',
 ];
 
 $messages['jam'] = [
@@ -12475,6 +12483,8 @@ $1',
 	'logentry-newusers-autocreate' => '$1 계정이 자동적으로 생성되었습니다.',
 	'log-in-new' => '계정이 이미 있다면, 로그인하세요.',
 	'log_in' => '로그인',
+	'login_as_another' => '다른 계정으로 로그인',
+	'login_greeting' => '[[User:$1|$1]]님 환영합니다!',
 ];
 
 $messages['ko-kp'] = [
@@ -16539,22 +16549,22 @@ U kunt {{SITENAME}} nu anoniem gebruiken of weer $1 als dezelfde of een andere g
 Mogelijk worden nog een aantal pagina\'s weergegeven alsof u aangemeld bent totdat u de cache van uw browser leegt.',
 	'logouttext-link-text' => 'aanmelden',
 	'login' => 'Aanmelden',
-	'loginprompt' => 'U moet cookies ingeschakeld hebben om u te kunnen aanmelden bij {{SITENAME}}.',
+	'loginprompt' => 'Je moet cookies ingeschakeld hebben om je te kunnen aanmelden bij {{SITENAME}}.',
 	'logout' => 'Afmelden',
 	'loginerror' => 'Aanmeldfout',
 	'loginsuccesstitle' => 'Aanmelden geslaagd',
-	'loginsuccess' => '\'\'\'U bent nu aangemeld bij {{SITENAME}} als "$1".\'\'\'',
+	'loginsuccess' => '\'\'\'Je bent nu aangemeld bij {{SITENAME}} als "$1".\'\'\'',
 	'login-userblocked' => 'Deze gebruiker is geblokkeerd.
 Aanmelden is niet mogelijk.',
-	'login-throttled' => 'U hebt recentelijk te vaak geprobeerd aan te melden met een onjuist wachtwoord.
-Wacht even voordat u het opnieuw probeert.',
+	'login-throttled' => 'Je hebt recentelijk te vaak geprobeerd aan te melden met een onjuist wachtwoord.
+Wacht even voordat je het opnieuw probeert.',
 	'login-abort-generic' => 'U bent niet aangemeld. De procedure is afgebroken.',
 	'loginlanguagelabel' => 'Taal: $1',
 	'link_sample' => 'Onderwerp',
 	'link_tip' => 'Interne verwijzing',
 	'loginreqtitle' => 'Aanmelden verplicht',
 	'loginreqlink' => 'aanmelden',
-	'loginreqpagetext' => 'U moet zich $1 om andere pagina\'s te kunnen bekijken.',
+	'loginreqpagetext' => 'Je moet je $1 om andere pagina\'s te kunnen bekijken.',
 	'longpageerror' => '\'\'\'Fout: de tekst die u hebt toegevoegd is {{PLURAL:$1|één kilobyte|$1 kilobyte}} groot, wat groter is dan het maximum van {{PLURAL:$2|één kilobyte|$2 kilobyte}}.\'\'\'
 Opslaan is niet mogelijk.',
 	'log-fulllog' => 'Het volledige logboek bekijken',
@@ -17607,7 +17617,7 @@ Odczekaj chwilę zanim ponowisz próbę.',
 	'loginlanguagelabel' => 'Język: $1',
 	'link_sample' => 'Tytuł linku',
 	'link_tip' => 'Link wewnętrzny',
-	'loginreqtitle' => 'musisz się zalogować',
+	'loginreqtitle' => 'Musisz się zalogować',
 	'loginreqlink' => 'zalogować się',
 	'loginreqpagetext' => 'Musisz $1, żeby móc przeglądać inne strony.',
 	'longpageerror' => '\'\'\'Błąd! Wprowadzony przez Ciebie tekst ma {{PLURAL:$1|1 kilobajt|$1 kilobajty|$1 kilobajtów}}. Długość tekstu nie może przekraczać {{PLURAL:$2|1 kilobajt|$2 kilobajty|$2 kilobajtów}}. Tekst nie może być zapisany.\'\'\'',
@@ -19267,7 +19277,7 @@ $messages['ru'] = [
 Вы можете продолжить участие в {{grammar:genitive|{{SITENAME}}}} анонимно или $1 под тем же или другим именем.
 Некоторые страницы могут продолжать отображаться в том виде, как будто вы всё ещё представлены системе. Для борьбы с этим явлением обновите кеш браузера.',
 	'logouttext-link-text' => 'представиться заново',
-	'login' => 'Представиться системе',
+	'login' => 'Войти',
 	'loginprompt' => 'Вы должны разрешить «cookies», чтобы представиться системе.',
 	'logout' => 'Завершение сеанса',
 	'loginerror' => 'Ошибка опознавания участника',
@@ -19423,6 +19433,7 @@ $1',
 **CopyrightedFreeUse|Разрешено использование правообладателем',
 	'log-in-new' => 'Уже есть учётная запись? Войти',
 	'log_in' => 'Вход',
+	'login-abort-readonly' => 'Сайт сейчас находится в режиме только для чтения. Пользователи не могут войти в систему, если сайт находится в режиме только для чтения.',
 ];
 
 $messages['rue'] = [
