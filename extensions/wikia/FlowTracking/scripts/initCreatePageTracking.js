@@ -4,18 +4,20 @@ require([
 	function init() {
 		// Create Page flow tracking, adding flow param in redlinks href.
 		// This parameter is added here to avoid reparsing all articles.
-		$( '#WikiaArticle').find( 'a.new' ).each(function(index, redlink) {
+		$('#WikiaArticle').find('a.new').each(function (index, redlink) {
 			var qs = QueryString(redlink.href),
-				redLinkFlow = mw.config.get('wgNamespaceNumber') === -1
-					? window.wgFlowTrackingFlows.CREATE_PAGE_SPECIAL_REDLINK
-					: window.wgFlowTrackingFlows.CREATE_PAGE_ARTICLE_REDLINK;
+				redLinkFlow = mw.config.get('wgNamespaceNumber') === -1 ?
+					window.wgFlowTrackingFlows.CREATE_PAGE_SPECIAL_REDLINK :
+					window.wgFlowTrackingFlows.CREATE_PAGE_ARTICLE_REDLINK;
 
 			qs.setVal('flow', redLinkFlow);
 			redlink.href = qs.toString();
 		});
+
+		$('#ca-ve-edit').click(initVEHooks);
 	}
 
-	function initVE() {
+	function initVEHooks() {
 		mw.hook('ve.activationComplete').add(function () {
 			flowTrackingCreatePage.trackOnEditPageLoad('visualeditor');
 		});
@@ -31,8 +33,5 @@ require([
 		});
 	}
 
-	$(function(){
-		init();
-		initVE();
-	});
+	$(init);
 });

@@ -15,9 +15,7 @@ define(
 				tracked = qs.getVal('tracked', false);
 
 			// Do not track if the step was tracked already or article exists
-			if (tracked
-				|| articleId !== 0
-				|| (namespaceId !== 0 && (namespaceId !== -1 && title === 'CreatePage'))) {
+			if (tracked || !shouldTrackFlow()) {
 				return;
 			}
 
@@ -33,6 +31,18 @@ define(
 			// set 'tracked' query param to prevent tracking the same event when page is reloaded
 			qs.setVal('tracked', 'true');
 			window.history.replaceState({}, '', qs.toString());
+		}
+
+		function shouldTrackFlow() {
+			return isNewArticle() || isAllowedSpecialPage();
+		}
+
+		function isNewArticle() {
+			return articleId === 0 && namespaceId === 0;
+		}
+
+		function isAllowedSpecialPage() {
+			return namespaceId !== -1 && title === 'CreatePage';
 		}
 
 		return {
