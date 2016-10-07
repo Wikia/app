@@ -8,15 +8,13 @@ class FlowTrackingHooks {
 	const CREATE_PAGE_UNRECOGNIZED_FLOW = 'create-page-unrecognized';
 
 	public static function onMakeGlobalVariablesScript( &$vars ) {
-		$flows = [
+		$vars[ 'wgFlowTrackingFlows' ] = [
 			'CREATE_PAGE_DIRECT_URL' => static::CREATE_PAGE_DIRECT_URL,
 			'CREATE_PAGE_CONTRIBUTE_BUTTON' => static::CREATE_PAGE_CONTRIBUTE_BUTTON,
 			'CREATE_PAGE_ARTICLE_REDLINK' => static::CREATE_PAGE_ARTICLE_REDLINK,
 			'CREATE_PAGE_SPECIAL_REDLINK' => static::CREATE_PAGE_SPECIAL_REDLINK,
 			'CREATE_PAGE_UNRECOGNIZED_FLOW' => static::CREATE_PAGE_UNRECOGNIZED_FLOW
 		];
-
-		$vars[ 'wgFlowTrackingFlows' ] = $flows;
 
 		return true;
 	}
