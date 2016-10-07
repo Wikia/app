@@ -23808,7 +23808,7 @@ Door een bestand te hernoemen naar deze naam, is het bestand uit de gedeelde med
 	'markedaspatrolledtext' => 'De geselecteerde versie van [[:$1]] is gemarkeerd als gecontroleerd.',
 	'markedaspatrollederror' => 'Kan niet als gecontroleerd worden aangemerkt',
 	'markedaspatrollederrortext' => 'Selecteer een versie om als gecontroleerd aan te merken.',
-	'markedaspatrollederror-noautopatrol' => 'U kunt uw eigen wijzigingen niet als gecontroleerd markeren.',
+	'markedaspatrollederror-noautopatrol' => 'Je kunt je eigen wijzigingen niet als gecontroleerd markeren.',
 	'mediawarning' => '\'\'\'Waarschuwing\'\'\': dit bestandstype bevat mogelijk programmacode die uw systeem schade kan berokkenen.',
 	'minutes' => '{{PLURAL:$1|$1 minuut|$1 minuten}}',
 	'metadata' => 'Metadata',
