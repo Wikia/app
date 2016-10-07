@@ -1,5 +1,5 @@
 define(
-	'wikia.flowTracking.createPage',
+	'ext.wikia.flowTracking.createPageTracking',
 	['wikia.flowTracking', 'wikia.querystring', 'mw', 'wikia.document', 'wikia.window'],
 	function (flowTrack, QueryString, mw, document, window) {
 		'use strict';

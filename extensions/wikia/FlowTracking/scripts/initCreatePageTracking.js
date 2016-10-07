@@ -1,5 +1,5 @@
 require([
-	'wikia.flowTracking.createPage', 'wikia.querystring', 'mw', 'jquery', 'wikia.window'
+	'ext.wikia.flowTracking.createPageTracking', 'wikia.querystring', 'mw', 'jquery', 'wikia.window'
 ], function (flowTrackingCreatePage, QueryString, mw, $, window) {
 	function init() {
 		// Create Page flow tracking, adding flow param in redlinks href.
