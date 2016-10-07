@@ -59,7 +59,7 @@ For optimal security, img_auth.php is disabled.',
 	'ipbenableautoblock' => 'Automatically block the last IP address used by this user, and any subsequent IP addresses they try to edit from',
 	'ipbsubmit' => 'Block this user',
 	'ipbother' => 'Other time:',
-	'ipboptions' => '2 hours:2 hours,1 day:1 day,3 days:3 days,1 week:1 week,2 weeks:2 weeks,1 month:1 month,3 months:3 months,6 months:6 months,1 year:1 year,indefinite:infinite',
+	'ipboptions' => '2 hours:2 hours,1 day:1 day,3 days:3 days,1 week:1 week,2 weeks:2 weeks,1 month:1 month,3 months:3 months,6 months:6 months,1 year:1 year',
 	'ipbotheroption' => 'other',
 	'ipbotherreason' => 'Other/additional reason:',
 	'ipbhidename' => 'Hide username from edits and lists',
@@ -5084,13 +5084,17 @@ Aus Sicherheitsgründen ist img_auth.php deaktiviert.',
 	'ipbreason' => 'Grund:',
 	'ipbreasonotherlist' => 'Anderer Grund',
 	'ipbreason-dropdown' => '* Allgemeine Sperrgründe
-** Einfügen falscher Informationen
-** Leeren von Seiten
-** Massenweises Einfügen externer Links
-** Einstellen unsinniger Inhalte in Seiten
-** Ungebührliches Verhalten
-** Missbrauch mit mehreren Benutzerkonten
-** Ungeeigneter Benutzername',
+** Vandalismus
+** Löschen von Seiten
+** Einstellen unsinniger Seiten
+** Fortgesetzte Verstöße gegen die Richtlinien für Weblinks
+** Verstoß gegen den Grundsatz „Keine persönlichen Angriffe“
+** Erstellen von Spam
+* Benutzerspezifische Sperrgründe
+** Ungeeigneter Benutzername
+** Neuanmeldung eines unbeschränkt gesperrten Benutzers
+* IP-spezifische Sperrgründe
+** Proxy, wegen Vandalismus einzelner Benutzer längerfristig gesperrt',
 	'ipb-hardblock' => 'Angemeldete Benutzer daran hindern, Bearbeitungen unter dieser IP-Adresse vorzunehmen',
 	'ipbcreateaccount' => 'Erstellung von Benutzerkonten verhindern',
 	'ipbemailban' => 'E-Mail-Versand sperren',
@@ -6090,13 +6094,18 @@ Para optima seguridad, img_auth.php está deshabilitado.',
 	'ipbexpiry' => 'Caduca dentro de',
 	'ipbreason' => 'Motivo:',
 	'ipbreasonotherlist' => 'Otra razón',
-	'ipbreason-dropdown' => '*Motivos comunes de bloqueo
+	'ipbreason-dropdown' => '* Relacionado con la edición de paginas
 ** Añadir información falsa
 ** Eliminar contenido de las páginas
-** Publicitar enlaces a otras páginas web
+** Poner publicidad con enlaces a otras páginas web
 ** Añadir basura a las páginas
-** Comportamiento intimidatorio u hostil
+* Comportamiento del usuario
+** Comportamiento intimidatorio
+** Acoso sexual hacia otros usuarios
+** Insultos o ataques contra otros usuarios
+* Aspectos técnicos
 ** Abusar de múltiples cuentas
+** Ser menor de 13 años y no disponer de autorización
 ** Nombre de usuario inaceptable',
 	'ipb-hardblock' => 'Impedir que los usuarios identificados editen desde esta dirección IP',
 	'ipbcreateaccount' => 'Prevenir la creación de cuentas de usuario',
@@ -7220,9 +7229,9 @@ Pour une sécurité optimale, img_auth.php est désactivé.',
 ** Tentative d’intimidation ou harcèlement
 ** Abus d’utilisation de comptes multiples
 ** Nom d’utilisateur inacceptable, injurieux ou diffamant',
-	'ipb-hardblock' => 'Empêche les modifications des utilisateurs enregistrés utilisant cette adresse IP',
+	'ipb-hardblock' => 'Empêcher les utilisateurs connectés de modifier en utilisant cette adresse IP',
 	'ipbcreateaccount' => 'Empêcher la création de compte',
-	'ipbemailban' => 'Empêcher l’utilisateur d’envoyer des courriels',
+	'ipbemailban' => 'Empêcher l’utilisateur d’envoyer des e-mails',
 	'ipbenableautoblock' => 'Bloquer automatiquement la dernière adresse IP utilisée par l’utilisateur et toutes ses IPs ultérieures qu’il pourrait essayer',
 	'ipbsubmit' => 'Bloquer cet utilisateur',
 	'ipbother' => 'Autre durée :',
@@ -7231,7 +7240,7 @@ Pour une sécurité optimale, img_auth.php est désactivé.',
 	'ipbotherreason' => 'Motif différent ou supplémentaire :',
 	'ipbhidename' => 'Masquer le nom d’utilisateur des modifications et des listes',
 	'ipbwatchuser' => 'Suivre les pages utilisateur et de discussion de cet utilisateur',
-	'ipb-disableusertalk' => 'Empêche cet utilisateur de modifier sa propre page de discussion pendant la durée de son blocage',
+	'ipb-disableusertalk' => 'Empêcher l’utilisateur de modifier sa page de discussion pendant le blocage',
 	'ipb-change-block' => 'Bloquer à nouveau cet utilisateur avec ces paramètres',
 	'ipb-confirm' => 'Confirmer le blocage',
 	'ipb-blockingself' => 'Vous êtes sur le point de bloquer votre propre compte ! Êtes-vous certain de vouloir faire cela ?',
@@ -10912,7 +10921,7 @@ Per una sicurezza ottimale, img_auth.php è disattivato.',
 	'ipbcreateaccount' => 'Impedisci la creazione di altri account',
 	'ipbemailban' => 'Impedisci all\'utente l\'invio di e-mail',
 	'ipbenableautoblock' => 'Blocca automaticamente l\'ultimo indirizzo IP usato dall\'utente e i successivi con cui vengono tentate modifiche',
-	'ipbsubmit' => 'Blocca l\'utente',
+	'ipbsubmit' => 'Blocca l’utente',
 	'ipbother' => 'Durata non in elenco:',
 	'ipboptions' => '2 ore:2 hours,1 giorno:1 day,3 giorni:3 days,1 settimana:1 week,2 settimane:2 weeks,1 mese:1 month,3 mesi:3 months,6 mesi:6 months,1 anno:1 year,infinito:infinite',
 	'ipbotheroption' => 'altro',
@@ -10920,7 +10929,7 @@ Per una sicurezza ottimale, img_auth.php è disattivato.',
 	'ipbhidename' => 'Nascondi il nome utente dalle modifiche e dagli elenchi.',
 	'ipbwatchuser' => 'Segui le pagine e le discussioni utente di questo utente',
 	'ipb-disableusertalk' => 'Impedisci a questo utente di modificare la propria pagina di discussioni mentre è bloccato',
-	'ipb-change-block' => 'Ri-blocca l\'utente con queste impostazioni',
+	'ipb-change-block' => 'Ri-blocca l’utente con queste impostazioni',
 	'ipb-confirm' => 'Conferma il blocco',
 	'ipb-blockingself' => 'Stai per bloccare te stesso! Sei sicuro di volerlo fare?',
 	'ipb-confirmhideuser' => 'Si sta per bloccare un utente con l\'opzione "Nascondi utente" abilitata.
@@ -11233,7 +11242,7 @@ CGI ベースであるため、img_auth に対応できない可能性もあり�
 	'ipbenableautoblock' => 'この利用者が最後に使用したIPアドレスと、後に編集しようとしたIPアドレスを自動的にブロック',
 	'ipbsubmit' => 'この利用者をブロック',
 	'ipbother' => 'その他の期間：',
-	'ipboptions' => '2時間:2 hours,1日:1 day,3日:3 days,1週間:1 week,2週間:2 weeks,1か月:1 month,3か月:3 months,6か月:6 months,1年:1 year,無期限:infinite',
+	'ipboptions' => '15分:15 minutes,30分:30 minutes,2時間:2 hours,1日:1 day,3日:3 days,1週間:1 week,2週間:2 weeks,1ヶ月:1 month,3ヶ月:3 months,6ヶ月:6 months,1年:1 year,無期限:infinite',
 	'ipbotheroption' => 'その他',
 	'ipbotherreason' => '他の、または追加の理由：',
 	'ipbhidename' => '利用者名を編集履歴や各種一覧から秘匿する',
@@ -17317,7 +17326,7 @@ Om beveiligingsreden is img_auth.php uitgeschakeld.',
 	'ipb_hide_invalid' => 'Het is niet mogelijk deze gebruiker te verbergen; mogelijk heeft deze te veel bewerkingen gemaakt.',
 	'ipb_already_blocked' => '"$1" is al geblokkeerd',
 	'ipb-needreblock' => '$1 is al geblokkeerd.
-Wilt u de instellingen wijzigen?',
+Wil je de instellingen wijzigen?',
 	'ipb-otherblocks-header' => 'Andere {{PLURAL:$1|blokkade|blokkades}}',
 	'ipb_cant_unblock' => 'Fout: blokkadenummer $1 is niet gevonden.
 Misschien is de blokkade al opgeheven.',
@@ -17325,8 +17334,8 @@ Misschien is de blokkade al opgeheven.',
 De blokkade is onderdeel van de reeks $2, waarvan de blokkade wel opgeheven kan worden.',
 	'ip_range_invalid' => 'Ongeldige IP-reeks.',
 	'ip_range_toolarge' => 'Reeksblokkades groter dan /$1 zijn niet toegestaan.',
-	'ipbblocked' => 'U kunt geen andere gebruikers (de)blokkeren, omdat u zelf geblokkeerd bent',
-	'ipbnounblockself' => 'U mag uzelf niet deblokkeren',
+	'ipbblocked' => 'Je kunt geen andere gebruikers (de)blokkeren, omdat je zelf geblokkeerd bent',
+	'ipbnounblockself' => 'Je mag jezelf niet deblokkeren',
 	'immobile-source-namespace' => 'Pagina\'s in de naamruimte "$1" kunnen niet hernoemd worden',
 	'immobile-target-namespace' => 'Pagina\'s kunnen niet hernoemd worden naar de naamruimte "$1"',
 	'immobile-target-namespace-iw' => 'Een interwikiverwijzing is geen geldige bestemming voor het hernoemen van een pagina.',
@@ -22963,7 +22972,7 @@ För optimal säkerhet, har img_auth.php blivit avaktiverad.',
 	'ipbenableautoblock' => 'Blockera automatiskt den IP-adress som användaren använde senast, samt alla adresser som användaren försöker redigera ifrån',
 	'ipbsubmit' => 'Blockera användaren',
 	'ipbother' => 'Annan tidsperiod:',
-	'ipboptions' => '2 timmar:2 hours,1 dygn:1 day,3 dygn:3 days,1 vecka:1 week,2 veckor:2 weeks,1 månad:1 month,3 månader:3 months,6 månader:6 months,1 år:1 year,oändlig:infinite',
+	'ipboptions' => '2 timmar:2 hours,1 dag:1 day,3 dagar:3 days,1 vecka:1 week,2 veckor:2 weeks,1 månad:1 month,3 månader:3 months,6 månader:6 months,1 year:1 year,indefinite:infinite',
 	'ipbotheroption' => 'annan tidsperiod',
 	'ipbotherreason' => 'Annan/ytterligare anledning:',
 	'ipbhidename' => 'Dölj användarnamnet från redigeringar och listor',
