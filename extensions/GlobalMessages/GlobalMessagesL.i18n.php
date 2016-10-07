@@ -5072,7 +5072,7 @@ Eine [[Special:WhatLinksHere/$2|vollständige Liste]] ist verfügbar.',
 	'listusers-creationsort' => 'Nach Erstelldatum sortieren',
 	'log' => 'Logbücher',
 	'logempty' => 'Keine passenden Einträge.',
-	'log-title-wildcard' => 'Titel beginnt mit …',
+	'log-title-wildcard' => 'Titel beginnt mit…',
 	'linksearch' => 'Weblinksuche',
 	'linksearch-pat' => 'Suchmuster:',
 	'linksearch-ns' => 'Namensraum:',
@@ -5150,6 +5150,7 @@ Bitte die normale Vorschau nutzen.',
 * Bildzitat|Das Bild wird ausschließlich zur inhaltlichen Erläuterung genutzt',
 	'lockdb-wikifactory-error' => 'Ein Fehler ist aufgetreten: Konnte nicht speichern oder den Cache leeren. Die Datenbank ist unter Umständen nicht gesperrt. Bitte versuche es nochmal oder kontaktiere das Technik-Team.',
 	'locked' => 'gesperrt',
+	'log-in-new' => 'Konto vorhanden? Melde dich an!',
 ];
 
 $messages['de-ch'] = [
@@ -6071,6 +6072,7 @@ Intenta usar la previsualización normal.',
 ** Fairuse|Puede usar ya que está cualificada como fair use bajo las leyes estadounidenses
 ** Permiso|Tiene copyright, pero se permite su uso por parte del dueño',
 	'limit' => 'Límite',
+	'log-in-new' => '¿Dispones de una cuenta? Identifícate',
 ];
 
 $messages['et'] = [
@@ -6571,6 +6573,7 @@ $1',
 	'logentry-newusers-create' => '$1 یک حساب کاربری ایجاد کرد',
 	'logentry-newusers-create2' => '$1 یک حساب کاربری ایجاد کرد $3',
 	'logentry-newusers-autocreate' => 'کاروری حساب $1  بساتن به شکل خودکار',
+	'log-in-new' => 'از قبل حساب کاربری دارید؟ وارد سیستم شوید.',
 ];
 
 $messages['fi'] = [
@@ -6722,6 +6725,7 @@ Yritä normaalia esikatselua.',
 	'logentry-newusers-autocreate' => 'Käyttäjätunnus $1 luotiin automaattisesti',
 	'login_greeting' => 'Tervetuloa Wikia, [[User:$1|$1]]!',
 	'login_as_another' => 'Kirjaudu sisään toisena käyttäjänä',
+	'log-in-new' => 'Sinulla on jo käyttäjä? Kirjaudu sisään',
 ];
 
 $messages['fiu-vro'] = [
@@ -7120,6 +7124,7 @@ Essayez la prévisualisation normale.',
 ** Droit auteur|Ce fichier est soumis au droit d\'auteur
 ** Permission|Ce fichier est sous copyright mais son auteur a permis son utilisation',
 	'limit' => 'Limite',
+	'log-in-new' => 'Déjà un compte? Connectez vous!',
 ];
 
 $messages['frc'] = [
@@ -10584,6 +10589,7 @@ Usare l\'anteprima standard.',
 	'logentry-newusers-autocreate' => 'L\'utenza $1 è stata creata automaticamente',
 	'login_greeting' => 'Benvenuto su Wikia, [[User:$1|$1]]!',
 	'login_as_another' => 'Esegui il login come un\'altro user',
+	'log-in-new' => 'Sei già registrato? Accedi',
 ];
 
 $messages['iu'] = [
@@ -10897,6 +10903,7 @@ $1',
 * その他
 ** PD|これはパブリックドメインです
 ** Permission|これは著作権がありますが、著作権保持者によって使用が許可されています',
+	'log-in-new' => 'アカウントを既にお持ちですか？ログイン',
 ];
 
 $messages['jam'] = [
@@ -12459,6 +12466,7 @@ $1',
 	'logentry-newusers-create' => '$1 사용자가 계정을 생성했습니다.',
 	'logentry-newusers-create2' => '$1 사용자가 $3 계정을 생성했습니다.',
 	'logentry-newusers-autocreate' => '$1 계정이 자동적으로 생성되었습니다.',
+	'log-in-new' => '계정이 이미 있다면, 로그인하세요.',
 ];
 
 $messages['ko-kp'] = [
@@ -16943,6 +16951,7 @@ Ei [[Special:WhatLinksHere/$2|fullstendig liste]] er tilgjengeleg.',
 	'limit' => 'Grense',
 	'lockdb-wikifactory-error' => 'En feil oppstod. Lagring eller fjerning av cache mislykket. Databasen er kanskje ikke låst. Vennligst prøv igjen eller kontakt teknikkansvarlig.',
 	'locked' => 'låst',
+	'log-in-new' => 'Har du allerede en bruker? Logg inn',
 ];
 
 $messages['nov'] = [
@@ -17726,6 +17735,7 @@ Blokowanie i odblokowywanie bazy danych, wymaga by plik mógł być zapisywany p
 *Copyright|Zastrzeżone prawa autorskie
 *PD|Plik znajduje się w domenie publicznej
 *Wikimedia|Plik z Wikipedii lub innego projektu Fundacji Wikimedia',
+	'log-in-new' => 'Masz już konto? Zaloguj się',
 ];
 
 $messages['pms'] = [
@@ -19403,6 +19413,7 @@ $1',
 **PD|Предоставлен в общественно достояние правообладателем
 **FAL|Free Art License
 **CopyrightedFreeUse|Разрешено использование правообладателем',
+	'log-in-new' => 'Уже есть учётная запись? Войти',
 ];
 
 $messages['rue'] = [
@@ -22073,6 +22084,7 @@ Pröva vanlig förhandsgranskning istället.',
 ** PD|Detta är i den offentliga domän
 ** Fairuse|Detta kommer att användas på ett sätt som kan betraktas som rättvisanvändning enligt amerikansk lagstiftning
 ** Tillstånd|Detta är upphovsrättsskyddat, men användningen är tillåten av rättighetsinnehavaren',
+	'log-in-new' => 'Har du redan ett konto? Logga in',
 ];
 
 $messages['sw'] = [
