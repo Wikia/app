@@ -273,9 +273,7 @@ var CreatePage = {
 			redLinkFlowName = CreatePage.getRedLinkFlowName();
 
 		CreatePage.redlinkParam = '&redlink=1';
-
 		CreatePage.flowName = redLinkFlowName;
-		CreatePage.trackCreatePageStart(redLinkFlowName);
 
 		if ( CreatePage.canUseVisualEditor() ) {
 			CreatePage.track( { action: 'click', label: 've-redlink-click' } );
