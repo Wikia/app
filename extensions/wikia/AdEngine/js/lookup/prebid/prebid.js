@@ -83,10 +83,24 @@ define('ext.wikia.adEngine.lookup.prebid', [
 	}
 
 	function getSlotParams(slotName) {
-		var params;
+		var bidResponses,
+			params,
+			winner;
 
 		if (win.pbjs && typeof win.pbjs.getAdserverTargetingForAdUnitCode === 'function') {
 			params = win.pbjs.getAdserverTargetingForAdUnitCode(slotName) || {};
+
+			if (params.hb_adid) {
+				bidResponses = win.pbjs.getBidResponsesForAdUnitCode(slotName);
+				winner = bidResponses.bids.find(function (bid) {
+					return bid.adId === params.hb_adid;
+				});
+
+				if (winner && winner.complete) {
+					return {};
+				}
+			}
+
 		}
 
 		return params || {};
