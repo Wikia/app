@@ -14,5 +14,10 @@ $messages['en'] = [
 
 $messages['fr'] = [
 	'helios-desc' => 'Autorisation OAuth2 dans ExternalUser',
+	'login-abort-service-unavailable' => 'La connexion est temporairement indisponible. Veuillez réessayer plus tard.',
+];
+
+$messages['es'] = [
+	'login-abort-service-unavailable' => 'El inicio de sesión no está disponible temporalmente. Por favor, inténtalo de nuevo más tarde.',
 ];
 
