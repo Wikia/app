@@ -62,9 +62,20 @@ this file is $2.',
 	'lockmanager-fail-db-bucket' => 'Could not contact enough lock databases in bucket $1.',
 	'lockmanager-fail-db-release' => 'Could not release locks on database $1.',
 	'lockmanager-fail-svr-release' => 'Could not release locks on server $1.',
-	'license' => 'Licensing:',
+	'license' => 'Licensing',
 	'license-header' => 'Licensing',
-	'licenses' => '-',
+	'licenses' => '* Fair use:
+** Fairuse|This will be used in a way that qualifies as fair use under US law
+* Own image:
+** Self|I created this image myself.
+* Wikimedia:
+** From Wikimedia|I got this from Wikipedia or another Wikimedia project
+* Free licenses:
+** CC-BY-SA|This is licensed under the Creative Commons Attribution-Share Alike License
+** Other free|This is licensed under another free license
+* Other
+** PD|This is in the public domain 
+** Permission|This is copyrighted, but use is permitted by the copyright holder',
 	'license-nopreview' => '(Preview not available)',
 	'listfiles-summary' => 'This special page shows all uploaded files.
 When filtered by user, only files where that user uploaded the most recent version of the file are shown.',
@@ -5133,6 +5144,10 @@ Bitte die normale Vorschau nutzen.',
 	'logentry-newusers-autocreate' => 'Benutzerkonto $1 wurde automatisch erstellt',
 	'login_greeting' => 'Willkommen bei Wikia, [[User:$1|$1]]!',
 	'login_as_another' => 'Als anderer Benutzer anmelden',
+	'licenses' => '* LU|Lizenz unbekannt (ich weiß nicht genau)
+* PD|gemeinfrei (public domain)
+* CC-by-sa|CC-BY-SA: Creative Commons Attribution-ShareAlike
+* Bildzitat|Das Bild wird ausschließlich zur inhaltlichen Erläuterung genutzt',
 ];
 
 $messages['de-ch'] = [
@@ -6040,6 +6055,19 @@ Intenta usar la previsualización normal.',
 	'logentry-newusers-autocreate' => 'La cuenta $1 fue creada automáticamente',
 	'login_greeting' => 'Bienvenido a Wikia, [[User:$1|$1]]!',
 	'login_as_another' => 'Ingresa como otro usuario',
+	'licenses' => '* Desconocida:
+** Sin licencia|No conozco la licencia
+* Foto propia:
+** Propia|Es una foto mía
+* Wikimedia:
+** De Wikimedia|Viene de Wikipedia u otro proyecto Wikimedia
+* Licencias libres:
+** CC-BY-SA|Tiene una licencia Creative Commons
+** Otra libre|Tiene otra licencia libre
+* Otras
+** PD|Es de dominio público
+** Fairuse|Puede usar ya que está cualificada como fair use bajo las leyes estadounidenses
+** Permiso|Tiene copyright, pero se permite su uso por parte del dueño',
 ];
 
 $messages['et'] = [
@@ -7074,6 +7102,20 @@ Essayez la prévisualisation normale.',
 	'logentry-newusers-autocreate' => 'Le compte $1 a été créé automatiquement',
 	'login_greeting' => 'Bienvenue sur Wikia, [[User:$1|$1]]!',
 	'login_as_another' => 'Se connecter sous un autre compte',
+	'licenses' => '* Inconnue
+** Inconnu|Je ne connais pas la licence
+* Propre image
+** Moi|Cette image est de moi seul
+* Wikimedia
+** De Wikimedia|J\'ai pris ce fichier de Wikipédia ou d\'un autre projet de Wikimedia 
+* Licences libres
+** CC-BY|Ce fichier est sous licence Creative Commons Attribution
+** CC-BY-SA|Ce fichier est sous licence Creative Commons Attribution-Share Alike
+** Autre libre|Ce fichier est sous une autre licence libre
+* Autre
+** Domaine public|Ce fichier est du domaine public
+** Droit auteur|Ce fichier est soumis au droit d\'auteur
+** Permission|Ce fichier est sous copyright mais son auteur a permis son utilisation',
 ];
 
 $messages['frc'] = [
@@ -10839,6 +10881,18 @@ $1',
 	'logentry-newusers-autocreate' => 'アカウント「$1」が自動的に作成されました',
 	'login_greeting' => '[[User:$1|$1]]さん、ようこそ!',
 	'login_as_another' => '他のユーザーとしてログインする',
+	'licenses' => '* フェアユース:
+** Fairuse|これはアメリカ合衆国著作権法によりフェアユースとみなして使われます
+* 自分の画像:
+** Self|私が自分でこの画像を作成しました。
+* ウィキメディア:
+** From Wikimedia|私はウィキペディアまたはウィキメディア・プロジェクトからこれを入手しました
+* フリーライセンス:
+** CC-BY-SA|これはクリエィティブ・コモンズ 表示 - 継承ライセンスのもとで許諾されています
+** Other free|これはその他のフリーライセンスのもとで許諾されています
+* その他
+** PD|これはパブリックドメインです
+** Permission|これは著作権がありますが、著作権保持者によって使用が許可されています',
 ];
 
 $messages['jam'] = [
@@ -17659,6 +17713,12 @@ Blokowanie i odblokowywanie bazy danych, wymaga by plik mógł być zapisywany p
 	'logentry-newusers-autocreate' => 'Konto użytkownika $1 zostało utworzone automatycznie',
 	'login_greeting' => 'Witamy w serwisie Wikia, [[User:$1|$1]]!',
 	'login_as_another' => 'Zaloguj się jako inny użytkownik',
+	'licenses' => '*Brak_licencji|Nie znam licencji
+*Fairuse|Plik używany zgodnie z zasadami dozwolonego użytku
+*CC-BY-SA|Creative Commons BY-SA
+*Copyright|Zastrzeżone prawa autorskie
+*PD|Plik znajduje się w domenie publicznej
+*Wikimedia|Plik z Wikipedii lub innego projektu Fundacji Wikimedia',
 ];
 
 $messages['pms'] = [
@@ -19326,6 +19386,17 @@ $1',
 	'logentry-newusers-autocreate' => 'Автоматически создана учётная запись $1',
 	'login_greeting' => 'Добро пожаловать в Wikia, [[User:$1|$1]]!',
 	'login_as_another' => 'Войти под другим именем',
+	'licenses' => '*Без лицензии|Я не знаю, какая у этого файла лицензия
+*Fairuse|Добросовестное использование (fair use) согласно законодательству США
+*Self|Я являюсь автором этого файла
+*Из Викимедиа|Файл из Википедии или другого проекта Викимедиа
+*Свободные лицензии:
+**CC-by-sa-3.0|Creative Commons Attribution ShareAlike 3.0
+**Свободная лицензия|Любая другая свободная лицензия
+* Другое:
+**PD|Предоставлен в общественно достояние правообладателем
+**FAL|Free Art License
+**CopyrightedFreeUse|Разрешено использование правообладателем',
 ];
 
 $messages['rue'] = [
@@ -21983,6 +22054,19 @@ Pröva vanlig förhandsgranskning istället.',
 	'logentry-newusers-autocreate' => 'Kontot $1 skapades automatiskt',
 	'login_greeting' => 'Välkommen till Wikia, [[User:$1|$1]]!',
 	'login_as_another' => 'Logga in som en annan användare',
+	'licenses' => '* Okänd:
+** Ingen licens|Jag vet inte licensen
+* Eget foto:
+** Själv|Jag tog denna bild själv
+* Wikimedia:
+** Från Wikimedia|Jag fick detta från Wikipedia eller någon annan Wikimediaprojekt
+* Fria licenser:
+** CC-BY-SA|Detta är licensierat under Creative Commons Attribution-Share Alike License
+** Andra fria|Detta är licensierat under en annan fri licens
+* Andra
+** PD|Detta är i den offentliga domän
+** Fairuse|Detta kommer att användas på ett sätt som kan betraktas som rättvisanvändning enligt amerikansk lagstiftning
+** Tillstånd|Detta är upphovsrättsskyddat, men användningen är tillåten av rättighetsinnehavaren',
 ];
 
 $messages['sw'] = [
@@ -25535,6 +25619,18 @@ $messages['zh-tw'] = [
 	'livepreview-failed' => '即時預覽失敗! 嘗試標準預覽。',
 	'login_greeting' => '歡迎來到「Wikia」, [[User:$1|$1]]!',
 	'login_as_another' => '以別的用戶身份登入',
+	'licenses' => '* 合理使用:
+** fairuse|需要符合合理使用原則
+* 擁有版權:
+** Self|我擁有圖片或影片的版權
+* 維基媒體基金會:
+** From Wikimedia|我從維基百科或其他維基媒體基金會計劃取得圖片或影片
+* 自由版權:
+** CC-BY-SA|以創作共用-署名-相同方式分享發布
+** Other free|以其他自由版權發布（於敘述中說明）
+* 其他
+** PD|版權屬公共領域 
+** Permission|版權所有者願意讓本站使用',
 ];
 
 $messages['zh-yue'] = [
@@ -25573,5 +25669,20 @@ $messages['zu'] = [
 	'last' => 'Amagcino',
 	'localtime' => 'Isikhathi siyalapha',
 	'longpages' => 'Amakhasi amade',
+];
+
+$messages['zh'] = [
+	'licenses' => '* 合理使用:
+** fairuse|需要符合合理使用原则
+* 拥有版权:
+** Self|我拥有图片或视频的版权
+* 维基媒体基金会:
+** From Wikimedia|我从维基百科或其他维基媒体基金会计划取得图片或视频
+* 自由版权:
+** CC-BY-SA|以创作共用-署名-相同方式分享发布
+** Other free|以其他自由版权发布（于叙述中说明）
+* 其他
+** PD|版权属公共领域 
+** Permission|版权所有者愿意让本站使用',
 ];
 
