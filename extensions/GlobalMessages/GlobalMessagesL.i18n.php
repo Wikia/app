@@ -88,9 +88,9 @@ When filtered by user, only files where that user uploaded the most recent versi
 	'listfiles_size' => 'Size',
 	'listfiles_description' => 'Description',
 	'listfiles_count' => 'Versions',
-	'linkstoimage' => 'The following {{PLURAL:$1|page links|$1 pages link}} to this file:',
-	'linkstoimage-more' => 'More than $1 {{PLURAL:$1|page links|pages link}} to this file.
-The following list shows the {{PLURAL:$1|first page link|first $1 page links}} to this file only.
+	'linkstoimage' => 'The following {{PLURAL:$1|page uses|$1 pages use}} this photo:',
+	'linkstoimage-more' => 'More than $1 {{PLURAL:$1|page uses|pages use}} this photo.
+The following list shows the {{PLURAL:$1|first page|first $1 page}} that uses this photo.
 A [[Special:WhatLinksHere/$2|full list]] is available.',
 	'linkstoimage-redirect' => '$1 (file redirect) $2',
 	'listredirects' => 'List of redirects',
