@@ -2703,6 +2703,8 @@ Tätä ei voi peruuttaa.',
 	'wall-topic-edit' => 'Muokkaa aiheita',
 	'wall-topic-edit-save' => 'Tallenna',
 	'wall-topic-edit-cancel' => 'Peruuta',
+	'group-threadmoderator-member' => 'Moderoija',
+	'group-threadmoderator' => 'Moderoijat',
 ];
 
 $messages['fo'] = [
@@ -3745,8 +3747,8 @@ $messages['it'] = [
 	'wall-message-notifyeveryone' => 'Evidenzia questa discussione',
 	'wall-message-unnotifyeveryone' => 'Non evidenziare più questa discussione',
 	'wall-message-notifyeveryone-tooltip' => 'Tutti gli utenti loggati in questa wiki riceveranno le notifiche per questa discussione la prossima volta che visiteranno la wiki',
-	'group-threadmoderator' => 'Moderatori di discussioni',
-	'group-threadmoderator-member' => 'Moderatore di discussioni',
+	'group-threadmoderator' => 'Moderatori',
+	'group-threadmoderator-member' => 'Moderatore',
 	'wall-message-not-found' => 'Impossibile trovare questo messaggio. Se si visualizza questo errore, contattare Fandom a [[Special:Contact]] e fornire quanti più dettagli possibile su come è possibile riprodurre questo bug. Grazie!',
 	'wall-message-staff-text' => 'Questo utente è un membro dello staff di Fandom',
 ];
@@ -3997,8 +3999,8 @@ $messages['ja'] = [
 	'wall-topic-edit' => 'タグを編集',
 	'wall-topic-edit-save' => '保存',
 	'wall-topic-edit-cancel' => '中止',
-	'group-threadmoderator' => 'トーク・モデレーター',
-	'group-threadmoderator-member' => 'トーク・モデレーター',
+	'group-threadmoderator' => 'モデレーター',
+	'group-threadmoderator-member' => 'モデレーター',
 ];
 
 $messages['ka'] = [
@@ -4137,6 +4139,8 @@ $messages['ko'] = [
 	'wall-topic-edit-cancel' => '취소',
 	'wall-message-not-found' => '요청한 메시지를 찾을 수 없습니다. 이 문제가 오류라고 생각하신다면 [[Special:Contact]]에서 이 문제에 관한 자세한 설명을 해주세요. 감사합니다!',
 	'wall-message-staff-text' => '이 사용자는 위키아의 스탭입니다.',
+	'group-threadmoderator-member' => '모더레이터',
+	'group-threadmoderator' => '모더레이터',
 ];
 
 $messages['krc'] = [
@@ -5912,8 +5916,8 @@ A publicação original e o teu sumário ainda serão visíveis no histórico da
 	'wall-topic-edit' => 'Editar tópicos',
 	'wall-topic-edit-save' => 'Gravar',
 	'wall-topic-edit-cancel' => 'Cancelar',
-	'group-threadmoderator' => 'Moderadores de discussões',
-	'group-threadmoderator-member' => 'Moderador de discussões',
+	'group-threadmoderator' => 'Moderadores',
+	'group-threadmoderator-member' => 'Moderador',
 ];
 
 $messages['pt-br'] = [
@@ -6113,6 +6117,8 @@ O post original e seu sumário ainda aparecerão no histórico da wikia.',
 	'wall-topic-edit' => 'Editar tópicos',
 	'wall-topic-edit-save' => 'Salvar',
 	'wall-topic-edit-cancel' => 'Cancelar',
+	'group-threadmoderator-member' => 'Moderador',
+	'group-threadmoderator' => 'Moderadores',
 ];
 
 $messages['qu'] = [
@@ -6408,8 +6414,8 @@ $messages['ru'] = [
 	'wall-topic-edit' => 'Edit Topics',
 	'wall-topic-edit-save' => 'Сохранить',
 	'wall-topic-edit-cancel' => 'Отмена',
-	'group-threadmoderator' => 'Модераторы обсуждений',
-	'group-threadmoderator-member' => 'Модератор обсуждений',
+	'group-threadmoderator' => 'Модераторы форума',
+	'group-threadmoderator-member' => 'модератор форума',
 ];
 
 $messages['sco'] = [
@@ -7755,6 +7761,8 @@ Các bản gốc và tóm tắt của bạn vẫn sẽ xuất hiện trong lịc
 	'wall-topic-edit' => 'Sửa đổi chủ đề',
 	'wall-topic-edit-save' => 'Lưu',
 	'wall-topic-edit-cancel' => 'Hủy bỏ',
+	'group-threadmoderator-member' => 'Điều phối viên',
+	'group-threadmoderator' => 'Điều phối viên',
 ];
 
 $messages['wa'] = [
