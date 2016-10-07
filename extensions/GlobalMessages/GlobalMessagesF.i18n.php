@@ -5592,6 +5592,7 @@ Anderenfalls kannst du auch das untenstehende einfache Formular nutzen. Dein Kom
 	'feedback-bugnew' => 'Ich habe es überprüft. Den neuen Fehler melden.',
 	'forum' => 'Forum',
 	'feed-watom' => 'Fandom Atom',
+	'fast-adv' => 'Werbeanzeige',
 ];
 
 $messages['de-at'] = [
@@ -7226,6 +7227,7 @@ $1',
 	'feedback-close' => 'انجام شد',
 	'feedback-bugcheck' => 'عالی‌است! فقط بررسی کنید که از [$1 ایرادهای شناخته‌شده] نباشد.',
 	'feedback-bugnew' => 'بررسی کردم. ایرادی جدید را گزارش بده',
+	'fast-adv' => 'تبلیغات',
 ];
 
 $messages['fi'] = [
@@ -11932,6 +11934,7 @@ $1',
 	'featured' => '秀逸なウィキ',
 	'forum' => 'フォーラム',
 	'feed-watom' => 'FandomのAtom',
+	'fast-adv' => '広告',
 ];
 
 $messages['jam'] = [
@@ -13681,6 +13684,7 @@ $1',
 	'feedback-close' => '완료',
 	'feedback-bugcheck' => '감사합니다! 혹시 해당 사항이 [$1 기존의 버그 리포트]에 올라와 있는지 확인해주세요.',
 	'feedback-bugnew' => '확인했습니다. 새로운 버그 리포트를 작성합니다.',
+	'fast-adv' => '광고',
 ];
 
 $messages['ko-kp'] = [
@@ -18778,6 +18782,7 @@ Skriv inn filnamnet utan «{{ns:file}}:»-prefikset.',
 	'feedback-error2' => 'Feil: Brigdinga gjekk ikkje',
 	'feedback-error3' => 'Feil: Saknar svar frå API',
 	'forum' => 'Forum',
+	'fast-adv' => 'Reklame',
 ];
 
 $messages['nov'] = [
