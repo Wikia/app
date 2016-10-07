@@ -9,8 +9,8 @@ require([
 	function init() {
 		var $wikiaArticle = $('#WikiaArticle'),
 			redLinkFlow = mw.config.get('wgNamespaceNumber') === -1 ?
-			window.wgFlowTrackingFlows.CREATE_PAGE_SPECIAL_REDLINK :
-			window.wgFlowTrackingFlows.CREATE_PAGE_ARTICLE_REDLINK;
+				window.wgFlowTrackingFlows.CREATE_PAGE_SPECIAL_REDLINK :
+				window.wgFlowTrackingFlows.CREATE_PAGE_ARTICLE_REDLINK;
 
 		// Create Page flow tracking, adding flow param in redlinks href.
 		// This parameter is added here to avoid reparsing all articles.
