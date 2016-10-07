@@ -4592,7 +4592,7 @@ $messages['niu'] = [
 
 $messages['nl'] = [
 	'go' => 'OK',
-	'gotaccount' => 'Hebt u al een gebruikersnaam? $1.',
+	'gotaccount' => 'Heb je al een gebruikersnaam? \'\'\'$1\'\'\'.',
 	'gotaccountlink' => 'Aanmelden',
 	'guesstimezone' => 'Vanuit de browser toevoegen',
 	'gender-unknown' => 'Niet aangegeven',
