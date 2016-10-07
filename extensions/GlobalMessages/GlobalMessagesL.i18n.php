@@ -6647,9 +6647,9 @@ Seuraava lista näyttää {{PLURAL:$1|ensimmäisen linkittävän sivun|$1 ensimm
 	'logempty' => 'Ei tapahtumia lokissa.',
 	'log-title-wildcard' => 'Kohde alkaa merkkijonolla',
 	'linksearch' => 'Etsi ulkoisia linkkejä',
-	'linksearch-pat' => 'Osoite',
-	'linksearch-ns' => 'Nimiavaruus',
-	'linksearch-ok' => 'Etsi',
+	'linksearch-pat' => 'Hakukaava:',
+	'linksearch-ns' => 'Nimiavaruus:',
+	'linksearch-ok' => 'Hae',
 	'linksearch-text' => 'Tähteä (*) voi käyttää jokerimerkkinä, esimerkiksi ”*.wikipedia.org”.
 Vähintään ylätason verkkotunnus, esimerkiksi "*.org", tarvitaan.<br />
 Tuetut protokollat: <tt>$1</tt> (älä lisää näitä hakuusi).',
@@ -10807,8 +10807,8 @@ $1',
 	'logempty' => '該当する記録がみつかりませんでした。',
 	'log-title-wildcard' => 'この文字列で始まるページ名を検索する',
 	'linksearch' => '外部リンクの検索',
-	'linksearch-pat' => '検索パターン：',
-	'linksearch-ns' => '名前空間：',
+	'linksearch-pat' => '検索パターン:',
+	'linksearch-ns' => '名前空間:',
 	'linksearch-ok' => '検索',
 	'linksearch-text' => '"*.wikipedia.org" のようにワイルドカードを使うことができます。
 少なくとも、"*.org" のようなトップレベルドメインが必要です。<br />
