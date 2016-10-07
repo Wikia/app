@@ -7085,6 +7085,7 @@ Weitere werden standardmäßig nicht angezeigt.
 	'most_popular' => 'Am beliebtesten',
 	'most_visited' => 'Am häufigsten besucht',
 	'most_emailed' => 'Am häufigsten verschickt',
+	'magicfooterlinks' => '<b>Vorgestellte Seiten</b>',
 ];
 
 $messages['de-ch'] = [
@@ -8443,6 +8444,7 @@ Existen otros campos que se mantendrán ocultos por defecto.
 	'most_popular' => 'Los más populares',
 	'most_visited' => 'Los más visitados',
 	'most_emailed' => 'Los más contactados por e-mail',
+	'magicfooterlinks' => '<b>Páginas destacadas</b>',
 ];
 
 $messages['et'] = [
@@ -24199,6 +24201,7 @@ Andre er gøymde som standard.
 	'most_popular' => 'Mest populære',
 	'most_visited' => 'Mest besøkte',
 	'most_emailed' => 'Mest mailet',
+	'magicfooterlinks' => '<b>Utvalgte sider</b>',
 ];
 
 $messages['nov'] = [
@@ -27629,6 +27632,7 @@ $messages['ru'] = [
 	'most_popular' => 'Самые популярные',
 	'most_visited' => 'Самые посещаемые',
 	'most_emailed' => 'Самые популярные по количеству электронных писем',
+	'magicfooterlinks' => '<b>Избранные страницы</b>',
 ];
 
 $messages['rue'] = [
