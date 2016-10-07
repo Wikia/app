@@ -481,7 +481,7 @@ $messages['de'] = [
 	'no_questions_found' => 'Keine Fragen gefunden',
 	'widget_settings' => 'Frage-Einstellungen',
 	'style_settings' => 'Style-Einstellungen',
-	'get_widget_title' => 'Fragen zu deiner Seite hinzufügen',
+	'get_widget_title' => 'Füge Fragen zu deiner Seite hinzu',
 	'background_color' => 'Hintergrundfarbe',
 	'widget_category' => 'Art der Fragen',
 	'category' => 'Eine Kategorie pro Zeile',
@@ -567,6 +567,7 @@ $messages['de'] = [
 	'anwb-step1-example' => '<strong>Beispiel:</strong><br /> Antworten auf alle deine Fragen zum Thema Wrestling!',
 	'anwb-step1-text' => 'Deine Frage-Antwort-Seite benötigt eine <strong>Kurzerklärung</strong> (ein Satz!).<br /><br />Die Kurzerklärung hilft anderen dein Angebot durch Suchmaschinen zu finden - versuche also möglichst präzise zu schreiben, welche Inhalte deine Seite behandelt.',
 	'anwb-thatisall-text' => 'Das wars auch schon - jetzt kann es losgehen!<br /><br />Du solltest damit beginnen, noch weitere Fragen und Antworten zu deiner Seite hinzuzufügen, so dass sie besser durch Suchmaschinen gefunden wird.<br /><br />Die Liste der Fragen aus dem letzten Schritt sind bereits auf deiner Frage-Antwort-Seite erstellt worden. Rufe sie auf, beantworte sie und starte deine eigene Community!',
+	'get_code' => 'Code holen',
 ];
 
 $messages['de-formal'] = [
@@ -616,7 +617,7 @@ $messages['es'] = [
 	'see_all_changes' => 'Ver todos los cambios',
 	'no_questions_found' => 'Ningunas preguntas encontradas',
 	'widget_settings' => 'Configuración de preguntas',
-	'get_widget_title' => 'Añade preguntas a tu página web',
+	'get_widget_title' => 'Añadir pregunta a tu sitio',
 	'background_color' => 'Color de fondo',
 	'widget_category' => 'Tipo de preguntas',
 	'category' => 'Nombre de Categoría',
@@ -2109,6 +2110,7 @@ $messages['pl'] = [
 	'a' => 'Odpowiedź:',
 	'edit_points' => '{{PLURAL:$1|punkt edycji|punkty edycji|punktów edycji}}',
 	'facebook_signed_in' => 'Jesteś {{GENDER:|zalogowany|zalogowana|zalogowany/a}} przez Facebook Connect',
+	'get_code' => 'Pobierz kod',
 ];
 
 $messages['pms'] = [
@@ -2549,6 +2551,8 @@ $messages['no'] = [
 	'facebook_send_request' => 'Send direkte til venner',
 	'facebook_send_request_content' => 'Kan du hjelpe til med å besvare dette? $1',
 	'facebook_signed_in' => 'Du er logget inn i Facebook Connect',
+	'get_code' => 'Få kode',
+	'get_widget_title' => 'Legg til spørsmål på siden din',
 ];
 
 $messages['zh-hant'] = [
