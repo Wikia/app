@@ -38,19 +38,6 @@ class ContributeMenuController extends WikiaController {
 				'href' =>  $specialPageTitle->getLocalURL(),
 			];
 
-			/**
-			 * id for flow tracking
-			 * @see https://wikia-inc.atlassian.net/browse/WW-343
-			 */
-			if ( $wgEnableFlowTracking && $specialPageName === 'CreatePage' ) {
-				// TODO: move param name and flow name  to consts
-				$attrs[ 'href' ] = http_build_url(
-					$attrs[ 'href' ],
-					[ 'query' => 'flow=' . FlowTrackingHooks::CREATE_PAGE_CONTRIBUTE_BUTTON ],
-					HTTP_URL_JOIN_QUERY
-				);
-			}
-
 			if ( isset( $link[ 'accesskey' ] ) ) {
 				$attrs[ 'accesskey' ] = $link[ 'accesskey' ];
 			}
@@ -65,6 +52,8 @@ class ContributeMenuController extends WikiaController {
 		if( $this->wg->User->isAllowed( 'editinterface' ) ) {
 			$dropdownItems[ 'wikinavedit' ] = $this->getEditNavItem();
 		}
+
+		wfRunHooks( 'ContributeMenuAfterDropdownItems', [ &$dropdownItems ]);
 
 		$this->response->setVal( 'dropdownItems', $dropdownItems );
 	}
