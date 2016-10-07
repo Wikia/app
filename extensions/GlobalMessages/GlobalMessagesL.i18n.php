@@ -16628,7 +16628,7 @@ Er kan [[{{MediaWiki:Listgrouprights-helppage}}|extra informatie]] over individu
 Bevestig dat je deze handeling wilt uitvoeren en dat je de database vrijgeeft nadat het onderhoud is uitgevoerd.',
 	'lockconfirm' => 'Ja, ik wil de database blokkeren.',
 	'lockbtn' => 'Database blokkeren',
-	'locknoconfirm' => 'U hebt uw keuze niet bevestigd via het vinkvakje.',
+	'locknoconfirm' => 'Je hebt je keuze niet bevestigd via het vinkvakje.',
 	'lockdbsuccesssub' => 'De database is afgesloten',
 	'lockdbsuccesstext' => 'De database is afgesloten.<br />
 Vergeet niet de [[Special:UnlockDB|database vrij te geven]] zodra je klaar bent met je onderhoud.',
