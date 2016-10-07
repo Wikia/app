@@ -4281,6 +4281,7 @@ Altrament, podeu fer servir un senzill formulari a continuació. El vostre comen
 	'feedback-bugcheck' => 'Fantàstic! Comproveu que no sigui un dels [$1 problemes ja coneguts].',
 	'feedback-bugnew' => 'Ja ho he comprovat. Informeu d\'un nou problema',
 	'forum' => 'fòrum',
+	'forum-url' => 'Forum:Index',
 ];
 
 $messages['cbk-zam'] = [
@@ -5615,6 +5616,7 @@ Anderenfalls kannst du auch das untenstehende einfache Formular nutzen. Dein Kom
 	'footer_Advertise_on_Wikia' => '[http://www.wikia.com/wiki/Advertising Auf Wikia werben]',
 	'footer_Contact_Wikia' => '[http://de.wikia.com/wiki/Kontaktiere_uns Kontakt]',
 	'footer_Terms_of_use' => '[http://www.wikia.com/wiki/Terms_of_use Nutzungsbedingungen]',
+	'forum-url' => 'Forum:Übersicht',
 ];
 
 $messages['de-at'] = [
@@ -6352,6 +6354,7 @@ $1',
 	'feedback-thanks' => 'Ευχαριστούμε! Τα σχόλιά σας έχουν καταχωρηθεί στη σελίδα "[$2 $1]".',
 	'feedback-close' => 'Ολοκληρώθηκε',
 	'forum' => 'Αγορά',
+	'forum-url' => 'Αγορά:Ευρετήριο',
 ];
 
 $messages['eml'] = [
@@ -7278,6 +7281,7 @@ $1',
 	'footer_9' => 'این مقاله را رتبه‌بندی کنید',
 	'footer_About_Wikia' => '[http://www.wikia.com/wiki/About_Wikia دربارۀ ویکیا]',
 	'footer_Contact_Wikia' => '[http://www.fa.wikia.com/wiki/تماس_با_ما  تماس با ویکیا]',
+	'forum-url' => 'فوروم:فهرست',
 ];
 
 $messages['fi'] = [
@@ -7457,6 +7461,7 @@ Muussa tapauksessa voit käyttää alla olevaa helpompaa lomaketta. Kommenttisi 
 	'footer_Advertise_on_Wikia' => '[http://www.wikia.com/wiki/Advertising Mainosta Wikiassa]',
 	'footer_Contact_Wikia' => '[http://fi.wikia.com/wiki/Ota_yhteytt%C3%A4 Ota yhteyttä Wikiaan]',
 	'footer_Terms_of_use' => '[http://fi.wikia.com/wiki/K%C3%A4ytt%C3%B6ehdot Käyttöehdot]',
+	'forum-url' => 'Foorumi:Sisällysluettelo',
 ];
 
 $messages['fiu-vro'] = [
@@ -11671,6 +11676,7 @@ Le immagini vengono mostrate alla massima risoluzione disponibile, per gli altri
 	'feedback-bugcheck' => 'Ottimo! Verifica che non sia già fra i [$1 bug conosciuti].',
 	'feedback-bugnew' => 'Controllo effettuato. Segnala un nuovo bug',
 	'feed-watom' => 'Fandom Atom',
+	'forum-url' => 'Forum:Index',
 ];
 
 $messages['iu'] = [
@@ -18901,6 +18907,7 @@ Skriv inn filnamnet utan «{{ns:file}}:»-prefikset.',
 	'footer_Advertise_on_Wikia' => '[http://www.wikia.com/wiki/Advertising Reklamér hos Wikia]',
 	'footer_Contact_Wikia' => '[http://www.wikia.com/wiki/Contact_us Kontakt Wikia]',
 	'footer_Terms_of_use' => '[http://www.wikia.com/wiki/Terms_of_use Brukervilkår]',
+	'forum-url' => 'Forum:Indeks',
 ];
 
 $messages['nov'] = [
@@ -21654,6 +21661,7 @@ $1',
 	'feedback-bugnew' => 'Я проверил. Сообщить о новой ошибке',
 	'forum' => 'Форум',
 	'feed-watom' => 'Fandom Atom',
+	'forum-url' => 'Форум:Сообщество',
 ];
 
 $messages['rue'] = [
@@ -27260,6 +27268,7 @@ Nếu không thì bạn có thể điền biểu mẫu đơn giản ở dưới.
 	'feedback-bugcheck' => 'Tuyệt! Chỉ cần kiểm tra nó chưa được [$1 báo cáo trước đây].',
 	'feedback-bugnew' => 'Tôi đã kiểm tra – báo cáo lỗi mới',
 	'forum' => 'diển đàn',
+	'forum-url' => 'Diễn đàn:Mục lục',
 ];
 
 $messages['vls'] = [
