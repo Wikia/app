@@ -8209,7 +8209,7 @@ Wellicht is die verwijderd of hernoemd.
 	'htmlform-invalid-input' => 'Er zijn problemen met enkele ingegeven waarden',
 	'htmlform-select-badoption' => 'De ingegeven waarde is ongeldig.',
 	'htmlform-int-invalid' => 'De ingegeven waarde is geen geheel getal.',
-	'htmlform-float-invalid' => 'De waarde die u hebt opgegeven is geen getal.',
+	'htmlform-float-invalid' => 'De waarde die je hebt opgegeven is geen getal.',
 	'htmlform-int-toolow' => 'De ingegeven waarde ligt onder de minimumwaarde van $1',
 	'htmlform-int-toohigh' => 'De ingegeven waarde ligt boven de maximumwaarde van $1',
 	'htmlform-required' => 'Deze waarde is verplicht',
