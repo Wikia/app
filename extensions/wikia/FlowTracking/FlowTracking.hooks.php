@@ -108,12 +108,10 @@ class FlowTrackingHooks {
 	}
 
 	private static function extendUrlWithParam( $url, $param, $value ) {
-		$parts = parse_url( $url );
-		parse_str( $parts[ 'query' ] ?? '', $queryParts );
+		$queryParts = static::getParamsFromUrlQuery( $url );
 		$queryParts[ $param ] = $value;
-		$parts[ 'query' ] = http_build_query( $queryParts );
 
-		return http_build_url( null, $parts );
+		return http_build_url( $url, [ 'query' => http_build_query( $queryParts ) ] );
 	}
 
 	private static function getEditor( $requestValues, $queryParams ) {
