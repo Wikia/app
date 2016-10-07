@@ -3021,6 +3021,7 @@ $messages['bg'] = [
 	'imgmultigo' => 'Отваряне',
 	'imgmultigoto' => 'Отиване на страница $1',
 	'intentionallyblankpage' => 'Тази страница умишлено е оставена празна',
+	'irc' => 'Помощ в IRC',
 ];
 
 $messages['bh'] = [
@@ -5203,6 +5204,7 @@ Diese auf dem lokalen Rechner speichern und danach hier hochladen.',
 	'intentionallyblankpage' => 'Diese Seite ist absichtlich ohne Inhalt. Sie wird für Benchmarks verwendet.',
 	'imagereverted' => 'Das Zurücksetzen auf eine vorherige Version war erfolgreich. <strong>Es kann einige Minuten dauern, bis die Änderung sichtbar wird.</strong>',
 	'insertimage' => 'Bild einfügen',
+	'irc' => 'Echtzeit-Hilfe',
 ];
 
 $messages['de-ch'] = [
@@ -6972,6 +6974,7 @@ Tallenna tiedot koneellesi ja tuo ne tällä sivulla.',
 	'intentionallyblankpage' => 'Tämä sivu on tarkoituksellisesti tyhjä.',
 	'imagereverted' => 'Palautus aiempaan versioon onnistui. <strong>Tällä muutoksella voi kestää jopa 2 minuuttia näkyä.</strong>',
 	'insertimage' => 'Sisällytä kuva',
+	'irc' => 'Reaaliaikaista wikiapua',
 ];
 
 $messages['fiu-vro'] = [
@@ -7340,6 +7343,7 @@ Un dossier temporaire est manquant.',
 	'imgmultigo' => 'Accéder !',
 	'imgmultigoto' => 'Aller à la page $1',
 	'intentionallyblankpage' => 'Cette page est laissée intentionellement vide.',
+	'irc' => 'Aide en ligne',
 ];
 
 $messages['frc'] = [
@@ -11358,7 +11362,7 @@ CGI ベースであるため、img_auth に対応できない可能性もあり�
 	'iranian-calendar-m11' => 'バフマン',
 	'iranian-calendar-m12' => 'エスファンド',
 	'intentionallyblankpage' => 'このページは意図的に白紙にされています。',
-	'irc' => 'IRCにるヘルプ',
+	'irc' => 'IRCによるヘルプ',
 	'irc-url' => 'http://irc.wikia.com/',
 	'insertimage' => '画像をインポートする',
 	'its_easy' => '簡単、無料',
@@ -17730,6 +17734,7 @@ For best tryggleik, er img_auth.php sett ut av funksjon.',
 	'intentionallyblankpage' => 'Denne sida er tom med vilje',
 	'imagereverted' => 'Tilbakestilling til tidligere versjon var vellykket. <strong>Denne endring kan ta opp til to mintter før den er synlig.</strong>',
 	'insertimage' => 'Sett inn bilde',
+	'irc' => 'Live wiki-hjelp',
 ];
 
 $messages['nov'] = [
@@ -18522,6 +18527,7 @@ Brak katalogu dla plików tymczasowych.',
 	'iranian-calendar-m9' => 'Āsar',
 	'iranian-calendar-m10' => 'Déi',
 	'intentionallyblankpage' => 'Ta strona umyślnie pozostała pusta',
+	'irc' => 'Wikia - kanał IRC',
 ];
 
 $messages['pms'] = [
@@ -26966,6 +26972,7 @@ $messages['zh-tw'] = [
 	'importhistoryconflict' => '存在衝突的修訂沿革(可能在之前已經匯入過此頁面)',
 	'imagemaxsize' => '在圖片描述頁對圖片大小限制為:',
 	'imagelisttext' => '以下是按$2排列的$1個檔案列表。',
+	'irc' => '線上協助',
 ];
 
 $messages['zh-yue'] = [
@@ -27020,5 +27027,9 @@ $messages['zu'] = [
 	'ipusubmit' => 'Qeda isivimbelo lo msebenzisi',
 	'import-interwiki-submit' => 'Ngenisa',
 	'ilsubmit' => 'Sesha',
+];
+
+$messages['zh-cn'] = [
+	'irc' => '線上協助',
 ];
 
