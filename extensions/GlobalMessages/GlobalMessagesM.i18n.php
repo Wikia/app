@@ -7086,6 +7086,7 @@ Weitere werden standardmäßig nicht angezeigt.
 	'most_visited' => 'Am häufigsten besucht',
 	'most_emailed' => 'Am häufigsten verschickt',
 	'magicfooterlinks' => '<b>Vorgestellte Seiten</b>',
+	'manage_widgets' => 'Widgets verwalten',
 ];
 
 $messages['de-ch'] = [
@@ -8445,6 +8446,7 @@ Existen otros campos que se mantendrán ocultos por defecto.
 	'most_visited' => 'Los más visitados',
 	'most_emailed' => 'Los más contactados por e-mail',
 	'magicfooterlinks' => '<b>Páginas destacadas</b>',
+	'manage_widgets' => 'Organizar widgets',
 ];
 
 $messages['et'] = [
@@ -9279,6 +9281,7 @@ Suorittamalla sen järjestelmäsi voi muuttua epäluotettavaksi.',
 	'most_popular' => 'Suosituimmat artikkelit',
 	'most_visited' => 'Käydyimmät',
 	'most_emailed' => 'Eniten lähetetyt',
+	'manage_widgets' => 'Hallinnoi vekottimia',
 ];
 
 $messages['fiu-vro'] = [
@@ -9767,6 +9770,7 @@ Si vous l’exécutez, votre système peut être compromis.',
 	'most_popular' => 'Les plus populaires',
 	'most_visited' => 'Les plus vus',
 	'most_emailed' => 'Les plus envoyés',
+	'manage_widgets' => 'Gérer les widgets',
 ];
 
 $messages['frc'] = [
@@ -15095,6 +15099,7 @@ contenttype/subtypeの形式で指定してください（例：<tt>image/jpeg</
 	'most_popular' => '人気順',
 	'most_visited' => '閲覧順',
 	'most_emailed' => 'メールの使われた記事',
+	'manage_widgets' => 'ウィジェットの設定',
 ];
 
 $messages['jam'] = [
@@ -24202,6 +24207,7 @@ Andre er gøymde som standard.
 	'most_visited' => 'Mest besøkte',
 	'most_emailed' => 'Mest mailet',
 	'magicfooterlinks' => '<b>Utvalgte sider</b>',
+	'manage_widgets' => 'Administrer skjermelementer',
 ];
 
 $messages['nov'] = [
@@ -25418,6 +25424,7 @@ Pozostałe pola zostaną domyślnie ukryte.
 	'most_popular' => 'Najpopularniejsze',
 	'most_visited' => 'Najczęściej odwiedzane',
 	'most_emailed' => 'Najczęściej przesyłane',
+	'manage_widgets' => 'Zarządzaj widgetami',
 ];
 
 $messages['pms'] = [
