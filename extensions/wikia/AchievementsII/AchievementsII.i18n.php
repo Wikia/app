@@ -26,7 +26,7 @@ Please try another one!',
 	'achievements-silver-points' => '50<br />pts',
 	'achievements-bronze-points' => '10<br />pts',
 	'achievements-you-must' => 'You need to $1 to earn this badge.',
-	'leaderboard-button' => 'Achievements leaderboard',
+	'leaderboard-button' => 'Achievements Leaderboard',
 	'achievements-masthead-points' => '$1 <small>{{PLURAL:$1|point|points}}</small>',
 	'achievements-track-name-edit' => 'Edit track',
 	'achievements-track-name-picture' => 'Pictures track',
@@ -61,7 +61,7 @@ Please try another one!',
 	'leaderboard-intro' => 'You can earn badges on this wiki by editing pages, uploading photos and leaving comments. Each badge earns you points - the more points you get, the higher up the leaderboard you go! You\'ll find the badges you\'ve earned on your [[$1|user profile page]].
 
 	\'\'\'What are badges worth?\'\'\'',
-	'leaderboard' => 'Achievements leaderboard',
+	'leaderboard' => 'Achievements Leaderboard',
 	'achievements-title' => 'Achievements',
 	'leaderboard-title' => 'Leaderboard',
 	'achievements-recent-earned-badges' => 'Recent Earned Badges',
@@ -1636,15 +1636,13 @@ $messages['de'] = [
 	'achievements-ranked-oasis' => '$1 belegt [[Special:Leaderboard|Rang #$2]] in diesem Wiki',
 	'achievements-viewall-oasis' => 'Zeige alle',
 	'achievements-toggle-hide' => 'Zeige weder Punkte, Abzeichen noch meine Platzierung auf meiner Benutzerseite',
-	'leaderboard-intro-hide' => 'Ausblenden',
-	'leaderboard-intro-open' => 'Öffnen',
-	'leaderboard-intro-headline' => 'Was sind Herausforderungen?',
-	'leaderboard-intro' => 'In diesem Wiki kannst du Abzeichen verdienen, indem du Seiten bearbeitest, Fotos hochlädst und Kommentare hinterlässt. Mit jedem Abzeichen verdienst du Punkte - und je mehr Punkte du hast, desto höher kletterst du auf der Rangliste! Du findest die Abzeichen, die du verdient hast, auf deiner [[$1|Benutzerseite]].
-
-\'\'\'Was sind Abzeichen wert?\'\'\'',
+	'leaderboard-intro-hide' => 'Schließen',
+	'leaderboard-intro-open' => 'Anzeigen',
+	'leaderboard-intro-headline' => 'Was sind Auszeichnungen?',
+	'leaderboard-intro' => '<b>&ldquo;Was sind Herausforderungen?&rdquo;</b> Du kannst durch deine aktive Teilnahme in diesem Wiki verschiedene Auszeichnungen gewinnen! Jede erhaltene Auszeichnung erhöht deinen Gesamt-Punktestand: Bronze-Auszeichnungen zählen 10 Punkte, Silber-Auszeichnungen 50 Punkte und Gold-Auszeichnungen sind 100 Punkte wert.<br /><br />Wenn du dem Wiki beitrittst, werden deine verdienten Auszeichnungen auf deiner Nutzerseite angezeigt - und eine Liste von Herausforderungen, die dir noch offen stehen. [[Special:MyPage|Besuche deine Benutzerseite mit deinen Auszeichnungen!]]',
 	'leaderboard' => 'Rangliste',
 	'achievements-title' => 'Herausforderungen',
-	'leaderboard-title' => 'Leaderboard',
+	'leaderboard-title' => 'Rangliste',
 	'achievements-recent-earned-badges' => 'Aktuelle Auszeichnungen',
 	'achievements-recent-info' => '<strong>$3</strong><br/>$4<br/>verdient durch <a href="$1">$2</a><br/>$5',
 	'achievements-activityfeed-info' => 'hat sich das <strong><a href="$3" class="badgeName">$1</a></strong>-Abzeichen verdient<br />$2',
@@ -2121,9 +2119,9 @@ Por favor, inténtalo con otra imagen.',
 	'leaderboard-intro-hide' => 'ocultar',
 	'leaderboard-intro-open' => 'abrir',
 	'leaderboard-intro-headline' => '¿Qué son los logros?',
-	'leaderboard-intro' => 'Puedes ganar insignias al participar (haciendo ediciones, subiendo imágenes) en esta wikia. Cada insignia te gana puntos, los cuales pueden llevarte más arriba en la clasificación. Podrás encontrar las insignias que has ganado en tu [[$1|página de usuario]].
+	'leaderboard-intro' => 'Por participar (haciendo ediciones, subiendo imágenes) en este wiki, puedes ganar logros.<br />Cada logro gana puntos los cuales pueden llevarte más arriba en la clasificación.
 
-\'\'\'¿Cuánto valen las insignias?\'\'\'',
+\'\'\'¿Cuánto valen los logros?\'\'\'',
 	'leaderboard' => 'Tabla de líderes con más logros',
 	'achievements-title' => 'Logros',
 	'leaderboard-title' => 'Tabla de líderes',
@@ -2867,7 +2865,7 @@ Merci d\'en essayer une autre !',
 	'achievements-silver-points' => '50<br />pts',
 	'achievements-bronze-points' => '10<br />pts',
 	'achievements-you-must' => 'Vous devez $1 pour gagner ce badge.',
-	'leaderboard-button' => 'Tableau des récompenses',
+	'leaderboard-button' => 'Tableau des distinctions',
 	'achievements-masthead-points' => '$1 <small>{{PLURAL:$1|point|points}}</small>',
 	'achievements-profile-title-no' => 'Badges de $1',
 	'achievements-no-badges' => 'Jetez un œil à la liste ci-dessous pour voir les badges que vous pouvez gagner sur ce wiki !',
@@ -2896,11 +2894,11 @@ Merci d\'en essayer une autre !',
 	'achievements-toggle-hide' => 'Masquer mes distinctions sur mon profil pour tout le monde',
 	'leaderboard-intro-hide' => 'masquer',
 	'leaderboard-intro-open' => 'ouvrir',
-	'leaderboard-intro-headline' => 'Que sont les récompenses ?',
-	'leaderboard-intro' => 'Sur ce wiki vous pouvez gagner des badges en modifiant des articles, téléversant des photos et en laissant des commentaires. Chaque badge vous rapporte des points — plus vous aurez de points et plus haut vous serez dans le classement ! Vous trouverez les badges que vous avez récoltés sur votre [[$1|page utilisateur]].
+	'leaderboard-intro-headline' => 'Que sont les distinctions ?',
+	'leaderboard-intro' => 'Sur ce wiki vous pouvez gagner des badges en modifiant des articles, important des images et en laissant des commentaires. Chaque badge gagné vous rapporte des points — plus vous aurez de points et plus haut vous serez dans le classement ! Vous trouverez les badges que vous avez gagnés sur votre [[$1|page utilisateur]].
 
 \'\'\'Que valent les badges ?\'\'\'',
-	'leaderboard' => 'Tableau des récompenses',
+	'leaderboard' => 'Tableau des distinctions',
 	'achievements-title' => 'Distinctions',
 	'leaderboard-title' => 'Classement',
 	'achievements-recent-earned-badges' => 'Badges récemment gagnés',
@@ -4645,7 +4643,7 @@ $messages['ja'] = [
 	'achievements-silver-points' => '50<br />ポイント',
 	'achievements-bronze-points' => '10<br />ポイント',
 	'achievements-you-must' => 'このバッジを入手するには$1必要があります',
-	'leaderboard-button' => 'アチーブメント・ランキング',
+	'leaderboard-button' => 'アチーブメントランキング',
 	'achievements-masthead-points' => '$1 <small>ポイント</small>',
 	'achievements-profile-title-no' => '$1 が入手したバッジ',
 	'achievements-no-badges' => '下のリストで入手可能なバッジをチェックしてみましょう。',
@@ -4673,10 +4671,10 @@ $messages['ja'] = [
 	'leaderboard-intro-hide' => '閉じる',
 	'leaderboard-intro-open' => '開く',
 	'leaderboard-intro-headline' => 'アチーブメントとは？',
-	'leaderboard-intro' => '画像をアップロードしたりコメントを残したりしながら、このコミュニティの編集に参加すると、バッジを獲得することができます。<br />バッジを獲得するとポイントが貯まり、アチーブメントのランキング順位に影響します。
+	'leaderboard-intro' => 'このウィキに参加する（編集や画像のアップロードなど）と、バッジを入手できます。<br />バッジを入手するとポイントが付与され、アチーブメントランキングの順位が変動します。
 
-各バッジで貯まるポイントは以下のとおりです。',
-	'leaderboard' => 'アチーブメント・ランキング',
+各バッジで入手できるポイントは以下のとおりです。',
+	'leaderboard' => 'アチーブメントランキング',
 	'achievements-title' => 'アチーブメント',
 	'leaderboard-title' => 'ランキング',
 	'achievements-recent-earned-badges' => '最近授与されたバッジ',
@@ -5056,10 +5054,10 @@ $messages['ko'] = [
 	'achievements-viewall-oasis' => '전체 보기',
 	'leaderboard-intro-hide' => '숨기기',
 	'leaderboard-intro-open' => '보이기',
-	'leaderboard-intro' => '위키에서 문서를 편집하고 파일을 올리고 댓글을 남김으로서 배지를 얻으실 수 있습니다. 배지를 얻게 되면 그에 대응하는 포인트도 획득하실 수 있으며 많은 포인트를 얻을수록 리더보드에서 더 높은 자리에 위치할 수 있게 됩니다. 얻으신 배지는 당신의 [[$1|사용자 문서]]에서 확인하실 수 있습니다.
+	'leaderboard-intro' => '위키에서 문서를 편집하고 파일을 올리고 댓글을 남김으로서 배지를 얻으실 수 있습니다. 배지를 얻게 되면 그에 대응하는 포인트도 획득하실 수 있으며 많은 포인트를 얻을수록 리더보드에서 더 높은 자리에 위치할 수 있게 됩니다. 얻으신 배지는 회원님의 [[$1|사용자 문서]]에서 확인하실 수 있습니다.
 
 \'\'\'배지는 얼마나 가치가 있나요?\'\'\'',
-	'leaderboard' => '배지 현황판',
+	'leaderboard' => '배지 순위',
 	'leaderboard-title' => '배지 현황판',
 	'achievements-recent-earned-badges' => '최근에 수여된 배지',
 	'achievements-recent-info' => '$5 <a href="$1">$2</a> 사용자가 \'$4\' 조건을 달성하였으므로 \'$3\' 배지를 얻었습니다.',
@@ -5269,6 +5267,7 @@ $messages['ko'] = [
 	'achievements-title' => '배지 현황판',
 	'achievements-toggle-hide' => '내 사용자 문서에서 받은 배지와 배지 순위를 공개하지 않기',
 	'achievements-track-name-sharing' => '공유 트랙',
+	'leaderboard-intro-headline' => '배지란 무엇인가요?',
 ];
 
 $messages['krj'] = [
@@ -6676,7 +6675,8 @@ Kies dan een ander plaatje.',
 	'leaderboard-intro-hide' => 'verbergen',
 	'leaderboard-intro-open' => 'openen',
 	'leaderboard-intro-headline' => 'Wat zijn speldjes?',
-	'leaderboard-intro' => 'U kunt speldjes verdienen door pagina\'s te bewerken, foto\'s te uploaden en reacties achter te laten. Voor ieder speldje krijgt u punten. Hoe meer punten u verdient, hoe hoger u komt te staan op het scorebord! Speldjes die u hebt verdiend worden weergegeven op uw [[$1|profielpagina]].
+	'leaderboard-intro' => 'Je kunt speldjes verdienen door pagina\'s te bewerken, foto\'s te uploaden en reacties achter te laten. Voor ieder speldje krijg je punten. Hoe meer puten je verdient, hoe hoger je komt te staan op het scorebord! Speldjes die je hebt verdiend worden weergegeven op uw [[$1|profielpagina]].
+
 
 \'\'\'Wat zijn speldjes waard?\'\'\'',
 	'leaderboard' => 'Ranglijst voor prestaties',
@@ -8748,7 +8748,7 @@ $messages['ru'] = [
 	'leaderboard-intro-hide' => 'скрыть',
 	'leaderboard-intro-open' => 'открыть',
 	'leaderboard-intro-headline' => 'Что такое достижения?',
-	'leaderboard-intro' => 'Вы можете зарабатывать значки на этой Вики редактируя страницы, загружая фотографий и оставляя комментарии. Каждый значок даёт очки — чем больше очков вы получите, тем выше вы будете в таблице лидеров! Значки, которые вы заработали, можно просмотреть на [[$1|странице профиля]]
+	'leaderboard-intro' => 'Вы можете зарабатывать значки на этой Вики, редактируя страницы, загружая фотографии и оставляя комментарии. Каждый значок даёт очки — чем больше очков вы получите, тем выше вы будете в таблице лидеров! Значки, которые вы заработали, можно просмотреть на [[$1|странице профиля]]
 
 	\'\'\'Что такое значки?\'\'\'',
 	'leaderboard' => 'Лидеры по наградам',
