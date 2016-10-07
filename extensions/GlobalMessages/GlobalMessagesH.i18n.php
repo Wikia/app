@@ -14,8 +14,8 @@ $messages['en'] = [
 	'headline_tip' => 'Level 2 headline',
 	'hr_tip' => 'Horizontal line (use sparingly)',
 	'hiddencategories' => 'This page is a member of {{PLURAL:$1|1 hidden category|$1 hidden categories}}:',
-	'histlegend' => 'Diff selection: Mark the radio boxes of the revisions to compare and hit enter or the button at the bottom.<br />
-Legend: \'\'\'({{int:cur}})\'\'\' = difference with latest revision, \'\'\'({{int:last}})\'\'\' = difference with preceding revision, \'\'\'{{int:minoreditletter}}\'\'\' = minor edit.',
+	'histlegend' => '<span style="white-space:nowrap;">For any version listed below, click on its date to view it.</span> <span style="white-space:nowrap;">For more help, see [[Help:Page history]].</span><br />
+<span style="white-space:nowrap;">(cur) = difference from current version, (prev) = difference from preceding version,</span> <span style="white-space:nowrap;">m = [[Help:Minor edit|minor edit]], → = section edit, ← = automatic edit summary</span>',
 	'history-fieldset-title' => 'Browse history',
 	'history-show-deleted' => 'Deleted only',
 	'history_copyright' => '-',
@@ -3197,7 +3197,8 @@ $messages['fi'] = [
 	'headline_tip' => 'Otsikko',
 	'hr_tip' => 'Vaakasuora viiva',
 	'hiddencategories' => 'Tämä sivu kuuluu {{PLURAL:$1|seuraavaan piilotettuun luokkaan|seuraaviin piilotettuihin luokkiin}}:',
-	'histlegend' => 'Merkinnät: (nyk.) = eroavaisuudet nykyiseen versioon, (edell.) = eroavaisuudet edelliseen versioon, <span class="minor">p</span> = pieni muutos',
+	'histlegend' => '<span style="white-space:nowrap;">Voit tarkastella mitä tahansa versiota napsauttamalla sen päivämäärää.</span> <span style="white-space:nowrap;">Katso sivulta [[Ohje:Historia]] lisätietoja.</span><br />
+<span style="white-space:nowrap;">(nyk.) = eroavaisuudet nykyiseen versioon, (edell.) = eroavaisuudet edelliseen versioon,</span> <span style="white-space:nowrap;">\'\'\'p\'\'\' = [[Ohje:Pieni muutos|pieni muutos]], → = osion muokkaus, ← = automaattinen muokkausyhteenveto</span>',
 	'history-fieldset-title' => 'Selaa muutoshistoriaa',
 	'history-show-deleted' => 'Vain poistetut',
 	'histfirst' => 'Ensimmäiset',
@@ -10713,8 +10714,8 @@ $messages['sv'] = [
 	'headline_tip' => 'Rubrik i nivå 2',
 	'hr_tip' => 'Horisontell linje (använd sparsamt)',
 	'hiddencategories' => 'Denna sida är medlem i följande dolda {{PLURAL:$1|kategori|kategorier}}:',
-	'histlegend' => 'Val av diff: markera i klickrutorna för att jämföra versioner och tryck enter eller knappen längst ner.<br />
-Förklaring: (nuvarande) = skillnad mot nuvarande version; (föregående) = skillnad mot föregående version; \'\'\'m\'\'\' = mindre ändring.',
+	'histlegend' => '<span style="white-space:nowrap;">För varje version som anges nedan, klicka på dagen för att visa det.</span> <span style="white-space:nowrap;">För mer hjälp, se [[Help:Page history|Hjälp:Sida historia]].</span><br />
+<span style="white-space:nowrap;">(cur) = skillnad mot nuvarande version, (sista) = skillnad mot föregående version,</span> <span style="white-space:nowrap;">m = [[Help:Minor edit|Hjälp:mindre ändring]], → = avsnitt redigera, ← = [[Help:Automatic edit summaries|Hjälp:automatisk redigeringskommentar]]</span>',
 	'history-fieldset-title' => 'Bläddra i historiken',
 	'history-show-deleted' => 'Endast borttagna',
 	'histfirst' => 'Första',
