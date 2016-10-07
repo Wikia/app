@@ -6601,7 +6601,7 @@ archivo a esa fecha.',
 	'filedelete-edit-reasonlist' => 'Edita los motivos del borrado',
 	'filedelete-maintenance' => 'Borrado y restauración de archivos temporalmente deshabilitados durante el mantenimiento.',
 	'filedelete-maintenance-title' => 'No se puede eliminar el archivo',
-	'fewestrevisions' => 'Artículos con menos ediciones',
+	'fewestrevisions' => 'Páginas con menos ediciones',
 	'fix-double-redirects' => 'Actualizar las redirecciones que apuntan al título original',
 	'file-exists-sharedrepo' => 'El nombre de archivo elegido ya está siendo usado en un repositorio compartido.
 Por favor, elige otro nombre.',
