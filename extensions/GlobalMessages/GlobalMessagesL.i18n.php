@@ -6977,7 +6977,7 @@ Notez que certaines pages peuvent être encore affichées comme si vous étiez t
 	'logouttext-link-text' => 'vous reconnecter',
 	'login' => 'Connexion',
 	'loginprompt' => 'Vous devez autoriser les \'\'cookies\'\' pour vous connecter à {{SITENAME}}.',
-	'logout' => 'Se déconnecter',
+	'logout' => 'Déconnexion',
 	'loginerror' => 'Erreur de connexion',
 	'loginsuccesstitle' => 'Connexion réussie',
 	'loginsuccess' => 'Vous êtes maintenant connecté{{GENDER:$1||e|(e)}} à {{SITENAME}} en tant que « $1 ».',
@@ -16543,10 +16543,10 @@ $messages['nl'] = [
 	'listingcontinuesabbrev' => 'meer',
 	'lastmodifiedat' => 'Deze pagina is het laatst bewerkt op $1 om $2.',
 	'laggedslavemode' => '\'\'\'Waarschuwing:\'\'\' de pagina kan verouder zijn.',
-	'logouttext' => '\'\'\'U bent nu afgemeld.\'\'\'
+	'logouttext' => '\'\'\'Je bent nu afgemeld.\'\'\'
 
-U kunt {{SITENAME}} nu anoniem gebruiken of weer $1 als dezelfde of een andere gebruiker.
-Mogelijk worden nog een aantal pagina\'s weergegeven alsof u aangemeld bent totdat u de cache van uw browser leegt.',
+Je kunt {{SITENAME}} nu anoniem gebruiken of weer [[Special:UserLogin|aanmelden]] als dezelfde of een andere gebruiker.
+Mogelijk worden nog een aantal pagina\'s weergegeven alsof je aangemeld bent totdat je de cache van uw browser leegt.',
 	'logouttext-link-text' => 'aanmelden',
 	'login' => 'Aanmelden',
 	'loginprompt' => 'Je moet cookies ingeschakeld hebben om je te kunnen aanmelden bij {{SITENAME}}.',
