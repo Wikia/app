@@ -451,7 +451,7 @@ $messages['de'] = [
 	'edit_points' => '{{PLURAL:$1|Punkt|Punkte}}',
 	'ask_a_question' => 'Gib deine Frage ein...',
 	'ask_a_question-widget' => 'Gib deine Frage ein...',
-	'in_category' => '...in der Kategorie',
+	'in_category' => '...in Kategorie',
 	'ask_button' => 'Fragen',
 	'ask_thanks' => 'Danke für diese tolle Frage!',
 	'question_asked_by' => 'Frage gestellt von',
@@ -678,6 +678,7 @@ $messages['es'] = [
 	'ask_thanks' => '¡Gracias por la magnífica pregunta!',
 	'edit_points' => '{{PLURAL:$1|punto de edición|puntos de edición}}',
 	'header_questionmark_pre' => '¿',
+	'in_category' => '... en categoría',
 ];
 
 $messages['fi'] = [
@@ -1410,6 +1411,7 @@ $messages['ja'] = [
 	'custom_category' => 'カスタムカテゴリ',
 	'edit_points' => '編集ポイント',
 	'improve_this_answer' => 'この回答を更新する',
+	'in_category' => 'カテゴリ',
 ];
 
 $messages['lb'] = [
@@ -2160,6 +2162,7 @@ $messages['pt'] = [
 	'ask_thanks' => 'Obrigado pela otima pergunta!',
 	'badWords' => 'merda filhodaputa bunda',
 	'improve_this_answer' => 'Melhore esta resposta',
+	'in_category' => '...na categoria',
 ];
 
 $messages['pt-br'] = [
@@ -2185,6 +2188,7 @@ $messages['pt-br'] = [
 	'ask_thanks' => 'Obrigado pela otima pergunta!',
 	'badWords' => 'merda filhodaputa bunda',
 	'improve_this_answer' => 'Melhore esta resposta',
+	'in_category' => '...na categoria',
 ];
 
 $messages['roa-tara'] = [
@@ -2559,6 +2563,7 @@ $messages['no'] = [
 	'get_code' => 'Få kode',
 	'get_widget_title' => 'Legg til spørsmål på siden din',
 	'improve_this_answer' => 'Forbedre dette svaret',
+	'in_category' => '...i kategorien',
 ];
 
 $messages['zh-hant'] = [
