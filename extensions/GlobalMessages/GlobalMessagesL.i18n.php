@@ -2866,8 +2866,7 @@ $messages['bg'] = [
 	'loginreqtitle' => 'Изисква се влизане',
 	'loginreqlink' => 'влизане',
 	'loginreqpagetext' => 'Необходимо е $1, за да можете да разглеждате други страници.',
-	'longpageerror' => '\'\'\'ГРЕШКА: Изпратеният текст е с големина {{PLURAL:$1|един килобайт|$1 килобайта}}, което надвишава позволения максимум от {{PLURAL:$2|един килобайт|$2 килобайта}}.\'\'\'
-Поради тази причина той не може да бъде съхранен.',
+	'longpageerror' => '<strong>ГРЕШКА: Текстът, който се опитвате да съхраните е с големина $1 килобайта; максималният допустим обем текст е $2 килобайта. Редакцията не може да бъде съхранена.</strong>',
 	'log-fulllog' => 'Преглеждане на пълния дневник',
 	'language-converter-depth-warning' => 'Надвишени са възможностите за автоматичен превод ($1)',
 	'last' => 'пред',
@@ -16565,8 +16564,8 @@ Wacht even voordat je het opnieuw probeert.',
 	'loginreqtitle' => 'Aanmelden verplicht',
 	'loginreqlink' => 'aanmelden',
 	'loginreqpagetext' => 'Je moet je $1 om andere pagina\'s te kunnen bekijken.',
-	'longpageerror' => '\'\'\'Fout: de tekst die u hebt toegevoegd is {{PLURAL:$1|één kilobyte|$1 kilobyte}} groot, wat groter is dan het maximum van {{PLURAL:$2|één kilobyte|$2 kilobyte}}.\'\'\'
-Opslaan is niet mogelijk.',
+	'longpageerror' => '\'\'\'FOUT: de tekst die je hebt toegevoegd is $1 kilobyte groot, wat groter is dan het maximum van $2 kilobyte.
+Opslaan is niet mogelijk.\'\'\'',
 	'log-fulllog' => 'Het volledige logboek bekijken',
 	'language-converter-depth-warning' => 'De dieptelimiet voor de taalconvertor is overschreden ($1)',
 	'last' => 'vorige',
