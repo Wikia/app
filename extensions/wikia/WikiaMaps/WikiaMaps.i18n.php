@@ -1,14 +1,14 @@
 <?php
+/** Internationalization file for /extensions/wikia/WikiaMaps/WikiaMaps extension. */
 $messages = [];
 
-$messages[ 'en' ] = [
+$messages['en'] = [
 	'wikia-interactive-maps-desc' => 'Create your own maps with point of interest or add your own point of interest into a real world map',
 	'wikia-interactive-maps-title' => 'Maps',
 	'wikia-interactive-maps-create-a-map' => 'Create a Map',
 	'wikia-interactive-maps-no-maps-header' => 'There are no maps created yet.',
 	'wikia-interactive-maps-no-maps-text' => 'Collaborate with the community by visually pinning locations of interest on maps.',
 	'wikia-interactive-maps-no-maps-learn-more' => 'Learn more',
-
 	'wikia-interactive-maps-parser-tag-error-no-require-parameters' => 'Wikia Interactive Maps error occurred: no parameters passed to the tag. The only required parameter is map-id parameter. Make sure it\'s set, please.',
 	'wikia-interactive-maps-parser-tag-error-invalid-map-id' => 'Wikia Interactive Maps error occurred: invalid map id. Please make sure your map-id parameter is an integer number.',
 	'wikia-interactive-maps-parser-tag-error-invalid-longitude' => 'Wikia Interactive Maps error occurred: invalid lon. Please make sure your longitude parameter is a number or remove it to set it to default value.',
@@ -29,16 +29,12 @@ $messages[ 'en' ] = [
 	'wikia-interactive-maps-parser-tag-error-no-map-found' => 'Wikia Interactive Maps error occurred: Map not found.',
 	'wikia-interactive-maps-parser-tag-created-by' => 'Created by $1',
 	'wikia-interactive-maps-parser-tag-view' => 'View',
-
 	'wikia-interactive-maps-map-placeholder-error' => 'Unexpected error has occurred. Please contact us if it happens again.',
 	'wikia-interactive-maps-service-error' => 'Oops, we have issues with our maps service. Please wait a few minutes and try again. If the error persists, please [[Special:Contact|let us know]].',
-
 	'wikia-interactive-maps-sort-newest-to-oldest' => 'Newest to Oldest',
 	'wikia-interactive-maps-sort-alphabetical' => 'Alphabetical',
 	'wikia-interactive-maps-sort-recently-updated' => 'Recently updated',
-
 	'wikia-interactive-maps-map-not-found-error' => 'Map not found',
-
 	'wikia-interactive-maps-create-map-header' => 'Create a Map',
 	'wikia-interactive-maps-create-map-next-btn' => 'Next',
 	'wikia-interactive-maps-create-map-back-btn' => 'Back',
@@ -56,7 +52,6 @@ $messages[ 'en' ] = [
 	'wikia-interactive-maps-create-map-tile-set-image-preview-alt' => 'Template image preview',
 	'wikia-interactive-maps-create-map-validation-error-map-title' => 'Error: Name of the map must be set',
 	'wikia-interactive-maps-create-map-validation-error-tile-set-title' => 'Error: Name of the template must be set',
-
 	'wikia-interactive-maps-poi-categories-header-create' => 'Create Pin Categories',
 	'wikia-interactive-maps-poi-categories-header-edit' => 'Edit Pin Categories',
 	'wikia-interactive-maps-poi-categories-add' => 'Add Another Pin Category',
@@ -69,7 +64,6 @@ $messages[ 'en' ] = [
 	'wikia-interactive-maps-poi-categories-save' => 'Save',
 	'wikia-interactive-maps-poi-categories-cancel' => 'Cancel',
 	'wikia-interactive-maps-poi-categories-upload-image-link' => 'Upload',
-
 	'wikia-interactive-maps-edit-poi-header-add-poi' => 'Add Pin Point',
 	'wikia-interactive-maps-edit-poi-header-edit-poi' => 'Edit Pin Point',
 	'wikia-interactive-maps-edit-poi-save' => 'Save',
@@ -85,9 +79,7 @@ $messages[ 'en' ] = [
 	'wikia-interactive-maps-embed-map-code-header' => 'Embed Map',
 	'wikia-interactive-maps-embed-map-code-info' => 'Use the embed code below to include the map on your personal site.',
 	'wikia-interactive-maps-embed-map-code-size-label' => 'Map Size',
-
 	'wikia-interactive-maps-create-map-bad-request-error' => 'Neither of required parameters was provided',
-
 	'wikia-interactive-maps-image-uploads-disabled' => 'File uploads are currently disabled on your wiki. Please try again later.',
 	'wikia-interactive-maps-image-uploads-error' => 'There was an error while uploading the image. If it repeats [[Special:Contact|contact us]], please.',
 	'wikia-interactive-maps-image-uploads-warning' => 'There were some issues while uploading the image. If it repeats [[Special:Contact|contact us]], please.',
@@ -95,9 +87,7 @@ $messages[ 'en' ] = [
 	'wikia-interactive-maps-image-uploads-error-empty-file' => 'The file you tried to upload is empty',
 	'wikia-interactive-maps-image-uploads-error-bad-type' => 'The file you tried to upload is not an image',
 	'wikia-interactive-maps-image-uploads-error-poi-category-marker-too-small' => 'Error: The image you uploaded was too small. Please use an image that is at least $1 x $1 pixels.',
-
 	'wikia-interactive-maps-create-map-error-invalid-map-title' => 'Error: You must title the map before proceeding.',
-
 	'wikia-interactive-maps-actions' => 'Actions',
 	'wikia-interactive-maps-delete-map' => 'Delete map',
 	'wikia-interactive-maps-undelete-map' => 'Restore map',
@@ -109,8 +99,6 @@ $messages[ 'en' ] = [
 	'wikia-interactive-maps-delete-map-client-error' => 'There was an error while deleting a map.',
 	'wikia-interactive-maps-delete-map-success' => 'Map was successfully deleted!',
 	'wikia-interactive-maps-undelete-map-success' => 'Map was successfully restored!',
-
-	// Special:Log https://www.mediawiki.org/wiki/Manual:Logging_to_Special:Log#1.19_and_later
 	'wikia-interactive-maps-log-name' => 'Maps',
 	'wikia-interactive-maps-log-description' => 'This is a log of maps actions',
 	'logentry-maps-create_map' => '$1 created new map $3',
@@ -123,11 +111,8 @@ $messages[ 'en' ] = [
 	'logentry-maps-create_pin' => '$1 created new pin for $3',
 	'logentry-maps-update_pin' => '$1 updated pin for $3',
 	'logentry-maps-delete_pin' => '$1 deleted pin for $3',
-
 	'wikia-interactive-maps-hide-filter' => 'Hide',
 	'wikia-interactive-maps-tile-set-exists-error' => 'Template name needs to be unique',
-
-	// default POI categories
 	'wikia-interactive-maps-poi-categories-default-other' => 'Other',
 	'wikia-interactive-maps-poi-categories-default-location' => 'Location',
 	'wikia-interactive-maps-poi-categories-default-quest' => 'Quest',
@@ -136,7 +121,7 @@ $messages[ 'en' ] = [
 	'wikia-interactive-maps-poi-categories-default-event' => 'Event',
 ];
 
-$messages[ 'pl' ] = [
+$messages['pl'] = [
 	'wikia-interactive-maps-title' => 'Mapy',
 	'wikia-interactive-maps-create-a-map' => 'Utwórz mapę',
 	'wikia-interactive-maps-no-maps-header' => 'Nie ma jeszcze utworzonych map.',
@@ -241,17 +226,16 @@ $messages[ 'pl' ] = [
 	'logentry-maps-delete_pin' => '$1 {{GENDER:$1|usunął|usunęła}} punkt na mapie $3',
 	'wikia-interactive-maps-hide-filter' => 'Ukryj',
 	'wikia-interactive-maps-tile-set-exists-error' => 'Nazwa szablonu musi być unikalna',
-
-	// default POI categories
 	'wikia-interactive-maps-poi-categories-default-other' => 'Pozostałe',
 	'wikia-interactive-maps-poi-categories-default-location' => 'Lokacja',
 	'wikia-interactive-maps-poi-categories-default-quest' => 'Zadanie',
 	'wikia-interactive-maps-poi-categories-default-character' => 'Postać',
 	'wikia-interactive-maps-poi-categories-default-item' => 'Przedmiot',
 	'wikia-interactive-maps-poi-categories-default-event' => 'Wydarzenie',
+	'logentry-maps-undelete_map' => '$1 przywrócił mapę $3',
 ];
 
-$messages[ 'de' ] = [
+$messages['de'] = [
 	'wikia-interactive-maps-title' => 'Karten',
 	'wikia-interactive-maps-create-a-map' => 'Karte erstellen',
 	'wikia-interactive-maps-no-maps-header' => 'Es wurden noch keine Karten erstellt.',
@@ -356,8 +340,6 @@ $messages[ 'de' ] = [
 	'logentry-maps-delete_pin' => '$1 Marker für $3 gelöscht',
 	'wikia-interactive-maps-hide-filter' => 'Ausblenden',
 	'wikia-interactive-maps-tile-set-exists-error' => 'Der Vorlagen-Name muss eindeutig sein',
-
-	// default POI categories
 	'wikia-interactive-maps-poi-categories-default-other' => 'Sonstiges',
 	'wikia-interactive-maps-poi-categories-default-location' => 'Ort',
 	'wikia-interactive-maps-poi-categories-default-quest' => 'Quest',
@@ -366,7 +348,7 @@ $messages[ 'de' ] = [
 	'wikia-interactive-maps-poi-categories-default-event' => 'Ereignis',
 ];
 
-$messages[ 'es' ] = [
+$messages['es'] = [
 	'wikia-interactive-maps-title' => 'Mapas',
 	'wikia-interactive-maps-create-a-map' => 'Crear un mapa',
 	'wikia-interactive-maps-no-maps-header' => 'Todavía no se han creado mapas.',
@@ -471,8 +453,6 @@ $messages[ 'es' ] = [
 	'logentry-maps-delete_pin' => '$1 pin borrado por $3',
 	'wikia-interactive-maps-hide-filter' => 'Esconder',
 	'wikia-interactive-maps-tile-set-exists-error' => 'El nombre de plantilla debe ser único',
-
-	// default POI categories
 	'wikia-interactive-maps-poi-categories-default-other' => 'Otro',
 	'wikia-interactive-maps-poi-categories-default-location' => 'Lugar',
 	'wikia-interactive-maps-poi-categories-default-quest' => 'Desafío',
@@ -481,16 +461,16 @@ $messages[ 'es' ] = [
 	'wikia-interactive-maps-poi-categories-default-event' => 'Evento',
 ];
 
-$messages[ 'fr' ] = [
+$messages['fr'] = [
 	'wikia-interactive-maps-title' => 'Cartes',
 	'wikia-interactive-maps-create-a-map' => 'Créer une carte',
-	'wikia-interactive-maps-no-maps-header' => "Aucune carte n'a encore été créée.",
-	'wikia-interactive-maps-no-maps-text' => "Collaborez avec la communauté en marquant visuellement des points d'intérêt sur des cartes.",
+	'wikia-interactive-maps-no-maps-header' => 'Aucune carte n\'a encore été créée.',
+	'wikia-interactive-maps-no-maps-text' => 'Collaborez avec la communauté en marquant visuellement des points d\'intérêt sur des cartes.',
 	'wikia-interactive-maps-no-maps-learn-more' => 'En savoir plus',
 	'wikia-interactive-maps-parser-tag-created-by' => 'Créée par $1',
 	'wikia-interactive-maps-parser-tag-view' => 'Voir',
-	'wikia-interactive-maps-map-placeholder-error' => "Une erreur inattendue s'est produite. Veuillez nous contacter si cela se reproduit.",
-	'wikia-interactive-maps-service-error' => "Oups, nous avons des problèmes avec notre service de cartes. Veuillez attendre quelques minutes puis réessayez. Si l'erreur perdure, veuillez [[Special:Contact|nous le faire savoir]].",
+	'wikia-interactive-maps-map-placeholder-error' => 'Une erreur inattendue s\'est produite. Veuillez nous contacter si cela se reproduit.',
+	'wikia-interactive-maps-service-error' => 'Oups, nous avons des problèmes avec notre service de cartes. Veuillez attendre quelques minutes puis réessayez. Si l\'erreur perdure, veuillez [[Special:Contact|nous le faire savoir]].',
 	'wikia-interactive-maps-sort-newest-to-oldest' => 'Plus récent au plus ancien',
 	'wikia-interactive-maps-sort-alphabetical' => 'Alphabétique',
 	'wikia-interactive-maps-sort-recently-updated' => 'Mises à jour récemment en premier',
@@ -499,17 +479,17 @@ $messages[ 'fr' ] = [
 	'wikia-interactive-maps-create-map-next-btn' => 'Suivant',
 	'wikia-interactive-maps-create-map-back-btn' => 'Retour',
 	'wikia-interactive-maps-create-map-choose-type-custom' => 'Carte personnalisée',
-	'wikia-interactive-maps-create-map-title-placeholder' => "ex. « Emplacement d'arme dans Skyrim »",
+	'wikia-interactive-maps-create-map-title-placeholder' => 'ex. « Emplacement d\'arme dans Skyrim »',
 	'wikia-interactive-maps-create-map-browse-tile-set' => 'Parcourir les échantillons existants',
 	'wikia-interactive-maps-create-map-search-tile-set-placeholder' => 'Rechercher',
 	'wikia-interactive-maps-create-map-upload-file' => 'Cliquez pour importer un modèle personnalisé',
 	'wikia-interactive-maps-create-map-choose-tile-set-tip' => 'Sélectionnez un modèle de carte existant ou importez le vôtre pour commencer.',
-	'wikia-interactive-maps-create-map-no-tile-set-found' => "Désolé, aucun modèle n'a été trouvé.",
+	'wikia-interactive-maps-create-map-no-tile-set-found' => 'Désolé, aucun modèle n\'a été trouvé.',
 	'wikia-interactive-maps-create-map-clear-tile-set-search' => 'Effacer le filtre de recherche',
 	'wikia-interactive-maps-create-map-title-label' => 'Nommez la carte',
 	'wikia-interactive-maps-create-map-tile-set-title-label' => 'Nommez le modèle',
-	'wikia-interactive-maps-create-map-tile-set-title-placeholder' => "Nommez l'image afin que les autres puissent la réutiliser pour leurs cartes (ex. Westeros)",
-	'wikia-interactive-maps-create-map-tile-set-image-preview-alt' => "Aperçu de l'image du modèle",
+	'wikia-interactive-maps-create-map-tile-set-title-placeholder' => 'Nommez l\'image afin que les autres puissent la réutiliser pour leurs cartes (ex. Westeros)',
+	'wikia-interactive-maps-create-map-tile-set-image-preview-alt' => 'Aperçu de l\'image du modèle',
 	'wikia-interactive-maps-create-map-validation-error-map-title' => 'Erreur : le nom de la carte doit être défini',
 	'wikia-interactive-maps-create-map-validation-error-tile-set-title' => 'Erreur : le nom du modèle doit être défini',
 	'wikia-interactive-maps-poi-categories-header-create' => 'Créer des catégories',
@@ -519,7 +499,7 @@ $messages[ 'fr' ] = [
 	'wikia-interactive-maps-poi-categories-name-placeholder' => 'Titre de la catégorie',
 	'wikia-interactive-maps-poi-categories-select-category' => 'Catégorie mère',
 	'wikia-interactive-maps-poi-categories-form-error' => 'Veuillez renseigner tous les champs',
-	'wikia-interactive-maps-poi-categories-creation-error' => "Malheureusement, nous n'avons pas pu créer toutes les catégories. Certaines peuvent avoir été créées par contre. Vérifiez celles qui manquent et essayez de les ajouter à nouveau.",
+	'wikia-interactive-maps-poi-categories-creation-error' => 'Malheureusement, nous n\'avons pas pu créer toutes les catégories. Certaines peuvent avoir été créées par contre. Vérifiez celles qui manquent et essayez de les ajouter à nouveau.',
 	'wikia-interactive-maps-poi-categories-save' => 'Enregistrer',
 	'wikia-interactive-maps-poi-categories-cancel' => 'Annuler',
 	'wikia-interactive-maps-poi-categories-upload-image-link' => 'Importer',
@@ -536,16 +516,16 @@ $messages[ 'fr' ] = [
 	'wikia-interactive-maps-edit-poi-error-poi-category-id' => 'La catégorie doit être définie',
 	'wikia-interactive-maps-edit-poi-wrong-article-name-or-url' => 'L\'article $1 n\'existe pas sur ce wikia ou ce n\'est pas une URL valide',
 	'wikia-interactive-maps-embed-map-code-header' => 'Incorporer la carte',
-	'wikia-interactive-maps-embed-map-code-info' => "Utilisez le code d'incorporation ci-dessous pour inclure la carte sur votre site personnel.",
+	'wikia-interactive-maps-embed-map-code-info' => 'Utilisez le code d\'incorporation ci-dessous pour inclure la carte sur votre site personnel.',
 	'wikia-interactive-maps-embed-map-code-size-label' => 'Taille de la carte',
-	'wikia-interactive-maps-create-map-bad-request-error' => "Aucun des paramètres requis n'a été renseigné",
-	'wikia-interactive-maps-image-uploads-disabled' => "L'importation de fichiers est actuellement désactivée sur votre wiki. Veuillez réessayer plus tard.",
-	'wikia-interactive-maps-image-uploads-error' => "Une erreur est survenue lors de l'importation de l'image. Si cela se reproduit, veuillez [[Special:Contact|nous contacter]] SVP.",
-	'wikia-interactive-maps-image-uploads-warning' => "Des problèmes sont survenus lors de l'importation de l'image. Si cela se reproduit, veuillez [[Special:Contact|nous contacter]] SVP.",
-	'wikia-interactive-maps-image-uploads-error-file-too-large' => "Le fichier que vous avez essayé d'importer est trop grand. La taille maximale pour l'image est $1.",
-	'wikia-interactive-maps-image-uploads-error-empty-file' => "Le fichier que vous avez essayé d'importer est vide",
-	'wikia-interactive-maps-image-uploads-error-bad-type' => "Le fichier que vous avez essayé d'importer n'est pas une image",
-	'wikia-interactive-maps-image-uploads-error-poi-category-marker-too-small' => "Erreur : l'image que vous avez importée est trop petite. Veuillez utiliser une image dont les dimensions sont au minimum $1 x $1 pixels.",
+	'wikia-interactive-maps-create-map-bad-request-error' => 'Aucun des paramètres requis n\'a été renseigné',
+	'wikia-interactive-maps-image-uploads-disabled' => 'L\'importation de fichiers est actuellement désactivée sur votre wiki. Veuillez réessayer plus tard.',
+	'wikia-interactive-maps-image-uploads-error' => 'Une erreur est survenue lors de l\'importation de l\'image. Si cela se reproduit, veuillez [[Special:Contact|nous contacter]] SVP.',
+	'wikia-interactive-maps-image-uploads-warning' => 'Des problèmes sont survenus lors de l\'importation de l\'image. Si cela se reproduit, veuillez [[Special:Contact|nous contacter]] SVP.',
+	'wikia-interactive-maps-image-uploads-error-file-too-large' => 'Le fichier que vous avez essayé d\'importer est trop grand. La taille maximale pour l\'image est $1.',
+	'wikia-interactive-maps-image-uploads-error-empty-file' => 'Le fichier que vous avez essayé d\'importer est vide',
+	'wikia-interactive-maps-image-uploads-error-bad-type' => 'Le fichier que vous avez essayé d\'importer n\'est pas une image',
+	'wikia-interactive-maps-image-uploads-error-poi-category-marker-too-small' => 'Erreur : l\'image que vous avez importée est trop petite. Veuillez utiliser une image dont les dimensions sont au minimum $1 x $1 pixels.',
 	'wikia-interactive-maps-create-map-error-invalid-map-title' => 'Erreur : vous devez donner un titre à la carte avant de continuer.',
 	'wikia-interactive-maps-delete-map' => 'Supprimer la carte',
 	'wikia-interactive-maps-delete-map-client-title' => 'Supprimer la carte',
@@ -567,8 +547,6 @@ $messages[ 'fr' ] = [
 	'logentry-maps-delete_pin' => '$1 a supprimé un marqueur de $3',
 	'wikia-interactive-maps-hide-filter' => 'Masquer',
 	'wikia-interactive-maps-tile-set-exists-error' => 'Le nom du modèle doit être unique',
-
-	// default POI categories
 	'wikia-interactive-maps-poi-categories-default-other' => 'Autre',
 	'wikia-interactive-maps-poi-categories-default-location' => 'Lieu',
 	'wikia-interactive-maps-poi-categories-default-quest' => 'Quête',
@@ -577,19 +555,19 @@ $messages[ 'fr' ] = [
 	'wikia-interactive-maps-poi-categories-default-event' => 'Évènement',
 ];
 
-$messages[ 'it' ] = [
+$messages['it'] = [
 	'wikia-interactive-maps-title' => 'Mappe',
 	'wikia-interactive-maps-create-a-map' => 'Crea una mappa',
 	'wikia-interactive-maps-no-maps-header' => 'Nessuna mappa ancora creata.',
-	'wikia-interactive-maps-no-maps-text' => "Collabora con la community aggiungendo segnaposti di luoghi d'interesse sulle mappe.",
+	'wikia-interactive-maps-no-maps-text' => 'Collabora con la community aggiungendo segnaposti di luoghi d\'interesse sulle mappe.',
 	'wikia-interactive-maps-no-maps-learn-more' => 'Impara di più',
-	'wikia-interactive-maps-parser-tag-error-no-require-parameters' => "Errore imprevisto di Wikia Interactive Maps: nessun parametro passato al tag. L'unico parametro richiesto è map-id, assicurati che sia impostato per favore.",
-	'wikia-interactive-maps-parser-tag-error-invalid-map-id' => "Errore imprevisto di Wikia Interactive Maps: map id invalido. Per favore, assicurati che il tuo parametro dell'ID della mappa sia un numero intero.",
+	'wikia-interactive-maps-parser-tag-error-no-require-parameters' => 'Errore imprevisto di Wikia Interactive Maps: nessun parametro passato al tag. L\'unico parametro richiesto è map-id, assicurati che sia impostato per favore.',
+	'wikia-interactive-maps-parser-tag-error-invalid-map-id' => 'Errore imprevisto di Wikia Interactive Maps: map id invalido. Per favore, assicurati che il tuo parametro dell\'ID della mappa sia un numero intero.',
 	'wikia-interactive-maps-parser-tag-error-invalid-longitude' => 'Errore imprevisto di Wikia Interactive Maps: lon invalido. Per favore, assicurati che il tuo parametro della longitudine sia un numero o rimuovilo per impostarlo al valore di default.',
 	'wikia-interactive-maps-parser-tag-error-invalid-latitude' => 'Errore imprevisto di Wikia Interactive Maps: lat invalido. Per favore, assicurati che il tuo parametro della latitudine sia un numero o rimuovilo per impostarlo al valore di default.',
 	'wikia-interactive-maps-parser-tag-error-invalid-zoom' => 'Errore imprevisto di Wikia Interactive Maps: zoom invalido. Per favore, assicurati che il tuo parametro dello zoom sia un numero intero o rimuovilo per impostarlo al valore di default.',
 	'wikia-interactive-maps-parser-tag-error-invalid-width' => 'Errore imprevisto di Wikia Interactive Maps: width invalido. Per favore, assicurati che il tuo parametro della larghezza sia un numero intero o rimuovilo per impostarlo al valore di default.',
-	'wikia-interactive-maps-parser-tag-error-invalid-height' => "Errore imprevisto di Wikia Interactive Maps: height invalido. Per favore, assicurati che il tuo parametro dell'altezza sia un numero intero o rimuovilo per impostarlo al valore di default.",
+	'wikia-interactive-maps-parser-tag-error-invalid-height' => 'Errore imprevisto di Wikia Interactive Maps: height invalido. Per favore, assicurati che il tuo parametro dell\'altezza sia un numero intero o rimuovilo per impostarlo al valore di default.',
 	'wikia-interactive-maps-parser-tag-error-min-latitude' => 'Errore imprevisto di Wikia Interactive Maps: lat invalido. Per favore, assicurati che la tua latitudine sia maggiore di $min.',
 	'wikia-interactive-maps-parser-tag-error-max-latitude' => 'Errore imprevisto di Wikia Interactive Maps: lat invalido. Per favore, assicurati che la tua latitudine sia minore di $max.',
 	'wikia-interactive-maps-parser-tag-error-min-longitude' => 'Errore imprevisto di Wikia Interactive Maps: lon invalido. Per favore, assicurati che la tua longitudine sia maggiore di $min.',
@@ -603,7 +581,7 @@ $messages[ 'it' ] = [
 	'wikia-interactive-maps-parser-tag-created-by' => 'Creato da $1',
 	'wikia-interactive-maps-parser-tag-view' => 'Visualizza',
 	'wikia-interactive-maps-map-placeholder-error' => 'Si è verificato un errore. [[Speciale:Contatta|Contattaci]] se ciò si ripetesse di nuovo.',
-	'wikia-interactive-maps-service-error' => "Oops, abbiamo dei problemi con il nostro servizio di mappe. Per favore, aspetta alcuni minuti e riprova di nuovo. Se l'errore persiste, [[Special:Contact|faccelo sapere]].",
+	'wikia-interactive-maps-service-error' => 'Oops, abbiamo dei problemi con il nostro servizio di mappe. Per favore, aspetta alcuni minuti e riprova di nuovo. Se l\'errore persiste, [[Special:Contact|faccelo sapere]].',
 	'wikia-interactive-maps-sort-newest-to-oldest' => 'Più recente',
 	'wikia-interactive-maps-sort-alphabetical' => 'Alfabetico',
 	'wikia-interactive-maps-sort-recently-updated' => 'Caricati di recente',
@@ -621,13 +599,13 @@ $messages[ 'it' ] = [
 	'wikia-interactive-maps-create-map-clear-tile-set-search' => 'Pulisci il filtro di ricerca',
 	'wikia-interactive-maps-create-map-title-label' => 'Dai un nome alla mappa',
 	'wikia-interactive-maps-create-map-tile-set-title-label' => 'Dai un nome al template',
-	'wikia-interactive-maps-create-map-tile-set-title-placeholder' => "Dai un nome all'immagine in modo che altri possano riutilizzarla per le loro mappe (es. Westeros)",
+	'wikia-interactive-maps-create-map-tile-set-title-placeholder' => 'Dai un nome all\'immagine in modo che altri possano riutilizzarla per le loro mappe (es. Westeros)',
 	'wikia-interactive-maps-create-map-tile-set-image-preview-alt' => 'Anteprima immagine del template',
 	'wikia-interactive-maps-create-map-validation-error-map-title' => 'Errore: il nome della mappa deve essere impostato',
 	'wikia-interactive-maps-create-map-validation-error-tile-set-title' => 'Errore: il nome del template deve essere impostato',
 	'wikia-interactive-maps-poi-categories-header-create' => 'Crea categorie di segnaposti',
 	'wikia-interactive-maps-poi-categories-header-edit' => 'Modifica categorie di segnaposti',
-	'wikia-interactive-maps-poi-categories-add' => "Aggiungi un'altra categoria di segnaposti.",
+	'wikia-interactive-maps-poi-categories-add' => 'Aggiungi un\'altra categoria di segnaposti.',
 	'wikia-interactive-maps-poi-categories-delete' => 'Rimuovi',
 	'wikia-interactive-maps-poi-categories-name-placeholder' => 'Titolo della categoria di segnaposti',
 	'wikia-interactive-maps-poi-categories-select-category' => 'Categoria superiore',
@@ -653,12 +631,12 @@ $messages[ 'it' ] = [
 	'wikia-interactive-maps-embed-map-code-size-label' => 'Dimensione della mappa',
 	'wikia-interactive-maps-create-map-bad-request-error' => 'Nessuno dei parametri richiesti è stato fornito',
 	'wikia-interactive-maps-image-uploads-disabled' => 'Il caricamento di file è al momento disabilitato sulla tua wiki. Riprova più tardi.',
-	'wikia-interactive-maps-image-uploads-error' => "C'è stato un errore durante il caricamento dell'immagine. Se ciò si ripete, [[Special:Contact|contattaci]] per favore.",
-	'wikia-interactive-maps-image-uploads-warning' => "Ci sono stati alcuni problemi durante il caricamento dell'immagine. Se ciò si ripete, [[Special:Contact|contattaci]] per favore.",
-	'wikia-interactive-maps-image-uploads-error-file-too-large' => "Il file che hai provato a caricare è troppo grande. La dimensione massima dell'immagine è $1.",
+	'wikia-interactive-maps-image-uploads-error' => 'C\'è stato un errore durante il caricamento dell\'immagine. Se ciò si ripete, [[Special:Contact|contattaci]] per favore.',
+	'wikia-interactive-maps-image-uploads-warning' => 'Ci sono stati alcuni problemi durante il caricamento dell\'immagine. Se ciò si ripete, [[Special:Contact|contattaci]] per favore.',
+	'wikia-interactive-maps-image-uploads-error-file-too-large' => 'Il file che hai provato a caricare è troppo grande. La dimensione massima dell\'immagine è $1.',
 	'wikia-interactive-maps-image-uploads-error-empty-file' => 'Il file che hai provato a caricare è vuoto',
-	'wikia-interactive-maps-image-uploads-error-bad-type' => "Il file che hai provato a caricare non è un'immagine",
-	'wikia-interactive-maps-image-uploads-error-poi-category-marker-too-small' => "Errore: L'immagine che hai caricato è troppo piccola. Per favore usa un'immagine che sia almeno di $1 x $1 pixel.",
+	'wikia-interactive-maps-image-uploads-error-bad-type' => 'Il file che hai provato a caricare non è un\'immagine',
+	'wikia-interactive-maps-image-uploads-error-poi-category-marker-too-small' => 'Errore: L\'immagine che hai caricato è troppo piccola. Per favore usa un\'immagine che sia almeno di $1 x $1 pixel.',
 	'wikia-interactive-maps-create-map-error-invalid-map-title' => 'Errore: devi inserire un titolo per la mappa prima di procedere.',
 	'wikia-interactive-maps-actions' => 'Azioni',
 	'wikia-interactive-maps-delete-map' => 'Rimuovi mappa',
@@ -666,7 +644,7 @@ $messages[ 'it' ] = [
 	'wikia-interactive-maps-delete-map-client-prompt' => 'Sei sicuro di voler rimuovere la mappa?',
 	'wikia-interactive-maps-delete-map-client-confirm-button' => 'Rimuovi mappa',
 	'wikia-interactive-maps-delete-map-client-cancel-button' => 'Annulla',
-	'wikia-interactive-maps-delete-map-client-error' => "C'è stato un errore durante la rimozione di una mappa.",
+	'wikia-interactive-maps-delete-map-client-error' => 'C\'è stato un errore durante la rimozione di una mappa.',
 	'wikia-interactive-maps-delete-map-success' => 'La mappa è stata rimossa con successo!',
 	'wikia-interactive-maps-log-name' => 'Mappe',
 	'wikia-interactive-maps-log-description' => 'Questo è un registro delle azione delle mappe',
@@ -681,8 +659,6 @@ $messages[ 'it' ] = [
 	'logentry-maps-delete_pin' => '$1 segnaposto rimosso per $3',
 	'wikia-interactive-maps-hide-filter' => 'Nascondi',
 	'wikia-interactive-maps-tile-set-exists-error' => 'Il nome del template deve essere unico',
-
-	// default POI categories
 	'wikia-interactive-maps-poi-categories-default-other' => 'Altro',
 	'wikia-interactive-maps-poi-categories-default-location' => 'Luogo',
 	'wikia-interactive-maps-poi-categories-default-quest' => 'Missione',
@@ -691,7 +667,7 @@ $messages[ 'it' ] = [
 	'wikia-interactive-maps-poi-categories-default-event' => 'Evento',
 ];
 
-$messages[ 'ja' ] = [
+$messages['ja'] = [
 	'wikia-interactive-maps-title' => 'マップ',
 	'wikia-interactive-maps-create-a-map' => 'マップを作成する',
 	'wikia-interactive-maps-no-maps-header' => 'マップの作成はされておりません',
@@ -796,8 +772,6 @@ $messages[ 'ja' ] = [
 	'logentry-maps-delete_pin' => '$1 $3の為にピンを削除する',
 	'wikia-interactive-maps-hide-filter' => '隠す',
 	'wikia-interactive-maps-tile-set-exists-error' => 'テンプレートの名前はユニークなものにして下さい',
-
-	// default POI categories
 	'wikia-interactive-maps-poi-categories-default-other' => 'その他',
 	'wikia-interactive-maps-poi-categories-default-location' => 'ロケーション',
 	'wikia-interactive-maps-poi-categories-default-quest' => 'クエスト',
@@ -806,7 +780,7 @@ $messages[ 'ja' ] = [
 	'wikia-interactive-maps-poi-categories-default-event' => 'イベント',
 ];
 
-$messages[ 'pt' ] = [
+$messages['pt'] = [
 	'wikia-interactive-maps-title' => 'Mapas',
 	'wikia-interactive-maps-create-a-map' => 'Crie um Mapa',
 	'wikia-interactive-maps-no-maps-header' => 'Nenhum mapa foi criado ainda.',
@@ -911,8 +885,6 @@ $messages[ 'pt' ] = [
 	'logentry-maps-delete_pin' => '$1 alfinete para $3 deletado',
 	'wikia-interactive-maps-hide-filter' => 'Esconder',
 	'wikia-interactive-maps-tile-set-exists-error' => 'O nome da predefinição precisa ser único',
-
-	// default POI categories
 	'wikia-interactive-maps-poi-categories-default-other' => 'Outro',
 	'wikia-interactive-maps-poi-categories-default-location' => 'Lugar',
 	'wikia-interactive-maps-poi-categories-default-quest' => 'Missão',
@@ -921,7 +893,7 @@ $messages[ 'pt' ] = [
 	'wikia-interactive-maps-poi-categories-default-event' => 'Evento',
 ];
 
-$messages[ 'pt-br' ] = [
+$messages['pt-br'] = [
 	'wikia-interactive-maps-title' => 'Mapas',
 	'wikia-interactive-maps-create-a-map' => 'Crie um Mapa',
 	'wikia-interactive-maps-no-maps-header' => 'Nenhum mapa foi criado ainda.',
@@ -1026,8 +998,6 @@ $messages[ 'pt-br' ] = [
 	'logentry-maps-delete_pin' => '$1 alfinete para $3 deletado',
 	'wikia-interactive-maps-hide-filter' => 'Esconder',
 	'wikia-interactive-maps-tile-set-exists-error' => 'O nome da predefinição precisa ser único',
-
-	// default POI categories
 	'wikia-interactive-maps-poi-categories-default-other' => 'Outro',
 	'wikia-interactive-maps-poi-categories-default-location' => 'Lugar',
 	'wikia-interactive-maps-poi-categories-default-quest' => 'Missão',
@@ -1036,7 +1006,7 @@ $messages[ 'pt-br' ] = [
 	'wikia-interactive-maps-poi-categories-default-event' => 'Evento',
 ];
 
-$messages[ 'ru' ] = [
+$messages['ru'] = [
 	'wikia-interactive-maps-title' => 'Карты',
 	'wikia-interactive-maps-create-a-map' => 'Создать карту',
 	'wikia-interactive-maps-no-maps-header' => 'Ещё нет ни одной созданной карты',
@@ -1143,7 +1113,7 @@ $messages[ 'ru' ] = [
 	'wikia-interactive-maps-tile-set-exists-error' => 'Имя шаблона должно быть уникальным',
 ];
 
-$messages[ 'zh' ] = [
+$messages['zh'] = [
 	'wikia-interactive-maps-title' => '地图',
 	'wikia-interactive-maps-create-a-map' => '创建地图',
 	'wikia-interactive-maps-no-maps-header' => '地图未被创建。',
@@ -1248,8 +1218,6 @@ $messages[ 'zh' ] = [
 	'logentry-maps-delete_pin' => '$1 删除$3的标记',
 	'wikia-interactive-maps-hide-filter' => '隐藏',
 	'wikia-interactive-maps-tile-set-exists-error' => '模版名称必须为未使用过的词语',
-
-	// default POI categories
 	'wikia-interactive-maps-poi-categories-default-other' => '其他',
 	'wikia-interactive-maps-poi-categories-default-location' => '地理位置',
 	'wikia-interactive-maps-poi-categories-default-quest' => '探索',
@@ -1258,7 +1226,7 @@ $messages[ 'zh' ] = [
 	'wikia-interactive-maps-poi-categories-default-event' => '活动',
 ];
 
-$messages[ 'zh-hant' ] = [
+$messages['zh-hant'] = [
 	'wikia-interactive-maps-title' => '地圖',
 	'wikia-interactive-maps-create-a-map' => '創建地圖',
 	'wikia-interactive-maps-no-maps-header' => '尚未創建地圖',
@@ -1363,8 +1331,6 @@ $messages[ 'zh-hant' ] = [
 	'logentry-maps-delete_pin' => '$1 删除$3的標記',
 	'wikia-interactive-maps-hide-filter' => '隱藏',
 	'wikia-interactive-maps-tile-set-exists-error' => '模板名稱必須未被使用過',
-
-	// default POI categories
 	'wikia-interactive-maps-poi-categories-default-other' => '其他',
 	'wikia-interactive-maps-poi-categories-default-location' => '地理位置',
 	'wikia-interactive-maps-poi-categories-default-quest' => '探索',
@@ -1373,7 +1339,7 @@ $messages[ 'zh-hant' ] = [
 	'wikia-interactive-maps-poi-categories-default-event' => '活動',
 ];
 
-$messages[ 'zh-hk' ] = [
+$messages['zh-hk'] = [
 	'wikia-interactive-maps-title' => '地圖',
 	'wikia-interactive-maps-create-a-map' => '創建地圖',
 	'wikia-interactive-maps-no-maps-header' => '尚未創建地圖',
@@ -1478,8 +1444,6 @@ $messages[ 'zh-hk' ] = [
 	'logentry-maps-delete_pin' => '$1 删除$3的標記',
 	'wikia-interactive-maps-hide-filter' => '隱藏',
 	'wikia-interactive-maps-tile-set-exists-error' => '模板名稱必須未被使用過',
-
-	// default POI categories
 	'wikia-interactive-maps-poi-categories-default-other' => '其他',
 	'wikia-interactive-maps-poi-categories-default-location' => '地理位置',
 	'wikia-interactive-maps-poi-categories-default-quest' => '探索',
@@ -1488,7 +1452,7 @@ $messages[ 'zh-hk' ] = [
 	'wikia-interactive-maps-poi-categories-default-event' => '活動',
 ];
 
-$messages[ 'zh-tw' ] = [
+$messages['zh-tw'] = [
 	'wikia-interactive-maps-title' => '地圖',
 	'wikia-interactive-maps-create-a-map' => '創建地圖',
 	'wikia-interactive-maps-no-maps-header' => '尚未創建地圖',
@@ -1593,8 +1557,6 @@ $messages[ 'zh-tw' ] = [
 	'logentry-maps-delete_pin' => '$1 删除$3的標記',
 	'wikia-interactive-maps-hide-filter' => '隱藏',
 	'wikia-interactive-maps-tile-set-exists-error' => '模板名稱必須未被使用過',
-
-	// default POI categories
 	'wikia-interactive-maps-poi-categories-default-other' => '其他',
 	'wikia-interactive-maps-poi-categories-default-location' => '地理位置',
 	'wikia-interactive-maps-poi-categories-default-quest' => '探索',
@@ -1603,8 +1565,7 @@ $messages[ 'zh-tw' ] = [
 	'wikia-interactive-maps-poi-categories-default-event' => '活動',
 ];
 
-$messages[ 'nl' ] = [
-	// default POI categories
+$messages['nl'] = [
 	'wikia-interactive-maps-poi-categories-default-other' => 'Overig',
 	'wikia-interactive-maps-poi-categories-default-location' => 'Locatie',
 	'wikia-interactive-maps-poi-categories-default-quest' => 'Quest',
@@ -1613,17 +1574,15 @@ $messages[ 'nl' ] = [
 	'wikia-interactive-maps-poi-categories-default-event' => 'Gebeurtenis',
 ];
 
-$messages[ 'qqq' ] = [
+$messages['qqq'] = [
 	'wikia-interactive-maps-desc' => '{{desc}}',
 	'wikia-interactive-maps-title' => 'Maps special page title',
 	'wikia-interactive-maps-create-a-map' => 'Label for create new map button',
 	'wikia-interactive-maps-no-maps-header' => 'No maps created yet for this wikia header.',
 	'wikia-interactive-maps-no-maps-text' => 'No maps created yet for this wikia explanation ',
 	'wikia-interactive-maps-no-maps-learn-more' => 'Learn more about maps',
-
 	'wikia-interactive-maps-map-status-done' => 'Message which informs about map tiles processing status; not visible for a user',
 	'wikia-interactive-maps-map-status-processing' => 'Message which informs about map tiles processing status; not visible for a user',
-
 	'wikia-interactive-maps-parser-tag-error-no-require-parameters' => 'Interactive maps error after try of parsing wikitext tag; one of the required parameters is not set',
 	'wikia-interactive-maps-parser-tag-error-invalid-map-id' => 'Interactive maps error after try of parsing wikitext tag; the map-id is not passed or is not a valid number',
 	'wikia-interactive-maps-parser-tag-error-invalid-latitude' => 'Interactive maps error after try of parsing wikitext tag; an invalid latitude value has been passed',
@@ -1644,17 +1603,12 @@ $messages[ 'qqq' ] = [
 	'wikia-interactive-maps-parser-tag-error-no-map-found' => 'Interactive maps error when map of given id doesn\'t exist',
 	'wikia-interactive-maps-parser-tag-created-by' => 'Created by message; Parameters: $1 - user name',
 	'wikia-interactive-maps-parser-tag-view' => 'View map button',
-
 	'wikia-interactive-maps-map-placeholder-error' => 'Interactive maps unexpected error which could happen during some rare situations such as file system dead',
-
 	'wikia-interactive-maps-service-error' => 'An error message which appears in the creation map modal when our map service fails to create a map',
-
 	'wikia-interactive-maps-sort-newest-to-oldest' => 'Ordering option shown in drop-down menu above map lists; when chosen orders map list from newest map to oldest',
 	'wikia-interactive-maps-sort-alphabetical' => 'Ordering option shown in drop-down menu above map lists; when chosen orders map list in alphabetical order',
 	'wikia-interactive-maps-sort-recently-updated' => 'Ordering option shown in drop-down menu above map lists; when chosen orders map list so the recently update maps are on the top',
-
 	'wikia-interactive-maps-map-not-found-error' => 'Error message, shown when map is not found',
-
 	'wikia-interactive-maps-create-map-header' => 'Header for create map modal',
 	'wikia-interactive-maps-create-map-next-btn' => 'Next button for create map modal',
 	'wikia-interactive-maps-create-map-back-btn' => 'Back button for create map modal',
@@ -1665,14 +1619,13 @@ $messages[ 'qqq' ] = [
 	'wikia-interactive-maps-create-map-upload-file' => 'Link to trigger file upload for tile set',
 	'wikia-interactive-maps-create-map-choose-tile-set-tip' => 'Tip for the user with information to select an existing map template or upload his own to get started creating a new map',
 	'wikia-interactive-maps-create-map-no-tile-set-found' => 'Error message - no map templates found',
-	'wikia-interactive-maps-create-map-clear-tile-set-search' => "Button to clear search filter for map templates and revert to initial map templates' list",
+	'wikia-interactive-maps-create-map-clear-tile-set-search' => 'Button to clear search filter for map templates and revert to initial map templates\' list',
 	'wikia-interactive-maps-create-map-title-label' => 'Label for map title input',
 	'wikia-interactive-maps-create-map-tile-set-title-label' => 'Label for tile set title input',
 	'wikia-interactive-maps-create-map-tile-set-title-placeholder' => 'Placeholder for tile set title input',
 	'wikia-interactive-maps-create-map-tile-set-image-preview-alt' => 'Alt attribute fot template image preview',
 	'wikia-interactive-maps-create-map-validation-error-map-title' => 'Error for empty map title',
 	'wikia-interactive-maps-create-map-validation-error-tile-set-title' => 'Error for empty tile set title',
-
 	'wikia-interactive-maps-poi-categories-header-create' => 'Header for create pin categories modal',
 	'wikia-interactive-maps-poi-categories-header-edit' => 'Header for edit pin categories modal',
 	'wikia-interactive-maps-poi-categories-add' => 'Link for adding new blank input for Pin Category',
@@ -1685,7 +1638,6 @@ $messages[ 'qqq' ] = [
 	'wikia-interactive-maps-poi-categories-save' => 'Button for saving pin categories',
 	'wikia-interactive-maps-poi-categories-cancel' => 'Button for closing pin categories modal',
 	'wikia-interactive-maps-poi-categories-upload-image-link' => 'Link to upload the marker image',
-
 	'wikia-interactive-maps-edit-poi-header-add-poi' => 'Modal header for add pin to map',
 	'wikia-interactive-maps-edit-poi-header-edit-poi' => 'Modal header for edit pin to map',
 	'wikia-interactive-maps-edit-poi-save' => 'Modal button to save pin on map',
@@ -1701,10 +1653,7 @@ $messages[ 'qqq' ] = [
 	'wikia-interactive-maps-embed-map-code-header' => 'Embed Map modal header - the title of "window" with embed map code',
 	'wikia-interactive-maps-embed-map-code-info' => 'Information for the user to copy code below in order to embed map to personal site',
 	'wikia-interactive-maps-embed-map-code-size-label' => 'Label for embed map size buttons',
-
-
 	'wikia-interactive-maps-create-map-bad-request-error' => 'An API error message not visible for the user',
-
 	'wikia-interactive-maps-image-uploads-disabled' => 'An error displayed to a user when files upload is disabled on a wikia',
 	'wikia-interactive-maps-image-uploads-error' => 'An error displayed to a user when a file upload fails because of backend errors',
 	'wikia-interactive-maps-image-uploads-warning' => 'An error displayed to a user when a file upload fails because of backend warnings',
@@ -1712,9 +1661,7 @@ $messages[ 'qqq' ] = [
 	'wikia-interactive-maps-image-uploads-error-empty-file' => 'An error displayed to a user when file is empty',
 	'wikia-interactive-maps-image-uploads-error-bad-type' => 'An error displayed to a user when file has wrong format (not image)',
 	'wikia-interactive-maps-image-uploads-error-poi-category-marker-too-small' => 'An error displayed to a user when uploaded image for custom pin category marker is too small',
-
 	'wikia-interactive-maps-create-map-error-invalid-map-title' => 'An error message displayed above map title form field when the map title is invalid.',
-
 	'wikia-interactive-maps-actions' => 'Text on a button near the map title that triggers dropdown with possible actions',
 	'wikia-interactive-maps-delete-map' => 'Text on a button for deleting an existing map',
 	'wikia-interactive-maps-undelete-map' => 'Text on a button for restoring a deleted map',
@@ -1726,7 +1673,6 @@ $messages[ 'qqq' ] = [
 	'wikia-interactive-maps-delete-map-client-error' => 'Text (in modal) about error during deletion of the map',
 	'wikia-interactive-maps-delete-map-success' => 'Notification text about succesfull deletion of the map',
 	'wikia-interactive-maps-undelete-map-success' => 'Notification text about succesfull restoration of the map',
-
 	'wikia-interactive-maps-log-name' => 'Name for Special:Log filter',
 	'wikia-interactive-maps-log-description' => 'Description for Special:Log filter',
 	'logentry-maps-create_map' => 'Message to be displayed in the log when a map is created; Parameters: $1 - username, $3 - map page title',
@@ -1741,13 +1687,11 @@ $messages[ 'qqq' ] = [
 	'logentry-maps-delete_pin' => 'Message to be displayed in the log when a pin is deleted; Parameters: $1 - username, $3 - map page title',
 	'wikia-interactive-maps-hide-filter' => 'Name of the button for hiding filter box',
 	'wikia-interactive-maps-tile-set-exists-error' => 'Error, shown when tile set with the same name already exists',
-
-	// default POI categories
-	'wikia-interactive-maps-poi-categories-default-other' => "one of the parent categories of point of interest; the only place where it's displayed is select box while creating or editing POI's categories",
-	'wikia-interactive-maps-poi-categories-default-location' => "one of the parent categories of point of interest; the only place where it's displayed is select box while creating or editing POI's categories",
-	'wikia-interactive-maps-poi-categories-default-quest' => "one of the parent categories of point of interest; the only place where it's displayed is select box while creating or editing POI's categories",
-	'wikia-interactive-maps-poi-categories-default-character' => "one of the parent categories of point of interest; the only place where it's displayed is select box while creating or editing POI's categories",
-	'wikia-interactive-maps-poi-categories-default-item' => "one of the parent categories of point of interest; the only place where it's displayed is select box while creating or editing POI's categories",
-	'wikia-interactive-maps-poi-categories-default-event' => "one of the parent categories of point of interest; the only place where it's displayed is select box while creating or editing POI's categories",
+	'wikia-interactive-maps-poi-categories-default-other' => 'one of the parent categories of point of interest; the only place where it\'s displayed is select box while creating or editing POI\'s categories',
+	'wikia-interactive-maps-poi-categories-default-location' => 'one of the parent categories of point of interest; the only place where it\'s displayed is select box while creating or editing POI\'s categories',
+	'wikia-interactive-maps-poi-categories-default-quest' => 'one of the parent categories of point of interest; the only place where it\'s displayed is select box while creating or editing POI\'s categories',
+	'wikia-interactive-maps-poi-categories-default-character' => 'one of the parent categories of point of interest; the only place where it\'s displayed is select box while creating or editing POI\'s categories',
+	'wikia-interactive-maps-poi-categories-default-item' => 'one of the parent categories of point of interest; the only place where it\'s displayed is select box while creating or editing POI\'s categories',
+	'wikia-interactive-maps-poi-categories-default-event' => 'one of the parent categories of point of interest; the only place where it\'s displayed is select box while creating or editing POI\'s categories',
 ];
 
