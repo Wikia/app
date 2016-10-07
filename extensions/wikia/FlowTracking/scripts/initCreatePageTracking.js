@@ -13,8 +13,6 @@ require([
 			qs.setVal('flow', redLinkFlow);
 			redlink.href = qs.toString();
 		});
-
-		$('#ca-ve-edit').click(initVEHooks);
 	}
 
 	function initVEHooks() {
@@ -33,5 +31,8 @@ require([
 		});
 	}
 
-	$(init);
+	$(function () {
+		init();
+		initVEHooks();
+	});
 });
