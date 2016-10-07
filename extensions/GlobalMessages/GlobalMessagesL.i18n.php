@@ -93,7 +93,7 @@ When filtered by user, only files where that user uploaded the most recent versi
 The following list shows the {{PLURAL:$1|first page|first $1 page}} that uses this photo.
 A [[Special:WhatLinksHere/$2|full list]] is available.',
 	'linkstoimage-redirect' => '$1 (file redirect) $2',
-	'listredirects' => 'List of redirects',
+	'listredirects' => 'Redirects list',
 	'listredirects-summary' => '',
 	'lonelypages' => 'Orphaned pages',
 	'lonelypages-summary' => '',
@@ -25633,6 +25633,7 @@ $messages['zh-tw'] = [
 * 其他
 ** PD|版權屬公共領域 
 ** Permission|版權所有者願意讓本站使用',
+	'listredirects' => '重定向頁面列表',
 ];
 
 $messages['zh-yue'] = [
@@ -25686,5 +25687,14 @@ $messages['zh'] = [
 * 其他
 ** PD|版权属公共领域 
 ** Permission|版权所有者愿意让本站使用',
+	'listredirects' => '重定向页面列表',
+];
+
+$messages['zh-cn'] = [
+	'listredirects' => '重定向页面列表',
+];
+
+$messages['zh-hk'] = [
+	'listredirects' => '重定向頁面列表',
 ];
 
