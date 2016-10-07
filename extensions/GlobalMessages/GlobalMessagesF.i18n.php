@@ -135,7 +135,7 @@ PICT # misc.
 	'filedelete-maintenance-title' => 'Cannot delete file',
 	'fewestrevisions' => 'Pages with the fewest revisions',
 	'fewestrevisions-summary' => '',
-	'fix-double-redirects' => 'Update any redirects that point to the original title',
+	'fix-double-redirects' => 'Automatically fix the redirects',
 	'file-exists-sharedrepo' => 'The filename chosen is already in use on a shared repository.
 Please choose another name.',
 	'filemissing' => 'File missing',
