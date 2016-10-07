@@ -1,13 +1,25 @@
 <?php
 
 class FlowTrackingHooks {
-	const FLOWS = [
-		'CREATE_PAGE_DIRECT_URL' => 'create-page-direct-url',
-		'CREATE_PAGE_CONTRIBUTE_BUTTON' => 'create-page-contribute-button',
-		'CREATE_PAGE_ARTICLE_REDLINK' => 'create-page-article-redlink',
-		'CREATE_PAGE_SPECIAL_REDLINK' => 'create-page-special-redlink',
-		'CREATE_PAGE_UNRECOGNIZED_FLOW' => 'create-page-unrecognized'
-	];
+	const CREATE_PAGE_DIRECT_URL = 'create-page-direct-url';
+	const CREATE_PAGE_CONTRIBUTE_BUTTON = 'create-page-contribute-button';
+	const CREATE_PAGE_ARTICLE_REDLINK = 'create-page-article-redlink';
+	const CREATE_PAGE_SPECIAL_REDLINK = 'create-page-special-redlink';
+	const CREATE_PAGE_UNRECOGNIZED_FLOW = 'create-page-unrecognized';
+
+	public static function onMakeGlobalVariablesScript( &$vars ) {
+		$flows = [
+			'CREATE_PAGE_DIRECT_URL' => static::CREATE_PAGE_DIRECT_URL,
+			'CREATE_PAGE_CONTRIBUTE_BUTTON' => static::CREATE_PAGE_CONTRIBUTE_BUTTON,
+			'CREATE_PAGE_ARTICLE_REDLINK' => static::CREATE_PAGE_ARTICLE_REDLINK,
+			'CREATE_PAGE_SPECIAL_REDLINK' => static::CREATE_PAGE_SPECIAL_REDLINK,
+			'CREATE_PAGE_UNRECOGNIZED_FLOW' => static::CREATE_PAGE_UNRECOGNIZED_FLOW
+		];
+
+		$vars[ 'wgFlowTrackingFlows' ] = $flows;
+
+		return true;
+	}
 
 	public static function onBeforePageDisplay( \OutputPage $out, \Skin $skin ) {
 		\Wikia::addAssetsToOutput( 'flow_tracking_create_page_js' );
@@ -47,17 +59,11 @@ class FlowTrackingHooks {
 			Track::event( 'trackingevent', [
 				'ga_action' => 'flow-end',
 				'editor' => static::getEditor( $request->getValues(), $queryParams ),
-				'flowname' => $queryParams[ 'flow' ] ?? static::FLOWS[ 'CREATE_PAGE_UNRECOGNIZED_FLOW' ],
+				'flowname' => $queryParams[ 'flow' ] ?? static::CREATE_PAGE_UNRECOGNIZED_FLOW,
 				'useragent' => $headers[ 'USER-AGENT' ]
 			] );
 			Track::eventGA( 'flow-tracking', 'flow-end', $queryParams[ 'flow' ] );
 		}
-
-		return true;
-	}
-
-	public static function onMakeGlobalVariablesScript( &$vars ) {
-		$vars[ 'wgFlowTrackingFlows' ] = static::FLOWS;
 
 		return true;
 	}

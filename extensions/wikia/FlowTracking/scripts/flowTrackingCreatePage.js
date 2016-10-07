@@ -5,7 +5,8 @@ define(
 		'use strict';
 
 		var namespaceId = mw.config.get('wgNamespaceNumber'),
-			articleId = mw.config.get('wgArticleId');
+			articleId = mw.config.get('wgArticleId'),
+			title = mw.config.get('wgTitle');
 
 		function trackOnEditPageLoad(editor) {
 			var qs = new QueryString(),
@@ -13,29 +14,20 @@ define(
 				flowParam = qs.getVal('flow', false),
 				tracked = qs.getVal('tracked', false);
 
-			// Do not track if the step was tracked already
-			if (tracked) {
+			// Do not track if the step was tracked already or article exists
+			if (tracked
+				|| articleId !== 0
+				|| (namespaceId !== 0 && (namespaceId !== -1 && title === 'CreatePage'))) {
 				return;
 			}
 
-			// Track only creating articles (wgArticleId=0) from namespace 0 (Main)
-			// IMPORTANT: on Special:CreatePage even after providing article title the namespace is set to -1 (Special Page)
-			if (namespaceId === 0 && articleId === 0) {
-				if (flowParam || document.referrer) {
-					flowTrack.trackFlowStep(flowParam, {editor: editor});
-				} else {
-					flowTrack.beginFlow(window.wgFlowTrackingFlows.CREATE_PAGE_DIRECT_URL, {editor: editor});
-					qs.setVal('flow', window.wgFlowTrackingFlows.CREATE_PAGE_DIRECT_URL);
-				}
-			}
-
-			// For Special:CreatePage
-			if (namespaceId === -1 && articleId === 0) {
-				if (flowParam || document.referrer) {
-					flowTrack.trackFlowStep(flowParam, {editor: editor});
-				} else {
-					// TODO: direct-url to Special:CreatePage (WW-351)
-				}
+			if (flowParam || document.referrer) {
+				flowTrack.trackFlowStep(flowParam, {editor: editor});
+			} else if (namespaceId === 0) {
+				flowTrack.beginFlow(window.wgFlowTrackingFlows.CREATE_PAGE_DIRECT_URL, {editor: editor});
+				qs.setVal('flow', window.wgFlowTrackingFlows.CREATE_PAGE_DIRECT_URL);
+			} else if (namespaceId === -1) {
+				// TODO: direct-url to Special:CreatePage (WW-351)
 			}
 
 			// set 'tracked' query param to prevent tracking the same event when page is reloaded
