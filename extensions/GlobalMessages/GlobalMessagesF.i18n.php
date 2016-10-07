@@ -5593,6 +5593,7 @@ Anderenfalls kannst du auch das untenstehende einfache Formular nutzen. Dein Kom
 	'forum' => 'Forum',
 	'feed-watom' => 'Fandom Atom',
 	'fast-adv' => 'Werbeanzeige',
+	'featured' => 'Vorgestellt',
 ];
 
 $messages['de-at'] = [
@@ -6653,6 +6654,7 @@ En otro caso, puedes usar el siguiente formulario. Tu comentario será añadido 
 	'feedback-bugnew' => 'Lo he comprobado. Informar de un nuevo fallo.',
 	'forum' => 'Foro',
 	'feed-watom' => 'Atomo de Fandom',
+	'featured' => 'Destacado',
 ];
 
 $messages['et'] = [
@@ -7228,6 +7230,7 @@ $1',
 	'feedback-bugcheck' => 'عالی‌است! فقط بررسی کنید که از [$1 ایرادهای شناخته‌شده] نباشد.',
 	'feedback-bugnew' => 'بررسی کردم. ایرادی جدید را گزارش بده',
 	'fast-adv' => 'تبلیغات',
+	'featured' => 'برگزیده',
 ];
 
 $messages['fi'] = [
@@ -7807,6 +7810,7 @@ Sinon, vous pouvez utiliser le formulaire simplifié ci-dessous. Votre commentai
 	'feedback-bugnew' => 'J\'ai vérifié. Signaler un nouveau bogue',
 	'forum' => 'Forum',
 	'feed-watom' => 'Fandom Atom',
+	'featured' => 'En vedette',
 ];
 
 $messages['frc'] = [
@@ -11931,7 +11935,7 @@ $1',
 	'feedback-error2' => 'エラー：編集に失敗しました',
 	'feedback-error3' => 'エラー：APIからの応答がありません',
 	'feedback-close' => '完了',
-	'featured' => '秀逸なウィキ',
+	'featured' => 'おすすめ',
 	'forum' => 'フォーラム',
 	'feed-watom' => 'FandomのAtom',
 	'fast-adv' => '広告',
@@ -18783,6 +18787,7 @@ Skriv inn filnamnet utan «{{ns:file}}:»-prefikset.',
 	'feedback-error3' => 'Feil: Saknar svar frå API',
 	'forum' => 'Forum',
 	'fast-adv' => 'Reklame',
+	'featured' => 'Utvalgt',
 ];
 
 $messages['nov'] = [
