@@ -112,7 +112,7 @@ $messages['de'] = [
 	'fbconnect-disconnect-account-link' => 'Dein Fandom-Konto ist derzeit mit Facebook verbunden. Du kannst dein Fandom-Konto von Facebook [[#|trennen]] und es weiterhin wie gewohnt benutzen. Deine Verlaufsgeschichte (Bearbeitungen, Punkte, Abzeichen) bleibt intakt.',
 	'fbconnect-disconnect-info' => 'Your Facebook account has been successfully disconnected from your Fandom account.',
 	'fbconnect-disconnect-info-existing' => 'Du kannst dich nach wie vor mit deinem Benutzernamen und Passwort anmelden.',
-	'fbconnect-unknown-error' => 'Unknown error, please try again.',
+	'fbconnect-unknown-error' => 'Ein unbekannter Fehler ist aufgetreten - versuche es erneut oder nimm mit uns Kontakt auf.',
 	'fbconnect-passwordremindertitle' => 'Your Fandom account is now disconnected from Facebook!',
 	'fbconnect-passwordremindertitle-exist' => 'Your Fandom account is now disconnected from Facebook!',
 	'fbconnect-passwordremindertext' => 'Hi,
@@ -136,7 +136,7 @@ You can use the same username and password as you did before you connected.
 Thanks,
 
 The Fandom Community Team',
-	'fbconnect-wikia-signup-w-facebook' => 'Sign up with Facebook',
+	'fbconnect-wikia-signup-w-facebook' => 'Mit Facebook anmelden',
 	'fbconnect-logout-confirm' => 'Die Auswahl "Abbrechen" wird dich von Wikia und Facebook abmelden. Willst du fortfahren?',
 	'prefs-fbconnect-prefstext' => 'Facebook Verbindung',
 	'prefs-fbconnect-status-prefstext' => 'Status',
@@ -169,7 +169,7 @@ $messages['es'] = [
 	'fbconnect-disconnect-account-link' => 'Tu cuenta de Fandom está vinculada a Facebook actualmente. Puedes [[#|desvincular]] tu cuenta en Fandom de Facebook. Podrás continuar usando tu cuenta de Fandom como siempre, con tu historial (ediciones, puntos, logros) intactos.',
 	'fbconnect-disconnect-info' => 'Your Facebook account has been successfully disconnected from your Fandom account.',
 	'fbconnect-disconnect-info-existing' => 'Puedes seguir identificándote usando tu nombre de usuario y contraseña como siempre.',
-	'fbconnect-unknown-error' => 'Unknown error, please try again.',
+	'fbconnect-unknown-error' => 'Error desconocido, inténtalo de nuevo o ponte en contacto con nosotros.',
 	'fbconnect-passwordremindertitle' => 'Your Fandom account is now disconnected from Facebook!',
 	'fbconnect-passwordremindertitle-exist' => 'Your Fandom account is now disconnected from Facebook!',
 	'fbconnect-passwordremindertext' => 'Hi,
@@ -193,7 +193,7 @@ You can use the same username and password as you did before you connected.
 Thanks,
 
 The Fandom Community Team',
-	'fbconnect-wikia-signup-w-facebook' => 'Sign up with Facebook',
+	'fbconnect-wikia-signup-w-facebook' => 'Registrarse con Facebook',
 	'fbconnect-logout-confirm' => 'Al elegir cancelar la acción se cerrará sesión en Wikia y Facebook. ¿Quieres continuar?',
 	'prefs-fbconnect-prefstext' => 'Facebook Connect',
 	'prefs-fbconnect-status-prefstext' => 'Estado',
@@ -250,7 +250,7 @@ Voit käyttää samaa käyttäjänimeä ja salasanaa kuin ennen yhdistämistä.
 Kiittäen,
 
 WIkian kehitystiimi',
-	'fbconnect-wikia-signup-w-facebook' => 'Sign up with Facebook',
+	'fbconnect-wikia-signup-w-facebook' => 'Liity Facebookin kautta',
 	'fbconnect-logout-confirm' => 'Valitsemalla peruuta, kirjaudut ulos sekä Wikiasta että Facebookista. Haluatko jatkaa?',
 	'prefs-fbconnect-prefstext' => 'Yhdistä Facebookiin',
 	'prefs-fbconnect-status-prefstext' => 'Status',
@@ -283,7 +283,7 @@ $messages['fr'] = [
 	'fbconnect-disconnect-account-link' => 'Votre compte Fandom est actuellement relié à Facebook. Vous pouvez [[#|supprimer le lien]] entre votre compte Fandom et Facebook. Vous pourrez continuer à utiliser votre compte Fandom normalement, avec votre historique (modifications, points, distinctions) préservé.',
 	'fbconnect-disconnect-info' => 'Your Facebook account has been successfully disconnected from your Fandom account.',
 	'fbconnect-disconnect-info-existing' => 'Le retrait de la liaison est terminé. Vous pouvez toujours vous connecter en utilisant votre nom d\'utilisateur et mot de passe, comme d\'habitude.',
-	'fbconnect-unknown-error' => 'Unknown error, please try again.',
+	'fbconnect-unknown-error' => 'Erreur inconnue, veuillez réessayer.',
 	'fbconnect-passwordremindertitle' => 'Your Fandom account is now disconnected from Facebook!',
 	'fbconnect-passwordremindertitle-exist' => 'Your Fandom account is now disconnected from Facebook!',
 	'fbconnect-passwordremindertext' => 'Hi,
@@ -307,7 +307,7 @@ You can use the same username and password as you did before you connected.
 Thanks,
 
 The Fandom Community Team',
-	'fbconnect-wikia-signup-w-facebook' => 'Sign up with Facebook',
+	'fbconnect-wikia-signup-w-facebook' => 'Se connecter avec Facebook',
 	'fbconnect-logout-confirm' => 'Choisir d\'annuler vous déconnectera de Wikia et Facebook. Souhaitez-vous continuer ?',
 	'prefs-fbconnect-prefstext' => 'Facebook Connect',
 	'prefs-fbconnect-status-prefstext' => 'État',
@@ -364,7 +364,7 @@ You can use the same username and password as you did before you connected.
 Thanks,
 
 The Fandom Community Team',
-	'fbconnect-wikia-signup-w-facebook' => 'Sign up with Facebook',
+	'fbconnect-wikia-signup-w-facebook' => 'Registrati con Facebook',
 	'fbconnect-logout-confirm' => 'Scegliendo annulla ti disconnetterai da Wikia e Facebook. Desideri continuare?',
 	'prefs-fbconnect-prefstext' => 'Facebook Connect',
 	'prefs-fbconnect-status-prefstext' => 'Stato',
@@ -437,7 +437,7 @@ $messages['ko'] = [
 	'fbconnect-connect-login-legend' => '기존 계정으로 로그인하기',
 	'fbconnect-connect-username-label' => '사용자 이름:',
 	'fbconnect-connect-password-label' => '비밀번호:',
-	'fbconnect-wrong-pass-msg' => '비밀번호가 올바르지 않습니다.',
+	'fbconnect-wrong-pass-msg' => '비밀번호가 잘못되었습니다',
 	'fbconnect-graphapi-not-configured' => '페이스북 앱 ID와 앱 시크릿 키가 누락되어 있습니다.',
 	'prefs-fbconnect-disconnect-prefstext' => '연동 해제',
 	'fbconnect-error-already-connected' => '이 계정은 이미 페이스북과 연동되어 있습니다. 새로운 페이스북 계정과 연동하기 위해선 기존의 계정과의 연동을 해제해 주세요.',
@@ -454,7 +454,7 @@ $messages['ko'] = [
 	'fbconnect-disconnect-account-link' => '현재 귀하의 위키아 계정은 페이스북 계정과 연동되어 있습니다. 원한다면 [[#|이곳]]에서 연동을 해제할 수 있습니다. 연동을 해제하더라도 위키아 계정은 정상적으로 사용할 수 있습니다.',
 	'fbconnect-disconnect-info' => '새 비밀번호를 이메일로 보냈습니다. 새 비밀번호를 통해 이전에 사용하던 계정 이름으로 로그인할 수 있습니다.',
 	'fbconnect-disconnect-info-existing' => '연동을 완전히 해제합니다. 위키아 계정은 그대로 계속 사용할 수 있습니다.',
-	'fbconnect-unknown-error' => 'Unknown error, please try again.',
+	'fbconnect-unknown-error' => '알 수 없는 오류가 발생하였습니다. 다시 시도하시거나 위키아에 문의해주세요.',
 	'fbconnect-passwordremindertitle' => '당신의 위키아 계정이 Facebook과 연동 해제되었습니다.',
 	'fbconnect-passwordremindertitle-exist' => '당신의 위키아 계정이 Facebook과 연동 해제되었습니다.',
 	'fbconnect-passwordremindertext' => '안녕하세요.
@@ -477,7 +477,7 @@ $messages['ko'] = [
 감사합니다.
 
 위키아 커뮤니티 팀 드림',
-	'fbconnect-wikia-signup-w-facebook' => 'Sign up with Facebook',
+	'fbconnect-wikia-signup-w-facebook' => 'Facebook 계정으로 가입',
 	'fbconnect-logout-confirm' => '취소를 선택하면 위키아와 페이스북에서 로그아웃됩니다. 계속하시겠습니까?',
 	'prefs-fbconnect-prefstext' => '페이스북 연동',
 	'prefs-fbconnect-status-prefstext' => '상태',
@@ -567,7 +567,7 @@ $messages['pl'] = [
 	'fbconnect-disconnect-account-link' => 'Twoje konto na portalu Fandom jest obecnie połączone z Facebookiem. Możesz zawsze [[#|odłączyć]] swoje konto Fandom od Facebooka. Jeżeli to zrobisz, będziesz mógł normalnie używać swojego konta na portalu Fandom, a twoja historia (edycje, punkty, odznaczenia) nie zostanie zmieniona.',
 	'fbconnect-disconnect-info' => 'Your Facebook account has been successfully disconnected from your Fandom account.',
 	'fbconnect-disconnect-info-existing' => 'Odłączanie zakończone. Możesz nadal zalogować się wykorzystując istniejącą nazwę i hasło.',
-	'fbconnect-unknown-error' => 'Unknown error, please try again.',
+	'fbconnect-unknown-error' => 'Wystąpił nieznany błąd, spróbuj ponownie lub skontaktuj się z nami.',
 	'fbconnect-passwordremindertitle' => 'Your Fandom account is now disconnected from Facebook!',
 	'fbconnect-passwordremindertitle-exist' => 'Your Fandom account is now disconnected from Facebook!',
 	'fbconnect-passwordremindertext' => 'Hi,
@@ -591,7 +591,7 @@ You can use the same username and password as you did before you connected.
 Thanks,
 
 The Fandom Community Team',
-	'fbconnect-wikia-signup-w-facebook' => 'Sign up with Facebook',
+	'fbconnect-wikia-signup-w-facebook' => 'Zarejestruj się poprzez Facebooka',
 	'fbconnect-logout-confirm' => 'Anulowanie spowoduje wylogowanie Cię z Wikii i Facebooka. Czy chcesz kontynuować?',
 	'prefs-fbconnect-prefstext' => 'Połącz z Facebookiem',
 	'prefs-fbconnect-status-prefstext' => 'Status',
@@ -648,7 +648,7 @@ You can use the same username and password as you did before you connected.
 Thanks,
 
 The Fandom Community Team',
-	'fbconnect-wikia-signup-w-facebook' => 'Sign up with Facebook',
+	'fbconnect-wikia-signup-w-facebook' => 'Conecte-se com o Facebook',
 	'fbconnect-logout-confirm' => 'Escolher cancelar fará com que você seja desconectado da Wikia e do Facebook. Você quer continuar?',
 	'prefs-fbconnect-prefstext' => 'Facebook Connect',
 	'prefs-fbconnect-status-prefstext' => 'Status',
@@ -664,7 +664,7 @@ $messages['ru'] = [
 	'fbconnect-connect-login-legend' => 'Войти в вашу учётную запись',
 	'fbconnect-connect-username-label' => 'Имя участника:',
 	'fbconnect-connect-password-label' => 'Пароль:',
-	'fbconnect-wrong-pass-msg' => 'Указан неверный пароль',
+	'fbconnect-wrong-pass-msg' => 'Указанный вами пароль - недействительный',
 	'fbconnect-graphapi-not-configured' => 'Facebook App ID, полученный через приложение, был неправильным.',
 	'prefs-fbconnect-disconnect-prefstext' => 'Отключить от Facebook',
 	'fbconnect-error-already-connected' => 'Эта учётная запись на Фэндоме уже подключена к Facebook. Пожалуйста, отключите её перед подключением к новому аккаунту Facebook.',
@@ -681,7 +681,7 @@ $messages['ru'] = [
 	'fbconnect-disconnect-account-link' => 'Ваша учётная запись на Фэндоме подключена к Facebook. Вы можете её [[#|отключить]] и продолжать использовать сервис Фэндома как обычно, при этом история ваших действий (правки, достижения) останется без изменений.',
 	'fbconnect-disconnect-info' => 'Your Facebook account has been successfully disconnected from your Fandom account.',
 	'fbconnect-disconnect-info-existing' => 'Отключение завершено. Вы можете войти на Викия, используя имя участника и пароль, как обычно.',
-	'fbconnect-unknown-error' => 'Unknown error, please try again.',
+	'fbconnect-unknown-error' => 'Неизвестная ошибка. Попробуйте снова или свяжитесь с нами.',
 	'fbconnect-passwordremindertitle' => 'Your Fandom account is now disconnected from Facebook!',
 	'fbconnect-passwordremindertitle-exist' => 'Your Fandom account is now disconnected from Facebook!',
 	'fbconnect-passwordremindertext' => 'Hi,
@@ -705,7 +705,7 @@ You can use the same username and password as you did before you connected.
 Thanks,
 
 The Fandom Community Team',
-	'fbconnect-wikia-signup-w-facebook' => 'Sign up with Facebook',
+	'fbconnect-wikia-signup-w-facebook' => 'Войти через Facebook',
 	'fbconnect-logout-confirm' => 'Выбрав "Отменить", вы выйдете из своих аккаунтов Викия и Facebook. Вы хотите продолжить?',
 	'prefs-fbconnect-prefstext' => 'Facebook Connect',
 	'prefs-fbconnect-status-prefstext' => 'Статус',
@@ -762,7 +762,7 @@ Bạn có thể sử dụng tên thành viên và mật khẩu như trước.
 Xin cảm ơn,
 
 Wikia Community Team',
-	'fbconnect-wikia-signup-w-facebook' => 'Sign up with Facebook',
+	'fbconnect-wikia-signup-w-facebook' => 'Đăng ký với Facebook',
 	'fbconnect-logout-confirm' => 'Lựa chọn hủy bỏ sẽ đăng xuất bạn khỏi Wikia và Facebook. Bạn có muốn tiếp tục?',
 	'prefs-fbconnect-prefstext' => 'Kết nối Facebook',
 	'prefs-fbconnect-status-prefstext' => 'Tình trạng',
@@ -819,7 +819,7 @@ You can use the same username and password as you did before you connected.
 Thanks,
 
 The Fandom Community Team',
-	'fbconnect-wikia-signup-w-facebook' => 'Sign up with Facebook',
+	'fbconnect-wikia-signup-w-facebook' => '使用Facebook注册',
 	'fbconnect-logout-confirm' => '选择取消会让你登出Wikia和Facebook。你要继续吗？',
 	'prefs-fbconnect-prefstext' => 'Facebook 连结',
 	'prefs-fbconnect-status-prefstext' => '状态',
@@ -876,7 +876,7 @@ The Wikia Community Team',
 謝謝，
 
 Wikia社區團隊',
-	'fbconnect-wikia-signup-w-facebook' => 'Sign up with Facebook',
+	'fbconnect-wikia-signup-w-facebook' => '使用Facebook註冊',
 	'fbconnect-logout-confirm' => '選擇取消會讓你登出Wikia和Facebook。你要繼續嗎？',
 	'prefs-fbconnect-prefstext' => 'Facebook 連結',
 	'prefs-fbconnect-status-prefstext' => '狀態',
@@ -892,6 +892,8 @@ $messages['pt-br'] = [
 	'fbconnect-disconnect-account-link' => 'Sua conta na Wikia está atualmente conectada com o Facebook. Você pode [[#desconectar]] a sua conta do Facebook. Você poderá continuar usando a sua conta da Wikia normalmente, com o seu histórico (edições, pointos, conquistas) intacto.',
 	'fbconnect-disconnect-info' => 'Nós enviamos um email com uma nova senha para a sua conta - você pode se conectar com o mesmo nome de usuário.',
 	'fbconnect-preferences-connected' => 'Parabéns! As suas contas na Wikia e no Facebook agora estão conectadas.',
+	'fbconnect-wikia-signup-w-facebook' => 'Conecte-se com o Facebook',
+	'fbconnect-wrong-pass-msg' => 'A senha que você digitou está incorreta',
 ];
 
 $messages['zh'] = [
@@ -899,6 +901,7 @@ $messages['zh'] = [
 	'fbconnect-disconnect-account-link' => '您已经成功使用Facebook注册了Wikia账户。您可以通过点击[[#|断开连接]]取消和Wikia账户的连接，之后可以继续使用您的Wikia账户进行编辑或者参与社区活动。',
 	'fbconnect-disconnect-info' => '我们已经发送了新的密码到您的注册邮箱。您可以使用这个密码重新登录。',
 	'fbconnect-preferences-connected' => '太棒了！您的Wikia账户已经和Facebook成功连接。',
+	'fbconnect-wikia-signup-w-facebook' => '使用Facebook注册',
 ];
 
 $messages['zh-hant'] = [
@@ -931,6 +934,8 @@ Thanks,
 The Fandom Community Team',
 	'fbconnect-passwordremindertitle' => 'Your Fandom account is now disconnected from Facebook!',
 	'fbconnect-passwordremindertitle-exist' => 'Your Fandom account is now disconnected from Facebook!',
+	'fbconnect-wikia-signup-w-facebook' => '使用Facebook註冊',
+	'fbconnect-wrong-pass-msg' => '您輸入的密碼不正確',
 ];
 
 $messages['zh-hk'] = [
@@ -938,5 +943,7 @@ $messages['zh-hk'] = [
 	'fbconnect-disconnect-account-link' => '您已經成功使用Facebook註冊了Wikia賬戶。您可以通過點擊斷開連接取消和Wikia賬戶的連接，之後可以繼續使用您的Wikia賬戶進行編輯或者參與社區活動。',
 	'fbconnect-disconnect-info' => '我們已經發送了新的密碼到您的註冊郵箱。您可以使用這個密碼重新登錄。',
 	'fbconnect-preferences-connected' => '太棒了！您的Wikia賬戶已經和Facebook成功連接。',
+	'fbconnect-wikia-signup-w-facebook' => '使用Facebook註冊',
+	'fbconnect-wrong-pass-msg' => '您輸入的密碼不正確',
 ];
 
