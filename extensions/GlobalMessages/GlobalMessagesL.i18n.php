@@ -154,7 +154,7 @@ To lock or unlock the database, this needs to be writable by the web server.',
 	'lockedbyandtime' => '(by {{GENDER:$1|$1}} on $2 at $3)',
 	'lastmodifiedatby' => 'This page was last modified $2, $1 by $3.',
 	'log-show-hide-patrol' => '$1 patrol log',
-	'limitall' => 'all',
+	'limitall' => '5000',
 	'livepreview-loading' => 'Loading...',
 	'livepreview-ready' => 'Loading... Ready!',
 	'livepreview-failed' => 'Live preview failed!
@@ -6068,6 +6068,7 @@ Intenta usar la previsualización normal.',
 ** PD|Es de dominio público
 ** Fairuse|Puede usar ya que está cualificada como fair use bajo las leyes estadounidenses
 ** Permiso|Tiene copyright, pero se permite su uso por parte del dueño',
+	'limit' => 'Límite',
 ];
 
 $messages['et'] = [
@@ -7070,7 +7071,7 @@ Pour bloquer ou débloquer la base de données, il doit être accessible par le 
 	'lockedbyandtime' => '(par $1 le $2 à $3)',
 	'lastmodifiedatby' => 'Cette page a été modifiée pour la dernière fois le $1 à $2 par $3.',
 	'log-show-hide-patrol' => '$1 l’historique des relectures',
-	'limitall' => 'tous',
+	'limitall' => '5000',
 	'livepreview-loading' => 'Chargement...',
 	'livepreview-ready' => 'Chargement … terminé !',
 	'livepreview-failed' => 'L’aperçu rapide a échoué !
@@ -7116,6 +7117,7 @@ Essayez la prévisualisation normale.',
 ** Domaine public|Ce fichier est du domaine public
 ** Droit auteur|Ce fichier est soumis au droit d\'auteur
 ** Permission|Ce fichier est sous copyright mais son auteur a permis son utilisation',
+	'limit' => 'Limite',
 ];
 
 $messages['frc'] = [
@@ -16936,6 +16938,7 @@ Ei [[Special:WhatLinksHere/$2|fullstendig liste]] er tilgjengeleg.',
 	'logentry-newusers-autocreate' => 'Kontoen $1 vart oppretta av seg sjølv',
 	'login_greeting' => 'Velkommen til Wikia, [[User:$1|$1]]!',
 	'login_as_another' => 'Logg inn som en annen bruker',
+	'limit' => 'Grense',
 ];
 
 $messages['nov'] = [
