@@ -17,6 +17,8 @@ class ContributeMenuController extends WikiaController {
 	];
 
 	public function executeIndex() {
+		global $wgEnableFlowTracking;
+
 		// add "edit this page" item
 		$dropdownItems = array();
 		$content_actions = $this->app->getSkinTemplateObj()->data[ 'content_actions' ];
@@ -40,9 +42,13 @@ class ContributeMenuController extends WikiaController {
 			 * id for flow tracking
 			 * @see https://wikia-inc.atlassian.net/browse/WW-343
 			 */
-			if ( $specialPageName === 'CreatePage' ) {
+			if ( $wgEnableFlowTracking && $specialPageName === 'CreatePage' ) {
 				// TODO: move param name and flow name  to consts
-				$attrs[ 'href' ] = http_build_url($attrs[ 'href' ], ['query' => 'flow=create-page-contribute-button'], HTTP_URL_JOIN_QUERY);
+				$attrs[ 'href' ] = http_build_url(
+					$attrs[ 'href' ],
+					[ 'query' => 'flow=' . FlowTrackingHooks::CREATE_PAGE_CONTRIBUTE_BUTTON ],
+					HTTP_URL_JOIN_QUERY
+				);
 			}
 
 			if ( isset( $link[ 'accesskey' ] ) ) {
