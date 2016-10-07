@@ -169,6 +169,7 @@ SCRIPT1;
 		$url = Track::getURL( 'special', urlencode( $event_type ), $param, false );
 		if ( ExternalHttp::get( $url ) !== false ) {
 			wfProfileOut( __METHOD__ );
+			\Wikia\Logger\WikiaLogger::instance()->info( 'Internal tracking sent', [ 'url' => $url ] );
 			return true;
 		} else {
 			wfProfileOut( __METHOD__ );
