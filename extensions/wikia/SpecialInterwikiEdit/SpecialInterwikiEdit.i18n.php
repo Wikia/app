@@ -4,7 +4,7 @@ $messages = [];
 
 $messages['en'] = [
 	'interwikiedit-desc' => 'Special:InterwikiEdit for web-based handling of interwiki links',
-	'interwikiedit' => 'Interwiki Editor',
+	'interwikiedit' => 'Edit interlanguage links',
 	'iwedit-title' => 'Interwiki Editor',
 	'iwedit-language-interwikis' => 'language interwikis only',
 	'iwedit-all-interwikis' => 'all interwikis',
@@ -343,7 +343,7 @@ $messages['nb'] = [
 ];
 
 $messages['nl'] = [
-	'interwikiedit' => 'Interwikitabel bewerken',
+	'interwikiedit' => 'Bewerk interlanguage links',
 	'iwedit-title' => 'Interwikitabel bewerken',
 	'iwedit-language-interwikis' => 'alleen taalinterwiki\'s',
 	'iwedit-all-interwikis' => 'alle interwiki\'s',
@@ -458,7 +458,7 @@ $messages['sr-ec'] = [
 
 $messages['sv'] = [
 	'interwikiedit-desc' => 'Special:InterwikiEdit för webbaserad hantering av interwikilänkar',
-	'interwikiedit' => 'Interwiki-redigerare',
+	'interwikiedit' => 'Redigera interimspråket länkar',
 	'iwedit-title' => 'Interwikiredigerare',
 	'iwedit-language-interwikis' => 'bara språkinterwikis',
 	'iwedit-all-interwikis' => 'alla interwikis',
