@@ -1,4 +1,4 @@
-/*global define, require*/
+/*global define*/
 define('ext.wikia.adEngine.lookup.prebid', [
 	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.lookup.prebid.adaptersPerformanceTracker',
@@ -64,7 +64,7 @@ define('ext.wikia.adEngine.lookup.prebid', [
 		biddersPerformanceMap = adaptersTracker.updatePerformanceMap(biddersPerformanceMap);
 
 		adapters.forEach(function (adapter) {
-			adaptersTracker.trackBidderOnLookupEnd(adapter, biddersPerformanceMap)
+			adaptersTracker.trackBidderOnLookupEnd(adapter, biddersPerformanceMap);
 		});
 	}
 
