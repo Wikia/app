@@ -8193,7 +8193,7 @@ Wellicht is die verwijderd of hernoemd.
 	'history-title' => 'Geschiedenis van "$1"',
 	'hist' => 'gesch',
 	'hide' => 'verbergen',
-	'hookaborted' => 'De wijziging die u probeerde te maken is afgebroken door een uitbreidingshook.',
+	'hookaborted' => 'De wijziging die je probeerde te maken is afgebroken door een uitbreidingshook.',
 	'http-invalid-url' => 'Ongeldige URL: $1',
 	'http-invalid-scheme' => 'URL\'s met de opmaak "$1" worden niet ondersteund',
 	'http-request-error' => 'Fout bij het verzenden van het verzoek.',
@@ -12563,6 +12563,7 @@ $messages['zu'] = [
 
 $messages['zh'] = [
 	'history_short' => '历史纪录',
+	'hookaborted' => '您所尝试的修改已经不被扩展功能支持。',
 ];
 
 $messages['zh-cn'] = [
