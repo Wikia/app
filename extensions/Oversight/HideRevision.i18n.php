@@ -868,35 +868,28 @@ Dono de ĉi tiu informo eble povus rezulti en daŭra malgajno de Kontrolanto-raj
 ];
 
 $messages['es'] = [
-	'hiderevision' => 'Esconder revisiones permanentemente',
-	'hiderevision-desc' => 'Esconde revisiones individuales de todos los usuarios por motivos legales, etc.',
+	'hiderevision' => 'Ocultar revisiones permanentemente',
+	'hiderevision-desc' => 'Ocultar las revisiones individuales de todos los usuarios por razones legales, etc.',
 	'group-oversight' => 'Oversighters',
 	'group-oversight-member' => 'Supervisor',
 	'grouppage-oversight' => 'w:c:ayuda:Ayuda:Niveles_de_acceso_de_los_usuarios',
 	'right-oversight' => 'Ver una revisión oculta con Extension:Oversight',
 	'right-hiderevision' => 'Ocultar revisiones a los administradores con Extension:Oversight',
-	'hiderevision-prompt' => 'Número de revisión a ocultar:',
-	'hiderevision-continue' => 'Seguir',
-	'hiderevision-text' => 'Esto \'\'\'sólo\'\'\' se debería usar en los siguientes casos:
-* Información personal no apropiada
-*: \'\'domilicios, números de teléfono, documentos de identidad, etc.\'\'
-
-\'\'\'El abuso de este sistema llevará consigo la pérdida de privilegios.\'\'\'
-
-Los elementos eliminados no serán visibles por nadie en todo el sitio web, pero los borrados quedan registrados y podrían ser restaurados manualmente por un administrador de la base de datos si cometieras un error.',
-	'hiderevision-reason' => 'Motivo (será registrado de manera privada):',
-	'hiderevision-submit' => 'Esconder estos datos permanentemente',
-	'hiderevision-tab' => 'Esconder revisión',
+	'hiderevision-prompt' => 'Número de revisiones a borrar:',
+	'hiderevision-continue' => 'Continuar',
+	'hiderevision-text' => 'Esto se debe usar \'\'\'solamente\'\'\' en los siguientes casos: * Información personal inapropiada *: \'\'domicilio y número de teléfono, número de seguridad social, etc.\'\' \'\'\'El abuso de este sistema conllevará la pérdida de privilegios.\'\'\' Lo que sea borrado no será visible para nadie en el sitio web, pero lo que borres es registrado y puede ser restaurado manualmente por un administrador de la base de datos si cometes un error.',
+	'hiderevision-reason' => 'Razón (será guardada de forma privada):',
+	'hiderevision-submit' => 'Ocultar esta información permanentemente',
+	'hiderevision-tab' => 'Ocultar revisión',
 	'hiderevision-link' => 'contribuciones ocultas del usuario',
-	'hiderevision-norevisions' => 'No se han especificado revisiones para borrar.',
-	'hiderevision-noreason' => 'Debes describir el motivo de esta eliminación.',
+	'hiderevision-norevisions' => 'No especificaste ninguna revisión para borrar.',
+	'hiderevision-noreason' => 'Debes describir la razón para borrarlo.',
 	'hiderevision-status' => 'Revisión $1: $2',
-	'hiderevision-success' => 'Se archivó y se borró con éxito.',
-	'hiderevision-error-missing' => 'No encontrado en la base de datos.',
-	'hiderevision-error-current' => 'No se puede borrar la última edición de una página.
-Revierte antes el cambio.',
+	'hiderevision-success' => 'Archivado y borrado satisfactoriamente.',
+	'hiderevision-error-missing' => 'No se encontró en la base de datos.',
+	'hiderevision-error-current' => 'No puedes borrar la última edición de una página. Revierte los cambios primero.',
 	'hiderevision-error-delete' => 'No se pudo archivar; ¿fue borrada anteriormente?',
-	'hiderevision-archive-status' => 'Revisión borrada de $1: $2',
+	'hiderevision-archive-status' => 'Borradas las revisiones desde $1: $2',
 	'oversight-nodiff' => 'Fue imposible seguir las modificaciones ya que no existe actualmente una revisión anterior de esta página. Puede que:
 *La página fuera borrada
 *Esta revisión oculta fuera la primera.',
@@ -1062,7 +1055,7 @@ $messages['fo'] = [
 ];
 
 $messages['fr'] = [
-	'hiderevision' => 'Cacher définitivement les révisions',
+	'hiderevision' => 'Masquer définitivement les révisions',
 	'hiderevision-desc' => 'Masque les modifications individuelles de tous les utilisateurs pour des motifs légaux, etc.',
 	'group-oversight' => 'Masqueurs de modifications',
 	'group-oversight-member' => '{{GENDER:$1|masqueur de modifications|masqueuse de modifications}}',

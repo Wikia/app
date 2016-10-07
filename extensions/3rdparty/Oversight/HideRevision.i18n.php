@@ -406,7 +406,7 @@ $messages['fo'] = [
 ];
 
 $messages['fr'] = [
-	'hiderevision' => 'Cacher définitivement les révisions',
+	'hiderevision' => 'Masquer définitivement les révisions',
 	'hiderevision-desc' => 'Masque les modifications individuelles de tous les utilisateurs pour des motifs légaux, etc.',
 	'group-oversight' => 'Masqueurs de modifications',
 	'group-oversight-member' => '{{GENDER:$1|masqueur de modifications|masqueuse de modifications}}',
@@ -2036,5 +2036,21 @@ $messages['zh-hant'] = [
 
 $messages['es'] = [
 	'grouppage-oversight' => 'w:c:ayuda:Ayuda:Niveles_de_acceso_de_los_usuarios',
+	'hiderevision-archive-status' => 'Borradas las revisiones desde $1: $2',
+	'hiderevision-continue' => 'Continuar',
+	'hiderevision-desc' => 'Ocultar las revisiones individuales de todos los usuarios por razones legales, etc.',
+	'hiderevision-error-current' => 'No puedes borrar la última edición de una página. Revierte los cambios primero.',
+	'hiderevision-error-delete' => 'No se pudo archivar; ¿fue borrada anteriormente?',
+	'hiderevision-error-missing' => 'No se encontró en la base de datos.',
+	'hiderevision-noreason' => 'Debes describir la razón para borrarlo.',
+	'hiderevision-norevisions' => 'No especificaste ninguna revisión para borrar.',
+	'hiderevision-prompt' => 'Número de revisiones a borrar:',
+	'hiderevision-reason' => 'Razón (será guardada de forma privada):',
+	'hiderevision-status' => 'Revisión $1: $2',
+	'hiderevision-submit' => 'Ocultar esta información permanentemente',
+	'hiderevision-success' => 'Archivado y borrado satisfactoriamente.',
+	'hiderevision-tab' => 'Ocultar revisión',
+	'hiderevision-text' => 'Esto se debe usar \'\'\'solamente\'\'\' en los siguientes casos: * Información personal inapropiada *: \'\'domicilio y número de teléfono, número de seguridad social, etc.\'\' \'\'\'El abuso de este sistema conllevará la pérdida de privilegios.\'\'\' Lo que sea borrado no será visible para nadie en el sitio web, pero lo que borres es registrado y puede ser restaurado manualmente por un administrador de la base de datos si cometes un error.',
+	'hiderevision' => 'Ocultar revisiones permanentemente',
 ];
 
