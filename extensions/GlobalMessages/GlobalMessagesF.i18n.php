@@ -5602,6 +5602,19 @@ Anderenfalls kannst du auch das untenstehende einfache Formular nutzen. Dein Kom
 	'feed-watom' => 'Fandom Atom',
 	'fast-adv' => 'Werbeanzeige',
 	'featured' => 'Vorgestellt',
+	'footer_1.5' => 'bearbeite diese Seite',
+	'footer_1' => 'Verbessere $1 und',
+	'footer_10' => 'Verbreite via $1',
+	'footer_2' => 'Kommentiere diesen Artikel',
+	'footer_5' => '$1 hat diese Seite am $2 bearbeitet',
+	'footer_6' => 'Zufälligen Artikel anzeigen',
+	'footer_7' => 'Artikel per Mail versenden',
+	'footer_8' => 'Verbreite diesen Artikel',
+	'footer_9' => 'Bewerte diesen Artikel',
+	'footer_About_Wikia' => '[http://www.wikia.com/wiki/About_Wikia Über Wikia]',
+	'footer_Advertise_on_Wikia' => '[http://www.wikia.com/wiki/Advertising Auf Wikia werben]',
+	'footer_Contact_Wikia' => '[http://de.wikia.com/wiki/Kontaktiere_uns Kontakt]',
+	'footer_Terms_of_use' => '[http://www.wikia.com/wiki/Terms_of_use Nutzungsbedingungen]',
 ];
 
 $messages['de-at'] = [
@@ -6668,6 +6681,20 @@ En otro caso, puedes usar el siguiente formulario. Tu comentario será añadido 
 	'forum' => 'Foro',
 	'feed-watom' => 'Atomo de Fandom',
 	'featured' => 'Destacado',
+	'footer_1.5' => 'editando esta página',
+	'footer_1' => 'Haz crecer $1',
+	'footer_10' => 'Compartir con $1',
+	'footer_2' => 'Discute este artículo',
+	'footer_5' => '$1 realizó una edición el $2',
+	'footer_6' => 'Ver una página aleatoria',
+	'footer_7' => 'Enviar este artículo por e-mail',
+	'footer_8' => 'Compartir este artículo',
+	'footer_9' => 'Puntuar este artículo',
+	'footer_About_Wikia' => '[http://es.wikia.com/Sobre_nosotros Sobre Wikia]',
+	'footer_Advertise_on_Wikia' => '[http://mediakit.wikia.com/wiki/Media_Kit_Wiki Publicidad]',
+	'footer_Contact_Wikia' => '[http://comunidad.wikia.com/wiki/Especial:Contactar Contacta con Wikia]',
+	'footer_License' => '[http://es.wikia.com/Licencia CC-BY-SA]',
+	'footer_Terms_of_use' => '[http://es.wikia.com/T%C3%A9rminos_de_Uso Términos de uso]',
 ];
 
 $messages['et'] = [
@@ -7244,6 +7271,13 @@ $1',
 	'feedback-bugnew' => 'بررسی کردم. ایرادی جدید را گزارش بده',
 	'fast-adv' => 'تبلیغات',
 	'featured' => 'برگزیده',
+	'footer_1.5' => '&nbsp;',
+	'footer_1' => 'با ویرایش این صفحه $1 را بهبود بخشید',
+	'footer_5' => '$1 این صفحه را در $2 ویرایش کرد',
+	'footer_6' => 'نمایش صفحه‌های تصادفی',
+	'footer_9' => 'این مقاله را رتبه‌بندی کنید',
+	'footer_About_Wikia' => '[http://www.wikia.com/wiki/About_Wikia دربارۀ ویکیا]',
+	'footer_Contact_Wikia' => '[http://www.fa.wikia.com/wiki/تماس_با_ما  تماس با ویکیا]',
 ];
 
 $messages['fi'] = [
@@ -7411,6 +7445,18 @@ Muussa tapauksessa voit käyttää alla olevaa helpompaa lomaketta. Kommenttisi 
 	'feedback-bugcheck' => 'Hyvä! Varmista, että ohjelmointivirhe ei vielä löydy [$1 tästä listasta].',
 	'feedback-bugnew' => 'Varmistin. Ilmoitan uuden ohjelmointivirheen',
 	'forum' => 'Foorumi',
+	'footer_1.5' => 'muokkaamalla tätä sivua',
+	'footer_1' => 'Paranna Wikiaa',
+	'footer_2' => 'Keskustele tästä artikkelista',
+	'footer_5' => '$1 teki muokkauksen $2',
+	'footer_6' => 'Katso sattumanvarainen sivu',
+	'footer_7' => 'Lähetä tämä artikkeli sähköpostitse',
+	'footer_8' => 'Jaa tämä artikkeli',
+	'footer_9' => 'Arvostele tämä artikkeli',
+	'footer_About_Wikia' => '[http://fi.wikia.com/wiki/Tietoja_Wikiasta Tietoja Wikiasta]',
+	'footer_Advertise_on_Wikia' => '[http://www.wikia.com/wiki/Advertising Mainosta Wikiassa]',
+	'footer_Contact_Wikia' => '[http://fi.wikia.com/wiki/Ota_yhteytt%C3%A4 Ota yhteyttä Wikiaan]',
+	'footer_Terms_of_use' => '[http://fi.wikia.com/wiki/K%C3%A4ytt%C3%B6ehdot Käyttöehdot]',
 ];
 
 $messages['fiu-vro'] = [
@@ -7824,6 +7870,19 @@ Sinon, vous pouvez utiliser le formulaire simplifié ci-dessous. Votre commentai
 	'forum' => 'Forum',
 	'feed-watom' => 'Fandom Atom',
 	'featured' => 'En vedette',
+	'footer_1.5' => 'modifiant cette page',
+	'footer_1' => 'Améliorez $1 en',
+	'footer_10' => 'Publier sur $1',
+	'footer_2' => 'Discuter sur cet article',
+	'footer_5' => '$1 a modifié cette page le $2',
+	'footer_6' => 'Voir une page au hasard',
+	'footer_7' => 'Envoyer cet article',
+	'footer_8' => 'Publier cet article',
+	'footer_9' => 'Notez-le',
+	'footer_About_Wikia' => '[http://fr.wikia.com/À_propos À propos de Wikia]',
+	'footer_Advertise_on_Wikia' => '[http://www.wikia.com/wiki/Advertising Faire de la publicité sur Wikia]',
+	'footer_Contact_Wikia' => '[http://www.wikia.com/wiki/Contact_us Contacter Wikia]',
+	'footer_Terms_of_use' => '[http://www.wikia.com/wiki/Terms_of_use Conditions d’utilisation]',
 ];
 
 $messages['frc'] = [
@@ -11959,6 +12018,21 @@ $1',
 	'forum' => 'フォーラム',
 	'feed-watom' => 'FandomのAtom',
 	'fast-adv' => '広告',
+	'footer_1.5' => '編集してみましょう',
+	'footer_1' => '$1のこの記事を',
+	'footer_10' => 'ソーシャルブックマーク:',
+	'footer_2' => 'このページに関する議論ページ',
+	'footer_5' => '最終編集:$2 $1',
+	'footer_6' => 'おまかせ表示',
+	'footer_7' => 'このページをメールで知らせる',
+	'footer_8' => 'ソーシャルブックマーク:',
+	'footer_9' => 'この記事のランク:',
+	'footer_About_Wikia' => '[http://ja.wikia.com/wiki/%E3%82%A6%E3%82%A3%E3%82%AD%E3%82%A2%E3%81%AB%E3%81%A4%E3%81%84%E3%81%A6 ウィキアについて]',
+	'footer_Advertise_on_Wikia' => '[http://ja.wikia.com/wiki/%E5%BA%83%E5%91%8A 広告について]',
+	'footer_Contact_Wikia' => '[[w:c:ja.community:Project:連絡先|連絡先]]',
+	'footer_License' => '[http://www.gnu.org/copyleft/fdl.html GFDL] - [http://www.opensource.jp/fdl/fdl.ja.html.euc-jp 日本語参考訳]',
+	'footer_MediaWiki' => '[http://www.mediawiki.org/wiki/MediaWiki/ja メディアウィキ]',
+	'footer_Terms_of_use' => '[http://ja.wikia.com/wiki/利用規約 利用規約]',
 ];
 
 $messages['jam'] = [
@@ -13709,6 +13783,12 @@ $1',
 	'feedback-bugcheck' => '감사합니다! 혹시 해당 사항이 [$1 기존의 버그 리포트]에 올라와 있는지 확인해주세요.',
 	'feedback-bugnew' => '확인했습니다. 새로운 버그 리포트를 작성합니다.',
 	'fast-adv' => '광고',
+	'footer_1.5' => '이 글에 기여하시면 발전합니다.',
+	'footer_1' => '$1는(은)',
+	'footer_5' => '$1 사용자가 $2에 마지막으로 편집하였습니다.',
+	'footer_6' => '임의 문서 보기',
+	'footer_8' => '공유',
+	'footer_9' => '별점 주기',
 ];
 
 $messages['ko-kp'] = [
@@ -18808,6 +18888,19 @@ Skriv inn filnamnet utan «{{ns:file}}:»-prefikset.',
 	'forum' => 'Forum',
 	'fast-adv' => 'Reklame',
 	'featured' => 'Utvalgt',
+	'footer_1.5' => 'endre denne siden',
+	'footer_1' => 'Forbedre $1 ved å',
+	'footer_10' => 'Del med $1',
+	'footer_2' => 'Diskuter denne artikkelen',
+	'footer_5' => '$1 gjorde en endring den $2',
+	'footer_6' => 'Vis tilfeldig side',
+	'footer_7' => 'E-post artikkelen',
+	'footer_8' => 'Del denne artikkelen',
+	'footer_9' => 'Ranger denne artikkelen',
+	'footer_About_Wikia' => '[http://www.wikia.com/wiki/About_Wikia Om Wikia]',
+	'footer_Advertise_on_Wikia' => '[http://www.wikia.com/wiki/Advertising Reklamér hos Wikia]',
+	'footer_Contact_Wikia' => '[http://www.wikia.com/wiki/Contact_us Kontakt Wikia]',
+	'footer_Terms_of_use' => '[http://www.wikia.com/wiki/Terms_of_use Brukervilkår]',
 ];
 
 $messages['nov'] = [
@@ -19703,6 +19796,8 @@ W przeciwnym wypadku można użyć prostego formularza poniżej. Komentarz zosta
 	'footer_9' => 'Oceń ten artykuł',
 	'feed-watom' => 'Fandom Atom',
 	'filepage.css' => '/* Umieszczony tutaj kod CSS wpłynie na wygląd stron plików, także na zewnętrznych wiki */',
+	'footer_About_Wikia' => '[http://pl.wikia.com/wiki/O_nas O Wikii]',
+	'footer_Terms_of_use' => '[http://pl.wikia.com/Zasady_U%C5%BCytkowania Zasady Użytkowania]',
 ];
 
 $messages['pms'] = [
@@ -28261,6 +28356,9 @@ $1',
 	'feedback-bugcheck' => '请检查本bug是否为[$1 已知bug]。',
 	'feedback-bugnew' => '我检查了。报告新bug',
 	'feed-watom' => 'Fandom Atom',
+	'footer_1.5' => '快来编修本页',
+	'footer_1' => '想改善$1？',
+	'footer_2' => '回应此文',
 ];
 
 $messages['zh-hant'] = [
@@ -28412,10 +28510,30 @@ $1',
 	'feedback-bugcheck' => '請檢查此bug是否為[$1 已知bug]。',
 	'feedback-bugnew' => '我已經檢查過。報告一個新的bug',
 	'feed-watom' => 'Fandom Atom',
+	'footer_1.5' => '快來編輯此頁！',
+	'footer_1' => '覺得 $1 不夠好嗎?',
+	'footer_2' => '回應此文',
+	'footer_5' => '修改:$1 - $2',
+	'footer_6' => '檢視隨機頁面',
+	'footer_7' => '轉寄此文',
+	'footer_8' => '分享到網路書籤',
+	'footer_9' => '打分數',
 ];
 
 $messages['zh-hk'] = [
 	'february' => '二月',
+	'footer_1.5' => '快來編修本頁',
+	'footer_1' => '覺得 $1 不夠好嗎?',
+	'footer_10' => '與$1分享',
+	'footer_2' => '發表意見',
+	'footer_5' => '最近編輯：$1 $2',
+	'footer_6' => '隨機頁面',
+	'footer_7' => '轉寄本文',
+	'footer_8' => '加到網路書籤',
+	'footer_9' => '打分數',
+	'footer_About_Wikia' => '[http://www.wikia.com/wiki/About_Wikia 關於Wikia]',
+	'footer_Advertise_on_Wikia' => '[http://www.wikia.com/wiki/Advertising 廣告合作]',
+	'footer_Contact_Wikia' => '[http://www.wikia.com/wiki/Contact_us 聯絡Wikia]',
 ];
 
 $messages['zh-min-nan'] = [
@@ -28460,6 +28578,19 @@ $messages['zh-tw'] = [
 	'filedelete-nofile-old' => '在已指定屬性的情況下，這裡沒有\'\'\'$1\'\'\'於 $2 $3 的版本。',
 	'file-nohires' => '無更高解析度可提供。',
 	'forum' => '討論區',
+	'footer_1.5' => '快來編修本頁',
+	'footer_1' => '覺得 $1 不夠好嗎?',
+	'footer_10' => '與$1分享',
+	'footer_2' => '發表意見',
+	'footer_5' => '最近編輯：$1 $2',
+	'footer_6' => '隨機頁面',
+	'footer_7' => '轉寄本文',
+	'footer_8' => '加到網路書籤',
+	'footer_9' => '打分數',
+	'footer_About_Wikia' => '[http://www.wikia.com/wiki/About_Wikia 關於Wikia]',
+	'footer_Advertise_on_Wikia' => '[http://www.wikia.com/wiki/Advertising 廣告合作]',
+	'footer_Contact_Wikia' => '[http://www.wikia.com/wiki/Contact_us 聯絡Wikia]',
+	'footer_Terms_of_use' => '[http://www.wikia.com/wiki/Terms_of_use 使用條款]',
 ];
 
 $messages['zh-yue'] = [
@@ -28506,5 +28637,34 @@ $messages['zu'] = [
 
 $messages['zh'] = [
 	'filedesc' => '简述',
+	'footer_1.5' => '快来编修本页',
+	'footer_1' => '想改善 $1 ?',
+	'footer_10' => '与$1分享',
+	'footer_2' => '发表意见',
+	'footer_5' => '最近编辑：$1 $2',
+	'footer_6' => '查看随机页面',
+	'footer_7' => '转寄本文',
+	'footer_8' => '加到网路书签',
+	'footer_9' => '打分数',
+	'footer_About_Wikia' => '[http://www.wikia.com/wiki/About_Wikia 关於Wikia]',
+	'footer_Advertise_on_Wikia' => '[http://www.wikia.com/wiki/Advertising 广告合作]',
+	'footer_Contact_Wikia' => '[http://www.wikia.com/wiki/Contact_us 联络Wikia]',
+	'footer_Terms_of_use' => '[http://www.wikia.com/wiki/Terms_of_use 使用条款]',
+];
+
+$messages['zh-cn'] = [
+	'footer_1.5' => '快来编修本页',
+	'footer_1' => '觉得 $1 不夠好吗?',
+	'footer_10' => '与$1分享',
+	'footer_2' => '发表意见',
+	'footer_5' => '最近编辑：$1 $2',
+	'footer_6' => '随机页面',
+	'footer_7' => '转寄本文',
+	'footer_8' => '加到网路书签',
+	'footer_9' => '打分数',
+	'footer_About_Wikia' => '[http://www.wikia.com/wiki/About_Wikia 关於Wikia]',
+	'footer_Advertise_on_Wikia' => '[http://www.wikia.com/wiki/Advertising 广告合作]',
+	'footer_Contact_Wikia' => '[http://www.wikia.com/wiki/Contact_us 联络Wikia]',
+	'footer_Terms_of_use' => '[http://www.wikia.com/wiki/Terms_of_use 使用条款]',
 ];
 
