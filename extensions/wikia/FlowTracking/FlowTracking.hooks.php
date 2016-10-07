@@ -1,7 +1,12 @@
 <?php
 
 class FlowTrackingHooks {
-	const CREATE_PAGE_UNRECOGNIZED_FLOW = 'create-page-unrecognized';
+	const FLOWS = [
+		'CREATE_PAGE_DIRECT_URL' => 'create-page-direct-url',
+		'CREATE_PAGE_CONTRIBUTE_BUTTON' => 'create-page-contribute-button',
+		'CREATE_PAGE_ARTICLE_REDLINK' => 'create-page-article-redlink',
+		'CREATE_PAGE_UNRECOGNIZED_FLOW' => 'create-page-unrecognized'
+	];
 
 	public static function onBeforePageDisplay( \OutputPage $out, \Skin $skin ) {
 		\Wikia::addAssetsToOutput( 'flow_tracking_create_page_js' );
@@ -41,11 +46,17 @@ class FlowTrackingHooks {
 			Track::event( 'trackingevent', [
 				'ga_action' => 'flow-end',
 				'editor' => static::getEditor( $request->getValues(), $queryParams ),
-				'flowname' => $queryParams[ 'flow' ] ?? static::CREATE_PAGE_UNRECOGNIZED_FLOW,
+				'flowname' => $queryParams[ 'flow' ] ?? static::FLOWS[ 'CREATE_PAGE_UNRECOGNIZED_FLOW' ],
 				'useragent' => $headers[ 'USER-AGENT' ]
 			] );
 			Track::eventGA( 'flow-tracking', 'flow-end', $queryParams[ 'flow' ] );
 		}
+
+		return true;
+	}
+
+	public static function onMakeGlobalVariablesScript( &$vars ) {
+		$vars[ 'wgFlowTrackingFlows' ] = static::FLOWS;
 
 		return true;
 	}

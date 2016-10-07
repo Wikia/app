@@ -24,8 +24,8 @@ define(
 				if (flowParam || document.referrer) {
 					flowTrack.trackFlowStep(flowParam, {editor: editor});
 				} else {
-					flowTrack.beginFlow(flowTrack.flows.CREATE_PAGE_DIRECT_URL, {editor: editor});
-					qs.setVal('flow', flowTrack.flows.CREATE_PAGE_DIRECT_URL);
+					flowTrack.beginFlow(window.wgFlowTrackingFlows.CREATE_PAGE_DIRECT_URL, {editor: editor});
+					qs.setVal('flow', window.wgFlowTrackingFlows.CREATE_PAGE_DIRECT_URL);
 				}
 			}
 

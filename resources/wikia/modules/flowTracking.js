@@ -1,13 +1,7 @@
 define('wikia.flowTracking', ['wikia.tracker', 'wikia.window', 'mw', 'jquery'], function (tracker, w, mw, $) {
 	'use strict';
 
-	var flows = {
-			// when updating, remember to update also constants in CreatePage.js
-			CREATE_PAGE_DIRECT_URL: 'create-page-direct-url',
-			CREATE_PAGE_CONTRIBUTE_BUTTON: 'create-page-contribute-button',
-			CREATE_PAGE_REDLINK: 'create-page-redlink'
-		},
-		track = tracker.buildTrackingFunction({
+	var track = tracker.buildTrackingFunction({
 			category: 'flow-tracking',
 			trackingMethod: 'analytics'
 
@@ -47,7 +41,6 @@ define('wikia.flowTracking', ['wikia.tracker', 'wikia.window', 'mw', 'jquery'], 
 
 	return {
 		beginFlow: beginFlow,
-		trackFlowStep: trackFlowStep,
-		flows: flows
+		trackFlowStep: trackFlowStep
 	}
 });

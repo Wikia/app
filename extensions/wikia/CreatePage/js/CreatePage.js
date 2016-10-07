@@ -1,9 +1,5 @@
 /* global $ */
 var CreatePage = {
-	// keep these constants up to date with wikia.flowTracking.flows
-	CREATE_PAGE_CONTRIBUTE_BUTTON: 'create-page-contribute-button',
-	CREATE_PAGE_REDLINK: 'create-page-redlink',
-
 	pageLayout: null,
 	options: {},
 	loading: false,
@@ -277,8 +273,8 @@ var CreatePage = {
 
 		CreatePage.redlinkParam = '&redlink=1';
 
-		CreatePage.flowName = CreatePage.CREATE_PAGE_REDLINK;
-		CreatePage.trackCreatePageStart(CreatePage.CREATE_PAGE_REDLINK);
+		CreatePage.flowName = window.wgFlowTrackingFlows.CREATE_PAGE_ARTICLE_REDLINK;
+		CreatePage.trackCreatePageStart(window.wgFlowTrackingFlows.CREATE_PAGE_ARTICLE_REDLINK);
 
 		if ( CreatePage.canUseVisualEditor() ) {
 			CreatePage.track( { action: 'click', label: 've-redlink-click' } );
@@ -301,8 +297,8 @@ var CreatePage = {
 		CreatePage.context = context;
 
 		$( '.WikiaMenuElement .createpage' ).click(function() {
-			CreatePage.trackCreatePageStart(CreatePage.CREATE_PAGE_CONTRIBUTE_BUTTON);
-			CreatePage.flowName = CreatePage.CREATE_PAGE_CONTRIBUTE_BUTTON;
+			CreatePage.trackCreatePageStart(window.wgFlowTrackingFlows.CREATE_PAGE_CONTRIBUTE_BUTTON);
+			CreatePage.flowName = window.wgFlowTrackingFlows.CREATE_PAGE_CONTRIBUTE_BUTTON;
 		});
 
 		$( function() {
@@ -311,7 +307,7 @@ var CreatePage = {
 				// This parameter is added here to avoid reparsing all articles.
 				$( '#WikiaArticle').find( 'a.new' ).toArray().forEach(function(redlink) {
 					var qs = QueryString(redlink.href);
-					qs.setVal('flow', CreatePage.CREATE_PAGE_REDLINK);
+					qs.setVal('flow', window.wgFlowTrackingFlows.CREATE_PAGE_ARTICLE_REDLINK);
 					redlink.href = qs.toString();
 				});
 			});
