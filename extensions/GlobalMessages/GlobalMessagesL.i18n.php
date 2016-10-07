@@ -5149,6 +5149,7 @@ Bitte die normale Vorschau nutzen.',
 * CC-by-sa|CC-BY-SA: Creative Commons Attribution-ShareAlike
 * Bildzitat|Das Bild wird ausschließlich zur inhaltlichen Erläuterung genutzt',
 	'lockdb-wikifactory-error' => 'Ein Fehler ist aufgetreten: Konnte nicht speichern oder den Cache leeren. Die Datenbank ist unter Umständen nicht gesperrt. Bitte versuche es nochmal oder kontaktiere das Technik-Team.',
+	'locked' => 'gesperrt',
 ];
 
 $messages['de-ch'] = [
@@ -16941,6 +16942,7 @@ Ei [[Special:WhatLinksHere/$2|fullstendig liste]] er tilgjengeleg.',
 	'login_as_another' => 'Logg inn som en annen bruker',
 	'limit' => 'Grense',
 	'lockdb-wikifactory-error' => 'En feil oppstod. Lagring eller fjerning av cache mislykket. Databasen er kanskje ikke låst. Vennligst prøv igjen eller kontakt teknikkansvarlig.',
+	'locked' => 'låst',
 ];
 
 $messages['nov'] = [
