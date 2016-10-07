@@ -245,7 +245,7 @@ $messages['de'] = [
 	'hiderevision-desc' => 'Verbirgt aus juristischen Gründen einzelne Versionen vor allen Benutzern',
 	'group-oversight' => 'Oversighter',
 	'group-oversight-member' => 'Oversighter ',
-	'grouppage-oversight' => '{{ns:project}}:Oversight',
+	'grouppage-oversight' => 'w:Wikia:Oversight',
 	'hiderevision-prompt' => 'Zu entfernende Versionsnummer:',
 	'hiderevision-continue' => 'Weiter',
 	'hiderevision-text' => 'Dies darf \'\'\'ausschließlich\'\'\' in den folgenden Fällen geschehen:
@@ -410,7 +410,7 @@ $messages['fr'] = [
 	'hiderevision-desc' => 'Masque les modifications individuelles de tous les utilisateurs pour des motifs légaux, etc.',
 	'group-oversight' => 'Masqueurs de modifications',
 	'group-oversight-member' => '{{GENDER:$1|masqueur de modifications|masqueuse de modifications}}',
-	'grouppage-oversight' => '{{ns:project}}:Superviseur',
+	'grouppage-oversight' => 'w:c:communaute:Aide:Niveaux d\'accès utilisateur',
 	'hiderevision-prompt' => 'Numéro d’édition à supprimer :',
 	'hiderevision-continue' => 'Continuer',
 	'hiderevision-text' => 'Cette fonctionnalité doit être utilisée \'\'\'uniquement\'\'\' pour les cas suivants :
@@ -1334,7 +1334,7 @@ $messages['pl'] = [
 	'hiderevision-desc' => 'Pozwala ukryć pojedyncze zmiany przed wszystkimi użytkownikami np. ze względów prawnych.',
 	'group-oversight' => 'Rewizorzy',
 	'group-oversight-member' => 'Rewizor',
-	'grouppage-oversight' => '{{ns:project}}:Rewizorzy',
+	'grouppage-oversight' => 'w:c:spolecznosc:Help:Uprawnienia_grup_użytkowników',
 	'hiderevision-prompt' => 'Numer wersji do usunięcia:',
 	'hiderevision-continue' => 'Kontynuuj',
 	'hiderevision-text' => 'Funkcja powinna być użyta \'\'\'jedynie\'\'\' w następujących przypadkach:
@@ -2032,5 +2032,9 @@ $messages['zh-hant'] = [
 	'oversight-prev' => '最後一個之前的修訂版本',
 	'oversight-hidden' => '隱藏修訂',
 	'oversight-header' => '以下列示的是已經永久隱藏的修訂版本。請注意！洩漏這些訊息將會永遠喪失{{int:Oversight}}權限！',
+];
+
+$messages['es'] = [
+	'grouppage-oversight' => 'w:c:ayuda:Ayuda:Niveles_de_acceso_de_los_usuarios',
 ];
 

@@ -256,7 +256,7 @@ The original post and your summary will still appear in the wiki\'s history.',
 	'wall-topic-edit-cancel' => 'Cancel',
 	'group-threadmoderator' => 'Discussions Moderators',
 	'group-threadmoderator-member' => 'Discussions Moderator',
-	'grouppage-threadmoderator' => 'w:c:community:Help:Moderators',
+	'grouppage-threadmoderator' => '',
 	'right-walledit' => 'Can edit wall posts',
 	'right-wallarchive' => 'Can archive wall posts',
 	'right-wallremove' => 'Can remove wall threads',
@@ -1993,7 +1993,7 @@ Der Original-Post und deine Zusammenfassung bleiben in der Wiki-Historie sichtba
 	'wall-topic-edit-cancel' => 'Abbrechen',
 	'group-threadmoderator' => 'Diskussions-Moderatoren',
 	'group-threadmoderator-member' => 'Diskussions-Moderator',
-	'grouppage-threadmoderator' => 'w:c:community:Help:Moderatoren',
+	'grouppage-threadmoderator' => 'w:c:de.community:Hilfe:Moderatoren',
 ];
 
 $messages['diq'] = [
@@ -2387,7 +2387,7 @@ El mensaje original y tu resumen aparecerá en el historial del wiki.',
 	'wall-topic-edit-cancel' => 'Cancelar',
 	'group-threadmoderator' => 'Moderadores de discusiones',
 	'group-threadmoderator-member' => 'Moderador de discusiones',
-	'grouppage-threadmoderator' => 'w:c:comunidad:Ayuda:Moderadores',
+	'grouppage-threadmoderator' => 'w:c:comunidad:Ayuda:Niveles_de_acceso_de_los_usuarios',
 ];
 
 $messages['eu'] = [
@@ -2705,6 +2705,7 @@ Tätä ei voi peruuttaa.',
 	'wall-topic-edit-cancel' => 'Peruuta',
 	'group-threadmoderator-member' => 'Moderoija',
 	'group-threadmoderator' => 'Moderoijat',
+	'grouppage-threadmoderator' => 'w:c:yhteiso:Ohje:Moderoijat',
 ];
 
 $messages['fo'] = [
@@ -2988,7 +2989,7 @@ Le message original et votre résumé seront toujours visibles dans l’historiq
 	'wall-topic-edit-cancel' => 'Annuler',
 	'group-threadmoderator' => 'Modérateurs de discussions',
 	'group-threadmoderator-member' => 'Modérateur de discussions',
-	'grouppage-threadmoderator' => 'w:c:community:Help:Moderators',
+	'grouppage-threadmoderator' => 'w:c:communaute:Aide:Niveaux d\'accès utilisateur#Modérateurs',
 ];
 
 $messages['fy'] = [
@@ -3751,6 +3752,7 @@ $messages['it'] = [
 	'group-threadmoderator-member' => 'Moderatore',
 	'wall-message-not-found' => 'Impossibile trovare questo messaggio. Se si visualizza questo errore, contattare Fandom a [[Special:Contact]] e fornire quanti più dettagli possibile su come è possibile riprodurre questo bug. Grazie!',
 	'wall-message-staff-text' => 'Questo utente è un membro dello staff di Fandom',
+	'grouppage-threadmoderator' => 'w:it:Aiuto:Moderatori',
 ];
 
 $messages['ja'] = [
@@ -4001,6 +4003,7 @@ $messages['ja'] = [
 	'wall-topic-edit-cancel' => '中止',
 	'group-threadmoderator' => 'モデレーター',
 	'group-threadmoderator-member' => 'モデレーター',
+	'grouppage-threadmoderator' => 'w:c:community:ヘルプ:モデレーター',
 ];
 
 $messages['ka'] = [
@@ -4141,6 +4144,7 @@ $messages['ko'] = [
 	'wall-message-staff-text' => '이 사용자는 위키아의 스탭입니다.',
 	'group-threadmoderator-member' => '모더레이터',
 	'group-threadmoderator' => '모더레이터',
+	'grouppage-threadmoderator' => 'w:c:ko.community:도움말:모더레이터',
 ];
 
 $messages['krc'] = [
@@ -5613,6 +5617,7 @@ Oryginał wiadomości i twój komentarz wciąż pozostaną w historii wiki.',
 	'wall-topic-edit-cancel' => 'Anuluj',
 	'group-threadmoderator' => 'Moderatorzy dyskusji',
 	'group-threadmoderator-member' => 'Moderator dyskusji',
+	'grouppage-threadmoderator' => 'w:c:spolecznosc:Help:Uprawnienia_grup_użytkowników',
 ];
 
 $messages['ps'] = [
@@ -5918,6 +5923,7 @@ A publicação original e o teu sumário ainda serão visíveis no histórico da
 	'wall-topic-edit-cancel' => 'Cancelar',
 	'group-threadmoderator' => 'Moderadores',
 	'group-threadmoderator-member' => 'Moderador',
+	'grouppage-threadmoderator' => 'w:c:comunidade:Ajuda:Moderadores',
 ];
 
 $messages['pt-br'] = [
@@ -6119,6 +6125,7 @@ O post original e seu sumário ainda aparecerão no histórico da wikia.',
 	'wall-topic-edit-cancel' => 'Cancelar',
 	'group-threadmoderator-member' => 'Moderador',
 	'group-threadmoderator' => 'Moderadores',
+	'grouppage-threadmoderator' => 'w:c:comunidade:Ajuda:Moderadores',
 ];
 
 $messages['qu'] = [
@@ -6416,6 +6423,7 @@ $messages['ru'] = [
 	'wall-topic-edit-cancel' => 'Отмена',
 	'group-threadmoderator' => 'Модераторы форума',
 	'group-threadmoderator-member' => 'модератор форума',
+	'grouppage-threadmoderator' => 'w:c:ru.community:Справка:Уровни доступа участников',
 ];
 
 $messages['sco'] = [
@@ -7763,6 +7771,7 @@ Các bản gốc và tóm tắt của bạn vẫn sẽ xuất hiện trong lịc
 	'wall-topic-edit-cancel' => 'Hủy bỏ',
 	'group-threadmoderator-member' => 'Điều phối viên',
 	'group-threadmoderator' => 'Điều phối viên',
+	'grouppage-threadmoderator' => 'w:c:community:vi:Help:Điều_phối_viên',
 ];
 
 $messages['wa'] = [
@@ -8109,7 +8118,7 @@ $messages['zh-hans'] = [
 	'wall-topic-edit-cancel' => '取消',
 	'group-threadmoderator' => '话题版主',
 	'group-threadmoderator-member' => '话题版主',
-	'grouppage-threadmoderator' => 'w:c:community:Help:Moderators',
+	'grouppage-threadmoderator' => 'w:c:zh.community:Help:User_access_levels',
 ];
 
 $messages['zh-hant'] = [
@@ -8360,5 +8369,22 @@ $messages['zh-hant'] = [
 	'wall-topic-edit-cancel' => '取消',
 	'group-threadmoderator' => '話題版主',
 	'group-threadmoderator-member' => '話題版主',
+	'grouppage-threadmoderator' => 'w:c:zh.community:Help:User_access_levels',
+];
+
+$messages['zh'] = [
+	'grouppage-threadmoderator' => 'w:c:zh.community:Help:User_access_levels',
+];
+
+$messages['zh-hk'] = [
+	'grouppage-threadmoderator' => 'w:c:zh.community:Help:User_access_levels',
+];
+
+$messages['zh-tw'] = [
+	'grouppage-threadmoderator' => 'w:c:zh.community:Help:User_access_levels',
+];
+
+$messages['zh－tw'] = [
+	'grouppage-threadmoderator' => 'w:c:zh.community:Help:User_access_levels',
 ];
 

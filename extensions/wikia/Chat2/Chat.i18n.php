@@ -724,7 +724,7 @@ Wenn du dies für einen Fehler hältst oder möchtest, dass die Entscheidung üb
 	'right-chatmoderator' => 'Kann einen Benutzer aus dem [[Hilfe:Chat|Chat]] kicken/bannen',
 	'group-chatmoderator' => 'Chat-Moderatoren',
 	'group-chatmoderator-member' => 'Chat-Moderator',
-	'grouppage-chatmoderator' => 'w:c:de.community:Hilfe:Chat',
+	'grouppage-chatmoderator' => 'w:c:hilfe:Hilfe:Chat',
 	'group-bannedfromchat' => 'Aus dem Chat verbannt',
 	'group-bannedfromchat-member' => 'Aus dem Chat verbannt',
 	'grouppage-bannedfromchat' => 'w:c:de.community:Hilfe:Chat',
@@ -1197,7 +1197,7 @@ $messages['fr'] = [
 	'right-chatmoderator' => 'Peut bannir des utilisateurs du [[Help:Chat|tchat]]',
 	'group-chatmoderator' => 'Modérateurs du chat',
 	'group-chatmoderator-member' => '{{GENDER:$1|modérateur du tchat|modératrice du tchat}}',
-	'grouppage-chatmoderator' => 'w:c:aide:Aide:Tchat',
+	'grouppage-chatmoderator' => 'w:c:communaute:Aide:Niveaux d\'accès utilisateur#Modérateurs du tchat',
 	'group-bannedfromchat' => 'Bannis du tchat',
 	'group-bannedfromchat-member' => '{{GENDER:$1|banni du tchat|bannie du tchat}}',
 	'grouppage-bannedfromchat' => 'w:c:communaute:Aide:Tchat',
@@ -1755,6 +1755,8 @@ $messages['ja'] = [
 	'chat-browser-is-notsupported' => 'お使いのブラウザはサポートされていません。より快適にご利用いただくために、<a href="http://community.wikia.com/wiki/Help:Supported_browsers">最新のブラウザ</a>への変更をお勧めいたします。',
 	'chat-checkuser-join-action' => 'チャットに参加',
 	'chat-status-away' => '退席中',
+	'grouppage-bannedfromchat' => 'w:c:ja.community:ヘルプ:チャット',
+	'grouppage-chatmoderator' => 'w:c:ja.community:ヘルプ:チャット',
 ];
 
 $messages['ka'] = [
@@ -2550,6 +2552,8 @@ $messages['pl'] = [
 	'chat-browser-is-notsupported' => 'Twoja przeglądarka nie jest obsługiwana. Dla najlepszych rezultatów użyj <a href="http://spolecznosc.wikia.com/wiki/Pomoc:Wspierane_przegl%C4%85darki">nowszej przeglądarki</a>.',
 	'chat-checkuser-join-action' => 'Dołączył na czat',
 	'chat-status-away' => 'Zaraz wracam',
+	'grouppage-bannedfromchat' => 'w:c:spolecznosc:Help:Uprawnienia_grup_użytkowników',
+	'grouppage-chatmoderator' => 'w:c:spolecznosc:Help:Uprawnienia_grup_użytkowników',
 ];
 
 $messages['pms'] = [
@@ -2971,6 +2975,7 @@ $messages['ru'] = [
 	'chat-browser-is-notsupported' => 'Ваш браузер не поддерживается. Используйте <a href="http://community.wikia.com/wiki/Help:Supported_browsers">другой браузер или другую версию браузера</a>.',
 	'chat-checkuser-join-action' => 'Присоединиться',
 	'chat-status-away' => 'Отсутствует',
+	'grouppage-chatmoderator' => 'w:c:ru.community:Справка:Чат',
 ];
 
 $messages['sa'] = [
@@ -3549,6 +3554,8 @@ $messages['vi'] = [
 	'chat-browser-is-notsupported' => 'Trình duyệt của bạn không được hỗ trợ. Để trải nghiệm tốt nhất, sử dụng một <a href="http://community.wikia.com/wiki/Help:Supported_browsers">trình duyệt mới hơn</a>.',
 	'chat-checkuser-join-action' => 'Tham gia Tán gẫu',
 	'chat-status-away' => 'Vắng',
+	'grouppage-bannedfromchat' => 'w:c:vi:Help:Tán gẫu',
+	'grouppage-chatmoderator' => 'w:c:vi:Help:Tán gẫu',
 ];
 
 $messages['zh-hans'] = [
@@ -3635,6 +3642,7 @@ $messages['zh-hans'] = [
 	'chat-browser-is-notsupported' => '您的浏览器不支持。为了获得最佳体验，请使用<a href="http://community.wikia.com/wiki/Help:Supported_browsers">较新的浏览器</a>。',
 	'chat-checkuser-join-action' => '加入聊天',
 	'chat-status-away' => '不在',
+	'grouppage-chatmoderator' => 'w:c:zh.community:Help:Chat',
 ];
 
 $messages['zh-hant'] = [
@@ -3721,9 +3729,22 @@ $messages['zh-hant'] = [
 	'chat-browser-is-notsupported' => '	您的瀏覽器不支援。 要取得最佳體驗請使用 <a href="http://community.wikia.com/wiki/Help:Supported_browsers">新版的瀏覽器</a>。',
 	'chat-checkuser-join-action' => '已加入聊天',
 	'chat-status-away' => '不在座位',
+	'grouppage-chatmoderator' => 'w:c:zh.community:Help:Chat',
 ];
 
 $messages['cy'] = [
 	'chat-start-a-chat' => 'Dechrau Sgwrs',
+];
+
+$messages['zh'] = [
+	'grouppage-chatmoderator' => 'w:c:zh.community:Help:Chat',
+];
+
+$messages['zh-hk'] = [
+	'grouppage-chatmoderator' => 'w:c:zh.community:Help:Chat',
+];
+
+$messages['zh-tw'] = [
+	'grouppage-chatmoderator' => 'w:c:zh.community:Help:Chat',
 ];
 
