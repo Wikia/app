@@ -1307,6 +1307,7 @@ $messages['fa'] = [
 	'javascripttest-pagetext-skins' => 'پوسته‌ای را برای اجرای آزمایش‌ها انتخاب کنید:',
 	'javascripttest-qunit-intro' => '[$1 مستندات آزمایش] را در mediawiki.org ببینید.',
 	'javascripttest-qunit-heading' => 'مجموعه آزمایش QUnit جاوااسکریپت برای مدیاویکی',
+	'joinnow' => 'همکنون عضو شوید',
 ];
 
 $messages['ff'] = [
