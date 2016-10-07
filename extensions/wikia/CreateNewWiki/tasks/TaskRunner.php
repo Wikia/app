@@ -32,6 +32,7 @@ class TaskRunner {
 		$this->tasks[] = new SetCustomSettings( $taskContext );
 		$this->tasks[] = new SetTags( $taskContext );
 		$this->tasks[] = new StartPostCreationTasks( $taskContext );
+		$this->tasks[] = new EnableDiscussionsTask( $taskContext );
 	}
 
 	protected function getLoggerContext() {
