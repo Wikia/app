@@ -41,7 +41,7 @@ Try [[Special:Search|searching on the wiki]] for relevant new pages.',
 	'http-curl-error' => 'Error fetching URL: $1',
 	'http-host-unreachable' => 'Could not reach URL.',
 	'http-bad-status' => 'There was a problem during the HTTP request: $1 $2',
-	'historywarning' => '\'\'\'Warning:\'\'\' The page you are about to delete has a history with approximately $1 {{PLURAL:$1|revision|revisions}}:',
+	'historywarning' => '<div style="margin-top: -10px;" class="emptymwmsg mediawiki_historywarning"></div>',
 	'handheld.css' => '/* CSS placed here will affect handheld devices based on the skin configured in $wgHandheldStyle */',
 	'hours-abbrev' => '$1h',
 	'hours' => '{{PLURAL:$1|$1 hour|$1 hours}}',
@@ -2485,7 +2485,7 @@ $messages['de'] = [
 	'hidden-category-category' => 'Versteckte Kategorien',
 	'help' => 'Hilfe',
 	'history' => 'Versionen',
-	'history_short' => 'Versionen/Autoren',
+	'history_short' => 'Versionen',
 	'helppage' => 'Hilfe:Übersicht',
 	'hidetoc' => 'Verbergen',
 	'headline_sample' => 'Ebene-2-Überschrift',
@@ -8202,7 +8202,7 @@ Wellicht is die verwijderd of hernoemd.
 	'http-curl-error' => 'Fout bij het ophalen van URL: $1',
 	'http-host-unreachable' => 'De URL is niet bereikbaar.',
 	'http-bad-status' => 'Er is een probleem opgetreden bij het HTTP-verzoek: $1 $2',
-	'historywarning' => '\'\'\'Waarschuwing:\'\'\' de pagina die u wilt verwijderen heeft ongeveer $1 {{PLURAL:$1|versie|versies}}:',
+	'historywarning' => '\'\'\'Waarschuwing:\'\'\' de pagina die je wilt verwijderen heeft ongeveer $1 {{PLURAL:$1|versie|versies}}:',
 	'handheld.css' => '/* CSS die hier wordt geplaatst heeft alleen invloed op handheldapparaten gebaseerd op de skin die is ingesteld in $wgHandheldStyle */',
 	'hours-abbrev' => '$1u',
 	'hours' => '{{PLURAL:$1|$1 uur|$1 uur}}',
@@ -12559,5 +12559,13 @@ $messages['zu'] = [
 	'histfirst' => 'lokuqala',
 	'histlast' => 'ligcinileyo',
 	'hide' => 'Fihla',
+];
+
+$messages['zh'] = [
+	'history_short' => '历史纪录',
+];
+
+$messages['zh-cn'] = [
+	'history_short' => '沿革',
 ];
 
