@@ -270,7 +270,7 @@ var CreatePage = {
 		var title = new mw.Title.newFromText( decodeURIComponent( titleText ) ),
 			namespace = title.getNamespacePrefix().replace( ':', '' ),
 			visualEditorActive = $( 'html' ).hasClass( 've-activated'),
-			redLinkFlowName = CreatePage.getRedLinkFlowName();;
+			redLinkFlowName = CreatePage.getRedLinkFlowName();
 
 		CreatePage.redlinkParam = '&redlink=1';
 
@@ -300,20 +300,6 @@ var CreatePage = {
 		$( '.WikiaMenuElement .createpage' ).click(function() {
 			CreatePage.trackCreatePageStart(window.wgFlowTrackingFlows.CREATE_PAGE_CONTRIBUTE_BUTTON);
 			CreatePage.flowName = window.wgFlowTrackingFlows.CREATE_PAGE_CONTRIBUTE_BUTTON;
-		});
-
-		$( function() {
-			require(['wikia.querystring'], function(QueryString) {
-				// Create Page flow tracking, adding flow param in redlinks href.
-				// This parameter is added here to avoid reparsing all articles.
-				$( '#WikiaArticle').find( 'a.new' ).each(function(index, redlink) {
-					var qs = QueryString(redlink.href),
-						redLinkFlow = CreatePage.getRedLinkFlowName();
-
-					qs.setVal('flow', redLinkFlow);
-					redlink.href = qs.toString();
-				});
-			});
 		});
 
 		if ( window.WikiaEnableNewCreatepage ) {

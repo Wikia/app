@@ -1,49 +1,38 @@
-define(
-	'wikia.flowTracking.createPage',
-	['wikia.flowTracking', 'wikia.querystring', 'mw', 'wikia.document', 'wikia.window'],
-	function (flowTrack, QueryString, mw, document, window) {
-		'use strict';
+require([
+	'wikia.flowTracking.createPage', 'wikia.querystring', 'mw', 'jquery', 'wikia.window'
+], function (flowTrackingCreatePage, QueryString, mw, $, window) {
+	function init() {
+		// Create Page flow tracking, adding flow param in redlinks href.
+		// This parameter is added here to avoid reparsing all articles.
+		$( '#WikiaArticle').find( 'a.new' ).each(function(index, redlink) {
+			var qs = QueryString(redlink.href),
+				redLinkFlow = mw.config.get('wgNamespaceNumber') === -1
+					? window.wgFlowTrackingFlows.CREATE_PAGE_SPECIAL_REDLINK
+					: window.wgFlowTrackingFlows.CREATE_PAGE_ARTICLE_REDLINK;
 
-		var namespaceId = mw.config.get('wgNamespaceNumber'),
-			articleId = mw.config.get('wgArticleId');
+			qs.setVal('flow', redLinkFlow);
+			redlink.href = qs.toString();
+		});
+	}
 
-		function trackOnEditPageLoad(editor) {
+	function initVE() {
+		mw.hook('ve.activationComplete').add(function () {
+			flowTrackingCreatePage.trackOnEditPageLoad('visualeditor');
+		});
+
+		mw.hook('ve.deactivationComplete').add(function () {
 			var qs = new QueryString(),
-				// 'flow' is the parameter passed in the url if user has started a flow already
-				flowParam = qs.getVal('flow', false),
-				tracked = qs.getVal('tracked', false);
+				flow = qs.getVal('flow');
 
-			// Do not track if the step was tracked already
-			if (tracked) {
-				return;
+			if (flow) {
+				qs.removeVal('flow');
+				window.history.replaceState({}, '', qs.toString())
 			}
+		});
+	}
 
-			// Track only creating articles (wgArticleId=0) from namespace 0 (Main)
-			// IMPORTANT: on Special:CreatePage even after providing article title the namespace is set to -1 (Special Page)
-			if (namespaceId === 0 && articleId === 0) {
-				if (flowParam || document.referrer) {
-					flowTrack.trackFlowStep(flowParam, {editor: editor});
-				} else {
-					flowTrack.beginFlow(window.wgFlowTrackingFlows.CREATE_PAGE_DIRECT_URL, {editor: editor});
-					qs.setVal('flow', window.wgFlowTrackingFlows.CREATE_PAGE_DIRECT_URL);
-				}
-			}
-
-			// For Special:CreatePage
-			if (namespaceId === -1 && articleId === 0) {
-				if (flowParam || document.referrer) {
-					flowTrack.trackFlowStep(flowParam, {editor: editor});
-				} else {
-					// TODO: direct-url to Special:CreatePage (WW-351)
-				}
-			}
-
-			// set 'tracked' query param to prevent tracking the same event when page is reloaded
-			qs.setVal('tracked', 'true');
-			window.history.replaceState({}, '', qs.toString());
-		}
-
-		return {
-			trackOnEditPageLoad: trackOnEditPageLoad
-		}
+	$(function(){
+		init();
+		initVE();
 	});
+});
