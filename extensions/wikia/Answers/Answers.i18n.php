@@ -448,7 +448,7 @@ $messages['de'] = [
 	'answered_by' => 'Bearbeitet von',
 	'unregistered' => 'Nicht registriert',
 	'anonymous_edit_points' => '$1 {{PLURAL:$1|Helfer|Helfer}}',
-	'edit_points' => '{{PLURAL:$1|Bearbeitungspunkt|Bearbeitungspunkte}}',
+	'edit_points' => '{{PLURAL:$1|Punkt|Punkte}}',
 	'ask_a_question' => 'Gib deine Frage ein...',
 	'ask_a_question-widget' => 'Gib deine Frage ein...',
 	'in_category' => '...in der Kategorie',
@@ -675,6 +675,7 @@ $messages['es'] = [
 	'ask_button' => 'Pregunta',
 	'ask_friends' => 'Pide ayuda a tus amigos para responder esto:',
 	'ask_thanks' => '¡Gracias por la magnífica pregunta!',
+	'edit_points' => '{{PLURAL:$1|punto de edición|puntos de edición}}',
 ];
 
 $messages['fi'] = [
@@ -1256,7 +1257,7 @@ $messages['it'] = [
 	'answered_by' => 'Risposta data da',
 	'unregistered' => 'Non registrato',
 	'anonymous_edit_points' => '$1 {{PLURAL:$1|collaboratore|collaboratori}}',
-	'edit_points' => '{{PLURAL:$1|modifica punto|modifica punti}}',
+	'edit_points' => '{{PLURAL:$1|punto modifica|punti modifica}}',
 	'ask_a_question' => 'Fai una domanda...',
 	'ask_a_question-widget' => 'Fai una domanda...',
 	'in_category' => '...nella categoria',
@@ -1405,6 +1406,7 @@ $messages['ja'] = [
 	'ask_button' => '質問する',
 	'createaccount-captcha' => '下の文字列を入力してください',
 	'custom_category' => 'カスタムカテゴリ',
+	'edit_points' => '編集ポイント',
 ];
 
 $messages['lb'] = [
@@ -1902,7 +1904,7 @@ $messages['nl'] = [
 	'answered_by' => 'Beantwoord door',
 	'unregistered' => 'Niet-geregistreerd',
 	'anonymous_edit_points' => '$1 {{PLURAL:$1|helper|helpers}}',
-	'edit_points' => '{{PLURAL:$1|bewerkingspunt|bewerkingspuntent}}',
+	'edit_points' => '{{PLURAL:$1|bewerk punt|bewerk punten}}',
 	'ask_a_question' => 'Stel een vraag...',
 	'ask_a_question-widget' => 'Stel een vraag...',
 	'in_category' => '...in categorie',
@@ -2105,6 +2107,7 @@ $messages['pl'] = [
 	'categorize' => 'Dodaj kategorię',
 	'categorize_help' => 'Jedna kategoria na linię',
 	'a' => 'Odpowiedź:',
+	'edit_points' => '{{PLURAL:$1|punkt edycji|punkty edycji|punktów edycji}}',
 ];
 
 $messages['pms'] = [
@@ -2540,6 +2543,7 @@ $messages['no'] = [
 	'category' => 'Kategorinavn',
 	'createaccount-captcha' => 'Vennligst skriv ordet under',
 	'custom_category' => 'Egendefinert kategori',
+	'edit_points' => '{{PLURAL:$1|redigeringspoeng|redigeringspoeng}}',
 ];
 
 $messages['zh-hant'] = [
@@ -2562,6 +2566,7 @@ $messages['ko'] = [
 	'ask_button' => '질문하기',
 	'background_color' => '배경색',
 	'createaccount-captcha' => '아래에 단어를 입력하세요',
+	'edit_points' => '포인트',
 ];
 
 $messages['bg'] = [

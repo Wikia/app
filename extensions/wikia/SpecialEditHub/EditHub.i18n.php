@@ -65,5 +65,6 @@ $messages['pl'] = [
 	'edit-hub-tooltip-current-date' => 'Dzisiejsza data',
 	'edit-hub-tooltip-in-progress' => 'Nieopublikowany',
 	'edit-hub-tooltip-published' => 'Opublikowany',
+	'edithub' => 'Edytuj Hub',
 ];
 

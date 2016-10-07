@@ -1141,6 +1141,7 @@ Tu pote <a href="$4">cancellar le subscription</a> al cambios in iste lista.',
 
 $messages['it'] = [
 	'toplists-create-button-msg' => 'Crea una lista',
+	'edittoplist' => 'Modifica Lista Top 10',
 ];
 
 $messages['ja'] = [
@@ -1239,6 +1240,7 @@ $messages['ko'] = [
 	'toplists-weeks' => '$1주',
 	'toplists-oasis-only' => '모노북 스킨에는 상위 10 목록이 적용되지 않습니다. 이 기능을 체험하고 싶으시다면 스킨을 위키아 스킨으로 바꿔주세요.',
 	'createtoplist' => '상위 10 목록 생성하기',
+	'edittoplist' => '상위 10 목록 편집',
 ];
 
 $messages['ksh'] = [
@@ -2542,7 +2544,7 @@ $messages['zh-hans'] = [
 	'right-toplists-edit-item' => '编辑前10列表页面的项',
 	'right-toplists-delete-item' => '从前10列表页面删除项',
 	'createtoplist' => '创建新的排行榜单',
-	'edittoplist' => '编辑前10列表',
+	'edittoplist' => '编辑排行榜单',
 	'toplists-category' => '前10列表',
 	'toplists-error-invalid-title' => '提供的文本无效。',
 	'toplists-error-invalid-picture' => '当前选中图片无效。',
@@ -2628,7 +2630,7 @@ $messages['zh-hant'] = [
 	'right-toplists-edit-item' => '編輯於前 10 排行榜頁面中的項目',
 	'right-toplists-delete-item' => '自前 10 排行榜頁面中刪除項目',
 	'createtoplist' => '創建新的排行榜單',
-	'edittoplist' => '編輯前 10 排行榜',
+	'edittoplist' => '编辑排行榜單',
 	'toplists-category' => '前 10 排行榜',
 	'toplists-error-invalid-title' => '提供的文字無效。',
 	'toplists-error-invalid-picture' => '選擇的圖片無效。',
@@ -2710,15 +2712,18 @@ $messages['zh-hant'] = [
 $messages['zh'] = [
 	'action-toplists-create-edit-list' => '创建和编辑排行榜单页面',
 	'createtoplist' => '创建新的排行榜单',
+	'edittoplist' => '编辑排行榜单',
 ];
 
 $messages['zh-hk'] = [
 	'action-toplists-create-edit-list' => '建立與編輯排行榜頁面',
 	'createtoplist' => '創建新的排行榜單',
+	'edittoplist' => '编辑排行榜單',
 ];
 
 $messages['zh-tw'] = [
 	'action-toplists-create-edit-list' => '建立與編輯排行榜頁面',
 	'createtoplist' => '創建新的排行榜單',
+	'edittoplist' => '编辑排行榜單',
 ];
 
