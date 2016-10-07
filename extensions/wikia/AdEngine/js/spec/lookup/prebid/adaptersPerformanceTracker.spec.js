@@ -91,6 +91,17 @@ describe('ext.wikia.adEngine.lookup.prebid.adaptersPerformanceTracker', function
 					return '100x100';
 				}
 			},
+			completeAppNexusBid: {
+				bidder: 'appnexus',
+				complete: true,
+				pbMg: '5.00',
+				getStatusCode: function () {
+					return 1;
+				},
+				getSize: function () {
+					return '100x100';
+				}
+			},
 			emptyAppNexusBid: {
 				bidder: 'appnexus',
 				getStatusCode: function () {
@@ -279,6 +290,37 @@ describe('ext.wikia.adEngine.lookup.prebid.adaptersPerformanceTracker', function
 				}
 			},
 			message: 'if no bids for one bidder are returned map stays untouched'
+		}, {
+			performanceMap: {
+				appnexus: {
+					TOP_LEADERBOARD: 'NO_RESPONSE',
+					TOP_RIGHT_BOXAD: 'NO_RESPONSE'
+				},
+				indexExchange: {
+					TOP_LEADERBOARD: 'NO_RESPONSE'
+				}
+			},
+			allBids: {
+				TOP_LEADERBOARD: {
+					bids: [
+						mocks.completeAppNexusBid
+					]
+				}, TOP_RIGHT_BOXAD: {
+					bids: [
+						mocks.correctAppNexusBid
+					]
+				}
+			},
+			expected: {
+				appnexus: {
+					TOP_LEADERBOARD: 'USED',
+					TOP_RIGHT_BOXAD: '100x100;0.00'
+				},
+				indexExchange: {
+					TOP_LEADERBOARD: 'NO_RESPONSE'
+				}
+			},
+			message: 'rendered bid is tracked as used'
 		}].forEach(function (testCase) {
 			var result;
 

@@ -6,7 +6,8 @@ define('ext.wikia.adEngine.lookup.prebid.adaptersPerformanceTracker', [
 
 	var emptyResponseMsg = 'EMPTY_RESPONSE',
 		notRespondedMsg = 'NO_RESPONSE',
-		responseErrorCode = 2;
+		responseErrorCode = 2,
+		usedMsg = 'USED';
 
 	function setupPerformanceMap(skin, adapters) {
 		var biddersPerformanceMap = {};
@@ -76,6 +77,8 @@ define('ext.wikia.adEngine.lookup.prebid.adaptersPerformanceTracker', [
 	function getParamsFromBidForTracking(bid) {
 		if (bid.getStatusCode() === responseErrorCode) {
 			return emptyResponseMsg;
+		} if (bid.complete) {
+			return usedMsg;
 		} else {
 			return [bid.getSize(), bid.pbMg].join(';');
 		}
