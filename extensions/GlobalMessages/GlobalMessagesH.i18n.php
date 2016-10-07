@@ -100,7 +100,7 @@ Try [[Special:Search|searching on the wiki]] for relevant new pages.',
 	'hubs' => 'Hubs',
 	'home' => 'Home',
 	'helpfaq' => 'Help & FAQ',
-	'highest_ratings' => 'Highest ratings',
+	'highest_ratings' => 'Highest voted',
 	'hub-Entertainment' => 'Entertainment',
 	'hub-Gaming' => 'Video Games',
 	'hub-Video_Games' => 'Video Games',
@@ -2947,7 +2947,7 @@ Prueba a [[Special:Search|buscar en el wiki]] nuevas páginas relevantes.',
 	'htmlform-selectorother-other' => 'Otro',
 	'home' => 'Portada',
 	'helpfaq' => 'Ayuda y preguntas frecuentes',
-	'highest_ratings' => 'Mejor puntuados',
+	'highest_ratings' => 'Lo más votado',
 	'hub-Wikia' => 'Fandom',
 	'hidebots' => 'Ocultar bots',
 	'hidesome' => 'Ocultar Algo',
@@ -3177,6 +3177,7 @@ $messages['fa'] = [
 	'htmlform-reset' => 'خنثی کردن تغییرات',
 	'htmlform-selectorother-other' => 'دیگر',
 	'hidebots' => 'نهفتن ربات‌ها',
+	'highest_ratings' => 'بیشترین امتیاز',
 ];
 
 $messages['ff'] = [
@@ -3388,7 +3389,7 @@ Essayez de [[Special:Search|rechercher sur le wiki]] pour trouver des pages en r
 	'htmlform-selectorother-other' => 'Autre',
 	'home' => 'Accueil',
 	'helpfaq' => 'Aide et FAQ',
-	'highest_ratings' => 'Les meilleurs notes',
+	'highest_ratings' => 'Les mieux notées',
 	'hub-Wikia' => 'Fandom',
 	'hidebots' => 'Masquer les robots',
 ];
@@ -5091,6 +5092,7 @@ Legenda: \'\'\'({{int:cur}})\'\'\' = differenze con la versione attuale, \'\'\'(
 	'htmlform-reset' => 'Annulla modifiche',
 	'htmlform-selectorother-other' => 'Altro',
 	'hub-Wikia' => 'Fandom',
+	'highest_ratings' => 'Valutazioni migliori',
 ];
 
 $messages['iu'] = [
