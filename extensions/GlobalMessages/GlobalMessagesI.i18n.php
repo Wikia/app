@@ -6,8 +6,7 @@ $messages['en'] = [
 	'index-category' => 'Indexed pages',
 	'internalerror' => 'Internal error',
 	'internalerror_info' => 'Internal error: $1',
-	'invalidemailaddress' => 'The e-mail address cannot be accepted as it appears to have an invalid format.
-Please enter a well-formatted address or empty that field.',
+	'invalidemailaddress' => 'Please enter a valid e-mail address.',
 	'italic_sample' => 'Italic text',
 	'italic_tip' => 'Italic text',
 	'image_sample' => 'Example.jpg',
@@ -37,7 +36,7 @@ For optimal security, img_auth.php is disabled.',
 	'imgfile' => 'file',
 	'imagelinks' => 'File usage',
 	'iteminvalidname' => 'Problem with item \'$1\', invalid name...',
-	'invert' => 'Invert selection',
+	'invert' => 'Exclude namespace',
 	'isredirect' => 'redirect page',
 	'istemplate' => 'transclusion',
 	'isimage' => 'file link',
@@ -5046,7 +5045,7 @@ $messages['de'] = [
 	'index-category' => 'Indizierte Seiten',
 	'internalerror' => 'Interner Fehler',
 	'internalerror_info' => 'Interner Fehler: $1',
-	'invalidemailaddress' => 'Die E-Mail-Adresse wird nicht akzeptiert, weil sie ein ungültiges Format (eventuell ungültige Zeichen) zu haben scheint. Bitte gib eine korrekte Adresse ein oder leere das Feld.',
+	'invalidemailaddress' => 'Die E-Mail-Adresse wird nicht akzeptiert, weil sie ein ungültiges Format (eventuell ungültige Zeichen) zu haben scheint. Bitte gib eine korrekte Adresse ein.',
 	'italic_sample' => 'Kursiver Text',
 	'italic_tip' => 'Kursiver Text',
 	'image_sample' => 'Beispiel.jpg',
@@ -5205,6 +5204,7 @@ Diese auf dem lokalen Rechner speichern und danach hier hochladen.',
 	'imagereverted' => 'Das Zurücksetzen auf eine vorherige Version war erfolgreich. <strong>Es kann einige Minuten dauern, bis die Änderung sichtbar wird.</strong>',
 	'insertimage' => 'Bild einfügen',
 	'irc' => 'Echtzeit-Hilfe',
+	'its_easy' => '...einfach und kostenlos',
 ];
 
 $messages['de-ch'] = [
@@ -6057,8 +6057,8 @@ $messages['es'] = [
 	'index-category' => 'Páginas indexadas',
 	'internalerror' => 'Error interno',
 	'internalerror_info' => 'Error interno: $1',
-	'invalidemailaddress' => 'La dirección electrónica no puede ser aceptada, pues parece que tiene un formato no válido.
-Por favor, escribe una dirección en el formato adecuado o deja el campo en blanco.',
+	'invalidemailaddress' => 'La dirección de correo electrónico no puede ser aceptada, ya que no tiene un formato válido.
+Por favor, introduzca una dirección válida.',
 	'italic_sample' => 'Texto en cursiva',
 	'italic_tip' => 'Texto en cursiva',
 	'image_sample' => 'Ejemplo.jpg',
@@ -6218,6 +6218,7 @@ No hay un directorio temporal.',
 	'imgmultigo' => '¡Ir!',
 	'imgmultigoto' => 'Ir a la página $1',
 	'intentionallyblankpage' => 'Esta pagina está en blanco de manera intencionada.',
+	'its_easy' => '...es fácil y gratis',
 ];
 
 $messages['et'] = [
@@ -6815,6 +6816,7 @@ https://www.mediawiki.org/wiki/Manual:Image_Authorization را ببینید.',
 	'iranian-calendar-m12' => 'اسفند',
 	'intentionallyblankpage' => 'این صفحه به طور عمدی خالی گذاشته شده است.',
 	'insertimage' => 'درج‌کردن تصویر',
+	'its_easy' => '...این کار ساده و مجانی است',
 ];
 
 $messages['ff'] = [
@@ -6825,7 +6827,7 @@ $messages['fi'] = [
 	'index-category' => 'Indeksoidut sivut',
 	'internalerror' => 'Sisäinen virhe',
 	'internalerror_info' => 'Sisäinen virhe: $1',
-	'invalidemailaddress' => 'Sähköpostiosoitetta ei voida hyväksyä, koska se ei ole oikeassa muodossa. Ole hyvä ja anna oikea sähköpostiosoite tai jätä kenttä tyhjäksi.',
+	'invalidemailaddress' => 'Ole hyvä ja laita toiminnassa oleva sähköpostiosoite.',
 	'italic_sample' => 'Kursivoitu teksti',
 	'italic_tip' => 'Kursivointi',
 	'image_sample' => 'Esimerkki.jpg',
@@ -6975,6 +6977,7 @@ Tallenna tiedot koneellesi ja tuo ne tällä sivulla.',
 	'imagereverted' => 'Palautus aiempaan versioon onnistui. <strong>Tällä muutoksella voi kestää jopa 2 minuuttia näkyä.</strong>',
 	'insertimage' => 'Sisällytä kuva',
 	'irc' => 'Reaaliaikaista wikiapua',
+	'its_easy' => '...se on helppoa ja ilmaista',
 ];
 
 $messages['fiu-vro'] = [
@@ -7185,8 +7188,7 @@ $messages['fr'] = [
 	'index-category' => 'Pages indexées',
 	'internalerror' => 'Erreur interne',
 	'internalerror_info' => 'Erreur interne : $1',
-	'invalidemailaddress' => 'Cette adresse courriel ne peut pas être acceptée car elle semble avoir un format incorrect.
-Entrez une adresse bien formatée ou laissez ce champ vide.',
+	'invalidemailaddress' => 'Veuillez saisir une adresse e-mail valide.',
 	'italic_sample' => 'Texte italique',
 	'italic_tip' => 'Texte italique',
 	'image_sample' => 'Exemple.jpg',
@@ -7337,13 +7339,14 @@ Un dossier temporaire est manquant.',
 	'imagemaxsize' => 'Taille maximale des images :<br />\'\'(pour les pages de description de fichier)\'\'',
 	'imagelisttext' => 'Voici une liste de \'\'\'$1\'\'\' fichier{{PLURAL:$1||s}} classée $2.',
 	'ilsubmit' => 'Rechercher',
-	'invalidateemail' => 'Annuler la confirmation de l’adresse de courriel',
+	'invalidateemail' => 'Annuler la confirmation de l’adresse e-mail',
 	'imgmultipageprev' => '← page précédente',
 	'imgmultipagenext' => 'page suivante →',
 	'imgmultigo' => 'Accéder !',
 	'imgmultigoto' => 'Aller à la page $1',
 	'intentionallyblankpage' => 'Cette page est laissée intentionellement vide.',
 	'irc' => 'Aide en ligne',
+	'its_easy' => '...c\'est facile et gratuit',
 ];
 
 $messages['frc'] = [
@@ -10875,7 +10878,7 @@ $messages['it'] = [
 	'index-category' => 'Pagine indicizzate',
 	'internalerror' => 'Errore interno',
 	'internalerror_info' => 'Errore interno: $1',
-	'invalidemailaddress' => 'L\'indirizzo e-mail indicato ha un formato non valido. Inserire un indirizzo valido o svuotare la casella.',
+	'invalidemailaddress' => 'L\'indirizzo e-mail indicato ha un formato non valido. Inserire un indirizzo valido.',
 	'italic_sample' => 'Corsivo',
 	'italic_tip' => 'Corsivo',
 	'image_sample' => 'Esempio.jpg',
@@ -11193,8 +11196,7 @@ $messages['ja'] = [
 	'index-category' => '検索エンジンに収集されるページ',
 	'internalerror' => '内部エラー',
 	'internalerror_info' => '内部エラー：$1',
-	'invalidemailaddress' => '入力されたメールアドレスが正しい形式に従っていないため、受け付けられません。
-正しい形式で入力し直すか、メールアドレス欄を空にしておいてください。',
+	'invalidemailaddress' => '有効なメールアドレスを入力してください。',
 	'italic_sample' => '斜体',
 	'italic_tip' => '斜体',
 	'image_sample' => 'サンプル.jpg',
@@ -17735,6 +17737,7 @@ For best tryggleik, er img_auth.php sett ut av funksjon.',
 	'imagereverted' => 'Tilbakestilling til tidligere versjon var vellykket. <strong>Denne endring kan ta opp til to mintter før den er synlig.</strong>',
 	'insertimage' => 'Sett inn bilde',
 	'irc' => 'Live wiki-hjelp',
+	'its_easy' => '...det er enkelt og gratis',
 ];
 
 $messages['nov'] = [
@@ -20307,6 +20310,7 @@ $messages['ru'] = [
 	'iranian-calendar-m12' => 'Эсфанд',
 	'intentionallyblankpage' => 'Эта страница намеренно оставлена пустой',
 	'insertimage' => 'Вставить фото',
+	'its_easy' => '...это просто и бесплатно',
 ];
 
 $messages['rue'] = [
@@ -22958,7 +22962,7 @@ För optimal säkerhet, har img_auth.php blivit avaktiverad.',
 	'iteminvalidname' => 'Problem med sidan \'$1\', ogiltigt namn...',
 	'invert' => 'Uteslut vald namnrymd',
 	'isredirect' => 'omdirigeringssida',
-	'istemplate' => 'inkluderad som mall',
+	'istemplate' => 'includering',
 	'isimage' => 'fillänk',
 	'ipadressorusername' => 'IP-adress eller användarnamn:',
 	'ipbexpiry' => 'Varaktighet:',
