@@ -8275,7 +8275,7 @@ $messages['es'] = [
 	'moredotdotdot' => 'Más...',
 	'mypage' => 'Mi página',
 	'mytalk' => 'Discusión',
-	'mainpage' => 'Página principal',
+	'mainpage' => 'Portada',
 	'mainpage-description' => 'Página principal',
 	'missing-article' => 'La base de datos no encuentra el texto de una página que debería hallarse, llamada «$1» $2.
 

@@ -483,7 +483,7 @@ $messages['de'] = [
 	'recreate-moveddeleted-warn-notice' => '\'\'\'Hinweis:\'\'\' Du erstellst eine Seite, die zuvor gelöscht wurde. [Mehr Informationen]',
 	'restore-edits-notice' => 'Willkommen zurück! Wir haben einige Änderungen wiederhergestellt, die du nicht veröffentlicht hattest. <a class=\'notice-action restoreeditlink\'>Meine Änderungen verwerfen und eine neue Bearbeitung beginnen.</a>',
 	'restore-edits-diff-notice' => 'Willkommen zurück! Wir haben einige Änderungen wiederhergestellt, die du nicht veröffentlicht hattest. Allerdings ist seitdem die Seite aktualisiert worden. Was möchtest du tun?: <a class=\'notice-action restoreeditlink\'>Meine Änderungen verwerfen und mit der aktuellen Textversion beginnen</a> oder <a class=\'notice-action difflink\'>einen Vergleich der Änderungen mit der aktuellen Seite ansehen.</a>',
-	'mainpagewarning-notice' => 'Mehr über [[w:c:community:Help:Main_page|das Bearbeiten der Hauptseite]] erfahren.',
+	'mainpagewarning-notice' => 'Mehr über [[w:c:de.community:Hilfe:Hauptseite|das Bearbeiten der Hauptseite]] erfahren.',
 	'explainconflict-notice' => '\'\'\'Warnung!\'\'\' Jemand hat diese Seite geändert, seit du begonnen hast, sie zu bearbeiten! [Mehr Informationen]',
 	'prefs-general' => 'Allgemein',
 	'prefs-starting-an-edit' => 'Bearbeitung beginnen',
@@ -757,7 +757,7 @@ $messages['fr'] = [
 	'recreate-moveddeleted-warn-notice' => '\'\'\'Note :\'\'\' vous êtes en train de recréer une page qui a été précédemment supprimée. [Plus d’infos]',
 	'restore-edits-notice' => 'Bienvenue ! Nous avons restauré certaines modifications que vous n’avez pas mises en ligne. <a class=\'notice-action restoreeditlink\'>Supprimez mes modifications et recommencer</a>',
 	'restore-edits-diff-notice' => 'Bienvenue ! Nous avons restauré certaines modifications que vous n’avez pas mises en ligne. Toutefois, la page a été mise à jour depuis. Que souhaitez-vous faire : <a class=\'notice-action restoreeditlink\'>Supprimer mes modifications et commencer avec la dernière version à date</a> or <a class=\'notice-action difflink\'>Afficher une comparaison des modifications avec la dernière version à date</a>',
-	'mainpagewarning-notice' => 'En savoir plus sur [[w:c:community:Help:Main_page|la modification de la page principale.]]',
+	'mainpagewarning-notice' => 'En savoir plus sur [[w:c:aide:Aide:Page d\'accueil|la modification de la page d\'accueil]].',
 	'explainconflict-notice' => '\'\'\'Attention !\'\'\' Quelqu’un d’autre a modifié cette page depuis que vous avez commencé à la modifier ! [Plus d’informations]',
 	'prefs-general' => 'Général',
 	'prefs-starting-an-edit' => 'Commencer à modifier',
@@ -1203,6 +1203,7 @@ $messages['ja'] = [
 	'tog-forceeditsummary' => '要約欄が空欄の場合に警告する',
 	'editpagelayout-preview-label-desktop' => 'PC',
 	'editpagelayout-preview-label-mobile' => 'モバイル',
+	'mainpagewarning-notice' => '[[w:c:ja.community:ヘルプ:メインページ|メインページの編集]]についてもっと詳しく知る。',
 ];
 
 $messages['km'] = [
@@ -1294,6 +1295,7 @@ $messages['ko'] = [
 	'tog-forceeditsummary' => '편집 요약을 쓰지 않았을 때 알려주기',
 	'editpagelayout-preview-label-desktop' => '데스크톱',
 	'editpagelayout-preview-label-mobile' => '모바일',
+	'mainpagewarning-notice' => '대문 편집에 대한 더 많은 정보는 이곳을 참고하세요: [[w:c:ko.community:도움말:대문|도움말:대문]]',
 ];
 
 $messages['lb'] = [
@@ -1728,7 +1730,7 @@ $messages['pl'] = [
 	'recreate-moveddeleted-warn-notice' => '\'\'\'Uwaga:\'\'\' Odtwarzasz stronę, która została wcześniej usunięta. [Więcej informacji]',
 	'restore-edits-notice' => 'Witamy ponownie! Przywróciliśmy część zmian, które nie zostały opublikowane. <a class=\'notice-action restoreeditlink\'>Anuluj moje zmiany i rozpocznij edytowanie na nowo</a>',
 	'restore-edits-diff-notice' => 'Witamy ponownie! Przywróciliśmy część zmian, które nie zostały opublikowane. Jednak strona była edytowana w tym czasie. <a class=\'notice-action restoreeditlink\'>Anulować moje zmiany i rozpocząć edytowanie na nowo w obecnej wersji</a> czy <a class=\'notice-action difflink\'>zobaczyć porównanie zmian z najnowszą wersją</a>.',
-	'mainpagewarning-notice' => 'Dowiedz się więcej o [[w:c:community:Help:Main_page|edytowaniu strony głównej.]]',
+	'mainpagewarning-notice' => 'Dowiedz się więcej o [[w:c:spolecznosc:Pomoc:Strona_główna|edytowaniu strony głównej.]]',
 	'explainconflict-notice' => '\'\'\'Uwaga!\'\'\' Ktoś inny zmienił tą stronę od czasu rozpoczęcia edycji. [Więcej]',
 	'prefs-general' => 'Ogólne',
 	'prefs-starting-an-edit' => 'Rozpoczęcie edytowania',
@@ -2085,7 +2087,7 @@ $messages['ru'] = [
 	'recreate-moveddeleted-warn-notice' => '\'\'\'Примечание.\'\'\' Вы пытаетесь создать страницу, которая ранее удалялась. [Подробнее]',
 	'restore-edits-notice' => 'С возвращением! Ваши правки, которые не были опубликованы, были восстановлены. <a class=\'notice-action restoreeditlink\'>Удалить мои изменения и начать новое редактирование</a>',
 	'restore-edits-diff-notice' => 'С возвращением! Правки, которые не были опубликованы, были восстановлены. Однако с тех пор была обновлена страница. Вы хотите: <a class=\'notice-action restoreeditlink\'>удалить изменения и начать с последнего варианта текста</a> или <a class=\'notice-action difflink\'>сравнить изменения с момента обновления страницы</a>',
-	'mainpagewarning-notice' => 'Узнайте больше о [[w:c:community:Help:Main_page|редактировании Заглавной страницы.]]',
+	'mainpagewarning-notice' => 'Узнайте больше о [[w:c:ru.community:Справка:Заглавная страница|редактировании Заглавной страницы.]]',
 	'explainconflict-notice' => '"\'Внимание!"\' Кто-то отредактировал эту страницу, пока вы редактировали ее! [Подробнее]',
 	'prefs-general' => 'Общее',
 	'prefs-starting-an-edit' => 'Начало редактирования',
@@ -2489,7 +2491,7 @@ $messages['zh-hans'] = [
 	'titleprotectedwarning-notice' => '\'\'\'注：\'\'\' 本页面已被锁定，只有特定用户（管理员、注册用户）可以创建。[详细内容]',
 	'recreate-moveddeleted-warn-notice' => '\'\'\'注：\'\'\'您正在重新创建一个已删除页面。[详细内容]',
 	'restore-edits-notice' => '欢迎回来！我们保存了一些您尚未发布的更改。<a class=\'notice-action restoreeditlink\'>删除我的更改，开始新的编辑</a>',
-	'mainpagewarning-notice' => '了解更多关于[[w:c:community:Help:Main_page|编辑主页]]的内容。',
+	'mainpagewarning-notice' => '了解更多关于[[w:c:zh.community:Help:Main_page|编辑主页]]的内容。',
 	'explainconflict-notice' => '\'\'\'警告!\'\'\'其他用户在您开始编辑后已对此页做出了改动！[详细信息]',
 	'prefs-general' => '简单介绍',
 	'prefs-starting-an-edit' => '开始编辑',
@@ -2502,5 +2504,21 @@ $messages['zh-hans'] = [
 	'tog-forceeditsummary' => '在我未填写编辑概要时提示我',
 	'editpagelayout-preview-label-desktop' => '桌面',
 	'editpagelayout-preview-label-mobile' => '行動裝置',
+];
+
+$messages['zh'] = [
+	'mainpagewarning-notice' => '了解更多关于[[w:c:zh.community:Help:Main_page|编辑主页]]的内容。',
+];
+
+$messages['zh-hant'] = [
+	'mainpagewarning-notice' => '瞭解更多關於[[w:c:zh.community:Help:Main_page|編輯首頁]]的內容。',
+];
+
+$messages['zh-hk'] = [
+	'mainpagewarning-notice' => '瞭解更多關於[[w:c:zh.community:Help:Main_page|編輯首頁]]的內容。',
+];
+
+$messages['zh-tw'] = [
+	'mainpagewarning-notice' => '瞭解更多關於[[w:c:zh.community:Help:Main_page|編輯首頁]]的內容。',
 ];
 
