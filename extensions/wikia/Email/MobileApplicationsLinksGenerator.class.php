@@ -44,13 +44,13 @@ class MobileApplicationsLinksGenerator {
 	 *
 	 * @param string $storeLanguage - language for localized store
 	 *
-	 * @return array - may contain 0, 1 or 2 links.
+	 * @return array - currently will contains 2 elements, link for app store and google play
 	 */
 	public function generate( $storeLanguage ) {
 		global $wgMemc;
 
 		$mobileApplicationsLinks = false;
-//			$wgMemc->get( $this->createCacheKeyForMobileApplicationsLinks() );
+			$wgMemc->get( $this->createCacheKeyForMobileApplicationsLinks() );
 
 		if ( is_bool( $mobileApplicationsLinks ) ) {
 			$mobileApplicationsLinks = [];
