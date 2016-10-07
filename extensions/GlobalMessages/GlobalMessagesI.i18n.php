@@ -6073,9 +6073,9 @@ Consulte https://www.mediawiki.org/wiki/Manual:Image_Authorization.',
 	'img-auth-isdir' => 'Estás tratando de acceder a un directorio «$1».
 Solo se permite el acceso a los archivos.',
 	'img-auth-streaming' => 'Streaming «$1».',
-	'img-auth-public' => 'La función de img_auth.php es mostrar archivos desde una wiki privada.
-Esta wiki está configurada como pública.
-Para óptima seguridad, img_auth.php está desactivado.',
+	'img-auth-public' => 'La función de img_auth.php es mostrar archivos desde un wiki privado.
+Este wiki está configurado como wiki público.
+Para optima seguridad, img_auth.php está deshabilitado.',
 	'img-auth-noread' => 'El usuario no tiene acceso para leer «$1».',
 	'img-auth-bad-query-string' => 'La dirección URL tiene una cadena de consulta no válida.',
 	'imgfile' => 'archivo',
@@ -17245,14 +17245,14 @@ Geef het bestand een andere naam, en probeer het dan opnieuw te uploaden.',
 	'invalid-chunk-offset' => 'Ongeldige chunkoffset',
 	'img-auth-accessdenied' => 'Toegang geweigerd',
 	'img-auth-nopathinfo' => 'PATH_INFO mist.
-Uw server is niet ingesteld om deze gegevens door te geven.
+Je server is niet ingesteld om deze informatie door te geven.
 Misschien gebruikt deze CGI, en dan wordt img_auth niet ondersteund.
-Zie https://www.mediawiki.org/wiki/Manual:Image_Authorization voor meer informatie.',
+Zie http://www.mediawiki.org/wiki/Manual:Image_Authorization voor meer informatie.',
 	'img-auth-notindir' => 'Het opgevraagde pad is niet de ingestelde uploadmap.',
 	'img-auth-badtitle' => 'Het was niet mogelijk een geldige paginanaam te maken van "$1".',
-	'img-auth-nologinnWL' => 'U bent niet aangemeld en "$1" staat niet op de witte lijst.',
+	'img-auth-nologinnWL' => 'Je bent niet aangemeld en "$1" staat niet op de witte lijst.',
 	'img-auth-nofile' => 'Bestand "$1" bestaat niet.',
-	'img-auth-isdir' => 'U probeert de map "$1" te benaderen.
+	'img-auth-isdir' => 'Je probeert de map "$1" te benaderen.
 Alleen toegang tot bestanden is toegestaan.',
 	'img-auth-streaming' => 'Bezig met het streamen van "$1".',
 	'img-auth-public' => 'Het doel van img_auth.php is de uitvoer van bestanden van een besloten wiki.
