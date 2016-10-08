@@ -33,7 +33,7 @@ class EnableDiscussionsWithNoForums extends Maintenance {
 				continue;
 			}
 
-			if ( WikiFactory::getVarByName( 'wgEnableDiscussions', $wikiId ) ) {
+			if ( WikiFactory::getVarValueByName( 'wgEnableDiscussions', $wikiId ) === true) {
 				$this->error( 'Discussions are already enabled on ' . $wikiId . ', skipping!' );
 				continue;
 			}
