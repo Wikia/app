@@ -4599,6 +4599,7 @@ Questo programma deve essere distribuito assieme ad [{{SERVER}}{{SCRIPTPATH}}/CO
 	'version-software' => 'Software installato',
 	'version-software-product' => 'Prodotto',
 	'version-software-version' => 'Versione',
+	'video-dims' => '$1, $2 × $3',
 ];
 
 $messages['iu'] = [
