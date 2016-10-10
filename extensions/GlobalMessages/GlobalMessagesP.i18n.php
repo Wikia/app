@@ -26824,8 +26824,8 @@ Meld je aan nadat je het hebt ontvangen.',
 	'protectedpagewarning' => '\'\'\'Waarschuwing: deze beveiligde pagina kan alleen door gebruikers met beheerdersrechten bewerkt worden.\'\'\'
 De laatste logboekregel staat hieronder:',
 	'permissionserrors' => 'Fouten in rechten',
-	'permissionserrorstext' => 'U hebt geen rechten om dit te doen om de volgende {{PLURAL:$1|reden|redenen}}:',
-	'permissionserrorstext-withaction' => 'U hebt geen rechten om $2 om de volgende {{PLURAL:$1|reden|redenen}}:',
+	'permissionserrorstext' => 'Je hebt geen rechten om dit te doen om de volgende {{PLURAL:$1|reden|redenen}}:',
+	'permissionserrorstext-withaction' => 'Je hebt geen rechten om $2 om de volgende {{PLURAL:$1|reden|redenen}}:',
 	'post-expand-template-inclusion-warning' => 'Waarschuwing: de maximale transclusiegrootte voor sjablonen is overschreden.
 Sommige sjablonen worden niet getranscludeerd.',
 	'post-expand-template-inclusion-category' => 'Pagina\'s waarvoor de maximale transclusiegrootte is overschreden',
@@ -31163,8 +31163,8 @@ ___________________________________________________________
 	'protectedpagewarning' => '\'\'\'Предупреждение. Эта страница защищена от изменений, её могут редактировать только участники с полномочиями администраторов.\'\'\'
 Ниже для справки приведена последняя запись журнала:',
 	'permissionserrors' => 'Ошибки прав доступа',
-	'permissionserrorstext' => 'У вас нет прав на выполнение этой операции по {{PLURAL:$1|следующей причине|следующим причинам}}:',
-	'permissionserrorstext-withaction' => 'У вас нет разрешения на «\'\'\'$2\'\'\'» по {{PLURAL:$1|следующей причине|следующим причинам}}:',
+	'permissionserrorstext' => 'Вы не имеете разрешения на данное действие по {{PLURAL:$1|следующей причине|следующим причинам}}:',
+	'permissionserrorstext-withaction' => 'Вы не имеете разрешения на «\'\'\'$2\'\'\'» по {{PLURAL:$1|следующей причине|следующим причинам}}:',
 	'post-expand-template-inclusion-warning' => 'Предупреждение: суммарный размер включаемых шаблонов слишком велик.
 Некоторые шаблоны не будут включены.',
 	'post-expand-template-inclusion-category' => 'Страницы, для которых превышен допустимый размер включаемых шаблонов',
