@@ -66,9 +66,7 @@ Check your spelling.',
 	'nosuchsectiontext' => 'You tried to edit a section that does not exist.
 It may have been moved or deleted while you were viewing the page.',
 	'newarticle' => '(New)',
-	'newarticletext' => 'You have followed a link to a page that does not exist yet.
-To create the page, start typing in the box below (see the [[{{MediaWiki:Helppage}}|help page]] for more info).
-If you are here by mistake, click your browser\'s \'\'\'back\'\'\' button.',
+	'newarticletext' => '<div style="margin-top: 0px;" class="emptymwmsg mediawiki_newarticletext"></div>',
 	'newarticletextanon' => '{{int:newarticletext}}',
 	'noarticletext' => 'There is currently no text in this page.
 You can [[Special:Search/{{PAGENAME}}|search for this page title]] in other pages,
@@ -5872,6 +5870,8 @@ oder die zugehörigen <span class="plainlinks">[{{fullurl:{{#special:Log}}|page=
 	'newuserlog-autocreate-entry' => 'Benutzerkonto automatisch erstellt',
 	'newuserlog-create-entry' => 'Neues Benutzerkonto',
 	'newuserlog-create2-entry' => 'erstellte neues Benutzerkonto $1',
+	'new_article' => 'Neue Seite',
+	'new_wiki' => 'Neues Wiki',
 ];
 
 $messages['de-ch'] = [
@@ -6818,9 +6818,10 @@ Revisa la ortografía, o [[Special:UserLogin/signup|crea una cuenta nueva]].',
 	'nosuchsectiontext' => 'Has intentado editar una sección que no existe.
 Quizá ha sido movida o borrada mientras visitabas la página.',
 	'newarticle' => '(Nuevo)',
-	'newarticletext' => 'Has seguido un enlace a una página que aún no existe.
-Para crear esta página, escribe en el campo a continuación. Para más información, consulta la [[{{MediaWiki:Helppage}}|página de ayuda]].
-Si llegaste aquí por error, vuelve a la página anterior.',
+	'newarticletext' => '<div style="float:right;"><small>\'\'[[MediaWiki:Newarticletext|Ver esta plantilla]]\'\'</small></div>
+\'\'\'Estás comenzando un nuevo artículo. Genial, ¿no?\'\'\' 
+* Revisa \'\'\'[[Ayuda:Edición]]\'\'\' para conocer más información sobre cómo editar páginas wiki.
+* ¡No olvides \'\'\'categorizar este artículo\'\'\' añadiendo <nowiki>[[Categoría:Nombre]]</nowiki> al final de esta página! Puedes encontrar una lista de categorías en [[Special:Categories|Especial:Categorías]].<br/><br/>',
 	'noarticletext' => 'En este momento no hay texto en esta página.
 Puedes [[Special:Search/{{PAGENAME}}|buscar el título de esta página]] en otras páginas,
 <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} buscar en los registros],
@@ -7473,8 +7474,7 @@ Luettelo toimintosivuista löytyy sivulta [[Special:SpecialPages|{{int:specialpa
 Se on saatettu siirtää tai poistaa äskettäin.',
 	'newarticle' => '(uusi)',
 	'newarticletext' => 'Linkki toi sivulle, jota ei vielä ole.
-Voit luoda sivun kirjoittamalla alla olevaan kenttään (katso [[{{MediaWiki:Helppage}}|ohjesivulta]] lisätietoja).
-Jos et halua luoda sivua, käytä selaimen paluutoimintoa.',
+Voit luoda sivun kirjoittamalla tekstiä allaolevaan kenttään (katso [[{{MediaWiki:Helppage}}|ohjesivulta]] lisätietoja). Mikäli et halua luoda sivua, käytä selaimen paluutoimintoa.',
 	'noarticletext' => 'Tällä hetkellä tällä sivulla ei ole tekstiä.
 Voit [[Special:Search/{{PAGENAME}}|etsiä sivun nimellä]] muilta sivuilta,
 <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} hakea aiheeseen liittyviä lokeja]
@@ -7551,6 +7551,8 @@ Kokeile lisätä haun alkuun \'\'all:\'\', niin haku kohdistuu kaikkeen sisält�
 	'number-shortening-millions' => '$1 milj',
 	'number-shortening-billions' => '$1 mrd',
 	'needhelp' => 'Tarvitsevat apua: Ole hyvä ja muokkaa [[MediaWiki:Needhelp|tätä sivua]] näyttääksesi artikkeleita tässä.',
+	'new_article' => 'Uusi artikkeli',
+	'new_wiki' => 'Uusi wiki',
 ];
 
 $messages['fiu-vro'] = [
@@ -7861,9 +7863,7 @@ Vérifiez l’orthographe, ou [[Special:UserLogin/signup|créez un nouveau compt
 	'nosuchsectiontext' => 'Vous avez essayé de modifier une section qui n’existe pas.
 Elle a peut-être été déplacée ou supprimée depuis que vous avez lu cette page.',
 	'newarticle' => '(Nouveau)',
-	'newarticletext' => 'Vous avez suivi un lien vers une page qui n’existe pas encore ou qui a été [{{fullurl:Special:Log|type=delete&page={{FULLPAGENAMEE}}}} effacée].
-Pour créer cette page, entrez votre texte dans la boîte ci-dessous (vous pouvez consulter [[{{MediaWiki:Helppage}}|la page d’aide]] pour plus d’informations).
-Si vous êtes arrivé{{GENDER:||e|(e)}} ici par erreur, cliquez sur le bouton \'\'\'retour\'\'\' de votre navigateur.',
+	'newarticletext' => '<div style="margin-top: 0px;" class="emptymwmsg mediawiki_newarticletext"></div>',
 	'noarticletext' => 'Il n’y a pour l’instant aucun texte sur cette page.
 Vous pouvez [[Special:Search/{{PAGENAME}}|lancer une recherche sur ce titre]] dans les autres pages,
 <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} rechercher dans les opérations liées]
@@ -7936,10 +7936,12 @@ Essayez en utilisant le préfixe \'\'all:\'\' pour rechercher dans tout le conte
 	'namespacesall' => 'Tous',
 	'newuserlog-byemail' => 'mot de passe envoyé par e-mail',
 	'not_you' => 'Pas vous ?',
-	'newly_changed' => 'Récemment modifié',
+	'newly_changed' => 'Modifiées récemment',
 	'number-shortening' => '$1K',
 	'number-shortening-millions' => '$1M',
 	'number-shortening-billions' => '$1 Mrd',
+	'new_article' => 'Nouvel article',
+	'new_wiki' => 'Nouveau wiki',
 ];
 
 $messages['frc'] = [
@@ -12017,9 +12019,10 @@ Assicurati di avere attivato i cookie, ricarica questa pagina e riprova.',
 	'nosuchsectiontext' => 'Si è tentato di modificare una sezione inesistente.
 Potrebbe essere stata spostata o eliminata mentre si stava visionando la pagina.',
 	'newarticle' => '(Nuovo)',
-	'newarticletext' => 'Il collegamento appena seguito corrisponde ad una pagina non ancora esistente.
-Se vuoi creare la pagina ora, basta cominciare a scrivere il testo nella casella qui sotto (vedi la [[{{MediaWiki:Helppage}}|pagina di aiuto]] per maggiori informazioni).
-Se il collegamento è stato aperto per errore, è sufficiente fare clic sul pulsante \'\'\'Indietro\'\'\' del proprio browser.',
+	'newarticletext' => 'Il link appena aperto corrisponde a una pagina non ancora esistente.
+Se vuoi creare la pagina ora, basta cominciare a scrivere il testo nella casella qui sotto
+(vedi le [[{{MediaWiki:Helppage/it}}|pagine di aiuto]] per maggiori informazioni).
+Se il link è stato aperto per errore, è sufficiente fare clic sul pulsante \'\'\'Indietro\'\'\' del proprio browser.',
 	'noarticletext' => 'In questo momento la pagina richiesta è vuota. È possibile [[Special:Search/{{PAGENAME}}|cercare questo titolo]] nelle altre pagine del sito, <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} cercare nei registri correlati] oppure [{{fullurl:{{FULLPAGENAME}}|action=edit}} modificare la pagina ora]</span>.',
 	'noarticletext-nopermission' => 'In questo momento la pagina richiesta è vuota. È possibile [[Special:Search/{{PAGENAME}}|cercare questo titolo]] nelle altre pagine del sito o <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} cercare nei registri correlati]</span>.',
 	'note' => '\'\'\'NOTA:\'\'\'',
@@ -12088,6 +12091,9 @@ Se il collegamento è stato aperto per errore, è sufficiente fare clic sul puls
 	'number-shortening' => '$1K',
 	'number-shortening-millions' => '$1 mln',
 	'number-shortening-billions' => '$1B',
+	'new_article' => 'Nuova pagina',
+	'new_wiki' => 'Nuova wiki',
+	'newly_changed' => 'Modificate di recente',
 ];
 
 $messages['iu'] = [
@@ -12274,9 +12280,7 @@ URLを間違って打ったか、正しくないリンクを辿った可能性�
 	'nosuchsectiontext' => '存在しない節を編集しようとしました。
 ページを閲覧している間に移動あるいは削除された可能性があります。',
 	'newarticle' => '（新）',
-	'newarticletext' => 'まだ存在していないページへのリンクをたどりました。
-このページを新規に作成するには、下のボックスに内容を書き込んでください（詳しくは[[{{MediaWiki:Helppage}}|ヘルプページ]]を参照してください）。
-誤ってこのページにたどり着いた場合には、ブラウザの\'\'\'戻る\'\'\'ボタンを使って前のページに戻ってください。',
+	'newarticletext' => '<div style="margin-top: 0px;" class="emptymwmsg mediawiki_newarticletext"></div>',
 	'noarticletext' => '現在このページには内容がありません。
 他のページに含まれる[[Special:Search/{{PAGENAME}}|このページ名を検索する]]か、
 <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} 関連記録を検索する]か、
@@ -12352,6 +12356,8 @@ URLを間違って打ったか、正しくないリンクを辿った可能性�
 	'number-shortening' => '$1K',
 	'number-shortening-millions' => '$1M',
 	'number-shortening-billions' => '$1B',
+	'new_article' => '記事を作成',
+	'new_wiki' => 'ウィキの申請',
 ];
 
 $messages['jam'] = [
@@ -14445,6 +14451,7 @@ $messages['ko'] = [
 	'number-shortening' => '$1천',
 	'number-shortening-millions' => '$1백만',
 	'number-shortening-billions' => '$1B',
+	'new_article' => '새 문서',
 ];
 
 $messages['ko-kp'] = [
@@ -19520,7 +19527,7 @@ Wellicht is het verplaatst of verwijderd terwijl u de pagina aan het bekijken wa
 	'newarticle' => '(Nieuw)',
 	'newarticletext' => 'Deze pagina bestaat niet.
 Typ in het onderstaande veld om de pagina aan te maken (meer informatie staat op de [[{{MediaWiki:Helppage}}|hulppagina]]).
-Gebruik de knop \'\'\'vorige\'\'\' in uw browser als u hier per ongeluk terecht bent gekomen.',
+Gebruik de knop \'\'\'vorige\'\'\' in je browser als je hier per ongeluk terecht bent gekomen.',
 	'noarticletext' => 'Deze pagina bevat geen tekst.
 U kunt [[Special:Search/{{PAGENAME}}|naar deze term zoeken]] in andere pagina\'s, <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} de logboeken doorzoeken] of [{{fullurl:{{FULLPAGENAME}}|action=edit}} deze pagina bewerken]</span>.',
 	'noarticletext-nopermission' => 'Deze pagina bevat geen tekst.
@@ -19904,6 +19911,8 @@ For å søkja i alle, bruk prefikset \'\'all:\'\' (det inkluderer diskusjonsside
 	'not_you' => 'Ikke deg?',
 	'newly_changed' => 'Nylig redigert',
 	'needhelp' => 'Trenger hjelp: Vennligst rediger [[MediaWiki:needhelp|denne siden]] for å vise artikler her.',
+	'new_article' => 'Ny artikkel',
+	'new_wiki' => 'Ny wiki',
 ];
 
 $messages['nov'] = [
@@ -20881,9 +20890,7 @@ Sprawdź poprawność pisowni.',
 	'nosuchsectiontext' => '{{GENDER:|Próbowałeś|Próbowałaś}} edytować sekcję, która nie istnieje.
 Mogła zostać przeniesiona lub usunięta podczas przeglądania tej strony.',
 	'newarticle' => '(Nowy)',
-	'newarticletext' => 'Brak strony o tym tytule.
-Jeśli chcesz ją utworzyć, wpisz treść strony w poniższym polu (więcej informacji odnajdziesz [[{{MediaWiki:Helppage}}|na stronie pomocy]]).
-Jeśli utworzenie nowej strony nie było Twoim zamiarem, wciśnij \'\'Wstecz\'\' w swojej przeglądarce.',
+	'newarticletext' => '<div style="margin-top: 0px;" class="emptymwmsg mediawiki_newarticletext"></div>',
 	'noarticletext' => 'Brak strony o tym tytule.
 Możesz [[Special:Search/{{PAGENAME}}|poszukać „{{PAGENAME}}” na innych stronach]],
 <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} przeszukać log] lub [{{fullurl:{{FULLPAGENAME}}|action=edit}} utworzyć tę stronę]</span>.',
@@ -22712,6 +22719,8 @@ The wiki server can\'t provide data in a format your client can read.',
 	'namespacedisabled' => 'Пространство имён отключено',
 	'namespacedisabledtext' => 'Это пространство имён было отключено.',
 	'needhelp' => 'Для отображения списка статей, которым нужна помощь, отредактируйте [[MediaWiki:needhelp|эту страницу]].',
+	'new_article' => 'Новая страница',
+	'new_wiki' => 'Новая вики',
 ];
 
 $messages['rue'] = [
@@ -25708,7 +25717,7 @@ Kontrollera din stavning, eller [[Special:UserLogin/signup|skapa ett nytt konto]
 	'nosuchsectiontext' => 'Du försökte redigera ett avsnitt som inte finns.
 Det kan ha flyttats eller raderats medan du tittade på sidan.',
 	'newarticle' => '(Ny)',
-	'newarticletext' => 'Du har klickat på en länk till en sida som inte finns ännu. Du kan själv skapa sidan genom att skriva i fältet nedan (du kan läsa mer på [[{{MediaWiki:Helppage}}|hjälpsidan]]). Om du inte vill skriva något kan du bara trycka på "tillbaka" i din webbläsare.',
+	'newarticletext' => '<div style="margin-top: 0px;" class="emptymwmsg mediawiki_newarticletext"></div>',
 	'noarticletext' => 'Det finns just nu ingen text på denna sida.
 Du kan [[Special:Search/{{PAGENAME}}|söka efter denna sidtitel]] på andra sidor, <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} söka i loggarna], eller [{{fullurl:{{FULLPAGENAME}}|action=edit}} redigera denna sida]</span>.',
 	'noarticletext-nopermission' => 'Det finns för tillfället ingen text på denna sida.
@@ -30025,6 +30034,13 @@ $messages['zh'] = [
 	'newpage' => '最新页面',
 	'newpages' => '最新页面',
 	'newimages' => '新图片',
+	'new_article' => '新增文章',
+	'new_wiki' => '申请 wiki',
+	'newarticletext' => '<div style="float:right;"><small>\'\'[[MediaWiki:Newarticletext|检视此模板]]\'\'</small></div>
+\'\'\'您正准备开始撰写一个新页面\'\'\'
+* 如有编辑问题，欢迎参考[[help:content|帮助页面]]
+* 如果是不小心点击进入这里，可使用浏览器的按钮回到上一页。<br/><br/>',
+	'newly_changed' => '最近更改',
 ];
 
 $messages['zh-classical'] = [
@@ -30083,9 +30099,10 @@ $messages['zh-hans'] = [
 	'nosuchsectiontext' => '您尝试编辑的章节并不存在。
 可能是在您查看页面时已经移动或删除。',
 	'newarticle' => '（新页面）',
-	'newarticletext' => '您进入了一个尚未创建的页面。
-要创建该页面，请在下面的编辑框中输入内容（详情参见[[{{MediaWiki:Helppage}}|帮助]]）。
-如果您是不小心来到此页面，直接点击您浏览器中的“返回”按钮返回。',
+	'newarticletext' => '<div style="float:right;"><small>\'\'[[MediaWiki:Newarticletext|检视此模板]]\'\'</small></div>
+\'\'\'您正准备开始撰写一个新页面\'\'\'
+* 如有编辑问题，欢迎参考[[help:content|帮助页面]]
+* 如果是不小心点击进入这里，可使用浏览器的按钮回到上一页。<br/><br/>',
 	'noarticletext' => '本页面目前没有内容。你可以在其他页面中[[Special:Search/{{PAGENAME}}|搜索该页标题]]、<span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} 搜索相关日志]或[{{fullurl:{{FULLPAGENAME}}|action=edit}} 编辑本页面]。</span>',
 	'noarticletext-nopermission' => '此页目前没有内容，您可以在其它页[[Special:Search/{{PAGENAME}}|搜索此页标题]]，
 或<span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} 搜索有关日志]</span>。',
@@ -30153,6 +30170,7 @@ $messages['zh-hans'] = [
 	'number-shortening' => '$1千',
 	'number-shortening-millions' => '$1百万',
 	'number-shortening-billions' => '$10亿',
+	'newly_changed' => '最近更改',
 ];
 
 $messages['zh-hant'] = [
@@ -30210,9 +30228,10 @@ $messages['zh-hant'] = [
 	'nosuchsectiontext' => '您嘗試編輯的章節並不存在。
 可能在您查看頁面時已經移動或刪除。',
 	'newarticle' => '（新）',
-	'newarticletext' => '您進入了一個尚未建立的頁面。
-要建立該頁面，請在下面的編輯框中輸入內容（詳情參見[[{{MediaWiki:Helppage}}|幫助]]）。
-如果您是不小心來到此頁面，直接點擊您瀏覽器中的“返回”按鈕返回。',
+	'newarticletext' => '<div style="float:right;"><small>\'\'[[MediaWiki:Newarticletext|檢視此模板]]\'\'</small></div>
+\'\'\'您正準備開始撰寫一個新頁面\'\'\'
+* 如有編輯問題，歡迎參考[[help:content|幫助頁面]]
+* 如果是不小心點擊進入這裡，可使用瀏覽器的按鈕回到上一頁。<br/><br/>',
 	'noarticletext' => '此頁目前沒有內容，您可以在其它頁[[Special:Search/{{PAGENAME}}|搜索此頁標題]]，
 <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} 搜索有關日誌]，
 或[{{fullurl:{{FULLPAGENAME}}|action=edit}} 編輯此頁]</span>。',
@@ -30282,6 +30301,7 @@ $messages['zh-hant'] = [
 	'number-shortening' => '$1 千',
 	'number-shortening-millions' => '$1 百萬',
 	'number-shortening-billions' => '$10 億',
+	'newly_changed' => '最新更改',
 ];
 
 $messages['zh-hk'] = [
@@ -30293,6 +30313,11 @@ $messages['zh-hk'] = [
 	'number-shortening-millions' => '$1M',
 	'number-shortening-billions' => '$1B',
 	'newimages' => '新圖像',
+	'newarticletext' => '<div style="float:right;"><small>\'\'[[MediaWiki:Newarticletext|檢視此模板]]\'\'</small></div>
+\'\'\'您正準備開始撰寫一個新頁面\'\'\'
+* 如有編輯問題，歡迎參考[[help:content|幫助頁面]]
+* 如果是不小心點擊進入這裡，可使用瀏覽器的按鈕回到上一頁。<br/><br/>',
+	'newly_changed' => '最新更改',
 ];
 
 $messages['zh-min-nan'] = [
@@ -30343,9 +30368,10 @@ $messages['zh-tw'] = [
 	'noemail' => '使用者"$1"沒有登記電子郵件地址。',
 	'noemailprefs' => '指定一個電子郵件地址以使用此功能',
 	'newpassword' => '新密碼',
-	'newarticletext' => '您進入了一個尚未建立的頁面。
-要建立該頁面，請在下面的編輯框中輸入內容(詳情參見[[{{MediaWiki:Helppage}}|說明]])。
-如果您是不小心來到此頁面，直接點擊您瀏覽器中的"返回"按鈕返回。',
+	'newarticletext' => '<div style="float:right;"><small>\'\'[[MediaWiki:Newarticletext|檢視此模板]]\'\'</small></div>
+\'\'\'您正準備開始撰寫一個新頁面\'\'\'
+* 如有編輯問題，歡迎參考[[help:content|幫助頁面]]
+* 如果是不小心點擊進入這裡，可使用瀏覽器的按鈕回到上一頁。<br/><br/>',
 	'noarticletext' => '此頁目前沒有內容，您可以在其它頁[[Special:Search/{{PAGENAME}}|搜索此頁標題]]，
 <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} 搜索有關日誌]，
 或[{{fullurl:{{FULLPAGENAME}}|action=edit}} 編輯此頁]</span>。',
@@ -30365,6 +30391,8 @@ $messages['zh-tw'] = [
 	'noimages' => '無可檢視圖片。',
 	'not_you' => '不是您？',
 	'newly_changed' => '剛更新過',
+	'new_article' => '新增文章',
+	'new_wiki' => '申請 wiki',
 ];
 
 $messages['zh-yue'] = [
@@ -30452,5 +30480,18 @@ $messages['zu'] = [
 
 $messages['zh-cn'] = [
 	'newimages' => '新图像',
+	'new_article' => '新增文章',
+	'new_wiki' => '申请 wiki',
+	'newarticletext' => '<div style="float:right;"><small>\'\'[[MediaWiki:Newarticletext|检视此模板]]\'\'</small></div>
+\'\'\'您正準备开始撰写一个新页面\'\'\'
+* 如有编辑问题，欢迎参考[[{{ns:project}}:帮助|帮助页面]]
+* 小叮咛：別忘了为你的文章加上分类，只要在页面底部加上<nowiki>[[Category:分类名]]</nowiki>即可。所有分类请见[[Special:Categories]]。<br/><br/>',
+];
+
+$messages['zh-sg'] = [
+	'newarticletext' => '<div style="float:right;"><small>\'\'[[MediaWiki:Newarticletext|检视此模板]]\'\'</small></div>
+\'\'\'您正準备开始撰写一个新页面\'\'\'
+* 如有编辑问题，欢迎参考[[{{ns:project}}:帮助|帮助页面]]
+* 小叮咛：別忘了为你的文章加上分类，只要在页面底部加上<nowiki>[[Category:分类名]]</nowiki>即可。所有分类请见[[Special:Categories]]。<br/><br/>',
 ];
 
