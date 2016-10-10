@@ -29,7 +29,7 @@ $messages['en'] = [
 	'unanswered_category' => 'Un-answered questions',
 	'answered_category' => 'Answered questions',
 	'related_questions' => 'Related questions',
-	'related_answered_questions' => 'Related answered questions',
+	'related_answered_questions' => 'More questions',
 	'recent_unanswered_questions' => 'Recent Unanswered Questions',
 	'popular_categories' => 'Popular Categories',
 	'createaccount-captcha' => 'Please type the word below',
@@ -596,7 +596,7 @@ $messages['es'] = [
 	'unanswered_category' => 'Preguntas no contestadas',
 	'answered_category' => 'Preguntas respondidas',
 	'related_questions' => 'Preguntas relacionadas',
-	'related_answered_questions' => 'Preguntas relacionadas que poseen respuesta',
+	'related_answered_questions' => 'Más preguntas',
 	'popular_categories' => 'Categorías populares',
 	'createaccount-captcha' => 'Por favor escribe abajo la palabra',
 	'inline-register-title' => 'Notificarme cuando mi pregunta sea contestada',
@@ -1425,6 +1425,8 @@ $messages['ja'] = [
 	'recent_asked_questions' => '最新の質問',
 	'recent_edited_questions' => '最近回答した質問',
 	'recent_unanswered_questions' => '最新の回答待ち質問',
+	'related_answered_questions' => '関連する回答済み質問',
+	'related_questions' => '関連する質問',
 ];
 
 $messages['lb'] = [
@@ -2080,7 +2082,7 @@ $messages['pl'] = [
 	'unanswered_category' => 'Pytania bez odpowiedzi',
 	'answered_category' => 'Pytania z odpowiedziami',
 	'related_questions' => 'Podobne pytania',
-	'related_answered_questions' => 'Odpowiedzi na powiązane pytania',
+	'related_answered_questions' => 'Podobne pytania z odpowiedzią',
 	'recent_unanswered_questions' => 'Ostatnie pytania bez odpowiedzi',
 	'popular_categories' => 'Popularne Kategorie',
 	'createaccount-captcha' => 'Wpisz słowo z obrazka',
@@ -2202,6 +2204,7 @@ $messages['pt'] = [
 	'recent_asked_questions' => 'Perguntas Recentes',
 	'recent_edited_questions' => 'Perguntas editadas recentemente',
 	'recent_unanswered_questions' => 'Perguntas sem resposta mais recentes',
+	'related_answered_questions' => 'Perguntas respondidas relacionadas',
 ];
 
 $messages['pt-br'] = [
@@ -2243,6 +2246,7 @@ $messages['pt-br'] = [
 	'recent_asked_questions' => 'Perguntas Recentes',
 	'recent_edited_questions' => 'Perguntas editadas recentemente',
 	'recent_unanswered_questions' => 'Perguntas sem resposta mais recentes',
+	'related_answered_questions' => 'Perguntas respondidas relacionadas',
 ];
 
 $messages['roa-tara'] = [
@@ -2643,6 +2647,8 @@ $messages['no'] = [
 	'recent_asked_questions' => 'Nylig stile spørsmål',
 	'recent_edited_questions' => 'Nylig endrede spørsmål',
 	'recent_unanswered_questions' => 'Nylig ubesvarte spørsmål',
+	'related_answered_questions' => 'Liknende besvarte spørsmål',
+	'related_questions' => 'Liknende spørsmål',
 ];
 
 $messages['zh-hant'] = [
@@ -2683,6 +2689,8 @@ $messages['ko'] = [
 	'recent_asked_questions' => '최근에 생성한 질문',
 	'recent_edited_questions' => '최근에 편집한 질문',
 	'recent_unanswered_questions' => '최근에 생성된 질문',
+	'related_answered_questions' => '관련된 답변이 달린 질문',
+	'related_questions' => '관련 질문',
 ];
 
 $messages['bg'] = [
