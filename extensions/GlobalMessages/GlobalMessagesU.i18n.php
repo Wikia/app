@@ -7411,6 +7411,7 @@ $1',
 	'undeletedarticle' => 'stellte "[[$1]]" wieder her',
 	'unlockdb-wikifactory-error' => 'Es ist ein Fehler aufgetreten. Speichern oder leeren des Caches fehlgeschlagen. Die Datenbank ist unter Umständen nicht gesperrt. Bitte versuche es erneut oder kontaktiere das TechTeam.',
 	'unlocked' => 'entsprerrt',
+	'unsubscribe-email' => 'Wenn du in Zukunft keine Mails mehr von Wikia empfangen möchtest, kannst du dich hier austragen: $1',
 ];
 
 $messages['de-ch'] = [
@@ -8867,6 +8868,7 @@ $1',
 	'use_new_formatting' => 'Probar un diseño nuevo',
 	'usesitejs-disabled-warning' => 'El JavaScript personalizado está deshabilitado en este wiki.',
 	'unable-block-edit' => 'No estás autorizado para editar esta página. Inténtalo de nuevo más tarde.',
+	'unsubscribe-email' => 'Si no quieres recibir más emails de Wikia, puedes cancelar tu suscripción aquí: $1',
 ];
 
 $messages['et'] = [
@@ -10420,6 +10422,7 @@ Veuillez confirmer que c’est bien là ce que vous voulez faire.',
 	'use_old_formatting' => 'Passer à l\'affichage Monobook',
 	'use_new_formatting' => 'Essayer le nouvel habillage',
 	'usesitejs-disabled-warning' => 'Le JavaScript personnalisé est désactivé sur ce wiki.',
+	'unsubscribe-email' => 'Si vous ne souhaitez plus recevoir d\'e-mails de la part de Wikia vous pouvez vous désabonner ici : $1',
 ];
 
 $messages['frc'] = [
@@ -18551,6 +18554,7 @@ $1',
 	'unlockdbsuccesssub' => '데이터베이스 잠금 해제됨',
 	'unlockdbsuccesstext' => '데이터베이스 잠금 상태가 해제되었습니다.',
 	'unknown_extension_tag' => '알 수 없는 확장 기능 태그 "$1"',
+	'unsubscribe-email' => '위키아에서 더 이상 이메일을 받고 싶지 않다면 다음 링크에서 해지할 수 있습니다: $1',
 ];
 
 $messages['ko-kp'] = [
@@ -28797,6 +28801,7 @@ $1',
 	'unable-block-edit' => 'Вы не можете редактировать эту страницу. Попробуйте ещё раз позже.',
 	'unlockdb-wikifactory-error' => 'Произошла ошибка. Не удалось сохранить или очистить кэш. База данных не может быть разблокирована. Пожалуйста, попробуйте ещё раз или обратитесь к инженерам.',
 	'unlocked' => 'разблокировано',
+	'unsubscribe-email' => 'Если вы больше не хотите получать письма от Викия, то вы можете отписаться здесь: $1',
 ];
 
 $messages['rue'] = [
