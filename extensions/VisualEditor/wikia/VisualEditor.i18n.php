@@ -592,7 +592,7 @@ $messages['en-gb'] = [
 ];
 
 $messages['es'] = [
-	'visualeditor-ca-classiceditor' => 'Editor clásico',
+	'visualeditor-ca-classiceditor' => 'Editor Clásico',
 	'wikia-visualeditor-preference-enable' => 'Activar el editor visual (beta)',
 	'wikia-visualeditor-dialogbutton-wikiamediainsert-tooltip' => 'Archivos multimedia',
 	'wikia-visualeditor-dialogbutton-wikiamapinsert-tooltip' => 'Mapa',
@@ -756,6 +756,7 @@ $messages['fi'] = [
 	'wikia-visualeditor-dialog-wikiasinglemedia-search' => 'Hae kuvia',
 	'wikia-visualeditor-wikiamediaoptionwidget-preview-photo' => 'Katso',
 	'wikia-visualeditor-media-photo-policy' => 'Noudatathan tämän wikian kuvakäytäntöjä lataessasi uusia kuvia',
+	'visualeditor-ca-classiceditor' => 'Perinteinen muokkain',
 ];
 
 $messages['fo'] = [
@@ -1178,7 +1179,7 @@ $messages['ja'] = [
 	'wikia-visualeditor-dialog-wikiasinglemedia-search' => '画像検索',
 	'wikia-visualeditor-wikiamediaoptionwidget-preview-photo' => '閲覧',
 	'wikia-visualeditor-media-photo-policy' => '新たに画像をアップロードする際は、コミュニティの画像ポリシーを遵守してください。',
-	'visualeditor-ca-classiceditor' => 'クラシックエディタ',
+	'visualeditor-ca-classiceditor' => 'クラッシックエディタ',
 	'wikia-visualeditor-dialog-wikiamediainsert-upload-error-size' => '画像サイズが大きすぎます。$1MB以下の画像をお使いください。',
 	'wikia-visualeditor-dialog-wikiamediainsert-upload-error-filetype' => 'サポートされているファイル形式は$1のみです',
 	'wikia-visualeditor-dialog-wikiamediainsert-upload-error' => 'ファイルのアップロード中にエラーが発生しました',
@@ -1304,6 +1305,7 @@ $messages['ko'] = [
 	'wikia-visualeditor-wikiamediaoptionwidget-preview-video' => '시계',
 	'wikia-visualeditor-media-photo-policy' => '그림을 올릴 땐 반드시 위키아 그림 정책을 준수해주세요',
 	'wikia-visualeditor-media-video-policy' => '그림을 올릴 땐 반드시 위키아 그림 정책을 준수해주세요',
+	'visualeditor-ca-classiceditor' => '클래식 편집기',
 ];
 
 $messages['ku-latn'] = [
@@ -2072,7 +2074,7 @@ $messages['roa-tara'] = [
 ];
 
 $messages['ru'] = [
-	'visualeditor-ca-classiceditor' => 'Классический редактор',
+	'visualeditor-ca-classiceditor' => 'Классич. редактор',
 	'wikia-visualeditor-preference-enable' => 'Включить бета-версию Визуального редактора',
 	'wikia-visualeditor-dialogbutton-wikiamediainsert-tooltip' => 'Медиа',
 	'wikia-visualeditor-dialogbutton-wikiamapinsert-tooltip' => 'Карта',
@@ -2506,6 +2508,7 @@ $messages['vi'] = [
 	'wikia-visualeditor-dialog-preference-start-button' => 'Hiểu rồi!',
 	'wikia-visualeditor-dialog-wikiasinglemedia-search' => 'Tìm kiếm hình ảnh',
 	'wikia-visualeditor-media-video-policy' => 'Hãy tuân thủ chính sách Video của wiki này khi thêm video mới.',
+	'visualeditor-ca-classiceditor' => 'Sửa đổi mã nguồn',
 ];
 
 $messages['vo'] = [
@@ -2517,7 +2520,7 @@ $messages['yi'] = [
 ];
 
 $messages['zh-hans'] = [
-	'visualeditor-ca-classiceditor' => '传统编辑器',
+	'visualeditor-ca-classiceditor' => '传统编辑模式',
 	'wikia-visualeditor-preference-enable' => '启用测试版可视化编辑器',
 	'wikia-visualeditor-dialogbutton-wikiamediainsert-tooltip' => '媒体',
 	'wikia-visualeditor-dialogbutton-wikiamapinsert-tooltip' => '地图',
@@ -2675,7 +2678,7 @@ $messages['zh-hant'] = [
 	'wikia-visualeditor-wikiamediaoptionwidget-preview-photo' => '查看',
 	'wikia-visualeditor-wikiamediaoptionwidget-preview-video' => '觀看',
 	'wikia-visualeditor-media-photo-policy' => '在您上傳圖片的同時，請遵守Fandom圖片政策。',
-	'visualeditor-ca-classiceditor' => '經典的編輯器',
+	'visualeditor-ca-classiceditor' => '傳統編輯模式',
 	'wikia-visualeditor-dialogbutton-infobox-tooltip' => '資訊框',
 	'wikia-visualeditor-dialog-infobox-insert-title' => '選擇要插入的資訊框',
 	'wikia-visualeditor-media-video-policy' => '添加新的視頻時，請遵守此維基視頻政策。',
@@ -2690,5 +2693,14 @@ $messages['zh-hant'] = [
 
 $messages['zh'] = [
 	'wikia-visualeditor-notification-media-only-premium-videos-allowed' => '这个维基只允许添加来自<a href="http://video.wikia.com" target="_blank">Wikia视频库</a>中的内容。请进入<a href="http://video.wikia.com" target="_blank">video.wikia.com</a>搜索视频。',
+	'visualeditor-ca-classiceditor' => '传统编辑模式',
+];
+
+$messages['zh-hk'] = [
+	'visualeditor-ca-classiceditor' => '傳統編輯模式',
+];
+
+$messages['zh-tw'] = [
+	'visualeditor-ca-classiceditor' => '傳統編輯模式',
 ];
 
