@@ -9746,7 +9746,7 @@ Wir freuen uns darauf, dass du weiterhin ein Teil von Wikia bist!
 Das Wikia Community-Team
 de.wikia.com',
 	'rcshowhideenhanced' => 'Erweiterte Darstellung $1',
-	'refreshpage' => 'Reload page to activate this widget',
+	'refreshpage' => 'Seite erneut laden, um das Widget zu aktivieren',
 	'requestcreatewiki' => 'Submit Request',
 	'right_now' => 'Right Now<br />people are...',
 	'return_to_article' => 'Return to page',
@@ -11652,7 +11652,7 @@ ___________________________________________
 * Si necesitas ayuda o consejos, visita nuestra comunidad central http://comunidad.wikia.com
 * ¿Quieres dejar de recibir estos mensajes? Puedes darte de baja en el servicio de emails desde tus preferencias aquí: http://comunidad.wikia.com/Especial:Preferencias',
 	'rcshowhideenhanced' => '$1 cambios recientes realzados',
-	'refreshpage' => 'Reload page to activate this widget',
+	'refreshpage' => 'Recarga la página para activar este widget',
 	'requestcreatewiki' => 'Submit Request',
 	'right_now' => 'Right Now<br />people are...',
 	'return_to_article' => 'Return to page',
@@ -12913,6 +12913,7 @@ Sinulla ei ole oikeutta siihen.',
 	'review_reason_4' => 'Arvostelun syy 4',
 	'review_reason_5' => 'Arvostelun syy 5',
 	'registerintro-title' => 'Kun luot Wikia käyttäjän, sinusta tulee osa yhteisöä!',
+	'refreshpage' => 'Lataa sivu uudestaan aktivoidaksesi tämän vekottimen',
 ];
 
 $messages['fiu-vro'] = [
@@ -20979,7 +20980,7 @@ ___________________________________________
 * コミュニティでヘルプとアドバイスを探す: http://ja.community.wikia.com
 * 私たちが送信するメッセージを減らしたいですか？ こちらで定期購読を中止するか電子メールの設定を変更することができます : http://ja.community.wikia.com/Special:Preferences',
 	'rcshowhideenhanced' => '拡張された最近更新したページを$1',
-	'refreshpage' => 'Reload page to activate this widget',
+	'refreshpage' => 'このウィジェットを有効にするにはページの再読み込みを行う必要があります。',
 	'related_wiki' => 'Add bulleted links here to display wiki related to this one in the related wiki [[Special:Widgets|widget]].
 
 * [{{FULLURL:MediaWiki:Related wiki}} No related wiki have been selected yet.]',
@@ -33063,6 +33064,7 @@ Vi ser frem til å treffe deg på Wikia!
 The Wikia Community Teamet
 www.wikia.com',
 	'reconfirmemail_subject' => 'Velkommen til Wikia!',
+	'refreshpage' => 'Oppdater siden for å aktivere denne widgeten',
 ];
 
 $messages['nov'] = [
