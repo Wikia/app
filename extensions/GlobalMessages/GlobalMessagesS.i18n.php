@@ -8459,6 +8459,7 @@ Das liegt wahrscheinlich an einem Link auf eine externe Seite.',
 	'see_more' => 'Zeige mehr...',
 	'seeeditcount' => 'siehe Bearbeitungsstatistik',
 	'seemoredotdotdot' => 'Zeige mehr...',
+	'send' => 'Senden',
 ];
 
 $messages['de-ch'] = [
@@ -10005,6 +10006,7 @@ Esto podría estar causado por un enlace a un sitio externo incluido en la lista
 	'see_more' => 'Ver más...',
 	'seeeditcount' => 'Ver contador de ediciones',
 	'seemoredotdotdot' => 'Ver más...',
+	'send' => 'Enviar',
 ];
 
 $messages['et'] = [
@@ -10768,6 +10770,7 @@ $messages['fa'] = [
 	'specialpages-group-spam' => 'ابزارهای هرزنگاری',
 	'sqlite-has-fts' => '$1 با پشتیبانی از جستجو در متن کامل',
 	'sqlite-no-fts' => '$1 بدون پشتیبانی از جستجو در متن کامل',
+	'send' => 'بفرست',
 ];
 
 $messages['ff'] = [
@@ -10982,6 +10985,7 @@ Alla on viimeisin lokitapahtuma:',
 	'searchtype' => 'Haun tyyppi',
 	'see_more' => 'Katso lisää...',
 	'seeeditcount' => 'Katso muokkauslaskuri',
+	'send' => 'Lähetä',
 ];
 
 $messages['fiu-vro'] = [
@@ -11656,6 +11660,7 @@ impossible de renommer une page sur elle-même.',
 	'see_more' => 'Plus…',
 	'seeeditcount' => 'Voir le nombre de modifications',
 	'seemoredotdotdot' => 'Plus…',
+	'send' => 'Envoyer',
 ];
 
 $messages['frc'] = [
@@ -20327,6 +20332,7 @@ $messages['ko'] = [
 	'sqlite-no-fts' => '$1 (본문은 검색에서 제외)',
 	'see_more' => '더 보기...',
 	'seeeditcount' => '편집 횟수 보기',
+	'send' => '보내기',
 ];
 
 $messages['ko-kp'] = [
@@ -31974,6 +31980,7 @@ $messages['ru'] = [
 	'see_more' => 'Подробнее...',
 	'seeeditcount' => 'См. счётчик правок',
 	'seemoredotdotdot' => 'Подробнее...',
+	'send' => 'Отправить',
 ];
 
 $messages['rue'] = [
