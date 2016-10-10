@@ -517,7 +517,7 @@ $messages['de'] = [
 	'answers-category-count-unanswered' => 'Diese Kategorie enthält $1 unbeantwortete Fragen.',
 	'answers_widget_no_questions' => 'Hilf uns dabei, die besten Antworten auf alle Fragen zu finden!',
 	'answers_widget_no_questions_askabout' => '<br><br>Mach mit und stelle eine Frage über "{{PAGENAME}}"',
-	'reword_this' => '<a href="$1" $2>Frage umformulieren</a>',
+	'reword_this' => '<a href="$1" $2>Formuliere diese Frage um</a>',
 	'no_related_answered_questions' => 'Es gibt noch keine ähnlichen Fragen.',
 	'auto_friend_request_body' => 'Wirst du mich als Freund hinzufügen?',
 	'tog-hidefromattribution' => 'Verstecke meinen Avatar und meinen Namen auf der Namensnennung-Liste',
@@ -642,7 +642,7 @@ $messages['es'] = [
 	'answers-category-count-unanswered' => 'Esta categoría contiene $1 pregunta/s sin responder.',
 	'answers_widget_no_questions' => 'Ayúdanos a dar la mejor respuesta a cualquier pregunta.',
 	'answers_widget_no_questions_askabout' => '<!-- -->',
-	'reword_this' => '<a href="$1" $2>Reformula esta pregunta</a>',
+	'reword_this' => '<a href="$1" $2>Reescribe la pregunta</a>',
 	'auto_friend_request_body' => '¿Me añadirás como amigo?',
 	'tog-hidefromattribution' => 'Ocultar mi avatar y nombre en la lista de atribuciones',
 	'a' => 'Respuesta:',
@@ -1432,6 +1432,7 @@ $messages['ja'] = [
 	'rephrase' => 'この質問の言い回しを変える',
 	'rephrase_this' => '<a href="$1" $2>この質問の言い回しを変える</a>',
 	'research_this_on_wikipedia' => 'ウィキペディアで<a href="$1">この質問について調べる</a>。',
+	'reword_this' => '<a href="$1" $2>この質問の言い回しを変える</a>。',
 ];
 
 $messages['lb'] = [
@@ -2147,6 +2148,7 @@ $messages['pl'] = [
 	'quick_action_panel' => 'Panel szybkiego działania',
 	'receive_email' => '<a href="$1" $2>Otrzymaj e-mail</a> gdy zostanie udzielona odpowiedź na to pytanie',
 	'research_this_on_wikipedia' => '<a href="$1">Wyszukaj odpowiedzi na to pytanie</a> na Wikipedii',
+	'reword_this' => '<a href="$1" $2>Przeredaguj to pytanie</a>',
 ];
 
 $messages['pms'] = [
@@ -2485,7 +2487,7 @@ $messages['sv'] = [
 	'answers-category-count-unanswered' => 'Denna kategori innehåller $1 {{PLURAL:$1|obesvarad fråga|obesvarade frågor}}.',
 	'answers_widget_no_questions' => '<a href="http://answers.wikia.com" target="_blank">Wikianswers</a> är en webbplats där du kan ställa frågor och bidra med svar. Vi siktar mot att skapa det bästa svaret på någon fråga. <a href="http://answers.wikia.com/wiki/Special:Search" target="_blank">Hitta</a> och svara på<a href="http://answers.wikia.com/wiki/Category:Un-answered_questions">obesvarade</a> frågor. Det är en wiki - så vara djärv!',
 	'answers_widget_no_questions_askabout' => '<br /><br />Komma igång med att ställa en fråga om "{{PAGENAME}}"',
-	'reword_this' => '<a href="$1" $2>Omformulera frågan</a>',
+	'reword_this' => '<a href="$1" $2>Omformulera denna fråga</a>',
 	'no_related_answered_questions' => 'Det finns inga relaterade frågor ännu. Skaffa en <a href="http://answers.wikia.com/wiki/Special:Randomincategory/answered_questions">slumpmässig besvarad fråga istället</a>, eller ställ en ny fråga!<br />
 	<div class="createbox" align="center">
 	<p></p><form name="createbox" action="/index.php" method="get" class="createboxForm">
@@ -2663,6 +2665,7 @@ $messages['no'] = [
 	'rephrase_this' => '<a href="$1" $2>Omformuler spørsmålet</a>',
 	'research_this' => 'Undersøk dette',
 	'research_this_on_wikipedia' => '<a href="$1">Undersøk dette spørsmålet</a> på Wikipedia',
+	'reword_this' => '<a href="$1" $2>Omformuler dette spørsmålet</a>',
 ];
 
 $messages['zh-hant'] = [
