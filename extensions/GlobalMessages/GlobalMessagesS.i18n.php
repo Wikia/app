@@ -28027,9 +28027,9 @@ De laatste regel uit het blokkeerlogboek wordt hieronder ter referentie weergege
 	'sp-contributions-username' => 'IP-adres of gebruikersnaam:',
 	'sp-contributions-toponly' => 'Alleen nieuwste versies weergeven',
 	'sp-contributions-submit' => 'Bekijken',
-	'sorbsreason' => 'Uw IP-adres staat bekend als open proxyserver in de DNS-blacklist die {{SITENAME}} gebruikt.',
-	'sorbs_create_account_reason' => 'Uw IP-adres staat bekend als open proxyserver in de DNS-blacklist die {{SITENAME}} gebruikt.
-U kunt geen gebruiker registreren.',
+	'sorbsreason' => 'Je IP-adres staat bekend als open proxyserver in de DNS-blacklist die {{SITENAME}} gebruikt.',
+	'sorbs_create_account_reason' => 'Je IP-adres staat bekend als open proxyserver in de DNS-blacklist die {{SITENAME}} gebruikt.
+Je kunt geen gebruiker registreren.',
 	'selfmove' => 'U kunt een pagina niet hernoemen naar dezelfde paginanaam.',
 	'semiprotectedpagemovewarning' => '\'\'\'Let op:\'\'\' Deze pagina kan alleen door geregistreerde gebruikers hernoemd worden.
 De laatste logboekregel staat hieronder:',
