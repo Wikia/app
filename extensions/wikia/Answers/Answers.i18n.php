@@ -456,7 +456,7 @@ $messages['de'] = [
 	'ask_thanks' => 'Danke für diese tolle Frage!',
 	'question_asked_by' => 'Frage gestellt von',
 	'question_asked_by_a_wikia_user' => 'Frage eines Fandom-Benutzers',
-	'new_question_comment' => 'neue Frage',
+	'new_question_comment' => 'Neue Frage',
 	'answers_toolbox' => 'Wikianswers-Toolbox',
 	'improve_this_answer' => 'Verbessere diese Antwort',
 	'answer_this_question' => 'Beantworte diese Frage',
@@ -1412,6 +1412,7 @@ $messages['ja'] = [
 	'edit_points' => '編集ポイント',
 	'improve_this_answer' => 'この回答を更新する',
 	'in_category' => 'カテゴリ',
+	'new_question_comment' => '新しい質問',
 ];
 
 $messages['lb'] = [
@@ -2163,6 +2164,7 @@ $messages['pt'] = [
 	'badWords' => 'merda filhodaputa bunda',
 	'improve_this_answer' => 'Melhore esta resposta',
 	'in_category' => '...na categoria',
+	'new_question_comment' => 'nova pergunta',
 ];
 
 $messages['pt-br'] = [
@@ -2189,6 +2191,7 @@ $messages['pt-br'] = [
 	'badWords' => 'merda filhodaputa bunda',
 	'improve_this_answer' => 'Melhore esta resposta',
 	'in_category' => '...na categoria',
+	'new_question_comment' => 'nova pergunta',
 ];
 
 $messages['roa-tara'] = [
@@ -2571,6 +2574,7 @@ $messages['no'] = [
 	'magic_answer_headline' => 'Besvarer dette spørsmålet ditt?',
 	'magic_answer_no' => 'Nei, ikke bruk dette',
 	'magic_answer_yes' => 'Ja, bruk dette som utgangspunkt',
+	'new_question_comment' => 'nytt spørsmål',
 ];
 
 $messages['zh-hant'] = [
@@ -2597,6 +2601,7 @@ $messages['ko'] = [
 	'facebook_ask' => 'Facebook에 문의하기',
 	'facebook_send_request' => 'Facebook 친구들에게 바로 보내기',
 	'facebook_signed_in' => 'Facebook 연동 기능을 사용하여 로그인했습니다.',
+	'new_question_comment' => '새 질문',
 ];
 
 $messages['bg'] = [
