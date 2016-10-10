@@ -1670,7 +1670,7 @@ $messages['ja'] = [
 	'multiwikifinder' => '複数ウィキでのタイトルの検索',
 	'multiwikifindpagenames' => 'ページ名を検索',
 	'multiwikienterpagename' => 'ページ名を入力:',
-	'multiwikirecords' => '$1 の{{PLURAL:$1|ウィキ}}が見つかりました',
+	'multiwikirecords' => '$1 のウィキが見つかりました',
 	'multiwikifinder-redirect' => '転送',
 	'action-multiwikifinder' => 'Fandom全体で特定のタイトルを検索',
 ];
@@ -1778,7 +1778,7 @@ $messages['ko'] = [
 	'multidelete_german_wikis' => '모든 독일어 위키',
 	'multiwikifinder' => '전역 문서 검색기',
 	'multiwikifindpagenames' => '문서 이름 검색',
-	'multiwikienterpagename' => '문서 이름 입력:',
+	'multiwikienterpagename' => '검색:',
 	'multiwikirecords' => '위키 $1개 발견',
 	'multiwikifinder-redirect' => '넘겨주기',
 	'multidelete_button' => '삭제',
