@@ -34,7 +34,7 @@ $messages['cs'] = [
 $messages['de'] = [
 	'skinchooser-desc' => 'Ermöglicht Benutzern in ihren Einstellungen Skins zu wählen',
 	'new-look' => 'Wikia',
-	'site-layout' => 'Seitenlayouts',
+	'site-layout' => 'Layout',
 ];
 
 $messages['es'] = [
@@ -101,7 +101,7 @@ $messages['kn'] = [
 
 $messages['ko'] = [
 	'new-look' => '위키아 기본 스킨',
-	'site-layout' => '사이트 배치',
+	'site-layout' => '스킨',
 ];
 
 $messages['lrc'] = [
