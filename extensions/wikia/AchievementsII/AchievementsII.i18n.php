@@ -10414,7 +10414,7 @@ $messages['zh-hans'] = [
 
 如果你决定不想要重视这个类别，你可以之后关闭这个轨道，只要把之前启用的格子中取消，再点击保存，就可以关闭。之后用户就不再会获得该类别的徽章，但之前获得的徽章还是会保留。这有助于为成就系统带来另一层次的乐趣！试试看吧！',
 	'achievements-create-edit-plus-category' => '创建此轨道',
-	'platinum' => '铂',
+	'platinum' => '白金徽章',
 	'achievements-community-platinum-awarded-email-subject' => '你被授予了一枚新的铂徽章!',
 	'achievements-community-platinum-awarded-email-body-text' => '恭喜您，$1!
 
@@ -10623,7 +10623,7 @@ $messages['zh-hant'] = [
 	'achievements-leaderboard-points' => '{{PLURAL:$1|點|點}}',
 	'achievements-send' => '保存圖片',
 	'achievements-about-title' => '有關此頁...',
-	'platinum' => '白金',
+	'platinum' => '白金徽章',
 	'achievements-community-platinum-edit' => '編輯',
 	'achievements-community-platinum-save' => '儲存',
 	'achievements-community-platinum-cancel' => '取消',
@@ -11140,6 +11140,7 @@ $5',
 	'achievements-you-must' => '您需要 $1 以獲得此徽章。',
 	'achievementscustomize' => '自訂徽章',
 	'achievementsii-desc' => '一個為維基用戶提供的成就徽章系統',
+	'platinum' => '白金徽章',
 ];
 
 $messages['zh-tw'] = [
@@ -11385,6 +11386,7 @@ $5',
 	'achievements-you-must' => '您需要 $1 以獲得此徽章。',
 	'achievementscustomize' => '自訂徽章',
 	'achievementsii-desc' => '一個為維基用戶提供的成就徽章系統',
+	'platinum' => '白金徽章',
 ];
 
 $messages['zh'] = [
@@ -11476,5 +11478,6 @@ $messages['zh'] = [
 	'achievements-track-name-picture' => '图片轨道',
 	'achievements-upload-not-allowed' => '管理员可以点击[[Special:AchievementsCustomize|自订成就]]页面来更改成就徽章的名称和图片。',
 	'achievements-you-must' => '您需要 $1 以获得此徽章。',
+	'platinum' => '白金徽章',
 ];
 
