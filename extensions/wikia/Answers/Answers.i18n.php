@@ -439,7 +439,7 @@ $messages['br'] = [
 $messages['de'] = [
 	'answer_title' => 'Antwort',
 	'answered_by' => 'Bearbeitet von',
-	'unregistered' => 'Nicht registriert',
+	'unregistered' => 'Unregistrierte(r) Benutzer',
 	'anonymous_edit_points' => '$1 {{PLURAL:$1|Helfer|Helfer}}',
 	'edit_points' => '{{PLURAL:$1|Punkt|Punkte}}',
 	'ask_a_question' => 'Gib deine Frage ein...',
@@ -1436,6 +1436,7 @@ $messages['ja'] = [
 	'see_all' => '全て見る',
 	'tog-hidefromattribution' => '投稿者のリストに自分のアバターと名前を表示しない',
 	'unanswered_category' => '回答待ちの質問',
+	'unregistered' => '未登録',
 ];
 
 $messages['lb'] = [
@@ -2679,6 +2680,7 @@ $messages['no'] = [
 	'research_this_on_wikipedia' => '<a href="$1">Undersøk dette spørsmålet</a> på Wikipedia',
 	'reword_this' => '<a href="$1" $2>Omformuler dette spørsmålet</a>',
 	'unanswered_category' => 'Ubesvarte spørsmål',
+	'unregistered' => 'Uregistrert',
 ];
 
 $messages['zh-hant'] = [
