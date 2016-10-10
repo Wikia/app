@@ -54,8 +54,7 @@ Please log in again after you receive it.',
 	'preview' => 'Preview',
 	'previewnote' => '<strong>Preview mode: no changes saved yet! Scroll down to continue editing.</strong>',
 	'previewconflict' => 'This preview reflects the text in the upper text editing area as it will appear if you choose to save.',
-	'protectedpagewarning' => '\'\'\'Warning: This page has been protected so that only users with administrator privileges can edit it.\'\'\'
-The latest log entry is provided below for reference:',
+	'protectedpagewarning' => '<strong>NOTE: This page has been protected so that only users with administrator privileges can edit it.</strong>',
 	'permissionserrors' => 'Permissions errors',
 	'permissionserrorstext' => 'You do not have permission to do that, for the following {{PLURAL:$1|reason|reasons}}:',
 	'permissionserrorstext-withaction' => 'You do not have permission to $2, for the following {{PLURAL:$1|reason|reasons}}:',
@@ -9632,7 +9631,7 @@ A continuación se muestran las opciones actuales de la página \'\'\'$1\'\'\':'
 	'proxyblockreason' => 'Su dirección IP ha sido bloqueada porque es un proxy abierto. Por favor, contacte con su proveedor de servicios de Internet o con su servicio de asistencia técnica e infórmeles de este grave problema de seguridad.',
 	'proxyblocksuccess' => 'Hecho.',
 	'pagemovedsub' => 'Renombrado realizado con éxito',
-	'protectedpagemovewarning' => '\'\'\'Advertencia:\'\'\' Esta página ha sido bloqueada de tal manera que solamente usuarios con privilegios de administrador puedan trasladarla.
+	'protectedpagemovewarning' => '\'\'\'Advertencia:\'\'\' Esta página ha sido bloqueada de tal manera que solamente usuarios con privilegios de administrador puedan renombrarla.
 A continuación se muestra la última entrada de registro para referencia:',
 	'print.css' => '/* Los estilos CSS colocados aquí afectarán la impresión */',
 	'pageinfo-title' => 'Información para «$1»',
@@ -16660,7 +16659,7 @@ Per favore, effettua un accesso non appena la ricevi.',
 	'preview' => 'Anteprima',
 	'previewnote' => '\'\'\'Questa è solo un\'anteprima; le modifiche alla pagina NON sono ancora state salvate!\'\'\'',
 	'previewconflict' => 'L\'anteprima corrisponde al testo presente nella casella di modifica superiore e rappresenta la pagina come apparirà se si sceglie di premere "Salva la pagina" in questo momento.',
-	'protectedpagewarning' => '\'\'\'ATTENZIONE: Questa pagina è stata bloccata in modo che solo gli utenti con privilegi di amministratore possano modificarla.\'\'\'
+	'protectedpagewarning' => '\'\'\'ATTENZIONE: Questa pagina è stata protetta in modo che solo gli utenti con privilegi di amministratore possano modificarla.\'\'\'
 L\'ultimo elemento del registro è riportato di seguito per informazione:',
 	'permissionserrors' => 'Errore nei permessi',
 	'permissionserrorstext' => 'Non si dispone dei permessi necessari ad eseguire l\'azione richiesta, per {{PLURAL:$1|il seguente motivo|i seguenti motivi}}:',
@@ -28641,7 +28640,7 @@ Po otrzymaniu go zaloguj się ponownie.',
 	'preview' => 'Podgląd',
 	'previewnote' => '\'\'\'To jest tylko podgląd – zmiany nie zostały jeszcze zapisane!\'\'\'',
 	'previewconflict' => 'Podgląd odnosi się do tekstu z górnego pola edycji. Tak będzie wyglądać strona, jeśli zdecydujesz się ją zapisać.',
-	'protectedpagewarning' => '\'\'\'Uwaga! Możliwość modyfikacja tej strony została zabezpieczona. Mogą ją edytować jedynie użytkownicy z uprawnieniami administratora.\'\'\'
+	'protectedpagewarning' => '\'\'\'Uwaga! Możliwość modyfikacji tej strony została zabezpieczona. Mogą ją edytować jedynie użytkownicy z uprawnieniami administratora.\'\'\'
 Ostatni wpis z rejestru jest pokazany poniżej.',
 	'permissionserrors' => 'Błędy uprawnień',
 	'permissionserrorstext' => 'Nie masz uprawnień do tego działania z {{PLURAL:$1|następującej przyczyny|następujących przyczyn}}:',
@@ -35445,8 +35444,8 @@ ___________________________________________________________
 	'previewconflict' => 'Den här förhandsvisningen är resultatet av den
 redigerbara texten ovanför,
 så som det kommer att se ut om du väljer att spara.',
-	'protectedpagewarning' => '\'\'\'Varning: Den här sidan har låsts så att bara användare med administratörsrättigheter kan redigera den.\'\'\'
-Den senaste loggposten tillhandahålls nedan som referens:',
+	'protectedpagewarning' => '<strong>VARNING: Den här sidan har låsts så att bara administratörer kan redigera den.</strong><br/>
+Kontrollera att du följer några skyddade sida riktlinjer.',
 	'permissionserrors' => 'Behörighetsfel',
 	'permissionserrorstext' => 'Du har inte behörighet att göra det du försöker göra, av följande {{PLURAL:$1|anledning|anledningar}}:',
 	'permissionserrorstext-withaction' => 'Du har inte behörighet att $2, av följande {{PLURAL:$1|anledning|anledningar}}:',
@@ -41126,6 +41125,7 @@ $messages['zh-cn'] = [
 	'permalink' => '固定链结',
 	'prefixindex' => '前缀索引',
 	'prefs-help-email' => '*<strong>电子邮件</strong>（可选）：让他人通过网站在不知道您的电子邮件地址的情况下通过电子邮件与您联络，以及通过电子邮件取得遗忘的密码。',
+	'protectedpages' => '被保护的页面',
 ];
 
 $messages['zh-hans'] = [
@@ -41585,6 +41585,7 @@ $messages['zh-hk'] = [
 	'prefs-help-email' => '*<strong>電子郵件</strong>（可選）：讓他人通過網站在不知道您的電子郵件地址的情況下通過電子郵件與您聯絡，以及通過電子郵件取得遺忘的密碼。',
 	'prefs-i18n' => '字體轉換',
 	'profile' => '用戶檔案',
+	'protectedpages' => '被保護的頁面',
 ];
 
 $messages['zh-min-nan'] = [
@@ -41660,6 +41661,7 @@ ___________________________________________________________
 	'permalink' => '固定鏈結',
 	'prefs-i18n' => '字體轉換',
 	'profile' => '用戶檔案',
+	'protectedpages' => '被保護的頁面',
 ];
 
 $messages['zh-yue'] = [
@@ -41732,5 +41734,6 @@ $messages['zh'] = [
 	'prefs-help-email' => '*<strong>电子邮件</strong>（可选）：让他人通过网站在不知道您的电子邮件地址的情况下通过电子邮件与您联络，以及通过电子邮件取得遗忘的密码。',
 	'prefs-i18n' => '字体转换',
 	'profile' => '用户档案',
+	'protectedpages' => '被保护的页面',
 ];
 

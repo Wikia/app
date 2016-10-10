@@ -67,7 +67,7 @@ $messages['en'] = [
 	'longpagewarning-notice' => '',
 	'userinvalidcssjstitle-notice' => '\'\'\'Warning:\'\'\' There is no skin "$1". [More info]',
 	'semiprotectedpagewarning-notice' => '\'\'\'Note:\'\'\' This page has been locked so that only registered users can edit it. You may need to log in to edit. [More info]',
-	'protectedpagewarning-notice' => '\'\'\'Note:\'\'\' This page has been locked so that only admins can edit it. Local admins can change this status. [More info]',
+	'protectedpagewarning-notice' => '\'\'\'Note:\'\'\' This page has been protected so that only users with certain privileges can edit it. [More info]',
 	'titleprotectedwarning-notice' => '\'\'\'Note:\'\'\' This page has been locked so that only certain users (either admins or registered users) can create it. [More info]',
 	'recreate-moveddeleted-warn-notice' => '\'\'\'Note:\'\'\' You are recreating a page that was previously deleted. [More info]',
 	'restore-edits-notice' => 'Welcome back! We\'ve restored some changes you had not published. <a class=\'notice-action restoreeditlink\'>Delete my changes and start a new edit</a>',
@@ -1136,6 +1136,7 @@ $messages['it'] = [
 	'editpagelayout-preview-label-mobile' => 'Mobile',
 	'editpagelayout-pageControls-newSectionLabel' => 'Aggiungi un titolo di sezione',
 	'editpagelayout-subject-headline-label' => 'Oggetto/titolo:',
+	'protectedpagewarning-notice' => '\'\'\'Nota:\'\'\' Questa pagina è stata protetta in modo che solo gli amministratori possano modificarla. Gli amministratori locali possono cambiare questo stato. [Maggiori informazioni]',
 ];
 
 $messages['ja'] = [
