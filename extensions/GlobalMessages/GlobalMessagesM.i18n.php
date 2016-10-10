@@ -191,17 +191,17 @@ Others will be hidden by default.
 	'monthsall' => 'all',
 	'move-redirect-suppressed' => 'redirect suppressed',
 	'monaco-sidebar' => '*mainpage|{{SITENAME}}
-*mainpage|Top Content
-**#popular#|most_popular
+*randompage-url|randompage
+*mainpage|TopContent
 **#visited#|most_visited
-**#voted#|highest_ratings
 **#newlychanged#|newly_changed
-*portal-url|Community
-**#topusers#|top_users
-**portal-url|portal
-**forum-url|forum
+* newfiles-url|NewPictures
+*blogs-recent-url|blogs-recent-url-text
 *#category1#
-*#category2#',
+*#category2#
+*portal-url|community
+**portal-url|portal
+**forum-url|forum',
 	'mu_login' => 'You must be logged in to upload files.',
 	'mycontributions' => 'My contributions',
 	'multiplefileuploadsummary' => 'Summary:',
@@ -7091,6 +7091,19 @@ Weitere werden standardmäßig nicht angezeigt.
 	'messagebar_mess' => 'Wusstest du, dass du <a href="$1">diese Seite bearbeiten</a> und <a href="$2">eine neue Seite erstellen</a> kannst? <a href="$3">Finde heraus</a> wie das funktioniert.',
 	'mobile-hide' => 'ausblenden',
 	'mobile-show' => 'anzeigen',
+	'monaco-sidebar' => '*mainpage|{{SITENAME}}
+*mainpage|Top-Inhalte
+**#popular#|Ausgewählte Artikel
+**#visited#|Am häufigsten besucht
+**#voted#|Am besten bewertet
+**#newlychanged#|Zuletzt geändert
+*portal-url|Community
+**#topusers#|Top-Benutzer
+**{{SITENAME}}:Community Portal|Community-Portal
+**blogs-recent-url|Letzte Blog-Beiträge
+**Forum:Index|Forum
+*#category1#
+*#category2#',
 ];
 
 $messages['de-ch'] = [
@@ -9111,6 +9124,20 @@ $messages['fa'] = [
 * gpsaltitude',
 	'monthsall' => 'همهٔ ماه‌ها',
 	'masthead-anonymous-user' => 'کاربر ناشناس',
+	'monaco-sidebar' => '*mainpage|{{SITENAME}}
+*mainpage|مطالب برتر
+**#popular#|most_popular
+**#visited#|most_visited
+**#voted#|highest_ratings
+**#newlychanged#|تغییرات اخیر
+* Special:NewFiles|تصاویر جدید
+*blogs-recent-url|blogs-recent-url-text
+*#category1#
+*#category2#
+*portal-url|جامعه
+**#topusers#|کاربران برتر
+**portal-url|ورودی کاربران
+**forum-url|فوروم',
 ];
 
 $messages['ff'] = [
@@ -9783,6 +9810,18 @@ Si vous l’exécutez, votre système peut être compromis.',
 	'masthead-anonymous-user' => 'Contributeur Wikia',
 	'mobile-hide' => 'Masquer',
 	'mobile-show' => 'Afficher',
+	'monaco-sidebar' => '*mainpage|{{SITENAME}}
+*mainpage|Palmarès
+**#popular#|Contenu le plus vu
+**#visited#|Pages les plus visitées
+**#voted#|Pages les plus annotées
+**#newlychanged#|Pages modifiées récemment
+*portal-url|Communauté
+**#topusers#|Utilisateurs les plus actifs
+**portal-url|Portail
+**forum-url|Forum
+*#category1#
+*#category2#',
 ];
 
 $messages['frc'] = [
@@ -15117,6 +15156,18 @@ contenttype/subtypeの形式で指定してください（例：<tt>image/jpeg</
 	'most_emailed' => 'メールの使われた記事',
 	'manage_widgets' => 'ウィジェットの設定',
 	'masthead-anonymous-user' => '匿名ユーザー',
+	'monaco-sidebar' => '*mainpage|{{SITENAME}}
+*mainpage|コンテンツ
+**#popular#|お薦め記事
+**#visited#|most_visited
+**#voted#|レートの高い記事
+**#newlychanged#|recentchanges
+*portal-url|Community
+**#topusers#|活発な利用者
+**portal-url|portal
+**Forum:Index|forum
+*#category1#
+*#category2#',
 ];
 
 $messages['jam'] = [
@@ -17603,6 +17654,18 @@ $messages['ko'] = [
 	'masthead-anonymous-user' => '익명 사용자',
 	'mobile-hide' => '가리기',
 	'mobile-show' => '보이기',
+	'monaco-sidebar' => '*mainpage|{{SITENAME}}
+*mainpage|뜨는 문서
+**#popular#|가장 인기 있는 문서
+**#visited#|가장 많이 방문한 문서
+**#voted#|별점이 높은 문서
+**#newlychanged#|새롭게 바뀐 문서
+*portal-url|사용자 모임
+**#topusers#|뜨는 사용자
+**portal-url|사용자 모임
+**forum-url|포럼
+*#category1#
+*#category2#',
 ];
 
 $messages['ko-kp'] = [
@@ -24230,6 +24293,18 @@ Andre er gøymde som standard.
 	'manage_widgets' => 'Administrer skjermelementer',
 	'masthead-anonymous-user' => 'Anonym bidragsyter',
 	'messagebar_mess' => 'Visste du at du kan <a href="$1">endre denne siden</a> eller <a href="$2">opprette en ny en</a>? <a href="$3">Finn ut hvordan</a> dette virker.',
+	'monaco-sidebar' => '*mainpage|{{SITENAME}}
+*mainpage|Toppinnhold
+**#popular#|most_popular
+**#visited#|most_visited
+**#voted#|highest_ratings
+**#newlychanged#|newly_changed
+*portal-url|Community
+**#topusers#|Toppbrukere
+**portal-url|Prosjektportal
+**forum-url|Forum
+*#category1#
+*#category2#',
 ];
 
 $messages['nov'] = [
@@ -25122,6 +25197,18 @@ Wenns des net iss, hoscht verleicht en Fehler in de Daadebank gfunne. Bitte meld
 	'movereason' => 'Grund:',
 	'metadata' => 'Metadaade',
 	'monthsall' => 'all',
+	'monaco-sidebar' => '*mainpage|{{SITENAME}}
+*mainpage|Gutr Inhalt
+**#popular#|Bekannte Seita
+**#visited#|Meistbsuachte Seita
+**#voted#|Gute Seita
+**#newlychanged#|Frisch g\'ändertes
+*portal-url|Gsellschaft
+**#topusers#|Fleißige Leut
+**portal-url|Portal
+**forum-url|Schwetzplatz
+*#category1#
+*#category2#',
 ];
 
 $messages['pdt'] = [
@@ -36947,5 +37034,17 @@ $messages['zu'] = [
 $messages['zh'] = [
 	'mobile-hide' => '隐藏',
 	'mobile-show' => '显示',
+	'monaco-sidebar' => '*mainpage|{{SITENAME}}
+*mainpage|流行内容
+**#popular#|热门
+**#visited#|访问最多
+**#voted#|尖端排名
+**#newlychanged#|最近更新
+*portal-url|社区
+**#topusers#|忠实用户
+**portal-url|门户
+**forum-url|论坛
+*#category1#
+*#category2#',
 ];
 
