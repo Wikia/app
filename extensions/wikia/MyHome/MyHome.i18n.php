@@ -719,7 +719,7 @@ Das Wiki wird durch die Gemeinschaft der Nutzer erstellt - und durch den Klick a
 	'myhome-switch-to-monaco' => 'Du musst zum Wikia-Skin wechseln, um diese Seite anzuzeigen.',
 	'myhome-namespace-blog' => 'Benutzer-Blog',
 	'myhome-community-corner-header' => 'Community-Bereich',
-	'oasis-myhome-community-corner-edit' => 'Bearbeiten &gt;',
+	'oasis-myhome-community-corner-edit' => 'Nachricht bearbeiten &gt;',
 	'myhome-community-corner-edit' => 'Bearbeiten',
 	'community-corner' => '\'\'\'Willkommen im Community-Bereich!\'\'\'
 
@@ -1945,7 +1945,7 @@ $messages['ko'] = [
 	'myhome-switch-to-monaco' => '마이 홈 기능은 위키아 기본 스킨을 사용중일 때만 보실 수 있습니다. 마이 홈 기능을 이용하기를 원하신다면 \'\'\'[[Special:Preferences|사용자 환경 설정]]\'\'\'에서 스킨을 변경해주세요.',
 	'myhome-namespace-blog' => 'Blog',
 	'myhome-community-corner-header' => '커뮤니티 코너',
-	'oasis-myhome-community-corner-edit' => '편집 &gt;',
+	'oasis-myhome-community-corner-edit' => '메시지 편집 &gt;',
 	'myhome-hot-spots-definition' => '$1일 동안 편집이 가장 많았던 문서 목록입니다.',
 	'myhome-default-view-checkbox' => '$1을 기본으로 보기',
 	'myhome-default-view-success' => '설정이 변경되었습니다.',
