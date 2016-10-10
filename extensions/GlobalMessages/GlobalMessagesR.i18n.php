@@ -11334,7 +11334,7 @@ $messages['es'] = [
 	'redirectpagesub' => 'Página redirigida',
 	'retrievedfrom' => 'Obtenido de «$1»',
 	'restorelink' => '{{PLURAL:$1|una edición borrada|$1 ediciones borradas}}',
-	'red-link-title' => '$1 (la página no existe)',
+	'red-link-title' => '$1 (aún no está redactado)',
 	'readonly' => 'Base de datos bloqueada',
 	'readonlytext' => 'La base de datos no permite nuevas entradas u otras modificaciones de forma temporal, probablemente por mantenimiento rutinario, tras lo cual volverá a la normalidad.
 
