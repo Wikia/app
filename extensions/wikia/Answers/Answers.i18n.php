@@ -555,6 +555,7 @@ $messages['de'] = [
 	'anwb-thatisall-text' => 'Das wars auch schon - jetzt kann es losgehen!<br /><br />Du solltest damit beginnen, noch weitere Fragen und Antworten zu deiner Seite hinzuzufügen, so dass sie besser durch Suchmaschinen gefunden wird.<br /><br />Die Liste der Fragen aus dem letzten Schritt sind bereits auf deiner Frage-Antwort-Seite erstellt worden. Rufe sie auf, beantworte sie und starte deine eigene Community!',
 	'get_code' => 'Code holen',
 	'nwb-thatisall-headline' => 'Das wars auch schon - jetzt kann es losgehen!',
+	'q' => 'Frage:',
 ];
 
 $messages['de-formal'] = [
