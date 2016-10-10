@@ -155,7 +155,12 @@ The description on its [$2 file description page] there is shown below.',
 	'statistics-users-active' => 'Active users',
 	'statistics-users-active-desc' => 'Users who have performed an action in the last {{PLURAL:$1|day|$1 days}}',
 	'statistics-mostpopular' => 'Most viewed pages',
-	'statistics-footer' => '',
+	'statistics-footer' => '== More info ==
+\'\'\'[[Special:Insights]] has more detailed info about various aspects of this community.\'\'\'
+
+See also:
+* [[Special:SpecialPages|Special]] pages
+* [[Special:AllMessages|MediaWiki]] messages',
 	'specialpage-empty' => 'There are no results for this report.',
 	'shortpages' => 'Short pages',
 	'shortpages-summary' => '',
@@ -8590,6 +8595,12 @@ Diese Seite bietet einen Überblick aller [[w:c:hilfe:Hilfe:Spezialseiten|Spezia
 
 Spezialseiten werden automatisch erstellt und sind nicht direkt zu bearbeiten. 
 |}',
+	'statistics-footer' => '== Weitere Informationen ==
+Auf der Seite \'\'\'[[Special:WikiStats]] finden sich eine Menge weiterer statistischer Informationen zu diesem Wiki.\'\'\'
+
+Siehe auch:
+* [[Special:Specialpages|Spezialseiten]]
+* [[Special:Allmessages|MediaWiki-Systemnachrichten]]',
 ];
 
 $messages['de-ch'] = [
@@ -9960,7 +9971,7 @@ La descripción en su [$2 página de descripción del archivo] está mostrada de
 	'statistics-header-hooks' => 'Otras estadísticas',
 	'statistics-articles' => 'Páginas de contenido',
 	'statistics-pages' => 'Páginas',
-	'statistics-pages-desc' => 'Todas las páginas en el wiki, incluyendo páginas de discusión, redirecciones, etc.',
+	'statistics-pages-desc' => 'Todas las páginas del wiki, incluyendo discusiones, redirecciones, etc.',
 	'statistics-files' => 'Ficheros subidos',
 	'statistics-edits' => 'Ediciones en páginas desde que {{SITENAME}} fue instalado',
 	'statistics-edits-average' => 'Media de ediciones por página',
@@ -18068,7 +18079,7 @@ $messages['ja'] = [
 	'statistics-header-hooks' => 'その他の統計',
 	'statistics-articles' => '記事数',
 	'statistics-pages' => '総ページ数',
-	'statistics-pages-desc' => 'このウィキ内のすべてのページです（トークページや転送などを含む）。',
+	'statistics-pages-desc' => 'トークページやリダイレクトなどを含んだこのウィキア内のすべてのページです。',
 	'statistics-files' => 'アップロードされたファイル数',
 	'statistics-edits' => '{{SITENAME}}が開設されてからの編集回数の総計',
 	'statistics-edits-average' => '1ページあたりの編集回数',
