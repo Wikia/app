@@ -1408,6 +1408,7 @@ $messages['ja'] = [
 	'notify_answered' => '回答されたらメールで通知する',
 	'notify_improved' => '回答が更新されたらメールで通知する',
 	'popular_categories' => '人気カテゴリ',
+	'prev_page' => '&laquo; 前',
 ];
 
 $messages['lb'] = [
@@ -2083,7 +2084,7 @@ $messages['pl'] = [
 	'number_of_items' => 'Liczba elementów do wyświetlenia',
 	'width' => 'Szerokość',
 	'next_page' => 'Następne &raquo;',
-	'prev_page' => '&laquo; Poprzednie',
+	'prev_page' => '&laquo; Poprzednia',
 	'see_all' => 'Zobacz wszystkie',
 	'link_color' => 'Kolor linku pytania',
 	'widget_order' => 'Kolejność Pytań',
@@ -2167,6 +2168,7 @@ $messages['pt'] = [
 	'notify_answered' => 'Avise-me por email quando tiver resposta.',
 	'notify_improved' => 'Avise-me por email sobre as alterações da resposta.',
 	'popular_categories' => 'Categorias mais populares',
+	'prev_page' => '« Anteriores',
 ];
 
 $messages['pt-br'] = [
@@ -2198,6 +2200,7 @@ $messages['pt-br'] = [
 	'notify_answered' => 'Avise-me por email quando tiver resposta.',
 	'notify_improved' => 'Avise-me por email sobre as alterações da resposta.',
 	'popular_categories' => 'Categorias mais populares',
+	'prev_page' => '« Anteriores',
 ];
 
 $messages['roa-tara'] = [
@@ -2588,6 +2591,7 @@ $messages['no'] = [
 	'notify_improved' => 'Send meg en e-post når forbedret',
 	'number_of_items' => 'Antall objekter å vise',
 	'popular_categories' => 'Populære kategorier',
+	'prev_page' => '&laquo; Forrige',
 ];
 
 $messages['zh-hant'] = [
@@ -2618,6 +2622,7 @@ $messages['ko'] = [
 	'new_question_comment' => '새 질문',
 	'next_page' => '다음 &raquo;',
 	'no_related_answered_questions' => '관련된 질문이 없습니다.',
+	'prev_page' => '&laquo; 이전',
 ];
 
 $messages['bg'] = [
