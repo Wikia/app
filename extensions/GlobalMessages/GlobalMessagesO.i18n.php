@@ -683,6 +683,7 @@ $messages['de'] = [
 	'overwroteimage' => 'lud eine neue Version von „[[$1]]“ hoch',
 	'othercontribs' => 'Basierend auf der Arbeit von $1.',
 	'others' => 'anderen',
+	'oasis-mobile-site' => 'Mobile Ansicht',
 ];
 
 $messages['de-weigsbrag'] = [
@@ -908,6 +909,7 @@ $messages['fr'] = [
 	'overwroteimage' => 'a importé une nouvelle version de « [[$1]] »',
 	'othercontribs' => 'Basé sur le travail de $1.',
 	'others' => 'autres',
+	'oasis-mobile-site' => 'Site mobile',
 ];
 
 $messages['frc'] = [
@@ -1350,6 +1352,7 @@ $messages['it'] = [
 	'overwroteimage' => 'ha caricato una nuova versione di "[[$1]]"',
 	'othercontribs' => 'Il testo attuale è basato su contributi di $1.',
 	'others' => 'altri',
+	'oasis-mobile-site' => 'Mobile site',
 ];
 
 $messages['iu'] = [
@@ -1609,6 +1612,7 @@ $messages['ko'] = [
 	'overwroteimage' => '‘[[$1]]’ 파일의 새 버전을 올렸습니다.',
 	'othercontribs' => '$1의 작업을 바탕으로 함.',
 	'others' => '기타',
+	'oasis-mobile-site' => '모바일 사이트',
 ];
 
 $messages['ko-kp'] = [
@@ -3462,6 +3466,7 @@ $messages['zh-hans'] = [
 	'overwroteimage' => '上传“[[$1]]”的新版本',
 	'othercontribs' => '在$1的工作基础上。',
 	'others' => '其他',
+	'oasis-mobile-site' => '手机版网页',
 ];
 
 $messages['zh-hant'] = [
@@ -3475,10 +3480,12 @@ $messages['zh-hant'] = [
 	'overwroteimage' => '已經上傳「[[$1]]」的新版本',
 	'othercontribs' => '在$1的工作基礎上。',
 	'others' => '其他',
+	'oasis-mobile-site' => '手機版網頁',
 ];
 
 $messages['zh-hk'] = [
 	'october' => '十月',
+	'oasis-mobile-site' => '手機版網頁',
 ];
 
 $messages['zh-min-nan'] = [
@@ -3498,6 +3505,7 @@ $messages['zh-tw'] = [
 	'october-gen' => '十月',
 	'oct' => '10月',
 	'oldpassword' => '舊密碼',
+	'oasis-mobile-site' => '手機版網頁',
 ];
 
 $messages['zh-yue'] = [
@@ -3512,5 +3520,9 @@ $messages['zu'] = [
 	'october-gen' => 'u-Okthoba',
 	'otherlanguages' => 'Ngezilimi ezinahlukene',
 	'others' => 'Abanye',
+];
+
+$messages['zh'] = [
+	'oasis-mobile-site' => '手机版网页',
 ];
 
