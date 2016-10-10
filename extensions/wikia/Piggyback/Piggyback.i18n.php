@@ -336,6 +336,7 @@ Sprawdź poprawność wpisanej nazwy.',
 	'action-piggyback' => 'zaloguj się jako inny użytkownik',
 	'log-name-piggyback' => 'Rejestr Piggyback',
 	'log-description-piggyback' => 'Ten rejestr zawiera wszystkie logowania z użyciem piggyback.',
+	'right-piggyback' => 'Logowanie jako inny użytkownik',
 ];
 
 $messages['pms'] = [

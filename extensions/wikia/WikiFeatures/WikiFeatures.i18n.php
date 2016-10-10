@@ -1144,6 +1144,8 @@ $messages['pl'] = [
 	'wikifeatures-feature-description-wgDisableAnonymousEditing' => 'Czy chcesz, żeby wszyscy użytkownicy Twojej wikii byli zalogowani, aby móc edytować? Kiedy ta funkcja jest włączona, osoby odwiedzające stronę anonimowo nie mogą edytować stron, komentować treści na stronie, udzielać się na forum ani na tablicach użytkowników, bez uprzedniego zalogowania. Każdy ciągle może utworzyć konto na Wikii i dołączyć do Twojej społeczności!',
 	'wikifeatures-feature-heading-wgEnablePortableInfoboxEuropaTheme' => 'Motyw kolorystyczny Europa dla infoboksów',
 	'wikifeatures-feature-description-wgEnablePortableInfoboxEuropaTheme' => 'Aktywuj nowy wygląd swoich [[w:c:spolecznosc:Pomoc:Infoboksy|infoboksów]], aby w pełni wykorzystać kolorystykę twojej wiki!',
+	'right-wikifeatures' => 'Edycja Rozszerzeń Wiki',
+	'right-wikifeaturesview' => 'Przeglądanie panelu Rozszerzeń Wiki',
 ];
 
 $messages['ps'] = [

@@ -5619,6 +5619,10 @@ Oryginał wiadomości i twój komentarz wciąż pozostaną w historii wiki.',
 	'group-threadmoderator' => 'Moderatorzy dyskusji',
 	'group-threadmoderator-member' => 'Moderator dyskusji',
 	'grouppage-threadmoderator' => 'w:c:spolecznosc:Help:Uprawnienia_grup_użytkowników',
+	'right-editwallarchivedpages' => 'Edycja zarchiwizowanych stron dyskusji',
+	'right-walladmindelete' => 'Kasowanie wątków na Tablicy Wiadomości',
+	'right-walldelete' => 'Trwałe usuwanie wątków na Tablicy Wiadomości',
+	'right-wallremove' => 'Usuwanie wątków z Tablicy Wiadomości',
 ];
 
 $messages['ps'] = [

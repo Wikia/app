@@ -1186,6 +1186,7 @@ $messages['pl'] = [
 	'admindashboard-control-add-video-label' => 'Dodaj film',
 	'admindashboard-control-add-video-tooltip' => 'Dodaj nowe filmy do Twojej wiki.',
 	'admindashboard-control-special-css-tooltip' => 'Dostosuj skórkę wiki edytując lokalny kod CSS.',
+	'right-admindashboard' => 'Dostęp do Panelu Administratora',
 ];
 
 $messages['ps'] = [

@@ -729,6 +729,7 @@ $messages['fa'] = [
 	'editaccount-status-unconfirmed' => 'تأیید نشده',
 	'editaccount-status-realuser' => 'کاربر حقیقی',
 	'edit-account-closed-flag' => '<div class="errorbox" style="padding: 1em;">این حساب کاربری سراسری به دلیل[[Help:Closing an account|انتخاب کاربر]]، یا توسط ویکیا غیر فعال شده‌است.</div>',
+	'right-editaccount' => 'ویرایش صفحۀ ترجیهات کاربران دیگر',
 ];
 
 $messages['fi'] = [
@@ -1400,7 +1401,7 @@ $messages['ko'] = [
 	'editaccount-log-entry-pass' => '$2 사용자의 비밀번호를 변경했습니다',
 	'editaccount-log-entry-realname' => '$2 사용자의 실명을 변경했습니다',
 	'editaccount-log-entry-close' => '$2 계정 비활성화',
-	'right-editaccount' => '다른 사용자의 정보 편집',
+	'right-editaccount' => '다른 사용자의 계정 정보를 편집',
 	'action-editaccount' => '다른 사용자의 정보 편집',
 	'edit-account-closed-flag' => '<div class="errorbox" style="padding: 1em;">이 사용자는 모든 위키아 산하 위키에서 차단되어 있습니다.</div>',
 ];

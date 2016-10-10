@@ -26,7 +26,7 @@ $messages['en'] = [
 	'multilookupwikioptions' => 'Options',
 	'multilookuplastedithdr' => 'Last edit',
 	'multilookuprecordspager' => 'Showing \'\'\'$1\'\'\' to \'\'\'$2\'\'\' of \'\'\'$3\'\'\' records.',
-	'right-multilookup' => 'Look up information on users in multiple wikis',
+	'right-multilookup' => 'View IP actions across all Wikia',
 	'action-multilookup' => 'look up information on users in multiple wikis',
 ];
 

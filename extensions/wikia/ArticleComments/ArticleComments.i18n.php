@@ -2880,6 +2880,8 @@ ___________________________________________
 <li>W celu zmiany ustawień powiadomień e-mail, odwiedź <a href="http://spolecznosc.wikia.com/wiki/Special:Preferences">tą stronę</a>.</li>
 </ul>
 </p>',
+	'right-commentdelete' => 'Usuwanie komentarzy',
+	'right-commentedit' => 'Edytowanie komentarzy',
 ];
 
 $messages['pms'] = [

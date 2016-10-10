@@ -1548,6 +1548,7 @@ $messages['pl'] = [
 	'themedesigner-wodmark-preview' => 'Podgląd',
 	'themedesigner-wordmark-preview-error' => 'Błąd – nazwa wiki nie może być pusta, wprowadź nazwę wiki, aby zapisać.',
 	'themedesigner-upload-disabled' => 'Przepraszamy, przesyłanie plików jest tymczasowo niedostępne. Spróbuj ponownie później.',
+	'right-themedesigner' => 'Edycja wyglądu wiki przy użyciu Kreatora motywu.',
 ];
 
 $messages['pms'] = [

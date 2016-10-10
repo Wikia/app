@@ -1652,10 +1652,10 @@ $messages['oc'] = [
 
 $messages['pl'] = [
 	'toplists-desc' => 'Listy Top 10',
-	'right-toplists-create-edit-list' => 'Ttwórz i edytuj listy Top 10',
-	'right-toplists-create-item' => 'Dodawaj elementy do list Top 10',
-	'right-toplists-edit-item' => 'Edytuj elementy na listach Top 10',
-	'right-toplists-delete-item' => 'Usuwaj elementy z listy Top 10',
+	'right-toplists-create-edit-list' => 'Tworzenie i dodawanie List Top 10',
+	'right-toplists-create-item' => 'Tworzenie i dodawanie wpisów do List Top 10',
+	'right-toplists-edit-item' => 'Edytowanie wpisów na Listach Top 10',
+	'right-toplists-delete-item' => 'Usuwanie wpisów z List Top 10',
 	'createtoplist' => 'Utwórz nową listę Top 10',
 	'edittoplist' => 'Edytuj listę Top 10',
 	'toplists-category' => 'Listy Top 10',
@@ -2539,10 +2539,10 @@ $messages['vi'] = [
 
 $messages['zh-hans'] = [
 	'toplists-desc' => '前10列表',
-	'right-toplists-create-edit-list' => '创建和编辑前10列表页面',
-	'right-toplists-create-item' => '创建前10列表页面并加入项',
-	'right-toplists-edit-item' => '编辑前10列表页面的项',
-	'right-toplists-delete-item' => '从前10列表页面删除项',
+	'right-toplists-create-edit-list' => '创建和编辑排行榜单',
+	'right-toplists-create-item' => '创建排行榜单页面并加入项',
+	'right-toplists-edit-item' => '编辑排行榜单页面的项',
+	'right-toplists-delete-item' => '从排行榜单页面删除项',
 	'createtoplist' => '创建新的排行榜单',
 	'edittoplist' => '编辑排行榜单',
 	'toplists-category' => '前10列表',
@@ -2625,10 +2625,10 @@ $messages['zh-hans'] = [
 
 $messages['zh-hant'] = [
 	'toplists-desc' => '前 10 排行榜',
-	'right-toplists-create-edit-list' => '建立與編輯前 10 排行榜頁面',
-	'right-toplists-create-item' => '建立與新增項目至前 10 排行榜頁面',
-	'right-toplists-edit-item' => '編輯於前 10 排行榜頁面中的項目',
-	'right-toplists-delete-item' => '自前 10 排行榜頁面中刪除項目',
+	'right-toplists-create-edit-list' => '建立與編輯排行榜單頁面',
+	'right-toplists-create-item' => '建立與新增項目至排行榜單頁面',
+	'right-toplists-edit-item' => '編輯排行榜單頁面中的項目',
+	'right-toplists-delete-item' => '自排行榜單頁面中刪除項目',
 	'createtoplist' => '創建新的排行榜單',
 	'edittoplist' => '编辑排行榜單',
 	'toplists-category' => '前 10 排行榜',
@@ -2713,17 +2713,29 @@ $messages['zh'] = [
 	'action-toplists-create-edit-list' => '创建和编辑排行榜单页面',
 	'createtoplist' => '创建新的排行榜单',
 	'edittoplist' => '编辑排行榜单',
+	'right-toplists-create-edit-list' => '创建和编辑排行榜单',
+	'right-toplists-create-item' => '创建排行榜單页面并加入项',
+	'right-toplists-delete-item' => '从排行榜单页面删除项',
+	'right-toplists-edit-item' => '编辑排行榜单页面的项',
 ];
 
 $messages['zh-hk'] = [
 	'action-toplists-create-edit-list' => '建立與編輯排行榜頁面',
 	'createtoplist' => '創建新的排行榜單',
 	'edittoplist' => '编辑排行榜單',
+	'right-toplists-create-edit-list' => '建立與編輯排行榜單頁面',
+	'right-toplists-create-item' => '建立與新增項目至排行榜單頁面',
+	'right-toplists-delete-item' => '自排行榜單頁面中刪除項目',
+	'right-toplists-edit-item' => '編輯排行榜單頁面中的項目',
 ];
 
 $messages['zh-tw'] = [
 	'action-toplists-create-edit-list' => '建立與編輯排行榜頁面',
 	'createtoplist' => '創建新的排行榜單',
 	'edittoplist' => '编辑排行榜單',
+	'right-toplists-create-edit-list' => '建立與編輯排行榜單頁面',
+	'right-toplists-create-item' => '建立與新增項目至排行榜單頁面',
+	'right-toplists-delete-item' => '自排行榜單頁面中刪除項目',
+	'right-toplists-edit-item' => '編輯排行榜單頁面中的項目',
 ];
 

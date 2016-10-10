@@ -866,7 +866,7 @@ Presione el botón \'atrás\' en su navegador para retornar al editor de página
 #  * Todo desde un caracter "#" hasta el final de la línea es un comentario
 #  * Toda línea que no esté en blanco es un fragmento de expresión regular que se comparará con las URLs
   #</pre> <!-- deje esta línea exactamente como está -->',
-	'right-skipcaptcha' => 'Realiza acciones que despliegan un captcha sin tener que confirmar el captcha',
+	'right-skipcaptcha' => 'Realizar acciones que activan el captcha sin llegar a activarlo.',
 ];
 
 $messages['et'] = [
@@ -1513,7 +1513,7 @@ $messages['ja'] = [
 #  * "#"文字から行末まではコメントとして扱われます
 #  * 空白を含まない行は、URLに含まれるホスト名との一致を検出する正規表現です
   #</pre> <!-- この行は変更しないでください -->',
-	'right-skipcaptcha' => 'CAPTCHAが必要な場面でCAPTCHAをスキップして操作を実行',
+	'right-skipcaptcha' => 'キャプチャのある動作をパスして活動できる',
 	'captcha-input-placeholder' => '文字列を入力',
 ];
 
@@ -2289,7 +2289,7 @@ Wciśnij przycisk „wstecz” w przeglądarce by powrócić do edycji strony.',
 #   * Linie zaczynające się od znaku „#” są komentarzami
 #   * Każda linia, która nie jest pusta, jest wyrażeniem regularnym, które ma pasować do adresu serwera (fragmentu URL)
   #</pre> <!-- nie modyfikuj tej linii -->',
-	'right-skipcaptcha' => 'Dostęp do czynności zabezpieczonych pytaniem o treść obrazka lub rozwiązanie zadania, z pominięciem zabezpieczenia',
+	'right-skipcaptcha' => 'Dostęp do czynności zabezpieczonych pytaniem o treść obrazka lub rozwiązanie zadania, z pominięciem tego zabezpieczenia',
 	'captcha-input-placeholder' => 'Wprowadź tekst',
 ];
 

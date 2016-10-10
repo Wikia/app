@@ -1081,6 +1081,7 @@ $messages['fr'] = [
 	'user-identity-box-group-adminmentor' => 'Administrateur référent',
 	'user-identity-box-discussion-posts' => 'Messages de discussion',
 	'user-identity-box-group-vanguard' => 'Vanguard',
+	'right-authenticated' => 'Un compte qui a été considéré par Wikia comme étant une source d\'industrie légitime (par exemple, une célébrité ou un dévelopeur de jeux vidéo)',
 ];
 
 $messages['gl'] = [
@@ -1646,6 +1647,7 @@ $messages['ja'] = [
 	'user-identity-box-group-adminmentor' => 'アドミン・アドバイザー',
 	'user-identity-box-discussion-posts' => 'トークの投稿数',
 	'user-identity-box-group-vanguard' => 'Vanguard',
+	'right-removeavatar' => '利用者のアバターの削除',
 ];
 
 $messages['lb'] = [
@@ -2294,6 +2296,9 @@ $messages['pl'] = [
 	'user-identity-box-group-adminmentor' => 'Mentor',
 	'user-identity-box-discussion-posts' => 'Postów w Dyskusjach',
 	'user-identity-box-group-vanguard' => 'Vanguard',
+	'right-authenticated' => 'Oficjalne konto zweryfikowane jako należące np. do znanej osoby czy producenta gry',
+	'right-council' => 'Użytkownik należący do Community Council',
+	'right-removeavatar' => 'Usuwanie awatarów użytkowników',
 ];
 
 $messages['pms'] = [
@@ -3487,5 +3492,9 @@ $messages['zh'] = [
 
 $messages['zh-hk'] = [
 	'blog-avatar-alt' => '關於使用者頭像添加和移除的日誌',
+];
+
+$messages['fa'] = [
+	'right-removeavatar' => 'حذف آواتار کاربران',
 ];
 

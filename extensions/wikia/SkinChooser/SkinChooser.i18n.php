@@ -6,7 +6,7 @@ $messages['en'] = [
 	'skinchooser-desc' => 'Allows users to choose skins in their preferences',
 	'new-look' => 'Wikia',
 	'site-layout' => 'Site Layouts',
-	'right-setadminskin' => 'Set the wiki\'s default skin',
+	'right-setadminskin' => 'Set the default skin',
 ];
 
 $messages['ar'] = [
@@ -142,6 +142,7 @@ $messages['pl'] = [
 	'skinchooser-desc' => 'Pozwala użytkownikom wybrać skórkę w swoich preferencjach',
 	'new-look' => 'Wikia',
 	'site-layout' => 'Skórka',
+	'right-setadminskin' => 'Ustawianie domyślnej skórki na wiki',
 ];
 
 $messages['pms'] = [

@@ -884,7 +884,7 @@ Haz clic en el botón "atrás" de tu navegador para volver a la página del edit
 # * Todo desde un caracter "#" hasta el final de la línea es un comentario
 # * Toda línea que no esté en blanco es un fragmento de expresión regular que se comparará con las URLs
  #</pre> <!-- deje esta línea exactamente como está -->',
-	'right-skipcaptcha' => 'Realiza acciones que disparan la protección CAPTCHA sin tener que escribir el código.',
+	'right-skipcaptcha' => 'Realizar acciones que activan el captcha sin llegar a activarlo.',
 	'captcha-input-placeholder' => 'Introduce el texto aquí',
 	'captcha-recaptcha-desc' => 'Módulo reCAPTCHA para confirmar la edición',
 	'captcha-recaptcha-edit' => 'Como medida de protección contra el spam automatizado en las ediciones, es necesario que completes la siguiente prueba:',
@@ -1564,7 +1564,7 @@ $messages['ja'] = [
 #   * 「#」の文字から行の末尾までのすべてがコメントです
 #   * 空白以外の行はすべて、URL内のホストのみとマッチする正規表現のフラグメントです
  #</pre> <!-- この行は変更しないでください -->',
-	'right-skipcaptcha' => 'CAPTCHAを行わずにCAPTCHAを起こす操作を実行します',
+	'right-skipcaptcha' => 'キャプチャのある動作をパスして活動できる',
 	'captcha-input-placeholder' => '文字列を入力',
 	'captcha-recaptcha-desc' => '編集の確認用reCAPTCHAモジュール',
 	'captcha-recaptcha-edit' => '自動化された編集スパムを防止するため、下の画像認証を行ってください:',
@@ -2364,8 +2364,7 @@ Wciśnij przycisk „wstecz” w przeglądarce by powrócić do edycji strony.',
 #   * Linie zaczynające się od znaku „#” są komentarzami
 #   * Każda linia, która nie jest pusta, jest wyrażeniem regularnym, które ma pasować do adresu serwera (fragmentu URL)
   #</pre> <!-- nie modyfikuj tej linii -->',
-	'right-skipcaptcha' => 'Dostęp do czynności zabezpieczonych pytaniem o treść obrazka lub rozwiązanie zadania, z pominięciem tego zabezpieczenia
-',
+	'right-skipcaptcha' => 'Dostęp do czynności zabezpieczonych pytaniem o treść obrazka lub rozwiązanie zadania, z pominięciem tego zabezpieczenia',
 	'captcha-input-placeholder' => 'Wprowadź tekst',
 	'captcha-recaptcha-desc' => 'Moduł reCAPTCHA do potwierdzenia edycji',
 	'captcha-recaptcha-edit' => 'Aby pomóc w ochronie przed zautomatyzowanym spamem, proszę uzupełnić odpowiednie pola:',
