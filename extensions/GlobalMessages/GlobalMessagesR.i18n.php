@@ -32134,10 +32134,10 @@ Mogelijk hebt u uw wachtwoord al gewijzigd of een nieuw tijdelijk wachtwoord aan
 Het is misschien verstandig om je tekst tijdelijk in een tekstbestand op te slaan om dit te bewaren voor wanneer de blokkering van de database opgeheven is.\'\'\'
 
 Een beheerder heeft de database geblokkeerd om de volgende reden: $1',
-	'recreate-moveddeleted-warn' => '\'\'\'Waarschuwing: u bent bezig met het aanmaken van een pagina die in het verleden verwijderd is.\'\'\'
+	'recreate-moveddeleted-warn' => '\'\'\'Waarschuwing: je bent bezig met het aanmaken van een pagina die in het verleden verwijderd is.\'\'\'
 
-Overweeg of het terecht is dat u verder werkt aan deze pagina.
-Voor uw gemak staan hieronder het verwijderingslogboek en het hernoemingslogboek voor deze pagina:',
+Overweeg of het terecht is dat je verder werkt aan deze pagina.
+Voor je gemak staan hieronder het verwijderingslogboek en het hernoemingslogboek voor deze pagina:',
 	'revisionasof' => 'Versie van $2 om $3',
 	'revision-info' => 'Versie door $2 op $4 om $5',
 	'rev-deleted-comment' => '(bewerkingssamenvatting verwijderd)',
