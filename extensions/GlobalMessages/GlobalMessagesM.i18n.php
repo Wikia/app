@@ -7393,6 +7393,7 @@ Weitere werden standardmäßig nicht angezeigt.
 *#category2#',
 	'move-redirect-suppressed' => 'Weiterleitung unterdrückt',
 	'mu_login' => 'Du musst angemeldet sein um Dateien hochladen zu können.',
+	'multiplefileuploadsummary' => 'Zusammenfassung:',
 ];
 
 $messages['de-ch'] = [
@@ -8751,6 +8752,7 @@ Existen otros campos que se mantendrán ocultos por defecto.
 	'masthead-anonymous-user' => 'Editor no registrado',
 	'messagebar_mess' => '¿Sabes que puedes <a href="$1">editar esta página</a> o <a href="$2">crear una nueva</a>? <a href="$3">Averigua cómo</a> se hace.',
 	'mu_login' => 'Debes identificarte para subir archivos',
+	'multiplefileuploadsummary' => 'Resumen:',
 ];
 
 $messages['et'] = [
@@ -9608,6 +9610,7 @@ Suorittamalla sen järjestelmäsi voi muuttua epäluotettavaksi.',
 	'masthead-anonymous-user' => 'Wikia-avustaja',
 	'messagebar_mess' => 'Tiesitkö, että voit <a href="$1">muokata tätä sivua</a> tai <a href="$2">luoda uuden</a>? <a href="$3">Ota selvää</a> miten tämä toimii.',
 	'mu_login' => 'Sinun pitää olla kirjautunut sisään ladataksesi tiedostoja.',
+	'multiplefileuploadsummary' => 'Yhteenveto:',
 ];
 
 $messages['fiu-vro'] = [
@@ -10113,6 +10116,7 @@ Si vous l’exécutez, votre système peut être compromis.',
 *#category1#
 *#category2#',
 	'mu_login' => 'Vous devez être connecté pour importer des fichiers.',
+	'multiplefileuploadsummary' => 'Résumé :',
 ];
 
 $messages['frc'] = [
@@ -15464,6 +15468,7 @@ contenttype/subtypeの形式で指定してください（例：<tt>image/jpeg</
 *#category1#
 *#category2#',
 	'mu_login' => 'ファイルをアップロードするには、ログインする必要があります。',
+	'multiplefileuploadsummary' => 'ファイルの概要:',
 ];
 
 $messages['jam'] = [
@@ -17962,6 +17967,7 @@ $messages['ko'] = [
 **forum-url|포럼
 *#category1#
 *#category2#',
+	'multiplefileuploadsummary' => '편집 요약:',
 ];
 
 $messages['ko-kp'] = [
@@ -24602,6 +24608,7 @@ Andre er gøymde som standard.
 *#category1#
 *#category2#',
 	'mu_login' => 'Du må være pålogget for å laste opp filer.',
+	'multiplefileuploadsummary' => 'Sammendrag:',
 ];
 
 $messages['nov'] = [
@@ -37244,6 +37251,7 @@ $messages['zh-tw'] = [
 	'mostlinkedcategories' => '最多被使用的分類',
 	'mostrevisions' => '最多修訂的文章',
 	'mu_login' => '您必須先登入才能上傳檔案',
+	'multiplefileuploadsummary' => '摘要:',
 ];
 
 $messages['zh-yue'] = [
