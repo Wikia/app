@@ -41,12 +41,7 @@ define(
 			return namespaceId === -1 && title === 'CreatePage';
 		}
 
-		function extendUri(veEditUri) {
-			return veEditUri.extend( { flow: window.wgFlowTrackingFlows.CREATE_PAGE_CREATE_BUTTON } );
-		}
-
 		return {
-			extendUri: extendUri,
 			trackOnEditPageLoad: trackOnEditPageLoad
 		}
 	});
