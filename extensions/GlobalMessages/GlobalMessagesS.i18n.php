@@ -8458,6 +8458,9 @@ Das liegt wahrscheinlich an einem Link auf eine externe Seite.',
 	'save' => 'Speichern',
 	'searchsuggest' => 'Suchvorschläge',
 	'searchtype' => 'Such-Frontend',
+	'see_more' => 'Zeige mehr...',
+	'seeeditcount' => 'siehe Bearbeitungsstatistik',
+	'seemoredotdotdot' => 'Zeige mehr...',
 ];
 
 $messages['de-ch'] = [
@@ -10001,6 +10004,9 @@ Esto podría estar causado por un enlace a un sitio externo incluido en la lista
 	'specialpages-group-wikia' => 'Páginas de Fandom',
 	'save' => 'Guardar',
 	'searchsuggest' => 'Búsquedas 2',
+	'see_more' => 'Ver más...',
+	'seeeditcount' => 'Ver contador de ediciones',
+	'seemoredotdotdot' => 'Ver más...',
 ];
 
 $messages['et'] = [
@@ -10976,6 +10982,8 @@ Alla on viimeisin lokitapahtuma:',
 	'save' => 'Tallenna',
 	'searchsuggest' => 'Ehdottava haku',
 	'searchtype' => 'Haun tyyppi',
+	'see_more' => 'Katso lisää...',
+	'seeeditcount' => 'Katso muokkauslaskuri',
 ];
 
 $messages['fiu-vro'] = [
@@ -11647,6 +11655,9 @@ impossible de renommer une page sur elle-même.',
 	'specialpages-group-wikia' => 'Pages Fandom',
 	'save' => 'Enregistrer',
 	'searchsuggest' => 'Suggestions de recherche',
+	'see_more' => 'Plus…',
+	'seeeditcount' => 'Voir le nombre de modifications',
+	'seemoredotdotdot' => 'Plus…',
 ];
 
 $messages['frc'] = [
@@ -17738,6 +17749,8 @@ $messages['ja'] = [
 * [[Special:Contact|Contact]]
 * [http://www.wikia.com/wiki/Wikia:Advertising_on_Wikia Advertise]',
 	'specialpages-group-wikia' => 'Fandomのページ',
+	'seeeditcount' => '編集回数のカウントをご覧ください',
+	'seemoredotdotdot' => 'その他',
 ];
 
 $messages['jam'] = [
@@ -20314,6 +20327,8 @@ $messages['ko'] = [
 	'specialpages-group-spam' => '스팸 처리 도구',
 	'sqlite-has-fts' => '$1 (본문 전체 검색)',
 	'sqlite-no-fts' => '$1 (본문은 검색에서 제외)',
+	'see_more' => '더 보기...',
+	'seeeditcount' => '편집 횟수 보기',
 ];
 
 $messages['ko-kp'] = [
@@ -31958,6 +31973,9 @@ $messages['ru'] = [
 * [http://www.wikia.com/wiki/Wikia:Advertising_on_Wikia Advertise]',
 	'specialpages-group-wikia' => 'Страницы Фэндома',
 	'save' => 'Сохранить',
+	'see_more' => 'Подробнее...',
+	'seeeditcount' => 'См. счётчик правок',
+	'seemoredotdotdot' => 'Подробнее...',
 ];
 
 $messages['rue'] = [
@@ -36131,6 +36149,7 @@ Detta orsakades troligen av en länk till en svartlistad webbplats.',
 	'sqlite-has-fts' => '$1 med stöd för fulltextsökning',
 	'sqlite-no-fts' => '$1 utan stöd för fulltextsökning',
 	'share_it' => 'Dela med av den:',
+	'seeeditcount' => 'Se redigera räkna',
 ];
 
 $messages['sw'] = [
@@ -42371,6 +42390,7 @@ $messages['zh-tw'] = [
 	'scarytranscludetoolong' => '[抱歉，URL 地址太長]',
 	'specialpages' => '特殊頁面',
 	'share_it' => '分享:',
+	'see_more' => '更多內容...',
 ];
 
 $messages['zh-yue'] = [
@@ -42441,5 +42461,13 @@ $messages['zu'] = [
 	'statistics-header-users' => 'Ukwaziswa wamsebenzisi',
 	'shortpages' => 'Amakhasi amafishane',
 	'specialloguserlabel' => 'Umsebenzisi:',
+];
+
+$messages['zh'] = [
+	'see_more' => '更多內容...',
+];
+
+$messages['zh-cn'] = [
+	'see_more' => '更多內容...',
 ];
 
