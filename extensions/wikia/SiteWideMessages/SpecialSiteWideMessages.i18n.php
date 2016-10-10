@@ -1856,6 +1856,7 @@ $messages['ko'] = [
 	'swm-mode-wikis-created-before' => '이전',
 	'swm-mode-wikis-created-between' => '사이',
 	'swm-label-mode-wikis-created-hint' => '<i>2012-04-01 00:00:00 같은 형식으로 작성하십시오.</i>',
+	'sitewidemessages' => '전역 메시지 (SWM)',
 ];
 
 $messages['krc'] = [
@@ -3553,7 +3554,7 @@ $messages['yi'] = [
 
 $messages['zh-hans'] = [
 	'sidewidemessages-desc' => '此扩展提供了一个接口，可发送消息使其在所有wiki上可见。',
-	'sitewidemessages' => '网站广域消息',
+	'sitewidemessages' => '全站信息',
 	'swm-page-title-editor' => '网站广域消息 :: 编辑者',
 	'swm-page-title-preview' => '网站广域消息 :: 预览',
 	'swm-page-title-send' => '网站广域消息 :: 发送',
@@ -3665,5 +3666,9 @@ $messages['zh-hant'] = [
 
 $messages['zh-hk'] = [
 	'swm-label-recipient-users' => '用戶',
+];
+
+$messages['zh'] = [
+	'sitewidemessages' => '全站信息',
 ];
 
