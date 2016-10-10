@@ -7195,7 +7195,7 @@ $messages['nl'] = [
 	'viewcount' => 'Deze pagina is {{PLURAL:$1|één keer|$1 keer}} bekeken.',
 	'view-pool-error' => 'Sorry, de servers zijn op het moment overbelast.
 Te veel gebruikers proberen deze pagina te bekijken.
-Wacht alstublieft even voordat u opnieuw toegang probeert te krijgen tot deze pagina.
+Wacht alstublieft even voordat je opnieuw toegang probeert te krijgen tot deze pagina.
 
 $1',
 	'versionrequired' => 'Versie $1 van MediaWiki is vereist',
@@ -7206,7 +7206,7 @@ Meer informatie is beschikbaar op de pagina [[Special:Version|softwareversie]].'
 	'viewdeleted' => '$1 bekijken?',
 	'viewsource' => 'Brontekst bekijken',
 	'viewsource-title' => 'Brontekst bekijken van $1',
-	'viewsourcetext' => 'U kunt de brontekst van deze pagina bekijken en kopiëren:',
+	'viewsourcetext' => 'Je kunt de brontekst van deze pagina bekijken en kopiëren:',
 	'viewyourtext' => 'U kunt \'\'\'uw bewerkingen\'\'\' aan de brontekst van deze pagina bekijken en kopiëren:',
 	'virus-badscanner' => 'Onjuiste configuratie: onbekende virusscanner: \'\'$1\'\'.',
 	'virus-scanfailed' => 'scannen is mislukt (code $1)',
