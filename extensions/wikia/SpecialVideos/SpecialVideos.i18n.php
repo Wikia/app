@@ -184,6 +184,7 @@ $messages['it'] = [
 	'specialvideos-uploadby' => 'da $1',
 	'specialvideos-posted-in' => 'Pubblicato in $1',
 	'special-videos-add-video' => 'Carica un video',
+	'related-videos-tooltip-add' => 'Inserisci un video in questa wiki',
 ];
 
 $messages['fi'] = [
@@ -196,6 +197,7 @@ $messages['ja'] = [
 
 $messages['ko'] = [
 	'specialvideos-sort-featured' => '위키아 동영상 라이브러리에서 가져옴',
+	'related-videos-tooltip-add' => '이 위키에 동영상 추가하기',
 ];
 
 $messages['pt'] = [
