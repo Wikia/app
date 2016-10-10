@@ -4524,9 +4524,9 @@ $messages['ru'] = [
 	'closed-confirm-btn' => 'Подтвердить закрытие',
 	'closed-redirect-alert' => 'Пожалуйста, введите новый URL перенаправления!',
 	'closed-reason' => 'Причина:',
-	'newwikisgraph' => 'Новый график викий',
-	'newwikisgraph-report-title' => 'викий, созданных за день',
-	'newwikisgraph-wikis-created' => 'создано викий',
+	'newwikisgraph' => 'Новый график вики',
+	'newwikisgraph-report-title' => 'вики, созданные за день',
+	'newwikisgraph-wikis-created' => 'создано вики',
 	'newwikisgraph-param-all' => 'Всего',
 	'newwikisgraph-param-other' => 'Другие',
 ];
