@@ -8219,6 +8219,7 @@ Zur Information folgt der aktuelle Logbucheintrag:',
 	'patrol-log-line' => 'markierte $1 von $2 als patrouilliert $3',
 	'popular-articles' => 'Beliebte Artikel',
 	'popular-wikis' => 'Beliebte Wikis',
+	'preferences_s' => 'Einstellungen',
 ];
 
 $messages['de-ch'] = [
@@ -9193,6 +9194,7 @@ $messages['el'] = [
 	'patrol-log-page' => 'Αρχείο καταγραφής περιπολιών',
 	'patrol-log-header' => 'Αυτός είναι ένας κατάλογος περιπολούμενων αναθεωρήσεων.',
 	'previousdiff' => '← Προηγούμενη επεξεργασία',
+	'preferences_s' => 'Προτιμήσεις',
 ];
 
 $messages['eml'] = [
@@ -9643,6 +9645,7 @@ A continuación se muestra la última entrada de registro para referencia:',
 	'prefs-help-terms' => 'Al crear un wiki y una cuenta de usuario, aceptas los {{#NewWindowLink: w:c:es:Términos de uso|términos de uso de Fandom}}',
 	'popular-articles' => 'Artículos Populares',
 	'popular-wikis' => 'Wikis Populares',
+	'preferences_s' => 'Preferencias',
 ];
 
 $messages['et'] = [
@@ -10617,6 +10620,7 @@ Alla on viimeisin lokitapahtuma:',
 	'percent' => '$1&nbsp;%',
 	'popular-articles' => 'Suositut artikkelit',
 	'popular-wikis' => 'Suositut wikit',
+	'preferences_s' => 'Asetukset',
 ];
 
 $messages['fiu-vro'] = [
@@ -11201,6 +11205,7 @@ Veuillez contacter votre fournisseur d’accès Internet ou votre support techni
 	'prefs-help-birthinfo' => 'Fandom requiert que tous les utilisateurs fournissent leur date de naissance réelle ; ceci est une mesure de sécurité et permet également de préserver l\'intégrité du site tout en respectant les lois fédérales américaines.',
 	'prefs-help-terms' => 'En créant un compte, vous acceptez les {{#NewWindowLink: homepage:fr:Conditions d\'utilisation|Conditions d\'utilisation}}',
 	'pipe-separator' => '&#32;•&#32;',
+	'preferences_s' => 'Préférences',
 ];
 
 $messages['frc'] = [
@@ -16800,6 +16805,7 @@ L\'ultimo elemento del registro è riportato di seguito per informazione:',
 	'previousdiff' => '← Differenza precedente',
 	'prefs-help-birthinfo' => 'Fandom chiede a tutti gli utenti di fornire la loro data di nascita reale sia quale precauzione di sicurezza, sia quale mezzo per preservare l\'integrità del sito rispettando al contempo le disposizioni federali.',
 	'prefs-help-terms' => 'Con la creazione di un account, accetti i {{#NewWindowLink:w:it:Project:Termini di utilizzo|Termini di utilizzo di Fandom}}',
+	'preferences_s' => 'Preferenze',
 ];
 
 $messages['iu'] = [
@@ -19747,6 +19753,7 @@ $messages['ko'] = [
 	'patrol-log-page' => '검토 기록',
 	'patrol-log-header' => '문서 검토에 대한 기록입니다.',
 	'previousdiff' => '← 이전 편집',
+	'preferences_s' => '사용자 환경 설정',
 ];
 
 $messages['ko-kp'] = [
@@ -27458,6 +27465,7 @@ Det siste loggelementet er oppgjeve under som referanse:',
 	'previousdiff' => '← Eldre endring',
 	'popular-articles' => 'Populære artikler',
 	'popular-wikis' => 'Populære wikier',
+	'preferences_s' => 'Innstillinger',
 ];
 
 $messages['nov'] = [
@@ -39382,6 +39390,7 @@ Thông tin mới nhất trong nhật trình được ghi dưới đây để ti�
 	'patrol-log-page' => 'Nhật ký tuần tra',
 	'patrol-log-header' => 'Đây là nhật trình tuần tra phiên bản.',
 	'previousdiff' => '← Sửa đổi cũ',
+	'preferences_s' => 'Tùy chọn',
 ];
 
 $messages['vls'] = [
@@ -41126,7 +41135,7 @@ ___________________________________________________________
 	'powersearch-togglelabel' => '选择：',
 	'powersearch-toggleall' => '全选',
 	'powersearch-togglenone' => '全不选',
-	'preferences' => '系统设置',
+	'preferences' => '用戶设定',
 	'prefs-edits' => '编辑数量：',
 	'prefsnologin' => '尚未登录',
 	'prefsnologintext' => '您必须先<span class="plainlinks">[{{fullurl:{{#Special:UserLogin}}|returnto=$1}} 登录]</span>才能设置个人参数。',
@@ -41642,5 +41651,6 @@ $messages['zh'] = [
 	'pagecategories' => '{{PLURAL:$1个|分类|分类}}',
 	'perfcachedts' => '下列数据已经过缓存处理，最后更新时间为$1。在缓存中最多有{{PLURAL:$4|一个结果|$4个结果}}可用。',
 	'permalink' => '固定链结',
+	'preferences' => '用戶设定',
 ];
 
