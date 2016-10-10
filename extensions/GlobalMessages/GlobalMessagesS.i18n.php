@@ -253,7 +253,7 @@ This is probably caused by a link to a blacklisted external site.',
 	'seemoredotdotdot' => 'See more...',
 	'specialpages-url' => 'Special:SpecialPages',
 	'signup-password' => 'Password - ',
-	'signup-moreinfo' => 'more info',
+	'signup-moreinfo' => 'Why is this required?',
 	'signup-mail' => 'E-mail - ',
 	'skin-forced' => 'You can\'t change skin on this wiki.',
 	'shared-problemreport' => 'Report a problem',
@@ -633,6 +633,7 @@ $messages['ab'] = [
 	'sp-contributions-submit' => 'Аҧшаара',
 	'specialpages' => 'Цастәи адаҟьақәа',
 	'specialpages-group-login' => 'Урдырра / Арегистрациара',
+	'signup-password' => 'Пароль:',
 ];
 
 $messages['ace'] = [
@@ -690,6 +691,7 @@ $messages['ace'] = [
 	'svg-long-desc' => 'Beureukah SVG, nominal $1 x $2 piksel, rayek beureukah: $3',
 	'show-big-image' => 'Resolusi peunoh',
 	'specialpages' => 'Ôn kusuih',
+	'signup-password' => 'Lageuëm rahsia:',
 ];
 
 $messages['af'] = [
@@ -898,6 +900,7 @@ Hierdie situasie was waarskynlik deur \'n skakel na \'n eksterne webtuiste op on
 	'specialpages-group-spam' => 'Spam-hulpmiddels',
 	'sqlite-has-fts' => 'Weergawe $1 met ondersteuning vir vol-teks soektogte ("full-text search")',
 	'sqlite-no-fts' => 'Weergawe $1 sonder ondersteuning vir vol-teks soektogte ("full-text search")',
+	'signup-password' => 'Wagwoord:',
 ];
 
 $messages['ak'] = [
@@ -909,6 +912,7 @@ $messages['ak'] = [
 	'searcharticle' => 'Kɔ',
 	'searchresultshead' => 'Hwehwɛ',
 	'sp-contributions-talk' => 'Kasa',
+	'signup-password' => 'Password:',
 ];
 
 $messages['aln'] = [
@@ -1015,6 +1019,7 @@ Vini re se indeksat e tyne të përmbajtjes së {{SITENAME}} munden me qenë të
 	'svg-long-desc' => 'skeda SVG, $1 × $2 pixela, madhësia: $3',
 	'show-big-image' => 'Rezolucion i plotë',
 	'specialpages' => 'Faqet speciale',
+	'signup-password' => 'Futni fjalëkalimin tuej',
 ];
 
 $messages['als'] = [
@@ -1121,6 +1126,7 @@ Vini re se indeksat e tyne të përmbajtjes së {{SITENAME}} munden me qenë të
 	'svg-long-desc' => 'skeda SVG, $1 × $2 pixela, madhësia: $3',
 	'show-big-image' => 'Rezolucion i plotë',
 	'specialpages' => 'Faqet speciale',
+	'signup-password' => 'Passwort:',
 ];
 
 $messages['am'] = [
@@ -1245,6 +1251,7 @@ $messages['am'] = [
 	'specialpages-group-highuse' => 'ከፍተኛ ጥቅም ያላቸው ገጾች',
 	'specialpages-group-pagetools' => 'የገጽ መሣሪያዎች',
 	'specialpages-group-wiki' => 'የዊኪ መረጃና መሣርያዎች',
+	'signup-password' => 'Password / መግቢያ ቃል',
 ];
 
 $messages['an'] = [
@@ -1446,6 +1453,7 @@ Ta más información, s\'amuestra contino a zaguera dentrada d\'o rechistro de b
 	'specialpages-group-spam' => 'Ferramientas de spam',
 	'sqlite-has-fts' => '$1, con soporte de busca de texto integro',
 	'sqlite-no-fts' => '$1, sin soporte de busca de texto integro',
+	'signup-password' => 'Palabra de paso:',
 ];
 
 $messages['ang'] = [
@@ -1532,6 +1540,7 @@ $messages['ang'] = [
 	'specialpages' => 'Syndriȝa sīdan',
 	'specialpages-group-other' => 'Ōðra syndriȝa sīdan',
 	'specialpages-group-users' => 'Brūcendas and riht',
+	'signup-password' => 'Þīn gelēafnesword',
 ];
 
 $messages['anp'] = [
@@ -1804,6 +1813,7 @@ $messages['ar'] = [
 	'specialpages-group-spam' => 'أدوات السبام',
 	'sqlite-has-fts' => '$1 بدعم البحث في كامل النص',
 	'sqlite-no-fts' => '$1 بدون دعم البحث في كامل النص',
+	'signup-password' => 'كلمة السر:',
 ];
 
 $messages['arc'] = [
@@ -1910,6 +1920,7 @@ $messages['arc'] = [
 	'specialpages-group-pagetools' => 'ܡܐܢ̈ܐ ܕܦܐܬܐ',
 	'specialpages-group-wiki' => 'ܓܠܝܬ̈ܐ ܘܡܐܢ̈ܐ ܕܘܝܩܝ',
 	'specialpages-group-redirects' => 'ܨܘܝܒܐ ܕܦܐܬܐ ܕܝܠܢܝܬܐ',
+	'signup-password' => 'ܡܠܬܐ ܕܥܠܠܐ:',
 ];
 
 $messages['arn'] = [
@@ -1989,6 +2000,7 @@ Fey ñi chumngen mülelu ($2 fey ñi chumngen wülngiñ) pengeli tüfa mew.',
 	'specialpages' => 'Wichuke wülngiñ',
 	'specialpages-group-login' => 'Konün',
 	'specialpages-group-pagetools' => 'Küsawkawe pakina mew',
+	'signup-password' => 'Tami kondungu',
 ];
 
 $messages['ary'] = [
@@ -2355,6 +2367,7 @@ $messages['arz'] = [
 	'specialpages-group-wiki' => 'بيانات وأدوات الويكى',
 	'specialpages-group-redirects' => 'صفحات  التحويل الخاصه',
 	'specialpages-group-spam' => 'أدوات السبام',
+	'signup-password' => 'الباسوورد:',
 ];
 
 $messages['as'] = [
@@ -2567,6 +2580,7 @@ $messages['as'] = [
 	'specialpages-group-spam' => 'স্পেম সা-সঁজুলি',
 	'sqlite-has-fts' => '$1 সম্পূৰ্ণ-পাঠ অনুসন্ধান সমৰ্থন সহ',
 	'sqlite-no-fts' => '$1 সম্পূৰ্ণ-পাঠ অনুসন্ধান সমৰ্থন অবিহনে',
+	'signup-password' => 'আপোনাৰ গুপ্তশব্দ',
 ];
 
 $messages['ast'] = [
@@ -2774,6 +2788,7 @@ Probablemente tea causao por un enllaz a un sitiu esternu de la llista prieta.',
 	'specialpages-group-spam' => 'Ferramientes pa spam',
 	'sqlite-has-fts' => '$1 con sofitu pa gueta en testu completu',
 	'sqlite-no-fts' => '$1 ensin sofitu pa gueta en testu completu',
+	'signup-password' => 'Clave:',
 ];
 
 $messages['av'] = [
@@ -2784,6 +2799,7 @@ $messages['av'] = [
 	'shortpages' => 'Къокъал макъалаби',
 	'specialloguserlabel' => 'ГӀахьалчи:',
 	'specialpages' => 'Хассал гьумерал',
+	'signup-password' => 'Пароль:',
 ];
 
 $messages['avk'] = [
@@ -2910,6 +2926,7 @@ MediaWiki spam cleanup',
 	'specialpages-group-wiki' => 'Wiki origeem isu xekeem',
 	'specialpages-group-redirects' => 'Graskara va aptabu',
 	'specialpages-group-spam' => 'Spam xekeem',
+	'signup-password' => 'Rinaf remravlem',
 ];
 
 $messages['ay'] = [
@@ -2934,6 +2951,7 @@ $messages['ay'] = [
 	'speciallogtitlelabel' => 'Titulu:',
 	'sp-contributions-talk' => 'Kutkatasiña',
 	'sp-contributions-submit' => 'Thaqaña',
+	'signup-password' => 'Contraseña:',
 ];
 
 $messages['az'] = [
@@ -3109,6 +3127,7 @@ Bloklama qeydlərinin sonuncusu aşağıda göstərilmişdir:',
 	'specialpages-group-spam' => 'Spam alətləri',
 	'sqlite-has-fts' => '$1 tam mətn axtarma ilə',
 	'sqlite-no-fts' => '$1 tam mətn axtarma olmadan',
+	'signup-password' => 'Parol',
 ];
 
 $messages['ba'] = [
@@ -3319,6 +3338,7 @@ $messages['ba'] = [
 	'specialpages-group-spam' => 'Спамға ҡаршы ҡоралдар',
 	'sqlite-has-fts' => '$1, тулы текст буйынса эҙләү мөмкинлеге менән',
 	'sqlite-no-fts' => '$1, тулы текст буйынса эҙләү мөмкинлекһеҙ',
+	'signup-password' => 'Һеҙҙең пароль',
 ];
 
 $messages['bar'] = [
@@ -3440,6 +3460,7 @@ Soidad des Probleem bestee blaim, [[Special:UserLogout|möid de ob]] und danoch 
 	'specialpages-group-wiki' => 'Systémdaaten und Werzeig',
 	'specialpages-group-redirects' => 'Weiderloattende Speziaalseiten',
 	'specialpages-group-spam' => 'Spam-Werkzeig',
+	'signup-password' => 'Passwort:',
 ];
 
 $messages['bat-smg'] = [
@@ -3561,6 +3582,7 @@ Soidad des Probleem bestee blaim, [[Special:UserLogout|möid de ob]] und danoch 
 	'specialpages-group-wiki' => 'Systémdaaten und Werzeig',
 	'specialpages-group-redirects' => 'Weiderloattende Speziaalseiten',
 	'specialpages-group-spam' => 'Spam-Werkzeig',
+	'signup-password' => 'Slaptažuodis:',
 ];
 
 $messages['bcc'] = [
@@ -3747,6 +3769,7 @@ $messages['bcc'] = [
 	'specialpages-group-wiki' => 'وسایل و دیتا وی کی',
 	'specialpages-group-redirects' => 'غیر مستقیم بیگنت صفحات حاصین',
 	'specialpages-group-spam' => 'وسایل اسپم',
+	'signup-password' => 'کلمه رمز',
 ];
 
 $messages['bcl'] = [
@@ -3851,6 +3874,7 @@ Pindotón tabî an "back" asin ikarga giraray an páhinang ginikanan mo, dangan 
 	'specialpages-group-other' => 'Iba pang mga espesyal na pahina',
 	'specialpages-group-login' => 'Maglaóg/ maggíbo',
 	'specialpages-group-changes' => 'Nakakaági pa sanáng mga pagbàgo asín laóg',
+	'signup-password' => 'Sekretong panlaog:',
 ];
 
 $messages['be'] = [
@@ -4053,6 +4077,7 @@ $messages['be'] = [
 	'specialpages-group-spam' => 'Прылады супраць спама',
 	'sqlite-has-fts' => '$1 з падтрымкай поўна-тэкставага пошуку',
 	'sqlite-no-fts' => '$1 без падтрымкі поўна-тэкставага пошуку',
+	'signup-password' => 'Пароль',
 ];
 
 $messages['be-tarask'] = [
@@ -4268,6 +4293,7 @@ $messages['be-tarask'] = [
 	'specialpages-group-spam' => 'Інструмэнты для барацьбы са спамам',
 	'sqlite-has-fts' => '$1 з падтрымкай поўнатэкстнага пошуку',
 	'sqlite-no-fts' => '$1 без падтрымкі поўнатэкстнага пошуку',
+	'signup-password' => 'Пароль:',
 ];
 
 $messages['be-x-old'] = [
@@ -4483,6 +4509,7 @@ $messages['be-x-old'] = [
 	'specialpages-group-spam' => 'Інструмэнты для барацьбы са спамам',
 	'sqlite-has-fts' => '$1 з падтрымкай поўнатэкстнага пошуку',
 	'sqlite-no-fts' => '$1 без падтрымкі поўнатэкстнага пошуку',
+	'signup-password' => 'Пароль:',
 ];
 
 $messages['bg'] = [
@@ -4686,6 +4713,7 @@ $messages['bg'] = [
 	'specialpages-group-spam' => 'Инструменти против спам',
 	'sqlite-has-fts' => '$1 с поддръжка на пълнотекстово търсене',
 	'sqlite-no-fts' => '$1 без поддръжка на пълнотекстово търсене',
+	'signup-password' => 'Парола:',
 ];
 
 $messages['bh'] = [
@@ -4889,6 +4917,7 @@ $messages['bh'] = [
 	'specialpages-group-spam' => 'Инструменти против спам',
 	'sqlite-has-fts' => '$1 с поддръжка на пълнотекстово търсене',
 	'sqlite-no-fts' => '$1 без поддръжка на пълнотекстово търсене',
+	'signup-password' => 'Password:',
 ];
 
 $messages['bho'] = [
@@ -4987,6 +5016,7 @@ $messages['bi'] = [
 	'shortpages' => 'Ol smol pej',
 	'sp-contributions-talk' => 'toktok',
 	'showhidebots' => '($1 bot)',
+	'signup-password' => 'Password:',
 ];
 
 $messages['bjn'] = [
@@ -5208,6 +5238,7 @@ $messages['bm'] = [
 	'searcharticle' => 'Taa',
 	'specialpage' => 'Nyɛ kɛrɛnkɛrɛnnen',
 	'specialpages' => 'Nyɛw kɛrɛnkɛrɛnnen',
+	'signup-password' => 'Mot de passe :',
 ];
 
 $messages['bn'] = [
@@ -5401,6 +5432,7 @@ $messages['bn'] = [
 	'specialpages-group-wiki' => 'উইকি উপাত্ত এবং সরঞ্জামসমূহ',
 	'specialpages-group-redirects' => 'বিশেষ পাতাগুলি পুনর্নির্দেশ করা হচ্ছে',
 	'specialpages-group-spam' => 'স্প্যামরোধী হাতিয়ার',
+	'signup-password' => 'শব্দচাবি (Password)',
 ];
 
 $messages['bo'] = [
@@ -5461,6 +5493,7 @@ $messages['bo'] = [
 	'sp-contributions-submit' => 'འཚོལ་བ།',
 	'show-big-image' => 'གཏན་འབེབ་ཆ་ཚང་།',
 	'specialpages' => 'དམིགས་གསལ་ཤོག་ངོས།',
+	'signup-password' => 'ལམ་ཡིག',
 ];
 
 $messages['bpy'] = [
@@ -5573,6 +5606,7 @@ $messages['bpy'] = [
 	'specialpages-group-login' => 'একাউন্টহাত হমানি/মিহানি',
 	'specialpages-group-users' => 'আতাকুরাগি বারো অধিকারহানি',
 	'specialpages-group-pagetools' => 'পাতাহানর আতিয়ার',
+	'signup-password' => 'খন্তাচাবিগ (password)',
 ];
 
 $messages['bqi'] = [
@@ -5611,6 +5645,7 @@ $messages['bqi'] = [
 	'svg-long-desc' => 'SVG فایل, تقریبا$1 × $2 پیکسل, اندازه فایل: $3',
 	'show-big-image' => 'تصویر با قابلیت تفکیک کامل',
 	'specialpages' => 'صفحات ویژه',
+	'signup-password' => 'رمز:',
 ];
 
 $messages['br'] = [
@@ -5821,6 +5856,7 @@ Sur a-walc\'h abalamour d\'ul liamm enni a gas d\'ul lec\'hienn ziavaez berzet.'
 	'specialpages-group-spam' => 'Ostilh enepstrob',
 	'sqlite-has-fts' => '$1 gant enklask eus an destenn a-bezh embreget',
 	'sqlite-no-fts' => '$1 hep enklask eus an destenn a-bezh embreget',
+	'signup-password' => 'Ho ker-tremen',
 ];
 
 $messages['brh'] = [
@@ -6088,6 +6124,7 @@ Ovo je vjerovatno izazvao vezom ka vanjskoj nepoželjnoj stranici.',
 	'specialpages-group-spam' => 'Alati za spam',
 	'sqlite-has-fts' => '$1 sa podrškom pretrage cijelog teksta',
 	'sqlite-no-fts' => '$1 bez podrške pretrage cijelog teksta',
+	'signup-password' => 'Šifra:',
 ];
 
 $messages['bug'] = [
@@ -6135,6 +6172,7 @@ $messages['bug'] = [
 	'specialpages-group-pagetools' => 'Tool leppaë',
 	'specialpages-group-wiki' => 'Data sibawa tool wiki',
 	'specialpages-group-spam' => 'Tool spam',
+	'signup-password' => 'Pasewodo:',
 ];
 
 $messages['ca'] = [
@@ -6340,6 +6378,7 @@ Això deu ser degut per un enllaç a un lloc extern inclòs a la llista negra.',
 	'sqlite-has-fts' => '$1, amb suport de búsqueda de text íntegre',
 	'sqlite-no-fts' => '$1, sense supor de búsqueda de text íntegre',
 	'share_it' => 'Comparteix-ho:',
+	'signup-password' => 'Contrasenya',
 ];
 
 $messages['cbk-zam'] = [
@@ -6352,6 +6391,7 @@ $messages['cbk-zam'] = [
 	'search-result-size' => '$1 ({{PLURAL:$2|1 palabra|$2 maga palabra}})',
 	'search-mwsuggest-enabled' => 'con sugestiones',
 	'search-mwsuggest-disabled' => 'sin sugestion',
+	'signup-password' => 'Contraseña:',
 ];
 
 $messages['cdo'] = [
@@ -6404,6 +6444,7 @@ $messages['cdo'] = [
 	'sp-contributions-submit' => 'Sìng-tō̤',
 	'showhidebots' => '($1 gĭ-ké-nè̤ng)',
 	'specialpages' => 'Dĕk-sṳ̀ hiĕk',
+	'signup-password' => 'Mĭk-mā',
 ];
 
 $messages['ce'] = [
@@ -6520,6 +6561,7 @@ $messages['ce'] = [
 	'specialpages-group-wiki' => 'Вики-баххаш а гlирсаш',
 	'specialpages-group-redirects' => 'Дlасахьажош йолу гlуллакхан агlонаш',
 	'specialpages-group-spam' => 'Гlирсаш совбиларна дуьхьал',
+	'signup-password' => 'Хьан тешаман дош',
 ];
 
 $messages['ceb'] = [
@@ -6589,6 +6631,7 @@ Hinumdomi nga ang ilang indeks sa sulod sa {{SITENAME}} mahimong dugay-dugay na.
 	'svg-long-desc' => 'SVG nga payl, nominally $1 × $2 pixels, size sa payl: $3',
 	'show-big-image' => 'Tibuok resolusyon',
 	'specialpages' => 'Espesyal nga mga panid',
+	'signup-password' => 'Password:',
 ];
 
 $messages['ch'] = [
@@ -6664,6 +6707,7 @@ Fanapunta na fana\'an ti gus nuebu i listan-ñiha i guinahan {{SITENAME}}.',
 	'svg-long-desc' => 'Atkibu SVG, $1 × $2 na pixels, mineddong atkibu: $3',
 	'show-big-image' => 'Magåhet mineddong-ña',
 	'specialpages' => 'Manespesiat na påhina',
+	'signup-password' => 'Password:',
 ];
 
 $messages['chr'] = [
@@ -6671,6 +6715,7 @@ $messages['chr'] = [
 	'searchresultshead' => 'ᎠᏯᏍᏗ',
 	'sp-contributions-talk' => 'ᎧᏃᎮᎸᏗ',
 	'specialpages' => 'ᎤᏤᎵᏛ ᏚᏆᏓᏛ',
+	'signup-password' => 'Password:',
 ];
 
 $messages['ckb'] = [
@@ -6885,6 +6930,7 @@ $messages['co'] = [
 	'show-big-image' => 'Imagine in alta resoluzione',
 	'showhidebots' => '($1 boti)',
 	'specialpages' => 'Pagine spiciale',
+	'signup-password' => 'Parulla secreta:',
 ];
 
 $messages['cps'] = [
@@ -7025,6 +7071,7 @@ Ang paglarawan nga yara sa ibabaw sang [$2 pahina sang paglarawan sang akta] sin
 	'svg-long-desc' => 'SVG file, nga ara sa $1 × $2 ka piksels, kadakuon sang file: $3',
 	'show-big-image' => 'Bilog nga resolusyon (katin-aw)',
 	'specialpages' => 'Pinasahi nga mga pahina',
+	'signup-password' => 'Paroliñiz',
 ];
 
 $messages['crh-cyrl'] = [
@@ -7173,6 +7220,7 @@ $messages['crh-cyrl'] = [
 	'specialpages-group-wiki' => 'Вики малюмат ве алетлер',
 	'specialpages-group-redirects' => 'Ёллама махсус саифелер',
 	'specialpages-group-spam' => 'Спамгъа къаршы алетлер',
+	'signup-password' => 'Паролинъиз',
 ];
 
 $messages['crh-latn'] = [
@@ -7322,6 +7370,7 @@ Jurnalnıñ soñki yazısı aşağıda berilgen:',
 	'specialpages-group-wiki' => 'Viki malümat ve aletler',
 	'specialpages-group-redirects' => 'Yollama mahsus saifeler',
 	'specialpages-group-spam' => 'Spamğa qarşı aletler',
+	'signup-password' => 'Paroliñiz',
 ];
 
 $messages['cs'] = [
@@ -7534,6 +7583,7 @@ Níže je pro přehled zobrazen nejnovější protokolovací záznam:',
 	'specialpages-group-spam' => 'Protispamové nástroje',
 	'sqlite-has-fts' => '$1 s podporou plnotextového vyhledávání',
 	'sqlite-no-fts' => '$1 bez podpory plnotextového vyhledávání',
+	'signup-password' => 'Vaše heslo',
 ];
 
 $messages['csb'] = [
@@ -7602,6 +7652,7 @@ $messages['csb'] = [
 	'svg-long-desc' => 'Lopk SVG, nominalno $1 × $2 pikslów, miara lopka: $3',
 	'show-big-image' => 'Fùl miara',
 	'specialpages' => 'Specjalné starnë',
+	'signup-password' => 'Twòja parola',
 ];
 
 $messages['cu'] = [
@@ -7661,6 +7712,7 @@ $messages['cu'] = [
 	'size-bytes' => '$1 Б҃',
 	'size-kilobytes' => '$1 Х҃Б',
 	'specialpages' => 'нарочьнꙑ страницѧ',
+	'signup-password' => 'Таино слово напиши',
 ];
 
 $messages['cv'] = [
@@ -7728,6 +7780,7 @@ $messages['cv'] = [
 	'specialpages-group-media' => 'Медиа-материалсемпе тултарăшсем',
 	'specialpages-group-users' => 'Хутшăнакансем тата правасем',
 	'specialpages-group-highuse' => 'Нумай усă куракан страницăсем',
+	'signup-password' => 'Вăрттăн сăмах:',
 ];
 
 $messages['cy'] = [
@@ -7939,6 +7992,7 @@ Achos hyn yn fwy na thebyg yw presenoldeb cysylltiad i wefan ar y rhestr gwahard
 	'specialpages-group-spam' => 'Offer sbam',
 	'sqlite-has-fts' => '$1 gyda chymorth chwilio yr holl destun',
 	'sqlite-no-fts' => '$1 heb gymorth chwiliad yr holl destun',
+	'signup-password' => 'Eich cyfrinair:',
 ];
 
 $messages['da'] = [
@@ -8142,6 +8196,7 @@ Dette skyldes sandsynligvis en henvisning til et sortlistet eksternt websted.',
 	'specialpages-group-spam' => 'Spamværktøjer',
 	'sqlite-has-fts' => '$1 med fuld-tekst søgnings support',
 	'sqlite-no-fts' => '$1 uden fuld-tekst søgnings support',
+	'signup-password' => 'Din adgangskode',
 ];
 
 $messages['de'] = [
@@ -8458,10 +8513,14 @@ Das liegt wahrscheinlich an einem Link auf eine externe Seite.',
 	'shared-News_box' => '<!-- &nbsp; -->',
 	'shared-problemreport' => 'Problem melden',
 	'showall' => 'Alle anzeigen',
+	'signup-mail' => 'E-Mail -',
+	'signup-moreinfo' => 'Hinweis',
+	'signup-password' => 'Passwort:',
 ];
 
 $messages['de-ch'] = [
 	'svg-long-desc' => 'SVG-Datei, Basisgrösse: $1 × $2 Pixel, Dateigrösse: $3',
+	'signup-password' => 'Passwort:',
 ];
 
 $messages['de-formal'] = [
@@ -8486,6 +8545,7 @@ Diese Aktion wurde daher sicherheitshalber abgebrochen, um eine falsche Zuordnun
 Bitte gehen Sie zurück und versuchen Sie den Vorgang erneut auszuführen.',
 	'spamprotectiontext' => 'Der Text, die Sie speichern wollen, wurde vom Spamschutzfilter blockiert.
 Das liegt wahrscheinlich an einem Link auf eine externe Seite.',
+	'signup-password' => 'Passwort:',
 ];
 
 $messages['de-weigsbrag'] = [
@@ -8641,6 +8701,7 @@ Bid surüg geddar und nogmal brobär auswühr dose Worgang.',
 	'specialpages-group-wiki' => 'Sysdemdades und Wergseuges',
 	'specialpages-group-redirects' => 'Weidleidendes Schbesialseides',
 	'specialpages-group-spam' => 'Sbäm-Wergseuges',
+	'signup-password' => 'Basword:',
 ];
 
 $messages['diq'] = [
@@ -8827,6 +8888,7 @@ Wexta ke şıma no pel vurneni diqet bıkeri, loge bivini:',
 	'specialpages-group-wiki' => 'Data u hacetê wîkîyî',
 	'specialpages-group-redirects' => 'Pela xasî reyna direk kenê',
 	'specialpages-group-spam' => 'hacetê spami',
+	'signup-password' => 'Parola',
 ];
 
 $messages['dsb'] = [
@@ -9033,6 +9095,7 @@ Nejnowšy protokolowy zapisk jo dołojce ako referenca pódany:',
 	'specialpages-group-spam' => 'Spamowe rědy',
 	'sqlite-has-fts' => 'Wersija $1 z pódpěru za połnotekstowe pytanje',
 	'sqlite-no-fts' => 'Wersija $1 bźez pódpěry za połnotekstowe pytanje',
+	'signup-password' => 'šćitne gronidło:',
 ];
 
 $messages['dtp'] = [
@@ -9169,6 +9232,7 @@ $messages['dv'] = [
 	'sp-contributions-userrights' => 'މެންބަރުގެ ހައްގުތަކުގެ އިންތިޒާމް',
 	'showhidebots' => '($1 ސެއްޓި)',
 	'specialpages' => 'ހާއްސަ ޞަފްޙާތައް',
+	'signup-password' => 'ސިއްރުބަސް',
 ];
 
 $messages['dz'] = [
@@ -9206,6 +9270,7 @@ $messages['dz'] = [
 	'svg-long-desc' => 'ཨེསི་བི་ཇི་ཡིག་སྣོད་  $1 × $2 པིག་སེལསི་ཆུང་སུ་ཅིག་  ཡིག་སྣོད་ཚད་: $3',
 	'show-big-image' => 'ཧུམ་ཆ་གང་།',
 	'specialpages' => 'དམིགས་བསལ་ཤོག་ལེབ།',
+	'signup-password' => 'ཆོག་ཡིག:',
 ];
 
 $messages['ee'] = [
@@ -9251,6 +9316,7 @@ $messages['ee'] = [
 	'sp-contributions-search' => 'Di nuŋɔŋlɔwo',
 	'sp-contributions-submit' => 'Dii',
 	'specialpages' => 'Axa tɔxewo',
+	'signup-password' => 'Password:',
 ];
 
 $messages['el'] = [
@@ -9453,6 +9519,7 @@ $messages['el'] = [
 	'sqlite-has-fts' => '$1 με υποστήριξη αναζήτησης πλήρους κειμένου',
 	'sqlite-no-fts' => '$1 χωρίς την υποστήριξη αναζήτησης πλήρους κειμένου',
 	'share_it' => 'Μοιραστείτε το:',
+	'signup-password' => 'Κωδικός:',
 ];
 
 $messages['eml'] = [
@@ -9467,6 +9534,7 @@ $messages['eml'] = [
 	'searchhelp-url' => 'Help:Introduzione',
 	'specialloguserlabel' => 'Utèint:',
 	'specialpages' => 'Pàgin specièli',
+	'signup-password' => 'Password:',
 ];
 
 $messages['en-ca'] = [
@@ -9479,6 +9547,7 @@ $messages['en-gb'] = [
 	'sessionfailure' => 'There seems to be a problem with your login session;
 this action has been cancelled as a precaution against session hijacking.
 Go back to the previous page, reload that page and then try again.',
+	'signup-password' => 'Password:',
 ];
 
 $messages['en-rtl'] = [
@@ -9693,6 +9762,7 @@ Jen la lasta protokolero por via referenco:',
 	'specialpages-group-spam' => 'Kontraŭspamiloj',
 	'sqlite-has-fts' => '$1 kun tut-teksta subteno',
 	'sqlite-no-fts' => '$1 sen tut-teksta subteno',
+	'signup-password' => 'Pasvorto:',
 ];
 
 $messages['es'] = [
@@ -10018,6 +10088,9 @@ Esto podría estar causado por un enlace a un sitio externo incluido en la lista
 ** randompage-url|randompage
 ** forum-url|forum 
 ** helppage|help',
+	'signup-mail' => 'Correo electrónico -',
+	'signup-moreinfo' => 'más información',
+	'signup-password' => 'Contraseña -',
 ];
 
 $messages['et'] = [
@@ -10231,6 +10304,7 @@ See on ilmselt põhjustatud linkimisest mustas nimekirjas olevasse välisvõrguk
 	'specialpages-group-spam' => 'Töö spämmiga',
 	'sqlite-has-fts' => '$1 koos täistekstiotsingu toega',
 	'sqlite-no-fts' => '$1 ilma täistekstiotsingu toeta',
+	'signup-password' => 'Teie parool',
 ];
 
 $messages['eu'] = [
@@ -10421,6 +10495,7 @@ Baliteke zerrenda beltzean dagoen kanpo lotura batek sortzea arazo hori.',
 	'specialpages-group-wiki' => 'Wiki datuak eta tresnak',
 	'specialpages-group-redirects' => 'Berbideraketa-orri bereziak',
 	'specialpages-group-spam' => 'Spam tresnak',
+	'signup-password' => 'Pasahitza',
 ];
 
 $messages['ext'] = [
@@ -10563,6 +10638,7 @@ tu escrucaol pa cargal otra vezi la páhina i güervi a ententalu.',
 	'specialpages-group-pagetools' => 'Herramientas de página',
 	'specialpages-group-wiki' => 'Datus Wiki i herramientas',
 	'specialpages-group-spam' => 'Herramientas de Spam',
+	'signup-password' => 'Consínia:',
 ];
 
 $messages['fa'] = [
@@ -10872,10 +10948,14 @@ $messages['fa'] = [
 ***w:c:althistory:Main_Page|Alternative History
 ***w:c:www:Lifestyle|More...',
 	'shared-problemreport' => 'گزارش‌دادن اشکال',
+	'signup-mail' => 'پست‌الکترونیکی -',
+	'signup-moreinfo' => 'اطلاعات بیشتر',
+	'signup-password' => 'گذرواژه -',
 ];
 
 $messages['ff'] = [
 	'sp-contributions-talk' => 'Kaldigal',
+	'signup-password' => 'Mot de passe :',
 ];
 
 $messages['fi'] = [
@@ -11093,6 +11173,9 @@ Alla on viimeisin lokitapahtuma:',
 * [[Special:Contact|Ota yhteyttä]]
 * [http://www.wikia.com/wiki/Wikia:Advertising_on_Wikia Mainosta]',
 	'showall' => 'Näytä kaikki',
+	'signup-mail' => 'Sähköposti -',
+	'signup-moreinfo' => 'lisätietoja',
+	'signup-password' => 'Salasana -',
 ];
 
 $messages['fiu-vro'] = [
@@ -11298,6 +11381,7 @@ Alla on viimeisin lokitapahtuma:',
 	'sqlite-has-fts' => '$1, jossa on tuki kokotekstihaulle',
 	'sqlite-no-fts' => '$1, jossa ei ole tukea kokotekstihaulle',
 	'share_it' => 'Jaa:',
+	'signup-password' => 'Salasõna',
 ];
 
 $messages['fj'] = [
@@ -11317,6 +11401,7 @@ $messages['fj'] = [
 	'showdiff' => 'Vakaritaka na veisau',
 	'searchresultshead' => 'Vaqaqara',
 	'specialpages' => 'Tabana vakamareqeti',
+	'signup-password' => 'Yaca vuni',
 ];
 
 $messages['fo'] = [
@@ -11456,6 +11541,7 @@ Frágreiðingin á [$2 fílu frágreiðingar síðu] er víst her niðanfyri.',
 	'svg-long-desc' => 'SVG fíle, nominelt $1 × $2 pixel, fíle stødd: $3',
 	'show-big-image' => 'Full upploysn',
 	'specialpages' => 'Serligar síður',
+	'signup-password' => 'Títt loyniorð:',
 ];
 
 $messages['fr'] = [
@@ -11778,6 +11864,8 @@ impossible de renommer une page sur elle-même.',
 ** recentchanges-url|Modifications récentes
 ** randompage-url|Une page au hassard
 ** helppage|Aide',
+	'signup-moreinfo' => 'plus d\'info',
+	'signup-password' => 'Mot de passe -',
 ];
 
 $messages['frc'] = [
@@ -11820,6 +11908,7 @@ $messages['frc'] = [
 	'search-result-size' => '$1 ({{PLURAL:$2|1 mot|$2 mots}})',
 	'skin-preview' => 'Vue d\'avance',
 	'sp-contributions-talk' => 'Discuter',
+	'signup-password' => 'Mot de passe:',
 ];
 
 $messages['frp'] = [
@@ -12039,6 +12128,7 @@ O est probâblament diu a un lim de vers un seto de defôr qu’aparêt sur la l
 	'specialpages-group-spam' => 'Outils anti-spame',
 	'sqlite-has-fts' => '$1 avouéc rechèrche en tèxto complèt recognua',
 	'sqlite-no-fts' => '$1 sen rechèrche en tèxto complèt recognua',
+	'signup-password' => 'Voutron mot de pâssa :',
 ];
 
 $messages['frr'] = [
@@ -12283,6 +12373,7 @@ La descrizion su la sô [$2 pagjine di descrizion] e je mostrade ca sot.',
 	'specialpages-group-wiki' => 'Imprescj e informazions sul progjet',
 	'specialpages-group-redirects' => 'Pagjinis speciâls di re-indreçament',
 	'specialpages-group-spam' => 'Imprescj pal spam',
+	'signup-password' => 'Peraule clâf',
 ];
 
 $messages['fy'] = [
@@ -12434,6 +12525,7 @@ As it dan  noch net slagget, [[Special:UserLogout|meld jo dan ôf]] en wer oan.\
 	'specialpages-group-wiki' => 'Wikigegevens en -helpmiddels',
 	'specialpages-group-redirects' => 'Trochferwizende bysûndere siden',
 	'specialpages-group-spam' => 'Spamhelpmiddels',
+	'signup-password' => 'Jo wachtwurd',
 ];
 
 $messages['ga'] = [
@@ -12547,6 +12639,7 @@ iarradh sábháil. Is dócha gur nasc chuig suíomh seachtrach ba chúis leis.',
 	'specialpages-group-pagetools' => 'Uirslí leathanach',
 	'specialpages-group-wiki' => 'Sonraí vicí agus uirslí',
 	'specialpages-group-spam' => 'Uirlisí turscar',
+	'signup-password' => 'D\'fhocal faire',
 ];
 
 $messages['gag'] = [
@@ -12625,6 +12718,7 @@ $messages['gag'] = [
 	'svg-long-desc' => 'SVG faylı, nominal $1 × $2 piksel, fayl ölçüsü: $3',
 	'show-big-image' => 'Taman aydınnık',
 	'specialpages' => 'Maasus sayfalar',
+	'signup-password' => 'Parol',
 ];
 
 $messages['gan-hans'] = [
@@ -12769,6 +12863,7 @@ $messages['gan-hans'] = [
 	'scarytranscludetoolong' => '[对伓住，URL 太长]',
 	'specialpages' => '特殊页',
 	'specialpages-group-redirects' => '重定向特殊页面',
+	'signup-password' => '密码：',
 ];
 
 $messages['gan-hant'] = [
@@ -12913,6 +13008,7 @@ $messages['gan-hant'] = [
 	'scarytranscludetoolong' => '[對伓住，URL 太長]',
 	'specialpages' => '特殊頁',
 	'specialpages-group-redirects' => '重定向特殊頁面',
+	'signup-password' => '密碼：',
 ];
 
 $messages['gd'] = [
@@ -13003,6 +13099,7 @@ Chithear an tuairisgeul a tha aice air [duilleag tuairisgeul an fhaidhle $2] gu 
 	'svg-long-desc' => 'Faidhle SVG, a-rèir ainm $1 × $2 pixel, meud faidhle: $3',
 	'show-big-image' => 'Dùmhlachd-bhreacaidh shlàn',
 	'specialpages' => 'Duilleagan sònraichte',
+	'signup-password' => 'Am facal-faire agaibh',
 ];
 
 $messages['gl'] = [
@@ -13215,6 +13312,7 @@ Isto, probabelmente, se debe a unha ligazón cara a un sitio externo que está n
 	'sqlite-has-fts' => '$1 con soporte para procuras de texto completo',
 	'sqlite-no-fts' => '$1 sen soporte para procuras de texto completo',
 	'share_it' => 'Compártelo:',
+	'signup-password' => 'O seu contrasinal:',
 ];
 
 $messages['glk'] = [
@@ -13226,6 +13324,7 @@ $messages['glk'] = [
 	'searchsubtitle' => 'شمه \'\'\'[[:$1]]\'\'\' ره واموتید ([[Special:Prefixindex/$1|هنه‌شرانی (صفحه‌هایی) کی «$1» همره سرأ گیفته بیدی (شوروع بیدی).]]{{int:pipe-separator}}
 [[Special:WhatLinksHere/$1|او هنه‌شرانی (صفحه‌هایی) کی به «$1» خال (لینک) بدأیید]])',
 	'sp-contributions-talk' => 'گب',
+	'signup-password' => 'گذرواژهٔ شما',
 ];
 
 $messages['gn'] = [
@@ -13265,6 +13364,7 @@ $messages['gn'] = [
 	'spam_reverting' => 'Revirtiendo a la última versión que no contenga enlaces a $1',
 	'spam_blanking' => 'Todas las revisiones contienen enlaces a $1, blanqueando',
 	'specialpages' => 'Kuatiarogue hekochĩchĩva',
+	'signup-password' => 'Ne remiñemi',
 ];
 
 $messages['got'] = [
@@ -13302,6 +13402,7 @@ $messages['got'] = [
 	'sp-contributions-talk' => 'Maþleiseido',
 	'show-big-image' => 'Fullis wahstus',
 	'specialpages' => '𐌿𐍃𐍃𐌹𐌽𐌳𐍃𐌴𐌹𐌳𐍉𐍃',
+	'signup-password' => 'Analaúgns wáurda:',
 ];
 
 $messages['grc'] = [
@@ -13465,6 +13566,7 @@ $messages['grc'] = [
 	'specialpages-group-wiki' => 'Βικι-δεδομένα καὶ στοιχεῖα',
 	'specialpages-group-redirects' => 'Ἀναδιευθύνειν εἰδικὰς δέλτους',
 	'specialpages-group-spam' => 'Ἐργαλεῖα κατὰ τῶν ἀνεπιθυμήτων διαγγελιῶν',
+	'signup-password' => 'Σῆμα:',
 ];
 
 $messages['gsw'] = [
@@ -13669,6 +13771,7 @@ As Referänz wird do dr letscht Logbuechyytrag aagee:',
 	'specialpages-group-spam' => 'Spam-Wärchzüüg',
 	'sqlite-has-fts' => '$1 mit Unterstitzig vu dr Volltextsuechi',
 	'sqlite-no-fts' => '$1 ohni Unterstitzig vu dr Volltextsuechi',
+	'signup-password' => 'Passwort:',
 ];
 
 $messages['gu'] = [
@@ -13880,6 +13983,7 @@ $messages['gu'] = [
 	'specialpages-group-spam' => 'સ્પેમ સાધનો',
 	'sqlite-has-fts' => '$1 પૂર્ણ શબ્દ શોધ સહીત',
 	'sqlite-no-fts' => '$1 પૂર્ણ શબ્દ  શોધ વિકલ્પ વગર',
+	'signup-password' => 'ગુપ્ત સંજ્ઞા:',
 ];
 
 $messages['gv'] = [
@@ -13965,6 +14069,7 @@ $messages['gv'] = [
 	'specialpages-group-other' => 'Duillagyn elley er lheh',
 	'specialpages-group-login' => 'Log stiagh / croo coontys',
 	'specialpages-group-users' => 'Ymmydeyryn as kiartyn',
+	'signup-password' => 'Fockle yn arrey:',
 ];
 
 $messages['ha'] = [
@@ -14016,6 +14121,7 @@ $messages['ha'] = [
 	'svg-long-desc' => 'Fayil kin SVG, saƙar fikisal $1 x $2, girman fayil: $3',
 	'show-big-image' => 'Cikakkar saƙa',
 	'specialpages' => 'Shafuna na musamman',
+	'signup-password' => 'Password:',
 ];
 
 $messages['hak'] = [
@@ -14116,6 +14222,7 @@ $messages['hak'] = [
 	'scarytranscludetoolong' => '[Tui-put-hí; URL thi-tiám thai-chhòng]',
 	'size-bytes' => '$1 Vi-ngièn-chû',
 	'specialpages' => 'Thi̍t-sû-ya̍p',
+	'signup-password' => 'Me̍t-me̍t',
 ];
 
 $messages['haw'] = [
@@ -14167,6 +14274,7 @@ $messages['haw'] = [
 	'sp-contributions-submit' => 'Huli',
 	'show-big-image' => 'Miomio piha',
 	'specialpages' => 'Nā ‘ao‘ao kūikawā',
+	'signup-password' => 'ʻŌlelo hūnā:',
 ];
 
 $messages['he'] = [
@@ -14394,6 +14502,7 @@ $messages['he'] = [
 	'sqlite-has-fts' => '$1 עם תמיכה בחיפוש בטקסט מלא',
 	'sqlite-no-fts' => '$1 ללא תמיכה בחיפוש בטקסט מלא',
 	'share_it' => 'תשתפ/י',
+	'signup-password' => 'סיסמה:',
 ];
 
 $messages['hi'] = [
@@ -14585,6 +14694,7 @@ $messages['hi'] = [
 	'specialpages-group-wiki' => 'विकि डाटा और औज़ार',
 	'specialpages-group-redirects' => 'विशेष पन्ने अनुप्रेषित कर रहें हैं',
 	'specialpages-group-spam' => 'स्पैम औज़ार',
+	'signup-password' => 'आपका पासवर्ड',
 ];
 
 $messages['hif'] = [
@@ -14776,6 +14886,7 @@ $messages['hif'] = [
 	'specialpages-group-wiki' => 'विकि डाटा और औज़ार',
 	'specialpages-group-redirects' => 'विशेष पन्ने अनुप्रेषित कर रहें हैं',
 	'specialpages-group-spam' => 'स्पैम औज़ार',
+	'signup-password' => 'Password:',
 ];
 
 $messages['hif-latn'] = [
@@ -14956,6 +15067,7 @@ Ii saait ii kaaran se hoi ki panna ke ek jorr koi blacklisted external site se h
 	'specialpages-group-highuse' => 'Jaada kaam me laae waala panna',
 	'specialpages-group-pages' => 'Panna ke suchi',
 	'specialpages-group-pagetools' => 'Panna ke aujar',
+	'signup-password' => 'Password:',
 ];
 
 $messages['hil'] = [
@@ -15073,6 +15185,7 @@ Tandai nga ang ila nga palasulundan sang mga unod sang {{SITENAME}} mahimo nga m
 	'svg-long-desc' => 'SVG file, nominalya $1 × $2 piksels, kadakuon sang file: $3',
 	'show-big-image' => 'Kabilogan nga resolusyon',
 	'specialpages' => 'Espesyal nga mga panid',
+	'signup-password' => 'Kontra-senyas:',
 ];
 
 $messages['hr'] = [
@@ -15275,6 +15388,7 @@ Razlog je vjerojatno vanjska poveznica koja se nalazi na crnom popisu.',
 	'sqlite-has-fts' => '$1 s podrškom pretraživanja cijelog teksta',
 	'sqlite-no-fts' => '$1 bez podrške pretraživanja cijelog teksta',
 	'share_it' => 'Podijeli:',
+	'signup-password' => 'Lozinka:',
 ];
 
 $messages['hsb'] = [
@@ -15479,6 +15593,7 @@ Najnowši protokolowy zapisk je deleka jako referenca podaty:',
 	'specialpages-group-spam' => 'Spamowe nastroje',
 	'sqlite-has-fts' => '$1 połnotekstowe pytanje podpěruje.',
 	'sqlite-no-fts' => '$1 połnotekstowe pytanje njepodpěruje',
+	'signup-password' => 'Hesło',
 ];
 
 $messages['ht'] = [
@@ -15559,6 +15674,7 @@ Dènye ekriti nan jounal parèt pi ba kòm referans:',
 	'svg-long-desc' => 'Fichye SVG, rezolisyon de $1 × $2 piksèl, gwosè fichye : $3',
 	'show-big-image' => 'Pi bon rezolisyon',
 	'specialpages' => 'Paj espesyal yo',
+	'signup-password' => 'Mopas ou an :',
 ];
 
 $messages['hu'] = [
@@ -15763,6 +15879,7 @@ Ez valószínűleg egy olyan link miatt van, ami egy feketelistán lévő oldalr
 	'specialpages-group-spam' => 'Spam eszközök',
 	'sqlite-has-fts' => '$1 teljes szöveges keresés támogatással',
 	'sqlite-no-fts' => '$1 teljes szöveges keresés támogatása nélkül',
+	'signup-password' => 'Jelszavad:',
 ];
 
 $messages['hy'] = [
@@ -15927,6 +16044,7 @@ $messages['hy'] = [
 	'specialpages-group-wiki' => 'Վիքի-տվյալներ և գործիքներ',
 	'specialpages-group-redirects' => 'Վերահղող հատուկ էջեր',
 	'specialpages-group-spam' => 'Սպամի գործիքներ',
+	'signup-password' => 'Գաղտնաբառ.',
 ];
 
 $messages['ia'] = [
@@ -16137,6 +16255,7 @@ Le causa es probabilemente un ligamine verso un sito externe que es presente in 
 	'specialpages-group-spam' => 'Instrumentos antispam',
 	'sqlite-has-fts' => '$1 con supporto de recerca de texto integre',
 	'sqlite-no-fts' => '$1 sin supporto de recerca de texto integre',
+	'signup-password' => 'Contrasigno:',
 ];
 
 $messages['id'] = [
@@ -16343,6 +16462,7 @@ Ini mungkin disebabkan oleh pranala ke situs luar yang termasuk dalam daftar hit
 	'specialpages-group-spam' => 'Peralatan spam',
 	'sqlite-has-fts' => '$1 dengan dukungan pencarian teks lengkap',
 	'sqlite-no-fts' => '$1 tanpa dukungan pencarian teks lengkap',
+	'signup-password' => 'Kata sandi:',
 ];
 
 $messages['ie'] = [
@@ -16456,6 +16576,7 @@ Li descrition es in li [$2 págine de descrition del file] ta e es monstrat in i
 	'specialpages-group-wiki' => 'Data wiki e utensiles',
 	'specialpages-group-redirects' => 'Redirectionant págines special',
 	'specialpages-group-spam' => 'Utensiles de spam',
+	'signup-password' => 'Vor passa-parol:',
 ];
 
 $messages['ig'] = [
@@ -16573,10 +16694,12 @@ Ndetu banyéré nkè ogẹ nso di na okpúrụ màkà ádịamámá:',
 	'specialpages-group-wiki' => 'Ùmá Wiki na ngwa ọru ya',
 	'specialpages-group-redirects' => 'Na kufù ihü mkpà',
 	'specialpages-group-spam' => 'Ngwa ụrú',
+	'signup-password' => 'Password:',
 ];
 
 $messages['ik'] = [
 	'searchhelp-url' => 'Help:anniqsuiruq',
+	'signup-password' => 'Password:',
 ];
 
 $messages['ike-cans'] = [
@@ -16605,6 +16728,7 @@ $messages['ike-cans'] = [
 	'sp-contributions-talk' => 'ᐅᖃᓕᒪᔪᖅ',
 	'sp-contributions-submit' => 'ᐃᕚᖅᐳᖅ',
 	'specialpages' => 'ᐱᔨ ᒪᑉᐱᑕᖅ',
+	'signup-password' => 'ᐅᐃᑭᐱᑎᐊ ᐸᓚᙵᓴᐅᑎ',
 ];
 
 $messages['ike-latn'] = [
@@ -16626,6 +16750,7 @@ $messages['ike-latn'] = [
 	'statistics-header-users' => 'qatannguti kisitsisillgurlugitpasissitissat',
 	'sp-contributions-submit' => 'ivaaqpuq',
 	'specialpages' => 'piji mappitaq',
+	'signup-password' => 'uikipitia palanngasauti',
 ];
 
 $messages['ilo'] = [
@@ -16838,6 +16963,7 @@ Daytoy ngata ket gapu ti panilpo a naiparit ti akin ruar a pagsaadan.',
 	'specialpages-group-spam' => 'Ramramit kontra spam',
 	'sqlite-has-fts' => '$1 adda ti suporta amin a teksto ti pinagbiruk',
 	'sqlite-no-fts' => '$1 awan ti suporta amin a teksto ti pinagbiruk',
+	'signup-password' => 'Pasesbalikas:',
 ];
 
 $messages['inh'] = [
@@ -16924,6 +17050,7 @@ $messages['inh'] = [
 	'specialpages-group-users' => 'Дакъалаьцархой, цара бокъо',
 	'specialpages-group-pages' => 'ОагIувний дагарченаш',
 	'specialpages-group-pagetools' => 'ОагIувнаша гIирсаш',
+	'signup-password' => 'Пароль:',
 ];
 
 $messages['io'] = [
@@ -17021,6 +17148,7 @@ Se ol ankore nefuncionas, probez [[Special:UserLogout|ekirar]] e pose enirar.',
 	'specialpages-group-pages' => 'Listi di pagini',
 	'specialpages-group-pagetools' => 'Paginala utensili',
 	'specialpages-group-redirects' => 'Specala pagini di ridirektili',
+	'signup-password' => 'Pasovorto:',
 ];
 
 $messages['is'] = [
@@ -17233,6 +17361,7 @@ Síðasta færsla síðunnar úr verndunarskrá er sýnd til skýringar:',
 	'sqlite-has-fts' => '$1 með fullum texta leitar stuðningi',
 	'sqlite-no-fts' => '$1 án fullum texta leitar stuðningi',
 	'share_it' => 'Deila því:',
+	'signup-password' => 'Lykilorð:',
 ];
 
 $messages['it'] = [
@@ -17521,6 +17650,9 @@ L\'ultimo elemento del registro è riportato di seguito per informazione:',
 ***w:c:it.lego|Lego
 ***w:c:it.encicprotezionecivile|Protezione Civile
 ***w:c:it|Altro...',
+	'signup-mail' => 'E-mail -',
+	'signup-moreinfo' => 'Ulteriori informazioni',
+	'signup-password' => 'Password -',
 ];
 
 $messages['iu'] = [
@@ -17721,6 +17853,7 @@ L\'ultimo elemento del registro è riportato di seguito per informazione:',
 	'specialpages-group-spam' => 'Strumenti contro lo spam',
 	'sqlite-has-fts' => '$1 con la possibilità di ricerca completa nel testo',
 	'sqlite-no-fts' => '$1 senza la possibilità di ricerca completa nel testo',
+	'signup-password' => 'ᐅᐃᑭᐱᑎᐊ ᐸᓚᙵᓴᐅᑎ',
 ];
 
 $messages['ja'] = [
@@ -18002,6 +18135,9 @@ $messages['ja'] = [
 ** recentchanges-url|最近の更新
 ** helppage|ヘルプ
 ** forum-url|フォーラム',
+	'signup-mail' => 'メールアドレス -',
+	'signup-moreinfo' => '詳細',
+	'signup-password' => 'パスワード:',
 ];
 
 $messages['jam'] = [
@@ -18097,6 +18233,7 @@ $messages['jbo'] = [
 	'sp-contributions-talk' => 'casnu',
 	'sp-contributions-submit' => 'sisku',
 	'specialpages' => 'steci ckupau',
+	'signup-password' => 'Password:',
 ];
 
 $messages['jut'] = [
@@ -18138,6 +18275,7 @@ $messages['jut'] = [
 	'svg-long-desc' => 'SVG gøret, wønetstørrelse $1 × $2 pixel, gøretstørrelse: $3',
 	'show-big-image' => 'Hersenenge i større åpløsnenge',
 	'specialpages' => 'Sonst sider',
+	'signup-password' => 'Din adgangskode',
 ];
 
 $messages['jv'] = [
@@ -18322,6 +18460,7 @@ Katrangan tampilan:
 	'specialpages-group-wiki' => 'Data lan piranti wiki',
 	'specialpages-group-redirects' => 'Ngalihaké kaca astamèwa',
 	'specialpages-group-spam' => 'Piranit spam',
+	'signup-password' => 'tembung sandhi',
 ];
 
 $messages['ka'] = [
@@ -18513,6 +18652,7 @@ $messages['ka'] = [
 	'specialpages-group-wiki' => 'ვიკი–მონაცემები და ინსტრუმენტები',
 	'specialpages-group-redirects' => 'სპეცგვერდების გადამისამართება',
 	'specialpages-group-spam' => 'ინსტრუმენტები სპამის წინააღმდეგ',
+	'signup-password' => 'პაროლი:',
 ];
 
 $messages['kaa'] = [
@@ -18631,6 +18771,7 @@ To\'mende en\' aqırg\'ı jurnal mag\'lıwmatları berilgen.',
 	'sp-newimages-showfrom' => '$2, $1 baslap taza fayllardı ko\'rset',
 	'specialpages' => 'Arnawlı betler',
 	'specialpages-group-users' => 'Paydalanıwshılar ha\'m olardın\' huqıqları',
+	'signup-password' => 'Parol:',
 ];
 
 $messages['kab'] = [
@@ -18722,6 +18863,7 @@ G leɛnayek wekki ɣef taqeffalt "Back/Précédent" n browser/explorateur inek, 
 	'size-megabytes' => '$1 MB/MO',
 	'size-gigabytes' => '$1 GB/GO',
 	'specialpages' => 'isebtar usligen',
+	'signup-password' => 'Awal n tbaḍnit',
 ];
 
 $messages['kbd'] = [
@@ -18913,6 +19055,7 @@ $messages['kg'] = [
 	'searchall' => 'nyonso',
 	'show' => 'Monisa',
 	'sp-contributions-talk' => 'disolo',
+	'signup-password' => 'Password:',
 ];
 
 $messages['khw'] = [
@@ -19128,6 +19271,7 @@ $messages['kk'] = [
 	'statistics-users' => 'Тіркелген қатысушылар',
 	'statistics-users-active' => 'Белсенді қатысушылар',
 	'statistics-users-active-desc' => 'Соңғы {{PLURAL:$1|күнде|$1 күнде}} қандай да бір іс-әрекет жасаған қатысушылар',
+	'signup-password' => 'Құпия сөзіңіз:',
 ];
 
 $messages['kk-arab'] = [
@@ -19266,6 +19410,7 @@ $messages['kk-arab'] = [
 	'specialpages-group-wiki' => 'ۋىيكىي دەرەكتەرى جانە قۇرالدارى',
 	'specialpages-group-redirects' => 'ايدايتىن ارنايى بەتتەر',
 	'specialpages-group-spam' => 'سپام قۇرالدارى',
+	'signup-password' => 'قۇپىييا ٴسوزىڭىز:',
 ];
 
 $messages['kk-cn'] = [
@@ -19404,6 +19549,7 @@ $messages['kk-cn'] = [
 	'specialpages-group-wiki' => 'ۋىيكىي دەرەكتەرى جانە قۇرالدارى',
 	'specialpages-group-redirects' => 'ايدايتىن ارنايى بەتتەر',
 	'specialpages-group-spam' => 'سپام قۇرالدارى',
+	'signup-password' => 'قۇپىييا ٴسوزىڭىز:',
 ];
 
 $messages['kk-cyrl'] = [
@@ -19561,6 +19707,7 @@ $messages['kk-cyrl'] = [
 	'specialpages-group-wiki' => 'Уики деректері және құралдары',
 	'specialpages-group-redirects' => 'Айдайтын арнайы беттер',
 	'specialpages-group-spam' => 'Спам құралдары',
+	'signup-password' => 'Құпия сөзіңіз:',
 ];
 
 $messages['kk-kz'] = [
@@ -19718,6 +19865,7 @@ $messages['kk-kz'] = [
 	'specialpages-group-wiki' => 'Уики деректері және құралдары',
 	'specialpages-group-redirects' => 'Айдайтын арнайы беттер',
 	'specialpages-group-spam' => 'Спам құралдары',
+	'signup-password' => 'Құпия сөзіңіз:',
 ];
 
 $messages['kk-latn'] = [
@@ -19854,6 +20002,7 @@ Bunıñ sebebi şettik torap siltemesinen bolwı mümkin.',
 	'specialpages-group-wiki' => 'Wïkï derekteri jäne quraldarı',
 	'specialpages-group-redirects' => 'Aýdaýtın arnaýı better',
 	'specialpages-group-spam' => 'Spam quraldarı',
+	'signup-password' => 'Qupïya söziñiz:',
 ];
 
 $messages['kk-tr'] = [
@@ -19990,6 +20139,7 @@ Bunıñ sebebi şettik torap siltemesinen bolwı mümkin.',
 	'specialpages-group-wiki' => 'Wïkï derekteri jäne quraldarı',
 	'specialpages-group-redirects' => 'Aýdaýtın arnaýı better',
 	'specialpages-group-spam' => 'Spam quraldarı',
+	'signup-password' => 'Qupïya söziñiz:',
 ];
 
 $messages['kl'] = [
@@ -20039,6 +20189,7 @@ $messages['kl'] = [
 	'sp-contributions-username' => 'IP adresse imalt. atuisoq:',
 	'sp-contributions-submit' => 'Ujaruk',
 	'specialpages' => 'Quppernerit immikkut ittut',
+	'signup-password' => 'Din adgangskode',
 ];
 
 $messages['km'] = [
@@ -20252,6 +20403,7 @@ $messages['km'] = [
 	'specialpages-group-wiki' => 'ទិន្នន័យនិងឧបករណ៍វិគី',
 	'specialpages-group-redirects' => 'ទំព័របញ្ជូនបន្តពិសេសៗ',
 	'specialpages-group-spam' => 'ឧបករណ៍ស្ព៊ែម',
+	'signup-password' => 'ពាក្យសំងាត់៖',
 ];
 
 $messages['kn'] = [
@@ -20374,6 +20526,7 @@ $messages['kn'] = [
 	'specialpages-group-highuse' => 'ಹೆಚ್ಚು ಬಳಕೆಯಲ್ಲಿರುವ ಪುಟಗಳು',
 	'specialpages-group-pages' => 'ಪುಟಗಳ ಪಟ್ಟಿ',
 	'specialpages-group-redirects' => 'ವಿಶೇಷ ಪುಟಗಳನ್ನು ಪುನರ್ನಿರ್ದೇಶಿಸಲಾಗುತ್ತಿದೆ',
+	'signup-password' => 'ನಿಮ್ಮ ಪ್ರವೇಶಪದ',
 ];
 
 $messages['ko'] = [
@@ -20627,6 +20780,9 @@ $messages['ko'] = [
 ***http://ko.community.wikia.com/wiki/%EB%8F%84%EC%9B%80%EB%A7%90:%EC%BD%98%ED%85%90%EC%B8%A0|도움말
 ***http://ko.community.wikia.com/wiki/%EB%8C%80%EB%AC%B8|더 보기...',
 	'shared-problemreport' => '오류 보고하기',
+	'signup-mail' => '이메일 -',
+	'signup-moreinfo' => '정보',
+	'signup-password' => '비밀번호 -',
 ];
 
 $messages['ko-kp'] = [
@@ -21128,6 +21284,7 @@ Memba se somtem dem indeks-dem noh op tu det {{SITENAME}}.',
 	'sp-contributions-talk' => 'tok',
 	'sp-contributions-submit' => 'Sach',
 	'specialpages' => 'Speshal pej-dem',
+	'signup-password' => 'Password:',
 ];
 
 $messages['krj'] = [
@@ -21150,6 +21307,7 @@ $messages['krj'] = [
 	'sp-contributions-talk' => 'Wakal',
 	'sp-contributions-submit' => 'Sagap',
 	'specialpages' => 'Manga espesyal nga pahina',
+	'signup-password' => 'Password:',
 ];
 
 $messages['ks'] = [
@@ -21159,6 +21317,7 @@ $messages['ks'] = [
 	'summary' => 'خُلاسہٕ:',
 	'sp-contributions-talk' => 'بَحَژ',
 	'sp-contributions-submit' => 'ژھارُن',
+	'signup-password' => 'Password:',
 ];
 
 $messages['ks-arab'] = [
@@ -21390,6 +21549,7 @@ Heh kütt der neuste Enndrach em Logbooch doh drövver:',
 	'specialpages-group-spam' => 'Werrekzüch jäje SPÄM',
 	'sqlite-has-fts' => 'Version $1 (un kann en janze Täxte söhke)',
 	'sqlite-no-fts' => 'Version $1 (kann ävver nit en janze Täxte söhke)',
+	'signup-password' => 'Passwood',
 ];
 
 $messages['ku'] = [
@@ -21612,6 +21772,7 @@ Heh kütt der neuste Enndrach em Logbooch doh drövver:',
 	'specialpages-group-spam' => 'Werrekzüch jäje SPÄM',
 	'sqlite-has-fts' => 'Version $1 (un kann en janze Täxte söhke)',
 	'sqlite-no-fts' => 'Version $1 (kann ävver nit en janze Täxte söhke)',
+	'signup-password' => 'Şîfreya te (password)',
 ];
 
 $messages['ku-latn'] = [
@@ -21746,6 +21907,7 @@ $messages['ku-latn'] = [
 	'specialpages-group-users' => 'Bikarhêner û maf',
 	'specialpages-group-pages' => 'Lîstên rûpelan',
 	'specialpages-group-pagetools' => 'Amûrên rûpelê',
+	'signup-password' => 'Şîfreya te (password)',
 ];
 
 $messages['kv'] = [
@@ -21760,6 +21922,7 @@ $messages['kv'] = [
 	'search-result-size' => '$1 ({{PLURAL:$2|$2 кыв}})',
 	'specialloguserlabel' => 'Пырысь:',
 	'specialpages' => 'Торъя лист бокъяс',
+	'signup-password' => 'Пароль:',
 ];
 
 $messages['kw'] = [
@@ -21845,6 +22008,7 @@ $messages['kw'] = [
 	'svg-long-desc' => 'Restren SVG, $1 × $2 pixel en hanow, mens an restren: $3',
 	'show-big-image' => 'Clerder leun',
 	'specialpages' => 'Folednow arbednek',
+	'signup-password' => 'Ger-tremena:',
 ];
 
 $messages['ky'] = [
@@ -21916,6 +22080,7 @@ $messages['ky'] = [
 	'svg-long-desc' => 'SVG файл, шарттуу түрдө $1 × $2 пиксел, файлдын көлөмү: $3',
 	'show-big-image' => 'Толук чечилиши',
 	'specialpages' => 'Атайын барактар',
+	'signup-password' => 'Сырсөз',
 ];
 
 $messages['la'] = [
@@ -22055,6 +22220,7 @@ Contenta [$2 paginae descriptionis fasciculi] subter monstrantur.',
 	'specialpages-group-wiki' => 'Vici-data et instrumenta',
 	'specialpages-group-redirects' => 'Paginae speciales redirigentes',
 	'specialpages-group-spam' => 'Instrumenta contra praeconia incommoda',
+	'signup-password' => 'Tessera tua:',
 ];
 
 $messages['lad'] = [
@@ -22131,6 +22297,7 @@ La descripción en su [$2 hoja de descripción del arxivo] está amostrada debax
 	'show-big-image' => 'Resolución original',
 	'specialpages' => 'Hojas especiales',
 	'specialpages-group-users' => 'Usadores y derechos',
+	'signup-password' => 'Parola',
 ];
 
 $messages['lb'] = [
@@ -22338,6 +22505,7 @@ Dëst warscheinlech duerch en externe Link den op der schwaarzer Lëscht (blackl
 	'specialpages-group-spam' => 'Handwierksgeschir géint de Spam',
 	'sqlite-has-fts' => '$1 ënnerstëtzt d\'Volltextsich',
 	'sqlite-no-fts' => '$1 ënnerstëtzt d\'Volltextsich net',
+	'signup-password' => 'Passwuert:',
 ];
 
 $messages['lbe'] = [
@@ -22345,6 +22513,7 @@ $messages['lbe'] = [
 	'showpreview' => 'Цалсса ххалбаву',
 	'specialloguserlabel' => 'Гьурттучув:',
 	'sp-contributions-talk' => 'Ихтилат',
+	'signup-password' => 'Пароль:',
 ];
 
 $messages['lez'] = [
@@ -22426,6 +22595,7 @@ $messages['lez'] = [
 	'svg-long-desc' => 'SVG файл, номилдаказ $1 $2 × пикселяр, файлдин кьадар: $3',
 	'show-big-image' => 'Мадни хъсан еридин шикил',
 	'specialpages' => 'КьетIен  ччинар',
+	'signup-password' => 'Password:',
 ];
 
 $messages['lfn'] = [
@@ -22483,6 +22653,7 @@ $messages['lfn'] = [
 	'svg-long-desc' => 'SVG fix, per nom $1 × $2 pixeles, grandia de fix: $3',
 	'show-big-image' => 'Densia masima',
 	'specialpages' => 'Pajes spesial',
+	'signup-password' => 'Sinia de entra:',
 ];
 
 $messages['lg'] = [
@@ -22589,6 +22760,7 @@ Ekyasemba okuyingizibwa mu lukalala olw\'ebifuddeyo lwa lwo bibino okwongera oku
 	'size-megabytes' => 'MB $1',
 	'size-gigabytes' => 'GB $1',
 	'specialpages' => 'Empapula enjawule',
+	'signup-password' => 'Ekigambo ekikuumi',
 ];
 
 $messages['li'] = [
@@ -22796,6 +22968,7 @@ Meistal wörd dit door \'ne zwarte externe link veroorzaak.',
 	'specialpages-group-spam' => 'Spamhölpmiddele',
 	'sqlite-has-fts' => 'Zeuk versie $1 mit óngersteuning veur "full-text"',
 	'sqlite-no-fts' => 'Zeuk versie $1 zónger óngersteuning veur "fulltext"',
+	'signup-password' => 'Die wachwaord',
 ];
 
 $messages['lij'] = [
@@ -22876,6 +23049,7 @@ Chi de segoito ti peu védde a descriçión inta [$2 pàgina de descriçión do 
 	'svg-long-desc' => 'archivio in formato SVG, dimenscioìn nominâli $1 × $2 pixel, dimenscioìn de l\'archivio: $3',
 	'show-big-image' => 'Verscion d\'ærta resolûxon',
 	'specialpages' => 'Pagine speçiâli',
+	'signup-password' => 'Pòula segretta:',
 ];
 
 $messages['liv'] = [
@@ -23043,6 +23217,7 @@ La descrizión sura la sua [$2 pagina de descrizión del file] l\'è mustrada ch
 	'svg-long-desc' => 'archivi in furmaa SVG, dimensión nominaj  $1 × $2 pixel, dimensión de l\'archivi: $3',
 	'show-big-image' => 'Versión a resolüzión volta',
 	'specialpages' => 'Paginn special',
+	'signup-password' => 'Parola d\'urdin',
 ];
 
 $messages['ln'] = [
@@ -23096,6 +23271,7 @@ $messages['ln'] = [
 	'sp-contributions-talk' => 'Ntembe',
 	'sp-contributions-submit' => 'Boluki',
 	'specialpages' => 'Nkásá gudi',
+	'signup-password' => 'Banda nayó:',
 ];
 
 $messages['lo'] = [
@@ -23151,6 +23327,7 @@ $messages['lo'] = [
 	'sp-contributions-submit' => 'ຊອກຫາ',
 	'show-big-image' => 'ເຕັມຂະໜາດ',
 	'specialpages' => 'ໜ້າພິເສດ',
+	'signup-password' => 'ລະຫັດຜ່ານ',
 ];
 
 $messages['loz'] = [
@@ -23213,6 +23390,7 @@ $messages['loz'] = [
 	'show-big-image' => 'Risolusi bakisize',
 	'sp-newimages-showfrom' => 'Kamukile nca imegi di $1',
 	'specialpages' => 'Petulo zwenti',
+	'signup-password' => 'Sebu dafi:',
 ];
 
 $messages['lt'] = [
@@ -23420,6 +23598,7 @@ Naujausias įrašas žurnale yra pateiktas žemiau:',
 	'specialpages-group-spam' => 'Šlamšto valdymo priemonės',
 	'sqlite-has-fts' => '$1 su visatekstės paieškos palaikymu',
 	'sqlite-no-fts' => '$1 be visatekstės paieškos palaikymo',
+	'signup-password' => 'Slaptažodis:',
 ];
 
 $messages['ltg'] = [
@@ -23677,6 +23856,7 @@ To visticamāk izraisīja ārēja saite uz melnajā sarakstā esošu interneta v
 	'specialpages-group-spam' => 'Spama rīki',
 	'sqlite-has-fts' => '$1 ar pilnteksta meklēšanas atbalstu',
 	'sqlite-no-fts' => '$1 bez pilnteksta meklēšanas atbalsta',
+	'signup-password' => 'Tava parole',
 ];
 
 $messages['lzh'] = [
@@ -23869,6 +24049,7 @@ $messages['lzh'] = [
 	'specialpages-group-spam' => '反垃圾之器',
 	'sqlite-has-fts' => '$1 含全文之尋',
 	'sqlite-no-fts' => '$1 不含全文之尋',
+	'signup-password' => '符節',
 ];
 
 $messages['lzz'] = [
@@ -23920,6 +24101,7 @@ $messages['lzz'] = [
 	'svg-long-desc' => 'SVG dosya, coxoten $1 × $2 pʼikʼseli, dosyaşi didinoba: $3',
 	'show-big-image' => 'Tam ozʼiramuşi',
 	'specialpages' => 'Doxmeli butʼkʼape',
+	'signup-password' => 'Password:',
 ];
 
 $messages['mai'] = [
@@ -24129,6 +24311,7 @@ $messages['mai'] = [
 	'specialpages-group-spam' => 'अनपेक्षित संदेश औजार',
 	'sqlite-has-fts' => '$1 पूर्ण-पाठ खोज सहायता युक्त',
 	'sqlite-no-fts' => '$1 बिन पूर्ण-पाठ खोज सहायताक',
+	'signup-password' => 'आपका पासवर्ड',
 ];
 
 $messages['map-bms'] = [
@@ -24275,6 +24458,7 @@ ora teyeng mindahna kaca maring awake dhewek.',
 	'svg-long-desc' => 'Berkas SVG, nominal $1 × $2 piksel, gedhené berkas: $3',
 	'show-big-image' => 'Résolusi kebak',
 	'specialpages' => 'Kaca-kaca khusus',
+	'signup-password' => 'tembung sandhi',
 ];
 
 $messages['mdf'] = [
@@ -24439,6 +24623,7 @@ $messages['mdf'] = [
 	'specialpages-group-wiki' => 'Викинь дата ди кядьёнксне',
 	'specialpages-group-redirects' => 'Башка лопатнень умборондафтома',
 	'specialpages-group-spam' => 'Лудна пачфтематнень каршес кядьёнксне',
+	'signup-password' => 'Сувама валце:',
 ];
 
 $messages['mg'] = [
@@ -24627,6 +24812,7 @@ Ny iditra farany tao amin\'ny laogim-panakanam-pikambana dia naseho teo ambany m
 	'specialpages-group-wiki' => 'Datan\'ny wiki sy fitaovana',
 	'specialpages-group-redirects' => 'Pejy manokana voaodina',
 	'specialpages-group-spam' => 'Fitaovana fanalana spam',
+	'signup-password' => 'Tenimiafina',
 ];
 
 $messages['mhr'] = [
@@ -24719,6 +24905,7 @@ $messages['mhr'] = [
 	'specialpages-group-pages' => 'Лаштык лӱмер-влак',
 	'specialpages-group-pagetools' => 'Лаштык ӱзгар-влак',
 	'specialpages-group-redirects' => 'Вес верек колтышо лӱмын ыштыме лаштык-влак',
+	'signup-password' => 'Шолыпмут:',
 ];
 
 $messages['mi'] = [
@@ -24731,6 +24918,7 @@ $messages['mi'] = [
 	'showdiff' => 'Tiro rerekētanga',
 	'show' => 'Whakaaturia',
 	'specialpages' => 'Whārangi motuhake',
+	'signup-password' => 'Password:',
 ];
 
 $messages['min'] = [
@@ -25054,6 +25242,7 @@ $messages['mk'] = [
 	'specialpages-group-spam' => 'Алатки против спам',
 	'sqlite-has-fts' => '$1 со поддршка за пребарување по цели текстови',
 	'sqlite-no-fts' => '$1 без поддршка за пребарување по цели текстови',
+	'signup-password' => 'Лозинка:',
 ];
 
 $messages['ml'] = [
@@ -25260,6 +25449,7 @@ $messages['ml'] = [
 	'specialpages-group-spam' => 'പാഴെഴുത്ത് ഉപകരണങ്ങൾ',
 	'sqlite-has-fts' => 'പൂർണ്ണ-എഴുത്ത് തിരച്ചിൽ പിന്തുണയുള്ള $1',
 	'sqlite-no-fts' => 'പൂർണ്ണ-എഴുത്ത് തിരച്ചിൽ പിന്തുണയില്ലാത്ത $1',
+	'signup-password' => 'രഹസ്യവാക്ക്:',
 ];
 
 $messages['mn'] = [
@@ -25466,6 +25656,7 @@ $messages['mn'] = [
 	'specialpages-group-spam' => 'Спамын хэрэгслүүд',
 	'sqlite-has-fts' => '$1 (бүх текстээрх хайлтыг дэмждэг)',
 	'sqlite-no-fts' => '$1 (бүх текстээрх хайлтыг дэмждэггүй)',
+	'signup-password' => 'Нууц үг:',
 ];
 
 $messages['mo'] = [
@@ -25512,6 +25703,7 @@ $messages['mo'] = [
 	'svg-long-desc' => 'фишиер SVG, ку дименсиуня номиналэ де $1 × $2 пиксель, мэриме фишиер: $3',
 	'show-big-image' => 'Мэреште резолуция имаӂиний',
 	'specialpages' => 'Сервичий',
+	'signup-password' => 'Parolă:',
 ];
 
 $messages['mr'] = [
@@ -25717,6 +25909,7 @@ $messages['mr'] = [
 	'specialpages-group-spam' => 'उत्पात साधने',
 	'sqlite-has-fts' => 'पूर्ण-मजकूर शोध समर्थनासहित $1',
 	'sqlite-no-fts' => 'पूर्ण-मजकूर शोध समर्थनाविरहित $1',
+	'signup-password' => 'तुमचा परवलीचा शब्द',
 ];
 
 $messages['mrj'] = [
@@ -25970,6 +26163,7 @@ Masukan log terakhir ditunjukkan di bawah untuk rujukan:',
 	'specialpages-group-spam' => 'Alatan spam',
 	'sqlite-has-fts' => '$1 dengan sokongan carian teks penuh',
 	'sqlite-no-fts' => '$1 tanpa sokongan carian teks penuh',
+	'signup-password' => 'Kata laluan:',
 ];
 
 $messages['mt'] = [
@@ -26177,6 +26371,7 @@ ma tistax iċaqlaq paġna fuqha nnifsa.',
 	'specialpages-group-spam' => 'Għodda kontra l-ispam',
 	'sqlite-has-fts' => '$1 bil-possibilità ta\' tfittxija kompluta fit-test',
 	'sqlite-no-fts' => '$1 mingħajr il-possibilità ta\' tfittxija kompluta fit-test',
+	'signup-password' => 'Password:',
 ];
 
 $messages['mwl'] = [
@@ -26250,6 +26445,7 @@ $messages['mwl'] = [
 	'specialpages-group-login' => 'Antrar / anscrebir',
 	'specialpages-group-pages' => 'Lhistas de páiginas',
 	'specialpages-group-pagetools' => 'Ferramienta de páiginas',
+	'signup-password' => 'Palabra chabe',
 ];
 
 $messages['my'] = [
@@ -26389,6 +26585,7 @@ $messages['my'] = [
 	'specialpages-group-wiki' => 'ဝီကီဒေတာနှင့် ကိရိယာများ',
 	'specialpages-group-redirects' => 'အထူးစာမျက်နှာများကို ပြန်ညွှန်းနေသည်',
 	'specialpages-group-spam' => 'စပမ်းကိရိယာများ',
+	'signup-password' => 'လှို့​ဝှက်​စ​ကား​လုံး:',
 ];
 
 $messages['myv'] = [
@@ -26515,6 +26712,7 @@ $messages['myv'] = [
 	'specialpages-group-wiki' => 'Викинь дата ды кедьйонкст',
 	'specialpages-group-redirects' => 'Башка тевень лопатнень ютавтома лия таркас',
 	'specialpages-group-spam' => 'Шукш пачтнематнеде кедьёнкст',
+	'signup-password' => 'Совамо валот:',
 ];
 
 $messages['mzn'] = [
@@ -26567,6 +26765,7 @@ $messages['mzn'] = [
 	'sp-newimages-showfrom' => 'نشون‌هدائن عکسای نو $2، $1 جه به بعد',
 	'specialpages' => 'شا صفحه‌ئون',
 	'specialpages-group-maintenance' => 'چله‌بندی صفحه‌ئون',
+	'signup-password' => 'پـاس‌واجـه',
 ];
 
 $messages['na'] = [
@@ -26578,6 +26777,7 @@ $messages['na'] = [
 	'searchhelp-url' => 'Help:Oangan',
 	'searchresultshead' => 'Anani ko',
 	'show' => 'oduwen',
+	'signup-password' => 'Password:',
 ];
 
 $messages['nah'] = [
@@ -26685,6 +26885,7 @@ $messages['nah'] = [
 	'specialpages-group-highuse' => 'Zāzaniltin tlatequitiliztechcopa',
 	'specialpages-group-pages' => 'Mochīntīn zāzaniltin',
 	'specialpages-group-redirects' => 'Tlatēmoliztli īhuān  tlacuepaliztli',
+	'signup-password' => 'Motlahtōlichtacāyo',
 ];
 
 $messages['nan'] = [
@@ -26836,6 +27037,7 @@ $messages['nan'] = [
 	'specialpages-group-login' => '登入',
 	'specialpages-group-changes' => '最近改的記錄',
 	'specialpages-group-wiki' => 'Wiki資料佮家私',
+	'signup-password' => 'Lí ê bi̍t-bé:',
 ];
 
 $messages['nap'] = [
@@ -26861,6 +27063,7 @@ $messages['nap'] = [
 	'shortpages' => 'Paggene curte',
 	'sp-contributions-talk' => 'Chiàcchiera',
 	'specialpages' => 'Paggene speciale',
+	'signup-password' => 'Password:',
 ];
 
 $messages['nb'] = [
@@ -27067,6 +27270,7 @@ Dette er sannsynligvis forårsaket av en lenke til et svartelistet eksternt nett
 	'specialpages-group-spam' => 'Spamverktøy',
 	'sqlite-has-fts' => '$1 med støtte for fulltekstsøk',
 	'sqlite-no-fts' => '$1 uten støtte for fulltekstsøk',
+	'signup-password' => 'Passord:',
 ];
 
 $messages['nds'] = [
@@ -27252,6 +27456,7 @@ De jüngste Indrag in dat Sperr-Logbook wart ünnen wiest:',
 	'specialpages-group-spam' => 'Spam-Warktüüch',
 	'sqlite-has-fts' => '$1 mit Stöhn för Vulltext-Söök',
 	'sqlite-no-fts' => '$1 ahn Stöhn för Vulltext-Söök',
+	'signup-password' => 'Dien Passwoort',
 ];
 
 $messages['nds-nl'] = [
@@ -27457,6 +27662,7 @@ Meestentieds kump dit deur n uutgaonde verwiezing die op de zwarte lieste steet.
 	'specialpages-group-spam' => 'Hulpmiddels tegen ongewunste bewarkingen',
 	'sqlite-has-fts' => 'Versie $1 mit ondersteuning veur "full-text" zeuken',
 	'sqlite-no-fts' => 'Versie $1 zonder ondersteuning veur "full-text" zeuken',
+	'signup-password' => 'Wachwoord',
 ];
 
 $messages['ne'] = [
@@ -27606,6 +27812,7 @@ $messages['ne'] = [
 	'specialpages-group-pagetools' => 'पृष्ठ उपकरणहरू',
 	'specialpages-group-redirects' => 'विशेष पृष्ठमा पठाउने',
 	'specialpages-group-spam' => 'स्पाम उपकरणहरु',
+	'signup-password' => 'पासवर्ड',
 ];
 
 $messages['new'] = [
@@ -27633,6 +27840,7 @@ $messages['new'] = [
 	'statistics' => 'तथ्याङ्क',
 	'sp-contributions-talk' => 'खँल्हाबँल्हा',
 	'specialpages' => 'विषेश पौत:',
+	'signup-password' => 'दुथखँग्वः (पासवर्द):',
 ];
 
 $messages['niu'] = [
@@ -27650,6 +27858,7 @@ $messages['niu'] = [
 	'searchresultshead' => 'Kumi',
 	'sp-contributions-submit' => 'Kumi',
 	'specialpages' => 'Tau Lau Mahuiga',
+	'signup-password' => 'Kupu fufu:',
 ];
 
 $messages['nl'] = [
@@ -28100,6 +28309,7 @@ Det siste loggelementet er oppgjeve under som referanse:',
 	'specialpages-group-spam' => 'Spamverktøy',
 	'sqlite-has-fts' => '$1 med støtte for fulltekstsøk',
 	'sqlite-no-fts' => '$1 utan støtte for fulltekstsøk',
+	'signup-password' => 'Passord:',
 ];
 
 $messages['no'] = [
@@ -28301,6 +28511,7 @@ Det siste loggelementet er oppgjeve under som referanse:',
 	'sqlite-has-fts' => '$1 med støtte for fulltekstsøk',
 	'sqlite-no-fts' => '$1 utan støtte for fulltekstsøk',
 	'share_it' => 'Del den:',
+	'signup-password' => 'Passord:',
 ];
 
 $messages['nov'] = [
@@ -28337,6 +28548,7 @@ $messages['nov'] = [
 	'sp-contributions-search' => 'Sercha kontributiones',
 	'sp-contributions-submit' => 'Sercha',
 	'specialpages' => 'Spesial pagines',
+	'signup-password' => 'Pasa-vorde:',
 ];
 
 $messages['nso'] = [
@@ -28406,6 +28618,7 @@ $messages['nso'] = [
 	'show-big-image' => '\'\'resolution\'\' ya gofella',
 	'show-big-image-thumb' => '<small>Bogolo ba pono: $1 × $2 pixels</small>',
 	'specialpages' => 'Matlakala a itšeng',
+	'signup-password' => 'Ditlhaka-tša-siphiri:',
 ];
 
 $messages['nv'] = [
@@ -28440,6 +28653,7 @@ $messages['nv'] = [
 	'sp-contributions-submit' => 'hanishtá',
 	'skinname-monobook' => 'NaaltsoosŁáa\'ígíí',
 	'specialpages' => 'Naaltsoos spéshelígíí',
+	'signup-password' => 'Password:',
 ];
 
 $messages['ny'] = [
@@ -28447,6 +28661,7 @@ $messages['ny'] = [
 	'searchbutton' => 'Fufuzani',
 	'searcharticle' => 'Pitani',
 	'specialpages' => 'Masamba apadera',
+	'signup-password' => 'Password:',
 ];
 
 $messages['oc'] = [
@@ -28646,6 +28861,7 @@ Aquò es probablament causat per un ligam sus lista negra que punta cap a un sit
 	'specialpages-group-wiki' => 'Donadas del wiki e aisinas',
 	'specialpages-group-redirects' => 'Redireccions',
 	'specialpages-group-spam' => 'Aisinas antispam',
+	'signup-password' => 'Vòstre senhal :',
 ];
 
 $messages['om'] = [
@@ -28654,6 +28870,7 @@ $messages['om'] = [
 	'sun' => 'Dil',
 	'sat' => 'San',
 	'september' => 'Fuulbana',
+	'signup-password' => 'Password:',
 ];
 
 $messages['or'] = [
@@ -28865,6 +29082,7 @@ $messages['or'] = [
 	'specialpages-group-spam' => 'ଅଯଥା ଉପକରଣ',
 	'sqlite-has-fts' => 'ପୁରା ଟେକ୍ସ୍ଟ ଖୋଜା ସହଯୋଗ ସହିତ $1',
 	'sqlite-no-fts' => 'ପୁରା ଟେକ୍ସ୍ଟ ଖୋଜା ସହଯୋଗ ବିନା $1',
+	'signup-password' => 'Password:',
 ];
 
 $messages['os'] = [
@@ -28956,6 +29174,7 @@ $messages['os'] = [
 	'size-megabytes' => '$1 МБ',
 	'size-gigabytes' => '$1 ГБ',
 	'specialpages' => 'Сæрмагонд фæрстæ',
+	'signup-password' => 'Пароль:',
 ];
 
 $messages['pa'] = [
@@ -29049,6 +29268,7 @@ $messages['pa'] = [
 	'scarytranscludetoolong' => '[ਅਫਸੋਸ ਹੈ ਕਿ URL ਬਹੁਤ ਲੰਮਾ ਹੈ]',
 	'specialpages' => 'ਖਾਸ ਪੇਜ',
 	'specialpages-group-login' => 'ਲਾਗ ਇਨ / ਅਕਾਊਂਟ ਬਣਾਓ',
+	'signup-password' => 'ਪਾਸਵਰਡ:',
 ];
 
 $messages['pag'] = [
@@ -29067,6 +29287,7 @@ $messages['pag'] = [
 	'sp-contributions-newbies-sub' => 'Para balo ran account',
 	'sp-contributions-submit' => 'Anapen',
 	'specialpages' => 'Niduma ran bolobolong',
+	'signup-password' => 'Password:',
 ];
 
 $messages['pam'] = [
@@ -29191,6 +29412,7 @@ Mapaliaring ing sangkan metung yang suglung king karinan king kilual (link to an
 	'specialpages-group-media' => 'Ulat king media ampong pamaglulan (uploads)',
 	'specialpages-group-users' => 'Talagamit ampong katuliran',
 	'specialpages-group-highuse' => 'Deng bulung a magamitan',
+	'signup-password' => 'Kekang password:',
 ];
 
 $messages['pap'] = [
@@ -29207,6 +29429,7 @@ $messages['pap'] = [
 	'statistics' => 'Estadístika',
 	'statistics-header-users' => 'Estadístika di uzadónan',
 	'specialpages' => 'Páginanan Spesial',
+	'signup-password' => 'Kontraseña',
 ];
 
 $messages['pcd'] = [
@@ -29328,6 +29551,7 @@ $messages['pdc'] = [
 	'specialpages-group-pagetools' => 'Gscharr fer Bledder',
 	'specialpages-group-redirects' => 'Besunnere Bledder wu weiderleide',
 	'specialpages-group-spam' => 'Spam-Gscharr',
+	'signup-password' => 'Passwort:',
 ];
 
 $messages['pdt'] = [
@@ -29376,6 +29600,7 @@ Daut woat aun eenem Link lidje, woona no eene externe Sied wiest.',
 	'spam_reverting' => 'Latste Versioon ohne Links no $1 wada trajcht jemoakt.',
 	'spam_blanking' => 'Aule Versioone haude Links no $1, reed jemoakt',
 	'specialpages' => 'Spezialsiede',
+	'signup-password' => 'Pauswot:',
 ];
 
 $messages['pfl'] = [
@@ -29426,16 +29651,19 @@ $messages['pfl'] = [
 	'show-big-image' => 'Gsamte Ergebnis',
 	'showhidebots' => '(Bots $1)',
 	'specialpages' => 'Spezialsaide',
+	'signup-password' => 'Passwort:',
 ];
 
 $messages['pi'] = [
 	'september' => 'सेप्टेम्बर',
 	'searchbutton' => 'खोज',
 	'searcharticle' => 'गच्छामि',
+	'signup-password' => 'Password:',
 ];
 
 $messages['pih'] = [
 	'searchhelp-url' => 'Help:Dem Kontent',
+	'signup-password' => 'Password:',
 ];
 
 $messages['pl'] = [
@@ -29765,6 +29993,8 @@ Najprawdopodobniej zostało to spowodowane przez link do zewnętrznej strony int
 * SEARCH
 * TOOLBOX
 * LANGUAGES',
+	'signup-moreinfo' => 'dodatkowe informacje',
+	'signup-password' => 'Hasło -',
 ];
 
 $messages['pms'] = [
@@ -29973,6 +30203,7 @@ Sòn a l\'é motobin belfé che a sia rivà përchè a-i era n\'anliura a un sit
 	'specialpages-group-spam' => 'Utiss contra lë spam',
 	'sqlite-has-fts' => '$1 con arserca an test pien mantnùa',
 	'sqlite-no-fts' => '$1 sensa arserca an test pien mantnùa',
+	'signup-password' => 'Soa ciav',
 ];
 
 $messages['pnb'] = [
@@ -30183,6 +30414,7 @@ $messages['pnb'] = [
 	'specialpages-group-spam' => 'سپام روک اوزار',
 	'sqlite-has-fts' => '$1 پوری لکھت کھوج مدد نال',
 	'sqlite-no-fts' => '$1 بنا کسے لکھت مدد دے',
+	'signup-password' => 'کنجی:',
 ];
 
 $messages['pnt'] = [
@@ -30263,6 +30495,7 @@ $messages['pnt'] = [
 	'specialpages-group-other' => 'Αλλέτερα ειδικά σελίδας',
 	'specialpages-group-pagetools' => 'Εργαλεία σελίδας',
 	'specialpages-group-spam' => 'Εργαλεία αντι-σπάμ',
+	'signup-password' => 'Σημάδι:',
 ];
 
 $messages['prg'] = [
@@ -30580,6 +30813,7 @@ $messages['ps'] = [
 	'specialpages-group-pages' => 'د مخونو لړليک',
 	'specialpages-group-pagetools' => 'د مخ اوزارونه',
 	'specialpages-group-wiki' => 'ويکيډاټا او اوزارونه',
+	'signup-password' => 'پټنوم:',
 ];
 
 $messages['pt'] = [
@@ -30887,6 +31121,7 @@ Este bloqueio foi provavelmente causado por um link para um site externo que con
 ***w:c:receitasfamilia:Receitas_para_Família_Wiki|Receitas para a família
 ***w:c:pt.conservas:Wiki_Conservas|Conservas
 ***homepage:Lifestyle|Mais...',
+	'signup-password' => 'Palavra-chave:',
 ];
 
 $messages['pt-br'] = [
@@ -31191,6 +31426,7 @@ Tal bloqueio foi provavelmente causado por uma ligação para um \'\'website\'\'
 ***w:c:receitasfamilia:Receitas_para_Família_Wiki|Receitas para a família
 ***w:c:pt.conservas:Wiki_Conservas|Conservas
 ***homepage:Lifestyle|Mais...',
+	'signup-password' => 'Senha:',
 ];
 
 $messages['qu'] = [
@@ -31396,6 +31632,7 @@ Hallch\'api qhipaq kaq yaykuchisqataqa kay qatiqpim rikunki willasunaykipaq:',
 	'specialpages-group-spam' => 'Spam nisqa millay rurayta hark\'anapaq llamk\'anakuna',
 	'sqlite-has-fts' => '$1 hunt\'a qillqa maskana yanapawan',
 	'sqlite-no-fts' => '$1 mana hunt\'a qillqa maskana yanapawan',
+	'signup-password' => 'Yaykuna rimayki',
 ];
 
 $messages['qug'] = [
@@ -31568,6 +31805,7 @@ $messages['rif'] = [
 	'svg-long-desc' => 'Afaylu n SVG, dis $1 × $2 pixel, Tiddi n ufaylu: $3',
 	'show-big-image' => 'Resolution ameqran',
 	'specialpages' => 'Tasniwin tinemmezrayin',
+	'signup-password' => 'Taguri n wadaf:',
 ];
 
 $messages['rm'] = [
@@ -31765,6 +32003,7 @@ Probablamien è quai capità pervia dad in link ad ina pagina externa ch\'è sin
 	'specialpages-group-spam' => 'Utensils da spam',
 	'sqlite-has-fts' => '$1 cun sustegn per la retschertga da text integrala',
 	'sqlite-no-fts' => '$1 senza sustegn per la retschertga da text integrala',
+	'signup-password' => 'pled-clav',
 ];
 
 $messages['rmy'] = [
@@ -31796,6 +32035,7 @@ $messages['rmy'] = [
 	'siteusers' => 'Jeno/e kai {{SITENAME}} $1',
 	'showhidebots' => '($1 boturya)',
 	'specialpages' => 'Uzalutne patrya',
+	'signup-password' => 'O nakhavipnasko lav',
 ];
 
 $messages['ro'] = [
@@ -32003,6 +32243,7 @@ Ultima intrare în jurnal este afișată mai jos pentru referință:',
 	'sqlite-has-fts' => '$1 cu suport de căutare în tot textul',
 	'sqlite-no-fts' => '$1 fără suport de căutare în tot textul',
 	'share_it' => 'Trimite:',
+	'signup-password' => 'Parolă:',
 ];
 
 $messages['roa-rup'] = [
@@ -32020,6 +32261,7 @@ $messages['roa-rup'] = [
 	'searchresultshead' => 'Caftã',
 	'sp-contributions-submit' => 'Caftã',
 	'specialpages' => 'Frãndzã spetsiale',
+	'signup-password' => 'Cljao:',
 ];
 
 $messages['roa-tara'] = [
@@ -32240,6 +32482,7 @@ Stu fatte ha state causate da \'nu collegamende a \'nu site esterne ca appartene
 	'specialpages-group-spam' => 'Struminde p\'u spam',
 	'sqlite-has-fts' => '$1 cu \'u supporte d\'a ricerche full-text',
 	'sqlite-no-fts' => '$1 senze \'u supporte d\'a ricerche full-text',
+	'signup-password' => 'Passuord:',
 ];
 
 $messages['ru'] = [
@@ -32556,6 +32799,8 @@ $messages['ru'] = [
 ***w:c:ru.community|Ещё...',
 	'shared-problemreport' => 'Сообщить о проблеме',
 	'showall' => 'Показать всё',
+	'signup-moreinfo' => 'подробнее',
+	'signup-password' => 'Пароль:',
 ];
 
 $messages['rue'] = [
@@ -32796,6 +33041,7 @@ $messages['ruq'] = [
 	'searchresultshead' => 'Caftã',
 	'sp-contributions-submit' => 'Caftã',
 	'specialpages' => 'Frãndzã spetsiale',
+	'signup-password' => 'Parolă:',
 ];
 
 $messages['ruq-cyrl'] = [
@@ -32821,6 +33067,7 @@ $messages['ruq-cyrl'] = [
 	'sp-contributions-talk' => 'дискућу',
 	'show-big-image' => 'Мареште ресолуцион',
 	'specialpages' => 'Пажи спецалус',
+	'signup-password' => 'Лозинка:',
 ];
 
 $messages['ruq-latn'] = [
@@ -32846,6 +33093,7 @@ $messages['ruq-latn'] = [
 	'sp-contributions-talk' => 'Diskuţu',
 	'show-big-image' => 'Mareşte resolucion',
 	'specialpages' => 'Paži specalus',
+	'signup-password' => 'Parolă:',
 ];
 
 $messages['sa'] = [
@@ -32956,6 +33204,7 @@ $messages['sa'] = [
 	'specialpages-group-highuse' => 'अधिकोपयोगीनि पृष्ठानि',
 	'specialpages-group-pages' => 'पृष्ठानाम् आवली',
 	'specialpages-group-pagetools' => 'पृष्ठोपकरणानि',
+	'signup-password' => 'सङ्केतशब्द:',
 ];
 
 $messages['sah'] = [
@@ -33162,6 +33411,7 @@ $messages['sah'] = [
 	'specialpages-group-spam' => 'Спаамы утары үнүстүрүмүөннэр',
 	'sqlite-has-fts' => '$1 толору тиэкистээх көрдөөһүнү өйүүр',
 	'sqlite-no-fts' => '$1 толору тиэкистээх көрдөөһүнү өйөөбөт',
+	'signup-password' => 'Киирии тыла:',
 ];
 
 $messages['sc'] = [
@@ -33257,6 +33507,7 @@ impossìbile mòver sa pàgina a issa etotu.',
 	'size-gigabytes' => '$1 GB',
 	'specialpages' => 'Pàginas ispetziales',
 	'specialpages-group-pages' => 'Listas de is pàginas',
+	'signup-password' => 'Password:',
 ];
 
 $messages['scn'] = [
@@ -33434,6 +33685,7 @@ Pi favuri utilizza lu tastu "\'n arreri" dû tò browser, ricàrrica la pàggina
 	'specialpages-group-wiki' => 'Strumenti e nfurmazzioni supra lu pruggettu',
 	'specialpages-group-redirects' => 'Pàggini spiciali di redirect',
 	'specialpages-group-spam' => 'Strumenti contr\'a lu spam',
+	'signup-password' => 'La tò \'\'password\'\'',
 ];
 
 $messages['sco'] = [
@@ -33549,6 +33801,7 @@ Th\' description oan tis [$2 file description page] thare is shown below.',
 	'specialpages' => 'Byordinar pages',
 	'specialpages-group-users' => 'Uisers an richts',
 	'specialpages-group-pages' => 'leet o pages',
+	'signup-password' => 'Passwaird:',
 ];
 
 $messages['sd'] = [
@@ -33589,6 +33842,7 @@ $messages['sd'] = [
 	'show-big-image' => 'سنهو ترين تحلل',
 	'specialpages' => 'خاص صفحا',
 	'specialpages-group-users' => 'يوزرس ۽ حق',
+	'signup-password' => 'ڳجھو لفظ:',
 ];
 
 $messages['sdc'] = [
@@ -33695,6 +33949,7 @@ $messages['sdc'] = [
 	'scarytranscludetoolong' => '[L\'URL è troppu longu]',
 	'specialpages' => 'Pagini ippiziari',
 	'specialpages-group-login' => 'Intra / registhrazioni',
+	'signup-password' => 'Paràura d\'órdhini',
 ];
 
 $messages['se'] = [
@@ -33762,6 +34017,7 @@ $messages['se'] = [
 	'size-megabytes' => '$1 MiB',
 	'size-gigabytes' => '$1 GiB',
 	'specialpages' => 'Erenomáš siiddut',
+	'signup-password' => 'Suollemassátni:',
 ];
 
 $messages['sei'] = [
@@ -33827,6 +34083,7 @@ Nexajvon. Jan necoccebj naxajvon poop, cuípo ö caápo.\'\'\'',
 	'spambot_username' => 'MediaWiki nespam',
 	'showhidebots' => '($1 botám)',
 	'specialpages' => 'Páhinám extravám',
+	'signup-password' => 'Quimx canj:',
 ];
 
 $messages['sg'] = [
@@ -33847,6 +34104,7 @@ $messages['sg'] = [
 	'shown-title' => 'Fa $1 {{PLURAL:$1|pendâkua |âpendâkua}} nî alîngbi na lêmbëtï ôko ôko.',
 	'search-result-size' => '$1 ({{PLURAL:$2|1 mbupa|$2 âmbupa}})',
 	'specialpages' => 'Âlêmbëtï sô ayeke ndê',
+	'signup-password' => 'Pafungûla',
 ];
 
 $messages['sgs'] = [
@@ -34201,6 +34459,7 @@ Ovo je vjerovatno izazvano vezom ka vanjskoj nepoželjnoj stranici.',
 	'specialpages-group-spam' => 'Spam alati',
 	'sqlite-has-fts' => '$1 sa podrškom pretrage cijelog teksta',
 	'sqlite-no-fts' => '$1 bez podrške pretrage cijelog teksta',
+	'signup-password' => 'Lozinka/zaporka:',
 ];
 
 $messages['shi'] = [
@@ -34307,6 +34566,7 @@ Izdar ad urtili ɣ isbidn n mayllan ɣ {{SITENAME}} .',
 	'specialpages-group-wiki' => 'wiki ladawat dlmalomat',
 	'specialpages-group-redirects' => 'sfhat tahwil gant khassa',
 	'specialpages-group-spam' => 'ladawat n spam',
+	'signup-password' => 'awal iḥdan:',
 ];
 
 $messages['si'] = [
@@ -34525,6 +34785,7 @@ $messages['si'] = [
 	'specialpages-group-spam' => 'අයාචිත-තැපෑල මෙවලම්',
 	'sqlite-has-fts' => '$1 සම්පූර්ණ-පෙළ සෙවුම් සහය සමග',
 	'sqlite-no-fts' => '$1 සම්පූර්ණ-පෙළ සෙවුම් සහය රහිතව',
+	'signup-password' => 'මුරපදය:',
 ];
 
 $messages['sk'] = [
@@ -34733,6 +34994,7 @@ Pravdepodobne to spôsobil odkaz na externú internetovú lokalitu, ktorá sa na
 	'specialpages-group-spam' => 'Nástroje proti spamu',
 	'sqlite-has-fts' => '$1 s podporou vyhľadávania v plnom texte',
 	'sqlite-no-fts' => '$1 bez podpory vyhľadávania v plnom texte',
+	'signup-password' => 'Heslo:',
 ];
 
 $messages['sl'] = [
@@ -34945,6 +35207,7 @@ Najnovejši vnos v dnevniku je na voljo spodaj:',
 	'sqlite-has-fts' => '$1 s podporo iskanju polnih besedil',
 	'sqlite-no-fts' => '$1 brez podpore iskanju polnih besedil',
 	'share_it' => 'Deli:',
+	'signup-password' => 'Geslo',
 ];
 
 $messages['sli'] = [
@@ -35111,6 +35374,7 @@ $messages['sm'] = [
 	'showdiff' => 'Fa\'aali suiga',
 	'searchresultshead' => 'Su\'e',
 	'specialpages' => 'Itulau fa\'apitoa',
+	'signup-password' => '\'Upu ulufale',
 ];
 
 $messages['sma'] = [
@@ -35163,6 +35427,7 @@ $messages['sma'] = [
 	'show-big-image' => 'Dïeves stoerre',
 	'scarytranscludetoolong' => '[URL lea ihke guhkie; gaatelassjedh]',
 	'specialpages' => 'Joekoen bielieh',
+	'signup-password' => 'Loevesbaakoe:',
 ];
 
 $messages['sn'] = [
@@ -35180,6 +35445,7 @@ $messages['sn'] = [
 	'searchresultshead' => 'Tsvaga',
 	'sp-contributions-submit' => 'Tsvaga',
 	'specialpages' => 'Mapeji akakosha',
+	'signup-password' => 'Password:',
 ];
 
 $messages['so'] = [
@@ -35223,6 +35489,7 @@ Fadlan markale isku day. Hadii aysan weli shaqaynin, ka bax ee markale soo gudag
 	'sp-contributions-talk' => 'Wadahadal',
 	'siteuser' => '{{SITENAME}} isticmaale $1',
 	'specialpages' => 'bogaga khaaska ah',
+	'signup-password' => 'Ereysir ah',
 ];
 
 $messages['sq'] = [
@@ -35425,6 +35692,7 @@ Veprimi i fundit mbi këtë faqe është poshtë për referncë:',
 	'specialpages-group-spam' => 'Mjetet për spam',
 	'sqlite-has-fts' => '$1 me mbështetje të kërkimit me teskt të plotë',
 	'sqlite-no-fts' => '$1 pa mbështetje të kërkimit me teskt të plotë',
+	'signup-password' => 'Fusni fjalëkalimin tuaj',
 ];
 
 $messages['sr'] = [
@@ -35628,6 +35896,7 @@ Veprimi i fundit mbi këtë faqe është poshtë për referncë:',
 	'sqlite-has-fts' => '$1 me mbështetje të kërkimit me teskt të plotë',
 	'sqlite-no-fts' => '$1 pa mbështetje të kërkimit me teskt të plotë',
 	'share_it' => 'Podelite:',
+	'signup-password' => 'Ваша лозинка',
 ];
 
 $messages['sr-ec'] = [
@@ -35847,6 +36116,7 @@ $messages['sr-ec'] = [
 	'specialpages-group-spam' => 'Алатке против непожељних порука',
 	'sqlite-has-fts' => '$1 с подршком претраге целог текста',
 	'sqlite-no-fts' => '$1 без подршке претраге целог текста',
+	'signup-password' => 'Ваша лозинка',
 ];
 
 $messages['sr-el'] = [
@@ -36026,6 +36296,7 @@ Ovo je verovatno izazvano blokiranom vezom ka spoljašnjem sajtu.',
 	'specialpages-group-wiki' => 'podaci i oruđa vikija',
 	'specialpages-group-redirects' => 'Preusmeravanje posebnih stranica',
 	'specialpages-group-spam' => 'oruđa protiv spama',
+	'signup-password' => 'Vaša lozinka',
 ];
 
 $messages['srn'] = [
@@ -36084,6 +36355,7 @@ $messages['srn'] = [
 	'show-big-image' => 'Moro srapu',
 	'showhidebots' => '(Bot $1)',
 	'specialpages' => 'Spesrutu papira',
+	'signup-password' => 'Psa wortu:',
 ];
 
 $messages['ss'] = [
@@ -36119,6 +36391,7 @@ Naka kutsi makhasi abo e {{SITENAME}} angaba sekadlulelwe sikhatsi.',
 	'sp-contributions-talk' => 'ingcoco',
 	'sp-contributions-submit' => 'Sesha',
 	'specialpages' => 'Emakhasi labalulekile',
+	'signup-password' => 'Password:',
 ];
 
 $messages['st'] = [
@@ -36133,6 +36406,7 @@ $messages['st'] = [
 	'searchresultshead' => 'Phuputso',
 	'statistics' => 'Dipalopalo',
 	'shortpages' => 'Maqephe a makgutshwane',
+	'signup-password' => 'Password:',
 ];
 
 $messages['stq'] = [
@@ -36327,6 +36601,7 @@ Foar Information foulget die aktuelle Iendraach uut dät Speer-Logbouk:',
 	'specialpages-group-spam' => 'Spam-Reewen',
 	'sqlite-has-fts' => 'Version $1 mäd Unnerstutsenge foar ju Fultäkstsäike',
 	'sqlite-no-fts' => 'Version $1 sunner Unnerstutsenge foaar ju Fultäkstsäike',
+	'signup-password' => 'Paaswoud:',
 ];
 
 $messages['su'] = [
@@ -36514,6 +36789,7 @@ Sigana mah ieu téh alatan tumbu ka loka luar.',
 	'specialpages-group-wiki' => 'Data wiki jeung parabot',
 	'specialpages-group-redirects' => 'Alihan kaca husus',
 	'specialpages-group-spam' => 'Parabot Spam',
+	'signup-password' => 'Sandi anjeun',
 ];
 
 $messages['sv'] = [
@@ -36730,6 +37006,9 @@ Detta orsakades troligen av en länk till en svartlistad webbplats.',
 	'sqlite-no-fts' => '$1 utan stöd för fulltextsökning',
 	'share_it' => 'Dela med av den:',
 	'seeeditcount' => 'Se redigera räkna',
+	'signup-mail' => 'E-post -',
+	'signup-moreinfo' => 'mer information',
+	'signup-password' => 'Lösenord -',
 ];
 
 $messages['sw'] = [
@@ -36922,6 +37201,7 @@ Kumbukumbu ya mwisho inaandikwa chini:',
 	'specialpages-group-pagetools' => 'Zana za kuushughulika ukurasa',
 	'specialpages-group-wiki' => 'Zana na data za wiki',
 	'specialpages-group-redirects' => 'Kurasa maalum za kuelekeza',
+	'signup-password' => 'Nywila',
 ];
 
 $messages['szl'] = [
@@ -37102,6 +37382,7 @@ Nojprawdopodobńij zostoło to spowodowane bez link do zewnyntrznyj zajty intern
 	'specialpages-group-wiki' => 'Informacyje a nořyńdźa wiki',
 	'specialpages-group-redirects' => 'Ekstra zajty, kere kerujům',
 	'specialpages-group-spam' => 'Nořyńdźa do wyćepywanio spamu',
+	'signup-password' => 'Hasuo:',
 ];
 
 $messages['ta'] = [
@@ -37304,6 +37585,7 @@ $messages['ta'] = [
 	'specialpages-group-spam' => 'எரித கருவிகள்',
 	'sqlite-has-fts' => '$1முழு-உரை தேடல் ஆதரவுடன்',
 	'sqlite-no-fts' => '$1முழு-உரை தேடல் ஆதரவு இல்லாமல்',
+	'signup-password' => 'உங்கள் கடவுச்சொல்',
 ];
 
 $messages['tcy'] = [
@@ -37376,6 +37658,7 @@ $messages['tcy'] = [
 	'svg-long-desc' => 'ಎಸ್.ವಿ.ಜಿ ಫೈಲ್, ಸುಮಾರಾದ್ $1 × $2 ಪಿಕ್ಸೆಲ್, ಫೈಲ್’ದ ಗಾತ್ರ: $3',
 	'show-big-image' => 'ಪೂರ್ತಿ ರೆಸೊಲ್ಯೂಶನ್',
 	'specialpages' => 'ವಿಷೇಶ ಪುಟೊಲು',
+	'signup-password' => 'ಪಾಸ್-ವರ್ಡ್:',
 ];
 
 $messages['te'] = [
@@ -37586,6 +37869,7 @@ $messages['te'] = [
 	'specialpages-group-spam' => 'స్పామ్ పనిముట్లు',
 	'sqlite-has-fts' => '$1 పూర్తి-పాఠ్య అన్వేషణ తోడ్పాటుతో',
 	'sqlite-no-fts' => '$1 పూర్తి-పాఠ్య అన్వేషణ తోడ్పాటు లేకుండా',
+	'signup-password' => 'మీ సంకేతపదం',
 ];
 
 $messages['tet'] = [
@@ -37637,6 +37921,7 @@ $messages['tet'] = [
 	'specialpages-group-changes' => 'Mudansa foufoun sira no lista sira',
 	'specialpages-group-users' => 'Uza-na\'in no priviléjiu sira',
 	'specialpages-group-pages' => 'Lista pájina nian',
+	'signup-password' => 'Password:',
 ];
 
 $messages['tg'] = [
@@ -37688,6 +37973,7 @@ $messages['tg'] = [
 	'specialpages-group-changes' => 'Mudansa foufoun sira no lista sira',
 	'specialpages-group-users' => 'Uza-na\'in no priviléjiu sira',
 	'specialpages-group-pages' => 'Lista pájina nian',
+	'signup-password' => 'Калимаи убур\пароль',
 ];
 
 $messages['tg-cyrl'] = [
@@ -37828,6 +38114,7 @@ $messages['tg-cyrl'] = [
 	'specialpages-group-pagetools' => 'Абзорҳои саҳифа',
 	'specialpages-group-wiki' => 'Вики додаҳо ва абзорҳо',
 	'specialpages-group-redirects' => 'Дар ҳоли тағйири масири саҳифаҳои вижа',
+	'signup-password' => 'Калимаи убур\пароль',
 ];
 
 $messages['tg-latn'] = [
@@ -37961,6 +38248,7 @@ Ehtimolan in az sababi dar bar giriftani pajvandi beruna ba somonai xoriçiji ba
 	'specialpages-group-pagetools' => 'Abzorhoi sahifa',
 	'specialpages-group-wiki' => 'Viki dodaho va abzorho',
 	'specialpages-group-redirects' => 'Dar holi taƣjiri masiri sahifahoi viƶa',
+	'signup-password' => 'Password:',
 ];
 
 $messages['th'] = [
@@ -38166,6 +38454,7 @@ $messages['th'] = [
 	'specialpages-group-spam' => 'เครื่องมือเกี่ยวกับสแปม',
 	'sqlite-has-fts' => 'รุ่น $1 พร้อมการสนับสนุนการค้นหาข้อความแบบเต็ม',
 	'sqlite-no-fts' => 'รุ่น $1 โดยไม่มีการสนับสนุนการค้นหาข้อความแบบเต็ม',
+	'signup-password' => 'รหัสผ่าน',
 ];
 
 $messages['ti'] = [
@@ -38187,6 +38476,7 @@ $messages['ti'] = [
 	'size-kilobytes' => '$1 ኪሎባይታት',
 	'size-megabytes' => '$1 ሜጋባይታት',
 	'size-gigabytes' => '$1 ጊጋባይታት',
+	'signup-password' => 'Password:',
 ];
 
 $messages['tk'] = [
@@ -38384,6 +38674,7 @@ Gündeligiň iň soňky ýazgysy salgylanmak üçin aşakda berilýär:',
 	'specialpages-group-spam' => 'Spam gurallary',
 	'sqlite-has-fts' => '$1 (doly tekstli gözleg goldawly)',
 	'sqlite-no-fts' => '$1 (doly tekstli gözleg goldawsyz)',
+	'signup-password' => 'Parolyňyz:',
 ];
 
 $messages['tl'] = [
@@ -38590,6 +38881,7 @@ Maaaring dahil ito sa isang kawing sa isang nakatalang hinarang dahil di-kinaisn
 	'specialpages-group-spam' => 'Mga kagamitang pang-spam',
 	'sqlite-has-fts' => '$1 na may suportang paghahanap ng buong teksto',
 	'sqlite-no-fts' => '$1 na walang suporta ng paghahanap ng buong teksto',
+	'signup-password' => 'Hudyat:',
 ];
 
 $messages['tn'] = [
@@ -38605,6 +38897,7 @@ $messages['tn'] = [
 	'showpreview' => 'Supa gore go tlaa lebega jang',
 	'showdiff' => 'Supa diphetogo',
 	'specialpages' => 'Diphetogo tse di faphegileng',
+	'signup-password' => 'Selotlolo sa sephiri:',
 ];
 
 $messages['to'] = [
@@ -38665,6 +38958,7 @@ $messages['to'] = [
 	'sp-newimages-showfrom' => 'ʻAsi mai ha ngaahi faitā foʻou ʻoku kamata mei he $1',
 	'scarytranscludefailed' => '[Fakamolemole, naʻe movete maʻu he sīpinga maʻa e $1]',
 	'specialpages' => 'Ngaahi peesi makehe',
+	'signup-password' => 'Leatapu',
 ];
 
 $messages['tokipona'] = [
@@ -38677,6 +38971,7 @@ $messages['tokipona'] = [
 	'savearticle' => 'o awen',
 	'showpreview' => 'mi wile lukin taso e ante',
 	'specialpages' => 'lipu suli',
+	'signup-password' => 'Password:',
 ];
 
 $messages['tpi'] = [
@@ -38739,6 +39034,7 @@ $messages['tpi'] = [
 	'specialpages-group-other' => 'Ol narapela sipesol pes',
 	'specialpages-group-pages' => 'Lista long ol pes',
 	'specialpages-group-pagetools' => 'Ol tul bilong pes',
+	'signup-password' => 'Password:',
 ];
 
 $messages['tr'] = [
@@ -38944,6 +39240,7 @@ Son günlük girdisi referans amaçlı aşağıda verilmiştir:',
 	'sqlite-has-fts' => '$1 tam-metin arama desteği ile',
 	'sqlite-no-fts' => '$1 tam-metin arama desteği olmaksızın',
 	'share_it' => 'Paylaş:',
+	'signup-password' => 'Parolanız',
 ];
 
 $messages['ts'] = [
@@ -38973,6 +39270,7 @@ $messages['ts'] = [
 	'sp-contributions-talk' => 'Mbulavulo',
 	'sp-contributions-search' => 'Lava minyikelo',
 	'specialpages' => 'Matluka yo hlawuleka',
+	'signup-password' => 'Vito-mpfungulo:',
 ];
 
 $messages['tt-cyrl'] = [
@@ -39139,6 +39437,7 @@ $messages['tt-cyrl'] = [
 	'specialpages-group-wiki' => 'Вики-мәгълүмат һәм җиһазлар',
 	'specialpages-group-redirects' => 'Күчерелүче махсус битләр',
 	'specialpages-group-spam' => 'Спамга каршы кораллар',
+	'signup-password' => 'Серсүз:',
 ];
 
 $messages['tt-latn'] = [
@@ -39294,6 +39593,7 @@ Asta bu bitne küzätü köndälege birelgän:',
 	'specialpages-group-wiki' => 'Wiki-mäğlümat häm cihazlar',
 	'specialpages-group-redirects' => 'Küçerelüçe maxsus bitlär',
 	'specialpages-group-spam' => 'Spamğa qarşı qorallar',
+	'signup-password' => 'Sersüzeñ',
 ];
 
 $messages['ty'] = [
@@ -39310,6 +39610,7 @@ $messages['ty'] = [
 	'specialpage' => '’Api ta’a ’ē',
 	'specialloguserlabel' => 'Ta’ata fa’a’ohipa :',
 	'specialpages' => 'Te mau ’api ta’a ’ē',
+	'signup-password' => 'Mot de passe :',
 ];
 
 $messages['tyv'] = [
@@ -39359,6 +39660,7 @@ $messages['tyv'] = [
 	'skinname-monobook' => 'Моно-Ном',
 	'showhidebots' => '(боцду $1)',
 	'specialpages' => 'Тускай арыннар',
+	'signup-password' => 'Чажыт сөс',
 ];
 
 $messages['udm'] = [
@@ -39382,6 +39684,7 @@ $messages['udm'] = [
 	'search-result-size' => '$1 кыл({{PLURAL:$2|1 word|$2 words}})',
 	'sharedupload' => 'Та файл — $1-ысь, сое мукет проектъёсын но уже кутыны луэ.',
 	'specialpages' => 'Ваньмыз панельёс',
+	'signup-password' => 'Пароль:',
 ];
 
 $messages['ug'] = [
@@ -39405,6 +39708,7 @@ $messages['ug'] = [
 	'search-result-size' => '$1 кыл({{PLURAL:$2|1 word|$2 words}})',
 	'sharedupload' => 'Та файл — $1-ысь, сое мукет проектъёсын но уже кутыны луэ.',
 	'specialpages' => 'Ваньмыз панельёс',
+	'signup-password' => 'Achkuch:',
 ];
 
 $messages['ug-arab'] = [
@@ -39631,6 +39935,7 @@ $messages['ug-latn'] = [
 	'sp-contributions-talk' => 'Monazire',
 	'sp-contributions-submit' => 'Izdash',
 	'specialpages' => 'Alahide tor betleri',
+	'signup-password' => 'Achkuch:',
 ];
 
 $messages['uk'] = [
@@ -39889,6 +40194,7 @@ $messages['uk'] = [
 ***w:c:uk.compu|Комп\'ютери в Україні
 ***w:c:uk.vijskpens|Світ Військового Пенсіонера
 ***w:c:uk.wikies|Вікі про вікі',
+	'signup-password' => 'Пароль:',
 ];
 
 $messages['ur'] = [
@@ -39986,6 +40292,7 @@ $messages['ur'] = [
 	'sp-contributions-submit' => 'تلاش',
 	'showhidebots' => '($1 بوٹ)',
 	'specialpages' => 'خصوصی صفحات',
+	'signup-password' => 'کلمۂ شناخت',
 ];
 
 $messages['uz'] = [
@@ -40034,6 +40341,7 @@ $messages['uz'] = [
 	'svg-long-desc' => 'SVG fayl, asl oʻlchamlari $1 × $2 piksel, fayl hajmi: $3',
 	'show-big-image' => 'Asl hajmdagi tasvir',
 	'specialpages' => 'Maxsus sahifalar',
+	'signup-password' => 'Maxfiy so\'z',
 ];
 
 $messages['val'] = [
@@ -40146,11 +40454,13 @@ La mida de la [http://meta.wikimedia.org/wiki/Help:Job_queue cua de treballs] es
 	'size-kilobytes' => '$1 KB',
 	'size-megabytes' => '$1 MB',
 	'size-gigabytes' => '$1 GB',
+	'signup-password' => 'Contrasenya',
 ];
 
 $messages['ve'] = [
 	'search' => 'Ṱolani',
 	'searchbutton' => 'Ṱolani',
+	'signup-password' => 'Phasiwede:',
 ];
 
 $messages['vec'] = [
@@ -40340,6 +40650,7 @@ Questo xe probabilmente dovùo a la presenza de un colegamento a un sito foresto
 	'specialpages-group-spam' => 'Strumenti anti spam',
 	'sqlite-has-fts' => '$1 con la possibilità de riserca completa nel testo',
 	'sqlite-no-fts' => '$1 sensa la possibilità de riserca completa nel testo',
+	'signup-password' => 'Scegli na password',
 ];
 
 $messages['vep'] = [
@@ -40529,6 +40840,7 @@ Voib olda, necil lehtpolel om kosketuz irdsaitale, kudamb om mustas nimikirjutes
 	'specialpages-group-spam' => 'Azeged spaman vaste',
 	'sqlite-has-fts' => ' $1 täuz\'tekstaižen ecindan tügedamiženke',
 	'sqlite-no-fts' => ' $1 täuz\'tekstaižen ecindan tügedamižeta',
+	'signup-password' => 'Peitsana:',
 ];
 
 $messages['vi'] = [
@@ -40735,6 +41047,7 @@ Thông tin mới nhất trong nhật trình được ghi dưới đây để ti�
 	'specialpages-group-spam' => 'Công cụ chống spam',
 	'sqlite-has-fts' => '$1 với sự hỗ trợ tìm kiếm toàn văn',
 	'sqlite-no-fts' => '$1 không có hỗ trợ tìm kiếm toàn văn',
+	'signup-password' => 'Mật khẩu:',
 ];
 
 $messages['vls'] = [
@@ -40751,6 +41064,7 @@ $messages['vls'] = [
 	'site-rss-feed' => '$1 RSS-feed',
 	'site-atom-feed' => '$1 Atom-feed',
 	'search-result-size' => '$1 ({{PLURAL:$2|1 woord|$2 woordn}})',
+	'signup-password' => 'Wachtwoord:',
 ];
 
 $messages['vmf'] = [
@@ -40985,6 +41299,7 @@ Pad luveratiko ninädon yümi lü bevüresodatopäd plödik in blägalised.',
 	'specialpages-group-redirects' => 'Lüodükam padas patik',
 	'specialpages-group-spam' => 'Stums ta el spam',
 	'share_it' => 'Notidükolös oni:',
+	'signup-password' => 'Letavöd:',
 ];
 
 $messages['vot'] = [
@@ -41174,6 +41489,7 @@ $messages['vro'] = [
 	'specialpages-group-pagetools' => 'Lehetüüriistaq',
 	'specialpages-group-wiki' => 'Vikiteedüseq ja tüüriistaq',
 	'specialpages-group-redirects' => 'Ümbrenäütämistallitusleheq',
+	'signup-password' => 'Salasõna',
 ];
 
 $messages['wa'] = [
@@ -41265,6 +41581,7 @@ Rissayîz s\' i vs plait. Si çoula n\' va todi nén, sayîz di vs dislodjî eye
 	'specialpages-group-users' => 'Uzeus et abondroets',
 	'specialpages-group-highuse' => 'Eployaedje timpesse des pådjes',
 	'specialpages-group-redirects' => 'Ridjiblaedjes di pådjes sipeciåles',
+	'signup-password' => 'Vosse sicret',
 ];
 
 $messages['war'] = [
@@ -41376,6 +41693,7 @@ An paglaladawan han iya [$2 fayl han paglaladawan nga pakli] didto in ginpapakit
 	'size-gigabytes' => '$1 nga GB',
 	'specialpages' => 'Mga pinaurog nga pakli',
 	'specialpages-group-pagetools' => 'Mga higamit han pakli',
+	'signup-password' => 'Password:',
 ];
 
 $messages['wo'] = [
@@ -41524,6 +41842,7 @@ Manoo tudewaat aw xët ci wenn tur wi.',
 	'svg-long-desc' => 'Dencukaay SVG, kem bu jaadu  $1 × $2 pixel, dayoo dencukaay bi: $3',
 	'show-big-image' => 'Ngandalal nataal gii',
 	'specialpages' => 'Xëti jagleel',
+	'signup-password' => 'Sa baatujàll',
 ];
 
 $messages['wuu'] = [
@@ -41637,6 +41956,7 @@ $messages['wuu'] = [
 	'showhidebots' => '（$1机器人）',
 	'scarytranscludetoolong' => '[对呒起，URL太长了]',
 	'specialpages' => '特殊页面',
+	'signup-password' => '密码:',
 ];
 
 $messages['xal'] = [
@@ -41739,6 +42059,7 @@ $messages['xal'] = [
 	'specialpages-group-wiki' => 'Бики өггцн болн зер-зев',
 	'specialpages-group-redirects' => 'Авч оддг көдлхнә халхс',
 	'specialpages-group-spam' => 'Спамас зевсг',
+	'signup-password' => 'Түлкүр үг:',
 ];
 
 $messages['xh'] = [
@@ -41757,6 +42078,7 @@ $messages['xh'] = [
 	'sp-contributions-talk' => 'Inthetho',
 	'sp-contributions-submit' => 'Khangela',
 	'specialpages' => 'Amaphepha Abalulekileyo',
+	'signup-password' => 'Igama elifihlakeleyo lelungu:',
 ];
 
 $messages['xmf'] = [
@@ -41835,6 +42157,7 @@ $messages['xmf'] = [
 	'svg-long-desc' => 'SVG ფაილ, ნომინალურო $1 × $2 პიქსელ, ფაილიშ ზიმა: $3',
 	'show-big-image' => 'რსული გიშაგორანჯალა',
 	'specialpages' => 'სპეციალურ ხასილეფ',
+	'signup-password' => 'პაროლ',
 ];
 
 $messages['yi'] = [
@@ -42025,6 +42348,7 @@ $messages['yi'] = [
 	'specialpages-group-spam' => 'ספאַם געצייג',
 	'sqlite-has-fts' => '$1 מיט פולן-טעקסט זוכן שטיץ',
 	'sqlite-no-fts' => '$1 אָן פֿולן-טעקסט זוכן שטיץ',
+	'signup-password' => 'פאסווארט',
 ];
 
 $messages['yo'] = [
@@ -42176,6 +42500,7 @@ Ní báyìí ná ẹ le ṣàwárí lọ́dọ̀ Google.
 	'specialpages-group-login' => 'Ìwọlé / ìforúkọsílẹ́',
 	'specialpages-group-pages' => 'Àkójọ àwọn ojúewé',
 	'specialpages-group-pagetools' => 'Àwọn irinṣẹ́ ojúewé',
+	'signup-password' => 'Ọ̀rọ̀ìpamọ́:',
 ];
 
 $messages['yue'] = [
@@ -42375,6 +42700,7 @@ $messages['yue'] = [
 	'specialpages-group-spam' => '反垃圾工具',
 	'sqlite-has-fts' => '$1 有全文搜尋支援',
 	'sqlite-no-fts' => '$1 冇全文搜尋支援',
+	'signup-password' => '密碼:',
 ];
 
 $messages['za'] = [
@@ -42404,6 +42730,7 @@ $messages['za'] = [
 	'statistics-pages' => 'Yieb',
 	'sp-contributions-submit' => 'Ra',
 	'specialpages' => 'Doenghmae daegxsei',
+	'signup-password' => '密码：',
 ];
 
 $messages['zea'] = [
@@ -42505,6 +42832,7 @@ De [$2 pagina mè de bestandsbeschrievienge] wòdt hieronder weergegeev\'n.',
 	'svg-long-desc' => 'SVG-bestand, nominaal $1 × $2 pixels, bestandshroôtte: $3',
 	'show-big-image' => 'Volledige resolutie',
 	'specialpages' => 'Speciaole bladzies',
+	'signup-password' => 'Wachtwoôrd',
 ];
 
 $messages['zh-hans'] = [
@@ -42716,6 +43044,7 @@ $messages['zh-hans'] = [
 * [[Special:Contact|Contact]]
 * [http://www.wikia.com/wiki/Wikia:Advertising_on_Wikia Advertise]',
 	'specialpages-group-wikia' => 'Fandom页面',
+	'signup-password' => '密码：',
 ];
 
 $messages['zh-hant'] = [
@@ -42931,6 +43260,7 @@ $messages['zh-hant'] = [
 * [http://www.wikia.com/wiki/Wikia:Advertising_on_Wikia Advertise]',
 	'specialpages-group-wikia' => 'Fandom頁面',
 	'shared-problemreport' => '問題回報',
+	'signup-password' => '您的密碼:',
 ];
 
 $messages['zh-hk'] = [
@@ -42940,6 +43270,7 @@ $messages['zh-hk'] = [
 	'search-mwsuggest-disabled' => '沒有意見',
 	'showhidebots' => '($1機械人)',
 	'specialpages' => '特殊頁面',
+	'signup-password' => '您的密碼:',
 ];
 
 $messages['zh-min-nan'] = [
@@ -42949,6 +43280,7 @@ $messages['zh-min-nan'] = [
 	'search-mwsuggest-disabled' => '沒有意見',
 	'showhidebots' => '($1機械人)',
 	'specialpages' => '特殊頁面',
+	'signup-password' => 'Lí ê bi̍t-bé:',
 ];
 
 $messages['zh-mo'] = [
@@ -42958,6 +43290,7 @@ $messages['zh-mo'] = [
 	'search-mwsuggest-disabled' => '沒有意見',
 	'showhidebots' => '($1機械人)',
 	'specialpages' => '特殊頁面',
+	'signup-password' => '您的密碼:',
 ];
 
 $messages['zh-my'] = [
@@ -42967,6 +43300,7 @@ $messages['zh-my'] = [
 	'search-mwsuggest-disabled' => '沒有意見',
 	'showhidebots' => '($1機械人)',
 	'specialpages' => '特殊頁面',
+	'signup-password' => '密码：',
 ];
 
 $messages['zh-tw'] = [
@@ -43017,6 +43351,7 @@ $messages['zh-tw'] = [
 	'see_more' => '更多內容...',
 	'shared-problemreport' => '回報問題',
 	'showdiff' => '顯示差異',
+	'signup-password' => '您的密碼:',
 ];
 
 $messages['zh-yue'] = [
@@ -43064,6 +43399,7 @@ $messages['zh-yue'] = [
 	'scarytranscludetoolong' => '[抱歉，URL 地址太長]',
 	'specialpages' => '特殊頁面',
 	'share_it' => '分享:',
+	'signup-password' => '密碼:',
 ];
 
 $messages['zu'] = [
@@ -43087,17 +43423,172 @@ $messages['zu'] = [
 	'statistics-header-users' => 'Ukwaziswa wamsebenzisi',
 	'shortpages' => 'Amakhasi amafishane',
 	'specialloguserlabel' => 'Umsebenzisi:',
+	'signup-password' => 'Izwi elingenangozi',
 ];
 
 $messages['zh'] = [
 	'see_more' => '更多內容...',
 	'shared-problemreport' => '回報問題',
 	'showdiff' => '显示差異',
+	'signup-password' => '密码：',
 ];
 
 $messages['zh-cn'] = [
 	'see_more' => '更多內容...',
 	'shared-problemreport' => '回报问题',
 	'showdiff' => '显示差異',
+	'signup-password' => '密码：',
+];
+
+$messages['aa'] = [
+	'signup-password' => 'Password:',
+];
+
+$messages['bto'] = [
+	'signup-password' => 'Password:',
+];
+
+$messages['bxr'] = [
+	'signup-password' => 'Password:',
+];
+
+$messages['cho'] = [
+	'signup-password' => 'Password:',
+];
+
+$messages['chy'] = [
+	'signup-password' => 'Password:',
+];
+
+$messages['cr'] = [
+	'signup-password' => 'Password:',
+];
+
+$messages['de-at'] = [
+	'signup-password' => 'Passwort:',
+];
+
+$messages['dk'] = [
+	'signup-password' => 'Din adgangskode',
+];
+
+$messages['gan'] = [
+	'signup-password' => '密碼：',
+];
+
+$messages['hif-deva'] = [
+	'signup-password' => 'Password:',
+];
+
+$messages['ho'] = [
+	'signup-password' => 'Password:',
+];
+
+$messages['hz'] = [
+	'signup-password' => 'Password:',
+];
+
+$messages['ii'] = [
+	'signup-password' => '密码：',
+];
+
+$messages['kh'] = [
+	'signup-password' => 'Password:',
+];
+
+$messages['ki'] = [
+	'signup-password' => 'Password:',
+];
+
+$messages['kj'] = [
+	'signup-password' => 'Password:',
+];
+
+$messages['kp'] = [
+	'signup-password' => 'Password:',
+];
+
+$messages['kr'] = [
+	'signup-password' => 'Password:',
+];
+
+$messages['ku-arab'] = [
+	'signup-password' => 'تێپه‌ڕه‌وشه‌',
+];
+
+$messages['lld'] = [
+	'signup-password' => 'Password:',
+];
+
+$messages['mh'] = [
+	'signup-password' => 'Password:',
+];
+
+$messages['mu'] = [
+	'signup-password' => 'Password:',
+];
+
+$messages['mus'] = [
+	'signup-password' => 'Password:',
+];
+
+$messages['ng'] = [
+	'signup-password' => 'Password:',
+];
+
+$messages['nrm'] = [
+	'signup-password' => 'Password:',
+];
+
+$messages['plm'] = [
+	'signup-password' => 'Password:',
+];
+
+$messages['rn'] = [
+	'signup-password' => 'Password:',
+];
+
+$messages['ruq-grek'] = [
+	'signup-password' => 'Κωδικός:',
+];
+
+$messages['rw'] = [
+	'signup-password' => 'Password:',
+];
+
+$messages['simple'] = [
+	'signup-password' => 'Password:',
+];
+
+$messages['tp'] = [
+	'signup-password' => 'Password:',
+];
+
+$messages['tt'] = [
+	'signup-password' => 'Sersüzeñ',
+];
+
+$messages['tum'] = [
+	'signup-password' => 'Password:',
+];
+
+$messages['tw'] = [
+	'signup-password' => 'Password:',
+];
+
+$messages['tzm'] = [
+	'signup-password' => 'Password:',
+];
+
+$messages['ydd'] = [
+	'signup-password' => 'פאסווארט',
+];
+
+$messages['zh-classical'] = [
+	'signup-password' => '符節',
+];
+
+$messages['zh-sg'] = [
+	'signup-password' => '密码：',
 ];
 
