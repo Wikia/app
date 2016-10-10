@@ -107,6 +107,7 @@ $messages['es'] = [
 	'specialvideos-meta-description-lifestyle' => '$1 tiene nuevos videos que incluyen guías de viajes, programas de cocina, recetas y vídeos de manualidades. ¡No te los pierdas!',
 	'specialvideos-remove-modal-message' => '¿Seguro que quieres borrar este video de tu wiki?',
 	'specialvideos-remove-modal-title' => 'Borrar video',
+	'videos' => 'Vídeos',
 ];
 
 $messages['fr'] = [
@@ -135,6 +136,7 @@ $messages['fr'] = [
 	'specialvideos-posted-in-label' => 'Publiée sur',
 	'specialvideos-remove-modal-message' => 'Êtes-vous sûr(e) de vouloir supprimer cette vidéo de votre wiki ?',
 	'specialvideos-remove-modal-title' => 'Supprimer vidéo',
+	'videos' => 'Vidéos',
 ];
 
 $messages['gl'] = [
@@ -163,6 +165,7 @@ $messages['nb'] = [
 
 $messages['nl'] = [
 	'related-videos-tooltip-add' => 'Video aan deze pagina toevoegen',
+	'videos' => 'Video\'s',
 ];
 
 $messages['pl'] = [
@@ -191,6 +194,7 @@ $messages['pl'] = [
 	'specialvideos-posted-in-label' => 'Dodany w',
 	'specialvideos-remove-modal-message' => 'Czy na pewno usunąć ten film z wiki?',
 	'specialvideos-remove-modal-title' => 'Usuń film',
+	'videos' => 'Filmy',
 ];
 
 $messages['ru'] = [
@@ -215,6 +219,7 @@ $messages['ru'] = [
 	'specialvideos-meta-description-lifestyle' => 'На $1 есть новые видео, включая свежие обучающие видео, видео путешествий, видео кулинарных шоу и рецептов. Смотрите прямо сейчас!',
 	'specialvideos-remove-modal-message' => 'Вы уверены, что хотите удалить это видео со своей вики?',
 	'specialvideos-remove-modal-title' => 'Удалить видео',
+	'videos' => 'Видео',
 ];
 
 $messages['sv'] = [
@@ -247,6 +252,7 @@ $messages['it'] = [
 	'specialvideos-meta-description-lifestyle' => '$1 ha dei nuovi video, tra i quali tutorial, guide di viaggio, show di cucina, video di ricette e fai da te. Guardali ora!',
 	'specialvideos-remove-modal-message' => 'Sei sicuro di voler cancellare questo video dalla tua wiki?',
 	'specialvideos-remove-modal-title' => 'Cancella video',
+	'videos' => 'Video',
 ];
 
 $messages['fi'] = [
@@ -259,6 +265,7 @@ $messages['fi'] = [
 	'specialvideos-sort-most-popular' => 'Suosituimmat',
 	'specialvideos-sort-trending' => 'Suosituimmat juuri nyt',
 	'specialvideos-wiki-videos-tally' => '<em>{{FORMATNUM:$1}}</em><span>{{PLURAL:$1|video<br />tässä wikissä|videota<br />tässä wikissä}}</span>',
+	'videos' => 'Videot',
 ];
 
 $messages['ja'] = [
@@ -282,6 +289,7 @@ $messages['ja'] = [
 	'specialvideos-sort-trending' => 'トレンド',
 	'specialvideos-uploadby' => '$1 による',
 	'specialvideos-wiki-videos-tally' => '<em>{{FORMATNUM:$1}}</em> <span class="$2">件の動画が<br />このウィキにあります</span>',
+	'videos' => '動画',
 ];
 
 $messages['ko'] = [
@@ -299,6 +307,7 @@ $messages['ko'] = [
 	'specialvideos-sort-trending' => '인기순',
 	'specialvideos-uploadby' => '올린이: $1',
 	'specialvideos-wiki-videos-tally' => '<em>{{FORMATNUM:$1}}</em><span>총 동영상<br />편 보유</span>',
+	'videos' => '동영상',
 ];
 
 $messages['pt'] = [
@@ -365,6 +374,7 @@ $messages['zh'] = [
 	'specialvideos-sort-trending' => '排行榜',
 	'specialvideos-uploadby' => '$1',
 	'specialvideos-wiki-videos-tally' => '<em>{{FORMATNUM:$1}}</em><span>{{PLURAL:$1|video on<br /> this wiki|个视频在<br /> 此维基上}}</span>',
+	'videos' => '视频',
 ];
 
 $messages['zh-hans'] = [
@@ -373,5 +383,29 @@ $messages['zh-hans'] = [
 
 $messages['zh-hant'] = [
 	'specialvideos-sort-featured' => '資料來源: Fandom資料庫',
+];
+
+$messages['cy'] = [
+	'videos' => 'Fideos',
+];
+
+$messages['el'] = [
+	'videos' => 'Βίντεο',
+];
+
+$messages['uk'] = [
+	'videos' => 'Відео',
+];
+
+$messages['vi'] = [
+	'videos' => 'Đoạn phim',
+];
+
+$messages['zh-hk'] = [
+	'videos' => '影片',
+];
+
+$messages['zh-tw'] = [
+	'videos' => '影片',
 ];
 
