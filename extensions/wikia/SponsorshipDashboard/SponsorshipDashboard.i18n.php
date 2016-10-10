@@ -759,7 +759,7 @@ $messages['diq'] = [
 ];
 
 $messages['es'] = [
-	'sponsorship-dashboard' => '[[Special:SponsorshipDashboard|Página especial]] para las métricas de patrocinios y relacionados',
+	'sponsorship-dashboard' => '[[Special:SponsorshipDashboard|Página especial]] para métricas de patrocinio',
 	'sponsorship-dashboard-serie-A' => 'Total de editores registrados en el mes actual (todos los espacios de nombres)',
 	'sponsorship-dashboard-serie-B' => 'Total de editores registrados en el mes actual (espacios de contenido)',
 	'sponsorship-dashboard-serie-C' => 'Número de editores registrados que editaron más de 5 veces en el mes actual (espacios de contenido)',
@@ -855,7 +855,7 @@ $messages['es'] = [
 	'sponsorship-dashboard-error-nodataforcurrentweek' => 'Error: No hay datos para la semana actual',
 	'not-allowed' => 'Lo sentimos. No tienes permiso para ver esta página',
 	'sponsorshipdashboard' => 'Panel de patrocinio',
-	'sponsorship-dashboard-city-select' => 'Selecciona una categoría de Wikia:',
+	'sponsorship-dashboard-city-select' => 'Selecciona un hub:',
 	'sponsorship-dashboard-report-01' => 'Compromiso del Usuario',
 	'sponsorship-dashboard-report-02' => 'Métricas de crecimiento',
 	'sponsorship-dashboard-report-03' => 'Investigación de mercado',
@@ -2750,9 +2750,9 @@ $messages['nl'] = [
 	'sponsorship-dashboard-description-activity' => 'Gebruikersactiviteit per maand',
 	'sponsorship-dashboard-description-engagement' => 'Totaal aantal uren besteed per dag',
 	'sponsorship-dashboard-description-participation' => 'Unieke bewerkers per maand',
-	'sponsorship-dashboard-description-source' => 'Hoe uw gebruikers uw wiki vinden',
+	'sponsorship-dashboard-description-source' => 'Hoe je gebruikers je wiki vinden',
 	'sponsorship-dashboard-description-competitors' => 'Verkeer van de concurrentie',
-	'sponsorship-dashboard-description-interests' => 'Wiki\'s die uw gebruikers ook bezoeken',
+	'sponsorship-dashboard-description-interests' => 'Wiki\'s die jouw gebruikers ook bezoeken',
 	'sponsorship-dashboard-description-keywords' => 'Trefwoorden gebruikt op zoekmachines',
 	'sponsorship-dashboard-description-visitors' => 'Nieuwe en terugkerende bezoekers',
 	'sponsorship-dashboard-description-traffic' => 'Bekeken pagina\'s',
@@ -3979,5 +3979,20 @@ $messages['zh-hans'] = [
 
 $messages['ko'] = [
 	'not-allowed' => '이 문서를 볼 수 있는 권한이 없습니다.',
+	'sponsorship-dashboard-description-traffic' => '조회수',
+	'sponsorship-dashboard-deselect-all' => '모두 선택 해제',
+	'sponsorship-dashboard-download-chart' => '도표를 .png 파일로 내려받기',
+	'sponsorship-dashboard-download-csv' => 'CSV 파일로 내려받기',
+	'sponsorship-dashboard-download' => '추가 동작',
+	'sponsorship-dashboard-from-checkbox-show-trends' => '추세 그래프로 표시',
+	'sponsorship-dashboard-from-label' => '시작 날짜',
+	'sponsorship-dashboard-overview-enddate' => '간편 선택',
+	'sponsorship-dashboard-overview-label' => '간편 선택',
+	'sponsorship-dashboard-overview-startdate' => '간편 선택',
+	'sponsorship-dashboard-select-all' => '모두 선택',
+	'sponsorship-dashboard-serie-pageviews' => '총 조회수',
+	'sponsorship-dashboard-source-Variables' => '종류',
+	'sponsorship-dashboard-to-label' => '종료 날짜',
+	'sponsorship-dashboard-variables' => '종류',
 ];
 
