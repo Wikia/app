@@ -27038,8 +27038,8 @@ Het beveiligingsniveau wijzigen heeft geen enkel effect.',
 	'pagesize' => '(bytes)',
 	'proxyblocker' => 'Proxyblocker',
 	'proxyblocker-disabled' => 'Deze functie is uitgeschakeld.',
-	'proxyblockreason' => 'Uw IP-adres is geblokkeerd, omdat u gebruik maakt van een open proxyserver.
-Neem contact op met uw Internet-provider of uw helpdesk en stel die op de hoogte van dit ernstige beveiligingsprobleem.',
+	'proxyblockreason' => 'Dit is een automatische preventieve blokkade, omdat je gebruik maakt van een open proxyserver.
+Neem contact op met je Internet-provider of je helpdesk en stel die op de hoogte van dit ernstige beveiligingsprobleem.',
 	'proxyblocksuccess' => 'Afgerond.',
 	'pagemovedsub' => 'De pagina is hernoemd',
 	'protectedpagemovewarning' => '\'\'\'Waarschuwing:\'\'\' Deze pagina kan alleen door beheerders hernoemd worden.
