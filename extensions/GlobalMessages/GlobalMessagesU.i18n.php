@@ -10243,7 +10243,7 @@ $messages['fr'] = [
 	'userexists' => 'Nom d’utilisateur entré déjà utilisé.
 Veuillez choisir un nom différent.',
 	'usernamehasherror' => 'Le nom d’utilisateur ne peut pas contenir des caractères de hachage',
-	'user-mail-no-addy' => 'Tenté d’envoyer un courriel sans adresse de courriel',
+	'user-mail-no-addy' => 'Essayé d’envoyer un e-mail sans adresse e-mail.',
 	'userpage-userdoesnotexist' => 'Le compte utilisateur « <nowiki>$1</nowiki> » n’est pas enregistré. Veuillez vérifier que vous voulez créer cette page.',
 	'userpage-userdoesnotexist-view' => 'Le compte utilisateur « $1 » n’est pas enregistré.',
 	'usercssyoucanpreview' => '\'\'\'Astuce :\'\'\' utilisez le bouton « {{int:showpreview}} » pour tester votre nouvelle feuille CSS avant de l’enregistrer.',
