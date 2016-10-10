@@ -9456,7 +9456,7 @@ ___________________________________________________________
 
     * Para cambiar tus preferencias o contraseña, ingresa a: http://www.es.fandom.com/wiki/Especial:Preferencias.
     * Esta contraseña temporal fue pedida por la siguiente dirección de correo electrónico: $1.',
-	'passwordsent' => 'Se ha enviado una nueva contraseña al correo electrónico de «$1».
+	'passwordsent' => 'Se ha enviado una nueva contraseña al correo electrónico de registrado por "$1".
 Por favor, identifícate de nuevo tras recibirla.',
 	'php-mail-error-unknown' => 'Error desconocido en la función mail() de PHP',
 	'preview' => 'Previsualizar',
@@ -11012,7 +11012,7 @@ ___________________________________________________________
 
     * Pour modifier vos préférences ou changer de mot de passe, accédez à la page suivante : http://www.wikia.com/wiki/Special:Preferences.
     * Cette demande de rappel de mot de passe a été envoyée depuis l\'adresse suivante : $1.',
-	'passwordsent' => 'Un nouveau mot de passe a été envoyé à l’adresse de courriel de l’utilisateur « $1 ». Veuillez vous reconnecter après l’avoir reçu.',
+	'passwordsent' => 'Un nouveau mot de passe a été envoyé à l’adresse e-mail de l’utilisateur « $1 ». Veuillez vous reconnecter après l’avoir reçu.',
 	'php-mail-error-unknown' => 'Erreur inconnue dans la fonction mail() de PHP.',
 	'preview' => 'Prévisualisation',
 	'previewnote' => '\'\'\'Attention, ce texte n’est qu’une prévisualisation et n’a pas encore été publié !\'\'\'',
@@ -26799,7 +26799,7 @@ $messages['nl'] = [
 Bewerken is niet mogelijk.',
 	'protectedinterface' => 'Deze pagina bevat tekst voor berichten van de software en is beveiligd om misbruik te voorkomen.',
 	'passwordtooshort' => 'Wachtwoorden moeten uit minstens {{PLURAL:$1|$1 teken|$1 tekens}} bestaan.',
-	'password-name-match' => 'Uw wachtwoord en uw gebruikersnaam mogen niet overeenkomen.',
+	'password-name-match' => 'Je wachtwoord en uw gebruikersnaam mogen niet overeenkomen.',
 	'password-login-forbidden' => 'Het gebruik van deze gebruikersnaam met dit wachtwoord is niet toegestaan.',
 	'passwordremindertitle' => 'Nieuw tijdelijk wachtwoord voor {{SITENAME}}',
 	'passwordremindertext' => 'Iemand, waarschijnlijk jijzelf, heeft vanaf IP-adres $1 een verzoek
@@ -26813,7 +26813,7 @@ Als iemand anders dan jij dit verzoek heeft gedaan of als je zich inmiddels het
 wachtwoord herinnert en het niet langer wilt wijzigen, negeer dit bericht
 dan en blijf je bestaande wachtwoord gebruiken.',
 	'passwordsent' => 'Het wachtwoord is verzonden naar het e-mailadres voor "$1".
-Meld u aan nadat u het hebt ontvangen.',
+Meld je aan nadat je het hebt ontvangen.',
 	'php-mail-error-unknown' => 'Er is een onbekende fout opgetreden in de mail()-functie van PHP',
 	'preview' => 'Voorvertoning',
 	'previewnote' => '\'\'\'Let op: dit is een controlepagina; uw tekst is niet opgeslagen!\'\'\'',
