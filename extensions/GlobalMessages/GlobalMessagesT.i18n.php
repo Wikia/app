@@ -67,7 +67,7 @@ $messages['en'] = [
 The reason given is "\'\'$2\'\'".',
 	'throttled-mailpassword' => 'A password reminder has already been sent, within the last {{PLURAL:$1|hour|$1 hours}}.
 To prevent abuse, only one password reminder will be sent per {{PLURAL:$1|hour|$1 hours}}.',
-	'talkpagetext' => '<!-- MediaWiki:talkpagetext -->',
+	'talkpagetext' => '<div id="talkpagesignbox" style="font-size:95%">\'\'\'This is a talk page. Please remember to sign your posts using four tildes (<code><nowiki>~~~~</nowiki></code>) or the signature button\'\'\'</div>',
 	'token_suffix_mismatch' => '\'\'\'Your edit has been rejected because your client mangled the punctuation characters in the edit token.\'\'\'
 The edit has been rejected to prevent corruption of the page text.
 This sometimes happens when you are using a buggy web-based anonymous proxy service.',
@@ -99,8 +99,7 @@ The latest log entry is provided below for reference:',
 	'tmp-write-error' => 'Error writing temporary file.',
 	'tooltip-invert' => 'Check this box to hide changes to pages within the selected namespace (and the associated namespace if checked)',
 	'tooltip-namespace_association' => 'Check this box to also include the talk or subject namespace associated with the selected namespace',
-	'talkexists' => '\'\'\'The page itself was moved successfully, but the talk page could not be moved because one already exists at the new title.
-Please merge them manually.\'\'\'',
+	'talkexists' => '\'\'\'The page itself was moved successfully, but the talk page could not be moved because one already exists at the new title. Contact an [[Project:Administrators|administrator]], but do not just copy and paste the contents.\'\'\'',
 	'thumbnail-more' => 'Enlarge',
 	'thumbnail_error' => 'Error creating thumbnail: $1',
 	'thumbnail-temp-create' => 'Unable to create temporary thumbnail file',
@@ -4587,7 +4586,7 @@ $messages['bg'] = [
 	'tagline' => 'от {{SITENAME}}',
 	'talkpage' => 'Дискусионна страница',
 	'talkpagelinktext' => 'Беседа',
-	'talk' => 'Беседа',
+	'talk' => 'беседа',
 	'toolbox' => 'Инструменти',
 	'toc' => 'Съдържание',
 	'thisisdeleted' => 'Преглед или възстановяване на $1?',
@@ -8544,7 +8543,7 @@ $messages['de'] = [
 	'tue' => 'Di',
 	'thu' => 'Do',
 	'tagline' => 'Aus {{SITENAME}}',
-	'talkpage' => 'Diese Seite diskutieren',
+	'talkpage' => 'Diskussion',
 	'talkpagelinktext' => 'Diskussion',
 	'talk' => 'Diskussion',
 	'toolbox' => 'Werkzeuge',
@@ -8697,7 +8696,7 @@ Zur Information folgt der aktuelle Logbucheintrag:',
 	'tog-enableuserjs' => 'Persönliches JavaScript aktivieren. ([[Hilfe:Persönliches_CSS_und_JS|Mehr dazu hier]])',
 	'tog-enotifdiscussions' => 'Ich möchte eine E-Mail bekommen, wenn meine Diskussionsbeiträge Antworten oder Stimmen erhalten',
 	'talkpageheader' => '-',
-	'talkpagetext' => '<!-- MediaWiki:talkpagetext -->',
+	'talkpagetext' => '<div style="margin: 0 0 1em; padding: .5em 1em; vertical-align: middle; border: solid #999 1px;">\'\'\'Dies ist eine Diskussionsseite. Denk bitte daran, deine Beiträge (mit vier Tilden) zu unterschreiben (<code><nowiki>~~~~</nowiki></code>).\'\'\'</div>',
 	'timezone-utc' => 'UTC',
 	'tagline-url-interwiki' => 'Von [[wikia:c:$1|{{SITENAME}}]], einem Wiki bei [[de.wikia:|Fandom]].',
 	'tog-skinoverwrite' => '<b>See custom wikis</b> (recommended)<br>Some wiki administrators take a lot of time to customize the look of their wikis. Check the box above to see their wikis with full customization.',
@@ -9995,7 +9994,7 @@ $messages['es'] = [
 	'tue' => 'mar',
 	'thu' => 'jue',
 	'tagline' => 'De {{SITENAME}}',
-	'talkpage' => 'Discutir esta página',
+	'talkpage' => 'Discusión',
 	'talkpagelinktext' => 'Discusión',
 	'talk' => 'Discusión',
 	'toolbox' => 'Herramientas',
@@ -10142,7 +10141,8 @@ Permite añadir una razón al resumen de edición.',
 	'tog-enableuserjs' => 'Habilitar JavaScript personal ([[Ayuda:CSS_y_JS_personal#JavaScript|Aprenda más]])',
 	'tog-enotifdiscussions' => 'Enviarme un correo electrónico cuando mis discusiones tengan respuestas y votos',
 	'talkpageheader' => '-',
-	'talkpagetext' => '<!-- MediaWiki:talkpagetext -->',
+	'talkpagetext' => '<!-- MediaWiki:talkpagetext -->
+<div style="margin: 0 0 1em; padding: .5em 1em; vertical-align: middle; border: solid #999 1px;">\'\'\'Esta es una página de discusión. Recuerda firmar tus mensajes usando cuatro tildes (<code><nowiki>~~~~</nowiki></code>).\'\'\'</div>',
 	'timezone-utc' => 'UTC',
 	'title' => 'Title',
 	'tagline-url-interwiki' => 'Desde [[wikia:c:$1|{{SITENAME}}]], hasta [[wikia:|Fandom]].',
@@ -10762,7 +10762,7 @@ $messages['fa'] = [
 	'tue' => 'سه‌شنبه',
 	'thu' => 'پنجشنبه',
 	'tagline' => 'از {{SITENAME}}',
-	'talkpage' => 'بحث دربارهٔ این صفحه',
+	'talkpage' => 'گفتگو',
 	'talkpagelinktext' => 'بحث',
 	'talk' => 'بحث',
 	'toolbox' => 'جعبه‌ابزار',
@@ -10902,6 +10902,7 @@ $messages['fa'] = [
 	'tags-hitcount-header' => 'تغییرهای برچسب‌دار',
 	'tags-edit' => 'ویرایش',
 	'tags-hitcount' => '$1 {{PLURAL:$1|تغییر|تغییر}}',
+	'talkpagetext' => '<div id="talkpagesignbox" style="margin: 0 0 1em; padding: .5em 1em; vertical-align: middle; border: solid #999 1px;">\'\'\' اینجا صفحه بحث است. لطفا فراموش نکنید که بحث‌هایتان را با چهار  علامت (<code><nowiki>~~~~</nowiki></code>) و یا با استفاده از دکمۀ   ( http://images1.wikia.nocookie.net/__cb1/messaging/images/5/5f/Signature_button.png )  امضا کنید.\'\'\'</div>',
 ];
 
 $messages['ff'] = [
@@ -10963,7 +10964,7 @@ $messages['fi'] = [
 	'tue' => 'ti',
 	'thu' => 'to',
 	'tagline' => '{{SITENAME}}',
-	'talkpage' => 'Keskustele tästä sivusta',
+	'talkpage' => 'Keskustelusivu',
 	'talkpagelinktext' => 'keskustelu',
 	'talk' => 'Keskustelu',
 	'toolbox' => 'Työkalut',
@@ -11102,6 +11103,7 @@ Alla on viimeisin lokitapahtuma:',
 	'top_five' => 'Viisi parhainta',
 	'tabbedsearchcse' => 'Välilehdellinen haku (Googlen kustomoitu haku)',
 	'tabbedsearchsolr' => 'Välilehdellinen haku',
+	'talkpagetext' => '<div id="talkpagesignbox" style="margin: 0 0 1em; padding: .5em 1em; vertical-align: middle; border: solid #999 1px;">\'\'\'Tämä on keskustelusivu. Muistathan allekirjoittaa kaikki viestisi käyttämällä neljää tildeä (<code><nowiki>~~~~</nowiki></code>) tai allerkirjoitusnappia ( http://images.wikia.com/common/skins/common/images/button_sig.png ).\'\'\'</div>',
 ];
 
 $messages['fiu-vro'] = [
@@ -11519,7 +11521,7 @@ $messages['fr'] = [
 	'tue' => 'mar',
 	'thu' => 'jeu',
 	'tagline' => 'De {{SITENAME}}.',
-	'talkpage' => 'Discussion sur cette page',
+	'talkpage' => 'Discussion',
 	'talkpagelinktext' => 'discuter',
 	'talk' => 'Discussion',
 	'toolbox' => 'Boîte à outils',
@@ -11665,7 +11667,7 @@ Permet de rétablir la version précédente et d’ajouter un motif dans la boî
 	'tog-enableuserjs' => 'Activer le code javascript personnel ([[Aide:CSS_et_JS_avancés|En savoir plus]])',
 	'tog-enotifdiscussions' => 'M\'avertir par e-mail lorsque mes publication reçoivent des réponses et des votes',
 	'talkpageheader' => '-',
-	'talkpagetext' => '<!-- MediaWiki:talkpagetext -->',
+	'talkpagetext' => '<div style="margin: 0 0 1em; padding: .5em 1em; vertical-align: middle; border: solid #999 1px;">\'\'\'Ceci est une page de discussion. N\'oubliez pas de signer votre message avec 4 tildes (<code><nowiki>~~~~</nowiki></code>, ou icône signature dans la barre d\'outils).\'\'\'</div>',
 	'timezone-utc' => 'UTC',
 	'title' => 'Title',
 	'tagline-url-interwiki' => 'De [[wikia:c:$1|{{SITENAME}}]], un wiki de [[wikia:|Fandom]].',
@@ -18080,8 +18082,7 @@ $messages['ja'] = [
 	'tmp-write-error' => '一時ファイルへの書き込みエラー',
 	'tooltip-invert' => '選択した名前空間（および、チェックされている場合、関連づけられた名前空間）のページの変更を非表示にするには、このチェックボックスをオンにします。',
 	'tooltip-namespace_association' => '選択した名前空間に関連付けられている、議論ページまたは対象の名前空間も含めるには、このボックスをチェック',
-	'talkexists' => '\'\'\'ページ自身は無事に移動されましたが、トークページは移動先のページが存在したため移動できませんでした。
-手動で統合してください。\'\'\'',
+	'talkexists' => '\'\'\'ページ自身は移動されましたが、付随のトークページは移動先のページが存在したため移動できませんでした。手動で内容を統合してください。\'\'\'',
 	'thumbnail-more' => '拡大',
 	'thumbnail_error' => 'サムネイルの作成中にエラーが発生しました：$1',
 	'thumbnail_invalid_params' => 'サムネイル引数が不正です',
@@ -18192,7 +18193,7 @@ $messages['ja'] = [
 	'tog-enableuserjs' => '個人用JavaScriptを有効にする（[[w:c:ja.community:ヘルプ:個人用CSSとJavaScript#JavaScript|詳細]]）',
 	'tog-enotifdiscussions' => '自分の投稿に返信や賛成があったときにメールを受信する',
 	'talkpageheader' => '-',
-	'talkpagetext' => '<!-- MediaWiki:talkpagetext -->',
+	'talkpagetext' => '<div id="talkpagesignbox" style="font-size:95%">\'\'\'これはトークページです。投稿の際には、チルダ4つ (<code><nowiki>~~~~</nowiki></code>) か署名ボタンを使って忘れずに署名してください。\'\'\'</div>',
 	'thumbnail-temp-create' => 'Unable to create temporary thumbnail file',
 	'thumbnail-dest-create' => 'Unable to save thumbnail to destination',
 	'tooltip-watchlistedit-normal-submit' => 'Remove titles',
@@ -31960,7 +31961,7 @@ $messages['pt-br'] = [
 	'tue' => 'ter',
 	'thu' => 'qui',
 	'tagline' => 'De {{SITENAME}}',
-	'talkpage' => 'Dialogar sobre esta página',
+	'talkpage' => 'Discussão',
 	'talkpagelinktext' => 'disc',
 	'talk' => 'Discussão',
 	'toolbox' => 'Ferramentas',
@@ -33294,7 +33295,7 @@ $messages['ru'] = [
 	'tue' => 'Вт',
 	'thu' => 'Чт',
 	'tagline' => 'Материал из {{grammar:genitive|{{SITENAME}}}}',
-	'talkpage' => 'Обсудить эту страницу',
+	'talkpage' => 'Обсуждение участника',
 	'talkpagelinktext' => 'обсуждение',
 	'talk' => 'Обсуждение',
 	'toolbox' => 'Инструменты',
@@ -37789,8 +37790,7 @@ Den senaste loggposten tillhandahålls nedan som referens:',
 	'tmp-write-error' => 'Fel vid skrivning av temporär fil.',
 	'tooltip-invert' => 'Markera denna ruta för att dölja ändringar på sidor inom det valda namnrymden (och tillhörande namnrymden om det är markerat)',
 	'tooltip-namespace_association' => 'Markera denna ruta för att även inkludera diskussions- eller ämnesnamnrymden som är associerad med den valda namnrymden',
-	'talkexists' => '\'\'\'Sidan flyttades, men diskussionssidan kunde inte flyttas eftersom det redan fanns en diskussionssida med det nya namnet.
-Försök att sammanfoga dem manuellt.\'\'\'',
+	'talkexists' => '\'\'\'Själva sidan var flyttades, men diskussionssidan kunde inte flyttas eftersom en redan finns på den nya titeln. Kontakta en [[Project:Administrators|administratör]], men inte bara kopiera och klistra in innehållet.\'\'\'',
 	'thumbnail-more' => 'Förstora',
 	'thumbnail_error' => 'Fel vid skapande av miniatyrbild: $1',
 	'thumbnail-temp-create' => 'Kunde inte skapa temporär miniatyrfil',
@@ -37893,6 +37893,7 @@ Ger möjlighet att skriva en motivering i redigeringssammanfattningen',
 	'this_article' => 'denna artikeln',
 	'this_page' => 'denna sidan',
 	'top_five' => 'topp fem',
+	'talkpagetext' => '<div id="talkpagesignbox" style="margin: 0 0 1em; padding: .5em 1em; vertical-align: middle; border: solid #999 1px;">\'\'\'Detta är en diskussionssida. Kom ihåg att signera dina inlägg med fyra tilde (<code><nowiki>~~~~</nowiki></code>) eller genom att använda signatur knappen ( http://images1.wikia.nocookie.net/__cb1/messaging/images/5/5f/Signature_button.png )\'\'\'</div>',
 ];
 
 $messages['sw'] = [
@@ -44009,6 +44010,7 @@ Dit gebeur soms a der een webhebaseerde proxydienst wor gebruukt die a fout\'n b
 
 $messages['zh'] = [
 	'tog-norollbackdiff' => '進行回退後略過差異比較',
+	'talkpagetext' => '<div style="margin: 0 0 1em; padding: .5em 1em; vertical-align: middle; border: solid #999 1px;">\'\'\'這是一個討論。請在您的留言後面加上四個波折號簽名。 (<code><nowiki>~~~~</nowiki></code>)\'\'\'</div>',
 ];
 
 $messages['zh-classical'] = [
@@ -44017,6 +44019,7 @@ $messages['zh-classical'] = [
 
 $messages['zh-cn'] = [
 	'tog-norollbackdiff' => '进行回退后略过差异比较',
+	'talkpagetext' => '<div style="margin: 0 0 1em; padding: .5em 1em; vertical-align: middle; border: solid #999 1px;">\'\'\'这是一个讨论页。请在您的留言后面加上四个波折号簽名。 (<code><nowiki>~~~~</nowiki></code>)\'\'\'</div>',
 ];
 
 $messages['zh-hans'] = [
@@ -44209,7 +44212,7 @@ $messages['zh-hans'] = [
 	'tog-enableuserjs' => '启用个人JavaScript ([[Help:Personal_CSS_and_JS#JavaScript|了解更多]])',
 	'tog-enotifdiscussions' => '当我的讨论帖收到答复或被赞的时候，请给我发邮件',
 	'talkpageheader' => '-',
-	'talkpagetext' => '<!-- MediaWiki:talkpagetext -->',
+	'talkpagetext' => '<div style="margin: 0 0 1em; padding: .5em 1em; vertical-align: middle; border: solid #999 1px;">\'\'\'这是一个讨论页。请在您的留言后面加上四个波折号簽名。 (<code><nowiki>~~~~</nowiki></code>)\'\'\'</div>',
 	'timezone-utc' => 'UTC',
 	'title' => 'Title',
 	'tagline-url-interwiki' => '来自[[wikia:c:$1|{{SITENAME}}]]，隶属[http://www.wikia.com Fandom]维基社区。',
@@ -44430,7 +44433,7 @@ $messages['zh-hant'] = [
 	'tog-enableuserjs' => '啟用個人JavaScript ([[Help:Personal_CSS_and_JS#JavaScript|了解更多]])',
 	'tog-enotifdiscussions' => '當我的討論文章獲得回覆或被按讚的時候，請給我發郵件',
 	'talkpageheader' => '-',
-	'talkpagetext' => '<!-- MediaWiki:talkpagetext -->',
+	'talkpagetext' => '<div style="margin: 0 0 1em; padding: .5em 1em; vertical-align: middle; border: solid #999 1px;">\'\'\'這是一個討論頁。請在您的留言後面加上四個波折號簽名。 (<code><nowiki>~~~~</nowiki></code>).\'\'\'</div>',
 	'timezone-utc' => 'UTC',
 	'title' => 'Title',
 	'tagline-url-interwiki' => '來自[[wikia:c:$1|{{SITENAME}}]]，一個在[http://www.wikia.com Fandom]的Wiki。',
@@ -44469,6 +44472,7 @@ $messages['zh-hk'] = [
 	'tooltip-n-mainpage-description' => '回到首頁',
 	'tooltip-n-randompage' => '跳到一個隨機抽取的頁面',
 	'tooltip-t-print' => '這個頁面的可打印版本',
+	'talkpagetext' => '<div style="margin: 0 0 1em; padding: .5em 1em; vertical-align: middle; border: solid #999 1px;">\'\'\'這是一個討論頁。請在您的留言後面加上四個波折號簽名。 (<code><nowiki>~~~~</nowiki></code>)\'\'\'</div>',
 ];
 
 $messages['zh-min-nan'] = [
@@ -44509,6 +44513,7 @@ $messages['zh-my'] = [
 
 $messages['zh-sg'] = [
 	'tog-norollbackdiff' => '进行回退后略过差异比较',
+	'talkpagetext' => '<div style="margin: 0 0 1em; padding: .5em 1em; vertical-align: middle; border: solid #999 1px;">\'\'\'这是一个讨论页。请在您的留言后面加上四个波折号簽名。 (<code><nowiki>~~~~</nowiki></code>)\'\'\'</div>',
 ];
 
 $messages['zh-tw'] = [
@@ -44565,6 +44570,7 @@ $messages['zh-tw'] = [
 	'this_article' => '此文章',
 	'this_page' => '此頁',
 	'top_five' => '前五名',
+	'talkpagetext' => '<div style="margin: 0 0 1em; padding: .5em 1em; vertical-align: middle; border: solid #999 1px;">\'\'\'這是一個討論頁。請在您的留言後面加上四個波折號簽名。 (<code><nowiki>~~~~</nowiki></code>)\'\'\'</div>',
 ];
 
 $messages['zh-yue'] = [
