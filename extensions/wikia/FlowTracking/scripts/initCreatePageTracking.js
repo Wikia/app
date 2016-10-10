@@ -53,7 +53,9 @@ require([
 		});
 
 		mw.hook('ve.afterVEInit').add(function(veEditUri) {
-			veEditUri.extend( { flow: createButtonFlow } );
+			if (!!mw.config.get( 'wgArticleId' )) {
+				veEditUri.extend( { flow: createButtonFlow } );
+			}
 		});
 	}
 
