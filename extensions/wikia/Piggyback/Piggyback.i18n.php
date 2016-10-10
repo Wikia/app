@@ -282,12 +282,12 @@ $messages['nl'] = [
 	'piggyback-otherusername' => 'Andere gebruikersnaam:',
 	'piggyback-nosuchuser' => 'De gebruiker "$1" bestaat niet.
 Gebruikersnamen zijn hoofdlettergevoelig.
-Controleer uw schrijfwijze.',
-	'piggyback-wronguser' => '$1 is niet uw gebruikersnaam',
-	'piggyback-loginprompt' => 'Voer uw gebruikersnaam en wachtwoord opnieuw in.',
-	'piggyback-firstlogout' => 'Meld eerst af om weer te werken met uw eigen gebruiker.',
-	'piggyback-itisyou' => 'U kunt piggyback niet op uzelf gebruiken.',
-	'piggyback-issysopto' => 'U kunt piggyback niet gebruiken om aan te melden als een andere gebruiker met het recht piggyback.',
+Controleer je schrijfwijze.',
+	'piggyback-wronguser' => '$1 is niet jouw gebruikersnaam',
+	'piggyback-loginprompt' => 'Voer je gebruikersnaam en wachtwoord opnieuw in.',
+	'piggyback-firstlogout' => 'Meld eerst af om weer te werken met je eigen gebruiker.',
+	'piggyback-itisyou' => 'Je kunt piggyback niet op jezelf gebruiken.',
+	'piggyback-issysopto' => 'Je kunt piggyback niet gebruiken om aan te melden als een andere gebruiker met het recht piggyback.',
 	'action-piggyback' => 'aanmelden als een andere gebruiker',
 	'log-name-piggyback' => 'Logboek piggyback',
 	'log-description-piggyback' => 'Dit logboek bevat een overzicht van alle piggybackhandelingen.',
@@ -502,5 +502,16 @@ $messages['zh-hans'] = [
 	'action-piggyback' => '用其他账户登录',
 	'log-name-piggyback' => 'Piggyback日志',
 	'log-description-piggyback' => '此日志记录账户搭载。',
+];
+
+$messages['no'] = [
+	'piggyback-firstlogout' => 'Vennligst logg ut tilbake til brukeren din først',
+	'piggyback-issysopto' => 'Du kan ikke transportere brukere med transportrettigheter',
+	'piggyback-itisyou' => 'Du kan ikke transportere deg selv',
+	'piggyback-loginprompt' => 'Vennligst skriv ditt brukernavn og passord igjen',
+	'piggyback-nosuchuser' => 'Det er ingen bruker med navnet «$1». Brukernavnet reagerer på store/små bokstaver. Sjekk rettskrivingen din.',
+	'piggyback-otherusername' => 'Annet brukernavn:',
+	'piggyback-wronguser' => '$1 er ikke brukernavnet ditt',
+	'piggyback' => 'Transporter',
 ];
 
