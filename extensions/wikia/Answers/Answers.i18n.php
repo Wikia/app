@@ -691,6 +691,7 @@ $messages['fi'] = [
 	'answered_category' => 'Vastauksen saaneet kysymykset',
 	'answers-category-count-answered' => 'Tämä luokka sisältää $1 vastattuja kysymyksiä.',
 	'answers-category-count-unanswered' => 'Tämä luokka sisältää $1 vastaamattomia kysymyksiä.',
+	'next_page' => 'Seuraava &raquo;',
 ];
 
 $messages['fr'] = [
@@ -1413,6 +1414,7 @@ $messages['ja'] = [
 	'improve_this_answer' => 'この回答を更新する',
 	'in_category' => 'カテゴリ',
 	'new_question_comment' => '新しい質問',
+	'next_page' => '次 &raquo;',
 ];
 
 $messages['lb'] = [
@@ -2165,6 +2167,7 @@ $messages['pt'] = [
 	'improve_this_answer' => 'Melhore esta resposta',
 	'in_category' => '...na categoria',
 	'new_question_comment' => 'nova pergunta',
+	'next_page' => 'Proxima »',
 ];
 
 $messages['pt-br'] = [
@@ -2192,6 +2195,7 @@ $messages['pt-br'] = [
 	'improve_this_answer' => 'Melhore esta resposta',
 	'in_category' => '...na categoria',
 	'new_question_comment' => 'nova pergunta',
+	'next_page' => 'Proxima »',
 ];
 
 $messages['roa-tara'] = [
@@ -2575,6 +2579,7 @@ $messages['no'] = [
 	'magic_answer_no' => 'Nei, ikke bruk dette',
 	'magic_answer_yes' => 'Ja, bruk dette som utgangspunkt',
 	'new_question_comment' => 'nytt spørsmål',
+	'next_page' => 'Neste &raquo;',
 ];
 
 $messages['zh-hant'] = [
@@ -2602,6 +2607,7 @@ $messages['ko'] = [
 	'facebook_send_request' => 'Facebook 친구들에게 바로 보내기',
 	'facebook_signed_in' => 'Facebook 연동 기능을 사용하여 로그인했습니다.',
 	'new_question_comment' => '새 질문',
+	'next_page' => '다음 &raquo;',
 ];
 
 $messages['bg'] = [
