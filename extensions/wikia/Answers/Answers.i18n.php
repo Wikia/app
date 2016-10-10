@@ -479,7 +479,7 @@ $messages['de'] = [
 	'widget_category' => 'Art der Fragen',
 	'category' => 'Eine Kategorie pro Zeile',
 	'custom_category' => 'Benutzerdefinierte Kategorie',
-	'number_of_items' => 'Anzahl sichtbarer Elemente',
+	'number_of_items' => 'Anzahl angezeigter Einträge',
 	'width' => 'Breite',
 	'next_page' => 'Nächste &raquo;',
 	'prev_page' => '&laquo; Vorherige',
@@ -608,7 +608,7 @@ $messages['es'] = [
 	'widget_category' => 'Tipo de preguntas',
 	'category' => 'Nombre de Categoría',
 	'custom_category' => 'Personalizar categoría',
-	'number_of_items' => 'Número de elementos a mostrar',
+	'number_of_items' => 'Número de items a mostrar',
 	'width' => 'Anchura',
 	'see_all' => 'Ver todos',
 	'get_code' => 'Coger código',
@@ -2579,6 +2579,7 @@ $messages['no'] = [
 	'no_related_answered_questions' => 'Det er ingen relaterte spørsmål ennå.',
 	'notify_answered' => 'Send meg en e-post når besvart',
 	'notify_improved' => 'Send meg en e-post når forbedret',
+	'number_of_items' => 'Antall objekter å vise',
 ];
 
 $messages['zh-hant'] = [
