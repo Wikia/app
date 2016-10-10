@@ -5869,6 +5869,9 @@ oder die zugehörigen <span class="plainlinks">[{{fullurl:{{#special:Log}}|page=
 	'namespacedisabled' => 'Namensraum deaktiviert',
 	'namespacedisabledtext' => 'Dieser Namensraum wurde deaktiviert.',
 	'needhelp' => 'Hilfe benötigt: Bitte bearbeite [[MediaWiki:needhelp|diese Seite]] um hier Artikel anzuzeigen.',
+	'newuserlog-autocreate-entry' => 'Benutzerkonto automatisch erstellt',
+	'newuserlog-create-entry' => 'Neues Benutzerkonto',
+	'newuserlog-create2-entry' => 'erstellte neues Benutzerkonto $1',
 ];
 
 $messages['de-ch'] = [
@@ -7931,7 +7934,7 @@ Essayez en utilisant le préfixe \'\'all:\'\' pour rechercher dans tout le conte
 	'newimages-label' => 'Nom du fichier (ou une partie de celui-ci) :',
 	'noimages' => 'Aucune image à afficher.',
 	'namespacesall' => 'Tous',
-	'newuserlog-byemail' => 'mot de passe envoyé par courriel',
+	'newuserlog-byemail' => 'mot de passe envoyé par e-mail',
 	'not_you' => 'Pas vous ?',
 	'newly_changed' => 'Récemment modifié',
 	'number-shortening' => '$1K',
