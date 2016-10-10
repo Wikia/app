@@ -32343,7 +32343,7 @@ Pagina\'s die op [[Special:Watchlist|je volglijst]] staan worden \'\'\'vet\'\'\'
 	'randomredirect' => 'Willekeurige doorverwijzing',
 	'randomredirect-nopages' => 'Er zijn geen doorverwijzingen in de naamruimte "$1".',
 	'removewatch' => 'Verwijderen uit volglijst',
-	'removedwatchtext' => 'De pagina "[[:$1]]" is van [[Special:Watchlist|uw volglijst]] verwijderd.',
+	'removedwatchtext' => 'De pagina "[[:$1]]" is van [[Special:Watchlist|je volglijst]] verwijderd.',
 	'reverted' => 'Eerdere versie hersteld',
 	'rollback' => 'Wijzigingen ongedaan maken',
 	'rollback_short' => 'Terugdraaien',
