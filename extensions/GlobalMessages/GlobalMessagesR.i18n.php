@@ -9768,9 +9768,9 @@ de.wikia.com',
 	'return_to_forum' => 'Return to forum page',
 	'return_to_forum_talk' => 'Return to discussion',
 	'return_to_special' => 'Return to special page',
-	'related_wiki' => 'Add bulleted links here to display wiki related to this one in the related wiki [[Special:Widgets|widget]].
+	'related_wiki' => 'Füge hier Links im Listenformat ein um ähnliche Wikis zu diesem im "Related Wikis" [[Special:Widgets|Widget]] anzuzeigen.
 
-* [{{FULLURL:MediaWiki:Related wiki}} No related wiki have been selected yet.]',
+* [{{FULLURL:MediaWiki:Related wiki}} Bisher wurde kein ähnliches Wiki eingetragen.]',
 	'registerintro-title' => 'Sobald du bei Fandom ein Konto erstellt hast, bist du Teil der Community!',
 	'registerintro-text' => 'Alle deine Beiträge werden dir zugeordnet und du kannst dein eigenes Benutzerprofil erstellen, interessante Artikel beobachen und hast du Zugriff auf weitere nützliche Tools.',
 	'rcshowhidelogs' => 'Logbücher $1',
@@ -12915,6 +12915,9 @@ Sinulla ei ole oikeutta siihen.',
 	'registerintro-title' => 'Kun luot Wikia käyttäjän, sinusta tulee osa yhteisöä!',
 	'refreshpage' => 'Lataa sivu uudestaan aktivoidaksesi tämän vekottimen',
 	'registerintro-text' => 'Saat kunniaa kaikista artikkeleistasi, ja voit myös tehdä oman käyttäjä sivun, tarkkailulistan lempisivuistasi, ja pääset kaikenlaisiin hienoihin työkaluihin käsiksi.',
+	'related_wiki' => 'Lisää asteriskein linkkejä tähän näyttääksesi aiheeseen liittyviä wikejä [[Special:Widgets|samankaltaiset wikit-vekottimessa]].
+
+* [{{FULLURL:MediaWiki:Related wiki}} Aiheeseen liittyviä wikejä ei ole valittu.]',
 ];
 
 $messages['fiu-vro'] = [
@@ -33068,6 +33071,9 @@ www.wikia.com',
 	'reconfirmemail_subject' => 'Velkommen til Wikia!',
 	'refreshpage' => 'Oppdater siden for å aktivere denne widgeten',
 	'registerintro-text' => 'Du får anerkjennelse for alle bidrag, og du kan også opprette en egen brukerprofil, overvåke yndlingssidene dine, og få tilgang til alle slags nyttige verktøy.',
+	'related_wiki' => 'Legg til oppslagslenker her for å vise wikier beslektet med denne i beslektede wikier [[Special:Widgets|widgeten]].
+
+* [{{FULLURL:MediaWiki:Related wiki}} Ingen beslektede wikier har blitt valgt ennå.]',
 ];
 
 $messages['nov'] = [
