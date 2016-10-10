@@ -270,104 +270,101 @@ This is probably caused by a link to a blacklisted external site.',
 ** Wikia
 ',
 	'seeeditcount' => 'See edit count',
-	'shared-Globalnavigation' => '*homepage:Video_Games|Video Games|video-games-vertical-color
+	'shared-Globalnavigation' => '*http://gameshub.wikia.com/wiki/Games_Hub|Video Games|video-games-vertical-color
 
 **#|What\'s Hot
-***http://shadowofmordor.wikia.com/wiki/Shadow_of_Mordor_Wikia|Shadow of Mordor
-***homepage:Video_Games/Xbox_and_PS4_Launch_Portal|Launch Portal
-***homepage:Video_Games/The_Stockpile|The Stockpile
-***w:c:video:Video_Wiki|Latest Videos
-***homepage:Video_Games|More...
+***http://ow.ly/DPznR|The Crew Driving Map
+***http://ow.ly/DwftL|Call of Duty Advanced Warfare Guide
+***http://ow.ly/Eeh8f|Dragon Age Inquisition Guide 
+***http://ow.ly/EeLdi|Master Chief in 60 Seconds
+***http://ow.ly/Eehu0|Dragon Age Fanon Writing Project
 
 **#|PS4 Games
-***http://killzone.wikia.com/wiki/Killzone:_Shadow_Fall|Killzone: Shadowfall
-***http://knack.wikia.com/wiki/Main_Page|Knack
-***http://warframe.wikia.com/wiki/WARFRAME_Wiki|Warframe
-***http://infamous.wikia.com/wiki/InFamous:_Second_Son|Infamous: Second Son
-***homepage:Video_Games|More...
+***http://ow.ly/DwftL|Call of Duty Advanced Warfare
+***http://ow.ly/DwDSA|Explore The Borderlands Map
+***http://ow.ly/Eeh8f|Dragon Age Inquisition Guide
+***http://ow.ly/DPznR|The Crew Driving Map
+***http://ow.ly/Eehu0|Dragon Age Fanon Writing Project
 
 **#|Xbox One Games
-***http://forzamotorsport.wikia.com/wiki/Forza_Motorsport_5|Forza 5
-***http://killerinstinct.wikia.com/wiki/Killer_Instinct_(Xbox_One)|Killer Instinct
-***http://rysesonofrome.wikia.com/wiki/Ryse:_Son_of_Rome_Wiki|Ryse: Son of Rome
-***http://deadrising.wikia.com/wiki/Dead_Rising_3|Dead Rising 3
-***homepage:Video_Games|More...
+***http://ow.ly/Eeh8f|Dragon Age Inquisition Guide
+***http://ow.ly/DPznR|Explore The Crew Driving Map
+***http://ow.ly/EeLdi|Master Chief in 60 Seconds
+***http://ow.ly/DwftL|Call of Duty Advanced Warfare
+***http://ow.ly/Eehu0|Dragon Age Fanon Writing Project
 
-**#|Free to Play
-***w:c:warframe|Warframe
-***w:c:leagueoflegends|League of Legends
-***w:c:clashofclans|Clash of Clans
-***w:c:puzzle-dragons-global|Puzzle & Dragons
-***homepage:Video_Games|More...
+**#|PC & Mobile
+***http://ow.ly/EiVqs|Interstellar Personality Quiz
+***http://ow.ly/Eeh8f|Dragon Age Inquisition Guide 
+***http://ow.ly/Eehu0|Dragon Age Fanon Writing Project
+***http://ow.ly/EiVjz|Civilization Beyond Earth Guide
+***http://gameshub.wikia.com/wiki/Games_Hub|More...
 
-*homepage:Entertainment|Entertainment|entertainment-vertical-color
+*http://movieshub.wikia.com/wiki/Movies_Hub|Entertainment|entertainment-vertical-color
 
-**#|What\'s Hot
-***http://dragons.wikia.com/wiki/User_blog:Mhadick/Wikia%27s_Epic_Dragon_Battle|Dragon Battle
-***http://entertainment.wikia.com/wiki/User_blog:Gcheung28/Holiday_Know_Days:_Community_Choice_Awards|Community Choice Awards
-***http://shadowofmordor.wikia.com/wiki/Shadow_of_Mordor_Wikia|Shadow of Mordor
-***w:c:video:Video_Wiki|New Videos
-***w:c:entertainment:Wikia_Entertainment|More...
+**http://comicshub.wikia.com/wiki/Comics_Hub|Comics
+***http://ow.ly/Dwg8w|The Walking Dead Trivia
+***http://ow.ly/DZul9|Agents of S.H.I.E.L.D Trivia
+***http://ow.ly/DlPug|Star Trek Memories
+***http://ow.ly/Ei6nf|Arrow Recap
+***http://comicshub.wikia.com/wiki/Comics_Hub|More...
 
-**#|Movies
-***w:c:lotr:The_Hobbit:_The_Desolation_of_Smaug|The Hobbit 2
-***w:c:disney:Frozen|Frozen
-***w:c:thehungergames:The_Hunger_Games:_Catching_Fire|Catching Fire
-***w:c:marvel:Thor:_The_Dark_World|Thor: The Dark World
-***homepage:Entertainment|More...
+**http://movieshub.wikia.com/wiki/Movies_Hub|Movies
+***http://ow.ly/EhOQA|Game of Thrones Bracket
+***http://ow.ly/EhP4J|Which GoT Character Are You?
+***http://ow.ly/DlPEa|Wikia Personality Quiz
+***http://ow.ly/EiVqs|Interstellar Personality Quiz
 
-**#|TV
-***w:c:tardis|Doctor Who
-***w:c:shield|Agents of SHIELD
-***w:c:americanhorrorstory|American Horror Story
-***w:c:vampirediaries|The Vampire Diaries
-***homepage:Entertainment|More...
+**http://tvhub.wikia.com/wiki/TV_Hub|TV
+***http://ow.ly/Dwg8w|The Walking Dead Trivia
+***http://ow.ly/EhOQA|Game of Thrones Bracket Tournament
+***http://ow.ly/EhP4J|Which Game of Thrones Character Are You?
+***http://tvhub.wikia.com/wiki/TV_Hub|More...
 
-**#|Music
+**http://musichub.wikia.com/wiki/Music_Hub|Music
 ***w:c:lyrics|Song Lyrics
-***w:c:music:Music_Wiki/|Music Wikia
-***w:c:ladygaga:Gagapedia|Lady Gaga
-***w:c:britneyspears:Britney_Spears_Wiki|Britney Spears
-***homepage:Entertainment|More...
+***http://ow.ly/DlPEa|Wikia Personality Quiz
+***http://ow.ly/DlPJF|Fan Playlist
+***w:c:musicvideo|Music Videos
+***http://musichub.wikia.com/wiki/Music_Hub|More...
 
-*homepage:Lifestyle|Lifestyle|lifestyle-vertical-color
+*http://lifestylehub.wikia.com/wiki/Lifestyle_Hub|Lifestyle|lifestyle-vertical-color
 
-**#|What\'s Hot
-***w:c:bookclub:Portal:Book_Club|Wikia Book Club
-***w:c:recipes:Portal:Closet_Confidential|Closet Confidential
-***w:c:recipes:Portal:Food_Fiction|Food Fiction
-***w:User_blog:TranStanley/Introducing_My_Wikia_for_iPad|My Wikia for iPad
-***w:c:weddings:Category:Wedding_Themes|Movie Wedding Themes
-***homepage:Lifestyle|More...
+**http://bookshub.wikia.com/wiki/Books_Hub|Books
+***http://ow.ly/EiC1B|YA Society Mockingjay
+***http://ow.ly/EiCf3|Mockingjay Discussion
+***http://ow.ly/EiCnj|Mockingjay Fan Favorites
+***http://ow.ly/EiCtW|Samantha Shannon Q&A
+***http://ow.ly/EiCIW|YA Society Sign Up
+***http://bookshub.wikia.com/wiki/Books_Hub|More...
 
 **#|Fashion and Beauty
+***http://ow.ly/EiDD4|Closet Confidential Mockingjay
 ***w:c:fashion:Fashion_Wiki|Fashion
 ***w:c:haircolor:Haircolor_Wiki|Haircolor
-***w:c:makeup:Makeup_Wiki|Makeup
-***w:c:nails:Nails_Wiki|Nails
-***homepage:Lifestyle|More...
+***w:c:makeup:Makeup_Wiki|Makeup 
+***http://lifestylehub.wikia.com/wiki/Lifestyle_Hub|More...
 
 **#|Food
+***w:c:recipes:Portal:Food_Fiction|Food Fiction
 ***w:c:healthyrecipes:Healthy_Recipes_Wiki|Healthy Recipes
 ***w:c:glutenfreerecipes:Gluten_Free_Recipes_Wiki|Gluten Free Recipes
-***w:c:japaneserecipes:Japanese_Recipes_Wiki|Japanese Recipes
 ***w:c:desserts:Dessert_Wiki|Dessert Recipes
-***homepage:Lifestyle|More...
+***http://lifestylehub.wikia.com/wiki/Lifestyle_Hub|More...
 
 **#|Drink
 ***w:c:cocktails:Cocktails_Wiki|Cocktails
 ***w:c:beer:Beer_Wiki|Beer
 ***w:c:tea:WikiTea|Tea
 ***w:c:coffee:Main_Page|Coffee
-***homepage:Lifestyle|More...
-',
+***http://lifestylehub.wikia.com/wiki/Lifestyle_Hub|More...',
 	'shared-Monobook-footer-wikia-links' => '* [http://www.wikia.com/wiki/Wikia:Privacy_Policy Privacy]
-	* [http://www.wikia.com/wiki/Wikia:About About Wikia]
-	* [http://www.wikia.com/wiki/Wikia:Terms_of_use Terms of use]
-	* [[Special:Contact|Contact]]
-	* [http://www.wikia.com/wiki/Wikia:Advertising_on_Wikia Advertise]',
+* [http://www.wikia.com/wiki/Wikia:About About Wikia]
+* [http://www.wikia.com/wiki/Wikia:Terms_of_use Terms of use]
+* [[Special:Contact|Contact]]
+* [http://www.wikia.com/wiki/Wikia:Advertising_on_Wikia Advertise]',
 	'scarytranscludebadinterwiki' => 'Non-transcludable interwiki provided.',
-	'shared-News_box' => '[http://www.wikia.com/Hiring Wikia is now hiring for several open positions]',
+	'shared-News_box' => '[http://www.wikia.com/Hiring Wikia is now hiring for several open positions]<br>',
 ];
 
 $messages['qqq'] = [
@@ -8355,99 +8352,98 @@ Das liegt wahrscheinlich an einem Link auf eine externe Seite.',
 	'sqlite-has-fts' => 'Version $1 mit Unterstützung für die Volltextsuche',
 	'sqlite-no-fts' => 'Version $1 ohne Unterstützung für die Volltextsuche',
 	'share_it' => 'Mitteilen:',
-	'shared-Globalnavigation' => '*w:c:de:Videospiele|Videospiele|video-games-vertical-color
+	'shared-Globalnavigation' => '*w:c:de.videospielehub|Videospiele|video-games-vertical-color
 
-**w:c:de:Videospiele|Großartiges
+**w:c:de.videospielehub|Großartiges
 ***w:c:de.elderscrolls|The Elder Scrolls
 ***w:c:de.gta|Grand Theft Auto
 ***w:c:de.fallout|Fallout
-***w:c:de.assassinscreed|Assassin\'s Creed
-***http://www.de.wikia.com/Videospiele|Mehr...
-
-**w:c:de:Videospiele|Aufsteigendes
-***w:c:de.bindingofisaac|Binding of Isaac
 ***w:c:de.terraria|Terraria
+***w:c:de.videospielehub|Mehr...
+
+**w:c:de.videospielehub|Aufsteigendes
+***w:c:de.clashofclans|Clash of Clans
+***w:c:de.starbound|Starbound
 ***w:c:de.monsterhunter|Monster Hunter
 ***w:c:de.leagueoflegends|League of Legends
-***http://www.de.wikia.com/Videospiele|Mehr...
+***w:c:de.videospielehub|Mehr...
 
-**w:c:de:Videospiele|Empfohlenes
+**w:c:de.videospielehub|Empfohlenes
 ***w:c:de.masseffect|Mass Effect
-***w:c:de.dofuswiki|Dofus
-***w:c:hexer|The Witcher
-***w:c:de.borderlands|Borderlands
-***http://www.de.wikia.com/Videospiele|Mehr...
+***w:c:mordorsschatten|Mordors Schatten
+***w:c:de.titanfall|Titanfall
+***w:c:de.warframe|Warframe
+***w:c:de.videospielehub|Mehr...
 
-**w:c:de:Videospiele|Bekanntes
+**w:c:de.videospielehub|Bekanntes
 ***w:c:de.mario|Super Mario
 ***w:c:de.halo|Halo
 ***w:c:de.finalfantasy|Final Fantasy
-***w:c:de.bioshock|BioShock
-***w:c:de:Videospiele|Mehr...
+***w:c:de.valve|Valve
+***w:c:de.videospielehub|Mehr...
 
 *w:c:de:Entertainment|Entertainment|entertainment-vertical-color
 
-**w:c:de:Entertainment|Serien
-***w:c:de.vampirediaries|Vampire Diaries
-***w:c:de.bigbangtheory|The Big Bang Theory
+**w:c:de.tvhub|Serien
+***w:c:de.vampirediaries|The Vampire Diaries
 ***w:c:de.how-i-met-your-mother|How I Met Your Mother
 ***w:c:de.glee|Glee
-***w:c:de:Entertainment|Mehr...
-
-**w:c:de:Entertainment/Anime|Anime
-***http://bit.ly/anime-portal-ref-globalheader|Anime-Portal und aktuelles
-***http://bit.ly/anime-tv-programm-ref-globalHeader|Anime-TV-Programm
-***http://bit.ly/animangawiki-ref-globalheader|Anime und Manga Wiki
-***http://bit.ly/wikia-de-inuyasha-globalheader|InuYasha
-***w:c:de:Entertainment/Anime|Mehr...
-
-**w:c:de:Entertainment|Filme und mehr
-***w:c:de.moviepedia|Moviepedia
-***w:c:dietributevonpanem|Die Tribute von Panem
-***w:c:de.harry-potter|Harry Potter
-***w:c:de.marvel-filme|Marvel-Filme
-***w:c:de:Entertainment|Mehr...
-
-**w:c:de:Entertainment|Wir empfehlen
-***w:c:de.gameofthrones|Game of Thrones
-***w:c:de.scrubs|Scrubs
 ***w:c:de.supernatural|Supernatural
-***w:c:de.ghibli|Ghibli
-***w:c:de:Entertainment|Mehr...
+***w:c:de.tvhub|Mehr...
 
-*w:c:de:Lifestyle|Lifestyle|lifestyle-vertical-color
+**w:c:de.filmhub|Filme und mehr
+***w:c:de.moviepedia|Moviepedia
+***w:c:de.marvel-filme|Marvel-Filme
+***w:c:de.jamesbond|James Bond
+***w:c:de.lotr|Der Herr der Ringe
+***w:c:de.filmhub|Mehr...
 
-**w:c:de:Lifestyle|Empfohlenes
+**w:c:de.literaturhub|Literatur
+***w:c:dietributevonpanem|Die Tribute von Panem
+***w:c:de.chronikenderunterwelt|Chroniken der Unterwelt
+***w:c:de.harrypotter|Harry Potter
+***w:c:de.eisundfeuer|Das Lied von Eis und Feuer
+***w:c:de.literaturhub|Mehr...
+
+**w:c:de.animehub|Anime
+***http://bit.ly/animangawiki-ref-globalheader|Anime und Manga Wiki
+***w:c:de.sailor-moon|Sailor Moon
+***w:c:de.avatar|Avatar
+***w:c:de.naruto|Naruto
+***w:c:de.animehub|Mehr...
+
+*w:c:de.lifestylehub|Lifestyle|lifestyle-vertical-color
+
+**w:c:de.lifestylehub|Empfohlenes
+***w:c:de.cocktail|Cocktails
+***w:c:bier|Bier
 ***w:c:de.mittelalter|Mittelalter
-***w:c:de.griechische-mythologie|Griechische Mythologie
+***w:c:elefanten|Elefanten
+***w:c:de.lifestylehub|Mehr...
+
+**w:c:de.lifestylehub|Spielereien
 ***w:c:de.lego|Lego
-***w:c:de.fahrrad|Fahrrad
-***w:c:de:Lifestyle|Mehr...
-
-**w:c:de:Lifestyle|Kreatives
-***http://bit.ly/mum-mainpage|Fanfiction- und Geschichten-Wiki
-***w:c:de.narutofantasyrpg|Naruto Fanfiction
-***w:c:de.inazuma-eleven-fantasy-rpg|Inazuma Eleven Fanfiction
-***w:c:de.starwarsfantasyrpg|Star Wars Fanfiction
-***w:c:de:Lifestyle|Mehr...
-
-**w:c:de:Lifestyle|Interessantes
 ***w:c:de.playmobil|Playmobil
-***w:c:de.drachen|Drachen
-***w:c:de.lego-stadt|Lego Bautipps
-***w:c:daffs|Fußball-Statistiken
-***w:c:de:Lifestyle|Mehr...
+***w:c:de.bionicle|Bionicle
+***w:c:de.x-wing|X-Wing Miniaturen
+***w:c:de.lifestylehub|Mehr...
+
+**w:c:de.lifestylehub|Interessantes
+***w:c:de.adel|Adel
+***w:c:de.royalpedia|Royalpedia
+***w:c:motorrad|Motorrad
+***http://bit.ly/mum-mainpage|Fanfiction
+***w:c:de.lifestylehub|Mehr...
 
 **w:c:de|Information
 ***w:c:de.community|Community-Wiki
 ***w:c:de.community:Blog:Wikia_Deutschland_News|Wikia Deutschland Blog
-***w:c:de.community:Hilfe:Übersicht|Hilfeseiten
+***w:c:de.community:Wikia-Universität|Wikia-Universität
 ***w:c:de.community:Spezial:Forum|Community-Forum
-***w:c:de|Mehr...
-',
+***w:c:de|Mehr...',
 	'shared-Monobook-footer-wikia-links' => '* [http://de.wikia.com/Datenschutz Datenschutz]
 * [http://de.wikia.com/wiki/%C3%9Cber_Wikia Über Wikia]
-* [http://de.wikia.com/Nutzungsbedingungen Nutzungsbedingungen]<span style="color: #ff0000"> (Aktualisiert)</span>
+* [http://de.wikia.com/Nutzungsbedingungen Nutzungsbedingungen]
 * [[Special:Contact|Kontakt]]
 * [http://www.wikia.com/wiki/Wikia:Advertising_on_Wikia Auf Wikia werben]',
 	'specialpages-group-wikia' => 'Fandom-Seiten',
@@ -8458,6 +8454,8 @@ Das liegt wahrscheinlich an einem Link auf eine externe Seite.',
 	'seeeditcount' => 'siehe Bearbeitungsstatistik',
 	'seemoredotdotdot' => 'Zeige mehr...',
 	'send' => 'Senden',
+	'shared-News_box' => '<!-- &nbsp; -->',
+	'shared-problemreport' => 'Problem melden',
 ];
 
 $messages['de-ch'] = [
@@ -9905,65 +9903,65 @@ Esto podría estar causado por un enlace a un sitio externo incluido en la lista
 	'share_it' => 'Compártelo:',
 	'shared-Globalnavigation' => '*w:c:es:Videojuegos|Videojuegos|video-games-vertical-color
 
-**w:c:es.gaming|Impulsados
-***w:c:es.assassinscreed|Assassin\'s Creed
-***w:c:es.finalfantasy|Final Fantasy
-***w:c:es.callofduty|Call of Duty
-***w:c:es.elderscrolls|Elder Scrolls
-***w:c:es.borderlands|Borderlands
-
 **w:c:es.gaming|Más visitados
 ***w:c:es.pokemon|Pokémon
 ***w:c:es.gta|Grand Theft Auto
-***w:c:es.dofus|Dofus
-***w:c:es.wow|WoW
+***w:c:es.yugioh|Yu-Gi-Oh!
+***w:c:es.dragoncity|Dragon City
+***w:c:es.terraria|Terraria
+
+**w:c:es.gaming|&nbsp;
 ***w:c:es.halo|Halo
-
-**w:c:es.gaming|&nbsp;
-***w:c:es.mortalkombat|Mortal Kombat
-***w:c:es.sims|Los Sims
-***w:c:es.fallout|Fallout
-***w:c:es.kingdomhearts|Kingdom Hearts
-***w:c:es.metroid|Metroid
-
-**w:c:es.gaming|&nbsp;
 ***w:c:es.zelda|Zelda
-***w:c:es.animalcrossing|Animal Crossing
-***w:c:es.reddead|Red Dead
-***w:c:es.metalgear|Metal Gear
-***w:c:es.kirby|Kirby
+***w:c:es.elderscrolls|Elder Scrolls
+***w:c:es.sims|Los Sims
+***w:c:es.monsterlegends|Monster Legends
+
+**w:c:es.gaming|&nbsp;
+***w:c:es.ssb|Super Smash Bros
+***w:c:es.clubpenguin|Club Penguin
+***w:c:es.sonic|Sonic
+***w:c:es.residentevil|Resident Evil
+***w:c:es.warhammer40k|Warhammer 40k
+
+**w:c:es.gaming|&nbsp;
+***w:c:es.assassinscreed|Assassin\'s Creed
+***w:c:es.dofuswiki|Dofus
+***w:c:es.mario|Super Mario
+***w:c:es.callofduty|Call of Duty
+***w:c:es.megaman|Mega Man
 
 *w:c:es:Entretenimiento|Entretenimiento|entertainment-vertical-color
 
-**w:c:es.entertainment|Impulsados
-***w:c:es.dexter|Dexterpedia
-***w:c:es.onepiece|One Piece
-***w:c:crepusculo|Crepúsculo
-***w:c:es.rosariovampire|Wiki Rosario Vampire
-***w:c:es.inazumaelevengo5|Inazuma Eleven Go 5
-
 **w:c:es.entertainment|Más visitados
-***w:c:doblaje|Doblaje
 ***w:c:es.drama|Drama
-***w:c:es.digimon|Digimon
-***w:c:es.ben10|Ben 10
-***w:c:es.starwars|Star Wars
-
-**w:c:es.entertainment|&nbsp;
-***w:c:es.glee|Wiki Glee
+***w:c:es.doblaje|Doblaje
 ***w:c:es.naruto|Naruto
-***w:c:es.saintseiya|Saint Seiya
-***w:c:es.harrypotter|Harry Potter
-***w:c:es.yugioh|Yu-Gi-Oh!
+***w:c:es.dragonball|Dragon Ball
+***w:c:es.horadeaventura|Hora de Aventura
 
 **w:c:es.entertainment|&nbsp;
-***w:c:es.simpsons|Simpsons
-***w:c:es.bleach|Bleach
-***w:c:es.dragonball|Dragon Ball
-***w:c:es.lostpedia|Lostpedia
+***w:c:es.mlp|My Little Pony
+***w:c:hieloyfuego|Hielo y Fuego
+***w:c:es.onepiece|One Piece
+***w:c:es.regularshow|Regular Show
+***w:c:es.ben10|Ben 10
+
+**w:c:es.entertainment|&nbsp;
+***w:c:es.creepypasta|Creepypasta
+***w:c:es.saintseiya|Saint Seiya
+***w:c:es.thewalkingdead|The Walking Dead
+***w:c:es.starwars|Star Wars
 ***w:c:es.disney|Disney
 
-*w:c:comunidad:Lista_de_Wikis|Estilo de vida|community-vertical-color
+**w:c:es.entertainment|&nbsp;
+***w:c:es.bleach|Bleach
+***w:c:los-juegos-del-hambre|Los Juegos del Hambre
+***w:c:es.bajoterra|Bajoterra
+***w:c:es.harrypotter|Harry Potter
+***w:c:es.fairytail|Fairy Tail
+
+*w:c:comunidad:Lista_de_Wikis|Estilo de vida|community-vertical-color 
 
 **w:c:respuestas|WikiRespuestas
 ***w:c:pokemon.respuestas|Pokémon Respuestas
@@ -9974,25 +9972,24 @@ Esto podría estar causado por un enlace a un sitio externo incluido en la lista
 
 **w:c:comunidad:Lista_de_Wikis|Otros
 ***w:c:Inciclopedia|Inciclopedia
-***w:c:es.bionicle|Bionicle
-***w:c:apicultura|Apicultura
+***w:c:es.althistory|Historia Alternativa
+***w:c:es.yugiohdecks|Yu-Gi-Oh! Decks
+***w:c:es.prehistrico|Prehistoria
+***w:c:es.club-penguin-super-fanon|Club Penguin Fanon
+
+**w:c:comunidadLista_de_Wikis|&nbsp;
+***w:c:es.la-wiki-pokeland|Pokeland
+***w:c:es.mujeres|Mujeres
 ***w:c:ceramica|Cerámica
-***w:c:es.quimica|Química
-
-**w:c:comunidadLista_de_Wikis|&nbsp;
-***w:c:herbolaria|Herbolaria
-***w:c:como-hacer|¿Cómo hacer?
-***w:c:es.transformers|Transformers
 ***w:c:futbol|Fútbol
-***w:c:matematica|Matemáticas
+***w:c:quimica|Química
 
 **w:c:comunidadLista_de_Wikis|&nbsp;
-***w:c:es.solarcooking|Cocina Solar
+***w:c:es.bionicle|Bionicle
 ***w:c:es.althistory|Historia Alternativa
 ***w:c:micronaciones|Micronaciones
-***w:c:es.gorillaz|Gorillaz
-***w:c:arte|Arte
-',
+***w:c:es.mitologia|Mitología
+***w:c:arte|Arte',
 	'shared-Monobook-footer-wikia-links' => '* [http://es.wikia.com/Pol%C3%ADtica_de_Privacidad Política de Privacidad]
 * [http://es.wikia.com/Sobre_nosotros Sobre Wikia]
 * [http://es.wikia.com/T%C3%A9rminos_de_Uso Términos de Uso]
@@ -10005,6 +10002,9 @@ Esto podría estar causado por un enlace a un sitio externo incluido en la lista
 	'seeeditcount' => 'Ver contador de ediciones',
 	'seemoredotdotdot' => 'Ver más...',
 	'send' => 'Enviar',
+	'shared-News_box' => 'Visita nuestra [[w:c:comunidad|Comunidad Central]]<br />',
+	'shared-problemreport-url' => 'http://comunidad.wikia.com/wiki/Project:Reportar_un_problema',
+	'shared-problemreport' => 'Reportar un problema',
 ];
 
 $messages['et'] = [
@@ -10769,6 +10769,96 @@ $messages['fa'] = [
 	'sqlite-has-fts' => '$1 با پشتیبانی از جستجو در متن کامل',
 	'sqlite-no-fts' => '$1 بدون پشتیبانی از جستجو در متن کامل',
 	'send' => 'بفرست',
+	'shared-Globalnavigation' => '*http://www.wikia.com/Video_Games|بازی‌های ویدیویی|video-games-vertical-color
+
+**http://www.wikia.com/Video_Games|What\'s Hot
+***w:c:batman:User_blog:Xean/Wikia_Exclusive!_Batman:_The_Fire_Rises|Batman: Fire Rises
+***w:c:mario:MarioWiki|Super Mario Bros. U
+***w:c:Halo:Halo_4|Halo 4
+***w:c:anarchyreigns:Anarchyreigns_Wiki|Anarchy Reigns
+***w:c:www:Video_Games|More...
+
+**http://www.wikia.com/Video_Games|Fall\'s Finest
+***w:c:farcry:Far_Cry_3|Far Cry 3
+***w:c:borderlands:Borderlands_2|Borderlands 2
+***w:c:assassinscreed:Assassin\'s_Creed_III|Assassin\'s Creed III
+***w:c:residentevil:Resident_Evil_6|Resident Evil 6
+***w:c:www:Video_Games|More...
+
+**http://www.wikia.com/Video_Games|Game Guides
+***w:c:elderscrolls:Quests_(Skyrim)|Skyrim
+***w:c:masseffect:Mass_Effect_3_Guide|Mass Effect 3
+***w:c:infinityblade:Game_Guides|Infinity Blade 2
+***w:c:amalur:Kingdoms_of_Amalur:_Reckoning_Walkthrough|Kingdoms of Amalur: Reckoning
+***w:c:www:Video_Games|More...
+
+**w:c:specops:Spec_Ops_Wiki|Spec Ops: The Line
+***w:c:specops:Spec_Ops:_The_Line/Walkthrough|Walkthrough
+***w:c:specops:Martin_Walker|Martin Walker
+***w:c:specops:Delta_Force|Delta Force
+***w:c:specops:The_Exiles|The Exiles
+***w:c:specops:Spec_Ops_Wiki|More Spec Ops...
+
+*http://www.wikia.com/Entertainment|سرگرمی|entertainment-vertical-color
+
+**http://www.wikia.com/Entertainment|What\'s Trending
+***w:c:wikia:Entertainment/Book_Club|Wikia Book Club
+***w:c:animanga:User_blog:LexiLexi/Summer_Anime_Movie_Guide|Summer Animé Guide
+***w:c:community:User_blog:Ericmoro/Represent_Your_Wiki_at_Comic-Con|Wikia at Comic-Con
+***w:c:wikia:Entertainment/TV_Schedule|Fall TV Schedule
+***w:c:entertainment:Wikia_Entertainment|More...
+
+**w:c:www:Movie|Movies
+***w:c:amazingspiderman:Amazing_Spider-Man_Wiki|The Amazing Spider-Man
+***w:c:avp:Prometheus_(Film)|Prometheus
+***w:c:pixar:Brave|Brave 
+***w:c:movies:Magic_Mike|Magic Mike 
+***w:c:www:Movie|More...
+
+**w:c:www:TV|TV
+***w:c:dallas:Dallas|Dallas
+***w:c:breakingbad:Breaking_Bad_Wiki|Breaking Bad
+***w:c:fallingskies:User_blog:LexiLexi/What_You_Need_to_Know|Falling Skies
+***w:c:weeds:Weeds_Wiki|Weeds
+***w:c:www:TV|More...
+
+**w:c:www:Music|Music
+***w:c:music:User_blog:Porterfield/2012_Concert_Series_-_Aerosmith|Aerosmith on Tour 
+***w:c:music:User_blog:Porterfield/Summer_Albums_Guide_2012|Summer Albums Guide  
+***w:c:lyrics:Carly_Rae_Jepsen|Carly Rae Jepsen
+***w:c:katyperry:Main_Page|Katy Perry
+***w:c:www:Music|More...
+
+*http://www.wikia.com/Lifestyle|شیو‌هٔ زندگی|lifestyle-vertical-color
+
+**w:c:www:Recipes|Body
+***w:c:recipes:Recipes_Wiki|BBQ Recipes
+***w:c:athletics:Athlepedia_Home|Athlepedia
+***w:c:healthyrecipes:Healthy_Recipes_Wiki|Healthy Recipes 
+***w:c:nails:Nails_Wiki|Nail Color 
+***w:c:www:Recipes|More...
+
+**w:c:www:humanscience|Mind
+***w:c:space:Main_Page|Space Travel
+***w:c:humanscience:Welcome_to_Human_Science|Human Science
+***w:c:how-to:How_To|How-To
+***w:c:liberapedia:Main_Page|Liberapedia
+***w:c:www:humanscience|More...
+
+**w:c:Travel:Wikia_Travel|Soul
+***w:c:art:Main_Page|Art
+***w:c:toys:Main_Page|Toys 
+***w:c:gardening:Gardening_Wiki|Gardening 
+***w:c:travel:Travel_Wiki|Travel 
+***w:c:www:Lifestyle|More...
+
+**http://www.wikia.com/Lifestyle|Of Note
+***w:c:olympics:Olympics_Wiki|2012 Olympics
+***w:c:literature:Literawiki|Literature
+***w:c:tea:WikiTea|Tea
+***w:c:althistory:Main_Page|Alternative History
+***w:c:www:Lifestyle|More...',
+	'shared-problemreport' => 'گزارش‌دادن اشکال',
 ];
 
 $messages['ff'] = [
@@ -10984,6 +11074,11 @@ Alla on viimeisin lokitapahtuma:',
 	'see_more' => 'Katso lisää...',
 	'seeeditcount' => 'Katso muokkauslaskuri',
 	'send' => 'Lähetä',
+	'shared-Monobook-footer-wikia-links' => '* [http://www.wikia.com/wiki/Wikia:Privacy_Policy Yksityisyys]
+* [http://www.wikia.com/wiki/Wikia:About Tietoa Wikiasta]
+* [http://www.wikia.com/wiki/Wikia:Terms_of_use Käyttöehdot]
+* [[Special:Contact|Ota yhteyttä]]
+* [http://www.wikia.com/wiki/Wikia:Advertising_on_Wikia Mainosta]',
 ];
 
 $messages['fiu-vro'] = [
@@ -11561,24 +11656,24 @@ impossible de renommer une page sur elle-même.',
 	'sqlite-has-fts' => '$1 avec recherche en texte intégral supportée',
 	'sqlite-no-fts' => '$1 sans recherche en texte intégral supportée',
 	'share_it' => 'Partagez:',
-	'shared-Globalnavigation' => '*w:c:fr:Jeux vidéo|Jeux vidéo|video-games-vertical-color
+	'shared-Globalnavigation' => '*w:c:portail-jeuxvideo|Jeux vidéo|video-games-vertical-color
 
 **w:c:communaute:Thème:Jeux divers|Jeux divers
-***w:c:fr.dragonsofatlantis|Dragons of Atlantis
+***w:c:fr.dont-starve|Don\'t Starve
 ***w:c:fr.mario|Mario
 ***w:c:fr.sims|Les Sims
-***w:c:fr.zelda|Zelda
+***w:c:fr.tekken|Tekken
 ***w:c:fr.animalcrossing|Animal Crossing
 
 **w:c:communaute:Thème:Jeux divers|Jeux divers
-***w:c:fr.masseffect|Mass Effect
-***w:c:fr.halo|Halo
-***w:c:fr.leagueoflegends|League of Legends
+***w:c:fr.warframe|Warframe
+***w:c:ombredumordor|L\'Ombre du Mordor
 ***w:c:fr.gta|GTA
 ***w:c:fr.assassinscreed|Assassin\'s Creed
+***w:c:fr.simpson-springfield|Les Simpson : Springfield
 
 **w:c:communaute:Thème:Jeux de rôle|Jeux de rôle
-***w:c:fr.guildwars|Guild Wars
+***w:c:fr.clashofclans|Clash of Clans
 ***w:c:fr.wowwiki|World of Warcraft
 ***w:c:fr.kingdomhearts|Kingdom Hearts
 ***w:c:sorceleur|The Witcher
@@ -11591,27 +11686,27 @@ impossible de renommer une page sur elle-même.',
 ***w:c:fr.finalfantasy|Final Fantasy
 ***w:c:fr.valkyrieprofilefr|Valkyrie Profile
 
-*w:c:fr:Divertissement|Divertissement|entertainment-vertical-color
+*w:c:portail-divertissement|Divertissement|entertainment-vertical-color
 
 **w:c:communaute:Thème:Littérature|Littérature
-***w:c:fr.hungergames|Hunger Games
-***w:c:fr.harrypotter|Harry Potter
+***w:c:fr.percy-jackson|Percy Jackson
+***w:c:fr.shadowhunters|The Mortal Instruments
 ***w:c:fr.seigneur-des-anneaux|Le Seigneur des Anneaux
 ***w:c:fr.asterix|Astérix
-***w:c:fr.picsou|Picsou
+***w:c:fr.divergent|Divergent
 
 **w:c:communaute:Thème:Séries télévisées|Séries télévisées
 ***w:c:fr.arrow|Arrow
 ***w:c:fr.pretty-little-liars|Pretty Little Liars
-***w:c:fr.nickcutter|Nick Cutter (Portes du Temps)
-***w:c:fr.whitecollar|FBI : Duo Très Spécial
+***w:c:fr.walking-dead|The Walking Dead
+***w:c:fr.game-of-thrones|Game of Thrones
 ***w:c:fr.simpsons|Les Simpson
 
 **w:c:communaute:Thème:Animes|Animes
-***w:c:fr.naruto|Naruto
+***w:c:fr.shingekinokyojin|L\'Attaque des Titans
 ***w:c:fr.onepiece|One Piece
-***w:c:fr.bleach|Bleach
-***w:c:fr.dragonball|Dragon Ball
+***w:c:fr.hunterxhunter|Hunter x Hunter
+***w:c:fr.reborn|Reborn!
 ***w:c:fr.fairytail|Fairy Tail
 
 **w:c:communaute:Thème:Films|Films
@@ -11621,7 +11716,7 @@ impossible de renommer une page sur elle-même.',
 ***w:c:fr.jamesbond|James Bond
 ***w:c:fr.cinepedia|Cinéma
 
-*w:c:fr:Mode de vie|Mode de vie|lifestyle-vertical-color
+*w:c:portail-modedevie|Mode de vie|lifestyle-vertical-color
 **w:c:fr:Mode de vie|Mode de vie
 ***w:c:fr.saveurs-du-monde|Saveurs du monde
 ***w:c:fr.londres|Londres
@@ -11629,27 +11724,28 @@ impossible de renommer une page sur elle-même.',
 ***w:c:fr.lego|LEGO
 ***w:c:fr.barbie|Barbie
 
-**w:c:fr:Mode de vie|Mode de vie
+**w:c:portail-modedevie|Mode de vie
 ***w:c:capoeira|Capoeira
-***w:c:fr.icehockey|Hockey sur glace
 ***w:c:fr.withkids|WithKids
 ***w:c:fr.howto|WikiComment
 ***w:c:fr.graphic|Wiki Graphic
+***w:c:fr.encyclopedie|Encyclopédie
 
-**w:c:fr:Mode de vie|Mode de vie
+**w:c:portail-modedevie|Mode de vie
 ***w:c:fr.univers|Univers
 ***w:c:fr.wikapplefrance|Apple
 ***w:c:lanormejuridique|La norme juridique
 ***w:c:familles|Familles
 ***w:c:monde|Monde
 
-**w:c:fr:Mode de vie|Mode de vie
+**w:c:portail-modedevie|Mode de vie
 ***w:c:routes|Routes de France
-***w:c:fr.encyclopedie|Encyclopédie
-',
+***w:c:fr.icehockey|Hockey sur glace
+***w:c:fr.ski|Ski
+***w:c:fr.mahabharata|Mahâbhârata',
 	'shared-Monobook-footer-wikia-links' => '* [http://www.wikia.com/wiki/Wikia:Privacy_Policy Confidentialité]
 * [http://fr.wikia.com/À_propos À propos de Wikia]
-* [http://fr.wikia.com/Conditions_d\'utilisation Conditions d\'utilisation]<span style="color: #ff0000"> (Mises à jour)</span>
+* [http://fr.wikia.com/Conditions_d\'utilisation Conditions d\'utilisation]
 * [[Special:Contact|Nous contacter]]
 * [http://www.wikia.com/wiki/Wikia:Advertising_on_Wikia Publicité]',
 	'specialpages-group-wikia' => 'Pages Fandom',
@@ -11659,6 +11755,8 @@ impossible de renommer une page sur elle-même.',
 	'seeeditcount' => 'Voir le nombre de modifications',
 	'seemoredotdotdot' => 'Plus…',
 	'send' => 'Envoyer',
+	'shared-News_box' => 'Visitez le [[w:fr:Accueil|Centre des communautés]] pour de l’aide et les dernières nouvelles',
+	'shared-problemreport' => 'Signaler un problème',
 ];
 
 $messages['frc'] = [
@@ -17315,11 +17413,93 @@ L\'ultimo elemento del registro è riportato di seguito per informazione:',
 	'sqlite-has-fts' => '$1 con la possibilità di ricerca completa nel testo',
 	'sqlite-no-fts' => '$1 senza la possibilità di ricerca completa nel testo',
 	'shared-Monobook-footer-wikia-links' => '* [http://www.wikia.com/wiki/Wikia:Privacy_Policy Privacy]
-	* [http://www.wikia.com/wiki/Wikia:About About Wikia]
-	* [http://it.community.wikia.com/wiki/Wiki_della_Community:Termini_di_utilizzo Termini di utilizzo]<span style="color: #ff0000"> (Aggiornati)</span>
-	* [[Special:Contact|Contact]]
-	* [http://www.wikia.com/wiki/Wikia:Advertising_on_Wikia Advertise]',
+* [http://www.wikia.com/wiki/Wikia:About About Wikia]
+* [http://it.community.wikia.com/wiki/Wiki_della_Community:Termini_di_utilizzo Termini di utilizzo]<span style="color: #ff0000"> (Aggiornati)</span>
+* [[Special:Contact|Contact]]
+* [http://www.wikia.com/wiki/Wikia:Advertising_on_Wikia Advertise]',
 	'specialpages-group-wikia' => 'Pagine di Fandom',
+	'shared-Globalnavigation' => '*w:c:it|Videogiochi
+
+**w:c:it.community:Categoria:Videogiochi|Giochi vari
+***w:c:it.assassinscreed|Assassin\'s Creed
+***w:c:it.finalfantasy|Final Fantasy
+***w:c:it.witcher|Witcher
+***w:c:it.uncharted|Uncharted
+***w:c:it.community:Categoria:Videogiochi|Altro...
+
+**w:c:it.community:Categoria:Videogiochi|Giochi vari
+***w:c:it.elderscrolls|Elder Scrolls
+***w:c:it.residentevil|Resident Evil
+***w:c:it.gta|GTA
+***w:c:it.ratcheteclank|Ratchet & Clank
+***w:c:it.community:Categoria:Videogiochi|Altro...
+
+**w:c:it.community:Categoria:Videogiochi|Giochi vari
+***w:c:it.halo|Halo
+***w:c:it.wow|World of Warcraft
+***w:c:it.gothic|Gothic
+***w:c:it.sims|Sims
+***w:c:it.community:Categoria:Videogiochi|Altro...
+
+**w:c:it.community:Categoria:Videogiochi|Browsergames
+***w:c:it.planetside|Planetside 2
+***w:c:it.ikariam|Ikariam
+***w:c:it.travian|Travian
+***w:c:it.dofuswiki|Dofus
+***w:c:it:community:Categoria:Videogiochi|Altro...
+
+*w:c:it|Intrattenimento
+
+**w:c:it.community:Categoria:Televisione|TV
+***w:c:it.ceraunavolta|C\'era Una Volta
+***w:c:it.iltronodispade|Il Trono di Spade
+***w:c:it.glee|Glee
+***w:c:it.squadraspecialecobra11|Cobra 11
+***w:c:it.community:Categoria:Televisione|Altro...
+
+**w:c:it.community:Categoria:Cinema|Cinema
+***http://it.memory-alpha.org/ |Star Trek
+***w:c:it.starwars|Guerre Stellari
+***w:c:padrino|Il Padrino
+***w:c:it.piratideicaraibi|Pirati dei Caraibi
+***w:c:it.community:Categoria:Cinema|Altro...
+
+**w:c:it.community:Categoria:Fumetti_e_cartoni|Fumetti e manga
+***w:c:it.onepiece|One Piece
+***w:c:it.naruto|Naruto
+***w:c:it.paperpedia|Paperpedia
+***w:c:it.shingekinokyojin|L\'Attacco dei Giganti
+***w:c:it.community:Categoria:Fumetti_e_cartoni|Altro...
+
+**w:c:it.community:Categoria:Anime_e_manga|Cartoni e anime
+***w:c:it.inazumaelevenwiki-italia|Inazuma Eleven
+***w:c:it.simpsons|Simpsons
+***w:c:it.dragonball|Dragon Ball
+***w:c:it.generatorrex|Generator Rex
+***w:c:it.community:Categoria:Anime_e_manga|Altro...
+
+*w:c:it|Stili di vita
+
+**w:c:it.community:Categoria:Letteratura|Letteratura
+***w:c:it.harrypotter|Harry Potter
+***w:c:it.lotr|J.R.R. Tolkien
+***w:c:it.questeoscurematerie|Queste Oscure Materie
+***w:c:it.eragon|Eragon
+***w:c:it|Altro...
+
+**w:c:it|Altro
+***w:c:it.magicthegathering|Magic the Gathering
+***w:c:it.coldplay|Coldplay
+***w:c:it.appunti|Appunti universitari
+***w:c:it.creepypasta|Creepypasta
+***w:c:it|Altro...
+
+**w:c:it|Altro
+***w:c:it.linux|Linux
+***w:c:it.gloves|Guanti
+***w:c:it.lego|Lego
+***w:c:it.encicprotezionecivile|Protezione Civile
+***w:c:it|Altro...',
 ];
 
 $messages['iu'] = [
@@ -17744,14 +17924,53 @@ $messages['ja'] = [
 	'share_it' => '共有ツール:',
 	'searchsuggest' => '検索補間',
 	'see_more' => '更に詳しくは',
-	'shared-Monobook-footer-wikia-links' => '* [http://www.wikia.com/wiki/Wikia:Privacy_Policy Privacy]
-* [http://www.wikia.com/wiki/Wikia:About About Wikia]
-* [http://www.wikia.com/wiki/Wikia:Terms_of_use Terms of use]
-* [[Special:Contact|Contact]]
-* [http://www.wikia.com/wiki/Wikia:Advertising_on_Wikia Advertise]',
+	'shared-Monobook-footer-wikia-links' => '* [http://ja.wikia.com/プライバシーポリシー プライバシー]
+* [http://ja.wikia.com/ウィキアについて ウィキアについて]
+* [http://ja.wikia.com/利用規約 利用規約]
+* [[Special:Contact|お問い合わせ]]
+* [http://www.wikia.com/Advertising 広告]',
 	'specialpages-group-wikia' => 'Fandomのページ',
 	'seeeditcount' => '編集回数のカウントをご覧ください',
 	'seemoredotdotdot' => 'その他',
+	'shared-Globalnavigation' => '* w:c:ja.community:ユーザーブログ:Gurgate/性格診断テストをやってみよう|性格診断テスト
+** w:c:ja.community:ユーザーブログ:Gurgate/性格診断テストをやってみよう|性格診断テストで
+*** w:c:ja.community:ユーザーブログ:Gurgate/性格診断テストをやってみよう|あなたは技術に詳しい人ですか？
+*** w:c:ja.community:ユーザーブログ:Gurgate/性格診断テストをやってみよう|TVの熱狂的なファンですか？
+** w:c:ja.community:ユーザーブログ:Gurgate/性格診断テストをやってみよう|本当の自分をみつけてみよう
+*** w:c:ja.community:ユーザーブログ:Gurgate/性格診断テストをやってみよう|グルメですか？
+*** w:c:ja.community:ユーザーブログ:Gurgate/性格診断テストをやってみよう|意外なことがわかるかもしれません！
+*** w:c:ja.community:ユーザーブログ:Gurgate/性格診断テストをやってみよう|詳細はこちらをクリック！
+* w:c:ja|人気・おすすめウィキア|video-games-vertical-color 
+** w:c:ja.videogameshub|ゲーム
+*** w:c:ja.game|ゲーム総合
+*** w:c:ja.destiny|Destiny
+*** w:c:ja.eq2|EverQuest 2
+*** w:c:ja.lotro|Lord of the Rings Online
+*** w:c:ja.rfonline|RF Online
+**
+*** w:c:ja.gw2|Guild Wars 2
+*** w:c:ja.finalfantasy|Final Fantasy
+*** w:c:ja.halo|Halo
+*** w:c:ja.kirby|カービィ
+** w:c:ja.entertainmenthub|エンターテイメント
+***w:c:ja.entertainment|エンターテイメント総合
+*** w:c:ja.starwars|スター・ウォーズ
+*** memoryalpha:ja:Portal:Main|スタートレック
+*** w:c:ja.onepiece|ワンピース
+*** w:c:ja.animanga|アニメ・漫画総合
+** w:c:ja:ライフスタイル|ライフスタイル
+*** w:c:japan|日本
+*** w:c:ja.tanukipedia|たぬき
+*** w:c:ja.noodle|ヌードル
+* w:c:ja.community:Blog:ウィキアコミュニティニュース|お知らせ・ヘルプ|entertainment-vertical-color
+** w:c:ja.community:Blog:ウィキアコミュニティニュース|お知らせ
+*** w:c:ja.community:ユーザーブログ:Gurgate/性格診断テストをやってみよう|性格診断テストをやってみよう
+*** w:c:ja.community:Blog:ウィキアコミュニティニュース|お知らせ
+*** w:c:ja.community:Blog:コミュニティサポートブログ|コミュニティサポートブログ
+*** w:c:ja.community:Blog:技術情報|技術情報
+** w:c:ja.community:Help:コンテンツ|ヘルプ
+*** w:c:ja.community:ウィキアユニバーシティ|ウィキアユニバーシティ
+*** w:c:ja.community:Blog:ヒントとコツ|ヒントとコツ',
 ];
 
 $messages['jam'] = [
@@ -20331,6 +20550,52 @@ $messages['ko'] = [
 	'see_more' => '더 보기...',
 	'seeeditcount' => '편집 횟수 보기',
 	'send' => '보내기',
+	'shared-Globalnavigation' => '*http://ko.community.wikia.com/wiki/%ED%97%88%EB%B8%8C:%EA%B2%8C%EC%9E%84|게임|video-games-vertical-color
+
+**#|화제의 게임
+***http://ko.pokemon.wikia.com/wiki/대문|포켓몬
+***http://ko.bujok.wikia.com/wiki/Home|부족전쟁
+***http://ko.unlight.wikia.com/wiki/대문|언라이트
+***http://ko.mabinogi.wikia.com/wiki/대문|마비노기
+***http://ko.community.wikia.com/wiki/%ED%97%88%EB%B8%8C:%EA%B2%8C%EC%9E%84|더 보기...
+
+**#|게임 추천
+***http://ko.projectarcturus.wikia.com/wiki/악튜러스(Arcturus,アークトゥルス)_위키|악튜러스
+***http://ko.maplestory2.wikia.com/wiki/메이플스토리2 위키|메이플스토리 2
+***http://ko.metalgear.wikia.com/wiki/메탈_기어_위키|메탈 기어
+***http://ko.halo.wikia.com/wiki/헤일로페디아_메인_페이지|헤일로
+***http://ko.community.wikia.com/wiki/%ED%97%88%EB%B8%8C:%EA%B2%8C%EC%9E%84|더 보기...
+
+*http://ko.community.wikia.com/wiki/%ED%97%88%EB%B8%8C:%EB%A7%8C%ED%99%94%26%EC%95%A0%EB%8B%88|엔터테인먼트|entertainment-vertical-color
+
+**#|텔레비전
+***http://ko.oreimo.wikia.com/wiki/대문|내 여동생이 이렇게 귀여울 리가 없어
+***http://ko.mlp.wikia.com/wiki/마이_리틀_포니_위키|마이 리틀 포니
+***http://ko.clairebible.wikia.com/wiki/슬레이어즈_위키|슬레이어즈
+***http://ko.shinchan.wikia.com/wiki/크레용_신짱_위키|크레용 신짱
+***http://ko.community.wikia.com/wiki/%ED%97%88%EB%B8%8C:%EB%A7%8C%ED%99%94%26%EC%95%A0%EB%8B%88|더 보기...
+
+**#|음악
+***http://ko.music.wikia.com/wiki/대문|음악 백과 사전
+***http://ko.utau.wikia.com/wiki/UTAU_위키|UTAU
+***http://ko.vocapedia.wikia.com/wiki/보컬로이드_위키|보컬로이드
+***http://ko.suju.wikia.com/wiki/슈주피디아|슈퍼주니어
+***http://ko.community.wikia.com/wiki/%ED%97%88%EB%B8%8C:%EB%A7%8C%ED%99%94%26%EC%95%A0%EB%8B%88|더 보기...
+
+*http://ko.community.wikia.com/wiki/%ED%97%88%EB%B8%8C:%EC%83%9D%ED%99%9C|생활|lifestyle-vertical-color
+
+**#|지식
+***http://ko.lihe.wikia.com/wiki/Lihe_위키:대문|Lihe 위키
+***http://ko.solution.wikia.com/wiki/풀이백과_위키|풀이백과
+***http://kore.wikia.com/wiki/대문|한자 위키
+***http://ko.community.wikia.com/wiki/%ED%97%88%EB%B8%8C:%EC%83%9D%ED%99%9C|더 보기...
+
+**http://ko.community.wikia.com/wiki/%EB%8C%80%EB%AC%B8|커뮤니티
+***http://ko.community.wikia.com/wiki/Blog:%EC%9C%84%ED%82%A4%EC%95%84_%EB%89%B4%EC%8A%A4|위키아 뉴스
+***http://ko.community.wikia.com/wiki/%ED%8A%B9%EC%88%98%EA%B8%B0%EB%8A%A5:Forum|커뮤니티 포럼
+***http://ko.community.wikia.com/wiki/%EB%8F%84%EC%9B%80%EB%A7%90:%EC%BD%98%ED%85%90%EC%B8%A0|도움말
+***http://ko.community.wikia.com/wiki/%EB%8C%80%EB%AC%B8|더 보기...',
+	'shared-problemreport' => '오류 보고하기',
 ];
 
 $messages['ko-kp'] = [
@@ -27574,6 +27839,7 @@ Meestal wordt dit door een externe verwijzing op een zwarte lijst veroorzaakt.',
 * [http://www.wikia.com/wiki/Wikia:Terms_of_use Terms of use]
 * [[Special:Contact|Contact]]
 * [http://www.wikia.com/wiki/Wikia:Advertising_on_Wikia Advertise]',
+	'shared-Globalnavigation' => '{{:MediaWiki:Shared-Globalnavigation}}',
 ];
 
 $messages['nl-informal'] = [
@@ -29249,13 +29515,13 @@ Jednak informacje o treści {{GRAMMAR:D.lp|{{SITENAME}}}} mogą być w Google ni
 	'savefile' => 'Zapisz plik',
 	'sourcefilename' => 'Nazwa pierwotna',
 	'sourceurl' => 'Źródłowy adres URL',
-	'sharedupload' => 'Ten plik znajduje się na $1 i może być używany w innych projektach.',
-	'sharedupload-desc-there' => 'Ten plik znajduje się na $1 i może być używany w innych projektach.
+	'sharedupload' => 'Ten plik znajduje się {{#switch:{{#if:{{#pos:{{lc:{{#urlencode:$1|WIKI}}}}|_wiki}}|A}}{{#if:{{#pos:{{lc:{{#urlencode:$1|WIKI}}}}|_wiki}}|B}}|A=na|B=we|#default=w}} $1 i może być używany w innych projektach.',
+	'sharedupload-desc-there' => 'Ten plik znajduje się {{#switch:{{#if:{{#pos:{{lc:{{#urlencode:$1|WIKI}}}}|_wiki}}|A}}{{#if:{{#pos:{{lc:{{#urlencode:$1|WIKI}}}}|_wiki}}|B}}|A=na|B=we|#default=w}} $1 i może być używany w innych projektach.
 Więcej informacji odnajdziesz na [$2 stronie opisu pliku].',
-	'sharedupload-desc-here' => 'Ten plik znajduje się na $1 i może być używany w innych projektach.
+	'sharedupload-desc-here' => 'Ten plik znajduje się {{#switch:{{#if:{{#pos:{{lc:{{#urlencode:$1|WIKI}}}}|_wiki}}|A}}{{#if:{{#pos:{{lc:{{#urlencode:$1|WIKI}}}}|_wiki}}|B}}|A=na|B=we|#default=w}} $1 i może być używany w innych projektach.
 Poniżej znajdują się informacje ze [$2 strony opisu] tego pliku.',
 	'shared-repo-from' => 'z $1',
-	'shared-repo' => 'współdzielone zasoby',
+	'shared-repo' => 'współdzielonych zasobach',
 	'statistics' => 'Statystyki',
 	'statistics-header-pages' => 'Statystyka stron',
 	'statistics-header-edits' => 'Statystyka edycji',
@@ -29359,104 +29625,105 @@ Najprawdopodobniej zostało to spowodowane przez link do zewnętrznej strony int
 	'send' => 'Wyślij',
 	'share_it' => 'Podziel się:',
 	'see_more' => 'Więcej...',
-	'shared-Globalnavigation' => '*w:c:pl:Gry|Gry|video-games-vertical-color
+	'shared-Globalnavigation' => '*http://gryhub.wikia.com/|Gry|video-games-vertical-color
 
-**w:c:pl:Gry|RPG
+**http://gryhub.wikia.com/|RPG
+***w:c:pl.gothic|Gothic
+***w:c:pl.elderscrolls|The Elder Scrolls
 ***w:c:wiedzmin|Wiedźmin
 ***w:c:pl.fallout|Fallout
-***w:c:pl.gothic|Gothic
-***w:c:pl.elderscrolls|Elder Scrolls
 ***w:c:pl.risen|Risen
 
-**w:c:pl:Gry|Akcja
-***w:c:pl.callofduty|Call of Duty
+**http://gryhub.wikia.com/|Akcja
 ***w:c:pl.gta|Grand Theft Auto
-***w:c:pl.saintsrow|Saints Row
 ***w:c:pl.assassinscreed|Assassin\'s Creed
+***w:c:pl.callofduty|Call of Duty
 ***w:c:pl.masseffect|Mass Effect
+***w:c:pl.saintsrow|Saints Row
 
-**w:c:pl:Gry|Multiplayer
-***w:c:pl.wow|World of Warcraft
-***w:c:pl.rappelz|Rappelz
-***w:c:pl.leagueoflegends|League of Legends
+**http://gryhub.wikia.com/|Multiplayer
 ***w:c:pl.dota-2|Dota 2
+***w:c:pl.leagueoflegends|League of Legends
+***w:c:pl.wow|World of Warcraft
 ***w:c:pl.warframe|Warframe
+***w:c:pl.rappelz|Rappelz
 
-**w:c:pl:Gry|Pozostałe
-***w:c:pl.sims|The Sims
-***w:c:pl.dontstarve|Don\'t Starve
+**http://gryhub.wikia.com/|Pozostałe
 ***w:c:pl.slodkiflirt|Słodki Flirt
-***w:c:pl.patapon|Patapon
+***w:c:pl.dontstarve|Don\'t Starve
+***w:c:pl.sims|The Sims
+***w:c:pl.wh40k|Warhammer 40.000
 ***w:c:pl.bindingofisaac|Binding of Isaac
 
-*w:c:pl:Rozrywka|Rozrywka|entertainment-vertical-color
+*http://rozrywkahub.wikia.com/|Rozrywka|entertainment-vertical-color
 
-**w:c:pl:Rozrywka|Filmy
-***w:c:pl.lotr|Władca Pierścieni
+**http://rozrywkahub.wikia.com/|Filmy
+***w:c:jakwytresowacsmoka|Jak Wytresować Smoka
 ***w:c:pl.harrypotter|Harry Potter
+***w:c:pl.lotr|Władca Pierścieni
+***w:c:pl.frozen|Kraina Lodu
 ***w:c:pl.polskapersopedia|Percy Jackson
-***w:c:pl.twilightsaga|Zmierzch
-***w:c:igrzyskasmierci|Igrzyska Śmierci
 
-**w:c:pl:Rozrywka|Seriale
+**http://rozrywkahub.wikia.com/|Seriale
 ***w:c:pl.mlp|My Little Pony
-***w:c:pl.austinially|Austin i Ally
+***w:c:pl.ben10|Ben 10
 ***w:c:ranczo|Ranczo
 ***w:c:pl.pora-na-przygode|Pora na Przygodę!
-***w:c:pl.nadzdolni|Nadzdolni
+***w:c:pl.totalna-porazka|Totalna Porażka
 
-**w:c:pl:Rozrywka|Anime
+**http://pl.animehub.wikia.com/|Anime
 ***w:c:pl.naruto|Naruto
 ***w:c:pl.bleach|Bleach
+***w:c:pl.onepiece|One Piece
 ***w:c:pl.dragonball|Dragon Ball
 ***w:c:pl.fairytail|Fairy Tail
-***w:c:pl.onepiece|One Piece
 
-**w:c:pl:Rozrywka|Pozostałe
-***w:c:pl.ben10|Ben 10
-***w:c:pl.fineasziferb|Fineasz i Ferb
-***w:c:pl.pzm|Pingwiny z Madagaskaru
+**http://rozrywkahub.wikia.com/|Pozostałe
+***w:c:pl.marvel|Marvel Universe
 ***w:c:pl.slugterra|Slugterra
-***w:c:pl.yugioh|Yu-Gi-Oh!
+***w:c:pl.pzm|Pingwiny z Madagaskaru
+***w:c:igrzyskasmierci|Igrzyska Śmierci
+***w:c:pl.fineasziferb|Fineasz i Ferb
+***w:c:pl.vocaloid|Vocaloid
 
-*w:c:pl:Lifestyle|Lifestyle|lifestyle-vertical-color
+*http://pl.lifestylehub.wikia.com/|Lifestyle|lifestyle-vertical-color
 
-**w:c:pl:Lifestyle|Miasta
+**http://pl.lifestylehub.wikia.com/|Miasta
 ***w:c:warszawa|Warszawa
+***w:c:poznan|Poznań
 ***w:c:wroclaw|Wrocław
 ***w:c:torun|Toruń
-***w:c:poznan|Poznań
 ***w:c:krakow|Kraków
 
-**w:c:pl:Lifestyle|Kultura
+**http://pl.lifestylehub.wikia.com/|Kultura
 ***w:c:wiersze|Wiersze
+***w:c:pl.mitologia|Mitologia
 ***w:c:dziedzictwo|Dziedzictwo
 ***w:c:pl.bractwoczarnegosztyletu|Bractwo Czarnego Sztyletu
 ***w:c:pl.ogienilod|Pieśń Lodu i Ognia
-***w:c:pl.mitologia|Mitologia
 
-**w:c:pl:Lifestyle|Kreatywne
+**http://pl.lifestylehub.wikia.com/|Kreatywne
 ***w:c:nonsensopedia|Nonsensopedia
 ***w:c:pl.creepypasta|Creepypasta
-***w:c:bezsensopedia|Bezsensopedia
 ***w:c:totaldramafanfick|Total Drama Polish FanFick
+***w:c:bezsensopedia|Bezsensopedia
 ***w:c:pl.bakuganfanfic|Bakugan Fan Fiction
 
-**w:c:pl:Lifestyle|Zainteresowania
-***w:c:pl.lego|Lego
-***w:c:egipt|Egipt
+**http://pl.lifestylehub.wikia.com/|Zainteresowania
 ***w:c:pl.monsterhigh|Monster High
+***w:c:pl.lego|Lego
 ***w:c:pl.bionicle|Bionicle
-***w:c:pl.vocaloid|Vocaloid
-',
+***w:c:egipt|Egipt
+***w:c:tradycja|Tradycja',
 	'shared-Monobook-footer-wikia-links' => '* [http://pl.wikia.com/Polityka_Prywatności Polityka Prywatności]
-	* [http://pl.wikia.com/O_nas O Wikii]
-	* [http://pl.wikia.com/Zasady_Użytkowania Zasady Użytkowania]<span style="color: #ff0000"> (Zaktualizowane)</span>
-	* [[Special:Contact|Kontakt]]
-	* [http://www.wikia.com/Advertising Reklama]',
+* [http://pl.wikia.com/O_nas O Wikii]
+* [http://pl.wikia.com/Zasady_Użytkowania Zasady Użytkowania]
+* [[Special:Contact|Kontakt]]
+* [http://www.wikia.com/Advertising Reklama]',
 	'specialpages-group-wikia' => 'Strony portalu Fandom',
 	'save' => 'Publikuj',
 	'scarytranscludebadinterwiki' => 'Użyto niewłaściwej składni transkluzji zewnętrznego szablonu.',
+	'shared-News_box' => 'Zajrzyj na [[w:c:spolecznosc:Specjalna:Forum|forum]].',
 ];
 
 $messages['pms'] = [
@@ -30490,6 +30757,95 @@ Este bloqueio foi provavelmente causado por um link para um site externo que con
 * [[Special:Contact|Contato]]
 * [http://www.wikia.com/wiki/Wikia:Publicidade_na_Wikia Publicidade]',
 	'specialpages-group-wikia' => 'Páginas do Fandom',
+	'shared-Globalnavigation' => '*http://pt.videogameshub.wikia.com/wiki/Wiki_Videogameshub|Videogames|video-games-vertical-color
+
+**#|Em alta
+***http://pt-br.watchdogs.wikia.com/wiki/Wiki_Watch_Dogs|Watchdogs
+***http://pt-br.titanfall.wikia.com/wiki/Wiki_Titanfall|Titanfall
+***http://pt-br.elderscrolls.wikia.com/wiki/P%C3%A1gina_principal|Elder Scrolls
+***w:c:video:Video_Wiki|Últimos Vídeos
+***homepage:Video_Games|Mais...
+
+**#|Jogos para PS
+***http://pt.assassinscreedbr.wikia.com/wiki/Página_principal|Assassin\'s Creed
+***http://pt-br.finalfantasy.wikia.com/wiki/Página_principal|Final Fantasy
+***http://pt-br.warframe.wikia.com/wiki/WARFRAME_Wiki|Warframe
+***http://pt-br.infamous.wikia.com/wiki/InFamous:_Second_Son|Infamous: Second Son
+***homepage:Video_Games|Mais...
+
+**#|Jogos para Xbox One 
+***http://pt-br.evolve.wikia.com/wiki/Wiki_Evolve|Evolve
+***http://pt-br.dragonage.wikia.com/wiki/P%C3%A1gina_principal|Dragon Age
+***http://pt-br.fifa.wikia.com/wiki/Wiki_Fifa|Wiki Fifa
+***http://pt.gta.wikia.com/wiki/P%C3%A1gina_principal|Grand Theft Auto
+***homepage:Video_Games|Mais...
+
+**#|Grátis
+***w:c:pt-br.warframe|Warframe
+***w:c:pt-br.leagueoflegends|League of Legends
+***w:c:pt-br.hearthstone|Hearthstone
+***w:c:pt-br.clashofclans|Clash of Clans
+***homepage:Video_Games|Mais...
+
+*http://pt.entretenimento.wikia.com/wiki/Wiki_Entretenimento|Entretenimento|entertainment-vertical-color
+
+**#|Em alta
+***http://pt-br.monica.wikia.com/wiki/P%C3%A1gina_principal|Turma da Mônica
+***http://pt-br.phineaseferb.wikia.com/wiki/Phineas_e_Ferb_Wiki|Phineas e Ferb
+***http://pt-br.disneyprincesas.wikia.com/wiki/Wiki_Disney_Princesas|Disney Princesas
+***w:c:video:Video_Wiki|Novos Vídeos
+***homepage:Entertainment|Mais...
+
+**#|Filmes
+***w:c:filmes|Filmes Wikia
+***w:c:pt-br.disneyprincesas:Frozen|Frozen
+***w:c:jogosvorazes:Em_Chamas_(filme)|Em Chamas
+***w:c:pt-br.marvel:Guardi%C3%B5es_da_Gal%C3%A1xia_(filme)|Guardiões da Galáxia
+***homepage:Entertainment|Mais...
+
+**#|TV
+***w:c:pt-br.doctorwho|Doctor Who
+***w:c:pt-br.revenge|Revenge
+***w:c:pt.simpsons|The Simpsons
+***w:c:pt-br.vampirediaries|The Vampire Diaries
+***homepage:Entertainment|Mais...
+
+**#|Música
+***w:c:lyrics:Main_Page_Pt|Letras de músicas
+***w:c:pt.musica:Wiki_Música/|Wiki Música
+***w:c:pt.ladygaga:Gagapedia|Lady Gaga
+***w:c:pt-br.adele:Wiki_Adele|Adele
+***homepage:Entertainment|Mais...
+
+*http://pt.estilodevida.wikia.com/wiki/Wiki_Estilo_de_Vida|Estilo De Vida|lifestyle-vertical-color
+
+**#|Em alta
+***w:c:sociedade-literaria:Portal_Clube_do_Livro|Clube do Livro
+***w:c:pt-br.foodficcao:Wiki_Food_Ficção|Food Ficção
+***w:c:comunidade:User_blog:Macherie_ana/Anunciando_o_nosso_aplicativo_de_letras_para_fãs,_por_fãs|Lyrically
+***w:c:futebol:User_blog:PeF001/Escale_a_sua_seleção_da_Copa_do_Mundo_de_2014|Copa 2014
+***homepage:Lifestyle|Mais...
+
+**#|Livros
+***w:c:pt-br.harrypotter:Página_Principal|Harry Potter
+***w:c:divergente-br:Divergente_Wiki|Divergente
+***w:c:pt.crepusculo:Página Inicial|Crepúsculo
+***w:c:pt-br.geloefogo:Wiki_As_Crônicas_de_Gelo_e_Fogo|As Crônicas de Gelo e Fogo
+***homepage:Lifestyle|Mais...
+
+**#|Receitas
+***w:c:receitas:Wiki_Receitas|Receitas Wikia
+***w:c:pt-br.chocolate:Wiki_Chocolate|Wiki Chocolate
+***w:c:pt.receitas-vegetarianas:Wiki_Receitas_Vegetarianas|Receitas Vegetarianas
+***w:c:pt.sobremesas:Wiki_Sobremesas|Receitas de Sobremesas
+***homepage:Lifestyle|Mais...
+
+**#|Comidas & Bebidas
+***w:c:pt-br.cafe:Wiki_Café|Café
+***w:c:pt.vitaminas:Wiki_Smoothies|Vitaminas
+***w:c:receitasfamilia:Receitas_para_Família_Wiki|Receitas para a família
+***w:c:pt.conservas:Wiki_Conservas|Conservas
+***homepage:Lifestyle|Mais...',
 ];
 
 $messages['pt-br'] = [
@@ -30705,6 +31061,95 @@ Tal bloqueio foi provavelmente causado por uma ligação para um \'\'website\'\'
 	'specialpages-group-spam' => 'Ferramentas anti-spam',
 	'sqlite-has-fts' => '$1 com suporte de pesquisa de texto completo',
 	'sqlite-no-fts' => '$1 sem suporte de pesquisa de texto completo',
+	'shared-Globalnavigation' => '*http://pt.videogameshub.wikia.com/wiki/Wiki_Videogameshub|Videogames|video-games-vertical-color
+
+**#|Em alta
+***http://pt-br.watchdogs.wikia.com/wiki/Wiki_Watch_Dogs|Watchdogs
+***http://pt-br.titanfall.wikia.com/wiki/Wiki_Titanfall|Titanfall
+***http://pt-br.elderscrolls.wikia.com/wiki/P%C3%A1gina_principal|Elder Scrolls
+***w:c:video:Video_Wiki|Últimos Vídeos
+***homepage:Video_Games|Mais...
+
+**#|Jogos para PS
+***http://pt.assassinscreedbr.wikia.com/wiki/Página_principal|Assassin\'s Creed
+***http://pt-br.finalfantasy.wikia.com/wiki/Página_principal|Final Fantasy
+***http://pt-br.warframe.wikia.com/wiki/WARFRAME_Wiki|Warframe
+***http://pt-br.infamous.wikia.com/wiki/InFamous:_Second_Son|Infamous: Second Son
+***homepage:Video_Games|Mais...
+
+**#|Jogos para Xbox One 
+***http://pt-br.evolve.wikia.com/wiki/Wiki_Evolve|Evolve
+***http://pt-br.dragonage.wikia.com/wiki/P%C3%A1gina_principal|Dragon Age
+***http://pt-br.fifa.wikia.com/wiki/Wiki_Fifa|Wiki Fifa
+***http://pt.gta.wikia.com/wiki/P%C3%A1gina_principal|Grand Theft Auto
+***homepage:Video_Games|Mais...
+
+**#|Grátis
+***w:c:pt-br.warframe|Warframe
+***w:c:pt-br.leagueoflegends|League of Legends
+***w:c:pt-br.hearthstone|Hearthstone
+***w:c:pt-br.clashofclans|Clash of Clans
+***homepage:Video_Games|Mais...
+
+*http://pt.entretenimento.wikia.com/wiki/Wiki_Entretenimento|Entretenimento|entertainment-vertical-color
+
+**#|Em alta
+***http://pt-br.monica.wikia.com/wiki/P%C3%A1gina_principal|Turma da Mônica
+***http://pt-br.phineaseferb.wikia.com/wiki/Phineas_e_Ferb_Wiki|Phineas e Ferb
+***http://pt-br.disneyprincesas.wikia.com/wiki/Wiki_Disney_Princesas|Disney Princesas
+***w:c:video:Video_Wiki|Novos Vídeos
+***homepage:Entertainment|Mais...
+
+**#|Filmes
+***w:c:filmes|Filmes Wikia
+***w:c:pt-br.disneyprincesas:Frozen|Frozen
+***w:c:jogosvorazes:Em_Chamas_(filme)|Em Chamas
+***w:c:pt-br.marvel:Guardi%C3%B5es_da_Gal%C3%A1xia_(filme)|Guardiões da Galáxia
+***homepage:Entertainment|Mais...
+
+**#|TV
+***w:c:pt-br.doctorwho|Doctor Who
+***w:c:pt-br.revenge|Revenge
+***w:c:pt.simpsons|The Simpsons
+***w:c:pt-br.vampirediaries|The Vampire Diaries
+***homepage:Entertainment|Mais...
+
+**#|Música
+***w:c:lyrics:Main_Page_Pt|Letras de músicas
+***w:c:pt.musica:Wiki_Música/|Wiki Música
+***w:c:pt.ladygaga:Gagapedia|Lady Gaga
+***w:c:pt-br.adele:Wiki_Adele|Adele
+***homepage:Entertainment|Mais...
+
+*http://pt.estilodevida.wikia.com/wiki/Wiki_Estilo_de_Vida|Estilo De Vida|lifestyle-vertical-color
+
+**#|Em alta
+***w:c:sociedade-literaria:Portal_Clube_do_Livro|Clube do Livro
+***w:c:pt-br.foodficcao:Wiki_Food_Ficção|Food Ficção
+***w:c:comunidade:User_blog:Macherie_ana/Anunciando_o_nosso_aplicativo_de_letras_para_fãs,_por_fãs|Lyrically
+***w:c:futebol:User_blog:PeF001/Escale_a_sua_seleção_da_Copa_do_Mundo_de_2014|Copa 2014
+***homepage:Lifestyle|Mais...
+
+**#|Livros
+***w:c:pt-br.harrypotter:Página_Principal|Harry Potter
+***w:c:divergente-br:Divergente_Wiki|Divergente
+***w:c:pt.crepusculo:Página Inicial|Crepúsculo
+***w:c:pt-br.geloefogo:Wiki_As_Crônicas_de_Gelo_e_Fogo|As Crônicas de Gelo e Fogo
+***homepage:Lifestyle|Mais...
+
+**#|Receitas
+***w:c:receitas:Wiki_Receitas|Receitas Wikia
+***w:c:pt-br.chocolate:Wiki_Chocolate|Wiki Chocolate
+***w:c:pt.receitas-vegetarianas:Wiki_Receitas_Vegetarianas|Receitas Vegetarianas
+***w:c:pt.sobremesas:Wiki_Sobremesas|Receitas de Sobremesas
+***homepage:Lifestyle|Mais...
+
+**#|Comidas & Bebidas
+***w:c:pt-br.cafe:Wiki_Café|Café
+***w:c:pt.vitaminas:Wiki_Smoothies|Vitaminas
+***w:c:receitasfamilia:Receitas_para_Família_Wiki|Receitas para a família
+***w:c:pt.conservas:Wiki_Conservas|Conservas
+***homepage:Lifestyle|Mais...',
 ];
 
 $messages['qu'] = [
@@ -31979,6 +32424,96 @@ $messages['ru'] = [
 	'seeeditcount' => 'См. счётчик правок',
 	'seemoredotdotdot' => 'Подробнее...',
 	'send' => 'Отправить',
+	'shared-Globalnavigation' => '*w:c:www:Entertainment|Кино и сериалы
+
+**w:c:ru.community:Портал:Фильмы|Сериалы
+***w:c:ru.tardis|Доктор Кто
+***w:c:ru.walkingdead|Ходячие мертвецы
+***w:c:ru.supernatural|Сверхъестественное
+***w:c:ru.vampirediaries|Дневники вампира
+***w:c:ru.community:Портал:Фильмы|Ещё...
+
+**w:c:ru.community:Портал:Фильмы|Анимация/Аниме
+***w:c:ru.avatar|Легенда о Корре
+***w:c:ru.onepiece|One Piece
+***w:c:ru.httyd|Как приручить дракона
+***w:c:ru.gravityfalls|Гравити Фолз
+***w:c:ru.community:Портал:Фильмы|Ещё...
+
+**w:c:ru.community:Портал:Фильмы|Книги/комиксы
+***w:c:ru.warriors-cats|Коты-Воители
+***w:c:ru.bubbleverse|Комиксы "Bubble"
+***w:c:ru.camphalfblood|Перси Джексон
+***w:c:ru.marvel|Комиксы "Marvel"
+***w:c:ru.community:Портал:Фильмы|Ещё...
+
+**w:c:ru.community:Портал:Фильмы|Кино/Музыка
+***w:c:ru.starwars|Звёздные войны
+***w:c:ru.harrypotter|Гарри Поттер
+***w:c:ru.transformers|Трансформеры
+***w:c:ru.rock-n-roll|Рок-н-Ролл
+***w:c:ru.community:Портал:Фильмы|Ещё...
+
+*w:c:www:Gaming|Игры
+
+**w:c:www:Gaming|Новое
+***w:c:ru.shadowofmordor|Средиземье: Тени Мордора
+***w:c:ru.assassinscreed|Assassin\'s Creed: Единство
+***w:c:ru.callofduty|Call of Duty: Advanced Warfare
+***w:c:ru.wasteland|Wasteland 2
+***w:c:ru.community:Портал:Игры|Ещё...
+
+**w:c:ru.community:Портал:Игры|Лучшее
+***w:c:ru.fallout|Fallout
+***w:c:ru.warframe|Warframe
+***w:c:ru.angrybirds|Angry Birds
+***w:c:ru.dragonage|Dragon Age
+***w:c:ru.community:Портал:Игры|Ещё...
+
+**w:c:ru.community:Портал:Игры|Лучшее
+***w:c:ru.darksouls|Dark Souls
+***w:c:ru.elderscrolls|The Elder Scrolls
+***w:c:ru.payday|PAYDAY
+***w:c:ru.spiralka|Spiral Knights
+***w:c:ru.community:Портал:Игры|Ещё...
+
+**w:c:ru.borderlands|Borderlands
+***w:c:ru.borderlands:The Pre-Sequel|The Pre-Sequel
+***w:c:ru.borderlands:Категория:Персонажи|Персонажи
+***w:c:ru.borderlands:Категория:Оружие|Оружие
+***w:c:ru.borderlands:Special:Random|Случайная статья
+***w:c:ru.community:Портал:Игры|Ещё...
+
+*w:c:www:Lifestyle|Увлечения/Викия
+
+**w:c:ru.community:Портал:Увлечения|Выдуманные миры
+***w:c:ru.svinastorona|Авторские комиксы
+***w:c:ru.angrybirds-fiction|Angry Birds Fiction
+***w:c:ru.domovoy|Комиксы Домового
+***w:c:ru.weboflife|Паутина Жизни
+***w:c:ru.community:Портал:Увлечения|Ещё...
+
+**w:c:ru.community:Портал:Увлечения|Разное
+***w:c:absurdopedia|Абсурдопедия
+***w:c:ru.lego|LEGO
+***w:c:ru.science|Наука
+***w:c:ru.wikies|О википроектах
+***w:c:ru.community:Портал:Увлечения|Ещё...
+
+**w:c:ru.community:Портал:Увлечения|Разное
+***w:c:ru.warriors|Военная история
+***w:c:ru.extinct-animals|О вымерших животных
+***w:c:ru.althistory|Альт. история
+***w:c:ru.zombie|О зомби
+***w:c:ru.community:Портал:Увлечения|Ещё...
+
+**w:c:ru.community|Викия
+***w:c:ru.community:Викия:Условия использования|Правила Викия
+***w:c:ru.community:Служебная:Forum|Форум ru-Викия
+***w:c:ru.community:Список википроектов на русском языке|Список ru-википроектов
+***w:c:ru.community:Викия: Запросы на статус администратора/бюрократа‎|Запрос статуса администратора
+***w:c:ru.community|Ещё...',
+	'shared-problemreport' => 'Сообщить о проблеме',
 ];
 
 $messages['rue'] = [
@@ -39269,6 +39804,49 @@ $messages['uk'] = [
 	'sqlite-has-fts' => '$1 з підтримкою повнотекстового пошуку',
 	'sqlite-no-fts' => '$1 без підтримки повнотекстового пошуку',
 	'share_it' => 'Поділитись:',
+	'shared-Globalnavigation' => '*w:c:www:Entertainment|Кіно та серіали
+
+**w:c:www:TV|Серіали
+***w:c:uk.how-i-met-your-mother|Як я зустрів вашу маму
+***w:c:druzi|Друзі
+
+**w:c:www:Movie|Фільми
+***w:c:uk.harrypotter|Гаррі Поттер
+
+*w:c:www:Video_Games|Ігри
+
+**w:c:www:Video_Games|Ігри
+***w:c:uk.stalker|S.T.A.L.K.E.R.
+***w:c:uk.elderscrolls|The Elder Scrolls
+***w:c:uk.borderlands|Borderlands
+***w:c:uk.mafia|Mafia
+***w:c:uk.survarium|Survarium
+***w:c:uk.metro|Metro 2033
+***w:c:uk.assassinscreed|Assassin\'s Creed
+***w:c:uk.callofduty|Call of Duty
+
+**w:c:www:Video_Games|Молоді проекти
+***w:c:uk.fallout|Fallout
+***w:c:uk.angry-birds|Angry Birds
+***w:c:uk.sonic|Sonic
+***w:c:uk.gta|GTA
+***w:c:uk.havenandhearth|Haven and Hearth
+
+*w:c:www:Lifestyle|Захоплення
+
+**w:c:www:Lifestyle|Країни, міста, села
+***w:c:uk.cherkasy|Черкаси
+***w:c:uk.bucha|Буча
+
+**w:c:www:Lifestyle|Історія
+***w:c:uk.historyukraine|Історія України
+***w:c:uk.althistory|Альтернативна історія
+***w:c:uk.warriors|Воїни та військова техніка
+
+**w:c:www:Lifestyle|Обране
+***w:c:uk.compu|Комп\'ютери в Україні
+***w:c:uk.vijskpens|Світ Військового Пенсіонера
+***w:c:uk.wikies|Вікі про вікі',
 ];
 
 $messages['ur'] = [
@@ -42310,6 +42888,7 @@ $messages['zh-hant'] = [
 * [[Special:Contact|Contact]]
 * [http://www.wikia.com/wiki/Wikia:Advertising_on_Wikia Advertise]',
 	'specialpages-group-wikia' => 'Fandom頁面',
+	'shared-problemreport' => '問題回報',
 ];
 
 $messages['zh-hk'] = [
@@ -42394,6 +42973,7 @@ $messages['zh-tw'] = [
 	'specialpages' => '特殊頁面',
 	'share_it' => '分享:',
 	'see_more' => '更多內容...',
+	'shared-problemreport' => '回報問題',
 ];
 
 $messages['zh-yue'] = [
@@ -42468,9 +43048,11 @@ $messages['zu'] = [
 
 $messages['zh'] = [
 	'see_more' => '更多內容...',
+	'shared-problemreport' => '回報問題',
 ];
 
 $messages['zh-cn'] = [
 	'see_more' => '更多內容...',
+	'shared-problemreport' => '回报问题',
 ];
 
