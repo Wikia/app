@@ -24131,6 +24131,7 @@ $1',
 	'revdelete-restricted' => '관리자에게 제한을 적용함',
 	'revdelete-unrestricted' => '관리자에 대한 제한을 해제함',
 	'registerintro-title' => '위키아에서 계정을 만드시면, 당신도 공동체의 일원이 됩니다!',
+	'rate_it' => '별점 주기:',
 ];
 
 $messages['ko-kp'] = [
