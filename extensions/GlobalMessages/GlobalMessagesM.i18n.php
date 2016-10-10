@@ -8307,7 +8307,7 @@ Asegúrate de que esto mantendrá la continuidad histórica de la página.',
 	'mergehistory-list' => 'Historial de ediciones fusionable',
 	'mergehistory-merge' => 'Las siguientes revisiones de [[:$1]] pueden fusionarse en [[:$2]].
 Usa la columna de casillas para fusionar sólo las revisiones creadas en y antes de la fecha especificada.
-Nota que usar los enlaces de navegación borrará las selecciones de esta columna.',
+Ten en cuenta que usar los enlaces de navegación borrará las selecciones de esta columna.',
 	'mergehistory-go' => 'Mostrar ediciones fusionables',
 	'mergehistory-submit' => 'Fusionar revisiones',
 	'mergehistory-empty' => 'No hay revisiones fusionables.',
@@ -23701,7 +23701,7 @@ Als u opnieuw op "{{int:savearticle}}" klikt, wordt uw wijziging zonder een onde
 	'moveddeleted-notice' => 'Deze pagina is verwijderd.
 Ter informatie worden het verwijderingslogboek en het hernoemingslogboek van deze pagina hieronder weergegeven.',
 	'mergehistory' => 'Geschiedenis van pagina\'s samenvoegen',
-	'mergehistory-header' => 'Via deze pagina kunt u versies van de geschiedenis van een bronpagina naar een nieuwere pagina samenvoegen.
+	'mergehistory-header' => 'Via deze pagina kun je versies van de geschiedenis van een bronpagina naar een nieuwere pagina samenvoegen.
 Zorg dat deze wijziging de geschiedenisdoorlopendheid van de pagina behoudt.',
 	'mergehistory-box' => 'Versies van twee pagina\'s samenvoegen:',
 	'mergehistory-from' => 'Bronpagina:',
