@@ -45,7 +45,7 @@ $messages['en'] = [
 	'showpreview' => 'Preview',
 	'showlivepreview' => 'Live preview',
 	'showdiff' => 'Show changes',
-	'summary-preview' => 'Summary preview:',
+	'summary-preview' => 'Preview of edit summary',
 	'subject-preview' => 'Subject/headline preview:',
 	'sitecsspreview' => '\'\'\'Remember that you are only previewing this CSS.\'\'\'
 \'\'\'It has not yet been saved!\'\'\'',
