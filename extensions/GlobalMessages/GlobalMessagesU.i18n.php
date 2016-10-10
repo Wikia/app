@@ -49,7 +49,8 @@ Custom .css and .js pages use a lowercase title, e.g. {{ns:user}}:Foo/vector.css
 	'userrights-groups-help' => 'You may alter the groups this user is in:
 * A checked box means the user is in that group.
 * An unchecked box means the user is not in that group.
-* A * indicates that you cannot remove the group once you have added it, or vice versa.',
+* A * indicates that you cannot remove the group once you have added it, or vice versa.
+* More information on what each group means can be found at [[Help:User access levels]]',
 	'userrights-reason' => 'Reason:',
 	'userrights-no-interwiki' => 'You do not have permission to edit user rights on other wikis.',
 	'userrights-nodatabase' => 'Database $1 does not exist or is not local.',
@@ -10306,10 +10307,11 @@ Veuillez choisir un nom différent.',
 	'userrights-editusergroup' => 'Modifier les groupes de l’utilisateur',
 	'userrights-groupsmember' => 'Membre de :',
 	'userrights-groupsmember-auto' => 'Membre implicite de :',
-	'userrights-groups-help' => 'Vous pouvez modifier les groupes auxquels appartient cet utilisateur:
-* Une case cochée signifie que l’utilisateur se trouve dans ce groupe.
-* Une case non cochée signifie qu’il ne s’y trouve pas.
-* Un astérisque (*) indique que vous ne pouvez pas retirer ce groupe une fois que vous l’avez ajouté, ou vice-versa.',
+	'userrights-groups-help' => 'Vous pouvez modifier les groupes auxquels cet utilisateur appartient :
+* Une case cochée signifie que l’utilisateur se trouve dans ce groupe
+* Une case non cochée signifie qu’il n’y s’y trouve pas
+* Un astérisque (*) indique que vous ne pouvez pas retirer ce groupe une fois que vous l’avez ajouté, ou vice-versa
+* Vous trouverez plus d’informations sur la signification de chaque groupe sur [[w:c:communaute:Aide:Niveaux d\'accès utilisateur|Aide:Niveaux d’accès utilisateur]]',
 	'userrights-reason' => 'Motif :',
 	'userrights-no-interwiki' => 'Vous n’avez pas la permission de modifier des droits d’utilisateurs sur d’autres wikis.',
 	'userrights-nodatabase' => 'La base de donnée « $1 » n’existe pas ou n’est pas locale.',
@@ -15542,7 +15544,13 @@ Scegliere un nome utente diverso.',
 	'userrights-groups-help' => 'È possibile modificare i gruppi cui è assegnato l\'utente.
 * Una casella di spunta selezionata indica l\'appartenenza dell\'utente al gruppo
 * Una casella di spunta deselezionata indica la sua mancata appartenenza al gruppo.
-* Il simbolo * indica che non è possibile eliminare l\'appartenenza al gruppo dopo averla aggiunta (o vice versa).',
+* Il simbolo * indica che non è possibile eliminare l\'appartenenza al gruppo dopo averla aggiunta (o vice versa).
+
+\'\'\'Note:\'\'\'
+* Le funzioni accessibili dagli utenti con diritti di "rollback" e "moderatore chat" sono già disponibili agli amministratori, per cui è ridondante assegnare questi diritti in aggiunta a quelli di amministrazione.
+* Come indicato dal simbolo *, una volta nominato un utente burocrate \'\'\'non si potrà più revocare tali diritti\'\'\'. Solo l\'utente stesso e lo [[Special:Contact|Staff]] possono rimuovere questi diritti.
+* Chi è burocrate non è automaticamente amministratore, per cui gli serviranno anche questi diritti per accedere agli strumenti di amministrazione.
+* Per altre informazioni sui diritti utente, leggere [[w:Aiuto:Livelli di accesso degli utenti|Aiuto:Livelli di accesso degli utenti]].',
 	'userrights-reason' => 'Motivo:',
 	'userrights-no-interwiki' => 'Non si dispone dei permessi necessari per modificare i diritti degli utenti su altri siti.',
 	'userrights-nodatabase' => 'Il database $1 non esiste o non è un database locale.',
@@ -15971,14 +15979,14 @@ $messages['ja'] = [
 	'username' => '利用者名：',
 	'uid' => '利用者ID：',
 	'userrights' => '利用者権限の管理',
-	'userrights-lookup-user' => '利用者グループを管理',
-	'userrights-user-editname' => '利用者名を入力：',
-	'userrights-editusergroup' => '利用者グループを編集',
+	'userrights-lookup-user' => 'ユーザーグループを管理',
+	'userrights-user-editname' => 'ユーザー名を入力：',
+	'userrights-editusergroup' => 'ユーザーグループを編集',
 	'userrights-groupsmember' => '所属グループ：',
 	'userrights-groupsmember-auto' => '暗黙で追加されるグループ：',
-	'userrights-groups-help' => 'この利用者が属するグループを変更することができます。
-* チェックが入っているボックスは、この利用者がそのグループに属していることを意味します。
-* チェックが入っていないボックスは、この利用者がそのグループに属していないことを意味します。
+	'userrights-groups-help' => 'このユーザーが属するグループを変更することができます。
+* チェックが入っているボックスは、このユーザーがそのグループに属していることを意味します。
+* チェックが入っていないボックスは、このユーザーがそのグループに属していないことを意味します。
 * *は一旦グループへ追加した場合に除去あるいはその逆が不可能であることを示しています。',
 	'userrights-reason' => '理由：',
 	'userrights-no-interwiki' => '他ウィキ上における利用者権限の編集権限はありません。',
@@ -24801,17 +24809,17 @@ Controleer voor het opslaan of het resultaat gewenst is.',
 	'userrights-editusergroup' => 'Gebruikersgroepen wijzigen',
 	'userrights-groupsmember' => 'Lid van:',
 	'userrights-groupsmember-auto' => 'Impliciet lid van:',
-	'userrights-groups-help' => 'U kunt de groepen wijzigen waar deze gebruiker lid van is.
+	'userrights-groups-help' => 'Je kunt de groepen wijzigen waar deze gebruiker lid van is.
 * Een aangekruist vakje betekent dat de gebruiker lid is van de groep.
 * Een niet aangekruist vakje betekent dat de gebruiker geen lid is van de groep.
-* Een "*" betekent dat u een gebruiker niet uit een groep kunt verwijderen nadat u die hebt toegevoegd of vice versa.',
+* Een "*" betekent dat je een gebruiker niet uit een groep kunt verwijderen nadat je die hebt toegevoegd of vice versa.',
 	'userrights-reason' => 'Reden:',
-	'userrights-no-interwiki' => 'U hebt geen rechten om gebruikersrechten op andere wiki\'s te wijzigen.',
+	'userrights-no-interwiki' => 'Je hebt geen rechten om gebruikersrechten op andere wiki\'s te wijzigen.',
 	'userrights-nodatabase' => 'De database $1 bestaat niet of is geen lokale database.',
-	'userrights-nologin' => 'U moet zich [[Special:UserLogin|aanmelden]] met een gebruiker met de juiste rechten om gebruikersrechten toe te wijzen.',
-	'userrights-notallowed' => 'U hebt geen rechten om gebruikersrechten toe te voegen of te verwijderen.',
-	'userrights-changeable-col' => 'Groepen die u kunt beheren',
-	'userrights-unchangeable-col' => 'Groepen die u niet kunt beheren',
+	'userrights-nologin' => 'Je moet jezelf [[Special:UserLogin|aanmelden]] met een gebruiker met de juiste rechten om gebruikersrechten toe te wijzen.',
+	'userrights-notallowed' => 'Je hebt geen rechten om gebruikersrechten toe te wijzen.',
+	'userrights-changeable-col' => 'Groepen die je kunt beheren',
+	'userrights-unchangeable-col' => 'Groepen die je niet kunt beheren',
 	'upload' => 'Bestand uploaden',
 	'uploadbtn' => 'Bestand uploaden',
 	'upload-tryagain' => 'Bestandsbeschrijving bijwerken',
