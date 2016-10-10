@@ -28,7 +28,7 @@ Please try again.',
 	'wantedpages' => 'Wanted pages',
 	'wantedpages-summary' => '',
 	'wantedpages-badtitle' => 'Invalid title in result set: $1',
-	'wantedfiles' => 'Wanted files',
+	'wantedfiles' => 'Wanted photos',
 	'wantedfiles-summary' => '',
 	'wantedfiletext-cat' => 'The following files are used but do not exist. Files from foreign repositories may be listed despite existing. Any such false positives will be <del>struck out</del>. Additionally, pages that embed files that do not exist are listed in [[:$1]].',
 	'wantedfiletext-nocat' => 'The following files are used but do not exist. Files from foreign repositories may be listed despite existing. Any such false positives will be <del>struck out</del>.',
@@ -4172,7 +4172,7 @@ Por favor, inténtalo de nuevo.',
 	'wantedcategories' => 'Categorías requeridas',
 	'wantedpages' => 'Páginas requeridas',
 	'wantedpages-badtitle' => 'Título inválido en conjunto de resultados: $1',
-	'wantedfiles' => 'Ficheros requeridos',
+	'wantedfiles' => 'Archivos requeridos',
 	'wantedfiletext-cat' => 'Los siguientes archivos están en uso, pero no existen. Es posible que algunos de ellos estén almacenados en repositorios externos y se hayan incluido aquí por error; dichas entradas aparecen <del>tachadas</del>. De igual manera, las páginas que incluyen archivos inexistentes se enumeran en [[:$1]].',
 	'wantedfiletext-nocat' => 'Los siguientes archivos están en uso, pero no existen. Es posible que algunos de ellos estén almacenados en repositorios externos y se hayan incluido aquí por error; dichas entradas aparecen <del>tachadas</del>.',
 	'wantedtemplates' => 'Plantillas requeridas',
@@ -4814,7 +4814,7 @@ N’oubliez pas de personnaliser vos [[Special:Preferences|préférences sur {{S
 	'wantedpages' => 'Pages les plus demandées',
 	'wantedpages-badtitle' => 'Titre invalide dans les résultats : $1',
 	'wantedfiles' => 'Fichiers les plus demandés',
-	'wantedfiletext-cat' => 'Les fichiers suivants sont utilisés, mais il n\'existent pas. Les fichiers de dépôts à distance peuvent être listés malgré qu\'ils existent. Tout ces faux positifs seront <del>barrés</del>. En outre, les pages qui intègrent des fichiers qui n\'existent pas sont répertoriés dans [[:$1]].',
+	'wantedfiletext-cat' => 'Les fichiers suivants sont utilisés, mais n\'existent pas localement. S\'ils se trouvent sur un dépôt partagé, ils peuvent être listés ici, bien qu\'ils soient, de fait, déjà disponibles. Tous ces faux positifs seront <del>barrés</del>. En outre, les pages qui intègrent des fichiers qui n\'existent pas sont répertoriées dans [[:$1]].',
 	'wantedfiletext-nocat' => 'Les fichiers suivants sont utilisés, mais n\'existent pas. Les fichiers de dépôts à distance peuvent être listés malgré qu\'ils existent. Tout ces faux positifs seront <del>barrés</del>.',
 	'wantedtemplates' => 'Modèles demandés',
 	'watchlist' => 'Liste de suivi',
@@ -7521,6 +7521,7 @@ $messages['ja'] = [
 	'widget-desc-wikiamessages' => 'Fandomのメッセージ',
 	'widget-title-advertiser' => 'Fandomスポットライト',
 	'widget-title-wikiamessages' => 'Fandomのメッセージ',
+	'wantedfiletext-cat' => '下記のファイルは使用されていますが存在しません。無関係なリポジトリからのファイルが存在するにもかかわらず表示されているかもしれません。誤検出されたものは<del>取り消し線</del>が引かれます。さらに、存在しないファイルが埋め込まれたページは[[:$1]]にリストアップされます。',
 ];
 
 $messages['jam'] = [
@@ -12487,8 +12488,8 @@ Nie zapomnij dostosować [[Special:Preferences|preferencji dla {{GRAMMAR:D.lp|{{
 	'withoutinterwiki-summary' => 'Poniższe strony nie odwołują się do innych wersji językowych.',
 	'withoutinterwiki-legend' => 'Prefiks',
 	'withoutinterwiki-submit' => 'Pokaż',
-	'wantedcategories' => 'Brakujące kategorie',
-	'wantedpages' => 'Najpotrzebniejsze strony',
+	'wantedcategories' => 'Potrzebne kategorie',
+	'wantedpages' => 'Potrzebne strony',
 	'wantedpages-badtitle' => 'Nieprawidłowy tytuł wśród wyników – $1',
 	'wantedfiles' => 'Potrzebne pliki',
 	'wantedfiletext-cat' => 'Następujące pliki są używane, ale nie istnieją. Pliki z obcych repozytoriów mogą być wymienione pomimo istnienia. Takie fałszywe wyniki zostaną <del>przekreślone</del>. Ponadto strony, które osadzają pliki, które nie istnieją, są wymienione w [[:$1]].',
@@ -18073,6 +18074,7 @@ $messages['zh-tw'] = [
 	'withoutinterwiki-summary' => '以下的頁面是未有語言鏈接到其它語言版本:',
 	'watchlist-details' => '不包含討論頁，您的監視列表共有 $1 頁。',
 	'whatlinkshere-title' => '鏈接到$1的頁面',
+	'wantedcategories' => '需要的分類',
 ];
 
 $messages['zh-yue'] = [
@@ -18094,5 +18096,13 @@ ikhawundi lakho liyadalwa. musa ukukhohlwa ukuguqula amakhethelo a-{{SITENAME}} 
 	'watchthis' => 'Bukela ngalelikhasi',
 	'watchlist' => 'Uhlelo ubukelwa wami',
 	'watch' => 'Bukela',
+];
+
+$messages['zh-cn'] = [
+	'wantedcategories' => '需要的分类',
+];
+
+$messages['zh-hk'] = [
+	'wantedcategories' => '需要的分類',
 ];
 
