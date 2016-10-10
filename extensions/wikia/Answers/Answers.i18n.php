@@ -500,8 +500,8 @@ $messages['de'] = [
 	'magic_answer_yes' => 'Ja, benutzte das zum Ausbauen',
 	'magic_answer_no' => 'Nein, das passt nicht',
 	'magic_answer_credit' => 'Bereitgestellt von Yahoo Answers',
-	'rephrase' => 'Diese Frage neu formulieren',
-	'rephrase_this' => '<a href="$1" $2>Die Frage umformulieren</a>',
+	'rephrase' => 'Bennene diese Frage um',
+	'rephrase_this' => '<a href="$1" $2>Bennene diese Frage um</a>',
 	'question_not_answered' => 'Diese Frage wurde nicht beantwortet',
 	'you_can' => 'Du kannst:',
 	'answer_this' => '<a href="$1">Beantworte diese Frage</a>, selbst wenn du sie nicht komplett zu beantworten weißt.',
@@ -676,6 +676,8 @@ $messages['es'] = [
 	'qa-toolbox-share' => 'Compartir',
 	'qa-toolbox-tools' => 'Herramientas avanzadas»',
 	'recent_unanswered_questions' => 'Preguntas recientes no respondidas',
+	'rephrase' => 'Reescribe esta pregunta',
+	'rephrase_this' => 'Reescribe esta pregunta',
 ];
 
 $messages['fi'] = [
@@ -1427,6 +1429,8 @@ $messages['ja'] = [
 	'recent_unanswered_questions' => '最新の回答待ち質問',
 	'related_answered_questions' => '関連する回答済み質問',
 	'related_questions' => '関連する質問',
+	'rephrase' => 'この質問の言い回しを変える',
+	'rephrase_this' => '<a href="$1" $2>この質問の言い回しを変える</a>',
 ];
 
 $messages['lb'] = [
@@ -2205,6 +2209,7 @@ $messages['pt'] = [
 	'recent_edited_questions' => 'Perguntas editadas recentemente',
 	'recent_unanswered_questions' => 'Perguntas sem resposta mais recentes',
 	'related_answered_questions' => 'Perguntas respondidas relacionadas',
+	'rephrase' => 'Refazer a pergunta',
 ];
 
 $messages['pt-br'] = [
@@ -2247,6 +2252,7 @@ $messages['pt-br'] = [
 	'recent_edited_questions' => 'Perguntas editadas recentemente',
 	'recent_unanswered_questions' => 'Perguntas sem resposta mais recentes',
 	'related_answered_questions' => 'Perguntas respondidas relacionadas',
+	'rephrase' => 'Refazer a pergunta',
 ];
 
 $messages['roa-tara'] = [
@@ -2649,6 +2655,8 @@ $messages['no'] = [
 	'recent_unanswered_questions' => 'Nylig ubesvarte spørsmål',
 	'related_answered_questions' => 'Liknende besvarte spørsmål',
 	'related_questions' => 'Liknende spørsmål',
+	'rephrase' => 'Omformuler dette spørsmålet',
+	'rephrase_this' => '<a href="$1" $2>Omformuler spørsmålet</a>',
 ];
 
 $messages['zh-hant'] = [
