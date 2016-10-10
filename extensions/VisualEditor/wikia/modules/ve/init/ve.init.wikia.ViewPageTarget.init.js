@@ -229,7 +229,7 @@
 
 			if ( history.pushState && uri.query.veaction !== 'edit' ) {
 				if (!pageExists) {
-					veEditUri.extend( { flow: 'create-page-create-button' } );
+					mw.hook('ve.afterVEInit').fire(veEditUri);
 				}
 				// Replace the current state with one that is tagged as ours, to prevent the
 				// back button from breaking when used to exit VE. FIXME: there should be a better
