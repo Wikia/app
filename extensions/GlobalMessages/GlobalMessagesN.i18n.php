@@ -30,15 +30,13 @@ $messages['en'] = [
 You might have mistyped the URL, or followed an incorrect link.
 This might also indicate a bug in the software used by {{SITENAME}}.',
 	'nosuchspecialpage' => 'No such special page',
-	'nospecialpagetext' => '<strong>You have requested an invalid special page.</strong>
-
-A list of valid special pages can be found at [[Special:SpecialPages|{{int:specialpages}}]].',
+	'nospecialpagetext' => 'You have requested a special page that is not recognized by {{SITENAME}}. A list of valid special pages can be found at [[Special:SpecialPages|{{int:specialpages}}]].',
 	'namespaceprotected' => 'You do not have permission to edit pages in the \'\'\'$1\'\'\' namespace.',
 	'ns-specialprotected' => 'Special pages cannot be edited.',
 	'nav-login-createaccount' => 'Log in / create account',
 	'notloggedin' => 'Not logged in',
 	'nologin' => 'Don\'t have an account? $1.',
-	'nologinlink' => 'Create an account',
+	'nologinlink' => 'Sign up',
 	'nocookiesnew' => 'The user account was created, but you are not logged in.
 {{SITENAME}} uses cookies to log in users.
 You have cookies disabled.
@@ -50,9 +48,7 @@ Please enable them and try again.',
 Ensure you have cookies enabled, reload this page and try again.',
 	'nocookiesforlogin' => '{{int:nocookieslogin}}',
 	'noname' => 'You have not specified a valid username.',
-	'nosuchuser' => 'There is no user by the name "$1".
-Usernames are case sensitive.
-Check your spelling, or [[Special:UserLogin/signup|create a new account]].',
+	'nosuchuser' => 'There is no user by the name "$1". User names are case sensitive. Please check your spelling, or use the link below to create a new user account.',
 	'nosuchusershort' => 'There is no user by the name "$1".
 Check your spelling.',
 	'nouserspecified' => 'You have to specify a username.',
@@ -68,13 +64,18 @@ It may have been moved or deleted while you were viewing the page.',
 	'newarticle' => '(New)',
 	'newarticletext' => '<div style="margin-top: 0px;" class="emptymwmsg mediawiki_newarticletext"></div>',
 	'newarticletextanon' => '{{int:newarticletext}}',
-	'noarticletext' => 'There is currently no text in this page.
-You can [[Special:Search/{{PAGENAME}}|search for this page title]] in other pages,
-<span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} search the related logs],
-or [{{fullurl:{{FULLPAGENAME}}|action=edit}} edit this page]</span>.',
-	'noarticletext-nopermission' => 'There is currently no text in this page.
-You can [[Special:Search/{{PAGENAME}}|search for this page title]] in other pages,
-or <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} search the related logs]</span>.',
+	'noarticletext' => '{{#ifeq:{{NAMESPACE}}|Category||=== \'\'\'Article {{FULLPAGENAME}} was not found\'\'\' ===
+
+What do you want to do?
+
+* Search existing articles for <span class="plainlinks">[{{fullurl:Special:Search|search={{urlencode:{{PAGENAME}}}}}} {{PAGENAME}}]</span>
+* Create article <span class="plainlinks">[{{fullurl:{{FULLPAGENAME}}|action=create}} {{FULLPAGENAME}}]</span>}}',
+	'noarticletext-nopermission' => '=== \'\'\'Article {{FULLPAGENAME}} was not found\'\'\' ===
+
+What do you want to do?
+
+* Search existing articles for <span class="plainlinks">[{{fullurl:Special:Search|search={{urlencode:{{PAGENAME}}}}}} {{PAGENAME}}]</span>
+* Create article <span class="plainlinks">[{{fullurl:{{FULLPAGENAME}}|action=create}} {{FULLPAGENAME}}]</span>',
 	'noarticletextanon' => '{{int:noarticletext}}',
 	'note' => '\'\'\'Note:\'\'\'',
 	'nonunicodebrowser' => '\'\'\'Warning: Your browser is not unicode compliant.\'\'\'
@@ -86,19 +87,18 @@ You can go back and edit an existing page, or [[Special:UserLogin|log in or crea
 	'nohistory' => 'There is no edit history for this page.',
 	'nextrevision' => 'Newer revision →',
 	'next' => 'next',
-	'notitlematches' => 'No page title matches',
-	'notextmatches' => 'No page text matches',
+	'notitlematches' => '<div style="margin-top: -40px;" class="emptymwmsg mediawiki_notitlematches"></div>',
+	'notextmatches' => '<div style="margin-top: -40px;" class="emptymwmsg mediawiki_notextmatches"></div>',
 	'nextn' => 'next {{PLURAL:$1|$1}}',
 	'nextn-title' => 'Next $1 {{PLURAL:$1|result|results}}',
-	'nonefound' => '\'\'\'Note\'\'\': Only some namespaces are searched by default.
-Try prefixing your query with \'\'all:\'\' to search all content (including talk pages, templates, etc), or use the desired namespace as prefix.',
+	'nonefound' => 'No search results for that term.',
 	'nchanges' => '$1 {{PLURAL:$1|change|changes}}',
 	'newpageletter' => 'N',
 	'number_of_watching_users_RCview' => '[$1]',
 	'number_of_watching_users_pageview' => '[$1 watching {{PLURAL:$1|user|users}}]',
 	'newsectionsummary' => '/* $1 */ new section',
 	'nolicense' => 'None selected',
-	'nolinkstoimage' => 'There are no pages that link to this file.',
+	'nolinkstoimage' => 'There are no pages that link to this photo.',
 	'nbytes' => '$1 {{PLURAL:$1|byte|bytes}}',
 	'ncategories' => '$1 {{PLURAL:$1|category|categories}}',
 	'nlinks' => '$1 {{PLURAL:$1|link|links}}',
@@ -3100,8 +3100,8 @@ $messages['bg'] = [
 	'ns-specialprotected' => 'Специалните страници не могат да бъдат редактирани.',
 	'nav-login-createaccount' => 'Регистриране или влизане',
 	'notloggedin' => 'Не сте влезли',
-	'nologin' => 'Нямате потребителско име? \'\'\'$1\'\'\'.',
-	'nologinlink' => 'Създаване на сметка',
+	'nologin' => 'Нямате регистрация?',
+	'nologinlink' => 'Създаване на потребителска сметка',
 	'nocookiesnew' => 'Потребителската сметка беше създадена, но все още не сте влезли. {{SITENAME}} използва бисквитки при влизането на потребителите. Разрешете бисквитките в браузъра си, тъй като те са забранени, а след това влезте с потребителското си име и парола.',
 	'nocookieslogin' => '{{SITENAME}} използва бисквитки (cookies) за запис на влизанията. Разрешете бисквитките в браузъра си, тъй като те са забранени, и опитайте отново.',
 	'nocookiesfornew' => 'Потребителската сметка не беше създадена, тъй като не беше възможно да се потвърди източникът й.
@@ -3111,7 +3111,7 @@ $messages['bg'] = [
 Потребителските имена са чувствителни на малки и главни букви.
 Проверете изписването или [[Special:UserLogin/signup|създайте нова сметка]].',
 	'nosuchusershort' => 'Не съществува потребител с името „$1“. Проверете изписването.',
-	'nouserspecified' => 'Необходимо е да се посочи потребителско име.',
+	'nouserspecified' => 'Трябва да посочите потребителско име',
 	'noemail' => 'Няма записана електронна поща за потребителя „$1“.',
 	'noemailcreate' => 'Необходимо е да въведете валиден адрес за е-поща',
 	'noemailprefs' => 'За да работят тези функционалности, трябва да посочите адрес на електронна поща в своите настройки.',
@@ -5767,7 +5767,7 @@ Alle verfügbaren Spezialseiten sind in der [[Special:SpecialPages|Liste der Spe
 	'nav-login-createaccount' => 'Anmelden / Benutzerkonto erstellen',
 	'notloggedin' => 'Nicht angemeldet',
 	'nologin' => 'Du hast kein Benutzerkonto? \'\'\'$1\'\'\'.',
-	'nologinlink' => 'Neues Benutzerkonto anlegen',
+	'nologinlink' => 'Benutzerkonto anlegen',
 	'nocookiesnew' => 'Der Benutzerzugang wurde erstellt, aber du bist nicht angemeldet. {{SITENAME}} benötigt für diese Funktion Cookies, bitte aktiviere diese und melde dich dann mit deinem neuen Benutzernamen und dem zugehörigen Passwort an.',
 	'nocookieslogin' => '{{SITENAME}} benutzt Cookies zur Anmeldung der Benutzer. Du hast Cookies deaktiviert, bitte aktiviere diese und versuche es erneut.',
 	'nocookiesfornew' => 'Das Benutzerkonto wurde nicht erstellt, da die Datenherkunft nicht ermittelt werden konnte.
@@ -5790,10 +5790,10 @@ Vermutlich wurde er verschoben oder gelöscht, nachdem du die Seite aufgerufen h
 	'newarticletext' => 'Du bist einem Link zu einer Seite gefolgt, die nicht vorhanden ist.
 Um diese Seite anzulegen, trage deinen Text in das untenstehende Bearbeitungsfeld ein (siehe die [[{{MediaWiki:Helppage}}|Hilfeseite]] für weitere Informationen).
 Sofern du fälschlicherweise hier bist, klicke auf die Schaltfläche \'\'\'Zurück\'\'\' deines Browsers.',
-	'noarticletext' => 'Diese Seite enthält momentan noch keinen Text.
-Du kannst sie <span class="plainlinks">[{{fullurl:{{FULLPAGENAME}}|action=edit}} bearbeiten]</span>,
-ihren Titel auf anderen Seiten [[Special:Search/{{PAGENAME}}|suchen]]
-oder die zugehörigen <span class="plainlinks">[{{fullurl:{{#special:Log}}|page={{FULLPAGENAMEE}}}} Logbücher betrachten]</span>.',
+	'noarticletext' => '<p style="font-size:140%;text-align: center">\'\'\'Diese Seite braucht Informationen. <br>Du kannst uns helfen, indem du einen Satz oder ein Bild einfügst!\'\'\'</p>
+
+<center><span class="wikia-button big">[{{fullurl:{{FULLPAGENAMEE}}|action=edit&redlink=1}} <span>Erstelle diese Seite!</span>]</span></center>  
+<br>',
 	'noarticletext-nopermission' => 'Diese Seite enthält momentan noch keinen Text.
 Du kannst ihren Titel auf anderen Seiten [[Special:Search/{{PAGENAME}}|suchen]]
 oder die zugehörigen <span class="plainlinks">[{{fullurl:{{#special:Log}}|page={{FULLPAGENAMEE}}}} Logbücher betrachten].</span>',
@@ -5809,7 +5809,7 @@ oder die zugehörigen <span class="plainlinks">[{{fullurl:{{#special:Log}}|page=
 	'notextmatches' => 'Keine Übereinstimmungen mit Inhalten',
 	'nextn' => '{{PLURAL:$1|nächster|nächste $1}}',
 	'nextn-title' => '{{PLURAL:$1|Folgendes Ergebnis|Folgende $1 Ergebnisse}}',
-	'nonefound' => '\'\'\'Hinweis:\'\'\' Es werden standardmäßig nur einige Namensräume durchsucht. Setze \'\'all:\'\' vor deinen Suchbegriff, um alle Seiten (inkl. Diskussionsseiten, Vorlagen usw.) zu durchsuchen oder gezielt den Namen des zu durchsuchenden Namensraumes.',
+	'nonefound' => '\'\'\'Hinweis:\'\'\' Es werden standardmäßig nur einige Namensräume durchsucht. Setze \'\'alle:\'\' vor deinen Suchbegriff, um alle Seiten (inkl. Diskussionsseiten, Vorlagen usw.) zu durchsuchen oder gezielt den Namen des zu durchsuchenden Namensraumes.',
 	'nchanges' => '$1 {{PLURAL:$1|Änderung|Änderungen}}',
 	'newpageletter' => 'N',
 	'number_of_watching_users_pageview' => '[$1 {{PLURAL:$1|beobachtender|beobachtende}} Benutzer]',
@@ -5872,6 +5872,8 @@ oder die zugehörigen <span class="plainlinks">[{{fullurl:{{#special:Log}}|page=
 	'newuserlog-create2-entry' => 'erstellte neues Benutzerkonto $1',
 	'new_article' => 'Neue Seite',
 	'new_wiki' => 'Neues Wiki',
+	'nocontributors' => 'Diese Seite hat keine Bearbeiter',
+	'nodiff' => 'Keine Änderungen',
 ];
 
 $messages['de-ch'] = [
@@ -6802,7 +6804,7 @@ Por favor, actívalas e inicia sesión con tu nuevo nombre de usuario y contrase
 	'nocookieslogin' => '{{SITENAME}} utiliza <em>cookies</em> para la autenticación de usuarios. Las <em>cookies</em> están desactivadas en tu navegador. Por favor, actívalas e inténtalo de nuevo.',
 	'nocookiesfornew' => 'No se pudo crear la cuenta de usuario, porque no pudimos confirmar su origen.
 Asegúrate de que tienes las cookies activadas, luego recarga esta página e inténtalo de nuevo.',
-	'noname' => 'No se ha especificado un nombre de usuario válido.',
+	'noname' => 'No ha especificado un nombre de usuario correcto.',
 	'nosuchuser' => 'No existe ningún usuario llamado «$1».
 Los nombres de usuario son sensibles a las mayúsculas.
 Revisa la ortografía, o [[Special:UserLogin/signup|crea una cuenta nueva]].',
@@ -6822,10 +6824,10 @@ Quizá ha sido movida o borrada mientras visitabas la página.',
 \'\'\'Estás comenzando un nuevo artículo. Genial, ¿no?\'\'\' 
 * Revisa \'\'\'[[Ayuda:Edición]]\'\'\' para conocer más información sobre cómo editar páginas wiki.
 * ¡No olvides \'\'\'categorizar este artículo\'\'\' añadiendo <nowiki>[[Categoría:Nombre]]</nowiki> al final de esta página! Puedes encontrar una lista de categorías en [[Special:Categories|Especial:Categorías]].<br/><br/>',
-	'noarticletext' => 'En este momento no hay texto en esta página.
-Puedes [[Special:Search/{{PAGENAME}}|buscar el título de esta página]] en otras páginas,
-<span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} buscar en los registros],
-o [{{fullurl:{{FULLPAGENAME}}|action=edit}} editar esta página]</span>.',
+	'noarticletext' => '<p style="font-size:140%;text-align: center">\'\'\'¡Recórcholis! Esta página está vacía... ¡Añade una imagen o alguna frase para que deje de estarlo!\'\'\'</p>
+
+<center><span class="wikia-button big plainlinks">[{{fullurl:{{FULLPAGENAMEE}}|action=edit&redlink=1}} <span>Edita esta página</span>]<br />o<br />[[Special:Search/{{PAGENAME}}|busca otra con un nombre similar]]</span></center>  
+<br />',
 	'noarticletext-nopermission' => 'Actualmente no hay texto en esta página.
 Puedes [[Special:Search/{{PAGENAME}}|buscar este título de página]] en otras páginas,
 o <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} buscar en los registros relacionados]</span>.',
@@ -6899,6 +6901,8 @@ Prueba a usar el prefijo \'\'all:\'\' para buscar en todo el contenido (incluyen
 	'number-shortening-millions' => '$1M',
 	'number-shortening-billions' => '$1B',
 	'needhelp' => 'Necesitan ayuda: Por favor edita [[MediaWiki:needhelp|esta página]] para mostrar los artículos aquí.',
+	'nocontributors' => 'Nadie ha contribuido en esta página',
+	'nodiff' => 'Sin cambios',
 ];
 
 $messages['et'] = [
@@ -7340,10 +7344,10 @@ $messages['fa'] = [
 	'newarticletext' => 'شما پیوندی را دنبال کرده‌اید و به صفحه‌ای رسیده‌اید که هنوز وجود ندارد.
 برای ایجاد صفحه، در مستطیل زیر شروع به نوشتن کنید (برای اطلاعات بیشتر به [[{{MediaWiki:Helppage}}|صفحهٔ راهنما]] مراجعه کنید).
 اگر به اشتباه اینجا آمده‌اید، دکمهٔ «بازگشت» مرورگرتان را بزنید.',
-	'noarticletext' => 'این صفحه هم‌اکنون دارای هیچ متنی نیست.
-شما می‌توانید در صفحه‌های دیگر [[Special:Search/{{PAGENAME}}|عنوان این صفحه را جستجو کنید]]،
-<span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} سیاهه‌های مرتبط را جستجو کنید]،
-یا [{{fullurl:{{FULLPAGENAME}}|action=edit}} این صفحه را ویرایش کنید]</span>.',
+	'noarticletext' => '<p style="font-size:140%;text-align: center">\'\'\'این صفحه نیاز به مطلب دارد. شما می‌توانید با اضافه کردن چند جمله و یا یک عکس کمک کنید!\'\'\'</p>
+
+<center><span class="wikia-button big">[{{fullurl:{{FULLPAGENAMEE}}|action=edit&redlink=1}} <span>ایجاد مقاله!</span>]</span></center>  
+<br>',
 	'noarticletext-nopermission' => 'این صفحه هم‌اکنون متنی ندارد.
 شما می‌توانید در دیگر صفحه‌ها [[Special:Search/{{PAGENAME}}|این عنوان را جستجو کنید]]،
 یا <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} سیاهه‌های مرتبط را بگردید]</span>.',
@@ -7475,10 +7479,9 @@ Se on saatettu siirtää tai poistaa äskettäin.',
 	'newarticle' => '(uusi)',
 	'newarticletext' => 'Linkki toi sivulle, jota ei vielä ole.
 Voit luoda sivun kirjoittamalla tekstiä allaolevaan kenttään (katso [[{{MediaWiki:Helppage}}|ohjesivulta]] lisätietoja). Mikäli et halua luoda sivua, käytä selaimen paluutoimintoa.',
-	'noarticletext' => 'Tällä hetkellä tällä sivulla ei ole tekstiä.
-Voit [[Special:Search/{{PAGENAME}}|etsiä sivun nimellä]] muilta sivuilta,
-<span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} hakea aiheeseen liittyviä lokeja]
-tai [{{fullurl:{{FULLPAGENAME}}|action=edit}} muokata tätä sivua]</span>.',
+	'noarticletext' => '<p style="font-size:140%;text-align: center">\'\'\'Tämä sivu kaipaa sisältöä. Voit auttaa lisäämällä muutaman lauseen tai kuvan!\'\'\'</p>
+
+<center><span class="wikia-button big plainlinks">[{{fullurl:{{FULLPAGENAMEE}}|action=edit&redlink=1}} <span>Muokkaa tätä sivua!</span>]<br />tai<br />[[Special:Search/{{PAGENAME}}|etsi sivua "{{PAGENAME}}"]]</span></center><br />',
 	'noarticletext-nopermission' => 'Tällä hetkellä tällä sivulla ei ole tekstiä.
 Voit [[Special:Search/{{PAGENAME}}|etsiä sivun nimellä]] muilta sivuilta
 tai <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} hakea aiheeseen liittyviä lokeja]</span>',
@@ -7553,6 +7556,9 @@ Kokeile lisätä haun alkuun \'\'all:\'\', niin haku kohdistuu kaikkeen sisält�
 	'needhelp' => 'Tarvitsevat apua: Ole hyvä ja muokkaa [[MediaWiki:Needhelp|tätä sivua]] näyttääksesi artikkeleita tässä.',
 	'new_article' => 'Uusi artikkeli',
 	'new_wiki' => 'Uusi wiki',
+	'nocontributors' => 'Tällä sivulla ei ole muokkaajia',
+	'nontabbedsearch' => 'Välilehdetön haku',
+	'nontabbedsearchold' => 'Välilehdetön haku (käytä vanhaa otsikko/tekstiosuma -näkymää)',
 ];
 
 $messages['fiu-vro'] = [
@@ -7853,9 +7859,9 @@ Les noms d’utilisateurs sont sensibles à la casse.
 Vérifiez l’orthographe, ou [[Special:UserLogin/signup|créez un nouveau compte]].',
 	'nosuchusershort' => 'Il n’y a pas de contributeur avec le nom « $1 ». Veuillez vérifier l’orthographe.',
 	'nouserspecified' => 'Vous devez saisir un nom d’utilisateur.',
-	'noemail' => 'Aucune adresse de courriel n’a été enregistrée pour l’utilisateur « $1 ».',
-	'noemailcreate' => 'Vous devez fournir une adresse de courriel valide',
-	'noemailprefs' => 'Indiquez une adresse de courriel dans vos préférences pour utiliser ces fonctions.',
+	'noemail' => 'Aucune adresse e-mail n’a été enregistrée pour l’utilisateur « $1 ».',
+	'noemailcreate' => 'Vous devez fournir une adresse e-mail valide',
+	'noemailprefs' => 'Indiquez une adresse e-mail dans vos préférences pour utiliser ces fonctions.',
 	'newpassword' => 'Nouveau mot de passe :',
 	'nowiki_sample' => 'Entrez le texte non formaté ici',
 	'nowiki_tip' => 'Ignorer la syntaxe wiki',
@@ -7864,10 +7870,10 @@ Vérifiez l’orthographe, ou [[Special:UserLogin/signup|créez un nouveau compt
 Elle a peut-être été déplacée ou supprimée depuis que vous avez lu cette page.',
 	'newarticle' => '(Nouveau)',
 	'newarticletext' => '<div style="margin-top: 0px;" class="emptymwmsg mediawiki_newarticletext"></div>',
-	'noarticletext' => 'Il n’y a pour l’instant aucun texte sur cette page.
-Vous pouvez [[Special:Search/{{PAGENAME}}|lancer une recherche sur ce titre]] dans les autres pages,
-<span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} rechercher dans les opérations liées]
-ou [{{fullurl:{{FULLPAGENAME}}|action=edit}} créer cette page]</span>.',
+	'noarticletext' => '<p style="font-size:140%;text-align: center">\'\'\'Cette page a besoin de contenu. Vous pouvez aider en ajoutant une phrase ou une image.\'\'\'</p>
+
+<center><span class="wikia-button big plainlinks">[{{fullurl:{{FULLPAGENAMEE}}|action=edit}} <span>Compléter cette page !</span>]<br />ou<br />[{{fullurl:Special:Search|search={{PAGENAME}}}} Rechercher « {{PAGENAME}} »]</span></center>  
+<br />',
 	'noarticletext-nopermission' => 'Il n’y a pour l’instant aucun texte sur cette page.
 Vous pouvez [[Special:Search/{{PAGENAME}}|faire une recherche sur ce titre]] dans les autres pages,
 ou <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} rechercher dans les journaux associés]</span>.',
@@ -7910,10 +7916,10 @@ Essayez en utilisant le préfixe \'\'all:\'\' pour rechercher dans tout le conte
 	'nextpage' => 'Page suivante ($1)',
 	'newuserlogpage' => 'Journal des créations de comptes utilisateur',
 	'newuserlogpagetext' => 'Cette page affiche l’historique des créations de comptes utilisateur.',
-	'noemailtitle' => 'Aucune adresse de courriel',
-	'noemailtext' => 'Cet utilisateur n’a pas spécifié une adresse de courriel valide.',
-	'nowikiemailtitle' => 'Pas de courriel autorisé',
-	'nowikiemailtext' => 'Cet utilisateur a choisi de ne pas recevoir de courriel de la part d’autres utilisateurs.',
+	'noemailtitle' => 'Aucune adresse e-mail',
+	'noemailtext' => 'Cet utilisateur n’a pas indiqué une adresse e-mail valide.',
+	'nowikiemailtitle' => 'Aucun email autorisé',
+	'nowikiemailtext' => 'Cet utilisateur a choisi de ne pas recevoir d\'e-mails de la part d’autres utilisateurs.',
 	'nowatchlist' => 'Votre liste de suivi ne référence aucune page.',
 	'notanarticle' => 'Ce n’est pas une page de contenu',
 	'notvisiblerev' => 'La version a été supprimée',
@@ -12023,7 +12029,10 @@ Potrebbe essere stata spostata o eliminata mentre si stava visionando la pagina.
 Se vuoi creare la pagina ora, basta cominciare a scrivere il testo nella casella qui sotto
 (vedi le [[{{MediaWiki:Helppage/it}}|pagine di aiuto]] per maggiori informazioni).
 Se il link è stato aperto per errore, è sufficiente fare clic sul pulsante \'\'\'Indietro\'\'\' del proprio browser.',
-	'noarticletext' => 'In questo momento la pagina richiesta è vuota. È possibile [[Special:Search/{{PAGENAME}}|cercare questo titolo]] nelle altre pagine del sito, <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} cercare nei registri correlati] oppure [{{fullurl:{{FULLPAGENAME}}|action=edit}} modificare la pagina ora]</span>.',
+	'noarticletext' => '<p style="font-size:140%;text-align: center">\'\'\'Questa pagina ha bisogno di contenuti. Puoi contribuire inserendo una frase o un\'immagine!\'\'\'</p>
+
+<center><span class="wikia-button big plainlinks">[{{fullurl:{{FULLPAGENAMEE}}|action=edit&redlink=1}} <span>Modifica questa pagina</span>]<br />oppure<br />[[Special:Search/{{PAGENAME}}|cerca "{{PAGENAME}}"]]</span></center>  
+<br />',
 	'noarticletext-nopermission' => 'In questo momento la pagina richiesta è vuota. È possibile [[Special:Search/{{PAGENAME}}|cercare questo titolo]] nelle altre pagine del sito o <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} cercare nei registri correlati]</span>.',
 	'note' => '\'\'\'NOTA:\'\'\'',
 	'nonunicodebrowser' => '\'\'\'Attenzione: si sta utilizzando un browser non compatibile con i caratteri Unicode. Per consentire la modifica delle pagine senza creare inconvenienti, i caratteri non ASCII vengono visualizzati nella casella di modifica sotto forma di codici esadecimali.\'\'\'',
@@ -12253,7 +12262,7 @@ URLを間違って打ったか、正しくないリンクを辿った可能性�
 	'nav-login-createaccount' => 'ログインまたはアカウント作成',
 	'notloggedin' => 'ログインしていません',
 	'nologin' => '登録がまだの場合、$1。',
-	'nologinlink' => 'アカウントを作成してください',
+	'nologinlink' => 'アカウントを作成',
 	'nocookiesnew' => '利用者アカウントが作成されましたが、ログインしていません。
 {{SITENAME}}ではログインにクッキーを使用します。
 クッキーが無効になっているようです。
@@ -12281,10 +12290,10 @@ URLを間違って打ったか、正しくないリンクを辿った可能性�
 ページを閲覧している間に移動あるいは削除された可能性があります。',
 	'newarticle' => '（新）',
 	'newarticletext' => '<div style="margin-top: 0px;" class="emptymwmsg mediawiki_newarticletext"></div>',
-	'noarticletext' => '現在このページには内容がありません。
-他のページに含まれる[[Special:Search/{{PAGENAME}}|このページ名を検索する]]か、
-<span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} 関連記録を検索する]か、
-もしくは、[{{fullurl:{{FULLPAGENAME}}|action=edit}} このページを編集]</span>することができます。',
+	'noarticletext' => '<p style="font-size:140%;text-align: center">\'\'\'このページはコンテンツを必要としています。文や画像を追加することでコンテンツを充実させることができます！\'\'\'</p>
+
+<center><span class="wikia-button big plainlinks">[{{fullurl:{{FULLPAGENAMEE}}|action=edit&redlink=1}} <span>このページを作成する！</span>]<br />または<br />[[Special:Search/{{PAGENAME}}|「{{PAGENAME}}」で検索する]]</span></center>  
+<br />',
 	'noarticletext-nopermission' => '現在このページには内容がありません。他のページに含まれる[[Special:Search/{{PAGENAME}}|このページ名を検索する]]か、もしくは<span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} 関連記録を検索する]</span>ことができます。',
 	'note' => '\'\'\'お知らせ：\'\'\'',
 	'nonunicodebrowser' => '\'\'\'警告：使用中のブラウザがUnicodeに対応していません。\'\'\'
@@ -12358,6 +12367,9 @@ URLを間違って打ったか、正しくないリンクを辿った可能性�
 	'number-shortening-billions' => '$1B',
 	'new_article' => '記事を作成',
 	'new_wiki' => 'ウィキの申請',
+	'nocontributors' => 'このページの履歴は見付かりませんでした。',
+	'nontabbedsearch' => '検索でタブを使わない',
+	'nontabbedsearchold' => '検索でタブを使わない(古いタイプの表示を利用する)',
 ];
 
 $messages['jam'] = [
@@ -14359,8 +14371,8 @@ $messages['ko'] = [
 	'ns-specialprotected' => '{{ns:special}} 네임스페이스의 문서는 편집할 수 없습니다.',
 	'nav-login-createaccount' => '로그인 / 계정 만들기',
 	'notloggedin' => '로그인하고 있지 않음',
-	'nologin' => '계정이 없나요? $1.',
-	'nologinlink' => '계정을 만들 수 있습니다',
+	'nologin' => '계정이 없나요? $1',
+	'nologinlink' => '계정 만들기',
 	'nocookiesnew' => '사용자 계정을 만들었지만, 아직 로그인하지 않았습니다. {{SITENAME}}에서는 로그인 정보를 저장하기 위해 쿠키를 사용합니다. 지금 사용하는 웹 브라우저는 쿠키를 사용하지 않도록 설정되어 있습니다. 로그인하기 전에 웹 브라우저에서 쿠키를 사용하도록 설정해주세요.',
 	'nocookieslogin' => '{{SITENAME}}에서는 로그인을 위해 쿠키를 사용합니다. 당신의 웹 브라우저에서 쿠키가 비활성되어 있습니다. 쿠키 사용을 활성화한 다음 로그인해 주세요.',
 	'nocookiesfornew' => '요청의 출처를 확인할 수 없기 때문에 사용자 계정이 생성되지 않았습니다.
@@ -14452,6 +14464,7 @@ $messages['ko'] = [
 	'number-shortening-millions' => '$1백만',
 	'number-shortening-billions' => '$1B',
 	'new_article' => '새 문서',
+	'nodiff' => '차이 없음',
 ];
 
 $messages['ko-kp'] = [
@@ -19488,12 +19501,12 @@ $messages['nl'] = [
 	'nstab-category' => 'Categorie',
 	'nosuchaction' => 'Opgegeven handeling bestaat niet',
 	'nosuchactiontext' => 'De opdracht in de URL is ongeldig.
-Mogelijk heeft u een typefout gemaakt in de URL of een onjuiste verwijzing gevolgd.
+Mogelijk heb je een typefout gemaakt in de URL of een onjuiste verwijzing gevolgd.
 Het kan ook wijzen op een fout in de software van {{SITENAME}}.',
 	'nosuchspecialpage' => 'Deze speciale pagina bestaat niet',
-	'nospecialpagetext' => '<strong>U hebt een onbestaande speciale pagina opgevraagd.</strong>
+	'nospecialpagetext' => '<strong>Je hebt een onbestaande speciale pagina opgevraagd.</strong>
 
-Een lijst met bestaande speciale pagina’s staat op [[Special:SpecialPages|{{int:specialpages}}]].',
+Een lijst met bestaande speciale pagina’s staat op [[Special:SpecialPages|speciale pagina’s]].',
 	'namespaceprotected' => 'Je hebt geen rechten om pagina\'s in de naamruimte \'\'\'$1\'\'\' te bewerken.',
 	'ns-specialprotected' => 'Pagina\'s in de naamruimte "{{ns:special}}" kunnen niet bewerkt worden.',
 	'nav-login-createaccount' => 'Aanmelden / registreren',
@@ -19502,44 +19515,45 @@ Een lijst met bestaande speciale pagina’s staat op [[Special:SpecialPages|{{in
 	'nologinlink' => 'Registreren',
 	'nocookiesnew' => 'De gebruiker is geregistreerd, maar niet aangemeld.
 {{SITENAME}} gebruikt cookies voor het aanmelden van gebruikers.
-Schakel die in en meld daarna aan met uw nieuwe gebruikersnaam en wachtwoord.',
+Schakel die in en meld daarna aan met je nieuwe gebruikersnaam en wachtwoord.',
 	'nocookieslogin' => '{{SITENAME}} gebruikt cookies voor het aanmelden van gebruikers.
-Cookies zijn uitgeschakeld in uw browser.
+Cookies zijn uitgeschakeld in je browser.
 Schakel deze optie aan en probeer het opnieuw.',
 	'nocookiesfornew' => 'De gebruiker is niet gemaakt omdat de bron niet bevestigd kon worden.
 Zorg ervoor dat u cookies hebt ingeschakeld, herlaad deze pagina en probeer het opnieuw.',
-	'noname' => 'U hebt geen geldige gebruikersnaam opgegeven.',
+	'noname' => 'Je hebt geen geldige gebruikersnaam opgegeven.',
 	'nosuchuser' => 'De gebruiker "$1" bestaat niet.
 Gebruikersnamen zijn hoofdlettergevoelig.
 Controleer de schrijfwijze of [[Special:UserLogin/signup|maak een nieuwe gebruiker aan]].',
 	'nosuchusershort' => 'De gebruiker "$1" bestaat niet.
 Controleer de schrijfwijze.',
-	'nouserspecified' => 'U dient een gebruikersnaam op te geven.',
+	'nouserspecified' => 'Je dient een gebruikersnaam op te geven.',
 	'noemail' => 'Er is geen e-mailadres bekend voor gebruiker "$1".',
-	'noemailcreate' => 'U moet een geldig e-mailadres opgeven',
-	'noemailprefs' => 'Geef een e-mailadres op in uw voorkeuren om deze functies te gebruiken.',
+	'noemailcreate' => 'Je moet een geldig e-mailadres opgeven',
+	'noemailprefs' => 'Geef een e-mailadres op in je voorkeuren om deze functies te gebruiken.',
 	'newpassword' => 'Nieuw wachtwoord:',
 	'nowiki_sample' => 'Voer hier de niet op te maken tekst in',
 	'nowiki_tip' => 'Wiki-opmaak negeren',
 	'nosuchsectiontitle' => 'Deze subkop bestaat niet',
-	'nosuchsectiontext' => 'U probeerde een subkopje te bewerken dat niet bestaat.
-Wellicht is het verplaatst of verwijderd terwijl u de pagina aan het bekijken was.',
+	'nosuchsectiontext' => 'Je probeerde een subkopje te bewerken dat niet bestaat.
+Wellicht is het verplaatst of verwijderd terwijl je de pagina aan het bekijken was.',
 	'newarticle' => '(Nieuw)',
 	'newarticletext' => 'Deze pagina bestaat niet.
 Typ in het onderstaande veld om de pagina aan te maken (meer informatie staat op de [[{{MediaWiki:Helppage}}|hulppagina]]).
 Gebruik de knop \'\'\'vorige\'\'\' in je browser als je hier per ongeluk terecht bent gekomen.',
-	'noarticletext' => 'Deze pagina bevat geen tekst.
-U kunt [[Special:Search/{{PAGENAME}}|naar deze term zoeken]] in andere pagina\'s, <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} de logboeken doorzoeken] of [{{fullurl:{{FULLPAGENAME}}|action=edit}} deze pagina bewerken]</span>.',
+	'noarticletext' => '<p style="font-size:140%;text-align: center">\'\'\'Deze pagina heeft tekst nodig. Je kan meehelpen door tekst of een afbeelding toe te voegen!\'\'\'</p>
+
+<center><span class="wikia-button big plainlinks">[{{fullurl:{{FULLPAGENAMEE}}|action=edit&redlink=1}} <span>Voeg tekst toe aan deze pagina!</span>]<br />of<br />[{{fullurl:Special:Search|search={{PAGENAMEE}}}} Zoek "{{PAGENAME}}" op!]</span></center>',
 	'noarticletext-nopermission' => 'Deze pagina bevat geen tekst.
-U kunt [[Special:Search/{{PAGENAME}}|naar deze term zoeken]] in andere pagina\'s of
+Je kunt [[Special:Search/{{PAGENAME}}|naar deze term zoeken]] in andere pagina\'s of
 <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} de logboeken doorzoeken]</span>.',
 	'note' => '\'\'\'Opmerking:\'\'\'',
-	'nonunicodebrowser' => '\'\'\'Waarschuwing: Uw browser kan niet goed overweg met unicode.\'\'\'
-Hiermee wordt door de MediaWiki-software rekening gehouden zodat u toch zonder problemen pagina\'s kunt bewerken: niet-ASCII karakters worden in het bewerkingsveld weergegeven als hexadecimale codes.',
+	'nonunicodebrowser' => '\'\'\'WAARSCHUWING: Je browser kan niet goed overweg met unicode.
+Hiermee wordt door de MediaWiki-software rekening gehouden zodat je toch zonder problemen pagina\'s kunt bewerken: niet-ASCII karakters worden in het bewerkingsveld weergegeven als hexadecimale codes.\'\'\'',
 	'nocreatetitle' => 'Het aanmaken van pagina\'s is beperkt',
 	'nocreatetext' => '{{SITENAME}} heeft de mogelijkheid om nieuwe pagina\'s te maken beperkt.
-U kunt reeds bestaande pagina\'s wijzigen of u kunt [[Special:UserLogin|zich aanmelden of registreren]].',
-	'nocreate-loggedin' => 'U hebt geen rechten om nieuwe pagina\'s te maken.',
+Je kunt reeds bestaande pagina\'s wijzigen of je kunt [[Special:UserLogin|jezelf aanmelden of registreren]].',
+	'nocreate-loggedin' => 'Je hebt geen rechten om nieuwe pagina\'s te maken.',
 	'nohistory' => 'Deze pagina is niet bewerkt.',
 	'nextrevision' => 'Nieuwere versie →',
 	'next' => 'volgende',
@@ -19548,8 +19562,8 @@ U kunt reeds bestaande pagina\'s wijzigen of u kunt [[Special:UserLogin|zich aan
 	'nextn' => 'volgende {{PLURAL:$1|$1}}',
 	'nextn-title' => 'Volgende {{PLURAL:$1|resultaat|$1 resultaten}}',
 	'nonefound' => '\'\'\'Opmerking\'\'\': standaard worden niet alle naamruimten doorzocht.
-Als u in uw zoekopdracht als voorvoegsel "\'\'all:\'\'" gebruikt worden alle pagina\'s doorzocht (inclusief overlegpagina\'s, sjablonen, enzovoort).
-U kunt ook een naamruimte als voorvoegsel gebruiken.',
+Als je in uw zoekopdracht als voorvoegsel "\'\'all:\'\'" gebruikt worden alle pagina\'s doorzocht (inclusief overlegpagina\'s, sjablonen, enzovoort).
+Je kunt ook een naamruimte als voorvoegsel gebruiken.',
 	'nchanges' => '$1 {{PLURAL:$1|bewerking|bewerkingen}}',
 	'newpageletter' => 'N',
 	'number_of_watching_users_pageview' => '[$1 {{PLURAL:$1|keer|keer}} op een volglijst]',
@@ -19567,9 +19581,9 @@ U kunt ook een naamruimte als voorvoegsel gebruiken.',
 	'newpages' => 'Nieuwe pagina\'s',
 	'newpages-username' => 'Gebruikersnaam:',
 	'notargettitle' => 'Geen doelpagina',
-	'notargettext' => 'U hebt niet opgegeven voor welke pagina of gebruiker u deze handeling wilt uitvoeren.',
+	'notargettext' => 'Je hebt niet opgegeven voor welke pagina of gebruiker u deze handeling wilt uitvoeren.',
 	'nopagetitle' => 'Te hernoemen pagina bestaat niet',
-	'nopagetext' => 'De pagina die u wilt hernoemen bestaat niet.',
+	'nopagetext' => 'De pagina die je wilt hernoemen bestaat niet.',
 	'nextpage' => 'Volgende pagina ($1)',
 	'newuserlogpage' => 'Logboek nieuwe gebruikers',
 	'newuserlogpagetext' => 'Hieronder staan de nieuw ingeschreven gebruikers',
@@ -19577,7 +19591,7 @@ U kunt ook een naamruimte als voorvoegsel gebruiken.',
 	'noemailtext' => 'Deze gebruiker heeft geen geldig e-mailadres opgegeven.',
 	'nowikiemailtitle' => 'E-mail is niet toegestaan',
 	'nowikiemailtext' => 'Deze gebruiker wil geen e-mail ontvangen van andere gebruikers.',
-	'nowatchlist' => 'Uw volglijst is leeg.',
+	'nowatchlist' => 'Je volglijst is leeg.',
 	'notanarticle' => 'Is geen pagina',
 	'notvisiblerev' => 'De laatste versie van een andere gebruiker is verwijderd',
 	'namespace' => 'Naamruimte:',
@@ -19589,7 +19603,7 @@ U kunt ook een naamruimte als voorvoegsel gebruiken.',
 	'newtitle' => 'Naar de nieuwe paginanaam:',
 	'nonfile-cannot-move-to-file' => 'Het is niet mogelijk te hernoemen van en naar de bestandsnaamruimte',
 	'noscript.css' => '/ * CSS die hier wordt geplaatst heeft invloed voor gebruikers die JavaScript hebben uitgeschakeld * /',
-	'notacceptable' => 'De wikiserver kan de gegevens niet leveren in een vorm die uw browser kan lezen.',
+	'notacceptable' => 'De wikiserver kan de gegevens niet leveren in een vorm die je browser kan lezen.',
 	'nocredits' => 'Er is geen auteursinformatie beschikbaar voor deze pagina.',
 	'nextdiff' => 'Nieuwere bewerking →',
 	'newimages' => 'Nieuwe bestanden',
@@ -19913,6 +19927,10 @@ For å søkja i alle, bruk prefikset \'\'all:\'\' (det inkluderer diskusjonsside
 	'needhelp' => 'Trenger hjelp: Vennligst rediger [[MediaWiki:needhelp|denne siden]] for å vise artikler her.',
 	'new_article' => 'Ny artikkel',
 	'new_wiki' => 'Ny wiki',
+	'nocontributors' => 'Denne siden har ingen bidragsytere',
+	'nodiff' => 'Ingen endringer',
+	'nontabbedsearch' => 'Ufanebasert søk',
+	'nontabbedsearchold' => 'Ufanebasert søk (bruk gammel tittel/tekstsamsvarsvisning)',
 ];
 
 $messages['nov'] = [
@@ -20891,9 +20909,10 @@ Sprawdź poprawność pisowni.',
 Mogła zostać przeniesiona lub usunięta podczas przeglądania tej strony.',
 	'newarticle' => '(Nowy)',
 	'newarticletext' => '<div style="margin-top: 0px;" class="emptymwmsg mediawiki_newarticletext"></div>',
-	'noarticletext' => 'Brak strony o tym tytule.
-Możesz [[Special:Search/{{PAGENAME}}|poszukać „{{PAGENAME}}” na innych stronach]],
-<span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} przeszukać log] lub [{{fullurl:{{FULLPAGENAME}}|action=edit}} utworzyć tę stronę]</span>.',
+	'noarticletext' => '<p style="font-size:140%;text-align: center">\'\'\'Ta strona potrzebuje zawartości. Możesz pomóc poprzez dodanie treści.\'\'\'</p>
+
+<div style="text-align:center; font-size:90%; font-weight:bold">[{{fullurl:{{FULLPAGENAMEE}}|action=edit&redlink=1}} Edytuj tę stronę!] &bull; [{{fullurl:Special:Search|search={{urlencode:{{PAGENAME}}|QUERY}}}} Szukaj „{{PAGENAME}}” na innych stronach] &bull; [{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} Przeszukaj rejestry]</div>
+<br>',
 	'noarticletext-nopermission' => 'Na tej stronie nie ma jeszcze artykułu.
 Możesz [[Special:Search/{{PAGENAME}}|wyszukać ten tytuł]] w treści innych stron
 lub <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} przeszukać powiązane logi].</span>',
@@ -22616,7 +22635,7 @@ $messages['ru'] = [
 	'nav-login-createaccount' => 'Представиться / зарегистрироваться',
 	'notloggedin' => 'Вы не представились системе',
 	'nologin' => 'Нет учётной записи? \'\'\'$1\'\'\'.',
-	'nologinlink' => 'Создать учётную запись',
+	'nologinlink' => 'Зарегистрироваться',
 	'nocookiesnew' => 'Участник зарегистрирован, но не представлен. {{SITENAME}} использует «cookies» для представления участников. У вас «cookies» запрещены. Пожалуйста, разрешите их, а затем представьтесь со своиим новым именем участника и паролем.',
 	'nocookieslogin' => '{{SITENAME}} использует «cookies» для представления участников. Вы их отключили. Пожалуйста, включите их и попробуйте снова.',
 	'nocookiesfornew' => 'Учётная запись участника не была создана из-за невозможности проверить её источник.
@@ -22640,10 +22659,10 @@ $messages['ru'] = [
 	'newarticletext' => 'Вы перешли по ссылке на страницу, которой пока не существует.
 Чтобы её создать, наберите текст в окне, расположенном ниже (подробнее см. [[{{MediaWiki:Helppage}}|справочную страницу]]).
 Если вы оказались здесь по ошибке, просто нажмите кнопку \'\'\'назад\'\'\' вашего браузера.',
-	'noarticletext' => 'В настоящий момент текст на данной странице отсутствует.
-Вы можете [[Special:Search/{{PAGENAME}}|найти упоминание данного названия]] в других статьях,
-<span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} найти соответствующие записи журналов],
-или \'\'\'[{{fullurl:{{FULLPAGENAME}}|action=edit}} создать страницу с таким названием]\'\'\'</span>.',
+	'noarticletext' => '<p style="font-size:140%;text-align: center">\'\'\'В настоящий момент текст на данной странице отсутствует.<br>Вы можете наполнить её текстом и изображениями!\'\'\'</p>
+
+<center><span class="wikia-button big plainlinks">[{{fullurl:{{FULLPAGENAMEE}}|action=edit&redlink=1}} <span>Создать эту статью!</span>]<br />или<br />[{{fullurl:Special:Search|search={{PAGENAMEE}}}} Найти похожую статью]</span></center>  
+<br>',
 	'noarticletext-nopermission' => 'В настоящее время на этой странице нет текста.
 Вы можете [[Special:Search/{{PAGENAME}}|найти упоминание данного названия]] в других статьях,
 или <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} найти соответствующие записи журналов].</span>',
@@ -22721,6 +22740,8 @@ The wiki server can\'t provide data in a format your client can read.',
 	'needhelp' => 'Для отображения списка статей, которым нужна помощь, отредактируйте [[MediaWiki:needhelp|эту страницу]].',
 	'new_article' => 'Новая страница',
 	'new_wiki' => 'Новая вики',
+	'nocontributors' => 'Эта страница не имеет вкладчиков',
+	'nodiff' => 'Нет изменений',
 ];
 
 $messages['rue'] = [
@@ -25685,9 +25706,7 @@ $messages['sv'] = [
 Du kan ha stavat URL:en fel, eller följt en felaktig länk.
 Det kan också bero på en bug i {{SITENAME}}.',
 	'nosuchspecialpage' => 'Någon sådan specialsida finns inte',
-	'nospecialpagetext' => '<strong>Du har begärt en specialsida som inte finns.</strong>
-
-I [[Special:SpecialPages|listan över specialsidor]] kan du se vilka specialsidor som finns.',
+	'nospecialpagetext' => 'Du har begärt en särskild sida som inte erkänns av {{SITENAME}}. En lista över alla särskilda erkända sidor finns på [[{{ns:-1}}:Specialpages|Specialsidor]].',
 	'namespaceprotected' => 'Du har inte behörighet att redigera sidor i namnrymden \'\'\'$1\'\'\'.',
 	'ns-specialprotected' => 'Specialsidor kan inte redigeras.',
 	'nav-login-createaccount' => 'Logga in / skapa konto',
@@ -25718,8 +25737,10 @@ Kontrollera din stavning, eller [[Special:UserLogin/signup|skapa ett nytt konto]
 Det kan ha flyttats eller raderats medan du tittade på sidan.',
 	'newarticle' => '(Ny)',
 	'newarticletext' => '<div style="margin-top: 0px;" class="emptymwmsg mediawiki_newarticletext"></div>',
-	'noarticletext' => 'Det finns just nu ingen text på denna sida.
-Du kan [[Special:Search/{{PAGENAME}}|söka efter denna sidtitel]] på andra sidor, <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} söka i loggarna], eller [{{fullurl:{{FULLPAGENAME}}|action=edit}} redigera denna sida]</span>.',
+	'noarticletext' => '<p style="font-size:140%;text-align: center">\'\'\'Denna sida kräver innehåll. Du kan hjälpa till genom att lägga till en mening eller en bild!\'\'\'</p>
+
+<center><span class="wikia-button big">[{{fullurl:{{FULLPAGENAMEE}}|action=edit&redlink=1}} <span>Lägg till denna sida!</span>]</span></center>  
+<br>',
 	'noarticletext-nopermission' => 'Det finns för tillfället ingen text på denna sida.
 Du kan [[Special:Search/{{PAGENAME}}|söka efter denna sidas titel]] i andra sidor,
 eller <span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} söka i relevanta loggar]</span>.',
@@ -25736,7 +25757,7 @@ Du kan redigera existerande sidor, eller [[Special:UserLogin|logga in eller skap
 	'notextmatches' => 'Det finns inga sidor som innehåller sökordet',
 	'nextn' => 'nästa {{PLURAL:$1|$1}}',
 	'nextn-title' => 'Nästa $1 {{PLURAL:$1|resultat|resultat}}',
-	'nonefound' => '\'\'\'Observera:\'\'\' Som standard sker sökning endast i vissa namnrymder. Du kan pröva att skriva \'\'all:\'\' i början av din sökning om du vill söka i alla sidor (inklusive diskussionssidor, mallar, m.m.), eller så kan du att börja din sökning med namnet på den namnrymd du vill söka i.',
+	'nonefound' => 'Inga sökresultat för den termen.',
 	'nchanges' => '$1 {{PLURAL:$1|ändring|ändringar}}',
 	'newpageletter' => 'N',
 	'number_of_watching_users_pageview' => '[$1 bevakande {{PLURAL:$1|användare|användare}}]',
@@ -30041,6 +30062,10 @@ $messages['zh'] = [
 * 如有编辑问题，欢迎参考[[help:content|帮助页面]]
 * 如果是不小心点击进入这里，可使用浏览器的按钮回到上一页。<br/><br/>',
 	'newly_changed' => '最近更改',
+	'noarticletext' => '本页面目前不存在，你可以：
+*[[Special:Search/{{PAGENAME}}|搜寻]]这个词是否存在其他页面
+*<span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} 查找相关日志]
+*或 [{{fullurl:{{FULLPAGENAME}}|action=edit}} 创建编辑这个页面]</span>。',
 ];
 
 $messages['zh-classical'] = [
@@ -30103,7 +30128,10 @@ $messages['zh-hans'] = [
 \'\'\'您正准备开始撰写一个新页面\'\'\'
 * 如有编辑问题，欢迎参考[[help:content|帮助页面]]
 * 如果是不小心点击进入这里，可使用浏览器的按钮回到上一页。<br/><br/>',
-	'noarticletext' => '本页面目前没有内容。你可以在其他页面中[[Special:Search/{{PAGENAME}}|搜索该页标题]]、<span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} 搜索相关日志]或[{{fullurl:{{FULLPAGENAME}}|action=edit}} 编辑本页面]。</span>',
+	'noarticletext' => '本页面目前不存在，你可以：
+*[[Special:Search/{{PAGENAME}}|搜寻]]这个词是否存在其他页面
+*<span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} 查找相关日志]
+*或 [{{fullurl:{{FULLPAGENAME}}|action=edit}} 创建编辑这个页面]</span>。',
 	'noarticletext-nopermission' => '此页目前没有内容，您可以在其它页[[Special:Search/{{PAGENAME}}|搜索此页标题]]，
 或<span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} 搜索有关日志]</span>。',
 	'note' => '\'\'\'注意：\'\'\'',
@@ -30232,9 +30260,10 @@ $messages['zh-hant'] = [
 \'\'\'您正準備開始撰寫一個新頁面\'\'\'
 * 如有編輯問題，歡迎參考[[help:content|幫助頁面]]
 * 如果是不小心點擊進入這裡，可使用瀏覽器的按鈕回到上一頁。<br/><br/>',
-	'noarticletext' => '此頁目前沒有內容，您可以在其它頁[[Special:Search/{{PAGENAME}}|搜索此頁標題]]，
-<span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} 搜索有關日誌]，
-或[{{fullurl:{{FULLPAGENAME}}|action=edit}} 編輯此頁]</span>。',
+	'noarticletext' => '本頁面目前不存在，你可以：
+*[[Special:Search/{{PAGENAME}}|搜尋]]這個詞是否存在其他頁面
+*<span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} 查找相關日誌]
+*或 [{{fullurl:{{FULLPAGENAME}}|action=edit}} 創建編輯這個頁面]</span>。',
 	'noarticletext-nopermission' => '此頁目前沒有內容，您可以在其它頁[[Special:Search/{{PAGENAME}}|搜索此頁標題]]，
 或<span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} 搜索有關日誌]</span>。',
 	'note' => '\'\'\'注意:\'\'\'',
@@ -30318,6 +30347,10 @@ $messages['zh-hk'] = [
 * 如有編輯問題，歡迎參考[[help:content|幫助頁面]]
 * 如果是不小心點擊進入這裡，可使用瀏覽器的按鈕回到上一頁。<br/><br/>',
 	'newly_changed' => '最新更改',
+	'noarticletext' => '本頁面目前不存在，你可以：
+*[[Special:Search/{{PAGENAME}}|搜尋]]這個詞是否存在其他頁面
+*<span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} 查找相關日誌]
+*或 [{{fullurl:{{FULLPAGENAME}}|action=edit}} 創建編輯這個頁面]</span>。',
 ];
 
 $messages['zh-min-nan'] = [
@@ -30372,9 +30405,10 @@ $messages['zh-tw'] = [
 \'\'\'您正準備開始撰寫一個新頁面\'\'\'
 * 如有編輯問題，歡迎參考[[help:content|幫助頁面]]
 * 如果是不小心點擊進入這裡，可使用瀏覽器的按鈕回到上一頁。<br/><br/>',
-	'noarticletext' => '此頁目前沒有內容，您可以在其它頁[[Special:Search/{{PAGENAME}}|搜索此頁標題]]，
-<span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} 搜索有關日誌]，
-或[{{fullurl:{{FULLPAGENAME}}|action=edit}} 編輯此頁]</span>。',
+	'noarticletext' => '本頁面目前不存在，你可以：
+*[[Special:Search/{{PAGENAME}}|搜尋]]這個詞是否存在其他頁面
+*<span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} 查找相關日誌]
+*或 [{{fullurl:{{FULLPAGENAME}}|action=edit}} 創建編輯這個頁面]</span>。',
 	'nonunicodebrowser' => '\'\'\'警告: 您的瀏覽器不相容Unicode編碼。這裡有一個工作區將使您能安全地編輯頁面: 非ASCII字元將以十六進製編碼模式出現在編輯框中。\'\'\'',
 	'nocreatetitle' => '建立頁面受限',
 	'nocreatetext' => '此網站限制了建立新頁面的功能。你可以返回並編輯已有的頁面，或者[[Special:UserLogin|登錄或建立新帳號]]。',
@@ -30486,6 +30520,9 @@ $messages['zh-cn'] = [
 \'\'\'您正準备开始撰写一个新页面\'\'\'
 * 如有编辑问题，欢迎参考[[{{ns:project}}:帮助|帮助页面]]
 * 小叮咛：別忘了为你的文章加上分类，只要在页面底部加上<nowiki>[[Category:分类名]]</nowiki>即可。所有分类请见[[Special:Categories]]。<br/><br/>',
+	'noarticletext' => '\'\'\'喔喔！ {{SITENAME}}还沒有以{{NAMESPACE}}为题的文章。\'\'\'
+* \'\'\'<span class="plainlinks">[{{fullurl:{{FULLPAGENAMEE}}|action=edit}} 鲇此]开始编辑这个页面</span>\'\'\'或\'\'\'<span class="plainlinks">[{{fullurl:Special:Search|search={{PAGENAMEE}}}} 鲇此]在此Wiki中搜寻此词汇</span>\'\'\'.
+* 如果以此为题的文章曾经存在，请查寻\'\'\'<span class="plainlinks">[{{fullurl:Special:Log/delete|page={{FULLPAGENAMEE}}}} 刪除记錄]</span>\'\'\'.',
 ];
 
 $messages['zh-sg'] = [
@@ -30493,5 +30530,8 @@ $messages['zh-sg'] = [
 \'\'\'您正準备开始撰写一个新页面\'\'\'
 * 如有编辑问题，欢迎参考[[{{ns:project}}:帮助|帮助页面]]
 * 小叮咛：別忘了为你的文章加上分类，只要在页面底部加上<nowiki>[[Category:分类名]]</nowiki>即可。所有分类请见[[Special:Categories]]。<br/><br/>',
+	'noarticletext' => '\'\'\'喔喔！ {{SITENAME}}还沒有以{{NAMESPACE}}为题的文章。\'\'\'
+* \'\'\'<span class="plainlinks">[{{fullurl:{{FULLPAGENAMEE}}|action=edit}} 鲇此]开始编辑这个页面</span>\'\'\'或\'\'\'<span class="plainlinks">[{{fullurl:Special:Search|search={{PAGENAMEE}}}} 鲇此]在此Wiki中搜寻此词汇</span>\'\'\'.
+* 如果以此为题的文章曾经存在，请查寻\'\'\'<span class="plainlinks">[{{fullurl:Special:Log/delete|page={{FULLPAGENAMEE}}}} 刪除记錄]</span>\'\'\'.',
 ];
 
