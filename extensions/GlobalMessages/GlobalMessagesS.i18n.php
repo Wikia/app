@@ -203,9 +203,11 @@ The latest log entry is provided below for reference:',
 	'siteuser' => '{{SITENAME}} user $1',
 	'siteusers' => '{{SITENAME}} {{PLURAL:$2|user|users}} $1',
 	'spamprotectiontitle' => 'Spam protection filter',
-	'spamprotectiontext' => 'The text you wanted to save was blocked by the spam filter.
-This is probably caused by a link to a blacklisted external site.',
-	'spamprotectionmatch' => 'The following text is what triggered our spam filter: $1',
+	'spamprotectiontext' => 'The page you wanted to save was blocked by the spam filter.<br/>
+This is probably caused by a blacklisted link or pagename.',
+	'spamprotectionmatch' => 'The following link, text or pagename is what triggered our spam filter: \'\'\'$1\'\'\'
+
+If you think this is wrong, please contact us [[w:c:vstf:Report:Spam filter problems|here]]. Please, provide a copy of this message when reporting any problem.',
 	'spambot_username' => 'MediaWiki spam cleanup',
 	'spam_reverting' => 'Reverting to last revision not containing links to $1',
 	'spam_blanking' => 'All revisions contained links to $1, blanking',
@@ -9948,7 +9950,9 @@ A continuación se muestra la última entrada de registro para referencia:',
 	'spamprotectiontitle' => 'Filtro de protección contra spam',
 	'spamprotectiontext' => 'La página que quería guardar fue bloqueada por el filtro de spam.
 Esto podría estar causado por un enlace a un sitio externo incluido en la lista negra.',
-	'spamprotectionmatch' => 'El siguiente texto es el que activó nuestro filtro de spam: $1',
+	'spamprotectionmatch' => 'El siguiente texto es el que activó nuestro filtro \'\'anti-spam\'\' (contra la publicidad no solicitada): \'\'\'$1\'\'\'
+
+Si crees que está mal, por favor contáctanos haciendo clic [[w:c:vstf:Report:Spam filter problems|aquí]] (puedes reportarlo en español). Por favor, provee una copia de este mensaje cuando vayas a reportar algún problema.',
 	'spambot_username' => 'Limpieza de spam de MediaWiki',
 	'spam_reverting' => 'Revirtiendo a la última versión que no contenga enlaces a $1',
 	'spam_blanking' => 'Todas las revisiones contienen enlaces a $1, blanqueando',
@@ -11731,9 +11735,9 @@ impossible de renommer une page sur elle-même.',
 	'semiprotectedpagemovewarning' => '\'\'\'Note :\'\'\' Cette page a été protégée afin que seuls les utilisateurs enregistrés puissent la renommer. La dernière entrée du journal est affichée ci-dessous pour référence :',
 	'siteuser' => '{{GENDER:$2|l’utilisateur|l’utilisatrice|l’utilisateur}} $1 de {{SITENAME}}',
 	'siteusers' => '{{PLURAL:$2|l’utilisateur|les utilisateurs}} $1 de {{SITENAME}}',
-	'spamprotectiontitle' => 'Filtre de protection anti-pollution',
-	'spamprotectiontext' => 'La page que vous avez voulu sauvegarder a été bloquée par le filtre anti-pollution. Ceci est probablement dû à l’introduction d’un lien vers un site externe apparaissant sur la liste noire. Cette dernière utilise les expressions rationnelles suivantes :',
-	'spamprotectionmatch' => 'La chaîne de caractères « \'\'\'$1\'\'\' » a déclenché le détecteur de pourriel.',
+	'spamprotectiontitle' => 'Filtre de protection anti-pourriel',
+	'spamprotectiontext' => 'Le texte que vous avez voulu enregistrer a été bloqué par le filtre anti-pourriel. Cela est probablement dû à un lien vers un site externe sur liste noire.',
+	'spamprotectionmatch' => 'Le texte suivant a déclenché notre filtre anti-pourriel : $1',
 	'spambot_username' => 'Nettoyage de pourriels par MediaWiki',
 	'spam_reverting' => 'Rétablissement de la dernière version ne contenant pas de lien vers $1',
 	'spam_blanking' => 'Toutes les versions contenant des liens vers $1 sont blanchies',
@@ -28064,7 +28068,7 @@ De laatste logboekregel staat hieronder:',
 	'siteuser' => '{{SITENAME}}-gebruiker $1',
 	'siteusers' => '{{SITENAME}}-{{PLURAL:$2|gebruiker|gebruikers}} $1',
 	'spamprotectiontitle' => 'Spamfilter',
-	'spamprotectiontext' => 'De pagina die u wilde opslaan is geblokkeerd door het spamfilter.
+	'spamprotectiontext' => 'De pagina die je wilde opslaan is geblokkeerd door het spamfilter.
 Meestal wordt dit door een externe verwijzing op een zwarte lijst veroorzaakt.',
 	'spamprotectionmatch' => 'De volgende tekst veroorzaakte een alarm van de spamfilter: $1',
 	'spambot_username' => 'MediaWiki opschoning spam',
@@ -32686,7 +32690,9 @@ $messages['ru'] = [
 	'spamprotectiontitle' => 'Спам-фильтр',
 	'spamprotectiontext' => 'Страница, которую вы пытаетесь сохранить, заблокирована спам-фильтром.
 Вероятно, это произошло из-за того, что она содержит ссылку на занесённый в чёрный список внешний сайт.',
-	'spamprotectionmatch' => 'Следующая ссылка вызвала срабатывание спам-фильтра: $1.',
+	'spamprotectionmatch' => 'Следующая ссылка, текст или название страницы вызвали срабатывание нашего спам-фильтра: \'\'\'$1\'\'\'
+
+Если Вы думаете, что здесь ошибка, то, пожалуйста, сообщите нам [[w:c:vstf:Report:Spam filter problems|здесь]]. Пожалуйста, приводите полный текст сообщения при сообщение о проблеме.',
 	'spambot_username' => 'Чистка спама',
 	'spam_reverting' => 'Откат к последней версии, не содержащей ссылки на $1',
 	'spam_blanking' => 'Все версии содержат ссылки на $1, очистка',
@@ -36994,8 +37000,8 @@ Den senaste loggposten tillhandahålls nedan som referens:',
 	'siteusers' => '{{SITENAME}}-{{PLURAL:$2|användaren|användarna}} $1',
 	'spamprotectiontitle' => 'Spamfilter',
 	'spamprotectiontext' => 'Sidan du ville spara blockerades av spamfiltret.
-Detta orsakades troligen av en länk till en svartlistad webbplats.',
-	'spamprotectionmatch' => 'Följande text aktiverade vårt spamfilter: $1',
+Detta orsakades troligen av en svartlistad länk eller sidnamn.',
+	'spamprotectionmatch' => 'Följande länk, text eller sidnamn är aktiverade vårt spamfilter: \'\'\'$1\'\'\'',
 	'spambot_username' => 'MediaWikis spampatrull',
 	'spam_reverting' => 'Återställer till den senaste versionen som inte innehåller länkar till $1',
 	'spam_blanking' => 'Alla versioner innehöll en länk till $1, blankar',
