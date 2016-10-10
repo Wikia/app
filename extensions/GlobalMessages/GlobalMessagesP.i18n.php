@@ -9588,7 +9588,7 @@ Véase [[Special:ProtectedPages|la lista de páginas protegidas]] para ver las p
 	'protectedarticle' => 'protegió «[[$1]]»',
 	'protect-title' => 'Cambiando el nivel de protección de «$1»',
 	'protect-title-notallowed' => 'Ver el nivel de protección de «$1»',
-	'prot_1movedto2' => 'heredando la protección al trasladar [[$1]] a [[$2]]',
+	'prot_1movedto2' => 'heredando la protección al renombrar [[$1]] a [[$2]]',
 	'protect-badnamespace-title' => 'Espacio de nombres no protegible',
 	'protect-badnamespace-text' => 'Las páginas de este espacio de nombres no pueden ser protegidas',
 	'protect-legend' => 'Confirmar protección',
