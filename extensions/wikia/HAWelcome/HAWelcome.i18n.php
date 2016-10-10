@@ -6,13 +6,9 @@ $messages['en'] = [
 	'welcome-user' => '@latest',
 	'welcome-bot' => '@bot',
 	'welcome-enabled' => 'page-user message-anon message-user',
-	'welcome-user-page' => '==About me==
+	'welcome-user-page' => '[[File:Placeholder|thumb|220px]]
 
-\'\'This is your user page. Please edit this page to tell the community about yourself!\'\'
-
-==My contributions==
-
-* [[Special:Contributions/$1|User contributions]]
+This is your user page. Please edit this page to tell the community about yourself!
 
 ==My favorite pages==
 
@@ -37,7 +33,7 @@ If you need help getting started, check outour [[Help:Getting Started|help pages
 Please [[$2|leave me a message]] if I can help with anything. Enjoy your time at {{SITENAME}}!
 
 $2',
-	'welcome-message-log' => 'welcoming new contributor',
+	'welcome-message-log' => 'Welcome to {{SITENAME}}!',
 	'welcome-message-user-staff' => '==Welcome==
 
 Hi, welcome to {{SITENAME}}! I\'m a member of Fandom\'s Community Support team. Thank you for your edit to [[:$1]]!
@@ -314,17 +310,17 @@ Central Wiki]] $3',
 $messages['de'] = [
 	'welcome-user-page' => '== Über mich ==
 
-\'\'Dies ist deine Benutzerseite. Hier kannst du anderen etwas über dich verraten!\'\'
+\'\'Das ist deine Benutzerseite. Hier kannst du den anderen ein paar Informationen über dich verraten!\'\'
 
 == Meine Beiträge ==
 
-* [[Special:Contributions/$1|Benutzerbeiträge]]
+* [[Special:Contributions/{{PAGENAME}}|Benutzerbeiträge]]
 
 == Meine beliebtesten Seiten ==
 
-* Hier kannst du Links zu deinen beliebtesten Seiten im Wiki hinzufügen!
-* Link auf zweite beliebte Seite
-* Link auf dritte beliebte Seite',
+* Hier kannst du Links zu deinen beliebtesten Artikeln im Wiki hinzufügen!
+* Link auf Seite #2
+* Link auf Seite #3',
 	'welcome-message-user' => '==Herzlich Willkommen==
 
 Hallo, ich bin einer der Admins der {{SITENAME}} Community. Herzlich willkommen und vielen Dank, dass du [[:$1]] bearbeitet hast!
@@ -453,13 +449,9 @@ Persiyayışa pêron rê ez şımarê peşti dana!',
 ];
 
 $messages['es'] = [
-	'welcome-user-page' => '==Sobre mí==
+	'welcome-user-page' => '==Sobre mi==
 
 \'\'Esta es tu página de usuario. ¡Edítala para hablar sobre ti a la comunidad!\'\'
-
-==Mis contribuciones==
-
-* [[Special:Contributions/$1|Contribuciones del usuario]]
 
 ==Mis páginas favoritas==
 
@@ -561,13 +553,9 @@ $messages['fa'] = [
 \'\'
 این صفحۀ کاربری شما است. لطفا این صفحه را ویرایش کنید و کمی دربارۀ خودتان به دیگر کاربران بگویید!\'\'
 
-==مشارکت‌های من==
-
-* [[Special:Contributions/{{PAGENAME}}|مشارکت‌های کاربر]]
-
 ==صفحات محبوب من==
 
-*پیوند صفحه‌های محبوب خود را در اینجا قرار دهید!
+*پیوند صفحات محبوب خود را در اینجا قرار دهید
 * صفحۀ محبوب #۲
 * صفحۀ محبوب #۳',
 	'welcome-message-user' => '==خوش‌آمدید==
@@ -580,6 +568,7 @@ $messages['fa'] = [
 
 اگر سوالی داشتید می‌توانید از من در [[$2|صفحۀ بحثم]] بپرسید! $3',
 	'welcome-message-log' => 'خوش‌آمدگویی کاربر جدید',
+	'welcome-user' => '@latest',
 ];
 
 $messages['fi'] = [
@@ -637,17 +626,11 @@ Skriva mær eini boð um eg kann hjálpa tær við nøkrum!',
 ];
 
 $messages['fr'] = [
-	'welcome-user-page' => '== Sur moi ==
+	'welcome-user-page' => 'Cette page est ta page personnelle. Tu peux y ajouter des informations te concernant !
 
-\'\'Ceci est votre page utilisateur. Vous pouvez y ajouter des informations vous concernant !\'\'
+==Mes pages préférées==
 
-== Mes contributions ==
-
-* [[Special:Contributions/$1|Mes contributions]]
-
-== Mes pages préférées ==
-
-* Vous pouvez placer ici des liens vers vos pages préférées du wiki !
+* Tu peux placer ici des liens vers tes pages du wiki préférées !
 * Lien vers la page #2
 * Lien vers la page #3',
 	'welcome-message-user' => '==Bienvenue==
@@ -668,7 +651,7 @@ Si vous avez besoin d\'aide pour vous lancer, consultez nos [[Aide:Commencer|pag
 Veuillez [[$2|me laisser un message]] si vous avez besoin d\'aide supplémentaire. Passez un bon moment sur {{SITENAME}} !
 
 $2',
-	'welcome-message-log' => 'accueil nouveau contributeur',
+	'welcome-message-log' => 'Bienvenue sur {{SITENAME}} !',
 	'welcome-message-user-staff' => '==Bienvenue==
 
 Bonjour et bienvenue à {{SITENAME}} ! Je suis membre de l\'équipe de support de la communauté Fandom. Merci pour votre contribution à [[:$1]] !
@@ -727,7 +710,7 @@ Il semble qu\'aucun des administrateurs de cette communauté ne soit actif en ce
 Vous pouvez également suivre [[w:c:communaute:Blog:Actualité_Wikia|ce blog]] afin de vous tenir informé des dernières actualités et événements ayant trait à Fandom. Et n\'oubliez pas de visiter l\'[[w:c:communaute:Université_Wikia|Université Fandom]] pour y voir de courtes vidéos d\'utilisation.
 
 Passez un bon moment sur {{SITENAME}} !',
-	'welcome-description' => 'Envoie un message d’accueil aux utilisateurs après leurs premières modifications',
+	'welcome-description' => 'Envoie un message d’accueil aux utilisateurs après leur première modification',
 ];
 
 $messages['gl'] = [
@@ -792,7 +775,7 @@ $messages['he'] = [
 \'\'זה דף המשתמש שלך. כדאי לערוך דף זה כדי שמשתמשים אחרים יוכלו לדעת עליך יותר!\'\'
 
 ==התרומות שלי==
-*[[Special:Contributions/$1|העריכות שלך]]
+*[[Special:Contributions/{{PAGENAME}}|העריכות שלך]]
 
 ==הדפים האהובים עליי==
 * הוסף כאן קישור לדפים האהובים עליך או דפים שיצרת.
@@ -807,6 +790,7 @@ $messages['he'] = [
 
 במידה ואתה זקוק לעזרה כלשהי, אנא השאר הודעה ב[[$2|דף השיחה שלי]], $3',
 	'welcome-message-log' => 'ברך משתמש חדש',
+	'welcome-user' => '@latest',
 ];
 
 $messages['hu'] = [
@@ -958,15 +942,15 @@ Jika Anda membutuhkan bantuan, pertama lihatlah [[Help:Contents|halaman bantuan]
 $messages['it'] = [
 	'welcome-user-page' => '==Qualcosa su di me==
 
-\'\'Questa è la tua pagina utente. Modifica liberamente questa pagina per farti conoscere dalla comunità!\'\'
+\'\'Questa è la tua pagina utente. Modifica liberamente questa pagina per farti conoscere dalla community!\'\'
 
 ==I miei contributi==
 
-* [[Special:Contributions/$1|Contributi utente]]
+* [[Special:Contributions/{{PAGENAME}}|Contributi utente]]
 
 ==Le mie pagine preferite==
 
-* Aggiungi i collegamenti alle tue pagine preferite su questo wiki!
+* Aggiungi i collegamenti alle tue pagine preferite su questa wiki!
 * Pagina preferita n.2
 * Pagina preferita n.3',
 	'welcome-message-user' => '== Benvenuto ==
@@ -1048,19 +1032,19 @@ Divertiti su {{SITENAME}}!',
 ];
 
 $messages['ja'] = [
-	'welcome-user-page' => '==自己紹介==
+	'welcome-user-page' => '== 自己紹介 ==
+\'\'\'ここは、「{{PAGENAME}}」さんの利用者ページです。\'\'\'
 
-\'\'\'ここはあなたの利用者ページです。このページを編集してあなた自身のことをみんなに伝えましょう!\'\'\'
+上の"編集"ボタンをクリックしてこのページを編集してみましょう。
 
-==投稿記録==
+[[File:Placeholder|thumb|220px]]
 
-* [[Special:Contributions/$1|利用者の投稿記録]]
+ここは、「{{PAGENAME}}」さんのユーザーページです。上の「編集」ボタンをクリックしてこのページを編集し、{{PAGENAME}}さん自身のことについてコミュニティに紹介してみましょう！
 
-==お気に入りページ==
-
-* ウィキのお気に入りのページへのリンクをここに追加してください!
-* お気に入りページ2
-* お気に入りページ3',
+== お気に入りのウィキア ==
+* ウィキアにあるあなたのお気に入りのウィキのリンクを追加してください！
+* お気に入りのページ #2
+* お気に入りのページ #3',
 	'welcome-message-user' => '==ようこそ==
 
 はじめまして、{{SITENAME}}コミュニティのアドミンです。[[:$1]]へようこそ！そして、ページ編集をありがとうございます！
@@ -1136,25 +1120,31 @@ Fandomを利用をはじめるにあたりご不明な点がございました�
 また、[[w:c:ja.community:Wikia_University|Fandomユニバーシティ]]ではFandomの使い方を簡単な動画でご紹介していますので、ぜひご覧ください。
 
 それでは、{{SITENAME}}をお楽しみください！',
+	'welcome-description' => '初めて編集をしたユーザーにウェルカムメッセージを送信',
+	'welcome-user' => '@latest',
 ];
 
 $messages['ko'] = [
-	'welcome-user-page' => '==저에 대해서==
+	'welcome-user-page' => '== 저에 대해서 ==
 
 이 문서는 당신의 사용자 문서입니다. 이 단락에 당신에 대해 소개하는 글을 남겨보세요.
 
-==기여 내역==
+== 기여 내역 ==
 
-* [[특수기능:기여/$1|기여 내역]]
 
-==관심 있는 문서 목록==
 
-* 여기에 관심 있는 문서들을 링크로 추가해보세요.
-* 2번째 관심 문서
-* 3번째 관심 문서',
+*[[Special:Contributions/{{PAGENAME}}|기여 내역]]
+
+== 관심 있는 문서 목록<br />==
+
+
+
+*여기에 관심 있는 문서들을 링크로 추가해보세요.
+*2번째 관심 문서
+*3번째 관심 문서',
 	'welcome-message-user' => '$4님, 안녕하세요.&nbsp;{{SITENAME}}에 오신 것을 환영합니다! [[:$1]] 문서를 편집해주셔서 감사드립니다. 만약 도움이 필요하시다면 [[$2|제 사용자 토론 문서]]에 메시지를 남겨주세요.&nbsp;$3',
 	'welcome-message-anon' => '안녕하세요. {{SITENAME}}에 오신 것을 환영합니다. [[:$1]] 문서를 편집해주셔서 감사드립니다. \'\'\'[[Special:Userlogin|먼저 계정을 만드셔서 활동하시는 것을 권해드립니다.]]\'\'\' 이는 당신의 기여를 쉽게 추적하고 다른 사용자분들과 쉽게 소통할 수 있는 좋은 방법입니다. 만약 도움이 필요하시다면 [[$2|제 사용자 토론 문서]]에 메시지를 남겨주세요.&nbsp;$3',
-	'welcome-message-log' => '새 기여자 환영하기',
+	'welcome-message-log' => '새 사용자 환영',
 	'welcome-message-wall-user' => '안녕하세요. {{SITENAME}}에 오신 것을 환영합니다! [[:$1]] 문서를 편집해주셔서 감사드립니다.
 
 만약 도움이 필요하시다면 제 담벼락에 메시지를 남겨주세요.',
@@ -1374,7 +1364,7 @@ Laat gerust een bericht achter op [[$2|mijn overlegpagina]] als ik je ergens mee
 Het is een eenvoudige manier om je bijdragen te volgen en helpt je bij het onderhouden van contacten met de rest van de gemeenschap.
 
 Laat alsjeblieft een bericht achter op [[$2|mijn overleg pagina]] als ik je ergens mee kan helpen! $3',
-	'welcome-message-log' => 'Verwelkomen van nieuwe bijdrager',
+	'welcome-message-log' => 'Welkom op de {{SITENAME}}!',
 	'welcome-message-user-staff' => '==Welkom==
 
 Hoi, Welkom bij {{SITENAME}}! Dank je wel voor je bewerking aan de pagina [[:$1]].
@@ -1406,6 +1396,7 @@ Welkom bij {{SITENAME}} en dank u wel voor uw bewerking van de [[:$1]] pagina. W
 
 Als u hulp nodig heeft, bekijk dan eerst onze [[Help:Contents|help pagina\'s]] en bezoek dan [[w:c:community|de centrale gemeenschap]] om meer te weten te komen. Veel plezier met bewerken!',
 	'welcome-description' => 'Stuurt een welkomstbericht aan gebruikers na hun eerste bewerkingen',
+	'welcome-user' => '@latest',
 ];
 
 $messages['nl-informal'] = [
@@ -1506,8 +1497,8 @@ $messages['pl'] = [
 	'welcome-user-page' => '== O mnie ==
 \'\'To Twoja strona użytkownika. Edytuj ją i powiedz społeczności coś o sobie!\'\'
 
-== Moje edycje ==
-* [[Special:Contributions/$1|Edycje]]
+== Mój wkład ==
+* [[Specjalna:Wkład/$1|wkład]]
 
 == Moje ulubione strony ==
 * Dodaj tu linki do swoich ulubionych stron!
@@ -1531,7 +1522,7 @@ Jeżeli potrzebujesz pomocy na początku przygody z Fandomem, zajrzyj na [[Help:
 Jeżeli mogę Ci w czymś pomóc, proszę, [[$2|wyślij do mnie wiadomość]]. Miłego pobytu na {{SITENAME}}!
 
 $2',
-	'welcome-message-log' => 'powitanie',
+	'welcome-message-log' => 'Witaj na {{SITENAME}}!',
 	'welcome-message-user-staff' => '==Witaj==
 
 Cześć, witaj na {{SITENAME}}! Jestem członkiem Zespołu Wsparcia Społeczności portalu Fandom. Dziękujemy za edycję w [[:$1]]!
@@ -1668,16 +1659,15 @@ $messages['ps'] = [
 ];
 
 $messages['pt'] = [
-	'welcome-user-page' => '== Sobre mim ==
-\'\'Esta é a tua página de utilizador. Por favor, edita esta página para contar mais sobre ti para a comunidade!\'\'
+	'welcome-user-page' => '==Sobre mim==
 
-== As minhas contribuições ==
-* [[Special:Contributions/$1|Contribuições deste utilizador]]
+\'\'Esta é a sua página de usuário. Por favor, edite esta página para contar mais sobre você para a comunidade!\'\'
 
-== As minhas páginas preferidas ==
-* Adiciona links para as tuas páginas favoritas deste wiki!
-* Página preferida #2
-* Página preferida #3',
+==Minhas páginas favoritas==
+
+* Adicione links para suas páginas favoritas da wikia!
+* Página favorita #2
+* Página favorita #3',
 	'welcome-message-user' => '==Bem-vindo==
 
 Olá, eu sou um administrador da comunidade {{SITENAME}}. Bem-vindo e obrigado por sua edição de [[: $1]]!
@@ -1696,7 +1686,7 @@ Se precisar de ajuda para começar, confira nossas [[Ajuda:Começando|páginas d
 Por favor [[$2|deixe uma mensagem]] se eu puder ajudar em algo. Divirta-se em {{SITENAME}}!
 
 $2',
-	'welcome-message-log' => 'boas-vindas a novo colaborador',
+	'welcome-message-log' => 'bem vindo novo contribuidor',
 	'welcome-message-user-staff' => '==Bem-vindo==
 
 Olá, bem-vindo a {{SITENAME}}! Eu sou um membro da equipe de suporte à comunidade Fandom. Obrigado por sua edição em[[:$1]]!
@@ -1761,20 +1751,18 @@ Você lambem pode seguir o [[w:c:community:Categoria:Notícias_da_Comunidade|blo
 
 Divirta-se em {{SITENAME}}!',
 	'welcome-description' => 'Envia uma mensagem de boas-vindas para utilizadores depois das suas primeiras edições',
+	'welcome-enabled' => 'page-user message-anon message-user',
+	'welcome-user' => '@latest',
 ];
 
 $messages['pt-br'] = [
-	'welcome-user-page' => '== Sobre mim ==
+	'welcome-user-page' => '==Sobre mim==
 
-\'\'Essa é sua página de usuário. Por favor, edite esta página e conte a comunidade algo sobre você!\'\'
+\'\'Esta é sua página de usuário. Por favor, edite esta página para contar mais sobre você para a comunidade!\'\'
 
-== Minhas contribuições ==
+==Minhas páginas favoritas==
 
-* [[Special:Contributions/$1|Contribuições deste usuário]]
-
-== Minhas páginas favoritas ==
-
-* Adicione links para as suas páginas favoritas nesta wiki!
+* Adicione links para suas páginas favoritas da comunidade!
 * Página favorita #2
 * Página favorita #3',
 	'welcome-message-user' => 'Olá, bem vindo(a) a {{SITENAME}}! Obrigada por sua edição em [[:$1]].
@@ -1792,7 +1780,7 @@ Por favor, se tiver alguma duvida, sinta-se a vontade para deixar uma mensagem e
 Porque não \'\'\'[[Special:Userlogin|cria uma conta e se identifica]]\'\'\'?  Desta forma será muito máis fácil saber qué páginas voce editou e o trabalho será atribuido a voce na wiki, alem do mais será de grande ajuda na hora de se comunicar com o resto da comunidade.
 
 Por favor, se tiver alguma duvida, sinta-se a vontade para deixar uma mensagem em [[$2|minha pagina de discussão]] para ver se posso te ajudar com alguma coisa $3',
-	'welcome-message-log' => 'recebendo um novo contribuidor',
+	'welcome-message-log' => 'bem vindo novo contribuidor',
 	'welcome-message-user-staff' => '==Bem-vindo(a)==
 
 Olá, bem-vindo(a) à {{SITENAME}}! Obrigado pela sua edição da página [[:$1]].
@@ -1828,6 +1816,8 @@ Por favor, deixe-me uma mensagem se eu puder te ajudar com qualquer coisa!',
 
 Por favor, deixe-me uma mensagem se eu puder te ajudar com qualquer coisa!',
 	'welcome-description' => 'Envie uma mensagem de boas-vindas para usuários depois das suas primeiras edições',
+	'welcome-enabled' => 'page-user message-anon message-user',
+	'welcome-user' => '@latest',
 ];
 
 $messages['roa-tara'] = [
@@ -1841,10 +1831,6 @@ $messages['ru'] = [
 	'welcome-user-page' => '== Обо мне ==
 
 \'\'Это ваша страница участника. Пожалуйста, отредактируйте эту страницу, расскажите о себе!\'\'
-
-== Мой вклад ==
-
-* [[Special:Contributions/$1|Вклад участника]]
 
 == Мои избранные страницы ==
 
@@ -1871,7 +1857,7 @@ $2',
 Пожалуйста, [[$2|оставьте мне сообщение]], если я могу вам чем-нибудь помочь. Надеюсь, что вам понравится на {{SITENAME}}.
 
 $2',
-	'welcome-message-log' => 'приветствие нового автора',
+	'welcome-message-log' => 'Приветствие нового автора',
 	'welcome-message-user-staff' => '==Добро пожаловать==
 
 Здравствуйте и добро пожаловать на {{SITENAME}}. Я представляю команду поддержки Фэндома. Спасибо за вашу правку на странице «[[:$1]]».
@@ -1932,6 +1918,8 @@ $2',
 Надеюсь, что вам понравится на {{SITENAME}}.
 $2',
 	'welcome-description' => 'Отправляет сообщение с приветствием пользователям после их первых правок',
+	'welcome-enabled' => 'page-user message-anon message-user',
+	'welcome-user' => '@latest',
 ];
 
 $messages['sr-ec'] = [
@@ -1977,11 +1965,11 @@ $messages['sr-ec'] = [
 $messages['sv'] = [
 	'welcome-user-page' => '==Om mig==
 
-\'\'Detta är din användarsida. Redigera den här sidan för att berätta för gemenskapen om dig själv!\'\'
+\'\'Detta är din användarsida. Redigera den här sidan för att berätta gemenskapen om dig själv!\'\'
 
-==Mina bidrag==
+==Mina bidrager==
 
-* [[Special:Contributions/$1|Användarbidrag]]
+* [[Special:Contributions/{{PAGENAME}}|Användarbidrager]]
 
 ==Mina favoritsidor==
 
@@ -2510,5 +2498,9 @@ $2',
 
 希望您在{{SITENAME}}上玩的愉快！',
 	'welcome-description' => '在用戶初次貢獻後發給他們歡迎訊息',
+];
+
+$messages['el'] = [
+	'welcome-message-log' => 'Καλώς Ήρθατε στο {{SITENAME}}!',
 ];
 
