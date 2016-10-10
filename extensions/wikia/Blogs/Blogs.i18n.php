@@ -1873,7 +1873,7 @@ Créez des pages de liste de blogs pour des catégories comme, par exemple, « B
 	'blog-by' => '$1 par $2',
 	'blogs-searchprofile' => 'Billets',
 	'blogs-searchprofile-tooltip' => 'Rechercher dans les billets de blog et les listes de blog',
-	'user-blog-url-link' => 'Blog utilisateur: $1',
+	'user-blog-url-link' => 'Blog utilisateur:$1',
 	'blogs-recent-url' => 'Blog:Billets_récents',
 ];
 
@@ -2678,6 +2678,7 @@ Crea una lista blog per categorie come "Barack Obama", "Fan Fiction" o combina p
 	'blogs-searchprofile' => 'Blog',
 	'blogs-recent-url' => 'Blog:Recent_posts',
 	'blogs-searchprofile-tooltip' => 'Cerca nei blog posts e nelle liste di blog',
+	'user-blog-url-link' => 'Blog utente:$1',
 ];
 
 $messages['ja'] = [
