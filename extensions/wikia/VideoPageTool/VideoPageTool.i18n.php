@@ -149,82 +149,135 @@ $messages['de'] = [
 	'videohomepage-header-search-placeholder' => 'Nach Fandom-Videos suchen',
 	'videopagetool-page-title' => 'Fandom Video-Tool',
 	'videopagetool-section-fan' => 'Fandom Fan-Medien',
+	'videohomepage-header-browse' => 'Durchsuchen',
+	'videohomepage-header-dropdown-name' => 'Entdecken',
+	'videohomepage-partner-section-title' => 'Unsere Partner',
 ];
 
 $messages['es'] = [
 	'videohomepage-header-search-placeholder' => 'Buscar por videos en Fandom',
 	'videopagetool-page-title' => 'Videoteca de Fandom',
 	'videopagetool-section-fan' => 'Fandom Fan Media',
+	'videohomepage-header-browse' => 'Navegar',
+	'videohomepage-header-dropdown-name' => 'Descubrir',
+	'videohomepage-partner-section-title' => 'Nuestros socios',
 ];
 
 $messages['fi'] = [
 	'videohomepage-header-search-placeholder' => 'Etsi Wikian videoita',
+	'videohomepage-header-browse' => 'Selaa',
+	'videohomepage-header-dropdown-name' => 'Löydä',
+	'videohomepage-partner-section-title' => 'Yhteistyökumppanimme',
 ];
 
 $messages['fr'] = [
 	'videohomepage-header-search-placeholder' => 'Rechercher des vidéos de Fandom',
 	'videopagetool-page-title' => 'Outil vidéo de Fandom',
 	'videopagetool-section-fan' => 'Médias des fans de Fandom',
+	'videohomepage-header-browse' => 'Parcourir',
+	'videohomepage-header-dropdown-name' => 'Découvrir',
+	'videohomepage-partner-section-title' => 'Nos partenaires',
 ];
 
 $messages['it'] = [
 	'videohomepage-header-search-placeholder' => 'Cerca video Fandom',
 	'videopagetool-page-title' => 'Strumento video di Fandom',
 	'videopagetool-section-fan' => 'Fandom Fan Media',
+	'videohomepage-header-browse' => 'Sfoglia',
+	'videohomepage-header-dropdown-name' => 'Scopri',
+	'videohomepage-partner-section-title' => 'I nostri Partner',
 ];
 
 $messages['ja'] = [
 	'videohomepage-header-search-placeholder' => 'Fandomの動画を検索',
 	'videopagetool-page-title' => 'Fandom動画ツール',
 	'videopagetool-section-fan' => 'Fandom ファンメディア',
+	'videohomepage-header-browse' => '閲覧',
+	'videohomepage-header-dropdown-name' => '発見',
+	'videohomepage-partner-name-anyclip' => 'Anyclip',
+	'videohomepage-partner-name-ign' => 'IGN',
+	'videohomepage-partner-name-iva' => 'IVA',
+	'videohomepage-partner-name-ooyala' => 'Ooyala (ウーヤラ)',
+	'videohomepage-partner-name-screenplay' => 'スクリーンプレイ',
+	'videohomepage-partner-section-title' => 'パートナー',
 ];
 
 $messages['pl'] = [
 	'videohomepage-header-search-placeholder' => 'Szukaj filmów w Fandom',
 	'videopagetool-page-title' => 'Narzędzia wideo portalu Fandom',
 	'videopagetool-section-fan' => 'Multimedia dla Fanów portalu Fandom',
+	'videohomepage-header-browse' => 'Przeglądaj',
+	'videohomepage-header-dropdown-name' => 'Odkryj',
+	'videohomepage-partner-section-title' => 'Nasi Partnerzy',
 ];
 
 $messages['pt'] = [
 	'videohomepage-header-search-placeholder' => 'Buscar vídeos do Fandom',
 	'videopagetool-page-title' => 'Ferramenta de vídeo do Fandom',
 	'videopagetool-section-fan' => 'Mídia do fã do Fandom',
+	'videohomepage-header-browse' => 'Navegue',
+	'videohomepage-header-dropdown-name' => 'Descubra',
+	'videohomepage-partner-section-title' => 'Nossos parceiros',
 ];
 
 $messages['pt-br'] = [
 	'videohomepage-header-search-placeholder' => 'Procure pelos vídeos da Wikia',
 	'videopagetool-page-title' => 'Ferramenta de Vídeo Wikia',
 	'videopagetool-section-fan' => 'Mídia de fãs da Wikia',
+	'videohomepage-header-browse' => 'Navegue',
+	'videohomepage-header-dropdown-name' => 'Descubra',
+	'videohomepage-partner-name-anyclip' => '',
+	'videohomepage-partner-section-title' => 'Nossos Parceiros',
 ];
 
 $messages['ru'] = [
 	'videohomepage-header-search-placeholder' => 'Поиск видео на Фэндоме',
 	'videopagetool-page-title' => 'Инструмент Фэндома для видео',
 	'videopagetool-section-fan' => 'Медиаматериалы участников Фэндома',
+	'videohomepage-header-browse' => 'Смотреть',
+	'videohomepage-header-dropdown-name' => 'Открывать',
+	'videohomepage-partner-section-title' => 'Наши партнёры',
 ];
 
 $messages['zh'] = [
 	'videohomepage-header-search-placeholder' => '搜索维基视频',
 	'videopagetool-page-title' => '维基视频工具',
 	'videopagetool-section-fan' => '维基粉丝媒体',
+	'videohomepage-header-browse' => '浏览',
+	'videohomepage-header-dropdown-name' => '探索',
+	'videohomepage-partner-section-title' => '我们的合作伙伴',
 ];
 
 $messages['zh-hant'] = [
 	'videohomepage-header-search-placeholder' => 'Fandom影片搜索',
 	'videopagetool-page-title' => 'Fandom影片工具',
 	'videopagetool-section-fan' => 'Fandom粉絲媒體',
+	'videohomepage-header-browse' => '瀏覽',
+	'videohomepage-header-dropdown-name' => '探索',
+	'videohomepage-partner-section-title' => '我們的合作夥伴',
 ];
 
 $messages['zh-hk'] = [
 	'videohomepage-header-search-placeholder' => '搜尋Wikia影片',
 	'videopagetool-page-title' => 'Wikia影片工具',
 	'videopagetool-section-fan' => 'Wikia 粉絲媒體',
+	'videohomepage-header-browse' => '瀏覽',
+	'videohomepage-header-dropdown-name' => '探索',
+	'videohomepage-partner-section-title' => '我們的合作夥伴',
 ];
 
 $messages['zh-tw'] = [
 	'videohomepage-header-search-placeholder' => '搜尋Wikia影片',
 	'videopagetool-page-title' => 'Wikia影片工具',
 	'videopagetool-section-fan' => 'Wikia 粉絲媒體',
+	'videohomepage-header-browse' => '瀏覽',
+	'videohomepage-header-dropdown-name' => '探索',
+	'videohomepage-partner-name-anyclip' => 'Anyclip',
+	'videohomepage-partner-name-ign' => 'IGN',
+	'videohomepage-partner-name-iva' => 'IVA',
+	'videohomepage-partner-name-ooyala' => 'Ooyala',
+	'videohomepage-partner-name-screenplay' => 'Screenplay',
+	'videohomepage-partner-section-title' => '我們的合作夥伴',
 ];
 
 $messages['zh-hans'] = [
