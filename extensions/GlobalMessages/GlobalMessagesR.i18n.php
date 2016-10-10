@@ -9772,7 +9772,7 @@ de.wikia.com',
 
 * [{{FULLURL:MediaWiki:Related wiki}} No related wiki have been selected yet.]',
 	'registerintro-title' => 'Sobald du bei Fandom ein Konto erstellt hast, bist du Teil der Community!',
-	'registerintro-text' => 'You get credit for all your contributions, and you can also create your own user profile, watchlist your favorite pages, and get access to all kinds of neat tools.',
+	'registerintro-text' => 'Alle deine Beiträge werden dir zugeordnet und du kannst dein eigenes Benutzerprofil erstellen, interessante Artikel beobachen und hast du Zugriff auf weitere nützliche Tools.',
 	'rcshowhidelogs' => 'Logbücher $1',
 ];
 
@@ -11678,7 +11678,7 @@ ___________________________________________
 
 * [{{FULLURL:MediaWiki:Related wiki}} No related wiki have been selected yet.]',
 	'registerintro-title' => '¡Cuando creas una cuenta en Fandom, te conviertes en parte de la comunidad!',
-	'registerintro-text' => 'You get credit for all your contributions, and you can also create your own user profile, watchlist your favorite pages, and get access to all kinds of neat tools.',
+	'registerintro-text' => 'Dale crédito a todas tus contribuciones, y también podrás crear tu propio perfil de usuario, lista de seguimiento con tus páginas favoritas y tendrás acceso a una gran variedad de herramientas continuamente actualizadas.',
 	'rcshowhidelogs' => '$1 registros',
 ];
 
@@ -12914,6 +12914,7 @@ Sinulla ei ole oikeutta siihen.',
 	'review_reason_5' => 'Arvostelun syy 5',
 	'registerintro-title' => 'Kun luot Wikia käyttäjän, sinusta tulee osa yhteisöä!',
 	'refreshpage' => 'Lataa sivu uudestaan aktivoidaksesi tämän vekottimen',
+	'registerintro-text' => 'Saat kunniaa kaikista artikkeleistasi, ja voit myös tehdä oman käyttäjä sivun, tarkkailulistan lempisivuistasi, ja pääset kaikenlaisiin hienoihin työkaluihin käsiksi.',
 ];
 
 $messages['fiu-vro'] = [
@@ -13704,7 +13705,7 @@ www.wikia.com
 
 * [{{FULLURL:MediaWiki:Related wiki}} No related wiki have been selected yet.]',
 	'registerintro-title' => 'Lorsque vous créez un compte sur Fandom, vous devenez membre de la communauté !',
-	'registerintro-text' => 'You get credit for all your contributions, and you can also create your own user profile, watchlist your favorite pages, and get access to all kinds of neat tools.',
+	'registerintro-text' => 'Vous comptabilisez toutes vos contributions et vous pouvez créer votre propre profil utilisateur, liste de suivi de vos pages favorites et avoir accès à toute sorte d\'outils sympas. Vos contributions sont davantage prises au sérieux.',
 	'rcshowhidelogs' => '$1 les journaux',
 ];
 
@@ -20383,7 +20384,7 @@ www.wikia.com
 
 * [{{FULLURL:MediaWiki:Related wiki}} No related wiki have been selected yet.]',
 	'registerintro-title' => 'Quando crei un account su Fandom, diventi parte della comunità!',
-	'registerintro-text' => 'You get credit for all your contributions, and you can also create your own user profile, watchlist your favorite pages, and get access to all kinds of neat tools.',
+	'registerintro-text' => 'Ricevi il riconoscimento per tutte le tue collaborazioni, crea il tuo profilo utente personale, segui gli sviluppi delle tue pagine preferite e utilizza tutti i pratici strumenti disponibili.',
 	'rcshowhidelogs' => '$1 logs',
 ];
 
@@ -20985,7 +20986,7 @@ ___________________________________________
 
 * [{{FULLURL:MediaWiki:Related wiki}} No related wiki have been selected yet.]',
 	'registerintro-title' => 'Fandomでアカウントを作成すると、コミュニティの一員になります',
-	'registerintro-text' => 'You get credit for all your contributions, and you can also create your own user profile, watchlist your favorite pages, and get access to all kinds of neat tools.',
+	'registerintro-text' => 'あなたが行う全ての投稿にクレジットがつけられ、プロフィールの作成・気に入ったページのウォッチ・様々なツールの利用ができるようになります。',
 	'rcshowhidelogs' => 'ログを$1',
 ];
 
@@ -24136,6 +24137,7 @@ ___________________________________________
 * 위키아 중앙 커뮤니티에서 도움을 구하실 수 있습니다: http://ko.community.wikia.com
 * 알림을 받고 싶지 않으신가요? 이곳에서 알림 설정을 변경하실 수 있습니다: http://ko.community.wikia.com/특수기능:환경설정',
 	'reconfirmemail_subject' => '위키아 계정을 다시 인증해 주세요',
+	'registerintro-text' => '당신의 기여를 쌓을 수 있으며, 프로필을 만드시거나, 관심 있는 문서를 주시하거나, 멋진 문서 도구들과 함께하실 수 있습니다',
 ];
 
 $messages['ko-kp'] = [
@@ -33065,6 +33067,7 @@ The Wikia Community Teamet
 www.wikia.com',
 	'reconfirmemail_subject' => 'Velkommen til Wikia!',
 	'refreshpage' => 'Oppdater siden for å aktivere denne widgeten',
+	'registerintro-text' => 'Du får anerkjennelse for alle bidrag, og du kan også opprette en egen brukerprofil, overvåke yndlingssidene dine, og få tilgang til alle slags nyttige verktøy.',
 ];
 
 $messages['nov'] = [
@@ -34625,7 +34628,7 @@ www.wikia.com
 
 * [{{FULLURL:MediaWiki:Related wiki}} No related wiki have been selected yet.]',
 	'registerintro-title' => 'Tworząc konto na portalu Fandom stajesz się częścią społeczności!',
-	'registerintro-text' => 'You get credit for all your contributions, and you can also create your own user profile, watchlist your favorite pages, and get access to all kinds of neat tools.',
+	'registerintro-text' => 'Otrzymujesz punkty za edytowanie, możesz stworzyć swój własny profil użytkownika, obserwować swoje ulubione strony i uzyskać dostęp do wszelkiego rodzaju ciekawych narzędzi.',
 ];
 
 $messages['pms'] = [
@@ -42748,6 +42751,7 @@ Vi ser fram emot att träffa er på Wikia!
 Wikia Community Team
 www.wikia.com',
 	'reconfirmemail_subject' => 'Vänligen bekräfta ditt Wikia konto',
+	'registerintro-text' => 'Du får kredit för alla era bidrag, och du kan också skapa din egen profil, övervakningslista dina favoritsidor, och få tillgång till alla typer av snyggt verktyg.',
 ];
 
 $messages['sw'] = [
