@@ -40,7 +40,7 @@ $messages['en'] = [
 	'sig_tip' => 'Your signature with timestamp',
 	'summary' => 'Summary:',
 	'subject' => 'Subject/headline:',
-	'savearticle' => 'Save page',
+	'savearticle' => 'Publish',
 	'showpreview' => 'Show preview',
 	'showlivepreview' => 'Live preview',
 	'showdiff' => 'Show changes',
@@ -8455,6 +8455,7 @@ Das liegt wahrscheinlich an einem Link auf eine externe Seite.',
 * [[Special:Contact|Kontakt]]
 * [http://www.wikia.com/wiki/Wikia:Advertising_on_Wikia Auf Wikia werben]',
 	'specialpages-group-wikia' => 'Fandom-Seiten',
+	'save' => 'Speichern',
 ];
 
 $messages['de-ch'] = [
@@ -9793,7 +9794,7 @@ Mientras tanto puedes buscar mediante Google, pero ten en cuenta que sus índice
 	'stub-threshold-disabled' => 'Desactivado',
 	'savedprefs' => 'Tus preferencias han sido guardadas.',
 	'servertime' => 'Hora del servidor:',
-	'saveusergroups' => 'Guardar grupos de usuarios',
+	'saveusergroups' => 'Guardar grupos del usuario',
 	'show' => 'mostrar',
 	'savefile' => 'Guardar archivo',
 	'sourcefilename' => 'Nombre del archivo origen:',
@@ -9996,6 +9997,7 @@ Esto podría estar causado por un enlace a un sitio externo incluido en la lista
 * [[Special:Contact|Contactar]]
 * [http://mediakit.wikia.com/wiki/Contact Publicidad]',
 	'specialpages-group-wikia' => 'Páginas de Fandom',
+	'save' => 'Guardar',
 ];
 
 $messages['et'] = [
@@ -10968,6 +10970,7 @@ Alla on viimeisin lokitapahtuma:',
 	'sqlite-has-fts' => '$1, jossa on tuki kokotekstihaulle',
 	'sqlite-no-fts' => '$1, jossa ei ole tukea kokotekstihaulle',
 	'share_it' => 'Jaa:',
+	'save' => 'Tallenna',
 ];
 
 $messages['fiu-vro'] = [
@@ -11637,6 +11640,7 @@ impossible de renommer une page sur elle-même.',
 * [[Special:Contact|Nous contacter]]
 * [http://www.wikia.com/wiki/Wikia:Advertising_on_Wikia Publicité]',
 	'specialpages-group-wikia' => 'Pages Fandom',
+	'save' => 'Enregistrer',
 ];
 
 $messages['frc'] = [
@@ -17524,7 +17528,7 @@ $messages['ja'] = [
 	'sig_tip' => '時刻印つきの署名',
 	'summary' => '編集内容の要約：',
 	'subject' => '題名・見出し：',
-	'savearticle' => 'ページを保存',
+	'savearticle' => '保存',
 	'showpreview' => 'プレビューを表示',
 	'showlivepreview' => 'ライブプレビュー',
 	'showdiff' => '差分を表示',
@@ -17603,7 +17607,7 @@ $messages['ja'] = [
 	'stub-threshold-disabled' => '無効',
 	'savedprefs' => '個人設定を保存しました。',
 	'servertime' => 'サーバーの時間：',
-	'saveusergroups' => '利用者グループを保存',
+	'saveusergroups' => 'ユーザー権限を保存',
 	'show' => '表示',
 	'savefile' => 'ファイルを保存',
 	'sourcefilename' => 'アップロード元のファイル名：',
@@ -27430,7 +27434,7 @@ De gegevens over {{SITENAME}} zijn mogelijk niet bijgewerkt.',
 	'searchresultshead' => 'Zoekresultaten',
 	'stub-threshold' => 'Drempel voor markering als <a href="#" class="stub">beginnetje</a>:',
 	'stub-threshold-disabled' => 'Uitgeschakeld',
-	'savedprefs' => 'Uw voorkeuren zijn opgeslagen.',
+	'savedprefs' => 'Je voorkeuren zijn opgeslagen.',
 	'servertime' => 'Servertijd:',
 	'saveusergroups' => 'Gebruikersgroepen opslaan',
 	'show' => 'weergeven',
@@ -29138,7 +29142,7 @@ $messages['pl'] = [
 	'sig_tip' => 'Twój podpis wraz z datą i czasem',
 	'summary' => 'Opis zmian ',
 	'subject' => 'Temat/nagłówek:',
-	'savearticle' => 'Zapisz',
+	'savearticle' => 'Publikuj',
 	'showpreview' => 'Pokaż podgląd',
 	'showlivepreview' => 'Dynamiczny podgląd',
 	'showdiff' => 'Podgląd zmian',
@@ -29428,6 +29432,7 @@ Najprawdopodobniej zostało to spowodowane przez link do zewnętrznej strony int
 	* [[Special:Contact|Kontakt]]
 	* [http://www.wikia.com/Advertising Reklama]',
 	'specialpages-group-wikia' => 'Strony portalu Fandom',
+	'save' => 'Publikuj',
 ];
 
 $messages['pms'] = [
@@ -31751,7 +31756,7 @@ $messages['ru'] = [
 	'sig_tip' => 'Ваша подпись и момент времени',
 	'summary' => 'Описание изменений:',
 	'subject' => 'Тема/заголовок:',
-	'savearticle' => 'Записать страницу',
+	'savearticle' => 'Записать',
 	'showpreview' => 'Предварительный просмотр',
 	'showlivepreview' => 'Быстрый предпросмотр',
 	'showdiff' => 'Внесённые изменения',
@@ -31945,6 +31950,7 @@ $messages['ru'] = [
 * [[Special:Contact|Contact]]
 * [http://www.wikia.com/wiki/Wikia:Advertising_on_Wikia Advertise]',
 	'specialpages-group-wikia' => 'Страницы Фэндома',
+	'save' => 'Сохранить',
 ];
 
 $messages['rue'] = [
