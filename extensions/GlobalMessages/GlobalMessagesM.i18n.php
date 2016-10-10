@@ -23818,7 +23818,7 @@ Door een bestand te hernoemen naar deze naam, is het bestand uit de gedeelde med
 	'markedaspatrollederror' => 'Kan niet als gecontroleerd worden aangemerkt',
 	'markedaspatrollederrortext' => 'Selecteer een versie om als gecontroleerd aan te merken.',
 	'markedaspatrollederror-noautopatrol' => 'Je kunt je eigen wijzigingen niet als gecontroleerd markeren.',
-	'mediawarning' => '\'\'\'Waarschuwing\'\'\': dit bestandstype bevat mogelijk programmacode die uw systeem schade kan berokkenen.',
+	'mediawarning' => '\'\'\'Waarschuwing\'\'\': dit bestandstype bevat mogelijk programmacode die je systeem schade kan berokkenen.',
 	'minutes' => '{{PLURAL:$1|$1 minuut|$1 minuten}}',
 	'metadata' => 'Metadata',
 	'metadata-help' => 'Dit bestand bevat aanvullende informatie, die door een fotocamera, scanner of fotobewerkingsprogramma toegevoegd kan zijn.
