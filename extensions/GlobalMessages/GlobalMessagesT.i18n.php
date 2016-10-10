@@ -28773,9 +28773,9 @@ $messages['nl'] = [
 De gegeven reden is \'\'$2\'\'.',
 	'throttled-mailpassword' => 'In {{PLURAL:$1|het laatste uur|de laatste $1 uur}} is er al een wachtwoordherinnering verzonden.
 Om misbruik te voorkomen wordt er slechts één wachtwoordherinnering per {{PLURAL:$1|uur|$1 uur}} verzonden.',
-	'token_suffix_mismatch' => '\'\'\'Uw bewerking is geweigerd, omdat uw browser de leestekens in het bewerkingstoken onjuist heeft behandeld.\'\'\'
+	'token_suffix_mismatch' => '\'\'\'Je bewerking is geweigerd, omdat je browser de leestekens in het bewerkingstoken onjuist heeft behandeld.
 De bewerking is geweigerd om verminking van de paginatekst te voorkomen.
-Dit gebeurt soms als er een webgebaseerde proxydienst wordt gebruikt die fouten bevat.',
+Dit gebeurt soms als er een webgebaseerde proxydienst wordt gebruikt die fouten bevat.\'\'\'',
 	'titleprotectedwarning' => '\'\'\'Waarschuwing: Deze pagina is beveiligd. Er zijn [[Special:ListGroupRights|speciale rechten]] nodig om de pagina aan te kunnen maken.\'\'\'
 De laatste logboekregel staat hieronder:',
 	'templatesused' => 'Op deze pagina {{PLURAL:$1|gebruikt sjabloon|gebruikte sjablonen}}:',
