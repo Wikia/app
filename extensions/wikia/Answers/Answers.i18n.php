@@ -631,7 +631,7 @@ $messages['es'] = [
 	'research_this_on_wikipedia' => '<a href="$1">Investigar sobre esta pregunta</a> en Wikipedia',
 	'receive_email' => '<a href="$1" $2>Recibir un correo electrónico</a> cuando se responda a esta pregunta',
 	'ask_friends_on_twitter' => 'Pregunta a tus amigos en <a href="$1" $2>Twitter</a>',
-	'quick_action_panel' => 'Panel de Acción Rápida',
+	'quick_action_panel' => 'Panel de acción rápida',
 	'categorize' => 'Categorizar',
 	'categorize_help' => 'Una categoría por línea',
 	'answers_widget_admin_note' => '{{int:Answers widget user note}}',
@@ -2130,6 +2130,7 @@ $messages['pl'] = [
 	'qa-toolbox-protect' => 'Zabezpiecz to pytanie',
 	'qa-toolbox-share' => 'Publikuj',
 	'qa-toolbox-tools' => 'Zaawansowane»',
+	'quick_action_panel' => 'Panel szybkiego działania',
 ];
 
 $messages['pms'] = [
@@ -2187,6 +2188,7 @@ $messages['pt'] = [
 	'question_asked_by' => 'Pergunta feita por',
 	'question_not_answered' => 'Esta pergunta ainda não foi respondida',
 	'question_redirected_help_page' => 'Por que minha pergunta foi transferida para aqui',
+	'quick_action_panel' => 'Painel de ação rapida',
 ];
 
 $messages['pt-br'] = [
@@ -2222,6 +2224,7 @@ $messages['pt-br'] = [
 	'question_asked_by' => 'Pergunta feita por',
 	'question_not_answered' => 'Esta pergunta ainda não foi respondida',
 	'question_redirected_help_page' => 'Por que minha pergunta foi transferida para aqui',
+	'quick_action_panel' => 'Painel de ação rapida',
 ];
 
 $messages['roa-tara'] = [
@@ -2616,6 +2619,7 @@ $messages['no'] = [
 	'question_asked_by' => 'Spørsmål stilt av',
 	'question_not_answered' => 'Dette spørsmålet har ikke blitt besvart',
 	'question_redirected_help_page' => 'Hvorfor ble spørsmålet mitt videreført hit',
+	'quick_action_panel' => 'Hurtighandlingspanel',
 ];
 
 $messages['zh-hant'] = [
