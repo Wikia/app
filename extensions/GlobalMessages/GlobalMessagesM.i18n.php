@@ -152,7 +152,158 @@ In those cases, you will have to move or merge the page manually if desired.',
 	'move-leave-redirect' => 'Leave a redirect behind',
 	'move-over-sharedrepo' => '== File exists ==
 [[:$1]] exists on a shared repository. Moving a file to this title will override the shared file.',
-	'monobook.css' => '/* CSS placed here will affect users of the Monobook skin */',
+	'monobook.css' => '/***** Edit this file to customize the Monobook skin for the entire site. Please ensure you do not violate Wikia\'s Terms of Use by obscuring or removing the advertising. *****/
+/* See also: [[MediaWiki:Common.css]] */
+
+/*** Bold \'edit this page\' link to encourage newcomers ***/
+
+#ca-edit a { 
+    font-weight: bold !important; 
+}
+
+/* Infobox template style */
+.infobox {
+   border: 1px solid #aaaaaa;
+   background-color: #f9f9f9;
+   color: black;
+   margin-bottom: 0.5em;
+   margin-left: 1em;
+   padding: 0.2em;
+   float: right;
+   clear: right;
+}
+.infobox td,
+.infobox th {
+   vertical-align: top;
+}
+.infobox caption {
+   font-size: larger;
+   margin-left: inherit;
+}
+.infobox.bordered {
+   border-collapse: collapse;
+}
+.infobox.bordered td,
+.infobox.bordered th {
+   border: 1px solid #aaaaaa;
+}
+.infobox.bordered .borderless td,
+.infobox.bordered .borderless th {
+   border: 0;
+}
+
+/* Forum formatting (by -Algorithm & -Splaka) */
+.forumheader {
+   border: 1px solid #aaa;
+   margin-top: 1em;
+   padding: 12px;
+}
+.forumlist td.forum_edited a {
+   color: black;
+   text-decoration: none;
+}
+.forumlist td.forum_title a {
+   padding-left: 20px;
+}
+.forumlist td.forum_title a.forum_new {
+   font-weight: bold;
+   background: url(/images/4/4e/Forum_new.gif) center left no-repeat;
+   padding-left: 20px;
+}
+.forumlist td.forum_title a.forum_new:visited {
+   font-weight: normal;
+   background: none;
+   padding-left: 20px;
+}
+.forumlist th.forum_title {
+   padding-left: 20px;
+}
+
+/* Recent changes byte indicators */
+.mw-plusminus-pos {
+   color: #006500;
+}
+.mw-plusminus-neg {
+   color: #8B0000;
+}
+
+/* Image frame fix */
+div.tright, div.tleft {
+   border: 1px solid silver;
+}
+
+div.thumbinner {
+   background: inherit;
+   border: none;
+   color: inherit;
+}
+#article div.thumb {
+   color:inherit;
+}
+
+/* === Babel === */
+
+div.babelbox {
+   float: right;
+   margin-left: 1em;
+   margin-bottom: 0.5em;
+   width: 246px;
+   border: 1px solid #99B3FF;
+   padding: 2px 0 2px 0;
+}
+.lang-blockN, .lang-block0, .lang-block1, .lang-block2, .lang-block3 {
+   margin: 2px 4px 2px 4px; /* t, l, b, r */
+   width:238px;
+   border-collapse: collapse;
+}
+td.lang-codeN, td.lang-code0, td.lang-code1, td.lang-code2, td.lang-code3 {
+   text-align:center;
+   font-size:14pt;
+   width:45px;
+   height:45px;
+}
+td.lang-descriptionN, td.lang-description0, td.lang-description1,
+td.lang-description2, td.lang-description3 {
+  font-size:8pt;
+  padding:4pt;
+  line-height:1.25em;
+}
+
+.lang-block0 {
+   border:1px solid #FFB3B3;
+}
+td.lang-code0 {
+  background-color: #FFB3B3;
+  color: black;
+}
+td.lang-description0 {
+  background-color: #FFE0E8;
+  color: black;
+}
+
+.lang-block1,  .lang-block2, .lang-block3  {
+   border:1px solid #99B3FF;
+}
+td.lang-code1, td.lang-code2, td.lang-code3 {
+  background-color: #99B3FF;
+  color: black;
+}
+td.lang-description1,  td.lang-description2, td.lang-description3 {
+  background-color: #E0E8FF;
+  color: black;
+}
+
+.lang-blockN {
+   border:1px solid #6EF7A7;
+}
+td.lang-codeN {
+  background-color: #6EF7A7;
+  color: black;
+}
+td.lang-descriptionN {
+  background-color: #C5FCDC;
+  color: black;
+}',
 	'monobook.js' => '/* Any JavaScript here will be loaded for users using the MonoBook skin */',
 	'markaspatrolleddiff' => 'Mark as patrolled',
 	'markaspatrolledlink' => '[$1]',
@@ -7048,8 +7199,143 @@ Bitte den \'\'\'neuen\'\'\' Titel unter \'\'\'Ziel\'\'\' eintragen, darunter die
 	'move-leave-redirect' => 'Weiterleitung erstellen',
 	'move-over-sharedrepo' => '==Datei existiert==
 [[:$1]] existiert in einem gemeinsam genutzten Repositorium. Das Verschieben einer Datei zu diesem Titel überschreibt die gemeinsam genutzte Datei.',
-	'monobook.css' => '/* Das folgende CSS wird für Benutzer der Monobook-Benutzeroberfläche geladen. Für allgemeingültige Benutzeroberflächen-Anpassungen bitte [[MediaWiki:Common.css]] bearbeiten. */',
-	'monobook.js' => '/* Das folgende JavaScript wird für Benutzer der Monobook-Benutzeroberfläche geladen. Allgemeingültiges JavaScript bitte in [[MediaWiki:Common.js]] eintragen. */',
+	'monobook.css' => '/***** CSS an dieser Stelle wirkt sich auf die Monobook-Skin für alle Benutzer aus *****/
+
+/* Siehe auch: [[MediaWiki:Common.css]] */
+
+/* <pre><nowiki> */
+
+
+/*** Kleinschreibung nicht erzwingen ***/
+
+.portlet h5,
+.portlet h6,
+#p-personal ul,
+#p-cactions li a {
+    text-transform: none;
+}
+
+
+/*** Fetter Bearbeiten-Link ***/
+
+#ca-edit a { 
+    font-weight: bold !important; 
+}
+
+
+/*** Reiter in linker Navigation ***/
+
+.portlet h5 {
+    background-color: #e0e3e6;
+    border: thin solid silver;
+}
+
+/* Infobox Vorlagen-Style */
+.infobox {
+   border: 1px solid #aaaaaa;
+   background-color: #f9f9f9;
+   color: black;
+   margin-bottom: 0.5em;
+   margin-left: 1em;
+   padding: 0.2em;
+   float: right;
+   clear: right;
+}
+.infobox td,
+.infobox th {
+   vertical-align: top;
+}
+.infobox caption {
+   font-size: larger;
+   margin-left: inherit;
+}
+.infobox.bordered {
+   border-collapse: collapse;
+}
+.infobox.bordered td,
+.infobox.bordered th {
+   border: 1px solid #aaaaaa;
+}
+.infobox.bordered .borderless td,
+.infobox.bordered .borderless th {
+   border: 0;
+}
+
+/*** Forum-Formatierung (von -Algorithm und -Splarka) ***/
+
+.forumheader { 
+    border:1px solid #a3bfb1; background:darkseagreen; color:#000; font-size:120%; font-weight:bold; text-align:left; -moz-border-radius:0.2em; margin-top: 0.5em; padding: 10px; 
+}
+.forumlist td.forum_edited a { 
+     color: black; text-decoration: none;
+}
+.forumlist td.forum_title a { 
+     padding-left: 20px; 
+}
+.forumlist td.forum_title a.forum_new {  
+     font-weight: bold; background: url(/images/4/4e/Forum_new.gif) center left no-repeat; padding-left: 20px; 
+}
+.forumlist td.forum_title a.forum_new:visited { 
+     font-weight: normal; background: none; padding-left: 20px; 
+}
+.forumlist th.forum_title { 
+     padding-left: 20px; 
+}
+
+ /* Markierung von Weiterleitungen in [[Special:Allpages]]  */
+ 
+ .allpagesredirect {
+     background-color:#F5F5F5;
+     font-style: italic;
+ }
+
+/*** (± Zahl) wird in den letzen Änderungen bei minus rot dargestellt, bei plus grün ***/
+ span.mw-plusminus-pos {color: #006400;} 
+ span.mw-plusminus-neg {color: #8B0000;}
+
+/*** font class für \'hellklick\' in Balkennavigation ***/
+
+.hellklick a, .hellklick a:visited { 
+     text-decoration: underline; color: #fefefe !important;
+}
+.hellklick a:hover, .hellklick a:active { 
+     color: #9ad9ff !important;
+}
+
+/*** font class für \'hellklick2\' in Tutorial ***/
+
+.hellklick2 a, .hellklick2 a:visited { 
+     text-decoration: none; color: #fefefe !important;
+}
+.hellklick2 a:hover, .hellklick2 a:active { 
+     color: #9ad9ff !important; text-decoration: underline;
+}
+
+/* Ausklappen per Mauklick (s.a. [[MediaWiki:Common.js]]  */
+ 
+ .klapp {
+      cursor: pointer;
+ }
+ span.klapp {
+      text-decoration: none;
+      color: #002bb8;
+      background: none;
+      }
+ 
+ span.klapp:hover {
+      text-decoration: underline;
+      }
+ 
+ /* Drag & Drop */
+ .jstest{
+      position:relative;
+      cursor:move;
+      z-index: 100;
+      padding:20px 45px 20px 0px;
+      border-width:1px;
+      }
+/* </nowiki></pre> */',
+	'monobook.js' => '/* Veraltet; benutze stattdessen [[MediaWiki:common.js]] */',
 	'markaspatrolleddiff' => 'Als kontrolliert markieren',
 	'markaspatrolledtext' => 'Diese Seite als kontrolliert markieren',
 	'markedaspatrolled' => 'Als kontrolliert markiert',
@@ -15116,7 +15402,7 @@ contenttype/subtypeの形式で指定してください（例：<tt>image/jpeg</
 	'move-over-sharedrepo' => '== ファイルが存在します ==
 [[:$1]]は共有リポジトリー上に存在します。ファイルをこの名前に移動すると共有ファイルを上書きします。',
 	'monobook.css' => '/* ここに記述したCSSはモノブック外装の利用者に影響します */',
-	'monobook.js' => '/* ここにあるすべてのJavaScriptは、モノブック外装を使用している利用者に対して読み込まれます */',
+	'monobook.js' => '/* このページの利用は中止してください。代わりに、[[MediaWiki:common.js]]を御利用下さい。 */',
 	'markaspatrolleddiff' => '巡回済みにする',
 	'markaspatrolledtext' => 'このページを巡回済みにする',
 	'markedaspatrolled' => '巡回済みにしました',
@@ -25494,8 +25780,8 @@ W takich przypadkach treść dyskusji można przenieść tylko ręcznie.',
 	'move-leave-redirect' => 'Pozostaw przekierowanie pod dotychczasowym tytułem',
 	'move-over-sharedrepo' => '== Plik istnieje ==
 [[:$1]] istnieje we wspólnym repozytorium. Zmiana nazwy pliku na tę spowoduje przesłonięcie współdzielonego pliku.',
-	'monobook.css' => '/* Umieszczony tutaj kod CSS wpłynie na wygląd skórki Książka */',
-	'monobook.js' => '/* Umieszczony tutaj kod JavaScript zostanie załadowany wyłącznie przez użytkowników korzystających ze skórki Książka */',
+	'monobook.css' => '/* Umieszczony tutaj kod CSS wpłynie na wygląd skórki Monobook */',
+	'monobook.js' => '/* Umieszczony tutaj kod JavaScript zostanie załadowany wyłącznie przez użytkowników korzystających ze skórki Monobook */',
 	'markaspatrolleddiff' => 'oznacz edycję jako „sprawdzoną”',
 	'markaspatrolledtext' => 'Oznacz tę stronę jako „sprawdzoną”',
 	'markedaspatrolled' => 'Sprawdzone',
