@@ -1118,7 +1118,7 @@ $messages['fi'] = [
 ];
 
 $messages['fr'] = [
-	'multiwikifinder-desc' => 'Outil d’équipe pour rechercher un titre spécifique dans Wikia',
+	'multiwikifinder-desc' => 'Outil pour le staff pour rechercher un titre spécifique sur Wikia',
 	'multidelete-desc' => 'Suppression sur plusieurs wikias',
 	'multiedit-desc' => 'Modification multi-wikis spéciale',
 	'multitasks-link-back-label' => 'ici',
@@ -1776,8 +1776,8 @@ $messages['ko'] = [
 	'multidelete_french_wikis' => '모든 프랑스어 위키',
 	'multidelete_swedish_wikis' => '모든 스웨덴어 위키',
 	'multidelete_german_wikis' => '모든 독일어 위키',
-	'multiwikifinder' => '문서 이름 찾기',
-	'multiwikifindpagenames' => '문서 이름 찾기',
+	'multiwikifinder' => '전역 문서 검색기',
+	'multiwikifindpagenames' => '문서 이름 검색',
 	'multiwikienterpagename' => '문서 이름 입력:',
 	'multiwikirecords' => '위키 $1개 발견',
 	'multiwikifinder-redirect' => '넘겨주기',
