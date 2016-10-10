@@ -34,23 +34,32 @@ define('ext.wikia.adEngine.domElementTweaker', [
 		}
 	}
 
-	function moveStylesToInline(element) {
-		var computedStyles;
+	function moveStylesToInline(sourceElement, targetElement, ignoredStyles) {
+		var computedStyles, tmpStyles = {};
 
-		if (!isElement(element)) {
-			log(['Can\'t copy styles because parameter isn\'t element', element], 4, logGroup);
+		if (!isElement(sourceElement)) {
+			log(['Can\'t copy styles because parameter isn\'t element', sourceElement], 4, logGroup);
 			return;
 		}
 
-		computedStyles = document.defaultView.getComputedStyle(element, '');
+		computedStyles = document.defaultView.getComputedStyle(sourceElement, '');
+
+		ignoredStyles.forEach(function (styleName) {
+			tmpStyles[styleName] = targetElement.style[styleName];
+		});
 
 		if (win.CSS2Properties !== undefined && computedStyles instanceof win.CSS2Properties) {
-			rewriteStylesToElement(computedStyles, element); // Hack for Firefox
+			rewriteStylesToElement(computedStyles, targetElement); // Hack for Firefox
 		} else if (win.CSSStyleDeclaration !== undefined && computedStyles instanceof win.CSSStyleDeclaration) {
-			element.style.cssText = computedStyles.cssText;
+			targetElement.style.cssText = computedStyles.cssText;
 		} else {
 			log(['Can\'t copy styles from element', computedStyles.cssText], 4, logGroup);
+			return;
 		}
+
+		Object.keys(tmpStyles).forEach(function (key) {
+			targetElement.style[key] = tmpStyles[key];
+		});
 	}
 
 	function cleanInlineStyles(element) {
