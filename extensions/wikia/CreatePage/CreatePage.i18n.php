@@ -31,15 +31,7 @@ Please use a different title.',
 	'tog-createpagedefaultblank' => 'Use a blank page as default for creating a new page',
 	'tog-createpagepopupdisabled' => 'Disable "Create a new article" flow (Not Recommended)',
 	'newpagelayout' => '[[File:Placeholder|right|300px]]
-Write the first paragraph of your page here.
-
-==Section heading==
-
-Write the first section of your page here.
-
-==Section heading==
-
-Write the second section of your page here.',
+Write the text of your article here!',
 	'createpage-with-video' => '[[File:Placeholder|video|right|300px]] [[File:Placeholder|right|300px]] 
 Write the first paragraph of your page here.
 
@@ -383,16 +375,16 @@ Bitte wähle einen anderen Namen.',
 	'createpage-error-article-blocked' => 'Du kannst im Moment keinen Artikel erstellen.',
 	'tog-createpagedefaultblank' => 'Wähle „Leere Seite“ als Standard bei Erstellung neuer Seiten',
 	'tog-createpagepopupdisabled' => 'Seite erstellen-Hinweis deaktivieren (Nicht empfohlen)',
-	'newpagelayout' => '[[File:Placeholder|right|300px]]
-Schreibe den ersten Absatz deines Artikels hier.
+	'newpagelayout' => '[[Datei:Platzhalter|right|300px]]
+Schreibe deinen ersten Abschnitt hier.
 
-==Überschrift des Abschnittes==
+==Überschrift==
 
-Schreibe den ersten Abschnitt deines Artikels hier.
+Schreibe deinen zweiten Artikelabschnitt hier. Vergiss nicht Links zu anderen Seiten im Wiki hinzuzufügen.
 
-==Überschrift des Abschnittes==
+==Überschrift==
 
-Schreibe den zweiten Abschnitt deines Artikels hier.',
+Dritter Artikelabschnitt. Vergiss nicht den Artikel in eine Kategorie einzuordnen, damit andere Benutzer ihn leichter finden können.',
 	'createpage-with-video' => '[[File:Placeholder|video|right|300px]] [[File:Placeholder|right|300px]]
 Schreibe den ersten Absatz deines Artikels hier.
 
@@ -492,15 +484,15 @@ $messages['es'] = [
 	'tog-createpagedefaultblank' => 'Usa una página en blanco de manera predeterminada para la traducción de nuevas páginas.',
 	'tog-createpagepopupdisabled' => 'Desactivar el proceso "Crear un nuevo artículo" (no recomendado)',
 	'newpagelayout' => '[[File:Placeholder|right|300px]]
-Escribe aquí el primer párrafo de tu artículo.
+Escribe el primer párrafo de tu artículo aquí.
 
-==Encabezado de sección==
+==Título de la sección==
 
-Escribe aquí la primera sección de tu artículo.
+Escribe la primera sección de tu artículo aquí.
 
-==Encabezado de sección==
+==Título de la sección==
 
-Escribe aquí la segunda sección de tu artículo.',
+Escribe la segunda sección de tu artículo aquí.',
 	'createpage-with-video' => '[[File:Placeholder|video|right|300px]] [[File:Placeholder|right|300px]]
 Escribe aquí el primer párrafo de tu artículo.
 
@@ -1446,13 +1438,13 @@ Kies alstublieft een andere paginanaam.',
 	'tog-createpagedefaultblank' => 'Lege pagina als standaard nieuwe pagina gebruiken',
 	'tog-createpagepopupdisabled' => 'Workflow voor "Pagina aanmaken" uitschakelen (niet aanbevolen)',
 	'newpagelayout' => '[[File:Placeholder|right|300px]]
-Schrijf hier de eerste alinea van uw pagina.
+Schrijf hier de eerste alinea van je pagina.
 
 ==Paragraafkop==
-Schrijf hier de eerste paragraaf van uw pagina.
+Schrijf hier de eerste paragraaf van je pagina.
 
 ==Paragraafkop==
-Schrijf hier de tweede paragraaf van uw pagina.',
+Schrijf hier de tweede paragraaf van je pagina.',
 	'createpage-with-video' => '[[File:Placeholder|video|right|300px]] [[File:Placeholder|right|300px]]
 Schrijf hier de eerste alinea van uw pagina.
 
@@ -1934,16 +1926,7 @@ Använd en annan titel.',
 	'createpage-error-article-blocked' => 'Tyvärr kan du inte skapa den sidan just nu.',
 	'tog-createpagedefaultblank' => 'Använd en tom sida som standard för att skapa en ny sida',
 	'tog-createpagepopupdisabled' => 'Inaktivera flödet "Skapa en ny artikel" (rekommenderas inte)',
-	'newpagelayout' => '[[File:Placeholder|right|300px]]
-Skriv det första stycket på din sida här.
-
-==Rubrik på avsnitt==
-
-Skriv det första avsnittet på din sida här.
-
-==Rubrik på avsnitt==
-
-Skriv det andra avsnittet på din sida här',
+	'newpagelayout' => 'Skriv texten i din artikel här!',
 	'createpage-with-video' => '[[File:Placeholder|video|right|300px]] [[File:Placeholder|right|300px]]
 Skriv det första stycket på din sida här.
 
@@ -2385,5 +2368,15 @@ $messages['ko'] = [
 	'createpage_spam' => '죄송하지만 요청하신 문서는 생성되지 못했습니다.',
 	'createpage_title' => '새 문서 만들기',
 	'createpage_title_caption' => '문서 이름:',
+	'newpagelayout' => '[[File:Placeholder|right|300px]]
+이곳에 주제에 대한 기본적인 정보들을 적어 주세요.
+
+==문단 제목==
+
+첫 문단에 들어갈 정보들을 적어 주세요.
+
+==문단 제목==
+
+두 번째 문단에 들어갈 정보들을 적어 주세요.',
 ];
 
