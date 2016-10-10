@@ -183,21 +183,24 @@ $messages['it'] = [
 	'specialvideos-sort-featured' => 'Fonte: Libreria Fandom',
 	'specialvideos-uploadby' => 'da $1',
 	'specialvideos-posted-in' => 'Pubblicato in $1',
-	'special-videos-add-video' => 'Carica un video',
+	'special-videos-add-video' => 'Inserisci un video',
 	'related-videos-tooltip-add' => 'Inserisci un video in questa wiki',
 ];
 
 $messages['fi'] = [
 	'specialvideos-sort-featured' => 'Lähde: Wikia Library',
+	'special-videos-add-video' => 'Lisää video',
 ];
 
 $messages['ja'] = [
 	'specialvideos-sort-featured' => '出典：Fandomライブラリ',
+	'special-videos-add-video' => '動画を追加',
 ];
 
 $messages['ko'] = [
 	'specialvideos-sort-featured' => '위키아 동영상 라이브러리에서 가져옴',
 	'related-videos-tooltip-add' => '이 위키에 동영상 추가하기',
+	'special-videos-add-video' => '동영상 추가',
 ];
 
 $messages['pt'] = [
