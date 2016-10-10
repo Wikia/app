@@ -21,15 +21,15 @@ Please choose a different name.',
 	'user-mail-no-addy' => 'Tried to send e-mail without an e-mail address.',
 	'userpage-userdoesnotexist' => 'User account "$1" is not registered.
 Please check if you want to create/edit this page.',
-	'userpage-userdoesnotexist-view' => 'User account "$1" is not registered.',
+	'userpage-userdoesnotexist-view' => 'User account "$1" does not exist or has never logged in on this wiki.',
 	'usercssyoucanpreview' => '\'\'\'Tip:\'\'\' Use the "{{int:showpreview}}" button to test your new CSS before saving.',
 	'userjsyoucanpreview' => '\'\'\'Tip:\'\'\' Use the "{{int:showpreview}}" button to test your new JavaScript before saving.',
 	'usercsspreview' => '\'\'\'Remember that you are only previewing your user CSS.\'\'\'
 \'\'\'It has not yet been saved!\'\'\'',
 	'userjspreview' => '\'\'\'Remember that you are only testing/previewing your user JavaScript.\'\'\'
 \'\'\'It has not yet been saved!\'\'\'',
-	'userinvalidcssjstitle' => '\'\'\'Warning:\'\'\' There is no skin "$1".
-Custom .css and .js pages use a lowercase title, e.g. {{ns:user}}:Foo/vector.css as opposed to {{ns:user}}:Foo/Vector.css.',
+	'userinvalidcssjstitle' => '<span class=\'error\'>\'\'\'Warning:\'\'\' There is no skin "$1".
+Remember that custom .css and .js pages use a lowercase title, e.g. {{ns:user}}:Foo/wikia.css as opposed to {{ns:user}}:Foo/Wikia.css.</span>',
 	'updated' => '(Updated)',
 	'undo-success' => '\'\'\'The edit can be undone. Please check the comparison below to verify that this is what you want to do, and then save the changes below to finish undoing the edit.\'\'\'
 
@@ -160,7 +160,7 @@ Please note that other web sites may link to a file with a direct URL, and so ma
 	'unusedcategoriestext' => 'The following category pages exist, although no other page or category makes use of them.',
 	'usermailererror' => 'Mail object returned error:',
 	'usermaildisabled' => 'User e-mail disabled',
-	'usermaildisabledtext' => 'You cannot send e-mail to other users on this wiki',
+	'usermaildisabledtext' => 'You cannot send e-mail to other users on this wiki.',
 	'usermessage-summary' => 'Leaving system message.',
 	'usermessage-editor' => 'System messenger',
 	'usermessage-template' => 'MediaWiki:UserMessage',
@@ -7451,6 +7451,10 @@ $1',
 	'userlogin-form-error' => 'Bitte behebe die Fehler, bevor du fortfährst.',
 	'userlogin-unable-info' => 'Es tut uns leid, aber wir können deine Anmeldung momentan nicht bearbeiten.',
 	'userlogin-unable-title' => 'Anmeldung konnte nicht durchgeführt werden.',
+	'usercaptcha' => 'Captcha -',
+	'usercaptchatext' => 'Bitte gib den Text aus dem Bild ein.',
+	'userinvalidcssjstitle' => '\'\'\'Achtung:\'\'\' Skin „$1“ existiert nicht. Bedenke, dass benutzerspezifische .css- und .js-Seiten mit einem Kleinbuchstaben anfangen müssen, also beispielsweise \'\'{{ns:user}}:Mustermann/monaco.css\'\' an Stelle von \'\'{{ns:user}}:Mustermann/Monaco.css\'\'.',
+	'users' => 'Benutzer',
 ];
 
 $messages['de-ch'] = [
@@ -8920,6 +8924,9 @@ $1',
 	'userlogin-form-error' => 'Por favor corrige los siguientes errores:',
 	'userlogin-unable-info' => 'Lo sentimos, no podemos llevar a cabo tu registro por ahora.',
 	'userlogin-unable-title' => 'No puede crearse el registro.',
+	'usercaptcha' => 'Palabra Borrosa -',
+	'usercaptchatext' => 'Por favor, introduce el texto de la imagen.',
+	'users' => 'Usuarios',
 ];
 
 $messages['et'] = [
@@ -9733,6 +9740,7 @@ $1',
 	'userlogin-choose-month' => 'ماه',
 	'userlogin-choose-year' => 'سال',
 	'userlogin-form-error' => 'لطفا خطاهای زیر را تصحیح کنید:',
+	'users' => 'کاربران',
 ];
 
 $messages['ff'] = [
@@ -9952,6 +9960,7 @@ $1',
 	'userlogin-choose-month' => 'Kuukausi',
 	'userlogin-choose-year' => 'Vuosi',
 	'userlogin-form-error' => 'Korjaa seuraavat virheet:',
+	'users' => 'Käyttäjät',
 ];
 
 $messages['fiu-vro'] = [
@@ -10409,9 +10418,9 @@ N’oubliez pas de vérifier s’il n’y a pas d’autres liens vers les modèl
 	'unusedimagestext' => 'Les fichiers suivants existent, mais ne sont inclus dans aucune page.
 Veuillez noter que d’autres sites peuvent avoir un lien direct vers un fichier, et donc qu’un fichier peut être listé ici alors qu’il est en réalité utilisé sur ces sites.',
 	'unusedcategoriestext' => 'Les catégories suivantes existent mais aucune page ou catégorie ne les utilise.',
-	'usermailererror' => 'Erreur dans l’objet du courriel :',
-	'usermaildisabled' => 'L’envoi de courriels entre utilisateurs est désactivé',
-	'usermaildisabledtext' => 'Vous ne pouvez pas envoyer de courriels à d’autres utilisateurs sur ce wiki',
+	'usermailererror' => 'Erreur dans l’objet de l\'e-mail :',
+	'usermaildisabled' => 'L’envoi d\'e-mails entre utilisateurs est désactivé',
+	'usermaildisabledtext' => 'Vous ne pouvez pas envoyer d\'e-mails à d’autres utilisateurs sur ce wikia',
 	'usermessage-summary' => 'A laissé un message système.',
 	'usermessage-editor' => 'Messager du système',
 	'unwatch' => 'Ne plus suivre',
@@ -10500,6 +10509,8 @@ Veuillez confirmer que c’est bien là ce que vous voulez faire.',
 	'userlogin-choose-month' => 'Mois',
 	'userlogin-choose-year' => 'Année',
 	'userlogin-form-error' => 'Merci de corriger les erreurs suivantes :',
+	'usercaptcha' => 'Mot flou -',
+	'usercaptchatext' => 'Veuillez saisir le texte dans l’image.',
 ];
 
 $messages['frc'] = [
@@ -15516,7 +15527,7 @@ $messages['it'] = [
 	'unexpected' => 'Valore imprevisto: "$1"="$2".',
 	'userlogin' => 'Entra / Registrati',
 	'userloginnocreate' => 'Entra',
-	'userlogout' => 'esci',
+	'userlogout' => 'Esci',
 	'userlogin-resetlink' => 'Hai dimenticato i tuoi dati di accesso?',
 	'userexists' => 'Il nome utente inserito è già utilizzato.
 Scegliere un nome utente diverso.',
@@ -15732,6 +15743,9 @@ $1',
 	'userlogin-form-error' => 'Per favore, correggi i seguenti errori:',
 	'userlogin-unable-info' => 'Ci dispiace, al momento non è possibile registrarti.',
 	'userlogin-unable-title' => 'Impossibile procedere con la registrazione',
+	'usercaptcha' => 'Parola sfocata -',
+	'usercaptchatext' => 'Per favore inserisci il testo dell\'immagine.',
+	'users' => 'Utenti',
 ];
 
 $messages['iu'] = [
@@ -16189,6 +16203,7 @@ $1',
 	'userlogin-form-error' => '次のエラーを修正してください:',
 	'userlogin-unable-info' => '申し訳ありません、現在登録が出来ません。',
 	'userlogin-unable-title' => 'アカウントの登録が出来ません',
+	'usercaptcha' => '画像認証 -',
 ];
 
 $messages['jam'] = [
@@ -18684,6 +18699,8 @@ $1',
 	'userlogin-form-error' => '다음 오류들이 발생했습니다:',
 	'userlogin-unable-info' => '죄송하지만 지금 위키아 계정을 만드는 것이 비활성화되어 있습니다.',
 	'userlogin-unable-title' => '위키아 계정 생성 불가',
+	'usercaptcha' => '보안 문자 -',
+	'usercaptchatext' => '그림에 있는 글자를 입력하세요.',
 ];
 
 $messages['ko-kp'] = [
@@ -24783,17 +24800,17 @@ $messages['nl'] = [
 Kies een andere naam.',
 	'usernamehasherror' => 'Een gebruikersnaam mag het karakter hekje ("#") niet bevatten.',
 	'user-mail-no-addy' => 'Geprobeerd een e-mail te verzenden zonder een e-mailadres.',
-	'userpage-userdoesnotexist' => 'U bewerkt een gebruikerspagina van een gebruiker die niet bestaat (gebruiker "<nowiki>$1</nowiki>").
-Controleer of u deze pagina wel wilt aanmaken of bewerken.',
+	'userpage-userdoesnotexist' => 'Je bewerkt een gebruikerspagina van een gebruiker die niet bestaat (gebruiker "$1").
+Controleer of je deze pagina wel wilt aanmaken/bewerken.',
 	'userpage-userdoesnotexist-view' => 'De gebruiker "$1" is niet geregistreerd.',
-	'usercssyoucanpreview' => '\'\'\'Tip:\'\'\' Gebruik de knop "{{int:showpreview}}" om uw nieuwe CSS te testen alvorens op te slaan.',
-	'userjsyoucanpreview' => '\'\'\'Tip:\'\'\' Gebruik de knop "{{int:showpreview}}" om uw nieuwe JavaScript te testen alvorens op te slaan.',
-	'usercsspreview' => '\'\'\'Dit is alleen een voorvertoning van uw persoonlijke CSS.\'\'\'
-\'\'\'Deze is nog niet opgeslagen!\'\'\'',
-	'userjspreview' => '\'\'\'Let op: u test nu uw persoonlijke JavaScript.\'\'\'
+	'usercssyoucanpreview' => '\'\'\'Tip:\'\'\' Gebruik de knop "{{int:showpreview}}" om je nieuwe CSS te testen alvorens op te slaan.',
+	'userjsyoucanpreview' => '\'\'\'Tip:\'\'\' Gebruik de knop "{{int:showpreview}}" om je nieuwe JavaScript te testen alvorens op te slaan.',
+	'usercsspreview' => '\'\'\'Dit is alleen een voorvertoning van je persoonlijke CSS.
+Deze is nog niet opgeslagen!\'\'\'',
+	'userjspreview' => '\'\'\'Let op: je test nu je persoonlijke JavaScript.\'\'\'
 \'\'\'De pagina is niet opgeslagen!\'\'\'',
-	'userinvalidcssjstitle' => '\'\'\'Waarschuwing:\'\'\' er is geen uiterlijk "$1".
-Uw eigen .css- en .js-pagina\'s beginnen met een kleine letter, bijvoorbeeld {{ns:user}}:Naam/vector.css in plaats van {{ns:user}}:Naam/Vector.css.',
+	'userinvalidcssjstitle' => '\'\'\'Waarschuwing:\'\'\' er is geen skin "$1".
+Let op: je eigen .css- en .js-pagina\'s beginnen met een kleine letter, bijvoorbeeld {{ns:user}}:Naam/vector.css in plaats van {{ns:user}}:Naam/Vector.css.',
 	'updated' => '(Bijgewerkt)',
 	'undo-success' => 'Deze bewerking kan ongedaan gemaakt worden.
 Hieronder staat de tekst waarin de wijziging ongedaan is gemaakt.
@@ -24920,7 +24937,7 @@ Een bestand kan hier dus ten onrechte opgenomen zijn.',
 	'unusedcategoriestext' => 'Hieronder staan categorieën die zijn aangemaakt, maar door geen enkele pagina of andere categorie gebruikt worden.',
 	'usermailererror' => 'Foutmelding bij het verzenden:',
 	'usermaildisabled' => 'Gebruikerse-mail uitgeschakeld',
-	'usermaildisabledtext' => 'U kunt geen e-mail verzenden naar andere gebruikers op deze wiki',
+	'usermaildisabledtext' => 'Je kunt geen e-mail verzenden naar andere gebruikers op deze wiki',
 	'usermessage-summary' => 'Systeembericht achtergelaten',
 	'usermessage-editor' => 'Systeembericht',
 	'unwatch' => 'Niet volgen',
@@ -26573,6 +26590,7 @@ $1',
 	'userlogin-form-error' => 'Popraw następujące błędy:',
 	'userlogin-unable-info' => 'Przepraszamy, chwilowo nie możesz założyć konta.',
 	'userlogin-unable-title' => 'Nie można zarejestrować konta',
+	'usercaptcha' => 'Wpisz słowo z obrazka -',
 ];
 
 $messages['pms'] = [
@@ -28962,6 +28980,7 @@ $1',
 	'userlogin-choose-year' => 'Год',
 	'userlogin-form-error' => 'Пожалуйста, исправьте следующие ошибки:',
 	'userlogin-unable-title' => 'Не удалось зарегистрировать',
+	'usercaptchatext' => 'Пожалуйста, введите текст с этой картинки.',
 ];
 
 $messages['rue'] = [
@@ -32972,6 +32991,8 @@ $1',
 	'userlogin-bad-password' => 'Du har angett ett ogiltigt lösenord.',
 	'userlogin-bad-repassword' => 'Ditt lösenord poster matchar inte.',
 	'userlogin-form-error' => 'Rätta till följande fel:',
+	'userinvalidcssjstitle' => '<span class=\'error\'>\'\'\'Varning:\'\'\' Det finns ingen teman "$1".
+Kom ihåg att anpassade .css och .js sidor använder ett gement titel, t.ex. {{ns:user}}:Foo/monaco.css i motsats till {{ns:user}}:Foo/Monaco.css.</span>',
 ];
 
 $messages['sw'] = [
