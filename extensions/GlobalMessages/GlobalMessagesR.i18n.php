@@ -13376,7 +13376,7 @@ $messages['fr'] = [
 
 L’administrateur ayant verrouillé la base de données a fourni l’explication suivante :<br />$1',
 	'readonly_lag' => 'La base de données a été automatiquement verrouillée pendant que les serveurs secondaires rattrapent leur retard sur le serveur principal.',
-	'remembermypassword' => 'Me reconnecter automatiquement aux prochaines visites avec ce navigateur (au maximum $1 {{PLURAL:$1|jour|jours}})',
+	'remembermypassword' => 'Me reconnecter automatiquement aux prochaines visites',
 	'resetpass' => 'Changer de mot de passe',
 	'resetpass_announce' => 'Vous vous êtes enregistré{{GENDER:||e|(e)}} avec un mot de passe temporaire envoyé par courriel. Pour terminer l’enregistrement, vous devez entrer un nouveau mot de passe ici :',
 	'resetpass_text' => '<!-- Ajoutez le texte ici -->',
@@ -20060,7 +20060,7 @@ $messages['it'] = [
 
 L\'amministratore di sistema che ha imposto il blocco ha fornito questa spiegazione: $1',
 	'readonly_lag' => 'Il database è stato bloccato automaticamente per consentire ai server con i database slave di sincronizzarsi con il master',
-	'remembermypassword' => 'Ricorda la password su questo computer (per un massimo di $1 {{PLURAL:$1|giorno|giorni}})',
+	'remembermypassword' => 'Ricorda la password su questo computer',
 	'resetpass' => 'Cambia la password',
 	'resetpass_announce' => 'L\'accesso è stato effettuato con un codice temporaneo, inviato via e-mail. Per completare l\'accesso è necessario impostare una nuova password:',
 	'resetpass_text' => '<!-- Aggiungere il testo qui -->',
@@ -34275,7 +34275,7 @@ $messages['pl'] = [
 
 Administrator, który zablokował bazę, podał następujące wyjaśnienie: $1',
 	'readonly_lag' => 'Baza danych została automatycznie zablokowana na czas potrzebny do wykonania synchronizacji zmian między serwerem głównym i serwerami pośredniczącymi.',
-	'remembermypassword' => 'Zapamiętaj moje hasło na tym komputerze (maksymalnie przez $1 {{PLURAL:$1|dzień|dni}})',
+	'remembermypassword' => 'Zapamiętaj moje hasło na tym komputerze',
 	'resetpass' => 'Zmień hasło',
 	'resetpass_announce' => '{{GENDER:|Zalogowałeś|Zalogowałaś}} się, wykorzystując tymczasowe hasło otrzymane poprzez e‐mail.
 Aby zakończyć proces logowania, musisz ustawić nowe hasło:',
@@ -37451,7 +37451,7 @@ $messages['ru'] = [
 	'readonlytext' => 'Добавление новых статей и другие изменения базы данных сейчас заблокированы: вероятно, в связи с плановым обслуживанием.
 Заблокировавший оператор оставил следующее разъяснение: $1.',
 	'readonly_lag' => 'База данных автоматически заблокирована от изменений на время, пока вторичные сервера базы данных не синхронизируются с первичным.',
-	'remembermypassword' => 'Помнить мою учётную запись на этом компьютере (не более $1 {{PLURAL:$1|дня|дней|дней}})',
+	'remembermypassword' => 'Помнить мою учётную запись на этом компьютере',
 	'resetpass' => 'Изменение пароля',
 	'resetpass_announce' => 'Вы представились с помощью временного пароля, полученного по электронной почте. Для завершения входа в систему, вы должны установить новый пароль.',
 	'resetpass_text' => '<!-- Добавьте сюда текст -->',
