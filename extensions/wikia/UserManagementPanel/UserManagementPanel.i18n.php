@@ -1,5 +1,5 @@
 <?php
-
+/** Internationalization file for /extensions/wikia/UserManagementPanel/UserManagementPanel extension. */
 $messages = [];
 
 $messages['en'] = [
@@ -17,3 +17,14 @@ $messages['qqq'] = [
 	'action-usermanagement' => '{{action}}',
 	'right-usermanagement' => '{{right}}',
 ];
+
+$messages['ru'] = [
+	'usermanagement-tab-label' => 'Управление',
+	'usermanagement' => 'Кабинет управления участником',
+];
+
+$messages['pl'] = [
+	'usermanagement-tab-label' => 'Zarządzanie kontem',
+	'usermanagement' => 'Panel zarządzania kontem użytkownika',
+];
+
