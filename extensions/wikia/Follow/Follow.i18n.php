@@ -1318,6 +1318,7 @@ ___________________________________________
 Vai su: {{fullurl:{{ns:special}}:Preferences}}.',
 	'enotif_subject_blogpost' => 'La pagina $PAGETITLE di {{SITENAME}} è stata postata su $BLOGLISTINGNAME da $PAGEEDITOR',
 	'enotif_subject_categoryadd' => 'La pagina $PAGETITLE di {{SITENAME}} è stata aggiunta a $CATEGORYNAME da $PAGEEDITOR',
+	'oasis-wikiafollowedpages-special-seeall' => 'Vedi tutte >',
 ];
 
 $messages['ja'] = [
@@ -3461,5 +3462,6 @@ $messages['ko'] = [
 	'enotif_body_categoryadd' => '$WATCHINGUSERNAME님, {{SITENAME}}에서 주시하시는 분류 중 하나의 분류에 새로 분류된 글이 있습니다. 새로 분류된 글은 "$PAGETITLE_URL"에서 보실 수 있습니다. 자주 방문해주시고 기여도 많이 부탁드립니다. {{SITENAME}} ___________________________________________ * 요즘 뜨는 위키들을 확인해보세요! http://www.wikia.com * 메일로 알림받는 항목들을 관리하고 싶으신가요? 다음 링크에서 해주세요: {{fullurl:{{ns:special}}:환경설정}}',
 	'enotif_subject_blogpost' => '{{SITENAME}}에 $PAGEEDITOR 사용자가 새 블로그 글인 $PAGETITLE 문서를 블로그 글 목록 $BLOGLISTINGNAME 문서에 작성했습니다.',
 	'enotif_subject_categoryadd' => '{{SITENAME}}에 $PAGEEDITOR 사용자가 $PAGETITLE 문서를 $CATEGORY 분류에 추가했습니다.',
+	'oasis-wikiafollowedpages-special-seeall' => '모두 보기 &gt;',
 ];
 
