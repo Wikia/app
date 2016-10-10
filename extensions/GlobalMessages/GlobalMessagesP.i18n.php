@@ -41032,6 +41032,7 @@ Sommige sjabloon\'n worr\'n nie getranscludeerd.',
 
 $messages['zh-cn'] = [
 	'portal' => '社区专页',
+	'permalink' => '固定链结',
 ];
 
 $messages['zh-hans'] = [
@@ -41557,6 +41558,7 @@ ___________________________________________________________
 	'patrol-log-page' => '巡查記錄',
 	'previousdiff' => '←上一個',
 	'pagecategories' => '{{PLURAL:$1個|分類|分類}}',
+	'permalink' => '固定鏈結',
 ];
 
 $messages['zh-yue'] = [
@@ -41623,5 +41625,6 @@ $messages['zh'] = [
 	'passwordremindertitle' => 'Wikia密码变更通知',
 	'pagecategories' => '{{PLURAL:$1个|分类|分类}}',
 	'perfcachedts' => '下列数据已经过缓存处理，最后更新时间为$1。在缓存中最多有{{PLURAL:$4|一个结果|$4个结果}}可用。',
+	'permalink' => '固定链结',
 ];
 
