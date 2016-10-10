@@ -1517,9 +1517,9 @@ $messages['it'] = [
 	'user-action-menu-rename' => 'Rinomina',
 	'user-action-menu-delete' => 'Cancella',
 	'user-action-menu-history' => 'Cronologia',
-	'usermasthead-log' => 'Intestazione profilo utente',
-	'usermasthead-log-message' => 'informazione del profilo aggiunta',
-	'usermasthead-log-alt' => 'Registri delle modifiche all\'intestazione del profilo utente',
+	'usermasthead-log' => 'Profilo Utente',
+	'usermasthead-log-message' => 'Informazioni sul profilo aggiunte',
+	'usermasthead-log-alt' => 'Log delle modifiche del Profilo Utente',
 	'useravatar-log' => 'Registro avatar utente',
 	'blog-avatar-removed-log' => 'Rimossi gli avatar di $1',
 	'blog-avatar-alt' => 'Registri di aggiunte o rimozioni di avatar utente',
@@ -3579,6 +3579,9 @@ $messages['ko'] = [
 	'user-identity-remove-confirmation' => '정말로 아바타를 제거하시겠습니까?',
 	'user-identity-remove-fail' => '아바타를 제거하는 데 문제가 생겨서 아바타를 제거하지 못했습니다.',
 	'userprofilepage-edit-modal-header' => '프로필 편집',
+	'usermasthead-log-alt' => '사용자 문서 머릿글 편집에 관한 기록입니다.',
+	'usermasthead-log-message' => '프로필 정보 추가/수정',
+	'usermasthead-log' => '사용자 문서 머릿글 기록',
 ];
 
 $messages['no'] = [
