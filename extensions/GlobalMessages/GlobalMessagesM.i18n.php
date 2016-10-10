@@ -5424,6 +5424,7 @@ Si l\'executeu, podeu comprometre la seguretat del vostre sistema.',
 	'most_popular' => 'Els mes populars',
 	'most_visited' => 'Els més consultats',
 	'most_emailed' => 'Els més contactats per correu electrònic',
+	'mycontributions' => 'Contribucions',
 ];
 
 $messages['cbk-zam'] = [
@@ -7395,6 +7396,7 @@ Weitere werden standardmäßig nicht angezeigt.
 	'mu_login' => 'Du musst angemeldet sein um Dateien hochladen zu können.',
 	'multiplefileuploadsummary' => 'Zusammenfassung:',
 	'mwlink_tip' => 'Interner Link',
+	'mycontributions' => 'Meine Beiträge',
 ];
 
 $messages['de-ch'] = [
@@ -8755,6 +8757,7 @@ Existen otros campos que se mantendrán ocultos por defecto.
 	'mu_login' => 'Debes identificarte para subir archivos',
 	'multiplefileuploadsummary' => 'Resumen:',
 	'mwlink_tip' => 'Enlace interno',
+	'mycontributions' => 'Mis contribuciones',
 ];
 
 $messages['et'] = [
@@ -10120,6 +10123,7 @@ Si vous l’exécutez, votre système peut être compromis.',
 *#category2#',
 	'mu_login' => 'Vous devez être connecté pour importer des fichiers.',
 	'multiplefileuploadsummary' => 'Résumé :',
+	'mycontributions' => 'Mes contributions',
 ];
 
 $messages['frc'] = [
@@ -17971,6 +17975,7 @@ $messages['ko'] = [
 *#category1#
 *#category2#',
 	'multiplefileuploadsummary' => '편집 요약:',
+	'mycontributions' => '내 기여 목록',
 ];
 
 $messages['ko-kp'] = [
@@ -25843,6 +25848,7 @@ Pozostałe pola zostaną domyślnie ukryte.
 	'most_emailed' => 'Najczęściej przesyłane',
 	'manage_widgets' => 'Zarządzaj widgetami',
 	'masthead-anonymous-user' => 'Niezarejestrowany użytkownik',
+	'mycontributions' => 'Moje edycje',
 ];
 
 $messages['pms'] = [
@@ -28062,6 +28068,7 @@ $messages['ru'] = [
 	'messagebar_mess' => 'Знаете ли вы, что вы можете <a href="$1">править эту страницу</a> или <a href="$2">создать новую страницу</a>? <a href="$3">Узнайте, как</a> это работает.',
 	'mu_login' => 'Вы должны войти в систему, чтобы загружать файлы.',
 	'mwlink_tip' => 'Внутренняя ссылка',
+	'mycontributions' => 'Мой вклад',
 ];
 
 $messages['rue'] = [
@@ -37367,5 +37374,6 @@ $messages['zh'] = [
 	'mostlinked' => '最多被連結的页面',
 	'mostlinkedcategories' => '最多被使用的分类',
 	'mostrevisions' => '最多修訂的文章',
+	'mycontributions' => '我的活动',
 ];
 
