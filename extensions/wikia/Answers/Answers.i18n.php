@@ -506,7 +506,7 @@ $messages['de'] = [
 	'you_can' => 'Du kannst:',
 	'answer_this' => '<a href="$1">Beantworte diese Frage</a>, selbst wenn du sie nicht komplett zu beantworten weißt.',
 	'research_this_on_wikipedia' => '<a href="$1">Die Frage recherchieren</a> auf Wikipedia',
-	'receive_email' => '<a href="$1" $2>Eine E-Mail erhalten</a> wenn diese Frage beantwortet wird',
+	'receive_email' => '<a href="$1" $2>Benachrichtige mich via E-Mail</a> wenn diese Frage beantwortet wurde',
 	'ask_friends_on_twitter' => 'Frage Freunde auf <a href="$1" $2>Twitter</a>',
 	'categorize' => 'Kategorisieren',
 	'categorize_help' => 'Kategoriename',
@@ -761,7 +761,7 @@ $messages['fr'] = [
 	'you_can' => 'Vous pouvez :',
 	'answer_this' => '<a href="$1">Répondre à cette question</a>, même si vous ne connaissez qu’une partie de la réponse',
 	'research_this_on_wikipedia' => '<a href="$1">Rechercher cette question</a> sur Wikipédia',
-	'receive_email' => '<a href="$1" $2>Recevoir un courriel</a> quand cette question reçoit une réponse',
+	'receive_email' => '<a href="$1" $2>Recevoir un e-mail</a> quand cette question reçoit une réponse',
 	'ask_friends_on_twitter' => 'Demander à des amis sur <a href="$1" $2>Twitter</a>',
 	'quick_action_panel' => 'Panneau d’action rapide',
 	'categorize' => 'Catégoriser',
@@ -1419,6 +1419,7 @@ $messages['ja'] = [
 	'question_asked_by' => '質問者:',
 	'question_not_answered' => 'この質問への回答はまだありません',
 	'question_redirected_help_page' => 'なぜ、私の質問がここにリダイレクトされたのですか。',
+	'receive_email' => 'この質問への回答がされたら<a href="$1" $2>メールで通知する</a>。',
 ];
 
 $messages['lb'] = [
@@ -2132,6 +2133,7 @@ $messages['pl'] = [
 	'qa-toolbox-share' => 'Publikuj',
 	'qa-toolbox-tools' => 'Zaawansowane»',
 	'quick_action_panel' => 'Panel szybkiego działania',
+	'receive_email' => '<a href="$1" $2>Otrzymaj e-mail</a> gdy zostanie udzielona odpowiedź na to pytanie',
 ];
 
 $messages['pms'] = [
@@ -2190,6 +2192,7 @@ $messages['pt'] = [
 	'question_not_answered' => 'Esta pergunta ainda não foi respondida',
 	'question_redirected_help_page' => 'Por que minha pergunta foi transferida para aqui',
 	'quick_action_panel' => 'Painel de ação rapida',
+	'receive_email' => '<a href="$1">Receba um email</a> quando esta pergunta for respondida',
 ];
 
 $messages['pt-br'] = [
@@ -2226,6 +2229,7 @@ $messages['pt-br'] = [
 	'question_not_answered' => 'Esta pergunta ainda não foi respondida',
 	'question_redirected_help_page' => 'Por que minha pergunta foi transferida para aqui',
 	'quick_action_panel' => 'Painel de ação rapida',
+	'receive_email' => '<a href="$1">Receba um email</a> quando esta pergunta for respondida',
 ];
 
 $messages['roa-tara'] = [
@@ -2621,6 +2625,7 @@ $messages['no'] = [
 	'question_not_answered' => 'Dette spørsmålet har ikke blitt besvart',
 	'question_redirected_help_page' => 'Hvorfor ble spørsmålet mitt videreført hit',
 	'quick_action_panel' => 'Hurtighandlingspanel',
+	'receive_email' => '<a href="$1" $2>Motta en e-post</a> når dette spørsmålet blir besvart',
 ];
 
 $messages['zh-hant'] = [
