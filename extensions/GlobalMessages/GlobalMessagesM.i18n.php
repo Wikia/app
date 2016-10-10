@@ -7088,6 +7088,7 @@ Weitere werden standardmäßig nicht angezeigt.
 	'magicfooterlinks' => '<b>Vorgestellte Seiten</b>',
 	'manage_widgets' => 'Widgets verwalten',
 	'masthead-anonymous-user' => 'nicht-angemeldeter Benutzer',
+	'messagebar_mess' => 'Wusstest du, dass du <a href="$1">diese Seite bearbeiten</a> und <a href="$2">eine neue Seite erstellen</a> kannst? <a href="$3">Finde heraus</a> wie das funktioniert.',
 ];
 
 $messages['de-ch'] = [
@@ -8449,6 +8450,7 @@ Existen otros campos que se mantendrán ocultos por defecto.
 	'magicfooterlinks' => '<b>Páginas destacadas</b>',
 	'manage_widgets' => 'Organizar widgets',
 	'masthead-anonymous-user' => 'Editor no registrado',
+	'messagebar_mess' => '¿Sabes que puedes <a href="$1">editar esta página</a> o <a href="$2">crear una nueva</a>? <a href="$3">Averigua cómo</a> se hace.',
 ];
 
 $messages['et'] = [
@@ -9286,6 +9288,7 @@ Suorittamalla sen järjestelmäsi voi muuttua epäluotettavaksi.',
 	'most_emailed' => 'Eniten lähetetyt',
 	'manage_widgets' => 'Hallinnoi vekottimia',
 	'masthead-anonymous-user' => 'Wikia-avustaja',
+	'messagebar_mess' => 'Tiesitkö, että voit <a href="$1">muokata tätä sivua</a> tai <a href="$2">luoda uuden</a>? <a href="$3">Ota selvää</a> miten tämä toimii.',
 ];
 
 $messages['fiu-vro'] = [
@@ -24218,6 +24221,7 @@ Andre er gøymde som standard.
 	'magicfooterlinks' => '<b>Utvalgte sider</b>',
 	'manage_widgets' => 'Administrer skjermelementer',
 	'masthead-anonymous-user' => 'Anonym bidragsyter',
+	'messagebar_mess' => 'Visste du at du kan <a href="$1">endre denne siden</a> eller <a href="$2">opprette en ny en</a>? <a href="$3">Finn ut hvordan</a> dette virker.',
 ];
 
 $messages['nov'] = [
@@ -27652,6 +27656,7 @@ $messages['ru'] = [
 	'most_emailed' => 'Самые популярные по количеству электронных писем',
 	'magicfooterlinks' => '<b>Избранные страницы</b>',
 	'masthead-anonymous-user' => 'Незарегистрированный вкладчик',
+	'messagebar_mess' => 'Знаете ли вы, что вы можете <a href="$1">править эту страницу</a> или <a href="$2">создать новую страницу</a>? <a href="$3">Узнайте, как</a> это работает.',
 ];
 
 $messages['rue'] = [
