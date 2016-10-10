@@ -684,6 +684,7 @@ $messages['de'] = [
 	'othercontribs' => 'Basierend auf der Arbeit von $1.',
 	'others' => 'anderen',
 	'oasis-mobile-site' => 'Mobile Ansicht',
+	'old_skins' => 'Alte Skins',
 ];
 
 $messages['de-weigsbrag'] = [
@@ -796,6 +797,7 @@ $messages['es'] = [
 	'overwroteimage' => 'subió una nueva versión de «[[$1]]»',
 	'othercontribs' => 'Basado en el trabajo de $1.',
 	'others' => 'otros',
+	'old_skins' => 'Pieles viejas',
 ];
 
 $messages['et'] = [
@@ -864,6 +866,7 @@ $messages['fi'] = [
 	'overwroteimage' => 'tallensi uuden version [[$1]]',
 	'othercontribs' => 'Perustuu työlle, jonka teki $1.',
 	'others' => 'muut',
+	'old_skins' => 'Vanhat ulkoasut',
 ];
 
 $messages['fiu-vro'] = [
@@ -910,6 +913,7 @@ $messages['fr'] = [
 	'othercontribs' => 'Basé sur le travail de $1.',
 	'others' => 'autres',
 	'oasis-mobile-site' => 'Site mobile',
+	'old_skins' => 'Anciens habillages',
 ];
 
 $messages['frc'] = [
@@ -1381,6 +1385,7 @@ $messages['ja'] = [
 	'others' => 'その他',
 	'other_people' => '他の人は、こんなことを探しています',
 	'or_learn' => 'ウィキアを知るには',
+	'old_skins' => '旧式の外装',
 ];
 
 $messages['jam'] = [
@@ -2241,6 +2246,7 @@ $messages['no'] = [
 	'overwroteimage' => 'lasta opp ein ny versjon av «[[$1]]»',
 	'othercontribs' => 'Basert på arbeid av $1.',
 	'others' => 'andre',
+	'old_skins' => 'Gamle utseender',
 ];
 
 $messages['nov'] = [
