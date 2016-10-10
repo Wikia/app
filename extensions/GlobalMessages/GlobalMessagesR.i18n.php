@@ -292,33 +292,18 @@ changed back to last revision by $2.',
 	'revdelete-hid' => 'hid $1',
 	'revdelete-unhid' => 'unhid $1',
 	'revdelete-log-message' => '$1 for $2 {{PLURAL:$2|revision|revisions}}',
-	'reconfirmemail_subject' => 'Welcome to Wikia!',
+	'reconfirmemail_subject' => 'Please reconfirm your Wikia account',
 	'reconfirmemail_body' => 'Hi $2,
 
-Thank you for updating the email address associated with your Wikia account.
+Thanks for updating the email address on your Wikia account. Please take a minute to confirm this is the correct email address by clicking here: $3
 
-Before our system can send you any mail you have opted to receive, you
-must confirm your email address.
+Thanks!
 
-Click on the link below or paste it into your browser:
+- Wikia Community Support
 
-$3
-
-Note: This confirmation link will expire in 7 days.
-
-
-With thousands of communities on Wikia, there are many ways to have fun
-here. Spend some time getting to know Wikia by visiting the home page
-(www.wikia.com), taking a tutorial at
-http://www.wikia.com/wiki/Help:Tutorial_1 , reading interesting and cool
-pages, writing content on your favorite subjects, or meeting other
-members of the community.
-
-We look forward to seeing you on Wikia!
-
-The Wikia Community Team
-www.wikia.com
-',
+___________________________________________
+* Find help and advice on Community Central: http://community.wikia.com
+* Want to receive fewer messages from us? You can unsubscribe or change your email preferences here: http://community.wikia.com/Special:Preferences',
 	'rcshowhideenhanced' => '$1 grouped recent changes',
 	'refreshpage' => 'Reload page to activate this widget',
 	'requestcreatewiki' => 'Submit Request',
@@ -9743,33 +9728,23 @@ Stand: $4, $5 Uhr.',
 	'revdelete-hid' => 'hid $1',
 	'revdelete-unhid' => 'unhid $1',
 	'revdelete-log-message' => '$1 for $2 {{PLURAL:$2|revision|revisions}}',
-	'reconfirmemail_subject' => 'Welcome to Wikia!',
-	'reconfirmemail_body' => 'Hi $2,
+	'reconfirmemail_subject' => 'Willkommen bei Wikia!',
+	'reconfirmemail_body' => 'Hallo $2,
 
-Thank you for updating the email address associated with your Wikia account.
+Vielen Dank für das Aktualisieren deiner E-Mail-Adresse, die du für dein Wikia-Benutzerkonto verwendest.
 
-Before our system can send you any mail you have opted to receive, you
-must confirm your email address.
+Bevor wir dir weitere Nachrichten schicken können, musst du zunächst deine E-Mail-Adresse bestätigen.
 
-Click on the link below or paste it into your browser:
+Klicke auf diesen Link oder gib ihn in deinem Browser ein:
 
 $3
 
-Note: This confirmation link will expire in 7 days.
+Hinweis: Dieser Link wird nach sieben Tagen ungültig.
 
+Wir freuen uns darauf, dass du weiterhin ein Teil von Wikia bist!
 
-With thousands of communities on Wikia, there are many ways to have fun
-here. Spend some time getting to know Wikia by visiting the home page
-(www.wikia.com), taking a tutorial at
-http://www.wikia.com/wiki/Help:Tutorial_1 , reading interesting and cool
-pages, writing content on your favorite subjects, or meeting other
-members of the community.
-
-We look forward to seeing you on Wikia!
-
-The Wikia Community Team
-www.wikia.com
-',
+Das Wikia Community-Team
+de.wikia.com',
 	'rcshowhideenhanced' => 'Erweiterte Darstellung $1',
 	'refreshpage' => 'Reload page to activate this widget',
 	'requestcreatewiki' => 'Submit Request',
@@ -11665,33 +11640,17 @@ Esta página especial te permite seguir los cambios más recientes en el wiki.
 	'revdelete-hid' => 'hid $1',
 	'revdelete-unhid' => 'unhid $1',
 	'revdelete-log-message' => '$1 for $2 {{PLURAL:$2|revision|revisions}}',
-	'reconfirmemail_subject' => 'Welcome to Wikia!',
-	'reconfirmemail_body' => 'Hi $2,
+	'reconfirmemail_subject' => 'Por favor, confirma de nuevo tu cuenta de Wikia',
+	'reconfirmemail_body' => 'Hola $2,
 
-Thank you for updating the email address associated with your Wikia account.
+Gracias por actualizar tu dirección de email en tu cuenta de Wikia Por favor, confirma que esta es la dirección de correo electrónico correcta haciendo clic en el siguiente enlace, solo te tomará un minuto: $3
 
-Before our system can send you any mail you have opted to receive, you
-must confirm your email address.
+¡Gracias!
+- Equipo comunitario de Wikia
 
-Click on the link below or paste it into your browser:
-
-$3
-
-Note: This confirmation link will expire in 7 days.
-
-
-With thousands of communities on Wikia, there are many ways to have fun
-here. Spend some time getting to know Wikia by visiting the home page
-(www.wikia.com), taking a tutorial at
-http://www.wikia.com/wiki/Help:Tutorial_1 , reading interesting and cool
-pages, writing content on your favorite subjects, or meeting other
-members of the community.
-
-We look forward to seeing you on Wikia!
-
-The Wikia Community Team
-www.wikia.com
-',
+___________________________________________
+* Si necesitas ayuda o consejos, visita nuestra comunidad central http://comunidad.wikia.com
+* ¿Quieres dejar de recibir estos mensajes? Puedes darte de baja en el servicio de emails desde tus preferencias aquí: http://comunidad.wikia.com/Especial:Preferencias',
 	'rcshowhideenhanced' => '$1 cambios recientes realzados',
 	'refreshpage' => 'Reload page to activate this widget',
 	'requestcreatewiki' => 'Submit Request',
@@ -21007,33 +20966,18 @@ $2による最後の版へ変更されました。',
 	'randompage-url' => 'Special:Random',
 	'rfcurl' => '//tools.ietf.org/html/rfc$1',
 	'revdelete-logentry' => 'changed revision visibility of "[[$1]]"',
-	'reconfirmemail_subject' => 'Welcome to Wikia!',
-	'reconfirmemail_body' => 'Hi $2,
+	'reconfirmemail_subject' => 'ウィキアへようこそ！',
+	'reconfirmemail_body' => 'こんにちは $2 さん
 
-Thank you for updating the email address associated with your Wikia account.
+ウィキア・アカウントの電子メールアドレスの更新ありがとうございます。お手数ですがこちらをクリックして電子メールアドレスの確認をお願いします: $3
 
-Before our system can send you any mail you have opted to receive, you
-must confirm your email address.
+ありがとうございます！
 
-Click on the link below or paste it into your browser:
+- ウィキア・コミュニティ・サポート
 
-$3
-
-Note: This confirmation link will expire in 7 days.
-
-
-With thousands of communities on Wikia, there are many ways to have fun
-here. Spend some time getting to know Wikia by visiting the home page
-(www.wikia.com), taking a tutorial at
-http://www.wikia.com/wiki/Help:Tutorial_1 , reading interesting and cool
-pages, writing content on your favorite subjects, or meeting other
-members of the community.
-
-We look forward to seeing you on Wikia!
-
-The Wikia Community Team
-www.wikia.com
-',
+___________________________________________
+* コミュニティでヘルプとアドバイスを探す: http://ja.community.wikia.com
+* 私たちが送信するメッセージを減らしたいですか？ こちらで定期購読を中止するか電子メールの設定を変更することができます : http://ja.community.wikia.com/Special:Preferences',
 	'rcshowhideenhanced' => '拡張された最近更新したページを$1',
 	'refreshpage' => 'Reload page to activate this widget',
 	'related_wiki' => 'Add bulleted links here to display wiki related to this one in the related wiki [[Special:Widgets|widget]].
@@ -24179,6 +24123,18 @@ $1',
 	'rate_it' => '별점 주기:',
 	'rcshowhideenhanced' => '확장된 최근 바뀜 기능을 $1',
 	'rcshowhidelogs' => '기록을 $1',
+	'reconfirmemail_body' => '안녕하세요, $2 님.
+
+방금 막 귀하의 위키아 이메일 주소를 변경하신 것을 확인했습니다. 이 이메일 주소가 맞다면 다음 링크를 클릭해 인증해 주세요: $3
+
+감사합니다!
+
+- 위키아 커뮤니티 지원팀
+
+___________________________________________
+* 위키아 중앙 커뮤니티에서 도움을 구하실 수 있습니다: http://ko.community.wikia.com
+* 알림을 받고 싶지 않으신가요? 이곳에서 알림 설정을 변경하실 수 있습니다: http://ko.community.wikia.com/특수기능:환경설정',
+	'reconfirmemail_subject' => '위키아 계정을 다시 인증해 주세요',
 ];
 
 $messages['ko-kp'] = [
@@ -33083,6 +33039,30 @@ Sjekk gjerne loggføringa.',
 	'registerintro-title' => 'Når du oppretter en bruker hos Wikia blir du en del av fellesskapet!',
 	'rcshowhideenhanced' => '$1 utdypende siste endringer',
 	'rcshowhidelogs' => '$1 logger',
+	'reconfirmemail_body' => 'Hei $2,
+
+Takk for at du oppdaterte e-postadressen tilhørende din Wikia-bruker.
+
+Før systemet vårt kan sende deg e-post du har bedt om å motta, må du bekrefte e-postadressen.
+
+Trykk på lenken under eller lim den inn i nettleseren din:
+
+$3
+
+Merknad: Denne bekreftelseslenken vil utgå etter syv dager.
+
+Med tusen av fellesskap på Wikia, er det mange måter å ha det gøy på. 
+Bruk litt tid på å bli kjent med Wikia ved å besøke hjemmesiden 
+(www.wikia.com), og gå gjennom læringsprogrammet vårt på
+http://www.wikia.com/wiki/Help:Tutorial_1 , les interessante og 
+kule artikler, skriv om favorittemnene dine, eller møt andre
+medlemmer av fellesskapet. 
+
+Vi ser frem til å treffe deg på Wikia!
+
+The Wikia Community Teamet
+www.wikia.com',
+	'reconfirmemail_subject' => 'Velkommen til Wikia!',
 ];
 
 $messages['nov'] = [
@@ -35909,7 +35889,7 @@ Páginas de sua [[Special:Watchlist|lista de páginas vigiadas]] são exibidas e
 	'revdelete-hid' => 'hid $1',
 	'revdelete-unhid' => 'unhid $1',
 	'revdelete-log-message' => '$1 for $2 {{PLURAL:$2|revision|revisions}}',
-	'reconfirmemail_subject' => 'Welcome to Wikia!',
+	'reconfirmemail_subject' => 'Bem vindo/a à Wikia!',
 	'reconfirmemail_body' => 'Hi $2,
 
 Thank you for updating the email address associated with your Wikia account.
@@ -36235,6 +36215,7 @@ Páginas de sua [[Special:Watchlist|lista de páginas vigiadas]] são exibidas e
 	'revdelete-uname-unhid' => 'nome de usuário não oculto',
 	'revdelete-restricted' => 'restrições a administradores aplicadas',
 	'revdelete-unrestricted' => 'restrições a administradores removidas',
+	'reconfirmemail_subject' => 'Bem vindo/a à Wikia!',
 ];
 
 $messages['qu'] = [
@@ -42754,6 +42735,17 @@ Sidor på [[Special:Watchlist|din bevakningslista]] är markerade med \'\'\'fets
 	'registerintro-title' => 'När du skapar ett konto på Wikia blir du en del av gemenskapet!',
 	'rcshowhideenhanced' => '$1 avancerad senaste ändringar',
 	'recentchanges-url' => 'Special:SenasteÄndringar',
+	'reconfirmemail_body' => 'Hej $2,
+
+Tack för att uppdatera e-postadressen för Wikia konto. Bekräfta detta är rätt e-postadress genom att klicka på denna länk:
+$3
+
+
+Vi ser fram emot att träffa er på Wikia!
+
+Wikia Community Team
+www.wikia.com',
+	'reconfirmemail_subject' => 'Vänligen bekräfta ditt Wikia konto',
 ];
 
 $messages['sw'] = [
@@ -49584,33 +49576,25 @@ $1',
 	'revdelete-hid' => 'hid $1',
 	'revdelete-unhid' => 'unhid $1',
 	'revdelete-log-message' => '$1 for $2 {{PLURAL:$2|revision|revisions}}',
-	'reconfirmemail_subject' => 'Welcome to Wikia!',
-	'reconfirmemail_body' => 'Hi $2,
+	'reconfirmemail_subject' => '欢迎来到Wikia!',
+	'reconfirmemail_body' => '$2 您好,
 
-Thank you for updating the email address associated with your Wikia account.
+谢谢您更新了Wikia帐号连结的电子邮件信箱。
 
-Before our system can send you any mail you have opted to receive, you
-must confirm your email address.
+在我们的系统寄发任何您所选择的通知电子邮件之前，您需要再确认您的电子邮件信箱。
 
-Click on the link below or paste it into your browser:
+点击以下链接或将网址贴到您的浏览器上： 
 
 $3
 
-Note: This confirmation link will expire in 7 days.
+注意: 这个确认链接会在7天之后失效。
 
 
-With thousands of communities on Wikia, there are many ways to have fun
-here. Spend some time getting to know Wikia by visiting the home page
-(www.wikia.com), taking a tutorial at
-http://www.wikia.com/wiki/Help:Tutorial_1 , reading interesting and cool
-pages, writing content on your favorite subjects, or meeting other
-members of the community.
+Wikia有成千上万的社区，在这里有很多方式可以找到乐趣。建议您可以访问我们的首页（zh.wikia.com） 看看有些什么有趣的社区和内容，您可以在您喜好的主题撰写文章，也可以和其他社区用户交流。
 
-We look forward to seeing you on Wikia!
+我们期待在Wikia见到您！ 
 
-The Wikia Community Team
-www.wikia.com
-',
+Wikia 社区团队',
 	'rcshowhideenhanced' => '$1 折页式显示模式',
 	'refreshpage' => 'Reload page to activate this widget',
 	'requestcreatewiki' => 'Submit Request',
@@ -49912,6 +49896,25 @@ $1',
 	'revdelete-unrestricted' => '已移除對於操作員的限制',
 	'registerintro-title' => '當你在Fandom上創建帳戶時，你就成為了社群的一份子！',
 	'rcshowhideenhanced' => '$1 折頁式顯示模式',
+	'reconfirmemail_body' => '$2 您好,
+
+謝謝您更新了Wikia帳號連結的電子郵件信箱。
+
+在我們的系統寄發任何您所選擇的通知電子郵件之前，您需要再確認您的電子郵件信箱。
+
+點擊以下鏈接或將網址貼到您的瀏覽器上： 
+
+$3
+
+注意: 這個確認鏈接會在7天之後失效。
+
+
+Wikia有成千上萬的社區，在這裡有很多方式可以找到樂趣。建議您可以訪問我們的首頁（zh-tw.wikia.com） 看看有些什麼有趣的社區和內容，您可以在您喜好的主題撰寫文章，也可以和其他社區用戶交流。
+
+我們期待在Wikia見到您！ 
+
+Wikia 社區團隊',
+	'reconfirmemail_subject' => '歡迎來到Wikia！',
 ];
 
 $messages['zh-hk'] = [
@@ -49937,6 +49940,25 @@ $messages['zh-hk'] = [
 |align="right"|\'\'\'特殊頁面&nbsp;:&nbsp;\'\'\'
 |align="left" |[[Special:Wantedpages|請求頁面]] - [[Special:Longpages|長頁面]] - [[Special:Uncategorizedimages|未分類圖片]] - [[Special:Uncategorizedpages|未分類文章]] - [[Special:Specialpages|更多特殊頁面...]]
 |}',
+	'reconfirmemail_body' => '$2 您好,
+
+謝謝您更新了Wikia帳號連結的電子郵件信箱。
+
+在我們的系統寄發任何您所選擇的通知電子郵件之前，您需要再確認您的電子郵件信箱。
+
+點擊以下鏈接或將網址貼到您的瀏覽器上： 
+
+$3
+
+注意: 這個確認鏈接會在7天之後失效。
+
+
+Wikia有成千上萬的社區，在這裡有很多方式可以找到樂趣。建議您可以訪問我們的首頁（zh-tw.wikia.com） 看看有些什麼有趣的社區和內容，您可以在您喜好的主題撰寫文章，也可以和其他社區用戶交流。
+
+我們期待在Wikia見到您！ 
+
+Wikia 社區團隊',
+	'reconfirmemail_subject' => '歡迎來到Wikia！',
 ];
 
 $messages['zh-min-nan'] = [
@@ -50255,33 +50277,25 @@ $1',
 	'revdelete-hid' => 'hid $1',
 	'revdelete-unhid' => 'unhid $1',
 	'revdelete-log-message' => '$1 for $2 {{PLURAL:$2|revision|revisions}}',
-	'reconfirmemail_subject' => 'Welcome to Wikia!',
-	'reconfirmemail_body' => 'Hi $2,
+	'reconfirmemail_subject' => '歡迎來到Wikia！',
+	'reconfirmemail_body' => '$2 您好,
 
-Thank you for updating the email address associated with your Wikia account.
+謝謝您更新了Wikia帳號連結的電子郵件信箱。
 
-Before our system can send you any mail you have opted to receive, you
-must confirm your email address.
+在我們的系統寄發任何您所選擇的通知電子郵件之前，您需要再確認您的電子郵件信箱。
 
-Click on the link below or paste it into your browser:
+點擊以下鏈接或將網址貼到您的瀏覽器上： 
 
 $3
 
-Note: This confirmation link will expire in 7 days.
+注意: 這個確認鏈接會在7天之後失效。
 
 
-With thousands of communities on Wikia, there are many ways to have fun
-here. Spend some time getting to know Wikia by visiting the home page
-(www.wikia.com), taking a tutorial at
-http://www.wikia.com/wiki/Help:Tutorial_1 , reading interesting and cool
-pages, writing content on your favorite subjects, or meeting other
-members of the community.
+Wikia有成千上萬的社區，在這裡有很多方式可以找到樂趣。建議您可以訪問我們的首頁（zh-tw.wikia.com） 看看有些什麼有趣的社區和內容，您可以在您喜好的主題撰寫文章，也可以和其他社區用戶交流。
 
-We look forward to seeing you on Wikia!
+我們期待在Wikia見到您！ 
 
-The Wikia Community Team
-www.wikia.com
-',
+Wikia 社區團隊',
 	'rcshowhideenhanced' => '$1 折頁式顯示模式',
 	'refreshpage' => 'Reload page to activate this widget',
 	'requestcreatewiki' => 'Submit Request',
@@ -50436,6 +50450,25 @@ $messages['zh'] = [
 |align="right"|\'\'\'特殊頁面&nbsp;:&nbsp;\'\'\'
 |align="left" |[[Special:Wantedpages|請求頁面]] - [[Special:Longpages|長頁面]] - [[Special:Uncategorizedimages|未分類圖片]] - [[Special:Uncategorizedpages|未分類文章]] - [[Special:Specialpages|更多特殊頁面...]]
 |}',
+	'reconfirmemail_body' => '$2 您好,
+
+谢谢您更新了Wikia帐号连结的电子邮件信箱。
+
+在我们的系统寄发任何您所选择的通知电子邮件之前，您需要再确认您的电子邮件信箱。
+
+点击以下链接或将网址贴到您的浏览器上： 
+
+$3
+
+注意: 这个确认链接会在7天之后失效。
+
+
+Wikia有成千上万的社区，在这里有很多方式可以找到乐趣。建议您可以访问我们的首页（zh.wikia.com） 看看有些什么有趣的社区和内容，您可以在您喜好的主题撰写文章，也可以和其他社区用户交流。
+
+我们期待在Wikia见到您！ 
+
+Wikia 社区团队',
+	'reconfirmemail_subject' => '欢迎来到Wikia!',
 ];
 
 $messages['zh-sg'] = [

@@ -209,11 +209,20 @@ www.wikia.com<br /><hr />
 <li>To change your preferences or password, go to: <a href="http://community.wikia.com/wiki/Special:Preferences">User Preferences</a>.</li>
 <li>This password reminder was requested from the following address: $1.</li>
 </ul></p>',
-	'reconfirmemail_body-HTML' => '<p>Hello $2,<br /><br />
-Thank you for updating the e-mail address for your Wikia account. Please confirm this is the correct e-mail address by <a href="$3">clicking here</a>.<br /><br /><br />
-We look forward to seeing you on Wikia!<br /><br />
-The Wikia Community Team<br />
-www.wikia.com<br /></p>',
+	'reconfirmemail_body-HTML' => 'Hello $2,
+<br /><br />
+Thanks for updating the email address on your Wikia account. Please take a minute to confirm this is the correct email address by <a href="$3">clicking here</a>.
+<br /><br />
+Thanks!<br>
+- Wikia Community Support
+
+<br /><hr />
+<p>
+<ul>
+<li>Find help and advice on <a href="http://www.community.wikia.com">Community Central</a>.</li>
+<li>Want to receive fewer messages from us? You can unsubscribe or change your email preferences <a href="http://community.wikia.com/Special:Preferences">here</a>.</li>
+</ul>
+</p>',
 ];
 
 $messages['nl-informal'] = [
@@ -728,6 +737,19 @@ Hay nuevos comentarios en la página $PAGETITLE de {{SITENAME}}. Usa el siguient
 </ul>
 </p>',
 	'enotif_lastvisited-HTML' => '<a href="$1">Visita</a> para ver todos los cambios en esta página desde tu última visita.',
+	'reconfirmemail_body-HTML' => 'Hola $2,
+<br /><br />
+Gracias por actualizar tu dirección de email en tu cuenta de Wikia Por favor, confirma que esta es la dirección de correo electrónico correcta haciendo haciendo <a href="$3">aquí</a>, solo te tomará un minuto.
+<br /><br />
+¡Gracias!<br>
+- Equipo comunitario de Wikia
+<br /><hr />
+<p>
+<ul>
+<li>Si necesitas ayuda o consejos, visita nuestra <a href="http://comunidad.wikia.com">comunidad central</a>.</li>
+<li>¿Quieres dejar de recibir estos mensajes? Puedes darte de baja en el servicio de emails desde tus preferencias <a href="http://comunidad.wikia.com/Especial:Preferencias">aquí</a>.</li>
+</ul>
+</p>',
 ];
 
 $messages['fr'] = [
@@ -1212,6 +1234,16 @@ Du bör nu logga in och ändra ditt lösenord.
 <br /><br />
 Du kan ignorera detta meddelande om kontot skapats av misstag.
 </p>',
+	'reconfirmemail_body-HTML' => '<p>Hej $2,<br/>
+<br/>
+Tack för att uppdatera e-postadressen för Wikia konto. Bekräfta detta är rätt e-postadress genom att <a href="$3">klicka här</a>.<br/>
+<br/>
+<br/>
+Vi ser fram emot att träffa er på Wikia!<br/>
+<br/>
+Wikia Community Team<br/>
+www.wikia.com<br/>
+</p>',
 ];
 
 $messages['zh'] = [
@@ -1270,6 +1302,11 @@ ___________________________________________
 	'founderemails-email-page-edited-body-HTML' => '<strong>嗨 $1,</strong><br /><br />
 $2 编辑了你的 wiki! 何不到他们的<a href="$3">用户页</a>打个招呼？<br /><br />
 <div style="font-style: italic; font-size: 120%;">-- The Wikia 团队</div>',
+	'reconfirmemail_body-HTML' => '<p> $2您好,<br /><br />
+谢谢您更新了Wikia帐号连结的电子信箱。请 <a href="$3">点击这里</a>以确认这是正确的电子信箱。<br /><br /><br />
+我们期待在Wikia见到您！<br /><br />
+Wikia社区团队<br />
+zh.wikia.com<br /></p>',
 ];
 
 $messages['zh-hans'] = [
@@ -1328,6 +1365,11 @@ ___________________________________________
 	'founderemails-email-page-edited-body-HTML' => '<strong>嗨 $1,</strong><br /><br />
 $2 编辑了你的 wiki! 何不到他们的<a href="$3">用户页</a>打个招呼？<br /><br />
 <div style="font-style: italic; font-size: 120%;">-- The Wikia 团队</div>',
+	'reconfirmemail_body-HTML' => '<p> $2您好,<br /><br />
+谢谢您更新了Wikia帐号连结的电子信箱。请 <a href="$3">点击这里</a>以确认这是正确的电子信箱。<br /><br /><br />
+我们期待在Wikia见到您！<br /><br />
+Wikia社区团队<br />
+zh.wikia.com<br /></p>',
 ];
 
 $messages['zh-hant'] = [
@@ -1389,6 +1431,11 @@ $2 編輯了你的 wiki! 何不到他們的<a href="$3">用戶頁</a>打個招�
 	'founderemails-email-user-registered-body-HTML' => '嗨$USERNAME,<br /><br />
 $EDITORNAME在你的Wiki上註冊了！何不訪問一下新成員的<a href="$EDITORTALKPAGEURL">對話頁</a>去打個招呼呢？<br /><br />
 <div style="font-style: italic; font-size: 120%;">-- Wikia團隊</div>',
+	'reconfirmemail_body-HTML' => '<p> $2您好,<br /><br />
+謝謝您更新了Wikia帳號連結的電子信箱。請 <a href="$3">點擊這裡</a>以確認這是正確的電子信箱。<br /><br /><br />
+我們期待在Wikia見到您！<br /><br />
+Wikia社區團隊<br />
+zh-tw.wikia.com<br /></p>',
 ];
 
 $messages['zh-hk'] = [
@@ -1450,6 +1497,11 @@ $2 編輯了你的 wiki! 何不到他們的<a href="$3">用戶頁</a>打個招�
 	'founderemails-email-user-registered-body-HTML' => '嗨$USERNAME,<br /><br />
 $EDITORNAME在你的Wiki上註冊了！何不訪問一下新成員的<a href="$EDITORTALKPAGEURL">對話頁</a>去打個招呼呢？<br /><br />
 <div style="font-style: italic; font-size: 120%;">-- Wikia團隊</div>',
+	'reconfirmemail_body-HTML' => '<p> $2您好,<br /><br />
+謝謝您更新了Wikia帳號連結的電子信箱。請 <a href="$3">點擊這裡</a>以確認這是正確的電子信箱。<br /><br /><br />
+我們期待在Wikia見到您！<br /><br />
+Wikia社區團隊<br />
+zh-tw.wikia.com<br /></p>',
 ];
 
 $messages['zh-tw'] = [
@@ -1511,6 +1563,11 @@ $2 編輯了你的 wiki! 何不到他們的<a href="$3">用戶頁</a>打個招�
 	'founderemails-email-user-registered-body-HTML' => '嗨$USERNAME,<br /><br />
 $EDITORNAME在你的Wiki上註冊了！何不訪問一下新成員的<a href="$EDITORTALKPAGEURL">對話頁</a>去打個招呼呢？<br /><br />
 <div style="font-style: italic; font-size: 120%;">-- Wikia團隊</div>',
+	'reconfirmemail_body-HTML' => '<p> $2您好,<br /><br />
+謝謝您更新了Wikia帳號連結的電子信箱。請 <a href="$3">點擊這裡</a>以確認這是正確的電子信箱。<br /><br /><br />
+我們期待在Wikia見到您！<br /><br />
+Wikia社區團隊<br />
+zh-tw.wikia.com<br /></p>',
 ];
 
 $messages['ja'] = [
@@ -1606,6 +1663,20 @@ $EDITORNAME が $WIKINAME に参加しました。<br /><br />
 トークページ:<br />
 <a href="$EDITORTALKPAGEURL">$EDITORTALKPAGEURL</a><br /><br />
 -- ウィキアチーム',
+	'reconfirmemail_body-HTML' => 'こんにちは、$2 さん
+<br /><br />
+あなたのウィキアのアカウントのメールアドレスを更新していただきありがとうございます。お手数ですが<a href="$3">こちらをクリック</a>してメールアドレスの確認をお願いします。
+<br /><br />
+ありがとうございます！<br>
+- ウィキア・コミュニティサポート
+
+<br /><hr />
+<p>
+<ul>
+<li><a href="http://ja.community.wikia.com/wiki/">コミュニティーセントラル</a>でヘルプやアドバイスを探してみましょう。</li>
+<li>私たちが送信するメッセージの受信を減らしたいですか？ Eメールの設定を<a href="http://ja.community.wikia.com/wiki/特別:個人設定">こちら</a>で変更するか登録解除することができます。</li>
+</ul>
+</p>',
 ];
 
 $messages['qqq'] = [
@@ -1733,6 +1804,20 @@ $messages['ko'] = [
 <li>위키아 중앙 커뮤니티에서 도움을 구하실 수 있습니다: <a href="http://ko.community.wikia.com">위키아 중앙 커뮤니티</a>.</li>
 <li>알림을 받고 싶지 않으신가요? 이곳에서 알림 설정을 변경하실 수 있습니다: <a href="http://ko.community.wikia.com/특수기능:환경설정">특수기능:환경설정</a></li>',
 	'enotif_body_article_comment-HTML' => '<p> $WATCHINGUSERNAME님, <br /><br /> $PAGEEDITOR 사용자가 "$PAGETITLE" 문서에 댓글을 남겼습니다. <br /><br /> 댓글을 보시려면 다음 링크로 들어가세요: <a href="$PAGETITLE_URL">$PAGETITLE</a> <br /><br /> 자주 방문해주시고 기여도 많이 부탁드립니다. <br /><br /> {{SITENAME}} <br /><hr /> <ul> <li>메일로 알림받는 항목들을 관리하고 싶으신가요? <a href="{{fullurl:{{ns:special}}:환경설정}}">{{ns:special}}:환경설정<a>에서 해주세요.</li> </ul> </p>',
+	'reconfirmemail_body-HTML' => '안녕하세요, $2 님.
+<br /><br />
+방금 막 귀하의 위키아 이메일 주소를 변경하신 것을 확인했습니다. 이 이메일 주소가 맞다면 <a href="$3">이곳</a>을 클릭해 인증해 주세요.
+<br /><br />
+감사합니다!<br>
+- 위키아 커뮤니티 지원팀
+
+<br /><hr />
+<p>
+<ul>
+<li>위키아 중앙 커뮤니티에서 도움을 구하실 수 있습니다: <a href="http://ko.community.wikia.com">위키아 중앙 커뮤니티</a></li>
+<li>알림을 받고 싶지 않으신가요? 이곳에서 알림 설정을 변경하실 수 있습니다: <a href="http://ko.community.wikia.com/특수기능:환경설정">특수기능:환경설정</a></li>
+</ul>
+</p>',
 ];
 
 $messages['nl'] = [
