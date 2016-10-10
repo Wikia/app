@@ -7409,6 +7409,8 @@ $1',
 	'usesitejs-disabled-warning' => 'Benutzerdefiniertes JavaScript ist in diesem Wiki deaktiviert.',
 	'unable-block-edit' => 'Du hast nicht die Berechtigung, diese Seite zu bearbeiten. Versuche es später erneut.',
 	'undeletedarticle' => 'stellte "[[$1]]" wieder her',
+	'unlockdb-wikifactory-error' => 'Es ist ein Fehler aufgetreten. Speichern oder leeren des Caches fehlgeschlagen. Die Datenbank ist unter Umständen nicht gesperrt. Bitte versuche es erneut oder kontaktiere das TechTeam.',
+	'unlocked' => 'entsprerrt',
 ];
 
 $messages['de-ch'] = [
@@ -24854,7 +24856,7 @@ $1',
 	'unlockdb' => 'Blokkering van de database opheffen',
 	'unlockdbtext' => 'Na het vrijgeven van de database kunnen gebruikers weer pagina\'s bewerken, hun voorkeuren wijzigen of iets anders te doen waarvoor er wijzigingen in de database nodig zijn.
 
-Bevestig dat u deze handeling wilt uitvoeren.',
+Bevestig dat je deze handeling wil uitvoeren.',
 	'unlockconfirm' => 'Ja, ik wil de database vrijgeven.',
 	'unlockbtn' => 'Database vrijgeven',
 	'unlockdbsuccesssub' => 'De database is vrijgegeven',
@@ -28793,6 +28795,8 @@ $1',
 	'use_new_formatting' => 'Neue Formatierung verwenden',
 	'usesitejs-disabled-warning' => 'Пользовательский JavaScript отключён на этой вики.',
 	'unable-block-edit' => 'Вы не можете редактировать эту страницу. Попробуйте ещё раз позже.',
+	'unlockdb-wikifactory-error' => 'Произошла ошибка. Не удалось сохранить или очистить кэш. База данных не может быть разблокирована. Пожалуйста, попробуйте ещё раз или обратитесь к инженерам.',
+	'unlocked' => 'разблокировано',
 ];
 
 $messages['rue'] = [
