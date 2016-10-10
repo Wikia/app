@@ -8214,6 +8214,9 @@ Zur Information folgt der aktuelle Logbucheintrag:',
 	'percent' => '$1&nbsp;%',
 	'prefs-help-birthinfo' => 'Fandom verlangt von allen Nutzern, ihr tatsächliches Geburtsdatum anzugeben, sowohl als Sicherheitsmaßnahme, als auch als Mittel zur Wahrung der Integrität der Website unter Einhaltung der behördlichen Vorschriften.',
 	'prefs-help-terms' => 'Mit Erstellung eines Benutzerkontos stimmst du den {{#NewWindowLink: homepage:de:Nutzungsbedingungen|Nutzungsbedingungen}} von Fandom zu',
+	'patrol-log-auto' => '(automatisch)',
+	'patrol-log-diff' => 'Version $1',
+	'patrol-log-line' => 'markierte $1 von $2 als patrouilliert $3',
 ];
 
 $messages['de-ch'] = [
@@ -28737,7 +28740,7 @@ Ostatni wpis z rejestru jest pokazany poniżej.',
 	'pageinfo-authors' => 'Autorów',
 	'pageinfo-views' => 'Odsłon',
 	'pageinfo-viewsperedit' => 'Odsłon na edycję',
-	'patrol-log-page' => 'Dziennik patrolowania',
+	'patrol-log-page' => 'Rejestr patrolowania',
 	'patrol-log-header' => 'Poniżej znajduje się dziennik patrolowania stron.',
 	'previousdiff' => '← poprzednia edycja',
 	'percent' => '$1&nbsp;%',
