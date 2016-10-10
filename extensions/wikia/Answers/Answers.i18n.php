@@ -531,11 +531,11 @@ $messages['de'] = [
 	'anwb-fp-headline' => 'Erstelle einige Fragen!',
 	'anwb-logo-preview' => 'Vorschau des Logos',
 	'qa-toolbox-button' => 'Beantworte eine zufällige Frage',
-	'qa-toolbox-share' => 'Teilen',
+	'qa-toolbox-share' => 'Frage deine Freunde',
 	'qa-toolbox-tools' => 'Erweiterte Optionen »',
 	'qa-toolbox-protect' => 'Schütze diese Frage',
 	'qa-toolbox-delete' => 'Lösche diese Frage',
-	'qa-toolbox-history' => 'Frühere Versionen dieser Seite',
+	'qa-toolbox-history' => 'Versionsgeschichte dieser Seite',
 	'answers_skins' => 'Antworten',
 	'answers-bluebell' => 'Glockenblume',
 	'answers-leaf' => 'Blatt',
@@ -668,6 +668,12 @@ $messages['es'] = [
 	'in_category' => '... en categoría',
 	'no_related_answered_questions' => 'Todavía no hay preguntas relacionadas.',
 	'nwb-thatisall-headline' => '¡Ya está, lo hiciste!',
+	'qa-toolbox-button' => 'Responder una pregunta al azar',
+	'qa-toolbox-delete' => 'Borrar esta pregunta',
+	'qa-toolbox-history' => 'Versiones anteriores de esta página',
+	'qa-toolbox-protect' => 'Proteger esta pregunta',
+	'qa-toolbox-share' => 'Compartir',
+	'qa-toolbox-tools' => 'Herramientas avanzadas»',
 ];
 
 $messages['fi'] = [
@@ -2115,6 +2121,12 @@ $messages['pl'] = [
 	'no_related_answered_questions' => 'Nie ma jeszcze podobnych pytań.',
 	'nwb-thatisall-headline' => 'To wszystko - gotowe!',
 	'plus_x_more_helpers' => '...i $1 użytkowników anonimowych',
+	'qa-toolbox-button' => 'Odpowiedz na losowe pytanie',
+	'qa-toolbox-delete' => 'Usuń to pytanie',
+	'qa-toolbox-history' => 'Poprzednia wersja tej strony',
+	'qa-toolbox-protect' => 'Zabezpiecz to pytanie',
+	'qa-toolbox-share' => 'Publikuj',
+	'qa-toolbox-tools' => 'Zaawansowane»',
 ];
 
 $messages['pms'] = [
@@ -2623,6 +2635,10 @@ $messages['ko'] = [
 	'next_page' => '다음 &raquo;',
 	'no_related_answered_questions' => '관련된 질문이 없습니다.',
 	'prev_page' => '&laquo; 이전',
+	'qa-toolbox-button' => '임의의 질문에 답변하기',
+	'qa-toolbox-delete' => '이 질문 삭제하기',
+	'qa-toolbox-share' => '공유',
+	'qa-toolbox-tools' => '고급 도구»',
 ];
 
 $messages['bg'] = [
