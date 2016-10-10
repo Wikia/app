@@ -172,7 +172,7 @@ $messages['de'] = [
 * Probiere den neuen Editor doch aus, indem du deine [{{fullurl:Special:MyPage|action=edit}} Benutzerseite bearbeitest].
 * Falls du zurück zum alten Editor wechseln möchtest, kannst du das im \'\'Bearbeiten\'\'-Reiter in deinen [[Special:Preferences#prefsection-4|Einstellungen]] tun.',
 	'rte-first-run-notice' => 'Wir haben einige Verbesserungen am Editor vorgenommen. [http://www.wikia.com/wiki/User_blog:Kirkburn/Rich_text_editor_upgrade_news Lies die Mitteilung] um mehr zu erfahren.',
-	'prefs-rte' => 'Rich Text Editor',
+	'prefs-rte' => 'Grafischer Editor',
 ];
 
 $messages['de-formal'] = [
@@ -693,6 +693,7 @@ $messages['vi'] = [
 	'rte-edgecase-redirect' => 'đổi hướng',
 	'rte-enablerichtexteditormessage' => 'Trình Soạn Thảo Văn Bản đã được kích hoạt!',
 	'rte-first-run-notice' => 'Chúng tôi đã thực hiện một số cải tiến để trình biên tập. Để tìm hiểu thêm, xin vui lòng đọc [http://www.wikia.com/wiki/User_blog:Kirkburn/Rich_text_editor_upgrade_news thông báo] để biết thêm chi tiết.',
+	'prefs-rte' => 'Trình soạn thảo văn bản giàu định dạng',
 ];
 
 $messages['zh'] = [
@@ -732,6 +733,7 @@ $messages['zh-hant'] = [
 
 $messages['it'] = [
 	'enablerichtexteditor' => 'Attiva la modifica in modalità visuale (in aggiunta alla modalità codice sorgente)',
+	'prefs-rte' => 'Editor visuale',
 ];
 
 $messages['no'] = [

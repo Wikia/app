@@ -620,6 +620,8 @@ $messages['el'] = [
 	'wikiafollowedpages-special-showall' => 'Προβολή όλων >',
 	'wikiafollowedpages-userpage-more' => 'Περισσότερα',
 	'wikiafollowedpages-userpage-hide' => 'απόκρυψη',
+	'prefs-basic' => 'Βασικές επιλογές',
+	'prefs-wikiafollowedpages-prefs-watchlist' => 'Μόνο λίστα παρακολούθησης',
 ];
 
 $messages['es'] = [
@@ -1253,7 +1255,7 @@ $messages['it'] = [
 	'wikiafollowedpages-special-heading-category' => 'Categorie ($1)',
 	'wikiafollowedpages-special-heading-wall' => 'Bacheche',
 	'prefs-wikiafollowedpages-prefs-advanced' => 'Opzioni avanzate',
-	'prefs-wikiafollowedpages-prefs-watchlist' => 'Solo pagine osservate',
+	'prefs-wikiafollowedpages-prefs-watchlist' => 'Solo osservati speciali',
 	'enotif_body_blogpost-HTML' => '<p>
 Caro $WATCHINGUSERNAME,
 <br /><br />
@@ -3463,5 +3465,8 @@ $messages['ko'] = [
 	'enotif_subject_blogpost' => '{{SITENAME}}에 $PAGEEDITOR 사용자가 새 블로그 글인 $PAGETITLE 문서를 블로그 글 목록 $BLOGLISTINGNAME 문서에 작성했습니다.',
 	'enotif_subject_categoryadd' => '{{SITENAME}}에 $PAGEEDITOR 사용자가 $PAGETITLE 문서를 $CATEGORY 분류에 추가했습니다.',
 	'oasis-wikiafollowedpages-special-seeall' => '모두 보기 &gt;',
+	'prefs-basic' => '기본 설정',
+	'prefs-wikiafollowedpages-prefs-advanced' => '고급 설정',
+	'prefs-wikiafollowedpages-prefs-watchlist' => '주시문서 목록 설정',
 ];
 

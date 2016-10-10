@@ -688,6 +688,9 @@ $messages['fi'] = [
 	'prefs-starting-an-edit' => 'Muokkauksen aloittaminen',
 	'tog-editsection' => 'Näytä osion muokkauslinkit',
 	'tog-minordefault' => 'Muutokset ovat oletuksena pieniä',
+	'prefs-editarea-size' => 'Muokkausikkunan koko (vain MonoBook -ulkoasu)',
+	'prefs-editing-experience' => 'Muokkauskokemus',
+	'prefs-monobook-layout' => 'Vain MonoBook -ulkoasu',
 ];
 
 $messages['fr'] = [
@@ -1121,8 +1124,8 @@ $messages['it'] = [
 	'semiprotectedpagewarning-notice' => '\'\'\'Nota:\'\'\' questa voce è stata bloccata in modo che solo gli utenti registrati possano modificarla. Si prega di accedere per modificare.',
 	'recreate-moveddeleted-warn-notice' => '\'\'\'Nota:\'\'\' stai ricreando una voce che è stata cancellata in precedenza. [Maggiori informazioni]',
 	'prefs-general' => 'Generale',
-	'prefs-starting-an-edit' => 'Opzioni di modifica',
-	'prefs-editing-experience' => 'Opzioni di modifica avanzate',
+	'prefs-starting-an-edit' => 'Iniziare una modifica',
+	'prefs-editing-experience' => 'Opzioni di modifica',
 	'prefs-monobook-layout' => 'Solo skin Monobook',
 	'prefs-editarea-size' => 'Dimensioni della finestra di modifica (solo skin Monobook)',
 	'tog-editsection' => 'Abilita la modifica delle sezioni tramite i link di modifica',
@@ -1285,7 +1288,7 @@ $messages['ko'] = [
 	'restore-edits-notice' => '돌아왔습니다! 당신이 편집한 후에 게시하지 않은 것을 복구했습니다. <a class=\'notice-action restoreeditlink\'>자신이 바꾼 것을 지우고 새로 편집하십시오</a>',
 	'restore-edits-diff-notice' => '돌아왔습니다! 당신이 편집한 후에 게시하지 않은 것을 복구했습니다. 그런데 문서가 그 이후에 업데이트되었습니다. 다음 둘 중에 선택하십시오: <a class=\'notice-action restoreeditlink\'>자신이 바꾼 것을 지우고 새로 편집합니다</a> 또는 <a class=\'notice-action difflink\'>최신판과 비교합니다</a>',
 	'prefs-general' => '일반',
-	'prefs-starting-an-edit' => '편집 시작',
+	'prefs-starting-an-edit' => '편집 설정',
 	'prefs-editing-experience' => '편집기 설정',
 	'prefs-monobook-layout' => '모노북 스킨 전용',
 	'prefs-editarea-size' => '편집 창 크기 (모노북 스킨 전용)',
@@ -1733,8 +1736,8 @@ $messages['pl'] = [
 	'mainpagewarning-notice' => 'Dowiedz się więcej o [[w:c:spolecznosc:Pomoc:Strona_główna|edytowaniu strony głównej.]]',
 	'explainconflict-notice' => '\'\'\'Uwaga!\'\'\' Ktoś inny zmienił tą stronę od czasu rozpoczęcia edycji. [Więcej]',
 	'prefs-general' => 'Ogólne',
-	'prefs-starting-an-edit' => 'Rozpoczęcie edytowania',
-	'prefs-editing-experience' => 'Doświadczenie edytowania',
+	'prefs-starting-an-edit' => 'Rozpoczynanie edycji',
+	'prefs-editing-experience' => 'Doświadczenie',
 	'prefs-monobook-layout' => 'Tylko w skórce Monobook',
 	'prefs-editarea-size' => 'Rozmiar okna edycji (tylko MonoBook)',
 	'tog-editsection' => 'Włącz edycję sekcji poprzez linki edycji',
@@ -2512,13 +2515,26 @@ $messages['zh'] = [
 
 $messages['zh-hant'] = [
 	'mainpagewarning-notice' => '瞭解更多關於[[w:c:zh.community:Help:Main_page|編輯首頁]]的內容。',
+	'prefs-editing-experience' => '編輯體驗',
+	'prefs-starting-an-edit' => '開始編輯',
 ];
 
 $messages['zh-hk'] = [
 	'mainpagewarning-notice' => '瞭解更多關於[[w:c:zh.community:Help:Main_page|編輯首頁]]的內容。',
+	'prefs-editing-experience' => '編輯體驗',
+	'prefs-starting-an-edit' => '開始編輯',
 ];
 
 $messages['zh-tw'] = [
 	'mainpagewarning-notice' => '瞭解更多關於[[w:c:zh.community:Help:Main_page|編輯首頁]]的內容。',
+	'prefs-editing-experience' => '編輯體驗',
+	'prefs-starting-an-edit' => '開始編輯',
+];
+
+$messages['el'] = [
+	'prefs-editarea-size' => 'Μέγεθος του παραθύρου επεξεργασίας (Μόνο για επιφάνεια MonoBook)',
+	'prefs-editing-experience' => 'Εμπειρία επεξεργασιών',
+	'prefs-general' => 'Γενικά',
+	'prefs-starting-an-edit' => 'Ξεκινώντας μία επεξεργασία',
 ];
 
