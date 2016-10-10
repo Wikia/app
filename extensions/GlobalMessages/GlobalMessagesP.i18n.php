@@ -10394,6 +10394,7 @@ $messages['fa'] = [
 	'patrol-log-page' => 'سیاههٔ گشت',
 	'patrol-log-header' => 'این سیاهه‌ای از ویرایش‌های گشت‌خورده است.',
 	'previousdiff' => '→ تفاوت قدیمی‌تر',
+	'pagecategorieslink' => 'ویژه:رده‌ها',
 ];
 
 $messages['ff'] = [
@@ -40728,7 +40729,7 @@ Bí a ṣe to ojúewé \'\'\'$1\'\'\' nì yí:',
 ];
 
 $messages['yue'] = [
-	'pagecategories' => '屬於$1類',
+	'pagecategories' => '{{PLURAL:$1個|分類|分類}}',
 	'printableversion' => '可打印版本',
 	'permalink' => '永久連結',
 	'print' => '印',
@@ -41031,7 +41032,7 @@ $messages['zh-cn'] = [
 ];
 
 $messages['zh-hans'] = [
-	'pagecategories' => '$1个分类',
+	'pagecategories' => '{{PLURAL:$1个|分类|分类}}',
 	'printableversion' => '可打印版',
 	'permalink' => '永久链接',
 	'print' => '打印',
@@ -41249,7 +41250,7 @@ ___________________________________________________________
 ];
 
 $messages['zh-hant'] = [
-	'pagecategories' => '$1個分類',
+	'pagecategories' => '{{PLURAL:$1個|分類|分類}}',
 	'printableversion' => '可列印版',
 	'permalink' => '永久連結',
 	'print' => '列印',
@@ -41480,6 +41481,7 @@ $messages['zh-hk'] = [
 	'privacy' => '私隱政策',
 	'privacypage' => 'Project:私隱政策',
 	'passwordremindertitle' => 'Wikia密碼變更通知',
+	'pagecategories' => '{{PLURAL:$1個|分類|分類}}',
 ];
 
 $messages['zh-min-nan'] = [
@@ -41551,6 +41553,7 @@ ___________________________________________________________
 	'protect-expiry-options' => '2小時:2 hours,1天:1 day,1周:1 week,2周:2 weeks,1個月:1 month,3個月:3 months,6個月:6 months,1年:1 year,永久:infinite',
 	'patrol-log-page' => '巡查記錄',
 	'previousdiff' => '←上一個',
+	'pagecategories' => '{{PLURAL:$1個|分類|分類}}',
 ];
 
 $messages['zh-yue'] = [
@@ -41615,5 +41618,6 @@ $messages['zu'] = [
 
 $messages['zh'] = [
 	'passwordremindertitle' => 'Wikia密码变更通知',
+	'pagecategories' => '{{PLURAL:$1个|分类|分类}}',
 ];
 
