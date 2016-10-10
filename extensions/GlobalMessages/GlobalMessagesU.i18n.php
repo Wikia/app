@@ -173,17 +173,20 @@ Please note that other web sites may link to a file with a direct URL, and so ma
 	'unwatchthispage' => 'Stop watching',
 	'unwatching' => 'Unwatching...',
 	'unprotectedarticle' => 'removed protection from "[[$1]]"',
-	'undelete' => 'View deleted pages',
-	'undeletepage' => 'View and restore deleted pages',
+	'undelete' => 'Restore deleted pages',
+	'undeletepage' => 'Restore deleted pages',
 	'undeletepagetitle' => '\'\'\'The following consists of deleted revisions of [[:$1|$1]]\'\'\'.',
 	'undeletepagetext' => 'The following {{PLURAL:$1|page has been deleted but is|$1 pages have been deleted but are}} still in the archive and can be restored.
 The archive may be periodically cleaned out.',
 	'undelete-fieldset-title' => 'Restore revisions',
-	'undeleteextrahelp' => 'To restore the page\'s entire history, leave all checkboxes deselected and click \'\'\'\'\'{{int:undeletebtn}}\'\'\'\'\'.
-To perform a selective restoration, check the boxes corresponding to the revisions to be restored, and click \'\'\'\'\'{{int:undeletebtn}}\'\'\'\'\'.',
+	'undeleteextrahelp' => '*To restore the entire page and its history, leave all checkboxes deselected and click \'\'\'\'\'Restore\'\'\'\'\'. To perform a selective restoration, check the boxes corresponding to the revisions to be restored and click \'\'\'\'\'Restore\'\'\'\'\'.
+*Selecting a box, then [Shift]-selecting another will fill all boxes in between in many browsers.<br /><br />',
 	'undeleterevisions' => '$1 {{PLURAL:$1|revision|revisions}} archived',
-	'undeletehistory' => 'If you restore the page, all revisions will be restored to the history.
-If a new page with the same name has been created since the deletion, the restored revisions will appear in the prior history.',
+	'undeletehistory' => 'By default, if you restore the page, all previous revisions will be restored to the page\'s history. If you do not want to restore all revisions, select only the checkboxes beside the revisions you do want to restore.
+
+If a new page with the same name has been created since the deletion, the restored revisions will be merged with the new page\'s history, and the current revision of the live page will not be automatically replaced. Be careful \'\'not\'\' to do this unless you specifically intend to merge the histories of the two pages.
+
+\'\'\'WARNING\'\'\': Any protection on the page \'\'\'will\'\'\' be lost when deleting and restoring revisions!  If you wish this page to be protected, you \'\'\'must\'\'\' protect it immediately after restoration.',
 	'undeleterevdel' => 'Undeletion will not be performed if it will result in the top page or file revision being partially deleted.
 In such cases, you must uncheck or unhide the newest deleted revision.',
 	'undeletehistorynoadmin' => 'This page has been deleted.
@@ -4240,7 +4243,7 @@ $1',
 	'undeleteviewlink' => 'преглеждане',
 	'undeletereset' => 'Изчистване',
 	'undeleteinvert' => 'Обръщане на избора',
-	'undeletecomment' => 'Причина:',
+	'undeletecomment' => 'Коментар:',
 	'undeletedrevisions' => '{{PLURAL:$1|Една версия беше възстановена|$1 версии бяха възстановени}}',
 	'undeletedrevisions-files' => '{{PLURAL:$1|Една версия|$1 версии}} и {{PLURAL:$1|един файл|$2 файла}} бяха възстановени',
 	'undeletedfiles' => '{{PLURAL:$1|Един файл беше възстановен|$1 файла бяха възстановени}}',
@@ -7404,6 +7407,7 @@ $1',
 	'use_new_formatting' => 'Neue Formatierung verwenden',
 	'usesitejs-disabled-warning' => 'Benutzerdefiniertes JavaScript ist in diesem Wiki deaktiviert.',
 	'unable-block-edit' => 'Du hast nicht die Berechtigung, diese Seite zu bearbeiten. Versuche es später erneut.',
+	'undeletedarticle' => 'stellte "[[$1]]" wieder her',
 ];
 
 $messages['de-ch'] = [
@@ -10346,8 +10350,8 @@ Veuillez noter que d’autres sites peuvent avoir un lien direct vers un fichier
 	'undeletepagetext' => '{{PLURAL:$1|La page suivante a été supprimée et se trouve|Les pages suivantes ont été supprimées et se trouvent}} dans la base de données archive, d’où {{PLURAL:$1|elle peut|elles peuvent}} encore être restaurée{{PLURAL:$1||s}}.
 L’archive peut être nettoyée périodiquement.',
 	'undelete-fieldset-title' => 'Restaurer les versions',
-	'undeleteextrahelp' => 'Pour restaurer l’historique complet de cette page, laissez toutes les cases décochées et cliquez sur \'\'\'\'\'Restaurer\'\'\'\'\'.
-Pour effectuer une restauration partielle, cochez les cases correspondant aux versions à rétablir, puis cliquez sur \'\'\'\'\'Restaurer\'\'\'\'\'.',
+	'undeleteextrahelp' => '* Pour restaurer l’historique complet de la page, laissez toutes les cases décochées et cliquez sur \'\'\'\'\'{{int:undeletebtn}}\'\'\'\'\'. Pour effectuer une restauration partielle, cochez les cases correspondant aux versions à rétablir, puis cliquez sur \'\'\'\'\'{{int:undeletebtn}}\'\'\'\'\'.
+* Avec la plupart des navigateurs, cocher une case puis en cocher une autre en maintenant la touche Shift enfoncée coche toutes les cases entre.',
 	'undeleterevisions' => '$1 {{PLURAL:$1|version archivée|versions archivées}}',
 	'undeletehistory' => 'Si vous restaurez la page, toutes les versions seront replacées dans l’historique.
 Si une nouvelle page avec le même nom a été créée depuis la suppression, les versions restaurées apparaîtront dans l’historique antérieur et la version courante ne sera pas automatiquement remplacée.',
@@ -15993,17 +15997,16 @@ URLが正しいものであり、ウェブサイトが稼働していること�
 	'unprotectedarticle' => '「[[$1]]」の保護を解除しました',
 	'undelete' => '削除されたページを表示',
 	'undeletepage' => '削除されたページの表示と復元',
-	'undeletepagetitle' => '\'\'\'以下は、[[:$1]]の削除された版です\'\'\'。',
+	'undeletepagetitle' => '\'\'\'以下には、[[:$1|$1]]の削除された修正が含まれています\'\'\'。',
 	'undeletepagetext' => '以下の{{PLURAL:$1|ページ}}は削除されていますが、保存版に残っているため、復元できます。
 保存版は定期的に消去される可能性があります。',
-	'undelete-fieldset-title' => '削除された版の復元',
+	'undelete-fieldset-title' => 'リビジョンの復元',
 	'undeleteextrahelp' => 'すべての版を復元する場合は、チェックボックスをどれも選択していない状態で\'\'\'\'\'{{int:undeletebtn}}\'\'\'\'\'をクリックしてください。
 特定の版を復帰する場合は、復帰する版のチェックボックスを選択した状態で\'\'\'\'\'{{int:undeletebtn}}\'\'\'\'\'をクリックしてください。',
 	'undeleterevisions' => '$1版が保存されています',
 	'undeletehistory' => 'ページの復帰を行うと、すべての版が履歴に復帰します。
 削除されたあとに同じ名前で新しくページが作成されていた場合、復帰した版はそれに先行する履歴として現れます。',
-	'undeleterevdel' => '復帰した結果、版指定削除されているページまたはファイルの版が最新となる場合、復帰は実行されません。
-このような場合、版指定削除されていない版が最新となるようにチェックするか、その版の版指定削除を解除する必要があります。',
+	'undeleterevdel' => '復元するとトップページやファイルのリビジョンが部分的に削除されてしまう場合、復元は実行されません。そのようなケースの場合、最近削除されたリビジョンのチェックを外すか、またはそのリビジョンを表示する必要があります。',
 	'undeletehistorynoadmin' => 'このページは削除されています。
 以下に、削除前にこのページを編集していた利用者の詳細情報と共に、この削除の理由が示されています。
 削除された各版の本文は管理者のみが使用可能です。',
@@ -24795,7 +24798,7 @@ Een bestand kan hier dus ten onrechte opgenomen zijn.',
 	'undeleteextrahelp' => 'Laat alle vakjess leeg en klik op \'\'\'\'\'Terugplaatsen\'\'\'\'\' om de hele pagina inclusief alle eerdere versies terug te plaatsen.
 Vink de terug te plaatsen versies aan en klik op \'\'\'\'\'Terugplaatsen\'\'\'\'\' om bepaalde versies terug te plaatsen.',
 	'undeleterevisions' => '$1 {{PLURAL:$1|versie|versies}} gearchiveerd',
-	'undeletehistory' => 'Als u een pagina terugplaatst, worden alle versies hersteld.
+	'undeletehistory' => 'Als je een pagina terugplaatst, worden alle versies hersteld.
 Als er al een nieuwe pagina met dezelfde naam is aangemaakt sinds de pagina is verwijderd, worden de eerder verwijderde versies teruggeplaatst en blijft de huidige versie intact.',
 	'undeleterevdel' => 'Herstellen is niet mogelijk als daardoor de meest recente versie van de pagina of het bestand gedeeltelijk wordt verwijderd.
 Verwijder in die gevallen de meest recent verwijderde versie uit de selectie.',
@@ -24804,7 +24807,7 @@ De reden hiervoor staat hieronder, samen met de details van de gebruikers die de
 De verwijderde inhoud van de pagina is alleen zichtbaar voor beheerders.',
 	'undelete-revision' => 'Dit is de verwijderde versie van $1 van $4 om $5 gemaakt door $3:',
 	'undeleterevision-missing' => 'Ongeldige of missende versie.
-Mogelijk hebt u een verkeerde verwijzing of is de versie hersteld of verwijderd uit het archief.',
+Mogelijk heb je een verkeerde verwijzing of is de versie hersteld of verwijderd uit het archief.',
 	'undelete-nodiff' => 'Geen eerdere versie gevonden.',
 	'undeletebtn' => 'Terugplaatsen',
 	'undeletelink' => 'bekijken/terugplaatsen',
@@ -24834,7 +24837,7 @@ Misschien is deze versie al teruggeplaatst.',
 	'undelete-error-long' => 'Er zijn fouten opgetreden bij het herstellen van het bestand:
 
 $1',
-	'undelete-show-file-confirm' => 'Weet u zeker dat u een verwijderde versie van het bestand "<nowiki>$1</nowiki>" van $2 om $3 wilt bekijken?',
+	'undelete-show-file-confirm' => 'Weet je zeker dat je een verwijderde versie van het bestand "<nowiki>$1</nowiki>" van $2 om $3 wil bekijken?',
 	'undelete-show-file-submit' => 'Ja',
 	'uctop' => '(laatste wijziging)',
 	'unblock' => 'Gebruiker deblokkeren',
@@ -32734,11 +32737,15 @@ Lägg märke till att andra webbplatser kan länka till en fil med en direkt URL
 	'undeletepagetext' => 'Följande {{PLURAL:$1|sida har blivit raderad|$1 sidor har blivit raderade}} men finns fortfarande i arkivet och kan återställas.
 Arkivet kan ibland rensas ut.',
 	'undelete-fieldset-title' => 'Återställ sidversioner',
-	'undeleteextrahelp' => 'För att återställa sidans hela historik, lämna alla rutor oifyllda och klicka på \'\'\'\'\'{{int:undeletebtn}}\'\'\'\'\'.
-För att göra en selektiv återställning, kryssa i de rutor som hör till de versioner som ska återställas, och klicka på \'\'\'\'\'{{int:undeletebtn}}\'\'\'\'\'.',
+	'undeleteextrahelp' => '*För att återställa hela sidan och dess historia, lämna alla kryssrutor avmarkerade och klicka på \'\'\'\'\'Återställ\'\'\'\'\'. För att utföra en selektiv återställning, kryssa i de kryssrutor som motsvarar de versioner som ska återställas och klicka på \'\'\'\'\'Återställ\'\'\'\'\'.
+*Välja en låda, då övergången välja en annan fyller i alla rutor i mellan i många webbläsare.
+*Du klickar på \'\'\'\'\'Återställ\'\'\'\'\' rensar fältet för kommentarer och kryssrutorna. Se till att du lämnar en sammanfattning i kommentar rutan.<br /><br />',
 	'undeleterevisions' => '$1 {{PLURAL:$1|version|versioner}} arkiverade',
-	'undeletehistory' => 'Om du återställer sidan kommer alla tidigare versioner att återfinnas i versionshistoriken.
-Om en ny sida med samma namn har skapats sedan sidan raderades, kommer den återskapade historiken automatiskt att återfinnas i den äldre historiken.',
+	'undeletehistory' => 'Som standard kommer du återställer sidan, alla tidigare versioner att återfinnas i sidans historia. Om du inte vill återställa alla ändringar, bara markera kryssrutorna bredvid de ändringar som du inte vill återställa.
+
+Om en ny sida med samma namn har skapats sedan sidan raderades, kommer den återskapade slås samman med den nya sidan historia och den pågående revideringen av den levande sidan kommer inte automatiskt att ersättas. Var försiktig \'\'inte\'\' att göra detta om du inte specifikt för avsikt att slå ihop historierna om de två sidorna.
+
+\'\'\'VARNING\'\'\': Något skydd på sidan \'\'\'kommer\'\'\' förlorad när radera och återställa ändringar! Om du vill sidan som skall skyddas, du \'\'\'måste\'\'\' skydda det direkt efter restaurering.',
 	'undeleterevdel' => 'Återställningen kan inte utföras om den resulterar i att den senaste versionen är delvis borttagen.
 I sådana fall måste du se till att den senaste raderade versionen inte är ikryssad, eller att den inte är dold.',
 	'undeletehistorynoadmin' => 'Den här sidan har blivit raderad. Anledningen till detta anges i sammanfattningen nedan, tillsammans med uppgifter om de användare som redigerat sidan innan den raderades. Enbart administratörerna har tillgång till den raderade texten.',
