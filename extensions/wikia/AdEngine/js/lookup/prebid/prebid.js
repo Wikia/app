@@ -24,9 +24,6 @@ define('ext.wikia.adEngine.lookup.prebid', [
 		var prebid = doc.createElement('script'),
 			node = doc.getElementsByTagName('script')[0];
 
-		win.pbjs = win.pbjs || {};
-		win.pbjs.que = win.pbjs.que || [];
-
 		if (wikiaAdapter.isEnabled()) {
 			adapters.push(wikiaAdapter);
 			win.pbjs.que.push(function () {

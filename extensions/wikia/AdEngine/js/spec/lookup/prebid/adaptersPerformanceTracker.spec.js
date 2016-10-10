@@ -6,14 +6,14 @@ describe('ext.wikia.adEngine.lookup.prebid.adaptersPerformanceTracker', function
 			adTracker: {
 				track: noop
 			},
-			win: {
-				pbjs: {
-					getBidResponses: noop
+			prebid: {
+				get: function () {
+					return mocks.pbjs;
 				}
 			},
 			adapterAppNexus: {
 				getName: function () {
-					return 'appnexus'
+					return 'appnexus';
 				},
 				isEnabled: function () {
 					return true;
@@ -55,7 +55,7 @@ describe('ext.wikia.adEngine.lookup.prebid.adaptersPerformanceTracker', function
 			},
 			adapterIndexExchangeDisabled: {
 				getName: function () {
-					return 'indexExchange'
+					return 'indexExchange';
 				},
 				isEnabled: function () {
 					return false;
@@ -107,6 +107,9 @@ describe('ext.wikia.adEngine.lookup.prebid.adaptersPerformanceTracker', function
 				getStatusCode: function () {
 					return 2;
 				}
+			},
+			pbjs: {
+				getBidResponses: noop
 			}
 		},
 		module,
@@ -118,13 +121,13 @@ describe('ext.wikia.adEngine.lookup.prebid.adaptersPerformanceTracker', function
 	function getModule() {
 		return modules['ext.wikia.adEngine.lookup.prebid.adaptersPerformanceTracker'](
 			mocks.adTracker,
-			mocks.win
+			mocks.prebid
 		);
 	}
 
 	beforeEach(function () {
 		module = getModule();
-		getBidResponsesSpy = spyOn(mocks.win.pbjs, 'getBidResponses');
+		getBidResponsesSpy = spyOn(mocks.pbjs, 'getBidResponses');
 	});
 
 	it('setupPerformanceMap creates object with correct structure', function () {

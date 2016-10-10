@@ -1,9 +1,9 @@
 /*global define*/
 define('ext.wikia.adEngine.lookup.prebid.adapters.wikia',[
+	'ext.wikia.adEngine.wrappers.prebid',
 	'wikia.document',
-	'wikia.window',
 	'wikia.querystring'
-], function (doc, win, QueryString) {
+], function (prebid, doc, QueryString) {
 	'use strict';
 
 	var bidderName = 'wikia',
@@ -87,7 +87,7 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.wikia',[
 
 	function addBids(bidderRequest) {
 		bidderRequest.bids.forEach(function (bid) {
-			var bidResponse = win.pbjs.createBid(1),
+			var bidResponse = prebid.get().createBid(1),
 				price = getPrice();
 
 			bidResponse.bidderCode = bidderRequest.bidderCode;
@@ -96,14 +96,14 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.wikia',[
 			bidResponse.width = bid.sizes[0][0];
 			bidResponse.height = bid.sizes[0][1];
 
-			win.pbjs.addBidResponse(bid.placementCode, bidResponse);
+			prebid.get().addBidResponse(bid.placementCode, bidResponse);
 		});
 	}
 
 	function create() {
 		return {
 			callBids: function (bidderRequest) {
-				win.pbjs.que.push(function () {
+				prebid.push(function () {
 					addBids(bidderRequest);
 				});
 			}

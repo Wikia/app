@@ -1,7 +1,7 @@
 define('ext.wikia.adEngine.lookup.prebid.adaptersPerformanceTracker', [
 	'ext.wikia.adEngine.adTracker',
-	'wikia.window'
-], function (adTracker, win) {
+	'ext.wikia.adEngine.wrappers.prebid'
+], function (adTracker, prebid) {
 	'use strict';
 
 	var emptyResponseMsg = 'EMPTY_RESPONSE',
@@ -30,8 +30,8 @@ define('ext.wikia.adEngine.lookup.prebid.adaptersPerformanceTracker', [
 	function updatePerformanceMap(performanceMap) {
 		var allBids;
 
-		if (typeof win.pbjs.getBidResponses === 'function') {
-			allBids = win.pbjs.getBidResponses();
+		if (typeof prebid.get().getBidResponses === 'function') {
+			allBids = prebid.get().getBidResponses();
 
 			Object.keys(allBids).forEach(function (slotName) {
 				var slotBids = allBids[slotName].bids;
