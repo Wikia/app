@@ -5868,6 +5868,7 @@ oder die zugehörigen <span class="plainlinks">[{{fullurl:{{#special:Log}}|page=
 	'number-shortening-billions' => '$1B',
 	'namespacedisabled' => 'Namensraum deaktiviert',
 	'namespacedisabledtext' => 'Dieser Namensraum wurde deaktiviert.',
+	'needhelp' => 'Hilfe benötigt: Bitte bearbeite [[MediaWiki:needhelp|diese Seite]] um hier Artikel anzuzeigen.',
 ];
 
 $messages['de-ch'] = [
@@ -6893,6 +6894,7 @@ Prueba a usar el prefijo \'\'all:\'\' para buscar en todo el contenido (incluyen
 	'number-shortening' => '$1K',
 	'number-shortening-millions' => '$1M',
 	'number-shortening-billions' => '$1B',
+	'needhelp' => 'Necesitan ayuda: Por favor edita [[MediaWiki:needhelp|esta página]] para mostrar los artículos aquí.',
 ];
 
 $messages['et'] = [
@@ -7545,6 +7547,7 @@ Kokeile lisätä haun alkuun \'\'all:\'\', niin haku kohdistuu kaikkeen sisält�
 	'number-shortening' => '$1 tuhatta',
 	'number-shortening-millions' => '$1 milj',
 	'number-shortening-billions' => '$1 mrd',
+	'needhelp' => 'Tarvitsevat apua: Ole hyvä ja muokkaa [[MediaWiki:Needhelp|tätä sivua]] näyttääksesi artikkeleita tässä.',
 ];
 
 $messages['fiu-vro'] = [
@@ -19897,6 +19900,7 @@ For å søkja i alle, bruk prefikset \'\'all:\'\' (det inkluderer diskusjonsside
 	'newuserlog-byemail' => 'passordet er sendt på e-post',
 	'not_you' => 'Ikke deg?',
 	'newly_changed' => 'Nylig redigert',
+	'needhelp' => 'Trenger hjelp: Vennligst rediger [[MediaWiki:needhelp|denne siden]] for å vise artikler her.',
 ];
 
 $messages['nov'] = [
@@ -22704,6 +22708,7 @@ The wiki server can\'t provide data in a format your client can read.',
 	'number-shortening-billions' => '$1миллиард',
 	'namespacedisabled' => 'Пространство имён отключено',
 	'namespacedisabledtext' => 'Это пространство имён было отключено.',
+	'needhelp' => 'Для отображения списка статей, которым нужна помощь, отредактируйте [[MediaWiki:needhelp|эту страницу]].',
 ];
 
 $messages['rue'] = [
