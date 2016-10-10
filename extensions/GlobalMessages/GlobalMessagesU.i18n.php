@@ -7403,6 +7403,7 @@ $1',
 	'use_old_formatting' => 'Zu Monobook wechseln',
 	'use_new_formatting' => 'Neue Formatierung verwenden',
 	'usesitejs-disabled-warning' => 'Benutzerdefiniertes JavaScript ist in diesem Wiki deaktiviert.',
+	'unable-block-edit' => 'Du hast nicht die Berechtigung, diese Seite zu bearbeiten. Versuche es später erneut.',
 ];
 
 $messages['de-ch'] = [
@@ -8858,6 +8859,7 @@ $1',
 	'use_old_formatting' => 'Cambiar a diseño Monobook',
 	'use_new_formatting' => 'Probar un diseño nuevo',
 	'usesitejs-disabled-warning' => 'El JavaScript personalizado está deshabilitado en este wiki.',
+	'unable-block-edit' => 'No estás autorizado para editar esta página. Inténtalo de nuevo más tarde.',
 ];
 
 $messages['et'] = [
@@ -16062,6 +16064,7 @@ $1',
 	'use_old_formatting' => 'monobookの外装に変更する',
 	'use_new_formatting' => '新しい外装を試す',
 	'usesitejs-disabled-warning' => 'このwikiではカスタムJavaScriptは無効になっています。',
+	'unable-block-edit' => 'このページの編集は許可されておりません。後で編集してください。',
 ];
 
 $messages['jam'] = [
@@ -28784,6 +28787,7 @@ $1',
 	'use_old_formatting' => 'Используйте старый формат',
 	'use_new_formatting' => 'Neue Formatierung verwenden',
 	'usesitejs-disabled-warning' => 'Пользовательский JavaScript отключён на этой вики.',
+	'unable-block-edit' => 'Вы не можете редактировать эту страницу. Попробуйте ещё раз позже.',
 ];
 
 $messages['rue'] = [
