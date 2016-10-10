@@ -459,7 +459,7 @@ $messages['de'] = [
 	'recent_asked_questions' => 'Zuletzt gestellte Fragen',
 	'recent_answered_questions' => 'Zuletzt beantwortete Fragen',
 	'recent_edited_questions' => 'Zuletzt bearbeitete Fragen',
-	'unanswered_category' => 'Offene Fragen',
+	'unanswered_category' => 'Unbeantwortete Fragen',
 	'answered_category' => 'Beantwortete Fragen',
 	'related_questions' => 'Ähnliche Fragen',
 	'related_answered_questions' => 'Ähnliche beantwortete Fragen',
@@ -593,7 +593,7 @@ $messages['es'] = [
 	'recent_asked_questions' => 'Preguntas hechas recientemente',
 	'recent_answered_questions' => 'Preguntas respondidas recientemente',
 	'recent_edited_questions' => 'Preguntas editadas recientemente',
-	'unanswered_category' => 'Preguntas no contestadas',
+	'unanswered_category' => 'Preguntas sin respuesta',
 	'answered_category' => 'Preguntas respondidas',
 	'related_questions' => 'Preguntas relacionadas',
 	'related_answered_questions' => 'Más preguntas',
@@ -1435,6 +1435,7 @@ $messages['ja'] = [
 	'reword_this' => '<a href="$1" $2>この質問の言い回しを変える</a>。',
 	'see_all' => '全て見る',
 	'tog-hidefromattribution' => '投稿者のリストに自分のアバターと名前を表示しない',
+	'unanswered_category' => '回答待ちの質問',
 ];
 
 $messages['lb'] = [
@@ -2221,6 +2222,7 @@ $messages['pt'] = [
 	'see_all' => 'Ver todas',
 	'twitter_ask' => 'Faça esta pergunta no Twitter',
 	'twitter_hashtag' => 'WikiRespostas',
+	'unanswered_category' => 'Perguntas sem respostas',
 ];
 
 $messages['pt-br'] = [
@@ -2268,6 +2270,7 @@ $messages['pt-br'] = [
 	'see_all' => 'Ver todas',
 	'twitter_ask' => 'Faça esta pergunta no Twitter',
 	'twitter_hashtag' => 'WikiRespostas',
+	'unanswered_category' => 'Perguntas sem respostas',
 ];
 
 $messages['roa-tara'] = [
@@ -2297,7 +2300,7 @@ $messages['ru'] = [
 	'recent_asked_questions' => 'Свежие вопросы',
 	'recent_answered_questions' => 'Свежие ответы',
 	'recent_edited_questions' => 'Свежие правки в вопросах',
-	'unanswered_category' => 'Вопросы без ответов',
+	'unanswered_category' => 'Un-answered questions',
 	'answered_category' => 'Вопросы с ответами',
 	'related_questions' => 'Вопросы, близкие по теме',
 	'related_answered_questions' => 'Ответы, близкие по теме',
@@ -2436,7 +2439,7 @@ $messages['sv'] = [
 	'recent_asked_questions' => 'Nyligen ställda frågor',
 	'recent_answered_questions' => 'Nyligen besvarade frågor',
 	'recent_edited_questions' => 'Nyligen redigerade frågor',
-	'unanswered_category' => 'Obesvarade frågor',
+	'unanswered_category' => 'Un-answered questions',
 	'answered_category' => 'Answered questions',
 	'related_questions' => 'Relaterade frågor',
 	'related_answered_questions' => 'Relaterade besvarade frågor',
@@ -2675,6 +2678,7 @@ $messages['no'] = [
 	'research_this' => 'Undersøk dette',
 	'research_this_on_wikipedia' => '<a href="$1">Undersøk dette spørsmålet</a> på Wikipedia',
 	'reword_this' => '<a href="$1" $2>Omformuler dette spørsmålet</a>',
+	'unanswered_category' => 'Ubesvarte spørsmål',
 ];
 
 $messages['zh-hant'] = [
@@ -2717,6 +2721,7 @@ $messages['ko'] = [
 	'recent_unanswered_questions' => '최근에 생성된 질문',
 	'related_answered_questions' => '관련된 답변이 달린 질문',
 	'related_questions' => '관련 질문',
+	'unanswered_category' => '답변이 등록되지 않은 질문',
 ];
 
 $messages['bg'] = [
@@ -2725,6 +2730,7 @@ $messages['bg'] = [
 
 $messages['ro'] = [
 	'answered_category' => 'Answered questions',
+	'unanswered_category' => 'Unanswered questions',
 ];
 
 $messages['zh'] = [
@@ -2737,6 +2743,7 @@ $messages['zh'] = [
 	'ask_a_question-widget' => '發問一條問題',
 	'ask_a_question' => '發問一條問題',
 	'category' => '分类名称',
+	'unanswered_category' => '未回答的問題',
 ];
 
 $messages['nn'] = [
@@ -2747,6 +2754,7 @@ $messages['nn'] = [
 	'answers_widget_user_note' => 'Kan du hjelpe med med å bli ein <a href="http://svar.wikia.com/wiki/Hvordan_blir_jeg_en_kategoriansvarlig" target="_blank">kategoriansvarlig</a> på <a href="http://svar.wikia.com" target="_blank">WikiSvar</a>?',
 	'ask_a_question-widget' => 'Spør på WikiSvar',
 	'ask_a_question' => 'Spør på WikiSvar',
+	'unanswered_category' => 'Ubesvarte spørsmål',
 ];
 
 $messages['zh-hk'] = [
