@@ -125,11 +125,11 @@ $messages['cs'] = [
 
 $messages['de'] = [
 	'partner-feed-desc' => 'Partner-Feed-Erweiterung',
-	'partner-feed-achievements-leaderboard' => 'Wiki Rangliste',
+	'partner-feed-achievements-leaderboard' => 'Wiki-Rangliste',
 	'partner-feed-earned-badges' => 'Kürzlich verdiente Abzeichen für ein bestimmtes Wiki',
 	'partner-feed-recent-blog-posts' => 'Letzte Blog-Beiträge in Verbindung mit einer Förderung',
 	'partner-feed-latest-images' => 'Galerie der neuesten Bilder, die hochgeladen wurden',
-	'partner-feed-hotcontent' => 'Hub / vertikaler "Hot Content" geordnet nach Anzahl der Bearbeiter',
+	'partner-feed-hotcontent' => 'Hub/vertikaler "Hot Content" geordnet nach Anzahl der Bearbeiter',
 	'partner-feed-recent-blog-comments' => 'Neueste Kommentare zu einem bestimmten Blog-Post.',
 	'partner-feed-recent-changes' => 'Letzte Änderungen',
 	'partnerfeed' => 'Partner-Feed',
@@ -157,8 +157,8 @@ $messages['diq'] = [
 
 $messages['es'] = [
 	'partner-feed-desc' => 'Extensión de Partner Feed',
-	'partner-feed-achievements-leaderboard' => 'Tabla de líderes con más logros',
-	'partner-feed-earned-badges' => 'Logros recientemente ganados para un wiki específico',
+	'partner-feed-achievements-leaderboard' => 'Tablón de líderes del wiki',
+	'partner-feed-earned-badges' => 'Logros recientemente conseguidos para un wiki específico',
 	'partner-feed-recent-blog-posts' => 'Entradas de blog recientes relacionadas con una promoción',
 	'partner-feed-latest-images' => 'Galería de las últimas imágenes que han sido subidas',
 	'partner-feed-hotcontent' => 'Hub / "Contenido Novedoso" clasificado por el número de editores',
@@ -218,7 +218,7 @@ $messages['fr'] = [
 	'partner-feed-desc' => 'Extension de flux partenaire',
 	'partner-feed-achievements-leaderboard' => 'Tableau des challenges des wikis',
 	'partner-feed-earned-badges' => 'Badges récemment gagnés pour un wiki donné',
-	'partner-feed-recent-blog-posts' => 'Billets de blog récemment postés pour une promotion',
+	'partner-feed-recent-blog-posts' => 'Billets de blog récents relatifs à une promotion',
 	'partner-feed-latest-images' => 'Galerie des dernières images importées',
 	'partner-feed-hotcontent' => 'Centre des contenus actifs classés par nombre d’éditeurs',
 	'partner-feed-recent-blog-comments' => 'Commentaires récents liés au billet de blog spécifié.',
@@ -235,7 +235,7 @@ $messages['fr'] = [
 	'feed-title-hot-content' => 'Contenu à l’actualité — $1',
 	'feed-title-blogcomments' => 'Commentaires à $1',
 	'feed-title-recentchanges' => 'Modifications récentes',
-	'partner-feed-error-no-blogpost-found' => '<b>Erreur :</b> le billet de blog $1 n’existe pas.',
+	'partner-feed-error-no-blogpost-found' => '<b>Erreur :</b> Le billet $1 n’existe pas.',
 ];
 
 $messages['gl'] = [
@@ -327,6 +327,7 @@ $messages['ko'] = [
 	'blog-posts-from-listing' => '속한 글 목록: $1',
 	'feed-title-blogcomments' => '\'$1\' 블로그 글에 대한 댓글',
 	'feed-title-hot-content' => '인기 있는 글 - $1',
+	'partner-feed-recent-changes' => '최근 바뀜',
 ];
 
 $messages['ku-latn'] = [
@@ -476,7 +477,7 @@ $messages['pl'] = [
 	'partner-feed-hotcontent' => 'Portale uszeregowane według liczby edytorów',
 	'partner-feed-recent-blog-comments' => 'Ostatnie komentarze dotyczące określonego wpisu na blogu.',
 	'partner-feed-recent-changes' => 'Ostatnie zmiany',
-	'partnerfeed' => 'Subskrybuj kanał',
+	'partnerfeed' => 'Subskrybuj',
 	'error-no-article' => 'Błąd: Brak parametru "artykuł"',
 	'feed-title-blogposts' => 'Ostatnie wpisy na blogu',
 	'feed-title-recent-badges' => 'Ostatnie odznaczenia',
@@ -488,7 +489,7 @@ $messages['pl'] = [
 	'feed-title-hot-content' => 'Gorące treści - $1',
 	'feed-title-blogcomments' => 'Komentarze do $1',
 	'feed-title-recentchanges' => 'Ostatnie zmiany',
-	'partner-feed-error-no-blogpost-found' => '<b>Błąd:</b> Wpis na blogu $1 nie istnieje.',
+	'partner-feed-error-no-blogpost-found' => 'Wpis na blogu $1 nie istnieje.',
 ];
 
 $messages['pms'] = [
@@ -593,7 +594,7 @@ $messages['ru'] = [
 	'feed-title-hot-content' => 'Топ контент - $1',
 	'feed-title-blogcomments' => 'Комментарии к $1',
 	'feed-title-recentchanges' => 'Свежие правки',
-	'partner-feed-error-no-blogpost-found' => '<b>Ошибка:</b> Сообщение $1 в блоге не существует.',
+	'partner-feed-error-no-blogpost-found' => '<b>Ошибка:</b> Блог $1 не существует.',
 ];
 
 $messages['sr-ec'] = [
@@ -720,7 +721,7 @@ $messages['zh-hans'] = [
 	'partner-feed-hotcontent' => '门户中的“热门内容”是通过编辑次数排名',
 	'partner-feed-recent-blog-comments' => '有关指定博客文章的最近的评论。',
 	'partner-feed-recent-changes' => '最近更改',
-	'partnerfeed' => '合作伙伴订阅点',
+	'partnerfeed' => '相关页面订阅',
 	'error-no-article' => '错误：未传递“article”参数',
 	'feed-title-blogposts' => '最近的博客文章',
 	'feed-title-recent-badges' => '最新徽章',
@@ -740,13 +741,20 @@ $messages['zh-hant'] = [
 	'feed-title-recentchanges' => '近期變動',
 	'feed-main-title' => 'Fandom合作夥伴新聞',
 	'blog-posts-from-listing' => '來自列表：$1',
+	'partnerfeed' => '相關頁面訂閱',
 ];
 
 $messages['zh-hk'] = [
 	'blog-posts-from-listing' => '來自列表：$1',
+	'partnerfeed' => '相關頁面訂閱',
 ];
 
 $messages['zh-tw'] = [
 	'blog-posts-from-listing' => '來自列表：$1',
+	'partnerfeed' => '相關頁面訂閱',
+];
+
+$messages['zh'] = [
+	'partnerfeed' => '相关页面订阅',
 ];
 
