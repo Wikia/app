@@ -22,7 +22,7 @@ $messages['en'] = [
 This is usually caused by following an outdated diff or history link to a page that has been deleted.
 
 If this is not the case, you may have found a bug in the software.
-Please report this to an [[Special:ListUsers/sysop|administrator]], making note of the URL.',
+Please [[Special:Contact|report this to Wikia staff]], making note of the URL.',
 	'missingarticle-rev' => '(revision#: $1)',
 	'missingarticle-diff' => '(Diff: $1, $2)',
 	'mailmypassword' => 'E-mail new password',
@@ -31,7 +31,7 @@ Please report this to an [[Special:ListUsers/sysop|administrator]], making note 
 	'media_tip' => 'File link',
 	'minoredit' => 'Minor edit',
 	'missingsummary' => '\'\'\'Reminder:\'\'\' You have not provided an edit summary.
-If you click "{{int:savearticle}}" again, your edit will be saved without one.',
+If you click Publish again, your edit will be published without one.',
 	'missingcommenttext' => 'Please enter a comment below.',
 	'missingcommentheader' => '\'\'\'Reminder:\'\'\' You have not provided a subject/headline for this comment.
 If you click "{{int:savearticle}}" again, your edit will be saved without one.',
@@ -3748,7 +3748,7 @@ $messages['bg'] = [
 	'media_sample' => 'Пример.ogg',
 	'media_tip' => 'Препратка към файл',
 	'minoredit' => 'Това е малка промяна',
-	'missingsummary' => '\'\'\'Напомняне:\'\'\' Не е въведено кратко описание на промените. При повторно натискане на бутона „Съхраняване“, редакцията ще бъде съхранена без резюме.',
+	'missingsummary' => '\'\'\'Напомняне:\'\'\' Полето "Резюме" не е попълнено. Ако отново натиснете Съхранение, редакцията ще бъде съхранена без резюме.',
 	'missingcommenttext' => 'По-долу въведете вашето съобщение.',
 	'missingcommentheader' => '\'\'\'Напомняне:\'\'\' Не е въведено заглавие на коментара.
 При повторно натискане на "{{int:savearticle}}", редакцията ще бъде записана без такова.',
@@ -23685,10 +23685,10 @@ $messages['nl'] = [
 	'mainpage-description' => 'Hoofdpagina',
 	'missing-article' => 'In de database is geen inhoud aangetroffen voor de pagina "$1" die er wel zou moeten zijn ($2).
 
-Dit kan voorkomen als u een verouderde verwijzing naar het verschil tussen twee versies van een pagina volgt of een versie opvraagt die is verwijderd.
+Dit kan voorkomen als je een verouderde verwijzing naar het verschil tussen twee versies van een pagina volgt of een versie opvraagt die is verwijderd.
 
-Als dit niet het geval is, hebt u wellicht een fout in de software gevonden.
-Maak hiervan melding bij een [[Special:ListUsers/sysop|beheerder]] van {{SITENAME}} en vermeld daarbij de URL van deze pagina.',
+Als dit niet het geval is, heb je wellicht een fout in de software gevonden.
+Maak hiervan melding bij een [[Special:ListUsers/sysop|systeembeheerder]] van {{SITENAME}} en vermeld daarbij de URL van deze pagina.',
 	'missingarticle-rev' => '(versienummer: $1)',
 	'missingarticle-diff' => '(Wijziging: $1, $2)',
 	'mailmypassword' => 'Nieuw wachtwoord e-mailen',
@@ -23696,11 +23696,11 @@ Maak hiervan melding bij een [[Special:ListUsers/sysop|beheerder]] van {{SITENAM
 	'media_sample' => 'Voorbeeld.ogg',
 	'media_tip' => 'Verwijzing naar bestand',
 	'minoredit' => 'Dit is een kleine bewerking',
-	'missingsummary' => '\'\'\'Herinnering:\'\'\' u hebt geen bewerkingssamenvatting opgegeven.
-Als u nogmaals op "{{int:savearticle}}" klikt wordt de bewerking zonder samenvatting opgeslagen.',
-	'missingcommenttext' => 'Plaats uw opmerking hieronder.',
-	'missingcommentheader' => '\'\'\'Let op:\'\'\' U hebt geen onderwerp/kop voor deze opmerking opgegeven.
-Als u opnieuw op "{{int:savearticle}}" klikt, wordt uw wijziging zonder een onderwerp/kop opgeslagen.',
+	'missingsummary' => '\'\'\'Herinnering:\'\'\' je hebt geen samenvatting opgegeven voor je bewerking.
+Als je nogmaals op \'\'Pagina opslaan\'\' klikt wordt de bewerking zonder samenvatting opgeslagen.',
+	'missingcommenttext' => 'Plaats je opmerking hieronder.',
+	'missingcommentheader' => '\'\'\'Let op:\'\'\' Je hebt geen onderwerp/kop voor deze opmerking opgegeven.
+Als je opnieuw op "{{int:savearticle}}" klikt, wordt je wijziging zonder een onderwerp/kop opgeslagen.',
 	'moveddeleted-notice' => 'Deze pagina is verwijderd.
 Ter informatie worden het verwijderingslogboek en het hernoemingslogboek van deze pagina hieronder weergegeven.',
 	'mergehistory' => 'Geschiedenis van pagina\'s samenvoegen',
@@ -27496,7 +27496,7 @@ $messages['ru'] = [
 Подобная ситуация обычно возникает при попытке перехода по устаревшей ссылке на историю изменения страницы, которая была удалена.
 
 Если дело не в этом, то скорее всего, вы обнаружили ошибку в программном обеспечении.
-Пожалуйста, сообщите об этом одному из [[Special:ListUsers/sysop|администраторов]], указав данный URL.',
+Пожалуйста, сообщите об этом [[Special:Contact|сотрудникам Викия]], указав данный URL.',
 	'missingarticle-rev' => '(версия № $1)',
 	'missingarticle-diff' => '(разность: $1, $2)',
 	'mailmypassword' => 'Выслать новый пароль по электронной почте',
@@ -33823,7 +33823,7 @@ $messages['uk'] = [
 Подібна ситуація зазвичай виникає при спробі переходу за застарілим посиланням або на історію змін сторінки, яка була вилучена.
 
 Якщо справа не в цьому, то, швидше за все, ви виявили помилку у програмному забезпеченні.
-Будь ласка, повідомте про це [[Special:ListUsers/sysop|адміністратора]], зазначивши URL.',
+Будь ласка, повідомте про це [[Special:Contact|співробітникам Вікія]], зазначивши URL.',
 	'missingarticle-rev' => '(версія № $1)',
 	'missingarticle-diff' => '(Різниця: $1, $2)',
 	'mailmypassword' => 'Надіслати новий пароль',
