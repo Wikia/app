@@ -554,6 +554,7 @@ $messages['de'] = [
 	'anwb-step1-text' => 'Deine Frage-Antwort-Seite benötigt eine <strong>Kurzerklärung</strong> (ein Satz!).<br /><br />Die Kurzerklärung hilft anderen dein Angebot durch Suchmaschinen zu finden - versuche also möglichst präzise zu schreiben, welche Inhalte deine Seite behandelt.',
 	'anwb-thatisall-text' => 'Das wars auch schon - jetzt kann es losgehen!<br /><br />Du solltest damit beginnen, noch weitere Fragen und Antworten zu deiner Seite hinzuzufügen, so dass sie besser durch Suchmaschinen gefunden wird.<br /><br />Die Liste der Fragen aus dem letzten Schritt sind bereits auf deiner Frage-Antwort-Seite erstellt worden. Rufe sie auf, beantworte sie und starte deine eigene Community!',
 	'get_code' => 'Code holen',
+	'nwb-thatisall-headline' => 'Das wars auch schon - jetzt kann es losgehen!',
 ];
 
 $messages['de-formal'] = [
@@ -666,6 +667,7 @@ $messages['es'] = [
 	'header_questionmark_pre' => '¿',
 	'in_category' => '... en categoría',
 	'no_related_answered_questions' => 'Todavía no hay preguntas relacionadas.',
+	'nwb-thatisall-headline' => '¡Ya está, lo hiciste!',
 ];
 
 $messages['fi'] = [
@@ -2109,6 +2111,7 @@ $messages['pl'] = [
 	'facebook_signed_in' => 'Jesteś {{GENDER:|zalogowany|zalogowana|zalogowany/a}} przez Facebook Connect',
 	'get_code' => 'Pobierz kod',
 	'no_related_answered_questions' => 'Nie ma jeszcze podobnych pytań.',
+	'nwb-thatisall-headline' => 'To wszystko - gotowe!',
 ];
 
 $messages['pms'] = [
