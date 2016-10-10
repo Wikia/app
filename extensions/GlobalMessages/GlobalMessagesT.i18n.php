@@ -73,7 +73,7 @@ The edit has been rejected to prevent corruption of the page text.
 This sometimes happens when you are using a buggy web-based anonymous proxy service.',
 	'titleprotectedwarning' => '\'\'\'Warning: This page has been protected so that [[Special:ListGroupRights|specific rights]] are needed to create it.\'\'\'
 The latest log entry is provided below for reference:',
-	'templatesused' => '{{PLURAL:$1|Template|Templates}} used on this page:',
+	'templatesused' => '\'\'\'Templates used on the current version of this page:\'\'\'',
 	'templatesusedpreview' => '{{PLURAL:$1|Template|Templates}} used in this preview:',
 	'templatesusedsection' => '{{PLURAL:$1|Template|Templates}} used in this section:',
 	'template-protected' => '(protected)',
@@ -37764,7 +37764,7 @@ i redigeringens "edit token". Redigeringen stoppades för att förhindra att sid
 Detta händer ibland om du använder buggiga webbaserade anonyma proxytjänster.\'\'\'',
 	'titleprotectedwarning' => '\'\'\'Varning: Denna sida har låsts så att [[Special:ListGroupRights|specifika rättigheter]] krävs för att skapa den.\'\'\'
 Den senaste loggposten tillhandahålls nedan som referens:',
-	'templatesused' => '{{PLURAL:$1|Mall|Mallar}} som används på den här sidan:',
+	'templatesused' => '\'\'\'Mallar som används på den aktuella versionen av denna sida:\'\'\'',
 	'templatesusedpreview' => '{{PLURAL:$1|Mall|Mallar}} som används i denna förhandsgranskning:',
 	'templatesusedsection' => '{{PLURAL:$1|Mall|Mallar}} som används i det här avsnittet:',
 	'template-protected' => '(skyddad)',
