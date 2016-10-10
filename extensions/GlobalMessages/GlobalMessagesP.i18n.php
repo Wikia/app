@@ -6147,6 +6147,7 @@ A continuació es mostra la darrera entrada del registre com a referència:',
 	'patrol-log-page' => 'Registre de supervisió',
 	'patrol-log-header' => 'Això és un registre de les revisions patrullades.',
 	'previousdiff' => '← Vés a l\'edició anterior',
+	'profile' => 'Perfil',
 ];
 
 $messages['cbk-zam'] = [
@@ -7777,6 +7778,7 @@ Dyma\'r cofnod lòg diweddaraf, er gwybodaeth:',
 	'patrol-log-page' => 'Lòg patrolio',
 	'patrol-log-header' => 'Mae\'r lòg hwn yn dangos y golygiadau sydd wedi derbyn ymweliad patrôl.',
 	'previousdiff' => '← Y fersiwn gynt',
+	'profile' => 'Proffil',
 ];
 
 $messages['da'] = [
@@ -8224,6 +8226,7 @@ Zur Information folgt der aktuelle Logbucheintrag:',
 	'prefs-help-blurmesg' => 'Captcha',
 	'prefs-help-mailmesg' => 'E-Mail',
 	'prefs-layout' => 'Aussehen',
+	'profile' => 'Profil',
 ];
 
 $messages['de-ch'] = [
@@ -9656,6 +9659,7 @@ A continuación se muestra la última entrada de registro para referencia:',
 	'prefs-help-blurmesg' => 'Palabra borrosa',
 	'prefs-help-mailmesg' => 'Correo electrónico',
 	'prefs-layout' => 'Diseño de Wikia',
+	'profile' => 'Perfil',
 ];
 
 $messages['et'] = [
@@ -10637,6 +10641,7 @@ Alla on viimeisin lokitapahtuma:',
 	'prefs-help-birthmesg' => 'Miksi minun pitää ilmoittaa syntymäpäiväni?',
 	'prefs-help-blurmesg' => 'Epäselvä sana',
 	'prefs-help-mailmesg' => 'Sähköposti',
+	'profile' => 'Profiili',
 ];
 
 $messages['fiu-vro'] = [
@@ -11226,6 +11231,7 @@ Veuillez contacter votre fournisseur d’accès Internet ou votre support techni
 	'prefs-help-birthmesg' => 'Pourquoi dois-je fournir ma date de naissance?',
 	'prefs-help-blurmesg' => 'Mot flouté',
 	'prefs-layout' => 'Apparence',
+	'profile' => 'Profil',
 ];
 
 $messages['frc'] = [
@@ -16831,6 +16837,7 @@ L\'ultimo elemento del registro è riportato di seguito per informazione:',
 	'prefs-help-blurmesg' => 'Immagine annebbiata',
 	'prefs-help-mailmesg' => 'E-mail',
 	'prefs-layout' => 'Layout globale',
+	'profile' => 'Profilo',
 ];
 
 $messages['iu'] = [
@@ -17279,6 +17286,7 @@ file_uploadsの設定を確認してください。',
 	'prefs-help-blurmesg' => '画像認証',
 	'prefs-help-mailmesg' => 'メールアドレス',
 	'prefs-layout' => 'サイトの外装',
+	'profile' => 'プロフィール',
 ];
 
 $messages['jam'] = [
@@ -19788,6 +19796,7 @@ $messages['ko'] = [
 	'prefs-help-blurmesg' => '보안문자',
 	'prefs-help-mailmesg' => '이메일',
 	'prefs-layout' => '스킨',
+	'profile' => '프로필',
 ];
 
 $messages['ko-kp'] = [
@@ -27505,6 +27514,7 @@ Det siste loggelementet er oppgjeve under som referanse:',
 	'prefs-help-birthday' => 'Hvorfor må jeg oppgi dette?',
 	'prefs-help-birthmesg' => 'Hvorfor må jeg oppgi fødselsdagen min?',
 	'prefs-help-blurmesg' => 'Uklart ord',
+	'profile' => 'Profil',
 ];
 
 $messages['nov'] = [
@@ -28811,6 +28821,7 @@ Ostatni wpis z rejestru jest pokazany poniżej.',
 	'prefs-help-birthmesg' => 'Dlaczego mam wpisać swoją datę urodzenia?',
 	'prefs-help-blurmesg' => 'Słowo z obrazka',
 	'prefs-layout' => 'Układy stron',
+	'profile' => 'Profil',
 ];
 
 $messages['pms'] = [
@@ -30111,6 +30122,7 @@ A última entrada no histórico é fornecida abaixo para referência:',
 	'patrol-log-page' => 'Registro de edições patrulhadas',
 	'patrol-log-header' => 'Este é um registro de edições patrulhadas.',
 	'previousdiff' => '← Edição anterior',
+	'profile' => 'Perfil',
 ];
 
 $messages['qu'] = [
@@ -31405,6 +31417,7 @@ ___________________________________________________________
 	'popular-wikis' => 'Популярные вики',
 	'prefs-help-birthday' => 'Почему я должен указывать это?',
 	'prefs-help-birthmesg' => 'Почему я должен указать дату своего рождения?',
+	'profile' => 'Профайл',
 ];
 
 $messages['rue'] = [
@@ -39443,6 +39456,7 @@ Thông tin mới nhất trong nhật trình được ghi dưới đây để ti�
 	'prefs-help-blurmesg' => 'Chữ mờ',
 	'prefs-help-mailmesg' => 'Thư điện tử',
 	'prefs-layout' => 'Mẫu trang web',
+	'profile' => 'Hồ sơ',
 ];
 
 $messages['vls'] = [
@@ -41330,6 +41344,7 @@ ___________________________________________________________
 	'parentheses' => '（$1）',
 	'prefs-help-birthinfo' => '作为安全预防措施，也为了遵守美国联邦法规而保持网站的完整性，Fandom要求所有用户提供自己的真实出生日期。',
 	'prefs-help-terms' => '创建用户账户，即表示您同意并接受此{{#NewWindowLink: homepage:Terms of use|Wikia, Inc使用条款}}',
+	'profile' => '用户档案',
 ];
 
 $messages['zh-hant'] = [
@@ -41555,6 +41570,7 @@ ___________________________________________________________
 	'parentheses' => '（$1）',
 	'prefs-help-birthinfo' => '作爲安全措施，也作爲保持網站完整性的手段，同時也爲了遵守美國聯邦法規，Fandom要求所有用戶提供自己的真實出生日期。',
 	'prefs-help-terms' => '創建帳戶，即表示你同意此{{#NewWindowLink: homepage:Terms of use|Wikia, Inc使用條款}}。',
+	'profile' => '用戶檔案',
 ];
 
 $messages['zh-hk'] = [
@@ -41568,6 +41584,7 @@ $messages['zh-hk'] = [
 	'prefixindex' => '前缀索引',
 	'prefs-help-email' => '*<strong>電子郵件</strong>（可選）：讓他人通過網站在不知道您的電子郵件地址的情況下通過電子郵件與您聯絡，以及通過電子郵件取得遺忘的密碼。',
 	'prefs-i18n' => '字體轉換',
+	'profile' => '用戶檔案',
 ];
 
 $messages['zh-min-nan'] = [
@@ -41642,6 +41659,7 @@ ___________________________________________________________
 	'pagecategories' => '{{PLURAL:$1個|分類|分類}}',
 	'permalink' => '固定鏈結',
 	'prefs-i18n' => '字體轉換',
+	'profile' => '用戶檔案',
 ];
 
 $messages['zh-yue'] = [
@@ -41713,5 +41731,6 @@ $messages['zh'] = [
 	'prefixindex' => '前缀索引',
 	'prefs-help-email' => '*<strong>电子邮件</strong>（可选）：让他人通过网站在不知道您的电子邮件地址的情况下通过电子邮件与您联络，以及通过电子邮件取得遗忘的密码。',
 	'prefs-i18n' => '字体转换',
+	'profile' => '用户档案',
 ];
 
