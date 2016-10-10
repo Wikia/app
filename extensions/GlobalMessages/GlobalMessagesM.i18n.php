@@ -7394,6 +7394,7 @@ Weitere werden standardmäßig nicht angezeigt.
 	'move-redirect-suppressed' => 'Weiterleitung unterdrückt',
 	'mu_login' => 'Du musst angemeldet sein um Dateien hochladen zu können.',
 	'multiplefileuploadsummary' => 'Zusammenfassung:',
+	'mwlink_tip' => 'Interner Link',
 ];
 
 $messages['de-ch'] = [
@@ -8753,6 +8754,7 @@ Existen otros campos que se mantendrán ocultos por defecto.
 	'messagebar_mess' => '¿Sabes que puedes <a href="$1">editar esta página</a> o <a href="$2">crear una nueva</a>? <a href="$3">Averigua cómo</a> se hace.',
 	'mu_login' => 'Debes identificarte para subir archivos',
 	'multiplefileuploadsummary' => 'Resumen:',
+	'mwlink_tip' => 'Enlace interno',
 ];
 
 $messages['et'] = [
@@ -9611,6 +9613,7 @@ Suorittamalla sen järjestelmäsi voi muuttua epäluotettavaksi.',
 	'messagebar_mess' => 'Tiesitkö, että voit <a href="$1">muokata tätä sivua</a> tai <a href="$2">luoda uuden</a>? <a href="$3">Ota selvää</a> miten tämä toimii.',
 	'mu_login' => 'Sinun pitää olla kirjautunut sisään ladataksesi tiedostoja.',
 	'multiplefileuploadsummary' => 'Yhteenveto:',
+	'mwlink_tip' => 'Sisäinen linkki',
 ];
 
 $messages['fiu-vro'] = [
@@ -24609,6 +24612,7 @@ Andre er gøymde som standard.
 *#category2#',
 	'mu_login' => 'Du må være pålogget for å laste opp filer.',
 	'multiplefileuploadsummary' => 'Sammendrag:',
+	'mwlink_tip' => 'Internlenke',
 ];
 
 $messages['nov'] = [
@@ -28057,6 +28061,7 @@ $messages['ru'] = [
 	'masthead-anonymous-user' => 'Незарегистрированный вкладчик',
 	'messagebar_mess' => 'Знаете ли вы, что вы можете <a href="$1">править эту страницу</a> или <a href="$2">создать новую страницу</a>? <a href="$3">Узнайте, как</a> это работает.',
 	'mu_login' => 'Вы должны войти в систему, чтобы загружать файлы.',
+	'mwlink_tip' => 'Внутренняя ссылка',
 ];
 
 $messages['rue'] = [
