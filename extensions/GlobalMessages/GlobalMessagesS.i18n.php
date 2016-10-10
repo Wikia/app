@@ -195,8 +195,7 @@ The latest block log entry is provided below for reference:',
 	'sorbsreason' => 'Your IP address is listed as an open proxy in the DNSBL used by {{SITENAME}}.',
 	'sorbs_create_account_reason' => 'Your IP address is listed as an open proxy in the DNSBL used by {{SITENAME}}.
 You cannot create an account',
-	'selfmove' => 'Source and destination titles are the same;
-cannot move a page over itself.',
+	'selfmove' => '\'\'\'Source and destination titles are the same; can\'t move a page over itself.\'\'\' Please check that you didn\'t enter the destination title into the "reason" field instead of the "new title" field.',
 	'semiprotectedpagemovewarning' => '\'\'\'Note:\'\'\' This page has been protected so that only registered users can move it.
 The latest log entry is provided below for reference:',
 	'siteuser' => '{{SITENAME}} user $1',
@@ -36100,7 +36099,7 @@ Den senaste posten i blockeringsloggen visas nedan som referens:',
 	'sorbsreason' => 'Din IP-adress är listad som öppen proxy i den DNSBL {{SITENAME}} använder.',
 	'sorbs_create_account_reason' => 'Din IP-adress är listad som en öppen proxy i den DNSBL som används av {{SITENAME}}.
 Du får inte skapa ett användarkonto',
-	'selfmove' => 'Ursprungstitel och destinationstitel är identiska. Sidan kan inte flyttas till sig själv.',
+	'selfmove' => '\'\'\'Källa och destinationstitel är den samma: kan inte flyttas till sig själv.\'\'\' Kontrollera att du inte ange destinationens titel i "orsaken"-fältet i stället för "nya titel"-fältet.',
 	'semiprotectedpagemovewarning' => '\'\'\'Observera:\'\'\' Denna sida har låsts så att endast registrerade användare kan flytta den.
 Den senaste loggposten tillhandahålls nedan som referens:',
 	'siteuser' => 'användaren $1 på {{SITENAME}}',
