@@ -87,14 +87,7 @@ $messages['en'] = [
 	'answers_widget_no_questions' => 'Help us create the best answer to any question!',
 	'answers_widget_no_questions_askabout' => '<!-- -->',
 	'reword_this' => '<a href="$1" $2>Reword this question</a>',
-	'no_related_answered_questions' => 'There are no related questions yet. Get a <a href="http://answers.wikia.com/wiki/Special:Randomincategory/answered_questions">random answered question instead</a>, or ask a new one!<br />
-	<div class="createbox" align="center">
-	<p></p><form name="createbox" action="/index.php" method="get" class="createboxForm">
-	<input name="action" value="create" type="hidden">
-	<input name="prefix" value="Special:CreateQuestionPage/" type="hidden">
-	<input name="editintro" value="" type="hidden">
-	<input class="createboxInput" name="title" value="" size="50" type="text">
-	<input name="create" class="createboxButton" value="Type your question and click here" type="submit"></form></div>',
+	'no_related_answered_questions' => 'There are no related questions yet.',
 	'auto_friend_request_body' => 'Will you add me as a friend?',
 	'tog-hidefromattribution' => 'Hide my avatar and name from attribution list',
 	'q' => '<!-- -->',
@@ -525,14 +518,7 @@ $messages['de'] = [
 	'answers_widget_no_questions' => 'Hilf uns dabei, die besten Antworten auf alle Fragen zu finden!',
 	'answers_widget_no_questions_askabout' => '<br><br>Mach mit und stelle eine Frage über "{{PAGENAME}}"',
 	'reword_this' => '<a href="$1" $2>Frage umformulieren</a>',
-	'no_related_answered_questions' => 'Es gibt noch keine ähnliche Fragen. Erhalte stattdessen eine <a href="http://answers.wikia.com/wiki/Special:Randomincategory/answered_questions">zufällig beantwortete Frage</a> oder stelle eine Neue!<br />
-<div class="createbox" align="center">
-<p></p><form name="createbox" action="/index.php" method="get" class="createboxForm">
-<input name="action" value="create" type="hidden">
-<input name="prefix" value="Special:CreateQuestionPage/" type="hidden">
-<input name="editintro" value="" type="hidden">
-<input class="createboxInput" name="title" value="" size="50" type="text">
-<input name="create" class="createboxButton" value="Frage eingeben und klicken" type="submit"></form></div>',
+	'no_related_answered_questions' => 'Es gibt noch keine ähnlichen Fragen.',
 	'auto_friend_request_body' => 'Wirst du mich als Freund hinzufügen?',
 	'tog-hidefromattribution' => 'Verstecke meinen Avatar und meinen Namen auf der Namensnennung-Liste',
 	'a' => 'Antwort:',
@@ -679,6 +665,7 @@ $messages['es'] = [
 	'edit_points' => '{{PLURAL:$1|punto de edición|puntos de edición}}',
 	'header_questionmark_pre' => '¿',
 	'in_category' => '... en categoría',
+	'no_related_answered_questions' => 'Todavía no hay preguntas relacionadas.',
 ];
 
 $messages['fi'] = [
@@ -711,9 +698,9 @@ $messages['fr'] = [
 	'answers_toolbox' => 'Boîte à outils Wikiréponses',
 	'improve_this_answer' => 'Améliorer cette réponse',
 	'answer_this_question' => 'Répondre à cette question :',
-	'notify_improved' => 'M’envoyer un courriel quand elle est améliorée',
+	'notify_improved' => 'M’envoyer un e-mail quand elle est améliorée',
 	'research_this' => 'Rechercher ceci',
-	'notify_answered' => 'M’envoyer un courriel quand une réponse est donnée',
+	'notify_answered' => 'M’envoyer un e-mail quand une réponse est donnée',
 	'recent_asked_questions' => 'Questions posées récemment',
 	'recent_answered_questions' => 'Questions ayant reçu une réponse récemment',
 	'recent_edited_questions' => 'Questions modifiées récemment',
@@ -1415,6 +1402,9 @@ $messages['ja'] = [
 	'in_category' => 'カテゴリ',
 	'new_question_comment' => '新しい質問',
 	'next_page' => '次 &raquo;',
+	'no_related_answered_questions' => '関連する質問はまだありません。',
+	'notify_answered' => '回答されたらメールで通知する',
+	'notify_improved' => '回答が更新されたらメールで通知する',
 ];
 
 $messages['lb'] = [
@@ -2061,9 +2051,9 @@ $messages['pl'] = [
 	'answers_toolbox' => 'Narzędzia Wikianswers',
 	'improve_this_answer' => 'Rozwiń odpowiedź',
 	'answer_this_question' => 'Odpowiedz na to pytanie:',
-	'notify_improved' => 'Wyślij e-mail przy poprawie',
+	'notify_improved' => 'Powiadom mnie e-mailem o zmianie odpowiedzi',
 	'research_this' => 'Wyszukaj',
-	'notify_answered' => 'Wyślij e-mail przy odpowiedzi',
+	'notify_answered' => 'Wyślij do mnie e-mail, gdy pojawi się odpowiedź',
 	'recent_asked_questions' => 'Ostatnio zadawane pytania',
 	'recent_answered_questions' => 'Ostatnie pytania na które odpowiedziano',
 	'recent_edited_questions' => 'Ostatnio edytowane pytania',
@@ -2079,7 +2069,7 @@ $messages['pl'] = [
 	'skip_this' => 'Pomiń',
 	'see_all_changes' => 'Zobacz wszystkie zmiany',
 	'toolbox_anon_message' => '<i>"Wikianswers wykorzystuje unikatowe rozwiązania wiki aby udzielać najlepszych odpowiedzi na każde pytanie"</i><br /><br /> <b>Jimmy Wales</b><br>założyciel Wikipedii i Wikianswers',
-	'no_questions_found' => 'Nie znaleziono pytania',
+	'no_questions_found' => 'Nie znaleziono pytań',
 	'widget_settings' => 'Ustawienia pytań',
 	'style_settings' => 'Ustawienia stylu',
 	'get_widget_title' => 'Dodaj Pytania do swojej strony',
@@ -2118,6 +2108,7 @@ $messages['pl'] = [
 	'edit_points' => '{{PLURAL:$1|punkt edycji|punkty edycji|punktów edycji}}',
 	'facebook_signed_in' => 'Jesteś {{GENDER:|zalogowany|zalogowana|zalogowany/a}} przez Facebook Connect',
 	'get_code' => 'Pobierz kod',
+	'no_related_answered_questions' => 'Nie ma jeszcze podobnych pytań.',
 ];
 
 $messages['pms'] = [
@@ -2168,6 +2159,8 @@ $messages['pt'] = [
 	'in_category' => '...na categoria',
 	'new_question_comment' => 'nova pergunta',
 	'next_page' => 'Proxima »',
+	'notify_answered' => 'Avise-me por email quando tiver resposta.',
+	'notify_improved' => 'Avise-me por email sobre as alterações da resposta.',
 ];
 
 $messages['pt-br'] = [
@@ -2196,6 +2189,8 @@ $messages['pt-br'] = [
 	'in_category' => '...na categoria',
 	'new_question_comment' => 'nova pergunta',
 	'next_page' => 'Proxima »',
+	'notify_answered' => 'Avise-me por email quando tiver resposta.',
+	'notify_improved' => 'Avise-me por email sobre as alterações da resposta.',
 ];
 
 $messages['roa-tara'] = [
@@ -2580,6 +2575,10 @@ $messages['no'] = [
 	'magic_answer_yes' => 'Ja, bruk dette som utgangspunkt',
 	'new_question_comment' => 'nytt spørsmål',
 	'next_page' => 'Neste &raquo;',
+	'no_questions_found' => 'Ingen spørsmål funnet',
+	'no_related_answered_questions' => 'Det er ingen relaterte spørsmål ennå.',
+	'notify_answered' => 'Send meg en e-post når besvart',
+	'notify_improved' => 'Send meg en e-post når forbedret',
 ];
 
 $messages['zh-hant'] = [
@@ -2608,6 +2607,7 @@ $messages['ko'] = [
 	'facebook_signed_in' => 'Facebook 연동 기능을 사용하여 로그인했습니다.',
 	'new_question_comment' => '새 질문',
 	'next_page' => '다음 &raquo;',
+	'no_related_answered_questions' => '관련된 질문이 없습니다.',
 ];
 
 $messages['bg'] = [
