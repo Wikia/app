@@ -1,22 +1,36 @@
 <?php
+/** Internationalization file for /extensions/wikia/SEOTweaks/SEOTweaks extension. */
+$messages = [];
 
-$messages = array();
+$messages['en'] = [
+	'seotweaks-image' => 'Image',
+	'seotweaks-video' => 'Video',
+];
 
-$messages['en'] = array(
+$messages['pl'] = [
+	'seotweaks-image' => 'Obraz',
+	'seotweaks-video' => 'Film',
+];
 
-	'seotweaks-image' => "Image",
-	'seotweaks-video' => "Video"
-);
+$messages['qqq'] = [
+	'seotweaks-image' => 'Prefix for image title displayed as document title (the title tag)',
+	'seotweaks-video' => 'Prefix for video title displayed as document title (the title tag)',
+];
 
-$messages['pl'] = array(
+$messages['de'] = [
+	'seotweaks-image' => 'Bild',
+];
 
-	'seotweaks-image' => "Obrazek",
-	'seotweaks-video' => "Wideo"
-);
+$messages['es'] = [
+	'seotweaks-image' => 'Imagen',
+];
 
-/** Message documentation (Message documentation) */
-$messages['qqq'] = array(
+$messages['ru'] = [
+	'seotweaks-image' => 'Файл',
+	'seotweaks-video' => 'Видео',
+];
 
-	'seotweaks-image' => "Prefix for image title displayed as document title (the title tag)",
-	'seotweaks-video' => "Prefix for video title displayed as document title (the title tag)"
-);
+$messages['fr'] = [
+	'seotweaks-video' => 'Vidéo',
+];
+
