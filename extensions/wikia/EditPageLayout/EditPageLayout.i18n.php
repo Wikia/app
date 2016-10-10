@@ -1145,6 +1145,7 @@ $messages['it'] = [
 	'editpagelayout-subject-headline-label' => 'Oggetto/titolo:',
 	'protectedpagewarning-notice' => '\'\'\'Nota:\'\'\' Questa pagina è stata protetta in modo che solo gli amministratori possano modificarla. Gli amministratori locali possono cambiare questo stato. [Maggiori informazioni]',
 	'tog-disablesyntaxhighlighting' => 'Non mostrare il syntax highlighting nel codice sorgente',
+	'userinvalidcssjstitle-notice' => '\'\'\'Attenzione:\'\'\' Non esiste alcuna skin "$1". [Altre info]',
 ];
 
 $messages['ja'] = [
