@@ -240,7 +240,7 @@ The latest log entry is provided below for reference:',
 	'patrol-log-page' => 'Patrol log',
 	'patrol-log-header' => 'This is a log of patrolled revisions.',
 	'previousdiff' => '← Older edit',
-	'pipe-separator' => ' | ',
+	'pipe-separator' => ' |&#32;',
 	'percent' => '$1%',
 	'parentheses' => '($1)',
 	'patrol-log-line' => 'marked $1 of $2 patrolled $3',
@@ -11192,6 +11192,7 @@ Veuillez contacter votre fournisseur d’accès Internet ou votre support techni
 	'percent' => '$1&nbsp;%',
 	'prefs-help-birthinfo' => 'Fandom requiert que tous les utilisateurs fournissent leur date de naissance réelle ; ceci est une mesure de sécurité et permet également de préserver l\'intégrité du site tout en respectant les lois fédérales américaines.',
 	'prefs-help-terms' => 'En créant un compte, vous acceptez les {{#NewWindowLink: homepage:fr:Conditions d\'utilisation|Conditions d\'utilisation}}',
+	'pipe-separator' => '&#32;•&#32;',
 ];
 
 $messages['frc'] = [
@@ -28746,6 +28747,7 @@ Ostatni wpis z rejestru jest pokazany poniżej.',
 	'percent' => '$1&nbsp;%',
 	'prefs-help-birthinfo' => 'Fandom wymaga od wszystkich użytkowników podania rzeczywistej daty urodzenia ze względów bezpieczeństwa oraz dla zachowania spójności strony, przy zapewnieniu zgodności z przepisami federalnymi.',
 	'prefs-help-terms' => 'Tworząc konto użytkownika, akceptujesz {{#NewWindowLink: homepage:Terms of use | Zasady Użytkowania}}',
+	'pipe-separator' => '&#32;•&#32;',
 ];
 
 $messages['pms'] = [
