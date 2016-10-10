@@ -193,7 +193,7 @@ $messages['fa'] = [
 ];
 
 $messages['fr'] = [
-	'stafflog-desc' => 'Identification centralisée pour le personnel',
+	'stafflog-desc' => 'Connexion centralisée pour le staff',
 	'stafflog' => 'StaffLog',
 	'stafflog-blockmsg' => '$1 $2 a essayé de bloquer l’employé $3 sur le wiki $4. Motif : $5',
 	'stafflog-piggybackloginmsg' => '$1 Accès superposé - utilisateur $2 connecté en tant que $3',
