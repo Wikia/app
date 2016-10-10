@@ -469,7 +469,7 @@ $messages['de'] = [
 	'inline-register-title' => 'Benachrichtige mich wenn meine Frage beantwortet wurde!',
 	'inline-welcome' => 'Willkommen bei Wikianswers',
 	'skip_this' => 'Überspringen',
-	'see_all_changes' => 'Alle Änderungen sehen',
+	'see_all_changes' => 'Zeige alle Änderungen',
 	'toolbox_anon_message' => '<i>"Wikianswers nutzt die einzigartigen Merkmale eines Wikis, um die absolut besten Antworten auf alle Fragen zu finden."</i><br /><br /> <b>Jimmy Wales</b><br />Gründer von Wikipedia und Wikianswers',
 	'no_questions_found' => 'Keine Fragen gefunden',
 	'widget_settings' => 'Frage-Einstellungen',
@@ -612,7 +612,7 @@ $messages['es'] = [
 	'custom_category' => 'Personalizar categoría',
 	'number_of_items' => 'Número de items a mostrar',
 	'width' => 'Anchura',
-	'see_all' => 'Ver todos',
+	'see_all' => 'Ver todo',
 	'get_code' => 'Coger código',
 	'link_color' => 'Color de enlace de la pregunta',
 	'widget_order' => 'Orden de las preguntas',
@@ -1433,6 +1433,7 @@ $messages['ja'] = [
 	'rephrase_this' => '<a href="$1" $2>この質問の言い回しを変える</a>',
 	'research_this_on_wikipedia' => 'ウィキペディアで<a href="$1">この質問について調べる</a>。',
 	'reword_this' => '<a href="$1" $2>この質問の言い回しを変える</a>。',
+	'see_all' => '全て見る',
 ];
 
 $messages['lb'] = [
@@ -2215,6 +2216,7 @@ $messages['pt'] = [
 	'related_answered_questions' => 'Perguntas respondidas relacionadas',
 	'rephrase' => 'Refazer a pergunta',
 	'research_this_on_wikipedia' => '<a href="$1">Pesquisar esta pergunta</a> na Wikipedia',
+	'see_all' => 'Ver todas',
 ];
 
 $messages['pt-br'] = [
@@ -2259,6 +2261,7 @@ $messages['pt-br'] = [
 	'related_answered_questions' => 'Perguntas respondidas relacionadas',
 	'rephrase' => 'Refazer a pergunta',
 	'research_this_on_wikipedia' => '<a href="$1">Pesquisar esta pergunta</a> na Wikipedia',
+	'see_all' => 'Ver todas',
 ];
 
 $messages['roa-tara'] = [
