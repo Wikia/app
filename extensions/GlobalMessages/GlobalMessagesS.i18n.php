@@ -10005,6 +10005,7 @@ Esto podría estar causado por un enlace a un sitio externo incluido en la lista
 	'shared-News_box' => 'Visita nuestra [[w:c:comunidad|Comunidad Central]]<br />',
 	'shared-problemreport-url' => 'http://comunidad.wikia.com/wiki/Project:Reportar_un_problema',
 	'shared-problemreport' => 'Reportar un problema',
+	'shoutbox' => 'Chat',
 ];
 
 $messages['et'] = [
