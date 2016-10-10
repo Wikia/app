@@ -13,13 +13,13 @@ $messages['en'] = [
 	'rte-edgecase-complex-description' => 'an external URL or template within a link description',
 	'rte-edgecase-template-with-link' => 'a template with a link as a parameter',
 	'rte-edgecase-syntax' => 'not allowed syntax',
-	'rte-edgecase-image-with-link' => 'image with a link in the description',
+	'rte-edgecase-image-with-link' => 'photo with a link in the description',
 	'rte-edgecase-redirect' => 'redirect',
 	'rte-edgecase-templateintable' => 'a table with template call in definition',
 	'rte-edgecase-unclosed-tags' => 'unclosed HTML tag',
 	'enablerichtexteditor' => 'Enable visual editor (where available)',
 	'rte-enablerichtexteditormessage' => 'Rich Text Editor enabled!',
-	'rte-first-run-notice' => 'We have made some improvements to the editor. To learn more, [http://www.wikia.com/wiki/User_blog:Kirkburn/Rich_text_editor_upgrade_news read the announcement].',
+	'rte-first-run-notice' => 'We have made some improvements to the rich text editor. For more information please visit the [[Help:Rich text editor|help page]].',
 	'prefs-rte' => 'Rich Text Editor',
 ];
 
@@ -106,7 +106,7 @@ $messages['br'] = [
 
 $messages['ca'] = [
 	'rte-desc' => 'CKeditor integrat per MediaWiki',
-	'rte-no-js-fallback' => 'L\'editor de text enriquit no funciona si el JavaScript està desactivat. Si us plau, activa\'l en les opcions del teu navegador, o visita les teves [[Special:Preferences|preferences]] per canviar a l\'antic editor de MediaWiki',
+	'rte-no-js-fallback' => 'L\'editor de text enriquit no funciona si JavaScript està desactivat. Si us plau, deixeu-lo activitat a les opcions del vostre navegador, o visita les teves [[Especial:Preferències|preferències]] per canviar l\'antic editor de MediaWiki',
 	'rte-edgecase-info-title' => 'Requereix mode font',
 	'rte-edgecase-info' => 'L\'editor de text enriquit s\'ha desactivat perquè la pàgina conté un codi complex.',
 	'rte-edgecase-comment' => 'Comentaris HTML',
@@ -154,8 +154,8 @@ $messages['cs'] = [
 $messages['de'] = [
 	'rte-desc' => 'Integration des CKeditors in MediaWiki',
 	'rte-no-js-fallback' => 'Der Rich-Text-Editor funktioniert nicht mit ausgeschaltetem JavaScript. Bitte aktiviere es entweder in den Browser-Optionen oder besuche deine [[Special:Preferences|Einstellungen]], um zum alten MediaWiki-Editor zu wechseln.',
-	'rte-edgecase-info-title' => 'Quelltext-Modus erforderlich',
-	'rte-edgecase-info' => 'Die Rich-Text-Bearbeitung wurde deaktiviert, weil die Seite komplexen Code enthält.',
+	'rte-edgecase-info-title' => 'Für diese Aktion wird die Quelltextansicht benötigt.',
+	'rte-edgecase-info' => 'Das Bearbeiten mit dem grafischen Editior ist aufgrund des komplexen Artikelcodes nicht möglich.',
 	'rte-edgecase-comment' => 'HTML-Kommentare',
 	'rte-edgecase-triplecurls' => 'Vorlagenparameter',
 	'rte-edgecase-nowysiwyg' => 'die Anweisung __NOWYSIWYG__, die den grafischen Editor absichtlich deaktiviert',
@@ -171,7 +171,7 @@ $messages['de'] = [
 
 * Probiere den neuen Editor doch aus, indem du deine [{{fullurl:Special:MyPage|action=edit}} Benutzerseite bearbeitest].
 * Falls du zurück zum alten Editor wechseln möchtest, kannst du das im \'\'Bearbeiten\'\'-Reiter in deinen [[Special:Preferences#prefsection-4|Einstellungen]] tun.',
-	'rte-first-run-notice' => 'Wir haben einige Verbesserungen am Editor vorgenommen. [http://www.wikia.com/wiki/User_blog:Kirkburn/Rich_text_editor_upgrade_news Lies die Mitteilung] um mehr zu erfahren.',
+	'rte-first-run-notice' => 'Wir haben den Editor verbessert. Weitere Informationen findest du in [http://de.wikia.com/wiki/Benutzer_Blog:Avatar/Neue_Version_des_grafischen_Editors dieser Ankündigung].',
 	'prefs-rte' => 'Grafischer Editor',
 ];
 
@@ -193,8 +193,8 @@ $messages['el'] = [
 $messages['es'] = [
 	'rte-desc' => 'Integración del editor CK en MediaWiki',
 	'rte-no-js-fallback' => 'El Editor de Texto Enriquecido no trabaja con JavaScript desactivado. Por favor, actívalo en las opciones de tu navegador, o visitas tus [[Especial:Preferencias]] para activar el viejo editor MediaWiki',
-	'rte-edgecase-info-title' => 'Modo fuente requerido',
-	'rte-edgecase-info' => 'Edición de texto enriquecido ha sido deshabilitado porque la página contiene código complejo.',
+	'rte-edgecase-info-title' => 'Modo de fuente requerido',
+	'rte-edgecase-info' => 'El editor de texto enriquecido se ha deshabilitado debido a que el artículo contiene código complejo.',
 	'rte-edgecase-comment' => 'Comentarios HTML',
 	'rte-edgecase-triplecurls' => 'parámetros de plantilla',
 	'rte-edgecase-nowysiwyg' => 'la orden «no WYSIWYG»',
@@ -222,9 +222,10 @@ $messages['fa'] = [
 ];
 
 $messages['fi'] = [
-	'rte-edgecase-info' => 'Rich text -muokkaus on poistettu käytöstä, koska sivu sisältää monimutkaista koodia.',
+	'rte-edgecase-info' => 'Rikas tekstin muokkaus on poistettu käytöstä, koska artikkeli muodostuu hankalasta koodista.',
 	'rte-edgecase-comment' => 'HTML-kommentit',
 	'enablerichtexteditor' => 'Mahdollista muokkaaminen visuaalisessa tilassa (lähdekooditilan lisäksi)',
+	'rte-edgecase-info-title' => 'Lähde vaadittu',
 ];
 
 $messages['fr'] = [
@@ -341,11 +342,13 @@ $messages['kn'] = [
 ];
 
 $messages['ko'] = [
-	'rte-edgecase-comment' => 'HTML 댓글',
+	'rte-edgecase-comment' => 'HTML 주석',
 	'rte-edgecase-triplecurls' => '틀 매개변수',
 	'rte-edgecase-redirect' => '넘겨주기',
 	'rte-edgecase-unclosed-tags' => 'HTML 태그가 닫히지 않음',
 	'enablerichtexteditor' => '에디터 모드를 활성화 (소스 모드가 기본)',
+	'rte-edgecase-info-title' => '소스 모드 필요',
+	'rte-edgecase-info' => '이 문서에 복잡한 코드가 포함되어 있어 에디터가 비활성화 되었습니다.',
 ];
 
 $messages['ksh'] = [
@@ -432,7 +435,7 @@ $messages['nb'] = [
 
 $messages['nl'] = [
 	'rte-desc' => 'CKeditor-integratie voor MediaWiki',
-	'rte-no-js-fallback' => 'De uitgebreide tekstverwerker werkt niet als JavaScript is uitgeschakeld. Schakel JavaScript in in uw browser of schakel in uw [[Special:Preferences| voorkeuren]] terug naar de oude tekstverwerker voor MediaWiki.',
+	'rte-no-js-fallback' => 'De uitgebreide tekstverwerker werkt niet als JavaScript is uitgeschakeld. Schakel JavaScript in in je browser of schakel in je [[Special:Preferences| voorkeuren]] terug naar de oude tekstverwerker voor MediaWiki.',
 	'rte-edgecase-info-title' => 'Broncodemodus vereist',
 	'rte-edgecase-info' => 'De uitgebreide tekstverwerker is uitgeschakeld omdat de pagina complexe code bevat.',
 	'rte-edgecase-comment' => 'HTML-opmerkingen',
@@ -570,8 +573,8 @@ $messages['roa-tara'] = [
 $messages['ru'] = [
 	'rte-desc' => 'Интеграция CKeditor в MediaWiki',
 	'rte-no-js-fallback' => 'Текстовый редактор не работает при выключенном JavaScript. Пожалуйста, либо включите его в настройках браузера, либо измените ваши [[Special:Preferences|настройки]], чтобы переключиться на старый редактор MediaWiki',
-	'rte-edgecase-info-title' => 'Требуется режим исходника',
-	'rte-edgecase-info' => 'Улучшенный редактор текста отключен, поскольку статья содержит сложный код.',
+	'rte-edgecase-info-title' => 'Требуется вид с исходным кодом',
+	'rte-edgecase-info' => 'Расширенный редактор отключен, так как статья содержит сложный код.',
 	'rte-edgecase-comment' => 'HTML комментарии',
 	'rte-edgecase-triplecurls' => 'параметры шаблона',
 	'rte-edgecase-nowysiwyg' => 'команда «нет WYSIWYG»',
@@ -583,7 +586,7 @@ $messages['ru'] = [
 	'rte-edgecase-templateintable' => 'таблица с вызовом шаблона в определении',
 	'rte-edgecase-unclosed-tags' => 'не закрытые HTML теги',
 	'enablerichtexteditor' => 'Включить Визуальный редактор (в дополнение к исходному коду)',
-	'rte-enablerichtexteditormessage' => 'Улучшенный редактор текста включен!',
+	'rte-enablerichtexteditormessage' => 'Визуальный редактор включён!',
 	'rte-first-run-notice' => 'Мы сделали несколько улучшений в редактор. Чтобы узнать больше, [http://www.wikia.com/wiki/User_blog:Kirkburn/Rich_text_editor_upgrade_news посетите страницу] с описанием изменений.',
 	'prefs-rte' => 'Визуальный текстовый редактор (RTE)',
 ];
@@ -734,6 +737,7 @@ $messages['zh-hant'] = [
 $messages['it'] = [
 	'enablerichtexteditor' => 'Attiva la modifica in modalità visuale (in aggiunta alla modalità codice sorgente)',
 	'prefs-rte' => 'Editor visuale',
+	'rte-edgecase-info-title' => 'È richiesta la modalità codice sorgente',
 ];
 
 $messages['no'] = [
