@@ -9747,7 +9747,7 @@ Das Wikia Community-Team
 de.wikia.com',
 	'rcshowhideenhanced' => 'Erweiterte Darstellung $1',
 	'refreshpage' => 'Seite erneut laden, um das Widget zu aktivieren',
-	'requestcreatewiki' => 'Submit Request',
+	'requestcreatewiki' => 'Antrag abschicken',
 	'right_now' => 'Right Now<br />people are...',
 	'return_to_article' => 'Return to page',
 	'return_to_talk' => 'Return to discussion',
@@ -11653,7 +11653,7 @@ ___________________________________________
 * ¿Quieres dejar de recibir estos mensajes? Puedes darte de baja en el servicio de emails desde tus preferencias aquí: http://comunidad.wikia.com/Especial:Preferencias',
 	'rcshowhideenhanced' => '$1 cambios recientes realzados',
 	'refreshpage' => 'Recarga la página para activar este widget',
-	'requestcreatewiki' => 'Submit Request',
+	'requestcreatewiki' => 'Presentar Solicitud',
 	'right_now' => 'Right Now<br />people are...',
 	'return_to_article' => 'Return to page',
 	'return_to_talk' => 'Return to discussion',
@@ -33074,6 +33074,7 @@ www.wikia.com',
 	'related_wiki' => 'Legg til oppslagslenker her for å vise wikier beslektet med denne i beslektede wikier [[Special:Widgets|widgeten]].
 
 * [{{FULLURL:MediaWiki:Related wiki}} Ingen beslektede wikier har blitt valgt ennå.]',
+	'requestcreatewiki' => 'Send forespørsel',
 ];
 
 $messages['nov'] = [
