@@ -1228,7 +1228,7 @@ $messages['fi'] = [
 	'oasis-popular-blogs-title' => 'Suositut blogi<br />kirjoitukset',
 	'oasis-spotlights-rail-title' => 'Enemmän',
 	'oasis-spotlights-footer-title' => 'Ympäri Wikian verkkoa <br /><a href="http://yhteiso.wikia.com/wiki/Project:Valokeilat"><span style="font-style: italic; font-size:80%;">Hae mainospaikkaa</span></a>',
-	'themedesigner' => 'Teeman suunnittelija',
+	'themedesigner' => 'Teemansuunnittelija',
 	'oasis-pages-on-wiki-header' => 'Sivua $1',
 	'oasis-latest-activity-new-details' => '$1 loi tämän $2',
 	'oasis-latest-activity-edit-details' => '$1 muokkasi tätä $2',
@@ -1972,7 +1972,7 @@ $messages['it'] = [
 	'oasis-popular-blogs-title' => 'Blog post<br />popolari',
 	'oasis-spotlights-rail-title' => 'In evidenza su',
 	'oasis-spotlights-footer-title' => 'Inoltre su Fandom',
-	'themedesigner' => 'Designer del tema',
+	'themedesigner' => 'Theme designer',
 	'oasis-pages-on-wiki-header' => 'Pagine su $1',
 	'oasis-latest-activity-new-details' => 'creato da $1 $2',
 	'oasis-latest-activity-edit-details' => 'modificato da $1 $2',
@@ -2158,7 +2158,7 @@ $messages['ja'] = [
 	'oasis-popular-blogs-title' => '人気のブログ<br />投稿',
 	'oasis-spotlights-rail-title' => 'をもっと見る',
 	'oasis-spotlights-footer-title' => 'Fandomでも見てみる',
-	'themedesigner' => 'テーマデザイナー',
+	'themedesigner' => 'テーマデザイナ',
 	'oasis-pages-on-wiki-header' => '$1のページ',
 	'oasis-latest-activity-new-details' => '$1さんが作成しました（$2）',
 	'oasis-latest-activity-edit-details' => '$1さんが編集しました $2',
@@ -2393,6 +2393,7 @@ $messages['ko'] = [
 	'oasis-upload-photos-title' => '파일 올리기',
 	'oasis-user-page-change-avatar' => '아바타 변경하기',
 	'oasis-wiki-navigation' => '$1 내비게이션',
+	'themedesigner' => '테마 디자이너',
 ];
 
 $messages['ku-latn'] = [
@@ -3679,7 +3680,7 @@ $messages['pt-br'] = [
 	'oasis-popular-blogs-title' => 'Posts de blogues<br />populares',
 	'oasis-spotlights-rail-title' => 'Mais de',
 	'oasis-spotlights-footer-title' => 'Mais da comunidade Wikia',
-	'themedesigner' => 'Compositor de Temas Visuais',
+	'themedesigner' => 'Designer de temas',
 	'oasis-pages-on-wiki-header' => 'Páginas na $1',
 	'oasis-latest-activity-new-details' => 'criada por $1 $2',
 	'oasis-latest-activity-edit-details' => 'editada por $1 $2',
@@ -5215,6 +5216,7 @@ $messages['zh'] = [
 	'oasis-page-header-comments' => '{{PLURAL:$1|评论|评论}}',
 	'oasis-popular-blogs-title' => '流行博客帖子',
 	'oasis-total-articles-mainpage' => '<em>{{FORMATNUM:$1}}</em><span>个页面创建 <br /> 于此维基上</span>',
+	'themedesigner' => '界面设计',
 ];
 
 $messages['cy'] = [
@@ -5229,5 +5231,9 @@ $messages['cy'] = [
 
 $messages['gv'] = [
 	'oasis-interlang-languages' => 'Çhengaghyn:',
+];
+
+$messages['el'] = [
+	'themedesigner' => 'Σχεδιαστής Θέματος',
 ];
 
