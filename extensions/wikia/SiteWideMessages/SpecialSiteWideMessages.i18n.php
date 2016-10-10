@@ -1,28 +1,10 @@
 <?php
-
-/**
- * SiteWideMessages
- *
- * A SiteWideMessages extension for MediaWiki
- * Provides an interface for sending messages seen on all wikis
- *
- * @author Maciej Błaszkowski (Marooned) <marooned at wikia-inc.com>
- * @date 2008-01-09
- * @copyright Copyright (C) 2008 Maciej Błaszkowski, Wikia Inc.
- * @license http://www.gnu.org/copyleft/gpl.html GNU General Public License 2.0 or later
- * @package MediaWiki
- * @subpackage SpecialPage
- *
- * To activate this functionality, place this file in your extensions/
- * subdirectory, and add the following line to LocalSettings.php:
- *     require_once("$IP/extensions/wikia/SiteWideMessages/SpecialSiteWideMessages.php");
- */
-
+/** Internationalization file for /extensions/wikia/SiteWideMessages/SpecialSiteWideMessages extension. */
 $messages = [];
 
 $messages['en'] = [
 	'sidewidemessages-desc' => 'This extension provides an interface for sending messages seen on all wikis.',
-	'sitewidemessages' => 'Site wide messages',    //the name displayed on Special:SpecialPages
+	'sitewidemessages' => 'Site wide messages',
 	'swm-page-title-editor' => 'Site wide messages :: Editor',
 	'swm-page-title-preview' => 'Site wide messages :: Preview',
 	'swm-page-title-send' => 'Site wide messages :: Send',
@@ -72,8 +54,8 @@ $messages['en'] = [
 	'swm-msg-sent-err' => '<h3>The message has NOT been sent.</h3>See error log for more informations.',
 	'swm-msg-sent-task' => 'Task created to send message: $1',
 	'swm-msg-remove' => 'Are you sure you want to remove this message? This can not be undone!',
-	'swm-days' => 'never,hour,hours,day,days',    //[0] => never expire, [1] => 1 hour, [2] => 2 hours and more, [3] => 1 day, [4] => 2 days and more. FIXME: bad i18n
-	'swm-expire-options' => '0,1h,6h,12h,1,3,7,14,30,60',    //0 = never
+	'swm-days' => 'never,hour,hours,day,days',
+	'swm-expire-options' => '0,1h,6h,12h,1,3,7,14,30,60',
 	'swm-expire-info' => 'This message will expire on $1.',
 	'swm-link-dismiss' => 'dismiss this message',
 	'swm-dismiss-content' => '<p>The message was dismissed.</p><p>%s</p>',
@@ -94,7 +76,7 @@ $messages['en'] = [
 	'swm-no' => 'No',
 	'swm-error-no-such-wiki' => 'There is no such wiki!',
 	'swm-error-no-wiki-list' => 'At least one wiki must be given',
-	'swm-error-no-such-user' => "Specified user doesn't exist.",
+	'swm-error-no-such-user' => 'Specified user doesn\'t exist.',
 	'swm-error-no-user-list' => 'At least one user must be given',
 	'swm-error-empty-message' => 'Enter the content of the message.',
 	'swm-error-long-message' => 'Messages are limited to 500 characters.',
@@ -102,21 +84,18 @@ $messages['en'] = [
 	'swm-error-invalid-time' => 'Invalid time provided.',
 	'swm-lang-other' => 'all remaining languages',
 	'action-messagetool' => 'send site wide messages',
-
 	'swm-label-mode-users-registration' => 'Registration date',
 	'swm-mode-users-registration-after' => 'After',
 	'swm-mode-users-registration-before' => 'Before',
 	'swm-mode-users-registration-between' => 'Between',
 	'swm-label-mode-users-registration-hint' => '<i>Dates must be in the form 2012-04-01 00:00:00</i>',
 	'swm-error-registered-tobeforefrom' => 'User registration end date is before start date.',
-
 	'swm-label-mode-users-editcount' => 'Edit count',
 	'swm-mode-users-editcount-more' => 'More',
 	'swm-mode-users-editcount-less' => 'Less',
 	'swm-mode-users-editcount-between' => 'Between',
 	'swm-error-editcount-tolessthanfrom' => 'User edit count upper limit is less than lower limit.',
 	'swm-error-editcount-notnumber' => 'Edit count must be a valid number.',
-
 	'swm-label-mode-wikis-created' => 'Wiki creation date',
 	'swm-mode-wikis-created-after' => 'After',
 	'swm-mode-wikis-created-before' => 'Before',
@@ -126,14 +105,6 @@ $messages['en'] = [
 	'right-messagetool' => 'Send messages to all the wikis',
 ];
 
-/** Message documentation (Message documentation)
- * @author EugeneZelenko
- * @author Hamilton Abreu
- * @author Liuxinyu970226
- * @author Lloffiwr
- * @author Shirayuki
- * @author Siebrand
- */
 $messages['qqq'] = [
 	'swm-page-title-sent' => 'Page title after message is sent out.',
 	'swm-page-title-list' => 'List is a noun here',
@@ -222,9 +193,6 @@ Referred to in:
 	'swm-error-created-tobeforefrom' => 'Error message when given wiki creation end date is before start date.',
 ];
 
-/** Afrikaans (Afrikaans)
- * @author Naudefj
- */
 $messages['af'] = [
 	'sitewidemessages' => 'Werfwye boodskappe',
 	'swm-page-title-editor' => 'Werfwye boodskappe: Teksverwerker',
@@ -239,16 +207,16 @@ $messages['af'] = [
 	'swm-label-sent' => 'Stuur',
 	'swm-label-list' => 'Lys',
 	'swm-label-recipient' => 'Ontvangers',
-	'swm-label-recipient-wikis' => "Wiki's",
+	'swm-label-recipient-wikis' => 'Wiki\'s',
 	'swm-label-recipient-users' => 'Gebruikers',
 	'swm-label-expiration' => 'Vervaldatum',
-	'swm-label-mode-wikis-all' => "Alle wiki's",
+	'swm-label-mode-wikis-all' => 'Alle wiki\'s',
 	'swm-label-mode-wikis-hub' => 'Geselekteerde hub',
 	'swm-label-mode-wikis-wiki' => 'Geselekteerde wiki',
 	'swm-label-mode-users-all' => 'Alle gebruikers',
 	'swm-label-mode-users-active' => 'Aktiewe grbruikers',
 	'swm-label-mode-users-group' => 'Gebruikers wat aan die groep behoort',
-	'swm-label-mode-users-group-hint' => "<i>Kies 'n groep uit die lys of voer die naam handmatig in.</i>",
+	'swm-label-mode-users-group-hint' => '<i>Kies \'n groep uit die lys of voer die naam handmatig in.</i>',
 	'swm-label-mode-users-user' => 'Geselekteerde gebruiker',
 	'swm-label-mode-users-user-hint' => '<i>Hierdie opsie verontagsaam seleksie in die groep "wiki\'s".</i>',
 	'swm-label-content' => 'Inhoud',
@@ -283,16 +251,13 @@ Dit kan nie ongedaan gemaak word nie!',
 	'swm-list-table-lang' => 'Tale',
 	'swm-yes' => 'Ja',
 	'swm-no' => 'Nee',
-	'swm-error-no-such-wiki' => "Daar is nie so 'n wiki nie!",
+	'swm-error-no-such-wiki' => 'Daar is nie so \'n wiki nie!',
 	'swm-error-no-such-user' => 'Gespesifiseerde gebruiker bestaan nie.',
 	'swm-error-empty-message' => 'Sleutel die inhoud van die boodskap in.',
 	'swm-error-empty-group' => 'Verskaf die naam van die groep.',
 	'swm-lang-other' => 'alle oorblywende tale',
 ];
 
-/** Aragonese (aragonés)
- * @author Juanpabl
- */
 $messages['an'] = [
 	'swm-label-preview' => 'Previsualizar',
 	'swm-label-list' => 'Lista',
@@ -303,21 +268,10 @@ $messages['an'] = [
 	'swm-no' => 'No',
 ];
 
-/** Old English (Ænglisc)
- * @author Espreon
- */
 $messages['ang'] = [
 	'swm-label-edit' => 'Adihtan',
 ];
 
-/** Arabic (العربية)
- * @author Achraf94
- * @author Malhargan
- * @author Meno25
- * @author OsamaK
- * @author ترجمان05
- * @author زكريا
- */
 $messages['ar'] = [
 	'sitewidemessages' => 'رسائل لكل الموقع',
 	'swm-page-title-editor' => 'رسائل لكل الموقع :: محرر',
@@ -415,17 +369,10 @@ $messages['ar'] = [
 	'swm-error-created-tobeforefrom' => 'يجب أن يكون تاريخ نهاية الويكي قبل تاريخ البداية.',
 ];
 
-/** Assamese (অসমীয়া)
- * @author Bishnu Saikia
- */
 $messages['as'] = [
 	'swm-button-preview' => '[খচৰা চাওক]',
 ];
 
-/** Azerbaijani (azərbaycanca)
- * @author Cekli829
- * @author Vago
- */
 $messages['az'] = [
 	'sitewidemessages' => 'Geniş mesajlar saytı',
 	'swm-page-title-editor' => 'Geniş mesajlar saytı :: Redaktə',
@@ -470,10 +417,6 @@ $messages['az'] = [
 	'swm-mode-wikis-created-between' => 'Arasında',
 ];
 
-/** Belarusian (Taraškievica orthography) (беларуская (тарашкевіца)‎)
- * @author EugeneZelenko
- * @author Jim-by
- */
 $messages['be-tarask'] = [
 	'sitewidemessages' => 'Паведамленьні сайту',
 	'swm-page-title-editor' => 'Паведамленьні сайту :: Рэдактар',
@@ -539,9 +482,6 @@ $messages['be-tarask'] = [
 	'swm-lang-other' => 'усе астатнія мовы',
 ];
 
-/** Bulgarian (български)
- * @author DCLXVI
- */
 $messages['bg'] = [
 	'swm-label-edit' => 'Редактиране',
 	'swm-label-remove' => 'Премахване',
@@ -567,20 +507,14 @@ $messages['bg'] = [
 	'swm-error-no-such-user' => 'Посоченият потребител не съществува.',
 ];
 
-/** Breton (brezhoneg)
- * @author Fohanno
- * @author Fulup
- * @author Gwenn-Ael
- * @author Y-M D
- */
 $messages['br'] = [
-	'sitewidemessages' => "Kemennadennoù a-dreuz al lec'hienn",
-	'swm-page-title-editor' => "Kemennadennoù a-dreuz al lec'hienn :: Embanner",
-	'swm-page-title-preview' => "Kemennadennoù a-dreuz al lec'hienn :: Rakwelet",
-	'swm-page-title-send' => "Kemennadennoù a-dreuz al lec'hienn :: Kas",
-	'swm-page-title-sent' => "Kemennadennoù a-dreuz al lec'hienn :: Kas",
-	'swm-page-title-dismiss' => "Kemennadennoù a-dreuz al lec'hienn :: Disteuler",
-	'swm-page-title-list' => "Kemennadennoù a-dreuz al lec'hienn :: Roll",
+	'sitewidemessages' => 'Kemennadennoù a-dreuz al lec\'hienn',
+	'swm-page-title-editor' => 'Kemennadennoù a-dreuz al lec\'hienn :: Embanner',
+	'swm-page-title-preview' => 'Kemennadennoù a-dreuz al lec\'hienn :: Rakwelet',
+	'swm-page-title-send' => 'Kemennadennoù a-dreuz al lec\'hienn :: Kas',
+	'swm-page-title-sent' => 'Kemennadennoù a-dreuz al lec\'hienn :: Kas',
+	'swm-page-title-dismiss' => 'Kemennadennoù a-dreuz al lec\'hienn :: Disteuler',
+	'swm-page-title-list' => 'Kemennadennoù a-dreuz al lec\'hienn :: Roll',
 	'swm-label-preview' => 'Rakwelet',
 	'swm-label-edit' => 'Kemmañ',
 	'swm-label-remove' => 'Dilemel',
@@ -598,7 +532,7 @@ $messages['br'] = [
 	'swm-label-mode-wikis-wiki-multi-hint' => '<i>Ebarzhiñ ur wiki dre linenn.</i>',
 	'swm-label-mode-users-all' => 'An holl implijerien',
 	'swm-label-mode-users-active' => 'Implijerien oberiant',
-	'swm-label-mode-users-group' => "Implijerien a aparchant d'ar strollad-se",
+	'swm-label-mode-users-group' => 'Implijerien a aparchant d\'ar strollad-se',
 	'swm-label-mode-users-group-hint' => '<i>Dibabit ur strollad eus ar roll disachañ pe skrivit an anv gant an dorn evit mont dreist ar roll disachañ. </i>',
 	'swm-label-mode-users-user' => 'An implijer dibabet',
 	'swm-label-mode-users-user-hint' => '<i>Ne vez ket anavezet an dibab-se er strollad « Wikioù ».</i>',
@@ -610,14 +544,14 @@ $messages['br'] = [
 	'swm-label-language' => 'Yezh',
 	'swm-button-lang-checkall' => '[Dibab pep tra]',
 	'swm-button-lang-checknone' => '[Diziuzañ pep tra]',
-	'swm-taskmanager-hint' => "<i>Notennit ez eo koustusoc'h dibarzhioù 'zo a-fed amzer, ha rollet e vint e TaskManager.</i>",
+	'swm-taskmanager-hint' => '<i>Notennit ez eo koustusoc\'h dibarzhioù \'zo a-fed amzer, ha rollet e vint e TaskManager.</i>',
 	'swm-button-preview' => '[ Rakwelet ]',
 	'swm-button-send' => '[ Kas ]',
 	'swm-button-save' => '[ Enrollañ ]',
 	'swm-button-new' => '[ Nevez ]',
 	'swm-msg-sent-ok' => '<h3>Kaset eo bet ar gemenadenn.</h3>',
-	'swm-msg-sent-err' => "<h3>N'eo ket bet kaset ar gemmennadenn;<h3>Gwelit ar renabl fazioù evit gouzout hiroc'h.",
-	'swm-msg-remove' => "Ha c'hoant hoc'h eus da zilemel ar gemennadenn-mañ ? Ne c'haller nullañ !",
+	'swm-msg-sent-err' => '<h3>N\'eo ket bet kaset ar gemmennadenn;<h3>Gwelit ar renabl fazioù evit gouzout hiroc\'h.',
+	'swm-msg-remove' => 'Ha c\'hoant hoc\'h eus da zilemel ar gemennadenn-mañ ? Ne c\'haller nullañ !',
 	'swm-expire-info' => 'Deiziad termen ar gemennadenn-mañ : $1',
 	'swm-link-dismiss' => 'disteuler ar gemennadenn-mañ',
 	'swm-dismiss-content' => '<p>Distaolet eo bet ar gemennadenn-mañ</p><p>%s</p>',
@@ -636,42 +570,36 @@ $messages['br'] = [
 	'swm-list-table-hub' => 'Tem',
 	'swm-yes' => 'Ya',
 	'swm-no' => 'Ket',
-	'swm-error-no-such-wiki' => "N'eus ket a wiki evel-se",
+	'swm-error-no-such-wiki' => 'N\'eus ket a wiki evel-se',
 	'swm-error-no-wiki-list' => 'Ret eo reiñ ur wiki da nebeutañ',
-	'swm-error-no-such-user' => "N'eus ket eus an implijer merket",
+	'swm-error-no-such-user' => 'N\'eus ket eus an implijer merket',
 	'swm-error-no-user-list' => 'Ret eo reiñ un implijer da nebeutañ',
-	'swm-error-empty-message' => "Ebarzhiñ endalc'h ar gemennadenn-mañ.",
-	'swm-error-long-message' => "Ar c'hemennadennoù a zo bevennet da 500 arouez",
+	'swm-error-empty-message' => 'Ebarzhiñ endalc\'h ar gemennadenn-mañ.',
+	'swm-error-long-message' => 'Ar c\'hemennadennoù a zo bevennet da 500 arouez',
 	'swm-error-empty-group' => 'Ebarzhiñ anv ar strollad-se.',
 	'swm-lang-other' => 'an holl yezhoù a chom',
-	'action-messagetool' => "kas kemennadennoù d'al lec'hienn a-bezh",
+	'action-messagetool' => 'kas kemennadennoù d\'al lec\'hienn a-bezh',
 	'swm-label-mode-users-registration' => 'Deiziad enrollañ',
-	'swm-mode-users-registration-after' => "War-lerc'h",
+	'swm-mode-users-registration-after' => 'War-lerc\'h',
 	'swm-mode-users-registration-before' => 'Kent',
 	'swm-mode-users-registration-between' => 'Etre',
-	'swm-label-mode-users-registration-hint' => "<i>Ret eo d'an deiziadoù bezañ er furm 2012-04-01 00:00:00</i>",
+	'swm-label-mode-users-registration-hint' => '<i>Ret eo d\'an deiziadoù bezañ er furm 2012-04-01 00:00:00</i>',
 	'swm-label-mode-users-editcount' => 'Aozañ ar gont',
-	'swm-mode-users-editcount-more' => "Muioc'h",
-	'swm-mode-users-editcount-less' => "Nebeutoc'h",
+	'swm-mode-users-editcount-more' => 'Muioc\'h',
+	'swm-mode-users-editcount-less' => 'Nebeutoc\'h',
 	'swm-mode-users-editcount-between' => 'Etre',
 	'swm-label-mode-wikis-created' => 'Deiziad krouiñ ar wiki',
-	'swm-mode-wikis-created-after' => "War-lerc'h",
+	'swm-mode-wikis-created-after' => 'War-lerc\'h',
 	'swm-mode-wikis-created-before' => 'A-raok',
 	'swm-mode-wikis-created-between' => 'Etre',
-	'swm-label-mode-wikis-created-hint' => "<i>Ret eo d'an deiziadoù bezañ er furm 2012-04-01 00:00:00</i>",
+	'swm-label-mode-wikis-created-hint' => '<i>Ret eo d\'an deiziadoù bezañ er furm 2012-04-01 00:00:00</i>',
 ];
 
-/** Bosnian (bosanski)
- */
 $messages['bs'] = [
 	'swm-yes' => 'Da',
 	'swm-no' => 'Ne',
 ];
 
-/** Catalan (català)
- * @author Marcmpujol
- * @author Unapersona
- */
 $messages['ca'] = [
 	'swm-label-preview' => 'Previsualització',
 	'swm-label-edit' => 'Editar',
@@ -681,7 +609,7 @@ $messages['ca'] = [
 	'swm-label-recipient' => 'Destinatari',
 	'swm-label-recipient-wikis' => 'Wikis',
 	'swm-label-recipient-users' => 'Usuaris',
-	'swm-label-expiration' => "Temps d'expiració",
+	'swm-label-expiration' => 'Temps d\'expiració',
 	'swm-label-mode-wikis-all' => 'Tots els wikis',
 	'swm-label-mode-wikis-hub' => 'Hub seleccionat',
 	'swm-label-mode-wikis-cluster' => 'Grup seleccionat',
@@ -692,7 +620,7 @@ $messages['ca'] = [
 	'swm-label-mode-users-active' => 'Usuaris actius',
 	'swm-label-mode-users-group' => 'Usuaris pertanyents al grup',
 	'swm-label-mode-users-user' => 'Usuari seleccionat',
-	'swm-label-mode-users-user-multi' => "Llista d'usuaris",
+	'swm-label-mode-users-user-multi' => 'Llista d\'usuaris',
 	'swm-label-mode-users-anon' => 'Tots els usuaris anònims',
 	'swm-label-content' => 'Contingut',
 	'swm-label-comment' => 'Comentari',
@@ -704,8 +632,8 @@ $messages['ca'] = [
 	'swm-button-send' => '[ Enviar ]',
 	'swm-button-save' => '[ Guardar ]',
 	'swm-button-new' => '[ Nou ]',
-	'swm-msg-sent-ok' => "<h3>S'ha enviat el missatge.</h3>",
-	'swm-msg-sent-err' => "<h3>El missatge no s'ha enviat.</h3>Veure el registre d'errors per a més informació.",
+	'swm-msg-sent-ok' => '<h3>S\'ha enviat el missatge.</h3>',
+	'swm-msg-sent-err' => '<h3>El missatge no s\'ha enviat.</h3>Veure el registre d\'errors per a més informació.',
 	'swm-msg-remove' => 'Estàs segur que vols eliminar aquest missatge? Això no es pot desfer!',
 	'swm-expire-info' => 'Aquest missatge expirarà en $1.',
 	'swm-link-dismiss' => 'descartar aquest missatge',
@@ -717,7 +645,7 @@ $messages['ca'] = [
 	'swm-list-table-recipient' => 'Destinatari',
 	'swm-list-table-group' => 'Grup',
 	'swm-list-table-expire' => 'Expira',
-	'swm-list-table-date' => "Data d'enviament",
+	'swm-list-table-date' => 'Data d\'enviament',
 	'swm-list-table-removed' => 'Eliminat',
 	'swm-list-table-content' => 'Contingut',
 	'swm-list-table-tools' => 'Eines',
@@ -727,8 +655,8 @@ $messages['ca'] = [
 	'swm-no' => 'No',
 	'swm-error-no-such-wiki' => 'Aquest wiki no existeix!',
 	'swm-error-no-wiki-list' => 'Cal especificar com a mínim un wiki',
-	'swm-error-no-such-user' => "L'usuari especificat no existeix.",
-	'swm-error-no-user-list' => "Com a mínim has d'especificar un usuari",
+	'swm-error-no-such-user' => 'L\'usuari especificat no existeix.',
+	'swm-error-no-user-list' => 'Com a mínim has d\'especificar un usuari',
 	'swm-error-empty-message' => 'Introdueix el contingut del missatge.',
 	'swm-error-long-message' => 'Els missatges són limitats a 500 caràcters.',
 	'swm-error-empty-group' => 'Introdueix el nom del grup.',
@@ -738,11 +666,11 @@ $messages['ca'] = [
 	'swm-mode-users-registration-before' => 'Abans',
 	'swm-mode-users-registration-between' => 'Entre',
 	'swm-label-mode-users-registration-hint' => '<i>Les dates han de ser en forma 2012-04-01 00:00:00</i>',
-	'swm-label-mode-users-editcount' => "Comptador d'edicions",
+	'swm-label-mode-users-editcount' => 'Comptador d\'edicions',
 	'swm-mode-users-editcount-more' => 'Més',
 	'swm-mode-users-editcount-less' => 'Menys',
 	'swm-mode-users-editcount-between' => 'Entre',
-	'swm-error-editcount-notnumber' => "El comptador d'edicions ha de ser un nombre vàlid.",
+	'swm-error-editcount-notnumber' => 'El comptador d\'edicions ha de ser un nombre vàlid.',
 	'swm-label-mode-wikis-created' => 'Data de creació del wiki',
 	'swm-mode-wikis-created-after' => 'Després',
 	'swm-mode-wikis-created-before' => 'Abans',
@@ -750,10 +678,6 @@ $messages['ca'] = [
 	'swm-label-mode-wikis-created-hint' => '<i>Les dates han de ser en forma 2012-04-01 00:00:00</i>',
 ];
 
-/** Chechen (нохчийн)
- * @author Sasan700
- * @author Умар
- */
 $messages['ce'] = [
 	'swm-label-preview' => 'Хьалха хьажар',
 	'swm-label-list' => 'МогӀа',
@@ -769,11 +693,6 @@ $messages['ce'] = [
 	'swm-label-mode-users-editcount' => 'Нисдарийн дукхалла',
 ];
 
-/** Czech (čeština)
- * @author Chmee2
- * @author Darth Daron
- * @author Dontlietome7
- */
 $messages['cs'] = [
 	'sidewidemessages-desc' => 'Toto rozšíření poskytuje rozhraní pro odesílání zpráv, které se zobrazí na všechny Wikiích.',
 	'sitewidemessages' => 'Celostránkové zprávy',
@@ -872,16 +791,10 @@ $messages['cs'] = [
 	'swm-error-created-tobeforefrom' => 'Datum ukončení vytváření wiki je před počátečním datem.',
 ];
 
-/** Church Slavic (словѣньскъ / ⰔⰎⰑⰂⰡⰐⰠⰔⰍⰟ)
- * @author ОйЛ
- */
 $messages['cu'] = [
 	'swm-no' => 'нѣтъ',
 ];
 
-/** Welsh (Cymraeg)
- * @author Lloffiwr
- */
 $messages['cy'] = [
 	'swm-list-table-id' => 'ID',
 	'swm-list-table-wiki' => 'Wici',
@@ -889,14 +802,6 @@ $messages['cy'] = [
 	'swm-list-table-lang' => 'Ieithoedd',
 ];
 
-/** German (Deutsch)
- * @author Kghbln
- * @author LWChris
- * @author Laximilian scoken
- * @author Metalhead64
- * @author PtM
- * @author The Evil IP address
- */
 $messages['de'] = [
 	'sidewidemessages-desc' => 'Diese Erweiterung stellt eine Oberfläche zum Versenden von Nachrichten auf alle Wikis zur Verfügung.',
 	'sitewidemessages' => 'Nachricht an alle',
@@ -997,9 +902,6 @@ $messages['de'] = [
 	'swm-error-created-tobeforefrom' => 'Das Enddatum der Wikierstellung liegt vor dem Startdatum.',
 ];
 
-/** German (formal address) (Deutsch (Sie-Form)‎)
- * @author LWChris
- */
 $messages['de-formal'] = [
 	'swm-label-mode-users-group-hint' => '<i>Wählen Sie eine Gruppe aus dem Dropdown, oder schreiben Sie den Namen per Hand um die Dropdown-Auswahl zu überschreiben.</i>',
 	'swm-taskmanager-hint' => '<i>Beachten Sie, dass einige Optionen mehr Zeit beanspruchen und in die Warteschlange des TaskManagers kommen.</i>',
@@ -1009,11 +911,6 @@ $messages['de-formal'] = [
 	'swm-error-empty-group' => 'Geben Sie den Namen der Gruppe ein.',
 ];
 
-/** Zazaki (Zazaki)
- * @author Erdemaslancan
- * @author Gorizon
- * @author Mirzali
- */
 $messages['diq'] = [
 	'swm-label-preview' => 'Verqayt',
 	'swm-label-edit' => 'Bıvurne',
@@ -1055,15 +952,10 @@ $messages['diq'] = [
 	'swm-mode-wikis-created-between' => 'Ared',
 ];
 
-/** Ewe (eʋegbe)
- */
 $messages['ee'] = [
 	'swm-label-edit' => 'Trɔ asi le eŋu',
 ];
 
-/** Greek (Ελληνικά)
- * @author Evropi
- */
 $messages['el'] = [
 	'swm-label-preview' => 'Προεπισκόπηση',
 	'swm-label-edit' => 'Επεξεργασία',
@@ -1077,7 +969,7 @@ $messages['el'] = [
 	'swm-button-send' => '[ Αποστολή ]',
 	'swm-button-save' => '[ Αποθήκευση ]',
 	'swm-button-new' => '[ Νέο ]',
-	'swm-msg-sent-ok' => '<h3>Το μήνυμα εστάλη.</h3>', # Fuzzy
+	'swm-msg-sent-ok' => '<h3>Το μήνυμα εστάλη.</h3>',
 	'swm-msg-remove' => 'Είστε βέβαιοι ότι θέλετε να διαγράψετε αυτό το μήνυμα; Αυτό δεν μπορεί να αναιρεθεί!',
 	'swm-list-table-wiki' => 'Βίκι',
 	'swm-yes' => 'Ναι',
@@ -1090,17 +982,6 @@ $messages['el'] = [
 	'swm-lang-other' => 'όλες οι υπόλοιπες γλώσσες',
 ];
 
-/** Spanish (español)
- * @author Armando-Martin
- * @author Bola
- * @author Crazymadlover
- * @author Macofe
- * @author McDutchie
- * @author Mor
- * @author Peter17
- * @author Translationista
- * @author VegaDark
- */
 $messages['es'] = [
 	'sidewidemessages-desc' => 'Esta extensión proporciona una interfaz para el envío de mensajes globales en todos los wikis.',
 	'sitewidemessages' => 'Mensajes de amplia difusión',
@@ -1201,10 +1082,6 @@ $messages['es'] = [
 	'swm-error-created-tobeforefrom' => 'La fecha final de creación del wiki es anterior a la fecha de creación.',
 ];
 
-/** Basque (euskara)
- * @author An13sa
- * @author Subi
- */
 $messages['eu'] = [
 	'swm-label-recipient-wikis' => 'Wikiak',
 	'swm-label-recipient-users' => 'Erabiltzaileak',
@@ -1229,10 +1106,6 @@ $messages['eu'] = [
 	'swm-mode-users-editcount-less' => 'Gutxiago',
 ];
 
-/** Persian (فارسی)
- * @author Ebraminio
- * @author Reza1615
- */
 $messages['fa'] = [
 	'swm-label-preview' => 'پیش‌نمایش',
 	'swm-label-edit' => 'ویرایش',
@@ -1269,14 +1142,6 @@ $messages['fa'] = [
 	'swm-mode-wikis-created-before' => 'قبل از',
 ];
 
-/** Finnish (suomi)
- * @author Centerlink
- * @author Crt
- * @author Elseweyr
- * @author Nike
- * @author Tofu II
- * @author VezonThunder
- */
 $messages['fi'] = [
 	'sitewidemessages' => 'Sivustonlaajuiset viestit',
 	'swm-page-title-editor' => 'Sivustonlaajuiset viestit :: Muokkaus',
@@ -1374,15 +1239,8 @@ $messages['fi'] = [
 	'swm-error-created-tobeforefrom' => 'Wikin luonnin päättymispäivämäärä on ennen alkamispäivämäärää.',
 ];
 
-/** French (français)
- * @author Crochet.david
- * @author Gomoko
- * @author IAlex
- * @author Verdy p
- * @author Wyz
- */
 $messages['fr'] = [
-	'sidewidemessages-desc' => 'Cette extension fournit une interface pour envoyer des messages vus sur tous les wikis.',
+	'sidewidemessages-desc' => 'Fournit une interface pour envoyer des messages affichés sur plusieurs wikias',
 	'sitewidemessages' => 'Messages à travers le site',
 	'swm-page-title-editor' => 'Messages à travers le site :: Éditeur',
 	'swm-page-title-preview' => 'Messages à travers le site :: Prévisualisation',
@@ -1399,7 +1257,7 @@ $messages['fr'] = [
 	'swm-label-recipient-wikis' => 'Wikis',
 	'swm-label-recipient-users' => 'Utilisateurs',
 	'swm-label-expiration' => 'Durée d’expiration',
-	'swm-label-expiration-hint' => "<i>Choisissez une durée d'expiration pour la liste déroulante ou inscrivez une durée à la main pour remplacer la liste déroulante sélection. Une durée écrite manuellement doit l'être sous la forme 2012-04-01 00:00:00</i>",
+	'swm-label-expiration-hint' => '<i>Choisissez une durée d\'expiration pour la liste déroulante ou inscrivez une durée à la main pour remplacer la liste déroulante sélection. Une durée écrite manuellement doit l\'être sous la forme 2012-04-01 00:00:00</i>',
 	'swm-label-mode-wikis-all' => 'Tous les wikis',
 	'swm-label-mode-wikis-hub' => 'Hub sélectionné',
 	'swm-label-mode-wikis-cluster' => 'Cluster sélectionné',
@@ -1430,7 +1288,7 @@ $messages['fr'] = [
 	'swm-button-save' => '[ Sauvegarder ]',
 	'swm-button-new' => '[ Nouveau ]',
 	'swm-msg-sent-ok' => '<h3>Ce message a été envoyé.</h3>',
-	'swm-msg-sent-err' => "<h3>Ce message n'a PAS été envoyé.</h3>Voyez le journal d'erreurs pour plus d'informations.",
+	'swm-msg-sent-err' => '<h3>Ce message n\'a PAS été envoyé.</h3>Voyez le journal d\'erreurs pour plus d\'informations.',
 	'swm-msg-sent-task' => 'Tâche créée pour envoyer le message: $1',
 	'swm-msg-remove' => 'Êtes-vous certain de vouloir supprimer ce message ? Ceci ne peut pas être défait !',
 	'swm-expire-info' => 'Ce message expirera le $1.',
@@ -1443,7 +1301,7 @@ $messages['fr'] = [
 	'swm-list-table-recipient' => 'Destinataire',
 	'swm-list-table-group' => 'Groupe',
 	'swm-list-table-expire' => 'Expire',
-	'swm-list-table-date' => "Date d'envoi",
+	'swm-list-table-date' => 'Date d\'envoi',
 	'swm-list-table-removed' => 'Enlevé',
 	'swm-list-table-content' => 'Contenu',
 	'swm-list-table-tools' => 'Outils',
@@ -1451,9 +1309,9 @@ $messages['fr'] = [
 	'swm-list-table-hub' => 'Thème',
 	'swm-yes' => 'Oui',
 	'swm-no' => 'Non',
-	'swm-error-no-such-wiki' => "Ce wiki n'existe pas !",
+	'swm-error-no-such-wiki' => 'Ce wiki n\'existe pas !',
 	'swm-error-no-wiki-list' => 'Au moins un wiki doit être indiqué',
-	'swm-error-no-such-user' => "L'utilisateur spécifié n'existe pas.",
+	'swm-error-no-such-user' => 'L\'utilisateur spécifié n\'existe pas.',
 	'swm-error-no-user-list' => 'Un utilisateur au moins doit être indiqué',
 	'swm-error-empty-message' => 'Entrez le contenu du message.',
 	'swm-error-long-message' => 'Les messages sont limités à 500 caractères.',
@@ -1461,12 +1319,12 @@ $messages['fr'] = [
 	'swm-error-invalid-time' => 'Durée fournie non valide.',
 	'swm-lang-other' => 'toutes les langues restantes',
 	'action-messagetool' => 'envoyer des messages à tout le site',
-	'swm-label-mode-users-registration' => "Date d'enregistrement",
+	'swm-label-mode-users-registration' => 'Date d\'enregistrement',
 	'swm-mode-users-registration-after' => 'Après',
 	'swm-mode-users-registration-before' => 'Avant',
 	'swm-mode-users-registration-between' => 'Entre',
 	'swm-label-mode-users-registration-hint' => '<i>Les dates doivent être au format 2012-04-01 00:00:00</i>',
-	'swm-error-registered-tobeforefrom' => "La date de fin d'inscription de l'utilisateur est antérieure à sa date de début.",
+	'swm-error-registered-tobeforefrom' => 'La date de fin d\'inscription de l\'utilisateur est antérieure à sa date de début.',
 	'swm-label-mode-users-editcount' => 'Compteur de modifications',
 	'swm-mode-users-editcount-more' => 'Plus',
 	'swm-mode-users-editcount-less' => 'Moins',
@@ -1481,16 +1339,10 @@ $messages['fr'] = [
 	'swm-error-created-tobeforefrom' => 'La date de fin de création du wiki est antérieure à sa date de démarrage.',
 ];
 
-/** Northern Frisian (Nordfriisk)
- * @author Murma174
- */
 $messages['frr'] = [
 	'swm-label-mode-users-editcount' => 'Taal faan feranrangen',
 ];
 
-/** Western Frisian (Frysk)
- * @author Robin0van0der0vliet
- */
 $messages['fy'] = [
 	'swm-label-edit' => 'Bewurkje',
 	'swm-label-recipient-users' => 'Brûkers',
@@ -1503,9 +1355,6 @@ $messages['fy'] = [
 	'swm-mode-users-editcount-more' => 'Mear',
 ];
 
-/** Galician (galego)
- * @author Toliño
- */
 $messages['gl'] = [
 	'sitewidemessages' => 'Mensaxes a través do sitio',
 	'swm-page-title-editor' => 'Mensaxes a través do sitio :: Editor',
@@ -1603,24 +1452,14 @@ $messages['gl'] = [
 	'swm-error-created-tobeforefrom' => 'A data de fin de creación do wiki é anterior á data de inicio.',
 ];
 
-/** Ancient Greek (Ἀρχαία ἑλληνικὴ)
- * @author Crazymadlover
- */
 $messages['grc'] = [
 	'swm-label-language' => 'Γλῶττα',
 ];
 
-/** Hausa (Hausa)
- */
 $messages['ha'] = [
 	'swm-label-comment' => 'Bahasi',
 ];
 
-/** Hungarian (magyar)
- * @author Dani
- * @author Glanthor Reviol
- * @author TK-999
- */
 $messages['hu'] = [
 	'swm-label-preview' => 'Előnézet',
 	'swm-label-edit' => 'Szerkesztés',
@@ -1693,9 +1532,6 @@ $messages['hu'] = [
 	'swm-label-mode-users-registration-hint' => '<i>A dátumokat a 2012-04-01 00:00:00 formátum szerint kell megadni</i>',
 ];
 
-/** Interlingua (interlingua)
- * @author McDutchie
- */
 $messages['ia'] = [
 	'sitewidemessages' => 'Messages a transverso le sito',
 	'swm-page-title-editor' => 'Messages a transverso le sito :: Editor',
@@ -1776,10 +1612,6 @@ $messages['ia'] = [
 	'swm-error-registered-tobeforefrom' => 'Le data de fin del registration del usator es ante le data de initio.',
 ];
 
-/** Indonesian (Bahasa Indonesia)
- * @author Aldnonymous
- * @author Irwangatot
- */
 $messages['id'] = [
 	'sitewidemessages' => 'Pesan umum situs',
 	'swm-page-title-editor' => 'Pesan umum situs :: Editor',
@@ -1846,16 +1678,10 @@ $messages['id'] = [
 	'swm-lang-other' => 'semua bahasa yang tersisa',
 ];
 
-/** Igbo (Igbo)
- * @author Ukabia
- */
 $messages['ig'] = [
 	'swm-button-save' => '[ Domá ]',
 ];
 
-/** Ingush (ГӀалгӀай)
- * @author Sapral Mikail
- */
 $messages['inh'] = [
 	'swm-list-table-group' => 'Тоабa',
 	'swm-list-table-lang' => 'Метташ',
@@ -1863,9 +1689,6 @@ $messages['inh'] = [
 	'swm-no' => 'A',
 ];
 
-/** Italian (italiano)
- * @author Gifh
- */
 $messages['it'] = [
 	'sitewidemessages' => 'Messaggi globali',
 	'swm-label-preview' => 'Anteprima',
@@ -1894,12 +1717,6 @@ $messages['it'] = [
 	'swm-no' => 'No',
 ];
 
-/** Japanese (日本語)
- * @author Fryed-peach
- * @author Los688
- * @author Plover-Y
- * @author Shirayuki
- */
 $messages['ja'] = [
 	'sitewidemessages' => 'サイト横断メッセージ',
 	'swm-page-title-editor' => 'サイト横断メッセージ:編集',
@@ -1958,10 +1775,6 @@ $messages['ja'] = [
 	'swm-label-mode-wikis-created-hint' => '<i>日時は、次のような形式にする必要があります。2012-04-01 00:00:00</i>',
 ];
 
-/** Kannada (ಕನ್ನಡ)
- * @author Nayvik
- * @author VASANTH S.N.
- */
 $messages['kn'] = [
 	'swm-label-preview' => 'ಮುನ್ನೋಟ',
 	'swm-label-edit' => 'ಸಂಪಾದಿಸಿ',
@@ -1982,11 +1795,6 @@ $messages['kn'] = [
 	'swm-mode-users-editcount-more' => 'ಹೆಚ್ಚು',
 ];
 
-/** Korean (한국어)
- * @author Cafeinlove
- * @author Miri-Nae
- * @author 아라
- */
 $messages['ko'] = [
 	'swm-label-preview' => '미리 보기',
 	'swm-label-edit' => '편집',
@@ -2050,26 +1858,16 @@ $messages['ko'] = [
 	'swm-label-mode-wikis-created-hint' => '<i>2012-04-01 00:00:00 같은 형식으로 작성하십시오.</i>',
 ];
 
-/** Karachay-Balkar (къарачай-малкъар)
- * @author Iltever
- */
 $messages['krc'] = [
 	'swm-list-table-lang' => 'Тилле',
 ];
 
-/** Colognian (Ripoarisch)
- * @author Purodha
- */
 $messages['ksh'] = [
 	'swm-label-recipient-users' => 'Metmaacher',
 	'swm-label-comment' => 'Aanmärkong',
 	'swm-button-new' => '[ Neu ]',
 ];
 
-/** Kurdish (Latin script) (Kurdî (latînî)‎)
- * @author Bikarhêner
- * @author George Animal
- */
 $messages['ku-latn'] = [
 	'swm-label-edit' => 'Biguherîne',
 	'swm-label-list' => 'Lîste',
@@ -2105,10 +1903,6 @@ $messages['ku-latn'] = [
 	'swm-mode-wikis-created-between' => 'Di navberê de',
 ];
 
-/** Luxembourgish (Lëtzebuergesch)
- * @author Les Meloures
- * @author Robby
- */
 $messages['lb'] = [
 	'swm-label-preview' => 'Kucken ouni ofzespäicheren',
 	'swm-label-edit' => 'Änneren',
@@ -2148,9 +1942,6 @@ $messages['lb'] = [
 	'swm-mode-wikis-created-before' => 'Virum',
 ];
 
-/** Northern Luri (لوری مینجایی)
- * @author Mogoeilor
- */
 $messages['lrc'] = [
 	'swm-label-preview' => 'پيش سيل',
 	'swm-label-edit' => 'ويرايشت',
@@ -2186,9 +1977,6 @@ $messages['lrc'] = [
 	'swm-mode-wikis-created-between' => 'مینجا',
 ];
 
-/** Macedonian (македонски)
- * @author Bjankuloski06
- */
 $messages['mk'] = [
 	'sitewidemessages' => 'Пораки низ целото мрежно место',
 	'swm-page-title-editor' => 'Пораки низ целото мрежно место :: Уредник',
@@ -2286,9 +2074,6 @@ $messages['mk'] = [
 	'swm-error-created-tobeforefrom' => 'Завршниот датум мора е пред почетниот.',
 ];
 
-/** Mongolian (монгол)
- * @author Chinneeb
- */
 $messages['mn'] = [
 	'swm-label-language' => 'Хэл',
 	'swm-list-table-lang' => 'Хэлнүүд',
@@ -2296,9 +2081,6 @@ $messages['mn'] = [
 	'swm-no' => 'Үгүй',
 ];
 
-/** Malay (Bahasa Melayu)
- * @author Anakmalaysia
- */
 $messages['ms'] = [
 	'sidewidemessages-desc' => 'Sambungan ini menyediakan antaramuka untuk menghantar mesej-mesej yang terdapat di semua wiki.',
 	'sitewidemessages' => 'Pesanan seluruh tapak',
@@ -2399,9 +2181,6 @@ $messages['ms'] = [
 	'swm-error-created-tobeforefrom' => 'Tarikh tutup penubuhan wiki adalah sebelum tarikh bermula.',
 ];
 
-/** Burmese (မြန်မာဘာသာ)
- * @author Erikoo
- */
 $messages['my'] = [
 	'swm-label-preview' => 'နမူနာ',
 	'swm-label-edit' => 'ပြင်​ဆင်​ရန်​',
@@ -2425,19 +2204,12 @@ $messages['my'] = [
 	'swm-no' => 'မလုပ်ပါ',
 ];
 
-/** Mazanderani (مازِرونی)
- * @author محک
- */
 $messages['mzn'] = [
 	'swm-label-edit' => 'دچی‌ین',
 	'swm-label-language' => 'زوون',
 	'swm-list-table-lang' => 'زوون',
 ];
 
-/** Norwegian Bokmål (norsk bokmål)
- * @author Audun
- * @author Nghtwlkr
- */
 $messages['nb'] = [
 	'sitewidemessages' => 'Meldinger for hele nettstedet',
 	'swm-page-title-editor' => 'Meldinger for hele nettstedet :: Skriveprogram',
@@ -2535,22 +2307,11 @@ $messages['nb'] = [
 	'swm-error-created-tobeforefrom' => 'Wikiens opprettelsessluttdato er før startdatoen.',
 ];
 
-/** Nepali (नेपाली)
- * @author Bhawani Gautam
- * @author Bhawani Gautam Rhk
- * @author RajeshPandey
- */
 $messages['ne'] = [
 	'swm-label-comment' => 'टिप्पणी',
 	'swm-button-new' => '[ नयाँ ]',
 ];
 
-/** Dutch (Nederlands)
- * @author AvatarTeam
- * @author McDutchie
- * @author SPQRobin
- * @author Siebrand
- */
 $messages['nl'] = [
 	'sitewidemessages' => 'Sitebrede berichten',
 	'swm-page-title-editor' => 'Sitebrede berichten :: Tekstverwerker',
@@ -2565,15 +2326,15 @@ $messages['nl'] = [
 	'swm-label-sent' => 'Verzonden',
 	'swm-label-list' => 'Lijst',
 	'swm-label-recipient' => 'Ontvangers',
-	'swm-label-recipient-wikis' => "Wiki's",
+	'swm-label-recipient-wikis' => 'Wiki\'s',
 	'swm-label-recipient-users' => 'Gebruikers',
 	'swm-label-expiration' => 'Vervaldatum',
 	'swm-label-expiration-hint' => '<i>Kies een vervaltijd uit de lijst of vul handmatig een datum en tijd in. Handmatig ingevulde tijden moeten in de vorm van "2012-04-01 00:00:00" worden geschreven.</i>',
-	'swm-label-mode-wikis-all' => "Alle wiki's",
+	'swm-label-mode-wikis-all' => 'Alle wiki\'s',
 	'swm-label-mode-wikis-hub' => 'Geselecteerde hub',
 	'swm-label-mode-wikis-cluster' => 'Geselecteerde cluster',
 	'swm-label-mode-wikis-wiki' => 'Geselecteerde wiki',
-	'swm-label-mode-wikis-wiki-multi' => "Lijst met wiki's",
+	'swm-label-mode-wikis-wiki-multi' => 'Lijst met wiki\'s',
 	'swm-label-mode-wikis-wiki-multi-hint' => '<i>Geef één wiki per regel op.</i>',
 	'swm-label-mode-users-all' => 'Alle gebruikers',
 	'swm-label-mode-users-active' => 'Actieve gebruikers',
@@ -2649,17 +2410,11 @@ Dit kan niet ongedaan gemaakt worden.',
 	'swm-error-created-tobeforefrom' => 'De aanmaakdatum van de wiki ligt voor de begindatum.',
 ];
 
-/** Nederlands (informeel)‎ (Nederlands (informeel)‎)
- * @author Siebrand
- */
 $messages['nl-informal'] = [
 	'swm-msg-remove' => 'Weet je zeker dat je dit bericht wilt verwijderen?
 Dit kan niet ongedaan gemaakt worden.',
 ];
 
-/** Occitan (occitan)
- * @author Cedric31
- */
 $messages['oc'] = [
 	'swm-label-preview' => 'Previsualizar',
 	'swm-label-edit' => 'Modificar',
@@ -2710,17 +2465,11 @@ $messages['oc'] = [
 	'swm-mode-wikis-created-between' => 'Entre',
 ];
 
-/** Ossetic (Ирон)
- * @author Amikeco
- */
 $messages['os'] = [
 	'swm-label-language' => 'Æвзаг',
 	'swm-list-table-lang' => 'Æвзæгтæ',
 ];
 
-/** Pennsylvania German (Deitsch)
- * @author Xqt
- */
 $messages['pdc'] = [
 	'swm-label-preview' => 'Aagucke',
 	'swm-label-comment' => 'Aamaericking',
@@ -2733,15 +2482,10 @@ $messages['pdc'] = [
 	'swm-no' => 'Nee',
 ];
 
-/** Palatine German (Pälzisch)
- */
 $messages['pfl'] = [
 	'swm-label-edit' => 'Bearwaide',
 ];
 
-/** Polish (polski)
- * @author Sovq
- */
 $messages['pl'] = [
 	'sitewidemessages' => 'Komunikaty globalne',
 	'swm-page-title-editor' => 'Komunikaty globalne :: Edytor',
@@ -2839,10 +2583,6 @@ $messages['pl'] = [
 	'swm-error-created-tobeforefrom' => 'Końcowa data utworzenia wiki jest przed datą początkową.',
 ];
 
-/** Piedmontese (Piemontèis)
- * @author Borichèt
- * @author Dragonòt
- */
 $messages['pms'] = [
 	'sitewidemessages' => 'Mëssagi a travers ël sit',
 	'swm-page-title-editor' => 'Mëssagi a travers ël sit :: Editor',
@@ -2860,41 +2600,41 @@ $messages['pms'] = [
 	'swm-label-recipient-wikis' => 'Wiki',
 	'swm-label-recipient-users' => 'Utent',
 	'swm-label-expiration' => 'Temp ëd fin',
-	'swm-label-expiration-hint' => "<i>Ch'a selession-a n'ora ëd fin da lë mnù a ridò o ch'a scriva n'ora a man për rampiassé la selession ëd lë mnù a ridò. L'ora scrivùa a man a dev esse ant la forma 2012-04-01 00:00:00</i>",
+	'swm-label-expiration-hint' => '<i>Ch\'a selession-a n\'ora ëd fin da lë mnù a ridò o ch\'a scriva n\'ora a man për rampiassé la selession ëd lë mnù a ridò. L\'ora scrivùa a man a dev esse ant la forma 2012-04-01 00:00:00</i>',
 	'swm-label-mode-wikis-all' => 'Tute le wiki',
 	'swm-label-mode-wikis-hub' => 'Pòrt selessionà',
 	'swm-label-mode-wikis-cluster' => 'Baron selessionà',
 	'swm-label-mode-wikis-wiki' => 'Wiki selessionà',
 	'swm-label-mode-wikis-wiki-multi' => 'Lista ëd le wiki',
 	'swm-label-mode-wikis-wiki-multi-hint' => '<i>Anseriss na wiki për linia.</i>',
-	'swm-label-mode-users-all' => "Tùit j'utent",
+	'swm-label-mode-users-all' => 'Tùit j\'utent',
 	'swm-label-mode-users-active' => 'Utent ativ',
 	'swm-label-mode-users-group' => 'Utent apartenent a la partìa',
 	'swm-label-mode-users-group-hint' => '<i>Pija na partìa da la lista o scriv un nòm a man për coaté la selession ëd la lista.</i>',
 	'swm-label-mode-users-user' => 'Utent selessionà',
 	'swm-label-mode-users-user-hint' => '<i>St\'opsion-sì a ignora le selession ant la partìa "Wiki".</i>',
-	'swm-label-mode-users-user-multi' => "Lista dj'utent",
-	'swm-label-mode-users-user-multi-hint' => "<i>Ch'a anseriss në stranòm d'utent për linia. Costa opsion a ignora la selession ant la partìa «Wiki».</i>",
-	'swm-label-mode-users-anon' => "Tùit j'utent anònim",
-	'swm-label-mode-users-anon-hint' => "<i>Costa opsion al moment a marcia mach con l'opsion «Tute le wiki», «Lista ëd le wiki» o la «Wiki selessionà».</i>",
+	'swm-label-mode-users-user-multi' => 'Lista dj\'utent',
+	'swm-label-mode-users-user-multi-hint' => '<i>Ch\'a anseriss në stranòm d\'utent për linia. Costa opsion a ignora la selession ant la partìa «Wiki».</i>',
+	'swm-label-mode-users-anon' => 'Tùit j\'utent anònim',
+	'swm-label-mode-users-anon-hint' => '<i>Costa opsion al moment a marcia mach con l\'opsion «Tute le wiki», «Lista ëd le wiki» o la «Wiki selessionà».</i>',
 	'swm-label-content' => 'Contnù',
 	'swm-label-comment' => 'Coment',
 	'swm-label-dismissed' => 'Arfudà',
 	'swm-label-language' => 'Lenga',
 	'swm-button-lang-checkall' => '[ Contròla tut ]',
 	'swm-button-lang-checknone' => '[ Contròla pa gnente ]',
-	'swm-taskmanager-hint' => "<i>Ch'a nòta che chèich opsion a consumo pi 'd temp e a saran butà an coa an TaskManager.</i>",
+	'swm-taskmanager-hint' => '<i>Ch\'a nòta che chèich opsion a consumo pi \'d temp e a saran butà an coa an TaskManager.</i>',
 	'swm-button-preview' => '[ Preuva ]',
 	'swm-button-send' => '[ Manda ]',
 	'swm-button-save' => '[ Salva ]',
 	'swm-button-new' => '[ Neuv ]',
-	'swm-msg-sent-ok' => "<h3>Ël mëssagi a l'é stàit mandà.</h3>",
-	'swm-msg-sent-err' => "<h3>Ël mëssagi a l'é PA stàit mandà.</h3>Varda ël registr ëd j'eror për pi d'anformassion.",
+	'swm-msg-sent-ok' => '<h3>Ël mëssagi a l\'é stàit mandà.</h3>',
+	'swm-msg-sent-err' => '<h3>Ël mëssagi a l\'é PA stàit mandà.</h3>Varda ël registr ëd j\'eror për pi d\'anformassion.',
 	'swm-msg-sent-task' => 'Travaj creà për mandé ël mëssagi: $1',
 	'swm-msg-remove' => 'É-lo sigur ëd vorèj gavé sto mëssagi-sì? As peul pa tornesse andré!',
 	'swm-expire-info' => 'Sto mëssagi a scad ai $1.',
 	'swm-link-dismiss' => 'arfudé ës mëssagi',
-	'swm-dismiss-content' => "<p>Ël mëssagi a l'é stàit arfudà.</p><p>%s</p>",
+	'swm-dismiss-content' => '<p>Ël mëssagi a l\'é stàit arfudà.</p><p>%s</p>',
 	'swm-list-no-messages' => 'Pa gnun mëssagi.',
 	'swm-list-table-id' => 'ID',
 	'swm-list-table-sender' => 'Mitent',
@@ -2912,37 +2652,34 @@ $messages['pms'] = [
 	'swm-no' => 'Nò',
 	'swm-error-no-such-wiki' => 'Na wiki parèj a-i é pa!',
 	'swm-error-no-wiki-list' => 'A venta buté almanch na wiki',
-	'swm-error-no-such-user' => "L'utent spessificà a esist pa.",
-	'swm-error-no-user-list' => "A venta buté almanch n'utent",
-	'swm-error-empty-message' => "Ch'a anserissa ël contnù dël mëssagi.",
+	'swm-error-no-such-user' => 'L\'utent spessificà a esist pa.',
+	'swm-error-no-user-list' => 'A venta buté almanch n\'utent',
+	'swm-error-empty-message' => 'Ch\'a anserissa ël contnù dël mëssagi.',
 	'swm-error-long-message' => 'Ij mëssagi a son limità a 500 caràter.',
-	'swm-error-empty-group' => "Ch'a anserissa ël nòm ëd la partìa.",
+	'swm-error-empty-group' => 'Ch\'a anserissa ël nòm ëd la partìa.',
 	'swm-error-invalid-time' => 'Durà butà nen bon-a.',
-	'swm-lang-other' => "tute j'àutre lenghe",
+	'swm-lang-other' => 'tute j\'àutre lenghe',
 	'action-messagetool' => 'mandé dij mëssagi a tut ël sit',
 	'swm-label-mode-users-registration' => 'Data ëd registrassion',
 	'swm-mode-users-registration-after' => 'Apress',
 	'swm-mode-users-registration-before' => 'Prima',
 	'swm-mode-users-registration-between' => 'Tra',
 	'swm-label-mode-users-registration-hint' => '<i>Le date a devo esse dla forma 2012-04-01 00:00:00</i>',
-	'swm-error-registered-tobeforefrom' => "La data ëd fin dla registrassion dl'utent a l'é prima dla data d'inissi.",
+	'swm-error-registered-tobeforefrom' => 'La data ëd fin dla registrassion dl\'utent a l\'é prima dla data d\'inissi.',
 	'swm-label-mode-users-editcount' => 'Conteur ëd modìfiche',
 	'swm-mode-users-editcount-more' => 'Pi',
 	'swm-mode-users-editcount-less' => 'Men',
 	'swm-mode-users-editcount-between' => 'Tra',
-	'swm-error-editcount-tolessthanfrom' => "Ël lìmit superior dël conteur ëd modifiche d'utent a l'é pi cit dël limit inferior.",
+	'swm-error-editcount-tolessthanfrom' => 'Ël lìmit superior dël conteur ëd modifiche d\'utent a l\'é pi cit dël limit inferior.',
 	'swm-error-editcount-notnumber' => 'Ël conteur ëd modìfiche a dev esse un nùmer bon.',
 	'swm-label-mode-wikis-created' => 'Data ëd creassion ëd la wiki.',
 	'swm-mode-wikis-created-after' => 'Apress',
 	'swm-mode-wikis-created-before' => 'Prima',
 	'swm-mode-wikis-created-between' => 'Tra',
 	'swm-label-mode-wikis-created-hint' => '<i>Le date a devo esse ant la forma 2012-04-01 00:00:00</i>',
-	'swm-error-created-tobeforefrom' => "La data ëd fin dla creassion ëd la wiki a l'é prima dla data d'inissi.",
+	'swm-error-created-tobeforefrom' => 'La data ëd fin dla creassion ëd la wiki a l\'é prima dla data d\'inissi.',
 ];
 
-/** Pashto (پښتو)
- * @author Ahmed-Najib-Biabani-Ibrahimkhel
- */
 $messages['ps'] = [
 	'swm-page-title-preview' => 'د وېبځي پراخ پيغامونه :: مخليدنه',
 	'swm-label-preview' => 'مخليدنه',
@@ -2988,12 +2725,6 @@ $messages['ps'] = [
 	'swm-mode-wikis-created-between' => 'تر منځ',
 ];
 
-/** Portuguese (português)
- * @author Hamilton Abreu
- * @author Luckas
- * @author SandroHc
- * @author Waldir
- */
 $messages['pt'] = [
 	'sitewidemessages' => 'Mensagens globais',
 	'swm-page-title-editor' => 'Mensagens globais :: Editor',
@@ -3089,14 +2820,6 @@ $messages['pt'] = [
 	'swm-label-mode-wikis-created-hint' => '<i>As datas devem estar no formato 2012-04-01 00:00:00</i>',
 ];
 
-/** Brazilian Portuguese (português do Brasil)
- * @author Aristóbulo
- * @author Dianakc
- * @author Giro720
- * @author Jesielt
- * @author Luckas
- * @author Luckas Blade
- */
 $messages['pt-br'] = [
 	'sitewidemessages' => 'Mensagens globais',
 	'swm-page-title-editor' => 'Mensagens globais :: Editor',
@@ -3174,17 +2897,11 @@ $messages['pt-br'] = [
 	'swm-label-mode-wikis-created-hint' => '<i>As datas devem estar no formato 2012-04-01 00:00:00</i>',
 ];
 
-/** Quechua (Runa Simi)
- * @author AlimanRuna
- */
 $messages['qu'] = [
 	'swm-label-language' => 'Rimay',
 	'swm-list-table-lang' => 'Rimaykuna',
 ];
 
-/** Romanian (română)
- * @author Stelistcristi
- */
 $messages['ro'] = [
 	'swm-list-table-group' => 'Grup',
 	'swm-list-table-date' => 'Data trimiterii',
@@ -3196,9 +2913,6 @@ $messages['ro'] = [
 	'swm-error-empty-group' => 'Introdu numele grupului.',
 ];
 
-/** tarandíne (tarandíne)
- * @author Joetaras
- */
 $messages['roa-tara'] = [
 	'swm-label-preview' => 'Andeprime',
 	'swm-label-edit' => 'Cange',
@@ -3208,10 +2922,10 @@ $messages['roa-tara'] = [
 	'swm-label-recipient-wikis' => 'Uicchi',
 	'swm-label-recipient-users' => 'Utinde',
 	'swm-label-mode-wikis-all' => 'tutte le uicchi',
-	'swm-label-mode-users-all' => "Tutte l'utinde",
+	'swm-label-mode-users-all' => 'Tutte l\'utinde',
 	'swm-label-mode-users-active' => 'Utinde attive',
-	'swm-label-mode-users-user-multi' => "Elenghe de l'utinde",
-	'swm-label-mode-users-anon' => "Tutte l'utinde anonime",
+	'swm-label-mode-users-user-multi' => 'Elenghe de l\'utinde',
+	'swm-label-mode-users-anon' => 'Tutte l\'utinde anonime',
 	'swm-label-content' => 'Condenute',
 	'swm-label-comment' => 'Commende',
 	'swm-label-dismissed' => 'Scettate',
@@ -3228,13 +2942,6 @@ $messages['roa-tara'] = [
 	'swm-no' => 'None',
 ];
 
-/** Russian (русский)
- * @author DCamer
- * @author Eleferen
- * @author Kuzura
- * @author Lockal
- * @author Александр Сигачёв
- */
 $messages['ru'] = [
 	'sitewidemessages' => 'Сообщения сайта',
 	'swm-page-title-editor' => 'Сообщения сайта :: Редактор',
@@ -3332,20 +3039,12 @@ $messages['ru'] = [
 	'swm-error-created-tobeforefrom' => 'Последняя дата не может быть больше первой даты',
 ];
 
-/** Slovenian (slovenščina)
- * @author Dbc334
- */
 $messages['sl'] = [
 	'swm-button-save' => '[ Shrani ]',
 	'swm-yes' => 'Da',
 	'swm-no' => 'Ne',
 ];
 
-/** Serbian (Cyrillic script) (српски (ћирилица)‎)
- * @author Nikola Smolenski
- * @author Rancher
- * @author Verlor
- */
 $messages['sr-ec'] = [
 	'swm-label-preview' => 'Преглед',
 	'swm-label-edit' => 'Уреди',
@@ -3397,12 +3096,6 @@ $messages['sr-ec'] = [
 	'swm-lang-other' => 'сви преостали језици',
 ];
 
-/** Swedish (svenska)
- * @author Jopparn
- * @author Lokal Profil
- * @author Tobulos1
- * @author WikiPhoenix
- */
 $messages['sv'] = [
 	'sidewidemessages-desc' => 'Denna tillägg tillhandahåller ett gränssnitt för att skicka meddelanden som syns på alla wikis.',
 	'sitewidemessages' => 'Meddelanden för hela webbplatsen',
@@ -3503,10 +3196,6 @@ $messages['sv'] = [
 	'swm-error-created-tobeforefrom' => 'Wikins skapelseslutdatum är innan startdatumet.',
 ];
 
-/** Swahili (Kiswahili)
- * @author Lloffiwr
- * @author Muddyb Blast Producer
- */
 $messages['sw'] = [
 	'swm-label-preview' => 'Hakikisha',
 	'swm-label-edit' => 'Hariri',
@@ -3521,9 +3210,6 @@ $messages['sw'] = [
 	'swm-list-table-lang' => 'Lugha',
 ];
 
-/** Tamil (தமிழ்)
- * @author TRYPPN
- */
 $messages['ta'] = [
 	'swm-button-preview' => '[ முன்தோற்றம் ]',
 	'swm-button-send' => '[ அனுப்பு ]',
@@ -3531,9 +3217,6 @@ $messages['ta'] = [
 	'swm-button-new' => '[ புதியது ]',
 ];
 
-/** Telugu (తెలుగు)
- * @author Veeven
- */
 $messages['te'] = [
 	'swm-label-list' => 'జాబితా',
 	'swm-label-recipient-wikis' => 'వికీలు',
@@ -3549,9 +3232,6 @@ $messages['te'] = [
 	'swm-no' => 'కాదు',
 ];
 
-/** Tetum (tetun)
- * @author MF-Warburg
- */
 $messages['tet'] = [
 	'swm-label-edit' => 'Edita',
 	'swm-label-remove' => 'Hasai',
@@ -3561,9 +3241,6 @@ $messages['tet'] = [
 	'swm-no' => 'Lae',
 ];
 
-/** Tagalog (Tagalog)
- * @author AnakngAraw
- */
 $messages['tl'] = [
 	'sitewidemessages' => 'Mga mensahe sa buong sityo',
 	'swm-page-title-editor' => 'Mga mensahe sa buong sityo :: Patnugot',
@@ -3644,9 +3321,6 @@ $messages['tl'] = [
 	'swm-error-registered-tobeforefrom' => 'Ang petsa ng pagwawakas ng pagkakapatala ng tagagamit ay bago ang petsa ng pagsisimula.',
 ];
 
-/** Talysh (толышә зывон)
- * @author Гусейн
- */
 $messages['tly'] = [
 	'swm-label-preview' => 'Сыфтәнә нишо дој',
 	'swm-label-edit' => 'Сәрост кардеј',
@@ -3661,18 +3335,12 @@ $messages['tly'] = [
 	'swm-no' => 'Не',
 ];
 
-/** Turkish (Türkçe)
- * @author Sucsuzz
- */
 $messages['tr'] = [
 	'swm-button-preview' => '[ Önizleme ]',
 	'swm-button-save' => '[ Kaydet ]',
 	'swm-button-new' => '[ Yeni ]',
 ];
 
-/** Tatar (Cyrillic script) (татарча)
- * @author Ильнар
- */
 $messages['tt-cyrl'] = [
 	'sitewidemessages' => 'Сайтның хатлары',
 	'swm-page-title-editor' => 'Сайтның хатлары :: Үзгәртү',
@@ -3737,9 +3405,6 @@ $messages['tt-cyrl'] = [
 	'swm-lang-other' => 'башка телләр',
 ];
 
-/** Central Atlas Tamazight (ⵜⴰⵎⴰⵣⵉⵖⵜ)
- * @author Tifinaghes
- */
 $messages['tzm'] = [
 	'swm-label-recipient-users' => 'ⵉⵎⴷⴰⵏⵏ',
 	'swm-label-mode-wikis-all' => 'ⴰⴽⴽ ⵉⴷ ⵡⵉⴽⵉ',
@@ -3757,12 +3422,6 @@ $messages['tzm'] = [
 	'swm-mode-users-editcount-more' => 'ⵓⴳⴰⵔ',
 ];
 
-/** Ukrainian (українська)
- * @author Andriykopanytsia
- * @author Steve.rusyn
- * @author SteveR
- * @author Тест
- */
 $messages['uk'] = [
 	'sitewidemessages' => 'Повідомлення сайту',
 	'swm-page-title-editor' => 'Повідомлення сайту :: Редактор',
@@ -3836,7 +3495,7 @@ $messages['uk'] = [
 	'swm-error-no-user-list' => 'Принаймні один користувач має бути вказаний',
 	'swm-error-empty-message' => 'Введіть текст повідомлення.',
 	'swm-error-long-message' => 'Повідомлення обмежене 500 символами.',
-	'swm-error-empty-group' => "Введіть ім'я групи.",
+	'swm-error-empty-group' => 'Введіть ім\'я групи.',
 	'swm-error-invalid-time' => 'Неприпустимий час наданий.',
 	'swm-lang-other' => 'всі інші мови',
 	'action-messagetool' => 'надіслати глобальні повідомлення',
@@ -3860,17 +3519,10 @@ $messages['uk'] = [
 	'swm-error-created-tobeforefrom' => 'Кінцева дата створення вікі є ранішою за початкову дату.',
 ];
 
-/** Uzbek (oʻzbekcha/ўзбекча)
- * @author CoderSI
- */
 $messages['uz'] = [
 	'swm-list-table-lang' => 'Tillar',
 ];
 
-/** Vietnamese (Tiếng Việt)
- * @author Baonguyen21022003
- * @author Dinhxuanduyet
- */
 $messages['vi'] = [
 	'sidewidemessages-desc' => 'Phần mở rộng này cung cấp một giao diện để gửi tin nhắn nhìn thấy trên tất cả các wiki.',
 	'swm-label-edit' => 'Sửa đổi',
@@ -3891,29 +3543,14 @@ $messages['vi'] = [
 	'swm-label-mode-wikis-created-hint' => '<i>Ngày phải trong các hình thức 2012-04-01 00:00:00</i>',
 ];
 
-/** Volapük (Volapük)
- * @author Malafaya
- */
 $messages['vo'] = [
 	'swm-no' => 'Nö!',
 ];
 
-/** Yiddish (ייִדיש)
- * @author פוילישער
- */
 $messages['yi'] = [
 	'swm-yes' => 'יא',
 ];
 
-/** Simplified Chinese (中文（简体）‎)
- * @author Dimension
- * @author Hydra
- * @author Hzy980512
- * @author Liuxinyu970226
- * @author Sam Wang
- * @author Xiaomingyan
- * @author Yfdyh000
- */
 $messages['zh-hans'] = [
 	'sidewidemessages-desc' => '此扩展提供了一个接口，可发送消息使其在所有wiki上可见。',
 	'sitewidemessages' => '网站广域消息',
@@ -3962,7 +3599,7 @@ $messages['zh-hans'] = [
 	'swm-button-save' => '[ 保存 ]',
 	'swm-button-new' => '[ 新 ]',
 	'swm-msg-sent-ok' => '<h3>消息已发送。</h3>',
-	'swm-msg-sent-err' => "<h3>此消息'''尚未'''发送。</h3>更多消息参见错误日志。",
+	'swm-msg-sent-err' => '<h3>此消息\'\'\'尚未\'\'\'发送。</h3>更多消息参见错误日志。',
 	'swm-msg-sent-task' => '发送消息的任务已创建：$1',
 	'swm-msg-remove' => '您确信要移除此消息？它不能被撤销！',
 	'swm-expire-info' => '此消息将于$1到期。',
@@ -4013,11 +3650,6 @@ $messages['zh-hans'] = [
 	'swm-error-created-tobeforefrom' => 'wiki创建的结束日期早于开始日期。',
 ];
 
-/** Traditional Chinese (中文（繁體）‎)
- * @author Ffaarr
- * @author LNDDYL
- * @author Liuxinyu970226
- */
 $messages['zh-hant'] = [
 	'sitewidemessages' => '全站訊息',
 	'swm-label-list' => '清單',
@@ -4031,9 +3663,7 @@ $messages['zh-hant'] = [
 	'swm-list-table-tools' => '工具',
 ];
 
-/** Chinese (Hong Kong) (中文（香港）‎)
- * @author Liuxinyu970226
- */
 $messages['zh-hk'] = [
 	'swm-label-recipient-users' => '用戶',
 ];
+
