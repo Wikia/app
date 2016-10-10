@@ -11,9 +11,9 @@ $messages['en'] = [
 	'restorelink' => '{{PLURAL:$1|one deleted edit|$1 deleted edits}}',
 	'red-link-title' => '$1 (page does not exist)',
 	'readonly' => 'Database locked',
-	'readonlytext' => 'The database is currently locked to new entries and other modifications, probably for routine database maintenance, after which it will be back to normal.
+	'readonlytext' => 'The database is currently locked.
 
-The administrator who locked it offered this explanation: $1',
+$1',
 	'readonly_lag' => 'The database has been automatically locked while the slave database servers catch up to the master',
 	'remembermypassword' => 'Remember my login on this computer',
 	'resetpass' => 'Change password',
@@ -32,7 +32,6 @@ Now logging you in...',
 You may have already successfully changed your password or requested a new temporary password.',
 	'resetpass-temp-password' => 'Temporary password:',
 	'readonlywarning' => '\'\'\'Warning: The database has been locked for maintenance, so you will not be able to save your edits right now.\'\'\'
-You may wish to cut-n-paste the text into a text file and save it for later.
 
 The administrator who locked it offered this explanation: $1',
 	'recreate-moveddeleted-warn' => '\'\'\'Warning: You are recreating a page that was previously deleted.\'\'\'
@@ -32130,8 +32129,8 @@ Bezig met aanmelden…',
 	'resetpass-wrong-oldpass' => 'Het huidige of tijdelijke wachtwoord is ongeldig.
 Mogelijk hebt u uw wachtwoord al gewijzigd of een nieuw tijdelijk wachtwoord aangevraagd.',
 	'resetpass-temp-password' => 'Tijdelijk wachtwoord:',
-	'readonlywarning' => '\'\'\'Waarschuwing: de database is geblokkeerd voor bewerkingen, waarschijnlijk voor regulier databaseonderhoud, dus u kunt deze nu niet opslaan.\'\'\'
-Het is misschien verstandig om uw tekst tijdelijk in een tekstbestand op te slaan om dit te bewaren voor wanneer de blokkering van de database opgeheven is.
+	'readonlywarning' => '\'\'\'WAARSCHUWING: De database is geblokkeerd voor bewerkingen, waarschijnlijk voor regulier databaseonderhoud, dus je kunt deze nu niet opslaan.
+Het is misschien verstandig om je tekst tijdelijk in een tekstbestand op te slaan om dit te bewaren voor wanneer de blokkering van de database opgeheven is.\'\'\'
 
 Een beheerder heeft de database geblokkeerd om de volgende reden: $1',
 	'recreate-moveddeleted-warn' => '\'\'\'Waarschuwing: u bent bezig met het aanmaken van een pagina die in het verleden verwijderd is.\'\'\'
@@ -42407,9 +42406,9 @@ $messages['sv'] = [
 	'restorelink' => '{{PLURAL:$1|en raderad version|$1 raderade versioner}}',
 	'red-link-title' => '$1 (sidan existerar inte)',
 	'readonly' => 'Databasen är skrivskyddad',
-	'readonlytext' => 'Databasen är tillfälligt låst för nya inlägg och andra modifieringar, förmodligen på grund av rutinmässigt underhåll, efter vilket den kommer den att återgå till normalläge.
+	'readonlytext' => 'Databasen är tillfälligt låst.
 
-Den administratör som låste den har angivit följande förklaring: $1',
+$1',
 	'readonly_lag' => 'Databasen har automatiskt skrivskyddats medan slavdatabasservrarna synkroniseras med huvudservern.',
 	'remembermypassword' => 'Spara min inloggning på den här datorn (i max $1 {{PLURAL:$1|dygn|dygn}})',
 	'resetpass' => 'Ändra lösenord',
