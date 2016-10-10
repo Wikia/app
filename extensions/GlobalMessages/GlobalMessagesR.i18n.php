@@ -225,13 +225,13 @@ See also: [[Special:Newpages|New pages]] – [[Special:Newimages|New files]] –
 	'recentchanges-label-minor' => 'This is a minor edit',
 	'recentchanges-label-bot' => 'This edit was performed by a bot',
 	'recentchanges-label-unpatrolled' => 'This edit has not yet been patrolled',
-	'rcnote' => 'Below {{PLURAL:$1|is \'\'\'1\'\'\' change|are the last \'\'\'$1\'\'\' changes}} in the last {{PLURAL:$2|day|\'\'\'$2\'\'\' days}}, as of $5, $4.',
+	'rcnote' => '<div style="margin-top: -20px;" class="emptymwmsg mediawiki_rcnote"></div>',
 	'rcnotefrom' => 'Below are the changes since \'\'\'$2\'\'\' (up to \'\'\'$1\'\'\' shown).',
 	'rclistfrom' => 'Show new changes starting from $1',
 	'rcshowhideminor' => '$1 minor edits',
 	'rcshowhidebots' => '$1 bots',
-	'rcshowhideliu' => '$1 logged-in users',
-	'rcshowhideanons' => '$1 anonymous users',
+	'rcshowhideliu' => '$1 users',
+	'rcshowhideanons' => '$1 anons',
 	'rcshowhidepatr' => '$1 patrolled edits',
 	'rcshowhidemine' => '$1 my edits',
 	'rclinks' => 'Show last $1 changes in last $2 days<br />$3',
@@ -326,7 +326,7 @@ We look forward to seeing you on Wikia!
 The Wikia Community Team
 www.wikia.com
 ',
-	'rcshowhideenhanced' => '$1 enhanced recent changes',
+	'rcshowhideenhanced' => '$1 grouped recent changes',
 	'refreshpage' => 'Reload page to activate this widget',
 	'requestcreatewiki' => 'Submit Request',
 	'right_now' => 'Right Now<br />people are...',
@@ -9764,7 +9764,7 @@ We look forward to seeing you on Wikia!
 The Wikia Community Team
 www.wikia.com
 ',
-	'rcshowhideenhanced' => '$1 enhanced recent changes',
+	'rcshowhideenhanced' => 'Erweiterte Darstellung $1',
 	'refreshpage' => 'Reload page to activate this widget',
 	'requestcreatewiki' => 'Submit Request',
 	'right_now' => 'Right Now<br />people are...',
@@ -9792,7 +9792,7 @@ www.wikia.com
 * [{{FULLURL:MediaWiki:Related wiki}} No related wiki have been selected yet.]',
 	'registerintro-title' => 'Sobald du bei Fandom ein Konto erstellt hast, bist du Teil der Community!',
 	'registerintro-text' => 'You get credit for all your contributions, and you can also create your own user profile, watchlist your favorite pages, and get access to all kinds of neat tools.',
-	'rcshowhidelogs' => '$1 logs',
+	'rcshowhidelogs' => 'Logbücher $1',
 ];
 
 $messages['de-ch'] = [
@@ -11553,7 +11553,7 @@ No tiene acceso a él.',
 	'recentchanges-label-minor' => 'Esta es una edición menor',
 	'recentchanges-label-bot' => 'Esta edición fue realizada por un robot',
 	'recentchanges-label-unpatrolled' => 'Esta edición todavía no se ha patrullado',
-	'rcnote' => 'Debajo {{PLURAL:$1|hay \'\'\'1\'\'\' cambio efectuado|están los últimos \'\'\'$1\'\'\' cambios efectuados}} en  {{PLURAL:$2|el último día|los últimos \'\'\'$2\'\'\' días}}, hasta el $4, $5.',
+	'rcnote' => 'Abajo {{PLURAL:$1|está \'\'\'1\'\'\' cambio realizado|están los últimos \'\'\'$1\'\'\' cambios realizados}} en {{PLURAL:$2|el último día|los últimos \'\'\'$2\'\'\' días}}, actualizados al $3',
 	'rcnotefrom' => 'A continuación se muestran los cambios desde <b>$2</b> (hasta <b>$1</b>).',
 	'rclistfrom' => 'Mostrar nuevos cambios desde $1',
 	'rcshowhideminor' => '$1 ediciones menores',
@@ -11666,7 +11666,7 @@ We look forward to seeing you on Wikia!
 The Wikia Community Team
 www.wikia.com
 ',
-	'rcshowhideenhanced' => '$1 enhanced recent changes',
+	'rcshowhideenhanced' => '$1 cambios recientes realzados',
 	'refreshpage' => 'Reload page to activate this widget',
 	'requestcreatewiki' => 'Submit Request',
 	'right_now' => 'Right Now<br />people are...',
@@ -11694,7 +11694,7 @@ www.wikia.com
 * [{{FULLURL:MediaWiki:Related wiki}} No related wiki have been selected yet.]',
 	'registerintro-title' => '¡Cuando creas una cuenta en Fandom, te conviertes en parte de la comunidad!',
 	'registerintro-text' => 'You get credit for all your contributions, and you can also create your own user profile, watchlist your favorite pages, and get access to all kinds of neat tools.',
-	'rcshowhidelogs' => '$1 logs',
+	'rcshowhidelogs' => '$1 registros',
 ];
 
 $messages['et'] = [
@@ -12588,7 +12588,7 @@ $1',
 	'recentchanges-label-minor' => 'این ویرایش جزئی‌است',
 	'recentchanges-label-bot' => 'این ویرایش را یک ربات انجام داده‌است',
 	'recentchanges-label-unpatrolled' => 'این ویرایش هنوز گشت‌زنی نشده‌است',
-	'rcnote' => 'در زیر {{PLURAL:$1|\'\'\'۱\'\'\' تغییر|آخرین \'\'\'$1\'\'\' تغییر}} در آخرین {{PLURAL:$2|روز|\'\'\'$2\'\'\' روز}} را، تا $4 ساعت $5 می‌بینید.',
+	'rcnote' => '<div style="margin-top: -20px;" class="emptymwmsg mediawiki_rcnote"></div>',
 	'rcnotefrom' => 'در زیر تغییرات از تاریخ <b>$2</b> آمده‌اند (تا <b>$1</b> مورد نشان داده می‌شود).',
 	'rclistfrom' => 'نمایش تغییرات جدید با شروع از $1',
 	'rcshowhideminor' => '$1 ویرایش‌های جزئی',
@@ -12652,6 +12652,7 @@ $1',
 	'revdelete-restricted' => 'مدیران را محدود کرد',
 	'revdelete-unrestricted' => 'محدودیت مدیران را لغو کرد',
 	'randompage-url' => 'ویژه:صفحه_تصادفی',
+	'rcshowhideenhanced' => '$1 تغییرات اخیر گسترش‌یافته',
 ];
 
 $messages['ff'] = [
@@ -13689,7 +13690,7 @@ We look forward to seeing you on Wikia!
 The Wikia Community Team
 www.wikia.com
 ',
-	'rcshowhideenhanced' => '$1 enhanced recent changes',
+	'rcshowhideenhanced' => '$1 les modifications récentes organisées',
 	'refreshpage' => 'Reload page to activate this widget',
 	'requestcreatewiki' => 'Submit Request',
 	'right_now' => 'Right Now<br />people are...',
@@ -13717,7 +13718,7 @@ www.wikia.com
 * [{{FULLURL:MediaWiki:Related wiki}} No related wiki have been selected yet.]',
 	'registerintro-title' => 'Lorsque vous créez un compte sur Fandom, vous devenez membre de la communauté !',
 	'registerintro-text' => 'You get credit for all your contributions, and you can also create your own user profile, watchlist your favorite pages, and get access to all kinds of neat tools.',
-	'rcshowhidelogs' => '$1 logs',
+	'rcshowhidelogs' => '$1 les journaux',
 ];
 
 $messages['frc'] = [
@@ -20860,7 +20861,7 @@ $1',
 	'recentchanges-label-minor' => 'これは細部の編集です',
 	'recentchanges-label-bot' => 'この編集はボットによって行われました',
 	'recentchanges-label-unpatrolled' => 'この編集はまだ巡回されていません',
-	'rcnote' => '$4 $5までの{{PLURAL:$2|\'\'\'1\'\'\'日|\'\'\'$2\'\'\'日間}}になされた\'\'\'$1\'\'\'件の変更は以下のとおりです。',
+	'rcnote' => '以下は $3 までの <strong>$2</strong> 日間に編集された <strong>$1</strong> ページです（<strong>{{int:newpageletter}}</strong>=新規項目、<strong>{{int:minoreditletter}}</strong>=細部の編集、<strong>{{int:boteditletter}}</strong>=ボットの編集、日時はオプションで未設定ならUTC）',
 	'rcnotefrom' => '以下は、\'\'\'$2\'\'\'以降の更新です（最大\'\'\'$1\'\'\'件）。',
 	'rclistfrom' => '$1以降の更新を表示する',
 	'rcshowhideminor' => '細部の編集を$1',
@@ -20989,14 +20990,14 @@ We look forward to seeing you on Wikia!
 The Wikia Community Team
 www.wikia.com
 ',
-	'rcshowhideenhanced' => '$1 enhanced recent changes',
+	'rcshowhideenhanced' => '拡張された最近更新したページを$1',
 	'refreshpage' => 'Reload page to activate this widget',
 	'related_wiki' => 'Add bulleted links here to display wiki related to this one in the related wiki [[Special:Widgets|widget]].
 
 * [{{FULLURL:MediaWiki:Related wiki}} No related wiki have been selected yet.]',
 	'registerintro-title' => 'Fandomでアカウントを作成すると、コミュニティの一員になります',
 	'registerintro-text' => 'You get credit for all your contributions, and you can also create your own user profile, watchlist your favorite pages, and get access to all kinds of neat tools.',
-	'rcshowhidelogs' => '$1 logs',
+	'rcshowhidelogs' => 'ログを$1',
 ];
 
 $messages['jam'] = [
@@ -24132,6 +24133,8 @@ $1',
 	'revdelete-unrestricted' => '관리자에 대한 제한을 해제함',
 	'registerintro-title' => '위키아에서 계정을 만드시면, 당신도 공동체의 일원이 됩니다!',
 	'rate_it' => '별점 주기:',
+	'rcshowhideenhanced' => '확장된 최근 바뀜 기능을 $1',
+	'rcshowhidelogs' => '기록을 $1',
 ];
 
 $messages['ko-kp'] = [
@@ -33034,6 +33037,8 @@ Sjekk gjerne loggføringa.',
 	'review_reason_4' => 'Anmeld grunn 4',
 	'review_reason_5' => 'Anmeld grunn 5',
 	'registerintro-title' => 'Når du oppretter en bruker hos Wikia blir du en del av fellesskapet!',
+	'rcshowhideenhanced' => '$1 utdypende siste endringer',
+	'rcshowhidelogs' => '$1 logger',
 ];
 
 $messages['nov'] = [
@@ -34536,7 +34541,7 @@ We look forward to seeing you on Wikia!
 The Wikia Community Team
 www.wikia.com
 ',
-	'rcshowhideenhanced' => '$1 enhanced recent changes',
+	'rcshowhideenhanced' => '$1 zaawansowane ostatnie zmiany',
 	'requestcreatewiki' => 'Submit Request',
 	'right_now' => 'Right Now<br />people are...',
 	'return_to_article' => 'Return to page',
@@ -37689,7 +37694,7 @@ We look forward to seeing you on Wikia!
 The Wikia Community Team
 www.wikia.com
 ',
-	'rcshowhideenhanced' => '$1 enhanced recent changes',
+	'rcshowhideenhanced' => '$1 короткий список правок',
 	'refreshpage' => 'Reload page to activate this widget',
 	'requestcreatewiki' => 'Submit Request',
 	'right_now' => 'Right Now<br />people are...',
@@ -37717,7 +37722,7 @@ www.wikia.com
 * [{{FULLURL:MediaWiki:Related wiki}} No related wiki have been selected yet.]',
 	'registerintro-title' => 'Создайте учётную запись и присоединитесь к сообществу Фэндома!',
 	'registerintro-text' => 'You get credit for all your contributions, and you can also create your own user profile, watchlist your favorite pages, and get access to all kinds of neat tools.',
-	'rcshowhidelogs' => '$1 logs',
+	'rcshowhidelogs' => '$1 журналы',
 ];
 
 $messages['rue'] = [
@@ -42602,14 +42607,14 @@ Vänligen kontrollera loggarna.',
 	'recentchanges-label-unpatrolled' => 'Denna redigering har inte blivit kontrollerad ännu',
 	'rcnote' => 'Nedan visas {{PLURAL:$1|\'\'\'1\'\'\' ändring|de senaste \'\'\'$1\'\'\' ändringarna}} från {{PLURAL:$2|det senaste dygnet|de senaste \'\'\'$2\'\'\' dygnen}}, per $4, kl. $5.',
 	'rcnotefrom' => 'Nedan visas ändringar sedan \'\'\'$2\'\'\' (upp till \'\'\'$1\'\'\' visas).',
-	'rclistfrom' => 'Visa ändringar efter $1',
+	'rclistfrom' => '<div style="float:right; font-size: 70%; position: absolute; right: 5px; bottom: 0px;">Visa förändringar sedan $1</div>',
 	'rcshowhideminor' => '$1 mindre ändringar',
 	'rcshowhidebots' => '$1 robotar',
 	'rcshowhideliu' => '$1 inloggade användare',
 	'rcshowhideanons' => '$1 oinloggade användare',
 	'rcshowhidepatr' => '$1 kontrollerade redigeringar',
 	'rcshowhidemine' => '$1 mina ändringar',
-	'rclinks' => 'Visa senaste $1 ändringar under de senaste $2 dygnen<br />$3',
+	'rclinks' => 'Visa senaste $1 ändringar under de senaste $2 dagar<br />$3',
 	'rc_categories' => 'Begränsa till följande kategorier (separera med "|")',
 	'rc_categories_any' => 'Vilken som helst',
 	'rc-change-size-new' => '$1 {{PLURAL:$1|byte|bytes}} efter ändring',
@@ -42670,6 +42675,7 @@ Sidor på [[Special:Watchlist|din bevakningslista]] är markerade med \'\'\'fets
 	'review_reason_4' => 'Anmälningsanledning 4',
 	'review_reason_5' => 'Anmälningsanledning 5',
 	'registerintro-title' => 'När du skapar ett konto på Wikia blir du en del av gemenskapet!',
+	'rcshowhideenhanced' => '$1 avancerad senaste ändringar',
 ];
 
 $messages['sw'] = [
@@ -49409,7 +49415,7 @@ $1',
 	'recentchanges-label-minor' => '这是一个小编辑',
 	'recentchanges-label-bot' => '这次编辑是由机器人进行',
 	'recentchanges-label-unpatrolled' => '这次编辑尚未巡查过',
-	'rcnote' => '以下是截至$4 $5在最近\'\'\'$2\'\'\'天内的最近\'\'\'$1\'\'\'次更改。',
+	'rcnote' => '以下是在$3，最近\'\'\'$2\'\'\'天内的\'\'\'$1\'\'\'次最近更改记录:',
 	'rcnotefrom' => '以下是自\'\'\'$2\'\'\'起的更改（最多显示\'\'\'$1\'\'\'项）。',
 	'rclistfrom' => '显示自$1起的新更改',
 	'rcshowhideminor' => '$1小编辑',
@@ -49517,7 +49523,7 @@ We look forward to seeing you on Wikia!
 The Wikia Community Team
 www.wikia.com
 ',
-	'rcshowhideenhanced' => '$1 enhanced recent changes',
+	'rcshowhideenhanced' => '$1 折页式显示模式',
 	'refreshpage' => 'Reload page to activate this widget',
 	'requestcreatewiki' => 'Submit Request',
 	'right_now' => 'Right Now<br />people are...',
@@ -49743,7 +49749,7 @@ $1',
 	'recentchanges-label-minor' => '這是一個小編輯',
 	'recentchanges-label-bot' => '這次編輯是由機器人進行',
 	'recentchanges-label-unpatrolled' => '這次編輯尚未巡查過',
-	'rcnote' => '以下是在$4 $5，最近 \'\'\'$2\'\'\' 天內的 \'\'\'$1\'\'\' 次最近更改記錄。',
+	'rcnote' => '以下是在$3，最近\'\'\'$2\'\'\'天內的\'\'\'$1\'\'\'次最近更改記錄:',
 	'rcnotefrom' => '下面是自\'\'\'$2\'\'\'（最多顯示\'\'\'$1\'\'\'）:',
 	'rclistfrom' => '顯示自$1以來的新更改',
 	'rcshowhideminor' => '$1小編輯',
@@ -49807,6 +49813,7 @@ $1',
 	'revdelete-restricted' => '已應用限制至操作員',
 	'revdelete-unrestricted' => '已移除對於操作員的限制',
 	'registerintro-title' => '當你在Fandom上創建帳戶時，你就成為了社群的一份子！',
+	'rcshowhideenhanced' => '$1 折頁式顯示模式',
 ];
 
 $messages['zh-hk'] = [
@@ -49819,6 +49826,8 @@ $messages['zh-hk'] = [
 	'recentchanges-label-bot' => '這次編輯是由機械人進行',
 	'rcshowhidebots' => '$1機械人的編輯',
 	'randomredirect' => '隨機重定向頁',
+	'rcnote' => '以下是在$3，最近\'\'\'$2\'\'\'天內的\'\'\'$1\'\'\'次最近更改記錄:',
+	'rcshowhideenhanced' => '$1 折頁式顯示模式',
 ];
 
 $messages['zh-min-nan'] = [
@@ -49896,9 +49905,9 @@ $messages['zh-tw'] = [
 	'recentchanges-feed-description' => '追蹤此訂閱在 wiki 上的最近更改。',
 	'rcnotefrom' => '下面是自\'\'\'$2\'\'\'（最多顯示\'\'\'$1\'\'\'）:',
 	'rcshowhideminor' => '$1小編輯',
-	'rcshowhidebots' => '$1機器人的編輯',
-	'rcshowhideliu' => '$1已登入用戶的編輯',
-	'rcshowhideanons' => '$1匿名用戶的編輯',
+	'rcshowhidebots' => '$1 機器人',
+	'rcshowhideliu' => '$1 登入用戶',
+	'rcshowhideanons' => '$1 匿名用戶',
 	'rcshowhidepatr' => '$1巡查過的編輯',
 	'recentchangeslinked' => '連出更改',
 	'recentchangeslinked-feed' => '連出更改',
@@ -50079,7 +50088,7 @@ $1',
 	'recentchanges-label-minor' => '這是一個小編輯',
 	'recentchanges-label-bot' => '這次編輯是由機器人進行',
 	'recentchanges-label-unpatrolled' => '這次編輯尚未巡查過',
-	'rcnote' => '以下是在$4 $5，最近 \'\'\'$2\'\'\' 天內的 \'\'\'$1\'\'\' 次最近更改記錄。',
+	'rcnote' => '以下是在$3，最近\'\'\'$2\'\'\'天內的\'\'\'$1\'\'\'次最近更改記錄:',
 	'rclistfrom' => '顯示自$1以來的新更改',
 	'rcshowhidemine' => '$1我的編輯',
 	'rclinks' => '顯示最近$2天內最新的$1次改動。<br />$3',
@@ -50154,7 +50163,7 @@ We look forward to seeing you on Wikia!
 The Wikia Community Team
 www.wikia.com
 ',
-	'rcshowhideenhanced' => '$1 enhanced recent changes',
+	'rcshowhideenhanced' => '$1 折頁式顯示模式',
 	'refreshpage' => 'Reload page to activate this widget',
 	'requestcreatewiki' => 'Submit Request',
 	'right_now' => 'Right Now<br />people are...',
@@ -50273,5 +50282,23 @@ $messages['zu'] = [
 
 $messages['zh-cn'] = [
 	'randomredirect' => '隨機重定向頁',
+	'rcnote' => '以下是在$3，最近\'\'\'$2\'\'\'天内的\'\'\'$1\'\'\'次最近更改记录:',
+	'rcshowhideanons' => '$1 匿名用戶',
+	'rcshowhidebots' => '$1 机器人',
+	'rcshowhideenhanced' => '$1 折页式显示模式',
+	'rcshowhideliu' => '$1 登入用戶',
+];
+
+$messages['zh'] = [
+	'rcnote' => '以下是在$3，最近\'\'\'$2\'\'\'天内的\'\'\'$1\'\'\'次最近更改记录:',
+	'rcshowhideanons' => '$1 匿名用戶',
+	'rcshowhidebots' => '$1 机器人',
+	'rcshowhideenhanced' => '$1 折頁式顯示模式',
+	'rcshowhideliu' => '$1 登入用戶',
+];
+
+$messages['zh-sg'] = [
+	'rcnote' => '以下是在$3，最近\'\'\'$2\'\'\'天内的\'\'\'$1\'\'\'次最近更改记录:',
+	'rcshowhideenhanced' => '$1 折页式显示模式',
 ];
 
