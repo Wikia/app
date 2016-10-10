@@ -7392,6 +7392,7 @@ Weitere werden standardmäßig nicht angezeigt.
 *#category1#
 *#category2#',
 	'move-redirect-suppressed' => 'Weiterleitung unterdrückt',
+	'mu_login' => 'Du musst angemeldet sein um Dateien hochladen zu können.',
 ];
 
 $messages['de-ch'] = [
@@ -8749,6 +8750,7 @@ Existen otros campos que se mantendrán ocultos por defecto.
 	'manage_widgets' => 'Organizar widgets',
 	'masthead-anonymous-user' => 'Editor no registrado',
 	'messagebar_mess' => '¿Sabes que puedes <a href="$1">editar esta página</a> o <a href="$2">crear una nueva</a>? <a href="$3">Averigua cómo</a> se hace.',
+	'mu_login' => 'Debes identificarte para subir archivos',
 ];
 
 $messages['et'] = [
@@ -9424,6 +9426,7 @@ $messages['fa'] = [
 	'most_popular' => 'محبوبترین',
 	'most_popular_articles' => 'محبوبترین مقالات',
 	'most_visited' => 'بیشترین بازدید',
+	'mu_login' => 'برای بار کردن پرونده‌ها باید [[Special:UserLogin|وارد سیستم شوید]].',
 ];
 
 $messages['ff'] = [
@@ -9604,6 +9607,7 @@ Suorittamalla sen järjestelmäsi voi muuttua epäluotettavaksi.',
 	'manage_widgets' => 'Hallinnoi vekottimia',
 	'masthead-anonymous-user' => 'Wikia-avustaja',
 	'messagebar_mess' => 'Tiesitkö, että voit <a href="$1">muokata tätä sivua</a> tai <a href="$2">luoda uuden</a>? <a href="$3">Ota selvää</a> miten tämä toimii.',
+	'mu_login' => 'Sinun pitää olla kirjautunut sisään ladataksesi tiedostoja.',
 ];
 
 $messages['fiu-vro'] = [
@@ -10108,6 +10112,7 @@ Si vous l’exécutez, votre système peut être compromis.',
 **forum-url|Forum
 *#category1#
 *#category2#',
+	'mu_login' => 'Vous devez être connecté pour importer des fichiers.',
 ];
 
 $messages['frc'] = [
@@ -15458,6 +15463,7 @@ contenttype/subtypeの形式で指定してください（例：<tt>image/jpeg</
 **Forum:Index|forum
 *#category1#
 *#category2#',
+	'mu_login' => 'ファイルをアップロードするには、ログインする必要があります。',
 ];
 
 $messages['jam'] = [
@@ -24595,6 +24601,7 @@ Andre er gøymde som standard.
 **forum-url|Forum
 *#category1#
 *#category2#',
+	'mu_login' => 'Du må være pålogget for å laste opp filer.',
 ];
 
 $messages['nov'] = [
@@ -28042,6 +28049,7 @@ $messages['ru'] = [
 	'magicfooterlinks' => '<b>Избранные страницы</b>',
 	'masthead-anonymous-user' => 'Незарегистрированный вкладчик',
 	'messagebar_mess' => 'Знаете ли вы, что вы можете <a href="$1">править эту страницу</a> или <a href="$2">создать новую страницу</a>? <a href="$3">Узнайте, как</a> это работает.',
+	'mu_login' => 'Вы должны войти в систему, чтобы загружать файлы.',
 ];
 
 $messages['rue'] = [
@@ -37235,6 +37243,7 @@ $messages['zh-tw'] = [
 	'mostlinked' => '最多被連接頁面',
 	'mostlinkedcategories' => '最多被使用的分類',
 	'mostrevisions' => '最多修訂的文章',
+	'mu_login' => '您必須先登入才能上傳檔案',
 ];
 
 $messages['zh-yue'] = [
