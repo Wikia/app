@@ -5866,6 +5866,8 @@ oder die zugehörigen <span class="plainlinks">[{{fullurl:{{#special:Log}}|page=
 	'number-shortening' => '$1K',
 	'number-shortening-millions' => '$1M',
 	'number-shortening-billions' => '$1B',
+	'namespacedisabled' => 'Namensraum deaktiviert',
+	'namespacedisabledtext' => 'Dieser Namensraum wurde deaktiviert.',
 ];
 
 $messages['de-ch'] = [
@@ -19479,7 +19481,7 @@ Het kan ook wijzen op een fout in de software van {{SITENAME}}.',
 	'nospecialpagetext' => '<strong>U hebt een onbestaande speciale pagina opgevraagd.</strong>
 
 Een lijst met bestaande speciale pagina’s staat op [[Special:SpecialPages|{{int:specialpages}}]].',
-	'namespaceprotected' => 'U hebt geen rechten om pagina\'s in de naamruimte \'\'\'$1\'\'\' te bewerken.',
+	'namespaceprotected' => 'Je hebt geen rechten om pagina\'s in de naamruimte \'\'\'$1\'\'\' te bewerken.',
 	'ns-specialprotected' => 'Pagina\'s in de naamruimte "{{ns:special}}" kunnen niet bewerkt worden.',
 	'nav-login-createaccount' => 'Aanmelden / registreren',
 	'notloggedin' => 'Niet aangemeld',
@@ -22700,6 +22702,8 @@ The wiki server can\'t provide data in a format your client can read.',
 	'number-shortening' => '$1K',
 	'number-shortening-millions' => '$1милл.',
 	'number-shortening-billions' => '$1миллиард',
+	'namespacedisabled' => 'Пространство имён отключено',
+	'namespacedisabledtext' => 'Это пространство имён было отключено.',
 ];
 
 $messages['rue'] = [
