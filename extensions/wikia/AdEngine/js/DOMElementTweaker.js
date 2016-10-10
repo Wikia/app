@@ -62,31 +62,7 @@ define('ext.wikia.adEngine.domElementTweaker', [
 		});
 	}
 
-	function cleanInlineStyles(element) {
-		if (isElement(element)) {
-			element.removeAttribute('style');
-			element.style.cssText = null;
-		}
-	}
-
-	function bubbleRun(action, deepestElement, topElement) {
-		var list = [];
-
-		while (deepestElement && deepestElement !== topElement) {
-			list.push(deepestElement);
-			deepestElement = deepestElement.parentNode;
-		}
-
-		list.push(topElement);
-
-		list.forEach(function (element) {
-			action(element);
-		});
-	}
-
 	return {
-		bubbleRun: bubbleRun,
-		cleanInlineStyles: cleanInlineStyles,
 		hide: hide,
 		isElement: isElement,
 		moveStylesToInline: moveStylesToInline,

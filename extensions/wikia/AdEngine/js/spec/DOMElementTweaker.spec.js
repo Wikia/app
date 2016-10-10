@@ -60,26 +60,4 @@ describe('DOMElementTweaker', function () {
 		expect(mocks.element.classList.length).toEqual(2);
 		expect(mocks.element.className.trim()).toEqual('b c');
 	});
-
-	it('Test bubble action call', function () {
-		var domElementTweaker = getModule();
-
-		var obj = {
-			action: function () {}
-		};
-
-		var a = document.createElement('div');
-		var b = document.createElement('p');
-		var c = document.createElement('img');
-
-		a.appendChild(b);
-		b.appendChild(c);
-
-		spyOn(obj, 'action');
-		domElementTweaker.bubbleRun(obj.action, c, a);
-
-		expect(obj.action).toHaveBeenCalledWith(c);
-		expect(obj.action).toHaveBeenCalledWith(a);
-		expect(obj.action).toHaveBeenCalledWith(b);
-	});
 });
