@@ -457,13 +457,13 @@ $messages['de'] = [
 	'research_this' => 'Das hier recherchieren',
 	'notify_answered' => 'E-Mail bei Antwort',
 	'recent_asked_questions' => 'Zuletzt gestellte Fragen',
-	'recent_answered_questions' => 'Zuletzt gestellte Fragen',
-	'recent_edited_questions' => 'Kürzlich bearbeitete Fragen',
+	'recent_answered_questions' => 'Zuletzt beantwortete Fragen',
+	'recent_edited_questions' => 'Zuletzt bearbeitete Fragen',
 	'unanswered_category' => 'Offene Fragen',
 	'answered_category' => 'Beantwortete Fragen',
 	'related_questions' => 'Ähnliche Fragen',
 	'related_answered_questions' => 'Ähnliche beantwortete Fragen',
-	'recent_unanswered_questions' => 'Aktuelle Offene Fragen',
+	'recent_unanswered_questions' => 'Neue unbeantwortete Fragen',
 	'popular_categories' => 'Beliebte Kategorien',
 	'createaccount-captcha' => 'Bitte gib das folgende Wort ein',
 	'inline-register-title' => 'Benachrichtige mich wenn meine Frage beantwortet wurde!',
@@ -590,9 +590,9 @@ $messages['es'] = [
 	'notify_improved' => 'Envíeme un email cuando la mejore',
 	'research_this' => 'Investigar esto',
 	'notify_answered' => 'Envíame un mail cuando seas contestado',
-	'recent_asked_questions' => 'Preguntas más frecuentes',
-	'recent_answered_questions' => 'Preguntas recién contestadas',
-	'recent_edited_questions' => 'Preguntas recién editadas',
+	'recent_asked_questions' => 'Preguntas hechas recientemente',
+	'recent_answered_questions' => 'Preguntas respondidas recientemente',
+	'recent_edited_questions' => 'Preguntas editadas recientemente',
 	'unanswered_category' => 'Preguntas no contestadas',
 	'answered_category' => 'Preguntas respondidas',
 	'related_questions' => 'Preguntas relacionadas',
@@ -675,6 +675,7 @@ $messages['es'] = [
 	'qa-toolbox-protect' => 'Proteger esta pregunta',
 	'qa-toolbox-share' => 'Compartir',
 	'qa-toolbox-tools' => 'Herramientas avanzadas»',
+	'recent_unanswered_questions' => 'Preguntas recientes no respondidas',
 ];
 
 $messages['fi'] = [
@@ -1420,6 +1421,10 @@ $messages['ja'] = [
 	'question_not_answered' => 'この質問への回答はまだありません',
 	'question_redirected_help_page' => 'なぜ、私の質問がここにリダイレクトされたのですか。',
 	'receive_email' => 'この質問への回答がされたら<a href="$1" $2>メールで通知する</a>。',
+	'recent_answered_questions' => '最新の回答済み質問',
+	'recent_asked_questions' => '最新の質問',
+	'recent_edited_questions' => '最近回答した質問',
+	'recent_unanswered_questions' => '最新の回答待ち質問',
 ];
 
 $messages['lb'] = [
@@ -2070,7 +2075,7 @@ $messages['pl'] = [
 	'research_this' => 'Wyszukaj',
 	'notify_answered' => 'Wyślij do mnie e-mail, gdy pojawi się odpowiedź',
 	'recent_asked_questions' => 'Ostatnio zadawane pytania',
-	'recent_answered_questions' => 'Ostatnie pytania na które odpowiedziano',
+	'recent_answered_questions' => 'Najnowsze odpowiedzi na pytania',
 	'recent_edited_questions' => 'Ostatnio edytowane pytania',
 	'unanswered_category' => 'Pytania bez odpowiedzi',
 	'answered_category' => 'Pytania z odpowiedziami',
@@ -2193,6 +2198,10 @@ $messages['pt'] = [
 	'question_redirected_help_page' => 'Por que minha pergunta foi transferida para aqui',
 	'quick_action_panel' => 'Painel de ação rapida',
 	'receive_email' => '<a href="$1">Receba um email</a> quando esta pergunta for respondida',
+	'recent_answered_questions' => 'Perguntas respondidas recentemente',
+	'recent_asked_questions' => 'Perguntas Recentes',
+	'recent_edited_questions' => 'Perguntas editadas recentemente',
+	'recent_unanswered_questions' => 'Perguntas sem resposta mais recentes',
 ];
 
 $messages['pt-br'] = [
@@ -2230,6 +2239,10 @@ $messages['pt-br'] = [
 	'question_redirected_help_page' => 'Por que minha pergunta foi transferida para aqui',
 	'quick_action_panel' => 'Painel de ação rapida',
 	'receive_email' => '<a href="$1">Receba um email</a> quando esta pergunta for respondida',
+	'recent_answered_questions' => 'Perguntas respondidas recentemente',
+	'recent_asked_questions' => 'Perguntas Recentes',
+	'recent_edited_questions' => 'Perguntas editadas recentemente',
+	'recent_unanswered_questions' => 'Perguntas sem resposta mais recentes',
 ];
 
 $messages['roa-tara'] = [
@@ -2626,6 +2639,10 @@ $messages['no'] = [
 	'question_redirected_help_page' => 'Hvorfor ble spørsmålet mitt videreført hit',
 	'quick_action_panel' => 'Hurtighandlingspanel',
 	'receive_email' => '<a href="$1" $2>Motta en e-post</a> når dette spørsmålet blir besvart',
+	'recent_answered_questions' => 'Nylig besvarte spørsmål',
+	'recent_asked_questions' => 'Nylig stile spørsmål',
+	'recent_edited_questions' => 'Nylig endrede spørsmål',
+	'recent_unanswered_questions' => 'Nylig ubesvarte spørsmål',
 ];
 
 $messages['zh-hant'] = [
@@ -2662,6 +2679,10 @@ $messages['ko'] = [
 	'qa-toolbox-share' => '공유',
 	'qa-toolbox-tools' => '고급 도구»',
 	'question_redirected_help_page' => '왜 제 질문이 여기로 넘어온거죠',
+	'recent_answered_questions' => '최근에 답변이 달린 질문',
+	'recent_asked_questions' => '최근에 생성한 질문',
+	'recent_edited_questions' => '최근에 편집한 질문',
+	'recent_unanswered_questions' => '최근에 생성된 질문',
 ];
 
 $messages['bg'] = [
