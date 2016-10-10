@@ -32,6 +32,9 @@ class AdEngine2ResourceTest extends WikiaBaseTest {
 
 		AdEngine2Resource::register($extensionName, $className);
 
+		var_dump($keys);
+		var_dump(array_keys($wgResourceModules));
+
 		$this->assertSame($keys, array_keys($wgResourceModules));
 		foreach ($keys as $key) {
 			$this->assertEquals($wgResourceModules[$key]['class'], $className);
@@ -40,6 +43,7 @@ class AdEngine2ResourceTest extends WikiaBaseTest {
 
 	private function getKeysForExtension($name) {
 		return [
+			AdEngine2Resource::getKey($name, new \DateTime('-2 day')),
 			AdEngine2Resource::getKey($name, new \DateTime('yesterday')),
 			AdEngine2Resource::getKey($name, new \DateTime('now')),
 			AdEngine2Resource::getKey($name, new \DateTime('tomorrow'))
