@@ -687,6 +687,7 @@ $messages['de'] = [
 	'old_skins' => 'Alte Skins',
 	'or' => 'oder',
 	'or_learn' => 'Um mehr zu erfahren,',
+	'other_people' => 'Andere Benutzer haben dies hier gesucht...',
 ];
 
 $messages['de-weigsbrag'] = [
@@ -802,6 +803,7 @@ $messages['es'] = [
 	'old_skins' => 'Pieles viejas',
 	'or' => 'o',
 	'or_learn' => 'O para aprender más, mira',
+	'other_people' => 'Otras personas han estado buscando por...',
 ];
 
 $messages['et'] = [
@@ -873,6 +875,7 @@ $messages['fi'] = [
 	'old_skins' => 'Vanhat ulkoasut',
 	'or' => 'tai',
 	'or_learn' => 'Tai oppiaksesi lisää, ota',
+	'other_people' => 'Muut ihmiset ovat hakeneet seuraavia...',
 ];
 
 $messages['fiu-vro'] = [
@@ -2255,6 +2258,7 @@ $messages['no'] = [
 	'old_skins' => 'Gamle utseender',
 	'or' => 'eller',
 	'or_learn' => 'Eller for å finne ut mer, ta',
+	'other_people' => 'Andre folk har søkt etter...',
 ];
 
 $messages['nov'] = [
