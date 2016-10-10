@@ -6,7 +6,7 @@ $messages['en'] = [
 	'editorpreference-desc' => 'Allows users to set their preference of editor',
 	'editor-preference' => 'Preferred editor:',
 	'editor-preference-help' => 'On this wiki, the default editor is always the classic editor. [[Help:Editing|Learn more]].',
-	'option-default-editor' => 'Default',
+	'option-default-editor' => 'No preference',
 	'option-visual-editor' => 'VisualEditor',
 	'option-ck-editor' => 'Classic rich-text editor (where available)',
 	'option-source-editor' => 'Source editor',
@@ -17,6 +17,8 @@ $messages['ja'] = [
 	'option-ck-editor' => 'クラシック・リッチテキスト・エディタ（利用可能な場合）',
 	'option-visual-editor' => 'ビジュアル・エディタ',
 	'editor-preference' => '使用するエディタ:',
+	'option-default-editor' => '各ウィキアの設定に従う',
+	'option-source-editor' => 'ソースエディタ',
 ];
 
 $messages['ko'] = [
@@ -24,6 +26,7 @@ $messages['ko'] = [
 	'option-ck-editor' => '위키아 클래식 리치 텍스트 편집기 (가능한 경우에만)',
 	'option-visual-editor' => '위키아 신규 시각 편집기',
 	'editor-preference' => '사용할 편집기:',
+	'option-source-editor' => '소스 편집기',
 ];
 
 $messages['zh'] = [
@@ -31,6 +34,8 @@ $messages['zh'] = [
 	'option-ck-editor' => 'Wikia传统可视编辑器（在能使用的页面）',
 	'option-visual-editor' => 'Wikia的新版视效编辑器',
 	'editor-preference' => '偏好的编辑器:',
+	'option-default-editor' => '预设',
+	'option-source-editor' => '源代码编辑器',
 ];
 
 $messages['zh-hans'] = [
@@ -38,6 +43,8 @@ $messages['zh-hans'] = [
 	'option-ck-editor' => 'Fandom传统编辑器（如可用）',
 	'option-visual-editor' => '可视化编辑器',
 	'editor-preference' => '偏好的编辑器:',
+	'option-default-editor' => '预设',
+	'option-source-editor' => '源代码编辑器',
 ];
 
 $messages['zh-hant'] = [
@@ -45,6 +52,8 @@ $messages['zh-hant'] = [
 	'option-ck-editor' => 'Fandom傳統編輯器（如可用）',
 	'option-visual-editor' => '視效編輯器',
 	'editor-preference' => '偏好的編輯器：',
+	'option-default-editor' => '預設',
+	'option-source-editor' => '源代碼編輯器',
 ];
 
 $messages['zh-hk'] = [
@@ -52,6 +61,8 @@ $messages['zh-hk'] = [
 	'option-ck-editor' => 'Wikia傳統可視編輯器（在能使用的頁面）',
 	'option-visual-editor' => 'Wikia的新版視效編輯器',
 	'editor-preference' => '偏好的編輯器：',
+	'option-default-editor' => '預設',
+	'option-source-editor' => '源代碼編輯器',
 ];
 
 $messages['zh-tw'] = [
@@ -59,6 +70,8 @@ $messages['zh-tw'] = [
 	'option-ck-editor' => 'Wikia傳統可視編輯器（在能使用的頁面）',
 	'option-visual-editor' => 'Wikia的新版視效編輯器',
 	'editor-preference' => '偏好的編輯器：',
+	'option-default-editor' => '預設',
+	'option-source-editor' => '源代碼編輯器',
 ];
 
 $messages['de'] = [
@@ -66,12 +79,16 @@ $messages['de'] = [
 	'option-visual-editor' => 'VisualEditor',
 	'editor-preference-help' => 'Der Standard-Editor in diesem Wiki ist immer der klassische Editor. [[w:c:de.community:Hilfe:Bearbeiten|Mehr erfahren]].',
 	'editor-preference' => 'Bevorzugte Art des Bearbeitens:',
+	'option-default-editor' => 'Standard',
+	'option-source-editor' => 'Quelltext-Editor',
 ];
 
 $messages['fi'] = [
 	'option-ck-editor' => 'Wikian klassinen rich text -muokkain (siellä, missä se on käytettävissä)',
 	'option-visual-editor' => 'Wikian uusi Visuaalinen muokkain',
 	'editor-preference' => 'Ensisijainen muokkain:',
+	'option-default-editor' => 'Oletus',
+	'option-source-editor' => 'Lähdekoodimuokkain',
 ];
 
 $messages['fr'] = [
@@ -80,6 +97,8 @@ $messages['fr'] = [
 	'editor-preference-help' => 'Sur ce wiki, l\'éditeur par défaut est toujours l\'éditeur classique. [[Aide:Modifier|En savoir plus]]',
 	'editor-preference' => 'Choix de l\'éditeur :',
 	'editorpreference-desc' => 'Permet aux utilisateurs de définir leur préférence d\'éditer',
+	'option-default-editor' => 'Sans préférence',
+	'option-source-editor' => 'Éditeur source',
 ];
 
 $messages['it'] = [
@@ -87,6 +106,8 @@ $messages['it'] = [
 	'option-visual-editor' => 'VisualEditor',
 	'editor-preference-help' => 'In questa wiki, l\'editor predefinito è sempre l\'editor classico. [[w:it:Aiuto:Modifica|Ulteriori informazioni]].',
 	'editor-preference' => 'Editor preferito:',
+	'option-default-editor' => 'Predefinito',
+	'option-source-editor' => 'Editor sorgente',
 ];
 
 $messages['pl'] = [
@@ -95,6 +116,8 @@ $messages['pl'] = [
 	'editor-preference-help' => 'Na tej wiki domyślnym edytorem jest zawsze klasyczny edytor. [[w:c:pl.c:Pomoc:Edytowanie|Dowiedz się więcej]].',
 	'editor-preference' => 'Preferowany edytor:',
 	'editorpreference-desc' => 'Pozwala użytkownikom ustawić swoje preferencje edytora.',
+	'option-default-editor' => 'Domyślny',
+	'option-source-editor' => 'Edytor źródłowy',
 ];
 
 $messages['ru'] = [
@@ -102,6 +125,8 @@ $messages['ru'] = [
 	'option-visual-editor' => 'Визуальный редактор',
 	'editor-preference-help' => 'На этой вики по умолчанию используется классический редактор. [[Справка:Редактирование|Подробнее]].',
 	'editor-preference' => 'Предпочитаемый редактор:',
+	'option-default-editor' => 'По умолчанию',
+	'option-source-editor' => 'Исходный код',
 ];
 
 $messages['vi'] = [
@@ -109,6 +134,8 @@ $messages['vi'] = [
 	'option-visual-editor' => 'Trình soạn thảo trực quan Wikia',
 	'editor-preference' => 'Chế độ soạn thảo ưa thích:',
 	'editorpreference-desc' => 'Cho phép người dùng thiết đặt tùy chọn chế độ soạn thảo của họ',
+	'option-default-editor' => 'Mặc định',
+	'option-source-editor' => 'Sửa đổi mã nguồn',
 ];
 
 $messages['qqq'] = [
