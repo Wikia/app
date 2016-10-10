@@ -357,10 +357,22 @@ Others will be hidden by default.
 	'mycontributions' => 'My contributions',
 	'multiplefileuploadsummary' => 'Summary:',
 	'mwlink_tip' => 'Internal link',
-	'most_popular_articles' => 'most popular pages',
+	'most_popular_articles' => 'Wikia:Community Portal|Community Portal
+
+Special:CreateWiki|Start a new Wikia
+
+Hub:Big_wikis|Big wikis
+
+Gaming
+
+Entertainment
+
+Blog:Wikia_Staff_Blog|Staff Blogs
+
+Forum:Help_desk|User Support Forums',
 	'messagebar_mess' => 'Did you know you can <a href="$1">edit this page</a> or <a href="$2">create a new one</a>? <a href="$3">Find out how</a> this works.',
 	'my_stuff' => 'my stuff',
-	'most_popular' => 'Most popular',
+	'most_popular' => 'Editor\'s pick',
 	'most_visited' => 'Most visited',
 	'most_emailed' => 'Most emailed',
 	'manage_widgets' => 'Manage widgets',
@@ -8745,7 +8757,7 @@ Existen otros campos que se mantendrán ocultos por defecto.
 	'monthsall' => 'todos',
 	'most_popular_articles' => 'artículos más populares',
 	'my_stuff' => 'mis útiles',
-	'most_popular' => 'Los más populares',
+	'most_popular' => 'Selección del editor',
 	'most_visited' => 'Los más visitados',
 	'most_emailed' => 'Los más contactados por e-mail',
 	'magicfooterlinks' => '<b>Páginas destacadas</b>',
@@ -9424,6 +9436,8 @@ $messages['fa'] = [
 **#topusers#|کاربران برتر
 **portal-url|ورودی کاربران
 **forum-url|فوروم',
+	'most_popular' => 'محبوبترین',
+	'most_popular_articles' => 'محبوبترین مقالات',
 ];
 
 $messages['ff'] = [
@@ -9598,7 +9612,7 @@ Suorittamalla sen järjestelmäsi voi muuttua epäluotettavaksi.',
 	'monthsall' => 'kaikki',
 	'most_popular_articles' => 'Kaikkein suosituimmat artikkelit',
 	'my_stuff' => 'Omat jutut',
-	'most_popular' => 'Suosituimmat artikkelit',
+	'most_popular' => 'Suositellut',
 	'most_visited' => 'Käydyimmät',
 	'most_emailed' => 'Eniten lähetetyt',
 	'manage_widgets' => 'Hallinnoi vekottimia',
@@ -15096,6 +15110,8 @@ In questi casi, se lo si ritiene opportuno, occorre spostare o aggiungere manual
 	'masthead-anonymous-user' => 'Collaboratore non registrato',
 	'mobile-hide' => 'Nascondi',
 	'mobile-show' => 'Mostra',
+	'most_popular' => 'Più popolari',
+	'most_popular_articles' => 'pagine più popolari',
 ];
 
 $messages['iu'] = [
@@ -15434,10 +15450,10 @@ contenttype/subtypeの形式で指定してください（例：<tt>image/jpeg</
 * gpslongitude
 * gpsaltitude',
 	'monthsall' => 'すべて',
-	'most_popular_articles' => '人気の記事',
+	'most_popular_articles' => 'もっとも人気のある記事',
 	'messagebar_mess' => '<a href="$1">このページを編集したり</a>、<a href="$2">新しい記事を作ったり</a>することが可能です。どうすればいいかは、<a href="$3">ここから検索してみてください</a>。',
 	'my_stuff' => 'my stuff',
-	'most_popular' => '人気順',
+	'most_popular' => '編集者の厳選',
 	'most_visited' => '閲覧順',
 	'most_emailed' => 'メールの使われた記事',
 	'manage_widgets' => 'ウィジェットの設定',
