@@ -735,7 +735,7 @@ Wenn du der Gründer oder ein Admin dieses Wikis bist, kannst du diese Nachricht
 	'myhome-hot-spots-definition' => 'Seiten mit den meisten Bearbeitern in den letzten $1 Tagen.',
 	'myhome-default-view-checkbox' => 'Zeige diese Seite standardmäßig an',
 	'myhome-default-view-success' => 'Deine Einstellung wurde gespeichert.',
-	'tooltip-pt-myhome' => 'Gehe zu meiner Startseite',
+	'tooltip-pt-myhome' => 'Gehe zur Startseite',
 	'activityfeed' => 'Aktivitäten-Feed',
 	'wiki-activity-message-wall-messages-count' => '{{PLURAL:$1|eine Nachricht|$1 Nachrichten}}',
 ];
@@ -974,7 +974,7 @@ Si eres el fundador o un administrador de este wiki, puedes cambiar este mensaje
 	'myhome-hot-spots-definition' => 'Páginas con más editores en {{PLURAL:$1|el último día|los últimos días}}',
 	'myhome-default-view-checkbox' => 'Hacer de $1 mi vista por defecto',
 	'myhome-default-view-success' => 'Perfecto, así será a partir de ahora',
-	'tooltip-pt-myhome' => 'Ir a mi página',
+	'tooltip-pt-myhome' => 'Ir a mi página de inicio',
 	'activityfeed' => 'Lista de actividad',
 	'wiki-activity-message-wall-messages-count' => '{{PLURAL:$1|un mensaje|$1 mensajes}}',
 ];
