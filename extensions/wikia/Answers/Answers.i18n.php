@@ -615,7 +615,7 @@ $messages['es'] = [
 	'get_code' => 'Coger código',
 	'link_color' => 'Color de enlace de la pregunta',
 	'widget_order' => 'Orden de las preguntas',
-	'question_redirected_help_page' => 'Porqué fue mi pregunta redirigida aquí?',
+	'question_redirected_help_page' => '¿Por qué se redirigió mi pregunta aquí?',
 	'twitter_hashtag' => 'WikiRespuestas',
 	'twitter_ask' => 'Preguntar en Twitter',
 	'facebook_ask' => 'Preguntar en Facebook',
@@ -625,7 +625,7 @@ $messages['es'] = [
 	'magic_answer_yes' => 'Sí, úsala como punto de partida',
 	'magic_answer_no' => 'No, no uses esta',
 	'magic_answer_credit' => 'De Yahoo Answers',
-	'question_not_answered' => 'La pregunta no ha sido respondida aún.',
+	'question_not_answered' => 'Esta pregunta no ha sido contestada',
 	'you_can' => 'Puedes:',
 	'answer_this' => '<a href="$1">Responde esta pregunta</a>, incluso si no sabes la respuesta completa',
 	'research_this_on_wikipedia' => '<a href="$1">Investigar sobre esta pregunta</a> en Wikipedia',
@@ -1415,6 +1415,9 @@ $messages['ja'] = [
 	'notify_improved' => '回答が更新されたらメールで通知する',
 	'popular_categories' => '人気カテゴリ',
 	'prev_page' => '&laquo; 前',
+	'question_asked_by' => '質問者:',
+	'question_not_answered' => 'この質問への回答はまだありません',
+	'question_redirected_help_page' => 'なぜ、私の質問がここにリダイレクトされたのですか。',
 ];
 
 $messages['lb'] = [
@@ -2055,7 +2058,7 @@ $messages['pl'] = [
 	'in_category' => '...w kategorii',
 	'ask_button' => 'Zapytaj',
 	'ask_thanks' => 'Dziękujemy za pytanie!',
-	'question_asked_by' => 'Pytanie zadał',
+	'question_asked_by' => 'Pytanie zadane przez',
 	'question_asked_by_a_wikia_user' => 'Pytanie zadane przez użytkownika Fandomu',
 	'new_question_comment' => 'nowe pytanie',
 	'answers_toolbox' => 'Narzędzia Wikianswers',
@@ -2094,7 +2097,7 @@ $messages['pl'] = [
 	'see_all' => 'Zobacz wszystkie',
 	'link_color' => 'Kolor linku pytania',
 	'widget_order' => 'Kolejność Pytań',
-	'question_redirected_help_page' => 'Dlaczego moje pytanie przekierowano tutaj',
+	'question_redirected_help_page' => 'Dlaczego moje pytanie zostało tutaj przekierowane',
 	'twitter_hashtag' => 'wikianswers',
 	'twitter_ask' => 'Zapytaj na Twitterze',
 	'facebook_ask' => 'Zapytaj na Facebooku',
@@ -2108,7 +2111,7 @@ $messages['pl'] = [
 	'magic_answer_credit' => 'Dostarczone przez Yahoo Answers',
 	'rephrase' => 'Sformułuj to pytanie inaczej',
 	'rephrase_this' => '<a href="$1" $2>Sformułuj to pytanie inaczej</a>',
-	'question_not_answered' => 'Na to pytanie nie udzielono odpowiedzi',
+	'question_not_answered' => 'Na to pytanie nie została udzielona odpowiedź',
 	'you_can' => 'Możesz:',
 	'answer_this' => '<a href="$1">Odpowiedz na to pytanie</a>, nawet jeśli nie znasz pełnej odpowiedzi',
 	'ask_friends_on_twitter' => 'Zapytaj znajomych na <a href="$1" $2>Twitterze</a>',
@@ -2181,6 +2184,9 @@ $messages['pt'] = [
 	'notify_improved' => 'Avise-me por email sobre as alterações da resposta.',
 	'popular_categories' => 'Categorias mais populares',
 	'prev_page' => '« Anteriores',
+	'question_asked_by' => 'Pergunta feita por',
+	'question_not_answered' => 'Esta pergunta ainda não foi respondida',
+	'question_redirected_help_page' => 'Por que minha pergunta foi transferida para aqui',
 ];
 
 $messages['pt-br'] = [
@@ -2213,6 +2219,9 @@ $messages['pt-br'] = [
 	'notify_improved' => 'Avise-me por email sobre as alterações da resposta.',
 	'popular_categories' => 'Categorias mais populares',
 	'prev_page' => '« Anteriores',
+	'question_asked_by' => 'Pergunta feita por',
+	'question_not_answered' => 'Esta pergunta ainda não foi respondida',
+	'question_redirected_help_page' => 'Por que minha pergunta foi transferida para aqui',
 ];
 
 $messages['roa-tara'] = [
@@ -2604,6 +2613,9 @@ $messages['no'] = [
 	'number_of_items' => 'Antall objekter å vise',
 	'popular_categories' => 'Populære kategorier',
 	'prev_page' => '&laquo; Forrige',
+	'question_asked_by' => 'Spørsmål stilt av',
+	'question_not_answered' => 'Dette spørsmålet har ikke blitt besvart',
+	'question_redirected_help_page' => 'Hvorfor ble spørsmålet mitt videreført hit',
 ];
 
 $messages['zh-hant'] = [
@@ -2639,6 +2651,7 @@ $messages['ko'] = [
 	'qa-toolbox-delete' => '이 질문 삭제하기',
 	'qa-toolbox-share' => '공유',
 	'qa-toolbox-tools' => '고급 도구»',
+	'question_redirected_help_page' => '왜 제 질문이 여기로 넘어온거죠',
 ];
 
 $messages['bg'] = [
