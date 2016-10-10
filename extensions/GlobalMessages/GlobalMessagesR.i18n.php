@@ -32194,26 +32194,27 @@ Er kunnen details aanwezig zijn in het [{{fullurl:{{#Special:Log}}/delete|page={
 Achtergronden zijn mogelijk te vinden in het [{{fullurl:{{#Special:Log}}/delete|page={{FULLPAGENAMEE}}}} verwijderingslogboek].
 Als beheerder kun je  [$1 deze versie bekijken] als je wil.',
 	'rev-suppressed-text-unhide' => 'Deze paginaversie is \'\'\'onderdrukt\'\'\'.
-Er kunnen details te vinden zijn in het [{{fullurl:{{#Special:Log}}/suppress|page={{FULLPAGENAMEE}}}} logboek onderdrukte versies].
-Als u wilt kunt u [$1 deze versie bekijken].',
+Achtergronden zijn mogelijk te vinden in het [{{fullurl:{{#Special:Log}}/suppress|page={{FULLPAGENAMEE}}}} logboek onderdrukte versies].
+Als beheerder kun je [$1 de verschillen bekijken] als je wil.',
 	'rev-deleted-text-view' => 'Deze bewerking is \'\'\'verwijderd\'\'\'.
 Als beheerder kun je deze zien;
 er kunnen details aanwezig zijn in het [{{fullurl:{{#Special:Log}}/delete|page={{FULLPAGENAMEE}}}} verwijderingslogboek].',
 	'rev-suppressed-text-view' => 'Deze paginaversie is \'\'\'onderdrukt\'\'\'.
-U kunt deze bekijken; er kunnen details te vinden zijn in het [{{fullurl:{{#Special:Log}}/suppress|page={{FULLPAGENAMEE}}}} logboek onderdrukte versies].',
+Als beheerder kun je deze bekijken;
+achtergronden zijn mogelijk te vinden in het [{{fullurl:{{#Special:Log}}/suppress|page={{FULLPAGENAMEE}}}} logboek onderdrukte versies].',
 	'rev-deleted-no-diff' => 'Je kunt de verschillen niet bekijken, omdat een van de versies is \'\'\'verwijderd\'\'\'.
 Achtergronden zijn mogelijk te vinden in het [{{fullurl:{{#Special:Log}}/delete|page={{FULLPAGENAMEE}}}} verwijderingslogboek].',
-	'rev-suppressed-no-diff' => 'U kunt de verschillen niet bekijken, omdat een van de versies is \'\'\'verwijderd\'\'\'.',
+	'rev-suppressed-no-diff' => 'Je kunt de verschillen niet bekijken, omdat een van de versies is \'\'\'verwijderd\'\'\'.',
 	'rev-deleted-unhide-diff' => 'Een van de bewerkingen voor de verschillen die je hebt opgevraagd is \'\'\'verwijderd\'\'\'.
 Achtergronden zijn mogelijk te vinden in het [{{fullurl:{{#Special:Log}}/delete|page={{FULLPAGENAMEE}}}} verwijderingslogboek].
 Als beheerder kun je [$1 de verschillen bekijken] als je wil.',
 	'rev-suppressed-unhide-diff' => 'Een van de versies in deze verschillen is \'\'\'onderdrukt\'\'\'.
-Er kunnen details te vinden zijn in het [{{fullurl:{{#Special:Log}}/suppress|page={{FULLPAGENAMEE}}}} verbergingslogboek].
-Als u wilt kunt u [$1 deze versie bekijken].',
+Achtergronden zijn mogelijk te vinden in het [{{fullurl:{{#Special:Log}}/suppress|page={{FULLPAGENAMEE}}}} verbergingslogboek].
+Als beheerder kunt je [$1 deze versie bekijken] als je wil.',
 	'rev-deleted-diff-view' => 'Een van de bewerkingen voor de verschillen die je hebt opgevraagd, is \'\'\'verwijderd\'\'\'.
 Als beheerder kunt je deze verschillen bekijken. Mogelijk zijn details zichtbaar in het [{{fullurl:{{#Special:Log}}/delete|page={{FULLPAGENAMEE}}}} verwijderlogboek].',
-	'rev-suppressed-diff-view' => 'Een van de bewerkingen voor de verschillen die u hebt opgevraagd, is \'\'\'onderdrukt\'\'\'.
-U kunt deze verschillen bekijken. Er kunnen details te vinden zijn in het [{{fullurl:{{#Special:Log}}/suppress|page={{FULLPAGENAMEE}}}} verbergingslogboek].',
+	'rev-suppressed-diff-view' => 'Een van de bewerkingen voor de verschillen die je hebt opgevraagd, is \'\'\'onderdrukt\'\'\'.
+Als beheerder kun je deze verschillen bekijken. Mogelijk zijn details zichtbaar in het [{{fullurl:{{#Special:Log}}/suppress|page={{FULLPAGENAMEE}}}} verbergingslogboek].',
 	'rev-delundel' => 'weergeven/verbergen',
 	'rev-showdeleted' => 'weergeven',
 	'revisiondelete' => 'Versies verwijderen of terugplaatsen',
