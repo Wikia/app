@@ -3,14 +3,15 @@
 $messages = [];
 
 $messages['en'] = [
-	'sidebar' => '
-* navigation
+	'sidebar' => '* Content Navigation
 ** mainpage|mainpage
-** portal-url|portal
-** currentevents-url|currentevents
-** recentchanges-url|recentchanges
+** content-url|content 
 ** randompage-url|randompage
-** helppage|help',
+* Community
+** portal-url|portal
+** recentchanges-url|recentchanges
+** helppage|help
+** forum-url|forum',
 	'sunday' => 'Sunday',
 	'saturday' => 'Saturday',
 	'sun' => 'Sun',
@@ -10008,6 +10009,15 @@ Esto podría estar causado por un enlace a un sitio externo incluido en la lista
 	'shared-problemreport' => 'Reportar un problema',
 	'shoutbox' => 'Chat',
 	'showall' => 'Mostrar todo',
+	'sidebar' => '* SEARCH
+* navigation
+** mainpage|mainpage
+** portal-url|portal
+** currentevents-url|currentevents
+** recentchanges-url|recentchanges
+** randompage-url|randompage
+** forum-url|forum 
+** helppage|help',
 ];
 
 $messages['et'] = [
@@ -11761,6 +11771,13 @@ impossible de renommer une page sur elle-même.',
 	'send' => 'Envoyer',
 	'shared-News_box' => 'Visitez le [[w:fr:Accueil|Centre des communautés]] pour de l’aide et les dernières nouvelles',
 	'shared-problemreport' => 'Signaler un problème',
+	'sidebar' => '* navigation
+** mainpage|mainpage
+** portal-url|Portail
+** currentevents-url|Qu\'est-ce qu\'est actuel?
+** recentchanges-url|Modifications récentes
+** randompage-url|Une page au hassard
+** helppage|Aide',
 ];
 
 $messages['frc'] = [
@@ -17976,6 +17993,15 @@ $messages['ja'] = [
 *** w:c:ja.community:ウィキアユニバーシティ|ウィキアユニバーシティ
 *** w:c:ja.community:Blog:ヒントとコツ|ヒントとコツ',
 	'showall' => '全て表示する',
+	'sidebar' => '* Content Navigation|コンテンツナビゲーション
+** mainpage|メインページ
+** content-url|コンテンツ
+** randompage-url|ランダムページ
+* Community|コミュニティ
+** portal-url|ポータル
+** recentchanges-url|最近の更新
+** helppage|ヘルプ
+** forum-url|フォーラム',
 ];
 
 $messages['jam'] = [
@@ -29729,6 +29755,16 @@ Najprawdopodobniej zostało to spowodowane przez link do zewnętrznej strony int
 	'save' => 'Publikuj',
 	'scarytranscludebadinterwiki' => 'Użyto niewłaściwej składni transkluzji zewnętrznego szablonu.',
 	'shared-News_box' => 'Zajrzyj na [[w:c:spolecznosc:Specjalna:Forum|forum]].',
+	'sidebar' => '* Nawigacja
+** mainpage|mainpage-description
+** randompage-url|randompage
+* Społeczność
+** recentchanges-url|recentchanges
+** forum-url|forum
+** helppage|help
+* SEARCH
+* TOOLBOX
+* LANGUAGES',
 ];
 
 $messages['pms'] = [
