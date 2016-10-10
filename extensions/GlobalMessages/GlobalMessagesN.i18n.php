@@ -15,7 +15,7 @@ $messages['en'] = [
 	'newmessagesdifflink' => 'show most recent',
 	'newtalkseparator' => ',&#32;',
 	'newsectionheaderdefaultlevel' => '== $1 ==',
-	'nstab-main' => 'Page',
+	'nstab-main' => 'Article',
 	'nstab-user' => 'User page',
 	'nstab-media' => 'Media page',
 	'nstab-special' => 'Special page',
@@ -6774,7 +6774,7 @@ $messages['es'] = [
 	'newpage' => 'Página nueva',
 	'newmessageslink' => 'mensajes nuevos',
 	'newmessagesdifflink' => 'diferencias',
-	'nstab-main' => 'Página',
+	'nstab-main' => 'Artículo',
 	'nstab-user' => 'Usuario',
 	'nstab-media' => 'Media',
 	'nstab-special' => 'Página especial',
@@ -30066,6 +30066,7 @@ $messages['zh'] = [
 *[[Special:Search/{{PAGENAME}}|搜寻]]这个词是否存在其他页面
 *<span class="plainlinks">[{{fullurl:{{#Special:Log}}|page={{FULLPAGENAMEE}}}} 查找相关日志]
 *或 [{{fullurl:{{FULLPAGENAME}}|action=edit}} 创建编辑这个页面]</span>。',
+	'nstab-main' => '正文',
 ];
 
 $messages['zh-classical'] = [
@@ -30378,7 +30379,7 @@ $messages['zh-tw'] = [
 	'november' => '十一月',
 	'november-gen' => '十一月',
 	'nov' => '11月',
-	'nstab-main' => '頁面',
+	'nstab-main' => '正文',
 	'nstab-user' => '使用者頁面',
 	'nstab-special' => '特殊頁面',
 	'nstab-project' => '計畫頁面',
@@ -30523,6 +30524,7 @@ $messages['zh-cn'] = [
 	'noarticletext' => '\'\'\'喔喔！ {{SITENAME}}还沒有以{{NAMESPACE}}为题的文章。\'\'\'
 * \'\'\'<span class="plainlinks">[{{fullurl:{{FULLPAGENAMEE}}|action=edit}} 鲇此]开始编辑这个页面</span>\'\'\'或\'\'\'<span class="plainlinks">[{{fullurl:Special:Search|search={{PAGENAMEE}}}} 鲇此]在此Wiki中搜寻此词汇</span>\'\'\'.
 * 如果以此为题的文章曾经存在，请查寻\'\'\'<span class="plainlinks">[{{fullurl:Special:Log/delete|page={{FULLPAGENAMEE}}}} 刪除记錄]</span>\'\'\'.',
+	'nstab-main' => '正文',
 ];
 
 $messages['zh-sg'] = [
