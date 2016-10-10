@@ -41,7 +41,7 @@ $messages['en'] = [
 	'summary' => 'Summary:',
 	'subject' => 'Subject/headline:',
 	'savearticle' => 'Publish',
-	'showpreview' => 'Show preview',
+	'showpreview' => 'Preview',
 	'showlivepreview' => 'Live preview',
 	'showdiff' => 'Show changes',
 	'summary-preview' => 'Summary preview:',
@@ -105,8 +105,8 @@ See the [[Special:BlockList|IP block list]] for the list of currently operationa
 	'searcheverything-enable' => 'Search in all namespaces',
 	'searchrelated' => 'related',
 	'searchall' => 'all',
-	'showingresults' => 'Showing below up to {{PLURAL:$1|\'\'\'1\'\'\' result|\'\'\'$1\'\'\' results}} starting with #\'\'\'$2\'\'\'.',
-	'showingresultsnum' => 'Showing below {{PLURAL:$3|\'\'\'1\'\'\' result|\'\'\'$3\'\'\' results}} starting with #\'\'\'$2\'\'\'.',
+	'showingresults' => '<div style="margin-top: -3px;" class="emptymwmsg mediawiki_showingresults"></div>',
+	'showingresultsnum' => '<div style="margin-top: -3px;" class="emptymwmsg mediawiki_showingresultsnum"></div>',
 	'showingresultsheader' => '{{PLURAL:$5|Result \'\'\'$1\'\'\' of \'\'\'$3\'\'\'|Results \'\'\'$1 - $2\'\'\' of \'\'\'$3\'\'\'}} for \'\'\'$4\'\'\'',
 	'search-nonefound' => 'There were no results matching the query.',
 	'search-external' => 'External search',
@@ -8168,7 +8168,7 @@ $messages['de'] = [
 	'summary' => 'Zusammenfassung:',
 	'subject' => 'Betreff:',
 	'savearticle' => 'Seite speichern',
-	'showpreview' => 'Vorschau zeigen',
+	'showpreview' => 'Vorschau',
 	'showlivepreview' => 'Sofortige Vorschau',
 	'showdiff' => 'Änderungen zeigen',
 	'summary-preview' => 'Vorschau der Zusammenfassungszeile:',
@@ -8245,7 +8245,7 @@ Siehe die [[Special:BlockList|Liste der gesperrten IP-Adressen und Benutzernamen
 	'savedprefs' => 'Deine Einstellungen wurden gespeichert.',
 	'servertime' => 'Aktuelle Zeit auf dem Server:',
 	'saveusergroups' => 'Gruppenzugehörigkeit ändern',
-	'show' => 'einblenden',
+	'show' => 'anzeigen',
 	'savefile' => 'Datei speichern',
 	'sourcefilename' => 'Quelldatei:',
 	'sourceurl' => 'Quell-URL:',
@@ -8456,6 +8456,7 @@ Das liegt wahrscheinlich an einem Link auf eine externe Seite.',
 	'send' => 'Senden',
 	'shared-News_box' => '<!-- &nbsp; -->',
 	'shared-problemreport' => 'Problem melden',
+	'showall' => 'Alle anzeigen',
 ];
 
 $messages['de-ch'] = [
@@ -10006,6 +10007,7 @@ Esto podría estar causado por un enlace a un sitio externo incluido en la lista
 	'shared-problemreport-url' => 'http://comunidad.wikia.com/wiki/Project:Reportar_un_problema',
 	'shared-problemreport' => 'Reportar un problema',
 	'shoutbox' => 'Chat',
+	'showall' => 'Mostrar todo',
 ];
 
 $messages['et'] = [
@@ -11080,6 +11082,7 @@ Alla on viimeisin lokitapahtuma:',
 * [http://www.wikia.com/wiki/Wikia:Terms_of_use Käyttöehdot]
 * [[Special:Contact|Ota yhteyttä]]
 * [http://www.wikia.com/wiki/Wikia:Advertising_on_Wikia Mainosta]',
+	'showall' => 'Näytä kaikki',
 ];
 
 $messages['fiu-vro'] = [
@@ -17972,6 +17975,7 @@ $messages['ja'] = [
 ** w:c:ja.community:Help:コンテンツ|ヘルプ
 *** w:c:ja.community:ウィキアユニバーシティ|ウィキアユニバーシティ
 *** w:c:ja.community:Blog:ヒントとコツ|ヒントとコツ',
+	'showall' => '全て表示する',
 ];
 
 $messages['jam'] = [
@@ -32215,7 +32219,7 @@ $messages['ru'] = [
 	'searchbutton' => 'Найти',
 	'searcharticle' => 'Перейти',
 	'specialpage' => 'Служебная страница',
-	'showtoc' => 'показать',
+	'showtoc' => 'развернуть',
 	'site-rss-feed' => '$1 — RSS-лента',
 	'site-atom-feed' => '$1 — Atom-лента',
 	'sort-descending' => 'Упорядочить по убыванию',
@@ -32515,6 +32519,7 @@ $messages['ru'] = [
 ***w:c:ru.community:Викия: Запросы на статус администратора/бюрократа‎|Запрос статуса администратора
 ***w:c:ru.community|Ещё...',
 	'shared-problemreport' => 'Сообщить о проблеме',
+	'showall' => 'Показать всё',
 ];
 
 $messages['rue'] = [
@@ -42975,6 +42980,7 @@ $messages['zh-tw'] = [
 	'share_it' => '分享:',
 	'see_more' => '更多內容...',
 	'shared-problemreport' => '回報問題',
+	'showdiff' => '顯示差異',
 ];
 
 $messages['zh-yue'] = [
@@ -43050,10 +43056,12 @@ $messages['zu'] = [
 $messages['zh'] = [
 	'see_more' => '更多內容...',
 	'shared-problemreport' => '回報問題',
+	'showdiff' => '显示差異',
 ];
 
 $messages['zh-cn'] = [
 	'see_more' => '更多內容...',
 	'shared-problemreport' => '回报问题',
+	'showdiff' => '显示差異',
 ];
 
