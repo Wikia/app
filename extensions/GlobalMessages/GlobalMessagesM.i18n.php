@@ -79,7 +79,7 @@ Input: contenttype/subtype, e.g. <tt>image/jpeg</tt>.',
 	'mostlinkedtemplates-summary' => '',
 	'mostcategories' => 'Pages with the most categories',
 	'mostcategories-summary' => '',
-	'mostimages' => 'Most linked-to files',
+	'mostimages' => 'Most linked-to photos',
 	'mostimages-summary' => '',
 	'mostrevisions' => 'Pages with the most revisions',
 	'mostrevisions-summary' => '',
@@ -3950,9 +3950,9 @@ $messages['bg'] = [
 	'mostlinked' => 'Най-препращани страници',
 	'mostlinkedcategories' => 'Най-препращани категории',
 	'mostlinkedtemplates' => 'Най-препращани шаблони',
-	'mostcategories' => 'Страници с най-много категории',
+	'mostcategories' => 'Списък на страниците с най-много категории',
 	'mostimages' => 'Най-препращани картинки',
-	'mostrevisions' => 'Страници с най-много версии',
+	'mostrevisions' => 'Списък на страниците с най-много редакции',
 	'move' => 'Преместване',
 	'movethispage' => 'Преместване на страницата',
 	'mailnologin' => 'Няма електронна поща',
@@ -8646,12 +8646,12 @@ Ten en cuenta que usar los enlaces de navegación borrará las selecciones de es
 	'mimesearch-summary' => 'Esta página permite el filtrado de ficheros por su tipo MIME.
 Entrada: contenttype/subtype, p. ej. <tt>image/jpeg</tt>.',
 	'mimetype' => 'Tipo MIME:',
-	'mostlinked' => 'Artículos más enlazados',
+	'mostlinked' => 'Páginas más enlazadas',
 	'mostlinkedcategories' => 'Categorías más enlazadas',
 	'mostlinkedtemplates' => 'Plantillas más enlazadas',
 	'mostcategories' => 'Páginas con más categorías',
 	'mostimages' => 'Imágenes más usadas',
-	'mostrevisions' => 'Artículos con más ediciones',
+	'mostrevisions' => 'Páginas con más ediciones',
 	'move' => 'Trasladar',
 	'movethispage' => 'Trasladar esta página',
 	'mailnologin' => 'Ninguna dirección de envio',
@@ -36797,6 +36797,10 @@ Aorre veld\'n worr\'n verborr\'n.
 
 $messages['zh-cn'] = [
 	'mytalk' => '我的讨论页',
+	'mostcategories' => '最多分类的文章',
+	'mostlinked' => '最多被链接页面',
+	'mostlinkedcategories' => '最多被使用的分类',
+	'mostrevisions' => '最多修订的文章',
 ];
 
 $messages['zh-hans'] = [
@@ -37169,6 +37173,10 @@ $messages['zh-hk'] = [
 	'mobile-hide' => '隱藏',
 	'mobile-show' => '顯示',
 	'most_visited' => '最多人訪問',
+	'mostcategories' => '最多分類的文章',
+	'mostlinked' => '最多被連接頁面',
+	'mostlinkedcategories' => '最多被使用的分類',
+	'mostrevisions' => '最多修訂的文章',
 ];
 
 $messages['zh-min-nan'] = [
@@ -37247,6 +37255,10 @@ $messages['zh-tw'] = [
 	'most_emailed' => '轉寄最多',
 	'mobile-hide' => '隱藏',
 	'mobile-show' => '顯示',
+	'mostcategories' => '最多分類的文章',
+	'mostlinked' => '最多被連接頁面',
+	'mostlinkedcategories' => '最多被使用的分類',
+	'mostrevisions' => '最多修訂的文章',
 ];
 
 $messages['zh-yue'] = [
@@ -37354,5 +37366,8 @@ $messages['zh'] = [
 *#category1#
 *#category2#',
 	'most_visited' => '最多人访问',
+	'mostlinked' => '最多被連結的页面',
+	'mostlinkedcategories' => '最多被使用的分类',
+	'mostrevisions' => '最多修訂的文章',
 ];
 
