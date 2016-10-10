@@ -11595,7 +11595,7 @@ Esta página especial te permite seguir los cambios más recientes en el wiki.
 	'restriction-type' => 'Permiso:',
 	'restriction-level' => 'Nivel de restricción:',
 	'restriction-edit' => 'Editar',
-	'restriction-move' => 'Pueden trasladar',
+	'restriction-move' => 'Pueden renombrar',
 	'restriction-create' => 'Crear',
 	'restriction-upload' => 'Subir',
 	'restriction-level-sysop' => 'completamente protegida',
