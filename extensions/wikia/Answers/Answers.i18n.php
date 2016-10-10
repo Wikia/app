@@ -2219,6 +2219,8 @@ $messages['pt'] = [
 	'rephrase' => 'Refazer a pergunta',
 	'research_this_on_wikipedia' => '<a href="$1">Pesquisar esta pergunta</a> na Wikipedia',
 	'see_all' => 'Ver todas',
+	'twitter_ask' => 'Faça esta pergunta no Twitter',
+	'twitter_hashtag' => 'WikiRespostas',
 ];
 
 $messages['pt-br'] = [
@@ -2264,6 +2266,8 @@ $messages['pt-br'] = [
 	'rephrase' => 'Refazer a pergunta',
 	'research_this_on_wikipedia' => '<a href="$1">Pesquisar esta pergunta</a> na Wikipedia',
 	'see_all' => 'Ver todas',
+	'twitter_ask' => 'Faça esta pergunta no Twitter',
+	'twitter_hashtag' => 'WikiRespostas',
 ];
 
 $messages['roa-tara'] = [
