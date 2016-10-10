@@ -257,7 +257,7 @@ If you think this is wrong, please contact us [[w:c:vstf:Report:Spam filter prob
 	'sqlite-no-fts' => '$1 without full-text search support',
 	'suppressedarticle' => 'suppressed "[[$1]]"',
 	'seemoredotdotdot' => 'See more...',
-	'specialpages-url' => 'Special:SpecialPages',
+	'specialpages-url' => 'Special:Specialpages',
 	'signup-password' => 'Password - ',
 	'signup-moreinfo' => 'Why is this required?',
 	'signup-mail' => 'E-mail - ',
@@ -8530,6 +8530,12 @@ Einige IP-Adressen werden dynamisch vergeben und können von verschiedenen Nutze
 
 \'\'\'Informationen zur IP-Adresse:\'\'\' [http://www.utrace.de/?query=$1 WHOIS] • [http://openrbl.org/query?$1 RDNS] • [http://www.robtex.com/rbls/$1.html RBLs] • [http://www.dnsstuff.com/tools/tracert.ch?ip=$1 Traceroute] • [http://www.as3344.net/is-tor/?args=$1 TOR check] &mdash; [[wikipedia:Regional Internet registry|RIR]]s: [http://ws.arin.net/whois/?queryinput=$1 America] &bull; [http://www.ripe.net/fcgi-bin/whois?searchtext=$1 Europe] · [http://www.afrinic.net/cgi-bin/whois?query=$1 Africa] · [http://www.apnic.net/apnic-bin/whois.pl?searchtext=$1 Asia-Pacific] · [http://www.lacnic.net/cgi-bin/lacnic/whois?lg=EN&query=$1 Latin America/Caribbean]
 |}',
+	'specialpages-summary' => '{|cellpadding="4px" style="width:100%; background-color:#f9f9f9; border-style:solid; border-color:#e9e9e9; border-width:4px; margin:auto; margin-top:4px; margin-bottom:4px; clear:both; position:relative; color:black;"
+|
+Diese Seite bietet einen Überblick aller [[w:c:hilfe:Hilfe:Spezialseiten|Spezialseiten]]. 
+
+Spezialseiten werden automatisch erstellt und sind nicht direkt zu bearbeiten. 
+|}',
 ];
 
 $messages['de-ch'] = [
@@ -9980,10 +9986,10 @@ Si crees que está mal, por favor contáctanos haciendo clic [[w:c:vstf:Report:S
 	'specialpages-group-changes' => 'Cambios recientes y registros',
 	'specialpages-group-media' => 'Páginas sobre archivos',
 	'specialpages-group-users' => 'Usuarios y permisos',
-	'specialpages-group-highuse' => 'Páginas sobre usos',
+	'specialpages-group-highuse' => 'Páginas de alto uso',
 	'specialpages-group-pages' => 'Listas de páginas',
 	'specialpages-group-pagetools' => 'Herramientas de páginas',
-	'specialpages-group-wiki' => 'Herramientas y datos del wiki',
+	'specialpages-group-wiki' => 'Herramientas y datos sobre el wiki',
 	'specialpages-group-redirects' => 'Búsquedas y redirecciones',
 	'specialpages-group-spam' => 'Herramientas anti-SPAM',
 	'sqlite-has-fts' => '$1 con soporte para búsqueda de texto completo',
@@ -10974,6 +10980,7 @@ $messages['fa'] = [
 	'signup-mail' => 'پست‌الکترونیکی -',
 	'signup-moreinfo' => 'اطلاعات بیشتر',
 	'signup-password' => 'گذرواژه -',
+	'specialpages-url' => 'ویژه:صفحه‌های_ویژه',
 ];
 
 $messages['ff'] = [
@@ -11762,8 +11769,7 @@ impossible de renommer une page sur elle-même.',
 	'specialpages' => 'Pages spéciales',
 	'specialpages-note' => '----
 * Pages spéciales normales.
-* <span class="mw-specialpagerestricted">Pages spéciales restreintes.</span>
-* <span class="mw-specialpagecached">Pages spéciales seulement en cache (pourraient être obsolètes).</span>',
+* <span class="mw-specialpagerestricted">Pages spéciales restreintes.</span>',
 	'specialpages-group-maintenance' => 'Rapports de maintenance',
 	'specialpages-group-other' => 'Autres pages spéciales',
 	'specialpages-group-login' => 'S’identifier / s’inscrire',
@@ -17681,6 +17687,7 @@ L\'ultimo elemento del registro è riportato di seguito per informazione:',
 	'signup-mail' => 'E-mail -',
 	'signup-moreinfo' => 'Ulteriori informazioni',
 	'signup-password' => 'Password -',
+	'specialpages-url' => 'Special:SpecialPages',
 ];
 
 $messages['iu'] = [
@@ -25262,7 +25269,7 @@ $messages['mk'] = [
 * Нормални специјални страници.
 * <span class="mw-specialpagerestricted">Ограничени специјални страници.</span>
 * <span class="mw-specialpagecached">Кеширани специјални страници (може да се застарени).</span>',
-	'specialpages-group-maintenance' => 'Извештаи за одржување',
+	'specialpages-group-maintenance' => 'Извештаи за одржување на Викија',
 	'specialpages-group-other' => 'Други специјални страници',
 	'specialpages-group-login' => 'Најава / регистрација',
 	'specialpages-group-changes' => 'Скорешни промени и дневници',
@@ -29897,9 +29904,9 @@ Najprawdopodobniej zostało to spowodowane przez link do zewnętrznej strony int
 	'size-gigabytes' => '$1&nbsp;GB',
 	'signature' => '[[{{ns:user}}:$1|$2]] ([[{{ns:user_talk}}:$1|dyskusja]])',
 	'specialpages' => 'Strony specjalne',
-	'specialpages-note' => '* Typowe strony specjalne.
-* <span class="mw-specialpagerestricted">Strony specjalne o ograniczonym dostępie.</span>
-* <span class="mw-specialpagecached">Buforowane strony specjalne (mogą być nieaktualne).</span>',
+	'specialpages-note' => '---- 
+* Normalne strony specjalne.
+* <span class="mw-specialpagerestricted">Zastrzeżone strony specjalne.</span>',
 	'specialpages-group-maintenance' => 'Raporty konserwacyjne',
 	'specialpages-group-other' => 'Inne strony specjalne',
 	'specialpages-group-login' => 'Logowanie i rejestracja',
