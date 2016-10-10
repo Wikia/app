@@ -1520,7 +1520,7 @@ $messages['it'] = [
 	'usermasthead-log' => 'Profilo Utente',
 	'usermasthead-log-message' => 'Informazioni sul profilo aggiunte',
 	'usermasthead-log-alt' => 'Log delle modifiche del Profilo Utente',
-	'useravatar-log' => 'Registro avatar utente',
+	'useravatar-log' => 'Log dell\'avatar dell\'utente',
 	'blog-avatar-removed-log' => 'Rimossi gli avatar di $1',
 	'blog-avatar-alt' => 'Registri di aggiunte o rimozioni di avatar utente',
 	'user-identity-remove-confirmation' => 'Sei sicuro di voler rimuovere l\'avatar?',
@@ -3149,6 +3149,7 @@ $messages['vi'] = [
 	'user-identity-box-banned-from-chat' => 'Bị cấm tán gẫu',
 	'user-identity-box-group-council' => 'Hội đồng viên',
 	'user-identity-box-group-voldev' => 'Phát triển viên tình nguyện',
+	'useravatar-log' => 'Nhật trình đổi hình đại diện',
 ];
 
 $messages['zh-hans'] = [
@@ -3582,6 +3583,7 @@ $messages['ko'] = [
 	'usermasthead-log-alt' => '사용자 문서 머릿글 편집에 관한 기록입니다.',
 	'usermasthead-log-message' => '프로필 정보 추가/수정',
 	'usermasthead-log' => '사용자 문서 머릿글 기록',
+	'useravatar-log' => '사용자 아바타 기록',
 ];
 
 $messages['no'] = [
