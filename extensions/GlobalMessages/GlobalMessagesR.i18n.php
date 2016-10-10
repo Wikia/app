@@ -24095,7 +24095,7 @@ $1',
 	'reuploaddesc' => '올리기를 취소하고 올리기 양식으로 돌아가기',
 	'randompage' => '임의 문서 보기',
 	'randompage-nopages' => '{{PLURAL:$2|다음}} 이름공간에는 문서가 없습니다: $1',
-	'randomredirect' => '임의 넘겨주기 문서로',
+	'randomredirect' => '임의 넘겨주기 문서 보기',
 	'randomredirect-nopages' => '"$1" 이름공간에서 해당하는 넘겨주기 문서가 없습니다.',
 	'removewatch' => '주시문서 목록에서 제거',
 	'removedwatchtext' => '"[[:$1]]" 문서를 [[Special:Watchlist|주시문서 목록]]에서 뺐습니다.',
@@ -49817,6 +49817,7 @@ $messages['zh-hk'] = [
 *: \'\'地址、電話號碼、身份證號碼等。\'\'',
 	'recentchanges-label-bot' => '這次編輯是由機械人進行',
 	'rcshowhidebots' => '$1機械人的編輯',
+	'randomredirect' => '隨機重定向頁',
 ];
 
 $messages['zh-min-nan'] = [
@@ -50093,7 +50094,7 @@ $1',
 	'recentchangeslinked-to' => '顯示連到所給出的頁面',
 	'randompage' => '隨機頁面',
 	'randompage-url' => 'Special:Random',
-	'randomredirect' => '隨機重定向頁面',
+	'randomredirect' => '隨機重定向頁',
 	'rfcurl' => '//tools.ietf.org/html/rfc$1',
 	'removewatch' => '停止監視',
 	'revertpage-nouser' => '恢復由（移除了的用戶名）的編輯到[[User:$1|$1]]的最後一個修訂版本',
@@ -50267,5 +50268,9 @@ $messages['zu'] = [
 	'restriction-edit' => 'Ukuhlela',
 	'restriction-move' => 'Sunduza',
 	'recreate' => 'Dala kabusha',
+];
+
+$messages['zh-cn'] = [
+	'randomredirect' => '隨機重定向頁',
 ];
 
