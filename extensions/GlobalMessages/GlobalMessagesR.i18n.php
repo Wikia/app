@@ -212,13 +212,7 @@ Please check the logs.',
 	'recentchanges' => 'Recent changes',
 	'recentchanges-url' => 'Special:RecentChanges',
 	'recentchanges-legend' => 'Recent changes options',
-	'recentchangestext' => '<div style="border:solid 3px #e9e9e9; margin-bottom:0.3em;">
-<div style="padding-left:0.5em; padding-right:0.5em;">
-This special page lets you track the most recent changes to the wiki.
-
-See also: [[Special:Newpages|New pages]] – [[Special:Newimages|New files]] – [[Special:Log|Logs]] – [[Special:Activeusers|Active users]] – [[Special:Listusers/sysop|Admins]]
-</div>
-</div>',
+	'recentchangestext' => '<div id="wikia-mediawiki-recentchangestext" style="border:2px solid #e9e9e9; margin-bottom:0.3em; padding:0.2em 0.5em;"><span style="float:left;">[[Special:NewPages|New pages]] – [[Special:NewImages|New files]] – [[Special:Log|Logs]] – [[Special:Insights|Insights]]</span><span style="float:right;">[[Help:Recent changes]]</span><div style="clear:both;"></div></div>',
 	'recentchanges-feed-description' => 'Track the most recent changes to the wiki in this feed.',
 	'recentchanges-label-newpage' => 'This edit created a new page',
 	'recentchanges-label-minor' => 'This is a minor edit',
@@ -9637,12 +9631,25 @@ Bitte prüfe die Logbücher.',
 	'rightsnone' => '(–)',
 	'recentchanges' => 'Letzte Änderungen',
 	'recentchanges-legend' => 'Anzeigeoptionen',
-	'recentchangestext' => '<div style=\'border:solid 3px #e9e9e9; margin-bottom:0.3em;\'>
-<div style=\'padding-left:0.5em; padding-right:0.5em;\'>
-Auf dieser Spezialseite kannst Du die \'\'\'letzten Änderungen\'\'\' in diesem Wiki nachvollziehen.
+	'recentchangestext' => '<div id="page-recentchanges-mediawiki-recentchangestext" style="border: solid 3px #e9e9e9; margin-bottom: 0.3em; padding:0.5em;">
+Auf dieser [[Hilfe:Spezialseiten|Spezialseite]] kannst du die [[Hilfe:Letzte Änderungen|letzten Änderungen]] im Wikia nachvollziehen.
 
-\'\'\'Organisatorisches:\'\'\' [[Spezial:Newpages|Neue Seiten]] – [[Spezial:Newimages|Neue Dateien]] – [[Spezial:Log|Logbücher]] – [[Spezial:Activeusers|Aktive Benutzer]] – [[Spezial:Listusers/sysop|Admins]]
-</div>
+{| class="plainlinks" style="background:transparent; margin-left:0.5em; margin-bottom:0.5em; text-align:left;"
+|-valign="top"
+|align="right"|\'\'\'[[Special:Log|Logbücher]]:\'\'\'
+|[[Special:Newpages|{{int:Newpages}}]] - [[Special:Log/delete|Löschungen]] - [[Special:Log/move|Verschiebungen]] - [[Special:Log/upload|Uploads]] - [[Special:Log/block|Sperrungen]] - [[Special:Log/rights|Rechteänderungen]]
+|-valign="top"
+|align="right"|\'\'\'[[Special:Specialpages|Spezialseiten]]:\'\'\'
+|[[Special:Wantedpages|{{int:wantedpages}}]] - [[Special:Longpages|{{int:longpages}}]] - [[Special:Uncategorizedimages|{{int:uncategorizedimages}}]] - [[Special:Uncategorizedpages|{{int:uncategorizedpages}}]] - [[Special:Insights|Insights]]
+|-valign="top"
+|align="right"|\'\'\'[[Special:Listusers|Benutzerverzeichnis]]:\'\'\'
+|[[Special:Listusers/sysop|{{int:Group-sysop}}]] - [[Special:Listusers/helper|{{int:Group-helper}}]] - [[Special:Listusers/vstf|{{int:Group-vstf}}]] - [[Special:Listusers/staff|{{int:Group-staff}}]]
+|-valign="top"
+|align="right"|\'\'\'[[Hilfe:Übersicht|Hilfeseiten]]:\'\'\'
+|[[Hilfe:Index|Index]] - [[Hilfe:FAQ|Häufig gestellte Fragen (FAQ)]] - [[Hilfe:Tutorial 1|Tutorial]]
+|}
+<div style="font-size:0.9em; text-align:center; margin:2px auto 0px; border-top:1px solid lightgrey;">
+[[w:c:de.community|Community Deutschland]]: [[w:c:de.community:Special:Chat|Community-Chat]] - [[w:c:de.community:Admin-Mentor-Programm|Admin-Mentor-Programm]]</div>
 </div>',
 	'recentchanges-feed-description' => 'Verfolge mit diesem Feed die letzten Änderungen in {{SITENAME}}.',
 	'recentchanges-label-newpage' => 'Neue Seite',
@@ -11546,7 +11553,27 @@ No tiene acceso a él.',
 	'rightsnone' => '(ninguno)',
 	'recentchanges' => 'Cambios recientes',
 	'recentchanges-legend' => 'Opciones sobre cambios recientes',
-	'recentchangestext' => 'Realiza un seguimiento de los cambios más recientes en el wiki en esta página.',
+	'recentchangestext' => '<div style="border:solid 3px #e9e9e9; margin-bottom:0.3em; padding-left:0.5em; padding-right:0.5em;">
+<span style="float:right;font-size:smaller;">\'\'[[MediaWiki:Recentchangestext|Ver esta plantilla]]\'\'</span>
+Esta página especial te permite seguir los cambios más recientes en el wiki.
+
+{| class="plainlinks" style="background:transparent; margin-left:0.5em; margin-bottom:0.5em; text-align:left;" cellpadding="0" cellspacing="0"
+|-valign="top"
+|align="right"|\'\'\'Registros&nbsp;:&nbsp;\'\'\'
+|[[Special:Newpages|{{int:Newpages}}]] - [[Special:Newimages|Archivos nuevos]] - [[Special:Log/delete|Borrados]] - [[Special:Log/move|Traslados]] - [[Special:Log/upload|Subidas]] - [[Special:Log/block|Bloqueos]] - [[Special:Log|más registros...]]
+|-valign="top"
+|align="right"|\'\'\'Páginas especiales&nbsp;:&nbsp;\'\'\'
+|[[Special:Wantedpages|{{int:wantedpages}}]] - [[Special:Longpages|{{int:longpages}}]] - [[Special:Uncategorizedimages|{{int:uncategorizedimages}}]] - [[Special:Uncategorizedpages|{{int:uncategorizedpages}}]] - [[Special:Specialpages|más páginas especiales...]]
+|-valign="top"
+|align="right"|\'\'\'Buscar usuarios&nbsp;:&nbsp;\'\'\'
+|[[Special:Listusers/sysop|{{int:Group-sysop}}]] - [[Special:Listusers/helper|{{int:Group-helper}}]] - [[Special:Listusers/vstf|{{int:Group-vstf}}]] - [[Special:Listusers/staff|{{int:Group-staff}}]] - [[Special:Listusers|más usuarios...]]
+|-valign="top"
+|align="right"|\'\'\'Ayuda general&nbsp;:&nbsp;\'\'\'
+|[[Ayuda:Comenzando|Comenzando]] - [[Ayuda:Tutorial 1|Tutorial]] - [[Ayuda:Índice|Índice general]]
+|}
+<div style="font-size:0.9em; text-align:center; margin:2px auto 0px; border-top:1px dotted lightgrey;">
+[[w:c:es.c:special:chat|Chat de Wikia]]</div>
+</div>',
 	'recentchanges-feed-description' => 'Realiza un seguimiento de los cambios más recientes en el wiki en este canal.',
 	'recentchanges-label-newpage' => 'Esta edición creó una nueva página',
 	'recentchanges-label-minor' => 'Esta es una edición menor',
@@ -11626,7 +11653,7 @@ No tiene acceso a él.',
 	'right-mcachepurge' => 'Control memcached behaviour via request parameters',
 	'right-emailconfirmed' => 'User has been email confirmed',
 	'right-runjob' => 'Run job from the job queue via API',
-	'recentchanges-url' => 'Special:RecentChanges',
+	'recentchanges-url' => 'Especial:CambiosRecientes',
 	'rc-change-size' => '$1',
 	'rc-old-title' => 'originally created as "$1"',
 	'randompage-url' => 'Special:Random',
@@ -12581,7 +12608,7 @@ $1',
 	'rightsnone' => '(هیچ)',
 	'recentchanges' => 'تغییرات اخیر',
 	'recentchanges-legend' => 'گزینه‌های تغییرات اخیر',
-	'recentchangestext' => 'آخرین تغییرات ویکی را در این صفحه پی‌گیری کنید.',
+	'recentchangestext' => '<div id="wikia-mediawiki-recentchangestext" style="border:2px solid #e9e9e9; margin-bottom:0.3em; padding:0.2em 0.5em;"><span style="float:right;">[[ویژه:صفحه‌های تازه|صفحه‌های تازه]] – [[ویژه:تصاویر جدید|تصاویر جدید]] – [[ویژه:سیاهه‌ها|سیاهه‌ها]]</span><span style="float:left;">[[راهنما:Recent changes|راهنما:تغییرات اخیر]]</span><div style="clear:both;"></div></div>',
 	'recentchanges-feed-description' => 'آخرین تغییرات ویکی را در این خوراک پی‌گیری کنید.',
 	'recentchanges-label-newpage' => 'این ویرایش صفحه‌ای جدید ایجاد کرد',
 	'recentchanges-label-minor' => 'این ویرایش جزئی‌است',
@@ -12652,6 +12679,7 @@ $1',
 	'revdelete-unrestricted' => 'محدودیت مدیران را لغو کرد',
 	'randompage-url' => 'ویژه:صفحه_تصادفی',
 	'rcshowhideenhanced' => '$1 تغییرات اخیر گسترش‌یافته',
+	'recentchanges-url' => 'ویژه:تغییرات_اخیر',
 ];
 
 $messages['ff'] = [
@@ -12852,7 +12880,7 @@ Sinulla ei ole oikeutta siihen.',
 	'rightsnone' => '(ei oikeuksia)',
 	'recentchanges' => 'Tuoreet muutokset',
 	'recentchanges-legend' => 'Tuoreiden muutosten asetukset',
-	'recentchangestext' => 'Tällä sivulla voi seurata tuoreita {{GRAMMAR:illative|{{SITENAME}}}} tehtyjä muutoksia.',
+	'recentchangestext' => '<div id="wikia-mediawiki-recentchangestext" style="border:2px solid #e9e9e9; margin-bottom:0.3em; padding:0.2em 0.5em;"><span style="float:left;">[[Special:NewPages|Uudet sivut]] – [[Special:NewImages|Uudet tiedostot]] – [[Special:Log|Lokit]]</span><span style="float:right;">[[:w:c:fi:Ohje:Tuoreet muutokset|Ohje:Tuoreet muutokset]]</span><div style="clear:both;"></div></div>',
 	'recentchanges-feed-description' => 'Tällä sivulla voi seurata tuoreita {{GRAMMAR:illative|{{SITENAME}}}} tehtyjä muutoksia.',
 	'recentchanges-label-newpage' => 'Tämä muutos loi uuden sivun',
 	'recentchanges-label-minor' => 'Tämä on pieni muutos',
@@ -13569,7 +13597,7 @@ Vérifiez les journaux.',
 	'rightsnone' => '(aucun)',
 	'recentchanges' => 'Modifications récentes',
 	'recentchanges-legend' => 'Options des modifications récentes',
-	'recentchangestext' => 'Piste les changements les plus récents du wiki sur cette page.',
+	'recentchangestext' => '<div id="wikia-mediawiki-recentchangestext" style="border:2px solid #e9e9e9; margin-bottom:0.3em; padding:0.2em 0.5em;"><span style="float:left;">[[Special:NewPages|Nouvelles pages]] – [[Special:NewImages|Nouveaux fichiers]] – [[Special:Log|Journaux]] – [[Special:Statistics|Statistiques]]</span><span style="float:right;">[[w:c:communaute:Aide:Modifications récentes|Aide:Modifications récentes]]</span><div style="clear:both;"></div></div>',
 	'recentchanges-feed-description' => 'Suivre les dernières modifications de ce wiki dans un flux.',
 	'recentchanges-label-newpage' => 'Cette modification a créé une nouvelle page',
 	'recentchanges-label-minor' => 'Cette modification est mineure',
@@ -13775,6 +13803,23 @@ Des autres administrateurs sus ce wiki ont la permission de voir et de rétablir
 	'recentchanges' => 'Changements récent',
 	'rcshowhidepatr' => '$1 les modifications patrouillés',
 	'randompage' => 'Page au hasard',
+	'recentchangestext' => '<span style="float:right;"><small>\'\'[[MediaWiki:Recentchangestext|Regarder ce modèle]]\'\'</small></span>
+Trouvez les changements les plus récents du wiki sur cette page.
+
+{| class="plainlinks" style="background: transparent; margin-left:0.5em; margin-bottom:0.5em;" cellpadding="0" cellspacing="0"
+|-valign="top"
+|align="right"|\'\'\'Opérations&nbsp;:&nbsp;\'\'\'
+|align="left" |[[Special:Newpages|Nouvelles pages]] - [[Special:Newimages|Nouveaux fichiers]] - [[Special:Log/delete|Suppressions]] - [[Special:Log/move|Déplacements]] - [[Special:Log/upload|Importations]] - [[Special:Log/block|Blocages]] - [[Special:Log|plus des logs...]]
+|-valign="top"
+|align="right"|\'\'\'Pages speciales&nbsp;:&nbsp;\'\'\'
+|align="left" |[[Special:Wantedpages|Pages les plus demandées]] - [[Special:Longpages|Pages longues]] - [[Special:Uncategorizedimages|Images sans catégorie]] - [[Special:Uncategorizedpages|Pages sans catégorie]] - [[Special:Specialpages|toutes les pages spéciales...]]
+|-valign="top"
+|align="right"|\'\'\'Trouver des utilisateurs&nbsp;:&nbsp;\'\'\'
+|align="left" |[[Special:Listusers/sysop|Administrateurs]] - [[Special:Listusers/helper|Helpers]] - [[Special:Listusers/staff|Wikia Staff]] - [[Special:Listusers|Plus des utilisateurs...]]
+|-valign="top"
+|align="right"|\'\'\'Autres&nbsp;:&nbsp;\'\'\'
+|align="left" |[[Special:Statistics|Statistiques]] - [http://irc.wikia.com/ Canaux d\'IRC]
+|}',
 ];
 
 $messages['frp'] = [
@@ -20854,7 +20899,7 @@ $1',
 	'rightsnone' => '（なし）',
 	'recentchanges' => '最近の更新',
 	'recentchanges-legend' => '最近の更新のオプション',
-	'recentchangestext' => 'このウィキにおける最近の更新はこのページから確認できます。',
+	'recentchangestext' => '<div id="wikia-mediawiki-recentchangestext" style="border:2px solid #e9e9e9; margin-bottom:0.3em; padding:0.2em 0.5em;"><span style="float:left;">[[Special:NewPages|新しいページ]] – [[Special:NewImages|新着ファイル]] – [[Special:Log|ログ]] – [[Special:Insights|インサイト]]</span><span style="float:right;">[[ヘルプ:最近の更新]]</span><div style="clear:both;"></div></div>',
 	'recentchanges-feed-description' => 'このフィードでそのウィキへの最近の更新を追跡。',
 	'recentchanges-label-newpage' => 'この編集で新しいページが作成されました',
 	'recentchanges-label-minor' => 'これは細部の編集です',
@@ -32327,7 +32372,7 @@ Controleer de logboeken.',
 	'recentchangeslinked-title' => 'Wijzigingen verwant aan "$1"',
 	'recentchangeslinked-noresult' => 'Er zijn in de opgegeven periode geen bewerkingen geweest op de pagina\'s waarheen vanaf hier verwezen wordt.',
 	'recentchangeslinked-summary' => 'Deze speciale pagina geeft de laatste bewerkingen weer op pagina\'s waarheen verwezen wordt vanaf een aangegeven pagina of vanuit pagina\'s in een aangegeven pagina een categorie.
-Pagina\'s die op [[Special:Watchlist|uw volglijst]] staan worden \'\'\'vet\'\'\' weergegeven.',
+Pagina\'s die op [[Special:Watchlist|je volglijst]] staan worden \'\'\'vet\'\'\' weergegeven.',
 	'recentchangeslinked-page' => 'Paginanaam:',
 	'recentchangeslinked-to' => 'Wijzigingen aan pagina\'s met verwijzingen naar deze pagina bekijken',
 	'reuploaddesc' => 'Upload annuleren en terugkeren naar het uploadformulier',
@@ -34430,7 +34475,34 @@ Proszę sprawdzić rejestr operacji.',
 	'rightsnone' => 'brak',
 	'recentchanges' => 'Ostatnie zmiany',
 	'recentchanges-legend' => 'Opcje ostatnich zmian',
-	'recentchangestext' => 'Ta strona przedstawia historię ostatnich zmian w tej wiki.',
+	'recentchangestext' => '<div style="border: 3px solid rgba(127, 127, 127, .25);padding:.2em .5em;"><span style="float:right;font-size:smaller;">\'\'[[MediaWiki:Recentchangestext|zobacz tę stronę]]\'\'</span>
+Ta strona przedstawia historię ostatnich zmian na tej wiki.
+{| style="width:100%;"
+! style="width:1px;text-align:right;white-space:nowrap;vertical-align:text-top;" | Strony :
+| [[Special:NewPages|Nowe]] <b>&middot;</b> [[Special:WantedPages|Potrzebne]] <b>&middot;</b> [[Special:LonelyPages|Porzucone]] <b>&middot;</b> [[Special:UncategorizedPages|Nieskategoryzowane]] <b>&middot;</b> [[Special:DeadendPages|Bez linków]] <b>&middot;</b> <small>[[Special:AllPages|wszystkie...]]</small>
+|-
+! style="text-align:right;white-space:nowrap;vertical-align:text-top;" | Szablony :
+| [[Special:WantedTemplates|Potrzebne]] <b>&middot;</b> [[Special:UnusedTemplates|Nieużywane]] <b>&middot;</b> [[Special:UncategorizedTemplates|Nieskategoryzowane]] <b>&middot;</b> <small>[{{fullurl:Special:AllPages|namespace=10}} wszystkie...]</small>
+|-
+! style="text-align:right;white-space:nowrap;vertical-align:text-top;" | Kategorie :
+| [[Special:CategoryTree|Drzewo kategorii]] <b>&middot;</b> [[Special:WantedCategories|Potrzebne]] <b>&middot;</b> [[Special:UnusedCategories|Nieużywane]] <b>&middot;</b> [[Special:UncategorizedCategories|Nieskategoryzowane]] <b>&middot;</b> <small>[[Special:Categories|wszystkie...]]</small>
+|-
+! style="text-align:right;white-space:nowrap;vertical-align:text-top;" | Pliki :
+| [[Special:NewFiles|Nowe]] <b>&middot;</b> [[Special:WantedFiles|Potrzebne]] <b>&middot;</b> [[Special:UnusedFiles|Nieużywane]] <b>&middot;</b> [[Special:UncategorizedFiles|Nieskategoryzowane]] <b>&middot;</b> <small>[[Special:ListFiles|wszystkie...]]</small>
+|-
+! style="text-align:right;white-space:nowrap;vertical-align:text-top;" | Rejestry :
+| [[Special:Log/block|Blokady]] <b>&middot;</b> [[Special:Log/move|Przeniesione]] <b>&middot;</b> [[Special:Log/upload|Przesłane]] <b>&middot;</b> [[Special:Log/delete|Usunięte]] <b>&middot;</b> [[Special:Log/protect|Zabezpieczone]] <b>&middot;</b> <small>[[Special:Log|więcej...]]</small>
+|-
+! style="text-align:right;white-space:nowrap;vertical-align:text-top;" | Strony specjalne :
+| [[Special:Insights|Podpowiedzi]] <b>&middot;</b> [[Special:ListRedirects|Przekierowania]] <small>([[Special:DoubleRedirects|podwójne]], [[Special:BrokenRedirects|zerwane]])</small> <b>&middot;</b> [[Special:AllMessages|Komunikaty]] <b>&middot;</b> [[Special:Statistics|Statystyki]] <b>&middot;</b> <small>[[Special:SpecialPages|wszystkie...]]</small>
+|-
+! style="text-align:right;white-space:nowrap;vertical-align:text-top;" | Użytkownicy :
+| [[Special:ListUsers/sysop|{{int:group-sysop}}]] <b>&middot;</b> [[Special:ListUsers/bureaucrat|{{int:group-bureaucrat}}]] <b>&middot;</b> [[Special:ListUsers/helper|{{int:group-helper}}]] <b>&middot;</b> [[Special:ListUsers/vstf|{{int:group-vstf}}]] <b>&middot;</b> [[Special:ListUsers/staff|{{int:group-staff}}]] <b>&middot;</b> <small>[[Special:ListUsers|wszyscy...]]</small>
+|-
+! style="text-align:right;white-space:nowrap;vertical-align:text-top;" | Pomoc :
+| [[w:c:spolecznosc:Pomoc:Podstawy|Podstawy]] <b>&middot;</b> [[w:c:spolecznosc:Pomoc:Edycja|Edycja]] <b>&middot;</b> [[w:c:spolecznosc:Pomoc:Administracja|Administracja]] <b>&middot;</b> [[w:c:spolecznosc:Pomoc:Zaawansowane narzędzia|Zaawansowane narzędzia]] <b>&middot;</b> <small>[[w:c:spolecznosc:Pomoc:Zawartość|więcej...]]</small>
+|}
+<div style="text-align:center;margin:.2em 2px 0px;padding-top:.2em;border-top:1px dotted rgba(127, 127, 127, .25);"><small>Szukasz pomocy? Odwiedź [[w:c:spolecznosc|Centrum Społeczności]]!</small></div></div>',
 	'recentchanges-feed-description' => 'Obserwuj najświeższe zmiany w tej wiki.',
 	'recentchanges-label-newpage' => 'W tej edycji utworzono nową stronę',
 	'recentchanges-label-minor' => 'To jest drobna zmiana',
@@ -37573,7 +37645,13 @@ $1',
 	'rightsnone' => '(нет)',
 	'recentchanges' => 'Свежие правки',
 	'recentchanges-legend' => 'Настройки свежих правок',
-	'recentchangestext' => 'Ниже в хронологическом порядке перечислены последние изменения на страницах {{grammar:genitive|{{SITENAME}}}}.',
+	'recentchangestext' => '{|cellpadding="4px" style="width:100%; margin:auto; margin-top:4px; margin-bottom:4px; clear:both; position:relative;"
+|
+Ниже в хронологическом порядке идёт список \'\'\'свежих правок\'\'\' на этой вики.
+
+\'\'\'Статьи:\'\'\' [[Special:Newpages|Новые страницы]] • [[Special:NewFiles|Новые изображения]] • [[Special:Log|Журналы]]<br />
+\'\'\'Участники:\'\'\' [[Special:Listusers|Участники]] • [[Special:Listusers/sysop|Администраторы]]
+|}',
 	'recentchanges-feed-description' => 'Отслеживать последние изменения в вики в этом потоке.',
 	'recentchanges-label-newpage' => 'Этой правкой была создана новая страница.',
 	'recentchanges-label-minor' => 'Это незначительное изменение',
@@ -42598,7 +42676,7 @@ Vänligen kontrollera loggarna.',
 	'rightsnone' => '(inga)',
 	'recentchanges' => 'Senaste ändringarna',
 	'recentchanges-legend' => 'Alternativ för senaste ändringarna',
-	'recentchangestext' => 'Följ de senaste ändringarna i wikin på denna sida.',
+	'recentchangestext' => '<div id="wikia-mediawiki-recentchangestext" style="border:2px solid #e9e9e9; margin-bottom:0.3em; padding:0.2em 0.5em;"><span style="float:left;">[[Special:NewPages|Nya sidor]] – [[Special:NewImages|Nya filer]] – [[Special:Log|Loggar]]</span><span style="float:right;">[[Help:Recent changes|Hjälp:Senaste ändringar]]</span><div style="clear:both;"></div></div>',
 	'recentchanges-feed-description' => 'Följ de senaste ändringarna i wikin genom den här matningen.',
 	'recentchanges-label-newpage' => 'Denna redigering skapade en ny sida',
 	'recentchanges-label-minor' => 'Detta är en mindre ändring',
@@ -42675,6 +42753,7 @@ Sidor på [[Special:Watchlist|din bevakningslista]] är markerade med \'\'\'fets
 	'review_reason_5' => 'Anmälningsanledning 5',
 	'registerintro-title' => 'När du skapar ett konto på Wikia blir du en del av gemenskapet!',
 	'rcshowhideenhanced' => '$1 avancerad senaste ändringar',
+	'recentchanges-url' => 'Special:SenasteÄndringar',
 ];
 
 $messages['sw'] = [
@@ -49408,7 +49487,17 @@ $1',
 	'rightsnone' => '（无）',
 	'recentchanges' => '最近更改',
 	'recentchanges-legend' => '最近更改选项',
-	'recentchangestext' => '本页面跟踪本wiki的最近更改。',
+	'recentchangestext' => '<span style="float:right;"><small>\'\'[[MediaWiki:Recentchangestext|View this template]]\'\'</small></span>
+此页为本站最近更新的內容：
+
+{| class="plainlinks" style="background: transparent; margin-left:0.5em; margin-bottom:0.5em;" cellpadding="0" cellspacing="0"
+|-valign="top"
+|align="right"|\'\'\'记錄&nbsp;:&nbsp;\'\'\'
+|align="left" |[[Special:Newpages|最新文章]] - [[Special:Newimages|最新档案]] - [[Special:Log/delete|刪除]] - [[Special:Log/move|移动页面]] - [[Special:Log/upload|上载记錄]] - [[Special:Log/block|封锁]] - [[Special:Log|更多记錄...]]
+|-valign="top"
+|align="right"|\'\'\'特殊页面&nbsp;:&nbsp;\'\'\'
+|align="left" |[[Special:Wantedpages|请求页面]] - [[Special:Longpages|长页面]] - [[Special:Uncategorizedimages|未分类图片]] - [[Special:Uncategorizedpages|未分类文章]] - [[Special:Specialpages|更多特殊页面...]]
+|}',
 	'recentchanges-feed-description' => '跟踪订阅本wiki的最近更改。',
 	'recentchanges-label-newpage' => '这次编辑建立了一个新页面',
 	'recentchanges-label-minor' => '这是一个小编辑',
@@ -49742,7 +49831,17 @@ $1',
 	'rightsnone' => '無',
 	'recentchanges' => '近期變動',
 	'recentchanges-legend' => '最近更改選項',
-	'recentchangestext' => '跟蹤這個wiki上的最新更改。',
+	'recentchangestext' => '<span style="float:right;"><small>\'\'[[MediaWiki:Recentchangestext|View this template]]\'\'</small></span>
+此頁為本站最近更新的內容：
+
+{| class="plainlinks" style="background: transparent; margin-left:0.5em; margin-bottom:0.5em;" cellpadding="0" cellspacing="0"
+|-valign="top"
+|align="right"|\'\'\'記錄&nbsp;:&nbsp;\'\'\'
+|align="left" |[[Special:Newpages|最新文章]] - [[Special:Newimages|最新檔案]] - [[Special:Log/delete|刪除]] - [[Special:Log/move|移動頁面]] - [[Special:Log/upload|上傳記錄]] - [[Special:Log/block|封鎖]] - [[Special:Log|更多記錄...]]
+|-valign="top"
+|align="right"|\'\'\'特殊頁面&nbsp;:&nbsp;\'\'\'
+|align="left" |[[Special:Wantedpages|請求頁面]] - [[Special:Longpages|長頁面]] - [[Special:Uncategorizedimages|未分類圖片]] - [[Special:Uncategorizedpages|未分類文章]] - [[Special:Specialpages|更多特殊頁面...]]
+|}',
 	'recentchanges-feed-description' => '追蹤此訂閱在 wiki 上的最近更改。',
 	'recentchanges-label-newpage' => '這次編輯建立了一個新頁面',
 	'recentchanges-label-minor' => '這是一個小編輯',
@@ -49827,6 +49926,17 @@ $messages['zh-hk'] = [
 	'randomredirect' => '隨機重定向頁',
 	'rcnote' => '以下是在$3，最近\'\'\'$2\'\'\'天內的\'\'\'$1\'\'\'次最近更改記錄:',
 	'rcshowhideenhanced' => '$1 折頁式顯示模式',
+	'recentchangestext' => '<span style="float:right;"><small>\'\'[[MediaWiki:Recentchangestext|View this template]]\'\'</small></span>
+此頁為本站最近更新的內容：
+
+{| class="plainlinks" style="background: transparent; margin-left:0.5em; margin-bottom:0.5em;" cellpadding="0" cellspacing="0"
+|-valign="top"
+|align="right"|\'\'\'記錄&nbsp;:&nbsp;\'\'\'
+|align="left" |[[Special:Newpages|最新文章]] - [[Special:Newimages|最新檔案]] - [[Special:Log/delete|刪除]] - [[Special:Log/move|移動頁面]] - [[Special:Log/upload|上傳記錄]] - [[Special:Log/block|封鎖]] - [[Special:Log|更多記錄...]]
+|-valign="top"
+|align="right"|\'\'\'特殊頁面&nbsp;:&nbsp;\'\'\'
+|align="left" |[[Special:Wantedpages|請求頁面]] - [[Special:Longpages|長頁面]] - [[Special:Uncategorizedimages|未分類圖片]] - [[Special:Uncategorizedpages|未分類文章]] - [[Special:Specialpages|更多特殊頁面...]]
+|}',
 ];
 
 $messages['zh-min-nan'] = [
@@ -50082,7 +50192,17 @@ $1',
 	'rightsnone' => '無',
 	'recentchanges-url' => 'Special:RecentChanges',
 	'recentchanges-legend' => '最近更改選項',
-	'recentchangestext' => '跟蹤這個wiki上的最新更改。',
+	'recentchangestext' => '<span style="float:right;"><small>\'\'[[MediaWiki:Recentchangestext|View this template]]\'\'</small></span>
+此頁為本站最近更新的內容：
+
+{| class="plainlinks" style="background: transparent; margin-left:0.5em; margin-bottom:0.5em;" cellpadding="0" cellspacing="0"
+|-valign="top"
+|align="right"|\'\'\'記錄&nbsp;:&nbsp;\'\'\'
+|align="left" |[[Special:Newpages|最新文章]] - [[Special:Newimages|最新檔案]] - [[Special:Log/delete|刪除]] - [[Special:Log/move|移動頁面]] - [[Special:Log/upload|上傳]] - [[Special:Log/block|封鎖]] - [[Special:Log|更多記錄...]]
+|-valign="top"
+|align="right"|\'\'\'特殊頁面&nbsp;:&nbsp;\'\'\'
+|align="left" |[[Special:Wantedpages|請求文章]] - [[Special:Longpages|長文]] - [[Special:Uncategorizedimages|未分類圖片]] - [[Special:Uncategorizedpages|未分類文章]] - [[Special:Specialpages|更多特殊頁面...]]
+|}',
 	'recentchanges-label-newpage' => '這次編輯建立了一個新頁面',
 	'recentchanges-label-minor' => '這是一個小編輯',
 	'recentchanges-label-bot' => '這次編輯是由機器人進行',
@@ -50286,6 +50406,17 @@ $messages['zh-cn'] = [
 	'rcshowhidebots' => '$1 机器人',
 	'rcshowhideenhanced' => '$1 折页式显示模式',
 	'rcshowhideliu' => '$1 登入用戶',
+	'recentchangestext' => '<span style="float:right;"><small>\'\'[[MediaWiki:Recentchangestext|View this template]]\'\'</small></span>
+此页为本站最近更新的內容：
+
+{| class="plainlinks" style="background: transparent; margin-left:0.5em; margin-bottom:0.5em;" cellpadding="0" cellspacing="0"
+|-valign="top"
+|align="right"|\'\'\'记錄&nbsp;:&nbsp;\'\'\'
+|align="left" |[[Special:Newpages|最新文章]] - [[Special:Newimages|最新档案]] - [[Special:Log/delete|刪除]] - [[Special:Log/move|移动页面]] - [[Special:Log/upload|上载记錄]] - [[Special:Log/block|封锁]] - [[Special:Log|更多记錄...]]
+|-valign="top"
+|align="right"|\'\'\'特殊页面&nbsp;:&nbsp;\'\'\'
+|align="left" |[[Special:Wantedpages|请求页面]] - [[Special:Longpages|长页面]] - [[Special:Uncategorizedimages|未分类图片]] - [[Special:Uncategorizedpages|未分类文章]] - [[Special:Specialpages|更多特殊页面...]]
+|}',
 ];
 
 $messages['zh'] = [
@@ -50294,10 +50425,32 @@ $messages['zh'] = [
 	'rcshowhidebots' => '$1 机器人',
 	'rcshowhideenhanced' => '$1 折頁式顯示模式',
 	'rcshowhideliu' => '$1 登入用戶',
+	'recentchangestext' => '<span style="float:right;"><small>\'\'[[MediaWiki:Recentchangestext|View this template]]\'\'</small></span>
+此頁為本站最近更新的內容：
+
+{| class="plainlinks" style="background: transparent; margin-left:0.5em; margin-bottom:0.5em;" cellpadding="0" cellspacing="0"
+|-valign="top"
+|align="right"|\'\'\'記錄&nbsp;:&nbsp;\'\'\'
+|align="left" |[[Special:Newpages|最新文章]] - [[Special:Newimages|最新檔案]] - [[Special:Log/delete|刪除]] - [[Special:Log/move|移動頁面]] - [[Special:Log/upload|上傳記錄]] - [[Special:Log/block|封鎖]] - [[Special:Log|更多記錄...]]
+|-valign="top"
+|align="right"|\'\'\'特殊頁面&nbsp;:&nbsp;\'\'\'
+|align="left" |[[Special:Wantedpages|請求頁面]] - [[Special:Longpages|長頁面]] - [[Special:Uncategorizedimages|未分類圖片]] - [[Special:Uncategorizedpages|未分類文章]] - [[Special:Specialpages|更多特殊頁面...]]
+|}',
 ];
 
 $messages['zh-sg'] = [
 	'rcnote' => '以下是在$3，最近\'\'\'$2\'\'\'天内的\'\'\'$1\'\'\'次最近更改记录:',
 	'rcshowhideenhanced' => '$1 折页式显示模式',
+	'recentchangestext' => '<span style="float:right;"><small>\'\'[[MediaWiki:Recentchangestext|View this template]]\'\'</small></span>
+此页为本站最近更新的內容：
+
+{| class="plainlinks" style="background: transparent; margin-left:0.5em; margin-bottom:0.5em;" cellpadding="0" cellspacing="0"
+|-valign="top"
+|align="right"|\'\'\'记錄&nbsp;:&nbsp;\'\'\'
+|align="left" |[[Special:Newpages|最新文章]] - [[Special:Newimages|最新档案]] - [[Special:Log/delete|刪除]] - [[Special:Log/move|移动页面]] - [[Special:Log/upload|上传记錄]] - [[Special:Log/block|封锁]] - [[Special:Log|更多记錄...]]
+|-valign="top"
+|align="right"|\'\'\'特殊页面&nbsp;:&nbsp;\'\'\'
+|align="left" |[[Special:Wantedpages|请求页面]] - [[Special:Longpages|长页面]] - [[Special:Uncategorizedimages|未分类图片]] - [[Special:Uncategorizedpages|未分类文章]] - [[Special:Specialpages|更多特殊页面...]]
+|}',
 ];
 
