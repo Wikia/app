@@ -59,7 +59,7 @@ Custom .css and .js pages use a lowercase title, e.g. {{ns:user}}:Foo/vector.css
 	'userrights-unchangeable-col' => 'Groups you cannot change',
 	'userrights-irreversible-marker' => '$1*',
 	'unpatrolledletter' => '!',
-	'upload' => 'Upload file',
+	'upload' => 'Upload photo',
 	'uploadbtn' => 'Upload file',
 	'upload-tryagain' => 'Submit modified file description',
 	'uploadnologin' => 'Not logged in',
@@ -71,13 +71,7 @@ Custom .css and .js pages use a lowercase title, e.g. {{ns:user}}:Foo/vector.css
 	'upload-recreate-warning' => '\'\'\'Warning: A file by that name has been deleted or moved.\'\'\'
 
 The deletion and move log for this page are provided here for convenience:',
-	'uploadtext' => 'Use the form below to upload files.
-To view or search previously uploaded files go to the [[Special:FileList|list of uploaded files]], (re)uploads are also logged in the [[Special:Log/upload|upload log]], deletions in the [[Special:Log/delete|deletion log]].
-
-To include a file in a page, use a link in one of the following forms:
-* \'\'\'<tt><nowiki>[[</nowiki>{{ns:file}}<nowiki>:File.jpg]]</nowiki></tt>\'\'\' to use the full version of the file
-* \'\'\'<tt><nowiki>[[</nowiki>{{ns:file}}<nowiki>:File.png|200px|thumb|left|alt text]]</nowiki></tt>\'\'\' to use a 200 pixel wide rendition in a box in the left margin with \'alt text\' as description
-* \'\'\'<tt><nowiki>[[</nowiki>{{ns:media}}<nowiki>:File.ogg]]</nowiki></tt>\'\'\' for directly linking to the file without displaying the file',
+	'uploadtext' => 'Use the form below to upload files. See also [[Help:Uploading files]].',
 	'upload-permitted' => 'Permitted file types: $1.',
 	'upload-preferred' => 'Preferred file types: $1.',
 	'upload-prohibited' => 'Prohibited file types: $1.',
@@ -93,12 +87,11 @@ See the [[Special:NewFiles|gallery of new files]] for a more visual overview.',
 	'uploadedimage' => 'uploaded "[[$1]]"',
 	'uploaddisabled' => 'Uploads disabled.',
 	'uploadfromurl-queued' => 'Your upload has been queued.',
-	'uploaddisabledtext' => 'File uploads are disabled.',
+	'uploaddisabledtext' => 'Unfortunately photo uploading is temporarily disabled while we work on our servers. Sorry for this inconvenience and please try again in a few hours.',
 	'uploadscripted' => 'This file contains HTML or script code that may be erroneously interpreted by a web browser.',
 	'uploadscriptednamespace' => 'This SVG file contains an illegal namespace \'$1\'',
 	'uploadinvalidxml' => 'The XML in the uploaded file could not be parsed.',
-	'uploadvirus' => 'The file contains a virus!
-Details: $1',
+	'uploadvirus' => 'The file may contain a virus! Details: $1',
 	'uploadjava' => 'The file is a ZIP file which contains a Java .class file.
 Uploading Java files is not allowed, because they can cause security restrictions to be bypassed.',
 	'upload-source' => 'Source file',
@@ -117,11 +110,11 @@ $1',
 	'upload-proto-error-text' => 'Remote upload requires URLs beginning with <code>http://</code> or <code>ftp://</code>.',
 	'upload-file-error' => 'Internal error',
 	'upload-file-error-text' => 'An internal error occurred when attempting to create a temporary file on the server.
-Please contact an [[Special:ListUsers/sysop|administrator]].',
+Please [[Special:Contact|report this to Wikia staff]].',
 	'upload-misc-error' => 'Unknown upload error',
 	'upload-misc-error-text' => 'An unknown error occurred during the upload.
 Please verify that the URL is valid and accessible and try again.
-If the problem persists, contact an [[Special:ListUsers/sysop|administrator]].',
+If the problem persists, [[special:contact|contact Wikia staff]].',
 	'upload-too-many-redirects' => 'The URL contained too many redirects',
 	'upload-unknown-size' => 'Unknown size',
 	'upload-http-error' => 'An HTTP error occured: $1',
@@ -249,7 +242,7 @@ Please confirm that this is what you intend to do.',
 	'unknown_extension_tag' => 'Unknown extension tag "$1"',
 	'undeletedarticle' => 'restored "[[$1]]"',
 	'upload-url' => 'Special:Upload',
-	'uploadtext-ext' => 'A full list of allowed extensions is available on the [[{{ns:Special}}:Version|wiki version page]].',
+	'uploadtext-ext' => '<div class="emptymwmsg mediawiki_uploadtext-ext"></div>',
 	'users' => 'Users',
 	'unrate_it' => 'Unrate it',
 	'use_old_formatting' => 'Switch to Monobook skin',
@@ -7249,14 +7242,43 @@ Bitte prüfe den Vergleich unten um sicherzustellen, dass du dies tun möchtest,
 	'upload-recreate-warning' => '\'\'\'Achtung: Eine Datei dieses Namens wurde bereits gelöscht oder verschoben.\'\'\'
 
 Es folgt ein Auszug aus dem Lösch- und Verschiebungs-Logbuch dieser Datei.',
-	'uploadtext' => 'Benutze dieses Formular, um neue Dateien hochzuladen.
+	'uploadtext' => '{|cellpadding="4px" style="width:100%; background-color:#f9f9f9; border-style:solid; border-color:#e9e9e9; border-width:4px; margin:auto; margin-top:4px; margin-bottom:4px; clear:both; position:relative; color: black;"
+|
+=== Allgemeines ===
 
-Gehe zu der [[Special:FileList|Liste hochgeladener Dateien]], um vorhandene Dateien zu suchen und anzuzeigen. Siehe auch das [[Special:Log/upload|Datei-]] und [[Special:Log/delete|Lösch-Logbuch]].
+Mit diesem Formular kannst du Dateien hochladen. Mögliche Dateiformate sind für Bilder \'\'jpg, jpeg, png, gif, svg\'\' und für Ton- bzw. Videodateien \'\'ogg\'\'.
 
-Um ein \'\'\'Bild\'\'\' in einer Seite zu verwenden, nutze einen Link in der folgenden Form:
-* \'\'\'<tt><nowiki>[[</nowiki>{{ns:file}}<nowiki>:Datei.jpg]]</nowiki></tt>\'\'\' – für ein Vollbild
-* \'\'\'<tt><nowiki>[[</nowiki>{{ns:file}}<nowiki>:Datei.png|200px|thumb|left|Alternativer Text]]</nowiki></tt>\'\'\' – für ein 200px breites Bild innerhalb einer Box, mit „Alternativer Text“ als Bildbeschreibung
-* \'\'\'<tt><nowiki>[[</nowiki>{{ns:media}}<nowiki>:Datei.ogg]]</nowiki></tt>\'\'\' – für einen direkten Link auf die Datei, ohne Darstellung der Datei',
+Wie du hochgeladene Bilder in Seiten einbaust, steht unter \'\'\'[[w:c:hilfe:Hilfe:Bilder|Hilfe „Bilder“]]\'\'\'. 
+
+=== Kurzanleitung ([[w:c:hilfe:Hilfe:Hochladen|ausführliche Anleitung]]) ===
+
+<span style="color:#008b00;">\'\'\'1. Quelldatei:\'\'\'</span> Klicke auf „Durchsuchen“ und wähle die gewünschte Datei.
+
+<span style="color:#008b00;">\'\'\'2. Dateiname:\'\'\'</span> Gib der Datei im zweiten Feld einen für das Wiki sinnvollen Namen (\'\'Kugelfisch.jpg\'\' statt \'\'IMG1234.jpg\'\') ohne Sonderzeichen und mit einer Dateiendung in Kleinbuchstaben (\'\'.jpg\'\' statt \'\'.JPG\'\').
+
+<span style="color:#008b00;">\'\'\'3. Bildinformation:\'\'\'</span> Kopiere den Mustertext der Vorlage „[[Vorlage:Dateiinfo|Dateiinfo]]“ (links) in das dritte Eingabefeld und fülle alle Zeilen nach den Gleichheitszeichen sorgfältig aus.
+{| width="100%"
+|width="20%" |
+<pre><nowiki>
+&#123;&#123;Dateiinfo
+|Beschreibung=
+|Datum=
+|Autor=
+|Quelle=
+|Lizenz=
+|Sonstiges=
+&#125;&#125;</nowiki></pre>
+| width="80%" |
+* \'\'\'Beschreibung:\'\'\' Was ist dargestellt, worum handelt es sich?
+* \'\'\'Datum:\'\'\' Wann ist die Datei entstanden? 
+* \'\'\'Autor:\'\'\' Wer ist der Urheber (Fotograf/Zeichner)? (ggf. mit 3 Tilden <nowiki>~~~</nowiki> signieren)
+* \'\'\'Quelle:\'\'\' Woher genau stammt die Datei? (exakte URL oder ggf. \'\'selbst fotografiert\'\') 
+* \'\'\'Lizenz:\'\'\' Unter welcher freien Lizenz steht die Datei? Dokumentiere ggf. die genaue Freigabe-Genehmigung. 
+* \'\'\'Sonstiges:\'\'\' Feld für Anmerkungen (kann frei- oder weggelassen werden)
+|}
+
+<span style="color:#008b00;">\'\'\'4. Hochladen:\'\'\'</span> Kontrolliere alle Angaben und klicke dann auf „Datei hochladen“. Dies kann – je nach Dateigröße und Internetverbindung – eine Weile dauern.
+|}',
 	'upload-permitted' => 'Erlaubte Dateitypen: $1.',
 	'upload-preferred' => 'Bevorzugte Dateitypen: $1.',
 	'upload-prohibited' => 'Nicht erlaubte Dateitypen: $1.',
@@ -7270,7 +7292,7 @@ Um ein \'\'\'Bild\'\'\' in einer Seite zu verwenden, nutze einen Link in der fol
 	'uploadedimage' => 'lud „[[$1]]“ hoch',
 	'uploaddisabled' => 'Hochladen deaktiviert',
 	'uploadfromurl-queued' => 'Dein Upload befindet sich nun in der Warteschlange.',
-	'uploaddisabledtext' => 'Das Hochladen von Dateien ist deaktiviert.',
+	'uploaddisabledtext' => 'Das Hochladen von Dateien ist momentan aufgrund von Serverarbeiten deaktiviert. Bitte entschuldige diese Unannehmlichkeiten und versuche es erneut in einigen Stunden.',
 	'uploadscripted' => 'Diese Datei enthält HTML- oder Scriptcode, der irrtümlich von einem Webbrowser ausgeführt werden könnte.',
 	'uploadvirus' => 'Diese Datei enthält einen Virus! Details: $1',
 	'uploadjava' => 'Dies ist eine ZIP-Datei, die ein CLASS-Datei von Java enthält.
@@ -7412,6 +7434,7 @@ $1',
 	'unlockdb-wikifactory-error' => 'Es ist ein Fehler aufgetreten. Speichern oder leeren des Caches fehlgeschlagen. Die Datenbank ist unter Umständen nicht gesperrt. Bitte versuche es erneut oder kontaktiere das TechTeam.',
 	'unlocked' => 'entsprerrt',
 	'unsubscribe-email' => 'Wenn du in Zukunft keine Mails mehr von Wikia empfangen möchtest, kannst du dich hier austragen: $1',
+	'uploadtext-ext' => 'Eine vollständige Liste aller aktivierten Extensions findet sich auf der [[{{ns:Special}}:Version|Versions-Seite]].',
 ];
 
 $messages['de-ch'] = [
@@ -8713,14 +8736,14 @@ Por favor escoge un nombre diferente.',
 	'upload-recreate-warning' => '\'\'\'Aviso: Un archivo con ese nombre ha sido eliminado o renombrado.\'\'\'
 
 A continuación se muestra el registro de borrados y traslados de esta página:',
-	'uploadtext' => 'Utiliza el siguiente formulario para subir archivos.
-Para ver o buscar archivos subidos con anterioridad, ve a la [[Special:FileList|lista de archivos subidos]].
-Los archivos subidos quedarán registrados además en el [[Special:Log/upload|registro de archivos subidos]] y los borrados en el [[Special:Log/delete|registro de borrados]].
+	'uploadtext' => 'Utilice el siguiente formulario para subir archivos.
+Para ver o buscar archivos subidos con anterioridad, ir a [[Special:Imagelist|lista de archivos subidos]].
+Lo que haya subido o borrado quedará registrado además en el [[Special:Log/upload|registro de archivos subidos]].
 
-Para incluir un archivo en una página, usa un enlace como los mostrados a continuación:
-* \'\'\'<tt><nowiki>[[</nowiki>{{ns:file}}<nowiki>:File.jpg]]</nowiki></tt>\'\'\' para usar el fichero en tamaño completo
-* \'\'\'<tt><nowiki>[[</nowiki>{{ns:file}}<nowiki>:File.png|200px|thumb|left|texto descriptivo]]</nowiki></tt>\'\'\' para una versión de 200 píxeles de ancho en una caja en el margen izquierdo con \'texto descriptivo\' como descripción
-* \'\'\'<tt><nowiki>[[</nowiki>{{ns:media}}<nowiki>:File.ogg]]</nowiki></tt>\'\'\' para enlazar directamente al fichero sin mostrarlo.',
+Para incluir un archivo en una página, utilice en el formulario los enlaces
+\'\'\'<nowiki>[[</nowiki>{{ns:image}}<nowiki>:File.jpg]]</nowiki>\'\'\',
+\'\'\'<nowiki>[[</nowiki>{{ns:image}}<nowiki>:File.png|alt text]]</nowiki>\'\'\', o
+\'\'\'<nowiki>[[</nowiki>{{ns:media}}<nowiki>:File.ogg]]</nowiki>\'\'\', para vincular directamente el archivo.',
 	'upload-permitted' => 'Tipos de archivo permitidos: $1.',
 	'upload-preferred' => 'Tipos de archivo preferidos: $1.',
 	'upload-prohibited' => 'Tipos de archivo prohibidos: $1.',
@@ -8735,7 +8758,7 @@ Mira la [[Special:NewFiles|galería de archivos nuevos]] para una descripción v
 	'uploadedimage' => 'subió «[[$1]]»',
 	'uploaddisabled' => 'Subida de archivos deshabilitada',
 	'uploadfromurl-queued' => 'Tu carga ha sido enviada a la cola.',
-	'uploaddisabledtext' => 'No es posible subir archivos.',
+	'uploaddisabledtext' => 'Desafortunadamente la subida de imágenes está desactivada temporalmente mientras trabajamos en nuestros servidores. Sentimos las molestias, por favor, inténtalo de nuevo en unas horas.',
 	'uploadscripted' => 'Este archivo contiene script o código HTML que puede ser interpretado erróneamente por un navegador web.',
 	'uploadvirus' => '¡El archivo contiene un virus!
 Detalles: $1',
@@ -8869,6 +8892,7 @@ $1',
 	'usesitejs-disabled-warning' => 'El JavaScript personalizado está deshabilitado en este wiki.',
 	'unable-block-edit' => 'No estás autorizado para editar esta página. Inténtalo de nuevo más tarde.',
 	'unsubscribe-email' => 'Si no quieres recibir más emails de Wikia, puedes cancelar tu suscripción aquí: $1',
+	'uploadtext-ext' => 'Una lista completa de extensiones permitidas está disponible en la [[{{ns:Special}}:Version|página de la versión del wiki]].',
 ];
 
 $messages['et'] = [
@@ -9673,6 +9697,7 @@ $1',
 	'unlockdbsuccesssub' => 'قفل پایگاه داده برداشته شد',
 	'unlockdbsuccesstext' => 'پایگاه داده از قفل در آمد.',
 	'unknown_extension_tag' => 'برچسب ناشناختهٔ افزونه «$1»',
+	'upload-url' => 'ویژه:بارگذاری_پرونده',
 ];
 
 $messages['ff'] = [
@@ -9725,7 +9750,7 @@ $messages['fi'] = [
 	'userrights-notallowed' => 'Tunnuksellasi ei ole lupaa lisätä tai poistaa käyttöoikeuksia.',
 	'userrights-changeable-col' => 'Ryhmät, joita voit muuttaa',
 	'userrights-unchangeable-col' => 'Ryhmät, joita et voi muuttaa',
-	'upload' => 'Tallenna tiedosto',
+	'upload' => 'Lisää tiedosto',
 	'uploadbtn' => 'Tallenna tiedosto',
 	'upload-tryagain' => 'Lähetä muutettu tiedostokuvaus',
 	'uploadnologin' => 'Et ole kirjautunut sisään',
@@ -10282,7 +10307,7 @@ Voyez la [[Special:NewFiles|galerie des nouvelles images]] pour une présentatio
 	'uploadedimage' => 'a importé « [[$1]] »',
 	'uploaddisabled' => 'Désolé, l\'import de fichiers est désactivé.',
 	'uploadfromurl-queued' => 'Votre fichier a été mis dans la file d’attente.',
-	'uploaddisabledtext' => 'L\'import de fichiers est désactivé sur ce wiki.',
+	'uploaddisabledtext' => 'L’importation d’images est malheureusement désactivée temporairement tandis que nous maintenons nos serveurs. Nous sommes désolés pour ce désagrément, veuillez réessayer dans quelques heures.',
 	'uploadscripted' => 'Ce fichier contient du code HTML ou un script qui pourrait être interprété de façon incorrecte par un navigateur web.',
 	'uploadvirus' => 'Ce fichier contient un virus ! Pour plus de détails, consultez : $1',
 	'uploadjava' => 'C\'est un fichier ZIP qui contient un fichier Java .class.
@@ -15505,7 +15530,7 @@ Consultare la [[Special:NewFiles|galleria dei nuovi file]] per una visione d\'in
 	'uploadedimage' => 'ha caricato "[[$1]]"',
 	'uploaddisabled' => 'Il caricamento dei file è temporaneamente sospeso.',
 	'uploadfromurl-queued' => 'Il caricamento è stato accodato.',
-	'uploaddisabledtext' => 'Il caricamento dei file non è attivo.',
+	'uploaddisabledtext' => 'Il caricamento dei file è stato temporaneamente disattivato mentre provvediamo alla manutenzione dei nostri server. Ci scusiamo per il disagio e vi invitiamo a riprovare tra qualche ora.',
 	'uploadscripted' => 'Questo file contiene codice HTML o di script, che potrebbe essere interpretato erroneamente da un browser web.',
 	'uploadvirus' => 'Questo file contiene un virus! Dettagli: $1',
 	'uploadjava' => 'Questo file è un file ZIP che contiene un file .class Java.
@@ -16075,6 +16100,7 @@ $1',
 	'use_new_formatting' => '新しい外装を試す',
 	'usesitejs-disabled-warning' => 'このwikiではカスタムJavaScriptは無効になっています。',
 	'unable-block-edit' => 'このページの編集は許可されておりません。後で編集してください。',
+	'uploadtext-ext' => '[[{{ns:Special}}:Version|バージョン情報]]のページで、利用できる拡張子を確認できます。',
 ];
 
 $messages['jam'] = [
@@ -24695,7 +24721,7 @@ Controleer voor het opslaan of het resultaat gewenst is.',
 	'uploadbtn' => 'Bestand uploaden',
 	'upload-tryagain' => 'Bestandsbeschrijving bijwerken',
 	'uploadnologin' => 'Niet aangemeld',
-	'uploadnologintext' => 'U moet [[Special:UserLogin|aangemeld]] zijn om bestanden te kunnen uploaden.',
+	'uploadnologintext' => 'Je moet [[Special:UserLogin|aangemeld]] zijn om bestanden te uploaden.',
 	'upload_directory_missing' => 'De uploadmap ($1) is niet aanwezig en kon niet aangemaakt worden door de webserver.',
 	'upload_directory_read_only' => 'De webserver kan niet schrijven in de uploadmap ($1).',
 	'uploaderror' => 'Uploadfout',
@@ -24724,7 +24750,7 @@ Zie de [[Special:NewFiles|galerij met nieuwe bestanden]] voor een visueler overz
 	'uploadwarning-text' => 'Pas de onderstaande bestandsbeschrijving aan en probeer het daarna opnieuw.',
 	'uploadedimage' => 'heeft "[[$1]]" geüpload',
 	'uploaddisabled' => 'Uploaden is uitgeschakeld',
-	'uploadfromurl-queued' => 'Uw upload is in de wachtrij geplaatst.',
+	'uploadfromurl-queued' => 'Je upload is in de wachtrij geplaatst.',
 	'uploaddisabledtext' => 'Het uploaden van bestanden is uitgeschakeld.',
 	'uploadscripted' => 'Dit bestand bevat HTML- of scriptcode die foutief door uw browser kan worden weergegeven.',
 	'uploadvirus' => 'Het bestand bevat een virus! Details: $1',
@@ -24735,13 +24761,13 @@ Het uploaden van Java-bestanden is niet toegestaan omdat hiermee beveiligingsins
 	'upload-description' => 'Bestandsbeschrijving',
 	'upload-options' => 'Uploadinstellingen',
 	'upload-success-subj' => 'Het bestand is toegevoegd',
-	'upload-success-msg' => 'Uw upload van [$2] is geslaagd en is beschikbaar: [[:{{ns:file}}:$1]]',
+	'upload-success-msg' => 'Je upload van [$2] is geslaagd en is beschikbaar: [[:{{ns:file}}:$1]]',
 	'upload-failure-subj' => 'Uploadprobleem',
-	'upload-failure-msg' => 'Er was een probleem met uw upload van [$2]:
+	'upload-failure-msg' => 'Er was een probleem met je upload van [$2]:
 
 $1',
 	'upload-warning-subj' => 'Uploadwaarschuwing',
-	'upload-warning-msg' => 'Er was een probleem met uw upload van [$2].
+	'upload-warning-msg' => 'Er was een probleem met je upload van [$2].
 Ga terug naar het [[Special:Upload/stash/$1|uploadformulier]] om dit probleem te verhelpen.',
 	'upload-proto-error' => 'Verkeerd protocol',
 	'upload-proto-error-text' => 'Uploads via deze methode vereisen URL\'s die beginnen met <code>http://</code> of <code>ftp://</code>.',
@@ -24768,9 +24794,9 @@ Controleer of de URL juist is, en of de website beschikbaar is.',
 	'upload-curl-error28' => 'Uploadtime-out',
 	'upload-curl-error28-text' => 'Het duurde te lang voordat de website antwoordde.
 Controleer of de website beschikbaar is, wacht even en probeer het dan opnieuw.
-U kunt het misschien proberen als het minder druk is.',
+Je kunt het misschien proberen als het minder druk is.',
 	'upload_source_url' => ' (een geldige, publiek toegankelijke URL)',
-	'upload_source_file' => ' (een bestand op uw computer)',
+	'upload_source_file' => '(een bestand op je computer)',
 	'uploadnewversion-linktext' => 'Een nieuwe versie van dit bestand uploaden',
 	'unwatchedpages' => 'Pagina\'s die niet op een volglijst staan',
 	'unusedtemplates' => 'Ongebruikte sjablonen',
@@ -26262,7 +26288,7 @@ Strony użytkownika zawierające CSS i JavaScript powinny zaczynać się małą 
 	'upload_directory_missing' => 'Katalog dla przesyłanych plików ($1) nie istnieje i nie może zostać utworzony przez serwer WWW.',
 	'upload_directory_read_only' => 'Serwer nie może zapisywać do katalogu ($1) przeznaczonego na przesyłane pliki.',
 	'uploaderror' => 'Błąd wysyłania',
-	'upload-recreate-warning' => '\'\'\'Uwaga – plik o tej nazwie został wcześniej usunięty lub przrniesiony.\'\'\'
+	'upload-recreate-warning' => '\'\'\'Uwaga – plik o tej nazwie został wcześniej usunięty lub przeniesiony.\'\'\'
 
 Poniżej znajduje się rejestr usunięć i zmian nazwy tej strony:',
 	'uploadtext' => 'Użyj poniższego formularza do przesłania plików.
@@ -26286,7 +26312,7 @@ Przejdź na stronę [[Special:NewFiles|galerii nowych plików]], by zobaczyć pl
 	'uploadedimage' => 'przesłał [[$1]]',
 	'uploaddisabled' => 'Przesyłanie plików wyłączone',
 	'uploadfromurl-queued' => 'Żądanie przesłania pliku zostało dołączone do kolejki.',
-	'uploaddisabledtext' => 'Możliwość przesyłania plików została wyłączona.',
+	'uploaddisabledtext' => 'Możliwość przesyłania plików została tymczasowo wyłączona na czas prac konserwacyjnych na serwerach. Przepraszamy za utrudnienia. Spróbuj ponownie za kilka godzin.',
 	'uploadscripted' => 'Plik zawiera kod HTML lub skrypt, który może zostać błędnie zinterpretowany przez przeglądarkę internetową.',
 	'uploadvirus' => 'W pliku jest wirus! Szczegóły: $1',
 	'uploadjava' => 'Ten plik zawiera deklarację klasy Java skompresowaną ZIP.
@@ -26428,6 +26454,7 @@ $1',
 	'use_old_formatting' => 'Przełącz na styl Monobook',
 	'use_new_formatting' => 'Wypróbuj nowe formatowanie',
 	'usesitejs-disabled-warning' => 'Niestandardowy JavaScript jest wyłączony na tej wiki.',
+	'uploadtext-ext' => 'Pełna lista rozszerzeń dostępna na [[{{ns:Special}}:Version|stronie wersji]].',
 ];
 
 $messages['pms'] = [
@@ -28660,7 +28687,7 @@ $messages['ru'] = [
 	'uploadedimage' => 'загрузил «[[$1]]»',
 	'uploaddisabled' => 'Загрузка запрещена',
 	'uploadfromurl-queued' => 'Ваша загрузка поставлена в очередь.',
-	'uploaddisabledtext' => 'Загрузка файлов отключена.',
+	'uploaddisabledtext' => 'К сожалению, загрузка файлов временно отключена из-за профилактических работ на наших серверах. Приносим извинения за доставленные неудобства. Попробуйте снова через пару часов.',
 	'uploadscripted' => 'Файл содержит HTML-код или скрипт, который может быть ошибочно обработан браузером.',
 	'uploadvirus' => 'Файл содержит вирус! См. $1',
 	'uploadjava' => 'Файл представляет собой ZIP-архив, содержащий .class файл Java.
@@ -28802,6 +28829,7 @@ $1',
 	'unlockdb-wikifactory-error' => 'Произошла ошибка. Не удалось сохранить или очистить кэш. База данных не может быть разблокирована. Пожалуйста, попробуйте ещё раз или обратитесь к инженерам.',
 	'unlocked' => 'разблокировано',
 	'unsubscribe-email' => 'Если вы больше не хотите получать письма от Викия, то вы можете отписаться здесь: $1',
+	'uploadtext-ext' => 'Полный список доступных расширений можно посмотреть на [[{{ns:Special}}:Version|этой странице]].',
 ];
 
 $messages['rue'] = [
@@ -32654,13 +32682,7 @@ Var god och kontrollera jämförelsen nedan för att bekräfta att detta är vad
 	'upload-recreate-warning' => '\'\'\'Varning: En fil med det namnet har tagits bort eller flyttats.\'\'\'
 
 Raderings- och sidflyttningsloggen för denna sida återges här:',
-	'uploadtext' => 'Använd formuläret nedan för att ladda upp filer.
-För att titta på eller leta efter filer som redan har laddats upp, se [[Special:FileList|listan över uppladdade filer]]. Uppladdningar loggförs även i [[Special:Log/upload|uppladdningsloggen]], och raderingar i [[Special:Log/delete|raderingsloggen]].
-
-Använd en länk på något av följande format för att infoga en fil på en sida:
-* \'\'\'<tt><nowiki>[[</nowiki>{{ns:file}}<nowiki>:File.jpg]]</nowiki></tt>\'\'\' för att visa filen i dess hela storlek
-* \'\'\'<tt><nowiki>[[</nowiki>{{ns:file}}<nowiki>:File.png|200px|thumb|left|alternativ text]]</nowiki></tt>\'\'\' för att visa en rendering med bredden 200 pixel i en ruta till vänster med bildtexten \'alternativ text\'
-* \'\'\'<tt><nowiki>[[</nowiki>{{ns:media}}<nowiki>:File.ogg]]</nowiki></tt>\'\'\' för att länka direkt till filen utan att visa den',
+	'uploadtext' => 'Använd formuläret nedan för att ladda upp filer. Se även [[Help:Uploading files|Ladda upp filer]].',
 	'upload-permitted' => 'Tillåtna filtyper: $1.',
 	'upload-preferred' => 'Föredragna filtyper: $1.',
 	'upload-prohibited' => 'Förbjudna filtyper: $1.',
@@ -35584,7 +35606,7 @@ $messages['uk'] = [
 	'uploadedimage' => 'завантажив «[[$1]]»',
 	'uploaddisabled' => 'Завантаження заборонене',
 	'uploadfromurl-queued' => 'Ваше завантаження поставлене в чергу.',
-	'uploaddisabledtext' => 'Можливість завантаження файлів відключена.',
+	'uploaddisabledtext' => 'На жаль, функція завантаження файлів тимчасово недоступна внаслідок робіт на наших серверах. Будь ласка, спробуйте завантажити файл через кілька годин. Просимо вибачення за тимчасові незручності.',
 	'uploadscripted' => 'Файл містить HTML-код або скрипт, який може неправильно обробитися браузером.',
 	'uploadvirus' => 'Файл містить вірус! Див. $1',
 	'uploadjava' => 'Файл є ZIP-архівом, що містить .class-файл Java.
@@ -37932,6 +37954,8 @@ $messages['zh-cn'] = [
 	'uncategorizedpages' => '待分类页面',
 	'unusedcategories' => '未使用的分类',
 	'unwatch' => '取消监视',
+	'uploadbtn' => '上传档案',
+	'uploadtext-ext' => 'Wikia支援的所有延申套件请见[[{{ns:Special}}:Version|版本页]]。',
 ];
 
 $messages['zh-hans'] = [
@@ -38351,6 +38375,7 @@ $1',
 	'unlockdbsuccesstext' => '{{SITENAME}}資料庫重新開放。',
 	'unknown_extension_tag' => '不明的擴展標籤 "$1"',
 	'usesitejs-disabled-warning' => '自訂JavaScript在這個wiki上被禁用。',
+	'uploadtext-ext' => 'Wikia支援的所有延申套件請見[[{{ns:Special}}:Version|版本頁]]。',
 ];
 
 $messages['zh-hk'] = [
@@ -38359,6 +38384,7 @@ $messages['zh-hk'] = [
 	'uncategorizedimages' => '待分類圖像',
 	'uncategorizedpages' => '待分類頁面',
 	'unusedcategories' => '未使用的分類',
+	'uploadtext-ext' => 'Wikia支援的所有延申套件請見[[{{ns:Special}}:Version|版本頁]]。',
 ];
 
 $messages['zh-min-nan'] = [
@@ -38388,15 +38414,30 @@ $messages['zh-tw'] = [
 	'userrights-user-editname' => '輸入使用者帳號:',
 	'userrights-editusergroup' => '編輯使用者群組',
 	'upload' => '上傳檔案',
-	'uploadtext' => '使用下面的表單來上傳用在頁面內新的圖片檔案。
-要檢視或搜尋以前上傳的圖片
-可以進入[[Special:FileList|圖片清單]]，
-上傳和刪除將在[[Special:Log/upload|上傳日誌]]中記錄。
+	'uploadtext' => '\'\'\'停止！\'\'\'在您上載之前，請先閲讀并遵守{{SITENAME}}
+[[Project:Image use policy|圖像使用守則]]。
 
-要在頁面中加入圖片，使用以下形式的連接:
-\'\'\'<nowiki>[[</nowiki>{{ns:file}}:file.jpg<nowiki>]]</nowiki>\'\'\'，
-\'\'\'<nowiki>[[</nowiki>{{ns:file}}:file.png|替換文字<nowiki>]]</nowiki>\'\'\' 或
-\'\'\'<nowiki>[[</nowiki>{{ns:media}}:file.ogg<nowiki>]]</nowiki>\'\'\'。',
+如果您要查看或搜索之前上載的圖像，
+請到[[Special:Imagelist|已上載圖像列表]].
+所有上載與删除行為都被記録在
+[[Project:上載紀録|上載紀録]]内。
+
+使用下面的表單來上載用在條目内新的圖像文件。
+在絶大多數瀏覧器内，你會看到一個"瀏覧..."按鈕，點撃它後就會跳出一個打開文件對話框。
+選擇一個文件後文件名將出現在按鈕旁邊的文字框中。
+您也必須點撃旁邊的復選框確認您所上載的文件并没有違反相關版權法律。
+點撃"上載" 按鈕完成上載程序。
+如果您使用的是較慢的網絡連接的話那麽這個上載過程會需要一些時間。
+
+我們建議照相圖片使用JPEG格式，繪圖及其他圖標圖像使用PNG格式，音像則使用OGG格式。
+請使用具有描述性的語言來命名您的文件以避免混亂。
+要在文章中加入圖像，使用以下形式的連接：
+\'\'\'<nowiki>[[圖像:file.jpg]]</nowiki>\'\'\'或者
+\'\'\'<nowiki>[[圖像:file.png|解釋文字]]</nowiki>\'\'\'
+或\'\'\'<nowiki>[[media:file.ogg]]</nowiki>\'\'\'來連接音像文件。
+
+請注意在{{SITENAME}}頁面中，其他人可能會為了百科全書的利益而編輯或删除您的上載文件，
+而如果您濫用上載系統，您則有可能被禁止使用上載功能。',
 	'uploadlogpagetext' => '以下是最近上傳的檔案的一覽表。',
 	'uploaddisabledtext' => '檔案上傳在此網站不可用。',
 	'upload-proto-error' => '協訂錯誤',
@@ -38437,6 +38478,8 @@ $messages['zh-tw'] = [
 	'uncategorizedpages' => '待分類頁面',
 	'unusedcategories' => '未使用的分類',
 	'unwatch' => '取消監視',
+	'uploadbtn' => '上傳檔案',
+	'uploadtext-ext' => 'Wikia支援的所有延申套件請見[[{{ns:Special}}:Version|版本頁]]。',
 ];
 
 $messages['zh-yue'] = [
@@ -38518,5 +38561,11 @@ $messages['zh'] = [
 	'uncategorizedimages' => '待分類圖像',
 	'uncategorizedpages' => '待分類頁面',
 	'unwatch' => '取消監視',
+	'uploadbtn' => '上传档案',
+	'uploadtext-ext' => 'Wikia支援的所有延申套件請見[[{{ns:Special}}:Version|版本頁]]。',
+];
+
+$messages['zh-sg'] = [
+	'uploadtext-ext' => 'Wikia支援的所有延申套件请见[[{{ns:Special}}:Version|版本页]]。',
 ];
 
