@@ -158,10 +158,10 @@ Remember to check for other links to the templates before deleting them.',
 	'uncategorizedtemplates' => 'Uncategorized templates',
 	'uncategorizedtemplates-summary' => '',
 	'unusedcategories' => 'Unused categories',
-	'unusedimages' => 'Unused files',
+	'unusedimages' => 'Unused photos',
 	'usereditcount' => '$1 {{PLURAL:$1|edit|edits}}',
 	'usercreated' => '{{GENDER:$3|Created}} on $1 at $2',
-	'unusedimagestext' => 'The following files exist but are not embedded in any page.
+	'unusedimagestext' => 'The following photos have been uploaded but are not used on any pages.
 Please note that other web sites may link to a file with a direct URL, and so may still be listed here despite being in active use.',
 	'unusedcategoriestext' => 'The following category pages exist, although no other page or category makes use of them.',
 	'usermailererror' => 'Mail object returned error:',
@@ -26340,7 +26340,7 @@ Sprawdź inne linki do szablonów, zanim usuniesz tę stronę.',
 	'uncategorizedcategories' => 'Nieskategoryzowane kategorie',
 	'uncategorizedimages' => 'Nieskategoryzowane pliki',
 	'uncategorizedtemplates' => 'Nieskategoryzowane szablony',
-	'unusedcategories' => 'Puste kategorie',
+	'unusedcategories' => 'Nieużywane kategorie',
 	'unusedimages' => 'Nieużywane pliki',
 	'usereditcount' => '$1 {{PLURAL:$1|edycja|edycje|edycji}}',
 	'usercreated' => '{{GENDER:$3|Utworzył|Utworzyła|Utworzone}} $1 o $2',
@@ -37930,6 +37930,7 @@ $messages['zh-cn'] = [
 	'uncategorizedcategories' => '待分类类别',
 	'uncategorizedimages' => '待分类图像',
 	'uncategorizedpages' => '待分类页面',
+	'unusedcategories' => '未使用的分类',
 ];
 
 $messages['zh-hans'] = [
@@ -38356,6 +38357,7 @@ $messages['zh-hk'] = [
 	'uncategorizedcategories' => '待分類類別',
 	'uncategorizedimages' => '待分類圖像',
 	'uncategorizedpages' => '待分類頁面',
+	'unusedcategories' => '未使用的分類',
 ];
 
 $messages['zh-min-nan'] = [
@@ -38432,6 +38434,7 @@ $messages['zh-tw'] = [
 	'use_new_formatting' => '嘗試新面板',
 	'uncategorizedcategories' => '待分類類別',
 	'uncategorizedpages' => '待分類頁面',
+	'unusedcategories' => '未使用的分類',
 ];
 
 $messages['zh-yue'] = [
