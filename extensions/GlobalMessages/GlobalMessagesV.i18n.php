@@ -33,8 +33,8 @@ See [[Special:Version|version page]].',
 	'video-dims' => '$1, $2 × $3',
 	'variantname-zh-hans' => 'hans',
 	'variantname-zh-hant' => 'hant',
-	'variantname-zh-cn' => 'cn',
-	'variantname-zh-tw' => 'tw',
+	'variantname-zh-cn' => '简体',
+	'variantname-zh-tw' => '正體',
 	'variantname-zh-hk' => 'hk',
 	'variantname-zh-mo' => 'mo',
 	'variantname-zh-sg' => 'sg',
@@ -2332,6 +2332,7 @@ Eine [{{SERVER}}{{SCRIPTPATH}}/COPYING Kopie der \'\'GNU General Public License\
 	'vertical-comics' => 'Comics',
 	'vertical-lifestyle' => 'Lifestyle',
 	'vertical-movies' => 'Filme',
+	'var_set' => 'stellte den $2 auf "$3"',
 ];
 
 $messages['de-ch'] = [
@@ -2746,6 +2747,7 @@ Has recibido [{{SERVER}}{{SCRIPTPATH}}/COPYING una copia de la Licencia Pública
 	'vertical-lifestyle' => 'Estilo de vida',
 	'vertical-music' => 'Música',
 	'vertical-movies' => 'Películas',
+	'var_set' => 'cambia la $2 a "$3"',
 ];
 
 $messages['et'] = [
@@ -3154,6 +3156,7 @@ Vous devriez avoir reçu [{{SERVER}}{{SCRIPTPATH}}/COPYING une copie de la Licen
 	'vertical-books' => 'Littérature',
 	'vertical-lifestyle' => 'Mode de vie',
 	'vertical-movies' => 'Films',
+	'var_set' => 'a changé le $2 en "$3"',
 ];
 
 $messages['frc'] = [
@@ -4742,6 +4745,7 @@ MediaWikiは、有用であることを期待して配布されていますが�
 	'vertical-comics' => '漫画',
 	'vertical-lifestyle' => 'ライフスタイル',
 	'vertical-movies' => '映画',
+	'var_set' => '"$2"を"$3"に設定しました',
 ];
 
 $messages['jam'] = [
@@ -11089,7 +11093,7 @@ MediaWiki是基於使用目的而加以發佈，然而不負任何擔保責任�
 
 $messages['zh-tw'] = [
 	'viewsourcetext' => '你可以檢視並複製本頁面的原始碼。',
-	'variantname-zh-tw' => '台灣繁體',
+	'variantname-zh-tw' => '台灣正體',
 	'version-parserhooks' => '語法鉤',
 	'version-hooks' => '鉤',
 	'version-parser-function-hooks' => '語法函數鉤',
