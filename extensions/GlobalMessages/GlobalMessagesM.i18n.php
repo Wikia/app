@@ -7089,6 +7089,8 @@ Weitere werden standardmäßig nicht angezeigt.
 	'manage_widgets' => 'Widgets verwalten',
 	'masthead-anonymous-user' => 'nicht-angemeldeter Benutzer',
 	'messagebar_mess' => 'Wusstest du, dass du <a href="$1">diese Seite bearbeiten</a> und <a href="$2">eine neue Seite erstellen</a> kannst? <a href="$3">Finde heraus</a> wie das funktioniert.',
+	'mobile-hide' => 'ausblenden',
+	'mobile-show' => 'anzeigen',
 ];
 
 $messages['de-ch'] = [
@@ -9779,6 +9781,8 @@ Si vous l’exécutez, votre système peut être compromis.',
 	'most_emailed' => 'Les plus envoyés',
 	'manage_widgets' => 'Gérer les widgets',
 	'masthead-anonymous-user' => 'Contributeur Wikia',
+	'mobile-hide' => 'Masquer',
+	'mobile-show' => 'Afficher',
 ];
 
 $messages['frc'] = [
@@ -14765,6 +14769,8 @@ In questi casi, se lo si ritiene opportuno, occorre spostare o aggiungere manual
 * gpsaltitude',
 	'monthsall' => 'tutti',
 	'masthead-anonymous-user' => 'Collaboratore non registrato',
+	'mobile-hide' => 'Nascondi',
+	'mobile-show' => 'Mostra',
 ];
 
 $messages['iu'] = [
@@ -17595,6 +17601,8 @@ $messages['ko'] = [
 * gpsaltitude',
 	'monthsall' => '모든 달',
 	'masthead-anonymous-user' => '익명 사용자',
+	'mobile-hide' => '가리기',
+	'mobile-show' => '보이기',
 ];
 
 $messages['ko-kp'] = [
@@ -36574,6 +36582,8 @@ $messages['zh-hans'] = [
 * gpslongitude
 * gpsaltitude',
 	'monthsall' => '全部',
+	'mobile-hide' => '隐藏',
+	'mobile-show' => '显示',
 ];
 
 $messages['zh-hant'] = [
@@ -36755,12 +36765,16 @@ $messages['zh-hant'] = [
 * gpslongitude
 * gpsaltitude',
 	'monthsall' => '全部',
+	'mobile-hide' => '隱藏',
+	'mobile-show' => '顯示',
 ];
 
 $messages['zh-hk'] = [
 	'march' => '三月',
 	'may_long' => '五月',
 	'mytalk' => '我的討論頁',
+	'mobile-hide' => '隱藏',
+	'mobile-show' => '顯示',
 ];
 
 $messages['zh-min-nan'] = [
@@ -36837,6 +36851,8 @@ $messages['zh-tw'] = [
 	'most_popular' => '最熱門',
 	'most_visited' => '最多閱覽',
 	'most_emailed' => '轉寄最多',
+	'mobile-hide' => '隱藏',
+	'mobile-show' => '顯示',
 ];
 
 $messages['zh-yue'] = [
@@ -36926,5 +36942,10 @@ $messages['zu'] = [
 	'markedaspatrolled' => 'Dweba ukuthi lelikhasi liyagadwa',
 	'metadata-expand' => 'Bukisa imininingwane yonke',
 	'metadata-collapse' => 'Fihla imininingwane yonke',
+];
+
+$messages['zh'] = [
+	'mobile-hide' => '隐藏',
+	'mobile-show' => '显示',
 ];
 
