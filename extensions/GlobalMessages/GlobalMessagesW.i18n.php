@@ -10,7 +10,11 @@ Function: $1<br />
 Query: $2',
 	'welcomecreation' => '== Welcome, $1! ==
 
-Your account has been created. Don\'t forget to change your {{SITENAME}} [[Special:Preferences|preferences]].',
+Your account has been created.
+
+\'\'\'[[User:$1|Click here to create your user page!]]\'\'\'
+
+You can also change your {{SITENAME}} [[Special:Preferences|preferences]].',
 	'wrongpassword' => 'Incorrect password entered.
 Please try again.',
 	'wrongpasswordempty' => 'Password entered was blank.
@@ -4799,8 +4803,8 @@ Fonction : $1<br />
 Requête : $2',
 	'welcomecreation' => '== Bienvenue, $1 ! ==
 
-Votre compte a été créé.
-N’oubliez pas de personnaliser vos [[Special:Preferences|préférences sur {{SITENAME}}]].',
+Ton compte a été créé.
+N’oublie pas de personnaliser tes [[Special:Preferences|préférences sur {{SITENAME}}]].',
 	'wrongpassword' => 'Le mot de passe est incorrect. Veuillez essayer à nouveau.',
 	'wrongpasswordempty' => 'Vous n’avez pas entré de mot de passe. Veuillez essayer à nouveau.',
 	'watchthis' => 'Suivre cette page',
@@ -7261,7 +7265,7 @@ Funzione: $1<br />
 Query: $2',
 	'welcomecreation' => '== Benvenuto, $1! ==
 
-L\'account è stato creato correttamente. Non dimenticare di personalizzare le [[Special:Preferences|preferenze di {{SITENAME}}]].',
+L\'account è stato creato correttamente. Non dimenticare di personalizzare le tue [[Special:Preferences|preferenze su {{SITENAME}}]].',
 	'wrongpassword' => 'La password inserita non è corretta. Riprovare.',
 	'wrongpasswordempty' => 'Non è stata inserita alcuna password. Riprovare.',
 	'watchthis' => 'Aggiungi agli osservati speciali',
@@ -7432,9 +7436,12 @@ $messages['ja'] = [
 	'wrong_wfQuery_params' => 'wfQuery()へ誤った引数が渡されました。<br />
 関数：$1<br />
 クエリ：$2',
-	'welcomecreation' => '== ようこそ、$1さん！ ==
-アカウントが作成されました。
-[[Special:Preferences|{{SITENAME}}の個人設定]]の変更も忘れないようにしてください。',
+	'welcomecreation' => '== $1 さん、ようこそ! ==
+あなたのアカウントが作成されました。
+
+\'\'\'[[User:$1|自分のユーザーページを作成するにはここをクリックしてください！]]\'\'\'
+
+自分の[[Special:Preferences|オプション]]の設定を変更することもできます。',
 	'wrongpassword' => 'パスワードが間違っています。
 もう一度やり直してください。',
 	'wrongpasswordempty' => 'パスワードを空にすることはできません。
@@ -11679,8 +11686,8 @@ $messages['nl'] = [
 Functie: $1<br />
 Zoekopdracht: $2',
 	'welcomecreation' => '== Welkom, $1! ==
-Uw gebruiker is geregistreerd.
-Vergeet niet uw [[Special:Preferences|voorkeuren voor {{SITENAME}}]] aan te passen.',
+Je gebruiker is geregistreerd.
+Vergeet niet je [[Special:Preferences|voorkeuren voor {{SITENAME}}]] aan te passen.',
 	'wrongpassword' => 'Het ingegeven wachtwoord is onjuist.
 Probeer het opnieuw.',
 	'wrongpasswordempty' => 'Het opgegeven wachtwoord was leeg.
@@ -15402,8 +15409,12 @@ $messages['sv'] = [
 	'wed' => 'ons',
 	'wrong_wfQuery_params' => 'Felaktiga parametrar för wfQuery()<br /> Funktion: $1<br /> Förfrågan: $2',
 	'welcomecreation' => '== Välkommen, $1! ==
+
 Ditt konto har skapats.
-Glöm inte att justera dina [[Special:Preferences|{{SITENAME}}-inställningar]].',
+
+\'\'\'[[User:$1|Klicka här för att skapa din användarsida!]]\'\'\'
+
+Du kan också ändra din {{SITENAME}} [[Special:Preferences|inställningar]].',
 	'wrongpassword' => 'Lösenordet du angav är felaktigt. Försök igen',
 	'wrongpasswordempty' => 'Lösenordet som angavs var blankt. Var god försök igen.',
 	'watchthis' => 'Bevaka denna sida',
