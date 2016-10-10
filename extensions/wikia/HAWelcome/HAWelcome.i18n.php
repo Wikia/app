@@ -66,7 +66,7 @@ Please [[$2|leave me a message]] if I can help with anything.
 Enjoy your time at {{SITENAME}}!
 
 $2',
-	'staffsig-text' => '[[{{ns:user}}:$1|$2]]<staff /> <small>([[w:forums|help forum]] | [[w:sblog|blog]])</small>',
+	'staffsig-text' => '$1 <staff /> <small>([[w:forums|help forum]] | [[w:sblog|blog]])</small>',
 	'hawelcomeedit' => 'HAWelcomeEdit',
 	'welcome-message-wall-user' => 'Hi, I\'m an admin for the {{SITENAME}} community. Welcome and thank you for your edit to [[:$1]]!
 
@@ -372,7 +372,7 @@ Du kannst außerdem dem [[w:c:de.community:Blog:Fandom_Deutschland_News|Fandom-B
 Viel Spaß bei {{SITENAME}}!
 
 $2',
-	'staffsig-text' => '[[{{ns:user}}:$1|$2]]<staff /> <small>([[w:forums|Hilfe]] | [[w:sblog|Blog]])</small>',
+	'staffsig-text' => '$1<staff /> <small>([[w:c:de.c:Special:Forum|Hilfe]] | [[w:c:de.c:Blog:Wikia Deutschland News|Blog]])</small>',
 	'hawelcomeedit' => 'HAWelcomeEdit',
 	'welcome-message-wall-user' => 'Hallo, ich bin einer der Admins der {{SITENAME}} Community. Herzlich willkommen und vielen Dank, dass du [[:$1]] bearbeitet hast!
 
@@ -511,7 +511,7 @@ Si necesitas ayuda no dejes de [[$2|enviarme un mensaje]].
 ¡Diviértete dentro de {{SITENAME}}!
 
 $2',
-	'staffsig-text' => '[[{{ns:user}}:$1|$2]]<staff /> <small>([[w:forums|foro de ayuda]] | [[w:sblog|blog]])</small>',
+	'staffsig-text' => '[[{{ns:user}}:$1|$2]] <staff /> <small>([[w:c:es.c:special:forums|foro de ayuda]] | [[w:c:es.c:Blog:Noticias_de_Wikia|blog del staff]])</small>',
 	'hawelcomeedit' => 'HaWelcomeEdit',
 	'welcome-message-wall-user' => 'Hola, soy un administrador de la comunidad {{SITENAME}}. ¡Bienvenido y muchas gracias por tu edición en [[:$1]]!
 
@@ -697,7 +697,7 @@ Veuillez [[$2|me laisser un message]] si vous avez besoin d\'aide supplémentair
 Passez un bon moment sur {{SITENAME}} !
 
 $2',
-	'staffsig-text' => '[[{{ns:user}}:$1|$2]]<staff /> <small>([[w:forums|forum d’aide]] | [[w:sblog|blog]])</small>',
+	'staffsig-text' => '[[{{ns:user}}:$1|$2]]<staff /> <small>([[w:fr:Special:Forum|forum d’aide]] | [[w:fr:Blog:Actualité Wikia|blog]])</small>',
 	'hawelcomeedit' => 'HAWelcomeEdit',
 	'welcome-message-wall-user' => 'Bonjour, je suis administrateur de la communauté {{SITENAME}}. Bienvenue et merci pour votre contribution à [[:$1]] !
 
