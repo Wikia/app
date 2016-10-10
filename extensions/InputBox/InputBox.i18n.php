@@ -270,7 +270,7 @@ $messages['de'] = [
 	'inputbox-error-no-type' => 'Es wurde kein Eingabefeldtyp angegeben.',
 	'inputbox-error-bad-type' => 'Der Eingabefeldtyp „$1“ ist unbekannt.
 Bitte „create“, „comment“, „search“, „search2“ oder „fulltext“ angeben.',
-	'tryexact' => 'Exakte Suche durchführen',
+	'tryexact' => 'Schnelle Suche',
 	'searchfulltext' => 'Volltextsuche',
 	'createarticle' => 'Seite erstellen',
 	'inputbox-ns-main' => 'Seiten',
