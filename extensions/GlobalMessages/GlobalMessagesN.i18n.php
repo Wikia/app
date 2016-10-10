@@ -138,8 +138,8 @@ Try prefixing your query with \'\'all:\'\' to search all content (including talk
 	'notacceptable' => 'The wiki server cannot provide data in a format your client can read.',
 	'nocredits' => 'There is no credits info available for this page.',
 	'nextdiff' => 'Newer edit →',
-	'newimages' => 'Gallery of new files',
-	'newimages-summary' => 'This special page shows the last uploaded files.',
+	'newimages' => 'New photos',
+	'newimages-summary' => '',
 	'newimages-legend' => 'Filter',
 	'newimages-label' => 'Filename (or a part of it):',
 	'noimages' => 'Nothing to see.',
@@ -12077,7 +12077,7 @@ Se il collegamento è stato aperto per errore, è sufficiente fare clic sul puls
 	'notacceptable' => 'Il server wiki non è in grado di fornire i dati in un formato leggibile dal client.',
 	'nocredits' => 'Nessuna informazione sugli autori disponibile per questa pagina.',
 	'nextdiff' => 'Differenza successiva →',
-	'newimages' => 'Galleria dei nuovi file',
+	'newimages' => 'Nuove immagini',
 	'newimages-summary' => 'Questa pagina speciale mostra i file caricati più di recente.',
 	'newimages-legend' => 'Nome file',
 	'newimages-label' => 'Nome file (o una parte di esso):',
@@ -30024,6 +30024,7 @@ Je kan a bestaende pagina\'s wiezigen, of je kan [[Special:UserLogin|jen eihen a
 $messages['zh'] = [
 	'newpage' => '最新页面',
 	'newpages' => '最新页面',
+	'newimages' => '新图片',
 ];
 
 $messages['zh-classical'] = [
@@ -30291,6 +30292,7 @@ $messages['zh-hk'] = [
 	'number-shortening' => '$1K',
 	'number-shortening-millions' => '$1M',
 	'number-shortening-billions' => '$1B',
+	'newimages' => '新圖像',
 ];
 
 $messages['zh-min-nan'] = [
@@ -30359,7 +30361,7 @@ $messages['zh-tw'] = [
 或者選擇不接受來自其他使用者的e-mail。',
 	'noautoblockblock' => '禁用自動封鎖',
 	'nextdiff' => '下一個→',
-	'newimages' => '新建圖片畫廊',
+	'newimages' => '新圖像',
 	'noimages' => '無可檢視圖片。',
 	'not_you' => '不是您？',
 	'newly_changed' => '剛更新過',
@@ -30446,5 +30448,9 @@ $messages['zu'] = [
 	'notanarticle' => 'Akulona ikhasi elinakho okuqukethwe',
 	'newimages' => 'Uhlelo lwamafayela amasha',
 	'noimages' => 'Awuboni lutho.',
+];
+
+$messages['zh-cn'] = [
+	'newimages' => '新图像',
 ];
 
