@@ -8601,6 +8601,7 @@ Auf der Seite \'\'\'[[Special:WikiStats]] finden sich eine Menge weiterer statis
 Siehe auch:
 * [[Special:Specialpages|Spezialseiten]]
 * [[Special:Allmessages|MediaWiki-Systemnachrichten]]',
+	'suppressedarticle' => 'unterdrückte "[[$1]]"',
 ];
 
 $messages['de-ch'] = [
