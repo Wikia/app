@@ -60,8 +60,7 @@ If it still does not work, try [[Special:UserLogout|logging out]] and logging ba
 \'\'\'If this is a legitimate edit attempt, please try again.\'\'\'
 If it still does not work, try [[Special:UserLogout|logging out]] and logging back in.',
 	'storedversion' => 'Stored revision',
-	'semiprotectedpagewarning' => '\'\'\'Note:\'\'\' This page has been protected so that only registered users can edit it.
-The latest log entry is provided below for reference:',
+	'semiprotectedpagewarning' => '<strong>NOTE: This page has been protected so that only established registered users can edit it.</strong>',
 	'sectioneditnotsupported-title' => 'Section editing not supported',
 	'sectioneditnotsupported-text' => 'Section editing is not supported in this page.',
 	'suppressionlog' => 'Suppression log',
