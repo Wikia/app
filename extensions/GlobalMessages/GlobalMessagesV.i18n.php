@@ -2720,10 +2720,10 @@ $1',
 	'version-variables' => 'Variables',
 	'version-antispam' => 'Prevención de spam',
 	'version-skins' => 'Pieles',
-	'version-other' => 'Otro',
+	'version-other' => 'Otras',
 	'version-mediahandlers' => 'Manejadores multimedia',
 	'version-hooks' => 'Extensiones',
-	'version-extension-functions' => 'Funciones de extensiones',
+	'version-extension-functions' => 'Funciones de la extensión',
 	'version-parser-extensiontags' => 'Etiquetas de extensiones sintácticas',
 	'version-parser-function-hooks' => 'Extensiones de funciones sintácticas',
 	'version-hook-name' => 'Nombre de la extensión',
@@ -2748,6 +2748,7 @@ Has recibido [{{SERVER}}{{SCRIPTPATH}}/COPYING una copia de la Licencia Pública
 	'vertical-music' => 'Música',
 	'vertical-movies' => 'Películas',
 	'var_set' => 'cambia la $2 a "$3"',
+	'version-file-extensions-allowed' => 'Extensiones de archivos permitidas para su subida',
 ];
 
 $messages['et'] = [
@@ -3127,9 +3128,9 @@ $1',
 	'version' => 'Version',
 	'version-extensions' => 'Extensions installées',
 	'version-specialpages' => 'Pages spéciales',
-	'version-parserhooks' => 'Greffons de l’analyseur syntaxique',
+	'version-parserhooks' => 'Greffons parseurs',
 	'version-variables' => 'Variables',
-	'version-antispam' => 'Prévention du pourriel',
+	'version-antispam' => 'Prévention du spam',
 	'version-skins' => 'Habillages',
 	'version-other' => 'Divers',
 	'version-mediahandlers' => 'Manipulateurs de médias',
@@ -3157,6 +3158,7 @@ Vous devriez avoir reçu [{{SERVER}}{{SCRIPTPATH}}/COPYING une copie de la Licen
 	'vertical-lifestyle' => 'Mode de vie',
 	'vertical-movies' => 'Films',
 	'var_set' => 'a changé le $2 en "$3"',
+	'version-file-extensions-allowed' => 'Extensions de fichier autorisées pour l\'importation',
 ];
 
 $messages['frc'] = [
@@ -7222,11 +7224,11 @@ Meer informatie is beschikbaar op de pagina [[Special:Version|softwareversie]].'
 	'version-license' => 'Licentie',
 	'version-poweredby-credits' => 'Deze wiki wordt aangedreven door \'\'\'[//www.mediawiki.org/ MediaWiki]\'\'\', copyright © 2001-$1 $2.',
 	'version-poweredby-others' => 'anderen',
-	'version-license-info' => 'MediaWiki is vrije software; u kunt MediaWiki verspreiden en/of aanpassen onder de voorwaarden van de GNU General Public License zoals gepubliceerd door de Free Software Foundation; ofwel versie 2 van de Licentie, of - naar uw wens - enige latere versie.
+	'version-license-info' => 'MediaWiki is vrije software; je kunt MediaWiki verspreiden en/of aanpassen onder de voorwaarden van de GNU General Public License zoals gepubliceerd door de Free Software Foundation; ofwel versie 2 van de Licentie, of - zo je wilt - enige latere versie.
 
-MediaWiki wordt verspreid in de hoop dat het nuttig is, maar ZONDER ENIGE GARANTIE; zonder zelfs de impliciete garantie van VERKOOPBAARHEID of GESCHIKTHEID VOOR ENIG DOEL IN HET BIJZONDER. Zie de GNU General Public License voor meer informatie.
+MediaWiki wordt verspreid in de hoop dat het nuttig is, maar ZONDER ENIGE GARANTIE; zonder zelfs de implicitiete garantie van VERKOOPBAARHEID of GESCHIKHEID VOOR ENIG DOEL IN HET BIJZONDER. Zie de GNU General Public License voor meer informatie.
 
-Samen met dit programma hoort u een [{{SERVER}}{{SCRIPTPATH}}/COPYING kopie van de GNU General Public License] te hebben ontvangen; zo niet, schrijf dan naar de Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA of [//www.gnu.org/licenses/old-licenses/gpl-2.0.html lees de licentie online].',
+Samen met dit programma hoor je een [{{SERVER}}{{SCRIPTPATH}}/COPYING kopie van de GNU General Public License] te hebben ontvangen; zo niet, schrijf dan naar de Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA of [http://www.gnu.org/licenses/old-licenses/gpl-2.0.html lees de licentie online].',
 	'version-software' => 'Geïnstalleerde software',
 	'version-software-product' => 'Product',
 	'version-software-version' => 'Versie',
@@ -7643,7 +7645,7 @@ $1',
 	'version-hook-subscribedby' => 'Zapotrzebowany przez',
 	'version-version' => '(Wersja $1)',
 	'version-license' => 'Licencja',
-	'version-poweredby-credits' => 'To wiki korzysta z oprogramowania \'\'\'[//www.mediawiki.org/ MediaWiki]\'\'\', copyright © 2001‐$1 $2.',
+	'version-poweredby-credits' => 'Ta wiki korzysta z oprogramowania \'\'\'[//www.mediawiki.org/ MediaWiki]\'\'\', copyright © 2001‐$1 $2.',
 	'version-poweredby-others' => 'inni',
 	'version-license-info' => 'MediaWiki jest wolnym oprogramowaniem – możesz je dystrybuować i modyfikować zgodnie z warunkami licencji GNU General Public License opublikowanej przez Free Software Foundation w wersji 2 tej licencji lub (jeśli wolisz) dowolnej późniejszej.
 
@@ -8357,9 +8359,9 @@ $1',
 	'version-poweredby-others' => 'другие',
 	'version-license-info' => 'MediaWiki является свободным программным обеспечением, которое вы можете распространять и/или изменять в соответствии с условиями лицензии GNU General Public License, опубликованной фондом свободного программного обеспечения; второй версии, либо любой более поздней версии.
 
-MediaWiki распространяется в надежде, что она будет полезной, но БЕЗ КАКИХ-ЛИБО ГАРАНТИЙ, даже без подразумеваемых гарантий КОММЕРЧЕСКОЙ ЦЕННОСТИ или ПРИГОДНОСТИ ДЛЯ ОПРЕДЕЛЕННОЙ ЦЕЛИ. См. лицензию GNU General Public License для более подробной информации.
+MediaWiki распространяется с надеждой на то, что будет полезным программным продуктом, но БЕЗ КАКИХ-ЛИБО ГАРАНТИЙ и без подразумеваемых гарантий КОММЕРЧЕСКОЙ ЦЕННОСТИ или СООТВЕТСТВИЯ КАКОЙ-ЛИБО ОПРЕДЕЛЁННОЙ ЦЕЛИ. См. лицензию GNU General Public License для более подробной информации.
 
-Вы должны были получить [{{SERVER}}{{SCRIPTPATH}}/COPYING копию GNU General Public License] вместе с этой программой, если нет, то напишите Free Software Foundation, Inc., по адресу: 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA или [//www.gnu.org/licenses/old-licenses/gpl-2.0.html прочтите её онлайн].',
+Вместе с данным программным обеспечением вы должны были получить [{{SERVER}}{{SCRIPTPATH}}/COPYING копию GNU General Public License] вместе с этой программой для ознакомления, если нет, то напишите Free Software Foundation, Inc., по адресу: 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA или [//www.gnu.org/licenses/old-licenses/gpl-2.0.html прочтите её онлайн].',
 	'version-software' => 'Установленное программное обеспечение',
 	'version-software-product' => 'Продукт',
 	'version-software-version' => 'Версия',
@@ -11098,6 +11100,7 @@ $messages['zh-tw'] = [
 	'version-hooks' => '鉤',
 	'version-parser-function-hooks' => '語法函數鉤',
 	'version-hook-name' => '鉤名',
+	'version' => '版本',
 ];
 
 $messages['zh-yue'] = [
@@ -11107,5 +11110,13 @@ $messages['zh-yue'] = [
 	'version-hooks' => '鉤',
 	'version-parser-function-hooks' => '語法函數鉤',
 	'version-hook-name' => '鉤名',
+];
+
+$messages['zh-cn'] = [
+	'version' => '版本',
+];
+
+$messages['zh-hk'] = [
+	'version' => '版本',
 ];
 
