@@ -81,6 +81,12 @@ define('ext.wikia.adEngine.provider.directGpt', [
 				'TOP_LEADERBOARD',
 				'TOP_RIGHT_BOXAD',
 				'GPT_FLUSH'
+			],
+			highlyViewableSlots: [
+				'INCONTENT_BOXAD_1',
+				'INCONTENT_LEADERBOARD',
+				'INCONTENT_PLAYER',
+				'INVISIBLE_HIGH_IMPACT_2'
 			]
 		}
 	);

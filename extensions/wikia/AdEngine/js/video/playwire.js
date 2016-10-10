@@ -13,20 +13,31 @@ define('ext.wikia.adEngine.video.playwire', [
 	}
 
 	function inject(params) {
-		var container = params.container,
+		var configUrl = params.configUrl,
+			container = params.container,
 			height = params.height,
+			playerId = 'playwire_' + Math.floor((1 + Math.random()) * 0x10000),
 			script = doc.createElement('script'),
 			slotName = params.slotName,
 			vastUrl = params.vastUrl,
 			width = params.width,
-			configUrl = params.configUrl;
+			win = container.ownerDocument.defaultView || container.ownerDocument.parentWindow;
 
 		if (!vastUrl) {
 			vastUrl = vastBuilder.build('playwire', slotName, width / height);
 		}
 
+		win.onReady = function () {
+			params.onReady(win.Bolt, playerId);
+		};
+
+		script.setAttribute('data-id', playerId);
 		script.setAttribute('data-config', configUrl);
 		script.setAttribute('data-ad-tag', vastUrl);
+
+		if (params.onReady) {
+			script.setAttribute('data-onready', 'onReady');
+		}
 
 		script.setAttribute('type', 'text/javascript');
 		script.src = playerUrl;

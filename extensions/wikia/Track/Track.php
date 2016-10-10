@@ -100,18 +100,18 @@ class Track {
 	}
 
 	private static function getGATrackingIds() {
-		global $wgWikiaEnvironment, $wgIsGASpecialWiki, $wgUser;
+		global $wgDevelEnvironment, $wgStagingEnvironment, $wgIsGASpecialWiki, $wgUser;
 
 		$tids = [ ];
 		// 10% sampling for general account
 		if ( mt_rand( 0, 9 ) === 0 ) {
-			$tids[] = ( $wgWikiaEnvironment === WIKIA_ENV_PROD ) ? 'UA-32129070-1' : 'UA-32129070-2';
+			$tids[] = $wgDevelEnvironment || $wgStagingEnvironment ? 'UA-32129070-2' : 'UA-32129070-1';
 		}
 		if ( $wgIsGASpecialWiki ) {
-			$tids[] = ( $wgWikiaEnvironment === WIKIA_ENV_PROD ) ? 'UA-32132943-1' : 'UA-32132943-2';
+			$tids[] = $wgDevelEnvironment || $wgStagingEnvironment ? 'UA-32132943-2' : 'UA-32132943-1';
 		}
 		if ( !$wgUser->isAnon() ) {
-			$tids[] = ( $wgWikiaEnvironment === WIKIA_ENV_PROD ) ? 'UA-32132943-7' : 'UA-32132943-8';
+			$tids[] = $wgDevelEnvironment || $wgStagingEnvironment ? 'UA-32132943-8' : 'UA-32132943-7';
 		}
 
 		return $tids;
