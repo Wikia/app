@@ -1,14 +1,8 @@
 <?php
-/**
- * Internationalisation file for SponsorshipDashboard extension.
- *
- * @addtogroup Extensions
- * @todo FIXME: most message keys need an extension specifix prefix to avoid key collision.
- */
+/** Internationalization file for /extensions/wikia/SponsorshipDashboard/SponsorshipDashboard extension. */
+$messages = [];
 
-$messages = array();
-
-$messages['en'] = array(
+$messages['en'] = [
 	'sponsorship-dashboard' => '[[Special:SponsorshipDashboard|Special page]] for sponsorship related metrics',
 	'sponsorship-dashboard-serie-A' => 'Total registered editors in current month (all namespaces)',
 	'sponsorship-dashboard-serie-B' => 'Total registered editors in current month (content namespaces)',
@@ -69,7 +63,7 @@ $messages['en'] = array(
 	'sponsorship-dashboard-serie-namespace-Category_talk' => 'Category talk pages',
 	'sponsorship-dashboard-serie-namespace-Top_10_list' => 'Category talk pages',
 	'sponsorship-dashboard-serie-namespace-User_blog_comment' => 'User blog comments',
-	'sponsorship-dashboard-serie-namespace-User_blog' => 'User blog pages',    
+	'sponsorship-dashboard-serie-namespace-User_blog' => 'User blog pages',
 	'sponsorship-dashboard-description-activity' => 'Contributor activity by month',
 	'sponsorship-dashboard-description-engagement' => 'Total hours spent per day',
 	'sponsorship-dashboard-description-participation' => 'Unique editors by month',
@@ -212,13 +206,10 @@ $messages['en'] = array(
 	'sponsorship-dashboard-compleat' => '% complete',
 	'sponsorship-dashboard-select-all' => 'select all',
 	'sponsorship-dashboard-deselect-all' => 'deselect all',
-	'sponsorship-dashboard-download' => 'extra actions'
-);
+	'sponsorship-dashboard-download' => 'extra actions',
+];
 
-/** Message documentation (Message documentation)
- * @author Siebrand
- */
-$messages['qqq'] = array(
+$messages['qqq'] = [
 	'sponsorship-dashboard-serie-bounces' => 'A bounce is a single-page visit or a visit in which the person left a site from the entrance (landing) page.',
 	'sponsorship-dashboard-serie-entranceRate' => 'The percentage of visits to a page that is the first visit to the site.',
 	'sponsorship-dashboard-serie-exitRate' => 'The percentage of visitors that leave a site from a given page based on the number of visits to that page (or pageviews in some cases).',
@@ -229,20 +220,14 @@ $messages['qqq'] = array(
 	'sponsorship-dashboard-report-new-source-gapi-custom' => '"GA" stands for Google Analytics.',
 	'sponsorship-dashboard-source-in-case-of-empty' => 'This is a label for a text input element',
 	'sponsorship-dashboard-source-gapi-force-account' => '"GA" stands for Google Analytics.',
-);
+];
 
-/** Tati (Tati)
- * @author Erdemaslancan
- */
-$messages['ttt'] = array(
+$messages['ttt'] = [
 	'sponsorship-dashboard-user-type-0' => 'WikiaKarber',
 	'sponsorship-dashboard-empty-description' => '$1',
-);
+];
 
-/** Afrikaans (Afrikaans)
- * @author Naudefj
- */
-$messages['af'] = array(
+$messages['af'] = [
 	'sponsorship-dashboard-serie-organic' => 'Soekenjins',
 	'sponsorship-dashboard-serie-content-article' => 'bladsye',
 	'sponsorship-dashboard-report-activity' => 'Aktiwiteit',
@@ -262,12 +247,9 @@ $messages['af'] = array(
 	'sponsorship-dashboard-year' => 'Jaar',
 	'sponsorship-dashboard-from-label' => 'Begindatum',
 	'sponsorship-dashboard-to-label' => 'Einddatum',
-);
+];
 
-/** Arabic (العربية)
- * @author OsamaK
- */
-$messages['ar'] = array(
+$messages['ar'] = [
 	'sponsorship-dashboard-serie-organic' => 'محركات البحث',
 	'sponsorship-dashboard-serie-namespace-Talk' => 'صفحات النقاش',
 	'sponsorship-dashboard-serie-namespace-User' => 'صفحات المستخدمين',
@@ -301,12 +283,9 @@ $messages['ar'] = array(
 	'sponsorship-dashboard-source-query' => 'خيارات',
 	'sponsorship-dashboard-other-options' => 'خيارات أخرى',
 	'sponsorship-dashboard-table-collumn-date' => 'التاريخ',
-);
+];
 
-/** Azerbaijani (azərbaycanca)
- * @author Cekli829
- */
-$messages['az'] = array(
+$messages['az'] = [
 	'sponsorship-dashboard-serie-content-article' => 'səhifələr',
 	'sponsorship-dashboard-day' => 'Gün',
 	'sponsorship-dashboard-month' => 'Ay',
@@ -328,12 +307,9 @@ $messages['az'] = array(
 	'sponsorship-dashboard-source-list' => 'Siyahı',
 	'sponsorship-dashboard-source-serie-name' => 'ad',
 	'sponsorship-dashboard-table-collumn-date' => 'Tarix',
-);
+];
 
-/** Bulgarian (български)
- * @author DCLXVI
- */
-$messages['bg'] = array(
+$messages['bg'] = [
 	'sponsorship-dashboard' => '[[Special:SponsorshipDashboard|Специална страница]] за свързани със спонсорства метрики',
 	'sponsorship-dashboard-serie-content-article' => 'страници',
 	'sponsorship-dashboard-serie-namespace-Help' => 'Помощни страници',
@@ -373,13 +349,9 @@ $messages['bg'] = array(
 	'sponsorship-dashboard-source-OS' => 'Операционна система',
 	'sponsorship-dashboard-table-collumn-date' => 'Дата',
 	'sponsorship-dashboard-download-csv' => 'Изтегляне на CSV файл',
-);
+];
 
-/** Breton (brezhoneg)
- * @author Fulup
- * @author Y-M D
- */
-$messages['br'] = array(
+$messages['br'] = [
 	'sponsorship-dashboard-serie-F' => 'Pennadoù nevez dre zeiz er miz-mañ',
 	'sponsorship-dashboard-serie-H' => 'Skeudennoù - Liammet',
 	'sponsorship-dashboard-serie-I' => 'Skeudennoù - Enporzhiet',
@@ -393,7 +365,7 @@ $messages['br'] = array(
 	'sponsorship-dashboard-serie-visitors' => 'Gweladennerien',
 	'sponsorship-dashboard-serie-entranceRate' => 'Feur dont e-barzh',
 	'sponsorship-dashboard-serie-exitRate' => 'Feur mont er-maez',
-	'sponsorship-dashboard-serie-avgTimeOnSite' => "Padelezh keitat chomet war al lec'hienn",
+	'sponsorship-dashboard-serie-avgTimeOnSite' => 'Padelezh keitat chomet war al lec\'hienn',
 	'sponsorship-dashboard-serie-percentNewVisits' => 'Dregantad a weladennerien nevez',
 	'sponsorship-dashboard-serie-avgTimeOnPage' => 'Padelezh keitat chomet war ar bajenn',
 	'sponsorship-dashboard-serie-pageviewsPerVisit' => 'Pajennoù gwelet dre weladenn',
@@ -409,7 +381,7 @@ $messages['br'] = array(
 	'sponsorship-dashboard-description-engagement' => 'Niver hollek a eurvezhioù dre zevezh',
 	'sponsorship-dashboard-report-activity' => 'Obererezh',
 	'sponsorship-dashboard-report-source' => 'Mammenn',
-	'sponsorship-dashboard-report-keywords' => "Gerioù alc'hwez",
+	'sponsorship-dashboard-report-keywords' => 'Gerioù alc\'hwez',
 	'sponsorship-dashboard-report-visitors' => 'Gweladennerien',
 	'sponsorship-dashboard-report-traffic' => 'Tremeniri',
 	'sponsorship-dashboard-report-content' => 'Danvez',
@@ -485,16 +457,9 @@ $messages['br'] = array(
 	'sponsorship-dashboard-select-all' => 'diuzañ pep tra',
 	'sponsorship-dashboard-deselect-all' => 'diziuzañ pep tra',
 	'sponsorship-dashboard-download' => 'oberoù ouzhpenn',
-);
+];
 
-/** German (Deutsch)
- * @author Claudia Hattitten
- * @author Erdemaslancan
- * @author George Animal
- * @author Kghbln
- * @author LWChris
- */
-$messages['de'] = array(
+$messages['de'] = [
 	'sponsorship-dashboard' => '[[Special:SponsorshipDashboard|Spezialseite]] für Kennzahlen zu Sponsoring',
 	'sponsorship-dashboard-serie-A' => 'Alle registrierten Bearbeiter im aktuellen Monat (alle Namensräume)',
 	'sponsorship-dashboard-serie-B' => 'Alle registrierten Bearbeiter im aktuellen Monat (Content-Namensräume)',
@@ -699,21 +664,13 @@ $messages['de'] = array(
 	'sponsorship-dashboard-select-all' => 'alle auswählen',
 	'sponsorship-dashboard-deselect-all' => 'nichts auswählen',
 	'sponsorship-dashboard-download' => 'zusätzliche Aktionen',
-);
+];
 
-/** German (formal address) (‪Deutsch (Sie-Form)‬)
- * @author Claudia Hattitten
- * @author Kghbln
- */
-$messages['de-formal'] = array(
+$messages['de-formal'] = [
 	'sponsorship-dashboard-not-allowed' => 'Sie haben nicht die erforderliche Berechtigung, um diese Seite aufrufen zu können.',
-);
+];
 
-/** Zazaki (Zazaki)
- * @author Erdemaslancan
- * @author Mirzali
- */
-$messages['diq'] = array(
+$messages['diq'] = [
 	'sponsorship-dashboard-serie-content-article' => 'Pekey',
 	'sponsorship-dashboard-serie-toplists' => 'Tewr Listey',
 	'sponsorship-dashboard-serie-clicks' => 'Kliki',
@@ -765,7 +722,7 @@ $messages['diq'] = array(
 	'sponsorship-dashboard-user-type' => 'Babeta Karberi',
 	'sponsorship-dashboard-report-new' => 'rapora newi',
 	'sponsorship-dashboard-description' => 'Şınasiyen',
-	'sponsorship-dashboard-users-user-id' => "ID'ê Karberi",
+	'sponsorship-dashboard-users-user-id' => 'ID\'ê Karberi',
 	'sponsorship-dashboard-users-name' => 'Name',
 	'sponsorship-dashboard-users-status' => 'Bikefilne',
 	'sponsorship-dashboard-users-type' => 'Babet',
@@ -799,13 +756,9 @@ $messages['diq'] = array(
 	'sponsorship-dashboard-source-serie-name' => 'name',
 	'sponsorship-dashboard-source-query' => 'Weçinegi',
 	'sponsorship-dashboard-table-collumn-date' => 'Deme',
-);
+];
 
-/** Spanish (español)
- * @author Benfutbol10
- * @author VegaDark
- */
-$messages['es'] = array(
+$messages['es'] = [
 	'sponsorship-dashboard' => '[[Special:SponsorshipDashboard|Página especial]] para las métricas de patrocinios y relacionados',
 	'sponsorship-dashboard-serie-A' => 'Total de editores registrados en el mes actual (todos los espacios de nombres)',
 	'sponsorship-dashboard-serie-B' => 'Total de editores registrados en el mes actual (espacios de contenido)',
@@ -1010,12 +963,9 @@ $messages['es'] = array(
 	'sponsorship-dashboard-select-all' => 'seleccionar todo',
 	'sponsorship-dashboard-deselect-all' => 'deseleccionar todo',
 	'sponsorship-dashboard-download' => 'acciones adicionales',
-);
+];
 
-/** Persian (فارسی)
- * @author Mjbmr
- */
-$messages['fa'] = array(
+$messages['fa'] = [
 	'sponsorship-dashboard-tab-ViewGroups' => 'گروه‌ها',
 	'sponsorship-dashboard-tab-ViewUsers' => 'کاربران',
 	'sponsorship-dashboard-users-name' => 'نام',
@@ -1027,14 +977,9 @@ $messages['fa'] = array(
 	'sponsorship-dashboard-report-new-source-mobile' => 'تلفن همراه',
 	'sponsorship-dashboard-source-serie-name' => 'نام',
 	'sponsorship-dashboard-table-collumn-date' => 'تاریخ',
-);
+];
 
-/** Finnish (suomi)
- * @author Crt
- * @author Nike
- * @author Olli
- */
-$messages['fi'] = array(
+$messages['fi'] = [
 	'sponsorship-dashboard' => '[[Special:SponsorshipDashboard|Toimintosivu]] tukemiseen liittyville mittareille',
 	'sponsorship-dashboard-serie-A' => 'Rekisteröityneitä muokkaajia yhteensä tässä kuussa (kaikki nimiavaruudet)',
 	'sponsorship-dashboard-serie-B' => 'Rekisteröityneitä muokkaajia tässä kuussa yhteensä (sisältönimiavaruudet)',
@@ -1231,16 +1176,9 @@ $messages['fi'] = array(
 	'sponsorship-dashboard-not-allowed' => 'Sinulla ei ole oikeutta käyttää tätä sivua',
 	'sponsorship-dashboard-download-csv' => 'Lataa CSV-tiedosto',
 	'sponsorship-dashboard-save-as-new' => 'Tallenna uutena',
-);
+];
 
-/** French (français)
- * @author Balzac 40
- * @author Brunoperel
- * @author Iketsi
- * @author Od1n
- * @author Verdy p
- */
-$messages['fr'] = array(
+$messages['fr'] = [
 	'sponsorship-dashboard' => '[[Special:SponsorshipDashboard|Page spéciale]] pour les données de mesures relatives aux parrainages',
 	'sponsorship-dashboard-serie-A' => 'Total des contributeurs inscrits au cours du mois actuel (tous les espaces de noms)',
 	'sponsorship-dashboard-serie-B' => 'Total des contributeurs inscrits au cours du mois actuel (espaces de noms de contenus)',
@@ -1259,8 +1197,8 @@ $messages['fr'] = array(
 	'sponsorship-dashboard-serie-content-article' => 'pages',
 	'sponsorship-dashboard-serie-toplists' => 'Listes de top',
 	'sponsorship-dashboard-serie-blog-comments' => 'Commentaires de blog',
-	'sponsorship-dashboard-serie-general-edits' => "plus d'une modification générale",
-	'sponsorship-dashboard-serie-article-edits-1' => "plus d'une page modifiée",
+	'sponsorship-dashboard-serie-general-edits' => 'plus d\'une modification générale',
+	'sponsorship-dashboard-serie-article-edits-1' => 'plus d\'une page modifiée',
 	'sponsorship-dashboard-serie-article-edits-5' => 'plus de 5 modifications',
 	'sponsorship-dashboard-serie-article-edits-10' => 'plus de 100 modifications',
 	'sponsorship-dashboard-serie-pageviews' => 'Nombre total de pages vues',
@@ -1270,7 +1208,7 @@ $messages['fr'] = array(
 	'sponsorship-dashboard-serie-newVisits' => 'Nouvelles visites',
 	'sponsorship-dashboard-serie-bounces' => 'Rebondit',
 	'sponsorship-dashboard-serie-visitors' => 'Visiteurs',
-	'sponsorship-dashboard-serie-entranceRate' => "Taux d'entrée",
+	'sponsorship-dashboard-serie-entranceRate' => 'Taux d\'entrée',
 	'sponsorship-dashboard-serie-uniquePageviews' => 'Nombre de pages uniques vues',
 	'sponsorship-dashboard-serie-exitRate' => 'Taux de sortie',
 	'sponsorship-dashboard-serie-avgTimeOnSite' => 'Délai moyen passé sur le site',
@@ -1295,7 +1233,7 @@ $messages['fr'] = array(
 	'sponsorship-dashboard-serie-namespace-MediaWiki_talk' => 'Pages de discussion de Mediawiki',
 	'sponsorship-dashboard-serie-namespace-Template' => 'Pages de modèle',
 	'sponsorship-dashboard-serie-namespace-Template_talk' => 'Pages de discussion d’un modèle',
-	'sponsorship-dashboard-serie-namespace-Help' => "Pages d'aide",
+	'sponsorship-dashboard-serie-namespace-Help' => 'Pages d\'aide',
 	'sponsorship-dashboard-serie-namespace-Help_talk' => 'Pages de discussion d’aide',
 	'sponsorship-dashboard-serie-namespace-Category' => 'Pages de catégories',
 	'sponsorship-dashboard-serie-namespace-Category_talk' => 'Pages de discussion d’une catégorie',
@@ -1303,7 +1241,7 @@ $messages['fr'] = array(
 	'sponsorship-dashboard-serie-namespace-User_blog_comment' => 'Commentaires des blogs des utilisateurs',
 	'sponsorship-dashboard-serie-namespace-User_blog' => 'Pages de blogs des utilisateurs',
 	'sponsorship-dashboard-description-activity' => 'Activités des contributeurs par mois',
-	'sponsorship-dashboard-description-engagement' => "Nombre total d'heures consacrées par jour",
+	'sponsorship-dashboard-description-engagement' => 'Nombre total d\'heures consacrées par jour',
 	'sponsorship-dashboard-description-participation' => 'Éditeurs uniques par mois',
 	'sponsorship-dashboard-description-source' => 'Comment vos utilisateurs vous trouvent',
 	'sponsorship-dashboard-description-competitors' => 'Trafic de la concurrence',
@@ -1317,7 +1255,7 @@ $messages['fr'] = array(
 	'sponsorship-dashboard-report-participation' => 'Participation',
 	'sponsorship-dashboard-report-source' => 'Source',
 	'sponsorship-dashboard-report-competitors' => 'Concurrents',
-	'sponsorship-dashboard-report-interests' => "Centres d'intérêt",
+	'sponsorship-dashboard-report-interests' => 'Centres d\'intérêt',
 	'sponsorship-dashboard-report-keywords' => 'Mots-clés',
 	'sponsorship-dashboard-report-visitors' => 'Visiteurs',
 	'sponsorship-dashboard-report-traffic' => 'Trafic',
@@ -1435,7 +1373,7 @@ $messages['fr'] = array(
 	'sponsorship-dashboard-download-chart' => 'Télécharger le graphique en .png',
 	'sponsorship-dashboard-from-checkbox-show-trends' => 'afficher sous forme de tendances',
 	'sponsorship-dashboard-table-collumn-date' => 'Date',
-	'sponsorship-dashboard-users-error' => "Utilisateur $1 introuvable. Le compte n'a pas été créé.",
+	'sponsorship-dashboard-users-error' => 'Utilisateur $1 introuvable. Le compte n\'a pas été créé.',
 	'sponsorship-dashboard-not-allowed' => 'Il ne vous est pas permis d’accéder à cette page',
 	'sponsorship-dashboard-download-csv' => 'Télécharger le fichier CSV',
 	'sponsorship-dashboard-save-as-new' => 'Enregistrer en tant que nouveau',
@@ -1445,12 +1383,9 @@ $messages['fr'] = array(
 	'sponsorship-dashboard-select-all' => 'Tout sélectionner',
 	'sponsorship-dashboard-deselect-all' => 'Tout déselectionner',
 	'sponsorship-dashboard-download' => 'actions supplémentaires',
-);
+];
 
-/** Galician (galego)
- * @author Toliño
- */
-$messages['gl'] = array(
+$messages['gl'] = [
 	'sponsorship-dashboard' => '[[Special:SponsorshipDashboard|Páxina epecial]] para os datos de medida relativos aos patrocinios',
 	'sponsorship-dashboard-serie-A' => 'Total de editores rexistrados no mes actual (todos os espazos de nomes)',
 	'sponsorship-dashboard-serie-B' => 'Total de editores rexistrados no mes actual (espazos de nomes de contido)',
@@ -1654,14 +1589,9 @@ $messages['gl'] = array(
 	'sponsorship-dashboard-select-all' => 'seleccionar todo',
 	'sponsorship-dashboard-deselect-all' => 'deseleccionar todo',
 	'sponsorship-dashboard-download' => 'accións adicionais',
-);
+];
 
-/** Hungarian (magyar)
- * @author Dani
- * @author Misibacsi
- * @author TK-999
- */
-$messages['hu'] = array(
+$messages['hu'] = [
 	'sponsorship-dashboard' => '[[Special:SponsorshipDashboard|Különleges oldal]] a szponzorálással kapcsolatos statisztikáknak',
 	'sponsorship-dashboard-serie-A' => 'Összes regisztrált szerkesztő az aktuális hónapban (minden névtér)',
 	'sponsorship-dashboard-serie-B' => 'Összes regisztrált szerkesztő az aktuális hónapban (tartalom névterek)',
@@ -1856,19 +1786,13 @@ $messages['hu'] = array(
 	'sponsorship-dashboard-select-all' => 'Összes kijelölése',
 	'sponsorship-dashboard-deselect-all' => 'Minden kijelölés megszüntetése',
 	'sponsorship-dashboard-download' => 'További műveletek',
-);
+];
 
-/** Armenian (Հայերեն)
- * @author Erdemaslancan
- */
-$messages['hy'] = array(
+$messages['hy'] = [
 	'sponsorship-dashboard-empty-description' => '$1',
-);
+];
 
-/** Interlingua (interlingua)
- * @author McDutchie
- */
-$messages['ia'] = array(
+$messages['ia'] = [
 	'sponsorship-dashboard' => '[[Special:SponsorshipDashboard|Pagina special]] pro mesurationes concernente le sponsorisation',
 	'sponsorship-dashboard-serie-A' => 'Total del contributores registrate in le mense actual (tote le spatios de nomines)',
 	'sponsorship-dashboard-serie-B' => 'Total del contributores registrate in le mense actual (spatios de nomines a contento)',
@@ -2072,19 +1996,13 @@ $messages['ia'] = array(
 	'sponsorship-dashboard-select-all' => 'seliger totes',
 	'sponsorship-dashboard-deselect-all' => 'disseliger totes',
 	'sponsorship-dashboard-download' => 'actiones extra',
-);
+];
 
-/** Ingush (ГӀалгӀай)
- * @author Sapral Mikail
- */
-$messages['inh'] = array(
+$messages['inh'] = [
 	'sponsorship-dashboard-day' => 'Ди',
-);
+];
 
-/** Japanese (日本語)
- * @author Shirayuki
- */
-$messages['ja'] = array(
+$messages['ja'] = [
 	'sponsorship-dashboard-serie-organic' => '検索エンジン',
 	'sponsorship-dashboard-serie-clicks' => 'クリック数',
 	'sponsorship-dashboard-day' => '日',
@@ -2092,21 +2010,15 @@ $messages['ja'] = array(
 	'sponsorship-dashboard-year' => '年',
 	'sponsorship-dashboard-from-label' => '開始日',
 	'sponsorship-dashboard-to-label' => '終了日',
-);
+];
 
-/** Kirmanjki (Kırmancki)
- * @author Erdemaslancan
- */
-$messages['kiu'] = array(
+$messages['kiu'] = [
 	'sponsorship-dasboard-specialpage' => 'WikiMetrisi',
 	'sponsorship-dashboard-user-type-0' => 'WikiaKarber',
 	'sponsorship-dashboard-empty-description' => '$1',
-);
+];
 
-/** Luxembourgish (Lëtzebuergesch)
- * @author Robby
- */
-$messages['lb'] = array(
+$messages['lb'] = [
 	'sponsorship-dashboard-serie-organic' => 'Sichmaschinnen',
 	'sponsorship-dashboard-serie-content-article' => 'Säiten',
 	'sponsorship-dashboard-serie-clicks' => 'Klicken',
@@ -2139,19 +2051,13 @@ $messages['lb'] = array(
 	'sponsorship-dashboard-source-query' => 'Optiounen',
 	'sponsorship-dashboard-other-options' => 'Aner Optiounen',
 	'sponsorship-dashboard-table-collumn-date' => 'Datum',
-);
+];
 
-/** Lazuri (Lazuri)
- * @author Erdemaslancan
- */
-$messages['lzz'] = array(
+$messages['lzz'] = [
 	'sponsorship-dashboard-empty-description' => '$1',
-);
+];
 
-/** Macedonian (македонски)
- * @author Bjankuloski06
- */
-$messages['mk'] = array(
+$messages['mk'] = [
 	'sponsorship-dashboard' => '[[Special:SponsorshipDashboard|Специјална страница]] за мерења поврзани со спонзорството',
 	'sponsorship-dashboard-serie-A' => 'Вкупно регистрирани уредници за овој месец (сите именски простори)',
 	'sponsorship-dashboard-serie-B' => 'Вкупно регистрирани уредници месецов (содржински имен. простори)',
@@ -2356,12 +2262,9 @@ $messages['mk'] = array(
 	'sponsorship-dashboard-select-all' => 'избери сè',
 	'sponsorship-dashboard-deselect-all' => 'тргни избор',
 	'sponsorship-dashboard-download' => 'дополнителни дејства',
-);
+];
 
-/** Malay (Bahasa Melayu)
- * @author Anakmalaysia
- */
-$messages['ms'] = array(
+$messages['ms'] = [
 	'sponsorship-dashboard' => '[[Special:SponsorshipDashboard|Laman khas]] untuk rencana berkaitan penajaan',
 	'sponsorship-dashboard-serie-A' => 'Jumlah penyunting berdaftar pada bulan ini (semua ruang nama)',
 	'sponsorship-dashboard-serie-B' => 'Jumlah penyunting berdaftar pada bulan ini (ruang nama kandungan)',
@@ -2565,25 +2468,18 @@ $messages['ms'] = array(
 	'sponsorship-dashboard-select-all' => 'pilih semua',
 	'sponsorship-dashboard-deselect-all' => 'nyahpilih semua',
 	'sponsorship-dashboard-download' => 'tindakan tambahan',
-);
+];
 
-/** Burmese (မြန်မာဘာသာ)
- * @author Erikoo
- */
-$messages['my'] = array(
+$messages['my'] = [
 	'sponsorship-dashboard-serie-content-article' => 'စာမျက်နှာများ',
 	'sponsorship-dashboard-serie-namespace-Media' => 'မီဒီယာ စာမျက်နှာ',
 	'sponsorship-dashboard-serie-namespace-Special' => 'အ​ထူး ​စာ​မျက်​နှာ​များ',
 	'sponsorship-dashboard-serie-namespace-Talk' => 'ဆွေးနွေးရန် စာမျက်နှာ',
 	'sponsorship-dashboard-serie-namespace-User' => 'အ​သုံး​ပြု​သူ​၏ ​စာ​မျက်​နှာ​',
 	'sponsorship-dashboard-serie-namespace-Project' => 'ပရောဂျက်စာမျက်နှာများ',
-);
+];
 
-/** Norwegian Bokmål (‪norsk (bokmål)‬)
- * @author Audun
- * @author Nghtwlkr
- */
-$messages['nb'] = array(
+$messages['nb'] = [
 	'sponsorship-dashboard' => '[[Special:SponsorshipDashboard|Spesialside]] for sponsorrelaterte beregninger',
 	'sponsorship-dashboard-serie-A' => 'Totalt antall registrerte redaktører for gjeldende måned (alle navnerom)',
 	'sponsorship-dashboard-serie-B' => 'Totalt antall registrerte redaktører for gjeldende måned (innholdsnavnerommet)',
@@ -2787,36 +2683,32 @@ $messages['nb'] = array(
 	'sponsorship-dashboard-select-all' => 'velg alle',
 	'sponsorship-dashboard-deselect-all' => 'velg ingen',
 	'sponsorship-dashboard-download' => 'ytterligere  handlinger',
-);
+];
 
-/** Dutch (Nederlands)
- * @author McDutchie
- * @author Siebrand
- */
-$messages['nl'] = array(
+$messages['nl'] = [
 	'sponsorship-dashboard' => '[[Special:SponsorshipDashboard|Speciale pagina]] sponsoringsgerelateerde statistieken',
 	'sponsorship-dashboard-serie-A' => 'Totale aantal geregistreerde bewerkers in huidige maand (alle naamruimten)',
 	'sponsorship-dashboard-serie-B' => 'Totale aantal geregistreerde bewerkers in huidige maand (inhoudsnaamruimten)',
 	'sponsorship-dashboard-serie-C' => 'Aantal geregistreerde bewerkers dat in huidige maand meer dan vijf bewerkingen heeft gemaakt (inhoudsnaamruimten)',
 	'sponsorship-dashboard-serie-D' => 'Aantal geregistreerde bewerkers dat in huidige maand meer dan honderd bewerkingen heeft gemaakt (inhoudsnaamruimten)',
-	'sponsorship-dashboard-serie-E' => "Aantal pagina's in alle inhoudsnaamruimten",
-	'sponsorship-dashboard-serie-F' => "Nieuwe pagina's per dag in de huidige maand",
-	'sponsorship-dashboard-serie-G' => "Aantal bewerkingen aan pagina's in alle inhoudsnaamruimten",
+	'sponsorship-dashboard-serie-E' => 'Aantal pagina\'s in alle inhoudsnaamruimten',
+	'sponsorship-dashboard-serie-F' => 'Nieuwe pagina\'s per dag in de huidige maand',
+	'sponsorship-dashboard-serie-G' => 'Aantal bewerkingen aan pagina\'s in alle inhoudsnaamruimten',
 	'sponsorship-dashboard-serie-H' => 'Afbeeldingen - gekoppeld',
 	'sponsorship-dashboard-serie-I' => 'Afbeeldingen - geüpload',
 	'sponsorship-dashboard-serie-J' => 'Video - ingebed',
 	'sponsorship-dashboard-serie-K' => 'Video - geüpload',
-	'sponsorship-dashboard-serie-new-pages-content-namespace' => "Toename aantal pagina's",
+	'sponsorship-dashboard-serie-new-pages-content-namespace' => 'Toename aantal pagina\'s',
 	'sponsorship-dashboard-serie-organic' => 'Zoekmachines',
 	'sponsorship-dashboard-serie-referral' => 'Verwijzende sites',
-	'sponsorship-dashboard-serie-content-article' => "pagina's",
+	'sponsorship-dashboard-serie-content-article' => 'pagina\'s',
 	'sponsorship-dashboard-serie-toplists' => 'Toplijsten',
 	'sponsorship-dashboard-serie-blog-comments' => 'Blogreacties',
 	'sponsorship-dashboard-serie-general-edits' => '1+ algemene bewerkingen',
 	'sponsorship-dashboard-serie-article-edits-1' => '1+ paginabewerkingen',
 	'sponsorship-dashboard-serie-article-edits-5' => '5+ paginabewerkingen',
 	'sponsorship-dashboard-serie-article-edits-10' => '100+ paginabewerkingen',
-	'sponsorship-dashboard-serie-pageviews' => "Totaal bekeken pagina's",
+	'sponsorship-dashboard-serie-pageviews' => 'Totaal bekeken pagina\'s',
 	'sponsorship-dashboard-serie-clicks' => 'Kliks',
 	'sponsorship-dashboard-serie-visits' => 'Totaal aantal bezoeken',
 	'sponsorship-dashboard-serie-timeOnSite' => 'Bestede uren',
@@ -2824,7 +2716,7 @@ $messages['nl'] = array(
 	'sponsorship-dashboard-serie-bounces' => 'Weigeringen',
 	'sponsorship-dashboard-serie-visitors' => 'Bezoekers',
 	'sponsorship-dashboard-serie-entranceRate' => 'Binnenkomstpercentage',
-	'sponsorship-dashboard-serie-uniquePageviews' => "Unieke bekeken pagina's",
+	'sponsorship-dashboard-serie-uniquePageviews' => 'Unieke bekeken pagina\'s',
 	'sponsorship-dashboard-serie-exitRate' => 'Exitpercentage',
 	'sponsorship-dashboard-serie-avgTimeOnSite' => 'Gemiddelde tijd op site',
 	'sponsorship-dashboard-serie-visitBounceRate' => 'Percentage bezoekweigeringen',
@@ -2835,35 +2727,35 @@ $messages['nl'] = array(
 	'sponsorship-dashboard-serie-pageviewsPerVisit' => 'Pageviews per bezoek',
 	'sponsorship-dashboard-serie-exits' => 'Exits',
 	'sponsorship-dashboard-serie-newVisitsTimeOnSite' => 'Bestede uren door nieuwe bezoekers',
-	'sponsorship-dashboard-serie-namespace-Media' => "Mediapagina's",
-	'sponsorship-dashboard-serie-namespace-Special' => "Speciale pagina's",
-	'sponsorship-dashboard-serie-namespace-Talk' => "Overlegpagina's",
-	'sponsorship-dashboard-serie-namespace-User' => "Gebruikerspagina's",
-	'sponsorship-dashboard-serie-namespace-User_talk' => "Gebruikersoverlegpagina's",
-	'sponsorship-dashboard-serie-namespace-Project' => "Projectpagina's",
-	'sponsorship-dashboard-serie-namespace-Project_talk' => "Projectoverlegpagina's",
-	'sponsorship-dashboard-serie-namespace-File' => "Bestandspagina's",
-	'sponsorship-dashboard-serie-namespace-File_talk' => "Bestandsoverlegpagina's",
-	'sponsorship-dashboard-serie-namespace-MediaWiki' => "MediaWiki-pagina's",
-	'sponsorship-dashboard-serie-namespace-MediaWiki_talk' => "MediaWiki-overlegpagina's",
-	'sponsorship-dashboard-serie-namespace-Template' => "Sjaboonpagina's",
-	'sponsorship-dashboard-serie-namespace-Template_talk' => "Sjaboonoverlegpagina's",
-	'sponsorship-dashboard-serie-namespace-Help' => "Helppagina 's",
-	'sponsorship-dashboard-serie-namespace-Help_talk' => "Helpoverlegpagina 's",
-	'sponsorship-dashboard-serie-namespace-Category' => "Categoriepagina's",
-	'sponsorship-dashboard-serie-namespace-Category_talk' => "Categorieoverlegpagina's",
-	'sponsorship-dashboard-serie-namespace-Top_10_list' => "Categorieoverlegpagina's",
+	'sponsorship-dashboard-serie-namespace-Media' => 'Mediapagina\'s',
+	'sponsorship-dashboard-serie-namespace-Special' => 'Speciale pagina\'s',
+	'sponsorship-dashboard-serie-namespace-Talk' => 'Overlegpagina\'s',
+	'sponsorship-dashboard-serie-namespace-User' => 'Gebruikerspagina\'s',
+	'sponsorship-dashboard-serie-namespace-User_talk' => 'Gebruikersoverlegpagina\'s',
+	'sponsorship-dashboard-serie-namespace-Project' => 'Projectpagina\'s',
+	'sponsorship-dashboard-serie-namespace-Project_talk' => 'Projectoverlegpagina\'s',
+	'sponsorship-dashboard-serie-namespace-File' => 'Bestandspagina\'s',
+	'sponsorship-dashboard-serie-namespace-File_talk' => 'Bestandsoverlegpagina\'s',
+	'sponsorship-dashboard-serie-namespace-MediaWiki' => 'MediaWiki-pagina\'s',
+	'sponsorship-dashboard-serie-namespace-MediaWiki_talk' => 'MediaWiki-overlegpagina\'s',
+	'sponsorship-dashboard-serie-namespace-Template' => 'Sjaboonpagina\'s',
+	'sponsorship-dashboard-serie-namespace-Template_talk' => 'Sjaboonoverlegpagina\'s',
+	'sponsorship-dashboard-serie-namespace-Help' => 'Helppagina \'s',
+	'sponsorship-dashboard-serie-namespace-Help_talk' => 'Helpoverlegpagina \'s',
+	'sponsorship-dashboard-serie-namespace-Category' => 'Categoriepagina\'s',
+	'sponsorship-dashboard-serie-namespace-Category_talk' => 'Categorieoverlegpagina\'s',
+	'sponsorship-dashboard-serie-namespace-Top_10_list' => 'Categorieoverlegpagina\'s',
 	'sponsorship-dashboard-serie-namespace-User_blog_comment' => 'Gebruikersblogreacties',
-	'sponsorship-dashboard-serie-namespace-User_blog' => "Gebruikersblogpagina's",
+	'sponsorship-dashboard-serie-namespace-User_blog' => 'Gebruikersblogpagina\'s',
 	'sponsorship-dashboard-description-activity' => 'Gebruikersactiviteit per maand',
 	'sponsorship-dashboard-description-engagement' => 'Totaal aantal uren besteed per dag',
 	'sponsorship-dashboard-description-participation' => 'Unieke bewerkers per maand',
 	'sponsorship-dashboard-description-source' => 'Hoe uw gebruikers uw wiki vinden',
 	'sponsorship-dashboard-description-competitors' => 'Verkeer van de concurrentie',
-	'sponsorship-dashboard-description-interests' => "Wiki's die uw gebruikers ook bezoeken",
+	'sponsorship-dashboard-description-interests' => 'Wiki\'s die uw gebruikers ook bezoeken',
 	'sponsorship-dashboard-description-keywords' => 'Trefwoorden gebruikt op zoekmachines',
 	'sponsorship-dashboard-description-visitors' => 'Nieuwe en terugkerende bezoekers',
-	'sponsorship-dashboard-description-traffic' => "Bekeken pagina's",
+	'sponsorship-dashboard-description-traffic' => 'Bekeken pagina\'s',
 	'sponsorship-dashboard-description-content' => 'Bijdragen per type',
 	'sponsorship-dashboard-report-activity' => 'Activiteit',
 	'sponsorship-dashboard-report-engagement' => 'Betrokkenheid',
@@ -2888,7 +2780,7 @@ $messages['nl'] = array(
 	'sponsorship-dashboard-from-label' => 'Begindatum',
 	'sponsorship-dashboard-to-label' => 'Einddatum',
 	'sponsorship-dashboard-error-nodataforcurrentweek' => 'Fout: er zijn geen gegevens gevonden voor de huidige week',
-	'not-allowed' => 'U hebt geen rechten om deze pagina te bekijken',
+	'not-allowed' => 'Je hebt geen rechten om deze pagina te bekijken',
 	'sponsorshipdashboard' => 'Sponsoringdashboard',
 	'sponsorship-dashboard-city-select' => 'Selecteer een Wikia-hub:',
 	'sponsorship-dashboard-report-01' => 'Gebruikersbetrokkenheid',
@@ -2951,7 +2843,7 @@ $messages['nl'] = array(
 	'sponsorship-dashboard-source-default' => '-- standaard --',
 	'sponsorship-dashboard-source-in-case-of-empty' => 'weergeven bij geen resultaten',
 	'sponsorship-dashboard-source-leave-empty' => '(leeg laten om lege resultaten te verbergen)',
-	'sponsorship-dashboard-source-wikis' => "Wiki's",
+	'sponsorship-dashboard-source-wikis' => 'Wiki\'s',
 	'sponsorship-dashboard-source-main-wiki' => 'Hoofdwiki',
 	'sponsorship-dashboard-source-list' => 'Lijst',
 	'sponsorship-dashboard-top-x-competitors' => 'Top x concurrenten',
@@ -2991,37 +2883,27 @@ $messages['nl'] = array(
 	'sponsorship-dashboard-not-allowed' => 'U hebt geen rechten om deze pagina te bekijken',
 	'sponsorship-dashboard-download-csv' => 'Als CSV-bestand downloaden',
 	'sponsorship-dashboard-save-as-new' => 'Als nieuw opslaan',
-	'sponsorship-dashboard-source-global' => "gegevens voor alle wiki's",
+	'sponsorship-dashboard-source-global' => 'gegevens voor alle wiki\'s',
 	'sponsorship-dashboard-source-max-elements' => 'aantal topresultaten',
 	'sponsorship-dashboard-compleat' => '% compleet',
 	'sponsorship-dashboard-select-all' => 'alles selecteren',
 	'sponsorship-dashboard-deselect-all' => 'alles deselecteren',
 	'sponsorship-dashboard-download' => 'extra handelingen',
-);
+];
 
-/** ‪Nederlands (informeel)‬ (‪Nederlands (informeel)‬)
- * @author Siebrand
- */
-$messages['nl-informal'] = array(
+$messages['nl-informal'] = [
 	'sponsorship-dashboard-description-source' => 'Hoe je gebruikers je wiki vinden',
-	'sponsorship-dashboard-description-interests' => "Wiki's die jouw gebruikers ook bezoeken",
+	'sponsorship-dashboard-description-interests' => 'Wiki\'s die jouw gebruikers ook bezoeken',
 	'not-allowed' => 'Je hebt geen rechten om deze pagina te bekijken',
 	'sponsorship-dashboard-not-allowed' => 'Je hebt geen rechten om deze pagina te bekijken',
-);
+];
 
-/** Pälzisch (Pälzisch)
- * @author Manuae
- */
-$messages['pfl'] = array(
+$messages['pfl'] = [
 	'sponsorship-dashboard-report-title' => 'Tidl',
 	'sponsorship-dashboard-source-gapi-name' => 'Qwelletitl',
-);
+];
 
-/** Polish (polski)
- * @author BeginaFelicysym
- * @author Sovq
- */
-$messages['pl'] = array(
+$messages['pl'] = [
 	'sponsorship-dashboard' => '[[Special:SponsorshipDashboard|Strona specjalna]] dla statystyk związanych ze sponsorowanymi artykułami',
 	'sponsorship-dashboard-serie-A' => 'Liczba zarejestrowanych edytorów w bieżącym miesiącu (wszystkie przestrzenie nazw)',
 	'sponsorship-dashboard-serie-B' => 'Liczba zarejestrowanych edytorów w bieżącym miesiącu (główne przestrzenie nazw)',
@@ -3225,12 +3107,9 @@ $messages['pl'] = array(
 	'sponsorship-dashboard-select-all' => 'wybierz wszystko',
 	'sponsorship-dashboard-deselect-all' => 'odznacz wszystko',
 	'sponsorship-dashboard-download' => 'dodatkowe opcje',
-);
+];
 
-/** Pashto (پښتو)
- * @author Ahmed-Najib-Biabani-Ibrahimkhel
- */
-$messages['ps'] = array(
+$messages['ps'] = [
 	'sponsorship-dashboard-serie-content-article' => 'مخونه',
 	'sponsorship-dashboard-report-visitors' => 'کتونکي',
 	'sponsorship-dashboard-day' => 'ورځ',
@@ -3268,14 +3147,9 @@ $messages['ps'] = array(
 	'sponsorship-dashboard-source-query' => 'خوښنې',
 	'sponsorship-dashboard-table-collumn-date' => 'نېټه',
 	'sponsorship-dashboard-select-all' => 'ټول ټاکل',
-);
+];
 
-/** Portuguese (português)
- * @author Hamilton Abreu
- * @author Malafaya
- * @author SandroHc
- */
-$messages['pt'] = array(
+$messages['pt'] = [
 	'sponsorship-dashboard' => '[[Special:SponsorshipDashboard|Página especial]] para métricas relacionadas com patrocínios',
 	'sponsorship-dashboard-serie-new-pages-content-namespace' => 'Aumento de páginas',
 	'sponsorship-dashboard-serie-organic' => 'Motores de Pesquisa',
@@ -3338,12 +3212,9 @@ $messages['pt'] = array(
 	'sponsorship-dashboard-report-date-daily' => 'Diário',
 	'sponsorship-dashboard-report-new-source-gapi' => 'GA',
 	'sponsorship-dashboard-report-new-source-gapi-custom' => 'GA personalizado',
-);
+];
 
-/** Romanian (română)
- * @author Stelistcristi
- */
-$messages['ro'] = array(
+$messages['ro'] = [
 	'sponsorship-dashboard-user-name' => 'Nume de utilizator',
 	'sponsorship-dashboard-user-type' => 'Tip de utilizator',
 	'sponsorship-dashboard-description' => 'Descriere',
@@ -3364,13 +3235,9 @@ $messages['ro'] = array(
 	'sponsorship-dashboard-source-serie-name' => 'nume',
 	'sponsorship-dashboard-source-query' => 'Opţiuni',
 	'sponsorship-dashboard-other-options' => 'Alte opţiuni',
-);
+];
 
-/** Russian (русский)
- * @author DCamer
- * @author Lvova
- */
-$messages['ru'] = array(
+$messages['ru'] = [
 	'sponsorship-dashboard' => '[[Special:SponsorshipDashboard|Слежебная страница]] для получения метрики, связанной со спонсорством',
 	'sponsorship-dashboard-serie-A' => 'Всего зарегистрированных редакторов в текущем месяце (все пространства имён)',
 	'sponsorship-dashboard-serie-B' => 'Всего зарегистрированных редакторов в текущем месяце (основное пространство имён)',
@@ -3574,12 +3441,9 @@ $messages['ru'] = array(
 	'sponsorship-dashboard-select-all' => 'выбрать все',
 	'sponsorship-dashboard-deselect-all' => 'снять выделение со всех',
 	'sponsorship-dashboard-download' => 'дополнительные действия',
-);
+];
 
-/** Serbian (Cyrillic script) (‪српски (ћирилица)‬)
- * @author Rancher
- */
-$messages['sr-ec'] = array(
+$messages['sr-ec'] = [
 	'sponsorship-dashboard-serie-content-article' => 'страница',
 	'sponsorship-dashboard-report-activity' => 'Активност',
 	'sponsorship-dashboard-report-engagement' => 'Ангажовање',
@@ -3600,12 +3464,9 @@ $messages['sr-ec'] = array(
 	'sponsorship-dashboard-from-label' => 'Почетни датум',
 	'sponsorship-dashboard-to-label' => 'Завршни датум',
 	'sponsorship-dashboard-empty-description' => '$1',
-);
+];
 
-/** Swedish (svenska)
- * @author WikiPhoenix
- */
-$messages['sv'] = array(
+$messages['sv'] = [
 	'sponsorship-dashboard' => '[[Special:SponsorshipDashboard|Specialsida]] för sponsringsrelaterade mätmetoder',
 	'sponsorship-dashboard-serie-A' => 'Totalt registrerade redaktörer nuvarande månad (alla namnrymder)',
 	'sponsorship-dashboard-serie-B' => 'Totalt registrerade redaktörer nuvarande månad (innehållsnamnrymder)',
@@ -3795,12 +3656,9 @@ $messages['sv'] = array(
 	'sponsorship-dashboard-select-all' => 'markera alla',
 	'sponsorship-dashboard-deselect-all' => 'avmarkera alla',
 	'sponsorship-dashboard-download' => 'extra handlingar',
-);
+];
 
-/** Tamil (தமிழ்)
- * @author செல்வா
- */
-$messages['ta'] = array(
+$messages['ta'] = [
 	'sponsorship-dashboard-serie-article-edits-1' => '1+ பக்கத் தொகுப்புகள்',
 	'sponsorship-dashboard-serie-article-edits-5' => '5+ பக்கத் தொகுப்புகள்',
 	'sponsorship-dashboard-serie-article-edits-10' => '100+ பக்கத் தொகுப்புகள்',
@@ -3835,12 +3693,9 @@ $messages['ta'] = array(
 	'sponsorship-dashboard-error-nodataforcurrentweek' => 'பிழை: நடப்புக் கிழமைக்கு தகவலேதும் இல்லை',
 	'not-allowed' => 'மன்னிக்கவும், இப்பக்கத்தைப் பார்க்க உங்களுக்கு அணுகுரிமை இல்லை.',
 	'sponsorship-dashboard-report-01' => 'பயனர் பொருந்தீடுபாடு',
-);
+];
 
-/** Telugu (తెలుగు)
- * @author Veeven
- */
-$messages['te'] = array(
+$messages['te'] = [
 	'sponsorship-dashboard-serie-content-article' => 'పుటలు',
 	'sponsorship-dashboard-serie-namespace-Special' => 'ప్రత్యేక పుటలు',
 	'sponsorship-dashboard-serie-namespace-Talk' => 'చర్చా పుటలు',
@@ -3864,12 +3719,9 @@ $messages['te'] = array(
 	'sponsorship-dashboard-source-query' => 'ఎంపికలు',
 	'sponsorship-dashboard-other-options' => 'ఇతర ఎంపికలు',
 	'sponsorship-dashboard-table-collumn-date' => 'తేదీ',
-);
+];
 
-/** Tagalog (Tagalog)
- * @author AnakngAraw
- */
-$messages['tl'] = array(
+$messages['tl'] = [
 	'sponsorship-dashboard' => '[[Special:SponsorshipDashboard|Natatanging pahina]] para sa kaugnay na mga sukatan ng pananangkilik',
 	'sponsorship-dashboard-serie-A' => 'Kabuaan ng nagpatalang mga patnugot sa loob ng kasalukuyang buwan (lahat ng mga puwang na pampangalan)',
 	'sponsorship-dashboard-serie-B' => 'Kabuuan ng nagpatalang mga patnugot sa loob ng kasulukuyang buwan (mga puwang pampangalan ng nilalaman)',
@@ -4073,37 +3925,24 @@ $messages['tl'] = array(
 	'sponsorship-dashboard-select-all' => 'piliin lahat',
 	'sponsorship-dashboard-deselect-all' => 'huwag piliing lahat',
 	'sponsorship-dashboard-download' => 'dagdag na mga galaw',
-);
+];
 
-/** толышә зывон (толышә зывон)
- * @author Erdemaslancan
- */
-$messages['tly'] = array(
+$messages['tly'] = [
 	'sponsorship-dashboard-empty-description' => '$1',
-);
+];
 
-/** Turkish (Türkçe)
- * @author Erdemaslancan
- */
-$messages['tr'] = array(
+$messages['tr'] = [
 	'sponsorship-dasboard-specialpage' => 'WikiMatrisler',
 	'sponsorship-dashboard-user-type-0' => 'WikiaKullanıcı',
 	'sponsorship-dashboard-empty-description' => '$1',
-);
+];
 
-/** Tatar (Cyrillic script) (татарча)
- * @author Ajdar
- */
-$messages['tt-cyrl'] = array(
+$messages['tt-cyrl'] = [
 	'sponsorship-dashboard-serie-content-article' => 'бит',
 	'sponsorship-dashboard-empty-description' => '$1',
-);
+];
 
-/** Vietnamese (Tiếng Việt)
- * @author Xiao Qiao
- * @author XiaoQiaoGrace
- */
-$messages['vi'] = array(
+$messages['vi'] = [
 	'sponsorship-dashboard-serie-namespace-Media' => 'Các trang phương tiện',
 	'sponsorship-dashboard-serie-namespace-Special' => 'Các trang đặc biệt',
 	'sponsorship-dashboard-serie-namespace-Talk' => 'Các trang thảo luận',
@@ -4113,13 +3952,9 @@ $messages['vi'] = array(
 	'sponsorship-dashboard-serie-namespace-Template' => 'Các trang bản mẫu',
 	'sponsorship-dashboard-serie-namespace-Help' => 'Các trang trợ giúp',
 	'sponsorship-dashboard-serie-namespace-Category' => 'Các trang thể loại',
-);
+];
 
-/** Simplified Chinese (‪中文（简体）‬)
- * @author Dimension
- * @author Hydra
- */
-$messages['zh-hans'] = array(
+$messages['zh-hans'] = [
 	'sponsorship-dashboard-serie-content-article' => '页面',
 	'sponsorship-dashboard-serie-clicks' => '点击数',
 	'sponsorship-dashboard-serie-visits' => '总访问',
@@ -4140,5 +3975,9 @@ $messages['zh-hans'] = array(
 	'sponsorship-dashboard-report-description' => '描述',
 	'sponsorship-dashboard-report-date-daily' => '每日',
 	'sponsorship-dashboard-compleat' => '%已完成',
-);
+];
+
+$messages['ko'] = [
+	'not-allowed' => '이 문서를 볼 수 있는 권한이 없습니다.',
+];
 
