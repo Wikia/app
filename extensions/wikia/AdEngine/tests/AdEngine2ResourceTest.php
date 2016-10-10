@@ -32,9 +32,6 @@ class AdEngine2ResourceTest extends WikiaBaseTest {
 
 		AdEngine2Resource::register($extensionName, $className);
 
-		var_dump($keys);
-		var_dump(array_keys($wgResourceModules));
-
 		$this->assertSame($keys, array_keys($wgResourceModules));
 		foreach ($keys as $key) {
 			$this->assertEquals($wgResourceModules[$key]['class'], $className);
