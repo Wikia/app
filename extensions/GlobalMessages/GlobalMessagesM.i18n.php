@@ -96,18 +96,7 @@ Input: contenttype/subtype, e.g. <tt>image/jpeg</tt>.',
 	'month' => 'From month (and earlier):',
 	'move-page' => 'Move $1',
 	'move-page-legend' => 'Move page',
-	'movepagetext' => 'Using the form below will rename a page, moving all of its history to the new name.
-The old title will become a redirect page to the new title.
-You can update redirects that point to the original title automatically.
-If you choose not to, be sure to check for [[Special:DoubleRedirects|double]] or [[Special:BrokenRedirects|broken redirects]].
-You are responsible for making sure that links continue to point where they are supposed to go.
-
-Note that the page will \'\'\'not\'\'\' be moved if there is already a page at the new title, unless it is empty or a redirect and has no past edit history.
-This means that you can rename a page back to where it was renamed from if you make a mistake, and you cannot overwrite an existing page.
-
-\'\'\'Warning!\'\'\'
-This can be a drastic and unexpected change for a popular page;
-please be sure you understand the consequences of this before proceeding.',
+	'movepagetext' => 'Using the form below will rename a page, moving all of its history to the new name. See also [[Help:Moving pages]].',
 	'movepagetext-noredirectfixer' => 'Using the form below will rename a page, moving all of its history to the new name.
 The old title will become a redirect page to the new title.
 Be sure to check for [[Special:DoubleRedirects|double]] or [[Special:BrokenRedirects|broken redirects]].
@@ -131,8 +120,8 @@ In those cases, you will have to move or merge the page manually if desired.',
 	'movenotallowed' => 'You do not have permission to move pages.',
 	'movenotallowedfile' => 'You do not have permission to move files.',
 	'move-watch' => 'Watch source page and target page',
-	'movepagebtn' => 'Move page',
-	'movepage-moved' => '\'\'\'"$1" has been moved to "$2"\'\'\'',
+	'movepagebtn' => 'Rename page',
+	'movepage-moved' => '\'\'\'"$1" has been renamed "$2"\'\'\'',
 	'movepage-moved-redirect' => 'A redirect has been created.',
 	'movepage-moved-noredirect' => 'The creation of a redirect has been suppressed.',
 	'movedto' => 'moved to',
@@ -8665,18 +8654,13 @@ Entrada: contenttype/subtype, p. ej. <tt>image/jpeg</tt>.',
 	'month' => 'Desde el mes (y anterior):',
 	'move-page' => 'Trasladar $1',
 	'move-page-legend' => 'Renombrar página',
-	'movepagetext' => 'Usando el siguiente formulario se renombrará una página, moviendo todo su historial al nuevo nombre.
-El título anterior se convertirá en una redirección al nuevo título.
-Los enlaces al antiguo título de la página no se cambiarán.
-Asegúrate de no dejar [[Special:DoubleRedirects|redirecciones dobles]] o [[Special:BrokenRedirects|rotas]].
-Tú eres responsable de hacer que los enlaces sigan apuntando a donde se supone que deberían hacerlo.
+	'movepagetext' => 'Usando el siguiente formulario se renombrará una página, moviendo todo su historial al nuevo nombre. 
 
-Recuerda que la página \'\'\'no\'\'\' será renombrada si ya existe una página con el nuevo título, a no ser que sea una página vacía o una redirección sin historial.
-Esto significa que podrás renombrar una página a su título original si has cometido un error, pero que no podrás sobrescribir una página existente.
+El título anterior se convertirá en una redirección al nuevo título. Los enlaces al antiguo título de la página no se cambiarán. Asegúrate de no dejar [[Special:DoubleRedirects|redirecciones dobles]] o [[Special:BrokenRedirects|rotas]]. 
 
-\'\'\'¡Aviso!\'\'\'
-Este puede ser un cambio drástico e inesperado para una página popular;
-por favor, asegúrate de entender las consecuencias del procedimiento antes de seguir adelante.',
+Eres responsable de hacer que los enlaces sigan apuntando adonde se supone que deberían hacerlo. Recuerda que la página \'\'\'no\'\'\' será renombrada si ya existe una página con el nuevo título, a no ser que sea una página vacía o una redirección sin historial. Esto significa que podrás renombrar una página a su título original si has cometido un error, pero que no podrás sobrescribir una página existente. 
+
+\'\'\'¡Advertencia!\'\'\' Este puede ser un cambio drástico e inesperado para una página popular; por favor, asegúrate de entender las consecuencias del procedimiento antes de seguir adelante.',
 	'movepagetext-noredirectfixer' => 'Usando el siguiente formulario se renombrará una página, moviendo todo su historial al nuevo nombre.
 El título anterior se convertirá en una redirección al nuevo título.
 Asegúrate de no dejar [[Special:DoubleRedirects|redirecciones dobles]] o [[Special:BrokenRedirects|rotas]].
@@ -8702,7 +8686,7 @@ En estos casos, deberás trasladar manualmente el contenido de la página de dis
 	'movenotallowedfile' => 'No tienes permiso para mover archivos.',
 	'move-watch' => 'Vigilar páginas de origen y destino',
 	'movepagebtn' => 'Renombrar página',
-	'movepage-moved' => '\'\'\'«$1» ha sido trasladado a «$2».\'\'\'',
+	'movepage-moved' => '\'\'\'"$1" ha sido renombrada a "$2".\'\'\'',
 	'movepage-moved-redirect' => 'Se ha creado una redirección.',
 	'movepage-moved-noredirect' => 'Se ha suprimido la creación de la redirección.',
 	'movedto' => 'renombrado a',
@@ -8710,9 +8694,9 @@ En estos casos, deberás trasladar manualmente el contenido de la página de dis
 	'move-subpages' => 'Intentar trasladar las subpáginas (hasta $1)',
 	'move-talk-subpages' => 'Intentar trasladar las subpáginas de discusión (hasta $1)',
 	'movepage-page-exists' => 'La página $1 ya existe, por lo que no puede ser renombrada automáticamente.',
-	'movepage-page-moved' => 'La página $1 ha sido trasladada a $2.',
-	'movepage-page-unmoved' => 'La página $1 no se ha podido trasladar a $2.',
-	'movepage-max-pages' => 'Se {{PLURAL:$1|ha trasladado un máximo de una página|han trasladado un máximo de $1 páginas}}, y no se van a mover más automáticamente.',
+	'movepage-page-moved' => 'La página $1 ha sido renombrada a $2.',
+	'movepage-page-unmoved' => 'La página $1 no se ha podido renombrar a $2.',
+	'movepage-max-pages' => 'Ya se {{PLURAL:$1|ha renombrado una página|han renombrado $1 páginas}}, y ese es el máximo de páginas que se pueden renombrar, por lo que no se van a renombrar más automáticamente.',
 	'movelogpage' => 'Registro de traslados',
 	'movelogpagetext' => 'Abajo se encuentra una lista de páginas trasladadas.',
 	'movesubpage' => '{{PLURAL:$1|Subpágina|Subpáginas}}',
@@ -15385,11 +15369,12 @@ contenttype/subtypeの形式で指定してください（例：<tt>image/jpeg</
 \'\'\'警告！\'\'\'
 多く閲覧されたりリンクされているページを移動すると、予期せぬ大きな変化が起こるかもしれません。
 ページの移動に伴う影響をよく考えてから移動してください。',
-	'movepagetalktext' => '関連付けられたトークページは、自動的に一緒に移動されます。ただしこれは、以下の場合を除きます。
-* 空でないトークページが新しい名前で存在する場合
-* 下のボックスのチェックを消した場合
+	'movepagetalktext' => '付随するトークページは自動的に一緒に移動されます。
+\'\'\'ただし、以下の場合を除きます:\'\'\'
+*同じ名前で空ではないトークページがすでに存在する場合
+*下のチェックボックスのチェックマークを消した場合
 
-これらの場合、必要に応じて、トークページを移動または統合する必要があります。',
+そのような場合、必要に応じてページを移動またはマージする必要があります。',
 	'movearticle' => '移動するページ：',
 	'moveuserpage-warning' => '\'\'\'警告：\'\'\'利用者ページを移動しようとしています。移動を行った場合、ページだけが移動され、利用者名は\'\'変更されない\'\'点に注意してください。',
 	'movenologin' => 'ログインしていません',
@@ -24131,18 +24116,18 @@ Invoer: inhoudstype/subtype, bijvoorbeeld <tt>image/jpeg</tt>.',
 	'month' => 'Van maand (en eerder):',
 	'move-page' => '"$1" hernoemen',
 	'move-page-legend' => 'Pagina hernoemen',
-	'movepagetext' => 'Door middel van het onderstaande formulier kunt u een pagina hernoemen.
+	'movepagetext' => 'Door middel van het onderstaande formulier kun je een pagina hernoemen.
 De geschiedenis gaat mee naar de nieuwe pagina.
 * De oude naam wordt automatisch een doorverwijzing naar de nieuwe pagina.
 * Verwijzingen naar de oude pagina worden niet aangepast.
 * De pagina\'s die doorverwijzen naar de oorspronkelijke paginanaam worden automatisch bijgewerkt.
-Als u dit niet wenst, controleer dan of er geen [[Special:DoubleRedirects|dubbele]] of [[Special:BrokenRedirects|onjuiste doorverwijzingen]] zijn ontstaan.
+Als je dit niet wenst, controleer dan of er geen [[Special:DoubleRedirects|dubbele]] of [[Special:BrokenRedirects|onjuiste doorverwijzingen]] zijn ontstaan.
 
 Een pagina kan \'\'\'alleen\'\'\' hernoemd worden als de nieuwe paginanaam niet bestaat of een doorverwijspagina zonder verdere geschiedenis is.
 
 \'\'\'WAARSCHUWING!\'\'\'
 Voor veel bekeken pagina\'s kan het hernoemen drastische en onvoorziene gevolgen hebben.
-Zorg ervoor dat u die gevolgen overziet voordat u deze handeling uitvoert.',
+Zorg ervoor dat je die gevolgen overziet voordat je deze handeling uitvoert.',
 	'movepagetext-noredirectfixer' => 'Door middel van het onderstaande formulier kunt u een pagina en alle bijbehorende oude versies hernoemen.
 De oude naam wordt automatisch een doorverwijzing naar de nieuwe pagina.
 Controleer dan of er geen [[Special:DoubleRedirects|dubbele]] of [[Special:BrokenRedirects|onjuiste doorverwijzingen]] zijn ontstaan.
@@ -24155,7 +24140,7 @@ Voor veel bekeken pagina\'s kan het hernoemen drastische en onvoorziene gevolgen
 Zorg ervoor dat u die gevolgen overziet voordat u deze handeling uitvoert.',
 	'movepagetalktext' => 'De bijbehorende overlegpagina krijgt automatisch een andere naam, \'\'\'tenzij\'\'\':
 * De overlegpagina onder de nieuwe naam al bestaat;
-* U het onderstaande vinkje deselecteert.',
+* Je het onderstaande vinkje deselecteert.',
 	'movearticle' => 'Te hernoemen pagina:',
 	'moveuserpage-warning' => '\'\'\'Waarschuwing:\'\'\' U gaat een gebruikerspagina hernoemen.
 Houd er rekening mee dat alleen de pagina wordt hernoemd, \'\'niet\'\' de gebruiker.',
@@ -31675,18 +31660,7 @@ Se till att sidhistorikens kontinuitet behålls när du sammanfogar historik.',
 	'month' => 'Från månad (och tidigare):',
 	'move-page' => 'Flytta $1',
 	'move-page-legend' => 'Flytta sida',
-	'movepagetext' => 'Med hjälp av formuläret härunder kan du byta namn på en sida, och flytta hela dess historik till ett nytt namn.
-Den gamla sidtiteln kommer att göras om till en omdirigering till den nya titeln.
-Du kan välja att automatiskt uppdatera omdirigeringar som leder till den gamla titeln.
-Om du väljer att inte göra det, kontrollera då att du inte skapar några [[Special:DoubleRedirects|dubbla]] eller [[Special:BrokenRedirects|trasiga omdirigeringar]].
-Du bör också se till att länkar fortsätter att peka dit de ska.
-
-Notera att sidan \'\'\'inte\'\'\' kan flyttas om det redan finns en sida under den nya sidtiteln, såvida inte den sidan är tom eller en omdirigering till den gamla titeln och saknar annan versionshistorik.
-Det innebär att du kan flytta tillbaks en sida om du råkar göra fel, och att du inte kan skriva över existerande sidor.
-
-\'\'\'VARNING!\'\'\'
-Att flytta en populär sida kan vara en drastisk och oväntad ändring;
-därför bör du vara säker på att du förstår konsekvenserna innan du fortsätter med flytten.',
+	'movepagetext' => 'Med hjälp av formuläret nedan kommer byta namn på en sida, flyttar hela dess historia till det nya namnet. Se även [[Help:Moving pages|Flytta sidor]].',
 	'movepagetext-noredirectfixer' => 'Formuläret nedan kommer att byta namn på en sida, och flytta hela sin historik till det nya namnet.
 Den gamla titeln kommer att bli en omdirigeringssida till den nya titeln.
 Glöm inte att kontrollera [[Special:DoubleRedirects|dubbla]] eller [[Special:BrokenRedirects|brutna omdirigeringar]].
