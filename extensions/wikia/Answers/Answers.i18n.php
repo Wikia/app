@@ -1431,6 +1431,7 @@ $messages['ja'] = [
 	'related_questions' => '関連する質問',
 	'rephrase' => 'この質問の言い回しを変える',
 	'rephrase_this' => '<a href="$1" $2>この質問の言い回しを変える</a>',
+	'research_this_on_wikipedia' => 'ウィキペディアで<a href="$1">この質問について調べる</a>。',
 ];
 
 $messages['lb'] = [
@@ -2078,7 +2079,7 @@ $messages['pl'] = [
 	'improve_this_answer' => 'Rozwiń odpowiedź',
 	'answer_this_question' => 'Odpowiedz na to pytanie:',
 	'notify_improved' => 'Powiadom mnie e-mailem o zmianie odpowiedzi',
-	'research_this' => 'Wyszukaj',
+	'research_this' => 'Przeszukaj',
 	'notify_answered' => 'Wyślij do mnie e-mail, gdy pojawi się odpowiedź',
 	'recent_asked_questions' => 'Ostatnio zadawane pytania',
 	'recent_answered_questions' => 'Najnowsze odpowiedzi na pytania',
@@ -2145,6 +2146,7 @@ $messages['pl'] = [
 	'qa-toolbox-tools' => 'Zaawansowane»',
 	'quick_action_panel' => 'Panel szybkiego działania',
 	'receive_email' => '<a href="$1" $2>Otrzymaj e-mail</a> gdy zostanie udzielona odpowiedź na to pytanie',
+	'research_this_on_wikipedia' => '<a href="$1">Wyszukaj odpowiedzi na to pytanie</a> na Wikipedii',
 ];
 
 $messages['pms'] = [
@@ -2170,7 +2172,7 @@ $messages['ps'] = [
 ];
 
 $messages['pt'] = [
-	'research_this' => 'Investigar isto',
+	'research_this' => 'Pesquisar isto',
 	'question_asked_by_a_wikia_user' => 'Pergunta feita por um usuário do Fandom',
 	'answer_this' => '<a class="huge_button huge_button_green hbg_white" href="$1" style="font-size:200%;"><div></div>Responder esta pergunta</a><br /><br /><hr /><br /><br />',
 	'answer_this_question' => 'Responder esta pergunta',
@@ -2210,6 +2212,7 @@ $messages['pt'] = [
 	'recent_unanswered_questions' => 'Perguntas sem resposta mais recentes',
 	'related_answered_questions' => 'Perguntas respondidas relacionadas',
 	'rephrase' => 'Refazer a pergunta',
+	'research_this_on_wikipedia' => '<a href="$1">Pesquisar esta pergunta</a> na Wikipedia',
 ];
 
 $messages['pt-br'] = [
@@ -2253,6 +2256,7 @@ $messages['pt-br'] = [
 	'recent_unanswered_questions' => 'Perguntas sem resposta mais recentes',
 	'related_answered_questions' => 'Perguntas respondidas relacionadas',
 	'rephrase' => 'Refazer a pergunta',
+	'research_this_on_wikipedia' => '<a href="$1">Pesquisar esta pergunta</a> na Wikipedia',
 ];
 
 $messages['roa-tara'] = [
@@ -2657,6 +2661,8 @@ $messages['no'] = [
 	'related_questions' => 'Liknende spørsmål',
 	'rephrase' => 'Omformuler dette spørsmålet',
 	'rephrase_this' => '<a href="$1" $2>Omformuler spørsmålet</a>',
+	'research_this' => 'Undersøk dette',
+	'research_this_on_wikipedia' => '<a href="$1">Undersøk dette spørsmålet</a> på Wikipedia',
 ];
 
 $messages['zh-hant'] = [
