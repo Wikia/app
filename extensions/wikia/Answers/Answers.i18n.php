@@ -523,7 +523,7 @@ $messages['de'] = [
 	'tog-hidefromattribution' => 'Verstecke meinen Avatar und meinen Namen auf der Namensnennung-Liste',
 	'a' => 'Antwort:',
 	'answering_tips' => '<h3>Tipps fürs Beantworten:</h3> Wenn du eine Frage beantwortest, versuche so genau wie möglich zu sein. Wenn du Informationen von einer anderen Seite als Wikipedia beziehst, gib einen Link an. Vielen Dank für deinen Beitrag zu {{SITENAME}}!',
-	'plus_x_more_helpers' => '... sowie $1 weitere Helfer',
+	'plus_x_more_helpers' => '...sowie $1 weitere Helfer',
 	'anwb-step1-headline' => 'Wovon handelt der Inhalt deiner Seite?',
 	'anwb-choose-logo' => 'Logo auswählen',
 	'anwb-step2-text' => 'Wähle als nächstes ein Logo für {{SITENAME}}. Am besten lädst du ein Bild hoch, von dem du denkst, dass es das Thema am besten rüber bringt.<br />Du kannst diesen Schritt überspringen, wenn du momentan noch kein Logo erstellen möchtest.<br /><br />',
@@ -2112,6 +2112,7 @@ $messages['pl'] = [
 	'get_code' => 'Pobierz kod',
 	'no_related_answered_questions' => 'Nie ma jeszcze podobnych pytań.',
 	'nwb-thatisall-headline' => 'To wszystko - gotowe!',
+	'plus_x_more_helpers' => '...i $1 użytkowników anonimowych',
 ];
 
 $messages['pms'] = [
