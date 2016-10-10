@@ -50,9 +50,7 @@ $messages['en'] = [
 \'\'\'It has not yet been saved!\'\'\'',
 	'sitejspreview' => '\'\'\'Remember that you are only previewing this JavaScript code.\'\'\'
 \'\'\'It has not yet been saved!\'\'\'',
-	'session_fail_preview' => '\'\'\'Sorry! We could not process your edit due to a loss of session data.\'\'\'
-Please try again.
-If it still does not work, try [[Special:UserLogout|logging out]] and logging back in.',
+	'session_fail_preview' => '<strong>No changes saved yet! Please click \'Publish\' again to save your edits.</strong>',
 	'session_fail_preview_html' => '\'\'\'Sorry! We could not process your edit due to a loss of session data.\'\'\'
 
 \'\'Because {{SITENAME}} has raw HTML enabled, the preview is hidden as a precaution against JavaScript attacks.\'\'
@@ -27392,15 +27390,15 @@ $messages['nl'] = [
 \'\'\'Deze is nog niet opgeslagen!\'\'\'',
 	'sitejspreview' => '\'\'\'Dit is alleen een voorvertoning van de JavaScriptcode.\'\'\'
 \'\'\'Deze is nog niet opgeslagen!\'\'\'',
-	'session_fail_preview' => '\'\'\'Uw bewerking is niet verwerkt, omdat de sessiegegevens verloren zijn gegaan.
+	'session_fail_preview' => '\'\'\'Je bewerking is niet verwerkt, omdat de sessiegegevens verloren zijn gegaan.
 Probeer het opnieuw.
-Als het dan nog niet lukt, [[Special:UserLogout|meld u zich dan af]] en weer aan.\'\'\'',
-	'session_fail_preview_html' => '\'\'\'Uw bewerking is niet verwerkt, omdat de sessiegegevens verloren zijn gegaan.\'\'\'
+Als het dan nog niet lukt, [[Special:UserLogout|meld jezelf dan af]] en weer aan.\'\'\'',
+	'session_fail_preview_html' => '\'\'\'Je bewerking is niet verwerkt, omdat sessiegegevens verloren zijn gegaan.\'\'\'
 
 \'\'Omdat in {{SITENAME}} ruwe HTML is ingeschakeld, is een voorvertoning niet mogelijk als bescherming tegen aanvallen met JavaScript.\'\'
 
-\'\'\'Als dit een legitieme bewerking is, probeer het dan opnieuw.\'\'\'
-Als het dan nog niet lukt, [[Special:UserLogout|meld u zich dan af]] en weer aan.',
+\'\'\'Als dit een legitieme bewerking is, probeer het dan opnieuw.
+Als het dan nog niet lukt, [[Special:UserLogout|meld jezelf dan af]] en weer aan.\'\'\'',
 	'storedversion' => 'Opgeslagen versie',
 	'semiprotectedpagewarning' => '\'\'\'Let op:\'\'\' deze pagina is beveiligd en kan alleen door geregistreerde gebruikers bewerkt worden.
 De laatste logboekregel staat hieronder:',
@@ -27502,8 +27500,8 @@ De [$2 pagina met de bestandsbeschrijving] wordt hieronder weergegeven.',
 	'special-categories-sort-abc' => 'alfabetisch sorteren',
 	'sp-deletedcontributions-contribs' => 'bijdragen',
 	'sessionfailure-title' => 'Sessiefout',
-	'sessionfailure' => 'Er lijkt een probleem te zijn met uw aanmeldsessie.
-Uw handeling is gestopt uit voorzorg tegen een beveiligingsrisico (dat bestaat uit mogelijke "hijacking" van deze sessie).
+	'sessionfailure' => 'Er lijkt een probleem te zijn met je aanmeldsessie.
+Je handeling is gestopt uit voorzorg tegen een beveiligingsrisico (dat bestaat uit mogelijke "hijacking" van deze sessie).
 Ga een pagina terug, laad die pagina opnieuw en probeer het nog eens.',
 	'sp-contributions-newbies' => 'Alleen de bijdragen van nieuwe gebruikers bekijken',
 	'sp-contributions-newbies-sub' => 'Voor nieuwelingen',
