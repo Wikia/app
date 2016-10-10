@@ -8516,6 +8516,7 @@ Das liegt wahrscheinlich an einem Link auf eine externe Seite.',
 	'signup-mail' => 'E-Mail -',
 	'signup-moreinfo' => 'Hinweis',
 	'signup-password' => 'Passwort:',
+	'skin-forced' => 'Du kannst den Skin in diesem Wiki nicht ändern.',
 ];
 
 $messages['de-ch'] = [
@@ -18138,6 +18139,7 @@ $messages['ja'] = [
 	'signup-mail' => 'メールアドレス -',
 	'signup-moreinfo' => '詳細',
 	'signup-password' => 'パスワード:',
+	'skin-forced' => 'このウィキでは外装を変更できません。',
 ];
 
 $messages['jam'] = [
@@ -29844,7 +29846,7 @@ Najprawdopodobniej zostało to spowodowane przez link do zewnętrznej strony int
 	'spambot_username' => 'MediaWiki – usuwanie spamu',
 	'spam_reverting' => 'Przywracanie ostatniej wersji nie zawierającej linków do $1',
 	'spam_blanking' => 'Wszystkie wersje zawierały odnośniki do $1. Czyszczenie strony.',
-	'skinname-monobook' => 'Książka',
+	'skinname-monobook' => 'Monobook',
 	'svg-long-desc' => 'Plik SVG, nominalnie $1 × $2 pikseli, rozmiar pliku: $3',
 	'show-big-image' => 'Pełna rozdzielczość',
 	'show-big-image-preview' => 'Rozmiar podglądu – $1.',
@@ -32801,6 +32803,7 @@ $messages['ru'] = [
 	'showall' => 'Показать всё',
 	'signup-moreinfo' => 'подробнее',
 	'signup-password' => 'Пароль:',
+	'skin-forced' => 'Вы не можете изменить оформление этой вики.',
 ];
 
 $messages['rue'] = [
