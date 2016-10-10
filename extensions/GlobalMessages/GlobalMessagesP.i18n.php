@@ -52,8 +52,7 @@ Please log in again after you receive it.',
 	'php-mail-error' => '$1',
 	'php-mail-error-unknown' => 'Unknown error in PHP\'s mail() function.',
 	'preview' => 'Preview',
-	'previewnote' => '\'\'\'Remember that this is only a preview.\'\'\'
-Your changes have not yet been saved!',
+	'previewnote' => '<strong>Preview mode: no changes saved yet! Scroll down to continue editing.</strong>',
 	'previewconflict' => 'This preview reflects the text in the upper text editing area as it will appear if you choose to save.',
 	'protectedpagewarning' => '\'\'\'Warning: This page has been protected so that only users with administrator privileges can edit it.\'\'\'
 The latest log entry is provided below for reference:',
@@ -9473,8 +9472,8 @@ ___________________________________________________________
 Por favor, identifícate de nuevo tras recibirla.',
 	'php-mail-error-unknown' => 'Error desconocido en la función mail() de PHP',
 	'preview' => 'Previsualizar',
-	'previewnote' => '\'\'\'¡Recuerda que esto es solo una previsualización.\'\'\'
-¡Tus cambios aún no se ha guardado!',
+	'previewnote' => '\'\'\'Recuerda que esto es solo una previsualización.\'\'\'
+¡Tus cambios aún no se han guardado!',
 	'previewconflict' => 'Esta previsualización refleja el texto en el área de edición superior como aparecerá una vez guardados los cambios.',
 	'protectedpagewarning' => '\'\'\'Aviso: Esta página ha sido protegida de manera que solo usuarios con permisos de administrador puedan editarla.\'\'\'
 A continuación se muestra la última entrada de registro para referencia:',
@@ -11046,7 +11045,7 @@ ___________________________________________________________
     * Cette demande de rappel de mot de passe a été envoyée depuis l\'adresse suivante : $1.',
 	'passwordsent' => 'Un nouveau mot de passe a été envoyé à l’adresse e-mail de l’utilisateur « $1 ». Veuillez vous reconnecter après l’avoir reçu.',
 	'php-mail-error-unknown' => 'Erreur inconnue dans la fonction mail() de PHP.',
-	'preview' => 'Prévisualisation',
+	'preview' => 'Aperçu',
 	'previewnote' => '\'\'\'Attention, ce texte n’est qu’une prévisualisation et n’a pas encore été publié !\'\'\'',
 	'previewconflict' => 'Cette prévisualisation montre le texte de la boîte supérieure de modification tel qu’il apparaîtra si vous choisissez de le publier.',
 	'protectedpagewarning' => '\'\'\'AVERTISSEMENT : cette page est protégée. Seuls les utilisateurs ayant le statut d’administrateur peuvent la modifier.\'\'\'<br />
@@ -19611,7 +19610,7 @@ $messages['ko'] = [
 	'passwordsent' => '‘$1’ 계정의 새로운 암호를 이메일로 보냈습니다. 암호를 받고 다시 로그인해 주세요.',
 	'php-mail-error-unknown' => 'PHP의 mail() 함수에서 알 수 없는 오류가 발생했습니다.',
 	'preview' => '미리 보기',
-	'previewnote' => '\'\'\'지금 미리 보기로 보고 있는 내용은 아직 저장되지 않았습니다!\'\'\'',
+	'previewnote' => '\'\'\'미리보기 모드 : 보시고 계신 문서는 아직 저장되지 않았습니다! 편집을 계속하시려면 스크롤바를 내려주세요.\'\'\'',
 	'previewconflict' => '이 미리 보기는 저장할 때의 모습, 즉 위쪽 편집창의 문서를 반영합니다.',
 	'protectedpagewarning' => '\'\'\'경고: 이 문서는 관리자만 편집할 수 있도록 보호되어 있습니다.\'\'\'
 이 문서의 최근 기록을 참고하십시오:',
@@ -26872,8 +26871,8 @@ dan en blijf je bestaande wachtwoord gebruiken.',
 Meld je aan nadat je het hebt ontvangen.',
 	'php-mail-error-unknown' => 'Er is een onbekende fout opgetreden in de mail()-functie van PHP',
 	'preview' => 'Voorvertoning',
-	'previewnote' => '\'\'\'Let op: dit is een controlepagina; uw tekst is niet opgeslagen!\'\'\'',
-	'previewconflict' => 'Deze voorvertoning geeft aan hoe de tekst in het bovenste veld eruit ziet als u deze opslaat.',
+	'previewnote' => '\'\'\'Let op: dit is een controlepagina; je tekst is niet opgeslagen!\'\'\'',
+	'previewconflict' => 'Deze voorvertoning geeft aan hoe de tekst in het bovenste veld eruit ziet als je deze opslaat.',
 	'protectedpagewarning' => '\'\'\'Waarschuwing: deze beveiligde pagina kan alleen door gebruikers met beheerdersrechten bewerkt worden.\'\'\'
 De laatste logboekregel staat hieronder:',
 	'permissionserrors' => 'Fouten in rechten',
@@ -35429,8 +35428,7 @@ ___________________________________________________________
 	'passwordsent' => 'Ett nytt lösenord har skickats till den e-postadress som användaren "$1" har registrerat. När du får meddelandet, var god logga in igen.',
 	'php-mail-error-unknown' => 'Okänt fel i PHP\'s mail()-funktion',
 	'preview' => 'Förhandsgranska',
-	'previewnote' => '\'\'\'Detta är bara en förhandsvisning;
-ändringar har ännu inte sparats!\'\'\'',
+	'previewnote' => '<strong>Förhandsläge: inga ändringar sparats ännu! Bläddra ner för att fortsätta redigera.</strong>',
 	'previewconflict' => 'Den här förhandsvisningen är resultatet av den
 redigerbara texten ovanför,
 så som det kommer att se ut om du väljer att spara.',
