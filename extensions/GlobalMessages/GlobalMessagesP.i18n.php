@@ -8217,6 +8217,8 @@ Zur Information folgt der aktuelle Logbucheintrag:',
 	'patrol-log-auto' => '(automatisch)',
 	'patrol-log-diff' => 'Version $1',
 	'patrol-log-line' => 'markierte $1 von $2 als patrouilliert $3',
+	'popular-articles' => 'Beliebte Artikel',
+	'popular-wikis' => 'Beliebte Wikis',
 ];
 
 $messages['de-ch'] = [
@@ -9639,6 +9641,8 @@ A continuación se muestra la última entrada de registro para referencia:',
 	'previousdiff' => '← Edición anterior',
 	'prefs-help-birthinfo' => 'Fandom solicita a todos los usuarios que pongan su fecha real de nacimiento como medida de seguridad y como forma de preservar la integridad del sitio mientras cumple con las regulaciones federales.',
 	'prefs-help-terms' => 'Al crear un wiki y una cuenta de usuario, aceptas los {{#NewWindowLink: w:c:es:Términos de uso|términos de uso de Fandom}}',
+	'popular-articles' => 'Artículos Populares',
+	'popular-wikis' => 'Wikis Populares',
 ];
 
 $messages['et'] = [
@@ -10398,6 +10402,8 @@ $messages['fa'] = [
 	'patrol-log-header' => 'این سیاهه‌ای از ویرایش‌های گشت‌خورده است.',
 	'previousdiff' => '→ تفاوت قدیمی‌تر',
 	'pagecategorieslink' => 'ویژه:رده‌ها',
+	'popular-articles' => 'مقالات محبوب',
+	'popular-wikis' => 'ویکی‌های محبوب',
 ];
 
 $messages['ff'] = [
@@ -10609,6 +10615,8 @@ Alla on viimeisin lokitapahtuma:',
 	'patrol-log-header' => 'Tämä on loki tarkastetuista muutoksista.',
 	'previousdiff' => '← Vanhempi muutos',
 	'percent' => '$1&nbsp;%',
+	'popular-articles' => 'Suositut artikkelit',
+	'popular-wikis' => 'Suositut wikit',
 ];
 
 $messages['fiu-vro'] = [
@@ -17234,6 +17242,8 @@ file_uploadsの設定を確認してください。',
 	'preferences_s' => 'オプション',
 	'prefs-help-birthinfo' => 'Fandomでは健全なサイト運営およびアメリカ合衆国の法規定に則るため、すべてのユーザーに対して生年月日の入力を必須としています。',
 	'prefs-help-terms' => 'アカウントを作成することで、{{#NewWindowLink: homepage:利用規約| Wikia株式会社の利用規約}}に同意したものと見なされます',
+	'popular-articles' => '人気ページ',
+	'popular-wikis' => '人気のウィキ',
 ];
 
 $messages['jam'] = [
@@ -27446,6 +27456,8 @@ Det siste loggelementet er oppgjeve under som referanse:',
 	'patrol-log-page' => 'Patruljeringslogg',
 	'patrol-log-header' => 'Dette er ein logg over patruljerte sideversjonar.',
 	'previousdiff' => '← Eldre endring',
+	'popular-articles' => 'Populære artikler',
+	'popular-wikis' => 'Populære wikier',
 ];
 
 $messages['nov'] = [
@@ -31338,6 +31350,8 @@ ___________________________________________________________
 	'parentheses' => '($1)',
 	'prefs-help-birthinfo' => 'Согласно требованиям Фэндома, все пользователи должны указывать свою настоящую дату рождения. Это мера позволяет обеспечить безопасность и соответствие сайта требованиям федеральных нормативных актов США.',
 	'prefs-help-terms' => 'Создавая вики или учётную запись, вы соглашаетесь с {{#NewWindowLink: w:c:ru.community:Викия:Условия_использования| Условиями использования, установленными компанией Wikia, Inc.}}',
+	'popular-articles' => 'Популярные страницы',
+	'popular-wikis' => 'Популярные вики',
 ];
 
 $messages['rue'] = [
