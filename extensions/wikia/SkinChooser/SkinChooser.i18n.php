@@ -60,7 +60,7 @@ $messages['fo'] = [
 ];
 
 $messages['fr'] = [
-	'skinchooser-desc' => 'Permet aux utilisateurs de choisir des habillages dans leurs préférences',
+	'skinchooser-desc' => 'Permet aux utilisateurs de choisir l\'apparence à utiliser dans leurs préférences',
 	'new-look' => 'Wikia',
 	'site-layout' => 'Apparences du site',
 ];
@@ -90,7 +90,7 @@ $messages['it'] = [
 ];
 
 $messages['ja'] = [
-	'skinchooser-desc' => '利用者の個人設定での外装選択を可能にします。',
+	'skinchooser-desc' => '利用者が個人設定で外装を変更できるようにする',
 	'new-look' => 'ウィキア',
 	'site-layout' => 'サイトの外装',
 ];
