@@ -66,7 +66,7 @@ $messages['en'] = [
 	'multidelete_error_empty_pages' => 'Please choose either one specified page or a given list of pages.',
 	'multidelete_error_multi_page' => 'Only one title at a time allowed for multi-wiki deletion.',
 	'multidelete_info_empty_list' => 'Provided titles were not found on any selected wikis.',
-	'multidelete_task_added' => 'Multi delete task #$1 was added.',
+	'multidelete_task_added' => 'Multi delete task #<a href="http://central.wikia.com/index.php?title=Special:TaskManager&action=log&offset=0&id=$1">$1</a> was added.',
 	'multidelete_task_error' => 'There was an error in adding the multi delete task.',
 	'multidelete_task_none_selected' => 'You didn\'t select any articles. The task was not added.',
 	'multidelete_select_all' => 'Select all',
@@ -789,19 +789,19 @@ $messages['de'] = [
 	'multidelete_button' => 'LÖSCHEN',
 	'multidelete_help' => 'Lösche mehrere Seiten. Du kannst entweder eine einzelne Löschung durchführen oder Seiten, die in einer Datei gelistet sind. Du kannst dies nur für dieses Wiki, alle Wikis aus der gemeinsamen Datenbank oder ausgewählte Wikis (aus einer Textdatei, jedes in einer eigenen neuen Zeile) durchführen. Wähle einen Benutzer, der in den Löschlogs angezeigt wird. Die hochgeladene Seitenliste muss den Seitennamen und eine durch | abgetrennte optionale Begründung in jeder Zeile beinhalten.',
 	'multidelete_caption' => 'Liste von Seiten',
-	'multidelete_title' => 'Multi Delete',
-	'multidelete_both_modes' => 'Bitte wähle entweder eine bestimmte Seite oder eine vorgegebene Liste von Seiten.',
+	'multidelete_title' => 'Multidelete',
+	'multidelete_both_modes' => 'Bitte wähle entweder eine spezifische Seite oder eine vorgegebene Liste von Seiten.',
 	'multidelete_or' => '<b>ODER</b>',
 	'multidelete_error_empty_selection' => 'Bitte gib die Liste der ausgewählten Wikis an',
 	'multidelete_error_empty_pages' => 'Bitte wähle entweder eine bestimmte Seite oder eine vorgegebene Liste von Seiten.',
 	'multidelete_error_multi_page' => 'Nur ein Titel pro Multi-Wiki-Löschung erlaubt.',
 	'multidelete_info_empty_list' => 'Die angegebenen Titel wurden auf keinem ausgewählten Wiki gefunden.',
-	'multidelete_task_added' => 'Der Multi Delete-Auftrag #$1 wurde hinzugefügt.',
-	'multidelete_task_error' => 'Beim Hinzufügen des Multi Delete-Auftrags ist ein Fehler aufgetreten.',
+	'multidelete_task_added' => 'Der Multidelete-Auftrag wurde hinzugefügt.',
+	'multidelete_task_error' => 'Beim Hinzufügen des Multidelete-Auftrags ist ein Fehler aufgetreten.',
 	'multidelete_task_none_selected' => 'Du hast keine Artikel ausgewählt. Es wurde kein Auftrag hinzugefügt.',
 	'multidelete_select_all' => 'Alle auswählen',
 	'multidelete_page' => 'Zu löschende Seiten',
-	'multidelete_reason' => 'Grund für die Löschung',
+	'multidelete_reason' => 'Löschgrund',
 	'multidelete_list_caption' => 'in einer vorgegebenen Liste von Wikis',
 	'multidelete_choose_articles' => 'wähle, welche der gefundenen Artikel gelöscht werden sollen',
 	'multidelete_processing' => 'Lösche Seiten',
@@ -810,13 +810,13 @@ $messages['de'] = [
 	'multidelete_all_wikis' => 'allen Wikis',
 	'multidelete_selected_wikis' => 'ausgewählten Wikis',
 	'multidelete_success_subtitle' => 'auf $1',
-	'multidelete_link_back' => 'Du kannst zurück zum Multi Delete-Formular $1 gehen.',
+	'multidelete_link_back' => 'Zurück zum Multidelete-Formular',
 	'multidelete_omitting_nonexistant' => 'Lasse nicht existente Seite $1 aus.',
 	'multidelete_omitting_invalid' => 'Lasse ungültige Seite $1 aus.',
 	'multidelete_file_bad_format' => 'Die Datei sollte eine reine Textdatei sein',
-	'multidelete_file_missing' => 'Die Datei kann nicht gelesen werden',
+	'multidelete_file_missing' => 'Datei kann nicht gelesen werden',
 	'multidelete_select_script' => 'Seiten-Löschskript',
-	'multidelete_no_page' => 'Bitte gib entweder mindestens eine zu löschende Seite an oder wähle eine Datei, die eine Liste zu löschender Seiten enthält.',
+	'multidelete_no_page' => 'Bitte gib mindestens eine zu löschende Seite an ODER wähle eine Datei mit einer Liste von Seiten.',
 	'multidelete_split_results' => 'Deine Artikelanzahl war zu groß, um in einer einzigen Aufgabe erledigt werden. Stattdessen wurde sie in \'\'\'$1\'\'\' {{PLURAL:$1|Aufgabe|Aufgaben}} mit einer maximalen Blockgröße von \'\'\'$2\'\'\' {{PLURAL:$2|Artikel|Artikeln}} aufgeteilt.',
 	'multidelete_max_display_size' => 'Multi Delete hat derzeit eine maximale Anzahl von Artikeln in der Bestätigungs-Phase. Deine Anfrage wurde nach \'\'\'$1\'\'\' Artikeln gekappt. Wähle deine Artikel und speichere die Aufgabe. Überlege, ob du sie dann wiederholt ausführst, um alle verbleibenden Artikel zu bearbeiten.',
 	'multidelete_brazilian_portuguese_wikis' => 'alle brasilianisch-portugiesischen Wikis',
@@ -1119,7 +1119,7 @@ $messages['fi'] = [
 
 $messages['fr'] = [
 	'multiwikifinder-desc' => 'Outil d’équipe pour rechercher un titre spécifique dans Wikia',
-	'multidelete-desc' => 'Suppression multi-wikis spéciale',
+	'multidelete-desc' => 'Suppression sur plusieurs wikias',
 	'multiedit-desc' => 'Modification multi-wikis spéciale',
 	'multitasks-link-back-label' => 'ici',
 	'multiwikiedit' => 'Modifier une série de pages',
@@ -1172,7 +1172,7 @@ $messages['fr'] = [
 	'action-multiwikiedit' => 'modifier un lot de pages',
 	'multidelete' => 'Supprimer une série de pages',
 	'multidelete_button' => 'SUPPRIMER',
-	'multidelete_help' => 'Supprimer une série de page en tâche de fond. Vous pouvez soit le faire pour ce wiki, pour tous les wiki avec une base de données partagée, les wiki sélectionnés ou les langues sélectionnées. Vous pouvez également choisir de supprimer les pages en tant que VOUS ou via un compte de script présélectionné.',
+	'multidelete_help' => 'Supprimer une série de pages en tâche de fond. Vous pouvez soit le faire pour ce wikia, pour tous les wikias avec une base de données partagée, les wikias sélectionnés ou les langues sélectionnées. Vous pouvez également choisir de supprimer les pages en tant que VOUS-MÊME ou via un compte de script prédéfini.',
 	'multidelete_caption' => 'Liste des pages',
 	'multidelete_title' => 'Suppression multiple',
 	'multidelete_both_modes' => 'Choisissez soit une page spécifique ou une liste de pages donnée.',
@@ -1639,7 +1639,7 @@ $messages['ja'] = [
 	'multidelete_processing' => 'ページの削除:',
 	'multidelete_this_wiki' => 'このウィキ',
 	'multidelete_inbox_caption' => 'コンマで区切ってウィキを指定',
-	'multidelete_all_wikis' => 'すべてのウィキ',
+	'multidelete_all_wikis' => '全ウィキ',
 	'multidelete_selected_wikis' => '指定したウィキ',
 	'multidelete_success_subtitle' => 'for $1',
 	'multidelete_link_back' => '一括削除フォームに戻るには$1。',
@@ -1781,6 +1781,8 @@ $messages['ko'] = [
 	'multiwikienterpagename' => '문서 이름 입력:',
 	'multiwikirecords' => '위키 $1개 발견',
 	'multiwikifinder-redirect' => '넘겨주기',
+	'multidelete_button' => '삭제',
+	'multidelete_title' => '문서 일괄 삭제',
 ];
 
 $messages['ksh'] = [
@@ -2295,8 +2297,8 @@ Voer de taak daarna opnieuw uit om alle overgebleven pagina\'s te verwerken.',
 	'multidelete' => 'Lijst van pagina\'s verwijderen',
 	'multidelete_button' => 'Verwijderen',
 	'multidelete_help' => 'Een verzameling pagina\'s verwijderen via een achtergrondtaak.
-U kunt dat doen voor deze wiki, alle wiki\'s van een gedeelde database, geselecteerde wiki\'s of geselecteerde taken.
-U kunt er voor kiezen de pagina\'s als uzelf te verwijderen of als een administratieve gebruiker.',
+Je kunt dat doen voor deze wiki, alle wiki\'s van een gedeelde database, geselecteerde wiki\'s of geselecteerde taken.
+Je kunt er voor kiezen de pagina\'s als jezelf te verwijderen of als een administratieve gebruiker.',
 	'multidelete_caption' => 'Paginalijst',
 	'multidelete_title' => 'Meervoudig verwijderen',
 	'multidelete_both_modes' => 'Kies een van de opgegeven pagina\'s of een lijst van pagina\'s.',
@@ -2307,7 +2309,7 @@ U kunt er voor kiezen de pagina\'s als uzelf te verwijderen of als een administr
 	'multidelete_info_empty_list' => 'De opgegeven paginanamen zijn niet aangetroffen in de geselecteerde wiki\'s.',
 	'multidelete_task_added' => 'De taak #$1 voor meervoudig verwijderen is toegevoegd.',
 	'multidelete_task_error' => 'Er is een fout opgetreden tijdens het toevoegen van de verwijderingstaak.',
-	'multidelete_task_none_selected' => 'U hebt geen pagina\'s geselecteerd.
+	'multidelete_task_none_selected' => 'Je hebt geen pagina\'s geselecteerd.
 De taak is niet toegevoegd.',
 	'multidelete_select_all' => 'Alle selecteren',
 	'multidelete_page' => 'Te verwijderen pagina\'s',
@@ -2330,8 +2332,8 @@ De taak is niet toegevoegd.',
 	'multidelete_split_results' => 'Het aantal pagina\'s was te groot om in één taak uit te voeren.
 De lijst is gesplitst in \'\'\'$1\'\'\' {{PLURAL:$1|taak|taken}} met maximaal \'\'\'$2\'\'\' {{PLURAL:$2|pagina|pagina\'s}}.',
 	'multidelete_max_display_size' => 'Meervoudig verwijderen heeft op het moment een maximaal aantal pagina\'s in de bevestigingsstap.
-Uw opdracht is ingekort tot \'\'\'$1\'\'\' pagina\'s.
-Kies uw pagina\'s en sla de taak op.
+Je opdracht is ingekort tot \'\'\'$1\'\'\' pagina\'s.
+Kies je pagina\'s en sla de taak op.
 Voer de taak daarna opnieuw uit om alle overgebleven pagina\'s te verwerken.',
 	'multidelete_brazilian_portuguese_wikis' => 'alle Braziliaans-Portugese wiki\'s',
 	'multidelete_hebrew_wikis' => 'alle Hebreeuwse wiki\'s',
@@ -3828,5 +3830,34 @@ $messages['zh-tw'] = [
 	'multidelete_button' => '刪除',
 	'multidelete_caption' => '頁面列表',
 	'multidelete_reason' => '刪除原因',
+];
+
+$messages['no'] = [
+	'multidelete_all_wikis' => 'alle wikier',
+	'multidelete_button' => 'SLETT',
+	'multidelete_caption' => 'Sideliste',
+	'multidelete_chinese_wikis' => 'alle kinesiske wikier',
+	'multidelete_czech_wikis' => 'alle tsjekkiske wikier',
+	'multidelete_dutch_wikis' => 'alle nederlandske wikier',
+	'multidelete_english_wikis' => 'alle engelske wikier',
+	'multidelete_finnish_wikis' => 'alle finske wikier',
+	'multidelete_french_wikis' => 'alle franske wikier',
+	'multidelete_german_wikis' => 'alle tyske wikier',
+	'multidelete_hebrew_wikis' => 'alle hebraiske wikier',
+	'multidelete_italian_wikis' => 'alle italienske wikier',
+	'multidelete_japanese_wikis' => 'alle japanske wikier',
+	'multidelete_or' => '<b>ELLER</b>',
+	'multidelete_page' => 'Sider som skal slettes',
+	'multidelete_polish_wikis' => 'alle polske wikier',
+	'multidelete_portuguese_wikis' => 'alle portugisiske wikier',
+	'multidelete_processing' => 'sletter sider',
+	'multidelete_reason' => 'Slettingsårsak',
+	'multidelete_russian_wikis' => 'alle russiske wikier',
+	'multidelete_select_all' => 'Velg alle',
+	'multidelete_selected_wikis' => 'valgte wikier',
+	'multidelete_spanish_wikis' => 'alle spanske wikier',
+	'multidelete_swedish_wikis' => 'alle svenske wikier',
+	'multidelete_task_none_selected' => 'Du valgte ingen artikler. Oppgaven ble ikke lagt til.',
+	'multidelete_this_wiki' => 'denne wikien',
 ];
 
