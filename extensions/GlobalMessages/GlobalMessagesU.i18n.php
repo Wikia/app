@@ -152,7 +152,7 @@ Remember to check for other links to the templates before deleting them.',
 	'uncategorizedpages-summary' => '',
 	'uncategorizedcategories' => 'Uncategorized categories',
 	'uncategorizedcategories-summary' => '',
-	'uncategorizedimages' => 'Uncategorized files',
+	'uncategorizedimages' => 'Uncategorized photos',
 	'uncategorizedimages-summary' => '',
 	'uncategorizedtemplates' => 'Uncategorized templates',
 	'uncategorizedtemplates-summary' => '',
@@ -37909,6 +37909,9 @@ De lèste lienk is bedoeld voe mediabestan\'n die an hin plaetje zien.',
 
 $messages['zh-cn'] = [
 	'uploadnologintext' => '你必须$1才能上传图片和视频内容。',
+	'uncategorizedcategories' => '待分类类别',
+	'uncategorizedimages' => '待分类图像',
+	'uncategorizedpages' => '待分类页面',
 ];
 
 $messages['zh-hans'] = [
@@ -38332,6 +38335,9 @@ $1',
 
 $messages['zh-hk'] = [
 	'userlogin' => '登入／創造帳戶',
+	'uncategorizedcategories' => '待分類類別',
+	'uncategorizedimages' => '待分類圖像',
+	'uncategorizedpages' => '待分類頁面',
 ];
 
 $messages['zh-min-nan'] = [
@@ -38376,7 +38382,7 @@ $messages['zh-tw'] = [
 	'upload-file-error-text' => '當試圖在伺服器上建立臨時檔案時發生內部錯誤。請與系統管理員聯繫。',
 	'upload-misc-error-text' => '在上傳時發生未知的錯誤. 請驗証使用了正確並可訪問的 URL，然後進行重試。如果問題仍然存在，請與系統管理員聯繫。',
 	'unusedtemplatestext' => '本頁面列出模板名字空間下所有未被其他頁面使用的頁面。請在刪除這些模板前檢查其他鏈入該模板的頁面。',
-	'uncategorizedimages' => '待分類圖片',
+	'uncategorizedimages' => '待分類圖像',
 	'unusedimages' => '未使用圖片',
 	'unusedimagestext' => '請注意其它網站可能直接透過 URL 連結此圖片，所以這裡列出的圖片有可能依然被使用。',
 	'undelete' => '復原被刪頁面',
@@ -38406,6 +38412,8 @@ $messages['zh-tw'] = [
 	'unrate_it' => '取消分數',
 	'use_old_formatting' => '換回舊面板',
 	'use_new_formatting' => '嘗試新面板',
+	'uncategorizedcategories' => '待分類類別',
+	'uncategorizedpages' => '待分類頁面',
 ];
 
 $messages['zh-yue'] = [
@@ -38480,5 +38488,11 @@ $messages['zu'] = [
 	'upload-success-subj' => 'Ukulayisha okuchumile',
 	'unwatch' => 'Mus\'ukubukela',
 	'undeletecomment' => 'Khuluma:',
+];
+
+$messages['zh'] = [
+	'uncategorizedcategories' => '待分類類別',
+	'uncategorizedimages' => '待分類圖像',
+	'uncategorizedpages' => '待分類頁面',
 ];
 
