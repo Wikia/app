@@ -9195,6 +9195,7 @@ $messages['el'] = [
 	'patrol-log-header' => 'Αυτός είναι ένας κατάλογος περιπολούμενων αναθεωρήσεων.',
 	'previousdiff' => '← Προηγούμενη επεξεργασία',
 	'preferences_s' => 'Προτιμήσεις',
+	'prefixindex-namespace' => 'Όλες οι σελίδες με πρόθεμα ($1 χώρος ονομάτων)',
 ];
 
 $messages['eml'] = [
@@ -41058,6 +41059,7 @@ Sommige sjabloon\'n worr\'n nie getranscludeerd.',
 $messages['zh-cn'] = [
 	'portal' => '社区专页',
 	'permalink' => '固定链结',
+	'prefixindex' => '前缀索引',
 ];
 
 $messages['zh-hans'] = [
@@ -41511,6 +41513,7 @@ $messages['zh-hk'] = [
 	'privacypage' => 'Project:私隱政策',
 	'passwordremindertitle' => 'Wikia密碼變更通知',
 	'pagecategories' => '{{PLURAL:$1個|分類|分類}}',
+	'prefixindex' => '前缀索引',
 ];
 
 $messages['zh-min-nan'] = [
@@ -41570,7 +41573,7 @@ ___________________________________________________________
 	'prefs-help-realname' => '真實姓名是選填的，如果您選擇提供它，那它便用以對您的貢獻署名。',
 	'prefs-help-email' => '電子郵件是選填的，但當啟用它後可以在您忘記您的個密碼時需要將新密碼重設寄回給您。而在您未公開自己的使用者身分時也能透過您的用戶頁或用戶討論頁與您聯繫。',
 	'popularpages' => '熱門頁面',
-	'prefixindex' => '前綴索引',
+	'prefixindex' => '前缀索引',
 	'protect-title' => '正在保護"$1"',
 	'protect-locked-blocked' => '您不能在被封鎖時更改保護級別。
 以下是\'\'\'$1\'\'\'現時的保護級別:',
@@ -41652,5 +41655,6 @@ $messages['zh'] = [
 	'perfcachedts' => '下列数据已经过缓存处理，最后更新时间为$1。在缓存中最多有{{PLURAL:$4|一个结果|$4个结果}}可用。',
 	'permalink' => '固定链结',
 	'preferences' => '用戶设定',
+	'prefixindex' => '前缀索引',
 ];
 
