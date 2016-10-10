@@ -240,6 +240,7 @@ $messages['bg'] = [
 	'wikia-editor-modules-templates-title' => 'Шаблони',
 	'wikia-editor-modules-templates-otherTemplates' => 'Добавяне на други шаблони',
 	'wikia-editor-modules-categories-title' => 'Категории',
+	'tog-forceeditsummary' => 'Уведомяване, когато полето "Резюне" не е попълнено',
 ];
 
 $messages['br'] = [
@@ -496,6 +497,7 @@ $messages['de'] = [
 	'tog-forceeditsummary' => 'Warnen, sofern beim Speichern die Zusammenfassung fehlt',
 	'editpagelayout-preview-label-desktop' => 'Desktop',
 	'editpagelayout-preview-label-mobile' => 'Mobil',
+	'tog-disablesyntaxhighlighting' => 'Keine Syntaxhervorhebung im Quelltext-Mode anzeigen',
 ];
 
 $messages['de-formal'] = [
@@ -621,6 +623,7 @@ $messages['es'] = [
 	'tog-forceeditsummary' => 'Alertar al grabar sin resumen de edición.',
 	'editpagelayout-preview-label-desktop' => 'Escritorio',
 	'editpagelayout-preview-label-mobile' => 'Móvil',
+	'tog-disablesyntaxhighlighting' => 'No mostrar el resaltado de sintaxis en Modo fuente',
 ];
 
 $messages['fa'] = [
@@ -691,6 +694,9 @@ $messages['fi'] = [
 	'prefs-editarea-size' => 'Muokkausikkunan koko (vain MonoBook -ulkoasu)',
 	'prefs-editing-experience' => 'Muokkauskokemus',
 	'prefs-monobook-layout' => 'Vain MonoBook -ulkoasu',
+	'tog-disablesyntaxhighlighting' => 'Poista koodin väritys käytöstä lähdekooditilassa',
+	'tog-editwidth' => 'Levitä lähdekooditilassa muokkausruutu koko näytön levyiseksi',
+	'tog-forceeditsummary' => 'Ilmoita minulle, jos olen tallentamassa sivua ilman muokkausyhteenvetoa',
 ];
 
 $messages['fr'] = [
@@ -774,6 +780,7 @@ $messages['fr'] = [
 	'editpagelayout-preview-label-desktop' => 'Bureau',
 	'editpagelayout-preview-label-mobile' => 'Mobile',
 	'editpagelayout-desc' => 'Applique la mise en page mise à jour pour les pages de modification',
+	'tog-disablesyntaxhighlighting' => 'Ne pas afficher la coloration syntaxique en mode source',
 ];
 
 $messages['gl'] = [
@@ -1137,6 +1144,7 @@ $messages['it'] = [
 	'editpagelayout-pageControls-newSectionLabel' => 'Aggiungi un titolo di sezione',
 	'editpagelayout-subject-headline-label' => 'Oggetto/titolo:',
 	'protectedpagewarning-notice' => '\'\'\'Nota:\'\'\' Questa pagina è stata protetta in modo che solo gli amministratori possano modificarla. Gli amministratori locali possono cambiare questo stato. [Maggiori informazioni]',
+	'tog-disablesyntaxhighlighting' => 'Non mostrare il syntax highlighting nel codice sorgente',
 ];
 
 $messages['ja'] = [
@@ -1201,13 +1209,14 @@ $messages['ja'] = [
 	'prefs-editing-experience' => '編集補助',
 	'prefs-monobook-layout' => 'MonoBook のみ',
 	'prefs-editarea-size' => '編集ウィンドウのサイズ（MonoBook のみ）',
-	'tog-editsection' => '[編集]リンクから節を編集できるようにする',
+	'tog-editsection' => '「編集」リンクから節を編集できるようにする',
 	'tog-editwidth' => 'ソースモード時の編集ボックスを画面いっぱいに広げる',
 	'tog-minordefault' => '細部の編集を既定でチェックする',
 	'tog-forceeditsummary' => '要約欄が空欄の場合に警告する',
 	'editpagelayout-preview-label-desktop' => 'PC',
 	'editpagelayout-preview-label-mobile' => 'モバイル',
 	'mainpagewarning-notice' => '[[w:c:ja.community:ヘルプ:メインページ|メインページの編集]]についてもっと詳しく知る。',
+	'tog-disablesyntaxhighlighting' => 'ソースモードでの編集時シンタックスハイライトを使わない',
 ];
 
 $messages['km'] = [
@@ -1300,6 +1309,7 @@ $messages['ko'] = [
 	'editpagelayout-preview-label-desktop' => '데스크톱',
 	'editpagelayout-preview-label-mobile' => '모바일',
 	'mainpagewarning-notice' => '대문 편집에 대한 더 많은 정보는 이곳을 참고하세요: [[w:c:ko.community:도움말:대문|도움말:대문]]',
+	'tog-disablesyntaxhighlighting' => '소스 모드에서 구문 강조 기능 사용하지 않기',
 ];
 
 $messages['lb'] = [
@@ -1747,6 +1757,7 @@ $messages['pl'] = [
 	'tog-forceeditsummary' => 'Poinformuj mnie gdy zostawię puste pole opisu zmian',
 	'editpagelayout-preview-label-desktop' => 'Komputer',
 	'editpagelayout-preview-label-mobile' => 'Mobilny',
+	'tog-disablesyntaxhighlighting' => 'Nie podświetlaj składni wikitekstu w trybie źródłowym',
 ];
 
 $messages['pms'] = [
@@ -1927,6 +1938,7 @@ $messages['pt'] = [
 	'tog-editwidth' => 'Aumentar a caixa de edição no modo de código para preenchar todo o ecrã',
 	'tog-minordefault' => 'Por omissão, marcar todas as edições como menores',
 	'tog-forceeditsummary' => 'Avisar-me se deixar o resumo da edição vazio',
+	'tog-disablesyntaxhighlighting' => 'Não mostre realce de sintaxe no modo Fonte',
 ];
 
 $messages['pt-br'] = [
@@ -2009,6 +2021,7 @@ $messages['pt-br'] = [
 	'tog-forceeditsummary' => 'Avisar-me se eu deixar um sumário em branco',
 	'editpagelayout-preview-label-desktop' => 'Computador',
 	'editpagelayout-preview-label-mobile' => 'Dispositivo Móvel',
+	'tog-disablesyntaxhighlighting' => 'Não mostre realce de sintaxe no modo código',
 ];
 
 $messages['roa-tara'] = [
@@ -2104,6 +2117,7 @@ $messages['ru'] = [
 	'tog-forceeditsummary' => 'Предупреждать, когда не заполнено поле описания правки',
 	'editpagelayout-preview-label-desktop' => 'Монитор ПК',
 	'editpagelayout-preview-label-mobile' => 'Мобильный',
+	'tog-disablesyntaxhighlighting' => 'Не показывать подсветку викитекста в Исходном коде',
 ];
 
 $messages['sv'] = [
@@ -2508,28 +2522,42 @@ $messages['zh-hans'] = [
 	'tog-forceeditsummary' => '在我未填写编辑概要时提示我',
 	'editpagelayout-preview-label-desktop' => '桌面',
 	'editpagelayout-preview-label-mobile' => '行動裝置',
+	'tog-disablesyntaxhighlighting' => '在原代码中不显示语法突出',
 ];
 
 $messages['zh'] = [
 	'mainpagewarning-notice' => '了解更多关于[[w:c:zh.community:Help:Main_page|编辑主页]]的内容。',
+	'tog-disablesyntaxhighlighting' => '在原代码中不显示语法突出',
 ];
 
 $messages['zh-hant'] = [
 	'mainpagewarning-notice' => '瞭解更多關於[[w:c:zh.community:Help:Main_page|編輯首頁]]的內容。',
 	'prefs-editing-experience' => '編輯體驗',
 	'prefs-starting-an-edit' => '開始編輯',
+	'tog-disablesyntaxhighlighting' => '在原代碼中不顯示語法突出',
+	'tog-editsection' => '顯示章節編輯鏈接',
+	'tog-editwidth' => '使源代碼模式的編輯框變寬至整個銀幕',
+	'tog-minordefault' => '預設將所有編輯標為「小編輯」',
 ];
 
 $messages['zh-hk'] = [
 	'mainpagewarning-notice' => '瞭解更多關於[[w:c:zh.community:Help:Main_page|編輯首頁]]的內容。',
 	'prefs-editing-experience' => '編輯體驗',
 	'prefs-starting-an-edit' => '開始編輯',
+	'tog-disablesyntaxhighlighting' => '在原代碼中不顯示語法突出',
+	'tog-editsection' => '顯示章節編輯鏈接',
+	'tog-editwidth' => '使源代碼模式的編輯框變寬至整個銀幕',
+	'tog-minordefault' => '預設將所有編輯標為「小編輯」',
 ];
 
 $messages['zh-tw'] = [
 	'mainpagewarning-notice' => '瞭解更多關於[[w:c:zh.community:Help:Main_page|編輯首頁]]的內容。',
 	'prefs-editing-experience' => '編輯體驗',
 	'prefs-starting-an-edit' => '開始編輯',
+	'tog-disablesyntaxhighlighting' => '在原代碼中不顯示語法突出',
+	'tog-editsection' => '顯示章節編輯鏈接',
+	'tog-editwidth' => '使源代碼模式的編輯框變寬至整個銀幕',
+	'tog-minordefault' => '預設將所有編輯標為「小編輯」',
 ];
 
 $messages['el'] = [

@@ -584,8 +584,8 @@ Der Benutzer, der #WIKINAME adoptiert hat, hat jetzt Bürokraten- und Admin-Stat
 Dein Fandom-Team<br /><br />
 
 Wenn du keine Nachrichten zu Änderungen dieser Liste mehr erhalten möchtest, kannst du dies <a href="$3">hier abstellen</a>.',
-	'tog-adoptionmails' => 'Benachrichtige mich per E-Mail, wenn $1 zur Adoption durch andere Benutzer freigegeben wird',
-	'tog-adoptionmails-v2' => '… wenn das Wiki für andere Benutzer zur Adoption freigegeben wird.',
+	'tog-adoptionmails' => 'Sende mir eine E-Mail, wenn $1 zur Adoption durch andere Benutzer freigegeben wird',
+	'tog-adoptionmails-v2' => '...wenn das Wiki zur Adoption durch andere Benutzer freigegeben wird.',
 	'wikiadoption-pref-label' => 'Eine Änderung dieser Einstellungen wirkt sich nur auf E-Mails von $1 aus.',
 	'wikiadoption-welcome-header' => 'Gratulation! Du hast {{SITENAME}} adoptiert!',
 	'wikiadoption-welcome-body' => 'Du bist in diesem Wiki nun ein Bürokrat. Damit hast du nun Zugang zu allen Werkzeugen, um {{SITENAME}} zu verwalten.
@@ -713,7 +713,7 @@ El equipo de Fandom<br /><br />
 
 Si quieres <a href="$3">dejar de recibir mensajes</a> sobre cambios en esta lista, haz clic aquí: $3.',
 	'tog-adoptionmails' => 'Notificarme por correo electrónico si $1 está disponible para otros usuarios para adoptar.',
-	'tog-adoptionmails-v2' => '...si el wiki estuviera disponible para que otros usuarios lo adopten',
+	'tog-adoptionmails-v2' => '...si el wiki está disponible para que lo adopten otros usuarios',
 	'wikiadoption-pref-label' => 'Cambiar estas preferencias solo afectarán los correos electrónicos de $1.',
 	'wikiadoption-welcome-header' => '¡Felicitaciones! ¡Has adoptado a {{SITENAME}}!',
 	'wikiadoption-welcome-body' => 'Ahora eres burócrata en este wiki. Con tu nuevo cargo, ahora tienes acceso a todas las herramientas que te ayudarán a administrar {{SITENAME}}.
@@ -973,7 +973,7 @@ L\'équipe de Fandom<br /><br />
 
 Vous pouvez vous <a href="$3">désabonner</a> des changements de cette liste.',
 	'tog-adoptionmails' => 'Envoyez-moi un message si $1 devient disponible à l\'adoption',
-	'tog-adoptionmails-v2' => '...si le wiki devient disponible à l’adoption',
+	'tog-adoptionmails-v2' => '...si le wikia devient disponible à l’adoption',
 	'wikiadoption-pref-label' => 'La modification de ces préférences affectera seulement les courriels de $1.',
 	'wikiadoption-welcome-header' => 'Félicitations ! Vous avez adopté {{SITENAME}} !',
 	'wikiadoption-welcome-body' => 'Vous êtes maintenant bureaucrate sur ce wiki. Avec votre nouveau statut, vous avez maintenant accès à tous les outils qui vous aideront à gérer {{SITENAME}}.
@@ -1483,8 +1483,8 @@ Sei pronto a fare i prossimi passi per aiutare {{SITENAME}}?',
 	'wikiadoption-notification' => '{{SITENAME}} è in adozione. Sei interessato a diventare un leader qui? Adottare questo wiki per iniziare! 2$',
 	'wikiadoption-mail-first-subject' => 'non ti abbiamo visto in giro per un po\'',
 	'wikiadoption-mail-adoption-subject' => '#WIKINAME è stata adottata',
-	'tog-adoptionmails' => 'Mandami una mail se $1 diventa disponibile per l\'adozione da parte di altri utenti',
-	'tog-adoptionmails-v2' => '...se la wiki diventa disponibile per l\'adozione da parte di altri utenti',
+	'tog-adoptionmails' => 'Mandami una mail se la wiki diventa disponibile per l\'adozione da parte di altri utenti',
+	'tog-adoptionmails-v2' => '...la wiki diventa disponibile per l\'adozione da parte di altri utenti',
 	'wikiadoption-pref-label' => 'Il cambio di queste preferenze si ripercuoterà solo sulle email da $1.',
 	'wikiadoption-welcome-header' => 'Complimenti! Tu hai adottato {{SITENAME}}!',
 	'wikiadoption-mail-adoption-content' => 'Ciao $1,
@@ -1747,8 +1747,8 @@ $messages['ko'] = [
 위키아 팀<br /><br />
 
 <a href="$3">이곳</a>에서 리스트를 변경하면 주시를 해제할 수 있습니다.',
-	'tog-adoptionmails' => '$1의 관리자 자리를 내놓을 준비가 되었다면 이메일을 보내주세요',
-	'tog-adoptionmails-v2' => '...관리자를 내놓을 준비가 되었다면',
+	'tog-adoptionmails' => '누군가 $1를(을) 입양할 수 있게 되면 알림',
+	'tog-adoptionmails-v2' => '누군가 이 위키를 입양할 수 있게 되면 알림',
 	'wikiadoption-pref-label' => '해당 설정은 $1의 메일 알림에만 영향을 미칩니다.',
 	'wikiadoption-welcome-header' => '축하합니다! {{SITENAME}} 프로젝트의 관리자 권한을 얻었습니다!',
 	'wikiadoption-welcome-body' => '관리자로 임명되셨습니다. 새로운 권한으로 {{SITENAME}}의 관리를 도와줄 도구를 사용할 수 있습니다.
@@ -2872,7 +2872,7 @@ $messages['ru'] = [
 
 Вы можете <a href="$3">отписаться</a> от оповещений для этой темы.',
 	'tog-adoptionmails' => 'Мой e-mail, если $1 станет доступной для принятия другим участникам',
-	'tog-adoptionmails-v2' => '...если вики станет доступной для автоматического принятие другими участниками',
+	'tog-adoptionmails-v2' => '...если вики станет доступной для автоматического принятия другими участниками',
 	'wikiadoption-pref-label' => 'Изменение этих настроек влияет только на электронные письма от $1',
 	'wikiadoption-welcome-header' => 'Поздравляем! Вы приняли {{SITENAME}}!',
 	'wikiadoption-welcome-body' => 'инструментам, которые помогут вам управлять {{SITENAME}}.
@@ -3327,8 +3327,8 @@ Người dùng chọn #WIKINAME bây giờ sẽ có trạng thái công chức v
 Đội Wikia<br /><br />
 
 Bạn có thể <a href="$3">bỏ đăng ký</a> từ các thay đổi vào danh sách này.',
-	'tog-adoptionmails' => 'Gửi email cho tôi nếu $1 sẽ trở thành có sẵn cho người dùng khác để áp dụng',
-	'tog-adoptionmails-v2' => '.. .Nếu wiki sẽ trở thành có sẵn cho người dùng khác để áp dụng',
+	'tog-adoptionmails' => 'Gửi thư điện tử cho tôi nếu $1 trở nên sẵn dụng để cho những thành viên khác nhận wiki',
+	'tog-adoptionmails-v2' => '...nếu wiki sẽ trở nên sẵn dụng để thành viên khác nhận wiki',
 	'wikiadoption-pref-label' => 'Thay đổi những tùy chọn sẽ chỉ ảnh hưởng đến email từ $1.',
 	'wikiadoption-welcome-header' => 'Chúc mừng! Bạn đã thông qua {{SITENAME}}!',
 	'wikiadoption-welcome-body' => 'Bạn bây giờ là một công chức wiki này. Với tình trạng mới của bạn, bạn bây giờ có quyền truy cập vào tất cả các công cụ mà sẽ giúp bạn quản lý {{SITENAME}}.
@@ -3517,5 +3517,17 @@ Fandom團隊<br /><br />
 
 您可以按這裡<a href="$3">取消郵件訂閱</a>。
 ',
+	'tog-adoptionmails-v2' => '……這個Wiki可以被其他用戶認領時',
+	'tog-adoptionmails' => '當$1可以由其他用戶認領時用郵件通知我',
+];
+
+$messages['zh-hk'] = [
+	'tog-adoptionmails-v2' => '……這個Wiki可以被其他用戶認領時',
+	'tog-adoptionmails' => '當$1可以由其他用戶認領時用郵件通知我',
+];
+
+$messages['zh-tw'] = [
+	'tog-adoptionmails-v2' => '……這個Wiki可以被其他用戶認領時',
+	'tog-adoptionmails' => '當$1可以由其他用戶認領時用郵件通知我',
 ];
 

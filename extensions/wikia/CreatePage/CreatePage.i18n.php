@@ -481,7 +481,7 @@ $messages['es'] = [
 	'createpage-error-article-exists' => 'Ya existe un artículo con ese título. Puedes ir a <a href="$1">$2</a> o cambiar el nombre de tu página',
 	'createpage-error-article-spam' => 'Lo sentimos, el título del artículo fue rechazado por nuestro filtro de contenido no deseado. Por favor, usa un título diferente.',
 	'createpage-error-article-blocked' => 'Lo sentimos, no puedes crear ese artículo en este momento.',
-	'tog-createpagedefaultblank' => 'Usa una página en blanco de manera predeterminada para la traducción de nuevas páginas.',
+	'tog-createpagedefaultblank' => 'Usar una página en blanco para crear páginas nuevas.',
 	'tog-createpagepopupdisabled' => 'Desactivar el proceso "Crear un nuevo artículo" (no recomendado)',
 	'newpagelayout' => '[[File:Placeholder|right|300px]]
 Escribe el primer párrafo de tu artículo aquí.
@@ -1539,7 +1539,7 @@ Możesz przejść do <a href="$1">$2</a>, lub zmienić nazwę strony',
 Podaj inny tytuł.',
 	'createpage-error-article-blocked' => 'Nie można utworzyć strony w tej chwili.',
 	'tog-createpagedefaultblank' => 'Domyślnie twórz nowe strony puste',
-	'tog-createpagepopupdisabled' => 'Wyłącz wyskakujące okno tworzenia nowego artykułu (nie zalecane)',
+	'tog-createpagepopupdisabled' => 'Wyłącz wyskakujące okno tworzenia nowego artykułu (niezalecane)',
 	'newpagelayout' => '[[File:Placeholder|right|300px]]
 Tutaj umieść treść pierwszego paragrafu.
 
@@ -2182,6 +2182,9 @@ $messages['zh'] = [
 	'createpage_enter_text' => '輸入文字',
 	'createpage-dialog-choose' => '选择一个页面布局：',
 	'createpage-error-article-spam' => '抱歉，这个页面标题被我们的防滥用过滤器拒绝。请使用其他的标题。',
+	'tog-createpagedefaultblank' => '
+预设使用空白页来创建页面',
+	'tog-createpagepopupdisabled' => '关闭 "创建新页面" 流程 (不建议)',
 ];
 
 $messages['zh-cn'] = [
@@ -2250,7 +2253,7 @@ $messages['zh-hant'] = [
 	'createpage-dialog-title' => '建立一個新的頁面',
 	'createpage-dialog-message2' => '你想叫它什麼？',
 	'createpage-error-article-blocked' => '對不起，您不能在這個時候創建該頁面。',
-	'tog-createpagedefaultblank' => '使用空白頁作為預設創建新頁面',
+	'tog-createpagedefaultblank' => '預設使用空白頁來創建頁面',
 	'createpage-ve-body' => '文章<b>$1</b>在此Fandom社群上不存在。您可以進行創建。',
 	'createpage-button-cancel' => '取消',
 	'createpage-dialog-blank' => '空白頁面',
@@ -2272,6 +2275,7 @@ $messages['zh-hant'] = [
 ==標題項==
 
 在這裡撰寫第二項。',
+	'tog-createpagepopupdisabled' => '關閉「創建新頁面」流程（不建議）',
 ];
 
 $messages['zh-hk'] = [
@@ -2298,6 +2302,8 @@ $messages['zh-hk'] = [
 ==標題項==
 
 在這裡撰寫第二項。',
+	'tog-createpagedefaultblank' => '預設使用空白頁來創建頁面',
+	'tog-createpagepopupdisabled' => '關閉「創建新頁面」流程（不建議）',
 ];
 
 $messages['zh-sg'] = [
@@ -2330,6 +2336,8 @@ $messages['zh-tw'] = [
 ==標題項==
 
 在這裡撰寫第二項。',
+	'tog-createpagedefaultblank' => '預設使用空白頁來創建頁面',
+	'tog-createpagepopupdisabled' => '關閉「創建新頁面」流程（不建議）',
 ];
 
 $messages['ko'] = [
@@ -2378,5 +2386,7 @@ $messages['ko'] = [
 ==문단 제목==
 
 두 번째 문단에 들어갈 정보들을 적어 주세요.',
+	'tog-createpagedefaultblank' => '새 문서를 생성할 때 빈 문서를 기본으로 지정',
+	'tog-createpagepopupdisabled' => '\'새 문서 만들기\' 창을 띄우지 않기',
 ];
 

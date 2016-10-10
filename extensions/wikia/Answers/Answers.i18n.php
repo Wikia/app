@@ -520,7 +520,7 @@ $messages['de'] = [
 	'reword_this' => '<a href="$1" $2>Formuliere diese Frage um</a>',
 	'no_related_answered_questions' => 'Es gibt noch keine ähnlichen Fragen.',
 	'auto_friend_request_body' => 'Wirst du mich als Freund hinzufügen?',
-	'tog-hidefromattribution' => 'Verstecke meinen Avatar und meinen Namen auf der Namensnennung-Liste',
+	'tog-hidefromattribution' => 'Meinen Namen und Avatar nicht unter bearbeiteten Artikeln anzeigen',
 	'a' => 'Antwort:',
 	'answering_tips' => '<h3>Tipps fürs Beantworten:</h3> Wenn du eine Frage beantwortest, versuche so genau wie möglich zu sein. Wenn du Informationen von einer anderen Seite als Wikipedia beziehst, gib einen Link an. Vielen Dank für deinen Beitrag zu {{SITENAME}}!',
 	'plus_x_more_helpers' => '...sowie $1 weitere Helfer',
@@ -1434,6 +1434,7 @@ $messages['ja'] = [
 	'research_this_on_wikipedia' => 'ウィキペディアで<a href="$1">この質問について調べる</a>。',
 	'reword_this' => '<a href="$1" $2>この質問の言い回しを変える</a>。',
 	'see_all' => '全て見る',
+	'tog-hidefromattribution' => '投稿者のリストに自分のアバターと名前を表示しない',
 ];
 
 $messages['lb'] = [
@@ -2150,6 +2151,7 @@ $messages['pl'] = [
 	'receive_email' => '<a href="$1" $2>Otrzymaj e-mail</a> gdy zostanie udzielona odpowiedź na to pytanie',
 	'research_this_on_wikipedia' => '<a href="$1">Wyszukaj odpowiedzi na to pytanie</a> na Wikipedii',
 	'reword_this' => '<a href="$1" $2>Przeredaguj to pytanie</a>',
+	'tog-hidefromattribution' => 'Ukryj mój avatar i nazwę użytkownika na liście autorów',
 ];
 
 $messages['pms'] = [
@@ -2751,5 +2753,9 @@ $messages['zh-hk'] = [
 $messages['zh-tw'] = [
 	'category' => '分類名稱',
 	'popular_categories' => '熱門分類',
+];
+
+$messages['vi'] = [
+	'tog-hidefromattribution' => 'Ẩn hình đại diện và tên của tôi khỏi danh sách cấp quyền',
 ];
 

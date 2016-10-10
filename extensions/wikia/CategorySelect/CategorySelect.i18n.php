@@ -246,7 +246,7 @@ $messages['de'] = [
 	'categoryselect-modal-category-name' => 'Gib den Namen der Kategorie an:',
 	'categoryselect-modal-category-sortkey' => 'Optional kannst du diesen Artikel auf der Kategorieseite „$1“ unter folgendem Namen einordnen:',
 	'categoryselect-tooltip-add' => 'Drück die Eingabetaste, wenn du fertig bist.',
-	'tog-disablecategoryselect' => 'Kategorie-Modul ausschalten (greift nur, wenn das grafische Bearbeiten ausgeschaltet wurde)',
+	'tog-disablecategoryselect' => 'Vereinfachtes Kategorisieren ausschalten',
 	'tog-disablecategoryselect-v2' => 'Kategorie-Modul deaktivieren (trifft nur zu, wenn der grafische Editor deaktiviert ist)',
 ];
 
@@ -295,7 +295,7 @@ $messages['es'] = [
 	'categoryselect-modal-category-sortkey' => 'Opcionalmente, puedes afabetizar este artículo en la categoría "$1" con el nombre:',
 	'categoryselect-tooltip-add' => 'Presiona Enter o Retroceso cuando termines.',
 	'tog-disablecategoryselect' => 'Desactivar el módulo de categorías (sólo se aplica si la edición en modo visual está desactivada)',
-	'tog-disablecategoryselect-v2' => 'Desactivar módulo de categorías en el modo fuente',
+	'tog-disablecategoryselect-v2' => 'Desactivar módulo de Categorías en el modo fuente',
 ];
 
 $messages['eu'] = [
@@ -376,7 +376,7 @@ $messages['fr'] = [
 	'categoryselect-modal-category-sortkey' => 'Vous pouvez trier cet article par ordre alphabétique sur la page de la catégorie « $1 » sous le nom (facultatif) :',
 	'categoryselect-tooltip-add' => 'Appuyez sur la touche Entrée ou Retour une fois terminé.',
 	'tog-disablecategoryselect' => 'Désactiver le module des catégories (valable uniquement si l\'édition en mode visuel a été désactivée)',
-	'tog-disablecategoryselect-v2' => 'Désactiver le module Catégorie (s\'applique uniquement si le mode d\'édition visuelle est désactivé)',
+	'tog-disablecategoryselect-v2' => 'Désactiver le module des catégories en mode source',
 ];
 
 $messages['fy'] = [
@@ -593,6 +593,7 @@ $messages['ko'] = [
 	'categoryselect-modal-category-sortkey' => '선택적으로 이름에 따라 "$1" 분류 문서에 이 문서를 알파벳순으로 정렬할 수 있습니다:',
 	'categoryselect-tooltip-add' => '완료되었으면 엔터, 혹은 백스페이스를 누르세요.',
 	'tog-disablecategoryselect-v2' => '분류 모듈을 비활성화 (에디터 모드가 활성화되어 있지 않을 경우에만 적용됨)',
+	'tog-disablecategoryselect' => '분류 모듈을 비활성화 (에디터 모드가 활성화되어 있지 않을 경우에만 적용됨)',
 ];
 
 $messages['ku-latn'] = [
@@ -941,7 +942,7 @@ $messages['ru'] = [
 	'categoryselect-modal-category-name' => 'Укажите название категории:',
 	'categoryselect-modal-category-sortkey' => 'Не обязательно. Вы можете задать "ключ сортировки" — название, по которому страница будет упорядочена в категории "$1" вместо своего основного названия.',
 	'categoryselect-tooltip-add' => 'Нажмите Enter или Отменить, когда закончите.',
-	'tog-disablecategoryselect' => 'Отключить модуль категорий (применяется только при отключенном редактировании в визуальном режиме)',
+	'tog-disablecategoryselect' => 'Отключить Category Taging',
 	'tog-disablecategoryselect-v2' => 'Отключить модуль Категорий (активно только при редактировании в режиме Исходного кода)',
 ];
 
@@ -1111,8 +1112,8 @@ $messages['vi'] = [
 	'categoryselect-modal-category-name' => 'Cung cấp tên của các thể loại:',
 	'categoryselect-modal-category-sortkey' => 'Tùy chọn, bạn có thể thêm chữ cái Trang này trên các " $1 " thể loại trang dưới tên:',
 	'categoryselect-tooltip-add' => 'Bấm phím Enter hoặc Return khi thực hiện.',
-	'tog-disablecategoryselect' => 'Vô hiệu hóa mô-đun Thể loại (chỉ áp dụng khi sửa đổi trong chế độ trực quan đã bị vô hiệu)',
-	'tog-disablecategoryselect-v2' => 'Vô hiệu hóa bản Thể loại (chỉ áp dụng khi sửa đổi ở chế độ trực quan bị vô hiệu hoá)',
+	'tog-disablecategoryselect' => 'Vô hiệu hóa Mô-đun thể loại (chỉ áp dụng khi sửa đổi tại chế độ trực quan đã bị vô hiệu)',
+	'tog-disablecategoryselect-v2' => 'Vô hiệu hóa Mô-đun thể loại (chỉ áp dụng khi sửa đổi ở chế độ trực quan bị vô hiệu hoá)',
 ];
 
 $messages['wuu'] = [
@@ -1123,6 +1124,8 @@ $messages['zh'] = [
 	'categoryselect-button-cancel' => '取消',
 	'categoryselect-button-save' => '儲存',
 	'categoryselect-category-edit' => '分類選項',
+	'tog-disablecategoryselect-v2' => '禁用分类模块（仅适用于不能使用可视模式的情況）',
+	'tog-disablecategoryselect' => '禁用分类模块（仅适用于不能使用可视模式的情況）',
 ];
 
 $messages['zh-hans'] = [
@@ -1144,8 +1147,8 @@ $messages['zh-hans'] = [
 	'categoryselect-modal-category-name' => '提供类别的名称：',
 	'categoryselect-modal-category-sortkey' => '您亦可在此名字下在“$1”分类页面上按字母排列。',
 	'categoryselect-tooltip-add' => '完成后按Enter或Return键。',
-	'tog-disablecategoryselect' => '禁用分类模块（仅适用于如果编辑在可视模式下已被禁用）',
-	'tog-disablecategoryselect-v2' => '禁用分类模块（仅适用于如果可视模式已被禁用）',
+	'tog-disablecategoryselect' => '禁用分类模块（仅适用于不能使用可视模式的情況）',
+	'tog-disablecategoryselect-v2' => '禁用分类模块（仅适用于不能使用可视模式的情況）',
 ];
 
 $messages['zh-hant'] = [
@@ -1162,10 +1165,22 @@ $messages['zh-hant'] = [
 	'categoryselect-error-empty-category-name' => '請提供一個分類名稱。',
 	'categoryselect-error-user-rights' => '使用者沒有進行此操作的權限。',
 	'categoryselect-modal-category-name' => '提供的分類的名稱：',
+	'tog-disablecategoryselect-v2' => '關閉分類模塊（僅適用於不能使用可視模式編輯的情況）',
+	'tog-disablecategoryselect' => '關閉分類模塊（僅適用於不能使用可視模式編輯的情況）',
 ];
 
 $messages['no'] = [
 	'categoryselect-button-cancel' => 'Avbryt',
 	'categoryselect-button-save' => 'Lagre',
+];
+
+$messages['zh-hk'] = [
+	'tog-disablecategoryselect-v2' => '關閉分類模塊（僅適用於不能使用可視模式編輯的情況）',
+	'tog-disablecategoryselect' => '關閉分類模塊（僅適用於不能使用可視模式編輯的情況）',
+];
+
+$messages['zh-tw'] = [
+	'tog-disablecategoryselect-v2' => '關閉分類模塊（僅適用於不能使用可視模式編輯的情況）',
+	'tog-disablecategoryselect' => '關閉分類模塊（僅適用於不能使用可視模式編輯的情況）',
 ];
 

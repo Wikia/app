@@ -50,13 +50,13 @@ $messages['cs'] = [
 
 $messages['de'] = [
 	'linksuggest-desc' => 'Schlägt Autoren Links in der Bearbeitungsansicht vor',
-	'tog-disablelinksuggest' => 'Keine Link-Vorschläge im Quellcodemodus anzeigen',
+	'tog-disablelinksuggest' => 'Keine Link-Vorschläge anzeigen',
 	'tog-redirected-from' => '&ndash; Weitergeleitet von $1',
 ];
 
 $messages['es'] = [
 	'linksuggest-desc' => 'Sugiere enlaces a los editores en modo de edición',
-	'tog-disablelinksuggest' => 'No mostrar sugerencias de vínculos en modo fuente.',
+	'tog-disablelinksuggest' => 'No mostrar sugerencias de vínculos',
 	'tog-redirected-from' => '&ndash; redirigido desde $1',
 ];
 
@@ -119,7 +119,7 @@ $messages['it'] = [
 
 $messages['ja'] = [
 	'linksuggest-desc' => '編集画面で編集者に対しリンクの提案を行う',
-	'tog-disablelinksuggest' => 'ソースモードでの編集時のリンク補完を使わない',
+	'tog-disablelinksuggest' => 'ソースモードでの編集時リンク補完を使わない',
 	'tog-redirected-from' => '&ndash; $1からのリダイレクト',
 ];
 
@@ -129,6 +129,7 @@ $messages['km'] = [
 
 $messages['ko'] = [
 	'tog-disablelinksuggest' => '소스 모드에서 링크 제안을 보이지 않기',
+	'tog-redirected-from' => '&ndash; $1에서 넘어옴',
 ];
 
 $messages['ksh'] = [
@@ -222,7 +223,7 @@ $messages['roa-tara'] = [
 
 $messages['ru'] = [
 	'linksuggest-desc' => 'Предлагает ссылки на редакторы в режиме редактирования',
-	'tog-disablelinksuggest' => 'Не показывать предложения ссылок в режиме Исходного кода',
+	'tog-disablelinksuggest' => 'Не показывать предложения ссылок',
 	'tog-redirected-from' => '&ndash; перенаправление с $1',
 ];
 

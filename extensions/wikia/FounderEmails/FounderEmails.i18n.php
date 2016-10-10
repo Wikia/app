@@ -1658,7 +1658,7 @@ $messages['fo'] = [
 
 $messages['fr'] = [
 	'founderemails-desc' => 'Aide les fondateurs en les informant des modifications effectuées sur leur wikia',
-	'tog-founderemailsenabled' => 'M’envoyer des mises à jour par courriel sur ce que font les autres personnes (fondateurs uniquement)',
+	'tog-founderemailsenabled' => 'M’envoyer des mises à jour par e-mail sur ce que font les autres personnes (fondateurs uniquement)',
 	'founderemails-email-user-registered-greeting' => 'Bonjour $USERNAME,',
 	'founderemails-email-user-registered-headline' => 'Félicitations ! $EDITORNAME vient de rejoindre $WIKINAME.',
 	'founderemails-email-user-registered-content' => 'Profitez de cette occasion pour leur souhaiter la bienvenue sur votre wiki et les encourager à vous aider à éditer. Plus on est de fous, plus on rit, et plus rapidement votre wiki va se développer.',
@@ -2854,7 +2854,7 @@ $messages['kn'] = [
 
 $messages['ko'] = [
 	'founderemails-desc' => '위키에 바뀜에 대해 창립자에게 알리는 데 도움을 줍니다',
-	'tog-founderemailsenabled' => '다른 사람이 무엇을 하고 있는지에 대한 업데이트를 내게 이메일로 보내기 (창립자만)',
+	'tog-founderemailsenabled' => '다른 사용자의 활동 내역을 이메일로 받기 (설립자 전용)',
 	'founderemails-email-user-registered-greeting' => '$USERNAME님 안녕하세요,',
 	'founderemails-email-user-registered-headline' => '축하합니다! $EDITORNAME 사용자가 $WIKINAME에 가입했습니다.',
 	'founderemails-email-user-registered-content' => '이번 기회에 위키에 새 사용자가 온 것을 환영해주시고 편집하는 데 도움이 될 수 있도록 격려해주세요. 위키가 더 화끈하게, 그리고 더 빨리 성장할 것입니다.',
@@ -5772,7 +5772,7 @@ $3 {{PLURAL:$3|особа приєдналася|особи приєдналис
 
 $messages['vi'] = [
 	'founderemails-desc' => 'Giúp thông báo cho sáng lập viên về những thay đổi trên wiki của họ',
-	'tog-founderemailsenabled' => 'Gửi thư điện tử cập nhật cho tôi trên những gì người khác đang làm (chỉ sáng lập viên)',
+	'tog-founderemailsenabled' => 'Gửi thư điện tử cập nhật cho tôi về hoạt động của mọi người (chỉ dành cho sáng lập viên)',
 	'founderemails-email-user-registered-greeting' => 'Chào $USERNAME,',
 	'founderemails-email-user-registered-headline' => 'Xin chúc mừng! $EDITORNAME đã tham gia $WIKINAME.',
 	'founderemails-email-user-registered-content' => 'Hãy nhân cơ hội này để chào đón họ đến wiki của bạn và khuyến khích họ trợ giúp sửa đổi. Càng nhiều càng tốt, wiki của bạn sẽ phát triển nhanh hơn.',
