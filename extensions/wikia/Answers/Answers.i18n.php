@@ -1407,6 +1407,7 @@ $messages['ja'] = [
 	'no_related_answered_questions' => '関連する質問はまだありません。',
 	'notify_answered' => '回答されたらメールで通知する',
 	'notify_improved' => '回答が更新されたらメールで通知する',
+	'popular_categories' => '人気カテゴリ',
 ];
 
 $messages['lb'] = [
@@ -2165,6 +2166,7 @@ $messages['pt'] = [
 	'next_page' => 'Proxima »',
 	'notify_answered' => 'Avise-me por email quando tiver resposta.',
 	'notify_improved' => 'Avise-me por email sobre as alterações da resposta.',
+	'popular_categories' => 'Categorias mais populares',
 ];
 
 $messages['pt-br'] = [
@@ -2195,6 +2197,7 @@ $messages['pt-br'] = [
 	'next_page' => 'Proxima »',
 	'notify_answered' => 'Avise-me por email quando tiver resposta.',
 	'notify_improved' => 'Avise-me por email sobre as alterações da resposta.',
+	'popular_categories' => 'Categorias mais populares',
 ];
 
 $messages['roa-tara'] = [
@@ -2584,10 +2587,12 @@ $messages['no'] = [
 	'notify_answered' => 'Send meg en e-post når besvart',
 	'notify_improved' => 'Send meg en e-post når forbedret',
 	'number_of_items' => 'Antall objekter å vise',
+	'popular_categories' => 'Populære kategorier',
 ];
 
 $messages['zh-hant'] = [
 	'question_asked_by_a_wikia_user' => ' Fandom用戶的提問',
+	'popular_categories' => '熱門分類',
 ];
 
 $messages['ko'] = [
@@ -2647,9 +2652,11 @@ $messages['nn'] = [
 
 $messages['zh-hk'] = [
 	'category' => '分類名稱',
+	'popular_categories' => '熱門分類',
 ];
 
 $messages['zh-tw'] = [
 	'category' => '分類名稱',
+	'popular_categories' => '熱門分類',
 ];
 
