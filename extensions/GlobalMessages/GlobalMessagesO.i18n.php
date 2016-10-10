@@ -685,6 +685,8 @@ $messages['de'] = [
 	'others' => 'anderen',
 	'oasis-mobile-site' => 'Mobile Ansicht',
 	'old_skins' => 'Alte Skins',
+	'or' => 'oder',
+	'or_learn' => 'Um mehr zu erfahren,',
 ];
 
 $messages['de-weigsbrag'] = [
@@ -798,6 +800,8 @@ $messages['es'] = [
 	'othercontribs' => 'Basado en el trabajo de $1.',
 	'others' => 'otros',
 	'old_skins' => 'Pieles viejas',
+	'or' => 'o',
+	'or_learn' => 'O para aprender más, mira',
 ];
 
 $messages['et'] = [
@@ -867,6 +871,8 @@ $messages['fi'] = [
 	'othercontribs' => 'Perustuu työlle, jonka teki $1.',
 	'others' => 'muut',
 	'old_skins' => 'Vanhat ulkoasut',
+	'or' => 'tai',
+	'or_learn' => 'Tai oppiaksesi lisää, ota',
 ];
 
 $messages['fiu-vro'] = [
@@ -2247,6 +2253,8 @@ $messages['no'] = [
 	'othercontribs' => 'Basert på arbeid av $1.',
 	'others' => 'andre',
 	'old_skins' => 'Gamle utseender',
+	'or' => 'eller',
+	'or_learn' => 'Eller for å finne ut mer, ta',
 ];
 
 $messages['nov'] = [
