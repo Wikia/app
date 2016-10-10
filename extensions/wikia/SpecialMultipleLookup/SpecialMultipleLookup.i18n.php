@@ -325,7 +325,7 @@ $messages['fi'] = [
 ];
 
 $messages['fr'] = [
-	'specialmultiplelookup-desc' => 'Donne des informations sur les utilisateurs sur plusieurs wikis',
+	'specialmultiplelookup-desc' => 'Donne des informations sur les utilisateurs sur plusieurs wikias',
 	'multilookup' => 'Lookup multiple',
 	'multilookupstitle' => 'Lookup multiple',
 	'multilookupselectuser' => 'Rechercher des comptes qui ont la même adresse IP sur de multiples wikis',
