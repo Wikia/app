@@ -11539,7 +11539,7 @@ $messages['fr'] = [
 	'thisisdeleted' => 'Désirez-vous afficher ou restaurer $1 ?',
 	'titleprotected' => 'Ce titre a été protégé à la création par [[User:$1|$1]].
 Le motif avancé est « \'\'$2\'\' ».',
-	'throttled-mailpassword' => 'Un e-mail de rappel de votre mot de passe a déjà été envoyé durant {{PLURAL:$1|la dernière heure|les $1 dernières heures}}. Afin d’éviter les abus, un seul courriel de rappel sera envoyé par {{PLURAL:$1|heure|intervalle de $1 heures}}.',
+	'throttled-mailpassword' => 'Un e-mail de rappel de votre mot de passe a déjà été envoyé durant {{PLURAL:$1|la dernière heure|les $1 dernières heures}}. Afin d’éviter les abus, un seul e-mail de rappel sera envoyé par {{PLURAL:$1|heure|intervalle de $1 heures}}.',
 	'token_suffix_mismatch' => '\'\'\'Votre modification n’a pas été acceptée car votre navigateur a mal codé les caractères de ponctuation dans l’identifiant de modification.\'\'\'
 Ce rejet est nécessaire pour empêcher la corruption du texte de la page.
 Ce problème se produit parfois lorsque vous utilisez un serveur mandataire anonyme problématique basé sur le web.',
@@ -30699,7 +30699,7 @@ $messages['pl'] = [
 	'titleprotected' => 'Utworzenie strony o tej nazwie zostało zablokowane przez [[User:$1|$1]].
 Uzasadnienie blokady: \'\'$2\'\'.',
 	'throttled-mailpassword' => 'Przypomnienie hasła zostało już wysłane w ciągu {{PLURAL:$1|ostatniej godziny|ostatnich $1 godzin}}.
-W celu powstrzymania nadużyć możliwość wysyłania przypomnień została ograniczona do jednego na {{PLURAL:$1|godzinę|$1 godziny|$1 godzin}}.',
+W celu powstrzymania nadużyć możliwość wysyłania przypomnień została ograniczona na {{PLURAL:$1|godzinę|liczbę godzin: $1}}.',
 	'token_suffix_mismatch' => '\'\'\'Twoja edycja została odrzucona, ponieważ twój klient pomieszał znaki interpunkcyjne w żetonie edycyjnym.
 Twoja edycja została odrzucona by zapobiec zniszczeniu tekstu strony.
 Takie problemy zdarzają się w wypadku korzystania z wadliwych anonimowych sieciowych usług proxy.\'\'\'',
