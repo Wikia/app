@@ -8758,7 +8758,7 @@ Existen otros campos que se mantendrán ocultos por defecto.
 	'most_popular_articles' => 'artículos más populares',
 	'my_stuff' => 'mis útiles',
 	'most_popular' => 'Selección del editor',
-	'most_visited' => 'Los más visitados',
+	'most_visited' => 'Lo más visitado',
 	'most_emailed' => 'Los más contactados por e-mail',
 	'magicfooterlinks' => '<b>Páginas destacadas</b>',
 	'manage_widgets' => 'Organizar widgets',
@@ -9438,6 +9438,7 @@ $messages['fa'] = [
 **forum-url|فوروم',
 	'most_popular' => 'محبوبترین',
 	'most_popular_articles' => 'محبوبترین مقالات',
+	'most_visited' => 'بیشترین بازدید',
 ];
 
 $messages['ff'] = [
@@ -10104,7 +10105,7 @@ Si vous l’exécutez, votre système peut être compromis.',
 	'most_popular_articles' => 'Articles les plus populaires',
 	'my_stuff' => 'Mon espace',
 	'most_popular' => 'Les plus populaires',
-	'most_visited' => 'Les plus vus',
+	'most_visited' => 'Pages les plus vues',
 	'most_emailed' => 'Les plus envoyés',
 	'manage_widgets' => 'Gérer les widgets',
 	'masthead-anonymous-user' => 'Contributeur Wikia',
@@ -15112,6 +15113,7 @@ In questi casi, se lo si ritiene opportuno, occorre spostare o aggiungere manual
 	'mobile-show' => 'Mostra',
 	'most_popular' => 'Più popolari',
 	'most_popular_articles' => 'pagine più popolari',
+	'most_visited' => 'Più visitate',
 ];
 
 $messages['iu'] = [
@@ -15454,7 +15456,7 @@ contenttype/subtypeの形式で指定してください（例：<tt>image/jpeg</
 	'messagebar_mess' => '<a href="$1">このページを編集したり</a>、<a href="$2">新しい記事を作ったり</a>することが可能です。どうすればいいかは、<a href="$3">ここから検索してみてください</a>。',
 	'my_stuff' => 'my stuff',
 	'most_popular' => '編集者の厳選',
-	'most_visited' => '閲覧順',
+	'most_visited' => '最多アクセス',
 	'most_emailed' => 'メールの使われた記事',
 	'manage_widgets' => 'ウィジェットの設定',
 	'masthead-anonymous-user' => '匿名ユーザー',
@@ -36973,6 +36975,7 @@ $messages['zh-hans'] = [
 	'monthsall' => '全部',
 	'mobile-hide' => '隐藏',
 	'mobile-show' => '显示',
+	'most_visited' => '最多人访问',
 ];
 
 $messages['zh-hant'] = [
@@ -37156,6 +37159,7 @@ $messages['zh-hant'] = [
 	'monthsall' => '全部',
 	'mobile-hide' => '隱藏',
 	'mobile-show' => '顯示',
+	'most_visited' => '最多人訪問',
 ];
 
 $messages['zh-hk'] = [
@@ -37164,6 +37168,7 @@ $messages['zh-hk'] = [
 	'mytalk' => '我的討論頁',
 	'mobile-hide' => '隱藏',
 	'mobile-show' => '顯示',
+	'most_visited' => '最多人訪問',
 ];
 
 $messages['zh-min-nan'] = [
@@ -37348,5 +37353,6 @@ $messages['zh'] = [
 **forum-url|论坛
 *#category1#
 *#category2#',
+	'most_visited' => '最多人访问',
 ];
 
