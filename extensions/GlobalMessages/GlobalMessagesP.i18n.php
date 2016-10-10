@@ -184,7 +184,7 @@ See the [[Special:ProtectedPages|protected pages list]] for the list of currentl
 	'protect_expiry_invalid' => 'Expiry time is invalid.',
 	'protect_expiry_old' => 'Expiry time is in the past.',
 	'protect-unchain-permissions' => 'Unlock further protect options',
-	'protect-text' => 'Here you may view and change the protection level for the page \'\'\'$1\'\'\'.',
+	'protect-text' => '<div style="margin-top: -10px;" class="emptymwmsg mediawiki_protect-text"></div>',
 	'protect-locked-blocked' => 'You cannot change protection levels while blocked.
 Here are the current settings for the page \'\'\'$1\'\'\':',
 	'protect-locked-dblock' => 'Protection levels cannot be changed due to an active database lock.
@@ -4495,10 +4495,10 @@ $messages['bg'] = [
 	'protect-locked-dblock' => 'Нивата на защита на страниците не могат да бъдат променяни, защото базата от данни е заключена. Ето текущите настройки за страницата „\'\'\'$1\'\'\'“:',
 	'protect-locked-access' => 'Нямате правото да променяте нивата на защита на страниците. Ето текущите настройки за страницата „\'\'\'$1\'\'\'“:',
 	'protect-cascadeon' => 'Тази страница е защитена против редактиране, защото е включена в {{PLURAL:$1|следната страница, която от своя страна има|следните страници, които от своя страна имат}} каскадна защита. Можете да промените нивото на защита на страницата, но това няма да повлияе върху каскадната защита.',
-	'protect-default' => 'Позволяване за всички потребители',
+	'protect-default' => '(по подразбиране)',
 	'protect-fallback' => 'Необходими са права на „$1“',
-	'protect-level-autoconfirmed' => 'Блокиране на нови и нерегистрирани потребители',
-	'protect-level-sysop' => 'Само за администратори',
+	'protect-level-autoconfirmed' => 'Само регистрирани потребители',
+	'protect-level-sysop' => 'Само администратори',
 	'protect-summary-cascade' => 'каскадно',
 	'protect-expiring' => 'изтича на $1 (UTC)',
 	'protect-expiring-local' => 'срок на изтичане $1',
@@ -10364,7 +10364,7 @@ $messages['fa'] = [
 	'protect_expiry_invalid' => 'زمان سرآمدن نامعتبر است.',
 	'protect_expiry_old' => 'زمان سرآمدن در گذشته‌است.',
 	'protect-unchain-permissions' => 'باز کردن سایر گزینه‌های محافظت',
-	'protect-text' => 'شما می‌توانید سطح محافظت صفحهٔ \'\'\'$1\'\'\' را ببینید و از اینجا آن را تغییر دهید.',
+	'protect-text' => '<div style="margin-top: -10px;" class="emptymwmsg mediawiki_protect-text"></div>',
 	'protect-locked-blocked' => 'شما در مدتی که دسترسی‌تان قطع است نمی‌توانید سطح محافظت صفحه‌ها را تغییر دهید.
 تنظیمات فعلی صفحهٔ \'\'\'$1\'\'\' از این قرار است:',
 	'protect-locked-dblock' => 'به دلیل قفل شدن پایگاه داده، امکان تغییر سطح محافظت صفحه وجود ندارد.
@@ -27005,12 +27005,12 @@ Zie de [[Special:ProtectedPages|lijst met beveiligde pagina\'s]] voor alle bevei
 	'protect_expiry_invalid' => 'De aangegeven duur is ongeldig.',
 	'protect_expiry_old' => 'Vervaldatum is in het verleden.',
 	'protect-unchain-permissions' => 'Overige beveiligingsinstellingen beschikbaar maken',
-	'protect-text' => 'Hier kunt u het beveiligingsniveau voor de pagina \'\'\'$1\'\'\' bekijken en wijzigen.',
-	'protect-locked-blocked' => 'U kunt het beveiligingsniveau niet wijzigen terwijl u geblokkeerd bent.
+	'protect-text' => 'Hier kun je het beveiligingsniveau voor de pagina \'\'\'<nowiki>$1</nowiki>\'\'\' bekijken en wijzigen.',
+	'protect-locked-blocked' => 'Je kunt het beveiligingsniveau niet wijzigen terwijl je geblokkeerd bent.
 Hier zijn de huidige instellingen voor de pagina \'\'\'$1\'\'\':',
 	'protect-locked-dblock' => 'Het beveiligingsniveau kan niet worden gewijzigd, omdat de database gesloten is.
 Hier zijn de huidige instellingen voor de pagina \'\'\'$1\'\'\':',
-	'protect-locked-access' => 'U hebt geen rechten om het beveiligingsniveau te wijzigen.
+	'protect-locked-access' => 'Je hebt geen rechten om het beveiligingsniveau te wijzigen.
 Dit zijn de huidige instellingen voor de pagina \'\'\'$1\'\'\':',
 	'protect-cascadeon' => 'Deze pagina is beveiligd, omdat die in de volgende {{PLURAL:$1|pagina|pagina\'s}} is opgenomen, die beveiligd {{PLURAL:$1|is|zijn}} met de cascade-optie.
 Het beveiligingsniveau wijzigen heeft geen enkel effect.',
@@ -27023,7 +27023,7 @@ Het beveiligingsniveau wijzigen heeft geen enkel effect.',
 	'protect-expiring-local' => 'vervalt op $1',
 	'protect-expiry-indefinite' => 'vervalt niet',
 	'protect-cascade' => 'Cascadebeveiliging: hiermee worden alle pagina\'s en sjablonen die in deze pagina opgenomen zijn beveiligd (let op: dit kan grote gevolgen hebben)',
-	'protect-cantedit' => 'U kunt het beveiligingsniveau van deze pagina niet wijzigen, omdat u geen rechten hebt om het te bewerken.',
+	'protect-cantedit' => 'Je kunt het beveiligingsniveau van deze pagina niet wijzigen, omdat je geen rechten hebt om het te bewerken.',
 	'protect-othertime' => 'Andere duur:',
 	'protect-othertime-op' => 'andere duur',
 	'protect-existing-expiry' => 'Bestaande vervaldatum: $2 om $3',
