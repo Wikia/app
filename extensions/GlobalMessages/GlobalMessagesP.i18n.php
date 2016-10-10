@@ -27484,7 +27484,7 @@ Her er dei noverande innstillingane for sida \'\'\'$1\'\'\':',
 	'pagemovedsub' => 'Flyttinga er gjennomførd',
 	'protectedpagemovewarning' => '\'\'\'ÅTVARING:\'\'\' Denne sida er verna, slik at berre brukarar med administratorrettar kan flytta henne.
 Det siste loggelementet er oppgjeve under som referanse:',
-	'print.css' => '/* CSS i denne fila vil påverke utskriftsversjonen */',
+	'print.css' => '/* CSS plassert her vil påvirke utskriften */',
 	'pageinfo-title' => 'Informasjon om «$1»',
 	'pageinfo-header-edits' => 'Endringar',
 	'pageinfo-header-watchlist' => 'Overvakingsliste',
