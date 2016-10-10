@@ -169,8 +169,9 @@ Please check the file_uploads setting.',
 	'pubmedurl' => '//www.ncbi.nlm.nih.gov/pubmed/$1?dopt=Abstract',
 	'prevpage' => 'Previous page ($1)',
 	'protectlogpage' => 'Protection log',
-	'protectlogtext' => 'Below is a list of changes to page protections.
-See the [[Special:ProtectedPages|protected pages list]] for the list of currently operational page protections.',
+	'protectlogtext' => 'Below is a list of page locks and unlocks.
+See the [[Special:ProtectedPages|protected pages list]] for the list of currently operational page protections.
+See the [[Special:ProtectedTitles|protected titles list]] for the list of currently operational title protections.',
 	'protectedarticle' => 'protected "[[$1]]"',
 	'protect-title' => 'Change protection level for "$1"',
 	'protect-title-notallowed' => 'View protection level of "$1"',
@@ -9136,8 +9137,7 @@ $messages['el'] = [
 	'pager-older-n' => '{{PLURAL:$1|παλαιότερο 1|παλαιότερα $1}}',
 	'prevpage' => 'Προηγούμενη σελίδα ($1)',
 	'protectlogpage' => 'Καταγραφές προστασίας (κλειδώματος)',
-	'protectlogtext' => 'Παρακάτω είναι μια λίστα των αλλαγών που έγιναν στις ρυθμίσεις προστασίας της σελίδας
-Ρίξτε μια ματιά στο [[Special:ProtectedPages|protected pages list]] για μια λίστα των παρόντων ρυθμίσεων προστασίας της λειτουργικής σελίδας.',
+	'protectlogtext' => 'Παρακάτω είναι μια λίστα των αλλαγών που έγιναν στις ρυθμίσεις προστασίας της σελίδας. Ρίξτε μια ματιά στη [[Special:ProtectedPages|λίστα προστατευόμενων σελίδων]] για τη λίστα προστατευτικών παραμέτρων για σελίδες σε χρήση.',
 	'protectedarticle' => 'κλείδωσε το $1',
 	'protect-title' => 'Κλειδώνεται η "$1"',
 	'prot_1movedto2' => 'Η [[$1]] μετακινήθηκε στη θέση [[$2]]',
@@ -9577,7 +9577,7 @@ Tu dirección de correo no se revela cuando otros usuarios te contactan.',
 	'protectedpagesempty' => 'Actualmente no hay ninguna página protegida con esos parámetros.',
 	'protectedtitles' => 'Títulos protegidos',
 	'protectedtitlestext' => 'Los siguientes títulos están protegidos, por lo que no se pueden crear',
-	'protectedtitlesempty' => 'Actualmente no existen entradas protegidas con esos parámetros.',
+	'protectedtitlesempty' => 'No hay títulos actualmente protegidos con estos parámetros.',
 	'pager-newer-n' => '{{PLURAL:$1|1 siguiente|$1 siguientes}}',
 	'pager-older-n' => '{{PLURAL:$1|1 anterior|$1 anteriores}}',
 	'prevpage' => 'Página anterior ($1)',
@@ -16761,7 +16761,7 @@ Il tuo indirizzo non viene rivelato quando gli altri utenti ti contattano.',
 	'pager-newer-n' => '{{PLURAL:$1|1 più recente|$1 più recenti}}',
 	'pager-older-n' => '{{PLURAL:$1|1 meno recente|$1 meno recenti}}',
 	'prevpage' => 'Pagina precedente ($1)',
-	'protectlogpage' => 'Protezioni',
+	'protectlogpage' => 'Registro delle protezioni',
 	'protectlogtext' => 'Di seguito sono elencate le modifiche alle protezioni delle pagine.
 Vedi la [[Special:ProtectedPages|lista delle pagine protette]] per l\'elenco delle protezioni di pagina attualmente attive.',
 	'protectedarticle' => 'ha protetto "[[$1]]"',
@@ -35550,8 +35550,9 @@ Om du väljer att ange ditt riktiga namn, kommer det att användas för att till
 	'pager-older-n' => '{{PLURAL:$1|1 äldre|$1 äldre}}',
 	'prevpage' => 'Föregående sida ($1)',
 	'protectlogpage' => 'Skrivskyddslogg',
-	'protectlogtext' => 'Detta är en lista över applicerande och borttagande av skrivskydd.
-Se [[Special:ProtectedPages|listan över skyddade sidor]] för listan över aktiva sidskydd.',
+	'protectlogtext' => 'Nedan är en lista av sidan lås och låser upp.
+Se [[Special:ProtectedPages|skyddade sidor lista]] för listan med operativa sidan skydd.
+Se [[Special:ProtectedTitles|skyddade titlar listan]] för listan med operativa avdelning skydd.',
 	'protectedarticle' => 'skyddade [[$1]]',
 	'protect-title' => 'Skyddsinställningar för "$1"',
 	'protect-title-notallowed' => 'Visa skyddsnivån för "$1"',
