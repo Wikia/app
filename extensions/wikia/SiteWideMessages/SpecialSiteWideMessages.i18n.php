@@ -838,7 +838,7 @@ $messages['de'] = [
 	'swm-label-mode-users-user-multi' => 'Benutzerliste',
 	'swm-label-mode-users-user-multi-hint' => '<i>Gib einen Benutzernamen pro Zeile ein. Diese Option ignoriert die Auswahl in der Gruppe "Wikis".</i>',
 	'swm-label-mode-users-anon' => 'Alle unangemeldeten Benutzer',
-	'swm-label-mode-users-anon-hint' => '<i>Diese Auswahl funktioniert derzeit nur mit den Optionen "alle Wikis" oder "Ausgewähltes Wiki".</i>',
+	'swm-label-mode-users-anon-hint' => '<i>Diese Auswahl funktioniert derzeit nur mit den Optionen "alle Wikis", "Wikiliste" oder "Ausgewähltes Wiki".</i>',
 	'swm-label-content' => 'Inhalt',
 	'swm-label-comment' => 'Kommentar',
 	'swm-label-dismissed' => 'Ausgeblendet',
@@ -869,7 +869,7 @@ $messages['de'] = [
 	'swm-list-table-content' => 'Inhalt',
 	'swm-list-table-tools' => 'Werkzeuge',
 	'swm-list-table-lang' => 'Sprachen',
-	'swm-list-table-hub' => 'Knotenpunkt',
+	'swm-list-table-hub' => 'Hub',
 	'swm-yes' => 'Ja',
 	'swm-no' => 'Nein',
 	'swm-error-no-such-wiki' => 'Es gibt kein solches Wiki!',
@@ -994,7 +994,7 @@ $messages['es'] = [
 	'swm-label-preview' => 'Previsualización',
 	'swm-label-edit' => 'Editar',
 	'swm-label-remove' => 'Quitar',
-	'swm-label-sent' => 'Enviado',
+	'swm-label-sent' => 'Enviar',
 	'swm-label-list' => 'Lista',
 	'swm-label-recipient' => 'Receptor',
 	'swm-label-recipient-wikis' => 'Wikis',
@@ -1285,7 +1285,7 @@ $messages['fr'] = [
 	'swm-taskmanager-hint' => '<i>Notez que certaines options sont plus couteuses en temps et seront gérées pas le gestionnaire de tâches.</i>',
 	'swm-button-preview' => '[ Prévisualiser ]',
 	'swm-button-send' => '[ Envoyer ]',
-	'swm-button-save' => '[ Sauvegarder ]',
+	'swm-button-save' => '[ Enregistrer ]',
 	'swm-button-new' => '[ Nouveau ]',
 	'swm-msg-sent-ok' => '<h3>Ce message a été envoyé.</h3>',
 	'swm-msg-sent-err' => '<h3>Ce message n\'a PAS été envoyé.</h3>Voyez le journal d\'erreurs pour plus d\'informations.',
@@ -1697,7 +1697,7 @@ $messages['it'] = [
 	'swm-label-recipient-users' => 'Utenti',
 	'swm-label-mode-users-all' => 'Tutti gli utenti',
 	'swm-label-mode-users-active' => 'Utenti attivi',
-	'swm-label-content' => 'Contenti',
+	'swm-label-content' => 'Contenuto',
 	'swm-label-comment' => 'Commento',
 	'swm-label-language' => 'Lingua',
 	'swm-button-preview' => '[ Anteprima ]',
@@ -1715,6 +1715,8 @@ $messages['it'] = [
 	'swm-list-table-lang' => 'Lingue',
 	'swm-yes' => 'Sì',
 	'swm-no' => 'No',
+	'swm-button-lang-checkall' => '[ Seleziona tutte ]',
+	'swm-button-lang-checknone' => '[ Deseleziona tutte ]',
 ];
 
 $messages['ja'] = [
@@ -1817,7 +1819,7 @@ $messages['ko'] = [
 	'swm-label-mode-users-user' => '특정 사용자',
 	'swm-label-mode-users-user-hint' => '<i>이 설정은 "위키" 설정을 무시합니다.</i>',
 	'swm-label-mode-users-user-multi' => '사용자 목록',
-	'swm-label-mode-users-user-multi-hint' => '<i>한 줄에 한 사용자씩 작성하십시오. 이 설정은 "위키" 설정을 무시합니다.</i>',
+	'swm-label-mode-users-user-multi-hint' => '<i>한 줄에 한 사용자씩 작성하십시오. 이 설정은 "위키" 설정을 무시합니다..</i>',
 	'swm-label-mode-users-anon' => '모든 익명 사용자',
 	'swm-label-mode-users-anon-hint' => '<i>현재 이 설정은 위키 설정이 “모든 위키”, “위키 목록”, “특정 위키”일 때만 작동합니다.</i>',
 	'swm-label-content' => '내용',
@@ -1857,6 +1859,9 @@ $messages['ko'] = [
 	'swm-mode-wikis-created-between' => '사이',
 	'swm-label-mode-wikis-created-hint' => '<i>2012-04-01 00:00:00 같은 형식으로 작성하십시오.</i>',
 	'sitewidemessages' => '전역 메시지 (SWM)',
+	'swm-label-expiration-hint' => '<i>드롭다운 메뉴에서 하나를 고르거나 직접 작성하십시오. 2012-04-01 00:00:00 같은 형식으로 작성하십시오.</i>',
+	'swm-label-mode-users-poweruser-hint' => '옆 목록에서 파워 유저의 유형을 고르십시오. 메시지는 위키아 전역에 보내집니다.',
+	'swm-label-mode-users-poweruser' => '특정 유형의 파워 유저',
 ];
 
 $messages['krc'] = [
@@ -2361,7 +2366,7 @@ $messages['nl'] = [
 	'swm-msg-sent-ok' => '<h3>Het bericht is verstuurd.</h3>',
 	'swm-msg-sent-err' => '<h3>Het bericht is niet verstuurd</h3>Zie het foutenlogboek voor meer informatie.',
 	'swm-msg-sent-task' => 'Er is een taak aangemaakt om het bericht te verzenden: $1',
-	'swm-msg-remove' => 'Weet u zeker dat u dit bericht wilt verwijderen?
+	'swm-msg-remove' => 'Weet je zeker dat je dit bericht wilt verwijderen?
 Dit kan niet ongedaan gemaakt worden.',
 	'swm-expire-info' => 'Dit bericht verloopt op $1.',
 	'swm-link-dismiss' => 'dit bericht sluiten',
@@ -2525,8 +2530,8 @@ $messages['pl'] = [
 	'swm-label-comment' => 'Komentarz',
 	'swm-label-dismissed' => 'Odrzucono',
 	'swm-label-language' => 'Język',
-	'swm-button-lang-checkall' => '[ Sprawdź wszystko ]',
-	'swm-button-lang-checknone' => '[ Nie sprawdzaj ]',
+	'swm-button-lang-checkall' => '[ Zaznacz wszystko ]',
+	'swm-button-lang-checknone' => '[ Odznacz wszystko ]',
 	'swm-taskmanager-hint' => '<i>Niektóre opcje wymagają więcej czasu i zostaną zakolejkowane w menedżerze zadań.</i>',
 	'swm-button-preview' => '[ Podgląd ]',
 	'swm-button-send' => '[ Wyślij ]',
@@ -2974,9 +2979,9 @@ $messages['ru'] = [
 	'swm-label-mode-users-user' => 'Выбранный участник',
 	'swm-label-mode-users-user-hint' => '<i>Эта настройка игнорирует выбор в группе «Вики».</i>',
 	'swm-label-mode-users-user-multi' => 'Список участников',
-	'swm-label-mode-users-user-multi-hint' => '<i>Введите одно имя участника в строке. Этот параметр игнорирует выбор в группе «Викии».</i>',
+	'swm-label-mode-users-user-multi-hint' => '<i>Введите одно имя участника в строке. Этот параметр игнорирует выбор в группе «Вики».</i>',
 	'swm-label-mode-users-anon' => 'Все анонимные участники',
-	'swm-label-mode-users-anon-hint' => '<i>В настоящее время этот параметр работает только с «Все викии» или с «Выберете параметр вики».</i>',
+	'swm-label-mode-users-anon-hint' => '<i>В настоящее время этот параметр работает только с «Все вики» или с «Выберете параметр вики».</i>',
 	'swm-label-content' => 'Содержание',
 	'swm-label-comment' => 'Комментарий',
 	'swm-label-dismissed' => 'Пропущено',
@@ -3629,7 +3634,7 @@ $messages['zh-hans'] = [
 	'swm-error-long-message' => '消息限定在500个字符间。',
 	'swm-error-empty-group' => '输入组名。',
 	'swm-error-invalid-time' => '提供的时间无效。',
-	'swm-lang-other' => '所有现存语言',
+	'swm-lang-other' => '其他所有语言',
 	'action-messagetool' => '发送网站广域消息',
 	'swm-label-mode-users-registration' => '注册日期',
 	'swm-mode-users-registration-after' => '之后',
@@ -3662,13 +3667,20 @@ $messages['zh-hant'] = [
 	'swm-list-table-id' => 'ID',
 	'swm-list-table-content' => '內容',
 	'swm-list-table-tools' => '工具',
+	'swm-lang-other' => '其他所有語言',
 ];
 
 $messages['zh-hk'] = [
 	'swm-label-recipient-users' => '用戶',
+	'swm-lang-other' => '其他所有語言',
 ];
 
 $messages['zh'] = [
 	'sitewidemessages' => '全站信息',
+	'swm-lang-other' => '其他所有语言',
+];
+
+$messages['zh-tw'] = [
+	'swm-lang-other' => '其他所有語言',
 ];
 
