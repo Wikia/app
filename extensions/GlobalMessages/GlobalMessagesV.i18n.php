@@ -3156,9 +3156,11 @@ Vous devriez avoir reçu [{{SERVER}}{{SCRIPTPATH}}/COPYING une copie de la Licen
 	'vertical-games' => 'Jeux vidéo',
 	'vertical-books' => 'Littérature',
 	'vertical-lifestyle' => 'Mode de vie',
-	'vertical-movies' => 'Films',
+	'vertical-movies' => 'Cinéma',
 	'var_set' => 'a changé le $2 en "$3"',
 	'version-file-extensions-allowed' => 'Extensions de fichier autorisées pour l\'importation',
+	'vertical-comics' => 'BD',
+	'vertical-music' => 'Musique',
 ];
 
 $messages['frc'] = [
@@ -4743,7 +4745,7 @@ MediaWikiは、有用であることを期待して配布されていますが�
 	'version-software-version' => 'バージョン',
 	'vertical-tv' => 'テレビ番組',
 	'vertical-games' => 'ゲーム',
-	'vertical-books' => '性格診断テスト',
+	'vertical-books' => '本',
 	'vertical-comics' => '漫画',
 	'vertical-lifestyle' => 'ライフスタイル',
 	'vertical-movies' => '映画',
@@ -5415,6 +5417,13 @@ $1',
 	'version-software' => '설치된 프로그램',
 	'version-software-product' => '제품',
 	'version-software-version' => '버전',
+	'vertical-books' => '책',
+	'vertical-comics' => '만화',
+	'vertical-games' => '게임',
+	'vertical-lifestyle' => '생활',
+	'vertical-movies' => '영화',
+	'vertical-music' => '음악',
+	'vertical-tv' => 'TV',
 ];
 
 $messages['ko-kp'] = [
@@ -7232,6 +7241,13 @@ Samen met dit programma hoor je een [{{SERVER}}{{SCRIPTPATH}}/COPYING kopie van 
 	'version-software' => 'Geïnstalleerde software',
 	'version-software-product' => 'Product',
 	'version-software-version' => 'Versie',
+	'vertical-books' => 'Boeken',
+	'vertical-comics' => 'Strips',
+	'vertical-games' => 'Games',
+	'vertical-lifestyle' => 'Lifestyle',
+	'vertical-movies' => 'Films',
+	'vertical-music' => 'Muziek',
+	'vertical-tv' => 'TV',
 ];
 
 $messages['nl-informal'] = [
@@ -8365,6 +8381,13 @@ MediaWiki распространяется с надеждой на то, что
 	'version-software' => 'Установленное программное обеспечение',
 	'version-software-product' => 'Продукт',
 	'version-software-version' => 'Версия',
+	'vertical-books' => 'Книги',
+	'vertical-comics' => 'Комиксы',
+	'vertical-games' => 'Видеоигры',
+	'vertical-lifestyle' => 'Увлечения',
+	'vertical-movies' => 'Кино',
+	'vertical-music' => 'Музыка',
+	'vertical-tv' => 'Телевидение',
 ];
 
 $messages['rue'] = [
@@ -10548,6 +10571,13 @@ hoặc [//www.gnu.org/licenses/old-licenses/gpl-2.0.html đọc nó trực tuy�
 	'version-software' => 'Phần mềm được cài đặt',
 	'version-software-product' => 'Phần mềm',
 	'version-software-version' => 'Phiên bản',
+	'vertical-books' => 'Sách',
+	'vertical-comics' => 'Truyện tranh',
+	'vertical-games' => 'Trò chơi',
+	'vertical-lifestyle' => 'Lối sống',
+	'vertical-movies' => 'Phim ảnh',
+	'vertical-music' => 'Âm nhạc',
+	'vertical-tv' => 'Truyền hình',
 ];
 
 $messages['vls'] = [
@@ -10951,6 +10981,13 @@ $messages['zh'] = [
 	'variantname-zh-sg' => 'disable',
 	'variantname-zh-my' => 'disable',
 	'variantname-zh' => 'disable',
+	'vertical-books' => '阅读新知',
+	'vertical-comics' => '动漫',
+	'vertical-games' => '游戏',
+	'vertical-lifestyle' => '生活',
+	'vertical-movies' => '电影',
+	'vertical-music' => '音乐',
+	'vertical-tv' => '电视',
 ];
 
 $messages['zh-classical'] = [
@@ -11028,6 +11065,13 @@ MediaWiki是基于使用目的而加以发布，然而不负任何担保责任�
 	'version-software' => '已安装的软件',
 	'version-software-product' => '产品',
 	'version-software-version' => '版本',
+	'vertical-books' => '阅读新知',
+	'vertical-comics' => '动漫',
+	'vertical-games' => '游戏',
+	'vertical-lifestyle' => '生活',
+	'vertical-movies' => '电影',
+	'vertical-music' => '音乐',
+	'vertical-tv' => '电视',
 ];
 
 $messages['zh-hant'] = [
@@ -11091,6 +11135,13 @@ MediaWiki是基於使用目的而加以發佈，然而不負任何擔保責任�
 	'version-software' => '已經安裝的軟件',
 	'version-software-product' => '產品',
 	'version-software-version' => '版本',
+	'vertical-books' => '閱讀新知',
+	'vertical-comics' => '動漫',
+	'vertical-games' => '遊戲',
+	'vertical-lifestyle' => '生活',
+	'vertical-movies' => '電影',
+	'vertical-music' => '音樂',
+	'vertical-tv' => '電視',
 ];
 
 $messages['zh-tw'] = [
@@ -11101,6 +11152,13 @@ $messages['zh-tw'] = [
 	'version-parser-function-hooks' => '語法函數鉤',
 	'version-hook-name' => '鉤名',
 	'version' => '版本',
+	'vertical-books' => '閱讀新知',
+	'vertical-comics' => '動漫',
+	'vertical-games' => '遊戲',
+	'vertical-lifestyle' => '生活',
+	'vertical-movies' => '電影',
+	'vertical-music' => '音樂',
+	'vertical-tv' => '電視',
 ];
 
 $messages['zh-yue'] = [
@@ -11118,5 +11176,12 @@ $messages['zh-cn'] = [
 
 $messages['zh-hk'] = [
 	'version' => '版本',
+	'vertical-books' => '閱讀新知',
+	'vertical-comics' => '動漫',
+	'vertical-games' => '遊戲',
+	'vertical-lifestyle' => '生活',
+	'vertical-movies' => '電影',
+	'vertical-music' => '音樂',
+	'vertical-tv' => '電視',
 ];
 
