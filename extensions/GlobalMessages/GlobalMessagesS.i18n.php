@@ -188,7 +188,11 @@ The latest block log entry is provided below for reference:',
 	'sp-contributions-submit' => 'Search',
 	'sp-contributions-explain' => '',
 	'sp-contributions-footer' => '-',
-	'sp-contributions-footer-anon' => '-',
+	'sp-contributions-footer-anon' => '{| id="anontalktext" class="plainlinks noeditsection" style="font-size:90%; border: 1px solid #B8B8B8; margin: 1em 1em 0; padding:0.25em 1em; clear: both" 
+| \'\'\'This is the contributions page for an anonymous user  who has not created an account yet or who does not use it, identified by the user\'s numerical [[wikipedia:IP address|IP address]].\'\'\'
+
+Some IP addresses change periodically, and may be shared by several users. If you are an anonymous user, you may [[{{ns:Special}}:Userlogin|create an account or log in]] to avoid future confusion with other anonymous users. Registering also hides your IP address. [[Help:Why create an account?|Why create an account?]] ([[Help:Create an account|How to create an account]])
+|}',
 	'sorbs' => 'DNSBL',
 	'sorbsreason' => 'Your IP address is listed as an open proxy in the DNSBL used by {{SITENAME}}.',
 	'sorbs_create_account_reason' => 'Your IP address is listed as an open proxy in the DNSBL used by {{SITENAME}}.
@@ -8517,6 +8521,13 @@ Das liegt wahrscheinlich an einem Link auf eine externe Seite.',
 	'signup-moreinfo' => 'Hinweis',
 	'signup-password' => 'Passwort:',
 	'skin-forced' => 'Du kannst den Skin in diesem Wiki nicht ändern.',
+	'sp-contributions-footer-anon' => '{| id="anontalktext" class="plainlinks noeditsection" style="font-size:90%; border: 1px solid #B8B8B8; margin:1em 1em 0em 1em; padding:0.25em 1em 0.25em 1em; clear: both;" 
+| \'\'\'Dies ist die Beitragsseite für unangemeldete Benutzer, die noch keine Benutzerkonto erstellt haben oder es nicht benutzen. Sie werden durch ihre [[wikipedia:de:IP-Adresse|IP-Adresse]] identifiziert.\'\'\'
+
+Einige IP-Adressen werden dynamisch vergeben und können von verschiedenen Nutzern geteilt werden. Als anonymous Nutzer kannst du [[{{ns:Special}}:Userlogin|ein Benutzerkonto erstellen oder dich einloggen]] um zu vermeiden, mit anderen unangemeldeten Nutzern verwechselt zu werden. Bei Benutzerkonten wird die IP-Adresse versteckt. [[w:c:help:Help:Why create an account|Why create an account?]] ([[w:c:help:Help:Create an account|How to create an account]])
+
+\'\'\'Informationen zur IP-Adresse:\'\'\' [http://www.utrace.de/?query=$1 WHOIS] • [http://openrbl.org/query?$1 RDNS] • [http://www.robtex.com/rbls/$1.html RBLs] • [http://www.dnsstuff.com/tools/tracert.ch?ip=$1 Traceroute] • [http://www.as3344.net/is-tor/?args=$1 TOR check] &mdash; [[wikipedia:Regional Internet registry|RIR]]s: [http://ws.arin.net/whois/?queryinput=$1 America] &bull; [http://www.ripe.net/fcgi-bin/whois?searchtext=$1 Europe] · [http://www.afrinic.net/cgi-bin/whois?query=$1 Africa] · [http://www.apnic.net/apnic-bin/whois.pl?searchtext=$1 Asia-Pacific] · [http://www.lacnic.net/cgi-bin/lacnic/whois?lg=EN&query=$1 Latin America/Caribbean]
+|}',
 ];
 
 $messages['de-ch'] = [
@@ -10092,6 +10103,13 @@ Esto podría estar causado por un enlace a un sitio externo incluido en la lista
 	'signup-mail' => 'Correo electrónico -',
 	'signup-moreinfo' => 'más información',
 	'signup-password' => 'Contraseña -',
+	'sp-contributions-footer-anon' => '{| id="anontalktext" class="plainlinks noeditsection" style="font-size:90%; border: 1px solid #B8B8B8; margin:1em 1em 0em 1em; padding:0.25em 1em 0.25em 1em; clear: both;" 
+| \'\'\'Esta es la página de contribuciones de un usuario anónimo que no ha creado una cuenta aún o que no la usa, se identifica con una [[wikipedia:IP address|dirección IP]] numérica.\'\'\'
+
+Algunas direcciones IP cambian periódicamente, y pueden ser usadas por usuarios malintencionados. si eres un usuario anónimo, deberías [[{{ns:Special}}:Userlogin|crearte una cuenta de usuario o identificarte]] para evitar futuras confusiones con usuarios anónimos. Registrandote también evitarás que se vea tu dirección IP. [[w:es:¿Por qué crear una cuenta?|¿Por qué crear una cuenta?]] ([[Ayuda:Registrar una cuenta|Cómo crear una cuenta]])
+
+\'\'\'Información sobre esta IP:\'\'\' [http://whatismyipaddress.com/ip/$1 WHOIS] &bull; [http://www.robtex.com/ip/$1.html#whois rDNS] &bull; [http://rbls.org/$1 RBLs] &bull; [http://toolserver.org/~overlordq/scripts/checktor.fcgi?ip=$1 Tor] &bull; [http://network-tools.com/default.asp?prog=trace&host=$1 Traceroute] <br /> \'\'\'[[wikipedia:Regional Internet registry|RIR]]s:\'\'\' [http://whois.arin.net/rest/ip/$1.html América] &bull; [http://www.ripe.net/fcgi-bin/whois?searchtext=$1 Europa] &bull; [http://www.afrinic.net/cgi-bin/whois?query=$1 África] &bull; [http://www.apnic.net/apnic-bin/whois.pl?searchtext=$1 Asia-Pacífico] &bull; [http://www.lacnic.net/cgi-bin/lacnic/whois?lg=EN&query=$1 América Latina/Caribe]
+|}',
 ];
 
 $messages['et'] = [
@@ -11867,6 +11885,11 @@ impossible de renommer une page sur elle-même.',
 ** helppage|Aide',
 	'signup-moreinfo' => 'plus d\'info',
 	'signup-password' => 'Mot de passe -',
+	'sp-contributions-footer-anon' => '{| id="anontalktext" class="plainlinks noeditsection" style="font-size:90%; border: 1px solid #B8B8B8; margin:1em 1em 0; padding:0.25em 1em; clear: both" 
+| \'\'\'Ceci est la page des contributions d\'un utilisateur anonyme qui n\'a pas encore créé de compte ou qui n\'en utilise pas, identifié par son [[wikipedia:fr:adresse IP|adresse IP]] numérique.\'\'\'
+
+Certaines adresses IP changent de façon périodiques et peuvent être partagées par plusieurs utilisateurs. Si vous êtes un utilisateur anonyme, vous devriez [[{{ns:Special}}:Userlogin|créer un compte ou vous connecter]] pour éviter à l\'avenir des confusions avec d\'autres utilisateurs anonymes. S\'enregistrer masque aussi votre adresse IP. ([[w:c:communaute:Aide:Créer un compte|Comment créer un compte]])
+|}',
 ];
 
 $messages['frc'] = [
@@ -18140,6 +18163,11 @@ $messages['ja'] = [
 	'signup-moreinfo' => '詳細',
 	'signup-password' => 'パスワード:',
 	'skin-forced' => 'このウィキでは外装を変更できません。',
+	'sp-contributions-footer-anon' => '{| id="anontalktext" class="plainlinks noeditsection" style="font-size:90%; border: 1px solid #B8B8B8; margin: 1em 1em 0; padding:0.25em 1em; clear: both" 
+| \'\'\'これは、アカウントを取得していないか、または利用していない匿名ユーザーのための投稿履歴ページです。このユーザーは、[[wikipedia:ja:IPアドレス|IPアドレス]]の数字により識別されます。\'\'\'
+
+IPアドレスは、時折変更されることもあり、複数人で共有されることもあります。もし、まだ匿名で利用しているなら、他の匿名ユーザーとの混乱を避けるため是非とも[[{{ns:Special}}:Userlogin|アカウントの作成、またはログイン]]することをお勧めします。登録することで、IPアドレスを隠すこともできます。[[w:c:ja.community:ヘルプ:アカウントを作る理由|なぜアカウントを作成するのですか？]] ([[w:c:ja.community:ヘルプ:アカウントを作成する|アカウントを作成する方法]])
+|}',
 ];
 
 $messages['jam'] = [
