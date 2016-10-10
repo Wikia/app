@@ -15007,7 +15007,7 @@ Si prega di segnalare l\'accaduto a un [[Special:ListUsers/sysop|amministratore]
 	'mergelog' => 'Unioni',
 	'mergelogpagetext' => 'Di seguito sono elencate le ultime operazioni di unione della cronologia di due pagine.',
 	'mwsuggest-disable' => 'Disattiva suggerimenti AJAX',
-	'mypreferences' => 'preferenze',
+	'mypreferences' => 'Preferenze',
 	'minoreditletter' => 'm',
 	'minlength1' => 'Il nome del file dev\'essere composto da almeno un carattere.',
 	'morelinkstoimage' => 'Visualizza [[Special:WhatLinksHere/$1|altri link]] a questo file.',
@@ -36804,6 +36804,7 @@ $messages['zh-cn'] = [
 	'mostlinkedcategories' => '最多被使用的分类',
 	'mostrevisions' => '最多修订的文章',
 	'move' => '移动',
+	'mypreferences' => '用戶设定',
 ];
 
 $messages['zh-hans'] = [
@@ -37218,7 +37219,7 @@ $messages['zh-tw'] = [
 \'\'\'最少該來源頁面的現時修訂必定會保持。\'\'\'',
 	'mergehistory-merge' => '以下[[:$1]]的修訂可以合併到[[:$2]]。用該選項按鈕欄去合併只有在指定時間以前所建立的修訂。要留意的是使用導航連結便會重設這一欄。',
 	'mergelogpagetext' => '以下是一個最近由一個頁面的修訂沿革合併到另一個頁面的列表。',
-	'mypreferences' => '我的偏好設定',
+	'mypreferences' => '用戶設定',
 	'mimesearch' => 'MIME 搜尋',
 	'mostimages' => '最多連結圖片',
 	'move' => '移動',
@@ -37375,5 +37376,6 @@ $messages['zh'] = [
 	'mostlinkedcategories' => '最多被使用的分类',
 	'mostrevisions' => '最多修訂的文章',
 	'mycontributions' => '我的活动',
+	'mypreferences' => '用戶设定',
 ];
 
