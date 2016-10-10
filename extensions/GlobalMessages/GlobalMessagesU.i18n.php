@@ -31,8 +31,9 @@ Please check if you want to create/edit this page.',
 	'userinvalidcssjstitle' => '\'\'\'Warning:\'\'\' There is no skin "$1".
 Custom .css and .js pages use a lowercase title, e.g. {{ns:user}}:Foo/vector.css as opposed to {{ns:user}}:Foo/Vector.css.',
 	'updated' => '(Updated)',
-	'undo-success' => 'The edit can be undone.
-Please check the comparison below to verify that this is what you want to do, and then save the changes below to finish undoing the edit.',
+	'undo-success' => '\'\'\'The edit can be undone. Please check the comparison below to verify that this is what you want to do, and then save the changes below to finish undoing the edit.\'\'\'
+
+\'\'If you are undoing an edit that is not vandalism, explain the reason in the edit summary rather than using only the default message.\'\'',
 	'undo-failure' => 'The edit could not be undone due to conflicting intermediate edits.',
 	'undo-norev' => 'The edit could not be undone because it does not exist or was deleted.',
 	'undo-summary' => 'Undo revision $1 by [[Special:Contributions/$2|$2]] ([[User talk:$2|talk]])',
@@ -10222,9 +10223,9 @@ Veuillez choisir un nom différent.',
 \'\'\'Elle n’a pas encore été enregistrée !\'\'\'',
 	'userjspreview' => '\'\'\'Rappelez-vous que vous êtes en train de visualiser ou de tester votre code JavaScript et qu’il n’a pas encore été enregistré !\'\'\'',
 	'updated' => '(Mis à jour)',
-	'undo-success' => 'Cette modification va être défaite. Veuillez vérifier les modifications ci-dessous, puis publier si c’est bien ce que vous voulez faire.',
-	'undo-failure' => 'Cette modification ne peut pas être défaite : cela entrerait en conflit avec les modifications intermédiaires.',
-	'undo-norev' => 'La modification n’a pas pu être défaite parce qu’elle est inexistante ou qu’elle a été supprimée.',
+	'undo-success' => 'Cette modification va être annulée. Veuillez vérifier les modifications ci-dessous, puis publier si c’est bien ce que vous voulez faire.',
+	'undo-failure' => 'Cette modification ne peut pas être annulée : cela entrerait en conflit avec les modifications intermédiaires.',
+	'undo-norev' => 'La modification n’a pas pu être annulée parce qu’elle n’existe pas ou qu’elle a été supprimée.',
 	'undo-summary' => 'Annulation des modifications $1 de [[Special:Contributions/$2|$2]] ([[User talk:$2|discussion]])',
 	'username' => 'Nom d’utilisateur :',
 	'uid' => 'Numéro d’utilisateur :',
@@ -15866,8 +15867,9 @@ $messages['ja'] = [
 	'userinvalidcssjstitle' => '\'\'\'警告：\'\'\'「$1」という外装はありません。
 .cssと.jsページを編集する際には、ページ名を小文字にすることを忘れないでください（例えば、{{ns:user}}:Hoge/Vector.cssではなく{{ns:user}}:Hoge/vector.cssとなります）。',
 	'updated' => '（更新）',
-	'undo-success' => '取り消しが可能です。
-これが意図した操作であるか、下に表示されている差分を確認し、取り消しを確定させるために、変更を保存してください。',
+	'undo-success' => '\'\'\'この編集はアンドゥ (取り消し) 可能です。これがあなたが行いたいことであることを照合するため下記の比較を確認し、下記の変更を保存して編集のアンドゥを完了してください。\'\'\'
+
+\'\'もしヴァンダリズムでない編集をアンドゥした場合は、デフォルトメッセージのみ使用するのではなく編集サマリでその理由を説明してください。\'\'',
 	'undo-failure' => '中間の版での編集と競合したため、取り消せませんでした。',
 	'undo-norev' => '取り消そうとした編集は存在しないかすでに削除されたために取り消せませんでした。',
 	'undo-summary' => '[[Special:Contributions/$2|$2]]（[[User talk:$2|トーク]]）による第$1版を取り消し',
