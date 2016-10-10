@@ -115,7 +115,7 @@ $messages['fi'] = [
 
 $messages['fr'] = [
 	'taskmanager' => 'Afficher et gérer les tâches d\'arrière-plan',
-	'taskmanager-desc' => 'Afficher et gérer les tâches d’arrière-plan',
+	'taskmanager-desc' => 'Affiche et gère les tâches en arrière-plan',
 	'taskmanager_title' => 'Afficher et gérer les tâches d\'arrière-plan',
 	'taskmanager_tasklist' => 'Retourner à la liste des tâches',
 	'right-taskmanager' => 'Peut afficher les tâches en arrière-plan',
@@ -196,6 +196,7 @@ $messages['ko'] = [
 	'taskmanager' => '백그라운드 작업 관리',
 	'taskmanager_title' => '백그라운드 작업 관리',
 	'action-taskmanager' => '백그라운드 작업 관리',
+	'taskmanager-desc' => '백그라운드 작업 관리',
 ];
 
 $messages['lb'] = [
