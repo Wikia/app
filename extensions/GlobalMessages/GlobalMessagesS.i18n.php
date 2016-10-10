@@ -29433,6 +29433,7 @@ Najprawdopodobniej zostało to spowodowane przez link do zewnętrznej strony int
 	* [http://www.wikia.com/Advertising Reklama]',
 	'specialpages-group-wikia' => 'Strony portalu Fandom',
 	'save' => 'Publikuj',
+	'scarytranscludebadinterwiki' => 'Użyto niewłaściwej składni transkluzji zewnętrznego szablonu.',
 ];
 
 $messages['pms'] = [
