@@ -2,17 +2,18 @@
 	"@metadata": {
 		"authors": [
 			"Sasan700",
-			"Умар"
+			"Умар",
+			"Исмаил Садуев"
 		]
 	},
-	"semanticforms-desc": "Cемантикийн хаамаш тӀетуху а нисбо а кепаш",
+	"semanticforms-desc": "Cемантикийн хаамаш тӀетуху а, нисбо а кепаш",
 	"createproperty": "Кхолла билгало",
 	"sf-createproperty-with-name": "Кхолла хӀума: $1",
 	"sf_createproperty_propname": "Къастаман цӀе:",
 	"sf_createproperty_proptype": "Тайп:",
 	"sf_createproperty_editsummary": "Кхоьллина [[Has type::$1]] тайпа меттиг",
 	"templates": "Кепаш",
-	"sf_templates_docu": "Вики чохь ю хӀара кепаш йолуш ю.",
+	"sf_templates_docu": "Вики чохь хӀара кепаш йолуш ю.",
 	"sf_templates_definescat": "билгалйе категори: $1",
 	"createtemplate": "Кхолла кеп",
 	"sf-createtemplate-with-name": "Кхолла кеп: $1",
@@ -71,6 +72,7 @@
 	"sf_createclass_listofvalues": "МаьӀнийн могӀам?",
 	"sf_createclass_nameinput": "Форман цӀе:",
 	"sf_createclass_create": "Кхолла",
+	"formstart": "Кепаца агӀо тӀетохар",
 	"sf_formstart_createoredit": "Кхолла я нисъе",
 	"formedit": "Тае форман гӀоьнца",
 	"sf_formedit_createtitle": "Кхоллар $1: $2",
@@ -88,10 +90,13 @@
 	"sf_runquery_title": "ДӀадоладалийта дехар: $1",
 	"sf_runquery_additionalquery": "Кхин тӀе дехарш",
 	"sf_blank_error": "есса хила цамега",
-	"sf-preview-header": "Хьалха хьажар",
+	"sf-preview-header": "Кепан хьалххе хьажар",
 	"sf_blank_namespace": "Коьрта",
 	"sf-select2-no-matches": "Терниш цакарий",
 	"sf-select2-searching": "Лахар…",
 	"sf-select2-input-too-short": "Дехар до, язъе $1 я дукха символаш",
-	"sf-select2-selection-too-big": "ХӀокху меттигехь $1 дукъа маьӀнаш хилийла дац."
+	"sf-select2-selection-too-big": "ХӀокху меттигехь $1 дукъа маьӀнаш хилийла дац.",
+	"sf-datepicker-close": "ДӀачӀагӀа",
+	"sf-datepicker-prev": "Хьалха йоьдург",
+	"sf-datepicker-next": "ТӀаьхьа йогӀург"
 }

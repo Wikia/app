@@ -1,0 +1,13 @@
+{
+	"@metadata": {
+		"authors": [
+			"GreenZeb"
+		]
+	},
+	"maps-abb-north": "Z",
+	"maps-abb-east": "A",
+	"maps-abb-south": "D",
+	"maps-abb-west": "R",
+	"maps-latitude": "Platums:",
+	"maps-longitude": "Garums:"
+}
