@@ -3610,6 +3610,7 @@ Wir arbeiten daran, dieses Problem zu beheben, vielen Dank für deine Geduld! We
 	'wikicitieshome' => 'Fandom Startseite',
 	'widget-desc-wikiamessages' => 'Fandom-Nachrichten',
 	'widget-title-wikiamessages' => 'Fandom-Nachrichten',
+	'wg_lastwikis' => 'Zuletzt besucht',
 ];
 
 $messages['de-formal'] = [
@@ -4242,6 +4243,7 @@ Estamos trabajando para solucionar el problema, gracias por tu comprensión! Si 
 	'wikia_messages' => 'Mensajes de Fandom',
 	'widget-title-advertiser' => 'Spotlights de Fandom',
 	'wikicitieshome' => 'Casa de Fandom',
+	'wg_lastwikis' => 'Visitadas Recientemente',
 ];
 
 $messages['et'] = [
@@ -4650,6 +4652,7 @@ Voit myös muokata listaa [[Special:EditWatchlist|tavalliseen tapaan]].',
 	'wikia_messages' => 'Wikian viestit',
 	'wikicitieshome' => 'Wikian kotisivu',
 	'watchlist_s' => 'Tarkkailulista',
+	'wg_lastwikis' => 'Äskettäin käydyt',
 ];
 
 $messages['fiu-vro'] = [
