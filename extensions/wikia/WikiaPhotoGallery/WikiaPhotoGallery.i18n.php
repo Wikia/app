@@ -2989,7 +2989,7 @@ $messages['inh'] = [
 ];
 
 $messages['it'] = [
-	'wikiaphotogallery-desc' => 'Fornisce un\'interfaccia per la gestione di gallerie nelle pagine',
+	'wikiaphotogallery-desc' => 'Fornisce un\'interfaccia per la gestione di gallerie e slideshow nelle pagine',
 	'wikiaPhotoGallery-back' => 'Indietro',
 	'wikiaPhotoGallery-finish' => 'Finito',
 	'wikiaPhotoGallery-add-gallery' => 'Inserisci una galleria di immagini',
@@ -3162,7 +3162,7 @@ In alternativa, è possibile fare clic su "$2" per vedere la pagina nella sua fo
 ];
 
 $messages['ja'] = [
-	'wikiaphotogallery-desc' => 'ページ内でギャラリーとスライドショーを管理するためのインタフェースを提供します。',
+	'wikiaphotogallery-desc' => 'ページ内でギャラリーとスライドショーを管理するためのインタフェースを提供する',
 	'wikiaPhotoGallery-back' => '戻る',
 	'wikiaPhotoGallery-finish' => '完了',
 	'wikiaPhotoGallery-feed-caption' => '$1 | <a href="$2">$3</a> より',
