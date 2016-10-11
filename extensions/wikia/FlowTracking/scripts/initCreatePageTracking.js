@@ -34,6 +34,10 @@ require([
 
 		$( '#ca-ve-edit,  #ca-edit' ).click(function() {
 			if (isNewArticle() && isMainNamespace()) {
+				var qs = new QueryString();
+				qs.setVal('flow', createButtonFlow);
+				window.history.replaceState({}, '', qs.toString());
+				
 				flowTracking.beginFlow(createButtonFlow, {});
 			}
 		});
