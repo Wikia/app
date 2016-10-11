@@ -32,7 +32,7 @@ require([
 			flowTracking.beginFlow(redLinkFlow, {});
 		});
 
-		$( '#ca-ve-edit' ).click(function() {
+		$( '#ca-ve-edit,  #ca-edit' ).click(function() {
 			flowTracking.beginFlow(createButtonFlow, {});
 		});
 	}
