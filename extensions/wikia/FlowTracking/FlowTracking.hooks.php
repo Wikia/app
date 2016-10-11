@@ -1,7 +1,23 @@
 <?php
 
 class FlowTrackingHooks {
+	const CREATE_PAGE_DIRECT_URL = 'create-page-direct-url';
+	const CREATE_PAGE_CONTRIBUTE_BUTTON = 'create-page-contribute-button';
+	const CREATE_PAGE_ARTICLE_REDLINK = 'create-page-article-redlink';
+	const CREATE_PAGE_SPECIAL_REDLINK = 'create-page-special-redlink';
 	const CREATE_PAGE_UNRECOGNIZED_FLOW = 'create-page-unrecognized';
+
+	public static function onMakeGlobalVariablesScript( &$vars ) {
+		$vars[ 'wgFlowTrackingFlows' ] = [
+			'CREATE_PAGE_DIRECT_URL' => static::CREATE_PAGE_DIRECT_URL,
+			'CREATE_PAGE_CONTRIBUTE_BUTTON' => static::CREATE_PAGE_CONTRIBUTE_BUTTON,
+			'CREATE_PAGE_ARTICLE_REDLINK' => static::CREATE_PAGE_ARTICLE_REDLINK,
+			'CREATE_PAGE_SPECIAL_REDLINK' => static::CREATE_PAGE_SPECIAL_REDLINK,
+			'CREATE_PAGE_UNRECOGNIZED_FLOW' => static::CREATE_PAGE_UNRECOGNIZED_FLOW
+		];
+
+		return true;
+	}
 
 	public static function onBeforePageDisplay( \OutputPage $out, \Skin $skin ) {
 		\Wikia::addAssetsToOutput( 'flow_tracking_create_page_js' );
@@ -45,6 +61,20 @@ class FlowTrackingHooks {
 				'useragent' => $headers[ 'USER-AGENT' ]
 			] );
 			Track::eventGA( 'flow-tracking', 'flow-end', $queryParams[ 'flow' ] );
+		}
+
+		return true;
+	}
+
+	public static function onContributeMenuAfterDropdownItems( &$dropdownItems ) {
+		foreach ( $dropdownItems as $specialPageName => &$item ) {
+			if ( $specialPageName === 'createpage' ) {
+				$item[ 'href' ] = http_build_url(
+					$item[ 'href' ],
+					[ 'query' => 'flow=' . static::CREATE_PAGE_CONTRIBUTE_BUTTON ],
+					HTTP_URL_JOIN_QUERY
+				);
+			}
 		}
 
 		return true;
