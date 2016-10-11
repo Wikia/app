@@ -17,7 +17,7 @@ class OoyalaVideoHandler extends VideoHandler {
 		$height = $this->getHeight($width);
 		$playerId = 'ooyalaplayer-'.$this->videoId.'-'.intval($isAjax);
 		$ooyalaPlayerId = $wg->OoyalaApiConfig['playerId'];
-		$jsFile = 'http://player.ooyala.com/v3/' . $ooyalaPlayerId . '?platform=html5-priority';
+		$jsFile = 'http://player.ooyala.com/v3/' . $ooyalaPlayerId . '?platform=html5-priority&debug=1';
 		$autoPlayStr = ( $autoplay ) ? 'true' : 'false';
 
 		$html = <<<EOT
@@ -35,8 +35,7 @@ EOT;
 				'title' => $this->title,
 				'jsFile' => array(
 					$jsFile,
-					"extensions/wikia/VideoHandlers/js/handlers/lib/OoyalaIma.js",
-					"extensions/wikia/VideoHandlers/js/handlers/lib/OoyalaAgeGate.js",
+					"extensions/wikia/VideoHandlers/js/handlers/lib/OoyalaAgeGate.js"
 				),
 			),
 			'init' => 'wikia.videohandler.ooyala',

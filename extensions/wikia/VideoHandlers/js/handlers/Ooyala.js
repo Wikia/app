@@ -8,13 +8,14 @@
  */
 
 define('wikia.videohandler.ooyala', [
+	'ext.wikia.aRecoveryEngine.recovery.helper',
 	'jquery',
 	'wikia.window',
 	require.optional('ext.wikia.adEngine.adContext'),
 	require.optional('ext.wikia.adEngine.dartVideoHelper'),
 	'wikia.loader',
 	'wikia.log'
-], function ($, window, adContext, dartVideoHelper, loader, log) {
+], function (recoveryHelper, $, win, adContext, dartVideoHelper, loader, log) {
 	'use strict';
 
 	/**
@@ -23,9 +24,9 @@ define('wikia.videohandler.ooyala', [
 	 * @param {Constructor} vb Instance of video player
 	 */
 	return function (params, vb) {
-		var containerId = vb.timeStampId(params.playerId),
+		var ima3LibUrl = 'https://imasdk.googleapis.com/js/sdkloader/ima3.js',
+			containerId = vb.timeStampId(params.playerId),
 			started = false,
-			tagUrl,
 			createParams = {
 				width: vb.width + 'px',
 				height: vb.height + 'px',
@@ -37,12 +38,12 @@ define('wikia.videohandler.ooyala', [
 			var messageBus = player.mb;
 
 			// Player has loaded
-			messageBus.subscribe(window.OO.EVENTS.PLAYER_CREATED, 'tracking', function () {
+			messageBus.subscribe(win.OO.EVENTS.PLAYER_CREATED, 'tracking', function () {
 				vb.track('player-load');
 			});
 
 			// Actual content starts playing (past any ads or age-gates)
-			messageBus.subscribe(window.OO.EVENTS.PLAYING, 'tracking', function () {
+			messageBus.subscribe(win.OO.EVENTS.PLAYING, 'tracking', function () {
 				if (!started) {
 					vb.track('content-begin');
 					started = true;
@@ -51,12 +52,12 @@ define('wikia.videohandler.ooyala', [
 			});
 
 			// Ad starts
-			messageBus.subscribe(window.OO.EVENTS.WILL_PLAY_ADS, 'tracking', function () {
+			messageBus.subscribe(win.OO.EVENTS.WILL_PLAY_ADS, 'tracking', function () {
 				vb.track('ad-start');
 			});
 
 			// Ad has been fully watched
-			messageBus.subscribe(window.OO.EVENTS.ADS_PLAYED, 'tracking', function () {
+			messageBus.subscribe(win.OO.EVENTS.ADS_PLAYED, 'tracking', function () {
 				vb.track('ad-finish');
 			});
 
@@ -66,7 +67,7 @@ define('wikia.videohandler.ooyala', [
 				if (player && player.modules && player.modules.length) {
 					for (i = 0; i < player.modules.length; i = i + 1) {
 						if (player.modules[i].name === "GoogleIma" && player.modules[i].instance) {
-							player.modules[i].instance.adTagUrl = tagUrl;
+							player.modules[i].instance.adTagUrl = createParams.vast.tagUrl;
 						}
 					}
 				}
@@ -79,6 +80,10 @@ define('wikia.videohandler.ooyala', [
 			});*/
 		}
 
+		function initRegularPlayer() {
+			win.OO.Player.create(containerId, params.videoId, createParams);
+		}
+
 		createParams.onCreate = onCreate;
 
 		if (adContext && adContext.getContext().opts.showAds) {
@@ -86,14 +91,8 @@ define('wikia.videohandler.ooyala', [
 				throw 'ext.wikia.adEngine.dartVideoHelper is not defined and it should as we need to display ads';
 			}
 
-
-			tagUrl = dartVideoHelper.getUrl();
-			console.log('---BEFORE---', tagUrl);
-			tagUrl = _sp_.getSafeUri(tagUrl);
-			console.log('---AFTER---', tagUrl);
-
 			createParams.vast = {
-				tagUrl: tagUrl
+				tagUrl: dartVideoHelper.getUrl()
 			};
 		}
 
@@ -108,47 +107,60 @@ define('wikia.videohandler.ooyala', [
 			log( message, log.levels.error, 'VideoBootstrap' );
 		}
 
-		window.googleImaSdkFailedCbList = {
-			unshift: function(cb) {
-			}
-		};
+		function initRecoveredPlayer() {
+			win.googleImaSdkFailedCbList = {
+				unshift: function () {
+				}
+			};
+			ima3LibUrl = recoveryHelper.getSafeUri(ima3LibUrl);
 
-		// Only load the Ooyala player code once, Ooyala AgeGates will break if we load this asset more than once.
-		if ( window.OO === undefined ) {
-			/* the second file depends on the first file */
+			createParams.vast.tagUrl = recoveryHelper.getSafeUri(createParams.vast.tagUrl);
+
 			loader({
 				type: loader.JS,
-				resources: params.jsFile[ 0 ]
-			}).done(function() {
-				log( 'First set of Ooyala assets loaded', log.levels.info, 'VideoBootstrap' );
-				var IMA_JS = "//imasdk.googleapis.com/js/sdkloader/ima3.js";
-				var protocol = "https:";
-				var bootJsSrc = protocol + IMA_JS;
+				resources: ima3LibUrl
+			}).done(function () {
+				log('Ooyala OO.ready', log.levels.info, 'VideoBootstrap');
+				initRegularPlayer();
 
-				bootJsSrc = _sp_.getSafeUri(bootJsSrc);
-
-				loader({
-					type: loader.JS,
-					resources: bootJsSrc
-				}).done(function() {
-					loader({
-						type: loader.JS,
-						resources: params.jsFile[ 2 ]
-					}).done(function() {
-						log( 'All Ooyala assets loaded', log.levels.info, 'VideoBootstrap' );
-
-						window.OO.ready(function (OO) {
-							log( 'Ooyala OO.ready', log.levels.info, 'VideoBootstrap' );
-							OO.Player.create( containerId, params.videoId, createParams );
-							OO._.each(window.googleImaSdkLoadedCbList, function(fn) { fn(); }, OO);
-						});
-
-					}).fail( loadFail );
-				}).fail( loadFail );
-			}).fail( loadFail );
-		} else {
-			window.OO.Player.create( containerId, params.videoId, createParams );
+				if (recoveryHelper.isBlocking()) {
+					win.OO._.each(win.googleImaSdkLoadedCbList, function (fn) {
+						fn();
+					}, win.OO);
+				}
+			});
 		}
+
+		function initPlayer () {
+			recoveryHelper.isBlocking() ? initRecoveredPlayer() : initRegularPlayer();
+		}
+
+		// Only load the Ooyala player code once, Ooyala AgeGates will break if we load this asset more than once.
+		if ( win.OO !== undefined ) {
+			initRegularPlayer();
+			return;
+		}
+
+		/* the second file depends on the first file */
+		loader({
+			type: loader.JS,
+			resources: params.jsFile[ 0 ]
+		}).done(function() {
+			log( 'First set of Ooyala assets loaded', log.levels.info, 'VideoBootstrap' );
+
+			loader({
+				type: loader.JS,
+				resources: params.jsFile[ 1 ]
+			}).done(function() {
+				log( 'All Ooyala assets loaded', log.levels.info, 'VideoBootstrap' );
+
+				win.OO.ready(function () {
+					recoveryHelper.isRecoveryEnabled() ?
+						recoveryHelper.runAfterDetection(initPlayer) : initRegularPlayer();
+				});
+
+			}).fail( loadFail );
+		}).fail( loadFail );
 
 	};
 });

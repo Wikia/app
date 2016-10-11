@@ -50,7 +50,7 @@ define('ext.wikia.aRecoveryEngine.recovery.helper', [
 	}
 
 	function track(type) {
-		if (window._sp_ && !window._sp_.trackingSent) {
+		if (win._sp_ && !win._sp_.trackingSent) {
 			if (Wikia && Wikia.Tracker) {
 				Wikia.Tracker.track({
 					eventName: 'ads.recovery',
@@ -67,7 +67,7 @@ define('ext.wikia.aRecoveryEngine.recovery.helper', [
 					xmlHttp.send();
 				} catch (e) {}
 			}
-			window._sp_.trackingSent = true;
+			win._sp_.trackingSent = true;
 		}
 	}
 
@@ -81,8 +81,27 @@ define('ext.wikia.aRecoveryEngine.recovery.helper', [
 		}
 	}
 
+	function getSafeUri(url) {
+		return win._sp_.getSafeUri(url);
+	}
+
+	function isSourcePointResultDefined() {
+		return win.ads && win.ads.runtime.sp && win.ads.runtime.sp.blocking !== undefined;
+	}
+
+	function runAfterDetection(callback) {
+		if (isSourcePointResultDefined()) {
+			callback();
+		} else {
+			doc.addEventListener('sp.blocking', callback);
+			doc.addEventListener('sp.not_blocking', callback);
+		}
+	}
+
 	return {
+		runAfterDetection: runAfterDetection,
 		addOnBlockingCallback: addOnBlockingCallback,
+		getSafeUri: getSafeUri,
 		initEventQueue: initEventQueue,
 		isRecoveryEnabled: isRecoveryEnabled,
 		isBlocking: isBlocking,
