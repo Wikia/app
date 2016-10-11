@@ -3682,6 +3682,8 @@ Wir arbeiten daran, dieses Problem zu beheben, vielen Dank für deine Geduld! We
 	'widgetwikipage' => 'Diese \'\'Nachricht\'\' ist ein \'\'einfacher\'\' Test des WikiPage-Widgets. Du kannst \'\'\'den Inhalt bearbeiten\'\'\' indem du [[Mediawiki:Widgetwikipage|diese Seite]] im MediaWiki-Namensraum anpasst.',
 	'wikia-days-ago' => 'vor $1 {{PLURAL:$1|Tag|Tagen}}',
 	'wikia-hours-ago' => 'vor $1 {{PLURAL:$1|Stunde|Stunden}}',
+	'wikia-language-all' => 'Alle Sprachen',
+	'wikia-language-top' => 'Top $1 Sprachen',
 ];
 
 $messages['de-formal'] = [
@@ -4734,6 +4736,8 @@ $messages['fa'] = [
 	'widget_description' => 'توضیحات',
 	'widget_name' => 'نام',
 	'widgets' => 'فهرست ابزار',
+	'wikia-language-all' => 'تمام زبان‌ها',
+	'wikia-language-top' => '$1 زبان برتر',
 ];
 
 $messages['ff'] = [
@@ -4891,6 +4895,8 @@ Voit myös muokata listaa [[Special:EditWatchlist|tavalliseen tapaan]].',
 	'widgetwikipage' => 'Tämä \'\'viesti\'\' on \'\'\'yksinkertaisesti\'\'\' WikiSivu vekottimen testausta. Voit vaihtaa täman oletus viestiin yksinkertaisesti [[Mediawiki:Widgetwikipage|muokkaamalla sivua]] järjestelmäviestien nimiavaruudessa.',
 	'wikia-days-ago' => '$1 {{PLURAL:$1|päivä|päivää}} sitten',
 	'wikia-hours-ago' => '$1 {{PLURAL:$1|tunti|tuntia}} sitten',
+	'wikia-language-all' => 'Kaikki Kielet',
+	'wikia-language-top' => 'Suositut $1 Kielet',
 ];
 
 $messages['fiu-vro'] = [
@@ -5150,6 +5156,8 @@ Nous essayons de résoudre le problème et vous remercions de votre patience. S\
 	'widgets' => 'Liste des widgets',
 	'wikia-days-ago' => 'il y a $1 {{PLURAL:$1|jour|jours}}',
 	'wikia-hours-ago' => 'il y a $1 {{PLURAL:$1|heure|heures}}',
+	'wikia-language-all' => 'Toutes les langues',
+	'wikia-language-top' => 'Top $1 des langues',
 ];
 
 $messages['frc'] = [
@@ -7615,6 +7623,8 @@ Si noti che è anche possibile [[Special:EditWatchlist|modificare la lista con l
 	'wikicitieshome' => 'Pagina principale di Fandom',
 	'wikia-days-ago' => '$1 {{PLURAL:$1|giorno|giorni}} fa',
 	'wikia-hours-ago' => '$1 {{PLURAL:$1|ora|ore}} fa',
+	'wikia-language-all' => 'Tutte le lingue',
+	'wikia-language-top-list' => 'de,en,es,he,fr,it,ja,no,pl,pt,pt-br,zh',
 ];
 
 $messages['iu'] = [
@@ -7832,6 +7842,8 @@ $messages['ja'] = [
 	'widgetwikipage' => 'このメッセージは、WikiPageウィジェットの簡単なサンプルです。[[Mediawiki:$1]]を編集することでこの内容を変更することが出来ます。',
 	'wikia-days-ago' => '$1日前',
 	'wikia-hours-ago' => '$1時間前',
+	'wikia-language-all' => '全言語',
+	'wikia-language-top' => '上位$1言語',
 ];
 
 $messages['jam'] = [
@@ -9088,6 +9100,8 @@ $messages['ko'] = [
 	'widget-title-contribs' => '기여 내역',
 	'wikia-days-ago' => '$1일 전',
 	'wikia-hours-ago' => '$1시간 전',
+	'wikia-language-all' => '모든 언어',
+	'wikia-language-top' => '상위 $1개 언어',
 ];
 
 $messages['ko-kp'] = [
@@ -14065,6 +14079,8 @@ $messages['ru'] = [
 	'widgetwikipage' => 'Это \'\'сообщение\'\' - \'\'\'просто\'\'\' проверка работоспособности виджета "Страница вики". Вы можете изменить этот текст, выводимый по умолчанию, [[Mediawiki:Widgetwikipage|отредактировав страницу]] в пространстве имён MediaWiki.',
 	'wikia-days-ago' => '$1 {{PLURAL:$1|день|дня|дней}} назад',
 	'wikia-hours-ago' => '$1 {{PLURAL:$1|час|часа|часов}} назад',
+	'wikia-language-all' => 'Все языки',
+	'wikia-language-top' => 'Топ $1 языков',
 ];
 
 $messages['rue'] = [
@@ -15937,6 +15953,8 @@ pl hu es de',
 	'widgetwikipage' => 'Detta meddelande är ett \'\'\'enkelt\'\'\' test av WikiSida pryl. Du kan \'\'\'redigera innehållet i pryl\'\'\' genom att [[Mediawiki:Widgetwikipage|redigera sidan]] i namnrymden MediaWiki.',
 	'wikia-days-ago' => '$1 {{PLURAL:$1|dag|dagar}} sedan',
 	'wikia-hours-ago' => '$1 {{PLURAL:$1|timme|timmar}} sedan',
+	'wikia-language-all' => 'Alla språk',
+	'wikia-language-top' => 'Toppen $1 språk',
 ];
 
 $messages['sw'] = [
@@ -17612,6 +17630,8 @@ Bạn cũng có thể [[Special:EditWatchlist|dùng trang sửa đổi bình th�
 	'wikia-pagetitle' => '$1 – Wikia',
 	'wikia-days-ago' => '$1 ngày trước',
 	'wikia-hours-ago' => '$1 giờ trước',
+	'wikia-language-all' => 'Mọi ngôn ngữ',
+	'wikia-language-top' => 'Top $1 ngôn ngữ',
 ];
 
 $messages['vls'] = [
@@ -18549,6 +18569,7 @@ $messages['zh-tw'] = [
 	'widgets' => 'Widgets列表',
 	'wikia-days-ago' => '$1 {{PLURAL:$1|天|天}}前',
 	'wikia-hours-ago' => '$1小時前',
+	'wikia-language-top-list' => 'zh,zh-hans,zh-hk,zh-tw',
 ];
 
 $messages['zh-yue'] = [
@@ -18583,6 +18604,7 @@ $messages['zh-hk'] = [
 	'widgets' => 'Widgets列表',
 	'wikia-days-ago' => '$1 {{PLURAL:$1|天|天}} 以前',
 	'wikia-hours-ago' => '$1小時前',
+	'wikia-language-top-list' => 'zh,zh-hans,zh-hk,zh-tw',
 ];
 
 $messages['zh'] = [
