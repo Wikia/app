@@ -11,6 +11,7 @@ $upvote-icon-active: '/extensions/wikia/EmbeddableDiscussions/images/upvote-acti
 $upvote-icon-tiny: '/extensions/wikia/EmbeddableDiscussions/images/upvote-tiny.svg';
 $share-icon: '/extensions/wikia/EmbeddableDiscussions/images/share.svg';
 $plus-icon: '/extensions/wikia/EmbeddableDiscussions/images/plus-x-large.svg';
+$default-avatar-icon: '/extensions/wikia/EmbeddableDiscussions/images/icon-avatar.svg';
 
 $gray: #999;
 $card-border-color: $color-page-border;
@@ -69,6 +70,12 @@ $font-size-large: 16px;
 		font-size: $font-size-regular;
 		line-height: $avatar-size;
 		z-index: 1;
+	}
+
+	.embeddable-discussions-default-avatar {
+		background: url($default-avatar-icon) no-repeat;
+		height: $avatar-size;
+		width: $avatar-size;
 	}
 
 	.embeddable-discussions-forum {

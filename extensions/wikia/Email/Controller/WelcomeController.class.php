@@ -35,17 +35,17 @@ class WelcomeController extends EmailController {
 	}
 
 	private function createSummary() {
-		return join(' ', [
+		return join( ' ', [
 			$this->getMessage( 'emailext-welcome-summary' )->text(),
 			$this->getMessage( 'emailext-welcome-summary-extended' )->text(),
-			$this->getMessage( 'emailext-welcome-summary-extended-tips' )->text()]);
+			$this->getMessage( 'emailext-welcome-summary-extended-tips' )->text()] );
 	}
 
 	private function createContentFooterMessages() {
 		return [
-			join(' ', [
+			join( ' ', [
 				$this->getMessage( 'emailext-welcome-footer-community' )->parse(),
-				$this->getMessage( 'emailext-welcome-footer-closing' )->text()])
+				$this->getMessage( 'emailext-welcome-footer-closing' )->text()] )
 		];
 	}
 

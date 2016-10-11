@@ -110,7 +110,7 @@ abstract class BlogPostController extends EmailController {
 	}
 
 	protected function getPostLabel() {
-		return $this->getMessage( 'emailext-blogpost-link-label')->parse();
+		return $this->getMessage( 'emailext-blogpost-link-label' )->parse();
 	}
 
 	protected function getPostLink() {
@@ -146,7 +146,7 @@ abstract class BlogPostController extends EmailController {
 				[
 					'type' => 'text',
 					'name' => 'pageTitle',
-					'label' =>'Blog Page Title',
+					'label' => 'Blog Page Title',
 					'tooltip' => 'The User_blog:XXX or Blog:YYY page where this post appears',
 				],
 				[
