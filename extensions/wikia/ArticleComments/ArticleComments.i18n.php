@@ -1302,8 +1302,8 @@ $messages['fr'] = [
 	'article-comments-show-more' => 'Afficher plus de commentaires',
 	'wikiamobile-article-comments-counter' => '$1 {{PLURAL:$1|commentaire|commentaires}}',
 	'wikiamobile-article-comments-header' => 'Commentaires',
-	'wikiamobile-article-comments-more' => 'Lire la suite',
-	'wikiamobile-article-comments-prev' => 'Charger le précédent',
+	'wikiamobile-article-comments-more' => 'Charger plus',
+	'wikiamobile-article-comments-prev' => 'Charger les précédents',
 	'wikiamobile-article-comments-none' => 'Aucun commentaire',
 	'wikiamobile-article-comments-view' => 'Afficher les réponses',
 	'wikiamobile-article-comments-replies' => 'réponses',
@@ -1789,17 +1789,17 @@ $messages['it'] = [
 	'article-comments-empty-comment' => 'Non puoi inserire un commento vuoto. [$1 Vuoi cancellarlo invece?]',
 	'article-comments-show-more' => 'mostra altri commenti',
 	'wikiamobile-article-comments-counter' => '$1 {{PLURAL:$1|commento|commenti}}',
-	'wikiamobile-article-comments-header' => 'Commenti',
-	'wikiamobile-article-comments-more' => 'Caricane ancora',
+	'wikiamobile-article-comments-header' => 'Commenti (<span id=wkArtCnt>$1</span>)',
+	'wikiamobile-article-comments-more' => 'Carica altri',
 	'wikiamobile-article-comments-prev' => 'Carica precedenti',
 	'wikiamobile-article-comments-none' => 'Nessun commento',
 	'wikiamobile-article-comments-view' => 'Visualizza risposte',
 	'wikiamobile-article-comments-replies' => 'risposte',
 	'wikiamobile-article-comments-post-reply' => 'Rispondi',
-	'wikiamobile-article-comments-post' => 'Posta',
+	'wikiamobile-article-comments-post' => 'Pubblica',
 	'wikiamobile-article-comments-placeholder' => 'Commenta',
 	'wikiamobile-article-comments-login-post' => 'Effettua il login per lasciare un commento.',
-	'wikiamobile-article-comments-post-fail' => 'Fallito nel salvataggio del commento, si prega di riprovare più tardi',
+	'wikiamobile-article-comments-post-fail' => 'Salvataggio del commento non riuscito, per favore riprova più tardi',
 	'enotif_subject_article_comment' => '$PAGEEDITOR ha commentato su "$PAGETITLE" su {{SITENAME}}',
 	'enotif_body_article_comment' => 'Caro $WATCHINGUSERNAME,
 
@@ -2011,17 +2011,17 @@ $messages['ko'] = [
 	'article-comments-empty-comment' => '내용이 없는 댓글을 다실 수 없습니다. <a href=\'$1\'>이 댓글을 삭제하시겠습니까?</a>',
 	'article-comments-show-more' => '더 많은 코멘트 보기',
 	'wikiamobile-article-comments-counter' => '{{PLURAL:$1|의견}} $1개',
-	'wikiamobile-article-comments-header' => '댓글',
-	'wikiamobile-article-comments-more' => '더 불러오기',
-	'wikiamobile-article-comments-prev' => '이전 불러오기',
+	'wikiamobile-article-comments-header' => '댓글 (<span id=wkArtCnt>$1</span>)',
+	'wikiamobile-article-comments-more' => '더 보기',
+	'wikiamobile-article-comments-prev' => '이전 댓글 더 보기',
 	'wikiamobile-article-comments-none' => '댓글 없음',
-	'wikiamobile-article-comments-view' => '댓글 보기',
-	'wikiamobile-article-comments-replies' => '댓글',
-	'wikiamobile-article-comments-post-reply' => '답변 게시',
+	'wikiamobile-article-comments-view' => '답글 보기',
+	'wikiamobile-article-comments-replies' => '답글',
+	'wikiamobile-article-comments-post-reply' => '답글 입력',
 	'wikiamobile-article-comments-post' => '게시',
-	'wikiamobile-article-comments-placeholder' => '댓글 남기기',
-	'wikiamobile-article-comments-login-post' => '덧글을 남기려면 로그인하세요.',
-	'wikiamobile-article-comments-post-fail' => '덧글을 저장하는 데에 실패했습니다, 나중에 다시 시도해주세요',
+	'wikiamobile-article-comments-placeholder' => '댓글 입력',
+	'wikiamobile-article-comments-login-post' => '댓글을 달기 위해서는 로그인이 필요합니다.',
+	'wikiamobile-article-comments-post-fail' => '댓글을 게시하는 데 실패했습니다. 다시 시도해주세요.',
 	'enotif_subject_article_comment' => '{{SITENAME}}에서 $PAGEEDITOR 사용자가 $PAGETITLE 문서에 댓글을 달았습니다.',
 	'enotif_body_article_comment' => '$WATCHINGUSERNAME님, $PAGEEDITOR 사용자가 "$PAGETITLE" 문서에 댓글을 남겼습니다. 댓글을 보시려면 다음 링크로 들어가세요: $PAGETITLE_URL
 자주 방문해주시고 기여도 많이 부탁드립니다. - 위키아 드림',
@@ -3989,7 +3989,7 @@ $messages['zh-hant'] = [
 	'article-comments-delete-reason' => '上層文章/上層評論已經被刪除。',
 	'article-comments-empty-comment' => '您不能發佈空白的評論。[$1 要刪除它嗎？]',
 	'article-comments-show-more' => '顯示更多評論',
-	'wikiamobile-article-comments-counter' => '$1 {{PLURAL:$1|評論|評論}}',
+	'wikiamobile-article-comments-counter' => '$1 {{PLURAL:$1|則評論|則評論}}',
 	'wikiamobile-article-comments-header' => '評論',
 	'wikiamobile-article-comments-more' => '讀取更多',
 	'wikiamobile-article-comments-prev' => '讀取前項',
@@ -4092,6 +4092,7 @@ Wikia 社群支援小組
 ___________________________________________
 * 您可在社群中心尋找協助和建議：http://zh.community.wikia.com
 * 不想收到這麼多訊息？您可以在以下頁面退訂或變更電子信箱設定：http://zh.community.wikia.com/Special:Preferences',
+	'wikiamobile-article-comments-counter' => '$1 {{PLURAL:$1|則評論|則評論}}',
 ];
 
 $messages['zh'] = [
@@ -4148,5 +4149,6 @@ Wikia 社群支援小組
 ___________________________________________
 * 您可在社群中心尋找協助和建議：http://zh.community.wikia.com
 * 不想收到這麼多訊息？您可以在以下頁面退訂或變更電子信箱設定：http://zh.community.wikia.com/Special:Preferences',
+	'wikiamobile-article-comments-counter' => '$1 {{PLURAL:$1|則評論|則評論}}',
 ];
 

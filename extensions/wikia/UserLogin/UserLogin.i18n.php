@@ -1318,7 +1318,7 @@ Wikiaの最新情報は http://ja.wikia.com/ で確認できます。
 	'userlogin-loginreqlink' => 'ログイン',
 	'userlogin-changepassword-needlogin' => 'パスワードを変更するには$1する必要があります。',
 	'wikiamobile-sendpassword-label' => '新しいパスワードを送信',
-	'wikiamobile-facebook-connect-fail' => 'あなたの Facebook アカウントは現在Wikiaのアカウントとリンクされていません。',
+	'wikiamobile-facebook-connect-fail' => 'あなたの Facebook アカウントは現在ウィキアのアカウントとリンクされていません。',
 	'userlogin-error-wrongcredentials' => 'このユーザー名とパスワードの組み合わせは正しくありません。再試行してください。',
 	'userlogin-error-invalidfacebook' => 'あなたの Facebook アカウントの検出に問題がありました。Facebook にログインして再試行してください。',
 	'userlogin-error-fbconnect' => 'FandomアカウントとFacebookを連携する際に問題が発生しました。',
@@ -1427,6 +1427,8 @@ ___________________________________________
 	'userlogin-provider-tooltip-facebook' => 'Facebook 계정으로 위키아에 로그인하기',
 	'userlogin-remembermypassword' => '로그인 상태 유지',
 	'userlogin-retypenew' => '새 비밀번호 입력하기',
+	'wikiamobile-facebook-connect-fail' => '회원님의 계정은 위키아 계정과 연동되어 있지 않습니다.',
+	'wikiamobile-sendpassword-label' => '새 암호를 이메일로 받기',
 ];
 
 $messages['krc'] = [

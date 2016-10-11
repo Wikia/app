@@ -199,8 +199,8 @@ $messages['de'] = [
 	'wikiasearch2-top-module-title' => 'Top-Seiten',
 	'wikiasearch2-fandom-stories-title' => 'Ähnliche {{PLURAL:$1|Story|Storys}}',
 	'wikiasearch2-fandom-stories-view-more' => 'Weitere Storys',
-	'wikiamobile-wikiasearch2-next' => 'Next',
-	'wikiamobile-wikiasearch2-prev' => 'Previous',
+	'wikiamobile-wikiasearch2-next' => 'Nächste',
+	'wikiamobile-wikiasearch2-prev' => 'Vorherige',
 	'wikiamobile-wikiasearch2-count-of-results' => '$1-$2 of $3 {{PLURAL:$3|result|results}}',
 	'wikiasearch2-video-results' => 'Videos for \'$1\'',
 ];
@@ -362,8 +362,8 @@ $messages['fr'] = [
 	'wikiasearch2-top-module-title' => 'Pages les plus visitées',
 	'wikiasearch2-fandom-stories-title' => '{{PLURAL:$1|Article|Articles}} à ce sujet',
 	'wikiasearch2-fandom-stories-view-more' => 'Voir plus d\'articles',
-	'wikiamobile-wikiasearch2-next' => 'Next',
-	'wikiamobile-wikiasearch2-prev' => 'Previous',
+	'wikiamobile-wikiasearch2-next' => 'Suivant',
+	'wikiamobile-wikiasearch2-prev' => 'Précédent',
 	'wikiamobile-wikiasearch2-count-of-results' => '$1-$2 of $3 {{PLURAL:$3|result|results}}',
 	'wikiasearch2-video-results' => 'Videos for \'$1\'',
 ];
@@ -566,8 +566,8 @@ $messages['ja'] = [
 	'wikiasearch2-top-module-title' => '上位ページ',
 	'wikiasearch2-fandom-stories-title' => '関連{{PLURAL:$1|ストーリー|ストーリー}}',
 	'wikiasearch2-fandom-stories-view-more' => 'ストーリーをもっと見る',
-	'wikiamobile-wikiasearch2-next' => 'Next',
-	'wikiamobile-wikiasearch2-prev' => 'Previous',
+	'wikiamobile-wikiasearch2-next' => '次へ',
+	'wikiamobile-wikiasearch2-prev' => '戻る',
 	'wikiamobile-wikiasearch2-count-of-results' => '$1-$2 of $3 {{PLURAL:$3|result|results}}',
 	'wikiasearch2-video-results' => 'Videos for \'$1\'',
 ];
@@ -775,8 +775,8 @@ $messages['pl'] = [
 	'wikiasearch2-top-module-title' => 'Najpopularniejsze strony',
 	'wikiasearch2-fandom-stories-title' => '{{PLURAL:$1|Powiązana Wieść|Powiązane Wieści}}',
 	'wikiasearch2-fandom-stories-view-more' => 'Zobacz więcej wieści z Fandomu',
-	'wikiamobile-wikiasearch2-next' => 'Następna',
-	'wikiamobile-wikiasearch2-prev' => 'Poprzednia',
+	'wikiamobile-wikiasearch2-next' => 'Dalej',
+	'wikiamobile-wikiasearch2-prev' => 'Wstecz',
 	'wikiamobile-wikiasearch2-count-of-results' => '$1-$2 z $3 {{PLURAL:$3|wyniku|wyników}}',
 	'wikiasearch2-video-results' => 'Filmy dla „$1”',
 	'wikiasearch2-images' => '$1 {{PLURAL:$2|Obraz|Obrazy|Obrazów}}',
@@ -1156,6 +1156,8 @@ $messages['ko'] = [
 	'wikiasearch2-global-search-headline' => '위키아 산하 위키 찾기',
 	'wikiasearch2-page-title-no-query-interwiki' => '위키아에서 찾기',
 	'wikiasearch2-search-all-wikia' => '위키아 전체에서 찾기',
+	'wikiamobile-wikiasearch2-next' => '다음',
+	'wikiamobile-wikiasearch2-prev' => '이전',
 ];
 
 $messages['zh'] = [
