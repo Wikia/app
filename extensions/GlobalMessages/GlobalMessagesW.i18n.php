@@ -3705,6 +3705,7 @@ Wir arbeiten daran, dieses Problem zu beheben, vielen Dank für deine Geduld! We
 	'wt_show_internal_urls' => 'Zeige auch interne URLs',
 	'wt_show_period' => 'Zeige Periode',
 	'wt_show_referrers' => 'Zeige Referrers',
+	'wysiwygcaption' => 'Grafischer Editor',
 ];
 
 $messages['de-formal'] = [
@@ -4424,6 +4425,7 @@ Estamos trabajando para solucionar el problema, gracias por tu comprensión! Si 
 	'wt_show_internal_urls' => 'Mostrar también vínculos internos',
 	'wt_show_period' => 'Mostrar periodo',
 	'wt_show_referrers' => 'Mostrar referencias',
+	'wysiwygcaption' => 'Edición visual',
 ];
 
 $messages['et'] = [
@@ -4945,6 +4947,7 @@ Voit myös muokata listaa [[Special:EditWatchlist|tavalliseen tapaan]].',
 	'wt_help_sidebar' => '|Vekottimien sivupalkki||Klikkaa "muokkaa" vaihtaaksesi vekottimien asetuksia. Voit sulkea vekottimia x-ikonin avulla',
 	'wt_help_startup' => '|Eivätkö vekottimet ole tuttuja sinulle?||Avaa käyttäjävalikko ja klikkaa "Hallinnoi vekottimia"...',
 	'wt_shoutbox_initial_message' => 'Hei... tervetuloa chattiin!',
+	'wysiwygcaption' => 'Visuaalinen muokkaaminen',
 ];
 
 $messages['fiu-vro'] = [
@@ -5210,6 +5213,7 @@ Nous essayons de résoudre le problème et vous remercions de votre patience. S\
 	'wikia-seconds-ago' => 'il y a $1 {{PLURAL:$1|seconde|secondes}}',
 	'wikia-pagination-next' => 'Suivant',
 	'wikia-pagination-prev' => 'Précédent',
+	'wysiwygcaption' => 'Éditeur visuel',
 ];
 
 $messages['frc'] = [
@@ -14167,6 +14171,7 @@ $messages['ru'] = [
 	'wikia-seconds-ago' => '$1 {{PLURAL:$1|секунда|секунды|секунд}} назад',
 	'wikia-pagination-next' => 'След.',
 	'wikia-pagination-prev' => 'Предыд.',
+	'wysiwygcaption' => 'Визуальное редактирование',
 ];
 
 $messages['rue'] = [
