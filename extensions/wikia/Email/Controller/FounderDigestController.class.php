@@ -300,7 +300,7 @@ class FounderPageViewsDigestController extends FounderDigestController {
 				'iconSrc' => ImageHelper::getFileUrl( '100PagesViewed.png' ),
 				'detailsHeader' => $this->getMessage( 'emailext-founder-digest-views-header', $this->pageViews )->parse(),
 				'details' => $this->getMessage( 'emailext-founder-digest-views-description-2' )->text()
-			] 
+			]
 		];
 	}
 
