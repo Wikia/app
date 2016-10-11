@@ -445,7 +445,7 @@ class WikiaTracer {
 		global $wgRequestTime;
 
 		$path = $this->requestPath;
-		array_unshift( $path, sprintf( "%s %s %d %.6f", 'mediawiki', wfHostname(), (int) $wgRequestTime, microtime( true ) - $wgRequestTime ) );
+		array_unshift( $path, sprintf( "%s %s %d %.6f", self::APPLICATION_NAME, wfHostname(), (int) $wgRequestTime, microtime( true ) - $wgRequestTime ) );
 
 		return sprintf( "(%s)", join( ' ', $path ) );
 	}
