@@ -28,6 +28,7 @@
 	"sf_createform_hidden": "লুকায়িত",
 	"sf_createform_removetemplate": "টেমপ্লেট অপসারণ",
 	"sf_createform_addtemplate": "টেমপ্লেট যোগ:",
+	"sf_createform_add": "যোগ করুন",
 	"createcategory": "একটি বিষয়শ্রেণী তৈরি করুন",
 	"sf-createcategory-with-name": "বিষয়শ্রেণী তৈরি: $1",
 	"sf_createcategory_name": "বিষয়শ্রেণীর নাম:",
@@ -43,8 +44,14 @@
 	"sf_formedit_remove": "অপসারণ",
 	"sf_formedit_addanother": "অপর একটি যোগ করুন",
 	"sf_formedit_none": "কোনটিই নয়",
+	"sf-autoedit-wait": "অপেক্ষা করুন...",
 	"sf_runquery_additionalquery": "অতিরিক্ত কোয়েরি",
 	"sf_deletionlog": "অপসারণ লগ",
 	"sf_form_freetextlabel": "মুক্ত লেখা",
-	"sf_blank_namespace": "প্রধান"
+	"sf_blank_namespace": "প্রধান",
+	"sf-datepicker-close": "বন্ধ",
+	"sf-datepicker-prev": "পূর্ববর্তী",
+	"sf-datepicker-next": "পরবর্তী",
+	"sf-datepicker-today": "আজ",
+	"sf-regexp-wrongformat": "ভুল বিন্যাস"
 }

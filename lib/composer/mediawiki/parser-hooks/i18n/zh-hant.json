@@ -1,0 +1,9 @@
+{
+	"@metadata": {
+		"authors": [
+			"Justincheng12345",
+			"LNDDYL"
+		]
+	},
+	"parserhooks-desc": "用以在面向對象編程及聲明的方式下建立 MediaWiki 解析器鈎"
+}

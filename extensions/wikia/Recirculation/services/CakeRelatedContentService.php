@@ -18,13 +18,17 @@ class CakeRelatedContentService {
 
 	/**
 	 * @param $title
-	 * @param $ignore
+	 * @param $namespaceId
+	 * @param $wikiId
+	 * @param null $universeName
+	 * @param int $limit
+	 * @param null $ignore
 	 * @return RecirculationContent[]
 	 */
-	public function getContentRelatedTo( $title, $universeName = null, $limit = 5, $ignore = null ) {
+	public function getContentRelatedTo($title, $namespaceId, $wikiId, $universeName = null, $limit = 5, $ignore = null ) {
 		$items = [];
 
-		if ( !$this->onValidWiki() || !$this->onValidPage( $title ) ) {
+		if ( !$this->onValidWiki($wikiId) || !$this->onValidPage( $title ) || !$this->isValidNamespace($namespaceId) ) {
 			return $items;
 		}
 
@@ -175,11 +179,9 @@ class CakeRelatedContentService {
 		}
 	}
 
-	private function onValidWiki() {
-		global $wgCityId;
-
+	private function onValidWiki($wikiId) {
 		return in_array(
-				$wgCityId,
+				$wikiId,
 				[
 						147,    // starwars
 						130814, // gameofthrones
@@ -187,11 +189,18 @@ class CakeRelatedContentService {
 						2237,   // dc
 						2233,   // marvel
 						208733, // darksouls
+						1706, 	// elderscrolls
+						1071836,// overwatch
+						509,		// harrypotter
 				]
 		);
 	}
 
 	private function onValidPage( $title ) {
 		return $title != "Main Page";
+	}
+
+	private function isValidNamespace($namespaceId) {
+		return $namespaceId == NS_MAIN;
 	}
 }

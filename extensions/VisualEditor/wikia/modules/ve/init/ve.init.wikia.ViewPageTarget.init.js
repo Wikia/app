@@ -125,7 +125,7 @@
 	conf = mw.config.get( 'wgVisualEditorConfig' );
 	tabMessages = conf.tabMessages;
 	uri = new mw.Uri();
-	pageExists = !!mw.config.get( 'wgRelevantArticleId' );
+	pageExists = !!mw.config.get( 'wgArticleId' );
 	viewUri = new mw.Uri( mw.util.getUrl( mw.config.get( 'wgRelevantPageName' ) ) );
 	isViewPage = (
 		mw.config.get( 'wgIsArticle' ) &&
@@ -228,6 +228,9 @@
 			ve.track( 'mwedit.init', { type: 'page', mechanism: 'click' } );
 
 			if ( history.pushState && uri.query.veaction !== 'edit' ) {
+				if (!pageExists) {
+					veEditUri.extend( { flow: 'create-page-create-button' } );
+				}
 				// Replace the current state with one that is tagged as ours, to prevent the
 				// back button from breaking when used to exit VE. FIXME: there should be a better
 				// way to do this. See also similar code in the ViewPageTarget constructor.
