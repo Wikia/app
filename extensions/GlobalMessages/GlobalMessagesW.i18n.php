@@ -18615,6 +18615,7 @@ $messages['zh-tw'] = [
 	'wikia-days-ago' => '$1 {{PLURAL:$1|天|天}}前',
 	'wikia-hours-ago' => '$1小時前',
 	'wikia-language-top-list' => 'zh,zh-hans,zh-hk,zh-tw',
+	'wlshowlast' => '顯示最近$1小時；$2天；$3的修改。',
 ];
 
 $messages['zh-yue'] = [
