@@ -11699,7 +11699,7 @@ Probeer het opnieuw.',
 	'wrongpasswordempty' => 'Het opgegeven wachtwoord was leeg.
 Probeer het opnieuw.',
 	'watchthis' => 'Deze pagina volgen',
-	'whitelistedittext' => 'U moet $1 om pagina\'s te bewerken.',
+	'whitelistedittext' => 'Je moet $1 om pagina\'s te bewerken.',
 	'windows-nonascii-filename' => 'Deze wiki ondersteunt geen bestandsnamen met speciale tekens.',
 	'watchthisupload' => 'Dit bestand volgen',
 	'withoutinterwiki' => 'Pagina\'s zonder taalverwijzingen',
