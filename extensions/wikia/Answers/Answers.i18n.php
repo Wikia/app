@@ -1437,6 +1437,7 @@ $messages['ja'] = [
 	'tog-hidefromattribution' => '投稿者のリストに自分のアバターと名前を表示しない',
 	'unanswered_category' => '回答待ちの質問',
 	'unregistered' => '未登録',
+	'you_can' => '次のことができます:',
 ];
 
 $messages['lb'] = [
@@ -2225,6 +2226,7 @@ $messages['pt'] = [
 	'twitter_ask' => 'Faça esta pergunta no Twitter',
 	'twitter_hashtag' => 'WikiRespostas',
 	'unanswered_category' => 'Perguntas sem respostas',
+	'you_can' => 'Voce pode:',
 ];
 
 $messages['pt-br'] = [
@@ -2273,6 +2275,7 @@ $messages['pt-br'] = [
 	'twitter_ask' => 'Faça esta pergunta no Twitter',
 	'twitter_hashtag' => 'WikiRespostas',
 	'unanswered_category' => 'Perguntas sem respostas',
+	'you_can' => 'Voce pode:',
 ];
 
 $messages['roa-tara'] = [
@@ -2682,6 +2685,7 @@ $messages['no'] = [
 	'reword_this' => '<a href="$1" $2>Omformuler dette spørsmålet</a>',
 	'unanswered_category' => 'Ubesvarte spørsmål',
 	'unregistered' => 'Uregistrert',
+	'you_can' => 'Du kan:',
 ];
 
 $messages['zh-hant'] = [
@@ -2729,6 +2733,7 @@ $messages['ko'] = [
 
 $messages['bg'] = [
 	'ads_by_google' => 'Реклами от Google',
+	'you_can' => 'Можете:',
 ];
 
 $messages['ro'] = [
