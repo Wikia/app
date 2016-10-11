@@ -2968,6 +2968,7 @@ $config['embeddable_discussions_js'] = [
 	'assets' => [
 		'//extensions/wikia/EmbeddableDiscussions/scripts/ext.embeddableDiscussions.js',
 		'//extensions/wikia/EmbeddableDiscussions/scripts/sharing.js',
+		'//extensions/wikia/EmbeddableDiscussions/scripts/DiscussionsSettingsModal.js',
 		'//extensions/wikia/EmbeddableDiscussions/scripts/templates.mustache.js',
 	],
 ];

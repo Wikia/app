@@ -19,6 +19,8 @@ $font-size-small: 12px;
 $font-size-regular: 14px;
 $font-size-large: 16px;
 
+@import 'SettingsModal';
+
 $post-mark-icon-size: 12px;
 $discussion-deleted-mark-color: #ed1c24;
 $discussion-reported-mark-color: #f08a24;
@@ -107,6 +109,18 @@ $text-overlay-value: 40%;
 		&.is-deleted {
 			opacity: $discussion-deleted-actions-opacity;
 		}
+	}
+
+	.embeddable-discussions-edit {
+		color: $color-links;
+		font-size: $font-size-small;
+		margin-left: 6px;
+		text-transform: uppercase;
+	}
+
+	.embeddable-discussions-edit-icon {
+		fill: $color-buttons;
+		width: 16px;
 	}
 
 	.embeddable-discussions-header-container {

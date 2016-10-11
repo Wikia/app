@@ -6,8 +6,9 @@ require([
 	'wikia.window',
 	'wikia.throbber',
 	'embeddablediscussions.templates.mustache',
-	'EmbeddableDiscussionsSharing'
-], function ($, tracker, uiFactory, mustache, window, throbber, templates, sharing) {
+	'EmbeddableDiscussionsSharing',
+	'DiscussionsSettingsModal',
+], function ($, tracker, uiFactory, mustache, window, throbber, templates, sharing, modal) {
 	'use strict';
 
 	var track = tracker.buildTrackingFunction({
@@ -31,7 +32,7 @@ require([
 			label: 'embeddable-discussions-share-modal-loaded',
 		});
 
-		uiFactory.init(['modal']).then(function (uiModal) {
+		uiFactory.init(['modal']).then(function(uiModal) {
 			var modalConfig = {
 				vars: {
 					classes: ['embeddable-discussions-share-modal'],
@@ -250,13 +251,15 @@ require([
 	}
 
 	$(function () {
+		var discussionsModule = $('.embeddable-discussions-module');
+
 		// Track impression
 		track({
 			action: tracker.ACTIONS.IMPRESSION,
 			label: 'embeddable-discussions-loaded',
 		});
 
-		$('.embeddable-discussions-module').on('click', '.upvote', function (event) {
+		discussionsModule.on('click', '.upvote', function(event) {
 			var upvoteUrl = getBaseUrl() + event.currentTarget.getAttribute('href'),
 				hasUpvoted = event.currentTarget.getAttribute('data-hasUpvoted') === '1',
 				$svg = $($(event.currentTarget).children()[0]),
@@ -266,8 +269,7 @@ require([
 				if (hasUpvoted) {
 					$svg.attr('class', 'embeddable-discussions-upvote-icon');
 					event.currentTarget.setAttribute('data-hasUpvoted', '0');
-				}
-				else {
+				} else {
 					$svg.attr('class', 'embeddable-discussions-upvote-icon-active');
 					event.currentTarget.setAttribute('data-hasUpvoted', '1');
 				}
@@ -282,11 +284,18 @@ require([
 			}
 
 			event.preventDefault();
+
+			return false;
 		});
 
-		$('.embeddable-discussions-module').on('click', '.share', function (event) {
+		discussionsModule.on('click', '.share', function(event) {
 			openModal(event.currentTarget.getAttribute('data-link'), event.currentTarget.getAttribute('data-title'));
 			event.preventDefault();
+		});
+
+		discussionsModule.on('click', '.embeddable-discussions-edit',  function (event) {
+			event.preventDefault();
+			modal.open();
 		});
 
 		// Hook to load after VE edit completes (no page reload)

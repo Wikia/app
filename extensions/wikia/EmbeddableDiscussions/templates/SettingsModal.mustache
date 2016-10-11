@@ -1,0 +1,54 @@
+<h1 class="embeddable-discussions-settingsmodal-heading">
+	{{heading}}
+</h1>
+<div class="embeddable-discussions-settingsmodal-wrapper">
+	<div>
+		{{description}}
+	</div>
+	<div>
+		<h2 class="embeddable-discussions-settingsmodal-subheading">
+			{{sortBy}}
+		</h2>
+		<div class="embeddable-discussions-settingsmodal-sort-container">
+			<div class="embeddable-discussions-settingsmodal-sort-item embeddable-discussions-settingsmodal-sort-item-left" id="embeddable-discussions-settingsmodal-sort-latest">
+				{{latest}}
+			</div>
+			<div class="embeddable-discussions-settingsmodal-sort-item" id="embeddable-discussions-settingsmodal-sort-trending">
+				{{trending}}
+			</div>
+		</div>
+	</div>
+	<div>
+		<div class="embeddable-discussions-settingsmodal-filter-by">
+			{{filterBy}}
+		</div>
+		<ul class="embeddable-discussions-filter-by-list">
+			<li class="embeddable-discussions-filter-by-item">
+				{{#allChecked}}
+					<input type="checkbox" id="embeddable-discussions-settingsmodal-filter-by-all-checkbox" value="all" checked>{{filterByAll}}
+				{{/allChecked}}
+				{{^allChecked}}
+					<input type="checkbox" id="embeddable-discussions-settingsmodal-filter-by-all-checkbox" value="all">{{filterByAll}}
+				{{/allChecked}}
+			</li>
+			{{#categories}}
+				<li class="embeddable-discussions-filter-by-item">
+					{{#checked}}
+						<input value="{{id}}" type="checkbox" checked>{{name}}
+					{{/checked}}
+					{{^checked}}
+						<input value="{{id}}" type="checkbox">{{name}}
+					{{/checked}}
+				</li>
+			{{/categories}}
+		</ul>
+	</div>
+</div>
+<div class="embeddable-discussions-settingsmodal-buttonrow">
+	<a href="#" class="embeddable-discussions-settingsmodal-button" id="embeddable-discussions-settingsmodal-done">
+		{{done}}
+	</a>
+	<a href="#" class="embeddable-discussions-settingsmodal-button" id="embeddable-discussions-settingsmodal-cancel">
+		{{cancel}}
+	</a>
+</div>

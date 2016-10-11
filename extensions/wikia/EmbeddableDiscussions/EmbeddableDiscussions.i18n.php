@@ -7,6 +7,8 @@ $messages['en'] = array(
 	'embeddable-discussions-share' => 'Share',
 	'embeddable-discussions-show-trending' => 'Trending Discussions',
 	'embeddable-discussions-show-latest' => 'Latest Discussions',
+	'embeddable-discussions-show-trending-short' => 'Trending',
+	'embeddable-discussions-show-latest-short' => 'Latest',
 	'embeddable-discussions-show-trending-in-category' => 'Trending discussions in $1',
 	'embeddable-discussions-show-latest-in-category' => 'Recent discussions in $1',
 	'embeddable-discussions-show-all' => 'View All →',
@@ -17,11 +19,18 @@ $messages['en'] = array(
 	'embeddable-discussions-loading' => 'Loading Discussions...',
 	'embeddable-discussions-error-loading' => 'Error loading discussions',
 	'embeddable-discussions-cancel-button' => 'Cancel',
+	'embeddable-discussions-done-button' => 'Done',
 	'embeddable-discussions-parameter-error' => "Error rendering discussions tag: '$1' is incorrect. $2",
 	'embeddable-discussions-parameter-error-range' => 'It must be an integer in the range $1 to $2.',
 	'embeddable-discussions-parameter-error-boolean' => 'It must be either true or false.',
 	'embeddable-discussions-parameter-error-category' => 'It must be a valid category id.',
 	'embeddable-discussions-timestamp-now' => 'Now',
+	'embeddable-discussions-timestamp-edit' => 'Edit',
+	'embeddable-discussions-heading' => 'Discussions Module',
+	'embeddable-discussions-description' => 'Customize how posts show up in your Discussions module by choosing sort by and filter by',
+	'embeddable-discussions-sort-by' => 'Sort By',
+	'embeddable-discussions-filter-by' => 'Filter By',
+	'embeddable-discussions-filter-by-all' => 'All',
 );
 
 $messages['qqq'] = array(
@@ -30,6 +39,8 @@ $messages['qqq'] = array(
 	'embeddable-discussions-share' => 'Text to show for Share button',
 	'embeddable-discussions-show-trending' => 'Module heading when showing trending discussions',
 	'embeddable-discussions-show-latest' => 'Module heading when showing latest discussions',
+	'embeddable-discussions-show-trending-short' => 'Short heading for trending discussions',
+	'embeddable-discussions-show-latest-short' => 'Short heading for latest discussions',
 	'embeddable-discussions-show-trending-in-category' => 'Module heading when showing trending discussions in a specific category',
 	'embeddable-discussions-show-latest-in-category' => 'Module heading when showing latest discussions in a specific category',
 	'embeddable-discussions-show-all' => 'Link for showing all discussions (followed by arrow)',
@@ -40,11 +51,14 @@ $messages['qqq'] = array(
 	'embeddable-discussions-loading' => 'Text to show when loading discussions cards (used on mobile only)',
 	'embeddable-discussions-error-loading' => 'Error message to show if loading of discussions items failed',
 	'embeddable-discussions-cancel-button' => 'Text for Share modal cancel button',
+	'embeddable-discussions-done-button' => 'Text for Settings modal done button',
 	'embeddable-discussions-parameter-error' => 'Error message to show when an incorrect parameter is given. $1 is the parameter name. $2 is the error message',
 	'embeddable-discussions-parameter-error-range' => 'Supplemental error message for numerical parameters.',
 	'embeddable-discussions-parameter-error-boolean' => 'Supplemental error message for boolean parameters. "true" and "false" should be verbatim, not translated.',
 	'embeddable-discussions-parameter-error-category' => 'Supplemental error message for showing when an incorrect category paremeter was given.',
 	'embeddable-discussions-timestamp-now' => 'Text to show for a timestamp less than one minute old (now)',
+	'embeddable-discussions-timestamp-edit' => 'Text for link to edit modal (used on community page)',
+	'embeddable-discussions-filter-by-all' => 'Text for check box to select all cagtegories',
 );
 
 $messages['de'] = array(
@@ -67,6 +81,16 @@ $messages['de'] = array(
 	'embeddable-discussions-parameter-error-range' => 'Es muss eine ganze Zahl zwischen $1 und $2 eingegeben werden.',
 	'embeddable-discussions-parameter-error-boolean' => 'Die Angabe muss entweder true oder false sein.',
 	'embeddable-discussions-parameter-error-category' => 'Es wird ein gültiger Kategorie-Name benötigt.',
+	'embeddable-discussions-timestamp-now' => 'Gerade eben',
+	'embeddable-discussions-show-trending-short' => 'Trends',
+	'embeddable-discussions-show-latest-short' => 'Neueste',
+	'embeddable-discussions-done-button' => 'Erledigt',
+	'embeddable-discussions-timestamp-edit' => 'Bearbeiten',
+	'embeddable-discussions-heading' => 'Diskussionen-Modul',
+	'embeddable-discussions-description' => 'Du kannst einstellen, wie Beiträge in deinem Diskussionen-Modul angezeigt werden, indem du „Sortieren nach“ und „Filtern nach“ auswählst',
+	'embeddable-discussions-sort-by' => 'Sortieren nach',
+	'embeddable-discussions-filter-by' => 'Filtern nach',
+	'embeddable-discussions-filter-by-all' => 'Alle',
 );
 
 $messages['es'] = array(
@@ -89,6 +113,16 @@ $messages['es'] = array(
 	'embeddable-discussions-parameter-error-range' => 'Debe ser un entero en el rango de $1 a $2.',
 	'embeddable-discussions-parameter-error-boolean' => 'Debe ser o verdadero o falso.',
 	'embeddable-discussions-parameter-error-category' => 'Debe ser un nombre de categoría válido.',
+	'embeddable-discussions-timestamp-now' => 'Ahora',
+	'embeddable-discussions-show-trending-short' => 'Tendencias',
+	'embeddable-discussions-show-latest-short' => 'Más recientes',
+	'embeddable-discussions-done-button' => 'Hecho',
+	'embeddable-discussions-timestamp-edit' => 'Editar',
+	'embeddable-discussions-heading' => 'Módulo de Discusiones',
+	'embeddable-discussions-description' => 'Personaliza cómo se muestran las discusiones en tu módulo eligiendo ordenar por y filtrar por',
+	'embeddable-discussions-sort-by' => 'Ordenar por',
+	'embeddable-discussions-filter-by' => 'Filtrar por',
+	'embeddable-discussions-filter-by-all' => 'Todos',
 );
 
 $messages['fr'] = array(
@@ -111,6 +145,16 @@ $messages['fr'] = array(
 	'embeddable-discussions-parameter-error-range' => 'Vous devez utiliser un nombre entier compris entre $1 et $2.',
 	'embeddable-discussions-parameter-error-boolean' => 'La valeur doit être "true" ou "false".',
 	'embeddable-discussions-parameter-error-category' => 'Vous devez utiliser un nom de catégorie valide.',
+	'embeddable-discussions-timestamp-now' => 'Maintenant',
+	'embeddable-discussions-show-trending-short' => 'Tendance',
+	'embeddable-discussions-show-latest-short' => 'Récentes',
+	'embeddable-discussions-done-button' => 'Terminé',
+	'embeddable-discussions-timestamp-edit' => 'Modifier',
+	'embeddable-discussions-heading' => 'Module Discussions',
+	'embeddable-discussions-description' => "Utilisez les options Trier par et Filtrer par pour personnaliser l'affichage des publications dans votre module Discussions.",
+	'embeddable-discussions-sort-by' => 'Trier par',
+	'embeddable-discussions-filter-by' => 'Filtrer par',
+	'embeddable-discussions-filter-by-all' => 'Tous',
 );
 
 $messages['it'] = array(
@@ -133,12 +177,22 @@ $messages['it'] = array(
 	'embeddable-discussions-parameter-error-range' => "Deve essere un valore intero compreso nell'intervallo tra $1 e $2.",
 	'embeddable-discussions-parameter-error-boolean' => 'Deve essere true o false.',
 	'embeddable-discussions-parameter-error-category' => 'Deve essere un ID di categoria valido.',
+	'embeddable-discussions-timestamp-now' => 'Adesso',
+	'embeddable-discussions-show-trending-short' => 'In Trend',
+	'embeddable-discussions-show-latest-short' => 'Più recenti',
+	'embeddable-discussions-done-button' => 'Fatto',
+	'embeddable-discussions-timestamp-edit' => 'Modifica',
+	'embeddable-discussions-heading' => 'Modulo di Discussioni',
+	'embeddable-discussions-description' => 'Personalizza come i post vengono visualizzati nel tuo modulo di Discussioni usando "Ordina per" e "Filtra per"',
+	'embeddable-discussions-sort-by' => 'Ordina per',
+	'embeddable-discussions-filter-by' => 'Filtra per',
+	'embeddable-discussions-filter-by-all' => 'Tutte',
 );
 
 $messages['ja'] = array(
 	'embeddable-discussions-upvote' => '賛成',
 	'embeddable-discussions-reply' => '返信',
-	'embeddable-discussions-share' => '共有',
+	'embeddable-discussions-share' => 'シェア',
 	'embeddable-discussions-show-trending' => '人気のトーク',
 	'embeddable-discussions-show-latest' => '最新のトーク',
 	'embeddable-discussions-show-all' => 'すべて表示 →',
@@ -155,6 +209,16 @@ $messages['ja'] = array(
 	'embeddable-discussions-parameter-error-range' => '$1～$2の整数を指定してください。',
 	'embeddable-discussions-parameter-error-boolean' => '「true」または「false」で指定してください。',
 	'embeddable-discussions-parameter-error-category' => '有効なカテゴリ名を指定してください。',
+	'embeddable-discussions-timestamp-now' => 'たった今',
+	'embeddable-discussions-show-trending-short' => '人気',
+	'embeddable-discussions-show-latest-short' => '最新',
+	'embeddable-discussions-done-button' => '完了',
+	'embeddable-discussions-timestamp-edit' => '編集',
+	'embeddable-discussions-heading' => 'トーク・モジュール',
+	'embeddable-discussions-description' => '並べ替え・絞り込み条件を指定して、トーク・モジュール内投稿の表示方法をカスタマイズしよう',
+	'embeddable-discussions-sort-by' => '並べ替え',
+	'embeddable-discussions-filter-by' => 'フィルター',
+	'embeddable-discussions-filter-by-all' => 'すべて',
 );
 
 $messages['pl'] = array(
@@ -177,6 +241,16 @@ $messages['pl'] = array(
 	'embeddable-discussions-parameter-error-range' => 'Wartość powinna być liczbą całkowitą pomiędzy $1 a $2.',
 	'embeddable-discussions-parameter-error-boolean' => 'Wprowadź wartość „true” lub „false”.',
 	'embeddable-discussions-parameter-error-category' => 'Wprowadź poprawną nazwę kategorii.',
+	'embeddable-discussions-timestamp-now' => 'Teraz',
+	'embeddable-discussions-show-trending-short' => 'Popularne',
+	'embeddable-discussions-show-latest-short' => 'Najnowsze',
+	'embeddable-discussions-done-button' => 'Gotowe',
+	'embeddable-discussions-timestamp-edit' => 'Edytuj',
+	'embeddable-discussions-heading' => 'Moduł Dyskusji',
+	'embeddable-discussions-description' => 'Dostosuj to, jakie posty pojawiają się w twoim module Dyskusji za pomocą opcji „sortuj według” oraz „filtruj według”',
+	'embeddable-discussions-sort-by' => 'Sortuj według',
+	'embeddable-discussions-filter-by' => 'Filtruj według',
+	'embeddable-discussions-filter-by-all' => 'Wszystkie',
 );
 
 $messages['pt'] = array(
@@ -199,6 +273,16 @@ $messages['pt'] = array(
 	'embeddable-discussions-parameter-error-range' => 'Deve ser um número inteiro na faixa de $1 a $2.',
 	'embeddable-discussions-parameter-error-boolean' => 'Deve ser ou verdadeiro ou falso.',
 	'embeddable-discussions-parameter-error-category' => 'Deve ser um nome de categoria válido.',
+	'embeddable-discussions-timestamp-now' => 'Agora',
+	'embeddable-discussions-show-trending-short' => 'Em alta',
+	'embeddable-discussions-show-latest-short' => 'Mais recentes',
+	'embeddable-discussions-done-button' => 'Pronto',
+	'embeddable-discussions-timestamp-edit' => 'Editar',
+	'embeddable-discussions-heading' => 'Módulo de Discussões',
+	'embeddable-discussions-description' => 'Personalize a aparência dos posts no seu módulo de discussões, escolhendo ordenar por e filtrar por',
+	'embeddable-discussions-sort-by' => 'Ordenar por',
+	'embeddable-discussions-filter-by' => 'Filtrar por',
+	'embeddable-discussions-filter-by-all' => 'Todos',
 );
 
 $messages['ru'] = array(
@@ -221,6 +305,16 @@ $messages['ru'] = array(
 	'embeddable-discussions-parameter-error-range' => 'Здесь должно быть целое число от $1 до $2.',
 	'embeddable-discussions-parameter-error-boolean' => 'Здесь должно быть значение true или false.',
 	'embeddable-discussions-parameter-error-category' => 'Здесь должен быть допустимый идентификатор категории.',
+	'embeddable-discussions-timestamp-now' => 'только что',
+	'embeddable-discussions-show-trending-short' => 'Популярные',
+	'embeddable-discussions-show-latest-short' => 'Последние',
+	'embeddable-discussions-done-button' => 'Готово',
+	'embeddable-discussions-timestamp-edit' => 'Править',
+	'embeddable-discussions-heading' => 'Модуль обсуждений',
+	'embeddable-discussions-description' => 'Используйте «сортировка» и «фильтр», чтобы настроить порядок отображения сообщений в вашем модуле обсуждений',
+	'embeddable-discussions-sort-by' => 'Сортировка',
+	'embeddable-discussions-filter-by' => 'Фильтр',
+	'embeddable-discussions-filter-by-all' => 'Все',
 );
 
 $messages['zh-hans'] = array(
@@ -243,6 +337,16 @@ $messages['zh-hans'] = array(
 	'embeddable-discussions-parameter-error-range' => '它必须是范围在$1和$2之间的一个整数。',
 	'embeddable-discussions-parameter-error-boolean' => '它必须是true或false。',
 	'embeddable-discussions-parameter-error-category' => '它必须是一个有效的分类名称。',
+	'embeddable-discussions-timestamp-now' => '现在',
+	'embeddable-discussions-show-trending-short' => '热门浏览',
+	'embeddable-discussions-show-latest-short' => '最新',
+	'embeddable-discussions-done-button' => '完成',
+	'embeddable-discussions-timestamp-edit' => '编辑',
+	'embeddable-discussions-heading' => '讨论版模块',
+	'embeddable-discussions-description' => '通过排序和筛选功能自定义帖子在您的讨论版模块上如何呈现',
+	'embeddable-discussions-sort-by' => '排序',
+	'embeddable-discussions-filter-by' => '筛选方式',
+	'embeddable-discussions-filter-by-all' => '所有',
 );
 
 $messages['zh-hant'] = array(
@@ -265,5 +369,15 @@ $messages['zh-hant'] = array(
 	'embeddable-discussions-parameter-error-range' => '它必須是範圍在$1和$2之間的一個整數。',
 	'embeddable-discussions-parameter-error-boolean' => '它必須是true或false。',
 	'embeddable-discussions-parameter-error-category' => '它必須是一個有效的分類名稱。',
+	'embeddable-discussions-timestamp-now' => '現在',
+	'embeddable-discussions-show-trending-short' => '熱門瀏覽',
+	'embeddable-discussions-show-latest-short' => '最新',
+	'embeddable-discussions-done-button' => '完成',
+	'embeddable-discussions-timestamp-edit' => '編輯',
+	'embeddable-discussions-heading' => '討論版模組',
+	'embeddable-discussions-description' => '自訂如何透過選擇排序和篩選在討論版模組上顯示文章',
+	'embeddable-discussions-sort-by' => '排序',
+	'embeddable-discussions-filter-by' => '篩選方式',
+	'embeddable-discussions-filter-by-all' => '所有',
 );
 

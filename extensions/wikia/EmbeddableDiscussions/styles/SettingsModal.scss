@@ -1,0 +1,106 @@
+@import 'skins/shared/color';
+@import 'skins/shared/mixins/flexbox';
+
+.embeddable-discussions-settings-modal.modal {
+	align-items: center;
+	min-height: 0;
+
+	> header {
+		display: none;
+	}
+
+	> footer {
+		display: none;
+	}
+
+	> section {
+		padding: 24px 0 0;
+		width: 100%;
+	}
+
+	&.small {
+		width: 350px;
+	}
+
+	.embeddable-discussions-settingsmodal-heading {
+		font-size: $font-size-large;
+		font-weight: bold;
+		padding: 0 24px 12px;
+	}
+
+	.embeddable-discussions-settingsmodal-subheading {
+		font-size: $font-size-regular;
+		padding: 21px 0 10px;
+	}
+
+	.embeddable-discussions-settingsmodal-sort-container {
+		@include flexbox();
+		@include flex-direction(row);
+		@include align-items(center);
+		@include align-self(center);
+		@include justify-content(center);
+	}
+
+	.embeddable-discussions-settingsmodal-sort-item {
+		border: 1px solid $button-text-color;
+		color: $button-text-color;
+		cursor: pointer;
+		padding: 8px;
+		text-transform: uppercase;
+		text-align: center;
+		width: 50%;
+	}
+
+	.embeddable-discussions-settingsmodal-sort-selected {
+		background: $button-text-color;
+		color: white;
+	}
+
+	.embeddable-discussions-settingsmodal-sort-item-left {
+		border-right: 0;
+	}
+
+	.embeddable-discussions-settingsmodal-filter-by {
+		color: gray;
+		font-size: $font-size-small;
+		padding-top: 12px;
+	}
+
+	.embeddable-discussions-filter-by-item {
+		padding: 16px 0;
+	}
+
+	.embeddable-discussions-filter-by-item:not(:last-child) {
+		border-bottom: 1px solid $color-page-border-subtle;
+	}
+
+	.embeddable-discussions-settingsmodal-categories {
+		min-height: 100px;
+		width: 100%;
+	}
+
+	.embeddable-discussions-settingsmodal-wrapper {
+		border-bottom: 2px solid $color-page-border-subtle;
+		padding: 0 24px 12px;
+	}
+
+	.embeddable-discussions-settingsmodal-button {
+		background: $button-color;
+		color: $button-text-color;
+		display: inline-block;
+		float: right;
+		font-size: 12px;
+		font-weight: bold;
+		height: 46px;
+		line-height: 46px;
+		margin: 6px 6px 6px 0;
+		padding: 0 20px;
+		text-decoration: none;
+		text-transform: uppercase;
+
+		&:hover, &:active {
+			background-color: $button-hover-color;
+			text-decoration: none;
+		}
+	}
+}
