@@ -2726,6 +2726,8 @@ També podeu [[Special:EditWatchlist|utilitzar l\'editor estàndard]].',
 	'watchlisttools-raw' => 'Edita la llista de seguiment sense format',
 	'wikia-days-ago' => 'fa $1 {{PLURAL:$1|dia|dies}}',
 	'wikia-hours-ago' => 'fa $1 {{PLURAL:$1|hora|hores}}',
+	'wikia-minutes-ago' => 'fa $1 {{PLURAL:$1|minut|minuts}}',
+	'wikia-seconds-ago' => 'fa $1 {{PLURAL:$1|segon|segons}}',
 ];
 
 $messages['cbk-zam'] = [
@@ -3684,6 +3686,8 @@ Wir arbeiten daran, dieses Problem zu beheben, vielen Dank für deine Geduld! We
 	'wikia-hours-ago' => 'vor $1 {{PLURAL:$1|Stunde|Stunden}}',
 	'wikia-language-all' => 'Alle Sprachen',
 	'wikia-language-top' => 'Top $1 Sprachen',
+	'wikia-minutes-ago' => 'vor $1 {{PLURAL:$1|Minute|Minuten}}',
+	'wikia-seconds-ago' => 'vor $1 {{PLURAL:$1|Sekunde|Sekunden}}',
 ];
 
 $messages['de-formal'] = [
@@ -4388,6 +4392,8 @@ Estamos trabajando para solucionar el problema, gracias por tu comprensión! Si 
 	'widgetwikipage' => 'Este \'\'mensaje\'\' es un \'\'\'simple\'\'\' ejemplo del widget Wikipage. Tú puedes \'\'\'editar el contenido del widget\'\'\' simplemente [[Mediawiki:$1|editando esta página]] en MediaWiki.',
 	'wikia-days-ago' => 'hace $1 {{PLURAL:$1|día|días}}',
 	'wikia-hours-ago' => 'hace $1 {{PLURAL:$1|hora|horas}}',
+	'wikia-minutes-ago' => 'hace $1 {{PLURAL:$1|minuto|minutos}}',
+	'wikia-seconds-ago' => 'hace $1 {{PLURAL:$1|segundo|segundos}}',
 ];
 
 $messages['et'] = [
@@ -4897,6 +4903,8 @@ Voit myös muokata listaa [[Special:EditWatchlist|tavalliseen tapaan]].',
 	'wikia-hours-ago' => '$1 {{PLURAL:$1|tunti|tuntia}} sitten',
 	'wikia-language-all' => 'Kaikki Kielet',
 	'wikia-language-top' => 'Suositut $1 Kielet',
+	'wikia-minutes-ago' => '$1 {{PLURAL:$1|minuutti|minuuttia}} sitten',
+	'wikia-seconds-ago' => '$1 {{PLURAL:$1|sekunti|sekuntia}} sitten',
 ];
 
 $messages['fiu-vro'] = [
@@ -5158,6 +5166,8 @@ Nous essayons de résoudre le problème et vous remercions de votre patience. S\
 	'wikia-hours-ago' => 'il y a $1 {{PLURAL:$1|heure|heures}}',
 	'wikia-language-all' => 'Toutes les langues',
 	'wikia-language-top' => 'Top $1 des langues',
+	'wikia-minutes-ago' => 'il y a $1 {{PLURAL:$1|minute|minutes}}',
+	'wikia-seconds-ago' => 'il y a $1 {{PLURAL:$1|seconde|secondes}}',
 ];
 
 $messages['frc'] = [
@@ -6896,6 +6906,8 @@ minden egyes sor egy figyelt lap címe. Ha kész vagy, kattints a lista alatt ta
 	'widget-desc-wikipage' => 'Egy szócikk jeleníthetõ meg a kiegészítõben. Remek lehetõség saját kiegészítõ létrehozására!',
 	'wikia-days-ago' => '$1 napja',
 	'wikia-hours-ago' => '$1 órája',
+	'wikia-minutes-ago' => '$1 perce',
+	'wikia-seconds-ago' => '$1 másodperce',
 ];
 
 $messages['hy'] = [
@@ -7625,6 +7637,8 @@ Si noti che è anche possibile [[Special:EditWatchlist|modificare la lista con l
 	'wikia-hours-ago' => '$1 {{PLURAL:$1|ora|ore}} fa',
 	'wikia-language-all' => 'Tutte le lingue',
 	'wikia-language-top-list' => 'de,en,es,he,fr,it,ja,no,pl,pt,pt-br,zh',
+	'wikia-minutes-ago' => '$1 {{PLURAL:$1|minuto|minuti}} fa',
+	'wikia-seconds-ago' => '$1 {{PLURAL:$1|secondo|secondi}} fa',
 ];
 
 $messages['iu'] = [
@@ -7844,6 +7858,8 @@ $messages['ja'] = [
 	'wikia-hours-ago' => '$1時間前',
 	'wikia-language-all' => '全言語',
 	'wikia-language-top' => '上位$1言語',
+	'wikia-minutes-ago' => '$1分前',
+	'wikia-seconds-ago' => '$1秒前',
 ];
 
 $messages['jam'] = [
@@ -9102,6 +9118,8 @@ $messages['ko'] = [
 	'wikia-hours-ago' => '$1시간 전',
 	'wikia-language-all' => '모든 언어',
 	'wikia-language-top' => '상위 $1개 언어',
+	'wikia-minutes-ago' => '$1분 전',
+	'wikia-seconds-ago' => '$1초 전',
 ];
 
 $messages['ko-kp'] = [
@@ -12960,6 +12978,8 @@ Dziękujemy za cierpliwość! Właśnie pracujemy nad rozwiązaniem tego problem
 	'widget-title-languages' => 'Wersje językowe',
 	'wikia-days-ago' => '$1 {{PLURAL:$1|dzień temu|dni temu}}',
 	'wikia-hours-ago' => '$1 {{PLURAL:$1|godzinę temu|godziny temu|godzin temu}}',
+	'wikia-minutes-ago' => '$1 {{PLURAL:$1|minutę temu|minuty temu|minut temu}}',
+	'wikia-seconds-ago' => '$1 {{PLURAL:$1|sekundę temu|sekundy temu|sekund temu}}',
 ];
 
 $messages['pms'] = [
@@ -14081,6 +14101,8 @@ $messages['ru'] = [
 	'wikia-hours-ago' => '$1 {{PLURAL:$1|час|часа|часов}} назад',
 	'wikia-language-all' => 'Все языки',
 	'wikia-language-top' => 'Топ $1 языков',
+	'wikia-minutes-ago' => '$1 {{PLURAL:$1|минута|минуты|минут}} назад',
+	'wikia-seconds-ago' => '$1 {{PLURAL:$1|секунда|секунды|секунд}} назад',
 ];
 
 $messages['rue'] = [
@@ -15955,6 +15977,8 @@ pl hu es de',
 	'wikia-hours-ago' => '$1 {{PLURAL:$1|timme|timmar}} sedan',
 	'wikia-language-all' => 'Alla språk',
 	'wikia-language-top' => 'Toppen $1 språk',
+	'wikia-minutes-ago' => '$1 {{PLURAL:$1|minut|minuter}} sedan',
+	'wikia-seconds-ago' => '$1 {{PLURAL:$1|sekund|sekunder}} sedan',
 ];
 
 $messages['sw'] = [
@@ -17632,6 +17656,8 @@ Bạn cũng có thể [[Special:EditWatchlist|dùng trang sửa đổi bình th�
 	'wikia-hours-ago' => '$1 giờ trước',
 	'wikia-language-all' => 'Mọi ngôn ngữ',
 	'wikia-language-top' => 'Top $1 ngôn ngữ',
+	'wikia-minutes-ago' => '$1 phút trước',
+	'wikia-seconds-ago' => '$1 giây trước',
 ];
 
 $messages['vls'] = [
