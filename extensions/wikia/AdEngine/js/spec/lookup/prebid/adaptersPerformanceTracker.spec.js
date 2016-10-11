@@ -6,6 +6,11 @@ describe('ext.wikia.adEngine.lookup.prebid.adaptersPerformanceTracker', function
 			adTracker: {
 				track: noop
 			},
+			adLogicZoneParams: {
+				getPageType: function () {
+					return 'article';
+				}
+			},
 			win: {
 				pbjs: {
 					getBidResponses: noop
@@ -107,6 +112,7 @@ describe('ext.wikia.adEngine.lookup.prebid.adaptersPerformanceTracker', function
 	function getModule() {
 		return modules['ext.wikia.adEngine.lookup.prebid.adaptersPerformanceTracker'](
 			mocks.adTracker,
+			mocks.adLogicZoneParams,
 			mocks.win
 		);
 	}
