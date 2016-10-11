@@ -45,7 +45,8 @@ class PhalanxContentModel extends PhalanxModel {
 			$this->wg->Out->addWikiMsg( 'phalanx-content-spam-summary' );
 		}
 
-		$this->wg->Out->returnToMain( false, $this->title );
+		// SUS-1090: Use page title, not destination page
+		$this->wg->Out->returnToMain( false, $this->wg->Title );
 		$this->wg->Out->addHTML( Html::closeElement( 'div' ) );
 		$this->logBlock();
 	}
