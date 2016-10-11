@@ -15,7 +15,7 @@ define(
 				tracked = qs.getVal('tracked', false);
 
 			// Do not track if the step was tracked already or article exists
-			if (tracked || !(isNewArticle() || isAllowedSpecialPage())) {
+			if (tracked || !isNewArticle() || !(isMainNamespace() || isAllowedSpecialPage())) {
 				return;
 			}
 
@@ -34,11 +34,15 @@ define(
 		}
 
 		function isNewArticle() {
-			return articleId === 0 && namespaceId === 0;
+			return articleId === 0;
 		}
 
 		function isAllowedSpecialPage() {
 			return namespaceId === -1 && title === 'CreatePage';
+		}
+
+		function isMainNamespace() {
+			return namespaceId === 0;
 		}
 
 		return {

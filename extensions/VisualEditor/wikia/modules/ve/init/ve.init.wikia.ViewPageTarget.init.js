@@ -364,7 +364,8 @@
 	function setupRedlinks() {
 		$( document ).on(
 			'mouseover click',
-			'a[href*="action=edit"][href*="&redlink"]:not([href*="veaction=edit"])',
+			'a[href*="action=edit"][href*="&redlink"]:not([href*="veaction=edit"]), ' +
+			'a[href*="action=edit"][href*="?redlink"]:not([href*="veaction=edit"])',
 			function () {
 				var $element = $( this ),
 					href = $element.attr( 'href' ),
