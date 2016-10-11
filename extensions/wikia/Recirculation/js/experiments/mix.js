@@ -5,7 +5,7 @@ require([
 	'ext.wikia.recirculation.utils',
 	'ext.wikia.recirculation.discussions',
 	require.optional('videosmodule.controllers.rail')
-], function(
+], function (
 	$,
 	w,
 	log,
@@ -48,7 +48,7 @@ require([
 		return;
 	}
 
-	recircExperiment.forEach(function(experiment) {
+	recircExperiment.forEach(function (experiment) {
 		var deferred = $.Deferred();
 
 		views[experiment.placement] = views[experiment.placement] || [];
@@ -62,10 +62,10 @@ require([
 
 			require([helperString], function (helper) {
 				helper(experiment.options).loadData()
-					.done(function(data) {
+					.done(function (data) {
 						deferred.resolve(data);
 					})
-					.fail(function(err) {
+					.fail(function (err) {
 						deferred.reject(err);
 					});
 			});
@@ -73,13 +73,13 @@ require([
 
 		if (experiment.source && saved[experiment.source]) {
 			saved[experiment.source]
-				.done(function(data) {
+				.done(function (data) {
 					deferred.resolve({
 						title: data.title,
 						items: data.items.slice(experiment.options.offset)
 					});
 				})
-				.fail(function(err) {
+				.fail(function (err) {
 					deferred.reject(err);
 				});
 		}
@@ -120,11 +120,31 @@ require([
 					view.render(data)
 						.then(view.setupTracking(experimentName));
 				})
-				.fail(function(err) {
-					console.log(err);
-				});
+				.fail(handleError(key));
 		});
 	});
+
+	function handleError(placement) {
+		return function (errorMessage) {
+			log(errorMessage, 'info', logGroup);
+
+			if (placement === 'rail') {
+				require([
+					'ext.wikia.recirculation.helpers.fandom',
+					'ext.wikia.recirculation.views.rail'
+				], function (helper, view) {
+					helper({
+						type: 'community',
+						fill: true,
+						limit: 10
+					}).loadData()
+						.done(function (data) {
+							view().render(data);
+						});
+				});
+			}
+		};
+	}
 
 	if (!views.impactFooter) {
 		discussions(experimentName);
