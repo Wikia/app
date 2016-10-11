@@ -67,7 +67,7 @@ Please try again.',
 	'whatlinkshere-hideredirs' => '$1 redirects',
 	'whatlinkshere-hidetrans' => '$1 transclusions',
 	'whatlinkshere-hidelinks' => '$1 links',
-	'whatlinkshere-hideimages' => '$1 image links',
+	'whatlinkshere-hideimages' => '$1 photo links',
 	'whatlinkshere-filters' => 'Filters',
 	'widthheight' => '$1 × $2',
 	'widthheightpage' => '$1 × $2, $3 {{PLURAL:$3|page|pages}}',
@@ -3611,6 +3611,7 @@ Wir arbeiten daran, dieses Problem zu beheben, vielen Dank für deine Geduld! We
 	'widget-desc-wikiamessages' => 'Fandom-Nachrichten',
 	'widget-title-wikiamessages' => 'Fandom-Nachrichten',
 	'wg_lastwikis' => 'Zuletzt besucht',
+	'whats_new' => 'Was ist neu',
 ];
 
 $messages['de-formal'] = [
@@ -4244,6 +4245,7 @@ Estamos trabajando para solucionar el problema, gracias por tu comprensión! Si 
 	'widget-title-advertiser' => 'Spotlights de Fandom',
 	'wikicitieshome' => 'Casa de Fandom',
 	'wg_lastwikis' => 'Visitadas Recientemente',
+	'whats_new' => 'Qué es nuevo',
 ];
 
 $messages['et'] = [
@@ -4653,6 +4655,7 @@ Voit myös muokata listaa [[Special:EditWatchlist|tavalliseen tapaan]].',
 	'wikicitieshome' => 'Wikian kotisivu',
 	'watchlist_s' => 'Tarkkailulista',
 	'wg_lastwikis' => 'Äskettäin käydyt',
+	'whats_new' => 'Mitä uutta',
 ];
 
 $messages['fiu-vro'] = [
@@ -12535,7 +12538,7 @@ Nie zapomnij dostosować [[Special:Preferences|preferencji dla {{GRAMMAR:D.lp|{{
 	'whatlinkshere-hideredirs' => '$1 przekierowania',
 	'whatlinkshere-hidetrans' => '$1 dołączenia',
 	'whatlinkshere-hidelinks' => '$1 linki',
-	'whatlinkshere-hideimages' => '$1 linki z grafik',
+	'whatlinkshere-hideimages' => '$1 linki z obrazów',
 	'whatlinkshere-filters' => 'Filtry',
 	'widthheightpage' => '$1 × $2, $3 {{PLURAL:$3|strona|strony|stron}}',
 	'watchlistall2' => 'wszystkie',
