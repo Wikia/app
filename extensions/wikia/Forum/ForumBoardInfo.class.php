@@ -15,11 +15,13 @@ class ForumBoardInfo {
 	 * ForumBoardInfo constructor.
 	 * @param array $array ;
 	 */
-	public function __construct( $array = [ ] ) {
-		$this->setLastPost( new ForumPostInfo( $array[ 'lastPost' ] ) );
-		unset( $array[ 'lastPost' ] );
-		foreach ( $array as $key => $val ) {
-			$this->$key = $val;
+	public function __construct( $array = [] ) {
+		if ( is_array( $array ) ) {
+			$this->setLastPost( new ForumPostInfo( $array[ 'lastPost' ] ) );
+			unset( $array[ 'lastPost' ] );
+			foreach ( $array as $key => $val ) {
+				$this->$key = $val;
+			}
 		}
 	}
 

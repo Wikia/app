@@ -6,9 +6,11 @@ class ForumPostInfo {
 	private $userprofile;
 	private $timestamp;
 
-	public function __construct( $array = [ ] ) {
-		foreach ( $array as $key => $val ) {
-			$this->$key = $val;
+	public function __construct( $array = [] ) {
+		if ( is_array( $array ) ) {
+			foreach ( $array as $key => $val ) {
+				$this->$key = $val;
+			}
 		}
 	}
 
