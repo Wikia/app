@@ -5,15 +5,14 @@
  * A Wall consists of "Bricks" which are each a single topic/thread/conversation.
  * In typical use, a Wall will only load a subset of Bricks because there will be a TON of bricks as time goes on.
  */
+
 class WallBaseController extends WikiaController {
-	const WALL_MESSAGE_RELATIVE_TIMESTAMP = 604800; // relative message timestamp for 7 days (improvement 20178)
+	const WALL_MESSAGE_RELATIVE_TIMESTAMP = 604800; // relative message timestampt for 7 days (improvement 20178)
 	const DEFAULT_MESSAGES_PER_PAGE = 10; // how many messages should appear per page if not specified otherwise
 	protected $helper;
 	// use for controlling if we are not adding the some css/js head two time
 	static $uniqueHead = [ ];
-
 	public function __construct() {
-		parent::__construct();
 		$this->app = F::App();
 		$this->helper = new WallHelper();
 	}
@@ -50,23 +49,15 @@ class WallBaseController extends WikiaController {
 
 		$id = $this->request->getVal( 'id', null );
 
-
-		$wallthread = WallThread::newFromId( $id );
-		$wallthread->loadIfCached();
-
-		$threads = [ $id => $wallthread ];
-
-		$this->response->setVal('threads', $threads);
-		$this->response->setVal('title', $this->wg->Title);
-
+		$this->getThread( $id );
 
 		$this->response->setVal( 'showNewMessage', false );
 		$this->response->setVal( 'type', 'Thread' );
 		$this->response->setVal( 'condenseMessage', false );
 
-		if ( count( $threads ) > 0 ) {
+		if ( count( $this->threads ) > 0 ) {
 			$wn = new WallNotifications();
-			foreach ( $threads as $key => $val ) {
+			foreach ( $this->threads as $key => $val ) {
 				$wn->markRead( $this->wg->User->getId(), $this->wg->CityId, $key );
 				break;
 			}
@@ -101,34 +92,36 @@ class WallBaseController extends WikiaController {
 			$wallMessagesPerPage = self::DEFAULT_MESSAGES_PER_PAGE;
 		}
 
-		/* @var Wall wall */
-		$wall = $this->getWallForIndexPage( $title );
-		$wall->setMaxPerPage( $wallMessagesPerPage );
-		$wall->setSorting( $this->getSortingSelected() );
-
-		$threads = $wall->getThreads( $page );
-		$countComments = $wall->getThreadCount();
-
-		$renderUserTalkArchiveAnchor = $this->request->getVal( 'dontRenderUserTalkArchiveAnchor', false ) != true;
+		$this->getThreads( $title, $page, $wallMessagesPerPage );
 
 		$this->response->setVal( 'type', 'Board' );
 		$this->response->setVal( 'showNewMessage', true );
 		$this->response->setVal( 'condenseMessage', true );
 
-		$this->response->setVal( 'wall', $wall );
-		$this->response->setVal( 'threads', $threads );
-		$this->response->setVal( 'renderUserTalkArchiveAnchor', $renderUserTalkArchiveAnchor );
-		$this->response->setVal( 'greeting', $this->getGreetingText( $title ) );
+		$this->response->setVal( 'renderUserTalkArchiveAnchor', $this->request->getVal( 'dontRenderUserTalkArchiveAnchor', false ) != true );
+
+		$greeting = Title::newFromText( $title->getText(), NS_USER_WALL_MESSAGE_GREETING );
+		$greetingText = '';
+
+		if ( !empty( $greeting ) && $greeting->exists() ) {
+			$article = new Article( $greeting );
+			$article->getParserOptions();
+			$article->mParserOptions->setIsPreview( true ); // create parser option
+			$article->mParserOptions->setEditSection( false );
+			$greetingText = $article->getParserOutput()->getText();
+		}
+		wfRunHooks( 'WallGreetingContent', [ &$greetingText ] ); // used by SWM to add messages to Wall in monobook
+		$this->response->setVal( 'greeting', $greetingText );
+
 		$this->response->setVal( 'sortingOptions', $this->getSortingOptions() );
 		$this->response->setVal( 'sortingSelected', $this->getSortingSelectedText() );
-		$this->response->setVal( 'title', $this->wg->Title );
-		$this->response->setVal( 'countComments', $countComments );
-		$this->response->setVal( 'totalItems', $countComments );
+		$this->response->setVal( 'title', $title );
+		$this->response->setVal( 'totalItems', $this->countComments );
 		$this->response->setVal( 'itemsPerPage', $wallMessagesPerPage );
-		$this->response->setVal( 'showPager', ( $countComments > $wallMessagesPerPage ) );
+		$this->response->setVal( 'showPager', ( $this->countComments > $wallMessagesPerPage ) );
 		$this->response->setVal( 'currentPage', $page );
 
-		Transaction::setSizeCategoryByDistributionOffset( $countComments, 0, self::DEFAULT_MESSAGES_PER_PAGE );
+		Transaction::setSizeCategoryByDistributionOffset( $this->countComments, 0, self::DEFAULT_MESSAGES_PER_PAGE );
 
 		// TODO: keep the varnish cache and do purging on post
 		$this->response->setCacheValidity( WikiaResponse::CACHE_DISABLED );
@@ -407,6 +400,26 @@ class WallBaseController extends WikiaController {
 		return $wall;
 	}
 
+	public function getThreads( $title, $page, $perPage = null ) {
+		wfProfileIn( __METHOD__ );
+
+		$this->wall = $this->getWallForIndexPage( $title );
+
+		/* @var Wall wall */
+		if ( !empty( $perPage ) ) {
+			$this->wall->setMaxPerPage( $perPage );
+		}
+
+		$this->wall->setSorting( $this->getSortingSelected() );
+
+		$this->threads = $this->wall->getThreads( $page );
+
+		$this->countComments = $this->wall->getThreadCount();
+
+		$this->title = $this->wg->Title;
+
+		wfProfileOut( __METHOD__ );
+	}
 
 	protected function getSortingOptions() {
 		$title = $this->request->getVal( 'title', $this->app->wg->Title );
@@ -622,31 +635,21 @@ class WallBaseController extends WikiaController {
 
 	}
 
+	public function getThread( $filterid ) {
+		wfProfileIn( __METHOD__ );
 
+		$wallthread = WallThread::newFromId( $filterid );
+		$wallthread->loadIfCached();
+
+		$this->threads = [ $filterid => $wallthread ];
+
+		$this->title = $this->wg->Title;
+
+		wfProfileOut( __METHOD__ );
+	}
 
 	public function message_error() {
 
-	}
-
-	/**
-	 * @param Title $title
-	 * @return mixed|string
-	 * @throws MWException
-	 */
-	private function getGreetingText( $title ) {
-		$greeting = Title::newFromText( $title->getText(), NS_USER_WALL_MESSAGE_GREETING );
-		$greetingText = '';
-
-		if ( !empty( $greeting ) && $greeting->exists() ) {
-			$article = new Article( $greeting );
-			$article->getParserOptions();
-			$article->mParserOptions->setIsPreview( true ); // create parser option
-			$article->mParserOptions->setEditSection( false );
-			$greetingText = $article->getParserOutput()->getText();
-		}
-
-		wfRunHooks( 'WallGreetingContent', [ &$greetingText ] );
-		return $greetingText; // used by SWM to add messages to Wall in monobook
 	}
 
 } // end class Wall
