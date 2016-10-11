@@ -2154,6 +2154,7 @@ $messages['pl'] = [
 	'research_this_on_wikipedia' => '<a href="$1">Wyszukaj odpowiedzi na to pytanie</a> na Wikipedii',
 	'reword_this' => '<a href="$1" $2>Przeredaguj to pytanie</a>',
 	'tog-hidefromattribution' => 'Ukryj mój avatar i nazwę użytkownika na liście autorów',
+	'widget_ask_box' => 'Wyświetlaj pole na pytania',
 ];
 
 $messages['pms'] = [
