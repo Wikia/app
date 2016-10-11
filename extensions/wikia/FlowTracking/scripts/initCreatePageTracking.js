@@ -33,7 +33,9 @@ require([
 		});
 
 		$( '#ca-ve-edit,  #ca-edit' ).click(function() {
-			flowTracking.beginFlow(createButtonFlow, {});
+			if (isNewArticle() && isMainNamespace()) {
+				flowTracking.beginFlow(createButtonFlow, {});
+			}
 		});
 	}
 
@@ -57,6 +59,14 @@ require([
 				veEditUri.extend( { flow: createButtonFlow } );
 			}
 		});
+	}
+
+	function isNewArticle() {
+		return mw.config.get('wgArticleId') === 0;
+	}
+
+	function isMainNamespace() {
+		return mw.config.get('wgNamespaceNumber') === 0;
 	}
 
 	$(function () {
