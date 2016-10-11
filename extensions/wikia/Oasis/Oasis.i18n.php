@@ -109,12 +109,12 @@ $messages['en'] = [
 	'oasis-interlang-languages' => 'Languages:',
 	'photosblacklist' => '* example-blacklist.png',
 	'categoryblacklist' => '* stub',
-	'wiki-navigation' => '*#visited#|TopContent
-*#category1#
-*#category2#
-*portal-url|Community
-**blogs-recent-url|blogs-recent-url-text
-**forum-url|Forum',
+	'wiki-navigation' => '*#|Popular pages
+**#visited#
+**#category1#
+**#category2#
+*Project:Community Portal|Community
+**Blog:Recent_posts|Recent blog posts',
 	'imageseo-featured-on' => 'Featured on:',
 	'imageseo-featured-more' => 'more...',
 	'oasis-related-video-by-5min' => 'by 5min Video',
@@ -765,8 +765,7 @@ $messages['de'] = [
 ***Hilfe:Administratoren-Handbuch|Admin-Handbuch
 **#category1#
 *Project:Portal|Community
-**Blog:Letzte_Beiträge|Letzte Blog-Beiträge
-**Forum:Übersicht|Forum',
+**Blog:Letzte_Beiträge|Letzte Blog-Beiträge',
 	'oasis-upload-photos-overwrite-file' => 'Datei überschreiben',
 	'oasis-label-wiki-vertical-id-0' => 'Andere',
 	'oasis-label-wiki-vertical-id-1' => 'TV',
@@ -983,12 +982,31 @@ $messages['es'] = [
 	'oasis-add-photo-to-wiki' => 'Añadir una imagen a esta wikia',
 	'photosblacklist' => '* ejemplo-blacklist.png',
 	'categoryblacklist' => '* esbozo',
-	'wiki-navigation' => '*#visited#|Contenido popular
-*#category1#
-*#category2#
-*portal-url|Comunidad
-**blogs-recent-url|blogs-recent-url-text
-**forum-url|Foro',
+	'wiki-navigation' => '*#|Contenido del Wiki
+**#newlychanged#|Páginas actualizadas
+**#category1#
+**#category2#
+*Project:Portal de la comunidad|Comunidad
+**Blog:Recent_posts|Entradas de Blog recientes
+**Categoría:Plantillas|Plantillas
+**Ayuda:Contenido|Páginas de ayuda
+*Categoría:Administración del sitio|Administración
+**Especial:AdminDashboard|Panel de administración
+***Especial:ThemeDesigner|Diseñador del wiki
+***Especial:CambiosRecientes|Cambios recientes
+***MediaWiki:Wiki-navigation|Panel de navegación
+***Especial:FuncionalidadesDeWikia|Activar funcionalidades
+***Especial:Promocionar|Promocionar comunidad
+***Especial:PáginasEspeciales|Páginas especiales
+**w:c:comunidad:project:Solicitudes|Solicitudes
+***w:c:comunidad:project:Spotlights|Spotlights
+***w:c:comunidad:project:Diseños_y_portadas|Diseños
+***w:c:comunidad:project:Adopción|Adopciones
+***w:c:comunidad:project:Mentores|Mentores
+***Especial:Contactar/wiki-name-change|Nombre de la comunidad
+***w:c:comunidad:Especial:Chat|Chat con usuarios de Wikia
+***Especial:Contactar|Contacta con Wikia
+**Ayuda:Administración Comunitaria|Páginas de ayuda',
 	'oasis-upload-photos-overwrite-file' => 'Sobrescribir archivo',
 	'oasis-label-wiki-vertical-id-0' => 'Otros',
 	'oasis-label-wiki-vertical-id-1' => 'TV',
@@ -1264,6 +1282,8 @@ $messages['fi'] = [
 	'oasis-navigation-v2-validation-next' => 'Seuraava',
 	'oasis-navigation-v2-new-photos' => 'Uudet kuvat',
 	'oasis-on-the-wiki' => 'Wikissä',
+	'wiki-navigation' => '*mainpage|Sisältö
+**#category1#',
 ];
 
 $messages['fr'] = [
@@ -1410,7 +1430,7 @@ $messages['fr'] = [
 **#category3#
 *project:À propos|Communauté
 **Blog:Billets_récents|Billets de blog récents
-**w:fr:Accueil|Centre des communauté',
+**w:fr:Accueil|Centre des communautés',
 	'oasis-upload-photos-overwrite-file' => 'Remplacer fichier',
 	'oasis-label-wiki-vertical-id-0' => 'Autre',
 	'oasis-label-wiki-vertical-id-1' => 'Télévision',
@@ -2015,12 +2035,13 @@ $messages['it'] = [
 	'oasis-add-photo-to-wiki' => 'Carica un\'immagine in questa wiki',
 	'photosblacklist' => '* example-blacklist.png',
 	'categoryblacklist' => '* stub',
-	'wiki-navigation' => '*#visited#|TopContent
-*#category1#
-*#category2#
-*portal-url|Community
-**blogs-recent-url|blogs-recent-url-text
-**forum-url|Forum',
+	'wiki-navigation' => '*#|Pagine più visitate
+**#visited#
+**#category1#
+**#category2#
+*Project:Portale comunità|Community
+**Blog:Recent_posts|Post recenti dei blog
+**Special:Forum|Forum',
 	'oasis-upload-photos-overwrite-file' => 'Sovrascrivi il file',
 	'oasis-navigation-v2-level1-validation' => 'Ops! Il menù di Livello 1 è troppo largo. Per favore accorcia i suoi elementi affinché si adattino alla larghezza massima. Grazie!',
 	'oasis-navigation-v2-level2-validation' => 'Ops! Il menù di Livello 2 è troppo largo. Per favore accorcia i suoi elementi affinché si adattino alla larghezza massima. Grazie!',
@@ -2191,12 +2212,12 @@ $messages['ja'] = [
 	'oasis-add-photo-to-wiki' => 'このWikiaコミュニティに写真を追加',
 	'photosblacklist' => '* example-blacklist.png',
 	'categoryblacklist' => '* スタブ',
-	'wiki-navigation' => '*#visited#|人気のコンテンツ
-*#category1#
-*#category2#
-*portal-url|コミュニティ
-**blogs-recent-url|最近のブログ
-**forum-url|フォーラム',
+	'wiki-navigation' => '*#|人気ページ
+**#visited#
+**#category1#
+**#category2#
+*Project:コミュニティーポータル|コミュニティ
+**Blog:Recent_posts|最近のブログ投稿',
 	'oasis-related-video-by-5min' => '提供: 5min Video',
 	'oasis-editpage-readonlywarning' => '<h2>申し訳ありません。</h2>
 <p>現在、このページは編集できなくなっています。間もなく復旧予定ですので、しばらくお待ちください。原因:<br /><em>$1</em></p>
@@ -2394,6 +2415,13 @@ $messages['ko'] = [
 	'oasis-user-page-change-avatar' => '아바타 변경하기',
 	'oasis-wiki-navigation' => '$1 내비게이션',
 	'themedesigner' => '테마 디자이너',
+	'wiki-navigation' => '*#visited#|인기 콘텐츠
+*#category1#
+*#category2#
+* 도우미
+** w:c:ko:특수기능:Forum|커뮤니티 포럼
+** w:c:ko:Blog:위키아 뉴스|위키아 블로그
+** w:c:ko:Blog:시스템 업데이트|시스템 업데이트',
 ];
 
 $messages['ku-latn'] = [
@@ -3098,12 +3126,12 @@ $messages['nl'] = [
 	'oasis-add-photo-to-wiki' => 'Add a photo to this wiki',
 	'photosblacklist' => '* example-blacklist.png',
 	'categoryblacklist' => '* stub',
-	'wiki-navigation' => '*#visited#|TopContent
-*#category1#
-*#category2#
-*portal-url|Community
-**blogs-recent-url|blogs-recent-url-text
-**forum-url|Forum',
+	'wiki-navigation' => '*#|Belangrijkste inhoud
+**#visited#
+**#category1#
+**#category2#
+*Project:Gebruikersportaal|Gebruikersportaal
+**Blog:Recent_post|Recente blogberichten',
 	'oasis-upload-photos-overwrite-file' => 'Overwrite File',
 	'oasis-label-wiki-vertical-id-0' => 'Other',
 	'oasis-label-wiki-vertical-id-1' => 'TV',
@@ -3301,19 +3329,18 @@ $messages['pl'] = [
 	'oasis-add-photo-to-wiki' => 'Dodaj obraz',
 	'photosblacklist' => '* przykład-czarnej-listy.png',
 	'categoryblacklist' => '* zalążek',
-	'wiki-navigation' => '* <nowiki>Artykuły</nowiki>
-** #category1#
-** #category2#
-** #category3#
-* <nowiki>Społeczność</nowiki>
-** blogs-recent-url|blogs-recent-url-text
-* Pomoc:Zawartość|Pomoc
-** Pomoc:Podstawy|Podstawy
-** Pomoc:Edycja|Edycja
-** Pomoc:Administracja|Administracja
-** Pomoc:Zaawansowane narzędzia|Zaawansowane narzędzia
-** Pomoc:Indeks|Wszystkie tematy pomocy...
-',
+	'wiki-navigation' => '*<nowiki>Artykuły</nowiki>
+**#category1#
+**#category2#
+**#category3# 
+*<nowiki>Społeczność</nowiki>
+**Blog:Ostatnie_wpisy|Ostatnie wpisy na blogach
+*Pomoc:Zawartość|Pomoc
+**Pomoc:Podstawy|Podstawy
+**Pomoc:Edycja|Edycja
+**Pomoc:Administracja|Administracja
+**Pomoc:Zaawansowane narzędzia|Zaawansowane narzędzia
+**Pomoc:Index|Wszystkie tematy pomocy...',
 	'oasis-upload-photos-overwrite-file' => 'Zastąp plik',
 	'oasis-label-wiki-vertical-id-0' => 'Inne',
 	'oasis-label-wiki-vertical-id-1' => 'TV',
@@ -3722,6 +3749,11 @@ $messages['pt-br'] = [
 	'oasis-label-wiki-category-id-22' => 'Videogames',
 	'oasis-navigation-v2-magic-word-validation' => 'As palavras mágicas (exemplo: #categoria1#) só podem ser usadas em menus de nível 2. Parece que você tem algumas palavras mágicas em seu menu de nível 1; mova-as para publicar suas alterações. <a href="http://comunidade.wikia.com/wiki/Ajuda:Navegação_da_wiki">Precisa de mais ajuda?</a>',
 	'oasis-wiki-navigation' => 'Navegação da $1',
+	'wiki-navigation' => '*#visited#|Conteúdo Top
+*#category1#
+*#category2#
+*portal-url|Comunidade
+**blogs-recent-url|blogs-recent-url-text',
 ];
 
 $messages['ru'] = [
@@ -3862,12 +3894,11 @@ $messages['ru'] = [
 	'oasis-add-photo-to-wiki' => 'Загрузить фото на вики',
 	'photosblacklist' => '* example-blacklist.png',
 	'categoryblacklist' => '* stub',
-	'wiki-navigation' => '*#visited#|TopContent
-*#category1#
-*#category2#
-*portal-url|Сообщества
-**blogs-recent-url|blogs-recent-url-text
-**forum-url|Форум',
+	'wiki-navigation' => '*#|Лучшее
+**#category1#
+**#category2#
+*Project:Портал сообщества|Сообщество
+**Blog:Recent_posts|Последние записи в блоге',
 	'oasis-upload-photos-overwrite-file' => 'Перезаписать файл',
 	'oasis-label-wiki-vertical-id-0' => 'Другое',
 	'oasis-label-wiki-vertical-id-1' => 'ТВ',
@@ -4504,6 +4535,120 @@ $messages['vi'] = [
 	'oasis-label-wiki-vertical-id-6' => 'Âm nhạc',
 	'oasis-label-wiki-vertical-id-7' => 'Phim ảnh',
 	'oasis-upload-photos-overwrite-file' => 'Ghi đè lên tập tin',
+	'wiki-navigation' => '*|Nội dung 1
+**|Chủ đề 1.1
+***|Bài viết 1.1.1
+***|Bài viết 1.1.2
+***|Bài viết 1.1.3
+***|Bài viết 1.1.4
+***|Bài viết 1.1.5
+**|Chủ đề 1.2
+***|Bài viết 1.2.1
+***|Bài viết 1.2.2
+***|Bài viết 1.2.3
+***|Bài viết 1.2.4
+***|Bài viết 1.2.5
+**|Chủ đề 1.3
+***|Bài viết 1.3.1
+***|Bài viết 1.3.2
+***|Bài viết 1.3.3
+***|Bài viết 1.3.4
+***|Bài viết 1.3.5
+**|Chủ đề 1.4
+***|Bài viết 1.4.1
+***|Bài viết 1.4.2
+***|Bài viết 1.4.3
+***|Bài viết 1.4.4
+***|Bài viết 1.4.5
+**|Chủ đề 1.5
+***|Bài viết 1.5.1
+***|Bài viết 1.5.2
+***|Bài viết 1.5.3
+***|Bài viết 1.5.4
+***|Bài viết 1.5.5
+**|Chủ đề 1.6
+***|Bài viết 1.6.1
+***|Bài viết 1.6.2
+***|Bài viết 1.6.3
+***|Bài viết 1.6.4
+***|Bài viết 1.6.5
+*|Nội dung 2
+**|Chủ đề 2.1
+***|Bài viết 2.1.1
+***|Bài viết 2.1.2
+***|Bài viết 2.1.3
+***|Bài viết 2.1.4
+***|Bài viết 2.1.5
+**|Chủ đề 2.2
+***|Bài viết 2.2.1
+***|Bài viết 2.2.2
+***|Bài viết 2.2.3
+***|Bài viết 2.2.4
+***|Bài viết 2.2.5
+**|Chủ đề 2.3
+***|Bài viết 2.3.1
+***|Bài viết 2.3.2
+***|Bài viết 2.3.3
+***|Bài viết 2.3.4
+***|Bài viết 2.3.5
+**|Chủ đề 2.4
+***|Bài viết 2.4.1
+***|Bài viết 2.4.2
+***|Bài viết 2.4.3
+***|Bài viết 2.4.4
+***|Bài viết 2.4.5
+**|Chủ đề 2.5
+***|Bài viết 2.5.1
+***|Bài viết 2.5.2
+***|Bài viết 2.5.3
+***|Bài viết 2.5.4
+***|Bài viết 2.5.5
+**|Chủ đề 2.6
+***|Bài viết 2.6.1
+***|Bài viết 2.6.2
+***|Bài viết 2.6.3
+***|Bài viết 2.6.4
+***|Bài viết 2.6.5
+*|Nội dung 3
+**|Chủ đề 3.1
+***|Bài viết 3.1.1
+***|Bài viết 3.1.2
+***|Bài viết 3.1.3
+***|Bài viết 3.1.4
+***|Bài viết 3.1.5
+**|Chủ đề 3.2
+***|Bài viết 3.2.1
+***|Bài viết 3.2.2
+***|Bài viết 3.2.3
+***|Bài viết 3.2.4
+***|Bài viết 3.2.5
+**|Chủ đề 3.3
+***|Bài viết 3.3.1
+***|Bài viết 3.3.2
+***|Bài viết 3.3.3
+***|Bài viết 3.3.4
+***|Bài viết 3.3.5
+**|Chủ đề 3.4
+***|Bài viết 3.4.1
+***|Bài viết 3.4.2
+***|Bài viết 3.4.3
+***|Bài viết 3.4.4
+***|Bài viết 3.4.5
+**|Chủ đề 3.5
+***|Bài viết 3.5.1
+***|Bài viết 3.5.2
+***|Bài viết 3.5.3
+***|Bài viết 3.5.4
+***|Bài viết 3.5.5
+**|Chủ đề 3.6
+***|Bài viết 3.6.1
+***|Bài viết 3.6.2
+***|Bài viết 3.6.3
+***|Bài viết 3.6.4
+***|Bài viết 3.6.5
+*Project:Cộng đồng|Cộng đồng
+**blogs-recent-url|Blog đăng gần đây
+**Special:Forum|Diễn đàn',
 ];
 
 $messages['zh-hans'] = [
@@ -4618,12 +4763,12 @@ $messages['zh-hans'] = [
 	'oasis-edit-this-menu' => '编辑此菜单',
 	'photosblacklist' => '* example-blacklist.png',
 	'categoryblacklist' => '* 标签',
-	'wiki-navigation' => '*#已访问#|流行内容
-*#类别1#
-*#类别2#
+	'wiki-navigation' => '*#|流行话题
+**#category1#
+**#category2#
 *portal-url|社区
-**blogs-recent-url|博客
-**forum-url|论坛',
+**blogs-recent-url|最新博客
+**help:內容|帮助中心',
 	'imageseo-featured-on' => '功能存在于:',
 	'imageseo-featured-more' => '更多...',
 	'oasis-related-video-by-5min' => '由5min网站提供',
@@ -4822,12 +4967,12 @@ $messages['zh-hant'] = [
 	'oasis-edit-this-menu' => '編輯此選單',
 	'photosblacklist' => '* example-blacklist.png',
 	'categoryblacklist' => '* 標簽',
-	'wiki-navigation' => '*#已造訪#|流行內容
-*#類別1#
-*#類別2#
+	'wiki-navigation' => '*#|流行话題
+**#category1#
+**#category2#
 *portal-url|社區
-**blogs-recent-url|部落格
-**forum-url|論壇',
+**blogs-recent-url|最新部落格
+**help:內容|幫助中心',
 	'imageseo-featured-on' => '功能:',
 	'oasis-related-video-by-5min' => '由5min網站提供',
 	'oasis-editpage-readonlywarning' => '<h2>很抱歉！</h2>
@@ -4986,6 +5131,12 @@ $messages['zh-hk'] = [
 	'oasis-skip-to-site-navigation' => '跳至網站導航',
 	'oasis-upload-photos-force' => '還是上傳吧',
 	'oasis-upload-photos-overwrite-file' => '覆蓋文件',
+	'wiki-navigation' => '*#|流行话題
+**#category1#
+**#category2#
+*portal-url|社區
+**blogs-recent-url|最新網誌
+**help:內容|幫助中心',
 ];
 
 $messages['zh-tw'] = [
@@ -5097,12 +5248,12 @@ $messages['zh-tw'] = [
 	'oasis-edit-this-menu' => '編輯此功能表',
 	'photosblacklist' => '* example-blacklist.png',
 	'categoryblacklist' => '* 標簽',
-	'wiki-navigation' => '*#已造訪#|TopContent
-*#類別1#
-*#類別2#
+	'wiki-navigation' => '*#|流行话題
+**#category1#
+**#category2#
 *portal-url|社區
-**blogs-recent-url|blogs-recent-url-text
-**forum-url|論壇',
+**blogs-recent-url|最新部落格
+**help:內容|幫助中心',
 	'imageseo-featured-on' => '功能:',
 	'imageseo-featured-more' => '更多...',
 	'oasis-related-video-by-5min' => '透過5分鐘視頻',
@@ -5217,6 +5368,12 @@ $messages['zh'] = [
 	'oasis-popular-blogs-title' => '流行博客帖子',
 	'oasis-total-articles-mainpage' => '<em>{{FORMATNUM:$1}}</em><span>个页面创建 <br /> 于此维基上</span>',
 	'themedesigner' => '界面设计',
+	'wiki-navigation' => '*#|流行话题
+**#category1#
+**#category2#
+*portal-url|社区
+**blogs-recent-url|最新博客
+**help:內容|帮助中心',
 ];
 
 $messages['cy'] = [
@@ -5235,5 +5392,27 @@ $messages['gv'] = [
 
 $messages['el'] = [
 	'themedesigner' => 'Σχεδιαστής Θέματος',
+	'wiki-navigation' => '*#visited#|Δημοφιλείς Σελιδες
+*#category1#
+*#category2#
+*portal-url|Κοινότητα
+**blogs-recent-url|Νέα Blogs',
+];
+
+$messages['aa'] = [
+	'wiki-navigation' => 'Project:Community portal|Community
+Blog:Recent_posts|Recent blog posts',
+];
+
+$messages['jp'] = [
+	'wiki-navigation' => '*mainpage|コンテンツ
+**#popular#|お薦め記事
+**#visited#|閲覧順
+**#voted#|レートの高い記事
+**#newlychanged#|最近の更新
+**Project:コミュニティ・ポータル|コミュニティ・ポータル
+**#topusers#|活発な利用者
+*#category1#
+*#category2#',
 ];
 
