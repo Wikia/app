@@ -1,7 +1,8 @@
 define('ext.wikia.adEngine.lookup.prebid.adaptersPerformanceTracker', [
 	'ext.wikia.adEngine.adTracker',
+	'ext.wikia.adEngine.utils.adLogicZoneParams',
 	'wikia.window'
-], function (adTracker, win) {
+], function (adTracker, params, win) {
 	'use strict';
 
 	var emptyResponseMsg = 'EMPTY_RESPONSE',
@@ -12,7 +13,7 @@ define('ext.wikia.adEngine.lookup.prebid.adaptersPerformanceTracker', [
 		var biddersPerformanceMap = {};
 
 		adapters.forEach(function (adapter) {
-			var slots = adapter.getSlots(skin),
+			var slots = adapter.getSlots(skin, params.getPageType()),
 				adapterName = adapter.getName();
 
 			if (adapter.isEnabled()) {
