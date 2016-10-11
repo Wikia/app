@@ -248,27 +248,27 @@ class RequestContext implements IContextSource {
 		}
 
 		// If more than one method was used to authenticate, log the
-        // 'AUTHENTICATION_FALLBACK' message.
-        if ( count( $authSource ) > 1 ) {
-            // now we sample logging at 5%
-            $sampler->setProbability( 0.05 );
+		// 'AUTHENTICATION_FALLBACK' message.
+		if ( count( $authSource ) > 1 ) {
+			// now we sample logging at 5%
+			$sampler->setProbability( 0.05 );
 
-            if ( !$sampler->shouldSample() ) {
-                return;
-            }
+			if ( !$sampler->shouldSample() ) {
+				return;
+			}
 
-            \Wikia\Logger\WikiaLogger::instance()->info(
-                'AUTHENTICATION_FALLBACK',
-                [
-                    'auth'			=> $authSource,
-                    'ip'			=> $this->getRequest()->getIP(),
-                    'session_id'	=> session_id(),
-                    'from'			=> $user->mFrom,
-                    'user_id'		=> $user->getId(),
-                    'user_name'		=> $user->getName(),
-                ]
-            );
-        }
+			\Wikia\Logger\WikiaLogger::instance()->info(
+				'AUTHENTICATION_FALLBACK',
+				[
+					'auth'			=> $authSource,
+					'ip'			=> $this->getRequest()->getIP(),
+					'session_id'	=> session_id(),
+					'from'			=> $user->mFrom,
+					'user_id'		=> $user->getId(),
+					'user_name'		=> $user->getName(),
+				]
+			);
+		}
 	}
 
 	/**
