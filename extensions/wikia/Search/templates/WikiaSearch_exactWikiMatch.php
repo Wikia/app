@@ -19,7 +19,7 @@
 				<li><?= wfMessage( 'wikiasearch2-images' )->rawParams( HTML::element( 'div', [], $shortenedImagesCount->decorated ) )->params( $shortenedImagesCount->rounded )->escaped(); ?></li>
 				<li><?= wfMessage( 'wikiasearch2-videos' )->rawParams( HTML::element( 'div', [], $shortenedVideosCount->decorated ) )->params( $shortenedVideosCount->rounded )->escaped(); ?></li>
 			</ul>
-			<p class="exact-wiki-match__wiki-description"><?= htmlspecialchars( $description ); ?></p>
+			<p class="exact-wiki-match__wiki-description"><?= \Wikia\Search\Result::limitTextLength( htmlspecialchars( $description ), $descriptionWordLimit ); ?></p>
 		</div>
 	</div>
 	<a href="<?= Sanitizer::encodeAttribute( $viewMoreWikisLink ) ?>" data-event="view-more"><?= wfMessage('wikiasearch3-view-more-wikis')->escaped(); ?> <?= DesignSystemHelper::getSvg( 'wds-icons-arrow', 'wds-icon wds-icon-small exact-wiki-match__arrow' ); ?></a>

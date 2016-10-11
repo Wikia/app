@@ -131,11 +131,11 @@ describe('Method ext.wikia.adEngine.lookup.amazonMatch', function () {
 
 		// Pick the lowest price point (single size)
 		{
-			skin: 'oasis', input: ['a1x6p14', 'a1x6p5', 'a1x6p12'],
-			expected: {skyscraper: ['a1x6p5'], incontentBoxad: ['a1x6p5']}},
+			skin: 'oasis', input: ['a1x6p14', 'a1x6p5'],
+			expected: {skyscraper: ['a1x6p14', 'a1x6p5'], incontentBoxad: ['a1x6p14', 'a1x6p5']}},
 		{
 			skin: 'mercury', input: ['a3x2p12', 'a3x2p10'],
-			expected: {mobileprefooter: ['a3x2p10'], mobileincontent: ['a3x2p10']}
+			expected: {mobileprefooter: ['a3x2p10', 'a3x2p12'], mobileincontent: ['a3x2p10', 'a3x2p12']}
 		},
 
 		// Medrec should get both 3x2 and 3x6 sizes
@@ -143,10 +143,10 @@ describe('Method ext.wikia.adEngine.lookup.amazonMatch', function () {
 			skin: 'oasis',
 			input: ['a3x2p12', 'a3x2p13', 'a3x6p5', 'a7x9p5'],
 			expected: {
-				medrec: ['a3x2p12', 'a3x6p5'],
+				medrec: ['a3x2p12', 'a3x2p13', 'a3x6p5'],
 				leaderboard: ['a7x9p5'],
-				skyscraper: ['a3x2p12', 'a3x6p5'],
-				incontentBoxad: ['a3x2p12', 'a3x6p5']
+				skyscraper: ['a3x2p12', 'a3x2p13', 'a3x6p5'],
+				incontentBoxad: ['a3x2p12', 'a3x2p13', 'a3x6p5']
 			}
 		},
 
@@ -158,21 +158,20 @@ describe('Method ext.wikia.adEngine.lookup.amazonMatch', function () {
 				'a1x6p3',
 				'a7x9p12',
 				'a7x9p4',
-				'a7x9p14',
 				'a3x2p5',
-				'a3x2p8',
 				'a3x2p6',
 				'a3x5p14',
-				'a3x6p10',
 				'a3x6p8',
 				'a3x6p12',
+				'piv_wik_7x9',
+				'piv_wik_3x6',
 				'xxx'
 			],
 			expected: {
-				leaderboard: ['a7x9p4'],
-				skyscraper: ['a1x6p3', 'a3x2p5', 'a3x6p8'],
-				medrec: ['a3x2p5', 'a3x6p8'],
-				incontentBoxad: ['a3x2p5', 'a1x6p3', 'a3x6p8']
+				leaderboard: ['a7x9p12', 'a7x9p4', 'piv_wik_7x9'],
+				skyscraper: ['a1x6p14', 'a1x6p3', 'a3x2p5', 'a3x2p6', 'a3x6p12', 'a3x6p8', 'piv_wik_3x6'],
+				medrec: ['a3x2p5', 'a3x2p6', 'a3x6p12', 'a3x6p8', 'piv_wik_3x6'],
+				incontentBoxad: ['a1x6p14', 'a1x6p3', 'a3x2p5', 'a3x2p6', 'a3x6p12', 'a3x6p8', 'piv_wik_3x6']
 			}
 		}
 	];

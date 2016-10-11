@@ -61,7 +61,7 @@ class Result extends ReadWrite {
 		$text = isset( $this->_fields[$field] ) ? $this->_fields[$field] : '';
 		$textAsString = is_array( $text ) ? implode( " ", $text ) : $text;
 
-		$textAsString = $this->limitTextLength( $textAsString, $wordLimit );
+		$textAsString = static::limitTextLength( $textAsString, $wordLimit );
 
 		// if title and description both start with the same File: prefix, remove the prefix from description
 		$textAsString = $this->removePrefix($this->findFilePrefix($this->getTitle(false)), $textAsString);
@@ -209,7 +209,7 @@ class Result extends ReadWrite {
 	 * @param string  $text
 	 * @param boolean $addEllipses
 	 */
-	private function fixSnippeting($text, $addEllipses=false) {
+	private static function fixSnippeting($text, $addEllipses=false) {
 		$text = preg_replace('/^(span class="searchmatch">)/', '<$1',
 			preg_replace("/^[[:punct:]]+ ?/", '',
 				preg_replace("/(<\\/span>)('s)/i", '$2$1',
@@ -351,12 +351,12 @@ class Result extends ReadWrite {
 	 * @param $wordLimit
 	 * @return mixed|string
 	 */
-	public function limitTextLength( $textAsString, $wordLimit ) {
+	public static function limitTextLength( $textAsString, $wordLimit ) {
 		if ( $wordLimit !== null ) {
 			$wordsExploded = explode( ' ', $textAsString );
 			$textAsString = implode( ' ', array_slice( $wordsExploded, 0, $wordLimit ) );
 			if ( count( $wordsExploded ) > $wordLimit ) {
-				$textAsString = $this->fixSnippeting( $textAsString, true );
+				$textAsString = static::fixSnippeting( $textAsString, true );
 				return $textAsString;
 			}
 			return $textAsString;

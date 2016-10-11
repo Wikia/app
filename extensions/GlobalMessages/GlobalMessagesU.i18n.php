@@ -274,7 +274,7 @@ Please confirm that this is what you intend to do.',
 	'user-properties-handler-not-registered' => 'Handler not registered',
 	'user-properties-method-nonexistent' => 'Handler method non-existent',
 	'user-properties-handler-nonexistent' => 'Handler class non-existent',
-	'usesitejs-disabled-warning' => 'Custom JavaScript is disabled on this wikia.',
+	'usesitejs-disabled-warning' => 'Custom JavaScript is disabled on this wiki.',
 ];
 
 $messages['qqq'] = [
@@ -7402,6 +7402,7 @@ $1',
 	'unrate_it' => 'Bewertung entfernen',
 	'use_old_formatting' => 'Zu Monobook wechseln',
 	'use_new_formatting' => 'Neue Formatierung verwenden',
+	'usesitejs-disabled-warning' => 'Benutzerdefiniertes JavaScript ist in diesem Wiki deaktiviert.',
 ];
 
 $messages['de-ch'] = [
@@ -8856,6 +8857,7 @@ $1',
 	'unrate_it' => 'Anula tu voto',
 	'use_old_formatting' => 'Cambiar a diseño Monobook',
 	'use_new_formatting' => 'Probar un diseño nuevo',
+	'usesitejs-disabled-warning' => 'El JavaScript personalizado está deshabilitado en este wiki.',
 ];
 
 $messages['et'] = [
@@ -10408,7 +10410,7 @@ Veuillez confirmer que c’est bien là ce que vous voulez faire.',
 	'unrate_it' => 'Annuler votre vote',
 	'use_old_formatting' => 'Passer à l\'affichage Monobook',
 	'use_new_formatting' => 'Essayer le nouvel habillage',
-	'usesitejs-disabled-warning' => 'Le JavaScript personnalisé est désactivé sur ce wikia.',
+	'usesitejs-disabled-warning' => 'Le JavaScript personnalisé est désactivé sur ce wiki.',
 ];
 
 $messages['frc'] = [
@@ -15619,6 +15621,7 @@ $1',
 	'unlockdbsuccesssub' => 'Sblocco del database eseguito',
 	'unlockdbsuccesstext' => 'Il database è stato sbloccato.',
 	'unknown_extension_tag' => 'Tag estensione sconosciuto: "$1"',
+	'usesitejs-disabled-warning' => 'Il JavaScript personalizzato è disabilitato per questa wiki.',
 ];
 
 $messages['iu'] = [
@@ -16058,6 +16061,7 @@ $1',
 	'unrate_it' => '評価を取り消す',
 	'use_old_formatting' => 'monobookの外装に変更する',
 	'use_new_formatting' => '新しい外装を試す',
+	'usesitejs-disabled-warning' => 'このwikiではカスタムJavaScriptは無効になっています。',
 ];
 
 $messages['jam'] = [
@@ -26409,6 +26413,7 @@ $1',
 	'unrate_it' => 'Cofnij ocenę',
 	'use_old_formatting' => 'Przełącz na styl Monobook',
 	'use_new_formatting' => 'Wypróbuj nowe formatowanie',
+	'usesitejs-disabled-warning' => 'Niestandardowy JavaScript jest wyłączony na tej wiki.',
 ];
 
 $messages['pms'] = [
@@ -27423,6 +27428,7 @@ $1',
 	'unrate_it' => 'Anule o seu voto',
 	'use_old_formatting' => 'Mudar para o formato Monobook',
 	'use_new_formatting' => 'Usar o formato novo',
+	'usesitejs-disabled-warning' => 'O JavaScript personalizado está desabilitado nesta wiki.',
 ];
 
 $messages['pt-br'] = [
@@ -28777,6 +28783,7 @@ $1',
 	'unrate_it' => 'Сбросить оценку',
 	'use_old_formatting' => 'Используйте старый формат',
 	'use_new_formatting' => 'Neue Formatierung verwenden',
+	'usesitejs-disabled-warning' => 'Пользовательский JavaScript отключён на этой вики.',
 ];
 
 $messages['rue'] = [
@@ -38105,6 +38112,7 @@ $1',
 	'unlockdbsuccesssub' => '数据库解锁成功',
 	'unlockdbsuccesstext' => '数据库已解锁。',
 	'unknown_extension_tag' => '不明的扩展标签“$1”',
+	'usesitejs-disabled-warning' => '自定义JavaScript在此维基上被禁用。',
 ];
 
 $messages['zh-hant'] = [
@@ -38315,6 +38323,7 @@ $1',
 	'unlockdbsuccesssub' => '資料庫開放',
 	'unlockdbsuccesstext' => '{{SITENAME}}資料庫重新開放。',
 	'unknown_extension_tag' => '不明的擴展標籤 "$1"',
+	'usesitejs-disabled-warning' => '自訂JavaScript在這個wiki上被禁用。',
 ];
 
 $messages['zh-hk'] = [

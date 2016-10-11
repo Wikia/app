@@ -16,13 +16,16 @@ define('ext.wikia.adEngine.video.vastBuilder', [
 		defaultAdUnit = '/5441/VIDEO_ATG',
 		logGroup = 'ext.wikia.adEngine.video.vastBuilder';
 
-	function getCustomParameters() {
+	function getCustomParameters(slotName, src) {
 		var customParameters = [],
-			pageParams = page.getPageLevelParams();
+			params = page.getPageLevelParams();
 
-		Object.keys(pageParams).forEach(function (key) {
-			if (pageParams[key]) {
-				customParameters.push(key + '=' + pageParams[key]);
+		params.pos = slotName;
+		params.src = src;
+
+		Object.keys(params).forEach(function (key) {
+			if (params[key]) {
+				customParameters.push(key + '=' + params[key]);
 			}
 		});
 
@@ -48,7 +51,7 @@ define('ext.wikia.adEngine.video.vastBuilder', [
 				'sz=' + getSize(aspectRatio),
 				'url=' + loc.href,
 				'correlator=' + correlator,
-				'cust_params=' + getCustomParameters()
+				'cust_params=' + getCustomParameters(slotName, src)
 			],
 			url = baseUrl + params.join('&');
 

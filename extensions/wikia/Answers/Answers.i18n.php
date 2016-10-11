@@ -15,7 +15,7 @@ $messages['en'] = [
 	'ask_button' => 'Ask',
 	'ask_thanks' => 'Thanks for the rockin\' question!',
 	'question_asked_by' => 'Question asked by',
-	'question_asked_by_a_wikia_user' => 'Question asked by a Wikia user',
+	'question_asked_by_a_wikia_user' => 'Question asked by a Fandom user',
 	'new_question_comment' => 'new question',
 	'answers_toolbox' => 'Wikianswers toolbox',
 	'improve_this_answer' => 'Improve this answer',
@@ -144,6 +144,7 @@ $messages['qqq'] = [
 * $1 is the number of answered questions.',
 	'answers-category-count-unanswered' => 'Parameters:
 * $1 is the number of unanswered questions.',
+	'question_asked_by_a_wikia_user' => 'Missing documentation',
 ];
 
 $messages['af'] = [
@@ -207,7 +208,7 @@ $messages['de'] = [
 	'ask_button' => 'Fragen',
 	'ask_thanks' => 'Danke für deine klasse Frage!',
 	'question_asked_by' => 'Frage gestellt von',
-	'question_asked_by_a_wikia_user' => 'Frage gestellt von einem Wikia Benutzer',
+	'question_asked_by_a_wikia_user' => 'Frage eines Fandom-Benutzers',
 	'new_question_comment' => 'neue Frage',
 	'answers_toolbox' => 'Wikianswers Toolbox',
 	'improve_this_answer' => 'Diese Antwort verbessern',
@@ -405,7 +406,7 @@ $messages['es'] = [
 	'a' => 'Respuesta:',
 	'anwb-step1-headline' => 'De qué trata tí Wiki?',
 	'anwb-choose-logo' => 'Elija su logo',
-	'question_asked_by_a_wikia_user' => 'Pregunta hecha por un usuario de Wikia',
+	'question_asked_by_a_wikia_user' => 'Pregunta hecha por un usuario de Fandom',
 ];
 
 $messages['fi'] = [
@@ -424,7 +425,7 @@ $messages['fr'] = [
 	'ask_button' => 'Demander',
 	'ask_thanks' => 'Merci pour cette question intéressante !',
 	'question_asked_by' => 'Question posée par',
-	'question_asked_by_a_wikia_user' => 'Question posée par un utilisateur de Wikia',
+	'question_asked_by_a_wikia_user' => 'Question posée par un utilisateur de Fandom',
 	'new_question_comment' => 'nouvelle question',
 	'answers_toolbox' => 'Boîte à outils Wikiréponses',
 	'improve_this_answer' => 'Améliorer cette réponse',
@@ -986,7 +987,7 @@ $messages['it'] = [
 	'ask_button' => 'Chiedi',
 	'ask_thanks' => 'Grazie per la domanda sconvolgente!',
 	'question_asked_by' => 'Domanda posta da',
-	'question_asked_by_a_wikia_user' => 'Domanda posta da un utente di Wikia',
+	'question_asked_by_a_wikia_user' => 'Domanda posta da un utente Fandom',
 	'new_question_comment' => 'nuova domanda',
 	'answers_toolbox' => 'Casella degli strumenti di Wikirisposte',
 	'improve_this_answer' => 'Migliora questa risposta',
@@ -1105,7 +1106,7 @@ $messages['it'] = [
 
 $messages['ja'] = [
 	'research_this' => 'この質問について調べる',
-	'question_asked_by_a_wikia_user' => '質問者: 匿名ユーザー',
+	'question_asked_by_a_wikia_user' => 'Fandomユーザーからの質問',
 ];
 
 $messages['lb'] = [
@@ -1747,7 +1748,7 @@ $messages['pl'] = [
 	'ask_button' => 'Zapytaj',
 	'ask_thanks' => 'Dziękujemy za pytanie!',
 	'question_asked_by' => 'Pytanie zadał',
-	'question_asked_by_a_wikia_user' => 'Pytanie zadane przez użytkownika Wikii',
+	'question_asked_by_a_wikia_user' => 'Pytanie zadane przez użytkownika Fandomu',
 	'new_question_comment' => 'nowe pytanie',
 	'answers_toolbox' => 'Narzędzia Wikianswers',
 	'improve_this_answer' => 'Popraw tą odpowiedź',
@@ -1830,7 +1831,7 @@ $messages['ps'] = [
 
 $messages['pt'] = [
 	'research_this' => 'Investigar isto',
-	'question_asked_by_a_wikia_user' => 'Pergunta feita por um usuário da Wikia',
+	'question_asked_by_a_wikia_user' => 'Pergunta feita por um usuário do Fandom',
 ];
 
 $messages['pt-br'] = [
@@ -1854,7 +1855,7 @@ $messages['ru'] = [
 	'ask_button' => 'Спросить',
 	'ask_thanks' => 'Спасибо за хороший вопрос!',
 	'question_asked_by' => 'Вопрос задал',
-	'question_asked_by_a_wikia_user' => 'Вопрос задал участник Викия',
+	'question_asked_by_a_wikia_user' => 'Вопрос от участника Фэндома',
 	'new_question_comment' => 'новый вопрос',
 	'answers_toolbox' => 'Инструменты Вики Ответов',
 	'improve_this_answer' => 'Улучшить этот ответ',
@@ -2169,9 +2170,14 @@ $messages['zh-hans'] = [
 	'next_page' => '下一页 &raquo;',
 	'prev_page' => '&laquo; 上一页',
 	'ads_by_google' => 'Google广告',
+	'question_asked_by_a_wikia_user' => 'Fandom用户的提问',
 ];
 
 $messages['no'] = [
 	'question_asked_by_a_wikia_user' => 'Spørsmål stilt av en Wikia-bruker',
+];
+
+$messages['zh-hant'] = [
+	'question_asked_by_a_wikia_user' => ' Fandom用戶的提問',
 ];
 

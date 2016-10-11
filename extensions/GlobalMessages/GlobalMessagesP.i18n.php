@@ -32,21 +32,20 @@ $messages['en'] = [
 	'passwordtooshort' => 'Passwords must be at least {{PLURAL:$1|1 character|$1 characters}}.',
 	'password-name-match' => 'Your password must be different from your username.',
 	'password-login-forbidden' => 'The use of this username and password has been forbidden.',
-	'passwordremindertitle' => 'Password reminder from Wikia',
+	'passwordremindertitle' => 'Password reminder from Fandom',
 	'passwordremindertext' => 'Hi,
 The login password for user "$2" is now "$3".
 If you did not request a new password, don’t worry. The replacement password has been sent only to you at this email address. Your account is secure and you can continue to use your old password.
 
 Thanks,
 
-The Wikia Community Team
+The Fandom Community Team
 
 www.wikia.com
 ___________________________________________________________
 
     * To change your preferences or password, go to: http://www.wikia.com/wiki/Special:Preferences.
-    * This password reminder was requested from the following address: $1.
-',
+    * This password reminder was requested from the following address: $1.',
 	'passwordsent' => 'A new password has been sent to the e-mail address registered for "$1".
 Please log in again after you receive it.',
 	'pear-mail-error' => '$1',
@@ -249,10 +248,10 @@ The latest log entry is provided below for reference:',
 	'patrol-log-diff' => 'revision $1',
 	'prefs-help-mailmesg' => 'E-mail',
 	'prefs-help-blurmesg' => 'Blurry word',
-	'prefs-help-terms' => 'By creating an account, you agree to the {{#NewWindowLink: homepage:Terms of use | Wikia\'s Terms of Use}}',
+	'prefs-help-terms' => 'By creating an account, you agree to the {{#NewWindowLink: homepage:Terms of use | Wikia, Inc\'s Terms of Use}}',
 	'prefs-help-birthday' => 'Why do I need to provide this?',
 	'prefs-help-birthmesg' => 'Why do I need to provide my birthday?',
-	'prefs-help-birthinfo' => 'Wikia requires all users to provide their real date of birth as both a safety precaution and as a means of preserving the integrity of the site while complying with federal regulations.',
+	'prefs-help-birthinfo' => 'Fandom requires all users to provide their real date of birth as both a safety precaution and as a means of preserving the integrity of the site while complying with federal regulations.',
 	'popular-articles' => 'Popular Pages',
 	'popular-wikis' => 'Popular Wikis',
 	'preferences_s' => 'Preferences',
@@ -501,6 +500,8 @@ The message appears after the name of the patroller.',
 	'pipe-separator' => '{{optional}}',
 	'percent' => '{{optional}}',
 	'parentheses' => '{{optional}}',
+	'prefs-help-birthinfo' => 'Missing documentation',
+	'prefs-help-terms' => 'Missing documentation',
 ];
 
 $messages['ab'] = [
@@ -8019,15 +8020,20 @@ $messages['de'] = [
 	'passwordtooshort' => 'Passwörter müssen mindestens {{PLURAL:$1|1 Zeichen|$1 Zeichen}} lang sein.',
 	'password-name-match' => 'Dein Passwort muss sich von deinem Benutzernamen unterscheiden.',
 	'password-login-forbidden' => 'Die Verwendung dieses Benutzernamens und Passwortes ist nicht erlaubt.',
-	'passwordremindertitle' => 'Neues Passwort für ein {{SITENAME}}-Benutzerkonto',
-	'passwordremindertext' => 'Jemand mit der IP-Adresse $1, wahrscheinlich du selbst, hat ein neues Passwort für die Anmeldung bei {{SITENAME}} ($4) angefordert.
+	'passwordremindertitle' => 'Passwort-Erinnerung von Fandom',
+	'passwordremindertext' => 'Hallo!
+Das Passwort für Benutzer "$2" lautet jetzt "$3".
+Mach dir keine Sorgen, falls du kein neues Passwort angefordert hast. Das Ersatz-Passwort wurde nur an dich unter dieser E-Mail-Adresse geschickt. Dein Konto ist sicher und du kannst auch weiterhin dein altes Passwort benutzen.
 
-Das automatisch generierte Passwort für Benutzer „$2“ lautet nun: $3
+Vielen Dank,
 
-Falls du dies wirklich gewünscht hast, solltest du dich jetzt anmelden und das Passwort ändern.
-Das neue Passwort ist {{PLURAL:$5|1 Tag|$5 Tage}} gültig.
+Dein Fandom Community-Team
 
-Bitte ignoriere diese E-Mail, falls du sie nicht selbst angefordert hast. Das alte Passwort bleibt weiterhin gültig.',
+www.wikia.com
+___________________________________________________________
+
+    * Deine Einstellungen oder dein Passwort kannst du hier ändern: http://www.de.wikia.com/wiki/Spezial:Einstellungen.
+    * Diese Passwort-Erinnerung wurde von dieser E-Mail-Adresse aus angefordert: $1.',
 	'passwordsent' => 'Ein neues, temporäres Passwort wurde an die E-Mail-Adresse von Benutzer „$1“ gesandt.
 Bitte melde dich damit an, sobald du es erhalten hast. Das alte Passwort bleibt weiterhin gültig.',
 	'php-mail-error-unknown' => 'Unbekannter Fehler mit der Funktion mail() von PHP',
@@ -8206,6 +8212,8 @@ Zur Information folgt der aktuelle Logbucheintrag:',
 	'patrol-log-header' => 'Dies ist das Kontroll-Logbuch.',
 	'previousdiff' => '← Zum vorherigen Versionsunterschied',
 	'percent' => '$1&nbsp;%',
+	'prefs-help-birthinfo' => 'Fandom verlangt von allen Nutzern, ihr tatsächliches Geburtsdatum anzugeben, sowohl als Sicherheitsmaßnahme, als auch als Mittel zur Wahrung der Integrität der Website unter Einhaltung der behördlichen Vorschriften.',
+	'prefs-help-terms' => 'Mit Erstellung eines Benutzerkontos stimmst du den {{#NewWindowLink: homepage:de:Nutzungsbedingungen|Nutzungsbedingungen}} von Fandom zu',
 ];
 
 $messages['de-ch'] = [
@@ -9434,18 +9442,20 @@ $messages['es'] = [
 	'passwordtooshort' => 'Las contraseñas deben tener al menos {{PLURAL:$1|1 caracter|$1 caracteres}}.',
 	'password-name-match' => 'Tu contraseña debe ser diferente de tu nombre de usuario.',
 	'password-login-forbidden' => 'El uso de este nombre de usuario y contraseña han sido prohibidos.',
-	'passwordremindertitle' => 'Recordatorio de contraseña de Wikia',
-	'passwordremindertext' => '$1,
+	'passwordremindertitle' => 'Recordatorio de la contraseña en Fandom',
+	'passwordremindertext' => 'Hola,
+La contraseña de inicio de sesión del usuario "$2" es ahora "$3".
+Si no has solicitado una nueva contraseña, ¡no te preocupes! La contraseña temporal ha sido enviada solamente a esta dirección de correo electrónico. Tu cuenta está segura y puedes acceder con tu antigua contraseña.
 
-La contraseña para el usuario "$2" ha sido cambiada a "$3".
+Atentamente,
 
-¿No solicitaste una nueva contraseña? No te preocupes, tu cuenta está segura; la contraseña solo la hemos enviado a esta dirección de correo electrónico, así que puedes continuar usando tu antigua contraseña sin problemas.
+El equipo comunitario de Fandom
 
-- Equipo comunitario de Wikia
+www.es.fandom.com
+___________________________________________________________
 
-___________________________________________
-* Si necesitas ayuda o consejos, visita nuestra comunidad central http://comunidad.wikia.com
-* ¿Quieres dejar de recibir estos mensajes? Puedes darte de baja en el servicio de emails desde tus preferencias aquí: http://comunidad.wikia.com/Especial:Preferencias',
+    * Para cambiar tus preferencias o contraseña, ingresa a: http://www.es.fandom.com/wiki/Especial:Preferencias.
+    * Esta contraseña temporal fue pedida por la siguiente dirección de correo electrónico: $1.',
 	'passwordsent' => 'Se ha enviado una nueva contraseña al correo electrónico de «$1».
 Por favor, identifícate de nuevo tras recibirla.',
 	'php-mail-error-unknown' => 'Error desconocido en la función mail() de PHP',
@@ -9624,6 +9634,8 @@ A continuación se muestra la última entrada de registro para referencia:',
 	'patrol-log-page' => 'Registro de revisiones',
 	'patrol-log-header' => 'Este es un registro de revisiones patrulladas.',
 	'previousdiff' => '← Edición anterior',
+	'prefs-help-birthinfo' => 'Fandom solicita a todos los usuarios que pongan su fecha real de nacimiento como medida de seguridad y como forma de preservar la integridad del sitio mientras cumple con las regulaciones federales.',
+	'prefs-help-terms' => 'Al crear un wiki y una cuenta de usuario, aceptas los {{#NewWindowLink: w:c:es:Términos de uso|términos de uso de Fandom}}',
 ];
 
 $messages['et'] = [
@@ -10985,16 +10997,20 @@ $messages['fr'] = [
 	'passwordtooshort' => 'Votre mot de passe doit contenir au moins $1 caractère{{PLURAL:$1||s}}.',
 	'password-name-match' => 'Votre mot de passe doit être différent de votre nom d’utilisateur.',
 	'password-login-forbidden' => 'L’utilisation de ce nom d’utilisateur et de ce mot de passe a été interdite.',
-	'passwordremindertitle' => 'Nouveau mot de passe temporaire pour {{SITENAME}}',
-	'passwordremindertext' => 'Quelqu’un (probablement vous, ayant l’adresse IP $1) a demandé un nouveau mot de
-passe pour {{SITENAME}} ($4 ). Un mot de passe temporaire a été créé pour
-l’utilisateur « $2 » et est « $3 ». Si cela était votre intention, vous devrez
-vous connecter et choisir un nouveau mot de passe.
-Votre mot de passe temporaire expirera dans $5 jour{{PLURAL:$5||s}}.
+	'passwordremindertitle' => 'Rappel de mot de passe de Fandom',
+	'passwordremindertext' => 'Bonjour,
+Le mot de passe de l\'utilisateur "$2" est désormais "$3".
+Si vous n\'avez pas demandé de nouveau mot de passe, ne vous inquiétez pas. Le mot de passe de substitution n\'a été envoyé qu\'à vous, à cette adresse e-mail. Votre compte est sain et sauf, et vous pouvez continuer à utiliser votre ancien mot de passe.
 
-Si vous n’êtes pas l’auteur de cette demande, ou si vous vous souvenez à présent
-de votre ancien mot de passe et que vous ne souhaitez plus en changer, vous
-pouvez ignorer ce message et continuer à utiliser votre ancien mot de passe.',
+Merci,
+
+L\'équipe de la communauté Fandom
+
+www.wikia.com
+___________________________________________________________
+
+    * Pour modifier vos préférences ou changer de mot de passe, accédez à la page suivante : http://www.wikia.com/wiki/Special:Preferences.
+    * Cette demande de rappel de mot de passe a été envoyée depuis l\'adresse suivante : $1.',
 	'passwordsent' => 'Un nouveau mot de passe a été envoyé à l’adresse de courriel de l’utilisateur « $1 ». Veuillez vous reconnecter après l’avoir reçu.',
 	'php-mail-error-unknown' => 'Erreur inconnue dans la fonction mail() de PHP.',
 	'preview' => 'Prévisualisation',
@@ -11170,6 +11186,8 @@ Veuillez contacter votre fournisseur d’accès Internet ou votre support techni
 	'patrol-log-header' => 'Voici l’historique des versions relues.',
 	'previousdiff' => '← Modification précédente',
 	'percent' => '$1&nbsp;%',
+	'prefs-help-birthinfo' => 'Fandom requiert que tous les utilisateurs fournissent leur date de naissance réelle ; ceci est une mesure de sécurité et permet également de préserver l\'intégrité du site tout en respectant les lois fédérales américaines.',
+	'prefs-help-terms' => 'En créant un compte, vous acceptez les {{#NewWindowLink: homepage:fr:Conditions d\'utilisation|Conditions d\'utilisation}}',
 ];
 
 $messages['frc'] = [
@@ -16578,12 +16596,20 @@ $messages['it'] = [
 	'passwordtooshort' => 'Le password devono contenere almeno {{PLURAL:$1|1 carattere|$1 caratteri}}.',
 	'password-name-match' => 'La password deve essere diversa dal nome utente.',
 	'password-login-forbidden' => 'L\'uso di questo nome utente e password è stato proibito.',
-	'passwordremindertitle' => 'Servizio Password Reminder di {{SITENAME}}',
-	'passwordremindertext' => 'Qualcuno (probabilmente tu, con indirizzo IP $1) ha richiesto l\'invio di una nuova password di accesso a {{SITENAME}} ($4).
-Una password temporanea per l\'utente "$2" è stata impostata a "$3".
-È opportuno eseguire un accesso quanto prima e cambiare la password immediatamente. La password temporanea scadrà dopo {{PLURAL:$5|un giorno|$5 giorni}}.
+	'passwordremindertitle' => 'Promemoria sulla password da Fandom',
+	'passwordremindertext' => 'Ciao,
+La password di accesso per l\'utente "$2" è ora "$3".
+Se non hai richiesto una nuova password, non preoccuparti. La password sostitutiva è stata inviata solo a te a questo indirizzo e-mail. Il tuo account è sicuro e puoi continuare a usare la tua vecchia password.
 
-Se non sei stato tu a fare la richiesta, oppure hai ritrovato la password e non desideri più cambiarla, puoi ignorare questo messaggio e continuare a usare la vecchia password.',
+Grazie,
+
+Il team della community di Fandom
+
+www.wikia.com
+___________________________________________________________
+
+    * Per modificare le tue preferenze o la password, vai su: http://www.wikia.com/wiki/Special:Preferences.
+    * Questo promemoria sulla password è stato richiesto dal seguente indirizzo: $1.',
 	'passwordsent' => 'Una nuova password è stata inviata all\'indirizzo e-mail registrato per l\'utente "$1".
 Per favore, effettua un accesso non appena la ricevi.',
 	'php-mail-error-unknown' => 'Errore sconosciuto nella funzione PHP mail()',
@@ -16759,6 +16785,8 @@ L\'ultimo elemento del registro è riportato di seguito per informazione:',
 	'patrol-log-page' => 'Modifiche verificate',
 	'patrol-log-header' => 'Di seguito sono elencate le verifiche delle modifiche.',
 	'previousdiff' => '← Differenza precedente',
+	'prefs-help-birthinfo' => 'Fandom chiede a tutti gli utenti di fornire la loro data di nascita reale sia quale precauzione di sicurezza, sia quale mezzo per preservare l\'integrità del sito rispettando al contempo le disposizioni federali.',
+	'prefs-help-terms' => 'Con la creazione di un account, accetti i {{#NewWindowLink:w:it:Project:Termini di utilizzo|Termini di utilizzo di Fandom}}',
 ];
 
 $messages['iu'] = [
@@ -16998,19 +17026,20 @@ $messages['ja'] = [
 	'passwordtooshort' => 'パスワードは{{PLURAL:$1|$1文字}}以上でなければなりません。',
 	'password-name-match' => 'パスワードは利用者名と同じであってはいけません。',
 	'password-login-forbidden' => 'このような利用者名とパスワードを使用することは禁止されています。',
-	'passwordremindertitle' => 'ウィキアからのパスワード・リマインダー',
-	'passwordremindertext' => '$1 さん,
+	'passwordremindertitle' => 'Fandomからパスワードに関するお知らせ',
+	'passwordremindertext' => 'こんにちは。
+$2さんのログイン用パスワードが「$3」になりました。
+新しいパスワードをリクエストしなかった場合でも、ご安心ください。この新しいパスワードは本メールアドレス宛にのみ送信されたもので、お使いのアカウントは安全に保護されています。また、以前のパスワードを引き続きお使いいただけます。
 
-ユーザー「$2」のログインパスワードが「S3」に変更されています。
+今後ともFandomをよろしくお願いいたします。
 
+Fandomコミュニティ・チーム
 
-新しいパスワードをリクエストしていませんか？　心配ありません、あなたのアカウントは安全です。変更後のパスワードはこの電子メールアドレスにのみ送信されています。古いパスワードを引き続き利用することができます。
+ja.wikia.com
+___________________________________________________________
 
-- ウィキア・コミュニティ・サポート
-
-___________________________________________
-* コミュニティセントラルでヘルプやアドバイスを探す : http://ja.community.wikia.com
-* 私たちが送信するメッセージの受信を減らしたいですか？こちらにて定期購読解除や電子メールの設定変更をすることができます : http://ja.community.wikia.com/Special:Preferences',
+    * 個人設定やパスワードを変更する場合は、次のページにアクセスしてください：http://ja.community.wikia.com/wiki/特別:個人設定
+    * このパスワードのお知らせは次のIPアドレスからリクエストされました：$1',
 	'passwordsent' => '新しいパスワードを「$1」に登録されたメールアドレスに送信しました。
 メールを受け取ったら、再度ログインしてください。',
 	'php-mail-error-unknown' => 'PHPのmail()関数で不明なエラー',
@@ -17198,6 +17227,8 @@ file_uploadsの設定を確認してください。',
 	'pipe-separator' => ' |&#32;',
 	'parentheses' => '（$1）',
 	'preferences_s' => 'オプション',
+	'prefs-help-birthinfo' => 'Fandomでは健全なサイト運営およびアメリカ合衆国の法規定に則るため、すべてのユーザーに対して生年月日の入力を必須としています。',
+	'prefs-help-terms' => 'アカウントを作成することで、{{#NewWindowLink: homepage:利用規約| Wikia株式会社の利用規約}}に同意したものと見なされます',
 ];
 
 $messages['jam'] = [
@@ -28516,14 +28547,20 @@ $messages['pl'] = [
 	'passwordtooshort' => 'Hasło musi mieć co najmniej $1 {{PLURAL:$1|znak|znaki|znaków}}.',
 	'password-name-match' => 'Hasło musi być inne niż nazwa użytkownika.',
 	'password-login-forbidden' => 'Wykorzystanie tej nazwy użytkownika lub hasła zostało zabronione.',
-	'passwordremindertitle' => 'Nowe tymczasowe hasło do {{GRAMMAR:D.lp|{{SITENAME}}}}',
-	'passwordremindertext' => 'Ktoś (prawdopodobnie Ty, spod adresu IP $1)
-poprosił o przesłanie nowego hasła do {{GRAMMAR:D.lp|{{SITENAME}}}} ($4).
-Dla użytkownika „$2” zostało wygenerowane tymczasowe hasło i jest nim „$3”.
-Jeśli było to zamierzone działanie, to po zalogowaniu się, musisz podać nowe hasło.
-Tymczasowe hasło wygaśnie za {{PLURAL:$5|1 dzień|$5 dni}}.
+	'passwordremindertitle' => 'Przypomnienie hasła od portalu Fandom',
+	'passwordremindertext' => 'Cześć,
+Hasło do konta użytkownika „$2” zostało zmienione na „$3”.
+Jeżeli nie prosiłeś o zmianę hasła, nie przejmuj się. Nowe hasło zostało wysłane do ciebie wyłącznie pod ten adres e-mail. Twoje konto jest bezpieczne i możesz nadal używać swojego starego hasła.
 
-Jeśli to nie Ty prosiłeś o przesłanie hasła lub przypomniałeś sobie hasło i nie chcesz go zmieniać, wystarczy, że zignorujesz tę wiadomość i dalej będziesz się posługiwać swoim dotychczasowym hasłem.',
+Pozdrawiamy,
+
+Zespół Społeczności Fandom
+
+http://pl.wikia.com/Wikia
+___________________________________________________________
+
+    * Żeby zmienić hasło lub ustawienia konta, wejdź na stronę http://www.wikia.com/wiki/Special:Preferences.
+    * Prośba o przypomnienie hasła została wysłana z następującego adresu IP: $1.',
 	'passwordsent' => 'Nowe hasło zostało wysłane na adres e‐mail użytkownika „$1”.
 Po otrzymaniu go zaloguj się ponownie.',
 	'php-mail-error-unknown' => 'Wystąpił nieznany błąd w funkcji PHP mail()',
@@ -28703,6 +28740,8 @@ Ostatni wpis z rejestru jest pokazany poniżej.',
 	'patrol-log-header' => 'Poniżej znajduje się dziennik patrolowania stron.',
 	'previousdiff' => '← poprzednia edycja',
 	'percent' => '$1&nbsp;%',
+	'prefs-help-birthinfo' => 'Fandom wymaga od wszystkich użytkowników podania rzeczywistej daty urodzenia ze względów bezpieczeństwa oraz dla zachowania spójności strony, przy zapewnieniu zgodności z przepisami federalnymi.',
+	'prefs-help-terms' => 'Tworząc konto użytkownika, akceptujesz {{#NewWindowLink: homepage:Terms of use | Zasady Użytkowania}}',
 ];
 
 $messages['pms'] = [
@@ -29590,13 +29629,20 @@ $messages['pt'] = [
 	'passwordtooshort' => 'A palavra-chave deve ter no mínimo $1 {{PLURAL:$1|carácter|caracteres}}.',
 	'password-name-match' => 'A sua palavra-chave tem de ser diferente do seu nome de utilizador.',
 	'password-login-forbidden' => 'Foi proibido o uso deste nome de utilizador e palavra-chave.',
-	'passwordremindertitle' => 'Nova palavra-chave temporária na {{SITENAME}}',
-	'passwordremindertext' => 'Alguém (provavelmente você, a partir do endereço IP $1) solicitou uma palavra-chave nova para a sua conta na {{SITENAME}} ($4).
-Foi criada a palavra-chave temporária "$3" para o utilizador "$2".
-Se o pedido foi feito por si, entre agora na sua conta e escolha uma palavra-chave nova.
-A palavra-chave temporária expira após {{PLURAL:$5|um dia|$5 dias}}.
+	'passwordremindertitle' => 'Lembrete de senha do Fandom',
+	'passwordremindertext' => 'Olá,
+A senha do usuário "$2" é agora "$3".
+Se você não solicitou uma nova senha, não se preocupe. A senha de substituição foi enviada apenas para você neste endereço de e-mail. Sua conta é segura e você pode continuar a usar sua senha antiga.
 
-Caso outra pessoa tenha feito o pedido, ou se entretanto se recordou da sua palavra-chave e já não deseja alterá-la, ignore esta mensagem e continue a utilizar a palavra-chave antiga.',
+Obrigado,
+
+Equipe da comunidade Fandom
+
+www.wikia.com
+___________________________________________________________
+
+* Para alterar suas preferências ou a senha, vá para: http://www.wikia.com/wiki/Especial:Preferências
+* Este lembrete de senha foi solicitado no seguinte endereço: $1.',
 	'passwordsent' => 'Foi enviada uma palavra-chave nova para o endereço de correio electrónico do utilizador "$1".
 Volte a autenticar-se após recebê-la, por favor.',
 	'php-mail-error-unknown' => 'Erro desconhecido na função mail() do PHP',
@@ -29780,6 +29826,8 @@ O último registo é apresentado abaixo para referência:',
 	'patrol-log-page' => 'Registo de edições patrulhadas',
 	'patrol-log-header' => 'Este é um registo de edições patrulhadas.',
 	'previousdiff' => '← Edição anterior',
+	'prefs-help-birthinfo' => 'O Fandom exige que todos os usuários forneçam suas datas de nascimento verdadeiras como medida de segurança e para preservar a integridade do site, mantendo conformidade com os regulamentos federais.',
+	'prefs-help-terms' => 'Ao criar uma conta, você concorda com os {{#NewWindowLink: w: pt:Termos de Uso |Termos de Uso da Wikia}}',
 ];
 
 $messages['pt-br'] = [
@@ -31089,16 +31137,18 @@ $messages['ru'] = [
 	'passwordtooshort' => 'Пароль должен состоять не менее чем из $1 {{PLURAL:$1|символа|символов|символов}}.',
 	'password-name-match' => 'Введённый пароль должен отличаться от имени участника.',
 	'password-login-forbidden' => 'Использование этого имени участника и пароля запрещено.',
-	'passwordremindertitle' => 'Напоминание пароля участника {{grammar:genitive|{{SITENAME}}}}',
-	'passwordremindertext' => 'Кто-то (вероятно, вы, с IP-адреса $1) запросил создать
-новый пароль для {{grammar:genitive|{{SITENAME}}}} ($4). Для участника $2
-создан временный пароль: $3. Если это был ваш запрос,
-вам следует представиться системе и выбрать новый пароль.
-Ваш временный пароль будет действовать в течение $5 {{PLURAL:$5|дня|дней|дней}}.
+	'passwordremindertitle' => 'Напоминание о пароле от Фэндома',
+	'passwordremindertext' => 'Здравствуйте,
+Новый пароль для учётной записи «$2» — «$3».
+Если вы не запрашивали смену пароля, не переживайте. Новый пароль был отправлен только вам на этот адрес электронной почты. Ваша учётная запись надежно защищена и вы можете продолжать использовать ваш старый пароль.
 
-Если вы не посылали запроса на смену пароля, или если вы уже вспомнили свой пароль,
-и не желаете его менять, вы можете проигнорировать данное сообщение и
-продолжить использовать свой старый пароль.',
+Команда Фэндома
+
+www.wikia.com
+___________________________________________________________
+    *Чтобы изменить настройки или пароль, перейдите по ссылке http://www.wikia.com/wiki/Special:Preferences.
+    *Запрос на отправку этого письма был получен с адреса $1.
+',
 	'passwordsent' => 'Новый пароль был выслан на адрес электронной почты, указанный для участника $1.
 
 Пожалуйста, представьтесь системе заново после получения пароля.',
@@ -31280,6 +31330,8 @@ $messages['ru'] = [
 	'patrol-log-header' => 'Это журнал патрулированных версий.',
 	'previousdiff' => '← Предыдущая правка',
 	'parentheses' => '($1)',
+	'prefs-help-birthinfo' => 'Согласно требованиям Фэндома, все пользователи должны указывать свою настоящую дату рождения. Это мера позволяет обеспечить безопасность и соответствие сайта требованиям федеральных нормативных актов США.',
+	'prefs-help-terms' => 'Создавая вики или учётную запись, вы соглашаетесь с {{#NewWindowLink: w:c:ru.community:Викия:Условия_использования| Условиями использования, установленными компанией Wikia, Inc.}}',
 ];
 
 $messages['rue'] = [
@@ -41005,14 +41057,21 @@ $messages['zh-hans'] = [
 	'passwordtooshort' => '您的密码至少需要$1个字符。',
 	'password-name-match' => '您的密码必须和您的用户名不相同。',
 	'password-login-forbidden' => '这个用户名称及密码的使用是被禁止的。',
-	'passwordremindertitle' => 'Wikia密码变更通知',
-	'passwordremindertext' => '您好, 用户"$2" 的密码已改为"$3"。如果您并没有申请新密码，请别担心。这个新密码仅仅寄送到这个电子邮件信箱给您，因此您的帐号是安全的，且仍然可以使用您的旧密码。谢谢。
+	'passwordremindertitle' => '来自Fandom的密码提示',
+	'passwordremindertext' => '你好，
 
-Wikia社区团队 
+用户"$2"的登入密码是"$3"。
 
-___________________________________________________________ 
-* 要更改个人设定或密码，请进入: http://www.wikia.com/wiki/Special:Preferences 
-* 这个密码通知是由以下IP地址申请的：$1 。',
+如果您没有申请一个新的密码，请不要担心。重置密码只发送至您所使用的电子邮件，您的帐户十分安全。您可以继续使用旧密码登入。 
+
+谢谢！
+
+Fandom社区团队 
+
+www.wikia.com
+___________________________________________________________
+* 若要更改您的个人设置或密码，请访问︰http://www.wikia.com/wiki/Special:参数设置。    
+* 密码提醒来源于以下地址：$1。',
 	'passwordsent' => '用户"$1"的新密码已经寄往所登记的电子邮件地址。
 请在收到后再登录。',
 	'php-mail-error-unknown' => '在 PHP 的 mail() 函数中的未知错误',
@@ -41185,6 +41244,8 @@ ___________________________________________________________
 	'patrol-log-header' => '这是已巡查的修订版本的日志。',
 	'previousdiff' => '←上一编辑',
 	'parentheses' => '（$1）',
+	'prefs-help-birthinfo' => '作为安全预防措施，也为了遵守美国联邦法规而保持网站的完整性，Fandom要求所有用户提供自己的真实出生日期。',
+	'prefs-help-terms' => '创建用户账户，即表示您同意并接受此{{#NewWindowLink: homepage:Terms of use|Wikia, Inc使用条款}}',
 ];
 
 $messages['zh-hant'] = [
@@ -41214,14 +41275,21 @@ $messages['zh-hant'] = [
 	'passwordtooshort' => '您的密碼不能少於$1個字元。',
 	'password-name-match' => '您的密碼必須跟您的用戶名不相同。',
 	'password-login-forbidden' => '這個用戶名稱及密碼的使用是被禁止的。',
-	'passwordremindertitle' => 'Wikia密碼變更通知',
-	'passwordremindertext' => '您好, 用戶"$2" 的密碼已改為"$3"。如果您並沒有申請新密碼，請別擔心。這個新密碼僅僅寄送到這個電子郵件信箱給您，因此您的帳號是安全的，且仍然可以使用您的舊密碼。謝謝。
+	'passwordremindertitle' => '源自Fandom的密碼提示問題',
+	'passwordremindertext' => '你好，
 
-Wikia社區團隊 
+用戶"$2"的登入密碼是"$3"。
 
-___________________________________________________________ 
-* 要更改個人設定或密碼，請進入: http://www.wikia.com/wiki/Special:Preferences 
-* 這個密碼通知是由以下IP地址申請的：$1 。',
+如果您沒有申請一個新的密碼，請不要擔心。重置密碼只發送至您所使用的電子郵件，您的帳戶十分安全。您可以繼續使用舊密碼登入。
+
+謝謝！
+
+Fandom社區團隊
+
+www.wikia.com
+___________________________________________________________
+* 若要更改您的帳戶設置或密碼，請訪問︰http://www.wikia.com/wiki/Special:Preferences。
+* 密碼提醒來源於以下地址：$1。',
 	'passwordsent' => '用戶"$1"的新密碼已經寄往所登記的電子郵件地址。
 請在收到後再登入。',
 	'php-mail-error-unknown' => '在 PHP 的 mail() 參數中的未知錯誤',
@@ -41401,6 +41469,8 @@ ___________________________________________________________
 	'patrol-log-header' => '這是已巡查的修訂版本的日誌。',
 	'previousdiff' => '←上一版本',
 	'parentheses' => '（$1）',
+	'prefs-help-birthinfo' => '作爲安全措施，也作爲保持網站完整性的手段，同時也爲了遵守美國聯邦法規，Fandom要求所有用戶提供自己的真實出生日期。',
+	'prefs-help-terms' => '創建帳戶，即表示你同意此{{#NewWindowLink: homepage:Terms of use|Wikia, Inc使用條款}}。',
 ];
 
 $messages['zh-hk'] = [

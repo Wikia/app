@@ -284,10 +284,11 @@ class VideoHandlerController extends WikiaController {
 			return $videos;
 		};
 
-		// Call the generator, caching the result, or not caching if we get null from the $dataGenerator
+		// Call the generator, caching the result, or caching it for only 5 seconds if we get null from the $dataGenerator
+		// (in case of some failure)
 		$videos = WikiaDataAccess::cacheWithOptions( $memcKey, $dataGenerator, [
 			'cacheTTL' => WikiaResponse::CACHE_STANDARD,
-			'negativeCacheTTL' => 0,
+			'negativeCacheTTL' => 5,
 		] );
 
 		// If file title was passed in as a string, return single associative array.

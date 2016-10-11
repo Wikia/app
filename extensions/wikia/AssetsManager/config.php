@@ -3058,3 +3058,38 @@ $config['crosslink_module_scss'] = [
 		'//extensions/wikia/CrosslinkModule/styles/CrosslinkModule.scss',
 	],
 ];
+
+/* Flow tracking */
+$config['flow_tracking_js'] = [
+	'type' => AssetsManager::TYPE_JS,
+	'assets' => [
+		'//resources/wikia/modules/flowTracking.js'
+	],
+];
+
+/* Flow tracking */
+$config['flow_tracking_create_page_js'] = [
+	'type' => AssetsManager::TYPE_JS,
+	'assets' => [
+		'//extensions/wikia/FlowTracking/scripts/createNewPageFlows.js',
+		'//extensions/wikia/FlowTracking/scripts/createNewPageFlowsVE.js',
+		'#group_flow_tracking_js'
+	],
+];
+
+/* StoriesLinkTag */
+$config['storieslink_tag_scss'] = [
+	'type' => AssetsManager::TYPE_SCSS,
+	'skin' => [ 'oasis' ],
+	'assets' => [
+		'//extensions/wikia/StoriesLinkTag/styles/StoriesLinkTag.scss',
+	],
+];
+
+$config['storieslink_tag_js'] = [
+	'type' => AssetsManager::TYPE_JS,
+	'skin' => [ 'oasis' ],
+	'assets' => [
+		'//extensions/wikia/StoriesLinkTag/scripts/StoriesLinkTag.js',
+	],
+];

@@ -3,7 +3,7 @@
 $messages = [];
 
 $messages['en'] = [
-	'usersignup-page-title' => 'Join Wikia',
+	'usersignup-page-title' => 'Join Fandom',
 	'usersignup-page-title-wikiamobile' => 'Create account',
 	'usersignup-page-captcha-label' => 'Challenge',
 	'usersignup-error-username-length' => 'Oops, your username can\'t be more than {{PLURAL:$1|one character|$1 characters}}.',
@@ -21,7 +21,7 @@ $messages['en'] = [
 	'usersignup-facebook-create-account' => 'Create account',
 	'usersignup-facebook-email-tooltip' => 'If you\'d like to use a different email address you can change it later in your Preferences.',
 	'usersignup-facebook-have-an-account-heading' => 'Already have an account?',
-	'usersignup-facebook-have-an-account' => 'Connect your existing Wikia username with Facebook instead.',
+	'usersignup-facebook-have-an-account' => 'Connect your existing Fandom username with Facebook instead.',
 	'usersignup-facebook-proxy-email' => 'Anonymous Facebook email',
 	'usersignup-user-pref-emailconfirmlink' => 'Request a new confirmation email',
 	'usersignup-user-pref-confirmemail_send' => 'Resend my confirmation email',
@@ -100,7 +100,7 @@ ___________________________________________
 
 To check out the latest happenings on Wikia, visit http://community.wikia.com
 Want to control which emails you receive? Go to: {{fullurl:{{ns:special}}:Preferences}}',
-	'usersignup-heading' => 'Join Wikia Today',
+	'usersignup-heading' => 'Join Fandom Today',
 	'usersignup-heading-byemail' => 'Create an account for someone else',
 	'usersignup-marketing-wikia' => 'Start collaborating with millions of people from around the world who come together to share what they know and love.',
 	'usersignup-marketing-login' => 'Already a user? [[Special:UserLogin|Log in]]',
@@ -110,7 +110,7 @@ Want to control which emails you receive? Go to: {{fullurl:{{ns:special}}:Prefer
 	'usersignup-marketing-global-heading' => 'Create',
 	'usersignup-marketing-global' => 'Start a wiki. Start small, grow big, with the help of others.',
 	'usersignup-marketing-creativity-heading' => 'Be original',
-	'usersignup-marketing-creativity' => 'Use Wikia to express your creativity with polls and top 10 lists, photo and video galleries, apps and more.',
+	'usersignup-marketing-creativity' => 'Use Fandom to express your creativity with photos, video galleries, apps and discussions.',
 	'usersignup-createaccount-byemail' => 'Create an account for someone else',
 	'usersignup-error-captcha' => 'The challenge answer failed, please try again!',
 	'usersignup-account-creation-heading' => 'Success!',
@@ -656,7 +656,7 @@ $messages['cy'] = [
 ];
 
 $messages['de'] = [
-	'usersignup-page-title' => 'Mach mit bei Wikia',
+	'usersignup-page-title' => 'Werde Mitglied bei Fandom',
 	'usersignup-page-title-wikiamobile' => 'Benutzerkonto erstellen',
 	'usersignup-page-captcha-label' => 'Herausforderung',
 	'usersignup-error-username-length' => 'Der Benutzername darf nicht länger als {{PLURAL:$1|ein Zeichen|$1 Zeichen}} sein.',
@@ -674,7 +674,7 @@ $messages['de'] = [
 	'usersignup-facebook-create-account' => 'Benutzerkonto anlegen',
 	'usersignup-facebook-email-tooltip' => 'Die E-Mail-Adresse kann später auch noch in den Einstellungen zu einer anderen Adresse geändert werden.',
 	'usersignup-facebook-have-an-account-heading' => 'Konto vorhanden?',
-	'usersignup-facebook-have-an-account' => 'Verknüpfe dein Wikia-Benutzerkonto stattdessen mit Facebook.',
+	'usersignup-facebook-have-an-account' => 'Verknüpfe dein Fandom-Benutzerkonto stattdessen mit Facebook.',
 	'usersignup-facebook-proxy-email' => 'Anonyme Facebook E-Mail',
 	'usersignup-user-pref-emailconfirmlink' => 'Neue Bestätigungs-Mail anfordern',
 	'usersignup-user-pref-confirmemail_send' => 'Bestätigungs-E-Mail erneut senden',
@@ -751,7 +751,7 @@ Das Wikia-Team
 
 Um dich zu Wikia auf dem aktuellen Stand zu halten, besuche http://de.community.wikia.com
 Steuere, welche E-Mails du von uns erhalten willst, auf {{fullurl:{{ns:special}}:Preferences}}',
-	'usersignup-heading' => 'Wikia noch heute beitreten',
+	'usersignup-heading' => 'Werde noch heute Mitglied bei Fandom',
 	'usersignup-heading-byemail' => 'Ein Konto für jemand anderen erstellen',
 	'usersignup-marketing-wikia' => 'Beginne die Zusammenarbeit mit Tausenden von Menschen aus aller Welt, die sich zusammentun um zu teilen, was sie kennen und lieben.',
 	'usersignup-marketing-login' => 'Konto vorhanden? [[Special:UserLogin|Melde dich an]]',
@@ -761,7 +761,7 @@ Steuere, welche E-Mails du von uns erhalten willst, auf {{fullurl:{{ns:special}}
 	'usersignup-marketing-global-heading' => 'Erstellen',
 	'usersignup-marketing-global' => 'Starte ein Wiki. Beginne klein und wachse mit der Hilfe Anderer.',
 	'usersignup-marketing-creativity-heading' => 'Sei originell',
-	'usersignup-marketing-creativity' => 'Nutze Wikia und bringe deine Kreativität über Umfragen und Top-10-Listen, Foto- und Video-Galerien, Apps und mehr zum Ausdruck',
+	'usersignup-marketing-creativity' => 'Bei Fandom kannst du deiner Kreativität mit Fotos, Videogalerien, Apps und Diskussionen Ausdruck verleihen.',
 	'usersignup-createaccount-byemail' => 'Ein Konto für jemand anderen erstellen',
 	'usersignup-error-captcha' => 'Die Herausforderungsantwort ist fehlgeschlagen, bitte erneut versuchen!',
 	'usersignup-account-creation-heading' => 'Erfolg!',
@@ -820,7 +820,7 @@ $messages['diq'] = [
 ];
 
 $messages['es'] = [
-	'usersignup-page-title' => 'Únete a Wikia',
+	'usersignup-page-title' => 'Únete a Fandom',
 	'usersignup-page-title-wikiamobile' => 'Crear una cuenta',
 	'usersignup-page-captcha-label' => 'Reto',
 	'usersignup-error-username-length' => '¡Arg! Tu nombre de usuario no puede ser más de {{PLURAL:$1|un caracter|$1 caracteres}}.',
@@ -838,7 +838,7 @@ $messages['es'] = [
 	'usersignup-facebook-create-account' => 'Crear una cuenta',
 	'usersignup-facebook-email-tooltip' => 'Si deseas utilizar un correo electrónico diferente, puedes cambiarlo después en tus preferencias.',
 	'usersignup-facebook-have-an-account-heading' => '¿Ya tienes una cuenta?',
-	'usersignup-facebook-have-an-account' => 'Vincula tu cuenta de usuario en Wikia con Facebook.',
+	'usersignup-facebook-have-an-account' => 'Vincula tu cuenta de usuario en Fandom con Facebook.',
 	'usersignup-facebook-proxy-email' => 'Correo electrónico anónimo de Facebook',
 	'usersignup-user-pref-emailconfirmlink' => 'Solicitar un nuevo correo electrónico de confirmación',
 	'usersignup-user-pref-confirmemail_send' => 'Reenviar mi correo electrónico de confirmación',
@@ -917,7 +917,7 @@ ___________________________________________
 
 Para ver las noticias más recientes en Wikia, visita http://comunidad.wikia.com
 ¿Quieres controlar los mensajes que recibes?? Ve a: {{fullurl:{{ns:special}}:Preferencias}}',
-	'usersignup-heading' => 'Únete hoy a Wikia',
+	'usersignup-heading' => 'Únete hoy a Fandom',
 	'usersignup-heading-byemail' => 'Crear una cuenta para alguien más',
 	'usersignup-marketing-wikia' => 'Comienza a colaborar con millones de personas de todo el mundo, quienes se reúnen para compartir lo que conocen y aman.',
 	'usersignup-marketing-login' => '¿Ya eres un usuario? [[Special:UserLogin|Inicia sesión]]',
@@ -927,7 +927,7 @@ Para ver las noticias más recientes en Wikia, visita http://comunidad.wikia.com
 	'usersignup-marketing-global-heading' => 'Crea',
 	'usersignup-marketing-global' => 'Comienza una wikia. Comienza con poco y crece con la ayuda de otros.',
 	'usersignup-marketing-creativity-heading' => 'Sé original',
-	'usersignup-marketing-creativity' => 'Usa Wikia para expresar tu creatividad con encuestas y listas, galerías de imágenes y vídeos, aplicaciones y más.',
+	'usersignup-marketing-creativity' => 'Usa Fandom para expresar tu creatividad con fotos, galerías de videos, aplicaciones y discusiones.',
 	'usersignup-createaccount-byemail' => 'Crear una cuenta para alguien más',
 	'usersignup-error-captcha' => 'La respuesta del reto ha fallado, ¡por favor inténtalo de nuevo!',
 	'usersignup-account-creation-heading' => '¡Conseguido!',
@@ -1126,7 +1126,7 @@ Haluatko hallita saamiasi sähköposteja? Mene: {{fullurl:{{ns:special}}:Asetuks
 ];
 
 $messages['fr'] = [
-	'usersignup-page-title' => 'Rejoindre Wikia',
+	'usersignup-page-title' => 'Rejoindre Fandom',
 	'usersignup-page-title-wikiamobile' => 'Créer un compte',
 	'usersignup-page-captcha-label' => 'Défi',
 	'usersignup-error-username-length' => 'Oups, votre nom d\'utilisateur ne doit pas dépasser {{PLURAL:$1|un caractère|$1 caractères}}',
@@ -1144,7 +1144,7 @@ $messages['fr'] = [
 	'usersignup-facebook-create-account' => 'Créer un compte',
 	'usersignup-facebook-email-tooltip' => 'Si vous souhaitez utiliser une autre adresse courriel, vous pouvez la modifier plus tard dans vos préférences.',
 	'usersignup-facebook-have-an-account-heading' => 'Vous avez déjà un compte ?',
-	'usersignup-facebook-have-an-account' => 'Connectez plutôt votre nom d\'utilisateur Wikia existant avec Facebook.',
+	'usersignup-facebook-have-an-account' => 'Connectez plutôt votre nom d\'utilisateur Fandom existant à Facebook.',
 	'usersignup-facebook-proxy-email' => 'Courriel anonyme Facebook',
 	'usersignup-user-pref-emailconfirmlink' => 'Demander un nouveau courriel de confirmation',
 	'usersignup-user-pref-confirmemail_send' => 'Renvoyer le courriel de confirmation',
@@ -1223,7 +1223,7 @@ ___________________________________________
 
 * Pour voir les derniers évènements sur Wikia, visitez http://communaute.wikia.com
 * Vous souhaitez contrôler les courriels que vous recevez ? Rendez-vous sur : {{fullurl:{{ns:special}}:Preferences}}',
-	'usersignup-heading' => 'Rejoindre Wikia maintenant',
+	'usersignup-heading' => 'Rejoindre Fandom dès aujourd\'hui',
 	'usersignup-heading-byemail' => 'Créer un compte pour quelqu\'un d\'autre',
 	'usersignup-marketing-wikia' => 'Commencez à participer avec des millions de personnes du monde entier qui se rassemblent pour partager ce qu\'elles savent et aiment.',
 	'usersignup-marketing-login' => 'Déjà utilisateur ? [[Special:UserLogin|Vous connecter]]',
@@ -1233,7 +1233,7 @@ ___________________________________________
 	'usersignup-marketing-global-heading' => 'Créez',
 	'usersignup-marketing-global' => 'Commencez un wikia. Commencez petit, devenez grand, avec l\'aide des autres.',
 	'usersignup-marketing-creativity-heading' => 'Soyez original',
-	'usersignup-marketing-creativity' => 'Utilisez Wikia pour exprimer votre créativité avec des sondages, des listes de top 10, des galeries d\'image et de vidéo, des applications et plus.',
+	'usersignup-marketing-creativity' => 'Laissez s\'exprimer votre créativité sur Fandom avec des images, des galeries vidéo, des applications et des discussions.',
 	'usersignup-createaccount-byemail' => 'Créer un compte pour quelqu\'un d\'autre',
 	'usersignup-error-captcha' => 'La réponse au défi est incorrecte, veuillez réessayer !',
 	'usersignup-account-creation-heading' => 'Réussite !',
@@ -1615,7 +1615,7 @@ Vole seliger le e-mail que tu recipe? Va a: {{fullurl:{{ns:special}}:Preferences
 ];
 
 $messages['it'] = [
-	'usersignup-page-title' => 'Entra in Wikia',
+	'usersignup-page-title' => 'Iscriviti a Fandom',
 	'usersignup-page-title-wikiamobile' => 'Crea account',
 	'usersignup-page-captcha-label' => 'Sfida',
 	'usersignup-error-username-length' => 'Oops, il tuo nome utente non può avere più di {{PLURAL:$1|un carattere|$1 caratteri}}.',
@@ -1633,7 +1633,7 @@ $messages['it'] = [
 	'usersignup-facebook-create-account' => 'Crea account',
 	'usersignup-facebook-email-tooltip' => 'Se preferisci usare un indirizzo email differente, puoi cambiarlo in seguito nelle tue preferenze.',
 	'usersignup-facebook-have-an-account-heading' => 'Hai già un account?',
-	'usersignup-facebook-have-an-account' => 'Connetti il tuo username di Wikia già esistente con Facebook.',
+	'usersignup-facebook-have-an-account' => 'Collega il tuo nome utente di Fandom esistente con Facebook invece.',
 	'usersignup-facebook-proxy-email' => 'Email di Facebook anonima',
 	'usersignup-user-pref-emailconfirmlink' => 'Richiedi una nuova email di conferma',
 	'usersignup-user-pref-confirmemail_send' => 'Invia nuovamente la mia email di conferma',
@@ -1712,7 +1712,7 @@ ___________________________________________
 
 Per controllare le ultime novità su Wikia, vai su http://it.community.wikia.com
 Vuoi controllare le email che ricevi? Vai su: {{fullurl:{{ns:special}}:Preferences}}',
-	'usersignup-heading' => 'Entra in Wikia oggi',
+	'usersignup-heading' => 'Iscriviti a Fandom oggi stesso',
 	'usersignup-heading-byemail' => 'Crea un account per qualcun altro',
 	'usersignup-marketing-wikia' => 'Inizia a collaborare con milioni di persone da tutto il mondo che si ritrovano per condividere ciò che conoscono ed amano.',
 	'usersignup-marketing-login' => 'Già un utente? [[Special:UserLogin|Accedi]]',
@@ -1722,7 +1722,7 @@ Vuoi controllare le email che ricevi? Vai su: {{fullurl:{{ns:special}}:Preferenc
 	'usersignup-marketing-global-heading' => 'Crea',
 	'usersignup-marketing-global' => 'Crea una wiki. Inizia in piccolo, diventa grande con l\'aiuto degli altri.',
 	'usersignup-marketing-creativity-heading' => 'Sii originale',
-	'usersignup-marketing-creativity' => 'Usa Wikia per esprimere la tua creatività con sondaggi e liste top 10, gallerie di immagini e video, applicazioni e altro.',
+	'usersignup-marketing-creativity' => 'Utilizza Fandom per esprimere la tua creatività con foto, gallerie video, app e discussioni.',
 	'usersignup-createaccount-byemail' => 'Crea un account per qualcun altro',
 	'usersignup-error-captcha' => 'La risposta alla sfida è scorretta, riprova!',
 	'usersignup-account-creation-heading' => 'Successo!',
@@ -1763,7 +1763,7 @@ Vuoi controllare le email che ricevi? Vai su: {{fullurl:{{ns:special}}:Preferenc
 ];
 
 $messages['ja'] = [
-	'usersignup-page-title' => 'Wikiaに参加しよう',
+	'usersignup-page-title' => 'Fandom ユーザー登録',
 	'usersignup-page-title-wikiamobile' => 'アカウントを作成',
 	'usersignup-page-captcha-label' => '画像認証',
 	'usersignup-error-username-length' => 'ユーザー名は $1 文字以下にしてください。',
@@ -1781,7 +1781,7 @@ $messages['ja'] = [
 	'usersignup-facebook-create-account' => 'アカウントを作成',
 	'usersignup-facebook-email-tooltip' => '別のメールアドレスの使用をご希望の場合には、個人設定で変更することができます。',
 	'usersignup-facebook-have-an-account-heading' => '既にアカウントをお持ちの方はログインしてください。',
-	'usersignup-facebook-have-an-account' => '既存のWikiaのユーザー名とFacebookをコネクトすることもできます。',
+	'usersignup-facebook-have-an-account' => 'Facebookアカウントと既存のFandomユーザーネームを連携することもできます。',
 	'usersignup-facebook-proxy-email' => '匿名Facebookメール',
 	'usersignup-user-pref-emailconfirmlink' => '新しい認証メールをリクエストする',
 	'usersignup-user-pref-confirmemail_send' => '認証メールを再送信する',
@@ -1860,7 +1860,7 @@ ___________________________________________
 
 Wikiaの最新情報については http://community.wikia.com をご覧ください
 メール通知に関する設定は {{fullurl:{{ns:special}}:個人設定}} のページで行っていただけます',
-	'usersignup-heading' => 'Wikiaに参加しよう',
+	'usersignup-heading' => 'Fandomに登録',
 	'usersignup-heading-byemail' => '他のユーザーのためにアカウントを作成する',
 	'usersignup-marketing-wikia' => ' ',
 	'usersignup-marketing-login' => '既にアカウントをお持ちの方はログインしてください。 [[Special:UserLogin|ログイン]]',
@@ -1870,7 +1870,7 @@ Wikiaの最新情報については http://community.wikia.com をご覧くだ�
 	'usersignup-marketing-global-heading' => ' ',
 	'usersignup-marketing-global' => ' ',
 	'usersignup-marketing-creativity-heading' => ' ',
-	'usersignup-marketing-creativity' => ' ',
+	'usersignup-marketing-creativity' => '写真ギャラリー、動画ギャラリー、アプリ、トーク機能など、Fandomの様々な機能で表現を楽しんでみませんか。',
 	'usersignup-createaccount-byemail' => '他のユーザーのためにアカウントを作成する',
 	'usersignup-error-captcha' => '回答が違っています。もう一度お試しください。',
 	'usersignup-account-creation-heading' => '認証が完了しました。',
@@ -2712,7 +2712,7 @@ Volètz verificar quins corrièrs electronics recebètz ? Anatz sus {{fullurl:{{
 ];
 
 $messages['pl'] = [
-	'usersignup-page-title' => 'Dołącz do Wikii',
+	'usersignup-page-title' => 'Dołącz do Fandomu',
 	'usersignup-page-title-wikiamobile' => 'Załóż nowe konto',
 	'usersignup-page-captcha-label' => 'Wyzwanie',
 	'usersignup-error-username-length' => 'Twoja nazwa użytkownika nie może mieć więcej niż {{PLURAL:$1|jeden znak|$1 znaki|$1 znaków}}.',
@@ -2730,7 +2730,7 @@ $messages['pl'] = [
 	'usersignup-facebook-create-account' => 'Załóż nowe konto',
 	'usersignup-facebook-email-tooltip' => 'Jeśli chcesz zmienić swój adres e-mail, możesz to zrobić później w swoich preferencjach.',
 	'usersignup-facebook-have-an-account-heading' => 'Masz już konto?',
-	'usersignup-facebook-have-an-account' => 'Rozważ połączenie istniejącego konta z Facebookiem, zamiast tworzyć nowe.',
+	'usersignup-facebook-have-an-account' => 'Zamiast tworzyć nowe konto, rozważ połączenie istniejącego z Facebookiem.',
 	'usersignup-facebook-proxy-email' => 'Anonimowy e-mail z Facebooka',
 	'usersignup-user-pref-emailconfirmlink' => 'Zażądaj nowego e-maila potwierdzającego adres',
 	'usersignup-user-pref-confirmemail_send' => 'Ponownie wyślij e-mail potwierdzający adres',
@@ -2809,7 +2809,7 @@ ___________________________________________
 
 Aby dowiedzieć się co nowego na Wikii, odwiedź http://spolecznosc.wikia.com/
 Chcesz zmienić ustawienia przysyłanych wiadomości? Przejdź tutaj: {{fullurl:{{#special:preferences}}}}',
-	'usersignup-heading' => 'Dołącz do Wikii już dziś',
+	'usersignup-heading' => 'Dołącz do Fandomu już dziś',
 	'usersignup-heading-byemail' => 'Załóż konto dla kogoś innego',
 	'usersignup-marketing-wikia' => 'Zacznij współpracę z milionami ludzi na całym świecie, którzy spotykają się aby dzielić się wiedzą o tym, co kochają.',
 	'usersignup-marketing-login' => 'Już jesteś użytkownikiem? [[Special:UserLogin|Zaloguj się]]',
@@ -2819,7 +2819,7 @@ Chcesz zmienić ustawienia przysyłanych wiadomości? Przejdź tutaj: {{fullurl:
 	'usersignup-marketing-global-heading' => 'Twórz',
 	'usersignup-marketing-global' => 'Utwórz wiki. Zacznij od podstaw i zbuduj coś wielkiego, z pomocą innych.',
 	'usersignup-marketing-creativity-heading' => 'Bądź oryginalny',
-	'usersignup-marketing-creativity' => 'Użyj Wikii aby wyrazić swoją kreatywność poprzez ankiety, rankingi, galerie obrazów i filmów, aplikacje i więcej.',
+	'usersignup-marketing-creativity' => 'Wykorzystaj Fandom, by wyrazić swoją kreatywność, używając zdjęć, galerii wideo, aplikacji i dyskusji.',
 	'usersignup-createaccount-byemail' => 'Załóż konto dla kogoś innego',
 	'usersignup-error-captcha' => 'Odpowiedź jest nieprawidłowa, spróbuj ponownie!',
 	'usersignup-account-creation-heading' => 'Sukces!',
@@ -3013,7 +3013,7 @@ $messages['ps'] = [
 ];
 
 $messages['pt'] = [
-	'usersignup-page-title' => 'Junte-se à Wikia',
+	'usersignup-page-title' => 'Junte-se ao Fandom',
 	'usersignup-page-title-wikiamobile' => 'Criar uma conta',
 	'usersignup-page-captcha-label' => 'Captcha',
 	'usersignup-error-username-length' => 'Opa, o seu nome de usuário não pode ter mais do que {{PLURAL:$1|um caracter|$1 caracteres}}.',
@@ -3031,7 +3031,7 @@ $messages['pt'] = [
 	'usersignup-facebook-create-account' => 'Criar conta',
 	'usersignup-facebook-email-tooltip' => 'Se você gostaria de usar um endereço de e-mail diferente você pode alterar isso mais tarde em suas preferências.',
 	'usersignup-facebook-have-an-account-heading' => 'Já tem uma conta?',
-	'usersignup-facebook-have-an-account' => 'Conecte o seu nome de usuário da Wikia com o Facebook.',
+	'usersignup-facebook-have-an-account' => 'Conecte seu nome de usuário existente do Fandom com o Facebook.',
 	'usersignup-facebook-proxy-email' => 'Email do Facebook anônimo',
 	'usersignup-user-pref-emailconfirmlink' => 'Envie-me um novo e-mail de confirmação',
 	'usersignup-user-pref-confirmemail_send' => 'Envie-me um novo e-mail de confirmação',
@@ -3109,7 +3109,7 @@ ___________________________________________
 
 Para conferir os últimos acontecimentos na Wikia, visite http://comunidade.wikia.com
 Quer controlar quais emails você recebe? Vá para: {{fullurl:{{ns:special}}:Preferências}}',
-	'usersignup-heading' => 'Junte-se à Wikia hoje',
+	'usersignup-heading' => 'Junte-se ao Fandom Hoje Mesmo',
 	'usersignup-heading-byemail' => 'Crie uma conta para outra pessoa',
 	'usersignup-marketing-wikia' => 'Comece a colaborar com milhões de pessoas ao redor do mundo que se reúnem para compartilhar o que conhecem e amam.',
 	'usersignup-marketing-login' => 'Já é um usuário? [[Especial: UserLogin|Entrar]]',
@@ -3119,7 +3119,7 @@ Quer controlar quais emails você recebe? Vá para: {{fullurl:{{ns:special}}:Pre
 	'usersignup-marketing-global-heading' => 'Crie',
 	'usersignup-marketing-global' => 'Comece uma wiki. Comece aos poucos e cresça bastante com a ajuda dos outros.',
 	'usersignup-marketing-creativity-heading' => 'Seja original',
-	'usersignup-marketing-creativity' => 'Use a Wikia para expressar sua criatividade com as pesquisas e listas top 10, galerias de foto e vídeo, aplicativos e mais.',
+	'usersignup-marketing-creativity' => 'Use o Fandom para expressar sua criatividade com fotos, galerias de vídeo, apps e discussões.',
 	'usersignup-createaccount-byemail' => 'Crie uma conta para outra pessoa',
 	'usersignup-error-captcha' => 'A resposta do captcha falhou, por favor, tente novamente!',
 	'usersignup-account-creation-heading' => 'Sucesso!',
@@ -3249,7 +3249,7 @@ $messages['roa-tara'] = [
 ];
 
 $messages['ru'] = [
-	'usersignup-page-title' => 'Присоединиться к Викия',
+	'usersignup-page-title' => 'Присоединиться к Фэндому',
 	'usersignup-page-title-wikiamobile' => 'Создать учётную запись',
 	'usersignup-page-captcha-label' => 'Captcha',
 	'usersignup-error-username-length' => 'Имя участника не может содержать больше {{PLURAL:$1|одного символа|$1 символов}}.',
@@ -3267,7 +3267,7 @@ $messages['ru'] = [
 	'usersignup-facebook-create-account' => 'Создать учётную запись',
 	'usersignup-facebook-email-tooltip' => 'Если вы хотите использовать другой адрес электронной почты, вы сможете изменить его позже в личных настройках.',
 	'usersignup-facebook-have-an-account-heading' => 'Уже есть учётная запись?',
-	'usersignup-facebook-have-an-account' => 'Подключить уже существующую учётную запись Викия к Facebook.',
+	'usersignup-facebook-have-an-account' => 'Подключить уже существующую учётную запись на Фэндоме к Facebook.',
 	'usersignup-facebook-proxy-email' => 'Использовать адрес эл. почты от Facebook',
 	'usersignup-user-pref-emailconfirmlink' => 'Запросить новое подтверждение электронной почты',
 	'usersignup-user-pref-confirmemail_send' => 'Отправить подтверждение электронной почты',
@@ -3346,7 +3346,7 @@ ___________________________________________
 
 Чтобы узнать свежие новости Викия, посетите http://community.wikia.com
 Хотите отписаться от этой рассылки? Перейдите на страницу {{fullurl:{{ns:special}}:Preferences}}',
-	'usersignup-heading' => 'Присоединяйтесь к Викия сегодня',
+	'usersignup-heading' => 'Присоединяйтесь к Фэндому сегодня',
 	'usersignup-heading-byemail' => 'Создать учётную запись для другого человека',
 	'usersignup-marketing-wikia' => 'Начните сотрудничество с миллионами людей со всего мира, которые собрались вместе, чтобы поделиться тем, что они знают и любят.',
 	'usersignup-marketing-login' => 'Уже есть учётная запись? [[Special:UserLogin|Войти]]',
@@ -3356,7 +3356,7 @@ ___________________________________________
 	'usersignup-marketing-global-heading' => 'Создавайте',
 	'usersignup-marketing-global' => 'Создайте вики. Начните с малого и вырастите нечто большое с помощью других участников.',
 	'usersignup-marketing-creativity-heading' => 'Будьте креативны',
-	'usersignup-marketing-creativity' => 'Используйте Викия, чтобы выразить свои идеи с помощью опросов и рейтинговых списков, фото и видео галерей, приложений и многих других вещей.',
+	'usersignup-marketing-creativity' => 'Проявите ваши творческие способности на Фэндоме с помощью фотографий, видеогалерей, приложений и обсуждений.',
 	'usersignup-createaccount-byemail' => 'Создать учётную запись для другого человека',
 	'usersignup-error-captcha' => 'Вызвать Captcha не удалось, попробуйте ещё раз.',
 	'usersignup-account-creation-heading' => 'Отлично!',
@@ -4005,7 +4005,7 @@ Ahiver on novea conte',
 ];
 
 $messages['zh-hans'] = [
-	'usersignup-page-title' => '加入Wikia',
+	'usersignup-page-title' => '加入Fandom',
 	'usersignup-page-title-wikiamobile' => '创建帐户',
 	'usersignup-page-captcha-label' => '挑战',
 	'usersignup-error-username-length' => '很抱歉，您的用户名不能超过 {{PLURAL:$1|1个字符|$1个字符}}.',
@@ -4023,7 +4023,7 @@ $messages['zh-hans'] = [
 	'usersignup-facebook-create-account' => '创建帐户',
 	'usersignup-facebook-email-tooltip' => '如果您想要使用一个不同的电子邮件地址，可以稍后在个人设置中进行更改。',
 	'usersignup-facebook-have-an-account-heading' => '已经有一个帐户了？',
-	'usersignup-facebook-have-an-account' => '将您现有的Wikia帐户和Facebook进行连接。',
+	'usersignup-facebook-have-an-account' => '将您现有的Fandom帐户和Facebook进行连接。',
 	'usersignup-facebook-proxy-email' => '匿名的Facebook电子邮件',
 	'usersignup-user-pref-emailconfirmlink' => '要求发送新的电子邮件进行确认',
 	'usersignup-user-pref-confirmemail_send' => '重新发送电子邮件进行确认',
@@ -4100,7 +4100,7 @@ Wikia团队
 ___________________________________________
 想了解Wikia最近发生了什么？请访问http://zh.community.wikia.com
 点击以下链接操作邮件获取方式: {{fullurl:{{ns:special}}:Preferences}}',
-	'usersignup-heading' => '加入Wikia',
+	'usersignup-heading' => '今天加入Fandom',
 	'usersignup-heading-byemail' => '为其他人创建帐户',
 	'usersignup-marketing-wikia' => '开始和全球成千上万的在线用户共同分享所知所感。',
 	'usersignup-marketing-login' => '已经是Wikia的用户？ [[Special:UserLogin|登录]]',
@@ -4110,7 +4110,7 @@ ___________________________________________
 	'usersignup-marketing-global-heading' => '创建',
 	'usersignup-marketing-global' => '开始一个维基。从基础开始，通过所有人共同努力不断成长。',
 	'usersignup-marketing-creativity-heading' => '原创性',
-	'usersignup-marketing-creativity' => '使用Wikia的投票，视频图片册，手机应用以及其他功能来实现你的创意。',
+	'usersignup-marketing-creativity' => '使用图片、视频册、App和讨论版在Fandom上传达你的创意。',
 	'usersignup-createaccount-byemail' => '为其他人创建帐户',
 	'usersignup-error-captcha' => '答案输入错误，请重新尝试！',
 	'usersignup-account-creation-heading' => '操作成功！',
@@ -4147,7 +4147,7 @@ ___________________________________________
 ];
 
 $messages['zh-hant'] = [
-	'usersignup-page-title' => '加入 Wikia',
+	'usersignup-page-title' => '加入Fandom',
 	'usersignup-page-captcha-label' => '模糊單詞',
 	'usersignup-error-username-length' => '哎呀，您的使用者名稱不能超過 {{PLURAL:$1|一個字符| $1 字元}}。',
 	'usersignup-error-invalid-user' => '無效使用者，請先登入。',
@@ -4164,6 +4164,9 @@ $messages['zh-hant'] = [
 	'usersignup-confirmation-heading-email-resent' => '新電子郵件已傳送',
 	'usersignup-confirmation-subheading' => '請檢查您的電子郵件',
 	'usersignup-marketing-global-heading' => '建立',
+	'usersignup-facebook-have-an-account' => '選擇將您已有的Fandom帳戶與Facebook進行連結',
+	'usersignup-heading' => '立刻加入Fandom',
+	'usersignup-marketing-creativity' => '使用圖片、影片、App和討論版在Fandom上傳達你的創意。',
 ];
 
 $messages['zh-tw'] = [

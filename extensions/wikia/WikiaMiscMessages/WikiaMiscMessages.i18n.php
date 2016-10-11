@@ -3,12 +3,12 @@
 $messages = [];
 
 $messages['en'] = [
-	'autocreatewiki-welcomebody-HTML' => '<p>Hello $2,<br /><br />
-The Wikia you created is now available at <a href="$1">$1</a>.  We hope to see you editing there soon!<br /><br />
-We have added some information and tips on your <a href="$5">user talk Page</a> to help you get started. If you have any questions, just reply to this e-mail or browse our help pages at <a href="http://help.wikia.com/">Wikia Help</a>.<br /><br />
+	'autocreatewiki-welcomebody-HTML' => '"<p>Hello $2,<br /><br />
+The wiki you created is now available at <a href="$1">$1</a>.  We hope to see you editing there soon!<br /><br />
+We have added some information and tips on your <a href="$5">user talk Page</a> to help you get started. If you have any questions, just reply to this e-mail or browse our help pages at <a href="http://help.wikia.com/">Fandom Help</a>.<br /><br />
 Good luck with the project,<br /><br />
 <a href="http://community.wikia.com/wiki/User:$4">$3</a><br />
-Wikia Community Team<br /></p>',
+Fandom Community Team<br /></p>',
 	'confirmemail_body-HTML' => '<p>Hello $2,<br /><br />
 Thank you for registering with Wikia.<br /><br />
 Please activate your new account by <a href="$3">confirming your e-mail address here</a>.<br /><br /><br />
@@ -163,7 +163,7 @@ Wikia<br /><hr />
 The login password for user "$2" is now "$3".<br /><br />
 If you did not request a new password, don’t worry. The replacement password has been sent only to you at this e-mail address. Your account is secure and you can continue to use your old password.<br /><br />
 Thanks,<br /><br />
-The Wikia Community Team<br /><br />
+The Fandom Community Team<br /><br />
 www.wikia.com<br /><hr />
 <ul>
 <li>To change your preferences or password, go to: <a href="http://community.wikia.com/wiki/Special:Preferences">User Preferences</a>.</li>
@@ -433,16 +433,22 @@ Das neue Passwort ist {{PLURAL:$5|1 Tag|$5 Tage}} gültig.<br />
 <br />
 Bitte ignoriere diese E-Mail, falls du sie nicht selbst angefordert hast. Das alte Passwort bleibt weiterhin gültig.<br />
 </p>',
-	'passwordremindertext-HTML' => '<p>
-Jemand mit der IP-Adresse $1, wahrscheinlich du selbst, hat ein neues Passwort für die Anmeldung bei {{SITENAME}} ($4) angefordert.<br />
-<br />
-Das automatisch generierte Passwort für Benutzer „$2“ lautet nun: $3<br /><br />
-
-Du solltest dich jetzt anmelden und das Passwort ändern: <a href="{{fullurl:{{ns:special}}:Userlogin}}">{{fullurl:{{ns:special}}:Userlogin}}</a><br />
-Das neue Passwort ist {{PLURAL:$5|1 Tag|$5 Tage}} gültig.<br />
-<br />
-Bitte ignoriere diese E-Mail, falls du sie nicht selbst angefordert hast. Das alte Passwort bleibt weiterhin gültig.<br />
-</p>',
+	'passwordremindertext-HTML' => '<p>Hallo!<br /><br />
+Das Passwort für Benutzer "$2" lautet jetzt "$3".<br /><br />
+Mach dir keine Sorgen, falls du kein neues Passwort angefordert hast. Das Ersatz-Passwort wurde nur an dich unter dieser E-Mail-Adresse geschickt. Dein Konto ist sicher und du kannst auch weiterhin dein altes Passwort benutzen.<br /><br />
+Vielen Dank,<br /><br />
+Dein Fandom Community-Team<br /><br />
+www.wikia.com<br /><hr />
+<ul>
+<li>Deine Einstellungen oder dein Passwort kannst du in den <a href="http://de.community.wikia.com/wiki/Spezial:Einstellungen">Benutzereinstellungen</a> ändern.</li>
+<li>Diese Passwort-Erinnerung wurde von dieser E-Mail-Adresse aus angefordert: $1.</li>
+</ul></p>',
+	'autocreatewiki-welcomebody-HTML' => '"<p>Hallo $2,<br /><br />
+Das von dir erstellte Wiki steht nun unter <a href="$1">$1</a> bereit.  Wir hoffen, dass du bald mit dem Bearbeiten beginnst!<br /><br />
+Wir haben dir auf deiner <a href="$5">Benutzer-Diskussionsseite</a> ein paar Informationen und Tipps eingestellt, damit du gleich richtig durchstarten kannst. Wenn du Fragen hast, antworte einfach auf diese E-Mail oder sieh dich auf unseren Hilfeseiten um. Hier findest du die <a href="http://help.wikia.com/">Fandom-Hilfe</a>.<br /><br />
+Viel Glück mit deinem Projekt, <br /><br />
+<a href="http://de.community.wikia.com/wiki/User:$4">$3</a><br />
+Das Fandom Community-Team<br /></p>',
 ];
 
 $messages['es'] = [
@@ -528,38 +534,22 @@ www.wikia.com
 <li>Este recordatorio de contraseña fue solicitado por la siguiente dirección: $1.</li>
 </ul>
 </p>',
-	'autocreatewiki-welcomebody-HTML' => '<p>
-Hola $2!<br />
-<br />
-¡Tu wiki ha sido creado! Aquí lo tienes: <a href="$1">$1</a><br />
-<br />
-¡Es el momento de comenzar la aventura! Hemos añadido algunos enlaces en tu <a href="$5">página de discusión</a> para ayudarte a comenzar y animarte a explorar sitios de Wikia en los que encontrarás páginas de ayuda que te podrían resultar interesantes. Si tienes preguntas o no sabes por dónde empezar, contéstanos a este email o echa un vistazo a nuestras <a href="http://ayuda.wikia.com/">páginas de ayuda</a>.<br />
-<br />
-También puedes mirar nuestro <a href="http://comunidad.wikia.com/wiki/Blog:Noticias_de_Wikia">blog de noticias</a>, donde encontrarás consejos e información sobre las nuevas funcionalidades y herramientas que añadimos a los wikis.<br />
-<br />
-¡Buena suerte con el wiki!<br />
-
-<a href="http://comunidad.wikia.com/wiki/User:$4">$3</a><br />
-Equipo comunitario de Wikia<br />
-</p>
-<br /><hr />
-<p>
-¿Quieres dejar de recibir estos mensajes? Puedes darte de baja en el servicio de emails desde tus preferencias <a href="http://comunidad.wikia.com/Especial:Preferencias">aquí</a>.
-</p>',
-	'passwordremindertext-HTML' => '$1,
-<br /><br />
-La contraseña para el usuario "$2" ha sido cambiada a "$3".
-<br /><br />
-¿No solicitaste una nueva contraseña? No te preocupes, tu cuenta está segura; la contraseña solo la hemos enviado a esta dirección de correo electrónico, así que puedes continuar usando tu antigua contraseña sin problemas.
-<br /><br />
-- Equipo comunitario de Wikia
-<br /><hr />
-<p>
+	'autocreatewiki-welcomebody-HTML' => '<p>Hola $2, <br /><br /> 
+El wiki que has creado está disponible en <a href="$1">$1</a>. ¡Esperamos verte editando allí pronto! <br />< br /> 
+Hemos añadido cierta información y consejos en tu <a href="$5"> Página de discusión de usuario</a> para ayudarle a empezar. Si tienes alguna pregunta, responde a este correo electrónico o navega por nuestras páginas de ayuda en <a href="http://help.wikia.com/">Ayuda Fandom</a>.< br /><br /> 
+Buena suerte con el proyecto, < br /><br /> 
+<a href="http://comunidad.wikia.com/wiki/Usuario:$4">$3</a>< br /> 
+Equipo comunitario de Fandom< br /></p>',
+	'passwordremindertext-HTML' => '<p>Hola,<br /><br />
+La contraseña de inicio de sesión del usuario "$2" es ahora "$3".<br /><br />
+Si no has solicitado una nueva contraseña, ¡no te preocupes! La contraseña temporal ha sido enviada solamente a esta dirección de correo electrónico. Tu cuenta está segura y puedes acceder con tu antigua contraseña.<br /><br />
+Atentamente,<br /><br />
+El equipo comunitario de Fandom<br /><br />
+www.fandom.com<br /><hr />
 <ul>
-<li>Si necesitas ayuda o consejos, visita nuestra <a href="http://comunidad.wikia.com">comunidad central</a>.</li>
-<li>¿Quieres dejar de recibir estos mensajes? Puedes darte de baja en el servicio de emails desde tus preferencias <a href="http://comunidad.wikia.com/Especial:Preferencias">aquí</a>.</li>
-</ul>
-</p>',
+<li>Para cambiar tus preferencias o contraseña, ingresa a: <a href="http://www.fandom.com/wiki/Especial:Preferencias">Preferencias de usuario</a>.</li> 
+<li>Esta contraseña temporal fue pedida por la siguiente dirección de correo electrónico: $1.</li>
+</ul></p>',
 ];
 
 $messages['fr'] = [
@@ -676,24 +666,22 @@ Si vou n’êtes pas l’auteur de cette demande, ou si vous vous souvenez à pr
 de votre ancien mot de passe et que vous ne souhaitez plus en changer, vous<br />
 pouvez ignorer ce message et continuer à utiliser votre ancien mot de passe.<br />
 </p>',
-	'autocreatewiki-welcomebody-HTML' => '<p>Bonjour $2 !<br /><br />
-Le wikia que vous avez créé est maintenant accessible via <a href="$1">$1</a>.<br /><br />
-Prêt à commencer ? Nous avons ajouté quelques liens sur <a href="$5">votre page de discussion</a> pour vous aider à commencer et vous encourager à explorer les nombreuses zones d\'aide de Wikia. Si vous avez des questions ou vous sentez un peu perdu, répondez à ce message ou regardez nos <a href="http://communaute.wikia.com/wiki/Catégorie:Aide">pages d\'aide </a>.<br /><br />
-Vous pouvez aussi regarder le <a href="http://communaute.wikia.com/wiki/Blog:Actualit%C3%A9_Wikia">blog d\'actualité</a> où vous trouverez des trucs et astuces, des informations sur les nouvelles fonctionnalités et les nouveautés sur Wikia.<br /><br />
-Bonnes modifications !<br /><br />
-L’équipe Wikia<br /><br />
-<a href="http://communaute.wikia.com/wiki/Utilisateur:$4">$3</a></p>',
-	'passwordremindertext-HTML' => '<p>
-Quelqu’un (probablement vous, ayant l’adresse IP $1) a demandé un nouveau mot de<br />
-passe pour {{SITENAME}} ($4). Un mot de passe temporaire a été créé pour<br />
-l’utilisateur « $2 » et est « $3 ». Si cela était votre intention, vous devrez<br />
-vous connecter et choisir un nouveau mot de passe.<br />
-Votre mot de passe temporaire expirera dans $5 jour{{PLURAL:$5||s}}.<br />
-<br />
-Si vou n’êtes pas l’auteur de cette demande, ou si vous vous souvenez à présent<br />
-de votre ancien mot de passe et que vous ne souhaitez plus en changer, vous<br />
-pouvez ignorer ce message et continuer à utiliser votre ancien mot de passe.<br />
-</p>',
+	'autocreatewiki-welcomebody-HTML' => '"<p>Bonjour $2,<br /><br />
+Le wiki que vous avez créé est disponible ici : <a href="$1">$1</a>.  Nous sommes impatients de voir vos prochaines contributions !<br /><br />
+Pour vous aider à vous lancer, nous avons ajouté des informations et des astuces sur votre <a href="$5">page de discussion utilisateur</a>. En cas de question, vous pouvez répondre à cet e-mail ou consulter les <a href="http://communaute.wikia.com/wiki/Aide:Contenu">pages d\'aide de Fandom</a>.<br /><br />
+Bonne réussite dans votre projet,<br /><br />
+<a href="http://communaute.wikia.com/wiki/Utilisateur:$4">$3</a><br />
+L\'équipe de la communauté Fandom<br /></p>',
+	'passwordremindertext-HTML' => '<p>Bonjour,<br /><br />
+Le mot de passe de l\'utilisateur "$2" est désormais "$3".<br /><br />
+Si vous n\'avez pas demandé de nouveau mot de passe, ne vous inquiétez pas. Le mot de passe de substitution n\'a été envoyé qu\'à vous, à cette adresse e-mail. Votre compte est sain et sauf, et vous pouvez continuer à utiliser votre ancien mot de passe.<br /><br />
+Merci,<br /><br />
+L\'équipe de la communauté Fandom<br /><br />
+www.wikia.com<br /><hr />
+<ul>
+<li>Pour modifier vos préférences ou changer de mot de passe, accédez à la page des <a href="http://community.wikia.com/wiki/Special:Preferences">préférences utilisateur</a>.</li>
+<li>Cette demande de rappel de mot de passe a été envoyée depuis l\'adresse suivante : $1.</li>
+</ul></p>',
 ];
 
 $messages['it'] = [
@@ -741,18 +729,21 @@ Una password temporanea per l\'utente "$2" è stata impostata a "$3".<br />
 Se non sei stato tu a fare la richiesta, oppure hai ritrovato la password e non desideri più cambiarla, puoi ignorare questo messaggio e continuare a usare la vecchia password.<br />
 </p>',
 	'autocreatewiki-welcomebody-HTML' => '<p>Ciao $2,<br /><br />
-La wiki che hai creato ora è disponibile su <a href="$1">$1</a>. Ci auguriamo di vedere presto i tuoi contributi!<br /><br />
-Abbiamo aggiunto alcune informazioni e suggerimenti nella tua <a href="$5">pagina di discussione</a> per aiutarti a mettere in moto la tua wiki. Per qualunque domanda, puoi rispondere a questa email o leggere le pagine di aiuto sulla <a href="http://it.community.wikia.com/wiki/Aiuto:Contenuti">Wiki della Community</a>.<br /><br />
-Buona fortuna per il tuo progetto,<br /><br /> 
+La wiki che hai creato è ora disponibile su <a href="$1">$1</a>.  Ci auguriamo di vederti contribuire lì presto!<br /><br />
+Abbiamo aggiunto delle informazioni e suggerimenti nella tua <a href="$5">pagina di discussione utente</a> per aiutarti a iniziare. Se hai domande, rispondi semplicemente a questa e-mail o leggi le nostre guide sull\'<a href="http://it.community.wikia.com/wiki/Aiuto:Contenuti">Aiuto di Fandom</a>.<br /><br />
+Buona fortuna con il tuo progetto,<br /><br />
 <a href="http://community.wikia.com/wiki/User:$4">$3</a><br />
-Wikia Community Team<br /></p>',
-	'passwordremindertext-HTML' => '<p>
-Qualcuno (probabilmente tu, con indirizzo IP $1) ha richiesto l\'invio di una nuova password di accesso a {{SITENAME}} ($4).<br />
-Una password temporanea per l\'utente "$2" è stata impostata a "$3".<br />
-È opportuno eseguire un accesso quanto prima e cambiare la password immediatamente. La password temporanea scadrà dopo {{PLURAL:$5|un giorno|$5 giorni}}.<br />
-<br />
-Se non sei stato tu a fare la richiesta, oppure hai ritrovato la password e non desideri più cambiarla, puoi ignorare questo messaggio e continuare a usare la vecchia password.<br />
-</p>',
+Team della community di Fandom<br /></p>',
+	'passwordremindertext-HTML' => '<p>Ciao,<br /><br />
+La password di accesso per l\'utente "$2" è ora "$3".<br /><br />
+Se non hai richiesto una nuova password, non ti preoccupare. La password sostitutiva è stata inviata solo a te a questo indirizzo e-mail. Il tuo account è sicuro e puoi continuare a usare la tua vecchia password.<br /><br />
+Grazie,<br /><br />
+Il team della community di Fandom<br /><br />
+www.wikia.com<br /><hr />
+<ul>
+<li>Per modificare le tue preferenze o la password, vai su: <a href="http://it.community.wikia.com/wiki/Speciale:Preferenze">Preferenze Utente</a>.</li>
+<li>Questo promemoria sulla password è stato richiesto dal seguente indirizzo: $1.</li>
+</ul></p>',
 ];
 
 $messages['pl'] = [
@@ -809,15 +800,22 @@ Tymczasowe hasło wygaśnie za {{PLURAL:$5|1 dzień|$5 dni}}.<br />
 <br />
 Jeśli to nie Ty prosiłeś o przesłanie hasła lub przypomniałeś sobie hasło i nie chcesz go zmieniać, wystarczy, że zignorujesz tę wiadomość i dalej będziesz się posługiwać swoim dotychczasowym hasłem.<br />
 </p>',
-	'passwordremindertext-HTML' => '<p>
-Ktoś (prawdopodobnie Ty, spod adresu IP $1)<br />
-poprosił o przesłanie nowego hasła do {{GRAMMAR:D.lp|{{SITENAME}}}} ($4).<br/ >
-Dla użytkownika „$2” zostało wygenerowane tymczasowe hasło i jest nim „$3”.<br />
-Jeśli było to zamierzone działanie, to po zalogowaniu się, musisz podać nowe hasło. <br />
-Tymczasowe hasło wygaśnie za {{PLURAL:$5|1 dzień|$5 dni}}.<br />
-<br />
-Jeśli to nie Ty prosiłeś o przesłanie hasła lub przypomniałeś sobie hasło i nie chcesz go zmieniać, wystarczy, że zignorujesz tę wiadomość i dalej będziesz się posługiwać swoim dotychczasowym hasłem.<br />
-</p>',
+	'passwordremindertext-HTML' => '<p>Cześć,<br /><br />
+Hasło do konta użytkownika „$2” zostało zmienione na „$3”.<br /><br />
+Jeżeli nie prosiłeś o zmianę hasła, nie przejmuj się. Nowe hasło zostało wysłane do ciebie wyłącznie pod ten adres e-mail. Twoje konto jest bezpieczne i możesz nadal używać swojego starego hasła.<br /><br />
+Pozdrawiamy,<br /><br />
+Zespół Społeczności Fandom<br /><br />
+http://pl.wikia.com/Wikia<br /><hr />
+<ul>
+<li>Żeby zmienić hasło lub ustawienia konta, wejdź na stronę <a href="http://community.wikia.com/wiki/Special:Preferences">Preferencje Użytkownika</a>.</li>
+<li>Prośba o przypomnienie hasła została wysłana z następującego adresu IP: $1.</li>
+</ul></p>',
+	'autocreatewiki-welcomebody-HTML' => '"<p>Cześć $2,<br /><br />
+Wiki, którą stworzyłeś jest dostępna tutaj: <a href="$1">$1</a>. Mamy nadzieję już niedługo zobaczyć pierwsze efekty twoich edycji!<br /><br />
+Do twojej <a href="$5">strony dyskusji</a> dodaliśmy przydatne informacje i porady, które pomogą Ci postawić pierwsze kroki z Fandom. Jeżeli masz jakieś pytania, po prostu odpisz na ten e-mail lub poszukaj odpowiedzi na <a href="http://spolecznosc.wikia.com/wiki/Pomoc:Zawarto%C5%9B%C4%87">stronach pomocy portalu Fandom</a>.<br /><br />
+Powodzenia,<br /><br />
+<a href="http://community.wikia.com/wiki/User:$4">$3</a><br />
+Zespół Społeczności portalu Fandom<br /></p>',
 ];
 
 $messages['sv'] = [
@@ -872,40 +870,40 @@ www.wikia.com<br /><hr />
 ];
 
 $messages['zh-hans'] = [
-	'autocreatewiki-welcomebody-HTML' => '<p>嗨 $2,<br /><br />
-您创建的Wiki已经可以在 <a href="$1">$1</a>访问。 期望很快能看到您的编辑！<br /><br />
-我们在您的<a href="$5">用户对话页</a>提供了一些资讯来协助您开始。如果有任何问题，可以浏览我们的 <a href="http://zh.community.wikia.com/wiki/help:content">帮助中心</a>.<br /><br />
-祝一切顺利。<br /><br />
-<a href="http://community.wikia.com/wiki/User:$4">$3</a><br />
-Wikia社区团队<br /></p>',
-	'passwordremindertext-HTML' => '<p>您好<br /><br />
-用户"$2" 的密码已更新为"$3"。<br /><br />
-如果您并没有申请新帐号，请别担心。这个临时密码仅仅由这个电子信箱寄给您，因此您的帐号是安全的，您也可以继续使用旧密码登入。<br /><br />
-谢谢,<br /><br />
-Wikia 社区团队<br /><br />
-www.wikia.com<br /><hr />
+	'autocreatewiki-welcomebody-HTML' => '<p>您好$2,<br /><br />
+您所创建的维基已经存在于<a href="$1">$1</a>。我们希望您可以尽快去那里编辑！<br /><br />
+同时，我们已经在您的<a href="$5">用户对话页</a>添加了一些入门信息和技巧供您查看。如果您有任何问题，可以回复这封邮件或者访问<a href="http://zh.help.wikia.com/">Fandom帮助</a>查看所有帮助页。<br /><br />
+祝您编辑一切顺利！<br /><br />
+<a href="http://zh.community.wikia.com/wiki/User:$4">$3</a><br />
+Fandom社区团队<br /></p>',
+	'passwordremindertext-HTML' => '<p>你好，<br /><br />
+用户"$2"的登入密码是"$3"。<br /><br />
+如果您没有申请一个新的密码，请不要担心。重置密码只发送至您所使用的电子邮件，您的帐户十分安全。您可以继续使用旧密码登入。 <br /><br />
+谢谢！<br /><br />
+Fandom社区团队<br /><br />
+www.wikia.com<br /><br />
 <ul>
-<li>要改更您的个人设定或密码，请进入: <a href="http://zh.community.wikia.com/wiki/Special:Preferences">用户设定</li>
-<li>这个密码提醒是由以下IP位址所申请发送： $1.</li>
+<li>若要更改您的个人设置或密码，请访问：<a href="http://zh.community.wikia.com/wiki/Special:Preferences">个人设置</a>。</li>
+<li>密码提醒来源于以下地址：$1。</li>
 </ul></p>',
 ];
 
 $messages['zh-hant'] = [
-	'autocreatewiki-welcomebody-HTML' => '<p>嗨 $2,<br /><br />
-您創建的Wiki已經可以在 <a href="$1">$1</a>訪問。 期望很快能看到您的編輯！<br /><br />
-我們在您的<a href="$5">用戶對話頁</a>提供了一些資訊來協助您開始。如果有任何問題，可以瀏覽我們的 <a href="http://zh.community.wikia.com/wiki/help:content">幫助中心</a>.<br /><br />
-祝一切順利。<br /><br />
+	'autocreatewiki-welcomebody-HTML' => '<p>您好$2，<br /><br />
+您所創建的wiki已經存在於<a href="$1">$1</a>。我們希望您可以盡快去那裡編輯！<br /><br />
+同時，我們已經在您的<a href="$5">用戶對話頁</a>添加了一些入門訊息和技巧供您查看。如果您有任何問題，可以回复這封郵件或者訪問<a href="http://help.wikia.com/">Fandom幫助</a>查看所有幫助頁。<br /><br />
+祝您編輯一切順利！<br /><br />
 <a href="http://community.wikia.com/wiki/User:$4">$3</a><br />
-Wikia社區團隊<br /></p>',
-	'passwordremindertext-HTML' => '<p>您好<br /><br />
-用戶"$2" 的密碼已更新為"$3"。<br /><br />
-如果您並沒有申請新帳號，請別擔心。這個臨時密碼僅僅由這個電子信箱寄給您，因此您的帳號是安全的，您也可以繼續使用舊密碼登入。<br /><br />
-謝謝,<br /><br />
-Wikia 社區團隊<br /><br />
-www.wikia.com<br /><hr />
+Fandom社區團隊<br /></p>',
+	'passwordremindertext-HTML' => '<p>你好，<br /><br />
+用戶"$2"的登入密碼是"$3"。<br /><br />
+如果您沒有申請一個新的密碼，請不要擔心。重置密碼只發送至您所使用的電子郵件，您的帳戶十分安全。您可以繼續使用舊密碼登入。<br /><br />
+謝謝！<br /><br />
+Fandom社區團隊<br /><br />
+www.wikia.com<br /><br />
 <ul>
-<li>要改更您的個人設定或密碼，請進入: <a href="http://zh.community.wikia.com/wiki/Special:Preferences">用戶設定</li>
-<li>這個密碼提醒是由以下IP位址所申請發送： $1.</li>
+<li>若要更改您的個人設置或密碼，請訪問：<a href="http://community.wikia.com/wiki/Special:Preferences">個人設置</a>。</li>
+<li>密碼提醒來源於以下地址：$1。</li>
 </ul></p>',
 ];
 
@@ -948,20 +946,63 @@ www.wikia.com<br /><hr />
 ];
 
 $messages['ja'] = [
-	'passwordremindertext-HTML' => '$1 さん、
-<br /><br />
-ユーザー「$2」のログインパスワードが「$3」に変更されました。
-<br /><br />
-新しいパスワードをリクエストした覚えがありませんか？ 心配いりません。あなたのアカウントは安全です。パスワードの変更はこの電子メールアドレスにのみ送信されています。古いパスワードの利用を継続することができます。
-<br /><br />
-- ウィキア・コミュニティ・サポート
-
-<br /><hr />
-<p>
+	'passwordremindertext-HTML' => '<p>こんにちは。<br /><br />
+$2さんのログイン用パスワードが「$3」になりました。<br /><br />
+新しいパスワードをリクエストしなかった場合でも、ご安心ください。この新しいパスワードはこのメールアドレス宛にのみ送信されたもので、お使いのアカウントは安全に保護されています。また、以前のパスワードを引き続きお使いいただけます。<br /><br />
+今後ともFnadomをよろしくお願いいたします。<br /><br />
+Fandomコミュニティ・チーム<br /><br />
+ja.wikia.com<br /><hr />
 <ul>
-<li><a href="http://ja.community.wikia.com/wiki/">コミュニティセントラル</a>でヘルプやアドバイスを探してみよう。</li>
-<li>私たちが送信するメッセージの受信を減らしたいですか？ <a href="http://ja.community.wikia.com/Special:Preferences">こちら</a>にて定期購読解除や電子メールの設定変更をすることができます。</li>
-</ul>
-</p>',
+<li>個人設定やパスワードを変更する場合は、次のページにアクセスしてください：<a href="http://ja.community.wikia.com/wiki/特別:個人設定">個人設定</a></li>
+<li>このパスワードのお知らせは次のIPアドレスからリクエストされました：$1</li>
+</ul></p>',
+	'autocreatewiki-welcomebody-HTML' => '<p>$2さん<br /><br />
+このたび作成されたwikiに、<a href="$1">$1</a>からアクセスしていただけるようになりました。さっそく、編集をお楽しみください。<br /><br />
+なお、<a href="$5">ユーザー・トークページ</a>にて基本情報やヒントをいくつかご紹介しています。その他ご不明な点がある場合、このメールにご返信いただくか、<a href="http://ja.community.wikia.com/wiki/ヘルプ:コンテンツ">Fandomヘルプページ</a>をご参照ください。<br /><br />
+今後ともFandomをよろしくお願いいたします。<br /><br />
+<a href="http://ja.community.wikia.com/wiki/ユーザー:$4">$3</a><br />
+Fandomコミュニティ・チーム<br /></p>',
+];
+
+$messages['qqq'] = [
+	'autocreatewiki-welcomebody-HTML' => 'Missing documentation',
+	'passwordremindertext-HTML' => 'Missing documentation',
+];
+
+$messages['pt'] = [
+	'autocreatewiki-welcomebody-HTML' => '<p>Olá $2,<br/><br /> 
+A wiki que você criou está disponível agora em <a href="$1">$1</a>. Esperamos vê-lo editando por lá em breve!
+<br />< br /> 
+Nós adicionamos algumas informações e dicas em seu <a href="$5">mural de mensagens </a> para ajudá-lo a começar. Se você tiver alguma dúvida, basta responder a este e-mail ou procurar em nossas páginas de ajuda em <a href="http://comunidade.wikia.com/Ajuda:Conteúdos"> Ajuda do Fandom</a>.< br /><br />
+Boa sorte com o projeto, <br />< br / >
+<a href="http://comunidade.wikia.com/wiki/User:$4">$3</a><br />
+ Equipe da comunidade Fandom <br /></p>',
+	'passwordremindertext-HTML' => '<p>Olá,<br /><br />
+A senha do usuário "$2" é agora "$3".<br /><br />
+Se você não solicitou uma nova senha, não se preocupe. A senha de substituição foi enviada apenas para você neste endereço de e-mail. Sua conta é segura e você pode continuar a usar sua senha antiga.<br /><br />
+Obrigado,<br /><br />
+Equipe da comunidade Fandom<br /><br />
+www.wikia.com<br /><hr />
+<ul>
+<li>Para alterar suas preferências ou a senha, vá para <a href="http://comunidade.wikia.com/wiki/Especial:Preferências">Preferências</a>.</li>
+<li>Este lembrete de senha foi solicitado no seguinte endereço: $1.</li>
+</ul></p>',
+];
+
+$messages['ru'] = [
+	'autocreatewiki-welcomebody-HTML' => '<p>Здравствуйте, $2!<br /><br />
+Созданная вами вики доступна по адресу <a href="$1">$1</a>. Мы надеемся, что вы скоро начнете её развивать. <br /><br />
+Чтобы вам помочь, мы добавили информацию и полезные советы на вашу <a href="$5">стену обсуждения</a>. Если у вас есть вопросы, ответьте на это письмо или просмотрите наши справочные статьи в <a href="http://ru.community.wikia.com/wiki/Справка:Содержание">Справке Фэндома</a>. <br /><br />Желаем вам удачи в работе над вашим википроектом!<br /><br /><a href="http://ru.community.wikia.com/wiki/User:$4">$3</a><br /> 
+Команда Фэндома<br /></p>',
+	'passwordremindertext-HTML' => '<p>Здравствуйте,<br /><br />
+Новый пароль для учётной записи «$2» — «$3».<br /><br />
+Если вы не запрашивали смену пароля, не переживайте. Новый пароль был отправлен только вам на этот адрес электронной почты. Ваша учётная запись надежно защищена и вы можете продолжать использовать ваш старый пароль.<br /><br />
+Команда Фэндома<br /><br />
+www.wikia.com<br /><br />
+<ul>
+<li>Чтобы изменить настройки или пароль, перейдите в <a href="http://community.wikia.com/wiki/Special:Preferences">личные настройки</a>.
+</li>
+<li>Запрос на отправку этого письма был получен с адреса $1.</li>
+</ul></p>',
 ];
 
