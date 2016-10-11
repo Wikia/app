@@ -110,7 +110,8 @@ class WikiaTracer {
 			] )
 		);
 		if ( $this->contextSource->getContext() !== $newContext ) {
-			$this->contextSource->setContext( $newContext ); // this will notify listeners
+			// this will notify listeners
+			$this->contextSource->setContext( $newContext );
 		}
 	}
 
@@ -130,9 +131,12 @@ class WikiaTracer {
 
 		$context = [
 			'app_name' => self::APPLICATION_NAME,
-			'app_version' => $this->getAppVersion(), // please note that this field won't always be filled (if logging is called pretty early)
-			'datacenter' => $wgWikiaDatacenter, # sjc / res / poz
-			'environment' => $wgWikiaEnvironment, # dev / prod
+			// please note that this field won't always be filled (if logging is called pretty early)
+			'app_version' => $this->getAppVersion(),
+			// sjc / res / poz
+			'datacenter' => $wgWikiaDatacenter,
+			// dev / prod
+			'environment' => $wgWikiaEnvironment,
 		];
 
 		if ( !empty( $wgDBname ) ) {
@@ -254,7 +258,8 @@ class WikiaTracer {
 
 		if ( !isset( $instance ) ) {
 			$instance = new self();
-			self::updateInstanceFromMediawiki(); // mainly to trigger the hook
+			// mainly to trigger the hook
+			self::updateInstanceFromMediawiki();
 		}
 
 		return $instance;
@@ -298,8 +303,10 @@ class WikiaTracer {
 	public function getPublicHeaders() {
 		return $this->removeNullEntries( [
 			self::TRACE_ID_HEADER_NAME => $this->traceId,
-			self::LEGACY_TRACE_ID_HEADER_NAME => $this->traceId, // duplicated until we move to X-Trace-Id everywhere
-			self::PARENT_SPAN_ID_HEADER_NAME => $this->spanId, // pass the current span ID to the subrequest, it will be logged as parent_span_id there
+			// duplicated until we move to X-Trace-Id everywhere
+			self::LEGACY_TRACE_ID_HEADER_NAME => $this->traceId,
+			// pass the current span ID to the subrequest, it will be logged as parent_span_id there
+			self::PARENT_SPAN_ID_HEADER_NAME => $this->spanId,
 			self::SHIELDS_HEADER_NAME => $this->sjcShields,
 		] );
 	}
