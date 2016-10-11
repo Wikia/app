@@ -27,6 +27,9 @@ class WikiaTracer {
 	const REQUEST_PATH_HEADER_NAME = 'X-Request-Path';
 
 	const ENV_VARIABLES_PREFIX = 'WIKIA_TRACER_';
+	
+	const SERVER_REQUEST_URI = 'REQUEST_URI';
+	const SERVER_SERVER_NAME = 'SERVER_NAME';
 
 	private $traceId;
 	private $sjcShields;
@@ -38,8 +41,6 @@ class WikiaTracer {
 	private $appVersion = '';
 
 	private $requestPath = [];
-	const SERVER_REQUEST_URI = 'REQUEST_URI';
-	const SERVER_SERVER_NAME = 'SERVER_NAME';
 
 	/**
 	 * @var ContextSource
