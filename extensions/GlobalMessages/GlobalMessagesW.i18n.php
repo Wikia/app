@@ -2725,6 +2725,7 @@ També podeu [[Special:EditWatchlist|utilitzar l\'editor estàndard]].',
 	'watchlisttools-edit' => 'Visualitza i edita la llista de seguiment',
 	'watchlisttools-raw' => 'Edita la llista de seguiment sense format',
 	'wikia-days-ago' => 'fa $1 {{PLURAL:$1|dia|dies}}',
+	'wikia-hours-ago' => 'fa $1 {{PLURAL:$1|hora|hores}}',
 ];
 
 $messages['cbk-zam'] = [
@@ -3680,6 +3681,7 @@ Wir arbeiten daran, dieses Problem zu beheben, vielen Dank für deine Geduld! We
 	'widgets' => 'Widgets-Liste',
 	'widgetwikipage' => 'Diese \'\'Nachricht\'\' ist ein \'\'einfacher\'\' Test des WikiPage-Widgets. Du kannst \'\'\'den Inhalt bearbeiten\'\'\' indem du [[Mediawiki:Widgetwikipage|diese Seite]] im MediaWiki-Namensraum anpasst.',
 	'wikia-days-ago' => 'vor $1 {{PLURAL:$1|Tag|Tagen}}',
+	'wikia-hours-ago' => 'vor $1 {{PLURAL:$1|Stunde|Stunden}}',
 ];
 
 $messages['de-formal'] = [
@@ -4383,6 +4385,7 @@ Estamos trabajando para solucionar el problema, gracias por tu comprensión! Si 
 	'widgets' => 'Lista de Widgets',
 	'widgetwikipage' => 'Este \'\'mensaje\'\' es un \'\'\'simple\'\'\' ejemplo del widget Wikipage. Tú puedes \'\'\'editar el contenido del widget\'\'\' simplemente [[Mediawiki:$1|editando esta página]] en MediaWiki.',
 	'wikia-days-ago' => 'hace $1 {{PLURAL:$1|día|días}}',
+	'wikia-hours-ago' => 'hace $1 {{PLURAL:$1|hora|horas}}',
 ];
 
 $messages['et'] = [
@@ -4887,6 +4890,7 @@ Voit myös muokata listaa [[Special:EditWatchlist|tavalliseen tapaan]].',
 	'widgets' => 'Vekottimien lista',
 	'widgetwikipage' => 'Tämä \'\'viesti\'\' on \'\'\'yksinkertaisesti\'\'\' WikiSivu vekottimen testausta. Voit vaihtaa täman oletus viestiin yksinkertaisesti [[Mediawiki:Widgetwikipage|muokkaamalla sivua]] järjestelmäviestien nimiavaruudessa.',
 	'wikia-days-ago' => '$1 {{PLURAL:$1|päivä|päivää}} sitten',
+	'wikia-hours-ago' => '$1 {{PLURAL:$1|tunti|tuntia}} sitten',
 ];
 
 $messages['fiu-vro'] = [
@@ -5145,6 +5149,7 @@ Nous essayons de résoudre le problème et vous remercions de votre patience. S\
 	'widget-title-wikiapartners' => 'Nos partenaires',
 	'widgets' => 'Liste des widgets',
 	'wikia-days-ago' => 'il y a $1 {{PLURAL:$1|jour|jours}}',
+	'wikia-hours-ago' => 'il y a $1 {{PLURAL:$1|heure|heures}}',
 ];
 
 $messages['frc'] = [
@@ -6882,6 +6887,7 @@ minden egyes sor egy figyelt lap címe. Ha kész vagy, kattints a lista alatt ta
 	'widget-title-wikipage' => 'Wikioldal a kiegészítõben',
 	'widget-desc-wikipage' => 'Egy szócikk jeleníthetõ meg a kiegészítõben. Remek lehetõség saját kiegészítõ létrehozására!',
 	'wikia-days-ago' => '$1 napja',
+	'wikia-hours-ago' => '$1 órája',
 ];
 
 $messages['hy'] = [
@@ -7608,6 +7614,7 @@ Si noti che è anche possibile [[Special:EditWatchlist|modificare la lista con l
 	'widget-title-wikiamessages' => 'Messaggi di Fandom',
 	'wikicitieshome' => 'Pagina principale di Fandom',
 	'wikia-days-ago' => '$1 {{PLURAL:$1|giorno|giorni}} fa',
+	'wikia-hours-ago' => '$1 {{PLURAL:$1|ora|ore}} fa',
 ];
 
 $messages['iu'] = [
@@ -7824,6 +7831,7 @@ $messages['ja'] = [
 	'widgets' => 'ウィジェットリスト',
 	'widgetwikipage' => 'このメッセージは、WikiPageウィジェットの簡単なサンプルです。[[Mediawiki:$1]]を編集することでこの内容を変更することが出来ます。',
 	'wikia-days-ago' => '$1日前',
+	'wikia-hours-ago' => '$1時間前',
 ];
 
 $messages['jam'] = [
@@ -9079,6 +9087,7 @@ $messages['ko'] = [
 	'widget-community-more' => '더 보기',
 	'widget-title-contribs' => '기여 내역',
 	'wikia-days-ago' => '$1일 전',
+	'wikia-hours-ago' => '$1시간 전',
 ];
 
 $messages['ko-kp'] = [
@@ -12936,6 +12945,7 @@ Dziękujemy za cierpliwość! Właśnie pracujemy nad rozwiązaniem tego problem
 	'widget-title-community' => 'Najnowsza aktywność',
 	'widget-title-languages' => 'Wersje językowe',
 	'wikia-days-ago' => '$1 {{PLURAL:$1|dzień temu|dni temu}}',
+	'wikia-hours-ago' => '$1 {{PLURAL:$1|godzinę temu|godziny temu|godzin temu}}',
 ];
 
 $messages['pms'] = [
@@ -14054,6 +14064,7 @@ $messages['ru'] = [
 	'widgets' => 'Список виджетов',
 	'widgetwikipage' => 'Это \'\'сообщение\'\' - \'\'\'просто\'\'\' проверка работоспособности виджета "Страница вики". Вы можете изменить этот текст, выводимый по умолчанию, [[Mediawiki:Widgetwikipage|отредактировав страницу]] в пространстве имён MediaWiki.',
 	'wikia-days-ago' => '$1 {{PLURAL:$1|день|дня|дней}} назад',
+	'wikia-hours-ago' => '$1 {{PLURAL:$1|час|часа|часов}} назад',
 ];
 
 $messages['rue'] = [
@@ -15925,6 +15936,7 @@ pl hu es de',
 	'widgets' => 'Prylar lista',
 	'widgetwikipage' => 'Detta meddelande är ett \'\'\'enkelt\'\'\' test av WikiSida pryl. Du kan \'\'\'redigera innehållet i pryl\'\'\' genom att [[Mediawiki:Widgetwikipage|redigera sidan]] i namnrymden MediaWiki.',
 	'wikia-days-ago' => '$1 {{PLURAL:$1|dag|dagar}} sedan',
+	'wikia-hours-ago' => '$1 {{PLURAL:$1|timme|timmar}} sedan',
 ];
 
 $messages['sw'] = [
@@ -17599,6 +17611,7 @@ Bạn cũng có thể [[Special:EditWatchlist|dùng trang sửa đổi bình th�
 	'watchlisttools-raw' => 'Sửa danh sách theo dõi dạng thô',
 	'wikia-pagetitle' => '$1 – Wikia',
 	'wikia-days-ago' => '$1 ngày trước',
+	'wikia-hours-ago' => '$1 giờ trước',
 ];
 
 $messages['vls'] = [
@@ -18429,6 +18442,7 @@ $messages['zh-hans'] = [
 	'wikicitieshome' => 'Fandom之家',
 	'widgets' => 'Widgets列表',
 	'wikia-days-ago' => '$1 {{PLURAL:$1|天|天}}前',
+	'wikia-hours-ago' => '$1 {{PLURAL:$1|小时|小时}}前',
 ];
 
 $messages['zh-hant'] = [
@@ -18518,6 +18532,7 @@ $messages['zh-hant'] = [
 	'wikicitieshome' => 'Fandom家園',
 	'widgets' => 'Widgets列表',
 	'wikia-days-ago' => '$1 {{PLURAL:$1|天|天}} 以前',
+	'wikia-hours-ago' => '$1小時前',
 ];
 
 $messages['zh-tw'] = [
@@ -18533,6 +18548,7 @@ $messages['zh-tw'] = [
 	'watch' => '關注',
 	'widgets' => 'Widgets列表',
 	'wikia-days-ago' => '$1 {{PLURAL:$1|天|天}}前',
+	'wikia-hours-ago' => '$1小時前',
 ];
 
 $messages['zh-yue'] = [
@@ -18566,11 +18582,13 @@ $messages['zh-hk'] = [
 	'watch' => '關注',
 	'widgets' => 'Widgets列表',
 	'wikia-days-ago' => '$1 {{PLURAL:$1|天|天}} 以前',
+	'wikia-hours-ago' => '$1小時前',
 ];
 
 $messages['zh'] = [
 	'watch' => '关注',
 	'widgets' => 'Widgets列表',
 	'wikia-days-ago' => '$1 {{PLURAL:$1|天|天}}前',
+	'wikia-hours-ago' => '于$1{{PLURAL:$1|小时|小时}}之前',
 ];
 
