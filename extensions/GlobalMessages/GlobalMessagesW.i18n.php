@@ -3706,6 +3706,7 @@ Wir arbeiten daran, dieses Problem zu beheben, vielen Dank für deine Geduld! We
 	'wt_show_period' => 'Zeige Periode',
 	'wt_show_referrers' => 'Zeige Referrers',
 	'wysiwygcaption' => 'Grafischer Editor',
+	'wikipedia_skin' => 'Wikipedia-Skin',
 ];
 
 $messages['de-formal'] = [
@@ -4426,6 +4427,7 @@ Estamos trabajando para solucionar el problema, gracias por tu comprensión! Si 
 	'wt_show_period' => 'Mostrar periodo',
 	'wt_show_referrers' => 'Mostrar referencias',
 	'wysiwygcaption' => 'Edición visual',
+	'wikipedia_skin' => 'Piel de Wikipedia',
 ];
 
 $messages['et'] = [
@@ -4778,6 +4780,7 @@ $messages['fa'] = [
 	'wikia-language-top' => '$1 زبان برتر',
 	'wikicities-nav' => 'ویکیا',
 	'wt_shoutbox_initial_message' => 'سلام... به چت خوش‌آمدید!',
+	'wikipedia_skin' => 'پوستۀ ویکی‌پدیا',
 ];
 
 $messages['ff'] = [
@@ -4948,6 +4951,7 @@ Voit myös muokata listaa [[Special:EditWatchlist|tavalliseen tapaan]].',
 	'wt_help_startup' => '|Eivätkö vekottimet ole tuttuja sinulle?||Avaa käyttäjävalikko ja klikkaa "Hallinnoi vekottimia"...',
 	'wt_shoutbox_initial_message' => 'Hei... tervetuloa chattiin!',
 	'wysiwygcaption' => 'Visuaalinen muokkaaminen',
+	'wikipedia_skin' => 'Wikipedian ulkoasu',
 ];
 
 $messages['fiu-vro'] = [
@@ -5214,6 +5218,7 @@ Nous essayons de résoudre le problème et vous remercions de votre patience. S\
 	'wikia-pagination-next' => 'Suivant',
 	'wikia-pagination-prev' => 'Précédent',
 	'wysiwygcaption' => 'Éditeur visuel',
+	'wikipedia_skin' => 'Apparence Wikipédia',
 ];
 
 $messages['frc'] = [
@@ -7919,6 +7924,7 @@ $messages['ja'] = [
 	'wt_shoutbox_initial_message' => 'さあ、チャットの開始です!',
 	'wt_show_external_urls' => '外部のURLだけを表示',
 	'wt_show_internal_urls' => '内部リンクだけを表示',
+	'wikipedia_skin' => 'ウィキペディアの外装',
 ];
 
 $messages['jam'] = [
@@ -14172,6 +14178,7 @@ $messages['ru'] = [
 	'wikia-pagination-next' => 'След.',
 	'wikia-pagination-prev' => 'Предыд.',
 	'wysiwygcaption' => 'Визуальное редактирование',
+	'wikipedia_skin' => 'Оформление Википедии',
 ];
 
 $messages['rue'] = [
