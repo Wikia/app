@@ -67,5 +67,8 @@
 	"uploadwindow": "Prozor za slanje",
 	"sf_deletionlog": "Istorija brisanja",
 	"sf_form_freetextlabel": "Slobodan tekst",
-	"sf-select2-selection-too-big": "Ovo polje ne može da sadrži više od {{PLURAL:$1|$1 vrednosti}}."
+	"sf-select2-selection-too-big": "Ovo polje ne može da sadrži više od {{PLURAL:$1|$1 vrednosti}}.",
+	"sf-datepicker-dateformatlong": "d MM yy",
+	"sf-datepicker-dateformatshort": "dd.mm.yy",
+	"sf-datepicker-firstdayofweek": "1"
 }

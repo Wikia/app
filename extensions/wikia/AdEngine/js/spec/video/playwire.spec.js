@@ -21,7 +21,10 @@ describe('ext.wikia.adEngine.video.playwire', function () {
 			},
 			log: noop,
 			parent: {
-				appendChild: noop
+				appendChild: noop,
+				ownerDocument: {
+					defaultView: {}
+				}
 			}
 		};
 
