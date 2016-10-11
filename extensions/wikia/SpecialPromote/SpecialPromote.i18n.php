@@ -151,7 +151,7 @@ $messages['fr'] = [
 	'promote-statusbar-approved' => 'Super ! $1 est promu sur [http://fr.wikia.com fr.wikia.com] !',
 	'promote-statusbar-rejected' => 'Une ou plusieurs de vos images n\'ont pas été approuvées. [[Special:Contact|Demander pourquoi]].',
 	'promote-error-oasis-only' => 'Cette page n\'est pas supportée avec cette apparence. Veuillez [[Special:Preferences|passer à l\'apparence Wikia]] pour accéder à cette fonctionnalité.',
-	'wikiahome-image-auto-uploaded-comment' => 'Image générée automatiquement pour être utilisée sur http://fr.wikia.com/ &#8212; retrouvez plus d\'informations sur le blog dédié&nbsp;: http://communaute.wikia.com/wiki/Blog:Actualit%C3%A9_Wikia',
+	'wikiahome-image-auto-uploaded-comment' => 'Image générée automatiquement pour être utilisée sur http://fr.wikia.com/ &#8212; retrouvez les dernières informations sur le blog Actualité Wikia&nbsp;: http://communaute.wikia.com/wiki/Blog:Actualité_Wikia',
 	'promote-desc' => 'La page Special:Promote est activée pour les administrateurs afin qu\'ils ajoutent des informations sur leur wikia. Après contrôle de ces informations elles s\'affichent sur wikia.com.',
 	'promote-extension-under-rework-header' => 'Special:Promote est désactivé',
 	'promote-extension-under-rework' => 'Le module Special:Promote a été désactivé. Une nouvelle fonctionnalité est actuellement en cours d\'élaboration et sera annoncée prochainement. Si vous avez des questions, n\'hésitez pas à nous contacter via [[Special:Contact]].',
@@ -267,6 +267,7 @@ $messages['pl'] = [
 	'promote-upload-image-uploads-disabled' => 'Ten obraz nie może zostać zaktualizowany przez stronę pliku. Możesz to zrobić przez stronę Specjalna:Promocja.',
 	'promote-extension-under-rework-header' => 'Specjalna:Promocja jest wyłączona',
 	'promote-extension-under-rework' => 'Strona Specjalna:Promocja została wyłączona. Pracujemy nad nową funkcją, która niedługo zostanie zapowiedziana. Jeśli masz jakieś pytania, śmiało pisz na [[Specjalna:Kontakt]].',
+	'wikiahome-image-auto-uploaded-comment' => 'Automatycznie generowany obraz wykorzystywany na http://wikia.com/ - dowiedz się więcej na oficjalnym blogu Wikii - http://spolecznosc.wikia.com/wiki/Blog:Wikia_News',
 ];
 
 $messages['pt'] = [
@@ -381,6 +382,7 @@ $messages['it'] = [
 	'promote-upload' => 'Inserisci immagini',
 	'promote-wrong-rights' => 'Accidenti, sembra che tu non abbia i permessi per accedere a questa pagina. Assicurati di aver effettuato il login!',
 	'promote' => 'Promuovi',
+	'wikiahome-image-auto-uploaded-comment' => 'Auto-generated image to be used on http://wikia.com/ – stay tuned for more info on the Staff Blog: http://community.wikia.com/wiki/Blog:Wikia_Staff_Blog',
 ];
 
 $messages['ru'] = [
@@ -434,6 +436,7 @@ $messages['ru'] = [
 	'promote-upload' => 'Изображения',
 	'promote-wrong-rights' => 'Вы не имеете доступа к этой странице. Убедитесь, что вы вошли в систему!',
 	'promote' => 'Продвижение',
+	'wikiahome-image-auto-uploaded-comment' => 'Автоматически созданное изображение, которое будет использоваться на  http://wikia.com/ – следите за обновлением информации в блоге сотрудников Викия: http://community.wikia.com/wiki/Blog:Wikia_Staff_Blog',
 ];
 
 $messages['zh'] = [
