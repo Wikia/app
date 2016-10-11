@@ -3690,6 +3690,8 @@ Wir arbeiten daran, dieses Problem zu beheben, vielen Dank für deine Geduld! We
 	'wikia-seconds-ago' => 'vor $1 {{PLURAL:$1|Sekunde|Sekunden}}',
 	'wikia-pagination-next' => 'Weiter',
 	'wikia-pagination-prev' => 'Zurück',
+	'wikicities-nav' => 'Wikia',
+	'wikicitieshome-url' => 'http://de.wikia.com/',
 ];
 
 $messages['de-formal'] = [
@@ -4746,6 +4748,7 @@ $messages['fa'] = [
 	'widgets' => 'فهرست ابزار',
 	'wikia-language-all' => 'تمام زبان‌ها',
 	'wikia-language-top' => '$1 زبان برتر',
+	'wikicities-nav' => 'ویکیا',
 ];
 
 $messages['ff'] = [
@@ -4907,6 +4910,7 @@ Voit myös muokata listaa [[Special:EditWatchlist|tavalliseen tapaan]].',
 	'wikia-language-top' => 'Suositut $1 Kielet',
 	'wikia-minutes-ago' => '$1 {{PLURAL:$1|minuutti|minuuttia}} sitten',
 	'wikia-seconds-ago' => '$1 {{PLURAL:$1|sekunti|sekuntia}} sitten',
+	'wikicitieshome-url' => 'http://fi.wikia.com/',
 ];
 
 $messages['fiu-vro'] = [
@@ -9128,6 +9132,8 @@ $messages['ko'] = [
 	'wikia-seconds-ago' => '$1초 전',
 	'wikia-pagination-next' => '다음',
 	'wikia-pagination-prev' => '이전',
+	'wikicities-nav' => '위키아',
+	'wikicitieshome-url' => 'http://ko.wikia.com/',
 ];
 
 $messages['ko-kp'] = [
@@ -12990,6 +12996,7 @@ Dziękujemy za cierpliwość! Właśnie pracujemy nad rozwiązaniem tego problem
 	'wikia-seconds-ago' => '$1 {{PLURAL:$1|sekundę temu|sekundy temu|sekund temu}}',
 	'wikia-pagination-next' => 'Następna',
 	'wikia-pagination-prev' => 'Poprzednia',
+	'wikicitieshome-url' => 'http://pl.wikia.com/',
 ];
 
 $messages['pms'] = [
@@ -18643,6 +18650,7 @@ $messages['zh-hk'] = [
 	'wikia-days-ago' => '$1 {{PLURAL:$1|天|天}} 以前',
 	'wikia-hours-ago' => '$1小時前',
 	'wikia-language-top-list' => 'zh,zh-hans,zh-hk,zh-tw',
+	'wikicitieshome-url' => 'http://zh-tw.wikia.com/',
 ];
 
 $messages['zh'] = [
