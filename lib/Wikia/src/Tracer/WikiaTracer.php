@@ -11,6 +11,7 @@ class WikiaTracer {
 	const TRACE_ID_HEADER_NAME = 'X-Trace-Id';
 	const PARENT_SPAN_ID_HEADER_NAME = 'X-Parent-Span-Id';
 	const CLIENT_IP_HEADER_NAME = 'X-Client-Ip';
+	const SHIELDS_HEADER_NAME = 'X-SJC-shields-healthy';
 	const CLIENT_BEACON_ID_HEADER_NAME = 'X-Client-Beacon-Id';
 	const CLIENT_DEVICE_ID_HEADER_NAME = 'X-Client-Device-Id';
 	const CLIENT_USER_ID = 'X-User-Id';
@@ -28,6 +29,7 @@ class WikiaTracer {
 	const ENV_VARIABLES_PREFIX = 'WIKIA_TRACER_';
 
 	private $traceId;
+	private $sjcShields;
 	private $parentSpanId;
 	private $clientIp;
 	private $clientBeaconId;
@@ -46,6 +48,7 @@ class WikiaTracer {
 		$this->traceId = $this->validateId( $this->getTraceEntry( self::TRACE_ID_HEADER_NAME ) )
 			?: $this->validateId( $this->getTraceEntry( self::LEGACY_TRACE_ID_HEADER_NAME ) )
 			?: self::generateId();
+		$this->sjcShields = $this->getTraceEntry( self::SHIELDS_HEADER_NAME );
 		$this->spanId = self::generateId();
 		$this->parentSpanId = $this->getTraceEntry( self::PARENT_SPAN_ID_HEADER_NAME );
 
@@ -103,6 +106,7 @@ class WikiaTracer {
 				'span_id' => $this->spanId,
 				'parent_span_id' => $this->parentSpanId,
 				'trace_id' => $this->traceId,
+				'sjc_shields' => $this->sjcShields,
 			] )
 		);
 		if ( $this->contextSource->getContext() !== $newContext ) {
@@ -296,6 +300,7 @@ class WikiaTracer {
 			self::TRACE_ID_HEADER_NAME => $this->traceId,
 			self::LEGACY_TRACE_ID_HEADER_NAME => $this->traceId, // duplicated until we move to X-Trace-Id everywhere
 			self::PARENT_SPAN_ID_HEADER_NAME => $this->spanId, // pass the current span ID to the subrequest, it will be logged as parent_span_id there
+			self::SHIELDS_HEADER_NAME => $this->sjcShields,
 		] );
 	}
 
