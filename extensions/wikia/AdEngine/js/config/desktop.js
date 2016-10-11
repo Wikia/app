@@ -65,6 +65,7 @@ define('ext.wikia.adEngine.config.desktop', [
 		}
 
 		return [
+			adProviderDirectGpt,
 			adProviderNetzAthleten
 		];
 

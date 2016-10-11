@@ -64,6 +64,7 @@ define('ext.wikia.adEngine.provider.netzathleten', [
 
 		cmdQueue.push(function () {
 			win.naMediaAd.includeAd(slotMap[slot.name]);
+			window.googletag.pubads().refresh();
 		});
 	}
 
