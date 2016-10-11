@@ -3692,6 +3692,19 @@ Wir arbeiten daran, dieses Problem zu beheben, vielen Dank für deine Geduld! We
 	'wikia-pagination-prev' => 'Zurück',
 	'wikicities-nav' => 'Wikia',
 	'wikicitieshome-url' => 'http://de.wikia.com/',
+	'wt_click_to_close' => 'Klicken um Tooltip zu schließen...',
+	'wt_countdown_give_date' => 'Bitte gib das Datum im Format YYYY-MM-DD HH:MM:SS (z.B. 2009-03-26 13:56:00) oder YYYY-MM-DD (z.B. 2009-02-23) oder HH:MM:SS (z.B. 17:01:00) an.',
+	'wt_countdown_show_seconds' => 'Sekunden anzeigen',
+	'wt_help_cockpit' => '|Widgets-Cockpit||Ziehe die Widget-Vorschaubilder auf deine Seitenleite um ein Widget hinzuzufügen...',
+	'wt_help_sidebar' => '|Widgets-Seitenleite||Klicke "bearbeiten" um die Widgets-Einstellungen zu ändern. Du kannst Widgets mit einem Klick auf das x-Icon schließen.',
+	'wt_help_startup' => '|Noch keine Widget benutzt?||Öffne das Benutzermenü ("MEHR...") und wähle "Widgets verwalten"...',
+	'wt_lastwikis_noresults' => 'Es gibt keine zuletzt besuchten Wikis die angezeigt werden können. Besuche unsere [[w:de:Kategorie:Portale|Hub Liste]] für weitere Wikis.',
+	'wt_referers_empty_list' => 'Momentan haben wir keine Statistiken um eine "Top referrer"-Tagcloud für dieses Wiki zu erstellen. Probier es später noch einmal...',
+	'wt_shoutbox_initial_message' => 'Hi... Willkommen im Chat!',
+	'wt_show_external_urls' => 'Zeige nur externe URLs',
+	'wt_show_internal_urls' => 'Zeige auch interne URLs',
+	'wt_show_period' => 'Zeige Periode',
+	'wt_show_referrers' => 'Zeige Referrers',
 ];
 
 $messages['de-formal'] = [
@@ -4398,6 +4411,19 @@ Estamos trabajando para solucionar el problema, gracias por tu comprensión! Si 
 	'wikia-hours-ago' => 'hace $1 {{PLURAL:$1|hora|horas}}',
 	'wikia-minutes-ago' => 'hace $1 {{PLURAL:$1|minuto|minutos}}',
 	'wikia-seconds-ago' => 'hace $1 {{PLURAL:$1|segundo|segundos}}',
+	'wt_click_to_close' => 'Haz click para cerrar la herramienta de consejos...',
+	'wt_countdown_give_date' => 'Por favor, pon una fecha con el formato AAAA-MM-DD HH:MM:SS (por ejemplo 2007-03-28 13:56:00) o AAAA-MM-DD (por ejemplo 2007-02-17) o HH:MM:SS (por ejemplo 17:01:00)',
+	'wt_countdown_show_seconds' => 'Mostrar segundos',
+	'wt_help_cockpit' => '|Widgets cockpit||Arrastra los widget y suéltalos en la barra lateral para añadir nuevos widget...',
+	'wt_help_sidebar' => '|Widgets sidebar||Haz click en "editar" para cambiar las preferencias de los widgets. Puedes cerrar widgets con el icono x',
+	'wt_help_startup' => '|¿No estás familiarizado con los widgets?||Abre el menú del usuario y haz click en "Organizar widgets"...',
+	'wt_lastwikis_noresults' => 'No hay wikis visitados anteriormente que mostrar. Visita nuestra [[w:Category:Hubs|lista de categorías]] para ver otros wikis que visitar.',
+	'wt_referers_empty_list' => 'Actualmente nosotros no tenemos estadísticas para generar un top de referencia para este wiki. Por favor, inténtalo más tarde...',
+	'wt_shoutbox_initial_message' => '¡Hola... bienvenido al chat!',
+	'wt_show_external_urls' => 'Mostrar solamente vínculos externos',
+	'wt_show_internal_urls' => 'Mostrar también vínculos internos',
+	'wt_show_period' => 'Mostrar periodo',
+	'wt_show_referrers' => 'Mostrar referencias',
 ];
 
 $messages['et'] = [
@@ -4749,6 +4775,7 @@ $messages['fa'] = [
 	'wikia-language-all' => 'تمام زبان‌ها',
 	'wikia-language-top' => '$1 زبان برتر',
 	'wikicities-nav' => 'ویکیا',
+	'wt_shoutbox_initial_message' => 'سلام... به چت خوش‌آمدید!',
 ];
 
 $messages['ff'] = [
@@ -4911,6 +4938,13 @@ Voit myös muokata listaa [[Special:EditWatchlist|tavalliseen tapaan]].',
 	'wikia-minutes-ago' => '$1 {{PLURAL:$1|minuutti|minuuttia}} sitten',
 	'wikia-seconds-ago' => '$1 {{PLURAL:$1|sekunti|sekuntia}} sitten',
 	'wikicitieshome-url' => 'http://fi.wikia.com/',
+	'wt_click_to_close' => 'Klikkaa sulkeaksesi työkaluvinkin...',
+	'wt_countdown_give_date' => 'Ole hyvä ja anna päiväys muodossa VVVV-KK-PP HH:MM:SS (kuten 2007-03-28 13:56:00) tai VVVV-KK-PP (kuten 2007-02-17) tai HH:MM:SS (kuten 17:01:00)',
+	'wt_countdown_show_seconds' => 'Näytä sekuntit',
+	'wt_help_cockpit' => '|Vekottimien ohjaamo||Raahaa vekottimien pikkukuvakkeita ja pudota ne sivupalkkiin lisätäksesi vekottimen...',
+	'wt_help_sidebar' => '|Vekottimien sivupalkki||Klikkaa "muokkaa" vaihtaaksesi vekottimien asetuksia. Voit sulkea vekottimia x-ikonin avulla',
+	'wt_help_startup' => '|Eivätkö vekottimet ole tuttuja sinulle?||Avaa käyttäjävalikko ja klikkaa "Hallinnoi vekottimia"...',
+	'wt_shoutbox_initial_message' => 'Hei... tervetuloa chattiin!',
 ];
 
 $messages['fiu-vro'] = [
@@ -7870,6 +7904,17 @@ $messages['ja'] = [
 	'wikia-language-top' => '上位$1言語',
 	'wikia-minutes-ago' => '$1分前',
 	'wikia-seconds-ago' => '$1秒前',
+	'wt_click_to_close' => 'ツールチップを閉じるには、クリックしてください。',
+	'wt_countdown_give_date' => '日時については、YYYY-MM-DD HH:MM:SS (例: 2007-03-28 13:56:00)か、YYYY-MM-DD (2007-02-17)、または HH:MM:SS (17:01:00)の形式にしてください。',
+	'wt_countdown_show_seconds' => '秒を表示する',
+	'wt_help_cockpit' => '|ウィジェット設定||ウィジェットのサムネイルをドラッグして、サイドバーに追加してください',
+	'wt_help_sidebar' => '|ウィジェットサイドバー||「編集を」を押して、ウィジェットの設定を変更できます。ウィジェットを閉じるには、X印を押してください。',
+	'wt_help_startup' => '|ウィジェットについては御存じですか?||自分の名前のあるメニューから、「ウィジェットの設定」をクリックしてください。',
+	'wt_lastwikis_noresults' => '表示するウィキの訪問履歴がありません。是非とも[[w:c:ja:Wikia:プロジェクトポータル|ウィキの一覧ページ]]をご覧になって、他のウィキを訪れてみてください。',
+	'wt_referers_empty_list' => 'このウィキで参照するだけのデータがまだ用意できておりません。後ほど、お尋ねください。',
+	'wt_shoutbox_initial_message' => 'さあ、チャットの開始です!',
+	'wt_show_external_urls' => '外部のURLだけを表示',
+	'wt_show_internal_urls' => '内部リンクだけを表示',
 ];
 
 $messages['jam'] = [
