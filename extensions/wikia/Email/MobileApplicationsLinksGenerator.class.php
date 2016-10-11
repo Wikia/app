@@ -49,7 +49,7 @@ class MobileApplicationsLinksGenerator {
 	public function generate( $storeLanguage ) {
 		global $wgMemc;
 
-		$mobileApplicationsLinks = false;
+		$mobileApplicationsLinks =
 			$wgMemc->get( $this->createCacheKeyForMobileApplicationsLinks() );
 
 		if ( is_bool( $mobileApplicationsLinks ) ) {
