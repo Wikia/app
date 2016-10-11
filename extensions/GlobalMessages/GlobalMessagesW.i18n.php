@@ -3688,6 +3688,8 @@ Wir arbeiten daran, dieses Problem zu beheben, vielen Dank für deine Geduld! We
 	'wikia-language-top' => 'Top $1 Sprachen',
 	'wikia-minutes-ago' => 'vor $1 {{PLURAL:$1|Minute|Minuten}}',
 	'wikia-seconds-ago' => 'vor $1 {{PLURAL:$1|Sekunde|Sekunden}}',
+	'wikia-pagination-next' => 'Weiter',
+	'wikia-pagination-prev' => 'Zurück',
 ];
 
 $messages['de-formal'] = [
@@ -5168,6 +5170,8 @@ Nous essayons de résoudre le problème et vous remercions de votre patience. S\
 	'wikia-language-top' => 'Top $1 des langues',
 	'wikia-minutes-ago' => 'il y a $1 {{PLURAL:$1|minute|minutes}}',
 	'wikia-seconds-ago' => 'il y a $1 {{PLURAL:$1|seconde|secondes}}',
+	'wikia-pagination-next' => 'Suivant',
+	'wikia-pagination-prev' => 'Précédent',
 ];
 
 $messages['frc'] = [
@@ -7639,6 +7643,8 @@ Si noti che è anche possibile [[Special:EditWatchlist|modificare la lista con l
 	'wikia-language-top-list' => 'de,en,es,he,fr,it,ja,no,pl,pt,pt-br,zh',
 	'wikia-minutes-ago' => '$1 {{PLURAL:$1|minuto|minuti}} fa',
 	'wikia-seconds-ago' => '$1 {{PLURAL:$1|secondo|secondi}} fa',
+	'wikia-pagination-next' => 'Successiva',
+	'wikia-pagination-prev' => 'Precedente',
 ];
 
 $messages['iu'] = [
@@ -9120,6 +9126,8 @@ $messages['ko'] = [
 	'wikia-language-top' => '상위 $1개 언어',
 	'wikia-minutes-ago' => '$1분 전',
 	'wikia-seconds-ago' => '$1초 전',
+	'wikia-pagination-next' => '다음',
+	'wikia-pagination-prev' => '이전',
 ];
 
 $messages['ko-kp'] = [
@@ -12980,6 +12988,8 @@ Dziękujemy za cierpliwość! Właśnie pracujemy nad rozwiązaniem tego problem
 	'wikia-hours-ago' => '$1 {{PLURAL:$1|godzinę temu|godziny temu|godzin temu}}',
 	'wikia-minutes-ago' => '$1 {{PLURAL:$1|minutę temu|minuty temu|minut temu}}',
 	'wikia-seconds-ago' => '$1 {{PLURAL:$1|sekundę temu|sekundy temu|sekund temu}}',
+	'wikia-pagination-next' => 'Następna',
+	'wikia-pagination-prev' => 'Poprzednia',
 ];
 
 $messages['pms'] = [
@@ -14103,6 +14113,8 @@ $messages['ru'] = [
 	'wikia-language-top' => 'Топ $1 языков',
 	'wikia-minutes-ago' => '$1 {{PLURAL:$1|минута|минуты|минут}} назад',
 	'wikia-seconds-ago' => '$1 {{PLURAL:$1|секунда|секунды|секунд}} назад',
+	'wikia-pagination-next' => 'След.',
+	'wikia-pagination-prev' => 'Предыд.',
 ];
 
 $messages['rue'] = [
