@@ -737,7 +737,7 @@ Wenn du der Gründer oder ein Admin dieses Wikis bist, kannst du diese Nachricht
 	'myhome-default-view-success' => 'Deine Einstellung wurde gespeichert.',
 	'tooltip-pt-myhome' => 'Gehe zur Startseite',
 	'activityfeed' => 'Aktivitäten-Feed',
-	'wiki-activity-message-wall-messages-count' => '{{PLURAL:$1|eine Nachricht|$1 Nachrichten}}',
+	'wiki-activity-message-wall-messages-count' => '{{PLURAL:$1|Eine Nachricht|$1 Nachrichten}}',
 ];
 
 $messages['de-formal'] = [
@@ -1853,7 +1853,7 @@ $messages['ja'] = [
 	'myhome-default-view-success' => 'このページがデフォルトに設定されました',
 	'tooltip-pt-myhome' => 'My Home',
 	'activityfeed' => 'アクティビティフィード',
-	'wiki-activity-message-wall-messages-count' => '{{PLURAL:$1|$1件のメッセージ}}',
+	'wiki-activity-message-wall-messages-count' => '$1件のメッセージ',
 ];
 
 $messages['ka'] = [
@@ -3769,7 +3769,7 @@ Ví dụ, bạn có thể:
 	'myhome-default-view-success' => 'Được rồi, đây là mặc định của bạn bây giờ',
 	'tooltip-pt-myhome' => 'Đi đến nhà của tôi',
 	'activityfeed' => 'Hoạt động nguồn cấp dữ liệu',
-	'wiki-activity-message-wall-messages-count' => '{{PLURAL:$1|Một thông điệp|$1 thông điệp}}',
+	'wiki-activity-message-wall-messages-count' => '{{PLURAL:$1|một thông điệp|$1 thông điệp}}',
 ];
 
 $messages['zh'] = [
