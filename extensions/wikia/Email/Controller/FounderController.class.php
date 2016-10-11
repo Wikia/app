@@ -318,7 +318,7 @@ class FounderActiveController extends EmailController {
 			'list' => 'recentchanges',
 			'rctype' => implode( '|', [ 'new', 'edit' ] ),
 			'rcprop' => implode( '|', [ 'user', 'title' ] ),
-			'rcnamespace' => implode( '|', $wg->ContentNamespaces),
+			'rcnamespace' => implode( '|', $wg->ContentNamespaces ),
 			'rcexcludeuser' => $this->getTargetUserName(),
 			'rcshow' => implode( '|', [ '!minor', '!bot', '!anon', '!redirect' ] ),
 			'rclimit' => $num,

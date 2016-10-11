@@ -2,7 +2,8 @@
 	"@metadata": {
 		"authors": [
 			"CERminator",
-			"KWiki"
+			"KWiki",
+			"Srdjan m"
 		]
 	},
 	"semanticforms-desc": "Obrasci za dodavanje i uređivanje semantičkih podataka",
@@ -24,7 +25,7 @@
 	"sf_createtemplate_fieldislist": "Ovo polje može sadržavati spisak vrijednosti, razdvojene zarezima",
 	"sf_createtemplate_aggregationlabel": "Naslov za spisak:",
 	"sf_createtemplate_outputformat": "Izlazni format:",
-	"sf_createtemplate_standardformat": "Standardni",
+	"sf_createtemplate_standardformat": "Tabela",
 	"sf_createtemplate_infoboxformat": "Infokutija na desnoj strani",
 	"sf_createtemplate_addfield": "Dodaj polje",
 	"sf_createtemplate_deletefield": "Obriši",
@@ -85,5 +86,10 @@
 	"sf_category_hasdefaultform": "Ova kategorija koristi obrazac $1.",
 	"sf_category_desc": "Ovo je $1 kategorija.",
 	"sf_blank_namespace": "Glavno",
-	"right-editrestrictedfields": "Uređivanje ograničenih polja obrazca"
+	"right-editrestrictedfields": "Uređivanje ograničenih polja obrazca",
+	"sf-datepicker-close": "Zatvori",
+	"sf-datepicker-prev": "Prethodno",
+	"sf-datepicker-next": "Slijedeće",
+	"sf-datepicker-today": "Danas",
+	"sf-regexp-wrongformat": "Pogrešan format."
 }
