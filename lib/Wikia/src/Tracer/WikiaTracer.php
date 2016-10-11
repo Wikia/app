@@ -38,6 +38,8 @@ class WikiaTracer {
 	private $appVersion = '';
 
 	private $requestPath = [];
+	const SERVER_REQUEST_URI = 'REQUEST_URI';
+	const SERVER_SERVER_NAME = 'SERVER_NAME';
 
 	/**
 	 * @var ContextSource
@@ -147,20 +149,20 @@ class WikiaTracer {
 			$context['wiki_id'] = $wgCityId;
 		}
 
-		if ( isset( $_SERVER['REQUEST_URI'] ) ) {
-			$context['http_url_path'] = $this->stripDomainFromUrl($_SERVER['REQUEST_URI']);
+		if ( isset( $_SERVER[ self::SERVER_REQUEST_URI ] ) ) {
+			$context['http_url_path'] = $this->stripDomainFromUrl( $_SERVER[ self::SERVER_REQUEST_URI ]);
 
 			if ( isset( $_SERVER['REQUEST_METHOD'] ) ) {
 				$context['http_method'] = $_SERVER['REQUEST_METHOD'];
 			}
 
-			if ( isset( $_SERVER['SERVER_NAME'] ) ) {
-				$context['http_url_domain'] = $_SERVER['SERVER_NAME'];
+			if ( isset( $_SERVER[ self::SERVER_SERVER_NAME ] ) ) {
+				$context['http_url_domain'] = $_SERVER[ self::SERVER_SERVER_NAME ];
 
 				$context['http_url'] = sprintf( "%s://%s%s",
 					( empty( $_SERVER['HTTPS'] ) ? 'http' : 'https' ),
-					$_SERVER['SERVER_NAME'],
-					$_SERVER['REQUEST_URI'] );
+					$_SERVER[ self::SERVER_SERVER_NAME ],
+					$_SERVER[ self::SERVER_REQUEST_URI ] );
 			}
 
 			if ( isset( $_SERVER['HTTP_REFERER'] ) ) {
