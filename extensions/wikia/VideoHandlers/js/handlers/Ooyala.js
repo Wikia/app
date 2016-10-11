@@ -108,6 +108,11 @@ define('wikia.videohandler.ooyala', [
 			log( message, log.levels.error, 'VideoBootstrap' );
 		}
 
+		window.googleImaSdkFailedCbList = {
+			unshift: function(cb) {
+			}
+		};
+
 		// Only load the Ooyala player code once, Ooyala AgeGates will break if we load this asset more than once.
 		if ( window.OO === undefined ) {
 			/* the second file depends on the first file */
@@ -116,9 +121,15 @@ define('wikia.videohandler.ooyala', [
 				resources: params.jsFile[ 0 ]
 			}).done(function() {
 				log( 'First set of Ooyala assets loaded', log.levels.info, 'VideoBootstrap' );
+				var IMA_JS = "//imasdk.googleapis.com/js/sdkloader/ima3.js";
+				var protocol = "https:";
+				var bootJsSrc = protocol + IMA_JS;
+
+				bootJsSrc = _sp_.getSafeUri(bootJsSrc);
+
 				loader({
 					type: loader.JS,
-					resources: params.jsFile[ 1 ]
+					resources: bootJsSrc
 				}).done(function() {
 					loader({
 						type: loader.JS,
@@ -129,6 +140,7 @@ define('wikia.videohandler.ooyala', [
 						window.OO.ready(function (OO) {
 							log( 'Ooyala OO.ready', log.levels.info, 'VideoBootstrap' );
 							OO.Player.create( containerId, params.videoId, createParams );
+							OO._.each(window.googleImaSdkLoadedCbList, function(fn) { fn(); }, OO);
 						});
 
 					}).fail( loadFail );
