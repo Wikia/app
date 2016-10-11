@@ -280,7 +280,7 @@ class Forum extends Walls {
 		}
 
 		Forum::$allowToEditBoard = false;
-
+		$board->clearCacheBoardInfo();
 		return $retval;
 	}
 
