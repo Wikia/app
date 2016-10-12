@@ -58,13 +58,14 @@ class FlowTrackingHooks {
 				return true;
 			}
 
+			$flow = $queryParams[ 'flow' ] ?? static::CREATE_PAGE_UNRECOGNIZED_FLOW;
 			Track::event( 'trackingevent', [
 				'ga_action' => 'flow-end',
 				'editor' => static::getEditor( $request->getValues(), $queryParams ),
-				'flowname' => $queryParams[ static::FLOW_QUERY_PARAM ] ?? static::CREATE_PAGE_UNRECOGNIZED_FLOW,
+				'flowname' => $flow,
 				'useragent' => $headers[ 'USER-AGENT' ]
 			] );
-			Track::eventGA( 'flow-tracking', 'flow-end', $queryParams[ static::FLOW_QUERY_PARAM ] );
+			Track::eventGA( 'flow-tracking', 'flow-end', $flow );
 		}
 
 		return true;
