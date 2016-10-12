@@ -1,13 +1,11 @@
 /*global define*/
-define('ext.wikia.adEngine.lookup.prebid.prebidHelper', [
-	'ext.wikia.adEngine.utils.adLogicZoneParams'
-], function(params) {
+define('ext.wikia.adEngine.lookup.prebid.prebidHelper', [], function() {
 	'use strict';
 	var adUnits = [];
 
 	function getAdapterAdUnits(adapter, skin) {
 		var adapterAdUnits = [],
-			slots = adapter.getSlots(skin, params.getPageType());
+			slots = adapter.getSlots(skin);
 
 		Object.keys(slots).forEach(function(slotName) {
 			adapterAdUnits.push(adapter.prepareAdUnit(slotName, slots[slotName], skin));
