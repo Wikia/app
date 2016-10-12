@@ -1,3 +1,4 @@
+/*global define*/
 define('ext.wikia.adEngine.lookup.prebid.adaptersPerformanceTracker', [
 	'ext.wikia.adEngine.adTracker',
 	'ext.wikia.adEngine.wrappers.prebid'
@@ -79,16 +80,15 @@ define('ext.wikia.adEngine.lookup.prebid.adaptersPerformanceTracker', [
 			return emptyResponseMsg;
 		} if (bid.complete) {
 			return usedMsg;
-		} else {
-			return [bid.getSize(), bid.pbMg].join(';');
 		}
-	}
 
+		return [bid.getSize(), bid.pbMg].join(';');
+	}
 
 	return {
 		setupPerformanceMap: setupPerformanceMap,
 		trackBidderOnLookupEnd: trackBidderOnLookupEnd,
 		trackBidderSlotState: trackBidderSlotState,
 		updatePerformanceMap: updatePerformanceMap
-	}
+	};
 });
