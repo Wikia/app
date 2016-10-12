@@ -47,7 +47,6 @@ describe('ext.wikia.adEngine.lookup.openXBidder', function () {
 				}
 			},
 			openXHelper: {
-				setSlots: function () {},
 				getSlots: function() {
 					return {
 						TOP_LEADERBOARD: {

@@ -1,8 +1,9 @@
 /*global define*/
 define('ext.wikia.adEngine.lookup.prebid.adapters.indexExchange',[
+	'ext.wikia.adEngine.context.slotsContext',
 	'wikia.geo',
 	'wikia.instantGlobals'
-], function (geo, instantGlobals) {
+], function (slotsContext, geo, instantGlobals) {
 	'use strict';
 
 	var bidderName = 'indexExchange',
@@ -120,18 +121,8 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.indexExchange',[
 		return geo.isProperGeo(instantGlobals.wgAdDriverIndexExchangeBidderCountries);
 	}
 
-	function getSlots(skin, pageType) {
-		var list = slots[skin] || {};
-		if (pageType === 'home') {
-			delete list.TOP_LEADERBOARD;
-			delete list.TOP_RIGHT_BOXAD;
-		} else {
-			delete list.HOME_TOP_LEADERBOARD;
-			delete list.HOME_TOP_RIGHT_BOXAD;
-			delete list.PREFOOTER_MIDDLE_BOXAD;
-		}
-
-		return list;
+	function getSlots(skin) {
+		return slotsContext.filterSlotMap(slots[skin]);
 	}
 
 	function prepareAdUnit(slotName, config) {

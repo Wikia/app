@@ -1,11 +1,12 @@
 /*global define*/
 define('ext.wikia.adEngine.lookup.amazonMatch', [
 	'ext.wikia.adEngine.adContext',
+	'ext.wikia.adEngine.context.slotsContext',
 	'ext.wikia.adEngine.lookup.lookupFactory',
 	'wikia.document',
 	'wikia.log',
 	'wikia.window'
-], function (adContext, factory, doc, log, win) {
+], function (adContext, slotsContext, factory, doc, log, win) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.lookup.amazonMatch',
@@ -19,7 +20,8 @@ define('ext.wikia.adEngine.lookup.amazonMatch', [
 				LEFT_SKYSCRAPER_2: ['1x6', '3x2', '3x6'],
 				LEFT_SKYSCRAPER_3: ['1x6', '3x2', '3x6'],
 				TOP_LEADERBOARD: ['7x9', '9x2'],
-				TOP_RIGHT_BOXAD: ['3x2', '3x6']
+				TOP_RIGHT_BOXAD: ['3x2', '3x6'],
+				INCONTENT_LEADERBOARD: ['7x9','3x2']
 			},
 			mercury: {
 				MOBILE_IN_CONTENT: ['3x2'],
@@ -38,14 +40,10 @@ define('ext.wikia.adEngine.lookup.amazonMatch', [
 			context = adContext.getContext(),
 			node = doc.getElementsByTagName('script')[0];
 
-		slots = config[skin];
+		slots = slotsContext.filterSlotMap(config[skin]);
 
 		if (context.opts.overridePrefootersSizes) {
 			slots.PREFOOTER_LEFT_BOXAD = ['3x2', '7x9'];
-		}
-
-		if (context.slots.incontentLeaderboard) {
-			slots.INCONTENT_LEADERBOARD = ['7x9','3x2'];
 		}
 
 		amznMatch.type = 'text/javascript';

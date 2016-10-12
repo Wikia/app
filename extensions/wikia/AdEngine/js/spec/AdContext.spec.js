@@ -349,18 +349,6 @@ describe('AdContext', function () {
 		expect(adContext.getContext().slots.invisibleHighImpact).toBeFalsy();
 	});
 
-	it('enables high impact 2 slot when country in instantGlobals.wgAdDriverHighImpact2SlotCountries', function () {
-		var adContext;
-
-		mocks.instantGlobals = {wgAdDriverHighImpact2SlotCountries: ['HH', 'CURRENT_COUNTRY', 'ZZ']};
-		adContext = getModule();
-		expect(adContext.getContext().slots.invisibleHighImpact2).toBeTruthy();
-
-		mocks.instantGlobals = {wgAdDriverHighImpact2SlotCountries: ['YY']};
-		adContext = getModule();
-		expect(adContext.getContext().slots.invisibleHighImpact2).toBeFalsy();
-	});
-
 	it('enables high impact slot when url param highimpactslot is set', function () {
 		spyOn(mocks.querystring, 'getVal').and.callFake(function (param) {
 			return param === 'highimpactslot' ?  '1' : '0';
@@ -567,51 +555,6 @@ describe('AdContext', function () {
 
 		mocks.instantGlobals = {wgAdDriverSourcePointDetectionCountries: ['XX']};
 		expect(getModule().getContext().opts.sourcePointDetection).toBeTruthy();
-	});
-
-	it('enables incontent_player slot when country in instatnGlobals.wgAdDriverIncontentPlayerSlotCountries', function () {
-		var adContext;
-
-		mocks.instantGlobals = {wgAdDriverIncontentPlayerSlotCountries: ['HH', 'CURRENT_COUNTRY', 'ZZ']};
-		adContext = getModule();
-		expect(adContext.getContext().slots.incontentPlayer).toBeTruthy();
-
-		mocks.instantGlobals = {wgAdDriverIncontentPlayerSlotCountries: ['YY']};
-		adContext = getModule();
-		expect(adContext.getContext().slots.incontentPlayer).toBeFalsy();
-	});
-
-	it('enables incontent_leaderboard slot when ' +
-	'country in instatnGlobals.wgAdDriverIncontentLeaderboardSlotCountries', function () {
-		var adContext;
-
-		mocks.instantGlobals = {wgAdDriverIncontentLeaderboardSlotCountries: ['HH', 'CURRENT_COUNTRY', 'ZZ']};
-		adContext = getModule();
-		expect(adContext.getContext().slots.incontentLeaderboard).toBeTruthy();
-
-		mocks.instantGlobals = {wgAdDriverIncontentLeaderboardSlotCountries: ['YY']};
-		adContext = getModule();
-		expect(adContext.getContext().slots.incontentLeaderboard).toBeFalsy();
-	});
-
-	it('enables incontent_leaderboard as out-of-page', function () {
-		var adContext;
-
-		mocks.instantGlobals = {wgAdDriverIncontentLeaderboardOutOfPageSlotCountries: ['HH', 'CURRENT_COUNTRY', 'ZZ']};
-		adContext = getModule();
-		expect(adContext.getContext().slots.incontentLeaderboardAsOutOfPage).toBeTruthy();
-
-		mocks.instantGlobals = {wgAdDriverIncontentLeaderboardOutOfPageSlotCountries: ['YY']};
-		adContext = getModule();
-		expect(adContext.getContext().slots.incontentLeaderboardAsOutOfPage).toBeFalsy();
-	});
-
-	it('enables incontent_player slot when url param incontentplayer is set', function () {
-		spyOn(mocks.querystring, 'getVal').and.callFake(function (param) {
-			return param === 'incontentplayer' ?  '1' : '0';
-		});
-
-		expect(getModule().getContext().slots.incontentPlayer).toBeTruthy();
 	});
 
 	it('context.opts.scrollHandlerConfig equals instatnGlobals.wgAdDriverScrollHandlerConfig', function () {
