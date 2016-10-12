@@ -1,8 +1,14 @@
 <?php
+
+use Maps\Elements\BaseElement;
+
 /**
  * @since 2.0
+ *
+ * @licence GNU GPL v2+
+ * @author Kim Eik < kim@heldig.org >
  */
-class MapsBaseStrokableElement extends MapsBaseElement implements iStrokableMapElement {
+class MapsBaseStrokableElement extends BaseElement implements iStrokableMapElement {
 
 	protected $strokeColor;
 	protected $strokeOpacity;
@@ -30,14 +36,6 @@ class MapsBaseStrokableElement extends MapsBaseElement implements iStrokableMapE
 
 	public function setStrokeWeight( $strokeWeight ) {
 		$this->strokeWeight = trim($strokeWeight);
-	}
-
-	public function hasText() {
-		return !is_null( $this->text ) && $this->text !== '';
-	}
-
-	public function hasTitle() {
-		return !is_null( $this->title ) && $this->title !== '';
 	}
 
 	public function hasStrokeColor() {

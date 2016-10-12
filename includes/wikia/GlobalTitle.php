@@ -839,7 +839,7 @@ class GlobalTitle extends Title {
 		if ( !is_array( $namespaces ) ) {
 			$namespaces = [];
 		}
-		
+
 		$this->mNamespaceNames = $namespaces + $langNamespaces + $wgCanonicalNamespaceNames;
 
 		return $this->mNamespaceNames;
@@ -859,7 +859,7 @@ class GlobalTitle extends Title {
 			foreach ( $wgExtensionNamespacesFiles as $extFile ) {
 				$namespaces = [ ];
 				// Namespace files fill in $namespaces array
-				require $extFile ;
+				require $extFile;
 
 				foreach ( $namespaces as $langKey => $namespaceArray ) {
 					if ( array_key_exists( $langKey, $extraExtensionNamespaces ) ) {
@@ -871,6 +871,10 @@ class GlobalTitle extends Title {
 			}
 
 			static::$extraExtensionNamespaces = $extraExtensionNamespaces;
+		}
+
+		if ( $this->mLang === 'en' || empty( static::$extraExtensionNamespaces[$this->mLang] ) ) {
+			return static::$extraExtensionNamespaces['en'];
 		}
 
 		return static::$extraExtensionNamespaces[$this->mLang] + static::$extraExtensionNamespaces['en'];

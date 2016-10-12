@@ -17,7 +17,7 @@
 	WE.plugins.flowtracking = $.createClass(WE.plugin,{
 
 		initEditor: function(editor) {
-			require(['wikia.flowTracking.createPage'], function(flowTrackingCreatePage) {
+			require(['ext.wikia.flowTracking.createPageTracking'], function(flowTrackingCreatePage) {
 				flowTrackingCreatePage.trackOnEditPageLoad(editorName(editor.mode));
 			});
 		}

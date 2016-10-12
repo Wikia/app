@@ -1897,6 +1897,11 @@ class Article extends Page {
 		trigger_error( 'Inaccessible function via __call(): ' . $fname, E_USER_ERROR );
 	}
 
+	public function doEdit( $text, $summary, $flags = 0, $baseRevId = false, $user = null,
+							$forcePatrolled = false) {
+		return $this->mPage->doEdit( $text, $summary, $flags, $baseRevId, $user, $forcePatrolled );
+	}
+
 	// ****** B/C functions to work-around PHP silliness with __call and references ****** //
 
 	/**

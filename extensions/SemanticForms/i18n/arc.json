@@ -33,5 +33,9 @@
 	"uploadwindow": "ܐܣܩ ܟܘܬܐ",
 	"sf_deletionlog": "ܣܓܠܐ ܕܫܝܦܐ",
 	"sf_form_freetextlabel": "ܟܬܒܬܐ ܚܐܪܬܐ",
-	"sf_blank_namespace": "ܪܫܝܬܐ"
+	"sf_blank_namespace": "ܪܫܝܬܐ",
+	"sf-datepicker-close": "ܣܟܘܪ",
+	"sf-datepicker-prev": "ܕܩܕܡ",
+	"sf-datepicker-next": "ܕܒܬܪ",
+	"sf-datepicker-today": "ܝܘܡܢܐ"
 }
