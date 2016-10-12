@@ -2,7 +2,6 @@
 
 /**
  * Represents a user-defined form.
- *
  * @author Yaron Koren
  * @file
  * @ingroup SF
@@ -27,10 +26,6 @@ class SFForm {
 		return $this->mFormName;
 	}
 
-	function getItems() {
-		return $this->mItems;
-	}
-
 	function setPageNameFormula( $pageNameFormula ) {
 		$this->mPageNameFormula = $pageNameFormula;
 	}
@@ -47,6 +42,24 @@ class SFForm {
 		$this->mAssociatedCategory = $associatedCategory;
 	}
 
+	function creationHTML() {
+		$text = "";
+		$template_count = 0; $section_count = 0;
+		foreach ( $this->mItems as $item ) {
+			if ( $item['type'] == 'template' ) {
+				$template = $item['item'];
+				$text .= $template->creationHTML( $template_count );
+				$template_count++;
+			} elseif ( $item['type'] == 'section' ) {
+				$section = $item['item'];
+				$text .= $section->creationHTML( $section_count );
+				$section_count++;
+			}
+		}
+
+		return $text;
+	}
+
 	function createMarkup( $standardInputs = array(), $freeTextLabel = null ) {
 		$title = Title::makeTitle( SF_NS_FORM, $this->mFormName );
 		$fs = SpecialPageFactory::getPage( 'FormStart' );
@@ -56,7 +69,7 @@ class SFForm {
 		if ( !is_null( $this->mAssociatedCategory ) ) {
 			$form_input .= "|autocomplete on category=" . $this->mAssociatedCategory;
 		}
-		$form_input .= "}}\n";
+	       	$form_input .= "}}\n";
 		$text = <<<END
 <noinclude>
 $form_description
@@ -112,7 +125,7 @@ END;
 			if ( array_key_exists( 'watch', $standardInputs ) ) {
 				$text .= $standardInputs['watch'];
 			}
-			if ( array_key_exists( 'minor edit', $standardInputs ) || array_key_exists( 'watch', $standardInputs ) ) {
+			if ( array_key_exists( 'minor edit', $standardInputs ) ||  array_key_exists( 'watch', $standardInputs ) ) {
 				$text .= "\n\n";
 			}
 			if ( array_key_exists( 'save', $standardInputs ) ) {

@@ -2,73 +2,58 @@
 
 /**
  * Parameter criterion stating that the value must be a layer.
- *
+ * 
  * @since 0.7.2
- *
+ * 
  * @file CriterionmapLayer.php
  * @ingroup Maps
  * @ingroup Criteria
- *
+ * 
  * @author Jeroen De Dauw
- * @author Daniel Werner
  */
 class CriterionMapLayer extends ItemParameterCriterion {
-
-	/**
-	 * @since 3.0
-	 *
-	 * @var string
-	 */
-	protected $groupNameSep;
-
+	
+	protected $service;
+	
 	/**
 	 * Constructor.
 	 *
-	 * @param string $groupNameSeparator Separator between layer group and the
-	 *        layers name within the group.
+	 * @since 0.7
 	 *
-	 * @since 0.7 (meaning of first param changed in 3.0)
+	 * @param string $service
 	 */
-	public function __construct( $groupNameSeparator = ';' ) {
+	public function __construct( $service ) {
 		parent::__construct();
 		
-		$this->groupNameSep = $groupNameSeparator;
+		$this->service = $service;
 	}
 	
 	/**
 	 * @see ItemParameterCriterion::validate
-	 */
+	 */	
 	protected function doValidation( $value, Parameter $parameter, array $parameters ) {
+		$title = Title::newFromText( $value, Maps_NS_LAYER );
 
-		$parts = explode( $this->groupNameSep, $value, 2 );
-		$layerTitle = Title::newFromText( $parts[0], Maps_NS_LAYER );
-
-		// if page with layer definition doesn't exist:
-		if ( $layerTitle === null
-			|| $layerTitle->getNamespace() !== Maps_NS_LAYER
-			|| ! $layerTitle->exists()
-		) {
-			return false;
+		if ( $title !== null && $title->getNamespace() == Maps_NS_LAYER && $title->exists() ) {
+			$layerPage = new MapsLayerPage( $title );
+			return $layerPage->hasValidDefinition( $this->service );
 		}
-
-		$layerName = count( $parts ) > 1 ? $parts[1] : null;
-
-		$layerPage = new MapsLayerPage( $layerTitle );
-		return $layerPage->hasUsableLayer( $layerName );
-	}
-
-	/**
-	 * @see ItemParameterCriterion::getItemErrorMessage
-	 */
-	protected function getItemErrorMessage( Parameter $parameter ) {
-		return wfMessage( 'validation-error-invalid-layer', $parameter->getOriginalName() )->parse();
-	}
+		
+		return false;
+	}	
 	
 	/**
-	 * @see ItemParameterCriterion::getFullListErrorMessage
-	 */
-	protected function getFullListErrorMessage( Parameter $parameter ) {
-		return wfMessage( 'validation-error-invalid-layers', $parameter->getOriginalName() )->parse();
+	 * @see ItemParameterCriterion::getItemErrorMessage
+	 */	
+	protected function getItemErrorMessage( Parameter $parameter ) {
+		return wfMsgExt( 'validation-error-invalid-layer', 'parsemag', $parameter->getOriginalName() );
 	}
+	
+	/** 
+	 * @see ItemParameterCriterion::getFullListErrorMessage
+	 */	
+	protected function getFullListErrorMessage( Parameter $parameter ) {
+		return wfMsgExt( 'validation-error-invalid-layers', 'parsemag', $parameter->getOriginalName() );
+	}		
 	
 }

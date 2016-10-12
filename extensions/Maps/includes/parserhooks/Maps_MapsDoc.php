@@ -1,12 +1,13 @@
 <?php
 
-use ParamProcessor\ParamDefinition;
-
 /**
  * Class for the 'mapsdoc' parser hooks,
  * which displays documentation for a specified mapping service.
  *
  * @since 1.0
+ *
+ * @file Maps_MapsDoc.php
+ * @ingroup Maps
  *
  * @licence GNU GPL v2+
  * @author Jeroen De Dauw < jeroendedauw@gmail.com >
@@ -21,6 +22,15 @@ class MapsMapsDoc extends ParserHook {
 	 * @var string
 	 */
 	protected $language;
+
+	/**
+	 * No LSB in pre-5.3 PHP *sigh*.
+	 * This is to be refactored as soon as php >=5.3 becomes acceptable.
+	 */
+	public static function staticInit( Parser &$parser ) {
+		$instance = new self;
+		return $instance->init( $parser );
+	}
 
 	/**
 	 * Gets the name of the parser hook.
@@ -45,20 +55,13 @@ class MapsMapsDoc extends ParserHook {
 	protected function getParameterInfo( $type ) {
 		$params = array();
 
-		$params['service'] = array(
-			'values' => $GLOBALS['egMapsAvailableServices'],
-			'tolower' => true,
-		);
+		$params['service'] = new Parameter( 'service' );
+		$params['service']->addCriteria( new CriterionInArray( $GLOBALS['egMapsAvailableServices'] ) );
+		$params['service']->setMessage( 'maps-mapsdoc-par-service' );
 
-		$params['language'] = array(
-			'default' => $GLOBALS['wgLanguageCode'],
-		);
-
-		// Give grep a chance to find the usages:
-		// maps-geocode-par-service, maps-geocode-par-language
-		foreach ( $params as $name => &$param ) {
-			$param['message'] = 'maps-geocode-par-' . $name;
-		}
+		$params['language'] = new Parameter( 'language' );
+		$params['language']->setDefault( $GLOBALS['wgLanguageCode'] );
+		$params['language']->setMessage( 'maps-mapsdoc-par-language' );
 
 		return $params;
 	}
@@ -106,7 +109,7 @@ class MapsMapsDoc extends ParserHook {
 	protected function msg() {
 		$args = func_get_args();
 		$key = array_shift( $args );
-		return wfMessage( $key, $args )->inLanguage( $this->language )->text();
+		return wfMsgReal( $key, $args, true, $this->language );
 	}
 
 	/**
@@ -120,8 +123,6 @@ class MapsMapsDoc extends ParserHook {
 	 */
 	protected function getParameterTable( array $parameters ) {
 		$tableRows = array();
-
-		$parameters = ParamDefinition::getCleanDefinitions( $parameters );
 
 		foreach ( $parameters as $parameter ) {
 			$tableRows[] = $this->getDescriptionRow( $parameter );
@@ -154,12 +155,19 @@ class MapsMapsDoc extends ParserHook {
 	 *
 	 * @since 1.0
 	 *
-	 * @param ParamDefinition $parameter
+	 * @param Parameter $parameter
 	 *
 	 * @return string
 	 */
-	protected function getDescriptionRow( ParamDefinition $parameter ) {
-		$description = $this->msg( $parameter->getMessage() );
+	protected function getDescriptionRow( Parameter $parameter ) {
+		$description = $parameter->getMessage();
+		if ( $description === false ) {
+			$description = $parameter->getDescription();
+			if ( $description === false ) $description = '-';
+		}
+		else {
+			$description = $this->msg( $description );
+		}
 
 		$type = $parameter->getTypeMessage();
 
@@ -186,10 +194,8 @@ EOT;
 
 		$params = array();
 
-		$params['zoom'] = array(
-			'type' => 'integer',
-			'message' => 'maps-par-zoom',
-		);
+		$params['zoom'] = new Parameter( 'zoom',  Parameter::TYPE_INTEGER );
+		$params['zoom']->setMessage( 'maps-par-zoom' );
 
 		$service->addParameterInfo( $params );
 

@@ -1,9 +1,0 @@
-*~
-*.kate-swp
-
-!.*
-
-composer.phar
-composer.lock
-vendor/
-.idea/
