@@ -123,11 +123,9 @@ define('wikia.videohandler.ooyala', [
 				log('Ooyala OO.ready', log.levels.info, 'VideoBootstrap');
 				initRegularPlayer();
 
-				if (recoveryHelper.isBlocking()) {
-					win.OO._.each(win.googleImaSdkLoadedCbList, function (fn) {
-						fn();
-					}, win.OO);
-				}
+				win.OO._.each(win.googleImaSdkLoadedCbList, function (fn) {
+					fn();
+				}, win.OO);
 			});
 		}
 
