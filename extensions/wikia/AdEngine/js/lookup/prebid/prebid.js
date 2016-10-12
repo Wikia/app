@@ -4,11 +4,12 @@ define('ext.wikia.adEngine.lookup.prebid', [
 	'ext.wikia.adEngine.lookup.prebid.adaptersPerformanceTracker',
 	'ext.wikia.adEngine.lookup.prebid.adapters.appnexus',
 	'ext.wikia.adEngine.lookup.prebid.adapters.indexExchange',
+	'ext.wikia.adEngine.lookup.prebid.adapters.wikia',
 	'ext.wikia.adEngine.lookup.prebid.prebidHelper',
 	'ext.wikia.adEngine.lookup.lookupFactory',
 	'wikia.document',
 	'wikia.window'
-], function (adContext, adaptersTracker, appnexus, index, helper, factory, doc, win) {
+], function (adContext, adaptersTracker, appnexus, index, wikiaAdapter, helper, factory, doc, win) {
 	'use strict';
 
 	var adapters = [
@@ -23,14 +24,17 @@ define('ext.wikia.adEngine.lookup.prebid', [
 		var prebid = doc.createElement('script'),
 			node = doc.getElementsByTagName('script')[0];
 
-		biddersPerformanceMap = adaptersTracker.setupPerformanceMap(skin, adapters);
+		if (wikiaAdapter.isEnabled()) {
+			adapters.push(wikiaAdapter);
+			win.pbjs.que.push(function () {
+				win.pbjs.registerBidAdapter(wikiaAdapter.create, 'wikia');
+			});
+		}
 
+		biddersPerformanceMap = adaptersTracker.setupPerformanceMap(skin, adapters);
 		adUnits = helper.setupAdUnits(adapters, skin);
 
 		if (adUnits.length > 0) {
-			win.pbjs = win.pbjs || {};
-			win.pbjs.que = win.pbjs.que || [];
-
 			prebid.async = true;
 			prebid.type = 'text/javascript';
 			prebid.src = adContext.getContext().opts.prebidBidderUrl || '//acdn.adnxs.com/prebid/prebid.js';
@@ -57,7 +61,7 @@ define('ext.wikia.adEngine.lookup.prebid', [
 		biddersPerformanceMap = adaptersTracker.updatePerformanceMap(biddersPerformanceMap);
 
 		adapters.forEach(function (adapter) {
-			adaptersTracker.trackBidderOnLookupEnd(adapter, biddersPerformanceMap)
+			adaptersTracker.trackBidderOnLookupEnd(adapter, biddersPerformanceMap);
 		});
 	}
 
@@ -76,10 +80,24 @@ define('ext.wikia.adEngine.lookup.prebid', [
 	}
 
 	function getSlotParams(slotName) {
-		var params;
+		var bidResponses,
+			params,
+			winner;
 
 		if (win.pbjs && typeof win.pbjs.getAdserverTargetingForAdUnitCode === 'function') {
 			params = win.pbjs.getAdserverTargetingForAdUnitCode(slotName) || {};
+
+			if (params.hb_adid) {
+				bidResponses = win.pbjs.getBidResponsesForAdUnitCode(slotName);
+				winner = bidResponses.bids.find(function (bid) {
+					return bid.adId === params.hb_adid;
+				});
+
+				if (winner && winner.complete) {
+					return {};
+				}
+			}
+
 		}
 
 		return params || {};
