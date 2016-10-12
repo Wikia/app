@@ -114,7 +114,9 @@ define('wikia.videohandler.ooyala', [
 			log('Create recovered Ooyala player', log.levels.info, logGroup);
 
 			win.googleImaSdkFailedCbList = {
-				unshift: function () {
+				originalCbList: [],
+				unshift: function (cb) {
+					this.originalCbList.push(cb);
 				}
 			};
 			ima3LibUrl = recoveryHelper.getSafeUri(ima3LibUrl);
@@ -127,6 +129,14 @@ define('wikia.videohandler.ooyala', [
 				initRegularPlayer();
 
 				win.OO._.each(win.googleImaSdkLoadedCbList, function (fn) {
+					fn();
+				}, win.OO);
+			}).fail(function() {
+				log('Recovered ima3 lib is failded to load', log.levels.info, logGroup);
+
+				initRegularPlayer();
+
+				win.OO._.each(win.googleImaSdkFailedCbList.originalCbList, function (fn) {
 					fn();
 				}, win.OO);
 			});
