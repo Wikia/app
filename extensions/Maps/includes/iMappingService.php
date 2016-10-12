@@ -4,6 +4,9 @@
  * Interface that should be implemented by all mapping feature classes.
  * 
  * @since 0.6.3
+ * 
+ * @file iMappingService.php
+ * @ingroup Maps
  *
  * @licence GNU GPL v2+
  * @author Jeroen De Dauw < jeroendedauw@gmail.com >
@@ -17,7 +20,7 @@ interface iMappingService {
 	 * 
 	 * @return string
 	 */	
-	public function getName();
+	function getName();
 	
 	/**
 	 * Adds the dependencies to the parser output as head items.
@@ -26,18 +29,16 @@ interface iMappingService {
 	 * 
 	 * @param mixed $parserOrOut
 	 */
-	public function addDependencies( &$parserOrOut );
+	function addDependencies( &$parserOrOut );
 	
 	/**
-	 * Adds service-specific parameter definitions to the provided parameter list.
+	 * Adds service-specific parameter definitions to the porvided parameter list.
 	 * 
 	 * @since 0.7
-	 *
-	 * @param array $parameterInfo
-	 *
-	 * @return array
+	 * 
+	 * @return array of IParam
 	 */
-	public function addParameterInfo( array &$parameterInfo );
+	function addParameterInfo( array &$parameterInfo );
 	
 	/**
 	 * Adds a feature to this service. This is to indicate this service has support for this feature.
@@ -47,7 +48,7 @@ interface iMappingService {
 	 * @param string $featureName
 	 * @param string $handlingClass
 	 */	
-	public function addFeature( $featureName, $handlingClass );
+	function addFeature( $featureName, $handlingClass );
 	
 	/**
 	 * Returns the name of the class that handles the provided feature in this service, or false if there is none.
@@ -58,7 +59,7 @@ interface iMappingService {
 	 * 
 	 * @return mixed String or false
 	 */	
-	public function getFeature( $featureName );
+	function getFeature( $featureName );
 	
 	/**
 	 * Returns an instance of the class handling the provided feature with this service, or false if there is none.
@@ -69,7 +70,7 @@ interface iMappingService {
 	 * 
 	 * @return object or false
 	 */	
-	public function getFeatureInstance( $featureName );	
+	function getFeatureInstance( $featureName );	
 	
 	/**
 	 * Returns a list of aliases.
@@ -78,7 +79,7 @@ interface iMappingService {
 	 * 
 	 * @return array
 	 */	
-	public function getAliases();
+	function getAliases();
 	
 	/**
 	 * Returns if the service has a certain alias or not.
@@ -89,7 +90,7 @@ interface iMappingService {
 	 * 
 	 * @return boolean
 	 */	
-	public function hasAlias( $alias );
+	function hasAlias( $alias );
 	
 	/**
 	 * Returns the default zoomlevel for the mapping service.
@@ -98,7 +99,7 @@ interface iMappingService {
 	 * 
 	 * @return integer
 	 */
-	public function getDefaultZoom();
+	function getDefaultZoom();
 	
 	/**
 	 * Returns the zoomlevel that shows the whole earth for the mapping service.
@@ -120,6 +121,6 @@ interface iMappingService {
 	 * 
 	 * @return string
 	 */
-	public function getMapId( $increment = true );
+	function getMapId( $increment = true );
 
 }

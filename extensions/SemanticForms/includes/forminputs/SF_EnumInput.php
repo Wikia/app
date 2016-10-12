@@ -30,13 +30,11 @@ abstract class SFEnumInput extends SFFormInput {
 			'type' => 'string',
 			'description' => wfMessage( 'sf_forminputs_values' )->text()
 		);
-		if ( defined( 'SMW_VERSION' ) ) {
-			$params[] = array(
-				'name' => 'values from property',
-				'type' => 'string',
-				'description' => wfMessage( 'sf_forminputs_valuesfromproperty' )->text()
-			);
-		}
+		$params[] = array(
+			'name' => 'values from property',
+			'type' => 'string',
+			'description' => wfMessage( 'sf_forminputs_valuesfromproperty' )->text()
+		);
 		$params[] = array(
 			'name' => 'values from category',
 			'type' => 'string',
@@ -47,13 +45,11 @@ abstract class SFEnumInput extends SFFormInput {
 			'type' => 'string',
 			'description' => wfMessage( 'sf_forminputs_valuesfromnamespace' )->text()
 		);
-		if ( defined( 'SMW_VERSION' ) ) {
-			$params[] = array(
-				'name' => 'values from concept',
-				'type' => 'string',
-				'description' => wfMessage( 'sf_forminputs_valuesfromconcept' )->text()
-			);
-		}
+		$params[] = array(
+			'name' => 'values from concept',
+			'type' => 'string',
+			'description' => wfMessage( 'sf_forminputs_valuesfromconcept' )->text()
+		);
 		return $params;
 	}
 

@@ -1,9 +1,0 @@
-{
-	"@metadata": {
-		"authors": [
-			"Ehsanulhb"
-		]
-	},
-	"validator-describe-descriptionmsg": "'''বিবরণ''': $1",
-	"validator-describe-header-description": "বিবরণ"
-}

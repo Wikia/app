@@ -1,41 +1,20 @@
 /*global define*/
 define('ext.wikia.adEngine.slotTweaker', [
-	'wikia.log',
+	'ext.wikia.adEngine.domElementTweaker',
+	'ext.wikia.aRecoveryEngine.recovery.helper',
 	'wikia.document',
+	'wikia.log',
 	'wikia.window'
-], function (log, doc, win) {
+], function (DOMElementTweaker, recoveryHelper, doc, log, win) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.slotTweaker',
 		defaultHeightClass = 'default-height',
-		rclass = /[\t\r\n]/g,
 		standardLeaderboardSizeClass = 'standard-leaderboard';
-
-	function removeClass(element, cls) {
-		var oldClasses,
-			newClasses = ' ' + element.className.replace(rclass, ' ') + ' ';
-
-		// Remove all instances of class in the className string
-		while (oldClasses !== newClasses) {
-			oldClasses = newClasses;
-			newClasses = oldClasses.replace(' ' + cls + ' ', ' ');
-		}
-
-		log(['removeClass ' + cls, element], 8, logGroup);
-		element.className = newClasses;
-	}
 
 	function hide(slotname, useInline) {
 		log('hide ' + slotname + ' using class hidden', 6, logGroup);
-
-		var slot = doc.getElementById(slotname);
-
-		if (slot && useInline) {
-			slot.style.display = 'none';
-		} else if (slot) {
-			removeClass(slot, 'hidden');
-			slot.className += ' hidden';
-		}
+		DOMElementTweaker.hide(doc.getElementById(slotname), useInline);
 	}
 
 	function show(slotname) {
@@ -44,7 +23,7 @@ define('ext.wikia.adEngine.slotTweaker', [
 		var slot = doc.getElementById(slotname);
 
 		if (slot) {
-			removeClass(slot, 'hidden');
+			DOMElementTweaker.removeClass(slot, 'hidden');
 		}
 	}
 
@@ -54,7 +33,7 @@ define('ext.wikia.adEngine.slotTweaker', [
 		log('removeDefaultHeight ' + slotname, 6, logGroup);
 
 		if (slot) {
-			removeClass(slot, defaultHeightClass);
+			DOMElementTweaker.removeClass(slot, defaultHeightClass);
 		}
 	}
 
@@ -110,8 +89,23 @@ define('ext.wikia.adEngine.slotTweaker', [
 		}
 	}
 
+	function getRecoveredIframe(slotName) {
+		var node = doc.querySelector('div[id="' + slotName + '"] > div > div'),
+			fallbackId = node && win._sp_.getElementId(node.id),
+			elementById = fallbackId && doc.getElementById(fallbackId);
+
+		if (elementById) {
+			return elementById.querySelector('div:not(.hidden) > div[id*="_container_"] iframe');
+		}
+	}
+
 	function onReady(slotName, callback) {
-		var iframe = doc.getElementById(slotName).querySelector('div:not(.hidden) > div[id*="_container_"] iframe');
+		var iframe = doc.querySelector('#' + slotName +' div:not(.hidden) > div[id*="_container_"] iframe');
+
+		if (!iframe && recoveryHelper.isRecoveryEnabled() && recoveryHelper.isBlocking()) {
+			log('onIframeReady - trying fallback iframe', 'debug', logGroup);
+			iframe = getRecoveredIframe(slotName);
+		}
 
 		if (!iframe) {
 			log('onIframeReady - iframe does not exist', 'debug', logGroup);
@@ -127,8 +121,48 @@ define('ext.wikia.adEngine.slotTweaker', [
 		}
 	}
 
+	function getRecoveredProviderContainer(providerContainer) {
+		var elementId = providerContainer.childNodes.length > 0 && providerContainer.childNodes[0].id,
+			recoveredElementId = win._sp_.getElementId(elementId),
+			element = doc.getElementById(recoveredElementId);
+
+		if (element && element.parentNode) {
+			return element.parentNode;
+		}
+
+		return null;
+	}
+
+	function isBlockedElement(original) {
+		return original.style.display === 'none';
+	}
+
+	function tweakRecoveredSlot(originalIframe, iframe) {
+		var original = originalIframe,
+			target = iframe;
+
+		while(isBlockedElement(original)) {
+			DOMElementTweaker.moveStylesToInline(original, target, ['paddingBottom', 'opacity']);
+			target.style.display = 'block';
+
+			original = original.parentNode;
+			target = target.parentNode;
+		}
+	}
+
 	function makeResponsive(slotName, aspectRatio) {
-		var providerContainer = doc.getElementById(slotName).lastElementChild;
+		var providerContainer = doc.getElementById(slotName).lastElementChild,
+			recoveredProviderContainer;
+
+		if (recoveryHelper.isRecoveryEnabled() && recoveryHelper.isBlocking()) {
+			recoveredProviderContainer = getRecoveredProviderContainer(providerContainer);
+
+			if (recoveredProviderContainer) {
+				providerContainer = recoveredProviderContainer;
+			}
+		}
+
+		log(['makeResponsive', slotName, aspectRatio], 'info', logGroup);
 
 		onReady(slotName, function (iframe) {
 			log(['makeResponsive', slotName], 'debug', logGroup);
@@ -186,6 +220,7 @@ define('ext.wikia.adEngine.slotTweaker', [
 		onReady: onReady,
 		removeDefaultHeight: removeDefaultHeight,
 		removeTopButtonIfNeeded: removeTopButtonIfNeeded,
-		show: show
+		show: show,
+		tweakRecoveredSlot: tweakRecoveredSlot
 	};
 });
