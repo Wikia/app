@@ -78,7 +78,7 @@ define('ext.wikia.adEngine.template.bfaa', [
 				spotlightFooter.parentNode.style.display = 'none';
 			}
 
-			if (recoveryHelper.isBlocking()) {
+			if (recoveryHelper.isRecoveryEnabled() && recoveryHelper.isBlocking()) {
 				slotTweaker.removeDefaultHeight(params.slotName);
 				recoverSlot(iframe, params);
 			}

@@ -90,7 +90,7 @@ define('ext.wikia.adEngine.slotTweaker', [
 	}
 
 	function getRecoveredIframe(slotName) {
-		var node = document.querySelector('div[id="' + slotName + '"] > div > div'),
+		var node = doc.querySelector('div[id="' + slotName + '"] > div > div'),
 			fallbackId = node && win._sp_.getElementId(node.id),
 			elementById = fallbackId && doc.getElementById(fallbackId);
 
@@ -102,19 +102,14 @@ define('ext.wikia.adEngine.slotTweaker', [
 	function onReady(slotName, callback) {
 		var iframe = doc.querySelector('#' + slotName +' div:not(.hidden) > div[id*="_container_"] iframe');
 
-		if (!iframe && !recoveryHelper.isBlocking()) {
-			log('onIframeReady - iframe does not exist', 'debug', logGroup);
-			return;
-		}
-
-		if (!iframe && recoveryHelper.isBlocking()) {
+		if (!iframe && recoveryHelper.isRecoveryEnabled() && recoveryHelper.isBlocking()) {
 			log('onIframeReady - trying fallback iframe', 'debug', logGroup);
 			iframe = getRecoveredIframe(slotName);
+		}
 
-			if (!iframe) {
-				log('onIframeReady - fallback iframe does not exist', 'debug', logGroup);
-				return;
-			}
+		if (!iframe) {
+			log('onIframeReady - iframe does not exist', 'debug', logGroup);
+			return;
 		}
 
 		if (iframe.contentWindow.document.readyState === 'complete') {
@@ -129,13 +124,13 @@ define('ext.wikia.adEngine.slotTweaker', [
 	function getRecoveredProviderContainer(providerContainer) {
 		var elementId = providerContainer.childNodes.length > 0 && providerContainer.childNodes[0].id,
 			recoveredElementId = win._sp_.getElementId(elementId),
-			element = document.getElementById(recoveredElementId);
+			element = doc.getElementById(recoveredElementId);
 
 		if (element && element.parentNode) {
 			return element.parentNode;
-		} else {
-			return null;
 		}
+
+		return null;
 	}
 
 	function isBlockedElement(original) {
@@ -159,8 +154,7 @@ define('ext.wikia.adEngine.slotTweaker', [
 		var providerContainer = doc.getElementById(slotName).lastElementChild,
 			recoveredProviderContainer;
 
-		if (recoveryHelper.isBlocking()) {
-
+		if (recoveryHelper.isRecoveryEnabled() && recoveryHelper.isBlocking()) {
 			recoveredProviderContainer = getRecoveredProviderContainer(providerContainer);
 
 			if (recoveredProviderContainer) {
