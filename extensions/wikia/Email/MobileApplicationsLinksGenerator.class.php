@@ -10,11 +10,13 @@ use Http;
  */
 class MobileApplicationsLinksGenerator {
 
+	const MOBILE_APPLICATIONS_ENDPOINT = 'https://services.wikia.com/mobile-applications/platform/android';
+
 	const WIKIA_APP_STORE_URL = 'https://itunes.apple.com/%s/developer/wikia-inc./id422467077';
 
 	const APPLICATION_APP_STORE_URL = 'https://itunes.apple.com/%s/app/id%s';
 
-	const WIKIA_GOOGLE_PALY_URL = 'https://play.google.com/store/apps/developer?id=Wikia,+Inc.&hl=%s';
+	const WIKIA_GOOGLE_PLAY_URL = 'https://play.google.com/store/apps/developer?id=Wikia,+Inc.&hl=%s';
 
 	const APPLICATION_GOOGLE_PLAY_URL = 'https://play.google.com/store/apps/details?hl=%s&id=%s';
 
@@ -39,14 +41,23 @@ class MobileApplicationsLinksGenerator {
 		'es' => 'es',
 	];
 
+	private $language;
+
+	/**
+	 * MobileApplicationsLinksGenerator constructor.
+	 *
+	 * @param string $language - language for localized store
+	 */
+	private function __construct( $language ) {
+		$this->language = $language;
+	}
+
 	/**
 	 * Generates links for mobile applications for current wiki.
 	 *
-	 * @param string $storeLanguage - language for localized store
-	 *
 	 * @return array - currently will contains 2 elements, link for app store and google play
 	 */
-	public function generate( $storeLanguage ) {
+	public function generate() {
 		global $wgMemc;
 
 		$mobileApplicationsLinks =
@@ -58,12 +69,11 @@ class MobileApplicationsLinksGenerator {
 
 			if ( $response && $this->applicationsExistIn( $response ) ) {
 				$mobileApplications = json_decode( $response, true );
-				$mobileApplicationsLinks =
-					$this->traverseThrough( $mobileApplications, $storeLanguage );
+				$mobileApplicationsLinks = $this->traverseThrough( $mobileApplications );
 			}
 
 			$mobileApplicationsLinks =
-				$this->fillWithWikiaAccountLinksIfEmpty( $mobileApplicationsLinks, $storeLanguage );
+				$this->fillWithWikiaAccountLinksIfEmpty( $mobileApplicationsLinks );
 
 			// Even if response is not valid (for example there are some difficulties with mobile applications service)
 			// result will be cached to prevent too long delays in email generation
@@ -78,40 +88,36 @@ class MobileApplicationsLinksGenerator {
 	 * Fills array with wikia mobile application store link if application was not found
 	 *
 	 * @param array $mobileApplicationsLinks
-	 * @param string $storeLanguage
 	 * @return array with links to app store and google play
 	 */
-	private function fillWithWikiaAccountLinksIfEmpty( $mobileApplicationsLinks, $storeLanguage ) {
+	private function fillWithWikiaAccountLinksIfEmpty( $mobileApplicationsLinks ) {
 		if ( empty ( $mobileApplicationsLinks[self::ANDROID_PLATFORM] ) ) {
 			$mobileApplicationsLinks[self::ANDROID_PLATFORM] =
-				sprintf( self::WIKIA_GOOGLE_PALY_URL,
-					$this->prepareLanguageForGooglePlay( $storeLanguage ) );
+				$this->generateUrlForWikiaGooglePlay();
 		}
 
 		if ( empty( $mobileApplicationsLinks[self::IOS_PLATFORM] ) ) {
-			$mobileApplicationsLinks[self::IOS_PLATFORM] =
-				sprintf( self::WIKIA_APP_STORE_URL,
-					$this->prepareLanguageForAppStore( $storeLanguage ) );
+			$mobileApplicationsLinks[self::IOS_PLATFORM] = $this->generateUrlForWikiaAppStore();
 		}
 
 		return $mobileApplicationsLinks;
 	}
 
-	/**
-	 * @param string $language
-	 * @return string
-	 */
-	private function prepareLanguageForGooglePlay( $language ) {
-		return $language;
+	private function generateUrlForWikiaGooglePlay() {
+		return sprintf( self::WIKIA_GOOGLE_PLAY_URL, $this->prepareLanguageForGooglePlay() );
 	}
 
-	/**
-	 * @param string $language
-	 * @return string
-	 */
-	private function prepareLanguageForAppStore( $language ) {
-		return empty ( self::$appStoreLanguagesMapping[$language] ) ? 'us'
-			: self::$appStoreLanguagesMapping[$language];
+	private function prepareLanguageForGooglePlay() {
+		return $this->language;
+	}
+
+	private function generateUrlForWikiaAppStore() {
+		return sprintf( self::WIKIA_APP_STORE_URL, $this->prepareLanguageForAppStore() );
+	}
+
+	private function prepareLanguageForAppStore() {
+		return empty ( self::$appStoreLanguagesMapping[$this->language] ) ? 'us'
+			: self::$appStoreLanguagesMapping[$this->language];
 	}
 
 	private function createCacheKeyForMobileApplicationsLinks() {
@@ -123,8 +129,7 @@ class MobileApplicationsLinksGenerator {
 	 */
 	private function fetchMobileApplicationsDetails() {
 		// currently it does not matter if Android or iOS value is added, data is returned for both Android and iOS
-		return Http::request( 'GET',
-			'https://services.wikia.com/mobile-applications/platform/android' );
+		return Http::request( 'GET', self::MOBILE_APPLICATIONS_ENDPOINT );
 	}
 
 	/**
@@ -138,28 +143,16 @@ class MobileApplicationsLinksGenerator {
 
 	/**
 	 * @param array $mobileApplications - array containing information about mobile applications
-	 * @param string $storeLanguage
 	 * @return array - containing mobile applications links
 	 */
-	private function traverseThrough( $mobileApplications, $storeLanguage ) {
+	private function traverseThrough( $mobileApplications ) {
 		$mobileApplicationsLinks = [];
 		$siteId = \F::app()->wg->CityId;
 
 		foreach ( $mobileApplications['apps'] as $app ) {
 			foreach ( $app['languages'] as $language ) {
 				if ( $language['wikia_id'] == $siteId ) {
-					if ( $app['android_release'] ) {
-						$release = $app['android_release'];
-						$mobileApplicationsLinks[self::ANDROID_PLATFORM] =
-							sprintf( self::APPLICATION_GOOGLE_PLAY_URL,
-								$this->prepareLanguageForGooglePlay( $storeLanguage ), $release );
-					}
-					if ( $app['ios_release'] ) {
-						$release = $app['ios_release'];
-						$mobileApplicationsLinks[self::IOS_PLATFORM] =
-							sprintf( self::APPLICATION_APP_STORE_URL,
-								$this->prepareLanguageForAppStore( $storeLanguage ), $release );
-					}
+					$mobileApplicationsLinks = $this->populateMobileApplicationsLinks( $app );
 					break;
 				}
 			}
@@ -170,5 +163,32 @@ class MobileApplicationsLinksGenerator {
 		}
 
 		return $mobileApplicationsLinks;
+	}
+
+	private function populateMobileApplicationsLinks( $app ) {
+		$mobileApplicationsLinks = [];
+
+		if ( $app['android_release'] ) {
+			$release = $app['android_release'];
+			$mobileApplicationsLinks[self::ANDROID_PLATFORM] =
+				$this->generateUrlForWikiaApplicationOnGooglePlay( $release );
+		}
+		if ( $app['ios_release'] ) {
+			$release = $app['ios_release'];
+			$mobileApplicationsLinks[self::IOS_PLATFORM] =
+				$this->generateUrlForWikiaApplicationOnAppStore( $release );
+		}
+
+		return $mobileApplicationsLinks;
+	}
+
+	private function generateUrlForWikiaApplicationOnGooglePlay( $release ) {
+		return sprintf( self::APPLICATION_GOOGLE_PLAY_URL, $this->prepareLanguageForGooglePlay(),
+			$release );
+	}
+
+	private function generateUrlForWikiaApplicationOnAppStore( $release ) {
+		return sprintf( self::APPLICATION_APP_STORE_URL, $this->prepareLanguageForAppStore(),
+			$release );
 	}
 }
