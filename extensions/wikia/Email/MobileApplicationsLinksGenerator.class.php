@@ -121,7 +121,7 @@ class MobileApplicationsLinksGenerator {
 	}
 
 	private function createCacheKeyForMobileApplicationsLinks() {
-		return wfMemcKey( 'mobileApplicationsLinks' );
+		return wfMemcKey( 'mobileApplicationsLinks', $this->language );
 	}
 
 	/**
