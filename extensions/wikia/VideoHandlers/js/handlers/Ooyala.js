@@ -26,6 +26,7 @@ define('wikia.videohandler.ooyala', [
 	return function (params, vb) {
 		var ima3LibUrl = 'https://imasdk.googleapis.com/js/sdkloader/ima3.js',
 			containerId = vb.timeStampId(params.playerId),
+			logGroup = 'wikia.videohandler.ooyala',
 			started = false,
 			createParams = {
 				width: vb.width + 'px',
@@ -81,6 +82,8 @@ define('wikia.videohandler.ooyala', [
 		}
 
 		function initRegularPlayer() {
+			log('Create Ooyala player', log.levels.info, logGroup);
+
 			win.OO.Player.create(containerId, params.videoId, createParams);
 		}
 
@@ -97,17 +100,19 @@ define('wikia.videohandler.ooyala', [
 		}
 
 		// log any errors from failed script loading (VID-976)
-		function loadFail( data ) {
+		function loadFail(data) {
 			var message = data.error + ':';
 
-			$.each( data.resources, function() {
+			$.each(data.resources, function () {
 				message += ' ' + this;
 			});
 
-			log( message, log.levels.error, 'VideoBootstrap' );
+			log(message, log.levels.error, logGroup);
 		}
 
 		function initRecoveredPlayer() {
+			log('Create recovered Ooyala player', log.levels.info, logGroup);
+
 			win.googleImaSdkFailedCbList = {
 				unshift: function () {
 				}
@@ -116,17 +121,22 @@ define('wikia.videohandler.ooyala', [
 
 			createParams.vast.tagUrl = recoveryHelper.getSafeUri(createParams.vast.tagUrl);
 
-			loader({
-				type: loader.JS,
-				resources: ima3LibUrl
-			}).done(function () {
-				log('Ooyala OO.ready', log.levels.info, 'VideoBootstrap');
+			loadJs(ima3LibUrl).done(function () {
+				log('Recovered ima3 lib is loaded', log.levels.info, logGroup);
+
 				initRegularPlayer();
 
 				win.OO._.each(win.googleImaSdkLoadedCbList, function (fn) {
 					fn();
 				}, win.OO);
 			});
+		}
+
+		function loadJs(resource) {
+			return loader({
+				type: loader.JS,
+				resources: resource
+			}).fail(loadFail);
 		}
 
 		function initPlayer() {
@@ -138,23 +148,17 @@ define('wikia.videohandler.ooyala', [
 		}
 
 		// Only load the Ooyala player code once, Ooyala AgeGates will break if we load this asset more than once.
-		if ( win.OO !== undefined ) {
+		if (win.OO !== undefined) {
 			initRegularPlayer();
 			return;
 		}
 
 		/* the second file depends on the first file */
-		loader({
-			type: loader.JS,
-			resources: params.jsFile[ 0 ]
-		}).done(function() {
-			log( 'First set of Ooyala assets loaded', log.levels.info, 'VideoBootstrap' );
+		loadJs(params.jsFile[0]).done(function () {
+			log('First set of Ooyala assets loaded', log.levels.info, logGroup);
 
-			loader({
-				type: loader.JS,
-				resources: params.jsFile[ 1 ]
-			}).done(function() {
-				log( 'All Ooyala assets loaded', log.levels.info, 'VideoBootstrap' );
+			loadJs(params.jsFile[1]).done(function () {
+				log('All Ooyala assets loaded', log.levels.info, logGroup);
 
 				win.OO.ready(function () {
 					if (recoveryHelper.isRecoveryEnabled()) {
@@ -163,9 +167,8 @@ define('wikia.videohandler.ooyala', [
 						initRegularPlayer();
 					}
 				});
-
-			}).fail( loadFail );
-		}).fail( loadFail );
+			});
+		});
 
 	};
 });
