@@ -1,0 +1,46 @@
+This is the install file for the Maps extension.
+	
+Extension page on mediawiki.org: https://www.mediawiki.org/wiki/Extension:Maps
+Latest version of the install file: https://gerrit.wikimedia.org/r/gitweb?p=mediawiki/extensions/Maps.git;a=blob;f=INSTALL
+
+
+== Requirements ==
+
+Maps requires:
+
+* MediaWiki 1.18 or above
+* PHP 5.3 or above
+* Validator 0.4.13 or above
+
+Not up to specs yet? Maybe you can use Maps 1.0.x which requires:
+
+* MediaWiki 1.17 or above
+* PHP 5.2 or above
+* Validator 0.4.11 or above
+
+== Download ==
+
+You can find the current version of Maps on the Google Code download page [0],
+as well as a list of legacy downloads [1].
+
+[0] https://code.google.com/p/mwmaps/downloads/list
+[1] https://code.google.com/p/mwmaps/downloads/list?can=1
+
+You can also get the code directly from SVN. Tags can be obtained via
+
+ svn checkout http://svn.wikimedia.org/svnroot/mediawiki/tags/extensions/Maps/REL_version
+
+Where 'version' is the version number of the tag, such as 0_1
+(see the available tags at http://svn.wikimedia.org/svnroot/mediawiki/tags/extensions/Maps/).
+
+The latest code can be obtained from trunk:
+
+ svn checkout http://svn.wikimedia.org/svnroot/mediawiki/trunk/extensions/Maps/
+
+== Installation ==
+
+Once you have downloaded the code, place the ''Maps'' directory within your MediaWiki
+'extensions' directory. Then add the following code to your [[Manual:LocalSettings.php|LocalSettings.php]] file:
+
+# Maps
+require_once( "$IP/extensions/Maps/Maps.php" );

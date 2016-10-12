@@ -87,6 +87,11 @@ describe('ext.wikia.adEngine.lookup.prebid', function () {
 					isEnabled: function () {
 						return true;
 					}
+				},
+				wikia: {
+					isEnabled: function () {
+						return false;
+					}
 				}
 			},
 			prebidHelper: {
@@ -146,6 +151,7 @@ describe('ext.wikia.adEngine.lookup.prebid', function () {
 			mocks.adaptersPerformanceTracker,
 			mocks.adapters.appnexus,
 			mocks.adapters.indexExchange,
+			mocks.adapters.wikia,
 			mocks.prebidHelper,
 			getFactory(),
 			mocks.doc,
