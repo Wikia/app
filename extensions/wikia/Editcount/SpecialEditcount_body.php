@@ -178,7 +178,7 @@ class Editcount extends SpecialPage {
 			$arcount = $dbr->selectField(
 				[ 'archive' ],
 				[ 'COUNT(*) as count' ],
-				[ [ 'ar_user' => $uid ] ],
+				[ 'ar_user' => $uid ],
 				__METHOD__
 			);
 
