@@ -6,11 +6,13 @@ require([
 	'jquery',
 	'wikia.window'
 ], function (flowTracking, flowTrackingCreatePage, QueryString, mw, $, window) {
+	var redLinkFlow = mw.config.get('wgNamespaceNumber') === -1 ?
+			window.wgFlowTrackingFlows.CREATE_PAGE_SPECIAL_REDLINK :
+			window.wgFlowTrackingFlows.CREATE_PAGE_ARTICLE_REDLINK,
+		createButtonFlow = window.wgFlowTrackingFlows.CREATE_PAGE_CREATE_BUTTON;
+
 	function init() {
-		var $wikiaArticle = $('#WikiaArticle'),
-			redLinkFlow = mw.config.get('wgNamespaceNumber') === -1 ?
-				window.wgFlowTrackingFlows.CREATE_PAGE_SPECIAL_REDLINK :
-				window.wgFlowTrackingFlows.CREATE_PAGE_ARTICLE_REDLINK;
+		var $wikiaArticle = $('#WikiaArticle');
 
 		// Create Page flow tracking, adding flow param in redlinks href.
 		// This parameter is added here to avoid reparsing all articles.
@@ -29,6 +31,10 @@ require([
 
 			flowTracking.beginFlow(redLinkFlow, {});
 		});
+
+		$( '#ca-ve-edit' ).click(function() {
+			flowTracking.beginFlow(createButtonFlow, {});
+		});
 	}
 
 	function initVEHooks() {
@@ -44,6 +50,10 @@ require([
 				qs.removeVal('flow');
 				window.history.replaceState({}, '', qs.toString())
 			}
+		});
+
+		mw.hook('ve.afterVEInit').add(function(veEditUri) {
+			veEditUri.extend( { flow: createButtonFlow } );
 		});
 	}
 
