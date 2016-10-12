@@ -5,6 +5,9 @@
  *
  * @since 2.0
  *
+ * @file
+ * @ingroup Maps
+ *
  * @licence GNU GPL v2+
  * @author Kim Eik
  * @author Jeroen De Dauw < jeroendedauw@gmail.com >
@@ -38,8 +41,8 @@ class SpecialMapEditor extends SpecialPage{
 		) );
 
 		$outputPage->addModules( 'mapeditor' );
-        $editorHtml = new MapEditorHtml( $this->getAttribs() );
-		$html = $editorHtml->getEditorHtml();
+        $editor = new MapEditor( $this->getAttribs() );
+		$html = $editor->getEditorHtml();
 		$outputPage->addHTML( $html );
 	}
 
@@ -55,7 +58,4 @@ class SpecialMapEditor extends SpecialPage{
         );
 	}
 
-	protected function getGroupName() {
-		return 'maps';
-	}
 }

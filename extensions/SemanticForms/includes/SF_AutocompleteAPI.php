@@ -46,15 +46,15 @@ class SFAutocompleteAPI extends ApiBase {
 		} elseif ( !is_null( $property ) ) {
 			$data = self::getAllValuesForProperty( $property, $substr );
 		} elseif ( !is_null( $category ) ) {
-			$data = SFValuesUtils::getAllPagesForCategory( $category, 3, $substr );
+			$data = SFUtils::getAllPagesForCategory( $category, 3, $substr );
 		} elseif ( !is_null( $concept ) ) {
-			$data = SFValuesUtils::getAllPagesForConcept( $concept, $substr );
+			$data = SFUtils::getAllPagesForConcept( $concept, $substr );
 		} elseif ( !is_null( $cargo_table ) && !is_null( $cargo_field ) ) {
 			$data = self::getAllValuesForCargoField( $cargo_table, $cargo_field, $field_is_array, $substr, $base_cargo_table, $base_cargo_field, $basevalue );
 		} elseif ( !is_null( $namespace ) ) {
-			$data = SFValuesUtils::getAllPagesForNamespace( $namespace, $substr );
+			$data = SFUtils::getAllPagesForNamespace( $namespace, $substr );
 		} elseif ( !is_null( $external_url ) ) {
-			$data = SFValuesUtils::getValuesFromExternalURL( $external_url, $substr );
+			$data = SFUtils::getValuesFromExternalURL( $external_url, $substr );
 		} else {
 			$data = array();
 		}
@@ -167,7 +167,7 @@ class SFAutocompleteAPI extends ApiBase {
 			if ( !is_null( $basePropertyName ) ) {
 				$cacheKeyString .= ',' . $basePropertyName . ',' . $baseValue;
 			}
-			$cacheKey = wfMemcKey( 'sf-autocomplete', md5( $cacheKeyString ) );
+			$cacheKey = wfMemcKey( 'sf-autocomplete' , md5( $cacheKeyString ) );
 			$values = $cache->get( $cacheKey );
 
 			if ( !empty( $values ) ){
@@ -236,7 +236,7 @@ class SFAutocompleteAPI extends ApiBase {
 		if ( !is_null( $substring ) ) {
 			// "Page" type property valeus are stored differently
 			// in the DB, i.e. underlines instead of spaces.
-			$conditions[] = SFValuesUtils::getSQLConditionForAutocompleteInColumn( $valueField, $substring, $propertyHasTypePage );
+			$conditions[] = SFUtils::getSQLConditionForAutocompleteInColumn( $valueField, $substring, $propertyHasTypePage );
 		}
 
 		$sqlOptions['ORDER BY'] = $valueField;
@@ -274,7 +274,7 @@ class SFAutocompleteAPI extends ApiBase {
 			if ( !is_null( $baseCargoTable ) ) {
 				$cacheKeyString .= '|' . $baseCargoTable . '|' . $baseCargoField . '|' . $baseValue;
 			}
-			$cacheKey = wfMemcKey( 'sf-autocomplete', md5( $cacheKeyString ) );
+			$cacheKey = wfMemcKey( 'sf-autocomplete' , md5( $cacheKeyString ) );
 			$values = $cache->get( $cacheKey );
 
 			if ( !empty( $values ) ){
