@@ -4,23 +4,21 @@
  *
  * @file
  * @ingroup SF
+ * The following parser functions are defined: 'default_form', 'forminput',
+ * 'formlink', 'queryformlink', 'arraymap', 'arraymaptemplate' and 'autoedit'.
  *
- * The following parser functions are defined: #default_form, #forminput,
- * #formlink, #formredlink, #queryformlink, #arraymap, #arraymaptemplate
- * and #autoedit.
- *
- * '#default_form' is called as:
+ * 'default_form' is called as:
  * {{#default_form:formName}}
  *
- * This function sets the specified form to be the default form for pages
- * in that category. It is a substitute for the now-deprecated "Has
+ * This function sets the specified form to be the default form for pages in
+ * that category. It is a substitute for the (now somewhat-deprecated) "Has
  * default form" special property.
  *
- * '#forminput' is called as:
+ * 'forminput' is called as:
  *
  * {{#forminput:form=|size=|default value=|button text=|query string=
  * |autocomplete on category=|autocomplete on namespace=
- * |...additional query string values...}}
+ * |remote autocompletion|...additional query string values...}}
  *
  * This function returns HTML representing a form to let the user enter the
  * name of a page to be added or edited using a Semantic Forms form. All
@@ -37,6 +35,10 @@
  * (you can only use one). To autcomplete on all pages in the main (blank)
  * namespace, specify "autocomplete on namespace=main".
  *
+ * If the "remote autocompletion" parameter is added, autocompletion
+ * is done via an external URL, which can allow autocompletion on a much
+ * larger set of values.
+ *
  * Example: to create an input to add or edit a page with a form called
  * 'User' within a namespace also called 'User', and to have the form
  * preload with the page called 'UserStub', you could call the following:
@@ -45,7 +47,7 @@
  * |query string=namespace=User&preload=UserStub}}
  *
  *
- * '#formlink' is called as:
+ * 'formlink' is called as:
  *
  * {{#formlink:form=|link text=|link type=|tooltip=|query string=|target=
  * |popup|...additional query string values...}}
@@ -75,7 +77,7 @@
  * |query string=namespace=User&preload=UserStub}}
  *
  *
- * '#formredlink' is called in a very similar way to 'formlink' - the only
+ * 'formredlink' is called in a very similar way to 'formlink' - the only
  * difference is that it lacks the 'link text', 'link type' and 'tooltip'
  * parameters. Its behavior is quite similar to that of 'formlink' as well;
  * the only difference is that, when the 'target' is an existing page, it
@@ -83,14 +85,14 @@
  * page. 
  *
  *
- * '#queryformlink' links to Special:RunQuery, instead of Special:FormEdit.
+ * 'queryformlink' links to Special:RunQuery, instead of Special:FormEdit.
  * It is called in the exact same way as 'formlink', though the
  * 'target' parameter should not be specified, and 'link text' is now optional,
  * since it has a default value of 'Run query' (in whatever language the
  * wiki is in).
  *
  *
- * '#arraymap' is called as:
+ * 'arraymap' is called as:
  *
  * {{#arraymap:value|delimiter|var|formula|new_delimiter}}
  *
@@ -108,7 +110,7 @@
  * {{#arraymap:blue;red;yellow|;|x|[[Has color::x]]|;}}
  *
  *
- * '#arraymaptemplate' is called as:
+ * 'arraymaptemplate' is called as:
  *
  * {{#arraymaptemplate:value|template|delimiter|new_delimiter}}
  *
@@ -126,10 +128,9 @@
  * {{#arraymaptemplate:blue;red;yellow|Beautify|;|;}}
  *
  *
- * '#autoedit' is called as:
+ * 'autoedit' is called as:
  *
- * {{#autoedit:form=|target=|link text=|link type=|tooltip=|query string=
- * |reload}}
+ * {{#autoedit:form=|target=|link text=|link type=|query string=|reload}}
  *
  * This function creates a link or button that, when clicked on,
  * automatically modifies the specified page according to the values in the
@@ -153,6 +154,27 @@ class SFParserFunctions {
 	// static variable to guarantee that Javascript for autocompletion
 	// only gets added to the page once
 	static $num_autocompletion_inputs = 0;
+
+	static function registerFunctions( &$parser ) {
+		global $wgOut;
+
+		$parser->setFunctionHook( 'default_form', array( 'SFParserFunctions', 'renderDefaultForm' ) );
+		$parser->setFunctionHook( 'forminput', array( 'SFParserFunctions', 'renderFormInput' ) );
+		$parser->setFunctionHook( 'formlink', array( 'SFParserFunctions', 'renderFormLink' ) );
+		$parser->setFunctionHook( 'formredlink', array( 'SFParserFunctions', 'renderFormRedLink' ) );
+		$parser->setFunctionHook( 'queryformlink', array( 'SFParserFunctions', 'renderQueryFormLink' ) );
+		if ( defined( get_class( $parser ) . '::SFH_OBJECT_ARGS' ) ) {
+			$parser->setFunctionHook( 'arraymap', array( 'SFParserFunctions', 'renderArrayMapObj' ), SFH_OBJECT_ARGS );
+			$parser->setFunctionHook( 'arraymaptemplate', array( 'SFParserFunctions', 'renderArrayMapTemplateObj' ), SFH_OBJECT_ARGS );
+		} else {
+			$parser->setFunctionHook( 'arraymap', array( 'SFParserFunctions', 'renderArrayMap' ) );
+			$parser->setFunctionHook( 'arraymaptemplate', array( 'SFParserFunctions', 'renderArrayMapTemplate' ) );
+		}
+
+		$parser->setFunctionHook( 'autoedit', array( 'SFParserFunctions', 'renderAutoEdit' ) );
+
+		return true;
+	}
 
 	static function renderDefaultform( &$parser ) {
 		$curTitle = $parser->getTitle();
@@ -191,7 +213,7 @@ class SFParserFunctions {
 
 		// hack to remove newline from beginning of output, thanks to
 		// http://jimbojw.com/wiki/index.php?title=Raw_HTML_Output_from_a_MediaWiki_Parser_Function
-		return $parser->insertStripItem( self::createFormLink( $parser, $params, 'formlink' ), $parser->mStripState );
+		return $parser->insertStripItem( SFUtils::createFormLink( $parser, $params, 'formlink' ), $parser->mStripState );
 	}
 
 	static function renderFormRedLink ( &$parser ) {
@@ -200,7 +222,7 @@ class SFParserFunctions {
 
 		// hack to remove newline from beginning of output, thanks to
 		// http://jimbojw.com/wiki/index.php?title=Raw_HTML_Output_from_a_MediaWiki_Parser_Function
-		return $parser->insertStripItem( self::createFormLink( $parser, $params, 'formredlink' ), $parser->mStripState );
+		return $parser->insertStripItem( SFUtils::createFormLink( $parser, $params, 'formredlink' ), $parser->mStripState );
 	}
 
 	static function renderQueryFormLink ( &$parser ) {
@@ -209,48 +231,49 @@ class SFParserFunctions {
 
 		// hack to remove newline from beginning of output, thanks to
 		// http://jimbojw.com/wiki/index.php?title=Raw_HTML_Output_from_a_MediaWiki_Parser_Function
-		return $parser->insertStripItem( self::createFormLink( $parser, $params, 'queryformlink' ), $parser->mStripState );
+		return $parser->insertStripItem( SFUtils::createFormLink( $parser, $params, 'queryformlink' ), $parser->mStripState );
 	}
 
-	static function renderFormInput( &$parser ) {
+	static function renderFormInput ( &$parser ) {
+		global $wgHtml5;
+
 		$params = func_get_args();
 		array_shift( $params ); // don't need the parser
-
-		// Set defaults.
+		// set defaults
 		$inFormName = $inValue = $inButtonStr = $inQueryStr = '';
 		$inQueryArr = array();
+		$positionalParameters = false;
 		$inAutocompletionSource = '';
+		$inRemoteAutocompletion = false;
 		$inSize = 25;
 		$classStr = "sfFormInput";
-		$inPlaceholder = null;
-		$inAutofocus = true;
-
-		// Assign params.
+		$inPlaceholder = "";
+		// assign params - support unlabelled params, for backwards compatibility
 		foreach ( $params as $i => $param ) {
 			$elements = explode( '=', $param, 2 );
 
-			// Set param name and value.
-			if ( count( $elements ) > 1 ) {
-				$paramName = trim( $elements[0] );
-				// Parse (and sanitize) parameter values.
-				// We call recursivePreprocess() and not
-				// recursiveTagParse() so that URL values will
-				// not be turned into links.
-				$value = trim( $parser->recursivePreprocess( $elements[1] ) );
+			// set param_name and value
+			if ( count( $elements ) > 1 && !$positionalParameters ) {
+				$param_name = trim( $elements[0] );
+
+				// parse (and sanitize) parameter values
+				$value = trim( $parser->recursiveTagParse( $elements[1] ) );
 			} else {
-				$paramName = trim( $param );
-				$value = null;
+				$param_name = null;
+
+				// parse (and sanitize) parameter values
+				$value = trim( $parser->recursiveTagParse( $param ) );
 			}
 
-			if ( $paramName == 'form' ) {
+			if ( $param_name == 'form' )
 				$inFormName = $value;
-			} elseif ( $paramName == 'size' ) {
+			elseif ( $param_name == 'size' )
 				$inSize = $value;
-			} elseif ( $paramName == 'default value' ) {
+			elseif ( $param_name == 'default value' )
 				$inValue = $value;
-			} elseif ( $paramName == 'button text' ) {
+			elseif ( $param_name == 'button text' )
 				$inButtonStr = $value;
-			} elseif ( $paramName == 'query string' ) {
+			elseif ( $param_name == 'query string' ) {
 				// Change HTML-encoded ampersands directly to
 				// URL-encoded ampersands, so that the string
 				// doesn't get split up on the '&'.
@@ -260,32 +283,57 @@ class SFParserFunctions {
 
 				parse_str($inQueryStr, $arr);
 				$inQueryArr = SFUtils::array_merge_recursive_distinct( $inQueryArr, $arr );
-			} elseif ( $paramName == 'autocomplete on category' ) {
+			} elseif ( $param_name == 'autocomplete on category' ) {
 				$inAutocompletionSource = $value;
-				$autocompletionType = 'category';
-			} elseif ( $paramName == 'autocomplete on namespace' ) {
+				$autocompletion_type = 'category';
+			} elseif ( $param_name == 'autocomplete on namespace' ) {
 				$inAutocompletionSource = $value;
-				$autocompletionType = 'namespace';
-			} elseif ( $paramName == 'placeholder' ) {
+				$autocompletion_type = 'namespace';
+			} elseif ( $param_name == 'remote autocompletion' ) {
+				$inRemoteAutocompletion = true;
+			} elseif ( $param_name == 'placeholder' ) {
 				$inPlaceholder = $value;
-			} elseif ( $paramName == 'popup' ) {
-				self::loadScriptsForPopupForm( $parser );
+			} elseif ( $param_name == null && $value == 'popup' ) {
+				SFUtils::loadScriptsForPopupForm( $parser );
 				$classStr .= ' popupforminput';
-			} elseif ( $paramName == 'no autofocus' ) {
-				$inAutofocus = false;
-			} else {
+			} elseif ( $param_name !== null && !$positionalParameters ) {
+
 				$value = urlencode($value);
-				parse_str( "$paramName=$value", $arr );
+				parse_str("$param_name=$value", $arr);
+				$inQueryArr = SFUtils::array_merge_recursive_distinct( $inQueryArr, $arr );
+
+			} elseif ( $i == 0 ) {
+				$inFormName = $value;
+				$positionalParameters = true;
+			} elseif ( $i == 1 ) {
+				$inSize = $value;
+			} elseif ( $i == 2 ) {
+				$inValue = $value;
+			} elseif ( $i == 3 ) {
+				$inButtonStr = $value;
+			} elseif ( $i == 4 ) {
+				// Change HTML-encoded ampersands directly to
+				// URL-encoded ampersands, so that the string
+				// doesn't get split up on the '&'.
+				$inQueryStr = str_replace( '&amp;', '%26', $value );
+
+				parse_str($inQueryStr, $arr);
 				$inQueryArr = SFUtils::array_merge_recursive_distinct( $inQueryArr, $arr );
 			}
 		}
 
+		$fs = SpecialPageFactory::getPage( 'FormStart' );
+
+		$fs_url = $fs->getTitle()->getLocalURL();
+		$str = <<<END
+			<form name="createbox" action="$fs_url" method="get" class="$classStr">
+			<p>
+
+END;
 		$formInputAttrs = array( 'size' => $inSize );
 
-		if ( $inPlaceholder != null ) {
+		if ( $wgHtml5 ) {
 			$formInputAttrs['placeholder'] = $inPlaceholder;
-		}
-		if ( $inAutofocus ) {
 			$formInputAttrs['autofocus'] = 'autofocus';
 		}
 
@@ -298,24 +346,23 @@ class SFParserFunctions {
 		} else {
 			self::$num_autocompletion_inputs++;
 			$input_num = self::$num_autocompletion_inputs;
-			// Place the necessary Javascript on the page, and
+			// place the necessary Javascript on the page, and
 			// disable the cache (so the Javascript will show up) -
 			// if there's more than one autocompleted #forminput
-			// on the page, we only need to do this the first time.
+			// on the page, we only need to do this the first time
 			if ( $input_num == 1 ) {
 				$parser->disableCache();
-				$output = $parser->getOutput();
-				$output->addModules( 'ext.semanticforms.main' );
+				SFUtils::addJavascriptAndCSS( $parser );
 			}
 
 			$inputID = 'input_' . $input_num;
 			$formInputAttrs['id'] = $inputID;
 			$formInputAttrs['class'] = 'autocompleteInput createboxInput formInput';
 			global $sfgMaxLocalAutocompleteValues;
-			$autocompletion_values = SFValuesUtils::getAutocompleteValues( $inAutocompletionSource, $autocompletionType );
-			if ( count( $autocompletion_values ) > $sfgMaxLocalAutocompleteValues ) {
+			$autocompletion_values = SFUtils::getAutocompleteValues( $inAutocompletionSource, $autocompletion_type );
+			if ( count($autocompletion_values) > $sfgMaxLocalAutocompleteValues || $inRemoteAutocompletion ) {
 				$formInputAttrs['autocompletesettings'] = $inAutocompletionSource;
-				$formInputAttrs['autocompletedatatype'] = $autocompletionType;
+				$formInputAttrs['autocompletedatatype'] = $autocompletion_type;
 			} else {
 				global $sfgAutocompleteValues;
 				$sfgAutocompleteValues[$inputID] = $autocompletion_values;
@@ -323,52 +370,40 @@ class SFParserFunctions {
 			}
 		}
 
-		$formContents = Html::input( 'page_name', $inValue, 'text', $formInputAttrs );
+		$str .= "\t" . Html::input( 'page_name', $inValue, 'text', $formInputAttrs ) . "\n";
 
-		// If the form start URL looks like "index.php?title=Special:FormStart"
+		// if the form start URL looks like "index.php?title=Special:FormStart"
 		// (i.e., it's in the default URL style), add in the title as a
 		// hidden value
-		$fs = SpecialPageFactory::getPage( 'FormStart' );
-		$fsURL = $fs->getTitle()->getLocalURL();
-		if ( ( $pos = strpos( $fsURL, "title=" ) ) > - 1 ) {
-			$formContents .= Html::hidden( "title", urldecode( substr( $fsURL, $pos + 6 ) ) );
+		if ( ( $pos = strpos( $fs_url, "title=" ) ) > - 1 ) {
+			$str .= Html::hidden( "title", urldecode( substr( $fs_url, $pos + 6 ) ) );
 		}
 		if ( $inFormName == '' ) {
-			$formContents .= SFUtils::formDropdownHTML();
+			$str .= SFUtils::formDropdownHTML();
 		} else {
-			$formContents .= Html::hidden( "form", $inFormName );
+			$str .= Html::hidden( "form", $inFormName );
 		}
 
-		// Recreate the passed-in query string as a set of hidden
-		// variables.
+		// Recreate the passed-in query string as a set of hidden variables.
 		if ( !empty( $inQueryArr ) ) {
-			// Query string has to be turned into hidden inputs.
+			// query string has to be turned into hidden inputs.
+
 			$query_components = explode( '&', http_build_query( $inQueryArr, '', '&' ) );
 
 			foreach ( $query_components as $query_component ) {
 				$var_and_val = explode( '=', $query_component, 2 );
 				if ( count( $var_and_val ) == 2 ) {
-					$formContents .= Html::hidden( urldecode( $var_and_val[0] ), urldecode( $var_and_val[1] ) );
+					$str .= Html::hidden( urldecode( $var_and_val[0] ), urldecode( $var_and_val[1] ) );
 				}
 			}
 		}
 
-		$buttonStr = ( $inButtonStr != '' ) ? $inButtonStr : wfMessage( 'sf_formstart_createoredit' )->escaped();
-		$formContents .= "&nbsp;" . Html::input( null, $buttonStr, 'submit',
-			array(
-				'id' => "input_button_$input_num",
-				'class' => 'forminput_button'
-			)
-		);
+		$button_str = ( $inButtonStr != '' ) ? $inButtonStr : wfMessage( 'sf_formstart_createoredit' )->escaped();
+		$str .= <<<END
+			<input type="submit" value="$button_str" id="input_button_$input_num" class="forminput_button"/></p>
+			</form>
 
-		$str = "\t" . Html::rawElement( 'form', array(
-				'name' => 'createbox',
-				'action' => $fsURL,
-				'method' => 'get',
-				'class' => $classStr
-			), '<p>' . $formContents . '</p>'
-		) . "\n";
-
+END;
 		if ( ! empty( $inAutocompletionSource ) ) {
 			$str .= "\t\t\t" .
 				Html::element( 'div',
@@ -376,14 +411,14 @@ class SFParserFunctions {
 						'class' => 'page_name_auto_complete',
 						'id' => "div_$input_num",
 					),
-					// It has to be <div></div>, not
+					// it has to be <div></div>, not
 					// <div />, to work properly - stick
-					// in a space as the content.
+					// in a space as the content
 					' '
 				) . "\n";
 		}
 
-		// Hack to remove newline from beginning of output, thanks to
+		// hack to remove newline from beginning of output, thanks to
 		// http://jimbojw.com/wiki/index.php?title=Raw_HTML_Output_from_a_MediaWiki_Parser_Function
 		return $parser->insertStripItem( $str, $parser->mStripState );
 	}
@@ -391,8 +426,37 @@ class SFParserFunctions {
 	/**
 	 * {{#arraymap:value|delimiter|var|formula|new_delimiter}}
 	 */
-	static function renderArrayMap( &$parser, $frame, $args ) {
-		// Set variables.
+	static function renderArrayMap( &$parser, $value = '', $delimiter = ',', $var = 'x', $formula = 'x', $new_delimiter = ', ' ) {
+		// let '\n' represent newlines - chances that anyone will
+		// actually need the '\n' literal are small
+		$delimiter = str_replace( '\n', "\n", $delimiter );
+		$actual_delimiter = $parser->mStripState->unstripNoWiki( $delimiter );
+		$new_delimiter = str_replace( '\n', "\n", $new_delimiter );
+
+		if ( $actual_delimiter == '' ) {
+			$values_array = preg_split( '/(.)/u', $value, -1, PREG_SPLIT_NO_EMPTY | PREG_SPLIT_DELIM_CAPTURE );
+		} else {
+			$values_array = explode( $actual_delimiter, $value );
+		}
+
+		$results = array();
+		foreach ( $values_array as $cur_value ) {
+			$cur_value = trim( $cur_value );
+			// ignore a value if it's null
+			if ( $cur_value != '' ) {
+				// remove whitespaces
+				$results[] = str_replace( $var, $cur_value, $formula );
+			}
+		}
+		return implode( $new_delimiter, $results );
+	}
+
+	/**
+	 * SFH_OBJ_ARGS
+	 * {{#arraymap:value|delimiter|var|formula|new_delimiter}}
+	 */
+	static function renderArrayMapObj( &$parser, $frame, $args ) {
+		# Set variables
 		$value = isset( $args[0] ) ? trim( $frame->expand( $args[0] ) ) : '';
 		$delimiter = isset( $args[1] ) ? trim( $frame->expand( $args[1] ) ) : ',';
 		$var = isset( $args[2] ) ? trim( $frame->expand( $args[2], PPFrame::NO_ARGS | PPFrame::NO_TEMPLATES ) ) : 'x';
@@ -411,7 +475,7 @@ class SFParserFunctions {
 		}
 
 		$results_array = array();
-		// Add results to the results array only if the old value was
+		// add results to the results array only if the old value was
 		// non-null, and the new, mapped value is non-null as well.
 		foreach ( $values_array as $old_value ) {
 			$old_value = trim( $old_value );
@@ -429,8 +493,39 @@ class SFParserFunctions {
 	/**
 	 * {{#arraymaptemplate:value|template|delimiter|new_delimiter}}
 	 */
-	static function renderArrayMapTemplate( &$parser, $frame, $args ) {
-		// Set variables.
+	static function renderArrayMapTemplate( &$parser, $value = '', $template = '', $delimiter = ',', $new_delimiter = ', ' ) {
+		# let '\n' represent newlines
+		$delimiter = str_replace( '\n', "\n", $delimiter );
+		$actual_delimiter = $parser->mStripState->unstripNoWiki( $delimiter );
+		$new_delimiter = str_replace( '\n', "\n", $new_delimiter );
+
+		if ( $actual_delimiter == '' ) {
+			$values_array = preg_split( '/(.)/u', $value, -1, PREG_SPLIT_NO_EMPTY | PREG_SPLIT_DELIM_CAPTURE );
+		} else {
+			$values_array = explode( $actual_delimiter, $value );
+		}
+
+		$results = array();
+		$template = trim( $template );
+
+		foreach ( $values_array as $cur_value ) {
+			$cur_value = trim( $cur_value );
+			// ignore a value if it's null
+			if ( $cur_value != '' ) {
+				// remove whitespaces
+				$results[] = '{{' . $template . '|' . $cur_value . '}}';
+			}
+		}
+
+		return array( implode( $new_delimiter, $results ), 'noparse' => false, 'isHTML' => false );
+	}
+
+	/**
+	 * SFH_OBJ_ARGS
+	 * {{#arraymaptemplate:value|template|delimiter|new_delimiter}}
+	 */
+	static function renderArrayMapTemplateObj( &$parser, $frame, $args ) {
+		# Set variables
 		$value = isset( $args[0] ) ? trim( $frame->expand( $args[0] ) ) : '';
 		$template = isset( $args[1] ) ? trim( $frame->expand( $args[1] ) ) : '';
 		$delimiter = isset( $args[2] ) ? trim( $frame->expand( $args[2] ) ) : ',';
@@ -453,8 +548,8 @@ class SFParserFunctions {
 			if ( $old_value == '' ) continue;
 			$bracketed_value = $frame->virtualBracketedImplode( '{{', '|', '}}',
 				$template, '1=' . $old_value );
-			// Special handling if preprocessor class is set to
-			// 'Preprocessor_Hash'.
+			// special handling if preprocessor class is set to
+			// 'Preprocessor_Hash'
 			if ( $bracketed_value instanceof PPNode_Hash_Array ) {
 				$bracketed_value = $bracketed_value->value;
 			}
@@ -466,23 +561,21 @@ class SFParserFunctions {
 
 
 	static function renderAutoEdit( &$parser ) {
-		$parser->getOutput()->addModules( 'ext.semanticforms.autoedit' );
-
-		// Set defaults.
+		// set defaults
 		$formcontent = '';
 		$linkString = null;
 		$linkType = 'span';
 		$summary = null;
 		$classString = 'autoedit-trigger';
-		$inTooltip = null;
 		$inQueryArr = array();
 		$editTime = null;
 
-		// Parse parameters.
+		// parse parameters
 		$params = func_get_args();
 		array_shift( $params ); // don't need the parser
 
 		foreach ( $params as $param ) {
+
 			$elements = explode( '=', $param, 2 );
 
 			$key = trim( $elements[ 0 ] );
@@ -517,9 +610,6 @@ class SFParserFunctions {
 					// do not parse ok text or error text yet. Will be parsed on api call
 					$arr = array( $key => $value );
 					$inQueryArr = SFUtils::array_merge_recursive_distinct( $inQueryArr, $arr );
-					break;
-				case 'tooltip':
-					$inTooltip = Sanitizer::decodeCharReferences( $value );
 					break;
 
 				case 'target':
@@ -557,24 +647,14 @@ class SFParserFunctions {
 			}
 		}
 
-		if ( $linkString == null ) {
-			return null;
-		}
+		if ( $linkString == null ) return null;
 
 		if ( $linkType == 'button' ) {
 			// Html::rawElement() before MW 1.21 or so drops the type attribute
 			// do not use Html::rawElement() for buttons!
-			$attrs = array( 'type' => 'submit', 'class' => $classString );
-			if ( $inTooltip != null ) {
-				$attrs['title'] = $inTooltip;
-			}
-			$linkElement = '<button ' . Html::expandAttributes( $attrs ) . '>' . $linkString . '</button>';
+			$linkElement = '<button ' . Html::expandAttributes( array( 'type' => 'submit', 'class' => $classString ) ) . '>' . $linkString . '</button>';
 		} elseif ( $linkType == 'link' ) {
-			$attrs = array( 'class' => $classString, 'href' => "#" );
-			if ( $inTooltip != null ) {
-				$attrs['title'] = $inTooltip;
-			}
-			$linkElement = Html::rawElement( 'a', $attrs, $linkString );
+			$linkElement = Html::rawElement( 'a', array( 'class' => $classString, 'href' => "#" ), $linkString );
 		} else {
 			$linkElement = Html::rawElement( 'span', array( 'class' => $classString ), $linkString );
 		}
@@ -591,182 +671,52 @@ class SFParserFunctions {
 
 		$form = Html::rawElement( 'form', array( 'class' => 'autoedit-data' ), $formcontent );
 
+		// ensure loading of jQuery and style sheets
+		self::loadScriptsForAutoEdit( $parser );
+
 		$output = Html::rawElement( 'div', array( 'class' => 'autoedit' ),
 				$linkElement .
 				Html::rawElement( 'span', array( 'class' => "autoedit-result" ), null ) .
 				$form
 		);
 
-		// Return output HTML.
+		// return output HTML
 		return $parser->insertStripItem( $output, $parser->mStripState );
 	}
 
-	static function createFormLink( &$parser, $params, $parserFunctionName ) {
-		// Set defaults.
-		$inFormName = $inLinkStr = $inExistingPageLinkStr = $inLinkType =
-			$inTooltip = $inQueryStr = $inTargetName = '';
-		if ( $parserFunctionName == 'queryformlink' ) {
-			$inLinkStr = wfMessage( 'runquery' )->text();
-		}
-		$inCreatePage = false;
-		$classStr = '';
-		$inQueryArr = array();
-		$targetWindow = '_self';
+	/**
+	 * Load scripts and style files for AutoEdit
+	 */
+	private static function loadScriptsForAutoEdit ( &$parser ) {
+		global $sfgScriptPath;
 
-		// assign params
-		// - support unlabelled params, for backwards compatibility
-		// - parse and sanitize all parameter values
-		foreach ( $params as $i => $param ) {
-
-			$elements = explode( '=', $param, 2 );
-
-			// set param_name and value
-			if ( count( $elements ) > 1 ) {
-				$param_name = trim( $elements[0] );
-
-				// parse (and sanitize) parameter values
-				$value = trim( $parser->recursiveTagParse( $elements[1] ) );
-			} else {
-				$param_name = null;
-
-				// parse (and sanitize) parameter values
-				$value = trim( $parser->recursiveTagParse( $param ) );
-			}
-
-			if ( $param_name == 'form' ) {
-				$inFormName = $value;
-			} elseif ( $param_name == 'link text' ) {
-				$inLinkStr = $value;
-			} elseif ( $param_name == 'existing page link text' ) {
-				$inExistingPageLinkStr = $value;
-			} elseif ( $param_name == 'link type' ) {
-				$inLinkType = $value;
-			} elseif ( $param_name == 'query string' ) {
-				// Change HTML-encoded ampersands directly to
-				// URL-encoded ampersands, so that the string
-				// doesn't get split up on the '&'.
-				$inQueryStr = str_replace( '&amp;', '%26', $value );
-
-				parse_str( $inQueryStr, $arr );
-				$inQueryArr = SFUtils::array_merge_recursive_distinct( $inQueryArr, $arr );
-			} elseif ( $param_name == 'tooltip' ) {
-				$inTooltip = Sanitizer::decodeCharReferences( $value );
-			} elseif ( $param_name == 'target' ) {
-				$inTargetName = $value;
-			} elseif ( $param_name == null && $value == 'popup' ) {
-				self::loadScriptsForPopupForm( $parser );
-				$classStr = 'popupformlink';
-			} elseif ( $param_name == null && $value == 'new window' ) {
-				$targetWindow = '_blank';
-			} elseif ( $param_name == null && $value == 'create page' ) {
-				$inCreatePage = true;
-			} elseif ( $param_name !== null ) {
-				$value = urlencode( $value );
-				parse_str( "$param_name=$value", $arr );
-				$inQueryArr = SFUtils::array_merge_recursive_distinct( $inQueryArr, $arr );
-			}
-		}
-
-		// Not the most graceful way to do this, but it is the
-		// easiest - if this is the #formredlink function, just
-		// ignore whatever values were passed in for these params.
-		if ( $parserFunctionName == 'formredlink' ) {
-			$inLinkType = $inTooltip = null;
-		}
-
-		// If "red link only" was specified, and a target page was
-		// specified, and it exists, just link to the page.
-		if ( $inTargetName != '' ) {
-			$targetTitle = Title::newFromText( $inTargetName );
-			$targetPageExists = ( $targetTitle != '' && $targetTitle->exists() );
+		if ( defined( 'MW_SUPPORTS_RESOURCE_MODULES' ) ) {
+			$parser->getOutput()->addModules( 'ext.semanticforms.autoedit' );
 		} else {
-			$targetPageExists = false;
-		}
 
-		if ( $parserFunctionName == 'formredlink' && $targetPageExists ) {
-			if ( $inExistingPageLinkStr == '' ) {
-				return Linker::link( $targetTitle );
-			} else {
-				return Linker::link( $targetTitle, $inExistingPageLinkStr );
+			static $loaded = false;
+
+			// load JavaScript and CSS files only once
+			if ( !$loaded ) {
+
+				// load extensions JavaScript
+				$parser->getOutput()->addHeadItem(
+					'<script type="text/javascript" src="' . $sfgScriptPath
+					. '/libs/SF_autoedit.js"></script> ' . "\n",
+					'sf_autoedit_script'
+				);
+
+				// load extensions style sheet
+				$parser->getOutput()->addHeadItem(
+					'<link rel="stylesheet" href="' . $sfgScriptPath
+					. '/skins/SF_autoedit.css"/> ' . "\n",
+					'sf_autoedit_style'
+				);
+
+				$loaded = true;
 			}
 		}
 
-		// The page doesn't exist, so if 'create page' was
-		// specified, create the page now.
-		if ( $parserFunctionName == 'formredlink' &&
-			$inCreatePage && $inTargetName != '' ) {
-			$targetTitle = Title::newFromText( $inTargetName );
-			SFFormLinker::createPageWithForm( $targetTitle, $inFormName );
-		}
-
-		if ( $parserFunctionName == 'queryformlink' ) {
-			$formSpecialPage = SpecialPageFactory::getPage( 'RunQuery' );
-		} else {
-			$formSpecialPage = SpecialPageFactory::getPage( 'FormEdit' );
-		}
-
-		if ( $inFormName == '' ) {
-			$query = array( 'target' => $inTargetName );
-			$link_url = $formSpecialPage->getTitle()->getLocalURL( $query );
-		} elseif ( strpos( $inFormName, '/' ) == true ) {
-			$query = array( 'form' => $inFormName, 'target' => $inTargetName );
-			$link_url = $formSpecialPage->getTitle()->getLocalURL( $query );
-		} else {
-			$link_url = $formSpecialPage->getTitle()->getLocalURL() . "/$inFormName";
-			if ( ! empty( $inTargetName ) ) {
-				$link_url .= "/$inTargetName";
-			}
-			$link_url = str_replace( ' ', '_', $link_url );
-		}
-		$hidden_inputs = "";
-		if ( ! empty( $inQueryArr ) ) {
-			// Special handling for the buttons - query string
-			// has to be turned into hidden inputs.
-			if ( $inLinkType == 'button' || $inLinkType == 'post button' ) {
-
-				$query_components = explode( '&', http_build_query( $inQueryArr, '', '&' ) );
-
-				foreach ( $query_components as $query_component ) {
-					$var_and_val = explode( '=', $query_component, 2 );
-					if ( count( $var_and_val ) == 2 ) {
-						$hidden_inputs .= Html::hidden( urldecode( $var_and_val[0] ), urldecode( $var_and_val[1] ) );
-					}
-				}
-			} else {
-				$link_url .= ( strstr( $link_url, '?' ) ) ? '&' : '?';
-				$link_url .= str_replace( '+', '%20', http_build_query( $inQueryArr, '', '&' ) );
-			}
-		}
-		if ( $inLinkType == 'button' || $inLinkType == 'post button' ) {
-			$formMethod = ( $inLinkType == 'button' ) ? 'get' : 'post';
-			$str = Html::rawElement( 'form', array( 'action' => $link_url, 'method' => $formMethod, 'class' => $classStr, 'target' => $targetWindow ),
-
-				// Html::rawElement() before MW 1.21 or so drops the type attribute
-				// do not use Html::rawElement() for buttons!
-				'<button ' . Html::expandAttributes( array( 'type' => 'submit', 'value' => $inLinkStr, 'title' => $inTooltip ) ) . '>' . $inLinkStr . '</button>' .
-				$hidden_inputs
-			);
-		} else {
-			// If a target page has been specified but it doesn't
-			// exist, make it a red link.
-			if ( ! empty( $inTargetName ) ) {
-				if ( !$targetPageExists ) {
-					$classStr .= " new";
-				}
-				// If no link string was specified, make it
-				// the name of the page.
-				if ( $inLinkStr == '' ) {
-					$inLinkStr = $inTargetName;
-				}
-			}
-			$str = Html::rawElement( 'a', array( 'href' => $link_url, 'class' => $classStr, 'title' => $inTooltip, 'target' => $targetWindow ), $inLinkStr );
-		}
-
-		return $str;
-	}
-
-	static function loadScriptsForPopupForm( &$parser ) {
-		$parser->getOutput()->addModules( 'ext.semanticforms.popupformedit' );
 		return true;
 	}
 

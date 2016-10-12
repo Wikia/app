@@ -37,33 +37,32 @@ class SFCreateCategory extends SpecialPage {
 	}
 
 	function execute( $query ) {
-		$this->setHeaders();
+		global $wgOut, $wgRequest, $sfgScriptPath;
 
-		$out = $this->getOutput();
-		$req = $this->getRequest();
+		$this->setHeaders();
 
 		// Cycle through the query values, setting the appropriate
 		// local variables.
 		if ( !is_null( $query ) ) {
 			$presetCategoryName = str_replace( '_', ' ', $query );
-			$out->setPageTitle( wfMessage( 'sf-createcategory-with-name', $presetCategoryName )->text() );
+			$wgOut->setPageTitle( wfMessage( 'sf-createcategory-with-name', $presetCategoryName )->text() );
 			$category_name = $presetCategoryName;
 		} else {
 			$presetCategoryName = null;
-			$category_name = $req->getVal( 'category_name' );
+			$category_name = $wgRequest->getVal( 'category_name' );
 		}
-		$default_form = $req->getVal( 'default_form' );
-		$parent_category = $req->getVal( 'parent_category' );
+		$default_form = $wgRequest->getVal( 'default_form' );
+		$parent_category = $wgRequest->getVal( 'parent_category' );
 
 		$category_name_error_str = null;
-		$save_page = $req->getCheck( 'wpSave' );
-		$preview_page = $req->getCheck( 'wpPreview' );
+		$save_page = $wgRequest->getCheck( 'wpSave' );
+		$preview_page = $wgRequest->getCheck( 'wpPreview' );
 		if ( $save_page || $preview_page ) {
 			// Guard against cross-site request forgeries (CSRF).
-			$validToken = $this->getUser()->matchEditToken( $req->getVal( 'csrf' ), 'CreateCategory' );
+			$validToken = $this->getUser()->matchEditToken( $wgRequest->getVal( 'csrf' ), 'CreateCategory' );
 			if ( !$validToken ) {
 				$text = "This appears to be a cross-site request forgery; canceling save.";
-				$out->addHTML( $text );
+				$wgOut->addHTML( $text );
 				return;
 			}
 			// Validate category name
@@ -71,11 +70,11 @@ class SFCreateCategory extends SpecialPage {
 				$category_name_error_str = wfMessage( 'sf_blank_error' )->text();
 			} else {
 				// Redirect to wiki interface
-				$out->setArticleBodyOnly( true );
+				$wgOut->setArticleBodyOnly( true );
 				$title = Title::makeTitleSafe( NS_CATEGORY, $category_name );
 				$full_text = SFCreateCategory::createCategoryText( $default_form, $category_name, $parent_category );
 				$text = SFUtils::printRedirectForm( $title, $full_text, "", $save_page, $preview_page, false, false, false, null, null );
-				$out->addHTML( $text );
+				$wgOut->addHTML( $text );
 				return;
 			}
 		}
@@ -89,7 +88,7 @@ class SFCreateCategory extends SpecialPage {
 		$firstRow = '';
 		if ( is_null( $presetCategoryName ) ) {
 			$text .= "\t" . Html::hidden( 'title', $this->getTitle()->getPrefixedText() ) . "\n";
-			$firstRow .= wfMessage( 'sf_createcategory_name' )->escaped() . ' ' .
+			$firstRow .= wfMessage( 'sf_createcategory_name' )->text() . ' ' .
 				Html::input( 'category_name', null, 'text',
 					array( 'size' => 25 ) ) . "\n";
 			if ( !is_null( $category_name_error_str ) ) {
@@ -98,7 +97,7 @@ class SFCreateCategory extends SpecialPage {
 					$category_name_error_str ) . "\n";
 			}
 		}
-		$firstRow .= "\t" . wfMessage( 'sf_createcategory_defaultform' )->escaped() . "\n";
+		$firstRow .= "\t" . wfMessage( 'sf_createcategory_defaultform' )->text() . "\n";
 		$formSelector = "\t" . Html::element( 'option', null, null ). "\n";
 		foreach ( $all_forms as $form ) {
 			$formSelector .= "\t" . Html::element( 'option', null, $form ) . "\n";
@@ -108,9 +107,9 @@ class SFCreateCategory extends SpecialPage {
 			array( 'id' => 'form_dropdown', 'name' => 'default_form' ),
 			$formSelector );
 		$text .= Html::rawElement( 'p', null, $firstRow )  . "\n";
-		$secondRow = wfMessage( 'sf_createcategory_makesubcategory' )->escaped() . ' ';
+		$secondRow = wfMessage( 'sf_createcategory_makesubcategory' )->text() . ' ';
 		$selectBody = "\t" . Html::element( 'option', null, null ). "\n";
-		$categories = SFValuesUtils::getCategoriesForPage();
+		$categories = SFUtils::getCategoriesForPage();
 		foreach ( $categories as $category ) {
 			$category = str_replace( '_', ' ', $category );
 			$selectBody .= "\t" . Html::element( 'option', null, $category ) . "\n";
@@ -125,7 +124,7 @@ class SFCreateCategory extends SpecialPage {
 		$text .= "\t" . Html::rawElement( 'div', array( 'class' => 'editButtons' ), $editButtonsText ) . "\n";
 		$text .= "\t</form>\n";
 
-		$out->addHTML( $text );
+		$wgOut->addExtensionStyle( $sfgScriptPath . "/skins/SemanticForms.css" );
+		$wgOut->addHTML( $text );
 	}
-
 }

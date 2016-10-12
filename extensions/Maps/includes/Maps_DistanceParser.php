@@ -2,9 +2,10 @@
 
 /**
  * Static class for distance validation and parsing. Internal representatations are in meters.
- *
- * TODO: migrate to DataValue, ValueParser and ValueFormatter
- *
+ * 
+ * @file Maps_DistanceParser.php
+ * @ingroup Maps
+ * 
  * @since 0.6
  *
  * @licence GNU GPL v2+

@@ -1,8 +1,0 @@
-{
-	"@metadata": {
-		"authors": [
-			"Shirayuki"
-		]
-	},
-	"parserhooks-desc": "MediaWiki パーサーフックを宣言型の方法で作成するための OOP (オブジェクト指向プログラミング) インターフェイス"
-}
