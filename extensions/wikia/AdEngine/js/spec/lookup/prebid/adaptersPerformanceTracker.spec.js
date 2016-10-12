@@ -6,19 +6,14 @@ describe('ext.wikia.adEngine.lookup.prebid.adaptersPerformanceTracker', function
 			adTracker: {
 				track: noop
 			},
-			adLogicZoneParams: {
-				getPageType: function () {
-					return 'article';
-				}
-			},
-			win: {
-				pbjs: {
-					getBidResponses: noop
+			prebid: {
+				get: function () {
+					return mocks.pbjs;
 				}
 			},
 			adapterAppNexus: {
 				getName: function () {
-					return 'appnexus'
+					return 'appnexus';
 				},
 				isEnabled: function () {
 					return true;
@@ -60,7 +55,7 @@ describe('ext.wikia.adEngine.lookup.prebid.adaptersPerformanceTracker', function
 			},
 			adapterIndexExchangeDisabled: {
 				getName: function () {
-					return 'indexExchange'
+					return 'indexExchange';
 				},
 				isEnabled: function () {
 					return false;
@@ -96,11 +91,25 @@ describe('ext.wikia.adEngine.lookup.prebid.adaptersPerformanceTracker', function
 					return '100x100';
 				}
 			},
+			completeAppNexusBid: {
+				bidder: 'appnexus',
+				complete: true,
+				pbMg: '5.00',
+				getStatusCode: function () {
+					return 1;
+				},
+				getSize: function () {
+					return '100x100';
+				}
+			},
 			emptyAppNexusBid: {
 				bidder: 'appnexus',
 				getStatusCode: function () {
 					return 2;
 				}
+			},
+			pbjs: {
+				getBidResponses: noop
 			}
 		},
 		module,
@@ -112,14 +121,13 @@ describe('ext.wikia.adEngine.lookup.prebid.adaptersPerformanceTracker', function
 	function getModule() {
 		return modules['ext.wikia.adEngine.lookup.prebid.adaptersPerformanceTracker'](
 			mocks.adTracker,
-			mocks.adLogicZoneParams,
-			mocks.win
+			mocks.prebid
 		);
 	}
 
 	beforeEach(function () {
 		module = getModule();
-		getBidResponsesSpy = spyOn(mocks.win.pbjs, 'getBidResponses');
+		getBidResponsesSpy = spyOn(mocks.pbjs, 'getBidResponses');
 	});
 
 	it('setupPerformanceMap creates object with correct structure', function () {
@@ -285,6 +293,37 @@ describe('ext.wikia.adEngine.lookup.prebid.adaptersPerformanceTracker', function
 				}
 			},
 			message: 'if no bids for one bidder are returned map stays untouched'
+		}, {
+			performanceMap: {
+				appnexus: {
+					TOP_LEADERBOARD: 'NO_RESPONSE',
+					TOP_RIGHT_BOXAD: 'NO_RESPONSE'
+				},
+				indexExchange: {
+					TOP_LEADERBOARD: 'NO_RESPONSE'
+				}
+			},
+			allBids: {
+				TOP_LEADERBOARD: {
+					bids: [
+						mocks.completeAppNexusBid
+					]
+				}, TOP_RIGHT_BOXAD: {
+					bids: [
+						mocks.correctAppNexusBid
+					]
+				}
+			},
+			expected: {
+				appnexus: {
+					TOP_LEADERBOARD: 'USED',
+					TOP_RIGHT_BOXAD: '100x100;0.00'
+				},
+				indexExchange: {
+					TOP_LEADERBOARD: 'NO_RESPONSE'
+				}
+			},
+			message: 'rendered bid is tracked as used'
 		}].forEach(function (testCase) {
 			var result;
 

@@ -1,19 +1,20 @@
+/*global define*/
 define('ext.wikia.adEngine.lookup.prebid.adaptersPerformanceTracker', [
 	'ext.wikia.adEngine.adTracker',
-	'ext.wikia.adEngine.utils.adLogicZoneParams',
-	'wikia.window'
-], function (adTracker, params, win) {
+	'ext.wikia.adEngine.wrappers.prebid'
+], function (adTracker, prebid) {
 	'use strict';
 
 	var emptyResponseMsg = 'EMPTY_RESPONSE',
 		notRespondedMsg = 'NO_RESPONSE',
-		responseErrorCode = 2;
+		responseErrorCode = 2,
+		usedMsg = 'USED';
 
 	function setupPerformanceMap(skin, adapters) {
 		var biddersPerformanceMap = {};
 
 		adapters.forEach(function (adapter) {
-			var slots = adapter.getSlots(skin, params.getPageType()),
+			var slots = adapter.getSlots(skin),
 				adapterName = adapter.getName();
 
 			if (adapter.isEnabled()) {
@@ -30,8 +31,8 @@ define('ext.wikia.adEngine.lookup.prebid.adaptersPerformanceTracker', [
 	function updatePerformanceMap(performanceMap) {
 		var allBids;
 
-		if (typeof win.pbjs.getBidResponses === 'function') {
-			allBids = win.pbjs.getBidResponses();
+		if (typeof prebid.get().getBidResponses === 'function') {
+			allBids = prebid.get().getBidResponses();
 
 			Object.keys(allBids).forEach(function (slotName) {
 				var slotBids = allBids[slotName].bids;
@@ -77,16 +78,17 @@ define('ext.wikia.adEngine.lookup.prebid.adaptersPerformanceTracker', [
 	function getParamsFromBidForTracking(bid) {
 		if (bid.getStatusCode() === responseErrorCode) {
 			return emptyResponseMsg;
-		} else {
-			return [bid.getSize(), bid.pbMg].join(';');
+		} if (bid.complete) {
+			return usedMsg;
 		}
-	}
 
+		return [bid.getSize(), bid.pbMg].join(';');
+	}
 
 	return {
 		setupPerformanceMap: setupPerformanceMap,
 		trackBidderOnLookupEnd: trackBidderOnLookupEnd,
 		trackBidderSlotState: trackBidderSlotState,
 		updatePerformanceMap: updatePerformanceMap
-	}
+	};
 });

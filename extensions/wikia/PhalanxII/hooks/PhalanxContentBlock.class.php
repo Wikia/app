@@ -8,8 +8,6 @@
  */
 
 class PhalanxContentBlock extends WikiaObject {
-	private static $whitelist = null;
-
 	/**
 	 * @static
 	 *
@@ -76,7 +74,7 @@ class PhalanxContentBlock extends WikiaObject {
 		if (self::isContentBlockingDisabled()) {
 			wfProfileOut( __METHOD__ );
 			wfDebug(__METHOD__ . ": content blocking disabled by \$wgPhalanxDisableContent\n");
-			return true;
+			return [ $contentIsBlocked, $errorMessage ];
 		}
 
 		$title = RequestContext::getMain()->getTitle();
@@ -85,16 +83,6 @@ class PhalanxContentBlock extends WikiaObject {
 
 		$summary = $editPage->summary;
 		$textbox = $editPage->textbox1;
-		
-		/* compare summary with spam-whitelist */
-		if ( !empty( $summary ) && !empty( $textbox ) && is_null( self::$whitelist ) ) {
-			self::$whitelist = $phalanxModel->buildWhiteList();
-		}
-
-		/* check summary */
-		if ( !empty( self::$whitelist ) ) {
-			$summary = preg_replace( self::$whitelist, '', $summary );
-		}
 
 		$contentIsBlocked = !$phalanxModel->match_summary( $summary );
 		if ( $contentIsBlocked === false ) {
@@ -114,43 +102,70 @@ class PhalanxContentBlock extends WikiaObject {
 		return [ $contentIsBlocked, $errorMessage ];
 	}
 
-	/*
-	 * abortMove
+
+	/**
+	 * Hook: SpecialMovepageBeforeMove
 	 *
-	 * Aborts a page move if the summary given matches
-	 * any blacklisted phrase.
+	 * Handles page moves via Special:MovePage - aborts if the summary given matches any blacklisted phrase,
+	 * or if the destination title matches any title filter.
+	 *
+	 * @param MovePageForm $move Special:MovePage class instance
+	 * @return bool False if a match was found to stop hook processing, true otherwise
 	 */
-	static public function abortMove( $oldTitle, $newTitle, $user, &$error, $reason ) {
+	static public function beforeMove( MovePageForm $move ): bool {
 		wfProfileIn( __METHOD__ );
 
-		if (self::isContentBlockingDisabled()) {
-			wfProfileOut( __METHOD__ );
-			wfDebug(__METHOD__ . ": content blocking disabled by \$wgPhalanxDisableContent\n");
-			return true;
+		$phalanxModel = new PhalanxContentModel( $move->newTitle );
+		$isOk = $phalanxModel->match_title();
+
+		// no need to check edit summary if title is blocked
+		if ( $isOk !== false ) {
+			$isOk = $phalanxModel->match_summary( $move->reason );
 		}
 
-		$phalanxModel = new PhalanxContentModel( $newTitle );
-		$ret = $phalanxModel->match_title();
-		if ( $ret !== false ) {
-			/* compare reason with spam-whitelist - WTF? */
-			if ( !empty( $reason ) && is_null( self::$whitelist ) ) {
-				self::$whitelist = $phalanxModel->buildWhiteList();
-			}
-			
-			/* check reason - WHY? */
-			if ( !empty( self::$whitelist ) ) {
-				$reason = preg_replace( self::$whitelist, '', $reason );
-			}
+		if ( $isOk === false ) {
+			$phalanxModel->displayBlock();
+		}
 
-			$ret = $phalanxModel->match_summary( $reason );
+		wfProfileOut( __METHOD__ );
+		return $isOk;
+	}
+
+	/**
+	 * Hook: AbortMove
+	 * @see https://www.mediawiki.org/wiki/Manual:Hooks/AbortMove
+	 *
+	 * Handles page moves via API - aborts if the summary given matches any blacklisted phrase,
+	 * or if the destination title matches any title filter.
+	 * For page moves via Special:MovePage, beforeMove hook handler above has already aborted the move in case of a match
+	 *
+	 * @param Title $oldTitle
+	 * @param Title $newTitle Destination title - will be checked against Phalanx service
+	 * @param User $user
+	 * @param null|string $error
+	 * @param string $reason User-provided move reason - will be checked against Phalanx service
+	 * @return bool False if a match was found to stop hook processing, true otherwise
+	 */
+	static public function abortMove( Title $oldTitle, Title $newTitle, User $user, &$error, string $reason ): bool {
+		wfProfileIn( __METHOD__ );
+
+		$phalanxModel = new PhalanxContentModel( $newTitle );
+		$isOk = $phalanxModel->match_title();
+
+		// no need to check edit summary if title is blocked
+		if ( $isOk !== false ) {
+			$isOk = $phalanxModel->match_summary( $reason );
 		} 
 		
-		if ( $ret === false ) {
-			$error .= $phalanxModel->reasonBlock();
+		if ( $isOk === false ) {
+			// SUS-1090: $error must be a MediaWiki message key
+			$error = 'spamprotectionmatch';
 		}
 		
 		wfProfileOut( __METHOD__ );
-		return true;
+
+		// SUS-1090: We need to return false if we found a match - otherwise move won't be aborted
+		return $isOk;
 	}
 
 	/**
@@ -169,16 +184,6 @@ class PhalanxContentBlock extends WikiaObject {
 
 		if ( is_null( $phalanxModel ) ) {
 			$phalanxModel = new PhalanxContentModel( $title );
-		}
-		
-		/* compare summary with spam-whitelist */
-		if ( !empty( $textbox ) && is_null(self::$whitelist) ) {
-			self::$whitelist = $phalanxModel->buildWhiteList();
-		}
-
-		/* check content */
-		if ( !empty( self::$whitelist ) ) {
-			$textbox = preg_replace( self::$whitelist, '', $textbox );
 		}
 
 		/* check in Phalanx service */
@@ -208,10 +213,7 @@ class PhalanxContentBlock extends WikiaObject {
 		$title = RequestContext::getMain()->getTitle();
 
 		$phalanxModel = new PhalanxContentModel( $title );
-		
-		/**
-		 * @todo $this in static method
-		 */
+
 		$ret = PhalanxContentBlock::editContent( $textbox, $msg, $phalanxModel );
 		
 		if ( $ret === false ) {

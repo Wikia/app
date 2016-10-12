@@ -4,7 +4,6 @@ class SpecialDiscussionsController extends WikiaSpecialPageController {
 
 	const DISCUSSIONS_LINK = '/d/f';
 	const DISCUSSIONS_ACTION = 'specialdiscussions';
-	const EDIT_TOKEN = 'editToken';
 
 	const DEFAULT_TEMPLATE_ENGINE = \WikiaResponse::TEMPLATE_ENGINE_MUSTACHE;
 
@@ -29,7 +28,7 @@ class SpecialDiscussionsController extends WikiaSpecialPageController {
 		$this->wg->Out->setPageTitle( wfMessage( 'discussions-pagetitle' )->escaped() );
 
 		if ( $this->request->wasPosted() ) {
-			$this->assertValidPostRequest();
+			$this->checkWriteRequest();
 			$this->activator->activateDiscussions();
 			$this->toggler->setEnableDiscussions( true )->save();
 		}
@@ -43,12 +42,6 @@ class SpecialDiscussionsController extends WikiaSpecialPageController {
 		}
 	}
 
-	private function assertValidPostRequest() {
-		if ( !$this->getUser()->matchEditToken( $this->request->getVal( self::EDIT_TOKEN ) ) ) {
-			throw new BadRequestApiException();
-		}
-	}
-
 	private function setIndexOutput() {
 		$callMethod = $this->activator->isDiscussionsActive() ? 'discussionsLink' : 'inputForm';
 		$this->response->setVal( 'content', $this->sendSelfRequest( $callMethod ) );
@@ -59,7 +52,7 @@ class SpecialDiscussionsController extends WikiaSpecialPageController {
 			[
 				'discussionsInactiveMessage' => wfMessage( 'discussions-not-active' )->escaped(),
 				'activateDiscussions' => wfMessage( 'discussions-activate' )->escaped(),
-				'editToken' => $this->getUser()->getEditToken(),
+				'token' => $this->getUser()->getEditToken(),
 			]
 		);
 	}

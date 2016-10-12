@@ -14,28 +14,6 @@
 class PhalanxTitleBlock extends WikiaObject {
 
 	/**
-	 * handler for beforeMove hook
-	 *
-	 * @static
-	 *
-	 * @param MovePageForm $move -- Special::Move class instance
-	 *
-	 * @return bool true -- pass hook further
-	 */
-	static public function beforeMove( &$move ) {
-		wfProfileIn( __METHOD__ );
-
-		/* title object */
-		$title = Title::newFromURL( $move->newTitle );
-
-		/* check title */
-		$ret = PhalanxTitleBlock::checkTitle( $title );
-		
-		wfProfileOut( __METHOD__ );
-		return $ret;
-	}
-
-	/**
 	 * handler for editFilter hook
 	 *
 	 * @param EditPage $editPage -- edit page instance

@@ -4,14 +4,14 @@
  * Discussions
  */
 
-$dir = dirname( __FILE__ ) . '/';
-
 $wgExtensionCredits['specialpage'][] = [
 	'name' => 'Discussions',
 	'author' => 'Wikia',
 	'descriptionmsg' => 'discussions-desc',
 	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/SpecialDiscussions',
 ];
+
+$dir = dirname( __FILE__ ) . '/';
 
 // load classes
 $wgAutoloadClasses['SpecialDiscussionsController'] = $dir . 'controllers/SpecialDiscussionsController.class.php';
