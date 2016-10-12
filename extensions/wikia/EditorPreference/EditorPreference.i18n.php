@@ -5,17 +5,17 @@ $messages = [];
 $messages['en'] = [
 	'editorpreference-desc' => 'Allows users to set their preference of editor',
 	'editor-preference' => 'Preferred editor:',
-	'editor-preference-help' => 'On this wikia, the default editor is always the classic editor. [[Help:Editing|Learn more]].',
+	'editor-preference-help' => 'On this wiki, the default editor is always the classic editor. [[Help:Editing|Learn more]].',
 	'option-default-editor' => 'Default',
-	'option-visual-editor' => 'Wikia\'s new VisualEditor',
-	'option-ck-editor' => 'Wikia\'s classic rich-text editor (where available)',
+	'option-visual-editor' => 'VisualEditor',
+	'option-ck-editor' => 'Classic rich-text editor (where available)',
 	'option-source-editor' => 'Source editor',
 ];
 
 $messages['ja'] = [
-	'editor-preference-help' => 'このウィキでは、初期設定のエディタは常にクラシックエディタに設定されています。詳しくは[[Help:Editing|こちら]]をご覧ください。',
-	'option-ck-editor' => 'ウィキアの旧リッチテキストエディタ（利用可能なウィキアでのみ有効）',
-	'option-visual-editor' => 'ウィキアの新ビジュアルエディタ',
+	'editor-preference-help' => 'このwikiでは、クラシックエディタが既定に設定されています。[[ヘルプ:編集|詳細]]',
+	'option-ck-editor' => 'クラシック・リッチテキスト・エディタ（利用可能な場合）',
+	'option-visual-editor' => 'ビジュアル・エディタ',
 ];
 
 $messages['ko'] = [
@@ -31,15 +31,15 @@ $messages['zh'] = [
 ];
 
 $messages['zh-hans'] = [
-	'editor-preference-help' => '在本维基上, 预设编辑器为传统编辑器。 [[Help:Editing|了解更多]]。',
-	'option-ck-editor' => 'Wikia传统可视编辑器（在能使用的页面）',
-	'option-visual-editor' => 'Wikia的新版视效编辑器',
+	'editor-preference-help' => '在这个维基上，传统编辑器被设定为默认编辑器。[[Help:Editing|点击这里了解更多]]。',
+	'option-ck-editor' => 'Fandom传统编辑器（如可用）',
+	'option-visual-editor' => '可视化编辑器',
 ];
 
 $messages['zh-hant'] = [
-	'editor-preference-help' => '在本維基上, 預設編輯器為傳統編輯器。 [[Help:Editing|了解更多]]。',
-	'option-ck-editor' => 'Wikia傳統可視編輯器（在能使用的頁面）',
-	'option-visual-editor' => 'Wikia的新版視效編輯器',
+	'editor-preference-help' => '在這個wiki上，傳統編輯器被設定為預設編輯器。[[Help:Editing|按這裡了解更多]]。',
+	'option-ck-editor' => 'Fandom傳統編輯器（如可用）',
+	'option-visual-editor' => '視效編輯器',
 ];
 
 $messages['zh-hk'] = [
@@ -55,8 +55,9 @@ $messages['zh-tw'] = [
 ];
 
 $messages['de'] = [
-	'option-ck-editor' => 'Wikias grafischer Editor (sofern verfügbar)',
-	'option-visual-editor' => 'Wikias neuer VisualEditor',
+	'option-ck-editor' => 'Klassischer Rich-Text-Editor (wo verfügbar)',
+	'option-visual-editor' => 'VisualEditor',
+	'editor-preference-help' => 'Der Standard-Editor in diesem Wiki ist immer der klassische Editor. [[w:c:de.community:Hilfe:Bearbeiten|Mehr erfahren]].',
 ];
 
 $messages['fi'] = [
@@ -65,27 +66,49 @@ $messages['fi'] = [
 ];
 
 $messages['fr'] = [
-	'option-ck-editor' => 'Éditeur de texte enrichi classique de Wikia (quand disponible)',
-	'option-visual-editor' => 'Nouvel ÉditeurVisuel de Wikia',
+	'option-ck-editor' => 'Éditeur de texte enrichi classique (si disponible)',
+	'option-visual-editor' => 'ÉditeurVisuel',
+	'editor-preference-help' => 'Sur ce wiki, l\'éditeur par défaut est toujours l\'éditeur classique. [[Aide:Modifier|En savoir plus]]',
 ];
 
 $messages['it'] = [
-	'option-ck-editor' => 'L\'editor RTE classico di Wikia (dove disponibile)',
-	'option-visual-editor' => 'Il nuovo VisualEditor di Wikia',
+	'option-ck-editor' => 'Editor di testo RTF classico (ove disponibile)',
+	'option-visual-editor' => 'VisualEditor',
+	'editor-preference-help' => 'In questa wiki, l\'editor predefinito è sempre l\'editor classico. [[w:it:Aiuto:Modifica|Ulteriori informazioni]].',
 ];
 
 $messages['pl'] = [
-	'option-ck-editor' => 'Klasyczny edytor wizualny Wikii (gdzie dostępny)',
-	'option-visual-editor' => 'Nowy VisualEditor Wikii',
+	'option-ck-editor' => 'Klasyczny edytor wizualny (jeżeli jest dostępny)',
+	'option-visual-editor' => 'VisualEditor',
+	'editor-preference-help' => 'Na tej wiki domyślnym edytorem jest zawsze klasyczny edytor. [[w:c:pl.c:Pomoc:Edytowanie|Dowiedz się więcej]].',
 ];
 
 $messages['ru'] = [
-	'option-ck-editor' => 'Классический Визуальный редактор (если доступен)',
-	'option-visual-editor' => 'Новый Визуальный редактор Викия',
+	'option-ck-editor' => 'Классический редактор форматированного текста Фэндома (если есть)',
+	'option-visual-editor' => 'Визуальный редактор',
+	'editor-preference-help' => 'На этой вики по умолчанию используется классический редактор. [[Справка:Редактирование|Подробнее]].',
 ];
 
 $messages['vi'] = [
 	'option-ck-editor' => 'Trình soạn thảo văn bản giàu định dạng cổ điển Wikia',
 	'option-visual-editor' => 'Trình soạn thảo trực quan Wikia',
+];
+
+$messages['qqq'] = [
+	'editor-preference-help' => 'Missing documentation',
+	'option-ck-editor' => 'Missing documentation',
+	'option-visual-editor' => 'Missing documentation',
+];
+
+$messages['es'] = [
+	'editor-preference-help' => 'En este wiki, el editor predeterminado es siempre el editor clásico. [[Ayuda:Editar|Aprende más]].',
+	'option-ck-editor' => 'Editor de texto enriquecido clásico de fandom (donde esté disponible)',
+	'option-visual-editor' => 'Editor Visual',
+];
+
+$messages['pt'] = [
+	'editor-preference-help' => 'Nesta wiki, o editor padrão é sempre o editor clássico. [[Ajuda:Editando|Saiba mais]].',
+	'option-ck-editor' => 'Editor clássico de rich text do Fandom (onde disponível)',
+	'option-visual-editor' => 'Editor visual',
 ];
 

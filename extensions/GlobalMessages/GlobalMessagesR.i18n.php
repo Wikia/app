@@ -358,7 +358,7 @@ www.wikia.com
 	'related_wiki' => 'Add bulleted links here to display wiki related to this one in the related wiki [[Special:Widgets|widget]].
 
 * [{{FULLURL:MediaWiki:Related wiki}} No related wiki have been selected yet.]',
-	'registerintro-title' => 'When you create an account on Wikia, you become a part of the community!',
+	'registerintro-title' => 'When you create an account on Fandom, you become a part of the community!',
 	'registerintro-text' => 'You get credit for all your contributions, and you can also create your own user profile, watchlist your favorite pages, and get access to all kinds of neat tools.',
 	'rcshowhidelogs' => '$1 logs',
 ];
@@ -769,6 +769,7 @@ In other cases the message {{msg-mw|revertpage}} is used.',
 	'recentchangesall' => '{{Identical|All}}',
 	'recentchanges-on-wikia-title' => 'A legend of a fieldset that contains a message to users about recent changes across the wikia\'s platform.',
 	'recentchanges-on-wikia-content' => 'A content of a message to users about recent changes across the wikia\'s platform.',
+	'registerintro-title' => 'Missing documentation',
 ];
 
 $messages['ab'] = [
@@ -9789,7 +9790,7 @@ www.wikia.com
 	'related_wiki' => 'Add bulleted links here to display wiki related to this one in the related wiki [[Special:Widgets|widget]].
 
 * [{{FULLURL:MediaWiki:Related wiki}} No related wiki have been selected yet.]',
-	'registerintro-title' => 'Wenn du ein Benutzerkonto erstellst, wirst du Teil der Wiki-Community!',
+	'registerintro-title' => 'Sobald du bei Fandom ein Konto erstellt hast, bist du Teil der Community!',
 	'registerintro-text' => 'You get credit for all your contributions, and you can also create your own user profile, watchlist your favorite pages, and get access to all kinds of neat tools.',
 	'rcshowhidelogs' => '$1 logs',
 ];
@@ -11691,7 +11692,7 @@ www.wikia.com
 	'related_wiki' => 'Add bulleted links here to display wiki related to this one in the related wiki [[Special:Widgets|widget]].
 
 * [{{FULLURL:MediaWiki:Related wiki}} No related wiki have been selected yet.]',
-	'registerintro-title' => 'Cuando creas una cuenta en Wikia, ¡te conviertes en parte de la comunidad!',
+	'registerintro-title' => '¡Cuando creas una cuenta en Fandom, te conviertes en parte de la comunidad!',
 	'registerintro-text' => 'You get credit for all your contributions, and you can also create your own user profile, watchlist your favorite pages, and get access to all kinds of neat tools.',
 	'rcshowhidelogs' => '$1 logs',
 ];
@@ -13713,7 +13714,7 @@ www.wikia.com
 	'related_wiki' => 'Add bulleted links here to display wiki related to this one in the related wiki [[Special:Widgets|widget]].
 
 * [{{FULLURL:MediaWiki:Related wiki}} No related wiki have been selected yet.]',
-	'registerintro-title' => 'Quand vous créez un compte chez Wikia, vous devenez un membre de la communauté!',
+	'registerintro-title' => 'Lorsque vous créez un compte sur Fandom, vous devenez membre de la communauté !',
 	'registerintro-text' => 'You get credit for all your contributions, and you can also create your own user profile, watchlist your favorite pages, and get access to all kinds of neat tools.',
 	'rcshowhidelogs' => '$1 logs',
 ];
@@ -20375,7 +20376,7 @@ www.wikia.com
 	'related_wiki' => 'Add bulleted links here to display wiki related to this one in the related wiki [[Special:Widgets|widget]].
 
 * [{{FULLURL:MediaWiki:Related wiki}} No related wiki have been selected yet.]',
-	'registerintro-title' => 'Una volta registrato in Wikia, entri a far parte della community!',
+	'registerintro-title' => 'Quando crei un account su Fandom, diventi parte della comunità!',
 	'registerintro-text' => 'You get credit for all your contributions, and you can also create your own user profile, watchlist your favorite pages, and get access to all kinds of neat tools.',
 	'rcshowhidelogs' => '$1 logs',
 ];
@@ -20992,7 +20993,7 @@ www.wikia.com
 	'related_wiki' => 'Add bulleted links here to display wiki related to this one in the related wiki [[Special:Widgets|widget]].
 
 * [{{FULLURL:MediaWiki:Related wiki}} No related wiki have been selected yet.]',
-	'registerintro-title' => 'ウィキアのアカウントを作成すれば、あなたもコミュニティの一員になります！',
+	'registerintro-title' => 'Fandomでアカウントを作成すると、コミュニティの一員になります',
 	'registerintro-text' => 'You get credit for all your contributions, and you can also create your own user profile, watchlist your favorite pages, and get access to all kinds of neat tools.',
 	'rcshowhidelogs' => '$1 logs',
 ];
@@ -34563,7 +34564,7 @@ www.wikia.com
 	'related_wiki' => 'Add bulleted links here to display wiki related to this one in the related wiki [[Special:Widgets|widget]].
 
 * [{{FULLURL:MediaWiki:Related wiki}} No related wiki have been selected yet.]',
-	'registerintro-title' => 'Załóż konto użytkownika, dołącz do społeczności Wikia!',
+	'registerintro-title' => 'Tworząc konto na portalu Fandom stajesz się częścią społeczności!',
 	'registerintro-text' => 'You get credit for all your contributions, and you can also create your own user profile, watchlist your favorite pages, and get access to all kinds of neat tools.',
 ];
 
@@ -35883,7 +35884,7 @@ www.wikia.com
 	'related_wiki' => 'Add bulleted links here to display wiki related to this one in the related wiki [[Special:Widgets|widget]].
 
 * [{{FULLURL:MediaWiki:Related wiki}} No related wiki have been selected yet.]',
-	'registerintro-title' => 'When you create an account on Wikia, you become a part of the community!',
+	'registerintro-title' => 'Quando você cria uma conta no Fandom, você se torna parte da comunidade!',
 	'registerintro-text' => 'You get credit for all your contributions, and you can also create your own user profile, watchlist your favorite pages, and get access to all kinds of neat tools.',
 	'rcshowhidelogs' => '$1 logs',
 ];
@@ -37712,7 +37713,7 @@ www.wikia.com
 	'related_wiki' => 'Add bulleted links here to display wiki related to this one in the related wiki [[Special:Widgets|widget]].
 
 * [{{FULLURL:MediaWiki:Related wiki}} No related wiki have been selected yet.]',
-	'registerintro-title' => 'When you create an account on Wikia, you become a part of the community!',
+	'registerintro-title' => 'Создайте учётную запись и присоединитесь к сообществу Фэндома!',
 	'registerintro-text' => 'You get credit for all your contributions, and you can also create your own user profile, watchlist your favorite pages, and get access to all kinds of neat tools.',
 	'rcshowhidelogs' => '$1 logs',
 ];
@@ -49546,7 +49547,7 @@ www.wikia.com
 	'related_wiki' => 'Add bulleted links here to display wiki related to this one in the related wiki [[Special:Widgets|widget]].
 
 * [{{FULLURL:MediaWiki:Related wiki}} No related wiki have been selected yet.]',
-	'registerintro-title' => 'When you create an account on Wikia, you become a part of the community!',
+	'registerintro-title' => '当你在Fandom上创建帐户时，你就成为了社区的一份子！',
 	'registerintro-text' => 'You get credit for all your contributions, and you can also create your own user profile, watchlist your favorite pages, and get access to all kinds of neat tools.',
 	'rcshowhidelogs' => '$1 logs',
 ];
@@ -49803,6 +49804,7 @@ $1',
 	'revdelete-uname-unhid' => '恢復用戶名',
 	'revdelete-restricted' => '已應用限制至操作員',
 	'revdelete-unrestricted' => '已移除對於操作員的限制',
+	'registerintro-title' => '當你在Fandom上創建帳戶時，你就成為了社群的一份子！',
 ];
 
 $messages['zh-hk'] = [

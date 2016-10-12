@@ -63,7 +63,8 @@ class Universe implements ArrayAccess
       */
     protected static $swaggerTypes = array(
         'id' => 'string',
-        'name' => 'string'
+        'name' => 'string',
+        'language' => 'string'
     );
 
     public static function swaggerTypes()
@@ -77,7 +78,8 @@ class Universe implements ArrayAccess
      */
     protected static $attributeMap = array(
         'id' => 'id',
-        'name' => 'name'
+        'name' => 'name',
+        'language' => 'language'
     );
 
     public static function attributeMap()
@@ -91,7 +93,8 @@ class Universe implements ArrayAccess
      */
     protected static $setters = array(
         'id' => 'setId',
-        'name' => 'setName'
+        'name' => 'setName',
+        'language' => 'setLanguage'
     );
 
     public static function setters()
@@ -105,7 +108,8 @@ class Universe implements ArrayAccess
      */
     protected static $getters = array(
         'id' => 'getId',
-        'name' => 'getName'
+        'name' => 'getName',
+        'language' => 'getLanguage'
     );
 
     public static function getters()
@@ -131,6 +135,7 @@ class Universe implements ArrayAccess
     {
         $this->container['id'] = isset($data['id']) ? $data['id'] : null;
         $this->container['name'] = isset($data['name']) ? $data['name'] : null;
+        $this->container['language'] = isset($data['language']) ? $data['language'] : null;
     }
 
     /**
@@ -194,6 +199,27 @@ class Universe implements ArrayAccess
     public function setName($name)
     {
         $this->container['name'] = $name;
+
+        return $this;
+    }
+
+    /**
+     * Gets language
+     * @return string
+     */
+    public function getLanguage()
+    {
+        return $this->container['language'];
+    }
+
+    /**
+     * Sets language
+     * @param string $language
+     * @return $this
+     */
+    public function setLanguage($language)
+    {
+        $this->container['language'] = $language;
 
         return $this;
     }

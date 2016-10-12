@@ -121,12 +121,21 @@ class StoriesLinkTagHelper extends WikiaModel {
 	 * @return string
 	 */
 	protected function getArticleImageUrl( $data ) {
-		if ( !empty( $data['_embedded']['wp:featuredmedia'][0]['media_details']['sizes']['medium_large']['source_url'] ) ) {
-			return $data['_embedded']['wp:featuredmedia'][0]['media_details']['sizes']['medium_large']['source_url'];
+		if ( empty( $data['_embedded']['wp:featuredmedia'][0] ) ) {
+			return '';
 		}
 
-		if ( !empty( $data['_embedded']['wp:featuredmedia'][0]['media_details']['sizes']['full']['source_url'] ) ) {
-			return $data['_embedded']['wp:featuredmedia'][0]['media_details']['sizes']['full']['source_url'];
+		$media = $data['_embedded']['wp:featuredmedia'][0];
+		if ( !empty( $media['media_details']['sizes']['medium_large']['source_url'] ) ) {
+			return $media['media_details']['sizes']['medium_large']['source_url'];
+		}
+
+		if ( !empty( $media['media_details']['sizes']['full']['source_url'] ) ) {
+			return $media['media_details']['sizes']['full']['source_url'];
+		}
+
+		if ( !empty( $media['source_url'] ) ) {
+			return $media['source_url'];
 		}
 
 		return '';
