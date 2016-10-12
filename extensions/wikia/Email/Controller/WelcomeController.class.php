@@ -52,8 +52,8 @@ class WelcomeController extends EmailController {
 
 	protected function getDetailsList() {
 		$basicsUrl = $this->getMessage( 'emailext-welcome-basics-url' )->text();
-		$linksGenerator = new MobileApplicationsLinksGenerator();
-		$mobileApplicationsLinks = $linksGenerator->generate( $this->targetLang );
+		$linksGenerator = new MobileApplicationsLinksGenerator( $this->targetLang );
+		$mobileApplicationsLinks = $linksGenerator->generate();
 
 		return [
 			[
