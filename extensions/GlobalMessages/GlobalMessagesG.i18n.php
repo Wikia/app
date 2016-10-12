@@ -54,21 +54,18 @@ $messages['en'] = [
 	'group-vstf' => 'VSTF',
 	'group-vstf-member' => 'VSTF',
 	'grouppage-vstf' => 'wikia:Help:SpamTaskForce',
-	'group-helper' => 'Wikia Helpers',
-	'group-helper-member' => 'Wikia Helper',
+	'group-helper' => 'Fandom Helpers',
+	'group-helper-member' => 'Fandom Helper',
 	'grouppage-helper' => 'wikia:Help:Helper_Group',
-	'group-staff' => 'Wikia Staff',
-	'group-staff-member' => 'Wikia Staff',
+	'group-staff' => 'Fandom Staff',
+	'group-staff-member' => 'Fandom Staff',
 	'grouppage-staff' => 'wikia:Community_Central:Staff',
-	'group-util' => 'Wikia Utilities',
-	'group-util-member' => 'Wikia Utilities',
+	'group-util' => 'Fandom Utilities',
+	'group-util-member' => 'Fandom Utilities',
 	'grouppage-util' => 'wikia:Community_Central:Staff',
 	'group-reviewer' => 'Image Reviewers',
 	'group-reviewer-member' => 'Image Reviewer',
 	'grouppage-reviewer' => 'wikia:Community_Central:Image_review',
-	'group-wikiastars' => 'Wikia Stars',
-	'group-wikiastars-member' => 'Wikia Star',
-	'grouppage-wikiastars' => 'wikia:Help:WikiaStars',
 	'group-vanguard' => 'Vanguards',
 	'group-vanguard-member' => 'Vanguard',
 	'group-voldev' => 'Volunteer Developers',
@@ -127,6 +124,12 @@ $messages['qqq'] = [
 	'group-voldev' => '{{doc-group|voldev}}',
 	'group-voldev-member' => '{{doc-group|voldev|member}}',
 	'grouppage-voldev' => '{{doc-group|voldev|page}}',
+	'group-helper' => 'Missing documentation',
+	'group-helper-member' => 'Missing documentation',
+	'group-staff' => 'Missing documentation',
+	'group-staff-member' => 'Missing documentation',
+	'group-util' => 'Missing documentation',
+	'group-util-member' => 'Missing documentation',
 ];
 
 $messages['ab'] = [
@@ -1493,8 +1496,12 @@ $messages['de'] = [
 	'group-bureaucrat.js' => '/* Das folgende JavaScript wird nur für Bürokraten geladen. */',
 	'group-content-moderator' => 'Inhalts-Moderatoren',
 	'group-content-moderator-member' => 'Inhalts-Moderator',
-	'group-helper' => 'Helfer',
-	'group-helper-member' => 'Helfer',
+	'group-helper' => 'Fandom-Helfer',
+	'group-helper-member' => 'Fandom-Helfer',
+	'group-staff' => 'Fandom-Mitarbeiter',
+	'group-staff-member' => 'Fandom-Mitarbeiter',
+	'group-util' => 'Fandom-Utilities',
+	'group-util-member' => 'Fandom-Hilfsmittel',
 ];
 
 $messages['de-formal'] = [
@@ -1708,7 +1715,12 @@ $messages['es'] = [
 	'grouppage-suppress' => '{{ns:project}}:Supresores de ediciones',
 	'group-content-moderator' => 'Moderadores de contenido',
 	'group-content-moderator-member' => 'Moderador de contenido',
-	'group-helper-member' => 'helper',
+	'group-helper-member' => 'Helpers de Fandom',
+	'group-helper' => 'Helpers de Fandom',
+	'group-staff' => 'Staff de Fandom',
+	'group-staff-member' => 'Staff de Fandom',
+	'group-util' => 'Utilidades de Fandom',
+	'group-util-member' => 'Utilidades de Fandom',
 ];
 
 $messages['et'] = [
@@ -1972,8 +1984,12 @@ $messages['fr'] = [
 	'group-sysop.js' => '/* Le JavaScript inclus ici n’affectera que les administrateurs */',
 	'group-content-moderator' => 'Modérateurs de contenu',
 	'group-content-moderator-member' => 'Modérateur de contenu',
-	'group-helper' => 'Assistants',
-	'group-helper-member' => '{{GENDER:$1|Assistant|Assistante}}',
+	'group-helper' => 'Assistants de Fandom',
+	'group-helper-member' => 'Assistant de Fandom',
+	'group-staff' => 'Staff de Fandom',
+	'group-staff-member' => 'Staff de Fandom',
+	'group-util' => 'Fandom Utilities',
+	'group-util-member' => 'Fandom Utilities',
 ];
 
 $messages['frc'] = [
@@ -2904,6 +2920,12 @@ $messages['it'] = [
 	'group-bureaucrat.js' => '/ * Il codice JavaScript inserito qui viene caricato solo per i burocrati * /',
 	'group-content-moderator' => 'Moderatori di contenuti',
 	'group-content-moderator-member' => 'Moderatore di contenuti',
+	'group-helper' => 'Helper di Fandom',
+	'group-helper-member' => 'Helper di Fandom',
+	'group-staff' => 'Staff Fandom',
+	'group-staff-member' => 'Staff Fandom',
+	'group-util' => 'Fandom Utilities',
+	'group-util-member' => 'Fandom Utilities',
 ];
 
 $messages['iu'] = [
@@ -2984,10 +3006,12 @@ $messages['ja'] = [
 	'group-bureaucrat.js' => '/* ここにあるすべてのJavaScriptは、ビューロクラットのみに対して読み込まれます */',
 	'group-content-moderator' => 'コンテンツ・モデレーター',
 	'group-content-moderator-member' => 'コンテンツ・モデレーター',
-	'group-helper' => 'ウィキアヘルパー',
-	'group-helper-member' => 'ウィキアヘルパー',
-	'group-util' => 'ウィキアユーティリティース',
-	'group-util-member' => 'ウィキアユーティリティース',
+	'group-helper' => 'Fandomヘルパー',
+	'group-helper-member' => 'Fandomヘルパー',
+	'group-util' => 'Fandomのユーティリティ・メンバー',
+	'group-util-member' => 'Fandomのユーティリティ・メンバー',
+	'group-staff' => 'Fandomスタッフ',
+	'group-staff-member' => 'Fandomスタッフ',
 ];
 
 $messages['jam'] = [
@@ -4907,8 +4931,12 @@ $messages['pl'] = [
 	'grouppage-suppress' => '{{ns:project}}:Rewizorzy',
 	'group-content-moderator' => 'Moderatorzy treści',
 	'group-content-moderator-member' => 'Moderator treści',
-	'group-helper' => 'Helperzy',
-	'group-helper-member' => 'Helper',
+	'group-helper' => 'Fandom Helpers',
+	'group-helper-member' => 'Fandom Helper',
+	'group-staff' => 'Fandom Staff',
+	'group-staff-member' => 'Fandom Staff',
+	'group-util' => 'Fandom Utilities',
+	'group-util-member' => 'Fandom Utilities',
 ];
 
 $messages['pms'] = [
@@ -5079,6 +5107,12 @@ $messages['pt'] = [
 	'grouppage-suppress' => '{{ns:project}}:Supervisores',
 	'group-content-moderator' => 'Moderadores de conteúdo',
 	'group-content-moderator-member' => 'Moderador de conteúdo',
+	'group-helper' => 'Ajudantes do Fandom',
+	'group-helper-member' => 'Ajudante do Fandom',
+	'group-staff' => 'Staff do Fandom',
+	'group-staff-member' => 'Staff do Fandom',
+	'group-util' => 'Utilitários do Fandom',
+	'group-util-member' => 'Utilitários do Fandom',
 ];
 
 $messages['pt-br'] = [
@@ -5317,6 +5351,12 @@ $messages['ru'] = [
 	'group-bureaucrat.css' => '/* Размещённый здесь CSS будет применяться только для бюрократов */',
 	'group-content-moderator' => 'Модераторы контента',
 	'group-content-moderator-member' => 'Модератор контента',
+	'group-helper' => 'Помощники Фэндома',
+	'group-helper-member' => 'Помощник Фэндома',
+	'group-staff' => 'Сотрудники Фэндома',
+	'group-staff-member' => 'Сотрудник Фэндома',
+	'group-util' => 'Утилиты Фэндома',
+	'group-util-member' => 'Утилита Фэндома',
 ];
 
 $messages['rue'] = [
@@ -7066,6 +7106,12 @@ $messages['zh-hans'] = [
 	'grouppage-suppress' => '{{ns:project}}:监督员',
 	'group-content-moderator' => '内容版主',
 	'group-content-moderator-member' => '内容版主',
+	'group-helper' => 'Fandom助手',
+	'group-helper-member' => 'Fandom助手',
+	'group-staff' => 'Fandom员工',
+	'group-staff-member' => 'Fandom员工',
+	'group-util' => 'Fandom Utilities',
+	'group-util-member' => 'Fandom Utilities',
 ];
 
 $messages['zh-hant'] = [
@@ -7098,6 +7144,12 @@ $messages['zh-hant'] = [
 	'grouppage-suppress' => '{{ns:project}}:監督',
 	'group-content-moderator' => '內容版主',
 	'group-content-moderator-member' => '內容版主',
+	'group-helper' => 'Fandom助手',
+	'group-helper-member' => 'Fandom助手',
+	'group-staff' => 'Fandom工作人員',
+	'group-staff-member' => 'Fandom工作人員',
+	'group-util' => 'Fandom Utilities',
+	'group-util-member' => 'Fandom Utilities',
 ];
 
 $messages['zh-hk'] = [

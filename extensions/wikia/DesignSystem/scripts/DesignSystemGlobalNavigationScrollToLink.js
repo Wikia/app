@@ -6,10 +6,10 @@ require(
 		var offset = 0;
 
 		/**
-		 * @desc handler for hashchange event
+		 * @desc scroll to anchor
 		 * @param {Event} event
 		 */
-		function hashChangeHandler(event) {
+		function scrollToAnchor(event) {
 			if (scrollToLink.handleScrollTo(win.location.hash, offset) || browserDetect.isIOS7orLower()) {
 				// prevent only if we managed to scroll to desired ID
 				event.preventDefault();
@@ -35,6 +35,6 @@ require(
 			// also scroll a bit, so element won't be stuck to GlobalNavigation
 			offset = -(globalNavigationHeight + spacingBelowGlobalNav);
 
-			$win.on('hashchange', hashChangeHandler);
+			$win.on('hashchange load', scrollToAnchor);
 		});
 	});

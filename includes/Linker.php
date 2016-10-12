@@ -199,8 +199,13 @@ class Linker {
 		}
 		wfProfileOut(__METHOD__.'-hooks');
 
-		# Normalize the Title if it's a special page
-		$target = self::normaliseSpecialPage( $target );
+		// Wikia change
+		// SUS-698: Don't normalise GlobalTitle references to special pages
+		// this returns a local title, and the link works fine without calling this
+		if ( !( $target instanceof GlobalTitle ) ) {
+			# Normalize the Title if it's a special page
+			$target = self::normaliseSpecialPage( $target );
+		}
 
 		# If we don't know whether the page exists, let's find out.
 		wfProfileIn( __METHOD__ . '-checkPageExistence' );
@@ -746,7 +751,7 @@ class Linker {
 	 * @param $manualthumb String
 	 * @return mixed
 	 */
-	public static function makeThumbLinkObj( Title $title, $file, $label = '', $alt,
+	public static function makeThumbLinkObj( Title $title, $file, $label = '', $alt = '',
 		$align = 'right', $params = array(), $framed = false , $manualthumb = "" )
 	{
 		$frameParams = array(

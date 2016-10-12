@@ -1,13 +1,10 @@
-/*global define*/
 define('ext.wikia.recirculation.views.footer', [
 	'jquery',
 	'wikia.window',
-	'wikia.log',
 	'ext.wikia.recirculation.tracker',
 	'ext.wikia.recirculation.utils'
-], function ($, w, log, tracker, utils) {
-
-	var logGroup = 'ext.wikia.recirculation.views.footer';
+], function ($, w, tracker, utils) {
+	'use strict';
 
 	function render(data) {
 
@@ -25,13 +22,13 @@ define('ext.wikia.recirculation.views.footer', [
 			$html.on('mousedown', 'a', function() {
 				tracker.trackVerboseClick(experimentName, utils.buildLabel(this, 'footer'));
 			});
-		}
+		};
 	}
 
 	return function() {
 		return {
 			render: render,
 			setupTracking: setupTracking
-		}
-	}
+		};
+	};
 });

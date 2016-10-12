@@ -29,13 +29,6 @@ class MercuryApiController extends WikiaController {
 			$smartBannerConfig = $this->wg->WikiaMobileSmartBannerConfig;
 
 			unset( $smartBannerConfig[ 'author' ] );
-
-			if ( !empty( $smartBannerConfig[ 'icon' ] ) &&
-				 !isset( parse_url( $smartBannerConfig[ 'icon' ] )[ 'scheme' ] ) // it differs per wiki
-			) {
-				$smartBannerConfig[ 'icon' ] = $this->wg->extensionsPath . $smartBannerConfig[ 'icon' ];
-			}
-
 			$meta = $smartBannerConfig[ 'meta' ];
 			unset( $smartBannerConfig[ 'meta' ] );
 			$smartBannerConfig[ 'appId' ] = [

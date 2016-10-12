@@ -1,0 +1,9 @@
+{
+	"@metadata": {
+		"authors": [
+			"Gazeb"
+		]
+	},
+	"validator-type-string": "текст",
+	"validator-listerrors-errors": "Хыбы"
+}

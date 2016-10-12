@@ -77,10 +77,10 @@ $recirculation-impact-footer-color-feature-overlay: rgba(0, 0, 0, .75);
 			font-size: 24px;
 			left: 0;
 			line-height: 28px;
+			min-height: 70px;
 			padding: 10px;
 			position: absolute;
 			right: 0;
-			min-height: 70px;
 		}
 
 		h4::before {
@@ -127,31 +127,9 @@ $recirculation-impact-footer-color-feature-overlay: rgba(0, 0, 0, .75);
 	}
 
 	.thumbnail {
-		background: {
-			color: $color-article-thumb-background;
-			image: url('/extensions/wikia/Recirculation/images/brackets.svg'); /* $wgCdnStylePath */
-			position: center;
-			repeat: no-repeat;
-			size: contain;
-		}
 		margin-bottom: 5px;
 		overflow: hidden;
-		position: relative;
 		width: 100%;
-
-		&::before {
-			content: '';
-			display: block;
-			padding-top: 56.25%;
-		}
-
-		img {
-			bottom: 0;
-			left: 0;
-			position: absolute;
-			right: 0;
-			top: 0;
-		}
 	}
 
 	.discussion-threads {
@@ -182,9 +160,11 @@ $recirculation-impact-footer-color-feature-overlay: rgba(0, 0, 0, .75);
 	}
 
 	.discussion-header {
+		background-position: center;
+		background-repeat: no-repeat;
 		color: $color-white;
 		font-size: 14px;
-		height: 165px;
+		height: 160px;
 		text-align: center;
 
 		h3 {

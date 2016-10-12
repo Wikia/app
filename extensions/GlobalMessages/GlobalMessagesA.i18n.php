@@ -285,7 +285,7 @@ Please visit [//www.mediawiki.org/wiki/Localisation MediaWiki Localisation] and 
 	'api-error-verification-error' => 'This file might be corrupt, or have the wrong extension.',
 	'adminskin_ds' => 'Default',
 	'admin_skin' => 'Admin Options',
-	'all_the_wikia' => 'All the wikia',
+	'all_the_wikia' => 'All the Fandom',
 	'already_a_member' => 'Already a member?',
 	'add_comment' => 'Leave message',
 	'achievements-leaderboard-navigation-item' => 'Wiki Leaderboard',
@@ -474,6 +474,7 @@ See also {{msg-mw|Anonuser}} and {{msg-mw|Siteusers}}.',
 	'autoredircomment' => 'The auto summary when making a redirect. $1 is the page where it redirects to.',
 	'autosumm-new' => 'The auto summary when creating a new page. $1 are the first X number of characters of the new page.',
 	'addnewtalksection-link' => 'Tooltip shown when hovering over the "addsection" tab (shown on talk pages).',
+	'all_the_wikia' => 'Missing documentation',
 ];
 
 $messages['ab'] = [
@@ -6495,7 +6496,7 @@ Bitte besuche die Seiten [//www.mediawiki.org/wiki/Localisation MediaWiki-Lokali
 	'api-error-uploaddisabled' => 'Das Hochladen ist in diesem Wiki deaktiviert.',
 	'api-error-verification-error' => 'Die hochzuladende Datei ist entweder fehlerhaft oder hat keine Dateinamenserweiterung.',
 	'addnewtalksection-link' => 'Neuen Abschnitt beginnen',
-	'all_the_wikia' => 'Alle Wikias',
+	'all_the_wikia' => 'Überall in Fandom',
 ];
 
 $messages['de-ch'] = [
@@ -7649,7 +7650,7 @@ Por favor visita [//www.mediawiki.org/wiki/Localisation Localización MediaWiki]
 	'api-error-uploaddisabled' => 'Las subidas están desactivadas en este wiki.',
 	'api-error-verification-error' => 'Este archivo puede estar dañado, o tiene una extensión incorrecta.',
 	'addnewtalksection-link' => 'Inicie una nueva sección',
-	'all_the_wikia' => 'Todas las Wikias',
+	'all_the_wikia' => 'Todo Fandom',
 ];
 
 $messages['et'] = [
@@ -8903,7 +8904,7 @@ Veuillez visiter la [//www.mediawiki.org/wiki/Localisation Localisation de Media
 	'api-error-uploaddisabled' => 'Le versement est désactivé sur ce wiki.',
 	'api-error-verification-error' => 'Ce fichier peut être corrompu, ou son extension est incorrecte.',
 	'addnewtalksection-link' => 'Commencer une nouvelle section',
-	'all_the_wikia' => 'Tous les wikia',
+	'all_the_wikia' => 'Tout Fandom',
 ];
 
 $messages['frc'] = [
@@ -13138,6 +13139,7 @@ Visitare [//www.mediawiki.org/wiki/Localisation MediaWiki Localisation] e [//tra
 	'api-error-uploaddisabled' => 'Il caricamento è disabilitato su questa wiki.',
 	'api-error-verification-error' => 'Questo file potrebbe essere danneggiato, o avere l\'estensione sbagliata.',
 	'addnewtalksection-link' => 'Inizia una nuova sezione',
+	'all_the_wikia' => 'Tutto il Fandom',
 ];
 
 $messages['iu'] = [
@@ -13501,7 +13503,7 @@ $1のブロックの理由は「$2」です。',
 	'api-error-unknown-warning' => '原因不明の警告:$1',
 	'api-error-uploaddisabled' => 'このウィキではアップロードは無効になっています。',
 	'api-error-verification-error' => 'このファイルは壊れているか、間違った拡張子になっています。',
-	'all_the_wikia' => 'ウィキアの全て',
+	'all_the_wikia' => 'Fandom全体',
 	'add_comment' => 'コメントを追加する',
 	'addnewtalksection-link' => '新しいセクションを開始する',
 ];
@@ -22115,7 +22117,7 @@ Odwiedź [//www.mediawiki.org/wiki/Localisation Tłumaczenie MediaWiki] oraz [//
 	'api-error-verification-error' => 'Plik może być uszkodzony lub nazwa pliku ma nieprawidłowe rozszerzenie.',
 	'add_widgets' => 'Dodaj widgety',
 	'addnewtalksection-link' => 'Dodaj nowy wątek.',
-	'all_the_wikia' => 'Wszystkie wiki',
+	'all_the_wikia' => 'Cały Fandom',
 ];
 
 $messages['pms'] = [
@@ -22979,6 +22981,7 @@ Se deseja colaborar na localização genérica do MediaWiki, visite [//www.media
 	'api-error-uploaddisabled' => 'Esta wiki não está configurada para poder receber ficheiros.',
 	'api-error-verification-error' => 'Este ficheiro pode estar corrompido, ou ter a extensão errada.',
 	'addnewtalksection-link' => 'Iniciar uma nova secção',
+	'all_the_wikia' => 'Todo o Fandom',
 ];
 
 $messages['pt-br'] = [
@@ -24144,7 +24147,7 @@ $messages['ru'] = [
 	'api-error-uploaddisabled' => 'В этой вики отключена возможность загрузки файлов.',
 	'api-error-verification-error' => 'Возможно, этот файл повреждён или имеет неправильное расширение.',
 	'addnewtalksection-link' => 'Создать новый раздел',
-	'all_the_wikia' => 'Вся Викия',
+	'all_the_wikia' => 'Весь Фэндом',
 ];
 
 $messages['rue'] = [
@@ -31709,6 +31712,7 @@ $1被封禁的理由是：“$2”',
 	'api-error-uploaddisabled' => '这个维基不接受上传。',
 	'api-error-verification-error' => '此文件可能已损坏，或有错误的扩展名。',
 	'addnewtalksection-link' => '开始一个新小节',
+	'all_the_wikia' => '所有Fandom',
 ];
 
 $messages['zh-hant'] = [
@@ -31884,6 +31888,7 @@ $1被封禁的理由是“$2”',
 	'api-error-uploaddisabled' => '本wiki的上傳檔案功能已停用。',
 	'api-error-verification-error' => '本檔案可能已損壞，或副檔名錯誤。',
 	'addnewtalksection-link' => '開始一個新小節',
+	'all_the_wikia' => '所有Fandom',
 ];
 
 $messages['zh-hk'] = [

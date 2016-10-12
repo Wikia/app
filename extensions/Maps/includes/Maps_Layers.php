@@ -1,142 +1,229 @@
 <?php
 
 /**
- * Static class for layer functionality.
+ * Static factory class for layers which also keeps track of layers defined in the wiki,
+ * using abstract layer templates(in form of a layer class) which are managed via MapsLayerTypes.
  *
- * @since 0.7.2
- * 
- * @file Maps_Layers.php
- * @ingroup Maps
+ * @since 3.0 (Most of the pre 3.0 'MapsLayer' class has moved to 'MapsLayerTypes')
  *
  * @licence GNU GPL v2+
  * @author Jeroen De Dauw < jeroendedauw@gmail.com >
+ * @author Daniel Werner
  */
 class MapsLayers {
-	
+
 	/**
-	 * List that maps layer types (keys) to their classes (values).
-	 * 
-	 * @since 0.7.2
-	 * 
-	 * @var array of string
+	 * Array with layer page site names as keys and MapsLayerGroup
+	 * objects as values.
+	 *
+	 * @since 3.0
+	 *
+	 * @var MapsLayerGroup
 	 */
-	protected static $classes = array();
-	
+	protected static $layerGroups = array();
+
 	/**
-	 * List that maps layer types (keys) to the services that they support (values).
-	 * 
-	 * @since 0.7.2
-	 * 
-	 * @var array of array of string
-	 */	
-	protected static $services = array();
-	
-	/**
-	 * Returns a new instance of a layer class for the provided layer type.
-	 * 
-	 * @since 0.7.2
-	 * 
-	 * @param string $type
-	 * @param array $properties
-	 * 
+	 * Returns a new instance of a layer class for the provided layer type to create
+	 * an actual layer definition based on the basic layer type class.
+	 *
+	 * @since 3.0
+	 *
+	 * @param string $type name of the basic layer type.
+	 * @param array  $properties definition describing the layer characteristics.
+	 * @param string $name optional name to identify this particular layer within a
+	 *        group of layers within a layer page. If not set, an increasing numeric
+	 *        name will be assigned.
+	 *
 	 * @return MapsLayer
 	 */
-	public static function getLayer( $type, array $properties ) {
-		self::initializeLayers();
-		
-		if ( self::hasLayer( $type ) ) {
-			return new self::$classes[$type]( $properties );
+	public static function newLayerFromDefinition( $type, array $properties, $name = null ) {
+
+		$class = MapsLayerTypes::getTypesClass( $type );
+
+		if ( $class !== null ) {
+			return new $class( $properties, $name );
 		}
 		else {
-			throw new exception( "There is no layer class for layer of type $type." );
+			throw new exception( "There is no layer class for layers of type \"$type\"." );
 		}
 	}
-	
+
 	/**
-	 * Returns the available layer types, optionally filtered by them requiring the
-	 * support of the $service parameter.
-	 * 
-	 * @since 0.7.2
-	 * 
-	 * @param string $service
-	 * 
-	 * @return array
+	 * Creates a new type specific MapsLayer from a feteched database row.
+	 *
+	 * @since 3.0
+	 *
+	 * @param object $row
+	 *
+	 * @return MapsLayer
 	 */
-	public static function getAvailableLayers( $service = null ) {
-		self::initializeLayers();
-		
-		if ( is_null( $service ) ) {
-			return array_keys( self::$classes );
+	public static function newLayerFromRow( $row ) {
+		if( is_object( $row ) ) {
+			$type = $row->layer_type;
+			$name = $row->layer_name; // might be null
+			$data = self::parseLayerParameters( $row->layer_data );
+
+			return self::newLayerFromDefinition( $type, $data, $name );
 		}
 		else {
-			$layers = array();
-			
-			foreach ( self::$services as $layerType => $supportedServices ) {
-				if ( in_array( $service, $supportedServices ) ) {
-					$layers[] = $layerType;
-				}
+			throw new MWException( 'Invalid row format for "MapsLayer" creation.' );
+		}
+	}
+
+	/**
+	 * Reads layer parameter definition in string form and returns and array containing
+	 * all parameters as structured data where the key is the parameter name and the
+	 * associated value its value.
+	 *
+	 * @since 3.0
+	 *
+	 * @param string $parameters
+	 * @param string $itemSep separator between prameters.
+	 * @param string $keyValueSep separator between parameter name and associated value.
+	 *
+	 * @return array
+	 */
+	public static function parseLayerParameters( $parameters, $itemSep = "\n", $keyValueSep = '=' ) {
+		$keyValuePairs = array();
+
+		// get 'key=value' pairs and put them into an array where key is the index for each value
+		foreach ( explode( $itemSep, $parameters ) as $line ) {
+			$parts = explode( $keyValueSep, $line, 2 );
+
+			if ( count( $parts ) == 2 ) {
+				// only allow basic characters as layer-description parameters:
+				$key = preg_replace( '/[^a-z0-9]/', '', strtolower( $parts[0] ) );
+				$keyValuePairs[ $key ] = trim( $parts[1] );
 			}
-			
-			return $layers;
 		}
+		return $keyValuePairs;
 	}
-	
+
 	/**
-	 * Returns the mapping services supported by the provided layer type.
-	 * 
-	 * @since 0.7.2
-	 * 
-	 * @param string $type
-	 * 
-	 * @return array
+	 * This will load an already defined layer from a layer page within the wiki. Since
+	 * there can be several layers as a group on one page, this also requires the layers
+	 * name within the group to identify it.
+	 * If the requested layer doesn't exist, this will return null.
+	 *
+	 * @since 3.0
+	 *
+	 * @param Title $layerPage title of a page with layer definitions
+	 * @param string $name layers name within the group of all layers defined in $layerPage
+	 *
+	 * @return MapsLayer|null
 	 */
-	public static function getServicesForType( $type ) {
-		return array_key_exists( $type, self::$services ) ? self::$services[$type] : array();
+	public static function loadLayer( Title $layerPage, $name ) {
+		$layers = self::loadLayerGroup( $layerPage );
+		return $layers->getLayerByName( $name );
 	}
 
 	/**
-	 * Returns if there is a layer class for the provided layer type.
-	 * 
-	 * @since 0.7.2
-	 * 
-	 * @param string $type
-	 * @param string $service
-	 * 
-	 * @return boolean
-	 */	
-	public static function hasLayer( $type, $service = null ) {
-		self::initializeLayers();
+	 * This will load all layers defined on a layer page and return them as
+	 * MapsLayerGroup object.
+	 *
+	 * @since 3.0
+	 *
+	 * @param Title $layerPage
+	 *
+	 * @return MapsLayerGroup
+	 */
+	public static function loadLayerGroup( Title $layerPage ) {
+		// try to get it from cached layers:
+		$groupId = $layerPage->getPrefixedDBkey();
+		if( array_key_exists( $groupId, self::$layerGroups ) ) {
+			return self::$layerGroups[ $groupId ];
+		}
 
-		if ( array_key_exists( $type, self::$classes ) && array_key_exists( $type, self::$services ) ) {
-			return is_null( $service ) || in_array( $service, self::$services[$type] );
+		$layerGroup = MapsLayerGroup::newFromTitle( $layerPage );
+
+		self::$layerGroups[ $groupId ] = $layerGroup;
+		return $layerGroup;
+	}
+
+	/**
+	 * Store layers of a page to database. This will remove all previous layers
+	 * of that page from the database first.
+	 *
+	 * @since 3.0
+	 *
+	 * @param MapsLayerGroup $layerGroup contains all layers of the page.
+	 * @param Title $title the page title the layers are associated with.
+	 *
+	 * @return boolean
+	 */
+	public static function storeLayers( MapsLayerGroup $layerGroup, Title $title ) {
+
+		// clear cache for this one:
+		unset( self::$layerGroups[ $title->getPrefixedDBkey() ] );
+
+		/*
+		 * create data for multiple row insert:
+		 */
+		$pageId = $title->getArticleID();
+
+		foreach( $layerGroup->getLayers() as $layer ) {
+			$dbLayers[] = self::databaseRowFromLayer( $layer, $pageId );
+		}
+
+		/*
+				 * insert all layer rows of the page into database:
+				 */
+		$db = wfGetDB( DB_MASTER );
+
+		// delete old, stored layers first:
+		$db->delete( 'maps_layers', array( 'layer_page_id' => $pageId ), __METHOD__ );
+
+		if( empty( $dbLayers ) ) {
+			// empty group, nothing to insert
+			return true;
 		}
 		else {
-			return false;
+			// insert new rows:
+			return $db->insert( 'maps_layers', $dbLayers, __METHOD__ );
 		}
 	}
-	
+
 	/**
-	 * Register a layer.
-	 * 
-	 * @param string $type
-	 * @param string $layerClass
-	 * @param $serviceIdentifier
-	 * 
-	 * @since 0.7.2
+	 * Return the list of database fields that should be selected to create a new MapsLayer.
+	 *
+	 * @since 3.0
 	 */
-	public static function registerLayer( $type, $layerClass, $serviceIdentifier ) {
-		self::$classes[$type] = $layerClass;
-		self::$services[$type][] = $serviceIdentifier;
+	public static function databaseFields() {
+		return array(
+			'layer_page_id',
+			'layer_name',
+			'layer_type',
+			'layer_data'
+		);
 	}
-	
+
 	/**
-	 * Initializes the layers functionality by registering the layer types
-	 * by firing the  hook.
-	 * 
-	 * @since 0.7.2
+	 * Returns database fields as keys and an associated value taken from a layer as value, ready
+	 * for database insert.
+	 *
+	 * @since 3.0
+	 *
+	 * @param MapsLayer $layer
+	 * @param integer   $pageId The article id of the page the layer should be associated to.
+	 *                  For example "Title::getArticleID()".
+	 *
+	 * @return array
 	 */
-	protected static function initializeLayers() {
-		wfRunHooks( 'MappingLayersInitialization' );
+	public static function databaseRowFromLayer( MapsLayer $layer, $pageId  ) {
+
+		// format layer properties array:
+		$properties = array();
+		foreach( $layer->getProperties() as $key => $prop ) {
+			$properties[] = "$key=$prop";
+		}
+		$properties = implode( "\n", $properties );
+
+		return array(
+			'layer_page_id' => $pageId,
+			'layer_name'    => $layer->getName(), // might be null
+			'layer_type'    => $layer->getType(),
+			'layer_data'    => $properties
+		);
 	}
-	
 }
+

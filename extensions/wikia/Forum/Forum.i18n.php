@@ -28,14 +28,14 @@ Before contributing to the {{SITENAME}} Forums, please keep in mind a few best p
 :Please take a moment to sift through the {{SITENAME}} Forum boards to see if a discussion already exists about something you want to talk about. If you can\'t find what you\'re looking for, jump right in and start a new discussion!
 
 \'\'\'Ask for help.\'\'\'
-:Notice something that doesn\'t seem right? Or do you have a question? Ask for help here on the forums! If you need help from Wikia staff, please reach out on [[w:c:community|Community Central]] or via [[Special:Contact]].
+:Notice something that doesn\'t seem right? Or do you have a question? Ask for help here on the forums! If you need help from Fandom staff, please reach out on [[w:c:community|Community Central]] or via [[Special:Contact]].
 
 \'\'\'Have fun!\'\'\'
 :The {{SITENAME}} community is happy to have you here. We look forward to seeing you around as we discuss this topic we all love.
 
 ==Forum FAQ==
 \'\'\'How do I stay on top of discussions I\'m interested in?\'\'\'
-: With a Wikia user account, you can follow specific conversations and then receive notification messages (either on-site or via email) when a discussion has more activity. Be sure to [[Special:UserSignup|sign up for a Wikia account]] if you don\'t already have one.
+: With a Fandom user account, you can follow specific conversations and then receive notification messages (either on-site or via email) when a discussion has more activity. Be sure to [[Special:UserSignup|sign up for a Fandom account]] if you don\'t already have one.
 
 \'\'\'How do I remove vandalism?\'\'\'
 : If you notice some spam or vandalism on a thread, hover your mouse over the offending text. You\'ll see a "More" button appear. Inside the "More" menu, you\'ll find "Remove". This will allow you to remove the vandalism and optionally inform an admin.
@@ -44,7 +44,7 @@ Before contributing to the {{SITENAME}} Forums, please keep in mind a few best p
 : If you find a particular discussion or reply interesting, well thought out, or amusing you can show direct appreciation by giving it Kudos. They can be helpful in voting situations, too.
 
 \'\'\'What are Topics?\'\'\'
-: Topics allow you to link a forum discussion with a wiki article. It\'s another way to keep Forums organized and to help people find interesting discussions. For example, a Forum thread tagged with "Lord Voldemort" will appear at the bottom of the "Lord Voldemort" article.',
+: Topics allow you to link a forum discussion with a wiki article. It\'s another way to keep Forums organized and to help people find interesting discussions. For example, a Forum thread tagged with \'\'Lord Voldemort\'\' will appear at the bottom of the \'\'Lord Voldemort\'\' article.',
 	'forum-board-title' => '$1 board',
 	'forum-board-topic-title' => 'Discussions about $1',
 	'forum-board-topics' => 'Topics',
@@ -166,7 +166,7 @@ $messages['qqq'] = [
 	'forum-specialpage-policies-edit' => 'Edit button on modal with forum policies.
 {{Identical|Edit}}',
 	'forum-specialpage-policies' => 'Button label for forum policies',
-	'forum-policies-and-faq' => 'Default policies and faq',
+	'forum-policies-and-faq' => 'Missing documentation',
 	'forum-board-title' => 'Appears in the header of board page. $1 is the title of the board.',
 	'forum-board-topic-title' => 'The title of the topic page. Parameters:
 * $1 is the title of the topic',
@@ -939,33 +939,33 @@ $messages['de'] = [
 	'forum-specialpage-board-lastpostby' => 'Letzter Beitrag von',
 	'forum-specialpage-policies-edit' => 'Bearbeiten',
 	'forum-specialpage-policies' => 'Forumrichtlinien / Häufig gestellte Fragen',
-	'forum-policies-and-faq' => '==Regeln==
-Bevor du dich ins Geschehen stürzt und dich an den {{SITENAME}}-Foren beteiligst, solltest du diese Punkte beachten:
+	'forum-policies-and-faq' => '==Foren-Richtlinien==
+Denke bitte daran, dich an die bestehenden Forenregeln zu halten, wenn du dich in den Foren von {{SITENAME}} engagierst:
 
-\'\'\'Sei nett und behandle jeden mit Respekt.\'\'\'
-:Wie in jedem anderen Gemeinschaftsprojekt wird es immer mal wieder Meinungsverschiedenheiten geben. Bitte halte Diskussionen in einem freundlichen und produktiven Ton, falls du mit jemand anderem nicht übereinstimmst. Behalte im Hinterkopf, dass wir alle hier sind, weil wir das gleiche Thema mögen.
+\'\'\'Sei freundlich und behandle andere mit Respekt.\'\'\'
+: Dieses Wiki und die zugehörigen Foren werden von Menschen aus der ganzen Welt gelesen und bearbeitet. Wie in jedem anderen Gemeinschaftsprojekt wird auch hier nicht immer jeder einer Meinung sein. Bleibe bei Diskussionen höflich und anderen Meinungen gegenüber aufgeschlossen. Wir sind alle hier, weil wir dieselben Themen toll finden.
 
-\'\'\'Suche zuerst nach bereits existierenden Diskussionsfäden, aber zögere nicht, einen neuen zu erstellen, solltest du keinen existierenden finden.\'\'\'
-:Bitte nimm dir einen Moment Zeit und durchstöbere die bereits existierenden Diskussionsfäden, um Dopplungen zu vermeiden. Solltest du keinen passenden Diskussionsfaden finden, kannst du selbstverständlich einen neuen erstellen.
+\'\'\'Versuche immer zuerst bereits existierende Diskussionen zu finden, aber scheue dich auch nicht davor, einen neuen Thread anzulegen.\'\'\'
+:Nimm dir bitte einen Augenblick Zeit, um die verschiedenen Unterforen auf {{SITENAME}} durch zu gehen und herauszufinden, ob es bereits Diskussionen zu dem Thema gibt, über das du dich gerne austauschen möchtest! Wenn du das, was du suchst, nirgends finden kannst, springe einfach ins kalte Wasser und beginne eine neue Diskussion!
 
-\'\'\'Frag nach Hilfe.\'\'\'
-:Scheint etwas nicht richtig zu sein? Oder hast du eine Frage? Dann frag nach Hilfe hier in den Foren! Solltest du Hilfe vom Wikia-Personal benötigen, dann schau im [[w:c:de.c|deutschen Community-Wiki]] vorbei oder [[Special:contact|schicke eine E-Mail an unsere Mitarbeiter]].
+\'\'\'Bitte um Hilfe.\'\'\'
+:Ist dir etwas aufgefallen, was so deiner Meinung nach nicht richtig ist? Oder hast du eine Frage? Bitte hier in den Foren um Hilfe! Wenn du Unterstützung von Fandom-Mitarbeitern brauchst, nimm in der [[w:c:de.community|Community Deutschland]] oder über [[Spezial:Kontakt]] Kontakt zu uns auf.
 
-\'\'\'Hab Spaß!\'\'\'
-:Unsere Community ist froh, dass du hier bist. Wir freuen uns darauf, dass du uns erhalten bleibst und fleißig mitdiskutierst!
+\'\'\'Viel Spaß!\'\'\'
+:Die Community {{SITENAME}} freut sich total, dass du jetzt hier bist. Wir können es kaum erwarten, mehr von dir zu erfahren und mit dir die Themen zu diskutieren, die uns allen am Herzen liegen.
 
 ==Forum FAQ==
-\'\'\'Kann ich mich bei neuen Antworten benachrichtigen lassen?\'\'\'
-: Mit einem Benutzerkonto bei Wikia kannst du das - in jedem Diskussionsfaden findest du ganz oben einen Button mit der Aufschrift "folgen". Klicke diesen und du wirst fortan Benachrichtigungen oben rechts neben deinem Benutzernamen erhalten oder auf Wunsch auch via E-Mail. Solltest du noch kein Benutzerkonto haben, dann [[Special:UserSignup|melde dich noch heute an]].
+\'\'\'Wie bleibe ich bei Diskussionen am Ball, die mich besonders interessieren?\'\'\'
+: Mit einem Benutzerkonto bei Fandom kannst du bestimmten Konversationen folgen und (entweder online oder per E-Mail) Benachrichtigungen erhalten, sobald die Diskussion weitergeht. [[Spezial:Anmelden|Melde sich also für ein Fandom-Benutzerkonto an]], falls du das nicht sowieso schon getan hast.
 
 \'\'\'Wie entferne ich Vandalismus?\'\'\'
-:Solltest du in einem Diskussionsfaden über Vandalismus stolpern, bewege die Maus zum entsprechenden Text. Daraufhin wird ein Button mit der Aufschrift "mehr" erscheinen, unter dem du "entfernen" wählen kannst. Dies erlaubt dir den Vandalismus zu entfernen und einen Admin darüber zu informieren.
+: Wenn Du in einem Diskussionsfaden auf Spam oder Vandalismus triffst, kannst du deine Maus über den betreffenden Text bewegen, bis die Schaltfläche "Mehr" erscheint. Im Menü "Mehr" findest du den Menüpunkt "Entfernen". Darüber kannst du den betreffenden, unpassenden Text entfernen und optional auch gleich einen Admin darüber unterrichten.
 
-\'\'\'Was sind Zustimmungen?\'\'\'
-:Gefällt dir eine Diskussion besonders, du stimmst ihr zu oder sie ist besonders hilfreich, dann stimme ihr zu. Das kann auch in anderen Situationen hilfreich sein.
+\'\'\'Wie funktioniert das mit dem Lob für Beiträge?\'\'\'
+: Wenn du eine bestimmte Diskussion oder Antwort besonders interessant, durchdacht oder amüsant findest, kannst du deine Wertschätzung dafür direkt zeigen, indem du ein Lob hinterlässt. Lob kann auch in Situationen, in denen abgestimmt werden soll, hilfreich sein.
 
 \'\'\'Was sind Themen?\'\'\'
-:Themen erlauben es dir, eine Diskussion mit einem Wiki-Artikel zu verbinden. Man kann sich das so ähnlich vorstellen wie das Kategorisieren von Seiten. Die Verwendung von Themen hält das Forum organisiert und hilft anderen Leuten, ähnliche Diskussionen zu finden. Sollte zum Beispiel das Thema "Lord Voldemort" zu einem Diskussionsfaden hinzugefügt werden, wird dieser Diskussionsfaden unterhalb des Artikels zu "Lord Voldemort" erscheinen.',
+: Mithilfe von Themen kannst du eine Forendiskussion mit einem Wiki-Artikel verknüpfen. Es ist eine andere Möglichkeit, um die Foren zu organisieren und den Benutzern dabei zu helfen, interessante Diskussionen zu finden. Ein Forum, für den der Tag "Lord Voldemort" vergeben wurde, erscheint beispielsweise am Ende des Artikels zu "Lord Voldemort".',
 	'forum-board-title' => 'Board „$1“',
 	'forum-board-topic-title' => 'Diskussionen über $1',
 	'forum-board-topics' => 'Themen',
@@ -1144,35 +1144,36 @@ $messages['es'] = [
 	'forum-specialpage-policies-edit' => 'Editar',
 	'forum-specialpage-policies' => 'Políticas del foro / P+F',
 	'forum-policies-and-faq' => '==Políticas del foro==
-Antes de contribuir en el foro de {{SITENAME}} ten en cuenta las siguientes prácticas:
+Antes de contribuir en el foro de {{SITENAME}}, ten en cuenta las siguientes prácticas:
 
 \'\'\'Trata a la gente con respeto y no tengas malas intenciones.\'\'\'
-: Personas de todos los lugares del mundo leen y editan en este wiki y este foro. Como cualquier proyecto colaborativo, no todo el mundo va a estar de acuerdo permanentemente con lo que se discuta así que abre tu mente a diferentes opiniones. Estamos aquí porque nos gusta lo mismo.
+
+:Personas de todos los lugares del mundo leen y editan en este wiki y este foro. Como cualquier proyecto colaborativo, no todo el mundo va a estar de acuerdo permanentemente con lo que se discuta así que abre tu mente a diferentes opiniones. Estamos aquí porque nos gusta lo mismo.
 
 \'\'\'Intenta encontrar discusiones existentes primero, pero no tengas miedo de iniciar un nuevo tema.\'\'\'
 :Por favor, tómate un momento para visitar los subforos de este wiki y ver si ya existe una discusión sobre lo que quieres hablar. Si no puedes encontrar lo que buscas, ¡comienza un nuevo tema!
 
 \'\'\'Pide ayuda.\'\'\'
-:¿Algo no se ve como debería? ¿Tienes alguna pregunta? ¡Pide ayuda aquí, en el foro! Si necesitas ayuda del Staff de Wikia, puedes ir a nuestra [[w:c:comunidad|Comundiad Central]] o preguntar a través de [[special:contact|Especial:Contactar]].
+:¿Algo no se ve como debería? ¿Tienes alguna pregunta? ¡Pide ayuda aquí, en el foro! Si necesitas ayuda del Staff de Fandom, puedes ir a nuestra [[w:c:comunidad|Comunidad Central]] o preguntar a través de [[Especial:Contactar]].
 
 \'\'\'¡Diviértete!\'\'\'
-:La comunidad de {{SITENAME}} se alegra de que estés aquí. Queremos verte hablar sobre el tema que más nos gusta, adivina cuál...
+La comunidad de {{SITENAME}} se alegra de que estés aquí. Queremos verte hablar sobre el tema que más nos gusta, adivina cuál...
 
 ==Preguntas frecuentes sobre el foro==
 \'\'\'¿Cómo puedo seguir las discusiones en las que estoy interesado?\'\'\'
-: Con una cuenta de usuario de Wikia puedes seguir conversaciones específicas y recibir notificaciones (a través del wiki o por correo) cuando un tema tenga más actividad. [[Special:UserSignup|Crea una cuenta en Wikia]] si aún no lo hiciste.
+:Con una cuenta de usuario de Fandom puedes seguir conversaciones específicas y recibir notificaciones (a través del wiki o por correo) cuando un tema tenga más actividad. Crea una cuenta en Fandom si aún no lo hiciste.
 
 \'\'\'¿Cómo borro los vandalismos?\'\'\'
-: Si descubres mensajes inadecuados, o vandalismo en un hilo, pasa el cursor sobre el texto, verás que aparece un botón llamado "Más acciones". Dentro del menú que se despliega en "Más acciones", encontrarás "Retirar". Esa acción te permitirá retirar el vandalismo y avisar a un administrador si lo consideras necesario.
+:Si descubres mensajes inadecuados, o vandalismo en un hilo, pasa el cursor sobre el texto, verás que aparece un botón llamado "Más acciones". Dentro del menú que se despliega en "Más acciones", encontrarás "Retirar". Esa acción te permitirá retirar el vandalismo y avisar a un administrador si lo consideras necesario.
 
 \'\'\'¿Qué significa que estoy a favor de un mensaje?\'\'\'
-: Si encuentras interesante un mensaje, estás de acuerdo con su contenido o simplemente apoyas el contenido del mismo, muéstraselo a los demás haciendo clic en el icono con el pulgar arriba. Puede ser algo muy útil para votaciones.
+:Si encuentras interesante un mensaje, estás de acuerdo con su contenido o simplemente apoyas el contenido del mismo, muéstraselo a los demás haciendo clic en el icono con el pulgar arriba. Puede ser algo muy útil para votaciones.
 
 \'\'\'Temas, hilos, conversaciones, ¿de qué hablas?\'\'\'
-: Veamos, un hilo es un conjunto de mensajes sobre un mismo tema. Cuando inicias una discusión sobre algo específico, estás iniciando un hilo. Cada hilo se compone de mensajes que van dejando los usuarios, y todos estos tienen en común que tratan sobre el mismo tema. A veces, cuando nos referimos a un hilo decimos que es un tema o una discusión, se puede llamar de ambas formas, ten claro por el contexto a qué nos estamos refiriendo.
+:Veamos, un hilo es un conjunto de mensajes sobre un mismo tema. Cuando inicias una discusión sobre algo específico, estás iniciando un hilo. Cada hilo se compone de mensajes que van dejando los usuarios, y todos estos tienen en común que tratan sobre el mismo tema. A veces, cuando nos referimos a un hilo decimos que es un tema o una discusión, se puede llamar de ambas formas, ten claro por el contexto a qué nos estamos refiriendo.
 
 \'\'\'¿Dentro de un hilo hay temas?\'\'\'
-: Suena confuso ¿verdad? Es fácil, al final de un hilo encontrarás un apartado que define las cosas sobre las que se está hablando en ese hilo, esos son los temas. Es una forma de mantener organizados los hilos del foro. Ahí podrás añadir los artículos sobre los que se está hablando. Por ejemplo, si etiquetas ese hilo con la etiqueta "Lord Voldermort", aparecerá reseñado ese artículo al final de la discusión, ¡pero no sabemos cómo podéis tener tanto valor como para hablar sobre \'\'El-Que-No-Debe-Ser-Nombrado\'\'!',
+:Suena confuso ¿verdad? Es fácil, al final de un hilo encontrarás un apartado que define las cosas sobre las que se está hablando en ese hilo, esos son los temas. Es una forma de mantener organizados los hilos del foro. Ahí podrás añadir los artículos sobre los que se está hablando. Por ejemplo, si etiquetas ese hilo con la etiqueta "Lord Voldermort", aparecerá reseñado ese artículo al final de la discusión, ¡pero no sabemos cómo podéis tener tanto valor como para hablar sobre El-Que-No-Debe-Ser-Nombrado.',
 	'forum-board-title' => 'Subforo $1',
 	'forum-board-topic-title' => 'Temas sobre $1',
 	'forum-board-topics' => 'Temas',
@@ -1538,33 +1539,33 @@ $messages['fr'] = [
 	'forum-specialpage-board-lastpostby' => 'Dernier message de',
 	'forum-specialpage-policies-edit' => 'Modifier',
 	'forum-specialpage-policies' => 'Règles du forum / FAQ',
-	'forum-policies-and-faq' => '==Règles du forum==
-Avant de contribuer sur le forum de {{SITENAME}}, veuillez garder à l’esprit quelques bonnes pratiques à suivre :
+	'forum-policies-and-faq' => '==Règles des forums==
+Avant de contribuer aux forums de {{SITENAME}}, veuillez garder à l\'esprit quelques bonnes pratiques à suivre :
 
-\'\'\'Soyez gentil et traitez les gens avec respect.\'\'\'
-: Des gens venant de partout dans le monde lisent et modifient ce wiki et son forum. Comme pour tout autre projet participatif, tout le monde ne sera pas toujours d’accord. Faites en sorte que les discussions restent polies et soyez ouvert vis-à-vis des opinions différentes des vôtres. Nous sommes tous ici parce que nous aimons le même sujet.
+\'\'\'Soyez courtois et traitez les gens avec respect.\'\'\'
+:Des gens du monde entier lisent et modifient ce wiki et ses forums. Comme pour tout autre projet participatif, tout le monde ne sera pas toujours d\'accord. Faites en sorte que les discussions restent polies et soyez ouvert aux opinions différentes des vôtres. Nous sommes tous ici parce que le même sujet nous passionne.
 
-\'\'\'Commencez par essayer de trouver des discussions existantes, mais n’ayez pas peur d’en créer une nouvelle.\'\'\'
-: Veuillez prendre un peu de temps pour parcourir les sous-forums de {{SITENAME}} pour voir si une discussion sur quelque chose dont vous souhaitez parler existe déjà. Si vous ne trouvez pas ce que vous cherchez, lancez-vous et démarrez une nouvelle discussion !
+\'\'\'Commencez par chercher si des discussions existent, mais n\'ayez pas peur d\'en créer une nouvelle.\'\'\'
+:Veuillez prendre un peu de temps pour parcourir les sous-forums de {{SITENAME}} afin de voir si une discussion sur quelque chose dont vous souhaitez parler existe déjà. Si vous ne trouvez pas ce que vous cherchez, lancez une nouvelle discussion !
 
 \'\'\'Demandez de l\'aide.\'\'\'
-: Vous avez constaté quelque chose qui ne vous paraît pas normal ? Ou vous avez une question ? Demandez de l’aide ici sur le forum ! Si vous avez besoin de l’aide de l’équipe de Wikia, allez sur le [[w:fr:Accueil|Centre des communautés]] ou utilisez [[Special:Contact]].
+:Vous avez remarqué quelque chose qui ne vous semble pas normal ? Ou vous avez une question ? Demandez de l\'aide ici sur les forums ! Si vous avez besoin de l\'aide de l\'équipe Fandom, rendez-vous au [[w:fr:Accueil|Centre des communautés]] ou utilisez Special:Contact.
 
 \'\'\'Amusez-vous !\'\'\'
-: La communauté de {{SITENAME}} est heureuse de vous avoir ici. Nous espérons vous voir dans le coin alors que nous discutons de ce sujet que nous aimons tous.
+:La communauté {{SITENAME}} est heureuse que vous soyez là. Nous espérons vous voir régulièrement participer aux discussions sur le sujet que nous aimons tous.
 
-==FAQ du forum==
-\'\'\'Comment suivre les discussions qui m’intéressent ?\'\'\'
-: Avec un compte utilisateur Wikia, vous pouvez suivre des conversations en particulier et recevoir des messages de notification (soit sur le site soit par e-mail) quand une discussion est complétée. Assurez-vous de [[Special:UserSignup|créer un compte Wikia]] si vous n’en avez pas déjà un.
+==FAQ sur les forums==
+\'\'\'Comment suivre les discussions qui m\'intéressent ?\'\'\'
+: Avec un compte utilisateur Fandom, vous pouvez suivre des conversations spécifiques et recevoir des notifications (soit sur le site soit par e-mail) lorsqu\'une discussion enregistre plus d\'activité. Si vous n\'avez pas encore de compte Fandom, [[Special:UserSignup|créez-en un dès maintenant]].
 
 \'\'\'Comment puis-je retirer le vandalisme ?\'\'\'
-: Si vous constatez du spam ou du vandalisme sur une discussion, placez votre souris sur le texte incriminé. Vous verrez un bouton « Plus » apparaître. Dans le menu « Plus », vous trouverez « Retirer ». Cela vous permettra de retirer le message et d’en informer éventuellement un administrateur.
+: Si vous remarquez du spam ou du vandalisme dans une discussion, placez votre souris sur le texte incriminé. Vous verrez un bouton Plus apparaître. Dans le menu Plus, vous trouverez l\'option Retirer. Cela vous permettra de retirer le message et d\'en informer éventuellement un administrateur.
 
 \'\'\'Que sont les sélections ?\'\'\'
-: Si vous trouvez une discussion particulière ou une réponse intéressante, bien tournée ou amusante, vous pouvez montrer votre appréciation en la sélectionnant. Elles peuvent être également utiles dans les situations de vote.
+: Si vous trouvez une discussion ou une réponse particulièrement intéressante, bien tournée ou amusante, vous pouvez montrer que vous l\'appréciez en la sélectionnant. Les sélections peuvent être également utiles dans les situations de vote.
 
 \'\'\'Que sont les rubriques ?\'\'\'
-: Les rubriques vous permettent de lier une discussion du forum avec un article du wiki. C’est un autre moyen de garder le forum organisé et d’aider les gens à trouver des discussions intéressantes. Par exemple, une discussion du forum marquée avec « Voldemort » apparaîtra en bas de l’article « Voldemort ».',
+: Les rubriques permettent de lier une discussion du forum à un article de wiki. Il s\'agit d\'un moyen de s\'assurer que le forum reste structuré et d\'aider les gens à trouver des discussions intéressantes. Par exemple, une discussion du forum peut porter la marque « Voldemort », ce qui la fera apparaître en bas de l\'article « Voldemort ».',
 	'forum-board-title' => 'Sous-forum $1',
 	'forum-board-topic-title' => 'Discussions à propos de « $1 »',
 	'forum-board-topics' => 'Sujets',
@@ -1978,6 +1979,33 @@ Sebelum berkontribusi ke Forum {{SITENAME}}, harap diingat beberapa praktek terb
 $messages['it'] = [
 	'forum-forum-title' => 'Forum',
 	'forum-specialpage-heading' => 'Forum',
+	'forum-policies-and-faq' => '== Politiche sui forum ==
+Prima di contribuire ai Forum di {{SITENAME}}, tieni a mente alcune buone pratiche di condotta:
+
+\'\'\'Sii gentile e tratta le persone con rispetto.\'\'\'
+: Le persone di tutto il mondo leggono e modificano questa wiki e i suoi forum. Proprio come ogni altro progetto in collaborazione, non tutti saranno sempre d\'accordo. Mantieni le discussioni su un tono civile e sii aperto mentalmente alle opinioni differenti. Siamo qui perché amiamo tutti lo stesso argomento.
+
+\'\'\'Prova prima a trovare discussioni già esistenti, ma non avere timore di avviarne una nuova.\'\'\'
+: Dedica un momento per cercare tra i sottoforum di {{SITENAME}} per vedere se esiste già una discussione su qualcosa di cui vuoi parlare. Se non trovi ciò che stai cercando, buttati e avvia una nuova discussione!
+
+\'\'\'Chiedi aiuto.\'\'\'
+: Noti qualcosa che non sembra giusto? O hai una domanda? Chiedi aiuto qui nei forum! Se hai bisogno di assistenza da parte del personale Fandom, contattaci sulla [[w:it:|Wiki della Community]] o tramite [[Special:Contact]].
+
+\'\'\'Divertiti!\'\'\'
+: La comunità di {{SITENAME}} è lieta di averti qui. Non vediamo l\'ora che partecipi alle discussioni di questo argomento che tutti amiamo.
+
+== Domande frequenti sui forum ==
+\'\'\'Come posso restare aggiornato sulle discussioni a cui sono interessato?\'\'\'
+: Con un account utente Fandom, puoi seguire conversazioni specifiche e ricevere messaggi di notifica (sul sito o per e-mail) quando una discussione contiene altre attività. Accertati di [[Special:UserSignup|registrarti a un account Fandom]] se non lo hai già fatto.
+
+\'\'\'Come posso rimuovere il vandalismo?\'\'\'
+: Se noti della spam o del vandalismo su un thread, passa il mouse sopra il testo offensivo. Sarà visualizzato un pulsante "Altro". All\'interno del menu "Altro", troverai "Rimuovi". Ciò ti consentirà di rimuovere il vandalismo e, opzionalmente, di informare un amministratore.
+
+\'\'\'Cosa sono i Kudos?\'\'\'
+: Se trovi una particolare discussione o risposta interessante, ben ponderata o divertente, puoi dimostrare il tuo apprezzamento assegnandole dei Kudos. Essi sono utili anche per votare.
+
+\'\'\'Cosa sono gli argomenti?\'\'\'
+: Gli argomenti ti consentono di collegare la discussione su un forum a un articolo della wiki. Rappresentano un altro modo per tenere organizzati i Forum e aiutare le persone a trovare discussioni interessanti. Ad esempio, una conversazione di forum taggata con \'\'Lord Voldemort\'\' sarà visualizzato in fondo all\'articolo \'\'Lord Voldemort\'\'.',
 ];
 
 $messages['ja'] = [
@@ -1993,33 +2021,33 @@ $messages['ja'] = [
 	'forum-specialpage-board-lastpostby' => '最終投稿者:',
 	'forum-specialpage-policies-edit' => '編集',
 	'forum-specialpage-policies' => 'フォーラムポリシー / FAQ',
-	'forum-policies-and-faq' => '== フォーラムポリシー ==
-{{SITENAME}} フォーラムに投稿するにあたり、以下のことに留意してください:
+	'forum-policies-and-faq' => '==フォーラムポリシー==
+{{SITENAME}}のフォーラムに投稿する際は、以下のことにご留意ください。
 
-\'\'\'敬意を持ち、親切かつ丁寧に他者に対応しましょう。\'\'\'
-:様々な世界の人がこのウィキアやフォーラムを閲覧、編集します。人々が協力し合って作り上げる形式の他のプロジェクト同様、全ての参加者の意見が常に一致するわけではありません。礼儀正しい議論を忘れず、異なる意見を受け入れる柔軟性を持ちましょう。ここにいる参加者は皆、同じ話題に興味があって集まっているということを忘れないでください。
+\'\'\'礼儀正しく、親切に\'\'\'
+: このwikiやフォーラムは、世界中のユーザーが閲覧、編集します。人々が協力し合って作り上げる様々なプロジェクトに、意見の不一致はつきものです。話し合いでは礼儀を大切にし、異なる意見を受け入れる寛容性を持ちましょう。このフォーラムの参加者は、共通のテーマに強い関心を持って集まっているということを心に留めておいてください。
 
-\'\'\'新しいスレッドを作ることを恐れる必要はありません。しかし、その前にまずは既存のスレッドを探してみましょう。\'\'\'
-:あなたが投稿したい話題について、既に同様のスレッドが存在しないか、まずはフォーラムの各板内を探してみてください。見つからなかった時には、どうぞ遠慮なくスレッドを作成してください。
+\'\'\'既存のスレッドを探しつつも、新しいスレッドは気軽に立てましょう\'\'\'
+: 投稿したい話題について既にスレッドが存在しないか、まずは{{SITENAME}}のフォーラム内を探してみてください。見つからなかったときには、新しいスレッドを作成してみましょう。
 
-\'\'\'助けを求める。\'\'\'
-:何かおかしなことに気が付いたとき、疑問があるときには、遠慮なくフォーラムに投稿し助けを求めましょう。ウィキアスタッフによる支援が必要な時は、[[w:c:ja.community|コミュニティー・セントラル]]か[[Special:Contact]]に連絡してください。
+\'\'\'助けを求めましょう\'\'\'
+: 何かおかしなことに気付いた場合や質問がある場合は、フォーラムで助けを求めてみましょう。Fandomスタッフによるサポートが必要な場合は、[[w:c:ja.community|コミュニティ・セントラル]]または[[特別:お問い合わせ]]からご連絡ください。
 
-\'\'\'楽しみましょう。\'\'\'
-:{{SITENAME}}へようこそ。同じ話題に興味を持った者どうしとして、あなたと語り合えること楽しみに待っています。
+\'\'\'楽しむことを大切に\'\'\'
+: {{SITENAME}}のコミュニティではメンバーを歓迎します。共通のテーマに強い関心を持つメンバーからの投稿をお待ちしています。
 
-== フォーラムFAQ ==
-\'\'\'興味を持った話題の最新情報を常に知るにはどうすればいいですか？\'\'\'
-:ウィキアのアカウントを作成すると、特定のスレッドをフォローし、そのスレッドに何か動きがあった時に通知を受け取る（サイト上での通知もしくはEメールによる通知のいずれでも）ことができるようになります。ウィキアのアカウントをまだ作成していないのであれば、[[Special:UserSignup|この機会にぜひ作成してください]]。
+==フォーラムについてのよくある質問==
+\'\'\'関心のあるスレッドの最新情報を得るにはどうすればいいですか？\'\'\'
+: Fandomユーザーアカウントを作成すると、特定のスレッドをフォローして、そのスレッドが更新されたときにサイト上でまたはメールで通知を受け取ることができます。Fandomアカウントをまだお持ちでない場合は、この機会にぜひ[[Special:UserSignup|作成]]してください。
 
-\'\'\'ヴァンダリズムを除去するにはどうすればいいですか？\'\'\'
-:スレッド上でスパムやヴァンダリズムを見かけた際には、その投稿にマウスカーソルをかざしてください。すると、「その他」ボタンが表示されます。「その他」をクリックして表示されるメニューから「除去」を選択すると、ヴァンダリズムしをスレッドから除去し必要であれば管理者に知らせることができます。
+\'\'\'荒らし行為を排除するにはどうすればいいですか？\'\'\'
+: スレッド内でスパムや荒らしを見つけた場合は、そのテキストにカーソルを合わせてください。表示された「その他」ボタンをクリックしてメニューから「除去」を選択すると、荒らし投稿を除去し、必要に応じてアドミンに報告することができます。
 
-\'\'\'「いいね」ってなんですか？\'\'\'
-:興味深い、おもしろい、よく考えられている、といったスレッドや返信を見かけたときには、「いいね」(Kudos) を押すことでそのスレッドや返信を直接評価できます。また、投票機能代わりにも利用できます。
+\'\'\'「いいね」とは何ですか？\'\'\'
+: 興味深い、よく考えられている、おもしろい、といったスレッドや返信を見つけたら、「いいね」をクリックして、そのスレッドや返信に対する好感を表現することができます。このボタンは、投票機能の代わりにもなります。
 
-\'\'\'タグ (トピック) ってなんですか？\'\'\'
-:タグ (Topic) を使用すると、フォーラムのスレッドとウィキアコミュニティの記事をつなげることができます。またこの機能は、フォーラムを体系化し、閲覧者が興味のあるスレッドを探す手助けとなるものです。例えば、フォーラムのスレッドに「ヴェネチア」というタグをつけると、「ヴェネチア」という名称の記事の下部にそのスレッドが表示されます。',
+\'\'\'「トピック」とは何ですか？\'\'\'
+: トピックを使用すると、フォーラムのスレッドとwikiの記事をリンクさせることができます。こうすることでフォーラムが整理され、ユーザーが興味のあるスレッドを見つけやすくなります。たとえば、フォーラムのスレッドに「ヴォルデモート卿」というトピックを付けると、「ヴォルデモート卿」の記事の下部にそのスレッドが表示されます。',
 	'forum-board-title' => '$1板',
 	'forum-board-topic-title' => '$1 に関連するスレッド',
 	'forum-board-topics' => 'タグ',
@@ -2810,33 +2838,33 @@ $messages['pl'] = [
 	'forum-specialpage-board-lastpostby' => 'Ostatni wpis dodany przez',
 	'forum-specialpage-policies-edit' => 'Edytuj',
 	'forum-specialpage-policies' => 'Zasady forum / FAQ',
-	'forum-policies-and-faq' => '==Zasady forum==
-Zanim rozpoczniesz dyskusję na forum, pamiętaj o przestrzeganiu kilku zasad:
+	'forum-policies-and-faq' => '==Zasady użytkowania forum==
+Zanim zaczniesz publikować na Forach {{SITENAME}}, pamiętaj o kilku ogólnych wskazówkach dotyczących korzystania z nich:
 
-\'\'\'Szanuj innych użytkowników\'\'\'
-:Ludzie z różnych miejsc korzystają z tej wiki i jej forum. Jak w każdym innym projekcie, w którym współpraca odgrywa ogromną rolę nie wszyscy będą zawsze się ze sobą zgadzać. Pamiętaj aby prowadzić dyskusje w wyważony i obiektywny sposób. Łączy nas zamiłowanie do tematu wiki.
+„Bądź miły i traktuj ludzi z szacunkiem.”
+: Ludzie z całego świata mogą czytać i edytować artykuły na tej wiki i forach z nią związanych. Jak w przypadku każdego projektu opartego na wzajemnej współpracy, nie zawsze wszyscy się ze sobą zgadzają. Biorąc udział w dyskusji warto być uprzejmym i otwartym na inne poglądy. W końcu jesteśmy tutaj, bo interesujemy się tym samym i to samo kochamy.
 
-\'\'\'Przeszukaj forum zanim rozpoczniesz nową dyskusję\'\'\'
-:Jeśli chcesz założyć nowy wątek, upewnij się, że podobny temat nie został już podjęty a odpowiedź na Twoje pytanie nie została już udzielona. Jeśli nie - nie bój się rozpocząć nowej dyskusji.
+„Zawsze najpierw sprawdź, czy nie istnieje już dyskusja na dany temat, ale nigdy nie bój się zakładać nowych wątków.”
+:Poświęć chwilę na przejrzenie forum {{SITENAME}} i sprawdź, czy ktoś już nie pisał na temat, który chcesz poruszyć. Jeżeli nic takiego nie możesz znaleźć, śmiało rozpocznij nowy wątek!
 
-\'\'\'Pytaj o pomoc\'\'\'
-:Zauważyłeś, że coś nie działa poprawnie? Być może masz pytania? Poproś o pomoc na forum. Jeśli potrzebujesz pomocy bezpośrednio od Wikii skontaktuj się z nami poprzez [[w:c:spolecznosc|Centrum Społeczności]] albo [[Specjalna:Kontakt]].
+„Proś o pomoc.”
+:Zaważyłeś, że coś jest nie tak? Masz jakieś pytanie? Śmiało pytaj na forum! Jeżeli potrzebujesz pomocy pracowników portalu Fandom, skontaktuj się z nami przez [[w:c:community|Centrum Społeczności]] lub [[Special:Contact]].
 
-\'\'\'Baw się dobrze\'\'\'
-:Społeczność {{SITENAME}} cieszy się, że jesteś jej częścią. Chcemy, abyś częściej wpadał aby podyskutować na temat tej wiki, który interesuje nas wszystkich.
+„Baw się dobrze!”
+:Społeczność {{SITENAME}} gości Cię z przyjemnością. Z radością zobaczymy Twój wkład w dyskusje prowadzone na tej wiki.
 
 ==FAQ==
-\'\'\'Jak śledzić dyskusje, które mnie interesują?\'\'\'
-:Jeśli założyłeś konto na Wikii możesz obserwować określone wątki i otrzymywać powiadomienia (na stronie lub poprzez e-mail) gdy pojawią się odpowiedzi w danej dyskusji. [[Special:UserSignup|Załóż konto]] jeśli jeszcze go nie posiadasz.
+„W jaki sposób mogę być na bieżąco z dyskusjami, które mnie interesują?”
+: Posiadając konto użytkownika portalu Fandom, możesz obserwować konkretne rozmowy i otrzymywać wiadomości z powiadomieniami (na stronie lub przez e-mail) dotyczącymi aktywności w dyskusji. [[Special:UserSignup|Załóż konto w Fandom]], jeżeli jeszcze tego nie zrobiłeś.
 
-\'\'\'Jak cofać wandalizm?\'\'\'
-:Jeśli widzisz spam lub wandalizm na forum, możesz usunąć go poprzez najechanie kursorem myszy na tekst wiadomości, pojawi się wtedy d dolnym rogu wiadomości menu "Więcej". W tym menu wybrać możesz opcję "Usuń". To pozwoli Ci usunąć złą wiadomości i (opcjonalnie) poinformować administratora.
+„Jak mogę walczyć z wandalizmem?”
+: Jeżeli zauważysz w jakimś wątku spam lub wandalizm, najedź kursorem na problematyczny tekst. Powinien pojawić się przycisk „Więcej” – kliknij na niego i z menu rozwijanego wybierz „Usuń”. W ten sposób usuniesz dany tekst oraz będziesz miał możliwość poinformować o nim administratora.
 
-\'\'\'Czym są OKejki?\'\'\'
-:Jeśli dany wątek lub odpowiedź Ci się spodobała, możesz wyrazić swoją aprobatę poprzez danie OKejki. Mogą one być także przydatne w głosowaniach na forum.
+„Czym jest OKejka (Kudos)?”
+: Jeżeli uznasz jakąś dyskusję lub odpowiedź za interesującą, wyjątkowo trafną lub zabawną, możesz wyrazić swoje uznanie dla autora przyznając OKejkę (w wersji angielskiej Kudos). OKejki bardzo przydają się również przy głosowaniach.
 
-\'\'\'Czym są tematy?\'\'\'
-:Tematy pozwolą Ci zsynchronizować wątek na forum z konkretnym artykułem. To sposób na zorganizowanie forum i ułatwienie innym odnalezienia ciekawych dyskusji na dany temat. Przykładowo, wątek o temacie "Lord Voldemort" pojawi się u dołu artykułu "Lord Voldemort"',
+„Czym są Tematy?”
+: Tematy pozwalają na powiązanie dyskusji z forum z artykułem na wiki. Ułatwia to zachowanie porządku na Forach i pomaga użytkownikom znaleźć ciekawe dyskusje. Na przykład: wątek na forum o tagu „Lord Voldemort” pojawi się pod artykułem „Lord Voldemort” na wiki.',
 	'forum-board-title' => 'Subforum $1',
 	'forum-board-topic-title' => 'Dyskusje na temat $1',
 	'forum-board-topics' => 'Tematy',
@@ -2986,33 +3014,33 @@ $messages['pt'] = [
 	'forum-specialpage-board-lastpostby' => 'Última postagem do',
 	'forum-specialpage-policies-edit' => 'Editar',
 	'forum-specialpage-policies' => 'Políticas do Fórum / FAQ',
-	'forum-policies-and-faq' => '==Políticas do Fórum==
-Antes de contribuir nos Fóruns do {{SITENAME}}, por favor, fique ciente dessas condutas:
+	'forum-policies-and-faq' => '==Políticas do fórum==
+Antes de contribuir para os fóruns de {{SITENAME}}, por favor, tenha em mente algumas práticas de conduta recomendadas:
 
-\'\'\'Seja amigável e trate as pessoas com respeito.\'\'\'
-: Pessoas do mundo todo lêem e editam essa wiki e os fóruns. Como qualquer outro trabalho colaborativo, nem todo mundo vai concordar o tempo todo. Mantenha as discussões civilizadas e tenha uma mente aberta sobre opiniões diferentes. Nós estamos aqui porque amamos o mesmo tópico.
+\'\'\'Seja educado e trate as pessoas com respeito.\'\'\'
+: Pessoas do mundo todo leem e editam esta wiki e seus fóruns. Como qualquer outro projeto colaborativo, nem todos concordam o tempo todo. Mantenha as discussões civilizadas e seja receptivo à opiniões divergentes. Todos nós estamos aqui porque amamos o mesmo tema.
 
-\'\'\'Tente encontrar discussões existentes primeiro, mas não tenha medo de começar uma nova conversa.\'\'\'
-:Por favor, dê uma olhada pelos Fóruns do {{SITENAME}} para ver se uma discussão já existe sobre o que você quer falar. Se você não achar nenhuma, vá em frente e comece uma nova discussão!
+\'\'\'Tente primeiro encontrar discussões existentes, mas não tenha medo de iniciar um novo tópico.\'\'\'
+: Por favor dê uma olhada nos fóruns de {{SITENAME}} para ver se uma discussão já existe sobre o tópico que você busca. Se você não encontrar o que procura, inicie uma nova discussão!
 
 \'\'\'Peça ajuda.\'\'\'
-:Viu alguma coisa que não está certa? Ou tem uma pergunta? Peça ajuda aqui nos fóruns! Se você precisar de ajuda da equipe da Wikia, por favor entre em contato com [[w:c:community|Comunidade Central]] ou via [[Special:Contact]].
+Você vê algo que não está certo? Ou você tem uma pergunta? Peça ajuda aqui no fórum! Se precisar de ajuda do staff do Fandom, por favor entre em contato na [[w:c:comunidade |Central da comunidade]] ou através de [[Especial:Contact]].
 
 \'\'\'Divirta-se!\'\'\'
-:A comunidade do {{SITENAME}} fica feliz em tê-lo aqui. Esperamos vê-lo por aqui enquanto discutimos esse tópico que amamos.
+ A comunidade {{SITENAME}} está feliz em ter você aqui. Estamos ansiosos para vê-lo novamente para discutirmos este tópico que todos nós amamos.
 
-==Fórum FAQ==
-\'\'\'Como eu posso ficar conectado às discussões que me interessam?\'\'\'
-: Com uma conta de usuário da Wikia, você pode seguir conversas específicas e receber mensagens de notificação (no próprio site ou via e-mail) quando a discussão tiver mais atividade. Tenha certeza de [[Special:UserSignup|crie uma conta na Wikia]] se você já não tiver uma.
+==Perguntas frequentes do Fórum==
+\'\'\'Como eu permaneço atualizado sobre as discussões que me interessam?\'\'\'
+: Com uma conta de usuário do Fandom, você pode seguir conversas específicas e receber mensagens de notificação (no site ou via e-mail) quando uma discussão tem mais atividade. Certifique-se de [[Especial:Criar uma conta|registrar-se para uma conta no Fandom]] se você ainda não tem uma.
 
-\'\'\'Como eu removo vandalismo?\'\'\'
-: Se você notar vandalismo ou spam, passe o mouse por cima do texto ofensivo. Você vai ver o botão "Mais" aparecer. Dentro do menu do botão "Mais", você vai encontrar "Remover". Isso permitirá que você remova o vandalismo e informe o administrador, se quiser.
+\'\'\'Como faço para remover vandalismo?\'\'\'
+: Se você notar algum spam ou vandalismo em uma discussão, passe o mouse sobre o texto ofensivo. Você verá um botão "Mais". Dentro do menu "Mais", você encontrará "Remover". Isso permite que você remova o vandalismo e, opcionalmente, informe a um administrador.
 
 \'\'\'O que são Kudos?\'\'\'
-: Se você achar uma certa discussão ou uma resposta interessante, bem pensada ou engraçada, você pode mostrar que gostou distribuindo Kudos. Eles podem ser interessantes para votações, também.
+: Se você encontrar uma discussão ou uma resposta interessante, bem bolada ou divertida você pode dar os parabéns através de Kudos. Eles também podem ser úteis em situações de voto.
 
 \'\'\'O que são tópicos?\'\'\'
-: Tópicos permitem que você associe uma discussão do fórum com um artigo da wiki. É uma outra maneira de manter os Fóruns organizados e ajudar as pessoas a encontrar discussões interessantes. Por exemplo, uma conversa no Fórum com a etiqueta "Lord Voldemort" vai aparecer embaixo do artigo "Lord Voldemort".',
+: Os tópicos permitem que você vincule uma discussão do fórum com um artigo da wiki. É outra maneira de manter os fóruns organizados e ajudar as pessoas a encontrar discussões interessantes. Por exemplo, uma discussão de fórum contendo \'\'Lord Voldemort\'\' será exibida na parte inferior do artigo \'\'Lord Voldemort.\'\'.',
 	'forum-board-title' => '$1 quadro',
 	'forum-board-topic-title' => 'Discussões sobre $1',
 	'forum-board-topics' => 'Tópicos',
@@ -3233,32 +3261,32 @@ $messages['ru'] = [
 	'forum-specialpage-policies-edit' => 'Править',
 	'forum-specialpage-policies' => 'Правила форума / ЧаВо',
 	'forum-policies-and-faq' => '==Правила форума==
-Перед тем, как открыть новое обсуждение на форуме {{SITENAME}} или поучаствовать в одном из текущих обсуждений, пожалуйста, обратите внимание на наши правила и рекомендации:
+Перед тем, как начать участие на форуме {{SITENAME}}, ознакомьтесь с правилами:
 
-\'\'\'Будьте вежливы и относитесь к другим участникам с уважением.\'\'\'
-: Люди из разных стран читают и редактируют эту вики и этот форум. Как и в любом другом совместном проекте, здесь также возможны разногласия. Придерживайтесь цивилизованной дискуссии и будьте готовы выслушать разные мнения. Помните, что мы находимся здесь потому, что любим одну и ту же тему.
+""Будьте вежливы и относитесь к другим участникам с уважением.""
+: Эту вики и форум посещают и редактируют люди из разных стран. Как и в любом другом совместном проекте, здесь возможны разногласия. Придерживайтесь вежливой манеры общения и будьте готовы выслушать чужие мнения. Помните, что мы все здесь потому, что нам интересна одна и та же тема.
 
-\'\'\'Присоединяйтесь к уже существующему обсуждению, но не бойтесь начать новую тему.\'\'\'
-:Пожалуйста, найдите время, чтобы просмотреть текущие обсуждения на форуме {{SITENAME}} и найти то, что подходит вам. Если вы не сможете найти подходящую тему, перейдите на первую страницу форума, выберите одну из главных тем и начните новое обсуждение!
+\'\'\'Постарайтесь сначала найти нужную вам тему среди уже существующих, но если её нет, то смело создавайте новую.\'\'\' 
+: Уделите несколько минут, чтобы просмотреть список тем на форуме {{SITENAME}} и проверить, нет ли там нужной вам темы. Если вы не можете найти то, что подходит вам, смело начинайте новую тему!
 
-\'\'\'Попросите помочь вам.\'\'\'
-:Заметили ошибку? Или может быть у вас есть вопрос? Попросите помочь вам в одной из главных тем форума! Если вам нужна помощь от сотрудников Викия, обратитесь на  [[w:c:community|Центральную Вики Сообщества]] или напишите в [[Служебная:Contact]].
+""Обращайтесь за помощью.""
+: Заметили ошибку? У вас возник вопрос? Спросите прямо на форуме. Если вам нужна помощь сотрудников Фэндома, зайдите на [[w:c:ru.community|Вики Сообщества]] или напишите нам через [[Служебная:Contact]].
 
-\'\'\'Получайте удовольствие!\'\'\'
-:Участники {{SITENAME}} рады видеть вас здесь. Мы всегда готовы обсудить с вами тему, которую мы все любим.
+""Получайте удовольствие!""
+: Мы рады, что вы стали частью сообщества {{SITENAME}}, и надеемся, что вы примете активное участие в обсуждениях нашей любимой темы. 
 
-==Справка==
-\'\'\'Как я могу следить за обсуждением, которое меня интересует?\'\'\'
-: Если у вас есть учётная запись на Викия, то вы можете отслеживать обсуждения и получать уведомления (на вики или через электронную почту) о новых ответах в дискуссиях. Если у вас нет учётной записи, пройдите на [[Special:UserSignup|эту страницу]] и создайте её.
+==FAQ форума==
+""Как следить за интересными мне темами?""
+: Если у вас есть учётная запись на Фэндоме, то вы можете отслеживать темы и получать уведомления (на вики или по электронной почте) о новых ответах. Если у вас ещё нет аккаунта, [[Служебная:UserSignup|создайте его прямо сейчас]].
 
-\'\'\'Как удалить вандализм?\'\'\'
-: Если вы заметите спам или вандальный ответ в теме, наведите курсор на этот ответ, затем нажмите появившуюся кнопку "Больше". В открывшемся меню выберите "Удалить". Этим действием вы можете удалить ответ и уведомить администратора вики о произошедшем.
+""Как бороться с вандализмом?""
+: Если среди ответов в теме вы заметили спам или вандализм, наведите курсор на проблемный текст и нажмите на появившуюся кнопку «Больше». В открывшемся меню выберите «Удалить». Так вы удалите проблемный ответ и, по желанию, уведомите администратора вики.
 
-\'\'\'Что такое "Мне нравится"?\'\'\'
-: Если вы нашли интересное обсуждение или интересный ответ, вы можете оценить его, поставив отметку "Мне нравится". Это также может быть полезно для опроса участников.
+""Что такое «Мне нравится»?""
+: Если какая-то тема или ответ показался вам интересным, хорошо продуманным или забавным, вы можете оценить его, поставив отметку «Мне нравится». Эти отметки также могут пригодиться для голосований.
 
-\'\'\'Что такое общие темы?\'\'\'
-: Общие темы позволяют отсортировать обсуждения по статьям, к которым они относятся, и помогают участникам найти нужное им обсуждение. Например, обсуждение с общей темой "Песочница" появится внизу статьи "Песочница."',
+""Что такое общие темы?""
+: Общие темы позволяют связывать темы форума со статьями, к которым они относятся. Они помогают организовать форум и найти участникам нужные им темы. Например, внизу статьи «Лорд Волан-де-Морт» появится обсуждение с общей темой «Лорд Волан-де-Морт».',
 	'forum-board-title' => 'раздел ̩$1',
 	'forum-board-topic-title' => 'Обсуждения о $1',
 	'forum-board-topics' => 'Темы',
@@ -4272,33 +4300,33 @@ $messages['zh-hans'] = [
 	'forum-specialpage-board-lastpostby' => '最后发帖者',
 	'forum-specialpage-policies-edit' => '编辑',
 	'forum-specialpage-policies' => '论坛方针/常见问题',
-	'forum-policies-and-faq' => '==论坛公约==
-在编辑{{SITENAME}}论坛之前，请阅读以下指导内容：
+	'forum-policies-and-faq' => '==论坛规定==
+在编辑{{SITENAME}}论坛之前,请仔细阅读以下指导内容:
 
-\'\'\'请尊重他人。\'\'\'
-:全世界的维基用户都可以自由在论坛上进行编辑。就如同编辑许多维基一样，不是每个人都会具有相同的想法。所以请保持开放性的讨论但同时也尊重其他人的观点。不要忘记，我们聚在这里是因为我们为了共同的一个话题。
+\'\'\'请尊重他人.\'\'\'
+:全世界的维基用户都可以自由在论坛上进行编辑。就如同其他合作性的项目一样，不是每个人都会具有相同的想法。所以请保持开放性的讨论但同时也尊重其他人的观点。不要忘记，我们相聚在这里是为了共同的一个话题。
 
-\'\'\'寻找存在的话题或者创建新的话题。\'\'\'
-:请大致浏览{{SITENAME}}论坛，看看是不是已经有其他人发表过类似的话题。如果没有，那就赶快发起一个新的讨论吧！
+\'\'\'寻找已经存在的话题或者创建新的话题\'\'\'
+:请大致浏览{{SITENAME}}论坛版块，看看是不是已经有其他人发表过类似的话题。如果没有，那就赶快发起一个新的讨论吧！
 
-\'\'\'寻求帮助。\'\'\'
-:发现有些地方不对劲？或是有问题要问？赶快登陆论坛吧！如果你需要寻求维基员工的帮助，请登陆[[w:c:community|社区中心]]或者[[Special:Contact|发送邮件]]给我们。
+\'\'\'寻求帮助\'\'\'
+:发现有些地方不对劲？或是有问题要问？赶快来论坛看一下吧！如果你需要寻求Fandom员工的帮助，请访问[[w:c:zh.community|社区中心]]或者[[Special:Contact|发送邮件]]给我们。
 
-\'\'\'畅所欲言！\'\'\'
+\'\'\'畅所欲言\'\'\'
 :{{SITENAME}}社区非常高兴有你的参与！赶快发起你感兴趣的话题，让大家一起参与讨论吧！
 
 ==论坛问与答==
 \'\'\'我如何能够关注一个讨论？\'\'\'
-: 通过使用维基的帐户，你可以关注某个话题。当这个话题更新以后，你会通过邮件或者在线消息收到通知。请一定确定首先要[[Special:UserSignup|注册一个维基帐户]]。
+: 通过使用Fandom的帐户，你可以关注某个话题。当这个话题更新以后，你会通过邮件或者在线消息收到通知。请一定确定首先要[[Special:UserSignup|注册一个Fandom帐户]]。
 
 \'\'\'如何删除一些破坏内容?\'\'\'
 : 在讨论的页面上，你可以点击"更多"按钮，之后点击"移除"选项。这允许你删除某个讨论内容同时也会告知管理员这项操作。
 
 \'\'\'“赞”是什么？\'\'\'
-: 如果你发现某个话题非常有趣，可以通过点“赞”来告诉其他人。
+: 如果你发现某个话题非常有趣，可以通过点“赞”来告诉其他人。在投票类的话题中，这个功能将同样适用。
 
 \'\'\'话题是什么？\'\'\'
-: 话题允许你引导其他用户讨论维基上相同的主题类别或者编辑功能。比如说，以"哈利波特"为标签的所有讨论都将在出现在"哈利波特"文章"中。',
+: 话题将允许你把论坛的讨论帖链接到文章页中去。它是另外一种帮助组织论坛内容并且吸引用户讨论的方式。比如说，以"伏地魔"为标签的所有讨论都将在出现在"伏地魔"的文章中出现。',
 	'forum-board-title' => '$1板面',
 	'forum-board-topic-title' => '有关$1的讨论',
 	'forum-board-topics' => '主题',
@@ -4443,33 +4471,33 @@ $messages['zh-hant'] = [
 	'forum-specialpage-board-lastpostby' => '最後發佈由',
 	'forum-specialpage-policies-edit' => '編輯',
 	'forum-specialpage-policies' => '論壇政策/常見問題',
-	'forum-policies-and-faq' => '==论坛公约==
-在编辑{{SITENAME}}论坛之前,请阅读以下指导内容:
+	'forum-policies-and-faq' => '==論壇政策==
+在編輯{{SITENAME}}的論壇之前,請仔細閱讀以下指導內容:
 
-\'\'\'请尊重他人.\'\'\'
-:全世界的維基使用者都可以自由在論壇上進行編輯。就如同編輯許多維基一樣，不是每個人都會具有相同的想法。所以請保持開放性的討論，但同時也尊重其他人的觀點。不要忘记，我們聚在這裡因為我們為了共同的一個話題。
+\'\'\'請尊重他人.\'\'\'
+:全世界的wiki使用者都可以自由在論壇上進行編輯。 就如同編輯許多wiki一樣，不是每個人都會具有相同的想法。所以請保持開放性的討論但同時也尊重其他人的想法。不要忘記，我們聚在一起是為了共同的一個感興趣的話題。
 
-\'\'\'尋找存在的話題或者建立新的話題\'\'\'
-:請大致瀏覽{{SITENAME}}論壇，看看是不是已经有其他人發表過類似的話題。如果没有，那就趕快發起一個新的討論吧！
+\'\'\'尋找已經存在的話題或者創建新的話題\'\'\'
+:請大致瀏覽{{SITENAME}}社群的論壇版塊，看看是不是已經有其他人發表過類似的話題。如果沒有，那就趕快發起一個新的討論吧！
 
 \'\'\'尋求幫助\'\'\'
-:發現有些地方不對勁？或是有問題要問？趕快來論壇發問吧！如果你需要尋求維基員工的幫助，請到[[w:c:zh.community|社區中心]]或者[http://zh.community.wikia.com/wiki/Special:Contact 發送郵件]给我們。
+:發現有些地方不對勁？或是有問題要問？趕快來論壇看一下吧！ 如果你需要尋求Fandom員工的幫助，請訪問[[w:c:zh.community|社區中心]]或者[[Special:Contact|發送郵件]]給我們。
 
 \'\'\'暢所欲言\'\'\'
-:{{SITENAME}}社區非常高興有你的参與！趕快發起你感兴興趣的話题，讓大家一起參與討論吧！
+:{{SITENAME}}社群非常歡迎你的參與！趕快發起你感興趣的話題，讓大家一起參與討論吧！
 
 ==論壇問與答==
-\'\'\'我如何能够關注一個討論？\'\'\'
-: 有维基的帳號的使用者，可以關注某個话题。當這個話題更新時，你會透過電子郵件或在線消息收到通知。請一定確定首先要[[Special:UserSignup|註册一個維基帳號]]。
+\'\'\'我如何能夠關注一個討論？ \'\'\'
+: 通過使用Fandom的帳戶，你可以關注某個話題。當這個話題更新以後，你會通過郵件或者線上消息收到通知。請一定確定首先要[[Special:UserSignup|註冊一個Fandom帳戶]]。
 
-\'\'\'如何删除一些破壞内容?\'\'\'
-: 在討論的頁面上，你可以點選"更多"按钮，之言點選"移除"選項。這允許你删除某個討論内容同時也可以選擇告知管理員這項操作。
+\'\'\'如何刪除一些破壞內容?\'\'\'
+: 在討論頁面上，你可以按一下"更多"按鈕，之後選擇"移除"選項。這允許你刪除某個討論內容同時也會告知管理員這項操作。
 
-\'\'\' "讚" 是什麼？\'\'\'
-: 如果你發現某個話題非常有趣，可以透過點 "讚" 来告訴其他人。
+\'\'\'「贊」是什麼？ \'\'\'
+: 如果你發現某個話題非常有趣，可以通過點「贊」來告訴其他人。在投票類的話題中，這個功能將同樣適用。
 
-\'\'\'主題是什麼？\'\'\'
-: 主題允許你引導一個論壇討論與一個維基文章連結。這是另一個組織論壇文章的方式，也幫助使用者們找到該討論。例如，以"哈利波特"為標籤的討論，會出弄在"哈利波特"文章"的底部。',
+\'\'\'話題是什麼？ \'\'\'
+: 話題允許你將一篇wiki文章和論壇討論做連結。它是另外一種幫助管理員組織論壇內容並且吸引使用者參與討論的方式。比如說，以"佛地魔"為標籤的所有討論都將在"佛地魔"的文章中出現。',
 	'forum-board-title' => '$1 討論板',
 	'forum-board-topic-title' => '關於 $1 的討論',
 	'forum-board-topics' => '主題',

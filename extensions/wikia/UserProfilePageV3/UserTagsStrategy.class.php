@@ -17,7 +17,6 @@ class UserTagsStrategy extends WikiaObject {
 		'helper',
 		'vstf',
 		'voldev',
-		'wikiastars',
 		'vanguard',
 		'council',
 	];
@@ -129,9 +128,6 @@ class UserTagsStrategy extends WikiaObject {
 					break;
 				case 'voldev':
 					$tags[] = wfMessage( 'user-identity-box-group-voldev' )->escaped();
-					break;
-				case 'wikiastars':
-					$tags[] = wfMessage( 'user-identity-box-group-wikiastars' )->escaped();
 					break;
 				case 'vanguard':
 					$tags[] = wfMessage( 'user-identity-box-group-vanguard' )->escaped();

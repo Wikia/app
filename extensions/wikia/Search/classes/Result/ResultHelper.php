@@ -45,14 +45,12 @@ class ResultHelper
 
 		if ( empty( $imageURL ) ) {
 			// display placeholder image if no thumbnail
-			$imageURL = \F::app()->wg->ExtensionsPath . '/wikia/Search/images/wiki_image_placeholder.png';
+			$imageURL = \F::app()->wg->ExtensionsPath . '/wikia/Search/images/fandom_image_placeholder.jpg';
 			$thumbTracking = "no-thumb";
 		}
 
-		$description = $result->limitTextLength( $commData->getCommunityDescription(), $descWordLimit );
-		$description = !empty( $description )
-			? $description
-			: $result->getText( Utilities::field( 'description' ), $descWordLimit );
+		$description = $commData->getCommunityDescription();
+		$description = !empty( $description ) ? $description : $result->getText( Utilities::field( 'description' ) );
 
 		$wikiaSearchHelper = new \WikiaSearchHelper();
 
@@ -70,6 +68,7 @@ class ResultHelper
 			'isOnWikiMatch' => isset( $result['onWikiMatch'] ) && $result['onWikiMatch'],
 			'imageURL' => $imageURL,
 			'description' => $description,
+			'descriptionWordLimit' => $descWordLimit,
 			'pagesCount' => $result['articles_i'] ?: 0,
 			'imagesCount' => $result['images_i'] ?: 0,
 			'videosCount' => $result['videos_i'] ?: 0,

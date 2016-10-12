@@ -69,8 +69,11 @@ class Content implements ArrayAccess
         'site_name' => 'string',
         'content_type' => 'string',
         'modified' => 'string',
+        'authors' => '\Swagger\Client\ContentEntity\Models\Author[]',
         'related_entities' => '\Swagger\Client\ContentEntity\Models\Entity[]',
-        'content_metadata' => 'map[string,string]'
+        'content_metadata' => 'map[string,string]',
+        'related_articles' => '\Swagger\Client\ContentEntity\Models\RelatedArticle[]',
+        '_links' => 'map[string,map[string,string]]'
     );
 
     public static function swaggerTypes()
@@ -90,8 +93,11 @@ class Content implements ArrayAccess
         'site_name' => 'siteName',
         'content_type' => 'contentType',
         'modified' => 'modified',
+        'authors' => 'authors',
         'related_entities' => 'relatedEntities',
-        'content_metadata' => 'contentMetadata'
+        'content_metadata' => 'contentMetadata',
+        'related_articles' => 'relatedArticles',
+        '_links' => '_links'
     );
 
     public static function attributeMap()
@@ -111,8 +117,11 @@ class Content implements ArrayAccess
         'site_name' => 'setSiteName',
         'content_type' => 'setContentType',
         'modified' => 'setModified',
+        'authors' => 'setAuthors',
         'related_entities' => 'setRelatedEntities',
-        'content_metadata' => 'setContentMetadata'
+        'content_metadata' => 'setContentMetadata',
+        'related_articles' => 'setRelatedArticles',
+        '_links' => 'setLinks'
     );
 
     public static function setters()
@@ -132,8 +141,11 @@ class Content implements ArrayAccess
         'site_name' => 'getSiteName',
         'content_type' => 'getContentType',
         'modified' => 'getModified',
+        'authors' => 'getAuthors',
         'related_entities' => 'getRelatedEntities',
-        'content_metadata' => 'getContentMetadata'
+        'content_metadata' => 'getContentMetadata',
+        'related_articles' => 'getRelatedArticles',
+        '_links' => 'getLinks'
     );
 
     public static function getters()
@@ -164,8 +176,11 @@ class Content implements ArrayAccess
         $this->container['site_name'] = isset($data['site_name']) ? $data['site_name'] : null;
         $this->container['content_type'] = isset($data['content_type']) ? $data['content_type'] : null;
         $this->container['modified'] = isset($data['modified']) ? $data['modified'] : null;
+        $this->container['authors'] = isset($data['authors']) ? $data['authors'] : null;
         $this->container['related_entities'] = isset($data['related_entities']) ? $data['related_entities'] : null;
         $this->container['content_metadata'] = isset($data['content_metadata']) ? $data['content_metadata'] : null;
+        $this->container['related_articles'] = isset($data['related_articles']) ? $data['related_articles'] : null;
+        $this->container['_links'] = isset($data['_links']) ? $data['_links'] : null;
     }
 
     /**
@@ -339,6 +354,27 @@ class Content implements ArrayAccess
     }
 
     /**
+     * Gets authors
+     * @return \Swagger\Client\ContentEntity\Models\Author[]
+     */
+    public function getAuthors()
+    {
+        return $this->container['authors'];
+    }
+
+    /**
+     * Sets authors
+     * @param \Swagger\Client\ContentEntity\Models\Author[] $authors
+     * @return $this
+     */
+    public function setAuthors($authors)
+    {
+        $this->container['authors'] = $authors;
+
+        return $this;
+    }
+
+    /**
      * Gets related_entities
      * @return \Swagger\Client\ContentEntity\Models\Entity[]
      */
@@ -376,6 +412,48 @@ class Content implements ArrayAccess
     public function setContentMetadata($content_metadata)
     {
         $this->container['content_metadata'] = $content_metadata;
+
+        return $this;
+    }
+
+    /**
+     * Gets related_articles
+     * @return \Swagger\Client\ContentEntity\Models\RelatedArticle[]
+     */
+    public function getRelatedArticles()
+    {
+        return $this->container['related_articles'];
+    }
+
+    /**
+     * Sets related_articles
+     * @param \Swagger\Client\ContentEntity\Models\RelatedArticle[] $related_articles
+     * @return $this
+     */
+    public function setRelatedArticles($related_articles)
+    {
+        $this->container['related_articles'] = $related_articles;
+
+        return $this;
+    }
+
+    /**
+     * Gets _links
+     * @return map[string,map[string,string]]
+     */
+    public function getLinks()
+    {
+        return $this->container['_links'];
+    }
+
+    /**
+     * Sets _links
+     * @param map[string,map[string,string]] $_links
+     * @return $this
+     */
+    public function setLinks($_links)
+    {
+        $this->container['_links'] = $_links;
 
         return $this;
     }

@@ -1,13 +1,8 @@
 <?php
-/**
- * Internationalisation file for extension GlobalMessages.
- *
- * @file
- * @ingroup Extensions
- */
-$messages = array();
+/** Internationalization file for /extensions/GlobalMessages/GlobalMessagesO extension. */
+$messages = [];
 
-$messages['en'] = array(
+$messages['en'] = [
 	'october' => 'October',
 	'october-gen' => 'October',
 	'oct' => 'Oct',
@@ -24,16 +19,16 @@ $messages['en'] = array(
 	'other_people' => 'Other people have been searching for...',
 	'or_learn' => 'Or to learn more, take the ',
 	'oasis-mobile-site' => 'Mobile site',
-);
+];
 
-$messages['qqq'] = array(
+$messages['qqq'] = [
 	'october' => 'The tenth month of the Gregorian calendar',
 	'october-gen' => 'The tenth month of the Gregorian calendar. Must be in genitive, if the language has a genitive case.',
 	'oct' => 'Abbreviation of October, the tenth month of the Gregorian calendar',
 	'otherlanguages' => 'This message is shown under the toolbox. It is used if there are interwiki links added to the page, like <tt><nowiki>[[</nowiki>en:Interwiki article]]</tt>.
 {{Identical|Otherlanguages}}',
 	'ok' => '{{Identical|OK}}',
-	'oldpassword' => "Used on the 'User profile' tab of 'my preferences'. This is the text next to an entry box for the old password in the 'change password' section.",
+	'oldpassword' => 'Used on the \'User profile\' tab of \'my preferences\'. This is the text next to an entry box for the old password in the \'change password\' section.',
 	'overwroteimage' => 'This is the text of an entry in the [[Special:Log|upload log]] (and Recent Changes), after hour (and date, only in the Upload log) and user name. $1 is the name of the file uploaded.',
 	'othercontribs' => 'This message is shown when viewing the credits of a page (example: {{fullurl:Main Page|action=credits}}). Note that this action is disabled by default (currently enabled on translatewiki.net - to use type <nowiki>&action=credits</nowiki> at the end of any URL in the address bar).
 * $1: the list of author(s) of the revisions preceding the current revision. It appears after the message [[Mediawiki:lastmodifiedatby/{{SUBPAGENAME}}]]. If there are no previous authors this message does not appear at all. If needed the messages [[Mediawiki:siteusers/{{SUBPAGENAME}}]], [[Mediawiki:anonymous/{{SUBPAGENAME}}]] and [[Mediawiki:and/{{SUBPAGENAME}}]] are part of the list of names.
@@ -41,40 +36,40 @@ $messages['qqq'] = array(
 	'others' => 'The following explanation is guesswork. This message is shown when viewing the credits of a page (example: {{fullurl:Main Page|action=credits}}). Note that this action is disabled by default (currently enabled on translatewiki.net - to use type <nowiki>&action=credits</nowiki> at the end of any URL in the address bar).
 
 The message appears at the end of the list of credits given in the message [[Mediawiki:Othercontribs/{{SUBPAGENAME}}]] if the number of contributors is above a certain level.',
-);
+];
 
-$messages['ab'] = array(
+$messages['ab'] = [
 	'october' => 'жьҭаара',
 	'october-gen' => 'жьҭаара',
 	'oct' => 'жьҭ',
 	'otherlanguages' => 'Абызшәақәа',
-);
+];
 
-$messages['ace'] = array(
+$messages['ace'] = [
 	'october' => 'Buleuën Siplôh',
 	'october-gen' => 'Buleuën Siplôh',
 	'oct' => 'Sip',
 	'otherlanguages' => 'Bahsa la’én',
-);
+];
 
-$messages['af'] = array(
+$messages['af'] = [
 	'october' => 'Oktober',
 	'october-gen' => 'Oktober',
 	'oct' => 'Okt',
 	'otherlanguages' => 'Ander tale',
 	'ok' => 'OK',
 	'oldpassword' => 'Ou wagwoord',
-	'overwrite' => "Die oorskryf van 'n bestaande lêer word nie toegelaat nie.",
+	'overwrite' => 'Die oorskryf van \'n bestaande lêer word nie toegelaat nie.',
 	'overwroteimage' => 'het een nuwe weergawe van "[[$1]]" gelaai',
 	'othercontribs' => 'Gebaseer op werk van $1.',
 	'others' => 'ander',
-);
+];
 
-$messages['ak'] = array(
+$messages['ak'] = [
 	'october' => 'Ahinime',
-);
+];
 
-$messages['aln'] = array(
+$messages['aln'] = [
 	'october' => 'tetor',
 	'october-gen' => 'tetorit',
 	'oct' => 'Tet',
@@ -83,9 +78,9 @@ $messages['aln'] = array(
 	'oldpassword' => 'Fjalëkalimi i vjetër:',
 	'othercontribs' => 'Bazue në punën e $1.',
 	'others' => 'tjerët',
-);
+];
 
-$messages['als'] = array(
+$messages['als'] = [
 	'october' => 'tetor',
 	'october-gen' => 'tetorit',
 	'oct' => 'Tet',
@@ -94,9 +89,9 @@ $messages['als'] = array(
 	'oldpassword' => 'Fjalëkalimi i vjetër:',
 	'othercontribs' => 'Bazue në punën e $1.',
 	'others' => 'tjerët',
-);
+];
 
-$messages['am'] = array(
+$messages['am'] = [
 	'october' => 'ኦክቶበር',
 	'october-gen' => 'ኦክቶበር',
 	'oct' => 'ኦክቶ.',
@@ -105,22 +100,22 @@ $messages['am'] = array(
 	'oldpassword' => 'የአሁኑ መግቢያ ቃልዎ',
 	'overwroteimage' => 'የ«[[$1]]» አዲስ ዕትም ላከ',
 	'others' => 'ሌሎች',
-);
+];
 
-$messages['an'] = array(
+$messages['an'] = [
 	'october' => 'octubre',
-	'october-gen' => "d'octubre",
+	'october-gen' => 'd\'octubre',
 	'oct' => 'oct',
 	'otherlanguages' => 'En atras luengas',
-	'ok' => "D'alcuerdo",
+	'ok' => 'D\'alcuerdo',
 	'oldpassword' => 'Clau antiga:',
 	'overwrite' => 'No se premite de sobrescribir un fichero existent.',
 	'overwroteimage' => 's\'ha cargato una nueva versión de "[[$1]]"',
 	'othercontribs' => 'Basato en o treballo de $1.',
 	'others' => 'atros',
-);
+];
 
-$messages['ang'] = array(
+$messages['ang'] = [
 	'october' => 'Ƿinterfylleþ',
 	'october-gen' => 'Ƿinterfylleðes',
 	'oct' => 'Ƿinfyl',
@@ -128,16 +123,16 @@ $messages['ang'] = array(
 	'ok' => 'OK',
 	'oldpassword' => 'Eald þafungƿord:',
 	'others' => 'ōðru',
-);
+];
 
-$messages['anp'] = array(
+$messages['anp'] = [
 	'october' => 'अक्तूबर',
 	'october-gen' => 'अक्टूबर',
 	'oct' => 'अक्तू.',
 	'otherlanguages' => 'इतर भाषा',
-);
+];
 
-$messages['ar'] = array(
+$messages['ar'] = [
 	'october' => 'أكتوبر',
 	'october-gen' => 'أكتوبر',
 	'oct' => 'أكتوبر',
@@ -148,9 +143,9 @@ $messages['ar'] = array(
 	'overwroteimage' => 'رفع نسخة جديدة من "[[$1]]"',
 	'othercontribs' => 'بناء على عمل $1.',
 	'others' => 'أخرون',
-);
+];
 
-$messages['arc'] = array(
+$messages['arc'] = [
 	'october' => 'ܬܫܪܝܢ ܩܕܡ',
 	'october-gen' => 'ܬܫܪܝܢ ܩܕܡ',
 	'oct' => 'ܬܫܪܝܢ ܩܕܡ',
@@ -158,18 +153,18 @@ $messages['arc'] = array(
 	'ok' => 'ܛܒ',
 	'oldpassword' => 'ܡܠܬܐ ܕܥܠܠܐ ܥܬܝܩܬܐ:',
 	'others' => 'ܐܚܪ̈ܢܐ',
-);
+];
 
-$messages['arn'] = array(
+$messages['arn'] = [
 	'october' => 'oktufüre küyeṉ',
 	'october-gen' => 'oktufüre küyeṉ',
 	'oct' => 'oktufüre',
 	'otherlanguages' => 'Kake dungun',
 	'ok' => 'Feley',
 	'others' => 'fill',
-);
+];
 
-$messages['ary'] = array(
+$messages['ary'] = [
 	'october' => 'Okṫober',
 	'october-gen' => 'Okṫober',
 	'oct' => 'Okṫ',
@@ -179,9 +174,9 @@ $messages['ary'] = array(
 	'overwrite' => 'maymknch tktb fog fichier deja kayn',
 	'overwroteimage' => 'sift noskha jdida dyal "[[$1]]"',
 	'others' => 'khrin',
-);
+];
 
-$messages['arz'] = array(
+$messages['arz'] = [
 	'october' => 'اكتوبر',
 	'october-gen' => 'اكتوبر',
 	'oct' => 'اكتوبر',
@@ -191,9 +186,9 @@ $messages['arz'] = array(
 	'overwroteimage' => 'اتحملت  نسخة جديدة من "[[$1]]"',
 	'othercontribs' => 'بناء على عمل $1.',
 	'others' => 'تانيين',
-);
+];
 
-$messages['as'] = array(
+$messages['as'] = [
 	'october' => 'অক্টোবৰ',
 	'october-gen' => 'অক্টোবৰ',
 	'oct' => 'অক্টো:',
@@ -204,26 +199,26 @@ $messages['as'] = array(
 	'overwroteimage' => '"[[$1]]" ৰ এটা নতুন সংস্কৰণ আপল’ড কৰা হৈছে',
 	'othercontribs' => '$1 ৰ কাৰ্য্যৰ উপৰত ভিত্তি কৰি',
 	'others' => 'অন্যান্য',
-);
+];
 
-$messages['ast'] = array(
+$messages['ast'] = [
 	'october' => 'ochobre',
-	'october-gen' => "d'ochobre",
+	'october-gen' => 'd\'ochobre',
 	'oct' => 'och',
-	'otherlanguages' => "N'otres llingües",
+	'otherlanguages' => 'N\'otres llingües',
 	'ok' => 'Aceutar',
 	'oldpassword' => 'Conseña antigua:',
 	'overwrite' => 'Nun ta permitío sobroscribir un ficheru esistente.',
 	'overwroteimage' => 'xubió una versión nueva de "[[$1]]"',
 	'othercontribs' => 'Basao nel trabayu fechu por $1.',
 	'others' => 'otros',
-);
+];
 
-$messages['av'] = array(
+$messages['av'] = [
 	'otherlanguages' => 'Цойги мацӀазда',
-);
+];
 
-$messages['avk'] = array(
+$messages['avk'] = [
 	'october' => 'saneaksat',
 	'october-gen' => 'Saneaksat',
 	'oct' => '10-at',
@@ -233,17 +228,17 @@ $messages['avk'] = array(
 	'overwroteimage' => 'kalvajayan siatos ke "[[$1]]"',
 	'othercontribs' => 'Omavaf gu kobara ke $1.',
 	'others' => 'ar',
-);
+];
 
-$messages['ay'] = array(
+$messages['ay'] = [
 	'october' => 'taypi sata phaxsi',
 	'october-gen' => 'taypi sata phaxsi',
 	'oct' => 'tay',
 	'otherlanguages' => 'Yaqha arunaka',
 	'others' => 'yaqha',
-);
+];
 
-$messages['az'] = array(
+$messages['az'] = [
 	'october' => 'oktyabr',
 	'october-gen' => 'oktyabr',
 	'oct' => 'Oktyabr',
@@ -253,9 +248,9 @@ $messages['az'] = array(
 	'overwroteimage' => '"[[$1]]"-in yeni versiyası yükləndi',
 	'othercontribs' => '$1-in işinə əsaslanıb.',
 	'others' => 'digərləri',
-);
+];
 
-$messages['ba'] = array(
+$messages['ba'] = [
 	'october' => 'октябрь',
 	'october-gen' => 'октябрь',
 	'oct' => 'окт',
@@ -266,9 +261,9 @@ $messages['ba'] = array(
 	'overwroteimage' => '"[[$1]]" файлының яңы өлгөһө тейәлде',
 	'othercontribs' => 'Мөхәррирләүҙә ҡатнаштылар: $1.',
 	'others' => 'башҡалар',
-);
+];
 
-$messages['bar'] = array(
+$messages['bar'] = [
 	'october' => 'Óktówer',
 	'october-gen' => 'Oktower',
 	'oct' => 'Ókt.',
@@ -276,9 +271,9 @@ $messages['bar'] = array(
 	'ok' => 'Passt',
 	'oldpassword' => 'Oids Posswort:',
 	'othercontribs' => 'Basiard auf da Orweid voh $1',
-);
+];
 
-$messages['bat-smg'] = array(
+$messages['bat-smg'] = [
 	'october' => 'Óktówer',
 	'october-gen' => 'Oktower',
 	'oct' => 'Ókt.',
@@ -286,9 +281,9 @@ $messages['bat-smg'] = array(
 	'ok' => 'Passt',
 	'oldpassword' => 'Oids Posswort:',
 	'othercontribs' => 'Basiard auf da Orweid voh $1',
-);
+];
 
-$messages['bcc'] = array(
+$messages['bcc'] = [
 	'october' => 'اکتبر',
 	'october-gen' => 'اکتبر',
 	'oct' => 'اکت',
@@ -298,9 +293,9 @@ $messages['bcc'] = array(
 	'overwroteimage' => 'یک نوکین نسخه چه "[[$1]]" آپلود بیتت',
 	'othercontribs' => 'براساس کار توسط $1.',
 	'others' => 'دگران',
-);
+];
 
-$messages['bcl'] = array(
+$messages['bcl'] = [
 	'october' => 'Oktobre',
 	'october-gen' => 'Oktobre',
 	'oct' => 'Okt',
@@ -310,9 +305,9 @@ $messages['bcl'] = array(
 	'overwroteimage' => 'kinarga an bagong bersión kan "[[$1]]"',
 	'othercontribs' => 'Binase ini sa trabaho ni $1.',
 	'others' => 'iba pa',
-);
+];
 
-$messages['be'] = array(
+$messages['be'] = [
 	'october' => 'Кастрычнік',
 	'october-gen' => 'кастрычніка',
 	'oct' => 'Кас',
@@ -323,9 +318,9 @@ $messages['be'] = array(
 	'overwroteimage' => 'укладзена новая версія "[[$1]]"',
 	'othercontribs' => 'На аснове працы $1.',
 	'others' => 'іншае',
-);
+];
 
-$messages['be-tarask'] = array(
+$messages['be-tarask'] = [
 	'october' => 'кастрычнік',
 	'october-gen' => 'кастрычніка',
 	'oct' => '10',
@@ -336,9 +331,9 @@ $messages['be-tarask'] = array(
 	'overwroteimage' => 'загружаная новая вэрсія «[[$1]]»',
 	'othercontribs' => 'На аснове працы $1.',
 	'others' => 'іншыя',
-);
+];
 
-$messages['be-x-old'] = array(
+$messages['be-x-old'] = [
 	'october' => 'кастрычнік',
 	'october-gen' => 'кастрычніка',
 	'oct' => '10',
@@ -349,9 +344,9 @@ $messages['be-x-old'] = array(
 	'overwroteimage' => 'загружаная новая вэрсія «[[$1]]»',
 	'othercontribs' => 'На аснове працы $1.',
 	'others' => 'іншыя',
-);
+];
 
-$messages['bg'] = array(
+$messages['bg'] = [
 	'october' => 'октомври',
 	'october-gen' => 'октомври',
 	'oct' => 'окт',
@@ -362,9 +357,9 @@ $messages['bg'] = array(
 	'overwroteimage' => 'качи нова версия на „[[$1]]“',
 	'othercontribs' => 'Основаващо се върху работа на $1.',
 	'others' => 'други',
-);
+];
 
-$messages['bh'] = array(
+$messages['bh'] = [
 	'october' => 'октомври',
 	'october-gen' => 'октомври',
 	'oct' => 'окт',
@@ -375,24 +370,24 @@ $messages['bh'] = array(
 	'overwroteimage' => 'качи нова версия на „[[$1]]“',
 	'othercontribs' => 'Основаващо се върху работа на $1.',
 	'others' => 'други',
-);
+];
 
-$messages['bho'] = array(
+$messages['bho'] = [
 	'october' => 'अक्टूबर',
 	'october-gen' => 'अक्टूबर',
 	'oct' => 'अक्टू',
 	'otherlanguages' => 'अन्य भाषा में',
 	'ok' => 'ठिक',
 	'oldpassword' => 'पुराना गुप्त-शब्द:',
-);
+];
 
-$messages['bi'] = array(
+$messages['bi'] = [
 	'october' => 'Oktoba',
 	'october-gen' => 'Oktoba',
 	'oct' => 'Okt',
-);
+];
 
-$messages['bjn'] = array(
+$messages['bjn'] = [
 	'october' => 'Uktubir',
 	'october-gen' => 'Uktubir',
 	'oct' => 'Ukt',
@@ -403,14 +398,14 @@ $messages['bjn'] = array(
 	'overwroteimage' => 'mahunggah sabuah pérsi hanyar matan "[[$1]]"',
 	'othercontribs' => 'Dipandalakan pada gawian ulih $1.',
 	'others' => 'lainnya',
-);
+];
 
-$messages['bm'] = array(
+$messages['bm'] = [
 	'otherlanguages' => 'Kanw wɛrɛ',
 	'others' => 'wɛrɛ',
-);
+];
 
-$messages['bn'] = array(
+$messages['bn'] = [
 	'october' => 'অক্টোবর',
 	'october-gen' => 'অক্টোবর',
 	'oct' => 'অক্টোবর',
@@ -420,18 +415,18 @@ $messages['bn'] = array(
 	'overwroteimage' => '"[[$1]]"-এর একটি নতুন সংস্করণ আপলোড করা হয়েছে',
 	'othercontribs' => '$1-এর কাজের উপর ভিত্তি করে।',
 	'others' => 'অন্যান্য',
-);
+];
 
-$messages['bo'] = array(
+$messages['bo'] = [
 	'october' => 'ཟླ་བཅུ་བ།',
 	'october-gen' => 'ཟླ་བཅུ་བ།',
 	'oct' => 'ཟླ་བཅུ་བ།',
 	'otherlanguages' => 'སྐད་རིགས་གཞན།',
 	'ok' => 'འགྲིག',
 	'oldpassword' => 'ལམ་ཡིག་རྙིང་བ།',
-);
+];
 
-$messages['bpy'] = array(
+$messages['bpy'] = [
 	'october' => 'অক্টোবর',
 	'october-gen' => 'অক্টোবর',
 	'oct' => 'অক্টো',
@@ -439,37 +434,37 @@ $messages['bpy'] = array(
 	'ok' => 'চুমিসে',
 	'oldpassword' => 'পুরানা খন্তাচাবি:',
 	'others' => 'আরতা',
-);
+];
 
-$messages['bqi'] = array(
+$messages['bqi'] = [
 	'october' => 'اکتبر',
 	'october-gen' => 'اکتبر',
 	'oct' => 'اکتبر',
 	'otherlanguages' => 'درزبانهای دیگر',
 	'ok' => 'خووه',
-);
+];
 
-$messages['br'] = array(
+$messages['br'] = [
 	'october' => 'Here',
 	'october-gen' => 'Here',
 	'oct' => 'Her',
 	'otherlanguages' => 'Yezhoù all',
 	'ok' => 'Mat eo',
 	'oldpassword' => 'Ger-tremen kozh :',
-	'overwrite' => "N'eo ket aotreet frikañ ur restr zo anezhi c'hoazh.",
+	'overwrite' => 'N\'eo ket aotreet frikañ ur restr zo anezhi c\'hoazh.',
 	'overwroteimage' => 'enporzhiet ur stumm nevez eus "[[$1]]"',
 	'othercontribs' => 'Diazezet war labour $1.',
 	'others' => 're all',
-);
+];
 
-$messages['brh'] = array(
+$messages['brh'] = [
 	'october' => 'Aktúbar',
 	'october-gen' => 'Aktúbar',
 	'oct' => 'Aktúbar',
 	'otherlanguages' => 'Elo bolí teŧí',
-);
+];
 
-$messages['bs'] = array(
+$messages['bs'] = [
 	'october' => 'oktobar',
 	'october-gen' => 'oktobra',
 	'oct' => 'okt',
@@ -480,42 +475,42 @@ $messages['bs'] = array(
 	'overwroteimage' => 'postavljena nova verzija datoteke "[[$1]]"',
 	'othercontribs' => 'Bazirano na radu od strane korisnika $1.',
 	'others' => 'ostali',
-);
+];
 
-$messages['bug'] = array(
+$messages['bug'] = [
 	'october' => 'Oktober',
 	'october-gen' => 'Oktober',
 	'oldpassword' => 'Pasewodo matoa:',
-);
+];
 
-$messages['ca'] = array(
+$messages['ca'] = [
 	'october' => 'octubre',
-	'october-gen' => "d'octubre",
+	'october-gen' => 'd\'octubre',
 	'oct' => 'oct',
 	'otherlanguages' => 'En altres llengües',
 	'ok' => 'OK',
 	'oldpassword' => 'Contrasenya antiga',
 	'overwrite' => 'No es permet sobreescriure un fitxer existent.',
-	'overwroteimage' => "s'ha penjat una nova versió de «[[$1]]»",
+	'overwroteimage' => 's\'ha penjat una nova versió de «[[$1]]»',
 	'othercontribs' => 'Basat en les contribucions de $1.',
 	'others' => 'altres',
-);
+];
 
-$messages['cbk-zam'] = array(
+$messages['cbk-zam'] = [
 	'october' => 'Octubre',
 	'otherlanguages' => 'na otro maga lenguaje',
-);
+];
 
-$messages['cdo'] = array(
+$messages['cdo'] = [
 	'october' => 'Sĕk nguŏk',
 	'october-gen' => 'Sĕk nguŏk',
 	'oct' => '10ng',
 	'otherlanguages' => 'Gì-tă gì ngṳ̄-ngiòng',
 	'ok' => 'Hō̤',
 	'oldpassword' => 'Gô mĭk-mā:',
-);
+];
 
-$messages['ce'] = array(
+$messages['ce'] = [
 	'october' => 'ардар бутт',
 	'october-gen' => 'ардар бутт',
 	'oct' => 'ардар бутт',
@@ -523,30 +518,30 @@ $messages['ce'] = array(
 	'ok' => 'Хlаъ',
 	'oldpassword' => 'Шираелла ишар:',
 	'others' => 'кхин',
-);
+];
 
-$messages['ceb'] = array(
+$messages['ceb'] = [
 	'october' => 'Oktubre',
 	'october-gen' => 'Oktubre',
 	'oct' => 'Okt',
 	'otherlanguages' => 'Sa ubang pinulongan',
 	'ok' => 'OK',
-);
+];
 
-$messages['ch'] = array(
+$messages['ch'] = [
 	'october' => 'Oktubre',
 	'october-gen' => 'Oktubre',
 	'oct' => 'Okt',
 	'otherlanguages' => 'Gi otru na lengguahe siha',
 	'ok' => 'OK',
 	'oldpassword' => 'Password bihu:',
-);
+];
 
-$messages['chr'] = array(
+$messages['chr'] = [
 	'otherlanguages' => 'ᎭᏫᎾᏗᏢ ᏐᎢ ᏗᎦᏬᏂᎯᏍᏗ',
-);
+];
 
-$messages['ckb'] = array(
+$messages['ckb'] = [
 	'october' => 'تشرینی یەکەم',
 	'october-gen' => 'تشرینی یەکەمی',
 	'oct' => 'ت١',
@@ -556,35 +551,35 @@ $messages['ckb'] = array(
 	'overwroteimage' => 'وەشانێکی نوێی «[[$1]]» بار کرد',
 	'othercontribs' => 'لەسەر بنەمای کاری $1.',
 	'others' => 'ئەوانی دیکە',
-);
+];
 
-$messages['co'] = array(
+$messages['co'] = [
 	'october' => 'ottobre',
 	'october-gen' => 'ottobre',
 	'oct' => 'ott',
 	'otherlanguages' => 'In altri lingui',
 	'others' => 'altri',
-);
+];
 
-$messages['cps'] = array(
+$messages['cps'] = [
 	'october' => 'Oktubre',
 	'october-gen' => 'Oktubre',
 	'oct' => 'Okt',
 	'otherlanguages' => 'Sa iban nga linggwahe',
 	'ok' => 'Sige',
 	'oldpassword' => 'Luma nga password:',
-);
+];
 
-$messages['crh'] = array(
+$messages['crh'] = [
 	'october' => 'Oktubre',
 	'october-gen' => 'Oktubre',
 	'oct' => 'Okt',
 	'otherlanguages' => 'Sa iban nga linggwahe',
 	'ok' => 'Sige',
 	'oldpassword' => 'Luma nga password:',
-);
+];
 
-$messages['crh-cyrl'] = array(
+$messages['crh-cyrl'] = [
 	'october' => 'октябрь',
 	'october-gen' => 'октябрьнинъ',
 	'oct' => 'окт',
@@ -594,9 +589,9 @@ $messages['crh-cyrl'] = array(
 	'overwroteimage' => '"[[$1]]" янъы версиясы юкленди',
 	'othercontribs' => 'Бу саифени яраткъанда иштирак эткен: $1.',
 	'others' => 'дигерлери',
-);
+];
 
-$messages['crh-latn'] = array(
+$messages['crh-latn'] = [
 	'october' => 'oktâbr',
 	'october-gen' => 'oktâbrniñ',
 	'oct' => 'okt',
@@ -606,9 +601,9 @@ $messages['crh-latn'] = array(
 	'overwroteimage' => '"[[$1]]" yañı versiyası yüklendi',
 	'othercontribs' => 'Bu saifeni yaratqanda iştirak etken: $1.',
 	'others' => 'digerleri',
-);
+];
 
-$messages['cs'] = array(
+$messages['cs'] = [
 	'october' => 'říjen',
 	'october-gen' => 'října',
 	'oct' => '10.',
@@ -619,9 +614,9 @@ $messages['cs'] = array(
 	'overwroteimage' => 'načtena nová verze "[[$1]]"',
 	'othercontribs' => 'Do textu {{PLURAL:$2|přispěl|přispěli}} $1.',
 	'others' => 'další',
-);
+];
 
-$messages['csb'] = array(
+$messages['csb'] = [
 	'october' => 'rujan',
 	'october-gen' => 'rujana',
 	'oct' => 'ruj',
@@ -630,17 +625,17 @@ $messages['csb'] = array(
 	'oldpassword' => 'Stôrô parola:',
 	'othercontribs' => 'Òpiarté na prôcë $1.',
 	'others' => 'jiné',
-);
+];
 
-$messages['cu'] = array(
+$messages['cu'] = [
 	'october' => 'октѡврїи',
 	'october-gen' => 'октѡврїꙗ',
 	'oct' => 'ок҃т',
 	'otherlanguages' => 'дроугꙑ ѩꙁꙑкꙑ',
 	'oldpassword' => 'старо таино слово :',
-);
+];
 
-$messages['cv'] = array(
+$messages['cv'] = [
 	'october' => 'юпа',
 	'october-gen' => 'юпа уйăхĕн',
 	'oct' => 'юпа',
@@ -649,9 +644,9 @@ $messages['cv'] = array(
 	'oldpassword' => 'Кивě пароль',
 	'othercontribs' => '$1 ĕçĕ çинче никĕсленнĕ.',
 	'others' => 'ыттисем',
-);
+];
 
-$messages['cy'] = array(
+$messages['cy'] = [
 	'october' => 'Hydref',
 	'october-gen' => 'Hydref',
 	'oct' => 'Hyd',
@@ -662,9 +657,9 @@ $messages['cy'] = array(
 	'overwroteimage' => 'wedi uwchlwytho fersiwn newydd o "[[$1]]"',
 	'othercontribs' => 'Yn seiliedig ar waith gan $1.',
 	'others' => 'eraill',
-);
+];
 
-$messages['da'] = array(
+$messages['da'] = [
 	'october' => 'oktober',
 	'october-gen' => 'oktobers',
 	'oct' => 'okt',
@@ -675,9 +670,9 @@ $messages['da'] = array(
 	'overwroteimage' => 'lagde en ny version af "[[$1]]" op',
 	'othercontribs' => 'Baseret på arbejde af $1.',
 	'others' => 'andre',
-);
+];
 
-$messages['de'] = array(
+$messages['de'] = [
 	'october' => 'Oktober',
 	'october-gen' => 'Oktobers',
 	'oct' => 'Okt.',
@@ -688,9 +683,9 @@ $messages['de'] = array(
 	'overwroteimage' => 'lud eine neue Version von „[[$1]]“ hoch',
 	'othercontribs' => 'Basierend auf der Arbeit von $1.',
 	'others' => 'anderen',
-);
+];
 
-$messages['de-weigsbrag'] = array(
+$messages['de-weigsbrag'] = [
 	'october' => 'Ogdob',
 	'october-gen' => 'Ogdobs',
 	'oct' => 'Ogd.',
@@ -700,9 +695,9 @@ $messages['de-weigsbrag'] = array(
 	'overwroteimage' => 'haddar eines neues Wersion won „[[$1]]“ hoglad',
 	'othercontribs' => 'Basär auw dose Arb won dose $1',
 	'others' => 'anderes',
-);
+];
 
-$messages['diq'] = array(
+$messages['diq'] = [
 	'october' => 'Tışrino Verên',
 	'october-gen' => 'Tışrinê Verêni',
 	'oct' => 'Tşv',
@@ -713,9 +708,9 @@ $messages['diq'] = array(
 	'overwroteimage' => 'yew versiyonê newvî ye "[[$1]]"î bar bike',
 	'othercontribs' => 'xebatê $1 ıney geriyayo diqqeti/geriyayo nezer.',
 	'others' => 'bini',
-);
+];
 
-$messages['dsb'] = array(
+$messages['dsb'] = [
 	'october' => 'oktober',
 	'october-gen' => 'oktobra',
 	'oct' => 'okt',
@@ -726,9 +721,9 @@ $messages['dsb'] = array(
 	'overwroteimage' => 'Jo nowu wersiju "[[$1]]" nagrał.',
 	'othercontribs' => 'Bazěrujo na źěle $1',
 	'others' => 'druge',
-);
+];
 
-$messages['dtp'] = array(
+$messages['dtp'] = [
 	'october' => 'Tugumas',
 	'october-gen' => 'Gumas',
 	'oct' => 'Mas',
@@ -736,30 +731,30 @@ $messages['dtp'] = array(
 	'ok' => 'Oboh',
 	'oldpassword' => 'Kaatalib laid:',
 	'others' => 'susuai',
-);
+];
 
-$messages['dv'] = array(
+$messages['dv'] = [
 	'october' => 'އޮކްޓޫބަރު',
 	'oct' => 'އޮކްޓޯބަރ',
 	'otherlanguages' => 'އެހެން ބަސްބަހުން',
 	'ok' => 'ރަނގަޅު',
 	'oldpassword' => 'ކުރީގެ ސިއްރުބަސް:',
-);
+];
 
-$messages['dz'] = array(
+$messages['dz'] = [
 	'october' => 'སྤྱི་ཟླ་བཅུ་པ།',
 	'october-gen' => 'སྤྱི་ཟླ་ ༡༠ པའི་',
 	'oct' => 'ཟླ་༡༠ པ།',
-);
+];
 
-$messages['ee'] = array(
+$messages['ee'] = [
 	'october' => 'Kele',
 	'october-gen' => 'Kele',
 	'oct' => 'Kel',
 	'otherlanguages' => 'Le gbe bubuwo me',
-);
+];
 
-$messages['el'] = array(
+$messages['el'] = [
 	'october' => 'Οκτώβριος',
 	'october-gen' => 'Οκτωβρίου',
 	'oct' => 'Οκτ',
@@ -770,13 +765,13 @@ $messages['el'] = array(
 	'overwroteimage' => 'ανέβασμα νέας έκδοσης του "[[$1]]"',
 	'othercontribs' => 'Βασισμένο στη δουλειά του/των $1',
 	'others' => 'άλλοι',
-);
+];
 
-$messages['eml'] = array(
+$messages['eml'] = [
 	'october' => 'Utóber',
-);
+];
 
-$messages['eo'] = array(
+$messages['eo'] = [
 	'october' => 'Oktobro',
 	'october-gen' => 'oktobro',
 	'oct' => 'Okt',
@@ -787,9 +782,9 @@ $messages['eo'] = array(
 	'overwroteimage' => 'alŝutis novan version de "[[$1]]"',
 	'othercontribs' => 'Bazita sur la laboro de $1.',
 	'others' => 'aliaj',
-);
+];
 
-$messages['es'] = array(
+$messages['es'] = [
 	'october' => 'octubre',
 	'october-gen' => 'octubre',
 	'oct' => 'oct',
@@ -800,9 +795,9 @@ $messages['es'] = array(
 	'overwroteimage' => 'subió una nueva versión de «[[$1]]»',
 	'othercontribs' => 'Basado en el trabajo de $1.',
 	'others' => 'otros',
-);
+];
 
-$messages['et'] = array(
+$messages['et'] = [
 	'october' => 'oktoober',
 	'october-gen' => 'oktoobri',
 	'oct' => 'okt',
@@ -813,9 +808,9 @@ $messages['et'] = array(
 	'overwroteimage' => 'laadis üles faili "[[$1]]" uue versiooni',
 	'othercontribs' => 'Põhineb kasutajate $1 tööl.',
 	'others' => 'teiste',
-);
+];
 
-$messages['eu'] = array(
+$messages['eu'] = [
 	'october' => 'Urria',
 	'october-gen' => 'Urri',
 	'oct' => 'Urr',
@@ -826,9 +821,9 @@ $messages['eu'] = array(
 	'overwroteimage' => '"[[$1]]"ren bertsio berri bat igo',
 	'othercontribs' => '$1(r)en lanean oinarrituta.',
 	'others' => 'besteak',
-);
+];
 
-$messages['ext'] = array(
+$messages['ext'] = [
 	'october' => 'Otubri',
 	'october-gen' => 'Otubri',
 	'oct' => 'Otu',
@@ -838,9 +833,9 @@ $messages['ext'] = array(
 	'overwroteimage' => 'empuntá una nueva velsión de "[[$1]]"',
 	'othercontribs' => 'Basau nun labutu e $1.',
 	'others' => 'otrus',
-);
+];
 
-$messages['fa'] = array(
+$messages['fa'] = [
 	'october' => 'اکتبر',
 	'october-gen' => 'اکتبر',
 	'oct' => 'اکتبر',
@@ -851,13 +846,13 @@ $messages['fa'] = array(
 	'overwroteimage' => 'نسخه جدیدی از  «[[$1]]» را بارگذاری کرد',
 	'othercontribs' => 'بر اساس اثری از $1',
 	'others' => 'دیگران',
-);
+];
 
-$messages['ff'] = array(
+$messages['ff'] = [
 	'otherlanguages' => 'ɗemɗe goɗe',
-);
+];
 
-$messages['fi'] = array(
+$messages['fi'] = [
 	'october' => 'lokakuu',
 	'october-gen' => 'lokakuun',
 	'oct' => 'lokakuu',
@@ -868,9 +863,9 @@ $messages['fi'] = array(
 	'overwroteimage' => 'tallensi uuden version [[$1]]',
 	'othercontribs' => 'Perustuu työlle, jonka teki $1.',
 	'others' => 'muut',
-);
+];
 
-$messages['fiu-vro'] = array(
+$messages['fiu-vro'] = [
 	'october' => 'lokakuu',
 	'october-gen' => 'lokakuun',
 	'oct' => 'lokakuu',
@@ -881,16 +876,16 @@ $messages['fiu-vro'] = array(
 	'overwroteimage' => 'tallensi uuden version [[$1]]',
 	'othercontribs' => 'Perustuu työlle, jonka teki $1.',
 	'others' => 'muut',
-);
+];
 
-$messages['fj'] = array(
+$messages['fj'] = [
 	'october' => 'Okotova',
 	'october-gen' => 'Okotova',
 	'oct' => 'Okotova',
 	'otherlanguages' => 'Veimataqali vosa',
-);
+];
 
-$messages['fo'] = array(
+$messages['fo'] = [
 	'october' => 'oktober',
 	'october-gen' => 'oktober',
 	'oct' => 'okt',
@@ -900,9 +895,9 @@ $messages['fo'] = array(
 	'overwrite' => 'Tað er ikki loyvi til at yvirskriva eina verandi fílu.',
 	'othercontribs' => 'Grundað á arbeiði eftir $1.',
 	'others' => 'onnur',
-);
+];
 
-$messages['fr'] = array(
+$messages['fr'] = [
 	'october' => 'octobre',
 	'october-gen' => 'octobre',
 	'oct' => 'oct',
@@ -913,16 +908,16 @@ $messages['fr'] = array(
 	'overwroteimage' => 'a importé une nouvelle version de « [[$1]] »',
 	'othercontribs' => 'Basé sur le travail de $1.',
 	'others' => 'autres',
-);
+];
 
-$messages['frc'] = array(
-	'october' => "d'octobre",
+$messages['frc'] = [
+	'october' => 'd\'octobre',
 	'october-gen' => 'octobre',
 	'oct' => 'oct',
 	'otherlanguages' => 'Autres langues',
-);
+];
 
-$messages['frp'] = array(
+$messages['frp'] = [
 	'october' => 'd’octobro',
 	'october-gen' => 'd’octobro',
 	'oct' => 'oct',
@@ -933,18 +928,18 @@ $messages['frp'] = array(
 	'overwroteimage' => 'at tèlèchargiê una novèla vèrsion de « [[$1]] »',
 	'othercontribs' => 'Basâ sur l’ôvra a $1.',
 	'others' => 'ôtros',
-);
+];
 
-$messages['frr'] = array(
+$messages['frr'] = [
 	'october' => 'Oktoober',
 	'october-gen' => 'Oktoober',
 	'oct' => 'Okt.',
 	'otherlanguages' => 'Önj oudere spräke',
 	'ok' => 'OK',
 	'oldpassword' => 'Üülj pååsuurd:',
-);
+];
 
-$messages['fur'] = array(
+$messages['fur'] = [
 	'october' => 'Otubar',
 	'october-gen' => 'Otubar',
 	'oct' => 'Otu',
@@ -954,9 +949,9 @@ $messages['fur'] = array(
 	'overwroteimage' => 'al à cjamât une gnove version di «[[$1]]»',
 	'othercontribs' => 'Basât sul lavôr di $1.',
 	'others' => 'altris',
-);
+];
 
-$messages['fy'] = array(
+$messages['fy'] = [
 	'october' => 'oktober',
 	'october-gen' => 'oktober',
 	'oct' => 'okt',
@@ -966,9 +961,9 @@ $messages['fy'] = array(
 	'overwroteimage' => 'hat in nije ferzje fan "[[$1]]" tafoege',
 	'othercontribs' => 'Basearre op wurk fan $1.',
 	'others' => 'Oaren',
-);
+];
 
-$messages['ga'] = array(
+$messages['ga'] = [
 	'october' => 'Deireadh Fómhair',
 	'october-gen' => 'Dheireadh Fómhair',
 	'oct' => 'DFómh',
@@ -977,17 +972,17 @@ $messages['ga'] = array(
 	'oldpassword' => 'Focal faire reatha:',
 	'othercontribs' => 'Bunaithe ar saothair le $1.',
 	'others' => 'daoine eile',
-);
+];
 
-$messages['gag'] = array(
+$messages['gag'] = [
 	'october' => 'Canavar ay',
 	'october-gen' => 'Canavar ay',
 	'oct' => 'Okt',
 	'otherlanguages' => 'Übür diller',
 	'ok' => 'TAMAN',
-);
+];
 
-$messages['gan-hans'] = array(
+$messages['gan-hans'] = [
 	'october' => '10月',
 	'october-gen' => '十月',
 	'oct' => '10月',
@@ -997,9 +992,9 @@ $messages['gan-hans'] = array(
 	'overwroteimage' => '上传正嘞"[[$1]]"𠮶新版本',
 	'othercontribs' => '以$1为基础。',
 	'others' => '别𠮶',
-);
+];
 
-$messages['gan-hant'] = array(
+$messages['gan-hant'] = [
 	'october' => '10月',
 	'october-gen' => '十月',
 	'oct' => '10月',
@@ -1009,9 +1004,9 @@ $messages['gan-hant'] = array(
 	'overwroteimage' => '上傳正嘞"[[$1]]"嗰新版本',
 	'othercontribs' => '以$1為基礎。',
 	'others' => '別嗰',
-);
+];
 
-$messages['gd'] = array(
+$messages['gd'] = [
 	'october' => 'dhen Dàmhair',
 	'october-gen' => 'dhen Dàmhair',
 	'oct' => 'dàmh',
@@ -1020,9 +1015,9 @@ $messages['gd'] = array(
 	'oldpassword' => 'Seann fhacal-faire',
 	'othercontribs' => 'Stèidhichte air obair le $1.',
 	'others' => 'eile',
-);
+];
 
-$messages['gl'] = array(
+$messages['gl'] = [
 	'october' => 'outubro',
 	'october-gen' => 'outubro',
 	'oct' => 'out',
@@ -1033,23 +1028,23 @@ $messages['gl'] = array(
 	'overwroteimage' => 'enviou unha nova versión de "[[$1]]"',
 	'othercontribs' => 'Baseado no traballo feito por $1.',
 	'others' => 'outros',
-);
+];
 
-$messages['gn'] = array(
+$messages['gn'] = [
 	'october' => 'jasypa',
 	'october-gen' => 'jasypa',
 	'oct' => 'jasypa',
-	'otherlanguages' => "Ambue ñe'ẽ",
-);
+	'otherlanguages' => 'Ambue ñe\'ẽ',
+];
 
-$messages['got'] = array(
+$messages['got'] = [
 	'october' => '𐍅𐌴𐌹𐌽𐌼𐌴𐌽𐍉𐌸𐍃',
 	'october-gen' => '𐍅𐌴𐌹𐌽𐌼𐌴𐌽𐍉𐌸𐌹𐍃',
 	'oct' => '𐍅𐌴𐌹',
 	'otherlanguages' => '𐌰𐌽𐌸𐌰𐍂 𐍂𐌰𐌶𐌳𐍉𐍃',
-);
+];
 
-$messages['grc'] = array(
+$messages['grc'] = [
 	'october' => 'Ὀκτώβριος',
 	'october-gen' => 'Ὀκτωβρίου',
 	'oct' => 'Ὀκτ',
@@ -1059,9 +1054,9 @@ $messages['grc'] = array(
 	'overwroteimage' => 'νέα ἔκδοσις τῆς "[[$1]]" ἐπιπεφορτισμένη',
 	'othercontribs' => 'Βεβασισμένον τῷ ἔργῳ τοῦ/τῶν $1.',
 	'others' => 'ἄλλοι',
-);
+];
 
-$messages['gsw'] = array(
+$messages['gsw'] = [
 	'october' => 'Oktober',
 	'october-gen' => 'Oktober',
 	'oct' => 'Okt.',
@@ -1072,9 +1067,9 @@ $messages['gsw'] = array(
 	'overwroteimage' => 'het e neiji Version vu „[[$1]]“ uffeglade',
 	'othercontribs' => 'Basiert auf der Arbeit von $1.',
 	'others' => 'anderi',
-);
+];
 
-$messages['gu'] = array(
+$messages['gu'] = [
 	'october' => 'ઓકટોબર',
 	'october-gen' => 'ઓકટોબર',
 	'oct' => 'ઓકટો',
@@ -1085,9 +1080,9 @@ $messages['gu'] = array(
 	'overwroteimage' => ' "[[$1]]" ની નવી આવૃત્તિ ચઢાવો.',
 	'othercontribs' => '$1 ના કાર્ય પર આધારિત',
 	'others' => 'અન્યો',
-);
+];
 
-$messages['gv'] = array(
+$messages['gv'] = [
 	'october' => 'Jerrey Fouyir',
 	'october-gen' => 'Jerrey Fouyir',
 	'oct' => 'JFou',
@@ -1095,16 +1090,16 @@ $messages['gv'] = array(
 	'ok' => 'OK',
 	'oldpassword' => 'Shenn-ockle yn arrey:',
 	'others' => 'sleih elley',
-);
+];
 
-$messages['ha'] = array(
+$messages['ha'] = [
 	'october' => 'Oktoba',
 	'october-gen' => 'Oktoba',
 	'oct' => 'Okt',
 	'otherlanguages' => 'A wasu harsuna',
-);
+];
 
-$messages['hak'] = array(
+$messages['hak'] = [
 	'october' => 'Sṳ̍p-ngie̍t',
 	'october-gen' => 'Sṳ̍p-ngie̍t',
 	'oct' => 'Sṳ̍p-ngie̍t',
@@ -1113,20 +1108,20 @@ $messages['hak'] = array(
 	'oldpassword' => 'Khiu pi-me̍t:',
 	'othercontribs' => 'Chhai $1-ke kûng-chok kî-chhú song.',
 	'others' => 'khì-thâ',
-);
+];
 
-$messages['haw'] = array(
+$messages['haw'] = [
 	'october' => '‘Okakopa',
 	'october-gen' => '‘Okakopa',
 	'oct' => 'ʻOk',
 	'otherlanguages' => 'Ma nā leo ʻē aʻe',
 	'ok' => 'Hiki nō',
-);
+];
 
-$messages['he'] = array(
+$messages['he'] = [
 	'october' => 'אוקטובר',
 	'october-gen' => 'באוקטובר',
-	'oct' => "אוק'",
+	'oct' => 'אוק\'',
 	'otherlanguages' => 'דף זה בשפות אחרות',
 	'ok' => 'אישור',
 	'oldpassword' => 'סיסמה ישנה:',
@@ -1134,9 +1129,9 @@ $messages['he'] = array(
 	'overwroteimage' => 'העלה גרסה חדשה של הקובץ [[$1]]',
 	'othercontribs' => 'מבוסס על העבודה של $1.',
 	'others' => 'אחרים',
-);
+];
 
-$messages['hi'] = array(
+$messages['hi'] = [
 	'october' => 'अक्तूबर',
 	'october-gen' => 'अक्टूबर',
 	'oct' => 'अक्तू॰',
@@ -1146,9 +1141,9 @@ $messages['hi'] = array(
 	'overwroteimage' => '"[[$1]]" का नया अवतरण अपलोड किया',
 	'othercontribs' => '$1 के कार्य के अनुसार।',
 	'others' => 'अन्य',
-);
+];
 
-$messages['hif'] = array(
+$messages['hif'] = [
 	'october' => 'अक्तूबर',
 	'october-gen' => 'अक्टूबर',
 	'oct' => 'अक्तू॰',
@@ -1158,9 +1153,9 @@ $messages['hif'] = array(
 	'overwroteimage' => '"[[$1]]" का नया अवतरण अपलोड किया',
 	'othercontribs' => '$1 के कार्य के अनुसार।',
 	'others' => 'अन्य',
-);
+];
 
-$messages['hif-latn'] = array(
+$messages['hif-latn'] = [
 	'october' => 'October',
 	'october-gen' => 'October',
 	'oct' => 'Oct',
@@ -1170,18 +1165,18 @@ $messages['hif-latn'] = array(
 	'overwroteimage' => '"[[$1]]" ke nawaa version ke upload karaa gais hai',
 	'othercontribs' => 'Ii $1 ke kaam pe based hae.',
 	'others' => 'duusra jane',
-);
+];
 
-$messages['hil'] = array(
+$messages['hil'] = [
 	'october' => 'Oktubre',
 	'october-gen' => 'Oktubre',
 	'oct' => 'Okt',
 	'otherlanguages' => 'Sa iban nga lenguahe',
 	'ok' => 'Sige',
 	'oldpassword' => 'Daan nga pasword:',
-);
+];
 
-$messages['hr'] = array(
+$messages['hr'] = [
 	'october' => 'listopada',
 	'october-gen' => 'listopada',
 	'oct' => 'lis',
@@ -1192,9 +1187,9 @@ $messages['hr'] = array(
 	'overwroteimage' => 'postavljena nova inačica od "[[$1]]"',
 	'othercontribs' => 'Temelji se na doprinosu suradnika $1.',
 	'others' => 'drugih',
-);
+];
 
-$messages['hsb'] = array(
+$messages['hsb'] = [
 	'october' => 'oktober',
 	'october-gen' => 'oktobra',
 	'oct' => 'okt',
@@ -1205,18 +1200,18 @@ $messages['hsb'] = array(
 	'overwroteimage' => 'je nowu wersiju dataje „[[$1]]“ nahrał',
 	'othercontribs' => 'Bazěruje na dźěle wužiwarja $1.',
 	'others' => 'druhich',
-);
+];
 
-$messages['ht'] = array(
+$messages['ht'] = [
 	'october' => 'oktòb',
 	'october-gen' => 'oktòb',
 	'oct' => 'okt',
 	'otherlanguages' => 'Nan lòt lang yo',
 	'ok' => 'OK',
 	'oldpassword' => 'Ansyen mopas:',
-);
+];
 
-$messages['hu'] = array(
+$messages['hu'] = [
 	'october' => 'október',
 	'october-gen' => 'október',
 	'oct' => 'okt',
@@ -1227,9 +1222,9 @@ $messages['hu'] = array(
 	'overwroteimage' => 'feltöltötte a(z) „[[$1]]” fájl új változatát',
 	'othercontribs' => '$1 munkája alapján.',
 	'others' => 'mások',
-);
+];
 
-$messages['hy'] = array(
+$messages['hy'] = [
 	'october' => 'Հոկտեմբեր',
 	'october-gen' => 'Հոկտեմբերի',
 	'oct' => 'հոկ',
@@ -1239,9 +1234,9 @@ $messages['hy'] = array(
 	'overwroteimage' => 'բեռնվեց «[[$1]]» նիշքի նոր տարբերակ',
 	'othercontribs' => 'Հիմնված է {{grammar:genitive|$1}} գործի վրա։',
 	'others' => 'այլոք',
-);
+];
 
-$messages['ia'] = array(
+$messages['ia'] = [
 	'october' => 'octobre',
 	'october-gen' => 'octobre',
 	'oct' => 'oct',
@@ -1252,9 +1247,9 @@ $messages['ia'] = array(
 	'overwroteimage' => 'incargava un nove version de "[[$1]]"',
 	'othercontribs' => 'A base de contributiones per $1.',
 	'others' => 'alteres',
-);
+];
 
-$messages['id'] = array(
+$messages['id'] = [
 	'october' => 'Oktober',
 	'october-gen' => 'Oktober',
 	'oct' => 'Okt',
@@ -1265,17 +1260,17 @@ $messages['id'] = array(
 	'overwroteimage' => 'memuat versi baru dari "[[$1]]"',
 	'othercontribs' => 'Didasarkan pada karya $1.',
 	'others' => 'lainnya',
-);
+];
 
-$messages['ie'] = array(
+$messages['ie'] = [
 	'october' => 'octobre',
 	'october-gen' => 'octobre',
 	'oct' => 'oct',
 	'otherlanguages' => 'Altri lingues',
 	'oldpassword' => 'Anteyan passa-parol:',
-);
+];
 
-$messages['ig'] = array(
+$messages['ig'] = [
 	'october' => 'Önwa Iri',
 	'october-gen' => 'Önwa Iri',
 	'oct' => 'ÖIri',
@@ -1283,22 +1278,22 @@ $messages['ig'] = array(
 	'ok' => 'Ngwanu',
 	'oldpassword' => 'Mkpurụ okwu ejị a gafẹ ochië:',
 	'others' => 'nke ndi ozor',
-);
+];
 
-$messages['ike-cans'] = array(
+$messages['ike-cans'] = [
 	'october' => 'ᐅᒃᑐᐳᕆ',
 	'october-gen' => 'ᐅᒃᑐᐳᕆ',
 	'oct' => 'ᐅᒃᑐ',
 	'otherlanguages' => 'ᑭᓪᓗᒧᑦ ᐅᐃᑭ',
-);
+];
 
-$messages['ike-latn'] = array(
+$messages['ike-latn'] = [
 	'october' => 'uktupuri',
 	'october-gen' => 'uktupuri',
 	'otherlanguages' => 'killumut uiki',
-);
+];
 
-$messages['ilo'] = array(
+$messages['ilo'] = [
 	'october' => 'Oktubre',
 	'october-gen' => 'Oktubre',
 	'oct' => 'Okt',
@@ -1309,18 +1304,18 @@ $messages['ilo'] = array(
 	'overwroteimage' => 'naipan ti baro a bersion ti "[[$1]]"',
 	'othercontribs' => 'Naibasar iti obra ni $1.',
 	'others' => 'dadduma pay',
-);
+];
 
-$messages['inh'] = array(
+$messages['inh'] = [
 	'october' => 'Тов',
 	'october-gen' => 'Тов бетт',
 	'oct' => 'Тов.',
 	'otherlanguages' => 'Кхыча меттаxь',
 	'ok' => 'ХӀаа',
 	'oldpassword' => 'Къаьна къайладоагӀ:',
-);
+];
 
-$messages['io'] = array(
+$messages['io'] = [
 	'october' => 'oktobro',
 	'october-gen' => 'di oktobro',
 	'oct' => 'okt',
@@ -1329,9 +1324,9 @@ $messages['io'] = array(
 	'oldpassword' => 'Anciena pasovorto:',
 	'othercontribs' => 'Bazizita en la laboro da $1.',
 	'others' => 'altra',
-);
+];
 
-$messages['is'] = array(
+$messages['is'] = [
 	'october' => 'október',
 	'october-gen' => 'október',
 	'oct' => 'okt',
@@ -1342,9 +1337,9 @@ $messages['is'] = array(
 	'overwroteimage' => 'hlóð inn nýrri útgáfu af "[[$1]]"',
 	'othercontribs' => 'Byggt á verkum $1.',
 	'others' => 'aðrir',
-);
+];
 
-$messages['it'] = array(
+$messages['it'] = [
 	'october' => 'ottobre',
 	'october-gen' => 'ottobre',
 	'oct' => 'ott',
@@ -1355,9 +1350,9 @@ $messages['it'] = array(
 	'overwroteimage' => 'ha caricato una nuova versione di "[[$1]]"',
 	'othercontribs' => 'Il testo attuale è basato su contributi di $1.',
 	'others' => 'altri',
-);
+];
 
-$messages['iu'] = array(
+$messages['iu'] = [
 	'october' => 'ottobre',
 	'october-gen' => 'ottobre',
 	'oct' => 'ott',
@@ -1368,9 +1363,9 @@ $messages['iu'] = array(
 	'overwroteimage' => 'ha caricato una nuova versione di "[[$1]]"',
 	'othercontribs' => 'Il testo attuale è basato su contributi di $1.',
 	'others' => 'altri',
-);
+];
 
-$messages['ja'] = array(
+$messages['ja'] = [
 	'october' => '10月',
 	'october-gen' => '10月',
 	'oct' => '10月',
@@ -1383,33 +1378,33 @@ $messages['ja'] = array(
 	'others' => 'その他',
 	'other_people' => '他の人は、こんなことを探しています',
 	'or_learn' => 'ウィキアを知るには',
-);
+];
 
-$messages['jam'] = array(
+$messages['jam'] = [
 	'october' => 'Aktuoba',
 	'october-gen' => 'Aktuoba',
 	'oct' => 'Akt',
 	'otherlanguages' => 'Ina ada langwij',
 	'ok' => 'OK',
 	'oldpassword' => 'Uol paaswod:',
-);
+];
 
-$messages['jbo'] = array(
+$messages['jbo'] = [
 	'october' => 'oktobero',
 	'october-gen' => 'la daumast.',
 	'oct' => 'okt',
 	'otherlanguages' => 'drata bangu',
-);
+];
 
-$messages['jut'] = array(
+$messages['jut'] = [
 	'october' => 'oktober',
 	'october-gen' => 'oktobers',
 	'oct' => 'okt',
 	'otherlanguages' => 'Andre språĝ',
 	'ok' => 'Er åkæ',
-);
+];
 
-$messages['jv'] = array(
+$messages['jv'] = [
 	'october' => 'Oktober',
 	'october-gen' => 'Oktober',
 	'oct' => 'Okt',
@@ -1419,9 +1414,9 @@ $messages['jv'] = array(
 	'overwroteimage' => 'ngunggahaké vèrsi anyar saka "[[$1]]"',
 	'othercontribs' => 'Adhedhasar karyané $1.',
 	'others' => 'liya-liyané',
-);
+];
 
-$messages['ka'] = array(
+$messages['ka'] = [
 	'october' => 'ოქტომბერი',
 	'october-gen' => 'ოქტომბრის',
 	'oct' => 'ოქტ',
@@ -1431,20 +1426,20 @@ $messages['ka'] = array(
 	'overwroteimage' => 'ატვირთულია "[[$1]]"-ის ახალი ვერსია',
 	'othercontribs' => '$1-ს ნამუშევრის მიხედვით.',
 	'others' => 'სხვები',
-);
+];
 
-$messages['kaa'] = array(
+$messages['kaa'] = [
 	'october' => 'Oktyabr',
-	'october-gen' => "oktyabrdin'",
+	'october-gen' => 'oktyabrdin\'',
 	'oct' => 'Okt',
 	'otherlanguages' => 'Basqa tillerde',
 	'ok' => 'OK',
-	'oldpassword' => "Aldıng'ı parol:",
+	'oldpassword' => 'Aldıng\'ı parol:',
 	'overwroteimage' => '"[[$1]]" faylının\' jan\'a nusqası aploud qılındı',
 	'others' => 'basqalar',
-);
+];
 
-$messages['kab'] = array(
+$messages['kab'] = [
 	'october' => 'Tuber',
 	'october-gen' => 'Tuber',
 	'oct' => 'Tuber',
@@ -1452,9 +1447,9 @@ $messages['kab'] = array(
 	'oldpassword' => 'Awal n tbaḍnit aqdim:',
 	'othercontribs' => 'Tikkin n wemseqdac-agi.',
 	'others' => 'wiyaḍ',
-);
+];
 
-$messages['kbd'] = array(
+$messages['kbd'] = [
 	'october' => 'Tuber',
 	'october-gen' => 'Tuber',
 	'oct' => 'Tuber',
@@ -1462,43 +1457,43 @@ $messages['kbd'] = array(
 	'oldpassword' => 'Awal n tbaḍnit aqdim:',
 	'othercontribs' => 'Tikkin n wemseqdac-agi.',
 	'others' => 'wiyaḍ',
-);
+];
 
-$messages['kbd-cyrl'] = array(
+$messages['kbd-cyrl'] = [
 	'october' => 'Жэпуэгъуэм и',
 	'october-gen' => 'Жэпуэгъуэм и',
 	'oct' => 'Жэп',
 	'otherlanguages' => 'НэмыщӀ бзэхэмкӀэ',
 	'ok' => 'ОК',
 	'oldpassword' => 'Паролыжьыр:',
-);
+];
 
-$messages['kg'] = array(
+$messages['kg'] = [
 	'october' => 'ngônda ya kûmi',
 	'october-gen' => 'ngônda ya kûmi',
 	'oct' => 'ng10',
 	'otherlanguages' => 'Bandinga ya nkaka',
-);
+];
 
-$messages['khw'] = array(
+$messages['khw'] = [
 	'october' => 'اکتوبر',
 	'october-gen' => 'اکتوبار',
 	'oct' => 'اکتوبر',
 	'otherlanguages' => 'خور زبانا',
 	'ok' => 'ٹھیک شیر',
 	'oldpassword' => 'پرانو کلمۂ شناخت:',
-);
+];
 
-$messages['kiu'] = array(
+$messages['kiu'] = [
 	'october' => 'Keşkelun',
 	'october-gen' => 'Keşkeluni',
 	'oct' => 'Keş',
 	'otherlanguages' => 'Zonunê binun de',
 	'ok' => 'Temam',
 	'oldpassword' => 'Parola khane:',
-);
+];
 
-$messages['kk-arab'] = array(
+$messages['kk-arab'] = [
 	'october' => 'قازان',
 	'october-gen' => 'قازاننىڭ',
 	'oct' => 'قاز',
@@ -1508,9 +1503,9 @@ $messages['kk-arab'] = array(
 	'overwroteimage' => '«[[$1]]» فايلىننىڭ جاڭا نۇسقاسىن قوتارىپ بەردى',
 	'othercontribs' => 'شىعارما نەگىزىن $1 جازعان.',
 	'others' => 'باسقالار',
-);
+];
 
-$messages['kk-cn'] = array(
+$messages['kk-cn'] = [
 	'october' => 'قازان',
 	'october-gen' => 'قازاننىڭ',
 	'oct' => 'قاز',
@@ -1520,9 +1515,9 @@ $messages['kk-cn'] = array(
 	'overwroteimage' => '«[[$1]]» فايلىننىڭ جاڭا نۇسقاسىن قوتارىپ بەردى',
 	'othercontribs' => 'شىعارما نەگىزىن $1 جازعان.',
 	'others' => 'باسقالار',
-);
+];
 
-$messages['kk-cyrl'] = array(
+$messages['kk-cyrl'] = [
 	'october' => 'қазан',
 	'october-gen' => 'қазанның',
 	'oct' => 'қаз',
@@ -1532,9 +1527,9 @@ $messages['kk-cyrl'] = array(
 	'overwroteimage' => '«[[$1]]» файлынның жаңа нұсқасын қотарып берді',
 	'othercontribs' => 'Шығарма негізін $1 жазған.',
 	'others' => 'басқалар',
-);
+];
 
-$messages['kk-kz'] = array(
+$messages['kk-kz'] = [
 	'october' => 'қазан',
 	'october-gen' => 'қазанның',
 	'oct' => 'қаз',
@@ -1544,9 +1539,9 @@ $messages['kk-kz'] = array(
 	'overwroteimage' => '«[[$1]]» файлынның жаңа нұсқасын қотарып берді',
 	'othercontribs' => 'Шығарма негізін $1 жазған.',
 	'others' => 'басқалар',
-);
+];
 
-$messages['kk-latn'] = array(
+$messages['kk-latn'] = [
 	'october' => 'qazan',
 	'october-gen' => 'qazannıñ',
 	'oct' => 'qaz',
@@ -1556,9 +1551,9 @@ $messages['kk-latn'] = array(
 	'overwroteimage' => '«[[$1]]» faýlınnıñ jaña nusqasın qotarıp berdi',
 	'othercontribs' => 'Şığarma negizin $1 jazğan.',
 	'others' => 'basqalar',
-);
+];
 
-$messages['kk-tr'] = array(
+$messages['kk-tr'] = [
 	'october' => 'qazan',
 	'october-gen' => 'qazannıñ',
 	'oct' => 'qaz',
@@ -1568,17 +1563,17 @@ $messages['kk-tr'] = array(
 	'overwroteimage' => '«[[$1]]» faýlınnıñ jaña nusqasın qotarıp berdi',
 	'othercontribs' => 'Şığarma negizin $1 jazğan.',
 	'others' => 'basqalar',
-);
+];
 
-$messages['kl'] = array(
+$messages['kl'] = [
 	'october' => 'Oktoberi',
 	'october-gen' => 'Oktobari',
 	'oct' => 'Okt',
 	'otherlanguages' => 'Oqaatsit allat',
 	'oldpassword' => 'Isissutissatoqaq:',
-);
+];
 
-$messages['km'] = array(
+$messages['km'] = [
 	'october' => 'ខែតុលា',
 	'october-gen' => 'ខែតុលា',
 	'oct' => 'តុលា',
@@ -1589,9 +1584,9 @@ $messages['km'] = array(
 	'overwroteimage' => 'បានផ្ទុកឡើងកំណែថ្មីរបស់"[[$1]]"',
 	'othercontribs' => 'ផ្អែកលើការងាររបស់$1។',
 	'others' => 'ផ្សេងៗទៀត',
-);
+];
 
-$messages['kn'] = array(
+$messages['kn'] = [
 	'october' => 'ಅಕ್ಟೋಬರ್',
 	'october-gen' => 'ಅಕ್ಟೋಬರ್',
 	'oct' => 'ಅಕ್ಟೋಬರ್',
@@ -1601,9 +1596,9 @@ $messages['kn'] = array(
 	'overwroteimage' => '"[[$1]]" ಫೈಲಿನ ಹೊಸ ಆವೃತ್ತಿಯನ್ನು ಅಪ್ಲೋಡ್ ಮಾಡಲಾಯಿತು',
 	'othercontribs' => '$1 ರ ಕೆಲಸವನ್ನು ಆಧರಿಸಿ.',
 	'others' => 'ಇತರರು',
-);
+];
 
-$messages['ko'] = array(
+$messages['ko'] = [
 	'october' => '10월',
 	'october-gen' => '10월',
 	'oct' => '10',
@@ -1614,9 +1609,9 @@ $messages['ko'] = array(
 	'overwroteimage' => '‘[[$1]]’ 파일의 새 버전을 올렸습니다.',
 	'othercontribs' => '$1의 작업을 바탕으로 함.',
 	'others' => '기타',
-);
+];
 
-$messages['ko-kp'] = array(
+$messages['ko-kp'] = [
 	'october' => '10월',
 	'october-gen' => '10월',
 	'oct' => '10',
@@ -1627,17 +1622,17 @@ $messages['ko-kp'] = array(
 	'overwroteimage' => '‘[[$1]]’ 파일의 새 버전을 올렸습니다.',
 	'othercontribs' => '$1의 작업을 바탕으로 함.',
 	'others' => '기타',
-);
+];
 
-$messages['koi'] = array(
+$messages['koi'] = [
 	'october' => 'Октяб',
 	'october-gen' => 'октяб',
 	'oct' => 'окт',
 	'otherlanguages' => 'Мöдiк кыввез вылын',
 	'oldpassword' => 'Важ пароль',
-);
+];
 
-$messages['krc'] = array(
+$messages['krc'] = [
 	'october' => 'октябрь',
 	'october-gen' => 'октябрь',
 	'oct' => 'окт',
@@ -1648,25 +1643,25 @@ $messages['krc'] = array(
 	'overwroteimage' => '«[[$1]]» суратны джангы версиясы джюкленнгенди',
 	'othercontribs' => '$1 джанындан этилген ишге тамалланады.',
 	'others' => 'башхала',
-);
+];
 
-$messages['kri'] = array(
+$messages['kri'] = [
 	'october' => 'Oktoba',
 	'october-gen' => 'Oktoba',
 	'oct' => 'Okt',
 	'otherlanguages' => 'Na oda langwej-dem',
 	'ok' => 'OK',
-);
+];
 
-$messages['krj'] = array(
+$messages['krj'] = [
 	'october' => 'Oktobre',
 	'october-gen' => 'Oktobre',
 	'oct' => 'Okt',
 	'otherlanguages' => 'Sa iban nga lingwahe',
 	'ok' => 'OK dun',
-);
+];
 
-$messages['ksh'] = array(
+$messages['ksh'] = [
 	'october' => 'Oktober',
 	'october-gen' => 'Oktober',
 	'oct' => 'Okt',
@@ -1677,9 +1672,9 @@ $messages['ksh'] = array(
 	'overwroteimage' => 'hät en neue Version huhjelade vun: „[[$1]]“',
 	'othercontribs' => 'Bout op et Werk vun $1 op.',
 	'others' => 'ander',
-);
+];
 
-$messages['ku'] = array(
+$messages['ku'] = [
 	'october' => 'Oktober',
 	'october-gen' => 'Oktober',
 	'oct' => 'Okt',
@@ -1690,9 +1685,9 @@ $messages['ku'] = array(
 	'overwroteimage' => 'hät en neue Version huhjelade vun: „[[$1]]“',
 	'othercontribs' => 'Bout op et Werk vun $1 op.',
 	'others' => 'ander',
-);
+];
 
-$messages['ku-latn'] = array(
+$messages['ku-latn'] = [
 	'october' => 'kewçêr',
 	'october-gen' => 'Kewçêr',
 	'oct' => 'kew',
@@ -1701,33 +1696,33 @@ $messages['ku-latn'] = array(
 	'oldpassword' => 'Şîfreya kevn',
 	'overwroteimage' => 'versyonekî nuh ji "[[$1]]" hate barkirin',
 	'others' => 'ên din',
-);
+];
 
-$messages['kv'] = array(
+$messages['kv'] = [
 	'october' => 'йирым тӧлысь',
 	'october-gen' => 'йирым',
 	'otherlanguages' => 'Мӧд кывъясӧн',
-);
+];
 
-$messages['kw'] = array(
+$messages['kw'] = [
 	'october' => 'Hedra',
 	'october-gen' => 'Hedra',
 	'oct' => 'Hed',
 	'otherlanguages' => 'En tavosow erel',
 	'ok' => 'Sur',
 	'oldpassword' => 'Ger-tremena coth:',
-);
+];
 
-$messages['ky'] = array(
+$messages['ky'] = [
 	'october' => 'Октябрь (Тогуздун айы)',
 	'october-gen' => 'Октябрь (Тогуздун айы)',
 	'oct' => 'Окт',
 	'otherlanguages' => 'Башка тилдерде',
 	'oldpassword' => 'Эски сырсөз:',
 	'others' => 'башкалар',
-);
+];
 
-$messages['la'] = array(
+$messages['la'] = [
 	'october' => 'October',
 	'october-gen' => 'Octobris',
 	'oct' => 'Oct',
@@ -1735,40 +1730,40 @@ $messages['la'] = array(
 	'ok' => 'Age',
 	'oldpassword' => 'Tessera vetus:',
 	'others' => 'alii',
-);
+];
 
-$messages['lad'] = array(
+$messages['lad'] = [
 	'october' => 'Ochůvre',
 	'october-gen' => 'Ochůvre',
 	'oct' => 'Ochů',
 	'otherlanguages' => 'En otras lînguas',
 	'ok' => 'DE ACORDDO',
 	'oldpassword' => 'Kóddiche viejo:',
-);
+];
 
-$messages['lb'] = array(
+$messages['lb'] = [
 	'october' => 'Oktober',
 	'october-gen' => 'Oktober',
 	'oct' => 'Okt.',
 	'otherlanguages' => 'An anere Sproochen',
 	'ok' => 'OK',
 	'oldpassword' => 'Aalt Passwuert:',
-	'overwrite' => "D'Iwwerschreiwe vun engem Fichier ass net erlaabt.",
+	'overwrite' => 'D\'Iwwerschreiwe vun engem Fichier ass net erlaabt.',
 	'overwroteimage' => 'huet eng nei Versioun vun "[[$1]]" eropgelueden',
 	'othercontribs' => 'Op der Basis vun der Aarbecht vum $1',
 	'others' => 'anerer',
-);
+];
 
-$messages['lez'] = array(
+$messages['lez'] = [
 	'october' => 'БаскӀум',
 	'october-gen' => 'БаскӀум',
 	'oct' => 'Бас',
 	'otherlanguages' => 'Маса чIаларал',
 	'ok' => 'ОК',
 	'oldpassword' => 'ЦIуру куьлег:',
-);
+];
 
-$messages['lfn'] = array(
+$messages['lfn'] = [
 	'october' => 'otobre',
 	'october-gen' => 'Otobre',
 	'oct' => 'oto',
@@ -1776,9 +1771,9 @@ $messages['lfn'] = array(
 	'ok' => 'Oce',
 	'oldpassword' => 'Sinia secreta vea:',
 	'others' => 'otras',
-);
+];
 
-$messages['lg'] = array(
+$messages['lg'] = [
 	'october' => 'Gwakkumi',
 	'october-gen' => 'Gwakkumi',
 	'oct' => 'Gw10',
@@ -1786,9 +1781,9 @@ $messages['lg'] = array(
 	'ok' => 'Kale',
 	'oldpassword' => 'Ekigambo ekikuumi ekikadde:',
 	'othercontribs' => 'nga ayongereza ku byakolebwa $1',
-);
+];
 
-$messages['li'] = array(
+$messages['li'] = [
 	'october' => 'oktober',
 	'october-gen' => 'oktober',
 	'oct' => 'okt',
@@ -1799,60 +1794,60 @@ $messages['li'] = array(
 	'overwroteimage' => 'haet \'ne nuuje versie van "[[$1]]" toegevoeg',
 	'othercontribs' => 'Gebaseerd op wirk van $1.',
 	'others' => 'angere',
-);
+];
 
-$messages['lij'] = array(
+$messages['lij'] = [
 	'october' => 'Ôtobre',
 	'october-gen' => 'Ötobre',
 	'oct' => 'Öto',
 	'otherlanguages' => 'In âtre lengóe',
-	'ok' => "D'accòrdio",
-);
+	'ok' => 'D\'accòrdio',
+];
 
-$messages['liv'] = array(
+$messages['liv'] = [
 	'october' => 'oktōbõr',
 	'october-gen' => 'Oktōbõr',
 	'oct' => 'okt',
 	'otherlanguages' => 'Mūši kīelši',
-);
+];
 
-$messages['lmo'] = array(
+$messages['lmo'] = [
 	'october' => 'Utuber',
 	'october-gen' => 'Otober',
 	'oct' => 'Utu',
 	'otherlanguages' => 'Alter lenguv',
 	'ok' => 'Va ben',
-	'oldpassword' => "Paròla d'urdin végja:",
-);
+	'oldpassword' => 'Paròla d\'urdin végja:',
+];
 
-$messages['ln'] = array(
+$messages['ln'] = [
 	'october' => 'sánzá ya zómi',
 	'october-gen' => 'sánzá ya zómi',
 	'oct' => 's10',
 	'otherlanguages' => 'Na nkótá isúsu',
 	'ok' => 'Nandimi',
 	'oldpassword' => 'Banda kala',
-);
+];
 
-$messages['lo'] = array(
+$messages['lo'] = [
 	'october' => 'ຕຸລາ',
 	'october-gen' => 'ຕຸລາ',
 	'oct' => 'ຕຸລາ',
 	'otherlanguages' => 'ເປັນພາສາອື່ນໆ',
 	'ok' => 'ຕົກລົງ',
 	'oldpassword' => 'ລະຫັດຜ່ານເກົ່າ:',
-);
+];
 
-$messages['loz'] = array(
+$messages['loz'] = [
 	'october' => 'Yenda',
 	'october-gen' => 'Yenda',
 	'oct' => 'Yen',
 	'otherlanguages' => 'Silozi kibuzi',
 	'ok' => 'lumelisize',
 	'overwroteimage' => 'sa uplodezi nca imegi petuho di "[[$1]]"',
-);
+];
 
-$messages['lt'] = array(
+$messages['lt'] = [
 	'october' => 'spalio',
 	'october-gen' => 'Spalis',
 	'oct' => 'spa',
@@ -1863,17 +1858,17 @@ $messages['lt'] = array(
 	'overwroteimage' => 'įkėlė naują „[[$1]]“ versiją',
 	'othercontribs' => 'Paremta $1 darbu.',
 	'others' => 'kiti',
-);
+];
 
-$messages['ltg'] = array(
+$messages['ltg'] = [
 	'october' => 'Oktobrs / Leita mieness',
 	'october-gen' => 'Oktoba / Leita mieneša',
 	'oct' => 'okt.',
 	'otherlanguages' => 'Cytuos volūduos',
 	'others' => 'cyti',
-);
+];
 
-$messages['lv'] = array(
+$messages['lv'] = [
 	'october' => 'oktobrī',
 	'october-gen' => 'Oktobra',
 	'oct' => 'oktobrī,',
@@ -1884,9 +1879,9 @@ $messages['lv'] = array(
 	'overwroteimage' => 'augšupielādēta jauna "[[$1]]" versija',
 	'othercontribs' => 'Balstototies uz $1 darbu.',
 	'others' => 'citi',
-);
+];
 
-$messages['lzh'] = array(
+$messages['lzh'] = [
 	'october' => '十月',
 	'october-gen' => '十月',
 	'oct' => '十月',
@@ -1897,18 +1892,18 @@ $messages['lzh'] = array(
 	'overwroteimage' => '新置「[[$1]]」矣',
 	'othercontribs' => '$1主撰',
 	'others' => '他',
-);
+];
 
-$messages['lzz'] = array(
+$messages['lzz'] = [
 	'october' => 'Gumatuta',
 	'october-gen' => 'Gumatuta',
 	'oct' => 'Gum',
 	'otherlanguages' => 'Majurani nenapes',
 	'ok' => 'HO',
-	'oldpassword' => "Mcveşi p'arola:",
-);
+	'oldpassword' => 'Mcveşi p\'arola:',
+];
 
-$messages['mai'] = array(
+$messages['mai'] = [
 	'october' => 'अक्टूबर',
 	'october-gen' => 'अकटूबर',
 	'oct' => 'अक्टू.',
@@ -1919,18 +1914,18 @@ $messages['mai'] = array(
 	'overwroteimage' => 'एकर "[[$1]]" नव संस्करण उपारोपित भेल।',
 	'othercontribs' => '$1 के काजुक तरहे',
 	'others' => 'दोसर, आन',
-);
+];
 
-$messages['map-bms'] = array(
+$messages['map-bms'] = [
 	'october' => 'Oktober',
 	'october-gen' => 'Oktober',
 	'oct' => 'Okt',
 	'otherlanguages' => 'basa liya',
 	'ok' => 'OK',
 	'oldpassword' => 'Tembung sandi lawas:',
-);
+];
 
-$messages['mdf'] = array(
+$messages['mdf'] = [
 	'october' => 'Кельмазаков',
 	'october-gen' => 'Кельмазаковонь',
 	'oct' => 'Кем',
@@ -1940,44 +1935,44 @@ $messages['mdf'] = array(
 	'overwroteimage' => 'тонгозь "[[$1]]" од верзиенц',
 	'othercontribs' => 'Тиф $1-нь покаманц коряс.',
 	'others' => 'илят',
-);
+];
 
-$messages['mg'] = array(
+$messages['mg'] = [
 	'october' => 'Oktobra',
 	'october-gen' => 'Oktobra',
 	'oct' => 'Okt',
-	'otherlanguages' => "Amin'ny tenim-pirenena hafa",
+	'otherlanguages' => 'Amin\'ny tenim-pirenena hafa',
 	'ok' => 'Eka',
 	'oldpassword' => 'Tenimiafina taloha:',
 	'overwrite' => 'Tsy azo itsahina ny rakitra efa misy.',
-	'overwroteimage' => "nampiditra santiôna vaovao an'ny « [[$1]] »",
-	'othercontribs' => "Mifototra amin'ny asan'i $1.",
+	'overwroteimage' => 'nampiditra santiôna vaovao an\'ny « [[$1]] »',
+	'othercontribs' => 'Mifototra amin\'ny asan\'i $1.',
 	'others' => 'hafa',
-);
+];
 
-$messages['mhr'] = array(
+$messages['mhr'] = [
 	'october' => 'Шыжа',
 	'october-gen' => 'Шыжа',
 	'oct' => 'Шыжа',
 	'otherlanguages' => 'Вес йылме дене',
 	'ok' => 'Йӧра',
 	'oldpassword' => 'Тошто шолыпмут:',
-);
+];
 
-$messages['mi'] = array(
+$messages['mi'] = [
 	'october' => 'Whiringa-ā-nuku',
-);
+];
 
-$messages['min'] = array(
+$messages['min'] = [
 	'october' => 'Oktober',
 	'october-gen' => 'Oktober',
 	'oct' => 'Okt',
 	'otherlanguages' => 'Dalam baso lain',
 	'ok' => 'OK',
 	'oldpassword' => 'Kato sandi lamo:',
-);
+];
 
-$messages['mk'] = array(
+$messages['mk'] = [
 	'october' => 'октомври',
 	'october-gen' => 'октомври',
 	'oct' => 'окт',
@@ -1988,9 +1983,9 @@ $messages['mk'] = array(
 	'overwroteimage' => 'подигнато нова верзија на „[[$1]]“',
 	'othercontribs' => 'Засновано на работата на $1.',
 	'others' => 'други',
-);
+];
 
-$messages['ml'] = array(
+$messages['ml'] = [
 	'october' => 'ഒക്ടോബർ',
 	'october-gen' => 'ഒക്ടോബർ',
 	'oct' => 'ഒക്ടോ.',
@@ -2001,9 +1996,9 @@ $messages['ml'] = array(
 	'overwroteimage' => '"[[$1]]" എന്ന പ്രമാണത്തിന്റെ പുതിയ പതിപ്പ് അപ്‌ലോഡ് ചെയ്തിരിക്കുന്നു',
 	'othercontribs' => '$1 നടത്തിയ സൃഷ്ടിയെ അധികരിച്ച്.',
 	'others' => 'മറ്റുള്ളവർ',
-);
+];
 
-$messages['mn'] = array(
+$messages['mn'] = [
 	'october' => 'Аравдугаар сар',
 	'october-gen' => 'Аравдугаар сар',
 	'oct' => '10-р сар',
@@ -2014,16 +2009,16 @@ $messages['mn'] = array(
 	'overwroteimage' => '"[[$1]]"-н шинэ хувилбарыг орууллаа',
 	'othercontribs' => '$1-ий бүтээл дээр тулгуурласан.',
 	'others' => 'Бусад',
-);
+];
 
-$messages['mo'] = array(
+$messages['mo'] = [
 	'october' => 'октомбрие',
 	'october-gen' => 'октомбрие',
 	'oct' => 'окт',
 	'otherlanguages' => 'Ын алте лимбь',
-);
+];
 
-$messages['mr'] = array(
+$messages['mr'] = [
 	'october' => 'ऑक्टोबर',
 	'october-gen' => 'ऑक्टोबर',
 	'oct' => 'ऑक्टो.',
@@ -2034,16 +2029,16 @@ $messages['mr'] = array(
 	'overwroteimage' => '"[[$1]]" या संचिकेची नवीन आवृत्ती चढविली.',
 	'othercontribs' => '$1 ने केलेल्या कामानुसार.',
 	'others' => 'इतर',
-);
+];
 
-$messages['mrj'] = array(
+$messages['mrj'] = [
 	'october' => 'октябрь',
 	'october-gen' => 'октябрьын',
 	'oct' => 'окт',
 	'otherlanguages' => 'Вес йӹлмӹвлӓ доно',
-);
+];
 
-$messages['ms'] = array(
+$messages['ms'] = [
 	'october' => 'Oktober',
 	'october-gen' => 'Oktober',
 	'oct' => 'Okt',
@@ -2054,30 +2049,30 @@ $messages['ms'] = array(
 	'overwroteimage' => 'memuat naik versi baru bagi "[[$1]]"',
 	'othercontribs' => 'Berdasarkan karya $1.',
 	'others' => 'lain-lain',
-);
+];
 
-$messages['mt'] = array(
+$messages['mt'] = [
 	'october' => 'Ottubru',
 	'october-gen' => 'Ottubru',
 	'oct' => 'Ott',
-	'otherlanguages' => "F'lingwi oħrajn",
+	'otherlanguages' => 'F\'lingwi oħrajn',
 	'ok' => 'OK',
 	'oldpassword' => 'Password antika:',
-	'overwrite' => "Li terġa' ttella' fuq fajl eżistenti mhuwiex permess.",
+	'overwrite' => 'Li terġa\' ttella\' fuq fajl eżistenti mhuwiex permess.',
 	'overwroteimage' => 'Verżjoni ġdida ġiet imtella\' "[[$1]]"',
-	'othercontribs' => "Dan it-test ibbażat fuq ix-xogħol ta' $1.",
+	'othercontribs' => 'Dan it-test ibbażat fuq ix-xogħol ta\' $1.',
 	'others' => 'oħrajn',
-);
+];
 
-$messages['mwl'] = array(
+$messages['mwl'] = [
 	'october' => 'Outubro',
 	'october-gen' => 'Outubre',
 	'oct' => 'Out.',
 	'otherlanguages' => 'Outras lhénguas',
 	'ok' => 'OK',
-);
+];
 
-$messages['my'] = array(
+$messages['my'] = [
 	'october' => 'အောက်​တို​ဘာ​',
 	'october-gen' => 'အောက်​တို​ဘာ​',
 	'oct' => 'အောက်',
@@ -2087,9 +2082,9 @@ $messages['my'] = array(
 	'overwrite' => 'ရှိပြီးသားဖိုင်အား ထပ်ရေးခြင်းကို ခွင့်မပြုပါ။',
 	'overwroteimage' => '"[[$1]]" ၏ မူသစ်ကို upload တင်လိုက်ပြီ',
 	'others' => 'အခြား',
-);
+];
 
-$messages['myv'] = array(
+$messages['myv'] = [
 	'october' => 'Ожоков',
 	'october-gen' => 'Ожоковонь',
 	'oct' => 'Ожо',
@@ -2099,17 +2094,17 @@ $messages['myv'] = array(
 	'overwroteimage' => 'Ёвкстамс "[[$1]]" файлань од версия',
 	'othercontribs' => '$1-нь важодеманзо лангс нежедезь.',
 	'others' => 'лият',
-);
+];
 
-$messages['mzn'] = array(
+$messages['mzn'] = [
 	'october' => 'ئـوکـتـوبـر',
 	'october-gen' => 'ئـوکـتـوبـر',
 	'oct' => 'ئوکتوبر',
 	'otherlanguages' => 'بقیه زوون‌ئون',
 	'ok' => 'خا',
-);
+];
 
-$messages['nah'] = array(
+$messages['nah'] = [
 	'october' => 'Teòtlêko',
 	'october-gen' => 'ic mahtlāctetl mētztli',
 	'oct' => 'ic mahtlāc',
@@ -2118,9 +2113,9 @@ $messages['nah'] = array(
 	'oldpassword' => 'Huēhueh motlahtōlichtacayo:',
 	'overwroteimage' => 'ōmoquetz yancuīc "[[$1]]" iuhcāyōtl',
 	'others' => 'occequīntīn',
-);
+];
 
-$messages['nan'] = array(
+$messages['nan'] = [
 	'october' => '10-goe̍h',
 	'october-gen' => 'Cha̍p-goe̍h',
 	'oct' => '10g',
@@ -2130,17 +2125,17 @@ $messages['nan'] = array(
 	'overwrite' => '袂使覆寫已經佇咧的檔案',
 	'overwroteimage' => '已經上載「[[$1]]」的新版本',
 	'othercontribs' => 'Kin-kù $1 ê kòng-hiàn.',
-);
+];
 
-$messages['nap'] = array(
+$messages['nap'] = [
 	'october' => 'ottobbre',
 	'october-gen' => 'ottovre',
 	'oct' => 'ott',
 	'otherlanguages' => 'Ate léngue',
 	'others' => 'ate',
-);
+];
 
-$messages['nb'] = array(
+$messages['nb'] = [
 	'october' => 'oktober',
 	'october-gen' => 'oktober',
 	'oct' => 'okt',
@@ -2151,9 +2146,9 @@ $messages['nb'] = array(
 	'overwroteimage' => 'last opp en ny versjon av «[[$1]]»',
 	'othercontribs' => 'Basert på arbeid av $1.',
 	'others' => 'andre',
-);
+];
 
-$messages['nds'] = array(
+$messages['nds'] = [
 	'october' => 'Oktober',
 	'october-gen' => 'Oktober',
 	'oct' => 'Okt',
@@ -2163,22 +2158,22 @@ $messages['nds'] = array(
 	'overwroteimage' => 'Ne’e Version vun „[[$1]]“ hoochlaadt',
 	'othercontribs' => 'Grünnt op Arbeid vun $1.',
 	'others' => 'annere',
-);
+];
 
-$messages['nds-nl'] = array(
+$messages['nds-nl'] = [
 	'october' => 'oktober',
 	'october-gen' => 'oktober',
 	'oct' => 'okt',
 	'otherlanguages' => 'Aandere talen',
 	'ok' => 'Oké',
-	'oldpassword' => "Wachtwoord da'j noen hebben",
+	'oldpassword' => 'Wachtwoord da\'j noen hebben',
 	'overwrite' => 't Overschrieven van n bestaand is niet toe-estaon.',
 	'overwroteimage' => 'Nieje versie van "[[$1]]" op-estuurd',
 	'othercontribs' => 'Ebaseerd op wark van $1.',
 	'others' => 'aandere',
-);
+];
 
-$messages['ne'] = array(
+$messages['ne'] = [
 	'october' => 'अक्टोबर',
 	'october-gen' => 'अक्टोबर',
 	'oct' => 'अक्टोबर',
@@ -2188,24 +2183,24 @@ $messages['ne'] = array(
 	'overwroteimage' => ' "[[$1]]"को एउटा नयाँ संस्करण उर्ध्वभरण गरियो',
 	'othercontribs' => '$1 को कामको आधारमा',
 	'others' => 'अन्य',
-);
+];
 
-$messages['new'] = array(
+$messages['new'] = [
 	'october' => 'अक्टोबर',
 	'october-gen' => 'अक्टोबर',
 	'oct' => 'अक्ट्',
 	'otherlanguages' => 'मेमेगु भाषाय्',
 	'ok' => 'ज्यु',
 	'others' => 'मेमेगु',
-);
+];
 
-$messages['niu'] = array(
+$messages['niu'] = [
 	'october' => 'Oketopa',
 	'october-gen' => 'Oketopa',
 	'otherlanguages' => 'Ke he falu vagahau',
-);
+];
 
-$messages['nl'] = array(
+$messages['nl'] = [
 	'october' => 'oktober',
 	'october-gen' => 'oktober',
 	'oct' => 'okt',
@@ -2216,9 +2211,9 @@ $messages['nl'] = array(
 	'overwroteimage' => 'heeft een nieuwe versie van "[[$1]]" toegevoegd',
 	'othercontribs' => 'Gebaseerd op werk van $1.',
 	'others' => 'anderen',
-);
+];
 
-$messages['nn'] = array(
+$messages['nn'] = [
 	'october' => 'oktober',
 	'october-gen' => 'oktober',
 	'oct' => 'okt',
@@ -2229,9 +2224,9 @@ $messages['nn'] = array(
 	'overwroteimage' => 'lasta opp ein ny versjon av «[[$1]]»',
 	'othercontribs' => 'Basert på arbeid av $1.',
 	'others' => 'andre',
-);
+];
 
-$messages['no'] = array(
+$messages['no'] = [
 	'october' => 'oktober',
 	'october-gen' => 'oktober',
 	'oct' => 'okt',
@@ -2242,49 +2237,49 @@ $messages['no'] = array(
 	'overwroteimage' => 'lasta opp ein ny versjon av «[[$1]]»',
 	'othercontribs' => 'Basert på arbeid av $1.',
 	'others' => 'andre',
-);
+];
 
-$messages['nov'] = array(
+$messages['nov'] = [
 	'october' => 'oktobre',
 	'october-gen' => 'de oktobre',
 	'oct' => 'okt',
 	'otherlanguages' => 'Altri lingues',
-);
+];
 
-$messages['nso'] = array(
+$messages['nso'] = [
 	'october' => 'Diphalane',
 	'october-gen' => 'Diphalane',
 	'oct' => 'Diphalane',
 	'otherlanguages' => 'Ka dipolelo tše dingwe',
 	'oldpassword' => 'Ditlhaka-tša-siphiri tša kgale:',
 	'others' => 'tše dingwe',
-);
+];
 
-$messages['nv'] = array(
+$messages['nv'] = [
 	'october' => 'Ghąąjį',
 	'october-gen' => 'Ghąąjį',
 	'oct' => 'Ghąj',
 	'otherlanguages' => 'saad',
-);
+];
 
-$messages['oc'] = array(
-	'october' => "d'octobre",
+$messages['oc'] = [
+	'october' => 'd\'octobre',
 	'october-gen' => 'Octobre',
-	'oct' => "d'oct",
+	'oct' => 'd\'oct',
 	'otherlanguages' => 'Autras lengas',
-	'ok' => "D'acòrdi",
+	'ok' => 'D\'acòrdi',
 	'oldpassword' => 'Senhal ancian :',
 	'overwrite' => 'Espotir un fichièr existent es pas autorizat.',
 	'overwroteimage' => 'a importat una version novèla de « [[$1]] »',
 	'othercontribs' => 'Basat sul trabalh de $1.',
 	'others' => 'autres',
-);
+];
 
-$messages['om'] = array(
+$messages['om'] = [
 	'october' => 'Onkololeessa',
-);
+];
 
-$messages['or'] = array(
+$messages['or'] = [
 	'october' => 'ଅକ୍ଟୋବର',
 	'october-gen' => 'ଅକ୍ଟୋବର',
 	'oct' => 'ଅକ୍ଟୋବର',
@@ -2295,9 +2290,9 @@ $messages['or'] = array(
 	'overwroteimage' => '"[[$1]]"ର ନୂଆ ସଙ୍କଳନଟିଏ ଅପଲୋଡ଼ କରାଗଲା',
 	'othercontribs' => '$1ଙ୍କ କାମ ଉପରେ ପର୍ଯ୍ୟବସିତ ।',
 	'others' => 'ବାକିସବୁ',
-);
+];
 
-$messages['os'] = array(
+$messages['os'] = [
 	'october' => 'октябрь',
 	'october-gen' => 'октябры',
 	'oct' => 'окт',
@@ -2305,9 +2300,9 @@ $messages['os'] = array(
 	'ok' => 'Афтæ уæд!',
 	'oldpassword' => 'Раздæры пароль:',
 	'others' => 'æндæртæ',
-);
+];
 
-$messages['pa'] = array(
+$messages['pa'] = [
 	'october' => 'ਅਕਤੂਬਰ',
 	'october-gen' => 'ਅਕਤੂਬਰ',
 	'oct' => 'ਅਕ',
@@ -2315,13 +2310,13 @@ $messages['pa'] = array(
 	'ok' => 'ਠੀਕ ਹੈ',
 	'oldpassword' => 'ਪੁਰਾਣਾ ਪਾਸਵਰਡ:',
 	'others' => 'ਹੋਰ',
-);
+];
 
-$messages['pag'] = array(
+$messages['pag'] = [
 	'otherlanguages' => 'Diad arom ran salita',
-);
+];
 
-$messages['pam'] = array(
+$messages['pam'] = [
 	'october' => 'Octubri',
 	'october-gen' => 'Octobri',
 	'oct' => 'Oct',
@@ -2331,24 +2326,24 @@ $messages['pam'] = array(
 	'overwroteimage' => 'milulan ya ing bayung bersion ning "[[$1]]"',
 	'othercontribs' => 'Agpang basi king obra nang $1.',
 	'others' => 'aliwa',
-);
+];
 
-$messages['pap'] = array(
+$messages['pap'] = [
 	'october' => 'òktober',
 	'oct' => 'okt',
 	'otherlanguages' => 'Na otro idioma',
-);
+];
 
-$messages['pcd'] = array(
-	'october' => "d'Octobe",
+$messages['pcd'] = [
+	'october' => 'd\'Octobe',
 	'october-gen' => 'Octobe',
 	'oct' => 'Oct',
-	'otherlanguages' => "Din d'eutes langaches",
+	'otherlanguages' => 'Din d\'eutes langaches',
 	'ok' => 'OK',
-	'oldpassword' => "Anthiu mot d'passe:",
-);
+	'oldpassword' => 'Anthiu mot d\'passe:',
+];
 
-$messages['pdc'] = array(
+$messages['pdc'] = [
 	'october' => 'Oktower',
 	'october-gen' => 'Oktower',
 	'oct' => 'Okt.',
@@ -2357,29 +2352,29 @@ $messages['pdc'] = array(
 	'oldpassword' => 'Aldes Paesswatt:',
 	'overwroteimage' => 'hot e neie Version vun „[[$1]]“ uffglaade',
 	'others' => 'annere',
-);
+];
 
-$messages['pdt'] = array(
+$messages['pdt'] = [
 	'october' => 'Oktooba',
 	'october-gen' => 'Oktooba',
 	'oct' => 'Okt',
 	'otherlanguages' => 'In aundre Sproake',
 	'othercontribs' => 'Oppe Gruntloag vonne Oabeit von $1.',
 	'others' => 'aundre',
-);
+];
 
-$messages['pfl'] = array(
+$messages['pfl'] = [
 	'october' => 'Ogdower',
 	'october-gen' => 'Ogdower',
 	'oct' => 'Ogd',
 	'otherlanguages' => 'In annere Sproche',
-);
+];
 
-$messages['pi'] = array(
+$messages['pi'] = [
 	'october' => 'ओक्टोबर',
-);
+];
 
-$messages['pl'] = array(
+$messages['pl'] = [
 	'october' => 'październik',
 	'october-gen' => 'października',
 	'oct' => 'paź',
@@ -2391,22 +2386,22 @@ $messages['pl'] = array(
 	'othercontribs' => 'Inni autorzy: $1.',
 	'others' => 'inni',
 	'or' => 'lub',
-);
+];
 
-$messages['pms'] = array(
+$messages['pms'] = [
 	'october' => 'Otóber',
 	'october-gen' => 'Otóber',
 	'oct' => 'Otó',
 	'otherlanguages' => 'Àutre lenghe',
 	'ok' => 'Va bin',
 	'oldpassword' => 'Veja ciav',
-	'overwrite' => "Dzorascrive ansima a n'archivi esistent a l'é nen përmëttù.",
+	'overwrite' => 'Dzorascrive ansima a n\'archivi esistent a l\'é nen përmëttù.',
 	'overwroteimage' => 'a l\'ha carìa na version neuva ëd "[[$1]]"',
 	'othercontribs' => 'Basà ant sëj travaj ëd $1.',
 	'others' => 'àutri',
-);
+];
 
-$messages['pnb'] = array(
+$messages['pnb'] = [
 	'october' => 'اکتوبر',
 	'october-gen' => 'اکتوبر',
 	'oct' => 'اکتوبر',
@@ -2417,20 +2412,20 @@ $messages['pnb'] = array(
 	'overwroteimage' => '"[[$1]]" دا اک نواں ورین چڑھاؤ',
 	'othercontribs' => '$1 دے کم تے چلدا اے۔',
 	'others' => 'دوجے',
-);
+];
 
-$messages['pnt'] = array(
+$messages['pnt'] = [
 	'october' => 'Τρυγομηνάς',
 	'october-gen' => 'Τρυγομηνά',
 	'oct' => 'Τρυγ',
-	'otherlanguages' => "Σ' άλλα γλώσσας",
+	'otherlanguages' => 'Σ\' άλλα γλώσσας',
 	'ok' => 'Εγέντον',
 	'oldpassword' => 'Παλαιόν σημάδιν:',
 	'overwroteimage' => 'Εφορτώθεν καινούρεον μορφή τη "[[$1]]"',
-	'others' => "άλλ'",
-);
+	'others' => 'άλλ\'',
+];
 
-$messages['prg'] = array(
+$messages['prg'] = [
 	'october' => 'spallins',
 	'october-gen' => 'spallinas',
 	'oct' => 'spa',
@@ -2440,9 +2435,9 @@ $messages['prg'] = array(
 	'overwroteimage' => 'ast enkraūwuns(si) nāunan wersiōnin stesse "[[$1]]"',
 	'othercontribs' => 'Kitāi autōrai: $1.',
 	'others' => 'kitāi',
-);
+];
 
-$messages['ps'] = array(
+$messages['ps'] = [
 	'october' => 'اکتوبر',
 	'october-gen' => 'اکتوبر',
 	'oct' => 'اکتوبر',
@@ -2450,9 +2445,9 @@ $messages['ps'] = array(
 	'ok' => 'ښه',
 	'oldpassword' => 'زوړ پټنوم:',
 	'others' => 'نور',
-);
+];
 
-$messages['pt'] = array(
+$messages['pt'] = [
 	'october' => 'Outubro',
 	'october-gen' => 'Outubro',
 	'oct' => 'Out.',
@@ -2463,9 +2458,9 @@ $messages['pt'] = array(
 	'overwroteimage' => 'foi enviada uma nova versão de "[[$1]]"',
 	'othercontribs' => 'Baseado no trabalho de $1.',
 	'others' => 'outros',
-);
+];
 
-$messages['pt-br'] = array(
+$messages['pt-br'] = [
 	'october' => 'outubro',
 	'october-gen' => 'outubro',
 	'oct' => 'out.',
@@ -2476,65 +2471,65 @@ $messages['pt-br'] = array(
 	'overwroteimage' => 'enviou uma nova versão de "[[$1]]"',
 	'othercontribs' => 'Baseado no trabalho de $1.',
 	'others' => 'outros',
-);
+];
 
-$messages['qu'] = array(
+$messages['qu'] = [
 	'october' => 'uktuwri',
 	'october-gen' => 'uktuwri',
 	'oct' => 'ukt',
 	'otherlanguages' => 'Huk simikunapi',
 	'ok' => 'Arí niy',
-	'oldpassword' => "Mawk'a yaykuna rima:",
+	'oldpassword' => 'Mawk\'a yaykuna rima:',
 	'overwrite' => 'Kachkaqña willañiqita huknachayqa manam saqillasqachu.',
 	'overwroteimage' => '"[[$1]]" musuqmanta churkusqa',
 	'othercontribs' => '$1-pa rurasqanmanta paqariq.',
 	'others' => 'hukkuna',
-);
+];
 
-$messages['qug'] = array(
+$messages['qug'] = [
 	'october' => 'Yaku',
 	'october-gen' => 'Yaku',
 	'oct' => 'Yaku',
 	'otherlanguages' => 'Shuk shimikunapi',
 	'ok' => 'Ari nina',
-);
+];
 
-$messages['rgn'] = array(
+$messages['rgn'] = [
 	'october' => 'Utóbar',
 	'october-gen' => 'Utobar',
 	'oct' => 'utob',
 	'otherlanguages' => 'Ètri lènguv',
-);
+];
 
-$messages['rif'] = array(
+$messages['rif'] = [
 	'october' => 'Ktubar',
 	'october-gen' => 'Ktubar',
 	'oct' => 'Ktubar',
 	'otherlanguages' => 'S tutlayin nneḍni',
-);
+];
 
-$messages['rm'] = array(
+$messages['rm'] = [
 	'october' => 'october',
 	'october-gen' => 'october',
 	'oct' => 'oct',
 	'otherlanguages' => 'En autras linguas',
-	'ok' => "D'accord",
+	'ok' => 'D\'accord',
 	'oldpassword' => 'pled-clav vegl:',
-	'overwrite' => "Recuvrir (surscriver) datotecas existentas n'è betg lubì.",
+	'overwrite' => 'Recuvrir (surscriver) datotecas existentas n\'è betg lubì.',
 	'overwroteimage' => 'ha chargià si ina nova versiun da "[[$1]]"',
 	'othercontribs' => 'Basescha sin la lavur da $1.',
 	'others' => 'auters',
-);
+];
 
-$messages['rmy'] = array(
+$messages['rmy'] = [
 	'october' => 'deshtonai',
 	'oct' => 'desh',
 	'otherlanguages' => 'Avre ćhibande',
 	'oldpassword' => 'Purano nakahvipnasko lav',
 	'others' => 'aver',
-);
+];
 
-$messages['ro'] = array(
+$messages['ro'] = [
 	'october' => 'octombrie',
 	'october-gen' => 'octombrie',
 	'oct' => 'oct',
@@ -2545,28 +2540,28 @@ $messages['ro'] = array(
 	'overwroteimage' => 'încărcat o versiune nouă a fișierului "[[$1]]"',
 	'othercontribs' => 'Bazat pe munca lui $1.',
 	'others' => 'alții',
-);
+];
 
-$messages['roa-rup'] = array(
+$messages['roa-rup'] = [
 	'october' => 'Xumedru',
 	'october-gen' => 'Xumedru',
 	'otherlanguages' => 'Pi alte limbe',
-);
+];
 
-$messages['roa-tara'] = array(
+$messages['roa-tara'] = [
 	'october' => 'Ottòmmre',
 	'october-gen' => 'Ottòmmre',
 	'oct' => 'Ott',
-	'otherlanguages' => "Jndr'à l'otre lènghe",
+	'otherlanguages' => 'Jndr\'à l\'otre lènghe',
 	'ok' => 'OK',
 	'oldpassword' => 'Vécchie passuord:',
-	'overwrite' => "'A sovrascritture de 'nu file ca esiste non ge se pò fà.",
+	'overwrite' => '\'A sovrascritture de \'nu file ca esiste non ge se pò fà.',
 	'overwroteimage' => 'ha state carechete \'na versiona nove de "[[$1]]"',
-	'othercontribs' => "Basete sus a 'na fatije de $1.",
+	'othercontribs' => 'Basete sus a \'na fatije de $1.',
 	'others' => 'otre',
-);
+];
 
-$messages['ru'] = array(
+$messages['ru'] = [
 	'october' => 'октябрь',
 	'october-gen' => 'октября',
 	'oct' => 'окт',
@@ -2577,9 +2572,9 @@ $messages['ru'] = array(
 	'overwroteimage' => 'загружена новая версия «[[$1]]»',
 	'othercontribs' => 'В создании приняли участие: $1.',
 	'others' => 'другие',
-);
+];
 
-$messages['rue'] = array(
+$messages['rue'] = [
 	'october' => 'октобер',
 	'october-gen' => 'октобра',
 	'oct' => 'окт',
@@ -2590,33 +2585,33 @@ $messages['rue'] = array(
 	'overwroteimage' => 'начітана нова верзія "[[$1]]"',
 	'othercontribs' => 'На базї роботы $1.',
 	'others' => 'іншы',
-);
+];
 
-$messages['rup'] = array(
+$messages['rup'] = [
 	'october' => 'Xumedru',
 	'october-gen' => 'Xumedru',
 	'otherlanguages' => 'Pi alte limbe',
-);
+];
 
-$messages['ruq'] = array(
+$messages['ruq'] = [
 	'october' => 'Xumedru',
 	'october-gen' => 'Xumedru',
 	'otherlanguages' => 'Pi alte limbe',
-);
+];
 
-$messages['ruq-cyrl'] = array(
+$messages['ruq-cyrl'] = [
 	'october' => 'октомври',
 	'october-gen' => 'октомври',
 	'oct' => 'окт',
-);
+];
 
-$messages['ruq-latn'] = array(
+$messages['ruq-latn'] = [
 	'october' => 'oktombri',
 	'october-gen' => 'oktombri',
 	'oct' => 'okt',
-);
+];
 
-$messages['sa'] = array(
+$messages['sa'] = [
 	'october' => 'अष्टोबर्',
 	'october-gen' => 'अष्टोबर्',
 	'oct' => 'अष्टो॰',
@@ -2624,9 +2619,9 @@ $messages['sa'] = array(
 	'ok' => 'अस्तु',
 	'oldpassword' => 'पुरातनः कूटशब्दः',
 	'others' => 'अन्य',
-);
+];
 
-$messages['sah'] = array(
+$messages['sah'] = [
 	'october' => 'Алтынньы',
 	'october-gen' => 'Алтынньы',
 	'oct' => 'Алт',
@@ -2637,9 +2632,9 @@ $messages['sah'] = array(
 	'overwroteimage' => '"[[$1]]" киллэриллибит саҥа торума',
 	'othercontribs' => '$1 үлэтигэр олоҕурбут.',
 	'others' => 'атыттар',
-);
+];
 
-$messages['sc'] = array(
+$messages['sc'] = [
 	'october' => 'Santugaine',
 	'october-gen' => 'Santugaine',
 	'oct' => 'Stg',
@@ -2647,9 +2642,9 @@ $messages['sc'] = array(
 	'ok' => 'OK',
 	'oldpassword' => 'Password betza:',
 	'others' => 'àteros',
-);
+];
 
-$messages['scn'] = array(
+$messages['scn'] = [
 	'october' => 'Uttùviru',
 	'october-gen' => 'uttùviru',
 	'oct' => 'utt',
@@ -2659,9 +2654,9 @@ $messages['scn'] = array(
 	'overwroteimage' => 'carricata na nova virsioni di "[[$1]]"',
 	'othercontribs' => 'Basatu supra lu travagghiu di $1.',
 	'others' => 'àutri',
-);
+];
 
-$messages['sco'] = array(
+$messages['sco'] = [
 	'october' => 'October',
 	'october-gen' => 'October',
 	'oct' => 'Oct',
@@ -2670,38 +2665,38 @@ $messages['sco'] = array(
 	'oldpassword' => 'Auld password',
 	'othercontribs' => 'Based on wark bi $1.',
 	'others' => 'ithers',
-);
+];
 
-$messages['sd'] = array(
+$messages['sd'] = [
 	'october' => 'آڪٽوبر',
 	'october-gen' => 'آڪٽوبر',
 	'oct' => 'آڪٽوبر',
 	'otherlanguages' => 'ٻين ٻولين ۾',
 	'ok' => 'ٺيڪ',
-);
+];
 
-$messages['sdc'] = array(
+$messages['sdc'] = [
 	'october' => 'Santuaini',
 	'october-gen' => 'Santuaini',
 	'oct' => 'SAini',
 	'otherlanguages' => 'Althri linghi',
 	'ok' => 'EMMU',
-	'oldpassword' => "Véccia paràura d'órdhini:",
+	'oldpassword' => 'Véccia paràura d\'órdhini:',
 	'overwroteimage' => 'ha carriggaddu una nóba versioni di "[[$1]]"',
-	'othercontribs' => "Lu testhu attuari è basaddu i' li cuntributi di $1.",
+	'othercontribs' => 'Lu testhu attuari è basaddu i\' li cuntributi di $1.',
 	'others' => 'althri',
-);
+];
 
-$messages['se'] = array(
+$messages['se'] = [
 	'october' => 'golggotmánnu',
 	'october-gen' => 'golggotmánu',
 	'oct' => 'golggotmánnu',
 	'otherlanguages' => 'Eará gielaide',
 	'oldpassword' => 'Boares suollemassátni',
 	'others' => 'earát',
-);
+];
 
-$messages['sei'] = array(
+$messages['sei'] = [
 	'october' => 'Tlamantilactöx',
 	'october-gen' => 'Tlamantilactöx',
 	'oct' => 'T10',
@@ -2710,19 +2705,19 @@ $messages['sei'] = array(
 	'oldpassword' => 'Janquimx canj:',
 	'overwroteimage' => 'uploadöx hunvercion zode "[[$1]]"',
 	'othercontribs' => 'Pacdan $1 mii.',
-	'others' => "pac'detazo",
-);
+	'others' => 'pac\'detazo',
+];
 
-$messages['sg'] = array(
+$messages['sg'] = [
 	'october' => 'Ngberere',
 	'october-gen' => 'Ngberere',
 	'oct' => 'Ngb',
 	'otherlanguages' => 'Na mbênî âyângâ',
 	'ok' => 'Nî laâ!',
 	'others' => 'mbênî',
-);
+];
 
-$messages['sgs'] = array(
+$messages['sgs'] = [
 	'october' => 'spalė',
 	'october-gen' => 'Spalis',
 	'oct' => 'spa',
@@ -2731,9 +2726,9 @@ $messages['sgs'] = array(
 	'oldpassword' => 'Sens slaptažuodis:',
 	'overwroteimage' => 'ikruovė nauja „[[$1]]“ versėjė',
 	'others' => 'kėtė',
-);
+];
 
-$messages['sh'] = array(
+$messages['sh'] = [
 	'october' => 'oktobar',
 	'october-gen' => 'oktobar',
 	'oct' => 'okt',
@@ -2744,18 +2739,18 @@ $messages['sh'] = array(
 	'overwroteimage' => 'postavljena nova verzija datoteke "[[$1]]"',
 	'othercontribs' => 'Bazirano na radu od strane korisnika $1.',
 	'others' => 'ostali',
-);
+];
 
-$messages['shi'] = array(
+$messages['shi'] = [
 	'october' => 'Kṭubr',
 	'october-gen' => 'Kṭubr',
 	'oct' => 'kṭuber',
 	'otherlanguages' => 'S tutlayin yaḍnin',
 	'ok' => 'Waxxa',
 	'oldpassword' => 'Awal iḥḍan aqbur',
-);
+];
 
-$messages['si'] = array(
+$messages['si'] = [
 	'october' => 'ඔක්තෝබර්',
 	'october-gen' => 'ඔක්තෝබර්',
 	'oct' => 'ඔක්',
@@ -2766,9 +2761,9 @@ $messages['si'] = array(
 	'overwroteimage' => ' "[[$1]]" හි නව අනුවාදයක් උඩුගත කරන ලදි',
 	'othercontribs' => '$1ගේ කෘතිය මත පදනම් විය.',
 	'others' => 'අනෙකුන්',
-);
+];
 
-$messages['sk'] = array(
+$messages['sk'] = [
 	'october' => 'október',
 	'october-gen' => 'októbra',
 	'oct' => 'okt',
@@ -2779,9 +2774,9 @@ $messages['sk'] = array(
 	'overwroteimage' => 'bola nahraná nová verzia „[[$1]]“',
 	'othercontribs' => 'Založené na práci $1.',
 	'others' => 'iné',
-);
+];
 
-$messages['sl'] = array(
+$messages['sl'] = [
 	'october' => 'oktober',
 	'october-gen' => 'oktobra',
 	'oct' => 'okt.',
@@ -2792,9 +2787,9 @@ $messages['sl'] = array(
 	'overwroteimage' => 'je naložil(-a) novo različico datoteke »[[$1]]«',
 	'othercontribs' => 'Temelji na delu $1.',
 	'others' => 'drugi',
-);
+];
 
-$messages['sli'] = array(
+$messages['sli'] = [
 	'october' => 'Oktober',
 	'october-gen' => 'Oktobers',
 	'oct' => 'Okt.',
@@ -2803,39 +2798,39 @@ $messages['sli'] = array(
 	'overwroteimage' => 'hoot anne neue Version vu „[[$1]]“ huchgeloada',
 	'othercontribs' => 'Basierend uff der Arbeet vu $1.',
 	'others' => 'oandera',
-);
+];
 
-$messages['sm'] = array(
+$messages['sm'] = [
 	'october' => 'Oketopa',
 	'october-gen' => 'Oketopa',
 	'oct' => 'Oketopa',
 	'otherlanguages' => 'I isi gagana',
-);
+];
 
-$messages['sma'] = array(
+$messages['sma'] = [
 	'october' => 'Golke',
 	'october-gen' => 'Golke',
 	'oct' => 'Gol',
 	'otherlanguages' => 'jeatjebh gïele',
 	'oldpassword' => 'Båeries loevesbaakoe:',
-);
+];
 
-$messages['sn'] = array(
+$messages['sn'] = [
 	'october' => 'Gumiguru',
 	'october-gen' => 'Gumiguru',
 	'otherlanguages' => 'Mimwe Mitauro',
-);
+];
 
-$messages['so'] = array(
+$messages['so'] = [
 	'october' => 'Oktoobar',
 	'october-gen' => 'Oktoobar',
 	'oct' => 'Okt',
 	'otherlanguages' => 'Luqadaha kale',
 	'oldpassword' => 'Ereysirkii hore:',
 	'othercontribs' => 'Waxay ku saleysantahay shaqada $1.',
-);
+];
 
-$messages['sq'] = array(
+$messages['sq'] = [
 	'october' => 'tetor',
 	'october-gen' => 'tetor',
 	'oct' => 'Tet',
@@ -2846,9 +2841,9 @@ $messages['sq'] = array(
 	'overwroteimage' => 'dha dhe zëvendësoi me një version të ri të "[[$1]]"',
 	'othercontribs' => 'Bazuar në punën e: $1',
 	'others' => 'të tjerë',
-);
+];
 
-$messages['sr'] = array(
+$messages['sr'] = [
 	'october' => 'tetor',
 	'october-gen' => 'tetor',
 	'oct' => 'Tet',
@@ -2859,9 +2854,9 @@ $messages['sr'] = array(
 	'overwroteimage' => 'dha dhe zëvendësoi me një version të ri të "[[$1]]"',
 	'othercontribs' => 'Bazuar në punën e: $1',
 	'others' => 'të tjerë',
-);
+];
 
-$messages['sr-ec'] = array(
+$messages['sr-ec'] = [
 	'october' => 'октобар',
 	'october-gen' => 'октобра',
 	'oct' => 'окт',
@@ -2872,9 +2867,9 @@ $messages['sr-ec'] = array(
 	'overwroteimage' => '{{GENDER:|је послао|је послала|је послао}} ново издање „[[$1]]“',
 	'othercontribs' => 'Засновано на раду корисникâ $1.',
 	'others' => 'други',
-);
+];
 
-$messages['sr-el'] = array(
+$messages['sr-el'] = [
 	'october' => 'oktobar',
 	'october-gen' => 'oktobra',
 	'oct' => 'okt',
@@ -2884,9 +2879,9 @@ $messages['sr-el'] = array(
 	'overwroteimage' => 'poslata nova verzija "[[$1]]"',
 	'othercontribs' => 'Bazirano na radu korisnika $1.',
 	'others' => 'ostali',
-);
+];
 
-$messages['srn'] = array(
+$messages['srn'] = [
 	'october' => 'fostin mun',
 	'october-gen' => 'fostin mun',
 	'oct' => 'tin',
@@ -2894,24 +2889,24 @@ $messages['srn'] = array(
 	'ok' => 'Abun',
 	'oldpassword' => 'Owru waktiwortu:',
 	'overwroteimage' => 'abi wan nyun si fu "[[$1]]" e uploti',
-);
+];
 
-$messages['ss'] = array(
+$messages['ss'] = [
 	'october' => 'iMphala',
 	'october-gen' => 'iMphala',
 	'oct' => 'iMpha',
 	'otherlanguages' => 'Ngaletinye tilwimi',
 	'ok' => 'Kulungile',
-);
+];
 
-$messages['st'] = array(
+$messages['st'] = [
 	'october' => 'Mphalane',
 	'oct' => 'Mphala',
 	'otherlanguages' => 'Ka maleme a mang',
 	'oldpassword' => 'Lepetjo la kgale:',
-);
+];
 
-$messages['stq'] = array(
+$messages['stq'] = [
 	'october' => 'Oktober',
 	'october-gen' => 'Oktober',
 	'oct' => 'Okt',
@@ -2922,9 +2917,9 @@ $messages['stq'] = array(
 	'overwroteimage' => 'häd ne näie Version fon „[[$1]]“ hoochleeden',
 	'othercontribs' => 'Basierd ap ju Oarbaid fon $1.',
 	'others' => 'uur',
-);
+];
 
-$messages['su'] = array(
+$messages['su'] = [
 	'october' => 'Oktober',
 	'october-gen' => 'Oktober',
 	'oct' => 'Okt',
@@ -2934,9 +2929,9 @@ $messages['su'] = array(
 	'overwroteimage' => 'Muatkeun koropak nu anyar ti "[[$1]]"',
 	'othercontribs' => 'Dumasar karya $1.',
 	'others' => 'Séjénna',
-);
+];
 
-$messages['sv'] = array(
+$messages['sv'] = [
 	'october' => 'oktober',
 	'october-gen' => 'oktobers',
 	'oct' => 'okt',
@@ -2947,9 +2942,9 @@ $messages['sv'] = array(
 	'overwroteimage' => 'laddade upp ny version av "[[$1]]"',
 	'othercontribs' => 'Baserad på arbete av $1.',
 	'others' => 'andra',
-);
+];
 
-$messages['sw'] = array(
+$messages['sw'] = [
 	'october' => 'Oktoba',
 	'october-gen' => 'Oktoba',
 	'oct' => 'Okt',
@@ -2960,9 +2955,9 @@ $messages['sw'] = array(
 	'overwroteimage' => 'alipakia toleo jipya la "[[$1]]"',
 	'othercontribs' => 'Ukurasa uliandikwa pia na $1.',
 	'others' => 'wengine',
-);
+];
 
-$messages['szl'] = array(
+$messages['szl'] = [
 	'october' => 'paźdźerńik',
 	'october-gen' => 'paźdźerńika',
 	'oct' => 'paź',
@@ -2972,9 +2967,9 @@ $messages['szl'] = array(
 	'overwroteimage' => 'wćepano nowšo wersyjo "[[$1]]"',
 	'othercontribs' => 'Inkše autory: $1.',
 	'others' => 'inkśi',
-);
+];
 
-$messages['ta'] = array(
+$messages['ta'] = [
 	'october' => 'அக்டோபர்',
 	'october-gen' => 'அக்டோபர்',
 	'oct' => 'அக்',
@@ -2985,18 +2980,18 @@ $messages['ta'] = array(
 	'overwroteimage' => '"[[$1]]" கோப்பின் புதிய பதிப்பை பதிவேற்று',
 	'othercontribs' => '$1 உடைய ஆக்கத்தை அடிப்படையாகக் கொண்டது.',
 	'others' => 'மற்றவைகள்',
-);
+];
 
-$messages['tcy'] = array(
+$messages['tcy'] = [
 	'october' => 'ಅಕ್ಟೋಬರ್',
 	'october-gen' => 'ಅಕ್ಟೋಬರ್',
 	'oct' => 'ಅಕ್ಟೋಬರ್',
 	'otherlanguages' => 'ಬೇತೆ ಭಾಷೆಲೆಡ್',
 	'ok' => 'ಸರಿ',
 	'oldpassword' => 'ಪರ ಪ್ರವೇಶಪದ',
-);
+];
 
-$messages['te'] = array(
+$messages['te'] = [
 	'october' => 'అక్టోబరు',
 	'october-gen' => 'అక్టోబరు',
 	'oct' => 'అక్టో',
@@ -3007,25 +3002,25 @@ $messages['te'] = array(
 	'overwroteimage' => '"[[$1]]" యొక్క కొత్త కూర్పును ఎక్కించారు',
 	'othercontribs' => '$1 యొక్క కృతిపై ఆధారితం.',
 	'others' => 'ఇతరాలు',
-);
+];
 
-$messages['tet'] = array(
+$messages['tet'] = [
 	'october' => 'Outubru',
 	'october-gen' => 'Outubru nian',
 	'oct' => 'Out.',
 	'otherlanguages' => 'Iha lian seluk',
 	'ok' => 'OK',
-);
+];
 
-$messages['tg'] = array(
+$messages['tg'] = [
 	'october' => 'Outubru',
 	'october-gen' => 'Outubru nian',
 	'oct' => 'Out.',
 	'otherlanguages' => 'Iha lian seluk',
 	'ok' => 'OK',
-);
+];
 
-$messages['tg-cyrl'] = array(
+$messages['tg-cyrl'] = [
 	'october' => 'Октябр',
 	'october-gen' => 'Октябр',
 	'oct' => 'Окт',
@@ -3035,9 +3030,9 @@ $messages['tg-cyrl'] = array(
 	'overwroteimage' => 'нусхаи ҷадиди "[[$1]]" боргузорӣ шуд',
 	'othercontribs' => 'Дар асоси коре аз тарафи $1.',
 	'others' => 'дигарон',
-);
+];
 
-$messages['tg-latn'] = array(
+$messages['tg-latn'] = [
 	'october' => 'Oktjabr',
 	'october-gen' => 'Oktjabr',
 	'oct' => 'Okt',
@@ -3047,9 +3042,9 @@ $messages['tg-latn'] = array(
 	'overwroteimage' => 'nusxai çadidi "[[$1]]" borguzorī şud',
 	'othercontribs' => 'Dar asosi kore az tarafi $1.',
 	'others' => 'digaron',
-);
+];
 
-$messages['th'] = array(
+$messages['th'] = [
 	'october' => 'ตุลาคม',
 	'october-gen' => 'ตุลาคม',
 	'oct' => 'ต.ค.',
@@ -3060,13 +3055,13 @@ $messages['th'] = array(
 	'overwroteimage' => 'อัปโหลดรุ่นใหม่ของ "[[$1]]"',
 	'othercontribs' => 'พัฒนาจากงานเขียนของ $1',
 	'others' => 'ผู้อื่น',
-);
+];
 
-$messages['ti'] = array(
+$messages['ti'] = [
 	'october' => 'ጥቅምቲ',
-);
+];
 
-$messages['tk'] = array(
+$messages['tk'] = [
 	'october' => 'oktýabr',
 	'october-gen' => 'oktýabr',
 	'oct' => 'okt',
@@ -3077,9 +3072,9 @@ $messages['tk'] = array(
 	'overwroteimage' => '"[[$1]]" faýlynyň täze wersiýasy ýüklendi',
 	'othercontribs' => 'Döredilmegine gatnaşanlar: $1.',
 	'others' => 'beýlekiler',
-);
+];
 
-$messages['tl'] = array(
+$messages['tl'] = [
 	'october' => 'Oktubre',
 	'october-gen' => 'Oktubre',
 	'oct' => 'Okt',
@@ -3090,15 +3085,15 @@ $messages['tl'] = array(
 	'overwroteimage' => 'nagkarga ng isang bagong bersyon ng "[[$1]]"',
 	'othercontribs' => 'Batay sa gawa ni/nina $1.',
 	'others' => 'iba pa',
-);
+];
 
-$messages['tn'] = array(
+$messages['tn'] = [
 	'october' => 'Phalane',
 	'october-gen' => 'Phalane',
 	'otherlanguages' => 'Ka dipuo di sele',
-);
+];
 
-$messages['to'] = array(
+$messages['to'] = [
 	'october' => 'ʻOkatopa',
 	'october-gen' => 'ʻOkatopa',
 	'oct' => 'ʻOka',
@@ -3106,24 +3101,24 @@ $messages['to'] = array(
 	'ok' => 'Fai ā',
 	'oldpassword' => 'Ko e leatapu motuʻa:',
 	'others' => 'ngaahi toe',
-);
+];
 
-$messages['tokipona'] = array(
+$messages['tokipona'] = [
 	'october' => 'tenpo mun pi nanpa luka luka',
 	'otherlanguages' => 'toki ante',
 	'ok' => 'pona',
-);
+];
 
-$messages['tpi'] = array(
+$messages['tpi'] = [
 	'october' => 'Oktoba',
 	'october-gen' => 'Oktoba',
 	'oct' => 'Okt',
 	'otherlanguages' => 'Long ol narapela tokples',
 	'ok' => 'OK',
 	'others' => 'ol narapela',
-);
+];
 
-$messages['tr'] = array(
+$messages['tr'] = [
 	'october' => 'Ekim',
 	'october-gen' => 'Ekim',
 	'oct' => 'Eki',
@@ -3134,14 +3129,14 @@ $messages['tr'] = array(
 	'overwroteimage' => '"[[$1]]" resminin yeni versiyonu yüklenmiştir',
 	'othercontribs' => '$1 tarafından yapılan çalışma baz alınmıştır.',
 	'others' => 'diğerleri',
-);
+];
 
-$messages['ts'] = array(
+$messages['ts'] = [
 	'october' => 'Nhlangula',
 	'ok' => 'Hiswona',
-);
+];
 
-$messages['tt-cyrl'] = array(
+$messages['tt-cyrl'] = [
 	'october' => 'октябрь',
 	'october-gen' => 'октябрь',
 	'oct' => 'окт',
@@ -3150,9 +3145,9 @@ $messages['tt-cyrl'] = array(
 	'oldpassword' => 'Иске серсүз:',
 	'overwroteimage' => '«[[$1]]» файлының яңа юрамасы йөкләнелде',
 	'othercontribs' => '«$1» эшенә нигезләнә.',
-);
+];
 
-$messages['tt-latn'] = array(
+$messages['tt-latn'] = [
 	'october' => 'oktäber',
 	'october-gen' => 'oktäber',
 	'oct' => 'okt',
@@ -3162,36 +3157,36 @@ $messages['tt-latn'] = array(
 	'overwroteimage' => '«[[$1]]» faylınıñ yaña yuraması yöklänelde',
 	'othercontribs' => '«$1» eşenä nigezlänä.',
 	'others' => 'başqalar',
-);
+];
 
-$messages['ty'] = array(
+$messages['ty'] = [
 	'october' => 'nō ’ātopa',
 	'october-gen' => 'nō ’ātopa',
 	'oct' => 'nō ’ātopa',
-);
+];
 
-$messages['tyv'] = array(
+$messages['tyv'] = [
 	'october' => 'Он ай',
 	'october-gen' => 'Он ай',
 	'oct' => '10.ай',
 	'otherlanguages' => 'Өске дылдарга',
 	'ok' => 'Чөп',
 	'oldpassword' => 'Эгри чажыт сөс:',
-);
+];
 
-$messages['udm'] = array(
+$messages['udm'] = [
 	'october' => 'коньывуон',
 	'october-gen' => 'коньывуонэ',
 	'oct' => 'квт',
-);
+];
 
-$messages['ug'] = array(
+$messages['ug'] = [
 	'october' => 'коньывуон',
 	'october-gen' => 'коньывуонэ',
 	'oct' => 'квт',
-);
+];
 
-$messages['ug-arab'] = array(
+$messages['ug-arab'] = [
 	'october' => 'ئوغۇز',
 	'october-gen' => 'ئوغۇز',
 	'oct' => 'ئوغۇز',
@@ -3202,17 +3197,17 @@ $messages['ug-arab'] = array(
 	'overwroteimage' => ' "[[$1]]" نىڭ يېڭى نەشرى يۈكلەندى',
 	'othercontribs' => '$1 نىڭ خىزمىتى ئاساسىدا.',
 	'others' => 'باشقا',
-);
+];
 
-$messages['ug-latn'] = array(
+$messages['ug-latn'] = [
 	'october' => 'Öktebir',
 	'october-gen' => 'Öktebir',
 	'oct' => '10-Ay',
 	'otherlanguages' => 'Bashqa tillarda',
 	'ok' => 'MAQUL',
-);
+];
 
-$messages['uk'] = array(
+$messages['uk'] = [
 	'october' => 'жовтень',
 	'october-gen' => 'жовтня',
 	'oct' => 'жов',
@@ -3223,9 +3218,9 @@ $messages['uk'] = array(
 	'overwroteimage' => 'завантажив нову версію «[[$1]]»',
 	'othercontribs' => 'Базується на праці $1.',
 	'others' => 'інші',
-);
+];
 
-$messages['ur'] = array(
+$messages['ur'] = [
 	'october' => 'اکتوبر',
 	'october-gen' => 'اکتوبر',
 	'oct' => 'اکتوبر',
@@ -3233,28 +3228,28 @@ $messages['ur'] = array(
 	'ok' => 'ٹھیک ہے',
 	'oldpassword' => 'پرانا کلمۂ شناخت:',
 	'others' => 'دیگر',
-);
+];
 
-$messages['uz'] = array(
+$messages['uz'] = [
 	'october' => 'oktabr',
 	'october-gen' => 'oktabrning',
 	'oct' => 'okt',
 	'otherlanguages' => 'Boshqa tillarda',
-);
+];
 
-$messages['val'] = array(
+$messages['val'] = [
 	'october' => 'octubre',
 	'october-gen' => 'octubre',
 	'oct' => 'oct',
 	'otherlanguages' => 'En atres llengües',
-	'ok' => "D'acort",
+	'ok' => 'D\'acort',
 	'orig' => 'orig',
 	'oldpassword' => 'Contrasenya antiga',
 	'othercontribs' => 'Basat en les contribucions de $1.',
 	'others' => 'atres',
-);
+];
 
-$messages['vec'] = array(
+$messages['vec'] = [
 	'october' => 'otobre',
 	'october-gen' => 'otobre',
 	'oct' => 'oto',
@@ -3265,9 +3260,9 @@ $messages['vec'] = array(
 	'overwroteimage' => 'gà cargà na version nova de "[[$1]]"',
 	'othercontribs' => 'El testo atuale el xe basà su contributi de $1.',
 	'others' => 'altri',
-);
+];
 
-$messages['vep'] = array(
+$messages['vep'] = [
 	'october' => 'reduku',
 	'october-gen' => 'redukun',
 	'oct' => 'reduku',
@@ -3278,9 +3273,9 @@ $messages['vep'] = array(
 	'overwroteimage' => 'jügutoiti "[[$1]]"-failan uden versijan',
 	'othercontribs' => 'Aluz - tö, kudamban tegi $1.',
 	'others' => 'toižed',
-);
+];
 
-$messages['vi'] = array(
+$messages['vi'] = [
 	'october' => 'tháng 10',
 	'october-gen' => 'tháng Mười',
 	'oct' => 'tháng 10',
@@ -3291,23 +3286,23 @@ $messages['vi'] = array(
 	'overwroteimage' => 'đã tải lên một phiên bản mới của “[[$1]]”',
 	'othercontribs' => 'Dựa trên công trình của $1.',
 	'others' => 'những người khác',
-);
+];
 
-$messages['vls'] = array(
+$messages['vls'] = [
 	'october' => 'oktober',
 	'october-gen' => 'oktober',
 	'oct' => 'okt',
-);
+];
 
-$messages['vmf'] = array(
+$messages['vmf'] = [
 	'october' => 'Ogdoobär',
 	'october-gen' => 'fom Ogdoowâr',
 	'oct' => 'Ogd.',
 	'otherlanguages' => 'In anäre schbrôôchng',
 	'ok' => 'In ôrdnung',
-);
+];
 
-$messages['vo'] = array(
+$messages['vo'] = [
 	'october' => 'tobul',
 	'october-gen' => 'tobul',
 	'oct' => 'tob',
@@ -3317,16 +3312,16 @@ $messages['vo'] = array(
 	'overwroteimage' => 'fomami nulik ragiva: „[[$1]]“ pelöpükon',
 	'othercontribs' => 'Stabü vob gebana: $1.',
 	'others' => 'votiks',
-);
+];
 
-$messages['vot'] = array(
+$messages['vot'] = [
 	'october' => 'okťaabri',
 	'october-gen' => 'okťaabrii',
 	'oct' => 'okťaabri',
 	'otherlanguages' => 'Muilla tšeelillä',
-);
+];
 
-$messages['vro'] = array(
+$messages['vro'] = [
 	'october' => 'rehekuu',
 	'october-gen' => 'rehekuu',
 	'oct' => 'rehek',
@@ -3336,20 +3331,20 @@ $messages['vro'] = array(
 	'overwroteimage' => 'üles laadit "[[$1]]" vahtsõnõ kujo',
 	'othercontribs' => 'Tennüq pruukja $1.',
 	'others' => 'tõõsõq',
-);
+];
 
-$messages['wa'] = array(
+$messages['wa'] = [
 	'october' => 'octôbe',
 	'october-gen' => 'octôbe',
 	'oct' => 'oct',
 	'otherlanguages' => 'Ôtes lingaedjes',
-	'ok' => "'l est bon",
+	'ok' => '\'l est bon',
 	'oldpassword' => 'Vî scret',
-	'othercontribs' => "Båzé so l' ovraedje da $1.",
+	'othercontribs' => 'Båzé so l\' ovraedje da $1.',
 	'others' => 'des ôtes',
-);
+];
 
-$messages['war'] = array(
+$messages['war'] = [
 	'october' => 'Oktubre',
 	'october-gen' => 'han Oktubre',
 	'oct' => 'Okt',
@@ -3357,9 +3352,9 @@ $messages['war'] = array(
 	'ok' => 'OK',
 	'oldpassword' => 'Daan nga tigaman-pagsulod:',
 	'othercontribs' => 'Ginbasihan ha binuhat ni $1.',
-);
+];
 
-$messages['wo'] = array(
+$messages['wo'] = [
 	'october' => 'Oktoobar',
 	'october-gen' => 'Oktoobar',
 	'oct' => 'Okt',
@@ -3369,41 +3364,41 @@ $messages['wo'] = array(
 	'overwroteimage' => 'moo yeb sumb bu bees bu « [[$1]] »',
 	'othercontribs' => 'Mi ngi dàttu ci liggéeyu $1.',
 	'others' => 'yeneen',
-);
+];
 
-$messages['wuu'] = array(
+$messages['wuu'] = [
 	'october' => '10月',
 	'october-gen' => '十月',
 	'oct' => '10月',
 	'otherlanguages' => '别样闲话版本',
 	'ok' => '确认',
 	'oldpassword' => '旧密码:',
-);
+];
 
-$messages['xal'] = array(
+$messages['xal'] = [
 	'october' => 'Хулһн сар',
 	'october-gen' => 'Хулһн сарин',
 	'oct' => 'Хул',
 	'otherlanguages' => 'Талдан келәр',
 	'ok' => 'Тиим',
 	'oldpassword' => 'Көгшн нууц үг:',
-);
+];
 
-$messages['xh'] = array(
+$messages['xh'] = [
 	'october' => 'Eye Dwarha',
 	'october-gen' => 'Eye Dwarha',
 	'otherlanguages' => 'Kwezinye Ilwimi',
-);
+];
 
-$messages['xmf'] = array(
+$messages['xmf'] = [
 	'october' => 'გჷმათუთა',
 	'october-gen' => 'გჷმათუთაშ',
 	'oct' => 'გჷმ.',
 	'otherlanguages' => 'შხვა ნინეფს',
 	'ok' => 'ჯგირი',
-);
+];
 
-$messages['yi'] = array(
+$messages['yi'] = [
 	'october' => 'אָקטאָבער',
 	'october-gen' => 'אקטאבער',
 	'oct' => 'אָקט׳',
@@ -3414,9 +3409,9 @@ $messages['yi'] = array(
 	'overwroteimage' => 'אַרויפֿגעלאָדן א נײַע ווערסיע פון "[[$1]]"',
 	'othercontribs' => 'באזירט אויף ארבעט פון $1.',
 	'others' => 'אנדערע',
-);
+];
 
-$messages['yo'] = array(
+$messages['yo'] = [
 	'october' => 'Oṣù Kẹ̀wá',
 	'october-gen' => 'Oṣù Kẹ̀wá',
 	'oct' => 'Oṣù 10',
@@ -3426,9 +3421,9 @@ $messages['yo'] = array(
 	'overwroteimage' => 'ṣe ìrùsókè àtúnyẹ̀wò tuntun "[[$1]]"',
 	'othercontribs' => 'Dídálórí iṣẹ́ ti $1.',
 	'others' => 'àwọn mìíràn',
-);
+];
 
-$messages['yue'] = array(
+$messages['yue'] = [
 	'october' => '10月',
 	'october-gen' => '十月',
 	'oct' => '10月',
@@ -3439,24 +3434,24 @@ $messages['yue'] = array(
 	'overwroteimage' => '已經上載咗"[[$1]]"嘅新版本',
 	'othercontribs' => '以$1嘅作品為基礎。',
 	'others' => '其他',
-);
+];
 
-$messages['za'] = array(
+$messages['za'] = [
 	'october' => 'Nin Cwbx',
 	'october-gen' => 'Cib nyied',
 	'oct' => 'Cibnyied',
-);
+];
 
-$messages['zea'] = array(
+$messages['zea'] = [
 	'october' => 'oktober',
 	'october-gen' => 'oktober',
 	'oct' => 'okt',
 	'otherlanguages' => 'In aore taelen',
 	'ok' => 'OK',
 	'oldpassword' => 'Udihe wachtwoôrd:',
-);
+];
 
-$messages['zh-hans'] = array(
+$messages['zh-hans'] = [
 	'october' => '10月',
 	'october-gen' => '十月',
 	'oct' => '10月',
@@ -3467,9 +3462,9 @@ $messages['zh-hans'] = array(
 	'overwroteimage' => '上传“[[$1]]”的新版本',
 	'othercontribs' => '在$1的工作基础上。',
 	'others' => '其他',
-);
+];
 
-$messages['zh-hant'] = array(
+$messages['zh-hant'] = [
 	'october' => '10月',
 	'october-gen' => '十月',
 	'oct' => '10月',
@@ -3480,42 +3475,42 @@ $messages['zh-hant'] = array(
 	'overwroteimage' => '已經上傳「[[$1]]」的新版本',
 	'othercontribs' => '在$1的工作基礎上。',
 	'others' => '其他',
-);
+];
 
-$messages['zh-hk'] = array(
+$messages['zh-hk'] = [
 	'october' => '十月',
-);
+];
 
-$messages['zh-min-nan'] = array(
+$messages['zh-min-nan'] = [
 	'october' => '十月',
-);
+];
 
-$messages['zh-mo'] = array(
+$messages['zh-mo'] = [
 	'october' => '十月',
-);
+];
 
-$messages['zh-my'] = array(
+$messages['zh-my'] = [
 	'october' => '十月',
-);
+];
 
-$messages['zh-tw'] = array(
-	'october' => '十月',
-	'october-gen' => '十月',
-	'oct' => '10月',
-	'oldpassword' => '舊密碼',
-);
-
-$messages['zh-yue'] = array(
+$messages['zh-tw'] = [
 	'october' => '十月',
 	'october-gen' => '十月',
 	'oct' => '10月',
 	'oldpassword' => '舊密碼',
-);
+];
 
-$messages['zu'] = array(
+$messages['zh-yue'] = [
+	'october' => '十月',
+	'october-gen' => '十月',
+	'oct' => '10月',
+	'oldpassword' => '舊密碼',
+];
+
+$messages['zu'] = [
 	'october' => 'u-Okthoba',
 	'october-gen' => 'u-Okthoba',
 	'otherlanguages' => 'Ngezilimi ezinahlukene',
 	'others' => 'Abanye',
-);
+];
 
