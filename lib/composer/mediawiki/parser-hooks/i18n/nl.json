@@ -1,8 +1,0 @@
-{
-	"@metadata": {
-		"authors": [
-			"Siebrand"
-		]
-	},
-	"parserhooks-desc": "OOP-interface voor het maken van parserhooks voor MediaWiki op een declarative wijze"
-}

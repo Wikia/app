@@ -33,15 +33,21 @@ class SFTextAreaWithAutocompleteInput extends SFTextAreaInput {
 	protected function getTextAreaAttributes() {
 		$textarea_attrs = parent::getTextAreaAttributes();
 
-		list( $autocompleteSettings, $remoteDataType, $delimiter ) = SFTextWithAutocompleteInput::setAutocompleteValues( $this->mOtherArgs );
+		// If 'no autocomplete' was specified, print a regular
+		// textarea instead.
+		if ( !array_key_exists( 'no autocomplete', $this->mOtherArgs ) ||
+			$this->mOtherArgs['no autocomplete'] == false
+		) {
+			list( $autocompleteSettings, $remoteDataType, $delimiter ) = SFTextWithAutocompleteInput::setAutocompleteValues( $this->mOtherArgs );
 
-		if ( !is_null( $remoteDataType ) ) {
-			$textarea_attrs['autocompletedatatype'] = $remoteDataType;
+			if ( !is_null( $remoteDataType ) ) {
+				$textarea_attrs['autocompletedatatype'] = $remoteDataType;
+			}
+
+			$textarea_attrs['autocompletesettings'] = $autocompleteSettings;
+
+			$textarea_attrs['class'] .= ' autocompleteInput';
 		}
-
-		$textarea_attrs['autocompletesettings'] = $autocompleteSettings;
-
-		$textarea_attrs['class'] .= ' autocompleteInput';
 
 		return $textarea_attrs;
 	}
