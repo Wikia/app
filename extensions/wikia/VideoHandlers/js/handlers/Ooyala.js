@@ -131,8 +131,12 @@ define('wikia.videohandler.ooyala', [
 			});
 		}
 
-		function initPlayer () {
-			recoveryHelper.isBlocking() ? initRecoveredPlayer() : initRegularPlayer();
+		function initPlayer() {
+			if (recoveryHelper.isBlocking()) {
+				initRecoveredPlayer();
+			} else {
+				initRegularPlayer();
+			}
 		}
 
 		// Only load the Ooyala player code once, Ooyala AgeGates will break if we load this asset more than once.
@@ -155,8 +159,11 @@ define('wikia.videohandler.ooyala', [
 				log( 'All Ooyala assets loaded', log.levels.info, 'VideoBootstrap' );
 
 				win.OO.ready(function () {
-					recoveryHelper.isRecoveryEnabled() ?
-						recoveryHelper.runAfterDetection(initPlayer) : initRegularPlayer();
+					if (recoveryHelper.isRecoveryEnabled()) {
+						recoveryHelper.runAfterDetection(initPlayer);
+					} else {
+						initRegularPlayer();
+					}
 				});
 
 			}).fail( loadFail );

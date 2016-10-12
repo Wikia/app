@@ -99,13 +99,13 @@ define('ext.wikia.aRecoveryEngine.recovery.helper', [
 	}
 
 	return {
-		runAfterDetection: runAfterDetection,
 		addOnBlockingCallback: addOnBlockingCallback,
 		getSafeUri: getSafeUri,
 		initEventQueue: initEventQueue,
-		isRecoveryEnabled: isRecoveryEnabled,
 		isBlocking: isBlocking,
 		isRecoverable: isRecoverable,
+		isRecoveryEnabled: isRecoveryEnabled,
+		runAfterDetection: runAfterDetection,
 		track: track,
 		verifyContent: verifyContent
 	};
