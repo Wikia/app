@@ -10,7 +10,7 @@ class ThreadCreator {
 
 	const SERVICE_NAME = "discussion";
 
-	public function create( int $userId, int $siteId, string $body, $title = null ) : bool {
+	public function create( int $userId, int $siteId, string $body, $title = null ): bool {
 		$postInput = $this->getPostInput( $siteId, $body, $title );
 		$api = $this->getThreadsApi( $userId );
 
@@ -27,7 +27,7 @@ class ThreadCreator {
 		return $success;
 	}
 
-	private function getPostInput( int $siteId, string $body, $title ) : PostInput {
+	private function getPostInput( int $siteId, string $body, $title ): PostInput {
 		return ( new PostInput() )
 			->setSiteId( $siteId )
 			->setBody( $body )
@@ -35,7 +35,7 @@ class ThreadCreator {
 
 	}
 
-	private function getThreadsApi( int $userId ) : ThreadsApi {
+	private function getThreadsApi( int $userId ): ThreadsApi {
 		/** @var ApiProvider $apiProvider */
 		$apiProvider = Injector::getInjector()->get( ApiProvider::class );
 		/** @var \Swagger\Client\Discussion\Api\ThreadsApi $api */
@@ -45,7 +45,7 @@ class ThreadCreator {
 		return $api;
 	}
 
-	private function logError( int $siteId, int $userId, string $body, Exception $e ) : void {
+	private function logError( int $siteId, int $userId, string $body, Exception $e ) {
 		Wikia\Logger\WikiaLogger::instance()->warning(
 			'DISCUSSIONS Error creating thread',
 			[
