@@ -8,8 +8,7 @@ define('ext.wikia.adEngine.context.slotsContext', [
 ], function (adContext, params, geo, instantGlobals, log) {
 	'use strict';
 
-	var context = adContext.getContext(),
-		logGroup = 'ext.wikia.adEngine.context.slotsContext',
+	var logGroup = 'ext.wikia.adEngine.context.slotsContext',
 		slots = null;
 
 	function setStatus(slotName, status) {
@@ -17,7 +16,8 @@ define('ext.wikia.adEngine.context.slotsContext', [
 	}
 
 	function setupSlots() {
-		var isHome = params.getPageType() === 'home';
+		var context = adContext.getContext(),
+			isHome = params.getPageType() === 'home';
 
 		slots = {};
 
@@ -38,10 +38,6 @@ define('ext.wikia.adEngine.context.slotsContext', [
 	}
 
 	function isApplicable(slotName) {
-		if (slots === null) {
-			setupSlots();
-		}
-
 		return slots[slotName] !== false;
 	}
 
@@ -56,6 +52,11 @@ define('ext.wikia.adEngine.context.slotsContext', [
 
 		return map;
 	}
+
+	setupSlots();
+	adContext.addCallback(function () {
+		setupSlots();
+	});
 
 	return {
 		filterSlotMap: filterSlotMap,

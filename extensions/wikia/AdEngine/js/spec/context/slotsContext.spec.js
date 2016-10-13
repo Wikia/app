@@ -10,6 +10,7 @@ describe('ext.wikia.adEngine.context.uapContext', function () {
 			opts: {}
 		},
 		adContext: {
+			addCallback: noop,
 			getContext: function () {
 				return mocks.context;
 			}
@@ -56,9 +57,8 @@ describe('ext.wikia.adEngine.context.uapContext', function () {
 	});
 
 	it('on home page mark article slots as disabled', function () {
-		var context = getContext();
-
 		mocks.context.pageType = 'home';
+		var context = getContext();
 
 		expect(context.isApplicable('TOP_LEADERBOARD')).toBeFalsy();
 		expect(context.isApplicable('TOP_RIGHT_BOXAD')).toBeFalsy();
@@ -93,34 +93,30 @@ describe('ext.wikia.adEngine.context.uapContext', function () {
 		];
 
 		dataProvider.forEach(function (testCase) {
-			var context = getContext();
-
 			mocks.instantGlobals[testCase.countriesVariable] = ['XX'];
+			var context = getContext();
 
 			expect(context.isApplicable(testCase.slotName)).toBeTruthy();
 		});
 
 		dataProvider.forEach(function (testCase) {
-			var context = getContext();
-
 			mocks.instantGlobals[testCase.countriesVariable] = ['DE'];
+			var context = getContext();
 
 			expect(context.isApplicable(testCase.slotName)).toBeFalsy();
 		});
 	});
 
 	it('enable prefooter based context opt', function () {
-		var context = getContext();
-
 		mocks.context.opts.overridePrefootersSizes = false;
+		var context = getContext();
 
 		expect(context.isApplicable('PREFOOTER_RIGHT_BOXAD')).toBeTruthy();
 	});
 
 	it('disable prefooter based context opt', function () {
-		var context = getContext();
-
 		mocks.context.opts.overridePrefootersSizes = true;
+		var context = getContext();
 
 		expect(context.isApplicable('PREFOOTER_RIGHT_BOXAD')).toBeFalsy();
 	});
@@ -144,6 +140,7 @@ describe('ext.wikia.adEngine.context.uapContext', function () {
 	});
 
 	it('filter slot map based on status (home page type)', function () {
+		mocks.context.pageType = 'home';
 		var context = getContext(),
 			slotMap = {
 				TOP_LEADERBOARD: 1,
@@ -153,8 +150,6 @@ describe('ext.wikia.adEngine.context.uapContext', function () {
 				PREFOOTER_LEFT_BOXAD: 5,
 				PREFOOTER_MIDDLE_BOXAD: 6
 			};
-
-		mocks.context.pageType = 'home';
 
 		expect(context.filterSlotMap(slotMap)).toEqual({
 			HOME_TOP_LEADERBOARD: 3,
