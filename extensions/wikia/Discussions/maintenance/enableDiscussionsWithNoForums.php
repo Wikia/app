@@ -7,7 +7,7 @@
  *
  * @ingroup Maintenance
  */
-require_once( __DIR__ . '/Maintenance.php' );
+require_once( __DIR__ . '/../../../../maintenance/Maintenance.php' );
 
 class EnableDiscussionsWithNoForums extends Maintenance {
 
@@ -18,6 +18,7 @@ class EnableDiscussionsWithNoForums extends Maintenance {
 	}
 
 	public function execute() {
+
 		$fh = fopen( $this->getArg(), 'r' );
 
 		if ( !$fh ) {
@@ -44,7 +45,10 @@ class EnableDiscussionsWithNoForums extends Maintenance {
 				$this->output( 'Enabled discussions on ' . $wikiId . "\n" );
 			} catch ( Exception $e ) {
 				$this->error( 'Creating site ' . $wikiId . ' caused an error: ' . $e->getMessage() );
+				continue;
 			}
+
+			$this->postWelcomeMessage( $wiki );
 		}
 	}
 
@@ -80,7 +84,14 @@ class EnableDiscussionsWithNoForums extends Maintenance {
 			->setArchiveWikiForums( true )
 			->save();
 	}
+
+	private function postWelcomeMessage( stdClass $wiki ) : bool {
+		$success = ( new StaffWelcomePoster() )->postMessage( $wiki->city_id, $wiki->city_lang );
+		if ( !$success ) {
+			$this->error( 'Unable to post staff welcome message for siteId: ' . $wiki->city_id );
+		}
+	}
 }
 
-$maintClass = 'EnableDiscussionsWithNoForums';
+$maintClass = EnableDiscussionsWithNoForums::class;
 require_once( RUN_MAINTENANCE_IF_MAIN );
