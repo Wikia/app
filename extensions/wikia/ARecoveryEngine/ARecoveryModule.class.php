@@ -29,4 +29,9 @@ class ARecoveryModule {
 	private static function getBootstrapCode() {
 		return F::app()->sendRequest( 'ARecoveryEngineApiController', 'getBootstrap' );
 	}
+	
+	public static function isPageFairRecoveryEnabled() {
+		//TODO: change this
+		return true;
+	}
 }

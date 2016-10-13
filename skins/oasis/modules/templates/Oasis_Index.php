@@ -34,6 +34,7 @@
 <? endif ?>
 
 <?= $topScripts ?>
+<?= $recoveryHeadBootstrapCode ?>	
 <?= $globalBlockingScripts; /*needed for jsLoader and for the async loading of CSS files.*/ ?>
 
 <!-- Make IE recognize HTML5 tags. -->
@@ -58,6 +59,7 @@
 
 </head>
 <body class="<?= implode(' ', $bodyClasses) ?>" <?= $itemType ?>>
+<?= $recoveryTopBodyBootstrapCode ?>
 <? if ( BodyController::isResponsiveLayoutEnabled() || BodyController::isOasisBreakpoints() ): ?>
 	<div class="background-image-gradient"></div>
 <? endif ?>
@@ -104,6 +106,7 @@
 <?= $bottomScripts ?>
 
 <?= $nielsen ?>
+<?= $recoveryBottomBodyBootstrapCode ?>
 </body>
 
 <?= wfReportTime() . "\n" ?>

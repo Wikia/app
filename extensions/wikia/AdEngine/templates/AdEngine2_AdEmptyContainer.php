@@ -1,6 +1,6 @@
 <?php if ($showAd): ?>
 	<!-- BEGIN CONTAINER: <?= htmlspecialchars( $slotName ) ?> -->
-	<div id="<?= htmlspecialchars( $slotName ) ?>">
+	<div id="<?= htmlspecialchars( $slotName ) ?>"<?=$slotMarker?>>
 		<script>
 			window.adslots2.push(<?= json_encode([$slotName]) ?>);
 		</script>

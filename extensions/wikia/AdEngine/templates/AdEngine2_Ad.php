@@ -1,6 +1,6 @@
 <?php if ($showAd): ?>
 	<!-- BEGIN SLOTNAME: <?= htmlspecialchars( $slotName ) ?> -->
-	<div id="<?= htmlspecialchars( $slotName ) ?>" class="wikia-ad noprint default-height">
+	<div id="<?= htmlspecialchars( $slotName ) ?>" class="wikia-ad noprint default-height"<?=$slotMarker?>>
 	<? if ($includeLabel): ?>
 		<label class="wikia-ad-label"><?= wfMessage( 'adengine-advertisement' )->escaped() ?></label>
 	<? endif; ?>
