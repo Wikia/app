@@ -6,7 +6,7 @@ define('ext.wikia.adEngine.provider.gpt.googleTag', [
 	'wikia.document',
 	'wikia.log',
 	'wikia.window'
-], function (googleSlots, helper, doc, log, window) {
+], function (googleSlots, recovery, doc, log, window) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.provider.gpt.googleTag',
@@ -22,14 +22,20 @@ define('ext.wikia.adEngine.provider.gpt.googleTag', [
 		var id;
 
 		log(['dispatchEvent', event], 'info', logGroup);
-
 		for (id in registeredCallbacks) {
-			if (registeredCallbacks.hasOwnProperty(id) &&
-				registeredCallbacks[id] && event.slot && event.slot === googleSlots.getSlot(id)
-			) {
-				log(['dispatchEvent', event, id, 'Launching registered callback'], 'debug', logGroup);
-				registeredCallbacks[id](event);
-				return;
+			if (registeredCallbacks.hasOwnProperty(id)) {
+				var slotId = id;
+
+				if (recovery.isRecoveryEnabled() && recovery.isBlocking()) {
+					slotId = window._sp_.getElementId(slotId);
+				}
+
+				if (registeredCallbacks[id] && event.slot && event.slot === googleSlots.getSlot(slotId)) {
+					log(['dispatchEvent', event, id, 'Launching registered callback'], 'debug', logGroup);
+					registeredCallbacks[id](event);
+					return;
+				}
+
 			}
 		}
 
@@ -60,7 +66,7 @@ define('ext.wikia.adEngine.provider.gpt.googleTag', [
 		var gads = doc.createElement('script'),
 			node = doc.getElementsByTagName('script')[0];
 
-		if (!window.googletag.apiReady && !helper.isBlocking()) {
+		if (!window.googletag.apiReady && !recovery.isBlocking()) {
 			gads.async = true;
 			gads.type = 'text/javascript';
 			gads.src = '//www.googletagservices.com/tag/js/gpt.js';
