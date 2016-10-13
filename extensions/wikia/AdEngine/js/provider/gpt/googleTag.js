@@ -18,24 +18,19 @@ define('ext.wikia.adEngine.provider.gpt.googleTag', [
 	window.googletag = window.googletag || {};
 	window.googletag.cmd = window.googletag.cmd || [];
 
+	function isSlotRegistered(slot, id) {
+		return registeredCallbacks[id] && slot && slot === googleSlots.getSlot(id);
+	}
+
 	function dispatchEvent(event) {
 		var id;
 
 		log(['dispatchEvent', event], 'info', logGroup);
 		for (id in registeredCallbacks) {
-			if (registeredCallbacks.hasOwnProperty(id)) {
-				var slotId = id;
-
-				if (recovery.isRecoveryEnabled() && recovery.isBlocking()) {
-					slotId = window._sp_.getElementId(slotId);
-				}
-
-				if (registeredCallbacks[id] && event.slot && event.slot === googleSlots.getSlot(slotId)) {
-					log(['dispatchEvent', event, id, 'Launching registered callback'], 'debug', logGroup);
-					registeredCallbacks[id](event);
-					return;
-				}
-
+			if (registeredCallbacks.hasOwnProperty(id) && isSlotRegistered(event.slot, id)) {
+				log(['dispatchEvent', event, id, 'Launching registered callback'], 'debug', logGroup);
+				registeredCallbacks[id](event);
+				return;
 			}
 		}
 
