@@ -1,8 +1,0 @@
-{
-	"@metadata": {
-		"authors": [
-			"Gomoko"
-		]
-	},
-	"parserhooks-desc": "L’interface OOP pour créer des amorces à l’analyseur MediaWiki travaille en mode déclaratif"
-}

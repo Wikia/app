@@ -21,11 +21,10 @@ class SFForms extends SpecialPage {
 
 	function execute( $query ) {
 		$this->setHeaders();
-		list( $limit, $offset ) = $this->getRequest()->getLimitOffset();
+		list( $limit, $offset ) = wfCheckLimits();
 		$rep = new FormsPage();
 		return $rep->execute( $query );
 	}
-
 }
 
 /**
@@ -45,7 +44,7 @@ class FormsPage extends QueryPage {
 	function isSyndicated() { return false; }
 
 	function getPageHeader() {
-		$header = Html::element( 'p', null, wfMessage( 'sf_forms_docu' )->text() );
+		$header = '<p>' . wfMessage( 'sf_forms_docu' )->text() . "</p><br />\n";
 		return $header;
 	}
 

@@ -3,12 +3,12 @@
 interface iBubbleMapElement {
 
 	/**
-	 * @param string $text
+	 * @param \text $text
 	 */
 	public function setText( $text );
 
 	/**
-	 * @return string
+	 * @return \text
 	 */
 	public function getText();
 

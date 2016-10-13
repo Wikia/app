@@ -1,3 +1,4 @@
+.svn
 *~
 *.kate-swp
 .*.swp
@@ -6,6 +7,5 @@ composer.lock
 composer.phar
 
 .idea/
-node_modules/
 vendor/
 extensions/

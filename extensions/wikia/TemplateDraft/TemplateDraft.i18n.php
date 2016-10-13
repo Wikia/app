@@ -1,12 +1,13 @@
 <?php
+/** Internationalization file for /extensions/wikia/TemplateDraft/TemplateDraft extension. */
 $messages = [];
 
 $messages['en'] = [
 	'templatedraft-description' => 'TemplateDraft extension',
 	'right-templatedraft' => 'Allows access to a wizard that helps convert non-portable infoboxes to the new markup',
 	'templatedraft-subpage' => 'Draft',
-	'templatedraft-editintro' => "Here you go! We've generated a draft version of your infobox with our new markup. We'll save it as a sub-page so you can review it and make any needed changes. You may want to $1 or $2.",
-	'templatedraft-approval-no-page-error' => "Approval failed as draft page doesn't exist",
+	'templatedraft-editintro' => 'Here you go! We\'ve generated a draft version of your infobox with our new markup. We\'ll save it as a sub-page so you can review it and make any needed changes. You may want to $1 or $2.',
+	'templatedraft-approval-no-page-error' => 'Approval failed as draft page doesn\'t exist',
 	'templatedraft-approval-no-templatedraft-error' => 'Approve draft action is not applicable on non template draft pages',
 	'templatedraft-approval-success-confirmation' => 'This template contents was replaced with updated version from draft template and the draft was removed',
 	'templatedraft-approval-summary' => 'Infobox updated using the [[Help:PortableInfoboxes|portable infobox]] migration tool',
@@ -114,7 +115,7 @@ $messages['es'] = [
 	'templatedraft-module-title-create' => 'Migrar esta infobox',
 	'templatedraft-module-subtitle-create' => 'Esta plantilla no usa el nuevo [[w:c:es:Ayuda:Infoboxes_Portátiles|marcador de infobox]].',
 	'templatedraft-module-content-create' => 'Podemos generar un borrador del marcador desde tu infobox existente y guardarlo como subpágina, para que puedas revisarlo y hacer cualquier cambio necesario.',
-	'templatedraft-module-button-create' => 'Generar marcador de borrador',
+	'templatedraft-module-button-create' => 'Generar borrador de infobox',
 	'templatedraft-module-button-title-create' => 'Abrir una nueva pestaña con un formulario de edición previamente llenado',
 	'templatedraft-module-title-approve' => 'Mover esta plantilla de borrador',
 	'templatedraft-module-content-approve' => '¿Estás conforme con este borrador y deseas promoverlo a una plantilla activa?',
@@ -142,21 +143,21 @@ $2
 $messages['fr'] = [
 	'templatedraft-description' => 'Extension TemplateDraft',
 	'templatedraft-subpage' => 'Version de travail',
-	'templatedraft-editintro' => "Eh voilà ! Nous avons généré une version de travail de votre infobox avec notre nouveau code. Nous allons l'enregistrer comme sous-page afin que vous puissiez la vérifier et y apporter d'éventuelles modifications. Vous voudrez peut-être $1 ou $2.",
-	'templatedraft-approval-no-page-error' => "Échec d'approbation : page de la version de travail inexistante",
-	'templatedraft-approval-no-templatedraft-error' => "Impossible d'approuver une version de travail qui ne concerne pas un modèle",
+	'templatedraft-editintro' => 'Eh voilà ! Nous avons généré une version de travail de votre infobox avec notre nouveau code. Nous allons l\'enregistrer comme sous-page afin que vous puissiez la vérifier et y apporter d\'éventuelles modifications. Vous voudrez peut-être $1 ou $2.',
+	'templatedraft-approval-no-page-error' => 'Échec d\'approbation : page de la version de travail inexistante',
+	'templatedraft-approval-no-templatedraft-error' => 'Impossible d\'approuver une version de travail qui ne concerne pas un modèle',
 	'templatedraft-approval-success-confirmation' => 'Le contenu de ce modèle a été remplacé par la version mise à jour du modèle de la version de travail et la version de travail a été supprimée.',
-	'templatedraft-approval-summary' => "Infobox mise à jour à l'aide de l'outil de migration des [[w:c:fr:Aide:Infoboxes_portables|infoboxes portables]]",
+	'templatedraft-approval-summary' => 'Infobox mise à jour à l\'aide de l\'outil de migration des [[w:c:fr:Aide:Infoboxes_portables|infoboxes portables]]',
 	'templatedraft-draft-removal-summary' => 'Nettoyage. Application de la version de travail sur la page parente approuvée.',
 	'templatedraft-module-title-create' => 'Migrer cette infobox',
-	'templatedraft-module-subtitle-create' => "Le nouveau [[w:c:fr:Aide:Infoboxes_portables|code des infoboxes]] n'est pas utilisé pour ce modèle.",
-	'templatedraft-module-content-create' => "Nous pouvons générer une version de travail de votre infobox avec le nouveau code et l'enregistrer comme sous-page afin que vous puissiez la vérifier et y apporter d'éventuelles modifications.",
+	'templatedraft-module-subtitle-create' => 'Le nouveau [[w:c:fr:Aide:Infoboxes_portables|code des infoboxes]] n\'est pas utilisé pour ce modèle.',
+	'templatedraft-module-content-create' => 'Nous pouvons générer une version de travail de votre infobox avec le nouveau code et l\'enregistrer comme sous-page afin que vous puissiez la vérifier et y apporter d\'éventuelles modifications.',
 	'templatedraft-module-button-create' => 'Générer le code de la version de travail',
-	'templatedraft-module-button-title-create' => "Ouvrir un nouvel onglet avec un formulaire d'édition pré-rempli",
+	'templatedraft-module-button-title-create' => 'Ouvrir un nouvel onglet avec un formulaire d\'édition pré-rempli',
 	'templatedraft-module-title-approve' => 'Déplacer ce modèle de la version de travail',
-	'templatedraft-module-content-approve' => "Cette version de travail vous satisfait et vous souhaitez l'appliquer au modèle en cours d'utilisation ?",
+	'templatedraft-module-content-approve' => 'Cette version de travail vous satisfait et vous souhaitez l\'appliquer au modèle en cours d\'utilisation ?',
 	'templatedraft-module-button-approve' => 'Approuver cette version de travail',
-	'templatedraft-preview-n-docs' => "== Utilisation et aperçu ==
+	'templatedraft-preview-n-docs' => '== Utilisation et aperçu ==
 Tapez ceci :
 
 <pre>
@@ -167,13 +168,13 @@ pour afficher ceci :
 
 $2
 
-[{{fullurl:{{ns:Template}}:{{PAGENAME}}}}?action=purge Cliquez ici pour actualiser l'aperçu ci-dessus.]",
+[{{fullurl:{{ns:Template}}:{{PAGENAME}}}}?action=purge Cliquez ici pour actualiser l\'aperçu ci-dessus.]',
 	'templatedraft-module-editintro-please-convert' => 'Nous pouvons générer une version de travail de votre infobox avec notre nouveau code. Il vous suffit de cliquer sur $1.',
 	'templatedraft-module-view-parent' => 'afficher le wikitexte du modèle parent',
-	'templatedraft-module-help' => "afficher la page d'aide sur le code des infoboxes",
+	'templatedraft-module-help' => 'afficher la page d\'aide sur le code des infoboxes',
 	'templatedraft-invalid-template' => 'Nom de modèle fourni non valide.',
-	'templatedraft-module-approve-protected' => "Ce modèle est protégé. Veuillez demander à un [[Special:ListAdmins|administrateur]] d'approuver cette version de travail.",
-	'templatedraft-protect-edit' => "Vous n'êtes pas autorisé à modifier la page parente.",
+	'templatedraft-module-approve-protected' => 'Ce modèle est protégé. Veuillez demander à un [[Special:ListAdmins|administrateur]] d\'approuver cette version de travail.',
+	'templatedraft-protect-edit' => 'Vous n\'êtes pas autorisé à modifier la page parente.',
 ];
 
 $messages['it'] = [
@@ -186,14 +187,14 @@ $messages['it'] = [
 	'templatedraft-approval-summary' => 'Infobox aggiornato usando lo strumento di migrazione [[Help:PortableInfoboxes|infobox esportabile]]',
 	'templatedraft-draft-removal-summary' => 'Pulizia. Bozza approvata per la pagina principale.',
 	'templatedraft-module-title-create' => 'Migra questo infobox',
-	'templatedraft-module-subtitle-create' => 'Questo modello non usa il nuovo [[Help:PortableInfoboxes|markup per infobox]].',
+	'templatedraft-module-subtitle-create' => 'Questo modello non usa il nuovo [[w:it:Aiuto:Infobox portatili|markup per infobox]].',
 	'templatedraft-module-content-create' => 'Possiamo generare una bozza del markup dal tuo infobox esistente e salvarla come sottopagina, di modo che tu possa rivederla e fare tutte le modifiche necessarie.',
 	'templatedraft-module-button-create' => 'Genera markup di bozza',
 	'templatedraft-module-button-title-create' => 'Apri una nuova scheda con un modulo di modifica precompilato',
 	'templatedraft-module-title-approve' => 'Sposta questo modello di bozza',
 	'templatedraft-module-content-approve' => 'Sei soddisfatto di questa bozza e desideri farla comparire nel modello in produzione?',
 	'templatedraft-module-button-approve' => 'Approva questa bozza',
-	'templatedraft-preview-n-docs' => "== Uso e anteprima ==
+	'templatedraft-preview-n-docs' => '== Uso e anteprima ==
 Digita:
 
 <pre>
@@ -204,7 +205,7 @@ per vedere:
 
 $2
 
-[{{fullurl:{{ns:Template}}:{{PAGENAME}}}}?action=purge Clicca qui per aggiornare l'anteprima precedente]",
+[{{fullurl:{{ns:Template}}:{{PAGENAME}}}}?action=purge Clicca qui per aggiornare l\'anteprima precedente]',
 	'templatedraft-module-editintro-please-convert' => 'Possiamo generare una bozza del tuo infobox con il nuovo markup, se clicchi qui $1.',
 	'templatedraft-module-view-parent' => 'vedi modello della pagina principale wikitext',
 	'templatedraft-module-help' => 'vedi la pagina di aiuto sul markup per Infobox',
@@ -253,8 +254,8 @@ $2
 $messages['nl'] = [
 	'templatedraft-description' => 'TemplateDraft extension',
 	'templatedraft-subpage' => 'Draft',
-	'templatedraft-editintro' => "Here you go! We've generated a draft version of your infobox with our new markup. We'll save it as a sub-page so you can review it and make any needed changes. You may want to $1 or $2.",
-	'templatedraft-approval-no-page-error' => "Approval failed as draft page doesn't exist",
+	'templatedraft-editintro' => 'Here you go! We\'ve generated a draft version of your infobox with our new markup. We\'ll save it as a sub-page so you can review it and make any needed changes. You may want to $1 or $2.',
+	'templatedraft-approval-no-page-error' => 'Approval failed as draft page doesn\'t exist',
 	'templatedraft-approval-no-templatedraft-error' => 'Approve draft action is not applicable on non template draft pages',
 	'templatedraft-approval-success-confirmation' => 'This template contents was replaced with updated version from draft template and the draft was removed',
 	'templatedraft-approval-summary' => 'Infobox updated using the [[Help:PortableInfoboxes|portable infobox]] migration tool',
@@ -293,7 +294,7 @@ $messages['pl'] = [
 	'templatedraft-editintro' => 'Proszę bardzo! Wygenerowaliśmy wersję roboczą twojego infoboksu wykorzystując nasze nowe znaczniki. Zapiszemy go jako podstronę, żebyś mógł go przejrzeć i wprowadzić niezbędne zmiany. Może chcesz $1 albo $2.',
 	'templatedraft-approval-no-page-error' => 'Zatwierdzenie nie powiodło się, ponieważ strona wersji roboczej nie istnieje',
 	'templatedraft-approval-no-templatedraft-error' => 'Zatwierdzenie wersji roboczej nie jest możliwe na stronach wersji roboczych, które nie są szablonami',
-	'templatedraft-approval-success-confirmation' => 'Zawartość tego szablonu została zastąpiona uaktualnioną treścią z wersji roboczej szablonu, a wersja robocza zostałą usunięta',
+	'templatedraft-approval-success-confirmation' => 'Zawartość tego szablonu została zastąpiona uaktualnioną treścią z wersji roboczej szablonu, a wersja robocza została usunięta',
 	'templatedraft-approval-summary' => 'Infoboks został uaktualniony przy użyciu narzędzia do migracji do [[w:c:pl:Pomoc:Przenośne_infoboksy|przenośnych infoboksów]]',
 	'templatedraft-draft-removal-summary' => 'Porządki. Projekt zatwierdzony jako strona nadrzędna.',
 	'templatedraft-module-title-create' => 'Dokonaj migracji tego infoboksu',
@@ -470,5 +471,28 @@ $2
 	'templatedraft-invalid-template' => '提供的模版名稱無效',
 	'templatedraft-module-approve-protected' => '此模板受到保護。 請諮詢[[Special:ListAdmins|管理員]]批准這一草案。',
 	'templatedraft-protect-edit' => '您沒有許可權編輯首頁面。',
+];
+
+$messages['ko'] = [
+	'templatedraft-editintro' => '성공적으로 변환이 완료되었습니다. 새 정보상자는 기존 정보상자의 하위문서로 저장되며 언제든지 추가적으로 수정하실 수 있습니다. 또, $1 또는 $2을 확인해 보시는 건 어떨까요?',
+	'templatedraft-module-button-create' => '초안 생성하기',
+	'templatedraft-module-content-create' => '기존의 정보상자를 간편 정보상자로 변환해 초안을 만들어드릴 수 있습니다. 변환된 초안은 이 틀의 하위문서에 저장되며 필요에 따라 추가적으로 수정하시면 됩니다.',
+	'templatedraft-module-help' => '간편 정보상자에 대한 도움말',
+	'templatedraft-module-subtitle-create' => '현재 이 틀은 [[도움말:간편 정보상자|간편 정보상자]]를 사용하고 있지 않습니다.',
+	'templatedraft-module-title-create' => '정보상자를 변환하세요',
+	'templatedraft-module-view-parent' => '기존 정보상자의 위키문법',
+	'templatedraft-preview-n-docs' => '== 사용법 및 예제 ==
+사용법은 다음과 같습니다.
+
+<pre>
+$1
+</pre>
+
+예제는 다음과 같습니다.
+
+$2
+
+[{{fullurl:{{ns:Template}}:{{PAGENAME}}}}?action=purge 이곳을 눌러 예제를 새로 고침하세요.]',
+	'templatedraft-subpage' => '초안',
 ];
 

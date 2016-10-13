@@ -1,5 +1,5 @@
 <?php
-
+/** Internationalization file for /extensions/wikia/PowerTools/PowerTools extension. */
 $messages = [];
 
 $messages['en'] = [
@@ -10,3 +10,8 @@ $messages['en'] = [
 $messages['qqq'] = [
 	'powertools-desc' => '{{desc}}',
 ];
+
+$messages['fr'] = [
+	'powertools-desc' => 'Permet aux utilisateurs privilégiés de supprimer et protéger des pages en une étape',
+];
+

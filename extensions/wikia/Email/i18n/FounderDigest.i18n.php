@@ -236,5 +236,11 @@ $messages['ko'] = [
 	'emailext-founder-digest-users-header' => '신규 사용자 $1명',
 	'emailext-founder-digest-views-description-1' => '새로운 정보, 토론, 사진, 동영상 등 사람들이 관심 가질 만한 정보들을 커뮤니티에 추가해 주세요!',
 	'emailext-founder-digest-views-description-2' => '지속적으로 콘텐츠를 발전시키고, 커뮤니티를 홍보해 주세요. 활발한 커뮤니티에 더 많은 사용자가 모이는 법입니다. 언제나 응원하고 있을게요!',
+	'emailext-founder-activity-digest-subject' => '$1의 최근 활동',
+	'emailext-founder-digest-edits-header' => '편집 $1회',
+	'emailext-founder-digest-summary' => '$1에서 오늘 하루 동안 있었던 일들을 정리한 내용입니다.',
+	'emailext-founder-digest-views-header' => '조회수 $1회',
+	'emailext-founder-views-digest-link-label' => '문서 생성하기',
+	'emailext-founder-views-digest-subject' => '오늘 $1는...',
 ];
 

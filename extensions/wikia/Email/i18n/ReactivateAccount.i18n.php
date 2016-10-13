@@ -104,5 +104,6 @@ $messages['ko'] = [
 	'emailext-reactivate-account-subject' => '위키아 계정 재활성화',
 	'emailext-reactivate-account-summary' => '이제 한 단계만 거치면 귀하의 위키아 계정을 재활성하실 수 있습니다. 아래의 링크를 눌러 인증을 완료해 주세요!',
 	'emailext-reactivate-account-welcome-back' => '다시 만나게 되어서 기뻐요!',
+	'emailext-reactivate-account-button-text' => '재활성화',
 ];
 
