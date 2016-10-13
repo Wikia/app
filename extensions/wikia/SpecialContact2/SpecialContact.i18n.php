@@ -22,7 +22,7 @@ Follow the links below to learn more about how to use Fandom, make changes to yo
 	'specialcontact-seclink-rename-account' => 'Rename my account',
 	'specialcontact-seclink-blocked' => 'My account is blocked',
 	'specialcontact-secheader-editing' => 'Participating on Fandom',
-	'specialcontact-seclink-using-wikia' => 'How do I use Fandom?',
+	'specialcontact-seclink-using-fandom' => 'How do I use Fandom?',
 	'specialcontact-seclink-feedback' => 'I want to offer some feedback',
 	'specialcontact-seclink-bug' => 'I think I found a bug',
 	'specialcontact-seclink-bad-ad' => 'I see a broken or inappropriate ad',
@@ -41,7 +41,7 @@ Follow the links below to learn more about how to use Fandom, make changes to yo
 	'specialcontact-sectitle-close-account' => 'Disable my account',
 	'specialcontact-sectitle-rename-account' => 'Rename my account',
 	'specialcontact-sectitle-blocked' => 'Account blocked',
-	'specialcontact-sectitle-using-wikia' => 'Using Fandom',
+	'specialcontact-sectitle-using-fandom' => 'Using Fandom',
 	'specialcontact-sectitle-feedback' => 'Feedback',
 	'specialcontact-sectitle-bug' => 'Bug Report',
 	'specialcontact-sectitle-bad-ad' => 'Ad report',
@@ -94,7 +94,7 @@ Happy editing!',
 However, if this talk page option is not available in your situation, then the best advice we can give you is to wait the block out or join the community at another of the many thousand Fandom communities available.
 
 If you feel you still need to discuss this block further with Fandom staff, please contact us [[Special:Contact/general|here]].',
-	'specialcontact-intro-using-wikia' => 'Now that you are a part of the community, you are able to edit and contribute to almost any page across Fandom. For some introductory help, check out our [[Help:Getting_Started|help pages here]]. They are a great place to learn the basics of editing, formatting and much more.
+	'specialcontact-intro-using-fandom' => 'Now that you are a part of the community, you are able to edit and contribute to almost any page across Fandom. For some introductory help, check out our [[Help:Getting_Started|help pages here]]. They are a great place to learn the basics of editing, formatting and much more.
 
 If you have questions about this specific community, start by [[Special:ListAdmins|contacting your local admins]].
 You can also ask general questions to other community members on our [[w:c:community:Special:Forum|community help forum]].
@@ -272,7 +272,7 @@ $messages['qqq'] = [
 	'specialcontact-intro-main-head' => 'Missing documentation',
 	'specialcontact-intro-rename-account' => 'Missing documentation',
 	'specialcontact-intro-user-conflict' => 'Missing documentation',
-	'specialcontact-intro-using-wikia' => 'Missing documentation',
+	'specialcontact-intro-using-fandom' => 'Missing documentation',
 	'specialcontact-label-close-account-confirm' => 'Missing documentation',
 	'specialcontact-mail' => 'Missing documentation',
 	'specialcontact-mailsub' => 'Missing documentation',
@@ -283,12 +283,12 @@ $messages['qqq'] = [
 	'specialcontact-secheader-setting' => 'Missing documentation',
 	'specialcontact-seclink-close-wiki' => 'Missing documentation',
 	'specialcontact-seclink-content-issue' => 'Missing documentation',
-	'specialcontact-seclink-using-wikia' => 'Missing documentation',
+	'specialcontact-seclink-using-fandom' => 'Missing documentation',
 	'specialcontact-sectitle' => 'Missing documentation',
 	'specialcontact-sectitle-close-wiki' => 'Missing documentation',
 	'specialcontact-sectitle-design' => 'Missing documentation',
 	'specialcontact-sectitle-features' => 'Missing documentation',
-	'specialcontact-sectitle-using-wikia' => 'Missing documentation',
+	'specialcontact-sectitle-using-fandom' => 'Missing documentation',
 	'specialcontact-sectitle-wiki-name-change' => 'Missing documentation',
 	'specialcontact-submitcomplete' => 'Missing documentation',
 	'specialcontact-wikia' => 'Missing documentation',
@@ -313,7 +313,7 @@ Klicke auf die folgenden Links, um mehr darüber zu erfahren, wie man Fandom ben
 	'specialcontact-seclink-rename-account' => 'Ich möchte meinen Namen ändern',
 	'specialcontact-seclink-blocked' => 'Mein Profil ist gesperrt',
 	'specialcontact-secheader-editing' => 'Bei Fandom mitmachen',
-	'specialcontact-seclink-using-wikia' => 'Wie benutze ich Fandom?',
+	'specialcontact-seclink-using-fandom' => 'Wie benutze ich Fandom?',
 	'specialcontact-seclink-feedback' => 'Ich habe Vorschläge',
 	'specialcontact-seclink-bug' => 'Ich habe einen Bug gefunden',
 	'specialcontact-seclink-bad-ad' => 'Ich habe unangebrachte Werbung gesehen',
@@ -331,7 +331,7 @@ Klicke auf die folgenden Links, um mehr darüber zu erfahren, wie man Fandom ben
 	'specialcontact-sectitle-close-account' => 'Profil stilllegen',
 	'specialcontact-sectitle-rename-account' => 'Namen ändern',
 	'specialcontact-sectitle-blocked' => 'Profil gesperrt',
-	'specialcontact-sectitle-using-wikia' => 'Verwendung von Fandom',
+	'specialcontact-sectitle-using-fandom' => 'Verwendung von Fandom',
 	'specialcontact-sectitle-feedback' => 'Feedback',
 	'specialcontact-sectitle-bug' => 'Bugs melden',
 	'specialcontact-sectitle-bad-ad' => 'Werbung melden',
@@ -375,7 +375,7 @@ Viel Spaß bei Fandom!',
 Falls die Nachrichtenseite nicht bearbeitet werden kann, ist es am Besten, die Sperre auszusitzen oder sich eine andere der vielen tausende Fandom-Communitys auszusuchen.
 
 Falls du die Sperre dennoch mit einem Fandom-Mitarbeiter besprechen möchtest, kontaktiere uns [[Spezial:Kontakt/general|hier]].',
-	'specialcontact-intro-using-wikia' => 'Jetzt wo du ein Teil der Community bist, steht dir frei bei allen Wikis deiner Wahl bei Fandom mitzumachen. Für eine kleine Starthilfe besuche die [[Hilfe:Einführung|Hilfeseiten]].
+	'specialcontact-intro-using-fandom' => 'Jetzt wo du ein Teil der Community bist, steht dir frei bei allen Wikis deiner Wahl bei Fandom mitzumachen. Für eine kleine Starthilfe besuche die [[Hilfe:Einführung|Hilfeseiten]].
 
 Hast du Fragen zu einer bestimmten Community, dann [[Spezial:Benutzer/sysop|frag die lokalen Admins]].
 Du kannst auch jederzeit allgemeine Fragen in unserem [[w:c:de.community:Spezial:Forum|Hilfeforum]] stellen.
@@ -534,7 +534,7 @@ Sigue los enlaces que hay debajo para aprender más sobre cómo usar Fandom, hac
 	'specialcontact-seclink-rename-account' => 'Renombrar mi cuenta',
 	'specialcontact-seclink-blocked' => 'Mi cuenta está bloqueada',
 	'specialcontact-secheader-editing' => 'Participando en Fandom',
-	'specialcontact-seclink-using-wikia' => '¿Cómo uso Fandom?',
+	'specialcontact-seclink-using-fandom' => '¿Cómo uso Fandom?',
 	'specialcontact-seclink-feedback' => 'Quiero dar mis sugerencias',
 	'specialcontact-seclink-bug' => 'Creo que encontré un bug',
 	'specialcontact-seclink-bad-ad' => 'Veo un anuncio roto o inapropiado',
@@ -552,7 +552,7 @@ Sigue los enlaces que hay debajo para aprender más sobre cómo usar Fandom, hac
 	'specialcontact-sectitle-close-account' => 'Desactivar mi cuenta',
 	'specialcontact-sectitle-rename-account' => 'Renombrar mi cuenta',
 	'specialcontact-sectitle-blocked' => 'Cuenta bloqueada',
-	'specialcontact-sectitle-using-wikia' => 'Usando Fandom',
+	'specialcontact-sectitle-using-fandom' => 'Usando Fandom',
 	'specialcontact-sectitle-feedback' => 'Sugerencias',
 	'specialcontact-sectitle-bug' => 'Informe de bug',
 	'specialcontact-sectitle-bad-ad' => 'Informe de anuncio inadecuado',
@@ -602,7 +602,7 @@ Una vez leas esa página de ayuda y estés seguro de que el nuevo nombre de usua
 Si tu página de discusión no puede ser editada, el mejor consejo que podemos darte es que esperes a que el bloqueo finalice o participes en la comunidad de otro de los muchos wikis que hay en Fandom.
 
 Si sientes que necesitas discutir tu bloqueo con el staff de Fandom, por favor, ponte en contacto con nosotros [[Special:Contact/general|por aquí]].',
-	'specialcontact-intro-using-wikia' => 'Ahora que formas parte de la comunidad, puedes editar y contribuir en cualquier página de Fandom. Comprueba nuestras [[Ayuda:Contenidos|páginas de ayuda]] para obtener una introducción de ayuda. Son un magnífico lugar donde aprender los conceptos básicos para editar, dar formato y mucho más.
+	'specialcontact-intro-using-fandom' => 'Ahora que formas parte de la comunidad, puedes editar y contribuir en cualquier página de Fandom. Comprueba nuestras [[Ayuda:Contenidos|páginas de ayuda]] para obtener una introducción de ayuda. Son un magnífico lugar donde aprender los conceptos básicos para editar, dar formato y mucho más.
 
 Si tienes preguntas sobre un wiki en específico, comienza [[Special:ListAdmins|contactando con tus administradores locales]].
 Puedes hacer preguntas generales a los miembros de Comunidad Central en el [[w:c:comunidad:Foro:Índice|foro de ayuda]].
@@ -860,7 +860,7 @@ Bonnes contributions !',
 Si vous avez besoin d\'aide, contactez d\'abord vos [[Special:ListAdmins|administrateurs locaux]]. Les administrateurs sont des experts du sujet abordé et de la communauté. Il est donc préférable de commencer par leur parler. S\'ils ne sont pas en mesure de vous aider ou si vous pensez que l\'utilisateur ne respecte pas les [http://fr.wikia.com/Conditions_d%27utilisation Conditions d\'utilisation] de Wikia Inc., vous pouvez contacter le staff de Fandom directement [[Special:Contact/general|ici]].
 
 Bonnes contributions !',
-	'specialcontact-intro-using-wikia' => 'Maintenant que vous faites partie de la communauté, vous pouvez apporter des modifications et contribuer à la plupart des pages de Fandom. Pour vos premiers pas, consultez [[Aide:Commencer|ces pages d\'aide]]. Vous y découvrirez les bases de la modification, de la mise en forme, et bien plus encore.
+	'specialcontact-intro-using-fandom' => 'Maintenant que vous faites partie de la communauté, vous pouvez apporter des modifications et contribuer à la plupart des pages de Fandom. Pour vos premiers pas, consultez [[Aide:Commencer|ces pages d\'aide]]. Vous y découvrirez les bases de la modification, de la mise en forme, et bien plus encore.
 
 Pour toute question sur cette communauté en particulier, commencez par [[Special:ListAdmins|contacter les administrateurs locaux]].
 Vous pouvez également poser des questions générales à d\'autres membres de la communauté sur le [[w:c:communaute:Special:Forum|forum d\'aide de notre communauté]].
@@ -873,12 +873,12 @@ N\'ayez pas peur de vous lancer, vous ne casserez aucune communauté sur Fandom.
 	'specialcontact-secheader-setting' => 'Modifications sur ce wiki',
 	'specialcontact-seclink-close-wiki' => 'Fermer ce wiki',
 	'specialcontact-seclink-content-issue' => 'Problème avec le contenu du wiki',
-	'specialcontact-seclink-using-wikia' => 'Comment utiliser Fandom ?',
+	'specialcontact-seclink-using-fandom' => 'Comment utiliser Fandom ?',
 	'specialcontact-sectitle' => 'Support de Fandom - $1',
 	'specialcontact-sectitle-close-wiki' => 'Fermer ce wiki',
 	'specialcontact-sectitle-design' => 'Apparence de la communauté',
 	'specialcontact-sectitle-features' => 'Fonctionnalités de Fandom',
-	'specialcontact-sectitle-using-wikia' => 'Utilisation de Fandom',
+	'specialcontact-sectitle-using-fandom' => 'Utilisation de Fandom',
 	'specialcontact-sectitle-wiki-name-change' => 'Changement de nom d\'une communauté',
 	'contact' => 'Contacter Fandom',
 	'specialcontact-ccheader' => 'Ceci est une copie de votre message envoyé au support de Fandom.',
@@ -1021,7 +1021,7 @@ Buone modifiche!',
 Se hai bisogno di aiuto, contatta dapprima i tuoi [[Special:ListAdmins|amministratori locali]]. Gli amministratori sono gli esperti locali sull\'argomento e la community, per cui è meglio parlare con loro per prima cosa. Se gli amministratori non sono in grado di aiutarti o se ritieni che l\'utente stia violando i [http://it.community.wikia.com/wiki/Wiki_della_Community:Termini_di_utilizzo Termini di utilizzo], puoi contattare lo Staff di Fandom direttamente [[Special:Contact/general|qui]].
 
 Buone modifiche!',
-	'specialcontact-intro-using-wikia' => 'Ora che fai parte della community, potrai modificare e contribuire a quasi ogni pagina su Fandom. Per un aiuto introduttivo, dai un\'occhiata alle nostre [[w:it:Aiuto:Nozioni di base|pagine d\'aiuto]]. Sono un ottimo posto per imparare i fondamenti delle modifiche, formattazione e molto altro ancora.
+	'specialcontact-intro-using-fandom' => 'Ora che fai parte della community, potrai modificare e contribuire a quasi ogni pagina su Fandom. Per un aiuto introduttivo, dai un\'occhiata alle nostre [[w:it:Aiuto:Nozioni di base|pagine d\'aiuto]]. Sono un ottimo posto per imparare i fondamenti delle modifiche, formattazione e molto altro ancora.
 
 Se hai domande su questa community specifica, inizia con il [[Special:ListAdmins|contattare i tuoi amministratori locali]].
 Puoi anche porre domande generali ad altri membri della community nel [[w:it:Special:Forum|forum di aiuto della community]].
@@ -1039,7 +1039,7 @@ Ricorda, non puoi rompere una community di Fandom, per cui non aver paura di ini
 	'specialcontact-sectitle-close-wiki' => 'Chiudi questa wiki',
 	'specialcontact-sectitle-design' => 'Design della community',
 	'specialcontact-sectitle-features' => 'Funzioni di Fandom',
-	'specialcontact-sectitle-using-wikia' => 'Utilizzo di Fandom',
+	'specialcontact-sectitle-using-fandom' => 'Utilizzo di Fandom',
 	'specialcontact-sectitle-wiki-name-change' => 'Modifica del nome della community',
 	'specialcontact-wikia' => 'Contatta Fandom',
 	'contact' => 'Contatta Fandom',
@@ -1058,7 +1058,7 @@ Informazioni aggiuntive su come segnalare problemi a Fandom sono disponibili [[S
 Se preferisci usare l\'e-mail normale o disponi di allegati multipli, puoi contattarci all\'indirizzo [mailto:community@wikia.com community@wikia.com].',
 	'specialcontact-mail' => 'Invia a Fandom',
 	'specialcontact-mailsub' => 'Supporto Fandom',
-	'specialcontact-seclink-using-wikia' => 'Come posso usare Fandom?',
+	'specialcontact-seclink-using-fandom' => 'Come posso usare Fandom?',
 	'specialcontact-submitcomplete' => 'Grazie per aver contattato Fandom. Riceviamo e prendiamo in esame tutti i messaggi inviati qui. Faremo del nostro meglio per risponderti entro 2-3 giorni lavorativi, ma ti preghiamo di essere paziente mentre prendiamo in esame tutti i messaggi.
 
 Ricorda che puoi anche trovare aiuto nel nostro [[w:it:Special:Forum|Forum della community]] e nelle [[w:it:Aiuto:Contenuti|pagine d\'aiuto]]. Puoi tenerti aggiornato in merito alle ultime novità Fandom nel nostro [[w:it:Blog:Blog ufficiale di Fandom Italia|blog]]. Happy editing!',
@@ -1082,7 +1082,7 @@ $messages['ja'] = [
 	'specialcontact-seclink-rename-account' => 'アカウント名を変更する',
 	'specialcontact-seclink-blocked' => 'アカウントをブロックする',
 	'specialcontact-secheader-editing' => 'Fandomへの参加',
-	'specialcontact-seclink-using-wikia' => 'Fandomの使い方',
+	'specialcontact-seclink-using-fandom' => 'Fandomの使い方',
 	'specialcontact-seclink-feedback' => 'フィードバックがほしい',
 	'specialcontact-seclink-bug' => '不具合があります',
 	'specialcontact-seclink-bad-ad' => '不適切な広告を見た場合',
@@ -1100,7 +1100,7 @@ $messages['ja'] = [
 	'specialcontact-sectitle-close-account' => 'アカウントを無効にする',
 	'specialcontact-sectitle-rename-account' => 'アカウント名を変更する',
 	'specialcontact-sectitle-blocked' => 'アカウントをブロックする',
-	'specialcontact-sectitle-using-wikia' => 'Fandomの使い方',
+	'specialcontact-sectitle-using-fandom' => 'Fandomの使い方',
 	'specialcontact-sectitle-feedback' => 'フィードバック',
 	'specialcontact-sectitle-bug' => '不具合を報告する',
 	'specialcontact-sectitle-bad-ad' => '広告を報告する',
@@ -1151,7 +1151,7 @@ http://ja.community.wikia.com/wiki/ヘルプ:ユーザー名を変更する
 メッセージウォールが使用できない場合は、ブロックが解除されるのを待つか、他のFandomコミュニティにご参加ください。
 
 ブロックについてFandomスタッフへご相談されたい場合は、[[Special:Contact/general|こちら]]からご連絡ください。',
-	'specialcontact-intro-using-wikia' => 'Fandomへのご参加ありがとうございます。これからは、Fandom上のほぼ全てのページを編集することができます。まずは、[[ヘルプ:始めよう|こちらのヘルプページ]]から、編集やフォーマット設定の基本的な使い方をご確認ください。
+	'specialcontact-intro-using-fandom' => 'Fandomへのご参加ありがとうございます。これからは、Fandom上のほぼ全てのページを編集することができます。まずは、[[ヘルプ:始めよう|こちらのヘルプページ]]から、編集やフォーマット設定の基本的な使い方をご確認ください。
 
 特定のコミュニティに関するご質問がある場合は、[[Special:ListAdmins|コミュニティのアドミン(管理者)にお問い合わせ]]ください。
 コミュニティのメンバーにご質問がある場合は、[[w:c:ja.community:Special:Forum|コミュニティのヘルプフォーラム]]をご利用ください。
@@ -1459,7 +1459,7 @@ Miłego edytowania!',
 Jeżeli potrzebujesz pomocy, w pierwszej kolejności skontaktuj się z [[Special:ListAdmins|lokalnymi administratorami]]. Administratorzy są ekspertami w danej dziedzinie i społeczności, więc najlepiej zacząć od rozmowy z nimi. Jeżeli nie są w stanie Ci pomóc lub uważasz, że inny użytkownik narusza [http://pl.wikia.com/Zasady_U%C5%BCytkowania Zasady Użytkowania], skontaktuj się bezpośrednio z [[Special:Contact/general|pracownikami Fandomu]].
 
 Miłego edytowania!',
-	'specialcontact-intro-using-wikia' => 'Jesteś teraz członkiem społeczności i możesz edytować i współtworzyć prawie każdą stronę na portalu Fandom. Żeby uzyskać pomoc na początku swojej przygody z Fandomem, zajrzyj na [[Help:Getting_Started|strony pomocy]]. To doskonałe źródło informacji na temat podstaw edycji, formatowania i wielu innych.
+	'specialcontact-intro-using-fandom' => 'Jesteś teraz członkiem społeczności i możesz edytować i współtworzyć prawie każdą stronę na portalu Fandom. Żeby uzyskać pomoc na początku swojej przygody z Fandomem, zajrzyj na [[Help:Getting_Started|strony pomocy]]. To doskonałe źródło informacji na temat podstaw edycji, formatowania i wielu innych.
 
 Jeżeli masz pytania dotyczące tej konkretnej społeczności, warto najpierw [[Special:ListAdmins|skontaktować się lokalnymi administratorami]].
 Możesz ten zadawać ogólne pytania innym członkom społeczności na [[w:c:community:Special:Forum|forum pomocy społeczności]].
@@ -1473,12 +1473,12 @@ Pamiętaj, społeczność nie gryzie, więc nie bój się i zaczynaj swoją przy
 	'specialcontact-secheader-setting' => 'Zmiany w tej wiki',
 	'specialcontact-seclink-close-wiki' => 'Zamknij tę wiki',
 	'specialcontact-seclink-content-issue' => 'Problem z treścią wiki',
-	'specialcontact-seclink-using-wikia' => 'Jak używać portalu Fandom?',
+	'specialcontact-seclink-using-fandom' => 'Jak używać portalu Fandom?',
 	'specialcontact-sectitle' => 'Wsparcie Fandomu - $1',
 	'specialcontact-sectitle-close-wiki' => 'Zamknij tę wiki',
 	'specialcontact-sectitle-design' => 'Projektowanie społeczności',
 	'specialcontact-sectitle-features' => 'Rozszerzenia Fandomu',
-	'specialcontact-sectitle-using-wikia' => 'Użytkowanie portalu Fandom',
+	'specialcontact-sectitle-using-fandom' => 'Użytkowanie portalu Fandom',
 	'specialcontact-sectitle-wiki-name-change' => 'Zmiana nazwy społeczności',
 	'specialcontact-wikia' => 'Skontaktuj się z Fandomem',
 	'specialcontact-intro-blocked' => 'Konta użytkowników najczęściej blokowane są przez lokalnych administratorów, a nie przez pracowników Fandomu. Dane administratora, który podjął tę decyzję powinny znajdować się w wysłanej do ciebie wiadomości o zablokowaniu konta. Jednym ze sposób skontaktowania się z administratorem, który zablokował twoje konto jest umieszczenie wiadomości na twojej stronie dyskusji. Na niektórych wiki zablokowani użytkownicy mogą edytować swoje strony dyskusji, a wprowadzane tam przez nich zmiany są widoczne dla innych użytkowników. Swoją stronę dyskusji znajdziesz klikając przycisk „Moja dyskusja”, który znajdziesz w prawym górnym rogu każdej strony na portalu Fandom.
@@ -1519,7 +1519,7 @@ $messages['pt'] = [
 	'specialcontact-seclink-rename-account' => 'Renomeie a minha conta',
 	'specialcontact-seclink-blocked' => 'Minha conta está bloqueada',
 	'specialcontact-secheader-editing' => 'Participando do Fandom',
-	'specialcontact-seclink-using-wikia' => 'Como utilizo o Fandom?',
+	'specialcontact-seclink-using-fandom' => 'Como utilizo o Fandom?',
 	'specialcontact-seclink-feedback' => 'Eu quero dar a minha opinião',
 	'specialcontact-seclink-bug' => 'Encontrei um bug',
 	'specialcontact-seclink-bad-ad' => 'Eu vi um anúncio sem funcionar ou inapropriado',
@@ -1537,7 +1537,7 @@ $messages['pt'] = [
 	'specialcontact-sectitle-close-account' => 'Desativar conta',
 	'specialcontact-sectitle-rename-account' => 'Renomear a minha conta',
 	'specialcontact-sectitle-blocked' => 'Conta bloqueada',
-	'specialcontact-sectitle-using-wikia' => 'Usando o Fandom',
+	'specialcontact-sectitle-using-fandom' => 'Usando o Fandom',
 	'specialcontact-sectitle-feedback' => 'Opinião',
 	'specialcontact-sectitle-bug' => 'Relatório de Bug',
 	'specialcontact-sectitle-bad-ad' => 'Relatório de Anúncio',
@@ -1589,7 +1589,7 @@ Boas edições!',
 No entanto, se essa página de conversas não estiver disponível, então o melhor conselho que podemos dar é para esperar o fim do bloqueio ou participar de outras comunidades Fandom disponíveis.
 
 Se você pensa que ainda precisa discutir sobre este bloqueio com o staff do Fandom, entre em contato conosco [[Especial:Contact/general|aqui]].',
-	'specialcontact-intro-using-wikia' => 'Agora que você é uma parte da comunidade, você pode editar e contribuir em quase todas as páginas do Fandom. Para ajudá-lo, confira nossas [[Ajuda:Começando|páginas de ajuda aqui]]. Elas são um ótimo lugar para aprender as noções básicas de edição, formatação e muito mais.
+	'specialcontact-intro-using-fandom' => 'Agora que você é uma parte da comunidade, você pode editar e contribuir em quase todas as páginas do Fandom. Para ajudá-lo, confira nossas [[Ajuda:Começando|páginas de ajuda aqui]]. Elas são um ótimo lugar para aprender as noções básicas de edição, formatação e muito mais.
 
 Se você tiver perguntas sobre esta comunidade específica, [[Especial: ListAdmins|entre em contato com seu administrador local]]. 
 Você também pode fazer perguntas gerais para outros membros da comunidade em nosso [[w:c:comunidade:Especial:Forum|Fórum de ajuda da comunidade]].
@@ -1856,7 +1856,7 @@ $messages['ru'] = [
 Если вам понадобится помощь, свяжитесь с [[Special:ListAdmins|местными администраторами]]. Администраторы являются экспертами в теме вики и работе сообщества, поэтому лучше всего первым делом поговорить с ними. Если администраторы не в силах вам помочь, или вы считаете, что участник нарушает [http://ru.community.wikia.com/wiki/Викия:Условия_использования Условия использования] компании Wikia Inc., свяжитесь непосредственно с сотрудниками Фэндома [[Special:Contact/general|здесь]].
 
 Счастливого редактирования!',
-	'specialcontact-intro-using-wikia' => 'Вы стали участником этого сообщества и можете редактировать практически любую страницу на сайте Фэндом. Для ознакомления с нашей платформой посетите [[w:c:ru.community:Справка:Содержание|портал справки]]. Это лучший способ научиться основам редактирования, форматирования и многого другого.
+	'specialcontact-intro-using-fandom' => 'Вы стали участником этого сообщества и можете редактировать практически любую страницу на сайте Фэндом. Для ознакомления с нашей платформой посетите [[w:c:ru.community:Справка:Содержание|портал справки]]. Это лучший способ научиться основам редактирования, форматирования и многого другого.
 
 Если у вас возник вопрос, касающийся конкретно этого сообщества, [[Special:ListAdmins|свяжитесь с местными администраторами]].
 С общими вопросами вы также можете обратиться к участникам других сообществ на [[w:c:ru.community:Служебная:Forum|общем форуме]].
@@ -1870,12 +1870,12 @@ $messages['ru'] = [
 	'specialcontact-secheader-setting' => 'Изменения в этой вики',
 	'specialcontact-seclink-close-wiki' => 'Удалить эту вики',
 	'specialcontact-seclink-content-issue' => 'Проблемы с содержанием этой вики',
-	'specialcontact-seclink-using-wikia' => 'Как пользоваться Фэндомом?',
+	'specialcontact-seclink-using-fandom' => 'Как пользоваться Фэндомом?',
 	'specialcontact-sectitle' => 'Поддержка Фэндома — $1',
 	'specialcontact-sectitle-close-wiki' => 'Удалить эту вики',
 	'specialcontact-sectitle-design' => 'Дизайн сообщества',
 	'specialcontact-sectitle-features' => 'Расширения Фэндома',
-	'specialcontact-sectitle-using-wikia' => 'Использование Фэндома',
+	'specialcontact-sectitle-using-fandom' => 'Использование Фэндома',
 	'specialcontact-sectitle-wiki-name-change' => 'Изменение названия сообщества',
 	'specialcontact-wikia' => 'Связаться с Фэндомом',
 	'specialcontact-intro-blocked' => 'Обычно блокировки участников производятся администраторами вики, а не сотрудниками Фэндома. Вы можете найти имя заблокировавшего вас администратора в уведомлении о блокировке и связаться с этим администратором на вашей стене обсуждения, поскольку на большинстве вики даже заблокированные участники могут оставлять сообщения на своей стене. Активность на вашей стене будет отображаться в списке вики-деятельности, и ваше сообщение заметят другие участники и администраторы. Чтобы попасть на вашу стену обсуждения, перейдите по соответствующей ссылке в правом верхнем углу любой страницы.
@@ -2017,7 +2017,7 @@ Fandom拥有大量不同主题的社区，我们希望您可以通过浏览其�
 
 祝您编辑愉快！
 ',
-	'specialcontact-intro-using-wikia' => '现在您已经是社区的一名成员了，您可以在Fandom的任何页面上进行编辑或者发言。您可以点击[[Help:创建Fandom|这里]]查看有关维基的介绍。在这里，您可以学到有关编辑以及格式建立的一些简单性操作。
+	'specialcontact-intro-using-fandom' => '现在您已经是社区的一名成员了，您可以在Fandom的任何页面上进行编辑或者发言。您可以点击[[Help:创建Fandom|这里]]查看有关维基的介绍。在这里，您可以学到有关编辑以及格式建立的一些简单性操作。
 
 如果您对某一个社区有任何问题，您可以联系此社区的[[Special:ListAdmins|管理员]]。
 您也可以登陆[[w:c:zh.community:special:Forum|社区论坛]]进行提问，获得其他维基用户的帮助。
@@ -2032,12 +2032,12 @@ Fandom拥有大量不同主题的社区，我们希望您可以通过浏览其�
 	'specialcontact-secheader-setting' => '此维基的更改',
 	'specialcontact-seclink-close-wiki' => '关闭此维基',
 	'specialcontact-seclink-content-issue' => '使用此维基内容进行发布',
-	'specialcontact-seclink-using-wikia' => '如何使用Fandom？',
+	'specialcontact-seclink-using-fandom' => '如何使用Fandom？',
 	'specialcontact-sectitle' => 'Fandom支持 - $1',
 	'specialcontact-sectitle-close-wiki' => '关闭此维基',
 	'specialcontact-sectitle-design' => '社区设计',
 	'specialcontact-sectitle-features' => 'Fandom功能',
-	'specialcontact-sectitle-using-wikia' => '源自Fandom',
+	'specialcontact-sectitle-using-fandom' => '源自Fandom',
 	'specialcontact-sectitle-wiki-name-change' => '社区名称更改',
 	'contact' => '联系Fandom',
 	'specialcontact-ccheader' => '这是你发送给Fandom支持部门的信息副本。',
@@ -2179,7 +2179,7 @@ Fandom擁有大量不同主題的社區，我們希望您可以通過查閱其�
 如果您需要任何幫助，可以首先聯絡此社群的[[Special:ListAdmins|管理員]]。他們負責社區的管理，會為您提供最好的幫助。如果管理員也不能幫到您，或者您認為某個用戶違反了Wikia Inc.公司的[http://zh-tw.wikia.com/wiki/%E4%Bd%Bf%E7%94%A8%E6%A2%9D%E6%Ac%Be 使用條款]，您可以直接[[Special:Contact/general|聯絡Fandom員工]]。
 
 祝您編輯愉快！',
-	'specialcontact-intro-using-wikia' => '現在您已經是社群的一名成員了，您可以在Fandom的任何頁面上進行編輯或者發言。您可以[[Help:Getting_Started|按這裡]]查看有關wiki的介紹。在這裡，您可以學到有關編輯以及格式建立的一些簡單性操作。
+	'specialcontact-intro-using-fandom' => '現在您已經是社群的一名成員了，您可以在Fandom的任何頁面上進行編輯或者發言。您可以[[Help:Getting_Started|按這裡]]查看有關wiki的介紹。在這裡，您可以學到有關編輯以及格式建立的一些簡單性操作。
 
 如果您對某一個社群有任何問題，您可以問詢此社區的[[Special:ListAdmins|管理員]]。
 您也可以訪問[[w:c:zh.community:special:Forum|社區論壇]]進行提問，獲得其他社群用戶的幫助。
@@ -2193,12 +2193,12 @@ Fandom擁有大量不同主題的社區，我們希望您可以通過查閱其�
 	'specialcontact-secheader-setting' => '對此wiki的更改',
 	'specialcontact-seclink-close-wiki' => '關閉這個wiki',
 	'specialcontact-seclink-content-issue' => '此wiki內容的問題',
-	'specialcontact-seclink-using-wikia' => '如何使用Fandom？',
+	'specialcontact-seclink-using-fandom' => '如何使用Fandom？',
 	'specialcontact-sectitle' => 'Fandom支援 - $1',
 	'specialcontact-sectitle-close-wiki' => '關閉這個wiki',
 	'specialcontact-sectitle-design' => '社區設計',
 	'specialcontact-sectitle-features' => 'Fandom功能',
-	'specialcontact-sectitle-using-wikia' => '源自Fandom',
+	'specialcontact-sectitle-using-fandom' => '源自Fandom',
 	'specialcontact-sectitle-wiki-name-change' => '社區名稱更改',
 	'contact' => '連絡Fandom',
 	'specialcontact-ccheader' => '這是你發送給Fandom支援部門的郵件副本。',
@@ -2245,7 +2245,7 @@ $messages['zh'] = [
 	'specialcontact-seclink-rename-account' => '重新命名我的帐户',
 	'specialcontact-seclink-blocked' => '我的帐户被封禁了',
 	'specialcontact-secheader-editing' => '参与Wikia',
-	'specialcontact-seclink-using-wikia' => '如何使用Wikia？',
+	'specialcontact-seclink-using-fandom' => '如何使用Wikia？',
 	'specialcontact-seclink-feedback' => '我想提供一些反馈',
 	'specialcontact-seclink-bug' => '我发现了一个程序故障',
 	'specialcontact-seclink-bad-ad' => '我发现了一个不能播放或不适宜的广告',
@@ -2263,7 +2263,7 @@ $messages['zh'] = [
 	'specialcontact-sectitle-close-account' => '关闭我的帐户',
 	'specialcontact-sectitle-rename-account' => '重新命名我的帐户',
 	'specialcontact-sectitle-blocked' => '帐户封禁',
-	'specialcontact-sectitle-using-wikia' => '使用Wikia',
+	'specialcontact-sectitle-using-fandom' => '使用Wikia',
 	'specialcontact-sectitle-feedback' => '用户反馈',
 	'specialcontact-sectitle-bug' => '程序故障',
 	'specialcontact-sectitle-bad-ad' => '广告问题报告',
@@ -2307,7 +2307,7 @@ $messages['zh'] = [
 尽管如此，如果您不能执行以上操作，我们建议您耐心等待封禁解除，或者参与其他的维基社区。
 
 如果您希望能够和我们探讨有关此次封禁，请访问[[Special:Contact/general|这里]]联系我们。',
-	'specialcontact-intro-using-wikia' => '现在您已经是社区的一名成员了，您可以在Wikia的任何页面上进行编辑或者发言。您可以点击[[Help:Getting_Started|这里]]查看有关维基的介绍。在这里，您可以学到有关维基编辑以及格式建立的一些简单性操作。
+	'specialcontact-intro-using-fandom' => '现在您已经是社区的一名成员了，您可以在Wikia的任何页面上进行编辑或者发言。您可以点击[[Help:Getting_Started|这里]]查看有关维基的介绍。在这里，您可以学到有关维基编辑以及格式建立的一些简单性操作。
 
 如果您对某一个维基有任何问题，您可以联系此维基的[[Special:ListAdmins|管理员]]。您也可以登陆[[w:c:zh.community:special:Forum|社区论坛]]进行提问，获得其他维基用户的帮助。',
 	'specialcontact-intro-feedback' => '如果您有任何反馈或者建议，十分欢迎您及时地联系我们。请在下面告诉我们反馈或者建议的相关内容。如果你对维基实验室的产品有任何想法，请在[[Special:WikiaLabs|这里]]联系我们。十分感谢您对Wikia的支持和帮助！',
@@ -2461,7 +2461,7 @@ $messages['ko'] = [
 	'specialcontact-intro-user-conflict' => '위키 커뮤니티를 성공으로 이끌기 위해선 협업이 필요합니다. 협업 과정에서 사용자 간의 마찰이 생길 수 있는데, 이럴 때는 서로를 존중하는 열린 마음으로 마찰을 풀어나가는 것이 좋습니다.
 
 도움이 필요하시다면 먼저 이 위키의 [[Special:ListAdmins|관리자]]에게 문의해 주세요. 이 위키의 관리자들은 위키에서 다루는 주제의 전문가들이며 그 위키의 커뮤니티에 익숙할 것입니다. 만약 관리자에게서 도움을 받기 힘들거나 마찰을 빚는 사용자가 위키아의 [http://www.wikia.com/Terms_of_Use 이용 약관(영어)]을 위반하고 있다고 생각되시면 [[Special:Contact/general|이곳]]에서 위키아 스태프에게 문의해주세요.',
-	'specialcontact-intro-using-wikia' => '이제 귀하는 위키 공동체의 일원으로서 위키아의 거의 모든 문서에 기여하실 수 있습니다. 위키 초보자에게 도움이 될 만한 정보는 [[도움말:초보자 길잡이|이곳]]에서 찾아보실 수 있습니다.
+	'specialcontact-intro-using-fandom' => '이제 귀하는 위키 공동체의 일원으로서 위키아의 거의 모든 문서에 기여하실 수 있습니다. 위키 초보자에게 도움이 될 만한 정보는 [[도움말:초보자 길잡이|이곳]]에서 찾아보실 수 있습니다.
 
 만약 지금 보고 계시는 이 위키에 관한 질문이 있으시다면 [[Special:ListAdmins|이 위키의 관리자]]에게 해주세요. 위키아나 위키에 관한 일반적인 질문이나 요청은 [[w:c:ko:특수기능:포럼|위키아 중앙 커뮤니티]]에서 하실 수 있습니다.
 
@@ -2474,12 +2474,12 @@ $messages['ko'] = [
 	'specialcontact-secheader-setting' => '위키 관리자 전용 요청',
 	'specialcontact-seclink-close-wiki' => '위키 폐쇄',
 	'specialcontact-seclink-content-issue' => '위키의 내용에 관한 문제',
-	'specialcontact-seclink-using-wikia' => '위키아 사용법',
+	'specialcontact-seclink-using-fandom' => '위키아 사용법',
 	'specialcontact-sectitle' => '위키아에 문의하기 - $1',
 	'specialcontact-sectitle-close-wiki' => '위키 폐쇄',
 	'specialcontact-sectitle-design' => '디자인 관련',
 	'specialcontact-sectitle-features' => '기능 관련',
-	'specialcontact-sectitle-using-wikia' => '위키아 사용법 관련',
+	'specialcontact-sectitle-using-fandom' => '위키아 사용법 관련',
 	'specialcontact-sectitle-wiki-name-change' => '위키 이름 변경',
 	'specialcontact-wikia' => '위키아에 문의하기',
 ];
@@ -2541,7 +2541,7 @@ $messages['zh-hk'] = [
 	'specialcontact-intro-user-conflict' => 'Wikia是通過所有人的共同合作建立的社區空間。在這種情況下，使用者間不可避免地會發生一些衝突。最好的解決辦法就是在您所參與的維基上，在尊重他人的基礎上進行有效的溝通。
 
 如果您需要任何説明，可以首先聯繫此維基的[[Special:ListAdmins|管理員]]。他們負責社區的管理，會為您提供最好的幫助。如果管理員也不能幫到您，或者您認為某個用戶違反了[http://zh.community.wikia.com/wiki/%E4%BD%BF%E7%94%A8%E6%A2%9D%E6%AC%BE Wikia使用條款]，您可以直接[[Special:Contact/general|聯繫我們]]。',
-	'specialcontact-intro-using-wikia' => '現在您已經是社區的一名成員了，您可以在Wikia的任何頁面上進行編輯或發言。您可以點擊[[Help:Getting_Started|這裡]]查看有關維基的介紹。在這裡，您可以學到有關維基編輯以及格式建立的一些簡單性操作。
+	'specialcontact-intro-using-fandom' => '現在您已經是社區的一名成員了，您可以在Wikia的任何頁面上進行編輯或發言。您可以點擊[[Help:Getting_Started|這裡]]查看有關維基的介紹。在這裡，您可以學到有關維基編輯以及格式建立的一些簡單性操作。
 
 如果您對某一個Wiki有任何問題，您可以聯繫此Wiki的[[Special:ListAdmins|管理員]]。您也可以登陸[[w:c:zh.community:special:Forum|社區論壇]]進行提問，獲得其他Wikia用戶的幫助。',
 	'specialcontact-label-close-account-confirm' => '我確定要關閉我的Wikia帳戶',
@@ -2550,12 +2550,12 @@ $messages['zh-hk'] = [
 	'specialcontact-secheader-setting' => '這個Wiki的更改',
 	'specialcontact-seclink-close-wiki' => '關閉這個Wiki',
 	'specialcontact-seclink-content-issue' => '關於Wiki內容的問題',
-	'specialcontact-seclink-using-wikia' => '如何使用Wikia？',
+	'specialcontact-seclink-using-fandom' => '如何使用Wikia？',
 	'specialcontact-sectitle' => '維基支持 - $1',
 	'specialcontact-sectitle-close-wiki' => '關閉這個Wiki',
 	'specialcontact-sectitle-design' => 'Wiki設計',
 	'specialcontact-sectitle-features' => 'Wiki功能',
-	'specialcontact-sectitle-using-wikia' => '使用Wikia',
+	'specialcontact-sectitle-using-fandom' => '使用Wikia',
 	'specialcontact-sectitle-wiki-name-change' => '更改Wiki名稱',
 ];
 
@@ -2611,7 +2611,7 @@ $messages['zh-tw'] = [
 	'specialcontact-intro-user-conflict' => 'Wikia是通過所有人的共同合作建立的社區空間。在這種情況下，使用者間不可避免地會發生一些衝突。最好的解決辦法就是在您所參與的維基上，在尊重他人的基礎上進行有效的溝通。
 
 如果您需要任何説明，可以首先聯繫此維基的[[Special:ListAdmins|管理員]]。他們負責社區的管理，會為您提供最好的幫助。如果管理員也不能幫到您，或者您認為某個用戶違反了[http://zh.community.wikia.com/wiki/%E4%BD%BF%E7%94%A8%E6%A2%9D%E6%AC%BE Wikia使用條款]，您可以直接[[Special:Contact/general|聯繫我們]]。',
-	'specialcontact-intro-using-wikia' => '現在您已經是社區的一名成員了，您可以在Wikia的任何頁面上進行編輯或發言。您可以點擊[[Help:Getting_Started|這裡]]查看有關維基的介紹。在這裡，您可以學到有關維基編輯以及格式建立的一些簡單性操作。
+	'specialcontact-intro-using-fandom' => '現在您已經是社區的一名成員了，您可以在Wikia的任何頁面上進行編輯或發言。您可以點擊[[Help:Getting_Started|這裡]]查看有關維基的介紹。在這裡，您可以學到有關維基編輯以及格式建立的一些簡單性操作。
 
 如果您對某一個Wiki有任何問題，您可以聯繫此Wiki的[[Special:ListAdmins|管理員]]。您也可以登陸[[w:c:zh.community:special:Forum|社區論壇]]進行提問，獲得其他Wikia用戶的幫助。',
 	'specialcontact-label-close-account-confirm' => '我確定要關閉Wikia帳戶',
@@ -2621,12 +2621,12 @@ $messages['zh-tw'] = [
 	'specialcontact-secheader-setting' => '這個Wiki的更改',
 	'specialcontact-seclink-close-wiki' => '關閉這個Wiki',
 	'specialcontact-seclink-content-issue' => '關於Wiki內容的問題',
-	'specialcontact-seclink-using-wikia' => '如何使用Wikia？',
+	'specialcontact-seclink-using-fandom' => '如何使用Wikia？',
 	'specialcontact-sectitle' => '維基支持 - $1',
 	'specialcontact-sectitle-close-wiki' => '關閉這個Wiki',
 	'specialcontact-sectitle-design' => 'Wiki設計',
 	'specialcontact-sectitle-features' => 'Wiki功能',
-	'specialcontact-sectitle-using-wikia' => '使用Wikia',
+	'specialcontact-sectitle-using-fandom' => '使用Wikia',
 	'specialcontact-sectitle-wiki-name-change' => '更改Wiki名稱',
 ];
 
