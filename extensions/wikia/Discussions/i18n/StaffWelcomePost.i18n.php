@@ -7,9 +7,9 @@ Welcome to Discussions!
 
 This is the place to talk about your favorite topic, to share news, theories, ideas, and to connect with others.
 
-To learn more about what you can do here, check out $1
+To learn more about what you can do here, check out http://community.wikia.com/wiki/Help:Discussions
 
-If you're an admin on this community, read more about how you can customize your Discussions and set up guidelines for contributors: $2
+If you're an admin on this community, read more about how you can customize your Discussions and set up guidelines for contributors: http://community.wikia.com/wiki/Help:Admin_and_Moderator_Tools_in_Discussions
 
 Have fun!
 "
