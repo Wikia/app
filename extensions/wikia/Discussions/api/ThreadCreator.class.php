@@ -19,7 +19,6 @@ class ThreadCreator {
 			// Currently only creates thread in "General" category of the Discussion.
 			$api->createThread( $siteId, $siteId,  $postInput );
 			$success = true;
-
 		} catch ( ApiException  $e ) {
 			$this->logError( $siteId, $userId, $body, $e );
 			$success = false;
