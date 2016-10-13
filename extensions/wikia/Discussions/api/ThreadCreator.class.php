@@ -9,6 +9,7 @@ use Wikia\Service\Swagger\ApiProvider;
 class ThreadCreator {
 
 	const SERVICE_NAME = "discussion";
+	const TIME_OUT = 5;
 
 	public function create( int $userId, int $siteId, string $body, $title = null ): bool {
 		$postInput = $this->getPostInput( $siteId, $body, $title );
@@ -32,7 +33,6 @@ class ThreadCreator {
 			->setSiteId( $siteId )
 			->setBody( $body )
 			->setTitle( $title ?? "" );
-
 	}
 
 	private function getThreadsApi( int $userId ): ThreadsApi {
@@ -40,7 +40,7 @@ class ThreadCreator {
 		$apiProvider = Injector::getInjector()->get( ApiProvider::class );
 		/** @var \Swagger\Client\Discussion\Api\ThreadsApi $api */
 		$api = $apiProvider->getAuthenticatedApi( self::SERVICE_NAME, $userId, ThreadsApi::class );
-		$api->getApiClient()->getConfig()->setCurlTimeout( 5 );
+		$api->getApiClient()->getConfig()->setCurlTimeout( self::TIME_OUT );
 
 		return $api;
 	}
