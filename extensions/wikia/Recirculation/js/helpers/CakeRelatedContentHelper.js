@@ -42,12 +42,12 @@ define('ext.wikia.recirculation.helpers.cakeRelatedContent', [
 
     function formatData(data) {
         data.items = data.items.map(function(item) {
-			if (item.source  == "discussions") {
-				item.meta.authorAvatarUrl = item.author.avatar.src;
-			}
-			item.author = item.author.username;
-			item.title = item.title.split(' | ')[0];
-			return item;
+		if (item.source  == "discussions") {
+			item.meta.authorAvatarUrl = item.author.avatar.src;
+		}
+		item.author = item.author.username;
+		item.title = item.title.split(' | ')[0];
+		return item;
         }).sort(utils.sortThumbnails);
         return data;
     }
