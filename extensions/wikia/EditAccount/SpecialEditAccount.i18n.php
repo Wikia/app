@@ -15,7 +15,7 @@ $messages['en'] = [
 	'editaccount-frame-logout' => 'Logging out user from all sessions: $1',
 	'editaccount-frame-close' => 'Disable user account: $1',
 	'editaccount-label-email' => 'Set new email address',
-	'editaccount-label-pass' => 'Set new password',
+	'editaccount-label-pass' => 'Set new password (and log out user)',
 	'editaccount-label-realname' => 'Set new real name',
 	'editaccount-label-clearunsub' => 'Unsubscribed',
 	'editaccount-label-toggleadopt' => 'Modify adopter status (for AutomaticWikiAdopt):',
@@ -547,7 +547,7 @@ $messages['de'] = [
 	'editaccount-remove-avatar-fail' => 'Problem beim automatischen Entfernen des Avatars.',
 	'editaccount-requested' => 'Hinweis: Benutzer hat Kontoschließung beantragt',
 	'editaccount-not-requested' => '!ACHTUNG: Benutzer hat noch keine Kontoschließung beantragt',
-	'editaccount-labal-account-status' => 'Account-Status',
+	'editaccount-labal-account-status' => 'Benutzerkonto-Status',
 	'editaccount-labal-email-status' => 'E-Mail-Status',
 	'editaccount-status-confirmed' => 'Bestätigt',
 	'editaccount-status-unconfirmed' => 'Unbestätigt',
@@ -614,7 +614,7 @@ $messages['es'] = [
 	'editaccount-title' => 'Especial:EditAccount',
 	'editaccount-frame-manage' => 'Editar una cuenta',
 	'editaccount-frame-usage' => 'Nota',
-	'editaccount-usage' => 'Los datos de usuario están en una caché separada para cada wiki. Cuando se reinicie una contraseña o cuenta de correo electrónico, la caché será únicamente anulada para este wiki. Dirige al usuario a este wiki para acceder al sistema con una nueva contraseña y evitar problemas de caché.',
+	'editaccount-usage' => 'Los datos de usuario están en una memoria intermedia separada para cada wiki. Cuando se reinicie una contraseña o cuenta de correo electrónico, la memoria intermedia será únicamente anulada para este wiki. Por favor dirija el usuario a este wiki para acceder al sistema con una nueva contraseña y evitar problemas de memoria intermedia.',
 	'editaccount-label-select' => 'Seleccionar una cuenta de usuario',
 	'editaccount-submit-account' => 'Administrar cuenta',
 	'editaccount-frame-account' => 'Editando cuenta de usuario: $1',
@@ -622,7 +622,7 @@ $messages['es'] = [
 	'editaccount-label-email' => 'Fijar una nueva dirección de correo electrónico',
 	'editaccount-label-pass' => 'Fijar una nueva contraseña',
 	'editaccount-label-realname' => 'Fijar un nuevo nombre real',
-	'editaccount-label-clearunsub' => 'Desuscrito',
+	'editaccount-label-clearunsub' => 'Borrado',
 	'editaccount-label-toggleadopt' => 'Cambiar el estado del adoptante (para Adopción Automática de Wikis):',
 	'editaccount-label-toggleadopt-prevent' => 'Prevenir adopción automática',
 	'editaccount-label-toggleadopt-allow' => 'Permitir adopción automática',
@@ -631,7 +631,7 @@ $messages['es'] = [
 	'editaccount-submit-email' => 'Guardar correo electrónico',
 	'editaccount-submit-pass' => 'Guardar contraseña',
 	'editaccount-submit-realname' => 'Guardar nombre verdadero',
-	'editaccount-submit-clearunsub' => 'Borrar desuscripción',
+	'editaccount-submit-clearunsub' => 'Suscribir',
 	'editaccount-submit-cleardisable' => 'Retirar la marca de desactivado',
 	'editaccount-submit-close' => 'Cerrar cuenta',
 	'editaccount-submit-button' => 'Guardar',
@@ -643,7 +643,7 @@ $messages['es'] = [
 	'editaccount-success-pass' => 'Se ha cambiado correctamente la contraseña para la cuenta $1.',
 	'editaccount-success-realname' => 'Se ha cambiado correctamente el nombre real de la cuenta $1.',
 	'editaccount-success-unsub' => 'Eliminada correctamente la suscripción de la cuenta $1.',
-	'editaccount-success-disable' => 'Se ha retirado la etiqueta "desactivada" para la cuenta $1.',
+	'editaccount-success-disable' => 'Se ha retirado la etiqueta "desactivada" para la cuenta $1 correctamente.',
 	'editaccount-success-toggleadopt' => 'Se fijó correctamente el estado de elegibilidad de adopción para la cuenta $1.',
 	'editaccount-success-close' => 'Se ha inhabilitado correctamente la cuenta $1.',
 	'editaccount-error-email' => 'El correo electrónico no se ha cambiado. Inténtalo de nuevo o contacta con el Equipo Técnico.',
@@ -729,6 +729,7 @@ $messages['fa'] = [
 	'editaccount-status-unconfirmed' => 'تأیید نشده',
 	'editaccount-status-realuser' => 'کاربر حقیقی',
 	'edit-account-closed-flag' => '<div class="errorbox" style="padding: 1em;">این حساب کاربری سراسری به دلیل[[Help:Closing an account|انتخاب کاربر]]، یا توسط ویکیا غیر فعال شده‌است.</div>',
+	'right-editaccount' => 'ویرایش صفحۀ ترجیهات کاربران دیگر',
 ];
 
 $messages['fi'] = [
@@ -840,13 +841,13 @@ $messages['fr'] = [
 	'editaccount-label-toggleadopt-prevent' => 'Empêcher l’adoption automatique',
 	'editaccount-label-toggleadopt-allow' => 'Autoriser l’adoption automatique',
 	'editaccount-label-reason' => 'Motif :',
-	'editaccount-label-clearemail' => 'Effacer l\'adresse de courriel',
+	'editaccount-label-clearemail' => 'Effacer l\'adresse e-mail',
 	'editaccount-submit-email' => 'Sauvegarder l\'adresse électronique',
 	'editaccount-submit-pass' => 'Sauvegarder le mot de passe',
 	'editaccount-submit-realname' => 'Sauvegarder le nom complet',
 	'editaccount-submit-clearunsub' => 'Effacer le désabonnement',
 	'editaccount-submit-cleardisable' => 'Retirer le flag « désactivé »',
-	'editaccount-submit-close' => 'Clore le compte',
+	'editaccount-submit-close' => 'Fermer le compte',
 	'editaccount-submit-button' => 'Enregistrer',
 	'editaccount-usage-close' => 'Vous pouvez également désactiver un compte utilisateur en brouillant son mot de passe et en supprimant son adresse électronique. Veuillez noter que les données seront perdues et ne seront pas récupérables.',
 	'editaccount-warning-close' => '<b>Attention !</b> Vous êtes sur le point de désactiver le compte utilisateur <b>$1</b> de manière permanente. Ceci ne peut pas être défait. Êtes-vous certain de vouloir effectuer cette opération ?',
@@ -870,13 +871,13 @@ $messages['fr'] = [
 	'editaccount-requested' => 'Note : l’utilisateur a demandé la fermeture de son compte',
 	'editaccount-not-requested' => 'ATTENTION : l’utilisateur n’a pas demandé la fermeture de son compte',
 	'editaccount-labal-account-status' => 'État de compte',
-	'editaccount-labal-email-status' => 'État du Courriel',
+	'editaccount-labal-email-status' => 'État de l\'adresse e-mail',
 	'editaccount-status-confirmed' => 'Confirmé',
 	'editaccount-status-unconfirmed' => 'Non confirmé',
 	'editaccount-status-realuser' => 'Utilisateur réel',
 	'editaccount-status-tempuser' => 'Utilisateur temporaire',
-	'editaccount-error-tempuser-email' => 'Les utilisateurs temporaires ne peuvent pas avoir de champ Adresse de courriel vide; veuillez entrer une adresse de courriel.',
-	'editaccount-email-change-requested' => 'Un utilisateur a demandé le changement de courriel via les préférences de $1. Pour confirmer le changement d\'adresse courriel demandé pour l\'utilisateur, entrez l\'adresse de courriel demandée dans le champ ci-dessous et cliquez sur «Enregistrer et confirmer».',
+	'editaccount-error-tempuser-email' => 'Les utilisateurs temporaires ne peuvent pas avoir de champ « Adresse e-mail » vide; veuillez saisir une adresse e-mail.',
+	'editaccount-email-change-requested' => 'Un utilisateur a demandé le changement d\'adresse e-mail via les préférences de $1. Pour confirmer le changement d\'adresse e-mail demandé pour l\'utilisateur, saisissez l\'adresse e-mail demandée dans le champ ci-dessous et cliquez sur « Enregistrer et confirmer ».',
 	'editaccount-closure-requested' => 'La fermeture de ce compte a été planifiée à sa propre demande.',
 	'editaccount-submit-clearclosurerequest' => 'Annuler la demande de fermeture',
 	'editaccount-error-clearclosurerequest' => 'Erreur : soit le compte est déjà fermé, soit sa fermeture n\'est pas planifiée.',
@@ -1215,7 +1216,7 @@ $messages['it'] = [
 	'editaccount-invalid-email' => '"$1" non è un indirizzo e-mail valido!',
 	'editaccount-nouser' => 'L\'account "$1" non esiste!',
 	'editaccount-remove-avatar-fail' => 'Problema  sull\'autorimozione dell\'avatar.',
-	'editaccount-requested' => 'NOTA: l\'utente ha richiesto la chiusura dell\'account',
+	'editaccount-requested' => 'Nota: L\'utente ha chiesto la disabilitazione dell\'account',
 	'editaccount-not-requested' => 'ATTENZIONE: l\'utente non ha richiesto la chiusura dell\'account',
 	'editaccount-labal-account-status' => 'Stato dell\'account',
 	'editaccount-labal-email-status' => 'Stato dell\'email',
@@ -1233,6 +1234,7 @@ $messages['it'] = [
 	'edit-account-closed-flag' => '<div class="errorbox" style="padding: 1em;">Questo account è stato disattivato a livello globale per [[w:it:Aiuto:Chiudere un account|scelta dell\'utente]] o da Fandom.</div>',
 	'right-editaccount' => 'Modifica le preferenze degli altri utenti',
 	'action-editaccount' => 'modificare le informazioni di altri utenti',
+	'editaccount-email-change-requested' => 'L\'utente ha richiesto tramite le Preferenze il cambio dell\'indirizzo email in $1. Per confermare il cambio di indirizzo richiesto per l\'utente, inserisci l\'indirizzo email richiesto nel campo sottostante e clicca su "Salva e conferma".',
 ];
 
 $messages['ja'] = [
@@ -1399,7 +1401,7 @@ $messages['ko'] = [
 	'editaccount-log-entry-pass' => '$2 사용자의 비밀번호를 변경했습니다',
 	'editaccount-log-entry-realname' => '$2 사용자의 실명을 변경했습니다',
 	'editaccount-log-entry-close' => '$2 계정 비활성화',
-	'right-editaccount' => '다른 사용자의 정보 편집',
+	'right-editaccount' => '다른 사용자의 계정 정보를 편집',
 	'action-editaccount' => '다른 사용자의 정보 편집',
 	'edit-account-closed-flag' => '<div class="errorbox" style="padding: 1em;">이 사용자는 모든 위키아 산하 위키에서 차단되어 있습니다.</div>',
 ];
@@ -1718,7 +1720,7 @@ $messages['nl'] = [
 	'editaccount-frame-manage' => 'Gebruiker bewerken',
 	'editaccount-frame-usage' => 'Let op',
 	'editaccount-usage' => 'Gebruikersgevens worden voor iedere wiki apart in een cache bijgehouden.
-Als u een wachtwoord of e-mailadres opnieuw instelt, wordt alleen de cache voor deze wiki ongeldig gemaakt.
+Als je een wachtwoord of e-mailadres opnieuw instelt, wordt alleen de cache voor deze wiki ongeldig gemaakt.
 Laat de gebruiker bij deze wiki aanmelden met een nieuw wachtwoord om problemen met de cache te voorkomen.',
 	'editaccount-label-select' => 'Selecteer een gebruiker',
 	'editaccount-submit-account' => 'Gebruiker beheren',
@@ -1740,12 +1742,12 @@ Laat de gebruiker bij deze wiki aanmelden met een nieuw wachtwoord om problemen 
 	'editaccount-submit-cleardisable' => 'Gebruiker weer vrijgeven',
 	'editaccount-submit-close' => 'Gebruiker afsluiten',
 	'editaccount-submit-button' => 'Opslaan',
-	'editaccount-usage-close' => 'U kunt een gebruiker ook uitschakelen door een onbekend wachtwoord in te stellen en het e-mailadres te verwijderen.
+	'editaccount-usage-close' => 'Je kunt een gebruiker ook uitschakelen door een onbekend wachtwoord in te stellen en het e-mailadres te verwijderen.
 De huidige gegevens gaan dan verloren en zijn niet te herstellen.',
 	'editaccount-warning-close' => '<b>Let op!</b>
-U staat op het punt de gebruiker <b>$1</b> permanent af te sluiten.
+Je staat op het punt de gebruiker <b>$1</b> permanent af te sluiten.
 Dit kan niet ongedaan gemaakt worden.
-Weet u zeker dat u dit wilt doen?',
+Weet je zeker dat u dit wilt doen?',
 	'editaccount-status' => 'Statusbericht',
 	'editaccount-success-email' => 'Het e-mailadres voor gebruiker $1 is gewijzigd naar $2.',
 	'editaccount-success-email-blank' => 'Het e-mailadres voor de gebruiker $1 is verwijderd.',
@@ -2202,7 +2204,7 @@ $messages['roa-tara'] = [
 $messages['ru'] = [
 	'editaccount' => 'Изменение учётной записи',
 	'editaccount-desc' => 'Позволяет управлять учётными записями пользователей',
-	'editaccount-title' => 'Special:ИзменениеУчётнойЗаписи',
+	'editaccount-title' => 'Special:EditAccount',
 	'editaccount-frame-manage' => 'Изменение учётной записи',
 	'editaccount-frame-usage' => 'Замечание',
 	'editaccount-usage' => 'Данные кэшируются отдельно для каждой вики. При сбросе пароля или адреса электронной почты, кэш будет обновлён только для этой вики. Пожалуйста, попросите участника войти в эту вики с новым паролем, чтобы избежать проблем с кэшированием.',
@@ -2214,9 +2216,9 @@ $messages['ru'] = [
 	'editaccount-label-pass' => 'Установка нового пароля',
 	'editaccount-label-realname' => 'Установка нового настоящего имени',
 	'editaccount-label-clearunsub' => 'Отписаться',
-	'editaccount-label-toggleadopt' => 'Изменить статус удочерителя (для AutomaticWikiAdopt):',
-	'editaccount-label-toggleadopt-prevent' => 'Предотвратить автоматическое удочерение',
-	'editaccount-label-toggleadopt-allow' => 'Разрешить автоматическое удочерение',
+	'editaccount-label-toggleadopt' => 'Изменить статус того, кто принимает вики (для AutomaticWikiAdopt):',
+	'editaccount-label-toggleadopt-prevent' => 'Предотвратить автоматическое принятие вики',
+	'editaccount-label-toggleadopt-allow' => 'Разрешить автоматическое принятие вики',
 	'editaccount-label-reason' => 'Причина:',
 	'editaccount-label-clearemail' => 'Очистить адрес электронной почты',
 	'editaccount-submit-email' => 'Сохранить адрес эл. почты',

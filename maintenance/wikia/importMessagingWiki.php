@@ -21,6 +21,7 @@ class ImportMessagingWiki extends Maintenance {
 
 		$this->addOption( 'dry-run', 'Don\'t make any changes to i18n files - print output in /tmp/ folder.' );
 		$this->addOption( 'message', 'Message name to process', false, true /* $withArg */ );
+		$this->addOption( 'prefix', 'Prefix for messages to process (e.g. "achievements-")', false, true /* $withArg */ );
 	}
 
 	/**
@@ -62,6 +63,13 @@ class ImportMessagingWiki extends Maintenance {
 		if ($msg) {
 			# AND page_title LIKE 'Autocreatewiki-welcomebody/%'
 			$sql->AND_('page_title')->LIKE( ucfirst( $msg ) . '/%' );
+		}
+
+		# handle --prefix argument
+		$prefix = $this->getOption('prefix');
+		if ($prefix) {
+			# AND page_title LIKE 'Achievements-%'
+			$sql->AND_('page_title')->LIKE( ucfirst( $prefix ) . '%' );
 		}
 
 		$res = $sql->runLoop( $db, function ( &$res, $row ) use ( &$i, $wgContLang ) {
@@ -115,30 +123,15 @@ class ImportMessagingWiki extends Maintenance {
 			$changed = 0;
 			/** @var array $messages */
 
-			# is the message defined in this file?
-			# check English so we can handle messages customized on Messaging Wiki that do not exist in i18n files
-			$msg = $this->getOption('message');
-
-			if ($msg) {
-				$msgDefinedInTheCode = isset( $messages['en'][$msg] );
-				if ( $msgDefinedInTheCode === false ) {
-					continue;
-				}
-
-				// we have a single message to process, simply replace i18n files entries here with those from Messaging Wiki
-				// will add missing entries as well (i.e. no entry in the code, translation of theWiki)
-				foreach( $this->messages as $lang => $translations ) {
-					if ( $messages[$lang][$msg] != $translations[$msg] ) {
-						$messages[$lang][$msg] = $translations[$msg];
-						$changed++;
-					}
-				}
-			}
-
-			// iterate over i18n file content and update it using data from Messaging Wiki when neeeded
-			foreach ( $messages as $lang => $translations ) {
+			// iterate over data from Messaging Wiki and uodate i18n files when neeeded
+			// this will also import values for languages defined on Messaging Wiki only
+			foreach ( $this->messages as $lang => $translations ) {
 				foreach ( $translations as $key => $text ) {
-					if ( isset( $this->messages[$lang][$key] ) && $this->messages[$lang][$key] !== $messages[$lang][$key] ) {
+					if (
+						( !isset( $messages[$lang][$key] ) && isset( $messages['en'][$key] ) ) // Messaging Wiki-powered localisation (entry in i18n file for English only)
+						||
+						( isset( $messages[$lang][$key] ) && ( $this->messages[$lang][$key] !== $messages[$lang][$key] ) ) ) // messages defined in both i18n and on Messaging Wiki
+					{
 						$messages[$lang][$key] = $this->messages[$lang][$key];
 						$changed++;
 					}

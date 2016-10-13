@@ -1,0 +1,17 @@
+These are the readme of the Validator extension.
+
+Extension page on mediawiki.org: https://www.mediawiki.org/wiki/Extension:Validator
+Latest version of the release notes: https://gerrit.wikimedia.org/r/gitweb?p=mediawiki/extensions/Validator.git;a=blob;f=README
+
+== About ==
+
+Validator is an extension that makes parameter validation functionality available
+to other extensions. This enables other extensions to validate parameters, set them
+to their defaults, and generate error messages, while only defining the parameters
+and their criteria.
+
+Notes on installing Validator are found in the file INSTALL.
+
+== Contributors ==
+
+https://www.mediawiki.org/wiki/Extension:Validator#Contributing_to_the_project

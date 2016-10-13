@@ -1,7 +1,8 @@
 <?php
-$messages = array();
+/** Internationalization file for /extensions/wikia/Email/Email extension. */
+$messages = [];
 
-$messages['en'] = array(
+$messages['en'] = [
 	'group-translator-member' => 'Fandom Translator',
 	'group-translator' => 'Fandom Translators',
 	'grouppage-translator' => 'wikia:Help:Internationalization',
@@ -18,9 +19,9 @@ $messages['en'] = array(
 	'emailext-wikia-home-url' => 'http://fandom.wikia.com/',
 	'emailext-mobile-application-footer-1' => 'Take your favorite fandoms with you and never miss a beat.',
 	'emailext-mobile-application-footer-2' => 'Check out our Fandom Community apps!',
-);
+];
 
-$messages['qqq'] = array(
+$messages['qqq'] = [
 	'group-translator-member' => 'The display name for a member of the translator group',
 	'group-translator' => 'The display name for the translator group',
 	'grouppage-translator' => 'A URL describing this group.  Should not need any i18n since its just a URL',
@@ -28,17 +29,17 @@ $messages['qqq'] = array(
 	'emailext-anonymous-editor' => 'Missing documentation',
 	'emailext-no-reply-name' => 'Name for sender of "no reply" email address',
 	'emailext-fanverse-tagline' => 'Missing documentation',
-	'emailext-watchedpage-notice' => "Informs the user who the intended recipient of the email is. $1 is the recipient's email address.",
+	'emailext-watchedpage-notice' => 'Informs the user who the intended recipient of the email is. $1 is the recipient\'s email address.',
 	'emailext-update-frequency' => 'Provides a link for users to update their email preferences',
 	'emailext-unsubscribe' => 'Missing documentation',
 	'emailext-unfollow-text' => 'Asks the user if they want to stop following this page and provides a link to unfollow the page. $1 -> unfollow url, $2 article title',
-	'emailext-salutation' => "Email greeting. $1 is the recipient's username.",
+	'emailext-salutation' => 'Email greeting. $1 is the recipient\'s username.',
 	'emailext-wikia-home-url' => 'URL to the appropriate Wikia home page for each localized language',
 	'emailext-mobile-application-footer-1' => 'Message encouraging to download mobile application.',
 	'emailext-mobile-application-footer-2' => 'Message encouraging to download mobile application.',
-);
+];
 
-$messages['de'] = array(
+$messages['de'] = [
 	'emailext-desc' => 'Eine Erweiterung, die die Zustellung von E-Mails abwickelt',
 	'emailext-anonymous-editor' => 'Ein Fandom-Benutzer',
 	'emailext-no-reply-name' => 'No Reply',
@@ -56,9 +57,9 @@ $messages['de'] = array(
 	'right-access-sendemail' => 'Ermöglicht den Zugriff auf Spezial:SendEmail',
 	'emailext-mobile-application-footer-1' => 'So hast du deine Lieblings-Communitys immer dabei und verpasst nie wieder etwas.',
 	'emailext-mobile-application-footer-2' => 'Schau dir unsere Fandom Community-Apps an!',
-);
+];
 
-$messages['es'] = array(
+$messages['es'] = [
 	'emailext-desc' => 'Una extensión para controlar el envío de correos electrónicos.',
 	'emailext-anonymous-editor' => 'Un usuario de Fandom',
 	'emailext-no-reply-name' => 'No responder',
@@ -76,17 +77,17 @@ $messages['es'] = array(
 	'right-access-sendemail' => 'Permite acceso a Special:SendEmail',
 	'emailext-mobile-application-footer-1' => 'Lleva tu comunidad favorita contigo y no te pierdas de nada.',
 	'emailext-mobile-application-footer-2' => '¡Revisa nuestras aplicaciones comunitarias!',
-);
+];
 
-$messages['fr'] = array(
-	'emailext-desc' => "Une extension pour gérer l'envoi d'e-mails",
+$messages['fr'] = [
+	'emailext-desc' => 'Une extension pour gérer les e-mails envoyés',
 	'emailext-anonymous-editor' => 'Un utilisateur de Fandom',
 	'emailext-no-reply-name' => 'Aucune réponse',
-	'emailext-password-email-signature' => "L'équipe Support de Wikia",
+	'emailext-password-email-signature' => 'L\'équipe Support de Wikia',
 	'emailext-fanverse-tagline' => 'Powered by Wikia',
 	'emailext-recipient-notice' => 'E-mail envoyé par Fandom à $1',
 	'emailext-update-frequency' => 'Pour modifier le nombre ou la fréquence des e-mails que vous recevez, visitez la page [{{fullurl:Special:Preferences|#mw-prefsection-emailv2}} Préférences].',
-	'emailext-unsubscribe' => "Pour ne plus recevoir d'e-mails de Fandom, cliquez [$1 ici].",
+	'emailext-unsubscribe' => 'Pour ne plus recevoir d\'e-mails de Fandom, cliquez [$1 ici].',
 	'emailext-unfollow-text' => 'Vous ne souhaitez plus être informé de ces mises à jour ? Cliquez [$1 ici] pour ne plus suivre $2 sur {{SITENAME}}.',
 	'emailext-salutation' => 'Bonjour $1,',
 	'group-translator-member' => 'Traducteur Fandom',
@@ -94,32 +95,32 @@ $messages['fr'] = array(
 	'grouppage-translator' => 'wikia:Help:Internationalization',
 	'emailext-wikia-home-url' => 'http://fandom.wikia.com/',
 	'emailext-forumreply-unfollow-text' => 'Vous ne souhaitez plus être informé de ces mises à jour ? Cliquez [$1 ici] pour ne plus suivre [$2 cette discussion] sur [{{SERVER}} {{SITENAME}}].',
-	'right-access-sendemail' => "Autorise l'accès à Special:SendEmail",
+	'right-access-sendemail' => 'Autorise l\'accès à Special:SendEmail',
 	'emailext-mobile-application-footer-1' => 'Emportez vos fandoms favoris partout avec vous.',
 	'emailext-mobile-application-footer-2' => 'Découvrez les applications communautaires Fandom !',
-);
+];
 
-$messages['it'] = array(
-	'emailext-desc' => "Un'estensione per gestire la distribuzione di email",
+$messages['it'] = [
+	'emailext-desc' => 'Un\'estensione per gestire la distribuzione di email',
 	'emailext-anonymous-editor' => 'Un utente Fandom',
 	'emailext-no-reply-name' => 'Nessuna risposta',
 	'emailext-fanverse-tagline' => 'Powered by Wikia',
 	'emailext-recipient-notice' => 'Email inviata a $1 da Fandom',
 	'emailext-update-frequency' => 'Per filtrare le email che vuoi ricevere o la loro frequenza, visita la tua pagina [{{fullurl:Special:Preferences|#mw-prefsection-emailv2}} Preferenze].',
 	'emailext-unsubscribe' => 'Per non ricevere più email da Fandom clicca [$1 qui].',
-	'emailext-unfollow-text' => "Non t'interessa più ricevere questi aggiornamenti? Clicca [$1 qui] per smettere di seguire $2 su {{SITENAME}}.",
+	'emailext-unfollow-text' => 'Non t\'interessa più ricevere questi aggiornamenti? Clicca [$1 qui] per smettere di seguire $2 su {{SITENAME}}.',
 	'emailext-salutation' => 'Ciao $1,',
 	'group-translator-member' => 'Traduttore di Fandom',
 	'group-translator' => 'Traduttori di Fandom',
 	'grouppage-translator' => 'wikia:Help:Internationalization',
 	'emailext-wikia-home-url' => 'http://fandom.wikia.com/',
-	'emailext-forumreply-unfollow-text' => "Non t'interessa più ricevere questi aggiornamenti? Clicca [$1 qui] per smettere di seguire [$2 questa discussione] su [{{SERVER}} {{SITENAME}}].",
-	'right-access-sendemail' => "Consente l'accesso a Special:SendEmail",
+	'emailext-forumreply-unfollow-text' => 'Non t\'interessa più ricevere questi aggiornamenti? Clicca [$1 qui] per smettere di seguire [$2 questa discussione] su [{{SERVER}} {{SITENAME}}].',
+	'right-access-sendemail' => 'Consente l\'accesso a Special:SendEmail',
 	'emailext-mobile-application-footer-1' => 'Porta i tuoi fandom preferiti con te e non perdere mai un colpo.',
-	'emailext-mobile-application-footer-2' => "Dai un'occhiata alle nostre app della community di Fandom!",
-);
+	'emailext-mobile-application-footer-2' => 'Dai un\'occhiata alle nostre app della community di Fandom!',
+];
 
-$messages['ja'] = array(
+$messages['ja'] = [
 	'emailext-desc' => 'メール配信に関する拡張機能',
 	'emailext-anonymous-editor' => 'Fandomユーザー',
 	'emailext-no-reply-name' => '送信専用',
@@ -137,16 +138,21 @@ $messages['ja'] = array(
 	'right-access-sendemail' => 'Special:SendEmailへのアクセスを許可する',
 	'emailext-mobile-application-footer-1' => 'アプリをダウンロードすれば、いつでもどこでもお気に入りのコミュニティに簡単にアクセスできます。',
 	'emailext-mobile-application-footer-2' => 'このコミュニティはアプリ版も公開されています！',
-);
+];
 
-$messages['ko'] = array(
+$messages['ko'] = [
 	'emailext-anonymous-editor' => '익명 사용자',
 	'emailext-fanverse-tagline' => '팬을 위한 팬에 의한 위키아 커뮤니티',
 	'emailext-recipient-notice' => '받는이: $1 / 보낸이: 위키아',
 	'emailext-unsubscribe' => '위키아에서 보내는 모든 이메일 알림을 받지 않으시려면 [$1 이곳]을 들러 주세요.',
-);
+	'emailext-desc' => '이메일 전송을 관리하는 확장 기능',
+	'emailext-no-reply-name' => '댓글 없음',
+	'emailext-salutation' => '안녕하세요, $1 님!',
+	'emailext-unfollow-text' => '더 이상 이에 관한 이메일 알림을 받고 싶지 않으신가요? [$1 이곳]에서 {{SITENAME}}의 $2 문서를 주시 해제하실 수 있습니다.',
+	'emailext-update-frequency' => '종류에 따른 이메일 알림 여부를 설정하시려면 귀하의 [{{fullurl:Special:Preferences|#mw-prefsection-emailv2}} 환경 설정] 페이지에 들러 주세요.',
+];
 
-$messages['nl'] = array(
+$messages['nl'] = [
 	'emailext-desc' => 'An extension to handle delivering email',
 	'emailext-anonymous-editor' => 'A Wikia fan',
 	'emailext-no-reply-name' => 'No Reply',
@@ -164,29 +170,29 @@ $messages['nl'] = array(
 	'right-access-sendemail' => 'Allows access to Special:SendEmail',
 	'emailext-mobile-application-footer-1' => 'Take your favorite fandoms with you and never miss a beat.',
 	'emailext-mobile-application-footer-2' => 'Check out our Fandom Community apps!',
-);
+];
 
-$messages['pl'] = array(
+$messages['pl'] = [
 	'emailext-desc' => 'Rozszerzenie służące do obsługi dostarczania wiadomości e-mail',
 	'emailext-anonymous-editor' => 'Użytkownik portalu Fandom',
-	'emailext-no-reply-name' => 'No Reply',
+	'emailext-no-reply-name' => 'Nie odpowiadaj',
 	'emailext-fanverse-tagline' => 'Powered by Wikia',
 	'emailext-recipient-notice' => 'Wiadomość e-mail została wysłana do $1 z portalu Fandom',
-	'emailext-update-frequency' => 'Jeśli chcesz zmienić rodzaj lub częstotliwość otrzymywanych wiadomości e-mail, przejdź do strony zawierającej Twoje  [{{fullurl:Special:Preferences|#mw-prefsection-emailv2}} Ustawienia].',
+	'emailext-update-frequency' => 'Jeśli chcesz zmienić rodzaj lub częstotliwość otrzymywanych wiadomości e-mail, przejdź do strony zawierającej Twoje  [{{fullurl:Special:Preferences|#mw-prefsection-emailv2}} preferencje].',
 	'emailext-unsubscribe' => 'Aby zrezygnować z otrzymywania wiadomości od Fandom, kliknij [$1 tutaj].',
-	'emailext-unfollow-text' => 'Nie jesteś już zainteresowany otrzymywaniem powiadomień? Kliknij [$1 tutaj], aby zrezygnować ze śledzenia $2 na {{SITENAME}}.',
+	'emailext-unfollow-text' => 'Nie chcesz już otrzymywać tych powiadomień? Kliknij [$1 tutaj], aby zrezygnować ze śledzenia $2 na {{SITENAME}}.',
 	'emailext-salutation' => 'Cześć $1,',
 	'group-translator-member' => 'Tłumacz Fandomu',
 	'group-translator' => 'Tłumacze Fandomu',
 	'grouppage-translator' => 'wikia:Help:Internationalization',
 	'emailext-wikia-home-url' => 'http://fandom.wikia.com/',
-	'emailext-forumreply-unfollow-text' => 'Nie jesteś już zainteresowany otrzymywaniem powiadomień? Kliknij [$1 tutaj], aby przestać śledzić  [$2 tą dyskusję] na [{{SERVER}} {{SITENAME}}].',
+	'emailext-forumreply-unfollow-text' => 'Nie chcesz już otrzymywać powiadomień? Kliknij [$1 tutaj], aby przestać śledzić  [$2 tę dyskusję] na [{{SERVER}} {{SITENAME}}].',
 	'right-access-sendemail' => 'Allows access to Special:SendEmail',
 	'emailext-mobile-application-footer-1' => 'Miej swoje ulubione fandomy zawsze pod ręką, a nigdy niczego nie przegapisz.',
 	'emailext-mobile-application-footer-2' => 'Sprawdź aplikacje Społeczności Fandom!',
-);
+];
 
-$messages['pt'] = array(
+$messages['pt'] = [
 	'emailext-desc' => 'Uma extensão para lidar com a entrega de e-mail',
 	'emailext--anonymous-editor' => 'Um fã da Wikia',
 	'emailext-no-reply-name' => 'Sem resposta',
@@ -205,9 +211,9 @@ $messages['pt'] = array(
 	'right-access-sendemail' => 'Permite acesso ao Especial:SendEmail',
 	'emailext-mobile-application-footer-1' => 'Leve seus fandoms favoritos com você e fique por dentro de tudo.',
 	'emailext-mobile-application-footer-2' => 'Confira os aplicativos das nossas comunidades!',
-);
+];
 
-$messages['ru'] = array(
+$messages['ru'] = [
 	'emailext-desc' => 'Расширение для доставки электронных сообщений',
 	'emailext-anonymous-editor' => 'Участник Фэндома',
 	'emailext-no-reply-name' => 'Не отвечать',
@@ -225,9 +231,9 @@ $messages['ru'] = array(
 	'right-access-sendemail' => 'Allows access to Special:SendEmail',
 	'emailext-mobile-application-footer-1' => 'Оставайтесь в курсе всего происходящего на ваших любимых сообществах.',
 	'emailext-mobile-application-footer-2' => 'Проверьте приложения от Фэндома!',
-);
+];
 
-$messages['zh-hans'] = array(
+$messages['zh-hans'] = [
 	'emailext-desc' => '用来处理发送邮件的扩展功能',
 	'emailext-anonymous-editor' => 'Fandom用户',
 	'emailext-no-reply-name' => '请勿回复',
@@ -245,49 +251,52 @@ $messages['zh-hans'] = array(
 	'right-access-sendemail' => 'Allows access to Special:SendEmail',
 	'emailext-mobile-application-footer-1' => '和你最喜爱的粉丝社区保持同步，不要错过精彩内容。',
 	'emailext-mobile-application-footer-2' => '看看我们的Fandom社区应用吧！',
-);
+];
 
-$messages['zh-hant'] = array(
+$messages['zh-hant'] = [
 	'group-translator-member' => 'Fandom翻譯人員',
 	'group-translator' => 'Fandom翻譯人員',
 	'grouppage-translator' => 'wikia:Help:Internationalization',
 	'emailext-desc' => '用來處理發送郵件的擴展功能',
 	'emailext-anonymous-editor' => 'Fandom用戶',
-	'emailext-no-reply-name' => '請勿回覆',
+	'emailext-no-reply-name' => '不要回覆這封郵件',
 	'emailext-fanverse-tagline' => 'Powered by Wikia',
 	'emailext-recipient-notice' => 'Fandom已經發送電子郵件至$1',
 	'emailext-update-frequency' => '如果您需要更改電子郵件地址或接收方式，請訪問您的[{{fullurl:Special:Preferences|#mw-prefsection-emailv2}} 用戶設定]頁面。',
 	'emailext-unsubscribe' => '如果您希望取消訂閱所有的Fandom電子郵件，請按[$1 這裡]。',
-	'emailext-unfollow-text' => '不想再接收這類更新通知？按一下[$1 這裡]取消對{{SITENAME}}上$2頁面的關注。',
+	'emailext-unfollow-text' => '不想再接收這類更新内容？點擊[$1 這裡]取消對{{SITENAME}}上$2頁面的關注。',
 	'emailext-salutation' => '$1，你好！',
-	'emailext-forumreply-unfollow-text' => '不想再收到這類更新通知？按一下[$1 這裡] 取消對[{{SERVER}} {{SITENAME}}]上[$2 這個討論]的關注。',
+	'emailext-forumreply-unfollow-text' => '不想再收到這類更新的訊息？按一下[$1這裡]取消在[{{SERVER}} {{SITENAME}}]監視[$2 這個討論]。',
 	'emailext-wikia-home-url' => 'http://fandom.wikia.com/',
 	'right-access-sendemail' => 'Allows access to Special:SendEmail',
 	'emailext-mobile-application-footer-1' => '和你最喜歡的粉絲社區保持同步，千萬不要錯過任何訊息。',
 	'emailext-mobile-application-footer-2' => '去看看我們的Fandom社群App吧！',
-);
+];
 
-$messages['zh-hk'] = array(
+$messages['zh-hk'] = [
 	'emailext-anonymous-editor' => 'Wikia粉絲',
 	'emailext-fanverse-tagline' => '全球粉絲社交帝國',
 	'emailext-recipient-notice' => 'Wikia已經發送電子郵件至$1',
 	'emailext-unsubscribe' => '如果您希望取消訂閱所有的Wikia電子郵件，請點擊[$1 這裡]。',
-);
+	'emailext-desc' => '用來處理發送郵件的擴展功能',
+	'emailext-no-reply-name' => '不要回覆這封郵件',
+	'emailext-unfollow-text' => '不想再接收這類更新内容？點擊[$1 這裡]取消對{{SITENAME}}上$2頁面的關注。',
+];
 
-$messages['zh-tw'] = array(
+$messages['zh-tw'] = [
 	'emailext-desc' => '用來處理發送郵件的擴展功能',
 	'emailext--anonymous-editor' => 'Wikia粉絲',
-	'emailext-no-reply-name' => '請勿回覆',
+	'emailext-no-reply-name' => '不要回覆這封郵件',
 	'emailext-fanverse-tagline' => '全球粉絲社交帝國',
 	'emailext-recipient-notice' => 'Wikia已經發送電子郵件至$1',
 	'emailext-update-frequency' => '如果您需要更改電子郵件地址或接收方式，請訪問您的[{{fullurl:Special:Preferences|#mw-prefsection-emailv2}} 用戶設定]頁面。',
 	'emailext-unsubscribe' => '如果您希望取消訂閱所有的Wikia電子郵件，請點擊[$1 這裡]。',
-	'emailext-unfollow-text' => '不想再接收這類更新通知？按一下[$1 這裡]取消對{{SITENAME}}上$2頁面的關注。',
+	'emailext-unfollow-text' => '不想再接收這類更新内容？點擊[$1 這裡]取消對{{SITENAME}}上$2頁面的關注。',
 	'emailext-salutation' => '$1，你好！',
 	'emailext-anonymous-editor' => 'Wikia粉絲',
 	'group-translator-member' => 'Wikia Translator',
 	'group-translator' => 'Wikia Translators',
 	'grouppage-translator' => 'wikia:Help:Internationalization',
 	'emailext-wikia-home-url' => 'http://zh-tw.wikia.com',
-);
+];
 

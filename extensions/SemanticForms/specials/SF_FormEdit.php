@@ -168,13 +168,17 @@ class SFFormEdit extends UnlistedSpecialPage {
 
 		$text .= '<form name="createbox" id="sfForm" method="post" class="createbox">';
 		$pre_form_html = '';
-		Hooks::run( 'sfHTMLBeforeForm', array( &$targetTitle, &$pre_form_html ) );
+		wfRunHooks( 'sfHTMLBeforeForm', array( &$targetTitle, &$pre_form_html ) );
 		$text .= $pre_form_html;
 		if ( isset( $result[ 'formHTML' ] ) ) {
 			$text .= $result[ 'formHTML' ];
 		}
 
-		SFUtils::addFormRLModules();
+		SFUtils::addJavascriptAndCSS();
+
+		if ( isset( $result[ 'formJS' ] ) ) {
+			$out->addScript( '		<script type="text/javascript">' . "\n$result[formJS]\n" . '</script>' . "\n" );
+		}
 
 		$out->addHTML( $text );
 

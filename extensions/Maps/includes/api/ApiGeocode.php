@@ -1,51 +1,49 @@
 <?php
 
-namespace Maps\Api;
-
-use ApiBase;
-
 /**
  * API module for geocoding.
  *
  * @since 1.0.3
  *
+ * @file ApiGeocode.php
+ * @ingroup Maps
  * @ingroup API
  *
  * @licence GNU GPL v2++
  * @author Jeroen De Dauw < jeroendedauw@gmail.com >
  */
-class Geocode extends ApiBase {
-
+class ApiGeocode extends ApiBase {
+	
 	public function __construct( $main, $action ) {
 		parent::__construct( $main, $action );
 	}
-
+	
 	public function execute() {
 		global $wgUser;
-
+		
 		if ( !$wgUser->isAllowed( 'geocode' ) || $wgUser->isBlocked() ) {
 			$this->dieUsageMsg( array( 'badaccess-groups' ) );
-		}
-
+		}			
+		
 		$params = $this->extractRequestParams();
-
+		
 		$results = array();
-
+		
 		foreach ( array_unique( $params['locations'] ) as $location ) {
-			$result = \Maps\Geocoders::geocode( $location, $params['service'] );
-
+			$result = MapsGeocoders::geocode( $location, $params['service'] );
+			
 			$results[$location] = array(
 				'count' => $result === false ? 0 : 1,
 				'locations' => array()
 			);
-
+			
 			if ( $result !== false ) {
 				$results[$location]['locations'][] = $result;
 			}
-
+			
 			$this->getResult()->setIndexedTagName( $results[$location]['locations'], 'location' );
 		}
-
+		
 		$this->getResult()->addValue(
 			null,
 			'results',
@@ -61,7 +59,7 @@ class Geocode extends ApiBase {
 				ApiBase::PARAM_ISMULTI => true,
 			),
 			'service' => array(
-				ApiBase::PARAM_TYPE => \Maps\Geocoders::getAvailableGeocoders(),
+				ApiBase::PARAM_TYPE => MapsGeocoders::getAvailableGeocoders(),
 			),
 			'props' => array(
 				ApiBase::PARAM_ISMULTI => true,
@@ -70,18 +68,24 @@ class Geocode extends ApiBase {
 			),
 		);
 	}
-
+	
 	public function getParamDescription() {
 		return array(
 			'locations' => 'The locations to geocode',
 			'service' => 'The geocoding service to use',
 		);
 	}
-
+	
 	public function getDescription() {
 		return array(
 			'API module for geocoding.'
 		);
+	}
+	
+	public function getPossibleErrors() {
+		return array_merge( parent::getPossibleErrors(), array(
+			array( 'missingparam', 'locations' ),
+		) );
 	}
 
 	public function getExamples() {
@@ -90,6 +94,10 @@ class Geocode extends ApiBase {
 			'api.php?action=geocode&locations=new york|brussels|london',
 			'api.php?action=geocode&locations=new york&service=geonames',
 		);
-	}
-
+	}	
+	
+	public function getVersion() {
+		return __CLASS__ . ': $Id$';
+	}		
+	
 }

@@ -242,5 +242,11 @@ $messages['ko'] = [
 	'emailext-emailconfirmation-reminder-summary' => '며칠이 지났지만 아직 위키아 인증 과정을 완료하지 않으셨습니다. 위키아 커뮤니티는 언제나 귀하를 위해 열려 있습니다! 간단히 아래 링크를 클릭한 뒤 인증을 완료하세요.',
 	'emailext-emailconfirmation-subject' => '이메일을 인증하고 본격적으로 위키아를 시작해보세요!',
 	'emailext-emailconfirmation-summary' => '거의 다 됐습니다! 아래 링크를 클릭해 인증 과정을 완료하고 위키아를 시작해보세요.',
+	'emailext-emailconfirmation-button-text' => '인증하기',
+	'emailext-emailconfirmation-changed-footer-1' => '새 이메일로 인증을 완료하기 전까진 기존의 이메일로 알림들이 전송됩니다.',
+	'emailext-emailconfirmation-footer-1' => '이메일을 인증하시면 귀하가 주시하는 문서에 변경점이 생겼거나, 다른 사람으로부터 메시지를 받았을 때 귀하의 이메일 주소로 알림을 받으실 수 있습니다. 또 자신만의 위키아를 만들어 관리하실 수도 있습니다.',
+	'emailext-emailconfirmation-footer-2' => '커뮤니티에서 만나요!',
+	'emailext-emailconfirmation-reminder-footer-1' => '23일 내에 인증하지 않을 경우, 귀하의 사용자명($1)을 다른 사람들이 사용할 수 있게 됩니다. 서두르세요! 소중한 이름을 지켜내야 해요!',
+	'emailext-emailconfirmation-reminder-subject' => '이메일을 인증하고 $1 님의 사용자명을 지켜내세요!',
 ];
 

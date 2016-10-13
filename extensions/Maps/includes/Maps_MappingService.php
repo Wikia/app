@@ -6,6 +6,9 @@
  *
  * @since 0.6.3
  *
+ * @file Maps_MappingService.php
+ * @ingroup Maps
+ *
  * @licence GNU GPL v2+
  * @author Jeroen De Dauw < jeroendedauw@gmail.com >
  */
@@ -114,7 +117,7 @@ abstract class MapsMappingService implements iMappingService {
 			$parserOrOut->getOutput()->addModules( $this->getResourceModules() );
 		}
 		elseif ( $parserOrOut instanceof OutputPage ) {
-			if ( $dependencies !== false ) {
+			if ( $dependencies ) {
 				$parserOrOut->addHeadItem( md5( $dependencies ), $dependencies );
 			}
 
@@ -151,7 +154,7 @@ abstract class MapsMappingService implements iMappingService {
 		}
 
 		// If there are dependencies, put them all together in a string, otherwise return false.
-		return $dependencies !== array() ? implode( '', $dependencies ) : false;
+		return count( $dependencies ) > 0 ? implode( '', $dependencies ) : false;
 	}
 
 	/**

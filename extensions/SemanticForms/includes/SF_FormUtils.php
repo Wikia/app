@@ -1,6 +1,6 @@
 <?php
 /**
- * Utilities for the display and retrieval of forms.
+ * Javascript- and HTML-creation utilities for the display of a form
  *
  * @author Yaron Koren
  * @author Jeffrey Stuckman
@@ -11,29 +11,63 @@
  */
 
 class SFFormUtils {
+	static function setGlobalJSVariables( &$vars ) {
+		global $sfgAutocompleteValues, $sfgAutocompleteOnAllChars;
+		global $sfgFieldProperties, $sfgCargoFields, $sfgDependentFields;
+		global $sfgShowOnSelect, $sfgScriptPath;
+		global $edgValues, $sfgEDSettings;
+//		global $sfgInitJSFunctions, $sfgValidationJSFunctions;
+
+		$vars['sfgAutocompleteValues'] = $sfgAutocompleteValues;
+		$vars['sfgAutocompleteOnAllChars'] = $sfgAutocompleteOnAllChars;
+		$vars['sfgFieldProperties'] = $sfgFieldProperties;
+		$vars['sfgCargoFields'] = $sfgCargoFields;
+		$vars['sfgDependentFields'] = $sfgDependentFields;
+		$vars['sfgShowOnSelect'] = $sfgShowOnSelect;
+		$vars['sfgScriptPath'] = $sfgScriptPath;
+		$vars['edgValues'] = $edgValues;
+		$vars['sfgEDSettings'] = $sfgEDSettings;
+//		$vars['sfgInitJSFunctions'] = $sfgInitJSFunctions;
+//		$vars['sfgValidationJSFunctions'] = $sfgValidationJSFunctions;
+
+		return true;
+	}
 
 	/**
 	 * Add a hidden input for each field in the template call that's
 	 * not handled by the form itself
 	 */
-	static function unhandledFieldsHTML( $template_in_form ) {
-		// This shouldn't happen, but sometimes this value is null.
-		// @TODO - fix the code that calls this function so the
-		// value is never null.
-		if ( is_null( $template_in_form ) ) {
-			return '';
-		}
-
+	static function unhandledFieldsHTML( $templateName, $templateContents ) {
 		// HTML element names shouldn't contain spaces
-		$templateName = str_replace( ' ', '_', $template_in_form->getTemplateName() );
+		$templateName = str_replace( ' ', '_', $templateName );
 		$text = "";
-		foreach ( $template_in_form->getValuesFromPage() as $key => $value ) {
+		foreach ( $templateContents as $key => $value ) {
 			if ( !is_null( $key ) && !is_numeric( $key ) ) {
 				$key = urlencode( $key );
 				$text .= Html::hidden( '_unhandled_' . $templateName . '_' . $key, $value );
 			}
 		}
 		return $text;
+	}
+
+	/**
+	 * Add unhandled fields back into the template call that the form
+	 * generates, so that editing with a form will have no effect on them
+	 */
+	static function addUnhandledFields( $templateName ) {
+		global $wgRequest;
+
+		$templateName = str_replace( ' ', '_', $templateName );
+		$prefix = '_unhandled_' . $templateName . '_';
+		$prefixSize = strlen( $prefix );
+		$additional_template_text = "";
+		foreach ( $wgRequest->getValues() as $key => $value ) {
+			if ( strpos( $key, $prefix ) === 0 ) {
+				$field_name = urldecode( substr( $key, $prefixSize ) );
+				$additional_template_text .= "|$field_name=$value\n";
+			}
+		}
+		return $additional_template_text;
 	}
 
 	static function summaryInputHTML( $is_disabled, $label = null, $attr = array(), $value = '' ) {
@@ -104,7 +138,7 @@ class SFFormUtils {
 			} elseif ( $wgUser->getGlobalPreference( 'watchcreations' ) && !$wgTitle->exists() ) {
 				# Watch creations
 				$is_checked = true;
-			} elseif ( $wgUser->isWatched( $wgTitle ) ) {
+			} elseif ( $wgTitle->userIsWatching() ) {
 				# Already watched
 				$is_checked = true;
 			}
@@ -376,7 +410,6 @@ END;
 		// {{{field|foo|default={{Bar}}}}} is not a problem. When used with preg_match and friends, $matches[0] will
 		// contain the whole SF tag, $matches[1] will contain the tag without the enclosing triple braces.
 		$regexp = '#\{\{\{((?>[^\{\}]+)|(\{((?>[^\{\}]+)|(?-2))*\}))*\}\}\}#';
-		// Needed to restore highlighting in vi - <?
 
 		$items = array();
 
