@@ -76,7 +76,7 @@ require([
 		}
 
 		// Recovery
-		recoveryHelper.initEventQueue();
+		recoveryHelper.initEventQueues();
 
 		if (context.opts.googleConsumerSurveys && gcs) {
 			gcs.addRecoveryCallback();

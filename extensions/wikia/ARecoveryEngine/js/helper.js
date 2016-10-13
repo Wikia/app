@@ -19,20 +19,23 @@ define('ext.wikia.aRecoveryEngine.recovery.helper', [
 	var logGroup = 'ext.wikia.aRecoveryEngine.recovery.helper',
 		context = adContext.getContext(),
 		customLogEndpoint = '/wikia.php?controller=ARecoveryEngineApi&method=getLogInfo&kind=',
-		onBlockingEventsQueue = [];
-
-	function initEventQueue() {
-		lazyQueue.makeQueue(onBlockingEventsQueue, function (callback) {
+		cb = function (callback) {
 			callback();
-		});
+		},
+		onBlockingEventsQueue = lazyQueue.makeQueue([], cb),
+		onNotBlockingEventsQueue = lazyQueue.makeQueue([], cb);
 
-		doc.addEventListener('sp.blocking', function () {
-			onBlockingEventsQueue.start();
-		});
+	function initEventQueues() {
+		doc.addEventListener('sp.not_blocking', onNotBlockingEventsQueue.start);
+		doc.addEventListener('sp.blocking', onBlockingEventsQueue.start);
 	}
 
 	function addOnBlockingCallback(callback) {
 		onBlockingEventsQueue.push(callback);
+	}
+
+	function addOnNotBlockingCallback(callback) {
+		onNotBlockingEventsQueue.push(callback);
 	}
 
 	function isRecoveryEnabled() {
@@ -85,27 +88,14 @@ define('ext.wikia.aRecoveryEngine.recovery.helper', [
 		return win._sp_.getSafeUri(url);
 	}
 
-	function isSourcePointResultDefined() {
-		return win.ads && win.ads.runtime.sp && win.ads.runtime.sp.blocking !== undefined;
-	}
-
-	function runAfterDetection(callback) {
-		if (isSourcePointResultDefined()) {
-			callback();
-		} else {
-			doc.addEventListener('sp.blocking', callback);
-			doc.addEventListener('sp.not_blocking', callback);
-		}
-	}
-
 	return {
 		addOnBlockingCallback: addOnBlockingCallback,
+		addOnNotBlockingCallback: addOnNotBlockingCallback,
 		getSafeUri: getSafeUri,
-		initEventQueue: initEventQueue,
+		initEventQueues: initEventQueues,
 		isBlocking: isBlocking,
 		isRecoverable: isRecoverable,
 		isRecoveryEnabled: isRecoveryEnabled,
-		runAfterDetection: runAfterDetection,
 		track: track,
 		verifyContent: verifyContent
 	};

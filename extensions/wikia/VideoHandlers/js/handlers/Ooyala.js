@@ -24,7 +24,7 @@ define('wikia.videohandler.ooyala', [
 	 * @param {Constructor} vb Instance of video player
 	 */
 	return function (params, vb) {
-		var ima3LibUrl = 'https://imasdk.googleapis.com/js/sdkloader/ima3.js',
+		var ima3LibUrl = '//imasdk.googleapis.com/js/sdkloader/ima3.js',
 			containerId = vb.timeStampId(params.playerId),
 			logGroup = 'wikia.videohandler.ooyala',
 			started = false,
@@ -79,6 +79,13 @@ define('wikia.videohandler.ooyala', [
 				console.log(eventName);
 				console.log(payload);
 			});*/
+		}
+
+		function loadJs(resource) {
+			return loader({
+				type: loader.JS,
+				resources: resource
+			}).fail(loadFail);
 		}
 
 		function initRegularPlayer() {
@@ -142,21 +149,6 @@ define('wikia.videohandler.ooyala', [
 			});
 		}
 
-		function loadJs(resource) {
-			return loader({
-				type: loader.JS,
-				resources: resource
-			}).fail(loadFail);
-		}
-
-		function initPlayer() {
-			if (recoveryHelper.isBlocking()) {
-				initRecoveredPlayer();
-			} else {
-				initRegularPlayer();
-			}
-		}
-
 		// Only load the Ooyala player code once, Ooyala AgeGates will break if we load this asset more than once.
 		if (win.OO !== undefined) {
 			initRegularPlayer();
@@ -172,7 +164,8 @@ define('wikia.videohandler.ooyala', [
 
 				win.OO.ready(function () {
 					if (recoveryHelper.isRecoveryEnabled()) {
-						recoveryHelper.runAfterDetection(initPlayer);
+						recoveryHelper.addOnBlockingCallback(initRecoveredPlayer);
+						recoveryHelper.addOnNotBlockingCallback(initRegularPlayer);
 					} else {
 						initRegularPlayer();
 					}

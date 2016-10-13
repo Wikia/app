@@ -75,4 +75,11 @@ describe('LazyQueue', function () {
 			lazyQueue.makeQueue(intQueue, callback);
 		}).toThrow();
 	});
+
+	it('Lazy queue returns passed array', function () {
+		var input = ['item0', 'item1', 'item2'],
+			output = modules['wikia.lazyqueue']().makeQueue(input, function () {});
+
+		expect(output).toEqual(input);
+	});
 });
