@@ -115,7 +115,7 @@ $messages['zh-hant'] = [
 	'emailext-password-summary' => '看來您好像無法登入帳戶。真抱歉！儘管我們希望將您的密碼發送給您，但是為了安全考慮，我們只能發送給您一個臨時密碼，您可以使用這個臨時密碼進行登入。',
 	'emailext-password-intro' => '請查看下面的臨時密碼：',
 	'emailext-password-unrequested' => '如果你沒有申請新的密碼，不要擔心！你的帳戶是安全的。你可以忽略這封電子郵件，並用你的舊密碼登入Fandom帳戶。',
-	'emailext-password-questions' => '有問題或疑慮？請隨時[http://zh.community.wikia.com/wiki/Special:Contact/account-issue 聯繫我們]。',
+	'emailext-password-questions' => '有疑問或顧慮？請隨時[http://zh.community.wikia.com/wiki/Special:Contact/account-issue 聯繫我們]。',
 	'emailext-password-signature' => 'Fandom社區團隊',
 ];
 
@@ -124,7 +124,7 @@ $messages['zh-tw'] = [
 	'emailext-password-summary' => '看起來你好象在登入時遇到麻煩。真抱歉！儘管我們很想要給你發送密碼，但出於安全方面的考量，我們需要你使用臨時密碼登入。',
 	'emailext-password-intro' => '請查看下面的臨時密碼：',
 	'emailext-password-unrequested' => '如果你沒有申請新的密碼，不要擔心！您的帳戶安全而可靠。你可以忽略這封電子郵件，並用你的舊密碼登入Wikia。',
-	'emailext-password-questions' => '有問題或疑慮？請隨時[http://zh.community.wikia.com/wiki/Special:聯繫我們/account-issue]。',
+	'emailext-password-questions' => '有疑問或顧慮？請隨時[http://zh.community.wikia.com/wiki/Special:Contact/account-issue 聯繫我們]。',
 	'emailext-password-signature' => 'Wikia社區團隊',
 ];
 
@@ -133,9 +133,16 @@ $messages['ko'] = [
 	'emailext-password-subject' => '위키아 비밀번호 변경 과정을 진행해 주세요',
 	'emailext-password-summary' => '안녕하세요! 마음 같아서는 지금 당장이라도 귀하에게 비밀번호를 보내드리고 싶지만 안전상의 이유로 과정을 하나 거치셔야 합니다. 먼저 임시 비밀번호를 통해 귀하의 계정으로 로그인해 주세요.',
 	'emailext-password-unrequested' => '새 비밀번호를 요청하신 적이 없으시다면 걱정하지 마세요! 귀하의 계정은 안전합니다. 그냥 이 이메일은 무시하시고 기존의 비밀번호로 로그인하시면 됩니다.',
+	'emailext-password-intro' => '아래의 임시 비밀번호를 확인해 주세요.',
+	'emailext-password-questions' => '질문이나 의견이 있으신가요? 부담 갖지 마시고 저희에게 [http://community.wikia.com/wiki/Special:Contact/account-issue 연락]해 주세요.',
 ];
 
 $messages['zh-hk'] = [
 	'emailext-password-signature' => 'Wikia社區團隊',
+	'emailext-password-questions' => '有疑問或顧慮？請隨時[http://zh.community.wikia.com/wiki/Special:Contact/account-issue 聯繫我們]。',
+];
+
+$messages['zh'] = [
+	'emailext-password-questions' => '有疑问或顾虑？请随时[http://zh.community.wikia.com/wiki/Special:Contact/account-issue 联系我们]。',
 ];
 

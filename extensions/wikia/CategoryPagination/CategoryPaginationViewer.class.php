@@ -78,7 +78,7 @@ class CategoryPaginationViewer extends CategoryViewer {
 		$this->getOutput()->addHeadItem( 'Paginator', $this->getPaginationHeadItem() );
 		$tpl = new EasyTemplate( __DIR__ . '/templates' );
 		$tpl->set_vars( [
-			'aswersSection' => $answersSection,
+			'answersSection' => $answersSection,
 			'categoryGallery' => $categoryGallery,
 			'content' => $this->content,
 			'counts' => $this->counts,

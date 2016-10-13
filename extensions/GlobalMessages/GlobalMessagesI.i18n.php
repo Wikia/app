@@ -6,8 +6,7 @@ $messages['en'] = [
 	'index-category' => 'Indexed pages',
 	'internalerror' => 'Internal error',
 	'internalerror_info' => 'Internal error: $1',
-	'invalidemailaddress' => 'The e-mail address cannot be accepted as it appears to have an invalid format.
-Please enter a well-formatted address or empty that field.',
+	'invalidemailaddress' => 'Please enter a valid e-mail address.',
 	'italic_sample' => 'Italic text',
 	'italic_tip' => 'Italic text',
 	'image_sample' => 'Example.jpg',
@@ -37,7 +36,7 @@ For optimal security, img_auth.php is disabled.',
 	'imgfile' => 'file',
 	'imagelinks' => 'File usage',
 	'iteminvalidname' => 'Problem with item \'$1\', invalid name...',
-	'invert' => 'Invert selection',
+	'invert' => 'Exclude namespace',
 	'isredirect' => 'redirect page',
 	'istemplate' => 'transclusion',
 	'isimage' => 'file link',
@@ -59,7 +58,7 @@ For optimal security, img_auth.php is disabled.',
 	'ipbenableautoblock' => 'Automatically block the last IP address used by this user, and any subsequent IP addresses they try to edit from',
 	'ipbsubmit' => 'Block this user',
 	'ipbother' => 'Other time:',
-	'ipboptions' => '2 hours:2 hours,1 day:1 day,3 days:3 days,1 week:1 week,2 weeks:2 weeks,1 month:1 month,3 months:3 months,6 months:6 months,1 year:1 year,indefinite:infinite',
+	'ipboptions' => '2 hours:2 hours,1 day:1 day,3 days:3 days,1 week:1 week,2 weeks:2 weeks,1 month:1 month,3 months:3 months,6 months:6 months,1 year:1 year',
 	'ipbotheroption' => 'other',
 	'ipbotherreason' => 'Other/additional reason:',
 	'ipbhidename' => 'Hide username from edits and lists',
@@ -155,8 +154,8 @@ Please try again.',
 	'import-logentry-upload-detail' => '$1 {{PLURAL:$1|revision|revisions}}',
 	'import-logentry-interwiki' => 'transwikied $1',
 	'import-logentry-interwiki-detail' => '$1 {{PLURAL:$1|revision|revisions}} from $2',
-	'imagemaxsize' => 'Image size limit:<br />\'\'(for file description pages)\'\'',
-	'imagelisttext' => 'Below is a list of \'\'\'$1\'\'\' {{PLURAL:$1|file|files}} sorted $2.',
+	'imagemaxsize' => 'Image size limit: (for file description pages)',
+	'imagelisttext' => '<div style="margin-top: -1px;" class="emptymwmsg mediawiki_imagelisttext"></div>',
 	'ilsubmit' => 'Search',
 	'invalidateemail' => 'Cancel email confirmation',
 	'imgmultipageprev' => '← previous page',
@@ -179,7 +178,7 @@ Please try again.',
 	'imagereverted' => 'Revert to earlier version was successful. <strong>This change may take up to 2 minutes to be visible.</strong>',
 	'irc' => 'Live wiki help',
 	'irc-url' => 'http://irc.wikia.com/',
-	'insertimage' => 'Insert image',
+	'insertimage' => 'Insert photo',
 	'its_easy' => '...it\'s easy and free',
 	'import-article-missing-single' => '$1 was not found (requested by user-supplied javascript)',
 	'import-article-missing-multiple' => '$1 $2 were not found (requested by user-supplied javascript)',
@@ -2877,7 +2876,7 @@ $messages['bg'] = [
 	'italic_tip' => 'Курсивен (наклонен) текст',
 	'image_sample' => 'Пример.jpg',
 	'image_tip' => 'Вмъкване на картинка',
-	'ignorewarning' => 'Съхраняване на файла въпреки предупреждението.',
+	'ignorewarning' => 'Пренебрегване на предупреждението и качване на файла.',
 	'ignorewarnings' => 'Пренебрегване на всякакви предупреждения',
 	'illegalfilename' => 'Името на файла „$1“ съдържа знаци, които не са позволени в заглавия на страници. Преименувайте файла и се опитайте да го качите отново.',
 	'illegal-filename' => 'Непозволено файлово име.',
@@ -3021,6 +3020,7 @@ $messages['bg'] = [
 	'imgmultigo' => 'Отваряне',
 	'imgmultigoto' => 'Отиване на страница $1',
 	'intentionallyblankpage' => 'Тази страница умишлено е оставена празна',
+	'irc' => 'Помощ в IRC',
 ];
 
 $messages['bh'] = [
@@ -5045,7 +5045,7 @@ $messages['de'] = [
 	'index-category' => 'Indizierte Seiten',
 	'internalerror' => 'Interner Fehler',
 	'internalerror_info' => 'Interner Fehler: $1',
-	'invalidemailaddress' => 'Die E-Mail-Adresse wird nicht akzeptiert, weil sie ein ungültiges Format (eventuell ungültige Zeichen) zu haben scheint. Bitte gib eine korrekte Adresse ein oder leere das Feld.',
+	'invalidemailaddress' => 'Die E-Mail-Adresse wird nicht akzeptiert, weil sie ein ungültiges Format (eventuell ungültige Zeichen) zu haben scheint. Bitte gib eine korrekte Adresse ein.',
 	'italic_sample' => 'Kursiver Text',
 	'italic_tip' => 'Kursiver Text',
 	'image_sample' => 'Beispiel.jpg',
@@ -5084,13 +5084,17 @@ Aus Sicherheitsgründen ist img_auth.php deaktiviert.',
 	'ipbreason' => 'Grund:',
 	'ipbreasonotherlist' => 'Anderer Grund',
 	'ipbreason-dropdown' => '* Allgemeine Sperrgründe
-** Einfügen falscher Informationen
-** Leeren von Seiten
-** Massenweises Einfügen externer Links
-** Einstellen unsinniger Inhalte in Seiten
-** Ungebührliches Verhalten
-** Missbrauch mit mehreren Benutzerkonten
-** Ungeeigneter Benutzername',
+** Vandalismus
+** Löschen von Seiten
+** Einstellen unsinniger Seiten
+** Fortgesetzte Verstöße gegen die Richtlinien für Weblinks
+** Verstoß gegen den Grundsatz „Keine persönlichen Angriffe“
+** Erstellen von Spam
+* Benutzerspezifische Sperrgründe
+** Ungeeigneter Benutzername
+** Neuanmeldung eines unbeschränkt gesperrten Benutzers
+* IP-spezifische Sperrgründe
+** Proxy, wegen Vandalismus einzelner Benutzer längerfristig gesperrt',
 	'ipb-hardblock' => 'Angemeldete Benutzer daran hindern, Bearbeitungen unter dieser IP-Adresse vorzunehmen',
 	'ipbcreateaccount' => 'Erstellung von Benutzerkonten verhindern',
 	'ipbemailban' => 'E-Mail-Versand sperren',
@@ -5152,10 +5156,10 @@ Alle Transwiki-Import-Aktionen werden im [[Special:Log/import|Import-Logbuch]] p
 	'import-interwiki-submit' => 'Import',
 	'import-interwiki-namespace' => 'Zielnamensraum:',
 	'import-upload-filename' => 'Dateiname:',
-	'import-comment' => 'Grund:',
+	'import-comment' => 'Herkunft:',
 	'importtext' => 'Bitte die Datei über die Spezialseite [[Special:Export|Exportfunktion]] aus dem Quellwiki exportieren.
 Diese auf dem lokalen Rechner speichern und danach hier hochladen.',
-	'importstart' => 'Importiere Seite …',
+	'importstart' => 'Importiere Seite…',
 	'import-revision-count' => '– {{PLURAL:$1|1 Version|$1 Versionen}}',
 	'importnopages' => 'Keine Seite zum Importieren vorhanden.',
 	'imported-log-entries' => '$1 {{PLURAL:$1|lLogbucheintrag|Logbucheinträge}} importiert.',
@@ -5175,7 +5179,7 @@ Diese auf dem lokalen Rechner speichern und danach hier hochladen.',
 	'import-noarticle' => 'Es wurde keine zu importierende Seite angegeben!',
 	'import-nonewrevisions' => 'Es sind keine neuen Versionen zum Import vorhanden, alle Versionen wurden bereits früher importiert.',
 	'import-upload' => 'XML-Daten importieren',
-	'import-token-mismatch' => 'Verlust der Sessiondaten. Bitte versuche es erneut.',
+	'import-token-mismatch' => 'Verlust der Sitzungsdaten. Bitte versuche es erneut.',
 	'import-invalid-interwiki' => 'Aus dem angegebenen Wiki ist kein Import möglich.',
 	'import-error-edit' => 'Die Seite „$1“ wurde nicht importiert, da du nicht berechtigt bist, sie zu bearbeiten.',
 	'import-error-create' => 'Die Seite „$1“ wurde nicht importiert, da du nicht berechtigt bist, sie zu erstellen.',
@@ -5185,10 +5189,10 @@ Diese auf dem lokalen Rechner speichern und danach hier hochladen.',
 	'importlogpage' => 'Import-Logbuch',
 	'importlogpagetext' => 'Administrativer Import von Seiten mit Versionsgeschichte von anderen Wikis.',
 	'import-logentry-upload' => 'importierte „[[$1]]“ von einer Datei',
-	'import-logentry-upload-detail' => '$1 {{PLURAL:$1|Version|Versionen}}',
+	'import-logentry-upload-detail' => '$1 {{PLURAL:$1|Version|Versionen}} importiert',
 	'import-logentry-interwiki' => 'importierte „$1“ (Transwiki)',
 	'import-logentry-interwiki-detail' => '$1 {{PLURAL:$1|Version|Versionen}} von $2',
-	'imagemaxsize' => 'Maximale Bildgröße:<br />\'\'(für Dateibeschreibungsseiten)\'\'',
+	'imagemaxsize' => 'Maximale Bildgröße: (für Dateibeschreibungsseiten)',
 	'imagelisttext' => 'Hier ist eine Liste von \'\'\'$1\'\'\' {{PLURAL:$1|Datei|Dateien}}, sortiert $2.',
 	'ilsubmit' => 'Suchen',
 	'invalidateemail' => 'E-Mail-Adressbestätigung abbrechen',
@@ -5197,6 +5201,10 @@ Diese auf dem lokalen Rechner speichern und danach hier hochladen.',
 	'imgmultigo' => 'OK',
 	'imgmultigoto' => 'Gehe zu Seite $1',
 	'intentionallyblankpage' => 'Diese Seite ist absichtlich ohne Inhalt. Sie wird für Benchmarks verwendet.',
+	'imagereverted' => 'Das Zurücksetzen auf eine vorherige Version war erfolgreich. <strong>Es kann einige Minuten dauern, bis die Änderung sichtbar wird.</strong>',
+	'insertimage' => 'Bild einfügen',
+	'irc' => 'Echtzeit-Hilfe',
+	'its_easy' => '...einfach und kostenlos',
 ];
 
 $messages['de-ch'] = [
@@ -6049,8 +6057,8 @@ $messages['es'] = [
 	'index-category' => 'Páginas indexadas',
 	'internalerror' => 'Error interno',
 	'internalerror_info' => 'Error interno: $1',
-	'invalidemailaddress' => 'La dirección electrónica no puede ser aceptada, pues parece que tiene un formato no válido.
-Por favor, escribe una dirección en el formato adecuado o deja el campo en blanco.',
+	'invalidemailaddress' => 'La dirección de correo electrónico no puede ser aceptada, ya que no tiene un formato válido.
+Por favor, introduzca una dirección válida.',
 	'italic_sample' => 'Texto en cursiva',
 	'italic_tip' => 'Texto en cursiva',
 	'image_sample' => 'Ejemplo.jpg',
@@ -6072,9 +6080,9 @@ Consulte https://www.mediawiki.org/wiki/Manual:Image_Authorization.',
 	'img-auth-isdir' => 'Estás tratando de acceder a un directorio «$1».
 Solo se permite el acceso a los archivos.',
 	'img-auth-streaming' => 'Streaming «$1».',
-	'img-auth-public' => 'La función de img_auth.php es mostrar archivos desde una wiki privada.
-Esta wiki está configurada como pública.
-Para óptima seguridad, img_auth.php está desactivado.',
+	'img-auth-public' => 'La función de img_auth.php es mostrar archivos desde un wiki privado.
+Este wiki está configurado como wiki público.
+Para optima seguridad, img_auth.php está deshabilitado.',
 	'img-auth-noread' => 'El usuario no tiene acceso para leer «$1».',
 	'img-auth-bad-query-string' => 'La dirección URL tiene una cadena de consulta no válida.',
 	'imgfile' => 'archivo',
@@ -6088,13 +6096,18 @@ Para óptima seguridad, img_auth.php está desactivado.',
 	'ipbexpiry' => 'Caduca dentro de',
 	'ipbreason' => 'Motivo:',
 	'ipbreasonotherlist' => 'Otra razón',
-	'ipbreason-dropdown' => '*Motivos comunes de bloqueo
+	'ipbreason-dropdown' => '* Relacionado con la edición de paginas
 ** Añadir información falsa
 ** Eliminar contenido de las páginas
-** Publicitar enlaces a otras páginas web
+** Poner publicidad con enlaces a otras páginas web
 ** Añadir basura a las páginas
-** Comportamiento intimidatorio u hostil
+* Comportamiento del usuario
+** Comportamiento intimidatorio
+** Acoso sexual hacia otros usuarios
+** Insultos o ataques contra otros usuarios
+* Aspectos técnicos
 ** Abusar de múltiples cuentas
+** Ser menor de 13 años y no disponer de autorización
 ** Nombre de usuario inaceptable',
 	'ipb-hardblock' => 'Impedir que los usuarios identificados editen desde esta dirección IP',
 	'ipbcreateaccount' => 'Prevenir la creación de cuentas de usuario',
@@ -6139,11 +6152,11 @@ Sin embargo, está bloqueada como parte del rango $2, que puede ser desbloqueado
 	'ip_range_toolarge' => 'Los bloqueos de rango superiores a /$1 no están permitidos.',
 	'ipbblocked' => 'No puedes bloquear o desbloquear a otros usuarios porque estás bloqueado',
 	'ipbnounblockself' => 'No puedes desbloquearte',
-	'immobile-source-namespace' => 'No se pueden trasladar páginas en el espacio de nombres «$1»',
-	'immobile-target-namespace' => 'No se puede trasladar páginas al espacio de nombres «$1»',
-	'immobile-target-namespace-iw' => 'Un enlace interwiki no es un destino válido para trasladar una página.',
+	'immobile-source-namespace' => 'No se pueden renombrar páginas en el espacio de nombres «$1»',
+	'immobile-target-namespace' => 'No se puede renombrar páginas al espacio de nombres «$1»',
+	'immobile-target-namespace-iw' => 'Un enlace interwiki no es un destino válido para renombrar una página.',
 	'immobile-source-page' => 'Esta página no se puede renombrar.',
-	'immobile-target-page' => 'No se puede trasladar a tal título.',
+	'immobile-target-page' => 'No se puede renombrar a tal título.',
 	'imagenocrossnamespace' => 'No se puede trasladar el fichero a otro espacio de nombres',
 	'imagetypemismatch' => 'La nueva extensión de archivo no corresponde con su tipo',
 	'imageinvalidfilename' => 'El nombre del fichero de destino no es válido',
@@ -6184,7 +6197,7 @@ No hay un directorio temporal.',
 	'import-nonewrevisions' => 'Todas las revisiones fueron previamente importadas.',
 	'import-upload' => 'Subir datos XML',
 	'import-token-mismatch' => 'Pérdida de datos de sesión. Por favor, inténtalo de nuevo.',
-	'import-invalid-interwiki' => 'No se puede importar de la wiki especificada.',
+	'import-invalid-interwiki' => 'No se puede importar desde el wiki especificado.',
 	'import-error-edit' => 'La página $1 no se importó porque no tienes permisos para editarla.',
 	'import-error-create' => 'La página «$1» no se importó porque no tienes permisos para crearla.',
 	'import-error-interwiki' => 'La página "$1" no se ha importado porque su nombre está reservado para la vinculación externa (interwikis).',
@@ -6196,7 +6209,7 @@ No hay un directorio temporal.',
 	'import-logentry-upload-detail' => '$1 {{PLURAL:$1|revisión|revisiones}}',
 	'import-logentry-interwiki' => 'transwikificada $1',
 	'import-logentry-interwiki-detail' => '$1 {{PLURAL:$1|revisión|revisiones}} desde $2',
-	'imagemaxsize' => 'Límite de tamaño de imagen:<br />\'\'(para páginas de descripción de archivo)\'\'',
+	'imagemaxsize' => 'Límite de tamaño de imagen: (para páginas de descripción de archivo)',
 	'imagelisttext' => 'Debajo hay una lista de \'\'\'$1\'\'\' {{PLURAL:$1|imagen|imágenes}} ordenadas $2.',
 	'ilsubmit' => 'Buscar',
 	'invalidateemail' => 'Cancelar confirmación de correo electrónico',
@@ -6205,6 +6218,7 @@ No hay un directorio temporal.',
 	'imgmultigo' => '¡Ir!',
 	'imgmultigoto' => 'Ir a la página $1',
 	'intentionallyblankpage' => 'Esta pagina está en blanco de manera intencionada.',
+	'its_easy' => '...es fácil y gratis',
 ];
 
 $messages['et'] = [
@@ -6801,6 +6815,8 @@ https://www.mediawiki.org/wiki/Manual:Image_Authorization را ببینید.',
 	'iranian-calendar-m11' => 'بهمن',
 	'iranian-calendar-m12' => 'اسفند',
 	'intentionallyblankpage' => 'این صفحه به طور عمدی خالی گذاشته شده است.',
+	'insertimage' => 'درج‌کردن تصویر',
+	'its_easy' => '...این کار ساده و مجانی است',
 ];
 
 $messages['ff'] = [
@@ -6811,7 +6827,7 @@ $messages['fi'] = [
 	'index-category' => 'Indeksoidut sivut',
 	'internalerror' => 'Sisäinen virhe',
 	'internalerror_info' => 'Sisäinen virhe: $1',
-	'invalidemailaddress' => 'Sähköpostiosoitetta ei voida hyväksyä, koska se ei ole oikeassa muodossa. Ole hyvä ja anna oikea sähköpostiosoite tai jätä kenttä tyhjäksi.',
+	'invalidemailaddress' => 'Ole hyvä ja laita toiminnassa oleva sähköpostiosoite.',
 	'italic_sample' => 'Kursivoitu teksti',
 	'italic_tip' => 'Kursivointi',
 	'image_sample' => 'Esimerkki.jpg',
@@ -6958,6 +6974,10 @@ Tallenna tiedot koneellesi ja tuo ne tällä sivulla.',
 	'imgmultigo' => 'Siirry',
 	'imgmultigoto' => 'Sivu $1',
 	'intentionallyblankpage' => 'Tämä sivu on tarkoituksellisesti tyhjä.',
+	'imagereverted' => 'Palautus aiempaan versioon onnistui. <strong>Tällä muutoksella voi kestää jopa 2 minuuttia näkyä.</strong>',
+	'insertimage' => 'Sisällytä kuva',
+	'irc' => 'Reaaliaikaista wikiapua',
+	'its_easy' => '...se on helppoa ja ilmaista',
 ];
 
 $messages['fiu-vro'] = [
@@ -7168,8 +7188,7 @@ $messages['fr'] = [
 	'index-category' => 'Pages indexées',
 	'internalerror' => 'Erreur interne',
 	'internalerror_info' => 'Erreur interne : $1',
-	'invalidemailaddress' => 'Cette adresse courriel ne peut pas être acceptée car elle semble avoir un format incorrect.
-Entrez une adresse bien formatée ou laissez ce champ vide.',
+	'invalidemailaddress' => 'Veuillez saisir une adresse e-mail valide.',
 	'italic_sample' => 'Texte italique',
 	'italic_tip' => 'Texte italique',
 	'image_sample' => 'Exemple.jpg',
@@ -7215,9 +7234,9 @@ Pour une sécurité optimale, img_auth.php est désactivé.',
 ** Tentative d’intimidation ou harcèlement
 ** Abus d’utilisation de comptes multiples
 ** Nom d’utilisateur inacceptable, injurieux ou diffamant',
-	'ipb-hardblock' => 'Empêche les modifications des utilisateurs enregistrés utilisant cette adresse IP',
+	'ipb-hardblock' => 'Empêcher les utilisateurs connectés de modifier en utilisant cette adresse IP',
 	'ipbcreateaccount' => 'Empêcher la création de compte',
-	'ipbemailban' => 'Empêcher l’utilisateur d’envoyer des courriels',
+	'ipbemailban' => 'Empêcher l’utilisateur d’envoyer des e-mails',
 	'ipbenableautoblock' => 'Bloquer automatiquement la dernière adresse IP utilisée par l’utilisateur et toutes ses IPs ultérieures qu’il pourrait essayer',
 	'ipbsubmit' => 'Bloquer cet utilisateur',
 	'ipbother' => 'Autre durée :',
@@ -7226,7 +7245,7 @@ Pour une sécurité optimale, img_auth.php est désactivé.',
 	'ipbotherreason' => 'Motif différent ou supplémentaire :',
 	'ipbhidename' => 'Masquer le nom d’utilisateur des modifications et des listes',
 	'ipbwatchuser' => 'Suivre les pages utilisateur et de discussion de cet utilisateur',
-	'ipb-disableusertalk' => 'Empêche cet utilisateur de modifier sa propre page de discussion pendant la durée de son blocage',
+	'ipb-disableusertalk' => 'Empêcher l’utilisateur de modifier sa page de discussion pendant le blocage',
 	'ipb-change-block' => 'Bloquer à nouveau cet utilisateur avec ces paramètres',
 	'ipb-confirm' => 'Confirmer le blocage',
 	'ipb-blockingself' => 'Vous êtes sur le point de bloquer votre propre compte ! Êtes-vous certain de vouloir faire cela ?',
@@ -7320,12 +7339,14 @@ Un dossier temporaire est manquant.',
 	'imagemaxsize' => 'Taille maximale des images :<br />\'\'(pour les pages de description de fichier)\'\'',
 	'imagelisttext' => 'Voici une liste de \'\'\'$1\'\'\' fichier{{PLURAL:$1||s}} classée $2.',
 	'ilsubmit' => 'Rechercher',
-	'invalidateemail' => 'Annuler la confirmation de l’adresse de courriel',
+	'invalidateemail' => 'Annuler la confirmation de l’adresse e-mail',
 	'imgmultipageprev' => '← page précédente',
 	'imgmultipagenext' => 'page suivante →',
 	'imgmultigo' => 'Accéder !',
 	'imgmultigoto' => 'Aller à la page $1',
 	'intentionallyblankpage' => 'Cette page est laissée intentionellement vide.',
+	'irc' => 'Aide en ligne',
+	'its_easy' => '...c\'est facile et gratuit',
 ];
 
 $messages['frc'] = [
@@ -10857,7 +10878,7 @@ $messages['it'] = [
 	'index-category' => 'Pagine indicizzate',
 	'internalerror' => 'Errore interno',
 	'internalerror_info' => 'Errore interno: $1',
-	'invalidemailaddress' => 'L\'indirizzo e-mail indicato ha un formato non valido. Inserire un indirizzo valido o svuotare la casella.',
+	'invalidemailaddress' => 'L\'indirizzo e-mail indicato ha un formato non valido. Inserire un indirizzo valido.',
 	'italic_sample' => 'Corsivo',
 	'italic_tip' => 'Corsivo',
 	'image_sample' => 'Esempio.jpg',
@@ -10907,7 +10928,7 @@ Per una sicurezza ottimale, img_auth.php è disattivato.',
 	'ipbcreateaccount' => 'Impedisci la creazione di altri account',
 	'ipbemailban' => 'Impedisci all\'utente l\'invio di e-mail',
 	'ipbenableautoblock' => 'Blocca automaticamente l\'ultimo indirizzo IP usato dall\'utente e i successivi con cui vengono tentate modifiche',
-	'ipbsubmit' => 'Blocca l\'utente',
+	'ipbsubmit' => 'Blocca l’utente',
 	'ipbother' => 'Durata non in elenco:',
 	'ipboptions' => '2 ore:2 hours,1 giorno:1 day,3 giorni:3 days,1 settimana:1 week,2 settimane:2 weeks,1 mese:1 month,3 mesi:3 months,6 mesi:6 months,1 anno:1 year,infinito:infinite',
 	'ipbotheroption' => 'altro',
@@ -10915,7 +10936,7 @@ Per una sicurezza ottimale, img_auth.php è disattivato.',
 	'ipbhidename' => 'Nascondi il nome utente dalle modifiche e dagli elenchi.',
 	'ipbwatchuser' => 'Segui le pagine e le discussioni utente di questo utente',
 	'ipb-disableusertalk' => 'Impedisci a questo utente di modificare la propria pagina di discussioni mentre è bloccato',
-	'ipb-change-block' => 'Ri-blocca l\'utente con queste impostazioni',
+	'ipb-change-block' => 'Ri-blocca l’utente con queste impostazioni',
 	'ipb-confirm' => 'Conferma il blocco',
 	'ipb-blockingself' => 'Stai per bloccare te stesso! Sei sicuro di volerlo fare?',
 	'ipb-confirmhideuser' => 'Si sta per bloccare un utente con l\'opzione "Nascondi utente" abilitata.
@@ -11175,13 +11196,12 @@ $messages['ja'] = [
 	'index-category' => '検索エンジンに収集されるページ',
 	'internalerror' => '内部エラー',
 	'internalerror_info' => '内部エラー：$1',
-	'invalidemailaddress' => '入力されたメールアドレスが正しい形式に従っていないため、受け付けられません。
-正しい形式で入力し直すか、メールアドレス欄を空にしておいてください。',
+	'invalidemailaddress' => '有効なメールアドレスを入力してください。',
 	'italic_sample' => '斜体',
 	'italic_tip' => '斜体',
 	'image_sample' => 'サンプル.jpg',
 	'image_tip' => 'ファイルの埋め込み',
-	'ignorewarning' => '警告を無視し、ファイルを保存してしまう',
+	'ignorewarning' => '警告を無視し、ファイルの保存を強制的に行う',
 	'ignorewarnings' => '警告を無視',
 	'illegalfilename' => 'ファイル名「$1」にページ名として許可されていない文字が含まれています。
 ファイル名を変更してからもう一度アップロードしてください。',
@@ -11228,7 +11248,7 @@ CGI ベースであるため、img_auth に対応できない可能性もあり�
 	'ipbenableautoblock' => 'この利用者が最後に使用したIPアドレスと、後に編集しようとしたIPアドレスを自動的にブロック',
 	'ipbsubmit' => 'この利用者をブロック',
 	'ipbother' => 'その他の期間：',
-	'ipboptions' => '2時間:2 hours,1日:1 day,3日:3 days,1週間:1 week,2週間:2 weeks,1か月:1 month,3か月:3 months,6か月:6 months,1年:1 year,無期限:infinite',
+	'ipboptions' => '15分:15 minutes,30分:30 minutes,2時間:2 hours,1日:1 day,3日:3 days,1週間:1 week,2週間:2 weeks,1ヶ月:1 month,3ヶ月:3 months,6ヶ月:6 months,1年:1 year,無期限:infinite',
 	'ipbotheroption' => 'その他',
 	'ipbotherreason' => '他の、または追加の理由：',
 	'ipbhidename' => '利用者名を編集履歴や各種一覧から秘匿する',
@@ -11284,7 +11304,7 @@ CGI ベースであるため、img_auth に対応できない可能性もあり�
 	'import-interwiki-history' => 'このページのすべての版を複製する',
 	'import-interwiki-templates' => 'すべてのテンプレートを含める',
 	'import-interwiki-submit' => '取り込み',
-	'import-interwiki-namespace' => '目的の名前空間：',
+	'import-interwiki-namespace' => '次の名前空間に取り込む:',
 	'import-upload-filename' => 'ファイルの名前：',
 	'import-comment' => 'コメント：',
 	'importtext' => '書き出し元となるウィキから[[Special:Export|書き出し用機能]]を使ってファイルを書き出してください。
@@ -11344,9 +11364,9 @@ CGI ベースであるため、img_auth に対応できない可能性もあり�
 	'iranian-calendar-m11' => 'バフマン',
 	'iranian-calendar-m12' => 'エスファンド',
 	'intentionallyblankpage' => 'このページは意図的に白紙にされています。',
-	'irc' => 'IRCにるヘルプ',
+	'irc' => 'IRCによるヘルプ',
 	'irc-url' => 'http://irc.wikia.com/',
-	'insertimage' => '画像を挿入する',
+	'insertimage' => '画像をインポートする',
 	'its_easy' => '簡単、無料',
 ];
 
@@ -17243,14 +17263,14 @@ Geef het bestand een andere naam, en probeer het dan opnieuw te uploaden.',
 	'invalid-chunk-offset' => 'Ongeldige chunkoffset',
 	'img-auth-accessdenied' => 'Toegang geweigerd',
 	'img-auth-nopathinfo' => 'PATH_INFO mist.
-Uw server is niet ingesteld om deze gegevens door te geven.
+Je server is niet ingesteld om deze informatie door te geven.
 Misschien gebruikt deze CGI, en dan wordt img_auth niet ondersteund.
-Zie https://www.mediawiki.org/wiki/Manual:Image_Authorization voor meer informatie.',
+Zie http://www.mediawiki.org/wiki/Manual:Image_Authorization voor meer informatie.',
 	'img-auth-notindir' => 'Het opgevraagde pad is niet de ingestelde uploadmap.',
 	'img-auth-badtitle' => 'Het was niet mogelijk een geldige paginanaam te maken van "$1".',
-	'img-auth-nologinnWL' => 'U bent niet aangemeld en "$1" staat niet op de witte lijst.',
+	'img-auth-nologinnWL' => 'Je bent niet aangemeld en "$1" staat niet op de witte lijst.',
 	'img-auth-nofile' => 'Bestand "$1" bestaat niet.',
-	'img-auth-isdir' => 'U probeert de map "$1" te benaderen.
+	'img-auth-isdir' => 'Je probeert de map "$1" te benaderen.
 Alleen toegang tot bestanden is toegestaan.',
 	'img-auth-streaming' => 'Bezig met het streamen van "$1".',
 	'img-auth-public' => 'Het doel van img_auth.php is de uitvoer van bestanden van een besloten wiki.
@@ -17312,7 +17332,7 @@ Om beveiligingsreden is img_auth.php uitgeschakeld.',
 	'ipb_hide_invalid' => 'Het is niet mogelijk deze gebruiker te verbergen; mogelijk heeft deze te veel bewerkingen gemaakt.',
 	'ipb_already_blocked' => '"$1" is al geblokkeerd',
 	'ipb-needreblock' => '$1 is al geblokkeerd.
-Wilt u de instellingen wijzigen?',
+Wil je de instellingen wijzigen?',
 	'ipb-otherblocks-header' => 'Andere {{PLURAL:$1|blokkade|blokkades}}',
 	'ipb_cant_unblock' => 'Fout: blokkadenummer $1 is niet gevonden.
 Misschien is de blokkade al opgeheven.',
@@ -17320,8 +17340,8 @@ Misschien is de blokkade al opgeheven.',
 De blokkade is onderdeel van de reeks $2, waarvan de blokkade wel opgeheven kan worden.',
 	'ip_range_invalid' => 'Ongeldige IP-reeks.',
 	'ip_range_toolarge' => 'Reeksblokkades groter dan /$1 zijn niet toegestaan.',
-	'ipbblocked' => 'U kunt geen andere gebruikers (de)blokkeren, omdat u zelf geblokkeerd bent',
-	'ipbnounblockself' => 'U mag uzelf niet deblokkeren',
+	'ipbblocked' => 'Je kunt geen andere gebruikers (de)blokkeren, omdat je zelf geblokkeerd bent',
+	'ipbnounblockself' => 'Je mag jezelf niet deblokkeren',
 	'immobile-source-namespace' => 'Pagina\'s in de naamruimte "$1" kunnen niet hernoemd worden',
 	'immobile-target-namespace' => 'Pagina\'s kunnen niet hernoemd worden naar de naamruimte "$1"',
 	'immobile-target-namespace-iw' => 'Een interwikiverwijzing is geen geldige bestemming voor het hernoemen van een pagina.',
@@ -17342,8 +17362,7 @@ Alle transwiki-importhandelingen worden opgeslagen in het [[Special:Log/import|i
 	'import-interwiki-namespace' => 'Doelnaamruimte:',
 	'import-upload-filename' => 'Bestandsnaam:',
 	'import-comment' => 'Opmerking:',
-	'importtext' => 'Gebruik de [[Special:Export|exportfunctie]] in de wiki waar de informatie vandaan komt.
-Sla de uitvoer op uw eigen computer op, en voeg die daarna hier toe.',
+	'importtext' => 'Gebruik de [[Special:Export|exportfunctie]] in de wiki waar de informatie vandaan komt, sla de uitvoer op je eigen systeem op, en voeg die daarna hier toe.',
 	'importstart' => 'Pagina\'s aan het importeren…',
 	'import-revision-count' => '$1 {{PLURAL:$1|versie|versies}}',
 	'importnopages' => 'Geen pagina\'s te importeren.',
@@ -17715,6 +17734,10 @@ For best tryggleik, er img_auth.php sett ut av funksjon.',
 	'imgmultigo' => 'Gå!',
 	'imgmultigoto' => 'Gå til sida $1',
 	'intentionallyblankpage' => 'Denne sida er tom med vilje',
+	'imagereverted' => 'Tilbakestilling til tidligere versjon var vellykket. <strong>Denne endring kan ta opp til to mintter før den er synlig.</strong>',
+	'insertimage' => 'Sett inn bilde',
+	'irc' => 'Live wiki-hjelp',
+	'its_easy' => '...det er enkelt og gratis',
 ];
 
 $messages['nov'] = [
@@ -18349,8 +18372,8 @@ Wpisz poprawny adres e‐mail lub wyczyść pole.',
 	'italic_sample' => 'Tekst pochyłą czcionką',
 	'italic_tip' => 'Tekst pochyłą czcionką',
 	'image_sample' => 'Przykład.jpg',
-	'image_tip' => 'Grafika lub inny plik osadzony w stronie',
-	'ignorewarning' => 'Zignoruj ostrzeżenia i wymuś zapisanie pliku.',
+	'image_tip' => 'Obraz lub inny plik osadzony na stronie',
+	'ignorewarning' => 'Zignoruj ostrzeżenia i wymuś zapisanie pliku',
 	'ignorewarnings' => 'Ignoruj wszystkie ostrzeżenia',
 	'illegalfilename' => 'Nazwa pliku „$1” zawiera znaki niedozwolone w tytułach stron.
 Zmień nazwę pliku i prześlij go ponownie.',
@@ -18440,7 +18463,7 @@ Należy on do zablokowanego zakresu adresów $2. Odblokować można tylko cały 
 	'immobile-target-namespace-iw' => 'Link interwiki jest nieprawidłowym tytułem, pod który miałaby być przeniesiona strona.',
 	'immobile-source-page' => 'Tej strony nie można przenieść.',
 	'immobile-target-page' => 'Nie można przenieść pod wskazany tytuł.',
-	'imagenocrossnamespace' => 'Nie można przenieść grafiki do przestrzeni nazw nie przeznaczonej dla grafik',
+	'imagenocrossnamespace' => 'Nie można przenieść pliku do przestrzeni nazw nie przeznaczonej dla plików',
 	'imagetypemismatch' => 'Nowe rozszerzenie nazwy pliku jest innego typu niż zawartość',
 	'imageinvalidfilename' => 'Nazwa pliku docelowego jest nieprawidłowa',
 	'import' => 'Import stron',
@@ -18507,6 +18530,7 @@ Brak katalogu dla plików tymczasowych.',
 	'iranian-calendar-m9' => 'Āsar',
 	'iranian-calendar-m10' => 'Déi',
 	'intentionallyblankpage' => 'Ta strona umyślnie pozostała pusta',
+	'irc' => 'Wikia - kanał IRC',
 ];
 
 $messages['pms'] = [
@@ -20285,6 +20309,8 @@ $messages['ru'] = [
 	'iranian-calendar-m11' => 'Бахман',
 	'iranian-calendar-m12' => 'Эсфанд',
 	'intentionallyblankpage' => 'Эта страница намеренно оставлена пустой',
+	'insertimage' => 'Вставить фото',
+	'its_easy' => '...это просто и бесплатно',
 ];
 
 $messages['rue'] = [
@@ -22936,7 +22962,7 @@ För optimal säkerhet, har img_auth.php blivit avaktiverad.',
 	'iteminvalidname' => 'Problem med sidan \'$1\', ogiltigt namn...',
 	'invert' => 'Uteslut vald namnrymd',
 	'isredirect' => 'omdirigeringssida',
-	'istemplate' => 'inkluderad som mall',
+	'istemplate' => 'includering',
 	'isimage' => 'fillänk',
 	'ipadressorusername' => 'IP-adress eller användarnamn:',
 	'ipbexpiry' => 'Varaktighet:',
@@ -22956,7 +22982,7 @@ För optimal säkerhet, har img_auth.php blivit avaktiverad.',
 	'ipbenableautoblock' => 'Blockera automatiskt den IP-adress som användaren använde senast, samt alla adresser som användaren försöker redigera ifrån',
 	'ipbsubmit' => 'Blockera användaren',
 	'ipbother' => 'Annan tidsperiod:',
-	'ipboptions' => '2 timmar:2 hours,1 dygn:1 day,3 dygn:3 days,1 vecka:1 week,2 veckor:2 weeks,1 månad:1 month,3 månader:3 months,6 månader:6 months,1 år:1 year,oändlig:infinite',
+	'ipboptions' => '2 timmar:2 hours,1 dag:1 day,3 dagar:3 days,1 vecka:1 week,2 veckor:2 weeks,1 månad:1 month,3 månader:3 months,6 månader:6 months,1 year:1 year,indefinite:infinite',
 	'ipbotheroption' => 'annan tidsperiod',
 	'ipbotherreason' => 'Annan/ytterligare anledning:',
 	'ipbhidename' => 'Dölj användarnamnet från redigeringar och listor',
@@ -26950,6 +26976,7 @@ $messages['zh-tw'] = [
 	'importhistoryconflict' => '存在衝突的修訂沿革(可能在之前已經匯入過此頁面)',
 	'imagemaxsize' => '在圖片描述頁對圖片大小限制為:',
 	'imagelisttext' => '以下是按$2排列的$1個檔案列表。',
+	'irc' => '線上協助',
 ];
 
 $messages['zh-yue'] = [
@@ -27004,5 +27031,9 @@ $messages['zu'] = [
 	'ipusubmit' => 'Qeda isivimbelo lo msebenzisi',
 	'import-interwiki-submit' => 'Ngenisa',
 	'ilsubmit' => 'Sesha',
+];
+
+$messages['zh-cn'] = [
+	'irc' => '線上協助',
 ];
 

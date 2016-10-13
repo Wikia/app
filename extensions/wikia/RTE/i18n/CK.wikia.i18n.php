@@ -1,15 +1,8 @@
 <?php
+/** Internationalization file for /extensions/wikia/RTE/i18n/CK.wikia extension. */
+$messages = [];
 
-/**
- * CKeditor Wikia messages
- *
- * Messages listed in CK.core.i18n.php can be customized in this file
- * More info about i18n for RTE can be found in /extensions/wikia/RTE/README.txt.
- */
-
-$messages = array();
-
-$messages['en'] = array(
+$messages['en'] = [
 	'rte-ck-bucket-textAppearance' => 'Text appearance',
 	'rte-ck-bucket-insert' => 'Insert',
 	'rte-ck-bucket-controls' => 'Controls',
@@ -26,13 +19,13 @@ $messages['en'] = array(
 	'rte-ck-hoverPreview-template-intro' => 'This is a template.',
 	'rte-ck-hoverPreview-template-notExisting' => 'This template does not exist!',
 	'rte-ck-hoverPreview-video-notExisting' => 'This video does not exist!',
-	'rte-ck-image-add' => 'Add a picture',
+	'rte-ck-image-add' => 'Add a photo',
 	'rte-ck-image-photo' => 'Photo',
-	'rte-ck-image-confirmDelete' => 'Are you sure you wish to remove the image from this page?',
-	'rte-ck-image-confirmDeleteTitle' => 'Remove this image?',
-	'rte-ck-imagePlaceholder-confirmDelete' => 'Are you sure you wish to remove the image placeholder from this page?',
-	'rte-ck-imagePlaceholder-confirmDeleteTitle' => 'Remove this image placeholder?',
-	'rte-ck-imagePlaceholder-tooltip' => 'This is an image placeholder.',
+	'rte-ck-image-confirmDelete' => 'Are you sure you wish to remove the photo from this page?',
+	'rte-ck-image-confirmDeleteTitle' => 'Remove this photo?',
+	'rte-ck-imagePlaceholder-confirmDelete' => 'Are you sure you wish to remove the photo placeholder from this page?',
+	'rte-ck-imagePlaceholder-confirmDeleteTitle' => 'Remove this photo placeholder?',
+	'rte-ck-imagePlaceholder-tooltip' => 'Click the "modify" link above to insert a photo here!',
 	'rte-ck-justify-center' => 'Align Center',
 	'rte-ck-link-add' => 'Add link',
 	'rte-ck-link-error-badPageTitle' => 'Please enter a page title.',
@@ -104,32 +97,22 @@ $messages['en'] = array(
 	'rte-ck-video-confirmDeleteTitle' => 'Remove this video?',
 	'rte-ck-videoPlaceholder-confirmDelete' => 'Are you sure you wish to remove the video placeholder from this page?',
 	'rte-ck-videoPlaceholder-confirmDeleteTitle' => 'Remove this video placeholder?',
-	'rte-ck-videoPlaceholder-tooltip' => 'This is a video placeholder.',
+	'rte-ck-videoPlaceholder-tooltip' => 'Click the "modify" link above to insert a video here!',
 	'rte-ck-mut-add' => 'Add a video (beta)',
 	'rte-ck-mut-mut' => 'Video (beta)',
 	'rte-ck-widescreen-toggle' => 'Toggle widescreen',
 	'rte-ck-spellchecker-moreSuggestions' => 'More suggestions',
 	'rte-ck-pasteText-title' => 'Paste your text',
 	'rte-ck-clipboard-pasteMsg' => 'For security reasons, the editor cannot access your paste directly. Please paste in the below box using keyboard shortcuts (Ctrl/Cmd+V) and hit \'OK\'.<br /><br />Note: your text will be stripped of formatting to avoid creating complex wikitext.',
-
 	'rte-ck-format-tag_p' => 'Normal text',
-	'rte-ck-format-tag_pre' => 'Code (preformatted text)',
+	'rte-ck-format-tag_pre' => 'Code / preformatted',
 	'rte-ck-format-tag_h2' => 'Heading 2',
 	'rte-ck-format-tag_h3' => 'Heading 3',
 	'rte-ck-format-tag_h4' => 'Heading 4',
 	'rte-ck-format-tag_h5' => 'Heading 5',
-);
+];
 
-/** Message documentation (Message documentation)
- * @author EugeneZelenko
- * @author Hamilton Abreu
- * @author NavaRose
- * @author Nemo bis
- * @author Sam Wang
- * @author Shirayuki
- * @author Siebrand
- */
-$messages['qqq'] = array(
+$messages['qqq'] = [
 	'rte-ck-bucket-insert' => '{{Identical|Insert}}',
 	'rte-ck-errorPopupTitle' => '{{Identical|Error}}',
 	'rte-ck-hoverPreview-codedElement-intro' => '{{Related|Source mode (wikia)}}',
@@ -169,12 +152,9 @@ $messages['qqq'] = array(
 	'rte-ck-format-tag_h3' => '{{Identical|Heading}}',
 	'rte-ck-format-tag_h4' => '{{Identical|Heading}}',
 	'rte-ck-format-tag_h5' => '{{Identical|Heading}}',
-);
+];
 
-/** Afrikaans (Afrikaans)
- * @author Naudefj
- */
-$messages['af'] = array(
+$messages['af'] = [
 	'rte-ck-errorPopupTitle' => 'Fout!',
 	'rte-ck-hoverPreview-comment-title' => 'Opmerking',
 	'rte-ck-hoverPreview-edit' => 'wysig',
@@ -183,14 +163,9 @@ $messages['af'] = array(
 	'rte-ck-templateEditor-editor-parameters' => 'Parameters',
 	'rte-ck-templateEditor-editor-previewButton' => 'Voorskou',
 	'rte-ck-templateEditor-editor-previewTitle' => 'Voorskou',
-);
+];
 
-/** Arabic (العربية)
- * @author Achraf94
- * @author Meno25
- * @author OsamaK
- */
-$messages['ar'] = array(
+$messages['ar'] = [
 	'rte-ck-bucket-textAppearance' => 'مظهر النص',
 	'rte-ck-bucket-insert' => 'إدراج',
 	'rte-ck-bucket-controls' => 'عناصر التحكم',
@@ -291,33 +266,24 @@ $messages['ar'] = array(
 	'rte-ck-widescreen-toggle' => 'تشغيل الشاشة العريضة',
 	'rte-ck-spellchecker-moreSuggestions' => 'مزيد من الاقتراحات',
 	'rte-ck-pasteText-title' => 'قم بلصق نصك',
-	'rte-ck-clipboard-pasteMsg' => "لأسباب تتعلق بالأمان، لا يمكن للمحرر التحصل على ما نسخته مباشرة. الرجاء لصق ما نسخته في المربع بالأسفل باستخدام اختصارات لوحة المفاتيح (Ctrl/Cmd + V) ثم اضغط 'موافق'. <br /> <br />ملاحظة: النص الخاص بك سيتم تجريده من التنسيق لتفادي خلق نص ويكي معقد.",
+	'rte-ck-clipboard-pasteMsg' => 'لأسباب تتعلق بالأمان، لا يمكن للمحرر التحصل على ما نسخته مباشرة. الرجاء لصق ما نسخته في المربع بالأسفل باستخدام اختصارات لوحة المفاتيح (Ctrl/Cmd + V) ثم اضغط \'موافق\'. <br /> <br />ملاحظة: النص الخاص بك سيتم تجريده من التنسيق لتفادي خلق نص ويكي معقد.',
 	'rte-ck-format-tag_p' => 'نص عادي',
 	'rte-ck-format-tag_pre' => 'رمز (نص تم تنسيقه مسبقاً)',
 	'rte-ck-format-tag_h2' => 'عنوان 2',
 	'rte-ck-format-tag_h3' => 'عنوان 3',
 	'rte-ck-format-tag_h4' => 'عنوان 4',
 	'rte-ck-format-tag_h5' => 'عنوان 5',
-);
+];
 
-/** Aramaic (ܐܪܡܝܐ)
- * @author Basharh
- */
-$messages['arc'] = array(
+$messages['arc'] = [
 	'rte-ck-link-label-target' => 'ܦܐܬܐ ܕܢܘܦܐ ܐܘ ܡܘܢܥܐ ܕURL',
-);
+];
 
-/** Asturian (asturianu)
- * @author Xuacu
- */
-$messages['ast'] = array(
+$messages['ast'] = [
 	'rte-ck-media-edit' => 'camudar',
-);
+];
 
-/** Azerbaijani (azərbaycanca)
- * @author Cekli829
- */
-$messages['az'] = array(
+$messages['az'] = [
 	'rte-ck-errorPopupTitle' => 'Xəta!',
 	'rte-ck-hoverPreview-comment-title' => 'Şərh',
 	'rte-ck-hoverPreview-delete' => 'sil',
@@ -337,20 +303,13 @@ $messages['az'] = array(
 	'rte-ck-format-tag_h3' => 'Başlıq 3',
 	'rte-ck-format-tag_h4' => 'Başlıq 4',
 	'rte-ck-format-tag_h5' => 'Başlıq 5',
-);
+];
 
-/** Belarusian (беларуская)
- * @author Тест
- */
-$messages['be'] = array(
+$messages['be'] = [
 	'rte-ck-templateDropDown-label' => 'Шаблон',
-);
+];
 
-/** Belarusian (Taraškievica orthography) (беларуская (тарашкевіца)‎)
- * @author EugeneZelenko
- * @author Jim-by
- */
-$messages['be-tarask'] = array(
+$messages['be-tarask'] = [
 	'rte-ck-bucket-textAppearance' => 'Выгляд тэксту',
 	'rte-ck-bucket-insert' => 'Уставіць',
 	'rte-ck-bucket-controls' => 'Элемэнты кіраваньня',
@@ -395,8 +354,8 @@ $messages['be-tarask'] = array(
 	'rte-ck-link-status-external' => 'Вонкавая спасылка',
 	'rte-ck-media-delete' => 'выдаліць',
 	'rte-ck-media-edit' => 'зьмяніць',
-	'rte-ck-modeSwitch-toSource' => 'Пераключыць у крынічны рэжым', # Fuzzy
-	'rte-ck-modeSwitch-toWysiwyg' => 'Пераключыць у візуальны рэжым WYSIWYG', # Fuzzy
+	'rte-ck-modeSwitch-toSource' => 'Пераключыць у крынічны рэжым',
+	'rte-ck-modeSwitch-toWysiwyg' => 'Пераключыць у візуальны рэжым WYSIWYG',
 	'rte-ck-photoGallery-confirmDelete' => 'Вы ўпэўнены, што жадаеце выдаліць галерэю з гэтай старонкі?',
 	'rte-ck-photoGallery-confirmDeleteTitle' => 'Выдаліць гэтую галерэю?',
 	'rte-ck-photoGallery-tooltip' => 'Гэта галерэя.',
@@ -430,12 +389,9 @@ $messages['be-tarask'] = array(
 	'rte-ck-videoPlaceholder-confirmDeleteTitle' => 'Выдаліць гэтае пазначэньне месца разьмяшчэньня відэа?',
 	'rte-ck-videoPlaceholder-tooltip' => 'Гэта пазначэньне месца разьмяшчэньня відэа.',
 	'rte-ck-widescreen-toggle' => 'Поўнаэкранны рэжым',
-);
+];
 
-/** Bulgarian (български)
- * @author DCLXVI
- */
-$messages['bg'] = array(
+$messages['bg'] = [
 	'rte-ck-errorPopupTitle' => 'Грешка!',
 	'rte-ck-hoverPreview-delete' => 'изтриване',
 	'rte-ck-hoverPreview-edit' => 'редактиране',
@@ -450,37 +406,32 @@ $messages['bg'] = array(
 	'rte-ck-media-edit' => 'промяна',
 	'rte-ck-templateDropDown-label' => 'Шаблон',
 	'rte-ck-templateDropDown-title' => 'Избиране на шаблон',
-);
+];
 
-/** Breton (brezhoneg)
- * @author Fohanno
- * @author Fulup
- * @author Y-M D
- */
-$messages['br'] = array(
+$messages['br'] = [
 	'rte-ck-bucket-textAppearance' => 'Neuz an destenn',
-	'rte-ck-bucket-insert' => "Ensoc'hañ",
+	'rte-ck-bucket-insert' => 'Ensoc\'hañ',
 	'rte-ck-bucket-controls' => 'Kontrolloù',
 	'rte-ck-commentEditor-title' => 'Embanner evezhiadennoù',
 	'rte-ck-errorPopupTitle' => 'Fazi !',
-	'rte-ck-hoverPreview-codedElement-intro' => "Mar plij kit d'ar mod mammenn evit kemmañ !",
+	'rte-ck-hoverPreview-codedElement-intro' => 'Mar plij kit d\'ar mod mammenn evit kemmañ !',
 	'rte-ck-hoverPreview-codedElement-title' => 'Elfenn kodet',
-	'rte-ck-hoverPreview-comment-intro' => "Ne c'hell bezañ gwelet an dra-mañ nemet e-pad an embann.",
+	'rte-ck-hoverPreview-comment-intro' => 'Ne c\'hell bezañ gwelet an dra-mañ nemet e-pad an embann.',
 	'rte-ck-hoverPreview-comment-title' => 'Evezhiadenn',
-	'rte-ck-hoverPreview-confirmDelete' => "Ha sur oc'h hoc'h eus c'hoant dilemel an dra-mañ eus ar bajenn ?",
+	'rte-ck-hoverPreview-confirmDelete' => 'Ha sur oc\'h hoc\'h eus c\'hoant dilemel an dra-mañ eus ar bajenn ?',
 	'rte-ck-hoverPreview-delete' => 'diverkañ',
 	'rte-ck-hoverPreview-edit' => 'kemmañ',
-	'rte-ck-hoverPreview-media-notExisting' => "N'eus ket eus ar skeudenn-mañ pe eus ar restr-mañ !",
+	'rte-ck-hoverPreview-media-notExisting' => 'N\'eus ket eus ar skeudenn-mañ pe eus ar restr-mañ !',
 	'rte-ck-hoverPreview-template-intro' => 'Ur patrom eo !',
-	'rte-ck-hoverPreview-template-notExisting' => "N'eus ket eus ar patrom-mañ!",
-	'rte-ck-hoverPreview-video-notExisting' => "N'eus ket eus ar video-mañ !",
+	'rte-ck-hoverPreview-template-notExisting' => 'N\'eus ket eus ar patrom-mañ!',
+	'rte-ck-hoverPreview-video-notExisting' => 'N\'eus ket eus ar video-mañ !',
 	'rte-ck-image-add' => 'Ouzhpennañ ur skeudenn',
-	'rte-ck-image-photo' => "Luc'hskeudenn",
-	'rte-ck-image-confirmDelete' => "Ha sur oc'h hoc'h eus c'hoant dilemel ar skeudenn eus ar bajenn-mañ ?",
+	'rte-ck-image-photo' => 'Luc\'hskeudenn',
+	'rte-ck-image-confirmDelete' => 'Ha sur oc\'h hoc\'h eus c\'hoant dilemel ar skeudenn eus ar bajenn-mañ ?',
 	'rte-ck-image-confirmDeleteTitle' => 'Dilemel ar skeudenn-mañ ?',
-	'rte-ck-imagePlaceholder-confirmDelete' => "Ha sur oc'h hoc'h eus c'hoant dilemel al lec'hienn evit skeudenn eus ar bajenn-mañ ?",
-	'rte-ck-imagePlaceholder-confirmDeleteTitle' => "Dilemel al lec'hienn evit ur skeudenn ?",
-	'rte-ck-imagePlaceholder-tooltip' => "Miret eo al lec'hienn-mañ evit ur skeudenn.",
+	'rte-ck-imagePlaceholder-confirmDelete' => 'Ha sur oc\'h hoc\'h eus c\'hoant dilemel al lec\'hienn evit skeudenn eus ar bajenn-mañ ?',
+	'rte-ck-imagePlaceholder-confirmDeleteTitle' => 'Dilemel al lec\'hienn evit ur skeudenn ?',
+	'rte-ck-imagePlaceholder-tooltip' => 'Miret eo al lec\'hienn-mañ evit ur skeudenn.',
 	'rte-ck-justify-center' => 'Kreizet',
 	'rte-ck-link-add' => 'Ouzhpennañ ul liamm',
 	'rte-ck-link-error-badPageTitle' => 'Mar plij lakait titl ur bajenn.',
@@ -500,28 +451,28 @@ $messages['br'] = array(
 	'rte-ck-link-label-external' => 'War-du ul liamm diavaez',
 	'rte-ck-link-status-checking' => 'O gwiriañ ar statud',
 	'rte-ck-link-status-exists' => 'Ar bajenn zo anezhi dija',
-	'rte-ck-link-status-notexists' => "N'eus ket eus ar bajenn-mañ",
+	'rte-ck-link-status-notexists' => 'N\'eus ket eus ar bajenn-mañ',
 	'rte-ck-link-status-external' => 'Liamm diavaez',
 	'rte-ck-media-delete' => 'lemel',
 	'rte-ck-media-edit' => 'kemmañ',
 	'rte-ck-modeSwitch-toSource' => 'Mammenn',
 	'rte-ck-modeSwitch-toWysiwyg' => 'Da welet',
 	'rte-ck-photoGallery-gallery' => 'Skeudennaoueg',
-	'rte-ck-photoGallery-slideshow' => "Kinnig luc'hvannoù",
+	'rte-ck-photoGallery-slideshow' => 'Kinnig luc\'hvannoù',
 	'rte-ck-photoGallery-slider' => 'Dibuner',
 	'rte-ck-photoGallery-addGallery' => 'Ouzhpennañ ur skeudennaoueg',
-	'rte-ck-photoGallery-addSlideshow' => "Ouzhpennañ ur c'hinnig luc'hvannoù",
+	'rte-ck-photoGallery-addSlideshow' => 'Ouzhpennañ ur c\'hinnig luc\'hvannoù',
 	'rte-ck-photoGallery-addSlider' => 'Ouzhpennañ un dibuner',
-	'rte-ck-photoGallery-confirmDelete' => "Ha sur oc'h hoc'h eus c'hoant dilemel ar skeudennaoueg eus ar bajenn-mañ ?",
+	'rte-ck-photoGallery-confirmDelete' => 'Ha sur oc\'h hoc\'h eus c\'hoant dilemel ar skeudennaoueg eus ar bajenn-mañ ?',
 	'rte-ck-photoGallery-confirmDeleteTitle' => 'Dilemel ar skeudennaoueg ?',
 	'rte-ck-photoGallery-tooltip' => 'Ur skeudennaoueg eo.',
-	'rte-ck-photoGallery-tooltipSlideshow' => "Ur c'hinnig luc'hvannoù eo.",
-	'rte-ck-photoGallery-tooltipSlider' => "Ur c'hinnig luc'hvannoù eo.",
+	'rte-ck-photoGallery-tooltipSlideshow' => 'Ur c\'hinnig luc\'hvannoù eo.',
+	'rte-ck-photoGallery-tooltipSlider' => 'Ur c\'hinnig luc\'hvannoù eo.',
 	'rte-ck-signature-add' => 'Ouzhpennañ ho sinadur',
 	'rte-ck-signature-label' => 'Sinadur',
 	'rte-ck-table-alignNotSet' => 'Nann-termenet',
-	'rte-ck-table-invalidCols' => "An niver a golonennoù a rank bezañ un niver brasoc'h eget 0.",
-	'rte-ck-table-invalidRows' => "An niver a renkennoù a rank bezañ un niver brasoc'h eget 0.",
+	'rte-ck-table-invalidCols' => 'An niver a golonennoù a rank bezañ un niver brasoc\'h eget 0.',
+	'rte-ck-table-invalidRows' => 'An niver a renkennoù a rank bezañ un niver brasoc\'h eget 0.',
 	'rte-ck-table-toolbarTooltip' => 'Ouzhpennañ un daolenn',
 	'rte-ck-templateDropDown-chooseAnotherTpl' => 'Patrom all / ger burzhudus',
 	'rte-ck-templateDropDown-showUsedList' => 'Diskouez roll ar patromoù implijet',
@@ -529,7 +480,7 @@ $messages['br'] = array(
 	'rte-ck-templateDropDown-label' => 'Patrom',
 	'rte-ck-templateDropDown-title' => 'Dibabit ur patrom',
 	'rte-ck-templateEditor-dialog-browse' => 'Klask ur patrom',
-	'rte-ck-templateEditor-dialog-insert' => "Ensoc'hañ",
+	'rte-ck-templateEditor-dialog-insert' => 'Ensoc\'hañ',
 	'rte-ck-templateEditor-dialog-magicWords' => 'Gerioù burzhudus',
 	'rte-ck-templateEditor-dialog-magicWordsLink' => 'Help:Gerioù burzhudus',
 	'rte-ck-templateEditor-dialog-mostFrequentlyUsed' => 'Implijet an aliesañ',
@@ -545,15 +496,15 @@ $messages['br'] = array(
 	'rte-ck-unlink' => 'Dilemel al liamm',
 	'rte-ck-video-add' => 'Ouzhpennañ ur video',
 	'rte-ck-video-video' => 'Video',
-	'rte-ck-video-confirmDelete' => "Ha sur oc'h hoc'h eus c'hoant dilemel ar video eus ar bajenn-mañ ?",
+	'rte-ck-video-confirmDelete' => 'Ha sur oc\'h hoc\'h eus c\'hoant dilemel ar video eus ar bajenn-mañ ?',
 	'rte-ck-video-confirmDeleteTitle' => 'Dilemel ar video-mañ ?',
-	'rte-ck-videoPlaceholder-confirmDelete' => "Ha sur oc'h hoc'h eus c'hoant dilemel al lec'hienn evit video eus ar bajenn-mañ ?",
-	'rte-ck-videoPlaceholder-confirmDeleteTitle' => "Dilemel al lec'hienn evit ur video ?",
-	'rte-ck-videoPlaceholder-tooltip' => "Miret eo al lec'hienn-mañ evit ur video.",
+	'rte-ck-videoPlaceholder-confirmDelete' => 'Ha sur oc\'h hoc\'h eus c\'hoant dilemel al lec\'hienn evit video eus ar bajenn-mañ ?',
+	'rte-ck-videoPlaceholder-confirmDeleteTitle' => 'Dilemel al lec\'hienn evit ur video ?',
+	'rte-ck-videoPlaceholder-tooltip' => 'Miret eo al lec\'hienn-mañ evit ur video.',
 	'rte-ck-mut-add' => 'Ouzhpennañ ur video (beta)',
 	'rte-ck-mut-mut' => 'Video (beta)',
 	'rte-ck-widescreen-toggle' => 'Gweredekaat/diweredekaat ar skramm leun',
-	'rte-ck-spellchecker-moreSuggestions' => "Muioc'h a ginnigoù",
+	'rte-ck-spellchecker-moreSuggestions' => 'Muioc\'h a ginnigoù',
 	'rte-ck-pasteText-title' => 'Pegañ ho testenn',
 	'rte-ck-format-tag_p' => 'Testenn normal',
 	'rte-ck-format-tag_pre' => 'Kod (testenn rakfurmadet)',
@@ -561,22 +512,19 @@ $messages['br'] = array(
 	'rte-ck-format-tag_h3' => 'Titl 3',
 	'rte-ck-format-tag_h4' => 'Titl 4',
 	'rte-ck-format-tag_h5' => 'Titl 5',
-);
+];
 
-/** Catalan (català)
- * @author BroOk
- */
-$messages['ca'] = array(
+$messages['ca'] = [
 	'rte-ck-bucket-textAppearance' => 'Aparença del text',
 	'rte-ck-bucket-insert' => 'Insereix',
 	'rte-ck-bucket-controls' => 'Controls',
-	'rte-ck-commentEditor-title' => "Comentari de l'editor",
+	'rte-ck-commentEditor-title' => 'Comentari de l\'editor',
 	'rte-ck-errorPopupTitle' => 'Error!',
 	'rte-ck-hoverPreview-codedElement-intro' => 'Si us plau, per editar canvieu al mode font!',
 	'rte-ck-hoverPreview-codedElement-title' => 'Element codificat',
-	'rte-ck-hoverPreview-comment-intro' => "Això només es pot veure durant l'edició.",
+	'rte-ck-hoverPreview-comment-intro' => 'Això només es pot veure durant l\'edició.',
 	'rte-ck-hoverPreview-comment-title' => 'Comentari',
-	'rte-ck-hoverPreview-confirmDelete' => "Estàs segur que vols eliminar això d'aquesta pàgina?",
+	'rte-ck-hoverPreview-confirmDelete' => 'Estàs segur que vols eliminar això d\'aquesta pàgina?',
 	'rte-ck-hoverPreview-delete' => 'Eliminar',
 	'rte-ck-hoverPreview-edit' => 'Editar',
 	'rte-ck-hoverPreview-media-notExisting' => 'Aquesta imatge o fitxer no existeix!',
@@ -585,11 +533,11 @@ $messages['ca'] = array(
 	'rte-ck-hoverPreview-video-notExisting' => 'Aquest vídeo no existeix!',
 	'rte-ck-image-add' => 'Afegeix una foto',
 	'rte-ck-image-photo' => 'Foto',
-	'rte-ck-image-confirmDelete' => "Estàs segur que vols eliminar la imatge d'aquesta pàgina?",
+	'rte-ck-image-confirmDelete' => 'Estàs segur que vols eliminar la imatge d\'aquesta pàgina?',
 	'rte-ck-image-confirmDeleteTitle' => 'Vols treure aquesta imatge?',
-	'rte-ck-imagePlaceholder-confirmDelete' => "Estàs segur que vols suprimir el marcador de posició d'imatge d'aquesta pàgina?",
-	'rte-ck-imagePlaceholder-confirmDeleteTitle' => "Eliminar aquest marcador de posició d'imatge?",
-	'rte-ck-imagePlaceholder-tooltip' => "Aquest és un marcador de posició d'imatge.",
+	'rte-ck-imagePlaceholder-confirmDelete' => 'Estàs segur que vols suprimir el marcador de posició d\'imatge d\'aquesta pàgina?',
+	'rte-ck-imagePlaceholder-confirmDeleteTitle' => 'Eliminar aquest marcador de posició d\'imatge?',
+	'rte-ck-imagePlaceholder-tooltip' => 'Aquest és un marcador de posició d\'imatge.',
 	'rte-ck-justify-center' => 'Alinea al centre',
 	'rte-ck-link-add' => 'Afegeix enllaç',
 	'rte-ck-link-error-badPageTitle' => 'Si us plau, introduïu un títol per la pàgina',
@@ -607,24 +555,24 @@ $messages['ca'] = array(
 	'rte-ck-link-label-display' => 'Text per mostrar',
 	'rte-ck-link-label-internal' => 'A una pàgina de wiki',
 	'rte-ck-link-label-external' => 'Cap a un enllaç extern',
-	'rte-ck-link-status-checking' => "Verificar l'estat",
+	'rte-ck-link-status-checking' => 'Verificar l\'estat',
 	'rte-ck-link-status-exists' => 'La pàgina existeix',
 	'rte-ck-link-status-notexists' => 'La pàgina no existeix',
 	'rte-ck-link-status-external' => 'Enllaç extern',
 	'rte-ck-media-delete' => 'Treure',
 	'rte-ck-media-edit' => 'Modifica',
-	'rte-ck-modeSwitch-toSource' => 'Font',
-	'rte-ck-modeSwitch-toWysiwyg' => 'Visual',
+	'rte-ck-modeSwitch-toSource' => 'Canviar a manera de font',
+	'rte-ck-modeSwitch-toWysiwyg' => 'Canviar a mode WYSIWYG',
 	'rte-ck-modeSwitch-toSourceTooltip' => 'Canviar a codi font',
 	'rte-ck-modeSwitch-toWysiwygTooltip' => 'Canviar al mode Visual',
-	'rte-ck-modeSwitch-error' => "S'ha produït un error en canviar el mode. Torneu-ho a intentar.",
+	'rte-ck-modeSwitch-error' => 'S\'ha produït un error en canviar el mode. Torneu-ho a intentar.',
 	'rte-ck-photoGallery-gallery' => 'Galeria',
 	'rte-ck-photoGallery-slideshow' => 'Slideshow',
 	'rte-ck-photoGallery-slider' => 'Slider',
 	'rte-ck-photoGallery-addGallery' => 'Afegir una galeria de fotos',
 	'rte-ck-photoGallery-addSlideshow' => 'Afegeix un Slideshow',
 	'rte-ck-photoGallery-addSlider' => 'Afegeix un Slider',
-	'rte-ck-photoGallery-confirmDelete' => "Estàs segur que vols eliminar la galeria d'imatges d'aquesta pàgina?",
+	'rte-ck-photoGallery-confirmDelete' => 'Estàs segur que vols eliminar la galeria d\'imatges d\'aquesta pàgina?',
 	'rte-ck-photoGallery-confirmDeleteTitle' => 'Treure la galeria de fotos?',
 	'rte-ck-photoGallery-tooltip' => 'Això és una galeria.',
 	'rte-ck-photoGallery-tooltipSlideshow' => 'Això és un slideshow.',
@@ -637,7 +585,7 @@ $messages['ca'] = array(
 	'rte-ck-table-toolbarTooltip' => 'Afegeix una taula',
 	'rte-ck-templateDropDown-chooseAnotherTpl' => 'Una altra plantilla / paraula màgica',
 	'rte-ck-templateDropDown-showUsedList' => 'Mostra una llista de plantilles usades',
-	'rte-ck-templateDropDown-makeLayout' => "Fes un disseny d'aquesta pàgina",
+	'rte-ck-templateDropDown-makeLayout' => 'Fes un disseny d\'aquesta pàgina',
 	'rte-ck-templateDropDown-label' => 'Plantilla',
 	'rte-ck-templateDropDown-title' => 'Tria una plantilla',
 	'rte-ck-templateEditor-dialog-browse' => 'Buscar una plantilla',
@@ -647,19 +595,19 @@ $messages['ca'] = array(
 	'rte-ck-templateEditor-dialog-mostFrequentlyUsed' => 'Usats més freqüentment',
 	'rte-ck-templateEditor-dialog-search' => 'Buscar una plantilla',
 	'rte-ck-templateEditor-editor-chooseAnotherTpl' => 'Trieu una altra plantilla',
-	'rte-ck-templateEditor-editor-intro' => "Canvia els valors de l'esquerra i fes clic a una vista prèvia. Quan hagis acabat d'editar, fes clic a \"D'acord\".",
+	'rte-ck-templateEditor-editor-intro' => 'Canvia els valors de l\'esquerra i fes clic a una vista prèvia. Quan hagis acabat d\'editar, fes clic a "D\'acord".',
 	'rte-ck-templateEditor-editor-parameters' => 'Paràmetres',
 	'rte-ck-templateEditor-editor-previewButton' => 'Previsualitza',
 	'rte-ck-templateEditor-editor-previewTitle' => 'Previsualitza',
-	'rte-ck-templateEditor-editor-viewTemplate' => "(Veure la pàgina de la plantilla - s'obre en una finestra nova)",
+	'rte-ck-templateEditor-editor-viewTemplate' => '(Veure la pàgina de la plantilla - s\'obre en una finestra nova)',
 	'rte-ck-templateEditor-usedTemplates-title' => 'Llista de plantilles usades',
 	'rte-ck-templateEditor-title' => 'Editor de plantilles',
 	'rte-ck-unlink' => 'Treure enllaç',
 	'rte-ck-video-add' => 'Afegeix un vídeo',
 	'rte-ck-video-video' => 'Vídeo',
-	'rte-ck-video-confirmDelete' => "Estàs segur que vols suprimir el vídeo d'aquesta pàgina?",
+	'rte-ck-video-confirmDelete' => 'Estàs segur que vols suprimir el vídeo d\'aquesta pàgina?',
 	'rte-ck-video-confirmDeleteTitle' => 'Eliminar aquest vídeo?',
-	'rte-ck-videoPlaceholder-confirmDelete' => "Estàs segur que vols suprimir el marcador de posició de vídeos d'aquesta pàgina?",
+	'rte-ck-videoPlaceholder-confirmDelete' => 'Estàs segur que vols suprimir el marcador de posició de vídeos d\'aquesta pàgina?',
 	'rte-ck-videoPlaceholder-confirmDeleteTitle' => 'Eliminar aquest marcador de posició de vídeo?',
 	'rte-ck-videoPlaceholder-tooltip' => 'Això és un marcador de posició de vídeo.',
 	'rte-ck-mut-add' => 'Afegir un vídeo (beta)',
@@ -667,20 +615,16 @@ $messages['ca'] = array(
 	'rte-ck-widescreen-toggle' => 'Activar pantalla completa',
 	'rte-ck-spellchecker-moreSuggestions' => 'Més suggeriments',
 	'rte-ck-pasteText-title' => 'Enganxa el text',
-	'rte-ck-clipboard-pasteMsg' => "Per raons de seguretat, l'editor no pot enganxar-ho directament. Si us plau enganxa-ho al quadre fent servir les dreceres del teclat (Ctrl/Cms+V) i prem 'OK'.<br /><br />Nota: el teu text quedarà sense el format per evitar la creació de wikitext complex.",
+	'rte-ck-clipboard-pasteMsg' => 'Per raons de seguretat, l\'editor no pot enganxar-ho directament. Si us plau enganxa-ho al quadre fent servir les dreceres del teclat (Ctrl/Cms+V) i prem \'OK\'.<br /><br />Nota: el teu text quedarà sense el format per evitar la creació de wikitext complex.',
 	'rte-ck-format-tag_p' => 'Text normal',
 	'rte-ck-format-tag_pre' => 'Codi (text amb format)',
 	'rte-ck-format-tag_h2' => 'Encapçalament 2',
 	'rte-ck-format-tag_h3' => 'Encapçalament 3',
 	'rte-ck-format-tag_h4' => 'Encapçalament 4',
 	'rte-ck-format-tag_h5' => 'Encapçalament 5',
-);
+];
 
-/** Chechen (нохчийн)
- * @author Sasan700
- * @author Умар
- */
-$messages['ce'] = array(
+$messages['ce'] = [
 	'rte-ck-link-error-badPageTitle' => 'Дехар до, дӀаязъе агӀона цӀе.',
 	'rte-ck-media-delete' => 'дӀаяккха',
 	'rte-ck-modeSwitch-toWysiwyg' => 'Визуальни тадар',
@@ -689,21 +633,13 @@ $messages['ce'] = array(
 	'rte-ck-templateEditor-editor-parameters' => 'Параметраш',
 	'rte-ck-templateEditor-editor-previewButton' => 'Хьалха хьажар',
 	'rte-ck-templateEditor-editor-previewTitle' => 'Хьалха хьажар',
-);
+];
 
-/** Central Kurdish (کوردیی ناوەندی)
- * @author Calak
- */
-$messages['ckb'] = array(
+$messages['ckb'] = [
 	'rte-ck-link-add' => 'بەستەر زیاد بکە',
-);
+];
 
-/** Czech (čeština)
- * @author Chmee2
- * @author Darth Daron
- * @author Mormegil
- */
-$messages['cs'] = array(
+$messages['cs'] = [
 	'rte-ck-bucket-textAppearance' => 'Vzhled textu',
 	'rte-ck-bucket-insert' => 'Vložit',
 	'rte-ck-bucket-controls' => 'Ovládací prvky',
@@ -811,78 +747,64 @@ $messages['cs'] = array(
 	'rte-ck-format-tag_h3' => 'Nadpis 3',
 	'rte-ck-format-tag_h4' => 'Nadpis 4',
 	'rte-ck-format-tag_h5' => 'Nadpis 5',
-);
+];
 
-/** Welsh (Cymraeg)
- * @author Thefartydoctor
- */
-$messages['cy'] = array(
+$messages['cy'] = [
 	'rte-ck-hoverPreview-delete' => 'dileu',
 	'rte-ck-hoverPreview-edit' => 'golygu',
 	'rte-ck-image-photo' => 'Ffoto',
 	'rte-ck-video-video' => 'Fideo',
-);
+];
 
-/** German (Deutsch)
- * @author Inkowik
- * @author Kghbln
- * @author Kjell
- * @author LWChris
- * @author Metalhead64
- * @author MtaÄ
- * @author PtM
- * @author The Evil IP address
- * @author Tiin
- */
-$messages['de'] = array(
-	'rte-ck-bucket-textAppearance' => 'Textaussehen',
+$messages['de'] = [
+	'rte-ck-bucket-textAppearance' => 'Textlayout',
 	'rte-ck-bucket-insert' => 'Einfügen',
-	'rte-ck-bucket-controls' => 'Bedienelemente',
-	'rte-ck-commentEditor-title' => 'Kommentar-Editor',
-	'rte-ck-errorPopupTitle' => 'Fehler!',
-	'rte-ck-hoverPreview-codedElement-intro' => 'Bitte zum Bearbeiten in den Quelltext-Modus wechseln!',
-	'rte-ck-hoverPreview-codedElement-title' => 'Programmiertes Element',
-	'rte-ck-hoverPreview-comment-intro' => 'Dies ist nur während der Bearbeitung sichtbar.',
+	'rte-ck-bucket-controls' => 'Bearbeitungsoptionen',
+	'rte-ck-commentEditor-title' => 'Kommentareditor',
+	'rte-ck-errorPopupTitle' => 'Fehler',
+	'rte-ck-hoverPreview-codedElement-intro' => 'Bitte wechsle zur Quelltextansicht, um das zu bearbeiten.',
+	'rte-ck-hoverPreview-codedElement-title' => 'Codiertes Element',
+	'rte-ck-hoverPreview-comment-intro' => 'Das kann nur während des Bearbeitens gesehen werden.',
 	'rte-ck-hoverPreview-comment-title' => 'Kommentar',
-	'rte-ck-hoverPreview-confirmDelete' => 'Willst du dies wirklich von dieser Seite entfernen?',
-	'rte-ck-hoverPreview-delete' => 'löschen',
-	'rte-ck-hoverPreview-edit' => 'bearbeiten',
-	'rte-ck-hoverPreview-media-notExisting' => 'Das Bild oder die Datei existiert nicht!',
-	'rte-ck-hoverPreview-template-intro' => 'Dies ist eine Vorlage.',
-	'rte-ck-hoverPreview-template-notExisting' => 'Diese Vorlage existiert nicht!',
-	'rte-ck-hoverPreview-video-notExisting' => 'Dieses Video existiert nicht!',
-	'rte-ck-image-add' => 'Ein Bild hinzufügen',
+	'rte-ck-hoverPreview-confirmDelete' => 'Willst du das wirklich von der Seite entfernen?',
+	'rte-ck-hoverPreview-delete' => 'Entfernen',
+	'rte-ck-hoverPreview-edit' => 'Ändern',
+	'rte-ck-hoverPreview-media-notExisting' => 'Diese Datei existiert nicht!',
+	'rte-ck-hoverPreview-template-intro' => 'Das ist eine Vorlage.',
+	'rte-ck-hoverPreview-template-notExisting' => 'Vorlage existiert nicht!',
+	'rte-ck-hoverPreview-video-notExisting' => 'Video existiert nicht!',
+	'rte-ck-image-add' => 'Bild hinzufügen',
 	'rte-ck-image-photo' => 'Bild',
-	'rte-ck-image-confirmDelete' => 'Willst du dieses Bild wirklich von dieser Seite entfernen?',
+	'rte-ck-image-confirmDelete' => 'Willst du dieses Bild wirklich von der Seite entfernen?',
 	'rte-ck-image-confirmDeleteTitle' => 'Dieses Bild entfernen?',
-	'rte-ck-imagePlaceholder-confirmDelete' => 'Willst du diesen Bild-Platzhalter wirklich von dieser Seite entfernen?',
-	'rte-ck-imagePlaceholder-confirmDeleteTitle' => 'Diesen Bild-Platzhalter entfernen?',
-	'rte-ck-imagePlaceholder-tooltip' => 'Dies ist ein Bild-Platzhalter.',
-	'rte-ck-justify-center' => 'Zentriert',
+	'rte-ck-imagePlaceholder-confirmDelete' => 'Willst du diesen Platzhalter wirklich von dieser Seite entfernen?',
+	'rte-ck-imagePlaceholder-confirmDeleteTitle' => 'Diesen Platzhalter entfernen?',
+	'rte-ck-imagePlaceholder-tooltip' => 'Ein Platzhalter. Klicke, um ein Bild hinzuzufügen!',
+	'rte-ck-justify-center' => 'Zentrieren',
 	'rte-ck-link-add' => 'Link hinzufügen',
-	'rte-ck-link-error-badPageTitle' => 'Bitte gib einen Seitentitel ein.',
-	'rte-ck-link-error-badUrl' => 'Wir erkennen diese URL nicht - bitte überprüfe die Korrektheit.',
+	'rte-ck-link-error-badPageTitle' => 'Bitte gib einen Seitentitel an.',
+	'rte-ck-link-error-badUrl' => 'Wir können die URL nicht erkennen - bitte überprüfe, ob sie korrekt ist.',
 	'rte-ck-link-error-title' => 'Fehler',
 	'rte-ck-link-external-linkText' => 'Linktext',
-	'rte-ck-link-external-numberedLink' => 'Erstelle einen nummerierten Link (zum Beispiel „[1]“)',
+	'rte-ck-link-external-numberedLink' => 'Erstelle einen nummerierten Link (beispielsweise "[1]")',
 	'rte-ck-link-external-tab' => 'Externer Link',
 	'rte-ck-link-external-url' => 'URL',
 	'rte-ck-link-internal-linkText' => 'Linktext',
 	'rte-ck-link-internal-pageName' => 'Seitenname',
-	'rte-ck-link-internal-tab' => 'Interner Link',
-	'rte-ck-link-title' => 'Erstelle oder bearbeite einen Link',
-	'rte-ck-link-label-target' => 'Zielseite oder URL',
-	'rte-ck-link-label-display' => 'Anzeigetext',
-	'rte-ck-link-label-internal' => 'Zu einer Wiki-Seite',
-	'rte-ck-link-label-external' => 'Zu einem externen Link',
+	'rte-ck-link-internal-tab' => 'Lokaler Link',
+	'rte-ck-link-title' => 'Linkeigenschaften',
+	'rte-ck-link-label-target' => 'Seitenname oder URL',
+	'rte-ck-link-label-display' => 'Linktext',
+	'rte-ck-link-label-internal' => 'Wikiseite verlinken',
+	'rte-ck-link-label-external' => 'Externe URL verlinken',
 	'rte-ck-link-status-checking' => 'Prüfe Status',
 	'rte-ck-link-status-exists' => 'Seite existiert',
 	'rte-ck-link-status-notexists' => 'Seite existiert nicht',
 	'rte-ck-link-status-external' => 'Externer Link',
 	'rte-ck-media-delete' => 'entfernen',
 	'rte-ck-media-edit' => 'ändern',
-	'rte-ck-modeSwitch-toSource' => 'Quelltext',
-	'rte-ck-modeSwitch-toWysiwyg' => 'Grafisch',
+	'rte-ck-modeSwitch-toSource' => 'Code-Ansicht',
+	'rte-ck-modeSwitch-toWysiwyg' => 'Grafik-Ansicht',
 	'rte-ck-modeSwitch-toSourceTooltip' => 'Zum Quelltext-Modus wechseln',
 	'rte-ck-modeSwitch-toWysiwygTooltip' => 'Zum Grafischen Editor wechseln',
 	'rte-ck-modeSwitch-error' => 'Es ist ein Fehler während des Moduswechsels aufgetreten. Bitte versuche es nochmal.',
@@ -892,70 +814,63 @@ $messages['de'] = array(
 	'rte-ck-photoGallery-addGallery' => 'Eine Fotogalerie hinzufügen',
 	'rte-ck-photoGallery-addSlideshow' => 'Diashow hinzufügen',
 	'rte-ck-photoGallery-addSlider' => 'Einen Slider hinzufügen',
-	'rte-ck-photoGallery-confirmDelete' => 'Willst du diese Galerie wirklich von dieser Seite entfernen?',
+	'rte-ck-photoGallery-confirmDelete' => 'Möchtest du diese Galerie wirklich von der Seite entfernen?',
 	'rte-ck-photoGallery-confirmDeleteTitle' => 'Diese Galerie entfernen?',
-	'rte-ck-photoGallery-tooltip' => 'Dies ist eine Galerie.',
+	'rte-ck-photoGallery-tooltip' => 'Ein Platzhalter. Klicke, um eine Galerie hinzuzufügen!',
 	'rte-ck-photoGallery-tooltipSlideshow' => 'Dies ist eine Diashow.',
 	'rte-ck-photoGallery-tooltipSlider' => 'Dies ist ein Schieberegler.',
-	'rte-ck-signature-add' => 'Deine Signatur hinzufügen',
+	'rte-ck-signature-add' => 'Füge deine Signatur hinzu',
 	'rte-ck-signature-label' => 'Signatur',
-	'rte-ck-table-alignNotSet' => 'Nicht festgelegt',
-	'rte-ck-table-invalidCols' => 'Die Anzahl der Spalten muss eine Zahl größer als 0 sein.',
-	'rte-ck-table-invalidRows' => 'Die Anzahl der Zeilen muss eine Zahl größer als 0 sein.',
+	'rte-ck-table-alignNotSet' => 'Nicht ausgerichtet',
+	'rte-ck-table-invalidCols' => 'Die Anzahl der Spalten muss größer als 0 sein.',
+	'rte-ck-table-invalidRows' => 'Die Anzahl der Zeilen muss größer als 0 sein.',
 	'rte-ck-table-toolbarTooltip' => 'Tabelle hinzufügen',
-	'rte-ck-templateDropDown-chooseAnotherTpl' => 'Andere Vorlage / Zauberwort',
+	'rte-ck-templateDropDown-chooseAnotherTpl' => 'Andere Vorlage/Anderes Zauberwort',
 	'rte-ck-templateDropDown-showUsedList' => 'Verwendete Vorlagen anzeigen',
 	'rte-ck-templateDropDown-makeLayout' => 'Erstelle ein Layout aus dieser Seite',
 	'rte-ck-templateDropDown-label' => 'Vorlage',
 	'rte-ck-templateDropDown-title' => 'Wähle eine Vorlage',
-	'rte-ck-templateEditor-dialog-browse' => 'Nach einer Vorlage suchen',
+	'rte-ck-templateEditor-dialog-browse' => 'Nach einer Vorlage durchsuchen',
 	'rte-ck-templateEditor-dialog-insert' => 'Einfügen',
-	'rte-ck-templateEditor-dialog-magicWords' => 'Magische Wörter',
-	'rte-ck-templateEditor-dialog-magicWordsLink' => 'Help:Magische Worte',
-	'rte-ck-templateEditor-dialog-mostFrequentlyUsed' => 'Am häufigsten verwendet',
+	'rte-ck-templateEditor-dialog-magicWords' => 'Zauberwörter',
+	'rte-ck-templateEditor-dialog-magicWordsLink' => 'Hilfe:Zauberwörter',
+	'rte-ck-templateEditor-dialog-mostFrequentlyUsed' => 'Meistgenutzt',
 	'rte-ck-templateEditor-dialog-search' => 'Nach einer Vorlage suchen',
-	'rte-ck-templateEditor-editor-chooseAnotherTpl' => 'Eine andere Vorlage wählen',
-	'rte-ck-templateEditor-editor-intro' => 'Ändere die Werte auf der linken Seite und klicke für eine Vorschau. Wenn du fertig bist, klicke auf „OK“.',
+	'rte-ck-templateEditor-editor-chooseAnotherTpl' => 'Wähle eine andere Vorlage',
+	'rte-ck-templateEditor-editor-intro' => 'Du kannst die Eingaben links ändern, klicke anschließend auf Vorschau. Wenn du mit deiner Eingabe fertig bist, klicke "OK".',
 	'rte-ck-templateEditor-editor-parameters' => 'Parameter',
 	'rte-ck-templateEditor-editor-previewButton' => 'Vorschau',
 	'rte-ck-templateEditor-editor-previewTitle' => 'Vorschau',
-	'rte-ck-templateEditor-editor-viewTemplate' => '(Vorlagenseite anzeigen - öffnet ein neues Fenster)',
+	'rte-ck-templateEditor-editor-viewTemplate' => '(Vorlagenseite anzeigen - öffnet neues Fenster)',
 	'rte-ck-templateEditor-usedTemplates-title' => 'Liste der benutzten Vorlagen',
-	'rte-ck-templateEditor-title' => 'Vorlagen-Editor',
+	'rte-ck-templateEditor-title' => 'Vorlageneditor',
 	'rte-ck-unlink' => 'Link entfernen',
-	'rte-ck-video-add' => 'Ein Video hinzufügen',
+	'rte-ck-video-add' => 'Video hinzufügen',
 	'rte-ck-video-video' => 'Video',
 	'rte-ck-video-confirmDelete' => 'Willst du dieses Video wirklich von dieser Seite entfernen?',
 	'rte-ck-video-confirmDeleteTitle' => 'Dieses Video entfernen?',
-	'rte-ck-videoPlaceholder-confirmDelete' => 'Willst du diesen Video-Platzhalter wirklich von dieser Seite entfernen?',
-	'rte-ck-videoPlaceholder-confirmDeleteTitle' => 'Diesen Video-Platzhalter entfernen?',
-	'rte-ck-videoPlaceholder-tooltip' => 'Dies ist ein Video-Platzhalter.',
+	'rte-ck-videoPlaceholder-confirmDelete' => 'Willst du diesen Platzhalter wirklich von dieser Seite entfernen?',
+	'rte-ck-videoPlaceholder-confirmDeleteTitle' => 'Diesen Platzhalter entfernen?',
+	'rte-ck-videoPlaceholder-tooltip' => 'Das ist ein Videoplatzhalter.',
 	'rte-ck-mut-add' => 'Video hinzufügen (beta)',
 	'rte-ck-mut-mut' => 'Video (beta)',
-	'rte-ck-widescreen-toggle' => 'Breitbildformat umschalten',
+	'rte-ck-widescreen-toggle' => 'Mit voller Bildschirmbreite bearbeiten',
 	'rte-ck-spellchecker-moreSuggestions' => 'Weitere Vorschläge',
-	'rte-ck-pasteText-title' => 'Füge deinen Text ein',
-	'rte-ck-clipboard-pasteMsg' => "Aus Sicherheitsgründen kann der Editor nicht direkt auf den Text zugreifen. Bitte füge ihn mithilfe von Tastenkombinationen (Strg/Cmd+V) in das Feld weiter unten ein und klicke auf 'OK'.<br /><br />Hinweis: Formatierungen des Textes werden entfernt, um das Erzeugen komplizierter Wikitexte zu vermeiden.",
-	'rte-ck-format-tag_p' => 'Normaler Text',
-	'rte-ck-format-tag_pre' => 'Code (hervorgehobener Text)',
+	'rte-ck-pasteText-title' => 'Unformatiert einfügen',
+	'rte-ck-clipboard-pasteMsg' => 'Du kannst entweder deine Maus benutzen, um Text in die folgende Box einzufügen, oder die Tastatur (<strong>Strg+V</strong>) um es direkt in das Bearbeitungsfenster einzufügen.',
+	'rte-ck-format-tag_p' => 'Normal',
+	'rte-ck-format-tag_pre' => 'Formatiert',
 	'rte-ck-format-tag_h2' => 'Überschrift 2',
 	'rte-ck-format-tag_h3' => 'Überschrift 3',
 	'rte-ck-format-tag_h4' => 'Überschrift 4',
 	'rte-ck-format-tag_h5' => 'Überschrift 5',
-);
+];
 
-/** German (formal address) (Deutsch (Sie-Form)‎)
- * @author Tiin
- */
-$messages['de-formal'] = array(
+$messages['de-formal'] = [
 	'rte-ck-pasteText-title' => 'Fügen Sie Ihren Text ein',
-);
+];
 
-/** Zazaki (Zazaki)
- * @author Erdemaslancan
- * @author Mirzali
- */
-$messages['diq'] = array(
+$messages['diq'] = [
 	'rte-ck-bucket-controls' => 'Qontroli',
 	'rte-ck-errorPopupTitle' => 'Xeta!',
 	'rte-ck-hoverPreview-comment-title' => 'Mışewre',
@@ -992,64 +907,50 @@ $messages['diq'] = array(
 	'rte-ck-format-tag_h3' => 'Sername 3',
 	'rte-ck-format-tag_h4' => 'Sername 4',
 	'rte-ck-format-tag_h5' => 'Sername 5',
-);
+];
 
-/** British English (British English)
- * @author Shirayuki
- */
-$messages['en-gb'] = array(
+$messages['en-gb'] = [
 	'rte-ck-justify-center' => 'Align Centre',
 	'rte-ck-link-error-badUrl' => 'We do not recognise that URL - please check it is correct.',
-);
+];
 
-/** Spanish (español)
- * @author Absay
- * @author Armando-Martin
- * @author Benfutbol10
- * @author Bola
- * @author Crazymadlover
- * @author Fitoschido
- * @author Mor
- * @author Translationista
- * @author VegaDark
- */
-$messages['es'] = array(
+$messages['es'] = [
 	'rte-ck-bucket-textAppearance' => 'Apariencia del texto',
 	'rte-ck-bucket-insert' => 'Insertar',
 	'rte-ck-bucket-controls' => 'Controles',
-	'rte-ck-commentEditor-title' => 'Editor de comentarios',
-	'rte-ck-errorPopupTitle' => 'Error!',
-	'rte-ck-hoverPreview-codedElement-intro' => 'Por favor, cambiar a modo fuente para editar!',
+	'rte-ck-commentEditor-title' => 'Comentario del editor',
+	'rte-ck-errorPopupTitle' => '¡Error!',
+	'rte-ck-hoverPreview-codedElement-intro' => '¡Por favor, cambia al modo de fuente para editar!',
 	'rte-ck-hoverPreview-codedElement-title' => 'Elemento codificado',
-	'rte-ck-hoverPreview-comment-intro' => 'Esto sólo puede ser visto durante la edición.',
+	'rte-ck-hoverPreview-comment-intro' => 'Esto solamente puede ser visto durante la edición.',
 	'rte-ck-hoverPreview-comment-title' => 'Comentario',
 	'rte-ck-hoverPreview-confirmDelete' => '¿Estás seguro de que deseas eliminar esto de esta página?',
 	'rte-ck-hoverPreview-delete' => 'borrar',
 	'rte-ck-hoverPreview-edit' => 'editar',
-	'rte-ck-hoverPreview-media-notExisting' => 'Esta imagen o archivo no existe!',
-	'rte-ck-hoverPreview-template-intro' => 'Esta es una plantilla.',
-	'rte-ck-hoverPreview-template-notExisting' => 'Esta plantilla no existe!',
-	'rte-ck-hoverPreview-video-notExisting' => 'Este video no existe!',
-	'rte-ck-image-add' => 'Agregar una imagen',
+	'rte-ck-hoverPreview-media-notExisting' => '¡Esta imagen o archivo no existe!',
+	'rte-ck-hoverPreview-template-intro' => 'Esto es una plantilla.',
+	'rte-ck-hoverPreview-template-notExisting' => '¡Esta plantilla no existe!',
+	'rte-ck-hoverPreview-video-notExisting' => '¡Este vídeo no existe!',
+	'rte-ck-image-add' => 'Añadir una imagen',
 	'rte-ck-image-photo' => 'Imagen',
-	'rte-ck-image-confirmDelete' => '¿Estás seguro de que deseas quitar la imagen de esta página?',
-	'rte-ck-image-confirmDeleteTitle' => '¿Quitar esta imagen?',
+	'rte-ck-image-confirmDelete' => '¿Estás seguro que quieres borrar la imagen de esta página?',
+	'rte-ck-image-confirmDeleteTitle' => '¿Borrar esta imagen?',
 	'rte-ck-imagePlaceholder-confirmDelete' => '¿Estás seguro de que deseas quitar el marcador de posición de la imagen de esta página?',
 	'rte-ck-imagePlaceholder-confirmDeleteTitle' => '¿Quitar este marcador de posición de imagen?',
-	'rte-ck-imagePlaceholder-tooltip' => 'Este es un marcador de posición de imagen.',
-	'rte-ck-justify-center' => 'Alineación central',
+	'rte-ck-imagePlaceholder-tooltip' => 'Un marcador de posición de imagen. ¡Haz click para editar!',
+	'rte-ck-justify-center' => 'Justificar al centro',
 	'rte-ck-link-add' => 'Añadir enlace',
-	'rte-ck-link-error-badPageTitle' => 'Escribe un título para la página.',
-	'rte-ck-link-error-badUrl' => 'No reconocemos este URL - por favor verifica si es correcto.',
+	'rte-ck-link-error-badPageTitle' => 'Por favor, ingresa un título de página.',
+	'rte-ck-link-error-badUrl' => 'No reconocemos esa URL - por favor, revísala si está correcta.',
 	'rte-ck-link-error-title' => 'Error',
 	'rte-ck-link-external-linkText' => 'Texto del enlace',
-	'rte-ck-link-external-numberedLink' => 'Crer un vínculo numerdo (por ejemplo, "[1]")',
+	'rte-ck-link-external-numberedLink' => 'Crear un enlace numerado (por ejemplo, "[1]")',
 	'rte-ck-link-external-tab' => 'Enlace externo',
-	'rte-ck-link-external-url' => 'URL',
-	'rte-ck-link-internal-linkText' => 'Texto del enlace',
-	'rte-ck-link-internal-pageName' => 'Nombre de página',
+	'rte-ck-link-external-url' => 'Url',
+	'rte-ck-link-internal-linkText' => 'Enlace de texto',
+	'rte-ck-link-internal-pageName' => 'Nombre de la página',
 	'rte-ck-link-internal-tab' => 'Enlace interno',
-	'rte-ck-link-title' => 'Crear o editar un enlace',
+	'rte-ck-link-title' => 'Enlace de propiedades',
 	'rte-ck-link-label-target' => 'Página objetivo o URL',
 	'rte-ck-link-label-display' => 'Texto para mostrar',
 	'rte-ck-link-label-internal' => 'Para una página wiki',
@@ -1058,10 +959,10 @@ $messages['es'] = array(
 	'rte-ck-link-status-exists' => 'Página existente',
 	'rte-ck-link-status-notexists' => 'Página no existente',
 	'rte-ck-link-status-external' => 'Enlace externo',
-	'rte-ck-media-delete' => 'quitar',
+	'rte-ck-media-delete' => 'borrar',
 	'rte-ck-media-edit' => 'modificar',
 	'rte-ck-modeSwitch-toSource' => 'Modo fuente',
-	'rte-ck-modeSwitch-toWysiwyg' => 'Modo visual',
+	'rte-ck-modeSwitch-toWysiwyg' => 'Cambiar a modo visual',
 	'rte-ck-modeSwitch-toSourceTooltip' => 'Modo fuente',
 	'rte-ck-modeSwitch-toWysiwygTooltip' => 'Modo visual',
 	'rte-ck-modeSwitch-error' => 'Ha ocurrido un error al cambiar de modo. Por favor, inténtalo otra vez.',
@@ -1076,57 +977,54 @@ $messages['es'] = array(
 	'rte-ck-photoGallery-tooltip' => 'Esta es una galería.',
 	'rte-ck-photoGallery-tooltipSlideshow' => 'Esta es una diapositiva.',
 	'rte-ck-photoGallery-tooltipSlider' => 'Esto es un slider.',
-	'rte-ck-signature-add' => 'Agregar tu firma',
+	'rte-ck-signature-add' => 'Añade tu firma',
 	'rte-ck-signature-label' => 'Firma',
 	'rte-ck-table-alignNotSet' => 'No establecido',
-	'rte-ck-table-invalidCols' => 'El número de columnas debe ser un número mayor de 0.',
-	'rte-ck-table-invalidRows' => 'El número de filas debe ser un número mayor de 0.',
+	'rte-ck-table-invalidCols' => 'El número de columnas debe ser superior a 0.',
+	'rte-ck-table-invalidRows' => 'El número de filas debe ser superior a 0.',
 	'rte-ck-table-toolbarTooltip' => 'Añadir una tabla',
 	'rte-ck-templateDropDown-chooseAnotherTpl' => 'Otra plantilla / palabra mágica',
 	'rte-ck-templateDropDown-showUsedList' => 'Mostrar lista de plantillas usadas',
 	'rte-ck-templateDropDown-makeLayout' => 'Crear un diseño desde esta página',
 	'rte-ck-templateDropDown-label' => 'Plantilla',
-	'rte-ck-templateDropDown-title' => 'Escoger una plantilla',
-	'rte-ck-templateEditor-dialog-browse' => 'Buscar una plantilla',
+	'rte-ck-templateDropDown-title' => 'Escoge una plantilla',
+	'rte-ck-templateEditor-dialog-browse' => 'Navegar por una plantilla',
 	'rte-ck-templateEditor-dialog-insert' => 'Insertar',
 	'rte-ck-templateEditor-dialog-magicWords' => 'Palabras mágicas',
-	'rte-ck-templateEditor-dialog-magicWordsLink' => 'Help:Palabras mágicas',
-	'rte-ck-templateEditor-dialog-mostFrequentlyUsed' => 'De uso más frecuente',
-	'rte-ck-templateEditor-dialog-search' => 'Buscar una plantilla',
-	'rte-ck-templateEditor-editor-chooseAnotherTpl' => 'Escoger otra plantilla',
-	'rte-ck-templateEditor-editor-intro' => 'Cambia los valores de la izquierda y pulsa para previsualizar. Cuando hayas terminado de editar, pulsa en «Aceptar».',
+	'rte-ck-templateEditor-dialog-magicWordsLink' => 'Ayuda:Palabras mágicas',
+	'rte-ck-templateEditor-dialog-mostFrequentlyUsed' => 'Más usadas frecuentemente',
+	'rte-ck-templateEditor-dialog-search' => 'Búsqueda de una plantilla',
+	'rte-ck-templateEditor-editor-chooseAnotherTpl' => 'Escoge otra plantilla',
+	'rte-ck-templateEditor-editor-intro' => 'Cambia los valores de la izquierda y haz click en vista previa. Cuando hayas terminado de editar, haz click en "Aceptar".',
 	'rte-ck-templateEditor-editor-parameters' => 'Parámetros',
-	'rte-ck-templateEditor-editor-previewButton' => 'Vista previa',
-	'rte-ck-templateEditor-editor-previewTitle' => 'Vista previa',
-	'rte-ck-templateEditor-editor-viewTemplate' => '(ver página de plantilla - abre una nueva ventana)',
+	'rte-ck-templateEditor-editor-previewButton' => 'Previsualizar',
+	'rte-ck-templateEditor-editor-previewTitle' => 'Previsualizar',
+	'rte-ck-templateEditor-editor-viewTemplate' => '(ver página de la plantilla - abre en una ventana nueva)',
 	'rte-ck-templateEditor-usedTemplates-title' => 'Lista de plantillas usadas',
-	'rte-ck-templateEditor-title' => 'Editor de plantilla',
-	'rte-ck-unlink' => 'Quitar vínculo',
-	'rte-ck-video-add' => 'Agregar un video',
+	'rte-ck-templateEditor-title' => 'Editor de plantillas',
+	'rte-ck-unlink' => 'Eliminar enlace',
+	'rte-ck-video-add' => 'Añadir un vídeo',
 	'rte-ck-video-video' => 'Vídeo',
 	'rte-ck-video-confirmDelete' => '¿Estás seguro de que deseas quitar el video de esta página?',
 	'rte-ck-video-confirmDeleteTitle' => '¿Quitar este vídeo?',
 	'rte-ck-videoPlaceholder-confirmDelete' => '¿Estas seguro de que deseas quitar el marcador de posición de video de esta página?',
 	'rte-ck-videoPlaceholder-confirmDeleteTitle' => '¿Quitar este marcador de posición de vídeo?',
-	'rte-ck-videoPlaceholder-tooltip' => 'Este es un marcador de posición de video.',
+	'rte-ck-videoPlaceholder-tooltip' => 'Un marcador de posición de vídeo. ¡Haz click para editar!',
 	'rte-ck-mut-add' => 'Añadir un vídeo (beta)',
 	'rte-ck-mut-mut' => 'Vídeo (beta)',
-	'rte-ck-widescreen-toggle' => 'Activar o desactivar pantalla panorámica',
+	'rte-ck-widescreen-toggle' => 'Cambiar pantalla ancha',
 	'rte-ck-spellchecker-moreSuggestions' => 'Más sugerencias',
 	'rte-ck-pasteText-title' => 'Pegar el texto',
-	'rte-ck-clipboard-pasteMsg' => "Por razones de seguridad, el editor no puede acceder directamente a tu texto. Por favor pégalo en la caja de abajo usando las abreviaturas del teclado (Ctrl/Cmd + V) y haz clic en 'Ok'.<br /><br />Nota: se eliminará el formato a tu texto para evitar que se cree wikitexto complejo.",
-	'rte-ck-format-tag_p' => 'Texto normal',
-	'rte-ck-format-tag_pre' => 'Código (texto preformateado)',
-	'rte-ck-format-tag_h2' => 'Encabezado 2',
-	'rte-ck-format-tag_h3' => 'Encabezado 3',
-	'rte-ck-format-tag_h4' => 'Encabezado 4',
-	'rte-ck-format-tag_h5' => 'Encabezado 5',
-);
+	'rte-ck-clipboard-pasteMsg' => 'Puedes utilizar el ratón para pegar texto en el cuadro siguiente, o usar en el teclado (\'\'\'Ctrl + V\'\'\') para pegar aquí o en la ventana principal de edición.',
+	'rte-ck-format-tag_p' => 'Normal',
+	'rte-ck-format-tag_pre' => 'Formateado',
+	'rte-ck-format-tag_h2' => 'Sección de encabezado 2',
+	'rte-ck-format-tag_h3' => 'Sección de encabezado 3',
+	'rte-ck-format-tag_h4' => 'Sección de encabezado 4',
+	'rte-ck-format-tag_h5' => 'Sección de encabezado 5',
+];
 
-/** Basque (euskara)
- * @author Subi
- */
-$messages['eu'] = array(
+$messages['eu'] = [
 	'rte-ck-photoGallery-gallery' => 'Galeria',
 	'rte-ck-signature-label' => 'sinadura',
 	'rte-ck-table-alignNotSet' => 'Ezarri gabe',
@@ -1137,13 +1035,9 @@ $messages['eu'] = array(
 	'rte-ck-video-add' => 'Bideo bat gehitu',
 	'rte-ck-video-video' => 'Bideoa',
 	'rte-ck-video-confirmDeleteTitle' => 'Bideo hau ezabatu?',
-);
+];
 
-/** Persian (فارسی)
- * @author Movyn
- * @author Reza1615
- */
-$messages['fa'] = array(
+$messages['fa'] = [
 	'rte-ck-bucket-insert' => 'درج',
 	'rte-ck-bucket-controls' => 'تنظیمات',
 	'rte-ck-errorPopupTitle' => 'خطا!',
@@ -1177,52 +1071,45 @@ $messages['fa'] = array(
 	'rte-ck-format-tag_h3' => 'سرعنوان ۳',
 	'rte-ck-format-tag_h4' => 'سرعنوان ۴',
 	'rte-ck-format-tag_h5' => 'سرعنوان ۵',
-);
+];
 
-/** Finnish (suomi)
- * @author Centerlink
- * @author Nedergard
- * @author Nike
- * @author Tofu II
- * @author Ville96
- */
-$messages['fi'] = array(
+$messages['fi'] = [
 	'rte-ck-bucket-textAppearance' => 'Tekstin ulkonäkö',
 	'rte-ck-bucket-insert' => 'Lisää',
 	'rte-ck-bucket-controls' => 'Ohjaimet',
-	'rte-ck-commentEditor-title' => 'Kommenttimuokkain',
+	'rte-ck-commentEditor-title' => 'Kommentti editori',
 	'rte-ck-errorPopupTitle' => 'Virhe!',
-	'rte-ck-hoverPreview-codedElement-intro' => 'Vaihda lähdetilaan muokataksesi!',
+	'rte-ck-hoverPreview-codedElement-intro' => 'Vaihda lähde moodiin muokataksesi!',
 	'rte-ck-hoverPreview-codedElement-title' => 'Koodattu elementti',
-	'rte-ck-hoverPreview-comment-intro' => 'Tämä on nähtävissä vain muokkauksen aikana.',
+	'rte-ck-hoverPreview-comment-intro' => 'Tämän pystyy näkemään vain muokatessa',
 	'rte-ck-hoverPreview-comment-title' => 'Kommentti',
-	'rte-ck-hoverPreview-confirmDelete' => 'Haluatko varmasti poistaa tämän tältä sivulta?',
+	'rte-ck-hoverPreview-confirmDelete' => 'Haluatko varmasti poistaa tämän tästä sivusta?',
 	'rte-ck-hoverPreview-delete' => 'poista',
 	'rte-ck-hoverPreview-edit' => 'muokkaa',
-	'rte-ck-hoverPreview-media-notExisting' => 'Tätä kuvaa tai tiedostoa ei ole olemassa!',
-	'rte-ck-hoverPreview-template-intro' => 'Tämä on malline.',
-	'rte-ck-hoverPreview-template-notExisting' => 'Tätä mallinetta ei ole olemassa!',
-	'rte-ck-hoverPreview-video-notExisting' => 'Tätä videota ei ole olemassa!',
+	'rte-ck-hoverPreview-media-notExisting' => 'Kuvaa tai tiedostoa ei ole olemassa.',
+	'rte-ck-hoverPreview-template-intro' => 'Tämä on malline',
+	'rte-ck-hoverPreview-template-notExisting' => 'Tämä mallinetta ei ole olemassa.',
+	'rte-ck-hoverPreview-video-notExisting' => 'Tätä videota ei ole olemassa',
 	'rte-ck-image-add' => 'Lisää kuva',
 	'rte-ck-image-photo' => 'Kuva',
 	'rte-ck-image-confirmDelete' => 'Haluatko varmasti poistaa kuvan tältä sivulta?',
 	'rte-ck-image-confirmDeleteTitle' => 'Poistetaanko tämä kuva?',
 	'rte-ck-imagePlaceholder-confirmDelete' => 'Haluatko varmasti poistaa kuvan paikkamerkin tältä sivulta?',
 	'rte-ck-imagePlaceholder-confirmDeleteTitle' => 'Poistetaanko tämä kuvan paikkamerkki?',
-	'rte-ck-imagePlaceholder-tooltip' => 'Tämä on kuvan paikkamerkki.',
+	'rte-ck-imagePlaceholder-tooltip' => 'Tämä on kuvan paikanpitäjä.',
 	'rte-ck-justify-center' => 'Keskitä',
 	'rte-ck-link-add' => 'Lisää linkki',
-	'rte-ck-link-error-badPageTitle' => 'Kirjoita sivun otsikko.',
-	'rte-ck-link-error-badUrl' => 'Emme tunnista URL:lää - tarkista että se on oikein.',
+	'rte-ck-link-error-badPageTitle' => 'Ole hyvä ja lisää sivun otsikko.',
+	'rte-ck-link-error-badUrl' => 'Me emme tunnista tätä URL:ää - tarkista onko se oikeinkirjoitettu.',
 	'rte-ck-link-error-title' => 'Virhe',
 	'rte-ck-link-external-linkText' => 'Linkin teksti',
-	'rte-ck-link-external-numberedLink' => 'Luo numeroitu linkki (esimerkiksi "[1]")',
+	'rte-ck-link-external-numberedLink' => 'Luo numeroitu linkki (Esimerkiksi, "[1]")',
 	'rte-ck-link-external-tab' => 'Ulkoinen linkki',
 	'rte-ck-link-external-url' => 'URL',
 	'rte-ck-link-internal-linkText' => 'Linkin teksti',
 	'rte-ck-link-internal-pageName' => 'Sivun nimi',
 	'rte-ck-link-internal-tab' => 'Sisäinen linkki',
-	'rte-ck-link-title' => 'Luo tai muokkaa linkkiä',
+	'rte-ck-link-title' => 'Linkin asetukset',
 	'rte-ck-link-label-target' => 'Kohdesivu tai URL:',
 	'rte-ck-link-label-display' => 'Näytettävä teksti:',
 	'rte-ck-link-label-internal' => 'Wikisivuun',
@@ -1251,29 +1138,29 @@ $messages['fi'] = array(
 	'rte-ck-photoGallery-tooltipSlider' => 'Tämä on liukusäädin.',
 	'rte-ck-signature-add' => 'Lisää allekirjoituksesi',
 	'rte-ck-signature-label' => 'allekirjoitus',
-	'rte-ck-table-alignNotSet' => 'Ei asetettu',
+	'rte-ck-table-alignNotSet' => 'ei asetettu',
 	'rte-ck-table-invalidCols' => 'Sarakkeiden määrän on oltava suurempi kuin 0.',
 	'rte-ck-table-invalidRows' => 'Rivien määrän on oltava suurempi kuin 0.',
 	'rte-ck-table-toolbarTooltip' => 'Lisää taulukko',
-	'rte-ck-templateDropDown-chooseAnotherTpl' => 'Muu malline tai taikasana',
+	'rte-ck-templateDropDown-chooseAnotherTpl' => 'Muu malline / taikasana',
 	'rte-ck-templateDropDown-showUsedList' => 'Näytä luettelo käytetyistä mallineista',
 	'rte-ck-templateDropDown-makeLayout' => 'Tee asettelu tästä sivusta',
 	'rte-ck-templateDropDown-label' => 'Malline',
 	'rte-ck-templateDropDown-title' => 'Valitse malline',
-	'rte-ck-templateEditor-dialog-browse' => 'Selaa mallineita',
+	'rte-ck-templateEditor-dialog-browse' => 'Selaa mallinetta',
 	'rte-ck-templateEditor-dialog-insert' => 'Lisää',
 	'rte-ck-templateEditor-dialog-magicWords' => 'Taikasanat',
-	'rte-ck-templateEditor-dialog-magicWordsLink' => 'Help:Taikasanat',
-	'rte-ck-templateEditor-dialog-mostFrequentlyUsed' => 'Useimmin käytetyt',
+	'rte-ck-templateEditor-dialog-magicWordsLink' => 'Ohje:Taikasanat',
+	'rte-ck-templateEditor-dialog-mostFrequentlyUsed' => 'Useimmin käytetty',
 	'rte-ck-templateEditor-dialog-search' => 'Etsi mallinetta',
-	'rte-ck-templateEditor-editor-chooseAnotherTpl' => 'Valitse toinen malline',
-	'rte-ck-templateEditor-editor-intro' => 'Muuttaa arvot vasemmalla ja valitse Esikatselu. Kun muokkaus on valmis, valitse "OK".',
-	'rte-ck-templateEditor-editor-parameters' => 'Parametrit',
-	'rte-ck-templateEditor-editor-previewButton' => 'Esikatselu',
+	'rte-ck-templateEditor-editor-chooseAnotherTpl' => 'Valitse eri malline',
+	'rte-ck-templateEditor-editor-intro' => 'Vaihda arvot vasemmalta ja klikkaa esikatsele. Kun olet lopettanut muokkaamisen klikkaa "OK".',
+	'rte-ck-templateEditor-editor-parameters' => 'Parametri',
+	'rte-ck-templateEditor-editor-previewButton' => 'Esikatsele',
 	'rte-ck-templateEditor-editor-previewTitle' => 'Esikatselu',
-	'rte-ck-templateEditor-editor-viewTemplate' => '(näytä mallinesivu - avautuu uuteen ikkunaan)',
+	'rte-ck-templateEditor-editor-viewTemplate' => '(katso malline sivua - avautuu uuteen ikkunaan)',
 	'rte-ck-templateEditor-usedTemplates-title' => 'Käytettyjen mallineiden luettelo',
-	'rte-ck-templateEditor-title' => 'Mallinemuokkain',
+	'rte-ck-templateEditor-title' => 'Malline muokkain',
 	'rte-ck-unlink' => 'Poista linkki',
 	'rte-ck-video-add' => 'Lisää video',
 	'rte-ck-video-video' => 'Video',
@@ -1281,32 +1168,22 @@ $messages['fi'] = array(
 	'rte-ck-video-confirmDeleteTitle' => 'Poistetaanko tämä video?',
 	'rte-ck-videoPlaceholder-confirmDelete' => 'Haluatko varmasti poistaa videon paikkamerkin tältä sivulta?',
 	'rte-ck-videoPlaceholder-confirmDeleteTitle' => 'Poistetaanko tämä videon paikkamerkki?',
-	'rte-ck-videoPlaceholder-tooltip' => 'Tämä on videon paikkamerkki.',
+	'rte-ck-videoPlaceholder-tooltip' => 'Tämä on videon paikanpitäjä.',
 	'rte-ck-mut-add' => 'Lisää video (beta)',
 	'rte-ck-mut-mut' => 'Video (beta)',
 	'rte-ck-widescreen-toggle' => 'Vaihda laajakuvaan',
 	'rte-ck-spellchecker-moreSuggestions' => 'Lisää ehdostuksia',
 	'rte-ck-pasteText-title' => 'Liitä teksti',
-	'rte-ck-clipboard-pasteMsg' => "Turvallisuussyistä leikepöytää ei voi käyttää suoraan. Liitä teksti alla olevaan laatikkoon pikanäppäimillä (Ctrl/Cmd+V) ja paina 'OK'.<br /><br />Huomautus: tekstistä poistetaan muotoilut, jotta sivulle ei luotaisi monimutkaista wikikoodia.",
+	'rte-ck-clipboard-pasteMsg' => 'Voit myös kayttää hiirtäsi liittämään tekstiä avautuvasta laatikosta, tai käytä näppäimistön (<STRONG>Ctrl+V</STRONG>) liittämään tähän tai päämuokkaus ikkunaan.',
 	'rte-ck-format-tag_p' => 'Normaali teksti',
 	'rte-ck-format-tag_pre' => 'Koodi (esimuotoiltu teksti)',
 	'rte-ck-format-tag_h2' => 'Otsikko 2',
 	'rte-ck-format-tag_h3' => 'Otsikko 3',
 	'rte-ck-format-tag_h4' => 'Otsikko 4',
 	'rte-ck-format-tag_h5' => 'Otsikko 5',
-);
+];
 
-/** French (français)
- * @author Gomoko
- * @author IAlex
- * @author Iluvalar
- * @author JonathanBoyer
- * @author Peter17
- * @author Slamduck
- * @author Wyz
- * @author Y-M D
- */
-$messages['fr'] = array(
+$messages['fr'] = [
 	'rte-ck-bucket-textAppearance' => 'Apparence du texte',
 	'rte-ck-bucket-insert' => 'Insérer',
 	'rte-ck-bucket-controls' => 'Contrôles',
@@ -1319,13 +1196,13 @@ $messages['fr'] = array(
 	'rte-ck-hoverPreview-confirmDelete' => 'Souhaitez-vous vraiment supprimer cet élément de cette page ?',
 	'rte-ck-hoverPreview-delete' => 'supprimer',
 	'rte-ck-hoverPreview-edit' => 'modifier',
-	'rte-ck-hoverPreview-media-notExisting' => "Cette image ou ce fichier n'existe pas !",
+	'rte-ck-hoverPreview-media-notExisting' => 'Cette image ou ce fichier n\'existe pas !',
 	'rte-ck-hoverPreview-template-intro' => 'Ceci est un modèle.',
-	'rte-ck-hoverPreview-template-notExisting' => "Ce modèle n'existe pas !",
-	'rte-ck-hoverPreview-video-notExisting' => "Cette vidéo n'existe pas !",
+	'rte-ck-hoverPreview-template-notExisting' => 'Ce modèle n\'existe pas !',
+	'rte-ck-hoverPreview-video-notExisting' => 'Cette vidéo n\'existe pas !',
 	'rte-ck-image-add' => 'Ajouter une image',
 	'rte-ck-image-photo' => 'Image',
-	'rte-ck-image-confirmDelete' => "Souhaitez-vous vraiment supprimer l'image de cette page ?",
+	'rte-ck-image-confirmDelete' => 'Souhaitez-vous vraiment supprimer l\'image de cette page ?',
 	'rte-ck-image-confirmDeleteTitle' => 'Souhaitez-vous vraiment supprimer cette image ?',
 	'rte-ck-imagePlaceholder-confirmDelete' => 'Souhaitez-vous vraiment supprimer de cette page cet espace réservé pour une image ?',
 	'rte-ck-imagePlaceholder-confirmDeleteTitle' => 'Supprimer cet espace réservé pour une image ?',
@@ -1333,7 +1210,7 @@ $messages['fr'] = array(
 	'rte-ck-justify-center' => 'Centrer',
 	'rte-ck-link-add' => 'Ajouter un lien',
 	'rte-ck-link-error-badPageTitle' => 'Veuillez entrer un titre de page.',
-	'rte-ck-link-error-badUrl' => "Nous ne reconnaissons pas cette URL - veuillez vérifier qu'elle est correcte.",
+	'rte-ck-link-error-badUrl' => 'Nous ne reconnaissons pas cette URL - veuillez vérifier qu\'elle est correcte.',
 	'rte-ck-link-error-title' => 'Erreur',
 	'rte-ck-link-external-linkText' => 'Texte du lien',
 	'rte-ck-link-external-numberedLink' => 'Créer un lien numéroté (par exemple « [1] »)',
@@ -1347,9 +1224,9 @@ $messages['fr'] = array(
 	'rte-ck-link-label-display' => 'Texte du lien',
 	'rte-ck-link-label-internal' => 'Vers une page du wiki',
 	'rte-ck-link-label-external' => 'Vers un lien externe',
-	'rte-ck-link-status-checking' => "Vérification de l'état",
+	'rte-ck-link-status-checking' => 'Vérification de l\'état',
 	'rte-ck-link-status-exists' => 'La page existe',
-	'rte-ck-link-status-notexists' => "La page n'existe pas",
+	'rte-ck-link-status-notexists' => 'La page n\'existe pas',
 	'rte-ck-link-status-external' => 'Lien externe',
 	'rte-ck-media-delete' => 'supprimer',
 	'rte-ck-media-edit' => 'modifier',
@@ -1414,12 +1291,9 @@ $messages['fr'] = array(
 	'rte-ck-format-tag_h3' => 'Titre 3',
 	'rte-ck-format-tag_h4' => 'Titre 4',
 	'rte-ck-format-tag_h5' => 'Titre 5',
-);
+];
 
-/** Western Frisian (Frysk)
- * @author Robin0van0der0vliet
- */
-$messages['fy'] = array(
+$messages['fy'] = [
 	'rte-ck-errorPopupTitle' => 'Flater!',
 	'rte-ck-hoverPreview-delete' => 'fuortsmite',
 	'rte-ck-hoverPreview-edit' => 'bewurkje',
@@ -1430,12 +1304,9 @@ $messages['fy'] = array(
 	'rte-ck-templateEditor-editor-previewButton' => 'Proefbyld',
 	'rte-ck-templateEditor-editor-previewTitle' => 'Proefbyld',
 	'rte-ck-video-video' => 'Fideo',
-);
+];
 
-/** Galician (galego)
- * @author Toliño
- */
-$messages['gl'] = array(
+$messages['gl'] = [
 	'rte-ck-bucket-textAppearance' => 'Aparencia do texto',
 	'rte-ck-bucket-insert' => 'Inserir',
 	'rte-ck-bucket-controls' => 'Controis',
@@ -1543,13 +1414,9 @@ $messages['gl'] = array(
 	'rte-ck-format-tag_h3' => 'Cabeceira 3',
 	'rte-ck-format-tag_h4' => 'Cabeceira 4',
 	'rte-ck-format-tag_h5' => 'Cabeceira 5',
-);
+];
 
-/** Hungarian (magyar)
- * @author Dani
- * @author TK-999
- */
-$messages['hu'] = array(
+$messages['hu'] = [
 	'rte-ck-bucket-textAppearance' => 'Szöveg megjelenése',
 	'rte-ck-bucket-insert' => 'Beszúrás',
 	'rte-ck-bucket-controls' => 'Menüsor',
@@ -1656,19 +1523,13 @@ $messages['hu'] = array(
 	'rte-ck-format-tag_h3' => 'Címsor 3',
 	'rte-ck-format-tag_h4' => 'Címsor 4',
 	'rte-ck-format-tag_h5' => 'Címsor 5',
-);
+];
 
-/** Armenian (Հայերեն)
- * @author Vadgt
- */
-$messages['hy'] = array(
+$messages['hy'] = [
 	'rte-ck-link-add' => 'Ստեղծել հղումը',
-);
+];
 
-/** Interlingua (interlingua)
- * @author McDutchie
- */
-$messages['ia'] = array(
+$messages['ia'] = [
 	'rte-ck-bucket-textAppearance' => 'Apparentia del texto',
 	'rte-ck-bucket-insert' => 'Inserer',
 	'rte-ck-bucket-controls' => 'Controlos',
@@ -1768,28 +1629,20 @@ $messages['ia'] = array(
 	'rte-ck-widescreen-toggle' => 'Alternar schermo large',
 	'rte-ck-spellchecker-moreSuggestions' => 'Plus suggestiones',
 	'rte-ck-pasteText-title' => 'Colla tu texto',
-	'rte-ck-clipboard-pasteMsg' => "Pro motivos de securitate, le editor non pote acceder a tu texto collate directemente. Per favor colla in le quadro hic infra usante le combinationes de claviero (Ctrl/Cmd+V) e preme 'OK'.<br /><br />Nota: le texto essera disfacite de tote formatation pro evitar le creation de wikitexto complexe.",
+	'rte-ck-clipboard-pasteMsg' => 'Pro motivos de securitate, le editor non pote acceder a tu texto collate directemente. Per favor colla in le quadro hic infra usante le combinationes de claviero (Ctrl/Cmd+V) e preme \'OK\'.<br /><br />Nota: le texto essera disfacite de tote formatation pro evitar le creation de wikitexto complexe.',
 	'rte-ck-format-tag_p' => 'Texto normal',
 	'rte-ck-format-tag_pre' => 'Codice (texto preformatate)',
 	'rte-ck-format-tag_h2' => 'Titulo 2',
 	'rte-ck-format-tag_h3' => 'Titulo 3',
 	'rte-ck-format-tag_h4' => 'Titulo 4',
 	'rte-ck-format-tag_h5' => 'Titulo 5',
-);
+];
 
-/** Ingush (ГӀалгӀай)
- * @author Sapral Mikail
- */
-$messages['inh'] = array(
+$messages['inh'] = [
 	'rte-ck-link-error-title' => 'Г|алат',
-);
+];
 
-/** Italian (italiano)
- * @author Beta16
- * @author Lexaeus 94
- * @author Minerva Titani
- */
-$messages['it'] = array(
+$messages['it'] = [
 	'rte-ck-image-photo' => 'Foto',
 	'rte-ck-justify-center' => 'Allinea al centro',
 	'rte-ck-link-add' => 'Aggiungi collegamento',
@@ -1814,11 +1667,11 @@ $messages['it'] = array(
 	'rte-ck-link-status-external' => 'Collegamento esterno',
 	'rte-ck-media-delete' => 'rimuovi',
 	'rte-ck-media-edit' => 'modifica',
-	'rte-ck-modeSwitch-toSource' => 'Codice sorgente',
-	'rte-ck-modeSwitch-toWysiwyg' => 'Visuale',
+	'rte-ck-modeSwitch-toSource' => 'Modalità codice sorgente',
+	'rte-ck-modeSwitch-toWysiwyg' => 'Modalità visuale',
 	'rte-ck-modeSwitch-toSourceTooltip' => 'Passa alla modalità codice sorgente',
 	'rte-ck-modeSwitch-toWysiwygTooltip' => 'Passa alla modalità visuale',
-	'rte-ck-modeSwitch-error' => 'Si è verificato un errore durante il cambio di modalità. Per favore riprovare.',
+	'rte-ck-modeSwitch-error' => 'Si è verificato un errore durante il cambio di modalità. Per favore riprova.',
 	'rte-ck-photoGallery-gallery' => 'Galleria',
 	'rte-ck-photoGallery-slideshow' => 'Slideshow',
 	'rte-ck-photoGallery-slider' => 'Slider',
@@ -1829,14 +1682,14 @@ $messages['it'] = array(
 	'rte-ck-photoGallery-confirmDeleteTitle' => 'Rimuovere questa galleria?',
 	'rte-ck-photoGallery-tooltip' => 'Questa è una galleria',
 	'rte-ck-photoGallery-tooltipSlideshow' => 'Questo è uno slideshow',
-	'rte-ck-signature-add' => 'Aggiungi la tua firma',
-	'rte-ck-signature-label' => 'firma',
+	'rte-ck-signature-add' => 'Inserisci la tua firma',
+	'rte-ck-signature-label' => 'Firma',
 	'rte-ck-table-alignNotSet' => 'Non impostato',
-	'rte-ck-table-invalidCols' => "Il numero di colonne dev'essere superiore a 0.",
-	'rte-ck-table-invalidRows' => "Il numero di righe dev'essere superiore a 0.",
+	'rte-ck-table-invalidCols' => 'Il numero di colonne dev\'essere superiore a 0.',
+	'rte-ck-table-invalidRows' => 'Il numero di righe dev\'essere superiore a 0.',
 	'rte-ck-table-toolbarTooltip' => 'Aggiungi tabella',
 	'rte-ck-templateDropDown-chooseAnotherTpl' => 'Altro template / parola magica',
-	'rte-ck-templateDropDown-showUsedList' => "Visualizza l'elenco dei template utilizzati",
+	'rte-ck-templateDropDown-showUsedList' => 'Visualizza l\'elenco dei template utilizzati',
 	'rte-ck-templateDropDown-makeLayout' => 'Fai un layout da questa pagina',
 	'rte-ck-templateDropDown-label' => 'Template',
 	'rte-ck-templateDropDown-title' => 'Scegli un template',
@@ -1844,7 +1697,7 @@ $messages['it'] = array(
 	'rte-ck-templateEditor-dialog-magicWords' => 'Parole magiche',
 	'rte-ck-templateEditor-dialog-magicWordsLink' => 'Help:Magic words',
 	'rte-ck-templateEditor-dialog-mostFrequentlyUsed' => 'Usati di più',
-	'rte-ck-templateEditor-dialog-search' => 'Ricerca di un template',
+	'rte-ck-templateEditor-dialog-search' => 'Cerca un template',
 	'rte-ck-templateEditor-editor-chooseAnotherTpl' => 'Scegli un altro template',
 	'rte-ck-templateEditor-editor-intro' => 'Cambia i valori a sinistra e clicca sull\'anteprima. Al termine della modifica, clicca su "OK".',
 	'rte-ck-templateEditor-editor-parameters' => 'Parametri',
@@ -1856,14 +1709,16 @@ $messages['it'] = array(
 	'rte-ck-format-tag_h3' => 'Titolo 3',
 	'rte-ck-format-tag_h4' => 'Titolo 4',
 	'rte-ck-format-tag_h5' => 'Titolo 5',
-);
+	'rte-ck-bucket-controls' => 'Controlli',
+	'rte-ck-bucket-insert' => 'Inserisci',
+	'rte-ck-bucket-textAppearance' => 'Aspetto del testo',
+	'rte-ck-hoverPreview-codedElement-intro' => 'Per favore passa alla modalità codice sorgente per modificare!',
+	'rte-ck-spellchecker-moreSuggestions' => 'Altri suggerimenti',
+	'rte-ck-templateEditor-editor-viewTemplate' => '(vedi la pagina del template - apre una nuova finestra)',
+	'rte-ck-templateEditor-title' => 'Editor di Template',
+];
 
-/** Japanese (日本語)
- * @author Plover-Y
- * @author Shirayuki
- * @author Tommy6
- */
-$messages['ja'] = array(
+$messages['ja'] = [
 	'rte-ck-bucket-textAppearance' => '書式',
 	'rte-ck-bucket-insert' => '挿入',
 	'rte-ck-bucket-controls' => '操作',
@@ -1909,8 +1764,8 @@ $messages['ja'] = array(
 	'rte-ck-link-status-external' => '外部リンク',
 	'rte-ck-media-delete' => '削除',
 	'rte-ck-media-edit' => '編集',
-	'rte-ck-modeSwitch-toSource' => 'ソース',
-	'rte-ck-modeSwitch-toWysiwyg' => 'ビジュアル',
+	'rte-ck-modeSwitch-toSource' => 'ソースモード',
+	'rte-ck-modeSwitch-toWysiwyg' => 'ビジュアルモード',
 	'rte-ck-modeSwitch-toSourceTooltip' => 'ソースモードに切り替え',
 	'rte-ck-modeSwitch-toWysiwygTooltip' => 'ビジュアルモードに切り替え',
 	'rte-ck-photoGallery-gallery' => 'ギャラリー',
@@ -1921,17 +1776,17 @@ $messages['ja'] = array(
 	'rte-ck-photoGallery-addSlider' => 'スライダを追加',
 	'rte-ck-photoGallery-confirmDelete' => '本当にページからギャラリーを削除しますか？',
 	'rte-ck-photoGallery-confirmDeleteTitle' => 'ギャラリーを削除しますか？',
-	'rte-ck-photoGallery-tooltip' => 'これはギャラリーです。',
-	'rte-ck-photoGallery-tooltipSlideshow' => 'これはスライドショーです。',
+	'rte-ck-photoGallery-tooltip' => 'これはギャラリーです',
+	'rte-ck-photoGallery-tooltipSlideshow' => 'これはスライドショーです',
 	'rte-ck-signature-add' => '署名の追加',
 	'rte-ck-signature-label' => '署名',
 	'rte-ck-table-invalidCols' => '列は0より大きな数値で入力してください。',
 	'rte-ck-table-invalidRows' => '行は0より大きな数値で入力してください。',
-	'rte-ck-templateDropDown-chooseAnotherTpl' => '他のテンプレート/マジックワード',
+	'rte-ck-templateDropDown-chooseAnotherTpl' => '他のテンプレート / マジックワード',
 	'rte-ck-templateDropDown-showUsedList' => '使用しているテンプレートの一覧を表示',
 	'rte-ck-templateDropDown-makeLayout' => 'このページからレイアウトを作成',
 	'rte-ck-templateDropDown-label' => 'テンプレート',
-	'rte-ck-templateDropDown-title' => 'テンプレートを選択',
+	'rte-ck-templateDropDown-title' => 'テンプレートの選択',
 	'rte-ck-templateEditor-dialog-browse' => 'テンプレートを閲覧',
 	'rte-ck-templateEditor-dialog-insert' => '挿入',
 	'rte-ck-templateEditor-dialog-magicWords' => 'マジックワード',
@@ -1947,9 +1802,9 @@ $messages['ja'] = array(
 	'rte-ck-templateEditor-usedTemplates-title' => '使用しているテンプレートの一覧',
 	'rte-ck-templateEditor-title' => 'テンプレートエディタ',
 	'rte-ck-unlink' => 'リンクを解除',
-	'rte-ck-video-add' => '動画を追加',
+	'rte-ck-video-add' => '動画の追加',
 	'rte-ck-video-video' => '動画',
-	'rte-ck-video-confirmDelete' => '本当にページから動画を削除しますか?',
+	'rte-ck-video-confirmDelete' => '本当にページから動画を削除しますか？',
 	'rte-ck-video-confirmDeleteTitle' => '動画を削除しますか？',
 	'rte-ck-videoPlaceholder-confirmDelete' => '本当にページから動画のプレースホルダを削除しますか？',
 	'rte-ck-videoPlaceholder-confirmDeleteTitle' => '動画のプレースホルダを削除しますか？',
@@ -1962,13 +1817,9 @@ $messages['ja'] = array(
 	'rte-ck-format-tag_h3' => 'レベル3見出し',
 	'rte-ck-format-tag_h4' => 'レベル4見出し',
 	'rte-ck-format-tag_h5' => 'レベル5見出し',
-);
+];
 
-/** Kannada (ಕನ್ನಡ)
- * @author Nayvik
- * @author VASANTH S.N.
- */
-$messages['kn'] = array(
+$messages['kn'] = [
 	'rte-ck-bucket-insert' => 'ಸೇರ್ಪಡಿಸು',
 	'rte-ck-errorPopupTitle' => 'ದೋಷ!',
 	'rte-ck-hoverPreview-comment-title' => 'ಟಿಪ್ಪಣಿ',
@@ -1995,41 +1846,35 @@ $messages['kn'] = array(
 	'rte-ck-format-tag_h3' => 'ತಲೆಬರಹ ೩',
 	'rte-ck-format-tag_h4' => 'ತಲೆಬರಹ ೪',
 	'rte-ck-format-tag_h5' => 'ತಲೆಬರಹ ೫',
-);
+];
 
-/** Korean (한국어)
- * @author Infinity
- * @author Miri-Nae
- * @author Priviet
- * @author 아라
- */
-$messages['ko'] = array(
+$messages['ko'] = [
 	'rte-ck-bucket-insert' => '삽입',
-	'rte-ck-errorPopupTitle' => '오류!',
+	'rte-ck-errorPopupTitle' => '오류',
 	'rte-ck-hoverPreview-comment-title' => '댓글',
-	'rte-ck-hoverPreview-confirmDelete' => '이것을 삭제하시겠습니까?',
-	'rte-ck-hoverPreview-delete' => '삭제',
+	'rte-ck-hoverPreview-confirmDelete' => '정말로 이 문서에서 제거하시겠습니까?',
+	'rte-ck-hoverPreview-delete' => '제거',
 	'rte-ck-hoverPreview-edit' => '편집',
-	'rte-ck-hoverPreview-media-notExisting' => '이 그림, 혹은 파일이 존재하지 않습니다!',
-	'rte-ck-hoverPreview-template-intro' => '이것은 틀입니다.',
-	'rte-ck-hoverPreview-template-notExisting' => '이 틀이 존재하지 않습니다!',
-	'rte-ck-hoverPreview-video-notExisting' => '이 동영상이 존재하지 않습니다!',
-	'rte-ck-image-add' => '그림 추가',
+	'rte-ck-hoverPreview-media-notExisting' => '존재하지 않는 그림 또는 파일입니다.',
+	'rte-ck-hoverPreview-template-intro' => '지금 보시고 계신 것은 틀입니다.',
+	'rte-ck-hoverPreview-template-notExisting' => '존재하지 않는 틀입니다.',
+	'rte-ck-hoverPreview-video-notExisting' => '존재하지 않는 동영상입니다.',
+	'rte-ck-image-add' => '그림 넣기',
 	'rte-ck-image-photo' => '그림',
-	'rte-ck-image-confirmDelete' => '그림을 삭제하시겠습니까?',
-	'rte-ck-image-confirmDeleteTitle' => '이 그림을 제거하시겠습니까?',
+	'rte-ck-image-confirmDelete' => '정말로 이 그림을 이 문서에서 제거하시겠습니까?',
+	'rte-ck-image-confirmDeleteTitle' => '이 그림을 이 문서에서 제거',
 	'rte-ck-justify-center' => '가운데 정렬',
-	'rte-ck-link-add' => '링크 추가',
-	'rte-ck-link-error-badPageTitle' => '문서 이름을 입력해주세요.',
-	'rte-ck-link-error-badUrl' => '해당 URL을 인식할 수 없습니다. 다시 확인해주세요.',
+	'rte-ck-link-add' => '링크 넣기',
+	'rte-ck-link-error-badPageTitle' => '문서 이름을 입력하세요.',
+	'rte-ck-link-error-badUrl' => 'URL이 정확한지 확인해주세요.',
 	'rte-ck-link-error-title' => '오류',
-	'rte-ck-link-external-linkText' => '링크 텍스트',
-	'rte-ck-link-external-numberedLink' => '번호 링크 만들기 (예: "[1]")',
-	'rte-ck-link-external-tab' => '바깥 링크',
+	'rte-ck-link-external-linkText' => '표시할 글',
+	'rte-ck-link-external-numberedLink' => '숫자가 매겨진 링크 만들기 (예시: [1])',
+	'rte-ck-link-external-tab' => '외부 링크',
 	'rte-ck-link-external-url' => 'URL',
-	'rte-ck-link-internal-linkText' => '링크 텍스트',
+	'rte-ck-link-internal-linkText' => '표시할 글',
 	'rte-ck-link-internal-pageName' => '문서 이름',
-	'rte-ck-link-internal-tab' => '외부 링크',
+	'rte-ck-link-internal-tab' => '내부 링크',
 	'rte-ck-link-title' => '링크 만들거나 편집하기',
 	'rte-ck-link-label-target' => '대상 문서 또는 URL',
 	'rte-ck-link-label-display' => '문서에 보이는 글',
@@ -2039,10 +1884,10 @@ $messages['ko'] = array(
 	'rte-ck-link-status-exists' => '존재하는 문서',
 	'rte-ck-link-status-notexists' => '존재하지 않는 문서',
 	'rte-ck-link-status-external' => '바깥 링크',
-	'rte-ck-media-delete' => '삭제',
+	'rte-ck-media-delete' => '제거',
 	'rte-ck-media-edit' => '수정',
-	'rte-ck-modeSwitch-toSource' => '출처',
-	'rte-ck-modeSwitch-toWysiwyg' => '시각편집기',
+	'rte-ck-modeSwitch-toSource' => '소스 모드',
+	'rte-ck-modeSwitch-toWysiwyg' => '에디터 모드',
 	'rte-ck-modeSwitch-toSourceTooltip' => '소스 모드로 전환',
 	'rte-ck-modeSwitch-toWysiwygTooltip' => '시각편집기로 전환',
 	'rte-ck-modeSwitch-error' => '모드를 전환하는 동안 오류가 발생했습니다. 다시 시도해주세요.',
@@ -2052,12 +1897,12 @@ $messages['ko'] = array(
 	'rte-ck-photoGallery-addGallery' => '사진 갤러리 추가',
 	'rte-ck-photoGallery-addSlideshow' => '슬라이드쇼 추가',
 	'rte-ck-photoGallery-addSlider' => '슬라이더 추가',
-	'rte-ck-photoGallery-confirmDelete' => '갤러리를 삭제하시겠습니까?',
-	'rte-ck-photoGallery-confirmDeleteTitle' => '갤러리를 삭제합니까?',
-	'rte-ck-photoGallery-tooltip' => '갤러리입니다.',
-	'rte-ck-photoGallery-tooltipSlideshow' => '슬라이드쇼입니다.',
+	'rte-ck-photoGallery-confirmDelete' => '정말로 이 갤러리를 이 문서에서 제거하시겠습니까?',
+	'rte-ck-photoGallery-confirmDeleteTitle' => '이 갤러리를 이 문서에서 제거',
+	'rte-ck-photoGallery-tooltip' => '이것은 갤러리입니다.',
+	'rte-ck-photoGallery-tooltipSlideshow' => '이것은 슬라이드 쇼입니다.',
 	'rte-ck-photoGallery-tooltipSlider' => '슬라이더입니다.',
-	'rte-ck-signature-add' => '서명을 추가해주세요',
+	'rte-ck-signature-add' => '서명 넣기',
 	'rte-ck-signature-label' => '서명',
 	'rte-ck-table-alignNotSet' => '설정되지 않음',
 	'rte-ck-table-invalidCols' => '세로줄의 수는 0보다 커야 합니다.',
@@ -2065,54 +1910,63 @@ $messages['ko'] = array(
 	'rte-ck-table-toolbarTooltip' => '표 추가',
 	'rte-ck-templateDropDown-showUsedList' => '사용한 틀 목록 보이기',
 	'rte-ck-templateDropDown-label' => '틀',
-	'rte-ck-templateDropDown-title' => '틀을 선택해주세요',
+	'rte-ck-templateDropDown-title' => '사용할 틀을 선택하세요',
 	'rte-ck-templateEditor-dialog-insert' => '삽입',
-	'rte-ck-templateEditor-dialog-magicWords' => '특수 변수',
+	'rte-ck-templateEditor-dialog-magicWords' => '매직 워드(기본 틀)',
 	'rte-ck-templateEditor-dialog-magicWordsLink' => 'Help:특수 변수',
-	'rte-ck-templateEditor-dialog-mostFrequentlyUsed' => '자주 사용됨',
-	'rte-ck-templateEditor-dialog-search' => '틀 검색',
-	'rte-ck-templateEditor-editor-chooseAnotherTpl' => '다른 틀을 선택해주세요',
-	'rte-ck-templateEditor-editor-parameters' => '매개변수',
+	'rte-ck-templateEditor-dialog-mostFrequentlyUsed' => '자주 사용되는 틀',
+	'rte-ck-templateEditor-dialog-search' => '틀 찾아보기',
+	'rte-ck-templateEditor-editor-chooseAnotherTpl' => '다른 틀 선택하기',
+	'rte-ck-templateEditor-editor-parameters' => '변수',
 	'rte-ck-templateEditor-editor-previewButton' => '미리 보기',
 	'rte-ck-templateEditor-editor-previewTitle' => '미리 보기',
 	'rte-ck-templateEditor-usedTemplates-title' => '사용한 틀 목록',
-	'rte-ck-templateEditor-title' => '툴 편집기',
-	'rte-ck-unlink' => '링크 삭제',
-	'rte-ck-video-add' => '동영상 추가',
+	'rte-ck-templateEditor-title' => '틀 편집기',
+	'rte-ck-unlink' => '링크 제거',
+	'rte-ck-video-add' => '동영상 넣기',
 	'rte-ck-video-video' => '동영상',
-	'rte-ck-video-confirmDelete' => '동영상을 삭제하시겠습니까?',
-	'rte-ck-video-confirmDeleteTitle' => '동영상을 삭제합니까?',
+	'rte-ck-video-confirmDelete' => '정말로 이 동영상을 이 문서에서 제거하시겠습니까?',
+	'rte-ck-video-confirmDeleteTitle' => '이 동영상을 이 문서에서 제거',
 	'rte-ck-mut-add' => '동영상 추가 (베타)',
 	'rte-ck-mut-mut' => '동영상 (베타)',
 	'rte-ck-format-tag_h2' => '2단계 문단',
 	'rte-ck-format-tag_h3' => '3단계 문단',
 	'rte-ck-format-tag_h4' => '4단계 문단',
 	'rte-ck-format-tag_h5' => '5단계 문단',
-);
+	'rte-ck-bucket-controls' => '도구',
+	'rte-ck-bucket-textAppearance' => '서식',
+	'rte-ck-clipboard-pasteMsg' => '키보드의 (<STRONG>Ctrl/Cmd+V</STRONG>) 키를 이용하여 상자 안에 붙여넣은 후 <STRONG>확인</STRONG>을 누르세요.',
+	'rte-ck-commentEditor-title' => '댓글 편집기',
+	'rte-ck-format-tag_p' => '본문',
+	'rte-ck-format-tag_pre' => '위키 문법 무시',
+	'rte-ck-hoverPreview-codedElement-intro' => '편집은 소스 모드에서 해 주세요.',
+	'rte-ck-hoverPreview-codedElement-title' => '코드로 된 성분',
+	'rte-ck-hoverPreview-comment-intro' => '이는 편집 중에만 보실 수 있습니다.',
+	'rte-ck-imagePlaceholder-confirmDelete' => '정말로 이 플레이스홀더를 이 문서에서 제거하시겠습니까?',
+	'rte-ck-imagePlaceholder-confirmDeleteTitle' => '이 플레이스홀더를 이 문서에서 제거',
+	'rte-ck-imagePlaceholder-tooltip' => '이것은 그림 플레이스홀더입니다.',
+	'rte-ck-templateDropDown-chooseAnotherTpl' => '다른 틀 / 매직 워드(기본 틀)',
+	'rte-ck-templateEditor-dialog-browse' => '틀 보기',
+	'rte-ck-templateEditor-editor-intro' => '왼쪽의 변수들을 설정하시고 \'미리보기\' 버튼을 누르세요. 편집을 마치셨다면 \'예\'를 누르세요.',
+	'rte-ck-templateEditor-editor-viewTemplate' => '(틀 문서 보기 - 새 창으로 열림)',
+	'rte-ck-videoPlaceholder-confirmDelete' => '정말로 이 동영상 플레이스홀더를 이 문서에서 제거하시겠습니까?',
+	'rte-ck-videoPlaceholder-confirmDeleteTitle' => '이 동영상 플레이스홀더를 이 문서에서 제거',
+	'rte-ck-videoPlaceholder-tooltip' => '이것은 동영상 플레이스홀더입니다.',
+	'rte-ck-widescreen-toggle' => '넓은 창에서 편집하기',
+];
 
-/** Karachay-Balkar (къарачай-малкъар)
- * @author Iltever
- */
-$messages['krc'] = array(
+$messages['krc'] = [
 	'rte-ck-modeSwitch-toWysiwyg' => 'Визуал редактор',
-);
+];
 
-/** Colognian (Ripoarisch)
- * @author Purodha
- */
-$messages['ksh'] = array(
+$messages['ksh'] = [
 	'rte-ck-hoverPreview-comment-title' => 'Aanmärkong',
 	'rte-ck-link-external-tab' => 'Ene Lengk noh ußerhallef vum Wiki',
 	'rte-ck-link-status-external' => 'Ene Lengk noh ußerhallef vum Wiki',
 	'rte-ck-video-video' => 'Viddejo',
-);
+];
 
-/** Kurdish (Latin script) (Kurdî (latînî)‎)
- * @author Bikarhêner
- * @author George Animal
- * @author Ghybu
- */
-$messages['ku-latn'] = array(
+$messages['ku-latn'] = [
 	'rte-ck-bucket-controls' => 'Kontrol',
 	'rte-ck-errorPopupTitle' => 'Çewtî!',
 	'rte-ck-hoverPreview-comment-title' => 'Şîrove',
@@ -2137,12 +1991,9 @@ $messages['ku-latn'] = array(
 	'rte-ck-templateEditor-editor-parameters' => 'Parametre',
 	'rte-ck-templateEditor-editor-previewButton' => 'Pêşdîtin',
 	'rte-ck-templateEditor-editor-previewTitle' => 'Pêşdîtin',
-);
+];
 
-/** Luxembourgish (Lëtzebuergesch)
- * @author Robby
- */
-$messages['lb'] = array(
+$messages['lb'] = [
 	'rte-ck-errorPopupTitle' => 'Feeler!',
 	'rte-ck-hoverPreview-comment-title' => 'Bemierkung',
 	'rte-ck-hoverPreview-delete' => 'läschen',
@@ -2171,12 +2022,9 @@ $messages['lb'] = array(
 	'rte-ck-templateEditor-dialog-search' => 'No enger Schabloun sichen',
 	'rte-ck-templateEditor-editor-parameters' => 'Parameter',
 	'rte-ck-unlink' => 'Link ewechhuelen',
-);
+];
 
-/** Northern Luri (لوری مینجایی)
- * @author Mogoeilor
- */
-$messages['lrc'] = array(
+$messages['lrc'] = [
 	'rte-ck-hoverPreview-comment-title' => 'نظر',
 	'rte-ck-hoverPreview-delete' => 'پاك كردن',
 	'rte-ck-hoverPreview-edit' => 'ويرايشت',
@@ -2194,12 +2042,9 @@ $messages['lrc'] = array(
 	'rte-ck-templateEditor-dialog-magicWords' => 'كلميا جادويی',
 	'rte-ck-templateEditor-editor-previewButton' => 'پيش سيل',
 	'rte-ck-templateEditor-editor-previewTitle' => 'پيش سيل',
-);
+];
 
-/** Macedonian (македонски)
- * @author Bjankuloski06
- */
-$messages['mk'] = array(
+$messages['mk'] = [
 	'rte-ck-bucket-textAppearance' => 'Изглед на текстот',
 	'rte-ck-bucket-insert' => 'Вметни',
 	'rte-ck-bucket-controls' => 'Контроли',
@@ -2307,12 +2152,9 @@ $messages['mk'] = array(
 	'rte-ck-format-tag_h3' => 'Наслов 3',
 	'rte-ck-format-tag_h4' => 'Наслов 4',
 	'rte-ck-format-tag_h5' => 'Наслов 5',
-);
+];
 
-/** Malayalam (മലയാളം)
- * @author Praveenp
- */
-$messages['ml'] = array(
+$messages['ml'] = [
 	'rte-ck-bucket-controls' => 'നിയന്ത്രണസൗകര്യങ്ങൾ',
 	'rte-ck-errorPopupTitle' => 'പിഴവ്!',
 	'rte-ck-hoverPreview-comment-title' => 'അഭിപ്രായം',
@@ -2358,12 +2200,9 @@ $messages['ml'] = array(
 	'rte-ck-unlink' => 'കണ്ണി നീക്കംചെയ്യുക',
 	'rte-ck-video-add' => 'ഒരു വീഡിയോ ചേർക്കുക',
 	'rte-ck-video-confirmDeleteTitle' => 'ഈ വീഡിയോ നീക്കംചെയ്യണോ?',
-);
+];
 
-/** Malay (Bahasa Melayu)
- * @author Anakmalaysia
- */
-$messages['ms'] = array(
+$messages['ms'] = [
 	'rte-ck-bucket-textAppearance' => 'Penampilan teks',
 	'rte-ck-bucket-insert' => 'Sisipkan',
 	'rte-ck-bucket-controls' => 'Kawalan',
@@ -2464,27 +2303,20 @@ $messages['ms'] = array(
 	'rte-ck-widescreen-toggle' => 'Togol skrin lebar',
 	'rte-ck-spellchecker-moreSuggestions' => 'Cadangan lain',
 	'rte-ck-pasteText-title' => 'Tampalkan teks anda',
-	'rte-ck-clipboard-pasteMsg' => "Atas sebab-sebab keselamatan, editor tidak boleh mengakses tampalan anda secara langsung. Sila tampalkan dalam ruangan di bawah dengan menggunakan kekunci pintas (Ctrl/Cmd+V), kemudian klik 'OK'.<br /><br />Perhatian: teks anda akan ditanggalkan pemformatannya untuk mengelakkan terhasilnya teks wiki yang rumit.",
+	'rte-ck-clipboard-pasteMsg' => 'Atas sebab-sebab keselamatan, editor tidak boleh mengakses tampalan anda secara langsung. Sila tampalkan dalam ruangan di bawah dengan menggunakan kekunci pintas (Ctrl/Cmd+V), kemudian klik \'OK\'.<br /><br />Perhatian: teks anda akan ditanggalkan pemformatannya untuk mengelakkan terhasilnya teks wiki yang rumit.',
 	'rte-ck-format-tag_p' => 'Teks biasa',
 	'rte-ck-format-tag_pre' => 'Kod (teks praformat)',
 	'rte-ck-format-tag_h2' => 'Pengatas 2',
 	'rte-ck-format-tag_h3' => 'Pengatas 3',
 	'rte-ck-format-tag_h4' => 'Pengatas 4',
 	'rte-ck-format-tag_h5' => 'Pengatas 5',
-);
+];
 
-/** Mazanderani (مازِرونی)
- * @author محک
- */
-$messages['mzn'] = array(
+$messages['mzn'] = [
 	'rte-ck-hoverPreview-edit' => 'دچی‌ین',
-);
+];
 
-/** Norwegian Bokmål (norsk bokmål)
- * @author Audun
- * @author Nghtwlkr
- */
-$messages['nb'] = array(
+$messages['nb'] = [
 	'rte-ck-bucket-textAppearance' => 'Tekstutseende',
 	'rte-ck-bucket-insert' => 'Sett inn',
 	'rte-ck-bucket-controls' => 'Alternativer',
@@ -2511,7 +2343,7 @@ $messages['nb'] = array(
 	'rte-ck-justify-center' => 'Midtstill',
 	'rte-ck-link-add' => 'Legg til lenke',
 	'rte-ck-link-error-badPageTitle' => 'Skriv inn en sidetittel.',
-	'rte-ck-link-error-badUrl' => "Vi kjenner ikke igjen den URL'n - sjekk at det er korrekt.",
+	'rte-ck-link-error-badUrl' => 'Vi kjenner ikke igjen den URL\'n - sjekk at det er korrekt.',
 	'rte-ck-link-error-title' => 'Feil',
 	'rte-ck-link-external-linkText' => 'Lenketekst',
 	'rte-ck-link-external-numberedLink' => 'Opprett en nummerert lenke (for eksempel «[1]»)',
@@ -2592,23 +2424,13 @@ $messages['nb'] = array(
 	'rte-ck-format-tag_h3' => 'Overskrift 3',
 	'rte-ck-format-tag_h4' => 'Overskrift 4',
 	'rte-ck-format-tag_h5' => 'Overskrift 5',
-);
+];
 
-/** Nepali (नेपाली)
- * @author RajeshPandey
- */
-$messages['ne'] = array(
+$messages['ne'] = [
 	'rte-ck-hoverPreview-comment-title' => 'टिप्पणी',
-);
+];
 
-/** Dutch (Nederlands)
- * @author AvatarTeam
- * @author JurgenNL
- * @author Kjell
- * @author SPQRobin
- * @author Siebrand
- */
-$messages['nl'] = array(
+$messages['nl'] = [
 	'rte-ck-bucket-textAppearance' => 'Tekstuiterlijk',
 	'rte-ck-bucket-insert' => 'Invoegen',
 	'rte-ck-bucket-controls' => 'Besturing',
@@ -2618,7 +2440,7 @@ $messages['nl'] = array(
 	'rte-ck-hoverPreview-codedElement-title' => 'Gecodeerd element',
 	'rte-ck-hoverPreview-comment-intro' => 'Dit is alleen te zien tijdens het bewerken.',
 	'rte-ck-hoverPreview-comment-title' => 'Reactie',
-	'rte-ck-hoverPreview-confirmDelete' => 'Weet u zeker dat u dit van deze pagina wilt verwijderen?',
+	'rte-ck-hoverPreview-confirmDelete' => 'Weet je zeker dat je dit van deze pagina wilt verwijderen?',
 	'rte-ck-hoverPreview-delete' => 'verwijderen',
 	'rte-ck-hoverPreview-edit' => 'bewerken',
 	'rte-ck-hoverPreview-media-notExisting' => 'Deze afbeelding of dit bestand bestaat niet.',
@@ -2627,9 +2449,9 @@ $messages['nl'] = array(
 	'rte-ck-hoverPreview-video-notExisting' => 'Deze video bestaat niet.',
 	'rte-ck-image-add' => 'Afbeelding toevoegen',
 	'rte-ck-image-photo' => 'Afbeelding',
-	'rte-ck-image-confirmDelete' => 'Weet u zeker dat u de afbeelding van deze pagina wilt verwijderen?',
+	'rte-ck-image-confirmDelete' => 'Weet je zeker dat je de afbeelding van deze pagina wilt verwijderen?',
 	'rte-ck-image-confirmDeleteTitle' => 'Deze afbeelding verwijderen?',
-	'rte-ck-imagePlaceholder-confirmDelete' => 'Weet u zeker dat u de reservering voor de afbeelding van deze pagina wilt verwijderen?',
+	'rte-ck-imagePlaceholder-confirmDelete' => 'Weet je zeker dat je de reservering voor de afbeelding van deze pagina wilt verwijderen?',
 	'rte-ck-imagePlaceholder-confirmDeleteTitle' => 'Deze reservering voor een afbeelding verwijderen?',
 	'rte-ck-imagePlaceholder-tooltip' => 'Dit is een reservering voor een afbeelding.',
 	'rte-ck-justify-center' => 'Centreren',
@@ -2666,7 +2488,7 @@ $messages['nl'] = array(
 	'rte-ck-photoGallery-addGallery' => 'Afbeeldingengalerij toevoegen',
 	'rte-ck-photoGallery-addSlideshow' => 'Diavoorstelling toevoegen',
 	'rte-ck-photoGallery-addSlider' => 'Schuifdiashow toevoegen',
-	'rte-ck-photoGallery-confirmDelete' => 'Weet u zeker dat u de galerij van deze pagina wilt verwijderen?',
+	'rte-ck-photoGallery-confirmDelete' => 'Weet je zeker dat je de galerij van deze pagina wilt verwijderen?',
 	'rte-ck-photoGallery-confirmDeleteTitle' => 'Deze galerij verwijderen?',
 	'rte-ck-photoGallery-tooltip' => 'Dit is een galerij.',
 	'rte-ck-photoGallery-tooltipSlideshow' => 'Dit is een diavoorstelling.',
@@ -2689,7 +2511,7 @@ $messages['nl'] = array(
 	'rte-ck-templateEditor-dialog-mostFrequentlyUsed' => 'Meest gebruikt',
 	'rte-ck-templateEditor-dialog-search' => 'Sjabloon zoeken',
 	'rte-ck-templateEditor-editor-chooseAnotherTpl' => 'Ander sjabloon kiezen',
-	'rte-ck-templateEditor-editor-intro' => 'Wijzig de waarden aan de linkerkant en klik voor een voorvertoning. Klik als u klaar bent met bewerken op "OK".',
+	'rte-ck-templateEditor-editor-intro' => 'Wijzig de waarden aan de linkerkant en klik voor een voorvertoning. Klik als je klaar bent met bewerken op "OK".',
 	'rte-ck-templateEditor-editor-parameters' => 'Parameters',
 	'rte-ck-templateEditor-editor-previewButton' => 'Voorvertoning',
 	'rte-ck-templateEditor-editor-previewTitle' => 'Voorvertoning',
@@ -2699,14 +2521,14 @@ $messages['nl'] = array(
 	'rte-ck-unlink' => 'Koppeling verwijderen',
 	'rte-ck-video-add' => 'Video toevoegen',
 	'rte-ck-video-video' => 'Video',
-	'rte-ck-video-confirmDelete' => 'Weet u zeker dat u de video van deze pagina wilt verwijderen?',
+	'rte-ck-video-confirmDelete' => 'Weet je zeker dat je de video van deze pagina wilt verwijderen?',
 	'rte-ck-video-confirmDeleteTitle' => 'Deze video verwijderen?',
-	'rte-ck-videoPlaceholder-confirmDelete' => 'Weet u zeker dat u de reservering voor de video van deze pagina wilt verwijderen?',
+	'rte-ck-videoPlaceholder-confirmDelete' => 'Weet je zeker dat je de reservering voor de video van deze pagina wilt verwijderen?',
 	'rte-ck-videoPlaceholder-confirmDeleteTitle' => 'Deze reservering voor een video verwijderen?',
 	'rte-ck-videoPlaceholder-tooltip' => 'Dit is een reservering voor een video.',
 	'rte-ck-mut-add' => 'Video toevoegen (beta)',
 	'rte-ck-mut-mut' => 'Video (beta)',
-	'rte-ck-widescreen-toggle' => 'Breedbeeld in- of uitschakelen',
+	'rte-ck-widescreen-toggle' => 'Schakel breedbeeld in/uit',
 	'rte-ck-spellchecker-moreSuggestions' => 'Meer suggesties',
 	'rte-ck-pasteText-title' => 'Plak uw tekst',
 	'rte-ck-clipboard-pasteMsg' => 'Om veiligheidsredenen kan de tekstverwerker uw klembord niet direct raadplegen. Plak de tekst in het onderstaande venster via uw snelkoppeling (Ctrl/Cmd+V) en klik op "OK".<br /><br />Let op: Uit uw tekst wordt de opmaak verwijderd om te voorkomen dat er complexe wikitekst nodig is.',
@@ -2716,12 +2538,9 @@ $messages['nl'] = array(
 	'rte-ck-format-tag_h3' => 'Kop 3',
 	'rte-ck-format-tag_h4' => 'Kop 4',
 	'rte-ck-format-tag_h5' => 'Kop 5',
-);
+];
 
-/** Nederlands (informeel)‎ (Nederlands (informeel)‎)
- * @author Siebrand
- */
-$messages['nl-informal'] = array(
+$messages['nl-informal'] = [
 	'rte-ck-hoverPreview-confirmDelete' => 'Weet je zeker dat je dit van deze pagina wilt verwijderen?',
 	'rte-ck-image-confirmDelete' => 'Weet je zeker dat je de afbeelding van deze pagina wilt verwijderen?',
 	'rte-ck-imagePlaceholder-confirmDelete' => 'Weet je zeker dat je de reservering voor de afbeelding van deze pagina wilt verwijderen?',
@@ -2729,12 +2548,9 @@ $messages['nl-informal'] = array(
 	'rte-ck-templateEditor-editor-intro' => 'Wijzig de waarden aan de linkerkant en klik voor een voorvertoning. Klik als je klaar bent met bewerken op "OK".',
 	'rte-ck-video-confirmDelete' => 'Weet je zeker dat je de video van deze pagina wilt verwijderen?',
 	'rte-ck-videoPlaceholder-confirmDelete' => 'Weet je zeker dat je de reservering voor de video van deze pagina wilt verwijderen?',
-);
+];
 
-/** Occitan (occitan)
- * @author Cedric31
- */
-$messages['oc'] = array(
+$messages['oc'] = [
 	'rte-ck-bucket-textAppearance' => 'Aparéncia del tèxte',
 	'rte-ck-bucket-insert' => 'Inserir',
 	'rte-ck-bucket-controls' => 'Contraròtles',
@@ -2744,16 +2560,16 @@ $messages['oc'] = array(
 	'rte-ck-hoverPreview-codedElement-title' => 'Element encodat',
 	'rte-ck-hoverPreview-comment-intro' => 'Aquò pòt pas èsser vist que pendent la modificacion.',
 	'rte-ck-hoverPreview-comment-title' => 'Comentari',
-	'rte-ck-hoverPreview-confirmDelete' => "Sètz segur que volètz suprimir aqueste element d'aquesta pagina ?",
+	'rte-ck-hoverPreview-confirmDelete' => 'Sètz segur que volètz suprimir aqueste element d\'aquesta pagina ?',
 	'rte-ck-hoverPreview-delete' => 'suprimir',
 	'rte-ck-hoverPreview-edit' => 'modificar',
 	'rte-ck-hoverPreview-media-notExisting' => 'Aqueste imatge o aqueste fichièr existís pas !',
-	'rte-ck-hoverPreview-template-intro' => "Aquò's un modèl.",
+	'rte-ck-hoverPreview-template-intro' => 'Aquò\'s un modèl.',
 	'rte-ck-hoverPreview-template-notExisting' => 'Aqueste modèl existís pas !',
 	'rte-ck-hoverPreview-video-notExisting' => 'Aquesta vidèo existís pas !',
 	'rte-ck-image-add' => 'Apondre un imatge',
 	'rte-ck-image-photo' => 'Fòto',
-	'rte-ck-image-confirmDelete' => "Sètz segur que volètz suprimir l'imatge d'aquesta pagina ?",
+	'rte-ck-image-confirmDelete' => 'Sètz segur que volètz suprimir l\'imatge d\'aquesta pagina ?',
 	'rte-ck-image-confirmDeleteTitle' => 'Suprimir aqueste imatge ?',
 	'rte-ck-justify-center' => 'Centrar',
 	'rte-ck-link-add' => 'Apondre un ligam',
@@ -2764,7 +2580,7 @@ $messages['oc'] = array(
 	'rte-ck-link-internal-linkText' => 'Tèxte del ligam',
 	'rte-ck-link-internal-pageName' => 'Nom de la pagina',
 	'rte-ck-link-internal-tab' => 'Ligam intèrne',
-	'rte-ck-link-status-checking' => "Verificacion de l'estat",
+	'rte-ck-link-status-checking' => 'Verificacion de l\'estat',
 	'rte-ck-link-status-external' => 'Ligam extèrne',
 	'rte-ck-media-delete' => 'suprimir',
 	'rte-ck-media-edit' => 'modificar',
@@ -2793,35 +2609,21 @@ $messages['oc'] = array(
 	'rte-ck-format-tag_h3' => 'Títol 3',
 	'rte-ck-format-tag_h4' => 'Títol 4',
 	'rte-ck-format-tag_h5' => 'Títol 5',
-);
+];
 
-/** Pennsylvania German (Deitsch)
- * @author Xqt
- */
-$messages['pdc'] = array(
+$messages['pdc'] = [
 	'rte-ck-hoverPreview-comment-title' => 'Aamaericking',
 	'rte-ck-hoverPreview-delete' => 'verwische',
-);
+];
 
-/** Palatine German (Pälzisch)
- * @author Manuae
- */
-$messages['pfl'] = array(
+$messages['pfl'] = [
 	'rte-ck-hoverPreview-delete' => 'lesche',
 	'rte-ck-hoverPreview-edit' => 'bearwaide',
-	'rte-ck-hoverPreview-media-notExisting' => "S'Bild oda die Dadai hods ned!",
+	'rte-ck-hoverPreview-media-notExisting' => 'S\'Bild oda die Dadai hods ned!',
 	'rte-ck-link-error-badPageTitle' => 'Geb bidde än Saidetidl oi.',
-);
+];
 
-/** Polish (polski)
- * @author BeginaFelicysym
- * @author Holek
- * @author Odie2
- * @author Sovq
- * @author Sp5uhe
- * @author TOR
- */
-$messages['pl'] = array(
+$messages['pl'] = [
 	'rte-ck-bucket-textAppearance' => 'Wygląd tekstu',
 	'rte-ck-bucket-insert' => 'Wstaw',
 	'rte-ck-bucket-controls' => 'Kontrola',
@@ -2929,27 +2731,23 @@ $messages['pl'] = array(
 	'rte-ck-format-tag_h3' => 'Nagłówek 3',
 	'rte-ck-format-tag_h4' => 'Nagłówek 4',
 	'rte-ck-format-tag_h5' => 'Nagłówek 5',
-);
+];
 
-/** Piedmontese (Piemontèis)
- * @author Borichèt
- * @author Dragonòt
- */
-$messages['pms'] = array(
+$messages['pms'] = [
 	'rte-ck-bucket-textAppearance' => 'Aparensa dël test',
 	'rte-ck-bucket-insert' => 'Anserì',
 	'rte-ck-bucket-controls' => 'Contròj',
 	'rte-ck-commentEditor-title' => 'Editor dël coment',
 	'rte-ck-errorPopupTitle' => 'Eror!',
-	'rte-ck-hoverPreview-codedElement-intro' => "Për piasì, ch'a passa ant la manera sorgiss për modifiché!",
+	'rte-ck-hoverPreview-codedElement-intro' => 'Për piasì, ch\'a passa ant la manera sorgiss për modifiché!',
 	'rte-ck-hoverPreview-codedElement-title' => 'Element codificà',
 	'rte-ck-hoverPreview-comment-intro' => 'Sossì a peul esse vëddù mach durant le modìfiche.',
 	'rte-ck-hoverPreview-comment-title' => 'Coment',
 	'rte-ck-hoverPreview-confirmDelete' => 'É-lo sigur ëd vorèj gavé sossì da sta pàgina?',
 	'rte-ck-hoverPreview-delete' => 'scancelé',
 	'rte-ck-hoverPreview-edit' => 'modìfica',
-	'rte-ck-hoverPreview-media-notExisting' => "Sa figura o s'archivi a esist pa!",
-	'rte-ck-hoverPreview-template-intro' => "Sossì a l'é në stamp.",
+	'rte-ck-hoverPreview-media-notExisting' => 'Sa figura o s\'archivi a esist pa!',
+	'rte-ck-hoverPreview-template-intro' => 'Sossì a l\'é në stamp.',
 	'rte-ck-hoverPreview-template-notExisting' => 'Sto stamp-sì a esist pa!',
 	'rte-ck-hoverPreview-video-notExisting' => 'Cost filmà-sì a esist pa!',
 	'rte-ck-image-add' => 'Gionta na figura',
@@ -2958,16 +2756,16 @@ $messages['pms'] = array(
 	'rte-ck-image-confirmDeleteTitle' => 'Gavé costa plancia?',
 	'rte-ck-imagePlaceholder-confirmDelete' => 'É-lo sigur ëd vorèj gavé ël marcapòst për na plancia da costa pàgina?',
 	'rte-ck-imagePlaceholder-confirmDeleteTitle' => 'Gavé cost marcapòst për na plancia?',
-	'rte-ck-imagePlaceholder-tooltip' => "Cost a l'é 'n marcapòst për na plancia.",
+	'rte-ck-imagePlaceholder-tooltip' => 'Cost a l\'é \'n marcapòst për na plancia.',
 	'rte-ck-justify-center' => 'Alinia al Sénter',
-	'rte-ck-link-add' => "Gionté n'anliura",
+	'rte-ck-link-add' => 'Gionté n\'anliura',
 	'rte-ck-link-error-badPageTitle' => 'Për piasì anseriss un tìtol ëd pàgina.',
-	'rte-ck-link-error-badUrl' => "I arconossoma pa cost'adrëssa dl'aragnà - për piasì, ch'a contròla ch'a sia giusta.",
+	'rte-ck-link-error-badUrl' => 'I arconossoma pa cost\'adrëssa dl\'aragnà - për piasì, ch\'a contròla ch\'a sia giusta.',
 	'rte-ck-link-error-title' => 'Eror',
 	'rte-ck-link-external-linkText' => 'Test dël colegament',
 	'rte-ck-link-external-numberedLink' => 'Crea un colegament numerà (për esempi, "[1]")',
 	'rte-ck-link-external-tab' => 'Anliura esterna',
-	'rte-ck-link-external-url' => "Adrëssa an sl'aragnà",
+	'rte-ck-link-external-url' => 'Adrëssa an sl\'aragnà',
 	'rte-ck-link-internal-linkText' => 'Test dël colegament',
 	'rte-ck-link-internal-pageName' => 'Nòm ëd la pàgina',
 	'rte-ck-link-internal-tab' => 'Anliura interna',
@@ -2986,7 +2784,7 @@ $messages['pms'] = array(
 	'rte-ck-modeSwitch-toWysiwyg' => 'Visual',
 	'rte-ck-modeSwitch-toSourceTooltip' => 'Passé an manera sorgiss',
 	'rte-ck-modeSwitch-toWysiwygTooltip' => 'Passé an manera Visual',
-	'rte-ck-modeSwitch-error' => "A l'é ancapitaje n'eror durant ël cangiament ëd manera. Për piasì, ch'a preuva torna.",
+	'rte-ck-modeSwitch-error' => 'A l\'é ancapitaje n\'eror durant ël cangiament ëd manera. Për piasì, ch\'a preuva torna.',
 	'rte-ck-photoGallery-gallery' => 'Galarìa',
 	'rte-ck-photoGallery-slideshow' => 'Sequensa ëd diapositive',
 	'rte-ck-photoGallery-slider' => 'Letor ëd diapositive',
@@ -2995,9 +2793,9 @@ $messages['pms'] = array(
 	'rte-ck-photoGallery-addSlider' => 'Gionté un letor ëd diapositive',
 	'rte-ck-photoGallery-confirmDelete' => 'É-lo sigur ëd vorèj gavé la galarìa da sta pàgina?',
 	'rte-ck-photoGallery-confirmDeleteTitle' => 'Gavé sta galarìa?',
-	'rte-ck-photoGallery-tooltip' => "Costa a l'é na galarìa.",
-	'rte-ck-photoGallery-tooltipSlideshow' => "Costa a l'é na sequensa ëd diapositive.",
-	'rte-ck-photoGallery-tooltipSlider' => "Cost a l'é un visualisator ëd diapositive.",
+	'rte-ck-photoGallery-tooltip' => 'Costa a l\'é na galarìa.',
+	'rte-ck-photoGallery-tooltipSlideshow' => 'Costa a l\'é na sequensa ëd diapositive.',
+	'rte-ck-photoGallery-tooltipSlider' => 'Cost a l\'é un visualisator ëd diapositive.',
 	'rte-ck-signature-add' => 'Gionta toa firma',
 	'rte-ck-signature-label' => 'Firma',
 	'rte-ck-table-alignNotSet' => 'Pa ampostà',
@@ -3013,42 +2811,39 @@ $messages['pms'] = array(
 	'rte-ck-templateEditor-dialog-insert' => 'Anserì',
 	'rte-ck-templateEditor-dialog-magicWords' => 'Paròle màgiche',
 	'rte-ck-templateEditor-dialog-magicWordsLink' => 'Help:Paròle màgiche',
-	'rte-ck-templateEditor-dialog-mostFrequentlyUsed' => "Dovrà pi 'd soens",
+	'rte-ck-templateEditor-dialog-mostFrequentlyUsed' => 'Dovrà pi \'d soens',
 	'rte-ck-templateEditor-dialog-search' => 'Serca në stamp',
-	'rte-ck-templateEditor-editor-chooseAnotherTpl' => "Sern n'àutr stamp",
-	'rte-ck-templateEditor-editor-intro' => "Ch'a modìfica ël valor an sla snista e ch'a sgnaca për na preuva. Quand ch'a l'ha finì ëd modifiché, ch'a sgnaca \"Va bin\".",
+	'rte-ck-templateEditor-editor-chooseAnotherTpl' => 'Sern n\'àutr stamp',
+	'rte-ck-templateEditor-editor-intro' => 'Ch\'a modìfica ël valor an sla snista e ch\'a sgnaca për na preuva. Quand ch\'a l\'ha finì ëd modifiché, ch\'a sgnaca "Va bin".',
 	'rte-ck-templateEditor-editor-parameters' => 'Paràmetr',
 	'rte-ck-templateEditor-editor-previewButton' => 'Preuva',
 	'rte-ck-templateEditor-editor-previewTitle' => 'Preuva',
 	'rte-ck-templateEditor-editor-viewTemplate' => '(vëdde la pàgina dlë stamp - a duverta na fnestra neuva)',
 	'rte-ck-templateEditor-usedTemplates-title' => 'Lista djë stamp dovrà',
 	'rte-ck-templateEditor-title' => 'Editor dë stamp',
-	'rte-ck-unlink' => "Gavé l'anliura",
+	'rte-ck-unlink' => 'Gavé l\'anliura',
 	'rte-ck-video-add' => 'Gionta un filmà',
 	'rte-ck-video-video' => 'Filmà',
 	'rte-ck-video-confirmDelete' => 'É-lo sigur ëd vorèj gavé ël filmà da sta pàgina?',
 	'rte-ck-video-confirmDeleteTitle' => 'Gavé sto filmà-sì?',
 	'rte-ck-videoPlaceholder-confirmDelete' => 'É-lo sigur ëd vorèj gavé ël marcapòst për un filmà da costa pàgina?',
-	'rte-ck-videoPlaceholder-confirmDeleteTitle' => "Gavé 's marcapòst për un filmà?",
-	'rte-ck-videoPlaceholder-tooltip' => "Sossì a l'é un marcapòst ëd filmà.",
+	'rte-ck-videoPlaceholder-confirmDeleteTitle' => 'Gavé \'s marcapòst për un filmà?',
+	'rte-ck-videoPlaceholder-tooltip' => 'Sossì a l\'é un marcapòst ëd filmà.',
 	'rte-ck-mut-add' => 'Gionta un filmà (beta)',
 	'rte-ck-mut-mut' => 'Filmà (beta)',
 	'rte-ck-widescreen-toggle' => 'Cangé lë scren pien',
-	'rte-ck-spellchecker-moreSuggestions' => "Pi 'd sugeriment",
+	'rte-ck-spellchecker-moreSuggestions' => 'Pi \'d sugeriment',
 	'rte-ck-pasteText-title' => 'Ancòla tò test',
-	'rte-ck-clipboard-pasteMsg' => "Për dle rason ëd sicurëssa, l'editor a peul pa ancolé sò test diretament. Për piasì, ch'a lo ancòla ant la casela sì-sota dovrand ij tast dla tastadura (Ctrl/Cmd+V) e ch'a sgnaca 'Va bin'.<br /><br />Nòta: sò test a sarà polidà da tuta formatassion për evité ëd creé dël test wiki complicà.",
+	'rte-ck-clipboard-pasteMsg' => 'Për dle rason ëd sicurëssa, l\'editor a peul pa ancolé sò test diretament. Për piasì, ch\'a lo ancòla ant la casela sì-sota dovrand ij tast dla tastadura (Ctrl/Cmd+V) e ch\'a sgnaca \'Va bin\'.<br /><br />Nòta: sò test a sarà polidà da tuta formatassion për evité ëd creé dël test wiki complicà.',
 	'rte-ck-format-tag_p' => 'Test normal',
 	'rte-ck-format-tag_pre' => 'Còdes (test preformatà)',
 	'rte-ck-format-tag_h2' => 'Antestassion 2',
 	'rte-ck-format-tag_h3' => 'Antestassion 3',
 	'rte-ck-format-tag_h4' => 'Antestassion 4',
 	'rte-ck-format-tag_h5' => 'Antestassion 5',
-);
+];
 
-/** Pashto (پښتو)
- * @author Ahmed-Najib-Biabani-Ibrahimkhel
- */
-$messages['ps'] = array(
+$messages['ps'] = [
 	'rte-ck-bucket-insert' => 'ورټومبل',
 	'rte-ck-hoverPreview-comment-title' => 'تبصره',
 	'rte-ck-hoverPreview-delete' => 'ړنگول',
@@ -3086,20 +2881,9 @@ $messages['ps'] = array(
 	'rte-ck-format-tag_h3' => 'سرليک 3',
 	'rte-ck-format-tag_h4' => 'سرليک 4',
 	'rte-ck-format-tag_h5' => 'سرليک 5',
-);
+];
 
-/** Portuguese (português)
- * @author Crazymadlover
- * @author Dianakc
- * @author Giro720
- * @author Hamilton Abreu
- * @author Josep Maria 15.
- * @author Luckas
- * @author Malafaya
- * @author SandroHc
- * @author Waldir
- */
-$messages['pt'] = array(
+$messages['pt'] = [
 	'rte-ck-bucket-textAppearance' => 'Aparência do texto',
 	'rte-ck-bucket-insert' => 'Inserir',
 	'rte-ck-bucket-controls' => 'Controlos',
@@ -3195,16 +2979,9 @@ $messages['pt'] = array(
 	'rte-ck-spellchecker-moreSuggestions' => 'Mais sugestões',
 	'rte-ck-pasteText-title' => 'Cola o teu texto',
 	'rte-ck-format-tag_p' => 'Texto normal',
-);
+];
 
-/** Brazilian Portuguese (português do Brasil)
- * @author Aristóbulo
- * @author Caio1478
- * @author Giro720
- * @author Luckas
- * @author Luckas Blade
- */
-$messages['pt-br'] = array(
+$messages['pt-br'] = [
 	'rte-ck-bucket-textAppearance' => 'Aparência do texto',
 	'rte-ck-bucket-insert' => 'Inserir',
 	'rte-ck-bucket-controls' => 'Controles',
@@ -3295,20 +3072,13 @@ $messages['pt-br'] = array(
 	'rte-ck-widescreen-toggle' => 'Ativar ou desativar o modo panorâmico',
 	'rte-ck-spellchecker-moreSuggestions' => 'Mais sugestões',
 	'rte-ck-format-tag_p' => 'Texto normal',
-);
+];
 
-/** Quechua (Runa Simi)
- * @author AlimanRuna
- */
-$messages['qu'] = array(
-	'rte-ck-link-add' => "T'inkita yapay",
-);
+$messages['qu'] = [
+	'rte-ck-link-add' => 'T\'inkita yapay',
+];
 
-/** Romanian (română)
- * @author Minisarm
- * @author Stelistcristi
- */
-$messages['ro'] = array(
+$messages['ro'] = [
 	'rte-ck-link-internal-pageName' => 'Nume pagină',
 	'rte-ck-link-internal-tab' => 'Legătură internă',
 	'rte-ck-link-status-exists' => 'Pagina există',
@@ -3319,40 +3089,30 @@ $messages['ro'] = array(
 	'rte-ck-templateEditor-editor-parameters' => 'Parametri',
 	'rte-ck-unlink' => 'Elimină legătura',
 	'rte-ck-video-add' => 'Adaugă un videoclip',
-);
+];
 
-/** tarandíne (tarandíne)
- * @author Joetaras
- */
-$messages['roa-tara'] = array(
-	'rte-ck-bucket-textAppearance' => "Aspette d'u teste",
-	'rte-ck-bucket-insert' => "'Nzerisce",
+$messages['roa-tara'] = [
+	'rte-ck-bucket-textAppearance' => 'Aspette d\'u teste',
+	'rte-ck-bucket-insert' => '\'Nzerisce',
 	'rte-ck-bucket-controls' => 'Condrolle',
 	'rte-ck-errorPopupTitle' => 'Errore!',
 	'rte-ck-hoverPreview-comment-title' => 'Commende',
 	'rte-ck-hoverPreview-delete' => 'scangille',
 	'rte-ck-hoverPreview-edit' => 'cange',
-	'rte-ck-hoverPreview-template-intro' => "Quiste jè 'nu template.",
-	'rte-ck-image-add' => "Aggiunge 'n'immaggine",
+	'rte-ck-hoverPreview-template-intro' => 'Quiste jè \'nu template.',
+	'rte-ck-image-add' => 'Aggiunge \'n\'immaggine',
 	'rte-ck-link-error-title' => 'Errore',
 	'rte-ck-link-external-url' => 'URL',
 	'rte-ck-media-delete' => 'live',
 	'rte-ck-media-edit' => 'cange',
-	'rte-ck-templateEditor-dialog-insert' => "'Nzerisce",
+	'rte-ck-templateEditor-dialog-insert' => '\'Nzerisce',
 	'rte-ck-templateEditor-editor-parameters' => 'Parametre',
 	'rte-ck-templateEditor-editor-previewButton' => 'Andeprime',
 	'rte-ck-templateEditor-editor-previewTitle' => 'Andeprime',
 	'rte-ck-video-video' => 'Video',
-);
+];
 
-/** Russian (русский)
- * @author DCamer
- * @author Eleferen
- * @author Kuzura
- * @author Lockal
- * @author Александр Сигачёв
- */
-$messages['ru'] = array(
+$messages['ru'] = [
 	'rte-ck-bucket-textAppearance' => 'Вид текста',
 	'rte-ck-bucket-insert' => 'Вставка',
 	'rte-ck-bucket-controls' => 'Элементы управления',
@@ -3364,7 +3124,7 @@ $messages['ru'] = array(
 	'rte-ck-hoverPreview-comment-title' => 'Комментарий',
 	'rte-ck-hoverPreview-confirmDelete' => 'Вы уверены, что хотите удалить это со страницы?',
 	'rte-ck-hoverPreview-delete' => 'удалить',
-	'rte-ck-hoverPreview-edit' => 'править',
+	'rte-ck-hoverPreview-edit' => 'редактировать',
 	'rte-ck-hoverPreview-media-notExisting' => 'Этого изображения или файла не существует!',
 	'rte-ck-hoverPreview-template-intro' => 'Это шаблон.',
 	'rte-ck-hoverPreview-template-notExisting' => 'Этот шаблон не существует!',
@@ -3415,19 +3175,19 @@ $messages['ru'] = array(
 	'rte-ck-photoGallery-tooltip' => 'Это галерея фотографий.',
 	'rte-ck-photoGallery-tooltipSlideshow' => 'Это слайд-шоу.',
 	'rte-ck-photoGallery-tooltipSlider' => 'Это слайдер.',
-	'rte-ck-signature-add' => 'Добавить подпись',
+	'rte-ck-signature-add' => 'Добавить свою подпись',
 	'rte-ck-signature-label' => 'Подпись',
 	'rte-ck-table-alignNotSet' => 'Не установлено',
 	'rte-ck-table-invalidCols' => 'Число столбцов должно быть больше 0.',
 	'rte-ck-table-invalidRows' => 'Число строк должно быть больше 0.',
 	'rte-ck-table-toolbarTooltip' => 'Добавить таблицу',
-	'rte-ck-templateDropDown-chooseAnotherTpl' => 'Другие шаблоны / «Волшебные слова»',
+	'rte-ck-templateDropDown-chooseAnotherTpl' => 'Другие шаблоны / "волшебные слова"',
 	'rte-ck-templateDropDown-showUsedList' => 'Показать список используемых шаблонов',
 	'rte-ck-templateDropDown-makeLayout' => 'Создать макет с этой страницей',
 	'rte-ck-templateDropDown-label' => 'Шаблон',
 	'rte-ck-templateDropDown-title' => 'Выберите шаблон',
 	'rte-ck-templateEditor-dialog-browse' => 'Просмотр шаблона',
-	'rte-ck-templateEditor-dialog-insert' => 'Вставить',
+	'rte-ck-templateEditor-dialog-insert' => 'Правка',
 	'rte-ck-templateEditor-dialog-magicWords' => 'Волшебные слова',
 	'rte-ck-templateEditor-dialog-magicWordsLink' => 'Help:Волшебные слова',
 	'rte-ck-templateEditor-dialog-mostFrequentlyUsed' => 'Часто используемые',
@@ -3441,7 +3201,7 @@ $messages['ru'] = array(
 	'rte-ck-templateEditor-usedTemplates-title' => 'Список используемых шаблонов',
 	'rte-ck-templateEditor-title' => 'Редактор шаблонов',
 	'rte-ck-unlink' => 'Удалить ссылку',
-	'rte-ck-video-add' => 'Добавить видео',
+	'rte-ck-video-add' => 'Добавить видеоролик',
 	'rte-ck-video-video' => 'Видео',
 	'rte-ck-video-confirmDelete' => 'Вы уверены, что хотите удалить видео с этой страницы?',
 	'rte-ck-video-confirmDeleteTitle' => 'Удалить это видео?',
@@ -3450,7 +3210,7 @@ $messages['ru'] = array(
 	'rte-ck-videoPlaceholder-tooltip' => 'Это маркер места размещения видео-файла.',
 	'rte-ck-mut-add' => 'Добавить видео (бета-версия)',
 	'rte-ck-mut-mut' => 'Видео (бета-версия)',
-	'rte-ck-widescreen-toggle' => 'Широкоэкранный режим',
+	'rte-ck-widescreen-toggle' => 'Переключение широкоэкранного режима',
 	'rte-ck-spellchecker-moreSuggestions' => 'Дополнительная поддержка',
 	'rte-ck-pasteText-title' => 'Вставить текст',
 	'rte-ck-clipboard-pasteMsg' => 'По соображениям безопасности, редактор не может получить доступ к вашему буферу обмена. Пожалуйста, вставьте в поле ниже с помощью сочетаний клавиш (Ctrl / Cmd + V) и нажмите «OK». <br /><br /> Примечание: ваш текст будет лишён форматирование, чтобы избежать создания сложного викитекста.',
@@ -3460,19 +3220,13 @@ $messages['ru'] = array(
 	'rte-ck-format-tag_h3' => 'Заголовок 3',
 	'rte-ck-format-tag_h4' => 'Заголовок 4',
 	'rte-ck-format-tag_h5' => 'Заголовок 5',
-);
+];
 
-/** Rusyn (русиньскый)
- * @author Tkalyn
- */
-$messages['rue'] = array(
+$messages['rue'] = [
 	'rte-ck-link-add' => 'Придати одказ',
-);
+];
 
-/** Serbian (Cyrillic script) (српски (ћирилица)‎)
- * @author Rancher
- */
-$messages['sr-ec'] = array(
+$messages['sr-ec'] = [
 	'rte-ck-bucket-textAppearance' => 'Изглед текста',
 	'rte-ck-bucket-insert' => 'Убаци',
 	'rte-ck-bucket-controls' => 'Контроле',
@@ -3540,13 +3294,9 @@ $messages['sr-ec'] = array(
 	'rte-ck-format-tag_h3' => 'Наслов 3',
 	'rte-ck-format-tag_h4' => 'Наслов 4',
 	'rte-ck-format-tag_h5' => 'Наслов 5',
-);
+];
 
-/** Swedish (svenska)
- * @author Tobulos1
- * @author WikiPhoenix
- */
-$messages['sv'] = array(
+$messages['sv'] = [
 	'rte-ck-bucket-textAppearance' => 'Textutseende',
 	'rte-ck-bucket-insert' => 'Infoga',
 	'rte-ck-bucket-controls' => 'Kontroller',
@@ -3647,28 +3397,21 @@ $messages['sv'] = array(
 	'rte-ck-widescreen-toggle' => 'Sätt på widescreen',
 	'rte-ck-spellchecker-moreSuggestions' => 'Fler förslag',
 	'rte-ck-pasteText-title' => 'Klistra in din text',
-	'rte-ck-clipboard-pasteMsg' => "Av säkerhetsskäl kan redigeraren inte komma åt ditt urklipp. Var god klistra in i rutan nedanför med hjälp av kortkommandon (Ctrl/Cmd+V) och tryck på 'OK'.<br /><br />OBS: All formatering på din text kommer att avlägsnas för att undvika att komplex wikitext skapas.",
+	'rte-ck-clipboard-pasteMsg' => 'Av säkerhetsskäl kan redigeraren inte komma åt ditt urklipp. Var god klistra in i rutan nedanför med hjälp av kortkommandon (Ctrl/Cmd+V) och tryck på \'OK\'.<br /><br />OBS: All formatering på din text kommer att avlägsnas för att undvika att komplex wikitext skapas.',
 	'rte-ck-format-tag_p' => 'Normal text',
 	'rte-ck-format-tag_pre' => 'Kod (förformaterad text)',
 	'rte-ck-format-tag_h2' => 'Rubrik 2',
 	'rte-ck-format-tag_h3' => 'Rubrik 3',
 	'rte-ck-format-tag_h4' => 'Rubrik 4',
 	'rte-ck-format-tag_h5' => 'Rubrik 5',
-);
+];
 
-/** Tamil (தமிழ்)
- * @author TRYPPN
- */
-$messages['ta'] = array(
+$messages['ta'] = [
 	'rte-ck-templateDropDown-label' => 'வார்ப்புரு',
 	'rte-ck-templateEditor-dialog-insert' => 'உள்ளிடு',
-);
+];
 
-/** Telugu (తెలుగు)
- * @author Chaduvari
- * @author Veeven
- */
-$messages['te'] = array(
+$messages['te'] = [
 	'rte-ck-hoverPreview-comment-title' => 'వ్యాఖ్య',
 	'rte-ck-hoverPreview-delete' => 'తొలగించు',
 	'rte-ck-link-error-title' => 'లోపం',
@@ -3685,20 +3428,14 @@ $messages['te'] = array(
 	'rte-ck-templateEditor-editor-previewButton' => 'మునుజూపు',
 	'rte-ck-templateEditor-editor-previewTitle' => 'మునుజూపు',
 	'rte-ck-spellchecker-moreSuggestions' => 'మరిన్ని సూచనలు',
-);
+];
 
-/** Tetum (tetun)
- * @author MF-Warburg
- */
-$messages['tet'] = array(
+$messages['tet'] = [
 	'rte-ck-hoverPreview-edit' => 'edita',
 	'rte-ck-media-delete' => 'hasai',
-);
+];
 
-/** Tagalog (Tagalog)
- * @author AnakngAraw
- */
-$messages['tl'] = array(
+$messages['tl'] = [
 	'rte-ck-bucket-textAppearance' => 'Anyo ng teksto',
 	'rte-ck-bucket-insert' => 'Isingit',
 	'rte-ck-bucket-controls' => 'Mga pantaban',
@@ -3798,21 +3535,16 @@ $messages['tl'] = array(
 	'rte-ck-widescreen-toggle' => 'Paglipat-lipatin ang panoorang maluwang',
 	'rte-ck-spellchecker-moreSuggestions' => 'Marami pang mga mungkahi',
 	'rte-ck-pasteText-title' => 'Idikit ang teksto mo',
-	'rte-ck-clipboard-pasteMsg' => "Para sa mga kadahilanang pangkaligtasan, hindi tuwirang mapuntahan ng patnugot ang iyong pagdikit. Paki magdikit sa loob ng kahong nasa ibaba na ginagamit ang mga mas matitipid na mga paraan sa pagmamakinilya (Ctrl/Cmd+V) at pindutin ang 'Sige'.<br /><br />Paunawa: ang teksto mo ay tatanggalan ng pagkakaayos upang maiwasan ang paglikha ng masalimuot na teksto ng wiki.",
+	'rte-ck-clipboard-pasteMsg' => 'Para sa mga kadahilanang pangkaligtasan, hindi tuwirang mapuntahan ng patnugot ang iyong pagdikit. Paki magdikit sa loob ng kahong nasa ibaba na ginagamit ang mga mas matitipid na mga paraan sa pagmamakinilya (Ctrl/Cmd+V) at pindutin ang \'Sige\'.<br /><br />Paunawa: ang teksto mo ay tatanggalan ng pagkakaayos upang maiwasan ang paglikha ng masalimuot na teksto ng wiki.',
 	'rte-ck-format-tag_p' => 'Normal na teksto',
 	'rte-ck-format-tag_pre' => 'Kodigo (tekstong may paunang pagsasaayos)',
 	'rte-ck-format-tag_h2' => 'Pamuhatan 2',
 	'rte-ck-format-tag_h3' => 'Pamuhatan 3',
 	'rte-ck-format-tag_h4' => 'Pamuhatan 4',
 	'rte-ck-format-tag_h5' => 'Pamuhatan 5',
-);
+];
 
-/** Turkish (Türkçe)
- * @author Emperyan
- * @author Incelemeelemani
- * @author Mert.subay
- */
-$messages['tr'] = array(
+$messages['tr'] = [
 	'rte-ck-bucket-textAppearance' => 'Metin Görünümü',
 	'rte-ck-bucket-insert' => 'Ekle',
 	'rte-ck-bucket-controls' => 'Kontroller',
@@ -3837,7 +3569,7 @@ $messages['tr'] = array(
 	'rte-ck-imagePlaceholder-tooltip' => 'Bu bir resim yertutucusudur.',
 	'rte-ck-link-add' => 'Link ekle',
 	'rte-ck-link-error-badPageTitle' => 'Lütfen bir sayfa başlığı girin.',
-	'rte-ck-link-error-badUrl' => "Bu URL'yi onaylamıyoruz - lütfen doğru olup olmadığına bakın.",
+	'rte-ck-link-error-badUrl' => 'Bu URL\'yi onaylamıyoruz - lütfen doğru olup olmadığına bakın.',
 	'rte-ck-link-error-title' => 'Hata',
 	'rte-ck-link-external-linkText' => 'Bağlantı metni',
 	'rte-ck-link-external-numberedLink' => 'Numaralı bağlantı yarat (örnek, "[1]")',
@@ -3867,8 +3599,8 @@ $messages['tr'] = array(
 	'rte-ck-signature-add' => 'İmzanı ekle',
 	'rte-ck-signature-label' => 'İmza',
 	'rte-ck-table-alignNotSet' => 'Sabit değil',
-	'rte-ck-table-invalidCols' => "Kolonların sayısı 0'dan büyük olmalıdır.",
-	'rte-ck-table-invalidRows' => "Kirişlerin sayısı 0'dan büyük olmalıdır.",
+	'rte-ck-table-invalidCols' => 'Kolonların sayısı 0\'dan büyük olmalıdır.',
+	'rte-ck-table-invalidRows' => 'Kirişlerin sayısı 0\'dan büyük olmalıdır.',
 	'rte-ck-templateDropDown-chooseAnotherTpl' => 'Diğer şablon / sihirli kelime',
 	'rte-ck-templateDropDown-label' => 'Şablon',
 	'rte-ck-templateDropDown-title' => 'Bir şablon seç',
@@ -3893,25 +3625,13 @@ $messages['tr'] = array(
 	'rte-ck-videoPlaceholder-confirmDeleteTitle' => 'Videotutucuyu kaldır?',
 	'rte-ck-videoPlaceholder-tooltip' => 'Bu bir video tutucudur.',
 	'rte-ck-widescreen-toggle' => 'Geniş ekran',
-);
+];
 
-/** Tatar (Cyrillic script) (татарча)
- * @author Ajdar
- */
-$messages['tt-cyrl'] = array(
+$messages['tt-cyrl'] = [
 	'rte-ck-errorPopupTitle' => 'Хата!',
-);
+];
 
-/** Ukrainian (українська)
- * @author A1
- * @author Ahonc
- * @author Andriykopanytsia
- * @author Steve.rusyn
- * @author SteveR
- * @author Ua2004
- * @author Тест
- */
-$messages['uk'] = array(
+$messages['uk'] = [
 	'rte-ck-bucket-textAppearance' => 'Вигляд тексту',
 	'rte-ck-bucket-insert' => 'Вставити',
 	'rte-ck-bucket-controls' => 'Керування',
@@ -4019,14 +3739,9 @@ $messages['uk'] = array(
 	'rte-ck-format-tag_h3' => 'Заголовок 3',
 	'rte-ck-format-tag_h4' => 'Заголовок 4',
 	'rte-ck-format-tag_h5' => 'Заголовок 5',
-);
+];
 
-/** Vietnamese (Tiếng Việt)
- * @author Baonguyen21022003
- * @author NavaRose
- * @author Xiao Qiao
- */
-$messages['vi'] = array(
+$messages['vi'] = [
 	'rte-ck-bucket-textAppearance' => 'Diện mạo văn bản',
 	'rte-ck-bucket-insert' => 'Chèn',
 	'rte-ck-bucket-controls' => 'Điều khiển',
@@ -4127,21 +3842,16 @@ $messages['vi'] = array(
 	'rte-ck-widescreen-toggle' => 'Chuyển đổi màn ảnh rộng',
 	'rte-ck-spellchecker-moreSuggestions' => 'Gợi ý thêm',
 	'rte-ck-pasteText-title' => 'Dán văn bản của bạn',
-	'rte-ck-clipboard-pasteMsg' => "Vì lý do an ninh, biên tập viên không thể thực hiện dán trực tiếp. Hãy dán vào hộp dưới đây bằng cách sử dụng các phím tắt (Ctrl/Cmd+V) và nhấn 'OK'.<br /><br />Chú ý: Văn bản của bạn sẽ bị gỡ bỏ định dạng để tránh việc tạo ra văn bản wiki phức tạp.",
+	'rte-ck-clipboard-pasteMsg' => 'Vì lý do an ninh, biên tập viên không thể thực hiện dán trực tiếp. Hãy dán vào hộp dưới đây bằng cách sử dụng các phím tắt (Ctrl/Cmd+V) và nhấn \'OK\'.<br /><br />Chú ý: Văn bản của bạn sẽ bị gỡ bỏ định dạng để tránh việc tạo ra văn bản wiki phức tạp.',
 	'rte-ck-format-tag_p' => 'Văn bản thường',
 	'rte-ck-format-tag_pre' => 'Mã (văn bản định dạng sẵn)',
 	'rte-ck-format-tag_h2' => 'Đề mục cấp 2',
 	'rte-ck-format-tag_h3' => 'Đề mục cấp 3',
 	'rte-ck-format-tag_h4' => 'Đề mục cấp 4',
 	'rte-ck-format-tag_h5' => 'Đề mục cấp 5',
-);
+];
 
-/** Simplified Chinese (中文（简体）‎)
- * @author Hydra
- * @author Liuxinyu970226
- * @author Sam Wang
- */
-$messages['zh-hans'] = array(
+$messages['zh-hans'] = [
 	'rte-ck-bucket-textAppearance' => '文本外观',
 	'rte-ck-bucket-insert' => '插入',
 	'rte-ck-bucket-controls' => '控件',
@@ -4242,21 +3952,16 @@ $messages['zh-hans'] = array(
 	'rte-ck-widescreen-toggle' => '切换宽屏',
 	'rte-ck-spellchecker-moreSuggestions' => '更多建议',
 	'rte-ck-pasteText-title' => '粘贴文本',
-	'rte-ck-clipboard-pasteMsg' => "基于安全原因，您不能在编辑器中直接复制粘贴。请通过键盘快捷键（Ctrl/Commond+V）粘贴至下面的方框中并点击'OK'。<br /><br />注意：您的文本将被格式化以防止复杂的维基文本无故消失。",
+	'rte-ck-clipboard-pasteMsg' => '基于安全原因，您不能在编辑器中直接复制粘贴。请通过键盘快捷键（Ctrl/Commond+V）粘贴至下面的方框中并点击\'OK\'。<br /><br />注意：您的文本将被格式化以防止复杂的维基文本无故消失。',
 	'rte-ck-format-tag_p' => '普通文本',
 	'rte-ck-format-tag_pre' => '代码（预先设好格式文本）',
 	'rte-ck-format-tag_h2' => '标题2',
 	'rte-ck-format-tag_h3' => '标题3',
 	'rte-ck-format-tag_h4' => '标题4',
 	'rte-ck-format-tag_h5' => '标题5',
-);
+];
 
-/** Traditional Chinese (中文（繁體）‎)
- * @author Ffaarr
- * @author LNDDYL
- * @author Liuxinyu970226
- */
-$messages['zh-hant'] = array(
+$messages['zh-hant'] = [
 	'rte-ck-bucket-insert' => '插入',
 	'rte-ck-hoverPreview-delete' => '刪除',
 	'rte-ck-image-photo' => '照片',
@@ -4269,11 +3974,13 @@ $messages['zh-hant'] = array(
 	'rte-ck-video-video' => '影片',
 	'rte-ck-mut-add' => '添加影片 （測試版）',
 	'rte-ck-mut-mut' => '影片 （測試版）',
-);
+];
 
-/** Chinese (Taiwan) (中文（台灣）‎)
- * @author Ffaarr
- */
-$messages['zh-tw'] = array(
+$messages['zh-tw'] = [
 	'rte-ck-hoverPreview-edit' => '編輯',
-);
+];
+
+$messages['no'] = [
+	'rte-ck-commentEditor-title' => 'Kommentarendrer',
+];
+
