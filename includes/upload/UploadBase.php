@@ -299,6 +299,11 @@ abstract class UploadBase {
 			}
 			return $result;
 		}
+
+		if ( !wfRunHooks( 'FileUploadTitleCheck', [ $nt ] ) ) {
+			return [ 'status' => self::HOOK_ABORTED, 'error' => 'phalanx-title' ];
+		}
+
 		$this->mDestName = $this->getLocalFile()->getName();
 
 		return true;
