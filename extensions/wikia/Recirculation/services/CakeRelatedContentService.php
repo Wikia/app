@@ -164,7 +164,7 @@ class CakeRelatedContentService {
 		}
 
 		return array("username" => $authorObjects[0]->getUsername(),
-					"avatar" => $authorObjects[0]->getAvatar());
+		             "avatar" => $authorObjects[0]->getAvatar());
 	}
 
 	private function getRecirculationContentType( $contentType ) {
