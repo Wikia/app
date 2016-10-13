@@ -42,7 +42,7 @@ define('ext.wikia.recirculation.helpers.cakeRelatedContent', [
 
     function formatData(data) {
         data.items = data.items.map(function(item) {
-	    if (item.source  == "discussions") {
+	    if (item.source  === "discussions") {
 	        item.meta.authorAvatarUrl = item.author.avatar.src;
 	    }
 	    item.author = item.author.username;
