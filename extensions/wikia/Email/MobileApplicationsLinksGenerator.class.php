@@ -32,6 +32,7 @@ class MobileApplicationsLinksGenerator {
 	static private $appStoreLanguagesMapping = [
 		'en' => 'us',
 		'zh' => 'cn',
+		'zh-hans' => 'cn',
 		'zh-tw' => 'tw',
 		'fr' => 'fr',
 		'de' => 'de',
