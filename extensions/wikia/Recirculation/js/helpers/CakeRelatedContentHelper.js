@@ -49,7 +49,6 @@ define('ext.wikia.recirculation.helpers.cakeRelatedContent', [
 			item.title = item.title.split(' | ')[0];
 			return item;
         }).sort(utils.sortThumbnails);
-		debugger
         return data;
     }
 
