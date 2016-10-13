@@ -29,30 +29,31 @@ class StaffWelcomePoster {
 	}
 
 	public function postMessage( int $siteId, string $language ): bool {
-		$staffId = $this->getStaffFromLang( $language );
-		$message = $this->getMessage( $language );
+		$trimmedLang = $this->trimLang( $language );
+		$staffId = $this->getStaffFromLang( $trimmedLang );
+		$message = $this->getMessage( $trimmedLang );
 
 		$success = $this->threadCreator->create( $staffId, $siteId,  $message );
 
 		return $success;
 	}
 
-	private function getStaffFromLang( string $langCode ): int {
-		$staffId = self::LANG_TO_STAFF_MAP[$this->trimLang( $langCode )];
+	private function getStaffFromLang( string $language ): int {
+		$staffId = self::LANG_TO_STAFF_MAP[$language];
 		return $staffId ?? self::LANG_TO_STAFF_MAP[self::DEFAULT_LANG];
 	}
 
-	private function getMessage( string $langCode ): string {
-		return wfMessage( self::MESSAGE_KEY )->inLanguage( $langCode )->plain();
+	private function getMessage( string $language ): string {
+		return wfMessage( self::MESSAGE_KEY )->inLanguage( $language )->plain();
 	}
 
 	/**
 	 * Trim off any regional variants for the language. Eg, pt-br and pt
 	 * should be treated the same, as should all variations of zh.
-	 * @param string $lang
+	 * @param string $language
 	 * @return string
 	 */
-	private function trimLang( string $lang ): string {
-		return substr( $lang, 0, 2 );
+	private function trimLang( string $language ): string {
+		return substr( $language, 0, 2 );
 	}
 }

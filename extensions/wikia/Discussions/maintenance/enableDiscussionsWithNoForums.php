@@ -18,7 +18,6 @@ class EnableDiscussionsWithNoForums extends Maintenance {
 	}
 
 	public function execute() {
-
 		$fh = fopen( $this->getArg(), 'r' );
 
 		if ( !$fh ) {
