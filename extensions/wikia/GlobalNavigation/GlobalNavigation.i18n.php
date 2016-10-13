@@ -90,10 +90,11 @@ $messages['fi'] = [
 	'global-navigation-community-link' => 'http://yhteiso.wikia.com/',
 	'global-navigation-community-link-label' => 'Yhteisöwiki',
 	'global-navigation-global-search' => 'Hae kaikkialta Wikiasta',
+	'global-navigation-local-search-placeholder' => 'Hae sivustolta $1...',
 ];
 
 $messages['fr'] = [
-	'global-navigation-desc' => 'Navigation de Wikia',
+	'global-navigation-desc' => 'Navigation globale de Wikia',
 	'global-navigation-create-wiki' => 'Créer une communauté',
 	'global-navigation-register' => 'S\'inscrire',
 	'global-navigation-sign-in' => 'Se connecter',
@@ -124,7 +125,7 @@ $messages['it'] = [
 	'global-navigation-menu-hubs' => '*http://it.community.wikia.com/wiki/Categoria:Videogiochi|Videogiochi|games
 *http://it.community.wikia.com/wiki/Categoria:Cinema|Cinema|movies
 *http://it.community.wikia.com/wiki/Categoria:Televisione|Televisione|tv',
-	'global-navigation-local-search-placeholder' => 'Cerca su $1...',
+	'global-navigation-local-search-placeholder' => 'Cerca all\'interno di $1...',
 	'global-navigation-local-search' => 'Cerca in questa comunità',
 	'global-navigation-global-search' => 'Cerca in tutto Fandom',
 	'global-navigation-community-link-label' => 'Wiki della Community',
@@ -146,7 +147,7 @@ $messages['ja'] = [
 	'global-navigation-community-link-label' => 'コミュニティセントラル',
 	'global-navigation-menu-hubs' => '*http://ja.videogameshub.wikia.com/wiki/ビデオゲームハブ_Wiki|ゲーム|games
 *http://ja.entertainmenthub.wikia.com/wiki/エンターテイメントハブ_Wiki|エンターテインメント|entertainment',
-	'global-navigation-local-search-placeholder' => '$1内を検索...',
+	'global-navigation-local-search-placeholder' => '$1のみを検索',
 	'global-navigation-local-search' => 'このコミュニティを検索',
 	'global-navigation-global-search' => 'Fandom全体を検索',
 	'global-navigation-explore-wikia-link' => '#',
@@ -157,13 +158,13 @@ $messages['ja'] = [
 ];
 
 $messages['nl'] = [
-	'global-navigation-desc' => 'Wikia\'s Global Navigation',
+	'global-navigation-desc' => 'Wikia\'s globale navigatie',
 	'global-navigation-create-wiki' => 'Een wikia starten',
 	'global-navigation-register' => 'Register',
-	'global-navigation-sign-in' => 'Sign In',
+	'global-navigation-sign-in' => 'Aanmelden',
 	'global-navigation-account-navigation-options' => '$1 or $2',
 	'global-navigation-community-link' => 'http://community.wikia.com',
-	'global-navigation-local-search-placeholder' => 'Search within $1...',
+	'global-navigation-local-search-placeholder' => 'Zoek binnen $1...',
 	'global-navigation-local-search' => 'Deze wikia doorzoeken',
 	'global-navigation-global-search' => 'Heel Wikia doorzoeken',
 	'global-navigation-community-link-label' => 'Community Central',
@@ -178,7 +179,7 @@ $messages['nl'] = [
 ];
 
 $messages['pl'] = [
-	'global-navigation-desc' => 'Globalna Nawigacja Wikii',
+	'global-navigation-desc' => 'Globalna nawigacja Wikii',
 	'global-navigation-create-wiki' => 'Stwórz społeczność',
 	'global-navigation-register' => 'Zarejestruj się',
 	'global-navigation-sign-in' => 'Zaloguj się',
@@ -186,9 +187,9 @@ $messages['pl'] = [
 	'global-navigation-community-link' => 'http://spolecznosc.wikia.com',
 	'global-navigation-community-link-label' => 'Centrum Społeczności',
 	'global-navigation-wam-link' => 'http://pl.wikia.com/WAM',
-	'global-navigation-menu-hubs' => '*http://gryhub.wikia.com/wiki/Gry|Gry|games
-*http://rozrywkahub.wikia.com/wiki/Rozrywka|Rozrywka|entertainment
-*http://pl.lifestylehub.wikia.com/wiki/Lifestyle|Lifestyle|lifestyle',
+	'global-navigation-menu-hubs' => '* http://gryhub.wikia.com/wiki/Gry|Gry|games
+* http://rozrywkahub.wikia.com/wiki/Rozrywka|Rozrywka|entertainment
+* http://pl.lifestylehub.wikia.com/wiki/Lifestyle|Lifestyle|lifestyle',
 	'global-navigation-local-search-placeholder' => 'Szukaj na $1...',
 	'global-navigation-local-search' => 'Przeszukaj tę społeczność',
 	'global-navigation-global-search' => 'Przeszukaj cały Fandom',
@@ -210,7 +211,7 @@ $messages['pt'] = [
 	'global-navigation-menu-hubs' => '*http://pt.videogameshub.wikia.com/wiki/Wiki_Videogameshub|Jogos|games
 *http://pt.entretenimento.wikia.com/wiki/Wiki_Entretenimento|Entretenimento|entertainment
 *http://pt.estilodevida.wikia.com/wiki/Wiki_Estilo_de_Vida|Estilo de Vida|lifestyle',
-	'global-navigation-local-search-placeholder' => 'Pesquisar dentro da $1...',
+	'global-navigation-local-search-placeholder' => 'Procure pela $1...',
 	'global-navigation-local-search' => 'Pesquisar esta comunidade',
 	'global-navigation-global-search' => 'Pesquisar todo o Fandom',
 	'global-navigation-explore-wikia-link' => '#',
@@ -218,6 +219,7 @@ $messages['pt'] = [
 	'global-navigation-wam-link-label' => 'Wikias em alta',
 	'global-navigation-search-wikia' => 'Pesquisar $1...',
 	'global-navigation-home-of-fandom' => 'O Reinado de fãs',
+	'global-navigation-wam-link' => 'http://wikia.com/WAM',
 ];
 
 $messages['ru'] = [
@@ -247,20 +249,21 @@ $messages['vi'] = [
 	'global-navigation-create-wiki' => 'Tạo lập wikia',
 	'global-navigation-global-search' => 'tất cả wikia',
 	'global-navigation-local-search' => 'wikia này',
+	'global-navigation-local-search-placeholder' => 'Tìm kiếm với $1...',
 ];
 
 $messages['zh-hans'] = [
 	'global-navigation-desc' => 'Wikia全球导航',
 	'global-navigation-create-wiki' => '创建社区',
 	'global-navigation-register' => '注册',
-	'global-navigation-sign-in' => '登入',
+	'global-navigation-sign-in' => '登录',
 	'global-navigation-account-navigation-options' => '$1或$2',
 	'global-navigation-community-link' => 'http://zh.community.wikia.com',
 	'global-navigation-community-link-label' => '社区中心',
 	'global-navigation-menu-hubs' => '*http://zh.gameshub.wikia.com/wiki/游戏中心|游戏|games
 *http://zh.entertainmenthub.wikia.com/wiki/娱乐中心|娱乐|entertainment
 *http://zh.lifestylehub.wikia.com/wiki/生活中心|生活|lifestyle',
-	'global-navigation-local-search-placeholder' => '在$1内搜索...',
+	'global-navigation-local-search-placeholder' => '在$1上进行搜索...',
 	'global-navigation-local-search' => '搜索这个社区',
 	'global-navigation-global-search' => '搜索所有Fandom社区',
 	'global-navigation-explore-wikia-link' => '#',
@@ -281,7 +284,7 @@ $messages['zh-hant'] = [
 	'global-navigation-menu-hubs' => '*http://zh-tw.gameshub.wikia.com/wiki/遊戲中心|遊戲|games
 *http://zh-tw.entertainmenthub.wikia.com/wiki/娛樂中心|娛樂|entertainment
 *http://zh-tw.lifestylehub.wikia.com/wiki/生活中心|生活|lifestyle',
-	'global-navigation-local-search-placeholder' => '在$1內搜索...',
+	'global-navigation-local-search-placeholder' => '在$1上進行搜索...',
 	'global-navigation-local-search' => '搜索這個社區',
 	'global-navigation-global-search' => '搜索整個Fandom',
 	'global-navigation-explore-wikia-link' => '#',
@@ -303,6 +306,8 @@ $messages['ko'] = [
 	'global-navigation-create-wiki' => '새 위키 만들기',
 	'global-navigation-global-search' => '위키아 전역에서 검색하기',
 	'global-navigation-local-search' => '이 위키아에서 검색하기',
+	'global-navigation-local-search-placeholder' => '$1에서 검색하기',
+	'global-navigation-sign-in' => '로그인',
 ];
 
 $messages['oc'] = [
@@ -315,6 +320,8 @@ $messages['pt-br'] = [
 	'global-navigation-create-wiki' => 'Comece uma wikia',
 	'global-navigation-global-search' => 'Procure em toda a Wikia',
 	'global-navigation-local-search' => 'nesta wikia',
+	'global-navigation-local-search-placeholder' => 'Procure pela $1...',
+	'global-navigation-wam-link' => 'http://wikia.com/WAM',
 ];
 
 $messages['uk'] = [
@@ -327,21 +334,31 @@ $messages['zh'] = [
 	'global-navigation-create-wiki' => '创建维基',
 	'global-navigation-global-search' => '搜索所有维基社区',
 	'global-navigation-local-search' => '本维基',
+	'global-navigation-local-search-placeholder' => '在$1上进行搜索...',
+	'global-navigation-menu-hubs' => '*http://zh.gameshub.wikia.com|游戏|games
+*http://zh.entertainmenthub.wikia.com/wiki/娱乐中心|娱乐|tv
+*http://zh.lifestylehub.wikia.com/wiki/生活中心|生活|lifestyle',
+	'global-navigation-sign-in' => '登录',
 ];
 
 $messages['zh-hk'] = [
 	'global-navigation-create-wiki' => '創建維基',
 	'global-navigation-global-search' => '搜索所有維基社區',
 	'global-navigation-local-search' => '本維基',
+	'global-navigation-local-search-placeholder' => '在$1上進行搜索...',
+	'global-navigation-sign-in' => '登入',
 ];
 
 $messages['zh-tw'] = [
 	'global-navigation-create-wiki' => '創建維基',
 	'global-navigation-global-search' => '搜索所有維基社區',
 	'global-navigation-local-search' => '本維基',
+	'global-navigation-local-search-placeholder' => '在$1上進行搜索...',
+	'global-navigation-sign-in' => '登入',
 ];
 
 $messages['sv'] = [
 	'global-navigation-global-search' => 'Sök på hela Wikia',
+	'global-navigation-local-search-placeholder' => 'Sök inom $1...',
 ];
 

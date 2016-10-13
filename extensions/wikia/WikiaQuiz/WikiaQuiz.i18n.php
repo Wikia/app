@@ -1,5 +1,5 @@
 <?php
-
+/** Internationalization file for /extensions/wikia/WikiaQuiz/WikiaQuiz extension. */
 $messages = [];
 
 $messages['en'] = [
@@ -40,8 +40,6 @@ $messages['en'] = [
 	'wikiaquiz-error-invalid-quiz' => 'Quiz name is invalid.',
 	'wikiaquiz-error-invalid-article' => 'Article ID is invalid.',
 	'wikiaquiz-error-invalid-article-with-details' => 'Article is invalid: $1',
-
-	// game itself
 	'wikiaquiz-game-start-button' => 'Start Game',
 	'wikiaquiz-game-cadence-3' => 'Ready',
 	'wikiaquiz-game-cadence-2' => 'Set',
@@ -58,20 +56,16 @@ $messages['en'] = [
 	'wikiaquiz-game-thanks' => 'Thanks for playing!',
 	'wikiaquiz-game-provide-email' => 'Please enter your e-mail address',
 	'wikiaquiz-game-email-placeholder' => 'yourname@youremail.com',
-	'wikiaquiz-game-email-button' => 'Send me free stuff',
+	'wikiaquiz-game-email-button' => 'Submit',
 	'wikiaquiz-game-email-valid-please' => 'Please enter a valid email address.',
 	'wikiaquiz-game-email-token-mismatch' => 'Oops! Token doesn\'t match',
 	'wikiaquiz-game-email-subject' => 'Thanks for your submission!',
-	'wikiaquiz-game-email-body' => 'This is a confirmation email. We have received your submission and will notify you if you\'re a winner!',
+	'wikiaquiz-game-email-body' => 'This is a confirmation email to let you know that we have received your submission. Thanks for playing Wikia Trivia!',
 	'wikiaquiz-game-email-error' => 'There was an error while sending this email: $1',
 	'wikiaquiz-game-challenge' => 'Challenge your friends to play!',
 	'wikiaquiz-game-mute' => 'Mute',
 ];
 
-/** Message documentation (Message documentation)
- * @author LWChris
- * @author Shirayuki
- */
 $messages['qqq'] = [
 	'wikiaquiz-desc' => '{{desc}}',
 	'wikiaquiz-createquiz-headline' => 'Headline for Create Quiz Special Page.',
@@ -120,15 +114,12 @@ $messages['qqq'] = [
 	'wikiaquiz-game-finish-button' => '{{Identical|Finish}}',
 	'wikiaquiz-game-continue-button' => '{{Identical|Continue}}',
 	'wikiaquiz-game-thanks' => '$1 is the name of wiki main page',
-	'wikiaquiz-game-email-token-mismatch' => "Shown when hidden token (to prevent hijacking) sent to the backend doesn't match the one stored in user's session",
+	'wikiaquiz-game-email-token-mismatch' => 'Shown when hidden token (to prevent hijacking) sent to the backend doesn\'t match the one stored in user\'s session',
 	'wikiaquiz-game-email-subject' => 'Subject of an email sent to the user when quiz is completed',
 	'wikiaquiz-game-email-body' => 'Body of an email sent to the user when quiz is completed',
 	'wikiaquiz-game-email-error' => 'Message shown when there was an error when sending an email. $1 is an error message.',
 ];
 
-/** Arabic (العربية)
- * @author Achraf94
- */
 $messages['ar'] = [
 	'wikiaquiz-desc' => 'توفر طريقة سهلة لصنع وإدارة مسابقات وألغاز',
 	'wikiaquiz-createquiz-headline' => 'إنشاء مسابقة',
@@ -192,9 +183,6 @@ $messages['ar'] = [
 	'wikiaquiz-game-mute' => 'مكتوم',
 ];
 
-/** Azerbaijani (azərbaycanca)
- * @author Cekli829
- */
 $messages['az'] = [
 	'wikiaquiz-title-label' => 'Başlıq',
 	'wikiaquiz-questions-label' => 'Suallar',
@@ -206,9 +194,6 @@ $messages['az'] = [
 	'wikiaquiz-game-email-placeholder' => 'yourname@youremail.com',
 ];
 
-/** Bulgarian (български)
- * @author DCLXVI
- */
 $messages['bg'] = [
 	'wikiaquiz-title-label' => 'Заглавие',
 	'wikiaquiz-moreinfoarticle-label' => 'Статия',
@@ -224,14 +209,9 @@ $messages['bg'] = [
 	'wikiaquiz-game-continue-button' => 'Продължаване',
 ];
 
-/** Breton (brezhoneg)
- * @author Fohanno
- * @author Fulup
- * @author Y-M D
- */
 $messages['br'] = [
-	'wikiaquiz-createquiz-headline' => "Krouiñ ur c'hwiz",
-	'wikiaquiz-editquiz-headline' => "Aozañ ar c'hwiz",
+	'wikiaquiz-createquiz-headline' => 'Krouiñ ur c\'hwiz',
+	'wikiaquiz-editquiz-headline' => 'Aozañ ar c\'hwiz',
 	'wikiaquiz-title-label' => 'Titl',
 	'wikiaquiz-moreinfolinks-label' => 'Liammoù "muioc\'h a ditouroù"',
 	'wikiaquiz-moreinfoarticle-label' => 'Pennad',
@@ -249,42 +229,37 @@ $messages['br'] = [
 	'wikiaquiz-publish-label' => 'Embann',
 	'wikiaquiz-error-duplicate-question' => 'Ur goulenn en anv-se zo anezhañ dija.',
 	'wikiaquiz-error-invalid-question' => 'Direizh eo testenn ar goulenn.',
-	'wikiaquiz-error-invalid-image' => "N'eo ket reizh ar skeudenn : $1",
-	'wikiaquiz-error-invalid-video' => "N'eo ket reizh ar video : $1",
-	'wikiaquiz-error-missing-answers' => "Ret eo deoc'h reiñ ur respont da nebeutañ",
-	'wikiaquiz-error-invalid-correct-answer' => "Ret eo deoc'h reiñ ur respont reizh.",
-	'wikiaquiz-error-invalid-quiz' => "N'eo ket reizh anv ar c'hwiz.",
-	'wikiaquiz-error-invalid-article' => "N'eo ket reizh ID ar pennad.",
-	'wikiaquiz-error-invalid-article-with-details' => "N'eo ket reizh ar pennad : $1",
-	'wikiaquiz-game-start-button' => "Kregiñ da c'hoari",
+	'wikiaquiz-error-invalid-image' => 'N\'eo ket reizh ar skeudenn : $1',
+	'wikiaquiz-error-invalid-video' => 'N\'eo ket reizh ar video : $1',
+	'wikiaquiz-error-missing-answers' => 'Ret eo deoc\'h reiñ ur respont da nebeutañ',
+	'wikiaquiz-error-invalid-correct-answer' => 'Ret eo deoc\'h reiñ ur respont reizh.',
+	'wikiaquiz-error-invalid-quiz' => 'N\'eo ket reizh anv ar c\'hwiz.',
+	'wikiaquiz-error-invalid-article' => 'N\'eo ket reizh ID ar pennad.',
+	'wikiaquiz-error-invalid-article-with-details' => 'N\'eo ket reizh ar pennad : $1',
+	'wikiaquiz-game-start-button' => 'Kregiñ da c\'hoari',
 	'wikiaquiz-game-cadence-3' => 'Prest',
 	'wikiaquiz-game-cadence-2' => 'Prest',
-	'wikiaquiz-game-cadence-1' => "Kit de'i!",
+	'wikiaquiz-game-cadence-1' => 'Kit de\'i!',
 	'wikiaquiz-game-question-label' => 'GOULENN',
 	'wikiaquiz-game-next-button' => 'Goulenn da-heul',
 	'wikiaquiz-game-finish-button' => 'Echuiñ',
-	'wikiaquiz-game-correct-label' => "Reizh ! Barrek hoc'h.",
-	'wikiaquiz-game-congratulations' => "Gourc'hemennoù, $1 !",
-	'wikiaquiz-game-congratulations-anon' => "Gourc'hemennoù !",
+	'wikiaquiz-game-correct-label' => 'Reizh ! Barrek hoc\'h.',
+	'wikiaquiz-game-congratulations' => 'Gourc\'hemennoù, $1 !',
+	'wikiaquiz-game-congratulations-anon' => 'Gourc\'hemennoù !',
 	'wikiaquiz-game-your-score' => 'HO SKOR A ZO',
-	'wikiaquiz-game-continue-button' => "Kenderc'hel",
-	'wikiaquiz-game-thanks' => "Trugarez deoc'h da c'hoari !",
-	'wikiaquiz-game-provide-email' => "Ebarzhit ho chomlec'h postel, mar plij",
+	'wikiaquiz-game-continue-button' => 'Kenderc\'hel',
+	'wikiaquiz-game-thanks' => 'Trugarez deoc\'h da c\'hoari !',
+	'wikiaquiz-game-provide-email' => 'Ebarzhit ho chomlec\'h postel, mar plij',
 	'wikiaquiz-game-email-placeholder' => 'hoanv@hopostel.com',
 	'wikiaquiz-game-email-button' => 'Kas din traoù digoust',
-	'wikiaquiz-game-email-valid-please' => "Ebarzhit ur chomlec'h postel reizh, mar plij.",
+	'wikiaquiz-game-email-valid-please' => 'Ebarzhit ur chomlec\'h postel reizh, mar plij.',
 	'wikiaquiz-game-email-token-mismatch' => 'Pop ! Ar jedouer ne glot ket',
-	'wikiaquiz-game-email-subject' => "Trugarez deoc'h evit ho kasadenn !",
+	'wikiaquiz-game-email-subject' => 'Trugarez deoc\'h evit ho kasadenn !',
 	'wikiaquiz-game-email-error' => 'Ur fazi a oa bet pa oad o kas ar postel-mañ : $1',
-	'wikiaquiz-game-challenge' => "Broudit ho mignoned da c'hoari !",
+	'wikiaquiz-game-challenge' => 'Broudit ho mignoned da c\'hoari !',
 	'wikiaquiz-game-mute' => 'Hep son',
 ];
 
-/** Catalan (català)
- * @author Alvaro Vidal-Abarca
- * @author Fitoschido
- * @author Gemmaa
- */
 $messages['ca'] = [
 	'wikiaquiz-desc' => 'Proporciona una manera fàcil de crear i gestionar els qüestionaris',
 	'wikiaquiz-createquiz-headline' => 'Crear Quiz',
@@ -295,9 +270,9 @@ $messages['ca'] = [
 	'wikiaquiz-titlescreentext-label' => 'Text del títol pantalla',
 	'wikiaquiz-fbrecommendationtext-label' => 'Descripció de recomanació per Facebook',
 	'wikiaquiz-titlescreenimages-label' => 'Imatges de pantalla de títol',
-	'wikiaquiz-moreinfoheading-label' => "Més encapçalament d'informació",
+	'wikiaquiz-moreinfoheading-label' => 'Més encapçalament d\'informació',
 	'wikiaquiz-requireemail-label' => 'És necessari que el jugador introdueixi una adreça de correu electrònic al final del joc',
-	'wikiaquiz-moreinfolinks-label' => "Més enllaços d'informació",
+	'wikiaquiz-moreinfolinks-label' => 'Més enllaços d\'informació',
 	'wikiaquiz-moreinfoarticle-label' => 'Article',
 	'wikiaquiz-moreinfolinktext-label' => 'Enllaç de Text',
 	'wikiaquiz-question-label' => 'Pregunta',
@@ -318,7 +293,7 @@ $messages['ca'] = [
 	'wikiaquiz-error-invalid-image' => 'Imatge no és vàlida:$1',
 	'wikiaquiz-error-invalid-video' => 'Vídeo no és vàlida:$1',
 	'wikiaquiz-error-missing-answers' => 'Heu de subministrar com a mínim una resposta.',
-	'wikiaquiz-error-invalid-correct-answer' => "Heu d'especificar una resposta correcta.",
+	'wikiaquiz-error-invalid-correct-answer' => 'Heu d\'especificar una resposta correcta.',
 	'wikiaquiz-error-invalid-quiz' => 'Quiz nom no és vàlid.',
 	'wikiaquiz-error-invalid-article' => 'Article ID és invàlid.',
 	'wikiaquiz-error-invalid-article-with-details' => 'Article no és vàlida:$1',
@@ -343,22 +318,15 @@ $messages['ca'] = [
 	'wikiaquiz-game-email-token-mismatch' => 'Ops! No coincideix amb la fitxa',
 	'wikiaquiz-game-email-subject' => 'Gràcies per la teva col·laboració!',
 	'wikiaquiz-game-email-body' => 'Això és un e-mail de confirmació. Hem rebut el seu enviament i li notificarà si vostè és un guanyador!',
-	'wikiaquiz-game-email-error' => "Hi ha hagut un error en l'enviament d'aquest correu electrònic:$1",
+	'wikiaquiz-game-email-error' => 'Hi ha hagut un error en l\'enviament d\'aquest correu electrònic:$1',
 	'wikiaquiz-game-challenge' => 'Desafia als teus amics per jugar!',
 	'wikiaquiz-game-mute' => 'Atenuar-se',
 ];
 
-/** Chechen (нохчийн)
- * @author Умар
- */
 $messages['ce'] = [
 	'wikiaquiz-game-continue-button' => 'Кхин дӀа',
 ];
 
-/** Czech (čeština)
- * @author Chmee2
- * @author Vks
- */
 $messages['cs'] = [
 	'wikiaquiz-createquiz-headline' => 'Vytvořit kvíz',
 	'wikiaquiz-editquiz-headline' => 'Upravit kvíz',
@@ -399,10 +367,6 @@ $messages['cs'] = [
 	'wikiaquiz-game-email-subject' => 'Děkujeme za vložení.',
 ];
 
-/** Welsh (Cymraeg)
- * @author Lloffiwr
- * @author Thefartydoctor
- */
 $messages['cy'] = [
 	'wikiaquiz-createquiz-headline' => 'Llunio Cwis',
 	'wikiaquiz-editquiz-headline' => 'Golygu Cwis',
@@ -419,13 +383,6 @@ $messages['cy'] = [
 	'wikiaquiz-game-email-placeholder' => 'eichenw@eichebost.com',
 ];
 
-/** German (Deutsch)
- * @author Avatar
- * @author Dennis07
- * @author LWChris
- * @author PtM
- * @author Sebastian Wallroth
- */
 $messages['de'] = [
 	'wikiaquiz-desc' => 'Einfache Möglichkeit zum Erstellen und Verwalten von Quizfragen',
 	'wikiaquiz-createquiz-headline' => 'Quiz erstellen',
@@ -481,7 +438,7 @@ $messages['de'] = [
 	'wikiaquiz-game-email-placeholder' => 'deinname@deinemail.de',
 	'wikiaquiz-game-email-button' => 'Schick mir Gratisgeschenke',
 	'wikiaquiz-game-email-valid-please' => 'Bitte eine gültige E-Mail-Adresse abgeben',
-	'wikiaquiz-game-email-token-mismatch' => 'Upps! Token stimmt nicht überein.',
+	'wikiaquiz-game-email-token-mismatch' => 'Hoppla! Token stimmt nicht überein.',
 	'wikiaquiz-game-email-subject' => 'Danke für deine Einsendung!',
 	'wikiaquiz-game-email-body' => 'Das ist eine Bestätigungsmail. Wir haben deine Einsendung erhalten und werden dich benachrichtigen, falls du gewonnen hast.',
 	'wikiaquiz-game-email-error' => 'Beim Senden dieser e-Mail ist ein Fehler aufgetreten:$1',
@@ -489,10 +446,6 @@ $messages['de'] = [
 	'wikiaquiz-game-mute' => 'Ton aus',
 ];
 
-/** Zazaki (Zazaki)
- * @author Erdemaslancan
- * @author Mirzali
- */
 $messages['diq'] = [
 	'wikiaquiz-createquiz-headline' => 'Quiz vırazê',
 	'wikiaquiz-editquiz-headline' => 'Quizi bıvurnê',
@@ -523,10 +476,6 @@ $messages['diq'] = [
 	'wikiaquiz-game-mute' => 'Bêveng',
 ];
 
-/** Spanish (español)
- * @author Benfutbol10
- * @author VegaDark
- */
 $messages['es'] = [
 	'wikiaquiz-desc' => 'Proporciona una forma fácil de crear y administrar quices',
 	'wikiaquiz-createquiz-headline' => 'Crear Quiz',
@@ -590,9 +539,6 @@ $messages['es'] = [
 	'wikiaquiz-game-mute' => 'Mudo',
 ];
 
-/** Basque (euskara)
- * @author Subi
- */
 $messages['eu'] = [
 	'wikiaquiz-questions-label' => 'Galderak',
 	'wikiaquiz-answers-label' => 'Erantzunak',
@@ -607,10 +553,6 @@ $messages['eu'] = [
 	'wikiaquiz-game-email-placeholder' => 'zureizena@zureposta.com',
 ];
 
-/** Persian (فارسی)
- * @author Mjbmr
- * @author Reza1615
- */
 $messages['fa'] = [
 	'wikiaquiz-title-label' => 'عنوان',
 	'wikiaquiz-moreinfoarticle-label' => 'مقاله',
@@ -631,9 +573,6 @@ $messages['fa'] = [
 	'wikiaquiz-game-mute' => 'صامت‌سازی',
 ];
 
-/** Finnish (suomi)
- * @author Silvonen
- */
 $messages['fi'] = [
 	'wikiaquiz-questions-label' => 'Kysymykset',
 	'wikiaquiz-answers-label' => 'Vastaukset',
@@ -642,9 +581,6 @@ $messages['fi'] = [
 	'wikiaquiz-game-continue-button' => 'Jatka',
 ];
 
-/** Faroese (føroyskt)
- * @author EileenSanda
- */
 $messages['fo'] = [
 	'wikiaquiz-desc' => 'Veitir ein lættan máta at upprætta og skipa spurnakappingum',
 	'wikiaquiz-createquiz-headline' => 'Upprætta spurnakapping',
@@ -652,14 +588,8 @@ $messages['fo'] = [
 	'wikiaquiz-title-label' => 'Heiti',
 ];
 
-/** French (français)
- * @author Cmarget
- * @author Crochet.david
- * @author Gomoko
- * @author Wyz
- */
 $messages['fr'] = [
-	'wikiaquiz-desc' => 'Fournit un moyen facile de créer et de gérer des quizz',
+	'wikiaquiz-desc' => 'Fournit un moyen facile de créer et de gérer des quiz',
 	'wikiaquiz-createquiz-headline' => 'Créer un quizz',
 	'wikiaquiz-editquiz-headline' => 'Modifier le quizz',
 	'wikiaquiz-createquizarticle-headline' => 'Créer les questions et les réponses du quizz',
@@ -669,8 +599,8 @@ $messages['fr'] = [
 	'wikiaquiz-fbrecommendationtext-label' => 'Description de la recommandation de Facebook',
 	'wikiaquiz-titlescreenimages-label' => 'Images de l’écran de titre',
 	'wikiaquiz-moreinfoheading-label' => 'En-tête « Plus d’informations »',
-	'wikiaquiz-requireemail-label' => 'Demander au joueur de saisir une adresse de courriel à la fin du jeu',
-	'wikiaquiz-moreinfolinks-label' => "Liens « Plus d'informations »",
+	'wikiaquiz-requireemail-label' => 'Demander au joueur de saisir une adresse e-mail à la fin du jeu',
+	'wikiaquiz-moreinfolinks-label' => 'Liens « Plus d\'informations »',
 	'wikiaquiz-moreinfoarticle-label' => 'Article',
 	'wikiaquiz-moreinfolinktext-label' => 'Texte du lien',
 	'wikiaquiz-question-label' => 'Question',
@@ -709,28 +639,22 @@ $messages['fr'] = [
 	'wikiaquiz-game-your-score' => 'VOTRE SCORE EST DE',
 	'wikiaquiz-game-continue-button' => 'Continuer',
 	'wikiaquiz-game-thanks' => 'Merci d’avoir participé !',
-	'wikiaquiz-game-provide-email' => 'Veuillez saisir votre adresse de courriel',
-	'wikiaquiz-game-email-placeholder' => 'votrenom@votrecourriel.com',
+	'wikiaquiz-game-provide-email' => 'Veuillez saisir votre adresse e-mail',
+	'wikiaquiz-game-email-placeholder' => 'votrenom@votreadresse.com',
 	'wikiaquiz-game-email-button' => 'M’envoyer des choses gratuites',
-	'wikiaquiz-game-email-valid-please' => 'Veuillez saisir une adresse de courriel valide.',
+	'wikiaquiz-game-email-valid-please' => 'Veuillez saisir une adresse e-mail valide.',
 	'wikiaquiz-game-email-token-mismatch' => 'Oups ! Le jeton ne correspond pas',
 	'wikiaquiz-game-email-subject' => 'Merci pour votre participation !',
-	'wikiaquiz-game-email-body' => 'Ceci est un courriel de confirmation. Nous avons reçu votre participation et nous vous avertirons si vous avez gagné !',
-	'wikiaquiz-game-email-error' => 'Une erreur est survenue à l’envoi de ce courriel : $1',
+	'wikiaquiz-game-email-body' => 'Ceci est un e-mail de confirmation. Nous avons reçu votre participation et nous vous avertirons si vous avez gagné !',
+	'wikiaquiz-game-email-error' => 'Une erreur est survenue à l’envoi de cet e-mail : $1',
 	'wikiaquiz-game-challenge' => 'Défiez vos amis d’y participer !',
 	'wikiaquiz-game-mute' => 'Muet',
 ];
 
-/** Western Frisian (Frysk)
- * @author Robin0van0der0vliet
- */
 $messages['fy'] = [
 	'wikiaquiz-cancel-label' => 'Annulearje',
 ];
 
-/** Galician (galego)
- * @author Toliño
- */
 $messages['gl'] = [
 	'wikiaquiz-desc' => 'Proporciona un xeito doado de crear e xestionar cuestionarios',
 	'wikiaquiz-createquiz-headline' => 'Crear un cuestionario',
@@ -794,9 +718,6 @@ $messages['gl'] = [
 	'wikiaquiz-game-mute' => 'Silenciar',
 ];
 
-/** Hungarian (magyar)
- * @author TK-999
- */
 $messages['hu'] = [
 	'wikiaquiz-desc' => 'Egyszerű lehetőséget biztosít a kvízek létrehozására és kezelésére',
 	'wikiaquiz-createquiz-headline' => 'Kvíz létrehozása',
@@ -854,9 +775,6 @@ $messages['hu'] = [
 	'wikiaquiz-game-mute' => 'Elnémítás',
 ];
 
-/** Interlingua (interlingua)
- * @author McDutchie
- */
 $messages['ia'] = [
 	'wikiaquiz-desc' => 'Forni un modo facile de crear e gerer quizzes',
 	'wikiaquiz-createquiz-headline' => 'Crear quiz',
@@ -920,9 +838,6 @@ $messages['ia'] = [
 	'wikiaquiz-game-mute' => 'Assurdar',
 ];
 
-/** Indonesian (Bahasa Indonesia)
- * @author Aldnonymous
- */
 $messages['id'] = [
 	'wikiaquiz-desc' => 'Memberikan cara mudah untuk membuat dan mengelola kuis',
 	'wikiaquiz-createquiz-headline' => 'Buat Kuis',
@@ -971,9 +886,6 @@ $messages['id'] = [
 	'wikiaquiz-game-mute' => 'Diam',
 ];
 
-/** Italian (italiano)
- * @author Minerva Titani
- */
 $messages['it'] = [
 	'wikiaquiz-createquiz-headline' => 'Crea Quiz',
 	'wikiaquiz-editquiz-headline' => 'Modifica Quiz',
@@ -1000,11 +912,10 @@ $messages['it'] = [
 	'wikiaquiz-game-continue-button' => 'Continua',
 	'wikiaquiz-game-thanks' => 'Grazie per aver giocato!',
 	'wikiaquiz-game-mute' => 'Muto',
+	'wikiaquiz-answer-label' => 'Risposta',
+	'wikiaquiz-correct-label' => 'Correggere?',
 ];
 
-/** Japanese (日本語)
- * @author Shirayuki
- */
 $messages['ja'] = [
 	'wikiaquiz-desc' => 'クイズを作成/管理する簡単な方法を提供する',
 	'wikiaquiz-createquiz-headline' => 'クイズを作成',
@@ -1068,9 +979,6 @@ $messages['ja'] = [
 	'wikiaquiz-game-mute' => 'ミュート',
 ];
 
-/** Kannada (ಕನ್ನಡ)
- * @author VASANTH S.N.
- */
 $messages['kn'] = [
 	'wikiaquiz-title-label' => 'ಶೀರ್ಷಿಕೆ',
 	'wikiaquiz-moreinfoarticle-label' => 'ಲೇಖನಗಳು',
@@ -1080,11 +988,6 @@ $messages['kn'] = [
 	'wikiaquiz-game-cadence-1' => 'ಹೋಗು!',
 ];
 
-/** Korean (한국어)
- * @author Infinity
- * @author Miri-Nae
- * @author 아라
- */
 $messages['ko'] = [
 	'wikiaquiz-desc' => '퀴즈를 생성하고 관리할 수 있는 편리한 방법을 제공',
 	'wikiaquiz-createquiz-headline' => '퀴즈 만들기',
@@ -1126,7 +1029,7 @@ $messages['ko'] = [
 	'wikiaquiz-game-question-label' => '질문',
 	'wikiaquiz-game-next-button' => '다음 질문',
 	'wikiaquiz-game-finish-button' => '완료',
-	'wikiaquiz-game-correct-label' => '맞습니다!',
+	'wikiaquiz-game-correct-label' => '정답입니다!',
 	'wikiaquiz-game-incorrect-label' => '틀렸습니다.',
 	'wikiaquiz-game-congratulations' => '$1님, 수고하셨습니다!',
 	'wikiaquiz-game-congratulations-anon' => '수고하셨습니다!',
@@ -1137,18 +1040,12 @@ $messages['ko'] = [
 	'wikiaquiz-game-mute' => '음소거',
 ];
 
-/** Kurdish (Latin script) (Kurdî (latînî)‎)
- * @author George Animal
- */
 $messages['ku-latn'] = [
 	'wikiaquiz-title-label' => 'Sernav',
 	'wikiaquiz-answer-label' => 'Bersiv',
 	'wikiaquiz-cancel-label' => 'Betal bike',
 ];
 
-/** Luxembourgish (Lëtzebuergesch)
- * @author Robby
- */
 $messages['lb'] = [
 	'wikiaquiz-title-label' => 'Titel',
 	'wikiaquiz-moreinfoarticle-label' => 'Artikel',
@@ -1170,9 +1067,6 @@ $messages['lb'] = [
 	'wikiaquiz-game-continue-button' => 'Viru fueren',
 ];
 
-/** Maithili (मैथिली)
- * @author Vinitutpal
- */
 $messages['mai'] = [
 	'wikiaquiz-createquiz-headline' => 'प्रश्नोतरी बनाऊ',
 	'wikiaquiz-editquiz-headline' => 'प्रश्नोतरी के संपादन करू',
@@ -1219,9 +1113,6 @@ $messages['mai'] = [
 	'wikiaquiz-game-mute' => 'चुप',
 ];
 
-/** Macedonian (македонски)
- * @author Bjankuloski06
- */
 $messages['mk'] = [
 	'wikiaquiz-desc' => 'Овозможува лесен начин на правење и раководење со квизови',
 	'wikiaquiz-createquiz-headline' => 'Направи квиз',
@@ -1285,9 +1176,6 @@ $messages['mk'] = [
 	'wikiaquiz-game-mute' => 'Искл. звук',
 ];
 
-/** Malay (Bahasa Melayu)
- * @author Anakmalaysia
- */
 $messages['ms'] = [
 	'wikiaquiz-desc' => 'Menyediakan cara yang mudah untuk mencipta dan menguruskan kuiz',
 	'wikiaquiz-createquiz-headline' => 'Buka Kuiz',
@@ -1351,9 +1239,6 @@ $messages['ms'] = [
 	'wikiaquiz-game-mute' => 'Bisu',
 ];
 
-/** Norwegian Bokmål (norsk bokmål)
- * @author Audun
- */
 $messages['nb'] = [
 	'wikiaquiz-desc' => 'Tilbyr en enkel måte å opprette og administrere quizer.',
 	'wikiaquiz-createquiz-headline' => 'Opprett quiz',
@@ -1417,11 +1302,6 @@ $messages['nb'] = [
 	'wikiaquiz-game-mute' => 'Demp',
 ];
 
-/** Dutch (Nederlands)
- * @author HanV
- * @author SPQRobin
- * @author Siebrand
- */
 $messages['nl'] = [
 	'wikiaquiz-desc' => 'Maakt het aanmaken en beheren van peilingen mogelijk',
 	'wikiaquiz-createquiz-headline' => 'Quiz aanmaken',
@@ -1485,9 +1365,6 @@ $messages['nl'] = [
 	'wikiaquiz-game-mute' => 'Dempen',
 ];
 
-/** Occitan (occitan)
- * @author Cedric31
- */
 $messages['oc'] = [
 	'wikiaquiz-desc' => 'Provesís un mejan aisit de crear e de gerir de quizzes',
 	'wikiaquiz-createquiz-headline' => 'Crear un quizz',
@@ -1499,7 +1376,7 @@ $messages['oc'] = [
 	'wikiaquiz-fbrecommendationtext-label' => 'Descripcion de la recomandacion de Facebook',
 	'wikiaquiz-titlescreenimages-label' => 'Imatges de l’ecran de títol',
 	'wikiaquiz-moreinfoheading-label' => 'Entèsta « Mai d’informacions »',
-	'wikiaquiz-moreinfolinks-label' => "Ligams « Mai d'informacions »",
+	'wikiaquiz-moreinfolinks-label' => 'Ligams « Mai d\'informacions »',
 	'wikiaquiz-moreinfoarticle-label' => 'Article',
 	'wikiaquiz-moreinfolinktext-label' => 'Tèxte del ligam',
 	'wikiaquiz-question-label' => 'Question',
@@ -1517,7 +1394,7 @@ $messages['oc'] = [
 	'wikiaquiz-error-invalid-question' => 'L’intitulat de la question es pas valid.',
 	'wikiaquiz-error-invalid-image' => 'L’imatge es pas valid : $1',
 	'wikiaquiz-error-invalid-video' => 'La vidèo es pas valida : $1',
-	'wikiaquiz-error-invalid-quiz' => "Lo nom d'aqueste quizz es pas valid.",
+	'wikiaquiz-error-invalid-quiz' => 'Lo nom d\'aqueste quizz es pas valid.',
 	'wikiaquiz-error-invalid-article' => 'L’ID article es pas valid.',
 	'wikiaquiz-error-invalid-article-with-details' => 'L’article es pas valid : $1',
 	'wikiaquiz-game-cadence-2' => 'Prèst',
@@ -1529,11 +1406,6 @@ $messages['oc'] = [
 	'wikiaquiz-game-mute' => 'Mut',
 ];
 
-/** Polish (polski)
- * @author BeginaFelicysym
- * @author Sovq
- * @author Wedkarski
- */
 $messages['pl'] = [
 	'wikiaquiz-desc' => 'Pozwala łatwo tworzyć i zarządzać quizami',
 	'wikiaquiz-createquiz-headline' => 'Utwórz quiz',
@@ -1597,10 +1469,6 @@ $messages['pl'] = [
 	'wikiaquiz-game-mute' => 'Wyciszenie',
 ];
 
-/** Piedmontese (Piemontèis)
- * @author Borichèt
- * @author Dragonòt
- */
 $messages['pms'] = [
 	'wikiaquiz-desc' => 'A forniss na manera còmoda ëd creé e gestì dij gieugh ëd chestion',
 	'wikiaquiz-createquiz-headline' => 'Creé un gieugh ëd chestion',
@@ -1609,11 +1477,11 @@ $messages['pms'] = [
 	'wikiaquiz-editquizarticle-headline' => 'Modifiché le chestion e le rispòste dël gieugh ëd chestion',
 	'wikiaquiz-title-label' => 'Tìtol',
 	'wikiaquiz-titlescreentext-label' => 'Test ëd lë scren ëd tìtol',
-	'wikiaquiz-fbrecommendationtext-label' => "Descrission ëd l'arcomandassion ëd Facebook",
+	'wikiaquiz-fbrecommendationtext-label' => 'Descrission ëd l\'arcomandassion ëd Facebook',
 	'wikiaquiz-titlescreenimages-label' => 'Figure ëd lë scren ëd tìtol',
-	'wikiaquiz-moreinfoheading-label' => "Antestassion Pi d'anformassion",
-	'wikiaquiz-requireemail-label' => "Ciamé al giugador ëd buté n'adrëssa ëd pòsta eletrònica a la fin dël gieugh",
-	'wikiaquiz-moreinfolinks-label' => "Liure Pi d'anformassion",
+	'wikiaquiz-moreinfoheading-label' => 'Antestassion Pi d\'anformassion',
+	'wikiaquiz-requireemail-label' => 'Ciamé al giugador ëd buté n\'adrëssa ëd pòsta eletrònica a la fin dël gieugh',
+	'wikiaquiz-moreinfolinks-label' => 'Liure Pi d\'anformassion',
 	'wikiaquiz-moreinfoarticle-label' => 'Artìcol',
 	'wikiaquiz-moreinfolinktext-label' => 'Test ëd la liura',
 	'wikiaquiz-question-label' => 'Domanda',
@@ -1625,48 +1493,45 @@ $messages['pms'] = [
 	'wikiaquiz-answers-label' => 'Rispòste',
 	'wikiaquiz-answer-label' => 'Rispòsta',
 	'wikiaquiz-correct-label' => 'Giust?',
-	'wikiaquiz-addnewitem-label' => "Gionta n'element neuv",
+	'wikiaquiz-addnewitem-label' => 'Gionta n\'element neuv',
 	'wikiaquiz-cancel-label' => 'Scancela',
 	'wikiaquiz-publish-label' => 'Pùblica',
 	'wikiaquiz-error-duplicate-quiz' => 'Un questionari con col nòm a esist già.',
 	'wikiaquiz-error-duplicate-question' => 'Na chestion con col nòm a esist già.',
 	'wikiaquiz-error-invalid-question' => 'Ël test ëd la chestion a va nen bin.',
-	'wikiaquiz-error-invalid-image' => "La figura a l'é pa bon-a: $1",
-	'wikiaquiz-error-invalid-video' => "Ël filmà a l'é pa bon: $1",
+	'wikiaquiz-error-invalid-image' => 'La figura a l\'é pa bon-a: $1',
+	'wikiaquiz-error-invalid-video' => 'Ël filmà a l\'é pa bon: $1',
 	'wikiaquiz-error-missing-answers' => 'A dev buté almanch na rispòsta.',
 	'wikiaquiz-error-invalid-correct-answer' => 'A dev specifiché na rispòsta giusta.',
-	'wikiaquiz-error-invalid-quiz' => "Ël nòm d'ës gieugh ëd chestion a va nen bin.",
-	'wikiaquiz-error-invalid-article' => "L'ID artìcol a l'é pa bon.",
-	'wikiaquiz-error-invalid-article-with-details' => "L'artìcol a l'é pa bon: $1",
-	'wikiaquiz-game-start-button' => "Anandié 'l gieugh",
+	'wikiaquiz-error-invalid-quiz' => 'Ël nòm d\'ës gieugh ëd chestion a va nen bin.',
+	'wikiaquiz-error-invalid-article' => 'L\'ID artìcol a l\'é pa bon.',
+	'wikiaquiz-error-invalid-article-with-details' => 'L\'artìcol a l\'é pa bon: $1',
+	'wikiaquiz-game-start-button' => 'Anandié \'l gieugh',
 	'wikiaquiz-game-cadence-3' => 'Pront',
 	'wikiaquiz-game-cadence-2' => 'Ampòsta',
 	'wikiaquiz-game-cadence-1' => 'Va!',
 	'wikiaquiz-game-question-label' => 'CHESTION',
 	'wikiaquiz-game-next-button' => 'Chestion apress',
 	'wikiaquiz-game-finish-button' => 'Fin',
-	'wikiaquiz-game-correct-label' => "Giust! A l'é 'n vasco.",
+	'wikiaquiz-game-correct-label' => 'Giust! A l\'é \'n vasco.',
 	'wikiaquiz-game-incorrect-label' => 'SBALIÀ. Buu.',
 	'wikiaquiz-game-congratulations' => 'Bel travaj, $1!',
 	'wikiaquiz-game-congratulations-anon' => 'Bel travaj!',
-	'wikiaquiz-game-your-score' => "SÒ PONTEGG A L'É",
+	'wikiaquiz-game-your-score' => 'SÒ PONTEGG A L\'É',
 	'wikiaquiz-game-continue-button' => 'Continua',
-	'wikiaquiz-game-thanks' => "Mersì d'avèj giugà!",
+	'wikiaquiz-game-thanks' => 'Mersì d\'avèj giugà!',
 	'wikiaquiz-game-provide-email' => 'Për piasì anseriss toa adrëssa ëd pòsta eletrònica',
 	'wikiaquiz-game-email-placeholder' => 'sonom@soaadressa.com',
 	'wikiaquiz-game-email-button' => 'Mandeme dle ròbe a gràtis',
-	'wikiaquiz-game-email-valid-please' => "Për piasì anseriss n'adrëssa ëd pòsta eletrònica bon-a.",
+	'wikiaquiz-game-email-valid-please' => 'Për piasì anseriss n\'adrëssa ëd pòsta eletrònica bon-a.',
 	'wikiaquiz-game-email-token-mismatch' => 'Contacc! Ël geton a corispond pa',
 	'wikiaquiz-game-email-subject' => 'Mersì për soa partissipassion!',
-	'wikiaquiz-game-email-body' => "Cost a l'é 'n mëssagi ëd conferma. I l'oma arseivù soa partissipassion e i-j notificheroma s'a l'ha vagnà!",
-	'wikiaquiz-game-email-error' => "A-i é staje n'eror an mandand ës mëssagi: $1",
+	'wikiaquiz-game-email-body' => 'Cost a l\'é \'n mëssagi ëd conferma. I l\'oma arseivù soa partissipassion e i-j notificheroma s\'a l\'ha vagnà!',
+	'wikiaquiz-game-email-error' => 'A-i é staje n\'eror an mandand ës mëssagi: $1',
 	'wikiaquiz-game-challenge' => 'Cissa ij tò amis a giughé!',
 	'wikiaquiz-game-mute' => 'Mut',
 ];
 
-/** Pashto (پښتو)
- * @author Ahmed-Najib-Biabani-Ibrahimkhel
- */
 $messages['ps'] = [
 	'wikiaquiz-title-label' => 'سرليک',
 	'wikiaquiz-moreinfoarticle-label' => 'ليکنه',
@@ -1688,11 +1553,6 @@ $messages['ps'] = [
 	'wikiaquiz-game-mute' => 'ټپول',
 ];
 
-/** Portuguese (português)
- * @author Caio1478
- * @author Hamilton Abreu
- * @author Luckas
- */
 $messages['pt'] = [
 	'wikiaquiz-desc' => 'Uma forma fácil de criar e gerir testes',
 	'wikiaquiz-createquiz-headline' => 'Criar Teste',
@@ -1744,10 +1604,6 @@ $messages['pt'] = [
 	'wikiaquiz-game-mute' => 'Mudo',
 ];
 
-/** Brazilian Portuguese (português do Brasil)
- * @author Luckas
- * @author Luckas Blade
- */
 $messages['pt-br'] = [
 	'wikiaquiz-title-label' => 'Título',
 	'wikiaquiz-moreinfoarticle-label' => 'Artigo',
@@ -1765,49 +1621,46 @@ $messages['pt-br'] = [
 	'wikiaquiz-game-mute' => 'Mudo',
 ];
 
-/** tarandíne (tarandíne)
- * @author Joetaras
- */
 $messages['roa-tara'] = [
-	'wikiaquiz-desc' => "Dèje 'nu mode facile de ccrejà e gestì le quiz",
-	'wikiaquiz-createquiz-headline' => "Ccreje 'nu Quiz",
-	'wikiaquiz-editquiz-headline' => "Cange 'nu Quiz",
-	'wikiaquiz-createquizarticle-headline' => "Ccreje le domande e le resposte d'u quiz",
-	'wikiaquiz-editquizarticle-headline' => "Cange le domande e le resposte d'u quiz",
+	'wikiaquiz-desc' => 'Dèje \'nu mode facile de ccrejà e gestì le quiz',
+	'wikiaquiz-createquiz-headline' => 'Ccreje \'nu Quiz',
+	'wikiaquiz-editquiz-headline' => 'Cange \'nu Quiz',
+	'wikiaquiz-createquizarticle-headline' => 'Ccreje le domande e le resposte d\'u quiz',
+	'wikiaquiz-editquizarticle-headline' => 'Cange le domande e le resposte d\'u quiz',
 	'wikiaquiz-title-label' => 'Titole',
-	'wikiaquiz-titlescreentext-label' => "Teste d'u titole d'u quadre",
-	'wikiaquiz-fbrecommendationtext-label' => "Descrizione d'a raccomandazione de Feisbuk",
-	'wikiaquiz-titlescreenimages-label' => "Titole de le immaggine d'u scherme",
-	'wikiaquiz-moreinfoheading-label' => "Cchiù 'mbormaziune in testate",
-	'wikiaquiz-requireemail-label' => "Cirche a 'u sciucatore de sckaffà 'n'indirizze email quanne 'u scioche spicce",
-	'wikiaquiz-moreinfolinks-label' => "Cchiù 'mbormaziune sus a le collegaminde",
+	'wikiaquiz-titlescreentext-label' => 'Teste d\'u titole d\'u quadre',
+	'wikiaquiz-fbrecommendationtext-label' => 'Descrizione d\'a raccomandazione de Feisbuk',
+	'wikiaquiz-titlescreenimages-label' => 'Titole de le immaggine d\'u scherme',
+	'wikiaquiz-moreinfoheading-label' => 'Cchiù \'mbormaziune in testate',
+	'wikiaquiz-requireemail-label' => 'Cirche a \'u sciucatore de sckaffà \'n\'indirizze email quanne \'u scioche spicce',
+	'wikiaquiz-moreinfolinks-label' => 'Cchiù \'mbormaziune sus a le collegaminde',
 	'wikiaquiz-moreinfoarticle-label' => 'Vôsce',
-	'wikiaquiz-moreinfolinktext-label' => "Teste d'u collegamende",
+	'wikiaquiz-moreinfolinktext-label' => 'Teste d\'u collegamende',
 	'wikiaquiz-question-label' => 'Domande',
 	'wikiaquiz-image-label' => 'Immaggine (opzionale)',
 	'wikiaquiz-video-label' => 'Video (opzionale, Immaggine ca sostituisce)',
-	'wikiaquiz-explanation-label' => "Spiegazione d'a resposte (opzionale)",
+	'wikiaquiz-explanation-label' => 'Spiegazione d\'a resposte (opzionale)',
 	'wikiaquiz-quiz-label' => 'Quiz',
 	'wikiaquiz-questions-label' => 'Domande',
 	'wikiaquiz-answers-label' => 'Resposte',
 	'wikiaquiz-answer-label' => 'Resposte',
 	'wikiaquiz-correct-label' => 'Esatte?',
-	'wikiaquiz-addnewitem-label' => "Aggiunge 'na vôscia nove",
+	'wikiaquiz-addnewitem-label' => 'Aggiunge \'na vôscia nove',
 	'wikiaquiz-cancel-label' => 'Annulle',
 	'wikiaquiz-publish-label' => 'Pubbleche',
-	'wikiaquiz-error-duplicate-quiz' => "'Nu quiz cu quidde nome ggià esiste.",
-	'wikiaquiz-error-duplicate-question' => "'Na domande cu quidde nome ggià esiste.",
-	'wikiaquiz-error-invalid-question' => "'U teste d'a domande jè invalide.",
-	'wikiaquiz-error-invalid-image' => "L'immaggine jè invalide: $1",
-	'wikiaquiz-error-invalid-video' => "'U video jè invalide: $1",
-	'wikiaquiz-error-missing-answers' => "Tu à dà almene 'na resposte.",
-	'wikiaquiz-error-invalid-correct-answer' => "Tu ha specificà 'na resposte corrette.",
-	'wikiaquiz-error-invalid-quiz' => "'U nome d'u quiz jè invalide.",
-	'wikiaquiz-error-invalid-article' => "ID d'a vôsce jè invalide.",
-	'wikiaquiz-error-invalid-article-with-details' => "'A vôsce jè invalide: $1",
+	'wikiaquiz-error-duplicate-quiz' => '\'Nu quiz cu quidde nome ggià esiste.',
+	'wikiaquiz-error-duplicate-question' => '\'Na domande cu quidde nome ggià esiste.',
+	'wikiaquiz-error-invalid-question' => '\'U teste d\'a domande jè invalide.',
+	'wikiaquiz-error-invalid-image' => 'L\'immaggine jè invalide: $1',
+	'wikiaquiz-error-invalid-video' => '\'U video jè invalide: $1',
+	'wikiaquiz-error-missing-answers' => 'Tu à dà almene \'na resposte.',
+	'wikiaquiz-error-invalid-correct-answer' => 'Tu ha specificà \'na resposte corrette.',
+	'wikiaquiz-error-invalid-quiz' => '\'U nome d\'u quiz jè invalide.',
+	'wikiaquiz-error-invalid-article' => 'ID d\'a vôsce jè invalide.',
+	'wikiaquiz-error-invalid-article-with-details' => '\'A vôsce jè invalide: $1',
 	'wikiaquiz-game-start-button' => 'Accuminze a sciucà',
 	'wikiaquiz-game-cadence-3' => 'Pronde',
-	'wikiaquiz-game-cadence-2' => "'Mboste",
+	'wikiaquiz-game-cadence-2' => '\'Mboste',
 	'wikiaquiz-game-cadence-1' => 'Veje!',
 	'wikiaquiz-game-question-label' => 'DOMANDE',
 	'wikiaquiz-game-next-button' => 'Prossema domande',
@@ -1816,26 +1669,21 @@ $messages['roa-tara'] = [
 	'wikiaquiz-game-incorrect-label' => 'SBAGLIATE. Vatinne.',
 	'wikiaquiz-game-congratulations' => 'A uerre sì tu, $1!',
 	'wikiaquiz-game-congratulations-anon' => 'A uerre sì tu!',
-	'wikiaquiz-game-your-score' => "'U PUNDEGGE TUNE JE'",
+	'wikiaquiz-game-your-score' => '\'U PUNDEGGE TUNE JE\'',
 	'wikiaquiz-game-continue-button' => 'Condinue',
 	'wikiaquiz-game-thanks' => 'Grazie pe avè sciucate!',
-	'wikiaquiz-game-provide-email' => "Pe piacere mitte l'indirizze email tune",
+	'wikiaquiz-game-provide-email' => 'Pe piacere mitte l\'indirizze email tune',
 	'wikiaquiz-game-email-placeholder' => 'yourname@youremail.com',
-	'wikiaquiz-game-email-button' => "Manname 'a robba aggratis",
-	'wikiaquiz-game-email-valid-please' => "Pe piacere mitte 'n'indirizze email valide.",
-	'wikiaquiz-game-email-token-mismatch' => "Ue! 'U gettone non ge corrisponne",
+	'wikiaquiz-game-email-button' => 'Manname \'a robba aggratis',
+	'wikiaquiz-game-email-valid-please' => 'Pe piacere mitte \'n\'indirizze email valide.',
+	'wikiaquiz-game-email-token-mismatch' => 'Ue! \'U gettone non ge corrisponne',
 	'wikiaquiz-game-email-subject' => 'Grazie pa conferma toje!',
-	'wikiaquiz-game-email-body' => "Queste jè 'na mail de conferme. Nuje amme ricevute 'a conferma toje e pò te decime ce sì 'u vingitore!",
-	'wikiaquiz-game-email-error' => "Ha assute 'n'errore quanne ste mannave st'email: $1",
+	'wikiaquiz-game-email-body' => 'Queste jè \'na mail de conferme. Nuje amme ricevute \'a conferma toje e pò te decime ce sì \'u vingitore!',
+	'wikiaquiz-game-email-error' => 'Ha assute \'n\'errore quanne ste mannave st\'email: $1',
 	'wikiaquiz-game-challenge' => 'Sfide le amice tue a sciucà!',
 	'wikiaquiz-game-mute' => 'Citte',
 ];
 
-/** Russian (русский)
- * @author DCamer
- * @author Kaganer
- * @author Kuzura
- */
 $messages['ru'] = [
 	'wikiaquiz-desc' => 'Позволяет легко и просто создать викторину',
 	'wikiaquiz-createquiz-headline' => 'Создать викторину',
@@ -1899,9 +1747,6 @@ $messages['ru'] = [
 	'wikiaquiz-game-mute' => 'Без звука',
 ];
 
-/** Serbian (Cyrillic script) (српски (ћирилица)‎)
- * @author Rancher
- */
 $messages['sr-ec'] = [
 	'wikiaquiz-desc' => 'Једноставан начин за стварање и управљање квизовима',
 	'wikiaquiz-createquiz-headline' => 'Прављење квиза',
@@ -1964,9 +1809,6 @@ $messages['sr-ec'] = [
 	'wikiaquiz-game-mute' => 'Искључи звук',
 ];
 
-/** Swedish (svenska)
- * @author WikiPhoenix
- */
 $messages['sv'] = [
 	'wikiaquiz-desc' => 'Ger ett enkelt sätt att skapa och hantera quizar (frågesporter)',
 	'wikiaquiz-createquiz-headline' => 'Skapa quiz',
@@ -2030,10 +1872,6 @@ $messages['sv'] = [
 	'wikiaquiz-game-mute' => 'Tyst',
 ];
 
-/** Tamil (தமிழ்)
- * @author Karthi.dr
- * @author மதனாஹரன்
- */
 $messages['ta'] = [
 	'wikiaquiz-desc' => 'புதிர்களை உருவாக்கவும் முகாமிக்கவும் ஓர் எளிய வழியை வழங்குகின்றது',
 	'wikiaquiz-createquiz-headline' => 'புதிரை உருவாக்கவும்',
@@ -2084,9 +1922,6 @@ $messages['ta'] = [
 	'wikiaquiz-game-mute' => 'அமைதியாக்கவும்',
 ];
 
-/** Telugu (తెలుగు)
- * @author Veeven
- */
 $messages['te'] = [
 	'wikiaquiz-moreinfolinktext-label' => 'లంకె పాఠ్యం',
 	'wikiaquiz-question-label' => 'ప్రశ్న',
@@ -2102,9 +1937,6 @@ $messages['te'] = [
 	'wikiaquiz-game-continue-button' => 'కొనసాగించు',
 ];
 
-/** Tagalog (Tagalog)
- * @author AnakngAraw
- */
 $messages['tl'] = [
 	'wikiaquiz-desc' => 'Nagbibigay ng isang maginhawang paraan upang lumikha at mamahala ng mga pagsusulit',
 	'wikiaquiz-createquiz-headline' => 'Lumikha ng Pagsusulit',
@@ -2168,12 +2000,6 @@ $messages['tl'] = [
 	'wikiaquiz-game-mute' => 'Walang tunog',
 ];
 
-/** Ukrainian (українська)
- * @author A1
- * @author Andriykopanytsia
- * @author Steve.rusyn
- * @author SteveR
- */
 $messages['uk'] = [
 	'wikiaquiz-desc' => 'Забезпечує простий спосіб створення та керування вікторинами',
 	'wikiaquiz-createquiz-headline' => 'Створити вікторину',
@@ -2190,9 +2016,9 @@ $messages['uk'] = [
 	'wikiaquiz-moreinfoarticle-label' => 'Стаття',
 	'wikiaquiz-moreinfolinktext-label' => 'Текст посилання',
 	'wikiaquiz-question-label' => 'Запитання',
-	'wikiaquiz-image-label' => "Зображення (необов'язково)",
-	'wikiaquiz-video-label' => "Відео (необов'язково, заміняє зображення)",
-	'wikiaquiz-explanation-label' => "Пояснення відповіді (необов'язково)",
+	'wikiaquiz-image-label' => 'Зображення (необов\'язково)',
+	'wikiaquiz-video-label' => 'Відео (необов\'язково, заміняє зображення)',
+	'wikiaquiz-explanation-label' => 'Пояснення відповіді (необов\'язково)',
 	'wikiaquiz-quiz-label' => 'Вікторина',
 	'wikiaquiz-questions-label' => 'Запитання',
 	'wikiaquiz-answers-label' => 'Відповіді',
@@ -2201,8 +2027,8 @@ $messages['uk'] = [
 	'wikiaquiz-addnewitem-label' => 'Додати новий пункт',
 	'wikiaquiz-cancel-label' => 'Скасувати',
 	'wikiaquiz-publish-label' => 'Опублікувати',
-	'wikiaquiz-error-duplicate-quiz' => "Вікторина з таким ім'ям вже існує.",
-	'wikiaquiz-error-duplicate-question' => "Питання з таким ім'ям вже існує.",
+	'wikiaquiz-error-duplicate-quiz' => 'Вікторина з таким ім\'ям вже існує.',
+	'wikiaquiz-error-duplicate-question' => 'Питання з таким ім\'ям вже існує.',
 	'wikiaquiz-error-invalid-question' => 'Текст запитання є неприпустимим.',
 	'wikiaquiz-error-invalid-image' => 'Зображення є неприпустимим:$1',
 	'wikiaquiz-error-invalid-video' => 'Відео є неприпустимим:$1',
@@ -2237,10 +2063,6 @@ $messages['uk'] = [
 	'wikiaquiz-game-mute' => 'Без звуку',
 ];
 
-/** Vietnamese (Tiếng Việt)
- * @author Baonguyen21022003
- * @author Dinhxuanduyet
- */
 $messages['vi'] = [
 	'wikiaquiz-desc' => 'Cung cấp một cách đơn giản để tạo vào quản lý các câu hỏi nhanh (quiz)',
 	'wikiaquiz-createquiz-headline' => 'Tạo Câu hỏi nhanh',
@@ -2300,11 +2122,6 @@ $messages['vi'] = [
 	'wikiaquiz-game-mute' => 'Tắt tiếng',
 ];
 
-/** Simplified Chinese (中文（简体）‎)
- * @author Hydra
- * @author Hzy980512
- * @author Yanmiao liu
- */
 $messages['zh-hans'] = [
 	'wikiaquiz-desc' => '提供一种创建和管理测验的简单方法',
 	'wikiaquiz-createquiz-headline' => '创建测验',
@@ -2368,9 +2185,6 @@ $messages['zh-hans'] = [
 	'wikiaquiz-game-mute' => '静音',
 ];
 
-/** Traditional Chinese (中文（繁體）‎)
- * @author Ffaarr
- */
 $messages['zh-hant'] = [
 	'wikiaquiz-editquiz-headline' => '編輯測驗',
 	'wikiaquiz-createquizarticle-headline' => '創建測驗的問題和答案',
@@ -2378,9 +2192,7 @@ $messages['zh-hant'] = [
 	'wikiaquiz-title-label' => '標題',
 ];
 
-/** Chinese (Hong Kong) (中文（香港）‎)
- * @author Tcshek
- */
 $messages['zh-hk'] = [
 	'wikiaquiz-error-invalid-image' => '圖像無效: $1',
 ];
+
