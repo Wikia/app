@@ -80,6 +80,8 @@ require([
 				timestamp: date.toLocaleString([mw.config.get('wgContentLanguage')]),
 				forumName: $.msg( 'embeddable-discussions-forum-name', thread.forumName),
 				id: thread.id,
+				isDeleted: thread.isDeleted ? 'is-deleted' : '',
+				isReported: thread.isReported ? 'is-reported' : '',
 				firstPostId: thread.firstPostId,
 				index: i,
 				link: '/d/p/' + thread.id,
