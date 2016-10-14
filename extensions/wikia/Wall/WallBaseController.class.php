@@ -14,7 +14,6 @@ class WallBaseController extends WikiaController {
 
 	public function __construct() {
 		parent::__construct();
-		$this->app = F::App();
 		$this->helper = new WallHelper();
 	}
 
