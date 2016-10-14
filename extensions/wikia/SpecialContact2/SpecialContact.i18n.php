@@ -148,7 +148,7 @@ Happy editing!',
 
 Additional information on how to report problems to Fandom can be found [[w:project:Report_a_problem|here]], or you can post on [[w:c:community:Special:Forum|Fandom Community Forums]] for user support.
 
-If you prefer to use regular e-mail or have multiple attachments, you can contact us at [mailto:community@wikia.com community@wikia.com].',
+If you prefer to use regular e-mail or have multiple attachments, you can contact us at [mailto:community@fandom.com community@fandom.com].',
 	'specialcontact-intro-security' => 'If you have found or believe you have found a security issue in Fandom\'s code or on one of Fandom\'s communities, please let us know. We appreciate your help in keeping Fandom safe for everyone by disclosing it to us in a [[wikipedia:Responsible disclosure|responsible manner]].
 
 If you are looking to report a general bug or another type of issue, please use one of the [[Special:Contact|other contact forms]].
