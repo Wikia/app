@@ -14,9 +14,10 @@
 
 
 	<!--
-	headLinks
-	REQUESTS:
-	SIZE:
+	$headLinks
+	REQUESTS: +0
+	SIZE:     +1KB
+	TIME:	  +0.3s (why?)
 	-->
 
 	<?= $headLinks ?>
@@ -44,28 +45,6 @@
 	<?= $cssLinks ?>
 
 	<!-- / cssLinks -->
-
-
-
-
-
-
-
-
-
-	<!--
-	$wg->OasisLastCssScripts
-	REQUESTS:
-	SIZE:
-	-->
-
-	<? if ( !empty( $wg->OasisLastCssScripts ) ): ?>
-		<? foreach( $wg->OasisLastCssScripts as $src ): ?>
-			<!--<link rel="stylesheet" href="<?= $src ?>">-->
-		<? endforeach ?>
-	<? endif ?>
-
-	<!-- / $wg->OasisLastCssScripts -->
 
 
 
