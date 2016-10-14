@@ -19,7 +19,7 @@
 	SIZE:
 	-->
 
-	<!--<? $headLinks ?>-->
+	<?= $headLinks ?>
 
 	<!-- / headLinks -->
 
@@ -32,7 +32,11 @@
 
 
 	<!--
-	cssLinks
+	$cssLinks without ad recovery and site
+	REQUESTS: +3
+	SIZE:     +123KB
+
+	$cssLinks with ad recovery and site
 	REQUESTS: +6
 	SIZE:     +126KB
 	-->
