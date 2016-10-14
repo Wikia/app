@@ -63,6 +63,7 @@ $phalanxhooks = array(
 			'EditContent'                     => 'editContent',
 			'CheckContent'                    => 'checkContent',
 			'APIEditBeforeSave'               => 'filterAPIEditBeforeSave',
+			'FileUploadSummaryCheck'          => 'checkContent',
 		),
 	'PhalanxTitleBlock' =>
 		array(

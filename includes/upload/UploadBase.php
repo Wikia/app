@@ -616,6 +616,10 @@ abstract class UploadBase {
 	 * @return Status indicating the whether the upload succeeded.
 	 */
 	public function performUpload( $comment, $pageText, $watch, $user ) {
+		if ( !wfRunHooks( 'FileUploadSummaryCheck', [ $comment ] ) ) {
+			return Status::newFatal( 'phalanx-title' );
+		}
+
 		$status = $this->getLocalFile()->upload(
 			$this->mTempPath,
 			$comment,
