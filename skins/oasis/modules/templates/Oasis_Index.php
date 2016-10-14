@@ -56,8 +56,8 @@
 
 	<!--
 	$topScripts
-	REQUESTS:
-	SIZE:
+	REQUESTS: +3
+	SIZE:     +12KB
 	-->
 
 	<?= $topScripts ?>
@@ -78,7 +78,7 @@
 	SIZE:
 	-->
 
-	<!--<? $globalBlockingScripts; /*needed for jsLoader and for the async loading of CSS files.*/ ?>-->
+	<?= $globalBlockingScripts; /*needed for jsLoader and for the async loading of CSS files.*/ ?>
 
 	<!-- / $globalBlockingScripts -->
 
