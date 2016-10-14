@@ -6,8 +6,7 @@
 			"Karduelis",
 			"Suelnur",
 			"Vito Genovese",
-			"Sucsuzz",
-			"Rapsar"
+			"Sucsuzz"
 		]
 	},
 	"semanticforms-desc": "Semantik veri ekleme ve düzenleme için formlar",
@@ -90,7 +89,7 @@
 	"sf_formcreate": "Formu oluştur",
 	"sf_viewform": "Formu gör",
 	"sf_editsource": "Kaynağı düzenle",
-	"sf_formedit_edittitle": "Değiştir $1: $2",
+	"sf_formedit_edittitle": "Düzenle $1: $2",
 	"sf_formedit_morethanoneform": "'''Uyarı:''' Bu sayfa için birden fazla varsayılan form tanımlanmış.",
 	"sf_formedit_remove": "Bu örneği kaldır",
 	"sf_formedit_addanotherabove": "Buna yukarıdakilerden başka bir örneği ekle",
@@ -105,6 +104,5 @@
 	"sf_form_freetextlabel": "Serbest metin",
 	"sf_category_desc": "Bu $1 kategorisidir.",
 	"sf_blank_namespace": "Ana",
-	"right-editrestrictedfields": "Kısıtlanmış form alanlarını değiştirir",
-	"sf-datepicker-today": "Bugün"
+	"right-editrestrictedfields": "Kısıtlanmış form alanlarını değiştirir"
 }

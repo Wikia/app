@@ -1,7 +1,8 @@
 <?php
-$messages = array();
+/** Internationalization file for /extensions/wikia/NjordPrototype/Njord extension. */
+$messages = [];
 
-$messages['en'] = array(
+$messages['en'] = [
 	'hero-image-drop-here' => 'drop an image here',
 	'hero-image-add-image' => 'Upload cover image',
 	'hero-image-update-image' => 'Update cover image',
@@ -11,14 +12,14 @@ $messages['en'] = array(
 	'hero-image-edit-btn' => 'Edit',
 	'hero-image-discard-btn' => 'Discard',
 	'hero-image-publish-btn' => 'Publish',
-	'hero-image-default-title' => "Your wikia's name",
+	'hero-image-default-title' => 'Your wikia\'s name',
 	'hero-image-save-image' => 'Your cover image will be used to promote your page in search results and in other promotional areas.',
 	'hero-image-default-description' => 'Add a summary that will promote your wikia in searches and on hubs.',
 	'hero-image-error' => 'Error',
 	'hero-image-unknown-error' => 'Unknown error occured.',
-);
+];
 
-$messages['qqq'] = array(
+$messages['qqq'] = [
 	'hero-image-drop-here' => 'Call to action message displayed as overlay on hero image module during drag action. Hero image is a part of main page above the textual content, representing the topic of the wiki.',
 	'hero-image-add-image' => 'Call to action message link displayed when hero image not set, after click will open upload image window. Hero image is a part of main page above the textual content, representing the topic of the wiki.',
 	'hero-image-update-image' => 'Call to action message link displayed when hero image is set, after click will open upload image window. Hero image is a part of main page above the textual content, representing the topic of the wiki.',
@@ -35,9 +36,9 @@ $messages['qqq'] = array(
 	'hero-image-default-description' => 'Hero image module default description, displayed when description not provided. Hero image is a part of main page above the textual content, representing the topic of the wiki.',
 	'hero-image-error' => 'Hero image module error modal title. Hero image is a part of main page above the textual content, representing the topic of the wiki.',
 	'hero-image-unknown-error' => 'Hero image module unknown error message displayed in modal. Hero image is a part of main page above the textual content, representing the topic of the wiki.',
-);
+];
 
-$messages['de'] = array(
+$messages['de'] = [
 	'hero-image-drop-here' => 'Füge hier ein Bild ein',
 	'hero-image-add-image' => 'Titelbild hochladen',
 	'hero-image-update-image' => 'Titelbild',
@@ -52,9 +53,9 @@ $messages['de'] = array(
 	'hero-image-default-description' => 'Gib eine kurze Beschreibung über deine Wikia-Community an, die bei der Suche und auf den Hubs angezeigt wird.',
 	'hero-image-error' => 'Fehler',
 	'hero-image-unknown-error' => 'Ein unbekannter Fehler ist aufgetreten.',
-);
+];
 
-$messages['es'] = array(
+$messages['es'] = [
 	'hero-image-drop-here' => 'arrastra una imagen aquí',
 	'hero-image-add-image' => 'Subir una imagen principal',
 	'hero-image-update-image' => 'Actualiza tu imagen principal',
@@ -69,9 +70,9 @@ $messages['es'] = array(
 	'hero-image-default-description' => 'Añade un resumen que promocione tu wikia en las búsquedas y en los hubs.',
 	'hero-image-error' => 'Error',
 	'hero-image-unknown-error' => 'Se ha producido un error desconocido.',
-);
+];
 
-$messages['fi'] = array(
+$messages['fi'] = [
 	'hero-image-drop-here' => 'Pudota kuva tänne',
 	'hero-image-add-image' => 'Päivitä kansikuva',
 	'hero-image-update-image' => 'Päivitä kansikuva',
@@ -86,9 +87,9 @@ $messages['fi'] = array(
 	'hero-image-default-description' => 'Lisää yhteenveto, joka mainostaa Wikiaasi hakukoneilla sekä keskuksissa.',
 	'hero-image-error' => 'Virhe',
 	'hero-image-unknown-error' => 'Tuntematon virhe.',
-);
+];
 
-$messages['fr'] = array(
+$messages['fr'] = [
 	'hero-image-drop-here' => 'déposez une image ici',
 	'hero-image-add-image' => 'Importer une image de couverture',
 	'hero-image-update-image' => 'Mettre à jour image de couverture',
@@ -96,19 +97,19 @@ $messages['fr'] = array(
 	'hero-image-position-image' => 'faites glisser pour repositionner cette image',
 	'hero-image-delete-btn' => 'Supprimer',
 	'hero-image-edit-btn' => 'Modifier',
-	'hero-image-discard-btn' => 'Retirer',
+	'hero-image-discard-btn' => 'Annuler',
 	'hero-image-publish-btn' => 'Publier',
 	'hero-image-default-title' => 'Nom de votre wikia',
 	'hero-image-save-image' => 'Votre image de couverture sera utilisée pour promouvoir votre page dans les résultats de recherche et autres zones promotionnelles.',
 	'hero-image-default-description' => 'Ajoutez un résumé qui promouvra votre wikia dans les résultats de recherche et sur les portails.',
 	'hero-image-error' => 'Erreur',
-	'hero-image-unknown-error' => "Une erreur inconnue s'est produite.",
-);
+	'hero-image-unknown-error' => 'Une erreur inconnue s\'est produite.',
+];
 
-$messages['it'] = array(
-	'hero-image-drop-here' => "Lascia qui un'immagine",
-	'hero-image-add-image' => "Carica l'immagine di copertina",
-	'hero-image-update-image' => "Aggiorna l'immagine di copertina",
+$messages['it'] = [
+	'hero-image-drop-here' => 'Lascia qui un\'immagine',
+	'hero-image-add-image' => 'Carica l\'immagine di copertina',
+	'hero-image-update-image' => 'Aggiorna l\'immagine di copertina',
 	'hero-image-dd-image' => 'o trascina e rilascia qui',
 	'hero-image-position-image' => 'Trascina per riposizionare questa immagine',
 	'hero-image-delete-btn' => 'Rimuovi',
@@ -116,13 +117,13 @@ $messages['it'] = array(
 	'hero-image-discard-btn' => 'Scarta',
 	'hero-image-publish-btn' => 'Pubblica',
 	'hero-image-default-title' => 'Il nome della tua wiki',
-	'hero-image-save-image' => "L'immagine di copertina sarà usata per promuovere la tua pagina nei risultati di ricerca e altre aree promozionali.",
+	'hero-image-save-image' => 'L\'immagine di copertina sarà usata per promuovere la tua pagina nei risultati di ricerca e altre aree promozionali.',
 	'hero-image-default-description' => 'Aggiungi una descrizione che promuoverà la tua wiki nelle ricerche e negli hub.',
 	'hero-image-error' => 'Errore',
 	'hero-image-unknown-error' => 'Errore sconosciuto.',
-);
+];
 
-$messages['ja'] = array(
+$messages['ja'] = [
 	'hero-image-drop-here' => 'ここに画像をドロップします',
 	'hero-image-add-image' => 'カバー画像をアップロードする',
 	'hero-image-update-image' => 'カバー画像を更新する',
@@ -137,9 +138,9 @@ $messages['ja'] = array(
 	'hero-image-default-description' => 'あなたのウィキアを検索結果やハブで紹介するための短い説明文を追加してください。',
 	'hero-image-error' => 'エラー',
 	'hero-image-unknown-error' => '不明なエラーが発生しました。',
-);
+];
 
-$messages['ko'] = array(
+$messages['ko'] = [
 	'hero-image-drop-here' => '이곳에 그림을 올려놓으세요',
 	'hero-image-add-image' => '커버 그림 올리기',
 	'hero-image-update-image' => '커버 그림 갱신하기',
@@ -154,9 +155,9 @@ $messages['ko'] = array(
 	'hero-image-default-description' => '검색 결과 또는 허브에서 본 위키아를 홍보하기 위해 쓰이게 될 설명을 추가해 주세요.',
 	'hero-image-error' => '오류',
 	'hero-image-unknown-error' => '알 수 없는 오류가 발생했습니다.',
-);
+];
 
-$messages['nl'] = array(
+$messages['nl'] = [
 	'hero-image-drop-here' => 'sleep hier een afbeelding',
 	'hero-image-add-image' => 'Coverafbeelding uploaden',
 	'hero-image-update-image' => 'Coverafbeelding vernieuwen',
@@ -166,17 +167,17 @@ $messages['nl'] = array(
 	'hero-image-edit-btn' => 'Bewerken',
 	'hero-image-discard-btn' => 'Verwerpen',
 	'hero-image-publish-btn' => 'Publiceren',
-	'hero-image-default-title' => "Jouw wikia's naam",
+	'hero-image-default-title' => 'Jouw wikia\'s naam',
 	'hero-image-save-image' => 'Jouw cover-afbeelding zal worden gebruikt om jouw pagina te promoten in de zoekresultaten en andere promotionele gebieden.',
 	'hero-image-default-description' => 'Klik om een samenvatting toe te voegen die jouw wikia zal promoten in zoekresultaten en hubs.',
 	'hero-image-error' => 'Fout',
 	'hero-image-unknown-error' => 'Er is een onbekende fout opgetreden.',
-);
+];
 
-$messages['pl'] = array(
+$messages['pl'] = [
 	'hero-image-drop-here' => 'upuść obraz tutaj',
-	'hero-image-add-image' => 'Prześlij obraz okładki',
-	'hero-image-update-image' => 'Zaktualizuj obraz okładki',
+	'hero-image-add-image' => 'Prześlij obraz tytułowy',
+	'hero-image-update-image' => 'Zaktualizuj obraz tytułowy',
 	'hero-image-dd-image' => 'lub upuść obraz tutaj',
 	'hero-image-position-image' => 'przeciągnij, aby przesunąć obraz',
 	'hero-image-delete-btn' => 'Usuń',
@@ -188,9 +189,9 @@ $messages['pl'] = array(
 	'hero-image-default-description' => 'Dodaj opis, który będzie promował Twoją wikię w wynikach wyszukiwaniach i hubach.',
 	'hero-image-error' => 'Błąd',
 	'hero-image-unknown-error' => 'Wystąpił nieznany błąd.',
-);
+];
 
-$messages['pt'] = array(
+$messages['pt'] = [
 	'hero-image-drop-here' => 'Ponha uma imagem aqui',
 	'hero-image-add-image' => 'Adicione uma imagem de capa',
 	'hero-image-update-image' => 'Atualize a imagem de capa',
@@ -205,9 +206,9 @@ $messages['pt'] = array(
 	'hero-image-default-description' => 'Adicione o resumo que promoverá a sua wikia em pesquisas e em portais.',
 	'hero-image-error' => 'Erro',
 	'hero-image-unknown-error' => 'Um erro desconhecido ocorreu.',
-);
+];
 
-$messages['ru'] = array(
+$messages['ru'] = [
 	'hero-image-drop-here' => 'поместите изображение сюда',
 	'hero-image-add-image' => 'Загрузить изображение обложки',
 	'hero-image-update-image' => 'Обновить изображение обложки',
@@ -222,26 +223,26 @@ $messages['ru'] = array(
 	'hero-image-default-description' => 'Добавить краткое описание, которое поможет вашей вики быть выше в поисковых системах.',
 	'hero-image-error' => 'Ошибка',
 	'hero-image-unknown-error' => 'Произошла неизвестная ошибка.',
-);
+];
 
-$messages['vi'] = array(
-	'hero-image-drop-here' => 'drop an image here',
-	'hero-image-add-image' => 'Upload cover image',
-	'hero-image-update-image' => 'Update cover image',
-	'hero-image-dd-image' => 'or drag and drop here',
-	'hero-image-position-image' => 'drag to reposition this image',
-	'hero-image-delete-btn' => 'Delete',
-	'hero-image-edit-btn' => 'Edit',
-	'hero-image-discard-btn' => 'Discard',
-	'hero-image-publish-btn' => 'Publish',
-	'hero-image-default-title' => "Your wikia's name",
-	'hero-image-save-image' => 'Your cover image will be used to promote your page in search results and in other promotional areas.',
-	'hero-image-default-description' => 'Add a summary that will promote your wikia in searches and on hubs.',
-	'hero-image-error' => 'Error',
-	'hero-image-unknown-error' => 'Unknown error occured.',
-);
+$messages['vi'] = [
+	'hero-image-drop-here' => 'thả hình ảnh ở đây',
+	'hero-image-add-image' => 'Tải lên ảnh bìa',
+	'hero-image-update-image' => 'Cập nhật ảnh bìa',
+	'hero-image-dd-image' => 'hoặc kéo và thả ở đây',
+	'hero-image-position-image' => 'Kéo để điều chỉnh vị trí ảnh bìa',
+	'hero-image-delete-btn' => 'Xóa',
+	'hero-image-edit-btn' => 'Sửa đổi',
+	'hero-image-discard-btn' => 'Hủy thay đổi',
+	'hero-image-publish-btn' => 'Xuất bản',
+	'hero-image-default-title' => 'Tên wikia của bạn',
+	'hero-image-save-image' => 'Ảnh bìa của bạn sẽ được sử dụng để xúc tiến trang web của mình trong các kết quả tìm kiếm và trong những lĩnh vực quảng bá khác.',
+	'hero-image-default-description' => 'Viết một dòng chú thích để xúc tiến wikia của bạn trong tìm kiếm và trên hub.',
+	'hero-image-error' => 'Lỗi',
+	'hero-image-unknown-error' => 'Lỗi không rõ đã xảy ra.',
+];
 
-$messages['zh-hans'] = array(
+$messages['zh-hans'] = [
 	'hero-image-drop-here' => '将图片拖至此处',
 	'hero-image-add-image' => '上传封面图片',
 	'hero-image-update-image' => '更新封面图片',
@@ -256,9 +257,9 @@ $messages['zh-hans'] = array(
 	'hero-image-default-description' => '添加摘要内容，这些内容将提升你的维基社区在搜索和各大主题社区中心中的位置。 ',
 	'hero-image-error' => '错误',
 	'hero-image-unknown-error' => '发生未知错误。',
-);
+];
 
-$messages['zh-tw'] = array(
+$messages['zh-tw'] = [
 	'hero-image-drop-here' => '將圖像拖至此處',
 	'hero-image-add-image' => '上傳封面圖片',
 	'hero-image-update-image' => '更新封面圖片',
@@ -273,5 +274,5 @@ $messages['zh-tw'] = array(
 	'hero-image-default-description' => '添加摘要內容，這些內容將提升你的維基社區在搜索和各大主題社區中心中的位置。',
 	'hero-image-error' => '錯誤',
 	'hero-image-unknown-error' => '出現未知錯誤。',
-);
+];
 

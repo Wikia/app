@@ -236,7 +236,7 @@ class RequestContext implements IContextSource {
 	 * @param $authSource array
 	 */
 	private function logAuthenticationMethod($user, $authSource) {
-		if ( count( $authSource ) <= 1 || $user === null || !$user->isLoggedIn() ) {
+		if ( count( $authSource ) == 0 || $user === null || !$user->isLoggedIn() ) {
 			return;
 		}
 
@@ -247,24 +247,28 @@ class RequestContext implements IContextSource {
 			\Transaction::addEvent( \Transaction::EVENT_USER_AUTH, $authSource );
 		}
 
-		// now we sample logging at 5%
-		$sampler->setProbability( 0.05 );
+		// If more than one method was used to authenticate, log the
+		// 'AUTHENTICATION_FALLBACK' message.
+		if ( count( $authSource ) > 1 ) {
+			// now we sample logging at 5%
+			$sampler->setProbability( 0.05 );
 
-		if ( !$sampler->shouldSample() ) {
-			return;
+			if ( !$sampler->shouldSample() ) {
+				return;
+			}
+
+			\Wikia\Logger\WikiaLogger::instance()->info(
+				'AUTHENTICATION_FALLBACK',
+				[
+					'auth'			=> $authSource,
+					'ip'			=> $this->getRequest()->getIP(),
+					'session_id'	=> session_id(),
+					'from'			=> $user->mFrom,
+					'user_id'		=> $user->getId(),
+					'user_name'		=> $user->getName(),
+				]
+			);
 		}
-
-		\Wikia\Logger\WikiaLogger::instance()->info(
-			'AUTHENTICATION_FALLBACK',
-			[
-				'auth'			=> $authSource,
-				'ip'			=> $this->getRequest()->getIP(),
-				'session_id'	=> session_id(),
-				'from'			=> $user->mFrom,
-				'user_id'		=> $user->getId(),
-				'user_name'		=> $user->getName(),
-			]
-		);
 	}
 
 	/**

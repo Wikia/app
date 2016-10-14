@@ -38,6 +38,8 @@ class PageHeaderController extends WikiaController {
 
 		global $wgTitle, $wgUser, $wgRequest;
 
+		wfRunHooks( 'BeforePrepareActionButtons', [ $this, &$this->content_actions ] );
+
 		$isDiff = !is_null( $wgRequest->getVal( 'diff' ) );
 
 		// "Add topic" action
@@ -79,8 +81,8 @@ class PageHeaderController extends WikiaController {
 			$this->actionImage = MenuButtonController::ADD_ICON;
 			$this->actionName = 'addtopic';
 		} // "Edit with form" (SMW)
-		else if ( isset( $this->content_actions['formedit'] ) ) {
-			$this->action = $this->content_actions['formedit'];
+		else if ( isset( $this->content_actions['form_edit'] ) ) {
+			$this->action = $this->content_actions['form_edit'];
 			$this->actionImage = MenuButtonController::EDIT_ICON;
 			$this->actionName = 'form-edit';
 		} // ve-edit

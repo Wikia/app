@@ -37,7 +37,7 @@ $messages['es'] = [
 ];
 
 $messages['fr'] = [
-	'staffpowers-desc' => 'Donne à l’équipe divers super-pouvoirs comme l’impossibilité de bloquer.',
+	'staffpowers-desc' => 'Donne à l’équipe divers super-pouvoirs comme l’impossibilité d\'être bloqué.',
 	'staffpowers-ipblock-abort' => 'Il est impossible de bloquer le staff de Fandom, les assistants de Fandom ou les membres de l\'équipe VSTF (Volunteer Spam Task Force). Veuillez utiliser le [[Special:Contact|formulaire de contact]] pour signaler tout problème avec notre staff.',
 ];
 

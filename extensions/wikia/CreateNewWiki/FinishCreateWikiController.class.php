@@ -129,7 +129,15 @@ class FinishCreateWikiController extends WikiaController {
 
 		$this->clearState();
 
-		$wgOut->redirect( $mainPageTitleText . '?wiki-welcome=1' );
+		/**
+		 * Mainpage under $wgSitename may not be ready yet
+		 * CreateNewWikiTask::postCreationSetup is run asynchronously on task machine
+		 *
+		 * MediaWiki will handle redirect to the main page and keep the URL parameter
+		 *
+		 * @see SUS-1167
+		 */
+		$wgOut->redirect( '/?wiki-welcome=1' );
 	}
 
 	/**
