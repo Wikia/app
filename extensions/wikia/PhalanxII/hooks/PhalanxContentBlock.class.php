@@ -207,7 +207,7 @@ class PhalanxContentBlock extends WikiaObject {
 	 *
 	 * hook
 	 */
-	static public function checkContent( $textbox, &$msg ) {
+	static public function checkContent( $textbox, &$msg, $displayBlock = false ) {
 		wfProfileIn( __METHOD__ );
 
 		$title = RequestContext::getMain()->getTitle();
@@ -217,7 +217,11 @@ class PhalanxContentBlock extends WikiaObject {
 		$ret = PhalanxContentBlock::editContent( $textbox, $msg, $phalanxModel );
 		
 		if ( $ret === false ) {
-			$msg = $phalanxModel->textBlock();
+			$msg = $phalanxModel->textBlock( !$displayBlock );
+
+			if ( $displayBlock ) {
+				$phalanxModel->displayBlock();
+			}
 		}
 		
 		wfProfileOut( __METHOD__ );

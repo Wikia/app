@@ -616,7 +616,9 @@ abstract class UploadBase {
 	 * @return Status indicating the whether the upload succeeded.
 	 */
 	public function performUpload( $comment, $pageText, $watch, $user ) {
-		if ( !wfRunHooks( 'FileUploadSummaryCheck', [ $comment ] ) ) {
+		$msg = '';
+
+		if ( !wfRunHooks( 'FileUploadSummaryCheck', [ $comment, &$msg, true ] ) ) {
 			return Status::newFatal( 'phalanx-title' );
 		}
 
