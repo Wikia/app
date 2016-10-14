@@ -1,6 +1,7 @@
 /*global define*/
 define('ext.wikia.aRecoveryEngine.recovery.helper', [
 	'ext.wikia.adEngine.adContext',
+	'ext.wikia.adEngine.slot.adUnitBuilder',
 	'wikia.document',
 	'wikia.instantGlobals',
 	'wikia.lazyqueue',
@@ -8,6 +9,7 @@ define('ext.wikia.aRecoveryEngine.recovery.helper', [
 	'wikia.window'
 ], function (
 	adContext,
+	adUnitBuilder,
 	doc,
 	instantGlobals,
 	lazyQueue,
@@ -81,8 +83,23 @@ define('ext.wikia.aRecoveryEngine.recovery.helper', [
 		}
 	}
 
+	function getRecoveredSlot(slotName) {
+		var recoveredId = win._sp_.getElementId(getAdUnit(slotName));
+
+		if (!recoveredId) {
+			return null;
+		}
+
+		return doc.getElementById(recoveredId);
+	}
+
+	function getAdUnit(slotName) {
+		return 'wikia_gpt' + adUnitBuilder.build(slotName, 'gpt');
+	}
+
 	return {
 		addOnBlockingCallback: addOnBlockingCallback,
+		getRecoveredSlot: getRecoveredSlot,
 		initEventQueue: initEventQueue,
 		isRecoveryEnabled: isRecoveryEnabled,
 		isBlocking: isBlocking,
