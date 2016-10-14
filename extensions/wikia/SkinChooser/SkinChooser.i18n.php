@@ -4,7 +4,7 @@ $messages = [];
 
 $messages['en'] = [
 	'skinchooser-desc' => 'Allows users to choose skins in their preferences',
-	'new-look' => 'Wikia',
+	'new-look' => 'Default',
 	'site-layout' => 'Site Layouts',
 	'right-setadminskin' => 'Set the default skin',
 ];
