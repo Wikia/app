@@ -82,6 +82,8 @@ use \Wikia\Tracer\WikiaTracer;
  */
 class Wikia {
 
+	public static $addAssetsToOutput;
+
 	const REQUIRED_CHARS = '0123456789abcdefG';
 
 	const COMMUNITY_WIKI_ID = 177; // community.wikia.com
@@ -2083,6 +2085,12 @@ class Wikia {
 
 		$sources = AssetsManager::getInstance()->getURL( $assetName, $type, $local );
 
+		if ( $type === AssetsManager::TYPE_JS ) {
+			if ( strpos( $assetName, '/' ) === false ) {
+				self::$addAssetsToOutput[] = $assetName;
+			}
+		}
+
 		foreach($sources as $src){
 			switch ( $type ) {
 				case AssetsManager::TYPE_CSS:
@@ -2090,7 +2098,7 @@ class Wikia {
 					$app->wg->Out->addStyle( $src );
 					break;
 				case AssetsManager::TYPE_JS:
-					$app->wg->Out->addScript( "<script src=\"{$src}\"></script>" );
+//					$app->wg->Out->addScript( "<script src=\"{$src}\"></script>" );
 					break;
 			}
 		}

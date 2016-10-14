@@ -279,8 +279,9 @@
 <!--
 $jsFiles (bottom)
 $body
-REQUESTS:
-SIZE:
+REQUESTS: +48
+SIZE:     +248KB
+TIME:     +2.67s
 -->
 
 <? if( $jsAtBottom ): ?>
