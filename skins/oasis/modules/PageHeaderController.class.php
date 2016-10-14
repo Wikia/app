@@ -38,6 +38,8 @@ class PageHeaderController extends WikiaController {
 
 		global $wgTitle, $wgUser, $wgRequest;
 
+		wfRunHooks( 'BeforePrepareActionButtons', [ $this, &$this->content_actions ] );
+
 		$isDiff = !is_null( $wgRequest->getVal( 'diff' ) );
 
 		// "Add topic" action

@@ -123,5 +123,6 @@ $messages['ko'] = [
 	'emailext-usernamechange-signature' => '위키아 커뮤니티 팀',
 	'emailext-usernamechange-subject' => '귀하의 위키아 사용자 이름 변경이 완료되었습니다!',
 	'emailext-usernamechange-summary' => '귀하의 위키아 사용자 이름 변경이 완료되었습니다.',
+	'emailext-usernamechange-changed' => '$1 님의 사용자 이름은 이제 $2입니다',
 ];
 

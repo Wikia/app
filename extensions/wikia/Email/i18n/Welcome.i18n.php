@@ -254,5 +254,9 @@ $messages['ko'] = [
 	'emailext-welcome-subject' => '위키아에 오신 것을 환영합니다, $1 님!',
 	'emailext-welcome-summary' => '위키아의 일원이 되신 것을 축하드립니다! 위키아는 팬을 위한, 팬에 의한 인터넷 지식 정보 보관소로서 모두에게 열려 있습니다.',
 	'emailext-welcome-summary-extended' => '그럼 이제 무슨 일을 해볼까요?',
+	'emailext-welcome-basics-description' => '아직 위키아의 문서 편집이나 파일 업로드 등에 익숙치 않으신가요? 그런 분들을 위해 [$1 간단한 강좌]를 준비했습니다!',
+	'emailext-welcome-basics-header' => '기초부터 시작해 보세요',
+	'emailext-welcome-fandom-header' => '원하는 커뮤니티를 찾아 보세요',
+	'emailext-welcome-profile-header' => '프로필을 생성해 보세요',
 ];
 

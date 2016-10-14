@@ -54,18 +54,64 @@ $messages['qqq'] = [
 
 $messages['pl'] = [
 	'imagereview-reason' => 'Naruszenie [[wikia:Terms of Use|Regulaminu]] portalu Fandom',
+	'imagereview-header-questionable' => 'Wątpliwe obrazy czekające na przegląd',
+	'imagereview-header-rejected' => 'Odrzucone obrazy czekające na przegląd',
+	'imagereview-header' => 'Obrazy oczekujące na przegląd',
+	'imagereview-imagepage-header' => 'Historia przeglądu obrazów',
+	'imagereview-imagepage-not-in-queue' => 'Uwaga: ten obraz nie został dodany do kolejki obrazów oczekujących na przegląd.',
+	'imagereview-imagepage-table-header-reviewer' => 'Przeglądający',
+	'imagereview-imagepage-table-header-state' => 'Status',
+	'imagereview-imagepage-table-header-time' => 'Data',
+	'imagereview-noresults' => 'Nie znaleziono obrazów.',
+	'imagereview-state-0' => 'Nie przejrzany',
+	'imagereview-state-1' => 'W trakcie przeglądu',
+	'imagereview-state-2' => 'Zatwierdzony',
+	'imagereview-state-3' => 'Usunięty',
+	'imagereview-state-4' => 'Odrzucony',
+	'imagereview-state-5' => 'Wątpliwy',
 ];
 
 $messages['de'] = [
 	'imagereview-reason' => 'Verletzung der [http://de.wikia.com/Nutzungsbedingungen Nutzungsbedingungen] von Fandom',
+	'imagereview-header-questionable' => 'Fragwürdige Bilder, die von den Mitarbeitern noch geprüft werden müssen',
+	'imagereview-header-rejected' => 'Zurückgewiesene Bilder, die von Mitarbeitern noch überprüft werden müssen',
+	'imagereview-header' => 'Bilder, die noch nicht überprüft wurden',
+	'imagereview-imagepage-header' => 'Bilderüberprüfungsversionsgeschichte',
+	'imagereview-imagepage-not-in-queue' => 'Warnung: Dieses Bild wurde noch nicht zur Überprüfung durch einen Mitarbeiter übermittelt',
+	'imagereview-imagepage-table-header-reviewer' => 'Prüfer',
+	'imagereview-imagepage-table-header-state' => 'Status',
+	'imagereview-imagepage-table-header-time' => 'Datum',
+	'imagereview-noresults' => 'Keine Bilder gefunden.',
+	'imagereview-state-0' => 'Noch nicht überprüft',
+	'imagereview-state-1' => 'Wird überprüft',
+	'imagereview-state-2' => 'Zugelassen',
+	'imagereview-state-3' => 'Gelöscht',
+	'imagereview-state-4' => 'Zurückgewiesen',
+	'imagereview-state-5' => 'Fragwürdig',
 ];
 
 $messages['fr'] = [
 	'imagereview-reason' => 'Infraction aux [[wikia:Terms of Use|Conditions d\'utilisation]] de Fandom',
+	'imagereview-header-questionable' => 'Images discutables en attente de vérification par le staff',
+	'imagereview-header-rejected' => 'Images rejetées en attente de vérification par le staff',
+	'imagereview-header' => 'Images en attente de vérification',
+	'imagereview-imagepage-header' => 'Historique des vérifications d\'image',
+	'imagereview-imagepage-not-in-queue' => 'Attention : cette image n\'a pas été ajoutée à la file des vérifications.',
+	'imagereview-imagepage-table-header-reviewer' => 'Vérifiée par',
+	'imagereview-imagepage-table-header-state' => 'Statut',
+	'imagereview-imagepage-table-header-time' => 'Date',
+	'imagereview-noresults' => 'Aucune image trouvée.',
+	'imagereview-state-0' => 'Non vérifiée',
+	'imagereview-state-1' => 'En cours de vérification',
+	'imagereview-state-2' => 'Approuvée',
+	'imagereview-state-3' => 'Supprimée',
+	'imagereview-state-4' => 'Rejetée',
+	'imagereview-state-5' => 'Discutable',
 ];
 
 $messages['ru'] = [
 	'imagereview-reason' => 'Нарушение [[w:c:ru.community:Викия:Условия_использования|Условий использования]] Фэндома',
+	'imagereview-noresults' => 'Изображения не найдены.',
 ];
 
 $messages['es'] = [
@@ -86,9 +132,28 @@ $messages['pt'] = [
 
 $messages['zh-hans'] = [
 	'imagereview-reason' => '违反Fandom[http://zh.wikia.com/wiki/%E4%BD%BF%E7%94%A8%E6%9D%A1%E6%AC%BE 使用条款]',
+	'imagereview-imagepage-header' => '图片检查历史',
+	'imagereview-imagepage-table-header-state' => '状态',
 ];
 
 $messages['zh-hant'] = [
 	'imagereview-reason' => '違反Fandom[http://zh-tw.wikia.com/wiki/%E4%BD%BF%E7%94%A8%E6%A2%9D%E6%AC%BE 使用條款]',
+	'imagereview-imagepage-header' => '圖片檢查歷史',
+	'imagereview-imagepage-table-header-state' => '狀態',
+];
+
+$messages['zh'] = [
+	'imagereview-imagepage-header' => '图片检查历史',
+	'imagereview-imagepage-table-header-state' => '状态',
+];
+
+$messages['zh-hk'] = [
+	'imagereview-imagepage-header' => '圖片檢查歷史',
+	'imagereview-imagepage-table-header-state' => '狀態',
+];
+
+$messages['zh-tw'] = [
+	'imagereview-imagepage-header' => '圖片檢查歷史',
+	'imagereview-imagepage-table-header-state' => '狀態',
 ];
 

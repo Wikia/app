@@ -14,8 +14,8 @@ $messages['en'] = [
 	'headline_tip' => 'Level 2 headline',
 	'hr_tip' => 'Horizontal line (use sparingly)',
 	'hiddencategories' => 'This page is a member of {{PLURAL:$1|1 hidden category|$1 hidden categories}}:',
-	'histlegend' => 'Diff selection: Mark the radio boxes of the revisions to compare and hit enter or the button at the bottom.<br />
-Legend: \'\'\'({{int:cur}})\'\'\' = difference with latest revision, \'\'\'({{int:last}})\'\'\' = difference with preceding revision, \'\'\'{{int:minoreditletter}}\'\'\' = minor edit.',
+	'histlegend' => '<span style="white-space:nowrap;">For any version listed below, click on its date to view it.</span> <span style="white-space:nowrap;">For more help, see [[Help:Page history]].</span><br />
+<span style="white-space:nowrap;">(cur) = difference from current version, (prev) = difference from preceding version,</span> <span style="white-space:nowrap;">m = [[Help:Minor edit|minor edit]], → = section edit, ← = automatic edit summary</span>',
 	'history-fieldset-title' => 'Browse history',
 	'history-show-deleted' => 'Deleted only',
 	'history_copyright' => '-',
@@ -41,7 +41,7 @@ Try [[Special:Search|searching on the wiki]] for relevant new pages.',
 	'http-curl-error' => 'Error fetching URL: $1',
 	'http-host-unreachable' => 'Could not reach URL.',
 	'http-bad-status' => 'There was a problem during the HTTP request: $1 $2',
-	'historywarning' => '\'\'\'Warning:\'\'\' The page you are about to delete has a history with approximately $1 {{PLURAL:$1|revision|revisions}}:',
+	'historywarning' => '<div style="margin-top: -10px;" class="emptymwmsg mediawiki_historywarning"></div>',
 	'handheld.css' => '/* CSS placed here will affect handheld devices based on the skin configured in $wgHandheldStyle */',
 	'hours-abbrev' => '$1h',
 	'hours' => '{{PLURAL:$1|$1 hour|$1 hours}}',
@@ -100,7 +100,7 @@ Try [[Special:Search|searching on the wiki]] for relevant new pages.',
 	'hubs' => 'Hubs',
 	'home' => 'Home',
 	'helpfaq' => 'Help & FAQ',
-	'highest_ratings' => 'Highest ratings',
+	'highest_ratings' => 'Highest voted',
 	'hub-Entertainment' => 'Entertainment',
 	'hub-Gaming' => 'Video Games',
 	'hub-Video_Games' => 'Video Games',
@@ -2485,8 +2485,8 @@ $messages['de'] = [
 	'hidden-category-category' => 'Versteckte Kategorien',
 	'help' => 'Hilfe',
 	'history' => 'Versionen',
-	'history_short' => 'Versionen/Autoren',
-	'helppage' => 'Help:Inhaltsverzeichnis',
+	'history_short' => 'Versionen',
+	'helppage' => 'Hilfe:Übersicht',
 	'hidetoc' => 'Verbergen',
 	'headline_sample' => 'Ebene-2-Überschrift',
 	'headline_tip' => 'Ebene-2-Überschrift',
@@ -2547,6 +2547,11 @@ $messages['de'] = [
 	'hub-Videospiele' => 'Videospiele',
 	'hub-Lifestyle' => 'Lifestyle',
 	'hub-Wikia' => 'Fandom',
+	'hidebots' => 'Bots ausblenden',
+	'hidesome' => 'Einige verbergen',
+	'hub-Food_and_Drink' => 'Essen und Trinken',
+	'hub-Video_Games' => 'Videospiele',
+	'hubs' => 'Portale',
 ];
 
 $messages['de-formal'] = [
@@ -2893,7 +2898,7 @@ $messages['es'] = [
 	'help' => 'Ayuda',
 	'history' => 'Historial',
 	'history_short' => 'Historial',
-	'helppage' => 'Help:Contenidos',
+	'helppage' => 'Ayuda:Contenidos',
 	'hidetoc' => 'ocultar',
 	'headline_sample' => 'Texto de encabezado',
 	'headline_tip' => 'Encabezado de nivel 2',
@@ -2945,8 +2950,10 @@ Prueba a [[Special:Search|buscar en el wiki]] nuevas páginas relevantes.',
 	'htmlform-selectorother-other' => 'Otro',
 	'home' => 'Portada',
 	'helpfaq' => 'Ayuda y preguntas frecuentes',
-	'highest_ratings' => 'Mejor puntuados',
+	'highest_ratings' => 'Lo más votado',
 	'hub-Wikia' => 'Fandom',
+	'hidebots' => 'Ocultar bots',
+	'hidesome' => 'Ocultar Algo',
 ];
 
 $messages['et'] = [
@@ -3133,7 +3140,7 @@ $messages['fa'] = [
 	'hijri-calendar-m9' => 'رمضان',
 	'hijri-calendar-m10' => 'شوّال',
 	'hijri-calendar-m11' => 'ذی‌القعده',
-	'hijri-calendar-m12' => 'ذی‌الحجّه',
+	'hijri-calendar-m12' => 'ذی‌الحجه',
 	'hebrew-calendar-m1' => 'تشری',
 	'hebrew-calendar-m2' => 'حشوان',
 	'hebrew-calendar-m3' => 'کسلو',
@@ -3172,6 +3179,8 @@ $messages['fa'] = [
 	'htmlform-submit' => 'ارسال',
 	'htmlform-reset' => 'خنثی کردن تغییرات',
 	'htmlform-selectorother-other' => 'دیگر',
+	'hidebots' => 'نهفتن ربات‌ها',
+	'highest_ratings' => 'بیشترین امتیاز',
 ];
 
 $messages['ff'] = [
@@ -3185,13 +3194,14 @@ $messages['fi'] = [
 	'help' => 'Ohje',
 	'history' => 'Historia',
 	'history_short' => 'Historia',
-	'helppage' => 'Help:Sisällys',
+	'helppage' => '{{ns:help}}:Sisällöt',
 	'hidetoc' => 'piilota',
 	'headline_sample' => 'Otsikkoteksti',
 	'headline_tip' => 'Otsikko',
 	'hr_tip' => 'Vaakasuora viiva',
 	'hiddencategories' => 'Tämä sivu kuuluu {{PLURAL:$1|seuraavaan piilotettuun luokkaan|seuraaviin piilotettuihin luokkiin}}:',
-	'histlegend' => 'Merkinnät: (nyk.) = eroavaisuudet nykyiseen versioon, (edell.) = eroavaisuudet edelliseen versioon, <span class="minor">p</span> = pieni muutos',
+	'histlegend' => '<span style="white-space:nowrap;">Voit tarkastella mitä tahansa versiota napsauttamalla sen päivämäärää.</span> <span style="white-space:nowrap;">Katso sivulta [[Ohje:Historia]] lisätietoja.</span><br />
+<span style="white-space:nowrap;">(nyk.) = eroavaisuudet nykyiseen versioon, (edell.) = eroavaisuudet edelliseen versioon,</span> <span style="white-space:nowrap;">\'\'\'p\'\'\' = [[Ohje:Pieni muutos|pieni muutos]], → = osion muokkaus, ← = automaattinen muokkausyhteenveto</span>',
 	'history-fieldset-title' => 'Selaa muutoshistoriaa',
 	'history-show-deleted' => 'Vain poistetut',
 	'histfirst' => 'Ensimmäiset',
@@ -3231,6 +3241,8 @@ Kokeile [[Special:Search|hakua]] löytääksesi asiaan liittyviä sivuja.',
 	'home' => 'Etusivu',
 	'helpfaq' => 'Ohje ja UKK',
 	'highest_ratings' => 'Korkeimmat arvosanat',
+	'hidesome' => 'Piilota joitakin',
+	'hubs' => 'Hubit',
 ];
 
 $messages['fiu-vro'] = [
@@ -3332,7 +3344,7 @@ $messages['fr'] = [
 	'help' => 'Aide',
 	'history' => 'Historique de la page',
 	'history_short' => 'Historique',
-	'helppage' => 'Help:Accueil',
+	'helppage' => 'Aide:Contenu',
 	'hidetoc' => 'masquer',
 	'headline_sample' => 'Texte de sous-titre',
 	'headline_tip' => 'Sous-titre niveau 2',
@@ -3382,8 +3394,14 @@ Essayez de [[Special:Search|rechercher sur le wiki]] pour trouver des pages en r
 	'htmlform-selectorother-other' => 'Autre',
 	'home' => 'Accueil',
 	'helpfaq' => 'Aide et FAQ',
-	'highest_ratings' => 'Les meilleurs notes',
+	'highest_ratings' => 'Les mieux notées',
 	'hub-Wikia' => 'Fandom',
+	'hidebots' => 'Masquer les robots',
+	'hub-Entertainment' => 'Divertissement',
+	'hub-Gaming' => 'Jeux vidéo',
+	'hub-Lifestyle' => 'Mode de vie',
+	'hub-Video_Games' => 'Jeux vidéo',
+	'hubs' => 'Thèmes',
 ];
 
 $messages['frc'] = [
@@ -5037,7 +5055,7 @@ $messages['it'] = [
 	'help' => 'Aiuto',
 	'history' => 'Versioni precedenti',
 	'history_short' => 'Cronologia',
-	'helppage' => 'Help:Indice',
+	'helppage' => 'Aiuto:Contenuti',
 	'hidetoc' => 'nascondi',
 	'headline_sample' => 'Intestazione',
 	'headline_tip' => 'Intestazione di 2° livello',
@@ -5083,7 +5101,13 @@ Legenda: \'\'\'({{int:cur}})\'\'\' = differenze con la versione attuale, \'\'\'(
 	'htmlform-submit' => 'Invia',
 	'htmlform-reset' => 'Annulla modifiche',
 	'htmlform-selectorother-other' => 'Altro',
-	'hub-Wikia' => 'Fandom',
+	'hub-Wikia' => 'Wikia',
+	'highest_ratings' => 'Valutazioni migliori',
+	'hub-Entertainment' => 'Intrattenimento',
+	'hub-Food_and_Drink' => 'Cibo e bevande',
+	'hub-Gaming' => 'Videogiochi',
+	'hub-Lifestyle' => 'Stili di vita',
+	'hub-Video_Games' => 'Videogiochi',
 ];
 
 $messages['iu'] = [
@@ -5146,7 +5170,7 @@ $messages['ja'] = [
 	'help' => 'ヘルプ',
 	'history' => 'ページの履歴',
 	'history_short' => '履歴',
-	'helppage' => 'Help:目次',
+	'helppage' => 'ヘルプ:コンテンツ',
 	'hidetoc' => '非表示',
 	'headline_sample' => '見出し文',
 	'headline_tip' => '2段目の見出し',
@@ -6030,7 +6054,7 @@ $messages['ko'] = [
 	'help' => '도움말',
 	'history' => '문서 역사',
 	'history_short' => '역사',
-	'helppage' => 'Help:목차',
+	'helppage' => '도움말:콘텐츠',
 	'hidetoc' => '숨기기',
 	'headline_sample' => '제목',
 	'headline_tip' => '2단계 문단 제목',
@@ -6076,6 +6100,11 @@ $messages['ko'] = [
 	'htmlform-reset' => '변경한 것을 되돌리기',
 	'htmlform-selectorother-other' => '기타',
 	'hub-Wikia' => '위키아',
+	'hub-Entertainment' => '엔터테인먼트',
+	'hub-Food_and_Drink' => '음식과 음료',
+	'hub-Gaming' => '게임',
+	'hub-Lifestyle' => '라이프스타일',
+	'hub-Video_Games' => '게임',
 ];
 
 $messages['ko-kp'] = [
@@ -8183,7 +8212,7 @@ Wellicht is die verwijderd of hernoemd.
 	'history-title' => 'Geschiedenis van "$1"',
 	'hist' => 'gesch',
 	'hide' => 'verbergen',
-	'hookaborted' => 'De wijziging die u probeerde te maken is afgebroken door een uitbreidingshook.',
+	'hookaborted' => 'De wijziging die je probeerde te maken is afgebroken door een uitbreidingshook.',
 	'http-invalid-url' => 'Ongeldige URL: $1',
 	'http-invalid-scheme' => 'URL\'s met de opmaak "$1" worden niet ondersteund',
 	'http-request-error' => 'Fout bij het verzenden van het verzoek.',
@@ -8192,14 +8221,14 @@ Wellicht is die verwijderd of hernoemd.
 	'http-curl-error' => 'Fout bij het ophalen van URL: $1',
 	'http-host-unreachable' => 'De URL is niet bereikbaar.',
 	'http-bad-status' => 'Er is een probleem opgetreden bij het HTTP-verzoek: $1 $2',
-	'historywarning' => '\'\'\'Waarschuwing:\'\'\' de pagina die u wilt verwijderen heeft ongeveer $1 {{PLURAL:$1|versie|versies}}:',
+	'historywarning' => '\'\'\'Waarschuwing:\'\'\' de pagina die je wilt verwijderen heeft ongeveer $1 {{PLURAL:$1|versie|versies}}:',
 	'handheld.css' => '/* CSS die hier wordt geplaatst heeft alleen invloed op handheldapparaten gebaseerd op de skin die is ingesteld in $wgHandheldStyle */',
 	'hours-abbrev' => '$1u',
 	'hours' => '{{PLURAL:$1|$1 uur|$1 uur}}',
 	'htmlform-invalid-input' => 'Er zijn problemen met enkele ingegeven waarden',
 	'htmlform-select-badoption' => 'De ingegeven waarde is ongeldig.',
 	'htmlform-int-invalid' => 'De ingegeven waarde is geen geheel getal.',
-	'htmlform-float-invalid' => 'De waarde die u hebt opgegeven is geen getal.',
+	'htmlform-float-invalid' => 'De waarde die je hebt opgegeven is geen getal.',
 	'htmlform-int-toolow' => 'De ingegeven waarde ligt onder de minimumwaarde van $1',
 	'htmlform-int-toohigh' => 'De ingegeven waarde ligt boven de maximumwaarde van $1',
 	'htmlform-required' => 'Deze waarde is verplicht',
@@ -8302,7 +8331,7 @@ $messages['no'] = [
 	'http-host-unreachable' => 'Kunne ikkje nå nettadressa',
 	'http-bad-status' => 'Det var eit problem under HTTP-førespurnaden: $1 $2',
 	'historywarning' => '\'\'\'Åtvaring:\'\'\' Sida du held på å slette har ein historikk med om lag $1 {{PLURAL:$1|versjon|versjonar}}:',
-	'handheld.css' => '/* CSS i denne fila vil gjelde alle handheldte innretnigar konfigurert i $wgHandheldStyle */',
+	'handheld.css' => '/* CSS plassert her vil påvirke håndholdte apparater basert på utseendet konfigurert i $wgHandheldStyle */',
 	'htmlform-invalid-input' => 'Det finst problem med innskrivinga di',
 	'htmlform-select-badoption' => 'Verdien du valde er ikkje eit gyldig alternativ.',
 	'htmlform-int-invalid' => 'Verdien du valde er ikkje eit heiltal.',
@@ -8316,6 +8345,9 @@ $messages['no'] = [
 	'home' => 'Hovedside',
 	'helpfaq' => 'Hjelp & Ofte stilte spørsmål',
 	'highest_ratings' => 'Høyest rangert',
+	'hidebots' => 'Skjul roboter',
+	'hidesome' => 'Skjul noen',
+	'hubs' => 'Hubber',
 ];
 
 $messages['nov'] = [
@@ -8686,7 +8718,7 @@ $messages['pl'] = [
 	'help' => 'Pomoc',
 	'history' => 'Historia strony',
 	'history_short' => 'Historia i autorzy',
-	'helppage' => 'Help:Spis treści',
+	'helppage' => 'Help:Zawartość',
 	'hidetoc' => 'ukryj',
 	'headline_sample' => 'Tekst nagłówka',
 	'headline_tip' => 'Nagłówek 2. poziomu',
@@ -8762,10 +8794,11 @@ Spróbuj [[Special:Search|poszukać]] tej strony.',
 	'helpfaq' => 'Pomoc i FAQ',
 	'highest_ratings' => 'Najwyżej oceniane',
 	'hub-Entertainment' => 'Rozrywka',
-	'hub-Gaming' => 'Gry wideo',
+	'hub-Gaming' => 'Gry',
 	'hub-Video_Games' => 'Gry wideo',
 	'hub-Lifestyle' => 'Lifestyle',
 	'hub-Wikia' => 'Fandom',
+	'hubs' => 'Huby',
 ];
 
 $messages['pms'] = [
@@ -9452,7 +9485,7 @@ $messages['ru'] = [
 	'history' => 'история',
 	'history_short' => 'история',
 	'helppage' => 'Help:Содержание',
-	'hidetoc' => 'убрать',
+	'hidetoc' => 'свернуть',
 	'headline_sample' => 'Текст заголовка',
 	'headline_tip' => 'Заголовок 2-го уровня',
 	'hr_tip' => 'Горизонтальная линия (не используйте часто)',
@@ -9527,7 +9560,13 @@ $messages['ru'] = [
 	'home' => 'Домой',
 	'helpfaq' => 'Помощь и FAQ',
 	'highest_ratings' => 'Самые высокие рейтинги',
-	'hub-Wikia' => 'Фэндом',
+	'hub-Wikia' => 'Викия',
+	'hub-Entertainment' => 'Entertainment',
+	'hub-Food_and_Drink' => 'Еда и напитки',
+	'hub-Gaming' => 'Видеоигры',
+	'hub-Lifestyle' => 'Увлечения',
+	'hub-Video_Games' => 'Видеоигры',
+	'hub-Videospiele' => 'Видеоигры',
 ];
 
 $messages['rue'] = [
@@ -10702,8 +10741,8 @@ $messages['sv'] = [
 	'headline_tip' => 'Rubrik i nivå 2',
 	'hr_tip' => 'Horisontell linje (använd sparsamt)',
 	'hiddencategories' => 'Denna sida är medlem i följande dolda {{PLURAL:$1|kategori|kategorier}}:',
-	'histlegend' => 'Val av diff: markera i klickrutorna för att jämföra versioner och tryck enter eller knappen längst ner.<br />
-Förklaring: (nuvarande) = skillnad mot nuvarande version; (föregående) = skillnad mot föregående version; \'\'\'m\'\'\' = mindre ändring.',
+	'histlegend' => '<span style="white-space:nowrap;">För varje version som anges nedan, klicka på dagen för att visa det.</span> <span style="white-space:nowrap;">För mer hjälp, se [[Help:Page history|Hjälp:Sida historia]].</span><br />
+<span style="white-space:nowrap;">(cur) = skillnad mot nuvarande version, (sista) = skillnad mot föregående version,</span> <span style="white-space:nowrap;">m = [[Help:Minor edit|Hjälp:mindre ändring]], → = avsnitt redigera, ← = [[Help:Automatic edit summaries|Hjälp:automatisk redigeringskommentar]]</span>',
 	'history-fieldset-title' => 'Bläddra i historiken',
 	'history-show-deleted' => 'Endast borttagna',
 	'histfirst' => 'Första',
@@ -11837,7 +11876,7 @@ $messages['vi'] = [
 	'help' => 'Trợ giúp',
 	'history' => 'Lịch sử trang',
 	'history_short' => 'Lịch sử',
-	'helppage' => 'Help:Nội dung',
+	'helppage' => 'Help:Mục_lục',
 	'hidetoc' => 'ẩn',
 	'headline_sample' => 'Đề mục',
 	'headline_tip' => 'Đề mục cấp 2',
@@ -11910,6 +11949,9 @@ Chú giải: (hiện) = khác với phiên bản hiện hành,
 	'htmlform-selectorother-other' => 'Khác',
 	'home' => 'trang chính',
 	'helpfaq' => 'Trợ giúp & Vấn đáp',
+	'hub-Entertainment' => 'Giải trí',
+	'hub-Gaming' => 'Trò chơi điện tử',
+	'hub-Lifestyle' => 'Lối sống',
 ];
 
 $messages['vls'] = [
@@ -12547,5 +12589,14 @@ $messages['zu'] = [
 	'histfirst' => 'lokuqala',
 	'histlast' => 'ligcinileyo',
 	'hide' => 'Fihla',
+];
+
+$messages['zh'] = [
+	'history_short' => '历史纪录',
+	'hookaborted' => '您所尝试的修改已经不被扩展功能支持。',
+];
+
+$messages['zh-cn'] = [
+	'history_short' => '沿革',
 ];
 

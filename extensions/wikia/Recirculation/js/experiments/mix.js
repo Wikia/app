@@ -5,7 +5,7 @@ require([
 	'ext.wikia.recirculation.utils',
 	'ext.wikia.recirculation.discussions',
 	require.optional('videosmodule.controllers.rail')
-], function(
+], function (
 	$,
 	w,
 	log,
@@ -48,7 +48,7 @@ require([
 		return;
 	}
 
-	recircExperiment.forEach(function(experiment) {
+	recircExperiment.forEach(function (experiment) {
 		var deferred = $.Deferred();
 
 		views[experiment.placement] = views[experiment.placement] || [];
@@ -62,19 +62,26 @@ require([
 
 			require([helperString], function (helper) {
 				helper(experiment.options).loadData()
-					.then(function(data) {
+					.done(function (data) {
 						deferred.resolve(data);
+					})
+					.fail(function (err) {
+						deferred.reject(err);
 					});
 			});
 		}
 
 		if (experiment.source && saved[experiment.source]) {
-			saved[experiment.source].then(function(data) {
-				deferred.resolve({
-					title: data.title,
-					items: data.items.slice(experiment.options.offset)
+			saved[experiment.source]
+				.done(function (data) {
+					deferred.resolve({
+						title: data.title,
+						items: data.items.slice(experiment.options.offset)
+					});
+				})
+				.fail(function (err) {
+					deferred.reject(err);
 				});
-			});
 		}
 
 		views[experiment.placement].push(deferred);
@@ -86,7 +93,7 @@ require([
 		log('Initializing View: ' + key, 'info', logGroup);
 		require([viewString], function (viewFactory) {
 			$.when.apply($, value)
-				.then(function () {
+				.done(function () {
 					var view = viewFactory(),
 						args = Array.prototype.slice.call(arguments),
 						data = {
@@ -112,9 +119,32 @@ require([
 
 					view.render(data)
 						.then(view.setupTracking(experimentName));
-				});
+				})
+				.fail(handleError(key));
 		});
 	});
+
+	function handleError(placement) {
+		return function (errorMessage) {
+			log(errorMessage, 'info', logGroup);
+
+			if (placement === 'rail') {
+				require([
+					'ext.wikia.recirculation.helpers.fandom',
+					'ext.wikia.recirculation.views.rail'
+				], function (helper, view) {
+					helper({
+						type: 'community',
+						fill: true,
+						limit: 10
+					}).loadData()
+						.done(function (data) {
+							view().render(data);
+						});
+				});
+			}
+		};
+	}
 
 	if (!views.impactFooter) {
 		discussions(experimentName);

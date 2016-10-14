@@ -57,7 +57,7 @@ $messages['de'] = [
 	'wikiahubs-v3-popular-videos' => 'Beliebte Videos',
 	'wikiahubs-v3-social-twitter-link' => 'http://twitter.com/wikia_de',
 	'wikiahubs-v3-social-facebook-link' => 'https://www.facebook.com/wikia.de',
-	'wikiahubs-v3-social-googleplus-link' => '',
+	'wikiahubs-v3-social-googleplus-link' => 'http://gplus.to/wikiade',
 ];
 
 $messages['fr'] = [
@@ -86,6 +86,7 @@ $messages['fr'] = [
 	'wikiahubs-v3-social-twitter-link' => 'https://twitter.com/#!/wikia_fr',
 	'wikiahubs-v3-social-facebook-link' => 'http://www.facebook.com/wikia.fr',
 	'wikiahubs-v3-social-googleplus-link' => 'https://plus.google.com/u/0/102929967599324609587/posts',
+	'wikiahubs-v3-suggest-article-close-button' => 'Fermer',
 ];
 
 $messages['es'] = [
@@ -141,6 +142,7 @@ $messages['pl'] = [
 	'wikiahubs-v3-social-twitter-link' => 'https://twitter.com/wikia_pl',
 	'wikiahubs-v3-social-facebook-link' => 'https://www.facebook.com/wikiapl',
 	'wikiahubs-v3-social-googleplus-link' => '',
+	'wikiahubs-v3-suggest-article-close-button' => 'Zamknij',
 ];
 
 $messages['ja'] = [
@@ -155,13 +157,13 @@ $messages['ja'] = [
 	'wikiahubs-v3-error-invalid-reason-length' => 'コメントは1から140文字以内でお願いします。',
 	'wikiahubs-v3-wam-header' => 'WAM スコア',
 	'wikiahubs-v3-wam-see-full-wam-ranking' => 'WAMについてもっと読む',
-	'wikiahubs-v3-wam-top-wikis-headline' => 'トップウィキア $1 コミュニティー',
+	'wikiahubs-v3-wam-top-wikis-headline' => 'トップウィキア $1 コミュニティ',
 	'wikiahubs-v3-wam-rank' => 'ランキング',
 	'wikiahubs-v3-wam-score' => 'WAM スコア',
 	'wikiahubs-v3-wam-wiki-url' => '名前',
 	'wikiahubs-v3-from-community-promoted' => '宣伝する',
 	'wikiahubs-v3-from-community-caption' => '[$1 $2] から[$3 $4]',
-	'wikiahubs-v3-from-community-headline' => 'コミュニティーから',
+	'wikiahubs-v3-from-community-headline' => 'コミュニティから',
 	'wikiahubs-v3-sponsored-by' => '$1によって提供されました。',
 	'wikiahubs-v3-404-title' => 'お探しのページは見つかりませんでした。',
 	'wikiahubs-v3-404-message' => 'お探しのページは見つかりませんでした。 [[$1|ここをクリック]] すると本日のハブに移動します。',
@@ -192,6 +194,30 @@ $messages['qqq'] = [
 
 $messages['ru'] = [
 	'wikiahubs-search-placeholder' => 'Поиск по Фэндому',
+	'wikiahubs-v3-404-message' => 'Страница, которую вы ищете, не существует. [[$1|Нажмите сюда]], чтобы вернуться на страницу портала.',
+	'wikiahubs-v3-404-title' => 'Страница, которую вы ищете, не существует',
+	'wikiahubs-v3-button-cancel' => 'Отмена',
+	'wikiahubs-v3-error-invalid-article-url-length' => 'URL страницы должен содержать не менее 10 символов',
+	'wikiahubs-v3-error-invalid-reason-length' => 'Комментарий должен содержать от 1 до 140 символов',
+	'wikiahubs-v3-from-community-caption' => 'От участника [$1 $2] с [$3 $4]',
+	'wikiahubs-v3-from-community-headline' => 'От сообщества',
+	'wikiahubs-v3-from-community-promoted' => 'Продвижение',
+	'wikiahubs-v3-popular-videos' => 'Популярное видео',
+	'wikiahubs-v3-social-facebook-link' => 'https://www.facebook.com/wikia.ru',
+	'wikiahubs-v3-social-twitter-link' => 'https://twitter.com/wikia_ru',
+	'wikiahubs-v3-sponsored-by' => 'Спонсор: $1',
+	'wikiahubs-v3-suggest-article-close-button' => 'Закрыть',
+	'wikiahubs-v3-suggest-article-header' => 'Предложить статью/новость',
+	'wikiahubs-v3-suggest-article-reason' => 'Почему это нужно опубликовать? (максимум 140 символов)',
+	'wikiahubs-v3-suggest-article-submit-button' => 'Отправить',
+	'wikiahubs-v3-suggest-article-success' => 'Спасибо за то, что предложили новость или интересную статью со своей вики! Наши редакторы проверят её. Следите за обновлениями страницы Портала!',
+	'wikiahubs-v3-suggest-article-what-article' => 'Дайте ссылку на URL с новостью или статьёй. (максимум 255 символов)',
+	'wikiahubs-v3-wam-header' => 'Рейтинг WAM',
+	'wikiahubs-v3-wam-rank' => 'Позиция',
+	'wikiahubs-v3-wam-score' => 'Рейтинг WAM',
+	'wikiahubs-v3-wam-see-full-wam-ranking' => 'Узнать больше о WAM',
+	'wikiahubs-v3-wam-top-wikis-headline' => 'Лучшие вики из портала $1',
+	'wikiahubs-v3-wam-wiki-url' => 'Название',
 ];
 
 $messages['it'] = [
@@ -200,13 +226,118 @@ $messages['it'] = [
 
 $messages['pt'] = [
 	'wikiahubs-search-placeholder' => 'Pesquisar o Fandom',
+	'wikiahubs-v3-suggest-article-close-button' => 'Fechar',
+	'wikiahubs-v3-suggest-article-header' => 'Sugira um Artigo',
+	'wikiahubs-v3-suggest-article-reason' => 'Por que isso é legal? (limite de 140 caracteres)',
+	'wikiahubs-v3-suggest-article-submit-button' => 'Enviar',
+	'wikiahubs-v3-suggest-article-success' => 'Obrigada por sugerir este artigo, nossos editores vão dar uma olhada! Olhe mais tarde para ver se a sua sugestão foi aprovada!',
+	'wikiahubs-v3-suggest-article-what-article' => 'Qual url você gostaria de compartilhar? (limite de 255 caracteres)',
 ];
 
 $messages['zh-hans'] = [
 	'wikiahubs-search-placeholder' => '搜索Fandom',
+	'wikiahubs-v3-from-community-caption' => '发布者:[$1 $2] 发布社区: [$3 $4]',
+	'wikiahubs-v3-suggest-article-close-button' => '关闭',
+	'wikiahubs-v3-suggest-article-header' => '推荐一篇文章',
+	'wikiahubs-v3-suggest-article-reason' => '推荐原因？ (最多140字符）',
+	'wikiahubs-v3-suggest-article-submit-button' => '送出',
+	'wikiahubs-v3-suggest-article-success' => '谢谢推荐文章，我们将会查看内容，可以过一段时间回来看看是不是登上页面了！',
+	'wikiahubs-v3-suggest-article-what-article' => '分享文章的网址为何? (最多255字符)',
+	'wikiahubs-v3-wam-header' => 'WAM分数',
+	'wikiahubs-v3-wam-rank' => '排名',
+	'wikiahubs-v3-wam-score' => 'WAM分数',
+	'wikiahubs-v3-wam-see-full-wam-ranking' => '关于WAM分数',
+	'wikiahubs-v3-wam-top-wikis-headline' => 'Wikia流行$1社区',
+	'wikiahubs-v3-wam-wiki-url' => '名称',
 ];
 
 $messages['zh-hant'] = [
 	'wikiahubs-search-placeholder' => '搜索Fandom',
+	'wikiahubs-v3-from-community-caption' => '發布者:[$1 $2] 發布社區: [$3 $4]',
+	'wikiahubs-v3-suggest-article-close-button' => '關閉',
+	'wikiahubs-v3-suggest-article-header' => '推薦一篇文章',
+	'wikiahubs-v3-suggest-article-reason' => '推薦原因？ (最多140字符）',
+	'wikiahubs-v3-suggest-article-submit-button' => '送出',
+	'wikiahubs-v3-suggest-article-success' => '謝謝推薦文章，我們將會查看內容，可以過一段時間回來看看是不是登上頁面了！',
+	'wikiahubs-v3-suggest-article-what-article' => '分享文章的網址為何? (最多255字符)',
+	'wikiahubs-v3-wam-header' => 'WAM分數',
+	'wikiahubs-v3-wam-rank' => '排名',
+	'wikiahubs-v3-wam-score' => 'WAM分數',
+	'wikiahubs-v3-wam-see-full-wam-ranking' => '關於WAM分數',
+	'wikiahubs-v3-wam-top-wikis-headline' => 'Wikia流行$1社區',
+	'wikiahubs-v3-wam-wiki-url' => '名稱',
+];
+
+$messages['zh'] = [
+	'wikiahubs-v3-from-community-caption' => '发布者:[$1 $2] 发布社区: [$3 $4]',
+	'wikiahubs-v3-suggest-article-close-button' => '关闭',
+	'wikiahubs-v3-suggest-article-header' => '推荐一篇文章',
+	'wikiahubs-v3-suggest-article-reason' => '推荐原因？ (最多140字符）',
+	'wikiahubs-v3-suggest-article-submit-button' => '送出',
+	'wikiahubs-v3-suggest-article-success' => '谢谢推荐文章，我们将会查看内容，可以过一段时间回来看看是不是登上页面了！',
+	'wikiahubs-v3-suggest-article-what-article' => '分享文章的网址为何? (最多255字符)',
+	'wikiahubs-v3-wam-header' => 'WAM分数',
+	'wikiahubs-v3-wam-rank' => '排名',
+	'wikiahubs-v3-wam-score' => 'WAM分数',
+	'wikiahubs-v3-wam-see-full-wam-ranking' => '关于WAM分数',
+	'wikiahubs-v3-wam-top-wikis-headline' => 'Wikia流行$1社区',
+	'wikiahubs-v3-wam-wiki-url' => '名称',
+];
+
+$messages['zh-hk'] = [
+	'wikiahubs-v3-from-community-caption' => '發布者:[$1 $2] 發布社區: [$3 $4]',
+	'wikiahubs-v3-suggest-article-close-button' => '關閉',
+	'wikiahubs-v3-suggest-article-header' => '推薦一篇文章',
+	'wikiahubs-v3-suggest-article-reason' => '推薦原因？ (最多140字符）',
+	'wikiahubs-v3-suggest-article-submit-button' => '送出',
+	'wikiahubs-v3-suggest-article-success' => '謝謝推薦文章，我們將會查看內容，可以過一段時間回來看看是不是登上頁面了！',
+	'wikiahubs-v3-suggest-article-what-article' => '分享文章的網址為何? (最多255字符)',
+	'wikiahubs-v3-wam-header' => 'WAM分數',
+	'wikiahubs-v3-wam-rank' => '排名',
+	'wikiahubs-v3-wam-score' => 'WAM分數',
+	'wikiahubs-v3-wam-see-full-wam-ranking' => '關於WAM分數',
+	'wikiahubs-v3-wam-top-wikis-headline' => 'Wikia流行$1社區',
+	'wikiahubs-v3-wam-wiki-url' => '名稱',
+];
+
+$messages['zh-tw'] = [
+	'wikiahubs-v3-from-community-caption' => '發布者:[$1 $2] 發布社區: [$3 $4]',
+	'wikiahubs-v3-suggest-article-close-button' => '關閉',
+	'wikiahubs-v3-suggest-article-header' => '推薦一篇文章',
+	'wikiahubs-v3-suggest-article-reason' => '推薦原因？ (最多140字符）',
+	'wikiahubs-v3-suggest-article-submit-button' => '送出',
+	'wikiahubs-v3-suggest-article-success' => '謝謝推薦文章，我們將會查看內容，可以過一段時間回來看看是不是登上頁面了！',
+	'wikiahubs-v3-suggest-article-what-article' => '分享文章的網址為何? (最多255字符)',
+	'wikiahubs-v3-wam-header' => 'WAM分數',
+	'wikiahubs-v3-wam-rank' => '排名',
+	'wikiahubs-v3-wam-score' => 'WAM分數',
+	'wikiahubs-v3-wam-see-full-wam-ranking' => '關於WAM分數',
+	'wikiahubs-v3-wam-top-wikis-headline' => 'Wikia流行$1社區',
+	'wikiahubs-v3-wam-wiki-url' => '名稱',
+];
+
+$messages['ko'] = [
+	'wikiahubs-v3-from-community-headline' => '커뮤니티 이모저모',
+	'wikiahubs-v3-popular-videos' => '인기 동영상',
+	'wikiahubs-v3-sponsored-by' => '$1 제공',
+	'wikiahubs-v3-suggest-article-close-button' => '취소',
+	'wikiahubs-v3-suggest-article-header' => '문서 제안하기',
+	'wikiahubs-v3-suggest-article-reason' => '왜 해당 URL이 멋지다고 생각하시나요? (140자 내로)',
+	'wikiahubs-v3-suggest-article-submit-button' => '완료',
+	'wikiahubs-v3-suggest-article-what-article' => '어느 URL을 사람들과 함께 나누고 싶나요? (255자 내로)',
+	'wikiahubs-v3-wam-header' => 'WAM 점수',
+	'wikiahubs-v3-wam-rank' => '순위',
+	'wikiahubs-v3-wam-score' => 'WAM 점수',
+	'wikiahubs-v3-wam-see-full-wam-ranking' => 'WAM에 대해 더 알아보기',
+	'wikiahubs-v3-wam-top-wikis-headline' => '위키아 $1 커뮤니티 순위',
+];
+
+$messages['pt-br'] = [
+	'wikiahubs-v3-suggest-article-close-button' => 'Fechar',
+	'wikiahubs-v3-suggest-article-header' => 'Sugira um Artigo',
+	'wikiahubs-v3-suggest-article-reason' => 'Por que isso é legal? (limite de 140 caracteres)',
+	'wikiahubs-v3-suggest-article-submit-button' => 'Enviar',
+	'wikiahubs-v3-suggest-article-success' => 'Obrigada por sugerir um artigo. Nosso editores vão revisar a sua sugestão. Confira mais tarde!',
+	'wikiahubs-v3-suggest-article-what-article' => 'Qual URL você gostaria de compartilhar? (limite de 255 caracteres)',
 ];
 
