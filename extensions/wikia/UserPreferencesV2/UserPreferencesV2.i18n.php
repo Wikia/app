@@ -53,7 +53,7 @@ $messages['en'] = [
 	'tog-editsectiononrightclick-v2' => 'Edit sections by right clicking on section titles',
 	'tog-editondblclick-v2' => 'Edit pages on double click',
 	'tog-hidefollowedpages-v2' => 'Hide my followed pages list from everybody',
-    'prefs-wikiemail' => '{{SITENAME}} options. Send me an email when...'
+	'prefs-wikiemail' => '{{SITENAME}} options. Send me an email when...'
 ];
 
 $messages['qqq'] = [
