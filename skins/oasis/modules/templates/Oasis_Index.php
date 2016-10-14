@@ -209,8 +209,8 @@
 
 	<!-- Rychu preloading -->
 
-	<img src="http://sandbox-s1.slot1.wikia.com/skins/shared/images/sprite.png" alt="preload">
-	<img src="http://img3.wikia.nocookie.net/__cb15/scrubs/images/5/50/Wiki-background" alt="preload">
+	<img src="http://sandbox-s1.slot1.wikia.com/skins/shared/images/sprite.png" height="1" alt="preload">
+	<img src="http://img3.wikia.nocookie.net/__cb15/scrubs/images/5/50/Wiki-background" height="1" alt="preload">
 	<link rel="stylesheet" src="http://sandbox-s1.slot1.wikia.com/skins/oasis/fonts/yanone/YanoneKaffeesatz-Regular-webfont.woff" lazyload>
 
 	<!-- / Rychu preloading -->

@@ -283,6 +283,9 @@ abstract class WikiaSkin extends SkinTemplate {
 
 		wfDebug( sprintf( "%s: combined %d SASS files\n", __METHOD__, count($sassFiles) ) );
 
+		// Rychu optimization:
+		$cssLinks = $unlockUrl = '';
+
 		wfProfileOut(__METHOD__);
 		return Html::linkedStyle($sassFilesUrl) . Html::linkedStyle($unlockUrl) . implode('', $cssLinks);
 	}

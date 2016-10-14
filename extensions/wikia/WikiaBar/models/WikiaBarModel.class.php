@@ -383,6 +383,7 @@ class WikiaBarModel extends WikiaBarModelBase {
     }
 
     public static function getValidImageUrl( $class ) {
+    	return 'data://assasasasa';
         global $wgExtensionsPath;
 
         $imageUrl = in_array( $class, self::$availableButtonImages )
