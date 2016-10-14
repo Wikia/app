@@ -92,6 +92,14 @@ class SpecialUserlogout extends UnlistedSpecialPage {
 			}
 		}
 
-		$out->returnToMain(false, $mReturnTo, $mReturnToQuery);
+		if (
+			empty( $mReturnTo ) &&
+			empty( $mReturnToQuery ) &&
+			$redirectUrl = $this->getRequest()->getVal( 'redirect' )
+		) {
+			$out->redirect( $redirectUrl );
+		} else {
+			$out->returnToMain(false, $mReturnTo, $mReturnToQuery);
+		}
 	}
 }

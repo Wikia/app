@@ -234,7 +234,7 @@ class DesignSystemGlobalNavigationModel extends WikiaModel {
 				'type' => 'translatable-text',
 				'key' => 'global-navigation-user-sign-out'
 			],
-			'param-name' => 'returnto',
+			'param-name' => $this->product === static::PRODUCT_FANDOMS ? 'redirect' : 'returnto',
 			'tracking_label' => 'account.sign-out',
 		];
 
