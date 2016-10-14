@@ -37,7 +37,7 @@
 	SIZE:
 	-->
 
-	<!--<? $cssLinks ?>-->
+	<?= $cssLinks ?>
 
 	<!-- / cssLinks -->
 
@@ -238,11 +238,15 @@
 
 		<!--
 		$body
-		REQUESTS:
-		SIZE:
+		REQUESTS: +0
+		SIZE:     +28KB
+
+		$body with images
+		REQUESTS: +3
+		SIZE:     +18KB
 		-->
 
-		<?= str_replace( '<img', '<no-img', $body ) ?>
+		<?= $body ?>
 
 		<!-- / $body -->
 
