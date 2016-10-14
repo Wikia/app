@@ -1,5 +1,5 @@
-/*global describe, it, expect, modules, beforeEach, spyOn*/
-describe('ext.wikia.adEngine.video.vastBuilder', function () {
+/*global describe, it, expect, modules*/
+describe('ext.wikia.adEngine.video.vastUrlBuilder', function () {
 	'use strict';
 
 	function noop () {}
@@ -36,7 +36,7 @@ describe('ext.wikia.adEngine.video.vastBuilder', function () {
 	};
 
 	function getModule() {
-		return modules['ext.wikia.adEngine.video.vastBuilder'](
+		return modules['ext.wikia.adEngine.video.vastUrlBuilder'](
 			mocks.adContext,
 			mocks.page,
 			mocks.adUnitBuilder,

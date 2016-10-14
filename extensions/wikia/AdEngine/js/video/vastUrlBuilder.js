@@ -1,5 +1,5 @@
 /*global define*/
-define('ext.wikia.adEngine.video.vastBuilder', [
+define('ext.wikia.adEngine.video.vastUrlBuilder', [
 	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.adLogicPageParams',
 	'ext.wikia.adEngine.slot.adUnitBuilder',
@@ -14,7 +14,7 @@ define('ext.wikia.adEngine.video.vastBuilder', [
 		baseUrl = 'https://pubads.g.doubleclick.net/gampad/ads?',
 		correlator = Math.round(Math.random() * 10000000000),
 		defaultAdUnit = '/5441/VIDEO_ATG',
-		logGroup = 'ext.wikia.adEngine.video.vastBuilder';
+		logGroup = 'ext.wikia.adEngine.video.vastUrlBuilder';
 
 	function getCustomParameters(slotName, src) {
 		var customParameters = [],
@@ -67,4 +67,13 @@ define('ext.wikia.adEngine.video.vastBuilder', [
 	return {
 		build: build
 	};
+});
+
+// TODO: ADEN-4128 - remove me
+// ext.wikia.adEngine.video.vastBuilder is used in Mercury
+define('ext.wikia.adEngine.video.vastBuilder', [
+	'ext.wikia.adEngine.video.vastUrlBuilder'
+], function (vastUrlBuilder) {
+	'use strict';
+	return vastUrlBuilder;
 });

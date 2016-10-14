@@ -1,9 +1,9 @@
 /*global define*/
 define('ext.wikia.adEngine.video.playwire', [
-	'ext.wikia.adEngine.video.vastBuilder',
+	'ext.wikia.adEngine.video.vastUrlBuilder',
 	'wikia.document',
 	'wikia.log'
-], function (vastBuilder, doc, log) {
+], function (vastUrlBuilder, doc, log) {
 	'use strict';
 	var logGroup = 'ext.wikia.adEngine.video.playwire',
 		playerUrl = '//cdn.playwire.com/bolt/js/zeus/embed.js';
@@ -24,7 +24,7 @@ define('ext.wikia.adEngine.video.playwire', [
 			win = container.ownerDocument.defaultView || container.ownerDocument.parentWindow;
 
 		if (!vastUrl) {
-			vastUrl = vastBuilder.build('playwire', slotName, width / height);
+			vastUrl = vastUrlBuilder.build('playwire', slotName, width / height);
 		}
 
 		win.onReady = function () {
