@@ -242,7 +242,7 @@
 		SIZE:
 		-->
 
-		<?= $body ?>
+		<?= str_replace( '<img', '<no-img', $body ) ?>
 
 		<!-- / $body -->
 
