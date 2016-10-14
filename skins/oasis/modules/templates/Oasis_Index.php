@@ -62,7 +62,7 @@
 
 		<? /* RT #68514: load global user CSS (and other page specific CSS added via "SkinTemplateSetupPageCss" hook) */ ?>
 		<? if ( $pageCss ): ?>
-			<!--<style type="text/css"><?= $pageCss ?></style>-->
+			<style type="text/css"><?= $pageCss ?></style>
 		<? endif ?>
 
 	<!-- / $pageCss -->
