@@ -9,7 +9,7 @@ define('ext.wikia.adEngine.context.slotsContext', [
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.context.slotsContext',
-		slots = null;
+		slots = {};
 
 	function setStatus(slotName, status) {
 		slots[slotName] = !!status;
@@ -18,8 +18,6 @@ define('ext.wikia.adEngine.context.slotsContext', [
 	function setupSlots() {
 		var context = adContext.getContext(),
 			isHome = params.getPageType() === 'home';
-
-		slots = {};
 
 		setStatus('HOME_TOP_LEADERBOARD', isHome);
 		setStatus('HOME_TOP_RIGHT_BOXAD', isHome);
