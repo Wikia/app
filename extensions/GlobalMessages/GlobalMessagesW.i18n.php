@@ -217,7 +217,7 @@ nl',
 	'wikia-pagetitle-brand' => 'Fandom powered by Wikia',
 	'wikia-pagetitle-sitename' => '{{SITENAME}}',
 	'wikia-read-only-mode' => 'Uh-oh! Our main datacenter is currently unavailable, so this is our backup. Unfortunately, this means you may not be able to do certain things like edit, upload, or chat.
-We are working to fix the problem, thank you for your patience! If you see this for an extended period of time, feel free to contact Fandom at community@wikia.com.',
+We are working to fix the problem, thank you for your patience! If you see this for an extended period of time, feel free to contact Fandom at community@fandom.com.',
 ];
 
 $messages['qqq'] = [
