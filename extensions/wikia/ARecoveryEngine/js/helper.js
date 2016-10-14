@@ -68,7 +68,9 @@ define('ext.wikia.aRecoveryEngine.recovery.helper', [
 					var xmlHttp = new XMLHttpRequest();
 					xmlHttp.open('GET', customLogEndpoint+type, true);
 					xmlHttp.send();
-				} catch (e) {}
+				} catch (e) {
+					log(['track', e], 'error', logGroup);
+				}
 			}
 			win._sp_.trackingSent = true;
 		}

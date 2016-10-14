@@ -73,12 +73,6 @@ define('wikia.videohandler.ooyala', [
 					}
 				}
 			});
-
-			// Log all events and values (for debugging)
-			/*messageBus.subscribe('*', 'tracking', function(eventName, payload) {
-				console.log(eventName);
-				console.log(payload);
-			});*/
 		}
 
 		function loadJs(resource) {
@@ -123,7 +117,7 @@ define('wikia.videohandler.ooyala', [
 			win.googleImaSdkFailedCbList = {
 				originalCbList: [],
 				unshift: function (cb) {
-					this.originalCbList.push(cb);
+					this.originalCbList.unshift(cb);
 				}
 			};
 			ima3LibUrl = recoveryHelper.getSafeUri(ima3LibUrl);
@@ -139,7 +133,7 @@ define('wikia.videohandler.ooyala', [
 					fn();
 				}, win.OO);
 			}).fail(function() {
-				log('Recovered ima3 lib is failded to load', log.levels.info, logGroup);
+				log('Recovered ima3 lib failed to load', log.levels.info, logGroup);
 
 				initRegularPlayer();
 
