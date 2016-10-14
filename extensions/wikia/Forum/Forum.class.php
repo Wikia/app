@@ -54,13 +54,7 @@ class Forum extends Walls {
 
 			/** @var $board ForumBoard */
 			$board = ForumBoard::newFromTitle( $title );
-
-			$boardInfo = $board->getBoardInfo();
-			$boardInfo['id'] = $title->getArticleID();
-			$boardInfo['name'] = $title->getText();
-			$boardInfo['description'] = $board->getDescriptionWithoutTemplates();
-			$boardInfo['url'] = $title->getFullURL();
-			$boards[] = $boardInfo;
+			$boards[] = $board->getBoardInfo()->toArray();
 		}
 
 		return $boards;
@@ -85,7 +79,7 @@ class Forum extends Walls {
 		);
 
 		wfProfileOut( __METHOD__ );
-		return $result['cnt'];
+		return $result[ 'cnt' ];
 	}
 
 	/**
@@ -286,7 +280,7 @@ class Forum extends Walls {
 		}
 
 		Forum::$allowToEditBoard = false;
-
+		$board->clearCacheBoardInfo();
 		return $retval;
 	}
 
@@ -299,8 +293,8 @@ class Forum extends Walls {
 	 * @return int
 	 */
 	public function getLengthLimits( $type, $field ) {
-		return ( isset( $this->fieldsLengths[$field] ) && isset( $this->fieldsLengths[$field][$type] ) ) ?
-			(int) $this->fieldsLengths[$field][$type] :
+		return ( isset( $this->fieldsLengths[ $field ] ) && isset( $this->fieldsLengths[ $field ][ $type ] ) ) ?
+			(int)$this->fieldsLengths[ $field ][ $type ] :
 			0;
 	}
 
