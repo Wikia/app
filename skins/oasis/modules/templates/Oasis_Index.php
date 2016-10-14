@@ -40,6 +40,7 @@
 	$cssLinks with ad recovery and site
 	REQUESTS: +6
 	SIZE:     +126KB
+	TIME:     +1.0s
 	-->
 
 	<?= $cssLinks ?>
@@ -56,8 +57,9 @@
 
 	<!--
 	$topScripts
-	REQUESTS: +3
+	REQUESTS: +3 (short TTL blocking RL, blocking RL, internal tracking)
 	SIZE:     +12KB
+	TIME:     +0.1s
 	-->
 
 	<?= $topScripts ?>
@@ -74,8 +76,9 @@
 
 	<!--
 	$globalBlockingScripts
-	REQUESTS:
-	SIZE:
+	REQUESTS: +2 (blocking AM inc. abtesting; AbTesting external config)
+	SIZE:     +12KB
+	TIME:     +0.2s
 	-->
 
 	<?= $globalBlockingScripts; /*needed for jsLoader and for the async loading of CSS files.*/ ?>
@@ -105,8 +108,8 @@
 
 	<!--
 	$jsFiles (top)
-	REQUESTS:
-	SIZE:
+	REQUESTS: +0
+	SIZE:     +0KB
 	-->
 
 	<? if ( !$jsAtBottom ): ?>
@@ -137,7 +140,7 @@
 	SIZE:
 	-->
 
-	<!--<? $headItems ?>-->
+	<?= $headItems ?>
 
 	<!-- / $headItems -->
 
