@@ -4856,7 +4856,7 @@ class User {
 	 */
 	public static function getUsername( $userId, $name ) {
 		global $wgEnableUsernameLookup;
-		if( $wgEnableUsernameLookup && $userId != 0 ) {
+		if ( !empty( $userId ) && $wgEnableUsernameLookup ) {
 			$caller = debug_backtrace()[1];
 			$callerFunction = $caller["class"]."::".$caller["function"];
 			$profiler = UsernameLookupProfiler::create( $caller["class"], $callerFunction );
