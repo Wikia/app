@@ -32,8 +32,11 @@
 <? if ( $pageCss ): ?>
 	<style type="text/css"><?= $pageCss ?></style>
 <? endif ?>
-
+	<script type="text/javascript" src="//s.adadapter.netzathleten-media.de/API-1.0/NA-828433-1/naMediaAd.js"></script>
 <?= $topScripts ?>
+	<script type="text/javascript">
+		naMediaAd.setValue("homesite", false); 
+	</script>
 <?= $globalBlockingScripts; /*needed for jsLoader and for the async loading of CSS files.*/ ?>
 
 <!-- Make IE recognize HTML5 tags. -->
