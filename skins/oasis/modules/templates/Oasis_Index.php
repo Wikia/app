@@ -136,8 +136,8 @@
 
 
 	<!-- $headItems
-	REQUESTS:
-	SIZE:
+	REQUESTS: +0
+	SIZE:     +0KB
 	-->
 
 	<?= $headItems ?>
@@ -293,7 +293,7 @@ SIZE:
 	<![endif]-->
 
 	<!-- Combined JS files and head scripts -->
-	<!--<? $jsFiles ?>-->
+	<?= $jsFiles ?>
 <? endif ?>
 
 <!-- / $jsFiles (bottom) -->
