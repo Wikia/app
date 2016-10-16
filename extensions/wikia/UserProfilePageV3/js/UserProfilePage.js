@@ -109,7 +109,7 @@ require(
 									title: mw.message('userprofilepage-edit-modal-header').escaped(),
 									buttons: [{
 										vars: {
-											value: mw.message('user-identity-box-avatar-save').escaped(),
+											value: mw.message('user-identity-box-avatar-save').text(),
 											classes: ['normal', 'primary'],
 											data: [{
 												key: 'event',
@@ -118,7 +118,7 @@ require(
 										}
 									}, {
 										vars: {
-											value: mw.message('user-identity-box-avatar-cancel').escaped(),
+											value: mw.message('user-identity-box-avatar-cancel').text(),
 											data: [{
 												key: 'event',
 												value: 'close'
