@@ -164,8 +164,7 @@ require(
 
 					window.console.log(data);
 
-					var message = '',
-						response = '';
+					var message, response;
 
 					if (data.responseText) {
 						response = JSON.parse(data.responseText);
@@ -433,15 +432,14 @@ require(
 					month: null,
 					day: null
 				},
-				i,
 				userDataItem;
 
-			for (i in userData) {
-				userDataItem = $(document.userData[i]).val();
+			Object.getOwnPropertyNames(userData).forEach(function (userDataItemKey) {
+				userDataItem = $(document.userData[userDataItemKey]).val();
 				if (typeof (userDataItem) !== 'undefined') {
-					userData[i] = userDataItem;
+					userData[userDataItemKey] = userDataItem;
 				}
-			}
+			});
 
 			userData.hideEditsWikis = document.userData.hideEditsWikis.checked ? 1 : 0;
 
@@ -640,7 +638,7 @@ require(
 		 * @param {string} confirmationMessage Confirmation message to display
 		 */
 		clearMastheadContents: function (targetUser, confirmationMessage) {
-			var confirmClear = window.confirm(confirmationMessage)
+			var confirmClear = window.confirm(confirmationMessage);
 			if (confirmClear) {
 				nirvana.sendRequest({
 					controller: 'UserProfilePage',
@@ -650,7 +648,7 @@ require(
 						target: targetUser,
 						token: mw.user.tokens.get('editToken')
 					}
-				}).done(function (res) {
+				}).done(function () {
 					window.location.reload();
 				}).fail(function (res) {
 					new BannerNotification(res.error, 'error').show();

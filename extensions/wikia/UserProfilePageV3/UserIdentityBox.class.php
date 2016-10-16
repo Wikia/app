@@ -543,11 +543,7 @@ class UserIdentityBox extends WikiaObject {
 		$hasUserEverEditedMastheadBefore = $this->hasUserEverEditedMasthead();
 		$hasUserEditedMastheadBeforeOnThisWiki = $this->hasUserEditedMastheadBefore( $this->wg->CityId );
 
-		if ( $hasUserEditedMastheadBeforeOnThisWiki || ( $iEdits > 0 && $hasUserEverEditedMastheadBefore ) ) {
-			return true;
-		} else {
-			return false;
-		}
+		return ( $hasUserEditedMastheadBeforeOnThisWiki || ( $iEdits > 0 && $hasUserEverEditedMastheadBefore ) );
 	}
 
 	/**
