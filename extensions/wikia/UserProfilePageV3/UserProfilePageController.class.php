@@ -11,6 +11,12 @@ class UserProfilePageController extends WikiaController {
 	const FBPAGE_BASE_URL = 'https://www.facebook.com/';
 
 	/**
+	 * @var string CLEAR_USER_PROFILE_RIGHT
+	 * MediaWiki user right required for clearing user profile data in 1 click
+	 */
+	const CLEAR_USER_PROFILE_RIGHT = 'clearuserprofile';
+
+	/**
 	 * @var $profilePage UserProfilePage
 	 */
 	protected $profilePage = null;
@@ -134,6 +140,7 @@ class UserProfilePageController extends WikiaController {
 		$this->setVal( 'canEditProfile', $canEditProfile );
 		$this->setVal( 'isWikiStaff', $sessionUser->isAllowed( 'staff' ) );
 		$this->setVal( 'canEditProfile', ( $isUserPageOwner || $sessionUser->isAllowed( 'staff' ) || $sessionUser->isAllowed( 'editprofilev3' ) ) );
+		$this->setVal( 'canClearProfile', $sessionUser->isAllowed( static::CLEAR_USER_PROFILE_RIGHT ) );
 
 		$this->fetchDiscussionPostsNumberFrom($user);
 
@@ -1013,6 +1020,45 @@ class UserProfilePageController extends WikiaController {
 
 		wfProfileOut( __METHOD__ );
 		return true;
+	}
+
+	/**
+	 * Clears contents of user profile masthead
+	 * @requestParam string token valid MediaWiki edit token
+	 * @requestParam string target user name of user whose masthead we want to clear
+	 * @responseParam string error [optional] error message, if any
+	 * @responseParam string success [optional] success confirmation message if action was successful
+	 */
+	public function clearMastheadContents() {
+		$this->response->setFormat( WikiaResponse::FORMAT_JSON );
+		$this->response->setCacheValidity( WikiaResponse::CACHE_DISABLED );
+
+		try {
+			$this->checkWriteRequest();
+		} catch ( BadRequestException $bre ) {
+			$this->response->setCode( WikiaResponse::RESPONSE_CODE_BAD_REQUEST );
+			$this->response->setVal( 'error', wfMessage( 'sessionfailure' )->escaped() );
+			return;
+		}
+
+		if ( !$this->wg->User->isAllowed( static::CLEAR_USER_PROFILE_RIGHT ) ) {
+			$this->response->setCode( WikiaResponse::RESPONSE_CODE_FORBIDDEN );
+			$this->response->setVal( 'error', wfMessage( 'permissionserrors' )->escaped() );
+			return;
+		}
+
+		$targetUser = User::newFromName( $this->request->getVal( 'target' ) );
+		if ( $targetUser->getId() !== 0 ) {
+			$userIdentityBox = new UserIdentityBox( $targetUser );
+			$userIdentityBox->clearMastheadContents();
+
+			$this->response->setVal( 'success', wfMessage( 'user-identity-box-clear-success' )->escaped() );
+			BannerNotificationsController::addConfirmation( wfMessage( 'user-identity-box-clear-success' )->escaped() );
+		} else {
+			// this user does not exist or is an anon - can't clear masthead contents
+			$this->response->setCode( WikiaResponse::RESPONSE_CODE_NOT_FOUND );
+			$this->response->setVal( 'error', wfMessage( 'user-identity-box-clear-notarget' )->escaped() );
+		}
 	}
 }
 

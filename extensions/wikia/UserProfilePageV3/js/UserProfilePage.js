@@ -54,6 +54,14 @@ require(
 				});
 			});
 
+			$('#userIdentityBoxClear').click(function (event) {
+				event.preventDefault();
+				UserProfilePage.clearMastheadContents(
+					$(event.target).attr('data-name'),
+					$(event.target).attr('data-confirm')
+				);
+			});
+
 			// for touch devices (without hover state) make sure that Edit is always
 			// visible
 			if (window.Wikia.isTouchScreen()) {
@@ -622,6 +630,30 @@ require(
 					} else {
 						UserProfilePage.error(data.error);
 					}
+				});
+			}
+		},
+
+		/**
+		 * Clear all contents from user profile (including user avatar)
+		 * @param {string} targetUser Name of target user
+		 * @param {string} confirmationMessage Confirmation message to display
+		 */
+		clearMastheadContents: function (targetUser, confirmationMessage) {
+			var confirmClear = window.confirm(confirmationMessage)
+			if (confirmClear) {
+				nirvana.sendRequest({
+					controller: 'UserProfilePage',
+					method: 'clearMastheadContents',
+					type: 'POST',
+					data: {
+						target: targetUser,
+						token: mw.user.tokens.get('editToken')
+					}
+				}).done(function (res) {
+					window.location.reload();
+				}).fail(function (res) {
+					new BannerNotification(res.error, 'error').show();
 				});
 			}
 		}
