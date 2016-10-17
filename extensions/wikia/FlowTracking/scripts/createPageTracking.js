@@ -71,7 +71,7 @@ define(
 		}
 
 		function isTitleInMainNamespace(title) {
-			var namespace = '';
+			var namespace;
 
 			if (title.indexOf(':')) {
 				namespace = title.split(':')[0].toLowerCase();
