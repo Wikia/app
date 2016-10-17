@@ -29,6 +29,11 @@ $font-size-small: 12px;
 $font-size-regular: 14px;
 $font-size-large: 16px;
 
+$post-mark-icon-size: 12px;
+$discussion-deleted-mark-color: #ed1c24;
+$discussion-reported-mark-color: #f08a24;
+$discussion-deleted-actions-opacity: 0.5;
+
 .embeddable-discussions-module {
 	@include flexbox();
 	@include flex-direction(column);
@@ -90,6 +95,10 @@ $font-size-large: 16px;
 	}
 
 	.embeddable-discussions-content {
+		&.is-deleted {
+			opacity: $discussion-deleted-actions-opacity;
+		}
+
 		font-size: $font-size-regular;
 	}
 
@@ -149,9 +158,35 @@ $font-size-large: 16px;
 	}
 
 	.embeddable-discussions-post-detail {
+		&.is-deleted,
+		&.is-reported {
+			&::before {
+				border-color: transparent;
+				border-style: solid;
+				border-width: $post-mark-icon-size $post-mark-icon-size 0 0;
+				content: "";
+				left: 0;
+				position: absolute;
+				top: 0;
+			}
+		}
+
+		&.is-deleted {
+			&::before {
+				border-top-color: $discussion-deleted-mark-color;
+			}
+		}
+
+		&.is-reported {
+			&::before {
+				border-top-color: $discussion-reported-mark-color;
+			}
+		}
+
 		border: 1px solid $card-border-color;
 		margin: 0 0 20px;
 		padding: 20px 0 0;
+		position: relative;
 	}
 
 	.embeddable-discussions-post-detail-columns {
@@ -212,6 +247,10 @@ $font-size-large: 16px;
 	}
 
 	.embeddable-discussions-title {
+		&.is-deleted {
+			opacity: $discussion-deleted-actions-opacity;
+		}
+
 		font-size: $font-size-regular;
 		font-weight: bold;
 		min-height: 22px;
