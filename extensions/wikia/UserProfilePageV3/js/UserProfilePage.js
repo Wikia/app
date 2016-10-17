@@ -651,7 +651,7 @@ require(
 				}).done(function () {
 					window.location.reload();
 				}).fail(function (res) {
-					new BannerNotification(res.error, 'error').show();
+					new BannerNotification(JSON.parse(res.responseText).error, 'error').show();
 				});
 			}
 		}

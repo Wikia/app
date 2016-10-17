@@ -1048,7 +1048,7 @@ class UserProfilePageController extends WikiaController {
 		}
 
 		$targetUser = User::newFromName( $this->request->getVal( 'target' ) );
-		if ( $targetUser->getId() !== 0 ) {
+		if ( $targetUser && $targetUser->getId() !== 0 ) {
 			$userIdentityBox = new UserIdentityBox( $targetUser );
 			$userIdentityBox->clearMastheadContents();
 
