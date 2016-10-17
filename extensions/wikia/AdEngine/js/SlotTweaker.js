@@ -90,10 +90,9 @@ define('ext.wikia.adEngine.slotTweaker', [
 	}
 
 	function getRecoveredIframe(slotName) {
-		var node = doc.querySelector('div[id="' + slotName + '"] > div > div'),
+		var node = doc.querySelector('#' + slotName + ' > div > div'),
 			fallbackId = node && win._sp_.getElementId(node.id),
 			elementById = fallbackId && doc.getElementById(fallbackId);
-
 		if (elementById) {
 			return elementById.querySelector('div:not(.hidden) > div[id*="_container_"] iframe');
 		}
