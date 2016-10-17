@@ -39,8 +39,7 @@ class StaffWelcomePoster {
 	}
 
 	private function getStaffFromLang( string $language ): int {
-		$staffId = self::LANG_TO_STAFF_MAP[$language];
-		return $staffId ?? self::LANG_TO_STAFF_MAP[self::DEFAULT_LANG];
+		return self::LANG_TO_STAFF_MAP[$language] ?? self::LANG_TO_STAFF_MAP[self::DEFAULT_LANG];
 	}
 
 	private function getMessage( string $language ): string {
