@@ -17,7 +17,7 @@ define('ext.wikia.adEngine.provider.factory.wikiaGpt', [
 			delete slotMap.PREFOOTER_RIGHT_BOXAD;
 		}
 
-		if (!!slotMap.INCONTENT_LEADERBOARD && context.slots.incontentLeaderboardAsOutOfPage) {
+		if (!!slotMap.INCONTENT_LEADERBOARD && context.opts.incontentLeaderboardAsOutOfPage) {
 			delete slotMap.INCONTENT_LEADERBOARD.size;
 		}
 	}
