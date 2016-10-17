@@ -175,7 +175,7 @@ class SocialLinksGenerator {
 	 * @return array - returns array of icons
 	 */
 	public static function generate( $targetLang, $iconKey = 'footerIcon' ) {
-		$lang = !empty( self::SOCIAL_MEDIA[$targetLang] ) ? $targetLang : 'en';
+		$lang = empty( self::SOCIAL_MEDIA[$targetLang] ) ? 'en' : $targetLang;
 		$socialIcons = self::SOCIAL_MEDIA[$lang];
 		$result = [];
 		foreach ( $socialIcons as $socialName => $socialIconAttributes ) {
