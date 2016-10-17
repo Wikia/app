@@ -184,6 +184,8 @@
 		updateEditedTitle: function () {
 			var title = $('[name=wpTitle]');
 
+			this.editor.fire('changeTitle', window.wgEditedTitle, title.val());
+
 			if (title.exists()) {
 				window.wgEditedTitle = title.val();
 			}
