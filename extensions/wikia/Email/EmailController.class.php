@@ -4,7 +4,6 @@ namespace Email;
 
 use TijsVerkoyen\CssToInlineStyles\CssToInlineStyles;
 use Wikia\Logger\WikiaLogger;
-use Email\MobileApplicationsLinksGenerator;
 
 abstract class EmailController extends \WikiaController {
 	const DEFAULT_TEMPLATE_ENGINE = \WikiaResponse::TEMPLATE_ENGINE_MUSTACHE;
