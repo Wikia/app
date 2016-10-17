@@ -4218,6 +4218,20 @@ class User {
 	 * @return Boolean
 	 */
 	public static function comparePasswords( $hash, $password, $userId = false ) {
+		// Wikia change - begin
+		// @see PLATFORM-2502 comparing new passwords in PHP code.
+		// @todo mech remove after the new password hashing is implemented.
+		$caller = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS)[1];
+		Wikia\Logger\WikiaLogger::instance()->debug(
+			'NEW_HASHING comparePasswords called in PHP',
+			[
+				'user_id' => $userId,
+				'caller' => $caller['class'].'::'.$caller['function'],
+				'exception' => new Exception()
+			]
+		);
+		// Wikia change - end
+
 		$type = substr( $hash, 0, 3 );
 
 		$result = false;
