@@ -41,14 +41,34 @@ class ImageHelper {
 			'name' => 'YouTube_Default-2x',
 			'extension' => 'png'
 		],
-		'Reddit' => [
-			'name' => 'Reddit-Icon-2x',
+		'VK' => [
+			'name' => 'VK-Icon',
 			'extension' => 'png'
 		],
 		'Instagram' => [
 			'name' => 'Instagram-Default-2x',
 			'extension' => 'png'
 		],
+		'Welcome-Facebook' => [
+			'name' => 'Connect-FB',
+			'extension' => 'png'
+		],
+		'Welcome-Twitter' => [
+			'name' => 'Connect-Tw',
+			'extension' => 'png'
+		],
+		'Welcome-YouTube' => [
+			'name' => 'Connect-YouTube',
+			'extension' => 'png'
+		],
+		'Welcome-Instagram' => [
+			'name' => 'Connect-IG',
+			'extension' => 'png'
+		],
+		'Welcome-VK' => [
+			'name' => 'Connect-VK',
+			'extension' => 'png'
+		]
 	];
 
 	/**

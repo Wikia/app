@@ -63,20 +63,7 @@ class WelcomeController extends EmailController {
 				'details' => $this->getMessage( 'emailext-welcome-profile-description' )->text(),
 			],
 			[
-				'icons' => [
-					[
-						'iconSrc' => ImageHelper::getFileUrl( 'Connect-FB.png' ),
-						'iconLink' => $this->getMessage( 'oasis-social-facebook-link' )->text(),
-					],
-					[
-						'iconSrc' => ImageHelper::getFileUrl( 'Connect-Tw.png' ),
-						'iconLink' => $this->getMessage( 'oasis-social-twitter-link' )->text(),
-					],
-					[
-						'iconSrc' => ImageHelper::getFileUrl( 'Connect-IG.png' ),
-						'iconLink' => $this->getMessage( 'oasis-social-instagram-link' )->text(),
-					],
-				],
+				'icons' => $this->getSocialIconsList('Welcome-'),
 				'iconLink' => $this->getMessage( 'emailext-wikia-home-url' )->text(),
 				'detailsHeader' => $this->getMessage( 'emailext-welcome-fandom-connect-header' )
 					->text(),

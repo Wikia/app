@@ -26,6 +26,98 @@ abstract class EmailController extends \WikiaController {
 	// Used when needing to specify an anonymous user from the external API
 	const ANONYMOUS_USER_ID = -1;
 
+    const SOCIALS = [
+        'en' => [
+            'Facebook',
+            'Twitter',
+            'YouTube',
+            'Instagram'
+        ],
+        'zh-hant' => [
+            'Facebook'
+        ],
+        'zh-hans' => [
+            'Facebook'
+        ],
+        'fr' => [
+            'Facebook',
+            'Twitter'
+        ],
+        'de' => [
+            'Facebook',
+            'Twitter',
+            'Instagram'
+        ],
+        'it' => [
+            'Facebook',
+            'Twitter'
+        ],
+        'ja' => [
+            'Facebook',
+            'Twitter'
+        ],
+        'pl' => [
+            'Facebook',
+            'Twitter'
+        ],
+        'br' => [
+            'Facebook',
+            'Twitter'
+        ],
+        'ru' => [
+            'Facebook',
+            'Twitter',
+            'VK'
+        ],
+        'es' => [
+            'Facebook',
+            'Twitter',
+            'Instagram'
+        ],
+    ];
+
+    const SOCIAL_URLS = [
+        'Facebook' => [
+            'en' => 'https://www.facebook.com/getfandom',
+            'zh-hant' => 'https://www.facebook.com/fandom.zh',
+            'zh-hans' => 'https://www.facebook.com/fandom.zh',
+            'fr' => 'https://www.facebook.com/fandom.fr',
+            'de' => 'https://www.facebook.com/de.fandom',
+            'it' => 'https://www.facebook.com/fandom.italy',
+            'ja' => 'https://www.facebook.com/FandomJP',
+            'pl' => 'https://www.facebook.com/pl.fandom',
+            'br' => 'https://www.facebook.com/getfandom.br',
+            'ru' => 'https://www.facebook.com/ru.fandom',
+            'es' => 'https://www.facebook.com/Fandom.espanol'
+        ],
+
+        'Twitter' => [
+            'en' => 'https://twitter.com/getfandom',
+            'fr' => 'https://twitter.com/fandom_fr',
+            'de' => 'https://twitter.com/fandom_deutsch',
+            'it' => 'https://twitter.com/fandom_italy',
+            'ja' => 'https://twitter.com/FandomJP',
+            'pl' => 'https://twitter.com/pl_fandom',
+            'br' => 'https://twitter.com/getfandom_br',
+            'ru' => 'https://twitter.com/ru_fandom',
+            'es' => 'https://twitter.com/es_fandom'
+        ],
+
+        'Instagram' => [
+            'en' => 'https://www.instagram.com/getfandom',
+            'de' => 'https://www.instagram.com/de_fandom',
+            'es' => 'https://www.instagram.com/es_fandom'
+        ],
+
+        'YouTube' => [
+            'en' => 'https://www.youtube.com/channel/UC988qTQImTjO7lUdPfYabgQ'
+        ],
+
+        'VK' => [
+            'ru' => 'https://vk.com/ru_fandom'
+        ]
+    ];
+
 	/** @var \User The user associated with the current request */
 	protected $currentUser;
 
@@ -270,8 +362,8 @@ abstract class EmailController extends \WikiaController {
 				'footerMobileApplicationMessages' => $this->getFooterMobileApplicationMessages(),
 				'badges' => $this->generateMobileApplicationsBadges(),
 				'marketingFooter' => $this->marketingFooter,
-				'socialMessages' => $this->getSocialMessages(),
 				'icons' => ImageHelper::getIconInfo(),
+                'socialIcons' => $this->getSocialIconsList(),
 				'disableInit' => true,
 			]
 		);
@@ -385,26 +477,6 @@ abstract class EmailController extends \WikiaController {
 		];
 	}
 
-	/**
-	 * Get localized strings for social networks and their URLs
-	 * @return array
-	 * @throws \MWException
-	 */
-	protected function getSocialMessages() {
-		return [
-			'facebook' => $this->getMessage( 'oasis-social-facebook' )->text(),
-			'facebook-link' => $this->getMessage( 'oasis-social-facebook-link' )->text(),
-			'twitter' => $this->getMessage( 'oasis-social-twitter' )->text(),
-			'twitter-link' => $this->getMessage( 'oasis-social-twitter-link' )->text(),
-			'youtube' => $this->getMessage( 'oasis-social-youtube' )->text(),
-			'youtube-link' => $this->getMessage( 'oasis-social-youtube-link' )->text(),
-			'reddit' => $this->getMessage( 'oasis-social-reddit' )->text(),
-			'reddit-link' => $this->getMessage( 'oasis-social-reddit-link' )->text(),
-			'instagram' => $this->getMessage( 'oasis-social-instagram' )->text(),
-			'instagram-link' => $this->getMessage( 'oasis-social-instagram-link' )->text(),
-		];
-	}
-
 	private function generateMobileApplicationsBadges() {
 		$linksGenerator = new MobileApplicationsLinksGenerator( $this->targetLang );
 		$mobileApplicationsLinks = $linksGenerator->generate( );
@@ -423,6 +495,30 @@ abstract class EmailController extends \WikiaController {
 		}
 
 		return $badges;
+	}
+
+	protected function getSocialIconsList($prefix = null) {
+		$lang = $this->targetLang;
+		$socials = EmailController::SOCIALS;
+		if(!isset($socials[$lang])) {
+			$lang = 'en';
+		}
+		$socialIcons = EmailController::SOCIALS[$lang];
+		$result = [];
+		foreach ($socialIcons as $socialName) {
+			$socialIconName = $socialName;
+			if(!is_null($prefix)) {
+				$socialIconName = $prefix . $socialName;
+			}
+			$icon = ImageHelper::$icons[$socialIconName];
+			$result[] = [
+				'iconSrc' => ImageHelper::getFileUrl($icon['name'] . '.' .  $icon['extension']),
+				'iconAlt' => $socialName,
+				'iconUrl' => EmailController::SOCIAL_URLS[$socialName][$lang],
+				'iconClass' => strtolower($socialName)
+			];
+		}
+		return $result;
 	}
 
 	/**
