@@ -607,7 +607,9 @@ class FounderTipsThreeDaysController extends FounderTipsController {
 			],
 		];
 
-		if ( \F::app()->wg->EnableDiscussions ) {
+		$discussionsEnabled =
+			\WikiFactory::getVarValueByName( 'wgEnableDiscussions', $this->wikiId );
+		if ( $discussionsEnabled ) {
 			array_push( $detailsList, [
 					"iconSrc" => Email\ImageHelper::getFileUrl( "StartADiscussion.png" ),
 					"iconLink" => "{$this->wikiUrl}/d",
