@@ -75,12 +75,6 @@ define('wikia.videohandler.ooyala', [
 			if (typeof params.onCreate === 'function') {
 				params.onCreate(player);
 			}
-
-			// Log all events and values (for debugging)
-			/*messageBus.subscribe('*', 'tracking', function(eventName, payload) {
-				console.log(eventName);
-				console.log(payload);
-			});*/
 		}
 
 		createParams.onCreate = onCreate;
