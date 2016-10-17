@@ -87,7 +87,7 @@ class TitleBlock {
 	 *
 	 * @return bool — true if $title is considered safe, false if $title is blocked
 	 */
-	static public function checkTitle($title, &$block) {
+	static public function checkTitle( Title $title, &$block ) {
 		wfProfileIn( __METHOD__ );
 
 		if (is_null(self::$blocksData)) {
