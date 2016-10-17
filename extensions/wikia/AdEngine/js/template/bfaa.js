@@ -45,6 +45,17 @@ define('ext.wikia.adEngine.template.bfaa', [
 		wrapper;
 
 	desktopHandler = {
+		addVideo: function(container, url) {
+			var video = doc.createElement('video');
+
+			video.src = url;
+			DOMElementTweaker.hide(video, false);
+
+			container.appendChild(video);
+
+			return video;
+		},
+
 		updateNavBar: function (iframe) {
 			var height = iframe.contentWindow.document.body.offsetHeight,
 				position = win.scrollY || win.pageYOffset;
@@ -82,7 +93,18 @@ define('ext.wikia.adEngine.template.bfaa', [
 				slotTweaker.removeDefaultHeight(params.slotName);
 				recoverSlot(iframe, params);
 			}
-		}
+
+			if (params.video) {
+				var video = this.addVideo(doc.getElementById(params.slotName), params.video);
+				slotTweaker.onReady(params.slotName, function(iframe) {
+					iframe.contentWindow.document.getElementById('ad-image').addEventListener('click', function () {
+						video.play();
+						DOMElementTweaker.removeClass(video, 'hidden');
+						DOMElementTweaker.hide(iframe.parentNode.parentNode.parentNode, false);
+					});
+				});
+			}
+		},
 	};
 
 	mobileHandler =  {

@@ -81,6 +81,11 @@ $taboola-small-breakpoint: "#{$screen} and (max-width: 420px)";
 			}
 		}
 	}
+
+	video {
+		height: auto;
+		width: 100%;
+	}
 }
 
 .bfab-template > div {
