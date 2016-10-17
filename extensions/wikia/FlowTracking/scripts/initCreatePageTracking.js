@@ -9,7 +9,8 @@ require([
 	var redLinkFlow = mw.config.get('wgNamespaceNumber') === -1 ?
 			window.wgFlowTrackingFlows.CREATE_PAGE_SPECIAL_REDLINK :
 			window.wgFlowTrackingFlows.CREATE_PAGE_ARTICLE_REDLINK,
-		createButtonFlow = window.wgFlowTrackingFlows.CREATE_PAGE_CREATE_BUTTON;
+		createButtonFlow = window.wgFlowTrackingFlows.CREATE_PAGE_CREATE_BUTTON,
+		createboxFlow = window.wgFlowTrackingFlows.CREATE_PAGE_CREATE_BOX;
 
 	function init() {
 		var $wikiaArticle = $('#WikiaArticle');
@@ -30,6 +31,10 @@ require([
 			}
 
 			flowTracking.beginFlow(redLinkFlow, {});
+		});
+
+		$( 'form.createboxForm .createboxButton' ).click(function() {
+			flowTracking.beginFlow(createboxFlow, {});
 		});
 
 		$( '#ca-ve-edit,  #ca-edit' ).click(function() {

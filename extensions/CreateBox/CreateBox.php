@@ -130,10 +130,15 @@ ENDFORM;
 
 function acRedirect( $title, $action ) {
 	global $wgRequest, $wgOut;
-	$query = "action={$action}"
-		. '&preload=' . $wgRequest->getVal( 'preload' )
-		. '&editintro=' . $wgRequest->getVal( 'editintro' )
-		. '&section=' . $wgRequest->getVal( 'section' );
+
+	$query = http_build_query([
+		'action' => $action,
+		'preload' => $wgRequest->getVal( 'preload' ),
+		'editintro' => $wgRequest->getVal( 'editintro' ),
+		'section' => $wgRequest->getVal( 'section' ),
+		'flow' => FlowTrackingHooks::CREATE_PAGE_CREATE_BOX
+	]);
+
 	$wgOut->setSquidMaxage( 1200 );
 	$wgOut->redirect( $title->getFullURL( $query ), '301' );
 }
