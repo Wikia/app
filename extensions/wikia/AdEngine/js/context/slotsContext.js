@@ -25,6 +25,9 @@ define('ext.wikia.adEngine.context.slotsContext', [
 
 		setStatus('TOP_LEADERBOARD', !isHome);
 		setStatus('TOP_RIGHT_BOXAD', !isHome);
+		setStatus('LEFT_SKYSCRAPER_2', !isHome);
+		setStatus('LEFT_SKYSCRAPER_3', !isHome);
+		setStatus('INCONTENT_BOXAD_1', !isHome);
 
 		setStatus('INVISIBLE_HIGH_IMPACT_2', geo.isProperGeo(instantGlobals.wgAdDriverHighImpact2SlotCountries));
 		setStatus('INCONTENT_LEADERBOARD', geo.isProperGeo(instantGlobals.wgAdDriverIncontentLeaderboardSlotCountries));
