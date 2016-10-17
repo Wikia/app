@@ -9,7 +9,7 @@ define(
 			title = mw.config.get('wgTitle');
 
 		function trackOnEditPageLoad(editor) {
-			var qs = new QueryString(),
+			var qs = new QueryString(window.location),
 				// 'flow' is the parameter passed in the url if user has started a flow already
 				flowParam = qs.getVal('flow', false),
 				tracked = qs.getVal('tracked', false);
