@@ -5,6 +5,7 @@ namespace Email\Controller;
 use Email\EmailController;
 use Email\ImageHelper;
 use Email\MobileApplicationsLinksGenerator;
+use Email\SocialLinksGenerator;
 
 class WelcomeController extends EmailController {
 
@@ -63,7 +64,7 @@ class WelcomeController extends EmailController {
 				'details' => $this->getMessage( 'emailext-welcome-profile-description' )->text(),
 			],
 			[
-				'icons' => $this->getSocialIconsList('Welcome-'),
+				'icons' => SocialLinksGenerator::generate($this->targetLang, 'welcomeIcon'),
 				'iconLink' => $this->getMessage( 'emailext-wikia-home-url' )->text(),
 				'detailsHeader' => $this->getMessage( 'emailext-welcome-fandom-connect-header' )
 					->text(),

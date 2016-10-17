@@ -28,46 +28,6 @@ class ImageHelper {
 		'Wikia' => [
 			'name' => 'Wikia',
 			'extension' => 'gif'
-		],
-		'Twitter' => [
-			'name' => 'Twitter-Icon-2x',
-			'extension' => 'png'
-		],
-		'Facebook' => [
-			'name' => 'Facebook-Icon-2x',
-			'extension' => 'png'
-		],
-		'YouTube' => [
-			'name' => 'YouTube_Default-2x',
-			'extension' => 'png'
-		],
-		'VK' => [
-			'name' => 'VK-Icon',
-			'extension' => 'png'
-		],
-		'Instagram' => [
-			'name' => 'Instagram-Default-2x',
-			'extension' => 'png'
-		],
-		'Welcome-Facebook' => [
-			'name' => 'Connect-FB',
-			'extension' => 'png'
-		],
-		'Welcome-Twitter' => [
-			'name' => 'Connect-Tw',
-			'extension' => 'png'
-		],
-		'Welcome-YouTube' => [
-			'name' => 'Connect-YouTube',
-			'extension' => 'png'
-		],
-		'Welcome-Instagram' => [
-			'name' => 'Connect-IG',
-			'extension' => 'png'
-		],
-		'Welcome-VK' => [
-			'name' => 'Connect-VK',
-			'extension' => 'png'
 		]
 	];
 
