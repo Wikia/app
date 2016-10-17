@@ -5,9 +5,8 @@ namespace Email;
 /**
  * Class SocialLinksGenerator
  * @package Email
-*/
-class SocialLinksGenerator
-{
+ */
+class SocialLinksGenerator {
 	const SOCIAL_MEDIA = [
 		'en' => [
 			'Facebook' => [
@@ -159,27 +158,35 @@ class SocialLinksGenerator
 	];
 
 	/**
-	 * Generates links for social icons.
+	 * Generates social icon links for welcome email.
 	 *
-	 * @param $lang - language string
+	 * @param $targetLang
+	 * @return array
+	 */
+	public static function generateForWelcomeEmail( $targetLang ) {
+		return self::generate( $targetLang, 'welcomeIcon' );
+	}
+
+	/**
+	 * Generates links for social icons. Default for email footer.
+	 *
+	 * @param $targetLang - language string
 	 * @param $iconKey - key from which icon file name should be taken
 	 * @return array - returns array of icons
 	 */
-	public static function generate($lang, $iconKey = 'footerIcon') {
-		$socials = self::SOCIAL_MEDIA;
-		if(!isset($socials[$lang])) {
-			$lang = 'en';
-		}
+	public static function generate( $targetLang, $iconKey = 'footerIcon' ) {
+		$lang = !empty( self::SOCIAL_MEDIA[$targetLang] ) ? $targetLang : 'en';
 		$socialIcons = self::SOCIAL_MEDIA[$lang];
 		$result = [];
-		foreach ($socialIcons as $socialName => $socialIconAttributes) {
+		foreach ( $socialIcons as $socialName => $socialIconAttributes ) {
 			$result[] = [
-				'iconSrc' => ImageHelper::getFileUrl($socialIconAttributes[$iconKey]),
+				'iconSrc' => ImageHelper::getFileUrl( $socialIconAttributes[$iconKey] ),
 				'iconAlt' => $socialName,
-				'iconUrl' => $socialIconAttributes['url'],
-				'iconClass' => strtolower($socialName)
+				'iconLink' => $socialIconAttributes['url'],
+				'iconClass' => strtolower( $socialName ),
 			];
 		}
+
 		return $result;
 	}
 

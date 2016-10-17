@@ -271,7 +271,7 @@ abstract class EmailController extends \WikiaController {
 				'badges' => $this->generateMobileApplicationsBadges(),
 				'marketingFooter' => $this->marketingFooter,
 				'icons' => ImageHelper::getIconInfo(),
-                'socialIcons' => SocialLinksGenerator::generate($this->targetLang),
+				'socialIcons' => SocialLinksGenerator::generate( $this->targetLang ),
 				'disableInit' => true,
 			]
 		);

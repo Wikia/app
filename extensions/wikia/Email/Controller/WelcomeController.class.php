@@ -64,7 +64,7 @@ class WelcomeController extends EmailController {
 				'details' => $this->getMessage( 'emailext-welcome-profile-description' )->text(),
 			],
 			[
-				'icons' => SocialLinksGenerator::generate($this->targetLang, 'welcomeIcon'),
+				'icons' => SocialLinksGenerator::generateForWelcomeEmail( $this->targetLang ),
 				'iconLink' => $this->getMessage( 'emailext-wikia-home-url' )->text(),
 				'detailsHeader' => $this->getMessage( 'emailext-welcome-fandom-connect-header' )
 					->text(),
