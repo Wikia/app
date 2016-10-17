@@ -4221,7 +4221,6 @@ class User {
 		// Wikia change - begin
 		// @see PLATFORM-2502 comparing new passwords in PHP code.
 		// @todo mech remove after the new password hashing is implemented (PLATFORM-2526).
-		// https://wikia-inc.atlassian.net/browse/PLATFORM-2526
 		Wikia\Logger\WikiaLogger::instance()->debug(
 			'NEW_HASHING comparePasswords called in PHP',
 			[
