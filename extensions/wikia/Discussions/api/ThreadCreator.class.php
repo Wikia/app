@@ -44,14 +44,21 @@ class ThreadCreator {
 		return $api;
 	}
 
-	private function logError( int $siteId, int $userId, string $body, Exception $e ) {
+	private function logError( int $siteId, int $userId, string $body, ApiException $e ) {
+		$response = $e->getResponseObject();
+		/** @var \Swagger\Client\Discussion\Models\HalProblem $response */
+		if ( $response instanceof \Swagger\Client\Discussion\Models\HalProblem ) {
+			$detail = $response->getDetail();
+		} else {
+			$detail = $e->getMessage();
+		}
 		Wikia\Logger\WikiaLogger::instance()->warning(
 			'DISCUSSIONS Error creating thread',
 			[
 				'siteId' => $siteId,
 				'userId' => $userId,
 				'body' => $body,
-				'exception' => $e
+				'detail' => $detail
 			]
 		);
 	}
