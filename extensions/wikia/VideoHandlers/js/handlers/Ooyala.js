@@ -72,6 +72,10 @@ define('wikia.videohandler.ooyala', [
 				}
 			});
 
+			if (typeof params.onCreate === 'function') {
+				params.onCreate(player);
+			}
+
 			// Log all events and values (for debugging)
 			/*messageBus.subscribe('*', 'tracking', function(eventName, payload) {
 				console.log(eventName);
@@ -82,11 +86,15 @@ define('wikia.videohandler.ooyala', [
 		createParams.onCreate = onCreate;
 
 		if (adContext && adContext.getContext().opts.showAds) {
-			if (!dartVideoHelper) {
-				throw 'ext.wikia.adEngine.dartVideoHelper is not defined and it should as we need to display ads';
-			}
+			if (params.tagUrl) {
+				tagUrl = params.tagUrl;
+			} else {
+				if (!dartVideoHelper) {
+					throw 'ext.wikia.adEngine.dartVideoHelper is not defined and it should as we need to display ads';
+				}
 
-			tagUrl = dartVideoHelper.getUrl();
+				tagUrl = dartVideoHelper.getUrl();
+			}
 
 			createParams.vast = {
 				tagUrl: tagUrl
