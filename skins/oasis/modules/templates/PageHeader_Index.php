@@ -39,6 +39,10 @@ if ( $runNjord ) {
 				<? if ( !is_null( $tallyMsg ) ): ?>
 					<div class="tally"><?= $tallyMsg ?></div>
 				<? endif; ?>
+				<?// TODO add interaction ?>
+				<? // TODO remove after XW-2226 is done ?>
+				<a class="wikia-button">Add New Page</a>
+				<? // TODO remove end ?>
 			</div>
 		</div>
 		<?php
@@ -77,6 +81,14 @@ if ( $runNjord ) {
 				<img src="<?= wfBlankImgUrl(); ?>" class="sprite addRelatedVideo"/> <?= wfMessage( 'videos-add-video' )->escaped(); ?>
 			</a>
 		<? endif;
+
+		?>
+
+		<?// TODO add href or handler ?>
+		<? // TODO remove after XW-2226 is done ?>
+		<a class="wikia-button"><img class="sprite new" src="<?=wfBlankImgUrl()?>"> Add New Page</a>
+		<? // TODO remove end ?>
+		<?
 
 		// comments & like button
 		if ( !$isWallEnabled ) {
