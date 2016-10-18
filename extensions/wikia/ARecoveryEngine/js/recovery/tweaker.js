@@ -18,7 +18,7 @@ define('ext.wikia.aRecoveryEngine.recovery.tweaker', [
 
 	var logGroup = 'ext.wikia.aRecoveryEngine.recovery.tweaker';
 
-	function isSupportedBrowser() {
+	function isNotSupportedBrowser() {
 		return browser.isIE() || browser.isEdge();
 	}
 
@@ -38,7 +38,7 @@ define('ext.wikia.aRecoveryEngine.recovery.tweaker', [
 		var adContainer = iframe.parentNode.parentNode.parentNode.parentNode,
 			originalIframe = mirrorDOMStructure(doc.querySelector('#' + slotName + ' > div > div'));
 
-		if (isSupportedBrowser()) {
+		if (isNotSupportedBrowser()) {
 			DOMElementTweaker.hide(adContainer, true);
 			log(['tweakSlot', 'not supported browser'], 'info', logGroup);
 			return;
