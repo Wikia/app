@@ -295,7 +295,7 @@ var CreatePage = {
 		'use strict';
 		CreatePage.context = context;
 
-		$( '.WikiaMenuElement .createpage' ).click(function() {
+		$( '.createpage' ).click(function() {
 			CreatePage.trackCreatePageStart(window.wgFlowTrackingFlows.CREATE_PAGE_CONTRIBUTE_BUTTON);
 			CreatePage.flowName = window.wgFlowTrackingFlows.CREATE_PAGE_CONTRIBUTE_BUTTON;
 		});
