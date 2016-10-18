@@ -23,19 +23,14 @@
 					flowTrackingCreatePage.trackOnEditPageLoad(editorName(editor.mode));
 				});
 			} else if (namespace === -1) {
-				editor.on('changeTitle', this.proxy(this.onChangeTitle));
+				editor.on('changeTitle', function (oldTitle, newTitle) {
+					if (oldTitle === '') {
+						require(['ext.wikia.flowTracking.createPageTracking'], function (flowTrackingCreatePage) {
+							flowTrackingCreatePage.trackOnSpecialCreatePageLoad(editorName(editor.mode), newTitle);
+						});
+					}
+				});
 			}
-		},
-
-		onChangeTitle: function (oldTitle, newTitle) {
-			var editor = this.editor;
-
-			require(['ext.wikia.flowTracking.createPageTracking'], function (flowTrackingCreatePage) {
-				// Check if title is provided first time and has valid namespace
-				if (oldTitle === '' && flowTrackingCreatePage.isTitleInMainNamespace(newTitle)) {
-					flowTrackingCreatePage.trackOnSpecialCreatePageLoad(editorName(editor.mode));
-				}
-			});
 		}
 	});
 })(this,jQuery);

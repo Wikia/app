@@ -29,14 +29,14 @@ define(
 			setTrackedQueryParam(qs);
 		}
 
-		function trackOnSpecialCreatePageLoad(editor) {
+		function trackOnSpecialCreatePageLoad(editor, title) {
 			var qs = new QueryString(),
 				// 'flow' is the parameter passed in the url if user has started a flow already
 				flowParam = qs.getVal('flow', false),
 				tracked = qs.getVal('tracked', false);
 
 			// Do not track if the step was tracked already or special page is not allowed
-			if (tracked  || !isAllowedSpecialPage()) {
+			if (tracked  || !isAllowedSpecialPage() || !isTitleInMainNamespace(title)) {
 				return;
 			}
 
@@ -85,7 +85,6 @@ define(
 
 		return {
 			trackOnEditPageLoad: trackOnEditPageLoad,
-			trackOnSpecialCreatePageLoad: trackOnSpecialCreatePageLoad,
-			isTitleInMainNamespace: isTitleInMainNamespace
+			trackOnSpecialCreatePageLoad: trackOnSpecialCreatePageLoad
 		}
 	});
