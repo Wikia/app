@@ -129,15 +129,20 @@ ENDFORM;
 }
 
 function acRedirect( $title, $action ) {
-	global $wgRequest, $wgOut;
+	global $wgRequest, $wgOut, $wgEnableFlowTracking;
 
-	$query = http_build_query([
+	$queryData = [
 		'action' => $action,
 		'preload' => $wgRequest->getVal( 'preload' ),
 		'editintro' => $wgRequest->getVal( 'editintro' ),
 		'section' => $wgRequest->getVal( 'section' ),
-		'flow' => FlowTrackingHooks::CREATE_PAGE_CREATE_BOX
-	]);
+	];
+
+	if( !empty( $wgEnableFlowTracking ) ) {
+		$queryData['flow'] = FlowTrackingHooks::CREATE_PAGE_CREATE_BOX;
+	}
+
+	$query = http_build_query($queryData);
 
 	$wgOut->setSquidMaxage( 1200 );
 	$wgOut->redirect( $title->getFullURL( $query ), '301' );
