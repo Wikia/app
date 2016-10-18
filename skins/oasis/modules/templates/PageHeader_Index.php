@@ -39,9 +39,8 @@ if ( $runNjord ) {
 				<? if ( !is_null( $tallyMsg ) ): ?>
 					<div class="tally"><?= $tallyMsg ?></div>
 				<? endif; ?>
-				<?// TODO add interaction ?>
 				<? // TODO remove after XW-2226 is done ?>
-				<a class="wikia-button">Add New Page</a>
+				<a class="wikia-button createpage">Add New Page</a>
 				<? // TODO remove end ?>
 			</div>
 		</div>
@@ -84,9 +83,8 @@ if ( $runNjord ) {
 
 		?>
 
-		<?// TODO add href or handler ?>
 		<? // TODO remove after XW-2226 is done ?>
-		<a class="wikia-button"><img class="sprite new" src="<?=wfBlankImgUrl()?>"> Add New Page</a>
+		<a class="wikia-button createpage"><img class="sprite new" src="<?=wfBlankImgUrl()?>"> Add New Page</a>
 		<? // TODO remove end ?>
 		<?
 

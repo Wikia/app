@@ -9,7 +9,7 @@
 	<? if ( $displayHeaderButtons ) : ?>
 		<div class="buttons">
 			<? // TODO remove after XW-2226 is done ?>
-			<a class="wikia-button">Add New Page</a>
+			<a class="wikia-button createpage">Add New Page</a>
 			<? // TODO remove end ?>
 			<?= $app->renderView( 'ContributeMenu', 'Index' ) ?>
 		</div>

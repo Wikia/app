@@ -1,7 +1,5 @@
 <?php
 
-
-// TODO add interaction
 // TODO remove after XW-2226 is done
 echo F::app()->renderView('MenuButton', 'Index', array(
 	'action' => array(
