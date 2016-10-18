@@ -507,15 +507,13 @@ abstract class EmailController extends \WikiaController {
 			throw new Fatal( 'Required username has been left empty' );
 		}
 
-		// Allow an anonymous user to be specified
-		if ( $username == self::ANONYMOUS_USER_ID ) {
-			return \User::newFromId( 0 );
-		}
-
 		if ( $username instanceof \User ) {
 			$user = $username;
 		} else if ( is_object( $username ) ) {
 			throw new Fatal( 'Non-user object passed when user object or username expected' );
+		} else if ( $username == self::ANONYMOUS_USER_ID ) {
+			// Allow an anonymous user to be specified
+			return \User::newFromId( 0 );
 		} else {
 			$user = \User::newFromName( $username, $validate = false );
 		}
