@@ -1,7 +1,7 @@
 // TODO remove when XW-2226 is done
 
 .skin-oasis .add-new-page-experiment-element {
-	display: none;
+	//display: none;
 }
 
 .WikiHeader {
@@ -13,7 +13,7 @@
 }
 
 .WikiaPageHeader {
-	.wikia-button.createpage.add-new-page-experiment-element {
+	.header-container .wikia-button.createpage.add-new-page-experiment-element {
 		float: right;
 		clear: both;
 		margin-top: 4px;
