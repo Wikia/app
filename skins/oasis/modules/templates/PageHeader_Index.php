@@ -40,7 +40,7 @@ if ( $runNjord ) {
 					<div class="tally"><?= $tallyMsg ?></div>
 				<? endif; ?>
 				<? // TODO remove after XW-2226 is done ?>
-				<a class="wikia-button createpage">Add New Page</a>
+				<a class="wikia-button createpage add-new-page-experiment-element">Add New Page</a>
 				<? // TODO remove end ?>
 			</div>
 		</div>
@@ -84,7 +84,7 @@ if ( $runNjord ) {
 		?>
 
 		<? // TODO remove after XW-2226 is done ?>
-		<a class="wikia-button createpage"><img class="sprite new" src="<?=wfBlankImgUrl()?>"> Add New Page</a>
+		<a class="wikia-button createpage add-new-page-experiment-element"><img class="sprite new" src="<?=wfBlankImgUrl()?>"> Add New Page</a>
 		<? // TODO remove end ?>
 		<?
 

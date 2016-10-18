@@ -5,7 +5,7 @@ echo F::app()->renderView('MenuButton', 'Index', array(
 	'action' => array(
 		'text' => 'Add Content',
 	),
-	'class' => 'contribute',
+	'class' => 'contribute add-new-page-experiment-element',
 	'image' => MenuButtonController::CONTRIBUTE_ICON,
 	'dropdown' => $dropdownItems,
 ));
