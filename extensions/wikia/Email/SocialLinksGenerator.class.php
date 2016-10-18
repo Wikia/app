@@ -7,6 +7,7 @@ namespace Email;
  * @package Email
  */
 class SocialLinksGenerator {
+	
 	const SOCIAL_MEDIA = [
 		'en' => [
 			'Facebook' => [
