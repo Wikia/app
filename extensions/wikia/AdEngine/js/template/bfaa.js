@@ -88,21 +88,14 @@ define('ext.wikia.adEngine.template.bfaa', [
 			}
 
 			if (params.video) {
-				video = uapVideoAd.create(doc.getElementById(params.slotName), params.video);
+				video = uapVideoAd(doc.getElementById(params.slotName), params.video);
 				slotTweaker.onReady(params.slotName, function(iframe) {
-					imageContainer = iframe.parentNode.parentNode.parentNode;
+					video.registerImageContainer(iframe.parentNode.parentNode.parentNode);
 
 					iframe.contentWindow.document.getElementById('ad-image').addEventListener('click', function () {
 						video.play();
-
-						DOMElementTweaker.hide(imageContainer, false);
-						DOMElementTweaker.removeClass(video, 'hidden');
+						video.toggle(false);
 					});
-				});
-
-				video.onEnded(function () {
-					DOMElementTweaker.hide(video, false);
-					DOMElementTweaker.removeClass(imageContainer, 'hidden');
 				});
 			}
 		}
