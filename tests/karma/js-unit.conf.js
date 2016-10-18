@@ -216,6 +216,10 @@ module.exports = function (config) {
 			//PortableInfoboxBuilder
 			'extensions/wikia/PortableInfoboxBuilder/js/PortableInfoboxBuilderTemplateClassificationHelper.js',
 			'extensions/wikia/PortableInfoboxBuilder/js/spec/PortableInfoboxBuilderTemplateClassificationHelper.spec.js',
+
+			// Flow Tracking
+			'extensions/wikia/FlowTracking/scripts/createPageTracking.js',
+			'extensions/wikia/FlowTracking/scripts/spec/createPageTracking.spec.js',
 		]
 	});
 };
