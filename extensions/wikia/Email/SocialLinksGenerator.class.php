@@ -15,7 +15,7 @@ class SocialLinksGenerator {
 				'welcomeIcon' => 'Connect-FB.png',
 			],
 			'Twitter' => [
-				'url' => 'https://www.facebook.com/getfandom',
+				'url' => 'https://twitter.com/getfandom',
 				'footerIcon' => 'Twitter-Icon-2x.png',
 				'welcomeIcon' => 'Connect-Tw.png',
 			],
