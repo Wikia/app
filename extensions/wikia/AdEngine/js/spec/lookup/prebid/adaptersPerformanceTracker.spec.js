@@ -2,6 +2,9 @@
 describe('ext.wikia.adEngine.lookup.prebid.adaptersPerformanceTracker', function () {
 	'use strict';
 
+	function noop() {
+	}
+
 	var mocks = {
 			adTracker: {
 				track: noop
@@ -37,7 +40,7 @@ describe('ext.wikia.adEngine.lookup.prebid.adaptersPerformanceTracker', function
 			},
 			adapterIndexExchange: {
 				getName: function () {
-					return 'indexExchange'
+					return 'indexExchange';
 				},
 				isEnabled: function () {
 					return true;
@@ -114,9 +117,6 @@ describe('ext.wikia.adEngine.lookup.prebid.adaptersPerformanceTracker', function
 		},
 		module,
 		getBidResponsesSpy;
-
-	function noop() {
-	}
 
 	function getModule() {
 		return modules['ext.wikia.adEngine.lookup.prebid.adaptersPerformanceTracker'](

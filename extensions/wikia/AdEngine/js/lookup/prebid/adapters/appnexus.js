@@ -1,9 +1,10 @@
 /*global define*/
 define('ext.wikia.adEngine.lookup.prebid.adapters.appnexus',[
+	'ext.wikia.adEngine.context.slotsContext',
 	'ext.wikia.adEngine.lookup.prebid.adapters.appnexusPlacements',
 	'wikia.geo',
 	'wikia.instantGlobals'
-], function (appnexusPlacements, geo, instantGlobals) {
+], function (slotsContext, appnexusPlacements, geo, instantGlobals) {
 	'use strict';
 
 	var bidderName = 'appnexus',
@@ -51,7 +52,7 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.appnexus',[
 	}
 
 	function getSlots(skin) {
-		return slots[skin];
+		return slotsContext.filterSlotMap(slots[skin]);
 	}
 
 	function getName() {
