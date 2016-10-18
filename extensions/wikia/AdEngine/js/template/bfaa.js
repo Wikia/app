@@ -6,6 +6,7 @@ define('ext.wikia.adEngine.template.bfaa', [
 	'ext.wikia.adEngine.domElementTweaker',
 	'ext.wikia.adEngine.provider.btfBlocker',
 	'ext.wikia.adEngine.slotTweaker',
+	'ext.wikia.adEngine.video.uapVideoAd',
 	'ext.wikia.aRecoveryEngine.recovery.helper',
 	'wikia.browserDetect',
 	'wikia.document',
@@ -19,6 +20,7 @@ define('ext.wikia.adEngine.template.bfaa', [
 	DOMElementTweaker,
 	btfBlocker,
 	slotTweaker,
+	uapVideoAd,
 	recoveryHelper,
 	browser,
 	doc,
@@ -42,23 +44,13 @@ define('ext.wikia.adEngine.template.bfaa', [
 			'MOBILE_IN_CONTENT',
 			'MOBILE_PREFOOTER'
 		],
-		wrapper;
+		wrapper,
+		video,
+		imageContainer;
 
 	desktopHandler = {
-		addVideo: function(container, url) {
-			var video = doc.createElement('video');
-
-			video.src = url;
-			DOMElementTweaker.hide(video, false);
-
-			container.appendChild(video);
-
-			return video;
-		},
-
-		updateNavBar: function (iframe) {
-			var height = iframe.contentWindow.document.body.offsetHeight,
-				position = win.scrollY || win.pageYOffset;
+		updateNavBar: function (height) {
+			var position = win.scrollY || win.pageYOffset;
 
 			log(['updateNavBar', height, position], 'info', logGroup);
 
@@ -70,15 +62,16 @@ define('ext.wikia.adEngine.template.bfaa', [
 		},
 
 		show: function (iframe, params) {
-			var spotlightFooter = doc.getElementById('SPOTLIGHT_FOOTER');
+			var spotlightFooter = doc.getElementById('SPOTLIGHT_FOOTER'),
+				adContainer = doc.getElementById(params.slotName);
 			nav.style.top = '';
 			page.classList.add('bfaa-template');
 
 			log('desktopHandler::show', 'info', logGroup);
 
-			this.updateNavBar(iframe);
+			this.updateNavBar(adContainer.offsetHeight);
 			doc.addEventListener('scroll', adHelper.throttle(function () {
-				this.updateNavBar(iframe);
+				this.updateNavBar(adContainer.offsetHeight);
 			}.bind(this), 100));
 
 			if (win.WikiaBar) {
@@ -95,16 +88,24 @@ define('ext.wikia.adEngine.template.bfaa', [
 			}
 
 			if (params.video) {
-				var video = this.addVideo(doc.getElementById(params.slotName), params.video);
+				video = uapVideoAd.create(doc.getElementById(params.slotName), params.video);
 				slotTweaker.onReady(params.slotName, function(iframe) {
+					imageContainer = iframe.parentNode.parentNode.parentNode;
+
 					iframe.contentWindow.document.getElementById('ad-image').addEventListener('click', function () {
 						video.play();
+
+						DOMElementTweaker.hide(imageContainer, false);
 						DOMElementTweaker.removeClass(video, 'hidden');
-						DOMElementTweaker.hide(iframe.parentNode.parentNode.parentNode, false);
 					});
 				});
+
+				video.onEnded(function () {
+					DOMElementTweaker.hide(video, false);
+					DOMElementTweaker.removeClass(imageContainer, 'hidden');
+				});
 			}
-		},
+		}
 	};
 
 	mobileHandler =  {
