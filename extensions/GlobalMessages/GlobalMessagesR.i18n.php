@@ -11,9 +11,9 @@ $messages['en'] = [
 	'restorelink' => '{{PLURAL:$1|one deleted edit|$1 deleted edits}}',
 	'red-link-title' => '$1 (page does not exist)',
 	'readonly' => 'Database locked',
-	'readonlytext' => 'The database is currently locked to new entries and other modifications, probably for routine database maintenance, after which it will be back to normal.
+	'readonlytext' => 'The database is currently locked.
 
-The administrator who locked it offered this explanation: $1',
+$1',
 	'readonly_lag' => 'The database has been automatically locked while the slave database servers catch up to the master',
 	'remembermypassword' => 'Remember my login on this computer',
 	'resetpass' => 'Change password',
@@ -32,7 +32,6 @@ Now logging you in...',
 You may have already successfully changed your password or requested a new temporary password.',
 	'resetpass-temp-password' => 'Temporary password:',
 	'readonlywarning' => '\'\'\'Warning: The database has been locked for maintenance, so you will not be able to save your edits right now.\'\'\'
-You may wish to cut-n-paste the text into a text file and save it for later.
 
 The administrator who locked it offered this explanation: $1',
 	'recreate-moveddeleted-warn' => '\'\'\'Warning: You are recreating a page that was previously deleted.\'\'\'
@@ -213,25 +212,19 @@ Please check the logs.',
 	'recentchanges' => 'Recent changes',
 	'recentchanges-url' => 'Special:RecentChanges',
 	'recentchanges-legend' => 'Recent changes options',
-	'recentchangestext' => '<div style="border:solid 3px #e9e9e9; margin-bottom:0.3em;">
-<div style="padding-left:0.5em; padding-right:0.5em;">
-This special page lets you track the most recent changes to the wiki.
-
-See also: [[Special:Newpages|New pages]] – [[Special:Newimages|New files]] – [[Special:Log|Logs]] – [[Special:Activeusers|Active users]] – [[Special:Listusers/sysop|Admins]]
-</div>
-</div>',
+	'recentchangestext' => '<div id="wikia-mediawiki-recentchangestext" style="border:2px solid #e9e9e9; margin-bottom:0.3em; padding:0.2em 0.5em;"><span style="float:left;">[[Special:NewPages|New pages]] – [[Special:NewImages|New files]] – [[Special:Log|Logs]] – [[Special:Insights|Insights]]</span><span style="float:right;">[[Help:Recent changes]]</span><div style="clear:both;"></div></div>',
 	'recentchanges-feed-description' => 'Track the most recent changes to the wiki in this feed.',
 	'recentchanges-label-newpage' => 'This edit created a new page',
 	'recentchanges-label-minor' => 'This is a minor edit',
 	'recentchanges-label-bot' => 'This edit was performed by a bot',
 	'recentchanges-label-unpatrolled' => 'This edit has not yet been patrolled',
-	'rcnote' => 'Below {{PLURAL:$1|is \'\'\'1\'\'\' change|are the last \'\'\'$1\'\'\' changes}} in the last {{PLURAL:$2|day|\'\'\'$2\'\'\' days}}, as of $5, $4.',
+	'rcnote' => '<div style="margin-top: -20px;" class="emptymwmsg mediawiki_rcnote"></div>',
 	'rcnotefrom' => 'Below are the changes since \'\'\'$2\'\'\' (up to \'\'\'$1\'\'\' shown).',
 	'rclistfrom' => 'Show new changes starting from $1',
 	'rcshowhideminor' => '$1 minor edits',
 	'rcshowhidebots' => '$1 bots',
-	'rcshowhideliu' => '$1 logged-in users',
-	'rcshowhideanons' => '$1 anonymous users',
+	'rcshowhideliu' => '$1 users',
+	'rcshowhideanons' => '$1 anons',
 	'rcshowhidepatr' => '$1 patrolled edits',
 	'rcshowhidemine' => '$1 my edits',
 	'rclinks' => 'Show last $1 changes in last $2 days<br />$3',
@@ -265,7 +258,7 @@ Pages on [[Special:Watchlist|your watchlist]] are \'\'\'bold\'\'\'.',
 	'rollback_short' => 'Rollback',
 	'rollbacklink' => 'rollback',
 	'rollbackfailed' => 'Rollback failed',
-	'revertpage' => 'Reverted edits by [[Special:Contributions/$2|$2]] ([[User talk:$2|talk]]) to last revision by [[User:$1|$1]]',
+	'revertpage' => 'Reverted edits by [[Special:Contributions/$2|$2]] ([[User talk:$2|talk]] | [[Special:Block/$2|block]]) to last version by [[User:$1|$1]]',
 	'revertpage-nouser' => 'Reverted edits by (username removed) to last revision by [[User:$1|$1]]',
 	'rollback-success' => 'Reverted edits by $1;
 changed back to last revision by $2.',
@@ -299,34 +292,19 @@ changed back to last revision by $2.',
 	'revdelete-hid' => 'hid $1',
 	'revdelete-unhid' => 'unhid $1',
 	'revdelete-log-message' => '$1 for $2 {{PLURAL:$2|revision|revisions}}',
-	'reconfirmemail_subject' => 'Welcome to Wikia!',
+	'reconfirmemail_subject' => 'Please reconfirm your Wikia account',
 	'reconfirmemail_body' => 'Hi $2,
 
-Thank you for updating the email address associated with your Wikia account.
+Thanks for updating the email address on your Wikia account. Please take a minute to confirm this is the correct email address by clicking here: $3
 
-Before our system can send you any mail you have opted to receive, you
-must confirm your email address.
+Thanks!
 
-Click on the link below or paste it into your browser:
+- Wikia Community Support
 
-$3
-
-Note: This confirmation link will expire in 7 days.
-
-
-With thousands of communities on Wikia, there are many ways to have fun
-here. Spend some time getting to know Wikia by visiting the home page
-(www.wikia.com), taking a tutorial at
-http://www.wikia.com/wiki/Help:Tutorial_1 , reading interesting and cool
-pages, writing content on your favorite subjects, or meeting other
-members of the community.
-
-We look forward to seeing you on Wikia!
-
-The Wikia Community Team
-www.wikia.com
-',
-	'rcshowhideenhanced' => '$1 enhanced recent changes',
+___________________________________________
+* Find help and advice on Community Central: http://community.wikia.com
+* Want to receive fewer messages from us? You can unsubscribe or change your email preferences here: http://community.wikia.com/Special:Preferences',
+	'rcshowhideenhanced' => '$1 grouped recent changes',
 	'refreshpage' => 'Reload page to activate this widget',
 	'requestcreatewiki' => 'Submit Request',
 	'right_now' => 'Right Now<br />people are...',
@@ -9456,11 +9434,11 @@ Grund der Sperrung: $1',
 	'remembermypassword' => 'Mit diesem Browser dauerhaft angemeldet bleiben (maximal $1 {{PLURAL:$1|Tag|Tage}})',
 	'resetpass' => 'Passwort ändern',
 	'resetpass_announce' => 'Anmeldung mit dem per E-Mail zugesandten Code. Um die Anmeldung abzuschließen, musst du jetzt ein neues Passwort wählen.',
-	'resetpass_text' => '<!-- Ergänze den Text hier -->',
+	'resetpass_text' => '<!-- Hier Text einfügen -->',
 	'resetpass_header' => 'Passwort ändern',
 	'retypenew' => 'Neues Passwort (nochmal):',
 	'resetpass_submit' => 'Ändern und anmelden',
-	'resetpass_success' => 'Dein Passwort wurde erfolgreich geändert. Es folgt die Anmeldung …',
+	'resetpass_success' => 'Dein Passwort wurde erfolgreich geändert. Es folgt die Anmeldung…',
 	'resetpass_forbidden' => 'Das Passwort kann nicht geändert werden.',
 	'resetpass-no-info' => 'Du musst dich anmelden, um auf diese Seite direkt zuzugreifen.',
 	'resetpass-submit-loggedin' => 'Passwort ändern',
@@ -9638,12 +9616,25 @@ Bitte prüfe die Logbücher.',
 	'rightsnone' => '(–)',
 	'recentchanges' => 'Letzte Änderungen',
 	'recentchanges-legend' => 'Anzeigeoptionen',
-	'recentchangestext' => '<div style=\'border:solid 3px #e9e9e9; margin-bottom:0.3em;\'>
-<div style=\'padding-left:0.5em; padding-right:0.5em;\'>
-Auf dieser Spezialseite kannst Du die \'\'\'letzten Änderungen\'\'\' in diesem Wiki nachvollziehen.
+	'recentchangestext' => '<div id="page-recentchanges-mediawiki-recentchangestext" style="border: solid 3px #e9e9e9; margin-bottom: 0.3em; padding:0.5em;">
+Auf dieser [[Hilfe:Spezialseiten|Spezialseite]] kannst du die [[Hilfe:Letzte Änderungen|letzten Änderungen]] im Wikia nachvollziehen.
 
-\'\'\'Organisatorisches:\'\'\' [[Spezial:Newpages|Neue Seiten]] – [[Spezial:Newimages|Neue Dateien]] – [[Spezial:Log|Logbücher]] – [[Spezial:Activeusers|Aktive Benutzer]] – [[Spezial:Listusers/sysop|Admins]]
-</div>
+{| class="plainlinks" style="background:transparent; margin-left:0.5em; margin-bottom:0.5em; text-align:left;"
+|-valign="top"
+|align="right"|\'\'\'[[Special:Log|Logbücher]]:\'\'\'
+|[[Special:Newpages|{{int:Newpages}}]] - [[Special:Log/delete|Löschungen]] - [[Special:Log/move|Verschiebungen]] - [[Special:Log/upload|Uploads]] - [[Special:Log/block|Sperrungen]] - [[Special:Log/rights|Rechteänderungen]]
+|-valign="top"
+|align="right"|\'\'\'[[Special:Specialpages|Spezialseiten]]:\'\'\'
+|[[Special:Wantedpages|{{int:wantedpages}}]] - [[Special:Longpages|{{int:longpages}}]] - [[Special:Uncategorizedimages|{{int:uncategorizedimages}}]] - [[Special:Uncategorizedpages|{{int:uncategorizedpages}}]] - [[Special:Insights|Insights]]
+|-valign="top"
+|align="right"|\'\'\'[[Special:Listusers|Benutzerverzeichnis]]:\'\'\'
+|[[Special:Listusers/sysop|{{int:Group-sysop}}]] - [[Special:Listusers/helper|{{int:Group-helper}}]] - [[Special:Listusers/vstf|{{int:Group-vstf}}]] - [[Special:Listusers/staff|{{int:Group-staff}}]]
+|-valign="top"
+|align="right"|\'\'\'[[Hilfe:Übersicht|Hilfeseiten]]:\'\'\'
+|[[Hilfe:Index|Index]] - [[Hilfe:FAQ|Häufig gestellte Fragen (FAQ)]] - [[Hilfe:Tutorial 1|Tutorial]]
+|}
+<div style="font-size:0.9em; text-align:center; margin:2px auto 0px; border-top:1px solid lightgrey;">
+[[w:c:de.community|Community Deutschland]]: [[w:c:de.community:Special:Chat|Community-Chat]] - [[w:c:de.community:Admin-Mentor-Programm|Admin-Mentor-Programm]]</div>
 </div>',
 	'recentchanges-feed-description' => 'Verfolge mit diesem Feed die letzten Änderungen in {{SITENAME}}.',
 	'recentchanges-label-newpage' => 'Neue Seite',
@@ -9687,7 +9678,7 @@ Stand: $4, $5 Uhr.',
 	'rollback_short' => 'Zurücksetzen',
 	'rollbacklink' => 'Zurücksetzen',
 	'rollbackfailed' => 'Zurücksetzen gescheitert',
-	'revertpage' => 'Änderungen von [[Special:Contributions/$2|$2]] ([[User talk:$2|Diskussion]]) wurden auf die letzte Version von [[User:$1|$1]] zurückgesetzt',
+	'revertpage' => 'Änderungen von [[Special:Contributions/$2|$2]] ([[User talk:$2|Diskussion]] | [[Special:Block/$2|Blockieren]]) rückgängig gemacht und letzte Version von [[User:$1|$1]] wiederhergestellt',
 	'revertpage-nouser' => 'Änderungen von (Benutzername entfernt) rückgängig gemacht und letzte Version von [[User:$1|$1]] wiederhergestellt',
 	'rollback-success' => 'Die Änderungen von $1 wurden rückgängig gemacht und die letzte Version von $2 wurde wiederhergestellt.',
 	'restriction-type' => 'Schutzstatus:',
@@ -9727,72 +9718,62 @@ Stand: $4, $5 Uhr.',
 	'right-emailconfirmed' => 'User has been email confirmed',
 	'right-runjob' => 'Run job from the job queue via API',
 	'recentchanges-url' => 'Special:RecentChanges',
-	'rc-old-title' => 'originally created as "$1"',
+	'rc-old-title' => 'Ursprünglich als "$1" erstellt',
 	'randompage-url' => 'Special:Random',
 	'rfcurl' => '//tools.ietf.org/html/rfc$1',
-	'revdelete-logentry' => 'changed revision visibility of "[[$1]]"',
-	'revdelete-content' => 'content',
-	'revdelete-summary' => 'edit summary',
-	'revdelete-uname' => 'username',
-	'revdelete-hid' => 'hid $1',
+	'revdelete-logentry' => 'änderte Sichtbarkeit von "[[$1]]"',
+	'revdelete-content' => 'Inhalt',
+	'revdelete-summary' => 'Zusammenfassung',
+	'revdelete-uname' => 'Benutzername',
+	'revdelete-hid' => 'versteckte $1',
 	'revdelete-unhid' => 'unhid $1',
 	'revdelete-log-message' => '$1 for $2 {{PLURAL:$2|revision|revisions}}',
-	'reconfirmemail_subject' => 'Welcome to Wikia!',
-	'reconfirmemail_body' => 'Hi $2,
+	'reconfirmemail_subject' => 'Willkommen bei Wikia!',
+	'reconfirmemail_body' => 'Hallo $2,
 
-Thank you for updating the email address associated with your Wikia account.
+Vielen Dank für das Aktualisieren deiner E-Mail-Adresse, die du für dein Wikia-Benutzerkonto verwendest.
 
-Before our system can send you any mail you have opted to receive, you
-must confirm your email address.
+Bevor wir dir weitere Nachrichten schicken können, musst du zunächst deine E-Mail-Adresse bestätigen.
 
-Click on the link below or paste it into your browser:
+Klicke auf diesen Link oder gib ihn in deinem Browser ein:
 
 $3
 
-Note: This confirmation link will expire in 7 days.
+Hinweis: Dieser Link wird nach sieben Tagen ungültig.
 
+Wir freuen uns darauf, dass du weiterhin ein Teil von Wikia bist!
 
-With thousands of communities on Wikia, there are many ways to have fun
-here. Spend some time getting to know Wikia by visiting the home page
-(www.wikia.com), taking a tutorial at
-http://www.wikia.com/wiki/Help:Tutorial_1 , reading interesting and cool
-pages, writing content on your favorite subjects, or meeting other
-members of the community.
+Das Wikia Community-Team
+de.wikia.com',
+	'rcshowhideenhanced' => 'Erweiterte Darstellung $1',
+	'refreshpage' => 'Seite erneut laden, um das Widget zu aktivieren',
+	'requestcreatewiki' => 'Antrag abschicken',
+	'right_now' => 'Gerade im Moment<br />sind Menschen dabei...',
+	'return_to_article' => 'Zurück zum Artikel',
+	'return_to_talk' => 'Zurück zur Diskussion',
+	'return_to_user' => 'Zurück zur Benutzerseite',
+	'return_to_user_talk' => 'Zurück zur Diskussion',
+	'return_to_project' => 'Zurück zur Projektseite',
+	'return_to_project_talk' => 'Zurück zur Diskussion',
+	'return_to_image' => 'Zurück zur Bildbeschreibungsseite',
+	'return_to_image_talk' => 'Zurück zur Diskussion',
+	'return_to_mediawiki' => 'Zurück zur Nachrichtenseite',
+	'return_to_mediawiki_talk' => 'Zurück zur Diskussion',
+	'return_to_template' => 'Zurück zur Vorlagenseite',
+	'return_to_template_talk' => 'Zurück zur Diskussion',
+	'return_to_help' => 'Zurück zur Hilfe-Seite',
+	'return_to_help_talk' => 'Zurück zur Diskussion',
+	'return_to_category' => 'Zurück zur Kategorie-Seite',
+	'return_to_category_talk' => 'Zurück zur Diskussion',
+	'return_to_forum' => 'Zurück zum Forum',
+	'return_to_forum_talk' => 'Zurück zur Diskussion',
+	'return_to_special' => 'Zurück zur Spezialseite',
+	'related_wiki' => 'Füge hier Links im Listenformat ein um ähnliche Wikis zu diesem im "Related Wikis" [[Special:Widgets|Widget]] anzuzeigen.
 
-We look forward to seeing you on Wikia!
-
-The Wikia Community Team
-www.wikia.com
-',
-	'rcshowhideenhanced' => '$1 enhanced recent changes',
-	'refreshpage' => 'Reload page to activate this widget',
-	'requestcreatewiki' => 'Submit Request',
-	'right_now' => 'Right Now<br />people are...',
-	'return_to_article' => 'Return to page',
-	'return_to_talk' => 'Return to discussion',
-	'return_to_user' => 'Return to user page',
-	'return_to_user_talk' => 'Return to discussion',
-	'return_to_project' => 'Return to project page',
-	'return_to_project_talk' => 'Return to discussion',
-	'return_to_image' => 'Return to image page',
-	'return_to_image_talk' => 'Return to discussion',
-	'return_to_mediawiki' => 'Return to message page',
-	'return_to_mediawiki_talk' => 'Return to discussion',
-	'return_to_template' => 'Return to template page',
-	'return_to_template_talk' => 'Return to discussion',
-	'return_to_help' => 'Return to help page',
-	'return_to_help_talk' => 'Return to discussion',
-	'return_to_category' => 'Return to category page',
-	'return_to_category_talk' => 'Return to discussion',
-	'return_to_forum' => 'Return to forum page',
-	'return_to_forum_talk' => 'Return to discussion',
-	'return_to_special' => 'Return to special page',
-	'related_wiki' => 'Add bulleted links here to display wiki related to this one in the related wiki [[Special:Widgets|widget]].
-
-* [{{FULLURL:MediaWiki:Related wiki}} No related wiki have been selected yet.]',
+* [{{FULLURL:MediaWiki:Related wiki}} Bisher wurde kein ähnliches Wiki eingetragen.]',
 	'registerintro-title' => 'Sobald du bei Fandom ein Konto erstellt hast, bist du Teil der Community!',
-	'registerintro-text' => 'You get credit for all your contributions, and you can also create your own user profile, watchlist your favorite pages, and get access to all kinds of neat tools.',
-	'rcshowhidelogs' => '$1 logs',
+	'registerintro-text' => 'Alle deine Beiträge werden dir zugeordnet und du kannst dein eigenes Benutzerprofil erstellen, interessante Artikel beobachen und hast du Zugriff auf weitere nützliche Tools.',
+	'rcshowhidelogs' => 'Logbücher $1',
 ];
 
 $messages['de-ch'] = [
@@ -11353,7 +11334,7 @@ $messages['es'] = [
 	'redirectpagesub' => 'Página redirigida',
 	'retrievedfrom' => 'Obtenido de «$1»',
 	'restorelink' => '{{PLURAL:$1|una edición borrada|$1 ediciones borradas}}',
-	'red-link-title' => '$1 (la página no existe)',
+	'red-link-title' => '$1 (aún no está redactado)',
 	'readonly' => 'Base de datos bloqueada',
 	'readonlytext' => 'La base de datos no permite nuevas entradas u otras modificaciones de forma temporal, probablemente por mantenimiento rutinario, tras lo cual volverá a la normalidad.
 
@@ -11547,13 +11528,33 @@ No tiene acceso a él.',
 	'rightsnone' => '(ninguno)',
 	'recentchanges' => 'Cambios recientes',
 	'recentchanges-legend' => 'Opciones sobre cambios recientes',
-	'recentchangestext' => 'Realiza un seguimiento de los cambios más recientes en el wiki en esta página.',
+	'recentchangestext' => '<div style="border:solid 3px #e9e9e9; margin-bottom:0.3em; padding-left:0.5em; padding-right:0.5em;">
+<span style="float:right;font-size:smaller;">\'\'[[MediaWiki:Recentchangestext|Ver esta plantilla]]\'\'</span>
+Esta página especial te permite seguir los cambios más recientes en el wiki.
+
+{| class="plainlinks" style="background:transparent; margin-left:0.5em; margin-bottom:0.5em; text-align:left;" cellpadding="0" cellspacing="0"
+|-valign="top"
+|align="right"|\'\'\'Registros&nbsp;:&nbsp;\'\'\'
+|[[Special:Newpages|{{int:Newpages}}]] - [[Special:Newimages|Archivos nuevos]] - [[Special:Log/delete|Borrados]] - [[Special:Log/move|Traslados]] - [[Special:Log/upload|Subidas]] - [[Special:Log/block|Bloqueos]] - [[Special:Log|más registros...]]
+|-valign="top"
+|align="right"|\'\'\'Páginas especiales&nbsp;:&nbsp;\'\'\'
+|[[Special:Wantedpages|{{int:wantedpages}}]] - [[Special:Longpages|{{int:longpages}}]] - [[Special:Uncategorizedimages|{{int:uncategorizedimages}}]] - [[Special:Uncategorizedpages|{{int:uncategorizedpages}}]] - [[Special:Specialpages|más páginas especiales...]]
+|-valign="top"
+|align="right"|\'\'\'Buscar usuarios&nbsp;:&nbsp;\'\'\'
+|[[Special:Listusers/sysop|{{int:Group-sysop}}]] - [[Special:Listusers/helper|{{int:Group-helper}}]] - [[Special:Listusers/vstf|{{int:Group-vstf}}]] - [[Special:Listusers/staff|{{int:Group-staff}}]] - [[Special:Listusers|más usuarios...]]
+|-valign="top"
+|align="right"|\'\'\'Ayuda general&nbsp;:&nbsp;\'\'\'
+|[[Ayuda:Comenzando|Comenzando]] - [[Ayuda:Tutorial 1|Tutorial]] - [[Ayuda:Índice|Índice general]]
+|}
+<div style="font-size:0.9em; text-align:center; margin:2px auto 0px; border-top:1px dotted lightgrey;">
+[[w:c:es.c:special:chat|Chat de Wikia]]</div>
+</div>',
 	'recentchanges-feed-description' => 'Realiza un seguimiento de los cambios más recientes en el wiki en este canal.',
 	'recentchanges-label-newpage' => 'Esta edición creó una nueva página',
 	'recentchanges-label-minor' => 'Esta es una edición menor',
 	'recentchanges-label-bot' => 'Esta edición fue realizada por un robot',
 	'recentchanges-label-unpatrolled' => 'Esta edición todavía no se ha patrullado',
-	'rcnote' => 'Debajo {{PLURAL:$1|hay \'\'\'1\'\'\' cambio efectuado|están los últimos \'\'\'$1\'\'\' cambios efectuados}} en  {{PLURAL:$2|el último día|los últimos \'\'\'$2\'\'\' días}}, hasta el $4, $5.',
+	'rcnote' => 'Abajo {{PLURAL:$1|está \'\'\'1\'\'\' cambio realizado|están los últimos \'\'\'$1\'\'\' cambios realizados}} en {{PLURAL:$2|el último día|los últimos \'\'\'$2\'\'\' días}}, actualizados al $3',
 	'rcnotefrom' => 'A continuación se muestran los cambios desde <b>$2</b> (hasta <b>$1</b>).',
 	'rclistfrom' => 'Mostrar nuevos cambios desde $1',
 	'rcshowhideminor' => '$1 ediciones menores',
@@ -11588,13 +11589,13 @@ No tiene acceso a él.',
 	'rollback_short' => 'Revertir',
 	'rollbacklink' => 'revertir',
 	'rollbackfailed' => 'No se pudo revertir',
-	'revertpage' => 'Revertidos los cambios de [[Special:Contributions/$2|$2]] ([[User talk:$2|disc.]]) a la última edición de [[User:$1|$1]]',
+	'revertpage' => 'Revertidos los cambios de [[Special:Contributions/$2|$2]] ([[User talk:$2|disc]] | [[Special:Block/$2|bloquear]]) a la última edición de [[User:$1|$1]]',
 	'revertpage-nouser' => 'Revertidas ediciones hechas por (nombre de usuario eliminado) a la última revisión hecha por [[User:$1|$1]]',
 	'rollback-success' => 'Revertidas las ediciones de $1; recuperada la última versión de $2.',
 	'restriction-type' => 'Permiso:',
 	'restriction-level' => 'Nivel de restricción:',
 	'restriction-edit' => 'Editar',
-	'restriction-move' => 'Pueden trasladar',
+	'restriction-move' => 'Pueden renombrar',
 	'restriction-create' => 'Crear',
 	'restriction-upload' => 'Subir',
 	'restriction-level-sysop' => 'completamente protegida',
@@ -11627,7 +11628,7 @@ No tiene acceso a él.',
 	'right-mcachepurge' => 'Control memcached behaviour via request parameters',
 	'right-emailconfirmed' => 'User has been email confirmed',
 	'right-runjob' => 'Run job from the job queue via API',
-	'recentchanges-url' => 'Special:RecentChanges',
+	'recentchanges-url' => 'Especial:CambiosRecientes',
 	'rc-change-size' => '$1',
 	'rc-old-title' => 'originally created as "$1"',
 	'randompage-url' => 'Special:Random',
@@ -11639,62 +11640,46 @@ No tiene acceso a él.',
 	'revdelete-hid' => 'hid $1',
 	'revdelete-unhid' => 'unhid $1',
 	'revdelete-log-message' => '$1 for $2 {{PLURAL:$2|revision|revisions}}',
-	'reconfirmemail_subject' => 'Welcome to Wikia!',
-	'reconfirmemail_body' => 'Hi $2,
+	'reconfirmemail_subject' => 'Por favor, confirma de nuevo tu cuenta de Wikia',
+	'reconfirmemail_body' => 'Hola $2,
 
-Thank you for updating the email address associated with your Wikia account.
+Gracias por actualizar tu dirección de email en tu cuenta de Wikia Por favor, confirma que esta es la dirección de correo electrónico correcta haciendo clic en el siguiente enlace, solo te tomará un minuto: $3
 
-Before our system can send you any mail you have opted to receive, you
-must confirm your email address.
+¡Gracias!
+- Equipo comunitario de Wikia
 
-Click on the link below or paste it into your browser:
-
-$3
-
-Note: This confirmation link will expire in 7 days.
-
-
-With thousands of communities on Wikia, there are many ways to have fun
-here. Spend some time getting to know Wikia by visiting the home page
-(www.wikia.com), taking a tutorial at
-http://www.wikia.com/wiki/Help:Tutorial_1 , reading interesting and cool
-pages, writing content on your favorite subjects, or meeting other
-members of the community.
-
-We look forward to seeing you on Wikia!
-
-The Wikia Community Team
-www.wikia.com
-',
-	'rcshowhideenhanced' => '$1 enhanced recent changes',
-	'refreshpage' => 'Reload page to activate this widget',
-	'requestcreatewiki' => 'Submit Request',
+___________________________________________
+* Si necesitas ayuda o consejos, visita nuestra comunidad central http://comunidad.wikia.com
+* ¿Quieres dejar de recibir estos mensajes? Puedes darte de baja en el servicio de emails desde tus preferencias aquí: http://comunidad.wikia.com/Especial:Preferencias',
+	'rcshowhideenhanced' => '$1 cambios recientes realzados',
+	'refreshpage' => 'Recarga la página para activar este widget',
+	'requestcreatewiki' => 'Presentar Solicitud',
 	'right_now' => 'Right Now<br />people are...',
-	'return_to_article' => 'Return to page',
-	'return_to_talk' => 'Return to discussion',
-	'return_to_user' => 'Return to user page',
-	'return_to_user_talk' => 'Return to discussion',
-	'return_to_project' => 'Return to project page',
-	'return_to_project_talk' => 'Return to discussion',
-	'return_to_image' => 'Return to image page',
-	'return_to_image_talk' => 'Return to discussion',
-	'return_to_mediawiki' => 'Return to message page',
-	'return_to_mediawiki_talk' => 'Return to discussion',
-	'return_to_template' => 'Return to template page',
-	'return_to_template_talk' => 'Return to discussion',
-	'return_to_help' => 'Return to help page',
-	'return_to_help_talk' => 'Return to discussion',
-	'return_to_category' => 'Return to category page',
-	'return_to_category_talk' => 'Return to discussion',
-	'return_to_forum' => 'Return to forum page',
-	'return_to_forum_talk' => 'Return to discussion',
-	'return_to_special' => 'Return to special page',
+	'return_to_article' => 'Volver al artículo',
+	'return_to_talk' => 'Volver a la página de discusión',
+	'return_to_user' => 'Volver a la página de usuario',
+	'return_to_user_talk' => 'Volver a la página de discusión',
+	'return_to_project' => 'Volver a la página del proyecto',
+	'return_to_project_talk' => 'Volver a la página de discusión',
+	'return_to_image' => 'Volver a la página de la imagen',
+	'return_to_image_talk' => 'Volver a la página de discusión',
+	'return_to_mediawiki' => 'Volver a la página del mensaje',
+	'return_to_mediawiki_talk' => 'Volver a la página de discusión',
+	'return_to_template' => 'Volver a la página del tema',
+	'return_to_template_talk' => 'Volver a la página de discusión',
+	'return_to_help' => 'Volver a la página de ayuda',
+	'return_to_help_talk' => 'Volver a la página de discusión',
+	'return_to_category' => 'Volver a la página de categoría',
+	'return_to_category_talk' => 'Volver a la página de discusión',
+	'return_to_forum' => 'Volver a la página del foro',
+	'return_to_forum_talk' => 'Volver a la página de discusión',
+	'return_to_special' => 'Volver a la página especial',
 	'related_wiki' => 'Add bulleted links here to display wiki related to this one in the related wiki [[Special:Widgets|widget]].
 
 * [{{FULLURL:MediaWiki:Related wiki}} No related wiki have been selected yet.]',
 	'registerintro-title' => '¡Cuando creas una cuenta en Fandom, te conviertes en parte de la comunidad!',
-	'registerintro-text' => 'You get credit for all your contributions, and you can also create your own user profile, watchlist your favorite pages, and get access to all kinds of neat tools.',
-	'rcshowhidelogs' => '$1 logs',
+	'registerintro-text' => 'Dale crédito a todas tus contribuciones, y también podrás crear tu propio perfil de usuario, lista de seguimiento con tus páginas favoritas y tendrás acceso a una gran variedad de herramientas continuamente actualizadas.',
+	'rcshowhidelogs' => '$1 registros',
 ];
 
 $messages['et'] = [
@@ -12582,13 +12567,13 @@ $1',
 	'rightsnone' => '(هیچ)',
 	'recentchanges' => 'تغییرات اخیر',
 	'recentchanges-legend' => 'گزینه‌های تغییرات اخیر',
-	'recentchangestext' => 'آخرین تغییرات ویکی را در این صفحه پی‌گیری کنید.',
+	'recentchangestext' => '<div id="wikia-mediawiki-recentchangestext" style="border:2px solid #e9e9e9; margin-bottom:0.3em; padding:0.2em 0.5em;"><span style="float:right;">[[ویژه:صفحه‌های تازه|صفحه‌های تازه]] – [[ویژه:تصاویر جدید|تصاویر جدید]] – [[ویژه:سیاهه‌ها|سیاهه‌ها]]</span><span style="float:left;">[[راهنما:Recent changes|راهنما:تغییرات اخیر]]</span><div style="clear:both;"></div></div>',
 	'recentchanges-feed-description' => 'آخرین تغییرات ویکی را در این خوراک پی‌گیری کنید.',
 	'recentchanges-label-newpage' => 'این ویرایش صفحه‌ای جدید ایجاد کرد',
 	'recentchanges-label-minor' => 'این ویرایش جزئی‌است',
 	'recentchanges-label-bot' => 'این ویرایش را یک ربات انجام داده‌است',
 	'recentchanges-label-unpatrolled' => 'این ویرایش هنوز گشت‌زنی نشده‌است',
-	'rcnote' => 'در زیر {{PLURAL:$1|\'\'\'۱\'\'\' تغییر|آخرین \'\'\'$1\'\'\' تغییر}} در آخرین {{PLURAL:$2|روز|\'\'\'$2\'\'\' روز}} را، تا $4 ساعت $5 می‌بینید.',
+	'rcnote' => '<div style="margin-top: -20px;" class="emptymwmsg mediawiki_rcnote"></div>',
 	'rcnotefrom' => 'در زیر تغییرات از تاریخ <b>$2</b> آمده‌اند (تا <b>$1</b> مورد نشان داده می‌شود).',
 	'rclistfrom' => 'نمایش تغییرات جدید با شروع از $1',
 	'rcshowhideminor' => '$1 ویرایش‌های جزئی',
@@ -12651,6 +12636,9 @@ $1',
 	'revdelete-uname-unhid' => 'نام کاربری را پنهان کرد',
 	'revdelete-restricted' => 'مدیران را محدود کرد',
 	'revdelete-unrestricted' => 'محدودیت مدیران را لغو کرد',
+	'randompage-url' => 'ویژه:صفحه_تصادفی',
+	'rcshowhideenhanced' => '$1 تغییرات اخیر گسترش‌یافته',
+	'recentchanges-url' => 'ویژه:تغییرات_اخیر',
 ];
 
 $messages['ff'] = [
@@ -12851,7 +12839,7 @@ Sinulla ei ole oikeutta siihen.',
 	'rightsnone' => '(ei oikeuksia)',
 	'recentchanges' => 'Tuoreet muutokset',
 	'recentchanges-legend' => 'Tuoreiden muutosten asetukset',
-	'recentchangestext' => 'Tällä sivulla voi seurata tuoreita {{GRAMMAR:illative|{{SITENAME}}}} tehtyjä muutoksia.',
+	'recentchangestext' => '<div id="wikia-mediawiki-recentchangestext" style="border:2px solid #e9e9e9; margin-bottom:0.3em; padding:0.2em 0.5em;"><span style="float:left;">[[Special:NewPages|Uudet sivut]] – [[Special:NewImages|Uudet tiedostot]] – [[Special:Log|Lokit]]</span><span style="float:right;">[[:w:c:fi:Ohje:Tuoreet muutokset|Ohje:Tuoreet muutokset]]</span><div style="clear:both;"></div></div>',
 	'recentchanges-feed-description' => 'Tällä sivulla voi seurata tuoreita {{GRAMMAR:illative|{{SITENAME}}}} tehtyjä muutoksia.',
 	'recentchanges-label-newpage' => 'Tämä muutos loi uuden sivun',
 	'recentchanges-label-minor' => 'Tämä on pieni muutos',
@@ -12925,6 +12913,31 @@ Sinulla ei ole oikeutta siihen.',
 	'review_reason_4' => 'Arvostelun syy 4',
 	'review_reason_5' => 'Arvostelun syy 5',
 	'registerintro-title' => 'Kun luot Wikia käyttäjän, sinusta tulee osa yhteisöä!',
+	'refreshpage' => 'Lataa sivu uudestaan aktivoidaksesi tämän vekottimen',
+	'registerintro-text' => 'Saat kunniaa kaikista artikkeleistasi, ja voit myös tehdä oman käyttäjä sivun, tarkkailulistan lempisivuistasi, ja pääset kaikenlaisiin hienoihin työkaluihin käsiksi.',
+	'related_wiki' => 'Lisää asteriskein linkkejä tähän näyttääksesi aiheeseen liittyviä wikejä [[Special:Widgets|samankaltaiset wikit-vekottimessa]].
+
+* [{{FULLURL:MediaWiki:Related wiki}} Aiheeseen liittyviä wikejä ei ole valittu.]',
+	'return_to_article' => 'Palaa artikkeliin',
+	'return_to_category' => 'Palaa luokkasivulle',
+	'return_to_category_talk' => 'Palaa keskusteluun',
+	'return_to_forum' => 'Palaa foorumisivulle',
+	'return_to_forum_talk' => 'Palaa keskusteluun',
+	'return_to_help' => 'Palaa ohjesivulle',
+	'return_to_help_talk' => 'Palaa keskusteluun',
+	'return_to_image' => 'Palaa kuvan kuvaussivulle',
+	'return_to_image_talk' => 'Palaa keskusteluun',
+	'return_to_mediawiki' => 'Palaa järjestelmäviestin sivulle',
+	'return_to_mediawiki_talk' => 'Palaa keskusteluun',
+	'return_to_project' => 'Palaa projektisivulle',
+	'return_to_project_talk' => 'Palaa keskusteluun',
+	'return_to_special' => 'Palaa toimintosivulle',
+	'return_to_talk' => 'Palaa keskusteluun',
+	'return_to_template' => 'Palaa mallineen sivulle',
+	'return_to_template_talk' => 'Palaa keskusteluun',
+	'return_to_user' => 'Palaa käyttäjäsivulle',
+	'return_to_user_talk' => 'Palaa keskusteluun',
+	'right_now' => 'Juuri nyt<br />ihmiset ovat...',
 ];
 
 $messages['fiu-vro'] = [
@@ -13383,9 +13396,9 @@ $messages['fr'] = [
 
 L’administrateur ayant verrouillé la base de données a fourni l’explication suivante :<br />$1',
 	'readonly_lag' => 'La base de données a été automatiquement verrouillée pendant que les serveurs secondaires rattrapent leur retard sur le serveur principal.',
-	'remembermypassword' => 'Me reconnecter automatiquement aux prochaines visites avec ce navigateur (au maximum $1 {{PLURAL:$1|jour|jours}})',
+	'remembermypassword' => 'Me reconnecter automatiquement aux prochaines visites',
 	'resetpass' => 'Changer de mot de passe',
-	'resetpass_announce' => 'Vous vous êtes enregistré{{GENDER:||e|(e)}} avec un mot de passe temporaire envoyé par courriel. Pour terminer l’enregistrement, vous devez entrer un nouveau mot de passe ici :',
+	'resetpass_announce' => 'Vous vous êtes enregistré{{GENDER:||e|(e)}} avec un mot de passe temporaire envoyé par e-mail. Pour terminer l’enregistrement, vous devez saisir un nouveau mot de passe ici :',
 	'resetpass_text' => '<!-- Ajoutez le texte ici -->',
 	'resetpass_header' => 'Changer le mot de passe du compte',
 	'retypenew' => 'Confirmer le nouveau mot de passe :',
@@ -13407,10 +13420,10 @@ L’administrateur ayant verrouillé la base de données a donné l’explicatio
 Assurez-vous qu’il est pertinent de poursuivre les modifications sur cette page. Le journal des suppressions et des déplacements est affiché ci-dessous :',
 	'revisionasof' => 'Version du $1',
 	'revision-info' => 'Version du $1 par $2',
-	'rev-deleted-comment' => '(résumé d\'édition enlevé)',
-	'rev-deleted-user' => '(nom d’utilisateur supprimé)',
-	'rev-deleted-event' => '(entrée supprimée)',
-	'rev-deleted-user-contribs' => '[nom d’utilisateur ou adresse IP supprimée - modification cachée sur les contributions]',
+	'rev-deleted-comment' => '(résumé de modification retiré)',
+	'rev-deleted-user' => '(nom d’utilisateur retiré)',
+	'rev-deleted-event' => '(entrée retirée)',
+	'rev-deleted-user-contribs' => '[nom d’utilisateur ou adresse IP retiré - modification masquée sur les contributions]',
 	'rev-deleted-text-permission' => 'Cette version de la page a été \'\'\'effacée\'\'\'.
 Des détails sont disponibles dans le [{{fullurl:{{#Special:Log}}/delete|page={{FULLPAGENAMEE}}}} journal des effacements].',
 	'rev-deleted-text-unhide' => 'Cette version de la page a été \'\'\'effacée\'\'\'.
@@ -13465,7 +13478,7 @@ Les autres administrateurs de {{SITENAME}} pourront toujours accéder au contenu
 	'revdelete-radio-same' => '(ne pas changer)',
 	'revdelete-radio-set' => 'Oui',
 	'revdelete-radio-unset' => 'Non',
-	'revdelete-suppress' => 'Cacher les données également pour les administrateurs',
+	'revdelete-suppress' => 'Masquer également les données pour les administrateurs',
 	'revdelete-unsuppress' => 'Enlever les restrictions sur les versions restaurées',
 	'revdelete-log' => 'Motif :',
 	'revdelete-submit' => 'Appliquer {{PLURAL:$1|à la révision sélectionnée|aux révisions sélectionnées}}',
@@ -13534,7 +13547,7 @@ Vérifiez les journaux.',
 	'right-suppressrevision' => 'Examiner et restaurer les versions masquées aux administrateurs',
 	'right-suppressionlog' => 'Voir les journaux privés',
 	'right-block' => 'Bloquer en écriture d’autres utilisateurs',
-	'right-blockemail' => 'Empêcher un utilisateur d’envoyer des courriels',
+	'right-blockemail' => 'Empêcher un utilisateur d’envoyer des e-mails',
 	'right-hideuser' => 'Bloquer un utilisateur en masquant son nom au public',
 	'right-ipblock-exempt' => 'Ne pas être affecté par les IP bloquées, les blocages automatiques et les blocages de plages d’IP',
 	'right-proxyunbannable' => 'Ne pas être affecté par les blocages automatiques de serveurs mandataires',
@@ -13559,8 +13572,8 @@ Vérifiez les journaux.',
 	'right-userrights-interwiki' => 'Modifier les droits d’utilisateurs qui sont sur un autre wiki',
 	'right-siteadmin' => 'Verrouiller ou déverrouiller la base de données',
 	'right-override-export-depth' => 'Exporter les pages en incluant les pages liées jusqu’à une profondeur de 5 niveaux',
-	'right-sendemail' => 'Envoyer un courriel aux autres utilisateurs',
-	'right-passwordreset' => 'Voir les courriels de réinitialisation des mots de passe',
+	'right-sendemail' => 'Envoyer un e-mail aux autres utilisateurs',
+	'right-passwordreset' => 'Voir les e-mails de réinitialisation des mots de passe',
 	'rightslog' => 'Journal des modifications de droits d’utilisateurs',
 	'rightslogtext' => 'Voici l’historique des modifications des droits des utilisateurs.',
 	'rightslogentry' => 'a modifié les droits de l’utilisateur « $1 » de $2 à $3',
@@ -13568,7 +13581,7 @@ Vérifiez les journaux.',
 	'rightsnone' => '(aucun)',
 	'recentchanges' => 'Modifications récentes',
 	'recentchanges-legend' => 'Options des modifications récentes',
-	'recentchangestext' => 'Piste les changements les plus récents du wiki sur cette page.',
+	'recentchangestext' => '<div id="wikia-mediawiki-recentchangestext" style="border:2px solid #e9e9e9; margin-bottom:0.3em; padding:0.2em 0.5em;"><span style="float:left;">[[Special:NewPages|Nouvelles pages]] – [[Special:NewImages|Nouveaux fichiers]] – [[Special:Log|Journaux]] – [[Special:Statistics|Statistiques]]</span><span style="float:right;">[[w:c:communaute:Aide:Modifications récentes|Aide:Modifications récentes]]</span><div style="clear:both;"></div></div>',
 	'recentchanges-feed-description' => 'Suivre les dernières modifications de ce wiki dans un flux.',
 	'recentchanges-label-newpage' => 'Cette modification a créé une nouvelle page',
 	'recentchanges-label-minor' => 'Cette modification est mineure',
@@ -13628,12 +13641,12 @@ rétablissement de la dernière version par $2.',
 	'rcpatroldisabled' => 'La fonction de relecture des modifications récentes n’est pas activée.',
 	'rcpatroldisabledtext' => 'La fonctionnalité de relecture des modifications récentes est actuellement désactivée.',
 	'recreate' => 'Recréer',
-	'revdelete-content-hid' => 'contenu caché',
-	'revdelete-summary-hid' => 'modifier le résumé caché',
-	'revdelete-uname-hid' => 'nom d\'utilisateur caché',
-	'revdelete-content-unhid' => 'contenu démasqué',
-	'revdelete-summary-unhid' => 'modifier le résumé démasqué',
-	'revdelete-uname-unhid' => 'nom d\'utilisateur démasqué',
+	'revdelete-content-hid' => 'contenu masqué',
+	'revdelete-summary-hid' => 'résumé de modification masqué',
+	'revdelete-uname-hid' => 'nom d’utilisateur masqué',
+	'revdelete-content-unhid' => 'contenu affiché',
+	'revdelete-summary-unhid' => 'résumé de modification affiché',
+	'revdelete-uname-unhid' => 'nom d’utilisateur affiché',
 	'revdelete-restricted' => 'a appliqué les restrictions aux administrateurs',
 	'revdelete-unrestricted' => 'restrictions retirées pour les administrateurs',
 	'rate_it' => 'Notez-le:',
@@ -13654,13 +13667,13 @@ rétablissement de la dernière version par $2.',
 	'rc-old-title' => 'originally created as "$1"',
 	'randompage-url' => 'Special:Random',
 	'rfcurl' => '//tools.ietf.org/html/rfc$1',
-	'revdelete-logentry' => 'changed revision visibility of "[[$1]]"',
-	'revdelete-content' => 'content',
-	'revdelete-summary' => 'edit summary',
-	'revdelete-uname' => 'username',
-	'revdelete-hid' => 'hid $1',
-	'revdelete-unhid' => 'unhid $1',
-	'revdelete-log-message' => '$1 for $2 {{PLURAL:$2|revision|revisions}}',
+	'revdelete-logentry' => 'a modifié la visibilité de la révision de « [[$1]] »',
+	'revdelete-content' => 'contenu',
+	'revdelete-summary' => 'résumé de modification',
+	'revdelete-uname' => 'nom d’utilisateur',
+	'revdelete-hid' => 'a masqué $1',
+	'revdelete-unhid' => 'a révélé $1',
+	'revdelete-log-message' => '$1 pour $2 version{{PLURAL:$2||s}}',
 	'reconfirmemail_subject' => 'Welcome to Wikia!',
 	'reconfirmemail_body' => 'Hi $2,
 
@@ -13688,7 +13701,7 @@ We look forward to seeing you on Wikia!
 The Wikia Community Team
 www.wikia.com
 ',
-	'rcshowhideenhanced' => '$1 enhanced recent changes',
+	'rcshowhideenhanced' => '$1 les modifications récentes organisées',
 	'refreshpage' => 'Reload page to activate this widget',
 	'requestcreatewiki' => 'Submit Request',
 	'right_now' => 'Right Now<br />people are...',
@@ -13715,8 +13728,8 @@ www.wikia.com
 
 * [{{FULLURL:MediaWiki:Related wiki}} No related wiki have been selected yet.]',
 	'registerintro-title' => 'Lorsque vous créez un compte sur Fandom, vous devenez membre de la communauté !',
-	'registerintro-text' => 'You get credit for all your contributions, and you can also create your own user profile, watchlist your favorite pages, and get access to all kinds of neat tools.',
-	'rcshowhidelogs' => '$1 logs',
+	'registerintro-text' => 'Vous comptabilisez toutes vos contributions et vous pouvez créer votre propre profil utilisateur, liste de suivi de vos pages favorites et avoir accès à toute sorte d\'outils sympas. Vos contributions sont davantage prises au sérieux.',
+	'rcshowhidelogs' => '$1 les journaux',
 ];
 
 $messages['frc'] = [
@@ -13774,6 +13787,23 @@ Des autres administrateurs sus ce wiki ont la permission de voir et de rétablir
 	'recentchanges' => 'Changements récent',
 	'rcshowhidepatr' => '$1 les modifications patrouillés',
 	'randompage' => 'Page au hasard',
+	'recentchangestext' => '<span style="float:right;"><small>\'\'[[MediaWiki:Recentchangestext|Regarder ce modèle]]\'\'</small></span>
+Trouvez les changements les plus récents du wiki sur cette page.
+
+{| class="plainlinks" style="background: transparent; margin-left:0.5em; margin-bottom:0.5em;" cellpadding="0" cellspacing="0"
+|-valign="top"
+|align="right"|\'\'\'Opérations&nbsp;:&nbsp;\'\'\'
+|align="left" |[[Special:Newpages|Nouvelles pages]] - [[Special:Newimages|Nouveaux fichiers]] - [[Special:Log/delete|Suppressions]] - [[Special:Log/move|Déplacements]] - [[Special:Log/upload|Importations]] - [[Special:Log/block|Blocages]] - [[Special:Log|plus des logs...]]
+|-valign="top"
+|align="right"|\'\'\'Pages speciales&nbsp;:&nbsp;\'\'\'
+|align="left" |[[Special:Wantedpages|Pages les plus demandées]] - [[Special:Longpages|Pages longues]] - [[Special:Uncategorizedimages|Images sans catégorie]] - [[Special:Uncategorizedpages|Pages sans catégorie]] - [[Special:Specialpages|toutes les pages spéciales...]]
+|-valign="top"
+|align="right"|\'\'\'Trouver des utilisateurs&nbsp;:&nbsp;\'\'\'
+|align="left" |[[Special:Listusers/sysop|Administrateurs]] - [[Special:Listusers/helper|Helpers]] - [[Special:Listusers/staff|Wikia Staff]] - [[Special:Listusers|Plus des utilisateurs...]]
+|-valign="top"
+|align="right"|\'\'\'Autres&nbsp;:&nbsp;\'\'\'
+|align="left" |[[Special:Statistics|Statistiques]] - [http://irc.wikia.com/ Canaux d\'IRC]
+|}',
 ];
 
 $messages['frp'] = [
@@ -20050,7 +20080,7 @@ $messages['it'] = [
 
 L\'amministratore di sistema che ha imposto il blocco ha fornito questa spiegazione: $1',
 	'readonly_lag' => 'Il database è stato bloccato automaticamente per consentire ai server con i database slave di sincronizzarsi con il master',
-	'remembermypassword' => 'Ricorda la password su questo computer (per un massimo di $1 {{PLURAL:$1|giorno|giorni}})',
+	'remembermypassword' => 'Ricorda la password su questo computer',
 	'resetpass' => 'Cambia la password',
 	'resetpass_announce' => 'L\'accesso è stato effettuato con un codice temporaneo, inviato via e-mail. Per completare l\'accesso è necessario impostare una nuova password:',
 	'resetpass_text' => '<!-- Aggiungere il testo qui -->',
@@ -20308,7 +20338,7 @@ Le pagine contenute nella propria lista degli [[Special:Watchlist|Osservati spec
 	'recentchanges-url' => 'Special:RecentChanges',
 	'rc-change-size' => '$1',
 	'rc-old-title' => 'originally created as "$1"',
-	'randompage-url' => 'Special:Random',
+	'randompage-url' => 'Speciale:PaginaCasuale',
 	'rfcurl' => '//tools.ietf.org/html/rfc$1',
 	'revdelete-logentry' => 'changed revision visibility of "[[$1]]"',
 	'revdelete-content' => 'content',
@@ -20377,7 +20407,7 @@ www.wikia.com
 
 * [{{FULLURL:MediaWiki:Related wiki}} No related wiki have been selected yet.]',
 	'registerintro-title' => 'Quando crei un account su Fandom, diventi parte della comunità!',
-	'registerintro-text' => 'You get credit for all your contributions, and you can also create your own user profile, watchlist your favorite pages, and get access to all kinds of neat tools.',
+	'registerintro-text' => 'Ricevi il riconoscimento per tutte le tue collaborazioni, crea il tuo profilo utente personale, segui gli sviluppi delle tue pagine preferite e utilizza tutti i pratici strumenti disponibili.',
 	'rcshowhidelogs' => '$1 logs',
 ];
 
@@ -20743,7 +20773,7 @@ $messages['ja'] = [
 	'revdelete-radio-set' => 'はい',
 	'revdelete-radio-unset' => 'いいえ',
 	'revdelete-suppress' => '他の利用者と同様に管理者からもデータを隠す',
-	'revdelete-unsuppress' => '復元版に対する制限を除去',
+	'revdelete-unsuppress' => '復元されたリビジョンに対する制限を解除',
 	'revdelete-log' => '理由：',
 	'revdelete-submit' => '選択した{{PLURAL:$1|版}}に適用',
 	'revdelete-success' => '\'\'\'版の閲覧レベルを更新しました。\'\'\'',
@@ -20789,8 +20819,8 @@ $1',
 	'recentchangescount' => '既定で表示する件数：',
 	'right-read' => 'ページの閲覧',
 	'right-edit' => 'ページの編集',
-	'right-createpage' => '（議論ページでない）ページの作成',
-	'right-createtalk' => '議論ページの作成',
+	'right-createpage' => '(トークページ以外の) ページの作成',
+	'right-createtalk' => 'トークページの作成',
 	'right-createaccount' => '新しい利用者アカウントの作成',
 	'right-minoredit' => '細部の編集の印づけ',
 	'right-move' => 'ページの移動',
@@ -20806,7 +20836,7 @@ $1',
 	'right-purge' => '確認を省略してサイトのキャッシュを破棄',
 	'right-autoconfirmed' => '半保護されたページの編集',
 	'right-bot' => '自動処理として認識',
-	'right-nominornewtalk' => '議論ページへ細部の編集をしたときに、新しいメッセージのお知らせを表示しない',
+	'right-nominornewtalk' => '会話ページへ細部の編集が行われた際の「新しいメッセージのお知らせ」の非表示',
 	'right-apihighlimits' => 'API要求でより高い制限値の使用',
 	'right-writeapi' => '書き込みAPIの使用',
 	'right-delete' => 'ページの削除',
@@ -20846,20 +20876,20 @@ $1',
 	'right-override-export-depth' => 'リンク先ページを5階層まで含めて書き出す',
 	'right-sendemail' => '他の利用者へ電子メールを送る',
 	'right-passwordreset' => 'パスワード再設定メールを閲覧する',
-	'rightslog' => '利用者権限変更記録',
+	'rightslog' => 'ユーザー権限変更記録',
 	'rightslogtext' => '以下は利用者権限の変更記録です。',
 	'rightslogentry' => '$1の所属グループを$2から$3へ変更しました',
 	'rightslogentry-autopromote' => '$2 から $3 に自動的に昇格',
 	'rightsnone' => '（なし）',
 	'recentchanges' => '最近の更新',
 	'recentchanges-legend' => '最近の更新のオプション',
-	'recentchangestext' => 'このウィキにおける最近の更新はこのページから確認できます。',
+	'recentchangestext' => '<div id="wikia-mediawiki-recentchangestext" style="border:2px solid #e9e9e9; margin-bottom:0.3em; padding:0.2em 0.5em;"><span style="float:left;">[[Special:NewPages|新しいページ]] – [[Special:NewImages|新着ファイル]] – [[Special:Log|ログ]] – [[Special:Insights|インサイト]]</span><span style="float:right;">[[ヘルプ:最近の更新]]</span><div style="clear:both;"></div></div>',
 	'recentchanges-feed-description' => 'このフィードでそのウィキへの最近の更新を追跡。',
 	'recentchanges-label-newpage' => 'この編集で新しいページが作成されました',
 	'recentchanges-label-minor' => 'これは細部の編集です',
 	'recentchanges-label-bot' => 'この編集はボットによって行われました',
 	'recentchanges-label-unpatrolled' => 'この編集はまだ巡回されていません',
-	'rcnote' => '$4 $5までの{{PLURAL:$2|\'\'\'1\'\'\'日|\'\'\'$2\'\'\'日間}}になされた\'\'\'$1\'\'\'件の変更は以下のとおりです。',
+	'rcnote' => '以下は $3 までの <strong>$2</strong> 日間に編集された <strong>$1</strong> ページです（<strong>{{int:newpageletter}}</strong>=新規項目、<strong>{{int:minoreditletter}}</strong>=細部の編集、<strong>{{int:boteditletter}}</strong>=ボットの編集、日時はオプションで未設定ならUTC）',
 	'rcnotefrom' => '以下は、\'\'\'$2\'\'\'以降の更新です（最大\'\'\'$1\'\'\'件）。',
 	'rclistfrom' => '$1以降の更新を表示する',
 	'rcshowhideminor' => '細部の編集を$1',
@@ -20961,41 +20991,26 @@ $2による最後の版へ変更されました。',
 	'randompage-url' => 'Special:Random',
 	'rfcurl' => '//tools.ietf.org/html/rfc$1',
 	'revdelete-logentry' => 'changed revision visibility of "[[$1]]"',
-	'reconfirmemail_subject' => 'Welcome to Wikia!',
-	'reconfirmemail_body' => 'Hi $2,
+	'reconfirmemail_subject' => 'ウィキアへようこそ！',
+	'reconfirmemail_body' => 'こんにちは $2 さん
 
-Thank you for updating the email address associated with your Wikia account.
+ウィキア・アカウントの電子メールアドレスの更新ありがとうございます。お手数ですがこちらをクリックして電子メールアドレスの確認をお願いします: $3
 
-Before our system can send you any mail you have opted to receive, you
-must confirm your email address.
+ありがとうございます！
 
-Click on the link below or paste it into your browser:
+- ウィキア・コミュニティ・サポート
 
-$3
-
-Note: This confirmation link will expire in 7 days.
-
-
-With thousands of communities on Wikia, there are many ways to have fun
-here. Spend some time getting to know Wikia by visiting the home page
-(www.wikia.com), taking a tutorial at
-http://www.wikia.com/wiki/Help:Tutorial_1 , reading interesting and cool
-pages, writing content on your favorite subjects, or meeting other
-members of the community.
-
-We look forward to seeing you on Wikia!
-
-The Wikia Community Team
-www.wikia.com
-',
-	'rcshowhideenhanced' => '$1 enhanced recent changes',
-	'refreshpage' => 'Reload page to activate this widget',
+___________________________________________
+* コミュニティでヘルプとアドバイスを探す: http://ja.community.wikia.com
+* 私たちが送信するメッセージを減らしたいですか？ こちらで定期購読を中止するか電子メールの設定を変更することができます : http://ja.community.wikia.com/Special:Preferences',
+	'rcshowhideenhanced' => '拡張された最近更新したページを$1',
+	'refreshpage' => 'このウィジェットを有効にするにはページの再読み込みを行う必要があります。',
 	'related_wiki' => 'Add bulleted links here to display wiki related to this one in the related wiki [[Special:Widgets|widget]].
 
 * [{{FULLURL:MediaWiki:Related wiki}} No related wiki have been selected yet.]',
 	'registerintro-title' => 'Fandomでアカウントを作成すると、コミュニティの一員になります',
-	'registerintro-text' => 'You get credit for all your contributions, and you can also create your own user profile, watchlist your favorite pages, and get access to all kinds of neat tools.',
-	'rcshowhidelogs' => '$1 logs',
+	'registerintro-text' => 'あなたが行う全ての投稿にクレジットがつけられ、プロフィールの作成・気に入ったページのウォッチ・様々なツールの利用ができるようになります。',
+	'rcshowhidelogs' => 'ログを$1',
 ];
 
 $messages['jam'] = [
@@ -24092,9 +24107,9 @@ $1',
 	'recentchangeslinked-page' => '문서 이름:',
 	'recentchangeslinked-to' => '여기를 가리키는 문서의 최근 바뀜',
 	'reuploaddesc' => '올리기를 취소하고 올리기 양식으로 돌아가기',
-	'randompage' => '임의 문서로',
+	'randompage' => '임의 문서 보기',
 	'randompage-nopages' => '{{PLURAL:$2|다음}} 이름공간에는 문서가 없습니다: $1',
-	'randomredirect' => '임의 넘겨주기 문서로',
+	'randomredirect' => '임의 넘겨주기 문서 보기',
 	'randomredirect-nopages' => '"$1" 이름공간에서 해당하는 넘겨주기 문서가 없습니다.',
 	'removewatch' => '주시문서 목록에서 제거',
 	'removedwatchtext' => '"[[:$1]]" 문서를 [[Special:Watchlist|주시문서 목록]]에서 뺐습니다.',
@@ -24130,6 +24145,41 @@ $1',
 	'revdelete-restricted' => '관리자에게 제한을 적용함',
 	'revdelete-unrestricted' => '관리자에 대한 제한을 해제함',
 	'registerintro-title' => '위키아에서 계정을 만드시면, 당신도 공동체의 일원이 됩니다!',
+	'rate_it' => '별점 주기:',
+	'rcshowhideenhanced' => '확장된 최근 바뀜 기능을 $1',
+	'rcshowhidelogs' => '기록을 $1',
+	'reconfirmemail_body' => '안녕하세요, $2 님.
+
+방금 막 귀하의 위키아 이메일 주소를 변경하신 것을 확인했습니다. 이 이메일 주소가 맞다면 다음 링크를 클릭해 인증해 주세요: $3
+
+감사합니다!
+
+- 위키아 커뮤니티 지원팀
+
+___________________________________________
+* 위키아 중앙 커뮤니티에서 도움을 구하실 수 있습니다: http://ko.community.wikia.com
+* 알림을 받고 싶지 않으신가요? 이곳에서 알림 설정을 변경하실 수 있습니다: http://ko.community.wikia.com/특수기능:환경설정',
+	'reconfirmemail_subject' => '위키아 계정을 다시 인증해 주세요',
+	'registerintro-text' => '당신의 기여를 쌓을 수 있으며, 프로필을 만드시거나, 관심 있는 문서를 주시하거나, 멋진 문서 도구들과 함께하실 수 있습니다',
+	'return_to_article' => '문서로 돌아가기',
+	'return_to_category' => '분류로 돌아가기',
+	'return_to_category_talk' => '토론 문서로 돌아가기',
+	'return_to_forum' => '포럼 문서로 돌아가기',
+	'return_to_forum_talk' => '토론 문서로 돌아가기',
+	'return_to_help' => '도움말 문서로 돌아가기',
+	'return_to_help_talk' => '토론 문서로 돌아가기',
+	'return_to_image' => '파일로 돌아가기',
+	'return_to_image_talk' => '토론 문서로 돌아가기',
+	'return_to_mediawiki' => '시스템 메시지로 돌아가기',
+	'return_to_mediawiki_talk' => '토론 문서로 돌아가기',
+	'return_to_project' => '프로젝트 문서로 돌아가기',
+	'return_to_project_talk' => '토론 문서로 돌아가기',
+	'return_to_special' => '특수 문서로 돌아가기',
+	'return_to_talk' => '토론 문서로 돌아가기',
+	'return_to_template' => '틀로 돌아가기',
+	'return_to_template_talk' => '토론 문서로 돌아가기',
+	'return_to_user' => '사용자 문서로 돌아가기',
+	'return_to_user_talk' => '토론 문서로 돌아가기',
 ];
 
 $messages['ko-kp'] = [
@@ -32110,29 +32160,29 @@ De beheerder heeft de volgende reden opgegeven: $1',
 	'readonly_lag' => 'De database is automatisch vergrendeld terwijl de ondergeschikte databaseservers synchroniseren met de hoofdserver.',
 	'remembermypassword' => 'Aanmeldgegevens onthouden (maximaal $1 {{PLURAL:$1|dag|dagen}})',
 	'resetpass' => 'Wachtwoord wijzigen',
-	'resetpass_announce' => 'U bent aangemeld met een tijdelijke code die u per e-mail is toegezonden.
+	'resetpass_announce' => 'Je bent aangemeld met een tijdelijke code die je per e-mail is toegezonden.
 Voer een nieuw wachtwoord in om het aanmelden te voltooien:',
 	'resetpass_text' => '<!-- Voeg hier tekst toe -->',
 	'resetpass_header' => 'Wachtwoord wijzigen',
 	'retypenew' => 'Herhaling nieuwe wachtwoord:',
 	'resetpass_submit' => 'Wachtwoord instellen en aanmelden',
-	'resetpass_success' => 'Uw wachtwoord is gewijzigd.
+	'resetpass_success' => 'Je wachtwoord is gewijzigd.
 Bezig met aanmelden…',
 	'resetpass_forbidden' => 'Wachtwoorden kunnen niet gewijzigd worden',
-	'resetpass-no-info' => 'U dient aangemeld zijn voordat u deze pagina kunt gebruiken.',
+	'resetpass-no-info' => 'Je dient aangemeld zijn voordat je deze pagina kunt gebruiken.',
 	'resetpass-submit-loggedin' => 'Wachtwoord wijzigen',
 	'resetpass-submit-cancel' => 'Annuleren',
 	'resetpass-wrong-oldpass' => 'Het huidige of tijdelijke wachtwoord is ongeldig.
-Mogelijk hebt u uw wachtwoord al gewijzigd of een nieuw tijdelijk wachtwoord aangevraagd.',
+Mogelijk heb je je wachtwoord al gewijzigd of een nieuw tijdelijk wachtwoord aangevraagd.',
 	'resetpass-temp-password' => 'Tijdelijk wachtwoord:',
-	'readonlywarning' => '\'\'\'Waarschuwing: de database is geblokkeerd voor bewerkingen, waarschijnlijk voor regulier databaseonderhoud, dus u kunt deze nu niet opslaan.\'\'\'
-Het is misschien verstandig om uw tekst tijdelijk in een tekstbestand op te slaan om dit te bewaren voor wanneer de blokkering van de database opgeheven is.
+	'readonlywarning' => '\'\'\'WAARSCHUWING: De database is geblokkeerd voor bewerkingen, waarschijnlijk voor regulier databaseonderhoud, dus je kunt deze nu niet opslaan.
+Het is misschien verstandig om je tekst tijdelijk in een tekstbestand op te slaan om dit te bewaren voor wanneer de blokkering van de database opgeheven is.\'\'\'
 
 Een beheerder heeft de database geblokkeerd om de volgende reden: $1',
-	'recreate-moveddeleted-warn' => '\'\'\'Waarschuwing: u bent bezig met het aanmaken van een pagina die in het verleden verwijderd is.\'\'\'
+	'recreate-moveddeleted-warn' => '\'\'\'Waarschuwing: je bent bezig met het aanmaken van een pagina die in het verleden verwijderd is.\'\'\'
 
-Overweeg of het terecht is dat u verder werkt aan deze pagina.
-Voor uw gemak staan hieronder het verwijderingslogboek en het hernoemingslogboek voor deze pagina:',
+Overweeg of het terecht is dat je verder werkt aan deze pagina.
+Voor je gemak staan hieronder het verwijderingslogboek en het hernoemingslogboek voor deze pagina:',
 	'revisionasof' => 'Versie van $2 om $3',
 	'revision-info' => 'Versie door $2 op $4 om $5',
 	'rev-deleted-comment' => '(bewerkingssamenvatting verwijderd)',
@@ -32141,45 +32191,47 @@ Voor uw gemak staan hieronder het verwijderingslogboek en het hernoemingslogboek
 	'rev-deleted-user-contribs' => '[gebruikersnaam of IP-adres verwijderd - bewerking verborgen in bijdragen]',
 	'rev-deleted-text-permission' => 'Deze bewerking is \'\'\'verwijderd\'\'\'.
 Er kunnen details aanwezig zijn in het [{{fullurl:{{#Special:Log}}/delete|page={{FULLPAGENAMEE}}}} verwijderingslogboek].',
-	'rev-deleted-text-unhide' => 'Deze paginaversie is \'\'\'verwijderd\'\'\'.
-Er kunnen details te vinden zijn in het [{{fullurl:{{#Special:Log}}/delete|page={{FULLPAGENAMEE}}}} verwijderingslogboek].
-Als u wilt kunt u [$1 deze versie bekijken].',
+	'rev-deleted-text-unhide' => 'Deze versie van de pagina is \'\'\'verwijderd\'\'\'.
+Achtergronden zijn mogelijk te vinden in het [{{fullurl:{{#Special:Log}}/delete|page={{FULLPAGENAMEE}}}} verwijderingslogboek].
+Als beheerder kun je  [$1 deze versie bekijken] als je wil.',
 	'rev-suppressed-text-unhide' => 'Deze paginaversie is \'\'\'onderdrukt\'\'\'.
-Er kunnen details te vinden zijn in het [{{fullurl:{{#Special:Log}}/suppress|page={{FULLPAGENAMEE}}}} logboek onderdrukte versies].
-Als u wilt kunt u [$1 deze versie bekijken].',
-	'rev-deleted-text-view' => 'Deze paginaversie is \'\'\'verwijderd\'\'\'.
-U kunt deze bekijken; er kunnen details te vinden zijn in het [{{fullurl:{{#Special:Log}}/delete|page={{FULLPAGENAMEE}}}} verwijderingslogboek].',
+Achtergronden zijn mogelijk te vinden in het [{{fullurl:{{#Special:Log}}/suppress|page={{FULLPAGENAMEE}}}} logboek onderdrukte versies].
+Als beheerder kun je [$1 de verschillen bekijken] als je wil.',
+	'rev-deleted-text-view' => 'Deze bewerking is \'\'\'verwijderd\'\'\'.
+Als beheerder kun je deze zien;
+er kunnen details aanwezig zijn in het [{{fullurl:{{#Special:Log}}/delete|page={{FULLPAGENAMEE}}}} verwijderingslogboek].',
 	'rev-suppressed-text-view' => 'Deze paginaversie is \'\'\'onderdrukt\'\'\'.
-U kunt deze bekijken; er kunnen details te vinden zijn in het [{{fullurl:{{#Special:Log}}/suppress|page={{FULLPAGENAMEE}}}} logboek onderdrukte versies].',
-	'rev-deleted-no-diff' => 'U kunt de verschillen niet bekijken, omdat een van de versies is \'\'\'verwijderd\'\'\'.
+Als beheerder kun je deze bekijken;
+achtergronden zijn mogelijk te vinden in het [{{fullurl:{{#Special:Log}}/suppress|page={{FULLPAGENAMEE}}}} logboek onderdrukte versies].',
+	'rev-deleted-no-diff' => 'Je kunt de verschillen niet bekijken, omdat een van de versies is \'\'\'verwijderd\'\'\'.
 Achtergronden zijn mogelijk te vinden in het [{{fullurl:{{#Special:Log}}/delete|page={{FULLPAGENAMEE}}}} verwijderingslogboek].',
-	'rev-suppressed-no-diff' => 'U kunt de verschillen niet bekijken, omdat een van de versies is \'\'\'verwijderd\'\'\'.',
-	'rev-deleted-unhide-diff' => 'Een van de bewerkingen voor de verschillen die u hebt opgevraagd is \'\'\'verwijderd\'\'\'.
-Er kunnen details te vinden zijn in het [{{fullurl:{{#Special:Log}}/delete|page={{FULLPAGENAMEE}}}} verwijderingslogboek].
-Als u wilt kunt u [$1 de verschillen bekijken].',
+	'rev-suppressed-no-diff' => 'Je kunt de verschillen niet bekijken, omdat een van de versies is \'\'\'verwijderd\'\'\'.',
+	'rev-deleted-unhide-diff' => 'Een van de bewerkingen voor de verschillen die je hebt opgevraagd is \'\'\'verwijderd\'\'\'.
+Achtergronden zijn mogelijk te vinden in het [{{fullurl:{{#Special:Log}}/delete|page={{FULLPAGENAMEE}}}} verwijderingslogboek].
+Als beheerder kun je [$1 de verschillen bekijken] als je wil.',
 	'rev-suppressed-unhide-diff' => 'Een van de versies in deze verschillen is \'\'\'onderdrukt\'\'\'.
-Er kunnen details te vinden zijn in het [{{fullurl:{{#Special:Log}}/suppress|page={{FULLPAGENAMEE}}}} verbergingslogboek].
-Als u wilt kunt u [$1 deze versie bekijken].',
-	'rev-deleted-diff-view' => 'Een van de versies voor de verschillen die u hebt opgevraagd, is \'\'\'verwijderd\'\'\'.
-U kunt deze verschillen bekijken. Er kunnen details te vinden zijn in het [{{fullurl:{{#Special:Log}}/delete|page={{FULLPAGENAMEE}}}} verwijderlogboek].',
-	'rev-suppressed-diff-view' => 'Een van de bewerkingen voor de verschillen die u hebt opgevraagd, is \'\'\'onderdrukt\'\'\'.
-U kunt deze verschillen bekijken. Er kunnen details te vinden zijn in het [{{fullurl:{{#Special:Log}}/suppress|page={{FULLPAGENAMEE}}}} verbergingslogboek].',
+Achtergronden zijn mogelijk te vinden in het [{{fullurl:{{#Special:Log}}/suppress|page={{FULLPAGENAMEE}}}} verbergingslogboek].
+Als beheerder kunt je [$1 deze versie bekijken] als je wil.',
+	'rev-deleted-diff-view' => 'Een van de bewerkingen voor de verschillen die je hebt opgevraagd, is \'\'\'verwijderd\'\'\'.
+Als beheerder kunt je deze verschillen bekijken. Mogelijk zijn details zichtbaar in het [{{fullurl:{{#Special:Log}}/delete|page={{FULLPAGENAMEE}}}} verwijderlogboek].',
+	'rev-suppressed-diff-view' => 'Een van de bewerkingen voor de verschillen die je hebt opgevraagd, is \'\'\'onderdrukt\'\'\'.
+Als beheerder kun je deze verschillen bekijken. Mogelijk zijn details zichtbaar in het [{{fullurl:{{#Special:Log}}/suppress|page={{FULLPAGENAMEE}}}} verbergingslogboek].',
 	'rev-delundel' => 'weergeven/verbergen',
 	'rev-showdeleted' => 'weergeven',
 	'revisiondelete' => 'Versies verwijderen of terugplaatsen',
 	'revdelete-nooldid-title' => 'Ongeldige doelversie',
-	'revdelete-nooldid-text' => 'U hebt geen doelversie(s) voor deze handeling opgegeven, de aangegeven versie bestaat niet of u probeert de laatste versie te verbergen.',
+	'revdelete-nooldid-text' => 'Je hebt geen doelversie(s) voor deze handeling opgegeven, de aangegeven versie bestaat niet of je probeert de laatste versie te verbergen.',
 	'revdelete-nologtype-title' => 'Er is geen logboektype opgegeven',
-	'revdelete-nologtype-text' => 'U hebt geen logboektype opgegeven om deze handeling op uit te voeren.',
+	'revdelete-nologtype-text' => 'Je hebt geen logboektype opgegeven om deze handeling op uit te voeren.',
 	'revdelete-nologid-title' => 'Ongeldige logboekregel',
-	'revdelete-nologid-text' => 'U hebt ofwel geen doellogboekregel opgegeven of de aangegeven logboekregel bestaat niet.',
+	'revdelete-nologid-text' => 'Je hebt ofwel geen doellogboekregel opgegeven of de aangegeven logboekregel bestaat niet.',
 	'revdelete-no-file' => 'Het aangegeven bestand bestaat niet.',
-	'revdelete-show-file-confirm' => 'Weet u zeker dat u de verwijderde versie van het bestand "<nowiki>$1</nowiki>" van $2 om $3 wilt bekijken?',
+	'revdelete-show-file-confirm' => 'Weet je zeker dat u de verwijderde versie van het bestand "<nowiki>$1</nowiki>" van $2 om $3 wilt bekijken?',
 	'revdelete-show-file-submit' => 'Ja',
 	'revdelete-selected' => '\'\'\'Geselecteerde {{PLURAL:$2|bewerking|bewerkingen}} van [[:$1]]:\'\'\'',
 	'revdelete-text' => '\'\'\'Verwijderde bewerkingen zijn zichtbaar in de geschiedenis en logboeken, maar delen van de inhoud zijn niet langer publiek toegankelijk.\'\'\'
 Andere beheerders van {{SITENAME}} kunnen de verborgen inhoud benaderen en de verwijdering ongedaan maken met behulp van dit formulier, tenzij er aanvullende beperkingen gelden die zijn ingesteld door de systeembeheerder.',
-	'revdelete-confirm' => 'Bevestig dat u dit wilde doen, dat u de consequenties begrijpt en dat u dit doet in overeenstemming met het geldende [[{{MediaWiki:Policy-url}}|beleid]].',
+	'revdelete-confirm' => 'Bevestig dat je dit wilde doen, dat je de consequenties begrijpt en dat je dit doet in overeenstemming met het geldende [[{{MediaWiki:Policy-url}}|beleid]].',
 	'revdelete-suppress-text' => 'Versies verbergen dient \'\'\'alleen\'\'\' gebruikt te worden in de volgende gevallen:
 * Ongepaste persoonlijke informatie
 *: \'\'woonadres, telefoonnummers, Burger Service Nummers, enzovoort.\'\'',
@@ -32206,14 +32258,14 @@ $1',
 	'revdelete-hide-current' => 'Er is een fout opgetreden bij het verbergen van het object van $1 om $2 uur: dit is de huidige versie.
 Deze versie kan niet verborgen worden.',
 	'revdelete-show-no-access' => 'Er is een fout opgetreden bij het weergeven van het object van $1 om $2 uur: dit object is gemarkeerd als "beschermd".
-U hebt geen toegang tot dit object.',
+Je hebt geen toegang tot dit object.',
 	'revdelete-modify-no-access' => 'Er is een fout opgetreden bij het wijzigen van het object van $1 om $2 uur: dit object is gemarkeerd als "beschermd".
-U hebt geen toegang tot dit object.',
+Je hebt geen toegang tot dit object.',
 	'revdelete-modify-missing' => 'Er is een fout opgetreden bij het wijzigen van versienummer $1: het komt niet voor in de database!',
 	'revdelete-no-change' => '\'\'\'Waarschuwing:\'\'\' het object van $1 om $2 uur had al de aangegeven zichtbaarheidsinstellingen.',
 	'revdelete-concurrent-change' => 'Er is een fout opgetreden bij het wijzigen van het object van $1 om $2 uur: de status is inmiddels gewijzigd door iemand anders.
 Controleer de logboeken.',
-	'revdelete-only-restricted' => 'Er is een fout opgetreden bij het verbergen van het item van $1, $2: u kunt geen items onderdrukken uit het zicht van beheerders zonder ook een van de andere zichtbaarheidsopties te selecteren.',
+	'revdelete-only-restricted' => 'Er is een fout opgetreden bij het verbergen van het item van $1, $2: je kunt geen items onderdrukken uit het zicht van beheerders zonder ook een van de andere zichtbaarheidsopties te selecteren.',
 	'revdelete-reason-dropdown' => '* Veel voorkomende redenen voor verwijderen
 ** Auteursrechtenschending
 ** Onbetamelijke persoonlijke gegevens
@@ -32323,7 +32375,7 @@ Controleer de logboeken.',
 	'recentchangeslinked-title' => 'Wijzigingen verwant aan "$1"',
 	'recentchangeslinked-noresult' => 'Er zijn in de opgegeven periode geen bewerkingen geweest op de pagina\'s waarheen vanaf hier verwezen wordt.',
 	'recentchangeslinked-summary' => 'Deze speciale pagina geeft de laatste bewerkingen weer op pagina\'s waarheen verwezen wordt vanaf een aangegeven pagina of vanuit pagina\'s in een aangegeven pagina een categorie.
-Pagina\'s die op [[Special:Watchlist|uw volglijst]] staan worden \'\'\'vet\'\'\' weergegeven.',
+Pagina\'s die op [[Special:Watchlist|je volglijst]] staan worden \'\'\'vet\'\'\' weergegeven.',
 	'recentchangeslinked-page' => 'Paginanaam:',
 	'recentchangeslinked-to' => 'Wijzigingen aan pagina\'s met verwijzingen naar deze pagina bekijken',
 	'reuploaddesc' => 'Upload annuleren en terugkeren naar het uploadformulier',
@@ -32332,7 +32384,7 @@ Pagina\'s die op [[Special:Watchlist|uw volglijst]] staan worden \'\'\'vet\'\'\'
 	'randomredirect' => 'Willekeurige doorverwijzing',
 	'randomredirect-nopages' => 'Er zijn geen doorverwijzingen in de naamruimte "$1".',
 	'removewatch' => 'Verwijderen uit volglijst',
-	'removedwatchtext' => 'De pagina "[[:$1]]" is van [[Special:Watchlist|uw volglijst]] verwijderd.',
+	'removedwatchtext' => 'De pagina "[[:$1]]" is van [[Special:Watchlist|je volglijst]] verwijderd.',
 	'reverted' => 'Eerdere versie hersteld',
 	'rollback' => 'Wijzigingen ongedaan maken',
 	'rollback_short' => 'Terugdraaien',
@@ -33032,6 +33084,57 @@ Sjekk gjerne loggføringa.',
 	'review_reason_4' => 'Anmeld grunn 4',
 	'review_reason_5' => 'Anmeld grunn 5',
 	'registerintro-title' => 'Når du oppretter en bruker hos Wikia blir du en del av fellesskapet!',
+	'rcshowhideenhanced' => '$1 utdypende siste endringer',
+	'rcshowhidelogs' => '$1 logger',
+	'reconfirmemail_body' => 'Hei $2,
+
+Takk for at du oppdaterte e-postadressen tilhørende din Wikia-bruker.
+
+Før systemet vårt kan sende deg e-post du har bedt om å motta, må du bekrefte e-postadressen.
+
+Trykk på lenken under eller lim den inn i nettleseren din:
+
+$3
+
+Merknad: Denne bekreftelseslenken vil utgå etter syv dager.
+
+Med tusen av fellesskap på Wikia, er det mange måter å ha det gøy på. 
+Bruk litt tid på å bli kjent med Wikia ved å besøke hjemmesiden 
+(www.wikia.com), og gå gjennom læringsprogrammet vårt på
+http://www.wikia.com/wiki/Help:Tutorial_1 , les interessante og 
+kule artikler, skriv om favorittemnene dine, eller møt andre
+medlemmer av fellesskapet. 
+
+Vi ser frem til å treffe deg på Wikia!
+
+The Wikia Community Teamet
+www.wikia.com',
+	'reconfirmemail_subject' => 'Velkommen til Wikia!',
+	'refreshpage' => 'Oppdater siden for å aktivere denne widgeten',
+	'registerintro-text' => 'Du får anerkjennelse for alle bidrag, og du kan også opprette en egen brukerprofil, overvåke yndlingssidene dine, og få tilgang til alle slags nyttige verktøy.',
+	'related_wiki' => 'Legg til oppslagslenker her for å vise wikier beslektet med denne i beslektede wikier [[Special:Widgets|widgeten]].
+
+* [{{FULLURL:MediaWiki:Related wiki}} Ingen beslektede wikier har blitt valgt ennå.]',
+	'requestcreatewiki' => 'Send forespørsel',
+	'return_to_article' => 'Tilbake til artikkel',
+	'return_to_category' => 'Tilbake til kategoriside',
+	'return_to_category_talk' => 'Tilbake til diskusjon',
+	'return_to_forum' => 'Tilbake til forumside',
+	'return_to_help' => 'Tilbake til hjelpside',
+	'return_to_help_talk' => 'Tilbake til diskusjon',
+	'return_to_image' => 'Tilbake til bildeside',
+	'return_to_image_talk' => 'Tilbake til diskusjon',
+	'return_to_mediawiki' => 'Tilbake til beskjedside',
+	'return_to_mediawiki_talk' => 'Tilbake til diskusjon',
+	'return_to_project' => 'Tilbake til prosjektside',
+	'return_to_project_talk' => 'Tilbake til diskusjon',
+	'return_to_special' => 'Tilbake til spesialside',
+	'return_to_talk' => 'Tilbake til diskusjon',
+	'return_to_template' => 'Tilbake til malside',
+	'return_to_template_talk' => 'Tilbake til diskusjon',
+	'return_to_user' => 'Tilbake til brukerside',
+	'return_to_user_talk' => 'Tilbake til diskusjon',
+	'right_now' => 'Akkurat nå<br />gjør folk...',
 ];
 
 $messages['nov'] = [
@@ -34233,7 +34336,7 @@ $messages['pl'] = [
 
 Administrator, który zablokował bazę, podał następujące wyjaśnienie: $1',
 	'readonly_lag' => 'Baza danych została automatycznie zablokowana na czas potrzebny do wykonania synchronizacji zmian między serwerem głównym i serwerami pośredniczącymi.',
-	'remembermypassword' => 'Zapamiętaj moje hasło na tym komputerze (maksymalnie przez $1 {{PLURAL:$1|dzień|dni}})',
+	'remembermypassword' => 'Zapamiętaj moje hasło na tym komputerze',
 	'resetpass' => 'Zmień hasło',
 	'resetpass_announce' => '{{GENDER:|Zalogowałeś|Zalogowałaś}} się, wykorzystując tymczasowe hasło otrzymane poprzez e‐mail.
 Aby zakończyć proces logowania, musisz ustawić nowe hasło:',
@@ -34303,7 +34406,7 @@ wybrana wersja nie istnieje lub próbowano ukryć wersję bieżącą.',
 	'revdelete-selected' => '\'\'\'{{PLURAL:$2|Zaznaczona wersja|Zaznaczone wersje}} strony [[:$1]]:\'\'\'',
 	'revdelete-text' => '\'\'\'Usunięte wersje i czynności będą nadal widoczne w historii strony i rejestrach, ale ich treść nie będzie publicznie dostępna.\'\'\'
 Inni administratorzy {{GRAMMAR:D.lp|{{SITENAME}}}} nadal będą mieć dostęp do ukrytych treści oraz będą mogli je odtworzyć używając standardowych mechanizmów, chyba że nałożono dodatkowe ograniczenia.',
-	'revdelete-confirm' => 'Potwierdzić, że chcesz to zrobić, rozumiesz konsekwencje oraz że robisz to zgodnie z [[{{MediaWiki:Policy-url}}|zasadami]].',
+	'revdelete-confirm' => 'Potwierdzić, że chcesz to zrobić, rozumiesz konsekwencje oraz że robisz to zgodnie z zasadami.',
 	'revdelete-suppress-text' => 'Ukrywanie powinno być używane \'\'\'wyłącznie\'\'\' w sytuacji:
 * Ujawnienie danych osobowych
 *: \'\'adres domowy, numer telefonu, numer PESEL itp\'\'',
@@ -34424,7 +34527,34 @@ Proszę sprawdzić rejestr operacji.',
 	'rightsnone' => 'brak',
 	'recentchanges' => 'Ostatnie zmiany',
 	'recentchanges-legend' => 'Opcje ostatnich zmian',
-	'recentchangestext' => 'Ta strona przedstawia historię ostatnich zmian w tej wiki.',
+	'recentchangestext' => '<div style="border: 3px solid rgba(127, 127, 127, .25);padding:.2em .5em;"><span style="float:right;font-size:smaller;">\'\'[[MediaWiki:Recentchangestext|zobacz tę stronę]]\'\'</span>
+Ta strona przedstawia historię ostatnich zmian na tej wiki.
+{| style="width:100%;"
+! style="width:1px;text-align:right;white-space:nowrap;vertical-align:text-top;" | Strony :
+| [[Special:NewPages|Nowe]] <b>&middot;</b> [[Special:WantedPages|Potrzebne]] <b>&middot;</b> [[Special:LonelyPages|Porzucone]] <b>&middot;</b> [[Special:UncategorizedPages|Nieskategoryzowane]] <b>&middot;</b> [[Special:DeadendPages|Bez linków]] <b>&middot;</b> <small>[[Special:AllPages|wszystkie...]]</small>
+|-
+! style="text-align:right;white-space:nowrap;vertical-align:text-top;" | Szablony :
+| [[Special:WantedTemplates|Potrzebne]] <b>&middot;</b> [[Special:UnusedTemplates|Nieużywane]] <b>&middot;</b> [[Special:UncategorizedTemplates|Nieskategoryzowane]] <b>&middot;</b> <small>[{{fullurl:Special:AllPages|namespace=10}} wszystkie...]</small>
+|-
+! style="text-align:right;white-space:nowrap;vertical-align:text-top;" | Kategorie :
+| [[Special:CategoryTree|Drzewo kategorii]] <b>&middot;</b> [[Special:WantedCategories|Potrzebne]] <b>&middot;</b> [[Special:UnusedCategories|Nieużywane]] <b>&middot;</b> [[Special:UncategorizedCategories|Nieskategoryzowane]] <b>&middot;</b> <small>[[Special:Categories|wszystkie...]]</small>
+|-
+! style="text-align:right;white-space:nowrap;vertical-align:text-top;" | Pliki :
+| [[Special:NewFiles|Nowe]] <b>&middot;</b> [[Special:WantedFiles|Potrzebne]] <b>&middot;</b> [[Special:UnusedFiles|Nieużywane]] <b>&middot;</b> [[Special:UncategorizedFiles|Nieskategoryzowane]] <b>&middot;</b> <small>[[Special:ListFiles|wszystkie...]]</small>
+|-
+! style="text-align:right;white-space:nowrap;vertical-align:text-top;" | Rejestry :
+| [[Special:Log/block|Blokady]] <b>&middot;</b> [[Special:Log/move|Przeniesione]] <b>&middot;</b> [[Special:Log/upload|Przesłane]] <b>&middot;</b> [[Special:Log/delete|Usunięte]] <b>&middot;</b> [[Special:Log/protect|Zabezpieczone]] <b>&middot;</b> <small>[[Special:Log|więcej...]]</small>
+|-
+! style="text-align:right;white-space:nowrap;vertical-align:text-top;" | Strony specjalne :
+| [[Special:Insights|Podpowiedzi]] <b>&middot;</b> [[Special:ListRedirects|Przekierowania]] <small>([[Special:DoubleRedirects|podwójne]], [[Special:BrokenRedirects|zerwane]])</small> <b>&middot;</b> [[Special:AllMessages|Komunikaty]] <b>&middot;</b> [[Special:Statistics|Statystyki]] <b>&middot;</b> <small>[[Special:SpecialPages|wszystkie...]]</small>
+|-
+! style="text-align:right;white-space:nowrap;vertical-align:text-top;" | Użytkownicy :
+| [[Special:ListUsers/sysop|{{int:group-sysop}}]] <b>&middot;</b> [[Special:ListUsers/bureaucrat|{{int:group-bureaucrat}}]] <b>&middot;</b> [[Special:ListUsers/helper|{{int:group-helper}}]] <b>&middot;</b> [[Special:ListUsers/vstf|{{int:group-vstf}}]] <b>&middot;</b> [[Special:ListUsers/staff|{{int:group-staff}}]] <b>&middot;</b> <small>[[Special:ListUsers|wszyscy...]]</small>
+|-
+! style="text-align:right;white-space:nowrap;vertical-align:text-top;" | Pomoc :
+| [[w:c:spolecznosc:Pomoc:Podstawy|Podstawy]] <b>&middot;</b> [[w:c:spolecznosc:Pomoc:Edycja|Edycja]] <b>&middot;</b> [[w:c:spolecznosc:Pomoc:Administracja|Administracja]] <b>&middot;</b> [[w:c:spolecznosc:Pomoc:Zaawansowane narzędzia|Zaawansowane narzędzia]] <b>&middot;</b> <small>[[w:c:spolecznosc:Pomoc:Zawartość|więcej...]]</small>
+|}
+<div style="text-align:center;margin:.2em 2px 0px;padding-top:.2em;border-top:1px dotted rgba(127, 127, 127, .25);"><small>Szukasz pomocy? Odwiedź [[w:c:spolecznosc|Centrum Społeczności]]!</small></div></div>',
 	'recentchanges-feed-description' => 'Obserwuj najświeższe zmiany w tej wiki.',
 	'recentchanges-label-newpage' => 'W tej edycji utworzono nową stronę',
 	'recentchanges-label-minor' => 'To jest drobna zmiana',
@@ -34443,7 +34573,7 @@ Proszę sprawdzić rejestr operacji.',
 	'rc_categories' => 'Ogranicz do kategorii (oddzielaj za pomocą „|”)',
 	'rc_categories_any' => 'Wszystkie',
 	'rc-change-size-new' => '$1 {{PLURAL:$1|bajt|bajty|bajtów}} po zmianie',
-	'rc-enhanced-expand' => 'Pokaż szczegóły (wymagana JavaScript)',
+	'rc-enhanced-expand' => 'Pokaż szczegóły (wymagany JavaScript)',
 	'rc-enhanced-hide' => 'Ukryj szczegóły',
 	'recentchangeslinked' => 'Zmiany w dolinkowanych',
 	'recentchangeslinked-feed' => 'Zmiany w dolinkowanych',
@@ -34534,7 +34664,7 @@ We look forward to seeing you on Wikia!
 The Wikia Community Team
 www.wikia.com
 ',
-	'rcshowhideenhanced' => '$1 enhanced recent changes',
+	'rcshowhideenhanced' => '$1 zaawansowane ostatnie zmiany',
 	'requestcreatewiki' => 'Submit Request',
 	'right_now' => 'Right Now<br />people are...',
 	'return_to_article' => 'Return to page',
@@ -34565,7 +34695,7 @@ www.wikia.com
 
 * [{{FULLURL:MediaWiki:Related wiki}} No related wiki have been selected yet.]',
 	'registerintro-title' => 'Tworząc konto na portalu Fandom stajesz się częścią społeczności!',
-	'registerintro-text' => 'You get credit for all your contributions, and you can also create your own user profile, watchlist your favorite pages, and get access to all kinds of neat tools.',
+	'registerintro-text' => 'Otrzymujesz punkty za edytowanie, możesz stworzyć swój własny profil użytkownika, obserwować swoje ulubione strony i uzyskać dostęp do wszelkiego rodzaju ciekawych narzędzi.',
 ];
 
 $messages['pms'] = [
@@ -35831,7 +35961,7 @@ Páginas de sua [[Special:Watchlist|lista de páginas vigiadas]] são exibidas e
 	'revdelete-hid' => 'hid $1',
 	'revdelete-unhid' => 'unhid $1',
 	'revdelete-log-message' => '$1 for $2 {{PLURAL:$2|revision|revisions}}',
-	'reconfirmemail_subject' => 'Welcome to Wikia!',
+	'reconfirmemail_subject' => 'Bem vindo/a à Wikia!',
 	'reconfirmemail_body' => 'Hi $2,
 
 Thank you for updating the email address associated with your Wikia account.
@@ -36157,6 +36287,7 @@ Páginas de sua [[Special:Watchlist|lista de páginas vigiadas]] são exibidas e
 	'revdelete-uname-unhid' => 'nome de usuário não oculto',
 	'revdelete-restricted' => 'restrições a administradores aplicadas',
 	'revdelete-unrestricted' => 'restrições a administradores removidas',
+	'reconfirmemail_subject' => 'Bem vindo/a à Wikia!',
 ];
 
 $messages['qu'] = [
@@ -37381,7 +37512,7 @@ $messages['ru'] = [
 	'readonlytext' => 'Добавление новых статей и другие изменения базы данных сейчас заблокированы: вероятно, в связи с плановым обслуживанием.
 Заблокировавший оператор оставил следующее разъяснение: $1.',
 	'readonly_lag' => 'База данных автоматически заблокирована от изменений на время, пока вторичные сервера базы данных не синхронизируются с первичным.',
-	'remembermypassword' => 'Помнить мою учётную запись на этом компьютере (не более $1 {{PLURAL:$1|дня|дней|дней}})',
+	'remembermypassword' => 'Помнить мою учётную запись на этом компьютере',
 	'resetpass' => 'Изменение пароля',
 	'resetpass_announce' => 'Вы представились с помощью временного пароля, полученного по электронной почте. Для завершения входа в систему, вы должны установить новый пароль.',
 	'resetpass_text' => '<!-- Добавьте сюда текст -->',
@@ -37567,7 +37698,13 @@ $1',
 	'rightsnone' => '(нет)',
 	'recentchanges' => 'Свежие правки',
 	'recentchanges-legend' => 'Настройки свежих правок',
-	'recentchangestext' => 'Ниже в хронологическом порядке перечислены последние изменения на страницах {{grammar:genitive|{{SITENAME}}}}.',
+	'recentchangestext' => '{|cellpadding="4px" style="width:100%; margin:auto; margin-top:4px; margin-bottom:4px; clear:both; position:relative;"
+|
+Ниже в хронологическом порядке идёт список \'\'\'свежих правок\'\'\' на этой вики.
+
+\'\'\'Статьи:\'\'\' [[Special:Newpages|Новые страницы]] • [[Special:NewFiles|Новые изображения]] • [[Special:Log|Журналы]]<br />
+\'\'\'Участники:\'\'\' [[Special:Listusers|Участники]] • [[Special:Listusers/sysop|Администраторы]]
+|}',
 	'recentchanges-feed-description' => 'Отслеживать последние изменения в вики в этом потоке.',
 	'recentchanges-label-newpage' => 'Этой правкой была создана новая страница.',
 	'recentchanges-label-minor' => 'Это незначительное изменение',
@@ -37585,7 +37722,7 @@ $1',
 	'rclinks' => 'Показать последние $1 изменений за $2 дней<br />$3',
 	'rc_categories' => 'Только из категорий (разделитель «|»)',
 	'rc_categories_any' => 'Любой',
-	'rc-change-size-new' => 'Размер после изменения: {{PLURAL:$1|байт|байта|байт}}',
+	'rc-change-size-new' => 'Размер после изменения: $1 {{PLURAL:$1|байт|байта|байт}}',
 	'rc-enhanced-expand' => 'Показать подробности (используется JavaScript)',
 	'rc-enhanced-hide' => 'Скрыть подробности',
 	'recentchangeslinked' => 'Связанные правки',
@@ -37687,14 +37824,14 @@ We look forward to seeing you on Wikia!
 The Wikia Community Team
 www.wikia.com
 ',
-	'rcshowhideenhanced' => '$1 enhanced recent changes',
+	'rcshowhideenhanced' => '$1 короткий список правок',
 	'refreshpage' => 'Reload page to activate this widget',
 	'requestcreatewiki' => 'Submit Request',
 	'right_now' => 'Right Now<br />people are...',
 	'return_to_article' => 'Return to page',
 	'return_to_talk' => 'Return to discussion',
 	'return_to_user' => 'Return to user page',
-	'return_to_user_talk' => 'Return to discussion',
+	'return_to_user_talk' => 'Вернуться к обсуждению',
 	'return_to_project' => 'Return to project page',
 	'return_to_project_talk' => 'Return to discussion',
 	'return_to_image' => 'Return to image page',
@@ -37715,7 +37852,7 @@ www.wikia.com
 * [{{FULLURL:MediaWiki:Related wiki}} No related wiki have been selected yet.]',
 	'registerintro-title' => 'Создайте учётную запись и присоединитесь к сообществу Фэндома!',
 	'registerintro-text' => 'You get credit for all your contributions, and you can also create your own user profile, watchlist your favorite pages, and get access to all kinds of neat tools.',
-	'rcshowhidelogs' => '$1 logs',
+	'rcshowhidelogs' => '$1 журналы',
 ];
 
 $messages['rue'] = [
@@ -42400,9 +42537,9 @@ $messages['sv'] = [
 	'restorelink' => '{{PLURAL:$1|en raderad version|$1 raderade versioner}}',
 	'red-link-title' => '$1 (sidan existerar inte)',
 	'readonly' => 'Databasen är skrivskyddad',
-	'readonlytext' => 'Databasen är tillfälligt låst för nya inlägg och andra modifieringar, förmodligen på grund av rutinmässigt underhåll, efter vilket den kommer den att återgå till normalläge.
+	'readonlytext' => 'Databasen är tillfälligt låst.
 
-Den administratör som låste den har angivit följande förklaring: $1',
+$1',
 	'readonly_lag' => 'Databasen har automatiskt skrivskyddats medan slavdatabasservrarna synkroniseras med huvudservern.',
 	'remembermypassword' => 'Spara min inloggning på den här datorn (i max $1 {{PLURAL:$1|dygn|dygn}})',
 	'resetpass' => 'Ändra lösenord',
@@ -42592,7 +42729,7 @@ Vänligen kontrollera loggarna.',
 	'rightsnone' => '(inga)',
 	'recentchanges' => 'Senaste ändringarna',
 	'recentchanges-legend' => 'Alternativ för senaste ändringarna',
-	'recentchangestext' => 'Följ de senaste ändringarna i wikin på denna sida.',
+	'recentchangestext' => '<div id="wikia-mediawiki-recentchangestext" style="border:2px solid #e9e9e9; margin-bottom:0.3em; padding:0.2em 0.5em;"><span style="float:left;">[[Special:NewPages|Nya sidor]] – [[Special:NewImages|Nya filer]] – [[Special:Log|Loggar]]</span><span style="float:right;">[[Help:Recent changes|Hjälp:Senaste ändringar]]</span><div style="clear:both;"></div></div>',
 	'recentchanges-feed-description' => 'Följ de senaste ändringarna i wikin genom den här matningen.',
 	'recentchanges-label-newpage' => 'Denna redigering skapade en ny sida',
 	'recentchanges-label-minor' => 'Detta är en mindre ändring',
@@ -42600,14 +42737,14 @@ Vänligen kontrollera loggarna.',
 	'recentchanges-label-unpatrolled' => 'Denna redigering har inte blivit kontrollerad ännu',
 	'rcnote' => 'Nedan visas {{PLURAL:$1|\'\'\'1\'\'\' ändring|de senaste \'\'\'$1\'\'\' ändringarna}} från {{PLURAL:$2|det senaste dygnet|de senaste \'\'\'$2\'\'\' dygnen}}, per $4, kl. $5.',
 	'rcnotefrom' => 'Nedan visas ändringar sedan \'\'\'$2\'\'\' (upp till \'\'\'$1\'\'\' visas).',
-	'rclistfrom' => 'Visa ändringar efter $1',
+	'rclistfrom' => '<div style="float:right; font-size: 70%; position: absolute; right: 5px; bottom: 0px;">Visa förändringar sedan $1</div>',
 	'rcshowhideminor' => '$1 mindre ändringar',
 	'rcshowhidebots' => '$1 robotar',
 	'rcshowhideliu' => '$1 inloggade användare',
 	'rcshowhideanons' => '$1 oinloggade användare',
 	'rcshowhidepatr' => '$1 kontrollerade redigeringar',
 	'rcshowhidemine' => '$1 mina ändringar',
-	'rclinks' => 'Visa senaste $1 ändringar under de senaste $2 dygnen<br />$3',
+	'rclinks' => 'Visa senaste $1 ändringar under de senaste $2 dagar<br />$3',
 	'rc_categories' => 'Begränsa till följande kategorier (separera med "|")',
 	'rc_categories_any' => 'Vilken som helst',
 	'rc-change-size-new' => '$1 {{PLURAL:$1|byte|bytes}} efter ändring',
@@ -42634,7 +42771,7 @@ Sidor på [[Special:Watchlist|din bevakningslista]] är markerade med \'\'\'fets
 	'rollback_short' => 'Återställning',
 	'rollbacklink' => 'rulla tillbaka',
 	'rollbackfailed' => 'Tillbakarullning misslyckades',
-	'revertpage' => 'Återställde redigeringar av  [[Special:Contributions/$2|$2]] ([[User talk:$2|användardiskussion]]) till senaste versionen av [[User:$1|$1]]',
+	'revertpage' => 'Återställde redigeringar av [[Special:Contributions/$2|$2]] ([[User talk:$2|användardiskussion]]) till senaste versionen av [[User:$1|$1]]',
 	'revertpage-nouser' => 'Återställda redigeringar av (användarnamn borttaget) till senaste version av [[User:$1|$1]]',
 	'rollback-success' => 'Återställde ändringar av $1;
 ändrade tillbaka till senaste version av $2.',
@@ -42668,6 +42805,20 @@ Sidor på [[Special:Watchlist|din bevakningslista]] är markerade med \'\'\'fets
 	'review_reason_4' => 'Anmälningsanledning 4',
 	'review_reason_5' => 'Anmälningsanledning 5',
 	'registerintro-title' => 'När du skapar ett konto på Wikia blir du en del av gemenskapet!',
+	'rcshowhideenhanced' => '$1 avancerad senaste ändringar',
+	'recentchanges-url' => 'Special:SenasteÄndringar',
+	'reconfirmemail_body' => 'Hej $2,
+
+Tack för att uppdatera e-postadressen för Wikia konto. Bekräfta detta är rätt e-postadress genom att klicka på denna länk:
+$3
+
+
+Vi ser fram emot att träffa er på Wikia!
+
+Wikia Community Team
+www.wikia.com',
+	'reconfirmemail_subject' => 'Vänligen bekräfta ditt Wikia konto',
+	'registerintro-text' => 'Du får kredit för alla era bidrag, och du kan också skapa din egen profil, övervakningslista dina favoritsidor, och få tillgång till alla typer av snyggt verktyg.',
 ];
 
 $messages['sw'] = [
@@ -49401,13 +49552,23 @@ $1',
 	'rightsnone' => '（无）',
 	'recentchanges' => '最近更改',
 	'recentchanges-legend' => '最近更改选项',
-	'recentchangestext' => '本页面跟踪本wiki的最近更改。',
+	'recentchangestext' => '<span style="float:right;"><small>\'\'[[MediaWiki:Recentchangestext|View this template]]\'\'</small></span>
+此页为本站最近更新的內容：
+
+{| class="plainlinks" style="background: transparent; margin-left:0.5em; margin-bottom:0.5em;" cellpadding="0" cellspacing="0"
+|-valign="top"
+|align="right"|\'\'\'记錄&nbsp;:&nbsp;\'\'\'
+|align="left" |[[Special:Newpages|最新文章]] - [[Special:Newimages|最新档案]] - [[Special:Log/delete|刪除]] - [[Special:Log/move|移动页面]] - [[Special:Log/upload|上载记錄]] - [[Special:Log/block|封锁]] - [[Special:Log|更多记錄...]]
+|-valign="top"
+|align="right"|\'\'\'特殊页面&nbsp;:&nbsp;\'\'\'
+|align="left" |[[Special:Wantedpages|请求页面]] - [[Special:Longpages|长页面]] - [[Special:Uncategorizedimages|未分类图片]] - [[Special:Uncategorizedpages|未分类文章]] - [[Special:Specialpages|更多特殊页面...]]
+|}',
 	'recentchanges-feed-description' => '跟踪订阅本wiki的最近更改。',
 	'recentchanges-label-newpage' => '这次编辑建立了一个新页面',
 	'recentchanges-label-minor' => '这是一个小编辑',
 	'recentchanges-label-bot' => '这次编辑是由机器人进行',
 	'recentchanges-label-unpatrolled' => '这次编辑尚未巡查过',
-	'rcnote' => '以下是截至$4 $5在最近\'\'\'$2\'\'\'天内的最近\'\'\'$1\'\'\'次更改。',
+	'rcnote' => '以下是在$3，最近\'\'\'$2\'\'\'天内的\'\'\'$1\'\'\'次最近更改记录:',
 	'rcnotefrom' => '以下是自\'\'\'$2\'\'\'起的更改（最多显示\'\'\'$1\'\'\'项）。',
 	'rclistfrom' => '显示自$1起的新更改',
 	'rcshowhideminor' => '$1小编辑',
@@ -49488,34 +49649,26 @@ $1',
 	'revdelete-hid' => 'hid $1',
 	'revdelete-unhid' => 'unhid $1',
 	'revdelete-log-message' => '$1 for $2 {{PLURAL:$2|revision|revisions}}',
-	'reconfirmemail_subject' => 'Welcome to Wikia!',
-	'reconfirmemail_body' => 'Hi $2,
+	'reconfirmemail_subject' => '欢迎来到Wikia!',
+	'reconfirmemail_body' => '$2 您好,
 
-Thank you for updating the email address associated with your Wikia account.
+谢谢您更新了Wikia帐号连结的电子邮件信箱。
 
-Before our system can send you any mail you have opted to receive, you
-must confirm your email address.
+在我们的系统寄发任何您所选择的通知电子邮件之前，您需要再确认您的电子邮件信箱。
 
-Click on the link below or paste it into your browser:
+点击以下链接或将网址贴到您的浏览器上： 
 
 $3
 
-Note: This confirmation link will expire in 7 days.
+注意: 这个确认链接会在7天之后失效。
 
 
-With thousands of communities on Wikia, there are many ways to have fun
-here. Spend some time getting to know Wikia by visiting the home page
-(www.wikia.com), taking a tutorial at
-http://www.wikia.com/wiki/Help:Tutorial_1 , reading interesting and cool
-pages, writing content on your favorite subjects, or meeting other
-members of the community.
+Wikia有成千上万的社区，在这里有很多方式可以找到乐趣。建议您可以访问我们的首页（zh.wikia.com） 看看有些什么有趣的社区和内容，您可以在您喜好的主题撰写文章，也可以和其他社区用户交流。
 
-We look forward to seeing you on Wikia!
+我们期待在Wikia见到您！ 
 
-The Wikia Community Team
-www.wikia.com
-',
-	'rcshowhideenhanced' => '$1 enhanced recent changes',
+Wikia 社区团队',
+	'rcshowhideenhanced' => '$1 折页式显示模式',
 	'refreshpage' => 'Reload page to activate this widget',
 	'requestcreatewiki' => 'Submit Request',
 	'right_now' => 'Right Now<br />people are...',
@@ -49735,13 +49888,23 @@ $1',
 	'rightsnone' => '無',
 	'recentchanges' => '近期變動',
 	'recentchanges-legend' => '最近更改選項',
-	'recentchangestext' => '跟蹤這個wiki上的最新更改。',
+	'recentchangestext' => '<span style="float:right;"><small>\'\'[[MediaWiki:Recentchangestext|View this template]]\'\'</small></span>
+此頁為本站最近更新的內容：
+
+{| class="plainlinks" style="background: transparent; margin-left:0.5em; margin-bottom:0.5em;" cellpadding="0" cellspacing="0"
+|-valign="top"
+|align="right"|\'\'\'記錄&nbsp;:&nbsp;\'\'\'
+|align="left" |[[Special:Newpages|最新文章]] - [[Special:Newimages|最新檔案]] - [[Special:Log/delete|刪除]] - [[Special:Log/move|移動頁面]] - [[Special:Log/upload|上傳記錄]] - [[Special:Log/block|封鎖]] - [[Special:Log|更多記錄...]]
+|-valign="top"
+|align="right"|\'\'\'特殊頁面&nbsp;:&nbsp;\'\'\'
+|align="left" |[[Special:Wantedpages|請求頁面]] - [[Special:Longpages|長頁面]] - [[Special:Uncategorizedimages|未分類圖片]] - [[Special:Uncategorizedpages|未分類文章]] - [[Special:Specialpages|更多特殊頁面...]]
+|}',
 	'recentchanges-feed-description' => '追蹤此訂閱在 wiki 上的最近更改。',
 	'recentchanges-label-newpage' => '這次編輯建立了一個新頁面',
 	'recentchanges-label-minor' => '這是一個小編輯',
 	'recentchanges-label-bot' => '這次編輯是由機器人進行',
 	'recentchanges-label-unpatrolled' => '這次編輯尚未巡查過',
-	'rcnote' => '以下是在$4 $5，最近 \'\'\'$2\'\'\' 天內的 \'\'\'$1\'\'\' 次最近更改記錄。',
+	'rcnote' => '以下是在$3，最近\'\'\'$2\'\'\'天內的\'\'\'$1\'\'\'次最近更改記錄:',
 	'rcnotefrom' => '下面是自\'\'\'$2\'\'\'（最多顯示\'\'\'$1\'\'\'）:',
 	'rclistfrom' => '顯示自$1以來的新更改',
 	'rcshowhideminor' => '$1小編輯',
@@ -49805,6 +49968,26 @@ $1',
 	'revdelete-restricted' => '已應用限制至操作員',
 	'revdelete-unrestricted' => '已移除對於操作員的限制',
 	'registerintro-title' => '當你在Fandom上創建帳戶時，你就成為了社群的一份子！',
+	'rcshowhideenhanced' => '$1 折頁式顯示模式',
+	'reconfirmemail_body' => '$2 您好,
+
+謝謝您更新了Wikia帳號連結的電子郵件信箱。
+
+在我們的系統寄發任何您所選擇的通知電子郵件之前，您需要再確認您的電子郵件信箱。
+
+點擊以下鏈接或將網址貼到您的瀏覽器上： 
+
+$3
+
+注意: 這個確認鏈接會在7天之後失效。
+
+
+Wikia有成千上萬的社區，在這裡有很多方式可以找到樂趣。建議您可以訪問我們的首頁（zh-tw.wikia.com） 看看有些什麼有趣的社區和內容，您可以在您喜好的主題撰寫文章，也可以和其他社區用戶交流。
+
+我們期待在Wikia見到您！ 
+
+Wikia 社區團隊',
+	'reconfirmemail_subject' => '歡迎來到Wikia！',
 ];
 
 $messages['zh-hk'] = [
@@ -49816,6 +49999,39 @@ $messages['zh-hk'] = [
 *: \'\'地址、電話號碼、身份證號碼等。\'\'',
 	'recentchanges-label-bot' => '這次編輯是由機械人進行',
 	'rcshowhidebots' => '$1機械人的編輯',
+	'randomredirect' => '隨機重定向頁',
+	'rcnote' => '以下是在$3，最近\'\'\'$2\'\'\'天內的\'\'\'$1\'\'\'次最近更改記錄:',
+	'rcshowhideenhanced' => '$1 折頁式顯示模式',
+	'recentchangestext' => '<span style="float:right;"><small>\'\'[[MediaWiki:Recentchangestext|View this template]]\'\'</small></span>
+此頁為本站最近更新的內容：
+
+{| class="plainlinks" style="background: transparent; margin-left:0.5em; margin-bottom:0.5em;" cellpadding="0" cellspacing="0"
+|-valign="top"
+|align="right"|\'\'\'記錄&nbsp;:&nbsp;\'\'\'
+|align="left" |[[Special:Newpages|最新文章]] - [[Special:Newimages|最新檔案]] - [[Special:Log/delete|刪除]] - [[Special:Log/move|移動頁面]] - [[Special:Log/upload|上傳記錄]] - [[Special:Log/block|封鎖]] - [[Special:Log|更多記錄...]]
+|-valign="top"
+|align="right"|\'\'\'特殊頁面&nbsp;:&nbsp;\'\'\'
+|align="left" |[[Special:Wantedpages|請求頁面]] - [[Special:Longpages|長頁面]] - [[Special:Uncategorizedimages|未分類圖片]] - [[Special:Uncategorizedpages|未分類文章]] - [[Special:Specialpages|更多特殊頁面...]]
+|}',
+	'reconfirmemail_body' => '$2 您好,
+
+謝謝您更新了Wikia帳號連結的電子郵件信箱。
+
+在我們的系統寄發任何您所選擇的通知電子郵件之前，您需要再確認您的電子郵件信箱。
+
+點擊以下鏈接或將網址貼到您的瀏覽器上： 
+
+$3
+
+注意: 這個確認鏈接會在7天之後失效。
+
+
+Wikia有成千上萬的社區，在這裡有很多方式可以找到樂趣。建議您可以訪問我們的首頁（zh-tw.wikia.com） 看看有些什麼有趣的社區和內容，您可以在您喜好的主題撰寫文章，也可以和其他社區用戶交流。
+
+我們期待在Wikia見到您！ 
+
+Wikia 社區團隊',
+	'reconfirmemail_subject' => '歡迎來到Wikia！',
 ];
 
 $messages['zh-min-nan'] = [
@@ -49893,9 +50109,9 @@ $messages['zh-tw'] = [
 	'recentchanges-feed-description' => '追蹤此訂閱在 wiki 上的最近更改。',
 	'rcnotefrom' => '下面是自\'\'\'$2\'\'\'（最多顯示\'\'\'$1\'\'\'）:',
 	'rcshowhideminor' => '$1小編輯',
-	'rcshowhidebots' => '$1機器人的編輯',
-	'rcshowhideliu' => '$1已登入用戶的編輯',
-	'rcshowhideanons' => '$1匿名用戶的編輯',
+	'rcshowhidebots' => '$1 機器人',
+	'rcshowhideliu' => '$1 登入用戶',
+	'rcshowhideanons' => '$1 匿名用戶',
 	'rcshowhidepatr' => '$1巡查過的編輯',
 	'recentchangeslinked' => '連出更改',
 	'recentchangeslinked-feed' => '連出更改',
@@ -50071,12 +50287,22 @@ $1',
 	'rightsnone' => '無',
 	'recentchanges-url' => 'Special:RecentChanges',
 	'recentchanges-legend' => '最近更改選項',
-	'recentchangestext' => '跟蹤這個wiki上的最新更改。',
+	'recentchangestext' => '<span style="float:right;"><small>\'\'[[MediaWiki:Recentchangestext|View this template]]\'\'</small></span>
+此頁為本站最近更新的內容：
+
+{| class="plainlinks" style="background: transparent; margin-left:0.5em; margin-bottom:0.5em;" cellpadding="0" cellspacing="0"
+|-valign="top"
+|align="right"|\'\'\'記錄&nbsp;:&nbsp;\'\'\'
+|align="left" |[[Special:Newpages|最新文章]] - [[Special:Newimages|最新檔案]] - [[Special:Log/delete|刪除]] - [[Special:Log/move|移動頁面]] - [[Special:Log/upload|上傳]] - [[Special:Log/block|封鎖]] - [[Special:Log|更多記錄...]]
+|-valign="top"
+|align="right"|\'\'\'特殊頁面&nbsp;:&nbsp;\'\'\'
+|align="left" |[[Special:Wantedpages|請求文章]] - [[Special:Longpages|長文]] - [[Special:Uncategorizedimages|未分類圖片]] - [[Special:Uncategorizedpages|未分類文章]] - [[Special:Specialpages|更多特殊頁面...]]
+|}',
 	'recentchanges-label-newpage' => '這次編輯建立了一個新頁面',
 	'recentchanges-label-minor' => '這是一個小編輯',
 	'recentchanges-label-bot' => '這次編輯是由機器人進行',
 	'recentchanges-label-unpatrolled' => '這次編輯尚未巡查過',
-	'rcnote' => '以下是在$4 $5，最近 \'\'\'$2\'\'\' 天內的 \'\'\'$1\'\'\' 次最近更改記錄。',
+	'rcnote' => '以下是在$3，最近\'\'\'$2\'\'\'天內的\'\'\'$1\'\'\'次最近更改記錄:',
 	'rclistfrom' => '顯示自$1以來的新更改',
 	'rcshowhidemine' => '$1我的編輯',
 	'rclinks' => '顯示最近$2天內最新的$1次改動。<br />$3',
@@ -50092,7 +50318,7 @@ $1',
 	'recentchangeslinked-to' => '顯示連到所給出的頁面',
 	'randompage' => '隨機頁面',
 	'randompage-url' => 'Special:Random',
-	'randomredirect' => '隨機重定向頁面',
+	'randomredirect' => '隨機重定向頁',
 	'rfcurl' => '//tools.ietf.org/html/rfc$1',
 	'removewatch' => '停止監視',
 	'revertpage-nouser' => '恢復由（移除了的用戶名）的編輯到[[User:$1|$1]]的最後一個修訂版本',
@@ -50124,34 +50350,26 @@ $1',
 	'revdelete-hid' => 'hid $1',
 	'revdelete-unhid' => 'unhid $1',
 	'revdelete-log-message' => '$1 for $2 {{PLURAL:$2|revision|revisions}}',
-	'reconfirmemail_subject' => 'Welcome to Wikia!',
-	'reconfirmemail_body' => 'Hi $2,
+	'reconfirmemail_subject' => '歡迎來到Wikia！',
+	'reconfirmemail_body' => '$2 您好,
 
-Thank you for updating the email address associated with your Wikia account.
+謝謝您更新了Wikia帳號連結的電子郵件信箱。
 
-Before our system can send you any mail you have opted to receive, you
-must confirm your email address.
+在我們的系統寄發任何您所選擇的通知電子郵件之前，您需要再確認您的電子郵件信箱。
 
-Click on the link below or paste it into your browser:
+點擊以下鏈接或將網址貼到您的瀏覽器上： 
 
 $3
 
-Note: This confirmation link will expire in 7 days.
+注意: 這個確認鏈接會在7天之後失效。
 
 
-With thousands of communities on Wikia, there are many ways to have fun
-here. Spend some time getting to know Wikia by visiting the home page
-(www.wikia.com), taking a tutorial at
-http://www.wikia.com/wiki/Help:Tutorial_1 , reading interesting and cool
-pages, writing content on your favorite subjects, or meeting other
-members of the community.
+Wikia有成千上萬的社區，在這裡有很多方式可以找到樂趣。建議您可以訪問我們的首頁（zh-tw.wikia.com） 看看有些什麼有趣的社區和內容，您可以在您喜好的主題撰寫文章，也可以和其他社區用戶交流。
 
-We look forward to seeing you on Wikia!
+我們期待在Wikia見到您！ 
 
-The Wikia Community Team
-www.wikia.com
-',
-	'rcshowhideenhanced' => '$1 enhanced recent changes',
+Wikia 社區團隊',
+	'rcshowhideenhanced' => '$1 折頁式顯示模式',
 	'refreshpage' => 'Reload page to activate this widget',
 	'requestcreatewiki' => 'Submit Request',
 	'right_now' => 'Right Now<br />people are...',
@@ -50266,5 +50484,79 @@ $messages['zu'] = [
 	'restriction-edit' => 'Ukuhlela',
 	'restriction-move' => 'Sunduza',
 	'recreate' => 'Dala kabusha',
+];
+
+$messages['zh-cn'] = [
+	'randomredirect' => '隨機重定向頁',
+	'rcnote' => '以下是在$3，最近\'\'\'$2\'\'\'天内的\'\'\'$1\'\'\'次最近更改记录:',
+	'rcshowhideanons' => '$1 匿名用戶',
+	'rcshowhidebots' => '$1 机器人',
+	'rcshowhideenhanced' => '$1 折页式显示模式',
+	'rcshowhideliu' => '$1 登入用戶',
+	'recentchangestext' => '<span style="float:right;"><small>\'\'[[MediaWiki:Recentchangestext|View this template]]\'\'</small></span>
+此页为本站最近更新的內容：
+
+{| class="plainlinks" style="background: transparent; margin-left:0.5em; margin-bottom:0.5em;" cellpadding="0" cellspacing="0"
+|-valign="top"
+|align="right"|\'\'\'记錄&nbsp;:&nbsp;\'\'\'
+|align="left" |[[Special:Newpages|最新文章]] - [[Special:Newimages|最新档案]] - [[Special:Log/delete|刪除]] - [[Special:Log/move|移动页面]] - [[Special:Log/upload|上载记錄]] - [[Special:Log/block|封锁]] - [[Special:Log|更多记錄...]]
+|-valign="top"
+|align="right"|\'\'\'特殊页面&nbsp;:&nbsp;\'\'\'
+|align="left" |[[Special:Wantedpages|请求页面]] - [[Special:Longpages|长页面]] - [[Special:Uncategorizedimages|未分类图片]] - [[Special:Uncategorizedpages|未分类文章]] - [[Special:Specialpages|更多特殊页面...]]
+|}',
+];
+
+$messages['zh'] = [
+	'rcnote' => '以下是在$3，最近\'\'\'$2\'\'\'天内的\'\'\'$1\'\'\'次最近更改记录:',
+	'rcshowhideanons' => '$1 匿名用戶',
+	'rcshowhidebots' => '$1 机器人',
+	'rcshowhideenhanced' => '$1 折頁式顯示模式',
+	'rcshowhideliu' => '$1 登入用戶',
+	'recentchangestext' => '<span style="float:right;"><small>\'\'[[MediaWiki:Recentchangestext|View this template]]\'\'</small></span>
+此頁為本站最近更新的內容：
+
+{| class="plainlinks" style="background: transparent; margin-left:0.5em; margin-bottom:0.5em;" cellpadding="0" cellspacing="0"
+|-valign="top"
+|align="right"|\'\'\'記錄&nbsp;:&nbsp;\'\'\'
+|align="left" |[[Special:Newpages|最新文章]] - [[Special:Newimages|最新檔案]] - [[Special:Log/delete|刪除]] - [[Special:Log/move|移動頁面]] - [[Special:Log/upload|上傳記錄]] - [[Special:Log/block|封鎖]] - [[Special:Log|更多記錄...]]
+|-valign="top"
+|align="right"|\'\'\'特殊頁面&nbsp;:&nbsp;\'\'\'
+|align="left" |[[Special:Wantedpages|請求頁面]] - [[Special:Longpages|長頁面]] - [[Special:Uncategorizedimages|未分類圖片]] - [[Special:Uncategorizedpages|未分類文章]] - [[Special:Specialpages|更多特殊頁面...]]
+|}',
+	'reconfirmemail_body' => '$2 您好,
+
+谢谢您更新了Wikia帐号连结的电子邮件信箱。
+
+在我们的系统寄发任何您所选择的通知电子邮件之前，您需要再确认您的电子邮件信箱。
+
+点击以下链接或将网址贴到您的浏览器上： 
+
+$3
+
+注意: 这个确认链接会在7天之后失效。
+
+
+Wikia有成千上万的社区，在这里有很多方式可以找到乐趣。建议您可以访问我们的首页（zh.wikia.com） 看看有些什么有趣的社区和内容，您可以在您喜好的主题撰写文章，也可以和其他社区用户交流。
+
+我们期待在Wikia见到您！ 
+
+Wikia 社区团队',
+	'reconfirmemail_subject' => '欢迎来到Wikia!',
+];
+
+$messages['zh-sg'] = [
+	'rcnote' => '以下是在$3，最近\'\'\'$2\'\'\'天内的\'\'\'$1\'\'\'次最近更改记录:',
+	'rcshowhideenhanced' => '$1 折页式显示模式',
+	'recentchangestext' => '<span style="float:right;"><small>\'\'[[MediaWiki:Recentchangestext|View this template]]\'\'</small></span>
+此页为本站最近更新的內容：
+
+{| class="plainlinks" style="background: transparent; margin-left:0.5em; margin-bottom:0.5em;" cellpadding="0" cellspacing="0"
+|-valign="top"
+|align="right"|\'\'\'记錄&nbsp;:&nbsp;\'\'\'
+|align="left" |[[Special:Newpages|最新文章]] - [[Special:Newimages|最新档案]] - [[Special:Log/delete|刪除]] - [[Special:Log/move|移动页面]] - [[Special:Log/upload|上传记錄]] - [[Special:Log/block|封锁]] - [[Special:Log|更多记錄...]]
+|-valign="top"
+|align="right"|\'\'\'特殊页面&nbsp;:&nbsp;\'\'\'
+|align="left" |[[Special:Wantedpages|请求页面]] - [[Special:Longpages|长页面]] - [[Special:Uncategorizedimages|未分类图片]] - [[Special:Uncategorizedpages|未分类文章]] - [[Special:Specialpages|更多特殊页面...]]
+|}',
 ];
 

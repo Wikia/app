@@ -120,18 +120,7 @@ define('ext.wikia.adEngine.adContext', [
 			geo.isProperGeo(instantGlobals.wgAdDriverHighImpactSlotCountries)
 		) || isUrlParamSet('highimpactslot');
 
-		// INVISIBLE_HIGH_IMPACT_2 slot
-		context.slots.invisibleHighImpact2 = geo.isProperGeo(instantGlobals.wgAdDriverHighImpact2SlotCountries);
-
-		// INCONTENT_PLAYER slot
-		context.slots.incontentPlayer = geo.isProperGeo(instantGlobals.wgAdDriverIncontentPlayerSlotCountries) ||
-			isUrlParamSet('incontentplayer');
-
-		// INCONTENT_LEADERBOARD slot
-		context.slots.incontentLeaderboard =
-			geo.isProperGeo(instantGlobals.wgAdDriverIncontentLeaderboardSlotCountries);
-
-		context.slots.incontentLeaderboardAsOutOfPage =
+		context.opts.incontentLeaderboardAsOutOfPage =
 			geo.isProperGeo(instantGlobals.wgAdDriverIncontentLeaderboardOutOfPageSlotCountries);
 
 		context.opts.scrollHandlerConfig = instantGlobals.wgAdDriverScrollHandlerConfig;

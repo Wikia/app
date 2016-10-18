@@ -7,6 +7,7 @@ class DiscussionsVarToggler {
 	const ENABLE_DISCUSSIONS = 'wgEnableDiscussions';
 	const ENABLE_FORUMS = 'wgEnableForumExt';
 	const ARCHIVE_WIKI_FORUMS = 'wgArchiveWikiForums';
+	const ENABLE_RECIRC_DISCUSSIONS = 'wgEnableRecirculationDiscussions';
 
 	private $discussionsVarMap;
 	private $cityId;
@@ -17,7 +18,8 @@ class DiscussionsVarToggler {
 			self::ENABLE_DISCUSSIONS => null,
 			self::ENABLE_DISCUSSIONS_NAV => null,
 			self::ENABLE_FORUMS => null,
-			self::ARCHIVE_WIKI_FORUMS => null
+			self::ARCHIVE_WIKI_FORUMS => null,
+			self::ENABLE_RECIRC_DISCUSSIONS => null
 		];
 	}
 
@@ -38,6 +40,11 @@ class DiscussionsVarToggler {
 
 	public function setArchiveWikiForums( bool $val ) : DiscussionsVarToggler {
 		$this->discussionsVarMap[self::ARCHIVE_WIKI_FORUMS] = $val;
+		return $this;
+	}
+
+	public function setEnableRecircDiscussions( bool $val ) : DiscussionsVarToggler {
+		$this->discussionsVarMap[self::ENABLE_RECIRC_DISCUSSIONS] = $val;
 		return $this;
 	}
 

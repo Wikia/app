@@ -73,6 +73,10 @@ define('wikia.videohandler.ooyala', [
 					}
 				}
 			});
+
+			if (typeof params.onCreate === 'function') {
+				params.onCreate(player);
+			}
 		}
 
 		function loadJs(resource) {
@@ -89,17 +93,21 @@ define('wikia.videohandler.ooyala', [
 		}
 
 		createParams.onCreate = onCreate;
-
-		if (adContext && adContext.getContext().opts.showAds) {
+		
+		function getDartTagUrl() {
 			if (!dartVideoHelper) {
 				throw 'ext.wikia.adEngine.dartVideoHelper is not defined and it should as we need to display ads';
 			}
 
+			return dartVideoHelper.getUrl();
+		}	
+		
+		if (adContext && adContext.getContext().opts.showAds) {
 			createParams.vast = {
-				tagUrl: dartVideoHelper.getUrl()
+				tagUrl: params.tagUrl || getDartTagUrl()
 			};
 		}
-
+		
 		// log any errors from failed script loading (VID-976)
 		function loadFail(data) {
 			var message = data.error + ':';

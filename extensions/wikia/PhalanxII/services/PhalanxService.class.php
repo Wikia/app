@@ -1,8 +1,8 @@
 <?php
 
 /**
- * @method setLimit
- * @method setUser
+ * @method PhalanxService setLimit( int $limit )
+ * @method PhalanxService setUser( User $user )
  */
 class PhalanxService extends Service {
 

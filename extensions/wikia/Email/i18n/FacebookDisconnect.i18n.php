@@ -132,5 +132,8 @@ $messages['ko'] = [
 	'emailext-fbdisconnect-instructions' => '이미 위키아 비밀번호를 설정하셨다면 걱정하지 마세요! 귀하의 계정은 안전합니다. 이 이메일은 무시하시고 기존의 비밀번호로 로그인하시면 됩니다. 그 외의 경우에는 임시 비밀번호로 로그인한 뒤 환경 설정에서 원하는 비밀번호로 설정을 변경하시면 됩니다.',
 	'emailext-fbdisconnect-subject' => '위키아 계정의 페이스북 연동이 해제되었습니다',
 	'emailext-fbdisconnect-summary' => '방금 막 귀하의 위키아 계정을 페이스북 연동에서 해제했습니다. 연동과 관련된 귀하의 정보(메시지, 프로필 등)는 서버에 안전히 보관됩니다.',
+	'emailext-fbdisconnect-intro' => '기존의 사용자 이름은 그대로 사용하실 수 있으며 저희가 임시 비밀번호를 생성해드렸습니다. 자세한 사항은 다음을 참고하세요.',
+	'emailext-fbdisconnect-password' => '비밀번호: $1',
+	'emailext-fbdisconnect-username' => '사용자 이름: $1',
 ];
 

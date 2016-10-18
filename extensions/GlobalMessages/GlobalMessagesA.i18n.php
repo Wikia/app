@@ -14,19 +14,17 @@ $messages['en'] = [
 	'anontalk' => 'Talk for this IP address',
 	'and' => '&#32;and',
 	'actions' => 'Actions',
-	'addsection' => '+',
+	'addsection' => 'Leave message',
 	'aboutsite' => 'About {{SITENAME}}',
 	'aboutpage' => 'Project:About',
 	'anonnotice' => '-',
 	'actionthrottled' => 'Action throttled',
-	'actionthrottledtext' => 'As an anti-spam measure, you are limited from performing this action too many times in a short space of time, and you have exceeded this limit.
-Please try again in a few minutes.',
+	'actionthrottledtext' => 'You can not perform this action right now. Please try again in a few minutes, or [[Special:Contact|contact Wikia]] if you are having difficulties.',
 	'acct_creation_throttle_hit' => 'Visitors to this wiki using your IP address have created {{PLURAL:$1|1 account|$1 accounts}} in the last day, which is the maximum allowed in this time period.
 As a result, visitors using this IP address cannot create any more accounts at the moment.',
 	'accountcreated' => 'Account created',
 	'accountcreatedtext' => 'The user account for $1 has been created.',
-	'anoneditwarning' => '\'\'\'Warning:\'\'\' You are not logged in.
-Your IP address will be recorded in this page\'s edit history.',
+	'anoneditwarning' => 'You are not logged in.',
 	'anonpreviewwarning' => '\'\'You are not logged in. Saving will record your IP address in this page\'s edit history.\'\'',
 	'autoblockedtext' => 'Your IP address has been automatically blocked because it was used by another user, who was blocked by $1.
 The reason given is this:
@@ -47,13 +45,18 @@ Please include all above details in any queries you make.',
 	'accmailtext' => 'A randomly generated password for [[User talk:$1|$1]] has been sent to $2.
 
 The password for this new account can be changed on the \'\'[[Special:ChangePassword|change password]]\'\' page upon logging in.',
-	'anontalkpagetext' => '----\'\'This is the discussion page for an anonymous user who has not created an account yet, or who does not use it.
-We therefore have to use the numerical IP address to identify him/her.
-Such an IP address can be shared by several users.
-If you are an anonymous user and feel that irrelevant comments have been directed at you, please [[Special:UserLogin/signup|create an account]] or [[Special:UserLogin|log in]] to avoid future confusion with other anonymous users.\'\'',
+	'anontalkpagetext' => '<br style="clear:both;" />
+----
+{| id="anontalktext" class="plainlinks noeditsection" style="font-size:90%; border: 1px solid #B8B8B8; margin:1em 1em 0em 1em; padding:0.25em 1em 0.25em 1em; clear: both;" 
+| \'\'\'This is the discussion page for an anonymous user  who has not created an account yet or who does not use it, identified by the user\'s numerical [[wikipedia:IP address|IP address]].\'\'\'
+
+Some IP addresses change periodically, and may be shared by several users. If you are an anonymous user, you may [[{{ns:Special}}:Signup|create an account or log in]] to avoid future confusion with other anonymous users. Registering also hides your IP address.
+
+\'\'\'Help:\'\'\' [[Help:Why create an account?|Why create an account?]] &bull; [[Help:Create an account|How to create an account]] &bull; [http://whatismyipaddress.com/ip/$1 WHOIS]
+|}',
 	'addsection-preload' => '',
 	'addsection-editintro' => '',
-	'allowemail' => 'Enable e-mail from other users',
+	'allowemail' => 'Enable email from other users',
 	'action-read' => 'read this page',
 	'action-edit' => 'edit this page',
 	'action-createpage' => 'create pages',
@@ -118,20 +121,17 @@ It may contain one or more characters which cannot be used in titles.',
 	'activeusers-hidesysops' => 'Hide administrators',
 	'activeusers-noresult' => 'No users found.',
 	'addwatch' => 'Add to watchlist',
-	'addedwatchtext' => 'The page "[[:$1]]" has been added to your [[Special:Watchlist|watchlist]].
-Future changes to this page and its associated talk page will be listed there, and the page will appear \'\'\'bolded\'\'\' in the [[Special:RecentChanges|list of recent changes]] to make it easier to pick out.',
+	'addedwatchtext' => 'The page "[[:$1]]" has been added to your [[Special:Watchlist|watchlist]].',
 	'actioncomplete' => 'Action complete',
 	'actionfailed' => 'Action failed',
-	'alreadyrolled' => 'Cannot rollback last edit of [[:$1]] by [[User:$2|$2]] ([[User talk:$2|talk]]{{int:pipe-separator}}[[Special:Contributions/$2|{{int:contribslink}}]]);
-someone else has edited or rolled back the page already.
+	'alreadyrolled' => 'Cannot roll back edit to [[:$1]] by [[User:$2|$2]] ([[User talk:$2|talk]] · [[special:blockip/$2|block]] · [[Special:Contributions/$2|contribs]]) because someone else has edited the page.
 
-The last edit to the page was by [[User:$3|$3]] ([[User talk:$3|talk]]{{int:pipe-separator}}[[Special:Contributions/$3|{{int:contribslink}}]]).',
+The last revision was by [[User:$3|$3]] ([[User talk:$3|talk]] · [[Special:Contributions/$3|contribs]]).',
 	'autoblockid' => 'Autoblock #$1',
 	'anononlyblock' => 'anon. only',
 	'autoblocker' => 'Autoblocked because your IP address has been recently used by "[[User:$1|$1]]".
 The reason given for $1\'s block is: "$2"',
-	'articleexists' => 'A page of that name already exists, or the name you have chosen is not valid.
-Please choose another name.',
+	'articleexists' => '\'\'\'The page could not be moved:\'\'\' a page of that name already exists, or the name you have chosen is not valid. Please choose another name, or ask an [[Project:Administrators|administrator]] to help you with the move.<br/>Please do not manually move the article by copying and pasting it; the page history must be moved along with the article text.',
 	'allmessages' => 'System messages',
 	'allmessagesname' => 'Name',
 	'allmessagesdefault' => 'Default message text',
@@ -221,7 +221,7 @@ Please visit [//www.mediawiki.org/wiki/Localisation MediaWiki Localisation] and 
 	'ago' => '$1 ago',
 	'autocomment-prefix' => '-&#32;',
 	'ascending_abbrev' => 'asc',
-	'autosumm-blank' => 'Blanked the page',
+	'autosumm-blank' => 'Removing all content from page',
 	'autosumm-replace' => 'Replaced content with "$1"',
 	'autoredircomment' => 'Redirected page to [[$1]]',
 	'autosumm-new' => 'Created page with "$1"',
@@ -246,7 +246,12 @@ Please visit [//www.mediawiki.org/wiki/Localisation MediaWiki Localisation] and 
 *205.188.208.0/23
 *205.188.112.0/20
 *205.188.146.144/30
-*207.200.112.0/21',
+*207.200.112.0/21
+*10.6.0.0/16
+*10.7.0.0/16
+*10.8.0.0/16
+*199.102.47.71
+*199.102.47.72',
 	'api-error-badaccess-groups' => 'You are not permitted to upload files to this wiki.',
 	'api-error-badtoken' => 'Internal error: Bad token.',
 	'api-error-copyuploaddisabled' => 'Uploading by URL is disabled on this server.',
@@ -289,8 +294,8 @@ Please visit [//www.mediawiki.org/wiki/Localisation MediaWiki Localisation] and 
 	'already_a_member' => 'Already a member?',
 	'add_comment' => 'Leave message',
 	'achievements-leaderboard-navigation-item' => 'Wiki Leaderboard',
-	'atom' => 'Wikia Atom',
-	'addnewtalksection-link' => 'Add new section',
+	'atom' => 'Atom',
+	'addnewtalksection-link' => 'Leave a new message',
 ];
 
 $messages['qqq'] = [
@@ -3632,6 +3637,7 @@ $messages['bg'] = [
 	'api-error-uploaddisabled' => 'Достъпът за качване на файлове в това уики е прекратен.',
 	'api-error-verification-error' => 'Файлът може би е повреден или има грешно разширение.',
 	'addnewtalksection-link' => 'Започване на нов раздел',
+	'add_comment' => 'Оставяне на съобщение',
 ];
 
 $messages['bh'] = [
@@ -6330,16 +6336,26 @@ $messages['de'] = [
 	'and' => '&#32;und',
 	'actions' => 'Aktionen',
 	'aboutsite' => 'Über {{SITENAME}}',
-	'aboutpage' => 'Project:Über',
+	'aboutpage' => '{{ns:project}}:Über_dieses_Wiki',
 	'actionthrottled' => 'Aktionsanzahl limitiert',
 	'actionthrottledtext' => 'Im Rahmen einer Anti-Spam-Maßnahme kann diese Aktion in einem kurzen Zeitabstand nur begrenzt oft ausgeführt werden. Diese Grenze hast du überschritten.
 Bitte versuche es in ein paar Minuten erneut.',
-	'acct_creation_throttle_hit' => 'Besucher dieses Wikis, die deine IP-Adresse verwenden, haben innerhalb des letzten Tages {{PLURAL:$1|1 Benutzerkonto|$1 Benutzerkonten}} erstellt, was die maximal erlaubte Anzahl in dieser Zeitperiode ist.
-
-Besucher, die diese IP-Adresse verwenden, können momentan keine Benutzerkonten mehr erstellen.',
+	'acct_creation_throttle_hit' => 'Du hast schon $1 Benutzerkonten angelegt und kannst vorerst keine weiteren mehr anlegen.',
 	'accountcreated' => 'Benutzerkonto erstellt',
-	'accountcreatedtext' => 'Das Benutzerkonto $1 wurde eingerichtet.',
-	'anoneditwarning' => 'Du bearbeitest diese Seite unangemeldet. Wenn du speicherst, wird deine aktuelle IP-Adresse in der Versionsgeschichte aufgezeichnet und ist damit unwiderruflich \'\'\'öffentlich\'\'\' einsehbar.',
+	'accountcreatedtext' => 'Das Benutzerkonto $1 wurde erstellt.',
+	'anoneditwarning' => '<table align=center width=75% cellpadding=5 style="background: #D3E1F2; border: 1px solid #aaa; color: black;">
+<tr>
+<td valign="top" colspan="2"> \'\'\'Hast du vergessen dich anzumelden?\'\'\' Ein Benutzername hilft dir dabei deine Änderungen nachzuvollziehen und mit anderen Nutzern zu kommunizieren. Wenn du dich nicht anmeldest, wird deine aktuelle IP-Adresse in der Versionsgeschichte aufgezeichnet und ist damit unwiderruflich \'\'\'öffentlich\'\'\' einsehbar.
+</td>
+</tr>
+<tr>
+<td class="plainlinks" align="center" rowspan="2"> [{{FULLURL:Special:Userlogin}} http://images3.wikia.nocookie.net/messaging/images/f/f1/Greenbutton.png] \'\'\'[[Special:Userlogin|Hier zum Anmelden klicken]]\'\'\'
+</td>
+<td class="plainlinks" align="left"> [{{SERVER}}/index.php?title=Special:Userlogin&type=signup http://images3.wikia.nocookie.net/messaging/images/f/f1/Greenbutton.png] \'\'\'[{{SERVER}}/index.php?title=Special:Userlogin&type=signup Benutzerkonto erstellen]\'\'\'
+</td>
+</tr>
+</table>
+<br />',
 	'anonpreviewwarning' => '\'\'Du bist nicht angemeldet. Beim Speichern wird deine IP-Adresse in der Versionsgeschichte aufgezeichnet.\'\'',
 	'autoblockedtext' => 'Deine IP-Adresse wurde automatisch gesperrt, da sie von einem anderen Benutzer genutzt wurde, der von $1 gesperrt wurde.
 Als Grund wurde angegeben:
@@ -6360,7 +6376,13 @@ Bitte füge alle Informationen jeder Anfrage hinzu, die du stellt.',
 	'accmailtext' => 'Ein zufällig generiertes Passwort für [[User talk:$1|$1]] wurde an $2 versandt.
 
 Das Passwort für dieses neue Benutzerkonto kann auf der Spezialseite „[[Special:ChangePassword|Passwort ändern]]“ geändert werden.',
-	'anontalkpagetext' => '----\'\'Diese Seite dient dazu, einem nicht angemeldeten Benutzer Nachrichten zu hinterlassen. Es wird seine IP-Adresse zur Identifizierung verwendet. IP-Adressen können von mehreren Benutzern gemeinsam verwendet werden. Wenn du mit den Kommentaren auf dieser Seite nichts anfangen kannst, richten sie sich vermutlich an einen früheren Inhaber deiner IP-Adresse und du kannst sie ignorieren. Du kannst dir auch ein [[Special:UserLogin/signup|Benutzerkonto erstellen]] oder dich [[Special:UserLogin|anmelden]], um künftig Verwechslungen mit anderen anonymen Benutzern zu vermeiden.\'\'',
+	'anontalkpagetext' => '<br style="clear:both;" />
+----
+{| id="anontalktext" class="plainlinks noeditsection" style="font-size:90%; border: 1px solid #B8B8B8; margin:1em 1em 0em 1em; padding:0.25em 1em 0.25em 1em; clear: both;" 
+| \'\'\'Diese Seite dient dazu, einem nicht angemeldeten Benutzer an seine [[wikipedia:de:IP-Adresse|IP-Adresse]] Nachrichten zu hinterlassen.\'\'\'
+
+Einige IP-Adressen wechseln dynamisch und können von mehreren Nutzern belegt werden. Falls du ein nicht-angemeldeter Nutzer bist, solltest du ein [[{{ns:Special}}:Signup|Benutzerkonto erstellen]] oder dich anmelden um nicht mit anderen Nutzern verwechselt zu werden. Nach einer Anmeldung wird deine IP-Adresse auch nicht mehr angezeigt.
+|}',
 	'allowemail' => 'E-Mail-Empfang von anderen Benutzern ermöglichen',
 	'action-read' => 'die Seite zu lesen',
 	'action-edit' => 'die Seite zu bearbeiten',
@@ -6399,20 +6421,19 @@ Das Passwort für dieses neue Benutzerkonto kann auf der Spezialseite „[[Speci
 	'action-sendemail' => 'E-Mails zu senden',
 	'ancientpages' => 'Seit längerem unbearbeitete Seiten',
 	'all-logs-page' => 'Alle öffentlichen Logbücher',
-	'alllogstext' => 'Dies ist die kombinierte Anzeige aller in {{SITENAME}} geführten Logbücher.
-Die Ausgabe kann durch die Auswahl des Logbuchtyps, des Benutzers oder des Seitentitels eingeschränkt werden (Groß-/Kleinschreibung muss beachtet werden).',
+	'alllogstext' => 'Diese Spezialseite bietet eine kombinierte Anzeige verschiedener Logbücher. Sie können nach Typ, Benutzernamen und nach betroffener Seite bzw. betroffenem Benutzer gefiltert werden.',
 	'allpages' => 'Alle Seiten',
 	'alphaindexline' => '$1 bis $2',
 	'allpagesfrom' => 'Seiten anzeigen ab:',
 	'allpagesto' => 'Seiten anzeigen bis:',
 	'allarticles' => 'Alle Seiten',
-	'allinnamespace' => 'Alle Seiten (Namensraum: $1)',
-	'allnotinnamespace' => 'Alle Seiten (nicht im $1 Namensraum)',
+	'allinnamespace' => 'Alle Seiten im Namensraum „$1“',
+	'allnotinnamespace' => 'Alle Seiten (nicht im Namensraum „$1“)',
 	'allpagesprev' => 'Vorherige',
 	'allpagesnext' => 'Nächste',
 	'allpagessubmit' => 'Anwenden',
 	'allpagesprefix' => 'Seiten anzeigen mit Präfix:',
-	'allpagesbadtitle' => 'Der eingegebene Seitenname ist ungültig: Er hat entweder ein vorangestelltes Sprach-, ein Interwiki-Kürzel oder enthält ein oder mehrere Zeichen, welche in Seitennamen nicht verwendet werden dürfen.',
+	'allpagesbadtitle' => 'Der angegeben Seitentitel war ungültig oder hatte einen Interlanguage- oder Interwiki-Präfix. Eventuell enthält er auch ein Zeichen, das nicht in einem Seitentitel verwendet werden kann.',
 	'allpages-bad-ns' => 'Der Namensraum „$1“ ist in {{SITENAME}} nicht vorhanden.',
 	'activeusers' => 'Aktive Benutzer',
 	'activeusers-intro' => 'Dies ist eine Liste von Benutzern, die innerhalb {{PLURAL:$1|des letzten Tages|der letzten $1 Tage}} Aktivitäten aufwiesen.',
@@ -6422,25 +6443,23 @@ Die Ausgabe kann durch die Auswahl des Logbuchtyps, des Benutzers oder des Seite
 	'activeusers-hidesysops' => 'Administratoren ausblenden',
 	'activeusers-noresult' => 'Keine Benutzer gefunden.',
 	'addwatch' => 'Zur Beobachtungsliste hinzufügen',
-	'addedwatchtext' => 'Die Seite „[[:$1]]“ wurde zu deiner [[Special:Watchlist|Beobachtungsliste]] hinzugefügt.
-
-Spätere Änderungen an dieser Seite und der dazugehörigen Diskussionsseite werden dort gelistet und
-in der Übersicht der [[Special:RecentChanges|letzten Änderungen]] in Fettschrift dargestellt.',
+	'addedwatchtext' => 'Die Seite „$1“ wurde zu Deiner [[{{ns:special}}:Watchlist|Beobachtungsliste]] hinzugefügt. <br />
+Spätere Änderungen an dieser Seite und der zugehörigen Diskussionsseite werden dort gelistet und die Seite wird in der [[{{ns:special}}:Recentchanges|Liste der letzten Änderungen]] in \'\'\'Fettschrift\'\'\' angezeigt. 
+Wenn Du die Seite wieder von der Beobachtungsliste entfernen möchtest, klicke auf der jeweiligen Seite auf „Nicht beobachten“.',
 	'actioncomplete' => 'Aktion beendet',
 	'actionfailed' => 'Aktion fehlgeschlagen',
-	'alreadyrolled' => 'Das Zurücksetzen der Änderungen von [[User:$2|$2]] ([[User talk:$2|Diskussion]]{{int:pipe-separator}}[[Special:Contributions/$2|{{int:contribslink}}]]) an [[:$1]] ist gescheitert, da in der Zwischenzeit ein anderer Benutzer die Seite geändert hat.
-
-Die letzte Änderung stammt von [[User:$3|$3]] ([[User talk:$3|Diskussion]]{{int:pipe-separator}}[[Special:Contributions/$3|{{int:contribslink}}]]).',
+	'alreadyrolled' => 'Das Zurücksetzen der Änderungen von [[{{ns:user}}:$2|$2]] <span style=\'font-size: smaller\'>([[{{ns:user_talk}}:$2|Diskussion]], [[{{ns:special}}:Contributions/$2|Beiträge]])</span> am Artikel [[:$1]] war nicht erfolgreich, da in der Zwischenzeit bereits ein anderer Benutzer 
+Änderungen an diesem Artikel vorgenommen hat.<br />Die letzte Änderung stammt von [[{{ns:user}}:$3|$3]] <span style=\'font-size: smaller\'>([[{{ns:user_talk}}:$3|Diskussion]])</span>.',
 	'autoblockid' => 'Automatische Sperrung #$1',
 	'anononlyblock' => 'nur Anonyme',
 	'autoblocker' => 'Automatische Sperre, da du eine gemeinsame IP-Adresse mit [[User:$1|$1]] benutzt. Grund der Benutzersperre: „$2“.',
-	'articleexists' => 'Unter diesem Namen existiert bereits eine Seite. Bitte wähle einen anderen Namen.',
+	'articleexists' => 'Unter diesem Namen existiert bereits eine Seite.
+Bitte wähle einen anderen Titel.',
 	'allmessages' => 'MediaWiki-Systemnachrichten',
 	'allmessagesname' => 'Name',
 	'allmessagesdefault' => 'Standardtext',
 	'allmessagescurrent' => 'Aktueller Text',
-	'allmessagestext' => 'Dies ist eine Liste der MediaWiki-Systemtexte.
-Bitte besuche die Seiten [//www.mediawiki.org/wiki/Localisation MediaWiki-Lokalisierung] und [//translatewiki.net translatewiki.net], sofern du dich an der Lokalisierung von MediaWiki beteiligen möchtest.',
+	'allmessagestext' => 'Dies ist eine Liste aller Systemnachrichten im MediaWiki-Namensraum. Diese werden von der MediaWiki-Software verwendet und können nur von Administratoren geändert werden.',
 	'allmessagesnotsupportedDB' => 'Diese Spezialseite steht nicht zur Verfügung, da sie über den Parameter <tt>$wgUseDatabaseMessages</tt> deaktiviert wurde.',
 	'allmessages-filter-legend' => 'Filter',
 	'allmessages-filter' => 'Filter für angepassten Zustand:',
@@ -6450,7 +6469,7 @@ Bitte besuche die Seiten [//www.mediawiki.org/wiki/Localisation MediaWiki-Lokali
 	'allmessages-prefix' => 'Präfixfilter:',
 	'allmessages-language' => 'Sprache:',
 	'allmessages-filter-submit' => 'Los',
-	'anonymous' => '{{PLURAL:$1|Unangemeldeter Benutzer|Unangemeldete Benutzer}} auf {{SITENAME}}',
+	'anonymous' => 'Unregistrierte(r) Benutzer',
 	'anonuser' => 'Anonymer {{SITENAME}}-Benutzer $1',
 	'anonusers' => '{{PLURAL:$2|unangemeldetem|unangemeldeten}} {{SITENAME}}-{{PLURAL:$2|Benutzer|Benutzern}} $1',
 	'ago' => 'vor $1',
@@ -6495,8 +6514,25 @@ Bitte besuche die Seiten [//www.mediawiki.org/wiki/Localisation MediaWiki-Lokali
 	'api-error-unknownerror' => 'Unbekannter Fehler: „$1“',
 	'api-error-uploaddisabled' => 'Das Hochladen ist in diesem Wiki deaktiviert.',
 	'api-error-verification-error' => 'Die hochzuladende Datei ist entweder fehlerhaft oder hat keine Dateinamenserweiterung.',
-	'addnewtalksection-link' => 'Neuen Abschnitt beginnen',
+	'addnewtalksection-link' => 'Neuen Abschnitt erstellen',
 	'all_the_wikia' => 'Überall in Fandom',
+	'achievements-leaderboard-navigation-item' => 'Herausforderungen',
+	'add_comment' => 'Kommentieren',
+	'addsection' => 'Kommentieren',
+	'admin_skin' => 'Admin-Optionen',
+	'adminskin_ds' => 'Voreinstellung',
+	'allpages-summary' => '{| cellpadding="4px" style="width:100%; background-color:#f9f9f9; border-style:solid; border-color:#e9e9e9; border-width:4px; margin:auto; margin-top:4px; margin-bottom:4px; clear:both; position:relative; color:black;"
+|<div style="float:right">http://images.wikia.com/de/images/4/47/Allpages-summary-de.png</div>
+<span style="font-weight:bold; font-size:140%;">Inhalt von A–Z</span>
+
+Diese automatisch erstellte Spezialseite bietet eine \'\'\'alphabetische Übersicht aller Seiten\'\'\' in diesem Wiki. Aktuell gibt es bereits \'\'\'{{NUMBEROFARTICLES}} Seiten\'\'\', die als „Artikel“ gelten. 
+
+* Mit dem Auswahlfeld lassen sich Seiten in bestimmten [[w:c:hilfe:Hilfe:Namensräume|Namensräumen]] anzeigen.
+* \'\'Kursiv\'\' dargestellte Einträge sind Weiterleitungen auf andere Seitentitel. 
+* Alternativ zu dieser automatisch erstellten Auflistung gibt es noch die [[:Kategorie:Inhalt|\'\'\'Kategorienübersicht\'\'\' als thematisch gegliederten Einstieg]].
+|}',
+	'already_a_member' => 'Bereits Wikia-Nutzer?',
+	'ancientpages-summary' => 'Diese Spezialseite zeigt eine Liste von Artikeln, die sehr lange nicht mehr geändert wurden. Sie ist hilfreich, um Artikel zu finden, die gegebenenfalls aktualisiert werden müssen.',
 ];
 
 $messages['de-ch'] = [
@@ -7489,8 +7525,7 @@ $messages['es'] = [
 	'aboutpage' => 'Project:Acerca de',
 	'actionthrottled' => 'Acción bloqueada',
 	'actionthrottledtext' => 'Como medida contra el \'\'spam\'\', la acción que estás realizando está limitada a un número determinado de veces en un periodo corto de tiempo, y has excedido ese límite. Por favor inténtalo de nuevo en unos minutos.',
-	'acct_creation_throttle_hit' => 'Los visitantes a este wiki usando tu dirección IP han creado {{PLURAL:$1|una cuenta|$1 cuentas}} en el último día, lo cual es lo máximo permitido en este periodo de tiempo.
-Como resultado, los visitantes usando esta dirección IP no pueden crear más cuentas en este momento.',
+	'acct_creation_throttle_hit' => '{{PLURAL:$1|Un visitante|Los visitantes}} de este wiki, usando tu dirección IP, {{PLURAL:$1|ha creado una cuenta|han creado $1 cuentas}} en el último día, lo cual es lo máximo permitido en este periodo de tiempo. Como resultado, los visitantes usando esta dirección IP no pueden crear más cuentas en este momento',
 	'accountcreated' => 'Cuenta creada',
 	'accountcreatedtext' => 'La cuenta de usuario para $1 ha sido creada.',
 	'anoneditwarning' => '\'\'\'Aviso:\'\'\' No has iniciado sesión con una cuenta de usuario.
@@ -7523,10 +7558,10 @@ La contraseña para esta nueva cuenta puede cambiarse en [[Special:ChangePasswor
 	'action-createtalk' => 'crear páginas de discusión',
 	'action-createaccount' => 'crear esta cuenta de usuario',
 	'action-minoredit' => 'marcar este cambio como menor',
-	'action-move' => 'mover esta página',
-	'action-move-subpages' => 'mover esta página y sus subpáginas',
-	'action-move-rootuserpages' => 'mover páginas del usuario raíz',
-	'action-movefile' => 'mover este archivo',
+	'action-move' => 'renombrar esta página',
+	'action-move-subpages' => 'renombrar esta página y sus subpáginas',
+	'action-move-rootuserpages' => 'renombrar páginas del usuario raíz',
+	'action-movefile' => 'renombrar este archivo',
 	'action-upload' => 'subir este archivo',
 	'action-reupload' => 'reemplazar este archivo existente',
 	'action-reupload-shared' => 'reemplazar este archivo existente en un depósito compartido',
@@ -7552,23 +7587,23 @@ La contraseña para esta nueva cuenta puede cambiarse en [[Special:ChangePasswor
 	'action-userrights-interwiki' => 'modificar los derechos de usuarios en otros wikis',
 	'action-siteadmin' => 'bloquear o desbloquear la base de datos',
 	'action-sendemail' => 'enviar correos electrónicos',
-	'ancientpages' => 'Artículos más antiguos',
+	'ancientpages' => 'Páginas más antiguas',
 	'all-logs-page' => 'Todos los registros públicos',
-	'alllogstext' => 'Vista combinada de todos los registros de {{SITENAME}}.
-Puedes filtrar la vista seleccionando un tipo de registro, el nombre del usuario o la página afectada. Se distinguen mayúsculas de minúsculas.',
+	'alllogstext' => 'Vista combinada de todos los registros disponibles de {{SITENAME}}.
+Puedes filtrar la vista seleccionando un tipo de registro, el nombre del usuario o la página afectada.',
 	'allpages' => 'Todas las páginas',
 	'alphaindexline' => '$1 a $2',
 	'allpagesfrom' => 'Mostrar páginas que empiecen por:',
 	'allpagesto' => 'Mostrar páginas terminadas con:',
 	'allarticles' => 'Todos los artículos',
-	'allinnamespace' => 'Todas las páginas (espacio de nombres $1)',
-	'allnotinnamespace' => 'Todas las páginas que no están en el espacio de nombres $1',
+	'allinnamespace' => 'Todas las páginas (espacio de nombre $1)',
+	'allnotinnamespace' => 'Todas las páginas (fuera del espacio de nombre $1)',
 	'allpagesprev' => 'Anterior',
 	'allpagesnext' => 'Siguiente',
 	'allpagessubmit' => 'Mostrar',
 	'allpagesprefix' => 'Mostrar páginas con el prefijo:',
 	'allpagesbadtitle' => 'El título dado era inválido o tenía un prefijo de enlace inter-idioma o inter-wiki. Puede contener uno o más caracteres que no se pueden usar en títulos.',
-	'allpages-bad-ns' => '{{SITENAME}} no tiene un espacio de nombres llamado «$1».',
+	'allpages-bad-ns' => '{{SITENAME}} no tiene el espacio de nombre "$1".',
 	'activeusers' => 'Lista de usuarios activos',
 	'activeusers-intro' => 'Esta es una lista de usuarios que han tenido alguna actividad en los últimos $1 {{PLURAL:$1|día|días}}.',
 	'activeusers-count' => '$1 {{PLURAL:$1|edición|ediciones}} en los últimos {{PLURAL:$3|día|$3 días}}',
@@ -7612,7 +7647,7 @@ Por favor visita [//www.mediawiki.org/wiki/Localisation Localización MediaWiki]
 	'autosumm-blank' => 'Página blanqueada',
 	'autosumm-replace' => 'Página reemplazada por «$1»',
 	'autoredircomment' => 'Página redirigida a [[$1]]',
-	'autosumm-new' => 'Página creada con «$1»',
+	'autosumm-new' => 'Página nueva: $1',
 	'api-error-badaccess-groups' => 'No puedes cargar archivos en este wiki.',
 	'api-error-badtoken' => 'Error interno: Símbolo incorrecto.',
 	'api-error-copyuploaddisabled' => 'La subida por URL está desactivada en este servidor.',
@@ -7649,8 +7684,14 @@ Por favor visita [//www.mediawiki.org/wiki/Localisation Localización MediaWiki]
 	'api-error-unknownerror' => 'Error desconocido: «$1».',
 	'api-error-uploaddisabled' => 'Las subidas están desactivadas en este wiki.',
 	'api-error-verification-error' => 'Este archivo puede estar dañado, o tiene una extensión incorrecta.',
-	'addnewtalksection-link' => 'Inicie una nueva sección',
+	'addnewtalksection-link' => 'Comienza un tema nuevo',
 	'all_the_wikia' => 'Todo Fandom',
+	'achievements-leaderboard-navigation-item' => 'Tablón de líderes del wiki',
+	'add_comment' => 'Dejar un mensaje',
+	'addsection' => 'Dejar un mensaje',
+	'admin_skin' => 'Opciones de administración',
+	'adminskin_ds' => 'Predeterminada',
+	'already_a_member' => '¿Ya estás registrado?',
 ];
 
 $messages['et'] = [
@@ -8259,6 +8300,10 @@ $messages['fa'] = [
 	'api-error-verification-error' => 'ممکن است پرونده آسیب دیده باشد، یا دارای پسوند نادرست باشد.',
 	'addnewtalksection-link' => 'یک بخش جدید ایجاد کنید',
 	'all_the_wikia' => 'کل ویکیا',
+	'add_comment' => 'شروع بحث جدید',
+	'admin_skin' => 'اختیارات مدیر',
+	'adminskin_ds' => 'پیش‌فرض',
+	'already_a_member' => 'حساب کاربری دارید؟',
 ];
 
 $messages['ff'] = [
@@ -8440,6 +8485,11 @@ Jos haluat muokata MediaWikin yleistä kotoistusta, käy [//www.mediawiki.org/wi
 	'api-error-verification-error' => 'Tiedosto voi olla vioittunut, tai sillä saattaa olla väärä tiedostopääte.',
 	'addnewtalksection-link' => 'Lisää uusi osio',
 	'all_the_wikia' => 'Kaikki wikiat',
+	'add_comment' => 'Jätä viesti',
+	'addsection' => 'Lisää kommentti',
+	'admin_skin' => 'Ylläpitäjän vaihtoehdot',
+	'adminskin_ds' => 'Oletus',
+	'already_a_member' => 'Jo jäsen?',
 ];
 
 $messages['fiu-vro'] = [
@@ -8760,7 +8810,7 @@ La raison invoquée est :
 
 Vous pouvez contacter $1 ou l’un des autres [[{{MediaWiki:Grouppage-sysop}}|administrateurs]] pour discuter de ce blocage.
 
-Notez que vous ne pourrez utiliser la fonctionnalité d’envoi de courriel que si vous avez une adresse de courriel validée dans vos [[Special:Preferences|préférences]] et que la fonctionnalité n’a pas été désactivée.
+Notez que vous ne pourrez utiliser la fonctionnalité d’envoi d\'e-mail que si vous avez une adresse e-mail validée dans vos [[Special:Preferences|préférences]] et que la fonctionnalité n’a pas été désactivée.
 
 Votre adresse IP actuelle est $3, et le numéro de blocage est $5.
 Veuillez préciser ces indications dans toutes les requêtes que vous ferez.',
@@ -8768,7 +8818,7 @@ Veuillez préciser ces indications dans toutes les requêtes que vous ferez.',
 	'accmailtext' => 'Un mot de passe généré aléatoirement pour [[User talk:$1|$1]] a été envoyé à $2.
 Le mot de passe pour ce nouveau compte peut être changé sur la page \'\'[[Special:ChangePassword|de changement de mot de passe]]\'\' après s’être connecté.',
 	'anontalkpagetext' => '---- \'\'Vous êtes sur la page de discussion d’un utilisateur anonyme qui n’a pas encore créé de compte ou qui n’en utilise pas. Pour cette raison, nous devons utiliser son adresse IP pour l’identifier. Une adresse IP peut être partagée par plusieurs utilisateurs. Si vous êtes un{{GENDER:||e|}} utilisat{{GENDER:|eur|rice|eur}} anonyme et si vous constatez que des commentaires qui ne vous concernent pas vous ont été adressés, vous pouvez [[Special:UserLogin/signup|créer un compte]] ou [[Special:UserLogin|vous connecter]] afin d’éviter toute confusion future avec d’autres contributeurs anonymes.\'\'',
-	'allowemail' => 'Autoriser l’envoi de courriels venant d’autres utilisateurs',
+	'allowemail' => 'Autoriser l’envoi d\'e-mails provenant d’autres utilisateurs',
 	'action-read' => 'lire cette page',
 	'action-edit' => 'modifier cette page',
 	'action-createpage' => 'créer des pages',
@@ -8803,7 +8853,7 @@ Le mot de passe pour ce nouveau compte peut être changé sur la page \'\'[[Spec
 	'action-userrights' => 'modifier tous les droits d’utilisateur',
 	'action-userrights-interwiki' => 'modifier les droits des utilisateurs sur d’autres wikis',
 	'action-siteadmin' => 'verrouiller ou déverrouiller la base de données',
-	'action-sendemail' => 'envoyer des courriels',
+	'action-sendemail' => 'envoyer des e-mails',
 	'ancientpages' => 'Pages les plus anciennement modifiées',
 	'all-logs-page' => 'Tous les journaux publics',
 	'alllogstext' => 'Affichage combiné de tous les journaux disponibles sur {{SITENAME}}.<br />
@@ -8890,7 +8940,7 @@ Veuillez visiter la [//www.mediawiki.org/wiki/Localisation Localisation de Media
 	'api-error-missingresult' => 'Erreur interne : Nous n’avons pas pu déterminer si la copie avait réussi.',
 	'api-error-mustbeloggedin' => 'Vous devez être connecté pour télécharger des fichiers.',
 	'api-error-mustbeposted' => 'Il y a un bogue dans ce logiciel ; il n’utilise pas la méthode HTTP adéquate.',
-	'api-error-noimageinfo' => 'Le téléversement a réussi, mais le serveur n’a pas donné d’informations sur le fichier.',
+	'api-error-noimageinfo' => 'L\'importation a réussi, mais le serveur ne nous a pas donné d’informations sur le fichier.',
 	'api-error-nomodule' => 'Erreur interne : aucun module de versement défini.',
 	'api-error-ok-but-empty' => 'Erreur interne : Le serveur n’a pas répondu.',
 	'api-error-overwrite' => 'Écraser un fichier existant n’est pas autorisé.',
@@ -8905,6 +8955,12 @@ Veuillez visiter la [//www.mediawiki.org/wiki/Localisation Localisation de Media
 	'api-error-verification-error' => 'Ce fichier peut être corrompu, ou son extension est incorrecte.',
 	'addnewtalksection-link' => 'Commencer une nouvelle section',
 	'all_the_wikia' => 'Tout Fandom',
+	'achievements-leaderboard-navigation-item' => 'Classement du wikia',
+	'add_comment' => 'Laisser un message',
+	'addsection' => 'Laisser un message',
+	'admin_skin' => 'Options administrateurs',
+	'adminskin_ds' => 'Par défaut',
+	'already_a_member' => 'Déjà membre ?',
 ];
 
 $messages['frc'] = [
@@ -12979,8 +13035,8 @@ $messages['it'] = [
 	'actionthrottledtext' => 'Come misura di sicurezza contro lo spam, l\'esecuzione di alcune azioni è limitata a un numero massimo di volte in un determinato periodo di tempo, limite che in questo caso è stato superato. Si prega di riprovare tra qualche minuto.',
 	'acct_creation_throttle_hit' => 'I visitatori del sito che usano il tuo indirizzo IP hanno creato {{PLURAL:$1|1 account|$1 account}} nell\'ultimo giorno, che è il massimo consentito in questo periodo di tempo.
 Perciò, gli utenti che usano questo indirizzo IP non possono creare altri account per il momento.',
-	'accountcreated' => 'Accesso creato',
-	'accountcreatedtext' => 'È stato creato un accesso per l\'utente $1.',
+	'accountcreated' => 'Account creato',
+	'accountcreatedtext' => 'È stato creato un account per l\'utente $1.',
 	'anoneditwarning' => '\'\'\'Attenzione:\'\'\' Accesso non effettuato. Nella cronologia della pagina verrà registrato l\'indirizzo IP.',
 	'anonpreviewwarning' => '\'\'Non hai eseguito il login. Salvando il tuo indirizzo IP sarà registrato nella cronologia di questa voce.\'\'',
 	'autoblockedtext' => 'Questo indirizzo IP è stato bloccato automaticamente perché condiviso con un altro utente, a sua volta bloccato da $1.
@@ -13002,7 +13058,7 @@ Si prega di specificare tutti i dettagli qui inclusi nel compilare qualsiasi ric
 	'accmailtext' => 'Una password generata casualmente per [[User talk:$1|$1]] è stata inviata a $2.
 
 La password per questo nuovo account può essere modificata all\'accesso nella pagina per \'\'[[Special:ChangePassword|cambiare la password]]\'\'.',
-	'anontalkpagetext' => '----\'\'Questa è la pagina di discussione di un utente anonimo, che non ha ancora creato un accesso o comunque non lo usa. Per identificarlo è quindi necessario usare il numero del suo indirizzo IP. Gli indirizzi IP possono però essere condivisi da più utenti. Se sei un utente anonimo e ritieni che i commenti presenti in questa pagina non si riferiscano a te, [[Special:UserLogin/signup|crea un nuovo accesso]] o [[Special:UserLogin|entra con quello che già hai]] per evitare di essere confuso con altri utenti anonimi in futuro.\'\'',
+	'anontalkpagetext' => '----\'\'Questa è la pagina di discussione di un utente anonimo, che non ha ancora creato un account o comunque non lo usa. Per identificarlo è quindi necessario usare il numero del suo indirizzo IP. Gli indirizzi IP possono però essere condivisi da più utenti. Se sei un utente anonimo e ritieni che i commenti presenti in questa pagina non si riferiscano a te, [[Special:UserLogin/signup|crea un nuovo account]] o [[Special:UserLogin|entra con quello che già hai]] per evitare di essere confuso con altri utenti anonimi in futuro.\'\'',
 	'allowemail' => 'Abilita la ricezione di messaggi e-mail da altri utenti',
 	'action-read' => 'leggere questa pagina',
 	'action-edit' => 'modificare questa pagina',
@@ -13343,8 +13399,17 @@ $messages['ja'] = [
 そのため、現在このIPアドレスの利用者はアカウントをこれ以上作成できません。',
 	'accountcreated' => 'アカウントを作成しました',
 	'accountcreatedtext' => '利用者アカウント：$1が作成されました。',
-	'anoneditwarning' => '\'\'\'警告：\'\'\'ログインしていません。
-このまま投稿を行った場合、使用中のIPアドレスがこのページの編集履歴に記録されます。',
+	'anoneditwarning' => '<table class="plainlinks" align="center" cellpadding="5" style="width:75%; background:#D3E1F2; border:1px solid #aaa; color:#000; text-align:center;">
+<tr>
+<td rowspan="2">http://images.wikia.com/messaging/images/6/68/Login.png</td>
+<td colspan="3" style="vertical-align:top;"> \'\'\'現在ログインしておりません。\'\'\' ログインしてから編集すると、編集履歴をあとで確認することができます。ログインしない場合は、IPアドレスが履歴他に表示されることになります。</td>
+</tr>
+<tr>
+<td style="width:40%; text-align:right;"> [{{fullurl:Special:Userlogin|returnto={{FULLPAGENAMEE}}}} http://images.wikia.com/messaging/images/f/f1/Greenbutton.png] \'\'\'<span class="plainlinks>[{{fullurl:Special:Userlogin|returnto={{FULLPAGENAMEE}}}} ログインする場合はこちら]</span> \'\'\'</td>
+<td></td>
+<td style="width:40%; text-align:left;"> [{{SERVER}}/index.php?title=Special:Userlogin&type=signup http://images.wikia.com/messaging/images/f/f1/Greenbutton.png] \'\'\'[{{SERVER}}/index.php?title=Special:Userlogin&type=signup アカウントを作成する場合はこちら]\'\'\'</td>
+</tr>
+</table>',
 	'anonpreviewwarning' => '\'\'ログインしていません。投稿を保存すると、このページの履歴に使用中のIPアドレスが記録されます。\'\'',
 	'autoblockedtext' => '利用中のIPアドレスは、$1によって投稿をブロックされた利用者によって使用されたために自動的にブロックされています。
 理由は次の通りです。
@@ -13365,10 +13430,13 @@ $1または他の[[{{MediaWiki:Grouppage-sysop}}|管理者]]にこの件につ�
 	'accmailtext' => '[[User talk:$1|$1]]のために無作為に生成したパスワードを、$2に送信しました。
 
 この新アカウントのパスワードは、ログインした際に\'\'[[Special:ChangePassword|パスワード変更]]\'\'ページで変更できます。',
-	'anontalkpagetext' => '----\'\'このページはアカウントをまだ作成していないか使用していない匿名利用者のための議論ページです。
-匿名利用者を識別するために、利用者名のかわりにIPアドレスが使用されています。
-IPアドレスは複数の利用者の間で共有されていることがあります。
-もし、自身が匿名利用者であり、自分に関係のないコメントが寄せられている考えられる場合は、[[Special:UserLogin/signup|アカウントを作成する]]か[[Special:UserLogin|ログインして]]他の匿名利用者と間違えられないようにしてください。\'\'',
+	'anontalkpagetext' => '<br style="clear:both;" />
+----
+{| id="anontalktext" class="plainlinks noeditsection" style="font-size:90%; border: 1px solid #B8B8B8; margin:1em 1em 0em 1em; padding:0.25em 1em 0.25em 1em; clear: both;" 
+|\'\'\'これはアカウントをまだ作成していないか、あるいは使っていない匿名利用者のための会話ページです。\'\'\'
+
+{{SITENAME}}では匿名利用者の識別は利用者名のかわりにIPアドレスを用います。IPアドレスは何人かで共有されることがあります。もしも、あなたが匿名利用者で無関係なコメントがここに寄せられる場合は、[[Special:Userlogin|アカウントを作成するかログインして]]他の匿名利用者と間違えられないようにしてくださるようお願いします。詳細は、[[w:c:ja:Help:アカウントを作る理由|Help:アカウントを作る理由]]をお読みください。
+|}',
 	'allowemail' => '他の利用者からの電子メールの受信を有効化する',
 	'action-read' => 'このページの閲覧',
 	'action-edit' => 'このページの編集',
@@ -13431,8 +13499,7 @@ IPアドレスは複数の利用者の間で共有されていることがあり
 	'activeusers-hidesysops' => '管理者を隠す',
 	'activeusers-noresult' => '利用者が見つかりませんでした。',
 	'addwatch' => 'ウォッチリストに追加',
-	'addedwatchtext' => 'ページ 「[[:$1]]」を[[Special:Watchlist|ウォッチリスト]]に追加しました。
-このページと付属のトークページに変更があった際には、ウォッチリストに表示されます。また、ウォッチリストに登録されているページは[[Special:RecentChanges|最近の更新の一覧]]に\'\'\'太字\'\'\'で表示され、見つけやすくなります。',
+	'addedwatchtext' => 'ページ 「[[:$1]]」をあなたの[[Special:Watchlist|ウォッチリスト]]に追加しました。このページと付属のノートページに変更があった際には、ウォッチリストに表示されます。また、ウォッチリストに登録されているページは[[Special:RecentChanges|最近の更新の一覧]]に\'\'\'太字\'\'\'で表示され、見つけやすくなります。',
 	'actioncomplete' => '完了しました',
 	'actionfailed' => '操作失敗',
 	'alreadyrolled' => 'ページ[[:$1]]の[[User:$2|$2]]（[[User talk:$2|トーク]]{{int:pipe-separator}}[[Special:Contributions/$2|{{int:contribslink}}]]）による編集を巻き戻せません。
@@ -13446,7 +13513,7 @@ $1のブロックの理由は「$2」です。',
 	'articleexists' => '指定された移動先には既にページが存在するか、名前が不適切です。
 別の名前を選択してください。',
 	'allmessages' => 'システムメッセージの一覧',
-	'allmessagesname' => '名前',
+	'allmessagesname' => '名称',
 	'allmessagesdefault' => '既定のメッセージ文',
 	'allmessagescurrent' => '現在のメッセージ文',
 	'allmessagestext' => 'これはMediaWiki名前空間で利用可能なシステムメッセージの一覧です。
@@ -13506,6 +13573,11 @@ $1のブロックの理由は「$2」です。',
 	'all_the_wikia' => 'Fandom全体',
 	'add_comment' => 'コメントを追加する',
 	'addnewtalksection-link' => '新しいセクションを開始する',
+	'achievements-leaderboard-navigation-item' => 'アチーブメントランキング',
+	'addsection' => 'メッセージを追加する',
+	'admin_skin' => '管理者向け設定',
+	'adminskin_ds' => '初期設定',
+	'already_a_member' => 'アカウントはお持ちですか?',
 ];
 
 $messages['jam'] = [
@@ -15188,7 +15260,8 @@ $1 사용자가 차단된 이유는 다음과 같습니다: "$2"',
 	'allmessagesname' => '이름',
 	'allmessagesdefault' => '기본 내용',
 	'allmessagescurrent' => '현재 내용',
-	'allmessagestext' => '미디어위키 이름공간에 있는 모든 시스템 메시지의 목록입니다. 미디어위키의 번역 작업에 관심이 있으면 [//www.mediawiki.org/wiki/Localisation 미디어위키 지역화]나 [//translatewiki.net translatewiki.net]에 참가해주세요.',
+	'allmessagestext' => '미디어위키 이름공간에 있는 모든 시스템 메시지의 목록입니다. 미디어위키의 번역 작업에 관심이 있으면 [http://www.mediawiki.org/wiki/Localisation 미디어위키 지역화]나 [http://translatewiki.net translatewiki.net]에 참가해주세요.
+<div class="toc">위키아의 한국어 번역 작업이 진행중입니다. 위키아에서 사용되는 시스템 메시지는 [http://translatewiki.net translatewiki.net]에서 직접 번역하실 수 있습니다. [[w:c:ko|한국어 중앙 커뮤니티]]의 포럼에 있는 번역 커뮤니티에도 참여해주세요.</div>',
 	'allmessagesnotsupportedDB' => '\'\'\'$wgUseDatabaseMessages\'\'\'가 해제되어 있어서 이 문서는 쓸 수 없습니다.',
 	'allmessages-filter-legend' => '필터',
 	'allmessages-filter' => '수정 상태로 거르기:',
@@ -15245,6 +15318,10 @@ $1 사용자가 차단된 이유는 다음과 같습니다: "$2"',
 	'api-error-verification-error' => '파일이 손상되었거나 잘못된 확장자를 사용하고 있습니다.',
 	'addnewtalksection-link' => '내용 추가하기',
 	'all_the_wikia' => '위키아 전체',
+	'achievements-leaderboard-navigation-item' => '위키 리더보드',
+	'add_comment' => '새 주제',
+	'admin_skin' => '관리자 옵션',
+	'already_a_member' => '이미 계정이 있으신가요?',
 ];
 
 $messages['ko-kp'] = [
@@ -18422,7 +18499,7 @@ $messages['mk'] = [
 	'allpagessubmit' => 'Оди',
 	'allpagesprefix' => 'Прикажи страници со префикс:',
 	'allpagesbadtitle' => 'Дадениот наслов е неважечки или има меѓујазичен или интервики префикс. Може да содржи повеќе знаци кои не смеат да се користат во наслови.',
-	'allpages-bad-ns' => 'Википедија не содржи именски простор „$1“.',
+	'allpages-bad-ns' => 'Викија не содржи именски простор „$1“.',
 	'activeusers' => 'Список на активни корисници',
 	'activeusers-intro' => 'Ова е список на корисници кои биле на некој начин активни во последните $1 {{PLURAL:$1|ден|дена}}.',
 	'activeusers-count' => '$1 {{PLURAL:$1|уредување|уредувања}} {{PLURAL:$3|денес|во последните $3 дена}}',
@@ -20538,18 +20615,18 @@ $messages['nl'] = [
 	'aboutsite' => 'Over {{SITENAME}}',
 	'aboutpage' => 'Project:Info',
 	'actionthrottled' => 'Handeling tegengehouden',
-	'actionthrottledtext' => 'Als maatregel tegen spam is het aantal keren per tijdseenheid dat u deze handeling kunt verrichten beperkt.
+	'actionthrottledtext' => 'Als maatregel tegen spam is het aantal keren per tijdseenheid dat je deze handeling kunt verrichten beperkt.
 De limiet is overschreden.
 Probeer het over een aantal minuten opnieuw.',
-	'acct_creation_throttle_hit' => 'Bezoekers van deze wiki met hetzelfde IP-adres als u hebben de afgelopen dag {{PLURAL:$1|al 1 gebruiker|al $1 gebruikers}} geregistreerd, wat het maximale aantal in deze periode is.
-Daarom kunt u als vanaf uw IP-adres op dit moment geen nieuwe gebruiker registreren.',
+	'acct_creation_throttle_hit' => 'Bezoekers van deze wiki met hetzelfde IP-adres als jij hebben de afgelopen dag {{PLURAL:$1|al 1 gebruiker|al $1 gebruikers}} geregistreerd, wat het maximale aantal in deze periode is.
+Daarom kun je als vanaf jouw IP-adres op dit moment geen nieuwe gebruiker registreren.',
 	'accountcreated' => 'Gebruiker aangemaakt',
 	'accountcreatedtext' => 'De gebruiker $1 is aangemaakt.',
-	'anoneditwarning' => '\'\'\'Waarschuwing:\'\'\' u bent niet aangemeld.
-Uw IP-adres wordt opgeslagen als u wijzigingen op deze pagina maakt.',
-	'anonpreviewwarning' => '\'\'U bent niet aangemeld.\'\'
-\'\'Door uw bewerking op te slaan wordt uw IP-adres opgeslagen in de paginageschiedenis.\'\'',
-	'autoblockedtext' => 'Uw IP-adres is automatisch geblokkeerd, omdat het is gebruikt door een andere gebruiker, die is geblokkeerd door $1.
+	'anoneditwarning' => '\'\'\'Waarschuwing:\'\'\' je bent niet aangemeld.
+Je IP-adres wordt opgeslagen als je wijzigingen op deze pagina maakt.',
+	'anonpreviewwarning' => '\'\'Je bent niet aangemeld.\'\'
+\'\'Door je bewerking op te slaan wordt je IP-adres opgeslagen in de paginageschiedenis.\'\'',
+	'autoblockedtext' => 'Je IP-adres is automatisch geblokkeerd, omdat het is gebruikt door een andere gebruiker, die is geblokkeerd door $1.
 De opgegeven reden is:
 
 :\'\'$2\'\'
@@ -20558,12 +20635,12 @@ De opgegeven reden is:
 * Einde blokkade: $6
 * Bedoeld te blokkeren: $7
 
-U kunt deze blokkade bespreken met $1 of een andere [[{{MediaWiki:Grouppage-sysop}}|beheerder]].
+Je kunt deze blokkade bespreken met $1 of een andere [[{{MediaWiki:Grouppage-sysop}}|beheerder]].
 
-U kunt geen gebruik maken van de functie "Deze gebruiker e-mailen", tenzij u een geldig e-mailadres hebt opgegeven in uw [[Special:Preferences|voorkeuren]] en het gebruik van deze functie niet is geblokkeerd.
+Je kunt geen gebruik maken van de functie "Deze gebruiker e-mailen", tenzij je een geldig e-mailadres hebt opgegeven in je [[Special:Preferences|voorkeuren]] en het gebruik van deze functie niet is geblokkeerd.
 
-Uw huidige IP-adres is $3 en het blokkadenummer is #$5.
-Vermeld alle bovenstaande gegevens als u ergens op deze blokkade reageert.',
+Je huidige IP-adres is $3 en het blokkadenummer is #$5.
+Vermeld alle bovenstaande gegevens als je ergens op deze blokkade reageert.',
 	'accmailtitle' => 'Wachtwoord verzonden.',
 	'accmailtext' => 'Een willekeurig wachtwoord voor [[User talk:$1|$1]] is naar $2 gestuurd.
 
@@ -20571,8 +20648,8 @@ Het wachtwoord voor deze nieuwe gebruiker kan gewijzigd worden via de pagina \'\
 	'anontalkpagetext' => '----\'\'Deze overlegpagina hoort bij een anonieme gebruiker die hetzij geen gebruikersnaam heeft, hetzij deze niet gebruikt.
 Daarom wordt het IP-adres ter identificatie gebruikt.
 Het is mogelijk dat meerdere personen hetzelfde IP-adres gebruiken.
-Mogelijk ontvangt u hier berichten die niet voor u bedoeld zijn.
-Als u dat wilt voorkomen, [[Special:UserLogin/signup|registreer u]] of [[Special:UserLogin|meld u aan]] om verwarring met andere anonieme gebruikers te voorkomen.\'\'',
+Mogelijk ontvang je hier berichten die niet voor je bedoeld zijn.
+Als je dat wilt voorkomen, [[Special:UserLogin/signup|registreer je]] of [[Special:UserLogin|meld je aan]] om verwarring met andere anonieme gebruikers te voorkomen.\'\'',
 	'allowemail' => 'E-mail van andere gebruikers toestaan',
 	'action-read' => 'deze pagina te bekijken',
 	'action-edit' => 'deze pagina te bewerken',
@@ -20612,7 +20689,7 @@ Als u dat wilt voorkomen, [[Special:UserLogin/signup|registreer u]] of [[Special
 	'ancientpages' => 'Oudste pagina\'s',
 	'all-logs-page' => 'Alle openbare logboeken',
 	'alllogstext' => 'Dit is het gecombineerde logboek van {{SITENAME}}.
-U kunt ook kiezen voor specifieke logboeken en filteren op gebruiker (hoofdlettergevoelig) en paginanaam (hoofdlettergevoelig).',
+Je kunt ook kiezen voor specifieke logboeken en filteren op gebruiker (hoofdlettergevoelig) en paginanaam (hoofdlettergevoelig).',
 	'allpages' => 'Alle pagina\'s',
 	'alphaindexline' => '$1 tot $2',
 	'allpagesfrom' => 'Pagina\'s bekijken vanaf:',
@@ -20635,8 +20712,8 @@ Mogelijk bevatte de naam karakters die niet gebruikt mogen worden in paginanamen
 	'activeusers-hidesysops' => 'Beheerders verbergen',
 	'activeusers-noresult' => 'Geen actieve gebruikers gevonden.',
 	'addwatch' => 'Toevoegen aan volglijst',
-	'addedwatchtext' => 'De pagina "[[:$1]]" is toegevoegd aan uw [[Special:Watchlist|volglijst]].
-Toekomstige bewerkingen van deze pagina en de bijbehorende overlegpagina worden op [[Special:Watchlist|uw volglijst]] vermeld en worden \'\'\'vet\'\'\' weergegeven in de [[Special:RecentChanges|lijst van recente wijzigingen]].',
+	'addedwatchtext' => 'De pagina "[[:$1]]" is toegevoegd aan je [[Special:Watchlist|volglijst]].
+Toekomstige bewerkingen van deze pagina en de bijbehorende overlegpagina worden op [[Special:Watchlist|je volglijst]] vermeld en worden \'\'\'vet\'\'\' weergegeven in de [[Special:RecentChanges|lijst van recente wijzigingen]].',
 	'actioncomplete' => 'Handeling voltooid',
 	'actionfailed' => 'De handeling is mislukt.',
 	'alreadyrolled' => 'Het is niet mogelijk om de bewerking van de pagina [[:$1]] door [[User:$2|$2]] ([[User talk:$2|overleg]]{{int:pipe-separator}}[[Special:Contributions/$2|bijdragen]]) ongedaan te maken.
@@ -20653,7 +20730,7 @@ Kies een andere paginanaam.',
 	'allmessagesdefault' => 'Standaardinhoud',
 	'allmessagescurrent' => 'Huidige inhoud',
 	'allmessagestext' => 'Hieronder staan de systeemberichten uit de MediaWiki-naamruimte.
-Ga naar [//www.mediawiki.org/wiki/Localisation MediaWiki-lokalisatie] en [//translatewiki.net translatewiki.net] als u wilt bijdragen aan de algemene vertaling voor MediaWiki.',
+Ga naar [http://www.mediawiki.org/wiki/Localisation MediaWiki-lokalisatie] en [http://translatewiki.net translatewiki.net] als je wilt bijdragen aan de algemene vertaling voor MediaWiki.',
 	'allmessagesnotsupportedDB' => 'Deze pagina kan niet gebruikt worden, omdat \'\'\'$wgUseDatabaseMessages\'\'\' is uitgeschakeld.',
 	'allmessages-filter-legend' => 'Filter',
 	'allmessages-filter' => 'Filteren op aangepast:',
@@ -21074,6 +21151,10 @@ Vitja [//www.mediawiki.org/wiki/Localisation MediaWiki Localisation] og [//trans
 	'api-error-verification-error' => 'Fila kan vera øydelagd eller ha rang filending.',
 	'addnewtalksection-link' => 'Start ny seksjon',
 	'all_the_wikia' => 'Hele wikia',
+	'add_comment' => 'Legg igjen beskjed',
+	'admin_skin' => 'Administratoralternativer',
+	'adminskin_ds' => 'Standard',
+	'already_a_member' => 'Allerede medlem?',
 ];
 
 $messages['nov'] = [
@@ -22075,10 +22156,10 @@ Odwiedź [//www.mediawiki.org/wiki/Localisation Tłumaczenie MediaWiki] oraz [//
 	'ago' => '$1 temu',
 	'autocomment-prefix' => '–&#32;',
 	'ascending_abbrev' => 'rosn.',
-	'autosumm-blank' => 'UWAGA! Usunięcie treści (strona pozostała pusta)!',
-	'autosumm-replace' => 'UWAGA! Zastąpienie treści hasła bardzo krótkim tekstem: „$1”',
+	'autosumm-blank' => 'UWAGA! Usunięto treść strony!',
+	'autosumm-replace' => 'UWAGA! Zastąpiono treść hasła tekstem „$1”',
 	'autoredircomment' => 'Przekierowanie do [[$1]]',
-	'autosumm-new' => 'Utworzył nową stronę „$1”',
+	'autosumm-new' => 'Dodano nową stronę „$1”',
 	'api-error-badaccess-groups' => 'Nie masz uprawnień aby przesyłać pliki do tej wiki.',
 	'api-error-badtoken' => 'Błąd wewnętrzny – żeton wykorzystywany do identyfikacji użytkownika jest nieprawidłowy.',
 	'api-error-copyuploaddisabled' => 'Przesyłanie poprzez podanie adresu URL zostało na tym serwerze wyłączone.',
@@ -22118,6 +22199,9 @@ Odwiedź [//www.mediawiki.org/wiki/Localisation Tłumaczenie MediaWiki] oraz [//
 	'add_widgets' => 'Dodaj widgety',
 	'addnewtalksection-link' => 'Dodaj nowy wątek.',
 	'all_the_wikia' => 'Cały Fandom',
+	'achievements-leaderboard-navigation-item' => 'Ranking wiki',
+	'addsection' => 'Dodaj wiadomość',
+	'adminskin_ds' => 'Domyślna',
 ];
 
 $messages['pms'] = [
@@ -23988,18 +24072,16 @@ $messages['ru'] = [
 	'anoneditwarning' => '\'\'\'Внимание:\'\'\' Вы не представились системе.
 Ваш IP-адрес будет записан в историю изменений этой страницы.',
 	'anonpreviewwarning' => '\'\'Вы не представились системе. Сохранение приведёт к записи вашего IP-адреса в историю изменений страницы.\'\'',
-	'autoblockedtext' => 'Ваш IP-адрес автоматически заблокирован в связи с тем, что он ранее использовался кем-то из участников, заблокированных {{GENDER:$4|участником|участницей}} $1.
+	'autoblockedtext' => 'Ваш IP-адрес автоматически заблокирован в связи с тем, что он ранее использовался кем-то из участников, заблокированных {{GENDER:$4|участником|участницей}} $1. 
 Была указана следующая причина блокировки:
 
 : «$2».
 
 * Начало блокировки: $8
 * Окончание блокировки: $6
-* Цель блокировки: $7
+* Причина блокировки: $7
 
 Вы можете связаться с $1 или любым другим [[{{MediaWiki:Grouppage-sysop}}|администратором]], чтобы обсудить блокировку.
-
-Обратите внимание, что не сможете использовать функцию «письмо участнику», если в своих [[Special:Preferences|персональных настройках]] не задали или не подтвердили корректный адрес электронной почты, или если ваша блокировка включает запрет отправки писем подобным образом.
 
 Ваш IP-адрес — $3, идентификатор блокировки — #$5.
 Пожалуйста, указывайте эти сведения в любых своих обращениях.',
@@ -24148,6 +24230,11 @@ $messages['ru'] = [
 	'api-error-verification-error' => 'Возможно, этот файл повреждён или имеет неправильное расширение.',
 	'addnewtalksection-link' => 'Создать новый раздел',
 	'all_the_wikia' => 'Весь Фэндом',
+	'achievements-leaderboard-navigation-item' => 'Доска лидеров вики',
+	'add_comment' => 'Оставить сообщение',
+	'admin_skin' => 'настройки администратора',
+	'adminskin_ds' => 'по-умолчанию',
+	'already_a_member' => 'Уже участник?',
 ];
 
 $messages['rue'] = [
@@ -27302,8 +27389,11 @@ $messages['sv'] = [
 Som ett resultat kan besökare som använder den här IP-adressen inte skapa några fler användarkonton just nu.',
 	'accountcreated' => 'Användarkontot har skapats',
 	'accountcreatedtext' => 'Användarkontot $1 har skapats.',
-	'anoneditwarning' => '\'\'\'Varning:\'\'\' Du är inte inloggad.
-Din IP-adress kommer att sparas i historiken för den här sidan.',
+	'anoneditwarning' => '<table class="plainlinks" align="center" cellpadding="5" style="width:75%; background:#D3E1F2; border:1px solid #99C; text-align:center; font-size:120%;" >
+<tr>
+<td>http://images1.wikia.nocookie.net/__cb1/messaging/images/f/f1/Greenbutton.png &nbsp; \'\'\'[{{fullurl:Special:Signup|returnto={{FULLPAGENAMEE}}}} KLICKA HÄR FÖR ATT LOGGA IN ELLER SKAPA ETT KONTO]\'\'\' &nbsp; http://images1.wikia.nocookie.net/__cb1/messaging/images/f/f1/Greenbutton.png</td>
+</tr>
+</table>',
 	'anonpreviewwarning' => '\'\'Du är inte inloggad. Om du sparar kommer din IP-adress registreras på denna sidas redigeringshistorik.\'\'',
 	'autoblockedtext' => 'Din IP-adress har blockerats automatiskt eftersom den har använts av en annan användare som blockerats av $1.
 Motiveringen av blockeringen var:
@@ -27324,10 +27414,15 @@ Vänligen ange informationen ovan i alla förfrågningar som du gör i ärendet.
 	'accmailtext' => 'Ett slumpgenererat lösenord för [[User talk:$1|$1]] har skickats till $2.
 
 Lösenordet för det här nya användarkontot kan ändras på sidan \'\'[[Special:ChangePassword|ändra lösenord]]\'\' när du loggar in.',
-	'anontalkpagetext' => '----\'\'Detta är diskussionssidan för en anonym användare som inte ännu skapat ett konto, eller som inte använder det.
-Därför måste vi använda den numeriska IP-adressen för att identifiera honom/henne.
-En sådan IP-adress kan delas av flera användare.
-Om du är en anonym användare och känner att irrelevanta kommentarer har riktats mot dig, vänligen [[Special:UserLogin/signup|skapa ett konto]] eller [[Special:UserLogin|logga in]] för att undvika framtida förväxlingar med andra anonyma användare.\'\'',
+	'anontalkpagetext' => '<br style="clear:both;" />
+----
+{| id="anontalktext" class="plainlinks noeditsection" style="font-size:90%; border: 1px solid #B8B8B8; margin:1em 1em 0em 1em; padding:0.25em 1em 0.25em 1em; clear: both;" 
+| \'\'\'Detta är en diskussionssida för en anonym användare som inte skapat ett konto ännu, eller som inte använder det, som identifierats av användarens numeriska [[wikipedia:IP address|IP-adress]].\'\'\'
+
+Vissa IP-adresser ändras regelbundet, och kan delas av flera användare. Om du är en anonym användare kan du [[{{ns:Special}}:Userlogin|skapa ett konto eller logga in]] för att undvika framtida förväxlingar användare. Registrera också döljer din IP-adress.
+
+\'\'\'Hjälp:\'\'\' [[Help:Why create an account?|Varför skapa ett konto?]] &bull; [[Help:Create an account|Hur man skapar ett konto]] &bull; [http://samspade.org/whois?query={{PAGENAMEE}} WHOIS]
+|}',
 	'allowemail' => 'Tillåt e-post från andra användare',
 	'action-read' => 'läsa denna sida',
 	'action-edit' => 'redigera denna sida',
@@ -27389,8 +27484,7 @@ Du kan avgränsa sökningen och få färre träffar genom att ange typ av logg, 
 	'activeusers-hidesysops' => 'Dölj administratörer',
 	'activeusers-noresult' => 'Inga användare funna.',
 	'addwatch' => 'Lägg till i bevakningslistan',
-	'addedwatchtext' => 'Sidan "[[:$1]]" har lagts till på din [[Special:Watchlist|bevakningslista]].
-Framtida ändringar av den här sidan och dess diskussionssida kommer att listas där, och sidan kommer att markeras med \'\'\'fetstil\'\'\' i [[Special:RecentChanges|listan över de senaste ändringarna]] för att lättare kunna hittas.',
+	'addedwatchtext' => 'Sidan "[[:$1]]" har lagts till i din [[Special:Watchlist|bevakningslista]].',
 	'actioncomplete' => 'Genomfört',
 	'actionfailed' => 'Handlingen misslyckades',
 	'alreadyrolled' => 'Det gick inte att rulla tillbaka den senaste redigeringen av [[User:$2|$2]] ([[User talk:$2|diskussion]]{{int:pipe-separator}}[[Special:Contributions/$2|{{int:contribslink}}]]) på sidan [[:$1|$1]]. Någon annan har redan rullat tillbaka eller redigerat sidan.
@@ -27463,6 +27557,7 @@ Besök [//www.mediawiki.org/wiki/Localisation MediaWiki Localisation] eller [//t
 	'api-error-uploaddisabled' => 'Uppladdning är inaktiverad på denna wiki.',
 	'api-error-verification-error' => 'Denna fil kan vara skadad eller har fel filändelse.',
 	'addnewtalksection-link' => 'Starta ett nytt avsnitt',
+	'addsection' => 'Lämna meddelande',
 ];
 
 $messages['sw'] = [
@@ -30324,6 +30419,8 @@ Mời vào [//www.mediawiki.org/wiki/Localisation Địa phương hóa MediaWiki
 	'api-error-uploaddisabled' => 'Chức năng tải lên đã bị tắt trên wiki này.',
 	'api-error-verification-error' => 'Tập tin này có thể bị hỏng hoặc có phần mở rộng sai.',
 	'addnewtalksection-link' => 'Bắt đầu một đề mục mới',
+	'admin_skin' => 'Tùy chọn bảo quản viên',
+	'adminskin_ds' => 'Mặc định',
 ];
 
 $messages['vls'] = [
@@ -31632,7 +31729,7 @@ $messages['zh-hans'] = [
 	'allpagesprefix' => '显示具有此前缀（名字空间）的页面：',
 	'allpagesbadtitle' => '给定的页面标题是非法的，或者具有一个内部语言或内部 wiki 的前缀。它可能包含一个或更多的不能用于标题的字符。',
 	'allpages-bad-ns' => '在{{SITENAME}}中没有一个叫做"$1"的名字空间。',
-	'activeusers' => '活跃用户列表',
+	'activeusers' => '活跃用户',
 	'activeusers-intro' => '这个列表列出了最近$1天进行过操作的用户。',
 	'activeusers-count' => '最近$3天编辑了$1次',
 	'activeusers-from' => '显示用户开始于：',
@@ -31713,6 +31810,11 @@ $1被封禁的理由是：“$2”',
 	'api-error-verification-error' => '此文件可能已损坏，或有错误的扩展名。',
 	'addnewtalksection-link' => '开始一个新小节',
 	'all_the_wikia' => '所有Fandom',
+	'achievements-leaderboard-navigation-item' => '维基排行榜',
+	'add_comment' => '留言',
+	'addsection' => '留言',
+	'admin_skin' => '管理员功能',
+	'adminskin_ds' => '默认',
 ];
 
 $messages['zh-hant'] = [
@@ -31808,7 +31910,7 @@ $messages['zh-hant'] = [
 	'allpagesprefix' => '顯示具有此前綴（名字空間）的頁面:',
 	'allpagesbadtitle' => '給定的頁面標題是非法的，或者具有一個內部語言或內部 wiki 的前綴。它可能包含一個或更多的不能用於標題的字元。',
 	'allpages-bad-ns' => '在{{SITENAME}}中沒有一個叫做"$1"的名字空間。',
-	'activeusers' => '活躍用戶列表',
+	'activeusers' => '活躍用戶',
 	'activeusers-intro' => '這個是在最近$1天之內有一些動作的用戶列表。',
 	'activeusers-count' => '於$3天內的$1次編輯',
 	'activeusers-from' => '顯示用戶開始於：',
@@ -31889,6 +31991,11 @@ $1被封禁的理由是“$2”',
 	'api-error-verification-error' => '本檔案可能已損壞，或副檔名錯誤。',
 	'addnewtalksection-link' => '開始一個新小節',
 	'all_the_wikia' => '所有Fandom',
+	'achievements-leaderboard-navigation-item' => '維基排行榜',
+	'add_comment' => '留言',
+	'addsection' => '留言',
+	'admin_skin' => '管理員功能',
+	'adminskin_ds' => '預設',
 ];
 
 $messages['zh-hk'] = [
@@ -31896,6 +32003,19 @@ $messages['zh-hk'] = [
 	'august' => '八月',
 	'aboutpage' => 'Project:關於我們',
 	'activeusers-hidebots' => '隱藏機械人',
+	'achievements-leaderboard-navigation-item' => '維基排行榜',
+	'activeusers' => '活躍用戶名單',
+	'add_comment' => '留言',
+	'addsection' => '留言',
+	'admin_skin' => '管理員功能',
+	'adminskin_ds' => '預設',
+	'allarticles' => '所有頁面',
+	'allnotinnamespace' => '所有頁面 (不包括 $1 名字空間)',
+	'allowemail' => '允許其他用戶寄發電子郵件給您',
+	'allpagesfrom' => '顯示頁面開始自：',
+	'anononlyblock' => '僅限匿名用戶',
+	'autoredircomment' => '重定向到[[$1]]',
+	'autosumm-blank' => '清空全部內容',
 ];
 
 $messages['zh-min-nan'] = [
@@ -31935,26 +32055,33 @@ $messages['zh-tw'] = [
 
 這個新帳號的密碼可以在登入後的\'\'[[Special:ChangePassword|更改密碼]]\'\'頁面中更改。',
 	'anontalkpagetext' => '---- \'\'這是一個還未建立帳號的匿名使用者的對話頁。我們因此只能用IP地址來與他／她聯絡。該IP地址可能由幾名使用者共享。如果您是一名匿名使用者並認為本頁上的評語與您無關，請[[Special:UserLogin|建立新帳號或登入]]以避免在未來於其他匿名使用者混淆。\'\'',
-	'allowemail' => '接受來自其他使用者的郵件',
+	'allowemail' => '允許其他用戶寄發電子郵件給您',
 	'alllogstext' => '綜合顯示上傳、刪除、保護、封鎖以及站務日誌。',
 	'activeusers-hidebots' => '隱藏機器人',
 	'addedwatchtext' => '頁面「[[:$1]]」已經被加入到您的[[Special:Watchlist|監視清單]]中。將來有關此頁面及其討論頁的任何修改將會在那裡列出，而且還會在[[Special:RecentChanges|近期變動]]中以\'\'\'粗體\'\'\'形式列出以使起更容易識別。',
-	'alreadyrolled' => '無法復原由[[User:$2|$2]] ([[User talk:$2|討論]])進行的[[$1]]的最後編輯；
-其他人已經編輯或是復原了該頁。
-
-最後編輯者: [[User:$3|$3]] ([[User talk:$3|討論]]{{int:pipe-separator}}[[Special:Contributions/$3|{{int:contribslink}}]])。',
-	'anononlyblock' => '僅限匿名使用者',
+	'alreadyrolled' => '無法恢復由[[User:$2|$2]] ([[User talk:$2|討論]])進行的[[$1]]的最後編輯；其他人已經編輯或是恢復了該頁。 最後編輯者: [[User:$3|$3]] ([[User talk:$3|討論]])。',
+	'anononlyblock' => '僅限匿名用戶',
 	'allmessages' => '系統介面',
 	'allmessagestext' => '這裡列出所有可定製的系統介面。',
 	'allmessagesnotsupportedDB' => '系統介面功能處於關閉狀態 (wgUseDatabaseMessages)。',
 	'anonymous' => '{{SITENAME}}的匿名{{PLURAL:$1|使用者|使用者}}',
 	'anonuser' => '{{SITENAME}}匿名使用者$1',
 	'anonusers' => '{{SITENAME}}匿名{{PLURAL:$2|使用者|使用者}}$1',
-	'autosumm-blank' => '移除所有頁面內容',
+	'autosumm-blank' => '清空全部內容',
 	'autosumm-replace' => '正在將頁面替換為 \'$1\'',
-	'autoredircomment' => '正在重定向到 [[$1]]',
+	'autoredircomment' => '[[WP:AES|←]]重定向到[[$1]]',
 	'autosumm-new' => '新頁面: $1',
 	'addnewtalksection-link' => '於本討論頁增加新的討論主題',
+	'achievements-leaderboard-navigation-item' => '維基排行榜',
+	'activeusers' => '活躍用戶名單',
+	'add_comment' => '留言',
+	'addsection' => '留言',
+	'admin_skin' => '管理員功能',
+	'adminskin_ds' => '預設值',
+	'allarticles' => '所有頁面',
+	'allnotinnamespace' => '所有頁面 (不包括 $1 名字空間)',
+	'allpagesfrom' => '顯示頁面開始自：',
+	'anoneditwarning' => '\'\'\'注意:\'\'\' 你尚未登入本站，你的IP位置會被記錄在本頁的修訂歷史頁中。',
 ];
 
 $messages['zh-yue'] = [
@@ -32003,5 +32130,47 @@ $messages['zu'] = [
 	'allinnamespace' => 'Onke amakhasi ($1 namespace)',
 	'allpagessubmit' => 'Hamba',
 	'allmessagesname' => 'Igama',
+];
+
+$messages['zh'] = [
+	'achievements-leaderboard-navigation-item' => '维基排行榜',
+	'accountcreated' => '账户已创建',
+	'accountcreatedtext' => '已创建账户 $1 。',
+	'add_comment' => '留言',
+	'addsection' => '留言',
+	'admin_skin' => '管理员功能',
+	'adminskin_ds' => '默认',
+	'allmessagesdefault' => '缺省的翻译',
+	'allnotinnamespace' => '所有页面 (不包括 $1 名字空间)',
+	'allowemail' => '允许其他用户给您发送电子邮件',
+	'allpagesfrom' => '显示页面开始自:',
+	'anoneditwarning' => '\'\'\'注意:\'\'\' 你尚未登入本站，你的IP位置會被記錄在本頁的修訂歷史頁中。',
+	'article' => '文章',
+	'autoredircomment' => '[[WP:AES|←]]重定向到[[$1]]',
+	'autosumm-blank' => '清空全部内容',
+	'autosumm-new' => '新頁面: $1',
+];
+
+$messages['zh-cn'] = [
+	'accountcreated' => '账户已创建',
+	'accountcreatedtext' => '已创建账户 $1 。',
+	'add_comment' => '留言',
+	'addsection' => '留言',
+	'allarticles' => '所有页面',
+	'allmessagesdefault' => '缺省的翻译',
+	'allmessagesname' => '名称',
+	'allnotinnamespace' => '所有页面 (不包括 $1 名字空间)',
+	'allowemail' => '允许其他用户给您发送电子邮件',
+	'allpagesfrom' => '显示页面开始自:',
+	'anoneditwarning' => '\'\'\'注意:\'\'\' 你尚未登入本站，你的IP位置會被記錄在本頁的修訂历史页中。',
+	'anononlyblock' => '仅限匿名用户',
+	'autoredircomment' => '[[WP:AES|←]]重定向到[[$1]]',
+	'autosumm-blank' => '清空全部内容',
+	'autosumm-new' => '新頁面: $1',
+];
+
+$messages['zh-sg'] = [
+	'add_comment' => '留言',
+	'addsection' => '留言',
 ];
 

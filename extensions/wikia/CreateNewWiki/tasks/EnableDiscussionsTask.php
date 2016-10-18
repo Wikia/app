@@ -38,6 +38,7 @@ class EnableDiscussionsTask extends Task {
 			->setEnableDiscussionsNav( true )
 			->setEnableForums( false )
 			->setArchiveWikiForums( true )
+			->setEnableRecircDiscussions( true )
 			->save();
 	}
 

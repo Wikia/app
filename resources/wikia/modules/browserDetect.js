@@ -28,6 +28,14 @@ define('wikia.browserDetect', ['wikia.window'], function (win) {
 	}
 
 	/**
+	 * Check if the browser is Edge
+	 * @returns {boolean}
+	 */
+	function isEdge() {
+		return userAgent.indexOf('Edge') !== -1;
+	}
+
+	/**
 	 * Checks if the browser is Firefox
 	 * @returns {Boolean}
 	 */
@@ -72,6 +80,7 @@ define('wikia.browserDetect', ['wikia.window'], function (win) {
 		isIPad: isIPad,
 		isIOS7orLower: isIOS7orLower,
 		isAndroid: isAndroid,
-		isMobile: isMobile
+		isMobile: isMobile,
+		isEdge: isEdge
 	};
 });

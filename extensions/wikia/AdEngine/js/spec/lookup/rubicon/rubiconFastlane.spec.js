@@ -15,6 +15,18 @@ describe('ext.wikia.adEngine.lookup.rubicon.rubiconFastlane', function () {
 					};
 				}
 			},
+			slotsContext: {
+				filterSlotMap: function (map) {
+					var newMap = {};
+					Object.keys(map).forEach(function (slotName) {
+						if (slotName.indexOf('HOME') === -1 && slotName.indexOf('MIDDLE') === -1) {
+							newMap[slotName] = map[slotName];
+						}
+					});
+
+					return newMap;
+				}
+			},
 			tracker: {
 				measureDiff: function () {
 					return mocks.tracker;
@@ -118,6 +130,7 @@ describe('ext.wikia.adEngine.lookup.rubicon.rubiconFastlane', function () {
 	function getRubiconFastlane() {
 		return modules['ext.wikia.adEngine.lookup.rubicon.rubiconFastlane'](
 			mocks.adContext,
+			mocks.slotsContext,
 			getFactory(),
 			mocks.rubiconTargeting,
 			mocks.doc,
@@ -162,7 +175,7 @@ describe('ext.wikia.adEngine.lookup.rubicon.rubiconFastlane', function () {
 
 		rubiconFastlane.call();
 
-		expect(mocks.win.rubicontag.defineSlot.calls.count()).toEqual(7);
+		expect(mocks.win.rubicontag.defineSlot.calls.count()).toEqual(8);
 	});
 
 	it('Define all 3 slots for mercury skin', function () {

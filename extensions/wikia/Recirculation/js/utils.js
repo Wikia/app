@@ -104,14 +104,11 @@ define('ext.wikia.recirculation.utils', [
 	function buildLabel(element, label) {
 		var $parent = $(element).parent(),
 			slot = $parent.data('index') + 1,
-			source = $parent.data('source');
+			source = $parent.data('source') || 'undefined',
+			isVideo = $parent.hasClass('is-video') ? 'video' : 'not-video',
+			parts = [label, 'slot-' + slot, source, isVideo];
 
-		label = label + '=slot-' + slot;
-		if (source) {
-			label = label + '=' + source;
-		}
-
-		return label;
+		return parts.join('=');
 	}
 
 	function addUtmTracking(items, placement) {

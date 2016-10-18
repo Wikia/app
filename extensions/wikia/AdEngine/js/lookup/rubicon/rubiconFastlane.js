@@ -1,22 +1,30 @@
 /*global define*/
 define('ext.wikia.adEngine.lookup.rubicon.rubiconFastlane', [
 	'ext.wikia.adEngine.adContext',
+	'ext.wikia.adEngine.context.slotsContext',
 	'ext.wikia.adEngine.lookup.lookupFactory',
 	'ext.wikia.adEngine.lookup.rubicon.rubiconTargeting',
 	'wikia.document',
 	'wikia.log',
 	'wikia.window'
-], function (adContext, factory, rubiconTargeting, doc, log, win) {
+], function (adContext, slotsContext, factory, rubiconTargeting, doc, log, win) {
 	'use strict';
 
 	var config = {
-			// check also method configureSlots() as it's overriding defaults
 			oasis: {
 				TOP_LEADERBOARD: {
 					sizes: [[728, 90], [970, 250]],
 					targeting: {loc: 'top'}
 				},
+				HOME_TOP_LEADERBOARD: {
+					sizes: [[728, 90], [970, 250]],
+					targeting: {loc: 'top'}
+				},
 				TOP_RIGHT_BOXAD: {
+					sizes: [[300, 250], [300, 600], [300, 1050]],
+					targeting: {loc: 'top'}
+				},
+				HOME_TOP_RIGHT_BOXAD: {
 					sizes: [[300, 250], [300, 600], [300, 1050]],
 					targeting: {loc: 'top'}
 				},
@@ -32,8 +40,16 @@ define('ext.wikia.adEngine.lookup.rubicon.rubiconFastlane', [
 					sizes: [[120, 600], [160, 600], [300, 250], [300, 600]],
 					targeting: {loc: 'hivi'}
 				},
+				INVISIBLE_HIGH_IMPACT_2: {
+					sizes: [[728, 90], [970, 250], [480, 320], [300, 250], [300, 600], [320, 480]],
+					targeting: {loc: 'hivi'}
+				},
 				PREFOOTER_LEFT_BOXAD: {
 					sizes: [[300, 250], [336, 280]],
+					targeting: {loc: 'footer'}
+				},
+				PREFOOTER_MIDDLE_BOXAD: {
+					sizes: [[300, 250]],
 					targeting: {loc: 'footer'}
 				},
 				PREFOOTER_RIGHT_BOXAD: {
@@ -124,43 +140,11 @@ define('ext.wikia.adEngine.lookup.rubicon.rubiconFastlane', [
 		});
 	}
 
-	function configureHomePageSlots() {
-		var slotName;
-		for (slotName in slots) {
-			if (slots.hasOwnProperty(slotName) && slotName.indexOf('TOP') > -1) {
-				slots['HOME_' + slotName] = slots[slotName];
-				delete slots[slotName];
-			}
-		}
-		slots.PREFOOTER_MIDDLE_BOXAD = {
-			sizes: [[300, 250]],
-			targeting: {loc: 'footer'}
-		};
-	}
-
 	function configureSlots(skin) {
-		slots = config[skin];
-		if (skin === 'oasis' && context.targeting.pageType === 'home') {
-			configureHomePageSlots();
-		}
+		slots = slotsContext.filterSlotMap(config[skin]);
 
 		if (context.opts.overridePrefootersSizes) {
 			slots.PREFOOTER_LEFT_BOXAD.sizes = [[300, 250], [336, 280], [468, 60], [728, 90]];
-			delete slots.PREFOOTER_RIGHT_BOXAD;
-		}
-
-		if (context.slots.invisibleHighImpact2) {
-			slots.INVISIBLE_HIGH_IMPACT_2 = {
-				sizes: [[728, 90], [970, 250], [480, 320], [300, 250], [300, 600], [320, 480]],
-				targeting: {loc: 'hivi'}
-			};
-		}
-
-		if (context.slots.incontentLeaderboard) {
-			slots.INCONTENT_LEADERBOARD = {
-				sizes: [[300, 250], [728, 90], [468, 60]],
-				targeting: {loc: 'hivi'}
-			};
 		}
 	}
 

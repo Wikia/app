@@ -253,6 +253,7 @@ $hover-transition-duration: 300ms !default;
 	}
 
 	&__search-input {
+		-webkit-appearance: none;
 		border: 0;
 		box-sizing: border-box;
 		color: $color-dark-gray;
@@ -270,7 +271,7 @@ $hover-transition-duration: 300ms !default;
 		right: 0;
 		top: 0;
 		transition: padding $search-transition-duration;
-		-webkit-appearance: none;
+		width: 100%;
 
 		&::-webkit-search-decoration,
 		&::-webkit-search-cancel-button {

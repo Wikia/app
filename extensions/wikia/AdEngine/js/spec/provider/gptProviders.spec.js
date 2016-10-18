@@ -119,7 +119,7 @@ describe('ext.wikia.adEngine.provider.*', function () {
 
 	beforeEach(function () {
 		mocks.context.opts.overridePrefootersSizes = false;
-		mocks.context.slots.incontentLeaderboardAsOutOfPage = false;
+		mocks.context.opts.incontentLeaderboardAsOutOfPage = false;
 	});
 
 	it('directGpt: Push ad with specific slot sizes', function () {
@@ -157,7 +157,7 @@ describe('ext.wikia.adEngine.provider.*', function () {
 	});
 
 	it('directGpt: Push ad with overridden incontent leaderboard', function () {
-		mocks.context.slots.incontentLeaderboardAsOutOfPage = true;
+		mocks.context.opts.incontentLeaderboardAsOutOfPage = true;
 		var expectedSizes = {
 			INCONTENT_LEADERBOARD: 'out-of-page'
 		};
@@ -200,7 +200,7 @@ describe('ext.wikia.adEngine.provider.*', function () {
 	});
 
 	it('remnantGpt: Push ad with overridden incontent leaderboard', function () {
-		mocks.context.slots.incontentLeaderboardAsOutOfPage = true;
+		mocks.context.opts.incontentLeaderboardAsOutOfPage = true;
 		var expectedSizes = {
 			INCONTENT_LEADERBOARD: 'out-of-page'
 		};
