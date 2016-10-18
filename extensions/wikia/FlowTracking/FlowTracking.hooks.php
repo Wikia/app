@@ -3,6 +3,7 @@
 class FlowTrackingHooks {
 	const CREATE_PAGE_ARTICLE_REDLINK = 'create-page-article-redlink';
 	const CREATE_PAGE_CONTRIBUTE_BUTTON = 'create-page-contribute-button';
+	const CREATE_PAGE_CREATE_BOX = 'create-page-create-box';
 	const CREATE_PAGE_INPUT_BOX = 'create-page-input-box';
 	const CREATE_PAGE_CREATE_BUTTON = 'create-page-create-button';
 	const CREATE_PAGE_DIRECT_URL = 'create-page-direct-url';
@@ -16,6 +17,7 @@ class FlowTrackingHooks {
 		$vars[ 'wgFlowTrackingFlows' ] = [
 			'CREATE_PAGE_ARTICLE_REDLINK' => static::CREATE_PAGE_ARTICLE_REDLINK,
 			'CREATE_PAGE_CONTRIBUTE_BUTTON' => static::CREATE_PAGE_CONTRIBUTE_BUTTON,
+			'CREATE_PAGE_CREATE_BOX' => static::CREATE_PAGE_CREATE_BOX,
 			'CREATE_PAGE_INPUT_BOX' => static::CREATE_PAGE_INPUT_BOX,
 			'CREATE_PAGE_CREATE_BUTTON' => static::CREATE_PAGE_CREATE_BUTTON,
 			'CREATE_PAGE_DIRECT_URL' => static::CREATE_PAGE_DIRECT_URL,
