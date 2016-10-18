@@ -61,8 +61,7 @@ define('ext.wikia.adEngine.template.bfaa', [
 
 		show: function (iframe, params) {
 			var spotlightFooter = doc.getElementById('SPOTLIGHT_FOOTER'),
-				adContainer = doc.getElementById(params.slotName),
-				video;
+				adContainer = doc.getElementById(params.slotName);
 
 			nav.style.top = '';
 			page.classList.add('bfaa-template');
@@ -88,11 +87,13 @@ define('ext.wikia.adEngine.template.bfaa', [
 			}
 
 			if (params.video && params.videoTriggerElement) {
-				video = uapVideoAd(doc.getElementById(params.slotName), params.video);
-
 				slotTweaker.onReady(params.slotName, function(iframe) {
-					video.registerImageContainer(iframe.parentNode.parentNode.parentNode);
-					video.launchVideoOn('click', params.videoTriggerElement);
+					var image = iframe.parentNode.parentNode.parentNode,
+						video = uapVideoAd.init(doc.getElementById(params.slotName), image, params.video);
+
+					params.videoTriggerElement.addEventListener('click', function () {
+						uapVideoAd.playAndToggle(video, image);
+					});
 				});
 			}
 		}

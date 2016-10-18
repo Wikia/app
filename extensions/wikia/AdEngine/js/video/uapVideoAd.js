@@ -5,47 +5,41 @@ define('ext.wikia.adEngine.video.uapVideoAd', [
 ], function (DOMElementTweaker, doc) {
 	'use strict';
 
-	function toggle(showAd) {
+	function toggle(video, image, showAd) {
 		if (showAd) {
-			DOMElementTweaker.hide(this.video, false);
-			DOMElementTweaker.removeClass(this.image, 'hidden');
+			DOMElementTweaker.hide(video, false);
+			DOMElementTweaker.removeClass(image, 'hidden');
 		} else {
-			DOMElementTweaker.hide(this.image, false);
-			DOMElementTweaker.removeClass(this.video, 'hidden');
+			DOMElementTweaker.hide(image, false);
+			DOMElementTweaker.removeClass(video, 'hidden');
 		}
 	}
 
-	function registerImageContainer(imageContainer) {
-		this.image = imageContainer;
-	}
-
-	function launchVideoOn(eventName, element) {
-		var self = this;
-		element.addEventListener(eventName, function () {
-			self.video.play();
-			self.toggle(false);
-		});
-	}
-
-	return function (container, url) {
+	function init(container, image, url) {
 		var videoElement = doc.createElement('video');
 
 		videoElement.src = url;
 		DOMElementTweaker.hide(videoElement, false);
 		container.appendChild(videoElement);
 
-		videoElement.addEventListener('ended', function() {
-			if (this.image) {
-				this.toggle(true);
-			}
-		}.bind(videoElement));
+		onEnded(videoElement, image);
 
-		return {
-			image: null,
-			registerImageContainer: registerImageContainer,
-			toggle: toggle,
-			video: videoElement,
-			launchVideoOn: launchVideoOn
-		};
+		return videoElement;
+	}
+
+	function onEnded(video, image) {
+		video.addEventListener('ended', function () {
+			toggle(video, image, true);
+		});
+	}
+
+	function playAndToggle(video, image) {
+		video.play();
+		toggle(video, image, false);
+	}
+
+	return {
+		init: init,
+		playAndToggle: playAndToggle
 	};
 });
