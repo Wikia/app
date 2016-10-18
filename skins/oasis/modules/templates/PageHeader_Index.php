@@ -1,12 +1,4 @@
 <?php
-if ( !empty( $wg->EnableMonetizationModuleExt ) ) {
-	if ( !empty( $wg->AdDriverUseMonetizationService ) ) {
-		echo $app->renderView( 'Ad', 'Index', [ 'slotName' => 'MON_ABOVE_TITLE' ] );
-	} else if ( !empty( $monetizationModules[MonetizationModuleHelper::SLOT_TYPE_ABOVE_TITLE] ) ) {
-		echo $monetizationModules[MonetizationModuleHelper::SLOT_TYPE_ABOVE_TITLE];
-	}
-}
-
 $runNjord = ( !empty( $wg->EnableNjordExt ) && WikiaPageType::isMainPage() );
 if ( $runNjord ) {
 	// edit button with actions dropdown
@@ -104,12 +96,5 @@ if ( $runNjord ) {
 		?>
 	</header>
 	<?php
-	if ( !empty( $wg->EnableMonetizationModuleExt ) ) {
-		if ( !empty( $wg->AdDriverUseMonetizationService ) ) {
-			echo $app->renderView( 'Ad', 'Index', [ 'slotName' => 'MON_BELOW_TITLE' ] );
-		} else if ( !empty( $monetizationModules[MonetizationModuleHelper::SLOT_TYPE_BELOW_TITLE] ) ) {
-			echo $monetizationModules[MonetizationModuleHelper::SLOT_TYPE_BELOW_TITLE];
-		}
-	}
 }
 ?>
