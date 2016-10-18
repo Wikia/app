@@ -4191,7 +4191,18 @@ class User {
 	 */
 	public static function crypt( $password, $salt = false ) {
 		global $wgPasswordSalt;
-
+		// Wikia change - begin
+		// @see PLATFORM-2502 comparing new passwords in PHP code.
+		// @todo mech remove after the new password hashing is implemented (PLATFORM-2530).
+		Wikia\Logger\WikiaLogger::instance()->debug(
+			'NEW_HASHING crypt called in PHP',
+			[
+				'wgPasswordSalt' => $wgPasswordSalt,
+				'caller' => wfGetCaller(),
+				'exception' => new Exception()
+			]
+		);
+ 		// Wikia change - end
 		$hash = '';
 		if( !wfRunHooks( 'UserCryptPassword', array( &$password, &$salt, &$wgPasswordSalt, &$hash ) ) ) {
 			return $hash;
