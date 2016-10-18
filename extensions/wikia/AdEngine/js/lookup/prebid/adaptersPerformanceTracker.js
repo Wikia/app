@@ -1,10 +1,12 @@
 define('ext.wikia.adEngine.lookup.prebid.adaptersPerformanceTracker', [
 	'ext.wikia.adEngine.adTracker',
+	'ext.wikia.adEngine.utils.timeBuckets',
 	'ext.wikia.adEngine.wrappers.prebid'
-], function (adTracker, prebid) {
+], function (adTracker, timeBuckets, prebid) {
 	'use strict';
 
-	var emptyResponseMsg = 'EMPTY_RESPONSE',
+	var buckets = [0.5, 1.0, 1.5, 2.0, 2.5, 3.0],
+		emptyResponseMsg = 'EMPTY_RESPONSE',
 		notRespondedMsg = 'NO_RESPONSE',
 		responseErrorCode = 2,
 		usedMsg = 'USED';
@@ -75,12 +77,14 @@ define('ext.wikia.adEngine.lookup.prebid.adaptersPerformanceTracker', [
 	}
 
 	function getParamsFromBidForTracking(bid) {
+		var bucket = timeBuckets.getTimeBucket(buckets, bid.timeToRespond / 1000);
+
 		if (bid.getStatusCode() === responseErrorCode) {
-			return emptyResponseMsg;
+			return [emptyResponseMsg, bucket].join(';');
 		} if (bid.complete) {
-			return usedMsg;
+			return [usedMsg, bucket].join(';');
 		} else {
-			return [bid.getSize(), bid.pbMg].join(';');
+			return [bid.getSize(), bid.pbMg, bucket].join(';');
 		}
 	}
 

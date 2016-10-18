@@ -14,6 +14,11 @@ describe('ext.wikia.adEngine.lookup.prebid.adaptersPerformanceTracker', function
 					return mocks.pbjs;
 				}
 			},
+			timeBuckets: {
+				getTimeBucket: function() {
+					return '0-1.0';
+				}
+			},
 			adapterAppNexus: {
 				getName: function () {
 					return 'appnexus';
@@ -121,6 +126,7 @@ describe('ext.wikia.adEngine.lookup.prebid.adaptersPerformanceTracker', function
 	function getModule() {
 		return modules['ext.wikia.adEngine.lookup.prebid.adaptersPerformanceTracker'](
 			mocks.adTracker,
+			mocks.timeBuckets,
 			mocks.prebid
 		);
 	}
@@ -226,11 +232,11 @@ describe('ext.wikia.adEngine.lookup.prebid.adaptersPerformanceTracker', function
 			},
 			expected: {
 				appnexus: {
-					TOP_LEADERBOARD: '100x100;0.00',
+					TOP_LEADERBOARD: '100x100;0.00;0-1.0',
 					TOP_RIGHT_BOXAD: 'NO_RESPONSE'
 				},
 				indexExchange: {
-					TOP_LEADERBOARD: '200x200;1.00'
+					TOP_LEADERBOARD: '200x200;1.00;0-1.0'
 				}
 			},
 			message: 'Only returned bids are updated in map'
@@ -254,11 +260,11 @@ describe('ext.wikia.adEngine.lookup.prebid.adaptersPerformanceTracker', function
 			},
 			expected: {
 				appnexus: {
-					TOP_LEADERBOARD: 'EMPTY_RESPONSE',
+					TOP_LEADERBOARD: 'EMPTY_RESPONSE;0-1.0',
 					TOP_RIGHT_BOXAD: 'NO_RESPONSE'
 				},
 				indexExchange: {
-					TOP_LEADERBOARD: '200x200;1.00'
+					TOP_LEADERBOARD: '200x200;1.00;0-1.0'
 				}
 			},
 			message: 'if no bids for slot are returned map stays untouched'
@@ -285,8 +291,8 @@ describe('ext.wikia.adEngine.lookup.prebid.adaptersPerformanceTracker', function
 			},
 			expected: {
 				appnexus: {
-					TOP_LEADERBOARD: '100x100;0.00',
-					TOP_RIGHT_BOXAD: '100x100;0.00'
+					TOP_LEADERBOARD: '100x100;0.00;0-1.0',
+					TOP_RIGHT_BOXAD: '100x100;0.00;0-1.0'
 				},
 				indexExchange: {
 					TOP_LEADERBOARD: 'NO_RESPONSE'
@@ -316,8 +322,8 @@ describe('ext.wikia.adEngine.lookup.prebid.adaptersPerformanceTracker', function
 			},
 			expected: {
 				appnexus: {
-					TOP_LEADERBOARD: 'USED',
-					TOP_RIGHT_BOXAD: '100x100;0.00'
+					TOP_LEADERBOARD: 'USED;0-1.0',
+					TOP_RIGHT_BOXAD: '100x100;0.00;0-1.0'
 				},
 				indexExchange: {
 					TOP_LEADERBOARD: 'NO_RESPONSE'
