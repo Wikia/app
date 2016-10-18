@@ -6,6 +6,7 @@ class FlowTrackingHooks {
 	const CREATE_PAGE_INPUT_BOX = 'create-page-input-box';
 	const CREATE_PAGE_CREATE_BUTTON = 'create-page-create-button';
 	const CREATE_PAGE_DIRECT_URL = 'create-page-direct-url';
+	const CREATE_PAGE_SPECIAL_CREATE_PAGE = 'create-page-special-create-page';
 	const CREATE_PAGE_SPECIAL_REDLINK = 'create-page-special-redlink';
 	const CREATE_PAGE_UNRECOGNIZED_FLOW = 'create-page-unrecognized';
 
@@ -18,6 +19,7 @@ class FlowTrackingHooks {
 			'CREATE_PAGE_INPUT_BOX' => static::CREATE_PAGE_INPUT_BOX,
 			'CREATE_PAGE_CREATE_BUTTON' => static::CREATE_PAGE_CREATE_BUTTON,
 			'CREATE_PAGE_DIRECT_URL' => static::CREATE_PAGE_DIRECT_URL,
+			'CREATE_PAGE_SPECIAL_CREATE_PAGE' => static::CREATE_PAGE_SPECIAL_CREATE_PAGE,
 			'CREATE_PAGE_SPECIAL_REDLINK' => static::CREATE_PAGE_SPECIAL_REDLINK,
 			'CREATE_PAGE_UNRECOGNIZED_FLOW' => static::CREATE_PAGE_UNRECOGNIZED_FLOW,
 		];
