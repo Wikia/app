@@ -1,3 +1,4 @@
+/*global describe, expect, it, jasmine, modules*/
 describe('ext.wikia.adEngine.lookup.prebid.adapters.indexExchange', function () {
 	'use strict';
 
@@ -7,11 +8,17 @@ describe('ext.wikia.adEngine.lookup.prebid.adapters.indexExchange', function () 
 		},
 		geo: {
 			isProperGeo: jasmine.createSpy('isProperGeo')
+		},
+		slotsContext: {
+			filterSlotMap: function (map) {
+				return map;
+			}
 		}
 	};
 
 	function getIndexExchange() {
 		return modules['ext.wikia.adEngine.lookup.prebid.adapters.indexExchange'](
+			mocks.slotsContext,
 			mocks.geo,
 			mocks.instantGlobals
 		);

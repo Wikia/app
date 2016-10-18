@@ -1,16 +1,14 @@
 /*global define*/
 define('ext.wikia.adEngine.slot.highImpact', [
-	'ext.wikia.adEngine.adContext',
-	'ext.wikia.adEngine.slotTweaker',
+	'ext.wikia.adEngine.context.slotsContext',
 	'wikia.window'
-], function (adContext, slotTweaker, win) {
+], function (slotsContext, win) {
 	'use strict';
 
-	var context = adContext.getContext(),
-		slotName = 'INVISIBLE_HIGH_IMPACT_2';
+	var slotName = 'INVISIBLE_HIGH_IMPACT_2';
 
 	function init() {
-		if (context.slots.invisibleHighImpact2) {
+		if (slotsContext.isApplicable(slotName)) {
 			win.adslots2.push({
 				slotName: slotName
 			});

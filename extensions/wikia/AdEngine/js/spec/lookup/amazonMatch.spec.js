@@ -21,6 +21,7 @@ describe('Method ext.wikia.adEngine.lookup.amazonMatch', function () {
 	function getModule() {
 		return modules['ext.wikia.adEngine.lookup.amazonMatch'](
 			mocks.adContext,
+			mocks.slotsContext,
 			getFactory(),
 			mocks.document,
 			mocks.log,
@@ -43,6 +44,11 @@ describe('Method ext.wikia.adEngine.lookup.amazonMatch', function () {
 					slots: noop,
 					targeting: mocks.targeting
 				};
+			}
+		},
+		slotsContext: {
+			filterSlotMap: function (map) {
+				return map;
 			}
 		},
 		adTracker: {
