@@ -7,7 +7,7 @@ namespace Email;
  * @package Email
  */
 class SocialLinksGenerator {
-	
+
 	const SOCIAL_MEDIA = [
 		'en' => [
 			'Facebook' => [
@@ -32,6 +32,13 @@ class SocialLinksGenerator {
 			],
 		],
 		'zh' => [
+			'Facebook' => [
+				'url' => 'https://www.facebook.com/fandom.zh',
+				'footerIcon' => 'Facebook-Icon-2x.png',
+				'welcomeIcon' => 'Connect-FB.png',
+			],
+		],
+		'zh-hans' => [
 			'Facebook' => [
 				'url' => 'https://www.facebook.com/fandom.zh',
 				'footerIcon' => 'Facebook-Icon-2x.png',
