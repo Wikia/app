@@ -1,3 +1,20 @@
 .skin-oasis .add-new-page-experiment-element {
 	display: none;
 }
+
+.WikiHeader {
+	.buttons {
+		> .contribute.add-new-page-experiment-element:hover {
+			@include linear-gradient(darken($color-buttons, 4%), top, darken($color-button-highlight, 4%), 35%, darken($color-buttons, 4%), 65%);
+		}
+	}
+}
+
+.WikiaPageHeader {
+	.wikia-button.createpage.add-new-page-experiment-element {
+		float: right;
+		clear: both;
+		display: block;
+		margin-top: 4px;
+	}
+}
