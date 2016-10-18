@@ -30,7 +30,7 @@ define(
 		}
 
 		function trackOnSpecialCreatePageLoad(editor, title) {
-			var qs = new QueryString(),
+			var qs = new QueryString(window.location),
 				// 'flow' is the parameter passed in the url if user has started a flow already
 				flowParam = qs.getVal('flow', false),
 				tracked = qs.getVal('tracked', false);
@@ -72,6 +72,8 @@ define(
 
 		function isTitleInMainNamespace(title) {
 			var namespace;
+
+			title = title || '';
 
 			if (title.indexOf(':')) {
 				namespace = title.split(':')[0].toLowerCase();
