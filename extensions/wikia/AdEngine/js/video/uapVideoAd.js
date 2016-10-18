@@ -19,6 +19,14 @@ define('ext.wikia.adEngine.video.uapVideoAd', [
 		this.image = imageContainer;
 	}
 
+	function launchVideoOn(eventName, element) {
+		var self = this;
+		element.addEventListener(eventName, function () {
+			self.video.play();
+			self.toggle(false);
+		});
+	}
+
 	return function (container, url) {
 		var videoElement = doc.createElement('video');
 
@@ -30,13 +38,14 @@ define('ext.wikia.adEngine.video.uapVideoAd', [
 			if (this.image) {
 				this.toggle(true);
 			}
-		});
+		}.bind(videoElement));
 
 		return {
 			image: null,
 			registerImageContainer: registerImageContainer,
 			toggle: toggle,
-			video: videoElement
+			video: videoElement,
+			launchVideoOn: launchVideoOn
 		};
 	};
 });
