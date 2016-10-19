@@ -2,7 +2,6 @@
 @import 'skins/shared/color';
 
 @import 'avatar';
-@import 'clamp';
 @import 'ShareModal';
 
 $reply-icon: '/extensions/wikia/EmbeddableDiscussions/images/reply.svg';
@@ -78,10 +77,6 @@ $discussion-deleted-actions-opacity: 0.5;
 		z-index: 1;
 	}
 
-	.clamp {
-		@include clamp(3);
-	}
-
 	.embeddable-discussions-default-avatar {
 		background: url($default-avatar-icon) no-repeat;
 		height: $avatar-size;
@@ -134,6 +129,10 @@ $discussion-deleted-actions-opacity: 0.5;
 	}
 
 	.embeddable-discussions-post-actions li {
+		&.is-deleted {
+			opacity: 0;
+		}
+		
 		color: $gray;
 		cursor: pointer;
 		text-align: center;
