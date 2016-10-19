@@ -48,21 +48,11 @@
 							{{# icons.FandomLogoFooter}}<img src="{{url}}" alt="Fandom">{{/ icons.FandomLogoFooter}}
 						</a>
 						<p class="social-links">
-							<a class="facebook" href="{{socialMessages.facebook-link}}" >
-								{{# icons.Facebook}}<img src="{{url}}" alt="{{socialMessages.facebook}}">{{/ icons.Facebook}}
-							</a>
-							<a class="twitter" href="{{socialMessages.twitter-link}}" >
-								{{# icons.Twitter}}<img src="{{url}}" alt="{{socialMessages.twitter}}">{{/ icons.Twitter}}
-							</a>
-							<a class="reddit" href="{{socialMessages.reddit-link}}" >
-								{{# icons.Reddit}}<img src="{{url}}" alt="{{socialMessages.reddit}}">{{/ icons.Reddit}}
-							</a>
-							<a class="youtube" href="{{socialMessages.youtube-link}}" >
-								{{# icons.YouTube}}<img src="{{url}}" alt="{{socialMessages.youtube}}">{{/ icons.YouTube}}
-							</a>
-							<a class="instagram" href="{{socialMessages.instagram-link}}" >
-								{{# icons.Instagram}}<img src="{{url}}" alt="{{socialMessages.instagram}}">{{/ icons.Instagram}}
-							</a>
+							{{#socialIcons}}
+								<a class="{{iconClass}}" href="{{iconLink}}" >
+									<img src="{{iconSrc}}" alt="{{iconAlt}}">
+								</a>
+							{{/socialIcons}}
 						</p>
 
 						{{#footerMessages}}

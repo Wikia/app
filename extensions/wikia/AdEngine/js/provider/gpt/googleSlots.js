@@ -21,7 +21,7 @@ define('ext.wikia.adEngine.provider.gpt.googleSlots', [
 	function getSlot(id) {
 		var slotId = id;
 
-		if (recoveryHelper.isRecoveryEnabled() && recoveryHelper.isBlocking()) {
+		if (recoveryHelper.isRecoveryEnabled() && recoveryHelper.isBlocking() && win._sp_.getElementId) {
 			slotId = win._sp_.getElementId(slotId);
 		}
 

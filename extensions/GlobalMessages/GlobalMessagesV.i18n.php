@@ -33,8 +33,8 @@ See [[Special:Version|version page]].',
 	'video-dims' => '$1, $2 × $3',
 	'variantname-zh-hans' => 'hans',
 	'variantname-zh-hant' => 'hant',
-	'variantname-zh-cn' => 'cn',
-	'variantname-zh-tw' => 'tw',
+	'variantname-zh-cn' => '简体',
+	'variantname-zh-tw' => '正體',
 	'variantname-zh-hk' => 'hk',
 	'variantname-zh-mo' => 'mo',
 	'variantname-zh-sg' => 'sg',
@@ -2332,6 +2332,7 @@ Eine [{{SERVER}}{{SCRIPTPATH}}/COPYING Kopie der \'\'GNU General Public License\
 	'vertical-comics' => 'Comics',
 	'vertical-lifestyle' => 'Lifestyle',
 	'vertical-movies' => 'Filme',
+	'var_set' => 'stellte den $2 auf "$3"',
 ];
 
 $messages['de-ch'] = [
@@ -2719,10 +2720,10 @@ $1',
 	'version-variables' => 'Variables',
 	'version-antispam' => 'Prevención de spam',
 	'version-skins' => 'Pieles',
-	'version-other' => 'Otro',
+	'version-other' => 'Otras',
 	'version-mediahandlers' => 'Manejadores multimedia',
 	'version-hooks' => 'Extensiones',
-	'version-extension-functions' => 'Funciones de extensiones',
+	'version-extension-functions' => 'Funciones de la extensión',
 	'version-parser-extensiontags' => 'Etiquetas de extensiones sintácticas',
 	'version-parser-function-hooks' => 'Extensiones de funciones sintácticas',
 	'version-hook-name' => 'Nombre de la extensión',
@@ -2746,6 +2747,8 @@ Has recibido [{{SERVER}}{{SCRIPTPATH}}/COPYING una copia de la Licencia Pública
 	'vertical-lifestyle' => 'Estilo de vida',
 	'vertical-music' => 'Música',
 	'vertical-movies' => 'Películas',
+	'var_set' => 'cambia la $2 a "$3"',
+	'version-file-extensions-allowed' => 'Extensiones de archivos permitidas para su subida',
 ];
 
 $messages['et'] = [
@@ -3125,9 +3128,9 @@ $1',
 	'version' => 'Version',
 	'version-extensions' => 'Extensions installées',
 	'version-specialpages' => 'Pages spéciales',
-	'version-parserhooks' => 'Greffons de l’analyseur syntaxique',
+	'version-parserhooks' => 'Greffons parseurs',
 	'version-variables' => 'Variables',
-	'version-antispam' => 'Prévention du pourriel',
+	'version-antispam' => 'Prévention du spam',
 	'version-skins' => 'Habillages',
 	'version-other' => 'Divers',
 	'version-mediahandlers' => 'Manipulateurs de médias',
@@ -3153,7 +3156,11 @@ Vous devriez avoir reçu [{{SERVER}}{{SCRIPTPATH}}/COPYING une copie de la Licen
 	'vertical-games' => 'Jeux vidéo',
 	'vertical-books' => 'Littérature',
 	'vertical-lifestyle' => 'Mode de vie',
-	'vertical-movies' => 'Films',
+	'vertical-movies' => 'Cinéma',
+	'var_set' => 'a changé le $2 en "$3"',
+	'version-file-extensions-allowed' => 'Extensions de fichier autorisées pour l\'importation',
+	'vertical-comics' => 'BD',
+	'vertical-music' => 'Musique',
 ];
 
 $messages['frc'] = [
@@ -4592,6 +4599,7 @@ Questo programma deve essere distribuito assieme ad [{{SERVER}}{{SCRIPTPATH}}/CO
 	'version-software' => 'Software installato',
 	'version-software-product' => 'Prodotto',
 	'version-software-version' => 'Versione',
+	'video-dims' => '$1, $2 × $3',
 ];
 
 $messages['iu'] = [
@@ -4738,10 +4746,11 @@ MediaWikiは、有用であることを期待して配布されていますが�
 	'version-software-version' => 'バージョン',
 	'vertical-tv' => 'テレビ番組',
 	'vertical-games' => 'ゲーム',
-	'vertical-books' => '性格診断テスト',
+	'vertical-books' => '本',
 	'vertical-comics' => '漫画',
 	'vertical-lifestyle' => 'ライフスタイル',
 	'vertical-movies' => '映画',
+	'var_set' => '"$2"を"$3"に設定しました',
 ];
 
 $messages['jam'] = [
@@ -5409,6 +5418,13 @@ $1',
 	'version-software' => '설치된 프로그램',
 	'version-software-product' => '제품',
 	'version-software-version' => '버전',
+	'vertical-books' => '책',
+	'vertical-comics' => '만화',
+	'vertical-games' => '게임',
+	'vertical-lifestyle' => '생활',
+	'vertical-movies' => '영화',
+	'vertical-music' => '음악',
+	'vertical-tv' => 'TV',
 ];
 
 $messages['ko-kp'] = [
@@ -7179,7 +7195,7 @@ $messages['nl'] = [
 	'viewcount' => 'Deze pagina is {{PLURAL:$1|één keer|$1 keer}} bekeken.',
 	'view-pool-error' => 'Sorry, de servers zijn op het moment overbelast.
 Te veel gebruikers proberen deze pagina te bekijken.
-Wacht alstublieft even voordat u opnieuw toegang probeert te krijgen tot deze pagina.
+Wacht alstublieft even voordat je opnieuw toegang probeert te krijgen tot deze pagina.
 
 $1',
 	'versionrequired' => 'Versie $1 van MediaWiki is vereist',
@@ -7190,7 +7206,7 @@ Meer informatie is beschikbaar op de pagina [[Special:Version|softwareversie]].'
 	'viewdeleted' => '$1 bekijken?',
 	'viewsource' => 'Brontekst bekijken',
 	'viewsource-title' => 'Brontekst bekijken van $1',
-	'viewsourcetext' => 'U kunt de brontekst van deze pagina bekijken en kopiëren:',
+	'viewsourcetext' => 'Je kunt de brontekst van deze pagina bekijken en kopiëren:',
 	'viewyourtext' => 'U kunt \'\'\'uw bewerkingen\'\'\' aan de brontekst van deze pagina bekijken en kopiëren:',
 	'virus-badscanner' => 'Onjuiste configuratie: onbekende virusscanner: \'\'$1\'\'.',
 	'virus-scanfailed' => 'scannen is mislukt (code $1)',
@@ -7218,14 +7234,21 @@ Meer informatie is beschikbaar op de pagina [[Special:Version|softwareversie]].'
 	'version-license' => 'Licentie',
 	'version-poweredby-credits' => 'Deze wiki wordt aangedreven door \'\'\'[//www.mediawiki.org/ MediaWiki]\'\'\', copyright © 2001-$1 $2.',
 	'version-poweredby-others' => 'anderen',
-	'version-license-info' => 'MediaWiki is vrije software; u kunt MediaWiki verspreiden en/of aanpassen onder de voorwaarden van de GNU General Public License zoals gepubliceerd door de Free Software Foundation; ofwel versie 2 van de Licentie, of - naar uw wens - enige latere versie.
+	'version-license-info' => 'MediaWiki is vrije software; je kunt MediaWiki verspreiden en/of aanpassen onder de voorwaarden van de GNU General Public License zoals gepubliceerd door de Free Software Foundation; ofwel versie 2 van de Licentie, of - zo je wilt - enige latere versie.
 
-MediaWiki wordt verspreid in de hoop dat het nuttig is, maar ZONDER ENIGE GARANTIE; zonder zelfs de impliciete garantie van VERKOOPBAARHEID of GESCHIKTHEID VOOR ENIG DOEL IN HET BIJZONDER. Zie de GNU General Public License voor meer informatie.
+MediaWiki wordt verspreid in de hoop dat het nuttig is, maar ZONDER ENIGE GARANTIE; zonder zelfs de implicitiete garantie van VERKOOPBAARHEID of GESCHIKHEID VOOR ENIG DOEL IN HET BIJZONDER. Zie de GNU General Public License voor meer informatie.
 
-Samen met dit programma hoort u een [{{SERVER}}{{SCRIPTPATH}}/COPYING kopie van de GNU General Public License] te hebben ontvangen; zo niet, schrijf dan naar de Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA of [//www.gnu.org/licenses/old-licenses/gpl-2.0.html lees de licentie online].',
+Samen met dit programma hoor je een [{{SERVER}}{{SCRIPTPATH}}/COPYING kopie van de GNU General Public License] te hebben ontvangen; zo niet, schrijf dan naar de Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA of [http://www.gnu.org/licenses/old-licenses/gpl-2.0.html lees de licentie online].',
 	'version-software' => 'Geïnstalleerde software',
 	'version-software-product' => 'Product',
 	'version-software-version' => 'Versie',
+	'vertical-books' => 'Boeken',
+	'vertical-comics' => 'Strips',
+	'vertical-games' => 'Games',
+	'vertical-lifestyle' => 'Lifestyle',
+	'vertical-movies' => 'Films',
+	'vertical-music' => 'Muziek',
+	'vertical-tv' => 'TV',
 ];
 
 $messages['nl-informal'] = [
@@ -7639,7 +7662,7 @@ $1',
 	'version-hook-subscribedby' => 'Zapotrzebowany przez',
 	'version-version' => '(Wersja $1)',
 	'version-license' => 'Licencja',
-	'version-poweredby-credits' => 'To wiki korzysta z oprogramowania \'\'\'[//www.mediawiki.org/ MediaWiki]\'\'\', copyright © 2001‐$1 $2.',
+	'version-poweredby-credits' => 'Ta wiki korzysta z oprogramowania \'\'\'[//www.mediawiki.org/ MediaWiki]\'\'\', copyright © 2001‐$1 $2.',
 	'version-poweredby-others' => 'inni',
 	'version-license-info' => 'MediaWiki jest wolnym oprogramowaniem – możesz je dystrybuować i modyfikować zgodnie z warunkami licencji GNU General Public License opublikowanej przez Free Software Foundation w wersji 2 tej licencji lub (jeśli wolisz) dowolnej późniejszej.
 
@@ -8353,12 +8376,19 @@ $1',
 	'version-poweredby-others' => 'другие',
 	'version-license-info' => 'MediaWiki является свободным программным обеспечением, которое вы можете распространять и/или изменять в соответствии с условиями лицензии GNU General Public License, опубликованной фондом свободного программного обеспечения; второй версии, либо любой более поздней версии.
 
-MediaWiki распространяется в надежде, что она будет полезной, но БЕЗ КАКИХ-ЛИБО ГАРАНТИЙ, даже без подразумеваемых гарантий КОММЕРЧЕСКОЙ ЦЕННОСТИ или ПРИГОДНОСТИ ДЛЯ ОПРЕДЕЛЕННОЙ ЦЕЛИ. См. лицензию GNU General Public License для более подробной информации.
+MediaWiki распространяется с надеждой на то, что будет полезным программным продуктом, но БЕЗ КАКИХ-ЛИБО ГАРАНТИЙ и без подразумеваемых гарантий КОММЕРЧЕСКОЙ ЦЕННОСТИ или СООТВЕТСТВИЯ КАКОЙ-ЛИБО ОПРЕДЕЛЁННОЙ ЦЕЛИ. См. лицензию GNU General Public License для более подробной информации.
 
-Вы должны были получить [{{SERVER}}{{SCRIPTPATH}}/COPYING копию GNU General Public License] вместе с этой программой, если нет, то напишите Free Software Foundation, Inc., по адресу: 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA или [//www.gnu.org/licenses/old-licenses/gpl-2.0.html прочтите её онлайн].',
+Вместе с данным программным обеспечением вы должны были получить [{{SERVER}}{{SCRIPTPATH}}/COPYING копию GNU General Public License] вместе с этой программой для ознакомления, если нет, то напишите Free Software Foundation, Inc., по адресу: 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA или [//www.gnu.org/licenses/old-licenses/gpl-2.0.html прочтите её онлайн].',
 	'version-software' => 'Установленное программное обеспечение',
 	'version-software-product' => 'Продукт',
 	'version-software-version' => 'Версия',
+	'vertical-books' => 'Книги',
+	'vertical-comics' => 'Комиксы',
+	'vertical-games' => 'Видеоигры',
+	'vertical-lifestyle' => 'Увлечения',
+	'vertical-movies' => 'Кино',
+	'vertical-music' => 'Музыка',
+	'vertical-tv' => 'Телевидение',
 ];
 
 $messages['rue'] = [
@@ -10542,6 +10572,13 @@ hoặc [//www.gnu.org/licenses/old-licenses/gpl-2.0.html đọc nó trực tuy�
 	'version-software' => 'Phần mềm được cài đặt',
 	'version-software-product' => 'Phần mềm',
 	'version-software-version' => 'Phiên bản',
+	'vertical-books' => 'Sách',
+	'vertical-comics' => 'Truyện tranh',
+	'vertical-games' => 'Trò chơi',
+	'vertical-lifestyle' => 'Lối sống',
+	'vertical-movies' => 'Phim ảnh',
+	'vertical-music' => 'Âm nhạc',
+	'vertical-tv' => 'Truyền hình',
 ];
 
 $messages['vls'] = [
@@ -10945,6 +10982,13 @@ $messages['zh'] = [
 	'variantname-zh-sg' => 'disable',
 	'variantname-zh-my' => 'disable',
 	'variantname-zh' => 'disable',
+	'vertical-books' => '阅读新知',
+	'vertical-comics' => '动漫',
+	'vertical-games' => '游戏',
+	'vertical-lifestyle' => '生活',
+	'vertical-movies' => '电影',
+	'vertical-music' => '音乐',
+	'vertical-tv' => '电视',
 ];
 
 $messages['zh-classical'] = [
@@ -11022,6 +11066,13 @@ MediaWiki是基于使用目的而加以发布，然而不负任何担保责任�
 	'version-software' => '已安装的软件',
 	'version-software-product' => '产品',
 	'version-software-version' => '版本',
+	'vertical-books' => '阅读新知',
+	'vertical-comics' => '动漫',
+	'vertical-games' => '游戏',
+	'vertical-lifestyle' => '生活',
+	'vertical-movies' => '电影',
+	'vertical-music' => '音乐',
+	'vertical-tv' => '电视',
 ];
 
 $messages['zh-hant'] = [
@@ -11085,15 +11136,30 @@ MediaWiki是基於使用目的而加以發佈，然而不負任何擔保責任�
 	'version-software' => '已經安裝的軟件',
 	'version-software-product' => '產品',
 	'version-software-version' => '版本',
+	'vertical-books' => '閱讀新知',
+	'vertical-comics' => '動漫',
+	'vertical-games' => '遊戲',
+	'vertical-lifestyle' => '生活',
+	'vertical-movies' => '電影',
+	'vertical-music' => '音樂',
+	'vertical-tv' => '電視',
 ];
 
 $messages['zh-tw'] = [
 	'viewsourcetext' => '你可以檢視並複製本頁面的原始碼。',
-	'variantname-zh-tw' => '台灣繁體',
+	'variantname-zh-tw' => '台灣正體',
 	'version-parserhooks' => '語法鉤',
 	'version-hooks' => '鉤',
 	'version-parser-function-hooks' => '語法函數鉤',
 	'version-hook-name' => '鉤名',
+	'version' => '版本',
+	'vertical-books' => '閱讀新知',
+	'vertical-comics' => '動漫',
+	'vertical-games' => '遊戲',
+	'vertical-lifestyle' => '生活',
+	'vertical-movies' => '電影',
+	'vertical-music' => '音樂',
+	'vertical-tv' => '電視',
 ];
 
 $messages['zh-yue'] = [
@@ -11103,5 +11169,20 @@ $messages['zh-yue'] = [
 	'version-hooks' => '鉤',
 	'version-parser-function-hooks' => '語法函數鉤',
 	'version-hook-name' => '鉤名',
+];
+
+$messages['zh-cn'] = [
+	'version' => '版本',
+];
+
+$messages['zh-hk'] = [
+	'version' => '版本',
+	'vertical-books' => '閱讀新知',
+	'vertical-comics' => '動漫',
+	'vertical-games' => '遊戲',
+	'vertical-lifestyle' => '生活',
+	'vertical-movies' => '電影',
+	'vertical-music' => '音樂',
+	'vertical-tv' => '電視',
 ];
 

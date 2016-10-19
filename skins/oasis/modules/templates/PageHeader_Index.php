@@ -1,12 +1,4 @@
 <?php
-if ( !empty( $wg->EnableMonetizationModuleExt ) ) {
-	if ( !empty( $wg->AdDriverUseMonetizationService ) ) {
-		echo $app->renderView( 'Ad', 'Index', [ 'slotName' => 'MON_ABOVE_TITLE' ] );
-	} else if ( !empty( $monetizationModules[MonetizationModuleHelper::SLOT_TYPE_ABOVE_TITLE] ) ) {
-		echo $monetizationModules[MonetizationModuleHelper::SLOT_TYPE_ABOVE_TITLE];
-	}
-}
-
 $runNjord = ( !empty( $wg->EnableNjordExt ) && WikiaPageType::isMainPage() );
 if ( $runNjord ) {
 	// edit button with actions dropdown
@@ -39,6 +31,9 @@ if ( $runNjord ) {
 				<? if ( !is_null( $tallyMsg ) ): ?>
 					<div class="tally"><?= $tallyMsg ?></div>
 				<? endif; ?>
+				<? // TODO remove after XW-2226 is done ?>
+				<a class="wikia-button createpage add-new-page-experiment-element">Add New Page</a>
+				<? // TODO remove end ?>
 			</div>
 		</div>
 		<?php
@@ -78,6 +73,13 @@ if ( $runNjord ) {
 			</a>
 		<? endif;
 
+		?>
+
+		<? // TODO remove after XW-2226 is done ?>
+		<a class="wikia-button createpage add-new-page-experiment-element"><img class="sprite new" src="<?=wfBlankImgUrl()?>"> Add New Page</a>
+		<? // TODO remove end ?>
+		<?
+
 		// comments & like button
 		if ( !$isWallEnabled ) {
 			echo F::app()->renderView( 'CommentsLikes', 'Index', [ 'comments' => $comments ] );
@@ -94,12 +96,5 @@ if ( $runNjord ) {
 		?>
 	</header>
 	<?php
-	if ( !empty( $wg->EnableMonetizationModuleExt ) ) {
-		if ( !empty( $wg->AdDriverUseMonetizationService ) ) {
-			echo $app->renderView( 'Ad', 'Index', [ 'slotName' => 'MON_BELOW_TITLE' ] );
-		} else if ( !empty( $monetizationModules[MonetizationModuleHelper::SLOT_TYPE_BELOW_TITLE] ) ) {
-			echo $monetizationModules[MonetizationModuleHelper::SLOT_TYPE_BELOW_TITLE];
-		}
-	}
 }
 ?>

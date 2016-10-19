@@ -683,6 +683,11 @@ $messages['de'] = [
 	'overwroteimage' => 'lud eine neue Version von „[[$1]]“ hoch',
 	'othercontribs' => 'Basierend auf der Arbeit von $1.',
 	'others' => 'anderen',
+	'oasis-mobile-site' => 'Mobile Ansicht',
+	'old_skins' => 'Alte Skins',
+	'or' => 'oder',
+	'or_learn' => 'Um mehr zu erfahren,',
+	'other_people' => 'Andere Benutzer haben dies hier gesucht...',
 ];
 
 $messages['de-weigsbrag'] = [
@@ -795,6 +800,10 @@ $messages['es'] = [
 	'overwroteimage' => 'subió una nueva versión de «[[$1]]»',
 	'othercontribs' => 'Basado en el trabajo de $1.',
 	'others' => 'otros',
+	'old_skins' => 'Pieles viejas',
+	'or' => 'o',
+	'or_learn' => 'O para aprender más, mira',
+	'other_people' => 'Otras personas han estado buscando por...',
 ];
 
 $messages['et'] = [
@@ -863,6 +872,10 @@ $messages['fi'] = [
 	'overwroteimage' => 'tallensi uuden version [[$1]]',
 	'othercontribs' => 'Perustuu työlle, jonka teki $1.',
 	'others' => 'muut',
+	'old_skins' => 'Vanhat ulkoasut',
+	'or' => 'tai',
+	'or_learn' => 'Tai oppiaksesi lisää, ota',
+	'other_people' => 'Muut ihmiset ovat hakeneet seuraavia...',
 ];
 
 $messages['fiu-vro'] = [
@@ -908,6 +921,8 @@ $messages['fr'] = [
 	'overwroteimage' => 'a importé une nouvelle version de « [[$1]] »',
 	'othercontribs' => 'Basé sur le travail de $1.',
 	'others' => 'autres',
+	'oasis-mobile-site' => 'Site mobile',
+	'old_skins' => 'Anciens habillages',
 ];
 
 $messages['frc'] = [
@@ -1350,6 +1365,7 @@ $messages['it'] = [
 	'overwroteimage' => 'ha caricato una nuova versione di "[[$1]]"',
 	'othercontribs' => 'Il testo attuale è basato su contributi di $1.',
 	'others' => 'altri',
+	'oasis-mobile-site' => 'Mobile site',
 ];
 
 $messages['iu'] = [
@@ -1378,6 +1394,7 @@ $messages['ja'] = [
 	'others' => 'その他',
 	'other_people' => '他の人は、こんなことを探しています',
 	'or_learn' => 'ウィキアを知るには',
+	'old_skins' => '旧式の外装',
 ];
 
 $messages['jam'] = [
@@ -1609,6 +1626,7 @@ $messages['ko'] = [
 	'overwroteimage' => '‘[[$1]]’ 파일의 새 버전을 올렸습니다.',
 	'othercontribs' => '$1의 작업을 바탕으로 함.',
 	'others' => '기타',
+	'oasis-mobile-site' => '모바일 사이트',
 ];
 
 $messages['ko-kp'] = [
@@ -2237,6 +2255,10 @@ $messages['no'] = [
 	'overwroteimage' => 'lasta opp ein ny versjon av «[[$1]]»',
 	'othercontribs' => 'Basert på arbeid av $1.',
 	'others' => 'andre',
+	'old_skins' => 'Gamle utseender',
+	'or' => 'eller',
+	'or_learn' => 'Eller for å finne ut mer, ta',
+	'other_people' => 'Andre folk har søkt etter...',
 ];
 
 $messages['nov'] = [
@@ -2382,7 +2404,7 @@ $messages['pl'] = [
 	'ok' => 'OK',
 	'oldpassword' => 'Stare hasło',
 	'overwrite' => 'Nadpisanie istniejącego pliku nie jest dopuszczalne.',
-	'overwroteimage' => 'przesłano nową wersję pliku „[[$1]]“',
+	'overwroteimage' => 'przesłał(a) nową wersję pliku „[[$1]]”',
 	'othercontribs' => 'Inni autorzy: $1.',
 	'others' => 'inni',
 	'or' => 'lub',
@@ -3462,6 +3484,7 @@ $messages['zh-hans'] = [
 	'overwroteimage' => '上传“[[$1]]”的新版本',
 	'othercontribs' => '在$1的工作基础上。',
 	'others' => '其他',
+	'oasis-mobile-site' => '手机版网页',
 ];
 
 $messages['zh-hant'] = [
@@ -3475,10 +3498,12 @@ $messages['zh-hant'] = [
 	'overwroteimage' => '已經上傳「[[$1]]」的新版本',
 	'othercontribs' => '在$1的工作基礎上。',
 	'others' => '其他',
+	'oasis-mobile-site' => '手機版網頁',
 ];
 
 $messages['zh-hk'] = [
 	'october' => '十月',
+	'oasis-mobile-site' => '手機版網頁',
 ];
 
 $messages['zh-min-nan'] = [
@@ -3498,6 +3523,7 @@ $messages['zh-tw'] = [
 	'october-gen' => '十月',
 	'oct' => '10月',
 	'oldpassword' => '舊密碼',
+	'oasis-mobile-site' => '手機版網頁',
 ];
 
 $messages['zh-yue'] = [
@@ -3512,5 +3538,9 @@ $messages['zu'] = [
 	'october-gen' => 'u-Okthoba',
 	'otherlanguages' => 'Ngezilimi ezinahlukene',
 	'others' => 'Abanye',
+];
+
+$messages['zh'] = [
+	'oasis-mobile-site' => '手机版网页',
 ];
 

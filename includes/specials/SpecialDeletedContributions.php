@@ -71,9 +71,13 @@ class DeletedContribsPager extends IndexPager {
 	}
 
 	function getUserCond() {
-		$condition = array();
-
-		$condition['ar_user_text'] = $this->target;
+		$condition = [];
+		$uid = User::idFromName( $this->target );
+		if ( empty( $uid ) ) {
+			$condition[ 'ar_user_text' ] = $this->target;
+		} else {
+			$condition[ 'ar_user' ] = $uid;
+		}
 		$index = 'usertext_timestamp';
 
 		return array( $index, $condition );
@@ -137,7 +141,7 @@ class DeletedContribsPager extends IndexPager {
 				'id'         => $row->ar_rev_id,
 				'comment'    => $row->ar_comment,
 				'user'       => $row->ar_user,
-				'user_text'  => $row->ar_user_text,
+				'user_text' => User::getUsername( $row->ar_user, $row->ar_user_text ),
 				'timestamp'  => $row->ar_timestamp,
 				'minor_edit' => $row->ar_minor_edit,
 				'deleted'    => $row->ar_deleted,

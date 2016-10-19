@@ -1,8 +1,8 @@
 <?php
+/** Internationalization file for /extensions/wikia/RecipesTemplate/RecipesTemplate extension. */
+$messages = [];
 
-$messages = array();
-
-$messages['en'] = array(
+$messages['en'] = [
 	'recipiestemplate-desc' => 'Adds forms to help people add recipes and ingredients pages to Recipes wikis',
 	'createingredient' => 'Create an ingredient page',
 	'createrecipe' => 'Create a recipe page',
@@ -49,21 +49,20 @@ $messages['en'] = array(
 	'recipes-template-time-format' => '{{#ifexpr: $1>0 | $1 {{PLURAL:$1|hour|hours}} | }}, {{#ifexpr: $2>0 | $2 {{PLURAL:$2|minute|minutes}} | }}',
 	'recipes-template-title-format' => '$1 by $2',
 	'recipes-template-title-hint' => '"My Recipe" becomes "My Recipe by Your User Name" when published',
-	'recipes-template-title-label' => 'Title:',
+	'recipes-template-title-label' => 'Recipe Name:',
 	'recipes-template-toggle-blank-label' => 'Blank page',
 	'recipes-template-toggle-ingredient-label' => 'Ingredient Page',
 	'recipes-template-toggle-label' => 'This is a...',
 	'recipes-template-toggle-recipe-label' => 'Recipe Page',
 	'recipes-template-yields-hint' => 'How many servings, or how many individual items?',
 	'recipes-template-yields-label' => 'Yields:',
+	'recipes-template-recipe-wikitext' => '[[<<wpPhoto>>|thumb|300px]]
 
-	'recipes-template-recipe-wikitext' => "[[<<wpPhoto>>|thumb|300px]]
+\'\'\'Prep Time:\'\'\' <<wpPrepTime>>
 
-'''Prep Time:''' <<wpPrepTime>>
+\'\'\'Cook Time:\'\'\' <<wpCookTime>>
 
-'''Cook Time:''' <<wpCookTime>>
-
-'''Yields:''' <<wpYields>>
+\'\'\'Yields:\'\'\' <<wpYields>>
 
 == Description ==
 
@@ -77,9 +76,8 @@ $messages['en'] = array(
 
 <<wpDirections>>
 
-<<wpCategories>>",
-
-	'recipe-menus' => "* Course
+<<wpCategories>>',
+	'recipe-menus' => '* Course
 ** Appetizer Recipes
 ** Main Dish Recipes
 ** Side Dish Recipes
@@ -112,9 +110,8 @@ $messages['en'] = array(
 ** Romantic Recipes
 ** Easter Recipes
 ** Thanksgiving Recipes
-** Christmas Recipes",
-
-	'recipes-template-ingredient-wikitext' => "[[<<wpPhoto>>|thumb|300px]]
+** Christmas Recipes',
+	'recipes-template-ingredient-wikitext' => '[[<<wpPhoto>>|thumb|300px]]
 
 == Description ==
 
@@ -136,14 +133,19 @@ $messages['en'] = array(
 
 <<wpNutrition>>
 
-<<wpCategories>>",
-
-	'ingredient-menus' => "* Ingredient
+<<wpCategories>>',
+	'ingredient-menus' => '* Ingredient
 ** Fruits and Vegetables
 ** Meat
 ** Dairy
 ** Legumes and Nuts
 ** Sweets
 ** Grains
-** Spices",
-);
+** Spices',
+];
+
+$messages['de'] = [
+	'createfromtemplate' => '<!-- deprecated recipes ext? -->Create a page from a template',
+	'createingredient' => '<!-- deprecated recipes ext? -->Create an ingredient page',
+];
+
