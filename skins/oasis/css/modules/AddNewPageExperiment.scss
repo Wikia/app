@@ -1,0 +1,21 @@
+// TODO remove when XW-2226 is done
+
+.skin-oasis .add-new-page-experiment-element {
+	display: none;
+}
+
+.WikiHeader {
+	.buttons {
+		> .contribute.add-new-page-experiment-element:hover {
+			@include linear-gradient(darken($color-buttons, 4%), top, darken($color-button-highlight, 4%), 35%, darken($color-buttons, 4%), 65%);
+		}
+	}
+}
+
+.WikiaPageHeader {
+	.header-container .wikia-button.createpage.add-new-page-experiment-element {
+		float: right;
+		clear: both;
+		margin-top: 4px;
+	}
+}

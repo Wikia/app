@@ -39,7 +39,6 @@ class EnableDiscussionsTask extends Task {
 			->setEnableForums( false )
 			->setArchiveWikiForums( true )
 			->setEnableRecircDiscussions( true )
-			->setEnableDisCountInProfile( true )
 			->save();
 	}
 

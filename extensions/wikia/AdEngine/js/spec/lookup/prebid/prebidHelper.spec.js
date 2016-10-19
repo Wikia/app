@@ -65,11 +65,18 @@ describe('ext.wikia.adEngine.lookup.prebid.prebidHelper', function () {
 						return true;
 					}
 				}
-			]
+			],
+			adLogicZoneParams: {
+				getPageType: function () {
+					return 'article';
+				}
+			}
 		};
 
 	function getPrebidHelper() {
-		return modules['ext.wikia.adEngine.lookup.prebid.prebidHelper']();
+		return modules['ext.wikia.adEngine.lookup.prebid.prebidHelper'](
+			mocks.adLogicZoneParams
+		);
 	}
 
 	it('SetupAdUnits returns data in correct shape', function () {

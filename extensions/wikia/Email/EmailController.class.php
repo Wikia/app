@@ -270,8 +270,8 @@ abstract class EmailController extends \WikiaController {
 				'footerMobileApplicationMessages' => $this->getFooterMobileApplicationMessages(),
 				'badges' => $this->generateMobileApplicationsBadges(),
 				'marketingFooter' => $this->marketingFooter,
-				'socialMessages' => $this->getSocialMessages(),
 				'icons' => ImageHelper::getIconInfo(),
+				'socialIcons' => SocialLinksGenerator::generate( $this->targetLang ),
 				'disableInit' => true,
 			]
 		);
@@ -385,26 +385,6 @@ abstract class EmailController extends \WikiaController {
 		];
 	}
 
-	/**
-	 * Get localized strings for social networks and their URLs
-	 * @return array
-	 * @throws \MWException
-	 */
-	protected function getSocialMessages() {
-		return [
-			'facebook' => $this->getMessage( 'oasis-social-facebook' )->text(),
-			'facebook-link' => $this->getMessage( 'oasis-social-facebook-link' )->text(),
-			'twitter' => $this->getMessage( 'oasis-social-twitter' )->text(),
-			'twitter-link' => $this->getMessage( 'oasis-social-twitter-link' )->text(),
-			'youtube' => $this->getMessage( 'oasis-social-youtube' )->text(),
-			'youtube-link' => $this->getMessage( 'oasis-social-youtube-link' )->text(),
-			'reddit' => $this->getMessage( 'oasis-social-reddit' )->text(),
-			'reddit-link' => $this->getMessage( 'oasis-social-reddit-link' )->text(),
-			'instagram' => $this->getMessage( 'oasis-social-instagram' )->text(),
-			'instagram-link' => $this->getMessage( 'oasis-social-instagram-link' )->text(),
-		];
-	}
-
 	private function generateMobileApplicationsBadges() {
 		$linksGenerator = new MobileApplicationsLinksGenerator( $this->targetLang );
 		$mobileApplicationsLinks = $linksGenerator->generate( );
@@ -507,15 +487,13 @@ abstract class EmailController extends \WikiaController {
 			throw new Fatal( 'Required username has been left empty' );
 		}
 
-		// Allow an anonymous user to be specified
-		if ( $username == self::ANONYMOUS_USER_ID ) {
-			return \User::newFromId( 0 );
-		}
-
 		if ( $username instanceof \User ) {
 			$user = $username;
 		} else if ( is_object( $username ) ) {
 			throw new Fatal( 'Non-user object passed when user object or username expected' );
+		} else if ( $username == self::ANONYMOUS_USER_ID ) {
+			// Allow an anonymous user to be specified
+			return \User::newFromId( 0 );
 		} else {
 			$user = \User::newFromName( $username, $validate = false );
 		}

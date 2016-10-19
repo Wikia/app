@@ -91,6 +91,7 @@ require([
 // Inject extra slots
 require([
 	'ext.wikia.adEngine.adContext',
+	'ext.wikia.adEngine.context.slotsContext',
 	'ext.wikia.adEngine.slot.bottomLeaderboard',
 	'ext.wikia.adEngine.slot.highImpact',
 	'ext.wikia.adEngine.slot.inContent',
@@ -102,6 +103,7 @@ require([
 	require.optional('ext.wikia.adEngine.slot.revcontentSlots')
 ], function (
 	adContext,
+	slotsContext,
 	bottomLeaderboard,
 	highImpact,
 	inContent,
@@ -117,7 +119,8 @@ require([
 	var context = adContext.getContext();
 
 	function initDesktopSlots() {
-		var incontentLeaderboard = 'INCONTENT_LEADERBOARD';
+		var incontentLeaderboardSlotName = 'INCONTENT_LEADERBOARD',
+			incontentPlayerSlotName = 'INCONTENT_PLAYER';
 
 		highImpact.init();
 		skyScraper3.init();
@@ -126,14 +129,14 @@ require([
 			revcontentSlots.init();
 		}
 
-		if (context.slots.incontentPlayer) {
-			inContent.init('INCONTENT_PLAYER');
+		if (slotsContext.isApplicable(incontentPlayerSlotName)) {
+			inContent.init(incontentPlayerSlotName);
 		}
 
-		if (context.slots.incontentLeaderboard) {
-			inContent.init(incontentLeaderboard, function () {
-				if (context.slots.incontentLeaderboardAsOutOfPage) {
-					slotTweaker.adjustIframeByContentSize(incontentLeaderboard);
+		if (slotsContext.isApplicable(incontentLeaderboardSlotName)) {
+			inContent.init(incontentLeaderboardSlotName, function () {
+				if (context.opts.incontentLeaderboardAsOutOfPage) {
+					slotTweaker.adjustIframeByContentSize(incontentLeaderboardSlotName);
 				}
 			});
 		}

@@ -1,11 +1,12 @@
 /*global define*/
 /*jshint camelcase:false*/
 define('ext.wikia.adEngine.lookup.openx.openXBidderHelper', [
-	'ext.wikia.adEngine.utils.adLogicZoneParams',
 	'ext.wikia.adEngine.adContext',
+	'ext.wikia.adEngine.context.slotsContext',
+	'ext.wikia.adEngine.utils.adLogicZoneParams',
 	'wikia.log',
 	'wikia.window'
-], function (adLogicZoneParams, adContext, log, win) {
+], function (adContext, slotsContext, adLogicZoneParams, log, win) {
 	'use strict';
 
 	var slots = {},
@@ -16,7 +17,13 @@ define('ext.wikia.adEngine.lookup.openx.openXBidderHelper', [
 				TOP_LEADERBOARD: {
 					sizes: ['728x90', '970x250']
 				},
+				HOME_TOP_LEADERBOARD: {
+					sizes: ['728x90', '970x250']
+				},
 				TOP_RIGHT_BOXAD: {
+					sizes: ['300x250', '300x600']
+				},
+				HOME_TOP_RIGHT_BOXAD: {
 					sizes: ['300x250', '300x600']
 				},
 				LEFT_SKYSCRAPER_2: {
@@ -29,6 +36,9 @@ define('ext.wikia.adEngine.lookup.openx.openXBidderHelper', [
 					sizes: ['300x250', '300x600', '160x600']
 				},
 				PREFOOTER_LEFT_BOXAD: {
+					sizes: ['300x250']
+				},
+				PREFOOTER_MIDDLE_BOXAD: {
 					sizes: ['300x250']
 				},
 				PREFOOTER_RIGHT_BOXAD: {
@@ -48,23 +58,6 @@ define('ext.wikia.adEngine.lookup.openx.openXBidderHelper', [
 			}
 		};
 
-	function setupHomePageSlots() {
-		var slots = getSlots();
-
-		Object.keys(slots).forEach(function (slotName) {
-			if (slotName.indexOf('TOP') > -1) {
-				addSlot('HOME_' + slotName, slots[slotName]);
-				removeSlot(slotName);
-			}
-		});
-
-		addSlot('PREFOOTER_MIDDLE_BOXAD', {sizes: ['300x250']});
-	}
-
-	function setSlots(newSlots) {
-		slots = newSlots;
-	}
-
 	function getSlots() {
 		return slots;
 	}
@@ -83,28 +76,14 @@ define('ext.wikia.adEngine.lookup.openx.openXBidderHelper', [
 	}
 
 	function setupSlots(skin) {
-		var context = adContext.getContext(),
-			pageType = context.targeting.pageType;
-
-		setSlots(config[skin]);
-		if (skin === 'oasis' && pageType === 'home') {
-			setupHomePageSlots();
-		}
-	}
-
-	function addOpenXSlot(slotName) {
-		if (isOpenXRemnantEnabledInGeo() && isSlotSupported(slotName)) {
-			log(['addOpenXSlot', slotName], 'debug', logGroup);
-			changeTimeout();
-			win.OX.dfp_bidder.addSlots([[getPagePath(), slots[slotName].sizes, getSlothPath(slotName)]]);
-		}
+		slots = slotsContext.filterSlotMap(config[skin]);
 	}
 
 	function isSlotSupported(slotName) {
-		var isSlotSupported = !!slots[slotName];
+		var isSupported = !!slots[slotName];
 
-		log(['isSlotSupported', slotName, isSlotSupported], 'debug', logGroup);
-		return isSlotSupported;
+		log(['isSupported', slotName, isSupported], 'debug', logGroup);
+		return isSupported;
 	}
 
 	function changeTimeout() {
@@ -131,16 +110,22 @@ define('ext.wikia.adEngine.lookup.openx.openXBidderHelper', [
 		return 'wikia_gpt' + getPagePath() + '/' + src + '/' + slotName;
 	}
 
+	function addOpenXSlot(slotName) {
+		if (isOpenXRemnantEnabledInGeo() && isSlotSupported(slotName)) {
+			log(['addOpenXSlot', slotName], 'debug', logGroup);
+			changeTimeout();
+			win.OX.dfp_bidder.addSlots([[getPagePath(), slots[slotName].sizes, getSlothPath(slotName)]]);
+		}
+	}
+
 	return {
 		addOpenXSlot: addOpenXSlot,
 		getSlots: getSlots,
-		setSlots: setSlots,
 		addSlot: addSlot,
 		removeSlot: removeSlot,
 		isSlotSupported: isSlotSupported,
-		configureHomePageSlots: setupHomePageSlots,
 		setupSlots: setupSlots,
 		getPagePath: getPagePath,
 		getSlotPath: getSlothPath
-	}
+	};
 });

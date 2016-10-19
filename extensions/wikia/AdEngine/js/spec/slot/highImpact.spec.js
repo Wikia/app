@@ -3,27 +3,24 @@ describe('ext.wikia.adEngine.slot.highImpact', function () {
 	'use strict';
 
 	var mocks = {
-		context: {},
-		adContext: {
-			getContext: function () {
-				return mocks.context;
+		slotsContext: {
+			isApplicable: function () {
+				return mocks.invisibleHighImpact2;
 			}
 		},
-		slotTweaker: {},
 		window: {
 			adslots2: []
 		}
 	};
 
 	beforeEach(function () {
-		mocks.context.slots = {};
+		mocks.invisibleHighImpact2 = false;
 		mocks.window.adslots2 = [];
 	});
 
 	function getModule() {
 		return modules['ext.wikia.adEngine.slot.highImpact'](
-			mocks.adContext,
-			mocks.slotTweaker,
+			mocks.slotsContext,
 			mocks.window
 		);
 	}
@@ -38,7 +35,7 @@ describe('ext.wikia.adEngine.slot.highImpact', function () {
 
 	it('Call slot when it is disabled', function () {
 		var highImpact = getModule();
-		mocks.context.slots.invisibleHighImpact2 = true;
+		mocks.invisibleHighImpact2 = true;
 
 		highImpact.init();
 
