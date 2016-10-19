@@ -45,7 +45,9 @@ class PhalanxStatsPager extends PhalanxPager {
 	}
 
 	function formatRow( $row ) {
-		$type = implode( ", ", Phalanx::getTypeNames( $row->ps_blocker_hit ?? $row->ps_blocker_type ) );
+		// $row->ps_blocker_hit can be null or zero
+		$type = implode( ", ",
+			Phalanx::getTypeNames( empty( $row->ps_blocker_hit ) ? $row->ps_blocker_type : $row->ps_blocker_hit ) );
 		$username = $row->ps_blocked_user;
 		$timestamp = $this->getLanguage()->timeanddate( $row->ps_timestamp );
 		$oWiki = WikiFactory::getWikiByID( $row->ps_wiki_id );
