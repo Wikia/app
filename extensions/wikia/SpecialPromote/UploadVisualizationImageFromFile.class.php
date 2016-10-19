@@ -57,7 +57,7 @@ class UploadVisualizationImageFromFile extends UploadFromFile {
 	static public function UploadVerification($destName, $tempPath, &$error) {
 		$promoImage = PromoImage::fromPathname($destName);
 
-		if ( !$promoImage->isValid() ||
+		if ( $promoImage->isValid() &&
 			$promoImage->getCityId() == F::app()->wg->cityId ||
 			!PhalanxTitleBlock::checkTitle( Title::newFromText( $destName ), true )
 		) {
