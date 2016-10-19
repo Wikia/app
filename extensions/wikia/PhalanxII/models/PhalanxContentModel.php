@@ -63,8 +63,11 @@ class PhalanxContentModel extends PhalanxModel {
 		return $msg;
 	}
 	
-	public function textBlock() {
-		$this->logBlock();
+	public function textBlock( $logBlock = true ) {
+		if ( $logBlock ) {
+			$this->logBlock();
+		}
+
 		return $this->block->text;
 	}
 	
