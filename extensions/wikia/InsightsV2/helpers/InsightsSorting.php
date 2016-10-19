@@ -20,7 +20,8 @@ class InsightsSorting {
 			'metadata' => 'pv7',
 		],
 		'random' => [
-			'sortType' =>  null
+			'sortType' =>  null,
+			'metadata' => 'pv7'
 		]
 	];
 
