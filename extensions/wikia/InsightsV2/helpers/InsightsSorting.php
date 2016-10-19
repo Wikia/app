@@ -44,9 +44,11 @@ class InsightsSorting {
 	 * @return array
 	 */
 	public function getSortedData( $articleData, $params ) {
-		if ( isset( $params['sort'] ) ) {
-			$sortParam = isset( self::$sorting[ $params['sort'] ] ) ?
-				$params['sort'] :
+		$sortParam = $params['sort'] ?? '';
+
+		if ( $sortParam || $this->config->showPageViews() ) {
+			$sortParam = isset( self::$sorting[ $sortParam ] ) ?
+				$sortParam :
 				self::INSIGHTS_DEFAULT_SORTING;
 
 			$this->data = WikiaDataAccess::cache(
