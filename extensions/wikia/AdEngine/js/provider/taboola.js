@@ -98,12 +98,24 @@ define('ext.wikia.adEngine.provider.taboola', [
 		slot.success();
 	}
 
+	function fillInAfterRecoveredSlotCollapse(slot, recoverdSlotId) {
+		window.addEventListener('adengine.slot.status', function (e) {
+			if (e.detail.slotName === recoverdSlotId && e.detail.status === 'collapse') {
+				fillInSlot(slot);
+			}
+		});
+	}
+
 	function fillInSlotByConfig(slot) {
 		if (supportedSlots.regular.indexOf(slot.name) !== -1) {
 			fillInSlot(slot);
 		} else if (supportedSlots.recovery.indexOf(slot.name) !== -1) {
 			recoveryHelper.addOnBlockingCallback(function () {
-				fillInSlot(slot);
+				if (recoveryHelper.isRecoveryEnabled() && slot.name === 'TOP_LEADERBOARD_AB') {
+					fillInAfterRecoveredSlotCollapse(slot, 'TOP_LEADERBOARD');
+				} else {
+					fillInSlot(slot);
+				}
 			});
 		}
 	}
