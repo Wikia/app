@@ -280,14 +280,15 @@ class PhalanxFallback {
 			wfProfileOut( __METHOD__ );
 			return;
 		}
-		
+
+		$username = \UtfNormal::toNFC( $wgUser->getName() );
 		if ( class_exists('WScribeClient') ) {
 			try {
 				$fields = array(
 					'blockId'			=> $blockerId,
 					'blockType'			=> $type,
 					'blockTs' 			=> wfTimestampNow(),
-					'blockUser' 		=> $wgUser->getName(),
+					'blockUser' 		=> $username,
 					'city_id' 			=> $wgCityId,
 				);	
 				$data = json_encode( $fields );
@@ -302,7 +303,7 @@ class PhalanxFallback {
 				'ps_blocker_id' => $blockerId,
 				'ps_blocker_type' => $type,
 				'ps_timestamp' => wfTimestampNow(),
-				'ps_blocked_user' => $wgUser->getName(),
+				'ps_blocked_user' => $username,
 				'ps_wiki_id' => $wgCityId,
 			);
 			$dbw = wfGetDB( DB_MASTER, array(), $wgSpecialsDB );
