@@ -19,6 +19,8 @@ class MigratePhalanxUserBlocks extends Maintenance {
 	}
 
 	public function execute() {
+		global $wgExternalSharedDB;
+
 		$this->dryRun = $this->getOption( 'dry-run', false );
 
 		$this->setCurrentUser();
@@ -33,6 +35,10 @@ class MigratePhalanxUserBlocks extends Maintenance {
 			$blockIdsClosed = $this->closeAccounts( $userBlocks );
 
 			$this->deletePhalanxBlocks( $blockIdsClosed );
+
+			// Make sure slaves are caught up before running another delete query
+			// to minimise lag just in case
+			wfWaitForSlaves( $wgExternalSharedDB );
 
 			$this->output( count( $blockIdsClosed ) . " user accounts closed.\n" );
 		} while ( !empty( $userBlocks ) );
