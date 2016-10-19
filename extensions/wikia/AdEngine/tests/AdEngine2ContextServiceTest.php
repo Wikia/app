@@ -32,16 +32,6 @@ class AdEngine2ContextServiceTest extends WikiaBaseTest {
 		return $title;
 	}
 
-	private function mockMonetizationModule() {
-		$name = 'MonetizationModuleHelper';
-		$mock = $this->getMock( $name );
-		$mock->method( 'getMonetizationUnits' )->willReturn( [ 'below_category' => 'testing' ] );
-		$mock->method( 'getWikiVertical' )->willReturn( 'other' );
-		$mock->method( 'getCacheVersion' )->willReturn( 'v1' );
-		$mock->method( 'canShowModule' )->willReturn( true );
-		$this->mockClass( $name, $mock );
-	}
-
 	public function adContextDataProvider() {
 		$defaultParameters = [
 			'titleMockType' => 'article',
@@ -286,10 +276,8 @@ class AdEngine2ContextServiceTest extends WikiaBaseTest {
 		$this->mockGlobalVariable( 'wgAdDriverEnableAdsInMaps', false );
 		$this->mockGlobalVariable( 'wgAdDriverEnableInvisibleHighImpactSlot', false );
 		$this->mockGlobalVariable( 'wgAdDriverTrackState', false );
-		$this->mockGlobalVariable( 'wgAdDriverUseMonetizationService', false );
 		$this->mockGlobalVariable( 'wgEnableAdsInContent', false );
 		$this->mockGlobalVariable( 'wgEnableKruxTargeting', false );
-		$this->mockGlobalVariable( 'wgEnableMonetizationModuleExt', false );
 		$this->mockGlobalVariable( 'wgEnableWikiaHomePageExt', false );
 		$this->mockGlobalVariable( 'wgEnableWikiaHubsV3Ext', false );
 		$this->mockGlobalVariable( 'wgEnableOutboundScreenExt', false );
@@ -335,11 +323,6 @@ class AdEngine2ContextServiceTest extends WikiaBaseTest {
 		$this->mockStaticMethod( 'HubService', 'getCategoryInfoForCity', (object)[
 			'cat_name' => !empty($verticals['oldVertical']) ? $verticals['oldVertical'] : $vertical
 		] );
-
-		// Mock MonetizationModule
-		if ( in_array( 'wgAdDriverUseMonetizationService', $flags ) ) {
-			$this->mockMonetizationModule();
-		}
 
 		$adContextService = new AdEngine2ContextService();
 		$result = $adContextService->getContext( $this->getTitleMock( $titleMockType, $langCode, $artId, $artDbKey ), $skinName );
@@ -404,13 +387,6 @@ class AdEngine2ContextServiceTest extends WikiaBaseTest {
 
 
 		$expected['providers']['rubiconFastlane'] = true;
-
-		// Extra check for Monetization Service
-		if ( isset($expectedProviders['monetizationService']) ) {
-			$this->assertTrue( is_array( $result['providers']['monetizationServiceAds'] ) );
-			$this->assertNotEmpty( $result['providers']['monetizationServiceAds'] );
-			unset($result['providers']['monetizationServiceAds']);
-		}
 
 		// Check Yavli URL format
 		$this->assertStringMatchesFormat( $expectedAdEngineResourceURLFormat, $result['opts']['yavliUrl'] );

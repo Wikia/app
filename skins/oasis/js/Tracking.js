@@ -259,6 +259,16 @@ jQuery(function ($) {
 		}
 	});
 
+	// TODO remove after XW-2226 is done
+	$('.add-new-page-experiment-element.createpage').on('mousedown', function (event) {
+		track({
+			browserEvent: event,
+			category: 'contribute',
+			label: 'add-a-page'
+		});
+	});
+	// TODO remove end
+
 	/** recent-changes **/
 
 	if ($body.hasClass('page-Special_RecentChanges')) {

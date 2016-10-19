@@ -44,10 +44,6 @@ describe('ext.wikia.adEngine.config.desktop', function () {
 					name: 'evolve2',
 					canHandleSlot: noop
 				},
-				monetizationService: {
-					name: 'monetizationService',
-					canHandleSlot: noop
-				},
 				remnantGpt: {
 					name: 'remnant'
 				},
@@ -80,7 +76,6 @@ describe('ext.wikia.adEngine.config.desktop', function () {
 			mocks.adDecoratorPageDimensions,
 			mocks.providers.directGpt,
 			mocks.providers.evolve2,
-			mocks.providers.monetizationService,
 			mocks.providers.remnantGpt,
 			mocks.providers.rubiconFastlane,
 			mocks.providers.turtle,
@@ -151,17 +146,6 @@ describe('ext.wikia.adEngine.config.desktop', function () {
 		spyOn(mocks, 'getAdContextProviders').and.returnValue({turtle: true});
 		spyOn(mocks, 'getInstantGlobals').and.returnValue({wgSitewideDisableGpt: true});
 		expect(getProviders('foo')).toEqual('turtle');
-	});
-
-	it('any country, Monetization Service on, Monetization Service slot', function () {
-		spyOn(mocks, 'getAdContextProviders').and.returnValue({monetizationService: true});
-		spyOn(mocks.providers.monetizationService, 'canHandleSlot').and.returnValue(true);
-		expect(getProviders('foo')).toEqual('monetizationService');
-	});
-
-	it('any country, Monetization Service on, non Monetization Service slot', function () {
-		spyOn(mocks, 'getAdContextProviders').and.returnValue({monetizationService: true});
-		expect(getProviders('foo')).not.toEqual('monetizationService');
 	});
 
 	it('returns correct providers depending on forcedProvider', function () {
