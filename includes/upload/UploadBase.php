@@ -619,7 +619,7 @@ abstract class UploadBase {
 		$msg = '';
 
 		if ( !wfRunHooks( 'FileUploadSummaryCheck', [ $comment, &$msg, true ] ) ) {
-			return Status::newFatal( 'phalanx-title' );
+			return Status::newFatal( $msg );
 		}
 
 		$status = $this->getLocalFile()->upload(

@@ -215,13 +215,9 @@ class PhalanxContentBlock extends WikiaObject {
 		$phalanxModel = new PhalanxContentModel( $title );
 
 		$ret = PhalanxContentBlock::editContent( $textbox, $msg, $phalanxModel );
-		
-		if ( $ret === false ) {
-			$msg = $phalanxModel->textBlock( !$displayBlock );
 
-			if ( $displayBlock ) {
-				$phalanxModel->displayBlock();
-			}
+		if ( $ret === false && $displayBlock ) {
+			$phalanxModel->displayBlock();
 		}
 		
 		wfProfileOut( __METHOD__ );
