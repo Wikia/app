@@ -3,28 +3,24 @@ define('ext.wikia.adEngine.template.bfaa', [
 	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.adHelper',
 	'ext.wikia.adEngine.context.uapContext',
-	'ext.wikia.adEngine.domElementTweaker',
 	'ext.wikia.adEngine.provider.btfBlocker',
 	'ext.wikia.adEngine.slotTweaker',
-	'ext.wikia.aRecoveryEngine.recovery.helper',
-	'wikia.browserDetect',
 	'wikia.document',
 	'wikia.log',
 	'wikia.window',
-	require.optional('ext.wikia.adEngine.mobile.mercuryListener')
+	require.optional('ext.wikia.adEngine.mobile.mercuryListener'),
+	require.optional('ext.wikia.aRecoveryEngine.recovery.tweaker')
 ], function (
 	adContext,
 	adHelper,
 	uapContext,
-	DOMElementTweaker,
 	btfBlocker,
 	slotTweaker,
-	recoveryHelper,
-	browser,
 	doc,
 	log,
 	win,
-	mercuryListener
+	mercuryListener,
+	recoveryTweaker
 ) {
 	'use strict';
 
@@ -78,9 +74,9 @@ define('ext.wikia.adEngine.template.bfaa', [
 				spotlightFooter.parentNode.style.display = 'none';
 			}
 
-			if (recoveryHelper.isRecoveryEnabled() && recoveryHelper.isBlocking()) {
+			if (recoveryTweaker && recoveryTweaker.isTweakable()) {
 				slotTweaker.removeDefaultHeight(params.slotName);
-				recoverSlot(iframe, params);
+				recoveryTweaker.tweakSlot(params.slotName, iframe);
 			}
 		}
 	};
@@ -115,33 +111,6 @@ define('ext.wikia.adEngine.template.bfaa', [
 			}
 		}
 	};
-
-	function isRecoveryNotSupportedBrowser() {
-		return browser.isIE() || browser.isEdge();
-	}
-
-	function mirrorDOMStructure(parentNode) {
-		var originalIframe = document.createElement('iframe');
-		var div = document.createElement('div');
-
-		div.appendChild(originalIframe);
-		parentNode.appendChild(div);
-		originalIframe.style.display = 'none';
-		div.style.display = 'none';
-		return originalIframe;
-	}
-
-	function recoverSlot(iframe, params) {
-		var adContainer = iframe.parentNode.parentNode.parentNode.parentNode,
-			originalIframe = mirrorDOMStructure(document.querySelector('#' + params.slotName + ' > div > div'));
-
-		if (isRecoveryNotSupportedBrowser()) {
-			DOMElementTweaker.hide(adContainer, true);
-			return;
-		}
-
-		slotTweaker.tweakRecoveredSlot(originalIframe, iframe);
-	}
 
 	function show(params) {
 		var handler,
