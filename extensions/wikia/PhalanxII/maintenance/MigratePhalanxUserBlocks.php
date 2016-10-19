@@ -169,7 +169,7 @@ class MigratePhalanxUserBlocks extends Maintenance {
 	private function setCurrentUser() {
 		global $wgUser;
 
-		$wgUser = User::newFromName( 'Wikia' );
+		$wgUser = User::newFromName( 'Fandom' );
 	}
 
 	private function getPhalanxDB( $db = DB_SLAVE ) {
