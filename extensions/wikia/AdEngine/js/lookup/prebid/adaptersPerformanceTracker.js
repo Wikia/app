@@ -13,7 +13,7 @@ define('ext.wikia.adEngine.lookup.prebid.adaptersPerformanceTracker', [
 		var biddersPerformanceMap = {};
 
 		adapters.forEach(function (adapter) {
-			var slots = adapter.getSlots(skin, params.getPageType()),
+			var slots = adapter.getSlots(skin),
 				adapterName = adapter.getName();
 
 			if (adapter.isEnabled()) {
