@@ -94,6 +94,7 @@ class Wikia {
 	const TAG_INTERFACE_PREFIX = 'tag-';
 
 	const DEFAULT_FAVICON_FILE = '/skins/common/images/favicon.ico';
+	const DEFAULT_WIKI_LOGO_FILE = '/skins/common/images/wiki.png';
 
 	private static $vars = array();
 	private static $cachedLinker;
@@ -163,6 +164,25 @@ class Wikia {
 
 	public static function invalidateFavicon() {
 		WikiaDataAccess::cachePurge( wfMemcKey( self::FAVICON_URL_CACHE_KEY ) );
+	}
+
+	/**
+	 * Return either a path to locally-uploaded Wiki.png file or a shared file taken from the code repo
+	 * (if there's no Wiki.png file uploaded on a wiki)
+	 *
+	 * @see SUS-1165
+	 *
+	 * @return string
+	 */
+	public static function getWikiLogoFullUrl() {
+		$localWikiLogo = wfLocalFile( 'Wiki.png' );
+
+		if ($localWikiLogo->exists() ) {
+			return $localWikiLogo->getUrl();
+		}
+		else {
+			return F::app()->wg->ResourceBasePath . self::DEFAULT_WIKI_LOGO_FILE;
+		}
 	}
 
 	/**

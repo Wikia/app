@@ -3258,7 +3258,7 @@ $templates
 		# apple-touch-icon is specified first to avoid this.
 		if ( $wgAppleTouchIcon !== false ) {
 			// Wikia change begin - @author: macbre
-			$appleTouchIcon = wfReplaceImageServer($wgAppleTouchIcon, SassUtil::getCacheBuster());
+			$appleTouchIcon = Wikia::getWikiLogoFullUrl();
 			// Wikia change end
 
 			$tags[] = Html::element( 'link', array( 'rel' => 'apple-touch-icon', 'href' => $appleTouchIcon ) );
