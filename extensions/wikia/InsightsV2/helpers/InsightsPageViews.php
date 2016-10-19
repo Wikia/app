@@ -54,7 +54,7 @@ class InsightsPageViews {
 			$sortingData['pvDiff'][ $articleId ] = $pvDiff;
 			$articlesData[ $articleId ]['metadata']['pvDiff'] = $pvDiff;
 
-			$randValue = rand();
+			$randValue = mt_rand();
 			$sortingData['random'][ $articleId ] = $randValue;
 			$articlesData[ $articleId ]['metadata']['random'] = $randValue;
 
