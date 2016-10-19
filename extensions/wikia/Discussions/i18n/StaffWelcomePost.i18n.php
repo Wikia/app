@@ -131,7 +131,8 @@ $messages['ru'] = array(
 ',
 );
 
-$messages['zh-hans'] = array(
+// was zh-hans
+$messages['zh'] = array(
 	'discussions-staff-welcome-post' => '欢迎来到讨论版！
 
 您可以在这里畅谈您所感兴趣的话题，分享新闻、理念、观点，并且可以和其他人互动。
@@ -143,16 +144,16 @@ $messages['zh-hans'] = array(
 祝您编辑愉快！',
 );
 
-$messages['zh-hant'] = array(
-	'discussions-staff-welcome-post' => '
-歡迎來到討論版！
-
-您可以在這裡暢談您所感興趣的話題，分享訊息、理念、觀點，並且可以和其他人互動。
-
-如果您希望進一步瞭解在這裡可以進行哪些活動，請查看：http://zh.community.wikia.com/wiki/Help:%E8%AE%A8%E8%AE%BA%E7%89%88
-
-如果您是這個社區的管理員，請閱讀如何自訂討論版以及如何為貢獻者制定方針：http://zh.community.wikia.com/wiki/Help:%E8%AE%A8%E8%AE%BA%E7%89%88
-
-祝您編輯愉快！',
-);
+//$messages['zh-hant'] = array(
+//	'discussions-staff-welcome-post' => '
+//歡迎來到討論版！
+//
+//您可以在這裡暢談您所感興趣的話題，分享訊息、理念、觀點，並且可以和其他人互動。
+//
+//如果您希望進一步瞭解在這裡可以進行哪些活動，請查看：http://zh.community.wikia.com/wiki/Help:%E8%AE%A8%E8%AE%BA%E7%89%88
+//
+//如果您是這個社區的管理員，請閱讀如何自訂討論版以及如何為貢獻者制定方針：http://zh.community.wikia.com/wiki/Help:%E8%AE%A8%E8%AE%BA%E7%89%88
+//
+//祝您編輯愉快！',
+//);
 
