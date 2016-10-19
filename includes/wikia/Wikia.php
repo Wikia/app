@@ -172,16 +172,22 @@ class Wikia {
 	 *
 	 * @see SUS-1165
 	 *
-	 * @return string
+	 * @return mixed an array containing "url" and "size" keys
 	 */
-	public static function getWikiLogoFullUrl() {
+	public static function getWikiLogoMetadata() {
 		$localWikiLogo = wfLocalFile( 'Wiki.png' );
 
 		if ( $localWikiLogo->exists() ) {
-			return $localWikiLogo->getUrl();
+			return [
+				'url' => $localWikiLogo->getUrl(),
+				'size' => sprintf( '%dx%d', $localWikiLogo->getWidth(), $localWikiLogo->getHeight() )
+			];
 		}
 		else {
-			return F::app()->wg->ResourceBasePath . self::DEFAULT_WIKI_LOGO_FILE;
+			return [
+				'url' => F::app()->wg->ResourceBasePath . self::DEFAULT_WIKI_LOGO_FILE,
+				'size' => '155x155'
+			];
 		}
 	}
 
