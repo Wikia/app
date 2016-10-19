@@ -16,7 +16,7 @@ class InsightsCache {
 		$this->config = $config;
 	}
 
-	public function get( $params ) {
+	private function get( $params ) {
 		$data = $this->memc->get( $this->getMemcKey( $params ) );
 		return is_array( $data ) ? $data : [];
 	}
