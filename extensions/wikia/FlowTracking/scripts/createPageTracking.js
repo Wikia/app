@@ -9,26 +9,51 @@ define(
 			title = mw.config.get('wgTitle');
 
 		function trackOnEditPageLoad(editor) {
-			var qs = new QueryString(),
+			var qs = new QueryString(window.location),
 				// 'flow' is the parameter passed in the url if user has started a flow already
 				flowParam = qs.getVal('flow', false),
 				tracked = qs.getVal('tracked', false);
 
 			// Do not track if the step was tracked already or article exists
-			if (tracked || !isNewArticle() || !(isMainNamespace() || isAllowedSpecialPage())) {
+			if (tracked || !isNewArticle() || !isMainNamespace()) {
 				return;
 			}
 
 			if (flowParam || document.referrer) {
 				flowTrack.trackFlowStep(flowParam, {editor: editor});
-			} else if (namespaceId === 0) {
+			} else {
 				flowTrack.beginFlow(window.wgFlowTrackingFlows.CREATE_PAGE_DIRECT_URL, {editor: editor});
 				qs.setVal('flow', window.wgFlowTrackingFlows.CREATE_PAGE_DIRECT_URL);
-			} else if (namespaceId === -1) {
-				// TODO: direct-url to Special:CreatePage (WW-351)
 			}
 
-			// set 'tracked' query param to prevent tracking the same event when page is reloaded
+			setTrackedQueryParam(qs);
+		}
+
+		function trackOnSpecialCreatePageLoad(editor, title) {
+			var qs = new QueryString(window.location),
+				// 'flow' is the parameter passed in the url if user has started a flow already
+				flowParam = qs.getVal('flow', false),
+				tracked = qs.getVal('tracked', false);
+
+			// Do not track if the step was tracked already or special page is not allowed
+			if (tracked  || !isAllowedSpecialPage() || !isTitleInMainNamespace(title)) {
+				return;
+			}
+
+			if (flowParam) {
+				flowTrack.trackFlowStep(flowParam, {editor: editor});
+			} else {
+				flowTrack.beginFlow(window.wgFlowTrackingFlows.CREATE_PAGE_SPECIAL_CREATE_PAGE, {editor: editor});
+				qs.setVal('flow', window.wgFlowTrackingFlows.CREATE_PAGE_SPECIAL_CREATE_PAGE);
+			}
+
+			setTrackedQueryParam(qs);
+		}
+
+		/**
+		 * Set 'tracked' query param to prevent tracking the same event when page is reloaded
+		 */
+		function setTrackedQueryParam(qs) {
 			qs.setVal('tracked', 'true');
 			window.history.replaceState({}, '', qs.toString());
 		}
@@ -45,7 +70,23 @@ define(
 			return namespaceId === 0;
 		}
 
+		function isTitleInMainNamespace(title) {
+			var namespace;
+
+			title = title || '';
+
+			if (title.indexOf(':')) {
+				namespace = title.split(':')[0].toLowerCase();
+				if (window.wgNamespaceIds[namespace]) {
+					return false;
+				}
+			}
+
+			return true;
+		}
+
 		return {
-			trackOnEditPageLoad: trackOnEditPageLoad
+			trackOnEditPageLoad: trackOnEditPageLoad,
+			trackOnSpecialCreatePageLoad: trackOnSpecialCreatePageLoad
 		}
 	});

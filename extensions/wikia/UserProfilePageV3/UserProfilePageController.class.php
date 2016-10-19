@@ -960,10 +960,10 @@ class UserProfilePageController extends WikiaController {
 	}
 
 	public function fetchDiscussionPostsNumberFrom( $user ) {
-		global $wgEnableDiscussionPostsCountInUserIdentityBox;
+		global $wgEnableDiscussions;
 
-		$this->setVal( 'discussionPostsCountInUserIdentityBoxEnabled', $wgEnableDiscussionPostsCountInUserIdentityBox );
-		if ( $wgEnableDiscussionPostsCountInUserIdentityBox ) {
+		$this->setVal( 'discussionPostsCountInUserIdentityBoxEnabled', $wgEnableDiscussions );
+		if ( $wgEnableDiscussions ) {
 			$discussionInfo = UserIdentityBoxDiscussionInfo::createFor( $user );
 
 			$this->setVal( 'discussionActive', $discussionInfo->isDiscussionActive() );

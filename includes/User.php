@@ -4218,6 +4218,19 @@ class User {
 	 * @return Boolean
 	 */
 	public static function comparePasswords( $hash, $password, $userId = false ) {
+		// Wikia change - begin
+		// @see PLATFORM-2502 comparing new passwords in PHP code.
+		// @todo mech remove after the new password hashing is implemented (PLATFORM-2526).
+		Wikia\Logger\WikiaLogger::instance()->debug(
+			'NEW_HASHING comparePasswords called in PHP',
+			[
+				'user_id' => $userId,
+				'caller' => wfGetCaller(),
+				'exception' => new Exception()
+			]
+		);
+		// Wikia change - end
+
 		$type = substr( $hash, 0, 3 );
 
 		$result = false;
@@ -4856,7 +4869,7 @@ class User {
 	 */
 	public static function getUsername( $userId, $name ) {
 		global $wgEnableUsernameLookup;
-		if( $wgEnableUsernameLookup && $userId != 0 ) {
+		if ( !empty( $userId ) && $wgEnableUsernameLookup ) {
 			$caller = debug_backtrace()[1];
 			$callerFunction = $caller["class"]."::".$caller["function"];
 			$profiler = UsernameLookupProfiler::create( $caller["class"], $callerFunction );

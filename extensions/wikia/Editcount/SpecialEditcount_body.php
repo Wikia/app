@@ -174,14 +174,11 @@ class Editcount extends SpecialPage {
 		$arcount = $wgMemc->get($key);
 
 		if ( empty($arcount) ) {
-			$userName = User::newFromId( $uid )->getName();
 			$dbr =& wfGetDB( DB_SLAVE );
 			$arcount = $dbr->selectField(
-				array( 'archive' ),
-				array( 'COUNT(*) as count' ),
-				array(
-					'ar_user_text' => $userName
-				),
+				[ 'archive' ],
+				[ 'COUNT(*) as count' ],
+				[ 'ar_user' => $uid ],
 				__METHOD__
 			);
 

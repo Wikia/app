@@ -9,7 +9,9 @@ require([
 	var redLinkFlow = mw.config.get('wgNamespaceNumber') === -1 ?
 			window.wgFlowTrackingFlows.CREATE_PAGE_SPECIAL_REDLINK :
 			window.wgFlowTrackingFlows.CREATE_PAGE_ARTICLE_REDLINK,
-		createButtonFlow = window.wgFlowTrackingFlows.CREATE_PAGE_CREATE_BUTTON;
+		createButtonFlow = window.wgFlowTrackingFlows.CREATE_PAGE_CREATE_BUTTON,
+		createboxFlow = window.wgFlowTrackingFlows.CREATE_PAGE_CREATE_BOX,
+		inputBoxFlow = window.wgFlowTrackingFlows.CREATE_PAGE_INPUT_BOX;
 
 	function init() {
 		var $wikiaArticle = $('#WikiaArticle');
@@ -30,6 +32,21 @@ require([
 			}
 
 			flowTracking.beginFlow(redLinkFlow, {});
+		});
+
+		$( 'form.createboxForm .createboxButton' ).click(function() {
+			flowTracking.beginFlow(createboxFlow, {});
+		});
+
+		$( 'form.createbox' ).submit(function() {
+			var flowInput = document.createElement('input');
+
+			flowInput.setAttribute('type', 'hidden');
+			flowInput.setAttribute('name', 'flow');
+			flowInput.setAttribute('value', inputBoxFlow);
+			this.appendChild(flowInput);
+
+			flowTracking.beginFlow(inputBoxFlow, {});
 		});
 
 		$( '#ca-ve-edit,  #ca-edit' ).click(function() {
