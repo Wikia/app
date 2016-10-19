@@ -58,6 +58,14 @@ body {
 	width: 194px;
 }
 
+.footer .spacer {
+	border-width: 1px 0 0 0;
+	border-color: #fff;
+	border-style: solid;
+	margin: 25px auto;
+	width: 300px;
+}
+
 .fandom-bar img {
 	display: block;
 	height: 5px;
@@ -88,9 +96,9 @@ body {
 	width: 22px;
 }
 
-.social-links .reddit img {
-	height: 21px;
-	width: 22px;
+.social-links .vk img {
+	height: 17px;
+	width: 29px;
 }
 
 .social-links .youtube img {
@@ -112,4 +120,19 @@ body {
 
 .fine-print a {
 	 text-decoration: underline;
+}
+
+.mobile-badges {
+	margin-top: 15px;
+}
+
+.mobile-badges .ios-badge img {
+	height: auto;
+	padding-bottom: 9px;
+	width: 120px;
+}
+
+.mobile-badges .android-badge img {
+	height: auto;
+	width: 140px;
 }

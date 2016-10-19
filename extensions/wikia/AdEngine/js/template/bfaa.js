@@ -1,24 +1,26 @@
 /*global define, require*/
 define('ext.wikia.adEngine.template.bfaa', [
 	'ext.wikia.adEngine.adContext',
-	'ext.wikia.adEngine.context.uapContext',
 	'ext.wikia.adEngine.adHelper',
+	'ext.wikia.adEngine.context.uapContext',
 	'ext.wikia.adEngine.provider.btfBlocker',
 	'ext.wikia.adEngine.slotTweaker',
 	'wikia.document',
 	'wikia.log',
 	'wikia.window',
-	require.optional('ext.wikia.adEngine.mobile.mercuryListener')
+	require.optional('ext.wikia.adEngine.mobile.mercuryListener'),
+	require.optional('ext.wikia.aRecoveryEngine.recovery.tweaker')
 ], function (
 	adContext,
-	uapContext,
 	adHelper,
+	uapContext,
 	btfBlocker,
 	slotTweaker,
 	doc,
 	log,
 	win,
-	mercuryListener
+	mercuryListener,
+	recoveryTweaker
 ) {
 	'use strict';
 
@@ -43,6 +45,8 @@ define('ext.wikia.adEngine.template.bfaa', [
 			var height = iframe.contentWindow.document.body.offsetHeight,
 				position = win.scrollY || win.pageYOffset;
 
+			log(['updateNavBar', height, position], 'info', logGroup);
+
 			if (doc.body.offsetWidth <= breakPointWidthNotSupported || position <= height) {
 				nav.classList.add('bfaa-pinned');
 			} else {
@@ -50,10 +54,12 @@ define('ext.wikia.adEngine.template.bfaa', [
 			}
 		},
 
-		show: function (iframe) {
+		show: function (iframe, params) {
 			var spotlightFooter = doc.getElementById('SPOTLIGHT_FOOTER');
 			nav.style.top = '';
 			page.classList.add('bfaa-template');
+
+			log('desktopHandler::show', 'info', logGroup);
 
 			this.updateNavBar(iframe);
 			doc.addEventListener('scroll', adHelper.throttle(function () {
@@ -67,12 +73,18 @@ define('ext.wikia.adEngine.template.bfaa', [
 			if (spotlightFooter) {
 				spotlightFooter.parentNode.style.display = 'none';
 			}
+
+			if (recoveryTweaker && recoveryTweaker.isTweakable()) {
+				slotTweaker.removeDefaultHeight(params.slotName);
+				recoveryTweaker.tweakSlot(params.slotName, iframe);
+			}
 		}
 	};
 
 	mobileHandler =  {
-		show: function (iframe, aspectRatio) {
-			var adsModule = win.Mercury.Modules.Ads.getInstance(),
+		show: function (iframe, params) {
+			var aspectRatio = params.aspectRatio,
+				adsModule = win.Mercury.Modules.Ads.getInstance(),
 				height,
 				viewPortWidth,
 				adjustPadding = function () {
@@ -120,14 +132,16 @@ define('ext.wikia.adEngine.template.bfaa', [
 				return log(['show', 'not supported skin'], 'info', logGroup);
 		}
 
+		log(['show', page, wrapper, params], 'info', logGroup);
+
 		wrapper.style.opacity = '0';
 		slotTweaker.makeResponsive(params.slotName, params.aspectRatio);
 		slotTweaker.onReady(params.slotName, function (iframe) {
-			handler.show(iframe, params.aspectRatio);
+			handler.show(iframe, params);
 			wrapper.style.opacity = '';
 		});
 
-		log('show', 'info', logGroup);
+		log(['show', params.uap], 'info', logGroup);
 
 		uapContext.setUapId(params.uap);
 		unblockedSlots.forEach(btfBlocker.unblock);

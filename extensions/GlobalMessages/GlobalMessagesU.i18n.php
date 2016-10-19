@@ -21,18 +21,19 @@ Please choose a different name.',
 	'user-mail-no-addy' => 'Tried to send e-mail without an e-mail address.',
 	'userpage-userdoesnotexist' => 'User account "$1" is not registered.
 Please check if you want to create/edit this page.',
-	'userpage-userdoesnotexist-view' => 'User account "$1" is not registered.',
+	'userpage-userdoesnotexist-view' => 'User account "$1" does not exist or has never logged in on this wiki.',
 	'usercssyoucanpreview' => '\'\'\'Tip:\'\'\' Use the "{{int:showpreview}}" button to test your new CSS before saving.',
 	'userjsyoucanpreview' => '\'\'\'Tip:\'\'\' Use the "{{int:showpreview}}" button to test your new JavaScript before saving.',
 	'usercsspreview' => '\'\'\'Remember that you are only previewing your user CSS.\'\'\'
 \'\'\'It has not yet been saved!\'\'\'',
 	'userjspreview' => '\'\'\'Remember that you are only testing/previewing your user JavaScript.\'\'\'
 \'\'\'It has not yet been saved!\'\'\'',
-	'userinvalidcssjstitle' => '\'\'\'Warning:\'\'\' There is no skin "$1".
-Custom .css and .js pages use a lowercase title, e.g. {{ns:user}}:Foo/vector.css as opposed to {{ns:user}}:Foo/Vector.css.',
+	'userinvalidcssjstitle' => '<span class=\'error\'>\'\'\'Warning:\'\'\' There is no skin "$1".
+Remember that custom .css and .js pages use a lowercase title, e.g. {{ns:user}}:Foo/wikia.css as opposed to {{ns:user}}:Foo/Wikia.css.</span>',
 	'updated' => '(Updated)',
-	'undo-success' => 'The edit can be undone.
-Please check the comparison below to verify that this is what you want to do, and then save the changes below to finish undoing the edit.',
+	'undo-success' => '\'\'\'The edit can be undone. Please check the comparison below to verify that this is what you want to do, and then save the changes below to finish undoing the edit.\'\'\'
+
+\'\'If you are undoing an edit that is not vandalism, explain the reason in the edit summary rather than using only the default message.\'\'',
 	'undo-failure' => 'The edit could not be undone due to conflicting intermediate edits.',
 	'undo-norev' => 'The edit could not be undone because it does not exist or was deleted.',
 	'undo-summary' => 'Undo revision $1 by [[Special:Contributions/$2|$2]] ([[User talk:$2|talk]])',
@@ -48,7 +49,8 @@ Please check the comparison below to verify that this is what you want to do, an
 	'userrights-groups-help' => 'You may alter the groups this user is in:
 * A checked box means the user is in that group.
 * An unchecked box means the user is not in that group.
-* A * indicates that you cannot remove the group once you have added it, or vice versa.',
+* A * indicates that you cannot remove the group once you have added it, or vice versa.
+* More information on what each group means can be found at [[Help:User access levels]]',
 	'userrights-reason' => 'Reason:',
 	'userrights-no-interwiki' => 'You do not have permission to edit user rights on other wikis.',
 	'userrights-nodatabase' => 'Database $1 does not exist or is not local.',
@@ -58,7 +60,7 @@ Please check the comparison below to verify that this is what you want to do, an
 	'userrights-unchangeable-col' => 'Groups you cannot change',
 	'userrights-irreversible-marker' => '$1*',
 	'unpatrolledletter' => '!',
-	'upload' => 'Upload file',
+	'upload' => 'Upload photo',
 	'uploadbtn' => 'Upload file',
 	'upload-tryagain' => 'Submit modified file description',
 	'uploadnologin' => 'Not logged in',
@@ -70,13 +72,7 @@ Please check the comparison below to verify that this is what you want to do, an
 	'upload-recreate-warning' => '\'\'\'Warning: A file by that name has been deleted or moved.\'\'\'
 
 The deletion and move log for this page are provided here for convenience:',
-	'uploadtext' => 'Use the form below to upload files.
-To view or search previously uploaded files go to the [[Special:FileList|list of uploaded files]], (re)uploads are also logged in the [[Special:Log/upload|upload log]], deletions in the [[Special:Log/delete|deletion log]].
-
-To include a file in a page, use a link in one of the following forms:
-* \'\'\'<tt><nowiki>[[</nowiki>{{ns:file}}<nowiki>:File.jpg]]</nowiki></tt>\'\'\' to use the full version of the file
-* \'\'\'<tt><nowiki>[[</nowiki>{{ns:file}}<nowiki>:File.png|200px|thumb|left|alt text]]</nowiki></tt>\'\'\' to use a 200 pixel wide rendition in a box in the left margin with \'alt text\' as description
-* \'\'\'<tt><nowiki>[[</nowiki>{{ns:media}}<nowiki>:File.ogg]]</nowiki></tt>\'\'\' for directly linking to the file without displaying the file',
+	'uploadtext' => 'Use the form below to upload files. See also [[Help:Uploading files]].',
 	'upload-permitted' => 'Permitted file types: $1.',
 	'upload-preferred' => 'Preferred file types: $1.',
 	'upload-prohibited' => 'Prohibited file types: $1.',
@@ -92,12 +88,11 @@ See the [[Special:NewFiles|gallery of new files]] for a more visual overview.',
 	'uploadedimage' => 'uploaded "[[$1]]"',
 	'uploaddisabled' => 'Uploads disabled.',
 	'uploadfromurl-queued' => 'Your upload has been queued.',
-	'uploaddisabledtext' => 'File uploads are disabled.',
+	'uploaddisabledtext' => 'Unfortunately photo uploading is temporarily disabled while we work on our servers. Sorry for this inconvenience and please try again in a few hours.',
 	'uploadscripted' => 'This file contains HTML or script code that may be erroneously interpreted by a web browser.',
 	'uploadscriptednamespace' => 'This SVG file contains an illegal namespace \'$1\'',
 	'uploadinvalidxml' => 'The XML in the uploaded file could not be parsed.',
-	'uploadvirus' => 'The file contains a virus!
-Details: $1',
+	'uploadvirus' => 'The file may contain a virus! Details: $1',
 	'uploadjava' => 'The file is a ZIP file which contains a Java .class file.
 Uploading Java files is not allowed, because they can cause security restrictions to be bypassed.',
 	'upload-source' => 'Source file',
@@ -116,11 +111,11 @@ $1',
 	'upload-proto-error-text' => 'Remote upload requires URLs beginning with <code>http://</code> or <code>ftp://</code>.',
 	'upload-file-error' => 'Internal error',
 	'upload-file-error-text' => 'An internal error occurred when attempting to create a temporary file on the server.
-Please contact an [[Special:ListUsers/sysop|administrator]].',
+Please [[Special:Contact|report this to Wikia staff]].',
 	'upload-misc-error' => 'Unknown upload error',
 	'upload-misc-error-text' => 'An unknown error occurred during the upload.
 Please verify that the URL is valid and accessible and try again.
-If the problem persists, contact an [[Special:ListUsers/sysop|administrator]].',
+If the problem persists, [[special:contact|contact Wikia staff]].',
 	'upload-too-many-redirects' => 'The URL contained too many redirects',
 	'upload-unknown-size' => 'Unknown size',
 	'upload-http-error' => 'An HTTP error occured: $1',
@@ -152,38 +147,41 @@ Remember to check for other links to the templates before deleting them.',
 	'uncategorizedpages-summary' => '',
 	'uncategorizedcategories' => 'Uncategorized categories',
 	'uncategorizedcategories-summary' => '',
-	'uncategorizedimages' => 'Uncategorized files',
+	'uncategorizedimages' => 'Uncategorized photos',
 	'uncategorizedimages-summary' => '',
 	'uncategorizedtemplates' => 'Uncategorized templates',
 	'uncategorizedtemplates-summary' => '',
 	'unusedcategories' => 'Unused categories',
-	'unusedimages' => 'Unused files',
+	'unusedimages' => 'Unused photos',
 	'usereditcount' => '$1 {{PLURAL:$1|edit|edits}}',
 	'usercreated' => '{{GENDER:$3|Created}} on $1 at $2',
-	'unusedimagestext' => 'The following files exist but are not embedded in any page.
+	'unusedimagestext' => 'The following photos have been uploaded but are not used on any pages.
 Please note that other web sites may link to a file with a direct URL, and so may still be listed here despite being in active use.',
 	'unusedcategoriestext' => 'The following category pages exist, although no other page or category makes use of them.',
 	'usermailererror' => 'Mail object returned error:',
 	'usermaildisabled' => 'User e-mail disabled',
-	'usermaildisabledtext' => 'You cannot send e-mail to other users on this wiki',
+	'usermaildisabledtext' => 'You cannot send e-mail to other users on this wiki.',
 	'usermessage-summary' => 'Leaving system message.',
 	'usermessage-editor' => 'System messenger',
 	'usermessage-template' => 'MediaWiki:UserMessage',
-	'unwatch' => 'Unwatch',
+	'unwatch' => 'Following',
 	'unwatchthispage' => 'Stop watching',
-	'unwatching' => 'Unwatching...',
+	'unwatching' => 'Unfollowing…',
 	'unprotectedarticle' => 'removed protection from "[[$1]]"',
-	'undelete' => 'View deleted pages',
-	'undeletepage' => 'View and restore deleted pages',
+	'undelete' => 'Restore deleted pages',
+	'undeletepage' => 'Restore deleted pages',
 	'undeletepagetitle' => '\'\'\'The following consists of deleted revisions of [[:$1|$1]]\'\'\'.',
 	'undeletepagetext' => 'The following {{PLURAL:$1|page has been deleted but is|$1 pages have been deleted but are}} still in the archive and can be restored.
 The archive may be periodically cleaned out.',
 	'undelete-fieldset-title' => 'Restore revisions',
-	'undeleteextrahelp' => 'To restore the page\'s entire history, leave all checkboxes deselected and click \'\'\'\'\'{{int:undeletebtn}}\'\'\'\'\'.
-To perform a selective restoration, check the boxes corresponding to the revisions to be restored, and click \'\'\'\'\'{{int:undeletebtn}}\'\'\'\'\'.',
+	'undeleteextrahelp' => '*To restore the entire page and its history, leave all checkboxes deselected and click \'\'\'\'\'Restore\'\'\'\'\'. To perform a selective restoration, check the boxes corresponding to the revisions to be restored and click \'\'\'\'\'Restore\'\'\'\'\'.
+*Selecting a box, then [Shift]-selecting another will fill all boxes in between in many browsers.<br /><br />',
 	'undeleterevisions' => '$1 {{PLURAL:$1|revision|revisions}} archived',
-	'undeletehistory' => 'If you restore the page, all revisions will be restored to the history.
-If a new page with the same name has been created since the deletion, the restored revisions will appear in the prior history.',
+	'undeletehistory' => 'By default, if you restore the page, all previous revisions will be restored to the page\'s history. If you do not want to restore all revisions, select only the checkboxes beside the revisions you do want to restore.
+
+If a new page with the same name has been created since the deletion, the restored revisions will be merged with the new page\'s history, and the current revision of the live page will not be automatically replaced. Be careful \'\'not\'\' to do this unless you specifically intend to merge the histories of the two pages.
+
+\'\'\'WARNING\'\'\': Any protection on the page \'\'\'will\'\'\' be lost when deleting and restoring revisions!  If you wish this page to be protected, you \'\'\'must\'\'\' protect it immediately after restoration.',
 	'undeleterevdel' => 'Undeletion will not be performed if it will result in the top page or file revision being partially deleted.
 In such cases, you must uncheck or unhide the newest deleted revision.',
 	'undeletehistorynoadmin' => 'This page has been deleted.
@@ -226,8 +224,8 @@ $1',
 	'uctop' => '(top)',
 	'unblock' => 'Unblock user',
 	'unblockip' => 'Unblock user',
-	'unblockiptext' => 'Use the form below to restore write access to a previously blocked IP address or username.',
-	'unblocked' => '[[User:$1|$1]] has been unblocked',
+	'unblockiptext' => 'Use the form below to restore write access to a blocked IP address or username. Remember, there was probably a good reason for the person to be blocked. Please discuss the block with the blocking administrator before unblocking.',
+	'unblocked' => '[[User:$1|$1]] has been unblocked ([[Special:Blockip/$1|re-block]]).',
 	'unblocked-range' => '$1 has been unblocked',
 	'unblocked-id' => 'Block $1 has been removed',
 	'unblocked-ip' => '[[Special:Contributions/$1|$1]] has been unblocked.',
@@ -245,7 +243,7 @@ Please confirm that this is what you intend to do.',
 	'unknown_extension_tag' => 'Unknown extension tag "$1"',
 	'undeletedarticle' => 'restored "[[$1]]"',
 	'upload-url' => 'Special:Upload',
-	'uploadtext-ext' => 'A full list of allowed extensions is available on the [[{{ns:Special}}:Version|wiki version page]].',
+	'uploadtext-ext' => '<div class="emptymwmsg mediawiki_uploadtext-ext"></div>',
 	'users' => 'Users',
 	'unrate_it' => 'Unrate it',
 	'use_old_formatting' => 'Switch to Monobook skin',
@@ -267,7 +265,7 @@ Please confirm that this is what you intend to do.',
 	'userlogin-unable-title' => 'Unable to create registration',
 	'userlogin-unable-info' => 'We are sorry, we are unable to register you at this time.',
 	'userlogin-captcha-label' => 'Enter the word that appears:',
-	'userlogin-form-error' => 'Please correct the following errors:',
+	'userlogin-form-error' => 'Please correct the following issues:',
 	'unable-block-edit' => 'You are not allowed to edit this page. Try again later.',
 	'unlockdb-wikifactory-error' => 'An error occurred. Failed to save or clear cache. The database might not be unlocked. Please try again or contact the TechTeam.',
 	'unsubscribe-email' => 'If you no longer want to receive email from Wikia you can unsubscribe here: $1',
@@ -4196,7 +4194,7 @@ $1',
 	'upload_source_url' => ' (правилен, публично достъпен интернет-адрес)',
 	'upload_source_file' => ' (файл на вашия компютър)',
 	'uploadnewversion-linktext' => 'Качване на нова версия на файла',
-	'unwatchedpages' => 'Ненаблюдавани страници',
+	'unwatchedpages' => 'Страници без надзор',
 	'unusedtemplates' => 'Неизползвани шаблони',
 	'unusedtemplatestext' => 'Тази страница съдържа списък на страниците в именно пространство {{ns:template}}, които не са включени в друга страница. Проверявайте за препратки към отделните шаблони преди да ги изтриете или предложите за изтриване.',
 	'unusedtemplateswlh' => 'други препратки',
@@ -4240,7 +4238,7 @@ $1',
 	'undeleteviewlink' => 'преглеждане',
 	'undeletereset' => 'Изчистване',
 	'undeleteinvert' => 'Обръщане на избора',
-	'undeletecomment' => 'Причина:',
+	'undeletecomment' => 'Коментар:',
 	'undeletedrevisions' => '{{PLURAL:$1|Една версия беше възстановена|$1 версии бяха възстановени}}',
 	'undeletedrevisions-files' => '{{PLURAL:$1|Една версия|$1 версии}} и {{PLURAL:$1|един файл|$2 файла}} бяха възстановени',
 	'undeletedfiles' => '{{PLURAL:$1|Един файл беше възстановен|$1 файла бяха възстановени}}',
@@ -7193,7 +7191,7 @@ $messages['de'] = [
 	'unprotect' => 'Seitenschutz ändern',
 	'unprotectthispage' => 'Seitenschutz ändern',
 	'unexpected' => 'Unerwarteter Wert: „$1“ = „$2“',
-	'userlogin' => 'Anmelden / Erstellen',
+	'userlogin' => 'Anmelden/Erstellen',
 	'userloginnocreate' => 'Anmelden',
 	'userlogout' => 'Abmelden',
 	'userlogin-resetlink' => 'Die Anmeldedaten vergessen?',
@@ -7245,14 +7243,43 @@ Bitte prüfe den Vergleich unten um sicherzustellen, dass du dies tun möchtest,
 	'upload-recreate-warning' => '\'\'\'Achtung: Eine Datei dieses Namens wurde bereits gelöscht oder verschoben.\'\'\'
 
 Es folgt ein Auszug aus dem Lösch- und Verschiebungs-Logbuch dieser Datei.',
-	'uploadtext' => 'Benutze dieses Formular, um neue Dateien hochzuladen.
+	'uploadtext' => '{|cellpadding="4px" style="width:100%; background-color:#f9f9f9; border-style:solid; border-color:#e9e9e9; border-width:4px; margin:auto; margin-top:4px; margin-bottom:4px; clear:both; position:relative; color: black;"
+|
+=== Allgemeines ===
 
-Gehe zu der [[Special:FileList|Liste hochgeladener Dateien]], um vorhandene Dateien zu suchen und anzuzeigen. Siehe auch das [[Special:Log/upload|Datei-]] und [[Special:Log/delete|Lösch-Logbuch]].
+Mit diesem Formular kannst du Dateien hochladen. Mögliche Dateiformate sind für Bilder \'\'jpg, jpeg, png, gif, svg\'\' und für Ton- bzw. Videodateien \'\'ogg\'\'.
 
-Um ein \'\'\'Bild\'\'\' in einer Seite zu verwenden, nutze einen Link in der folgenden Form:
-* \'\'\'<tt><nowiki>[[</nowiki>{{ns:file}}<nowiki>:Datei.jpg]]</nowiki></tt>\'\'\' – für ein Vollbild
-* \'\'\'<tt><nowiki>[[</nowiki>{{ns:file}}<nowiki>:Datei.png|200px|thumb|left|Alternativer Text]]</nowiki></tt>\'\'\' – für ein 200px breites Bild innerhalb einer Box, mit „Alternativer Text“ als Bildbeschreibung
-* \'\'\'<tt><nowiki>[[</nowiki>{{ns:media}}<nowiki>:Datei.ogg]]</nowiki></tt>\'\'\' – für einen direkten Link auf die Datei, ohne Darstellung der Datei',
+Wie du hochgeladene Bilder in Seiten einbaust, steht unter \'\'\'[[w:c:hilfe:Hilfe:Bilder|Hilfe „Bilder“]]\'\'\'. 
+
+=== Kurzanleitung ([[w:c:hilfe:Hilfe:Hochladen|ausführliche Anleitung]]) ===
+
+<span style="color:#008b00;">\'\'\'1. Quelldatei:\'\'\'</span> Klicke auf „Durchsuchen“ und wähle die gewünschte Datei.
+
+<span style="color:#008b00;">\'\'\'2. Dateiname:\'\'\'</span> Gib der Datei im zweiten Feld einen für das Wiki sinnvollen Namen (\'\'Kugelfisch.jpg\'\' statt \'\'IMG1234.jpg\'\') ohne Sonderzeichen und mit einer Dateiendung in Kleinbuchstaben (\'\'.jpg\'\' statt \'\'.JPG\'\').
+
+<span style="color:#008b00;">\'\'\'3. Bildinformation:\'\'\'</span> Kopiere den Mustertext der Vorlage „[[Vorlage:Dateiinfo|Dateiinfo]]“ (links) in das dritte Eingabefeld und fülle alle Zeilen nach den Gleichheitszeichen sorgfältig aus.
+{| width="100%"
+|width="20%" |
+<pre><nowiki>
+&#123;&#123;Dateiinfo
+|Beschreibung=
+|Datum=
+|Autor=
+|Quelle=
+|Lizenz=
+|Sonstiges=
+&#125;&#125;</nowiki></pre>
+| width="80%" |
+* \'\'\'Beschreibung:\'\'\' Was ist dargestellt, worum handelt es sich?
+* \'\'\'Datum:\'\'\' Wann ist die Datei entstanden? 
+* \'\'\'Autor:\'\'\' Wer ist der Urheber (Fotograf/Zeichner)? (ggf. mit 3 Tilden <nowiki>~~~</nowiki> signieren)
+* \'\'\'Quelle:\'\'\' Woher genau stammt die Datei? (exakte URL oder ggf. \'\'selbst fotografiert\'\') 
+* \'\'\'Lizenz:\'\'\' Unter welcher freien Lizenz steht die Datei? Dokumentiere ggf. die genaue Freigabe-Genehmigung. 
+* \'\'\'Sonstiges:\'\'\' Feld für Anmerkungen (kann frei- oder weggelassen werden)
+|}
+
+<span style="color:#008b00;">\'\'\'4. Hochladen:\'\'\'</span> Kontrolliere alle Angaben und klicke dann auf „Datei hochladen“. Dies kann – je nach Dateigröße und Internetverbindung – eine Weile dauern.
+|}',
 	'upload-permitted' => 'Erlaubte Dateitypen: $1.',
 	'upload-preferred' => 'Bevorzugte Dateitypen: $1.',
 	'upload-prohibited' => 'Nicht erlaubte Dateitypen: $1.',
@@ -7266,7 +7293,7 @@ Um ein \'\'\'Bild\'\'\' in einer Seite zu verwenden, nutze einen Link in der fol
 	'uploadedimage' => 'lud „[[$1]]“ hoch',
 	'uploaddisabled' => 'Hochladen deaktiviert',
 	'uploadfromurl-queued' => 'Dein Upload befindet sich nun in der Warteschlange.',
-	'uploaddisabledtext' => 'Das Hochladen von Dateien ist deaktiviert.',
+	'uploaddisabledtext' => 'Das Hochladen von Dateien ist momentan aufgrund von Serverarbeiten deaktiviert. Bitte entschuldige diese Unannehmlichkeiten und versuche es erneut in einigen Stunden.',
 	'uploadscripted' => 'Diese Datei enthält HTML- oder Scriptcode, der irrtümlich von einem Webbrowser ausgeführt werden könnte.',
 	'uploadvirus' => 'Diese Datei enthält einen Virus! Details: $1',
 	'uploadjava' => 'Dies ist eine ZIP-Datei, die ein CLASS-Datei von Java enthält.
@@ -7330,9 +7357,9 @@ Wenn das Problem weiter besteht, informiere einen [[Special:ListUsers/sysop|Syst
 	'usermessage-summary' => 'Systemnachricht gespeichert.',
 	'usermessage-editor' => 'System-Messenger',
 	'usermessage-template' => 'MediaWiki:Benutzernachricht',
-	'unwatch' => 'nicht mehr beobachten',
+	'unwatch' => 'Verfolgung aufheben',
 	'unwatchthispage' => 'Nicht mehr beobachten',
-	'unwatching' => 'Nicht beobachten …',
+	'unwatching' => 'Nicht mehr verfolgen…',
 	'unprotectedarticle' => 'hob den Schutz von „[[$1]]“ auf',
 	'undelete' => 'Gelöschte Seiten anzeigen',
 	'undeletepage' => 'Gelöschte Seiten anzeigen und wiederherstellen',
@@ -7403,6 +7430,31 @@ $1',
 	'use_old_formatting' => 'Zu Monobook wechseln',
 	'use_new_formatting' => 'Neue Formatierung verwenden',
 	'usesitejs-disabled-warning' => 'Benutzerdefiniertes JavaScript ist in diesem Wiki deaktiviert.',
+	'unable-block-edit' => 'Du hast nicht die Berechtigung, diese Seite zu bearbeiten. Versuche es später erneut.',
+	'undeletedarticle' => 'stellte "[[$1]]" wieder her',
+	'unlockdb-wikifactory-error' => 'Es ist ein Fehler aufgetreten. Speichern oder leeren des Caches fehlgeschlagen. Die Datenbank ist unter Umständen nicht gesperrt. Bitte versuche es erneut oder kontaktiere das TechTeam.',
+	'unlocked' => 'entsprerrt',
+	'unsubscribe-email' => 'Wenn du in Zukunft keine Mails mehr von Wikia empfangen möchtest, kannst du dich hier austragen: $1',
+	'uploadtext-ext' => 'Eine vollständige Liste aller aktivierten Extensions findet sich auf der [[{{ns:Special}}:Version|Versions-Seite]].',
+	'userlogin-bad-birthday' => 'Gib ein korrektes Geburtsdatum ein.',
+	'userlogin-bad-email' => 'Du hast keine gültige E-mail Adresse angegeben.',
+	'userlogin-bad-password' => 'Du hast kein gültiges Passwort angegeben.',
+	'userlogin-bad-repassword' => 'Deine Passwörter stimmen nicht überein.',
+	'userlogin-bad-username-character' => 'Dein Benutzername darf das Zeichen "@" nicht beinhalten.',
+	'userlogin-bad-username-empty' => 'Du hast keinen gültigen Benutzernamen angegeben.',
+	'userlogin-bad-username-length' => 'Dein Benutzername ist zu lang. Kürze ihn auf unter 50 Zeichen.',
+	'userlogin-bad-username-taken' => 'Dieser Benutzername ist bereits vergeben. Bitte wähle einen anderen aus.',
+	'userlogin-captcha-label' => 'Gib das dargestellte Wort ein:',
+	'userlogin-choose-day' => 'Tag',
+	'userlogin-choose-month' => 'Monat',
+	'userlogin-choose-year' => 'Jahr',
+	'userlogin-form-error' => 'Bitte behebe die Fehler, bevor du fortfährst.',
+	'userlogin-unable-info' => 'Es tut uns leid, aber wir können deine Anmeldung momentan nicht bearbeiten.',
+	'userlogin-unable-title' => 'Anmeldung konnte nicht durchgeführt werden.',
+	'usercaptcha' => 'Captcha -',
+	'usercaptchatext' => 'Bitte gib den Text aus dem Bild ein.',
+	'userinvalidcssjstitle' => '\'\'\'Achtung:\'\'\' Skin „$1“ existiert nicht. Bedenke, dass benutzerspezifische .css- und .js-Seiten mit einem Kleinbuchstaben anfangen müssen, also beispielsweise \'\'{{ns:user}}:Mustermann/monaco.css\'\' an Stelle von \'\'{{ns:user}}:Mustermann/Monaco.css\'\'.',
+	'users' => 'Benutzer',
 ];
 
 $messages['de-ch'] = [
@@ -8704,14 +8756,14 @@ Por favor escoge un nombre diferente.',
 	'upload-recreate-warning' => '\'\'\'Aviso: Un archivo con ese nombre ha sido eliminado o renombrado.\'\'\'
 
 A continuación se muestra el registro de borrados y traslados de esta página:',
-	'uploadtext' => 'Utiliza el siguiente formulario para subir archivos.
-Para ver o buscar archivos subidos con anterioridad, ve a la [[Special:FileList|lista de archivos subidos]].
-Los archivos subidos quedarán registrados además en el [[Special:Log/upload|registro de archivos subidos]] y los borrados en el [[Special:Log/delete|registro de borrados]].
+	'uploadtext' => 'Utilice el siguiente formulario para subir archivos.
+Para ver o buscar archivos subidos con anterioridad, ir a [[Special:Imagelist|lista de archivos subidos]].
+Lo que haya subido o borrado quedará registrado además en el [[Special:Log/upload|registro de archivos subidos]].
 
-Para incluir un archivo en una página, usa un enlace como los mostrados a continuación:
-* \'\'\'<tt><nowiki>[[</nowiki>{{ns:file}}<nowiki>:File.jpg]]</nowiki></tt>\'\'\' para usar el fichero en tamaño completo
-* \'\'\'<tt><nowiki>[[</nowiki>{{ns:file}}<nowiki>:File.png|200px|thumb|left|texto descriptivo]]</nowiki></tt>\'\'\' para una versión de 200 píxeles de ancho en una caja en el margen izquierdo con \'texto descriptivo\' como descripción
-* \'\'\'<tt><nowiki>[[</nowiki>{{ns:media}}<nowiki>:File.ogg]]</nowiki></tt>\'\'\' para enlazar directamente al fichero sin mostrarlo.',
+Para incluir un archivo en una página, utilice en el formulario los enlaces
+\'\'\'<nowiki>[[</nowiki>{{ns:image}}<nowiki>:File.jpg]]</nowiki>\'\'\',
+\'\'\'<nowiki>[[</nowiki>{{ns:image}}<nowiki>:File.png|alt text]]</nowiki>\'\'\', o
+\'\'\'<nowiki>[[</nowiki>{{ns:media}}<nowiki>:File.ogg]]</nowiki>\'\'\', para vincular directamente el archivo.',
 	'upload-permitted' => 'Tipos de archivo permitidos: $1.',
 	'upload-preferred' => 'Tipos de archivo preferidos: $1.',
 	'upload-prohibited' => 'Tipos de archivo prohibidos: $1.',
@@ -8726,7 +8778,7 @@ Mira la [[Special:NewFiles|galería de archivos nuevos]] para una descripción v
 	'uploadedimage' => 'subió «[[$1]]»',
 	'uploaddisabled' => 'Subida de archivos deshabilitada',
 	'uploadfromurl-queued' => 'Tu carga ha sido enviada a la cola.',
-	'uploaddisabledtext' => 'No es posible subir archivos.',
+	'uploaddisabledtext' => 'Desafortunadamente la subida de imágenes está desactivada temporalmente mientras trabajamos en nuestros servidores. Sentimos las molestias, por favor, inténtalo de nuevo en unas horas.',
 	'uploadscripted' => 'Este archivo contiene script o código HTML que puede ser interpretado erróneamente por un navegador web.',
 	'uploadvirus' => '¡El archivo contiene un virus!
 Detalles: $1',
@@ -8787,7 +8839,7 @@ Por favor note que otros sitios web pueden vincular a un archivo con un URL dire
 	'usermaildisabledtext' => 'No puedes enviar correos electrónicos a otros usuarios en esta wiki',
 	'usermessage-summary' => 'Dejando un mensaje de sistema.',
 	'usermessage-editor' => 'Mensajero del sistema',
-	'unwatch' => 'Dejar de vigilar',
+	'unwatch' => 'No seguir',
 	'unwatchthispage' => 'Dejar de vigilar',
 	'unwatching' => 'Eliminando de la lista de seguimiento...',
 	'unprotectedarticle' => 'desprotegió «[[$1]]»',
@@ -8858,6 +8910,23 @@ $1',
 	'use_old_formatting' => 'Cambiar a diseño Monobook',
 	'use_new_formatting' => 'Probar un diseño nuevo',
 	'usesitejs-disabled-warning' => 'El JavaScript personalizado está deshabilitado en este wiki.',
+	'unable-block-edit' => 'No estás autorizado para editar esta página. Inténtalo de nuevo más tarde.',
+	'unsubscribe-email' => 'Si no quieres recibir más emails de Wikia, puedes cancelar tu suscripción aquí: $1',
+	'uploadtext-ext' => 'Una lista completa de extensiones permitidas está disponible en la [[{{ns:Special}}:Version|página de la versión del wiki]].',
+	'userlogin-bad-birthday' => 'Elige una fecha de nacimiento correcta.',
+	'userlogin-bad-email' => 'No has especificado una dirección de correo electrónico válida.',
+	'userlogin-bad-password' => 'No has escrito una contraseña válida.',
+	'userlogin-bad-repassword' => 'Las contraseñas no son iguales.',
+	'userlogin-captcha-label' => 'Introduce la palabra que aparece:',
+	'userlogin-choose-day' => 'Día',
+	'userlogin-choose-month' => 'Mes',
+	'userlogin-choose-year' => 'Año',
+	'userlogin-form-error' => 'Por favor corrige los siguientes errores:',
+	'userlogin-unable-info' => 'Lo sentimos, no podemos llevar a cabo tu registro por ahora.',
+	'userlogin-unable-title' => 'No puede crearse el registro.',
+	'usercaptcha' => 'Palabra Borrosa -',
+	'usercaptchatext' => 'Por favor, introduce el texto de la imagen.',
+	'users' => 'Usuarios',
 ];
 
 $messages['et'] = [
@@ -9662,6 +9731,16 @@ $1',
 	'unlockdbsuccesssub' => 'قفل پایگاه داده برداشته شد',
 	'unlockdbsuccesstext' => 'پایگاه داده از قفل در آمد.',
 	'unknown_extension_tag' => 'برچسب ناشناختهٔ افزونه «$1»',
+	'upload-url' => 'ویژه:بارگذاری_پرونده',
+	'userlogin-bad-birthday' => 'تاریخ تولد صحیح را انتخاب کنید.',
+	'userlogin-bad-email' => 'شما آدرس ایمیل معتبری مشخص نکردید.',
+	'userlogin-bad-password' => 'گذرواژه وارد شده معتبر نمی‌باشد.',
+	'userlogin-bad-repassword' => 'گذرواژه‌های وارد شده با هم مطابقت ندارند.',
+	'userlogin-choose-day' => 'روز',
+	'userlogin-choose-month' => 'ماه',
+	'userlogin-choose-year' => 'سال',
+	'userlogin-form-error' => 'لطفا خطاهای زیر را تصحیح کنید:',
+	'users' => 'کاربران',
 ];
 
 $messages['ff'] = [
@@ -9714,7 +9793,7 @@ $messages['fi'] = [
 	'userrights-notallowed' => 'Tunnuksellasi ei ole lupaa lisätä tai poistaa käyttöoikeuksia.',
 	'userrights-changeable-col' => 'Ryhmät, joita voit muuttaa',
 	'userrights-unchangeable-col' => 'Ryhmät, joita et voi muuttaa',
-	'upload' => 'Tallenna tiedosto',
+	'upload' => 'Lisää tiedosto',
 	'uploadbtn' => 'Tallenna tiedosto',
 	'upload-tryagain' => 'Lähetä muutettu tiedostokuvaus',
 	'uploadnologin' => 'Et ole kirjautunut sisään',
@@ -9873,6 +9952,15 @@ $1',
 	'unrate_it' => 'Poista arvosteluni',
 	'use_old_formatting' => 'Vaihda Monobook-ulkoasuun',
 	'use_new_formatting' => 'Kokeile uutta ulkoasua',
+	'userlogin-bad-birthday' => 'Valitse oikea syntymäpäivä.',
+	'userlogin-bad-email' => 'Et ole määritellyt kelvollista sähköpostiosoitetta.',
+	'userlogin-bad-password' => 'Et ole määritelly kelvollista salasanaa.',
+	'userlogin-bad-repassword' => 'Salasana ei täsmää.',
+	'userlogin-choose-day' => 'Päivä',
+	'userlogin-choose-month' => 'Kuukausi',
+	'userlogin-choose-year' => 'Vuosi',
+	'userlogin-form-error' => 'Korjaa seuraavat virheet:',
+	'users' => 'Käyttäjät',
 ];
 
 $messages['fiu-vro'] = [
@@ -10207,7 +10295,7 @@ $messages['fr'] = [
 	'userexists' => 'Nom d’utilisateur entré déjà utilisé.
 Veuillez choisir un nom différent.',
 	'usernamehasherror' => 'Le nom d’utilisateur ne peut pas contenir des caractères de hachage',
-	'user-mail-no-addy' => 'Tenté d’envoyer un courriel sans adresse de courriel',
+	'user-mail-no-addy' => 'Essayé d’envoyer un e-mail sans adresse e-mail.',
 	'userpage-userdoesnotexist' => 'Le compte utilisateur « <nowiki>$1</nowiki> » n’est pas enregistré. Veuillez vérifier que vous voulez créer cette page.',
 	'userpage-userdoesnotexist-view' => 'Le compte utilisateur « $1 » n’est pas enregistré.',
 	'usercssyoucanpreview' => '\'\'\'Astuce :\'\'\' utilisez le bouton « {{int:showpreview}} » pour tester votre nouvelle feuille CSS avant de l’enregistrer.',
@@ -10216,9 +10304,9 @@ Veuillez choisir un nom différent.',
 \'\'\'Elle n’a pas encore été enregistrée !\'\'\'',
 	'userjspreview' => '\'\'\'Rappelez-vous que vous êtes en train de visualiser ou de tester votre code JavaScript et qu’il n’a pas encore été enregistré !\'\'\'',
 	'updated' => '(Mis à jour)',
-	'undo-success' => 'Cette modification va être défaite. Veuillez vérifier les modifications ci-dessous, puis publier si c’est bien ce que vous voulez faire.',
-	'undo-failure' => 'Cette modification ne peut pas être défaite : cela entrerait en conflit avec les modifications intermédiaires.',
-	'undo-norev' => 'La modification n’a pas pu être défaite parce qu’elle est inexistante ou qu’elle a été supprimée.',
+	'undo-success' => 'Cette modification va être annulée. Veuillez vérifier les modifications ci-dessous, puis publier si c’est bien ce que vous voulez faire.',
+	'undo-failure' => 'Cette modification ne peut pas être annulée : cela entrerait en conflit avec les modifications intermédiaires.',
+	'undo-norev' => 'La modification n’a pas pu être annulée parce qu’elle n’existe pas ou qu’elle a été supprimée.',
 	'undo-summary' => 'Annulation des modifications $1 de [[Special:Contributions/$2|$2]] ([[User talk:$2|discussion]])',
 	'username' => 'Nom d’utilisateur :',
 	'uid' => 'Numéro d’utilisateur :',
@@ -10228,10 +10316,11 @@ Veuillez choisir un nom différent.',
 	'userrights-editusergroup' => 'Modifier les groupes de l’utilisateur',
 	'userrights-groupsmember' => 'Membre de :',
 	'userrights-groupsmember-auto' => 'Membre implicite de :',
-	'userrights-groups-help' => 'Vous pouvez modifier les groupes auxquels appartient cet utilisateur:
-* Une case cochée signifie que l’utilisateur se trouve dans ce groupe.
-* Une case non cochée signifie qu’il ne s’y trouve pas.
-* Un astérisque (*) indique que vous ne pouvez pas retirer ce groupe une fois que vous l’avez ajouté, ou vice-versa.',
+	'userrights-groups-help' => 'Vous pouvez modifier les groupes auxquels cet utilisateur appartient :
+* Une case cochée signifie que l’utilisateur se trouve dans ce groupe
+* Une case non cochée signifie qu’il n’y s’y trouve pas
+* Un astérisque (*) indique que vous ne pouvez pas retirer ce groupe une fois que vous l’avez ajouté, ou vice-versa
+* Vous trouverez plus d’informations sur la signification de chaque groupe sur [[w:c:communaute:Aide:Niveaux d\'accès utilisateur|Aide:Niveaux d’accès utilisateur]]',
 	'userrights-reason' => 'Motif :',
 	'userrights-no-interwiki' => 'Vous n’avez pas la permission de modifier des droits d’utilisateurs sur d’autres wikis.',
 	'userrights-nodatabase' => 'La base de donnée « $1 » n’existe pas ou n’est pas locale.',
@@ -10271,7 +10360,7 @@ Voyez la [[Special:NewFiles|galerie des nouvelles images]] pour une présentatio
 	'uploadedimage' => 'a importé « [[$1]] »',
 	'uploaddisabled' => 'Désolé, l\'import de fichiers est désactivé.',
 	'uploadfromurl-queued' => 'Votre fichier a été mis dans la file d’attente.',
-	'uploaddisabledtext' => 'L\'import de fichiers est désactivé sur ce wiki.',
+	'uploaddisabledtext' => 'L’importation d’images est malheureusement désactivée temporairement tandis que nous maintenons nos serveurs. Nous sommes désolés pour ce désagrément, veuillez réessayer dans quelques heures.',
 	'uploadscripted' => 'Ce fichier contient du code HTML ou un script qui pourrait être interprété de façon incorrecte par un navigateur web.',
 	'uploadvirus' => 'Ce fichier contient un virus ! Pour plus de détails, consultez : $1',
 	'uploadjava' => 'C\'est un fichier ZIP qui contient un fichier Java .class.
@@ -10329,9 +10418,9 @@ N’oubliez pas de vérifier s’il n’y a pas d’autres liens vers les modèl
 	'unusedimagestext' => 'Les fichiers suivants existent, mais ne sont inclus dans aucune page.
 Veuillez noter que d’autres sites peuvent avoir un lien direct vers un fichier, et donc qu’un fichier peut être listé ici alors qu’il est en réalité utilisé sur ces sites.',
 	'unusedcategoriestext' => 'Les catégories suivantes existent mais aucune page ou catégorie ne les utilise.',
-	'usermailererror' => 'Erreur dans l’objet du courriel :',
-	'usermaildisabled' => 'L’envoi de courriels entre utilisateurs est désactivé',
-	'usermaildisabledtext' => 'Vous ne pouvez pas envoyer de courriels à d’autres utilisateurs sur ce wiki',
+	'usermailererror' => 'Erreur dans l’objet de l\'e-mail :',
+	'usermaildisabled' => 'L’envoi d\'e-mails entre utilisateurs est désactivé',
+	'usermaildisabledtext' => 'Vous ne pouvez pas envoyer d\'e-mails à d’autres utilisateurs sur ce wikia',
 	'usermessage-summary' => 'A laissé un message système.',
 	'usermessage-editor' => 'Messager du système',
 	'unwatch' => 'Ne plus suivre',
@@ -10344,8 +10433,8 @@ Veuillez noter que d’autres sites peuvent avoir un lien direct vers un fichier
 	'undeletepagetext' => '{{PLURAL:$1|La page suivante a été supprimée et se trouve|Les pages suivantes ont été supprimées et se trouvent}} dans la base de données archive, d’où {{PLURAL:$1|elle peut|elles peuvent}} encore être restaurée{{PLURAL:$1||s}}.
 L’archive peut être nettoyée périodiquement.',
 	'undelete-fieldset-title' => 'Restaurer les versions',
-	'undeleteextrahelp' => 'Pour restaurer l’historique complet de cette page, laissez toutes les cases décochées et cliquez sur \'\'\'\'\'Restaurer\'\'\'\'\'.
-Pour effectuer une restauration partielle, cochez les cases correspondant aux versions à rétablir, puis cliquez sur \'\'\'\'\'Restaurer\'\'\'\'\'.',
+	'undeleteextrahelp' => '* Pour restaurer l’historique complet de la page, laissez toutes les cases décochées et cliquez sur \'\'\'\'\'{{int:undeletebtn}}\'\'\'\'\'. Pour effectuer une restauration partielle, cochez les cases correspondant aux versions à rétablir, puis cliquez sur \'\'\'\'\'{{int:undeletebtn}}\'\'\'\'\'.
+* Avec la plupart des navigateurs, cocher une case puis en cocher une autre en maintenant la touche Shift enfoncée coche toutes les cases entre.',
 	'undeleterevisions' => '$1 {{PLURAL:$1|version archivée|versions archivées}}',
 	'undeletehistory' => 'Si vous restaurez la page, toutes les versions seront replacées dans l’historique.
 Si une nouvelle page avec le même nom a été créée depuis la suppression, les versions restaurées apparaîtront dans l’historique antérieur et la version courante ne sera pas automatiquement remplacée.',
@@ -10411,6 +10500,17 @@ Veuillez confirmer que c’est bien là ce que vous voulez faire.',
 	'use_old_formatting' => 'Passer à l\'affichage Monobook',
 	'use_new_formatting' => 'Essayer le nouvel habillage',
 	'usesitejs-disabled-warning' => 'Le JavaScript personnalisé est désactivé sur ce wiki.',
+	'unsubscribe-email' => 'Si vous ne souhaitez plus recevoir d\'e-mails de la part de Wikia vous pouvez vous désabonner ici : $1',
+	'userlogin-bad-birthday' => 'Merci de choisir une date de naissance correctement.',
+	'userlogin-bad-email' => 'Vous n’avez pas saisi une adresse email valide.',
+	'userlogin-bad-password' => 'Vous n’avez pas saisi un mot de passe valide.',
+	'userlogin-bad-repassword' => 'Ce mot de passe ne correspond pas à votre nom d\'utilisateur.',
+	'userlogin-choose-day' => 'Jour',
+	'userlogin-choose-month' => 'Mois',
+	'userlogin-choose-year' => 'Année',
+	'userlogin-form-error' => 'Merci de corriger les erreurs suivantes :',
+	'usercaptcha' => 'Mot flou -',
+	'usercaptchatext' => 'Veuillez saisir le texte dans l’image.',
 ];
 
 $messages['frc'] = [
@@ -15427,7 +15527,7 @@ $messages['it'] = [
 	'unexpected' => 'Valore imprevisto: "$1"="$2".',
 	'userlogin' => 'Entra / Registrati',
 	'userloginnocreate' => 'Entra',
-	'userlogout' => 'esci',
+	'userlogout' => 'Esci',
 	'userlogin-resetlink' => 'Hai dimenticato i tuoi dati di accesso?',
 	'userexists' => 'Il nome utente inserito è già utilizzato.
 Scegliere un nome utente diverso.',
@@ -15455,7 +15555,13 @@ Scegliere un nome utente diverso.',
 	'userrights-groups-help' => 'È possibile modificare i gruppi cui è assegnato l\'utente.
 * Una casella di spunta selezionata indica l\'appartenenza dell\'utente al gruppo
 * Una casella di spunta deselezionata indica la sua mancata appartenenza al gruppo.
-* Il simbolo * indica che non è possibile eliminare l\'appartenenza al gruppo dopo averla aggiunta (o vice versa).',
+* Il simbolo * indica che non è possibile eliminare l\'appartenenza al gruppo dopo averla aggiunta (o vice versa).
+
+\'\'\'Note:\'\'\'
+* Le funzioni accessibili dagli utenti con diritti di "rollback" e "moderatore chat" sono già disponibili agli amministratori, per cui è ridondante assegnare questi diritti in aggiunta a quelli di amministrazione.
+* Come indicato dal simbolo *, una volta nominato un utente burocrate \'\'\'non si potrà più revocare tali diritti\'\'\'. Solo l\'utente stesso e lo [[Special:Contact|Staff]] possono rimuovere questi diritti.
+* Chi è burocrate non è automaticamente amministratore, per cui gli serviranno anche questi diritti per accedere agli strumenti di amministrazione.
+* Per altre informazioni sui diritti utente, leggere [[w:Aiuto:Livelli di accesso degli utenti|Aiuto:Livelli di accesso degli utenti]].',
 	'userrights-reason' => 'Motivo:',
 	'userrights-no-interwiki' => 'Non si dispone dei permessi necessari per modificare i diritti degli utenti su altri siti.',
 	'userrights-nodatabase' => 'Il database $1 non esiste o non è un database locale.',
@@ -15493,7 +15599,7 @@ Consultare la [[Special:NewFiles|galleria dei nuovi file]] per una visione d\'in
 	'uploadedimage' => 'ha caricato "[[$1]]"',
 	'uploaddisabled' => 'Il caricamento dei file è temporaneamente sospeso.',
 	'uploadfromurl-queued' => 'Il caricamento è stato accodato.',
-	'uploaddisabledtext' => 'Il caricamento dei file non è attivo.',
+	'uploaddisabledtext' => 'Il caricamento dei file è stato temporaneamente disattivato mentre provvediamo alla manutenzione dei nostri server. Ci scusiamo per il disagio e vi invitiamo a riprovare tra qualche ora.',
 	'uploadscripted' => 'Questo file contiene codice HTML o di script, che potrebbe essere interpretato erroneamente da un browser web.',
 	'uploadvirus' => 'Questo file contiene un virus! Dettagli: $1',
 	'uploadjava' => 'Questo file è un file ZIP che contiene un file .class Java.
@@ -15622,6 +15728,24 @@ $1',
 	'unlockdbsuccesstext' => 'Il database è stato sbloccato.',
 	'unknown_extension_tag' => 'Tag estensione sconosciuto: "$1"',
 	'usesitejs-disabled-warning' => 'Il JavaScript personalizzato è disabilitato per questa wiki.',
+	'userlogin-bad-birthday' => 'Inserisci la data di nascita corretta.',
+	'userlogin-bad-email' => 'L\'indirizzo e-mail specificato non è valido.',
+	'userlogin-bad-password' => 'La password inserita non è valida.',
+	'userlogin-bad-repassword' => 'Le password inserite non combaciano.',
+	'userlogin-bad-username-character' => 'Il tuo username non può contenere il carattere "@".',
+	'userlogin-bad-username-empty' => 'Non hai specificato un valido username.',
+	'userlogin-bad-username-length' => 'Il tuo username è troppo lungo. Può contenere al massimo 50 caratteri.',
+	'userlogin-bad-username-taken' => 'Questo username è già stato preso. Per favore scegline un altro.',
+	'userlogin-captcha-label' => 'Inserisci la parola che appare:',
+	'userlogin-choose-day' => 'Giorno',
+	'userlogin-choose-month' => 'Mese',
+	'userlogin-choose-year' => 'Anno',
+	'userlogin-form-error' => 'Per favore, correggi i seguenti errori:',
+	'userlogin-unable-info' => 'Ci dispiace, al momento non è possibile registrarti.',
+	'userlogin-unable-title' => 'Impossibile procedere con la registrazione',
+	'usercaptcha' => 'Parola sfocata -',
+	'usercaptchatext' => 'Per favore inserisci il testo dell\'immagine.',
+	'users' => 'Utenti',
 ];
 
 $messages['iu'] = [
@@ -15860,22 +15984,23 @@ $messages['ja'] = [
 	'userinvalidcssjstitle' => '\'\'\'警告：\'\'\'「$1」という外装はありません。
 .cssと.jsページを編集する際には、ページ名を小文字にすることを忘れないでください（例えば、{{ns:user}}:Hoge/Vector.cssではなく{{ns:user}}:Hoge/vector.cssとなります）。',
 	'updated' => '（更新）',
-	'undo-success' => '取り消しが可能です。
-これが意図した操作であるか、下に表示されている差分を確認し、取り消しを確定させるために、変更を保存してください。',
+	'undo-success' => '\'\'\'この編集はアンドゥ (取り消し) 可能です。これがあなたが行いたいことであることを照合するため下記の比較を確認し、下記の変更を保存して編集のアンドゥを完了してください。\'\'\'
+
+\'\'もしヴァンダリズムでない編集をアンドゥした場合は、デフォルトメッセージのみ使用するのではなく編集サマリでその理由を説明してください。\'\'',
 	'undo-failure' => '中間の版での編集と競合したため、取り消せませんでした。',
 	'undo-norev' => '取り消そうとした編集は存在しないかすでに削除されたために取り消せませんでした。',
 	'undo-summary' => '[[Special:Contributions/$2|$2]]（[[User talk:$2|トーク]]）による第$1版を取り消し',
 	'username' => '利用者名：',
 	'uid' => '利用者ID：',
 	'userrights' => '利用者権限の管理',
-	'userrights-lookup-user' => '利用者グループを管理',
-	'userrights-user-editname' => '利用者名を入力：',
-	'userrights-editusergroup' => '利用者グループを編集',
+	'userrights-lookup-user' => 'ユーザーグループを管理',
+	'userrights-user-editname' => 'ユーザー名を入力：',
+	'userrights-editusergroup' => 'ユーザーグループを編集',
 	'userrights-groupsmember' => '所属グループ：',
 	'userrights-groupsmember-auto' => '暗黙で追加されるグループ：',
-	'userrights-groups-help' => 'この利用者が属するグループを変更することができます。
-* チェックが入っているボックスは、この利用者がそのグループに属していることを意味します。
-* チェックが入っていないボックスは、この利用者がそのグループに属していないことを意味します。
+	'userrights-groups-help' => 'このユーザーが属するグループを変更することができます。
+* チェックが入っているボックスは、このユーザーがそのグループに属していることを意味します。
+* チェックが入っていないボックスは、このユーザーがそのグループに属していないことを意味します。
 * *は一旦グループへ追加した場合に除去あるいはその逆が不可能であることを示しています。',
 	'userrights-reason' => '理由：',
 	'userrights-no-interwiki' => '他ウィキ上における利用者権限の編集権限はありません。',
@@ -15985,23 +16110,22 @@ URLが正しいものであり、ウェブサイトが稼働していること�
 	'usermaildisabledtext' => 'このウィキ上で他の利用者へメールを送ることはできません。',
 	'usermessage-summary' => 'システムメッセージを残す。',
 	'usermessage-editor' => 'システムメッセンジャー',
-	'unwatch' => 'ウォッチしない',
+	'unwatch' => 'フォロー中',
 	'unwatchthispage' => 'ウォッチをやめる',
-	'unwatching' => 'ウォッチリストから除去しています・・・',
+	'unwatching' => 'フォローを外しています...',
 	'unprotectedarticle' => '「[[$1]]」の保護を解除しました',
 	'undelete' => '削除されたページを表示',
 	'undeletepage' => '削除されたページの表示と復元',
-	'undeletepagetitle' => '\'\'\'以下は、[[:$1]]の削除された版です\'\'\'。',
+	'undeletepagetitle' => '\'\'\'以下には、[[:$1|$1]]の削除された修正が含まれています\'\'\'。',
 	'undeletepagetext' => '以下の{{PLURAL:$1|ページ}}は削除されていますが、保存版に残っているため、復元できます。
 保存版は定期的に消去される可能性があります。',
-	'undelete-fieldset-title' => '削除された版の復元',
+	'undelete-fieldset-title' => 'リビジョンの復元',
 	'undeleteextrahelp' => 'すべての版を復元する場合は、チェックボックスをどれも選択していない状態で\'\'\'\'\'{{int:undeletebtn}}\'\'\'\'\'をクリックしてください。
 特定の版を復帰する場合は、復帰する版のチェックボックスを選択した状態で\'\'\'\'\'{{int:undeletebtn}}\'\'\'\'\'をクリックしてください。',
 	'undeleterevisions' => '$1版が保存されています',
 	'undeletehistory' => 'ページの復帰を行うと、すべての版が履歴に復帰します。
 削除されたあとに同じ名前で新しくページが作成されていた場合、復帰した版はそれに先行する履歴として現れます。',
-	'undeleterevdel' => '復帰した結果、版指定削除されているページまたはファイルの版が最新となる場合、復帰は実行されません。
-このような場合、版指定削除されていない版が最新となるようにチェックするか、その版の版指定削除を解除する必要があります。',
+	'undeleterevdel' => '復元するとトップページやファイルのリビジョンが部分的に削除されてしまう場合、復元は実行されません。そのようなケースの場合、最近削除されたリビジョンのチェックを外すか、またはそのリビジョンを表示する必要があります。',
 	'undeletehistorynoadmin' => 'このページは削除されています。
 以下に、削除前にこのページを編集していた利用者の詳細情報と共に、この削除の理由が示されています。
 削除された各版の本文は管理者のみが使用可能です。',
@@ -16062,6 +16186,24 @@ $1',
 	'use_old_formatting' => 'monobookの外装に変更する',
 	'use_new_formatting' => '新しい外装を試す',
 	'usesitejs-disabled-warning' => 'このwikiではカスタムJavaScriptは無効になっています。',
+	'unable-block-edit' => 'このページの編集は許可されておりません。後で編集してください。',
+	'uploadtext-ext' => '[[{{ns:Special}}:Version|バージョン情報]]のページで、利用できる拡張子を確認できます。',
+	'userlogin-bad-birthday' => '正しい日付を選んでください。',
+	'userlogin-bad-email' => '正しいメールアドレスを入力してください。',
+	'userlogin-bad-password' => '正しいパスワードを入力してください。',
+	'userlogin-bad-repassword' => 'パスワードが再入力したものと一致しません。',
+	'userlogin-bad-username-character' => '利用者名に「@」を使うことはできません。',
+	'userlogin-bad-username-empty' => '有効な利用者名が入力されていません。',
+	'userlogin-bad-username-length' => '利用者名が長すぎます。利用者名は50文字未満でなければなりません。',
+	'userlogin-bad-username-taken' => 'この利用者名は既に使用されています。別の利用者名を入力してください。',
+	'userlogin-captcha-label' => '画像で表示されている文字を入力してください。',
+	'userlogin-choose-day' => '日',
+	'userlogin-choose-month' => '月',
+	'userlogin-choose-year' => '年',
+	'userlogin-form-error' => '次のエラーを修正してください:',
+	'userlogin-unable-info' => '申し訳ありません、現在登録が出来ません。',
+	'userlogin-unable-title' => 'アカウントの登録が出来ません',
+	'usercaptcha' => '画像認証 -',
 ];
 
 $messages['jam'] = [
@@ -18541,6 +18683,24 @@ $1',
 	'unlockdbsuccesssub' => '데이터베이스 잠금 해제됨',
 	'unlockdbsuccesstext' => '데이터베이스 잠금 상태가 해제되었습니다.',
 	'unknown_extension_tag' => '알 수 없는 확장 기능 태그 "$1"',
+	'unsubscribe-email' => '위키아에서 더 이상 이메일을 받고 싶지 않다면 다음 링크에서 해지할 수 있습니다: $1',
+	'userlogin-bad-birthday' => '올바른 생년월일을 선택하십시오.',
+	'userlogin-bad-email' => '올바른 이메일 주소가 아닙니다.',
+	'userlogin-bad-password' => '올바른 비밀번호를 입력하십시오.',
+	'userlogin-bad-repassword' => '다시 입력하신 비밀번호가 그 위에 입력하신 비밀번호와 맞지 않습니다.',
+	'userlogin-bad-username-character' => '계정 이름에는 \'@\'가 포함될 수 없습니다.',
+	'userlogin-bad-username-empty' => '사용할 수 있는 계정 이름이 아닙니다.',
+	'userlogin-bad-username-length' => '계정 이름은 50자보다 짧아야 합니다.',
+	'userlogin-bad-username-taken' => '이미 사용중인 계정 이름입니다. 다른 이름으로 시도해주세요.',
+	'userlogin-captcha-label' => '다음에 나타나는 단어를 입력하세요:',
+	'userlogin-choose-day' => '일',
+	'userlogin-choose-month' => '월',
+	'userlogin-choose-year' => '년',
+	'userlogin-form-error' => '다음 오류들이 발생했습니다:',
+	'userlogin-unable-info' => '죄송하지만 지금 위키아 계정을 만드는 것이 비활성화되어 있습니다.',
+	'userlogin-unable-title' => '위키아 계정 생성 불가',
+	'usercaptcha' => '보안 문자 -',
+	'usercaptchatext' => '그림에 있는 글자를 입력하세요.',
 ];
 
 $messages['ko-kp'] = [
@@ -24640,17 +24800,17 @@ $messages['nl'] = [
 Kies een andere naam.',
 	'usernamehasherror' => 'Een gebruikersnaam mag het karakter hekje ("#") niet bevatten.',
 	'user-mail-no-addy' => 'Geprobeerd een e-mail te verzenden zonder een e-mailadres.',
-	'userpage-userdoesnotexist' => 'U bewerkt een gebruikerspagina van een gebruiker die niet bestaat (gebruiker "<nowiki>$1</nowiki>").
-Controleer of u deze pagina wel wilt aanmaken of bewerken.',
+	'userpage-userdoesnotexist' => 'Je bewerkt een gebruikerspagina van een gebruiker die niet bestaat (gebruiker "$1").
+Controleer of je deze pagina wel wilt aanmaken/bewerken.',
 	'userpage-userdoesnotexist-view' => 'De gebruiker "$1" is niet geregistreerd.',
-	'usercssyoucanpreview' => '\'\'\'Tip:\'\'\' Gebruik de knop "{{int:showpreview}}" om uw nieuwe CSS te testen alvorens op te slaan.',
-	'userjsyoucanpreview' => '\'\'\'Tip:\'\'\' Gebruik de knop "{{int:showpreview}}" om uw nieuwe JavaScript te testen alvorens op te slaan.',
-	'usercsspreview' => '\'\'\'Dit is alleen een voorvertoning van uw persoonlijke CSS.\'\'\'
-\'\'\'Deze is nog niet opgeslagen!\'\'\'',
-	'userjspreview' => '\'\'\'Let op: u test nu uw persoonlijke JavaScript.\'\'\'
+	'usercssyoucanpreview' => '\'\'\'Tip:\'\'\' Gebruik de knop "{{int:showpreview}}" om je nieuwe CSS te testen alvorens op te slaan.',
+	'userjsyoucanpreview' => '\'\'\'Tip:\'\'\' Gebruik de knop "{{int:showpreview}}" om je nieuwe JavaScript te testen alvorens op te slaan.',
+	'usercsspreview' => '\'\'\'Dit is alleen een voorvertoning van je persoonlijke CSS.
+Deze is nog niet opgeslagen!\'\'\'',
+	'userjspreview' => '\'\'\'Let op: je test nu je persoonlijke JavaScript.\'\'\'
 \'\'\'De pagina is niet opgeslagen!\'\'\'',
-	'userinvalidcssjstitle' => '\'\'\'Waarschuwing:\'\'\' er is geen uiterlijk "$1".
-Uw eigen .css- en .js-pagina\'s beginnen met een kleine letter, bijvoorbeeld {{ns:user}}:Naam/vector.css in plaats van {{ns:user}}:Naam/Vector.css.',
+	'userinvalidcssjstitle' => '\'\'\'Waarschuwing:\'\'\' er is geen skin "$1".
+Let op: je eigen .css- en .js-pagina\'s beginnen met een kleine letter, bijvoorbeeld {{ns:user}}:Naam/vector.css in plaats van {{ns:user}}:Naam/Vector.css.',
 	'updated' => '(Bijgewerkt)',
 	'undo-success' => 'Deze bewerking kan ongedaan gemaakt worden.
 Hieronder staat de tekst waarin de wijziging ongedaan is gemaakt.
@@ -24666,22 +24826,22 @@ Controleer voor het opslaan of het resultaat gewenst is.',
 	'userrights-editusergroup' => 'Gebruikersgroepen wijzigen',
 	'userrights-groupsmember' => 'Lid van:',
 	'userrights-groupsmember-auto' => 'Impliciet lid van:',
-	'userrights-groups-help' => 'U kunt de groepen wijzigen waar deze gebruiker lid van is.
+	'userrights-groups-help' => 'Je kunt de groepen wijzigen waar deze gebruiker lid van is.
 * Een aangekruist vakje betekent dat de gebruiker lid is van de groep.
 * Een niet aangekruist vakje betekent dat de gebruiker geen lid is van de groep.
-* Een "*" betekent dat u een gebruiker niet uit een groep kunt verwijderen nadat u die hebt toegevoegd of vice versa.',
+* Een "*" betekent dat je een gebruiker niet uit een groep kunt verwijderen nadat je die hebt toegevoegd of vice versa.',
 	'userrights-reason' => 'Reden:',
-	'userrights-no-interwiki' => 'U hebt geen rechten om gebruikersrechten op andere wiki\'s te wijzigen.',
+	'userrights-no-interwiki' => 'Je hebt geen rechten om gebruikersrechten op andere wiki\'s te wijzigen.',
 	'userrights-nodatabase' => 'De database $1 bestaat niet of is geen lokale database.',
-	'userrights-nologin' => 'U moet zich [[Special:UserLogin|aanmelden]] met een gebruiker met de juiste rechten om gebruikersrechten toe te wijzen.',
-	'userrights-notallowed' => 'U hebt geen rechten om gebruikersrechten toe te voegen of te verwijderen.',
-	'userrights-changeable-col' => 'Groepen die u kunt beheren',
-	'userrights-unchangeable-col' => 'Groepen die u niet kunt beheren',
+	'userrights-nologin' => 'Je moet jezelf [[Special:UserLogin|aanmelden]] met een gebruiker met de juiste rechten om gebruikersrechten toe te wijzen.',
+	'userrights-notallowed' => 'Je hebt geen rechten om gebruikersrechten toe te wijzen.',
+	'userrights-changeable-col' => 'Groepen die je kunt beheren',
+	'userrights-unchangeable-col' => 'Groepen die je niet kunt beheren',
 	'upload' => 'Bestand uploaden',
 	'uploadbtn' => 'Bestand uploaden',
 	'upload-tryagain' => 'Bestandsbeschrijving bijwerken',
 	'uploadnologin' => 'Niet aangemeld',
-	'uploadnologintext' => 'U moet [[Special:UserLogin|aangemeld]] zijn om bestanden te kunnen uploaden.',
+	'uploadnologintext' => 'Je moet [[Special:UserLogin|aangemeld]] zijn om bestanden te uploaden.',
 	'upload_directory_missing' => 'De uploadmap ($1) is niet aanwezig en kon niet aangemaakt worden door de webserver.',
 	'upload_directory_read_only' => 'De webserver kan niet schrijven in de uploadmap ($1).',
 	'uploaderror' => 'Uploadfout',
@@ -24710,7 +24870,7 @@ Zie de [[Special:NewFiles|galerij met nieuwe bestanden]] voor een visueler overz
 	'uploadwarning-text' => 'Pas de onderstaande bestandsbeschrijving aan en probeer het daarna opnieuw.',
 	'uploadedimage' => 'heeft "[[$1]]" geüpload',
 	'uploaddisabled' => 'Uploaden is uitgeschakeld',
-	'uploadfromurl-queued' => 'Uw upload is in de wachtrij geplaatst.',
+	'uploadfromurl-queued' => 'Je upload is in de wachtrij geplaatst.',
 	'uploaddisabledtext' => 'Het uploaden van bestanden is uitgeschakeld.',
 	'uploadscripted' => 'Dit bestand bevat HTML- of scriptcode die foutief door uw browser kan worden weergegeven.',
 	'uploadvirus' => 'Het bestand bevat een virus! Details: $1',
@@ -24721,13 +24881,13 @@ Het uploaden van Java-bestanden is niet toegestaan omdat hiermee beveiligingsins
 	'upload-description' => 'Bestandsbeschrijving',
 	'upload-options' => 'Uploadinstellingen',
 	'upload-success-subj' => 'Het bestand is toegevoegd',
-	'upload-success-msg' => 'Uw upload van [$2] is geslaagd en is beschikbaar: [[:{{ns:file}}:$1]]',
+	'upload-success-msg' => 'Je upload van [$2] is geslaagd en is beschikbaar: [[:{{ns:file}}:$1]]',
 	'upload-failure-subj' => 'Uploadprobleem',
-	'upload-failure-msg' => 'Er was een probleem met uw upload van [$2]:
+	'upload-failure-msg' => 'Er was een probleem met je upload van [$2]:
 
 $1',
 	'upload-warning-subj' => 'Uploadwaarschuwing',
-	'upload-warning-msg' => 'Er was een probleem met uw upload van [$2].
+	'upload-warning-msg' => 'Er was een probleem met je upload van [$2].
 Ga terug naar het [[Special:Upload/stash/$1|uploadformulier]] om dit probleem te verhelpen.',
 	'upload-proto-error' => 'Verkeerd protocol',
 	'upload-proto-error-text' => 'Uploads via deze methode vereisen URL\'s die beginnen met <code>http://</code> of <code>ftp://</code>.',
@@ -24754,9 +24914,9 @@ Controleer of de URL juist is, en of de website beschikbaar is.',
 	'upload-curl-error28' => 'Uploadtime-out',
 	'upload-curl-error28-text' => 'Het duurde te lang voordat de website antwoordde.
 Controleer of de website beschikbaar is, wacht even en probeer het dan opnieuw.
-U kunt het misschien proberen als het minder druk is.',
+Je kunt het misschien proberen als het minder druk is.',
 	'upload_source_url' => ' (een geldige, publiek toegankelijke URL)',
-	'upload_source_file' => ' (een bestand op uw computer)',
+	'upload_source_file' => '(een bestand op je computer)',
 	'uploadnewversion-linktext' => 'Een nieuwe versie van dit bestand uploaden',
 	'unwatchedpages' => 'Pagina\'s die niet op een volglijst staan',
 	'unusedtemplates' => 'Ongebruikte sjablonen',
@@ -24777,7 +24937,7 @@ Een bestand kan hier dus ten onrechte opgenomen zijn.',
 	'unusedcategoriestext' => 'Hieronder staan categorieën die zijn aangemaakt, maar door geen enkele pagina of andere categorie gebruikt worden.',
 	'usermailererror' => 'Foutmelding bij het verzenden:',
 	'usermaildisabled' => 'Gebruikerse-mail uitgeschakeld',
-	'usermaildisabledtext' => 'U kunt geen e-mail verzenden naar andere gebruikers op deze wiki',
+	'usermaildisabledtext' => 'Je kunt geen e-mail verzenden naar andere gebruikers op deze wiki',
 	'usermessage-summary' => 'Systeembericht achtergelaten',
 	'usermessage-editor' => 'Systeembericht',
 	'unwatch' => 'Niet volgen',
@@ -24792,7 +24952,7 @@ Een bestand kan hier dus ten onrechte opgenomen zijn.',
 	'undeleteextrahelp' => 'Laat alle vakjess leeg en klik op \'\'\'\'\'Terugplaatsen\'\'\'\'\' om de hele pagina inclusief alle eerdere versies terug te plaatsen.
 Vink de terug te plaatsen versies aan en klik op \'\'\'\'\'Terugplaatsen\'\'\'\'\' om bepaalde versies terug te plaatsen.',
 	'undeleterevisions' => '$1 {{PLURAL:$1|versie|versies}} gearchiveerd',
-	'undeletehistory' => 'Als u een pagina terugplaatst, worden alle versies hersteld.
+	'undeletehistory' => 'Als je een pagina terugplaatst, worden alle versies hersteld.
 Als er al een nieuwe pagina met dezelfde naam is aangemaakt sinds de pagina is verwijderd, worden de eerder verwijderde versies teruggeplaatst en blijft de huidige versie intact.',
 	'undeleterevdel' => 'Herstellen is niet mogelijk als daardoor de meest recente versie van de pagina of het bestand gedeeltelijk wordt verwijderd.
 Verwijder in die gevallen de meest recent verwijderde versie uit de selectie.',
@@ -24801,7 +24961,7 @@ De reden hiervoor staat hieronder, samen met de details van de gebruikers die de
 De verwijderde inhoud van de pagina is alleen zichtbaar voor beheerders.',
 	'undelete-revision' => 'Dit is de verwijderde versie van $1 van $4 om $5 gemaakt door $3:',
 	'undeleterevision-missing' => 'Ongeldige of missende versie.
-Mogelijk hebt u een verkeerde verwijzing of is de versie hersteld of verwijderd uit het archief.',
+Mogelijk heb je een verkeerde verwijzing of is de versie hersteld of verwijderd uit het archief.',
 	'undelete-nodiff' => 'Geen eerdere versie gevonden.',
 	'undeletebtn' => 'Terugplaatsen',
 	'undeletelink' => 'bekijken/terugplaatsen',
@@ -24831,7 +24991,7 @@ Misschien is deze versie al teruggeplaatst.',
 	'undelete-error-long' => 'Er zijn fouten opgetreden bij het herstellen van het bestand:
 
 $1',
-	'undelete-show-file-confirm' => 'Weet u zeker dat u een verwijderde versie van het bestand "<nowiki>$1</nowiki>" van $2 om $3 wilt bekijken?',
+	'undelete-show-file-confirm' => 'Weet je zeker dat je een verwijderde versie van het bestand "<nowiki>$1</nowiki>" van $2 om $3 wil bekijken?',
 	'undelete-show-file-submit' => 'Ja',
 	'uctop' => '(laatste wijziging)',
 	'unblock' => 'Gebruiker deblokkeren',
@@ -24846,7 +25006,7 @@ $1',
 	'unlockdb' => 'Blokkering van de database opheffen',
 	'unlockdbtext' => 'Na het vrijgeven van de database kunnen gebruikers weer pagina\'s bewerken, hun voorkeuren wijzigen of iets anders te doen waarvoor er wijzigingen in de database nodig zijn.
 
-Bevestig dat u deze handeling wilt uitvoeren.',
+Bevestig dat je deze handeling wil uitvoeren.',
 	'unlockconfirm' => 'Ja, ik wil de database vrijgeven.',
 	'unlockbtn' => 'Database vrijgeven',
 	'unlockdbsuccesssub' => 'De database is vrijgegeven',
@@ -26248,7 +26408,7 @@ Strony użytkownika zawierające CSS i JavaScript powinny zaczynać się małą 
 	'upload_directory_missing' => 'Katalog dla przesyłanych plików ($1) nie istnieje i nie może zostać utworzony przez serwer WWW.',
 	'upload_directory_read_only' => 'Serwer nie może zapisywać do katalogu ($1) przeznaczonego na przesyłane pliki.',
 	'uploaderror' => 'Błąd wysyłania',
-	'upload-recreate-warning' => '\'\'\'Uwaga – plik o tej nazwie został wcześniej usunięty lub przrniesiony.\'\'\'
+	'upload-recreate-warning' => '\'\'\'Uwaga – plik o tej nazwie został wcześniej usunięty lub przeniesiony.\'\'\'
 
 Poniżej znajduje się rejestr usunięć i zmian nazwy tej strony:',
 	'uploadtext' => 'Użyj poniższego formularza do przesłania plików.
@@ -26272,7 +26432,7 @@ Przejdź na stronę [[Special:NewFiles|galerii nowych plików]], by zobaczyć pl
 	'uploadedimage' => 'przesłał [[$1]]',
 	'uploaddisabled' => 'Przesyłanie plików wyłączone',
 	'uploadfromurl-queued' => 'Żądanie przesłania pliku zostało dołączone do kolejki.',
-	'uploaddisabledtext' => 'Możliwość przesyłania plików została wyłączona.',
+	'uploaddisabledtext' => 'Możliwość przesyłania plików została tymczasowo wyłączona na czas prac konserwacyjnych na serwerach. Przepraszamy za utrudnienia. Spróbuj ponownie za kilka godzin.',
 	'uploadscripted' => 'Plik zawiera kod HTML lub skrypt, który może zostać błędnie zinterpretowany przez przeglądarkę internetową.',
 	'uploadvirus' => 'W pliku jest wirus! Szczegóły: $1',
 	'uploadjava' => 'Ten plik zawiera deklarację klasy Java skompresowaną ZIP.
@@ -26326,7 +26486,7 @@ Sprawdź inne linki do szablonów, zanim usuniesz tę stronę.',
 	'uncategorizedcategories' => 'Nieskategoryzowane kategorie',
 	'uncategorizedimages' => 'Nieskategoryzowane pliki',
 	'uncategorizedtemplates' => 'Nieskategoryzowane szablony',
-	'unusedcategories' => 'Puste kategorie',
+	'unusedcategories' => 'Nieużywane kategorie',
 	'unusedimages' => 'Nieużywane pliki',
 	'usereditcount' => '$1 {{PLURAL:$1|edycja|edycje|edycji}}',
 	'usercreated' => '{{GENDER:$3|Utworzył|Utworzyła|Utworzone}} $1 o $2',
@@ -26414,6 +26574,23 @@ $1',
 	'use_old_formatting' => 'Przełącz na styl Monobook',
 	'use_new_formatting' => 'Wypróbuj nowe formatowanie',
 	'usesitejs-disabled-warning' => 'Niestandardowy JavaScript jest wyłączony na tej wiki.',
+	'uploadtext-ext' => 'Pełna lista rozszerzeń dostępna na [[{{ns:Special}}:Version|stronie wersji]].',
+	'userlogin-bad-birthday' => 'Wybierz poprawną datę urodzenia.',
+	'userlogin-bad-email' => 'To nie jest poprawny adres email.',
+	'userlogin-bad-password' => 'Wpisz hasło poprawnie.',
+	'userlogin-bad-repassword' => 'Wpisane hasło jest niepoprawne.',
+	'userlogin-bad-username-character' => 'Twoja nazwa użytkownika nie może zawierać symbolu "@".',
+	'userlogin-bad-username-empty' => 'Nie podałeś/aś poprawnej nazwy użytkownika.',
+	'userlogin-bad-username-length' => 'Twoja nazwa użytkownika jest za długa. Musi być krótsza niż 50 znaków.',
+	'userlogin-bad-username-taken' => 'Ta nazwa użytkownika jest już zajęta. Wybierz inną.',
+	'userlogin-captcha-label' => 'Wpisz pojawiające się słowo:',
+	'userlogin-choose-day' => 'Dzień',
+	'userlogin-choose-month' => 'Miesiąc',
+	'userlogin-choose-year' => 'Rok',
+	'userlogin-form-error' => 'Popraw następujące błędy:',
+	'userlogin-unable-info' => 'Przepraszamy, chwilowo nie możesz założyć konta.',
+	'userlogin-unable-title' => 'Nie można zarejestrować konta',
+	'usercaptcha' => 'Wpisz słowo z obrazka -',
 ];
 
 $messages['pms'] = [
@@ -28646,7 +28823,7 @@ $messages['ru'] = [
 	'uploadedimage' => 'загрузил «[[$1]]»',
 	'uploaddisabled' => 'Загрузка запрещена',
 	'uploadfromurl-queued' => 'Ваша загрузка поставлена в очередь.',
-	'uploaddisabledtext' => 'Загрузка файлов отключена.',
+	'uploaddisabledtext' => 'К сожалению, загрузка файлов временно отключена из-за профилактических работ на наших серверах. Приносим извинения за доставленные неудобства. Попробуйте снова через пару часов.',
 	'uploadscripted' => 'Файл содержит HTML-код или скрипт, который может быть ошибочно обработан браузером.',
 	'uploadvirus' => 'Файл содержит вирус! См. $1',
 	'uploadjava' => 'Файл представляет собой ZIP-архив, содержащий .class файл Java.
@@ -28784,6 +28961,26 @@ $1',
 	'use_old_formatting' => 'Используйте старый формат',
 	'use_new_formatting' => 'Neue Formatierung verwenden',
 	'usesitejs-disabled-warning' => 'Пользовательский JavaScript отключён на этой вики.',
+	'unable-block-edit' => 'Вы не можете редактировать эту страницу. Попробуйте ещё раз позже.',
+	'unlockdb-wikifactory-error' => 'Произошла ошибка. Не удалось сохранить или очистить кэш. База данных не может быть разблокирована. Пожалуйста, попробуйте ещё раз или обратитесь к инженерам.',
+	'unlocked' => 'разблокировано',
+	'unsubscribe-email' => 'Если вы больше не хотите получать письма от Викия, то вы можете отписаться здесь: $1',
+	'uploadtext-ext' => 'Полный список доступных расширений можно посмотреть на [[{{ns:Special}}:Version|этой странице]].',
+	'userlogin-bad-birthday' => 'Выберете действительную дату рождения.',
+	'userlogin-bad-email' => 'Вы не указали адрес электронной почты.',
+	'userlogin-bad-password' => 'Вы не указали пароль.',
+	'userlogin-bad-repassword' => 'Ваши записи пароля не совпадают.',
+	'userlogin-bad-username-character' => 'Имя участника не может содержать символ "@".',
+	'userlogin-bad-username-empty' => 'Вы не указали корректное имя участника.',
+	'userlogin-bad-username-length' => 'Ваше имя участника слишком длинное. Оно не должно содержать больше 50 символов.',
+	'userlogin-bad-username-taken' => 'Это имя участника уже занято. Пожалуйста, выберите другое имя.',
+	'userlogin-captcha-label' => 'Введите слово, которое появится здесь',
+	'userlogin-choose-day' => 'День',
+	'userlogin-choose-month' => 'Месяц',
+	'userlogin-choose-year' => 'Год',
+	'userlogin-form-error' => 'Пожалуйста, исправьте следующие ошибки:',
+	'userlogin-unable-title' => 'Не удалось зарегистрировать',
+	'usercaptchatext' => 'Пожалуйста, введите текст с этой картинки.',
 ];
 
 $messages['rue'] = [
@@ -32636,13 +32833,7 @@ Var god och kontrollera jämförelsen nedan för att bekräfta att detta är vad
 	'upload-recreate-warning' => '\'\'\'Varning: En fil med det namnet har tagits bort eller flyttats.\'\'\'
 
 Raderings- och sidflyttningsloggen för denna sida återges här:',
-	'uploadtext' => 'Använd formuläret nedan för att ladda upp filer.
-För att titta på eller leta efter filer som redan har laddats upp, se [[Special:FileList|listan över uppladdade filer]]. Uppladdningar loggförs även i [[Special:Log/upload|uppladdningsloggen]], och raderingar i [[Special:Log/delete|raderingsloggen]].
-
-Använd en länk på något av följande format för att infoga en fil på en sida:
-* \'\'\'<tt><nowiki>[[</nowiki>{{ns:file}}<nowiki>:File.jpg]]</nowiki></tt>\'\'\' för att visa filen i dess hela storlek
-* \'\'\'<tt><nowiki>[[</nowiki>{{ns:file}}<nowiki>:File.png|200px|thumb|left|alternativ text]]</nowiki></tt>\'\'\' för att visa en rendering med bredden 200 pixel i en ruta till vänster med bildtexten \'alternativ text\'
-* \'\'\'<tt><nowiki>[[</nowiki>{{ns:media}}<nowiki>:File.ogg]]</nowiki></tt>\'\'\' för att länka direkt till filen utan att visa den',
+	'uploadtext' => 'Använd formuläret nedan för att ladda upp filer. Se även [[Help:Uploading files|Ladda upp filer]].',
 	'upload-permitted' => 'Tillåtna filtyper: $1.',
 	'upload-preferred' => 'Föredragna filtyper: $1.',
 	'upload-prohibited' => 'Förbjudna filtyper: $1.',
@@ -32720,7 +32911,7 @@ Lägg märke till att andra webbplatser kan länka till en fil med en direkt URL
 	'usermaildisabledtext' => 'Du kan inte skicka e-post till andra användare på den här wikin',
 	'usermessage-summary' => 'Lämnar systemmeddelande.',
 	'usermessage-editor' => 'Systemmeddelare',
-	'unwatch' => 'Avbevaka',
+	'unwatch' => 'Avbevakar...',
 	'unwatchthispage' => 'Sluta bevaka',
 	'unwatching' => 'Avbevakar...',
 	'unprotectedarticle' => 'tog bort skydd från "[[$1]]"',
@@ -32730,11 +32921,15 @@ Lägg märke till att andra webbplatser kan länka till en fil med en direkt URL
 	'undeletepagetext' => 'Följande {{PLURAL:$1|sida har blivit raderad|$1 sidor har blivit raderade}} men finns fortfarande i arkivet och kan återställas.
 Arkivet kan ibland rensas ut.',
 	'undelete-fieldset-title' => 'Återställ sidversioner',
-	'undeleteextrahelp' => 'För att återställa sidans hela historik, lämna alla rutor oifyllda och klicka på \'\'\'\'\'{{int:undeletebtn}}\'\'\'\'\'.
-För att göra en selektiv återställning, kryssa i de rutor som hör till de versioner som ska återställas, och klicka på \'\'\'\'\'{{int:undeletebtn}}\'\'\'\'\'.',
+	'undeleteextrahelp' => '*För att återställa hela sidan och dess historia, lämna alla kryssrutor avmarkerade och klicka på \'\'\'\'\'Återställ\'\'\'\'\'. För att utföra en selektiv återställning, kryssa i de kryssrutor som motsvarar de versioner som ska återställas och klicka på \'\'\'\'\'Återställ\'\'\'\'\'.
+*Välja en låda, då övergången välja en annan fyller i alla rutor i mellan i många webbläsare.
+*Du klickar på \'\'\'\'\'Återställ\'\'\'\'\' rensar fältet för kommentarer och kryssrutorna. Se till att du lämnar en sammanfattning i kommentar rutan.<br /><br />',
 	'undeleterevisions' => '$1 {{PLURAL:$1|version|versioner}} arkiverade',
-	'undeletehistory' => 'Om du återställer sidan kommer alla tidigare versioner att återfinnas i versionshistoriken.
-Om en ny sida med samma namn har skapats sedan sidan raderades, kommer den återskapade historiken automatiskt att återfinnas i den äldre historiken.',
+	'undeletehistory' => 'Som standard kommer du återställer sidan, alla tidigare versioner att återfinnas i sidans historia. Om du inte vill återställa alla ändringar, bara markera kryssrutorna bredvid de ändringar som du inte vill återställa.
+
+Om en ny sida med samma namn har skapats sedan sidan raderades, kommer den återskapade slås samman med den nya sidan historia och den pågående revideringen av den levande sidan kommer inte automatiskt att ersättas. Var försiktig \'\'inte\'\' att göra detta om du inte specifikt för avsikt att slå ihop historierna om de två sidorna.
+
+\'\'\'VARNING\'\'\': Något skydd på sidan \'\'\'kommer\'\'\' förlorad när radera och återställa ändringar! Om du vill sidan som skall skyddas, du \'\'\'måste\'\'\' skydda det direkt efter restaurering.',
 	'undeleterevdel' => 'Återställningen kan inte utföras om den resulterar i att den senaste versionen är delvis borttagen.
 I sådana fall måste du se till att den senaste raderade versionen inte är ikryssad, eller att den inte är dold.',
 	'undeletehistorynoadmin' => 'Den här sidan har blivit raderad. Anledningen till detta anges i sammanfattningen nedan, tillsammans med uppgifter om de användare som redigerat sidan innan den raderades. Enbart administratörerna har tillgång till den raderade texten.',
@@ -32773,8 +32968,8 @@ $1',
 	'uctop' => '(senaste)',
 	'unblock' => 'Avblockera användaren',
 	'unblockip' => 'Ta bort blockering av användare/IP-adress',
-	'unblockiptext' => 'Använd formuläret nedan för att ta bort blockeringen av en IP-adress.',
-	'unblocked' => 'Blockeringen av [[User:$1|$1]] har hävts',
+	'unblockiptext' => 'Använd formuläret nedan för att få tillgång till en blockerad IP-adress eller användarnamn. Kom ihåg att det var förmodligen en bra anledning för den person som skall blockeras. Diskutera i blocket med den blockerande administratör innan igensatt.',
+	'unblocked' => '[[User:$1|$1]] har oblockerade ([[Special:Blockip/$1|oblockera]]).',
 	'unblocked-range' => '$1 har avblockerats',
 	'unblocked-id' => 'Blockeringen $1 har hävts',
 	'unblocked-ip' => '[[Special:Contributions/$1|$1]] har avblockerats.',
@@ -32791,6 +32986,13 @@ $1',
 	'unrate_it' => 'Ta bort rösten',
 	'use_old_formatting' => 'Ändra till skalet Monobook',
 	'use_new_formatting' => 'Prova det nya skalet',
+	'userlogin-bad-birthday' => 'Välj rätt födelsedatum.',
+	'userlogin-bad-email' => 'Du har inte angivit en giltig e-postadress.',
+	'userlogin-bad-password' => 'Du har angett ett ogiltigt lösenord.',
+	'userlogin-bad-repassword' => 'Ditt lösenord poster matchar inte.',
+	'userlogin-form-error' => 'Rätta till följande fel:',
+	'userinvalidcssjstitle' => '<span class=\'error\'>\'\'\'Varning:\'\'\' Det finns ingen teman "$1".
+Kom ihåg att anpassade .css och .js sidor använder ett gement titel, t.ex. {{ns:user}}:Foo/monaco.css i motsats till {{ns:user}}:Foo/Monaco.css.</span>',
 ];
 
 $messages['sw'] = [
@@ -35562,7 +35764,7 @@ $messages['uk'] = [
 	'uploadedimage' => 'завантажив «[[$1]]»',
 	'uploaddisabled' => 'Завантаження заборонене',
 	'uploadfromurl-queued' => 'Ваше завантаження поставлене в чергу.',
-	'uploaddisabledtext' => 'Можливість завантаження файлів відключена.',
+	'uploaddisabledtext' => 'На жаль, функція завантаження файлів тимчасово недоступна внаслідок робіт на наших серверах. Будь ласка, спробуйте завантажити файл через кілька годин. Просимо вибачення за тимчасові незручності.',
 	'uploadscripted' => 'Файл містить HTML-код або скрипт, який може неправильно обробитися браузером.',
 	'uploadvirus' => 'Файл містить вірус! Див. $1',
 	'uploadjava' => 'Файл є ZIP-архівом, що містить .class-файл Java.
@@ -36514,6 +36716,21 @@ Xin hãy xác nhận đây là điều bạn định làm.',
 	'unlockdbsuccesssub' => 'Đã mở khóa cơ sở dữ liệu thành công',
 	'unlockdbsuccesstext' => 'Cơ sở dữ liệu đã được mở khóa.',
 	'unknown_extension_tag' => 'Không hiểu thẻ mở rộng “$1”',
+	'userlogin-bad-birthday' => 'Nhập ngày sinh chính xác.',
+	'userlogin-bad-email' => 'Bạn chưa cung cấp một địa chỉ email hợp lệ.',
+	'userlogin-bad-password' => 'Bạn chưa cung cấp một mật khẩu hợp lệ.',
+	'userlogin-bad-repassword' => 'Mật khẩu bạn nhập không chính xác.',
+	'userlogin-bad-username-character' => 'Tên người dùng của bạn không thể chứa kí tự "@".',
+	'userlogin-bad-username-empty' => 'Bạn chưa cung cấp một tên người dùng hợp lệ.',
+	'userlogin-bad-username-length' => 'Tên người dùng của bạn quá dài. Nó phải ngắn hơn 50 kí tự.',
+	'userlogin-bad-username-taken' => 'Tên người dùng này không khả dụng. Xin chọn một tên khác.',
+	'userlogin-captcha-label' => 'Nhập chữ xuất hiện sau đây:',
+	'userlogin-choose-day' => 'Ngày',
+	'userlogin-choose-month' => 'Tháng',
+	'userlogin-choose-year' => 'Năm',
+	'userlogin-form-error' => 'Xin điều chỉnh những lỗi sau đây:',
+	'userlogin-unable-info' => 'Rất tiếc, chúng tôi không thể nhận đăng ký của bạn vào lúc này.',
+	'userlogin-unable-title' => 'Không thể tạo đăng ký',
 ];
 
 $messages['vls'] = [
@@ -37905,6 +38122,13 @@ De lèste lienk is bedoeld voe mediabestan\'n die an hin plaetje zien.',
 
 $messages['zh-cn'] = [
 	'uploadnologintext' => '你必须$1才能上传图片和视频内容。',
+	'uncategorizedcategories' => '待分类类别',
+	'uncategorizedimages' => '待分类图像',
+	'uncategorizedpages' => '待分类页面',
+	'unusedcategories' => '未使用的分类',
+	'unwatch' => '取消监视',
+	'uploadbtn' => '上传档案',
+	'uploadtext-ext' => 'Wikia支援的所有延申套件请见[[{{ns:Special}}:Version|版本页]]。',
 ];
 
 $messages['zh-hans'] = [
@@ -38324,10 +38548,16 @@ $1',
 	'unlockdbsuccesstext' => '{{SITENAME}}資料庫重新開放。',
 	'unknown_extension_tag' => '不明的擴展標籤 "$1"',
 	'usesitejs-disabled-warning' => '自訂JavaScript在這個wiki上被禁用。',
+	'uploadtext-ext' => 'Wikia支援的所有延申套件請見[[{{ns:Special}}:Version|版本頁]]。',
 ];
 
 $messages['zh-hk'] = [
 	'userlogin' => '登入／創造帳戶',
+	'uncategorizedcategories' => '待分類類別',
+	'uncategorizedimages' => '待分類圖像',
+	'uncategorizedpages' => '待分類頁面',
+	'unusedcategories' => '未使用的分類',
+	'uploadtext-ext' => 'Wikia支援的所有延申套件請見[[{{ns:Special}}:Version|版本頁]]。',
 ];
 
 $messages['zh-min-nan'] = [
@@ -38357,22 +38587,37 @@ $messages['zh-tw'] = [
 	'userrights-user-editname' => '輸入使用者帳號:',
 	'userrights-editusergroup' => '編輯使用者群組',
 	'upload' => '上傳檔案',
-	'uploadtext' => '使用下面的表單來上傳用在頁面內新的圖片檔案。
-要檢視或搜尋以前上傳的圖片
-可以進入[[Special:FileList|圖片清單]]，
-上傳和刪除將在[[Special:Log/upload|上傳日誌]]中記錄。
+	'uploadtext' => '\'\'\'停止！\'\'\'在您上載之前，請先閲讀并遵守{{SITENAME}}
+[[Project:Image use policy|圖像使用守則]]。
 
-要在頁面中加入圖片，使用以下形式的連接:
-\'\'\'<nowiki>[[</nowiki>{{ns:file}}:file.jpg<nowiki>]]</nowiki>\'\'\'，
-\'\'\'<nowiki>[[</nowiki>{{ns:file}}:file.png|替換文字<nowiki>]]</nowiki>\'\'\' 或
-\'\'\'<nowiki>[[</nowiki>{{ns:media}}:file.ogg<nowiki>]]</nowiki>\'\'\'。',
+如果您要查看或搜索之前上載的圖像，
+請到[[Special:Imagelist|已上載圖像列表]].
+所有上載與删除行為都被記録在
+[[Project:上載紀録|上載紀録]]内。
+
+使用下面的表單來上載用在條目内新的圖像文件。
+在絶大多數瀏覧器内，你會看到一個"瀏覧..."按鈕，點撃它後就會跳出一個打開文件對話框。
+選擇一個文件後文件名將出現在按鈕旁邊的文字框中。
+您也必須點撃旁邊的復選框確認您所上載的文件并没有違反相關版權法律。
+點撃"上載" 按鈕完成上載程序。
+如果您使用的是較慢的網絡連接的話那麽這個上載過程會需要一些時間。
+
+我們建議照相圖片使用JPEG格式，繪圖及其他圖標圖像使用PNG格式，音像則使用OGG格式。
+請使用具有描述性的語言來命名您的文件以避免混亂。
+要在文章中加入圖像，使用以下形式的連接：
+\'\'\'<nowiki>[[圖像:file.jpg]]</nowiki>\'\'\'或者
+\'\'\'<nowiki>[[圖像:file.png|解釋文字]]</nowiki>\'\'\'
+或\'\'\'<nowiki>[[media:file.ogg]]</nowiki>\'\'\'來連接音像文件。
+
+請注意在{{SITENAME}}頁面中，其他人可能會為了百科全書的利益而編輯或删除您的上載文件，
+而如果您濫用上載系統，您則有可能被禁止使用上載功能。',
 	'uploadlogpagetext' => '以下是最近上傳的檔案的一覽表。',
 	'uploaddisabledtext' => '檔案上傳在此網站不可用。',
 	'upload-proto-error' => '協訂錯誤',
 	'upload-file-error-text' => '當試圖在伺服器上建立臨時檔案時發生內部錯誤。請與系統管理員聯繫。',
 	'upload-misc-error-text' => '在上傳時發生未知的錯誤. 請驗証使用了正確並可訪問的 URL，然後進行重試。如果問題仍然存在，請與系統管理員聯繫。',
 	'unusedtemplatestext' => '本頁面列出模板名字空間下所有未被其他頁面使用的頁面。請在刪除這些模板前檢查其他鏈入該模板的頁面。',
-	'uncategorizedimages' => '待分類圖片',
+	'uncategorizedimages' => '待分類圖像',
 	'unusedimages' => '未使用圖片',
 	'unusedimagestext' => '請注意其它網站可能直接透過 URL 連結此圖片，所以這裡列出的圖片有可能依然被使用。',
 	'undelete' => '復原被刪頁面',
@@ -38402,6 +38647,12 @@ $messages['zh-tw'] = [
 	'unrate_it' => '取消分數',
 	'use_old_formatting' => '換回舊面板',
 	'use_new_formatting' => '嘗試新面板',
+	'uncategorizedcategories' => '待分類類別',
+	'uncategorizedpages' => '待分類頁面',
+	'unusedcategories' => '未使用的分類',
+	'unwatch' => '取消監視',
+	'uploadbtn' => '上傳檔案',
+	'uploadtext-ext' => 'Wikia支援的所有延申套件請見[[{{ns:Special}}:Version|版本頁]]。',
 ];
 
 $messages['zh-yue'] = [
@@ -38476,5 +38727,21 @@ $messages['zu'] = [
 	'upload-success-subj' => 'Ukulayisha okuchumile',
 	'unwatch' => 'Mus\'ukubukela',
 	'undeletecomment' => 'Khuluma:',
+];
+
+$messages['zh'] = [
+	'uncategorizedcategories' => '待分類類別',
+	'uncategorizedimages' => '待分類圖像',
+	'uncategorizedpages' => '待分類頁面',
+	'unwatch' => '取消監視',
+	'uploadbtn' => '上传档案',
+	'uploadtext-ext' => 'Wikia支援的所有延申套件請見[[{{ns:Special}}:Version|版本頁]]。',
+	'userlogin-choose-day' => '日',
+	'userlogin-choose-month' => '月',
+	'userlogin-choose-year' => '年',
+];
+
+$messages['zh-sg'] = [
+	'uploadtext-ext' => 'Wikia支援的所有延申套件请见[[{{ns:Special}}:Version|版本页]]。',
 ];
 

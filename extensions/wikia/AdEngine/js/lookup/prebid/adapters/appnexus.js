@@ -1,9 +1,10 @@
 /*global define*/
 define('ext.wikia.adEngine.lookup.prebid.adapters.appnexus',[
+	'ext.wikia.adEngine.context.slotsContext',
 	'ext.wikia.adEngine.lookup.prebid.adapters.appnexusPlacements',
 	'wikia.geo',
 	'wikia.instantGlobals'
-], function (appnexusPlacements, geo, instantGlobals) {
+], function (slotsContext, appnexusPlacements, geo, instantGlobals) {
 	'use strict';
 
 	var bidderName = 'appnexus',
@@ -126,18 +127,8 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.appnexus',[
 		};
 	}
 
-	function getSlots(skin, pageType) {
-		var list = slots[skin] || {};
-		if (pageType === 'home') {
-			delete list.TOP_LEADERBOARD;
-			delete list.TOP_RIGHT_BOXAD;
-		} else {
-			delete list.HOME_TOP_LEADERBOARD;
-			delete list.HOME_TOP_RIGHT_BOXAD;
-			delete list.PREFOOTER_MIDDLE_BOXAD;
-		}
-
-		return list;
+	function getSlots(skin) {
+		return slotsContext.filterSlotMap(slots[skin]);
 	}
 
 	function getName() {

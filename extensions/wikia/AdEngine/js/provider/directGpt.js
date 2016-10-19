@@ -69,6 +69,7 @@ define('ext.wikia.adEngine.provider.directGpt', [
 				'TOP_RIGHT_BOXAD',
 				'LEFT_SKYSCRAPER_2',
 				'LEFT_SKYSCRAPER_3',
+				'BOTTOM_LEADERBOARD',
 				'GPT_FLUSH'
 			],
 			atfSlots: [

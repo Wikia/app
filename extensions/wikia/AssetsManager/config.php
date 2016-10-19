@@ -52,8 +52,10 @@ $config['adengine2_desktop_js'] = [
 		'//extensions/wikia/AdEngine/js/CustomAdsLoader.js',
 		'//extensions/wikia/AdEngine/js/utils/sampler.js',
 		'//extensions/wikia/AdEngine/js/context/adContext.js',
+		'//extensions/wikia/AdEngine/js/context/slotsContext.js',
 		'//extensions/wikia/AdEngine/js/context/uapContext.js',
 		'//extensions/wikia/AdEngine/js/DartUrl.js',
+		'//extensions/wikia/AdEngine/js/DOMElementTweaker.js',
 		'//extensions/wikia/AdEngine/js/EventDispatcher.js',
 		'//extensions/wikia/AdEngine/js/lookup/services.js',
 		'//extensions/wikia/AdEngine/js/MessageListener.js',
@@ -97,6 +99,7 @@ $config['adengine2_desktop_js'] = [
 		'//extensions/wikia/AdEngine/js/template/modal.js',
 		'//extensions/wikia/AdEngine/js/template/modalHandlerFactory.js',
 		'//extensions/wikia/AdEngine/js/template/modalOasisHandler.js',
+		'//extensions/wikia/AdEngine/js/template/ooyala.js',
 		'//extensions/wikia/AdEngine/js/template/playwire.js',
 		'//extensions/wikia/AdEngine/js/template/skin.js',
 		'//extensions/wikia/AdEngine/js/utils/AdLogicZoneParams.js',
@@ -107,6 +110,7 @@ $config['adengine2_desktop_js'] = [
 		'//extensions/wikia/AdEngine/js/video/playwire.js',
 		'//extensions/wikia/AdEngine/js/video/vastBuilder.js',
 		'//extensions/wikia/ARecoveryEngine/js/helper.js',
+		'//extensions/wikia/ARecoveryEngine/js/recovery/tweaker.js',
 		'//extensions/wikia/ARecoveryEngine/js/sourcePointRecovery.js',
 		'//resources/wikia/modules/krux.js',
 
@@ -116,7 +120,6 @@ $config['adengine2_desktop_js'] = [
 		'//extensions/wikia/AdEngine/js/TaboolaHelper.js',
 		'//extensions/wikia/AdEngine/js/utils/scriptLoader.js',
 		'//extensions/wikia/AdEngine/js/provider/evolve2.js',
-		'//extensions/wikia/AdEngine/js/provider/monetizationService.js',
 
 		'//extensions/wikia/AdEngine/js/run/desktop.run.js',
 	],
@@ -212,6 +215,7 @@ $config['adengine2_tracking_js'] = [
 		'//extensions/wikia/AdEngine/js/AdTracker.js',
 		'//extensions/wikia/AdEngine/js/utils/sampler.js',
 		'//extensions/wikia/AdEngine/js/context/adContext.js',
+		'//extensions/wikia/AdEngine/js/context/slotsContext.js',
 		'//extensions/wikia/AdEngine/js/lookup/lookupFactory.js',
 		'//extensions/wikia/AdEngine/js/slot/adSlot.js',
 		'//extensions/wikia/AdEngine/js/utils/AdLogicZoneParams.js',
@@ -265,7 +269,9 @@ $config['adengine2_prebid_js'] = [
 		'//extensions/wikia/AdEngine/js/lookup/prebid/adaptersPerformanceTracker.js',
 		'//extensions/wikia/AdEngine/js/lookup/prebid/adapters/appnexus.js',
 		'//extensions/wikia/AdEngine/js/lookup/prebid/adapters/appnexusPlacements.js',
-		'//extensions/wikia/AdEngine/js/lookup/prebid/adapters/indexExchange.js'
+		'//extensions/wikia/AdEngine/js/lookup/prebid/adapters/indexExchange.js',
+		'//extensions/wikia/AdEngine/js/lookup/prebid/adapters/wikia.js',
+		'//extensions/wikia/AdEngine/js/wrappers/prebid.js'
 	],
 ];
 
@@ -804,6 +810,7 @@ $config['mobile_base_ads_js'] = [
 		'//extensions/wikia/AdEngine/js/AdLogicPageParams.js',
 		'//extensions/wikia/AdEngine/js/AdTracker.js',
 		'//extensions/wikia/AdEngine/js/DartUrl.js',
+		'//extensions/wikia/AdEngine/js/DOMElementTweaker.js',
 		'//extensions/wikia/AdEngine/js/EventDispatcher.js',
 		'//extensions/wikia/AdEngine/js/MessageListener.js',
 		'//extensions/wikia/AdEngine/js/SlotTracker.js',
@@ -812,6 +819,7 @@ $config['mobile_base_ads_js'] = [
 		'//extensions/wikia/AdEngine/js/config/mobile.js',
 		'//extensions/wikia/AdEngine/js/utils/sampler.js',
 		'//extensions/wikia/AdEngine/js/context/adContext.js',
+		'//extensions/wikia/AdEngine/js/context/slotsContext.js',
 		'//extensions/wikia/AdEngine/js/context/uapContext.js',
 		'//extensions/wikia/AdEngine/js/lookup/amazonMatch.js',
 		'//extensions/wikia/AdEngine/js/lookup/lookupFactory.js',
@@ -944,6 +952,7 @@ $config['interactivemaps_ads_js'] = [
 		'//extensions/wikia/AdEngine/js/provider/gpt/googleTag.js',
 		'//extensions/wikia/AdEngine/js/provider/gpt/googleSlots.js',
 		'//extensions/wikia/AdEngine/js/provider/gpt/helper.js',
+		'//extensions/wikia/AdEngine/js/DOMElementTweaker.js',
 		'//extensions/wikia/AdEngine/js/SlotTweaker.js',
 		'//extensions/wikia/AdEngine/InteractiveMaps/ads.js',
 
@@ -2113,41 +2122,6 @@ $config['bucky_js'] = [
 	],
 ];
 
-/* Monetization Module */
-$config['monetization_module_css'] = [
-	'type' => AssetsManager::TYPE_SCSS,
-	'skin' => [ 'oasis' ],
-	'assets' => [
-		'//extensions/wikia/MonetizationModule/styles/MonetizationModule.scss',
-	],
-];
-
-$config['monetization_module_css_no_breakpoints'] = [
-	'type' => AssetsManager::TYPE_SCSS,
-	'skin' => [ 'oasis' ],
-	'assets' => [
-		'//extensions/wikia/MonetizationModule/styles/MonetizationModuleNoBreakpoints.scss',
-	],
-];
-
-$config['monetization_module_js'] = [
-	'type' => AssetsManager::TYPE_JS,
-	'skin' => [ 'oasis' ],
-	'assets' => [
-		'//extensions/wikia/MonetizationModule/scripts/MonetizationModule.js',
-
-	],
-];
-
-$config['monetization_module_top_script_js'] = [
-	'type' => AssetsManager::TYPE_JS,
-	'skin' => [ 'oasis' ],
-	'assets' => [
-		'//extensions/wikia/MonetizationModule/scripts/MonetizationModuleTopScript.js',
-
-	],
-];
-
 /* extension/wikia/WikiaMaps */
 
 $config['wikia_maps_ponto'] = [
@@ -3071,8 +3045,8 @@ $config['flow_tracking_js'] = [
 $config['flow_tracking_create_page_js'] = [
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => [
-		'//extensions/wikia/FlowTracking/scripts/createNewPageFlows.js',
-		'//extensions/wikia/FlowTracking/scripts/createNewPageFlowsVE.js',
+		'//extensions/wikia/FlowTracking/scripts/createPageTracking.js',
+		'//extensions/wikia/FlowTracking/scripts/initCreatePageTracking.js',
 		'#group_flow_tracking_js'
 	],
 ];

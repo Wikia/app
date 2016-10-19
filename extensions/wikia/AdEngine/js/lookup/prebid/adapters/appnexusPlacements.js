@@ -18,6 +18,7 @@ define('ext.wikia.adEngine.lookup.prebid.adapters.appnexusPlacements', [
 			}
 
 			// TODO: remove if statement after switching config from old structure (conf[skin][vertical] = pId)
+			// ADEN-4116 done + 24h
 			if (!position || position === 'atf') {
 				return placementsMap[skin][vertical];
 			}

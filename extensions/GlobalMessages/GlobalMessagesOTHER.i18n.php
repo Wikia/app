@@ -126,3 +126,22 @@ $messages['yo'] = [
 	'1movedto2_redir' => 'yípò [[$1]] sí [[$2]] lórí àtúnjúwe',
 ];
 
+$messages['de'] = [
+	'1movedto2' => 'verschob [[$1]] zu [[$2]]',
+	'1movedto2_redir' => 'verschob [[$1]] zu [[$2]] und überschrieb Weiterleitung',
+];
+
+$messages['es'] = [
+	'1movedto2' => 'movió [[$1]] a [[$2]]',
+	'1movedto2_redir' => 'movió [[$1]] a [[$2]] sobre una redirección',
+];
+
+$messages['fr'] = [
+	'1movedto2' => 'a renommé [[$1]] en [[$2]]',
+	'1movedto2_redir' => 'a renommé [[$1]] en [[$2]] en écrasant la redirection',
+];
+
+$messages['ko'] = [
+	'1movedto2' => '[[$1]]을 [[$2]]로 이동함',
+];
+

@@ -11,7 +11,6 @@ define('ext.wikia.adEngine.config.desktop', [
 	// adProviders
 	'ext.wikia.adEngine.provider.directGpt',
 	'ext.wikia.adEngine.provider.evolve2',
-	'ext.wikia.adEngine.provider.monetizationService',
 	'ext.wikia.adEngine.provider.remnantGpt',
 	'ext.wikia.adEngine.provider.rubiconFastlane',
 	'ext.wikia.adEngine.provider.turtle',
@@ -29,7 +28,6 @@ define('ext.wikia.adEngine.config.desktop', [
 	// AdProviders
 	adProviderDirectGpt,
 	adProviderEvolve2,
-	adProviderMonetizationService,
 	adProviderRemnantGpt,
 	adProviderRubiconFastlane,
 	adProviderTurtle,
@@ -76,15 +74,6 @@ define('ext.wikia.adEngine.config.desktop', [
 		// Revcontent
 		if (adProviderRevcontent && context.providers.revcontent && adProviderRevcontent.canHandleSlot(slotName)) {
 			return [adProviderRevcontent];
-		}
-
-		// MonetizationService
-		if (context.providers.monetizationService && adProviderMonetizationService.canHandleSlot(slotName)) {
-			if (instantGlobals.wgSitewideDisableMonetizationService) {
-				log('MonetizationService disabled by DR. No ads', 'warn', logGroup);
-				return [];
-			}
-			return [adProviderMonetizationService];
 		}
 
 		// First provider: Turtle, Evolve or Direct GPT?

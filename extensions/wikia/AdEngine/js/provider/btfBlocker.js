@@ -77,10 +77,6 @@ define('ext.wikia.adEngine.provider.btfBlocker', [
 					startBtfQueue();
 				}
 			}
-
-			if (recoveryHelper.isBlocking()) {
-				startBtfQueue();
-			}
 		}
 
 		function fillInSlotWithDelay(slot) {

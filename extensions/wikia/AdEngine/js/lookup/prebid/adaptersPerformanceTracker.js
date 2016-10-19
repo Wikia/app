@@ -1,13 +1,13 @@
 define('ext.wikia.adEngine.lookup.prebid.adaptersPerformanceTracker', [
 	'ext.wikia.adEngine.adTracker',
-	'ext.wikia.adEngine.utils.adLogicZoneParams',
-	'wikia.window'
-], function (adTracker, params, win) {
+	'ext.wikia.adEngine.wrappers.prebid'
+], function (adTracker, prebid) {
 	'use strict';
 
 	var emptyResponseMsg = 'EMPTY_RESPONSE',
 		notRespondedMsg = 'NO_RESPONSE',
-		responseErrorCode = 2;
+		responseErrorCode = 2,
+		usedMsg = 'USED';
 
 	function setupPerformanceMap(skin, adapters) {
 		var biddersPerformanceMap = {};
@@ -30,8 +30,8 @@ define('ext.wikia.adEngine.lookup.prebid.adaptersPerformanceTracker', [
 	function updatePerformanceMap(performanceMap) {
 		var allBids;
 
-		if (typeof win.pbjs.getBidResponses === 'function') {
-			allBids = win.pbjs.getBidResponses();
+		if (typeof prebid.get().getBidResponses === 'function') {
+			allBids = prebid.get().getBidResponses();
 
 			Object.keys(allBids).forEach(function (slotName) {
 				var slotBids = allBids[slotName].bids;
@@ -77,6 +77,8 @@ define('ext.wikia.adEngine.lookup.prebid.adaptersPerformanceTracker', [
 	function getParamsFromBidForTracking(bid) {
 		if (bid.getStatusCode() === responseErrorCode) {
 			return emptyResponseMsg;
+		} if (bid.complete) {
+			return usedMsg;
 		} else {
 			return [bid.getSize(), bid.pbMg].join(';');
 		}

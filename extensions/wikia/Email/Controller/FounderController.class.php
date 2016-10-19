@@ -318,7 +318,7 @@ class FounderActiveController extends EmailController {
 			'list' => 'recentchanges',
 			'rctype' => implode( '|', [ 'new', 'edit' ] ),
 			'rcprop' => implode( '|', [ 'user', 'title' ] ),
-			'rcnamespace' => implode( '|', $wg->ContentNamespaces),
+			'rcnamespace' => implode( '|', $wg->ContentNamespaces ),
 			'rcexcludeuser' => $this->getTargetUserName(),
 			'rcshow' => implode( '|', [ '!minor', '!bot', '!anon', '!redirect' ] ),
 			'rclimit' => $num,
@@ -607,7 +607,9 @@ class FounderTipsThreeDaysController extends FounderTipsController {
 			],
 		];
 
-		if ( \F::app()->wg->EnableDiscussions ) {
+		$discussionsEnabled =
+			\WikiFactory::getVarValueByName( 'wgEnableDiscussions', $this->wikiId );
+		if ( $discussionsEnabled ) {
 			array_push( $detailsList, [
 					"iconSrc" => Email\ImageHelper::getFileUrl( "StartADiscussion.png" ),
 					"iconLink" => "{$this->wikiUrl}/d",
