@@ -27,7 +27,12 @@ class EnableDiscussionsWithNoForums extends Maintenance {
 		while ( !empty( $wikiId = trim( fgets( $fh ) ) ) ) {
 			$wiki = WikiFactory::getWikiByID( $wikiId );
 
-			$count = $this->getForumThreadCount( $wiki );
+			try {
+				$count = $this->getForumThreadCount( $wiki );
+			} catch ( Exception $e ) {
+				$this->error("Failed to get forum thread count for $wikiId: ".$e->getMessage());
+				continue;
+			}
 			if ( $count > 0 ) {
 				$this->error( $wikiId . ' has ' . $count . ' forum threads, skipping!' );
 				continue;
