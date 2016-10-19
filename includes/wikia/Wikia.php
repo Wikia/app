@@ -177,7 +177,7 @@ class Wikia {
 	public static function getWikiLogoFullUrl() {
 		$localWikiLogo = wfLocalFile( 'Wiki.png' );
 
-		if ($localWikiLogo->exists() ) {
+		if ( $localWikiLogo->exists() ) {
 			return $localWikiLogo->getUrl();
 		}
 		else {
