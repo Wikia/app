@@ -5,7 +5,6 @@ class InsightsSorting {
 
 	private $insightsCache;
 	private $config;
-	private $data;
 
 	public static
 		$sorting = [
@@ -52,7 +51,7 @@ class InsightsSorting {
 				$sortParam :
 				self::INSIGHTS_DEFAULT_SORTING;
 
-			$this->data = WikiaDataAccess::cache(
+			$data = WikiaDataAccess::cache(
 				$this->insightsCache->getMemcKey( $sortParam ),
 				InsightsCache::INSIGHTS_MEMC_TTL,
 				function () use ( $sortParam, $articleData ) {
@@ -63,10 +62,10 @@ class InsightsSorting {
 				}
 			);
 		} else {
-			$this->data = array_keys( $articleData );
+			$data = array_keys( $articleData );
 		}
 
-		return $this->data;
+		return $data;
 	}
 
 	public function createSortingArrays( $sortingData ) {
