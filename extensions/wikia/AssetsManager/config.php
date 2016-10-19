@@ -108,6 +108,7 @@ $config['adengine2_desktop_js'] = [
 		'//extensions/wikia/AdEngine/js/video/playwire.js',
 		'//extensions/wikia/AdEngine/js/video/vastBuilder.js',
 		'//extensions/wikia/ARecoveryEngine/js/helper.js',
+		'//extensions/wikia/ARecoveryEngine/js/slotFinder.js',
 		'//extensions/wikia/ARecoveryEngine/js/sourcePointRecovery.js',
 		'//resources/wikia/modules/krux.js',
 
@@ -215,7 +216,6 @@ $config['adengine2_tracking_js'] = [
 		'//extensions/wikia/AdEngine/js/context/adContext.js',
 		'//extensions/wikia/AdEngine/js/lookup/lookupFactory.js',
 		'//extensions/wikia/AdEngine/js/slot/adSlot.js',
-		'//extensions/wikia/AdEngine/js/slot/adUnitBuilder.js',
 		'//extensions/wikia/AdEngine/js/utils/AdLogicZoneParams.js',
 		'//extensions/wikia/ARecoveryEngine/js/helper.js',
 		'//resources/wikia/modules/krux.js'
@@ -941,7 +941,6 @@ $config['interactivemaps_ads_js'] = [
 		'//resources/wikia/modules/window.js',
 
 		// Advertisement libs
-		'//extensions/wikia/AdEngine/js/slot/adUnitBuilder.js',
 		'//extensions/wikia/AdEngine/js/provider/factoryWikiaGpt.js',
 		'//extensions/wikia/AdEngine/js/provider/directGptMaps.js',
 		'//extensions/wikia/AdEngine/js/provider/gpt/adElement.js',

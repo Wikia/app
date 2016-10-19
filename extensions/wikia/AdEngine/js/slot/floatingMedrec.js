@@ -4,10 +4,20 @@ define('ext.wikia.adEngine.slot.floatingMedrec', [
 	'ext.wikia.adEngine.adHelper',
 	'ext.wikia.adEngine.adLogicPageDimensions',
 	'ext.wikia.aRecoveryEngine.recovery.helper',
+	'ext.wikia.aRecoveryEngine.recovery.slotFinder',
 	'jquery',
 	'wikia.log',
 	'wikia.window'
-], function (adContext, adHelper, adLogicPageDimensions, recoveryHelper, $, log, win) {
+], function (
+	adContext,
+	adHelper,
+	adLogicPageDimensions,
+	recoveryHelper,
+	slotFinder,
+	$,
+	log,
+	win
+) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.slot.floatingMedrec';
@@ -45,7 +55,7 @@ define('ext.wikia.adEngine.slot.floatingMedrec', [
 		}
 
 		function replaceAdSlot() {
-			var recoveredElement = recoveryHelper.getRecoveredSlot(slotName);
+			var recoveredElement = slotFinder.getRecoveredSlot(slotName);
 
 			if (recoveredElement) {
 				$adSlot = $(recoveredElement.parentNode.parentNode);
