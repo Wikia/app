@@ -111,7 +111,7 @@ define('ext.wikia.adEngine.provider.taboola', [
 			fillInSlot(slot);
 		} else if (supportedSlots.recovery.indexOf(slot.name) !== -1) {
 			recoveryHelper.addOnBlockingCallback(function () {
-				if (recoveryHelper.isRecoveryEnabled() && slot.name === 'TOP_LEADERBOARD_AB') {
+				if (recoveryHelper.isRecoveryEnabled()) {
 					fillInAfterRecoveredSlotCollapse(slot, 'TOP_LEADERBOARD');
 				} else {
 					fillInSlot(slot);
