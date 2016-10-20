@@ -135,7 +135,7 @@
 					<span><?= wfMessage( 'user-identity-box-fav-wikis' )->escaped(); ?></span>
 					<ul>
 						<? foreach ( $user['topWikis'] as $wiki ): ?>
-							<li><a href="<?= $wiki['wikiUrl']; ?>"><?= $wiki['wikiName']; ?></a></li>
+							<li><a href="<?= Sanitizer::encodeAttribute( $wiki['wikiUrl'] ); ?>"><?= htmlspecialchars( $wiki['wikiName'] ); ?></a></li>
 						<? endforeach; ?>
 					</ul>
 				</ul>
