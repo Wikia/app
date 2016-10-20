@@ -18,11 +18,6 @@ class AdEngine2ContextService {
 			$wikiaPageType = new WikiaPageType();
 			$pageType = $wikiaPageType->getPageType();
 
-			$monetizationServiceAds = null;
-			if ( !empty( $wg->AdDriverUseMonetizationService ) && !empty( $wg->EnableMonetizationModuleExt ) ) {
-				$monetizationServiceAds = F::app()->sendRequest( 'MonetizationModule', 'index' )->getData()['data'];
-			}
-
 			$sourcePointDetectionKey = AdEngine2Resource::getKey('wikia.ext.adengine.sp.detection');
 			$sourcePointDetectionUrl = ResourceLoader::makeCustomURL( $wg->Out, [$sourcePointDetectionKey], 'scripts' );
 
@@ -79,8 +74,6 @@ class AdEngine2ContextService {
 				] ),
 				'providers' => $this->filterOutEmptyItems( [
 					'evolve2' => $wg->AdDriverUseEvolve2,
-					'monetizationService' => $wg->AdDriverUseMonetizationService,
-					'monetizationServiceAds' => $monetizationServiceAds,
 					'rubiconFastlane' => AnalyticsProviderRubiconFastlane::isEnabled(),
 					'taboola' => $wg->AdDriverUseTaboola && $pageType === 'article',
 				] ),

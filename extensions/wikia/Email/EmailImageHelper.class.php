@@ -28,27 +28,7 @@ class ImageHelper {
 		'Wikia' => [
 			'name' => 'Wikia',
 			'extension' => 'gif'
-		],
-		'Twitter' => [
-			'name' => 'Twitter-Icon-2x',
-			'extension' => 'png'
-		],
-		'Facebook' => [
-			'name' => 'Facebook-Icon-2x',
-			'extension' => 'png'
-		],
-		'YouTube' => [
-			'name' => 'YouTube_Default-2x',
-			'extension' => 'png'
-		],
-		'Reddit' => [
-			'name' => 'Reddit-Icon-2x',
-			'extension' => 'png'
-		],
-		'Instagram' => [
-			'name' => 'Instagram-Default-2x',
-			'extension' => 'png'
-		],
+		]
 	];
 
 	/**
