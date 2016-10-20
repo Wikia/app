@@ -344,7 +344,7 @@ describe('ext.wikia.adEngine.lookup.prebid.adaptersPerformanceTracker', function
 		[{
 			adapter: mocks.adapterIndexExchangeDisabled,
 			slotName: 'TOP_LEADERBOARD',
-			providerName: 'indexExchange',
+			providerName: 'direct',
 			performanceMap: {
 				appnexus: {
 					TOP_LEADERBOARD: 'EMPTY_RESPONSE;0-1.0',
@@ -359,7 +359,7 @@ describe('ext.wikia.adEngine.lookup.prebid.adaptersPerformanceTracker', function
 		}, {
 			adapter: mocks.adapterIndexExchange,
 			slotName: 'TOP_RIGHT_BOXAD',
-			providerName: 'indexExchange',
+			providerName: 'direct',
 			performanceMap: {
 				appnexus: {
 					TOP_LEADERBOARD: 'EMPTY_RESPONSE;0-1.0',
@@ -390,7 +390,7 @@ describe('ext.wikia.adEngine.lookup.prebid.adaptersPerformanceTracker', function
 		[{
 			adapter: mocks.adapterIndexExchange,
 			slotName: 'TOP_LEADERBOARD',
-			providerName: 'indexExchange',
+			providerName: 'direct',
 			performanceMap: {
 				appnexus: {
 					TOP_LEADERBOARD: 'EMPTY_RESPONSE;0-1.0',
@@ -400,11 +400,11 @@ describe('ext.wikia.adEngine.lookup.prebid.adaptersPerformanceTracker', function
 					TOP_LEADERBOARD: '200x200;1.00;0-1.0'
 				}
 			},
-			expected: ['indexExchange/lookup_success/indexExchange', 'TOP_LEADERBOARD', 0, '200x200;1.00;0-1.0']
+			expected: ['indexExchange/lookup_success/direct', 'TOP_LEADERBOARD', 0, '200x200;1.00;0-1.0']
 		}, {
 			adapter: mocks.adapterAppNexus,
 			slotName: 'TOP_RIGHT_BOXAD',
-			providerName: 'appnexus',
+			providerName: 'remnant',
 			performanceMap: {
 				appnexus: {
 					TOP_LEADERBOARD: 'EMPTY_RESPONSE',
@@ -414,11 +414,11 @@ describe('ext.wikia.adEngine.lookup.prebid.adaptersPerformanceTracker', function
 					TOP_LEADERBOARD: '200x200;1.00;0-1.0'
 				}
 			},
-			expected: ['appnexus/lookup_error/appnexus', 'TOP_RIGHT_BOXAD', 0, 'nodata']
+			expected: ['appnexus/lookup_error/remnant', 'TOP_RIGHT_BOXAD', 0, 'nodata']
 		}, {
 			adapter: mocks.adapterAppNexus,
 			slotName: 'TOP_RIGHT_BOXAD',
-			providerName: 'foo',
+			providerName: 'direct',
 			performanceMap: {
 				appnexus: {
 					TOP_LEADERBOARD: 'EMPTY_RESPONSE',
@@ -428,7 +428,7 @@ describe('ext.wikia.adEngine.lookup.prebid.adaptersPerformanceTracker', function
 					TOP_LEADERBOARD: '200x200;1.00;0-1.0'
 				}
 			},
-			expected: ['appnexus/lookup_error/foo', 'TOP_RIGHT_BOXAD', 0, 'nodata']
+			expected: ['appnexus/lookup_error/direct', 'TOP_RIGHT_BOXAD', 0, 'nodata']
 		}].forEach(function(testCase) {
 			var module = getModule(),
 				expectResult;
