@@ -5,7 +5,7 @@ define('ext.wikia.adEngine.lookup.prebid.adaptersPerformanceTracker', [
 ], function (adTracker, timeBuckets, prebid) {
 	'use strict';
 
-	var buckets = [0.5, 1.0, 1.5, 2.0, 2.5, 3.0],
+	var buckets = [0, 0.5, 1.0, 1.5, 2.0, 2.5, 3.0],
 		emptyResponseMsg = 'EMPTY_RESPONSE',
 		notRespondedMsg = 'NO_RESPONSE',
 		responseErrorCode = 2,
@@ -54,6 +54,11 @@ define('ext.wikia.adEngine.lookup.prebid.adaptersPerformanceTracker', [
 			return;
 		}
 
+		//Don't track if slot not supported by adapter
+		if (!performanceMap[bidderName][slotName]) {
+			return;
+		}
+
 		if (performanceMap[bidderName]) {
 			if (performanceMap[bidderName][slotName] !== notRespondedMsg) {
 				category = bidderName + '/lookup_success/' + providerName;
@@ -81,7 +86,8 @@ define('ext.wikia.adEngine.lookup.prebid.adaptersPerformanceTracker', [
 
 		if (bid.getStatusCode() === responseErrorCode) {
 			return [emptyResponseMsg, bucket].join(';');
-		} if (bid.complete) {
+		}
+		if (bid.complete) {
 			return [usedMsg, bucket].join(';');
 		} else {
 			return [bid.getSize(), bid.pbMg, bucket].join(';');
