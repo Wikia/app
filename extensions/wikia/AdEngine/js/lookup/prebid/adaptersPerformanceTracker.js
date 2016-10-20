@@ -5,7 +5,7 @@ define('ext.wikia.adEngine.lookup.prebid.adaptersPerformanceTracker', [
 ], function (adTracker, timeBuckets, prebid) {
 	'use strict';
 
-	var buckets = [0, 0.5, 1.0, 1.5, 2.0, 2.5, 3.0],
+	var buckets = [0.0, 0.5, 1.0, 1.5, 2.0, 2.5, 3.0],
 		emptyResponseMsg = 'EMPTY_RESPONSE',
 		notRespondedMsg = 'NO_RESPONSE',
 		responseErrorCode = 2,
