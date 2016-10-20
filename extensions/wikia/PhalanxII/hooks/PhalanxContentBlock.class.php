@@ -20,13 +20,15 @@ class PhalanxContentBlock extends WikiaObject {
 	 * @param $summary
 	 * @return bool
 	 */
-	static public function editFilter( $editPage, $text, $section, &$hookError, $summary ) {
+	static public function editFilter( EditPage $editPage, $text, $section, &$hookError, $summary ) {
 		wfProfileIn( __METHOD__ );
 		list( $contentIsBlocked, $errorMessage ) = self::checkContentFromEditPage( $editPage );
 
 		if ( $contentIsBlocked ) {
 			// we found block
 			$editPage->spamPageWithContent( $errorMessage );
+
+			Wikia\Logger\WikiaLogger::instance()->warning( __METHOD__ . ' - block applied SUS-1188', [ 'title' => $editPage->getTitle()->getPrefixedDBkey(), 'error_message' => $errorMessage ] );
 		}
 
 		wfProfileOut( __METHOD__ );
