@@ -615,7 +615,7 @@ abstract class UploadBase {
 		$msg = '';
 
 		if ( !wfRunHooks( 'FileUploadSummaryCheck', [ $comment, &$msg, true ] ) ) {
-			return Status::newFatal( $msg );
+			return Status::newFatal( 'validator-fatal-error', $msg );
 		}
 
 		$status = $this->getLocalFile()->upload(
