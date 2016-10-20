@@ -9,7 +9,7 @@
 			<p class="date"><?= $wg->lang->date($date); ?></p>
 		<? endif?>
 		<? if (isset($hubLang) && isset($hubName)): ?>
-			<p class="alternative"><?=$hubLang?> / <?=$hubName ?></p>
+			<p class="alternative"><?=$hubLang?> / <?= htmlspecialchars( $hubName ) ?></p>
 		<? endif ?>
 	</div>
 
@@ -19,7 +19,7 @@
 		<? endif ?>
 
 		<? if (isset($lastEditor)): ?>
-		<p><strong><?= wfMessage('edit-hub-header-right-by')->escaped(); ?></strong> <?=$lastEditor?></p>
+		<p><strong><?= wfMessage('edit-hub-header-right-by')->escaped(); ?></strong> <?= htmlspecialchars( $lastEditor ) ?></p>
 		<? endif ?>
 	</aside>
 </header>
