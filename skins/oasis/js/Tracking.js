@@ -690,7 +690,7 @@ jQuery(function ($) {
 						label = 'on-the-wiki-videos';
 						break;
 				}
-			} else if (el.attr('href').indexOf('/d/f') != -1) {
+			} else if (el.attr('href') === '/d/f') {
 				label = 'on-the-wiki-discussions'
 			} else if (el.parent().hasClass('nav-item')) {
 				label = 'custom-level-1';
