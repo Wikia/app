@@ -40,9 +40,9 @@ require(['wikia.nirvana'], function (nirvana) {
         sAjaxSource: '',
         fnServerData: function (sSource, aoData, fnCallback) {
             var refData = {},
-                columns = {},
-                order = '',
-                requestData = {};
+                columns,
+                order,
+                requestData;
 
             aoData.forEach(function (el) {
                 refData[el.name] = el.value;
