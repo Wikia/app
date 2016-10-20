@@ -331,7 +331,8 @@ class AdEngine2ContextServiceTest extends WikiaBaseTest {
 			'opts' => [
 				'pageType' => 'all_ads',
 				'showAds' => true,
-				'delayBtf' => true
+				'delayBtf' => true,
+				'sourcePointRecovery' => false
 			],
 			'targeting' => [
 				'esrbRating' => 'teen',
