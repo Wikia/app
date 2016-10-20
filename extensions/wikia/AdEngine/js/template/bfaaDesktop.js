@@ -72,13 +72,13 @@ define('ext.wikia.adEngine.template.bfaaDesktop', [
 			recoveryTweaker.tweakSlot(params.slotName, iframe);
 		}
 
-		if (params.video && params.videoTriggerElement) {
+		if (params.videoUrl && params.videoTriggerElement) {
 			slotTweaker.onReady(params.slotName, function(iframe) {
-				var image = iframe.parentNode.parentNode.parentNode,
-					video = uapVideoAd.init(doc.getElementById(params.slotName), image, params.video);
+				var imageContainer = iframe.parentNode.parentNode.parentNode,
+					video = uapVideoAd.init(doc.getElementById(params.slotName), imageContainer, params.videoUrl);
 
 				params.videoTriggerElement.addEventListener('click', function () {
-					uapVideoAd.playAndToggle(video, image);
+					uapVideoAd.playAndToggle(video, imageContainer);
 				});
 			});
 		}

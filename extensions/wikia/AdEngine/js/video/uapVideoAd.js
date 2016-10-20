@@ -5,37 +5,37 @@ define('ext.wikia.adEngine.video.uapVideoAd', [
 ], function (DOMElementTweaker, doc) {
 	'use strict';
 
-	function toggle(video, image, showAd) {
+	function toggle(video, imageContainer, showAd) {
 		if (showAd) {
 			DOMElementTweaker.hide(video, false);
-			DOMElementTweaker.removeClass(image, 'hidden');
+			DOMElementTweaker.removeClass(imageContainer, 'hidden');
 		} else {
-			DOMElementTweaker.hide(image, false);
+			DOMElementTweaker.hide(imageContainer, false);
 			DOMElementTweaker.removeClass(video, 'hidden');
 		}
 	}
 
-	function init(container, image, url) {
+	function init(container, imageContainer, url) {
 		var videoElement = doc.createElement('video');
 
 		videoElement.src = url;
 		DOMElementTweaker.hide(videoElement, false);
 		container.appendChild(videoElement);
 
-		onEnded(videoElement, image);
+		onEnded(videoElement, imageContainer);
 
 		return videoElement;
 	}
 
-	function onEnded(video, image) {
+	function onEnded(video, imageContainer) {
 		video.addEventListener('ended', function () {
-			toggle(video, image, true);
+			toggle(video, imageContainer, true);
 		});
 	}
 
-	function playAndToggle(video, image) {
+	function playAndToggle(video, imageContainer) {
 		video.play();
-		toggle(video, image, false);
+		toggle(video, imageContainer, false);
 	}
 
 	return {

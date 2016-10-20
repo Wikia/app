@@ -12,11 +12,10 @@ define('ext.wikia.adEngine.template.bfaa', [
 ) {
 	'use strict';
 
-	var logGroup = 'ext.wikia.adEngine.template.bfaa';
+	var bfaa,
+		logGroup = 'ext.wikia.adEngine.template.bfaa';
 
 	function show(params) {
-
-		var bfaa;
 		switch (adContext.getContext().targeting.skin) {
 			case 'oasis':
 				bfaa = bfaaDesktop;
