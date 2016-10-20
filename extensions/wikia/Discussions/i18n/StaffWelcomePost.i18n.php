@@ -16,7 +16,7 @@ Have fun!
 );
 
 $messages['qqq'] = array(
-	'discussions-staff-welcome-post' => 'Message posted by a staff account when Discussions is first enabled for a community. $1 -> Link to help page about Discussions, $2 -> Link to help page about tools for Admins',
+	'discussions-staff-welcome-post' => 'Message posted by a staff account when Discussions is first enabled for a community',
 );
 
 $messages['de'] = array(
@@ -95,9 +95,9 @@ Witaj w Dyskusjach!
 
 Dyskusje to miejsce, w którym możesz rozmawiać na swój ulubiony temat, dzielić się wiadomościami oraz pomysłami, snuć teorie i poznawać innych fanów.
 
-Żeby dowiedzieć się, co jeszcze możesz tutaj znaleźć, zobacz $1.
+Żeby dowiedzieć się, co jeszcze możesz tutaj znaleźć, zobacz http://spolecznosc.wikia.com/wiki/Pomoc:Dyskusje.
 
-Jeżeli jesteś administratorem tej społeczności, poznaj szczegóły jak dostosować stronę Dyskusji i stworzyć wskazówki dla innych współtwórców: $2.
+Jeżeli jesteś administratorem tej społeczności, poznaj szczegóły jak dostosować stronę Dyskusji i stworzyć wskazówki dla innych współtwórców: http://spolecznosc.wikia.com/wiki/Pomoc:Narz%C4%99dzia_do_moderowania_Dyskusji.
 
 Miłej zabawy!
 ',
@@ -131,8 +131,7 @@ $messages['ru'] = array(
 ',
 );
 
-// was zh-hans
-$messages['zh'] = array(
+$messages['zh-hans'] = array(
 	'discussions-staff-welcome-post' => '欢迎来到讨论版！
 
 您可以在这里畅谈您所感兴趣的话题，分享新闻、理念、观点，并且可以和其他人互动。
@@ -144,16 +143,16 @@ $messages['zh'] = array(
 祝您编辑愉快！',
 );
 
-//$messages['zh-hant'] = array(
-//	'discussions-staff-welcome-post' => '
-//歡迎來到討論版！
-//
-//您可以在這裡暢談您所感興趣的話題，分享訊息、理念、觀點，並且可以和其他人互動。
-//
-//如果您希望進一步瞭解在這裡可以進行哪些活動，請查看：http://zh.community.wikia.com/wiki/Help:%E8%AE%A8%E8%AE%BA%E7%89%88
-//
-//如果您是這個社區的管理員，請閱讀如何自訂討論版以及如何為貢獻者制定方針：http://zh.community.wikia.com/wiki/Help:%E8%AE%A8%E8%AE%BA%E7%89%88
-//
-//祝您編輯愉快！',
-//);
+$messages['zh-hant'] = array(
+	'discussions-staff-welcome-post' => '
+歡迎來到討論版！
+
+您可以在這裡暢談您所感興趣的話題，分享訊息、理念、觀點，並且可以和其他人互動。
+
+如果您希望進一步瞭解在這裡可以進行哪些活動，請查看：http://zh.community.wikia.com/wiki/Help:%E8%AE%A8%E8%AE%BA%E7%89%88
+
+如果您是這個社區的管理員，請閱讀如何自訂討論版以及如何為貢獻者制定方針：http://zh.community.wikia.com/wiki/Help:%E8%AE%A8%E8%AE%BA%E7%89%88
+
+祝您編輯愉快！',
+);
 
