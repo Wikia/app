@@ -112,12 +112,6 @@ class SpecialUserlogout extends UnlistedSpecialPage {
 	 */
 	protected function isValidRedirectUrl( $url ) {
 		$hostname = parse_url( $url, PHP_URL_HOST );
-
-		if ( $hostname === 'wikia.com' || $hostname === 'fandom.com' ) {
-			return true;
-		}
-
-		return substr( $hostname, -strlen( '.wikia.com' ) ) === '.wikia.com' ||
-				substr( $hostname, -strlen( '.fandom.com' ) ) === '.fandom.com';
+		return preg_match( '/(\.|^)(wikia|fandom)\.com$/', $hostname );
 	}
 }
