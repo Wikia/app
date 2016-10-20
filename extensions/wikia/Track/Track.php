@@ -32,7 +32,7 @@ class Track {
 			   'y=' . $wgDBcluster . $sep .
 			   'u=' . $wgUser->getID() . $sep .
 			   'a=' . ( is_object( $wgArticle ) ? $wgArticle->getID() : null ) . $sep .
-			   's=' . RequestContext::getMain()->getSkin()->getSkinName() .
+			   's=' . RequestContext::getMain()->getSkin()->getSkinName() . $sep .
 			   'beacon=' . wfGetBeaconId() .
 			   ( $wgTitle && !is_object( $wgArticle ) ? $sep . 'pg=' . urlencode( $wgTitle->getPrefixedDBkey() ) : '' ) .
 			   ( $wgTitle ? $sep . 'n=' . $wgTitle->getNamespace() : '' ) .
