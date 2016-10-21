@@ -2,6 +2,9 @@ require(['jquery', 'mw', 'phalanx', 'BannerNotification'], function($, mw, phala
 	// edit token is required by Phalanx API
 	phalanx.init(mw.config.get('wgPhalanxToken'));
 
+	var $filter = $('#wpPhalanxFilter'),
+		$bulkFilter = $('#wpPhalanxFilterBulk');
+
 	$('body').
 		// handle blocks "unblocking" (i.e. removing blocks)
 		on('click', 'button.unblock', function(ev) {
@@ -30,6 +33,8 @@ require(['jquery', 'mw', 'phalanx', 'BannerNotification'], function($, mw, phala
 			var singleModeWrapper = $('#singlemode'),
 				bulkModeWrapper = $('#bulkmode');
 
+			$bulkFilter.val($filter.val());
+
 			singleModeWrapper.slideUp();
 			bulkModeWrapper.slideDown();
 		}).
@@ -45,7 +50,7 @@ require(['jquery', 'mw', 'phalanx', 'BannerNotification'], function($, mw, phala
 
 		// handle "validate regex" button
 		on('click', '#validate', function(ev) {
-			var regex = $('#wpPhalanxFilter').val(),
+			var regex = $filter.val(),
 				buttonNode = $(this),
 				msgNode = $('#validateMessage').hide();
 
