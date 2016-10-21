@@ -46,8 +46,14 @@
 				</a>
 			</div>
 		</div>
-		<div class="wds-global-navigation__right-slot">
-			<img src="https://services.wikia.com/static-assets/image/24fc42b9-5429-49f3-8515-130626fb4751" width="100px" height="30px" />
-		</div>
+		<?php if (isset( $model['right_slot'] )): ?>
+			<?= $app->renderView(
+				'DesignSystemGlobalNavigationService',
+				'rightSlot',
+				[
+					'model' => $model['right_slot'],
+				]
+			); ?>
+		<?php endif ?>
 	</div>
 </div>
