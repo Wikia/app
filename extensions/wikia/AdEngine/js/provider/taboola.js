@@ -99,8 +99,10 @@ define('ext.wikia.adEngine.provider.taboola', [
 	}
 
 	function fillInAfterRecoveredSlotCollapse(slot, recoverdSlotId) {
+		log(['fillInAfterRecoveredSlotCollapse - set listener', slot.name], 'debug', logGroup);
 		window.addEventListener('adengine.slot.status', function (e) {
 			if (e.detail.slotName === recoverdSlotId && e.detail.status === 'collapse') {
+				log(['fillInAfterRecoveredSlotCollapse::fter event', slot.name], 'debug', logGroup);
 				fillInSlot(slot);
 			}
 		});
@@ -110,6 +112,7 @@ define('ext.wikia.adEngine.provider.taboola', [
 		if (supportedSlots.regular.indexOf(slot.name) !== -1) {
 			fillInSlot(slot);
 		} else if (supportedSlots.recovery.indexOf(slot.name) !== -1) {
+			log(['fillInSlotByConfig', 'addOnBlockingCallback', slot.name], 'debug', logGroup);
 			recoveryHelper.addOnBlockingCallback(function () {
 				if (recoveryHelper.isRecoveryEnabled()) {
 					fillInAfterRecoveredSlotCollapse(slot, 'TOP_LEADERBOARD');
