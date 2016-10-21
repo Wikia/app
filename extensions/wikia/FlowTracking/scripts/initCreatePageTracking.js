@@ -52,12 +52,12 @@ require([
 
 		$( '#ca-ve-edit,  #ca-edit' ).click(function() {
 			if (isNewArticle() && isMainNamespace()) {
+				flowTracking.beginFlow(createButtonFlow, {});
+
 				var qs = new QueryString();
 				qs.setVal('flow', createButtonFlow);
 				qs.removeVal('tracked');
 				window.history.replaceState({}, '', qs.toString());
-
-				flowTracking.beginFlow(createButtonFlow, {});
 			}
 		});
 	}
