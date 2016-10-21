@@ -31,7 +31,7 @@ $wgAutoloadClasses['ChatRailController'] = "$dir/ChatRailController.class.php";
 $wgAutoloadClasses['ChatBanTimeOptions'] = "$dir/ChatBanTimeOptions.class.php";
 $wgAutoloadClasses['SpecialChat'] = "$dir/SpecialChat.class.php";
 $wgAutoloadClasses['ChatServerApiClient'] = "$dir/ChatServerApiClient.class.php";
-$wgAutoloadClasses['ChatBanListSpecialController'] = "$dir/ChatBanListSpecialController.php";
+$wgAutoloadClasses['ChatBanListSpecialController'] = "$dir/ChatBanListSpecialController.class.php";
 $wgAutoloadClasses['ChatBanData'] = "$dir/ChatBanListSpecial_helper.php";
 
 // special pages
