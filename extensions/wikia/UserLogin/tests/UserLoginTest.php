@@ -16,20 +16,12 @@ class UserLoginTest extends UserLoginBaseTest {
 	protected $skinOrg = null;
 
 	public function setUp() {
-		$this->setupFile = dirname( __FILE__ ) . '/../UserLogin.setup.php';
+		$this->setupFile = __DIR__ . '/../UserLogin.setup.php';
 		parent::setUp();
 	}
 
 	protected function setUpMock() {
-		// mock cache
-		$memcParams = array(
-			'set' => null,
-			'get' => null,
-			'delete' => null
-		);
-
-		$this->setUpMockObject( 'stdClass', $memcParams, false, 'wgMemc' );
-
+		$this->disableMemCache();
 		$this->mockGlobalVariable( 'wgCityId', self::TEST_CITY_ID );
 
 		// "mock" IP
@@ -48,7 +40,7 @@ class UserLoginTest extends UserLoginBaseTest {
 		$this->setUpMockObject( 'User', $mockUserParams, true, 'wgUser' );
 		$this->setUpMockObject( 'UserLoginHelper', $mockHelperParams, true );
 		if ( !is_null( $mockLoginFormParams ) ) {
-			$this->setUpMockObject( 'LoginForm', $mockLoginFormParams, true, null, array(), false );
+			$this->mockClassWithMethods( 'LoginForm', $mockLoginFormParams );
 		}
 
 		$this->setUpMock();

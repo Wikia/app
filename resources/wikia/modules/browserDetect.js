@@ -5,6 +5,14 @@ define('wikia.browserDetect', ['wikia.window'], function (win) {
 		userAgent = win.navigator.userAgent;
 
 	/**
+	 * Check if the browser is mobile - tablet or phone
+	 * @returns {boolean}
+     */
+	function isMobile() {
+		return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(userAgent);
+	}
+
+	/**
 	 * Checks if the browser is IE
 	 * @returns {boolean}
 	 */
@@ -17,6 +25,14 @@ define('wikia.browserDetect', ['wikia.window'], function (win) {
 		}
 
 		return bool;
+	}
+
+	/**
+	 * Check if the browser is Edge
+	 * @returns {boolean}
+	 */
+	function isEdge() {
+		return userAgent.indexOf('Edge') !== -1;
 	}
 
 	/**
@@ -63,6 +79,8 @@ define('wikia.browserDetect', ['wikia.window'], function (win) {
 		isFirefox: isFirefox,
 		isIPad: isIPad,
 		isIOS7orLower: isIOS7orLower,
-		isAndroid: isAndroid
+		isAndroid: isAndroid,
+		isMobile: isMobile,
+		isEdge: isEdge
 	};
 });

@@ -1,0 +1,86 @@
+// Font family - see https://www.smashingmagazine.com/2015/11/using-system-ui-fonts-practical-guide/
+$font-family: 'San Francisco', 'Helvetica Neue', 'Roboto', 'Segoe UI', 'Ubuntu', 'Droid Sans', sans-serif;
+
+// Line height
+$line-height: 1.5em;
+
+// Typescale sizes
+$typescale-size-minus-3: 10px;
+$typescale-size-minus-2: 12px;
+$typescale-size-minus-1: 14px;
+$typescale-size-base: 16px;
+$typescale-size-plus-1: 18px;
+$typescale-size-plus-2: 24px;
+$typescale-size-plus-3: 28px;
+$typescale-size-plus-4: 36px;
+$typescale-size-plus-5: 40px;
+$typescale-size-plus-6: 48px;
+$typescale-size-plus-7: 54px;
+
+// Typescale variants
+$typescale-variant-minus-3: (
+	mobile: $typescale-size-minus-3,
+	tablet: $typescale-size-minus-3,
+	desktop: $typescale-size-minus-3,
+	desktop-xl: $typescale-size-minus-3
+);
+$typescale-variant-minus-2: (
+	mobile: $typescale-size-minus-3,
+	tablet: $typescale-size-minus-2,
+	desktop: $typescale-size-minus-2,
+	desktop-xl: $typescale-size-minus-2
+);
+$typescale-variant-minus-1: (
+	mobile: $typescale-size-minus-2,
+	tablet: $typescale-size-minus-1,
+	desktop: $typescale-size-minus-1,
+	desktop-xl: $typescale-size-minus-1
+);
+$typescale-variant-base: (
+	mobile: $typescale-size-base,
+	tablet: $typescale-size-base,
+	desktop: $typescale-size-base,
+	desktop-xl: $typescale-size-base
+);
+$typescale-variant-plus-1: (
+	mobile: $typescale-size-base,
+	tablet: $typescale-size-plus-1,
+	desktop: $typescale-size-plus-1,
+	desktop-xl: $typescale-size-plus-1
+);
+$typescale-variant-plus-2: (
+	mobile: $typescale-size-plus-1,
+	tablet: $typescale-size-plus-2,
+	desktop: $typescale-size-plus-2,
+	desktop-xl: $typescale-size-plus-2
+);
+$typescale-variant-plus-3: (
+	mobile: $typescale-size-plus-2,
+	tablet: $typescale-size-plus-3,
+	desktop: $typescale-size-plus-3,
+	desktop-xl: $typescale-size-plus-3
+);
+$typescale-variant-plus-4: (
+	mobile: $typescale-size-plus-3,
+	tablet: $typescale-size-plus-4,
+	desktop: $typescale-size-plus-4,
+	desktop-xl: $typescale-size-plus-4
+);
+$typescale-variant-plus-5: (
+	mobile: $typescale-size-plus-3,
+	tablet: $typescale-size-plus-4,
+	desktop: $typescale-size-plus-5,
+	desktop-xl: $typescale-size-plus-5
+);
+$typescale-variant-plus-6: (
+	mobile: $typescale-size-plus-4,
+	tablet: $typescale-size-plus-5,
+	desktop: $typescale-size-plus-6,
+	desktop-xl: $typescale-size-plus-6
+);
+$typescale-variant-plus-7: (
+	mobile: $typescale-size-plus-5,
+	tablet: $typescale-size-plus-6,
+	desktop: $typescale-size-plus-7,
+	desktop-xl: $typescale-size-plus-7
+);

@@ -5,6 +5,10 @@
 @import "skins/shared/mixins/gradient";
 @import "skins/shared/mixins/menus";
 
+.WikiaFooter {
+	margin-bottom: 30px;
+}
+
 .WikiaFooter, .WikiaBarWrapper {
 	clear: both;
 	padding-top: 23px;

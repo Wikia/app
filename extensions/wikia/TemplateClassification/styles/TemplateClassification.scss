@@ -1,6 +1,8 @@
 @import 'skins/shared/color';
 
+$tc-name-color: $color-text;
 $tc-name-color-checked: $color-links;
+$tc-modal-text-color: $color-text;
 
 @if $is-dark-wiki {
 	$tc-name-color: lighten(mix($color-text, $color-links, 75%), 5%);

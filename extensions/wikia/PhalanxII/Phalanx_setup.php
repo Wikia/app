@@ -57,15 +57,15 @@ $phalanxhooks = array(
 		),
 	'PhalanxContentBlock' =>
 		array(
-			'EditFilter'         => 'editFilter',
-			'AbortMove'          => 'abortMove',
-			'EditContent'        => 'editContent',
-			'CheckContent'       => 'checkContent',
-			'APIEditBeforeSave'  => 'filterAPIEditBeforeSave',
+			'SpecialMovepageBeforeMove'       => 'beforeMove',
+			'EditFilter'                      => 'editFilter',
+			'AbortMove'                       => 'abortMove',
+			'EditContent'                     => 'editContent',
+			'CheckContent'                    => 'checkContent',
+			'APIEditBeforeSave'               => 'filterAPIEditBeforeSave',
 		),
 	'PhalanxTitleBlock' =>
 		array(
-			'SpecialMovepageBeforeMove'       => 'beforeMove',
 			'EditFilter'                      => 'editFilter',
 			'CreateDefaultQuestionPageFilter' => 'checkTitle',
 			'CreatePageTitleCheck'            => 'checkTitle',
@@ -77,7 +77,7 @@ $phalanxhooks = array(
 		),
 	'PhalanxWikiCreationBlock' =>
 		array(
-			'AutoCreateWiki::checkBadWords'   => 'isAllowedText'
+			'CreateWikiChecks::checkBadWords' => 'isAllowedText'
 		),
 	'PhalanxHooks' =>
 		array(

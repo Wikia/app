@@ -109,19 +109,15 @@ var ChatView = Backbone.View.extend({
 
 		// Inline Alerts have may have i18n messages in them. If so (and they don't have 'text' yet), process the message and cache it in 'text'.
 		// This needs to be done before the template processing below so that 'text' will be set by then.
-
-
 		if(this.model.get('text') == ''){
 			var params = this.model.get('msgParams'),
 				msgId = this.model.get('wfMsg');
-			if (!params || !msgId) {
+			if (!msgId) {
 				return this;
 			}
-			$().log("Found an i18n message with msg name " + msgId + " and params: " + params);
 			params.unshift(msgId);
-			var i18nText = $.msg.apply(null, params);
+			var i18nText = mw.message.apply(null, params).text();
 			this.model.set({text: i18nText});
-			$().log("Message translated to: " + i18nText);
 		}
 
 		var msg = this.model.toJSON();
@@ -327,7 +323,7 @@ var NodeChatDiscussion = Backbone.View.extend({
 		 		$('#ChatHeader .private').hide();
 			} else {
 		 		$('#ChatHeader .public').hide();
-		 		$('#ChatHeader .private').text($.msg('chat-private-headline').replace('$1', status.get('privateUser').get('name'))).show();
+		 		$('#ChatHeader .private').text(mw.message('chat-private-headline').text().replace('$1', status.get('privateUser').get('name'))).show();
 			}
 		} else {
 			room.removeClass('selected');
@@ -573,7 +569,7 @@ var NodeChatUsers = Backbone.View.extend({
 					this[ location ? 'actionTemplate' : 'actionTemplateNoUrl' ]({
 						actionUrl: location,
 						actionName: action,
-						actionDesc: mw.html.escape($.msg('chat-user-menu-' + action))
+						actionDesc: mw.message('chat-user-menu-' + action).escaped()
 					})
 				);
 			}
@@ -589,7 +585,7 @@ var NodeChatUsers = Backbone.View.extend({
 				adminActions.append(
 					this.actionTemplateNoUrl({
 						actionName: action,
-						actionDesc: mw.html.escape($.msg('chat-user-menu-' + action))
+						actionDesc: mw.message('chat-user-menu-' + action).escaped()
 					})
 				);
 			}

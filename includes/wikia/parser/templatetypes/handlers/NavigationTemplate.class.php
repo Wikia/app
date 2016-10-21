@@ -8,15 +8,9 @@ class NavigationTemplate {
 		'p',
 	];
 
-	const MARK = 'NAVUNIQ';
+	const NAV_PATH = '//div[@data-navuniq]';
+	const NESTED_NAV_PATH = '//div[@data-navuniq]//div[@data-navuniq]';
 
-	/**
-	 * @desc If a block element div, table or p is found in a template's text, return an empty
-	 * string to hide the template.
-	 * @param $text
-	 *
-	 * @return string
-	 */
 	public static function handle( $text ) {
 		return !empty( $text ) ? self::mark( $text ) : $text;
 	}
@@ -28,33 +22,61 @@ class NavigationTemplate {
 		return true;
 	}
 
+	/**
+	 * @desc If a block element div, table or p is found in a template's text, return an empty
+	 * string to hide the template.
+	 * @param $html
+	 *
+	 * @return string
+	 */
 	private static function process( $html ) {
-		$markerRegex = "/(<|&lt;)(\x7f" . self::MARK . ".+\x7f)(>|&gt;)/sU";
+		$document = HtmlHelper::createDOMDocumentFromText( $html );
+		$xpath = new DOMXPath( $document );
+		$result = $xpath->query( self::NAV_PATH, $document );
 
-		//getting unique markers of each navigation template
-		preg_match_all( $markerRegex, $html, $markers );
-
-		foreach ( array_unique( $markers[ 2 ] ) as $marker ) {
-			// matches block elements in between start and end marker tags
-			// <marker>(not </marker>)...(block element)...</marker>
-			$html = preg_replace( '/(<|&lt;)' . $marker . '(>|&gt;)' .
-								  '((?!(<|&lt;)\\/' . $marker . '(>|&gt;)).)*' .
-								  '(<|&lt;)(' . implode( '|', self::$blockLevelElements ) . ')[(>|&gt;)\s]+.*' .
-								  '(<|&lt;)\\/' . $marker . '(>|&gt;)/isU', '', $html );
-			// remove just the marker tags
-			$html = preg_replace( '/(<|&lt;)\\/?' . $marker . '(>|&gt;)/sU', '', $html );
+		$blockElements = implode( "|", self::$blockLevelElements );
+		for ( $i = 0; $i < $result->length; $i++ ) {
+			$node = $result->item( $i );
+			$found = $xpath->query( $blockElements, $node );
+			if ( $found->length ) {
+				HtmlHelper::removeNode( $node );
+			} else {
+				HtmlHelper::unwrapNode( $node );
+			}
 		}
 
-		return $html;
+		return HtmlHelper::getBodyHtml( $document );
 	}
 
 	/**
-	 * @param $text
+	 * Remove markings for nested templates
+	 * @param $templateWikitext
 	 * @return string
 	 */
+	public static function removeInnerMarks( $templateWikitext ) {
+		$document = HtmlHelper::createDOMDocumentFromText( $templateWikitext );
+		// check for nested navuniq divs
+		$xpath = new DOMXPath( $document );
+		$result = $xpath->query( self::NESTED_NAV_PATH, $document );
+		if ( $result->length ) {
+			for ( $i = 0; $i < $result->length; $i++ ) {
+				$node = $result->item( $i );
+				// remove new line from the string beginning (see: NavigationTemplate::mark)
+				$node->firstChild->nodeValue = self::removeFirstCharacter( $node->firstChild->nodeValue );
+				HtmlHelper::unwrapNode( $node );
+			}
+
+			return HtmlHelper::getBodyHtml( $document );
+		}
+
+		return $templateWikitext;
+	}
+
 	private static function mark( $text ) {
-		// marking each template with unique marker to be able to handle nested navigation templates
-		$marker = "\x7f" . self::MARK . "_" . uniqid() . "\x7f";
-		return sprintf( "<%s>%s</%s>", $marker, $text, $marker );
+		return sprintf( "<div data-navuniq=\"%s\">\n%s</div>", uniqid(), $text );
+	}
+
+	private static function removeFirstCharacter( $text ) {
+		return substr( $text, 1 );
 	}
 }

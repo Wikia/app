@@ -8,10 +8,14 @@ $old-close-image: '/resources/wikia/ui_components/modal/images/close-light.svg';
 	position: fixed;
 	text-align: center;
 	width: 100%;
-	z-index: $zTop;
 
 	.background {
 		height: 90px;
+	}
+
+	.top-bar {
+		background: none;
+		z-index: 0;
 	}
 
 	.close {

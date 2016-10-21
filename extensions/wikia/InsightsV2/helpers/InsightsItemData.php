@@ -70,6 +70,7 @@ class InsightsItemData {
 
 		$data = [
 			'text' => $prefixedTitle,
+			'articleurl' => $title->getFullURL(),
 			'url' => $title->getFullURL( $params ),
 			'title' => $prefixedTitle,
 			'classes' => '',

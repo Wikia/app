@@ -1,29 +1,17 @@
 <?php
 
 class ARecoveryEngineHooks {
-
-	/**
-	 * Register recovery related scripts on the top
-	 *
-	 * @param array $vars
-	 * @param array $scripts
-	 *
-	 * @return bool
-	 */
-	public static function onWikiaSkinTopScripts( &$vars, &$scripts ) {
-		global $wgEnableUsingSourcePointProxyForCSS;
-
-		if ( empty( $wgEnableUsingSourcePointProxyForCSS ) ) {
-			return true;
+	
+	public static function onBeforePageDisplay( &$outputPage, &$skin ) {
+		if ( ARecoveryModule::isLockEnabled() ) {
+			Wikia::addAssetsToOutput( ARecoveryModule::ASSET_GROUP_ARECOVERY_LOCK );
 		}
-		$scripts .= F::app()->sendRequest( 'ARecoveryEngineApiController', 'getBootstrap' );
 		return true;
 	}
 
-	public static function onBeforePageDisplay(&$outputPage, &$skin) {
-		global $wgOasisLastCssScripts;
-		$sp = new ARecoveryUnlockCSS($outputPage);
-		$wgOasisLastCssScripts[] = $sp->getUnlockCSSUrl();
+	public static function onInstantGlobalsGetVariables( array &$vars ) {
+		$vars[] = 'wgARecoveryEngineCustomLog';
+		$vars[] = 'wgAdDriverSourcePointRecoveryCountries';
 		return true;
 	}
 }

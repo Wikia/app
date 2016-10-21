@@ -2,8 +2,8 @@
 define('ext.wikia.adEngine.adHelper', function () {
 	'use strict';
 
-	function throttle(fn, threshhold, scope) {
-		threshhold = threshhold || 250;
+	function throttle(fn, threshold, scope) {
+		threshold = threshold || 250;
 		var last,
 			deferTimer;
 
@@ -12,13 +12,13 @@ define('ext.wikia.adEngine.adHelper', function () {
 				now = +(new Date()),
 				args = arguments;
 
-			if (last && now < last + threshhold) {
+			if (last && now < last + threshold) {
 				// hold on to it
 				clearTimeout(deferTimer);
 				deferTimer = setTimeout(function () {
 					last = now;
 					fn.apply(context, args);
-				}, threshhold);
+				}, threshold);
 			} else {
 				last = now;
 				fn.apply(context, args);

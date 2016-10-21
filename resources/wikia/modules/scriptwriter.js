@@ -4,24 +4,20 @@
  * But for some reason there are still advertisers and ad networks that want to use this
  * obsolete technology.
  *
- * This is why ghostwriter and later postscribe libraries emerged. They let you load a script
- * including document.write calls as it was put in some <div> but without blocking the whole page.
+ * Let you load a script including document.write calls as it was put in some <div> but
+ * without blocking the whole page.
  *
  * ScriptWriter is a wrapper around those libraries which:
  *
  *  * exposes a simple API of 3 functions: injectHtml, injectScriptByText and injectScriptByUrl
  *  * registers an AMD module wikia.scriptwriter
- *  * chooses library to use: postscribe if wgUsePostScribe, ghostwriter otherwise
  *  * loads the library if not already loaded
- *  * works around the "</embed>" bug in PostScribe (https://github.com/krux/postscribe/issues/33)
  *  * launches GhostWriter's flushloadhandlers() trigger after each script handled
  *  * serializes the operation
  *
  * A word on serialization: document.write calls would execute synchronously and that's how some
  * of the 3rd party scripts we run want to be called. We also want as few of those as possible,
  * so adding this additional performance hit makes sure we don't abuse this module.
- *
- * Ideally some day this module should be a simple wrapper around PostScribe.
  */
 
 /*global define*/
@@ -33,7 +29,7 @@ define('wikia.scriptwriter', [
 	'use strict';
 
 	var logGroup = 'wikia.scriptwriter',
-		library = win.wgUsePostScribe ? 'postscribe' : 'ghostwriter',
+		library = 'ghostwriter',
 		queue = [],
 		loading = false; // load library only once
 
@@ -59,26 +55,15 @@ define('wikia.scriptwriter', [
 	function processItem(params) {
 		log(['processItem', library, params], 'debug', logGroup);
 
-		if (library === 'postscribe') {
-			win.postscribe(
-				params.element,
-				params.html,
-				{
-					autoFix: false,
-					done: params.callback
-				}
-			);
-		} else {
-			var text = params.gwScriptText || 'document.write(' + JSON.stringify(params.html) + ');';
-			win.ghostwriter(
-				params.element,
-				{
-					insertType: 'append',
-					script: { text: text },
-					done: gwFlushLoadHandlersAndCall(params.callback)
-				}
-			);
-		}
+		var text = params.gwScriptText || 'document.write(' + JSON.stringify(params.html) + ');';
+		win.ghostwriter(
+			params.element,
+			{
+				insertType: 'append',
+				script: { text: text },
+				done: gwFlushLoadHandlersAndCall(params.callback)
+			}
+		);
 	}
 
 	function processQueue() {
@@ -97,22 +82,7 @@ define('wikia.scriptwriter', [
 		loading = true;
 
 		log(['loadLibrary', library], 'debug', logGroup);
-
-		if (library === 'postscribe') {
-			url = '/resources/wikia/libraries/postscribe/postscribe.min.js';
-
-			// GhostWriter does this safety-guards, but PostScribe doesn't
-			doc.open = noop;
-			doc.close = noop;
-
-			if (!!win.postscribe) {
-				log(['loadLibrary', 'postscribe already loaded, processing queue'], 'debug', logGroup);
-				processQueue();
-				return;
-			}
-		} else {
-			url = '/resources/wikia/libraries/ghostwriter/gw.min.js';
-		}
+		url = '/resources/wikia/libraries/ghostwriter/gw.min.js';
 
 		loader(url).done(processQueue);
 	}

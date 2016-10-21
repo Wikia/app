@@ -1,6 +1,11 @@
 @import 'horizontal';
 @import 'rail';
 @import 'discussions';
+@import 'perfect-scrollbar';
+@import 'scroller';
+@import 'impact-footer';
+
+@import 'skins/shared/color';
 
 
 // GOOGLE MATCHED CONTENT
@@ -14,5 +19,58 @@
 
 	iframe {
 		margin: -1px;
+	}
+}
+
+.recirculation-unit {
+
+	.rail-item.is-video,
+	.item.is-video {
+		.image-thumbnail,
+		.thumbnail {
+			position: relative;
+
+			&::after {
+				background: {
+					image: url('/extensions/wikia/Recirculation/images/playhead.svg'); /* $wgCdnStylePath */
+					position: center center;
+					repeat: no-repeat;
+					size: cover;
+				}
+
+				bottom: 12px;
+				content: '';
+				display: block;
+				height: 48px;
+				position: absolute;
+				right: 12px;
+				width: 48px;
+				z-index: 1;
+			}
+		}
+	}
+
+	.placeholder-thumbnail {
+		background-color: $color-article-thumb-background;
+		background-image: url('/extensions/wikia/Recirculation/images/brackets.svg'); /* $wgCdnStylePath */
+		background-position: center;
+		background-repeat: no-repeat;
+		background-size: contain;
+		display: block;
+		position: relative;
+
+		&::before {
+			content: '';
+			display: block;
+			padding-top: 56.25%;
+		}
+
+		img {
+			bottom: 0;
+			left: 0;
+			position: absolute;
+			right: 0;
+			top: 0;
+		}
 	}
 }

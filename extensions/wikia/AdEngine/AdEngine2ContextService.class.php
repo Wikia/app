@@ -18,18 +18,13 @@ class AdEngine2ContextService {
 			$wikiaPageType = new WikiaPageType();
 			$pageType = $wikiaPageType->getPageType();
 
-			$sevenOneMediaCombinedUrl = null;
-			if ( !empty( $wg->AdDriverUseSevenOneMedia ) ) {
-				// TODO: implicitly gets the skin from the context!
-				$sevenOneMediaCombinedUrl = ResourceLoader::makeCustomURL( $wg->Out, ['wikia.ext.adengine.sevenonemedia'], 'scripts' );
-			}
+			$sourcePointDetectionKey = AdEngine2Resource::getKey('wikia.ext.adengine.sp.detection');
+			$sourcePointDetectionUrl = ResourceLoader::makeCustomURL( $wg->Out, [$sourcePointDetectionKey], 'scripts' );
 
-			$monetizationServiceAds = null;
-			if ( !empty( $wg->AdDriverUseMonetizationService ) && !empty( $wg->EnableMonetizationModuleExt ) ) {
-				$monetizationServiceAds = F::app()->sendRequest( 'MonetizationModule', 'index' )->getData()['data'];
-			}
+			$pageFairDetectionKey = AdEngine2Resource::getKey('wikia.ext.adengine.pf.detection');
+			$pageFairDetectionUrl = ResourceLoader::makeCustomURL( $wg->Out, [$pageFairDetectionKey], 'scripts' );
 
-			$sourcePointDetectionUrl = ResourceLoader::makeCustomURL( $wg->Out, ['wikia.ext.adengine.sp.detection'], 'scripts' );
+			$prebidBidderUrl = AssetsManager::getInstance()->getURL( 'prebid_prod_js', $type );
 
 			$langCode = $title->getPageLanguage()->getCode();
 
@@ -40,8 +35,10 @@ class AdEngine2ContextService {
 			$newWikiVertical = $wikiFactoryHub->getWikiVertical( $wg->CityId );
 			$newWikiVertical = !empty($newWikiVertical['short']) ? $newWikiVertical['short'] : 'error';
 
-			$yavliUrl = ResourceLoader::makeCustomURL( $wg->Out, ['wikia.ext.adengine.yavli'], 'scripts' );
-			return [
+			$yavliKey = AdEngine2Resource::getKey('wikia.ext.adengine.yavli');
+			$yavliUrl = ResourceLoader::makeCustomURL( $wg->Out, [$yavliKey], 'scripts' );
+
+			$context = [
 				'opts' => $this->filterOutEmptyItems( [
 					'adsInContent' => $wg->EnableAdsInContent,
 					'delayBtf' => $wg->AdDriverDelayBelowTheFold,
@@ -50,10 +47,10 @@ class AdEngine2ContextService {
 					'paidAssetDropConfig' => $wg->PaidAssetDropConfig, // @see extensions/wikia/PaidAssetDrop
 					'showAds' => $adPageTypeService->areAdsShowableOnPage(),
 					'trackSlotState' => $wg->AdDriverTrackState,
-					'usePostScribe' => $wg->Request->getBool( 'usepostscribe', false ),
 					'sourcePointDetectionUrl' => $sourcePointDetectionUrl,
-					'sourcePointRecovery' => $wg->EnableUsingSourcePointProxyForCSS,
 					'yavliUrl' => $yavliUrl,
+					'pageFairDetectionUrl' => $pageFairDetectionUrl,
+					'prebidBidderUrl' => $prebidBidderUrl
 				] ),
 				'targeting' => $this->filterOutEmptyItems( [
 					'enableKruxTargeting' => AnalyticsProviderKrux::isEnabled(),
@@ -65,7 +62,6 @@ class AdEngine2ContextService {
 					'pageIsHub' => $wikiaPageType->isWikiaHub(),
 					'pageName' => $title->getPrefixedDBKey(),
 					'pageType' => $pageType,
-					'sevenOneMediaSub2Site' => $wg->AdDriverSevenOneMediaOverrideSub2Site,
 					'skin' => $skinName,
 					'wikiCategory' => $wikiFactoryHub->getCategoryShort( $wg->CityId ),
 					'wikiCustomKeyValues' => $wg->DartCustomKeyValues,
@@ -78,10 +74,7 @@ class AdEngine2ContextService {
 				] ),
 				'providers' => $this->filterOutEmptyItems( [
 					'evolve2' => $wg->AdDriverUseEvolve2,
-					'monetizationService' => $wg->AdDriverUseMonetizationService,
-					'monetizationServiceAds' => $monetizationServiceAds,
-					'sevenOneMedia' => $wg->AdDriverUseSevenOneMedia,
-					'sevenOneMediaCombinedUrl' => $sevenOneMediaCombinedUrl,
+					'rubiconFastlane' => AnalyticsProviderRubiconFastlane::isEnabled(),
 					'taboola' => $wg->AdDriverUseTaboola && $pageType === 'article',
 				] ),
 				'slots' => $this->filterOutEmptyItems( [
@@ -91,6 +84,14 @@ class AdEngine2ContextService {
 				] ),
 				'forcedProvider' => $wg->AdDriverForcedProvider
 			];
+
+			/**
+			 * $wgAdDriverEnableSourcePointRecovery === false; // disabled on wiki
+			 * $wgAdDriverEnableSourcePointRecovery === true; // enabled on wiki
+			 * $wgAdDriverEnableSourcePointRecovery === null; // don't care - depend on $wgAdDriverSourcePointRecoveryCountries
+			 */
+			$context['opts']['sourcePointRecovery'] = $skinName === 'oasis' ? $wg->AdDriverEnableSourcePointRecovery : false;
+			return $context;
 		} );
 	}
 

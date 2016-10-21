@@ -1,11 +1,12 @@
 <?php
-$messages = array();
+/** Internationalization file for /extensions/wikia/UserProfilePageV3/UserProfilePage extension. */
+$messages = [];
 
-$messages['en'] = array(
+$messages['en'] = [
 	'userprofilepage-edit-modal-header' => 'Edit Profile',
 	'userprofilepage-question-caption' => 'Question $1/$2',
 	'userprofilepage-lightbox-interview-cancel' => 'Cancel',
-	'userprofilepage-lightbox-interview-save' => "Save, I'm Done",
+	'userprofilepage-lightbox-interview-save' => 'Save, I\'m Done',
 	'userprofilepage-interview-edit-new-summary' => 'User interview created',
 	'userprofilepage-interview-edit-update-summary' => 'User interview updated',
 	'userprofilepage-interview-save-error' => 'Saving interview failed',
@@ -19,13 +20,13 @@ $messages['en'] = array(
 	'userprofilepage-avatar-error-type' => 'Invalid MIME type. Allowed: $1',
 	'userprofilepage-avatar-error-resolution' => 'Maximum resolution of avatar is 2000x2000',
 	'user-identity-box-edit' => 'Edit',
-	'user-identity-box-wikia-contributor' => 'A Wikia Contributor',
+	'user-identity-box-wikia-contributor' => 'A Fandom User',
 	'user-identity-box-edit-avatar' => 'Edit avatar',
 	'user-identity-box-delete-avatar' => 'Delete avatar',
 	'user-identity-box-avatar-upload-avatar' => 'Upload an avatar',
 	'user-identity-box-avatar-fb-import-avatar' => 'Import my avatar from Facebook',
 	'user-identity-box-avatar-choose-avatar' => 'Choose an avatar',
-	'user-identity-box-avatar-save' => "Save, I'm Done",
+	'user-identity-box-avatar-save' => 'Save, I\'m Done',
 	'user-identity-box-avatar-cancel' => 'Cancel',
 	'user-identity-box-avatar-anon-user-error' => 'You have to log-in before you change anything',
 	'user-identity-box-hide-edits-wikis' => 'Hide All',
@@ -42,6 +43,7 @@ $messages['en'] = array(
 	'user-identity-i-am' => '<span>I am</span> $1',
 	'user-identity-box-edits-since-joining' => 'Edits since joining this wiki<br />$1',
 	'user-identity-box-edits' => '<em>$1</em><span>EDITS</span>',
+	'user-identity-box-discussion-posts' => 'Discussion posts',
 	'user-identity-box-group-blocked' => 'Blocked',
 	'user-identity-box-group-chatmoderator' => 'Chat moderator',
 	'user-identity-box-group-sysop' => 'Admin',
@@ -49,13 +51,13 @@ $messages['en'] = array(
 	'user-identity-box-group-founder' => 'Founder',
 	'user-identity-box-group-staff' => 'Staff',
 	'user-identity-box-group-helper' => 'Helper',
-	'user-identity-box-group-vstf' => 'Volunteer Spam Task Force',
+	'user-identity-box-group-vstf' => 'VSTF',
 	'user-identity-box-group-authenticated' => 'Authenticated',
 	'user-identity-box-group-council' => 'Councilor',
-	'user-identity-box-group-wikiastars' => 'Wikia Star',
 	'user-identity-box-group-voldev' => 'Volunteer Developer',
 	'user-identity-box-group-threadmoderator' => 'Discussions Moderator',
 	'user-identity-box-group-vanguard' => 'Vanguard',
+	'user-identity-box-group-content-moderator' => 'Content Moderator',
 	'user-identity-box-zero-state-location' => 'Location',
 	'user-identity-box-zero-state-birthday' => 'Birthday',
 	'user-identity-box-zero-state-gender' => 'Gender',
@@ -65,29 +67,33 @@ $messages['en'] = array(
 	'user-identity-box-zero-state-fb-page' => 'My Facebook',
 	'user-identity-box-about-me' => 'About Me',
 	'user-identity-box-avatar' => 'Avatar',
-	'user-identity-box-about-name' => "What's your name?",
+	'user-identity-box-about-name' => 'What\'s your name?',
 	'user-identity-box-about-location' => 'Where do you live?',
 	'user-identity-box-about-birthday' => 'When is your birthday?',
-	'user-identity-box-about-occupation' => "What's your occupation?",
+	'user-identity-box-about-occupation' => 'What\'s your occupation?',
 	'user-identity-box-about-gender' => 'What gender are you?',
-	'user-identity-box-about-website' => "What's your personal website?",
-	'user-identity-box-about-tweet' => "What's your Twitter name?",
-	'user-identity-box-about-fb-page' => "What's your Facebook profile link?",
-	'user-identity-box-about-fav-wikis' => "Wikis you've contributed to:",
+	'user-identity-box-about-website' => 'What\'s your personal website?',
+	'user-identity-box-about-tweet' => 'What\'s your Twitter name?',
+	'user-identity-box-about-fb-page' => 'What\'s your Facebook profile link?',
+	'user-identity-box-about-fav-wikis' => 'Wikis you\'ve contributed to:',
 	'user-identity-box-about-fav-wikis-refresh' => 'Refresh',
 	'user-identity-box-join-more-wikis' => 'Join more wikis to see them here!',
 	'user-identity-box-import-from-fb' => 'Import your information from Facebook',
 	'user-identity-box-connect-to-fb' => 'Connect with Facebook',
 	'user-identity-box-unsyc-fb' => 'Unsync with Facebook',
-	'user-identity-box-fb-page' => "What's your Facebook page?",
+	'user-identity-box-fb-page' => 'What\'s your Facebook page?',
 	'user-identity-box-invalid-fb-id-error' => 'Invalid Facebook ID',
 	'user-identity-box-fb-prefs' => 'Feed Preferences',
 	'user-identity-box-avatar-error-nofile' => 'Error: No avatar file found to upload',
 	'user-identity-box-avatar-error-cantwrite' => 'Error: Could not write to temporary directory',
 	'user-identity-box-avatar-error-size' => 'Error: Avatar file is too big (max {{PLURAL:$1|$1|$1}}KB)',
 	'user-identity-box-avatar-error' => 'Error: There was internal error while saving avatar',
+	'user-identity-box-clear' => 'Clear profile contents',
+	'user-identity-box-clear-confirmation' => 'Are you sure you want to clear profile contents',
+	'user-identity-box-clear-success' => 'Successfully deleted user profile contents',
+	'user-identity-box-clear-notarget' => 'The specified user could not be found',
 	'userprofilepage-lightbox-about-me-cancel' => 'Cancel',
-	'userprofilepage-lightbox-about-me-save' => "Save, I'm Done",
+	'userprofilepage-lightbox-about-me-save' => 'Save, I\'m Done',
 	'user-identity-box-saving-error' => 'Saving user data failed - your data should be a plain text',
 	'user-identity-box-saving-internal-error' => 'Saving user data failed - internal error occurred',
 	'userprofilepage-closing-popup-header' => 'Exit Profile Editor',
@@ -108,19 +114,25 @@ $messages['en'] = array(
 	'usermasthead-log-message' => 'added profile information',
 	'usermasthead-log-alt' => 'Logs of user masthead edits',
 	'useravatar-log' => 'User avatar log',
-	'blog-avatar-changed-log' => 'Added or changed avatar',
-	'blog-avatar-removed-log' => "Removed $1's avatars",
-	'blog-avatar-alt' => 'Logs of user avatar additions or removals',
+	'blog-avatar-changed-log' => 'User avatar added or updated',
+	'blog-avatar-removed-log' => 'removed $1\'s avatar',
+	'blog-avatar-alt' => 'Logs of useravatar additions or removals',
 	'user-identity-remove-confirmation' => 'Are you sure you want to remove avatar?',
 	'user-identity-remove-fail' => 'There was some problem when removing the avatar!',
 	'user-identity-avatars-maintenance' => 'Upload and deletion of avatars temporarily disabled during maintenance!',
 	'userprofilepage-edit-modal-error' => 'Unexpected error occurred',
-);
+	'right-council' => 'Can access the Community Council Wiki',
+	'right-voldev' => 'Flags user as "Volunteer Developer" on user profile',
+	'right-authenticated' => 'An account which has been vetted by Wikia, as being a legitimate industry source (for example, a celebrity or a game developer)',
+	'right-removeavatar' => 'Remove a user\'s avatar icon',
+	'right-loggedin' => 'Flags user as being logged in to an account',
+	'right-editprofilev3' => 'Edit other user\'s profile data',
+	'right-deleteprofilev3' => 'Delete user pages',
+	'right-renameprofilev3' => 'Move user pages',
+	'right-clearuserprofile' => 'Clear the contents of an user\'s profile masthead in one click',
+];
 
-/** Message documentation (Message documentation)
- * @author Damian <damian@wikia-inc.com>
- */
-$messages['qqq'] = array(
+$messages['qqq'] = [
 	'userprofilepage-edit-modal-header' => 'Header for edit profile modal on user profile page.',
 	'userprofilepage-question-caption' => 'Currently not in use!
 	Parameters:
@@ -146,7 +158,7 @@ $messages['qqq'] = array(
 * $1 is list of supported mime types',
 	'userprofilepage-avatar-error-resolution' => 'Error message, appears when the user tries to upload too big of an avatar file. This message contains information that the maximum avatar resolution is 2000x2000px',
 	'user-identity-box-edit' => 'Label for link that opens the user profile edit modal.',
-	'user-identity-box-wikia-contributor' => 'Anonymous user\'s "real name". Displayed when we display the user profile page for IP address after "aka" phrase.',
+	'user-identity-box-wikia-contributor' => 'Missing documentation',
 	'user-identity-box-edit-avatar' => 'Label the link which opens the user avatar picture edit modal.',
 	'user-identity-box-delete-avatar' => 'Label for link which deletes the current user avatar picture. After the user clicks this link a confirmation message is displayed.',
 	'user-identity-box-avatar-upload-avatar' => 'Label for form file input on the avatar picture edit modal.',
@@ -155,15 +167,15 @@ $messages['qqq'] = array(
 	'user-identity-box-avatar-save' => 'Label for save button on the avatar picture edit modal.',
 	'user-identity-box-avatar-cancel' => 'Label for cancel button on the avatar picture edit modal. Clicking on this button either closes the modal or displays a confirmation message if any changes were made.',
 	'user-identity-box-avatar-anon-user-error' => 'Error message that is displayed when an anon user tries to change their avatar. It informs the user they need to login before changing their avatar.',
-	'user-identity-box-hide-edits-wikis' => "Label for checkbox on the user profile edit modal. When this field is checked, the user's favorite wikis are not displayed on their user profile page.",
+	'user-identity-box-hide-edits-wikis' => 'Label for checkbox on the user profile edit modal. When this field is checked, the user\'s favorite wikis are not displayed on their user profile page.',
 	'user-identity-box-banned-from-chat' => 'Label for tag displayed on the user profile page informing the user they are banned from using Wikia chat.',
-	'user-identity-box-aka-label' => "Message that is displayed below the user name on the user profile page that shows the user's real name. In English there is 'aka - also known as' in an HTML span tag (it's required for styling).
+	'user-identity-box-aka-label' => 'Message that is displayed below the user name on the user profile page that shows the user\'s real name. In English there is \'aka - also known as\' in an HTML span tag (it\'s required for styling).
 	Parameters:
-* $1 is the user's Real Name field entry, e.g. TOR aka Lucas Garczewski",
-	'user-identity-box-my-twitter' => "Label for link to user's twitter account. Displayed on the user profile page.",
-	'user-identity-box-my-website' => "Label for link to user's website. Displayed on the user profile page.",
-	'user-identity-box-my-fb-page' => "Label for link to user's facebook profile. Displayed on the user profile page.",
-	'user-identity-box-fav-wikis' => "Header for user's favorite wikis section on the user profile page.",
+* $1 is the user\'s Real Name field entry, e.g. TOR aka Lucas Garczewski',
+	'user-identity-box-my-twitter' => 'Label for link to user\'s twitter account. Displayed on the user profile page.',
+	'user-identity-box-my-website' => 'Label for link to user\'s website. Displayed on the user profile page.',
+	'user-identity-box-my-fb-page' => 'Label for link to user\'s facebook profile. Displayed on the user profile page.',
+	'user-identity-box-fav-wikis' => 'Header for user\'s favorite wikis section on the user profile page.',
 	'user-identity-box-location' => 'Message that tells where the user lives, shown on user profile page. Requires HTML span tag for styling UI.
 	Parameters:
 * $1 is a location, input by user. Usually a town or country.',
@@ -174,9 +186,9 @@ $messages['qqq'] = array(
 	'user-identity-box-was-born-in' => 'Message that tells where the user was born, shown on user profile page. Requires HTML span tag for styling UI
 	Parameters:
 * $1 is a user input, usually a town or country.',
-	'user-identity-box-occupation' => "Message that tells what is the user's occupation, shown on user profile page. Requires HTML span tag for styling UI
+	'user-identity-box-occupation' => 'Message that tells what is the user\'s occupation, shown on user profile page. Requires HTML span tag for styling UI
 	Parameters:
-* $1 is a user input, user occupation.",
+* $1 is a user input, user occupation.',
 	'user-identity-i-am' => 'Message that tells what gender the user identifies with, shown on user profile page. Requires HTML span tag for styling UI
 	Parameters:
  is free-form user input, usually contains gender but sometimes a more general statement, such as "a rockstar". This is by design.',
@@ -186,6 +198,7 @@ Parameters:
 	'user-identity-box-edits' => 'This message is used to show how many edits the user has made already - visible on user profile page. HTML tags are used for styling UI.
 Parameters:
 * $1 is the number of edits',
+	'user-identity-box-discussion-posts' => 'This message is used to show how many discussion posts the user has already made.',
 	'user-identity-box-group-blocked' => 'Group name shown on user profile page next to user login for users who are "Blocked".',
 	'user-identity-box-group-chatmoderator' => 'Group name shown on user profile page next to user login for users who are "Chat moderator".',
 	'user-identity-box-group-sysop' => 'Group name shown on user profile page next to user login for users who are "Admin".',
@@ -196,17 +209,17 @@ Parameters:
 	'user-identity-box-group-vstf' => 'Group name shown on user profile page next to user login for users who are "Volunteer Spam Task Force".',
 	'user-identity-box-group-authenticated' => 'Group name shown on user profile page next to user login for users who are "Authenticated".',
 	'user-identity-box-group-council' => 'Group name shown on user profile page next to user login for users who are "Councilor".',
-	'user-identity-box-group-wikiastars' => 'Group name shown on user profile page next to user login for users who are "Wikia Star".',
 	'user-identity-box-group-voldev' => 'Group name shown on user profile page next to user login for users who are "Volunteer Developer".',
 	'user-identity-box-group-threadmoderator' => 'Group name shown on user profile page next to user login for users who are "Discussions Moderator".',
+	'user-identity-box-group-content-moderator' => 'Group name shown on user profile page next to user login for users who are "Content Moderator".',
 	'user-identity-box-group-vanguard' => 'Group name shown on user profile page next to user login for users who are "Vanguard".',
-	'user-identity-box-zero-state-location' => "Placeholder message on user profile page for user location when user didn't provide it.",
-	'user-identity-box-zero-state-birthday' => "Placeholder message on user profile page for user birthday when user didn't provide it.",
-	'user-identity-box-zero-state-gender' => "Placeholder message on user profile page for user gender when user didn't provide it.",
-	'user-identity-box-zero-state-occupation' => "Placeholder message on user profile page for user occupation when user didn't provide it.",
-	'user-identity-box-zero-state-twitter' => "Placeholder message on user profile page for user twitter account when user didn't provide it.",
-	'user-identity-box-zero-state-website' => "Placeholder message on user profile page for user website when user didn't provide it.",
-	'user-identity-box-zero-state-fb-page' => "Placeholder message on user profile page for user facebook profile when user didn't provide it.",
+	'user-identity-box-zero-state-location' => 'Placeholder message on user profile page for user location when user didn\'t provide it.',
+	'user-identity-box-zero-state-birthday' => 'Placeholder message on user profile page for user birthday when user didn\'t provide it.',
+	'user-identity-box-zero-state-gender' => 'Placeholder message on user profile page for user gender when user didn\'t provide it.',
+	'user-identity-box-zero-state-occupation' => 'Placeholder message on user profile page for user occupation when user didn\'t provide it.',
+	'user-identity-box-zero-state-twitter' => 'Placeholder message on user profile page for user twitter account when user didn\'t provide it.',
+	'user-identity-box-zero-state-website' => 'Placeholder message on user profile page for user website when user didn\'t provide it.',
+	'user-identity-box-zero-state-fb-page' => 'Placeholder message on user profile page for user facebook profile when user didn\'t provide it.',
 	'user-identity-box-about-me' => 'Label for tab where user can edit information about their account on user profile page edit modal.',
 	'user-identity-box-avatar' => 'Label for tab where user can edit avatar picture for their account on user profile page edit modal.',
 	'user-identity-box-about-name' => 'Label for user real name form field on user profile edit modal.',
@@ -217,7 +230,7 @@ Parameters:
 	'user-identity-box-about-website' => 'Label for user website form field on user profile edit modal.',
 	'user-identity-box-about-tweet' => 'Label for user twitter account name form field on user profile edit modal.',
 	'user-identity-box-about-fb-page' => 'Label for user facebook profile name form field on user profile edit modal.',
-	'user-identity-box-about-fav-wikis' => "Label for form field on user profile edit modal where there are pre-populated names of wikis that the user already contributed. The user can hide wiki names that they don't want to be displayed on their user profile page",
+	'user-identity-box-about-fav-wikis' => 'Label for form field on user profile edit modal where there are pre-populated names of wikis that the user already contributed. The user can hide wiki names that they don\'t want to be displayed on their user profile page',
 	'user-identity-box-about-fav-wikis-refresh' => 'Currently not in use!',
 	'user-identity-box-join-more-wikis' => 'Placeholder message on user profile edit modal in favorite wikis form field that encourages the user to join more wikis.',
 	'user-identity-box-import-from-fb' => 'Currently not in use!',
@@ -261,21 +274,29 @@ Parameters:
 	'blog-avatar-alt' => 'Message that describe what the avatar log page is. This is the place where all avatar operations for all users are listed.',
 	'user-identity-remove-confirmation' => 'Confirmation message displayed after user clicks remove avatar link on user profile page.',
 	'user-identity-remove-fail' => 'Error message, general error message during avatar picture removal.',
-	'user-identity-avatars-maintenance' => "Info message that avatars are currently under maintenance and can't be modified right now.",
+	'user-identity-avatars-maintenance' => 'Info message that avatars are currently under maintenance and can\'t be modified right now.',
 	'userprofilepage-edit-modal-error' => 'General error message for user profile page.',
-);
+	'right-council' => '{{doc-right}}',
+	'right-voldev' => '{{doc-right}}',
+	'right-authenticated' => '{{doc-right}}',
+	'right-removeavatar' => '{{doc-right}}',
+	'right-loggedin' => '{{doc-right}}',
+	'right-editprofilev3' => '{{doc-right}}',
+	'right-deleteprofilev3' => '{{doc-right}}',
+	'right-renameprofilev3' => '{{doc-right}}',
+	'right-clearuserprofile' => '{{doc-right}}',
+	'user-identity-box-clear' => 'Label for link which clears user profile page contents in one click',
+	'user-identity-box-clear-confirmation' => 'Confirmation message displayed after user clicks clear profile contents link on user profile page',
+	'user-identity-box-clear-success' => 'Success confirmation message shown as banner notification when the contents of the user profile page were successfully cleared',
+	'user-identity-box-clear-notarget' => 'Error message shown as banner notification when the contents of the user profile page could not be cleared because the target was invalid',
+];
 
-/** Arabic (العربية)
- */
-$messages['ar'] = array(
+$messages['ar'] = [
 	'useravatar-log' => 'سجل تغييرات الصور الرمزية',
 	'blog-avatar-changed-log' => 'أضاف أو غير الصورة الرمزية',
-);
+];
 
-/** Azerbaijani (azərbaycanca)
- * @author AZISS
- */
-$messages['az'] = array(
+$messages['az'] = [
 	'userprofilepage-lightbox-interview-cancel' => 'İmtina',
 	'user-identity-box-edit' => 'Redaktə et',
 	'user-identity-box-avatar-choose-avatar' => 'Avatar seç',
@@ -304,12 +325,9 @@ $messages['az'] = array(
 	'userprofilepage-closing-popup-cancel' => 'İmtina',
 	'user-action-menu-delete' => 'Sil',
 	'user-action-menu-history' => 'Tarixçə',
-);
+];
 
-/** Bulgarian (български)
- * @author DCLXVI
- */
-$messages['bg'] = array(
+$messages['bg'] = [
 	'userprofilepage-edit-modal-header' => 'Редактиране на профила',
 	'userprofilepage-question-caption' => 'Въпрос $1/$2',
 	'userprofilepage-lightbox-interview-cancel' => 'Отказване',
@@ -329,14 +347,9 @@ $messages['bg'] = array(
 	'user-action-menu-rename' => 'Преименуване',
 	'user-action-menu-delete' => 'Изтриване',
 	'user-action-menu-history' => 'История',
-);
+];
 
-/** Breton (brezhoneg)
- * @author Fohanno
- * @author Fulup
- * @author Y-M D
- */
-$messages['br'] = array(
+$messages['br'] = [
 	'userprofilepage-lightbox-interview-cancel' => 'Nullañ',
 	'userprofilepage-add-question' => 'Ouzhpennañ ur goulenn nevez',
 	'user-identity-box-edit' => 'Aozañ',
@@ -344,11 +357,11 @@ $messages['br'] = array(
 	'user-identity-box-group-blocked' => 'Stanket',
 	'user-identity-box-zero-state-birthday' => 'Deiz-ha-bloaz',
 	'user-identity-box-zero-state-twitter' => 'Ma Z/Twitter',
-	'user-identity-box-zero-state-website' => "Ma lec'hienn internet",
+	'user-identity-box-zero-state-website' => 'Ma lec\'hienn internet',
 	'user-identity-box-zero-state-fb-page' => 'Ma Facebook',
 	'user-identity-box-about-me' => 'Diwar ma fenn',
 	'user-identity-box-avatar' => 'Avatar',
-	'user-identity-box-about-gender' => "Paotr pe blac'h oc'h ?",
+	'user-identity-box-about-gender' => 'Paotr pe blac\'h oc\'h ?',
 	'user-identity-box-about-fav-wikis-refresh' => 'Freskaat',
 	'userprofilepage-lightbox-about-me-cancel' => 'Nullañ',
 	'userprofilepage-lightbox-about-me-save' => 'Enrollañ, poent echuiñ',
@@ -364,40 +377,35 @@ $messages['br'] = array(
 	'blog-avatar-changed-log' => 'en deus ouzhpennet pe kemmet e avatar',
 	'blog-avatar-removed-log' => 'En deus dilamet avatarioù $1',
 	'blog-avatar-alt' => 'Marilh ouzhpennadennoù pe dilammadennoù avataroù an implijerien',
-);
+];
 
-/** Catalan (català)
- * @author BroOk
- * @author CuBaN VeRcEttI
- * @author Gemmaa
- */
-$messages['ca'] = array(
+$messages['ca'] = [
 	'userprofilepage-edit-modal-header' => 'Edita el Perfil',
 	'userprofilepage-question-caption' => 'Pregunta  $1 /$2',
 	'userprofilepage-lightbox-interview-cancel' => 'Cancel·la',
 	'userprofilepage-lightbox-interview-save' => 'Desa, he acabat',
-	'userprofilepage-interview-edit-new-summary' => "Entrevista de l'usuari creat",
-	'userprofilepage-interview-edit-update-summary' => "Entrevista de l'usuari creat",
-	'userprofilepage-interview-save-error' => "Entrevista d'estalvi ha fallat",
-	'userprofilepage-interview-save-internal-error' => "Entrevista d'estalvi ha fallat - s'ha produït l'error intern",
+	'userprofilepage-interview-edit-new-summary' => 'Entrevista de l\'usuari creat',
+	'userprofilepage-interview-edit-update-summary' => 'Entrevista de l\'usuari creat',
+	'userprofilepage-interview-save-error' => 'Entrevista d\'estalvi ha fallat',
+	'userprofilepage-interview-save-internal-error' => 'Entrevista d\'estalvi ha fallat - s\'ha produït l\'error intern',
 	'userprofilepage-answers-stats-title' => 'Estadístiques de la entrevista',
 	'userprofilepage-add-question' => 'Afegir nova pregunta',
 	'userprofilepage-question-save' => 'Guardar pregunta',
 	'userprofilepage-question-list-title' => '$1/ $2  Preguntes',
-	'userprofilepage-interview-section-title' => "Entrevista de l'usuari",
-	'userprofilepage-invalid-user' => "L'usuari no és vàlid! Vostè no són registrat dins o no té drets per continuar",
+	'userprofilepage-interview-section-title' => 'Entrevista de l\'usuari',
+	'userprofilepage-invalid-user' => 'L\'usuari no és vàlid! Vostè no són registrat dins o no té drets per continuar',
 	'userprofilepage-avatar-error-type' => 'Tipus MIME no vàlid. Permès:$1',
 	'userprofilepage-avatar-error-resolution' => 'Màxima resolució de avatar és 2000 x 2000',
 	'user-identity-box-edit' => 'Edita',
 	'user-identity-box-wikia-contributor' => 'Un Wikia Contributor',
-	'user-identity-box-edit-avatar' => "Edita l'avatar",
-	'user-identity-box-delete-avatar' => "Esborra l'avatar",
+	'user-identity-box-edit-avatar' => 'Edita l\'avatar',
+	'user-identity-box-delete-avatar' => 'Esborra l\'avatar',
 	'user-identity-box-avatar-upload-avatar' => 'Puja un avatar',
 	'user-identity-box-avatar-fb-import-avatar' => 'Importa el meu avatar del Facebook',
 	'user-identity-box-avatar-choose-avatar' => 'Tria un avatar',
 	'user-identity-box-avatar-save' => 'Desa, he acabat',
 	'user-identity-box-avatar-cancel' => 'Cancel·la',
-	'user-identity-box-avatar-anon-user-error' => "Has de d'iniciar sessió abans de canviar res",
+	'user-identity-box-avatar-anon-user-error' => 'Has de d\'iniciar sessió abans de canviar res',
 	'user-identity-box-hide-edits-wikis' => 'Amaga-ho tot',
 	'user-identity-box-banned-from-chat' => 'Bannejat del xat',
 	'user-identity-box-aka-label' => '<span>conegut com</span> $1',
@@ -440,21 +448,21 @@ $messages['ca'] = array(
 	'user-identity-box-about-tweet' => 'Quin és el teu nom al Twitter?',
 	'user-identity-box-about-fav-wikis' => 'Wikis en que has contribuït:',
 	'user-identity-box-about-fav-wikis-refresh' => 'Refresca',
-	'user-identity-box-join-more-wikis' => "Uneix-te a més wikis per veure'ls aquí!",
+	'user-identity-box-join-more-wikis' => 'Uneix-te a més wikis per veure\'ls aquí!',
 	'user-identity-box-import-from-fb' => 'Importa informació del Facebook',
 	'user-identity-box-connect-to-fb' => 'Connecta amb Facebook',
 	'user-identity-box-unsyc-fb' => 'Unsync amb Facebook',
 	'user-identity-box-fb-page' => 'Quina és la teva pàgina al Facebook?',
 	'user-identity-box-invalid-fb-id-error' => 'Facebook ID no vàlid',
-	'user-identity-box-fb-prefs' => "Preferències d'usuari",
+	'user-identity-box-fb-prefs' => 'Preferències d\'usuari',
 	'user-identity-box-avatar-error-nofile' => 'Error: No hi ha avatar arxiu trobat per carregar',
-	'user-identity-box-avatar-error-cantwrite' => "Error: No s'ha pogut escriure al directori temporal",
+	'user-identity-box-avatar-error-cantwrite' => 'Error: No s\'ha pogut escriure al directori temporal',
 	'user-identity-box-avatar-error-size' => 'Error: Avatar fitxer és massa gran (max  $1 KB)',
 	'user-identity-box-avatar-error' => 'Error: Hi va haver error intern mentre es desava avatar',
 	'userprofilepage-lightbox-about-me-cancel' => 'Cancel·la',
 	'userprofilepage-lightbox-about-me-save' => 'Desa, he acabat',
-	'user-identity-box-saving-error' => "Desar dades de l'usuari ha fallat - les seves dades hauria de ser un text sense format",
-	'user-identity-box-saving-internal-error' => "Desar dades de l'usuari ha fallat - s'ha produït l'error intern",
+	'user-identity-box-saving-error' => 'Desar dades de l\'usuari ha fallat - les seves dades hauria de ser un text sense format',
+	'user-identity-box-saving-internal-error' => 'Desar dades de l\'usuari ha fallat - s\'ha produït l\'error intern',
 	'userprofilepage-closing-popup-header' => 'Editor de perfil de sortida',
 	'userprofilepage-closing-popup-info' => 'Allà són canvis no desats en el seu perfil. Què voleu fer?',
 	'userprofilepage-closing-popup-discard-and-quit' => 'Descartar els canvis i sortir',
@@ -469,22 +477,16 @@ $messages['ca'] = array(
 	'user-action-menu-rename' => 'Reanomena',
 	'user-action-menu-delete' => 'Elimina',
 	'user-action-menu-history' => 'Historial',
-	'usermasthead-log' => "Capçalera de l'usuari",
+	'usermasthead-log' => 'Capçalera de l\'usuari',
 	'usermasthead-log-message' => 'informació del perfil afegit',
-	'usermasthead-log-alt' => "Registres d'edicions de capçalera de l'usuari",
-	'useravatar-log' => "Registre d'avatars d'usuari",
+	'usermasthead-log-alt' => 'Registres d\'edicions de capçalera de l\'usuari',
+	'useravatar-log' => 'Registre d\'avatars d\'usuari',
 	'blog-avatar-changed-log' => 'Avatar afegit o canviat',
-	'blog-avatar-removed-log' => "Esborrats avatars de l'usuari $1",
-	'blog-avatar-alt' => "Registre d'addicions o esborrats d'avatars d'usuari",
-);
+	'blog-avatar-removed-log' => 'Esborrats avatars de l\'usuari $1',
+	'blog-avatar-alt' => 'Registre d\'addicions o esborrats d\'avatars d\'usuari',
+];
 
-/** Czech (česky)
- * @author Chmee2
- * @author Darth Daron
- * @author Dontlietome7
- * @author Vks
- */
-$messages['cs'] = array(
+$messages['cs'] = [
 	'userprofilepage-edit-modal-header' => 'Upravit profil',
 	'userprofilepage-question-caption' => 'Otázka $1/$2',
 	'userprofilepage-lightbox-interview-cancel' => 'Zrušit',
@@ -591,19 +593,11 @@ $messages['cs'] = array(
 	'blog-avatar-alt' => 'Protokoly přidáni nebo odstranění uživatelova avataru',
 	'user-identity-remove-confirmation' => 'Opravdu chcete odstranit avatar?',
 	'user-identity-remove-fail' => 'Došlo k problému při odebírání avataru!',
-);
+];
 
-/** German (Deutsch)
- * @author Alphakilo
- * @author Geitost
- * @author Metalhead64
- * @author PtM
- * @author SVG
- * @author Sebastian Wallroth
- */
-$messages['de'] = array(
+$messages['de'] = [
 	'userprofilepage-edit-modal-header' => 'Profil bearbeiten',
-	'userprofilepage-question-caption' => 'Frage  $1/$2',
+	'userprofilepage-question-caption' => 'Frage $1/$2',
 	'userprofilepage-lightbox-interview-cancel' => 'Abbrechen',
 	'userprofilepage-lightbox-interview-save' => 'Speichern, ich bin fertig',
 	'userprofilepage-interview-edit-new-summary' => 'Nutzerbefragung erstellt',
@@ -619,11 +613,11 @@ $messages['de'] = array(
 	'userprofilepage-avatar-error-type' => 'Ungültiger MIME-Typ. Zulässig: $1',
 	'userprofilepage-avatar-error-resolution' => 'Die maximale Auflösung eines Avatars ist 2000 x 2000.',
 	'user-identity-box-edit' => 'Bearbeiten',
-	'user-identity-box-wikia-contributor' => 'Ein Wikia-Nutzer',
+	'user-identity-box-wikia-contributor' => 'Ein Fandom-Benutzer',
 	'user-identity-box-edit-avatar' => 'Avatar bearbeiten',
 	'user-identity-box-delete-avatar' => 'Avatar löschen',
 	'user-identity-box-avatar-upload-avatar' => 'Avatar hochladen',
-	'user-identity-box-avatar-fb-import-avatar' => 'Avatar von Facebook importieren',
+	'user-identity-box-avatar-fb-import-avatar' => 'Meinen Avatar von Facebook importieren',
 	'user-identity-box-avatar-choose-avatar' => 'Wähle einen Avatar',
 	'user-identity-box-avatar-save' => 'Speichern',
 	'user-identity-box-avatar-cancel' => 'Abbrechen',
@@ -634,8 +628,8 @@ $messages['de'] = array(
 	'user-identity-box-my-twitter' => 'Twitter',
 	'user-identity-box-my-website' => 'Meine Website',
 	'user-identity-box-my-fb-page' => 'Facebook',
-	'user-identity-box-fav-wikis' => 'Bevorzugte Wikis',
-	'user-identity-box-location' => '<span>Ich lebe in</span> $1',
+	'user-identity-box-fav-wikis' => 'Beliebteste Wikis',
+	'user-identity-box-location' => '<span>Ich wohne in</span> $1',
 	'user-identity-box-was-born-on' => '<span>Ich bin geboren am</span> $2. $1',
 	'user-identity-box-was-born-in' => '<span>Geboren in</span> $1',
 	'user-identity-box-occupation' => '<span>Ich arbeite als</span> $1',
@@ -648,21 +642,21 @@ $messages['de'] = array(
 	'user-identity-box-group-bureaucrat' => 'Bürokrat',
 	'user-identity-box-group-founder' => 'Gründer',
 	'user-identity-box-group-staff' => 'Wikia-Mitarbeiter',
-	'user-identity-box-group-helper' => 'Helfer',
+	'user-identity-box-group-helper' => 'Wikia-Helfer',
 	'user-identity-box-group-vstf' => 'VSTF',
-	'user-identity-box-group-authenticated' => 'Bestätigt',
+	'user-identity-box-group-authenticated' => 'Offiziell',
 	'user-identity-box-group-council' => 'Council',
 	'user-identity-box-zero-state-location' => 'Ort',
 	'user-identity-box-zero-state-birthday' => 'Geburtstag',
 	'user-identity-box-zero-state-gender' => 'Geschlecht',
-	'user-identity-box-zero-state-occupation' => 'Beruf',
+	'user-identity-box-zero-state-occupation' => 'Tätigkeit',
 	'user-identity-box-zero-state-twitter' => 'Twitter',
 	'user-identity-box-zero-state-website' => 'Meine Website',
 	'user-identity-box-zero-state-fb-page' => 'Facebook',
 	'user-identity-box-about-me' => 'Über mich',
 	'user-identity-box-avatar' => 'Avatar',
 	'user-identity-box-about-name' => 'Wie lautet dein Name?',
-	'user-identity-box-about-location' => 'An welchem Ort lebst du?',
+	'user-identity-box-about-location' => 'In welcher Stadt wohnst du?',
 	'user-identity-box-about-birthday' => 'Wann hast du Geburtstag?',
 	'user-identity-box-about-occupation' => 'Was ist dein Beruf?',
 	'user-identity-box-about-gender' => 'Bist du männlich oder weiblich?',
@@ -670,7 +664,7 @@ $messages['de'] = array(
 	'user-identity-box-about-tweet' => 'Bist du bei Twitter?',
 	'user-identity-box-about-fav-wikis' => 'Wikis, die du bearbeitet hast:',
 	'user-identity-box-about-fav-wikis-refresh' => 'Aktualisieren',
-	'user-identity-box-join-more-wikis' => 'Tritt weiteren Wikias bei, um sie hier zu sehen!',
+	'user-identity-box-join-more-wikis' => 'Tritt mehr Wikis bei um sie hier zu sehen!',
 	'user-identity-box-import-from-fb' => 'Importiere deine Daten von Facebook',
 	'user-identity-box-connect-to-fb' => 'Mit Facebook verknüpfen',
 	'user-identity-box-unsyc-fb' => 'Facebook-Verknüpfung lösen',
@@ -678,9 +672,9 @@ $messages['de'] = array(
 	'user-identity-box-invalid-fb-id-error' => 'Ungültige Facebook-ID',
 	'user-identity-box-fb-prefs' => 'Feed-Einstellungen',
 	'user-identity-box-avatar-error-nofile' => 'Fehler: Kein Avatar-Bild angegeben',
-	'user-identity-box-avatar-error-cantwrite' => 'Fehler: Konnte nicht in das temporäre Verzeichnis schreiben',
-	'user-identity-box-avatar-error-size' => 'Fehler: Avatar-Datei ist zu groß (maximal {{PLURAL:$1|$1|$1}} KB).',
-	'user-identity-box-avatar-error' => 'Fehler: Interner Fehler beim Speichern des Avatars',
+	'user-identity-box-avatar-error-cantwrite' => 'Fehler: Konnte nicht in temporäres Verzeichnis schreiben',
+	'user-identity-box-avatar-error-size' => 'Fehler: Avatar ist zu groß ($1)',
+	'user-identity-box-avatar-error' => 'Fehler: Es gab einen internen Fehler beim Speichern',
 	'userprofilepage-lightbox-about-me-cancel' => 'Abbrechen',
 	'userprofilepage-lightbox-about-me-save' => 'Speichern',
 	'user-identity-box-saving-error' => 'Konnte Daten nicht speichern - bitte gib nur normalen Text ein.',
@@ -692,15 +686,15 @@ $messages['de'] = array(
 	'userprofilepage-closing-popup-cancel' => 'Abbrechen',
 	'user-action-menu-edit' => 'Bearbeiten',
 	'user-action-menu-edit-profile' => 'Profil bearbeiten',
-	'user-action-menu-leave-message' => 'Nachricht hinterlassen',
+	'user-action-menu-leave-message' => 'Kommentieren',
 	'user-action-menu-view-source' => 'Quelltext anzeigen',
 	'user-action-menu-protect' => 'Schützen',
 	'user-action-menu-unprotect' => 'Freigeben',
-	'user-action-menu-rename' => 'Umbenennen',
+	'user-action-menu-rename' => 'Verschieben',
 	'user-action-menu-delete' => 'Löschen',
-	'user-action-menu-history' => 'Verlauf',
+	'user-action-menu-history' => 'Versionen',
 	'usermasthead-log' => 'Nutzerprofil',
-	'usermasthead-log-message' => 'änderte Profil-Infos',
+	'usermasthead-log-message' => 'Zusätzliche Informationen zum Profil',
 	'usermasthead-log-alt' => 'Logbücher für Nutzerprofil-Änderungen',
 	'useravatar-log' => 'Avatar-Logbuch',
 	'blog-avatar-changed-log' => 'hat einen Avatar hinzugefügt oder geändert',
@@ -708,26 +702,21 @@ $messages['de'] = array(
 	'blog-avatar-alt' => 'Dies ist das Logbuch der Hinzufügungen und Entfernungen von Avataren.',
 	'user-identity-remove-confirmation' => 'Bist du sicher, dass du den Avatar entfernen möchtest?',
 	'user-identity-remove-fail' => 'Es gab ein Problem beim Entfernen des Avatars!',
-	'user-identity-box-group-wikiastars' => 'Wikia Star',
 	'user-identity-box-group-voldev' => 'Volunteer Developer',
 	'user-identity-box-group-threadmoderator' => 'Moderator',
 	'user-identity-box-about-fb-page' => 'Wie lautet der Link zu deinem Facebook-Profil?',
-	'user-identity-avatars-maintenance' => 'Das Hochladen und Löschen von Avataren ist aus Wartungsgründen momentan nicht möglich!',
+	'user-identity-avatars-maintenance' => 'Das Hochladen und Löschen von Avataren ist aus Wartungsgründen momentan nicht möglich.',
 	'userprofilepage-edit-modal-error' => 'Ein unerwarteter Fehler ist aufgetreten.',
-);
+	'user-identity-box-group-adminmentor' => 'Adminmentor',
+	'user-identity-box-discussion-posts' => 'Diskussionsbeiträge',
+	'user-identity-box-group-vanguard' => 'Vanguard',
+];
 
-/** Swiss High German (Schweizer Hochdeutsch)
- * @author Geitost
- */
-$messages['de-ch'] = array(
+$messages['de-ch'] = [
 	'user-identity-box-avatar-error-size' => 'Fehler: Avatar-Datei ist zu gross (maximal {{PLURAL:$1|$1|$1}} KB).',
-);
+];
 
-/** Zazaki (Zazaki)
- * @author Erdemaslancan
- * @author Mirzali
- */
-$messages['diq'] = array(
+$messages['diq'] = [
 	'userprofilepage-edit-modal-header' => 'Profili bıvurnê',
 	'userprofilepage-question-caption' => 'Pers $1/$2',
 	'userprofilepage-lightbox-interview-cancel' => 'Bıterkne',
@@ -738,9 +727,9 @@ $messages['diq'] = array(
 	'user-identity-box-avatar-cancel' => 'Bıterkne',
 	'user-identity-box-hide-edits-wikis' => 'Pêron bınımne',
 	'user-identity-box-aka-label' => '<span>aka</span> $1',
-	'user-identity-box-my-twitter' => "Twitter'ê me",
+	'user-identity-box-my-twitter' => 'Twitter\'ê me',
 	'user-identity-box-my-website' => 'Websitey me',
-	'user-identity-box-my-fb-page' => "Facebook'ê me",
+	'user-identity-box-my-fb-page' => 'Facebook\'ê me',
 	'user-identity-box-fav-wikis' => 'Favori Wikiy me',
 	'user-identity-box-group-blocked' => 'kilit biy',
 	'user-identity-box-group-sysop' => 'Admin',
@@ -753,7 +742,7 @@ $messages['diq'] = array(
 	'user-identity-box-zero-state-birthday' => 'Roc biyayen',
 	'user-identity-box-zero-state-gender' => 'Cınsiyet',
 	'user-identity-box-zero-state-occupation' => 'Gurwayen',
-	'user-identity-box-zero-state-twitter' => "Twitter'ê me",
+	'user-identity-box-zero-state-twitter' => 'Twitter\'ê me',
 	'user-identity-box-zero-state-website' => 'Websitey me',
 	'user-identity-box-about-me' => 'Heqtê me',
 	'user-identity-box-avatar' => 'Avatar',
@@ -767,17 +756,9 @@ $messages['diq'] = array(
 	'user-action-menu-rename' => 'Zewmi name cıdı',
 	'user-action-menu-delete' => 'Besterne',
 	'user-action-menu-history' => 'Tarix',
-);
+];
 
-/** Spanish (español)
- * @author Armando-Martin
- * @author Benfutbol10
- * @author Ciencia Al Poder
- * @author CuBaN VeRcEttI
- * @author Mor
- * @author VegaDark
- */
-$messages['es'] = array(
+$messages['es'] = [
 	'userprofilepage-edit-modal-header' => 'Editar perfil',
 	'userprofilepage-question-caption' => 'Pregunta $1 de $2',
 	'userprofilepage-lightbox-interview-cancel' => 'Cancelar',
@@ -787,36 +768,36 @@ $messages['es'] = array(
 	'userprofilepage-interview-save-error' => 'Error al guardar la entrevista',
 	'userprofilepage-interview-save-internal-error' => 'Error al guardar la entrevista, se produjo un error interno',
 	'userprofilepage-answers-stats-title' => 'Estadísticas de la entrevista',
-	'userprofilepage-add-question' => 'Añadir una pregunta nueva',
+	'userprofilepage-add-question' => 'Añade una pregunta',
 	'userprofilepage-question-save' => 'Guardar pregunta',
 	'userprofilepage-question-list-title' => '$1 de $2 preguntas',
 	'userprofilepage-interview-section-title' => 'Entrevista de usuario',
 	'userprofilepage-invalid-user' => '¡Usuario no válido! No has iniciado sesión o no tienes permisos para continuar',
-	'userprofilepage-avatar-error-type' => 'Tipo MIME inválido. Permitidos: $1',
-	'userprofilepage-avatar-error-resolution' => 'La resolución máxima del avatar es 2000x2000',
+	'userprofilepage-avatar-error-type' => 'Tipo MIME inválido. Permitido: $1',
+	'userprofilepage-avatar-error-resolution' => 'La máxima resolución del avatar es 2000x2000',
 	'user-identity-box-edit' => 'Editar',
-	'user-identity-box-wikia-contributor' => 'Un usuario de Wikia',
+	'user-identity-box-wikia-contributor' => 'Un usuario de Fandom',
 	'user-identity-box-edit-avatar' => 'Editar avatar',
-	'user-identity-box-delete-avatar' => 'Eliminar avatar',
-	'user-identity-box-avatar-upload-avatar' => 'Subir un nuevo avatar',
-	'user-identity-box-avatar-fb-import-avatar' => 'Importar mi avatar de Facebook',
+	'user-identity-box-delete-avatar' => 'Borrar avatar',
+	'user-identity-box-avatar-upload-avatar' => 'Subir un avatar',
+	'user-identity-box-avatar-fb-import-avatar' => 'Importar mi avatar desde Facebook',
 	'user-identity-box-avatar-choose-avatar' => 'Elige un avatar',
-	'user-identity-box-avatar-save' => 'Hecho, he terminado',
+	'user-identity-box-avatar-save' => 'Guardar, he terminado',
 	'user-identity-box-avatar-cancel' => 'Cancelar',
-	'user-identity-box-avatar-anon-user-error' => 'Tienes que iniciar sesión antes de modificar algo',
+	'user-identity-box-avatar-anon-user-error' => 'Tienes que identificarte antes para poder hacer cambios',
 	'user-identity-box-hide-edits-wikis' => 'Ocultar todo',
 	'user-identity-box-banned-from-chat' => 'Expulsado del chat',
 	'user-identity-box-aka-label' => '<span>conocido como</span> $1',
 	'user-identity-box-my-twitter' => 'Mi Twitter',
 	'user-identity-box-my-website' => 'Mi web',
 	'user-identity-box-my-fb-page' => 'Mi Facebook',
-	'user-identity-box-fav-wikis' => 'Mis wikias favoritas',
+	'user-identity-box-fav-wikis' => 'Mis wikis favoritos',
 	'user-identity-box-location' => '<span>Vivo en</span> $1',
 	'user-identity-box-was-born-on' => '<span>Nací el</span> $2 de $1',
 	'user-identity-box-was-born-in' => '<span>Nací en</span> $1',
 	'user-identity-box-occupation' => '<span>Mi ocupación es</span> $1',
 	'user-identity-i-am' => '<span>Soy</span> $1',
-	'user-identity-box-edits-since-joining' => 'Ediciones desde que empezó a editar<br />$1',
+	'user-identity-box-edits-since-joining' => 'EDICIONES DESDE QUE EMPEZÓ A EDITAR<br />$1',
 	'user-identity-box-edits' => '<em>$1</em><span>EDICIONES</span>',
 	'user-identity-box-group-blocked' => 'Bloqueado',
 	'user-identity-box-group-chatmoderator' => 'Moderador del chat',
@@ -825,11 +806,11 @@ $messages['es'] = array(
 	'user-identity-box-group-founder' => 'Fundador',
 	'user-identity-box-group-staff' => 'Staff',
 	'user-identity-box-group-helper' => 'Helper',
-	'user-identity-box-group-vstf' => 'VSTF',
-	'user-identity-box-group-authenticated' => 'Autenticado',
+	'user-identity-box-group-vstf' => 'Volunteer Spam Task Force',
+	'user-identity-box-group-authenticated' => 'Cuenta verificada',
 	'user-identity-box-group-council' => 'Consejero',
-	'user-identity-box-zero-state-location' => 'Ubicación',
-	'user-identity-box-zero-state-birthday' => 'Cumpleaños',
+	'user-identity-box-zero-state-location' => 'Localización',
+	'user-identity-box-zero-state-birthday' => 'Día de nacimiento',
 	'user-identity-box-zero-state-gender' => 'Género',
 	'user-identity-box-zero-state-occupation' => 'Ocupación',
 	'user-identity-box-zero-state-twitter' => 'Mi Twitter',
@@ -837,42 +818,42 @@ $messages['es'] = array(
 	'user-identity-box-zero-state-fb-page' => 'Mi Facebook',
 	'user-identity-box-about-me' => 'Sobre mí',
 	'user-identity-box-avatar' => 'Avatar',
-	'user-identity-box-about-name' => '¿Cómo te llamas?',
+	'user-identity-box-about-name' => '¿Cuál es tu nombre?',
 	'user-identity-box-about-location' => '¿Dónde vives?',
 	'user-identity-box-about-birthday' => '¿Cuándo es tu cumpleaños?',
-	'user-identity-box-about-occupation' => '¿Cuál es tu ocupación?',
-	'user-identity-box-about-gender' => '¿Qué sexo eres?',
-	'user-identity-box-about-website' => '¿Cuál es tu sitio web personal?',
-	'user-identity-box-about-tweet' => '¿Cuál es tu cuenta en Twitter?',
-	'user-identity-box-about-fav-wikis' => 'Wikias en las que has contribuido:',
+	'user-identity-box-about-occupation' => '¿A qué te dedicas?',
+	'user-identity-box-about-gender' => '¿Cuál es tu género?',
+	'user-identity-box-about-website' => '¿Cuál es tu web?',
+	'user-identity-box-about-tweet' => '¿Cuál es tu Twitter?',
+	'user-identity-box-about-fav-wikis' => 'Wikis en los que has contribuido:',
 	'user-identity-box-about-fav-wikis-refresh' => 'Actualizar',
-	'user-identity-box-join-more-wikis' => '¡Únete a más wikias para verlas aquí!',
-	'user-identity-box-import-from-fb' => 'Importa tu información de Facebook',
+	'user-identity-box-join-more-wikis' => '¡Participa en más wikis para verlos aquí!',
+	'user-identity-box-import-from-fb' => 'Importar la información desde Facebook',
 	'user-identity-box-connect-to-fb' => 'Conectar con Facebook',
-	'user-identity-box-unsyc-fb' => 'Desincronizar con Facebook',
-	'user-identity-box-fb-page' => '¿Cuál es tu página en Facebook?',
-	'user-identity-box-invalid-fb-id-error' => 'ID de Facebook inválido',
-	'user-identity-box-fb-prefs' => 'Preferencias de Fuente',
-	'user-identity-box-avatar-error-nofile' => 'Error: No se encontró archivo de avatar para subir',
-	'user-identity-box-avatar-error-cantwrite' => 'Error: No se pudo modificar el directorio temporal',
-	'user-identity-box-avatar-error-size' => 'Error: El archivo del avatar es muy grande (máximo {{PLURAL:$1|$1|$1}}KB)',
-	'user-identity-box-avatar-error' => 'Error: Hubo un error interno al guardar el avatar',
+	'user-identity-box-unsyc-fb' => 'Desincronizado con Facebook',
+	'user-identity-box-fb-page' => '¿Cuál es tu página de Facebook?',
+	'user-identity-box-invalid-fb-id-error' => 'Id de Facebook incorrecta',
+	'user-identity-box-fb-prefs' => 'Preferencias de publicaciones en tu muro',
+	'user-identity-box-avatar-error-nofile' => 'Error: No hemos encontrado ningún archivo para subir',
+	'user-identity-box-avatar-error-cantwrite' => 'Error: No se pudo escribir en el directorio temporal',
+	'user-identity-box-avatar-error-size' => 'Error: El avatar es demasiado grande ($1)',
+	'user-identity-box-avatar-error' => 'Error: Hubo un error interno mientras se guardaba tu avatar',
 	'userprofilepage-lightbox-about-me-cancel' => 'Cancelar',
 	'userprofilepage-lightbox-about-me-save' => 'Hecho, he terminado',
-	'user-identity-box-saving-error' => 'Error al guardar los datos de usuario, tus datos deben estar en texto plano',
-	'user-identity-box-saving-internal-error' => 'Error al guardar los datos de usuario, ocurrió un error interno',
-	'userprofilepage-closing-popup-header' => 'Salir del editor de perfil',
+	'user-identity-box-saving-error' => 'Fallo al guardar tus datos de usuario - los datos deben estar escritos en texto plano',
+	'user-identity-box-saving-internal-error' => 'Fallo al guardar tus datos de usuario - ocurrió un error interno',
+	'userprofilepage-closing-popup-header' => 'Salir del editor',
 	'userprofilepage-closing-popup-info' => 'Hay cambios sin guardar en tu perfil. ¿Qué quieres hacer?',
 	'userprofilepage-closing-popup-discard-and-quit' => 'Descartar cambios y salir',
-	'userprofilepage-closing-popup-save-and-quit' => 'Grabar y salir',
+	'userprofilepage-closing-popup-save-and-quit' => 'Guardar y salir',
 	'userprofilepage-closing-popup-cancel' => 'Cancelar',
 	'user-action-menu-edit' => 'Editar',
 	'user-action-menu-edit-profile' => 'Editar perfil',
-	'user-action-menu-leave-message' => 'Dejar un mensaje',
-	'user-action-menu-view-source' => 'Ver código fuente',
+	'user-action-menu-leave-message' => 'Dejar mensaje',
+	'user-action-menu-view-source' => 'Ver modo fuente',
 	'user-action-menu-protect' => 'Proteger',
 	'user-action-menu-unprotect' => 'Desproteger',
-	'user-action-menu-rename' => 'Renombrar',
+	'user-action-menu-rename' => 'Trasladar',
 	'user-action-menu-delete' => 'Borrar',
 	'user-action-menu-history' => 'Historial',
 	'usermasthead-log' => 'Encabezado de perfil',
@@ -884,19 +865,17 @@ $messages['es'] = array(
 	'blog-avatar-alt' => 'Registros de subidas o borrados de avatares de los usuarios',
 	'user-identity-remove-confirmation' => '¿Estás seguro que quieres borrar el avatar?',
 	'user-identity-remove-fail' => '¡Hubo un problema al eliminar el avatar!',
-	'user-identity-box-group-wikiastars' => 'Wikia Star',
 	'user-identity-box-group-voldev' => 'Desarrollador voluntario',
-	'user-identity-box-group-threadmoderator' => 'Moderador',
+	'user-identity-box-group-threadmoderator' => 'Moderador de discusiones',
 	'user-identity-box-about-fb-page' => '¿Cuál es el enlace de tu perfil de Facebook?',
-	'user-identity-avatars-maintenance' => '¡La subida y eliminación de avatares se desactiva durante el mantenimiento!',
+	'user-identity-avatars-maintenance' => 'Durante el día de mañana, los avatares en Wikia serán movidos a un nuevo servidor. La subida de nuevos avatares se desactivará durante este proceso.',
 	'userprofilepage-edit-modal-error' => 'Ha ocurrido un error inesperado',
-);
+	'user-identity-box-group-adminmentor' => 'Mentor',
+	'user-identity-box-discussion-posts' => 'Discusiones',
+	'user-identity-box-group-vanguard' => 'Vanguard',
+];
 
-/** Finnish (suomi)
- * @author Ilkea
- * @author Tm T
- */
-$messages['fi'] = array(
+$messages['fi'] = [
 	'userprofilepage-edit-modal-header' => 'Muokkaa profiilia',
 	'userprofilepage-question-caption' => 'Kysymys  $1/$2',
 	'userprofilepage-lightbox-interview-cancel' => 'Peruuta',
@@ -929,7 +908,7 @@ $messages['fi'] = array(
 	'user-identity-box-my-twitter' => 'Twitter',
 	'user-identity-box-my-website' => 'Kotisivu',
 	'user-identity-box-my-fb-page' => 'Facebook',
-	'user-identity-box-fav-wikis' => 'Suosikki wikini',
+	'user-identity-box-fav-wikis' => 'Suosikki- wikini',
 	'user-identity-box-location' => '<span>Asun</span> $1',
 	'user-identity-box-was-born-on' => '<span>Synnyin</span> $2.$1',
 	'user-identity-box-was-born-in' => '<span>Syntymäpaikkani on</span> $1',
@@ -937,13 +916,13 @@ $messages['fi'] = array(
 	'user-identity-i-am' => '<span>Olen</span> $1',
 	'user-identity-box-edits-since-joining' => 'Muokkausta liittymisen jälkeen <br />$1',
 	'user-identity-box-edits' => '<em>$1</em><span>MUOKKAUKSET</span>',
-	'user-identity-box-group-blocked' => 'Lukittu',
+	'user-identity-box-group-blocked' => 'Estetty',
 	'user-identity-box-group-chatmoderator' => 'Chat moderaattori',
 	'user-identity-box-group-sysop' => 'Admin',
 	'user-identity-box-group-bureaucrat' => 'Byrokraatti',
 	'user-identity-box-group-founder' => 'Perustaja',
 	'user-identity-box-group-staff' => 'Henkilökunta',
-	'user-identity-box-group-helper' => 'Avustaja',
+	'user-identity-box-group-helper' => 'Auttaja',
 	'user-identity-box-group-vstf' => 'Vapaaehtoinen roskan torjunta voima',
 	'user-identity-box-group-authenticated' => 'Todennettu',
 	'user-identity-box-group-council' => 'Valtuutettu',
@@ -1003,13 +982,9 @@ $messages['fi'] = array(
 	'blog-avatar-alt' => 'Avatar',
 	'user-identity-remove-confirmation' => 'Haluatko varmasti poistaa avatarin?',
 	'user-identity-remove-fail' => 'Ongelma poistaessa avataria!',
-);
+];
 
-/** French (français)
- * @author Gomoko
- * @author Wyz
- */
-$messages['fr'] = array(
+$messages['fr'] = [
 	'userprofilepage-edit-modal-header' => 'Modifier le profil',
 	'userprofilepage-question-caption' => 'Question $1 de $2',
 	'userprofilepage-lightbox-interview-cancel' => 'Annuler',
@@ -1024,10 +999,10 @@ $messages['fr'] = array(
 	'userprofilepage-question-list-title' => '$1 de $2 questions',
 	'userprofilepage-interview-section-title' => 'Questionnaire utilisateur',
 	'userprofilepage-invalid-user' => 'Utilisateur non valide ! Vous n’êtes pas connecté ou n’avez pas les droits pour continuer',
-	'userprofilepage-avatar-error-type' => 'Type MIME non valide. Autorisés : $1',
+	'userprofilepage-avatar-error-type' => 'Type MIME invalide. Autorisés : $1',
 	'userprofilepage-avatar-error-resolution' => 'La résolution maximum pour l’avatar est 2000x2000',
 	'user-identity-box-edit' => 'Modifier',
-	'user-identity-box-wikia-contributor' => 'Un contributeur sur Wikia',
+	'user-identity-box-wikia-contributor' => 'Un utilisateur de Fandom',
 	'user-identity-box-edit-avatar' => 'Modifier l’avatar',
 	'user-identity-box-delete-avatar' => 'Retirer l’avatar',
 	'user-identity-box-avatar-upload-avatar' => 'Importer un avatar',
@@ -1037,7 +1012,7 @@ $messages['fr'] = array(
 	'user-identity-box-avatar-cancel' => 'Annuler',
 	'user-identity-box-avatar-anon-user-error' => 'Vous devez vous connecter avant de modifier quoi que ce soit',
 	'user-identity-box-hide-edits-wikis' => 'Masquer tout',
-	'user-identity-box-banned-from-chat' => 'Banni du tchat',
+	'user-identity-box-banned-from-chat' => 'Banni(e) du tchat',
 	'user-identity-box-aka-label' => '<span>alias</span> $1',
 	'user-identity-box-my-twitter' => 'Mon Twitter',
 	'user-identity-box-my-website' => 'Mon site Web',
@@ -1077,7 +1052,7 @@ $messages['fr'] = array(
 	'user-identity-box-about-website' => 'Quel est votre site Web personnel ?',
 	'user-identity-box-about-tweet' => 'Quel est le nom de votre Twitter ?',
 	'user-identity-box-about-fav-wikis' => 'Wikias sur lesquels vous avez participé :',
-	'user-identity-box-about-fav-wikis-refresh' => 'Actualiser',
+	'user-identity-box-about-fav-wikis-refresh' => 'Rafraîchir',
 	'user-identity-box-join-more-wikis' => 'Rejoignez plus de wikias pour les voir ici !',
 	'user-identity-box-import-from-fb' => 'Importer vos informations de Facebook',
 	'user-identity-box-connect-to-fb' => 'Relier avec Facebook',
@@ -1086,7 +1061,7 @@ $messages['fr'] = array(
 	'user-identity-box-invalid-fb-id-error' => 'ID Facebook incorrect',
 	'user-identity-box-fb-prefs' => 'Préférences de flux',
 	'user-identity-box-avatar-error-nofile' => 'Erreur : aucun fichier d’avatar trouvé pour importation',
-	'user-identity-box-avatar-error-cantwrite' => 'Erreur : impossible d’écrire dans le répertoire temporaire',
+	'user-identity-box-avatar-error-cantwrite' => 'Erreur : impossible d’écrire sur un répertoire temporaire',
 	'user-identity-box-avatar-error-size' => 'Erreur : le fichier de l’avatar est trop gros (max. {{PLURAL:$1|$1|$1}} Ko)',
 	'user-identity-box-avatar-error' => 'Erreur : une erreur interne est survenue lors de l’enregistrement de l’avatar',
 	'userprofilepage-lightbox-about-me-cancel' => 'Annuler',
@@ -1116,18 +1091,18 @@ $messages['fr'] = array(
 	'blog-avatar-alt' => 'Affiche les ajouts et retraits des avatars utilisateur',
 	'user-identity-remove-confirmation' => 'Êtes-vous sûr(e) de vouloir retirer l’avatar ?',
 	'user-identity-remove-fail' => 'Un problème est survenu lors du retrait de l’avatar !',
-	'user-identity-box-group-wikiastars' => 'Wikia Star',
 	'user-identity-box-group-voldev' => 'Développeur bénévole',
 	'user-identity-box-group-threadmoderator' => 'Modérateur',
 	'user-identity-box-about-fb-page' => 'Quel est le lien vers votre profil Facebook ?',
 	'user-identity-avatars-maintenance' => 'Importation et retrait des avatars désactivés momentanément pour cause de maintenance !',
-	'userprofilepage-edit-modal-error' => "Un erreur inattendue s'est produite",
-);
+	'userprofilepage-edit-modal-error' => 'Un erreur inattendue s\'est produite',
+	'user-identity-box-group-adminmentor' => 'Administrateur référent',
+	'user-identity-box-discussion-posts' => 'Messages de discussion',
+	'user-identity-box-group-vanguard' => 'Vanguard',
+	'right-authenticated' => 'Un compte qui a été considéré par Wikia comme étant une source d\'industrie légitime (par exemple, une célébrité ou un dévelopeur de jeux vidéo)',
+];
 
-/** Galician (galego)
- * @author Toliño
- */
-$messages['gl'] = array(
+$messages['gl'] = [
 	'userprofilepage-edit-modal-header' => 'Editar o perfil',
 	'userprofilepage-question-caption' => 'Pregunta $1/$2',
 	'userprofilepage-lightbox-interview-cancel' => 'Cancelar',
@@ -1234,13 +1209,9 @@ $messages['gl'] = array(
 	'blog-avatar-alt' => 'Rexistros das adicións e eliminacións de avatares de usuario',
 	'user-identity-remove-confirmation' => 'Está seguro de querer eliminar o avatar?',
 	'user-identity-remove-fail' => 'Houbo un problema ao eliminar o avatar!',
-);
+];
 
-/** Hungarian (magyar)
- * @author Dani
- * @author TK-999
- */
-$messages['hu'] = array(
+$messages['hu'] = [
 	'userprofilepage-edit-modal-header' => 'Profil szerkesztése',
 	'userprofilepage-question-caption' => '$1./$2 kérdés',
 	'userprofilepage-lightbox-interview-cancel' => 'Mégse',
@@ -1347,18 +1318,13 @@ $messages['hu'] = array(
 	'blog-avatar-alt' => 'A felhasználói avatarok hozzáadásainak és eltávolításainak naplója',
 	'user-identity-remove-confirmation' => 'Biztosan el szeretnéd távolítani az avatarodat?',
 	'user-identity-remove-fail' => 'Hiba történt az avatar eltávolítása közben!',
-);
+];
 
-/** Armenian (Հայերեն)
- */
-$messages['hy'] = array(
+$messages['hy'] = [
 	'blog-avatar-changed-log' => 'ավելացրել է կամ փոխել է ավատարը',
-);
+];
 
-/** Interlingua (interlingua)
- * @author McDutchie
- */
-$messages['ia'] = array(
+$messages['ia'] = [
 	'userprofilepage-edit-modal-header' => 'Modificar profilo',
 	'userprofilepage-question-caption' => 'Question $1 de $2',
 	'userprofilepage-lightbox-interview-cancel' => 'Cancellar',
@@ -1465,131 +1431,128 @@ $messages['ia'] = array(
 	'blog-avatar-alt' => 'Registro de additiones o remotiones de avatares de usatores',
 	'user-identity-remove-confirmation' => 'Es tu secur de voler remover le avatar?',
 	'user-identity-remove-fail' => 'Un problema occurreva con le remotion del avatar!',
-);
+];
 
-/** Italian (italiano)
- * @author Minerva Titani
- */
-$messages['it'] = array(
-	'user-identity-box-fb-prefs' => 'Feed delle Preferenze',
-	'blog-avatar-changed-log' => 'Avatar aggiunto o modificato',
+$messages['it'] = [
+	'user-identity-box-fb-prefs' => 'Impostazioni Feed',
+	'blog-avatar-changed-log' => '(Avatar aggiunto o modificato)',
 	'userprofilepage-edit-modal-header' => 'Modifica profilo',
 	'userprofilepage-question-caption' => 'Domanda $1/$2',
 	'userprofilepage-lightbox-interview-cancel' => 'Annulla',
 	'userprofilepage-lightbox-interview-save' => 'Salva, ho finito',
-	'userprofilepage-interview-edit-new-summary' => 'Intervista utente creata',
-	'userprofilepage-interview-edit-update-summary' => 'Intervista utente aggiornata',
-	'userprofilepage-interview-save-error' => 'Salvataggio intervista fallito',
-	'userprofilepage-interview-save-internal-error' => 'Salvataggio intervista fallito - errore interno',
-	'userprofilepage-answers-stats-title' => 'Statistiche intervista',
-	'userprofilepage-add-question' => 'Aggiungi nuova domanda',
-	'userprofilepage-question-save' => 'Salva domanda',
-	'userprofilepage-question-list-title' => '$1/$2 {{PLURAL:$2|Domanda|Domande}}',
-	'userprofilepage-interview-section-title' => 'Intervista utente',
-	'userprofilepage-invalid-user' => "Utente non valido! Non hai effettuato l'accesso o non hai i diritti per procedere",
-	'userprofilepage-avatar-error-type' => 'Tipo MIME non valido. Permesso: $1',
-	'userprofilepage-avatar-error-resolution' => "La risoluzione massima per l'avatar è 2000 x 2000",
+	'userprofilepage-interview-edit-new-summary' => 'Intervista all\'utente creata',
+	'userprofilepage-interview-edit-update-summary' => 'Intervista all\'utente aggiornata',
+	'userprofilepage-interview-save-error' => 'Salvataggio dell\'intervista fallito',
+	'userprofilepage-interview-save-internal-error' => 'Salvataggio dell\'intervista fallito - si è verificato un errore interno',
+	'userprofilepage-answers-stats-title' => 'Statistiche dell\'intervista',
+	'userprofilepage-add-question' => 'Aggiungi una nuova domanda',
+	'userprofilepage-question-save' => 'Salva la domanda',
+	'userprofilepage-question-list-title' => '$1/$2 Domande',
+	'userprofilepage-interview-section-title' => 'Intervista all\'utente',
+	'userprofilepage-invalid-user' => 'Utente non valido! Non sei loggato o non hai il permesso di procedere',
+	'userprofilepage-avatar-error-type' => 'Tipo di MIME non valido. Consentiti: $1',
+	'userprofilepage-avatar-error-resolution' => 'La risoluzione massima dell\'avatar è 2000x2000',
 	'user-identity-box-edit' => 'Modifica',
-	'user-identity-box-wikia-contributor' => 'Un collaboratore di Wikia',
+	'user-identity-box-wikia-contributor' => 'Un utente Fandom',
 	'user-identity-box-edit-avatar' => 'Modifica avatar',
-	'user-identity-box-delete-avatar' => 'Elimina avatar',
+	'user-identity-box-delete-avatar' => 'Cancella avatar',
 	'user-identity-box-avatar-upload-avatar' => 'Carica un avatar',
 	'user-identity-box-avatar-fb-import-avatar' => 'Importa il mio avatar da Facebook',
 	'user-identity-box-avatar-choose-avatar' => 'Scegli un avatar',
 	'user-identity-box-avatar-save' => 'Salva, ho finito',
 	'user-identity-box-avatar-cancel' => 'Annulla',
-	'user-identity-box-avatar-anon-user-error' => "Devi effettuare l'accesso prima di poter cambiare qualsiasi cosa",
-	'user-identity-box-hide-edits-wikis' => 'Nascondi tutto',
+	'user-identity-box-avatar-anon-user-error' => 'Devi effettuare il login per fare le modifiche',
+	'user-identity-box-hide-edits-wikis' => 'Nascondi tutte',
 	'user-identity-box-banned-from-chat' => 'Bannato dalla Chat',
 	'user-identity-box-aka-label' => '<span>alias</span> $1',
-	'user-identity-box-my-twitter' => 'Il mio Twitter',
-	'user-identity-box-my-website' => 'Il mio sito web',
-	'user-identity-box-my-fb-page' => 'Il mio Facebook',
+	'user-identity-box-my-twitter' => 'Twitter',
+	'user-identity-box-my-website' => 'Sito web',
+	'user-identity-box-my-fb-page' => 'Facebook',
 	'user-identity-box-fav-wikis' => 'Le mie wiki preferite',
-	'user-identity-box-location' => '<span>Vivo a</span> $1',
-	'user-identity-box-was-born-on' => '<span>sono nato il</span> $1 $2',
-	'user-identity-box-was-born-in' => '<span>sono nato a</span> $1',
-	'user-identity-box-occupation' => '<span>La mia occupazione è</span> $1',
+	'user-identity-box-location' => '<span>Vivo </span> $1',
+	'user-identity-box-was-born-on' => '<span>Sono nato/a il</span> $2 $1',
+	'user-identity-box-was-born-in' => '<span>Sono nato/a a</span> $1',
+	'user-identity-box-occupation' => '<span>Faccio</span> $1',
 	'user-identity-i-am' => '<span>Sono</span> $1',
 	'user-identity-box-edits-since-joining' => 'Modifiche da quando è membro della wiki<br />$1',
-	'user-identity-box-edits' => '<em>$1</em><span>{{PLURAL:$1|MODIFICA|MODIFICHE}}</span>',
+	'user-identity-box-edits' => '<em>$1</em><span>MODIFICHE</span>',
 	'user-identity-box-group-blocked' => 'Bloccato',
-	'user-identity-box-group-chatmoderator' => 'Moderatore chat',
+	'user-identity-box-group-chatmoderator' => 'Moderatore Chat',
 	'user-identity-box-group-sysop' => 'Amministratore',
 	'user-identity-box-group-bureaucrat' => 'Burocrate',
 	'user-identity-box-group-founder' => 'Fondatore',
 	'user-identity-box-group-staff' => 'Staff',
 	'user-identity-box-group-helper' => 'Helper',
-	'user-identity-box-group-vstf' => 'Volunteer Spam Task Force',
+	'user-identity-box-group-vstf' => 'VSTF',
 	'user-identity-box-group-authenticated' => 'Autenticato',
 	'user-identity-box-group-council' => 'Consigliere',
-	'user-identity-box-group-wikiastars' => 'Wikia Star',
-	'user-identity-box-group-voldev' => 'Volunteer Developer',
-	'user-identity-box-group-threadmoderator' => 'Moderatore',
+	'user-identity-box-group-voldev' => 'Sviluppatore volontario',
+	'user-identity-box-group-threadmoderator' => 'Moderatore di discussioni',
 	'user-identity-box-zero-state-location' => 'Luogo',
 	'user-identity-box-zero-state-birthday' => 'Compleanno',
 	'user-identity-box-zero-state-gender' => 'Sesso',
 	'user-identity-box-zero-state-occupation' => 'Occupazione',
-	'user-identity-box-zero-state-twitter' => 'Il mio Twitter',
-	'user-identity-box-zero-state-website' => 'Il mio sito web',
+	'user-identity-box-zero-state-twitter' => 'Twitter',
+	'user-identity-box-zero-state-website' => 'Sito web',
 	'user-identity-box-zero-state-fb-page' => 'Il mio Facebook',
 	'user-identity-box-about-me' => 'Su di me',
 	'user-identity-box-avatar' => 'Avatar',
 	'user-identity-box-about-name' => 'Come ti chiami?',
 	'user-identity-box-about-location' => 'Dove vivi?',
-	'user-identity-box-about-birthday' => "Quand'è il tuo compleanno?",
-	'user-identity-box-about-occupation' => 'Qual è la tua occupazione?',
-	'user-identity-box-about-gender' => 'Qual è il tuo sesso?',
-	'user-identity-box-about-website' => 'Qual è il tuo sito personale?',
-	'user-identity-box-about-tweet' => 'Qual è il tuo nome di Twitter?',
+	'user-identity-box-about-birthday' => 'Quando è il tuo compleanno?',
+	'user-identity-box-about-occupation' => 'Cosa fai nella vita?',
+	'user-identity-box-about-gender' => 'Di che sesso sei?',
+	'user-identity-box-about-website' => 'Hai un sito web personale?',
+	'user-identity-box-about-tweet' => 'Hai un account Twitter?',
 	'user-identity-box-about-fb-page' => 'Qual è il tuo link al profilo Facebook?',
-	'user-identity-box-about-fav-wikis' => 'Wiki su cui hai contribuito:',
+	'user-identity-box-about-fav-wikis' => 'Wiki a cui hai contribuito:',
 	'user-identity-box-about-fav-wikis-refresh' => 'Aggiorna',
-	'user-identity-box-join-more-wikis' => 'Unisciti ad altre wiki per vederle qui!',
+	'user-identity-box-join-more-wikis' => 'Diventa membro di altre wiki per vederle qui!',
 	'user-identity-box-import-from-fb' => 'Importa le tue informazioni da Facebook',
 	'user-identity-box-connect-to-fb' => 'Connettiti con Facebook',
-	'user-identity-box-unsyc-fb' => 'Disconnettiti da Facebook',
+	'user-identity-box-unsyc-fb' => 'Non sincronizzato con Facebook',
 	'user-identity-box-fb-page' => 'Qual è la tua pagina Facebook?',
-	'user-identity-box-invalid-fb-id-error' => 'ID di Facebook non valido',
-	'user-identity-box-avatar-error-nofile' => 'Errore: Nessun file di avatar trovato da caricare',
-	'user-identity-box-avatar-error-cantwrite' => 'Errore: Impossibile scrivere nella directory temporanea',
-	'user-identity-box-avatar-error-size' => "Errore: Il file dell'avatar è troppo grande (massimo {{PLURAL:$1|$1|$1}}KB)",
-	'user-identity-box-avatar-error' => "Error: Si è verificato un errore interno durante il salvataggio dell'avatar",
+	'user-identity-box-invalid-fb-id-error' => 'ID Facebook non valido',
+	'user-identity-box-avatar-error-nofile' => 'Errore: Non è stato trovato alcun avatar da caricare',
+	'user-identity-box-avatar-error-cantwrite' => 'Errore: Non è stato possibile scrivere nella directory temporanea',
+	'user-identity-box-avatar-error-size' => 'Errore: L\'avatar è troppo grande (max.$1KB)',
+	'user-identity-box-avatar-error' => 'Errore: Si è verificato un errore interno durante il salvataggio dell\'avatar',
 	'userprofilepage-lightbox-about-me-cancel' => 'Annulla',
 	'userprofilepage-lightbox-about-me-save' => 'Salva, ho finito',
-	'user-identity-box-saving-error' => 'Salvataggio dei dati utente fallito - i tuoi dati dovrebbero essere un testo normale',
-	'user-identity-box-saving-internal-error' => 'Salvataggio dei dati utente non riuscito - errore interno',
-	'userprofilepage-closing-popup-header' => "Esci dall'editor del profilo",
-	'userprofilepage-closing-popup-info' => 'Ci sono modifiche non salvate nel tuo profilo. Che cosa vorresti fare?',
-	'userprofilepage-closing-popup-discard-and-quit' => 'Scarta le modifiche ed esci',
+	'user-identity-box-saving-error' => 'Salvataggio dei dati dell\'utente fallito - i tuoi dati devono essere di solo testo',
+	'user-identity-box-saving-internal-error' => 'Salvataggio dei dati dell\'utente fallito - si è verificato un errore interno',
+	'userprofilepage-closing-popup-header' => 'Esci dall\'editor del profilo',
+	'userprofilepage-closing-popup-info' => 'Ci sono modifiche non salvate nel tuo profilo. Cosa vuoi fare?',
+	'userprofilepage-closing-popup-discard-and-quit' => 'Annulla le modifiche ed esci',
 	'userprofilepage-closing-popup-save-and-quit' => 'Salva ed esci',
 	'userprofilepage-closing-popup-cancel' => 'Annulla',
 	'user-action-menu-edit' => 'Modifica',
 	'user-action-menu-edit-profile' => 'Modifica profilo',
-	'user-action-menu-leave-message' => 'Lascia un messaggio',
-	'user-action-menu-view-source' => 'Visualizza sorgente',
+	'user-action-menu-leave-message' => 'Lascia messaggio',
+	'user-action-menu-view-source' => 'Vedi codice sorgente',
 	'user-action-menu-protect' => 'Proteggi',
-	'user-action-menu-unprotect' => 'Togli la protezione',
+	'user-action-menu-unprotect' => 'Sblocca',
 	'user-action-menu-rename' => 'Rinomina',
-	'user-action-menu-delete' => 'Rimuovi',
+	'user-action-menu-delete' => 'Cancella',
 	'user-action-menu-history' => 'Cronologia',
-	'usermasthead-log' => 'Intestazione profilo utente',
-	'usermasthead-log-message' => 'informazione del profilo aggiunta',
-	'usermasthead-log-alt' => "Registri delle modifiche all'intestazione del profilo utente",
-	'useravatar-log' => 'Registro avatar utente',
+	'usermasthead-log' => 'Profilo Utente',
+	'usermasthead-log-message' => 'Informazioni sul profilo aggiunte',
+	'usermasthead-log-alt' => 'Log delle modifiche del Profilo Utente',
+	'useravatar-log' => 'Log dell\'avatar dell\'utente',
 	'blog-avatar-removed-log' => 'Rimossi gli avatar di $1',
 	'blog-avatar-alt' => 'Registri di aggiunte o rimozioni di avatar utente',
-	'user-identity-remove-confirmation' => "Sei sicuro di voler rimuovere l'avatar?",
-	'user-identity-remove-fail' => "C'è stato un problema durante la rimozione dell'avatar!",
-	'user-identity-avatars-maintenance' => 'Il caricamento e la rimozione di avatar non sono temporaneamente possibili durante la manutenzione!',
+	'user-identity-remove-confirmation' => 'Sei sicuro di voler rimuovere l\'avatar?',
+	'user-identity-remove-fail' => 'C\'è stato un problema durante la rimozione dell\'avatar!',
+	'user-identity-avatars-maintenance' => 'Il caricamento e la cancellazione degli avatar sono temporaneamente disabilitati durante la manutenzione!',
 	'userprofilepage-edit-modal-error' => 'Si è verificato un errore imprevisto',
-);
+	'user-identity-box-group-adminmentor' => 'Admin Mentor',
+	'user-identity-box-discussion-posts' => 'Post in discussioni',
+	'user-identity-box-group-vanguard' => 'Vanguard',
+];
 
-/** Japanese (日本語)
- */
-$messages['ja'] = array(
+$messages['ja'] = [
 	'useravatar-log' => 'アバターのログ',
-	'blog-avatar-changed-log' => 'アバターが追加、または変更されました',
+	'blog-avatar-changed-log' => 'アバターが追加・変更されました',
 	'blog-avatar-removed-log' => '$1 のアバターを削除しました',
 	'blog-avatar-alt' => 'アバターの追加、または削除のログ',
 	'userprofilepage-edit-modal-header' => 'プロフィールの編集',
@@ -1605,18 +1568,18 @@ $messages['ja'] = array(
 	'userprofilepage-question-save' => '質問を保存する',
 	'userprofilepage-question-list-title' => '$1/$2 の質問',
 	'userprofilepage-interview-section-title' => 'ユーザー・インタビュー',
-	'userprofilepage-invalid-user' => '有効でないユーザーです。ログインされていないか、続行の権限のないユーザーです。',
+	'userprofilepage-invalid-user' => '有効でないユーザーです。ログインされていないか、このアクションの権限がないユーザーです。',
 	'userprofilepage-avatar-error-type' => '無効なMIMEの種類です。可能な種類: $1',
 	'userprofilepage-avatar-error-resolution' => 'アバターの最大解像度は2000x2000pxです。',
 	'user-identity-box-edit' => '編集',
-	'user-identity-box-wikia-contributor' => 'ウィキア投稿者',
+	'user-identity-box-wikia-contributor' => 'Fandomユーザー',
 	'user-identity-box-edit-avatar' => 'アバターの編集',
 	'user-identity-box-delete-avatar' => 'アバターの削除',
-	'user-identity-box-avatar-upload-avatar' => 'アバター画像のアップロード',
+	'user-identity-box-avatar-upload-avatar' => 'アバターをアップロード',
 	'user-identity-box-avatar-fb-import-avatar' => 'Facebookからアバターをインポート',
-	'user-identity-box-avatar-choose-avatar' => 'アバターを選んでください',
-	'user-identity-box-avatar-save' => '保存する',
-	'user-identity-box-avatar-cancel' => 'キャンセル',
+	'user-identity-box-avatar-choose-avatar' => 'アバターを選択',
+	'user-identity-box-avatar-save' => '保存',
+	'user-identity-box-avatar-cancel' => '中止',
 	'user-identity-box-avatar-anon-user-error' => '変更するには、ログインする必要があります',
 	'user-identity-box-hide-edits-wikis' => '全て非表示にする',
 	'user-identity-box-banned-from-chat' => 'チャットの利用が禁止されています',
@@ -1624,25 +1587,25 @@ $messages['ja'] = array(
 	'user-identity-box-my-twitter' => 'Twitter',
 	'user-identity-box-my-website' => 'ウェブサイト',
 	'user-identity-box-my-fb-page' => 'Facebook',
-	'user-identity-box-fav-wikis' => 'お気に入りのウィキア',
+	'user-identity-box-fav-wikis' => 'お気に入りの ウィキア',
 	'user-identity-box-location' => '<span>居住地</span> $1',
-	'user-identity-box-was-born-on' => '<span>誕生日</span> $1$ 2日',
+	'user-identity-box-was-born-on' => '<span>誕生日</span> $1 $2日',
 	'user-identity-box-was-born-in' => '<span>出身地</span> $1',
 	'user-identity-box-occupation' => '<span>職業</span> $1',
 	'user-identity-i-am' => '<span>私は</span> $1です',
-	'user-identity-box-edits-since-joining' => 'このウィキアでの編集回数<br />$1',
+	'user-identity-box-edits-since-joining' => '回の編集
+<br />$1',
 	'user-identity-box-edits' => '<em>$1</em><span>回の編集</span>',
-	'user-identity-box-group-blocked' => 'ブロック済み',
-	'user-identity-box-group-chatmoderator' => 'チャット・モデレーター',
+	'user-identity-box-group-blocked' => 'ブロックされています',
+	'user-identity-box-group-chatmoderator' => 'チャットモデレータ',
 	'user-identity-box-group-sysop' => 'アドミン',
 	'user-identity-box-group-bureaucrat' => 'ビューロクラット',
-	'user-identity-box-group-founder' => 'ファウンダー',
+	'user-identity-box-group-founder' => '設立者',
 	'user-identity-box-group-staff' => 'スタッフ',
 	'user-identity-box-group-helper' => 'ヘルパー',
-	'user-identity-box-group-vstf' => 'ボランティア・スパム・タスク・フォース',
+	'user-identity-box-group-vstf' => 'VSTF',
 	'user-identity-box-group-authenticated' => '認証済み',
 	'user-identity-box-group-council' => 'コミュニティ・カウンシラー',
-	'user-identity-box-group-wikiastars' => 'ウィキア・スター',
 	'user-identity-box-group-voldev' => 'ボランティア・ディベロッパー',
 	'user-identity-box-group-threadmoderator' => 'モデレーター',
 	'user-identity-box-zero-state-location' => '居住地',
@@ -1664,17 +1627,17 @@ $messages['ja'] = array(
 	'user-identity-box-about-fb-page' => 'Facebookのプロフィールページのリンクを教えてください。',
 	'user-identity-box-about-fav-wikis' => '編集したことのあるウィキア',
 	'user-identity-box-about-fav-wikis-refresh' => 'リフレッシュ',
-	'user-identity-box-join-more-wikis' => '多くのウィキアに参加して、ここに表示されるウィキアを増やしましょう。',
+	'user-identity-box-join-more-wikis' => 'たくさんのウィキアに参加して、ここに表示されるウィキアを増やそう',
 	'user-identity-box-import-from-fb' => 'Facebookから情報をインポートする',
 	'user-identity-box-connect-to-fb' => 'Facebookコネクト',
 	'user-identity-box-unsyc-fb' => 'Facobookコネクト解除',
 	'user-identity-box-fb-page' => 'あなたのFacebookページ',
 	'user-identity-box-invalid-fb-id-error' => '無効なFacebookのIDです',
-	'user-identity-box-fb-prefs' => 'フィード設定',
-	'user-identity-box-avatar-error-nofile' => 'エラー: アップロードするアバターのファイルが見つかりませんでした',
-	'user-identity-box-avatar-error-cantwrite' => 'エラー: 一時ディレクトリに書き込みできませんでした',
-	'user-identity-box-avatar-error-size' => 'エラー: アバターファイルが最大サイズを超えています（最大{{PLURAL:$1|$1|$1}}KBまで）',
-	'user-identity-box-avatar-error' => 'エラー: アバター保存中に内部エラーが発生しました',
+	'user-identity-box-fb-prefs' => 'フィードの設定',
+	'user-identity-box-avatar-error-nofile' => 'エラー: アップロードファイルが見つかりませんでした',
+	'user-identity-box-avatar-error-cantwrite' => 'エラー: 一時ディレクトリに書き込めませんでした',
+	'user-identity-box-avatar-error-size' => 'エラー: アバターファイルが大きすぎます（最大 $1KB）',
+	'user-identity-box-avatar-error' => 'エラー: アバターの保存中に内部エラーが発生しました',
 	'userprofilepage-lightbox-about-me-cancel' => 'キャンセル',
 	'userprofilepage-lightbox-about-me-save' => '保存する',
 	'user-identity-box-saving-error' => 'ユーザーデータの保存に失敗しました。データはプレーンテキストである必要があります',
@@ -1689,8 +1652,8 @@ $messages['ja'] = array(
 	'user-action-menu-leave-message' => 'メッセージを残す',
 	'user-action-menu-view-source' => 'ソースの表示',
 	'user-action-menu-protect' => '保護',
-	'user-action-menu-unprotect' => '保護を解除',
-	'user-action-menu-rename' => '名前の変更',
+	'user-action-menu-unprotect' => '保護解除',
+	'user-action-menu-rename' => 'ページ名変更',
 	'user-action-menu-delete' => '削除',
 	'user-action-menu-history' => '履歴',
 	'usermasthead-log' => 'ユーザー・マストヘッド',
@@ -1700,12 +1663,13 @@ $messages['ja'] = array(
 	'user-identity-remove-fail' => 'アバターの削除中にエラーが発生しました',
 	'user-identity-avatars-maintenance' => 'メンテナンス中のため、アバターのアップロードと削除ができなくなっています。',
 	'userprofilepage-edit-modal-error' => '予期しないエラーが発生しました',
-);
+	'user-identity-box-group-adminmentor' => 'アドミン・アドバイザー',
+	'user-identity-box-discussion-posts' => 'トークの投稿数',
+	'user-identity-box-group-vanguard' => 'Vanguard',
+	'right-removeavatar' => '利用者のアバターの削除',
+];
 
-/** Luxembourgish (Lëtzebuergesch)
- * @author Robby
- */
-$messages['lb'] = array(
+$messages['lb'] = [
 	'userprofilepage-edit-modal-header' => 'Profil änneren',
 	'userprofilepage-question-caption' => 'Fro $1/$2',
 	'userprofilepage-lightbox-interview-cancel' => 'Ofbriechen',
@@ -1729,12 +1693,9 @@ $messages['lb'] = array(
 	'user-action-menu-edit' => 'Änneren',
 	'user-action-menu-rename' => 'Ëmbenennen',
 	'user-action-menu-delete' => 'Läschen',
-);
+];
 
-/** Lezghian (лезги)
- * @author Migraghvi
- */
-$messages['lez'] = array(
+$messages['lez'] = [
 	'userprofilepage-edit-modal-header' => 'Профил дуьзар хъувун',
 	'userprofilepage-question-caption' => 'Жузун $1/$2',
 	'userprofilepage-lightbox-interview-cancel' => 'Гьич авун',
@@ -1784,12 +1745,9 @@ $messages['lez'] = array(
 	'user-action-menu-delete' => 'Алудун',
 	'user-action-menu-history' => 'Тарих',
 	'usermasthead-log' => 'Уртахдикай малумат',
-);
+];
 
-/** Macedonian (македонски)
- * @author Bjankuloski06
- */
-$messages['mk'] = array(
+$messages['mk'] = [
 	'userprofilepage-edit-modal-header' => 'Уреди профил',
 	'userprofilepage-question-caption' => 'Прашање $1/$2',
 	'userprofilepage-lightbox-interview-cancel' => 'Откажи',
@@ -1896,12 +1854,9 @@ $messages['mk'] = array(
 	'blog-avatar-alt' => 'Дневници на додавања и отстранувања на кориснички аватари',
 	'user-identity-remove-confirmation' => 'Дали сте сигурни дека сакате да го отстраните аватарот?',
 	'user-identity-remove-fail' => 'Се појави некаков проблем при отстранувањето на аватарот!',
-);
+];
 
-/** Malay (Bahasa Melayu)
- * @author Anakmalaysia
- */
-$messages['ms'] = array(
+$messages['ms'] = [
 	'userprofilepage-edit-modal-header' => 'Sunting Profil',
 	'userprofilepage-question-caption' => 'Soalan $1/$2',
 	'userprofilepage-lightbox-interview-cancel' => 'Batalkan',
@@ -2008,12 +1963,9 @@ $messages['ms'] = array(
 	'blog-avatar-alt' => 'Log penambahan atau pengguguran avatar pengguna',
 	'user-identity-remove-confirmation' => 'Adakah anda benar-benar ingin menggugurkan avatar ini?',
 	'user-identity-remove-fail' => 'Ada sedikit masalah ketika menggugurkan avatar!',
-);
+];
 
-/** Norwegian Bokmål (norsk bokmål)
- * @author Audun
- */
-$messages['nb'] = array(
+$messages['nb'] = [
 	'userprofilepage-edit-modal-header' => 'Rediger profil',
 	'userprofilepage-question-caption' => 'Spørsmål $1/$2',
 	'userprofilepage-lightbox-interview-cancel' => 'Avbryt',
@@ -2120,14 +2072,9 @@ $messages['nb'] = array(
 	'blog-avatar-alt' => 'Logger over brukeravatar-tillegg eller -fjerninger',
 	'user-identity-remove-confirmation' => 'Er du sikker på at du vil fjerne avataren?',
 	'user-identity-remove-fail' => 'Det oppstod et problem under fjerning av avataren!',
-);
+];
 
-/** Dutch (Nederlands)
- * @author MarkvA
- * @author SPQRobin
- * @author Siebrand
- */
-$messages['nl'] = array(
+$messages['nl'] = [
 	'userprofilepage-edit-modal-header' => 'Profiel aanpassen',
 	'userprofilepage-question-caption' => 'Vraag $1/$2',
 	'userprofilepage-lightbox-interview-cancel' => 'Annuleren',
@@ -2153,14 +2100,14 @@ $messages['nl'] = array(
 	'user-identity-box-avatar-choose-avatar' => 'Kies een avatar',
 	'user-identity-box-avatar-save' => 'Opslaan, ik ben klaar',
 	'user-identity-box-avatar-cancel' => 'Annuleren',
-	'user-identity-box-avatar-anon-user-error' => 'U moet aanmelden voor u iets kunt wijzigen',
+	'user-identity-box-avatar-anon-user-error' => 'U moet inloggen voor u iets kunt wijzigen',
 	'user-identity-box-hide-edits-wikis' => 'Alles verbergen',
 	'user-identity-box-banned-from-chat' => 'Verbannen uit chat',
 	'user-identity-box-aka-label' => '<span>ook bekend als</span> $1',
 	'user-identity-box-my-twitter' => 'Mijn Twitter',
 	'user-identity-box-my-website' => 'Mijn website',
 	'user-identity-box-my-fb-page' => 'Mijn Facebook',
-	'user-identity-box-fav-wikis' => "Mijn favoriete wiki's",
+	'user-identity-box-fav-wikis' => 'Mijn favoriete wiki\'s',
 	'user-identity-box-location' => '<span>Ik woon in</span> $1',
 	'user-identity-box-was-born-on' => '<span>Ik ben geboren op</span> $1 $2',
 	'user-identity-box-was-born-in' => '<span>Ik ben geboren in</span> $1',
@@ -2194,14 +2141,14 @@ $messages['nl'] = array(
 	'user-identity-box-about-gender' => 'Welk geslacht bent u?',
 	'user-identity-box-about-website' => 'Wat is uw persoonlijke website?',
 	'user-identity-box-about-tweet' => 'Wat is uw Twitter-naam?',
-	'user-identity-box-about-fav-wikis' => "Wiki's waar u aan hebt bijgedragen:",
+	'user-identity-box-about-fav-wikis' => 'Wiki\'s waar u aan hebt bijgedragen:',
 	'user-identity-box-about-fav-wikis-refresh' => 'Verversen',
-	'user-identity-box-join-more-wikis' => "Word lid van meer wiki's om ze hier te zien!",
+	'user-identity-box-join-more-wikis' => 'Word lid van meer wiki\'s om ze hier te zien!',
 	'user-identity-box-import-from-fb' => 'Uw gegevens importeren uit Facebook',
 	'user-identity-box-connect-to-fb' => 'Verbinding maken met Facebook',
 	'user-identity-box-unsyc-fb' => 'Koppeling met Facebook verbreken',
 	'user-identity-box-fb-page' => 'Wat is uw Facebook-pagina?',
-	'user-identity-box-invalid-fb-id-error' => 'Ongeldige Facebook-ID',
+	'user-identity-box-invalid-fb-id-error' => 'Ongeldig Facebook-ID',
 	'user-identity-box-fb-prefs' => 'Feedvoorkeuren',
 	'user-identity-box-avatar-error-nofile' => 'Fout: er is geen avatarbestand gevonden om te uploaden',
 	'user-identity-box-avatar-error-cantwrite' => 'Fout: het is niet mogelijk naar de tijdelijke map te schrijven',
@@ -2211,7 +2158,7 @@ $messages['nl'] = array(
 	'userprofilepage-lightbox-about-me-save' => 'Opslaan, ik ben klaar',
 	'user-identity-box-saving-error' => 'Het opslaan van de gebruikersgegevens is mislukt. Uw gegevens moeten aangeleverd worden als platte tekst',
 	'user-identity-box-saving-internal-error' => 'Het opslaan van de gebruikersgegevens is mislukt. Er is een interne fout opgetreden',
-	'userprofilepage-closing-popup-header' => 'Profiel bewerken verlaten',
+	'userprofilepage-closing-popup-header' => 'Profielbewerker verlaten',
 	'userprofilepage-closing-popup-info' => 'Er zijn niet-opgeslagen wijzigingen in uw profiel. Wat wilt u doen?',
 	'userprofilepage-closing-popup-discard-and-quit' => 'Wijzigingen negeren en afsluiten',
 	'userprofilepage-closing-popup-save-and-quit' => 'Opslaan en sluiten',
@@ -2234,32 +2181,26 @@ $messages['nl'] = array(
 	'blog-avatar-alt' => 'Logboek van toegevoegde en verwijderde avatars',
 	'user-identity-remove-confirmation' => 'Weet u zeker dat u de avatar wilt verwijderen?',
 	'user-identity-remove-fail' => 'Er is een probleem opgetreden tijdens het verwijderen van de avatar.',
-	'user-identity-box-group-wikiastars' => 'Wikia Star',
 	'user-identity-box-group-voldev' => 'Vrijwilliger-ontwikkelaar',
 	'user-identity-box-group-threadmoderator' => 'Moderator',
 	'user-identity-box-about-fb-page' => 'Wat is jouw Facebook profiel-link?',
 	'user-identity-avatars-maintenance' => 'Het uploaden en verwijderen van profielafbeeldingen is tijdelijk uitgeschakeld wegens werkzaamheden!',
 	'userprofilepage-edit-modal-error' => 'Er zijn onbekende fouten opgetreden',
-);
+	'user-identity-box-group-adminmentor' => 'Beheerdersmentor',
+	'user-identity-box-discussion-posts' => 'Discussion posts',
+	'user-identity-box-group-vanguard' => 'Vanguard',
+];
 
-/** Pälzisch (Pälzisch)
- * @author Manuae
- */
-$messages['pfl'] = array(
+$messages['pfl'] = [
 	'userprofilepage-lightbox-about-me-cancel' => 'Uffhere',
 	'userprofilepage-lightbox-about-me-save' => 'Schbaischare, isch bin feadisch',
 	'userprofilepage-closing-popup-save-and-quit' => 'schbaischare un uffhere',
 	'userprofilepage-closing-popup-cancel' => 'Uffhere',
 	'user-action-menu-edit' => 'Bearwaide',
 	'user-action-menu-delete' => 'Lesche',
-);
+];
 
-/** Polish (polski)
- * @author BeginaFelicysym
- * @author Cloudissimo
- * @author Sovq
- */
-$messages['pl'] = array(
+$messages['pl'] = [
 	'userprofilepage-edit-modal-header' => 'Edycja profilu',
 	'userprofilepage-question-caption' => 'Pytanie $1/$2',
 	'userprofilepage-lightbox-interview-cancel' => 'Anuluj',
@@ -2267,22 +2208,22 @@ $messages['pl'] = array(
 	'userprofilepage-interview-edit-new-summary' => 'Wywiad użytkownika utworzony',
 	'userprofilepage-interview-edit-update-summary' => 'Wywiad użytkownika zaktualizowany',
 	'userprofilepage-interview-save-error' => 'Zapisywanie wywiadu nie powiodło się',
-	'userprofilepage-interview-save-internal-error' => 'Zapisywanie wywiadu nie powiodło się - nastąpił błąd wewnętrzny',
+	'userprofilepage-interview-save-internal-error' => 'Zapisywanie wywiadu nie powiodło się – nastąpił błąd wewnętrzny',
 	'userprofilepage-answers-stats-title' => 'Statystyki wywiadu',
 	'userprofilepage-add-question' => 'Dodaj nowe pytanie',
 	'userprofilepage-question-save' => 'Zapisz pytanie',
 	'userprofilepage-question-list-title' => '$1 z $2 pytań',
 	'userprofilepage-interview-section-title' => 'Wywiad użytkownika',
-	'userprofilepage-invalid-user' => 'Błąd użytkownika! Jesteś niezalogowany lub nie masz uprawnień, by przejść dalej',
+	'userprofilepage-invalid-user' => 'Jesteś niezalogowany lub nie masz uprawnień, by przejść dalej',
 	'userprofilepage-avatar-error-type' => 'Nieprawidłowy typ MIME. Dozwolone: $1',
-	'userprofilepage-avatar-error-resolution' => 'Maksymalna rozdzielczość avataru to 2000x2000',
+	'userprofilepage-avatar-error-resolution' => 'Maksymalna rozdzielczość awatara to 2000×2000',
 	'user-identity-box-edit' => 'Edytuj',
-	'user-identity-box-wikia-contributor' => 'Użytkownik Wikii',
-	'user-identity-box-edit-avatar' => 'Edytuj avatar',
-	'user-identity-box-delete-avatar' => 'Usuń avatar',
-	'user-identity-box-avatar-upload-avatar' => 'Prześlij avatar',
-	'user-identity-box-avatar-fb-import-avatar' => 'Importuj mój avatar z Facebooka',
-	'user-identity-box-avatar-choose-avatar' => 'Wybierz avatar',
+	'user-identity-box-wikia-contributor' => 'Użytkownik portalu Fandom',
+	'user-identity-box-edit-avatar' => 'Edytuj awatar',
+	'user-identity-box-delete-avatar' => 'Usuń awatar',
+	'user-identity-box-avatar-upload-avatar' => 'Prześlij awatar',
+	'user-identity-box-avatar-fb-import-avatar' => 'Importuj mój awatar z Facebooka',
+	'user-identity-box-avatar-choose-avatar' => 'Wybierz awatar',
 	'user-identity-box-avatar-save' => 'Zapisz i zakończ',
 	'user-identity-box-avatar-cancel' => 'Anuluj',
 	'user-identity-box-avatar-anon-user-error' => 'Musisz się zalogować zanim cokolwiek zmienisz',
@@ -2294,12 +2235,12 @@ $messages['pl'] = array(
 	'user-identity-box-my-fb-page' => 'Mój Facebook',
 	'user-identity-box-fav-wikis' => 'Ulubione wiki',
 	'user-identity-box-location' => '<span>Mieszkam w</span> $1',
-	'user-identity-box-was-born-on' => '<span>Urodziny</span> $1 $2',
+	'user-identity-box-was-born-on' => '<span>Urodziny</span> $2 $1',
 	'user-identity-box-was-born-in' => '<span>Urodziłem się w</span> $1',
 	'user-identity-box-occupation' => '<span>Moje zajęcie</span> $1',
 	'user-identity-i-am' => '<span>Jestem</span> $1',
 	'user-identity-box-edits-since-joining' => 'Edycje od czasu dołączenia do tej wiki<br />$1',
-	'user-identity-box-edits' => '<em>$1</em><span>{{PLURAL:$1|EDYCJA|EDYCJE|EDYCJI}}</span>',
+	'user-identity-box-edits' => '<em>$1</em><span>EDYCJE</span>',
 	'user-identity-box-group-blocked' => 'Zablokowany',
 	'user-identity-box-group-chatmoderator' => 'Moderator czatu',
 	'user-identity-box-group-sysop' => 'Administrator',
@@ -2318,31 +2259,31 @@ $messages['pl'] = array(
 	'user-identity-box-zero-state-website' => 'Moja strona',
 	'user-identity-box-zero-state-fb-page' => 'Mój Facebook',
 	'user-identity-box-about-me' => 'O mnie',
-	'user-identity-box-avatar' => 'Avatar',
+	'user-identity-box-avatar' => 'Awatar',
 	'user-identity-box-about-name' => 'Jak masz na imię?',
 	'user-identity-box-about-location' => 'Gdzie mieszkasz?',
 	'user-identity-box-about-birthday' => 'Kiedy masz urodziny?',
 	'user-identity-box-about-occupation' => 'Czym się zajmujesz?',
 	'user-identity-box-about-gender' => 'Jakiej jesteś płci?',
-	'user-identity-box-about-website' => 'Jaka jest twoja osobista strona?',
+	'user-identity-box-about-website' => 'Jaka jest Twoja osobista strona?',
 	'user-identity-box-about-tweet' => 'Jak nazywa się Twoje konto na Twitterze?',
-	'user-identity-box-about-fav-wikis' => 'Wiki, na których dokonałeś edycji:',
+	'user-identity-box-about-fav-wikis' => 'Wiki, na których edytujesz:',
 	'user-identity-box-about-fav-wikis-refresh' => 'Odśwież',
-	'user-identity-box-join-more-wikis' => 'Dołącz do większej ilości wiki, żeby je tutaj zobaczyć!',
+	'user-identity-box-join-more-wikis' => 'Dołącz do innych wiki, żeby je tutaj zobaczyć!',
 	'user-identity-box-import-from-fb' => 'Zaimportuj swoje dane z Facebooka',
 	'user-identity-box-connect-to-fb' => 'Połącz z Facebookiem',
-	'user-identity-box-unsyc-fb' => 'Rozłącz z Facebookiem',
+	'user-identity-box-unsyc-fb' => 'Odłącz od Facebooka',
 	'user-identity-box-fb-page' => 'Jaka jest Twoja strona na Facebooku?',
 	'user-identity-box-invalid-fb-id-error' => 'Błędny identyfikator Facebooka',
 	'user-identity-box-fb-prefs' => 'Preferencje kanału',
 	'user-identity-box-avatar-error-nofile' => 'Błąd: Nie znaleziono pliku do przesłania',
 	'user-identity-box-avatar-error-cantwrite' => 'Błąd: Nie można zapisać do tymczasowego katalogu',
-	'user-identity-box-avatar-error-size' => 'Błąd: Plik jest zbyt duży (maks. {{PLURAL:$1|$1|$1}}KB)',
-	'user-identity-box-avatar-error' => 'Błąd: Wystąpił błąd wewnętrzny podczas zapisywania avataru',
+	'user-identity-box-avatar-error-size' => 'Błąd: Plik avataru jest zbyt duży (maks. $1KB)',
+	'user-identity-box-avatar-error' => 'Błąd: Wystąpił błąd wewnętrzny podczas zapisywania awatara',
 	'userprofilepage-lightbox-about-me-cancel' => 'Anuluj',
 	'userprofilepage-lightbox-about-me-save' => 'Zapisz i zakończ',
-	'user-identity-box-saving-error' => 'Zapisywanie danych użytkownika nie powiodło się - podane informacje powinny być zwykłym tekstem',
-	'user-identity-box-saving-internal-error' => 'Zapisywanie danych użytkownika nie powiodło się - wystąpił błąd wewnętrzny',
+	'user-identity-box-saving-error' => 'Zapisywanie danych użytkownika nie powiodło się – podane informacje powinny być zwykłym tekstem',
+	'user-identity-box-saving-internal-error' => 'Zapisywanie danych użytkownika nie powiodło się – wystąpił błąd wewnętrzny',
 	'userprofilepage-closing-popup-header' => 'Opuszczanie edytora profilu',
 	'userprofilepage-closing-popup-info' => 'Są niezapisane zmiany w Twoim profilu. Co chcesz zrobić?',
 	'userprofilepage-closing-popup-discard-and-quit' => 'Odrzuć zmiany i zamknij',
@@ -2360,33 +2301,33 @@ $messages['pl'] = array(
 	'usermasthead-log' => 'Profil użytkownika',
 	'usermasthead-log-message' => 'dodano informacje do profilu',
 	'usermasthead-log-alt' => 'Rejestr operacji w profilu użytkownika',
-	'useravatar-log' => 'Avatary',
-	'blog-avatar-changed-log' => 'Zmiana lub dodanie avatara',
-	'blog-avatar-removed-log' => 'Usunięto avatary użytkownika $1',
-	'blog-avatar-alt' => 'Rejestr zmian avatarów',
-	'user-identity-remove-confirmation' => 'Czy na pewno chcesz usunąć avatar?',
-	'user-identity-remove-fail' => 'Wystąpił błąd podczas usuwania avatara!',
-	'user-identity-box-group-wikiastars' => 'Wikia Star',
+	'useravatar-log' => 'Awatary',
+	'blog-avatar-changed-log' => 'zmiana lub dodanie avatara',
+	'blog-avatar-removed-log' => 'Usunięto awatary użytkownika $1',
+	'blog-avatar-alt' => 'Rejestr zmian awatarów',
+	'user-identity-remove-confirmation' => 'Czy na pewno chcesz usunąć awatar?',
+	'user-identity-remove-fail' => 'Wystąpił błąd podczas usuwania awatara!',
 	'user-identity-box-group-voldev' => 'Volunteer Developer',
-	'user-identity-box-group-threadmoderator' => 'Moderator',
+	'user-identity-box-group-threadmoderator' => 'Moderator dyskusji',
 	'user-identity-box-about-fb-page' => 'Jaki jest link do Twojego profilu na Facebooku?',
-	'user-identity-avatars-maintenance' => 'Przesyłanie i usuwanie avatarów tymczasowo wyłączone na czas konserwacji!',
+	'user-identity-avatars-maintenance' => 'Jutro awatary użytkowników zostaną przeniesione na nowy serwer. W tym czasie przesyłanie nowych awatarów nie będzie możliwe.',
 	'userprofilepage-edit-modal-error' => 'Wystąpił nieznany błąd',
-);
+	'user-identity-box-group-adminmentor' => 'Mentor',
+	'user-identity-box-discussion-posts' => 'Postów w Dyskusjach',
+	'user-identity-box-group-vanguard' => 'Vanguard',
+	'right-authenticated' => 'Oficjalne konto zweryfikowane jako należące np. do znanej osoby czy producenta gry',
+	'right-council' => 'Użytkownik należący do Community Council',
+	'right-removeavatar' => 'Usuwanie awatarów użytkowników',
+];
 
-/** Piedmontese (Piemontèis)
- */
-$messages['pms'] = array(
-	'useravatar-log' => "Registr dj'avatar ëd j'utent",
+$messages['pms'] = [
+	'useravatar-log' => 'Registr dj\'avatar ëd j\'utent',
 	'blog-avatar-changed-log' => 'Avatar giontà o cangià',
 	'blog-avatar-removed-log' => 'Avatar ëd $1 gavà',
-	'blog-avatar-alt' => "Registr ëd le gionte o dle scancelassion ëd j'avatar ëd j'utent",
-);
+	'blog-avatar-alt' => 'Registr ëd le gionte o dle scancelassion ëd j\'avatar ëd j\'utent',
+];
 
-/** Pashto (پښتو)
- * @author Ahmed-Najib-Biabani-Ibrahimkhel
- */
-$messages['ps'] = array(
+$messages['ps'] = [
 	'userprofilepage-edit-modal-header' => 'پېژنليک سمول',
 	'userprofilepage-lightbox-interview-cancel' => 'ناګارل',
 	'userprofilepage-add-question' => 'نوې پوښتنه ورګډول',
@@ -2431,12 +2372,9 @@ $messages['ps'] = array(
 	'user-action-menu-rename' => 'نوم بدلول',
 	'user-action-menu-delete' => 'ړنګول',
 	'user-action-menu-history' => 'پېښليک',
-);
+];
 
-/** Portuguese (português)
- * @author SandroHc
- */
-$messages['pt'] = array(
+$messages['pt'] = [
 	'userprofilepage-edit-modal-header' => 'Editar perfil',
 	'userprofilepage-question-caption' => 'Pergunta $1/$2',
 	'userprofilepage-lightbox-interview-cancel' => 'Cancelar',
@@ -2447,7 +2385,7 @@ $messages['pt'] = array(
 	'userprofilepage-avatar-error-type' => 'Tipo MIME inválido. Permitido: $1',
 	'userprofilepage-avatar-error-resolution' => 'A resolução máxima para avatares é 2000 x 2000',
 	'user-identity-box-edit' => 'Editar',
-	'user-identity-box-wikia-contributor' => 'Um contribuidor da Wikia',
+	'user-identity-box-wikia-contributor' => 'Um usuário do Fandom',
 	'user-identity-box-edit-avatar' => 'Editar avatar',
 	'user-identity-box-delete-avatar' => 'Eliminar avatar',
 	'user-identity-box-avatar-upload-avatar' => 'Enviar um avatar',
@@ -2456,7 +2394,7 @@ $messages['pt'] = array(
 	'user-identity-box-avatar-save' => 'Salve, eu terminei',
 	'user-identity-box-avatar-cancel' => 'Cancelar',
 	'user-identity-box-avatar-anon-user-error' => 'Você tem que fazer login antes que possa mudar qualquer coisa',
-	'user-identity-box-hide-edits-wikis' => 'Ocultar todos',
+	'user-identity-box-hide-edits-wikis' => 'Esconder tudo',
 	'user-identity-box-banned-from-chat' => 'Banido do Chat',
 	'user-identity-box-aka-label' => '<span>também conhecido como</span> $1',
 	'user-identity-box-my-twitter' => 'Meu Twitter',
@@ -2466,9 +2404,9 @@ $messages['pt'] = array(
 	'user-identity-box-location' => '<span>Vivo em</span> $1',
 	'user-identity-box-was-born-on' => '<span>Nasci em</span> $2 de $1',
 	'user-identity-box-was-born-in' => '<span>Nasci em</span> $1',
-	'user-identity-box-occupation' => '<span>Minha ocupação é</span> $1',
+	'user-identity-box-occupation' => '<span>Minha profissão é</span> $1',
 	'user-identity-i-am' => '<span>Eu sou</span> $1',
-	'user-identity-box-edits-since-joining' => 'Edições desde que se juntou a essa wikia<br />$1',
+	'user-identity-box-edits-since-joining' => 'Edições desde que se juntou a essa wiki<br />$1',
 	'user-identity-box-edits' => '<em>$1</em><span>EDIÇÕES</span>',
 	'user-identity-box-group-blocked' => 'Bloqueado',
 	'user-identity-box-group-chatmoderator' => 'Moderador do chat',
@@ -2498,7 +2436,7 @@ $messages['pt'] = array(
 	'user-identity-box-about-tweet' => 'Qual é o seu nome no Twitter?',
 	'user-identity-box-about-fav-wikis' => 'Wikis em que você já contribuiu:',
 	'user-identity-box-about-fav-wikis-refresh' => 'Atualizar',
-	'user-identity-box-join-more-wikis' => 'Junte-se a mais wikias para vê-las aqui!',
+	'user-identity-box-join-more-wikis' => 'Junte-se a mais wikis para vê-las aqui!',
 	'user-identity-box-import-from-fb' => 'Importar sua informação do Facebook',
 	'user-identity-box-connect-to-fb' => 'Conectar com Facebook',
 	'user-identity-box-unsyc-fb' => 'Desconectar do Facebook',
@@ -2506,12 +2444,12 @@ $messages['pt'] = array(
 	'user-identity-box-invalid-fb-id-error' => 'ID do Facebook Inválido',
 	'user-identity-box-fb-prefs' => 'Preferências de feed',
 	'user-identity-box-avatar-error-nofile' => 'Erro: Nenhum arquivo de avatar encontrado para ser enviado',
-	'user-identity-box-avatar-error-size' => 'Erro: Arquivo do Avatar é muito grande (max {{PLURAL:$1|$1|$1}} KB)',
+	'user-identity-box-avatar-error-size' => 'Erro: Arquivo do avatar é muito grande (max {{PLURAL:$1|$1|$1}} KB)',
 	'userprofilepage-lightbox-about-me-cancel' => 'Cancelar',
 	'userprofilepage-lightbox-about-me-save' => 'Salve, eu terminei',
 	'userprofilepage-closing-popup-header' => 'Sair do Editor de Perfil',
 	'userprofilepage-closing-popup-info' => 'Há alterações que não foram salvas no seu perfil. O que você gostaria de fazer?',
-	'userprofilepage-closing-popup-discard-and-quit' => 'Descartar as alterações e sair',
+	'userprofilepage-closing-popup-discard-and-quit' => 'Descartar alterações e sair',
 	'userprofilepage-closing-popup-save-and-quit' => 'Salvar e sair',
 	'userprofilepage-closing-popup-cancel' => 'Cancelar',
 	'user-action-menu-edit' => 'Editar',
@@ -2537,9 +2475,8 @@ $messages['pt'] = array(
 	'userprofilepage-answers-stats-title' => 'Estatísticas de entrevista',
 	'userprofilepage-interview-section-title' => 'Entrevista de usuário',
 	'userprofilepage-invalid-user' => 'Usuário inválido! Você não está logado ou não tem direitos para prosseguir',
-	'user-identity-box-group-wikiastars' => 'Wikia Star',
 	'user-identity-box-group-voldev' => 'Volunteer Developer',
-	'user-identity-box-group-threadmoderator' => 'Moderador',
+	'user-identity-box-group-threadmoderator' => 'Moderador de Discussões',
 	'user-identity-box-about-fb-page' => 'Qual é o link do seu perfil no Facebook?',
 	'user-identity-box-avatar-error-cantwrite' => 'Erro: Não foi possível salvar no diretório temporário',
 	'user-identity-box-avatar-error' => 'Erro: Houve um erro interno ao salvar o avatar',
@@ -2549,12 +2486,12 @@ $messages['pt'] = array(
 	'usermasthead-log-alt' => 'Registro de edições no cabeçalho do usuário',
 	'user-identity-avatars-maintenance' => 'Carregamento e exclusão de avatares temporariamente desativados durante a manutenção!',
 	'userprofilepage-edit-modal-error' => 'Um erro desconhecido ocorreu',
-);
+	'user-identity-box-group-adminmentor' => 'Mentor de admin',
+	'user-identity-box-discussion-posts' => 'Posts em Discussões',
+	'user-identity-box-group-vanguard' => 'Vanguard',
+];
 
-/** Brazilian Portuguese (português do Brasil)
- * @author Luckas Blade
- */
-$messages['pt-br'] = array(
+$messages['pt-br'] = [
 	'userprofilepage-edit-modal-header' => 'Editar perfil',
 	'userprofilepage-question-caption' => 'Pergunta $1/$2',
 	'userprofilepage-lightbox-interview-cancel' => 'Cancelar',
@@ -2622,32 +2559,24 @@ $messages['pt-br'] = array(
 	'blog-avatar-changed-log' => 'Adicionou ou alterou avatar',
 	'blog-avatar-removed-log' => 'Removeu os avatares de $1',
 	'blog-avatar-alt' => 'Registros de adições e remoções de avatares',
-);
+];
 
-/** tarandíne (tarandíne)
- * @author Joetaras
- */
-$messages['roa-tara'] = array(
-	'userprofilepage-edit-modal-header' => "Cange 'u profile",
+$messages['roa-tara'] = [
+	'userprofilepage-edit-modal-header' => 'Cange \'u profile',
 	'userprofilepage-question-caption' => 'Domande $1/$2',
 	'userprofilepage-lightbox-interview-cancel' => 'Annulle',
 	'user-identity-box-edit' => 'Cange',
 	'user-identity-box-zero-state-gender' => 'Sesso',
 	'user-action-menu-edit' => 'Cange',
-	'user-action-menu-edit-profile' => "Cange 'u profile",
-	'user-action-menu-leave-message' => "Lasse 'u messàgge",
-);
+	'user-action-menu-edit-profile' => 'Cange \'u profile',
+	'user-action-menu-leave-message' => 'Lasse \'u messàgge',
+];
 
-/** Russian (русский)
- * @author DCamer
- * @author Kaganer
- * @author Kuzura
- */
-$messages['ru'] = array(
-	'userprofilepage-edit-modal-header' => 'Правка своего профайла',
+$messages['ru'] = [
+	'userprofilepage-edit-modal-header' => 'Правка профайла',
 	'userprofilepage-question-caption' => 'Вопрос $1/$2',
 	'userprofilepage-lightbox-interview-cancel' => 'Отмена',
-	'userprofilepage-lightbox-interview-save' => 'Сохранить, я закончил',
+	'userprofilepage-lightbox-interview-save' => 'Сохранить',
 	'userprofilepage-interview-edit-new-summary' => 'Интервью участника создано',
 	'userprofilepage-interview-edit-update-summary' => 'Интервью участника обновлено',
 	'userprofilepage-interview-save-error' => 'Сохранить интервью не удалось',
@@ -2657,29 +2586,29 @@ $messages['ru'] = array(
 	'userprofilepage-question-save' => 'Сохранить вопрос',
 	'userprofilepage-question-list-title' => '$1/$2 вопросов',
 	'userprofilepage-interview-section-title' => 'Интервью участника',
-	'userprofilepage-invalid-user' => 'Недопустимое имя участника! Вы не авторизованы или не имеете права делать это',
+	'userprofilepage-invalid-user' => 'Недопустимое имя участника. Вы не авторизованы или не имеете на это права',
 	'userprofilepage-avatar-error-type' => 'Недопустимый тип MIME. Допускается: $1',
 	'userprofilepage-avatar-error-resolution' => 'Максимальное разрешение аватара составляет 2000x2000',
 	'user-identity-box-edit' => 'Править',
-	'user-identity-box-wikia-contributor' => 'Анонимный участник',
+	'user-identity-box-wikia-contributor' => 'Участник Фэндома',
 	'user-identity-box-edit-avatar' => 'Изменить аватар',
 	'user-identity-box-delete-avatar' => 'Удалить аватар',
 	'user-identity-box-avatar-upload-avatar' => 'Загрузить аватар',
 	'user-identity-box-avatar-fb-import-avatar' => 'Импортировать мой аватар из Facebook',
 	'user-identity-box-avatar-choose-avatar' => 'Выбрать аватар',
-	'user-identity-box-avatar-save' => 'Сохранить, я закончил',
+	'user-identity-box-avatar-save' => 'Сохранить',
 	'user-identity-box-avatar-cancel' => 'Отмена',
-	'user-identity-box-avatar-anon-user-error' => 'Вы должны войти в систему прежде, чем изменить что-либо',
+	'user-identity-box-avatar-anon-user-error' => 'Вы должны войти в систему, прежде чем что-либо изменить',
 	'user-identity-box-hide-edits-wikis' => 'Скрыть всё',
 	'user-identity-box-banned-from-chat' => 'Забанен в чате',
 	'user-identity-box-aka-label' => '<span>aka</span> $1',
-	'user-identity-box-my-twitter' => 'Мой Твиттер',
+	'user-identity-box-my-twitter' => 'Мой твиттер-аккаунт',
 	'user-identity-box-my-website' => 'Мой веб-сайт',
 	'user-identity-box-my-fb-page' => 'Мой Facebook',
 	'user-identity-box-fav-wikis' => 'Мои избранные вики',
 	'user-identity-box-location' => '<span>Я живу в</span> $1',
 	'user-identity-box-was-born-on' => '<span>Мой день рождения:</span> $2 $1',
-	'user-identity-box-was-born-in' => '<span>Я родился в</span> $1',
+	'user-identity-box-was-born-in' => '<span>Родной город:</span> $1',
 	'user-identity-box-occupation' => '<span>Моя профессия:</span> $1',
 	'user-identity-i-am' => '<span>Я</span> $1',
 	'user-identity-box-edits-since-joining' => 'Правок с момента присоединения<br />к этой вики $1',
@@ -2698,34 +2627,34 @@ $messages['ru'] = array(
 	'user-identity-box-zero-state-birthday' => 'Мой день рождения:',
 	'user-identity-box-zero-state-gender' => 'Я',
 	'user-identity-box-zero-state-occupation' => 'Моя профессия:',
-	'user-identity-box-zero-state-twitter' => 'Мой Твиттер',
+	'user-identity-box-zero-state-twitter' => 'Мой твиттер-аккаунт',
 	'user-identity-box-zero-state-website' => 'Мой веб-сайт',
 	'user-identity-box-zero-state-fb-page' => 'Мой Facebook',
 	'user-identity-box-about-me' => 'Обо мне',
 	'user-identity-box-avatar' => 'Аватар',
 	'user-identity-box-about-name' => 'Как вас зовут?',
 	'user-identity-box-about-location' => 'Где вы живёте?',
-	'user-identity-box-about-birthday' => 'Когда у тебя день рождения?',
+	'user-identity-box-about-birthday' => 'Когда у вас день рождения?',
 	'user-identity-box-about-occupation' => 'Ваш род деятельности?',
-	'user-identity-box-about-gender' => 'Ваш пол?',
+	'user-identity-box-about-gender' => 'Ваш пол или гендерная идентичность?',
 	'user-identity-box-about-website' => 'Адрес вашего личного веб-сайта?',
-	'user-identity-box-about-tweet' => 'Ваш Твиттер?',
-	'user-identity-box-about-fav-wikis' => 'Википроекты, в которые вы внесли вклад:',
+	'user-identity-box-about-tweet' => 'Ваш твиттер-аккаунт?',
+	'user-identity-box-about-fav-wikis' => 'Вики-проекты, в которые вы внесли вклад:',
 	'user-identity-box-about-fav-wikis-refresh' => 'Обновить',
-	'user-identity-box-join-more-wikis' => 'Правьте на википроектах, чтобы увидеть их в списке!',
+	'user-identity-box-join-more-wikis' => 'Присоединитесь к вики, чтобы увидеть её здесь!',
 	'user-identity-box-import-from-fb' => 'Импорт информации из Facebook',
 	'user-identity-box-connect-to-fb' => 'Связаться с Facebook',
 	'user-identity-box-unsyc-fb' => 'Войти через Facebook',
 	'user-identity-box-fb-page' => 'Ваша страница на Facebook?',
-	'user-identity-box-invalid-fb-id-error' => 'Недопустимый ID Facebook',
-	'user-identity-box-fb-prefs' => 'Предпочтительные настройки',
+	'user-identity-box-invalid-fb-id-error' => 'Недопустимый Facebook ID',
+	'user-identity-box-fb-prefs' => 'Настройки ленты новостей',
 	'user-identity-box-avatar-error-nofile' => 'Ошибка: файл для загрузки аватара не найден',
 	'user-identity-box-avatar-error-cantwrite' => 'Ошибка: не удалось записать во временную директорию',
-	'user-identity-box-avatar-error-size' => 'Ошибка: файл Аватара слишком велик (макс.  {{PLURAL:$1| $1|$1}}кб)',
+	'user-identity-box-avatar-error-size' => 'Ошибка: файл аватара слишком велик (макс.  {{PLURAL:$1| $1|$1}}кб)',
 	'user-identity-box-avatar-error' => 'Ошибка: произошла внутренняя ошибка при сохранении аватара',
 	'userprofilepage-lightbox-about-me-cancel' => 'Отмена',
-	'userprofilepage-lightbox-about-me-save' => 'Сохранить, я закончил',
-	'user-identity-box-saving-error' => 'Сохранить данные участника не удалось - ваши данные должны быть обычным текстом',
+	'userprofilepage-lightbox-about-me-save' => 'Сохранить',
+	'user-identity-box-saving-error' => 'Сохранить данные участника не удалось — ваши данные должны быть обычным текстом',
 	'user-identity-box-saving-internal-error' => 'Сохранить данные участника не удалось — внутренняя ошибка',
 	'userprofilepage-closing-popup-header' => 'Выход из редактора профайла',
 	'userprofilepage-closing-popup-info' => 'Есть несохранённые изменения в профайле. Что вы хотите сделать?',
@@ -2741,27 +2670,26 @@ $messages['ru'] = array(
 	'user-action-menu-rename' => 'Переименовать',
 	'user-action-menu-delete' => 'Удалить',
 	'user-action-menu-history' => 'История',
-	'usermasthead-log' => 'Данные об участнике',
+	'usermasthead-log' => 'Данные участника',
 	'usermasthead-log-message' => 'добавить информацию в профайл',
-	'usermasthead-log-alt' => 'Журналы правок данных об участниках',
-	'useravatar-log' => 'Журнал аватар участников',
-	'blog-avatar-changed-log' => 'Добавить или изменить аватар',
-	'blog-avatar-removed-log' => 'Удалён аватар $1',
-	'blog-avatar-alt' => 'Журналы добавлений или удалений аватар участников',
-	'user-identity-remove-confirmation' => 'Вы уверены, что вы хотите удалить аватар?',
-	'user-identity-remove-fail' => 'Возникли некоторые проблемы при удалении аватара!',
-	'user-identity-box-group-wikiastars' => 'Wikia Star',
+	'usermasthead-log-alt' => 'Журнал правок данных участника',
+	'useravatar-log' => 'Журнал аватаров участников',
+	'blog-avatar-changed-log' => 'Добавил или изменил аватар',
+	'blog-avatar-removed-log' => 'удалил аватары для $1',
+	'blog-avatar-alt' => 'аватар',
+	'user-identity-remove-confirmation' => 'Вы уверены, что хотите удалить аватар?',
+	'user-identity-remove-fail' => 'Возникли проблемы при удалении аватара.',
 	'user-identity-box-group-voldev' => 'Volunteer Developer',
 	'user-identity-box-group-threadmoderator' => 'Модератор форума',
-	'user-identity-box-about-fb-page' => 'Дайте ссылку на свою страницу в Facebook',
-	'user-identity-avatars-maintenance' => 'Загрузка и удаление аватара временно отключено. Идут технические работы.',
+	'user-identity-box-about-fb-page' => 'Ссылка на вашу страницу на Facebook',
+	'user-identity-avatars-maintenance' => 'Завтра аватарки участников Викия будут перенесены на новый сервер. На время этого процесса функция загрузки новых аватарок будет отключена.',
 	'userprofilepage-edit-modal-error' => 'Неизвестная ошибка',
-);
+	'user-identity-box-group-adminmentor' => 'Администратор-наставник',
+	'user-identity-box-discussion-posts' => 'Сообщения',
+	'user-identity-box-group-vanguard' => 'Vanguard',
+];
 
-/** Serbian (Cyrillic script) (српски (ћирилица)‎)
- * @author Rancher
- */
-$messages['sr-ec'] = array(
+$messages['sr-ec'] = [
 	'userprofilepage-edit-modal-header' => 'Уређивање профила',
 	'userprofilepage-question-caption' => 'Питање $1/$2',
 	'userprofilepage-lightbox-interview-cancel' => 'Откажи',
@@ -2776,13 +2704,9 @@ $messages['sr-ec'] = array(
 	'userprofilepage-question-list-title' => '$1/$2 питања',
 	'userprofilepage-interview-section-title' => 'Интервју с корисником',
 	'userprofilepage-invalid-user' => 'Неисправан корисник. Нисте пријављени или немате права да наставите',
-);
+];
 
-/** Swedish (svenska)
- * @author VickyC
- * @author WikiPhoenix
- */
-$messages['sv'] = array(
+$messages['sv'] = [
 	'userprofilepage-edit-modal-header' => 'Redigera profil',
 	'userprofilepage-question-caption' => 'Fråga $1/$2',
 	'userprofilepage-lightbox-interview-cancel' => 'Avbryt',
@@ -2884,18 +2808,14 @@ $messages['sv'] = array(
 	'usermasthead-log-message' => 'lade till profilinformation',
 	'usermasthead-log-alt' => 'Redigeringsloggar för redaktionsruta',
 	'useravatar-log' => 'Användaravatarslogg',
-	'blog-avatar-changed-log' => 'Lade till eller ändrade avatar',
-	'blog-avatar-removed-log' => 'Tog bort $1s avatarer',
-	'blog-avatar-alt' => 'Logbok över användares tillagda eller borttagna avatarer.',
+	'blog-avatar-changed-log' => 'Lagt till eller ändrats avatar',
+	'blog-avatar-removed-log' => 'Tagit bort $1s avatarer',
+	'blog-avatar-alt' => 'Loggar av användare avatar tillägg eller flyttning',
 	'user-identity-remove-confirmation' => 'Är du säker på att du vill ta bort avataren?',
 	'user-identity-remove-fail' => 'Det uppstod ett problem när avataren skulle tas bort!',
-);
+];
 
-/** Telugu (తెలుగు)
- * @author Jprmvnvijay5
- * @author Veeven
- */
-$messages['te'] = array(
+$messages['te'] = [
 	'userprofilepage-lightbox-interview-save' => 'అయిపోయింది, ఇక దాచిపెట్టండి.',
 	'userprofilepage-interview-edit-new-summary' => 'వాడుకరితో మాటామంతీ కల్పించాము.',
 	'userprofilepage-interview-section-title' => 'వాడుకరితో మాటామంతీ',
@@ -2915,12 +2835,9 @@ $messages['te'] = array(
 	'userprofilepage-lightbox-about-me-save' => 'అయిపోయింది, ఇక దాచిపెట్టండి.',
 	'user-action-menu-view-source' => 'వేరును చూపండి',
 	'user-action-menu-protect' => 'కాపాడండి',
-);
+];
 
-/** Tagalog (Tagalog)
- * @author AnakngAraw
- */
-$messages['tl'] = array(
+$messages['tl'] = [
 	'userprofilepage-edit-modal-header' => 'Baguhin ang Balangkas ng Katangian',
 	'userprofilepage-question-caption' => 'Tanong $1/$2',
 	'userprofilepage-lightbox-interview-cancel' => 'Huwag ituloy',
@@ -3027,32 +2944,21 @@ $messages['tl'] = array(
 	'blog-avatar-alt' => 'Mga talaan ng mga pagdaragdag o pagtatanggal ng abatar ng tagagamit',
 	'user-identity-remove-confirmation' => 'Talaga bang gusto mong tanggalin ang abatar?',
 	'user-identity-remove-fail' => 'Mayroong ilang suliranin noong tinatanggal ang abatar!',
-);
+];
 
-/** толышә зывон (толышә зывон)
- * @author Гусейн
- */
-$messages['tly'] = array(
+$messages['tly'] = [
 	'user-identity-box-about-fav-wikis-refresh' => 'Тожә кардеј',
-);
+];
 
-/** Turkish (Türkçe)
- * @author Bilalokms
- * @author Emperyan
- * @author Erdemaslancan
- */
-$messages['tr'] = array(
+$messages['tr'] = [
 	'userprofilepage-edit-modal-header' => 'Profil Düzenle',
 	'user-identity-box-avatar-cancel' => 'İptal',
 	'user-identity-box-aka-label' => '$1 <span>olarak bilinir</span>',
 	'user-identity-box-fav-wikis' => 'Favori vikilerim',
 	'userprofilepage-closing-popup-cancel' => 'İptal',
-);
+];
 
-/** Tatar (Cyrillic script) (татарча)
- * @author Ajdar
- */
-$messages['tt-cyrl'] = array(
+$messages['tt-cyrl'] = [
 	'userprofilepage-lightbox-interview-cancel' => 'Баш тарту',
 	'user-identity-box-edit' => 'Үзгәртү',
 	'user-identity-box-avatar-cancel' => 'Баш тарту',
@@ -3069,13 +2975,9 @@ $messages['tt-cyrl'] = array(
 	'user-action-menu-edit' => 'Үзгәртү',
 	'user-action-menu-view-source' => 'Башлангыч кодны карау',
 	'user-action-menu-protect' => 'Якларга',
-);
+];
 
-/** Ukrainian (українська)
- * @author A1
- * @author Steve.rusyn
- */
-$messages['uk'] = array(
+$messages['uk'] = [
 	'userprofilepage-edit-modal-header' => 'Редагувати профіль',
 	'userprofilepage-question-caption' => 'Запитання $1/$2',
 	'userprofilepage-lightbox-interview-cancel' => 'Скасувати',
@@ -3104,15 +3006,15 @@ $messages['uk'] = array(
 	'user-identity-box-zero-state-fb-page' => 'Мій Facebook',
 	'user-identity-box-about-me' => 'Про мене',
 	'user-identity-box-avatar' => 'Аватар',
-	'user-identity-box-about-name' => "Ваше ім'я?",
+	'user-identity-box-about-name' => 'Ваше ім\'я?',
 	'user-identity-box-about-location' => 'Де ви мешкаєте?',
 	'user-identity-box-about-birthday' => 'Коли у вас день народження?',
-	'user-identity-box-about-fav-wikis' => 'Вікі в які ви зробили внесок:',
+	'user-identity-box-about-fav-wikis' => 'Вікі, в які ви зробили внесок:',
 	'user-identity-box-about-fav-wikis-refresh' => 'Оновити',
-	'user-identity-box-join-more-wikis' => 'Долучайтесь до вікі, щоб побачити їх тут!',
+	'user-identity-box-join-more-wikis' => 'Приєднуйтесь до інших вікі, щоб побачити їх тут!',
 	'user-identity-box-import-from-fb' => 'Імпорт інформації з Facebook',
-	'user-identity-box-connect-to-fb' => "Пов'язати з Facebook",
-	'user-identity-box-unsyc-fb' => 'Увійти з Facebook',
+	'user-identity-box-connect-to-fb' => 'Пов\'язати з Facebook',
+	'user-identity-box-unsyc-fb' => 'Увійти за допомогою Facebook',
 	'user-identity-box-fb-page' => 'Ваша сторінка на Facebook?',
 	'user-identity-box-invalid-fb-id-error' => 'Невірний ID Facebook',
 	'user-identity-box-fb-prefs' => 'Налаштування користувача',
@@ -3137,20 +3039,36 @@ $messages['uk'] = array(
 	'user-action-menu-history' => 'Історія',
 	'usermasthead-log-message' => 'Додана інформація до профілю',
 	'usermasthead-log-alt' => 'Журнали зміни даних про користувачів',
-);
+	'user-identity-box-wikia-contributor' => 'Анонімний користувач',
+	'user-identity-box-about-gender' => 'Хто ви за статевою ознакою?',
+	'user-identity-box-about-occupation' => 'Ваш рід занять, професія?',
+	'user-identity-box-about-tweet' => 'Ваш Twitter?',
+	'user-identity-box-about-website' => 'Адреса вашого особистого веб-сайту?',
+	'user-identity-box-avatar-anon-user-error' => 'Ви маєте увійти до системи, перш ніж змінити будь-що',
+	'user-identity-box-avatar-error-cantwrite' => 'Помилка: збереження в тимчасовій директорії не вдалося',
+	'user-identity-box-avatar-error' => 'Помилка: на жаль, через внутрішню помилку аватар не вдалося зберегти',
+	'user-identity-box-avatar-fb-import-avatar' => 'Імпортувати мій аватар з мережі Facebook',
+	'user-identity-box-avatar-save' => 'Зберегти, я завершив',
+	'user-identity-box-banned-from-chat' => 'Отримав бан у чаті',
+	'user-identity-box-edits-since-joining' => 'Правок з моменту приєднання <br />до цієї вікі $1',
+	'user-identity-box-fav-wikis' => 'Мої улюблені вікі',
+	'user-identity-box-group-staff' => 'Співробітник Вікія',
+	'user-identity-box-hide-edits-wikis' => 'Приховати все',
+	'user-identity-box-location' => '<span>Я живу в</span> $1',
+	'user-identity-box-saving-error' => 'Не вдалося зберегти дані користувача - ваші дані мають бути звичайним текстом',
+	'user-identity-box-was-born-in' => '<span>Я народився в</span> $1',
+	'user-identity-box-was-born-on' => '<span>Мій день народження:</span> $2 $1',
+	'user-identity-i-am' => '<span>Я - </span> $1',
+	'user-identity-remove-confirmation' => 'Ви впевнені, що хочете видалити аватар?',
+	'user-identity-remove-fail' => 'Виникли деякі проблеми під час видалення аватару!',
+];
 
-/** Uzbek (oʻzbekcha)
- * @author CoderSI
- */
-$messages['uz'] = array(
+$messages['uz'] = [
 	'user-identity-box-about-fav-wikis-refresh' => 'Yangilash',
-	'user-action-menu-view-source' => "Manbasini ko'rish",
-);
+	'user-action-menu-view-source' => 'Manbasini ko\'rish',
+];
 
-/** Vietnamese (Tiếng Việt)
- * @author Xiao Qiao
- */
-$messages['vi'] = array(
+$messages['vi'] = [
 	'userprofilepage-edit-modal-header' => 'Sửa đổi hồ sơ',
 	'userprofilepage-question-caption' => 'Câu hỏi  $1/$2',
 	'userprofilepage-lightbox-interview-cancel' => 'Hủy bỏ',
@@ -3169,42 +3087,42 @@ $messages['vi'] = array(
 	'userprofilepage-avatar-error-resolution' => 'Độ phân giải tối đa của avatar là 2000x2000',
 	'user-identity-box-edit' => 'Sửa đổi',
 	'user-identity-box-wikia-contributor' => 'một người dùng vô danh',
-	'user-identity-box-edit-avatar' => 'Đổi avatar',
-	'user-identity-box-delete-avatar' => 'Xóa avatar',
-	'user-identity-box-avatar-upload-avatar' => 'Tải lên avatar',
-	'user-identity-box-avatar-fb-import-avatar' => 'Nhập avatar của tôi từ Facebook',
-	'user-identity-box-avatar-choose-avatar' => 'Chọn một avatar',
+	'user-identity-box-edit-avatar' => 'Đổi ảnh đại diện',
+	'user-identity-box-delete-avatar' => 'Xóa ảnh đại diện',
+	'user-identity-box-avatar-upload-avatar' => 'Tải ảnh đại diện',
+	'user-identity-box-avatar-fb-import-avatar' => 'Nhập ảnh đại diện từ Facebook',
+	'user-identity-box-avatar-choose-avatar' => 'Chọn ảnh đại diện',
 	'user-identity-box-avatar-save' => 'Lưu, tôi đã xong',
 	'user-identity-box-avatar-cancel' => 'Hủy bỏ',
 	'user-identity-box-avatar-anon-user-error' => 'Bạn phải đăng nhập trước khi bạn thay đổi bất cứ điều gì',
 	'user-identity-box-hide-edits-wikis' => 'Ẩn tất cả',
-	'user-identity-box-my-twitter' => 'Twitter của tôi',
-	'user-identity-box-my-website' => 'Trang web của tôi',
-	'user-identity-box-my-fb-page' => 'Facebook của tôi',
-	'user-identity-box-fav-wikis' => 'Wiki yêu thích của tôi',
+	'user-identity-box-my-twitter' => 'Twitter',
+	'user-identity-box-my-website' => 'Trang web cá nhân',
+	'user-identity-box-my-fb-page' => 'Facebook',
+	'user-identity-box-fav-wikis' => 'Wikia tôi tham gia',
 	'user-identity-box-location' => '<span>Tôi sống tại</span> $1',
 	'user-identity-box-was-born-on' => '<span>Tôi sinh ngày</span> $2 $1',
-	'user-identity-box-was-born-in' => '<span>Tôi sinh ra ở</span> $1',
+	'user-identity-box-was-born-in' => '<span>Tôi sinh ra tại</span> $1',
 	'user-identity-box-occupation' => '<span>Công việc của tôi là</span> $1',
 	'user-identity-i-am' => '<span>Tôi là</span> $1',
-	'user-identity-box-edits-since-joining' => 'Sửa đổi từ ngày tham gia wiki<br />$1',
+	'user-identity-box-edits-since-joining' => 'Sửa đổi từ ngày tham gia wikia này<br />$1',
 	'user-identity-box-edits' => '<em>$1</em><span>SỬA ĐỔI</span>',
 	'user-identity-box-group-blocked' => 'Bị cấm',
-	'user-identity-box-group-chatmoderator' => 'Điều phối viên Tán gẫu',
+	'user-identity-box-group-chatmoderator' => 'Điều phối viên tán gẫu',
 	'user-identity-box-group-sysop' => 'Bảo quản viên',
 	'user-identity-box-group-bureaucrat' => 'Hành chính viên',
 	'user-identity-box-group-founder' => 'Sáng lập viên',
 	'user-identity-box-group-staff' => 'Nhân viên',
 	'user-identity-box-group-helper' => 'Hỗ trợ viên',
-	'user-identity-box-group-vstf' => 'Tình nguyện viên Phòng chống Thư rác',
-	'user-identity-box-group-authenticated' => 'Xác minh',
+	'user-identity-box-group-vstf' => 'Đội chống thư rác',
+	'user-identity-box-group-authenticated' => 'Xác thực viên',
 	'user-identity-box-zero-state-location' => 'Vị trí',
 	'user-identity-box-zero-state-birthday' => 'Sinh nhật',
 	'user-identity-box-zero-state-gender' => 'Giới tính',
 	'user-identity-box-zero-state-occupation' => 'Nghề nghiệp',
-	'user-identity-box-zero-state-twitter' => 'Twitter của tôi',
-	'user-identity-box-zero-state-website' => 'Trang web của tôi',
-	'user-identity-box-zero-state-fb-page' => 'Facebook của tôi',
+	'user-identity-box-zero-state-twitter' => 'Twitter',
+	'user-identity-box-zero-state-website' => 'Trang web cá nhân',
+	'user-identity-box-zero-state-fb-page' => 'Facebook',
 	'user-identity-box-about-me' => 'Bản thân',
 	'user-identity-box-avatar' => 'Hình đại diện',
 	'user-identity-box-about-name' => 'Bạn là tên gì?',
@@ -3214,17 +3132,17 @@ $messages['vi'] = array(
 	'user-identity-box-about-gender' => 'Giới tính của bạn?',
 	'user-identity-box-about-website' => 'Trang web cá nhân của bạn là gì?',
 	'user-identity-box-about-tweet' => 'Tên Twitter của bạn là gì?',
-	'user-identity-box-about-fav-wikis' => 'Wiki bạn xây dựng:',
-	'user-identity-box-about-fav-wikis-refresh' => 'Refresh',
+	'user-identity-box-about-fav-wikis' => 'Wiki bạn tham gia:',
+	'user-identity-box-about-fav-wikis-refresh' => 'Làm mới',
 	'user-identity-box-join-more-wikis' => 'Tham gia nhiều wiki hơn để xem chúng ở đây!',
 	'user-identity-box-import-from-fb' => 'Nhập thông tin của bạn từ Facebook',
 	'user-identity-box-connect-to-fb' => 'Kết nối với Facebook',
-	'user-identity-box-fb-page' => 'Trang Facebook của bạn là gì?',
+	'user-identity-box-fb-page' => 'Facebook của bạn là gì?',
 	'user-identity-box-invalid-fb-id-error' => 'ID Facebook không hợp lệ',
 	'user-identity-box-fb-prefs' => 'Nguồn dữ liệu tuỳ chọn',
 	'user-identity-box-avatar-error-nofile' => 'Lỗi: Không có tập tin avatar để tải lên',
 	'user-identity-box-avatar-error-cantwrite' => 'Lỗi: Không thể ghi vào thư mục tạm thời',
-	'user-identity-box-avatar-error-size' => 'Lỗi: Tập tin avatar vượt quá cỡ (tối đa {{PLURAL:$1|$1|$1}}KB)',
+	'user-identity-box-avatar-error-size' => 'Lỗi: Ảnh đại diện quá cỡ (tối đa $1KB)',
 	'user-identity-box-avatar-error' => 'Lỗi: Đã có lỗi nội bộ trong khi lưu avatar',
 	'userprofilepage-lightbox-about-me-cancel' => 'Hủy bỏ',
 	'userprofilepage-lightbox-about-me-save' => 'Lưu, tôi đã xong',
@@ -3245,15 +3163,14 @@ $messages['vi'] = array(
 	'user-action-menu-delete' => 'Xóa',
 	'user-action-menu-history' => 'Lịch sử',
 	'usermasthead-log-message' => 'bổ sung thông tin hồ sơ',
-);
+	'user-identity-box-aka-label' => '<span>biệt danh</span> $1',
+	'user-identity-box-banned-from-chat' => 'Bị cấm tán gẫu',
+	'user-identity-box-group-council' => 'Hội đồng viên',
+	'user-identity-box-group-voldev' => 'Phát triển viên tình nguyện',
+	'useravatar-log' => 'Nhật trình đổi hình đại diện',
+];
 
-/** Simplified Chinese (中文（简体）‎)
- * @author Anakmalaysia
- * @author Dimension
- * @author Hzy980512
- * @author Sam Wang
- */
-$messages['zh-hans'] = array(
+$messages['zh-hans'] = [
 	'userprofilepage-edit-modal-header' => '编辑个人资料',
 	'userprofilepage-question-caption' => '$2个问题之$1',
 	'userprofilepage-lightbox-interview-cancel' => '取消',
@@ -3265,9 +3182,9 @@ $messages['zh-hans'] = array(
 	'user-identity-box-edit' => '编辑',
 	'user-identity-box-avatar-cancel' => '取消',
 	'user-identity-box-location' => '<span>我住在</span>$1',
-	'user-identity-box-was-born-on' => '<span>我在</span>$1 $2出生',
+	'user-identity-box-was-born-on' => '<span>我在</span>$1$2出生',
 	'user-identity-box-was-born-in' => '<span>我在</span>$1<span>出生</span>',
-	'user-identity-box-occupation' => '<span>我的工作是</span> $1',
+	'user-identity-box-occupation' => '<span>我的工作是</span>$1',
 	'user-identity-i-am' => '<span>我是</span>$1',
 	'user-identity-box-group-blocked' => '封禁',
 	'user-identity-box-group-chatmoderator' => '聊天主持人',
@@ -3276,7 +3193,7 @@ $messages['zh-hans'] = array(
 	'user-identity-box-group-founder' => '创始人',
 	'user-identity-box-group-staff' => '职员',
 	'user-identity-box-group-helper' => '助手',
-	'user-identity-box-group-vstf' => '防垃圾信息志愿者特遣队',
+	'user-identity-box-group-vstf' => '反破坏小组',
 	'user-identity-box-zero-state-location' => '位置',
 	'user-identity-box-zero-state-birthday' => '生日',
 	'user-identity-box-zero-state-gender' => '性别',
@@ -3304,28 +3221,27 @@ $messages['zh-hans'] = array(
 	'userprofilepage-question-list-title' => '$2个问题之$1',
 	'userprofilepage-avatar-error-type' => '无效的MIME文件类型。允许的文件类型: $1',
 	'userprofilepage-avatar-error-resolution' => '用户头像最大分辨率为2000×2000',
-	'user-identity-box-wikia-contributor' => 'Wikia用户',
+	'user-identity-box-wikia-contributor' => 'Fandom用户',
 	'user-identity-box-edit-avatar' => '编辑用户头像',
 	'user-identity-box-delete-avatar' => '删除用户头像',
 	'user-identity-box-avatar-upload-avatar' => '上传头像',
 	'user-identity-box-avatar-fb-import-avatar' => '从Facebook中导入用户图像',
 	'user-identity-box-avatar-choose-avatar' => '选择用户头像',
-	'user-identity-box-avatar-save' => '保存成功',
+	'user-identity-box-avatar-save' => '保存',
 	'user-identity-box-avatar-anon-user-error' => '你需要登录之后才能进行更改',
 	'user-identity-box-hide-edits-wikis' => '隐藏所有',
 	'user-identity-box-banned-from-chat' => '禁止聊天',
-	'user-identity-box-aka-label' => '<span>我是</span> $1',
+	'user-identity-box-aka-label' => '<span>我是</span>$1',
 	'user-identity-box-my-twitter' => '我的Twitter',
 	'user-identity-box-my-website' => '我的网站',
 	'user-identity-box-my-fb-page' => '我的Facebook',
 	'user-identity-box-fav-wikis' => '我最喜欢的wiki',
-	'user-identity-box-edits-since-joining' => '次编辑<br/>于$1加入Wikia',
+	'user-identity-box-edits-since-joining' => '在Wiki上的编辑次数<br/>$1',
 	'user-identity-box-edits' => '<em>$1</em><span>次编辑</span>',
 	'user-identity-box-group-authenticated' => '官方认证',
 	'user-identity-box-group-council' => '委员',
-	'user-identity-box-group-wikiastars' => 'Wikia Star',
 	'user-identity-box-group-voldev' => '志愿开发者',
-	'user-identity-box-group-threadmoderator' => '主持人',
+	'user-identity-box-group-threadmoderator' => '话题版主',
 	'user-identity-box-zero-state-twitter' => '我的Twitter',
 	'user-identity-box-zero-state-fb-page' => '我的Facebook',
 	'user-identity-box-about-name' => '你叫什么名字？',
@@ -3337,13 +3253,13 @@ $messages['zh-hans'] = array(
 	'user-identity-box-about-tweet' => '你的Twitter名字是什么？',
 	'user-identity-box-about-fb-page' => '你的Facebook帐户链接是什么？',
 	'user-identity-box-about-fav-wikis' => '你参与的Wiki:',
-	'user-identity-box-join-more-wikis' => '加入更多的Wiki，它们将在这里显示',
+	'user-identity-box-join-more-wikis' => '加入更多的Wiki，它们将在这里显示！',
 	'user-identity-box-import-from-fb' => '从Facebook中导入用户信息',
 	'user-identity-box-unsyc-fb' => '与Facebook断开连接',
 	'user-identity-box-fb-page' => '你的Facebook主页是什么？',
 	'user-identity-box-invalid-fb-id-error' => '无效的Facebook ID',
 	'user-identity-box-fb-prefs' => 'Feed首选项',
-	'user-identity-box-avatar-error-nofile' => '错误: 找不到用户图像无法上传',
+	'user-identity-box-avatar-error-nofile' => '错误: 找不到用户图像，无法上传',
 	'user-identity-box-avatar-error-cantwrite' => '错误: 无法写入临时目录',
 	'user-identity-box-avatar-error-size' => '错误: 头像文件过大(最大{{PLURAL:$1|$1|$1}}KB)',
 	'user-identity-box-avatar-error' => '错误: 保存头像时发生内部错误',
@@ -3359,19 +3275,19 @@ $messages['zh-hans'] = array(
 	'usermasthead-log-message' => '添加个人设置信息',
 	'usermasthead-log-alt' => '用户刊头编辑日志',
 	'useravatar-log' => '用户头像记录',
-	'blog-avatar-changed-log' => '添加的或更改的头像',
-	'blog-avatar-removed-log' => '$1的头像已经被移除',
-	'blog-avatar-alt' => '用户头像添加或清除日志',
+	'blog-avatar-changed-log' => '添加或更改头像',
+	'blog-avatar-removed-log' => '移除 $1 的头像',
+	'blog-avatar-alt' => '关於用户头像添加和移除的日志',
 	'user-identity-remove-confirmation' => '你确定你想要删除个人头像吗？',
 	'user-identity-remove-fail' => '移除个人头像时遇到问题！',
 	'user-identity-avatars-maintenance' => '系统处于维护状态，上传和删除头像暂时不可用！',
 	'userprofilepage-edit-modal-error' => '发生未知错误',
-);
+	'user-identity-box-group-adminmentor' => '管理员导师',
+	'user-identity-box-discussion-posts' => '讨论版帖子',
+	'user-identity-box-group-vanguard' => '先锋',
+];
 
-/** Traditional Chinese (中文（繁體）‎)
- * @author Ffaarr
- */
-$messages['zh-hant'] = array(
+$messages['zh-hant'] = [
 	'userprofilepage-edit-modal-header' => '編輯個人資料',
 	'userprofilepage-lightbox-interview-cancel' => '取消',
 	'userprofilepage-lightbox-interview-save' => '已經完成了，儲存',
@@ -3380,7 +3296,7 @@ $messages['zh-hant'] = array(
 	'userprofilepage-add-question' => '增加新的問題',
 	'userprofilepage-invalid-user' => '無效的使用者 ！您未登錄或沒有權限進行',
 	'user-identity-box-edit' => '編輯',
-	'user-identity-box-wikia-contributor' => 'Wikia 參與者',
+	'user-identity-box-wikia-contributor' => 'Fandom用戶',
 	'user-identity-box-edit-avatar' => '編輯頭像',
 	'user-identity-box-delete-avatar' => '刪除頭像',
 	'user-identity-box-avatar-upload-avatar' => '上傳頭像',
@@ -3395,7 +3311,7 @@ $messages['zh-hant'] = array(
 	'user-identity-box-my-fb-page' => '我的 Facebook',
 	'user-identity-box-fav-wikis' => '我最喜歡的 wiki',
 	'user-identity-box-location' => '<span>我住在</span> $1',
-	'user-identity-box-was-born-on' => '<span>我的生日是</span> $1 月$2日',
+	'user-identity-box-was-born-on' => '<span>我的生日是</span> $1月$2日',
 	'user-identity-box-was-born-in' => '<span>我出生於</span> $1',
 	'user-identity-box-occupation' => '<span>我的工作是</span> $1',
 	'user-identity-i-am' => '<span>我是</span> $1',
@@ -3406,7 +3322,7 @@ $messages['zh-hant'] = array(
 	'user-identity-box-group-founder' => '創建者',
 	'user-identity-box-group-staff' => '職員',
 	'user-identity-box-group-helper' => '助手',
-	'user-identity-box-group-vstf' => '防垃圾信息志願者特遣隊',
+	'user-identity-box-group-vstf' => '反破壞小組',
 	'user-identity-box-group-authenticated' => '通過認證',
 	'user-identity-box-zero-state-location' => '位置',
 	'user-identity-box-zero-state-birthday' => '生日',
@@ -3431,14 +3347,14 @@ $messages['zh-hant'] = array(
 	'user-identity-box-fb-page' => '你的 Facebook 頁面是什麼？',
 	'user-identity-box-invalid-fb-id-error' => 'Facebook ID 無效',
 	'user-identity-box-avatar-error-nofile' => '錯誤： 未找到要上載的頭像檔案',
-	'user-identity-box-avatar-error-size' => '錯誤: 頭像檔案太大 (最大 {{PLURAL:$1|   $1 | $1 }}KB)',
+	'user-identity-box-avatar-error-size' => '錯誤: 頭像檔案太大 (最大 {{PLURAL:$1| $1 | $1}}KB)',
 	'user-identity-box-avatar-error' => '錯誤： 儲存頭像時發生內部錯誤',
 	'userprofilepage-lightbox-about-me-cancel' => '取消',
 	'userprofilepage-lightbox-about-me-save' => '已完成，儲存',
-	'user-identity-box-saving-error' => '儲存使用者資料失敗-您的資料應該是純文字',
-	'user-identity-box-saving-internal-error' => '未能儲存使用者資料-發生內部錯誤',
+	'user-identity-box-saving-error' => '儲存用戶資料失敗-您的資料應該要是純文字',
+	'user-identity-box-saving-internal-error' => '未能儲存用戶資料-發生內部錯誤',
 	'userprofilepage-closing-popup-header' => '退出個人資訊編輯器',
-	'userprofilepage-closing-popup-info' => '還有未儲存在您的個人檔案中的更改。你要如何？',
+	'userprofilepage-closing-popup-info' => '還有未儲存在您的個人檔案中的更改。你想要怎麼做？',
 	'userprofilepage-closing-popup-discard-and-quit' => '放棄更改並退出',
 	'userprofilepage-closing-popup-save-and-quit' => '保存並退出',
 	'userprofilepage-closing-popup-cancel' => '取消',
@@ -3447,9 +3363,48 @@ $messages['zh-hant'] = array(
 	'user-action-menu-leave-message' => '留言',
 	'blog-avatar-changed-log' => '添加或更改頭像',
 	'blog-avatar-removed-log' => '刪除 $1 的頭像',
-);
+	'userprofilepage-question-caption' => '$2個問題之$1',
+	'userprofilepage-interview-save-error' => '保存訪談記錄失敗',
+	'userprofilepage-interview-save-internal-error' => '保存訪談記錄失敗-發生內部錯誤',
+	'userprofilepage-answers-stats-title' => '訪談統計',
+	'userprofilepage-question-save' => '保存提問',
+	'userprofilepage-question-list-title' => '$2個問題之$1',
+	'userprofilepage-interview-section-title' => '使用者採訪',
+	'userprofilepage-avatar-error-type' => '不正確MIME檔案類型。允許的檔案類型: $1',
+	'userprofilepage-avatar-error-resolution' => '使用者頭像最大解析度為2000×2000',
+	'user-identity-box-banned-from-chat' => '禁止聊天',
+	'user-identity-box-aka-label' => '<span>我是</span> $1',
+	'user-identity-box-edits-since-joining' => '在Wiki上的編輯次數<br/>$1',
+	'user-identity-box-edits' => '<em>$1</em><span>次編輯</span>',
+	'user-identity-box-group-council' => '委員',
+	'user-identity-box-group-adminmentor' => '管理員導師',
+	'user-identity-box-group-voldev' => '志願開發者',
+	'user-identity-box-group-threadmoderator' => '話題版主',
+	'user-identity-box-about-fb-page' => '你的Facebook帳戶頁面是什麼？',
+	'user-identity-box-join-more-wikis' => '加入更多的Wiki，它們將在這裡顯示！',
+	'user-identity-box-unsyc-fb' => '與Facebook斷開連接',
+	'user-identity-box-fb-prefs' => 'Feed首選項',
+	'user-identity-box-avatar-error-cantwrite' => '錯誤: 無法寫入臨時目錄',
+	'user-action-menu-view-source' => '查看原始程式碼',
+	'user-action-menu-protect' => '保護',
+	'user-action-menu-unprotect' => '取消保護',
+	'user-action-menu-rename' => '重命名',
+	'user-action-menu-delete' => '刪除',
+	'user-action-menu-history' => '歷史記錄',
+	'usermasthead-log' => '使用者刊頭',
+	'usermasthead-log-message' => '添加個人檔案資訊',
+	'usermasthead-log-alt' => '使用者刊頭編輯日誌',
+	'useravatar-log' => '使用者頭像日誌',
+	'blog-avatar-alt' => '關於使用者頭像添加和移除的日誌',
+	'user-identity-remove-confirmation' => '你確定你想要移除個人頭像嗎?',
+	'user-identity-remove-fail' => '移除個人頭像時遇到問題！',
+	'user-identity-avatars-maintenance' => '系統處於維護狀態，上傳和刪除頭像暫時不可用！',
+	'userprofilepage-edit-modal-error' => '發生未知錯誤',
+	'user-identity-box-discussion-posts' => '討論版文章',
+	'user-identity-box-group-vanguard' => '先鋒',
+];
 
-$messages['zh-tw'] = array(
+$messages['zh-tw'] = [
 	'userprofilepage-edit-modal-header' => '編輯個人資料',
 	'userprofilepage-question-caption' => '$2個問題之$1',
 	'userprofilepage-lightbox-interview-cancel' => '取消',
@@ -3497,10 +3452,9 @@ $messages['zh-tw'] = array(
 	'user-identity-box-group-founder' => '創建者',
 	'user-identity-box-group-staff' => '職員',
 	'user-identity-box-group-helper' => '助手',
-	'user-identity-box-group-vstf' => '防垃圾信息志願者特遣隊',
+	'user-identity-box-group-vstf' => '反破壞小組',
 	'user-identity-box-group-authenticated' => '通過認證',
 	'user-identity-box-group-council' => '委員',
-	'user-identity-box-group-wikiastars' => 'Wikia Star',
 	'user-identity-box-group-voldev' => '志願開發者',
 	'user-identity-box-group-threadmoderator' => '主持人',
 	'user-identity-box-zero-state-location' => '位置',
@@ -3557,10 +3511,123 @@ $messages['zh-tw'] = array(
 	'useravatar-log' => '使用者頭像日誌',
 	'blog-avatar-changed-log' => '添加或更改頭像',
 	'blog-avatar-removed-log' => '刪除 $1 的頭像',
-	'blog-avatar-alt' => '使用者頭像添加或清除日誌',
+	'blog-avatar-alt' => '關於使用者頭像添加和移除的日誌',
 	'user-identity-remove-confirmation' => '你確定你想要刪除個人頭像嗎?',
 	'user-identity-remove-fail' => '移除個人頭像時遇到問題！',
 	'user-identity-avatars-maintenance' => '系統處於維護狀態，上傳和刪除頭像暫時不可用！',
 	'userprofilepage-edit-modal-error' => '發生未知錯誤',
-);
+];
+
+$messages['ko'] = [
+	'user-identity-box-wikia-contributor' => '익명 사용자',
+	'blog-avatar-alt' => '사용자의 아바타 추가나 삭제에 관한 기록입니다.',
+	'blog-avatar-changed-log' => '아바타가 추가 또는 수정됨',
+	'blog-avatar-removed-log' => '$1의 아바타가 제거됨',
+	'user-action-menu-delete' => '제거',
+	'user-action-menu-edit-profile' => '프로필 편집',
+	'user-action-menu-edit' => '편집',
+	'user-action-menu-history' => '역사',
+	'user-action-menu-leave-message' => '메시지 남기기',
+	'user-action-menu-protect' => '보호',
+	'user-action-menu-rename' => '이동',
+	'user-action-menu-unprotect' => '보호 해제',
+	'user-action-menu-view-source' => '내용 보기',
+	'user-identity-box-about-birthday' => '생일이 언제인가요?',
+	'user-identity-box-about-fav-wikis-refresh' => '새로고침',
+	'user-identity-box-about-fav-wikis' => '주로 기여하는 위키:',
+	'user-identity-box-about-gender' => '성(性)이 어떻게 되나요?',
+	'user-identity-box-about-location' => '어디에 살고 있나요?',
+	'user-identity-box-about-me' => '프로필',
+	'user-identity-box-about-name' => '이름이 무엇인가요?',
+	'user-identity-box-about-occupation' => '직업이 무엇인가요?',
+	'user-identity-box-about-tweet' => '트위터 아이디가 무엇인가요?',
+	'user-identity-box-about-website' => '개인 홈페이지 주소가 어떻게 되나요?',
+	'user-identity-box-aka-label' => '<span>다른 이름:</span> $1',
+	'user-identity-box-avatar-anon-user-error' => '내용을 수정하시려면 로그인하세요',
+	'user-identity-box-avatar-cancel' => '취소',
+	'user-identity-box-avatar-choose-avatar' => '아바타 선택',
+	'user-identity-box-avatar-error-cantwrite' => '오류: 임시 경로를 쓸 수 없습니다',
+	'user-identity-box-avatar-error-nofile' => '오류: 올릴 아바타 그림이 없습니다',
+	'user-identity-box-avatar-error-size' => '오류: 올릴 그림이 너무 큽니다 (최대 $1KB)',
+	'user-identity-box-avatar-error' => '오류: 아바타를 저장하는 도중에 내부 오류가 발생하였습니다',
+	'user-identity-box-avatar-fb-import-avatar' => 'Facebook에서 내 아바타 불러오기',
+	'user-identity-box-avatar-save' => '저장',
+	'user-identity-box-avatar-upload-avatar' => '아바타 올리기',
+	'user-identity-box-avatar' => '아바타',
+	'user-identity-box-banned-from-chat' => '채팅방에서 차단됨',
+	'user-identity-box-connect-to-fb' => 'Facebook 연동',
+	'user-identity-box-delete-avatar' => '아바타 제거',
+	'user-identity-box-edit-avatar' => '아바타 수정',
+	'user-identity-box-edit' => '편집',
+	'user-identity-box-edits-since-joining' => '회 기여',
+	'user-identity-box-edits' => '<em>$1</em><span>회 기여</span>',
+	'user-identity-box-fav-wikis' => '선호하는 위키',
+	'user-identity-box-fb-page' => 'Facebook 프로필 주소가 어떻게 되나요?',
+	'user-identity-box-group-authenticated' => '인증됨',
+	'user-identity-box-group-blocked' => '차단됨',
+	'user-identity-box-group-bureaucrat' => '사무관',
+	'user-identity-box-group-chatmoderator' => '채팅 관리자',
+	'user-identity-box-group-council' => '카운슬러',
+	'user-identity-box-group-founder' => '설립자',
+	'user-identity-box-group-helper' => '헬퍼',
+	'user-identity-box-group-staff' => '스탭',
+	'user-identity-box-group-sysop' => '관리자',
+	'user-identity-box-group-vstf' => 'VSTF',
+	'user-identity-box-hide-edits-wikis' => '모두 가리기',
+	'user-identity-box-import-from-fb' => 'Facebook에서 내 정보 불러오기',
+	'user-identity-box-invalid-fb-id-error' => '유효하지 않은 Facebook id입니다',
+	'user-identity-box-join-more-wikis' => '더 많은 위키를 보시려면 여러 위키에서 활동해보세요!',
+	'user-identity-box-location' => '<span>거주지</span> $1',
+	'user-identity-box-my-fb-page' => 'Facebook',
+	'user-identity-box-my-twitter' => 'Twitter',
+	'user-identity-box-my-website' => '개인 홈페이지',
+	'user-identity-box-occupation' => '<span>직업</span> $1',
+	'user-identity-box-saving-error' => '저장 실패 - 순수한 문자로만 이루어져야 합니다',
+	'user-identity-box-saving-internal-error' => '저장 실패 - 내부 오류가 발생했습니다',
+	'user-identity-box-unsyc-fb' => 'Facebook 연동 해제',
+	'user-identity-box-was-born-in' => '<span>출생지</span> $1',
+	'user-identity-box-was-born-on' => '<span>생일</span> $1 $2',
+	'user-identity-box-zero-state-birthday' => '생일',
+	'user-identity-box-zero-state-fb-page' => 'Facebook',
+	'user-identity-box-zero-state-gender' => '성별',
+	'user-identity-box-zero-state-location' => '거주지',
+	'user-identity-box-zero-state-occupation' => '직업',
+	'user-identity-box-zero-state-twitter' => 'Twitter',
+	'user-identity-box-zero-state-website' => '개인 홈페이지',
+	'user-identity-i-am' => '<span>저는</span> $1',
+	'user-identity-remove-confirmation' => '정말로 아바타를 제거하시겠습니까?',
+	'user-identity-remove-fail' => '아바타를 제거하는 데 문제가 생겨서 아바타를 제거하지 못했습니다.',
+	'userprofilepage-edit-modal-header' => '프로필 편집',
+	'usermasthead-log-alt' => '사용자 문서 머릿글 편집에 관한 기록입니다.',
+	'usermasthead-log-message' => '프로필 정보 추가/수정',
+	'usermasthead-log' => '사용자 문서 머릿글 기록',
+	'useravatar-log' => '사용자 아바타 기록',
+];
+
+$messages['no'] = [
+	'blog-avatar-removed-log' => 'Fjernet $1s avatarer',
+];
+
+$messages['zh'] = [
+	'blog-avatar-alt' => '关於用户头像添加和移除的日志',
+	'blog-avatar-changed-log' => '添加或更改头像',
+	'blog-avatar-removed-log' => '移除 $1 的头像',
+	'user-identity-box-avatar-save' => '保存',
+	'user-identity-box-edits-since-joining' => '次编辑<br/>
+于$1加入维基',
+	'user-identity-box-group-vstf' => '反破坏小组',
+];
+
+$messages['zh-hk'] = [
+	'blog-avatar-alt' => '關於使用者頭像添加和移除的日誌',
+	'user-identity-box-group-vstf' => '反破壞小組',
+];
+
+$messages['fa'] = [
+	'right-removeavatar' => 'حذف آواتار کاربران',
+];
+
+$messages['zh-cn'] = [
+	'user-identity-box-avatar-save' => '保存',
+];
 

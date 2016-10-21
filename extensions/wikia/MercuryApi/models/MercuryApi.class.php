@@ -111,7 +111,7 @@ class MercuryApi {
 
 		return [
 			'cacheBuster' => (int)$wgCacheBuster,
-			'contentNamespaces' => $wgContentNamespaces,
+			'contentNamespaces' => array_values( $wgContentNamespaces ),
 			'dbName' => $wgDBname,
 			'defaultSkin' => $wgDefaultSkin,
 			'disableAnonymousEditing' => $wgDisableAnonymousEditing,
@@ -143,6 +143,11 @@ class MercuryApi {
 				],
 				'nielsen' => [
 					'enabled' => AnalyticsProviderNielsen::isEnabled(),
+					'apid' => AnalyticsProviderNielsen::getApid()
+				],
+				'ubisoft' => [
+					'enabled' => AnalyticsProviderUbisoft::isEnabled(),
+					'url' => AnalyticsProviderUbisoft::URL
 				]
 			],
 			'wikiCategories' => WikiFactoryHub::getInstance()->getWikiCategoryNames( $wgCityId ),

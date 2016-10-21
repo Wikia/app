@@ -12,6 +12,3 @@
 
 $fallback = 'en';
 
-$messages = array(
-
-);

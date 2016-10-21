@@ -1,0 +1,66 @@
+@import 'skins/shared/color';
+@import 'skins/shared/mixins/flexbox';
+@import 'skins/oasis/css/core/breakpoints-variables';
+
+@import '../components/_variables';
+@import '../components/_modal';
+
+$header-image: '/extensions/wikia/CommunityPage/images/success-icon.svg';
+
+.CommunityPageFirstEditModal.modal {
+	align-items: center;
+
+	> header {
+		display: none;
+	}
+
+	> footer {
+		display: none;
+	}
+
+	> section {
+		padding: 40px 0 20px;
+		text-align: center;
+		width: 100%;
+	}
+
+	.community-page-header-image {
+		background: url($header-image) no-repeat center;
+		height: 80px;
+	}
+
+	.community-page-first-edit-heading {
+		font-size: 18px;
+		font-weight: bold;
+		padding: 20px;
+	}
+
+	.community-page-first-edit-subheading {
+		border-bottom: 2px solid $color-page-border-subtle;
+		font-size: 16px;
+		padding: 12px 20px 30px;
+	}
+
+	.community-page-first-edit-getstarted {
+		padding-top: 5px;
+	}
+
+	.community-page-first-edit-button {
+		background: $color-buttons;
+		color: $color-button-text;
+		display: inline-block;
+		font-size: 12px;
+		font-weight: bold;
+		height: 46px;
+		line-height: 46px;
+		margin: 14px 0;
+		padding: 0 30px;
+		text-decoration: none;
+		text-transform: uppercase;
+
+		&:hover, &:active {
+			background-color: $color-button-highlight;
+			text-decoration: none;
+		}
+	}
+}

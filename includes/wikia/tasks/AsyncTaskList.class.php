@@ -235,6 +235,10 @@ class AsyncTaskList {
 
 	/**
 	 * Allows us to determine execution method and runner for a given environment
+	 *
+	 * If method and runner fields are not set here,
+	 * celeryd will use the defaults from /etc/celeryd/celeryd.conf ([mediawiki] section)
+	 *
 	 * @return array
 	 */
 	protected function getExecutor() {
@@ -243,7 +247,7 @@ class AsyncTaskList {
 			'app' => self::EXECUTOR_APP_NAME,
 		];
 
-		if ( $wgWikiaEnvironment != WIKIA_ENV_PROD ) {
+		if ( !in_array( $wgWikiaEnvironment, [ WIKIA_ENV_PROD, WIKIA_ENV_STAGING ] ) ) {
 			$host = gethostname();
 			$executionMethod = 'http';
 
@@ -254,6 +258,8 @@ class AsyncTaskList {
 			} elseif (in_array($wgWikiaEnvironment, [WIKIA_ENV_PREVIEW, WIKIA_ENV_VERIFY])) {
 				$executionRunner = ["http://{$wgWikiaEnvironment}.community.wikia.com/extensions/wikia/Tasks/proxy/proxy.php"];
 			} else { // in other environments or when apache isn't available, ssh into this exact node to execute
+				wfDebug( __METHOD__ . " - fallback to remote_shell execution mode on {$host}!\n" );
+
 				$executionMethod = 'remote_shell';
 				$executionRunner = [
 					$host,

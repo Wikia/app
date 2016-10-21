@@ -177,6 +177,7 @@
 	"visualeditor-editnotices-tooltip": "Avisos de edición",
 	"visualeditor-editsummary": "Describe lo que has cambiado",
 	"visualeditor-editsummary-bytes-remaining": "El número de bytes restantes",
+	"visualeditor-formatdropdown-format-blockquote": "Cita bloqueada",
 	"visualeditor-formatdropdown-format-mw-heading1": "Título de página",
 	"visualeditor-formatdropdown-format-mw-heading2": "Encabezado",
 	"visualeditor-formatdropdown-format-mw-heading3": "Subtítulo 1",
@@ -256,10 +257,5 @@
 	"visualeditor-viewpage-savewarning-title": "¿Estás seguro?",
 	"visualeditor-wikitext-warning": "Estás utilizando el Editor visual, donde el [[{{MediaWiki:visualeditor-wikitext-warning-link}}|wikitexto]] no funciona. Para volver a la edición de fuente en cualquier momento sin perder tus cambios abre el menú desplegable junto a \"{{int:visualeditor-toolbar-savedialog}}\" y selecciona \"{{int:visualeditor-mweditmodesource-title}}\".",
 	"visualeditor-wikitext-warning-title": "Se ha detectado wikitexto",
-	"visualeditor-dialog-media-insert-title": "Insertar multimedia",
-	"visualeditor-dialog-image-insert-title": "Añadir una imagen",
-	"visualeditor-dialog-video-insert-title": "Añadir un video",
-	"wikia-visualeditor-dialogbutton-wikiamediainsert-tooltip": "Archivos multimedia",
-	"wikia-visualeditor-dialogbutton-imageinsert-tooltip": "Imagen",
-	"wikia-visualeditor-dialogbutton-videoinsert-tooltip": "Video"
+	"visualeditor-dialog-media-insert-title": "Insertar multimedia"
 }

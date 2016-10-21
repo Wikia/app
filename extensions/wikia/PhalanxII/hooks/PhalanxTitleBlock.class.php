@@ -14,34 +14,12 @@
 class PhalanxTitleBlock extends WikiaObject {
 
 	/**
-	 * handler for beforeMove hook
-	 *
-	 * @static
-	 *
-	 * @param MovePageForm $move -- Special::Move class instance
-	 *
-	 * @return bool true -- pass hook further
-	 */
-	static public function beforeMove( &$move ) {
-		wfProfileIn( __METHOD__ );
-
-		/* title object */
-		$title = Title::newFromURL( $move->newTitle );
-
-		/* check title */
-		$ret = PhalanxTitleBlock::checkTitle( $title );
-		
-		wfProfileOut( __METHOD__ );
-		return $ret;
-	}
-
-	/**
 	 * handler for editFilter hook
 	 *
 	 * @param EditPage $editPage -- edit page instance
 	 * @static
 	 */
-	static public function editFilter( $editPage, $text, $section, &$hookError, $summary ) {
+	static public function editFilter( EditPage $editPage, $text, $section, &$hookError, $summary ) {
 		wfProfileIn( __METHOD__ );
 
 		$title = $editPage->getTitle();
@@ -58,6 +36,10 @@ class PhalanxTitleBlock extends WikiaObject {
 		 * pass to check title method
 		 */
 		$ret = PhalanxTitleBlock::checkTitle( $title );
+
+		if ( $ret === false ) {
+			Wikia\Logger\WikiaLogger::instance()->warning( __METHOD__ . ' - block applied SUS-1188', [ 'title' => $title->getPrefixedDBkey() ] );
+		}
 
 		wfProfileOut( __METHOD__ );
 		return $ret;

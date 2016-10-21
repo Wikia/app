@@ -32,6 +32,7 @@ return [
 			'wikia.tracker',
 			'wikia.window',
 			'wikia.abTest',
+			'underscore',
 		],
 		'position' => 'top', // needs to be loaded before AssetsManager files
 	],
@@ -175,6 +176,12 @@ return [
 			'amd',
 		],
 	],
+	'underscore' => [
+		'scripts' => 'resources/wikia/libraries/underscore/underscore-min.js',
+		'dependencies' => [
+			'amd',
+		],
+	],
 
 	// AMD modules loaded on demand
 	'wikia.aim' => [
@@ -217,11 +224,6 @@ return [
 			'wikia.document',
 			'wikia.underscore',
 		]
-	],
-
-	'wikia.stringhelper' => [
-		'scripts' => 'resources/wikia/modules/stringhelper.js',
-		'dependencies' => 'amd',
 	],
 
 	// module loaded via $.loadjQuery UI and is a wrapper for MediaWiki jQuery UI modules
@@ -289,6 +291,15 @@ return [
 		'scripts' => [
 			'resources/wikia/modules/importScript.js',
 			'resources/wikia/modules/importScriptHelper.js'
+		]
+	],
+
+	'wikia.article.edit' => [
+		'scripts' => [
+			'resources/wikia/modules/articleEditTracking.js',
+		],
+		'dependencies' => [
+			'wikia.tracker',
 		]
 	],
 ];

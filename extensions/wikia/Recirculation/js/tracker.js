@@ -39,6 +39,8 @@ define('ext.wikia.recirculation.tracker', [
 
 	return {
 		trackVerboseClick: trackVerboseClick,
-		trackVerboseImpression: trackVerboseImpression
+		trackVerboseImpression: trackVerboseImpression,
+		trackImpression: trackImpression,
+		trackClick: trackClick
 	};
 });

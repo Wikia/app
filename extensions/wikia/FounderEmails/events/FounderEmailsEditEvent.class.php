@@ -176,7 +176,7 @@ class FounderEmailsEditEvent extends FounderEmailsEvent {
 		static $counter = null;
 
 		if ( empty( $counter[$admin->getId()] ) ) {
-			$allCounter = Wikia\Util\Serialize::safeUnserialize( $admin->getGlobalAttribute( 'founderemails-counter' ) );
+			$allCounter = unserialize( $admin->getGlobalAttribute( 'founderemails-counter' ), [ 'allowed_classes' => false ] );
 			$allCounter = is_array( $allCounter ) ? $allCounter : [];
 
 			if ( $this->userCounterNeedsReset( $allCounter ) ) {

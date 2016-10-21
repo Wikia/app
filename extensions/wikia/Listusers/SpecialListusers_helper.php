@@ -134,7 +134,11 @@ class ListusersData {
 			$dbs = wfGetDB( DB_SLAVE, array(), $this->mDBh );
 
 			/* initial conditions for SQL query */
-			$where = array( 'wiki_id' => $this->mCityId, "user_name != ''" );
+			$where = [
+					'wiki_id' => $this->mCityId,
+					"user_name != ''",
+					'user_is_closed' => 0
+			];
 
 			/* filter: groups */
 			if ( !empty( $this->mFilterGroup ) && is_array( $this->mFilterGroup ) ) {

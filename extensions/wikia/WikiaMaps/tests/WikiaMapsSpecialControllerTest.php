@@ -223,11 +223,7 @@ class WikiaMapsSpecialControllerTest extends WikiaBaseTest {
 				[ 'poiCategories', $expected[ 'poiCategories' ] ]
 			);
 
-		$wfMessageMock = $this->getGlobalFunctionMock( 'wfMessage' );
-		$wfMessageMock
-			->expects( $this->any() )
-			->method( 'wfMessage' )
-			->will( $this->returnValue( 'Other' ) );
+		$this->mockGlobalFunction('wfMessage', 'Other');
 
 		$wikiaMapsSpecialControllerMock->prepareListOfPois( $mapData );
 	}

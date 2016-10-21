@@ -571,8 +571,6 @@ class ConfigTest extends BaseTest {
 	 */
 	public function testGetSearchProfiles() {
 		$config 			= new Config;
-		$searchEngineMock	= $this->getMock( 'SearchEngine', array( 'defaultNamespaces', 'searchableNamespaces', 'namespacesAsText' ), array() );
-
 
         $this->getStaticMethodMock('SearchEngine', 'searchableNamespaces')
             ->expects   	( $this->any() )
@@ -591,9 +589,6 @@ class ConfigTest extends BaseTest {
             ->method		( 'namespacesAsText' )
             ->will			( $this->returnValue( array( 'Article', 'Category' ) ) )
         ;
-
-
-		$this->mockClass( 'SearchEngine', $searchEngineMock );
 
 		$profiles = $config->getSearchProfiles();
 		$profileConstants = array( SEARCH_PROFILE_DEFAULT, SEARCH_PROFILE_IMAGES, SEARCH_PROFILE_USERS, SEARCH_PROFILE_ALL );

@@ -402,7 +402,10 @@ $smwgMaxNonExpNumber = 1000000000000000;
 # parts of the semantic data to get out of date, so that manual modifications
 # or the use of SMW_refreshData.php might be needed.
 ##
-$smwgEnableUpdateJobs = true;
+
+if ( !isset( $smwgEnableUpdateJobs ) ) {
+	$smwgEnableUpdateJobs = true;
+}
 ##
 
 ###

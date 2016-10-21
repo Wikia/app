@@ -1,7 +1,8 @@
 <?php
-$messages = array();
+/** Internationalization file for /extensions/wikia/TemplateClassification/TemplateClassification extension. */
+$messages = [];
 
-$messages['en'] = array(
+$messages['en'] = [
 	'template-classification-description' => 'Interface for classifying templates to understand content better.',
 	'template-classification-type-unclassified' => 'Unclassified',
 	'template-classification-type-infobox' => 'Infobox',
@@ -31,7 +32,7 @@ $messages['en'] = array(
 	'template-classification-type-infoicon' => 'Infoicon',
 	'template-classification-description-infoicon' => 'This template is used for creating a link with a small icon.',
 	'template-classification-type-unknown' => 'Unknown',
-	'template-classification-description-unknown' => "I don't know.",
+	'template-classification-description-unknown' => 'I don\'t know.',
 	'template-classification-type-header' => 'Template type',
 	'template-classification-edit-modal-add-button-text' => 'Add',
 	'template-classification-edit-modal-save-button-text' => 'Save',
@@ -65,10 +66,11 @@ $messages['en'] = array(
 	'special-templates-portable-infobox' => 'Portable',
 	'special-templates-non-portable-infobox' => 'Non-portable',
 	'logentry-templateclassification-tc-changed' => '$1 changed type of $3 from $5 to $4.',
-	'templates' => 'Templates on wikia',
-);
+	'templates' => 'Templates on Fandom',
+	'right-template-bulk-classification' => 'Allows classifying multiple templates at once',
+];
 
-$messages['qqq'] = array(
+$messages['qqq'] = [
 	'template-classification-description' => 'Description of extension viewed on Special:Version',
 	'template-classification-type-unclassified' => 'Name of an unclassified type',
 	'template-classification-type-infobox' => 'Name of an infobox type',
@@ -130,12 +132,12 @@ $messages['qqq'] = array(
 	'special-templates' => 'Name of special page containing all templates on wiki with types.',
 	'special-templates-portable-infobox' => 'Inform that given infobox is portable',
 	'special-templates-non-portable-infobox' => 'Inform that given infobox is non-portable',
-	'logentry-templateclassification-tc-changed' => "A message that is saved to a user-facing log if a type of a template is changed to another one. Parameters are: $1 - User's name, $3 - A link to a target page, $4 - New type of the template, $5 - Old type of the template.",
-	'templates' => 'Describe that Special:Templates page contains templates on wikia.',
-);
+	'logentry-templateclassification-tc-changed' => 'A message that is saved to a user-facing log if a type of a template is changed to another one. Parameters are: $1 - User\'s name, $3 - A link to a target page, $4 - New type of the template, $5 - Old type of the template.',
+	'templates' => 'Missing documentation',
+];
 
-$messages['de'] = array(
-	'templates' => 'Vorlagen auf Wikia',
+$messages['de'] = [
+	'templates' => 'Vorlagen bei Fandom',
 	'template-classification-description' => 'Schnittstelle zur Klassifizierung von Vorlagen, um Inhalte besser zu verstehen.',
 	'template-classification-type-unclassified' => 'Nicht klassifiziert',
 	'template-classification-type-infobox' => 'Infobox',
@@ -199,10 +201,10 @@ $messages['de'] = array(
 	'template-classification-description-infoicon' => 'Diese Vorlage wird verwendet, um einen Link mit einem kleinen Symbol zu erzeugen.',
 	'special-templates-portable-infobox' => 'Portabel',
 	'special-templates-non-portable-infobox' => 'Nicht portabel',
-);
+];
 
-$messages['es'] = array(
-	'templates' => 'Plantillas en wikia',
+$messages['es'] = [
+	'templates' => 'Plantillas en Fandom',
 	'template-classification-description' => 'Interfaz para clasificar plantillas para entender mejor el contenido.',
 	'template-classification-type-unclassified' => 'No clasificado',
 	'template-classification-type-infobox' => 'Infobox',
@@ -266,31 +268,31 @@ $messages['es'] = array(
 	'template-classification-description-infoicon' => 'Esta plantilla se utiliza para crear un enlace con un pequeño icono.',
 	'special-templates-portable-infobox' => 'Portable',
 	'special-templates-non-portable-infobox' => 'No-portable',
-);
+];
 
-$messages['fr'] = array(
+$messages['fr'] = [
 	'template-classification-description' => 'Interface de classification des modèles permettant de mieux comprendre le contenu.',
 	'template-classification-type-unclassified' => 'Non classifié',
 	'template-classification-type-infobox' => 'Infobox',
-	'template-classification-description-infobox' => "Affiche les informations les plus importantes d'un article dans un encadré situé en haut de la page, généralement sur le côté droit.",
+	'template-classification-description-infobox' => 'Affiche les informations les plus importantes d\'un article dans un encadré situé en haut de la page, généralement sur le côté droit.',
 	'template-classification-type-navbox' => 'Navbox',
 	'template-classification-description-navbox' => 'Affiche une liste de liens organisés vers des articles liés destinés aux lecteurs, dans un encadré généralement situé en bas de la page.',
 	'template-classification-type-quote' => 'Citation',
-	'template-classification-description-quote' => "Met en relief certains extraits de texte importants tels que des paroles, les passages d'un livre ou un dialogue parlé entre deux ou plusieurs personnes.",
+	'template-classification-description-quote' => 'Met en relief certains extraits de texte importants tels que des paroles, les passages d\'un livre ou un dialogue parlé entre deux ou plusieurs personnes.',
 	'template-classification-type-notice' => 'Notice',
-	'template-classification-description-notice' => "Informe le lecteur de l'état de l'article, à savoir s'il s'agit d'une ébauche, d'une désambiguïsation ou d'un spoiler.",
+	'template-classification-description-notice' => 'Informe le lecteur de l\'état de l\'article, à savoir s\'il s\'agit d\'une ébauche, d\'une désambiguïsation ou d\'un spoiler.',
 	'template-classification-type-references' => 'Références',
-	'template-classification-description-references' => "Organise et uniformise l'annotation des sources de contenu sur les pages d'article.",
+	'template-classification-description-references' => 'Organise et uniformise l\'annotation des sources de contenu sur les pages d\'article.',
 	'template-classification-type-media' => 'Image, vidéo ou galerie',
-	'template-classification-description-media' => "Uniformise ou modifie l'affichage d'une ou plusieurs images ou vidéos.",
+	'template-classification-description-media' => 'Uniformise ou modifie l\'affichage d\'une ou plusieurs images ou vidéos.',
 	'template-classification-type-data' => 'Données',
-	'template-classification-description-data' => "Affiche des données sur une page d'article.",
+	'template-classification-description-data' => 'Affiche des données sur une page d\'article.',
 	'template-classification-type-design' => 'Conception',
-	'template-classification-description-design' => "Permet de concevoir ou organiser des pages d'article.",
+	'template-classification-description-design' => 'Permet de concevoir ou organiser des pages d\'article.',
 	'template-classification-type-navigation' => 'Navigation',
 	'template-classification-description-navigation' => 'Sert à la navigation.',
 	'template-classification-type-nonarticle' => 'Hors article',
-	'template-classification-description-nonarticle' => "Non utilisé sur les pages d'article.",
+	'template-classification-description-nonarticle' => 'Non utilisé sur les pages d\'article.',
 	'template-classification-type-unknown' => 'Inconnu',
 	'template-classification-description-unknown' => 'Je ne sais pas.',
 	'template-classification-type-header' => 'Type de modèle',
@@ -301,12 +303,12 @@ $messages['fr'] = array(
 	'template-classification-edit-modal-title-select-type' => 'Choisir le type de modèle',
 	'template-classification-edit-modal-help' => 'Pour en savoir plus sur chaque type de modèle et voir des exemples, consultez la page [[Aide:Classification des modèles]].',
 	'template-classification-edit-modal-success' => 'Le nouveau type de modèle est enregistré, merci !',
-	'template-classification-edit-modal-error' => "Ce type de modèle n'a malheureusement pas pu être enregistré. Veuillez réessayer.",
+	'template-classification-edit-modal-error' => 'Ce type de modèle n\'a malheureusement pas pu être enregistré. Veuillez réessayer.',
 	'template-classification-global-shortcuts-caption-classify-page' => 'Page de classification',
 	'template-classification-indicator' => 'Type de modèle :',
-	'template-classification-notification-error-retry' => "Le type de modèle n'a pas pu être enregistré en raison d'un problème. Veuillez réessayer avec le lien sous le titre de la page.",
+	'template-classification-notification-error-retry' => 'Le type de modèle n\'a pas pu être enregistré en raison d\'un problème. Veuillez réessayer avec le lien sous le titre de la page.',
 	'template-classification-type-context-link' => 'Lien-contexte',
-	'template-classification-description-context-link' => "Suggère aux lecteurs une autre page associée à la page ou section actuelles. En général, ces dernières incluent la page d'accueil ou la section Voir aussi et apparaissent en italique.",
+	'template-classification-description-context-link' => 'Suggère aux lecteurs une autre page associée à la page ou section actuelles. En général, ces dernières incluent la page d\'accueil ou la section Voir aussi et apparaissent en italique.',
 	'template-classification-special-last-edit' => 'Dernière modification par $1, $2',
 	'template-classification-special-search' => 'Rechercher',
 	'template-classification-special-find-template' => 'Trouver le modèle :',
@@ -318,24 +320,24 @@ $messages['fr'] = array(
 	'template-classification-special-exception' => 'Désolés, une erreur a eu lieu. Merci de réessayer.',
 	'special-templates' => 'Modèles',
 	'template-classification-edit-modal-title-bulk-types' => 'Modifier le type de plusieurs modèles',
-	'template-classification-edit-modal-bulk-error' => "Malheureusement, nous n'avons pas réussi à classer {{PLURAL:$1|cette page|ces pages}}: $2. Pourriez-vous réessayer ?",
-	'template-classification-edit-modal-bulk-error-limited' => "Nous n'avons malheureusement pas été en mesure de classifier $1 des $2 pages. Pourriez-vous réessayer ?",
-	'template-classification-edit-modal-bulk-task' => "En raison de la taille de cette catégorie, la classification des modèles va se faire en arrière-plan. Les changements risquent donc de prendre un certain temps avant d'apparaître. Nous vous remercions de votre patience !",
+	'template-classification-edit-modal-bulk-error' => 'Malheureusement, nous n\'avons pas réussi à classer {{PLURAL:$1|cette page|ces pages}}: $2. Pourriez-vous réessayer ?',
+	'template-classification-edit-modal-bulk-error-limited' => 'Nous n\'avons malheureusement pas été en mesure de classifier $1 des $2 pages. Pourriez-vous réessayer ?',
+	'template-classification-edit-modal-bulk-task' => 'En raison de la taille de cette catégorie, la classification des modèles va se faire en arrière-plan. Les changements risquent donc de prendre un certain temps avant d\'apparaître. Nous vous remercions de votre patience !',
 	'template-classification-open-modal-key-tip' => 'Ouvrir la boîte de dialogue de classification (k)',
-	'template-classification-bulk-classification-hint' => "Bonjour $1! Aidez-nous à organiser les modèles de cette catégorie. Cliquez sur Modifier le type de plusieurs modèles et choisissez l'un de ces types. 
-[[w:c:fr:Aide:Classification des modèles|En savoir plus]].",
+	'template-classification-bulk-classification-hint' => 'Bonjour $1! Aidez-nous à organiser les modèles de cette catégorie. Cliquez sur Modifier le type de plusieurs modèles et choisissez l\'un de ces types. 
+[[w:c:fr:Aide:Classification des modèles|En savoir plus]].',
 	'template-classification-bulk-classification-agreement' => 'Je comprends',
 	'logentry-templateclassification-tc-changed' => '$1 a modifié le type de $3 : de $5 à $4.',
 	'template-classification-type-scrollbox' => 'Scrollbox',
-	'template-classification-description-scrollbox' => "Ce modèle affiche le contenu dans une zone que l'on peut faire défiler.",
+	'template-classification-description-scrollbox' => 'Ce modèle affiche le contenu dans une zone que l\'on peut faire défiler.',
 	'template-classification-type-infoicon' => 'Icône Info',
 	'template-classification-description-infoicon' => 'Ce modèle est utilisé pour créer un lien avec une petite icône.',
 	'special-templates-portable-infobox' => 'Portable',
 	'special-templates-non-portable-infobox' => 'Non-portable',
-	'templates' => 'Modèles sur Wikia',
-);
+	'templates' => 'Modèles sur Fandom',
+];
 
-$messages['it'] = array(
+$messages['it'] = [
 	'template-classification-description' => 'Interfaccia di classificazione dei template per comprendere meglio il contenuto.',
 	'template-classification-type-unclassified' => 'Non classificato',
 	'template-classification-type-infobox' => 'Infobox',
@@ -345,9 +347,9 @@ $messages['it'] = array(
 	'template-classification-type-quote' => 'Citazione',
 	'template-classification-description-quote' => 'Evidenzia importanti estratti di testo, quali testi di canzone, passaggi di un libro o battute di un dialogo. Può contenere un monologo o un dialogo tra più persone.',
 	'template-classification-type-notice' => 'Avviso',
-	'template-classification-description-notice' => "Conosciuti anche come avvisi, questi template avvertono il lettore sullo stato dell'articolo con notazioni quali stub, bozze, disambiguazione o spoiler.",
+	'template-classification-description-notice' => 'Conosciuti anche come avvisi, questi template avvertono il lettore sullo stato dell\'articolo con notazioni quali stub, bozze, disambiguazione o spoiler.',
 	'template-classification-type-references' => 'Nota o riferimento',
-	'template-classification-description-references' => "Organizza e standardizza l'annotazione delle fonti di contenuto di un articolo.",
+	'template-classification-description-references' => 'Organizza e standardizza l\'annotazione delle fonti di contenuto di un articolo.',
 	'template-classification-type-media' => 'Immagine, video o galleria',
 	'template-classification-description-media' => 'Questo template standardizza o modifica la visualizzazione di una o più immagini o video.',
 	'template-classification-type-data' => 'Dati',
@@ -387,7 +389,7 @@ $messages['it'] = array(
 	'template-classification-edit-modal-title-bulk-types' => 'Modifica in massa la tipologia dei template',
 	'template-classification-edit-modal-bulk-error' => 'Purtroppo non siamo stati in grado di classificare {{PLURAL:$1|questa pagina|queste pagine}}: $2. Ti dispiacerebbe riprovare?',
 	'template-classification-edit-modal-bulk-error-limited' => 'Purtroppo non siamo stati in grado di classificare $1 di $2 pagine. Ti dispiacerebbe riprovare?',
-	'template-classification-edit-modal-bulk-task' => "A causa delle dimensioni di questa categoria stiamo eseguendo la modifica in massa come operazione in background. Di conseguenza potrebbe volerci un po' prima che le modifiche abbiano effetto. Grazie della pazienza!",
+	'template-classification-edit-modal-bulk-task' => 'A causa delle dimensioni di questa categoria stiamo eseguendo la modifica in massa come operazione in background. Di conseguenza potrebbe volerci un po\' prima che le modifiche abbiano effetto. Grazie della pazienza!',
 	'template-classification-open-modal-key-tip' => 'Apri la finestra di dialogo per la classificazione (k)',
 	'template-classification-bulk-classification-hint' => 'Ciao $1! Aiutaci ad organizzare i template in questa categoria. Clicca su "Modifica in massa la tipologia dei template" e scegli una delle opzioni.
 [[w:it:Aiuto:Tipologie di template|Per saperne di più]].',
@@ -396,13 +398,13 @@ $messages['it'] = array(
 	'template-classification-type-scrollbox' => 'Riquadro scorrevole',
 	'template-classification-description-scrollbox' => 'Questo template visualizza i propri contenuti in un riquadro scorrevole.',
 	'template-classification-type-infoicon' => 'Icona info',
-	'template-classification-description-infoicon' => "Questo template è usato per creare un link con un'icona di piccole dimensioni.",
+	'template-classification-description-infoicon' => 'Questo template è usato per creare un link con un\'icona di piccole dimensioni.',
 	'special-templates-portable-infobox' => 'Esportabile',
 	'special-templates-non-portable-infobox' => 'Non esportabile',
-	'templates' => 'Modelli su Wikia',
-);
+	'templates' => 'Template su Fandom',
+];
 
-$messages['ja'] = array(
+$messages['ja'] = [
 	'template-classification-description' => 'テンプレートを分類してコンテンツをわかりやすくするためのインターフェイス。',
 	'template-classification-type-unclassified' => '未分類',
 	'template-classification-type-infobox' => 'インフォボックス',
@@ -466,10 +468,10 @@ $messages['ja'] = array(
 	'template-classification-description-infoicon' => 'このテンプレートを使用すると、小さいアイコン付きのリンクを作成できます。',
 	'special-templates-portable-infobox' => 'ポータブル',
 	'special-templates-non-portable-infobox' => '非ポータブル',
-	'templates' => 'コミュニティのテンプレート',
-);
+	'templates' => 'Fandomのテンプレート',
+];
 
-$messages['nl'] = array(
+$messages['nl'] = [
 	'template-classification-description' => 'Interface for classifying templates to understand content better.',
 	'template-classification-type-unclassified' => 'Unclassified',
 	'template-classification-type-infobox' => 'Infobox',
@@ -493,7 +495,7 @@ $messages['nl'] = array(
 	'template-classification-type-nonarticle' => 'Non-article',
 	'template-classification-description-nonarticle' => 'This template is not used on article pages.',
 	'template-classification-type-unknown' => 'Unknown',
-	'template-classification-description-unknown' => "I don't know.",
+	'template-classification-description-unknown' => 'I don\'t know.',
 	'template-classification-type-header' => 'Template type',
 	'template-classification-edit-modal-add-button-text' => 'Add',
 	'template-classification-edit-modal-save-button-text' => 'Save',
@@ -533,9 +535,9 @@ $messages['nl'] = array(
 	'special-templates-portable-infobox' => 'Portable',
 	'special-templates-non-portable-infobox' => 'Non-portable',
 	'templates' => 'Templates on wikia',
-);
+];
 
-$messages['pl'] = array(
+$messages['pl'] = [
 	'template-classification-description' => 'Interfejs do klasyfikacji szablonów w celu lepszego zrozumienia treści.',
 	'template-classification-type-unclassified' => 'Niesklasyfikowany',
 	'template-classification-type-infobox' => 'Infoboks',
@@ -599,10 +601,10 @@ $messages['pl'] = array(
 	'special-templates-portable-infobox' => 'Przenośne',
 	'special-templates-non-portable-infobox' => 'Nieprzenośne',
 	'template-classification-bulk-classification-hint' => 'Cześć $1! Pomóż nam zorganizować szablony w tej kategorii. Kliknij "Edycja zbiorcza typu szablonu" i wybierz jeden z typów. [[w:c:pl:Pomoc:Szablony|Dowiedz się więcej]].',
-	'templates' => 'Szablony na wikii',
-);
+	'templates' => 'Szablony w Fandom',
+];
 
-$messages['pt'] = array(
+$messages['pt'] = [
 	'template-classification-description' => 'Interface para a classificação de predefinições para auxiliar na compreensão do conteúdo.',
 	'template-classification-type-unclassified' => 'Não classificado',
 	'template-classification-type-infobox' => 'Infobox',
@@ -666,11 +668,11 @@ $messages['pt'] = array(
 	'template-classification-description-infoicon' => 'Esta predefinição é usada para criar um link com um ícone pequeno.',
 	'special-templates-portable-infobox' => 'Portátil',
 	'special-templates-non-portable-infobox' => 'Não-portátil',
-	'templates' => 'Predefinições na wikia',
-);
+	'templates' => 'Predefinições no Fandom',
+];
 
-$messages['ru'] = array(
-	'templates' => 'Шаблоны на Викия',
+$messages['ru'] = [
+	'templates' => 'Шаблоны Фэндома',
 	'template-classification-description' => 'Интерфейс классификации шаблонов для лучшего понимания их содержимого.',
 	'template-classification-type-unclassified' => 'Неклассифицированные',
 	'template-classification-type-infobox' => 'Инфобоксы',
@@ -734,9 +736,9 @@ $messages['ru'] = array(
 	'template-classification-description-infoicon' => 'Эти шаблоны используются для создания информационных иконок на страницах.',
 	'special-templates-portable-infobox' => 'Модульный инфобокс',
 	'special-templates-non-portable-infobox' => 'Классический инфобокс',
-);
+];
 
-$messages['zh-hans'] = array(
+$messages['zh-hans'] = [
 	'template-classification-description' => '界面用于分类模板以更好地理解内容。',
 	'template-classification-type-unclassified' => '未分类',
 	'template-classification-type-infobox' => '信息框',
@@ -799,10 +801,10 @@ $messages['zh-hans'] = array(
 	'template-classification-description-infoicon' => '此模板通过使用一个小图标进行创建链接。',
 	'special-templates-portable-infobox' => '便携式',
 	'special-templates-non-portable-infobox' => '非便携式',
-	'templates' => 'Wikia上的所有模板',
-);
+	'templates' => 'Fandom上的模板',
+];
 
-$messages['zh-hant'] = array(
+$messages['zh-hant'] = [
 	'template-classification-description' => '介面用於分類模版以更好地理解內容。',
 	'template-classification-type-unclassified' => '未分類',
 	'template-classification-type-infobox' => '訊息框',
@@ -865,6 +867,6 @@ $messages['zh-hant'] = array(
 	'template-classification-description-infoicon' => '此模板通過使用一個小圖示進行創建連結。',
 	'special-templates-portable-infobox' => '可擕式',
 	'special-templates-non-portable-infobox' => '非可擕式',
-	'templates' => 'Wikia上的所有模板',
-);
+	'templates' => 'Fandom上的模板',
+];
 

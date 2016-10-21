@@ -17,7 +17,7 @@ class ArticleComment {
 	const LOG_ACTION_COMMENT = 'article_comment';
 
 	/** @var Bool (for blogs only) */
-	public $mProps;
+	private $mProps;
 
 	public $mLastRevId;
 	public $mFirstRevId;
@@ -26,13 +26,13 @@ class ArticleComment {
 	/** @var array */
 	public $mMetadata;
 
-	public $mText;
-	public $mRawtext;
+	private $mText;
+	private $mRawtext;
 	public $mHeadItems;
 	public $mNamespaceTalk;
 
 	/** @var Title */
-	public $mTitle;
+	private $mTitle;
 
 	/** @var User comment creator */
 	public $mUser;
@@ -48,13 +48,13 @@ class ArticleComment {
 
 	protected $minRevIdFromSlave;
 
-	/** @var bool */
-	private $isLoaded = false;
+	private $isTextLoaded = false;
+	private $isRevisionLoaded = false;
 
 	/**
 	 * @param Title $title
 	 */
-	public function __construct( $title ) {
+	public function __construct( Title $title ) {
 		$this->mTitle = $title;
 		$this->mNamespace = $title->getNamespace();
 		$this->mNamespaceTalk = MWNamespace::getTalk( $this->mNamespace );
@@ -191,7 +191,34 @@ class ArticleComment {
 	 * @return bool
 	 */
 	public function load( $master = false ) {
-		if ( $this->isLoaded ) {
+		$ret = $this->loadRevisionsAndAuthor( $master );
+		if ( $ret === false ) {
+			return false;
+		}
+
+		if ( $this->isTextLoaded ) {
+			return true;
+		}
+
+		$rawText = $this->mLastRevision->getText();
+		$this->parseText( $rawText );
+
+		$this->isTextLoaded = true;
+		return true;
+	}
+
+	/**
+	 * Lazy load revisions and comment's author data
+	 *
+	 * We can use this method to check user permissions instead of calling load() that parses the content (which takes time!)
+	 *
+	 * @see PLATFORM-2260
+	 *
+	 * @param bool $master
+	 * @return bool
+	 */
+	private function loadRevisionsAndAuthor( $master = false ) {
+		if ( $this->isRevisionLoaded ) {
 			return true;
 		}
 
@@ -221,10 +248,7 @@ class ArticleComment {
 		$this->mUser = User::newFromId( $this->mFirstRevision->getUser() );
 		$this->mUser->setName( $this->mFirstRevision->getUserText() );
 
-		$rawText = $this->mLastRevision->getText();
-		$this->parseText( $rawText );
-
-		$this->isLoaded = true;
+		$this->isRevisionLoaded = true;
 		return true;
 	}
 
@@ -312,10 +336,13 @@ class ArticleComment {
 	}
 
 	public function parseText( $rawText ) {
+		wfProfileIn( __METHOD__ );
+
 		global $wgEnableParserCache;
 
 		$this->mRawtext = self::removeMetadataTag( $rawText );
 
+		# seriously, WTF?
 		$wgEnableParserCache = false;
 
 		$parser = ParserPool::get();
@@ -339,9 +366,13 @@ class ArticleComment {
 
 		ParserPool::release( $parser );
 
+		wfProfileOut( __METHOD__ );
 		return $this->mText;
 	}
 
+	/**
+	 * @return string
+	 */
 	public function getText() {
 		return $this->mText;
 	}
@@ -483,9 +514,9 @@ class ArticleComment {
 			'links' => $links,
 			'replyButton' => $replyButton,
 			'sig' => $sig,
-			'text' => $this->mText,
-			'metadata' => $this->mMetadata,
-			'rawtext' =>  $this->mRawtext,
+			'text' => $this->getText(),
+			'metadata' => $this->mMetadata, # filled by parseText()
+			'rawtext' =>  $this->mRawtext, # filled by parseText()
 			'timestamp' => $timestamp,
 			'rawtimestamp' => $rawTimestamp,
 			'rawmwtimestamp' =>	$rawMWTimestamp,
@@ -632,7 +663,7 @@ class ArticleComment {
 	 * @return bool
 	 */
 	public function isAuthor( $user ) {
-		if ( $this->mUser ) {
+		if ( $this->loadRevisionsAndAuthor( true ) && $this->mUser ) {
 			return $this->mUser->getId() == $user->getId() && !$user->isAnon();
 		}
 		return false;
@@ -669,7 +700,7 @@ class ArticleComment {
 	public function editPage() {
 		global $wgStylePath;
 
-		if ( !$this->load( true ) ) {
+		if ( !$this->loadRevisionsAndAuthor( true ) ) {
 			return '';
 		}
 
@@ -792,7 +823,22 @@ class ArticleComment {
 
 		$bot = $user->isAllowed( 'bot' );
 
-		return $editPage->internalAttemptSave( $result, $bot );
+		$status = $editPage->internalAttemptSave( $result, $bot );
+
+		// SUS-1188
+		if ( !$status->isOK() ) {
+			WikiaLogger::instance()->error( __METHOD__ . ' - failed SUS-1188', [
+				'hook_error' => (string) $editPage->hookError,
+				'edit_status' => $status,
+				'edit_result' => (array) $result,
+				'exception' => new Exception( 'EditPage::internalAttemptSave failed', $status->value ),
+				'is_bot_bool' => $bot,
+				'title' => $editPage->getTitle()->getPrefixedDBkey(),
+				'page_id' => $editPage->getTitle()->getArticleID(),
+			] );
+		}
+
+		return $status;
 	}
 
 	/**
@@ -976,8 +1022,6 @@ class ArticleComment {
 	 * @return array
 	 */
 	static public function doAfterPost( Status $status, $article, $parentId = 0 ) {
-		global $wgUser, $wgDBname;
-
 		Hooks::run( 'ArticleCommentAfterPost', [ $status, &$article ] );
 		$commentId = $article->getId();
 		$error = false;
@@ -1017,20 +1061,16 @@ class ArticleComment {
 				wfGetDB( DB_MASTER )->commit();
 				break;
 			default:
-				$userId = $wgUser->getId();
 				$text  = false;
 				$error = true;
 
 				$message = wfMessage( 'article-comments-error' )->escaped();
 
-				WikiaLogger::instance()->error( 'PLATFORM-1311', [
-					'method' => __METHOD__,
+				WikiaLogger::instance()->error( __METHOD__ . ' - PLATFORM-1311', [
 					'status' => $status->value,
-					'dbName' => $wgDBname,
 					'reason' => 'article-comments-error',
 					'name' => $article->getTitle()->getPrefixedDBkey(),
 					'page_id' => $commentId,
-					'user_id' => $userId,
 					'exception' => new Exception( 'article-comments-error', $status->value )
 				] );
 		}
@@ -1563,6 +1603,8 @@ class ArticleComment {
 			return true;
 		}
 
+		wfProfileIn( __METHOD__ );
+
 		$comment = ArticleComment::newFromTitle( $title );
 		$isBlog = ( $wg->EnableBlogArticles && ArticleComment::isBlog( $title ) );
 
@@ -1580,9 +1622,7 @@ class ArticleComment {
 			case 'edit':
 				// Prepopulate the object with revision data
 				// required by ArticleComment::isAuthor
-				$result = $comment->load( true ) ?
-					( $comment->isAuthor( $user ) || $user->isAllowed( 'commentedit' ) )
-					: false;
+				$result = ( $comment->isAuthor( $user ) || $user->isAllowed( 'commentedit' ) );
 				$return = false;
 				break;
 
@@ -1603,6 +1643,7 @@ class ArticleComment {
 				$result = $return = true;
 		}
 
+		wfProfileOut( __METHOD__ );
 		return $return;
 	}
 

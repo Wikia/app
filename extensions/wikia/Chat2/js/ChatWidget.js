@@ -21,13 +21,10 @@ var ChatWidget = {
 
 		// make sure we start processing after ChatModule templates is loaded
 		if ($('.ChatModule').length) {
-			// check if user is logged in (content was pre-rendered to JS variable)
-			if (window.wgUserName) {
-				ChatWidget.initEntryPoint();
-			} else if (!ChatWidget.loading) {
+			if (!ChatWidget.loading) {
 				// if we're not loading yet - start it
 				ChatWidget.loading = true;
-				ChatWidget.initChatEntryPointForAnons();
+				ChatWidget.loadDataAndInitializeModules();
 			}
 		}
 	},
@@ -36,7 +33,7 @@ var ChatWidget = {
 	 * Make request for actual users list and fetch mustache template.
 	 * Then init chat entrypoint.
 	 */
-	initChatEntryPointForAnons: function() {
+	loadDataAndInitializeModules: function() {
 		$.when(
 			ChatWidget.loadChatUsers(),
 			ChatWidget.loadWidgetUserElementTemplate()
@@ -54,7 +51,7 @@ var ChatWidget = {
 				ChatWidget.users = users;
 			}
 
-			ChatWidget.initEntryPoint();
+			ChatWidget.initializeChatModules();
 		});
 	},
 
@@ -90,7 +87,7 @@ var ChatWidget = {
 		});
 
 		$('.chat-contents.chat-room-empty').each(function () {
-			$(this).get(0)
+			$(this).eq(0)
 				.removeClass('chat-room-empty')
 				.addClass('chat-room-active');
 		});
@@ -103,7 +100,7 @@ var ChatWidget = {
 		$('.chat-total').innerHTML = users.length;
 	},
 
-	initEntryPoint: function () {
+	initializeChatModules: function () {
 		// in case the module is embedded in the article, we can have several modules on the page.
 		// Process them one by one
 		$('.ChatModuleUninitialized').each(function () {
@@ -156,7 +153,7 @@ var ChatWidget = {
 		// process i18n the messages
 		$t.find('[data-msg-id]').each(function () {
 			var $e = $(this);
-			$e.text($.msg($e.data('msg-id'), $e.data('msg-param')));
+			$e.text(mw.message($e.data('msg-id'), $e.data('msg-param')).text());
 		});
 	},
 
@@ -213,13 +210,10 @@ var ChatWidget = {
 		if (window.wgUserName) {
 			window.open(linkToSpecialChat, 'wikiachat', window.wgWikiaChatWindowFeatures);
 		} else {
-			require(['AuthModal'], function (authModal) {
-				authModal.load({
-					forceLogin: true,
-					url: '/signin?redirect=' + encodeURIComponent(window.location.href),
-					origin: 'chat',
-					onAuthSuccess: ChatWidget.onSuccessfulLogin
-				});
+			window.wikiaAuthModal.load({
+				forceLogin: true,
+				origin: 'chat',
+				onAuthSuccess: ChatWidget.onSuccessfulLogin
 			});
 		}
 	},
@@ -243,7 +237,7 @@ var ChatWidget = {
 						id: 'JoinChatModal',
 						size: 'small',
 						content: html,
-						title: mw.html.escape($.msg('chat-start-a-chat'))
+						title: mw.message('chat-start-a-chat').escaped()
 					}
 				};
 				uiModal.createComponent(joinModalConfig, function (joinModal) {

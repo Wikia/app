@@ -1,5 +1,7 @@
 <?php
 
+use Wikia\Paginator\Paginator;
+
 class WAMPageController extends WikiaController
 {
 	const DEFAULT_LANG_CODE = 'en';
@@ -38,10 +40,10 @@ class WAMPageController extends WikiaController
 		$total = ( empty( $this->indexWikis['wam_results_total'] ) ) ? 0 : $this->indexWikis['wam_results_total'];
 		$itemsPerPage = $this->model->getItemsPerPage();
 		if( $total > $itemsPerPage ) {
-			$paginator = Paginator::newFromCount( $total, $itemsPerPage );
+			$paginator = new Paginator( $total, $itemsPerPage, $this->getUrlForPagination() );
 			$paginator->setActivePage( $this->page );
-			$this->paginatorBar = $paginator->getBarHTML( $this->getUrlWithAllParams() );
-			$this->wg->Out->addHeadItem( 'Pagination', $paginator->getHeadItem( $this->getUrlWithAllParams() ) );
+			$this->paginatorBar = $paginator->getBarHTML();
+			$this->wg->Out->addHeadItem( 'Pagination', $paginator->getHeadItem() );
 		}
 	}
 
@@ -92,6 +94,9 @@ class WAMPageController extends WikiaController
 					$this->selectedDate = null;
 				}
 			}
+		} else {
+			// DE-1673 default to two days ago because we might not have data for today
+			$this->selectedDate = strtotime( '00:00 -2 day');
 		}
 
 		$this->filterLanguages = $this->model->getWAMLanguages( $this->selectedDate );
@@ -116,24 +121,20 @@ class WAMPageController extends WikiaController
 	}
 
 	protected function getIndexParams($forPaginator = false) {
-		if( $forPaginator ) {
-			$page = '%s';
-		} else {
-			$page = $this->page;
-		}
-
 		$indexParams = [
 			'searchPhrase' => $this->searchPhrase,
 			'verticalId' => Sanitizer::encodeAttribute( $this->selectedVerticalId ),
 			'langCode' => $this->selectedLangCode,
-			'date' => isset($this->selectedDate) ? $this->selectedDate : null,
-			'page' => Sanitizer::encodeAttribute( $page ),
+			'date' => isset( $this->selectedDate ) ? $this->selectedDate : null,
 		];
+		if ( !$forPaginator ) {
+			$indexParams['page'] = Sanitizer::encodeAttribute( $this->page );
+		}
 
 		return $indexParams;
 	}
 
-	protected function getUrlWithAllParams() {
+	protected function getUrlForPagination() {
 		$url = '#';
 		$title = $this->wg->Title;
 		if( $title instanceof Title ) {

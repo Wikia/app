@@ -992,8 +992,8 @@ class WallMessage {
 		return $this->getVoteHelper()->getVoteCount();
 	}
 
-	public function getVotersList() {
-		return $this->getVoteHelper()->getVotersList();
+	public function getVotersList( $from, $count ) {
+		return $this->getVoteHelper()->getVotersList( $from, $count );
 	}
 
 	public function isEdited() {
@@ -1249,7 +1249,7 @@ class WallMessage {
 		);
 	}
 
-	public function delete( $reason ) {
+	public function delete( $reason, $suppress = true ) {
 		$this->load( true );
 
 		$this->removeRelatedNotifications();
@@ -1260,7 +1260,7 @@ class WallMessage {
 			$obj = $this->getThread();
 		}
 
-		$retval = $this->getArticleComment()->doDeleteComment( $reason, true );
+		$retval = $this->getArticleComment()->doDeleteComment( $reason, $suppress );
 		$obj->invalidateCache();
 		return $retval;
 	}

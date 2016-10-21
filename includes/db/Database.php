@@ -882,7 +882,7 @@ abstract class DatabaseBase implements DatabaseType {
 		}
 
 		# <Wikia>
-		global $wgDBReadOnly;
+		global $wgDBReadOnly, $wgReadOnly;
 		if ( $is_writeable && $wgDBReadOnly ) {
 			if ( !Profiler::instance()->isStub() ) {
 				wfProfileOut( $queryProf );
@@ -891,7 +891,8 @@ abstract class DatabaseBase implements DatabaseType {
 			WikiaLogger::instance()->error( 'DB readonly mode', [
 				'exception' => new WikiaException( $fname . ' called in read-only mode' ),
 				'sql'       => $sql,
-				'server'    => $this->mServer
+				'server'    => $this->mServer,
+				'reason'    => (string) $wgReadOnly,
 			] );
 			wfDebug( sprintf( "%s: DB read-only mode prevented the following query: %s\n", __METHOD__, $sql ) );
 			return false;
@@ -969,7 +970,7 @@ abstract class DatabaseBase implements DatabaseType {
 			wfDebug( "Query {$this->mDBname} (DB user: {$DBuser}) ($cnt) ($master): $sqlx\n" );
 		}
 
-		if ( istainted( $sql ) & TC_MYSQL ) {
+		if ( is_tainted( $sql ) ) {
 			throw new MWException( 'Tainted query found' );
 		}
 
@@ -3200,7 +3201,7 @@ abstract class DatabaseBase implements DatabaseType {
 	 * installations. Most callers should use LoadBalancer::safeGetLag()
 	 * instead.
 	 *
-	 * @return Database replication lag in seconds
+	 * @return int replication lag in seconds
 	 */
 	function getLag() {
 		return intval( $this->mFakeSlaveLag );
@@ -3665,6 +3666,11 @@ abstract class DatabaseBase implements DatabaseType {
 		$this->logSql( $sql, $ret, $fname, microtime( true ) - $start, $isMaster );
 
 		MWDebug::queryTime( $queryId );
+
+		if ( $this->wasDeadlock() ) {
+			$this->logDeadlock();
+		}
+
 		return $ret;
 	}
 
@@ -3679,7 +3685,7 @@ abstract class DatabaseBase implements DatabaseType {
 	 * @return void
 	 */
 	protected function logSql( $sql, $ret, $fname, $elapsedTime, $isMaster ) {
-		global $wgDBcluster;
+		global $wgDBcluster, $wgRequest;
 
 		if ( $ret instanceof ResultWrapper ) {
 			// NOP for MySQL driver
@@ -3719,6 +3725,10 @@ abstract class DatabaseBase implements DatabaseType {
 			'exception'   => new Exception(), // log the backtrace
 		];
 
+		if ( $wgRequest && $wgRequest->getVal( 'action' ) == 'delete' ) {
+			$this->getWikiaLogger()->info( "SQL (action=delete) {$sql}", $context );
+		}
+
 		if ( $this->getSampler()->shouldSample() ) {
 			$this->getWikiaLogger()->info( "SQL {$sql}", $context );
 		}
@@ -3740,6 +3750,21 @@ abstract class DatabaseBase implements DatabaseType {
 		# e.g. queries on events_local_users via DataProvider::GetTopFiveUsers
 		if ( $elapsedTime > self::SLOW_QUERY_LOG_THRESHOLD ) {
 			$this->getWikiaLogger()->info( "Slow query {$sql}", $context );
+		}
+	}
+
+	protected function logDeadlock() {
+		$res = $this->doQuery( "SHOW ENGINE INNODB STATUS;" );
+		if ( $res && $row = $this->fetchRow( $res ) ) {
+			$statusString = $row['Status'];
+
+			if ( preg_match('/\nLATEST DETECTED DEADLOCK\n-+\n(.*?)(?:\n-+\n|$)/s', $statusString, $m) ) {
+				$deadlockDetails = $m[1];
+				$this->getWikiaLogger()->error( 'Database deadlock occurred', [
+					'latest_deadlock_details' => $deadlockDetails,
+					'exception' => new Exception(),
+				]);
+			}
 		}
 	}
 

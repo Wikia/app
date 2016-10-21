@@ -50,7 +50,7 @@ class EditPageLayoutHelper {
 	 * @author macbre
 	 */
 	function setupEditPage( Article $editedArticle, $fullScreen = true, $class = false ) {
-		global $wgHooks, $wgInfoboxPreviewURL, $wgEditPreviewMercuryUrl;
+		global $wgHooks, $wgEditPreviewMercuryUrl;
 
 		wfProfileIn( __METHOD__ );
 
@@ -129,9 +129,6 @@ class EditPageLayoutHelper {
 
 		// copyright warning for notifications (BugId:7951)
 		$this->addJsVariable( 'wgCopywarn', $this->editPage->getCopyrightNotice() );
-
-		// infobox preview url
-		$this->addJsVariable( 'wgInfoboxPreviewURL', $wgInfoboxPreviewURL );
 
 		// extra hooks for edit page
 		$wgHooks['MakeGlobalVariablesScript'][] = 'EditPageLayoutHooks::onMakeGlobalVariablesScript';
@@ -336,6 +333,7 @@ class EditPageLayoutHelper {
 			'extensions/wikia/EditPageLayout/js/plugins/Collapsiblemodules.js',
 			'extensions/wikia/EditPageLayout/js/plugins/Cssloadcheck.js',
 			'extensions/wikia/EditPageLayout/js/plugins/Edittools.js',
+			'extensions/wikia/EditPageLayout/js/plugins/FlowTracking.js',
 			'extensions/wikia/EditPageLayout/js/plugins/Loadingstatus.js',
 			'extensions/wikia/EditPageLayout/js/plugins/Noticearea.js',
 			'extensions/wikia/EditPageLayout/js/plugins/Railminimumheight.js',

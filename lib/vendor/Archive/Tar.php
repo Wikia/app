@@ -80,7 +80,8 @@ class Archive_Tar extends PEAR
     */
     function __construct($p_tarname, $p_compress = null)
     {
-        $this->PEAR();
+        parent::__construct();
+
         $this->_compress = false;
         $this->_compress_type = 'none';
         if (($p_compress === null) || ($p_compress == '')) {

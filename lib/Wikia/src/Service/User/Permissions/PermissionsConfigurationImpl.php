@@ -20,31 +20,32 @@ class PermissionsConfigurationImpl implements PermissionsConfiguration {
 	private $groupsSelfRemovableByGroup = [];
 
 	private $globalGroups = [
-		'content-reviewer',
-		'staff',
-		'helper',
-		'vstf',
+		'authenticated',
 		'beta',
 		'bot-global',
-		'util',
-		'reviewer',
-		'poweruser',
-		'translator',
-		'wikifactory',
-		'restricted-login',
+		'content-reviewer',
 		'council',
-		'authenticated',
-		'wikiastars',
+		'helper',
+		'poweruser',
 		'restricted-login',
+		'restricted-login-exempt',
+		'reviewer',
+		'staff',
+		'translator',
+		'util',
+		'vanguard',
 		'voldev',
-		'vanguard'
+		'vstf',
+		'fancontributor-staff',
+		'fancontributor-contributor',
 	];
 
 	private $implicitGroups = [
 		'*',
 		'user',
 		'autoconfirmed',
-		'poweruser'
+		'poweruser',
+		'restricted-login-auto',
 	];
 
 	private $permissions = [
@@ -204,7 +205,6 @@ class PermissionsConfigurationImpl implements PermissionsConfiguration {
 		'powerdelete',
 		'quicktools',
 		'quickadopt',
-		'regexblock',
 		'restrictsession',
 		'scribeevents',
 		'performancestats',
@@ -241,7 +241,6 @@ class PermissionsConfigurationImpl implements PermissionsConfiguration {
 		'smwallowaskpage',
 		'council',
 		'authenticated',
-		'displaywikiastarslabel',
 		'editinterfacetrusted',
 		'deleteinterfacetrusted',
 		'voldev',
@@ -251,7 +250,12 @@ class PermissionsConfigurationImpl implements PermissionsConfiguration {
 		'mcachepurge',
 		'editrestrictedfields',
 		'viewedittab',
-		'createclass'
+		'createclass',
+		'first-edit-dialog-exempt',
+		'hideblockername',
+		'fancontributor-staff',
+		'fancontributor-contributor',
+		'clearuserprofile',
 	];
 
 	public function __construct() {
@@ -404,8 +408,11 @@ class PermissionsConfigurationImpl implements PermissionsConfiguration {
 		$this->groupsRemovableByGroup['bureaucrat'] = [ 'rollback', 'sysop', 'bot', 'content-moderator' ];
 		$this->groupsSelfRemovableByGroup['bureaucrat'] = [ 'bureaucrat' ];
 
-		$this->groupsAddableByGroup['staff'] = [ 'rollback', 'bot', 'sysop', 'bureaucrat', 'content-moderator', 'chatmoderator', 'translator', 'threadmoderator', 'vanguard' ];
-		$this->groupsRemovableByGroup['staff'] = [ 'rollback', 'bot', 'sysop', 'bureaucrat', 'content-moderator', 'chatmoderator', 'translator', 'threadmoderator', 'vanguard' ];
+		$this->groupsAddableByGroup['staff'] = [ 'rollback', 'bot', 'sysop', 'bureaucrat', 'content-moderator', 'chatmoderator', 'translator', 'threadmoderator', 'vanguard', 'fancontributor-staff', 'fancontributor-contributor' ];
+		$this->groupsRemovableByGroup['staff'] = [ 'rollback', 'bot', 'sysop', 'bureaucrat', 'content-moderator', 'chatmoderator', 'translator', 'threadmoderator', 'vanguard', 'fancontributor-staff', 'fancontributor-contributor' ];
+
+		$this->groupsSelfAddableByGroup['fancontributor-staff'] = [ 'fancontributor-contributor' ];
+		$this->groupsSelfRemovableByGroup['fancontributor-staff'] = [ 'fancontributor-staff', 'fancontributor-contributor' ];
 
 		$this->groupsAddableByGroup['helper'] = [ 'rollback', 'bot', 'sysop', 'bureaucrat', 'content-moderator', 'chatmoderator', 'threadmoderator' ];
 		$this->groupsRemovableByGroup['helper'] = [ 'rollback', 'bot', 'sysop', 'bureaucrat', 'content-moderator', 'chatmoderator', 'threadmoderator' ];
@@ -449,9 +456,9 @@ class PermissionsConfigurationImpl implements PermissionsConfiguration {
 			[ 'chatmoderator', 'threadmoderator' ] ) );
 
 		$this->groupsAddableByGroup['util'] = array_diff( $this->getExplicitGroups(),
-			array_merge( [ 'wikifactory', 'content-reviewer', 'staff', 'util' ], $this->getImplicitGroups() ) );
+			array_merge( [ 'content-reviewer', 'staff', 'util', 'restricted-login-exempt' ], $this->getImplicitGroups() ) );
 		$this->groupsRemovableByGroup['util'] = array_diff( $this->getExplicitGroups(),
-			$this->getImplicitGroups() );
+			array_merge( [ 'restricted-login', 'restricted-login-exempt' ], $this->getImplicitGroups() ) );
 
 		global $wgDevelEnvironment;
 		if ( !empty( $wgDevelEnvironment ) ) {
@@ -460,5 +467,15 @@ class PermissionsConfigurationImpl implements PermissionsConfiguration {
 			$this->groupsSelfAddableByGroup['staff'] = $this->getExplicitGroups();
 			$this->groupsSelfRemovableByGroup['staff'] = $this->getExplicitGroups();
 		}
+	}
+
+	public function getRestrictedAccessGroups() {
+		global $wgRestrictedAccessGroups;
+		return $wgRestrictedAccessGroups;
+	}
+
+	public function getRestrictedAccessExemptGroups() {
+		global $wgRestrictedAccessExemptGroups;
+		return $wgRestrictedAccessExemptGroups;
 	}
 }

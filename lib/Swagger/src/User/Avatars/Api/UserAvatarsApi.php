@@ -10,7 +10,7 @@
  * @link     https://github.com/swagger-api/swagger-codegen
  */
 /**
- *  Copyright 2015 SmartBear Software
+ *  Copyright 2016 SmartBear Software
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -37,7 +37,6 @@ use \Swagger\Client\Configuration;
 use \Swagger\Client\ApiClient;
 use \Swagger\Client\ApiException;
 use \Swagger\Client\ObjectSerializer;
-use Wikia\Service\Constants;
 
 /**
  * UserAvatarsApi Class Doc Comment
@@ -61,11 +60,11 @@ class UserAvatarsApi
      * Constructor
      * @param \Swagger\Client\ApiClient|null $apiClient The api client to use
      */
-    function __construct( $apiClient = null )
+    function __construct($apiClient = null)
     {
-        if ( $apiClient == null ) {
+        if ($apiClient == null) {
             $apiClient = new ApiClient();
-            $apiClient->getConfig()->setHost( 'https://localhost/' );
+            $apiClient->getConfig()->setHost('https://localhost/');
         }
 
         $this->apiClient = $apiClient;
@@ -85,7 +84,7 @@ class UserAvatarsApi
      * @param \Swagger\Client\ApiClient $apiClient set the API client
      * @return UserAvatarsApi
      */
-    public function setApiClient( ApiClient $apiClient )
+    public function setApiClient(ApiClient $apiClient)
     {
         $this->apiClient = $apiClient;
         return $this;
@@ -93,275 +92,457 @@ class UserAvatarsApi
 
 
     /**
-     * getAvatarForUser
-     *
-     * Get an user avatar
-     *
-     * @param int $user_id  (required)
-     * @param string $if_none_match  (optional)
-     * @return void
-     * @throws \Swagger\Client\ApiException on non-2xx response
-     */
-    public function getAvatarForUser( $user_id, $if_none_match = null )
-    {
-
-        // verify the required parameter 'user_id' is set
-        if ( $user_id === null ) {
-            throw new \InvalidArgumentException( 'Missing the required parameter $user_id when calling getAvatarForUser' );
-        }
-
-        // parse inputs
-        $resourcePath = "/user/{userId}/avatar";
-        $resourcePath = str_replace( "{format}", "json", $resourcePath );
-        $method = "GET";
-        $httpBody = '';
-        $queryParams = array();
-        $headerParams = array();
-        $formParams = array();
-        $headerParams['Content-Type'] = ApiClient::selectHeaderContentType( array() );
-
-
-        // header params
-        if ( $if_none_match !== null ) {
-            $headerParams['If-None-Match'] = $this->apiClient->getSerializer()->toHeaderValue( $if_none_match );
-        }
-        // path params
-        if ( $user_id !== null ) {
-            $resourcePath = str_replace(
-                "{" . "userId" . "}",
-                $this->apiClient->getSerializer()->toPathValue( $user_id ),
-                $resourcePath
-            );
-        }
-
-
-
-        // for model (json/xml)
-        if ( isset( $_tempBody ) ) {
-            $httpBody = $_tempBody; // $_tempBody is the method argument, if present
-        } else if ( count( $formParams ) > 0 ) {
-            $httpBody = $formParams; // for HTTP post (form)
-        }
-
-        // make the API Call
-        try
-        {
-            list( $response, $httpHeader ) = $this->apiClient->callApi(
-                $resourcePath, $method,
-                $queryParams, $httpBody,
-                $headerParams
-            );
-        } catch ( ApiException $e ) {
-            switch ( $e->getCode() ) {
-            }
-
-            throw $e;
-        }
-
-		return $response;
-    }
-
-    /**
-     * updateOrCreateUserAvatar
-     *
-     * Create an avatar for a user, potentially overwriting any existing one
-     *
-     * @param int $user_id  (required)
-	 * @param array $_tempBody  (required)
-     * @return void
-     * @throws \Swagger\Client\ApiException on non-2xx response
-     */
-    public function updateOrCreateUserAvatar( $user_id, $_tempBody )
-    {
-
-        // verify the required parameter 'user_id' is set
-        if ( $user_id === null ) {
-            throw new \InvalidArgumentException( 'Missing the required parameter $user_id when calling updateOrCreateUserAvatar' );
-        }
-
-        // parse inputs
-        $resourcePath = "/user/{userId}/avatar";
-        $resourcePath = str_replace( "{format}", "json", $resourcePath );
-        $method = "PUT";
-        $httpBody = '';
-        $queryParams = array();
-        $headerParams = array();
-        $formParams = array();
-        $headerParams['Content-Type'] = ApiClient::selectHeaderContentType( array( 'multipart/form-data' ) );
-		$headerParams[Constants::HELIOS_AUTH_HEADER] = $user_id;
-
-
-
-        // path params
-        if ( $user_id !== null ) {
-            $resourcePath = str_replace(
-                "{" . "userId" . "}",
-                $this->apiClient->getSerializer()->toPathValue( $user_id ),
-                $resourcePath
-            );
-        }
-
-
-
-        // for model (json/xml)
-        if ( isset( $_tempBody ) ) {
-            $httpBody = $_tempBody; // $_tempBody is the method argument, if present
-        } else if ( count( $formParams ) > 0 ) {
-            $httpBody = $formParams; // for HTTP post (form)
-        }
-
-        // make the API Call
-        try
-        {
-            list( $response, $httpHeader ) = $this->apiClient->callApi(
-                $resourcePath, $method,
-                $queryParams, $httpBody,
-                $headerParams
-            );
-        } catch ( ApiException $e ) {
-            switch ( $e->getCode() ) {
-            }
-
-            throw $e;
-        }
-
-		return $response;
-
-    }
-
-    /**
-     * createUserAvatar
-     *
-     * Create an avatar for a user (only if it does not exist yet)
-     *
-     * @param int $user_id  (required)
-	 * @param array $_tempBody  (required)
-     * @return void
-     * @throws \Swagger\Client\ApiException on non-2xx response
-     */
-    public function createUserAvatar( $user_id, $_tempBody )
-    {
-
-        // verify the required parameter 'user_id' is set
-        if ( $user_id === null ) {
-            throw new \InvalidArgumentException( 'Missing the required parameter $user_id when calling createUserAvatar' );
-        }
-
-        // parse inputs
-        $resourcePath = "/user/{userId}/avatar";
-        $resourcePath = str_replace( "{format}", "json", $resourcePath );
-        $method = "POST";
-        $httpBody = '';
-        $queryParams = array();
-        $headerParams = array();
-        $formParams = array();
-        $headerParams['Content-Type'] = ApiClient::selectHeaderContentType( array( 'multipart/form-data' ) );
-		$headerParams[Constants::HELIOS_AUTH_HEADER] = $user_id;
-
-
-
-        // path params
-        if ( $user_id !== null ) {
-            $resourcePath = str_replace(
-                "{" . "userId" . "}",
-                $this->apiClient->getSerializer()->toPathValue( $user_id ),
-                $resourcePath
-            );
-        }
-
-
-
-        // for model (json/xml)
-        if ( isset( $_tempBody ) ) {
-            $httpBody = $_tempBody; // $_tempBody is the method argument, if present
-        } else if ( count( $formParams ) > 0 ) {
-            $httpBody = $formParams; // for HTTP post (form)
-        }
-
-        // make the API Call
-        try
-        {
-            list( $response, $httpHeader ) = $this->apiClient->callApi(
-                $resourcePath, $method,
-                $queryParams, $httpBody,
-                $headerParams
-            );
-        } catch ( ApiException $e ) {
-            switch ( $e->getCode() ) {
-            }
-
-            throw $e;
-        }
-
-		return $response;
-
-    }
-
-    /**
      * deleteUserAvatar
      *
      * Delete the users avatar
      *
-     * @param int $user_id  (required)
+     * @param string $user_id  (required)
      * @return void
      * @throws \Swagger\Client\ApiException on non-2xx response
      */
-    public function deleteUserAvatar( $user_id )
+    public function deleteUserAvatar($user_id)
+    {
+        list($response, $statusCode, $httpHeader) = $this->deleteUserAvatarWithHttpInfo ($user_id);
+        return $response;
+    }
+
+
+    /**
+     * deleteUserAvatarWithHttpInfo
+     *
+     * Delete the users avatar
+     *
+     * @param string $user_id  (required)
+     * @return Array of null, HTTP status code, HTTP response headers (array of strings)
+     * @throws \Swagger\Client\ApiException on non-2xx response
+     */
+    public function deleteUserAvatarWithHttpInfo($user_id)
     {
 
         // verify the required parameter 'user_id' is set
-        if ( $user_id === null ) {
-            throw new \InvalidArgumentException( 'Missing the required parameter $user_id when calling deleteUserAvatar' );
+        if ($user_id === null) {
+            throw new \InvalidArgumentException('Missing the required parameter $user_id when calling deleteUserAvatar');
         }
 
         // parse inputs
         $resourcePath = "/user/{userId}/avatar";
-        $resourcePath = str_replace( "{format}", "json", $resourcePath );
-        $method = "DELETE";
         $httpBody = '';
         $queryParams = array();
         $headerParams = array();
         $formParams = array();
-        $headerParams['Content-Type'] = ApiClient::selectHeaderContentType( array( 'multipart/form-data' ) );
-		$headerParams[Constants::HELIOS_AUTH_HEADER] = $user_id;
+        $_header_accept = ApiClient::selectHeaderAccept(array('application/json'));
+        if (!is_null($_header_accept)) {
+            $headerParams['Accept'] = $_header_accept;
+        }
+        $headerParams['Content-Type'] = ApiClient::selectHeaderContentType(array());
 
 
 
         // path params
-        if ( $user_id !== null ) {
+
+        if ($user_id !== null) {
             $resourcePath = str_replace(
                 "{" . "userId" . "}",
-                $this->apiClient->getSerializer()->toPathValue( $user_id ),
+                $this->apiClient->getSerializer()->toPathValue($user_id),
                 $resourcePath
             );
         }
+        // default format to json
+        $resourcePath = str_replace("{format}", "json", $resourcePath);
+
 
 
 
         // for model (json/xml)
-        if ( isset( $_tempBody ) ) {
+        if (isset($_tempBody)) {
             $httpBody = $_tempBody; // $_tempBody is the method argument, if present
-        } else if ( count( $formParams ) > 0 ) {
+        } elseif (count($formParams) > 0) {
             $httpBody = $formParams; // for HTTP post (form)
         }
 
+        // this endpoint requires API key authentication
+        $apiKey = $this->apiClient->getApiKeyWithPrefix('X-Wikia-AccessToken');
+        if (strlen($apiKey) !== 0) {
+            $headerParams['X-Wikia-AccessToken'] = $apiKey;
+        }
+
+
+        // this endpoint requires API key authentication
+        $apiKey = $this->apiClient->getApiKeyWithPrefix('X-Wikia-UserId');
+        if (strlen($apiKey) !== 0) {
+            $headerParams['X-Wikia-UserId'] = $apiKey;
+        }
+
+
         // make the API Call
-        try
-        {
-            list( $response, $httpHeader ) = $this->apiClient->callApi(
-                $resourcePath, $method,
+        try {
+            list($response, $statusCode, $httpHeader) = $this->apiClient->callApi(
+                $resourcePath, 'DELETE',
                 $queryParams, $httpBody,
                 $headerParams
             );
-        } catch ( ApiException $e ) {
-            switch ( $e->getCode() ) {
+
+            return array(null, $statusCode, $httpHeader);
+
+        } catch (ApiException $e) {
+            switch ($e->getCode()) {
             }
 
             throw $e;
         }
+    }
 
-		return $response;
+    /**
+     * getAvatarForUser
+     *
+     * Get an user avatar
+     *
+     * @param string $user_id  (required)
+     * @param string $if_none_match  (optional)
+     * @return void
+     * @throws \Swagger\Client\ApiException on non-2xx response
+     */
+    public function getAvatarForUser($user_id, $if_none_match = null)
+    {
+        list($response, $statusCode, $httpHeader) = $this->getAvatarForUserWithHttpInfo ($user_id, $if_none_match);
+        return $response;
+    }
 
+
+    /**
+     * getAvatarForUserWithHttpInfo
+     *
+     * Get an user avatar
+     *
+     * @param string $user_id  (required)
+     * @param string $if_none_match  (optional)
+     * @return Array of null, HTTP status code, HTTP response headers (array of strings)
+     * @throws \Swagger\Client\ApiException on non-2xx response
+     */
+    public function getAvatarForUserWithHttpInfo($user_id, $if_none_match = null)
+    {
+
+        // verify the required parameter 'user_id' is set
+        if ($user_id === null) {
+            throw new \InvalidArgumentException('Missing the required parameter $user_id when calling getAvatarForUser');
+        }
+
+        // parse inputs
+        $resourcePath = "/user/{userId}/avatar";
+        $httpBody = '';
+        $queryParams = array();
+        $headerParams = array();
+        $formParams = array();
+        $_header_accept = ApiClient::selectHeaderAccept(array('application/json'));
+        if (!is_null($_header_accept)) {
+            $headerParams['Accept'] = $_header_accept;
+        }
+        $headerParams['Content-Type'] = ApiClient::selectHeaderContentType(array());
+
+
+        // header params
+
+        if ($if_none_match !== null) {
+            $headerParams['If-None-Match'] = $this->apiClient->getSerializer()->toHeaderValue($if_none_match);
+        }
+        // path params
+
+        if ($user_id !== null) {
+            $resourcePath = str_replace(
+                "{" . "userId" . "}",
+                $this->apiClient->getSerializer()->toPathValue($user_id),
+                $resourcePath
+            );
+        }
+        // default format to json
+        $resourcePath = str_replace("{format}", "json", $resourcePath);
+
+
+
+
+        // for model (json/xml)
+        if (isset($_tempBody)) {
+            $httpBody = $_tempBody; // $_tempBody is the method argument, if present
+        } elseif (count($formParams) > 0) {
+            $httpBody = $formParams; // for HTTP post (form)
+        }
+
+        // this endpoint requires API key authentication
+        $apiKey = $this->apiClient->getApiKeyWithPrefix('X-Wikia-AccessToken');
+        if (strlen($apiKey) !== 0) {
+            $headerParams['X-Wikia-AccessToken'] = $apiKey;
+        }
+
+
+        // this endpoint requires API key authentication
+        $apiKey = $this->apiClient->getApiKeyWithPrefix('X-Wikia-UserId');
+        if (strlen($apiKey) !== 0) {
+            $headerParams['X-Wikia-UserId'] = $apiKey;
+        }
+
+
+        // make the API Call
+        try {
+            list($response, $statusCode, $httpHeader) = $this->apiClient->callApi(
+                $resourcePath, 'GET',
+                $queryParams, $httpBody,
+                $headerParams
+            );
+
+            return array(null, $statusCode, $httpHeader);
+
+        } catch (ApiException $e) {
+            switch ($e->getCode()) {
+            }
+
+            throw $e;
+        }
+    }
+
+    /**
+     * postUserAvatar
+     *
+     * Creates an avatar for a user
+     *
+     * @param string $user_id  (required)
+     * @param \SplFileObject $file  (optional)
+     * @return \Swagger\Client\User\Avatars\Models\UserAvatarCreatedResult
+     * @throws \Swagger\Client\ApiException on non-2xx response
+     */
+    public function postUserAvatar($user_id, $file = null)
+    {
+        list($response, $statusCode, $httpHeader) = $this->postUserAvatarWithHttpInfo ($user_id, $file);
+        return $response;
+    }
+
+
+    /**
+     * postUserAvatarWithHttpInfo
+     *
+     * Creates an avatar for a user
+     *
+     * @param string $user_id  (required)
+     * @param \SplFileObject $file  (optional)
+     * @return Array of \Swagger\Client\User\Avatars\Models\UserAvatarCreatedResult, HTTP status code, HTTP response headers (array of strings)
+     * @throws \Swagger\Client\ApiException on non-2xx response
+     */
+    public function postUserAvatarWithHttpInfo($user_id, $file = null)
+    {
+
+        // verify the required parameter 'user_id' is set
+        if ($user_id === null) {
+            throw new \InvalidArgumentException('Missing the required parameter $user_id when calling postUserAvatar');
+        }
+
+        // parse inputs
+        $resourcePath = "/user/{userId}/avatar";
+        $httpBody = '';
+        $queryParams = array();
+        $headerParams = array();
+        $formParams = array();
+        $_header_accept = ApiClient::selectHeaderAccept(array('application/json'));
+        if (!is_null($_header_accept)) {
+            $headerParams['Accept'] = $_header_accept;
+        }
+        $headerParams['Content-Type'] = ApiClient::selectHeaderContentType(array('multipart/form-data'));
+
+
+
+        // path params
+
+        if ($user_id !== null) {
+            $resourcePath = str_replace(
+                "{" . "userId" . "}",
+                $this->apiClient->getSerializer()->toPathValue($user_id),
+                $resourcePath
+            );
+        }
+        // default format to json
+        $resourcePath = str_replace("{format}", "json", $resourcePath);
+
+        // form params
+        if ($file !== null) {
+
+            // PHP 5.5 introduced a CurlFile object that deprecates the old @filename syntax
+            // See: https://wiki.php.net/rfc/curl-file-upload
+            if (function_exists('curl_file_create')) {
+                $formParams['file'] = curl_file_create($this->apiClient->getSerializer()->toFormValue($file));
+            } else {
+                $formParams['file'] = '@' . $this->apiClient->getSerializer()->toFormValue($file);
+            }
+
+
+        }
+
+
+        // for model (json/xml)
+        if (isset($_tempBody)) {
+            $httpBody = $_tempBody; // $_tempBody is the method argument, if present
+        } elseif (count($formParams) > 0) {
+            $httpBody = $formParams; // for HTTP post (form)
+        }
+
+        // this endpoint requires API key authentication
+        $apiKey = $this->apiClient->getApiKeyWithPrefix('X-Wikia-AccessToken');
+        if (strlen($apiKey) !== 0) {
+            $headerParams['X-Wikia-AccessToken'] = $apiKey;
+        }
+
+
+        // this endpoint requires API key authentication
+        $apiKey = $this->apiClient->getApiKeyWithPrefix('X-Wikia-UserId');
+        if (strlen($apiKey) !== 0) {
+            $headerParams['X-Wikia-UserId'] = $apiKey;
+        }
+
+
+        // make the API Call
+        try {
+            list($response, $statusCode, $httpHeader) = $this->apiClient->callApi(
+                $resourcePath, 'POST',
+                $queryParams, $httpBody,
+                $headerParams, '\Swagger\Client\User\Avatars\Models\UserAvatarCreatedResult'
+            );
+
+            if (!$response) {
+                return array(null, $statusCode, $httpHeader);
+            }
+
+            return array(\Swagger\Client\ObjectSerializer::deserialize($response, '\Swagger\Client\User\Avatars\Models\UserAvatarCreatedResult', $httpHeader), $statusCode, $httpHeader);
+
+        } catch (ApiException $e) {
+            switch ($e->getCode()) {
+                case 200:
+                    $data = \Swagger\Client\ObjectSerializer::deserialize($e->getResponseBody(), '\Swagger\Client\User\Avatars\Models\UserAvatarCreatedResult', $e->getResponseHeaders());
+                    $e->setResponseObject($data);
+                    break;
+            }
+
+            throw $e;
+        }
+    }
+
+    /**
+     * putUserAvatar
+     *
+     * Create an avatar for a user, potentially overwriting any existing one
+     *
+     * @param string $user_id  (required)
+     * @param \SplFileObject $file  (optional)
+     * @return \Swagger\Client\User\Avatars\Models\UserAvatarCreatedResult
+     * @throws \Swagger\Client\ApiException on non-2xx response
+     */
+    public function putUserAvatar($user_id, $file = null)
+    {
+        list($response, $statusCode, $httpHeader) = $this->putUserAvatarWithHttpInfo ($user_id, $file);
+        return $response;
+    }
+
+
+    /**
+     * putUserAvatarWithHttpInfo
+     *
+     * Create an avatar for a user, potentially overwriting any existing one
+     *
+     * @param string $user_id  (required)
+     * @param \SplFileObject $file  (optional)
+     * @return Array of \Swagger\Client\User\Avatars\Models\UserAvatarCreatedResult, HTTP status code, HTTP response headers (array of strings)
+     * @throws \Swagger\Client\ApiException on non-2xx response
+     */
+    public function putUserAvatarWithHttpInfo($user_id, $file = null)
+    {
+
+        // verify the required parameter 'user_id' is set
+        if ($user_id === null) {
+            throw new \InvalidArgumentException('Missing the required parameter $user_id when calling putUserAvatar');
+        }
+
+        // parse inputs
+        $resourcePath = "/user/{userId}/avatar";
+        $httpBody = '';
+        $queryParams = array();
+        $headerParams = array();
+        $formParams = array();
+        $_header_accept = ApiClient::selectHeaderAccept(array('application/json'));
+        if (!is_null($_header_accept)) {
+            $headerParams['Accept'] = $_header_accept;
+        }
+        $headerParams['Content-Type'] = ApiClient::selectHeaderContentType(array('multipart/form-data'));
+
+
+
+        // path params
+
+        if ($user_id !== null) {
+            $resourcePath = str_replace(
+                "{" . "userId" . "}",
+                $this->apiClient->getSerializer()->toPathValue($user_id),
+                $resourcePath
+            );
+        }
+        // default format to json
+        $resourcePath = str_replace("{format}", "json", $resourcePath);
+
+        // form params
+        if ($file !== null) {
+
+            // PHP 5.5 introduced a CurlFile object that deprecates the old @filename syntax
+            // See: https://wiki.php.net/rfc/curl-file-upload
+            if (function_exists('curl_file_create')) {
+                $formParams['file'] = curl_file_create($this->apiClient->getSerializer()->toFormValue($file));
+            } else {
+                $formParams['file'] = '@' . $this->apiClient->getSerializer()->toFormValue($file);
+            }
+
+
+        }
+
+
+        // for model (json/xml)
+        if (isset($_tempBody)) {
+            $httpBody = $_tempBody; // $_tempBody is the method argument, if present
+        } elseif (count($formParams) > 0) {
+            $httpBody = $formParams; // for HTTP post (form)
+        }
+
+        // this endpoint requires API key authentication
+        $apiKey = $this->apiClient->getApiKeyWithPrefix('X-Wikia-AccessToken');
+        if (strlen($apiKey) !== 0) {
+            $headerParams['X-Wikia-AccessToken'] = $apiKey;
+        }
+
+
+        // this endpoint requires API key authentication
+        $apiKey = $this->apiClient->getApiKeyWithPrefix('X-Wikia-UserId');
+        if (strlen($apiKey) !== 0) {
+            $headerParams['X-Wikia-UserId'] = $apiKey;
+        }
+
+
+        // make the API Call
+        try {
+            list($response, $statusCode, $httpHeader) = $this->apiClient->callApi(
+                $resourcePath, 'PUT',
+                $queryParams, $httpBody,
+                $headerParams, '\Swagger\Client\User\Avatars\Models\UserAvatarCreatedResult'
+            );
+
+            if (!$response) {
+                return array(null, $statusCode, $httpHeader);
+            }
+
+            return array(\Swagger\Client\ObjectSerializer::deserialize($response, '\Swagger\Client\User\Avatars\Models\UserAvatarCreatedResult', $httpHeader), $statusCode, $httpHeader);
+
+        } catch (ApiException $e) {
+            switch ($e->getCode()) {
+                case 200:
+                    $data = \Swagger\Client\ObjectSerializer::deserialize($e->getResponseBody(), '\Swagger\Client\User\Avatars\Models\UserAvatarCreatedResult', $e->getResponseHeaders());
+                    $e->setResponseObject($data);
+                    break;
+            }
+
+            throw $e;
+        }
     }
 
 }

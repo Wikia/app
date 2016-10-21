@@ -62,7 +62,7 @@ class ResultTest extends BaseTest {
 		$method = new ReflectionMethod( 'Wikia\Search\Result', 'fixSnippeting' );
 		$method->setAccessible( true );
 		$this->assertEquals(
-			$method->invoke( $result, $textFieldValue, true ),
+			$method->invoke( null, $textFieldValue, true ),
 			$result->getText(),
 			'The text field should be stored after being filtered through Wikia\Search\Result::fixSnippeting.'
 		);
@@ -276,82 +276,80 @@ class ResultTest extends BaseTest {
 	 * @covers Wikia\Search\Result::fixSnippeting
 	 */
 	public function testFixSnippeting() {
-
-		$result		= new Result( $this->defaultFields );
 		$method		= new ReflectionMethod( 'Wikia\Search\Result', 'fixSnippeting' );
 		$method->setAccessible( true );
 
 		$text = '�foo';
 		$this->assertEquals(
 			'foo',
-			$method->invoke( $result, $text ),
+			$method->invoke( null, $text ),
 			'Wikia\Search\Result::fixSnippeting should remove bytecode junk.'
 		);
 
 		$text = 'foo &hellip;';
 		$this->assertEquals(
 			'foo',
-			$method->invoke( $result, $text ),
+			$method->invoke( null, $text ),
 			'Wikia\Search\Result::fixSnippeting should remove string-final ellipses.'
 		);
 		$text = 'foo&hellip;';
 		$this->assertEquals(
 			'foo',
-			$method->invoke( $result, $text ),
+			$method->invoke( null, $text ),
 			'Wikia\Search\Result::fixSnippeting should remove string-final ellipses.'
 		);
 		$text = 'foo...';
 		$this->assertEquals(
 			'foo',
-			$method->invoke( $result, $text ),
+			$method->invoke( null, $text ),
 			'Wikia\Search\Result::fixSnippeting should remove string-final ellipses.'
 		);
 		$text = 'foo ...';
 		$this->assertEquals(
 			'foo',
-			$method->invoke( $result, $text ),
+			$method->invoke( null, $text ),
 			'Wikia\Search\Result::fixSnippeting should remove string-final ellipses.'
 		);
 		$text = 'foo..';
 		$this->assertEquals(
 			'foo',
-			$method->invoke( $result, $text ),
+			$method->invoke( null, $text ),
 			'Wikia\Search\Result::fixSnippeting should remove multiple string-final periods.'
 		);
 		$text = 'foo                     ';
 		$this->assertEquals(
 			'foo',
-			$method->invoke( $result, $text ),
+			$method->invoke( null, $text ),
 			'Wikia\Search\Result::fixSnippeting should remove string-final whitespace.'
 		);
 		$text = "foo</span>'s";
 		$this->assertEquals(
 			"foo's</span>",
-			$method->invoke( $result, $text ),
+			$method->invoke( null, $text ),
 			'Wikia\Search\Result::fixSnippeting should fix searchmatch spans that orphan apostrophes.'
 		);
 		$text = '!,?. foo';
 		$this->assertEquals(
 			'foo',
-			$method->invoke( $result, $text ),
+			$method->invoke( null, $text ),
 			'Wikia\Search\Result::fixSnippeting should remove string-initial punctuation.'
 		);
 		$text = 'span class="searchmatch"> foo';
 		$this->assertEquals(
 			'<span class="searchmatch"> foo',
-			$method->invoke( $result, $text ),
+			$method->invoke( null, $text ),
 			'Wikia\Search\Result::fixSnippeting should repair broken string-initial span tags.'
 		);
 		$text = 'foo</span>!!!!';
 		$this->assertEquals(
 			'foo</span>&hellip;',
-			$method->invoke( $result, $text, true ),
+			$method->invoke( null, $text, true ),
 			'Wikia\Search\Result::fixSnippeting should append an ellipses to the end of a string if second parameter passed as true. Broken span tags should be repaired, as well.'
 		);
 		$text = '<span class="searchmatch">foo</span></div>';
 		$this->assertEquals(
 			'<span class="searchmatch">foo</span>',
-			$method->invoke( $result, $text ),
+			$method->invoke( null, $text ),
 			'Wikia\Search\Result::fixSnippeting should strip all tags except spans.'
 		);
 	}
@@ -560,8 +558,7 @@ class ResultTest extends BaseTest {
 	 * @dataProvider limitTextLengthProvider
 	 */
 	public function testLimitTextLength( $text, $limit, $expected ) {
-		$result = new Result( [] );
-		$this->assertEquals( $expected, $result->limitTextLength( $text, $limit ) );
+		$this->assertEquals( $expected, Result::limitTextLength( $text, $limit ) );
 	}
 
 	public function limitTextLengthProvider() {

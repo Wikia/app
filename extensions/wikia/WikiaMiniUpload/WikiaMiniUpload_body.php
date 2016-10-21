@@ -99,11 +99,13 @@ class WikiaMiniUpload {
 		$constrain = array();
 		$exactHeight = $wgRequest->getVal('exactHeight');
 		if ( $exactHeight ) {
+			$exactHeight = intval($exactHeight);
 			$constrain[] = "img_height = $exactHeight";
 		}
 
 		$exactWidth = $wgRequest->getVal('exactWidth');
 		if ( $exactWidth ) {
+			$exactWidth = intval($exactWidth);
 			$constrain[] = "img_width = $exactWidth";
 		}
 

@@ -1126,18 +1126,22 @@ class SpecialUndelete extends SpecialPage {
 		if( $haveRevisions ) {
 			$batch = new LinkBatch();
 			foreach ( $revisions as $row ) {
-				$batch->addObj( Title::makeTitleSafe( NS_USER, $row->ar_user_text ) );
-				$batch->addObj( Title::makeTitleSafe( NS_USER_TALK, $row->ar_user_text ) );
+				$username = User::getUsername( $row->ar_user, $row->ar_user_text );
+				$batch->addObj( Title::makeTitleSafe( NS_USER, $username ) );
+				$batch->addObj( Title::makeTitleSafe( NS_USER_TALK, $username ) );
 			}
 			$batch->execute();
 			$revisions->seek( 0 );
 		}
 		if( $haveFiles ) {
 			$batch = new LinkBatch();
+			/* Wikia change begin */
 			foreach ( $files as $row ) {
-				$batch->addObj( Title::makeTitleSafe( NS_USER, $row->fa_user_text ) );
-				$batch->addObj( Title::makeTitleSafe( NS_USER_TALK, $row->fa_user_text ) );
+				$userName = User::getUsername( $row->fa_user, $row->fa_user_text );
+				$batch->addObj( Title::makeTitleSafe( NS_USER, $userName ) );
+				$batch->addObj( Title::makeTitleSafe( NS_USER_TALK, $userName ) );
 			}
+			/* Wikia change end */
 			$batch->execute();
 			$files->seek( 0 );
 		}
@@ -1238,7 +1242,6 @@ class SpecialUndelete extends SpecialPage {
 			$misc .= Xml::closeElement( 'form' );
 			$out->addHTML( $misc );
 		}
-
 		return true;
 	}
 

@@ -29,13 +29,6 @@ class MercuryApiController extends WikiaController {
 			$smartBannerConfig = $this->wg->WikiaMobileSmartBannerConfig;
 
 			unset( $smartBannerConfig[ 'author' ] );
-
-			if ( !empty( $smartBannerConfig[ 'icon' ] ) &&
-				 !isset( parse_url( $smartBannerConfig[ 'icon' ] )[ 'scheme' ] ) // it differs per wiki
-			) {
-				$smartBannerConfig[ 'icon' ] = $this->wg->extensionsPath . $smartBannerConfig[ 'icon' ];
-			}
-
 			$meta = $smartBannerConfig[ 'meta' ];
 			unset( $smartBannerConfig[ 'meta' ] );
 			$smartBannerConfig[ 'appId' ] = [
@@ -44,8 +37,8 @@ class MercuryApiController extends WikiaController {
 			];
 
 			$smartBannerConfig[ 'appScheme' ] = [
-				'ios' => $meta[ 'ios-scheme' ],
-				'android' => $meta[ 'android-scheme' ]
+				'ios' => $meta[ 'ios-scheme' ] ?? null,
+				'android' => $meta[ 'android-scheme' ] ?? null,
 			];
 
 			return $smartBannerConfig;
@@ -164,8 +157,9 @@ class MercuryApiController extends WikiaController {
 	private function prepareWikiVariables() {
 		$wikiVariables = $this->mercuryApi->getWikiVariables();
 		$navigation = $this->getNavigation();
-		if ( empty( $navData ) ) {
-			\Wikia\Logger\WikiaLogger::instance()->error(
+
+		if ( empty( $navigation ) ) {
+			\Wikia\Logger\WikiaLogger::instance()->notice(
 				'Fallback to empty navigation'
 			);
 		}
@@ -246,7 +240,7 @@ class MercuryApiController extends WikiaController {
 
 			$adContext = ( new AdEngine2ContextService() )->getContext( $title, 'mercury' );
 			$dimensions[3] = $adContext['targeting']['wikiVertical'];
-			$dimensions[14] = $adContext['opts']['showAds'] ? 'yes' : 'no';
+			$dimensions[14] = $adContext['opts']['showAds'] ? 'Yes' : 'No';
 			$dimensions[19] = WikiaPageType::getArticleType( $title );
 			$dimensions[25] = strval( $title->getNamespace() );
 		} catch ( Exception $ex ) {

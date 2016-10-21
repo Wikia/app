@@ -57,6 +57,7 @@ $wgHooks['BeforeSendCacheControl']    [] = 'Wikia::onBeforeSendCacheControl';
 $wgHooks['ResourceLoaderAfterRespond'][] = 'Wikia::onResourceLoaderAfterRespond';
 $wgHooks['NirvanaAfterRespond']       [] = 'Wikia::onNirvanaAfterRespond';
 $wgHooks['ApiMainBeforeSendCacheHeaders'][] = 'Wikia::onApiMainBeforeSendCacheHeaders';
+$wgHooks['AjaxResponseSendHeadersAfter'][] = 'Wikia::onAjaxResponseSendHeadersAfter';
 
 # don't purge all variants of articles in Chinese - BAC-1278
 $wgHooks['TitleGetLangVariants'][] = 'Wikia::onTitleGetLangVariants';
@@ -91,6 +92,9 @@ class Wikia {
 	const CUSTOM_INTERFACE_PREFIX = 'custom-';
 	const EDITNOTICE_INTERFACE_PREFIX = 'editnotice-';
 	const TAG_INTERFACE_PREFIX = 'tag-';
+
+	const DEFAULT_FAVICON_FILE = '/skins/common/images/favicon.ico';
+	const DEFAULT_WIKI_LOGO_FILE = '/skins/common/images/wiki.png';
 
 	private static $vars = array();
 	private static $cachedLinker;
@@ -145,26 +149,46 @@ class Wikia {
 			wfMemcKey( self::FAVICON_URL_CACHE_KEY ),
 			WikiaResponse::CACHE_STANDARD,
 			function () {
-				$faviconFilename = 'Favicon.ico';
+				$faviconFilename = ThemeSettings::FaviconImageName;
+				$localFavicon = wfFindFile( $faviconFilename );
 
-				$localFaviconTitle = Title::newFromText( $faviconFilename, NS_FILE );
-
-				#FIXME: Checking existance of Title in order to use File. #VID-1744
-				if ( $localFaviconTitle->exists() ) {
-					$localFavicon = wfFindFile( $faviconFilename );
-
-					if ( $localFavicon ) {
-						return $localFavicon->getURL();
-					}
+				if ( $localFavicon ) {
+					return $localFavicon->getUrl();
 				}
 
-				return GlobalFile::newFromText( $faviconFilename, self::COMMUNITY_WIKI_ID )->getURL();
+				// SUS-214: fallback to image in repo instead of Community Central
+				return F::app()->wg->ResourceBasePath . static::DEFAULT_FAVICON_FILE;
 			}
 		);
 	}
 
 	public static function invalidateFavicon() {
 		WikiaDataAccess::cachePurge( wfMemcKey( self::FAVICON_URL_CACHE_KEY ) );
+	}
+
+	/**
+	 * Return either a path to locally-uploaded Wiki.png file or a shared file taken from the code repo
+	 * (if there's no Wiki.png file uploaded on a wiki)
+	 *
+	 * @see SUS-1165
+	 *
+	 * @return mixed an array containing "url" and "size" keys
+	 */
+	public static function getWikiLogoMetadata() {
+		$localWikiLogo = wfLocalFile( 'Wiki.png' );
+
+		if ( $localWikiLogo->exists() ) {
+			return [
+				'url' => $localWikiLogo->getUrl(),
+				'size' => sprintf( '%dx%d', $localWikiLogo->getWidth(), $localWikiLogo->getHeight() )
+			];
+		}
+		else {
+			return [
+				'url' => F::app()->wg->ResourceBasePath . self::DEFAULT_WIKI_LOGO_FILE,
+				'size' => '155x155'
+			];
+		}
 	}
 
 	/**
@@ -297,6 +321,8 @@ class Wikia {
      * @return string fixed domain name
      */
 	static public function fixDomainName( $name, $language = false, $type = false ) {
+		global $wgWikiaBaseDomain;
+
 		if (empty( $name )) {
 			return $name;
 		}
@@ -312,15 +338,15 @@ class Wikia {
 					case "answers":
 						$domains = self::getAnswersDomains();
 						if ( $language && isset($domains[$language]) && !empty($domains[$language]) ) {
-							$name =  sprintf("%s.%s.%s", $name, $domains[$language], "wikia.com");
+							$name =  sprintf("%s.%s.%s", $name, $domains[$language], $wgWikiaBaseDomain);
 							$allowLang = false;
 						} else {
-							$name =  sprintf("%s.%s.%s", $name, $domains["default"], "wikia.com");
+							$name =  sprintf("%s.%s.%s", $name, $domains["default"], $wgWikiaBaseDomain);
 						}
 						break;
 
 					default:
-						$name = $name.".wikia.com";
+						$name = sprintf("%s.%s", $name, $wgWikiaBaseDomain);
 				}
 				if ( $language && $language != "en" && $allowLang ) {
 					$name = $language.".".$name;
@@ -1084,23 +1110,27 @@ class Wikia {
 	 * add entries to software info
 	 */
 	static public function softwareInfo( &$software ) {
-		global $wgCityId, $wgDBcluster, $wgWikiaDatacenter, $wgLocalFileRepo;
+		global $wgCityId, $wgDBcluster, $wgWikiaDatacenter, $wgLocalFileRepo, $smwgDefaultStore, $wgEnableSemanticMediaWikiExt;
+
+		$info = [];
 
 		if( !empty( $wgCityId ) ) {
-			$info = "city_id: {$wgCityId}";
+			$info[] = "city_id: {$wgCityId}";
 		}
 		if( empty( $wgDBcluster ) ) {
-			$info .= ", cluster: c1";
+			$info[] = "cluster: c1";
 		}
 		else {
-			$info .= ", cluster: $wgDBcluster";
+			$info[] = "cluster: $wgDBcluster";
 		}
 		if( !empty( $wgWikiaDatacenter ) ) {
-			$info .= ", dc: $wgWikiaDatacenter";
+			$info[] = "dc: $wgWikiaDatacenter";
 		}
-		$info .= ", file_repo: {$wgLocalFileRepo['backend']}";
+		if( !empty( $wgEnableSemanticMediaWikiExt ) ) {
+			$info[] = "smw_store: $smwgDefaultStore";
+		}
 
-		$software[ "Internals" ] = $info;
+		$software[ "Internals" ] = join( ', ', $info );
 
 		/**
 		 * obligatory hook return value
@@ -1331,15 +1361,6 @@ class Wikia {
 
 		wfProfileOut( __METHOD__ );
 		return $params;
-	}
-
-	static public function getAllHeaders() {
-		if ( function_exists( 'getallheaders' ) ) {
-			$headers = getallheaders();
-		} else {
-			$headers = $_SERVER;
-		}
-		return $headers;
 	}
 
 	static public function isUnsubscribed( $to, $body, $subject ) {
@@ -2310,6 +2331,17 @@ class Wikia {
 	}
 
 	/**
+	 * Add X-Served-By and X-Backend-Response-Time response headers to index.php?action=ajax (MW ajax requests dispatcher)
+	 *
+	 * @return bool
+	 * @author macbre
+	 */
+	static function onAjaxResponseSendHeadersAfter() {
+		self::addExtraHeaders( F::app()->wg->Request->response() );
+		return true;
+	}
+
+	/**
 	 * Purge a limited set of language variants on Chinese wikis
 	 *
 	 * See BAC-1278 / BAC-698 for details
@@ -2514,6 +2546,10 @@ class Wikia {
 			$vars['wgWikiDirectedAtChildrenByFounder'] = $wgWikiDirectedAtChildrenByFounder;
 		}
 
+		if ( self::isUsingSafeJs() ) {
+			$vars['wgUseSiteJs'] = true;
+		}
+
 		return true;
 	}
 
@@ -2536,6 +2572,20 @@ class Wikia {
 				]);
 		}
 		return true;
+	}
+
+	public static function surrogateKey( $args ) {
+		global $wgCachePrefix;
+
+		return 'mw-' . implode( '-', [ $wgCachePrefix ?: wfWikiID(), implode( '-', func_get_args() ) ] );
+	}
+
+	public static function sharedSurrogateKey( $args ) {
+		return 'mw-' . implode( '-', func_get_args() );
+	}
+
+	public static function purgeSurrogateKey( $key ) {
+		CeleryPurge::purgeBySurrogateKey( $key );
 	}
 
 }

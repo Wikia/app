@@ -4,13 +4,7 @@ class GlobalNavigationHelper {
 
 	const DEFAULT_LANG = 'en';
 	const USE_LANG_PARAMETER = '?uselang=';
-	const CENTRAL_WIKI_SEARCH = '/wiki/Special:Search';
 	const WAM_LANG_CODE_PARAMETER = '?langCode=';
-
-	/**
-	 * @var WikiaCorporateModel
-	 */
-	private $wikiCorporateModel;
 
 	/**
 	 * @var WikiaLogoHelper
@@ -19,28 +13,7 @@ class GlobalNavigationHelper {
 
 
 	public function __construct() {
-		$this->wikiCorporateModel = new WikiaCorporateModel();
 		$this->wikiaLogoHelper = new WikiaLogoHelper();
-	}
-
-	/**
-	 * @desc get central wiki URL for given language.
-	 * If central wiki in given language doesn't exist return default one (english)
-	 *
-	 * @param String $lang - language
-	 * @return string - central wiki url
-	 */
-	public function getCentralUrlFromGlobalTitle( $lang ) {
-		$out = '/';
-
-		$title = $this->wikiaLogoHelper->getCentralWikiUrlForLangIfExists( $lang );
-		if ( $title ) {
-			$out = $title->getServer();
-		} else if ( $title = $this->wikiaLogoHelper->getCentralWikiUrlForLangIfExists( self::DEFAULT_LANG ) ) {
-			$out = $title->getServer();
-		}
-
-		return $out;
 	}
 
 	/**
@@ -57,35 +30,6 @@ class GlobalNavigationHelper {
 			$createWikiUrl .= self::USE_LANG_PARAMETER . $lang;
 		}
 		return $createWikiUrl;
-	}
-
-	/**
-	 * @desc This method appends /wiki/Special:Search to central URL.
-	 * It appends not localized version because SpecialPage::getTitle returns value based on content language
-	 * not user language.
-	 *
-	 * @param String $centralUrl - central wiki URL in given user language
-	 * @return string - url to Special:Search page
-	 */
-	public function getGlobalSearchUrl( $centralUrl ) {
-		return $centralUrl . self::CENTRAL_WIKI_SEARCH;
-	}
-
-	/**
-	 * @desc get language for search results.
-	 * If resultsLang param is set then use it if not get it from $wgLang
-	 *
-	 * @return String - language
-	 */
-	public function getLangForSearchResults() {
-		global $wgLanguageCode, $wgRequest;
-
-		$resultsLang = $wgRequest->getVal( 'resultsLang' );
-		if ( !empty( $resultsLang ) ) {
-			return $resultsLang;
-		} else {
-			return $wgLanguageCode;
-		}
 	}
 
 	protected function createCNWUrlFromGlobalTitle() {
@@ -105,11 +49,15 @@ class GlobalNavigationHelper {
 		$CommunityLinkLabel = wfMessage( 'global-navigation-community-link-label');
 		$exploreWikiaLabel = wfMessage( 'global-navigation-explore-wikia-link-label');
 
-		$hubsNodes = ( new NavigationModel( true /* useSharedMemcKey */ ) )->getTree(
-			NavigationModel::TYPE_MESSAGE,
-			'global-navigation-menu-hubs',
-			[3] // max 3 links
-		);
+		if ( $wgLang->getCode() === self::DEFAULT_LANG ) {
+			$hubsNodes = (new NavigationModel())->getTree(
+				NavigationModel::TYPE_MESSAGE,
+				'global-navigation-menu-hubs',
+				[3]
+			);
+		} else {
+			$hubsNodes = [];
+		}
 
 		// Link to WAM - Top Communities
 		$exploreDropdownLinks[] = [
@@ -140,13 +88,18 @@ class GlobalNavigationHelper {
 	}
 
 	public function getWAMLinkForLang( $lang ) {
-		$wamService = new WAMService();
-		$wamDates = $wamService->getWamIndexDates();
 
-		if ( $lang === 'en' || !in_array( $lang, $wamService->getWAMLanguages( $wamDates['max_date'] ) ) ) {
-			return wfMessage('global-navigation-wam-link')->plain();
-		} else {
-			return wfMessage('global-navigation-wam-link')->plain() . self::WAM_LANG_CODE_PARAMETER . $lang;
+		// Default/common case is 'en'
+		$message = wfMessage('global-navigation-wam-link')->plain();
+
+		if ( $lang !== self::DEFAULT_LANG ) {
+			$wamService = new WAMService();
+			$wamDates = $wamService->getWamIndexDates();
+			if (in_array( $lang, $wamService->getWAMLanguages( $wamDates['max_date'] ) ) ) {
+				$message = $message . self::WAM_LANG_CODE_PARAMETER . $lang;
+			}
 		}
+
+		return $message;
 	}
 }

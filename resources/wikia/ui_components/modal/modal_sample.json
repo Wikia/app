@@ -61,5 +61,28 @@
 		"assets": [
 			"//resources/wikia/ui_components/modal/js/modal_sample.js"
 		]
+	},
+	{
+		"description": "styleguide-example-modal-content-size-description",
+		"helpers": {
+			"components": [
+				{
+					"name": "button",
+					"params": {
+						"type": "link",
+						"vars": {
+							"id": "showContentSizeModalExample",
+							"href": "#",
+							"classes": [ "primary" ],
+							"title": "Show content size modal example",
+							"value": "Content size modal"
+						}
+					}
+				}
+			]
+		},
+		"assets": [
+			"//resources/wikia/ui_components/modal/js/modal_sample.js"
+		]
 	}
 ]

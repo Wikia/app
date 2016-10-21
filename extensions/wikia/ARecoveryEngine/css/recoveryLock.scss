@@ -1,11 +1,10 @@
-#WikiaArticle {
-  display:none;
-}
+html:not(.full-screen-page) #WikiaPage {
+	#WikiaArticle {
+		display: none;
+	}
 
-#WikiaPageHeader:after {
-  content: 'Ad blocker interference detected!';
-  display: block;
-  font-size: 60px;
-  padding: 50px;
-  text-align: center;
+  	#WikiaArticleMsg {
+	  	display: block;
+	  	padding: 50px 0 50px;
+	}
 }

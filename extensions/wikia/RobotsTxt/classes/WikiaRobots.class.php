@@ -73,6 +73,9 @@ class WikiaRobots {
 	 */
 	private $blockedPaths = [
 		'/d/u/', // User pages for discussions
+		'/fandom?p=', // Fandom old URLs
+		'/wikia.php?controller=ARecoveryEngineApi', // logging for ad-recovery (ADEN-3930)
+		'/api/v1/ARecoveryEngine' // logging for ad-recovery (ADEN-3930)
 	];
 
 	/**
@@ -83,51 +86,13 @@ class WikiaRobots {
 	private $blockedParams = [
 		'action',
 		'feed',
+		'from', // user-supplied legacy MW pagination
 		'oldid',
 		'printable',
 		'redirect',
 		'useskin',
 		'uselang',
 		'veaction',
-	];
-
-	/**
-	 * Robots we want block on robots.txt level
-	 *
-	 * Only applied if $wgRobotsTxtRemoveDeprecatedDirectives = false
-	 *
-	 * @var string[]
-	 */
-	private $blockedRobots = [
-		'IsraBot',
-		'Orthogaffe',
-		'UbiCrawler',
-		'DOC',
-		'Zao',
-		'sitecheck.internetseer.com',
-		'Zealbot',
-		'MSIECrawler',
-		'SiteSnagger',
-		'WebStripper',
-		'WebCopier',
-		'Fetch',
-		'Offline Explorer',
-		'Teleport',
-		'TeleportPro',
-		'WebZIP',
-		'linko',
-		'HTTrack',
-		'Microsoft.URL.Control',
-		'Xenu',
-		'larbin',
-		'libwww',
-		'ZyBORG',
-		'Download Ninja',
-		'sitebot',
-		'wget',
-		'k2spider',
-		'NPBot',
-		'WebReaper',
 	];
 
 	/**
@@ -151,7 +116,6 @@ class WikiaRobots {
 	 */
 	public function __construct( PathBuilder $pathBuilder ) {
 		global $wgAllowSpecialImagesInRobots,
-			   $wgEnableLocalSitemap,
 			   $wgRequest,
 			   $wgRobotsTxtCustomRules,
 			   $wgWikiaEnvironment;
@@ -164,10 +128,6 @@ class WikiaRobots {
 			foreach ( (array) $wgRobotsTxtCustomRules['allowSpecialPage'] as $page ) {
 				$this->allowedSpecialPages[$page] = 'allow';
 			}
-		}
-
-		if ( !empty( $wgEnableLocalSitemap ) ) {
-			$this->allowedSpecialPages['Allpages'] = 'allow';
 		}
 
 		if ( !empty( $wgAllowSpecialImagesInRobots ) ) {
@@ -221,19 +181,6 @@ class WikiaRobots {
 		// Allow special pages
 		foreach ( array_keys( $this->allowedSpecialPages ) as $page ) {
 			$robots->addAllowedPaths( $this->pathBuilder->buildPathsForSpecialPage( $page, true ) );
-		}
-
-		if ( empty( $wgRobotsTxtRemoveDeprecatedDirectives ) ) {
-			// Block robots
-			$robots->addBlockedRobots( $this->blockedRobots );
-
-			// Deprecated items, probably we should delete them
-			$robots->addDisallowedPaths( [
-				'/w/',
-				'/trap/',
-				'/dbdumps/',
-				'/wikistats/',
-			] );
 		}
 
 		return $robots;

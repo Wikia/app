@@ -17,9 +17,16 @@ class GlobalNavigationController extends WikiaController {
 	 */
 	private $wikiaLogoHelper;
 
+	/**
+	 * @var WikiaSearchHelper
+	 */
+	private $wikiaSearchHelper;
+
 	public function __construct() {
 		parent::__construct();
+
 		$this->helper = new GlobalNavigationHelper();
+		$this->wikiaSearchHelper = new WikiaSearchHelper();
 		$this->wikiaLogoHelper = new WikiaLogoHelper();
 	}
 
@@ -39,21 +46,15 @@ class GlobalNavigationController extends WikiaController {
 		$this->response->setVal( 'createWikiUrl', $createWikiUrl );
 		$this->response->setVal( 'notificationsEnabled', !empty( $userCanRead ) );
 		$this->response->setVal( 'isAnon', $wgUser->isAnon() );
-
-		$isGameStarLogoEnabled = $this->isGameStarLogoEnabled();
-		$this->response->setVal( 'isGameStarLogoEnabled', $isGameStarLogoEnabled );
-		if ( $isGameStarLogoEnabled ) {
-			$this->response->addAsset( 'extensions/wikia/GlobalNavigation/styles/GlobalNavigationGameStar.scss' );
-		}
 	}
 
 	public function searchIndex() {
 		global $wgRequest, $wgSitename, $wgUser;
 
-		$lang = $this->helper->getLangForSearchResults();
+		$lang = $this->wikiaSearchHelper->getLangForSearchResults();
 
-		$centralUrl = $this->helper->getCentralUrlFromGlobalTitle( $lang );
-		$globalSearchUrl = $this->helper->getGlobalSearchUrl( $centralUrl );
+		$centralUrl = $this->wikiaSearchHelper->getCentralUrlFromGlobalTitle( $lang );
+		$globalSearchUrl = $this->wikiaSearchHelper->getGlobalSearchUrl( $centralUrl );
 		$localSearchUrl = SpecialPage::getTitleFor( 'Search' )->getFullUrl();
 		$fulltext = $wgUser->getGlobalPreference( 'enableGoSearch' ) ? 0 : 'Search';
 		$query = $wgRequest->getVal( 'search', $wgRequest->getVal( 'query', '' ) );
@@ -75,9 +76,5 @@ class GlobalNavigationController extends WikiaController {
 		$this->response->setVal( 'fulltext', $fulltext );
 		$this->response->setVal( 'query', $query );
 		$this->response->setVal( 'lang', $lang );
-	}
-
-	protected function isGameStarLogoEnabled() {
-		return $this->wg->contLang->getCode() == 'de';
 	}
 }

@@ -17,6 +17,8 @@
  *     require_once("$IP/extensions/wikia/WhereIsExtension/SpecialWhereIsExtension.php");
  */
 
+use Wikia\Paginator\Paginator;
+
 if (!defined('MEDIAWIKI')) {
 	echo "This is MediaWiki extension named WhereIsExtension.\n";
 	exit(1) ;
@@ -102,9 +104,10 @@ class WhereIsExtension extends SpecialPage {
 					// the list
 					$formData['wikis'] = WikiFactory::getListOfWikisWithVar( $gVar, $gTypeVal, $this->values[$gVal][2], $this->values[$gVal][1], $gLikeVal, $iOffset, self::ITEMS_PER_PAGE );
 
-					$oPaginator = Paginator::newFromCount( $formData['count'], self::ITEMS_PER_PAGE );
+					$url = sprintf( '%s?var=%s&val=%s&likeValue=%s&searchType=%s', $wgTitle->getFullURL(), $gVar, $gVal, $gLikeVal, $gTypeVal );
+					$oPaginator = new Paginator( $formData['count'], self::ITEMS_PER_PAGE, $url );
 					$oPaginator->setActivePage( $iPage );
-					$sPager = $oPaginator->getBarHTML( sprintf( '%s?var=%s&val=%s&likeValue=%s&searchType=%s&page=%%s', $wgTitle->getFullURL(), $gVar, $gVal, $gLikeVal, $gTypeVal ) );
+					$sPager = $oPaginator->getBarHTML();
 				}
 			}
 		}

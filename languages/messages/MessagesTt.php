@@ -12,8 +12,3 @@
 
 $fallback = 'tt-cyrl, ru';
 
-$messages = array(
-# Delete
-'excontentauthor' => '',
-
-);

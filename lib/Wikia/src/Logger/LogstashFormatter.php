@@ -20,6 +20,7 @@ class LogstashFormatter extends \Monolog\Formatter\LogstashFormatter {
 
 	protected function formatV0(array $record) {
 		$message = array(
+			'appname' => 'mediawiki',
 			'@timestamp' => $record['datetime'],
 			'@message' => $record['message'],
 		);

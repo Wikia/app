@@ -55,12 +55,10 @@ require([
 	}
 
 	function authModalOpen(url) {
-		require(['AuthModal'], function (authModal) {
-			authModal.load({
-				url: url,
-				origin: 'global-nav',
-				onAuthSuccess: onAuthSuccess.bind({url: url})
-			});
+		window.wikiaAuthModal.load({
+			url: url,
+			origin: 'global-nav',
+			onAuthSuccess: onAuthSuccess.bind({url: url})
 		});
 	}
 

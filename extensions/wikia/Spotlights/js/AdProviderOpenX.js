@@ -8,7 +8,7 @@ AdProviderOpenX.getConfig = function() {
 	'use strict';
 
 	var config =  {
-		'zones':'14|15|16|17|18|19|20|21|22',
+		'zones':'14|15|16|17|18|19|20|21|22|27|28',
 		'source': '',
 		'r': Math.floor(Math.random()*99999999),
 		'loc': escape(window.location),
@@ -55,7 +55,7 @@ AdProviderOpenX.getUrl = function() {
 
 function isReviveEnabledInGeo() {
 	'use strict';
-	
+
 	try {
 		return window.Wikia.geo.isProperGeo(window.Wikia.InstantGlobals.wgReviveSpotlightsCountries);
 	} catch (e) {
@@ -63,11 +63,32 @@ function isReviveEnabledInGeo() {
 	}
 }
 
+function createReviveLazyQueue() {
+	'use strict';
+
+	window.Wikia.reviveQueue = window.Wikia.reviveQueue || [];
+
+	window.Wikia.LazyQueue.makeQueue(window.Wikia.reviveQueue, function(item) {
+		var output = window.OA_output || [],
+			elem = document.getElementById(item.slotName);
+
+		if (output[item.zoneId]) {
+			elem.innerHTML = output[item.zoneId];
+			elem.classList.add('wikia-ad');
+			elem.classList.remove('hidden');
+		}
+	});
+
+	return window.Wikia.reviveQueue;
+}
+
 if (!window.wgNoExternals && window.wgEnableOpenXSPC && !window.wgIsEditPage && !window.navigator.userAgent.match(/sony_tvs/)) {
+	var reviveQueue = createReviveLazyQueue();
+
 	jQuery(function($) {
 		$.getScript(AdProviderOpenX.getUrl(), function() {
 			var lazy = new window.Wikia.LazyLoadAds();
-		});
+		}).done(reviveQueue.start);
 	});
 } else {
 	$('#SPOTLIGHT_FOOTER').parent('section').hide();

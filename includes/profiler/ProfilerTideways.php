@@ -4,6 +4,7 @@
  * data collection to Tideway's php-profiler-extension. Afterwards sends the gathered data
  * to UDP formatted in similar way to regular ProfilerSimpleUDP.
  *
+ * @author wladek
  * @author macbre
  */
 class ProfilerTideways extends ProfilerStub {

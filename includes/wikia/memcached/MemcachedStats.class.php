@@ -84,7 +84,7 @@ class MemcachedStats {
 	 */
 	public static function normalizeKey($key) {
 		// remove per-wiki prefix
-		$prefix = \F::app()->wf->WikiId() . ':';
+		$prefix = wfWikiId() . ':';
 		if (startsWith($key, $prefix)) {
 			$key = str_replace($prefix, '*:', $key);
 		}

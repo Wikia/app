@@ -347,7 +347,7 @@ class GameGuidesController extends WikiaController {
 		global $IP;
 
 		$this->response->setFormat( 'json' );
-		$this->cacheResponseFor( 15, self::MINUTES );
+		$this->cacheResponseFor( 300, self::MINUTES );
 
 		$hash = md5_file( $IP . self::ASSETS_PATH );
 

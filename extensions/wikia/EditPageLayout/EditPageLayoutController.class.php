@@ -1,7 +1,5 @@
 <?php
 
-use \Wikia\Logger\WikiaLogger;
-
 /**
  * Oasis module for EditPageLayout
  *
@@ -128,7 +126,9 @@ class EditPageLayoutController extends WikiaController {
 		$this->wordmark = $response->getData();
 
 		// render global and user navigation
-		$this->header = F::app()->renderView( 'GlobalNavigation', 'index' );
+		$this->header = !empty( $this->wg->EnableDesignSystem ) ?
+			F::app()->renderView( 'DesignSystemGlobalNavigationService', 'index' ) :
+			F::app()->renderView( 'GlobalNavigation', 'index' );
 
 		// Editing [foo]
 		$this->title = $editPage->getEditedTitle();
@@ -208,8 +208,6 @@ class EditPageLayoutController extends WikiaController {
 			? wfMessage( 'editpagelayout-notificationsLink-none' )->escaped()
 			: wfMessage( 'editpagelayout-notificationsLink', count( $this->notices ) )->parse();
 
-		$this->showInfoboxPreview = $this->shouldShowInfoboxPreview();
-
 		// check if we're in read only mode
 		// disable edit form when in read-only mode
 		if ( wfReadOnly() ) {
@@ -225,35 +223,6 @@ class EditPageLayoutController extends WikiaController {
 		wfRunHooks( 'EditPageLayoutExecute', array( $this ) );
 
 		wfProfileOut( __METHOD__ );
-	}
-
-	/**
-	 * Determines whether to display the infobox preview entry point
-	 */
-	public function shouldShowInfoboxPreview() {
-		global $wgCityId, $wgUser, $wgEnableTemplateClassificationExt, $wgInfoboxPreviewEnabled, $wgInfoboxPreviewSupportedLanuages;
-
-		if ( !$wgInfoboxPreviewEnabled || !in_array( strtolower( $wgUser->getGlobalPreference( 'language' ) ), $wgInfoboxPreviewSupportedLanuages ) ) {
-			return false;
-		}
-
-		if ( $wgEnableTemplateClassificationExt ) {
-			try {
-				$templateType = ( new TemplateClassificationService() )
-					->getType( $wgCityId, $this->title->getArticleID() );
-			} catch ( Exception $e ) {
-				$templateType = null;
-				WikiaLogger::instance()->error('TemplateClassificationService::getType() threw an exception', [
-					'ex' => $e
-				]);
-			}
-		} else {
-			$templateType = null;
-		}
-
-		return !$wgEnableTemplateClassificationExt
-			|| $templateType === TemplateClassificationService::TEMPLATE_INFOBOX
-			|| $templateType === TemplateClassificationService::TEMPLATE_CUSTOM_INFOBOX;
 	}
 
 	public function addExtraHeaderHtml( $html ) {

@@ -9,6 +9,13 @@ class SiteStats {
 	static $pageCount = array();
 	static $groupMemberCounts = array();
 
+	/**
+	 * @return String
+	 */
+	private static function getMemcKey() {
+		return wfMemcKey( __CLASS__, 'row' );
+	}
+
 	static function recache() {
 		self::load( true );
 	}
@@ -29,7 +36,7 @@ class SiteStats {
 			$u = new SiteStatsUpdate( 0, 0, 0 );
 			$u->doUpdate();
 			$dbr = wfGetDB( DB_SLAVE, 'vslow' );
-			self::$row = $dbr->selectRow( 'site_stats', '*', false, __METHOD__ );
+			self::$row = self::doLoad( $dbr );
 		}
 
 		self::$loaded = true;
@@ -39,45 +46,29 @@ class SiteStats {
 	 * @return Bool|ResultWrapper
 	 */
 	static function loadAndLazyInit() {
-		wfDebug( __METHOD__ . ": reading site_stats from slave\n" );
-		$row = self::doLoad( wfGetDB( DB_SLAVE, 'vslow' ) );
+		# Wikia change
+		return WikiaDataAccess::cache(
+			self::getMemcKey(),
+			WikiaResponse::CACHE_LONG,
+			function() {
+				wfDebug( __METHOD__ . ": reading site_stats from slave\n" );
+				return self::doLoad( wfGetDB( DB_SLAVE, 'vslow' ) );
+			}
+		);
+	}
 
-		/*
-		if( !self::isSane( $row ) ) {
-			// Might have just been initialized during this request? Underflow?
-			wfDebug( __METHOD__ . ": site_stats damaged or missing on slave\n" );
-			$row = self::doLoad( wfGetDB( DB_MASTER ) );
-		}
-
-		if( !self::isSane( $row ) ) {
-			// Normally the site_stats table is initialized at install time.
-			// Some manual construction scenarios may leave the table empty or
-			// broken, however, for instance when importing from a dump into a
-			// clean schema with mwdumper.
-			wfDebug( __METHOD__ . ": initializing damaged or missing site_stats\n" );
-
-			SiteStatsInit::doAllAndCommit( wfGetDB( DB_SLAVE ) );
-
-			ob_start();
-			wfInitStats();
-			wfGetDB( DB_MASTER )->commit();
-			ob_end_clean();
-
-			$row = self::doLoad( wfGetDB( DB_MASTER ) );
-		}
-
-		if( !self::isSane( $row ) ) {
-			wfDebug( __METHOD__ . ": site_stats persistently nonsensical o_O\n" );
-		}
-		*/
-		return $row;
+	/**
+	 * Wikia change: invalidate cache used by SiteStats::load()
+	 */
+	public static function invalidateCache() {
+		WikiaDataAccess::cachePurge( self::getMemcKey() );
 	}
 
 	/**
 	 * @param $db DatabaseBase
 	 * @return Bool|ResultWrapper
 	 */
-	static function doLoad( $db ) {
+	private static function doLoad( $db ) {
 		return $db->selectRow( 'site_stats', '*', false, __METHOD__ );
 	}
 
@@ -235,100 +226,6 @@ class SiteStats {
 }
 
 /**
- * Class for handling updates to the site_stats table
- */
-class SiteStatsUpdate implements DeferrableUpdate {
-
-	var $mViews, $mEdits, $mGood, $mPages, $mUsers;
-
-	function __construct( $views, $edits, $good, $pages = 0, $users = 0 ) {
-		$this->mViews = $views;
-		$this->mEdits = $edits;
-		$this->mGood = $good;
-		$this->mPages = $pages;
-		$this->mUsers = $users;
-	}
-
-	/**
-	 * @param $sql
-	 * @param $field
-	 * @param $delta
-	 */
-	function appendUpdate( &$sql, $field, $delta ) {
-		if ( $delta ) {
-			if ( $sql ) {
-				$sql .= ',';
-			}
-			if ( $delta < 0 ) {
-				$sql .= "$field=$field-1";
-			} else {
-				$sql .= "$field=$field+1";
-			}
-		}
-	}
-
-	function doUpdate() {
-		$dbw = wfGetDB( DB_MASTER );
-
-		$updates = '';
-
-		# fix (bugId: 10928)
-		# if ( ss_good_article == 0 )
-		# update site_stats set ss_good_articles = ss_good_articles - 1 where ss_row_id = 1;
-		# result is: 18446744073709551615
-		$oRow = $dbw->selectRow( 'site_stats', '*', false, __METHOD__ );
-		$this->mViews = ( isset( $oRow->ss_total_views ) && ( $this->mViews + $oRow->ss_total_views ) < 0 ) ? 0 : $this->mViews;
-		$this->mEdits = ( isset( $oRow->ss_total_edits ) && ( $this->mEdits + $oRow->ss_total_edits ) < 0 ) ? 0 : $this->mEdits;
-		$this->mGood = ( isset( $oRow->ss_good_articles ) && ( $this->mGood + $oRow->ss_good_articles ) < 0 ) ? 0 : $this->mGood;
-
-		$this->appendUpdate( $updates, 'ss_total_views', $this->mViews );
-		$this->appendUpdate( $updates, 'ss_total_edits', $this->mEdits );
-		$this->appendUpdate( $updates, 'ss_good_articles', $this->mGood );
-		$this->appendUpdate( $updates, 'ss_total_pages', $this->mPages );
-		$this->appendUpdate( $updates, 'ss_users', $this->mUsers );
-
-		if ( $updates ) {
-			$site_stats = $dbw->tableName( 'site_stats' );
-			$sql = "UPDATE $site_stats SET $updates";
-
-			# Need a separate transaction because this a global lock
-			$dbw->begin( __METHOD__ );
-			$dbw->query( $sql, __METHOD__ );
-			$dbw->commit( __METHOD__ );
-		}
-	}
-
-	/**
-	 * @param $dbw DatabaseBase
-	 * @return bool|mixed
-	 */
-	public static function cacheUpdate( $dbw ) {
-		global $wgActiveUserDays;
-		$dbr = wfGetDB( DB_SLAVE, array( 'SpecialStatistics', 'vslow' ) );
-		# Get non-bot users than did some recent action other than making accounts.
-		# If account creation is included, the number gets inflated ~20+ fold on enwiki.
-		$activeUsers = $dbr->selectField(
-			'recentchanges',
-			'COUNT( DISTINCT rc_user_text )',
-			array(
-				'rc_user != 0',
-				'rc_bot' => 0,
-				"rc_log_type != 'newusers' OR rc_log_type IS NULL",
-				"rc_timestamp >= '{$dbw->timestamp( wfTimestamp( TS_UNIX ) - $wgActiveUserDays*24*3600 )}'",
-			),
-			__METHOD__
-		);
-		$dbw->update(
-			'site_stats',
-			array( 'ss_active_users' => intval( $activeUsers ) ),
-			array( 'ss_row_id' => 1 ),
-			__METHOD__
-		);
-		return $activeUsers;
-	}
-}
-
-/**
  * Class designed for counting of stats.
  */
 class SiteStatsInit {
@@ -409,18 +306,16 @@ class SiteStatsInit {
 	 * @return Integer
 	 */
 	public function users() {
-		/**
-		 * wikia change
-		 * cache number of users for 12hours
-		 * it's not important to have exact numbers there
-		 */
-		$cache = F::app()->getGlobal( "wgMemc" );
-		$this->mUsers = $cache->get( wfSharedMemcKey( "registered-users-number" ) );
-		if( empty( $this->mUsers ) ) {
-			$this->mUsers = $this->dbshared->selectField( '`user`', 'COUNT(*)', '', __METHOD__ );
-			$cache->set( wfSharedMemcKey( "registered-users-number" ), $this->mUsers, 60*60*12 );
-		}
-		return $this->mUsers;
+		$fname = __METHOD__;
+
+		# Wikia change
+		return $this->mUsers = WikiaDataAccess::cache(
+			wfSharedMemcKey( __METHOD__ ),
+			WikiaResponse::CACHE_STANDARD,
+			function() use ($fname) {
+				return $this->dbshared->estimateRowCount( '`user`', '*', '', $fname );
+			}
+		);
 	}
 
 	/**
@@ -453,7 +348,7 @@ class SiteStatsInit {
 	 * - views Boolean: when true, do not update the number of page views (default: true)
 	 * - activeUsers Boolean: whether to update the number of active users (default: false)
 	 */
-	public static function doAllAndCommit( $database, array $options = array() ) {
+	public static function doAllAndCommit( $database = false, array $options = array() ) {
 		$options += array( 'update' => false, 'views' => true, 'activeUsers' => false );
 
 		// Grab the object and count everything
@@ -490,6 +385,8 @@ class SiteStatsInit {
 		list( $values, $conds ) = $this->getDbParams();
 		$dbw = wfGetDB( DB_MASTER );
 		$dbw->update( 'site_stats', $values, $conds, __METHOD__ );
+
+		SiteStats::invalidateCache(); // Wikia change
 	}
 
 	/**
@@ -501,6 +398,8 @@ class SiteStatsInit {
 		$dbw = wfGetDB( DB_MASTER );
 		$dbw->delete( 'site_stats', $conds, __METHOD__ );
 		$dbw->insert( 'site_stats', array_merge( $values, $conds, $views ), __METHOD__ );
+
+		SiteStats::invalidateCache(); // Wikia change
 	}
 
 	/**

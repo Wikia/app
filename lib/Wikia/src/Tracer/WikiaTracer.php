@@ -11,6 +11,7 @@ class WikiaTracer {
 	const TRACE_ID_HEADER_NAME = 'X-Trace-Id';
 	const PARENT_SPAN_ID_HEADER_NAME = 'X-Parent-Span-Id';
 	const CLIENT_IP_HEADER_NAME = 'X-Client-Ip';
+	const SHIELDS_HEADER_NAME = 'X-SJC-shields-healthy';
 	const CLIENT_BEACON_ID_HEADER_NAME = 'X-Client-Beacon-Id';
 	const CLIENT_DEVICE_ID_HEADER_NAME = 'X-Client-Device-Id';
 	const CLIENT_USER_ID = 'X-User-Id';
@@ -26,8 +27,12 @@ class WikiaTracer {
 	const REQUEST_PATH_HEADER_NAME = 'X-Request-Path';
 
 	const ENV_VARIABLES_PREFIX = 'WIKIA_TRACER_';
+	
+	const SERVER_REQUEST_URI = 'REQUEST_URI';
+	const SERVER_SERVER_NAME = 'SERVER_NAME';
 
 	private $traceId;
+	private $sjcShields;
 	private $parentSpanId;
 	private $clientIp;
 	private $clientBeaconId;
@@ -43,10 +48,13 @@ class WikiaTracer {
 	private $contextSource;
 
 	private function __construct() {
-		$this->spanId = RequestId::generateId();
-		$this->traceId = RequestId::instance()->getRequestId();
-
+		$this->traceId = $this->validateId( $this->getTraceEntry( self::TRACE_ID_HEADER_NAME ) )
+			?: $this->validateId( $this->getTraceEntry( self::LEGACY_TRACE_ID_HEADER_NAME ) )
+			?: self::generateId();
+		$this->sjcShields = $this->getTraceEntry( self::SHIELDS_HEADER_NAME );
+		$this->spanId = self::generateId();
 		$this->parentSpanId = $this->getTraceEntry( self::PARENT_SPAN_ID_HEADER_NAME );
+
 		$this->clientIp = $this->getTraceEntry( self::CLIENT_IP_HEADER_NAME );
 		$this->clientBeaconId = $this->getTraceEntry( self::CLIENT_BEACON_ID_HEADER_NAME );
 		$this->clientDeviceId = $this->getTraceEntry( self::CLIENT_DEVICE_ID_HEADER_NAME );
@@ -54,6 +62,16 @@ class WikiaTracer {
 
 		$this->contextSource = new ContextSource( [ ] );
 		$this->updateContext();
+	}
+
+	/**
+	 * Validate given trace/span id and return it if it is valid. Otherwise return null.
+	 *
+	 * @param string $id Trace/Span ID
+	 * @return string|null
+	 */
+	private function validateId( $id ) {
+		return self::isValidId( $id ) ? $id : null;
 	}
 
 	/**
@@ -91,10 +109,12 @@ class WikiaTracer {
 				'span_id' => $this->spanId,
 				'parent_span_id' => $this->parentSpanId,
 				'trace_id' => $this->traceId,
+				'sjc_shields' => $this->sjcShields,
 			] )
 		);
 		if ( $this->contextSource->getContext() !== $newContext ) {
-			$this->contextSource->setContext( $newContext ); // this will notify listeners
+			// this will notify listeners
+			$this->contextSource->setContext( $newContext );
 		}
 	}
 
@@ -114,9 +134,12 @@ class WikiaTracer {
 
 		$context = [
 			'app_name' => self::APPLICATION_NAME,
-			'app_version' => $this->getAppVersion(), // please note that this field won't always be filled (if logging is called pretty early)
-			'datacenter' => $wgWikiaDatacenter, # sjc / res / poz
-			'environment' => $wgWikiaEnvironment, # dev / prod
+			// please note that this field won't always be filled (if logging is called pretty early)
+			'app_version' => $this->getAppVersion(),
+			// sjc / res / poz
+			'datacenter' => $wgWikiaDatacenter,
+			// dev / prod
+			'environment' => $wgWikiaEnvironment,
 		];
 
 		if ( !empty( $wgDBname ) ) {
@@ -127,20 +150,20 @@ class WikiaTracer {
 			$context['wiki_id'] = $wgCityId;
 		}
 
-		if ( isset( $_SERVER['REQUEST_URI'] ) ) {
-			$context['http_url_path'] = $_SERVER['REQUEST_URI'];
+		if ( isset( $_SERVER[ self::SERVER_REQUEST_URI ] ) ) {
+			$context['http_url_path'] = $this->stripDomainFromUrl( $_SERVER[ self::SERVER_REQUEST_URI ]);
 
 			if ( isset( $_SERVER['REQUEST_METHOD'] ) ) {
 				$context['http_method'] = $_SERVER['REQUEST_METHOD'];
 			}
 
-			if ( isset( $_SERVER['SERVER_NAME'] ) ) {
-				$context['http_url_domain'] = $_SERVER['SERVER_NAME'];
+			if ( isset( $_SERVER[ self::SERVER_SERVER_NAME ] ) ) {
+				$context['http_url_domain'] = $_SERVER[ self::SERVER_SERVER_NAME ];
 
 				$context['http_url'] = sprintf( "%s://%s%s",
 					( empty( $_SERVER['HTTPS'] ) ? 'http' : 'https' ),
-					$_SERVER['SERVER_NAME'],
-					$_SERVER['REQUEST_URI'] );
+					$_SERVER[ self::SERVER_SERVER_NAME ],
+					$_SERVER[ self::SERVER_REQUEST_URI ] );
 			}
 
 			if ( isset( $_SERVER['HTTP_REFERER'] ) ) {
@@ -162,6 +185,19 @@ class WikiaTracer {
 		return $this->removeNullEntries( $context );
 	}
 
+	private function stripDomainFromUrl( $url ) {
+		$matches = null;
+		if (preg_match('#^https?://[^/]+(/.*)?$#',$url,$matches)) {
+			if (isset($matches[1])) {
+				$url = $matches[1];
+			} else {
+				$url = '/';
+			}
+		}
+
+		return $url;
+	}
+
 	private function removeNullEntries( $array ) {
 		foreach ( $array as $k => $v ) {
 			if ( is_null( $v ) ) {
@@ -170,6 +206,24 @@ class WikiaTracer {
 		}
 
 		return $array;
+	}
+
+	/**
+	 * Return a version 4 (random) UUID (e.g. 8454441a-f0e1-11e5-9c4a-00163e046284)
+	 * @return string
+	 */
+	public static function generateId() {
+		return Uuid::v4();
+	}
+
+	/**
+	 * Validate provided request ID
+	 *
+	 * @param string $id
+	 * @return bool
+	 */
+	public static function isValidId( $id ) {
+		return Uuid::isValid( $id );
 	}
 
 	/**
@@ -207,7 +261,8 @@ class WikiaTracer {
 
 		if ( !isset( $instance ) ) {
 			$instance = new self();
-			self::updateInstanceFromMediawiki(); // mainly to trigger the hook
+			// mainly to trigger the hook
+			self::updateInstanceFromMediawiki();
 		}
 
 		return $instance;
@@ -251,8 +306,11 @@ class WikiaTracer {
 	public function getPublicHeaders() {
 		return $this->removeNullEntries( [
 			self::TRACE_ID_HEADER_NAME => $this->traceId,
-			self::LEGACY_TRACE_ID_HEADER_NAME => $this->traceId, // duplicated until we move to X-Trace-Id everywhere
-			self::PARENT_SPAN_ID_HEADER_NAME => $this->spanId, // pass the current span ID to the subrequest, it will be logged as parent_span_id there
+			// duplicated until we move to X-Trace-Id everywhere
+			self::LEGACY_TRACE_ID_HEADER_NAME => $this->traceId,
+			// pass the current span ID to the subrequest, it will be logged as parent_span_id there
+			self::PARENT_SPAN_ID_HEADER_NAME => $this->spanId,
+			self::SHIELDS_HEADER_NAME => $this->sjcShields,
 		] );
 	}
 
@@ -390,7 +448,7 @@ class WikiaTracer {
 		global $wgRequestTime;
 
 		$path = $this->requestPath;
-		array_unshift( $path, sprintf( "%s %s %d %.6f", 'mediawiki', wfHostname(), (int) $wgRequestTime, microtime( true ) - $wgRequestTime ) );
+		array_unshift( $path, sprintf( "%s %s %d %.6f", self::APPLICATION_NAME, wfHostname(), (int) $wgRequestTime, microtime( true ) - $wgRequestTime ) );
 
 		return sprintf( "(%s)", join( ' ', $path ) );
 	}

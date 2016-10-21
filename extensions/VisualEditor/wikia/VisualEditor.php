@@ -161,8 +161,8 @@ $wgResourceModules += array(
 		'messages' => array(
 			'oasis-content-picture-added-by',
 			'videohandler-video-views',
-			'visualeditor-dialog-image-insert-title',
-			'visualeditor-dialog-video-insert-title',
+			'wikia-visualeditor-dialog-image-insert-title',
+			'wikia-visualeditor-dialog-video-insert-title',
 			'wikia-visualeditor-preference-enable',
 			'wikia-visualeditor-dialogbutton-wikiamediainsert-tooltip',
 			'wikia-visualeditor-dialogbutton-imageinsert-tooltip',

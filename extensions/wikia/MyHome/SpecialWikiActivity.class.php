@@ -117,6 +117,13 @@ JS
 		global $wgHooks;
 		$wgHooks['PageHeaderIndexAfterExecute'][] = array($this, 'addNavigation');
 
+		if ($wgUser->isAnon()) {
+			$this->getOutput()->setSquidMaxage( 3600 ); // 1 hour
+			$this->getOutput()->tagWithSurrogateKeys(
+				MyHome::getWikiActivitySurrogateKey()
+			);
+		}
+
 		wfProfileOut(__METHOD__);
 	}
 

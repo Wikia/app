@@ -38,6 +38,7 @@ require_once ( $IP."/includes/wikia/Defines.php" );
 require_once ( $IP."/includes/wikia/GlobalFunctions.php" );
 require_once ( $IP."/includes/wikia/Wikia.php" );
 require_once ( $IP."/includes/wikia/WikiaMailer.php" );
+require_once ( $IP."/extensions/GlobalMessages/GlobalMessages.setup.php" );
 require_once ( $IP."/extensions/Math/Math.php" );
 
 /**
@@ -147,6 +148,7 @@ $wgAutoloadClasses[ 'WikiaApiController'] =  "{$IP}/includes/wikia/api/WikiaApiC
 
 //Wikia API controllers
 $wgAutoloadClasses['DiscoverApiController'] = "{$IP}/includes/wikia/api/DiscoverApiController.class.php";
+$wgAutoloadClasses['DesignSystemApiController'] = "{$IP}/includes/wikia/api/DesignSystemApiController.class.php";
 $wgAutoloadClasses['NavigationApiController'] = "{$IP}/includes/wikia/api/NavigationApiController.class.php";
 $wgAutoloadClasses['ArticlesApiController'] = "{$IP}/includes/wikia/api/ArticlesApiController.class.php";
 $wgAutoloadClasses['RevisionApiController'] = "{$IP}/includes/wikia/api/RevisionApiController.class.php";
@@ -164,6 +166,7 @@ $wgAutoloadClasses['TemplateClassificationApiController'] = "{$IP}/includes/wiki
 $wgExtensionMessagesFiles['WikiaApi'] = "{$IP}/includes/wikia/api/WikiaApi.i18n.php";
 
 $wgWikiaApiControllers['DiscoverApiController'] = "{$IP}/includes/wikia/api/DiscoverApiController.class.php";
+$wgWikiaApiControllers['DesignSystemApiController'] = "{$IP}/includes/wikia/api/DesignSystemApiController.class.php";
 $wgWikiaApiControllers['NavigationApiController'] = "{$IP}/includes/wikia/api/NavigationApiController.class.php";
 $wgWikiaApiControllers['ArticlesApiController'] = "{$IP}/includes/wikia/api/ArticlesApiController.class.php";
 $wgWikiaApiControllers['SearchSuggestionsApiController'] = "{$IP}/includes/wikia/api/SearchSuggestionsApiController.class.php";
@@ -259,8 +262,6 @@ $wgAutoloadClasses[ 'Wikia\\Measurements\\Drivers'    ] = "$IP/includes/wikia/me
 $wgAutoloadClasses[ 'Wikia\\Measurements\\NewrelicDriver' ] = "$IP/includes/wikia/measurements/Drivers.php";
 $wgAutoloadClasses[ 'Wikia\\Measurements\\DummyDriver'    ] = "$IP/includes/wikia/measurements/Drivers.php";
 $wgAutoloadClasses[ 'Wikia\\Measurements\\Time'       ] = "$IP/includes/wikia/measurements/Time.class.php";
-$wgAutoloadClasses[ 'MemcacheMoxiCluster'             ] = "{$IP}/includes/wikia/MemcacheMoxiCluster.class.php";
-$wgAutoloadClasses[ 'MemcacheClientShadower'          ] = "{$IP}/includes/wikia/MemcacheClientShadower.class.php";
 $wgAutoloadClasses[ 'Wikia\\SwiftStorage'             ] = "$IP/includes/wikia/SwiftStorage.class.php";
 $wgAutoloadClasses[ 'WikiaSQL'                        ] = "$IP/includes/wikia/WikiaSQL.class.php";
 $wgAutoloadClasses[ 'WikiaSQLCache'                   ] = "$IP/includes/wikia/WikiaSQLCache.class.php";
@@ -273,6 +274,7 @@ $wgAutoloadClasses[ 'TransactionClassifier'           ] = "$IP/includes/wikia/tr
 $wgAutoloadClasses[ 'TransactionTraceNewrelic'        ] = "$IP/includes/wikia/transaction/TransactionTraceNewrelic.php";
 $wgAutoloadClasses[ 'TransactionTraceScribe'          ] = "$IP/includes/wikia/transaction/TransactionTraceScribe.php";
 $wgHooks          [ 'ArticleViewAddParserOutput'      ][] = 'Transaction::onArticleViewAddParserOutput';
+$wgHooks          [ 'AfterSmwfGetStore'               ][] = 'Transaction::onAfterSmwfGetStore';
 $wgHooks          [ 'RestInPeace'                     ][] = 'Transaction::onRestInPeace';
 $wgHooks          [ 'RestInPeace'                     ][] = 'ScribePurge::onRestInPeace';
 $wgHooks          [ 'RestInPeace'                     ][] = 'CeleryPurge::onRestInPeace';
@@ -354,6 +356,8 @@ $wgAutoloadClasses['PortableInfoboxBuilderService'] = $IP . '/extensions/wikia/P
 $wgAutoloadClasses['PortableInfoboxBuilderHelper'] = $IP . '/extensions/wikia/PortableInfoboxBuilder/services/PortableInfoboxBuilderHelper.class.php';
 $wgAutoloadClasses['TemplateClassificationService'] = $IP . '/includes/wikia/services/TemplateClassificationService.class.php';
 $wgAutoloadClasses['CommunityDataService'] = $IP . '/includes/wikia/services/CommunityDataService.class.php';
+$wgAutoloadClasses['InspectletService'] = $IP . '/includes/wikia/services/InspectletService.class.php';
+$wgAutoloadClasses['SiteAttributeService'] = $IP . '/includes/wikia/services/SiteAttributeService.class.php';
 
 // services hooks
 $wgHooks['ArticleEditUpdates'][] = 'MediaQueryService::onArticleEditUpdates';
@@ -368,6 +372,9 @@ $wgAutoloadClasses['NavigationModel'] = "{$IP}/includes/wikia/models/NavigationM
 $wgAutoloadClasses['WikiaCollectionsModel'] = "{$IP}/includes/wikia/models/WikiaCollectionsModel.class.php";
 $wgAutoloadClasses['WikiaCorporateModel'] = "{$IP}/includes/wikia/models/WikiaCorporateModel.class.php";
 $wgAutoloadClasses['MySQLKeyValueModel'] = "{$IP}/includes/wikia/models/MySQLKeyValueModel.class.php";
+$wgAutoloadClasses['DesignSystemGlobalFooterModel'] = "{$IP}/includes/wikia/models/DesignSystemGlobalFooterModel.class.php";
+$wgAutoloadClasses['DesignSystemGlobalNavigationModel'] = "{$IP}/includes/wikia/models/DesignSystemGlobalNavigationModel.class.php";
+$wgAutoloadClasses['DesignSystemSharedLinks'] = "{$IP}/includes/wikia/models/DesignSystemSharedLinks.class.php";
 
 // modules
 $wgAutoloadClasses['OasisController'] = $IP.'/skins/oasis/modules/OasisController.class.php';
@@ -397,7 +404,6 @@ $wgAutoloadClasses['CommunityCornerController'] = $IP.'/skins/oasis/modules/Comm
 $wgAutoloadClasses['PopularBlogPostsController'] = $IP.'/skins/oasis/modules/PopularBlogPostsController.class.php';
 $wgAutoloadClasses['RandomWikiController'] = $IP.'/skins/oasis/modules/RandomWikiController.class.php';
 $wgAutoloadClasses['ArticleInterlangController'] = $IP.'/skins/oasis/modules/ArticleInterlangController.class.php';
-$wgAutoloadClasses['PagesOnWikiController'] = $IP.'/skins/oasis/modules/PagesOnWikiController.class.php';
 $wgAutoloadClasses['ContributeMenuController'] = $IP.'/skins/oasis/modules/ContributeMenuController.class.php';
 $wgAutoloadClasses['WikiNavigationController'] = $IP.'/skins/oasis/modules/WikiNavigationController.class.php';
 $wgAutoloadClasses['UploadPhotosController'] = $IP.'/skins/oasis/modules/UploadPhotosController.class.php';
@@ -632,7 +638,6 @@ include_once( "$IP/extensions/wikia/AuthModal/AuthModal.setup.php" );
 include_once( "$IP/extensions/wikia/LatestPhotos/LatestPhotos.setup.php" );
 include_once( "$IP/extensions/wikia/PowerUser/PowerUser.setup.php" );
 include_once( "$IP/extensions/wikia/AutoFollow/AutoFollow.setup.php" );
-include_once( "$IP/extensions/wikia/GlobalFooter/GlobalFooter.setup.php" );
 include_once( "$IP/extensions/wikia/WikiaLogo/WikiaLogo.setup.php" );
 include_once( "$IP/extensions/wikia/Rail/Rail.setup.php" );
 include_once( "$IP/extensions/wikia/PageShare/PageShare.setup.php" );
@@ -710,12 +715,6 @@ $wgLangCreationVariables = array();
  define('NS_LEGACY_VIDEO', '400');
 
 /**
- * register job class
- */
-$wgJobClasses[ "CWLocal" ] = "CreateWikiLocalJob";
-include_once( "$IP/extensions/wikia/CreateNewWiki/CreateWikiLocalJob.php" );
-
-/**
  * Tasks
  */
 require_once( "{$IP}/extensions/wikia/Tasks/Tasks.setup.php");
@@ -757,7 +756,6 @@ $wgContentReviewDB = 'content_review';
 $wgExternalDatawareDB = 'dataware';
 $wgExternalArchiveDB = 'archive';
 $wgStatsDB = 'stats';
-$wgDatamartDB = 'statsdb_mart';
 $wgDWStatsDB = 'statsdb';
 $wgStatsDBEnabled = true;
 $wgExternalWikiaStatsDB = 'wikiastats';
@@ -766,6 +764,7 @@ $wgSwiftSyncDB = 'swift_sync';
 $wgSharedKeyPrefix = "wikicities"; // default value for shared key prefix, @see wfSharedMemcKey
 $wgWikiaMailerDB = 'wikia_mailer';
 $wgRevisionUpvotesDB = 'revision_upvotes';
+$wgPortabilityDB = 'portability_db';
 $wgForceMasterDatabase = false;  // true only during wiki creation process
 
 $wgAutoloadClasses['LBFactory_Wikia'] = "$IP/includes/wikia/LBFactory_Wikia.php";
@@ -1058,7 +1057,8 @@ $wgMaxLevelThreeNavElements = 10;
 /**
  * Memcached class name
  */
-$wgMemCachedClass = 'MemcacheMoxiCluster';
+
+$wgMemCachedClass = 'MemCachedClientforWiki';
 
 /**
  * Extra configuration options for memcached when using libmemcached/pecl-memcached
@@ -1088,7 +1088,7 @@ $wgHooks['ArticleDelete'][] = 'ArticlesUsingMediaQuery::onArticleDelete';
 /**
  * Password reminder name
  */
-$wgPasswordSenderName = 'Wikia';
+$wgPasswordSenderName = 'Fandom';
 
 /**
  * Defines the mapping for per-skin Common.js/css
@@ -1176,6 +1176,7 @@ $wgPhalanxService = true;
 $wgPhalanxBaseUrl = "phalanx.service.consul:4666";
 $wgPhalanxServiceOptions = [
 	'noProxy' => true, # PLATFORM-1744: do not use the default HTTP proxy (defined in $wgHTTPProxy) for Phalanx requests
+	'timeout' => 1 # [sec] PLATFORM-2385 / SUS-890: prevent Phalanx slowness from affecting the site performance
 ];
 
 /**
@@ -1201,6 +1202,18 @@ $wgWikiaHubsFileRepoDirectory = '/images/c/corp/images';
  * Enables Nielsen Digital Content Ratings
  */
 $wgEnableNielsen = false;
+
+/**
+ * @name $wgNielsenApid
+ * Nielsen Digital Content Ratings apid. Should be changed via WikiFactory when $wgEnableNielsen is set to true
+ */
+$wgNielsenApid = 'FIXME';
+
+/**
+ * @name $wgEnableUbisoft
+ * Enables Ubisoft
+ */
+$wgEnableUbisoft = false;
 
 /**
  * @name $wgEnableAmazonMatch
@@ -1236,11 +1249,11 @@ $wgAdDriverEnableOpenXBidder = true;
 $wgAdDriverOpenXBidderCountries = null;
 
 /**
- * @name $wgAdDriverOpenXBidderCountriesMobile
- * Enables OpenX bidder on mobile in these countries.
+ * @name $wgAdDriverOpenXBidderCountriesRemnant
+ * Enables OpenX bidder in these countries (given wgAdDriverEnableOpenXBidder is also true) in remnant slots.
  * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
  */
-$wgAdDriverOpenXBidderCountriesMobile = null;
+$wgAdDriverOpenXBidderCountriesRemnant = null;
 
 /**
  * @name $wgAdDriverEnableRubiconFastlane
@@ -1254,6 +1267,54 @@ $wgAdDriverEnableRubiconFastlane = true;
  * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
  */
 $wgAdDriverRubiconFastlaneCountries = null;
+
+/**
+ * @name $wgAdDriverRubiconFastlaneProviderCountries
+ * Enables RubiconFastlane provider in these countries.
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ */
+$wgAdDriverRubiconFastlaneProviderCountries = null;
+
+/**
+ * @name $wgAdDriverRubiconFastlaneProviderSkipTier
+ * Sets minimum value of tier needed to render an ad.
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ */
+$wgAdDriverRubiconFastlaneProviderSkipTier = 0;
+
+/**
+ * @name $wgAdDriverEnableRubiconVulcan
+ * Enables Rubicon Vulcan
+ */
+$wgAdDriverEnableRubiconVulcan = true;
+
+/**
+ * @name $wgAdDriverRubiconVulcanCountries
+ * Enables RubiconVulcan in these countries (given wgAdDriverEnableRubiconVulcan is also true).
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ */
+$wgAdDriverRubiconVulcanCountries = null;
+
+/**
+ * @name $wgAdDriverPrebidBidderCountries
+ * List of countries where prebid bidding platform is enabled.
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ */
+$wgAdDriverPrebidBidderCountries = null;
+
+/**
+ * @name $wgAdDriverAppNexusBidderCountries
+ * List of countries where appnexus bidding platform is enabled.
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ */
+$wgAdDriverAppNexusBidderCountries = null;
+
+/**
+ * @name $wgAdDriverIndexExchangeBidderCountries
+ * List of countries where indexExchange bidding platform is enabled.
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ */
+$wgAdDriverIndexExchangeBidderCountries = null;
 
 /**
  * @name $wgAdDriverOverridePrefootersCountries
@@ -1286,7 +1347,7 @@ $wgEnableJavaScriptErrorLogging = false;
  * @name $wgAdDriverDelayBelowTheFold
  * Prevents from loading BTF before ATF ad slots
  */
-$wgAdDriverDelayBelowTheFold = false;
+$wgAdDriverDelayBelowTheFold = true;
 
 /**
  * @name $wgAdDriverEnableInvisibleHighImpactSlot
@@ -1331,6 +1392,19 @@ $wgAdDriverEvolve2Countries = null;
  * Whether to enable AdProviderTaboola (true) or not (false)
  */
 $wgAdDriverUseTaboola = true;
+
+/**
+ * @name $wgAdDriverUseRevcontent
+ * Whether to enable Revcontent or not
+ */
+$wgAdDriverUseRevcontent = true;
+
+/**
+ * @name $wgAdDriverRevcontentCountries
+ * List of countries with enabled Revcontent.
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ */
+$wgAdDriverRevcontentCountries = null;
 
 /**
  * @name $wgAdDriverTaboolaConfig
@@ -1386,17 +1460,6 @@ $wgSitewideDisableIVW3 = false;
 $wgAnalyticsDriverIVW3Countries = ['AT', 'CH', 'DE'];
 
 /**
- * @name $wgSitewideDisableLiftium
- * @link https://one.wikia-inc.com/wiki/Ads/Disaster_recovery
- * @link http://community.wikia.com/wiki/Special:WikiFactory/community/variables/wgSitewideDisableLiftium
- *
- * Disable Liftium sitewide in case a disaster happens.
- * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
- * For more details consult https://one.wikia-inc.com/wiki/Ads/Disaster_recovery
- */
-$wgSitewideDisableLiftium = false;
-
-/**
  * @name $wgSitewideDisablePaidAssetDrop
  * @link https://one.wikia-inc.com/wiki/Ads/Disaster_recovery
  * @link http://community.wikia.com/wiki/Special:WikiFactory/community/variables/wgSitewideDisablePaidAssetDrop
@@ -1406,17 +1469,6 @@ $wgSitewideDisableLiftium = false;
  * For more details consult https://one.wikia-inc.com/wiki/Ads/Disaster_recovery
  */
 $wgSitewideDisablePaidAssetDrop = false;
-
-/**
- * @name $wgSitewideDisableSevenOneMedia
- * @link https://one.wikia-inc.com/wiki/Ads/Disaster_recovery
- * @link http://community.wikia.com/wiki/Special:WikiFactory/community/variables/wgSitewideDisableSevenOneMedia
- *
- * Disable SevenOneMedia sitewide in case a disaster happens.
- * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
- * For more details consult https://one.wikia-inc.com/wiki/Ads/Disaster_recovery
- */
-$wgSitewideDisableSevenOneMedia = false;
 
 /**
  * @name $wgEnableKruxTargeting
@@ -1437,31 +1489,6 @@ $wgEnableKruxTargeting = true;
 $wgSitewideDisableKrux = false;
 
 /**
- * @name $wgSitewideDisableMonetizationService
- * @link https://one.wikia-inc.com/wiki/Ads/Disaster_recovery
- * @link http://community.wikia.com/wiki/Special:WikiFactory/community/variables/wgSitewideDisableMonetizationService
- *
- * Disable MonetizationService sitewide in case a disaster happens.
- * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
- * For more details consult https://one.wikia-inc.com/wiki/Ads/Disaster_recovery
- */
-$wgSitewideDisableMonetizationService = false;
-
-/**
- * @name $wgAdDriverUseSevenOneMedia
- * Whether to use SevenOne Media ads (true) or the other ads (false)
- * Null means true for languages within $wgAdDriverUseSevenOneMediaInLanguages
- */
-$wgAdDriverUseSevenOneMedia = null;
-$wgAdDriverUseSevenOneMediaInLanguages = ['de'];
-
-/**
- * @name $wgAdDriverSevenOneMediaOverrideSub2Site
- * Enable override SOI_SUB2SITE with string defined in value for SevenOne Media ads
- */
-$wgAdDriverSevenOneMediaOverrideSub2Site = null;
-
-/**
  * @name $wgAdDriverTrackState
  * Enables GA tracking of state for ad slots on pages
  */
@@ -1469,7 +1496,6 @@ $wgAdDriverTrackState = false;
 
 /**
  * @name $wgAdDriverForcedProvider
- * @example 'liftium', 'turtle'
  * Forces to use passed provider for all slots managed by this provider and disables other providers.
  */
 $wgAdDriverForcedProvider = null;
@@ -1486,6 +1512,13 @@ $wgAdDriverEnableAdsInMaps = true;
  * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
  */
 $wgAdDriverDelayCountries = null;
+
+/**
+ * @name $wgAdDriverDelayTimeout
+ * AdEngine delay timeout (in ms)
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ */
+$wgAdDriverDelayTimeout = 2000;
 
 /**
  * @name $wgAdDriverKruxCountries
@@ -1523,18 +1556,18 @@ $wgHighValueCountries = null;
 $wgAdDriverTurtleCountries = null;
 
 /**
- * @name $wgAdDriverTurtleCountries
- * List of countries to call HitMedia ad partner in
- * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
- */
-$wgAdDriverHitMediaCountries = null;
-
-/**
  * @name $wgAdDriverSourcePointDetectionCountries
  * List of countries to call SourcePoint detection scripts
  * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
  */
 $wgAdDriverSourcePointDetectionCountries = null;
+
+
+/**
+ * @name $wgAdDriverPageFairDetectionCountries
+ * List of countries to call PageFair detection scripts
+ */
+$wgAdDriverPageFairDetectionCountries = null;
 
 /**
  * @name $wgAdDriverSourcePointDetectionMobileCountries
@@ -1549,6 +1582,12 @@ $wgAdDriverSourcePointDetectionMobileCountries = null;
  * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
  */
 $wgAdDriverSourcePointRecoveryCountries = null;
+
+/**
+ * @name wgAdDriverEnableSourcePointRecovery
+ * Disable SourcePoint Recovery per wiki
+ */
+$wgAdDriverEnableSourcePointRecovery = null;
 
 /**
  * trusted proxy service registry
@@ -1633,7 +1672,8 @@ $wgApiAccess = [
 	'MoviesApiController' => ApiAccessService::WIKIA_CORPORATE,
 	'WAMApiController' => ApiAccessService::WIKIA_CORPORATE,
 	'WikiaHubsApiController' => ApiAccessService::WIKIA_CORPORATE,
-	'WikisApiController' => ApiAccessService::WIKIA_CORPORATE
+	'WikisApiController' => ApiAccessService::WIKIA_CORPORATE,
+	'DesignSystemApiController' => ApiAccessService::WIKIA_CORPORATE
 ];
 
 /**
@@ -1754,11 +1794,6 @@ $wgProfilerSendViaScribe = true;
  */
 $wgDisableWAMOnHubs = false;
 
-/* @name wgIncludeWikiInCorporateFooterDropdown
- * Include link to this wiki in the Corporate Footer dropdown (the one with flags).
- */
-$wgIncludeWikiInCorporateFooterDropdown = false;
-
 /**
  * Force ImageServing to return an empty list
  * see PLATFORM-392
@@ -1780,12 +1815,6 @@ $wgOasisTypography = true;
 $wgOasisBreakpoints = true;
 
 /**
- * Enable updated GlobalFooter
- * @TODO CONCF-444 - remove this variable
- */
-$wgEnableUpdatedGlobalFooter = true;
-
-/**
  * @name $wgPaidAssetDropConfig
  *
  * Disables Paid Asset Drop campaign if set to false. Enables it if set to an array with two dates (YYYY-MM-DD format).
@@ -1799,6 +1828,25 @@ $wgPaidAssetDropConfig = false;
  * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
  */
 $wgAdDriverHighImpact2SlotCountries = null;
+
+/**
+ * @name $wgAdDriverMobileTransitionInterstitialCountries
+ * Enables Mercury Interstitial inside INVISIBLE_HIGH_IMPACT_2 on transition.
+ * Works only when $wgAdDriverHighImpact2SlotCountries is set to true/current geo.
+ * Don't combine with $wgAdDriverMobileFloorAdhesionCountries
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ */
+$wgAdDriverMobileTransitionInterstitialCountries = null;
+
+
+/**
+ * @name $wgAdDriverMobileFloorAdhesionCountries
+ * Enables Mercury FloorAdhesion inside INVISIBLE_HIGH_IMPACT_2 on transition.
+ * Works only when $wgAdDriverHighImpact2SlotCountries is set to true/current geo.
+ * Don't combine with $wgAdDriverMobileTransitionInterstitialCountries
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ */
+$wgAdDriverMobileFloorAdhesionCountries = null;
 
 /**
  * @name $wgAdDriverIncontentLeaderboardSlotCountries
@@ -1835,11 +1883,11 @@ $wgPreferenceServiceWrite = true;
 $wgEnableFliteTagExt = false;
 
 /**
- * @name $wgAdDriverAdsRecoveryMessageCountries
- * Enables module which displays a simple message to users with ad blockers
+ * @name $wgARecoveryEngineCustomLog
+ * Enables Kibana logging of ad recovery interruptions
  * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
  */
-$wgAdDriverAdsRecoveryMessageCountries = null;
+$wgARecoveryEngineCustomLog = null;
 
 /**
  * Protect Piggyback logs even if the extension is disabled
@@ -1879,6 +1927,8 @@ $wgReviveSpotlightsCountries = null;
 
 /**
  * Enable SourcePoint recovery
+ * It should be always included even if recovery is disabled as we use Recovery classes outside the module
  */
-
 include_once("$IP/extensions/wikia/ARecoveryEngine/ARecoveryEngine.setup.php");
+
+require_once "$IP/extensions/wikia/ImageReview/ImageReviewEvents.setup.php";

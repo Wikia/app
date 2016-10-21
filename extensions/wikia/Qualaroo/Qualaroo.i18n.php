@@ -1,11 +1,16 @@
 <?php
+/** Internationalization file for /extensions/wikia/Qualaroo/Qualaroo extension. */
+$messages = [];
 
-$messages = array();
-
-$messages['en'] = array(
+$messages['en'] = [
 	'qualaroo-desc' => 'Qualaroo Loader',
-);
+];
 
-$messages['qqq'] = array(
+$messages['qqq'] = [
 	'qualaroo-desc' => '{{desc}}',
-);
+];
+
+$messages['fr'] = [
+	'qualaroo-desc' => 'Loader de Qualaroo',
+];
+
