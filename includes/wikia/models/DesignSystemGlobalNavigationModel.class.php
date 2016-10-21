@@ -107,6 +107,11 @@ class DesignSystemGlobalNavigationModel extends WikiaModel {
 			$data[ 'anon' ] = $this->getAnonUserData();
 		}
 
+		$rightSlot = $this->getRightSlot();
+		if ( !empty( $rightSlot ) ) {
+			$data[ 'right_slot' ] = $rightSlot;
+		}
+
 		return $data;
 	}
 
@@ -381,5 +386,23 @@ class DesignSystemGlobalNavigationModel extends WikiaModel {
 			'type' => 'text',
 			'value' => WikiFactory::getVarValueByName( 'wgSitename', $this->productInstanceId, false, $this->wg->Sitename ),
 		];
+	}
+
+	private function getRightSlot() {
+		if ( $this->lang === 'de' ) {
+			return [
+				'type' => 'link-external-image',
+				'href' => 'http://www.entertainweb.de/',
+				'image_url' => 'https://services.wikia.com/static-assets/image/24fc42b9-5429-49f3-8515-130626fb4751',
+				'width' => 100,
+				'height' => 30,
+				'title' => [
+					'type' => 'text',
+					'value' => 'entertainweb'
+				],
+				'tracking_label' => 'entertainweb',
+			];
+		}
+		return null;
 	}
 }
