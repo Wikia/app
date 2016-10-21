@@ -236,15 +236,6 @@ class LocalFile extends File {
 			}
 		}
 
-		/* Wikia change begin */
-		// If there's no timestamp with this file don't cache it, its a soon
-		// to be uploaded file that hasn't been fully saved yet.
-		if ( empty($cache['timestamp']) ) {
-			$wgMemc->delete( $key );
-			return;
-		}
-		/* Wikia change end */
-
 		$wgMemc->set( $key, $cache, 60 * 60 * 24 * 7 ); // A week
 	}
 

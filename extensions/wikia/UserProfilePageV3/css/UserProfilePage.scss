@@ -101,7 +101,7 @@ $color-user-profile-gradient-bottom: desaturate(darken($color-menu-highlight, 5%
 		position: relative;
 
 		&:hover {
-			#userIdentityBoxEdit {
+			.user-identity-box-edit {
 				display: block;
 			}
 		}
@@ -276,18 +276,20 @@ $color-user-profile-gradient-bottom: desaturate(darken($color-menu-highlight, 5%
 			padding-bottom: 10px;
 		}
 
-		#userIdentityBoxEdit {
+		.user-identity-box-edit {
 			display: block;
 		}
 	}
 }
 
-#userIdentityBoxEdit {
+.user-identity-box-edit {
+	cursor: pointer;
 	display: none;
 	margin-top: 10px;
 	position: absolute;
 	right: 10px;
-	img {
+	list-style: none;
+	svg {
 		position: relative;
 		top: 2px;
 	}

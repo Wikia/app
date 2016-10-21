@@ -186,6 +186,7 @@ class OasisController extends WikiaController {
 
 		if(Wikia::isMainPage()) {
 			$bodyClasses[] = 'mainpage';
+			$wgOut->addScript( ( new InspectletService( InspectletService::MAIN_PAGE ) )->getInspectletCode() );
 		}
 
 		wfProfileIn(__METHOD__ . ' - skin Operations');

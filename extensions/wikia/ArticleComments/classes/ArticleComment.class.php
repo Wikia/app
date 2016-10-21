@@ -823,7 +823,22 @@ class ArticleComment {
 
 		$bot = $user->isAllowed( 'bot' );
 
-		return $editPage->internalAttemptSave( $result, $bot );
+		$status = $editPage->internalAttemptSave( $result, $bot );
+
+		// SUS-1188
+		if ( !$status->isOK() ) {
+			WikiaLogger::instance()->error( __METHOD__ . ' - failed SUS-1188', [
+				'hook_error' => (string) $editPage->hookError,
+				'edit_status' => $status,
+				'edit_result' => (array) $result,
+				'exception' => new Exception( 'EditPage::internalAttemptSave failed', $status->value ),
+				'is_bot_bool' => $bot,
+				'title' => $editPage->getTitle()->getPrefixedDBkey(),
+				'page_id' => $editPage->getTitle()->getArticleID(),
+			] );
+		}
+
+		return $status;
 	}
 
 	/**
@@ -1007,8 +1022,6 @@ class ArticleComment {
 	 * @return array
 	 */
 	static public function doAfterPost( Status $status, $article, $parentId = 0 ) {
-		global $wgUser, $wgDBname;
-
 		Hooks::run( 'ArticleCommentAfterPost', [ $status, &$article ] );
 		$commentId = $article->getId();
 		$error = false;
@@ -1048,20 +1061,16 @@ class ArticleComment {
 				wfGetDB( DB_MASTER )->commit();
 				break;
 			default:
-				$userId = $wgUser->getId();
 				$text  = false;
 				$error = true;
 
 				$message = wfMessage( 'article-comments-error' )->escaped();
 
-				WikiaLogger::instance()->error( 'PLATFORM-1311', [
-					'method' => __METHOD__,
+				WikiaLogger::instance()->error( __METHOD__ . ' - PLATFORM-1311', [
 					'status' => $status->value,
-					'dbName' => $wgDBname,
 					'reason' => 'article-comments-error',
 					'name' => $article->getTitle()->getPrefixedDBkey(),
 					'page_id' => $commentId,
-					'user_id' => $userId,
 					'exception' => new Exception( 'article-comments-error', $status->value )
 				] );
 		}

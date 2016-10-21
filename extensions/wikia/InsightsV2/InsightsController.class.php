@@ -60,22 +60,11 @@ class InsightsController extends WikiaSpecialPageController {
 	 */
 	public function pageViews() {
 		$dropdown = [];
+		$dropdown[ 'pv7' ] = wfMessage( 'insights-sort-pv7' )->escaped();
+		$dropdown[ 'pv28' ] = wfMessage( 'insights-sort-pv28' )->escaped();
+		$dropdown[ 'pvDiff' ] = wfMessage( 'insights-sort-pvDiff' )->escaped();
 
 		$sort = $this->request->getVal( 'sort', InsightsSorting::getDefaultSorting() );
-
-		$sortingTypes = InsightsSorting::$sorting;
-
-		/**
-		 * Used to create the following messages:
-		 *
-		 * 'insights-list-pv7',
-		 * 'insights-list-pv28',
-		 * 'insights-list-pvDiff',
-		 * 'insights-list-title'
-		 */
-		foreach ( $sortingTypes as $key => $sorting ) {
-			$dropdown[ $key ] = wfMessage( 'insights-sort-' . $key )->escaped();
-		}
 
 		$this->setVal( 'current', $sort );
 		$this->setVal( 'dropdown', $dropdown );

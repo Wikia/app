@@ -255,6 +255,7 @@ class PermissionsConfigurationImpl implements PermissionsConfiguration {
 		'hideblockername',
 		'fancontributor-staff',
 		'fancontributor-contributor',
+		'clearuserprofile',
 	];
 
 	public function __construct() {
