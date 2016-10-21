@@ -70,31 +70,35 @@ class PhalanxService extends Service {
 	/**
 	 * service for check function
 	 *
-	 * @param string $type     one of: content, summary, title, user, question_title, recent_questions, wiki_creation, cookie, email
-	 * @param string $content  text to be checked
-	 * @param string $lang     language code (eg. en, de, ru, pl). "en" will be assumed if this is missing
+	 * @param string $type one of: content, summary, title, user, question_title, recent_questions, wiki_creation, cookie, email
+	 * @param string $content text to be checked
+	 * @return mixed
 	 */
-	public function check( $type, $content, $lang = "" ) {
-		wfProfileIn( __METHOD__  );
-		$result =  $this->sendToPhalanxDaemon( "check", array( "type" => $type, "content" => $content, "lang" => $lang ) );
-		wfProfileOut( __METHOD__  );
+	public function check( string $type, string $content ) {
+		wfProfileIn( __METHOD__ );
+
+		$result = $this->sendToPhalanxDaemon( 'check', [ 'type' => $type, 'content' => $content ] );
+
+		wfProfileOut( __METHOD__ );
 		return $result;
 	}
 
 	/**
 	 * service for match function
 	 *
-	 * @param string $type     one of: content, summary, title, user, question_title, recent_questions, wiki_creation, cookie, email
-	 * @param string/Array $content  text to be checked
-	 * @param string $lang     language code (eg. en, de, ru, pl). "en" will be assumed if this is missing
+	 * @param string $type one of: content, summary, title, user, question_title, recent_questions, wiki_creation, cookie, email
+	 * @param string|array $content text to be checked
+	 * @return mixed
 	 */
-	public function match( $type, $content, $lang = "" ) {
-		wfProfileIn( __METHOD__  );
-		if (is_array($content)) {
-			$content = array_unique($content);
+	public function match( string $type, $content ) {
+		wfProfileIn( __METHOD__ );
+		if ( is_array( $content ) ) {
+			$content = array_unique( $content );
 		}
-		$result =  $this->sendToPhalanxDaemon( "match", array( "type" => $type, "content" => $content, "lang" => $lang ) );
-		wfProfileOut( __METHOD__  );
+		
+		$result = $this->sendToPhalanxDaemon( 'match', [ 'type' => $type, 'content' => $content ] );
+		
+		wfProfileOut( __METHOD__ );
 		return $result;
 	}
 

@@ -1,6 +1,6 @@
 <?php
 
-class Phalanx implements arrayaccess {
+class Phalanx extends WikiaModel implements ArrayAccess {
 	const TYPE_CONTENT = 1;
 	const TYPE_SUMMARY = 2;
 	const TYPE_TITLE = 4;
@@ -50,12 +50,12 @@ class Phalanx implements arrayaccess {
 		"infinite"
 	);
 
+	public $data = [];
+
 	public function __construct( $blockId = 0 ) {
-		$this->app = F::app();
-		$this->wf = $this->app->wf;
-		$this->wg = $this->app->wg;
+		parent::__construct();
 		$this->blockId = intval( $blockId );
-		$this->data = array();
+		$this->data = [];
 	}
 
 	/**
@@ -97,7 +97,7 @@ class Phalanx implements arrayaccess {
 	public function load() {
 		wfProfileIn( __METHOD__ );
 
-		$dbr = wfGetDB( DB_SLAVE, array(), $this->app->wg->ExternalSharedDB );
+		$dbr = $this->getSharedDB();
 
 		$row = $dbr->selectRow( $this->db_table, '*', array( 'p_id' => $this->blockId ), __METHOD__ );
 
@@ -114,7 +114,6 @@ class Phalanx implements arrayaccess {
 				'case'      => $row->p_case,
 				'reason'    => $row->p_reason,
 				'comment'   => $row->p_comment,
-				'lang'      => $row->p_lang,
 				'ip_hex'    => $row->p_ip_hex
 			);
 		}
@@ -134,7 +133,7 @@ class Phalanx implements arrayaccess {
 			$this->data['ip_hex'] = IP::toHex( $this->data['text'] );
 		}
 
-		$dbw = wfGetDB( DB_MASTER, array(), $this->wg->ExternalSharedDB );
+		$dbw = $this->getSharedDB( DB_MASTER );
 		if ( empty( $this->data['id'] ) ) {
 			/* add block */
 			$dbw->insert( $this->db_table, $this->mapToDB(), __METHOD__ );
@@ -166,7 +165,7 @@ class Phalanx implements arrayaccess {
 			return false;
 		}
 
-		$dbw = wfGetDB( DB_MASTER, array(), $this->wg->ExternalSharedDB );
+		$dbw = $this->getSharedDB( DB_MASTER );
 		$dbw->delete( $this->db_table, array( 'p_id' => $this->data['id'] ), __METHOD__ );
 
 		if ( $removed = $dbw->affectedRows() ) {
