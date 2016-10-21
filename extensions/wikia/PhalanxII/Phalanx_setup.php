@@ -71,6 +71,7 @@ $phalanxhooks = array(
 			'CreateDefaultQuestionPageFilter' => 'checkTitle',
 			'CreatePageTitleCheck'            => 'checkTitle',
 			'PageTitleFilter'                 => 'pageTitleFilter',
+			'UploadVerification'              => 'checkFileTitle',
 		),
 	'PhalanxAnswersBlock' =>
 		array(
