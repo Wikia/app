@@ -671,25 +671,28 @@ jQuery(function ($) {
 			canonical = el.data('canonical');
 			if (canonical !== undefined) {
 				switch (canonical) {
-				case 'wikiactivity':
-					label = 'on-the-wiki-activity';
-					break;
-				case 'random':
-					label = 'on-the-wiki-random';
-					break;
-				case 'images':
-					label = 'on-the-wiki-new-photos';
-					break;
-				case 'chat':
-					label = 'on-the-wiki-chat';
-					break;
-				case 'forum':
-					label = 'on-the-wiki-forum';
-					break;
-				case 'videos':
-					label = 'on-the-wiki-videos';
-					break;
+					case 'wikiactivity':
+						label = 'on-the-wiki-activity';
+						break;
+					case 'random':
+						label = 'on-the-wiki-random';
+						break;
+					case 'newfiles':
+					case 'images':
+						label = 'on-the-wiki-new-photos';
+						break;
+					case 'chat':
+						label = 'on-the-wiki-chat';
+						break;
+					case 'forum':
+						label = 'on-the-wiki-forum';
+						break;
+					case 'videos':
+						label = 'on-the-wiki-videos';
+						break;
 				}
+			} else if (el.attr('href') === '/d/f') {
+				label = 'on-the-wiki-discussions'
 			} else if (el.parent().hasClass('nav-item')) {
 				label = 'custom-level-1';
 			} else if (el.hasClass('subnav-2a')) {

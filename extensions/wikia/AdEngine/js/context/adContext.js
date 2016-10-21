@@ -75,6 +75,12 @@ define('ext.wikia.adEngine.adContext', [
 				context.opts.pageFairDetection = true;
 			}
 		}
+		// SourcePoint recovery
+		if (!noExternals && context.opts.sourcePointRecovery !== false) {
+			if (geo.isProperGeo(instantGlobals.wgAdDriverSourcePointRecoveryCountries)) {
+				context.opts.sourcePointRecovery = true;
+			}
+		}
 
 		// SourcePoint detection integration
 		if (!noExternals && context.opts.sourcePointDetectionUrl) {

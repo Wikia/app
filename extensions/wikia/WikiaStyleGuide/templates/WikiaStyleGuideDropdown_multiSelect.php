@@ -7,14 +7,14 @@
 		<?= $toolbar ?>
 		<?php if(!empty($selectAll) && $selectAll === true): ?>
 			<div class="toolbar">
-				<label><input type="checkbox" name="select-all" class="select-all" value="all"><?= wfMsg('wikiastyleguide-dropdown-select-all') ?></label>
+				<label><input type="checkbox" name="select-all" class="select-all" value="all"><?= wfMessage( 'wikiastyleguide-dropdown-select-all' )->escaped(); ?></label>
 			</div>
 		<?php endif; ?>
 		<ul class="dropdown-list">
 			<? foreach($options as $option): ?>
 				<? $isSelected = in_array($option['value'], $selected); ?>
 				<li class="dropdown-item<?= $isSelected ? ' selected' : '' ?>">
-					<label><input type="checkbox" name="namespace[]" value="<?= $option['value'] ?>"<?= $isSelected ? ' checked' : '' ?>><?= $option['label'] ?></label>
+					<label><input type="checkbox" name="namespace[]" value="<?= Sanitizer::encodeAttribute( $option['value'] ) ?>"<?= $isSelected ? ' checked' : '' ?>><?= htmlspecialchars( $option['label'] ) ?></label>
 				</li>
 			<? endforeach; ?>
 		</ul>

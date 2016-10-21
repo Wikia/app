@@ -14,6 +14,11 @@ describe('ext.wikia.adEngine.lookup.prebid.adaptersPerformanceTracker', function
 					return mocks.pbjs;
 				}
 			},
+			timeBuckets: {
+				getTimeBucket: function () {
+					return '0-1.0';
+				}
+			},
 			adapterAppNexus: {
 				getName: function () {
 					return 'appnexus';
@@ -121,6 +126,7 @@ describe('ext.wikia.adEngine.lookup.prebid.adaptersPerformanceTracker', function
 	function getModule() {
 		return modules['ext.wikia.adEngine.lookup.prebid.adaptersPerformanceTracker'](
 			mocks.adTracker,
+			mocks.timeBuckets,
 			mocks.prebid
 		);
 	}
@@ -226,11 +232,11 @@ describe('ext.wikia.adEngine.lookup.prebid.adaptersPerformanceTracker', function
 			},
 			expected: {
 				appnexus: {
-					TOP_LEADERBOARD: '100x100;0.00',
+					TOP_LEADERBOARD: '100x100;0.00;0-1.0',
 					TOP_RIGHT_BOXAD: 'NO_RESPONSE'
 				},
 				indexExchange: {
-					TOP_LEADERBOARD: '200x200;1.00'
+					TOP_LEADERBOARD: '200x200;1.00;0-1.0'
 				}
 			},
 			message: 'Only returned bids are updated in map'
@@ -254,11 +260,11 @@ describe('ext.wikia.adEngine.lookup.prebid.adaptersPerformanceTracker', function
 			},
 			expected: {
 				appnexus: {
-					TOP_LEADERBOARD: 'EMPTY_RESPONSE',
+					TOP_LEADERBOARD: 'EMPTY_RESPONSE;0-1.0',
 					TOP_RIGHT_BOXAD: 'NO_RESPONSE'
 				},
 				indexExchange: {
-					TOP_LEADERBOARD: '200x200;1.00'
+					TOP_LEADERBOARD: '200x200;1.00;0-1.0'
 				}
 			},
 			message: 'if no bids for slot are returned map stays untouched'
@@ -285,8 +291,8 @@ describe('ext.wikia.adEngine.lookup.prebid.adaptersPerformanceTracker', function
 			},
 			expected: {
 				appnexus: {
-					TOP_LEADERBOARD: '100x100;0.00',
-					TOP_RIGHT_BOXAD: '100x100;0.00'
+					TOP_LEADERBOARD: '100x100;0.00;0-1.0',
+					TOP_RIGHT_BOXAD: '100x100;0.00;0-1.0'
 				},
 				indexExchange: {
 					TOP_LEADERBOARD: 'NO_RESPONSE'
@@ -316,8 +322,8 @@ describe('ext.wikia.adEngine.lookup.prebid.adaptersPerformanceTracker', function
 			},
 			expected: {
 				appnexus: {
-					TOP_LEADERBOARD: 'USED',
-					TOP_RIGHT_BOXAD: '100x100;0.00'
+					TOP_LEADERBOARD: 'USED;0-1.0',
+					TOP_RIGHT_BOXAD: '100x100;0.00;0-1.0'
 				},
 				indexExchange: {
 					TOP_LEADERBOARD: 'NO_RESPONSE'
@@ -331,6 +337,109 @@ describe('ext.wikia.adEngine.lookup.prebid.adaptersPerformanceTracker', function
 			result = module.updatePerformanceMap(testCase.performanceMap);
 
 			expect(result).toEqual(testCase.expected, testCase.message);
+		});
+	});
+
+	it('trackBidderSlotState does not track when adapter disabled or slot not supported', function () {
+		[{
+			adapter: mocks.adapterIndexExchangeDisabled,
+			slotName: 'TOP_LEADERBOARD',
+			providerName: 'direct',
+			performanceMap: {
+				appnexus: {
+					TOP_LEADERBOARD: 'EMPTY_RESPONSE;0-1.0',
+					TOP_RIGHT_BOXAD: 'NO_RESPONSE'
+				},
+				indexExchange: {
+					TOP_LEADERBOARD: '200x200;1.00;0-1.0'
+				}
+			},
+			expected: undefined,
+			message: 'Return undefined when adapter is disabled'
+		}, {
+			adapter: mocks.adapterIndexExchange,
+			slotName: 'TOP_RIGHT_BOXAD',
+			providerName: 'direct',
+			performanceMap: {
+				appnexus: {
+					TOP_LEADERBOARD: 'EMPTY_RESPONSE;0-1.0',
+					TOP_RIGHT_BOXAD: 'NO_RESPONSE'
+				},
+				indexExchange: {
+					TOP_LEADERBOARD: '200x200;1.00;0-1.0'
+				}
+			},
+			expected: undefined,
+			message: 'Return undefined when slot is not supported by adapter'
+		}].forEach(function(testCase) {
+			var module = getModule(),
+				result;
+
+			spyOn(mocks.adTracker, 'track');
+
+			result = module.trackBidderSlotState(testCase.adapter, testCase.slotName, testCase.providerName, testCase.performanceMap);
+
+			expect(result).toEqual(testCase.expected, testCase.message);
+			expect(mocks.adTracker.track).not.toHaveBeenCalled();
+
+			mocks.adTracker.track = noop;
+		});
+	});
+
+	it('trackBidderSlotState works when adapter enabled and slot is supported', function () {
+		[{
+			adapter: mocks.adapterIndexExchange,
+			slotName: 'TOP_LEADERBOARD',
+			providerName: 'direct',
+			performanceMap: {
+				appnexus: {
+					TOP_LEADERBOARD: 'EMPTY_RESPONSE;0-1.0',
+					TOP_RIGHT_BOXAD: 'NO_RESPONSE'
+				},
+				indexExchange: {
+					TOP_LEADERBOARD: '200x200;1.00;0-1.0'
+				}
+			},
+			expected: ['indexExchange/lookup_success/direct', 'TOP_LEADERBOARD', 0, '200x200;1.00;0-1.0']
+		}, {
+			adapter: mocks.adapterAppNexus,
+			slotName: 'TOP_RIGHT_BOXAD',
+			providerName: 'remnant',
+			performanceMap: {
+				appnexus: {
+					TOP_LEADERBOARD: 'EMPTY_RESPONSE',
+					TOP_RIGHT_BOXAD: 'NO_RESPONSE'
+				},
+				indexExchange: {
+					TOP_LEADERBOARD: '200x200;1.00;0-1.0'
+				}
+			},
+			expected: ['appnexus/lookup_error/remnant', 'TOP_RIGHT_BOXAD', 0, 'nodata']
+		}, {
+			adapter: mocks.adapterAppNexus,
+			slotName: 'TOP_RIGHT_BOXAD',
+			providerName: 'direct',
+			performanceMap: {
+				appnexus: {
+					TOP_LEADERBOARD: 'EMPTY_RESPONSE',
+					TOP_RIGHT_BOXAD: 'NO_RESPONSE'
+				},
+				indexExchange: {
+					TOP_LEADERBOARD: '200x200;1.00;0-1.0'
+				}
+			},
+			expected: ['appnexus/lookup_error/direct', 'TOP_RIGHT_BOXAD', 0, 'nodata']
+		}].forEach(function(testCase) {
+			var module = getModule(),
+				expectResult;
+
+			spyOn(mocks.adTracker, 'track');
+
+			module.trackBidderSlotState(testCase.adapter, testCase.slotName, testCase.providerName, testCase.performanceMap);
+			expectResult = expect(mocks.adTracker.track);
+			expectResult.toHaveBeenCalledWith.apply(expectResult, testCase.expected);
+
+			mocks.adTracker.track = noop;
 		});
 	});
 });
