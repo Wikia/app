@@ -1,5 +1,6 @@
+// Importing CSS has to be done via absolute url - because ...
 @import '/extensions/wikia/DesignSystem/bower_components/design-system/dist/css/styles.css';
-@import '../bower_components/design-system/base/colors';
+@import '../bower_components/design-system/dist/scss/wds-base/colors';
 
 // Platform-specific styles for DesignSystem integration
 $global-navigation-z-index: 5000101;

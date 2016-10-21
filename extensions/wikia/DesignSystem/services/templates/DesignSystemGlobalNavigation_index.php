@@ -46,5 +46,8 @@
 				</a>
 			</div>
 		</div>
+		<div class="wds-global-navigation__right-slot">
+			<img src="https://services.wikia.com/static-assets/image/24fc42b9-5429-49f3-8515-130626fb4751" width="100px" height="30px" />
+		</div>
 	</div>
 </div>
