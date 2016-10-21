@@ -92,6 +92,26 @@ class SpecialUserlogout extends UnlistedSpecialPage {
 			}
 		}
 
-		$out->returnToMain(false, $mReturnTo, $mReturnToQuery);
+		if ( empty( $mReturnTo ) && empty( $mReturnToQuery ) ) {
+			$redirectUrl = $this->getRequest()->getVal( 'redirect' );
+
+			if ( $redirectUrl && $this->isValidRedirectUrl( $redirectUrl ) ) {
+				$out->redirect( $redirectUrl );
+				return;
+			}
+		}
+
+		$out->returnToMain( false, $mReturnTo, $mReturnToQuery );
+	}
+
+	/**
+	 * Verifies that a log-out redirect URL is for a Wikia/Fandom domain
+	 *
+	 * @param string $url
+	 * @return boolean True if the URL can be used for a redirect
+	 */
+	protected function isValidRedirectUrl( $url ) {
+		$hostname = parse_url( $url, PHP_URL_HOST );
+		return preg_match( '/(\.|^)(wikia|fandom)\.com$/', $hostname );
 	}
 }
