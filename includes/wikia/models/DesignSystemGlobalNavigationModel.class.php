@@ -394,8 +394,6 @@ class DesignSystemGlobalNavigationModel extends WikiaModel {
 				'type' => 'link-external-image',
 				'href' => 'http://www.entertainweb.de/',
 				'image_url' => 'https://services.wikia.com/static-assets/image/24fc42b9-5429-49f3-8515-130626fb4751',
-				'width' => 100,
-				'height' => 30,
 				'title' => [
 					'type' => 'text',
 					'value' => 'entertainweb'
