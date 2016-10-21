@@ -35,10 +35,25 @@
 		</hgroup>
 
 		<? if ( $canEditProfile ): ?>
-			<span id="userIdentityBoxEdit">
-				<img src="<?= $wgBlankImgUrl ?>" class="sprite edit-pencil">
-				<a href="#"><?= wfMessage( 'user-identity-box-edit' )->escaped(); ?></a>
-			</span>
+			<ul class="user-identity-box-edit">
+				<li>
+					<?= DesignSystemHelper::getSvg( 'wds-icons-pencil', 'wds-icon-tiny' ); ?>
+					<a id="userIdentityBoxEdit" href="#"><?= wfMessage( 'user-identity-box-edit' )->escaped(); ?></a>
+				</li>
+				<? if ( $canClearProfile && !$user[ 'showZeroStates' ] ): ?>
+					<li>
+						<?= DesignSystemHelper::getSvg( 'wds-icons-trash', 'wds-icon-tiny' ); ?>
+						<a
+							id="userIdentityBoxClear"
+							href="#"
+							data-name="<?= Sanitizer::encodeAttribute( $user['name'] ); ?>"
+							data-confirm="<?= wfMessage( 'user-identity-box-clear-confirmation' )->escaped(); ?>"
+						>
+							<?= wfMessage( 'user-identity-box-clear' )->escaped(); ?>
+						</a>
+					</li>
+				<? endif; ?>
+			</ul>
 			<input type="hidden" id="user" value="<?= $user['id']; ?>"/>
 		<? endif; ?>
 		<div class="masthead-info-lower">
