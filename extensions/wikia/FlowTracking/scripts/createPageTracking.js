@@ -10,7 +10,7 @@ define(
 
 		function trackOnEditPageLoad(editor) {
 			var qs = new QueryString(window.location),
-				// 'flow' is the parameter passed in the url if user has started a flow already
+			// 'flow' is the parameter passed in the url if user has started a flow already
 				flowParam = qs.getVal('flow', false),
 				tracked = qs.getVal('tracked', false);
 
@@ -24,7 +24,6 @@ define(
 			} else {
 				flowTrack.beginFlow(window.wgFlowTrackingFlows.CREATE_PAGE_DIRECT_URL, {editor: editor});
 				qs.setVal('flow', window.wgFlowTrackingFlows.CREATE_PAGE_DIRECT_URL);
-				qs.removeVal('tracked');
 			}
 
 			setTrackedQueryParam(qs);
@@ -32,12 +31,12 @@ define(
 
 		function trackOnSpecialCreatePageLoad(editor, title) {
 			var qs = new QueryString(window.location),
-				// 'flow' is the parameter passed in the url if user has started a flow already
+			// 'flow' is the parameter passed in the url if user has started a flow already
 				flowParam = qs.getVal('flow', false),
 				tracked = qs.getVal('tracked', false);
 
 			// Do not track if the step was tracked already or special page is not allowed
-			if (tracked  || !isAllowedSpecialPage() || !isTitleInMainNamespace(title)) {
+			if (tracked || !isAllowedSpecialPage() || !isTitleInMainNamespace(title)) {
 				return;
 			}
 
@@ -46,7 +45,6 @@ define(
 			} else {
 				flowTrack.beginFlow(window.wgFlowTrackingFlows.CREATE_PAGE_SPECIAL_CREATE_PAGE, {editor: editor});
 				qs.setVal('flow', window.wgFlowTrackingFlows.CREATE_PAGE_SPECIAL_CREATE_PAGE);
-				qs.removeVal('tracked');
 			}
 
 			setTrackedQueryParam(qs);
