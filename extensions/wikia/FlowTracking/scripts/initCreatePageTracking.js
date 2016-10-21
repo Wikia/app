@@ -22,6 +22,7 @@ require([
 			var qs = QueryString(redlink.href);
 
 			qs.setVal('flow', redLinkFlow);
+			qs.removeVal('tracked');
 			redlink.href = qs.toString();
 		});
 
@@ -53,8 +54,9 @@ require([
 			if (isNewArticle() && isMainNamespace()) {
 				var qs = new QueryString();
 				qs.setVal('flow', createButtonFlow);
+				qs.removeVal('tracked');
 				window.history.replaceState({}, '', qs.toString());
-				
+
 				flowTracking.beginFlow(createButtonFlow, {});
 			}
 		});

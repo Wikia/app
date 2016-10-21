@@ -24,6 +24,7 @@ define(
 			} else {
 				flowTrack.beginFlow(window.wgFlowTrackingFlows.CREATE_PAGE_DIRECT_URL, {editor: editor});
 				qs.setVal('flow', window.wgFlowTrackingFlows.CREATE_PAGE_DIRECT_URL);
+				qs.removeVal('tracked');
 			}
 
 			setTrackedQueryParam(qs);
@@ -45,6 +46,7 @@ define(
 			} else {
 				flowTrack.beginFlow(window.wgFlowTrackingFlows.CREATE_PAGE_SPECIAL_CREATE_PAGE, {editor: editor});
 				qs.setVal('flow', window.wgFlowTrackingFlows.CREATE_PAGE_SPECIAL_CREATE_PAGE);
+				qs.removeVal('tracked');
 			}
 
 			setTrackedQueryParam(qs);
