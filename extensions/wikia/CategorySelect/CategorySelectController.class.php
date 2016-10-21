@@ -8,7 +8,7 @@
  * @author Kyle Florence <kflorence@wikia-inc.com>
  */
 
-class CategorySelectController extends WikiaService {
+class CategorySelectController extends WikiaController {
 	const CACHE_TTL_AJAX = 360; // 1 hour
 	const CACHE_TTL_MEMCACHE = 86400; // 1 day
 	const VERSION = 1;
@@ -63,6 +63,10 @@ class CategorySelectController extends WikiaService {
 	public function categories() {
 		wfProfileIn( __METHOD__ );
 
+		if ( !$this->request->isInternal() ) {
+			throw new UnauthorizedException();
+		}
+
 		$categories = $this->request->getVal( 'categories', array() );
 		$data = array();
 
@@ -99,6 +103,10 @@ class CategorySelectController extends WikiaService {
 	 * The template for a category in the category list.
 	 */
 	public function category() {
+		if ( !$this->request->isInternal() ) {
+			throw new UnauthorizedException();
+		}
+
 		$this->response->setVal( 'blankImageUrl', $this->wg->BlankImgUrl );
 		$this->response->setVal( 'edit', wfMessage( 'categoryselect-category-edit' )->text() );
 		$this->response->setVal( 'link', $this->request->getVal( 'link', '' ) );
