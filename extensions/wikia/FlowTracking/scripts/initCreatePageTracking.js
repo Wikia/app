@@ -22,7 +22,6 @@ require([
 			var qs = QueryString(redlink.href);
 
 			qs.setVal('flow', redLinkFlow);
-			qs.removeVal('tracked');
 			redlink.href = qs.toString();
 		});
 
