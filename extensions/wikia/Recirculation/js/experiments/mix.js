@@ -104,15 +104,13 @@ require([
 					log(args, 'info', logGroup);
 
 					args.forEach(function (result) {
-						if (!result) {
-							return;
-						}
-
 						if (result.title && data.title.length === 0) {
 							data.title = result.title;
 						}
 
-						data.items = data.items.concat(result.items);
+						if (result.items && result.items.length > 0) {
+							data.items = data.items.concat(result.items);
+						}
 					});
 
 					data.items = utils.ditherResults(data.items, 4);
