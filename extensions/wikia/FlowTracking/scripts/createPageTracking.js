@@ -14,7 +14,6 @@ define(
 				flowParam = qs.getVal('flow', false),
 				tracked = qs.getVal('tracked', false);
 
-			// Do not track if the step was tracked already or article exists
 			if (tracked || !isNewArticle() || !isMainNamespace()) {
 				return;
 			}
@@ -35,7 +34,6 @@ define(
 				flowParam = qs.getVal('flow', false),
 				tracked = qs.getVal('tracked', false);
 
-			// Do not track if the step was tracked already or special page is not allowed
 			if (tracked || !isAllowedSpecialPage() || !isTitleInMainNamespace(title)) {
 				return;
 			}
