@@ -60,6 +60,21 @@ class DesignSystemHelper {
 		}
 	}
 
+	public static function getApiImage( $model, $classNames = '', $alt = '' ) {
+		if ( $model['type'] === 'image-local' ) {
+			return static::getSvg( $model['name'], $classNames, $alt );
+		} elseif ($model['type'] === 'image-external') {
+			return Html::element( 'img', [
+				'src' => $model['url'],
+				'class' => $classNames,
+				'alt' => $alt
+			] );
+		}
+
+		WikiaLogger::instance()->error( __METHOD__ . ': unhandled image type:' . $model['type'] );
+		return '';
+	}
+
 	/**
 	 * @desc Loads SVG file as a SimpleXMLElement object or gets it from cache
 	 *

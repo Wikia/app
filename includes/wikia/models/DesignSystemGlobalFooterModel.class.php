@@ -173,7 +173,7 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 						'image' => 'wds-company-store-appstore',
 						'img' => [
 							'type' => 'image-local',
-							'name' => 'ds-company-store-appstore',
+							'name' => 'wds-company-store-appstore',
 						],
 						'title' => [
 							'type' => 'translatable-text',
