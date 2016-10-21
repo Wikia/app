@@ -73,6 +73,7 @@ require([
 
 			if (flow) {
 				qs.removeVal('flow');
+				qs.removeVal('tracked');
 				window.history.replaceState({}, '', qs.toString())
 			}
 		});
