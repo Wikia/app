@@ -32,7 +32,12 @@ class DesignSystemGlobalNavigationModel extends WikiaModel {
 				'header' => [
 					'type' => 'link-image',
 					'href' => $this->getHref( 'fandom-logo' ),
+					// 'image' is deprecated
 					'image' => 'wds-company-logo-fandom-powered-by-wikia',
+					'img' => [
+						'type' => 'image-local',
+						'name' => 'wds-company-logo-fandom-powered-by-wikia',
+					],
 					'title' => [
 						'type' => 'text',
 						'value' => 'Fandom powered by Wikia'
@@ -179,7 +184,12 @@ class DesignSystemGlobalNavigationModel extends WikiaModel {
 		return [
 			'header' => [
 				'type' => 'line-image',
+				// 'image' is deprecated, use 'img' instead
 				'image' => 'wds-icons-user',
+				'img' => [
+					'type' => 'image-local',
+					'name' => 'wds-icons-user',
+				],
 				'title' => [
 					'type' => 'translatable-text',
 					'key' => 'global-navigation-anon-my-account',
@@ -305,7 +315,12 @@ class DesignSystemGlobalNavigationModel extends WikiaModel {
 		return [
 			'header' => [
 				'type' => 'line-image',
+				// 'image' is deprecated, use 'img' instead
 				'image' => 'wds-icons-bell',
+				'img' => [
+					'type' => 'image-local',
+					'name' => 'wds-icons-bell',
+				],
 				'title' => [
 					'type' => 'translatable-text',
 					'key' => 'global-navigation-notifications-title'
@@ -391,9 +406,12 @@ class DesignSystemGlobalNavigationModel extends WikiaModel {
 	private function getRightSlot() {
 		if ( $this->lang === 'de' ) {
 			return [
-				'type' => 'link-external-image',
+				'type' => 'link-image',
 				'href' => 'http://www.entertainweb.de/',
-				'image_url' => 'https://services.wikia.com/static-assets/image/24fc42b9-5429-49f3-8515-130626fb4751',
+				'img' => [
+					'type' => 'image-external',
+					'url' => 'https://services.wikia.com/static-assets/image/24fc42b9-5429-49f3-8515-130626fb4751',
+				],
 				'title' => [
 					'type' => 'text',
 					'value' => 'entertainweb'
