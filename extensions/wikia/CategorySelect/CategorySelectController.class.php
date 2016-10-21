@@ -8,7 +8,7 @@
  * @author Kyle Florence <kflorence@wikia-inc.com>
  */
 
-class CategorySelectController extends WikiaController {
+class CategorySelectController extends WikiaService {
 	const CACHE_TTL_AJAX = 360; // 1 hour
 	const CACHE_TTL_MEMCACHE = 86400; // 1 day
 	const VERSION = 1;
