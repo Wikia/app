@@ -1,5 +1,5 @@
 /*global define*/
-define('ext.wikia.adEngine.video.vastBuilder', [
+define('ext.wikia.adEngine.video.vastUrlBuilder', [
 	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.adLogicPageParams',
 	'ext.wikia.adEngine.slot.adUnitBuilder',
@@ -13,19 +13,21 @@ define('ext.wikia.adEngine.video.vastBuilder', [
 		},
 		baseUrl = 'https://pubads.g.doubleclick.net/gampad/ads?',
 		correlator = Math.round(Math.random() * 10000000000),
-		defaultAdUnit = '/5441/VIDEO_ATG',
-		logGroup = 'ext.wikia.adEngine.video.vastBuilder';
+		logGroup = 'ext.wikia.adEngine.video.vastUrlBuilder';
 
-	function getCustomParameters(slotName, src) {
+	function getCustomParameters(slotParams) {
 		var customParameters = [],
 			params = page.getPageLevelParams();
-
-		params.pos = slotName;
-		params.src = src;
 
 		Object.keys(params).forEach(function (key) {
 			if (params[key]) {
 				customParameters.push(key + '=' + params[key]);
+			}
+		});
+
+		Object.keys(slotParams).forEach(function (key) {
+			if (slotParams[key]) {
+				customParameters.push(key + '=' + slotParams[key]);
 			}
 		});
 
@@ -40,18 +42,20 @@ define('ext.wikia.adEngine.video.vastBuilder', [
 		return aspectRatio >= 1 || !isNumeric(aspectRatio) ? adSizes.horizontal : adSizes.vertical;
 	}
 
-	function build(src, slotName, aspectRatio) {
+	function build(aspectRatio, slotParams) {
+		slotParams = slotParams || {};
+
 		var params = [
 				'output=vast',
 				'env=vp',
 				'gdfp_req=1',
 				'impl=s',
 				'unviewed_position_start=1',
-				'iu=' + (src && slotName ?  adUnitBuilder.build(slotName, src) : defaultAdUnit),
+				'iu=' + adUnitBuilder.build(slotParams.pos, slotParams.src),
 				'sz=' + getSize(aspectRatio),
 				'url=' + loc.href,
 				'correlator=' + correlator,
-				'cust_params=' + getCustomParameters(slotName, src)
+				'cust_params=' + getCustomParameters(slotParams)
 			],
 			url = baseUrl + params.join('&');
 
@@ -67,4 +71,13 @@ define('ext.wikia.adEngine.video.vastBuilder', [
 	return {
 		build: build
 	};
+});
+
+// TODO: ADEN-4128 - remove me
+// ext.wikia.adEngine.video.vastBuilder is used in Mercury
+define('ext.wikia.adEngine.video.vastBuilder', [
+	'ext.wikia.adEngine.video.vastUrlBuilder'
+], function (vastUrlBuilder) {
+	'use strict';
+	return vastUrlBuilder;
 });
