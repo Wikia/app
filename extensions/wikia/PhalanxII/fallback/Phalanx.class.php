@@ -281,7 +281,7 @@ class PhalanxFallback {
 			return;
 		}
 
-		$username = \UtfNormal::toNFC( $wgUser->getName() );
+		$username = $wgUser->getName();
 		if ( class_exists('WScribeClient') ) {
 			try {
 				$fields = array(

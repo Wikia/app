@@ -48,6 +48,7 @@ class PhalanxStatsPager extends PhalanxPager {
 		// $row->ps_blocker_hit can be null or zero
 		$type = implode( ", ",
 			Phalanx::getTypeNames( empty( $row->ps_blocker_hit ) ? $row->ps_blocker_type : $row->ps_blocker_hit ) );
+
 		$username = $row->ps_blocked_user;
 		$timestamp = $this->getLanguage()->timeanddate( $row->ps_timestamp );
 		$oWiki = WikiFactory::getWikiByID( $row->ps_wiki_id );
@@ -55,18 +56,23 @@ class PhalanxStatsPager extends PhalanxPager {
 		$url = ( empty( $url ) && isset( $oWiki ) ) ? $oWiki->city_url : $url;
 
 		// SUS-184: Render usernames containing spaces correctly
-		$encUserName = str_replace(' ', '_', $username );
+		$encUserName = $this->replaceSpaces( $username );
 
-		$specialContributionsURL = GlobalTitle::newFromText( 'Contributions', NS_SPECIAL, $row->ps_wiki_id )->getFullURL();
+		$specialContributionsURL =
+			GlobalTitle::newFromText( 'Contributions', NS_SPECIAL, $row->ps_wiki_id )->getFullURL();
 
 		if ( !empty( $specialContributionsURL ) ) {
-			$username = '[' . $specialContributionsURL . '/' . $encUserName . ' ' . $username . ']';
+			$specialContributionsURL = "[$specialContributionsURL/$encUserName $encUserName]";
 		}
 
 		$html  = Html::openElement( 'li' );
-		$html .= $this->msg( 'phalanx-stats-row', $type, $username, $url, $timestamp )->parse();
+		$html .= $this->msg( 'phalanx-stats-row', $type, $specialContributionsURL, $url, $timestamp )->parse();
 		$html .= Html::closeElement( 'li' );
 
 		return $html;
+	}
+
+	private function replaceSpaces( $text ) {
+		return str_replace( ' ', '_', $text );
 	}
 }
