@@ -82,12 +82,20 @@ class SpecialListGroupRights extends SpecialPage {
 				$msg->text() :
 				MWNamespace::getCanonicalName( NS_PROJECT ) . ':' . $groupname;
 
-			if( $group == '*' ) {
+			// Wikia change - SUS-942: Don't link to nonexistent group pages
+			$groupPageTitle = Title::newFromText( $grouppageLocalized );
+			if ( $group === '*' ||
+				(
+					!$groupPageTitle instanceof GlobalTitle &&
+					!$groupPageTitle->inNamespace( NS_HELP ) &&
+					!$groupPageTitle->exists()
+				)
+			) {
 				// Do not make a link for the generic * group
 				$grouppage = htmlspecialchars( $groupnameLocalized );
 			} else {
 				$grouppage = Linker::link(
-					Title::newFromText( $grouppageLocalized ),
+					$groupPageTitle,
 					htmlspecialchars( $groupnameLocalized )
 				);
 			}
