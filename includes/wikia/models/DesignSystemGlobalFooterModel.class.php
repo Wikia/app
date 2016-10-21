@@ -31,7 +31,7 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 				// 'image' is deprecated, use 'img' instead
 				'image' => 'wds-company-logo-fandom-powered-by-wikia-two-lines',
 				'img' => [
-					'type' => 'image-local',
+					'type' => 'wds-svg',
 					'name' => 'wds-company-logo-fandom-powered-by-wikia-two-lines',
 				],
 				'href' => $this->getHref( 'fandom-logo' ),
@@ -172,7 +172,7 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 						// 'image' is deprecated, use 'img' instead
 						'image' => 'wds-company-store-appstore',
 						'img' => [
-							'type' => 'image-local',
+							'type' => 'wds-svg',
 							'name' => 'wds-company-store-appstore',
 						],
 						'title' => [
@@ -187,7 +187,7 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 						// 'image' is deprecated, use 'img' instead
 						'image' => 'wds-company-store-googleplay',
 						'img' => [
-							'type' => 'image-local',
+							'type' => 'wds-svg',
 							'name' => 'wds-company-store-googleplay',
 						],
 						'title' => [
@@ -404,7 +404,7 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 				// 'image' is deprecated, use 'img' instead
 				'image' => 'wds-icons-facebook',
 				'img' => [
-					'type' => 'image-local',
+					'type' => 'wds-svg',
 					'name' => 'wds-icons-facebook',
 				],
 				'title' => [
@@ -422,7 +422,7 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 				// 'image' is deprecated, use 'img' instead
 				'image' => 'wds-icons-twitter',
 				'img' => [
-					'type' => 'image-local',
+					'type' => 'wds-svg',
 					'name' => 'wds-icons-twitter',
 				],
 				'title' => [
@@ -440,7 +440,7 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 				// 'image' is deprecated, use 'img' instead
 				'image' => 'wds-icons-reddit',
 				'img' => [
-					'type' => 'image-local',
+					'type' => 'wds-svg',
 					'name' => 'wds-icons-reddit',
 				],
 				'title' => [
@@ -458,7 +458,7 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 				// 'image' is deprecated, use 'img' instead
 				'image' => 'wds-icons-youtube',
 				'img' => [
-					'type' => 'image-local',
+					'type' => 'wds-svg',
 					'name' => 'wds-icons-youtube',
 				],
 				'title' => [
@@ -476,7 +476,7 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 				// 'image' is deprecated, use 'img' instead
 				'image' => 'wds-icons-instagram',
 				'img' => [
-					'type' => 'image-local',
+					'type' => 'wds-svg',
 					'name' => 'wds-icons-instagram',
 				],
 				'title' => [

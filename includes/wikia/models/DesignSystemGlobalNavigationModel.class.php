@@ -35,7 +35,7 @@ class DesignSystemGlobalNavigationModel extends WikiaModel {
 					// 'image' is deprecated
 					'image' => 'wds-company-logo-fandom-powered-by-wikia',
 					'img' => [
-						'type' => 'image-local',
+						'type' => 'wds-svg',
 						'name' => 'wds-company-logo-fandom-powered-by-wikia',
 					],
 					'title' => [
@@ -187,7 +187,7 @@ class DesignSystemGlobalNavigationModel extends WikiaModel {
 				// 'image' is deprecated, use 'img' instead
 				'image' => 'wds-icons-user',
 				'img' => [
-					'type' => 'image-local',
+					'type' => 'wds-svg',
 					'name' => 'wds-icons-user',
 				],
 				'title' => [
@@ -318,7 +318,7 @@ class DesignSystemGlobalNavigationModel extends WikiaModel {
 				// 'image' is deprecated, use 'img' instead
 				'image' => 'wds-icons-bell',
 				'img' => [
-					'type' => 'image-local',
+					'type' => 'wds-svg',
 					'name' => 'wds-icons-bell',
 				],
 				'title' => [

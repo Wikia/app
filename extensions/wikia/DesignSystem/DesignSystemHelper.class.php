@@ -61,7 +61,7 @@ class DesignSystemHelper {
 	}
 
 	public static function getApiImage( $model, $classNames = '', $alt = '' ) {
-		if ( $model['type'] === 'image-local' ) {
+		if ( $model['type'] === 'wds-svg' ) {
 			return static::getSvg( $model['name'], $classNames, $alt );
 		} elseif ($model['type'] === 'image-external') {
 			return Html::element( 'img', [
