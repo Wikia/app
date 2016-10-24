@@ -20,13 +20,15 @@ class PhalanxContentBlock extends WikiaObject {
 	 * @param $summary
 	 * @return bool
 	 */
-	static public function editFilter( $editPage, $text, $section, &$hookError, $summary ) {
+	static public function editFilter( EditPage $editPage, $text, $section, &$hookError, $summary ) {
 		wfProfileIn( __METHOD__ );
 		list( $contentIsBlocked, $errorMessage ) = self::checkContentFromEditPage( $editPage );
 
 		if ( $contentIsBlocked ) {
 			// we found block
 			$editPage->spamPageWithContent( $errorMessage );
+
+			Wikia\Logger\WikiaLogger::instance()->warning( __METHOD__ . ' - block applied SUS-1188', [ 'title' => $editPage->getTitle()->getPrefixedDBkey(), 'error_message' => $errorMessage ] );
 		}
 
 		wfProfileOut( __METHOD__ );
@@ -207,7 +209,7 @@ class PhalanxContentBlock extends WikiaObject {
 	 *
 	 * hook
 	 */
-	static public function checkContent( $textbox, &$msg ) {
+	static public function checkContent( $textbox, &$msg, $displayBlock = false ) {
 		wfProfileIn( __METHOD__ );
 
 		$title = RequestContext::getMain()->getTitle();
@@ -215,9 +217,9 @@ class PhalanxContentBlock extends WikiaObject {
 		$phalanxModel = new PhalanxContentModel( $title );
 
 		$ret = PhalanxContentBlock::editContent( $textbox, $msg, $phalanxModel );
-		
-		if ( $ret === false ) {
-			$msg = $phalanxModel->textBlock();
+
+		if ( $ret === false && $displayBlock ) {
+			$phalanxModel->displayBlock();
 		}
 		
 		wfProfileOut( __METHOD__ );

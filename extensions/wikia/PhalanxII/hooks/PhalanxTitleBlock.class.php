@@ -19,7 +19,7 @@ class PhalanxTitleBlock extends WikiaObject {
 	 * @param EditPage $editPage -- edit page instance
 	 * @static
 	 */
-	static public function editFilter( $editPage, $text, $section, &$hookError, $summary ) {
+	static public function editFilter( EditPage $editPage, $text, $section, &$hookError, $summary ) {
 		wfProfileIn( __METHOD__ );
 
 		$title = $editPage->getTitle();
@@ -36,6 +36,10 @@ class PhalanxTitleBlock extends WikiaObject {
 		 * pass to check title method
 		 */
 		$ret = PhalanxTitleBlock::checkTitle( $title );
+
+		if ( $ret === false ) {
+			Wikia\Logger\WikiaLogger::instance()->warning( __METHOD__ . ' - block applied SUS-1188', [ 'title' => $title->getPrefixedDBkey() ] );
+		}
 
 		wfProfileOut( __METHOD__ );
 		return $ret;
@@ -63,6 +67,22 @@ class PhalanxTitleBlock extends WikiaObject {
 		
 		wfProfileOut( __METHOD__ );
 		return $ret;
+	}
+
+	static public function checkFileTitle( $destName, $tempPath, &$error ) {
+		wfProfileIn( __METHOD__ );
+
+		$title = Title::newFromText( $destName );
+		$phalanxModel = new PhalanxContentModel( $title );
+		$isTitleSafe = $phalanxModel->match_title();
+
+		if ( !$isTitleSafe ) {
+			$phalanxModel->displayBlock();
+			$error = [ 'validator-fatal-error', $phalanxModel->contentBlock() ];
+		}
+
+		wfProfileOut( __METHOD__ );
+		return $isTitleSafe;
 	}
 	
 	/**
