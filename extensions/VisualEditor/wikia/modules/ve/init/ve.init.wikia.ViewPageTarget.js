@@ -361,18 +361,6 @@ ve.init.wikia.ViewPageTarget.prototype.onSaveError = function ( doc, saveData, j
 /**
  * @inheritdoc
  */
-ve.init.wikia.ViewPageTarget.prototype.maybeShowDialogs = function () {
-	// Parent method
-	ve.init.wikia.ViewPageTarget.super.prototype.maybeShowDialogs.call( this );
-	if ( parseInt( mw.config.get( 'showVisualEditorTransitionDialog' ) ) === 1 ) {
-		this.surface.getDialogs().getWindow( 'wikiaPreference' ).open( null, null, this.surface );
-	}
-	//this.surface.getDialogs().getWindow( 'wikiaSingleMedia' ).open( null, null, this.surface );
-};
-
-/**
- * @inheritdoc
- */
 ve.init.wikia.ViewPageTarget.prototype.onSaveErrorCaptcha = function () {
 	var $captchaDiv = $( '<div>' ).addClass( 've-ui-mwSaveDialog-captcha' );
 
