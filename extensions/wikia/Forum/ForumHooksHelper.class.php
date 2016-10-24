@@ -522,10 +522,8 @@ class ForumHooksHelper {
 	 * @return bool always true to continue hook processing
 	 */
 	static public function onArticleDeleteComplete( Page $page, User $user, string $reason, int $id ): bool {
-		global $wgCityId;
-
 		if ( $page->getTitle()->inNamespace( NS_WIKIA_FORUM_BOARD_THREAD ) ) {
-			$wallHistory = new WallHistory( $wgCityId );
+			$wallHistory = new WallHistory();
 			WikiaDataAccess::cachePurge( $wallHistory->getLastPostsMemcKey() );
 		}
 
