@@ -5,6 +5,7 @@ define('ext.wikia.aRecoveryEngine.recovery.helper', [
 	'wikia.instantGlobals',
 	'wikia.lazyqueue',
 	'wikia.log',
+	'ext.wikia.adEngine.taboolaHelper',
 	'wikia.window'
 ], function (
 	adContext,
@@ -12,6 +13,7 @@ define('ext.wikia.aRecoveryEngine.recovery.helper', [
 	instantGlobals,
 	lazyQueue,
 	log,
+	taboolaHelper,
 	win
 ) {
 	'use strict';
@@ -28,6 +30,13 @@ define('ext.wikia.aRecoveryEngine.recovery.helper', [
 	function initEventQueues() {
 		doc.addEventListener('sp.not_blocking', onNotBlockingEventsQueue.start);
 		doc.addEventListener('sp.blocking', onBlockingEventsQueue.start);
+
+		// load taboola lib
+		if (context.opts.loadTaboolaLibrary) {
+			addOnBlockingCallback(function() {
+				taboolaHelper.loadTaboola();
+			});			
+		}
 	}
 
 	function addOnBlockingCallback(callback) {

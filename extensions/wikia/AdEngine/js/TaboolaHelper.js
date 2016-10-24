@@ -35,11 +35,11 @@ define('ext.wikia.adEngine.taboolaHelper', [
 	}
 
 	function initializeWidget ( widget ) {
-		win._taboola.push( widget );
-	}
+		if (!libraryLoaded) {
+			loadTaboola();
+		}
 
-	if (!libraryLoaded) {
-		loadTaboola();
+		win._taboola.push( widget );
 	}
 
 	return {
