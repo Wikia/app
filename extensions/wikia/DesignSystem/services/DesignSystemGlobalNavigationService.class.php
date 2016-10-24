@@ -33,7 +33,7 @@ class DesignSystemGlobalNavigationService extends WikiaService {
 		$this->setVal( 'model', $this->getVal( 'model' ) );
 	}
 
-	public function rightSlot() {
+	public function partnerSlot() {
 		$this->setVal( 'model', $this->getVal( 'model' ) );
 	}
 

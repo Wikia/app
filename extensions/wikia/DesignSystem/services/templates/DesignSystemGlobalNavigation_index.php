@@ -46,12 +46,12 @@
 				</a>
 			</div>
 		</div>
-		<?php if ( isset( $model['right_slot'] ) ): ?>
+		<?php if ( isset( $model['partner_slot'] ) ): ?>
 			<?= $app->renderView(
 				'DesignSystemGlobalNavigationService',
-				'rightSlot',
+				'partnerSlot',
 				[
-					'model' => $model['right_slot'],
+					'model' => $model['partner_slot'],
 				]
 			); ?>
 		<?php endif ?>

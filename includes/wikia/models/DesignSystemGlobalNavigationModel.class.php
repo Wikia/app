@@ -112,9 +112,9 @@ class DesignSystemGlobalNavigationModel extends WikiaModel {
 			$data[ 'anon' ] = $this->getAnonUserData();
 		}
 
-		$rightSlot = $this->getRightSlot();
-		if ( !empty( $rightSlot ) ) {
-			$data[ 'right_slot' ] = $rightSlot;
+		$partnerSlot = $this->getPartnerSlot();
+		if ( !empty( $partnerSlot ) ) {
+			$data[ 'partner_slot' ] = $partnerSlot;
 		}
 
 		return $data;
@@ -403,7 +403,7 @@ class DesignSystemGlobalNavigationModel extends WikiaModel {
 		];
 	}
 
-	private function getRightSlot() {
+	private function getPartnerSlot() {
 		if ( $this->lang === 'de' ) {
 			return [
 				'type' => 'link-image',
