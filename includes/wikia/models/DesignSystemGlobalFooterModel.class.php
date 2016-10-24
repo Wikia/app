@@ -28,9 +28,9 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 		$data = [
 			'header' => [
 				'type' => 'link-image',
-				// 'image' is deprecated, use 'img' instead
+				// 'image' is deprecated, use 'image-data' instead
 				'image' => 'wds-company-logo-fandom-powered-by-wikia-two-lines',
-				'img' => [
+				'image-data' => [
 					'type' => 'wds-svg',
 					'name' => 'wds-company-logo-fandom-powered-by-wikia-two-lines',
 				],
@@ -169,9 +169,9 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 				'links' => [
 					[
 						'type' => 'link-image',
-						// 'image' is deprecated, use 'img' instead
+						// 'image' is deprecated, use 'image-data' instead
 						'image' => 'wds-company-store-appstore',
-						'img' => [
+						'image-data' => [
 							'type' => 'wds-svg',
 							'name' => 'wds-company-store-appstore',
 						],
@@ -184,9 +184,9 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 					],
 					[
 						'type' => 'link-image',
-						// 'image' is deprecated, use 'img' instead
+						// 'image' is deprecated, use 'image-data' instead
 						'image' => 'wds-company-store-googleplay',
-						'img' => [
+						'image-data' => [
 							'type' => 'wds-svg',
 							'name' => 'wds-company-store-googleplay',
 						],
@@ -401,9 +401,9 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 		if ( $this->getHref( 'social-facebook' ) ) {
 			$data['links'][] = [
 				'type' => 'link-image',
-				// 'image' is deprecated, use 'img' instead
+				// 'image' is deprecated, use 'image-data' instead
 				'image' => 'wds-icons-facebook',
-				'img' => [
+				'image-data' => [
 					'type' => 'wds-svg',
 					'name' => 'wds-icons-facebook',
 				],
@@ -419,9 +419,9 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 		if ( $this->getHref( 'social-twitter' ) ) {
 			$data['links'][] = [
 				'type' => 'link-image',
-				// 'image' is deprecated, use 'img' instead
+				// 'image' is deprecated, use 'image-data' instead
 				'image' => 'wds-icons-twitter',
-				'img' => [
+				'image-data' => [
 					'type' => 'wds-svg',
 					'name' => 'wds-icons-twitter',
 				],
@@ -437,9 +437,9 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 		if ( $this->getHref( 'social-reddit' ) ) {
 			$data['links'][] = [
 				'type' => 'link-image',
-				// 'image' is deprecated, use 'img' instead
+				// 'image' is deprecated, use 'image-data' instead
 				'image' => 'wds-icons-reddit',
-				'img' => [
+				'image-data' => [
 					'type' => 'wds-svg',
 					'name' => 'wds-icons-reddit',
 				],
@@ -455,9 +455,9 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 		if ( $this->getHref( 'social-youtube' ) ) {
 			$data['links'][] = [
 				'type' => 'link-image',
-				// 'image' is deprecated, use 'img' instead
+				// 'image' is deprecated, use 'image-data' instead
 				'image' => 'wds-icons-youtube',
-				'img' => [
+				'image-data' => [
 					'type' => 'wds-svg',
 					'name' => 'wds-icons-youtube',
 				],
@@ -473,9 +473,9 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 		if ( $this->getHref( 'social-instagram' ) ) {
 			$data['links'][] = [
 				'type' => 'link-image',
-				// 'image' is deprecated, use 'img' instead
+				// 'image' is deprecated, use 'image-data' instead
 				'image' => 'wds-icons-instagram',
-				'img' => [
+				'image-data' => [
 					'type' => 'wds-svg',
 					'name' => 'wds-icons-instagram',
 				],

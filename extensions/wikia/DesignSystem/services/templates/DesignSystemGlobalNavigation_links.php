@@ -8,7 +8,7 @@
 			<?php if ( $model['header']['type'] === 'line-text' ): ?>
 				<span><?= DesignSystemHelper::renderText( $model['header']['title'] ) ?></span>
 			<?php elseif ( $model['header']['type'] === 'avatar' ): ?>
-				<?= Html::element( 'img', [
+				<?= Html::element( 'image-data', [
 					'class' => 'wds-avatar wds-is-circle',
 					'src' => $model['header']['url'],
 					'alt' => $model['header']['username']['value']

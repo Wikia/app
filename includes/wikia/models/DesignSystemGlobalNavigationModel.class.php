@@ -32,9 +32,9 @@ class DesignSystemGlobalNavigationModel extends WikiaModel {
 				'header' => [
 					'type' => 'link-image',
 					'href' => $this->getHref( 'fandom-logo' ),
-					// 'image' is deprecated
+					// 'image' is deprecated use 'image-data' instead
 					'image' => 'wds-company-logo-fandom-powered-by-wikia',
-					'img' => [
+					'image-data' => [
 						'type' => 'wds-svg',
 						'name' => 'wds-company-logo-fandom-powered-by-wikia',
 					],
@@ -184,9 +184,9 @@ class DesignSystemGlobalNavigationModel extends WikiaModel {
 		return [
 			'header' => [
 				'type' => 'line-image',
-				// 'image' is deprecated, use 'img' instead
+				// 'image' is deprecated, use 'image-data' instead
 				'image' => 'wds-icons-user',
-				'img' => [
+				'image-data' => [
 					'type' => 'wds-svg',
 					'name' => 'wds-icons-user',
 				],
@@ -315,9 +315,9 @@ class DesignSystemGlobalNavigationModel extends WikiaModel {
 		return [
 			'header' => [
 				'type' => 'line-image',
-				// 'image' is deprecated, use 'img' instead
+				// 'image' is deprecated, use 'image-data' instead
 				'image' => 'wds-icons-bell',
-				'img' => [
+				'image-data' => [
 					'type' => 'wds-svg',
 					'name' => 'wds-icons-bell',
 				],
@@ -408,7 +408,7 @@ class DesignSystemGlobalNavigationModel extends WikiaModel {
 			return [
 				'type' => 'link-image',
 				'href' => 'http://www.entertainweb.de/',
-				'img' => [
+				'image-data' => [
 					'type' => 'image-external',
 					'url' => 'https://services.wikia.com/static-assets/image/24fc42b9-5429-49f3-8515-130626fb4751',
 				],

@@ -5,7 +5,7 @@
 			   data-tracking-label="<?= Sanitizer::encodeAttribute( $model['header']['tracking_label'] ) ?>"
 			   title="<?= DesignSystemHelper::renderText( $model['header']['title'] ); ?>">
 				<?= DesignSystemHelper::getApiImage(
-					$model['header']['img'],
+					$model['header']['image-data'],
 					'wds-global-footer__header-logo',
 					DesignSystemHelper::renderText( $model['header']['title'] )
 				) ?>

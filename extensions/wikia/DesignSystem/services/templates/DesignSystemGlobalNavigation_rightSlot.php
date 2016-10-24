@@ -3,7 +3,7 @@
 		data-tracking-label="<?= Sanitizer::encodeAttribute( $model['tracking_label'])?>"
 		class="wds-global-navigation__right-slot-link">
 		<?= DesignSystemHelper::getApiImage(
-			$model['img'],
+			$model['image-data'],
 			'wds-global-navigation__right-slot-image',
 			DesignSystemHelper::renderText( $model['title'] )
 		) ?>
