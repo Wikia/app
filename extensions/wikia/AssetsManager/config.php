@@ -108,7 +108,6 @@ $config['adengine2_desktop_js'] = [
 		'//extensions/wikia/AdEngine/js/utils/math.js',
 		'//extensions/wikia/AdEngine/js/video/playwire.js',
 		'//extensions/wikia/AdEngine/js/video/vastBuilder.js',
-		'//extensions/wikia/AdEngine/js/TaboolaHelper.js',
 		'//extensions/wikia/ARecoveryEngine/js/helper.js',
 		'//extensions/wikia/ARecoveryEngine/js/slotFinder.js',
 		'//extensions/wikia/ARecoveryEngine/js/recovery/tweaker.js',
@@ -118,8 +117,10 @@ $config['adengine2_desktop_js'] = [
 		// was: late queue
 		'//extensions/wikia/AdEngine/js/OoyalaTracking.js',
 		'//extensions/wikia/AdEngine/js/WikiaDartVideoHelper.js',
+		'//extensions/wikia/AdEngine/js/TaboolaHelper.js',
 		'//extensions/wikia/AdEngine/js/utils/scriptLoader.js',
 		'//extensions/wikia/AdEngine/js/provider/evolve2.js',
+
 		'//extensions/wikia/AdEngine/js/run/desktop.run.js',
 	],
 ];
@@ -219,7 +220,6 @@ $config['adengine2_tracking_js'] = [
 		'//extensions/wikia/AdEngine/js/lookup/lookupFactory.js',
 		'//extensions/wikia/AdEngine/js/slot/adSlot.js',
 		'//extensions/wikia/AdEngine/js/utils/AdLogicZoneParams.js',
-		'//extensions/wikia/AdEngine/js/TaboolaHelper.js',
 		'//extensions/wikia/ARecoveryEngine/js/helper.js',
 		'//resources/wikia/modules/krux.js'
 	],
@@ -854,7 +854,6 @@ $config['mobile_base_ads_js'] = [
 		'//extensions/wikia/AdEngine/js/video/vastBuilder.js',
 
 		// Recovery
-		'//extensions/wikia/AdEngine/js/TaboolaHelper.js',
 		'//extensions/wikia/ARecoveryEngine/js/helper.js',
 
 		// Video ads
@@ -959,7 +958,6 @@ $config['interactivemaps_ads_js'] = [
 		'//extensions/wikia/AdEngine/InteractiveMaps/ads.js',
 
 		// RecoveryEngine
-		'//extensions/wikia/AdEngine/js/TaboolaHelper.js',
 		'//extensions/wikia/ARecoveryEngine/js/helper.js',
 	],
 ];

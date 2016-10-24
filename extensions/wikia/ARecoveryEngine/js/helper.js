@@ -1,7 +1,6 @@
 /*global define*/
 define('ext.wikia.aRecoveryEngine.recovery.helper', [
 	'ext.wikia.adEngine.adContext',
-	'ext.wikia.adEngine.taboolaHelper',
 	'wikia.document',
 	'wikia.instantGlobals',
 	'wikia.lazyqueue',
@@ -9,7 +8,6 @@ define('ext.wikia.aRecoveryEngine.recovery.helper', [
 	'wikia.window'
 ], function (
 	adContext,
-	taboolaHelper,
 	doc,
 	instantGlobals,
 	lazyQueue,
@@ -30,13 +28,6 @@ define('ext.wikia.aRecoveryEngine.recovery.helper', [
 	function initEventQueues() {
 		doc.addEventListener('sp.not_blocking', onNotBlockingEventsQueue.start);
 		doc.addEventListener('sp.blocking', onBlockingEventsQueue.start);
-
-		// load taboola lib
-		if (context.opts.loadTaboolaLibrary) {
-			addOnBlockingCallback(function() {
-				taboolaHelper.loadTaboola();
-			});
-		}
 	}
 
 	function addOnBlockingCallback(callback) {
