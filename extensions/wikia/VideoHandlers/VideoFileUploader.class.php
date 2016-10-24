@@ -182,6 +182,11 @@ class VideoFileUploader {
 
 		wfRunHooks('AfterVideoFileUploaderUpload', array($file, $result));
 
+		// SUS-1195: make sure the file cache is up to date shortly after the video upload
+		if ( $result->isOK() ) {
+			$file->saveToCache();
+		}
+
 		return $result;
 	}
 
