@@ -1,5 +1,5 @@
-/*global describe, it, expect, modules, beforeEach, spyOn*/
-describe('ext.wikia.adEngine.video.vastBuilder', function () {
+/*global describe, it, expect, modules*/
+describe('ext.wikia.adEngine.video.vastUrlBuilder', function () {
 	'use strict';
 
 	function noop () {}
@@ -30,13 +30,15 @@ describe('ext.wikia.adEngine.video.vastBuilder', function () {
 				href: 'http://foo.url'
 			},
 			log: noop,
-			src: 'src',
-			slotName: 'SLOT_NAME'
+			slotParams: {
+				src: 'src',
+				pos: 'SLOT_NAME'
+			}
 
 	};
 
 	function getModule() {
-		return modules['ext.wikia.adEngine.video.vastBuilder'](
+		return modules['ext.wikia.adEngine.video.vastUrlBuilder'](
 			mocks.adContext,
 			mocks.page,
 			mocks.adUnitBuilder,
@@ -62,61 +64,59 @@ describe('ext.wikia.adEngine.video.vastBuilder', function () {
 	});
 
 	it('Build VAST URL with ad size horizontal', function () {
-		var vastUrl = getModule().build(mocks.src, mocks.slotName, 1.5);
+		var vastUrl = getModule().build(1.5, mocks.slotParams);
 
 		expect(vastUrl).toMatch(/&sz=640x480&/g);
 	});
 
 	it('Build VAST URL with ad size vertical', function () {
-		var vastUrl = getModule().build(mocks.src, mocks.slotName, 0.5);
+		var vastUrl = getModule().build(0.5, mocks.slotParams);
 
 		expect(vastUrl).toMatch(/&sz=320x480&/g);
 	});
 
 	it('Build VAST URL with ad size squared (horizontal)', function () {
-		var vastUrl = getModule().build(mocks.src, mocks.slotName, 1);
+		var vastUrl = getModule().build(1, mocks.slotParams);
 
 		expect(vastUrl).toMatch(/&sz=640x480&/);
 	});
 
 	it('Build VAST URL with no ad size parameters', function () {
-		var vastUrl = getModule().build(mocks.src, mocks.slotName, NaN);
+		var vastUrl = getModule().build(NaN, mocks.slotParams);
 
 		expect(vastUrl).toMatch(/&sz=640x480&/);
 	});
 
-	it('Build VAST URL without needed parameters', function () {
-		var vastUrl = getModule().build();
-
-		expect(vastUrl).toMatch(/&iu=\/5441\/VIDEO_ATG&/);
-	});
-
 	it('Build VAST URL with referrer', function () {
-		var vastUrl = getModule().build('', '', 1);
+		var vastUrl = getModule().build(1, mocks.slotParams);
 
 		expect(vastUrl).toMatch(/&url=http:\/\/foo\.url/g);
 	});
 
 	it('Build VAST URL with numeric correlator', function () {
-		var vastUrl = getModule().build('', '', 1);
+		var vastUrl = getModule().build(1, mocks.slotParams);
 
 		expect(vastUrl).toMatch(/&correlator=\d+&/g);
 	});
 
 	it('Build VAST URL with page level params', function () {
-		var vastUrl = getModule().build('', '', 1);
+		var vastUrl = getModule().build(1, {});
 
 		expect(vastUrl).toMatch(/&cust_params=uno%3Dfoo%26due%3D15%26tre%3Dbar%2Czero%26s0%3Dlife%26s1%3D_project43%26s2%3Darticle$/g);
 	});
 
 	it('Build VAST URL with page level params and slot level params', function () {
-		var vastUrl = getModule().build('test-source', 'TEST_SLOT', 1);
+		var vastUrl = getModule().build(1, {
+			passback: 'playwire',
+			pos: 'TEST_SLOT',
+			src: 'remnant'
+		});
 
-		expect(vastUrl).toMatch(/&cust_params=uno%3Dfoo%26due%3D15%26tre%3Dbar%2Czero%26s0%3Dlife%26s1%3D_project43%26s2%3Darticle%26pos%3DTEST_SLOT%26src%3Dtest-source$/);
+		expect(vastUrl).toMatch(/&cust_params=uno%3Dfoo%26due%3D15%26tre%3Dbar%2Czero%26s0%3Dlife%26s1%3D_project43%26s2%3Darticle%26passback%3Dplaywire%26pos%3DTEST_SLOT%26src%3Dremnant$/);
 	});
 
 	it('Build VAST URL with ad unit id', function () {
-		var vastUrl = getModule().build('a', 'b', 1);
+		var vastUrl = getModule().build(1, mocks.slotParams);
 
 		expect(vastUrl).toMatch('&iu=my\/ad\/unit&');
 	});
