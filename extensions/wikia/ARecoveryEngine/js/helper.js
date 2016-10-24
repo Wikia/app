@@ -1,19 +1,19 @@
 /*global define*/
 define('ext.wikia.aRecoveryEngine.recovery.helper', [
 	'ext.wikia.adEngine.adContext',
+	'ext.wikia.adEngine.taboolaHelper',
 	'wikia.document',
 	'wikia.instantGlobals',
 	'wikia.lazyqueue',
 	'wikia.log',
-	'ext.wikia.adEngine.taboolaHelper',
 	'wikia.window'
 ], function (
 	adContext,
+	taboolaHelper,
 	doc,
 	instantGlobals,
 	lazyQueue,
 	log,
-	taboolaHelper,
 	win
 ) {
 	'use strict';
@@ -35,7 +35,7 @@ define('ext.wikia.aRecoveryEngine.recovery.helper', [
 		if (context.opts.loadTaboolaLibrary) {
 			addOnBlockingCallback(function() {
 				taboolaHelper.loadTaboola();
-			});			
+			});
 		}
 	}
 
