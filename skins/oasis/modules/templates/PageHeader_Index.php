@@ -25,9 +25,11 @@ if ( $runNjord ) {
 				<? endif; ?>
 			</div>
 			<div class="header-column header-tally">
-				<div id="PageShareContainer" class="page-share-container">
-					<?= F::app()->renderView( 'PageShare', 'Index' ); ?>
-				</div>
+				<?php if ( !empty( $pageExists ) ) { ?>
+					<div id="PageShareContainer" class="page-share-container">
+						<?= F::app()->renderView( 'PageShare', 'Index' ); ?>
+					</div>
+				<?php } ?>
 				<? if ( !is_null( $tallyMsg ) ): ?>
 					<div class="tally"><?= $tallyMsg ?></div>
 				<? endif; ?>
