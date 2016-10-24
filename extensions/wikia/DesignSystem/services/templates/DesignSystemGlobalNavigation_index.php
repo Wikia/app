@@ -46,7 +46,7 @@
 				</a>
 			</div>
 		</div>
-		<?php if (isset( $model['right_slot'] )): ?>
+		<?php if ( isset( $model['right_slot'] ) ): ?>
 			<?= $app->renderView(
 				'DesignSystemGlobalNavigationService',
 				'rightSlot',
