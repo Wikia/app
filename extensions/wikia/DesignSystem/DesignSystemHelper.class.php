@@ -64,11 +64,13 @@ class DesignSystemHelper {
 		if ( $model['type'] === 'wds-svg' ) {
 			return static::renderSvg( $model['name'], $classNames, $alt );
 		} elseif ($model['type'] === 'image-external') {
-			return Html::element( 'img', [
-				'src' => $model['url'],
-				'class' => $classNames,
-				'alt' => $alt
-			] );
+			$imgXml = new SimpleXMLElement( '<img />' );
+			$imgXml->addAttribute( 'src', $model['url'] );
+			$imgXml->addAttribute( 'class', $classNames );
+			$imgXml->addAttribute( 'alt', $alt );
+
+			$dom = dom_import_simplexml( $imgXml );
+			return $dom->ownerDocument->saveXML( $dom->ownerDocument->documentElement );
 		}
 
 		WikiaLogger::instance()->error( __METHOD__ . ': unhandled image type:' . $model['type'] );
