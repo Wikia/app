@@ -914,6 +914,7 @@ $config['mercury_ads_js'] = [
 		'//extensions/wikia/AdEngine/js/template/interstitial.js',
 		'//extensions/wikia/AdEngine/js/utils/domCalculator.js',
 		'//extensions/wikia/AdEngine/js/utils/scriptLoader.js',
+		'//extensions/wikia/AdEngine/js/video/uapVideoAd.js',
 		'//resources/wikia/modules/abTest.js',
 		'//resources/wikia/modules/krux.js',
 		'//extensions/wikia/AdEngine/js/run/mercury.run.js',

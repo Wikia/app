@@ -4,6 +4,7 @@ define('ext.wikia.adEngine.template.bfaaMobile', [
 	'ext.wikia.adEngine.context.uapContext',
 	'ext.wikia.adEngine.provider.btfBlocker',
 	'ext.wikia.adEngine.slotTweaker',
+	'ext.wikia.adEngine.video.uapVideoAd',
 	'wikia.document',
 	'wikia.log',
 	'wikia.window',
@@ -13,6 +14,7 @@ define('ext.wikia.adEngine.template.bfaaMobile', [
 	uapContext,
 	btfBlocker,
 	slotTweaker,
+	uapVideoAd,
 	doc,
 	log,
 	win,
@@ -32,13 +34,10 @@ define('ext.wikia.adEngine.template.bfaaMobile', [
 	function runOnReady(iframe, params) {
 		var aspectRatio = params.aspectRatio,
 			adsModule = win.Mercury.Modules.Ads.getInstance(),
-			height,
-			viewPortWidth,
 			adjustPadding = function () {
-				viewPortWidth = Math.max(doc.documentElement.clientWidth, win.innerWidth || 0);
-				height = aspectRatio ?
-				viewPortWidth / aspectRatio :
-					iframe.contentWindow.document.body.offsetHeight;
+				var viewPortWidth = Math.max(doc.documentElement.clientWidth, win.innerWidth || 0),
+					height = aspectRatio ?
+						viewPortWidth / aspectRatio : iframe.contentWindow.document.body.offsetHeight;
 				page.style.paddingTop = height + 'px';
 				adsModule.setSiteHeadOffset(height);
 			},
@@ -54,6 +53,25 @@ define('ext.wikia.adEngine.template.bfaaMobile', [
 				page.style.paddingTop = '';
 				adsModule.setSiteHeadOffset(0);
 				win.removeEventListener('resize', onResize);
+			});
+		}
+
+		if (params.videoUrl && params.videoTriggerElement) {
+			slotTweaker.onReady(params.slotName, function() {
+				var divs = doc.querySelectorAll('#' + params.slotName + ' > div'),
+					imageContainer = divs[divs.length - 1],
+					video = uapVideoAd.init(doc.getElementById(params.slotName), imageContainer, params.videoUrl);
+
+				params.videoTriggerElement.addEventListener('click', function () {
+					uapVideoAd.playAndToggle(video, imageContainer);
+					aspectRatio = video.videoWidth / video.videoHeight;
+					onResize();
+				});
+
+				video.addEventListener('ended', function () {
+					aspectRatio = params.aspectRatio;
+					onResize();
+				});
 			});
 		}
 	}
