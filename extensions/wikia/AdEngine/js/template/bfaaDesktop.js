@@ -73,7 +73,7 @@ define('ext.wikia.adEngine.template.bfaaDesktop', [
 		}
 
 		if (params.videoUrl && params.videoTriggerElement) {
-			slotTweaker.onReady(params.slotName, function(iframe) {
+			slotTweaker.onReady(params.slotName, function() {
 				var divs = doc.querySelectorAll('#' + params.slotName + ' > div'),
 					imageContainer = divs[divs.length - 1],
 					video = uapVideoAd.init(doc.getElementById(params.slotName), imageContainer, params.videoUrl);
