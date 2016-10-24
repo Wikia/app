@@ -32,7 +32,7 @@ class DesignSystemHelper {
 	 *
 	 * @return string
 	 */
-	public static function getSvg( $name, $classNames = '', $alt = '' ) {
+	public static function renderSvg( $name, $classNames = '', $alt = '' ) {
 		$xml = static::getCachedSvg( $name );
 
 		if ( $xml instanceof SimpleXMLElement ) {
@@ -60,9 +60,9 @@ class DesignSystemHelper {
 		}
 	}
 
-	public static function getApiImage( $model, $classNames = '', $alt = '' ) {
+	public static function renderApiImage( $model, $classNames = '', $alt = '' ) {
 		if ( $model['type'] === 'wds-svg' ) {
-			return static::getSvg( $model['name'], $classNames, $alt );
+			return static::renderSvg( $model['name'], $classNames, $alt );
 		} elseif ($model['type'] === 'image-external') {
 			return Html::element( 'img', [
 				'src' => $model['url'],

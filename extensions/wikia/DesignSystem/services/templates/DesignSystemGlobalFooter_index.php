@@ -4,7 +4,7 @@
 			<a href="<?= Sanitizer::encodeAttribute( $model['header']['href'] ); ?>"
 			   data-tracking-label="<?= Sanitizer::encodeAttribute( $model['header']['tracking_label'] ) ?>"
 			   title="<?= DesignSystemHelper::renderText( $model['header']['title'] ); ?>">
-				<?= DesignSystemHelper::getApiImage(
+				<?= DesignSystemHelper::renderApiImage(
 					$model['header']['image-data'],
 					'wds-global-footer__header-logo',
 					DesignSystemHelper::renderText( $model['header']['title'] )
