@@ -1220,6 +1220,13 @@ $wgNielsenApid = 'FIXME';
  */
 $wgEnableUbisoft = false;
 
+
+/**
+ * @name $wgEnableNetzAthleten
+ * Enables NetzAthleten provider
+ */
+$wgEnableNetzAthleten = true;
+
 /**
  * @name $wgEnableAmazonMatch
  * Enables AmazonMatch new integration (id=3115)
