@@ -66,8 +66,10 @@ class VideoFileUploader {
 			'wpUploadFileURL' => $urlFrom
 		);
 
+		$request = new FauxRequest( $data, true );
+
 		$upload = (new UploadFromUrl); /* @var $upload UploadFromUrl */
-		$upload->initializeFromRequest( new FauxRequest( $data, true ) );
+		$upload->initializeFromRequest( $request );
 		wfProfileOut( __METHOD__ );
 		return $upload;
 	}
