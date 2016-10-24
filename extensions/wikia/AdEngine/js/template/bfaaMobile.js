@@ -58,7 +58,8 @@ define('ext.wikia.adEngine.template.bfaaMobile', [
 
 		if (params.videoUrl && params.videoTriggerElement) {
 			slotTweaker.onReady(params.slotName, function(iframe) {
-				var imageContainer = iframe.parentNode.parentNode.parentNode,
+				var divs = doc.querySelectorAll('#' + params.slotName + ' > div'),
+					imageContainer = divs[divs.length - 1],
 					video = uapVideoAd.init(doc.getElementById(params.slotName), imageContainer, params.videoUrl);
 
 				params.videoTriggerElement.addEventListener('click', function () {
