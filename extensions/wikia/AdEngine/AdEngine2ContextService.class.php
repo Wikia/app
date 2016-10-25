@@ -37,8 +37,7 @@ class AdEngine2ContextService {
 
 			$yavliKey = AdEngine2Resource::getKey('wikia.ext.adengine.yavli');
 			$yavliUrl = ResourceLoader::makeCustomURL( $wg->Out, [$yavliKey], 'scripts' );
-
-			$context = [
+			return [
 				'opts' => $this->filterOutEmptyItems( [
 					'adsInContent' => $wg->EnableAdsInContent,
 					'delayBtf' => $wg->AdDriverDelayBelowTheFold,
@@ -48,6 +47,7 @@ class AdEngine2ContextService {
 					'showAds' => $adPageTypeService->areAdsShowableOnPage(),
 					'trackSlotState' => $wg->AdDriverTrackState,
 					'sourcePointDetectionUrl' => $sourcePointDetectionUrl,
+					'sourcePointRecovery' => $skinName === 'oasis' && ARecoveryModule::isEnabled(),
 					'yavliUrl' => $yavliUrl,
 					'pageFairDetectionUrl' => $pageFairDetectionUrl,
 					'prebidBidderUrl' => $prebidBidderUrl
@@ -84,14 +84,6 @@ class AdEngine2ContextService {
 				] ),
 				'forcedProvider' => $wg->AdDriverForcedProvider
 			];
-
-			/**
-			 * $wgAdDriverEnableSourcePointRecovery === false; // disabled on wiki
-			 * $wgAdDriverEnableSourcePointRecovery === true; // enabled on wiki
-			 * $wgAdDriverEnableSourcePointRecovery === null; // don't care - depend on $wgAdDriverSourcePointRecoveryCountries
-			 */
-			$context['opts']['sourcePointRecovery'] = $skinName === 'oasis' ? $wg->AdDriverEnableSourcePointRecovery : false;
-			return $context;
 		} );
 	}
 
