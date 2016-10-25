@@ -1220,12 +1220,18 @@ $wgNielsenApid = 'FIXME';
  */
 $wgEnableUbisoft = false;
 
-
 /**
  * @name $wgEnableNetzAthleten
  * Enables NetzAthleten provider
  */
 $wgEnableNetzAthleten = true;
+
+/**
+ * @name $wgAdDriverNetzAthletenCountries
+ * Enables NetzAthleten provider in these countries (given $wgEnableNetzAthleten is also true).
+ * ONLY UPDATE THROUGH WIKI FACTORY ON COMMUNITY - it's an instant global.
+ */
+$wgAdDriverNetzAthletenCountries = null;
 
 /**
  * @name $wgEnableAmazonMatch
