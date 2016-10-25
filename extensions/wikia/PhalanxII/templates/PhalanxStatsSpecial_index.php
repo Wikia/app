@@ -9,7 +9,6 @@
 			<th><?= wfMessage( 'phalanx-stats-table-exact' )->escaped(); ?></th>
 			<th><?= wfMessage( 'phalanx-stats-table-regex' )->escaped(); ?></th>
 			<th><?= wfMessage( 'phalanx-stats-table-case' )->escaped(); ?></th>
-			<th><?= wfMessage( 'phalanx-stats-table-language')->escaped(); ?></th>
 		</tr>
 	</thead>
 	<tbody>
