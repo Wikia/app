@@ -33,7 +33,7 @@ class SpecialSitemapXmlController extends WikiaSpecialPageController {
 	];
 
 	/**
-	 * All the other namespaces are merged into the "other" sitemap
+	 * All the other namespaces are merged into the "others" sitemap
 	 * Well, all beside talk namespaces (odd-numbered), and those
 	 */
 	const EXCLUDED_NAMESPACES = [
@@ -75,39 +75,18 @@ class SpecialSitemapXmlController extends WikiaSpecialPageController {
 		$start = microtime( true ) * 1000;
 		$this->getOutput()->disable();
 
-		if ( $subpage === 'sitemap-newsitemapxml-index.xml' || $subpage === 'sitemap-index.xml' ) {
-			header( 'Content-type: application/xml; charset=utf-8' );
-			header( 'Cache-Control: maxage=86400' );
+		$parsedSubpage = $this->parseSubpage( $subpage );
 
-			echo $this->generateSitemapIndex();
-			echo sprintf( '<!-- Generation time: %dms -->' . PHP_EOL, microtime( true ) * 1000 - $start );
-			echo sprintf( '<!-- Generation date: %s -->' . PHP_EOL, wfTimestamp( TS_ISO_8601 ) );
-			return;
-		}
-
-		$m = null;
-		if ( !preg_match( '/^sitemap-(newsitemapxml-)?(other|NS_([0-9]+))-p(\d+)\.xml$/', $subpage, $m ) ) {
-			$this->print404();
-			return;
-		}
-
-		$space = $m[2];
-		$specificNamespace = intval( $m[3] );
-		$page = $m[4];
-
-		if ( $space === 'other' ) {
-			$nses = $this->getOtherNamespaces();
-		} elseif ( in_array( $specificNamespace, self::SEPARATE_SITEMAPS ) ) {
-			$nses = [ $specificNamespace ];
+		if ( $parsedSubpage->index ) {
+			$out = $this->generateSitemapIndex();
+		} elseif ( $parsedSubpage->nses ) {
+			$out = $this->generateSitemapPage( $parsedSubpage->nses, $parsedSubpage->page );
 		} else {
-			$this->print404();
+			header( 'HTTP/1.0 404 Not Found' );
+			echo '<h1>404 Not Found</h1>';
 			return;
 		}
 
-		header( 'Content-type: application/xml; charset=utf-8' );
-		header( 'Cache-Control: maxage=86400' );
-
-		$out = $this->generateSitemapPage( $nses, $page );
 		$out .= sprintf( '<!-- Generation time: %dms -->' . PHP_EOL, microtime( true ) * 1000 - $start );
 		$out .= sprintf( '<!-- Generation date: %s -->' . PHP_EOL, wfTimestamp( TS_ISO_8601 ) );
 
@@ -130,6 +109,8 @@ class SpecialSitemapXmlController extends WikiaSpecialPageController {
 			] );
 		}
 
+		header( 'Content-type: application/xml; charset=utf-8' );
+		header( 'Cache-Control: maxage=86400' );
 		echo $out;
 	}
 
@@ -146,35 +127,6 @@ class SpecialSitemapXmlController extends WikiaSpecialPageController {
 	private function getOtherNamespaces() {
 		$nsIds = array_unique( $this->wg->ContLang->getNamespaceIds() );
 		return array_filter( $nsIds, [ $this, 'isOtherNamespace' ] );
-	}
-
-	private function isOtherNamespace( $nsId ) {
-		// Exclude negative namespaces
-		if ( $nsId < 0 ) {
-			return false;
-		}
-
-		// Exclude namespaces with separate sitemaps
-		if ( in_array( $nsId, self::SEPARATE_SITEMAPS ) ) {
-			return false;
-		}
-
-		// Exclude talk pages
-		if ( $nsId % 2 !== 0 ) {
-			return false;
-		}
-
-		// Excluded namespaces
-		if ( in_array( $nsId, self::EXCLUDED_NAMESPACES ) ) {
-			return false;
-		}
-
-		return true;
-	}
-
-	private function isRequestedGzipped() {
-		$acceptEncoding = $_SERVER['HTTP_ACCEPT_ENCODING'] ?? '';
-		return strpos( $acceptEncoding, 'gzip' ) !== false;
 	}
 
 	private function generateSitemapPage( array $nses, $page ) {
@@ -207,12 +159,10 @@ class SpecialSitemapXmlController extends WikiaSpecialPageController {
 	}
 
 	private function generateSitemapIndex() {
-		global $wgServer;
-
 		$out = '<?xml version="1.0" encoding="UTF-8"?>' . PHP_EOL;
 		$out .= '<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">' . PHP_EOL;
 
-		$baseUrl = $wgServer;
+		$baseUrl = $this->wg->Server;
 
 		foreach ( self::SEPARATE_SITEMAPS as $ns ) {
 			$ns_pages = $this->model->getPageNumber( [ $ns ], self::URLS_PER_PAGE );
@@ -225,7 +175,7 @@ class SpecialSitemapXmlController extends WikiaSpecialPageController {
 		$other_pages = $this->model->getPageNumber( $this->getOtherNamespaces(), self::URLS_PER_PAGE );
 
 		for ( $page = 1; $page <= $other_pages; $page++ ) {
-			$url = $baseUrl . '/sitemap-newsitemapxml-other-p' . $page . '.xml';
+			$url = $baseUrl . '/sitemap-newsitemapxml-others-p' . $page . '.xml';
 			$out .= '<sitemap><loc>' . $url . '</loc></sitemap>' . PHP_EOL;
 		}
 
@@ -234,8 +184,66 @@ class SpecialSitemapXmlController extends WikiaSpecialPageController {
 		return $out;
 	}
 
-	private function print404() {
-		header( 'HTTP/1.0 404 Not Found' );
-		echo '<h1>404 Not Found</h1>';
+	private function isOtherNamespace( $nsId ) {
+		// Exclude negative namespaces
+		if ( $nsId < 0 ) {
+			return false;
+		}
+
+		// Exclude namespaces with separate sitemaps
+		if ( in_array( $nsId, self::SEPARATE_SITEMAPS ) ) {
+			return false;
+		}
+
+		// Exclude talk pages
+		if ( $nsId % 2 !== 0 ) {
+			return false;
+		}
+
+		// Excluded namespaces
+		if ( in_array( $nsId, self::EXCLUDED_NAMESPACES ) ) {
+			return false;
+		}
+
+		return true;
+	}
+
+	private function isRequestedGzipped() {
+		$acceptEncoding = $_SERVER['HTTP_ACCEPT_ENCODING'] ?? '';
+		return strpos( $acceptEncoding, 'gzip' ) !== false;
+	}
+
+	private function parseSubpage( $subpage ) {
+		$parsed = (object) [
+			'index' => false,
+			'nses' => null,
+			'page' => null,
+		];
+
+		if ( $subpage === 'sitemap-newsitemapxml-index.xml' || $subpage === 'sitemap-index.xml' ) {
+			$parsed->index = true;
+			return $parsed;
+		}
+
+		$m = null;
+
+		if ( !preg_match(
+			'/^sitemap-(newsitemapxml-)?(others|NS_([0-9]+))-p(\d+)\.xml$/', $subpage, $m )
+		) {
+			return $parsed;
+		}
+
+		$space = $m[2];
+		$specificNamespace = intval( $m[3] );
+		$page = intval( $m[4] );
+
+		if ( $space !== 'others' && !in_array( $specificNamespace, self::SEPARATE_SITEMAPS ) ) {
+			return $parsed;
+		}
+
+		$parsed->nses = ( $space === 'others' ) ? $this->getOtherNamespaces() : [ $specificNamespace ];
+		$parsed->page = $page;
+
+		return $parsed;
 	}
 }
