@@ -9,7 +9,7 @@
 				$accesskey = ' accesskey="e"';
 			}
 ?>
-			<a<?= $accesskey ?> href="<?= htmlspecialchars($action['href']) ?>" class="<?= Sanitizer::encodeAttribute( $class ) ?>" <?= ( !empty($nofollow) ? 'rel="nofollow"' : '' ); ?> data-id="<?= $actionName ?>"<?= $tooltip ?><?= $tabindex ?>><?= $icon ?> <?= htmlspecialchars($action['text']) ?><?= isset($action['html']) ? $action['html'] : '' ?></a>
+			<a<?= $accesskey ?> href="<?= htmlspecialchars($action['href']) ?>" class="<?= Sanitizer::encodeAttribute( $class ) ?>" <?= ( !empty($nofollow) ? 'rel="nofollow"' : '' ); ?> data-id="<?= Sanitizer::encodeAttribute( $actionName ); ?>"<?= $tooltip ?><?= $tabindex ?>><?= $icon ?> <?= htmlspecialchars($action['text']) ?><?= isset($action['html']) ? $action['html'] : '' ?></a>
 <?php
 		}
 		// render edit button with dropdown
@@ -51,7 +51,7 @@
 					$accesskey = '';
 				}
 
-				$href = isset($item['href']) ? htmlspecialchars($item['href']) : '#';
+				$href = $item['href'] ?? '#';
 ?>
 		<li>
 			<a href="<?= Sanitizer::encodeAttribute( $href ); ?>" <?= $accesskey ?> data-id="<?= Sanitizer::encodeAttribute( $key ); ?>" <?= empty($item['title']) ? '' : ' title="'. Sanitizer::encodeAttribute( $item['title'] ) .'"'; ?> <?= empty($item['id']) ? '' : ' id="'. Sanitizer::encodeAttribute( $item['id'] ) .'"' ?><?= empty($item['class']) ? '' : ' class="'. Sanitizer::encodeAttribute( $item['class'] ) .'"' ?><?= empty($item['attr']) ? '' : ' '.$item['attr'] ?>><?=htmlspecialchars($item['text']) ?></a>
