@@ -79,8 +79,8 @@ class SpecialSitemapXmlController extends WikiaSpecialPageController {
 
 		if ( $parsedSubpage->index ) {
 			$out = $this->generateSitemapIndex();
-		} elseif ( $parsedSubpage->nses ) {
-			$out = $this->generateSitemapPage( $parsedSubpage->nses, $parsedSubpage->page );
+		} elseif ( $parsedSubpage->namespaces ) {
+			$out = $this->generateSitemapPage( $parsedSubpage->namespaces, $parsedSubpage->page );
 		} else {
 			header( 'HTTP/1.0 404 Not Found' );
 			echo '<h1>404 Not Found</h1>';
@@ -129,21 +129,21 @@ class SpecialSitemapXmlController extends WikiaSpecialPageController {
 		return array_filter( $nsIds, [ $this, 'isOtherNamespace' ] );
 	}
 
-	private function generateSitemapPage( array $nses, $page ) {
+	private function generateSitemapPage( array $namespaces, $page ) {
 		$out = '<?xml version="1.0" encoding="UTF-8"?>' . PHP_EOL;
 		$out .= '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">' . PHP_EOL;
-		$out .= '<!-- Namespaces: ' . implode( ', ', $nses ) . '; page: ' . $page . ' -->' . PHP_EOL;
+		$out .= '<!-- Namespaces: ' . implode( ', ', $namespaces ) . '; page: ' . $page . ' -->' . PHP_EOL;
 
 		$offset = self::URLS_PER_PAGE * ( $page - 1 );
 		$limit = self::URLS_PER_PAGE;
 
-		foreach ( $nses as $ns ) {
+		foreach ( $namespaces as $ns ) {
 			$priority[$ns] = self::PRIORITIES[$ns] ?? self::DEFAULT_PRIORITY;
 			$title = Title::newFromText( '$1', $ns );
 			$urlPrefix[$ns] = str_replace( '$1', '', $title->getFullURL() );
 		}
 
-		foreach ( $this->model->getItems( $nses, $offset, $limit ) as $page ) {
+		foreach ( $this->model->getItems( $namespaces, $offset, $limit ) as $page ) {
 			$encodedTitle = wfUrlencode( str_replace( ' ', '_', $page->page_title ) );
 			$lastmod = $this->getIso8601Timestamp( $page->page_touched );
 
@@ -165,16 +165,16 @@ class SpecialSitemapXmlController extends WikiaSpecialPageController {
 		$baseUrl = $this->wg->Server;
 
 		foreach ( self::SEPARATE_SITEMAPS as $ns ) {
-			$ns_pages = $this->model->getPageNumber( [ $ns ], self::URLS_PER_PAGE );
-			for ( $page = 1; $page <= $ns_pages; $page++ ) {
+			$nsPages = $this->model->getPageNumber( [ $ns ], self::URLS_PER_PAGE );
+			for ( $page = 1; $page <= $nsPages; $page++ ) {
 				$url = $baseUrl . '/sitemap-newsitemapxml-NS_' . $ns . '-p' . $page . '.xml';
 				$out .= '<sitemap><loc>' . $url . '</loc></sitemap>' . PHP_EOL;
 			}
 		}
 
-		$other_pages = $this->model->getPageNumber( $this->getOtherNamespaces(), self::URLS_PER_PAGE );
+		$otherPages = $this->model->getPageNumber( $this->getOtherNamespaces(), self::URLS_PER_PAGE );
 
-		for ( $page = 1; $page <= $other_pages; $page++ ) {
+		for ( $page = 1; $page <= $otherPages; $page++ ) {
 			$url = $baseUrl . '/sitemap-newsitemapxml-others-p' . $page . '.xml';
 			$out .= '<sitemap><loc>' . $url . '</loc></sitemap>' . PHP_EOL;
 		}
@@ -216,7 +216,7 @@ class SpecialSitemapXmlController extends WikiaSpecialPageController {
 	private function parseSubpage( $subpage ) {
 		$parsed = (object) [
 			'index' => false,
-			'nses' => null,
+			'namespaces' => null,
 			'page' => null,
 		];
 
@@ -241,7 +241,7 @@ class SpecialSitemapXmlController extends WikiaSpecialPageController {
 			return $parsed;
 		}
 
-		$parsed->nses = ( $space === 'others' ) ? $this->getOtherNamespaces() : [ $specificNamespace ];
+		$parsed->namespaces = ( $space === 'others' ) ? $this->getOtherNamespaces() : [ $specificNamespace ];
 		$parsed->page = $page;
 
 		return $parsed;
