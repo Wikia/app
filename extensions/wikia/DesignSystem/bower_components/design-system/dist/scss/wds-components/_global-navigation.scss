@@ -379,8 +379,8 @@ $hover-transition-duration: 300ms !default;
 	}
 
 	&__partner-slot {
-		$slot-width: 100px;
-		$link-padding: 7px;
+		$slot-width: 80px;
+		$link-padding: 10px;
 
 		border-left: 1px solid $color-blue-gray;
 		display: none;
