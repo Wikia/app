@@ -36,7 +36,6 @@ class WikiFeaturesHelper extends WikiaModel {
 		'wgEnableChat' => 258,
 		'wgEnableWallExt' => 258,
 		'wgEnableForumExt' => 259,
-		'wgEnableWikiaInteractiveMaps' => 260,
 		'wgEnableMediaGalleryExt' => 1,
 		'wgEnableNjordExt' => 2,
 	);
@@ -47,7 +46,6 @@ class WikiFeaturesHelper extends WikiaModel {
 		'wgShowTopListsInCreatePage' => '2012-02-12',
 		'wgEnableAchievementsExt' => '2012-02-12',
 		'wgEnableForumExt' => '2012-11-29',
-		'wgEnableWikiaInteractiveMaps' => '2014-07-23',
 	);
 
 	/**
