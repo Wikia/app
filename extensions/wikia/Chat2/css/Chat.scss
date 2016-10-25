@@ -14,7 +14,6 @@
 
 @import "ChatColor";
 @import "ChatModal";
-@import "ChatSprite";
 @import "UserStatsMenu";
 
 body {
@@ -154,22 +153,22 @@ a {
 
 		&:after {
 			content: '';
-			height: 15px;
+			height: 18px;
 			position: absolute;
 			right: 5px;
 			top: 5px;
-			width: 15px;
+			width: 18px;
 		}
 	}
 	&.chat-mod .username:after, &.staff .username:after {
-		@include sprite-Chat-base;
+
 	}
 	&.chat-mod .username:after {
-		@include sprite-Chat('icon-chat_mod');
+      background-image: url('/extensions/wikia/DesignSystem/bower_components/design-system/dist/svg/wds-avatar-badges-admin.svg'); /* inline */
 	}
 	&.staff .username:after {
-		@include sprite-Chat('icon-staff' + $sprite-normal, 14px, 14px);
-	}
+      background-image: url('/extensions/wikia/DesignSystem/bower_components/design-system/dist/svg/wds-avatar-badges-staff.svg'); /* inline */
+    }
 	.details {
 		font-size: 11px;
 	}
