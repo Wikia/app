@@ -1001,7 +1001,7 @@ class UserProfilePageController extends WikiaController {
 			if ( $avUser->getId() !== 0 ) {
 				$avatar = Masthead::newFromUser( $avUser );
 				if ( $avatar->removeFile( true ) ) {
-					$this->clearAttributeCache( $avUser->getId() );
+					$avUser->invalidateCache();
 					$this->setVal( 'status', 'ok' );
 					wfProfileOut( __METHOD__ );
 					return true;
