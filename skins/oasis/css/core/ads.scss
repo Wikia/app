@@ -69,10 +69,10 @@ $taboola-small-breakpoint: "#{$screen} and (max-width: 420px)";
 		background: #000;
 		max-width: none;
 		overflow: hidden;
-		-webkit-transition: height, 0.4s ease;
-		-moz-transition: height, 0.4s ease;
-		-o-transition: height, 0.4s ease;
-		transition: height, 0.4s ease;
+		-webkit-transition: height 0.4s ease;
+		-moz-transition: height 0.4s ease;
+		-o-transition: height 0.4s ease;
+		transition: height 0.4s ease;
 		width: 100%;
 
 		> div {
