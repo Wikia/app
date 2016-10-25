@@ -46,8 +46,11 @@ define('ext.wikia.adEngine.template.bfaaDesktop', [
 	}
 
 	function runOnReady(iframe, params) {
-		var spotlightFooter = doc.getElementById('SPOTLIGHT_FOOTER'),
-			adContainer = doc.getElementById(params.slotName);
+		var adContainer = doc.getElementById(params.slotName),
+			spotlightFooter = doc.getElementById('SPOTLIGHT_FOOTER'),
+			divs,
+			imageContainer,
+			video;
 
 		nav.style.top = '';
 		page.classList.add('bfaa-template');
@@ -73,14 +76,12 @@ define('ext.wikia.adEngine.template.bfaaDesktop', [
 		}
 
 		if (params.videoUrl && params.videoTriggerElement) {
-			slotTweaker.onReady(params.slotName, function() {
-				var divs = doc.querySelectorAll('#' + params.slotName + ' > div'),
-					imageContainer = divs[divs.length - 1],
-					video = uapVideoAd.init(doc.getElementById(params.slotName), imageContainer, params.videoUrl);
+			divs = doc.querySelectorAll('#' + params.slotName + ' > div');
+			imageContainer = divs[divs.length - 1];
+			video = uapVideoAd.init(doc.getElementById(params.slotName), imageContainer, params.videoUrl);
 
-				params.videoTriggerElement.addEventListener('click', function () {
-					uapVideoAd.playAndToggle(video, imageContainer);
-				});
+			params.videoTriggerElement.addEventListener('click', function () {
+				uapVideoAd.playAndToggle(video, imageContainer);
 			});
 		}
 	}
