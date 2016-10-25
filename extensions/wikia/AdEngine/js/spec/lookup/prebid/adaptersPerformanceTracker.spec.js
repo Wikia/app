@@ -324,37 +324,6 @@ describe('ext.wikia.adEngine.lookup.prebid.adaptersPerformanceTracker', function
 				}
 			},
 			message: 'if no bids for one bidder are returned map stays untouched'
-		}, {
-			performanceMap: {
-				appnexus: {
-					TOP_LEADERBOARD: 'NO_RESPONSE',
-					TOP_RIGHT_BOXAD: 'NO_RESPONSE'
-				},
-				indexExchange: {
-					TOP_LEADERBOARD: 'NO_RESPONSE'
-				}
-			},
-			allBids: {
-				TOP_LEADERBOARD: {
-					bids: [
-						mocks.completeAppNexusBid
-					]
-				}, TOP_RIGHT_BOXAD: {
-					bids: [
-						mocks.correctAppNexusBid
-					]
-				}
-			},
-			expected: {
-				appnexus: {
-					TOP_LEADERBOARD: 'USED;0-1.0',
-					TOP_RIGHT_BOXAD: '100x100;0.00;0-1.0'
-				},
-				indexExchange: {
-					TOP_LEADERBOARD: 'NO_RESPONSE'
-				}
-			},
-			message: 'rendered bid is tracked as used'
 		}].forEach(function (testCase) {
 			var result;
 
@@ -396,7 +365,7 @@ describe('ext.wikia.adEngine.lookup.prebid.adaptersPerformanceTracker', function
 			},
 			expected: undefined,
 			message: 'Return undefined when slot is not supported by adapter'
-		}].forEach(function(testCase) {
+		}].forEach(function (testCase) {
 			var module = getModule(),
 				result;
 
@@ -454,7 +423,7 @@ describe('ext.wikia.adEngine.lookup.prebid.adaptersPerformanceTracker', function
 				}
 			},
 			expected: ['appnexus/lookup_error/direct', 'TOP_RIGHT_BOXAD', 0, 'nodata']
-		}].forEach(function(testCase) {
+		}].forEach(function (testCase) {
 			var module = getModule(),
 				expectResult;
 
