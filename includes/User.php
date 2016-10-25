@@ -2094,7 +2094,6 @@ class User {
 					__METHOD__ );
 			}
 			self::permissionsService()->invalidateCache( $this );
-			$this->userAttributes()->clearCache( $this->mId );
 
 			$this->clearSharedCache();
 		}
