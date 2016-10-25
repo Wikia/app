@@ -8,8 +8,9 @@ define('ext.wikia.adEngine.lookup.prebid', [
 	'ext.wikia.adEngine.lookup.prebid.prebidHelper',
 	'ext.wikia.adEngine.lookup.lookupFactory',
 	'wikia.document',
-	'wikia.window'
-], function (adContext, adaptersTracker, appnexus, index, wikiaAdapter, helper, factory, doc, win) {
+	'wikia.window',
+	require.optional('ext.wikia.adEngine.mobile.mercuryListener')
+], function (adContext, adaptersTracker, appnexus, index, wikiaAdapter, helper, factory, doc, win, mercuryListener) {
 	'use strict';
 
 	var adapters = [
@@ -18,39 +19,49 @@ define('ext.wikia.adEngine.lookup.prebid', [
 		],
 		adUnits = [],
 		biddersPerformanceMap = {},
-		autoPriceGranularity = 'auto';
+		autoPriceGranularity = 'auto',
+		prebidLoaded = false;
 
 	function call(skin, onResponse) {
-		var prebid = doc.createElement('script'),
-			node = doc.getElementsByTagName('script')[0];
-
-		if (wikiaAdapter.isEnabled()) {
-			adapters.push(wikiaAdapter);
-			win.pbjs.que.push(function () {
-				win.pbjs.registerBidAdapter(wikiaAdapter.create, 'wikia');
-			});
-		}
+		var prebid, node;
 
 		biddersPerformanceMap = adaptersTracker.setupPerformanceMap(skin, adapters);
 		adUnits = helper.setupAdUnits(adapters, skin);
 
-		if (adUnits.length > 0) {
+		if (!prebidLoaded) {
+			prebid = doc.createElement('script');
+			node = doc.getElementsByTagName('script')[0];
+
+			if (wikiaAdapter.isEnabled()) {
+				adapters.push(wikiaAdapter);
+				win.pbjs.que.push(function () {
+					win.pbjs.registerBidAdapter(wikiaAdapter.create, 'wikia');
+				});
+			}
+
 			prebid.async = true;
 			prebid.type = 'text/javascript';
 			prebid.src = adContext.getContext().opts.prebidBidderUrl || '//acdn.adnxs.com/prebid/prebid.js';
-
 			node.parentNode.insertBefore(prebid, node);
+		}
 
-			win.pbjs.que.push(function () {
+		if (adUnits.length > 0) {
+			if (!prebidLoaded) {
+				win.pbjs.que.push(function () {
+					win.pbjs.setPriceGranularity(autoPriceGranularity);
+					win.pbjs.addAdUnits(adUnits);
+				});
+			}
 
-				win.pbjs.setPriceGranularity(autoPriceGranularity);
-				win.pbjs.addAdUnits(adUnits);
-
+			win.pbjs.que.push(function() {
+				console.log('bogna', 'requesting bids');
 				win.pbjs.requestBids({
 					bidsBackHandler: onResponse
 				});
 			});
 		}
+
+		prebidLoaded = true;
 	}
 
 	function calculatePrices() {

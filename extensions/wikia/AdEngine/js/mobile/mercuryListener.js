@@ -7,7 +7,8 @@ define('ext.wikia.adEngine.mobile.mercuryListener', [
 
 	var logGroup = 'ext.wikia.adEngine.mobile.mercuryListener',
 		onLoadQueue = [],
-		onPageChangeCallbacks = [];
+		onPageChangeCallbacks = [],
+		onEveryPageChangeCallbacks = [];
 
 	function onLoad(callback) {
 		onLoadQueue.push(callback);
@@ -15,6 +16,10 @@ define('ext.wikia.adEngine.mobile.mercuryListener', [
 
 	function onPageChange(callback) {
 		onPageChangeCallbacks.push(callback);
+	}
+
+	function onEveryPageChange(callback) {
+		onEveryPageChangeCallbacks.push(callback);
 	}
 
 	function startOnLoadQueue() {
@@ -25,10 +30,16 @@ define('ext.wikia.adEngine.mobile.mercuryListener', [
 	function runOnPageChangeCallbacks() {
 		var callback;
 		log(['runOnPageChangeCallbacks', onPageChangeCallbacks.length], 'info', logGroup);
+
 		while (onPageChangeCallbacks.length) {
 			callback = onPageChangeCallbacks.shift();
 			callback();
 		}
+
+		log(['runOnEveryPageChangeCallbacks', onEveryPageChangeCallbacks.length], 'info', logGroup);
+		onEveryPageChangeCallbacks.forEach(function(callback) {
+			callback();
+		});
 	}
 
 	lazyQueue.makeQueue(onLoadQueue, function (callback) {
@@ -38,6 +49,7 @@ define('ext.wikia.adEngine.mobile.mercuryListener', [
 	return {
 		onLoad: onLoad,
 		onPageChange: onPageChange,
+		onEveryPageChange: onEveryPageChange,
 		startOnLoadQueue: startOnLoadQueue,
 		runOnPageChangeCallbacks: runOnPageChangeCallbacks
 	};
