@@ -24,9 +24,6 @@ define('ext.wikia.adEngine.lookup.prebid', [
 	function call(skin, onResponse) {
 		var prebid, node;
 
-		biddersPerformanceMap = adaptersTracker.setupPerformanceMap(skin, adapters);
-		adUnits = helper.setupAdUnits(adapters, skin);
-
 		if (!prebidLoaded) {
 			prebid = doc.createElement('script');
 			node = doc.getElementsByTagName('script')[0];
@@ -43,6 +40,9 @@ define('ext.wikia.adEngine.lookup.prebid', [
 			prebid.src = adContext.getContext().opts.prebidBidderUrl || '//acdn.adnxs.com/prebid/prebid.js';
 			node.parentNode.insertBefore(prebid, node);
 		}
+
+		biddersPerformanceMap = adaptersTracker.setupPerformanceMap(skin, adapters);
+		adUnits = helper.setupAdUnits(adapters, skin);
 
 		if (adUnits.length > 0) {
 			if (!prebidLoaded) {
