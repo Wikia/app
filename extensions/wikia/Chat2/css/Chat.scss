@@ -164,11 +164,11 @@ a {
 
 	}
 	&.chat-mod .username:after {
-      background-image: url('/extensions/wikia/DesignSystem/bower_components/design-system/dist/svg/wds-avatar-badges-admin.svg'); /* inline */
+		background-image: url('/extensions/wikia/DesignSystem/bower_components/design-system/dist/svg/wds-avatar-badges-admin.svg'); /* inline */
 	}
 	&.staff .username:after {
-      background-image: url('/extensions/wikia/DesignSystem/bower_components/design-system/dist/svg/wds-avatar-badges-staff.svg'); /* inline */
-    }
+		background-image: url('/extensions/wikia/DesignSystem/bower_components/design-system/dist/svg/wds-avatar-badges-staff.svg'); /* inline */
+	}
 	.details {
 		font-size: 11px;
 	}
