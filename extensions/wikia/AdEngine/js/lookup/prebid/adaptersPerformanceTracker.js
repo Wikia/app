@@ -66,8 +66,6 @@ define('ext.wikia.adEngine.lookup.prebid.adaptersPerformanceTracker', [
 			category = bidderName + '/lookup_error/' + providerName;
 			adTracker.track(category, slotName, 0, 'nodata');
 		}
-		category = bidderName + '/lookup_error/' + providerName;
-		adTracker.track(category, slotName, 0, 'nodata');
 	}
 
 	function trackBidderOnLookupEnd(adapter, performanceMap) {
