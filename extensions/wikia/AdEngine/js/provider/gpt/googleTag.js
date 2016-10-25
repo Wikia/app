@@ -161,7 +161,7 @@ define('ext.wikia.adEngine.provider.gpt.googleTag', [
 			return;
 		}
 
-		allSlots = window.googletag.getSlots();
+		allSlots = window.googletag.pubads().getSlots();
 		// when nothing passed - destroy all slots
 		if (!slotsNames) {
 			slotsToDestroy = allSlots;
