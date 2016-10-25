@@ -252,7 +252,7 @@ class ContactForm extends SpecialPage {
 		global $wgLanguageCode, $wgServer;
 
 		// If not configured, fall back to a default just in case.
-		$wgSpecialContactEmail = ( empty( $wgSpecialContactEmail ) ? "community@wikia.com" : $wgSpecialContactEmail );
+		$wgSpecialContactEmail = ( empty( $wgSpecialContactEmail ) ? "community@fandom.com" : $wgSpecialContactEmail );
 
 		$user = $this->getUser();
 		$output = $this->getOutput();
