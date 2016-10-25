@@ -378,22 +378,22 @@ $hover-transition-duration: 300ms !default;
 		display: none;
 	}
 
-	&__right-slot {
+	&__partner-slot {
 		$slot-width: 100px;
 		$link-padding: 7px;
 
-		max-width: $slot-width;
+		border-left: 1px solid $color-blue-gray;
 		display: none;
 		height: 100%;
+		max-width: $slot-width;
 		position: absolute;
 		right: 0;
 		top: 0;
-		border-left: 1px solid $color-blue-gray;
 
 		// 1280px is a minimum for right slot to appear, on smaller screen there is no space for it
 		@media (min-width: 1280px) {
-			display: flex;
 			align-items: center;
+			display: flex;
 		}
 
 		&-link {
@@ -401,9 +401,9 @@ $hover-transition-duration: 300ms !default;
 		}
 
 		&-image {
-			vertical-align: middle;
 			max-width: $slot-width - 2 * $link-padding;
 			max-height: $nav-height - 2 * $link-padding;
+			vertical-align: middle;
 		}
 	}
 

@@ -1,10 +1,10 @@
-<div class="wds-global-navigation__right-slot">
+<div class="wds-global-navigation__partner-slot">
 	<a href="<?= Sanitizer::encodeAttribute( $model['href'])?>"
 		data-tracking-label="<?= Sanitizer::encodeAttribute( $model['tracking_label'])?>"
-		class="wds-global-navigation__right-slot-link">
+		class="wds-global-navigation__partner-slot-link">
 		<?= DesignSystemHelper::renderApiImage(
 			$model['image-data'],
-			'wds-global-navigation__right-slot-image',
+			'wds-global-navigation__partner-slot-image',
 			DesignSystemHelper::renderText( $model['title'] )
 		) ?>
 	</a>
