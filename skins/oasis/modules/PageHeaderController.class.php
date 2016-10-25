@@ -227,6 +227,8 @@ class PageHeaderController extends WikiaController {
 			// number of pages on this wiki
 			$this->tallyMsg = wfMessage( 'oasis-total-articles-mainpage', SiteStats::articles() )->parse();
 
+		} elseif ( !empty( $this->wg->Title ) && $this->wg->Title->isDeleted() == 0 ) {
+			$this->comments = false;
 		}
 
 		// remove namespaces prefix from title
