@@ -151,10 +151,10 @@ class WikiFeaturesHelper extends WikiaModel {
 	}
 
 	protected function getFeatureEnabled($feature) {
-		if ($this->app->getGlobal($feature)==true)
+		if ($this->app->getGlobal($feature)==true) {
 			return true;
-		else
-			return false;
+		}
+		return false;
 	}
 
 	/**
@@ -166,8 +166,7 @@ class WikiFeaturesHelper extends WikiaModel {
 		$result = false;
 		if (isset(self::$release_date[$feature])) {
 			$release = strtotime(self::$release_date[$feature]);
-			if ($release != false) {
-				if (floor((time()-$release)/86400) < 15)
+			if ($release != false && floor((time()-$release)/86400) < 15) {
 					$result = true;
 			}
 		}
