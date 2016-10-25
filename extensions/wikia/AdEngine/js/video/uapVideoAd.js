@@ -4,7 +4,7 @@ define('ext.wikia.adEngine.video.uapVideoAd', [
 	'wikia.document'
 ], function (DOMElementTweaker, doc) {
 	'use strict';
-	var animationDuration = 200;
+	var animationDuration = 400;
 
 	function getOriginalHeight(element) {
 		var height;
