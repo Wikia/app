@@ -68,6 +68,22 @@ class PhalanxTitleBlock extends WikiaObject {
 		wfProfileOut( __METHOD__ );
 		return $ret;
 	}
+
+	static public function checkFileTitle( $destName, $tempPath, &$error ) {
+		wfProfileIn( __METHOD__ );
+
+		$title = Title::newFromText( $destName );
+		$phalanxModel = new PhalanxContentModel( $title );
+		$isTitleSafe = $phalanxModel->match_title();
+
+		if ( !$isTitleSafe ) {
+			$phalanxModel->displayBlock();
+			$error = [ 'validator-fatal-error', $phalanxModel->contentBlock() ];
+		}
+
+		wfProfileOut( __METHOD__ );
+		return $isTitleSafe;
+	}
 	
 	/**
 	 * handler for pageTitleFilter hook

@@ -19,8 +19,8 @@ define('ext.wikia.adEngine.lookup.prebid.adaptersPerformanceTracker', [
 				adapterName = adapter.getName();
 
 			if (adapter.isEnabled()) {
+				biddersPerformanceMap[adapterName] = {};
 				Object.keys(slots).forEach(function (slotName) {
-					biddersPerformanceMap[adapterName] = biddersPerformanceMap[adapterName] || {};
 					biddersPerformanceMap[adapterName][slotName] = notRespondedMsg;
 				});
 			}
@@ -59,14 +59,9 @@ define('ext.wikia.adEngine.lookup.prebid.adaptersPerformanceTracker', [
 			return;
 		}
 
-		if (performanceMap[bidderName]) {
-			if (performanceMap[bidderName][slotName] !== notRespondedMsg) {
-				category = bidderName + '/lookup_success/' + providerName;
-				adTracker.track(category, slotName, 0, performanceMap[bidderName][slotName]);
-			} else {
-				category = bidderName + '/lookup_error/' + providerName;
-				adTracker.track(category, slotName, 0, 'nodata');
-			}
+		if (performanceMap[bidderName][slotName] !== notRespondedMsg) {
+			category = bidderName + '/lookup_success/' + providerName;
+			adTracker.track(category, slotName, 0, performanceMap[bidderName][slotName]);
 		} else {
 			category = bidderName + '/lookup_error/' + providerName;
 			adTracker.track(category, slotName, 0, 'nodata');

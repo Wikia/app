@@ -61,6 +61,17 @@ describe('ext.wikia.adEngine.lookup.prebid.adaptersPerformanceTracker', function
 					};
 				}
 			},
+			adapterIndexExchangeEmpty: {
+				getName: function () {
+					return 'indexExchange';
+				},
+				isEnabled: function () {
+					return true;
+				},
+				getSlots: function () {
+					return {};
+				}
+			},
 			adapterIndexExchangeDisabled: {
 				getName: function () {
 					return 'indexExchange';
@@ -181,6 +192,20 @@ describe('ext.wikia.adEngine.lookup.prebid.adaptersPerformanceTracker', function
 					TOP_LEADERBOARD: 'NO_RESPONSE',
 					TOP_RIGHT_BOXAD: 'NO_RESPONSE'
 				}
+			},
+			message: 'disabled adapters are not added'
+		}, {
+			skin: 'oasis',
+			adapters: [
+				mocks.adapterAppNexus,
+				mocks.adapterIndexExchangeEmpty
+			],
+			expected: {
+				appnexus: {
+					TOP_LEADERBOARD: 'NO_RESPONSE',
+					TOP_RIGHT_BOXAD: 'NO_RESPONSE'
+				},
+				indexExchange: {}
 			},
 			message: 'disabled adapters are not added'
 		}].forEach(function (testCase) {

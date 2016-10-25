@@ -63,6 +63,7 @@ $phalanxhooks = array(
 			'EditContent'                     => 'editContent',
 			'CheckContent'                    => 'checkContent',
 			'APIEditBeforeSave'               => 'filterAPIEditBeforeSave',
+			'FileUploadSummaryCheck'          => 'checkContent',
 		),
 	'PhalanxTitleBlock' =>
 		array(
@@ -70,6 +71,7 @@ $phalanxhooks = array(
 			'CreateDefaultQuestionPageFilter' => 'checkTitle',
 			'CreatePageTitleCheck'            => 'checkTitle',
 			'PageTitleFilter'                 => 'pageTitleFilter',
+			'UploadVerification'              => 'checkFileTitle',
 		),
 	'PhalanxAnswersBlock' =>
 		array(

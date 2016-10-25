@@ -1,5 +1,7 @@
 <?php
 
+use Wikia\Logger\WikiaLogger;
+
 class Phalanx extends WikiaModel implements ArrayAccess {
 	const TYPE_CONTENT = 1;
 	const TYPE_SUMMARY = 2;
@@ -160,21 +162,28 @@ class Phalanx extends WikiaModel implements ArrayAccess {
 	public function delete() {
 		wfProfileIn( __METHOD__ );
 
-		if (empty($this->data)) {
+		$return = false;
+
+		if ( empty( $this->data ) ) {
 			wfProfileOut( __METHOD__ );
-			return false;
+			return $return;
 		}
 
 		$dbw = $this->getSharedDB( DB_MASTER );
-		$dbw->delete( $this->db_table, array( 'p_id' => $this->data['id'] ), __METHOD__ );
+		$dbw->delete( $this->db_table, ['p_id' => $this->data['id']], __METHOD__ );
 
-		if ( $removed = $dbw->affectedRows() ) {
-			$this->log( 'delete' );
-		}
+		$removed = $dbw->affectedRows();
+
 		$dbw->commit();
 
+		if ( $removed ) {
+			$this->log( 'delete' );
+			WikiaLogger::instance()->info( 'Phalanx block rule deleted', $this->data );
+			$return = $this->data['id'];
+		}
+
 		wfProfileOut( __METHOD__ );
-		return ( $removed ) ? $this->data['id'] : false;
+		return $return;
 	}
 
 	/* get the values for the expire select */

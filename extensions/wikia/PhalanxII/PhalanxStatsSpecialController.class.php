@@ -42,52 +42,37 @@ class PhalanxStatsSpecialController extends WikiaSpecialPageController {
 	}
 
 	private function blockStats($blockId) {
-		$this->wg->Out->setPageTitle( sprintf( "%s #%s", wfMsg('phalanx-stats-title'), $blockId ) );
-		$this->wg->Out->addBacklinkSubtitle( $this->title );
+		$out = $this->getOutput();
+		$out->setPageTitle( $this->msg( 'phalanx-stats-title' )->text() . "#$blockId" );
+		$out->addBacklinkSubtitle( $this->title );
 
 		$data = Phalanx::newFromId($blockId);
 
 		if ( !isset( $data["id"] ) ) {
-			$this->wg->Out->addWikiMsg( 'phalanx-stats-block-notfound', $blockId );
-			return;
+			$out->addWikiMsg( 'phalanx-stats-block-notfound', $blockId );
+			return false; // skip rendering
 		}
 
 		$data['author_id'] = User::newFromId($data['author_id'])->getName();
-		$data['timestamp'] = $this->wg->Lang->timeanddate( $data['timestamp'] );
+		$data['timestamp'] = $this->getLanguage()->timeanddate( $data['timestamp'] );
 
 		if ( $data['expire'] == null ) {
 			$data['expire'] = 'infinite';
 		} else {
-			$data['expire'] = $this->wg->Lang->timeanddate( $data['expire'] );
+			$data['expire'] = $this->getLanguage()->timeanddate( $data['expire'] );
 		}
 
 		$data['regex'] = $data['regex'] ? 'Yes' : 'No';
 		$data['case']  = $data['case']  ? 'Yes' : 'No';
 		$data['exact'] = $data['exact'] ? 'Yes' : 'No';
 
-		if ( $data['type'] & Phalanx::TYPE_EMAIL && !$this->wg->User->isAllowed( 'phalanxemailblock' ) ) {
+		if ( $data['type'] & Phalanx::TYPE_EMAIL && !$this->getUser()->isAllowed( 'phalanxemailblock' ) ) {
 			/* hide email from non-privildged users */
-			$data['text'] = wfMsg( 'phalanx-email-filter-hidden' );
+			$data['text'] = $this->msg( 'phalanx-email-filter-hidden' )->escaped();
 		}
 
 		$data['type'] = implode( ', ', Phalanx::getTypeNames( $data['type'] ) );
 
-		/* stats table */
-		$headers = array(
-			wfMsg('phalanx-stats-table-id'),
-			wfMsg('phalanx-stats-table-user'),
-			wfMsg('phalanx-stats-table-type'),
-			wfMsg('phalanx-stats-table-create'),
-			wfMsg('phalanx-stats-table-expire'),
-			wfMsg('phalanx-stats-table-exact'),
-			wfMsg('phalanx-stats-table-regex'),
-			wfMsg('phalanx-stats-table-case'),
-		);
-
-		$tableAttribs = array(
-			'class' => 'wikitable',
-			'width' => '100%',
-		);
 
 		/* pull these out of the array, so they dont get used in the top rows */
 		$row = $data->toArray();
@@ -96,31 +81,44 @@ class PhalanxStatsSpecialController extends WikiaSpecialPageController {
 		unset($row['comment']);
 		unset($row['ip_hex']);
 
-		// parse block comment
-		if ($data['comment'] != '') {
-			$comment = ParserPool::parse($data['comment'], $this->wg->Title, new ParserOptions())->getText();
+		// parse block reason and comment
+		$parserOptions = ParserOptions::newFromContext( $this->getContext() );
+		$parser = ParserPool::get();
+
+		if ($data['reason'] != '') {
+			$reason = $parser->parse( $data['reason'], $this->getTitle(), $parserOptions )->getText();
+		} else {
+			$reason = '';
 		}
-		else {
+
+		if ($data['comment'] != '') {
+			$comment = $parser->parse( $data['comment'], $this->getTitle(), $parserOptions )->getText();
+		} else {
 			$comment = '';
 		}
 
-		$table  = Xml::buildTable( array( $row ), $tableAttribs, $headers );
-		$table  = str_replace("</table>", "", $table);
-		$table .= "<tr><th>" . wfMsg('phalanx-stats-table-text') . "</th><td colspan='8'>" . htmlspecialchars( $data['text'] ) . "</td></tr>";
-		$table .= "<tr><th>" . wfMsg('phalanx-stats-table-reason')  ."</th><td colspan='8'>{$data['reason']}</td></tr>";
-		$table .= "<tr><th>" . wfMsg('phalanx-stats-table-comment')  ."</th><td colspan='8'>{$comment}</td></tr>";
-		$table .= "</table>";
+		ParserPool::release( $parser );
 
-		$this->setVal('table', $table);
-		$this->setVal('editUrl', $this->phalanxTitle->getLocalUrl( array( 'id' => $data['id'] ) ));
+		$this->response->setValues( [
+			'firstRow' => $row,
+			'text' => $data['text'],
+			'reason' => $reason,
+			'comment' => $comment,
+			'editUrl' => $this->phalanxTitle->getLocalURL( [ 'id' => $data['id'] ] ),
+			'blockId' => $blockId,
+		] );
 
 		/* match statistics */
 		$pager = new PhalanxStatsPager( $blockId );
+		$pager->setContext( $this->getContext() );
 		$this->setVal('statsPager',
 			$pager->getNavigationBar() .
 			$pager->getBody() .
 			$pager->getNavigationBar()
 		);
+
+		// SUS-269: Add JS for unblock button
+		$out->addModules( 'ext.wikia.Phalanx' );
 	}
 
 	private function blockWikia($wikiId) {
