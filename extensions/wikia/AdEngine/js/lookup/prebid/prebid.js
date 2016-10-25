@@ -9,8 +9,7 @@ define('ext.wikia.adEngine.lookup.prebid', [
 	'ext.wikia.adEngine.lookup.lookupFactory',
 	'wikia.document',
 	'wikia.window',
-	require.optional('ext.wikia.adEngine.mobile.mercuryListener')
-], function (adContext, adaptersTracker, appnexus, index, wikiaAdapter, helper, factory, doc, win, mercuryListener) {
+], function (adContext, adaptersTracker, appnexus, index, wikiaAdapter, helper, factory, doc, win) {
 	'use strict';
 
 	var adapters = [
@@ -54,7 +53,6 @@ define('ext.wikia.adEngine.lookup.prebid', [
 			}
 
 			win.pbjs.que.push(function() {
-				console.log('bogna', 'requesting bids');
 				win.pbjs.requestBids({
 					bidsBackHandler: onResponse
 				});
