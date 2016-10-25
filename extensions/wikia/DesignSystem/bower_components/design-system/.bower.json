@@ -6,19 +6,22 @@
     "url": "git://github.com/Wikia/design-system.git"
   },
   "ignore": [
-    "**/.*",
-    "gulpfile.js",
-    "reference-page/"
+    "/*",
+    "!/dist"
   ],
+  "devDependencies": {
+    "ember": "2.8.2",
+    "ember-cli-shims": "0.1.1"
+  },
   "homepage": "https://github.com/Wikia/design-system",
-  "version": "0.14.5",
-  "_release": "0.14.5",
+  "version": "1.1.0",
+  "_release": "1.1.0",
   "_resolution": {
     "type": "version",
-    "tag": "0.14.5",
-    "commit": "886a7a68828c43ff6a07e686fc00fea1cf208301"
+    "tag": "1.1.0",
+    "commit": "29b0fda996a68280e2a32b5e9f31a86748bedf6f"
   },
   "_source": "git://github.com/Wikia/design-system.git",
-  "_target": "0.14.5",
+  "_target": "1.1.0",
   "_originalSource": "Wikia/design-system"
 }
