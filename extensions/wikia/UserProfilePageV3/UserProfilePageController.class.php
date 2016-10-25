@@ -1009,6 +1009,7 @@ class UserProfilePageController extends WikiaController {
 				$avatar = Masthead::newFromUser( $avUser );
 				if ( $avatar->removeFile( true ) ) {
 					$this->clearAttributeCache( $avUser->getId() );
+					$this->bustETagForCurrentUser();
 					$this->setVal( 'status', 'ok' );
 					wfProfileOut( __METHOD__ );
 					return true;
@@ -1020,6 +1021,15 @@ class UserProfilePageController extends WikiaController {
 
 		wfProfileOut( __METHOD__ );
 		return true;
+	}
+
+	/**
+	 * Call invalidateCache on the current user which updates the user's user_touched value.
+	 * That value is used when constructing ETag so we end up cache busting any pages this user
+	 * has saved locally.
+	 */
+	private function bustETagForCurrentUser() {
+		$this->app->wg->User->invalidateCache();
 	}
 
 	/**
