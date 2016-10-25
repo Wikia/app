@@ -1008,8 +1008,7 @@ class UserProfilePageController extends WikiaController {
 			if ( $avUser->getId() !== 0 ) {
 				$avatar = Masthead::newFromUser( $avUser );
 				if ( $avatar->removeFile( true ) ) {
-					$this->clearAttributeCache( $avUser->getId() );
-					$this->bustETagForCurrentUser();
+					$this->clearCaches( $avUser );
 					$this->setVal( 'status', 'ok' );
 					wfProfileOut( __METHOD__ );
 					return true;
@@ -1023,13 +1022,31 @@ class UserProfilePageController extends WikiaController {
 		return true;
 	}
 
+	private function clearCaches( User $user ) {
+		$this->clearAttributeCache( $user->getId() );
+		$this->bustETagsForUserPage( $user );
+		$this->bustETagsForAllPagesIfNecessary( $user );
+
+	}
+
 	/**
-	 * Call invalidateCache on the current user which updates the user's user_touched value.
-	 * That value is used when constructing ETag so we end up cache busting any pages this user
-	 * has saved locally.
+	 *
+	 * @param User $user
 	 */
-	private function bustETagForCurrentUser() {
-		$this->app->wg->User->invalidateCache();
+	private function bustETagsForUserPage( User $user ) {
+		$user->getUserPage()->invalidateCache();
+	}
+
+	/**
+	 * Call invalidateCache for the current user if it's the current user whose avatar we've removed.
+	 * This is because the global header (which contains the avatar) is cached along with the page, so
+	 * any article pages which the user has in browser cache contain the stale avatar value. invalidateCache
+	 * updates the user's last_touched value which is used when validating ETags.
+	 */
+	private function bustETagsForAllPagesIfNecessary( User $user ) {
+		if ( $this->wg->User->getId() == $user->getId() ) {
+			$user->invalidateCache();
+		}
 	}
 
 	/**
