@@ -412,6 +412,8 @@ var NodeChatDiscussion = Backbone.View.extend({
 });
 //TODO: rename it to frame NodeChatFrame ?
 var NodeChatUsers = Backbone.View.extend({
+	actionTemplate: _.template( $('#user-action-template').html() ),
+	actionTemplateNoUrl: _.template( $('#user-action-template-no-url').html() ),
 	initialize: function(options) {
 		this.model.users.bind('add', $.proxy(this.addUser,this));
 		this.model.users.bind('remove', $.proxy(this.removeUser, this));
@@ -551,9 +553,7 @@ var NodeChatUsers = Backbone.View.extend({
 		if (actions.regular && actions.regular.length) {
 			var regularActions = ul.clone().addClass('regular-actions');
 			for (var i in actions.regular) {
-				var action = actions.regular[i],
-					template = _.template( $('#user-action-'+action+'-template').html() );
-
+				var action = actions.regular[i];
 				if (action == 'profile') {
 					action = /Message_Wall/.test(window.wgChatPathToProfilePage) ? 'message-wall' : 'talk-page';
 					location = window.wgChatPathToProfilePage.replace('$1', username);
@@ -566,7 +566,7 @@ var NodeChatUsers = Backbone.View.extend({
 				}
 
 				regularActions.append(
-					template({
+					this[ location ? 'actionTemplate' : 'actionTemplateNoUrl' ]({
 						actionUrl: location,
 						actionName: action,
 						actionDesc: mw.message('chat-user-menu-' + action).escaped()
@@ -580,11 +580,10 @@ var NodeChatUsers = Backbone.View.extend({
 		// admin actions
 		if (actions.admin && actions.admin.length) {
 			var adminActions = ul.clone().addClass('admin-actions');
-			for (var i in actions.admin) { 
-				var action = actions.admin[i],
-					template = _.template( $('#user-action-'+action+'-template').html() );
+			for (var i in actions.admin) {
+				var action = actions.admin[i];
 				adminActions.append(
-					template({
+					this.actionTemplateNoUrl({
 						actionName: action,
 						actionDesc: mw.message('chat-user-menu-' + action).escaped()
 					})

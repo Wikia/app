@@ -95,7 +95,6 @@ class ChatWidgetTest extends WikiaBaseTest {
 		// static method mocks
 		$this->mockStaticMethod( 'ChatWidget', 'getUsersInfo', $chatUsersInfo );
 		$this->mockStaticMethod( 'AvatarService', 'getAvatarUrl', 'www.image.com' );
-		$this->mockStaticMethod( 'DesignSystemHelper', 'getSvg', '<svg></svg>' );
 
 		$vars = ChatWidget::getTemplateVars( $fromParserTag );
 
@@ -112,7 +111,6 @@ class ChatWidgetTest extends WikiaBaseTest {
 				'expected' => [
 					'blankImgUrl' => 'www.url.com',
 					'buttonText' => 'message',
-					'buttonIcon' => '<svg></svg>',
 					'guidelinesText' => 'message',
 					'fromParserTag' => true,
 					'sectionClassName' => 'ChatWidget',
@@ -134,7 +132,6 @@ class ChatWidgetTest extends WikiaBaseTest {
 				'expected' => [
 					'blankImgUrl' => 'www.url.com',
 					'buttonText' => 'message',
-					'buttonIcon' => '<svg></svg>',
 					'guidelinesText' => 'message',
 					'fromParserTag' => false,
 					'sectionClassName' => 'module',
@@ -156,7 +153,6 @@ class ChatWidgetTest extends WikiaBaseTest {
 				'expected' => [
 					'blankImgUrl' => 'www.url.com',
 					'buttonText' => 'message',
-					'buttonIcon' => '<svg></svg>',
 					'guidelinesText' => 'message',
 					'fromParserTag' => false,
 					'sectionClassName' => 'module',
@@ -178,7 +174,6 @@ class ChatWidgetTest extends WikiaBaseTest {
 				'expected' => [
 					'blankImgUrl' => 'www.url.com',
 					'buttonText' => 'message',
-					'buttonIcon' => '<svg></svg>',
 					'guidelinesText' => 'message',
 					'fromParserTag' => true,
 					'sectionClassName' => 'ChatWidget',
@@ -200,7 +195,6 @@ class ChatWidgetTest extends WikiaBaseTest {
 				'expected' => [
 					'blankImgUrl' => 'www.url.com',
 					'buttonText' => 'message',
-					'buttonIcon' => '<svg></svg>',
 					'guidelinesText' => 'message',
 					'fromParserTag' => true,
 					'sectionClassName' => 'ChatWidget',
@@ -222,7 +216,6 @@ class ChatWidgetTest extends WikiaBaseTest {
 				'expected' => [
 					'blankImgUrl' => 'www.url.com',
 					'buttonText' => 'message',
-					'buttonIcon' => '<svg></svg>',
 					'guidelinesText' => 'message',
 					'fromParserTag' => true,
 					'sectionClassName' => 'ChatWidget',
