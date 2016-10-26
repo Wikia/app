@@ -16,18 +16,18 @@ define('ext.wikia.adEngine.video.uapVideoAd', [
 		return height;
 	}
 
-	function toggle(container, video, imageContainer, showAd) {
+	function toggle(container, video, ad, showAd) {
 		if (showAd) {
 			container.style.height = video.offsetHeight + 'px';
-			container.style.height = getOriginalHeight(imageContainer);
+			container.style.height = getOriginalHeight(ad);
 
 			setTimeout(function () {
 				DOMElementTweaker.hide(video, false);
-				DOMElementTweaker.removeClass(imageContainer, 'hidden');
+				DOMElementTweaker.removeClass(ad, 'hidden');
 			}, animationDuration);
 		} else {
-			container.style.height = imageContainer.offsetHeight + 'px';
-			DOMElementTweaker.hide(imageContainer, false);
+			container.style.height = ad.offsetHeight + 'px';
+			DOMElementTweaker.hide(ad, false);
 			DOMElementTweaker.removeClass(video, 'hidden');
 			container.style.height = video.offsetHeight + 'px';
 		}
@@ -37,27 +37,27 @@ define('ext.wikia.adEngine.video.uapVideoAd', [
 		}, animationDuration);
 	}
 
-	function onEnded(container, video, imageContainer) {
+	function onEnded(container, video, ad) {
 		video.addEventListener('ended', function () {
-			toggle(container, video, imageContainer, true);
+			toggle(container, video, ad, true);
 		});
 	}
 
-	function init(container, imageContainer, url) {
+	function init(container, ad, url) {
 		var videoElement = doc.createElement('video');
 
 		videoElement.src = url;
 		DOMElementTweaker.hide(videoElement, false);
 		container.appendChild(videoElement);
 
-		onEnded(container, videoElement, imageContainer);
+		onEnded(container, videoElement, ad);
 
 		return videoElement;
 	}
 
-	function playAndToggle(container, video, imageContainer) {
+	function playAndToggle(container, video, ad) {
 		video.play();
-		toggle(container, video, imageContainer, false);
+		toggle(container, video, ad, false);
 	}
 
 	return {
