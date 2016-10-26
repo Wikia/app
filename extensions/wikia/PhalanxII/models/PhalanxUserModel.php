@@ -55,6 +55,10 @@ class PhalanxUserModel extends PhalanxModel {
 		$this->user->mBlock->setId( $this->block->id );
 		$this->user->mBlock->setBlockEmail( true );
 		$this->user->mBlock->setBlocker( User::newFromID( $this->block->authorId ) );
+
+		// SUS-351: Prevent Phalanxed user from posting on their own Wall
+		$this->user->mBlock->prevents( 'editownusertalk', true );
+
 		// public
 		$this->user->mBlock->mExpiry = ( isset( $this->block->expires ) && !empty( $this->block->expires ) ) ? $this->block->expires : 'infinity';
 		$this->user->mBlock->mTimestamp = ( isset( $this->block->timestamp ) ? $this->block->timestamp : wfTimestampNow() );
