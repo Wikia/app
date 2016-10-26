@@ -33,10 +33,14 @@ require(['jquery', 'mw', 'phalanx', 'BannerNotification'], function($, mw, phala
 			var singleModeWrapper = $('#singlemode'),
 				bulkModeWrapper = $('#bulkmode');
 
+			// SUS-1191: preload single filter contents into bulk mode textbox
 			$bulkFilter.val($filter.val());
 
 			singleModeWrapper.slideUp();
 			bulkModeWrapper.slideDown();
+
+			// SUS-1191: autofocus newly revealed input field
+			$bulkFilter.focus();
 		}).
 
 		// handle "single mode" button
@@ -46,6 +50,9 @@ require(['jquery', 'mw', 'phalanx', 'BannerNotification'], function($, mw, phala
 
 			singleModeWrapper.slideDown();
 			bulkModeWrapper.slideUp();
+
+			// SUS-1191: autofocus newly revealed input field
+			$filter.focus();
 		}).
 
 		// handle "validate regex" button
