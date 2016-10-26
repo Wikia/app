@@ -2,6 +2,7 @@
 @import 'skins/shared/color';
 
 @import 'avatar';
+@import 'clamp';
 @import 'ShareModal';
 
 $reply-icon: '/extensions/wikia/EmbeddableDiscussions/images/reply.svg';
@@ -75,6 +76,10 @@ $discussion-deleted-actions-opacity: .5;
 		font-size: $font-size-regular;
 		line-height: $avatar-size;
 		z-index: 1;
+	}
+
+	.clamp {
+		@include clamp(3);
 	}
 
 	.embeddable-discussions-default-avatar {
