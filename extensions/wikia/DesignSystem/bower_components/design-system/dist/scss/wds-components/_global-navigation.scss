@@ -1,41 +1,41 @@
-$border-top-width: 6px;
-$nav-height: 49px;
-// this variable is used in Mercury specific styles - do not remove it
-$wds-global-navigation-outer-height: $nav-height + $border-top-width;
-
-$nav-background-color: $color-white;
-
-$logo-width: 230px;
-$search-input-padding: 3px 4px;
-$notification-counter-size: 18px;
-
-$search-transition-duration: 200ms;
-$search-buttons-transition-duration: 50ms;
-$search-buttons-transition-delay: $search-transition-duration - $search-buttons-transition-duration;
-$hover-transition-duration: 300ms !default;
-
-@mixin visible-search-input {
-	&__search-input {
-		// transitioned property: padding;
-		padding: $search-input-padding;
-		position: relative;
-		top: auto;
-	}
-}
-
-@mixin search-label-icon-default-hover-color {
-	&__search-label-icon:hover {
-		color: $color-dark-blue-gray;
-	}
-}
-
-@mixin search-input-default-placeholder-color {
-	&__search-input::placeholder {
-		color: $color-dark-blue-gray;
-	}
-}
-
 .wds-global-navigation {
+	$border-top-width: 6px;
+	$nav-height: 49px;
+	// this variable is used in Mercury specific styles - do not remove it
+	$wds-global-navigation-outer-height: $nav-height + $border-top-width;
+
+	$nav-background-color: $color-white;
+
+	$logo-width: 230px;
+	$search-input-padding: 3px 4px;
+	$notification-counter-size: 18px;
+
+	$search-transition-duration: 200ms;
+	$search-buttons-transition-duration: 50ms;
+	$search-buttons-transition-delay: $search-transition-duration - $search-buttons-transition-duration;
+	$hover-transition-duration: 300ms !default;
+
+	@mixin visible-search-input {
+		&__search-input {
+			// transitioned property: padding;
+			padding: $search-input-padding;
+			position: relative;
+			top: auto;
+		}
+	}
+
+	@mixin search-label-icon-default-hover-color {
+		&__search-label-icon:hover {
+			color: $color-dark-blue-gray;
+		}
+	}
+
+	@mixin search-input-default-placeholder-color {
+		&__search-input::placeholder {
+			color: $color-dark-blue-gray;
+		}
+	}
+
 	background-color: $nav-background-color;
 	border-image: linear-gradient(to right, $color-dark-blue-gray 40%, $color-slate-gray 40%) 1 0 0;
 	border-top: $border-top-width solid $color-slate-gray;
