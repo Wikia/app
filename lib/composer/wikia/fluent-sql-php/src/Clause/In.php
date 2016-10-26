@@ -17,30 +17,38 @@ class In implements ClauseInterface {
 	 */
 	protected $values;
 
-	/**
-	 * @var bool
-	 */
-	protected $in;
-
-	public function __construct($values, $in=true) {
+	public function __construct($values) {
 		$this->values = $values;
-		$this->in = $in;
 	}
 
 	public function build(Breakdown $bk, $tabs) {
-		if (!$this->in) {
-			$bk->append(" NOT");
+		if (!$this->hasSingleValue()) {
+			$bk->append(" (");
 		}
-
-		$bk->append(" IN");
-		$bk->append(" (");
 
 		if ($this->values instanceof SQL) {
 			$this->values->build($bk, $tabs);
+		} else if (!empty($this->values)) {
+			$doCommaValues = false;
+			foreach ($this->values as $val) {
+				/** @var Values $val */
+				if ($doCommaValues) {
+					$bk->append(",");
+				} else {
+					$doCommaValues = true;
+				}
+				$val->build($bk, $tabs);
+			}
 		} else {
-			$bk->append(explode(',', $this->values));
+			$bk->append(" NULL");
 		}
 
-		$bk->append(" )");
+		if (!$this->hasSingleValue()) {
+			$bk->append(" )");
+		}
+	}
+
+	public function hasSingleValue() {
+		return count($this->values) == 1 && $this->values[0] instanceof Values;
 	}
 }

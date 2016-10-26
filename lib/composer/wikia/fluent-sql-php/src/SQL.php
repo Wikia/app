@@ -1288,13 +1288,13 @@ class SQL {
 
 		if ($condition instanceof Clause\Condition) {
 			$condition->equality($conditionType);
-			$condition->right(self::instanceHelper('Clause\\Field', $args));
+			$condition->right(self::instanceHelper('Clause\\In', [$args]));
 
 			return $this->called($condition);
 		} else {
 			$condition = new Clause\Condition();
 			$condition->equality($conditionType);
-			$condition->right(self::instanceHelper('Clause\\Field', $args));
+			$condition->right(self::instanceHelper('Clause\\In', [$args]));
 
 			$field = new Clause\Field($condition);
 			$this->fields []= $field;
@@ -1464,9 +1464,6 @@ class SQL {
 		}
 
 		if ($autoIterate) {
-			// Wikia change begin
-			\Wikia\Util\Assert::true( $result instanceof \ResultWrapper, 'FluentSQL::query - did not get ResultWrapper - instead got ' . get_class($result) );
-			// Wikia change end
 			$data = $this->autoIterate($result, $callback);
 		} else {
 			$data = $callback($result);
