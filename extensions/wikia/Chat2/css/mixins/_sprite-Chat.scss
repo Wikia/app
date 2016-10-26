@@ -1,0 +1,238 @@
+
+// @autosprite-start
+@mixin sprite-Chat-base() {
+	background-color: transparent;
+	background-image: url('/extensions/wikia/Chat2/images/sprite-Chat.png'); /* wgCdnStylePath */
+	background-repeat: no-repeat;
+}
+@mixin sprite-Chat($imageName,$width: 0,$height: 0,$offset-x: 0,$offset-y: 0) {
+	$image-x: -1;
+	$image-y: -1;
+	$image-width: -1;
+	$image-height: -1;
+	// @autosprite-image-details: icon-chat_bubble.png@72,0,44edb7af5e5327fde3eb141b6ac9b920
+	@if $imageName == 'icon-chat_bubble' {
+		$image-x: 72px;
+		$image-y: 0px;
+		$image-width: 17px;
+		$image-height: 15px;
+	}
+	// @autosprite-image-details: icon-chat_mod.png@101,0,846e7c899ccaab166e49fe15c9d2359f
+	@if $imageName == 'icon-chat_mod' {
+		$image-x: 101px;
+		$image-y: 0px;
+		$image-width: 15px;
+		$image-height: 15px;
+	}
+	// @autosprite-image-details: icon-staff-dark.png@128,0,973195876279cb22992622cb1f106294
+	@if $imageName == 'icon-staff-dark' {
+		$image-x: 128px;
+		$image-y: 0px;
+		$image-width: 14px;
+		$image-height: 14px;
+	}
+	// @autosprite-image-details: icon-staff-light.png@154,0,811dd6088e9848c6c2e1f13180cd51fb
+	@if $imageName == 'icon-staff-light' {
+		$image-x: 154px;
+		$image-y: 0px;
+		$image-width: 14px;
+		$image-height: 14px;
+	}
+	// @autosprite-image-details: menu-allow-dark.png@180,0,964716a6240bf5866e21426f3d3faac4
+	@if $imageName == 'menu-allow-dark' {
+		$image-x: 180px;
+		$image-y: 0px;
+		$image-width: 19px;
+		$image-height: 18px;
+	}
+	// @autosprite-image-details: menu-allow-light.png@211,0,a48c0dcf10563fd193767544fb3a8060
+	@if $imageName == 'menu-allow-light' {
+		$image-x: 211px;
+		$image-y: 0px;
+		$image-width: 19px;
+		$image-height: 18px;
+	}
+	// @autosprite-image-details: menu-ban-dark.png@242,0,4b0ed7a1b6bda335fd8336cc99b0148e
+	@if $imageName == 'menu-ban-dark' {
+		$image-x: 242px;
+		$image-y: 0px;
+		$image-width: 19px;
+		$image-height: 18px;
+	}
+	// @autosprite-image-details: menu-ban-light.png@273,0,56a4a9197aea0d72c726bbeddaaa7e7a
+	@if $imageName == 'menu-ban-light' {
+		$image-x: 273px;
+		$image-y: 0px;
+		$image-width: 19px;
+		$image-height: 18px;
+	}
+	// @autosprite-image-details: menu-chat_mod-dark.png@304,0,acbab603bf3b3bdd17006ef64dd3443a
+	@if $imageName == 'menu-chat_mod-dark' {
+		$image-x: 304px;
+		$image-y: 0px;
+		$image-width: 19px;
+		$image-height: 18px;
+	}
+	// @autosprite-image-details: menu-chat_mod-light.png@335,0,3693b0a1bd6bc006a063b2832da4514c
+	@if $imageName == 'menu-chat_mod-light' {
+		$image-x: 335px;
+		$image-y: 0px;
+		$image-width: 19px;
+		$image-height: 18px;
+	}
+	// @autosprite-image-details: menu-contributions-dark.png@366,0,444105d21ec22b2417f35030bc789969
+	@if $imageName == 'menu-contributions-dark' {
+		$image-x: 366px;
+		$image-y: 0px;
+		$image-width: 19px;
+		$image-height: 18px;
+	}
+	// @autosprite-image-details: menu-contributions-light.png@397,0,21e26857ffc55aabf061d1efd0bf9403
+	@if $imageName == 'menu-contributions-light' {
+		$image-x: 397px;
+		$image-y: 0px;
+		$image-width: 19px;
+		$image-height: 18px;
+	}
+	// @autosprite-image-details: menu-kick-dark.png@428,0,08688633eccef69a7791b861c09a7e16
+	@if $imageName == 'menu-kick-dark' {
+		$image-x: 428px;
+		$image-y: 0px;
+		$image-width: 19px;
+		$image-height: 18px;
+	}
+	// @autosprite-image-details: menu-kick-light.png@459,0,3c438874c328ad695f13828e1bf04ea4
+	@if $imageName == 'menu-kick-light' {
+		$image-x: 459px;
+		$image-y: 0px;
+		$image-width: 19px;
+		$image-height: 18px;
+	}
+	// @autosprite-image-details: menu-message_wall-dark.png@490,0,2efa835a2716775812132890de3ac503
+	@if $imageName == 'menu-message_wall-dark' {
+		$image-x: 490px;
+		$image-y: 0px;
+		$image-width: 19px;
+		$image-height: 17px;
+	}
+	// @autosprite-image-details: menu-message_wall-light.png@521,0,ea313a4fd3b8b9d11861673c91054093
+	@if $imageName == 'menu-message_wall-light' {
+		$image-x: 521px;
+		$image-y: 0px;
+		$image-width: 19px;
+		$image-height: 17px;
+	}
+	// @autosprite-image-details: menu-private_message-dark.png@552,0,1584461e1e346ae4c1855f0410bd232f
+	@if $imageName == 'menu-private_message-dark' {
+		$image-x: 552px;
+		$image-y: 0px;
+		$image-width: 19px;
+		$image-height: 16px;
+	}
+	// @autosprite-image-details: menu-private_message-light.png@583,0,ee382fe97cf254c985e3794829d02dbc
+	@if $imageName == 'menu-private_message-light' {
+		$image-x: 583px;
+		$image-y: 0px;
+		$image-width: 19px;
+		$image-height: 16px;
+	}
+	// @autosprite-image-details: menu-private_message_block-dark.png@614,0,c29ef7c8880272ab227424efd6b6f9d1
+	@if $imageName == 'menu-private_message_block-dark' {
+		$image-x: 614px;
+		$image-y: 0px;
+		$image-width: 15px;
+		$image-height: 17px;
+	}
+	// @autosprite-image-details: menu-private_message_block-light.png@641,0,ce976b00e00150b609509b4e18bd3468
+	@if $imageName == 'menu-private_message_block-light' {
+		$image-x: 641px;
+		$image-y: 0px;
+		$image-width: 15px;
+		$image-height: 17px;
+	}
+	@if $image-x != -1 {
+		$position-x: 0px - $image-x;
+		$position-y: 0px - $image-y;
+		@if $width > 0 {
+			$position-x: $position-x + ( $width - $image-width ) / 2;
+		}
+		@if $height > 0 {
+			$position-y: $position-y + ( $height - $image-height ) / 2;
+		}
+		@if $offset-x != 0 {
+			$position-x: $position-x + $offset-x;
+		}
+		@if $offset-y != 0 {
+			$position-y: $position-y + $offset-y;
+		}
+		background-position: $position-x $position-y;
+	}
+}
+@mixin sprite-Chat-full($imageName, $width: 0, $height: 0,$offset-x: 0,$offset-y: 0) {
+	@include sprite-Chat-base;
+	@include sprite-Chat($imageName,$width,$height,$offset-x,$offset-y);
+}
+@mixin sprite-Chat-deep($width: 0,$height: 0) {
+	@include sprite-Chat-base;
+	&.icon-chat-bubble {
+		@include sprite-Chat('icon-chat_bubble',$width,$height);
+	}
+	&.icon-chat-mod {
+		@include sprite-Chat('icon-chat_mod',$width,$height);
+	}
+	&.icon-staff-dark {
+		@include sprite-Chat('icon-staff-dark',$width,$height);
+	}
+	&.icon-staff-light {
+		@include sprite-Chat('icon-staff-light',$width,$height);
+	}
+	&.menu-allow-dark {
+		@include sprite-Chat('menu-allow-dark',$width,$height);
+	}
+	&.menu-allow-light {
+		@include sprite-Chat('menu-allow-light',$width,$height);
+	}
+	&.menu-ban-dark {
+		@include sprite-Chat('menu-ban-dark',$width,$height);
+	}
+	&.menu-ban-light {
+		@include sprite-Chat('menu-ban-light',$width,$height);
+	}
+	&.menu-chat-mod-dark {
+		@include sprite-Chat('menu-chat_mod-dark',$width,$height);
+	}
+	&.menu-chat-mod-light {
+		@include sprite-Chat('menu-chat_mod-light',$width,$height);
+	}
+	&.menu-contributions-dark {
+		@include sprite-Chat('menu-contributions-dark',$width,$height);
+	}
+	&.menu-contributions-light {
+		@include sprite-Chat('menu-contributions-light',$width,$height);
+	}
+	&.menu-kick-dark {
+		@include sprite-Chat('menu-kick-dark',$width,$height);
+	}
+	&.menu-kick-light {
+		@include sprite-Chat('menu-kick-light',$width,$height);
+	}
+	&.menu-message-wall-dark {
+		@include sprite-Chat('menu-message_wall-dark',$width,$height);
+	}
+	&.menu-message-wall-light {
+		@include sprite-Chat('menu-message_wall-light',$width,$height);
+	}
+	&.menu-private-message-dark {
+		@include sprite-Chat('menu-private_message-dark',$width,$height);
+	}
+	&.menu-private-message-light {
+		@include sprite-Chat('menu-private_message-light',$width,$height);
+	}
+	&.menu-private-message-block-dark {
+		@include sprite-Chat('menu-private_message_block-dark',$width,$height);
+	}
+	&.menu-private-message-block-light {
+		@include sprite-Chat('menu-private_message_block-light',$width,$height);
+	}
+}
+// @autosprite-end

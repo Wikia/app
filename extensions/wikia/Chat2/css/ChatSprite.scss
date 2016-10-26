@@ -1,0 +1,9 @@
+@import "mixins/sprite-Chat";
+
+// Default and hover icons depend on theme darkness
+$sprite-normal: '-dark';
+$sprite-hover: '-light';
+@if ($is-dark-wiki) {
+	$sprite-normal: '-light';
+	$sprite-hover: '-dark';
+}
