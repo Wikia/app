@@ -78,10 +78,10 @@ define('ext.wikia.adEngine.template.bfaaDesktop', [
 		if (params.videoUrl && params.videoTriggerElement) {
 			divs = doc.querySelectorAll('#' + params.slotName + ' > div');
 			imageContainer = divs[divs.length - 1];
-			video = uapVideoAd.init(doc.getElementById(params.slotName), imageContainer, params.videoUrl);
+			video = uapVideoAd.init(adContainer, imageContainer, params.videoUrl);
 
 			params.videoTriggerElement.addEventListener('click', function () {
-				uapVideoAd.playAndToggle(video, imageContainer);
+				uapVideoAd.playAndToggle(adContainer, video, imageContainer);
 			});
 		}
 	}

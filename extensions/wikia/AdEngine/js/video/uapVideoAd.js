@@ -16,32 +16,30 @@ define('ext.wikia.adEngine.video.uapVideoAd', [
 		return height;
 	}
 
-	function toggle(video, imageContainer, showAd) {
-		var leaderboard = doc.getElementById('TOP_LEADERBOARD');
-
+	function toggle(container, video, imageContainer, showAd) {
 		if (showAd) {
-			leaderboard.style.height = video.offsetHeight + 'px';
-			leaderboard.style.height = getOriginalHeight(imageContainer);
+			container.style.height = video.offsetHeight + 'px';
+			container.style.height = getOriginalHeight(imageContainer);
 
 			setTimeout(function () {
 				DOMElementTweaker.hide(video, false);
 				DOMElementTweaker.removeClass(imageContainer, 'hidden');
 			}, animationDuration);
 		} else {
-			leaderboard.style.height = imageContainer.offsetHeight + 'px';
+			container.style.height = imageContainer.offsetHeight + 'px';
 			DOMElementTweaker.hide(imageContainer, false);
 			DOMElementTweaker.removeClass(video, 'hidden');
-			leaderboard.style.height = video.offsetHeight + 'px';
+			container.style.height = video.offsetHeight + 'px';
 		}
 
 		setTimeout(function () {
-			leaderboard.style.height = '';
+			container.style.height = '';
 		}, animationDuration);
 	}
 
-	function onEnded(video, imageContainer) {
+	function onEnded(container, video, imageContainer) {
 		video.addEventListener('ended', function () {
-			toggle(video, imageContainer, true);
+			toggle(container, video, imageContainer, true);
 		});
 	}
 
@@ -52,14 +50,14 @@ define('ext.wikia.adEngine.video.uapVideoAd', [
 		DOMElementTweaker.hide(videoElement, false);
 		container.appendChild(videoElement);
 
-		onEnded(videoElement, imageContainer);
+		onEnded(container, videoElement, imageContainer);
 
 		return videoElement;
 	}
 
-	function playAndToggle(video, imageContainer) {
+	function playAndToggle(container, video, imageContainer) {
 		video.play();
-		toggle(video, imageContainer, false);
+		toggle(container, video, imageContainer, false);
 	}
 
 	return {

@@ -32,7 +32,8 @@ define('ext.wikia.adEngine.template.bfaaMobile', [
 		wrapper;
 
 	function runOnReady(iframe, params) {
-		var aspectRatio = params.aspectRatio,
+		var adContainer = doc.getElementById(params.slotName),
+			aspectRatio = params.aspectRatio,
 			adsModule = win.Mercury.Modules.Ads.getInstance(),
 			adjustPadding = function () {
 				var viewPortWidth = Math.max(doc.documentElement.clientWidth, win.innerWidth || 0),
@@ -60,10 +61,10 @@ define('ext.wikia.adEngine.template.bfaaMobile', [
 			slotTweaker.onReady(params.slotName, function() {
 				var divs = doc.querySelectorAll('#' + params.slotName + ' > div'),
 					imageContainer = divs[divs.length - 1],
-					video = uapVideoAd.init(doc.getElementById(params.slotName), imageContainer, params.videoUrl);
+					video = uapVideoAd.init(adContainer, imageContainer, params.videoUrl);
 
 				params.videoTriggerElement.addEventListener('click', function () {
-					uapVideoAd.playAndToggle(video, imageContainer);
+					uapVideoAd.playAndToggle(adContainer, video, imageContainer);
 					aspectRatio = video.videoWidth / video.videoHeight;
 					onResize();
 				});
