@@ -1,4 +1,14 @@
-<!doctype html>
+<?php
+
+function convert_to_h2( $str ) {
+	return str_replace(
+		[ '/img3.wikia.nocookie.net/', '/img4.wikia.nocookie.net/' ],
+		'/images2.wikia.nocookie.net/',
+		str_replace( 'http://', 'https://', $str )
+	);
+}
+
+?><!doctype html>
 <html lang="<?= $lang ?>" dir="<?= $dir ?>" class="<?= implode(' ', array_map( 'Sanitizer::escapeClass', $htmlClasses )) ?>">
 <head>
 	<meta charset="utf-8">
@@ -43,7 +53,7 @@
 	TIME:     +1.0s
 	-->
 
-	<?= $cssLinks ?>
+	<?= convert_to_h2( $cssLinks ); ?>
 
 	<!-- / cssLinks -->
 
@@ -62,7 +72,7 @@
 	TIME:     +0.1s
 	-->
 
-	<?= $topScripts ?>
+	<?= convert_to_h2( $topScripts ); ?>
 
 	<!-- / $topScripts -->
 
@@ -81,7 +91,7 @@
 	TIME:     +0.2s
 	-->
 
-	<?= $globalBlockingScripts; /*needed for jsLoader and for the async loading of CSS files.*/ ?>
+	<?= convert_to_h2( $globalBlockingScripts ); /*needed for jsLoader and for the async loading of CSS files.*/ ?>
 
 	<!-- / $globalBlockingScripts -->
 
@@ -122,7 +132,7 @@
 		<![endif]-->
 
 		<!-- Combined JS files and head scripts -->
-		<?= $jsFiles ?>
+		<?= convert_to_h2( $jsFiles ); ?>
 	<? endif ?>
 
 	<!-- / $jsFiles (top) -->
@@ -163,30 +173,6 @@
 
 
 <body class="<?= implode(' ', $bodyClasses) ?>" <?= $itemType ?>>
-
-
-
-
-
-
-
-
-
-	<!-- Rychu preloading -->
-
-	<img src="http://sandbox-s1.slot1.wikia.com/skins/shared/images/sprite.png" height="1" alt="preload">
-	<img src="http://img3.wikia.nocookie.net/__cb15/scrubs/images/5/50/Wiki-background" height="1" alt="preload">
-	<link rel="stylesheet" src="http://sandbox-s1.slot1.wikia.com/skins/oasis/fonts/yanone/YanoneKaffeesatz-Regular-webfont.woff" lazyload>
-
-	<!-- / Rychu preloading -->
-
-
-
-
-
-
-
-
 
 <div class="background-image-gradient"></div>
 
@@ -327,7 +313,7 @@ REQUESTS:
 SIZE:
 -->
 
-<!--<? $bottomScripts ?>-->
+<!--<? convert_to_h2( $bottomScripts ); ?>-->
 <!--<? $nielsen ?>-->
 
 <!-- / $bottomScripts -->
