@@ -199,35 +199,6 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 					]
 				]
 			],
-			'advertise' => [
-				'header' => [
-					'type' => 'line-text',
-					'title' => [
-						'type' => 'translatable-text',
-						'key' => 'global-footer-advertise-header'
-					]
-				],
-				'links' => [
-					[
-						'type' => 'link-text',
-						'title' => [
-							'type' => 'translatable-text',
-							'key' => 'global-footer-advertise-link-media-kit'
-						],
-						'href' => $this->getHref( 'media-kit' ),
-						'tracking_label' => 'advertise.media-kit',
-					],
-					[
-						'type' => 'link-text',
-						'title' => [
-							'type' => 'translatable-text',
-							'key' => 'global-footer-advertise-link-contact'
-						],
-						'href' => $this->getHref( 'media-kit-contact' ),
-						'tracking_label' => 'advertise.contact',
-					]
-				]
-			],
 			'licensing_and_vertical' => [
 				'description' => [
 					'type' => 'translatable-text',
@@ -244,6 +215,7 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 		$data['fandom_overview'] = $this->getFandomOverview();
 		$data['follow_us'] = $this->getFollowUs();
 		$data['community'] = $this->getCommunity();
+		$data['advertise'] = $this->getAdvertise();
 
 		return $data;
 	}
@@ -560,6 +532,44 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 				],
 				'href' => $this->getHref( 'help' ),
 				'tracking_label' => 'community.help',
+			];
+		}
+
+		return $data;
+	}
+
+	private function getAdvertise() {
+		$data = [
+			'header' => [
+				'type' => 'line-text',
+				'title' => [
+					'type' => 'translatable-text',
+					'key' => 'global-footer-advertise-header'
+				]
+			],
+			'links' => [
+				[
+					'type' => 'link-text',
+					'title' => [
+						'type' => 'translatable-text',
+						'key' => 'global-footer-advertise-link-media-kit'
+					],
+					'href' => $this->getHref( 'media-kit' ),
+					'tracking_label' => 'advertise.media-kit',
+				]
+			]
+		];
+
+		$mediaKitContactHref = $this->getHref( 'media-kit-contact' );
+		if ( !empty( $mediaKitContactHref ) ) {
+			$data['links'][] = [
+				'type' => 'link-text',
+				'title' => [
+					'type' => 'translatable-text',
+					'key' => 'global-footer-advertise-link-contact'
+				],
+				'href' => $mediaKitContactHref,
+				'tracking_label' => 'advertise.contact',
 			];
 		}
 
