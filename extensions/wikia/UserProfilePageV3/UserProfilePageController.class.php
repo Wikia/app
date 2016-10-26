@@ -1026,7 +1026,6 @@ class UserProfilePageController extends WikiaController {
 		$this->clearAttributeCache( $user->getId() );
 		$this->bustETagsForUserPage( $user );
 		$this->bustETagsForAllPagesIfNecessary( $user );
-
 	}
 
 	/**
@@ -1038,10 +1037,11 @@ class UserProfilePageController extends WikiaController {
 	}
 
 	/**
-	 * Call invalidateCache for the current user if it's the current user whose avatar we've removed.
-	 * This is because the global header (which contains the avatar) is cached along with the page, so
-	 * any article pages which the user has in browser cache contain the stale avatar value. invalidateCache
-	 * updates the user's last_touched value which is used when validating ETags.
+	 * Call invalidateCache for the current user if the user is removing their own avatar. This is necessary
+	 * because the global header (which contains the avatar) is cached along with the page, so any article page
+	 * the user has in browser cache will contain their stale avatar value. invalidateCache updates the
+	 * user's last_touched value which is used when validating ETags, effectively busting all pages the user
+	 * has in their browser cache.
 	 */
 	private function bustETagsForAllPagesIfNecessary( User $user ) {
 		if ( $this->wg->User->getId() == $user->getId() ) {
