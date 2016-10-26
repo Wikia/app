@@ -560,15 +560,14 @@ class DesignSystemGlobalFooterModel extends WikiaModel {
 			]
 		];
 
-		$mediaKitContactHref = $this->getHref( 'media-kit-contact' );
-		if ( !empty( $mediaKitContactHref ) ) {
+		if ( $this->getHref( 'media-kit-contact' ) ) {
 			$data['links'][] = [
 				'type' => 'link-text',
 				'title' => [
 					'type' => 'translatable-text',
 					'key' => 'global-footer-advertise-link-contact'
 				],
-				'href' => $mediaKitContactHref,
+				'href' => $this->getHref( 'media-kit-contact' ),
 				'tracking_label' => 'advertise.contact',
 			];
 		}

@@ -232,7 +232,7 @@ class DesignSystemSharedLinks {
 			'fandom-logo' => 'http://fandom.wikia.com/explore-zh',
 			'terms-of-use' => 'http://zh.wikia.com/wiki/%E4%BD%BF%E7%94%A8%E6%9D%A1%E6%AC%BE',
 			'privacy-policy' => 'http://zh.wikia.com/wiki/Privacy_Policy',
-			'community-central' => 'http://zh.community.wikia.com/wiki/Wikia_%E4%B8%AD%E6%96%87',
+			'community-central' => 'http://zh.community.wikia.com/wiki/Fandom_%E4%B8%AD%E6%96%87',
 			'support' => 'http://zh.community.wikia.com/wiki/Special:Contact',
 			'create-new-wiki' => 'http://www.wikia.com/Special:CreateNewWiki?uselang=zh',
 			'wam' => 'http://www.wikia.com/WAM?langCode=zh',
