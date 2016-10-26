@@ -159,53 +159,6 @@ class UserTest extends \WikiaBaseTest {
 		$this->assertNull( User::getAccessToken( $this->webRequestMock ) );
 	}
 
-	public function testNewFromTokenAuthorizationGranted() {
-		$this->webRequestMock->expects( $this->once() )
-			->method( 'getCookie' )
-			->willReturn( 'qi8H8R7OM4xMUNMPuRAZxlY' );
-
-		$userInfo = new \StdClass;
-		$userInfo->user_id = 1;
-
-		$oClientMock = $this->container->get( HeliosClient::class );
-		$oClientMock->expects( $this->once() )
-			->method( 'info' )
-			->with( 'qi8H8R7OM4xMUNMPuRAZxlY' )
-			->willReturn( $userInfo );
-
-		$this->mockClass( 'Wikia\Service\Helios\HeliosClient', $oClientMock );
-
-		$userMock = $this->getMockBuilder( 'User' )
-			->setMethods( [ 'getGlobalFlag' ] )
-			->getMock();
-		$userMock->expects( $this->once() )
-			->method( 'getGlobalFlag' )
-			->with( $this->equalTo( 'disabled' ) )
-			->will( $this->returnValue( false ) );
-
-		$this->mockClass( 'User', $userMock );
-
-		$this->assertEquals( User::newFromToken( $this->webRequestMock ), \User::newFromId( 1 ) );
-	}
-
-	public function testNewFromTokenAuthorizationDeclined() {
-		$this->webRequestMock->expects( $this->once() )
-			->method( 'getCookie' )
-			->willReturn( 'qi8H8R7OM4xMUNMPuRAZxlY' );
-
-		$userInfo = new \StdClass;
-
-		$clientMock = $this->container->get( HeliosClient::class );
-		$clientMock->expects( $this->once() )
-			->method( 'info' )
-			->with( 'qi8H8R7OM4xMUNMPuRAZxlY' )
-			->willReturn( $userInfo );
-
-		$this->mockClass( 'Wikia\Service\Helios\HeliosClient', $clientMock );
-
-		$this->assertNull( User::newFromToken( $this->webRequestMock ) );
-	}
-
 	public function testAuthenticateAuthenticationFailed() {
 		$username = 'SomeName';
 		$password = 'Password';

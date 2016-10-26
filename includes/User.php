@@ -29,6 +29,7 @@ use Wikia\Service\User\Preferences\PreferenceService;
 use Wikia\Service\User\Permissions\PermissionsService;
 use Wikia\Util\Statistics\BernoulliTrial;
 use Wikia\Service\Helios\HeliosClient;
+use Wikia\Service\User\Auth\CookieHelper;
 use Wikia\Util\PerformanceProfilers\UsernameLookupProfiler;
 
 /**
@@ -89,6 +90,9 @@ class User {
 	const EDIT_TOKEN_SUFFIX = EDIT_TOKEN_SUFFIX;
 	const CACHE_ATTRIBUTES_KEY = "attributes";
 	const GET_SET_OPTION_SAMPLE_RATE = 0.1;
+
+	const INVALIDATE_CACHE_THROTTLE_SESSION_KEY = 'invalidate-cache-throttle';
+	const INVALIDATE_CACHE_THROTTLE = 60; /* seconds */
 
 	private static $PROPERTY_UPSERT_SET_BLOCK = [ "up_user = VALUES(up_user)", "up_property = VALUES(up_property)", "up_value = VALUES(up_value)" ];
 
@@ -217,8 +221,8 @@ class User {
 	/**
 		* @return HeliosClient
 	 */
-	private function getAuthenticationService() {
-		return Injector::getInjector()->get(HeliosClient::class);
+	private static function authenticationService() {
+		return Injector::getInjector()->get( HeliosClient::class );
 	}
 
 	/**
@@ -495,6 +499,64 @@ class User {
 		$user->mFrom = 'session';
 		$user->mRequest = $request;
 		return $user;
+	}
+
+	/**
+	 * Creates a MediaWiki User object based on the token given in the HTTP request.
+	 *
+	 * @param \WebRequest $request the HTTP request data as an object
+	 *
+	 * @return \User on successful authentication
+	 */
+	public static function newFromToken( \WebRequest $request ) {
+		global $wgMemc;
+
+		$cookieHelper = Injector::getInjector()->get( CookieHelper::class );
+		$token = $cookieHelper->getAccessToken( $request );
+
+		if ( !$token ) {
+			return null;
+		}
+
+		try {
+			$tokenInfo = self::authenticationService()->info( $token );
+			if ( empty( $tokenInfo->user_id ) ) {
+				return null;
+			}
+			$user = self::newFromId( $tokenInfo->user_id );
+			$user->setGlobalAuthToken( $token );
+
+			// Dont' return the user object if it's disabled
+			// @see SERVICES-459
+			if ( (bool)$user->getGlobalFlag( 'disabled' ) ) {
+				$cookieHelper->clearAuthenticationCookie( $request->response() );
+				return null;
+			}
+
+			// start the session if there's none so far
+			// the code is borrowed from SpecialUserlogin
+			// @see PLATFORM-1261
+			if ( session_id() == '' ) {
+				$sessionId = substr( hash( 'sha256', $token ), 0, 32 );
+				wfSetupSession( $sessionId );
+				WikiaLogger::instance()->debug( __METHOD__ . '::startSession' );
+
+				// Update mTouched on user when he starts new MW session, but not too often
+				// @see SOC-1326 and SUS-546
+				$throttleKey = wfSharedMemcKey( self::INVALIDATE_CACHE_THROTTLE_SESSION_KEY, $tokenInfo->user_id );
+				$invalidateCacheThrottleTime = $wgMemc->get( $throttleKey );
+				if ( $invalidateCacheThrottleTime === null || $invalidateCacheThrottleTime < time() ) {
+					$wgMemc->set( $throttleKey, time() + self::INVALIDATE_CACHE_THROTTLE, self::INVALIDATE_CACHE_THROTTLE );
+					$user->invalidateCache();
+				}
+			}
+
+			return $user;
+		} catch ( Wikia\Service\Helios\ClientException $e ) {
+			WikiaLogger::instance()->error( __METHOD__, [ 'exception' => $e ] );
+		}
+
+		return null;
 	}
 
 	/**
@@ -4583,7 +4645,7 @@ class User {
 			return false;
 		}
 
-		$tokenInfo = $this->getAuthenticationService()->info( $token );
+		$tokenInfo = self::authenticationService()->info( $token );
 		if ( !empty( $tokenInfo->user_id ) ) {
 			return ( $this->getId() > 0 ) && ( $tokenInfo->user_id == $this->getId() );
 		}
