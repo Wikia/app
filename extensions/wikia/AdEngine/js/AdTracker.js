@@ -1,9 +1,9 @@
 /*global define*/
 /*jshint camelcase:false*/
-define('ext.wikia.adEngine.adTracker', ['wikia.tracker', 'wikia.window', 'wikia.log'], function (tracker, window, log) {
+define('ext.wikia.adEngine.adTracker', ['ext.wikia.adEngine.utils.timeBuckets','wikia.tracker', 'wikia.window', 'wikia.log'], function (timeBuckets, tracker, window, log) {
 	'use strict';
 
-	var timeBuckets = [0.0, 0.5, 1.0, 1.5, 2.0, 2.5, 3.5, 5.0, 8.0, 20.0, 60.0],
+	var buckets = [0.0, 0.5, 1.0, 1.5, 2.0, 2.5, 3.5, 5.0, 8.0, 20.0, 60.0],
 		logGroup = 'ext.wikia.adEngine.adTracker';
 
 	function encodeAsQueryString(extraParams) {
@@ -30,28 +30,6 @@ define('ext.wikia.adEngine.adTracker', ['wikia.tracker', 'wikia.window', 'wikia.
 		return out.join(';');
 	}
 
-	function getTimeBucket(time) {
-		var i,
-			len = timeBuckets.length,
-			bucket;
-
-		for (i = 0; i < len; i += 1) {
-			if (time >= timeBuckets[i]) {
-				bucket = i;
-			}
-		}
-
-		if (bucket === len - 1) {
-			return timeBuckets[bucket] + '+';
-		}
-
-		if (bucket >= 0) {
-			return timeBuckets[bucket] + '-' + timeBuckets[bucket + 1];
-		}
-
-		return 'invalid';
-	}
-
 	/**
 	 * A generic function to track an ad-related event and its timing
 	 *
@@ -72,7 +50,7 @@ define('ext.wikia.adEngine.adTracker', ['wikia.tracker', 'wikia.window', 'wikia.
 				gaLabel = '';
 				value = 0;
 			} else {
-				gaLabel = getTimeBucket(value / 1000);
+				gaLabel = timeBuckets.getTimeBucket(buckets, value / 1000);
 				if (/\+$|invalid/.test(gaLabel)) {
 					category = category.replace('ad', 'ad/error');
 				}

@@ -19,20 +19,23 @@ define('ext.wikia.aRecoveryEngine.recovery.helper', [
 	var logGroup = 'ext.wikia.aRecoveryEngine.recovery.helper',
 		context = adContext.getContext(),
 		customLogEndpoint = '/wikia.php?controller=ARecoveryEngineApi&method=getLogInfo&kind=',
-		onBlockingEventsQueue = [];
-
-	function initEventQueue() {
-		lazyQueue.makeQueue(onBlockingEventsQueue, function (callback) {
+		cb = function (callback) {
 			callback();
-		});
+		},
+		onBlockingEventsQueue = lazyQueue.makeQueue([], cb),
+		onNotBlockingEventsQueue = lazyQueue.makeQueue([], cb);
 
-		doc.addEventListener('sp.blocking', function () {
-			onBlockingEventsQueue.start();
-		});
+	function initEventQueues() {
+		doc.addEventListener('sp.not_blocking', onNotBlockingEventsQueue.start);
+		doc.addEventListener('sp.blocking', onBlockingEventsQueue.start);
 	}
 
 	function addOnBlockingCallback(callback) {
 		onBlockingEventsQueue.push(callback);
+	}
+
+	function addOnNotBlockingCallback(callback) {
+		onNotBlockingEventsQueue.push(callback);
 	}
 
 	function isRecoveryEnabled() {
@@ -50,7 +53,7 @@ define('ext.wikia.aRecoveryEngine.recovery.helper', [
 	}
 
 	function track(type) {
-		if (window._sp_ && !window._sp_.trackingSent) {
+		if (win._sp_ && !win._sp_.trackingSent) {
 			if (Wikia && Wikia.Tracker) {
 				Wikia.Tracker.track({
 					eventName: 'ads.recovery',
@@ -65,9 +68,11 @@ define('ext.wikia.aRecoveryEngine.recovery.helper', [
 					var xmlHttp = new XMLHttpRequest();
 					xmlHttp.open('GET', customLogEndpoint+type, true);
 					xmlHttp.send();
-				} catch (e) {}
+				} catch (e) {
+					log(['track', e], 'error', logGroup);
+				}
 			}
-			window._sp_.trackingSent = true;
+			win._sp_.trackingSent = true;
 		}
 	}
 
@@ -81,12 +86,18 @@ define('ext.wikia.aRecoveryEngine.recovery.helper', [
 		}
 	}
 
+	function getSafeUri(url) {
+		return win._sp_.getSafeUri(url);
+	}
+
 	return {
 		addOnBlockingCallback: addOnBlockingCallback,
-		initEventQueue: initEventQueue,
-		isRecoveryEnabled: isRecoveryEnabled,
+		addOnNotBlockingCallback: addOnNotBlockingCallback,
+		getSafeUri: getSafeUri,
+		initEventQueues: initEventQueues,
 		isBlocking: isBlocking,
 		isRecoverable: isRecoverable,
+		isRecoveryEnabled: isRecoveryEnabled,
 		track: track,
 		verifyContent: verifyContent
 	};

@@ -1,7 +1,7 @@
 <form class="wds-global-navigation__search" action="<?= Sanitizer::encodeAttribute( $model['module']['results']['url'] ); ?>">
 	<div id="searchInputWrapper" class="wds-dropdown wds-global-navigation__search-input-wrapper">
 		<label class="wds-global-navigation__search-label">
-			<?= DesignSystemHelper::getSvg(
+			<?= DesignSystemHelper::renderSvg(
 				'wds-icons-magnifying-glass',
 				'wds-icon wds-icon-small wds-global-navigation__search-label-icon'
 			) ?>
@@ -20,14 +20,14 @@
 			/>
 		</label>
 		<button class="wds-button wds-is-text wds-global-navigation__search-close" type="reset">
-			<?= DesignSystemHelper::getSvg(
+			<?= DesignSystemHelper::renderSvg(
 				'wds-icons-cross',
 				'wds-icon wds-icon-small wds-global-navigation__search-close-icon',
 				wfMessage( 'global-navigation-search-cancel' )->escaped()
 			) ?>
 		</button>
 		<button class="wds-button wds-global-navigation__search-submit" type="submit" data-tracking-label="<?= Sanitizer::encodeAttribute( $model['module']['results']['tracking_label'] ); ?>">
-			<?= DesignSystemHelper::getSvg(
+			<?= DesignSystemHelper::renderSvg(
 				'wds-icons-arrow',
 				'wds-icon wds-icon-small wds-global-navigation__search-submit-icon'
 			) ?>

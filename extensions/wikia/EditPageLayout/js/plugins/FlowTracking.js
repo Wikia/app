@@ -15,7 +15,7 @@
 
 	WE.plugins.flowtracking = $.createClass(WE.plugin,{
 
-		initEditor: function (editor) {
+		init: function (editor) {
 			var namespace = window.mw.config.get('wgNamespaceNumber');
 
 			if (namespace === 0) {

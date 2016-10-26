@@ -75,17 +75,24 @@ $wgHooks['ArticleSaveComplete'][] = 'Masthead::userMastheadInvalidateCache';
  */
 $wgExtensionMessagesFiles['UserProfilePageV3'] = $dir . '/UserProfilePage.i18n.php';
 
-// register messages package for JS
-JSMessages::registerPackage( 'UserProfilePageV3', array(
-	'userprofilepage-edit-modal-header',
-	'user-identity-box-avatar-cancel',
-	'user-identity-box-avatar-save',
-	'userprofilepage-closing-popup-header',
-	'userprofilepage-closing-popup-save-and-quit',
-	'userprofilepage-closing-popup-discard-and-quit',
-	'userprofilepage-closing-popup-cancel',
-	'userprofilepage-edit-modal-error'
-) );
+$wgResourceModules['ext.UserProfilePage.Lightbox'] = [
+	'styles' => 'css/UserProfilePage_modal.scss',
+	'messages' => [
+		'userprofilepage-edit-modal-header',
+		'user-identity-box-avatar-cancel',
+		'user-identity-box-avatar-save',
+		'userprofilepage-closing-popup-header',
+		'userprofilepage-closing-popup-save-and-quit',
+		'userprofilepage-closing-popup-discard-and-quit',
+		'userprofilepage-closing-popup-cancel',
+		'userprofilepage-edit-modal-error',
+		'oasis-generic-error'
+	],
+	'dependencies' => [ 'mediawiki.jqueryMsg' ],
+	'localBasePath' => __DIR__,
+	'remoteExtPath' => 'wikia'
+];
+
 /**
  * extension related configuration
  */

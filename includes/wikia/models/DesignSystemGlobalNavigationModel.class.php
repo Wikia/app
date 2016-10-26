@@ -32,7 +32,12 @@ class DesignSystemGlobalNavigationModel extends WikiaModel {
 				'header' => [
 					'type' => 'link-image',
 					'href' => $this->getHref( 'fandom-logo' ),
+					// 'image' is deprecated use 'image-data' instead
 					'image' => 'wds-company-logo-fandom-powered-by-wikia',
+					'image-data' => [
+						'type' => 'wds-svg',
+						'name' => 'wds-company-logo-fandom-powered-by-wikia',
+					],
 					'title' => [
 						'type' => 'text',
 						'value' => 'Fandom powered by Wikia'
@@ -107,6 +112,11 @@ class DesignSystemGlobalNavigationModel extends WikiaModel {
 			$data[ 'anon' ] = $this->getAnonUserData();
 		}
 
+		$partnerSlot = $this->getPartnerSlot();
+		if ( !empty( $partnerSlot ) ) {
+			$data[ 'partner_slot' ] = $partnerSlot;
+		}
+
 		return $data;
 	}
 
@@ -174,7 +184,12 @@ class DesignSystemGlobalNavigationModel extends WikiaModel {
 		return [
 			'header' => [
 				'type' => 'line-image',
+				// 'image' is deprecated, use 'image-data' instead
 				'image' => 'wds-icons-user',
+				'image-data' => [
+					'type' => 'wds-svg',
+					'name' => 'wds-icons-user',
+				],
 				'title' => [
 					'type' => 'translatable-text',
 					'key' => 'global-navigation-anon-my-account',
@@ -234,7 +249,7 @@ class DesignSystemGlobalNavigationModel extends WikiaModel {
 				'type' => 'translatable-text',
 				'key' => 'global-navigation-user-sign-out'
 			],
-			'param-name' => 'returnto',
+			'param-name' => $this->product === static::PRODUCT_FANDOMS ? 'redirect' : 'returnto',
 			'tracking_label' => 'account.sign-out',
 		];
 
@@ -300,7 +315,12 @@ class DesignSystemGlobalNavigationModel extends WikiaModel {
 		return [
 			'header' => [
 				'type' => 'line-image',
+				// 'image' is deprecated, use 'image-data' instead
 				'image' => 'wds-icons-bell',
+				'image-data' => [
+					'type' => 'wds-svg',
+					'name' => 'wds-icons-bell',
+				],
 				'title' => [
 					'type' => 'translatable-text',
 					'key' => 'global-navigation-notifications-title'
@@ -381,5 +401,24 @@ class DesignSystemGlobalNavigationModel extends WikiaModel {
 			'type' => 'text',
 			'value' => WikiFactory::getVarValueByName( 'wgSitename', $this->productInstanceId, false, $this->wg->Sitename ),
 		];
+	}
+
+	private function getPartnerSlot() {
+		if ( $this->lang === 'de' ) {
+			return [
+				'type' => 'link-image',
+				'href' => 'http://www.entertainweb.de/',
+				'image-data' => [
+					'type' => 'image-external',
+					'url' => 'https://services.wikia.com/static-assets/image/5588e692-fae8-4dc3-8db6-5f62e37fed47',
+				],
+				'title' => [
+					'type' => 'text',
+					'value' => 'entertainweb'
+				],
+				'tracking_label' => 'entertainweb',
+			];
+		}
+		return null;
 	}
 }
