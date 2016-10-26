@@ -1,8 +1,7 @@
 @import 'skins/shared/color';
 @import 'skins/oasis/css/core/breakpoints-variables';
 @import 'variables';
-@import 'extensions/wikia/DesignSystem/bower_components/design-system/base/colors';
-@import 'extensions/wikia/DesignSystem/bower_components/design-system/base/typography';
+@import 'extensions/wikia/DesignSystem/bower_components/design-system/dist/scss/wds-variables/index';
 
 $community-page-rail-background-color: mix($color-page, #000, 96%);
 @if $is-dark-wiki {

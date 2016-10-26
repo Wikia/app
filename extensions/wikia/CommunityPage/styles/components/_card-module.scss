@@ -2,7 +2,7 @@
 @import 'skins/shared/color';
 @import 'skins/shared/mixins/flexbox';
 @import 'variables';
-@import 'extensions/wikia/DesignSystem/bower_components/design-system/base/typography';
+@import 'extensions/wikia/DesignSystem/bower_components/design-system/dist/scss/wds-variables/index';
 
 $card-background-color: mix($color-page, #fff, 91%);
 $card-header-size: 84px;
