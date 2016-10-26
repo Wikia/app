@@ -70,6 +70,7 @@
 <?= $prebid ?>
 <?= $rubiconVulcan ?>
 <?= $krux ?>
+<?= $netzathleten ?>
 <?= $dynamicYield ?>
 <?= $ivw3 ?>
 <?= $ivw2 ?>
