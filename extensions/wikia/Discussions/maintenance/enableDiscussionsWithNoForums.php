@@ -38,13 +38,13 @@ class EnableDiscussionsWithNoForums extends Maintenance {
 				continue;
 			}
 
-			if ( WikiFactory::getVarValueByName( 'wgEnableDiscussions', $wikiId ) === true) {
+			if ( WikiFactory::getVarValueByName( 'wgEnableDiscussions', $wikiId ) === true ) {
 				$this->error( 'Discussions are already enabled on ' . $wikiId . ', skipping!' );
 				continue;
 			}
 
 			try {
-				$this->activateDiscussions( $wikiId, $wiki->city_lang, $wiki->city_title );
+				$this->activateDiscussions( $wiki );
 				$this->enableDiscussions( $wikiId );
 				$this->output( 'Enabled discussions on ' . $wikiId . "\n" );
 			} catch ( Exception $e ) {
@@ -76,8 +76,9 @@ class EnableDiscussionsWithNoForums extends Maintenance {
 		return intval( $row->cnt );
 	}
 
-	private function activateDiscussions( $cityId, $cityName, $cityLang ) {
-		( new \DiscussionsActivator( $cityId, $cityName, $cityLang ) )->activateDiscussions();
+	private function activateDiscussions( $wiki ) {
+		( new \DiscussionsActivator( $wiki->city_id, $wiki->city_title, $wiki->city_lang ) )
+			->activateDiscussions();
 	}
 
 	private function enableDiscussions( $cityId ) {

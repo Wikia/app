@@ -8,81 +8,81 @@ use Wikia\Service\Swagger\ApiProvider;
 
 class DiscussionsActivator {
 
-    const SERVICE_NAME = 'discussion';
-    const TIMEOUT = 5;
-    const SITE_NAME_MAX_LENGTH = 256;
+	const SERVICE_NAME = 'discussion';
+	const TIMEOUT = 5;
+	const SITE_NAME_MAX_LENGTH = 256;
 
-    private $cityId;
-    private $cityName;
-    private $cityLang;
+	private $cityId;
+	private $cityName;
+	private $cityLang;
 
-    private $sitesApi;
-    private $logger;
+	private $sitesApi;
+	private $logger;
 
-    public function __construct( int $cityId, string $cityName, string $cityLang ) {
-        $this->cityId = $cityId;
-        $this->cityName = $cityName;
-        $this->cityLang = $cityLang;
+	public function __construct( int $cityId, string $cityName, string $cityLang ) {
+		$this->cityId = $cityId;
+		$this->cityName = $cityName;
+		$this->cityLang = $cityLang;
 
-        $this->sitesApi = $this->getSitesApi();
-        $this->logger = Wikia\Logger\WikiaLogger::instance();
-    }
+		$this->sitesApi = $this->getSitesApi();
+		$this->logger = Wikia\Logger\WikiaLogger::instance();
+	}
 
-    public function activateDiscussions() {
-        if ( $this->isDiscussionsActive() ) {
-            return;
-        }
+	public function activateDiscussions() {
+		if ( $this->isDiscussionsActive() ) {
+			return;
+		}
 
-        $siteInput = $this->getSiteInput();
-        try {
-            $this->sitesApi->createSite( $siteInput, F::app()->wg->TheSchwartzSecretToken );
-        } catch ( ApiException $e ) {
-            $this->logAndThrowError( $e );
-        }
-    }
+		$siteInput = $this->getSiteInput();
+		try {
+			$this->sitesApi->createSite( $siteInput, F::app()->wg->TheSchwartzSecretToken );
+		} catch ( ApiException $e ) {
+			$this->logAndThrowError( $e );
+		}
+	}
 
-    private function getSiteInput() : SiteInput {
-        return new SiteInput(
-            [
-                'id' => $this->cityId,
-                'name' => substr( $this->cityName, 0, self::SITE_NAME_MAX_LENGTH ),
-                'language_code' => $this->cityLang
-            ]
-        );
-    }
+	private function getSiteInput() : SiteInput {
+		return new SiteInput(
+			[
+				'id' => $this->cityId,
+				'name' => substr( $this->cityName, 0, self::SITE_NAME_MAX_LENGTH ),
+				'language_code' => $this->cityLang
+			]
+		);
+	}
 
-    public function isDiscussionsActive() {
-        try {
-            $this->sitesApi->getSite( $this->cityId );
-            return true;
-        } catch ( ApiException $e ) {
-            $this->logger->info( 'DISCUSSIONS Getting site caused an error',
-                [
-                    'siteId' => $this->cityId,
-                    'error' => $e->getMessage(),
-                ] );
-            return false;
-        }
-    }
+	public function isDiscussionsActive() {
+		try {
+			$this->sitesApi->getSite( $this->cityId );
+			return true;
+		} catch ( ApiException $e ) {
+			$this->logger->info( 'DISCUSSIONS Getting site caused an error',
+				[
+					'siteId' => $this->cityId,
+					'error' => $e->getMessage(),
+				] );
+			return false;
+		}
+	}
 
-    private function getSitesApi() {
-        /** @var ApiProvider $apiProvider */
-        $apiProvider = Injector::getInjector()->get( ApiProvider::class );
-        /** @var SitesApi $api */
-        $api = $apiProvider->getApi( self::SERVICE_NAME, SitesApi::class );
-        $api->getApiClient()->getConfig()->setCurlTimeout( self::TIMEOUT );
+	private function getSitesApi() {
+		/** @var ApiProvider $apiProvider */
+		$apiProvider = Injector::getInjector()->get( ApiProvider::class );
+		/** @var SitesApi $api */
+		$api = $apiProvider->getApi( self::SERVICE_NAME, SitesApi::class );
+		$api->getApiClient()->getConfig()->setCurlTimeout( self::TIMEOUT );
 
-        return $api;
-    }
+		return $api;
+	}
 
-    private function logAndThrowError( Exception $e ) {
-        $this->logger->error(
-            'DISCUSSIONS Creating site caused an error',
-            [
-                'siteId' => $this->cityId,
-                'error' => $e->getMessage()
-            ]
-        );
-        throw new ErrorPageError( 'unknown-error', 'discussions-activate-error' );
-    }
+	private function logAndThrowError( Exception $e ) {
+		$this->logger->error(
+			'DISCUSSIONS Creating site caused an error',
+			[
+				'siteId' => $this->cityId,
+				'error' => $e->getMessage()
+			]
+		);
+		throw new ErrorPageError( 'unknown-error', 'discussions-activate-error' );
+	}
 }

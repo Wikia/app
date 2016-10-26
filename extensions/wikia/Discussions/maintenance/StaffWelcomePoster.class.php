@@ -38,7 +38,7 @@ class StaffWelcomePoster {
 		$staffId = $this->getStaffFromLang( $transformedLang );
 		$message = $this->getMessage( $transformedLang );
 
-		$success = $this->threadCreator->create( $staffId, $siteId,  $message );
+		$success = $this->threadCreator->create( $staffId, $siteId, $message );
 
 		return $success;
 	}
