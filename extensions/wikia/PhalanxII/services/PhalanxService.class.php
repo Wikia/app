@@ -152,10 +152,12 @@ class PhalanxService extends Service {
 	 * @return integer|mixed data of blocks applied or numeric value (0 - block applied, 1 - no block applied)
 	 */
 	private function sendToPhalanxDaemon( $action, $parameters ) {
-		$baseurl = F::app()->wg->PhalanxServiceUrl;
+		global $wgConsulServiceTag, $wgConsulUrl;
+
+		$baseurl = ( new Wikia\Service\Gateway\ConsulUrlProvider( $wgConsulUrl, $wgConsulServiceTag ))->getUrl( 'phalanx' );
 		$options = F::app()->wg->PhalanxServiceOptions;
 
-		$url = sprintf( "%s/%s", $baseurl, $action != "status" ? $action : "" );
+		$url = sprintf( "http://%s/%s", $baseurl, $action != "status" ? $action : "" );
 		$requestTime = 0;
 		$loggerPostParams = [];
 		$tries = 1;
