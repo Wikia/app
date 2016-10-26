@@ -271,13 +271,6 @@ class User {
 	public static function clearAccessTokenCookie() {
 		// FIXME: replace with CookieHelper::clearAuthenticationCookie
 		self::clearCookie( self::ACCESS_TOKEN_COOKIE_NAME );
-
-		/*
-		 * Mercury's backend (Hapi) is setting access_token cookie in an encrypted form, so we need
-		 * to destroy this one as well on UserLogout
-		 * This is a temporary change which will be deleted while implementing SOC-798
-		 */
-		self::clearCookie( self::MERCURY_ACCESS_TOKEN_COOKIE_NAME );
 	}
 
 	/**
@@ -305,8 +298,6 @@ class User {
 	 * @return bool true - hook handler
 	 */
 	public static function onUserCheckPassword( $id, $username, $hash, $password, &$result, &$errorMessageKey ) {
-		global $wgHeliosLoginShadowMode;
-
 		$heliosResult = null;
 		$heliosException = null;
 		try {
@@ -316,30 +307,11 @@ class User {
 			$heliosException = $e;
 		}
 
-		// If we are in shadow mode calculate mediawiki response and log comparison result
-		if ( $wgHeliosLoginShadowMode ) {
-			$mediawikiResult = \User::comparePasswords( $hash, $password, $id );
-
-			// Detect discrepancies between Helios and MediaWiki results.
-			if ( $heliosResult !== null && $heliosResult != $mediawikiResult ) {
-				self::debugLogin( $password, __METHOD__ );
-				WikiaLogger::instance()->error(
-					'HELIOS_LOGIN check_password_discrepancy',
-					[	'helios'         => $heliosResult,
-						'mediawiki'      => $mediawikiResult,
-						'user_id'        => $id,
-						'username'       => $username ]
-				);
-			}
-
-			$result = $mediawikiResult;
-		} else { // pure-Helios mode
-			if ( $heliosException ) {
-				$errorMessageKey = 'login-abort-service-unavailable';
-			}
-
-			$result = $heliosResult;
+		if ( $heliosException ) {
+			$errorMessageKey = 'login-abort-service-unavailable';
 		}
+
+		$result = $heliosResult;
 
 		return true;
 	}
@@ -353,107 +325,6 @@ class User {
 		}
 		$heliosClient = self::getHeliosClient();
 		$heliosClient->forceLogout($userId);
-		return true;
-	}
-
-	/**
-	 * Called in ExternalUser_Wikia registers a user.
-	 *
-	 * @param string $username The username
-	 * @param string $password The plaintext password the user entered
-	 * @param string $email The user's email
-	 * @param string $langCode The language code of the community the user is registering on
-	 * @param string $birthDate
-	 *
-	 * @return bool true on success, false otherwise
-	 */
-	public static function register( $username, $password, $email, $birthDate, $langCode ) {
-		$logger = WikiaLogger::instance();
-		$logger->info( 'HELIOS_REGISTRATION START', [ 'method' => __METHOD__ ] );
-
-		$helios = self::getHeliosClient();
-
-		try {
-			$registration = $helios->register( $username, $password, $email, $birthDate, $langCode );
-			$result = !empty( $registration->success );
-
-			if ( !empty( $registration->error ) ) {
-				$logger->error(
-					'HELIOS_REGISTRATION ERROR_FROM_SERVICE',
-					[ 'method' => __METHOD__ ]
-				);
-			}
-		}
-
-		catch ( ClientException $e ) {
-			$logger->error(
-				'HELIOS_REGISTRATION ERROR_FROM_CLIENT',
-				[ 'exception' => $e, 'method' => __METHOD__ ]
-			);
-			$result = false;
-		}
-
-		return $result;
-	}
-
-	/**
-	 * @param bool $result
-	 * @param int $userId
-	 * @param \User $user
-	 * @param string $password
-	 * @param string $email
-	 *
-	 * @return bool
-	 */
-	public static function onRegister( &$result, &$userId, $user, $password, $email ) {
-		global $wgLang;
-
-		$heliosUserId = null;
-		$heliosResult = self::register( $user->mName, $password, $email, $user->mBirthDate, $wgLang->getCode() );
-		$logger = WikiaLogger::instance();
-
-		global $wgHeliosRegistrationShadowMode;
-
-		if ( $heliosResult ) {
-
-			global $wgExternalSharedDB;
-
-			$table = $wgHeliosRegistrationShadowMode ? 'user_helios' : '`user`';
-
-			$dbw = \wfGetDB( DB_MASTER, [], $wgExternalSharedDB );
-			$dbw->commit(); // PLATFORM-1151 This commit is required in order to refresh the database state.
-			$heliosUserId = $dbw->selectField( $table, 'user_id', [ 'user_name' => $user->mName ], __METHOD__ );
-
-			if ( $heliosUserId ) {
-
-				if ( ! $wgHeliosRegistrationShadowMode ) {
-					$result = $heliosResult;
-					$userId = $heliosUserId;
-				}
-
-				$logger->info( 'HELIOS_REGISTRATION SUCCESS', [
-					'method' => __METHOD__,
-					'user_id' => $heliosUserId,
-					'user_name' => $user->mName,
-					'shadow' => $wgHeliosRegistrationShadowMode
-				] );
-			} else {
-				$logger->error( 'HELIOS_REGISTRATION FAILURE FETCH_ID', [
-					'method' => __METHOD__,
-					'user_id' => null,
-					'user_name' => $user->mName,
-					'shadow' => $wgHeliosRegistrationShadowMode
-				] );
-			}
-
-		} else {
-			$logger->error( 'HELIOS_REGISTRATION FAILURE CALL', [
-				'method' => __METHOD__,
-				'user_name' => $user->mName,
-				'shadow' => $wgHeliosRegistrationShadowMode
-			] );
-		}
-
 		return true;
 	}
 
