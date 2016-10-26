@@ -1,4 +1,6 @@
 <?php
+use Wikia\DependencyInjection\Injector;
+use Wikia\Service\Gateway\ConsulUrlProvider;
 
 /**
  * @method PhalanxService setLimit( int $limit )
@@ -152,9 +154,8 @@ class PhalanxService extends Service {
 	 * @return integer|mixed data of blocks applied or numeric value (0 - block applied, 1 - no block applied)
 	 */
 	private function sendToPhalanxDaemon( $action, $parameters ) {
-		global $wgConsulServiceTag, $wgConsulUrl;
-
-		$baseurl = ( new Wikia\Service\Gateway\ConsulUrlProvider( $wgConsulUrl, $wgConsulServiceTag ))->getUrl( 'phalanx' );
+		$urlProvider = Injector::getInjector()->get(ConsulUrlProvider::class);
+		$baseurl = $urlProvider->getUrl( 'phalanx' );
 		$options = F::app()->wg->PhalanxServiceOptions;
 
 		$url = sprintf( "http://%s/%s", $baseurl, $action != "status" ? $action : "" );
