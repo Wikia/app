@@ -51,7 +51,7 @@ class DesignSystemGlobalNavigationModel extends WikiaModel {
 			$data[ 'logo-small-tagline' ] = $logoSmallTagline;
 		}
 
-		if ( $this->lang === static::DEFAULT_LANG ) {
+		if ( $this->lang === static::DEFAULT_LANG && !$this->isWikiaOrgCommunity() ) {
 			$data[ 'fandom_overview' ] = $this->getVerticalsSection();
 			$data[ 'wikis' ] = [
 				'header' => [
