@@ -1,11 +1,11 @@
 <div class="wds-global-navigation__account-menu wds-dropdown">
 	<div class="wds-dropdown__toggle wds-global-navigation__dropdown-toggle">
-		<?= DesignSystemHelper::getSvg(
-			$model['header']['image'],
+		<?= DesignSystemHelper::renderApiImage(
+			$model['header']['image-data'],
 			'wds-icon wds-icon-small wds-icon'
 		) ?>
 		<span class="wds-global-navigation__account-menu-caption"><?= DesignSystemHelper::renderText( $model['header']['title'] ); ?></span>
-		<?= DesignSystemHelper::getSvg(
+		<?= DesignSystemHelper::renderSvg(
 			'wds-icons-dropdown-tiny',
 			'wds-icon wds-icon-tiny wds-dropdown__toggle-chevron'
 		) ?>

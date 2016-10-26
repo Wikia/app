@@ -25,14 +25,16 @@ if ( $runNjord ) {
 				<? endif; ?>
 			</div>
 			<div class="header-column header-tally">
-				<div id="PageShareContainer" class="page-share-container">
-					<?= F::app()->renderView( 'PageShare', 'Index' ); ?>
-				</div>
+				<?php if ( !empty( $pageExists ) ) { ?>
+					<div id="PageShareContainer" class="page-share-container">
+						<?= F::app()->renderView( 'PageShare', 'Index' ); ?>
+					</div>
+				<?php } ?>
 				<? if ( !is_null( $tallyMsg ) ): ?>
 					<div class="tally"><?= $tallyMsg ?></div>
 				<? endif; ?>
 				<? // TODO remove after XW-2226 is done ?>
-				<a class="wikia-button createpage add-new-page-experiment-element">Add New Page</a>
+				<a href="/wiki/Special:CreatePage?flow=create-page-contribute-button" class="wikia-button createpage add-new-page-experiment-element">Add New Page</a>
 				<? // TODO remove end ?>
 			</div>
 		</div>
@@ -76,7 +78,7 @@ if ( $runNjord ) {
 		?>
 
 		<? // TODO remove after XW-2226 is done ?>
-		<a class="wikia-button createpage add-new-page-experiment-element"><img class="sprite new" src="<?=wfBlankImgUrl()?>"> Add New Page</a>
+		<a href="/wiki/Special:CreatePage?flow=create-page-contribute-button" class="wikia-button createpage add-new-page-experiment-element"><img class="sprite new" src="<?=wfBlankImgUrl()?>"> Add New Page</a>
 		<? // TODO remove end ?>
 		<?
 

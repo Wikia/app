@@ -300,7 +300,7 @@ class CommunityPageSpecialController extends WikiaSpecialPageController {
 
 		return array_merge( $data, [
 			'showEditLink' => $userCanEditinterface,
-			'editIcon' => DesignSystemHelper::getSvg( 'wds-icons-pencil',
+			'editIcon' => DesignSystemHelper::renderSvg( 'wds-icons-pencil',
 				'community-page-todo-list-module-edit-icon' ),
 			'showTodoListModule' => $data[ 'haveContent' ] || $userCanEditinterface,
 			'isZeroState' => !$data[ 'haveContent' ],
