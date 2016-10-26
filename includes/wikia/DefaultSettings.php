@@ -1602,12 +1602,6 @@ $wgAdDriverSourcePointDetectionMobileCountries = null;
 $wgAdDriverSourcePointRecoveryCountries = null;
 
 /**
- * @name wgAdDriverEnableSourcePointRecovery
- * Disable SourcePoint Recovery per wiki
- */
-$wgAdDriverEnableSourcePointRecovery = null;
-
-/**
  * trusted proxy service registry
  */
 $wgAutoloadClasses[ 'TrustedProxyService'] =  "$IP/includes/wikia/services/TrustedProxyService.class.php" ;
