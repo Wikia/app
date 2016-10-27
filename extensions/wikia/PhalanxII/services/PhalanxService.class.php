@@ -154,11 +154,9 @@ class PhalanxService extends Service {
 	 * @return integer|mixed data of blocks applied or numeric value (0 - block applied, 1 - no block applied)
 	 */
 	private function sendToPhalanxDaemon( $action, $parameters ) {
-		$urlProvider = Injector::getInjector()->get(ConsulUrlProvider::class);
-		$baseurl = $urlProvider->getUrl( 'phalanx' );
 		$options = F::app()->wg->PhalanxServiceOptions;
 
-		$url = sprintf( "http://%s/%s", $baseurl, $action != "status" ? $action : "" );
+		$url = $this->getPhalanxUrl($action);
 		$requestTime = 0;
 		$loggerPostParams = [];
 		$tries = 1;
@@ -229,6 +227,7 @@ class PhalanxService extends Service {
 			// BAC-1332 - some of the phalanx service calls are breaking and we're not sure why
 			// it's better to do the retry than maintain the PHP fallback for that
 			while ( $tries <= self::PHALANX_SERVICE_TRIES_LIMIT ) {
+				$url = $this->getPhalanxUrl($action);
 				$response = Http::post( $url, $options );
 				if ( false !== $response) {
 					break;
@@ -309,4 +308,10 @@ class PhalanxService extends Service {
 		}
 		return $res;
 	}
+
+	private function getPhalanxUrl($action) {
+		$baseurl = Injector::getInjector()->get(ConsulUrlProvider::class)->getUrl('phalanx');
+		return sprintf( "http://%s/%s", $baseurl, $action != "status" ? $action : "" );
+	}
+
 };
