@@ -1,5 +1,4 @@
 <?php
-use Wikia\DependencyInjection\Injector;
 use Wikia\Service\Gateway\ConsulUrlProvider;
 
 /**
@@ -310,7 +309,8 @@ class PhalanxService extends Service {
 	}
 
 	private function getPhalanxUrl($action) {
-		$baseurl = Injector::getInjector()->get(ConsulUrlProvider::class)->getUrl('phalanx');
+		global $wgConsulUrl, $wgConsulServiceTag;
+		$baseurl = ( new Wikia\Service\Gateway\ConsulUrlProvider( $wgConsulUrl, $wgConsulServiceTag ) )->getUrl( 'phalanx' );
 		return sprintf( "http://%s/%s", $baseurl, $action != "status" ? $action : "" );
 	}
 
