@@ -25,7 +25,7 @@ class PageFairBootstrapCode {
 
 	public static function getSlotMarker( $slotName ) {
 		if ( isset( static::$recoverableSlots[ $slotName ] ) ) {
-			return ' adonis­-marker';
+			return ' adonis-marker';
 		}
 		return '';
 	}
