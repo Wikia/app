@@ -1,21 +1,21 @@
-$breakpoint-m: 768px;
-$breakpoint-l: 1024px;
-$breakpoint-xl: 1084px;
-$breakpoint-xxl: 1596px;
+$wds-breakpoint-m: 768px;
+$wds-breakpoint-l: 1024px;
+$wds-breakpoint-xl: 1084px;
+$wds-breakpoint-xxl: 1596px;
 
-$screen: 'only screen';
+$wds-screen: 'only screen';
 
-$breakpoint-s-up: "#{$screen}";
-$breakpoint-s-only: "#{$screen} and (max-width:#{$breakpoint-m - 1})";
+$wds-breakpoint-s-up: "#{$wds-screen}";
+$wds-breakpoint-s-only: "#{$wds-screen} and (max-width:#{$wds-breakpoint-m - 1})";
 
-$breakpoint-m-up: "#{$screen} and (min-width:#{$breakpoint-m})";
-$breakpoint-m-only: "#{$screen} and (min-width:#{$breakpoint-m}) and (max-width:#{$breakpoint-l - 1})";
+$wds-breakpoint-m-up: "#{$wds-screen} and (min-width:#{$wds-breakpoint-m})";
+$wds-breakpoint-m-only: "#{$wds-screen} and (min-width:#{$wds-breakpoint-m}) and (max-width:#{$wds-breakpoint-l - 1})";
 
-$breakpoint-l-down: "#{$screen} and (max-width:#{$breakpoint-xl - 1})";
-$breakpoint-l-up: "#{$screen} and (min-width:#{$breakpoint-l})";
-$breakpoint-l-only: "#{$screen} and (min-width:#{$breakpoint-l}) and (max-width:#{$breakpoint-xl - 1})";
+$wds-breakpoint-l-down: "#{$wds-screen} and (max-width:#{$wds-breakpoint-xl - 1})";
+$wds-breakpoint-l-up: "#{$wds-screen} and (min-width:#{$wds-breakpoint-l})";
+$wds-breakpoint-l-only: "#{$wds-screen} and (min-width:#{$wds-breakpoint-l}) and (max-width:#{$wds-breakpoint-xl - 1})";
 
-$breakpoint-xl-up: "#{$screen} and (min-width:#{$breakpoint-xl})";
-$breakpoint-xl-only: "#{$screen} and (min-width:#{$breakpoint-xl}) and (max-width:#{$breakpoint-xxl - 1})";
+$wds-breakpoint-xl-up: "#{$wds-screen} and (min-width:#{$wds-breakpoint-xl})";
+$wds-breakpoint-xl-only: "#{$wds-screen} and (min-width:#{$wds-breakpoint-xl}) and (max-width:#{$wds-breakpoint-xxl - 1})";
 
-$breakpoint-xxl-up: "#{$screen} and (min-width:#{$breakpoint-xxl})";
+$wds-breakpoint-xxl-up: "#{$wds-screen} and (min-width:#{$wds-breakpoint-xxl})";

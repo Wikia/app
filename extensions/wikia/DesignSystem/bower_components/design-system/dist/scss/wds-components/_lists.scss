@@ -4,9 +4,9 @@
 	padding: 7px 18px;
 
 	> li {
-		font-size: $typescale-size-minus-1;
+		font-size: $wds-typescale-size-minus-1;
 		line-height: 1em;
-		padding: $list-item-padding;
+		padding: $wds-list-item-padding;
 	}
 
 	&.wds-has-big-items {
@@ -16,7 +16,7 @@
 		};
 
 		> li {
-			font-size: $typescale-size-base;
+			font-size: $wds-typescale-size-base;
 			padding: {
 				bottom: 16px;
 				top: 16px;
@@ -43,7 +43,7 @@
 
 			> a {
 				display: block;
-				padding: $list-item-padding;
+				padding: $wds-list-item-padding;
 			}
 		}
 	}

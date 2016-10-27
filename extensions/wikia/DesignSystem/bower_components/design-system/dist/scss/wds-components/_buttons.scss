@@ -4,16 +4,16 @@
 	color: $color-white;
 	cursor: pointer;
 	display: inline-block;
-	font-size: $typescale-size-minus-2;
+	font-size: $wds-typescale-size-minus-2;
 	font-weight: 600;
 	letter-spacing: .15px;
-	line-height: $button-line-height;
+	line-height: $wds-button-line-height;
 	outline: none;
 	padding: 16px 18px 15px;
 	text-align: center;
 	text-decoration: none;
 	text-transform: uppercase;
-	transition-duration: $_hover-transition-duration;
+	transition-duration: $wds-button-transition-duration;
 	transition-property: background-color, border-color, color;
 	-webkit-appearance: none;
 	-webkit-border-radius: 0;
@@ -22,8 +22,8 @@
 	&:hover:not(:disabled),
 	&:active,
 	&.wds-is-active {
-		background-color: $button-active-color;
-		border-color: $button-active-color;
+		background-color: $wds-button-active-color;
+		border-color: $wds-button-active-color;
 	}
 
 	&:disabled,
@@ -41,12 +41,12 @@
 		&:active,
 		&.wds-is-active {
 			background-color: $color-white;
-			color: $button-active-color;
+			color: $wds-button-active-color;
 		}
 	}
 
 	&.wds-is-squished {
-		font-size: $typescale-size-minus-3;
+		font-size: $wds-typescale-size-minus-3;
 		padding: 10px 12px 9px;
 	}
 
@@ -69,7 +69,7 @@
 		&:active,
 		&.wds-is-active {
 			background-color: $color-white;
-			color: $button-active-color;
+			color: $wds-button-active-color;
 		}
 	}
 }

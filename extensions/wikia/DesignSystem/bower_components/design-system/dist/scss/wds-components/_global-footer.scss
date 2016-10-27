@@ -68,7 +68,7 @@
 
 	&__bottom-bar {
 		background: rgba($color-night-sky, .5);
-		font-size: $typescale-size-minus-2;
+		font-size: $wds-typescale-size-minus-2;
 		line-height: $footer-line-height;
 		min-height: 50px;
 		padding: 0 20px;
@@ -145,7 +145,7 @@
 		color: #7f90a1;
 		display: block;
 		font: {
-			size: $typescale-size-minus-2;
+			size: $wds-typescale-size-minus-2;
 			weight: bold;
 		}
 		letter-spacing: .5px;
@@ -192,7 +192,7 @@
 		&:visited,
 		&:focus {
 			color: $color-blue-gray;
-			font-size: $typescale-size-minus-1;
+			font-size: $wds-typescale-size-minus-1;
 			font-weight: normal;
 			line-height: $footer-line-height;
 			text-decoration: none;
@@ -217,7 +217,7 @@
 				border-top: $section-line-width solid $color-slate-gray;
 				display: flex;
 				font: {
-					size: $typescale-size-plus-1;
+					size: $wds-typescale-size-plus-1;
 					weight: bold;
 				}
 				justify-content: space-between;
@@ -277,7 +277,7 @@
 				color: $color-blue-gray;
 				display: inline-block;
 				font: {
-					size: $typescale-size-minus-2;
+					size: $wds-typescale-size-minus-2;
 					weight: bold;
 				}
 				letter-spacing: .3px;
@@ -315,7 +315,7 @@
 	&__section-header {
 		color: $color-white;
 		font: {
-			size: $typescale-size-plus-1;
+			size: $wds-typescale-size-plus-1;
 			weight: bold;
 		}
 		margin: {
@@ -328,13 +328,13 @@
 
 	&__section-description {
 		color: $color-white;
-		font-size: $typescale-size-minus-1;
+		font-size: $wds-typescale-size-minus-1;
 		line-height: $footer-line-height;
 		margin: 0;
 		padding: 0;
 	}
 
-	@media #{$breakpoint-l-down} {
+	@media #{$wds-breakpoint-l-down} {
 		&__main {
 			margin: 0 20px;
 		}
@@ -421,7 +421,7 @@
 		}
 	}
 
-	@media #{$breakpoint-xl-up} {
+	@media #{$wds-breakpoint-xl-up} {
 		&__main {
 			flex-direction: row;
 			margin: 0 auto;

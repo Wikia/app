@@ -7,7 +7,6 @@
 	$search-transition-duration: 200ms;
 	$search-buttons-transition-duration: 50ms;
 	$search-buttons-transition-delay: $search-transition-duration - $search-buttons-transition-duration;
-	$hover-transition-duration: 300ms !default;
 
 	@mixin visible-search-input {
 		&__search-input {
@@ -88,7 +87,7 @@
 		border-top: $border-top-width solid $color-slate-gray;
 		color: $color-dark-blue-gray;
 		display: flex;
-		font-size: $typescale-size-minus-1;
+		font-size: $wds-typescale-size-minus-1;
 		height: $nav-height;
 		justify-content: center;
 		margin-top: -$border-top-width;
@@ -150,9 +149,9 @@
 		};
 		color: #aaa;
 		display: inline-block;
-		font-size: $typescale-size-minus-3;
+		font-size: $wds-typescale-size-minus-3;
 		font-weight: bold;
-		line-height: $typescale-size-base;
+		line-height: $wds-typescale-size-base;
 		margin-left: 8px;
 		text-transform: uppercase;
 	}
@@ -255,7 +254,7 @@
 		// Safari doesn't set default flex values if we use `flex: 1;`
 		// it requires us to put these values explicitly.
 		flex: 1 1 auto;
-		font-size: $typescale-size-minus-1;
+		font-size: $wds-typescale-size-minus-1;
 		// iPad Safari needs the height below to be set
 		height: 100%;
 		left: 0;
@@ -330,7 +329,7 @@
 	}
 
 	&__account-menu-dropdown-caption {
-		font-size: $typescale-size-minus-2;
+		font-size: $wds-typescale-size-minus-2;
 		padding-bottom: 10px;
 		text-align: center;
 	}
@@ -349,7 +348,7 @@
 		box-sizing: border-box;
 		color: $color-white;
 		display: flex;
-		font-size: $typescale-size-minus-3;
+		font-size: $wds-typescale-size-minus-3;
 		height: $notification-counter-size;
 		justify-content: center;
 		left: -1px;
@@ -478,7 +477,7 @@
 		&__search-submit {
 			max-width: 100%;
 			padding: 5px 9px;
-			transition: background-color $hover-transition-duration, border-color $hover-transition-duration, color $hover-transition-duration, max-width $search-buttons-transition-duration $search-buttons-transition-delay, opacity $hover-transition-duration, padding $search-buttons-transition-duration $search-buttons-transition-delay;
+			transition: background-color $wds-button-transition-duration, border-color $wds-button-transition-duration, color $wds-button-transition-duration, max-width $search-buttons-transition-duration $search-buttons-transition-delay, opacity $wds-button-transition-duration, padding $search-buttons-transition-duration $search-buttons-transition-delay;
 		}
 	}
 
@@ -492,7 +491,7 @@
 		}
 	}
 
-	@media #{$breakpoint-l-up} {
+	@media #{$wds-breakpoint-l-up} {
 		@include visible-search-input;
 		@include search-label-icon-default-hover-color;
 		@include search-input-default-placeholder-color;
@@ -537,13 +536,13 @@
 		}
 	}
 
-	@media #{$breakpoint-xl-up} {
+	@media #{$wds-breakpoint-xl-up} {
 		&__content-bar {
 			width: 1064px;
 		}
 	}
 
-	@media #{$breakpoint-xxl-up} {
+	@media #{$wds-breakpoint-xxl-up} {
 		&__content-bar {
 			width: 1238px;
 		}
