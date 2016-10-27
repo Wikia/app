@@ -9,6 +9,9 @@ describe('ext.wikia.adEngine.provider.gpt.googleTag', function () {
 	var googleTag,
 		mocks = {
 			callback: noop,
+			adSlot: {
+				getIframe: noop
+			},
 			element: {
 				getId: noop,
 				getNode: function () {
@@ -91,6 +94,7 @@ describe('ext.wikia.adEngine.provider.gpt.googleTag', function () {
 	beforeEach(function () {
 		googleTag = modules['ext.wikia.adEngine.provider.gpt.googleTag'](
 			mocks.googleSlots,
+			mocks.adSlot,
 			mocks.recoveryHelper,
 			document,
 			mocks.log,
