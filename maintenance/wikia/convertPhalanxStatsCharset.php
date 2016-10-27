@@ -28,7 +28,7 @@ $table = 'phalanx_stats';
 $alterCharset = "ALTER TABLE $table CONVERT TO CHARACTER SET latin1;";
 
 if ( isset( $options['verbose'] ) ) {
-	echo( "Executing query on $schema.$table: $alterCharset ...\n" );
+	echo "Executing query on $schema.$table: $alterCharset ...\n";
 }
 
 if ( !$dryRun ) {
@@ -37,7 +37,6 @@ if ( !$dryRun ) {
 	wfWaitForSlaves();
 
 	$dbw->query( $alterCharset );
-	$dbw->commit();
 } else {
 	echo "dry-run mode; no changes were made!";
 }
