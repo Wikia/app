@@ -33,7 +33,7 @@ $policy-link-title-padding-top: 2px;
 		@include flexbox();
 
 		border-top: 1px solid $color-page-border;
-		font-size: $typescale-size-minus-1;
+		font-size: $wds-typescale-size-minus-1;
 		line-height: $help-link-line-height;
 		margin-top: $content-spacing-small-plus;
 		padding-top: $content-spacing-regular;
@@ -64,7 +64,7 @@ $policy-link-title-padding-top: 2px;
 		@include flexbox();
 		@include flex-direction(column);
 
-		font-size: $typescale-size-minus-1;
+		font-size: $wds-typescale-size-minus-1;
 		line-height: $help-link-line-height;
 
 		a {

@@ -4,10 +4,9 @@
 
 // Platform-specific styles for DesignSystem integration
 $global-navigation-z-index: 5000101;
-$global-navigation-height: 55px;
 
 .wds-global-navigation-wrapper {
-	height: $global-navigation-height;
+	height: $wds-global-navigation-height;
 }
 
 .wds-global-navigation {

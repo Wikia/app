@@ -57,12 +57,12 @@
 		}
 
 		small {
-			font-size: $typescale-size-minus-2;
+			font-size: $wds-typescale-size-minus-2;
 		}
 
 		span {
 			display: block;
-			font-size: $typescale-size-base;
+			font-size: $wds-typescale-size-base;
 			height: $module-default-line-height;
 			text-align: center;
 		}
@@ -73,7 +73,7 @@
 
 		.community-page-subtle {
 			color: $color-alternate-text;
-			font-size: $typescale-size-minus-3;
+			font-size: $wds-typescale-size-minus-3;
 			line-height: $line-height;
 			text-transform: uppercase;
 		}

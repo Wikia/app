@@ -42,19 +42,19 @@ $hero-image-background: $color-slate-gray;
 
 	.community-page-header-welcome-message {
 		color: $color-white;
-		font-size: $typescale-size-plus-4;
+		font-size: $wds-typescale-size-plus-4;
 		font-weight: bold;
 		line-height: 40px;
 		margin:	0;
 	}
 
 	.community-page-header-welcome-message:lang(ja) {
-		font-size: $typescale-size-plus-2;
+		font-size: $wds-typescale-size-plus-2;
 	}
 
 	.community-page-subheader-welcome-message {
 		color: $color-white;
-		font-size: $typescale-size-plus-2;
+		font-size: $wds-typescale-size-plus-2;
 		line-height: $line-height;
 		margin: 6px 0 0 0;
 	}

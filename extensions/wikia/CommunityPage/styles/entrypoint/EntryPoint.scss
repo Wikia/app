@@ -22,7 +22,7 @@ $logo-border-radius: $logo-size / 2;
 
 .community-page-entry-point-module {
 	font-family: $community-page-font-family;
-	font-size: $typescale-size-base;
+	font-size: $wds-typescale-size-base;
 	line-height: $module-default-line-height;
 	margin-top: $content-spacing-regular;
 	position: relative;
@@ -45,7 +45,7 @@ $logo-border-radius: $logo-size / 2;
 		background: $color-buttons;
 		color: $color-button-text;
 		display: inline-block;
-		font-size: $typescale-size-minus-2;
+		font-size: $wds-typescale-size-minus-2;
 		font-weight: bold;
 		height: $button-height;
 		line-height: $button-height;
@@ -64,7 +64,7 @@ $logo-border-radius: $logo-size / 2;
 		white-space: pre-line; // Respect linebreaks
 
 		b {
-			font-size: $typescale-size-plus-1;
+			font-size: $wds-typescale-size-plus-1;
 			&:before { content: '\A'; } // Add a linebreak before bolded text
 		}
 

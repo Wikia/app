@@ -30,7 +30,7 @@ $card-footer-size: 48px;
 	.community-page-card-module-description {
 		@include flex-grow(1);
 
-		font-size: $typescale-size-base;
+		font-size: $wds-typescale-size-base;
 		padding: 0 $content-spacing-regular;
 	}
 
@@ -41,7 +41,7 @@ $card-footer-size: 48px;
 	.community-page-card-module-full-list-link {
 		color: $color-buttons;
 		display: inline-block;
-		font-size: $typescale-size-minus-2;
+		font-size: $wds-typescale-size-minus-2;
 		font-weight: bold;
 		line-height: $line-height;
 		margin: $content-spacing-xxsmall;
@@ -64,9 +64,9 @@ $card-footer-size: 48px;
 		padding: 0 $content-spacing-regular;
 
 		span {
-			font-size: $typescale-size-minus-1;
+			font-size: $wds-typescale-size-minus-1;
 			font-weight: bold;
-			line-height: $typescale-size-base;
+			line-height: $wds-typescale-size-base;
 			max-width: 70%;
 			text-transform: uppercase;
 		}
@@ -91,7 +91,7 @@ $card-footer-size: 48px;
 	.community-page-card-module-list {
 		@include flex-grow(1);
 
-		font-size: $typescale-size-base;
+		font-size: $wds-typescale-size-base;
 		margin: 0;
 		padding: 0 $content-spacing-regular;
 	}

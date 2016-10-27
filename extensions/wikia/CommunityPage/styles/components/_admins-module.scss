@@ -8,7 +8,7 @@ $admins-module-item-width: 80px;
 	text-align: center;
 
 	.community-page-admins-list {
-		font-size: $typescale-size-minus-2;
+		font-size: $wds-typescale-size-minus-2;
 
 		.community-page-admin-item {
 			display: inline-block;
@@ -22,7 +22,7 @@ $admins-module-item-width: 80px;
 	}
 
 	.community-page-admins-text {
-		font-size: $typescale-size-minus-1;
+		font-size: $wds-typescale-size-minus-1;
 		line-height: $line-height;
 		padding: $content-spacing-small-plus 0;
 	}
@@ -30,7 +30,7 @@ $admins-module-item-width: 80px;
 	.community-page-admins-view-all {
 		color: $color-buttons;
 		display: inline-block;
-		font-size: $typescale-size-minus-2;
+		font-size: $wds-typescale-size-minus-2;
 		font-weight: bold;
 		line-height: $line-height;
 		margin: $content-spacing-xsmall 0 $content-spacing-xxsmall;
