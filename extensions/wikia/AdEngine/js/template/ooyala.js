@@ -1,9 +1,9 @@
 /*global define*/
 define('ext.wikia.adEngine.template.ooyala', [
-	'ext.wikia.adEngine.video.vastBuilder',
+	'ext.wikia.adEngine.video.vastUrlBuilder',
 	'wikia.log',
 	'wikia.videoBootstrap'
-], function (vastBuilder, log, VideoBootstrap) {
+], function (vastUrlBuilder, log, VideoBootstrap) {
 	'use strict';
 	var libraryUrl = 'http://player.ooyala.com/v3/52bc289bedc847e3aa8eb2b347644f68?platform=html5-priority',
 		logGroup = 'ext.wikia.adEngine.template.ooyala';
@@ -21,7 +21,11 @@ define('ext.wikia.adEngine.template.ooyala', [
 				playerId: playerId,
 				videoId: params.videoId,
 				autoPlay: params.autoPlay || true,
-				tagUrl: params.vastUrl || vastBuilder.build(params.src, params.slotName, aspectRatio),
+				tagUrl: params.vastUrl || vastUrlBuilder.build(aspectRatio, {
+					passback: 'ooyala',
+					pos: params.slotName,
+					src: params.src
+				}),
 				jsFile: [
 					libraryUrl,
 					'extensions/wikia/VideoHandlers/js/handlers/lib/OoyalaAgeGate.js'

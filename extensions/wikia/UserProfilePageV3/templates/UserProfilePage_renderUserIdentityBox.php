@@ -37,12 +37,12 @@
 		<? if ( $canEditProfile ): ?>
 			<ul class="user-identity-box-edit">
 				<li>
-					<?= DesignSystemHelper::getSvg( 'wds-icons-pencil', 'wds-icon-tiny' ); ?>
+					<?= DesignSystemHelper::renderSvg( 'wds-icons-pencil', 'wds-icon-tiny' ); ?>
 					<a id="userIdentityBoxEdit" href="#"><?= wfMessage( 'user-identity-box-edit' )->escaped(); ?></a>
 				</li>
 				<? if ( $canClearProfile && !$user[ 'showZeroStates' ] ): ?>
 					<li>
-						<?= DesignSystemHelper::getSvg( 'wds-icons-trash', 'wds-icon-tiny' ); ?>
+						<?= DesignSystemHelper::renderSvg( 'wds-icons-trash', 'wds-icon-tiny' ); ?>
 						<a
 							id="userIdentityBoxClear"
 							href="#"

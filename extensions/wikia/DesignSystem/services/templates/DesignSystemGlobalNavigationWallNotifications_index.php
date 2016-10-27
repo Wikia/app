@@ -3,12 +3,12 @@
 		<div class="bubbles">
 			<div class="wds-global-navigation__notifications-menu-counter notifications-count"></div>
 		</div>
-		<?= DesignSystemHelper::getSvg(
+		<?= DesignSystemHelper::renderSvg(
 			'wds-icons-bell',
 			'wds-icon wds-icon-small',
 			wfMessage( 'global-navigation-notifications-title' )->escaped()
 		) ?>
-		<?= DesignSystemHelper::getSvg(
+		<?= DesignSystemHelper::renderSvg(
 			'wds-icons-dropdown-tiny',
 			'wds-icon wds-icon-tiny wds-dropdown__toggle-chevron'
 		) ?>
