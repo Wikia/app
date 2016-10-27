@@ -14,8 +14,8 @@
 	}
 
 	&__content {
-		background-color: $color-white;
-		box-shadow: 0 0 10px 0 rgba($color-black, .2);
+		background-color: $wds-color-white;
+		box-shadow: 0 0 10px 0 rgba($wds-color-black, .2);
 		display: none;
 		left: 0;
 		position: absolute;
@@ -23,7 +23,7 @@
 		z-index: $wds-dropdown-content-z-index;
 
 		&.wds-is-dark {
-			box-shadow: 0 0 20px 0 rgba($color-black, .3);
+			box-shadow: 0 0 20px 0 rgba($wds-color-black, .3);
 		}
 
 		&.wds-is-right-aligned {

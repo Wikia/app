@@ -19,21 +19,21 @@
 
 	@mixin search-label-icon-default-hover-color {
 		&__search-label-icon:hover {
-			color: $color-dark-blue-gray;
+			color: $wds-color-dark-blue-gray;
 		}
 	}
 
 	@mixin search-input-default-placeholder-color {
 		&__search-input::placeholder {
-			color: $color-dark-blue-gray;
+			color: $wds-color-dark-blue-gray;
 		}
 	}
 
 	background-color: $wds-global-navigation-background-color;
-	border-image: linear-gradient(to right, $color-dark-blue-gray 40%, $color-slate-gray 40%) 1 0 0;
-	border-top: $border-top-width solid $color-slate-gray;
+	border-image: linear-gradient(to right, $wds-color-dark-blue-gray 40%, $wds-color-slate-gray 40%) 1 0 0;
+	border-top: $border-top-width solid $wds-color-slate-gray;
 	border-width: $border-top-width 0 0;
-	box-shadow: 0 1px 0 0 $color-faint-gray;
+	box-shadow: 0 1px 0 0 $wds-color-faint-gray;
 	position: relative;
 
 	&__dropdown-toggle {
@@ -47,21 +47,21 @@
 	}
 
 	&__dropdown-content {
-		color: $color-dark-blue-gray;
+		color: $wds-color-dark-blue-gray;
 		min-width: 190px;
 		top: calc(100% + 1px);
 		z-index: -1;
 	}
 
 	&__dropdown-link {
-		color: $color-dark-blue-gray;
+		color: $wds-color-dark-blue-gray;
 		text-decoration: none;
 		transition: color $search-transition-duration;
 
 		&:active,
 		&:hover,
 		&.wds-is-active {
-			color: $color-link;
+			color: $wds-color-link;
 		}
 	}
 
@@ -84,8 +84,8 @@
 	&__wikis-menu {
 		align-items: center;
 		background-color: $wds-global-navigation-background-color;
-		border-top: $border-top-width solid $color-slate-gray;
-		color: $color-dark-blue-gray;
+		border-top: $border-top-width solid $wds-color-slate-gray;
+		color: $wds-color-dark-blue-gray;
 		display: flex;
 		font-size: $wds-typescale-size-minus-1;
 		height: $nav-height;
@@ -105,19 +105,19 @@
 		transition-property: background-color, border-color, color;
 
 		&:hover {
-			color: $color-link;
+			color: $wds-color-link;
 		}
 
 		&:active,
 		&.wds-is-active {
-			background-color: $color-slate-gray;
-			border-color: darken($color-slate-gray, 20%);
-			color: $color-white;
+			background-color: $wds-color-slate-gray;
+			border-color: darken($wds-color-slate-gray, 20%);
+			color: $wds-color-white;
 		}
 	}
 
 	&__logo {
-		border-top: $border-top-width solid $color-dark-blue-gray;
+		border-top: $border-top-width solid $wds-color-dark-blue-gray;
 		// Safari will still make container fluid even when content inside has static width
 		// That is why we need to set grow and shrink to 0
 		flex: 0 0 $wds-global-navigation-logo-width;
@@ -136,7 +136,7 @@
 	}
 
 	&__logo-wikia-icon {
-		fill: $color-dark-blue;
+		fill: $wds-color-dark-blue;
 		height: 100%;
 		padding-bottom: 4px;
 		width: 90px;
@@ -175,32 +175,32 @@
 		flex: 1 1 auto;
 
 		&.wds-is-games {
-			border-color: $color-games;
+			border-color: $wds-color-games;
 
 			&:active,
 			&.wds-is-active {
-				background-color: $color-games;
-				border-color: darken($color-games, 10%);
+				background-color: $wds-color-games;
+				border-color: darken($wds-color-games, 10%);
 			}
 		}
 
 		&.wds-is-movies {
-			border-color: $color-movies;
+			border-color: $wds-color-movies;
 
 			&:active,
 			&.wds-is-active {
-				background-color: $color-movies;
-				border-color: darken($color-movies, 10%);
+				background-color: $wds-color-movies;
+				border-color: darken($wds-color-movies, 10%);
 			}
 		}
 
 		&.wds-is-tv {
-			border-color: $color-tv;
+			border-color: $wds-color-tv;
 
 			&:active,
 			&.wds-is-active {
-				background-color: $color-tv;
-				border-color: darken($color-tv, 10%);
+				background-color: $wds-color-tv;
+				border-color: darken($wds-color-tv, 10%);
 			}
 		}
 	}
@@ -227,7 +227,7 @@
 
 	&__search-label {
 		align-items: center;
-		background-color: $color-white;
+		background-color: $wds-color-white;
 		display: flex;
 		// Safari doesn't set default flex values if we use `flex: 1;`
 		// it requires us to put these values explicitly.
@@ -242,7 +242,7 @@
 		z-index: 1;
 
 		&:hover {
-			color: $color-link;
+			color: $wds-color-link;
 		}
 	}
 
@@ -250,7 +250,7 @@
 		-webkit-appearance: none;
 		border: 0;
 		box-sizing: border-box;
-		color: $color-dark-gray;
+		color: $wds-color-dark-gray;
 		// Safari doesn't set default flex values if we use `flex: 1;`
 		// it requires us to put these values explicitly.
 		flex: 1 1 auto;
@@ -299,7 +299,7 @@
 	}
 
 	&__search-close-icon {
-		color: $color-light-gray;
+		color: $wds-color-light-gray;
 		display: block;
 	}
 
@@ -342,11 +342,11 @@
 
 	&__notifications-menu-counter {
 		align-items: center;
-		background-color: $color-link;
-		border: 1px solid $color-white;
+		background-color: $wds-color-link;
+		border: 1px solid $wds-color-white;
 		border-radius: $notification-counter-size / 2;
 		box-sizing: border-box;
-		color: $color-white;
+		color: $wds-color-white;
 		display: flex;
 		font-size: $wds-typescale-size-minus-3;
 		height: $notification-counter-size;
@@ -375,7 +375,7 @@
 		$slot-width: 80px;
 		$link-padding: 10px;
 
-		border-left: 1px solid $color-blue-gray;
+		border-left: 1px solid $wds-color-blue-gray;
 		display: none;
 		height: 100%;
 		max-width: $slot-width;
@@ -424,7 +424,7 @@
 		}
 
 		&__search-input-wrapper {
-			border-bottom-color: $color-slate-gray;
+			border-bottom-color: $wds-color-slate-gray;
 		}
 	}
 
@@ -454,16 +454,16 @@
 
 		&__search-input-wrapper {
 			// transitioned property: border-bottom-color;
-			border-bottom-color: $color-slate-gray;
+			border-bottom-color: $wds-color-slate-gray;
 
 			&.wds-is-active {
-				border-bottom-color: $color-link;
+				border-bottom-color: $wds-color-link;
 			}
 		}
 
 		&__search-input::placeholder {
 			// transitioned property: color;
-			color: $color-light-gray;
+			color: $wds-color-light-gray;
 		}
 
 		&__search-close {
@@ -513,7 +513,7 @@
 		}
 
 		&__search-input-wrapper {
-			border-bottom: 1px solid $color-slate-gray;
+			border-bottom: 1px solid $wds-color-slate-gray;
 		}
 
 		&__account-menu-caption,
