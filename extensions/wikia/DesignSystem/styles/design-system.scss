@@ -39,7 +39,7 @@ $global-navigation-z-index: 5000101;
 	button:focus:disabled,
 	button:hover:disabled,
 	button:active:disabled {
-		background-color: $color-link;
+		background-color: $wds-color-link;
 	}
 
 	.notifications-container .bubbles {
@@ -66,11 +66,11 @@ $global-navigation-z-index: 5000101;
 		}
 
 		a:hover {
-			color: $color-dark-blue-gray;
+			color: $wds-color-dark-blue-gray;
 		}
 
 		.wds-is-selected a {
-			color: $color-link;
+			color: $wds-color-link;
 		}
 	}
 }
