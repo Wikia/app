@@ -1,12 +1,6 @@
 .wds-global-navigation {
 	$border-top-width: 6px;
-	$nav-height: 49px;
-	// this variable is used in Mercury specific styles - do not remove it
-	$wds-global-navigation-outer-height: $nav-height + $border-top-width;
-
-	$nav-background-color: $color-white;
-
-	$logo-width: 230px;
+	$nav-height: $wds-global-navigation-height - $border-top-width;
 	$search-input-padding: 3px 4px;
 	$notification-counter-size: 18px;
 
@@ -36,7 +30,7 @@
 		}
 	}
 
-	background-color: $nav-background-color;
+	background-color: $wds-global-navigation-background-color;
 	border-image: linear-gradient(to right, $color-dark-blue-gray 40%, $color-slate-gray 40%) 1 0 0;
 	border-top: $border-top-width solid $color-slate-gray;
 	border-width: $border-top-width 0 0;
@@ -90,7 +84,7 @@
 	&__user-menu,
 	&__wikis-menu {
 		align-items: center;
-		background-color: $nav-background-color;
+		background-color: $wds-global-navigation-background-color;
 		border-top: $border-top-width solid $color-slate-gray;
 		color: $color-dark-blue-gray;
 		display: flex;
@@ -127,13 +121,13 @@
 		border-top: $border-top-width solid $color-dark-blue-gray;
 		// Safari will still make container fluid even when content inside has static width
 		// That is why we need to set grow and shrink to 0
-		flex: 0 0 $logo-width;
+		flex: 0 0 $wds-global-navigation-logo-width;
 	}
 
 	&__logo-fandom {
 		height: 100%;
 		padding-bottom: 4px;
-		width: $logo-width;
+		width: $wds-global-navigation-logo-width;
 	}
 
 	// These are temporary styles which should be removed after 4th October 2016

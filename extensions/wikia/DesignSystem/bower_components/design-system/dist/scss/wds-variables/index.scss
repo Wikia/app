@@ -1,3 +1,6 @@
+// private variables - for Design System use only, should not be used outside DS
+@import 'private_variables';
+
 // base variables
 @import 'breakpoints';
 @import 'colors';
@@ -6,4 +9,5 @@
 // component variables
 @import 'buttons';
 @import 'dropdowns';
+@import 'global-navigation';
 @import 'lists';
