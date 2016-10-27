@@ -22,7 +22,7 @@ $admins-module-item-width: 80px;
 
 	.community-page-admins-text {
 		font-size: $wds-typescale-size-minus-1;
-		line-height: $line-height;
+		line-height: $wds-line-height;
 		padding: $content-spacing-small-plus 0;
 	}
 
@@ -31,7 +31,7 @@ $admins-module-item-width: 80px;
 		display: inline-block;
 		font-size: $wds-typescale-size-minus-2;
 		font-weight: bold;
-		line-height: $line-height;
+		line-height: $wds-line-height;
 		margin: $content-spacing-xsmall 0 $content-spacing-xxsmall;
 		padding: $content-spacing-small $content-spacing-regular;
 		text-transform: uppercase;

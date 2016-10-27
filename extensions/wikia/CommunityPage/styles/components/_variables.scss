@@ -56,8 +56,8 @@ $avatar-badge-z-index: 10;
 
 	// simply not display other lines
 	// (fallback for other browsers)
-	line-height: $line-height;
-	max-height: $number * $line-height;
+	line-height: $wds-line-height;
+	max-height: $number * $wds-line-height;
 }
 
 @mixin avatar-badge($top, $left) {
