@@ -80,6 +80,11 @@ $taboola-small-breakpoint: "#{$screen} and (max-width: 420px)";
 				top: 0;
 			}
 		}
+
+		video {
+			height: auto;
+			width: 100%;
+		}
 	}
 }
 
@@ -441,4 +446,8 @@ body > a > img[src$="noad.gif"] {
 		clear: both;
 		margin: 0;
 	}
+}
+
+#WikiaArticleMsg {
+  display: none;
 }

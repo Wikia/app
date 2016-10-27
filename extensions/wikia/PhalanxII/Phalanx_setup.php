@@ -63,6 +63,7 @@ $phalanxhooks = array(
 			'EditContent'                     => 'editContent',
 			'CheckContent'                    => 'checkContent',
 			'APIEditBeforeSave'               => 'filterAPIEditBeforeSave',
+			'FileUploadSummaryCheck'          => 'checkContent',
 		),
 	'PhalanxTitleBlock' =>
 		array(
@@ -70,6 +71,7 @@ $phalanxhooks = array(
 			'CreateDefaultQuestionPageFilter' => 'checkTitle',
 			'CreatePageTitleCheck'            => 'checkTitle',
 			'PageTitleFilter'                 => 'pageTitleFilter',
+			'UploadVerification'              => 'checkFileTitle',
 		),
 	'PhalanxAnswersBlock' =>
 		array(
@@ -144,5 +146,3 @@ $wgLogActions['phalanx/delete']     	= 'phalanx-rule-log-delete';
 $wgLogActions['phalanxemail/add']   	= 'phalanx-rule-log-add';
 $wgLogActions['phalanxemail/edit']  	= 'phalanx-rule-log-edit';
 $wgLogActions['phalanxemail/delete'] 	= 'phalanx-rule-log-delete';
-
-$wgPhalanxServiceUrl = "http://" . $wgConsulServiceTag . "." . $wgPhalanxBaseUrl; # PLATFORM-1744

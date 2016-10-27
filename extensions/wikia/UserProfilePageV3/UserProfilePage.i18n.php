@@ -88,6 +88,10 @@ $messages['en'] = [
 	'user-identity-box-avatar-error-cantwrite' => 'Error: Could not write to temporary directory',
 	'user-identity-box-avatar-error-size' => 'Error: Avatar file is too big (max {{PLURAL:$1|$1|$1}}KB)',
 	'user-identity-box-avatar-error' => 'Error: There was internal error while saving avatar',
+	'user-identity-box-clear' => 'Clear profile contents',
+	'user-identity-box-clear-confirmation' => 'Are you sure you want to clear profile contents',
+	'user-identity-box-clear-success' => 'Successfully deleted user profile contents',
+	'user-identity-box-clear-notarget' => 'The specified user could not be found',
 	'userprofilepage-lightbox-about-me-cancel' => 'Cancel',
 	'userprofilepage-lightbox-about-me-save' => 'Save, I\'m Done',
 	'user-identity-box-saving-error' => 'Saving user data failed - your data should be a plain text',
@@ -125,6 +129,7 @@ $messages['en'] = [
 	'right-editprofilev3' => 'Edit other user\'s profile data',
 	'right-deleteprofilev3' => 'Delete user pages',
 	'right-renameprofilev3' => 'Move user pages',
+	'right-clearuserprofile' => 'Clear the contents of an user\'s profile masthead in one click',
 ];
 
 $messages['qqq'] = [
@@ -271,6 +276,19 @@ Parameters:
 	'user-identity-remove-fail' => 'Error message, general error message during avatar picture removal.',
 	'user-identity-avatars-maintenance' => 'Info message that avatars are currently under maintenance and can\'t be modified right now.',
 	'userprofilepage-edit-modal-error' => 'General error message for user profile page.',
+	'right-council' => '{{doc-right}}',
+	'right-voldev' => '{{doc-right}}',
+	'right-authenticated' => '{{doc-right}}',
+	'right-removeavatar' => '{{doc-right}}',
+	'right-loggedin' => '{{doc-right}}',
+	'right-editprofilev3' => '{{doc-right}}',
+	'right-deleteprofilev3' => '{{doc-right}}',
+	'right-renameprofilev3' => '{{doc-right}}',
+	'right-clearuserprofile' => '{{doc-right}}',
+	'user-identity-box-clear' => 'Label for link which clears user profile page contents in one click',
+	'user-identity-box-clear-confirmation' => 'Confirmation message displayed after user clicks clear profile contents link on user profile page',
+	'user-identity-box-clear-success' => 'Success confirmation message shown as banner notification when the contents of the user profile page were successfully cleared',
+	'user-identity-box-clear-notarget' => 'Error message shown as banner notification when the contents of the user profile page could not be cleared because the target was invalid',
 ];
 
 $messages['ar'] = [

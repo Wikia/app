@@ -36,7 +36,6 @@ class WikiFeaturesHelper extends WikiaModel {
 		'wgEnableChat' => 258,
 		'wgEnableWallExt' => 258,
 		'wgEnableForumExt' => 259,
-		'wgEnableWikiaInteractiveMaps' => 260,
 		'wgEnableMediaGalleryExt' => 1,
 		'wgEnableNjordExt' => 2,
 	);
@@ -47,7 +46,6 @@ class WikiFeaturesHelper extends WikiaModel {
 		'wgShowTopListsInCreatePage' => '2012-02-12',
 		'wgEnableAchievementsExt' => '2012-02-12',
 		'wgEnableForumExt' => '2012-11-29',
-		'wgEnableWikiaInteractiveMaps' => '2014-07-23',
 	);
 
 	/**
@@ -153,10 +151,10 @@ class WikiFeaturesHelper extends WikiaModel {
 	}
 
 	protected function getFeatureEnabled($feature) {
-		if ($this->app->getGlobal($feature)==true)
+		if ($this->app->getGlobal($feature)) {
 			return true;
-		else
-			return false;
+		}
+		return false;
 	}
 
 	/**
@@ -168,8 +166,7 @@ class WikiFeaturesHelper extends WikiaModel {
 		$result = false;
 		if (isset(self::$release_date[$feature])) {
 			$release = strtotime(self::$release_date[$feature]);
-			if ($release != false) {
-				if (floor((time()-$release)/86400) < 15)
+			if ($release && floor((time()-$release)/86400) < 15) {
 					$result = true;
 			}
 		}
