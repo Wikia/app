@@ -1078,6 +1078,7 @@ class UserProfilePageController extends WikiaController {
 		if ( $targetUser && $targetUser->getId() !== 0 ) {
 			$userIdentityBox = new UserIdentityBox( $targetUser );
 			$userIdentityBox->clearMastheadContents();
+			$this->clearCaches( $targetUser );
 
 			$this->response->setVal( 'success', wfMessage( 'user-identity-box-clear-success' )->escaped() );
 			BannerNotificationsController::addConfirmation( wfMessage( 'user-identity-box-clear-success' )->escaped() );
