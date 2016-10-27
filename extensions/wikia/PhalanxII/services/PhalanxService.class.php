@@ -155,7 +155,7 @@ class PhalanxService extends Service {
 	private function sendToPhalanxDaemon( $action, $parameters ) {
 		$options = F::app()->wg->PhalanxServiceOptions;
 
-		$url = $this->getPhalanxUrl($action);
+		$url = $this->getPhalanxUrl( $action );
 		$requestTime = 0;
 		$loggerPostParams = [];
 		$tries = 1;
@@ -226,7 +226,7 @@ class PhalanxService extends Service {
 			// BAC-1332 - some of the phalanx service calls are breaking and we're not sure why
 			// it's better to do the retry than maintain the PHP fallback for that
 			while ( $tries <= self::PHALANX_SERVICE_TRIES_LIMIT ) {
-				$url = $this->getPhalanxUrl($action);
+				$url = $this->getPhalanxUrl( $action );
 				$response = Http::post( $url, $options );
 				if ( false !== $response) {
 					break;
@@ -308,9 +308,10 @@ class PhalanxService extends Service {
 		return $res;
 	}
 
-	private function getPhalanxUrl($action) {
+	private function getPhalanxUrl( $action ) {
 		global $wgConsulUrl, $wgConsulServiceTag;
-		$baseurl = ( new Wikia\Service\Gateway\ConsulUrlProvider( $wgConsulUrl, $wgConsulServiceTag ) )->getUrl( 'phalanx' );
+		
+		$baseurl = ( new ConsulUrlProvider( $wgConsulUrl, $wgConsulServiceTag ) )->getUrl( 'phalanx' );
 		return sprintf( "http://%s/%s", $baseurl, $action != "status" ? $action : "" );
 	}
 

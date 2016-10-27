@@ -60,7 +60,7 @@ class ConsulUrlProvider implements UrlProvider {
 		}
 
 		if (empty($this->cache[$serviceName])) {
-			WikiaLogger::instance()->warning("Empty URL returned from ConsulUrlProvider", ["service_name" => $serviceName, "service_tag" => $this->serviceTag]);
+			WikiaLogger::instance()->warning(__METHOD__ . " Empty URL returned from ConsulUrlProvider", ["service_name" => $serviceName, "service_tag" => $this->serviceTag]);
 			return "";
 		}
 
