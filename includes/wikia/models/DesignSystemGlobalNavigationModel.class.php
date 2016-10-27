@@ -29,7 +29,7 @@ class DesignSystemGlobalNavigationModel extends WikiaModel {
 
 		$data = [
 			'logo' => $this->getLogo(),
-			'logo-small' => $this->getLogoSmall(),
+			'logo_small' => $this->getLogoSmall(),
 			'search' => [
 				'module' => $this->getSearchData()
 			],
@@ -48,7 +48,7 @@ class DesignSystemGlobalNavigationModel extends WikiaModel {
 
 		$logoSmallTagline = $this->getLogoSmallTagline();
 		if ( !empty( $logoSmallTagline ) ) {
-			$data[ 'logo-small-tagline' ] = $logoSmallTagline;
+			$data[ 'logo_small_tagline' ] = $logoSmallTagline;
 		}
 
 		if ( $this->lang === static::DEFAULT_LANG && !$this->isWikiaOrgCommunity() ) {
@@ -368,11 +368,9 @@ class DesignSystemGlobalNavigationModel extends WikiaModel {
 	}
 
 	private function isWikiaOrgCommunity() {
-		if ( $this->product !== self::PRODUCT_WIKIS ) {
-			return false;
-		}
-
-		return WikiFactory::getVarValueByName( 'wgIsInWikiaOrgProgram', $this->productInstanceId );
+		return $this->product !== self::PRODUCT_WIKIS ?
+			false :
+			WikiFactory::getVarValueByName( 'wgIsInWikiaOrgProgram', $this->productInstanceId );
 	}
 
 	private function getCorporatePageSearchUrl() {
