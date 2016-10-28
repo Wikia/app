@@ -1,23 +1,22 @@
-$button-active-color: darken($color-link, 20%);
-$button-line-height: 1.3em;
-$hover-transition-duration: 300ms;
-
 .wds-button {
-	background-color: $color-link;
-	border: 1px solid $color-link;
-	color: $color-white;
+	$active-color: darken($wds-color-link, 20%);
+	$line-height: 1.3em;
+
+	background-color: $wds-color-link;
+	border: 1px solid $wds-color-link;
+	color: $wds-color-white;
 	cursor: pointer;
 	display: inline-block;
-	font-size: $typescale-size-minus-2;
+	font-size: $wds-typescale-size-minus-2;
 	font-weight: 600;
 	letter-spacing: .15px;
-	line-height: $button-line-height;
+	line-height: $line-height;
 	outline: none;
 	padding: 16px 18px 15px;
 	text-align: center;
 	text-decoration: none;
 	text-transform: uppercase;
-	transition-duration: $hover-transition-duration;
+	transition-duration: $wds-button-transition-duration;
 	transition-property: background-color, border-color, color;
 	-webkit-appearance: none;
 	-webkit-border-radius: 0;
@@ -26,8 +25,8 @@ $hover-transition-duration: 300ms;
 	&:hover:not(:disabled),
 	&:active,
 	&.wds-is-active {
-		background-color: $button-active-color;
-		border-color: $button-active-color;
+		background-color: $active-color;
+		border-color: $active-color;
 	}
 
 	&:disabled,
@@ -37,20 +36,20 @@ $hover-transition-duration: 300ms;
 	}
 
 	&.wds-is-secondary {
-		background-color: $color-white;
-		color: $color-link;
+		background-color: $wds-color-white;
+		color: $wds-color-link;
 
 		&:focus:not(:disabled),
 		&:hover:not(:disabled),
 		&:active,
 		&.wds-is-active {
-			background-color: $color-white;
-			color: $button-active-color;
+			background-color: $wds-color-white;
+			color: $active-color;
 		}
 	}
 
 	&.wds-is-squished {
-		font-size: $typescale-size-minus-3;
+		font-size: $wds-typescale-size-minus-3;
 		padding: 10px 12px 9px;
 	}
 
@@ -64,16 +63,16 @@ $hover-transition-duration: 300ms;
 	}
 
 	&.wds-is-text {
-		background-color: $color-white;
+		background-color: $wds-color-white;
 		border: 0;
-		color: $color-link;
+		color: $wds-color-link;
 
 		&:focus:not(:disabled),
 		&:hover:not(:disabled),
 		&:active,
 		&.wds-is-active {
-			background-color: $color-white;
-			color: $button-active-color;
+			background-color: $wds-color-white;
+			color: $active-color;
 		}
 	}
 }
