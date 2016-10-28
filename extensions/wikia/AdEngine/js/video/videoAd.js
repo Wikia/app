@@ -20,7 +20,8 @@ define('ext.wikia.adEngine.video.videoAd', [
 		return googleIma.setupIma(vastUrl, imageContainer, width, height);
 	}
 
-	function setupVideo(imageContainer, slotWidth, slotHeight, adSlot, slotParams) {
+	function setupVideo(imageContainer, slotWidth, slotHeight,
+						adSlot, slotParams, onVideoEndedCallback) {
 		var vastUrl = vastUrlBuilder.build(slotWidth / slotHeight, slotParams),
 			videoAdContainer = setupIma(vastUrl, adSlot, slotWidth, slotHeight);
 
@@ -28,6 +29,9 @@ define('ext.wikia.adEngine.video.videoAd', [
 			googleIma.playVideo(slotWidth, slotHeight, function () {
 				toggle(videoAdContainer, imageContainer, true);
 				videoAdContainer = setupIma(vastUrl, adSlot, slotWidth, slotHeight);
+				if (onVideoEndedCallback) {
+					onVideoEndedCallback();
+				}
 			});
 
 			toggle(videoAdContainer, imageContainer, false);
