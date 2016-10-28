@@ -7,7 +7,7 @@
  *
  * @ingroup Maintenance
  */
-require_once( __DIR__ . '/Maintenance.php' );
+require_once( __DIR__ . '/../../../../maintenance/Maintenance.php' );
 
 class EnableDiscussionsWithNoForums extends Maintenance {
 
@@ -27,24 +27,32 @@ class EnableDiscussionsWithNoForums extends Maintenance {
 		while ( !empty( $wikiId = trim( fgets( $fh ) ) ) ) {
 			$wiki = WikiFactory::getWikiByID( $wikiId );
 
-			$count = $this->getForumThreadCount( $wiki );
+			try {
+				$count = $this->getForumThreadCount( $wiki );
+			} catch ( Exception $e ) {
+				$this->error("Failed to get forum thread count for $wikiId: ".$e->getMessage());
+				continue;
+			}
 			if ( $count > 0 ) {
 				$this->error( $wikiId . ' has ' . $count . ' forum threads, skipping!' );
 				continue;
 			}
 
-			if ( WikiFactory::getVarValueByName( 'wgEnableDiscussions', $wikiId ) === true) {
+			if ( WikiFactory::getVarValueByName( 'wgEnableDiscussions', $wikiId ) === true ) {
 				$this->error( 'Discussions are already enabled on ' . $wikiId . ', skipping!' );
 				continue;
 			}
 
 			try {
-				$this->activateDiscussions( $wikiId, $wiki->city_lang, $wiki->city_title );
+				$this->activateDiscussions( $wiki );
 				$this->enableDiscussions( $wikiId );
 				$this->output( 'Enabled discussions on ' . $wikiId . "\n" );
 			} catch ( Exception $e ) {
 				$this->error( 'Creating site ' . $wikiId . ' caused an error: ' . $e->getMessage() );
+				continue;
 			}
+
+			$this->postWelcomeMessage( $wiki );
 		}
 	}
 
@@ -68,8 +76,9 @@ class EnableDiscussionsWithNoForums extends Maintenance {
 		return intval( $row->cnt );
 	}
 
-	private function activateDiscussions( $cityId, $cityName, $cityLang ) {
-		( new \DiscussionsActivator( $cityId, $cityName, $cityLang ) )->activateDiscussions();
+	private function activateDiscussions( $wiki ) {
+		( new \DiscussionsActivator( $wiki->city_id, $wiki->city_title, $wiki->city_lang ) )
+			->activateDiscussions();
 	}
 
 	private function enableDiscussions( $cityId ) {
@@ -80,7 +89,14 @@ class EnableDiscussionsWithNoForums extends Maintenance {
 			->setArchiveWikiForums( true )
 			->save();
 	}
+
+	private function postWelcomeMessage( stdClass $wiki ) {
+		$success = ( new StaffWelcomePoster() )->postMessage( $wiki->city_id, $wiki->city_lang );
+		if ( !$success ) {
+			$this->error( 'Unable to post staff welcome message for siteId: ' . $wiki->city_id );
+		}
+	}
 }
 
-$maintClass = 'EnableDiscussionsWithNoForums';
+$maintClass = EnableDiscussionsWithNoForums::class;
 require_once( RUN_MAINTENANCE_IF_MAIN );
