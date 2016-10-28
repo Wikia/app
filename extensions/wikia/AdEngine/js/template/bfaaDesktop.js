@@ -4,7 +4,7 @@ define('ext.wikia.adEngine.template.bfaaDesktop', [
 	'ext.wikia.adEngine.context.uapContext',
 	'ext.wikia.adEngine.provider.btfBlocker',
 	'ext.wikia.adEngine.slotTweaker',
-	'ext.wikia.adEngine.video.uapVideoAd',
+	'ext.wikia.adEngine.video.videoAd',
 	'wikia.document',
 	'wikia.log',
 	'wikia.window',
@@ -14,7 +14,7 @@ define('ext.wikia.adEngine.template.bfaaDesktop', [
 	uapContext,
 	btfBlocker,
 	slotTweaker,
-	uapVideoAd,
+	videoAd,
 	doc,
 	log,
 	win,
@@ -22,7 +22,8 @@ define('ext.wikia.adEngine.template.bfaaDesktop', [
 ) {
 	'use strict';
 
-	var breakPointWidthNotSupported = 767, // SCSS property: $breakpoint-width-not-supported
+	var adSlot,
+		breakPointWidthNotSupported = 767, // SCSS property: $breakpoint-width-not-supported
 		logGroup = 'ext.wikia.adEngine.template.bfaaDesktop',
 		nav,
 		page,
@@ -46,17 +47,16 @@ define('ext.wikia.adEngine.template.bfaaDesktop', [
 	}
 
 	function runOnReady(iframe, params) {
-		var spotlightFooter = doc.getElementById('SPOTLIGHT_FOOTER'),
-			adContainer = doc.getElementById(params.slotName);
+		var spotlightFooter = doc.getElementById('SPOTLIGHT_FOOTER');
 
 		nav.style.top = '';
 		page.classList.add('bfaa-template');
 
 		log('desktopHandler::show', 'info', logGroup);
 
-		updateNavBar(adContainer.offsetHeight);
+		updateNavBar(adSlot.offsetHeight);
 		doc.addEventListener('scroll', adHelper.throttle(function () {
-			updateNavBar(adContainer.offsetHeight);
+			updateNavBar(adSlot.offsetHeight);
 		}, 100));
 
 		if (win.WikiaBar) {
@@ -72,23 +72,38 @@ define('ext.wikia.adEngine.template.bfaaDesktop', [
 			recoveryTweaker.tweakSlot(params.slotName, iframe);
 		}
 
-		if (params.videoUrl && params.videoTriggerElement) {
-			slotTweaker.onReady(params.slotName, function() {
-				var divs = doc.querySelectorAll('#' + params.slotName + ' > div'),
-					imageContainer = divs[divs.length - 1],
-					video = uapVideoAd.init(doc.getElementById(params.slotName), imageContainer, params.videoUrl);
+		if (videoEnabled(params)) {
+			videoAd.onLibraryReady(function () {
+				var playTrigger = videoAd.setupVideo(
+					adSlot.querySelector('div:last-of-type'),
+					document.body.clientWidth,
+					document.body.clientWidth / params.videoAspectRatio,
+					adSlot,
+					{
+						src: 'gpt',
+						slotName: params.slotName,
+						uap: params.uap
+					}
+				);
 
-				params.videoTriggerElement.addEventListener('click', function () {
-					uapVideoAd.playAndToggle(video, imageContainer);
-				});
+				params.videoTriggerElement.addEventListener('click', playTrigger);
 			});
 		}
 	}
 
+	function videoEnabled(params) {
+		return params.videoTriggerElement && params.videoAspectRatio;
+	}
+
 	function show(params) {
+		adSlot = doc.getElementById(params.slotName);
 		nav = doc.getElementById('globalNavigation');
 		page = doc.getElementsByClassName('WikiaSiteWrapper')[0];
 		wrapper = doc.getElementById('WikiaTopAds');
+
+		if (videoEnabled(params)) {
+			videoAd.init();
+		}
 
 		log(['show', page, wrapper, params], 'info', logGroup);
 
