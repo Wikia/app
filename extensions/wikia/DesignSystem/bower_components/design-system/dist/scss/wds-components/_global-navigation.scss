@@ -120,45 +120,34 @@
 
 	&__logo {
 		border-top: $border-top-width solid $wds-color-dark-blue-gray;
-		// Safari will still make container fluid even when content inside has static width
-		// That is why we need to set grow and shrink to 0
-		flex: 0 0 $logo-width;
 	}
 
 	&__logo-fandom {
+		// For backwards compatibility after splitting logo and tagline
 		height: 100%;
 		padding-bottom: 4px;
-		width: $logo-width;
+		width: 230px;
 	}
 
-	// These are temporary styles which should be removed after 4th October 2016
-
-	&__logo-wikia {
-		flex-basis: auto;
-	}
-
-	&__logo-wikia-icon {
-		fill: $wds-color-dark-blue;
+	&__logo-image {
 		height: 100%;
-		padding-bottom: 4px;
-		width: 90px;
-	}
 
-	&__logo-wikia-caption {
-		border: {
-			bottom: 1px solid;
-			top: 1px solid;
-		};
-		color: #aaa;
-		display: inline-block;
-		font-size: $wds-typescale-size-minus-3;
-		font-weight: bold;
-		line-height: $wds-typescale-size-base;
-		margin-left: 8px;
-		text-transform: uppercase;
-	}
+		// 'wds' is doubled because second part is name of the asset that we style.
+		&.wds-is-wds-company-logo-fandom {
+			fill: $wds-color-dark-blue-gray;
+			padding-bottom: 4px;
+			width: 120px;
+		}
 
-	// End of temporary styles
+		&.wds-is-wds-company-logo-powered-by-wikia {
+			margin: 0 1px 2px 11px;
+			width: 98px;
+		}
+
+		&.wds-is-wds-company-logo-wikia-org {
+			width: 105px;
+		}
+	}
 
 	&__links-and-search {
 		display: flex;
