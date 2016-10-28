@@ -4,14 +4,13 @@
  * Usage: $ SERVER_ID=1 php /usr/wikia/source/wiki/extensions/wikia/NjordPrototype/maintenance/RemoveNjordTag.php
  */
 
-require_once( dirname( __FILE__ ) . '/../../../../maintenance/Maintenance.php' );
+require_once( __DIR__ . '/../../../../maintenance/Maintenance.php' );
 
 class RemoveNjordTag extends Maintenance {
 	/**
 	 * Duplicated with NjordUsage script;
 	 * Not refactoring as a part of feature sunset process
 	 */
-	const NJORD_VAR_NAME = 'wgEnableNjordExt';
 	const NJORD_ARTICLE_PROP_TITLE = 'TITLE';
 	const NJORD_ARTICLE_PROP_DESCR = 'DESCRIPTION';
 	const NJORD_ARTICLE_PROP_IMAGE = 'IMAGE';
@@ -20,14 +19,16 @@ class RemoveNjordTag extends Maintenance {
 
 	private $dryRun = true;
 
-
 	function __construct() {
 		$this->addOption( 'process', 'Do the real operation. As the operation is destructive, without this flag it will only perform dry-run' );
 		parent::__construct();
 	}
 
 	public function execute() {
-		global $wgCityId;
+		global $wgCityId, $wgUser;
+
+		// attribute automated edits to FandomBot
+		$wgUser = User::newFromName( 'FandomBot' );
 
 		$this->dryRun = !$this->hasOption( 'process' );
 
@@ -43,19 +44,9 @@ class RemoveNjordTag extends Maintenance {
 
 		$this->removeNjordTag();
 		$this->removeNjordPagePropsData();
-		$this->disableNjordExtension( $wgCityId );
 		$this->output( PHP_EOL );
 
 		$this->output( 'Done for ' . $wgCityId . PHP_EOL );
-	}
-
-	private function disableNjordExtension( $cityId ) {
-		if ( $this->dryRun ) {
-			$this->output( 'Dry run; would remove variable from configuration in WikiFactory' . PHP_EOL );
-		} else {
-			$this->output( 'Removing variable from configuration in WikiFactory' . PHP_EOL );
-			WikiFactory::removeVarByName( self::NJORD_VAR_NAME, $cityId );
-		}
 	}
 
 	private function removeNjordTag() {
@@ -70,7 +61,7 @@ class RemoveNjordTag extends Maintenance {
 
 		if(!$this->dryRun && $content !== $newContent) {
 			$this->output( 'Saving change' . PHP_EOL );
-			$page->doEdit( $newContent, 'Removal of a deprecated tag' );
+			$page->doEdit( $newContent, 'Removal of a deprecated <hero> tag' );
 		} else {
 			$this->output( 'Dry run; Real one would change:' . PHP_EOL );
 			$this->output( $content . PHP_EOL );
@@ -78,7 +69,6 @@ class RemoveNjordTag extends Maintenance {
 			$this->output( $newContent . PHP_EOL );
 		}
 	}
-
 
 	private function removeNjordPagePropsData() {
 		if ( $this->dryRun ) {
