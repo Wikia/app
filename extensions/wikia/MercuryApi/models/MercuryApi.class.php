@@ -148,10 +148,6 @@ class MercuryApi {
 				'ubisoft' => [
 					'enabled' => AnalyticsProviderUbisoft::isEnabled(),
 					'url' => AnalyticsProviderUbisoft::URL
-				],
-				'netzathleten' => [
-					'enabled' => AnalyticsProviderNetzAthleten::isEnabled(),
-					'url' => AnalyticsProviderNetzAthleten::URL
 				]
 			],
 			'wikiCategories' => WikiFactoryHub::getInstance()->getWikiCategoryNames( $wgCityId ),
