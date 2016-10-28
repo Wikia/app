@@ -3,6 +3,6 @@
   "private": true,
 
   "dependencies": {
-    "design-system": "Wikia/design-system#XW-2253"
+    "design-system": "Wikia/design-system#2.1.0"
   }
 }
