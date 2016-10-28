@@ -22,7 +22,7 @@ class PhalanxServiceTest extends WikiaBaseTest {
 		$this->service = new PhalanxService();
 		if (!$this->service->status()) {
 			//Skip test if phalanx service is not available
-			throw new Exception("Can't connect to phalanx service on " . $this->app->wg->PhalanxServiceUrl);
+			throw new Exception("Can't connect to phalanx service");
 		}
 	}
 

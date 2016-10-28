@@ -8,8 +8,7 @@ define('ext.wikia.adEngine.lookup.prebid.adaptersPerformanceTracker', [
 	var buckets = [0.0, 0.5, 1.0, 1.5, 2.0, 2.5, 3.0],
 		emptyResponseMsg = 'EMPTY_RESPONSE',
 		notRespondedMsg = 'NO_RESPONSE',
-		responseErrorCode = 2,
-		usedMsg = 'USED';
+		responseErrorCode = 2;
 
 	function setupPerformanceMap(skin, adapters) {
 		var biddersPerformanceMap = {};
@@ -82,11 +81,7 @@ define('ext.wikia.adEngine.lookup.prebid.adaptersPerformanceTracker', [
 		if (bid.getStatusCode() === responseErrorCode) {
 			return [emptyResponseMsg, bucket].join(';');
 		}
-		if (bid.complete) {
-			return [usedMsg, bucket].join(';');
-		} else {
-			return [bid.getSize(), bid.pbMg, bucket].join(';');
-		}
+		return [bid.getSize(), bid.pbMg, bucket].join(';');
 	}
 
 

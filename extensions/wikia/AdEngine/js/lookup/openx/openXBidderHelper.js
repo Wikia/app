@@ -88,8 +88,10 @@ define('ext.wikia.adEngine.lookup.openx.openXBidderHelper', [
 
 	function changeTimeout() {
 		if (!openXTimeoutChanged) {
-			win.OXHBConfig.DFP_mapping.timeout = 0;
-			log(['changeTimeout'], 'debug', logGroup);
+			if (win.OXHBConfig) {
+				win.OXHBConfig.DFP_mapping.timeout = 0;
+				log(['changeTimeout'], 'debug', logGroup);
+			}
 			openXTimeoutChanged = true;
 		}
 	}
@@ -111,7 +113,7 @@ define('ext.wikia.adEngine.lookup.openx.openXBidderHelper', [
 	}
 
 	function addOpenXSlot(slotName) {
-		if (isOpenXRemnantEnabledInGeo() && isSlotSupported(slotName)) {
+		if (isOpenXRemnantEnabledInGeo() && isSlotSupported(slotName) && win.OX) {
 			log(['addOpenXSlot', slotName], 'debug', logGroup);
 			changeTimeout();
 			win.OX.dfp_bidder.addSlots([[getPagePath(), slots[slotName].sizes, getSlothPath(slotName)]]);

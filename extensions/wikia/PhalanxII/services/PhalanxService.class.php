@@ -1,4 +1,5 @@
 <?php
+use Wikia\Service\Gateway\ConsulUrlProvider;
 
 /**
  * @method PhalanxService setLimit( int $limit )
@@ -152,10 +153,9 @@ class PhalanxService extends Service {
 	 * @return integer|mixed data of blocks applied or numeric value (0 - block applied, 1 - no block applied)
 	 */
 	private function sendToPhalanxDaemon( $action, $parameters ) {
-		$baseurl = F::app()->wg->PhalanxServiceUrl;
 		$options = F::app()->wg->PhalanxServiceOptions;
 
-		$url = sprintf( "%s/%s", $baseurl, $action != "status" ? $action : "" );
+		$url = $this->getPhalanxUrl( $action );
 		$requestTime = 0;
 		$loggerPostParams = [];
 		$tries = 1;
@@ -226,6 +226,7 @@ class PhalanxService extends Service {
 			// BAC-1332 - some of the phalanx service calls are breaking and we're not sure why
 			// it's better to do the retry than maintain the PHP fallback for that
 			while ( $tries <= self::PHALANX_SERVICE_TRIES_LIMIT ) {
+				$url = $this->getPhalanxUrl( $action );
 				$response = Http::post( $url, $options );
 				if ( false !== $response) {
 					break;
@@ -306,4 +307,12 @@ class PhalanxService extends Service {
 		}
 		return $res;
 	}
+
+	private function getPhalanxUrl( $action ) {
+		global $wgConsulUrl, $wgConsulServiceTag;
+		
+		$baseurl = ( new ConsulUrlProvider( $wgConsulUrl, $wgConsulServiceTag ) )->getUrl( 'phalanx' );
+		return sprintf( "http://%s/%s", $baseurl, $action != "status" ? $action : "" );
+	}
+
 };
