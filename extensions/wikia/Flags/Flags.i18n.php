@@ -1,11 +1,12 @@
 <?php
-$messages = array();
+/** Internationalization file for /extensions/wikia/Flags/Flags extension. */
+$messages = [];
 
-$messages['en'] = array(
+$messages['en'] = [
 	'flags-description' => 'Flags are per article information for reader or editors that describe the content or action required',
 	'flags-special-title' => 'Manage Flags',
 	'flags-special-header-text' => 'Built on top of the notice templates you already know and use, Flags allow for more powerful article organization, management, and labeling than ever before. Visit [[Help:Flags]] to learn more.',
-	'flags-special-zero-state' => "This community doesn't have any flags set up. [[Help:Flags|Learn more about flags]].",
+	'flags-special-zero-state' => 'This community doesn\'t have any flags set up. [[Help:Flags|Learn more about flags]].',
 	'flags-special-create-button-text' => 'Create a flag',
 	'flags-special-create-form-title-new' => 'Create a flag',
 	'flags-special-create-form-title-edit' => 'Edit the flag',
@@ -43,7 +44,7 @@ $messages['en'] = array(
 	'flags-edit-modal-cancel-button-text' => 'Cancel',
 	'flags-edit-modal-close-button-text' => 'Close',
 	'flags-edit-modal-done-button-text' => 'Done',
-	'flags-edit-modal-no-flags-on-community' => "This community doesn't have any flags set up. [[Help:Flags|Learn more about flags]] or [[Special:Flags|define the flags for this community]].",
+	'flags-edit-modal-no-flags-on-community' => 'This community doesn\'t have any flags set up. [[Help:Flags|Learn more about flags]] or [[Special:Flags|define the flags for this community]].',
 	'flags-edit-modal-title' => 'Flags',
 	'flags-edit-modal-exception' => 'Unfortunately, we are not able to display this due to the following error:
 
@@ -77,17 +78,17 @@ This error has already been reported to the technical team. Please feel free to 
 	'flags-icons-actions-edit' => 'Edit',
 	'flags-icons-actions-delete' => 'Delete this type of flags',
 	'flags-icons-actions-insights' => 'Open a new tab with an Insights list of pages with this flag',
-	'flags-notification-templates-extraction' => "The following templates: ''$1'' were recognized as [[Special:Flags|Flags]] and automatically converted. To see the change visit [[Special:RecentChanges]] or [[Special:Log]].",
+	'flags-notification-templates-extraction' => 'The following templates: \'\'$1\'\' were recognized as [[Special:Flags|Flags]] and automatically converted. To see the change visit [[Special:RecentChanges]] or [[Special:Log]].',
 	'flags-edit-intro-notification' => 'This template is associated with a Flag. Manage Flags at [[Special:Flags]].',
 	'flags-log-name' => 'Flags log',
-	'logentry-flags-flag-added' => "$1 added flag '$4' to page $3",
-	'logentry-flags-flag-removed' => "$1 removed flag '$4' from page $3",
-	'logentry-flags-flag-parameter-added' => "$1 added value '$7' for parameter '$5' of flag '$4' on page $3",
-	'logentry-flags-flag-parameter-modified' => "$1 modified parameter '$5' of flag '$4' on page $3 from '$6' to '$7'",
-	'logentry-flags-flag-parameter-removed' => "$1 removed value '$6' for parameter '$5' of flag '$4' on page $3",
-);
+	'logentry-flags-flag-added' => '$1 added flag \'$4\' to page $3',
+	'logentry-flags-flag-removed' => '$1 removed flag \'$4\' from page $3',
+	'logentry-flags-flag-parameter-added' => '$1 added value \'$7\' for parameter \'$5\' of flag \'$4\' on page $3',
+	'logentry-flags-flag-parameter-modified' => '$1 modified parameter \'$5\' of flag \'$4\' on page $3 from \'$6\' to \'$7\'',
+	'logentry-flags-flag-parameter-removed' => '$1 removed value \'$6\' for parameter \'$5\' of flag \'$4\' on page $3',
+];
 
-$messages['qqq'] = array(
+$messages['qqq'] = [
 	'flags-description' => '{{desc}}',
 	'flags-special-title' => 'A title of the Flags special page (Flags HQ).',
 	'flags-special-header-text' => 'A brief description of what Flags are and where a user can find more information about them.',
@@ -111,7 +112,7 @@ $messages['qqq'] = array(
 	'flags-special-create-form-invalid-param-name' => 'Error message which ask user to enter appropriate parameter names or remove the empty ones.',
 	'flags-special-create-form-save-success' => 'Success message after click save which inform user that flag has been added',
 	'flags-special-create-form-save-failure' => 'Error message after click save which inform user that an error occurs and ask to try again',
-	'flags-special-create-form-fetch-params' => "Text of a link that allows users to fetch parameters already used in an existing template. Displayed below an input field for the template's name.",
+	'flags-special-create-form-fetch-params' => 'Text of a link that allows users to fetch parameters already used in an existing template. Displayed below an input field for the template\'s name.',
 	'flags-special-create-form-save-nochange' => 'Message which inform user that there were no change mage',
 	'flags-special-autoload-delete-confirm' => 'Message warning the user that if removes flag then it also will be removed from all articles and this action cannot be undone. Ask user if is sure to perform this action.',
 	'flags-special-autoload-delete-success' => 'Success message which inform user that flag has been removed',
@@ -154,9 +155,9 @@ $messages['qqq'] = array(
 		$3 link to modified page
 		$4 name of flag added',
 	'logentry-flags-flag-removed' => 'Same as logentry-flags-flag-added message but concerns removal',
-);
+];
 
-$messages['de'] = array(
+$messages['de'] = [
 	'flags-description' => 'Markierungen sind artikelbezogene Informationen für Leser oder Beitragende, die den Inhalt des Artikels oder eine erforderliche Aktion beschreiben.',
 	'flags-special-title' => 'Markierungen verwalten',
 	'flags-special-header-text' => 'Die Markierungen sind auf die Benachrichtigungsvorlagen aufgesetzt, die du ja bereits kennst und nutzt und sie bieten dir eine  leistungsstärkere Organisation, Verwaltung und Beschriftung von Artikeln als jemals zuvor. Unter [[Help:Flags]] erfährst du mehr.',
@@ -232,17 +233,17 @@ Der Fehler wurde bereits an das technische Team weitergeleitet. Zögere bitte ni
 	'flags-icons-actions-edit' => 'Bearbeiten',
 	'flags-icons-actions-delete' => 'Diesen Markierungstyp löschen.',
 	'flags-icons-actions-insights' => 'Öffne eine neue Registerkarte mit einer Insights-Liste von Seiten mit dieser Markierung.',
-	'flags-notification-templates-extraction' => "Die folgenden Vorlagen: ''$1'' wurden als [[Special:Flags|Markierungen]] erkannt und automatisch konvertiert. Du kannst die Änderungen unter [[Special:RecentChanges]] oder [[Special:Log]] ansehen.",
+	'flags-notification-templates-extraction' => 'Die folgenden Vorlagen: \'\'$1\'\' wurden als [[Special:Flags|Markierungen]] erkannt und automatisch konvertiert. Du kannst die Änderungen unter [[Special:RecentChanges]] oder [[Special:Log]] ansehen.',
 	'flags-edit-intro-notification' => 'Diese Vorlage ist mit einer Markierung verbunden. Du kannst Markierungen unter [[Special:Flags]] verwalten.',
 	'flags-log-name' => 'Markierungsprotokoll',
-	'logentry-flags-flag-added' => "$1 hat der Seite $3 die Markierung '$4' hinzugefügt",
-	'logentry-flags-flag-removed' => "$1 hat die Markierung '$4' von der Seite $3 entfernt",
-	'logentry-flags-flag-parameter-added' => "$1 hat für den Parameter '$5' der Markierung '$4' auf der Seite $3 den Wert '$7' hinzugefügt",
-	'logentry-flags-flag-parameter-modified' => "$1 hat den Parameter '$5' der Markierung '$4' auf der Seite $3 von '$6' bis '$7' modifiziert",
-	'logentry-flags-flag-parameter-removed' => "$1 hat für den Parameter '$5' der Markierung '$4' auf der Seite $3 den Wert '$6' entfernt",
-);
+	'logentry-flags-flag-added' => '$1 hat der Seite $3 die Markierung \'$4\' hinzugefügt',
+	'logentry-flags-flag-removed' => '$1 hat die Markierung \'$4\' von der Seite $3 entfernt',
+	'logentry-flags-flag-parameter-added' => '$1 hat für den Parameter \'$5\' der Markierung \'$4\' auf der Seite $3 den Wert \'$7\' hinzugefügt',
+	'logentry-flags-flag-parameter-modified' => '$1 hat den Parameter \'$5\' der Markierung \'$4\' auf der Seite $3 von \'$6\' bis \'$7\' modifiziert',
+	'logentry-flags-flag-parameter-removed' => '$1 hat für den Parameter \'$5\' der Markierung \'$4\' auf der Seite $3 den Wert \'$6\' entfernt',
+];
 
-$messages['es'] = array(
+$messages['es'] = [
 	'flags-description' => 'Los avisos son información del artículo para lectores o editores que describen el contenido o la acción requerida',
 	'flags-special-title' => 'Manejar avisos',
 	'flags-special-header-text' => 'Creados arriba de las plantillas de notificaciones que ya conoces y usas, los avisos permiten que los artículos se organicen, manejen y etiqueten de mejor manera que antes. Visita [[w:c:es:Ayuda:Avisos]] para saber más.',
@@ -318,21 +319,21 @@ Ya se reportó este error al equipo técnico. No dudes en usar [[Special:Contact
 	'flags-icons-actions-edit' => 'Editar',
 	'flags-icons-actions-delete' => 'Borra este tipo de avisos',
 	'flags-icons-actions-insights' => 'Abre una nueva viñeta con una lista de pagina de Sugerencias con este aviso',
-	'flags-notification-templates-extraction' => "Las siguientes plantillas: ''$1''fueron reconocidas como [[Special:Flags|Avisos]] y se convirtieron automáticamente. Para ver el cambio visita [[Special:RecentChanges]] o [[Special:Log]].",
+	'flags-notification-templates-extraction' => 'Las siguientes plantillas: \'\'$1\'\'fueron reconocidas como [[Special:Flags|Avisos]] y se convirtieron automáticamente. Para ver el cambio visita [[Special:RecentChanges]] o [[Special:Log]].',
 	'flags-edit-intro-notification' => 'Esta plantilla está asociada con un aviso. Maneja los avisos en [[Special:Flags]].',
 	'flags-log-name' => 'Registro de avisos',
-	'logentry-flags-flag-added' => "$1 añadido aviso '$4' a la pagina $3",
-	'logentry-flags-flag-removed' => "$1 quitó el aviso '$4' de la página $3",
-	'logentry-flags-flag-parameter-added' => "$1 agregó el valor '$7' para el parámetro '$5' del aviso '$4' en la página $3",
-	'logentry-flags-flag-parameter-modified' => "$1 modificó el parámetro '$5' del aviso '$4' en la página $3 de '$6' a '$7'",
-	'logentry-flags-flag-parameter-removed' => "$1 quitó el valor '$6' para el parámetro '$5' del aviso '$4' en la página $3",
-);
+	'logentry-flags-flag-added' => '$1 añadido aviso \'$4\' a la pagina $3',
+	'logentry-flags-flag-removed' => '$1 quitó el aviso \'$4\' de la página $3',
+	'logentry-flags-flag-parameter-added' => '$1 agregó el valor \'$7\' para el parámetro \'$5\' del aviso \'$4\' en la página $3',
+	'logentry-flags-flag-parameter-modified' => '$1 modificó el parámetro \'$5\' del aviso \'$4\' en la página $3 de \'$6\' a \'$7\'',
+	'logentry-flags-flag-parameter-removed' => '$1 quitó el valor \'$6\' para el parámetro \'$5\' del aviso \'$4\' en la página $3',
+];
 
-$messages['fr'] = array(
-	'flags-description' => "Les flags sont des informations destinées aux lecteurs ou aux contributeurs décrivant le contenu ou l'action nécessaire sur un article.",
+$messages['fr'] = [
+	'flags-description' => 'Les flags sont des informations destinées aux lecteurs ou aux contributeurs décrivant le contenu ou l\'action nécessaire sur un article.',
 	'flags-special-title' => 'Gestion des flags',
-	'flags-special-header-text' => "Créés en plus des modèles de notification que vous connaissez et utilisez déjà, les flags permettent une organisation, une gestion et un étiquetage des articles plus avancés qu'avant. Pour en savoir plus, visitez la page [[Aide:Flags]].",
-	'flags-special-zero-state' => "Aucun flag n'a été configuré pour cette communauté. [[Aide:Flags|En savoir plus sur les flags]]",
+	'flags-special-header-text' => 'Créés en plus des modèles de notification que vous connaissez et utilisez déjà, les flags permettent une organisation, une gestion et un étiquetage des articles plus avancés qu\'avant. Pour en savoir plus, visitez la page [[Aide:Flags]].',
+	'flags-special-zero-state' => 'Aucun flag n\'a été configuré pour cette communauté. [[Aide:Flags|En savoir plus sur les flags]]',
 	'flags-special-create-button-text' => 'Créer un flag',
 	'flags-special-create-form-title-new' => 'Créer un flag',
 	'flags-special-create-form-title-edit' => 'Modifier le flag',
@@ -352,12 +353,12 @@ $messages['fr'] = array(
 	'flags-special-create-form-invalid-param-name' => 'Veuillez saisir des noms appropriés pour tous les paramètres ou supprimer ceux qui sont vides.',
 	'flags-special-create-form-save-success' => 'Le flag a été ajouté.',
 	'flags-special-create-form-save-failure' => 'Une erreur est survenue. Veuillez réessayer.',
-	'flags-special-create-form-save-nochange' => "Il semble qu'aucune modification n'ait été apportée.",
-	'flags-special-create-form-no-parameters' => "Aucun paramètre n'a été trouvé dans le modèle fourni.",
+	'flags-special-create-form-save-nochange' => 'Il semble qu\'aucune modification n\'ait été apportée.',
+	'flags-special-create-form-no-parameters' => 'Aucun paramètre n\'a été trouvé dans le modèle fourni.',
 	'flags-special-create-form-fetch-params' => 'Récupérer les paramètres déjà utilisés dans le modèle',
 	'flags-special-autoload-delete-confirm' => 'Supprimer le flag $1 le retirera également de tous les articles. Cette opération ne peut pas être annulée. Voulez-vous vraiment continuer ?',
 	'flags-special-autoload-delete-success' => 'Le flag été supprimé.',
-	'flags-special-autoload-delete-error' => "Nous n'avons pas pu supprimer le flag. Veuillez réessayer ou nous contacter.",
+	'flags-special-autoload-delete-error' => 'Nous n\'avons pas pu supprimer le flag. Veuillez réessayer ou nous contacter.',
 	'flags-special-list-header-name' => 'Nom du flag',
 	'flags-special-list-header-template' => 'Nom du modèle',
 	'flags-special-list-header-group' => 'Groupe du flag',
@@ -366,13 +367,13 @@ $messages['fr'] = array(
 	'flags-special-list-header-actions' => 'Actions',
 	'flags-special-video' => '[[File:Wikia_Flags|250px|right|Voir les flags Wikia en action !]]',
 	'flags-edit-flags-button-text' => 'Modifier les flags',
-	'flags-edit-form-more-info' => "Plus d'infos >",
+	'flags-edit-form-more-info' => 'Plus d\'infos >',
 	'flags-edit-modal-cancel-button-text' => 'Annuler',
 	'flags-edit-modal-close-button-text' => 'Fermer',
 	'flags-edit-modal-done-button-text' => 'Terminé',
-	'flags-edit-modal-no-flags-on-community' => "Aucun flag n'a été configuré pour cette communauté. [[Aide:Flags|Découvrez ce que sont les flags]] ou [[Special:Flags|définissez-en pour cette communauté]].",
+	'flags-edit-modal-no-flags-on-community' => 'Aucun flag n\'a été configuré pour cette communauté. [[Aide:Flags|Découvrez ce que sont les flags]] ou [[Special:Flags|définissez-en pour cette communauté]].',
 	'flags-edit-modal-title' => 'Flags',
-	'flags-edit-modal-exception' => "Nous n'avons pas pu afficher cela en raison de l'erreur suivante :
+	'flags-edit-modal-exception' => 'Nous n\'avons pas pu afficher cela en raison de l\'erreur suivante :
 
 
 
@@ -380,8 +381,8 @@ $1
 
 
 
-Cette erreur a déjà été signalée à l'équipe technique. Si le problème persiste, vous pouvez visiter la page [[Spécial:Contact]] pour vous adresser à l'équipe d'assistance de Wikia.",
-	'flags-edit-modal-post-exception' => "Nous n'avons pas pu terminer le processus en raison de l'erreur suivante :
+Cette erreur a déjà été signalée à l\'équipe technique. Si le problème persiste, vous pouvez visiter la page [[Spécial:Contact]] pour vous adresser à l\'équipe d\'assistance de Wikia.',
+	'flags-edit-modal-post-exception' => 'Nous n\'avons pas pu terminer le processus en raison de l\'erreur suivante :
 
 
 
@@ -389,7 +390,7 @@ $1
 
 
 
-Cette erreur a déjà été signalée à l'équipe technique. Si le problème persiste, vous pouvez visiter la page [[Spécial:Contact]] pour vous adresser à l'équipe d'assistance de Wikia.",
+Cette erreur a déjà été signalée à l\'équipe technique. Si le problème persiste, vous pouvez visiter la page [[Spécial:Contact]] pour vous adresser à l\'équipe d\'assistance de Wikia.',
 	'flags-groups-spoiler' => 'Spoiler',
 	'flags-groups-disambig' => 'Désambiguïsation',
 	'flags-groups-canon' => 'Canon',
@@ -404,18 +405,18 @@ Cette erreur a déjà été signalée à l'équipe technique. Si le problème pe
 	'flags-icons-actions-edit' => 'Modifier',
 	'flags-icons-actions-delete' => 'Supprimer ce type de flag',
 	'flags-icons-actions-insights' => 'Ouvrir un nouvel onglet contenant une liste de pages avec ce flag',
-	'flags-notification-templates-extraction' => "Les modèles ''$1'' ont été reconnus comme des [[Special:Flags|flags]] et automatiquement convertis. Pour voir ce qui a changé, visitez la page [[Spécial:Modifications_récentes]] ou [[Spécial:Journal]].",
+	'flags-notification-templates-extraction' => 'Les modèles \'\'$1\'\' ont été reconnus comme des [[Special:Flags|flags]] et automatiquement convertis. Pour voir ce qui a changé, visitez la page [[Spécial:Modifications_récentes]] ou [[Spécial:Journal]].',
 	'flags-edit-intro-notification' => 'Ce modèle est associé à un flag. Pour gérer les flags, visitez la page [[Special:Flags]].',
 	'flags-log-name' => 'Journal des flags',
-	'logentry-flags-flag-added' => "$1 a ajouté le flag '$4' à la page $3",
-	'logentry-flags-flag-removed' => "$1 a supprimé le flag '$4' de la page $3.",
-	'logentry-flags-flag-parameter-added' => "$1 a ajouté la valeur '$7' pour le paramètre '$5' du flag '$4' de la page $3.",
-	'logentry-flags-flag-parameter-modified' => "$1 a modifié le paramètre '$5' du flag '$4' de la page $3 de '$6' en '$7'.",
-	'logentry-flags-flag-parameter-removed' => "$1 a supprimé la valeur '$6' du paramètre '$5' du flag '$4' de la page $3.",
-);
+	'logentry-flags-flag-added' => '$1 a ajouté le flag \'$4\' à la page $3',
+	'logentry-flags-flag-removed' => '$1 a supprimé le flag \'$4\' de la page $3.',
+	'logentry-flags-flag-parameter-added' => '$1 a ajouté la valeur \'$7\' pour le paramètre \'$5\' du flag \'$4\' de la page $3.',
+	'logentry-flags-flag-parameter-modified' => '$1 a modifié le paramètre \'$5\' du flag \'$4\' de la page $3 de \'$6\' en \'$7\'.',
+	'logentry-flags-flag-parameter-removed' => '$1 a supprimé la valeur \'$6\' du paramètre \'$5\' du flag \'$4\' de la page $3.',
+];
 
-$messages['it'] = array(
-	'flags-description' => "I contrassegni sono informazioni sugli articoli, utili a lettori e collaboratori, che ne descrivono il contenuto o l'azione richiesta",
+$messages['it'] = [
+	'flags-description' => 'I contrassegni sono informazioni sugli articoli, utili a lettori e collaboratori, che ne descrivono il contenuto o l\'azione richiesta',
 	'flags-special-title' => 'Organizza contrassegni',
 	'flags-special-header-text' => 'Creati sulla base dei modelli di notifica che già conosci e usi, Contrassegni migliora drasticamente la tua esperienza di organizzazione, gestione e categorizzazione degli articoli. Visita [[Help:Flags]] per saperne di più.',
 	'flags-special-zero-state' => 'Questa community non ha alcun contrassegno predefinito. [[Help:Flags|Per saperne di più sui contrassegni]].',
@@ -441,7 +442,7 @@ $messages['it'] = array(
 	'flags-special-create-form-save-nochange' => 'Non è stata fatta alcuna modifica.',
 	'flags-special-create-form-no-parameters' => 'Nel modello dato non sono stati trovati parametri.',
 	'flags-special-create-form-fetch-params' => 'Importa i parametri già usati nel modello',
-	'flags-special-autoload-delete-confirm' => "Se elimini il contrassegno $1, questo scomparirà da tutti gli articoli e l'azione sarà irreversibile. Desideri procedere comunque?",
+	'flags-special-autoload-delete-confirm' => 'Se elimini il contrassegno $1, questo scomparirà da tutti gli articoli e l\'azione sarà irreversibile. Desideri procedere comunque?',
 	'flags-special-autoload-delete-success' => 'Il contrassegno è stato rimosso.',
 	'flags-special-autoload-delete-error' => 'Sfortunatamente non abbiamo potuto rimuovere il contrassegno. Sei pregato di riprovare o di contattarci.',
 	'flags-special-list-header-name' => 'Nome del contrassegno',
@@ -490,17 +491,17 @@ Questo errore è già stato riportato ai nostri tecnici. Se il problema persiste
 	'flags-icons-actions-edit' => 'Modifica',
 	'flags-icons-actions-delete' => 'Cancella questo tipo di contrassegni',
 	'flags-icons-actions-insights' => 'Apri una nuova scheda che elenchi le pagine con questo contrassegno',
-	'flags-notification-templates-extraction' => "I seguenti modelli: ''$1'' sono stati identificati come [[Special:Flags|Contrassegni]] e automaticamente convertiti. Per vedere la modifica visita [[Special:RecentChanges]] o [[Special:Log]].",
+	'flags-notification-templates-extraction' => 'I seguenti modelli: \'\'$1\'\' sono stati identificati come [[Special:Flags|Contrassegni]] e automaticamente convertiti. Per vedere la modifica visita [[Special:RecentChanges]] o [[Special:Log]].',
 	'flags-edit-intro-notification' => 'Questo modello è associato a un contrassegno. Gestisci i contrassegni qui [[Special:Flags]].',
 	'flags-log-name' => 'Registro contrassegni',
-	'logentry-flags-flag-added' => "$1 ha aggiunto il contrassegno '$4' alla pagina $3",
-	'logentry-flags-flag-removed' => "$1 ha rimosso il contrassegno '$4' dalla pagina $3",
-	'logentry-flags-flag-parameter-added' => "$1 ha aggiunto il valore '$7' al parametro '$5' del contrassegno '$4' alla pagina $3",
-	'logentry-flags-flag-parameter-modified' => "$1 ha modificato il parametro '$5' del contrassegno '$4' alla pagina $3 da '$6' a '$7'",
-	'logentry-flags-flag-parameter-removed' => "$1 ha rimosso il valore '$6' per il parametro '$5' del contrassegno '$4' alla pagina $3",
-);
+	'logentry-flags-flag-added' => '$1 ha aggiunto il contrassegno \'$4\' alla pagina $3',
+	'logentry-flags-flag-removed' => '$1 ha rimosso il contrassegno \'$4\' dalla pagina $3',
+	'logentry-flags-flag-parameter-added' => '$1 ha aggiunto il valore \'$7\' al parametro \'$5\' del contrassegno \'$4\' alla pagina $3',
+	'logentry-flags-flag-parameter-modified' => '$1 ha modificato il parametro \'$5\' del contrassegno \'$4\' alla pagina $3 da \'$6\' a \'$7\'',
+	'logentry-flags-flag-parameter-removed' => '$1 ha rimosso il valore \'$6\' per il parametro \'$5\' del contrassegno \'$4\' alla pagina $3',
+];
 
-$messages['ja'] = array(
+$messages['ja'] = [
 	'flags-description' => 'フラッグは閲覧者や編集者向けに表示される記事ごとの情報で、記事のコンテンツや必要な対処について説明しています',
 	'flags-special-title' => 'フラッグの管理',
 	'flags-special-header-text' => 'すでに使い慣れている通知テンプレートをベースに構築されたフラッグを使用すると、これまでよりもさらに効果的に記事を整理、管理、ラベル付けすることができます。詳しくは、[[Help:フラッグ]]をご覧ください。',
@@ -576,7 +577,7 @@ $1
 	'flags-icons-actions-edit' => '編集',
 	'flags-icons-actions-delete' => 'この種類のフラッグを削除',
 	'flags-icons-actions-insights' => '新しいタブに、このフラッグを含むページのインサイトのリストを開く',
-	'flags-notification-templates-extraction' => "テンプレート''$1''は[[Special:Flags|フラッグ]]として認識されたため、自動変換されました。変更を確認するには、[[Special:RecentChanges]]または[[Special:Log]]をご覧ください。",
+	'flags-notification-templates-extraction' => 'テンプレート\'\'$1\'\'は[[Special:Flags|フラッグ]]として認識されたため、自動変換されました。変更を確認するには、[[Special:RecentChanges]]または[[Special:Log]]をご覧ください。',
 	'flags-edit-intro-notification' => 'このテンプレートはフラッグに関連付けられています。フラッグの管理は[[Special:Flags]]で行っていただけます。',
 	'flags-log-name' => 'フラッグログ',
 	'logentry-flags-flag-added' => '$1さんがページ$3にフラッグ「$4」を追加しました',
@@ -584,13 +585,13 @@ $1
 	'logentry-flags-flag-parameter-added' => '$1さんがページ$3のフラッグ「$4」のパラメータ「$5」に値「$7」を追加しました',
 	'logentry-flags-flag-parameter-modified' => '$1さんがページ$3のフラッグ「$4」のパラメータ「$5」を「$6」から「$7」に変更しました',
 	'logentry-flags-flag-parameter-removed' => '$1さんがページ$3のフラッグ「$4」のパラメータ「$5」から値「$6」を削除しました',
-);
+];
 
-$messages['nl'] = array(
+$messages['nl'] = [
 	'flags-description' => 'Flags are per article information for reader or editors that describe the content or action required',
 	'flags-special-title' => 'Manage Flags',
 	'flags-special-header-text' => 'Built on top of the notice templates you already know and use, Flags allow for more powerful article organization, management, and labeling than ever before. Visit [[Help:Flags]] to learn more.',
-	'flags-special-zero-state' => "This community doesn't have any flags set up. [[Help:Flags|Learn more about flags]].",
+	'flags-special-zero-state' => 'This community doesn\'t have any flags set up. [[Help:Flags|Learn more about flags]].',
 	'flags-special-create-button-text' => 'Create a flag',
 	'flags-special-create-form-title-new' => 'Create a flag',
 	'flags-special-create-form-title-edit' => 'Edit the flag',
@@ -628,7 +629,7 @@ $messages['nl'] = array(
 	'flags-edit-modal-cancel-button-text' => 'Cancel',
 	'flags-edit-modal-close-button-text' => 'Close',
 	'flags-edit-modal-done-button-text' => 'Done',
-	'flags-edit-modal-no-flags-on-community' => "This community doesn't have any flags set up. [[Help:Flags|Learn more about flags]] or [[Special:Flags|define the flags for this community]].",
+	'flags-edit-modal-no-flags-on-community' => 'This community doesn\'t have any flags set up. [[Help:Flags|Learn more about flags]] or [[Special:Flags|define the flags for this community]].',
 	'flags-edit-modal-title' => 'Flags',
 	'flags-edit-modal-exception' => 'Unfortunately, we are not able to display this due to the following error:
 
@@ -662,17 +663,17 @@ This error has already been reported to the technical team. Please feel free to 
 	'flags-icons-actions-edit' => 'Edit',
 	'flags-icons-actions-delete' => 'Delete this type of flags',
 	'flags-icons-actions-insights' => 'Open a new tab with an Insights list of pages with this flag',
-	'flags-notification-templates-extraction' => "The following templates: ''$1'' were recognized as [[Special:Flags|Flags]] and automatically converted. To see the change visit [[Special:RecentChanges]] or [[Special:Log]].",
+	'flags-notification-templates-extraction' => 'The following templates: \'\'$1\'\' were recognized as [[Special:Flags|Flags]] and automatically converted. To see the change visit [[Special:RecentChanges]] or [[Special:Log]].',
 	'flags-edit-intro-notification' => 'This template is associated with a Flag. Manage Flags at [[Special:Flags]].',
 	'flags-log-name' => 'Flags log',
-	'logentry-flags-flag-added' => "$1 added flag '$4' to page $3",
-	'logentry-flags-flag-removed' => "$1 removed flag '$4' from page $3",
-	'logentry-flags-flag-parameter-added' => "$1 added value '$7' for parameter '$5' of flag '$4' on page $3",
-	'logentry-flags-flag-parameter-modified' => "$1 modified parameter '$5' of flag '$4' on page $3 from '$6' to '$7'",
-	'logentry-flags-flag-parameter-removed' => "$1 removed value '$6' for parameter '$5' of flag '$4' on page $3",
-);
+	'logentry-flags-flag-added' => '$1 added flag \'$4\' to page $3',
+	'logentry-flags-flag-removed' => '$1 removed flag \'$4\' from page $3',
+	'logentry-flags-flag-parameter-added' => '$1 added value \'$7\' for parameter \'$5\' of flag \'$4\' on page $3',
+	'logentry-flags-flag-parameter-modified' => '$1 modified parameter \'$5\' of flag \'$4\' on page $3 from \'$6\' to \'$7\'',
+	'logentry-flags-flag-parameter-removed' => '$1 removed value \'$6\' for parameter \'$5\' of flag \'$4\' on page $3',
+];
 
-$messages['pl'] = array(
+$messages['pl'] = [
 	'flags-description' => 'Flagi są dla czytelników lub użytkowników danego artykułu informacją, która opisuje jego zawartość lub działania, które należy podjąć',
 	'flags-edit-flags-button-text' => 'Edytuj flagi',
 	'flags-edit-form-more-info' => 'Więcej informacji >',
@@ -682,8 +683,8 @@ $messages['pl'] = array(
 	'flags-edit-modal-no-flags-on-community' => 'Ta społeczność nie ma ustawionych flag. [[Help:Flags|Więcej informacji na temat flag]] lub [[Special:Flags|określ flagi dla tej społeczności]].',
 	'flags-edit-modal-title' => 'Flagi',
 	'flags-log-name' => 'Protokół Flag',
-	'logentry-flags-flag-added' => "$1 {{GENDER:$2|dodał|dodała}} flagę '$4' do strony $3",
-	'logentry-flags-flag-removed' => "Użytkownik $1 usunął flagę '$4' ze strony $3",
+	'logentry-flags-flag-added' => '$1 {{GENDER:$2|dodał|dodała}} flagę \'$4\' do strony $3',
+	'logentry-flags-flag-removed' => 'Użytkownik $1 usunął flagę \'$4\' ze strony $3',
 	'flags-special-title' => 'Zarządzaj Flagami',
 	'flags-special-header-text' => 'Zbudowane na bazie szablonów uwag, które znasz i z których korzystasz, Flagi pozwalają na lepsze organizowanie, zarządzanie i znakowanie artykułów. Odwiedź stronę [[Pomoc:Flagi]], aby dowiedzieć się więcej.',
 	'flags-special-zero-state' => 'Ta społeczność nie ma ustawionych flag. [[Help:Flags|Więcej informacji na temat flag]].',
@@ -751,14 +752,14 @@ Błąd został już zgłoszony zespołowi technicznemu. Jeśli w dalszym ciągu 
 	'flags-icons-actions-edit' => 'Edytuj',
 	'flags-icons-actions-delete' => 'Usuń ten rodzaj flag',
 	'flags-icons-actions-insights' => 'Otwórz nową kartę Podpowiedziami dotyczącymi listy stron, na których znajduje się ta flaga',
-	'flags-notification-templates-extraction' => "Następujące szablony: ''$1'' zostały rozpoznane jako [[Special:Flags|Flagi]] i zostały  automatycznie przekształcone. Aby zobaczyć zmianę przejdź do [[Special:RecentChanges]] lub [[Special:Log]].",
+	'flags-notification-templates-extraction' => 'Następujące szablony: \'\'$1\'\' zostały rozpoznane jako [[Special:Flags|Flagi]] i zostały  automatycznie przekształcone. Aby zobaczyć zmianę przejdź do [[Special:RecentChanges]] lub [[Special:Log]].',
 	'flags-edit-intro-notification' => 'Ten szablon jest powiązany z Flagą. Zarządzaj Flagami na stronie [[Special:Flags]].',
-	'logentry-flags-flag-parameter-added' => "Użytkownik $1 dodał wartość '$7' dla parametru '$5' flagi '$4' na stronie $3",
-	'logentry-flags-flag-parameter-modified' => "Użytkownik $1 zmodyfikował parametr '$5' flagi '$4' na stronie $3 z '$6' na '$7'",
-	'logentry-flags-flag-parameter-removed' => "Użytkownik $1 usunął wartość '$6' dla parametru '$5' flagi '$4' na stronie $3",
-);
+	'logentry-flags-flag-parameter-added' => 'Użytkownik $1 dodał wartość \'$7\' dla parametru \'$5\' flagi \'$4\' na stronie $3',
+	'logentry-flags-flag-parameter-modified' => 'Użytkownik $1 zmodyfikował parametr \'$5\' flagi \'$4\' na stronie $3 z \'$6\' na \'$7\'',
+	'logentry-flags-flag-parameter-removed' => 'Użytkownik $1 usunął wartość \'$6\' dla parametru \'$5\' flagi \'$4\' na stronie $3',
+];
 
-$messages['pt'] = array(
+$messages['pt'] = [
 	'flags-description' => 'Bandeiras são informações contidas em artigos que permitem ao leitor ou editores descrever o conteúdo ou uma ação necessária',
 	'flags-special-title' => 'Administrar bandeiras',
 	'flags-special-header-text' => 'Criadas acima das predefinições de notificação que você já conhece e usa, as bandeiras permitem melhor organização, gerenciamento e marcação de artigo do que nunca. Visite [[Help:Bandeiras]] para saber mais.',
@@ -834,13 +835,13 @@ Este erro já foi comunicado à equipe técnica. Sinta-se à vontade para usar [
 	'flags-edit-intro-notification' => 'Esta predefinição está associada com uma bandeira. Administre as bandeiras em [[Special:Flags]].',
 	'flags-log-name' => 'Registro de bandeiras',
 	'logentry-flags-flag-added' => '$1 adicionou a bandeira \'$4" à página $3',
-	'logentry-flags-flag-removed' => "$1 removeu a bandeira '$4' da página $3",
-	'logentry-flags-flag-parameter-added' => "$1 adicionou o valor '$7' como parâmetro '$5' da bandeira '$4' na página $3",
-	'logentry-flags-flag-parameter-modified' => "$1 modificou o parâmetro '$5' da bandeira '$4' na página $3 de '$6' para '$7'",
-	'logentry-flags-flag-parameter-removed' => "$1 removeu o valor '$6' do parâmetro '$5' da bandeira '$4' na página $3",
-);
+	'logentry-flags-flag-removed' => '$1 removeu a bandeira \'$4\' da página $3',
+	'logentry-flags-flag-parameter-added' => '$1 adicionou o valor \'$7\' como parâmetro \'$5\' da bandeira \'$4\' na página $3',
+	'logentry-flags-flag-parameter-modified' => '$1 modificou o parâmetro \'$5\' da bandeira \'$4\' na página $3 de \'$6\' para \'$7\'',
+	'logentry-flags-flag-parameter-removed' => '$1 removeu o valor \'$6\' do parâmetro \'$5\' da bandeira \'$4\' na página $3',
+];
 
-$messages['ru'] = array(
+$messages['ru'] = [
 	'flags-description' => 'Флаги предоставляют читателям и редакторам информацию о каждой статье, описывая содержание статьи, и/или действия, которые необходимо предпринять по отношению к статье',
 	'flags-special-title' => 'Управление флагами',
 	'flags-special-header-text' => 'Созданные на основе широко используемых информационных шаблонов, Флаги позволяют поднять организацию и маркировку статей на новый уровень. [[Справка:Флаги|Подробнее о флагах]].',
@@ -916,17 +917,17 @@ $1
 	'flags-icons-actions-edit' => 'Править',
 	'flags-icons-actions-delete' => 'Удалить эту группу флагов',
 	'flags-icons-actions-insights' => 'Открыть новую вкладку со списком статей, отмеченных данным флагом',
-	'flags-notification-templates-extraction' => "Шаблон(ы): ''$1'' были распознаны, как [[Special:Flags|Флаги]] и автоматически конвертированы. Посетите [[Special:RecentChanges]] или [[Special:Log]], чтобы увидеть изменения.",
+	'flags-notification-templates-extraction' => 'Шаблон(ы): \'\'$1\'\' были распознаны, как [[Special:Flags|Флаги]] и автоматически конвертированы. Посетите [[Special:RecentChanges]] или [[Special:Log]], чтобы увидеть изменения.',
 	'flags-edit-intro-notification' => 'Этот шаблон может быть использован, как [[Справка:Флаги|Флаг]]. [[Special:Flags|Управление флагами]].',
 	'flags-log-name' => 'Журнал флагов',
-	'logentry-flags-flag-added' => "$1 добавил флаг '$4' на страницу $3",
-	'logentry-flags-flag-removed' => "$1 убрал флаг '$4' со страницы $3",
-	'logentry-flags-flag-parameter-added' => "$1 установил значение '$7' для параметра '$5' флага '$4' на странице $3",
-	'logentry-flags-flag-parameter-modified' => "$1 изменил параметр '$5' флага '$4' на странице $3 с '$6' на '$7'",
-	'logentry-flags-flag-parameter-removed' => "$1 убрал значение '$6' параметра '$5' флага '$4' на странице $3",
-);
+	'logentry-flags-flag-added' => '$1 добавил флаг \'$4\' на страницу $3',
+	'logentry-flags-flag-removed' => '$1 убрал флаг \'$4\' со страницы $3',
+	'logentry-flags-flag-parameter-added' => '$1 установил значение \'$7\' для параметра \'$5\' флага \'$4\' на странице $3',
+	'logentry-flags-flag-parameter-modified' => '$1 изменил параметр \'$5\' флага \'$4\' на странице $3 с \'$6\' на \'$7\'',
+	'logentry-flags-flag-parameter-removed' => '$1 убрал значение \'$6\' параметра \'$5\' флага \'$4\' на странице $3',
+];
 
-$messages['zh-hans'] = array(
+$messages['zh-hans'] = [
 	'flags-description' => '标识模版是为读者或编辑提供的文章相关信息，对内容或需要进行的操作进行描述。',
 	'flags-special-title' => '管理标识模版条目',
 	'flags-special-header-text' => '标识模版条目建在您已经知道和使用的通知模版的顶部，让您能够更加有效地对文章进行组织、管理和标注。此功能比以往任何时候都更强大。如需了解更多信息，请访问[[Help:Flags|标识模版帮助页]]。',
@@ -1002,17 +1003,17 @@ $1
 	'flags-icons-actions-edit' => '编辑',
 	'flags-icons-actions-delete' => '删除此类标识',
 	'flags-icons-actions-insights' => '打开一个含此标识的新的问题页面列表选项卡',
-	'flags-notification-templates-extraction' => "下面的模版''\$ 1''被识别为[[Special:Flags|标识模版]]并自动转换。如需查看此更改，请访问[[Special:最新更改]]或[[Special:日志]]。",
+	'flags-notification-templates-extraction' => '下面的模版\'\'$ 1\'\'被识别为[[Special:Flags|标识模版]]并自动转换。如需查看此更改，请访问[[Special:最新更改]]或[[Special:日志]]。',
 	'flags-edit-intro-notification' => '此模版与标识模版有关。点击[[Special:Flags|标识模版]]管理条目。',
 	'flags-log-name' => '标识模版日志',
-	'logentry-flags-flag-added' => "$1添加了一个'$4'标识到$3页面",
-	'logentry-flags-flag-removed' => "$1已从$3页面删除了'$4'的标识模版",
-	'logentry-flags-flag-parameter-added' => "$1已在$3页面添加了'$4'标识模版中参量'$5'的'$7'值",
-	'logentry-flags-flag-parameter-modified' => "$1已将$3页面上'$4'标识模版的'$5' 参量由'$6'改为'$7'",
-	'logentry-flags-flag-parameter-removed' => "$1已移除了$3页面上'$4'的标识模版中参量'$5'的'$6'值",
-);
+	'logentry-flags-flag-added' => '$1添加了一个\'$4\'标识到$3页面',
+	'logentry-flags-flag-removed' => '$1已从$3页面删除了\'$4\'的标识模版',
+	'logentry-flags-flag-parameter-added' => '$1已在$3页面添加了\'$4\'标识模版中参量\'$5\'的\'$7\'值',
+	'logentry-flags-flag-parameter-modified' => '$1已将$3页面上\'$4\'标识模版的\'$5\' 参量由\'$6\'改为\'$7\'',
+	'logentry-flags-flag-parameter-removed' => '$1已移除了$3页面上\'$4\'的标识模版中参量\'$5\'的\'$6\'值',
+];
 
-$messages['zh-hant'] = array(
+$messages['zh-hant'] = [
 	'flags-description' => '標誌模板是為讀者或編輯提供的文章相關信息，對内容或需要進行的操作進行描述。',
 	'flags-special-title' => '管理標誌模板條目',
 	'flags-special-header-text' => '標誌模板條目出現在你已經知道和使用的通知模版的頂部，讓你能夠更加有效地對文章進行組織、管理和標註。此功能比以往任何時候都更強大。如需了解更多資訊，請訪問[[Help:Flags|標誌模板幫助頁]]。',
@@ -1090,13 +1091,37 @@ $1
 	'flags-icons-actions-edit' => '編輯',
 	'flags-icons-actions-delete' => '刪除此類標誌',
 	'flags-icons-actions-insights' => '打開一個標有這個標誌的新的問題頁面列表選項卡',
-	'flags-notification-templates-extraction' => "下面的模版''\$ 1''被辨識為[[Special:Flags|標誌模板]]並已自動轉換。如需查看所做的更改，請訪問[[Special:RecentChanges|Special:更新更改]]或[[Special:Log|Special:日志]]。",
+	'flags-notification-templates-extraction' => '下面的模版\'\'$ 1\'\'被辨識為[[Special:Flags|標誌模板]]並已自動轉換。如需查看所做的更改，請訪問[[Special:RecentChanges|Special:更新更改]]或[[Special:Log|Special:日志]]。',
 	'flags-edit-intro-notification' => '這個模版與標誌模板關聯。如果要管理標誌模板條目，請按一下[[Special:Flags|Special:標誌模板]]。',
 	'flags-log-name' => '標誌模板日誌',
-	'logentry-flags-flag-added' => "$1 添加了一個'$4'標識到$3",
-	'logentry-flags-flag-removed' => "$1 已經從$3頁面刪除了'$4'標誌",
-	'logentry-flags-flag-parameter-added' => "$1已經在$3頁面上添加了'$4'提醒中參量'$5'的'$7'值",
-	'logentry-flags-flag-parameter-modified' => "$1已經將$3頁面上'$4'標誌模板的'$5'參量由'$6'改爲'$7'",
-	'logentry-flags-flag-parameter-removed' => "$1已經移除$3頁面上'$4'標誌模板中參量'$5'的'$6'值",
-);
+	'logentry-flags-flag-added' => '$1 添加了一個\'$4\'標識到$3',
+	'logentry-flags-flag-removed' => '$1 已經從$3頁面刪除了\'$4\'標誌',
+	'logentry-flags-flag-parameter-added' => '$1已經在$3頁面上添加了\'$4\'提醒中參量\'$5\'的\'$7\'值',
+	'logentry-flags-flag-parameter-modified' => '$1已經將$3頁面上\'$4\'標誌模板的\'$5\'參量由\'$6\'改爲\'$7\'',
+	'logentry-flags-flag-parameter-removed' => '$1已經移除$3頁面上\'$4\'標誌模板中參量\'$5\'的\'$6\'值',
+];
+
+$messages['ko'] = [
+	'flags-edit-flags-button-text' => '배너 편집',
+	'flags-edit-form-more-info' => '자세히 >',
+	'flags-edit-modal-cancel-button-text' => '취소',
+	'flags-edit-modal-done-button-text' => '완료',
+	'flags-edit-modal-title' => '배너',
+	'flags-groups-canon' => '공식 설정',
+	'flags-groups-delete' => '삭제',
+	'flags-groups-disambig' => '동음이의어',
+	'flags-groups-improvements' => '개선',
+	'flags-groups-other' => '기타',
+	'flags-groups-spoiler' => '스포일러',
+	'flags-groups-status' => '상태',
+	'flags-groups-stub' => '토막글',
+	'flags-log-name' => '배너 기록',
+	'flags-special-header-text' => '배너는 문서 맨 위에 표시돼서, 사용자들에게 문서에 관한 내용을 알릴 수 있게 해주는 기능입니다. 이 기능은 기존의 ‘문서 알림 상자’보다 더 체계적이고 편리하게 이용할 수 있습니다. 자세한 사항은 [[도움말:문서 배너]]를 참고하세요.',
+	'flags-special-list-header-group' => '배너 그룹',
+	'flags-special-list-header-name' => '배너 이름',
+	'flags-special-list-header-target' => '사용자',
+	'flags-special-list-header-template' => '틀 이름',
+	'flags-target-contributors' => '기여자',
+	'flags-target-readers' => '독자',
+];
 

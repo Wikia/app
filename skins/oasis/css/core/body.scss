@@ -8,7 +8,7 @@ body {
 	font-size: 12px;
 	margin: 0;
 	overflow-x: auto;
-	padding: 0 0 30px 0;
+	padding: 0;
 }
 
 .WikiaSiteWrapper > h2 {
@@ -76,9 +76,7 @@ a {
 	color: $color-text;
 }
 
-// Customization for Special:Allpages
-.mw-special-Allpages {
-	#mw-content-text a span {
-		color: $color-text;
-	}
+// Customization for Local_Sitemap
+.local-sitemap-line a span {
+	color: $color-text;
 }

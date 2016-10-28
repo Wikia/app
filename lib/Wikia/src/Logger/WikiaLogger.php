@@ -91,7 +91,15 @@ class WikiaLogger implements LoggerInterface {
 			exit(1);
 		}
 
-		return true;
+		/**
+		 * It is important to remember that the standard PHP error handler is completely bypassed
+		 * for the error types specified by error_typesunless the callback function returns FALSE
+		 *
+		 * Return false will make it possible for XDebug to display an orange box with an error on devboxes
+		 *
+		 * @see PLATFORM-2377
+		 */
+		return false;
 	}
 
 	/**
@@ -113,6 +121,12 @@ class WikiaLogger implements LoggerInterface {
 		}
 	}
 
+	public function debugSampled($sampling, $message, Array $context=[]) {
+		if ( ( new \Wikia\Util\Statistics\BernoulliTrial($sampling) )->shouldSample() ) {
+			return $this->debug($message, $context);
+		}
+	}
+
 	public function debug($message, Array $context=[]) {
 		return $this->getLogger()->debug($message, $context);
 	}
@@ -126,26 +140,37 @@ class WikiaLogger implements LoggerInterface {
 	}
 
 	public function warning($message, Array $context=[]) {
+		$this->addStacktraceIfMissing($context);
 		return $this->getLogger()->warning($message, $context);
 	}
 
 	public function error($message, Array $context=[]) {
+		$this->addStacktraceIfMissing($context);
 		return $this->getLogger()->error($message, $context);
 	}
 
 	public function critical($message, Array $context=[]) {
+		$this->addStacktraceIfMissing($context);
 		return $this->getLogger()->critical($message, $context);
 	}
 
 	public function alert($message, Array $context=[]) {
+		$this->addStacktraceIfMissing($context);
 		return $this->getLogger()->alert($message, $context);
 	}
 
 	public function emergency($message, Array $context=[]) {
+		$this->addStacktraceIfMissing($context);
 		return $this->getLogger()->emergency($message, $context);
 	}
 
 	public function log($level, $message, Array $context=[]) {} // NOOP
+
+	private function addStacktraceIfMissing( array &$context ) {
+		if ( !array_key_exists( 'exception', $context ) ) {
+			$context['exception'] = new \Exception();
+		}
+	}
 
 	public function setLogger(Logger $logger) {
 		$this->logger = $logger;

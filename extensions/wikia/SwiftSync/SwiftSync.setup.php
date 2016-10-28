@@ -19,4 +19,3 @@ $wgAutoloadClasses[ 'Wikia\\SwiftSync\\ImageSync'     ] = $dir . "classes/ImageS
 $wgHooks[ 'SwiftFileBackend::doStoreInternal'     ][] = 'Wikia\SwiftSync\Hooks::doStoreInternal';
 $wgHooks[ 'SwiftFileBackend::doCopyInternal'      ][] = 'Wikia\SwiftSync\Hooks::doCopyInternal';
 $wgHooks[ 'SwiftFileBackend::doDeleteInternal'    ][] = 'Wikia\SwiftSync\Hooks::doDeleteInternal';
-$wgHooks[ 'Masthead::AvatarSavedToSwift'          ][] = 'Wikia\SwiftSync\Hooks::SyncFiletoDC';

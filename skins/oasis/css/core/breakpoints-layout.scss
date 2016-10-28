@@ -143,26 +143,24 @@
 		padding: 0;
 
 		@media #{$breakpoint-below-small-plus} {
+			-moz-column-count: 2;
+			-webkit-column-count: 2;
+			column-count: 2;
+
 			// this is copied from responsive-core.scss
 			clear: both;
 			float: none;
 			padding: 13px 10px 0;
 			width: auto;
 
-			&.loaded,
-			&.AdminDashboardRail {
-				align-items: flex-start;
-				display: flex;
-				flex-wrap: wrap;
-				justify-content: space-between;
-			}
-
 			.module,
 			.admin-dashboard-module {
 				box-sizing: border-box;
 				display: inline-block;
-				flex-basis: 49%;
+				margin: 12px 8px;
 				position: static;
+				vertical-align: top;
+				width: 330px;
 
 				.carousel-container {
 					left: 0;

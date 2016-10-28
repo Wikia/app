@@ -118,18 +118,27 @@ define('ext.wikia.adEngine.adEngine', [
 				slot = createSlot(queuedSlot, container, {
 					success: function (adInfo) {
 						log(['success', provider.name, slotName, adInfo], 'debug', logGroup);
+						slotTweaker.show(slotName);
 						tracker.track('success', adInfo);
 					},
 					collapse: function (adInfo) {
 						log(['collapse', provider.name, slotName, adInfo], 'debug', logGroup);
+						slotTweaker.hide(slotName);
 						tracker.track('collapse', adInfo);
 					},
 					hop: function (adInfo) {
 						log(['hop', provider.name, slotName, adInfo], 'debug', logGroup);
+						slotTweaker.hide(container.id);
 						tracker.track('hop', adInfo);
 						nextProvider();
 					}
 				});
+
+			if (slotTweaker.isTopLeaderboard(slotName)) {
+				slot.pre('collapse', function () {
+					slotTweaker.hide('TOP_BUTTON_WIDE');
+				});
+			}
 
 			// Notify people there's the slot handled
 			eventDispatcher.trigger('ext.wikia.adEngine fillInSlot', slotName, provider);
@@ -144,8 +153,6 @@ define('ext.wikia.adEngine.adEngine', [
 
 			var slotName = slot.slotName,
 				providerList = adConfig.getProviderList(slotName).slice(); // Get a copy of the array
-
-			slotTweaker.show(slotName);
 
 			log(['fillInSlot', slot, 'provider list', JSON.stringify(providerList)], 'debug', logGroup);
 

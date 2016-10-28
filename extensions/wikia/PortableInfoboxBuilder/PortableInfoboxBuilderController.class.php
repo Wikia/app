@@ -20,7 +20,10 @@ class PortableInfoboxBuilderController extends WikiaController {
 		} else {
 			$response->setVal( 'css', AssetsManager::getInstance()->getURL( 'portable_infobox_builder_preview_scss' ) );
 		}
+	}
 
+	public function getData() {
+		$response = $this->getResponse();
 		$params = $this->getRequest()->getParams();
 		$isNew = true;
 		$data = new stdClass();

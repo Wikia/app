@@ -63,19 +63,6 @@ class SpecialAllpages extends IncludableSpecialPage {
 		$out = $this->getOutput();
 
 		$this->setHeaders();
-
-		/* Wikia change begin - @author: rychu */
-		// SEO-6: Remove the nofollow attribute from Special:AllPages
-		// SEO-256: Use Special:Allpages as local sitemaps
-		global $wgEnableLocalSitemap;
-		if ( !empty( $wgEnableLocalSitemap ) ) {
-			if ( $this->getUser() && !$this->getUser()->isLoggedIn() ) {
-				$out->setRobotPolicy( 'noindex,follow' );
-				$out->mSquidMaxage = WikiaResponse::CACHE_VERY_SHORT;
-			}
-		}
-		/* Wikia change end */
-
 		$this->outputHeader();
 		$out->allowClickjacking();
 
@@ -88,8 +75,8 @@ class SpecialAllpages extends IncludableSpecialPage {
 
 		$out->setPageTitle(
 			( $namespace > 0 && in_array( $namespace, array_keys( $namespaces) ) ) ?
-			$this->msg( 'allinnamespace', str_replace( '_', ' ', $namespaces[$namespace] ) ) :
-			$this->msg( 'allarticles' )
+				$this->msg( 'allinnamespace', str_replace( '_', ' ', $namespaces[$namespace] ) ) :
+				$this->msg( 'allarticles' )
 		);
 		$out->addModuleStyles( 'mediawiki.special' );
 
@@ -121,31 +108,31 @@ class SpecialAllpages extends IncludableSpecialPage {
 		$out .= Xml::openElement( 'table', array( 'id' => 'nsselect', 'class' => 'allpages' ) );
 		$out .= "<tr>
 	<td class='mw-label'>" .
-			Xml::label( $this->msg( 'allpagesfrom' )->text(), 'nsfrom' ) .
-			"	</td>
+				Xml::label( $this->msg( 'allpagesfrom' )->text(), 'nsfrom' ) .
+				"	</td>
 	<td class='mw-input'>" .
-			Xml::input( 'from', 30, str_replace('_',' ',$from), array( 'id' => 'nsfrom' ) ) .
-			"	</td>
+				Xml::input( 'from', 30, str_replace('_',' ',$from), array( 'id' => 'nsfrom' ) ) .
+				"	</td>
 </tr>
 <tr>
 	<td class='mw-label'>" .
-			Xml::label( $this->msg( 'allpagesto' )->text(), 'nsto' ) .
-			"	</td>
+				Xml::label( $this->msg( 'allpagesto' )->text(), 'nsto' ) .
+				"	</td>
 			<td class='mw-input'>" .
-			Xml::input( 'to', 30, str_replace('_',' ',$to), array( 'id' => 'nsto' ) ) .
-			"		</td>
+				Xml::input( 'to', 30, str_replace('_',' ',$to), array( 'id' => 'nsto' ) ) .
+				"		</td>
 </tr>
 <tr>
 	<td class='mw-label'>" .
-			Xml::label( $this->msg( 'namespace' )->text(), 'namespace' ) .
-			"	</td>
+				Xml::label( $this->msg( 'namespace' )->text(), 'namespace' ) .
+				"	</td>
 			<td class='mw-input'>" .
-			Html::namespaceSelector(
-				array( 'selected' => $namespace ),
-				array( 'name' => 'namespace', 'id' => 'namespace' )
-			) . ' ' .
-			Xml::submitButton( $this->msg( 'allpagessubmit' )->text() ) .
-			"	</td>
+				Html::namespaceSelector(
+					array( 'selected' => $namespace ),
+					array( 'name' => 'namespace', 'id' => 'namespace' )
+				) . ' ' .
+				Xml::submitButton( $this->msg( 'allpagessubmit' )->text() ) .
+				"	</td>
 </tr>";
 		$out .= Xml::closeElement( 'table' );
 		$out .= Xml::closeElement( 'fieldset' );
@@ -262,14 +249,14 @@ class SpecialAllpages extends IncludableSpecialPage {
 				$out2 = Xml::openElement( 'table', array( 'class' => 'mw-allpages-table-form' ) ).
 						'<tr>
 							<td>' .
-								$nsForm .
-							'</td>
+						$nsForm .
+						'</td>
 							<td class="mw-allpages-nav">' .
-								Linker::link( $this->getTitle(), $this->msg( 'allpages' )->escaped(),
-									array(), array(), 'known' ) .
-							"</td>
+						Linker::link( $this->getTitle(), $this->msg( 'allpages' )->escaped(),
+							array(), array(), 'known' ) .
+						"</td>
 						</tr>" .
-					Xml::closeElement( 'table' );
+						Xml::closeElement( 'table' );
 			} else {
 				$out2 = $nsForm;
 			}
@@ -295,20 +282,6 @@ class SpecialAllpages extends IncludableSpecialPage {
 		$queryparams = $namespace ? "namespace=$namespace&" : '';
 		$special = $this->getTitle();
 		$link = htmlspecialchars( $special->getLocalUrl( $queryparams . 'from=' . urlencode($inpoint) . '&to=' . urlencode($outpoint) ) );
-
-		/* Wikia change begin - @author: rychu */
-		// SEO-256: Use Special:Allpages as local sitemaps
-		global $wgEnableLocalSitemap;
-		if ( !empty( $wgEnableLocalSitemap ) ) {
-			$out = '<div><a href="' . $link . '"><span>';
-			$out .= $this->msg( 'alphaindexline' )->rawParams(
-				'</span>' . $inpointf . '<span>',
-				'</span>' . $outpointf . '<span>'
-			)->escaped();
-			$out .= '</span></a></div>';
-			return $out;
-		}
-		/* Wikia change end */
 
 		$out = $this->msg( 'alphaindexline' )->rawParams(
 			"<a href=\"$link\">$inpointf</a></td><td>",
@@ -367,8 +340,8 @@ class SpecialAllpages extends IncludableSpecialPage {
 					$t = Title::newFromRow( $s );
 					if( $t ) {
 						$link = ( $s->page_is_redirect ? '<div class="allpagesredirect">' : '' ) .
-							Linker::link( $t ) .
-							($s->page_is_redirect ? '</div>' : '' );
+								Linker::link( $t ) .
+								($s->page_is_redirect ? '</div>' : '' );
 					} else {
 						$link = '[[' . htmlspecialchars( $s->page_title ) . ']]';
 					}
@@ -405,7 +378,7 @@ class SpecialAllpages extends IncludableSpecialPage {
 					array( 'page_namespace' => $namespace, 'page_title < '.$dbr->addQuotes($from) ),
 					__METHOD__,
 					array( 'ORDER BY' => 'page_title DESC',
-						'LIMIT' => $this->maxPerPage, 'OFFSET' => ($this->maxPerPage - 1 )
+						   'LIMIT' => $this->maxPerPage, 'OFFSET' => ($this->maxPerPage - 1 )
 					)
 				);
 
@@ -435,12 +408,12 @@ class SpecialAllpages extends IncludableSpecialPage {
 
 			$nsForm = $this->namespaceForm( $namespace, $from, $to );
 			$out2 = Xml::openElement( 'table', array( 'class' => 'mw-allpages-table-form' ) ).
-						'<tr>
+					'<tr>
 							<td>' .
-								$nsForm .
-							'</td>
+					$nsForm .
+					'</td>
 							<td class="mw-allpages-nav">' .
-								Linker::link( $self, $this->msg( 'allpages' )->escaped() );
+					Linker::link( $self, $this->msg( 'allpages' )->escaped() );
 
 			# Do we put a previous link ?
 			if( isset( $prevTitle ) &&  $pt = $prevTitle->getText() ) {
@@ -452,10 +425,7 @@ class SpecialAllpages extends IncludableSpecialPage {
 				$prevLink = Linker::linkKnown(
 					$self,
 					$this->msg( 'prevpage', $pt )->escaped(),
-					/* Wikia change begin - @author: rychu */
-					// SEO-256: Use Special:Allpages as local sitemaps
-					array( 'rel' => 'nofollow' ),
-					/* Wikia change end */
+					array(),
 					$query
 				);
 				$out2 = $this->getLanguage()->pipeList( array( $out2, $prevLink ) );
@@ -472,10 +442,7 @@ class SpecialAllpages extends IncludableSpecialPage {
 				$nextLink = Linker::linkKnown(
 					$self,
 					$this->msg( 'nextpage', $t->getText() )->escaped(),
-					/* Wikia change begin - @author: rychu */
-					// SEO-256: Use Special:Allpages as local sitemaps
-					array( 'rel' => 'nofollow' ),
-					/* Wikia change end */
+					array(),
 					$query
 				);
 				$out2 = $this->getLanguage()->pipeList( array( $out2, $nextLink ) );

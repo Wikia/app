@@ -192,14 +192,14 @@ class SkinChooser {
 		 * check headers sent by varnish, if X-Skin is send force skin unless there is useskin param in url
 		 * @author eloy, requested by artur
 		 */
-		if ( is_null( $useskin ) && function_exists( 'apache_request_headers' ) ) {
-			$headers = apache_request_headers();
+		if ( is_null( $useskin ) ) {
+			$skinFromHeader = $request->getHeader( 'X-Skin' );
 
-			if ( isset( $headers[ 'X-Skin' ] ) ) {
-				if ( in_array( $headers[ 'X-Skin' ], array( 'monobook', 'oasis', 'wikia', 'wikiamobile', 'uncyclopedia' ) ) ) {
-					$skin = Skin::newFromKey( $headers[ 'X-Skin' ] );
+			if ( $skinFromHeader !== false ) {
+				if ( in_array( $skinFromHeader, array( 'monobook', 'oasis', 'wikia', 'wikiamobile', 'uncyclopedia' ) ) ) {
+					$skin = Skin::newFromKey( $skinFromHeader );
 				// X-Skin header fallback for Mercury which is actually not a MediaWiki skin but a separate application
-				} elseif ( $headers[ 'X-Skin' ] === 'mercury') {
+				} elseif ( $skinFromHeader === 'mercury') {
 					$skin = Skin::newFromKey( 'wikiamobile' );
 				}
 				wfProfileOut( __METHOD__ );

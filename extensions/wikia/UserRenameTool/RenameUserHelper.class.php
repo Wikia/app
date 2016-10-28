@@ -19,7 +19,7 @@ class RenameUserHelper {
 	 * instead of the blobs table in dataware, tests showed is faster and more accurate
 	 */
 	static public function lookupRegisteredUserActivity( $userID ) {
-		global $wgDevelEnvironment, $wgDatamartDB, $wgStatsDBEnabled;
+		global $wgDevelEnvironment, $wgDWStatsDB, $wgStatsDBEnabled;
 		wfProfileIn( __METHOD__ );
 
 		// check for non admitted values
@@ -33,7 +33,7 @@ class RenameUserHelper {
 		$result = [];
 		if ( empty( $wgDevelEnvironment ) ) { // on production
 			if ( !empty( $wgStatsDBEnabled ) ) {
-				$dbr = wfGetDB( DB_SLAVE, array(), $wgDatamartDB );
+				$dbr = wfGetDB( DB_SLAVE, array(), $wgDWStatsDB );
 				$res = $dbr->select( 'rollup_edit_events', 'wiki_id', ['user_id' => $userID], __METHOD__, ['GROUP BY' => 'wiki_id'] );
 
 				while ( $row = $dbr->fetchObject( $res ) ) {

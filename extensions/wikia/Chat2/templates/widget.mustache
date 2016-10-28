@@ -32,10 +32,10 @@
 			</div>
 		</div>
 	</div>
+	{{#guidelinesText}}
+		<span class="more">{{{guidelinesText}}}</span>
+	{{/guidelinesText}}
 </section>
-{{#guidelinesText}}
-	<span class="more">{{{guidelinesText}}}</span>
-{{/guidelinesText}}
 {{#fromParserTag}}
 	<script language="javascript" type="text/javascript">if ( typeof ChatWidget!=="undefined" ) ChatWidget.init();</script>
 	<a class="ChatMonobookWidget" href="{{linkToSpecialChat}}">{{joinChatText}}></a>

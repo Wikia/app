@@ -43,7 +43,7 @@ DROP TABLE IF EXISTS `image_sync_done`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `image_sync_done` (
-  `id` int(8) unsigned NOT NULL,
+  `id` int(8) NOT NULL AUTO_INCREMENT
   `city_id` int(8) unsigned NOT NULL,
   `img_action` varchar(32) NOT NULL,
   `img_src` blob,

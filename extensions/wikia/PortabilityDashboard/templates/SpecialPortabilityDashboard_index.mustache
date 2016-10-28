@@ -1,3 +1,15 @@
+<section class="Search clearfix">
+    <form class="WikiaSearch" id="search-v2-form" action="">
+        <div class="SearchInput">
+            <p class="grid-1 alpha">{{searchHeadline}}</p>
+            <input type="text" name="url" id="search-v2-input" class="search-v2-input" placeholder="{{searchPlaceholder}}">
+            <button type="submit" class="wikia-button" id="search-v2-button" value="Search">
+                <img src="{{blankImgUrl}}" class="sprite search" height="17" width="21">
+            </button>
+        </div>
+    </form>
+</section>
+
 <p>{{langFilterLabel}}</p>
 <ul class="portability-dashboard-language-filter">
 	<li>
@@ -14,7 +26,8 @@
 		</li>
 	{{/langList}}
 </ul>
-<p>{{dashboardLegend}}</p>
+<p>{{dashboardLegend}}<br/>
+    {{refreshFreqInfo}}</p>
 <table class="wikitable portability-dashboard-table sortable">
 	<thead>
 		{{#dashboardLabels}}
@@ -30,8 +43,8 @@
 					</a>
 				</td>
 				<td>{{wikiLang}}</td>
-				<td>{{portability}}</td>
-				<td>{{infoboxPortability}}</td>
+				<td>{{portability}} %</td>
+				<td>{{infoboxPortability}} %</td>
 				<td>{{traffic}}</td>
 				<td>
 					<a href="{{wikiUrl}}{{typelessTemplatesInsightsPath}}" title="{{templatesWithoutTypeUrlTitle}}">
@@ -48,3 +61,6 @@
 		{{/list}}
 	</tbody>
 </table>
+{{^list}}
+    <p class="portability-dashboard-noresults">{{noResultsInfo}}</p>
+{{/list}}

@@ -83,28 +83,4 @@ HEADER;
 
 		return true;
 	}
-
-	/**
-	 * Clear local wikinav cache when local version of global menu
-	 * is modified using WikiFactory
-	 *
-	 * @param string $cv_name WF variable name
-	 * @param int $city_id wiki ID
-	 * @param mixed $value new variable value
-	 * @return bool return true
-	 */
-	public static function onWikiFactoryChanged($cv_name , $city_id, $value) {
-		if ( $cv_name == NavigationModel::WIKIA_GLOBAL_VARIABLE ) {
-			$model = new NavigationModel();
-
-			$model->clearMemc(
-				NavigationModel::WIKIA_GLOBAL_VARIABLE,
-				$city_id
-			);
-
-			wfDebug(__METHOD__ . ": purging the cache for wiki #{$city_id}\n");
-		}
-
-		return true;
-	}
 }

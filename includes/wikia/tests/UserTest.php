@@ -46,7 +46,7 @@ class UserTest extends WikiaBaseTest {
 		$this->userPreferenceServiceMock = $this->getMock( PreferenceService::class,
 			['getGlobalPreference', 'getPreferences', 'setPreferences', 'setGlobalPreference', 'deleteGlobalPreference',
 			'getLocalPreference', 'setLocalPreference', 'deleteLocalPreference', 'save', 'getGlobalDefault', 'deleteFromCache',
-			'deleteAllPreferences', 'findWikisWithLocalPreferenceValue'] );
+			'deleteAllPreferences', 'findWikisWithLocalPreferenceValue', 'findUsersWithGlobalPreferenceValue'] );
 
 		$this->userAttributeServiceMock = $this->getMock( AttributeService::class );
 		$this->userAttributesMock = $this->getMockBuilder( UserAttributes::class )
@@ -177,5 +177,26 @@ class UserTest extends WikiaBaseTest {
 		$this->assertEquals( "pl", $options[ "language" ] );
 		$this->assertEquals( "someLocalWikia1Value", $options[ "someLocalWikia1Pref" ] );
 		$this->assertArrayNotHasKey( "someLocalWikia2Pref", $options );
+	}
+
+	public function testGetUsernameShouldReturnAnonNameForUserIdZero() {
+		$this->assertEquals( 'anonName', User::getUsername( 0, 'anonName' ) );
+	}
+
+	public function testGetUsernameShouldReturnProvidedNameIfLookupIsDisabled() {
+		$this->mockGlobalVariable( 'wgEnableUsernameLookup', false );
+		$this->assertEquals( 'someName', User::getUsername( 123, 'someName' ) );
+	}
+
+	public function testGetUsernameShouldReturnNameFromWhoIsIfLookupIsEnabled() {
+		$this->mockGlobalVariable( 'wgEnableUsernameLookup', true );
+		$this->mockStaticMethod( 'User', 'whoIs', 'NameFromUserTable' );
+		$this->assertEquals( 'NameFromUserTable', User::getUsername( 123, 'notFromUserTableName' ) );
+	}
+
+	public function testGetUsernameShouldReturnDefaultValueIfUserIsNotFound() {
+		$this->mockGlobalVariable( 'wgEnableUsernameLookup', true );
+		$this->mockStaticMethod( 'User', 'whoIs', false );
+		$this->assertEquals( 'someName', User::getUsername( 123, 'someName' ) );
 	}
 }

@@ -19,9 +19,6 @@
 		<?php echo $tabs; ?>
 
 		<div class="results-wrapper grid-3 alpha">
-			<?php if ( !empty( $wikiMatch ) ):?>
-				<?=$wikiMatch?>
-			<?php endif; ?>
 			<?php if ( !empty( $results ) ): ?>
 				<?php if ( $resultsFound > 0 ): ?>
 					<p class="result-count subtle">
@@ -31,7 +28,7 @@
 							<?= wfMsg( 'wikiasearch2-results-for', '<strong>' . $query . '</strong>' ); ?>
 						<?php endif; ?>
 						<?php if ( isset( $hub ) && $hub ) : ?>
-							<?= wfMsg( 'wikiasearch2-onhub', $hub )?>
+							<?= wfMessage( 'wikiasearch2-onhub', Sanitizer::stripAllTags( $hub ) )->escaped(); ?>
 							|
 							<a href="<?=preg_replace( '/&hub=[^&]+/', '', $_SERVER['REQUEST_URI'] )?>"><?= wfMsg( 'wikiasearch2-search-all-wikia' ) ?></a>
 						<?php endif ?>
@@ -99,7 +96,18 @@
 			</div>
 			<div class="SearchAdsTopWrapper WikiaRail <?= !empty( $isGridLayoutEnabled ) ? 'grid-2' : '' ?> alpha">
 				<?= F::app()->renderView( 'Ad', 'Index', ['slotName' => 'TOP_RIGHT_BOXAD', 'pageTypes' => ['search']] ); ?>
-				<?= $topWikiArticles ?>
+				<?php if ( !empty( $wikiMatch ) ):?>
+					<?= $wikiMatch ?>
+				<?php endif; ?>
+				<?php if ( !empty( $fandomStories ) ): ?>
+					<?= F::app()->renderView( 'WikiaSearch', 'fandomStories', [
+						'stories' => $fandomStories,
+						'viewMoreLink' => $viewMoreFandomStoriesLink
+					] ); ?>
+				<?php endif ?>
+				<?php if ( !empty( $topWikiArticles ) ) : ?>
+					<?= F::app()->renderView( 'WikiaSearch', 'topWikiArticles', [ 'pages' => $topWikiArticles ] ); ?>
+				<?php endif ?>
 				<?= F::app()->renderView( 'Ad', 'Index', ['slotName' => 'LEFT_SKYSCRAPER_2', 'pageTypes' => ['search']] ); ?>
 				<div id="WikiaAdInContentPlaceHolder"></div>
 			</div>

@@ -193,7 +193,7 @@ class FavoriteWikisModel extends WikiaModel {
 				'id' => $wikiId,
 				'wikiName' => $wikiName,
 				'wikiUrl' => $wikiUrl,
-				'edits' => $userStats['edits'] + 1
+				'edits' => $userStats['editcount'] + 1
 			];
 			$this->storeEditsWikis( $wikiId, $wiki );
 		}

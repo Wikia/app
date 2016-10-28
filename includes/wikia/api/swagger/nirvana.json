@@ -24,7 +24,7 @@
     },
     {
       "name": "mercury",
-      "decription": "Mercury API"
+      "description": "Mercury API"
     },
     {
       "name": "navigation",
@@ -3523,7 +3523,8 @@
         "title",
         "url",
         "ns",
-        "quality"
+        "quality",
+        "snippet"
       ],
       "properties": {
         "quality": {
@@ -3548,6 +3549,10 @@
         "title": {
           "type": "string",
           "description": "Article title"
+        },
+        "snippet": {
+          "type": "string",
+          "description": "snippet with highlighted match (HTML format)"
         }
       }
     },

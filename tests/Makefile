@@ -4,7 +4,7 @@
 LOGS_PATH=build/logs
 
 # command to run PHPUnit
-CMD_PHPUNIT=php run-test.php \
+CMD_PHPUNIT=php -v && php -d xdebug.coverage_enable=0 -d opcache.enable=0 run-test.php \
 	--configuration=phpunit.xml
 
 # command to run karma

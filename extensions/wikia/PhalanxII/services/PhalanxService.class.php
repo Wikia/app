@@ -1,8 +1,9 @@
 <?php
+use Wikia\Service\Gateway\ConsulUrlProvider;
 
 /**
- * @method setLimit
- * @method setUser
+ * @method PhalanxService setLimit( int $limit )
+ * @method PhalanxService setUser( User $user )
  */
 class PhalanxService extends Service {
 
@@ -20,6 +21,13 @@ class PhalanxService extends Service {
 
 	const PHALANX_SERVICE_TRIES_LIMIT = 3; // number of retries for phalanx POST requests
 	const PHALANX_SERVICE_TRY_USLEEP = 20000; // delay between retries - 0.2s
+
+	/**
+	 * @var int PHALANX_SERVICE_RELOAD_TIMEOUT
+	 * SUS-964: Give Phalanx /reload requests more time to succeed (25 seconds, the old default for $wgHttpTimeout)
+	 * This does not affect site performance - /reload requests are sent only upon saving/modifying a block.
+	 */
+	const PHALANX_SERVICE_RELOAD_TIMEOUT = 25;
 
 	protected function getLoggerContext() {
 		return [
@@ -145,10 +153,9 @@ class PhalanxService extends Service {
 	 * @return integer|mixed data of blocks applied or numeric value (0 - block applied, 1 - no block applied)
 	 */
 	private function sendToPhalanxDaemon( $action, $parameters ) {
-		$baseurl = F::app()->wg->PhalanxServiceUrl;
 		$options = F::app()->wg->PhalanxServiceOptions;
 
-		$url = sprintf( "%s/%s", $baseurl, $action != "status" ? $action : "" );
+		$url = $this->getPhalanxUrl( $action );
 		$requestTime = 0;
 		$loggerPostParams = [];
 		$tries = 1;
@@ -204,6 +211,13 @@ class PhalanxService extends Service {
 				}
 			}
 
+			// SUS-964: Give reload requests more time to succeed
+			// Reload requests are only sent upon saving/modifying a block,
+			// so using a higher value here won't affect site performance
+			if ( $action === 'reload' ) {
+				$options['timeout'] = static::PHALANX_SERVICE_RELOAD_TIMEOUT;
+			}
+
 			$options["postData"] = implode( "&", $postData );
 			wfDebug( __METHOD__ . ": calling $url with POST data " . $options["postData"] ."\n" );
 			wfDebug( __METHOD__ . ": " . json_encode($parameters) ."\n" );
@@ -212,6 +226,7 @@ class PhalanxService extends Service {
 			// BAC-1332 - some of the phalanx service calls are breaking and we're not sure why
 			// it's better to do the retry than maintain the PHP fallback for that
 			while ( $tries <= self::PHALANX_SERVICE_TRIES_LIMIT ) {
+				$url = $this->getPhalanxUrl( $action );
 				$response = Http::post( $url, $options );
 				if ( false !== $response) {
 					break;
@@ -292,4 +307,12 @@ class PhalanxService extends Service {
 		}
 		return $res;
 	}
+
+	private function getPhalanxUrl( $action ) {
+		global $wgConsulUrl, $wgConsulServiceTag;
+		
+		$baseurl = ( new ConsulUrlProvider( $wgConsulUrl, $wgConsulServiceTag ) )->getUrl( 'phalanx' );
+		return sprintf( "http://%s/%s", $baseurl, $action != "status" ? $action : "" );
+	}
+
 };

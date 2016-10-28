@@ -281,7 +281,7 @@ abstract class WikiaSkin extends SkinTemplate {
 		wfDebug( sprintf( "%s: combined %d SASS files\n", __METHOD__, count($sassFiles) ) );
 
 		wfProfileOut(__METHOD__);
-		return Html::linkedStyle($sassFilesUrl ) . implode('', $cssLinks);
+		return Html::linkedStyle($sassFilesUrl) . implode('', $cssLinks);
 	}
 
 	/*
@@ -396,6 +396,16 @@ abstract class WikiaSkin extends SkinTemplate {
 		}
 
 		return self::USER_LOGIN_STATUS_CLASS_ANON;
+	}
+
+	/**
+	 * VOLDEV-168: Add a community-specific class to the body tag
+	 * The class is the local DB name with a wiki- prefix
+	 *
+	 * @return string Generated CSS class for this wikia
+	 */
+	public function getBodyClassForCommunity() {
+		return Sanitizer::escapeClass( "wiki-{$this->wg->DBname}" );
 	}
 
 	public function initPage( OutputPage $out ) {

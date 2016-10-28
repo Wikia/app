@@ -32,6 +32,7 @@ class PortableInfoboxBuilderSpecialController extends WikiaSpecialPageController
 
 	public function builder() {
 		$title = $this->getPar();
+		OasisController::addHtmlClass( 'full-screen-page' );
 		RenderContentOnlyHelper::setRenderContentVar( true );
 		RenderContentOnlyHelper::setRenderContentLevel( RenderContentOnlyHelper::LEAVE_GLOBAL_NAV_ONLY );
 		Wikia::addAssetsToOutput( 'portable_infobox_builder_scss' );

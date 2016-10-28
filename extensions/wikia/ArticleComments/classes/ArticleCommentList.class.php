@@ -465,7 +465,7 @@ class ArticleCommentList {
 
 			// add spacer when there is a gap between 1st and 2nd visible page
 			if ( $firstVisiblePage > 2 ) {
-				$pagination .= wfMessage( 'article-comments-page-spacer' )->escaped();
+				$pagination .= wfMessage( 'article-comments-page-spacer' )->parse();
 			}
 
 			// generate links
@@ -475,7 +475,7 @@ class ArticleCommentList {
 
 			// add spacer when there is a gap between 2 last links
 			if ( $numberOfPages - $lastVisiblePage > 1 ) {
-				$pagination .= wfMessage( 'article-comments-page-spacer' )->escaped();
+				$pagination .= wfMessage( 'article-comments-page-spacer' )->parse();
 			}
 
 			// add last page - always visible
@@ -505,34 +505,22 @@ class ArticleCommentList {
 			return '';
 		}
 
+		$block = $wgUser->mBlock;
+
 		list( $blockerName, $reason, $ip, $blockid, $blockTimestamp, $blockExpiry, $intended, $isGlobal ) = [
 			User::whoIs( $wgUser->blockedBy() ),
 			$wgUser->blockedFor() ? $wgUser->blockedFor() : wfMessage( 'blockednoreason' )->text(),
 			$wgRequest->getIP(),
 			$wgUser->getBlockId(),
-			$wgLang->timeanddate( wfTimestamp( TS_MW, $wgUser->mBlock->mTimestamp ), true ),
-			$wgUser->mBlock->mExpiry,
-			$wgUser->mBlock->mAddress,
+			$wgLang->timeanddate( wfTimestamp( TS_MW, $block->mTimestamp ), true ),
+			$block->mExpiry,
+			$block->mAddress,
 			$wgUser->mBlockedGlobally
 		];
 
 		// Hide username of blocker if this is a global block (see lines 2112-2129 of includes/Title.php)
-		if ( $isGlobal ) {
-			$blocker = User::newFromName( $blockerName );
-			if ( $blocker instanceof User ) {
-				// user groups to be displayed instead of user name
-				$groups = [
-					'staff',
-					'vstf',
-				];
-				$blockerGroups = $blocker->getEffectiveGroups();
-
-				foreach ( $groups as $group ) {
-					if ( in_array( $group, $blockerGroups ) ) {
-						$blockerLink = wfMessage( "group-$group" )->plain();
-					}
-				}
-			}
+		if ( $block->shouldHideBlockerName() ) {
+			$blockerLink = $block->getGroupNameForHiddenBlocker();
 		} else {
 			$blockerLink = '[[' . $wgContLang->getNsText( NS_USER ) . ":{$blockerName}|{$blockerName}]]";
 		}
@@ -718,7 +706,7 @@ class ArticleCommentList {
 				foreach ( self::$mArticlesToDelete as $page_id => $oComment ) {
 					$oCommentTitle = $oComment->getTitle();
 					if ( $oCommentTitle instanceof Title ) {
-						$oComment = new ArticleComment( $oCommentTitle );
+						$oComment = ArticleComment::newFromTitle( $oCommentTitle );
 						$oComment->doDeleteComment( $deleteReason );
 					}
 				}

@@ -1097,9 +1097,6 @@ but after noinclude/includeonly/onlyinclude and other processing.
 &$text: string containing partially parsed text
 &$stripState: Parser's internal StripState object
 
-'InvalidateEmailComplete': Called after a user's email has been invalidated successfully
-$user: user (object) whose email is being invalidated
-
 'IRCLineURL': When constructing the URL to use in an IRC notification.
 Callee may modify $url and $query, URL will be constructed as $url . $query
 &$url: URL to index.php
@@ -1746,31 +1743,6 @@ $software: The array of software in format 'name' => 'version'.
 
 'SpecialContributionsBeforeMainOutput': Before the form on Special:Contributions
 $id: User identifier
-
-'SpecialListusersDefaultQuery': called right before the end of
-UsersPager::getDefaultQuery()
-$pager: The UsersPager instance
-$query: The query array to be returned
-
-'SpecialListusersFormatRow': called right before the end of
-UsersPager::formatRow()
-$item: HTML to be returned. Will be wrapped in <li></li> after the hook finishes
-$row: Database row object
-
-'SpecialListusersHeader': called before closing the <fieldset> in
-UsersPager::getPageHeader()
-$pager: The UsersPager instance
-$out: The header HTML
-
-'SpecialListusersHeaderForm': called before adding the submit button in
-UsersPager::getPageHeader()
-$pager: The UsersPager instance
-$out: The header HTML
-
-'SpecialListusersQueryInfo': called right before the end of
-UsersPager::getQueryInfo()
-$pager: The UsersPager instance
-$query: The query array to be returned
 
 'SpecialMovepageAfterMove': called after moving a page
 $movePage: MovePageForm object

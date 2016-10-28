@@ -16,8 +16,9 @@ class InsightsCache {
 		$this->config = $config;
 	}
 
-	public function get( $params ) {
-		return $this->memc->get( $this->getMemcKey( $params ) );
+	private function get( $params ) {
+		$data = $this->memc->get( $this->getMemcKey( $params ) );
+		return is_array( $data ) ? $data : [];
 	}
 
 	public function set( $params, $data, $ttl = self::INSIGHTS_MEMC_TTL ) {
@@ -80,14 +81,14 @@ class InsightsCache {
 	private function updateSortingCache( $articleId ) {
 		$sorting = InsightsSorting::getSortingTypes();
 
-		foreach ( $sorting as $key => $item ) {
-			$sortingArray = $this->get( $key );
-			if ( is_array( $sortingArray ) ) {
+		foreach ( $sorting as $type => $item ) {
+			$sortingArray = $this->get( $type );
+			if ( !empty( $sortingArray ) ) {
 				$key = array_search( $articleId, $sortingArray );
 
 				if ( $key !== false && $key !== null ) {
 					unset( $sortingArray[$key] );
-					$this->set( $key, $sortingArray );
+					$this->set( $type, $sortingArray );
 				}
 			}
 		}

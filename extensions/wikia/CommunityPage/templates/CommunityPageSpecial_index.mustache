@@ -1,23 +1,17 @@
+{{>pageHeader}}
 
-{{#showPopupMessage}}
-	<div class="community-page-message">
-		<div class="info-icon"></div>
-		<div class="text">
-			{{popupMessageText}}
-		</div>
-		<div class="close-icon"></div>
+<div class="CommunityPageContainer">
+	<div class="CommunityPageMainContent">
+		{{>callToActionModule}}
+		{{>communityTodoListModule}}
 	</div>
-{{/showPopupMessage}}
-
-
-<div class="WikiaMainContent CommunityPageMainContent" id="WikiaMainContent">
-	<div class="WikiaMainContentContainer" id="WikiaMainContentContainer">
-		{{#userIsMember}}<p>Current User is a Member of this Wiki</p>{{/userIsMember}}
-		{{^userIsMember}}<p>Current User is not a member or is Anon</p>{{/userIsMember}}
-	</div>
-	<div id="WikiaRail" class="WikiaRail">
-		{{>contributorsModule}}
-		{{>recentActivityModule}}
+	<div class="community-page-rail">
+		{{>adminsModule}}
+		{{>moderatorsModule}}
+		{{#contributorsModuleEnabled}}
+			{{>contributorsModule}}
+		{{/contributorsModuleEnabled}}
+		{{>recentlyJoinedModule}}
+		{{>helpModule}}
 	</div>
 </div>
-

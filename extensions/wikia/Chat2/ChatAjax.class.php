@@ -45,7 +45,10 @@ class ChatAjax {
 		}
 
 		$user = User::newFromId( $data['user_id'] );
-		if ( empty( $user ) || !$user->isLoggedIn() || $user->getName() != urldecode( $wgRequest->getVal( 'name', '' ) ) ) {
+		if ( empty( $user ) ||
+			 !$user->isLoggedIn() ||
+			 $user->getName() != $wgRequest->getVal( 'name', '' )
+			) {
 			wfProfileOut( __METHOD__ );
 
 			return [ 'errorMsg' => self::ERROR_USER_NOT_FOUND ];
@@ -82,7 +85,8 @@ class ChatAjax {
 		if ( $res['canChat'] ) {
 			$roomId = $wgRequest->getVal( 'roomId' );
 			$cityIdFromRoom = ChatServerApiClient::getCityIdFromRoomId( $roomId );
-			if ( $wgCityId !== $cityIdFromRoom ) {
+			$cityIdHash = md5($wgCityId.$wgServer);
+			if ( $cityIdHash !== $cityIdFromRoom ) {
 				$res['canChat'] = false; // don't let the user chat in the room they requested.
 				$res['errorMsg'] = wfMessage( 'chat-room-is-not-on-this-wiki' )->text();
 			}
@@ -94,12 +98,12 @@ class ChatAjax {
 
 			// this results goes to chat server, which obiously has no user lang
 			// so we just return a short month name key - it has to be translated on client side
-			$res['since'] = !empty( $stats['date'] )
-				? getdate( wfTimestamp( TS_UNIX, $stats['date'] ) )
+			$res['since'] = !empty( $stats['firstContributionTimestamp'] )
+				? getdate( wfTimestamp( TS_UNIX, $stats['firstContributionTimestamp'] ) )
 				: '';
 
 			// NOTE: This is attached to the user so it will be in the wiki's content language instead of wgLang (which it normally will).
-			$res['editCount'] = $wgContLang->formatNum( $stats['edits'] );
+			$res['editCount'] = $wgContLang->formatNum( $stats['editcount'] );
 		}
 
 		wfProfileOut( __METHOD__ );
@@ -262,7 +266,7 @@ class ChatAjax {
 	private static function authenticateServer() {
 		global $wgRequest;
 
-		return \Wikia\Security\Utils::matchToken( ChatConfig::getSecretToken(), $wgRequest->getVal( 'token' ) );
+		return \Wikia\Security\Utils::matchSecretToken( ChatConfig::getSecretToken(), $wgRequest->getVal( 'token' ) );
 	}
 
 	private static function authenticateServerOrUser() {
@@ -272,7 +276,13 @@ class ChatAjax {
 	}
 
 
-	function BanModal() {
+	/**
+	 * Generates the HTML form used in the chat ban modal interface
+	 * Used via AjaxDispatcher by JS
+	 *
+	 * @return array array containing the form HTML and whether we are changing an existing ban
+	 */
+	public static function BanModal() {
 		global $wgRequest, $wgLang;
 
 		wfProfileIn( __METHOD__ );

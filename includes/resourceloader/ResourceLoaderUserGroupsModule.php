@@ -39,7 +39,9 @@ class ResourceLoaderUserGroupsModule extends ResourceLoaderWikiModule {
 					if ( in_array( $group, array( '*', 'user' ) ) ) {
 						continue;
 					}
-					$pages["MediaWiki:Group-$group.js"] = array( 'type' => 'script' );
+					// MAIN-7675 - Disable group JS because it bypasses JS review process.
+					// This can be re-enabled if integrated with JS review.
+					//$pages["MediaWiki:Group-$group.js"] = array( 'type' => 'script' );
 					$pages["MediaWiki:Group-$group.css"] = array( 'type' => 'style' );
 				}
 				return $pages;

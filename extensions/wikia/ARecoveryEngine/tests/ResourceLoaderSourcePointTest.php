@@ -39,4 +39,51 @@ class ResourceLoaderSourcePointTest extends WikiaBaseTest {
 			+ ResourceLoaderAdEngineSourcePointCSDelivery::TTL_SCRIPTS, $mock->getTtl() );
 	}
 
+	public function testSourcePointModuleRequestFailed() {
+		$this->disableMemCache();
+		$mock = $this->getMockBuilder('ResourceLoaderAdEngineSourcePointCSDelivery')
+			->disableOriginalConstructor()
+			->setMethods( [ 'fetchRemoteScript', 'fetchLocalScript', 'getInlineScript', 'getFallbackDataWhenRequestFails' ] )
+			->getMock();
+		ResourceLoaderAdEngineSourcePointCSDelivery::$localCache[get_class($mock)] = null;
+		$mock->method( 'fetchRemoteScript' )->willReturn( false );
+		$mock->method( 'fetchLocalScript' )->willReturn( self::LOCAL_SCRIPT_MOCK_CONTENT );
+		$mock->method( 'getInlineScript' )->willReturn( self::INLINE_SCRIPT_MOCK_CONTENT );
+		$mock->method( 'getFallbackDataWhenRequestFails')->willReturn( ['script'=>self::FALLBACK_DATA_MOCK_CONTENT] );
+
+		$this->assertEquals( self::FALLBACK_DATA_MOCK_CONTENT, $mock->getScript( $this->resourceLoaderContext ) );
+	}
+
+	public function testSourcePointModuleRequestFailWithCachedGrace() {
+		$now = time();
+		$past = $now - 48 * 3600;
+
+		$wgMemcMock = $this->getMockBuilder( 'MWMemcached' )
+			->disableOriginalConstructor()
+			->setMethods( [ 'get' ] )
+			->getMock();
+
+		$wgMemcMock->expects( $this->any() )
+			->method( 'get' )
+			->willReturn( [
+				'script' => self::MEMCACHED_DATA_MOCK_CONTENT,
+				'modTime' => $past,
+				'ttl' => $past + ResourceLoaderAdEngineSourcePointCSDelivery::TTL_SCRIPTS,
+			] );
+
+		$this->mockGlobalVariable( 'wgMemc', $wgMemcMock );
+
+		$mock = $this->getMockBuilder('ResourceLoaderAdEngineSourcePointCSDelivery')
+			->disableOriginalConstructor()
+			->setMethods( [ 'fetchRemoteScript', 'fetchLocalScript', 'getInlineScript', 'getFallbackDataWhenRequestFails' ] )
+			->getMock();
+		ResourceLoaderAdEngineSourcePointCSDelivery::$localCache[get_class($mock)] = null;
+		$mock->method( 'fetchRemoteScript' )->willReturn( false );
+		$mock->method( 'fetchLocalScript' )->willReturn( self::LOCAL_SCRIPT_MOCK_CONTENT );
+		$mock->method( 'getInlineScript' )->willReturn( self::INLINE_SCRIPT_MOCK_CONTENT );
+		$mock->method( 'getFallbackDataWhenRequestFails')->willReturn( ['script'=>self::FALLBACK_DATA_MOCK_CONTENT] );
+
+		$this->assertEquals( self::MEMCACHED_DATA_MOCK_CONTENT, $mock->getScript( $this->resourceLoaderContext ) );
+	}
+
 }

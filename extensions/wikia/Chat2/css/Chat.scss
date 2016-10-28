@@ -38,7 +38,12 @@ body {
 	&.limit-reached .remaining {
 		color: $color-error;
 	}
-	.remaining {
+	&.limit-reached .limit-reached-msg{
+		color: $color-error;
+		display: block;
+		left: 5px;
+	}
+	.remaining, .limit-reached-msg {
 		display: none;
 		line-height: 25px;
 		position: absolute;
@@ -244,6 +249,7 @@ a {
 	}
 	.message {
 		white-space: pre-line;
+		word-wrap: break-word;
 	}
 	.me-message {
 		color: $color-chat-gray;
@@ -316,14 +322,14 @@ a {
 	top: 0;
 	width: 150px;
 	.User {
-		padding-left: 47px;
+		padding-left: 37px;
 		min-height: 22px;
 		&:hover {
 			background: $color-menu-highlight;
 			cursor: pointer;
 		}
 		img {
-			left: 20px;
+			left: 5px;
 		}
 	}
 	h1 {

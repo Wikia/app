@@ -1,39 +1,91 @@
+@import 'skins/shared/color';
 @import 'skins/shared/mixins/flexbox';
+@import 'skins/oasis/css/core/breakpoints-variables';
+@import 'extensions/wikia/DesignSystem/bower_components/design-system/dist/scss/wds-base/_typography';
+
+$hero-image-url: '/extensions/wikia/CommunityPage/images/fandom_heart.svg';
+$hero-image-height: 200px;
+$hero-image-background: $color-slate-gray;
 
 .community-page-header {
 	@include flexbox();
-	align-items: center;
-	background-image: url('/extensions/wikia/WAMPage/images/hero.jpg'); /* inline */
-	height: 250px;
-	justify-content: center;
+	@include justify-content(center);
+	align-items: flex-end;
+	background: url($hero-image-url) center no-repeat;
+	background-color: $hero-image-background;
+	background-size: 100px 100px;
+	height: $hero-image-height;
+	position: relative;
 	text-align: center;
 
+	&.community-page-header-cover {
+		background-position: center;
+		background-size: cover;
+	}
+
+	&.community-page-header-cover:before {
+		background-color: rgba(0, 0, 0, 0.35);
+		content: '';
+		height: $hero-image-height;
+		left: 0;
+		position: absolute;
+		right: 0;
+		top: 0;
+		z-index: 0;
+	}
+
 	.community-page-header-content {
-		width: 50%;
+		padding-bottom: 24px;
+		width: 94%;
+		z-index: 0;
 	}
 
-	h1 {
-		color: $color-community-page-white;
+	.community-page-header-welcome-message {
+		color: $color-white;
+		font-size: $typescale-size-plus-4;
 		font-weight: bold;
+		line-height: 40px;
+		margin:	0;
 	}
 
-	.signup-button {
-		background: $color-buttons;
-		color: $color-button-text;
-		display: inline-block;
-		font-size: 14px;
-		font-weight: bold;
-		height: 46px;
-		line-height: 46px;
-		margin: 12px 16px 16px;
-		padding: 0 30px;
-		text-decoration: none;
-		text-transform: uppercase;
-		white-space: normal;
+	.community-page-header-welcome-message:lang(ja) {
+		font-size: $typescale-size-plus-2;
+	}
 
-		&:hover, &:active {
-			background-color: $color-button-highlight;
-			text-decoration: none;
-		}
+	.community-page-subheader-welcome-message {
+		color: $color-white;
+		font-size: $typescale-size-plus-2;
+		line-height: $line-height;
+		margin: 6px 0 0 0;
 	}
 }
+
+@mixin header-image($marginSize) {
+	left: -$marginSize;
+	width: calc(100% + 2 * #{$marginSize});
+}
+
+@media #{$breakpoint-large-up} {
+	.community-page-header {
+		@include header-image($padding-width-large);
+	}
+}
+
+@media #{$breakpoint-medium-only} {
+	.community-page-header {
+		@include header-image($padding-width-medium);
+	}
+}
+
+@media #{$breakpoint-small-plus} {
+	.community-page-header {
+		@include header-image($padding-width-small-plus);
+	}
+}
+
+@media #{$breakpoint-below-small-plus} {
+	.community-page-header {
+		@include header-image($padding-width-small);
+	}
+}
+

@@ -6,6 +6,7 @@ $wgExtensionCredits['parserTag'][] = [
 	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/TwitterTag',
 	'author' => [
 		'[http://community.wikia.com/wiki/User:TyA TyA]',
+		'[http://community.wikia.com/wiki/User:Sactage sactage]',
 		'X-Wing Team @ Wikia',
 	],
 	'descriptionmsg' => 'twitter-tag-desc',

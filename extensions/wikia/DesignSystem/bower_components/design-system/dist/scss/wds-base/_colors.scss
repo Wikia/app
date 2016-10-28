@@ -1,0 +1,62 @@
+/////////////////////////
+// # Wikia Brand Colors
+// ## Corporate Colors
+$color-blue-gray: #c5ced9;
+$color-dark-blue-gray: #39424d;
+$color-dark-blue: #092344;
+$color-faint-blue-gray: #f2f6fa;
+$color-light-blue-gray: #e6ebf2;
+$color-light-blue: #1a5eb8;
+$color-slate-gray: #656e78;
+
+// ## Vertical Colors
+$color-books: #ff7f26;
+$color-comics: #ff5400;
+$color-games: #94d11f;
+$color-lifestyle: #ffd000;
+$color-movies: #09d3bf;
+$color-music: #c819ad;
+$color-tv: #00b7e0;
+
+// ## Alerts
+$color-alert: #ed1c24;
+$color-message: #1a5eb8;
+$color-success: #5ba200;
+$color-warning: #f08a24;
+
+// ## Fandom Corporate Colors
+$color-link: #00b7e0;
+
+/////////////////////////
+// # Theming Colors
+// ## Color Names
+$color-black: #1a1a1a;
+$color-dark-gray: #333;
+$color-faint-gray: #ccc;
+$color-gold: #e3bd00;
+$color-light-gray: #999;
+$color-medium-gray: #666;
+$color-mist-gray: #e6e6e6;
+$color-night-sky: #262626;
+$color-off-white: #f6f6f6;
+$color-white: #fff;
+
+// ## Light Theme
+$color-light-c1: $color-white;
+$color-light-c2: $color-off-white;
+$color-light-c3: $color-mist-gray;
+$color-light-c4: $color-faint-gray;
+$color-light-c5: $color-light-gray;
+$color-light-c6: $color-dark-gray;
+$color-light-c7: $color-medium-gray;
+$color-light-c8: $color-gold;
+
+// ## Dark Theme
+$color-dark-c1: $color-night-sky;
+$color-dark-c2: $color-black;
+$color-dark-c3: $color-dark-gray;
+$color-dark-c4: $color-medium-gray;
+$color-dark-c5: $color-light-gray;
+$color-dark-c6: $color-faint-gray;
+$color-dark-c7: $color-white;
+$color-dark-c8: $color-gold;

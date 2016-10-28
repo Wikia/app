@@ -78,10 +78,8 @@ class SpecialPageFactory {
 		'Preferences'               => 'SpecialPreferences',
 		'Contributions'             => 'SpecialContributions',
 		'Listgrouprights'           => 'SpecialListGroupRights',
-		'Listusers'                 => 'SpecialListUsers' ,
 		'Listadmins'                => 'SpecialListAdmins',
 		'Listbots'                  => 'SpecialListBots',
-		'Activeusers'               => 'SpecialActiveUsers',
 		'Userrights'                => 'UserrightsPage',
 		'EditWatchlist'             => 'SpecialEditWatchlist',
 
@@ -136,6 +134,7 @@ class SpecialPageFactory {
 		// Unlisted / redirects
 		'Blankpage'                 => 'SpecialBlankpage',
 		'Blockme'                   => 'SpecialBlockme',
+		'Diff'                      => 'SpecialDiff',
 		'Emailuser'                 => 'SpecialEmailUser',
 		'JavaScriptTest'            => 'SpecialJavaScriptTest',
 		'Movepage'                  => 'MovePageForm',

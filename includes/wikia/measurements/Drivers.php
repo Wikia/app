@@ -51,7 +51,7 @@ class NewrelicDriver implements Driver {
 		 * Adds a custom metric with the specified name and value, which is of type double. Values saved are assumed to be milliseconds, so "4" will be stored as ".004" in our system.
 		 */
 		/** @noinspection PhpUndefinedFunctionInspection */
-		newrelic_custom_metric( $fullMeasurementName, $time * self::MILLISECONDS_IN_SECOND );
+		\newrelic_custom_metric( $fullMeasurementName, $time * self::MILLISECONDS_IN_SECOND );
 	}
 }
 

@@ -1834,6 +1834,20 @@ class OutputPage extends ContextSource {
 	}
 
 	/**
+	 * Return a Vary: header on which to vary caches. Based on the keys of $mVaryHeader,
+	 * such as Accept-Encoding or Cookie
+	 *
+	 * @return string
+	 */
+	public function getVaryHeader() {
+		// If we vary on cookies, let's make sure it's always included here too.
+		if ( $this->getCacheVaryCookies() ) {
+			$this->addVaryHeader( 'Cookie' );
+		}
+		return 'Vary: ' . join( ', ', array_keys( $this->mVaryHeader ) );
+	}
+
+	/**
 	 * Get a complete X-Vary-Options header
 	 *
 	 * @return String
@@ -3115,6 +3129,7 @@ $templates
 	public function userCanPreview() {
 		if ( $this->getRequest()->getVal( 'action' ) != 'submit'
 			|| !$this->getRequest()->wasPosted()
+			|| !$this->getUser()->isLoggedIn()
 			|| !$this->getUser()->matchEditToken(
 				$this->getRequest()->getVal( 'wpEditToken' ) )
 		) {
@@ -3243,10 +3258,10 @@ $templates
 		# apple-touch-icon is specified first to avoid this.
 		if ( $wgAppleTouchIcon !== false ) {
 			// Wikia change begin - @author: macbre
-			$appleTouchIcon = wfReplaceImageServer($wgAppleTouchIcon, SassUtil::getCacheBuster());
-			// Wikia change end
+			$appleTouchIcon = Wikia::getWikiLogoMetadata();
 
-			$tags[] = Html::element( 'link', array( 'rel' => 'apple-touch-icon', 'href' => $appleTouchIcon ) );
+			$tags[] = Html::element( 'link', array( 'rel' => 'apple-touch-icon', 'href' => $appleTouchIcon['url'], 'sizes' => $appleTouchIcon['size'] ) );
+			// Wikia change end
 		}
 
 		$tags[] = Html::element( 'link', array( 'rel' => 'shortcut icon', 'href' => Wikia::getFaviconFullUrl() ) );
@@ -3745,7 +3760,9 @@ $templates
 			}
 		}
 	}
+
 	/**
+	 * @param string|array $keyArr Surrogate keys (array or space-delimited string)
 	 * @author Wikia
 	 */
 	public function tagWithSurrogateKeys( $keyArr ) {

@@ -38,3 +38,12 @@ $wgGroupPermissions['staff']['specialdiscussionslog'] = true;
 $wgGroupPermissions['vstf']['specialdiscussionslog'] = true;
 $wgGroupPermissions['helper']['specialdiscussionslog'] = true;
 
+// resources Loader module
+$wgResourceModules['ext.wikia.SpecialDiscussionsLog'] = [
+	'scripts' => [
+		'js/SpecialDiscussionsLog.js',
+	],
+	'localBasePath' => __DIR__,
+	'remoteExtPath' => 'wikia/SpecialDiscussionsLog'
+];
+

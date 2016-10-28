@@ -11,13 +11,11 @@ define('ext.wikia.adEngine.config.desktop', [
 	// adProviders
 	'ext.wikia.adEngine.provider.directGpt',
 	'ext.wikia.adEngine.provider.evolve2',
-	'ext.wikia.adEngine.provider.hitMedia',
-	'ext.wikia.adEngine.provider.liftium',
-	'ext.wikia.adEngine.provider.monetizationService',
 	'ext.wikia.adEngine.provider.remnantGpt',
-	'ext.wikia.adEngine.provider.sevenOneMedia',
+	'ext.wikia.adEngine.provider.rubiconFastlane',
 	'ext.wikia.adEngine.provider.turtle',
-	require.optional('ext.wikia.adEngine.provider.taboola')
+	require.optional('ext.wikia.adEngine.provider.taboola'),
+	require.optional('ext.wikia.adEngine.provider.revcontent')
 ], function (
 	// regular dependencies
 	log,
@@ -30,29 +28,20 @@ define('ext.wikia.adEngine.config.desktop', [
 	// AdProviders
 	adProviderDirectGpt,
 	adProviderEvolve2,
-	adProviderHitMedia,
-	adProviderLiftium,
-	adProviderMonetizationService,
 	adProviderRemnantGpt,
-	adProviderSevenOneMedia,
+	adProviderRubiconFastlane,
 	adProviderTurtle,
-	adProviderTaboola
+	adProviderTaboola,
+	adProviderRevcontent
 ) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.adConfigLate',
 		context = adContext.getContext(),
-		liftiumSlotsToShowWithSevenOneMedia = {
-			'WIKIA_BAR_BOXAD_1': true,
-			'TOP_BUTTON_WIDE': true,
-			'TOP_BUTTON_WIDE.force': true
-		},
-		ie8 = window.navigator && window.navigator.userAgent && window.navigator.userAgent.match(/MSIE [6-8]\./),
 		gptEnabled = !instantGlobals.wgSitewideDisableGpt,
 		forcedProviders = {
 			evolve2:  [adProviderEvolve2],
-			hitmedia: [adProviderHitMedia],
-			liftium:  [adProviderLiftium],
+			rpfl:     [adProviderRubiconFastlane],
 			turtle:   [adProviderTurtle]
 		};
 
@@ -77,44 +66,21 @@ define('ext.wikia.adEngine.config.desktop', [
 			return forcedProviders[context.forcedProvider];
 		}
 
-		// SevenOne Media
-		if (context.providers.sevenOneMedia) {
-			if (!liftiumSlotsToShowWithSevenOneMedia[slotName]) {
-				if (ie8) {
-					log('SevenOneMedia not supported on IE8. No ads', 'warn', logGroup);
-					return [];
-				}
-
-				if (instantGlobals.wgSitewideDisableSevenOneMedia) {
-					log('SevenOneMedia disabled by DR. No ads', 'warn', logGroup);
-					return [];
-				}
-
-				return [adProviderSevenOneMedia];
-			}
-		}
-
 		// Taboola
 		if (context.providers.taboola && adProviderTaboola && adProviderTaboola.canHandleSlot(slotName)) {
 			return [adProviderTaboola];
 		}
 
-		// MonetizationService
-		if (context.providers.monetizationService && adProviderMonetizationService.canHandleSlot(slotName)) {
-			if (instantGlobals.wgSitewideDisableMonetizationService) {
-				log('MonetizationService disabled by DR. No ads', 'warn', logGroup);
-				return [];
-			}
-			return [adProviderMonetizationService];
+		// Revcontent
+		if (adProviderRevcontent && context.providers.revcontent && adProviderRevcontent.canHandleSlot(slotName)) {
+			return [adProviderRevcontent];
 		}
 
-		// First provider: Turtle, Evolve, HitMedia or Direct GPT?
+		// First provider: Turtle, Evolve or Direct GPT?
 		if (context.providers.turtle && adProviderTurtle.canHandleSlot(slotName)) {
 			providerList.push(adProviderTurtle);
 		} else if (context.providers.evolve2 && adProviderEvolve2.canHandleSlot(slotName)) {
 			providerList.push(adProviderEvolve2);
-		} else if (context.providers.hitMedia && adProviderHitMedia.canHandleSlot(slotName)) {
-			providerList.push(adProviderHitMedia);
 		} else if (gptEnabled) {
 			providerList.push(adProviderDirectGpt);
 		}
@@ -124,8 +90,10 @@ define('ext.wikia.adEngine.config.desktop', [
 			providerList.push(adProviderRemnantGpt);
 		}
 
-		// Last resort provider: Liftium
-		providerList.push(adProviderLiftium);
+		// Last resort provider: RubiconFastlane
+		if (context.providers.rubiconFastlane && adProviderRubiconFastlane.canHandleSlot(slotName)) {
+			providerList.push(adProviderRubiconFastlane);
+		}
 
 		return providerList;
 	}

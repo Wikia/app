@@ -1,8 +1,11 @@
 /*global require*/
 require([
+	'ext.wikia.adEngine.adContext',
 	'ext.wikia.adEngine.lookup.amazonMatch',
 	'ext.wikia.adEngine.lookup.openXBidder',
-	'ext.wikia.adEngine.lookup.rubiconFastlane',
+	'ext.wikia.adEngine.lookup.prebid',
+	'ext.wikia.adEngine.lookup.rubicon.rubiconFastlane',
+	'ext.wikia.adEngine.lookup.rubicon.rubiconVulcan',
 	'ext.wikia.adEngine.customAdsLoader',
 	'ext.wikia.adEngine.messageListener',
 	'ext.wikia.adEngine.mobile.mercuryListener',
@@ -11,19 +14,20 @@ require([
 	'wikia.geo',
 	'wikia.instantGlobals',
 	'wikia.window'
-], function (
-	amazon,
-	oxBidder,
-	rubiconFastlane,
-	customAdsLoader,
-	messageListener,
-	mercuryListener,
-	scrollHandler,
-	yavliTag,
-	geo,
-	instantGlobals,
-	win
-) {
+], function (adContext,
+			 amazon,
+			 oxBidder,
+			 prebid,
+			 rubiconFastlane,
+			 rubiconVulcan,
+			 customAdsLoader,
+			 messageListener,
+			 mercuryListener,
+			 scrollHandler,
+			 yavliTag,
+			 geo,
+			 instantGlobals,
+			 win) {
 	'use strict';
 
 	messageListener.init();
@@ -41,12 +45,26 @@ require([
 			rubiconFastlane.call();
 		}
 
-		if (geo.isProperGeo(instantGlobals.wgAdDriverOpenXBidderCountriesMobile)) {
+		if (geo.isProperGeo(instantGlobals.wgAdDriverOpenXBidderCountries)) {
 			oxBidder.call();
 		}
 
-		if (geo.isProperGeo(instantGlobals.wgAdDriverYavliCountries)) {
+		if (geo.isProperGeo(instantGlobals.wgAdDriverPrebidBidderCountries)) {
+			prebid.call();
+		}
+
+		if (geo.isProperGeo(instantGlobals.wgAdDriverRubiconVulcanCountries)) {
+			rubiconVulcan.call();
+		}
+
+		if (adContext.getContext().opts.yavli) {
 			yavliTag.add();
 		}
 	});
+
+	if (geo.isProperGeo(instantGlobals.wgAdDriverPrebidBidderCountries)) {
+		mercuryListener.onEveryPageChange(function () {
+			prebid.call();
+		});
+	}
 });

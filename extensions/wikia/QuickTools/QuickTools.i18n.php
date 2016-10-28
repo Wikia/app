@@ -1,17 +1,8 @@
 <?php
-/**
- * Internationalisation for QuickTools extension
- *
- * @file
- * @ingroup Extensions
- */
+/** Internationalization file for /extensions/wikia/QuickTools/QuickTools extension. */
+$messages = [];
 
-$messages = array();
-
-/** English
- * @author Daniel Grunwell (grunny)
- */
-$messages['en'] = array(
+$messages['en'] = [
 	'quicktools' => 'QuickTools',
 	'quicktools-desc' => 'A collection of tools to make fighting spam and vandalism, and other tasks for staff and volunteers easier',
 	'right-quicktools' => 'Quickly revert and delete spam and vandalism',
@@ -41,15 +32,11 @@ $messages['en'] = array(
 	'quicktools-bot-reason' => 'Cleanup',
 	'quicktools-botflag-add' => 'Bot me',
 	'quicktools-botflag-remove' => 'Unbot me',
-
-	/* Create user page */
 	'quicktools-createuserpage-link' => 'Create user page',
 	'quicktools-createuserpage-reason' => 'Creating user page',
 	'quicktools-createuserpage-success' => 'Successfully created page!',
 	'quicktools-createuserpage-exists' => 'User page already exists!',
 	'quicktools-createuserpage-error' => 'Creating page failed!',
-
-	/* Quick Adopt */
 	'quicktools-adopt-contrib-link' => 'Quick Adopt',
 	'quicktools-adopt-reason' => 'Adopting Wiki',
 	'quicktools-adopt-success' => 'User rights change succeeded!',
@@ -58,12 +45,9 @@ $messages['en'] = array(
 	'quicktools-adopt-confirm-ok' => 'Yes',
 	'quicktools-adopt-confirm-cancel' => 'No',
 	'quicktools-adopt-confirm-title' => 'Confirm Adoption',
-);
+];
 
-/**
- * @author Daniel Grunwell (grunny)
- */
-$messages['qqq'] = array(
+$messages['qqq'] = [
 	'quicktools' => 'Extension name',
 	'quicktools-desc' => '{{desc}}',
 	'right-quicktools' => '{{doc-right|quicktools}}',
@@ -106,4 +90,121 @@ $messages['qqq'] = array(
 	'quicktools-adopt-confirm-ok' => 'Message for the OK button in the confirm dialog',
 	'quicktools-adopt-confirm-cancel' => 'Message for the cancel button in the confirm dialog',
 	'quicktools-adopt-confirm-title' => 'Title of confirm dialog',
-);
+];
+
+$messages['es'] = [
+	'quicktools-adopt-contrib-link' => 'Adopción Rápida',
+	'quicktools-adopt-error' => '¡Falló el cambio de permisos de usuario!',
+	'quicktools-adopt-reason' => 'Adoptando el wiki',
+	'quicktools-adopt-success' => '¡Cambiados los permisos de usuario!',
+	'quicktools-block-and-revert' => 'Todo lo anterior',
+	'quicktools-block' => 'Bloquear',
+	'quicktools-botflag-add' => 'Darme bot',
+	'quicktools-botflag-remove' => 'Quitarme bot',
+	'quicktools-contrib-link' => 'RapiTareas',
+	'quicktools-createuserpage-error' => '¡Falló al crear la página!',
+	'quicktools-createuserpage-exists' => '¡La página de usuario ya existe!',
+	'quicktools-createuserpage-link' => 'Crear página de usuario',
+	'quicktools-createuserpage-success' => '¡La página se creó satisfactoriamente!',
+	'quicktools-delete-all' => 'Borrar todo',
+	'quicktools-desc' => 'Una colección de herramientas para combatir fácilmente el spam y el vandalismo, y otras tareas para el staff y usuarios voluntarios',
+	'quicktools-invalidtime' => 'Fecha y hora inválidas',
+	'quicktools-label-block-length' => 'Duración del bloqueo:',
+	'quicktools-label-default-reason' => '[[w:Help:Spam|Spam]]',
+	'quicktools-label-reason' => 'Motivo:',
+	'quicktools-label-time' => 'Realizar acciones desde:',
+	'quicktools-modal-title' => 'RapiTareas &mdash; $1',
+	'quicktools-notitles' => 'No hay títulos que revertir',
+	'quicktools-permissionerror' => 'No tienes los permisos apropiados para usar Quick Tools.',
+	'quicktools-revert-all' => 'Revertir y borrar',
+	'quicktools-rollback-all' => 'Revertir todo',
+	'quicktools-success-block' => '$1 ha sido bloqueado.',
+	'quicktools-success-delete' => 'Borradas las páginas creadas por $1.',
+	'quicktools-success-rollback-delete' => 'Revertidas y borradas las ediciones y las páginas creadas por $1.',
+	'quicktools-success-rollback' => 'Revertidas las ediciones de $1.',
+	'quicktools-success' => 'Revertidas las ediciones de $1.',
+	'quicktools' => 'RapiTareas',
+];
+
+$messages['pl'] = [
+	'quicktools-adopt-contrib-link' => 'Adopcja',
+	'quicktools-adopt-error' => 'Zmiana uprawnień użytkownika nie powiodła się!',
+	'quicktools-adopt-reason' => 'Adopcja wiki',
+	'quicktools-adopt-success' => 'Zmiana uprawnień użytkownika powiodła się!',
+	'quicktools-block-and-revert' => 'Wszystkie powyższe',
+	'quicktools-block' => 'Zablokuj',
+	'quicktools-bot-reason' => 'Porządki',
+	'quicktools-botflag-add' => 'Flaga bota',
+	'quicktools-botflag-remove' => 'Zdejmij flagę bota',
+	'quicktools-contrib-link' => 'Narzędzia',
+	'quicktools-createuserpage-error' => 'Tworzenie strony nie powiodło się!',
+	'quicktools-createuserpage-exists' => 'Profil użytkownika już istnieje!',
+	'quicktools-createuserpage-link' => 'Utwórz profil',
+	'quicktools-createuserpage-reason' => 'Tworzenie profilu użytkownika',
+	'quicktools-createuserpage-success' => 'Utworzono profil!',
+	'quicktools-delete-all' => 'Usuń wszystko',
+	'quicktools-desc' => 'Zbiór narzędzi ułatwiających walkę ze spamem i wandalizmem a także wykonywaniem innych zadań pracowników i wolontariuszy Wikii.',
+	'quicktools-invalidtime' => 'Niewłaściwy limit czasu',
+	'quicktools-label-block-length' => 'Czas trwania blokady:',
+	'quicktools-label-default-reason' => 'Spam',
+	'quicktools-label-reason' => 'Powód:',
+	'quicktools-label-time' => 'Wykonaj na edycjach od:',
+	'quicktools-modal-title' => 'Narzędzia &mdash; $1',
+	'quicktools-notitles' => 'Brak stron do odwrócenia zmian',
+	'quicktools-permissionerror' => 'Nie masz uprawnień do korzystania z tych narzędzi.',
+	'quicktools-revert-all' => 'Cofnij i usuń',
+	'quicktools-rollback-all' => 'Cofnij wszystko',
+	'quicktools-success-block' => 'Zablokowano użytkownika $1.',
+	'quicktools-success-delete' => 'Usunięto strony utworzone przez użytkownika $1.',
+	'quicktools-success-rollback-delete' => 'Usunięto strony i edycje wykonane przez użytkownika $1.',
+	'quicktools-success-rollback' => 'Wycofano edycje użytkownika $1.',
+	'quicktools-success' => 'Wycofano edycje użytkownika $1.',
+	'quicktools' => 'Narzędzia',
+];
+
+$messages['fr'] = [
+	'quicktools-desc' => 'Divers outils pour rendre le combat contre le spam et le vandalisme et autres tâches du staff plus simple',
+];
+
+$messages['it'] = [
+	'quicktools-createuserpage-link' => 'Crea pagina utente',
+];
+
+$messages['ja'] = [
+	'quicktools-createuserpage-exists' => 'ユーザーページはすでに作成されています。',
+	'quicktools-createuserpage-link' => 'ユーザーページ作成',
+	'quicktools-createuserpage-success' => 'ユーザーページの作成に成功しました。',
+];
+
+$messages['ko'] = [
+	'quicktools-createuserpage-error' => '문서를 생성하는 데에 실패했습니다!',
+	'quicktools-createuserpage-exists' => '사용자 문서가 이미 존재합니다!',
+	'quicktools-createuserpage-link' => '사용자 문서 생성',
+	'quicktools-createuserpage-reason' => '사용자 문서 생성하는 중...',
+];
+
+$messages['zh'] = [
+	'quicktools-createuserpage-exists' => '用户页面已存在！',
+	'quicktools-createuserpage-link' => '创建用户页面',
+];
+
+$messages['zh-hans'] = [
+	'quicktools-createuserpage-exists' => '用户页面已存在！',
+	'quicktools-createuserpage-link' => '创建用户页面',
+];
+
+$messages['zh-hant'] = [
+	'quicktools-createuserpage-exists' => '用戶頁面已存在！',
+	'quicktools-createuserpage-link' => '創建用戶頁面',
+];
+
+$messages['zh-hk'] = [
+	'quicktools-createuserpage-exists' => '用戶頁面已存在！',
+	'quicktools-createuserpage-link' => '創建用戶頁面',
+];
+
+$messages['zh-tw'] = [
+	'quicktools-createuserpage-exists' => '用戶頁面已存在！',
+	'quicktools-createuserpage-link' => '創建用戶頁面',
+];
+

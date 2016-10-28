@@ -27,6 +27,19 @@ class ImageServingDriverCategoryNS extends ImageServingDriverMainNS {
 	}
 
 	protected function addTopArticlesFromCategory( $categoryId, &$articleCategories ) {
+
+		$key = wfMemcKey(__METHOD__, $categoryId);
+		$cachedPageIds = $this->memc->get($key);
+		if (is_array($cachedPageIds)) {
+			foreach ($cachedPageIds as $page_id) {
+				if ( empty( $articleCategories[$page_id] ) ) {
+					$articleCategories[$page_id] = array();
+				}
+				$articleCategories[$page_id][] = $categoryId;
+			}
+			return;
+		}
+
 		# fetch number of articles in category
 		# which controls if we use STRAIGHT_JOIN in the next query
 		$count = $this->db->selectField(
@@ -63,11 +76,15 @@ class ImageServingDriverCategoryNS extends ImageServingDriverMainNS {
 			$options
 		);
 
+		$cachedPageIds = [];
+
 		while ( $row = $this->db->fetchRow( $res ) ) {
 			if ( empty( $articleCategories[$row['page_id']] ) ) {
 				$articleCategories[$row['page_id']] = array();
 			}
 			$articleCategories[$row['page_id']][] = $categoryId;
+			$cachedPageIds[] = intval( $row['page_id'] );
 		}
+		$this->memc->set($key, $cachedPageIds, WikiaResponse::CACHE_STANDARD);
 	}
 }

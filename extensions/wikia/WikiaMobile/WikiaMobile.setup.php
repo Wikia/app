@@ -150,7 +150,6 @@ if ( empty( $wgWikiaMobileIncludeJSGlobals ) ) {
 			'wgAdDriverWikiIsTop1000',
 			'wgDartCustomKeyValues',
 			'wgShowAds',
-			'wgUsePostScribe',
 			'wgWikiDirectedAtChildren',
 			'wikiaPageIsHub',
 			'wikiaPageType',

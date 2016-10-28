@@ -1,32 +1,19 @@
 <?php
-/**
-* Internationalisation file for the AdminDashboard extension.
-*
-* @addtogroup Languages
-*/
+/** Internationalization file for /extensions/wikia/AdminDashboard/QuickStats extension. */
+$messages = [];
 
-$messages = array();
-
-$messages['en'] = array(
+$messages['en'] = [
 	'quickstats-header-label' => 'Quick Stats',
 	'quickstats-header-date' => 'Date',
 	'quickstats-header-views' => 'Views',
 	'quickstats-header-edits' => 'Edits',
 	'quickstats-header-photos' => 'Photos',
-	'quickstats-date-format' => 'M d',	// follow this guide: http://php.net/manual/en/function.date.php
+	'quickstats-date-format' => 'M d',
 	'quickstats-totals-label' => 'Totals',
 	'quickstats-see-more-stats-link' => '[[Special:Insights|See more stats]]',
-	'quickstats-number-shortening' => '$1K',
-	'quickstats-number-shortening-millions' => '$1M',
-	'quickstats-number-shortening-billions' => '$1B',
-);
+];
 
-/** Message documentation (Message documentation)
- * @author Caliburn
- * @author Shirayuki
- * @author 아라
- */
-$messages['qqq'] = array(
+$messages['qqq'] = [
 	'quickstats-header-label' => 'Header of the "Quick Stats" section of the [[Special:AdminDashboard|Admin Dashboard]].',
 	'quickstats-header-date' => '{{Identical|Date}}',
 	'quickstats-header-views' => '{{Identical|View}}',
@@ -35,35 +22,20 @@ $messages['qqq'] = array(
 	'quickstats-date-format' => 'Follow this guide: http://php.net/manual/en/function.date.php.',
 	'quickstats-totals-label' => '{{Identical|Total}}',
 	'quickstats-see-more-stats-link' => 'Link to [[Special:WikiStats]] under the "quick stats" chart in the [[Special:AdminDashboard|Admin Dashboard]].',
-	'quickstats-number-shortening' => 'This is a shortend number abbreviation shown in a stats table. Number larger than 10.000 are rendered using this message (as thousands rounded up to the first decimal fraction). K stands for thousands (1.000)
+];
 
-{{Identical|$1k}}',
-	'quickstats-number-shortening-millions' => 'This is a shortend number abbreviation shown in a stats table. Number between 1.000.000 and 999.999.999.999 are rendered using this message (as millions rounded up to the first decimal fraction). M stands for millions (1.000.000)',
-	'quickstats-number-shortening-billions' => 'This is a shortend number abbreviation shown in a stats table. Number larger than 1.000.000.000 are rendered using this message (as billions rounded up to the first decimal fraction). B stands for billions (1.000.000.000)',
-);
-
-/** Afrikaans (Afrikaans)
- * @author Naudefj
- */
-$messages['af'] = array(
+$messages['af'] = [
 	'quickstats-header-date' => 'Datum',
 	'quickstats-header-edits' => 'Wysigings',
-	'quickstats-header-photos' => "Foto's",
+	'quickstats-header-photos' => 'Foto\'s',
 	'quickstats-totals-label' => 'Totale',
-);
+];
 
-/** Old English (Ænglisc)
- * @author Espreon
- */
-$messages['ang'] = array(
+$messages['ang'] = [
 	'quickstats-header-date' => 'Tælmearc',
-);
+];
 
-/** Arabic (العربية)
- * @author Achraf94
- * @author Kuwaity26
- */
-$messages['ar'] = array(
+$messages['ar'] = [
 	'quickstats-header-label' => 'إحصائيات سريعة',
 	'quickstats-header-date' => 'التاريخ',
 	'quickstats-header-views' => 'المشاهدات',
@@ -71,36 +43,20 @@ $messages['ar'] = array(
 	'quickstats-header-photos' => 'الصور',
 	'quickstats-totals-label' => 'المجموع',
 	'quickstats-see-more-stats-link' => '[[Special:Insights|مشاهدة المزيد من الإحصائيات]]',
-	'quickstats-number-shortening' => '$1 ألف',
-	'quickstats-number-shortening-millions' => '$1 مليون',
-	'quickstats-number-shortening-billions' => '$1 مليار',
-);
+];
 
-/** Aramaic (ܐܪܡܝܐ)
- * @author Basharh
- */
-$messages['arc'] = array(
+$messages['arc'] = [
 	'quickstats-header-date' => 'ܣܝܩܘܡܐ',
-);
+];
 
-/** Assamese (অসমীয়া)
- * @author Bishnu Saikia
- */
-$messages['as'] = array(
+$messages['as'] = [
 	'quickstats-header-date' => 'তাৰিখ',
 	'quickstats-header-edits' => 'সম্পাদনাসমূহ',
 	'quickstats-header-photos' => 'চিত্ৰসমূহ',
 	'quickstats-totals-label' => 'মুঠ',
-);
+];
 
-/** Azerbaijani (azərbaycanca)
- * @author Andriykopanytsia
- * @author Cekli829
- * @author Melikov Memmed
- * @author Mushviq Abdulla
- * @author Vago
- */
-$messages['az'] = array(
+$messages['az'] = [
 	'quickstats-header-label' => 'Çevik Statistika',
 	'quickstats-header-date' => 'Tarix',
 	'quickstats-header-views' => 'Görünüş',
@@ -108,28 +64,16 @@ $messages['az'] = array(
 	'quickstats-header-photos' => 'Şəkillər',
 	'quickstats-totals-label' => 'Yekunu',
 	'quickstats-see-more-stats-link' => '[[Special:Insights|Daha çox statistikaya bax]]',
-	'quickstats-number-shortening' => '$1 тис.',
-	'quickstats-number-shortening-millions' => '$1M',
-	'quickstats-number-shortening-billions' => '$1milyard',
-);
+];
 
-/** South Azerbaijani (تۆرکجه)
- * @author E THP
- * @author Mousa
- */
-$messages['azb'] = array(
+$messages['azb'] = [
 	'quickstats-header-date' => 'تاریخ',
 	'quickstats-header-views' => 'گؤرونوشلر',
 	'quickstats-header-edits' => 'دَییشدیرمه‌لر',
 	'quickstats-header-photos' => 'شکیل‌لر',
-	'quickstats-number-shortening' => '$1 مین',
-);
+];
 
-/** Bashkir (башҡортса)
- * @author Рустам Нурыев
- * @author ҒатаУлла
- */
-$messages['ba'] = array(
+$messages['ba'] = [
 	'quickstats-header-label' => 'Вики статистикаһы',
 	'quickstats-header-date' => 'Дата',
 	'quickstats-header-views' => 'Ҡарауҙар',
@@ -137,23 +81,14 @@ $messages['ba'] = array(
 	'quickstats-header-photos' => 'Фото',
 	'quickstats-totals-label' => 'Барыһы',
 	'quickstats-see-more-stats-link' => '[[Special:Insights|Тағын статистика]]',
-	'quickstats-number-shortening' => '$1K',
-	'quickstats-number-shortening-millions' => '$1милл.',
-	'quickstats-number-shortening-billions' => '$1миллиард',
-);
+];
 
-/** Bavarian (Boarisch)
- * @author Bua333
- */
-$messages['bar'] = array(
+$messages['bar'] = [
 	'quickstats-header-label' => 'Ministatistik',
 	'quickstats-header-date' => 'Datum',
-);
+];
 
-/** Bikol Central (Bikol Central)
- * @author Geopoet
- */
-$messages['bcl'] = array(
+$messages['bcl'] = [
 	'quickstats-header-label' => 'Hidaling Estadistika',
 	'quickstats-header-date' => 'Petsa',
 	'quickstats-header-views' => 'Mga Tanawon',
@@ -161,24 +96,14 @@ $messages['bcl'] = array(
 	'quickstats-header-photos' => 'Mga Litrato',
 	'quickstats-totals-label' => 'Mga Kabilogan',
 	'quickstats-see-more-stats-link' => '[[Special:Insights|Hilngon an mga kadugangang mga estadistika]]',
-	'quickstats-number-shortening' => '$1 na ribo',
-	'quickstats-number-shortening-millions' => '$1 na milyon',
-	'quickstats-number-shortening-billions' => '$1 na bilyon',
-);
+];
 
-/** Belarusian (беларуская)
- * @author Чаховіч Уладзіслаў
- */
-$messages['be'] = array(
+$messages['be'] = [
 	'quickstats-header-views' => 'Праглядаў',
 	'quickstats-header-edits' => 'Правак',
-);
+];
 
-/** Bulgarian (български)
- * @author Aquilax
- * @author DCLXVI
- */
-$messages['bg'] = array(
+$messages['bg'] = [
 	'quickstats-header-label' => 'Бърза статистика',
 	'quickstats-header-date' => 'Дата',
 	'quickstats-header-views' => 'Преглеждания',
@@ -186,28 +111,16 @@ $messages['bg'] = array(
 	'quickstats-header-photos' => 'Снимки',
 	'quickstats-totals-label' => 'Общо',
 	'quickstats-see-more-stats-link' => '[[Special:Insights|Още статистики]]',
-	'quickstats-number-shortening' => '$1 хил.',
-	'quickstats-number-shortening-millions' => '$1M',
-	'quickstats-number-shortening-billions' => '$1B',
-);
+];
 
-/** Western Balochi (بلوچی رخشانی)
- * @author Baloch Afghanistan
- */
-$messages['bgn'] = array(
+$messages['bgn'] = [
 	'quickstats-header-date' => 'تاریخ',
 	'quickstats-header-views' => 'دیستینین',
 	'quickstats-header-edits' => 'ایڈیٹ',
 	'quickstats-header-photos' => 'اکس هان',
-	'quickstats-number-shortening' => '$1 هزار',
-	'quickstats-number-shortening-millions' => '$1 میلیون',
-	'quickstats-number-shortening-billions' => '$1 میلیارد',
-);
+];
 
-/** Bhojpuri (भोजपुरी)
- * @author Nepaboy
- */
-$messages['bho'] = array(
+$messages['bho'] = [
 	'quickstats-header-label' => 'त्वरित आँकड़े',
 	'quickstats-header-date' => 'तिथि',
 	'quickstats-header-views' => 'दृष्टिकोण',
@@ -215,17 +128,9 @@ $messages['bho'] = array(
 	'quickstats-header-photos' => 'तस्वीरें',
 	'quickstats-totals-label' => 'योग',
 	'quickstats-see-more-stats-link' => '[[Special:Insights|और आँकड़ा देखीं]]',
-	'quickstats-number-shortening' => '$1के',
-	'quickstats-number-shortening-millions' => '$1मिलियन',
-	'quickstats-number-shortening-billions' => '$1बिलियन',
-);
+];
 
-/** Bengali (বাংলা)
- * @author Aftab1995
- * @author Aftabuzzaman
- * @author Tauhid16
- */
-$messages['bn'] = array(
+$messages['bn'] = [
 	'quickstats-header-label' => 'দ্রুত পরিসংখ্যান',
 	'quickstats-header-date' => 'তারিখ',
 	'quickstats-header-views' => 'দৃষ্টিকোণ',
@@ -233,71 +138,39 @@ $messages['bn'] = array(
 	'quickstats-header-photos' => 'চিত্রসমূহ',
 	'quickstats-totals-label' => 'মোট',
 	'quickstats-see-more-stats-link' => '[[Special:Insights|আরও পরিসংখ্যান দেখুন]]',
-	'quickstats-number-shortening' => '$1 হাজার',
-	'quickstats-number-shortening-millions' => '$1 মিলিয়ন',
-	'quickstats-number-shortening-billions' => '$1 বিলিয়ন',
-);
+];
 
-/** Tibetan (བོད་ཡིག)
- * @author YeshiTuhden
- */
-$messages['bo'] = array(
+$messages['bo'] = [
 	'quickstats-header-label' => 'མགྱོགས་མྱུར་སྡོམ་རྩིས་',
 	'quickstats-header-date' => 'ཟླ་ཚེས་',
 	'quickstats-header-edits' => 'རྩོམ་སྒྲིག་',
 	'quickstats-header-photos' => 'འདྲ་པར་',
 	'quickstats-totals-label' => 'ཡོངས་བགྲང་',
-);
+];
 
-/** Breton (brezhoneg)
- * @author Andriykopanytsia
- * @author Fulup
- * @author Y-M D
- */
-$messages['br'] = array(
+$messages['br'] = [
 	'quickstats-header-label' => 'Stadegoù prim',
 	'quickstats-header-date' => 'Deiziad',
 	'quickstats-header-views' => 'Gweladennoù',
 	'quickstats-header-edits' => 'Kemmoù',
-	'quickstats-header-photos' => "Luc'hskeudennoù",
+	'quickstats-header-photos' => 'Luc\'hskeudennoù',
 	'quickstats-totals-label' => 'Hollad',
-	'quickstats-see-more-stats-link' => "[[Special:Insights|Gwelet muioc'h a stadegoù]]",
-	'quickstats-number-shortening' => '$1 тис.',
-	'quickstats-number-shortening-millions' => '$1M',
-	'quickstats-number-shortening-billions' => '$1Mrd',
-);
+	'quickstats-see-more-stats-link' => '[[Special:Insights|Gwelet muioc\'h a stadegoù]]',
+];
 
-/** Bosnian (bosanski)
- * @author Palapa
- */
-$messages['bs'] = array(
+$messages['bs'] = [
 	'quickstats-header-photos' => 'Fotografije',
 	'quickstats-totals-label' => 'Ukupno',
 	'quickstats-see-more-stats-link' => '[[Special:Insights|Pogledajte više statistike]]',
-	'quickstats-number-shortening' => '$1K',
-	'quickstats-number-shortening-millions' => '$1M',
-	'quickstats-number-shortening-billions' => '$1B',
-);
+];
 
-/** Iriga Bicolano (Iriga Bicolano)
- * @author Filipinayzd
- */
-$messages['bto'] = array(
+$messages['bto'] = [
 	'quickstats-header-date' => 'Petsa',
 	'quickstats-header-views' => 'Mga silung',
 	'quickstats-header-edits' => 'Mga pagbalyow',
-	'quickstats-number-shortening' => '$1,000',
-	'quickstats-number-shortening-millions' => '$1 Milyon',
-	'quickstats-number-shortening-billions' => '$1 Bilyon',
-);
+];
 
-/** Catalan (català)
- * @author Andriykopanytsia
- * @author CuBaN VeRcEttI
- * @author Paynekiller92
- * @author Solde
- */
-$messages['ca'] = array(
+$messages['ca'] = [
 	'quickstats-header-label' => 'Estadístiques ràpides',
 	'quickstats-header-date' => 'Data',
 	'quickstats-header-views' => 'Visites',
@@ -306,38 +179,19 @@ $messages['ca'] = array(
 	'quickstats-date-format' => 'M d',
 	'quickstats-totals-label' => 'Totals',
 	'quickstats-see-more-stats-link' => '[[Special:Insights|Veure més estadístiques]]',
-	'quickstats-number-shortening' => '$1K',
-	'quickstats-number-shortening-millions' => '$1M',
-	'quickstats-number-shortening-billions' => '
-$1B',
-);
+];
 
-/** Chechen (нохчийн)
- * @author Умар
- */
-$messages['ce'] = array(
+$messages['ce'] = [
 	'quickstats-header-edits' => 'Нисдарш',
-);
+];
 
-/** Central Kurdish (کوردیی ناوەندی)
- * @author Calak
- */
-$messages['ckb'] = array(
+$messages['ckb'] = [
 	'quickstats-header-date' => 'ڕێکەوت',
 	'quickstats-header-edits' => 'دەستکارییەکان',
 	'quickstats-header-photos' => 'وێنەکان',
-	'quickstats-number-shortening' => '$1 ھەزار',
-	'quickstats-number-shortening-millions' => '$1 میلیۆن',
-	'quickstats-number-shortening-billions' => '$1 بیلیۆن',
-);
+];
 
-/** Czech (čeština)
- * @author Andriykopanytsia
- * @author Chmee2
- * @author Darth Daron
- * @author Mormegil
- */
-$messages['cs'] = array(
+$messages['cs'] = [
 	'quickstats-header-label' => 'Stručná statistika',
 	'quickstats-header-date' => 'Datum',
 	'quickstats-header-views' => 'Zobrazení',
@@ -345,16 +199,9 @@ $messages['cs'] = array(
 	'quickstats-header-photos' => 'Fotografie',
 	'quickstats-totals-label' => 'Celkem',
 	'quickstats-see-more-stats-link' => '[[Special:Insights|Další statistiky]]',
-	'quickstats-number-shortening' => '$1K',
-	'quickstats-number-shortening-millions' => '$1M',
-	'quickstats-number-shortening-billions' => '$1B',
-);
+];
 
-/** Welsh (Cymraeg)
- * @author Lloffiwr
- * @author Thefartydoctor
- */
-$messages['cy'] = array(
+$messages['cy'] = [
 	'quickstats-header-label' => 'Ystadegau Chwim',
 	'quickstats-header-date' => 'Dyddiad',
 	'quickstats-header-views' => 'Golygon',
@@ -362,28 +209,16 @@ $messages['cy'] = array(
 	'quickstats-header-photos' => 'Lluniau',
 	'quickstats-totals-label' => 'Cyfanswm',
 	'quickstats-see-more-stats-link' => '[[Special:Insights|Amlygu mwy ystadegau]]',
-	'quickstats-number-shortening' => '$1,000',
-	'quickstats-number-shortening-millions' => '$1 miliwn',
-	'quickstats-number-shortening-billions' => '$1 biliwn',
-);
+];
 
-/** Danish (dansk)
- * @author Christian List
- * @author Sarrus
- */
-$messages['da'] = array(
+$messages['da'] = [
 	'quickstats-header-date' => 'Dato',
 	'quickstats-header-views' => 'Visninger',
 	'quickstats-header-edits' => 'Redigeringer',
 	'quickstats-header-photos' => 'Billeder',
-);
+];
 
-/** German (Deutsch)
- * @author LWChris
- * @author PtM
- * @author Suriyaa Kudo
- */
-$messages['de'] = array(
+$messages['de'] = [
 	'quickstats-header-label' => 'Ministatistik',
 	'quickstats-header-date' => 'Datum',
 	'quickstats-header-views' => 'Aufrufe',
@@ -391,15 +226,9 @@ $messages['de'] = array(
 	'quickstats-header-photos' => 'Fotos',
 	'quickstats-totals-label' => 'Gesamt',
 	'quickstats-see-more-stats-link' => '[[Special:Insights|Siehe weitere Statistiken]]',
-	'quickstats-number-shortening' => '$1K',
-	'quickstats-number-shortening-millions' => '$1M',
-	'quickstats-number-shortening-billions' => '$1B',
-);
+];
 
-/** Zazaki (Zazaki)
- * @author Erdemaslancan
- */
-$messages['diq'] = array(
+$messages['diq'] = [
 	'quickstats-header-label' => 'İstatıstike vistri',
 	'quickstats-header-date' => 'Deme',
 	'quickstats-header-views' => 'Bıvin',
@@ -407,15 +236,9 @@ $messages['diq'] = array(
 	'quickstats-header-photos' => 'Fotrafi',
 	'quickstats-totals-label' => 'Pêro piya',
 	'quickstats-see-more-stats-link' => '[[Special:Insights|istatistiki bıvin]]',
-	'quickstats-number-shortening' => '$1K',
-	'quickstats-number-shortening-millions' => '$1M',
-	'quickstats-number-shortening-billions' => '$1B',
-);
+];
 
-/** Greek (Ελληνικά)
- * @author Glavkos
- */
-$messages['el'] = array(
+$messages['el'] = [
 	'quickstats-header-label' => 'Γρήγορα Στατιστικά',
 	'quickstats-header-date' => 'Ημερομηνία',
 	'quickstats-header-views' => 'Επισκέψεις',
@@ -423,27 +246,17 @@ $messages['el'] = array(
 	'quickstats-header-photos' => 'Φωτογραφίες',
 	'quickstats-totals-label' => 'Σύνολα',
 	'quickstats-see-more-stats-link' => '[[Special:Insights|Δείτε περισσότερα στατιστικά]]',
-	'quickstats-number-shortening' => '$1K',
-	'quickstats-number-shortening-millions' => '$1M',
-	'quickstats-number-shortening-billions' => '$1δις',
-);
+];
 
-/** British English (British English)
- * @author Caliburn
- */
-$messages['en-gb'] = array(
+$messages['en-gb'] = [
 	'quickstats-header-date' => 'Date',
 	'quickstats-header-views' => 'Views',
 	'quickstats-header-edits' => 'Edits',
 	'quickstats-header-photos' => 'Photos',
 	'quickstats-totals-label' => 'Totals',
-);
+];
 
-/** Esperanto (Esperanto)
- * @author Objectivesea
- * @author Tradukisto
- */
-$messages['eo'] = array(
+$messages['eo'] = [
 	'quickstats-header-label' => 'Baldaŭa statistiko',
 	'quickstats-header-date' => 'Dato',
 	'quickstats-header-views' => 'Vidoj',
@@ -451,33 +264,19 @@ $messages['eo'] = array(
 	'quickstats-header-photos' => 'Fotoj',
 	'quickstats-totals-label' => 'Sumoj',
 	'quickstats-see-more-stats-link' => '[[Special:Insights|Vidu pli da statistiko]]',
-	'quickstats-number-shortening' => '$1K',
-	'quickstats-number-shortening-millions' => '$1M',
-	'quickstats-number-shortening-billions' => '$1 Mrd',
-);
+];
 
-/** Spanish (español)
- * @author Armando-Martin
- * @author Bola
- * @author VegaDark
- */
-$messages['es'] = array(
-	'quickstats-header-label' => 'Estadísticas rápidas',
+$messages['es'] = [
+	'quickstats-header-label' => 'Panel de información rápida',
 	'quickstats-header-date' => 'Fecha',
-	'quickstats-header-views' => 'Páginas vistas',
+	'quickstats-header-views' => 'Impresiones',
 	'quickstats-header-edits' => 'Ediciones',
 	'quickstats-header-photos' => 'Imágenes',
 	'quickstats-totals-label' => 'Total',
-	'quickstats-see-more-stats-link' => '[[Special:Insights|Ver más estadísticas]]',
-	'quickstats-number-shortening' => '$1K',
-	'quickstats-number-shortening-millions' => '$1M',
-	'quickstats-number-shortening-billions' => '$1B',
-);
+	'quickstats-see-more-stats-link' => '[[Special:WikiStats|Ver más estadísticas]]',
+];
 
-/** Estonian (eesti)
- * @author KalmerE.
- */
-$messages['et'] = array(
+$messages['et'] = [
 	'quickstats-header-label' => 'Lühi statistika',
 	'quickstats-header-date' => 'Kuupäev',
 	'quickstats-header-views' => 'Vaatamisi',
@@ -485,32 +284,17 @@ $messages['et'] = array(
 	'quickstats-header-photos' => 'Fotod',
 	'quickstats-totals-label' => 'Kokku',
 	'quickstats-see-more-stats-link' => '[[Special:Insights|Vaata rohkem statistikat]]',
-	'quickstats-number-shortening' => '$1K',
-	'quickstats-number-shortening-millions' => '$1M',
-	'quickstats-number-shortening-billions' => '$1B',
-);
+];
 
-/** Basque (euskara)
- * @author Fitoschido
- * @author Subi
- */
-$messages['eu'] = array(
+$messages['eu'] = [
 	'quickstats-header-date' => 'Data',
 	'quickstats-header-views' => 'Ikustaldiak',
 	'quickstats-header-edits' => 'Aldaketak',
 	'quickstats-header-photos' => 'Argazkiak',
 	'quickstats-see-more-stats-link' => '[[Special:Insights|Ikusi estatistika gehiago]]',
-	'quickstats-number-shortening' => '$1 K',
-	'quickstats-number-shortening-millions' => '$1 M',
-);
+];
 
-/** Persian (فارسی)
- * @author Ebraminio
- * @author Huji
- * @author Reza1615
- * @author جواد
- */
-$messages['fa'] = array(
+$messages['fa'] = [
 	'quickstats-header-label' => 'آماز سریع',
 	'quickstats-header-date' => 'تاریخ',
 	'quickstats-header-views' => 'بازدیدها',
@@ -518,17 +302,9 @@ $messages['fa'] = array(
 	'quickstats-header-photos' => 'عکس‌ها',
 	'quickstats-totals-label' => 'مجموع',
 	'quickstats-see-more-stats-link' => '[[Special:Insights|دیدن آمار بیشتر]]',
-	'quickstats-number-shortening' => '$1 هزار',
-	'quickstats-number-shortening-millions' => '$1 میلیون',
-	'quickstats-number-shortening-billions' => '$1 میلیارد',
-);
+];
 
-/** Finnish (suomi)
- * @author Elseweyr
- * @author Ilkea
- * @author VezonThunder
- */
-$messages['fi'] = array(
+$messages['fi'] = [
 	'quickstats-header-label' => 'Pikatilastot',
 	'quickstats-header-date' => 'Päivämäärä',
 	'quickstats-header-views' => 'Katselukertoja',
@@ -536,15 +312,9 @@ $messages['fi'] = array(
 	'quickstats-header-photos' => 'Kuvia',
 	'quickstats-totals-label' => 'Yhteensä',
 	'quickstats-see-more-stats-link' => '[[Special:Insights|Katso lisää tilastoja]]',
-	'quickstats-number-shortening' => '$1 tuhatta',
-	'quickstats-number-shortening-millions' => '$1 milj',
-	'quickstats-number-shortening-billions' => '$1 mrd',
-);
+];
 
-/** Faroese (føroyskt)
- * @author EileenSanda
- */
-$messages['fo'] = array(
+$messages['fo'] = [
 	'quickstats-header-label' => 'Skjót Hagtøl',
 	'quickstats-header-date' => 'Dagur',
 	'quickstats-header-views' => 'Sýningar',
@@ -552,17 +322,9 @@ $messages['fo'] = array(
 	'quickstats-header-photos' => 'Myndir',
 	'quickstats-totals-label' => 'Tilsamans',
 	'quickstats-see-more-stats-link' => '[[Special:Insights|Sí fleiri hagtøl]]',
-	'quickstats-number-shortening' => '$1K',
-	'quickstats-number-shortening-millions' => '$1M',
-	'quickstats-number-shortening-billions' => '$1B',
-);
+];
 
-/** French (français)
- * @author Gomoko
- * @author Nicolapps
- * @author Wyz
- */
-$messages['fr'] = array(
+$messages['fr'] = [
 	'quickstats-header-label' => 'Stats rapides',
 	'quickstats-header-date' => 'Date',
 	'quickstats-header-views' => 'Vues',
@@ -570,26 +332,14 @@ $messages['fr'] = array(
 	'quickstats-header-photos' => 'Images',
 	'quickstats-totals-label' => 'Totaux',
 	'quickstats-see-more-stats-link' => '[[Special:Insights|Voir plus de stats]]',
-	'quickstats-number-shortening' => '$1K',
-	'quickstats-number-shortening-millions' => '$1M',
-	'quickstats-number-shortening-billions' => '$1 Mrd',
-);
+	'quickstats-date-format' => 'd M',
+];
 
-/** Western Frisian (Frysk)
- * @author Robin0van0der0vliet
- */
-$messages['fy'] = array(
+$messages['fy'] = [
 	'quickstats-header-date' => 'Datum',
-	'quickstats-number-shortening' => '$1K',
-	'quickstats-number-shortening-millions' => '$1*10ˆ6',
-	'quickstats-number-shortening-billions' => '$1*10ˆ9',
-);
+];
 
-/** Galician (galego)
- * @author Toliño
- * @author Vivaelcelta
- */
-$messages['gl'] = array(
+$messages['gl'] = [
 	'quickstats-header-label' => 'Estatísticas rápidas',
 	'quickstats-header-date' => 'Data',
 	'quickstats-header-views' => 'Visitas',
@@ -598,15 +348,9 @@ $messages['gl'] = array(
 	'quickstats-date-format' => 'd de M',
 	'quickstats-totals-label' => 'Totais',
 	'quickstats-see-more-stats-link' => '[[Special:Insights|Ollar máis estatísticas]]',
-	'quickstats-number-shortening' => '$1K',
-	'quickstats-number-shortening-millions' => '$1M',
-	'quickstats-number-shortening-billions' => '$1B',
-);
+];
 
-/** Hakka Chinese (客家語/Hak-kâ-ngî)
- * @author Anson2812
- */
-$messages['hak'] = array(
+$messages['hak'] = [
 	'quickstats-header-label' => '快速計數',
 	'quickstats-header-date' => '日期',
 	'quickstats-header-views' => '查看嘅數目',
@@ -614,15 +358,9 @@ $messages['hak'] = array(
 	'quickstats-header-photos' => '相片',
 	'quickstats-totals-label' => '共計',
 	'quickstats-see-more-stats-link' => '[[Special:Insights|查看還加多統計]]',
-	'quickstats-number-shortening' => '$1千',
-	'quickstats-number-shortening-millions' => '$1百萬',
-	'quickstats-number-shortening-billions' => '$10億',
-);
+];
 
-/** Hawaiian (Hawai`i)
- * @author Kolonahe
- */
-$messages['haw'] = array(
+$messages['haw'] = [
 	'quickstats-header-label' => 'ʻIkepilihelu Wiki',
 	'quickstats-header-date' => 'Ka Lā',
 	'quickstats-header-views' => 'Nānana',
@@ -630,16 +368,9 @@ $messages['haw'] = array(
 	'quickstats-header-photos' => 'Kiʻi',
 	'quickstats-totals-label' => 'Huinanui',
 	'quickstats-see-more-stats-link' => '[[Special:Insights|Nā ʻikepilihelu ʻē aʻe]]',
-	'quickstats-number-shortening' => '$1K',
-	'quickstats-number-shortening-millions' => '$1M',
-	'quickstats-number-shortening-billions' => '$1B',
-);
+];
 
-/** Hebrew (עברית)
- * @author Deror avi
- * @author Yova
- */
-$messages['he'] = array(
+$messages['he'] = [
 	'quickstats-header-label' => 'סטטיסטיקה מהירה',
 	'quickstats-header-date' => 'תאריך',
 	'quickstats-header-views' => 'צפיות',
@@ -647,15 +378,9 @@ $messages['he'] = array(
 	'quickstats-header-photos' => 'תמונות',
 	'quickstats-totals-label' => 'סה"כ',
 	'quickstats-see-more-stats-link' => '[[Special:Insights|לצפיה בסטטיסטיקות נוספות]]',
-	'quickstats-number-shortening' => '$1 אלפים',
-	'quickstats-number-shortening-millions' => '$1 מיליונים',
-	'quickstats-number-shortening-billions' => '$1 מיליארדים',
-);
+];
 
-/** Hindi (हिन्दी)
- * @author Kush rohra
- */
-$messages['hi'] = array(
+$messages['hi'] = [
 	'quickstats-header-label' => 'त्वरित आँकड़े',
 	'quickstats-header-date' => 'तिथि',
 	'quickstats-header-views' => '
@@ -664,16 +389,10 @@ $messages['hi'] = array(
 	'quickstats-header-edits' => 'संपादन',
 	'quickstats-header-photos' => 'तस्वीरें',
 	'quickstats-totals-label' => 'योग',
-	'quickstats-see-more-stats-link' => '[[विशिष्ट:विकीआँकड़े|देखना अधिक आँकड़े]]', # Fuzzy
-	'quickstats-number-shortening' => '$1के',
-	'quickstats-number-shortening-millions' => '$1मिलियन',
-	'quickstats-number-shortening-billions' => '$1बिलियन',
-);
+	'quickstats-see-more-stats-link' => '[[विशिष्ट:विकीआँकड़े|देखना अधिक आँकड़े]]',
+];
 
-/** Hunsrik (Hunsrik)
- * @author Paul Beppler
- */
-$messages['hrx'] = array(
+$messages['hrx'] = [
 	'quickstats-header-label' => 'Ministatistik',
 	'quickstats-header-date' => 'Datum',
 	'quickstats-header-views' => 'Affrufe',
@@ -681,16 +400,9 @@ $messages['hrx'] = array(
 	'quickstats-header-photos' => 'Fotos',
 	'quickstats-totals-label' => 'Gesamt',
 	'quickstats-see-more-stats-link' => '[[Special:Insights|Sieh weitre Statistike]]',
-	'quickstats-number-shortening' => '$1K',
-	'quickstats-number-shortening-millions' => '$1M',
-	'quickstats-number-shortening-billions' => '$1B',
-);
+];
 
-/** Hungarian (magyar)
- * @author Csega
- * @author TK-999
- */
-$messages['hu'] = array(
+$messages['hu'] = [
 	'quickstats-header-label' => 'Gyors statisztikák',
 	'quickstats-header-date' => 'Dátum',
 	'quickstats-header-views' => 'Megtekintések',
@@ -698,15 +410,9 @@ $messages['hu'] = array(
 	'quickstats-header-photos' => 'Képek',
 	'quickstats-totals-label' => 'Összesítés',
 	'quickstats-see-more-stats-link' => '[[Special:Insights|Részletes statisztika]]',
-	'quickstats-number-shortening' => '$1 ezer',
-	'quickstats-number-shortening-millions' => '$1 millió',
-	'quickstats-number-shortening-billions' => '$1 milliárd',
-);
+];
 
-/** Interlingua (interlingua)
- * @author McDutchie
- */
-$messages['ia'] = array(
+$messages['ia'] = [
 	'quickstats-header-label' => 'Statistica rapide',
 	'quickstats-header-date' => 'Data',
 	'quickstats-header-views' => 'Visitas',
@@ -714,17 +420,9 @@ $messages['ia'] = array(
 	'quickstats-header-photos' => 'Photos',
 	'quickstats-totals-label' => 'Totales',
 	'quickstats-see-more-stats-link' => '[[Special:Insights|Vider plus statisticas]]',
-	'quickstats-number-shortening' => '$1K',
-	'quickstats-number-shortening-millions' => '$1mln',
-	'quickstats-number-shortening-billions' => '$1mld',
-);
+];
 
-/** Indonesian (Bahasa Indonesia)
- * @author Aldnonymous
- * @author C5st4wr6ch
- * @author Riemogerz
- */
-$messages['id'] = array(
+$messages['id'] = [
 	'quickstats-header-label' => 'Statistik Cepat',
 	'quickstats-header-date' => 'Tanggal',
 	'quickstats-header-views' => 'Dilihat',
@@ -732,44 +430,28 @@ $messages['id'] = array(
 	'quickstats-header-photos' => 'Foto',
 	'quickstats-totals-label' => 'Total',
 	'quickstats-see-more-stats-link' => '[[Special:Insights|Lihat lebih banyak statistik]]',
-	'quickstats-number-shortening' => '$1K',
-	'quickstats-number-shortening-millions' => '$1M',
-	'quickstats-number-shortening-billions' => '$1B',
-);
+];
 
-/** Ingush (ГӀалгӀай)
- * @author Sapral Mikail
- */
-$messages['inh'] = array(
+$messages['inh'] = [
 	'quickstats-header-date' => 'Денха',
 	'quickstats-header-views' => 'Б|аргтассараш',
 	'quickstats-header-edits' => 'Нийсдараш',
 	'quickstats-header-photos' => 'Сурташ',
 	'quickstats-totals-label' => 'Деррига а',
-);
+];
 
-/** Italian (italiano)
- * @author Lexaeus 94
- * @author Ximo17
- */
-$messages['it'] = array(
-	'quickstats-header-label' => 'Quick Stats - Statistiche',
+$messages['it'] = [
+	'quickstats-header-label' => 'Statistiche in breve',
 	'quickstats-header-date' => 'Data',
-	'quickstats-header-views' => 'Visite',
+	'quickstats-header-views' => 'Visualizzazioni',
 	'quickstats-header-edits' => 'Modifiche',
-	'quickstats-header-photos' => 'Foto',
+	'quickstats-header-photos' => 'Immagini',
 	'quickstats-totals-label' => 'Totale',
-	'quickstats-see-more-stats-link' => '[[Special:Insights|Visualizza statistiche complete]]',
-	'quickstats-number-shortening' => '$1K',
-	'quickstats-number-shortening-millions' => '$1 mln',
-	'quickstats-number-shortening-billions' => '$1B',
-);
+	'quickstats-see-more-stats-link' => '[[Special:WikiStats|Vedi altre statistiche]]',
+	'quickstats-date-format' => 'd M',
+];
 
-/** Japanese (日本語)
- * @author BryghtShadow
- * @author Tommy6
- */
-$messages['ja'] = array(
+$messages['ja'] = [
 	'quickstats-header-label' => '簡易統計',
 	'quickstats-header-date' => '日付',
 	'quickstats-header-views' => '閲覧数',
@@ -777,24 +459,15 @@ $messages['ja'] = array(
 	'quickstats-header-photos' => '新規画像数',
 	'quickstats-date-format' => 'n月j日',
 	'quickstats-totals-label' => '合計',
-	'quickstats-see-more-stats-link' => '[[Special:Insights|さらに詳しい統計をみる]]',
-	'quickstats-number-shortening' => '$1K',
-	'quickstats-number-shortening-millions' => '$1M',
-	'quickstats-number-shortening-billions' => '$1B',
-);
+	'quickstats-see-more-stats-link' => '[[Special:WikiStats|さらに詳しい統計をみる]]',
+];
 
-/** Georgian (ქართული)
- * @author GeorgeBarnick
- */
-$messages['ka'] = array(
+$messages['ka'] = [
 	'quickstats-header-date' => 'თარიღი',
 	'quickstats-header-views' => 'ნახვა',
-);
+];
 
-/** Kannada (ಕನ್ನಡ)
- * @author Dimension10
- */
-$messages['kn'] = array(
+$messages['kn'] = [
 	'quickstats-header-label' => 'ತ್ವಿರಿತ ಆನ್ಕಡೆಗಳು',
 	'quickstats-header-date' => 'ದಿನಾಂಕ',
 	'quickstats-header-views' => 'ನೋಟಗಳು',
@@ -802,65 +475,38 @@ $messages['kn'] = array(
 	'quickstats-header-photos' => 'ಭಾವಚಿತ್ರಗಳು',
 	'quickstats-totals-label' => 'ಒತ್ತುಗಳು',
 	'quickstats-see-more-stats-link' => '[[Special:Insights|ಇನ್ನೂ ಆನ್ಕಡೆಗಳನ್ನು ]]',
-	'quickstats-number-shortening' => '$1 ಸಾವಿರ',
-	'quickstats-number-shortening-millions' => '$1 ದಶಲಕ್ಷ',
-	'quickstats-number-shortening-billions' => '$1 ಶತಕೋಟಿ',
-);
+];
 
-/** Korean (한국어)
- * @author Daisy2002
- * @author Excalibur777
- * @author Hym411
- * @author Revi
- * @author 아라
- * @author 한글화담당
- */
-$messages['ko'] = array(
-	'quickstats-header-label' => '간단한 통계',
+$messages['ko'] = [
+	'quickstats-header-label' => '위키 통계',
 	'quickstats-header-date' => '날짜',
-	'quickstats-header-views' => '보기',
+	'quickstats-header-views' => '조회',
 	'quickstats-header-edits' => '편집',
-	'quickstats-header-photos' => '사진',
+	'quickstats-header-photos' => '파일',
 	'quickstats-date-format' => 'M d일',
-	'quickstats-totals-label' => '합계',
-	'quickstats-see-more-stats-link' => '[[Special:Insights|더 많은 통계 보기]]',
-	'quickstats-number-shortening' => '$1천',
-	'quickstats-number-shortening-millions' => '$1백만',
-	'quickstats-number-shortening-billions' => '$1B',
-);
+	'quickstats-totals-label' => '총계',
+	'quickstats-see-more-stats-link' => '[[Special:WikiStats|자세히 보기]]',
+];
 
-/** Colognian (Ripoarisch)
- * @author Purodha
- */
-$messages['ksh'] = array(
+$messages['ksh'] = [
 	'quickstats-header-date' => 'Dattum',
-);
+];
 
-/** Kurdish (Latin script) (Kurdî (latînî)‎)
- * @author George Animal
- * @author Gomada
- */
-$messages['ku-latn'] = array(
+$messages['ku-latn'] = [
 	'quickstats-header-date' => 'Dîrok',
 	'quickstats-header-edits' => 'Guherandin',
 	'quickstats-header-photos' => 'Wêne',
 	'quickstats-totals-label' => 'Hemû',
-);
+];
 
-/** Kyrgyz (Кыргызча)
- * @author Growingup
- */
-$messages['ky'] = array(
+$messages['ky'] = [
 	'quickstats-header-date' => 'Дата',
 	'quickstats-header-views' => 'Көрүүлөр',
 	'quickstats-header-edits' => 'Оңдоолор',
 	'quickstats-header-photos' => 'Фото',
-);
+];
 
-/** Luxembourgish (Lëtzebuergesch)
- * @author Robby
- */
-$messages['lb'] = array(
+$messages['lb'] = [
 	'quickstats-header-label' => 'Ministatistik',
 	'quickstats-header-date' => 'Datum',
 	'quickstats-header-views' => 'Säitenofruffer',
@@ -868,45 +514,25 @@ $messages['lb'] = array(
 	'quickstats-header-photos' => 'Fotoen',
 	'quickstats-totals-label' => 'Total',
 	'quickstats-see-more-stats-link' => '[[Special:Insights|Méi Statistiken]]',
-	'quickstats-number-shortening' => '$1k',
-	'quickstats-number-shortening-millions' => '$1M',
-	'quickstats-number-shortening-billions' => '$1 Mrd',
-);
+];
 
-/** Lezghian (лезги)
- * @author Lezgia
- */
-$messages['lez'] = array(
+$messages['lez'] = [
 	'quickstats-header-edits' => 'Дегишарин',
 	'quickstats-header-photos' => 'Фото',
 	'quickstats-totals-label' => 'Мандни',
-	'quickstats-number-shortening' => '$1K',
-	'quickstats-number-shortening-millions' => '$1M',
-	'quickstats-number-shortening-billions' => '$1B',
-);
+];
 
-/** Northern Luri (لوری مینجایی)
- * @author Mogoeilor
- */
-$messages['lrc'] = array(
+$messages['lrc'] = [
 	'quickstats-header-label' => 'گوته آ سریع',
 	'quickstats-header-date' => 'ویرگار',
 	'quickstats-header-views' => 'ديئنيا',
 	'quickstats-header-edits' => 'ويرايشت',
 	'quickstats-header-photos' => 'عسكيا',
 	'quickstats-totals-label' => 'همه',
-	'quickstats-see-more-stats-link' => '[[Special:ويكی امار|آماريا بيشتر بوينيتو]]', # Fuzzy
-	'quickstats-number-shortening' => '$1ك',
-	'quickstats-number-shortening-millions' => '$1 م',
-	'quickstats-number-shortening-billions' => '$1 ب',
-);
+	'quickstats-see-more-stats-link' => '[[Special:ويكی امار|آماريا بيشتر بوينيتو]]',
+];
 
-/** Lithuanian (lietuvių)
- * @author Eitvys200
- * @author Macofe
- * @author Vilius
- */
-$messages['lt'] = array(
+$messages['lt'] = [
 	'quickstats-header-label' => 'Greita statistika',
 	'quickstats-header-date' => 'Data',
 	'quickstats-header-views' => 'Peržiūros',
@@ -914,16 +540,9 @@ $messages['lt'] = array(
 	'quickstats-header-photos' => 'Nuotraukos',
 	'quickstats-totals-label' => 'Viso',
 	'quickstats-see-more-stats-link' => '[[Special:WikiStats|Pamatyti daugiau statistikų]]',
-	'quickstats-number-shortening' => '$1K',
-	'quickstats-number-shortening-millions' => '$1M',
-	'quickstats-number-shortening-billions' => '$1B',
-);
+];
 
-/** Latvian (latviešu)
- * @author Papuass
- * @author Sg ghost
- */
-$messages['lv'] = array(
+$messages['lv'] = [
 	'quickstats-header-label' => 'Vienkārša Statistika',
 	'quickstats-header-date' => 'Datums',
 	'quickstats-header-views' => 'Skatīts',
@@ -931,26 +550,15 @@ $messages['lv'] = array(
 	'quickstats-header-photos' => 'Fotogrāfijas',
 	'quickstats-totals-label' => 'Kopsummas',
 	'quickstats-see-more-stats-link' => '[[Special:Insights|Skatīt vairāk stats]]',
-	'quickstats-number-shortening' => '$1K',
-	'quickstats-number-shortening-millions' => '$1M',
-	'quickstats-number-shortening-billions' => '$1B',
-);
+];
 
-/** Literary Chinese (文言)
- * @author Jason924tw
- */
-$messages['lzh'] = array(
+$messages['lzh'] = [
 	'quickstats-header-date' => '期',
 	'quickstats-header-views' => '覽',
 	'quickstats-header-edits' => '纂',
-	'quickstats-number-shortening' => '$1千',
-	'quickstats-number-shortening-millions' => '$1百萬',
-);
+];
 
-/** Basa Banyumasan (Basa Banyumasan)
- * @author StefanusRA
- */
-$messages['map-bms'] = array(
+$messages['map-bms'] = [
 	'quickstats-header-label' => 'Statistik Banter',
 	'quickstats-header-date' => 'Tanggal',
 	'quickstats-header-views' => 'Dideleng',
@@ -958,15 +566,9 @@ $messages['map-bms'] = array(
 	'quickstats-header-photos' => 'Foto',
 	'quickstats-totals-label' => 'Total',
 	'quickstats-see-more-stats-link' => '[[Special:Insights|Deleng lewih akeh maning statistike]]',
-	'quickstats-number-shortening' => '$1K',
-	'quickstats-number-shortening-millions' => '$1Jt',
-	'quickstats-number-shortening-billions' => '$1M',
-);
+];
 
-/** Macedonian (македонски)
- * @author Bjankuloski06
- */
-$messages['mk'] = array(
+$messages['mk'] = [
 	'quickstats-header-label' => 'Статистики накратко',
 	'quickstats-header-date' => 'Датум',
 	'quickstats-header-views' => 'Посети',
@@ -975,29 +577,16 @@ $messages['mk'] = array(
 	'quickstats-date-format' => 'd M',
 	'quickstats-totals-label' => 'Вкупно',
 	'quickstats-see-more-stats-link' => '[[Special:Insights|Повеќе статистики]]',
-	'quickstats-number-shortening' => '$1 К',
-	'quickstats-number-shortening-millions' => '$1 млн.',
-	'quickstats-number-shortening-billions' => '$1 млд',
-);
+];
 
-/** Malayalam (മലയാളം)
- * @author Kavya Manohar
- * @author Praveenp
- */
-$messages['ml'] = array(
+$messages['ml'] = [
 	'quickstats-header-date' => 'തീയതി',
 	'quickstats-header-edits' => 'തിരുത്തുകൾ',
 	'quickstats-header-photos' => 'ചിത്രങ്ങൾ',
 	'quickstats-totals-label' => 'ആകെ',
-	'quickstats-number-shortening' => '$1 ആയിരം',
-	'quickstats-number-shortening-millions' => '$1 ദശലക്ഷം',
-	'quickstats-number-shortening-billions' => '$1 ആയിരം കോടി',
-);
+];
 
-/** Marathi (मराठी)
- * @author V.narsikar
- */
-$messages['mr'] = array(
+$messages['mr'] = [
 	'quickstats-header-label' => 'जलद सांख्यिकी',
 	'quickstats-header-date' => 'दिनांक',
 	'quickstats-header-views' => 'दृष्ये',
@@ -1005,13 +594,9 @@ $messages['mr'] = array(
 	'quickstats-header-photos' => 'छायाचित्रे',
 	'quickstats-totals-label' => 'एकूण',
 	'quickstats-see-more-stats-link' => '[[Special:Insights|अधिक आकडेवारी बघा]]',
-	'quickstats-number-shortening' => '$1के',
-);
+];
 
-/** Malay (Bahasa Melayu)
- * @author Anakmalaysia
- */
-$messages['ms'] = array(
+$messages['ms'] = [
 	'quickstats-header-label' => 'Statistik Asas',
 	'quickstats-header-date' => 'Tarikh',
 	'quickstats-header-views' => 'Kunjungan',
@@ -1020,15 +605,9 @@ $messages['ms'] = array(
 	'quickstats-date-format' => 'd M',
 	'quickstats-totals-label' => 'Jumlah',
 	'quickstats-see-more-stats-link' => '[[Special:Insights|Lihat banyak lagi statistik]]',
-	'quickstats-number-shortening' => '$1K',
-	'quickstats-number-shortening-millions' => '$1J',
-	'quickstats-number-shortening-billions' => '$1B',
-);
+];
 
-/** Maltese (Malti)
- * @author Chrisportelli
- */
-$messages['mt'] = array(
+$messages['mt'] = [
 	'quickstats-header-label' => 'Statistiċi ħfief',
 	'quickstats-header-date' => 'Data',
 	'quickstats-header-views' => 'Dehriet',
@@ -1036,15 +615,9 @@ $messages['mt'] = array(
 	'quickstats-header-photos' => 'Ritratti',
 	'quickstats-totals-label' => 'Total',
 	'quickstats-see-more-stats-link' => '[[Special:Insights|Aktar statistika]]',
-	'quickstats-number-shortening' => '$1K',
-	'quickstats-number-shortening-millions' => '$1M',
-	'quickstats-number-shortening-billions' => '$1B',
-);
+];
 
-/** Min Nan Chinese (Bân-lâm-gú)
- * @author Ianbu
- */
-$messages['nan'] = array(
+$messages['nan'] = [
 	'quickstats-header-label' => '簡便的統計資料',
 	'quickstats-header-date' => 'Ji̍t-kî',
 	'quickstats-header-views' => 'Khoàⁿ',
@@ -1052,15 +625,9 @@ $messages['nan'] = array(
 	'quickstats-header-photos' => '圖像數量',
 	'quickstats-totals-label' => '合計',
 	'quickstats-see-more-stats-link' => '[[Special:WikiStats|閣看其他的統計]]',
-	'quickstats-number-shortening' => '$1K',
-	'quickstats-number-shortening-millions' => '$1M',
-	'quickstats-number-shortening-billions' => '$1B',
-);
+];
 
-/** Norwegian Bokmål (norsk bokmål)
- * @author Audun
- */
-$messages['nb'] = array(
+$messages['nb'] = [
 	'quickstats-header-label' => 'Hurtigstatistikk',
 	'quickstats-header-date' => 'Dato',
 	'quickstats-header-views' => 'Visninger',
@@ -1069,16 +636,9 @@ $messages['nb'] = array(
 	'quickstats-date-format' => 'M d',
 	'quickstats-totals-label' => 'Totalt',
 	'quickstats-see-more-stats-link' => '[[Special:Insights|Se mer statistikk]]',
-	'quickstats-number-shortening' => '$1K',
-	'quickstats-number-shortening-millions' => '$1 M',
-	'quickstats-number-shortening-billions' => '$1 B',
-);
+];
 
-/** Nepali (नेपाली)
- * @author Bhawani Gautam
- * @author सरोज कुमार ढकाल
- */
-$messages['ne'] = array(
+$messages['ne'] = [
 	'quickstats-header-label' => 'छरितो तथ्यंक',
 	'quickstats-header-date' => 'मिति',
 	'quickstats-header-views' => 'अवलोकनहरू',
@@ -1086,17 +646,9 @@ $messages['ne'] = array(
 	'quickstats-header-photos' => 'चित्र',
 	'quickstats-totals-label' => 'कुल',
 	'quickstats-see-more-stats-link' => '[[Special:Insights|थप तथ्याङ्क हेर्नुहोस्]]',
-	'quickstats-number-shortening' => '$1 हजार',
-	'quickstats-number-shortening-millions' => '$1 मिलियन',
-	'quickstats-number-shortening-billions' => '$1 बिलियन',
-);
+];
 
-/** Dutch (Nederlands)
- * @author NielsAC
- * @author SPQRobin
- * @author Siebrand
- */
-$messages['nl'] = array(
+$messages['nl'] = [
 	'quickstats-header-label' => 'Snelle statistieken',
 	'quickstats-header-date' => 'Datum',
 	'quickstats-header-views' => 'Weergaven',
@@ -1105,32 +657,19 @@ $messages['nl'] = array(
 	'quickstats-date-format' => 'M d',
 	'quickstats-totals-label' => 'Totalen',
 	'quickstats-see-more-stats-link' => '[[Special:Insights|Meer statistieken bekijken]]',
-	'quickstats-number-shortening' => '$1K',
-	'quickstats-number-shortening-millions' => '$1*10ˆ6',
-	'quickstats-number-shortening-billions' => '$1*10ˆ9',
-);
+];
 
-/** Occitan (occitan)
- * @author Cedric31
- * @author Hulothe
- */
-$messages['oc'] = array(
+$messages['oc'] = [
 	'quickstats-header-label' => 'Estats. Rapidas',
 	'quickstats-header-date' => 'Data',
 	'quickstats-header-views' => 'Vistas',
 	'quickstats-header-edits' => 'Modificacions',
 	'quickstats-header-photos' => 'Imatges',
 	'quickstats-totals-label' => 'Totals',
-	'quickstats-see-more-stats-link' => "[[Special:Insights|Veire mai d'estat.]]",
-	'quickstats-number-shortening' => '$1K',
-	'quickstats-number-shortening-millions' => '$1 M',
-	'quickstats-number-shortening-billions' => '$1 Mrd',
-);
+	'quickstats-see-more-stats-link' => '[[Special:Insights|Veire mai d\'estat.]]',
+];
 
-/** Palatine German (Pälzisch)
- * @author Manuae
- */
-$messages['pfl'] = array(
+$messages['pfl'] = [
 	'quickstats-header-label' => 'Koazi Schdadischdig',
 	'quickstats-header-date' => 'Dadum',
 	'quickstats-header-views' => 'Uffruf',
@@ -1138,19 +677,9 @@ $messages['pfl'] = array(
 	'quickstats-header-photos' => 'Fodos',
 	'quickstats-totals-label' => 'Gsoamd',
 	'quickstats-see-more-stats-link' => '[[Special:Insights|Waidari Schdadischdige]]',
-	'quickstats-number-shortening' => '$1k',
-	'quickstats-number-shortening-millions' => '$1Mill.',
-	'quickstats-number-shortening-billions' => '$1Mrd.',
-);
+];
 
-/** Polish (polski)
- * @author BeginaFelicysym
- * @author Chrumps
- * @author Cloudissimo
- * @author Sovq
- * @author Woytecr
- */
-$messages['pl'] = array(
+$messages['pl'] = [
 	'quickstats-header-label' => 'Statystyki',
 	'quickstats-header-date' => 'Data',
 	'quickstats-header-views' => 'Odwiedziny',
@@ -1159,16 +688,9 @@ $messages['pl'] = array(
 	'quickstats-date-format' => 'M d',
 	'quickstats-totals-label' => 'Łącznie',
 	'quickstats-see-more-stats-link' => '[[Special:Insights|Więcej statystyk]]',
-	'quickstats-number-shortening' => '$1 tys.',
-	'quickstats-number-shortening-millions' => '$1 mln',
-	'quickstats-number-shortening-billions' => '$1 mld',
-);
+];
 
-/** Piedmontese (Piemontèis)
- * @author Borichèt
- * @author Dragonòt
- */
-$messages['pms'] = array(
+$messages['pms'] = [
 	'quickstats-header-label' => 'Statìstiche Leste',
 	'quickstats-header-date' => 'Data',
 	'quickstats-header-views' => 'Vìsite',
@@ -1176,15 +698,9 @@ $messages['pms'] = array(
 	'quickstats-header-photos' => 'Fòto',
 	'quickstats-totals-label' => 'Totaj',
 	'quickstats-see-more-stats-link' => '[[Special:Insights|Vëdde pi dë statìstiche]]',
-	'quickstats-number-shortening' => '$1K',
-	'quickstats-number-shortening-millions' => '$1M',
-	'quickstats-number-shortening-billions' => '$1Mrd',
-);
+];
 
-/** Pashto (پښتو)
- * @author Ahmed-Najib-Biabani-Ibrahimkhel
- */
-$messages['ps'] = array(
+$messages['ps'] = [
 	'quickstats-header-label' => 'چټک شمار',
 	'quickstats-header-date' => 'نېټه',
 	'quickstats-header-views' => 'کتنې',
@@ -1192,18 +708,9 @@ $messages['ps'] = array(
 	'quickstats-header-photos' => 'انځورونه',
 	'quickstats-totals-label' => 'ټولټال',
 	'quickstats-see-more-stats-link' => '[[Special:Insights|نورې شمارنې وگورئ]]',
-	'quickstats-number-shortening' => '$1زر',
-	'quickstats-number-shortening-millions' => '$1ميليون',
-	'quickstats-number-shortening-billions' => '$1بيليون',
-);
+];
 
-/** Portuguese (português)
- * @author Hamilton Abreu
- * @author Malafaya
- * @author Pjcaldeira
- * @author SandroHc
- */
-$messages['pt'] = array(
+$messages['pt'] = [
 	'quickstats-header-label' => 'Estatísticas',
 	'quickstats-header-date' => 'Data',
 	'quickstats-header-views' => 'Visualizações',
@@ -1211,20 +718,9 @@ $messages['pt'] = array(
 	'quickstats-header-photos' => 'Imagens',
 	'quickstats-totals-label' => 'Totais',
 	'quickstats-see-more-stats-link' => '[[Special:Insights|Ver mais estatísticas]]',
-	'quickstats-number-shortening' => '$1K',
-	'quickstats-number-shortening-millions' => '$1M',
-	'quickstats-number-shortening-billions' => '$1B',
-);
+];
 
-/** Brazilian Portuguese (português do Brasil)
- * @author Caio1478
- * @author Giro720
- * @author Luckas
- * @author Luckas Blade
- * @author Pedroca cerebral
- * @author TheGabrielZaum
- */
-$messages['pt-br'] = array(
+$messages['pt-br'] = [
 	'quickstats-header-label' => 'Estatísticas Rápidas',
 	'quickstats-header-date' => 'Data',
 	'quickstats-header-views' => 'Visualizações',
@@ -1232,16 +728,9 @@ $messages['pt-br'] = array(
 	'quickstats-header-photos' => 'Fotos',
 	'quickstats-totals-label' => 'Totais',
 	'quickstats-see-more-stats-link' => '[[Special:Insights|Ver mais estatísticas]]',
-	'quickstats-number-shortening' => '$1K',
-	'quickstats-number-shortening-millions' => '$1M',
-	'quickstats-number-shortening-billions' => '$1B',
-);
+];
 
-/** tarandíne (tarandíne)
- * @author Joetaras
- * @author Reder
- */
-$messages['roa-tara'] = array(
+$messages['roa-tara'] = [
 	'quickstats-header-label' => 'Statisteche veloce',
 	'quickstats-header-date' => 'Date',
 	'quickstats-header-views' => 'Visite',
@@ -1249,45 +738,28 @@ $messages['roa-tara'] = array(
 	'quickstats-header-photos' => 'Foto',
 	'quickstats-totals-label' => 'Totele',
 	'quickstats-see-more-stats-link' => '[[Special:Insights|Vide cchiù statisteche]]',
-	'quickstats-number-shortening' => '$1K',
-	'quickstats-number-shortening-millions' => '$1M',
-	'quickstats-number-shortening-billions' => '$1B',
-);
+];
 
-/** Russian (русский)
- * @author Kuzura
- */
-$messages['ru'] = array(
-	'quickstats-header-label' => 'Статистика Вики',
+$messages['ru'] = [
+	'quickstats-header-label' => 'Статистика вики',
 	'quickstats-header-date' => 'Дата',
 	'quickstats-header-views' => 'Просмотров',
 	'quickstats-header-edits' => 'Правок',
 	'quickstats-header-photos' => 'Фото',
 	'quickstats-totals-label' => 'Итого',
-	'quickstats-see-more-stats-link' => '[[Special:Insights|Ещё статистика]]',
-	'quickstats-number-shortening' => '$1K',
-	'quickstats-number-shortening-millions' => '$1милл.',
-	'quickstats-number-shortening-billions' => '$1миллиард',
-);
+	'quickstats-see-more-stats-link' => '[[Special:WikiStats|Ещё статистика]]',
+	'quickstats-date-format' => 'd M',
+];
 
-/** Sanskrit (संस्कृतम्)
- * @author NehalDaveND
- */
-$messages['sa'] = array(
+$messages['sa'] = [
 	'quickstats-header-date' => 'दिनाङ्कः',
 	'quickstats-header-views' => 'मतानि',
 	'quickstats-header-edits' => 'सम्पादनानि',
 	'quickstats-header-photos' => 'चित्राणि',
 	'quickstats-totals-label' => 'योगः',
-	'quickstats-number-shortening' => '$1 सहस्राणि',
-	'quickstats-number-shortening-millions' => '$1 कोटिः',
-	'quickstats-number-shortening-billions' => '$1 अर्बुदं',
-);
+];
 
-/** Scots (Scots)
- * @author John Reid
- */
-$messages['sco'] = array(
+$messages['sco'] = [
 	'quickstats-header-label' => 'Queeck Stats',
 	'quickstats-header-date' => 'Date,',
 	'quickstats-header-views' => 'Views,',
@@ -1295,15 +767,9 @@ $messages['sco'] = array(
 	'quickstats-header-photos' => 'Photæs',
 	'quickstats-totals-label' => 'Tôtals',
 	'quickstats-see-more-stats-link' => '[[Special:Insights|See mair stats]]',
-	'quickstats-number-shortening' => '$1K',
-	'quickstats-number-shortening-millions' => '$1M',
-	'quickstats-number-shortening-billions' => '$1B',
-);
+];
 
-/** Serbo-Croatian (srpskohrvatski / српскохрватски)
- * @author OC Ripper
- */
-$messages['sh'] = array(
+$messages['sh'] = [
 	'quickstats-header-label' => 'Kratke statistike',
 	'quickstats-header-date' => 'Datum',
 	'quickstats-header-views' => 'Pregleda',
@@ -1311,28 +777,18 @@ $messages['sh'] = array(
 	'quickstats-header-photos' => 'Fotografija',
 	'quickstats-totals-label' => 'Ukupno',
 	'quickstats-see-more-stats-link' => '[[Special:Insights|Pogledajte još statistika]]',
-);
+];
 
-/** Sinhala (සිංහල)
- * @author පසිඳු කාවින්ද
- * @author බිඟුවා
- * @author හරිත
- */
-$messages['si'] = array(
+$messages['si'] = [
 	'quickstats-header-label' => 'ඉක්මන් තොරතුර',
 	'quickstats-header-date' => 'දිනය',
 	'quickstats-header-views' => 'නැරඹීම්',
 	'quickstats-header-edits' => 'සංස්කරණ',
 	'quickstats-header-photos' => 'පින්තූර',
 	'quickstats-totals-label' => 'සියල්ල',
-	'quickstats-number-shortening' => '$1K',
-);
+];
 
-/** Slovenian (slovenščina)
- * @author Dbc334
- * @author Mitja i
- */
-$messages['sl'] = array(
+$messages['sl'] = [
 	'quickstats-header-label' => 'Hitre statistike',
 	'quickstats-header-date' => 'Datum',
 	'quickstats-header-views' => 'Ogledi',
@@ -1340,15 +796,9 @@ $messages['sl'] = array(
 	'quickstats-header-photos' => 'Fotografije',
 	'quickstats-totals-label' => 'Skupaj',
 	'quickstats-see-more-stats-link' => '[[Special:Insights|Oglejte si več statistik]]',
-	'quickstats-number-shortening' => '$1 tis.',
-	'quickstats-number-shortening-millions' => '$1 mio.',
-	'quickstats-number-shortening-billions' => '$1 mia.',
-);
+];
 
-/** Somali (Soomaaliga)
- * @author Abshirdheere
- */
-$messages['so'] = array(
+$messages['so'] = [
 	'quickstats-header-label' => 'Tirakoob degdeg ah',
 	'quickstats-header-date' => 'Taariikh',
 	'quickstats-header-views' => 'Muuqaalka',
@@ -1356,15 +806,9 @@ $messages['so'] = array(
 	'quickstats-header-photos' => 'Sawirro',
 	'quickstats-totals-label' => 'Wadarta',
 	'quickstats-see-more-stats-link' => '[[Special:Insights|sii eeg tirakoobyeda]]',
-	'quickstats-number-shortening' => '$1K',
-	'quickstats-number-shortening-millions' => '$1M',
-	'quickstats-number-shortening-billions' => '$1B',
-);
+];
 
-/** Serbian (Cyrillic script) (српски (ћирилица)‎)
- * @author Rancher
- */
-$messages['sr-ec'] = array(
+$messages['sr-ec'] = [
 	'quickstats-header-label' => 'Статистика укратко',
 	'quickstats-header-date' => 'Датум',
 	'quickstats-header-views' => 'Прегледи',
@@ -1373,15 +817,9 @@ $messages['sr-ec'] = array(
 	'quickstats-date-format' => 'd M',
 	'quickstats-totals-label' => 'Укупно',
 	'quickstats-see-more-stats-link' => '[[Special:Insights|Више статистика]]',
-	'quickstats-number-shortening' => '$1 хиљ.',
-	'quickstats-number-shortening-millions' => '$1 мил.',
-	'quickstats-number-shortening-billions' => '$1 млрд.',
-);
+];
 
-/** Swedish (svenska)
- * @author WikiPhoenix
- */
-$messages['sv'] = array(
+$messages['sv'] = [
 	'quickstats-header-label' => 'Snabbstatistik',
 	'quickstats-header-date' => 'Datum',
 	'quickstats-header-views' => 'Visningar',
@@ -1390,15 +828,9 @@ $messages['sv'] = array(
 	'quickstats-date-format' => 'd M',
 	'quickstats-totals-label' => 'Totalt',
 	'quickstats-see-more-stats-link' => '[[Special:Insights|Se mer statistik]]',
-	'quickstats-number-shortening' => '$1K',
-	'quickstats-number-shortening-millions' => '$1M',
-	'quickstats-number-shortening-billions' => '$1B',
-);
+];
 
-/** Silesian (ślůnski)
- * @author Krol111
- */
-$messages['szl'] = array(
+$messages['szl'] = [
 	'quickstats-header-label' => 'Minisztatystyki',
 	'quickstats-header-date' => 'Data',
 	'quickstats-header-views' => 'Podglůndy',
@@ -1406,28 +838,17 @@ $messages['szl'] = array(
 	'quickstats-header-photos' => 'Uobrozy',
 	'quickstats-totals-label' => 'Cuzamyn',
 	'quickstats-see-more-stats-link' => '[[Special:Insights|Wjyncyj sztatystyk]]',
-	'quickstats-number-shortening' => '$1 tyś.',
-	'quickstats-number-shortening-millions' => '$1 mln',
-	'quickstats-number-shortening-billions' => '$1 mld',
-);
+];
 
-/** Tamil (தமிழ்)
- * @author Shanmugamp7
- */
-$messages['ta'] = array(
+$messages['ta'] = [
 	'quickstats-header-date' => 'தேதி',
 	'quickstats-header-views' => 'பார்வைகள்',
 	'quickstats-header-edits' => 'தொகுப்புகள்',
 	'quickstats-header-photos' => 'புகைப்படங்கள்',
 	'quickstats-totals-label' => 'மொத்தம்',
-);
+];
 
-/** Telugu (తెలుగు)
- * @author Chaduvari
- * @author Ravichandra
- * @author Veeven
- */
-$messages['te'] = array(
+$messages['te'] = [
 	'quickstats-header-label' => 'త్వరిత గణాంకాలు',
 	'quickstats-header-date' => 'తేదీ',
 	'quickstats-header-views' => 'వీక్షణలు',
@@ -1435,15 +856,9 @@ $messages['te'] = array(
 	'quickstats-header-photos' => 'ఫోటోలు',
 	'quickstats-totals-label' => 'మొత్తాలు',
 	'quickstats-see-more-stats-link' => '[[Special:Insights|మరిన్ని గణాంకాలను చూడండి]]',
-	'quickstats-number-shortening' => '$1K',
-	'quickstats-number-shortening-millions' => '$1మిలియన్',
-	'quickstats-number-shortening-billions' => '$1బిలియన్',
-);
+];
 
-/** Thai (ไทย)
- * @author Panan2544
- */
-$messages['th'] = array(
+$messages['th'] = [
 	'quickstats-header-label' => 'สถิติอย่างด่วน',
 	'quickstats-header-date' => 'วัน',
 	'quickstats-header-views' => 'ดู/มุมมอง',
@@ -1451,15 +866,9 @@ $messages['th'] = array(
 	'quickstats-header-photos' => 'รูปภาพ',
 	'quickstats-totals-label' => 'รวม',
 	'quickstats-see-more-stats-link' => '[[Special:WikiStats|See more stats]]',
-	'quickstats-number-shortening' => '$1หมื่น',
-	'quickstats-number-shortening-millions' => '$1ล้าน',
-	'quickstats-number-shortening-billions' => '$1พันล้าน',
-);
+];
 
-/** Tagalog (Tagalog)
- * @author AnakngAraw
- */
-$messages['tl'] = array(
+$messages['tl'] = [
 	'quickstats-header-label' => 'Mabilisang Estadistika',
 	'quickstats-header-date' => 'Petsa',
 	'quickstats-header-views' => 'Mga pagtanaw',
@@ -1468,26 +877,16 @@ $messages['tl'] = array(
 	'quickstats-date-format' => 'B a',
 	'quickstats-totals-label' => 'Mga kabuoan',
 	'quickstats-see-more-stats-link' => '[[Special:Insights|Tumingin ng marami pang estadistika]]',
-	'quickstats-number-shortening' => '$1,000',
-	'quickstats-number-shortening-millions' => '$1 Milyon',
-	'quickstats-number-shortening-billions' => '$1 Bilyon',
-);
+];
 
-/** Talysh (толышә зывон)
- * @author Гусейн
- */
-$messages['tly'] = array(
+$messages['tly'] = [
 	'quickstats-header-date' => 'Тарых',
 	'quickstats-header-views' => 'Тәмшо кардеј',
 	'quickstats-header-edits' => 'Дәгишон',
 	'quickstats-header-photos' => 'Шикилон',
-	'quickstats-number-shortening' => '$1K',
-);
+];
 
-/** Turkish (Türkçe)
- * @author Sabri Vatansever
- */
-$messages['tr'] = array(
+$messages['tr'] = [
 	'quickstats-header-label' => 'Hızlı istatistik',
 	'quickstats-header-date' => 'Tarih',
 	'quickstats-header-views' => 'Görüntülenme',
@@ -1495,15 +894,9 @@ $messages['tr'] = array(
 	'quickstats-header-photos' => 'Fotoğraflar',
 	'quickstats-totals-label' => 'Toplam',
 	'quickstats-see-more-stats-link' => '[[Special:Insights|Daha fazla istatislik gör]]',
-	'quickstats-number-shortening' => '$1K',
-	'quickstats-number-shortening-millions' => '$1M',
-	'quickstats-number-shortening-billions' => '$1B',
-);
+];
 
-/** Tatar (Cyrillic script) (татарча)
- * @author Ajdar
- */
-$messages['tt-cyrl'] = array(
+$messages['tt-cyrl'] = [
 	'quickstats-header-label' => 'Вики статистикасы',
 	'quickstats-header-date' => 'Вакыт',
 	'quickstats-header-views' => 'караулар',
@@ -1512,35 +905,19 @@ $messages['tt-cyrl'] = array(
 	'quickstats-date-format' => 'M d',
 	'quickstats-totals-label' => 'Барысы',
 	'quickstats-see-more-stats-link' => '[[Special:Insights|Тагын статистика...]]',
-	'quickstats-number-shortening' => '$1K',
-	'quickstats-number-shortening-millions' => '$1милл.',
-	'quickstats-number-shortening-billions' => '$1миллиард',
-);
+];
 
-/** Muslim Tat (Tati)
- * @author Erdemaslancan
- */
-$messages['ttt'] = array(
+$messages['ttt'] = [
 	'quickstats-see-more-stats-link' => '[[Special:Insights|istatistikan diyin]]',
-);
+];
 
-/** Central Atlas Tamazight (ⵜⴰⵎⴰⵣⵉⵖⵜ)
- * @author Tifinaghes
- */
-$messages['tzm'] = array(
+$messages['tzm'] = [
 	'quickstats-header-date' => 'ⴰⴽⵓⴷ',
 	'quickstats-header-photos' => 'ⵜⵉⵡⵍⴰⴼⵉⵏ',
 	'quickstats-totals-label' => 'ⵎⴰⵕⵕⴰ',
-);
+];
 
-/** Ukrainian (українська)
- * @author A1
- * @author Andriykopanytsia
- * @author Ua2004
- * @author Vox
- * @author Капитан Джон Шепард
- */
-$messages['uk'] = array(
+$messages['uk'] = [
 	'quickstats-header-label' => 'Стисла статистика',
 	'quickstats-header-date' => 'Дата',
 	'quickstats-header-views' => 'Переглядів',
@@ -1548,23 +925,14 @@ $messages['uk'] = array(
 	'quickstats-header-photos' => 'Фото',
 	'quickstats-totals-label' => 'Підсумки',
 	'quickstats-see-more-stats-link' => '[[Special:Insights|Більше статистики]]',
-	'quickstats-number-shortening' => '$1 тис.',
-	'quickstats-number-shortening-millions' => '$1 млн',
-	'quickstats-number-shortening-billions' => '$1 млрд',
-);
+];
 
-/** Veps (vepsän kel’)
- * @author Игорь Бродский
- */
-$messages['vep'] = array(
+$messages['vep'] = [
 	'quickstats-header-date' => 'Dat',
 	'quickstats-header-photos' => 'Fotokuvad',
-);
+];
 
-/** Vietnamese (Tiếng Việt)
- * @author Xiao Qiao
- */
-$messages['vi'] = array(
+$messages['vi'] = [
 	'quickstats-header-label' => 'Thống kê nhanh',
 	'quickstats-header-date' => 'Ngày',
 	'quickstats-header-views' => 'Lượt xem',
@@ -1572,36 +940,21 @@ $messages['vi'] = array(
 	'quickstats-header-photos' => 'Hình ảnh',
 	'quickstats-totals-label' => 'Tổng cộng',
 	'quickstats-see-more-stats-link' => '[[Special:Insights|Xem thêm các số liệu thống kê]]',
-	'quickstats-number-shortening' => '$1K',
-	'quickstats-number-shortening-millions' => '$1M',
-	'quickstats-number-shortening-billions' => '$1B',
-);
+];
 
-/** Waray (Winaray)
- * @author Harvzsf
- */
-$messages['war'] = array(
+$messages['war'] = [
 	'quickstats-header-photos' => 'Mga hulagway',
-);
+];
 
-/** Chinese (中文)
- * @author Shangkuanlc
- */
-$messages['zh'] = array(
+$messages['zh'] = [
 	'quickstats-header-label' => '統計快訊',
 	'quickstats-header-date' => '日期',
 	'quickstats-header-views' => '點閱數',
 	'quickstats-header-edits' => '編輯數',
 	'quickstats-header-photos' => '照片',
-);
+];
 
-/** Simplified Chinese (中文（简体）‎)
- * @author Anakmalaysia
- * @author Dimension
- * @author Reasno
- * @author User670839245
- */
-$messages['zh-hans'] = array(
+$messages['zh-hans'] = [
 	'quickstats-header-label' => '简明统计',
 	'quickstats-header-date' => '日期',
 	'quickstats-header-views' => '浏览量',
@@ -1609,18 +962,9 @@ $messages['zh-hans'] = array(
 	'quickstats-header-photos' => '照片',
 	'quickstats-totals-label' => '总计',
 	'quickstats-see-more-stats-link' => '[[Special:Insights|查看更多统计]]',
-	'quickstats-number-shortening' => '$1千',
-	'quickstats-number-shortening-millions' => '$1百万',
-	'quickstats-number-shortening-billions' => '$10亿',
-);
+];
 
-/** Traditional Chinese (中文（繁體）‎)
- * @author Cwlin0416
- * @author Ffaarr
- * @author LNDDYL
- * @author Vincent Liu
- */
-$messages['zh-hant'] = array(
+$messages['zh-hant'] = [
 	'quickstats-header-label' => '快速統計資訊',
 	'quickstats-header-date' => '日期',
 	'quickstats-header-views' => '瀏覽次數',
@@ -1628,15 +972,9 @@ $messages['zh-hant'] = array(
 	'quickstats-header-photos' => '圖片張數',
 	'quickstats-totals-label' => '總計',
 	'quickstats-see-more-stats-link' => '[[Special:Insights|檢視更多統計]]',
-	'quickstats-number-shortening' => '$1 千',
-	'quickstats-number-shortening-millions' => '$1 百萬',
-	'quickstats-number-shortening-billions' => '$10 億',
-);
+];
 
-/** Chinese (Hong Kong) (中文（香港）‎)
- * @author Tcshek
- */
-$messages['zh-hk'] = array(
+$messages['zh-hk'] = [
 	'quickstats-header-label' => '快速統計資訊',
 	'quickstats-header-date' => '日期',
 	'quickstats-header-views' => '瀏覽次數',
@@ -1644,7 +982,5 @@ $messages['zh-hk'] = array(
 	'quickstats-header-photos' => '圖片數',
 	'quickstats-totals-label' => '總計',
 	'quickstats-see-more-stats-link' => '[[Special:Insights|查看更多統計]]',
-	'quickstats-number-shortening' => '$1K',
-	'quickstats-number-shortening-millions' => '$1M',
-	'quickstats-number-shortening-billions' => '$1B',
-);
+];
+

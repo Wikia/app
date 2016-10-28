@@ -12,6 +12,9 @@ class ChatRailController extends WikiaController {
 			$this->setVal( $name, $value );
 		}
 
+		// SUS-749: Add required MW messages to output
+		$this->wg->Out->addModuleMessages( 'ext.Chat2.ChatWidget' );
+
 		// As most the markup for this is the same as for the chat parser tag, we're reusing the tag template
 		$this->response->getView()->setTemplatePath( __DIR__ . '/templates/widget.mustache' );
 		$this->response->setTemplateEngine( WikiaResponse::TEMPLATE_ENGINE_MUSTACHE );

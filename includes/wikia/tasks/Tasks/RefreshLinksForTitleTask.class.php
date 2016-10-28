@@ -61,6 +61,9 @@ class RefreshLinksForTitleTask extends BaseTask {
 	}
 
 	protected function getLoggerContext() {
-		return ['task' => __CLASS__];
+		return [
+			'task' => __CLASS__,
+			'title' => $this->title->getPrefixedDBkey(),
+		];
 	}
 }

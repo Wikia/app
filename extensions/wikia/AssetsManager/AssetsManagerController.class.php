@@ -41,7 +41,6 @@ class AssetsManagerController extends WikiaController {
 		$scripts = $this->request->getVal( 'scripts', null );
 		$messages = $this->request->getVal( 'messages', null );
 		$mustache = $this->request->getVal( 'mustache', null );
-		$handlebars = $this->request->getVal( 'handlebars', null );
 		$sassParams = $this->request->getVal( 'sassParams', null );
 
 		// handle templates via sendRequest
@@ -135,7 +134,7 @@ class AssetsManagerController extends WikiaController {
 		}
 
 		// handle mustache templates (BugId:30841)
-		foreach (['mustache', 'handlebars'] as $templateLanguage) {
+		foreach (['mustache'] as $templateLanguage) {
 			$template = $$templateLanguage;
 
 			if ( is_null( $template ) ) {
