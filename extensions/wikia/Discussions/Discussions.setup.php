@@ -25,7 +25,9 @@ $wgAutoloadClasses['StaffWelcomePoster'] = $dir . 'maintenance/StaffWelcomePoste
 // register special page
 $wgSpecialPages['Discussions'] = 'SpecialDiscussionsController';
 
-if ( empty( $wgEnableForumExt ) ) {
+// This will cause /wiki/Special:Forum to redirect to Discussions when Discussions
+// is enabled and Forums are disabled.
+if ( !empty( $wgEnableDiscussions ) && empty( $wgEnableForumExt ) ) {
 	$wgAutoloadClasses['SpecialForumRedirectController'] = $dir . 'controllers/SpecialForumRedirectController.class.php';
 	$wgSpecialPages['Forum'] = 'SpecialForumRedirectController';
 }
