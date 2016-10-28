@@ -6,6 +6,10 @@ require(['wikia.geo', 'wikia.instantGlobals'], function(geo, instantGlobals) {
 	if (geo.isProperGeo(instantGlobals.wgAdDriverNetzAthletenCountries)) {
 		scriptElementNetzAthleten.type = "text/javascript";
 		scriptElementNetzAthleten.src = url;
+
+		scriptElementNetzAthleten.addEventListener("load", function(){
+			window.naMediaAd.setValue("homesite", window.wgIsMainpage);
+		});
 		document.head.appendChild(scriptElementNetzAthleten);
 	}
 });
