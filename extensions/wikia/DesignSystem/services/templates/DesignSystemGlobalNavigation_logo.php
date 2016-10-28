@@ -1,9 +1,16 @@
-<a href="<?= Sanitizer::encodeAttribute( $model['header']['href'] ); ?>"
-   class="wds-global-navigation__logo wds-is-<?= $model['header']['image-data']['name'] ?>"
-   data-tracking-label="<?= Sanitizer::encodeAttribute( $model['header']['tracking_label'] ); ?>">
+<a href="<?= Sanitizer::encodeAttribute( $model['module']['main']['href'] ); ?>"
+   class="wds-global-navigation__logo wds-is-<?= $model['module']['main']['image-data']['name'] ?>"
+   data-tracking-label="<?= Sanitizer::encodeAttribute( $model['module']['main']['tracking_label'] ); ?>">
 	<?= DesignSystemHelper::renderApiImage(
-		$model['header']['image-data'],
-		'wds-global-navigation__logo-image',
-		DesignSystemHelper::renderText( $model['header']['title'] )
+		$model['module']['main']['image-data'],
+		'wds-global-navigation__logo-main',
+		DesignSystemHelper::renderText( $model['module']['main']['title'] )
 	) ?>
+	<?php if ( !empty( $model['module']['tagline'] ) ) : ?>
+		<?= DesignSystemHelper::renderApiImage(
+			$model['module']['tagline']['image-data'],
+			'wds-global-navigation__logo-tagline',
+			DesignSystemHelper::renderText( $model['module']['tagline']['title'] )
+		) ?>
+	<?php endif; ?>
 </a>
