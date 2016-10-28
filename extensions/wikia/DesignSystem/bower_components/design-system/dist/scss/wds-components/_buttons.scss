@@ -1,4 +1,7 @@
 .wds-button {
+	$active-color: darken($wds-color-link, 20%);
+	$line-height: 1.3em;
+
 	background-color: $wds-color-link;
 	border: 1px solid $wds-color-link;
 	color: $wds-color-white;
@@ -7,7 +10,7 @@
 	font-size: $wds-typescale-size-minus-2;
 	font-weight: 600;
 	letter-spacing: .15px;
-	line-height: $wds-button-line-height;
+	line-height: $line-height;
 	outline: none;
 	padding: 16px 18px 15px;
 	text-align: center;
@@ -22,8 +25,8 @@
 	&:hover:not(:disabled),
 	&:active,
 	&.wds-is-active {
-		background-color: $wds-button-active-color;
-		border-color: $wds-button-active-color;
+		background-color: $active-color;
+		border-color: $active-color;
 	}
 
 	&:disabled,
@@ -41,7 +44,7 @@
 		&:active,
 		&.wds-is-active {
 			background-color: $wds-color-white;
-			color: $wds-button-active-color;
+			color: $active-color;
 		}
 	}
 
@@ -69,7 +72,7 @@
 		&:active,
 		&.wds-is-active {
 			background-color: $wds-color-white;
-			color: $wds-button-active-color;
+			color: $active-color;
 		}
 	}
 }

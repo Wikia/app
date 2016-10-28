@@ -1,10 +1,8 @@
-// base variables
+// Base variables
 @import 'breakpoints';
 @import 'colors';
 @import 'typography';
 
-// component variables
-@import 'buttons';
-@import 'dropdowns';
-@import 'global-navigation';
-@import 'lists';
+// Component variables
+$wds-global-navigation-height: 55px;
+$wds-button-transition-duration: 300ms;

@@ -1,4 +1,6 @@
 .wds-dropdown {
+	$content-z-index: 1;
+
 	display: inline-block;
 	position: relative;
 
@@ -6,7 +8,7 @@
 		cursor: pointer;
 		position: relative;
 		// dropdown content has shadow that should be hidden below the toggle
-		z-index: $wds-dropdown-content-z-index + 1;
+		z-index: $content-z-index + 1;
 	}
 
 	&__toggle-chevron {
@@ -20,7 +22,7 @@
 		left: 0;
 		position: absolute;
 		top: 100%;
-		z-index: $wds-dropdown-content-z-index;
+		z-index: $content-z-index;
 
 		&.wds-is-dark {
 			box-shadow: 0 0 20px 0 rgba($wds-color-black, .3);

@@ -1,6 +1,8 @@
 .wds-global-navigation {
 	$border-top-width: 6px;
+	$logo-width: 230px;
 	$nav-height: $wds-global-navigation-height - $border-top-width;
+	$nav-background-color: $wds-color-white;
 	$search-input-padding: 3px 4px;
 	$notification-counter-size: 18px;
 
@@ -29,7 +31,7 @@
 		}
 	}
 
-	background-color: $wds-global-navigation-background-color;
+	background-color: $nav-background-color;
 	border-image: linear-gradient(to right, $wds-color-dark-blue-gray 40%, $wds-color-slate-gray 40%) 1 0 0;
 	border-top: $border-top-width solid $wds-color-slate-gray;
 	border-width: $border-top-width 0 0;
@@ -83,7 +85,7 @@
 	&__user-menu,
 	&__wikis-menu {
 		align-items: center;
-		background-color: $wds-global-navigation-background-color;
+		background-color: $nav-background-color;
 		border-top: $border-top-width solid $wds-color-slate-gray;
 		color: $wds-color-dark-blue-gray;
 		display: flex;
@@ -120,13 +122,13 @@
 		border-top: $border-top-width solid $wds-color-dark-blue-gray;
 		// Safari will still make container fluid even when content inside has static width
 		// That is why we need to set grow and shrink to 0
-		flex: 0 0 $wds-global-navigation-logo-width;
+		flex: 0 0 $logo-width;
 	}
 
 	&__logo-fandom {
 		height: 100%;
 		padding-bottom: 4px;
-		width: $wds-global-navigation-logo-width;
+		width: $logo-width;
 	}
 
 	// These are temporary styles which should be removed after 4th October 2016
