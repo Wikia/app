@@ -190,7 +190,7 @@ $color-pagehistory: darken($color-page, 5%);
 }
 $color-diff-context: darken($color-page, 5%);
 @if $is-dark-wiki {
-	$color-diff-context: lighten($color-page, 15%);
+	$color-diff-context: lighten($color-page, 5%);
 }
 $color-diff-text: darken($color-text-dark, 5%);
 $color-diffchange-text: $color-diff-text;
