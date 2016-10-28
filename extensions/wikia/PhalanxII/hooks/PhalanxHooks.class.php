@@ -158,18 +158,16 @@ class PhalanxHooks extends WikiaObject {
 			$bulkdata = explode( "\n", $multitext );
 			if ( count( $bulkdata ) > 0 ) {
 				$result = array( 'success' => array(), 'failed' => 0 );
+				$targets = [];
 				foreach ( $bulkdata as $bulkrow ) {
 					$bulkrow = trim( $bulkrow );
-					$phalanx['id'] = null;
-					$phalanx['text'] = $bulkrow;
-
-					$data['id'] = $phalanx->save();
-					if ( $data['id'] ) {
-						$result[ 'success' ][] = $data['id'];
-					} else {
-						$result[ 'failed' ]++;
+					if ( $bulkrow !== '' ) {
+						$targets[] = $bulkrow;
 					}
 				}
+
+				// SUS-1207: Insert Phalanx bulk filters in single write operation
+				$result['success'] = $phalanx->insertBulkFilter( $targets );
 			} else {
 				$result = false;
 			}
