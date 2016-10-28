@@ -362,8 +362,7 @@ class DesignSystemGlobalNavigationModel extends WikiaModel {
 	}
 
 	private function isWikiaOrgCommunity() {
-		return $this->product !== self::PRODUCT_WIKIS ?
-			false :
+		return $this->product !== self::PRODUCT_WIKIS &&
 			WikiFactory::getVarValueByName( 'wgIsInWikiaOrgProgram', $this->productInstanceId );
 	}
 
