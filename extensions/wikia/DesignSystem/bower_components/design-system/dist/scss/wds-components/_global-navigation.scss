@@ -124,32 +124,31 @@ $hover-transition-duration: 300ms !default;
 
 	&__logo {
 		border-top: $border-top-width solid $color-dark-blue-gray;
+	}
 
-		&-image {
-			height: 100%;
+	&__logo-fandom {
+		// For backwards compatibility after splitting logo and tagline
+		height: 100%;
+		padding-bottom: 4px;
+		width: 230px;
+	}
+
+	&__logo-image {
+		height: 100%;
+
+		&.wds-is-wds-company-logo-fandom {
+			fill: $color-dark-blue-gray;
+			padding-bottom: 4px;
+			width: 120px;
 		}
 
-		&.wds-is-wds-company-logo-fandom-powered-by-wikia {
-			$logo-width: 230px;
-			// Safari will still make container fluid even when content inside has static width
-			// That is why we need to set grow and shrink to 0
-			flex: 0 0 $logo-width;
-
-			.wds-global-navigation__logo-image {
-				padding-bottom: 4px;
-				width: $logo-width;
-			}
+		&.wds-is-wds-company-logo-powered-by-wikia {
+			margin: 0 1px 2px 11px;
+			width: 98px;
 		}
 
 		&.wds-is-wds-company-logo-wikia-org {
-			$logo-width: 105px;
-			// Safari will still make container fluid even when content inside has static width
-			// That is why we need to set grow and shrink to 0
-			flex: 0 0 $logo-width;
-
-			.wds-global-navigation__logo-image {
-				width: $logo-width;
-			}
+			width: 105px;
 		}
 	}
 
