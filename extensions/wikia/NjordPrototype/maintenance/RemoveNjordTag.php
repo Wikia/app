@@ -42,14 +42,14 @@ class RemoveNjordTag extends Maintenance {
 			$this->output( PHP_EOL );
 		}
 
-		$this->removeNjordTag();
+		$this->removeTag();
 		$this->removeNjordPagePropsData();
 		$this->output( PHP_EOL );
 
 		$this->output( 'Done for ' . $wgCityId . PHP_EOL );
 	}
 
-	private function removeNjordTag() {
+	private function removeTag() {
 		$this->output( 'Removing tag from pages' . PHP_EOL );
 
 		$regex = "<hero[^>]+?/>\n";
