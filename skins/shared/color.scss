@@ -188,15 +188,20 @@ $color-pagehistory: darken($color-page, 5%);
 @if $is-dark-wiki {
 	$color-pagehistory: lighten($color-page, 15%);
 }
-$color-diff-context: darken($color-page, 5%);
-@if $is-dark-wiki {
-	$color-diff-context: lighten($color-page, 5%);
-}
 $color-diff-text: darken($color-text-dark, 5%);
 @if $is-dark-wiki {
 	$color-diff-text: lighten($color-text-light, 15%);
 }
 $color-diffchange-text: $color-diff-text;
+
+$color-diff-context: darken($color-page, 5%);
+@if $is-dark-wiki {
+	$color-diff-context: lighten($color-page, 5%);
+}
+$color-diff-context-border: #e6e6e6;
+@if $is-dark-wiki {
+	$color-diff-context-border: #444;
+}
 
 $color-diff-addedline-border: #a3d3ff;
 @if $is-dark-wiki {
