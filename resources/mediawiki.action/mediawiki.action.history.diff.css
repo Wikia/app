@@ -61,14 +61,6 @@ td.diff-context {
 	border-radius: 0.33em;
 }
 
-td.diff-addedline {
-	border-color: #a3d3ff;
-}
-
-td.diff-deletedline {
-	border-color: #ffe49c;
-}
-
 td.diff-context {
 	background: #f9f9f9;
 	border-color: #e6e6e6;

@@ -415,8 +415,13 @@
 		color: $color-diff-text;
 	}
 
-	td.diff-deletedline,
 	td.diff-addedline {
+		border-color: $color-diff-addedline-border;
+		color: $color-diff-text;
+	}
+
+	td.diff-deletedline {
+		border-color: $color-diff-deletedline-border;
 		color: $color-diff-text;
 	}
 

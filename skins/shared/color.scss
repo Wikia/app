@@ -198,6 +198,15 @@ $color-diff-text: darken($color-text-dark, 5%);
 }
 $color-diffchange-text: $color-diff-text;
 
+$color-diff-addedline-border: #a3d3ff;
+@if $is-dark-wiki {
+	$color-diff-addedline-border: #293e4f;
+}
+$color-diff-deletedline-border: #ffe49c;
+@if $is-dark-wiki {
+	$color-diff-deletedline-border: #964c4c;
+}
+
 // Vertical colors
 $color-vertical-books: #ff7f26;
 $color-vertical-comics: #ff5400;
