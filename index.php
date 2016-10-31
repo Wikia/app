@@ -66,6 +66,8 @@ if ( rand( 0, 99 ) < 5 ) {
 
 	if ( strstr( $scriptUrl , 'index.php' ) !== false
 		&& strstr( $scriptUrl , '/wiki/' ) === false
+		&& strstr( $queryString, 'action=raw' ) === false
+		&& strstr( $queryString, 'action=ajax' ) === false
 	) {
 		\Wikia\Logger\WikiaLogger::instance()->debug( 'SEO-586 index.php referrers', [
 			'referrer' => $referrer,
