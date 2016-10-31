@@ -56,3 +56,21 @@ if ( isset( $_SERVER['MW_COMPILED'] ) ) {
 
 $mediaWiki = new MediaWiki();
 $mediaWiki->run();
+
+// SEO-586 Log what pages link to index.php URLs on 5% of page views
+if ( rand( 0, 99 ) < 5 ) {
+	$scriptUrl = $_SERVER[ 'SCRIPT_URL' ] ?? 'empty';
+	$scriptUri = $_SERVER[ 'SCRIPT_URI' ] ?? 'empty';
+	$queryString = $_SERVER[ 'QUERY_STRING' ] ?? 'empty';
+	$referrer = $_SERVER[ 'HTTP_REFERER' ] ?? 'empty';
+
+	if ( strstr( $scriptUrl , 'index.php' ) !== false
+		&& strstr( $scriptUrl , '/wiki/' ) === false
+	) {
+		\Wikia\Logger\WikiaLogger::instance()->debug( 'SEO-586 index.php referrers', [
+			'referrer' => $referrer,
+			'scriptUri' => $scriptUri,
+			'queryString' => $queryString,
+		] );
+	}
+}
