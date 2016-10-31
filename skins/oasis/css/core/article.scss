@@ -421,9 +421,17 @@
 		color: $color-diff-text;
 	}
 
+	td.diff-addedline .diffchange {
+		background: $color-diff-addedline-diffchange;
+	}
+
 	td.diff-deletedline {
 		border-color: $color-diff-deletedline-border;
 		color: $color-diff-text;
+	}
+
+	td.diff-deletedline .diffchange {
+		background: $color-diff-deletedline-diffchange;
 	}
 
 	.diffchange-inline {

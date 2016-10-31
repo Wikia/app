@@ -212,6 +212,15 @@ $color-diff-deletedline-border: #ffe49c;
 	$color-diff-deletedline-border: #964c4c;
 }
 
+$color-diff-addedline-diffchange: #d8ecff;
+@if $is-dark-wiki {
+	$color-diff-addedline-diffchange: #293e4f;
+}
+$color-diff-deletedline-diffchange: #feeec8;
+@if $is-dark-wiki {
+	$color-diff-deletedline-diffchange: #964c4c;
+}
+
 // Vertical colors
 $color-vertical-books: #ff7f26;
 $color-vertical-comics: #ff5400;

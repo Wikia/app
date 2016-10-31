@@ -77,14 +77,6 @@ td.diff-deletedline .diffchange {
 	padding: 0.25em 0;
 }
 
-td.diff-addedline .diffchange {
-	background: #d8ecff;
-}
-
-td.diff-deletedline .diffchange {
-	background: #feeec8;
-}
-
 /* Correct user & content directionality when viewing a diff */
 .diff-currentversion-title,
 .diff {
