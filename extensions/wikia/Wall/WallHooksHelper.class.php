@@ -2295,6 +2295,14 @@ class WallHooksHelper {
 					$result = $isActionAllowed ?? [ 'badaccess-group0' ];
 					break;
 				case 'create':
+					// hack - we can only allow creating a page in Thread namespace
+					// if it's coming from Wall Nirvana API, otherwise we end up with a broken page
+					$isNirvanaRequest = Transaction::getAttribute( Transaction::PARAM_ENTRY_POINT ) === Transaction::ENTRY_POINT_NIRVANA;
+					$isActionAllowed = $isNirvanaRequest && ( $isAuthor || $user->isAllowed( 'walledit' ) );
+					if ( !$isActionAllowed ) {
+						$result = [ !$isNirvanaRequest ? 'badtitle' : 'badaccess-group0' ];
+					}
+					break;
 				case 'move':
 				case 'move-target':
 					// you don't want to do this, ever
