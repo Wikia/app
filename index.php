@@ -63,6 +63,7 @@ if ( rand( 0, 99 ) < 5 ) {
 	$scriptUri = $_SERVER[ 'SCRIPT_URI' ] ?? 'empty';
 	$queryString = $_SERVER[ 'QUERY_STRING' ] ?? 'empty';
 	$referrer = $_SERVER[ 'HTTP_REFERER' ] ?? 'empty';
+	$userAgent = $_SERVER[ 'HTTP_USER_AGENT' ] ?? 'empty';
 
 	if ( strstr( $scriptUrl , 'index.php' ) !== false
 		&& strstr( $scriptUrl , '/wiki/' ) === false
@@ -73,6 +74,7 @@ if ( rand( 0, 99 ) < 5 ) {
 			'referrer' => $referrer,
 			'scriptUri' => $scriptUri,
 			'queryString' => $queryString,
+			'userAgent' => $userAgent,
 		] );
 	}
 }
