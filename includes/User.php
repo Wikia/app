@@ -219,10 +219,18 @@ class User {
 
 
 	/**
-		* @return HeliosClient
+	 * @return HeliosClient
 	 */
 	private static function authenticationService() {
 		return Injector::getInjector()->get( HeliosClient::class );
+	}
+
+
+	/**
+	 * @return CookieHelper
+	 */
+	private static function authCookieHelper() {
+		return Injector::getInjector()->get( CookieHelper::class );
 	}
 
 	/**
@@ -511,7 +519,7 @@ class User {
 	public static function newFromToken( \WebRequest $request ) {
 		global $wgMemc;
 
-		$cookieHelper = Injector::getInjector()->get( CookieHelper::class );
+		$cookieHelper = self::authCookieHelper();
 		$token = $cookieHelper->getAccessToken( $request );
 
 		if ( !$token ) {
@@ -2210,7 +2218,7 @@ class User {
 	 *
 	 * @return bool
 	 */
-	public function setPassword( $str, $forceLogout=true ) {
+	public function setPassword( $str, $forceLogout = true ) {
 		global $wgAuth;
 
 		if( $str !== null ) {
@@ -2237,7 +2245,10 @@ class User {
 		}
 
 		$this->setInternalPassword( $str );
-		wfRunHooks( 'UserSetPassword', [ $this->getId(), $forceLogout ] );
+
+		if ( $forceLogout ) {
+			self::authenticationService()->forceLogout( $this->getId() );
+		}
 
 		return true;
 	}
@@ -3246,7 +3257,7 @@ class User {
 	 * Log this user out.
 	 */
 	public function logout() {
-		if( wfRunHooks( 'UserLogout', array( &$this ) ) ) {
+		if ( wfRunHooks( 'UserLogout', array( &$this ) ) ) {
 			$this->doLogout();
 		}
 	}
@@ -3256,6 +3267,12 @@ class User {
 	 * @see logout()
 	 */
 	public function doLogout() {
+		$accessToken = self::authCookieHelper()->getAccessToken( $this->getRequest() );
+		if ( !empty( $accessToken ) ) {
+			self::authenticationService()->invalidateToken( $accessToken, $this->getId() );
+		}
+		self::authCookieHelper()->clearAuthenticationCookie( $this->getRequest()->response() );
+
 		$this->clearInstanceCache( 'defaults' );
 
 		$this->getRequest()->setSessionData( 'wsUserID', 0 );

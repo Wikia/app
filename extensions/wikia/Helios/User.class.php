@@ -13,8 +13,6 @@ use Wikia\Service\User\Auth\CookieHelper;
  */
 class User {
 
-	const ACCESS_TOKEN_COOKIE_NAME = 'access_token';
-	const ACCESS_TOKEN_HEADER_NAME = 'X-Wikia-AccessToken';
 	const AUTH_METHOD_NAME = 'auth_method';
 	const STATUS_NAME = 'status';
 	const MERCURY_ACCESS_TOKEN_COOKIE_NAME = 'sid';
@@ -22,11 +20,6 @@ class User {
 	const AUTH_TYPE_NORMAL_PW = 1;
 	const AUTH_TYPE_RESET_PW = 2;
 	const AUTH_TYPE_FB_TOKEN = 4;
-	const INVALIDATE_CACHE_THROTTLE_SESSION_KEY = 'invalidate-cache-throttle';
-	const INVALIDATE_CACHE_THROTTLE = 60; /* seconds */
-
-	// This is set to 6 months,(365/2)*24*60*60 = 15768000
-	const ACCESS_TOKEN_COOKIE_TTL = 15768000;
 
 	private static $authenticationCache = [];
 
@@ -47,30 +40,6 @@ class User {
 			'detected_encoding'		=> $detectedEncoding,
 			'internal_encoding'		=> $internalEncoding,
 		] );
-	}
-
-	/**
-	 * Extracts access token from HTTP request data.
-	 *
-	 * @param \WebRequest $request the HTTP request data as an object
-	 * @return String access token or null
-	 */
-	public static function getAccessToken( \WebRequest $request ) {
-		// A cookie takes precedence over an HTTP header.
-		// FIXME: replace with CookieHelper
-		$token = $request->getCookie( self::ACCESS_TOKEN_COOKIE_NAME, '' );
-
-		// No access token in the cookie, try the HTTP header.
-		if ( ! $token ) {
-			$token = $request->getHeader( self::ACCESS_TOKEN_HEADER_NAME );
-		}
-
-		// Normalize the value so the method returns a non-empty string or null.
-		if ( empty( $token ) ) {
-			return null;
-		}
-
-		return $token;
 	}
 
 	/**
@@ -182,33 +151,6 @@ class User {
 		self::getCookieHelper()->setAuthenticationCookieWithToken( $accessToken, $response );
 	}
 
-	public static function onUserLogout() {
-		self::invalidateAccessTokenInHelios();
-		self::clearAccessTokenCookie();
-		return true; // So that wfRunHooks evaluates to true.
-	}
-
-	/**
-	 * Call helios invalidate token.
-	 */
-	private static function invalidateAccessTokenInHelios() {
-		global $wgUser;
-		$request = \RequestContext::getMain()->getRequest();
-		$heliosClient = self::getHeliosClient();
-		$accessToken = self::getAccessToken( $request );
-		if ( !empty( $accessToken ) && !empty( $wgUser ) ) {
-			$heliosClient->invalidateToken( $accessToken, $wgUser->getId() );
-		}
-	}
-
-	/**
-	 * Clear the access token cookie by setting a time in the past
-	 */
-	public static function clearAccessTokenCookie() {
-		// FIXME: replace with CookieHelper::clearAuthenticationCookie
-		self::clearCookie( self::ACCESS_TOKEN_COOKIE_NAME );
-	}
-
 	/**
 	 * Purge the authentication cache. If the username is specified only that username is affected.
 	 *
@@ -252,18 +194,6 @@ class User {
 		return true;
 	}
 
-	/*
-	 * Invalidate all tokens for given user in helios service
-	 */
-	public static function onUserSetPassword( $userId, $forceLogout ) {
-		if(!$forceLogout) {
-			return true;
-		}
-		$heliosClient = self::getHeliosClient();
-		$heliosClient->forceLogout($userId);
-		return true;
-	}
-
 	/**
 	 * Listens for any user data save events and purges the authentication cache
 	 *
@@ -273,21 +203,6 @@ class User {
 	public static function onUserSave( \User $user ) {
 		self::purgeAuthenticationCache( $user->getName() );
 		return true;
-	}
-
-	/**
-	 * Clears selected cookie
-	 *
-	 * @param $cookieName
-	 */
-	private static function clearCookie( $cookieName ) {
-		$response = \RequestContext::getMain()->getRequest()->response();
-		$response->setcookie(
-			$cookieName,
-			'',
-			time() - self::ACCESS_TOKEN_COOKIE_TTL,
-			\WebResponse::NO_COOKIE_PREFIX
-		);
 	}
 
 	/**

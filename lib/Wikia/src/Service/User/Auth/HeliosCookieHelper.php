@@ -31,7 +31,7 @@ class HeliosCookieHelper implements CookieHelper {
 		$this->heliosClient = $client;
 	}
 
-	public function getAccessToken( IRequest $request ) {
+	public function getAccessToken( WebRequest $request ) {
 		// Fallback to header if cookie isn't set
 		$token = $request->getCookie( self::ACCESS_TOKEN_COOKIE_NAME,
 			$request->getHeader( self::ACCESS_TOKEN_HEADER_NAME ) );
