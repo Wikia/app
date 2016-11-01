@@ -5,7 +5,7 @@
  * @subpackage SpecialPage
  */
 class ContactForm extends SpecialPage {
-	const WIKIA_SUPPORT_EMAIL = 'support@wikia-inc.com';
+	const WIKIA_SUPPORT_EMAIL = 'support@fandom.com';
 
 	var $mUserName, $mPassword, $mRetype, $mReturnto, $mCookieCheck;
 	var $mAction, $mCreateaccount, $mCreateaccountMail, $mMailmypassword;
