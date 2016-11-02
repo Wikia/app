@@ -1,41 +1,29 @@
-/*global define*/
+/*global define, google*/
 define('ext.wikia.adEngine.video.googleIma', [
 	'ext.wikia.adEngine.video.vastBuilder',
 	'wikia.lazyqueue',
-	'ext.wikia.adEngine.utils.scriptLoader',
-	'wikia.log'
-], function (vastBuilder, lazyQueue, scriptLoader, log) {
+	'ext.wikia.adEngine.utils.scriptLoader'
+], function (vastBuilder, lazyQueue, scriptLoader) {
 	'use strict';
 	var adDisplayContainer,
 		adsLoader,
 		adsManager,
-		googleIma,
-		logGroup = 'ext.wikia.adEngine.video.googleIma',
 		imaLibraryUrl = 'http://imasdk.googleapis.com/js/sdkloader/ima3.js',
 		isAdsManagerLoaded = false,
 		videoMock = {currentTime: 0};
 
 	function initialize() {
-
-
-		return new Promise(function (resolve, reject) {
-			scriptLoader.loadAsync(imaLibraryUrl, document.querySelector('div'))
-				.onload = function (event) {
-					resolve(); // TODO add here if
-					console.log(google.ima);
-					googleIma = google.ima;
-				};
-		});
+		return scriptLoader.loadScript(imaLibraryUrl);
 	}
 
 	function onAdsManagerLoaded(adsManagerLoadedEvent) {
-		var adsRenderingSettings = new googleIma.AdsRenderingSettings();
+		var adsRenderingSettings = new google.ima.AdsRenderingSettings();
 		adsManager = adsManagerLoadedEvent.getAdsManager(videoMock, adsRenderingSettings);
 		isAdsManagerLoaded = true;
 	}
 
 	function createRequest(vastUrl, width, height) {
-		var adsRequest = new googleIma.AdsRequest();
+		var adsRequest = new google.ima.AdsRequest();
 
 		adsRequest.adTagUrl = vastUrl;
 		adsRequest.linearAdSlotWidth = width;
@@ -54,9 +42,9 @@ define('ext.wikia.adEngine.video.googleIma', [
 
 	function setupIma(vastUrl, adContainer, width, height) {
 		isAdsManagerLoaded = false;
-		adDisplayContainer = new googleIma.AdDisplayContainer(adContainer);
-		adsLoader = new googleIma.AdsLoader(adDisplayContainer);
-		adsLoader.addEventListener(googleIma.AdsManagerLoadedEvent.Type.ADS_MANAGER_LOADED, onAdsManagerLoaded, false);
+		adDisplayContainer = new google.ima.AdDisplayContainer(adContainer);
+		adsLoader = new google.ima.AdsLoader(adDisplayContainer);
+		adsLoader.addEventListener(google.ima.AdsManagerLoadedEvent.Type.ADS_MANAGER_LOADED, onAdsManagerLoaded, false);
 		adsLoader.requestAds(createRequest(vastUrl, width, height));
 
 		adDisplayContainer.initialize();
@@ -66,9 +54,9 @@ define('ext.wikia.adEngine.video.googleIma', [
 
 	function playVideo(width, height, onVideoFinishedCallback) {
 		runWhenAdsManagerLoaded(function () {
-			adsManager.init(width, height, googleIma.ViewMode.FULLSCREEN);
+			adsManager.init(width, height, google.ima.ViewMode.FULLSCREEN);
 			adsManager.start();
-			adsManager.addEventListener(googleIma.AdEvent.Type.COMPLETE, onVideoFinishedCallback);
+			adsManager.addEventListener(google.ima.AdEvent.Type.COMPLETE, onVideoFinishedCallback);
 		});
 	}
 
@@ -76,7 +64,7 @@ define('ext.wikia.adEngine.video.googleIma', [
 		if (isAdsManagerLoaded) {
 			cb();
 		} else {
-			adsLoader.addEventListener(googleIma.AdsManagerLoadedEvent.Type.ADS_MANAGER_LOADED, cb, false);
+			adsLoader.addEventListener(google.ima.AdsManagerLoadedEvent.Type.ADS_MANAGER_LOADED, cb, false);
 		}
 	}
 
