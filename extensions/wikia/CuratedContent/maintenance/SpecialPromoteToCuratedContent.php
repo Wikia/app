@@ -158,9 +158,9 @@ class SpecialPromoteToCuratedContentMigrator extends Maintenance {
 		$uploadOptions->name = $imageName;
 		$uploadOptions->comment = wfMessage( 'wikiacuratedcontent-image-upload-comment' )->inContentLanguage()->escaped();
 		$uploadOptions->description = wfMessage( 'wikiacuratedcontent-image-upload-description' )->inContentLanguage()->escaped();
-		$wikiaBotUser = User::newFromName( 'WikiaBot' );
+		$botUser = User::newFromName( 'FandomBot' );
 
-		$result = ImagesService::uploadImageFromUrl( $imageUrl, $uploadOptions, $wikiaBotUser );
+		$result = ImagesService::uploadImageFromUrl( $imageUrl, $uploadOptions, $botUser );
 		return $result;
 	}
 }
