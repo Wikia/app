@@ -82,7 +82,7 @@ $global-navigation-z-index: 5000101;
 }
 
 @if $widthType == 0 {
-	@media #{screen} and (max-width: #{$content-width-small}) {
+	@media #{$screen} and (max-width: #{$content-width-small}) {
 		.wds-global-footer {
 			width: $content-width-small;
 		}
