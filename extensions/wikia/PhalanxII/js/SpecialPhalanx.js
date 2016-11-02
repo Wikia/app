@@ -2,6 +2,9 @@ require(['jquery', 'mw', 'phalanx', 'BannerNotification', 'wikia.window'], funct
 	// edit token is required by Phalanx API
 	phalanx.init(mw.user.tokens.get('editToken'));
 
+	var $filter = $('#wpPhalanxFilter'),
+		$bulkFilter = $('#wpPhalanxFilterBulk');
+
 	$('body').
 		// handle blocks "unblocking" (i.e. removing blocks)
 		on('click', 'button.unblock, a.unblock', function(ev) {
@@ -30,6 +33,9 @@ require(['jquery', 'mw', 'phalanx', 'BannerNotification', 'wikia.window'], funct
 			var singleModeWrapper = $('#singlemode'),
 				bulkModeWrapper = $('#bulkmode');
 
+			// SUS-1191: preload single filter contents into bulk mode textbox
+			$bulkFilter.val($filter.val());
+
 			singleModeWrapper.slideUp();
 			bulkModeWrapper.slideDown();
 
@@ -37,6 +43,8 @@ require(['jquery', 'mw', 'phalanx', 'BannerNotification', 'wikia.window'], funct
 			$('#validateMessage').hide();
 			// clear input field when switching modes, for validation purposes
 			$('#wpPhalanxFilter').val('');
+			// SUS-1191: autofocus newly revealed input field
+			$bulkFilter.focus();
 		}).
 
 		// handle "single mode" button
@@ -49,11 +57,13 @@ require(['jquery', 'mw', 'phalanx', 'BannerNotification', 'wikia.window'], funct
 
 			// clear input field when switching modes, for validation purposes
 			$('#wpPhalanxFilterBulk').val('');
+			// SUS-1191: autofocus newly revealed input field
+			$filter.focus();
 		}).
 
 		// handle "validate regex" button
 		on('click', '#validate', function(ev) {
-			var regex = $('#wpPhalanxFilter').val(),
+			var regex = $filter.val(),
 				buttonNode = $(this),
 				msgNode = $('#validateMessage').hide();
 

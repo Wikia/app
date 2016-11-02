@@ -54,5 +54,9 @@
 	"sf_template_docufooter": "ഫലകത്തിന്റെ ഉള്ളടക്കം കാണാൻ താൾ തിരുത്തുക.",
 	"sf_category_hasdefaultform": "ഈ വർഗ്ഗം $1 എന്ന ഫോം ഉപയോഗിക്കുന്നു.",
 	"sf_category_desc": "ഇതു $1 എന്ന വർഗ്ഗമാണ്‌.",
-	"sf_blank_namespace": "മുഖ്യം"
+	"sf_blank_namespace": "മുഖ്യം",
+	"sf-datepicker-close": "അടയ്ക്കുക",
+	"sf-datepicker-prev": "മുൻപത്തേത്",
+	"sf-datepicker-next": "അടുത്തത്",
+	"sf-datepicker-today": "ഇന്ന്"
 }
