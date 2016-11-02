@@ -14,5 +14,6 @@ return array(
     'Doctrine\\Common\\Lexer\\' => array($vendorDir . '/doctrine/lexer/lib'),
     'Doctrine\\Common\\Cache\\' => array($vendorDir . '/doctrine/cache/lib'),
     'Doctrine\\Common\\Annotations\\' => array($vendorDir . '/doctrine/annotations/lib'),
+    'DataValues\\' => array($vendorDir . '/data-values/data-values/src'),
     '' => array($vendorDir . '/cssjanus/cssjanus/src'),
 );

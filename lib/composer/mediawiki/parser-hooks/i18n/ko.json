@@ -1,0 +1,8 @@
+{
+	"@metadata": {
+		"authors": [
+			"아라"
+		]
+	},
+	"parserhooks-desc": "선언적 방식으로 미디어위키 파서 훅을 만드는 OOP 인터페이스"
+}
