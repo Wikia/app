@@ -11,6 +11,12 @@ class UserProfilePageController extends WikiaController {
 	const FBPAGE_BASE_URL = 'https://www.facebook.com/';
 
 	/**
+	 * @var string CLEAR_USER_PROFILE_RIGHT
+	 * MediaWiki user right required for clearing user profile data in 1 click
+	 */
+	const CLEAR_USER_PROFILE_RIGHT = 'clearuserprofile';
+
+	/**
 	 * @var $profilePage UserProfilePage
 	 */
 	protected $profilePage = null;
@@ -134,6 +140,7 @@ class UserProfilePageController extends WikiaController {
 		$this->setVal( 'canEditProfile', $canEditProfile );
 		$this->setVal( 'isWikiStaff', $sessionUser->isAllowed( 'staff' ) );
 		$this->setVal( 'canEditProfile', ( $isUserPageOwner || $sessionUser->isAllowed( 'staff' ) || $sessionUser->isAllowed( 'editprofilev3' ) ) );
+		$this->setVal( 'canClearProfile', $sessionUser->isAllowed( static::CLEAR_USER_PROFILE_RIGHT ) );
 
 		$this->fetchDiscussionPostsNumberFrom($user);
 
@@ -1001,7 +1008,7 @@ class UserProfilePageController extends WikiaController {
 			if ( $avUser->getId() !== 0 ) {
 				$avatar = Masthead::newFromUser( $avUser );
 				if ( $avatar->removeFile( true ) ) {
-					$this->clearAttributeCache( $avUser->getId() );
+					$this->clearCaches( $avUser );
 					$this->setVal( 'status', 'ok' );
 					wfProfileOut( __METHOD__ );
 					return true;
@@ -1013,6 +1020,73 @@ class UserProfilePageController extends WikiaController {
 
 		wfProfileOut( __METHOD__ );
 		return true;
+	}
+
+	private function clearCaches( User $user ) {
+		$this->clearAttributeCache( $user->getId() );
+		$this->bustETagsForUserPage( $user );
+		$this->bustETagsForAllPagesIfNecessary( $user );
+	}
+
+	/**
+	 *
+	 * @param User $user
+	 */
+	private function bustETagsForUserPage( User $user ) {
+		$user->getUserPage()->invalidateCache();
+	}
+
+	/**
+	 * Call invalidateCache for the current user if the user is removing their own avatar. This is necessary
+	 * because the global header (which contains the avatar) is cached along with the page, so any article page
+	 * the user has in browser cache will contain their stale avatar value. invalidateCache updates the
+	 * user's last_touched value which is used when validating ETags, effectively busting all pages the user
+	 * has in their browser cache.
+	 */
+	private function bustETagsForAllPagesIfNecessary( User $user ) {
+		if ( $this->wg->User->getId() == $user->getId() ) {
+			$user->invalidateCache();
+		}
+	}
+
+	/**
+	 * Clears contents of user profile masthead
+	 * @requestParam string token valid MediaWiki edit token
+	 * @requestParam string target user name of user whose masthead we want to clear
+	 * @responseParam string error [optional] error message, if any
+	 * @responseParam string success [optional] success confirmation message if action was successful
+	 */
+	public function clearMastheadContents() {
+		$this->response->setFormat( WikiaResponse::FORMAT_JSON );
+		$this->response->setCacheValidity( WikiaResponse::CACHE_DISABLED );
+
+		try {
+			$this->checkWriteRequest();
+		} catch ( BadRequestException $bre ) {
+			$this->response->setCode( WikiaResponse::RESPONSE_CODE_BAD_REQUEST );
+			$this->response->setVal( 'error', wfMessage( 'sessionfailure' )->escaped() );
+			return;
+		}
+
+		if ( !$this->wg->User->isAllowed( static::CLEAR_USER_PROFILE_RIGHT ) ) {
+			$this->response->setCode( WikiaResponse::RESPONSE_CODE_FORBIDDEN );
+			$this->response->setVal( 'error', wfMessage( 'permissionserrors' )->escaped() );
+			return;
+		}
+
+		$targetUser = User::newFromName( $this->request->getVal( 'target' ) );
+		if ( $targetUser && $targetUser->getId() !== 0 ) {
+			$userIdentityBox = new UserIdentityBox( $targetUser );
+			$userIdentityBox->clearMastheadContents();
+			$this->clearCaches( $targetUser );
+
+			$this->response->setVal( 'success', wfMessage( 'user-identity-box-clear-success' )->escaped() );
+			BannerNotificationsController::addConfirmation( wfMessage( 'user-identity-box-clear-success' )->escaped() );
+		} else {
+			// this user does not exist or is an anon - can't clear masthead contents
+			$this->response->setCode( WikiaResponse::RESPONSE_CODE_NOT_FOUND );
+			$this->response->setVal( 'error', wfMessage( 'user-identity-box-clear-notarget' )->escaped() );
+		}
 	}
 }
 

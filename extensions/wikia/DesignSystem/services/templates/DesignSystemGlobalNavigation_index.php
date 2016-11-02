@@ -39,12 +39,21 @@
 			<div class="wds-global-navigation__start-a-wiki <?= isset( $model['user'] ) ? ' wds-user-is-logged-in' : ''; ?>">
 				<a href="<?= Sanitizer::encodeAttribute( $model['create_wiki']['header']['href'] ); ?>" class="wds-global-navigation__start-a-wiki-button wds-button wds-is-squished wds-is-secondary" data-tracking-label="<?= Sanitizer::encodeAttribute( $model['create_wiki']['header']['tracking_label'] ) ?>">
 					<span class="wds-global-navigation__start-a-wiki-caption"><?= DesignSystemHelper::renderText( $model['create_wiki']['header']['title'] ) ?></span>
-					<?= DesignSystemHelper::getSvg(
+					<?= DesignSystemHelper::renderSvg(
 						'wds-icons-plus',
 						'wds-global-navigation__start-a-wiki-icon wds-icon'
 					) ?>
 				</a>
 			</div>
 		</div>
+		<?php if ( isset( $model['partner_slot'] ) ): ?>
+			<?= $app->renderView(
+				'DesignSystemGlobalNavigationService',
+				'partnerSlot',
+				[
+					'model' => $model['partner_slot'],
+				]
+			); ?>
+		<?php endif ?>
 	</div>
 </div>

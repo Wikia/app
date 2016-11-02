@@ -22,5 +22,5 @@
 			<p class="exact-wiki-match__wiki-description"><?= \Wikia\Search\Result::limitTextLength( htmlspecialchars( $description ), $descriptionWordLimit ); ?></p>
 		</div>
 	</div>
-	<a href="<?= Sanitizer::encodeAttribute( $viewMoreWikisLink ) ?>" data-event="view-more"><?= wfMessage('wikiasearch3-view-more-wikis')->escaped(); ?> <?= DesignSystemHelper::getSvg( 'wds-icons-arrow', 'wds-icon wds-icon-small exact-wiki-match__arrow' ); ?></a>
+	<a href="<?= Sanitizer::encodeAttribute( $viewMoreWikisLink ) ?>" data-event="view-more"><?= wfMessage('wikiasearch3-view-more-wikis')->escaped(); ?> <?= DesignSystemHelper::renderSvg( 'wds-icons-arrow', 'wds-icon wds-icon-small exact-wiki-match__arrow' ); ?></a>
 </div>

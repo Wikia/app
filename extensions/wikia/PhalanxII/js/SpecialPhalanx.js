@@ -1,10 +1,13 @@
 require(['jquery', 'mw', 'phalanx', 'BannerNotification'], function($, mw, phalanx, notification) {
 	// edit token is required by Phalanx API
-	phalanx.init(mw.config.get('wgPhalanxToken'));
+	phalanx.init(mw.user.tokens.get('editToken'));
+
+	var $filter = $('#wpPhalanxFilter'),
+		$bulkFilter = $('#wpPhalanxFilterBulk');
 
 	$('body').
 		// handle blocks "unblocking" (i.e. removing blocks)
-		on('click', 'button.unblock', function(ev) {
+		on('click', 'button.unblock, a.unblock', function(ev) {
 			var node = $(this),
 				blockId = parseInt(node.data('id'), 10);
 
@@ -30,8 +33,14 @@ require(['jquery', 'mw', 'phalanx', 'BannerNotification'], function($, mw, phala
 			var singleModeWrapper = $('#singlemode'),
 				bulkModeWrapper = $('#bulkmode');
 
+			// SUS-1191: preload single filter contents into bulk mode textbox
+			$bulkFilter.val($filter.val());
+
 			singleModeWrapper.slideUp();
 			bulkModeWrapper.slideDown();
+
+			// SUS-1191: autofocus newly revealed input field
+			$bulkFilter.focus();
 		}).
 
 		// handle "single mode" button
@@ -41,11 +50,14 @@ require(['jquery', 'mw', 'phalanx', 'BannerNotification'], function($, mw, phala
 
 			singleModeWrapper.slideDown();
 			bulkModeWrapper.slideUp();
+
+			// SUS-1191: autofocus newly revealed input field
+			$filter.focus();
 		}).
 
 		// handle "validate regex" button
 		on('click', '#validate', function(ev) {
-			var regex = $('#wpPhalanxFilter').val(),
+			var regex = $filter.val(),
 				buttonNode = $(this),
 				msgNode = $('#validateMessage').hide();
 

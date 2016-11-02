@@ -42,7 +42,9 @@ $(document).ready(function() {
 		],
 		aoColumnDefs: [
 			{ bVisible: false, aTargets: [0], bSortable: true },
-			{ bVisible: true,  aTargets: [1], bSortable: true },
+			{ bVisible: true,  aTargets: [1], bSortable: true, 'fnRender': function (oObj) {
+				return mw.html.escape(oObj.aData[1]);
+			} },
 			{
 				fnRender: function ( oObj ) {
 					var row = '<span class="lc-row"><a href="' + mw.html.escape( oObj.aData[2] ) + '">' + mw.html.escape( oObj.aData[2] ) + '</a></span>';

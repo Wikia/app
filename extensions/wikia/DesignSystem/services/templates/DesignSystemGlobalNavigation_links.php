@@ -14,7 +14,7 @@
 					'alt' => $model['header']['username']['value']
 				] ); ?>
 			<?php endif; ?>
-			<?= DesignSystemHelper::getSvg(
+			<?= DesignSystemHelper::renderSvg(
 				'wds-icons-dropdown-tiny',
 				'wds-icon wds-icon-tiny wds-dropdown__toggle-chevron'
 			) ?>

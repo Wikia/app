@@ -7,11 +7,10 @@ class PhalanxContentModel extends PhalanxModel {
 
 	/**
 	 * @param Title $title
-	 * @param string $lang
-	 * @param int $id
 	 */
-	public function __construct( $title, $lang = null, $id = 0 ) {
-		parent::__construct( __CLASS__, array( 'title' => $title, 'lang' => $lang, 'id' => $id ) );
+	public function __construct( Title $title ) {
+		parent::__construct();
+		$this->title = $title;
 	}
 
 	/**
@@ -62,7 +61,7 @@ class PhalanxContentModel extends PhalanxModel {
 		$this->logBlock();
 		return $msg;
 	}
-	
+
 	public function textBlock() {
 		$this->logBlock();
 		return $this->block->text;

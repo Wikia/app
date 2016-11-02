@@ -14,22 +14,20 @@ require([
 	'wikia.geo',
 	'wikia.instantGlobals',
 	'wikia.window'
-], function (
-	adContext,
-	amazon,
-	oxBidder,
-	prebid,
-	rubiconFastlane,
-	rubiconVulcan,
-	customAdsLoader,
-	messageListener,
-	mercuryListener,
-	scrollHandler,
-	yavliTag,
-	geo,
-	instantGlobals,
-	win
-) {
+], function (adContext,
+			 amazon,
+			 oxBidder,
+			 prebid,
+			 rubiconFastlane,
+			 rubiconVulcan,
+			 customAdsLoader,
+			 messageListener,
+			 mercuryListener,
+			 scrollHandler,
+			 yavliTag,
+			 geo,
+			 instantGlobals,
+			 win) {
 	'use strict';
 
 	messageListener.init();
@@ -63,4 +61,10 @@ require([
 			yavliTag.add();
 		}
 	});
+
+	if (geo.isProperGeo(instantGlobals.wgAdDriverPrebidBidderCountries)) {
+		mercuryListener.onEveryPageChange(function () {
+			prebid.call();
+		});
+	}
 });

@@ -9,6 +9,7 @@ require([
 	'ext.wikia.adEngine.dartHelper',
 	'ext.wikia.adEngine.messageListener',
 	'ext.wikia.adEngine.pageFairDetection',
+	'ext.wikia.adEngine.taboolaHelper',
 	'ext.wikia.aRecoveryEngine.recovery.helper',
 	'ext.wikia.adEngine.slot.scrollHandler',
 	'ext.wikia.adEngine.slotTracker',
@@ -28,6 +29,7 @@ require([
 	dartHelper,
 	messageListener,
 	pageFair,
+	taboolaHelper,
 	recoveryHelper,
 	scrollHandler,
 	slotTracker,
@@ -76,7 +78,14 @@ require([
 		}
 
 		// Recovery
-		recoveryHelper.initEventQueue();
+		recoveryHelper.initEventQueues();
+
+		// Taboola
+		if (context.opts.loadTaboolaLibrary) {
+			recoveryHelper.addOnBlockingCallback(function() {
+				taboolaHelper.loadTaboola();
+			});
+		}
 
 		if (context.opts.googleConsumerSurveys && gcs) {
 			gcs.addRecoveryCallback();

@@ -1,8 +1,5 @@
 @import 'skins/oasis/css/core/breakpoints-variables';
-@import 'extensions/wikia/DesignSystem/bower_components/design-system/base/typography';
-
-// colors
-$color-slate-gray: #656e78;
+@import 'extensions/wikia/DesignSystem/bower_components/design-system/dist/scss/wds-variables/index';
 
 // fonts
 $community-page-font-family: "HelveticaNeue", Helvetica, Arial, sans-serif;
@@ -59,8 +56,8 @@ $avatar-badge-z-index: 10;
 
 	// simply not display other lines
 	// (fallback for other browsers)
-	line-height: $line-height;
-	max-height: $number * $line-height;
+	line-height: $wds-line-height;
+	max-height: $number * $wds-line-height;
 }
 
 @mixin avatar-badge($top, $left) {

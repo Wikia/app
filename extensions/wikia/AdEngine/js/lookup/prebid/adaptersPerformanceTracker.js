@@ -1,13 +1,14 @@
 define('ext.wikia.adEngine.lookup.prebid.adaptersPerformanceTracker', [
 	'ext.wikia.adEngine.adTracker',
+	'ext.wikia.adEngine.utils.timeBuckets',
 	'ext.wikia.adEngine.wrappers.prebid'
-], function (adTracker, prebid) {
+], function (adTracker, timeBuckets, prebid) {
 	'use strict';
 
-	var emptyResponseMsg = 'EMPTY_RESPONSE',
+	var buckets = [0.0, 0.5, 1.0, 1.5, 2.0, 2.5, 3.0],
+		emptyResponseMsg = 'EMPTY_RESPONSE',
 		notRespondedMsg = 'NO_RESPONSE',
-		responseErrorCode = 2,
-		usedMsg = 'USED';
+		responseErrorCode = 2;
 
 	function setupPerformanceMap(skin, adapters) {
 		var biddersPerformanceMap = {};
@@ -17,8 +18,8 @@ define('ext.wikia.adEngine.lookup.prebid.adaptersPerformanceTracker', [
 				adapterName = adapter.getName();
 
 			if (adapter.isEnabled()) {
+				biddersPerformanceMap[adapterName] = {};
 				Object.keys(slots).forEach(function (slotName) {
-					biddersPerformanceMap[adapterName] = biddersPerformanceMap[adapterName] || {};
 					biddersPerformanceMap[adapterName][slotName] = notRespondedMsg;
 				});
 			}
@@ -52,14 +53,14 @@ define('ext.wikia.adEngine.lookup.prebid.adaptersPerformanceTracker', [
 			return;
 		}
 
-		if (performanceMap[bidderName]) {
-			if (performanceMap[bidderName][slotName] !== notRespondedMsg) {
-				category = bidderName + '/lookup_success/' + providerName;
-				adTracker.track(category, slotName, 0, performanceMap[bidderName][slotName]);
-			} else {
-				category = bidderName + '/lookup_error/' + providerName;
-				adTracker.track(category, slotName, 0, 'nodata');
-			}
+		//Don't track if slot not supported by adapter
+		if (!performanceMap[bidderName][slotName]) {
+			return;
+		}
+
+		if (performanceMap[bidderName][slotName] !== notRespondedMsg) {
+			category = bidderName + '/lookup_success/' + providerName;
+			adTracker.track(category, slotName, 0, performanceMap[bidderName][slotName]);
 		} else {
 			category = bidderName + '/lookup_error/' + providerName;
 			adTracker.track(category, slotName, 0, 'nodata');
@@ -75,13 +76,12 @@ define('ext.wikia.adEngine.lookup.prebid.adaptersPerformanceTracker', [
 	}
 
 	function getParamsFromBidForTracking(bid) {
+		var bucket = timeBuckets.getTimeBucket(buckets, bid.timeToRespond / 1000);
+
 		if (bid.getStatusCode() === responseErrorCode) {
-			return emptyResponseMsg;
-		} if (bid.complete) {
-			return usedMsg;
-		} else {
-			return [bid.getSize(), bid.pbMg].join(';');
+			return [emptyResponseMsg, bucket].join(';');
 		}
+		return [bid.getSize(), bid.pbMg, bucket].join(';');
 	}
 
 

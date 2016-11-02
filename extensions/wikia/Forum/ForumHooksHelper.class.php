@@ -513,4 +513,21 @@ class ForumHooksHelper {
 		return true;
 	}
 
+	/**
+	 * SUS-1196: Invalidate "Forum Activity" rail module cache if thread is deleted via Nuke / Quick Tools
+	 * @param Article|WikiPage|Page $page
+	 * @param User $user
+	 * @param string $reason
+	 * @param int $id
+	 * @return bool always true to continue hook processing
+	 */
+	static public function onArticleDeleteComplete( Page $page, User $user, string $reason, int $id ): bool {
+		if ( $page->getTitle()->inNamespace( NS_WIKIA_FORUM_BOARD_THREAD ) ) {
+			$wallHistory = new WallHistory();
+			WikiaDataAccess::cachePurge( $wallHistory->getLastPostsMemcKey() );
+		}
+
+		return true;
+	}
+
 }
