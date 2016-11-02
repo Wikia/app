@@ -1,7 +1,7 @@
 /*global define*/
 define('ext.wikia.adEngine.adDecoratorPageDimensions', [
-	'ext.wikia.adEngine.adLogicPageDimensions', 'wikia.log', 'ext.wikia.adEngine.eventDispatcher'
-], function (adLogicPageDimensions, log, eventDispatcher) {
+	'ext.wikia.adEngine.adLogicPageDimensions', 'wikia.log'
+], function (adLogicPageDimensions, log) {
 	'use strict';
 
 	var logGroup = 'ext.wikia.adEngine.adDecoratorPageDimensions';
@@ -21,9 +21,7 @@ define('ext.wikia.adEngine.adDecoratorPageDimensions', [
 
 			if (adLogicPageDimensions.isApplicable(slotname)) {
 				adLogicPageDimensions.addSlot(slotname, function () {
-					if (eventDispatcher.trigger('ext.wikia.adEngine.adDecoratorPageDimensions fillInSlot', slot)) {
-						fillInSlot(slot);
-					}
+					fillInSlot(slot);
 				});
 
 				log(['decorated', slot, 'deferred'], 'debug', logGroup);
