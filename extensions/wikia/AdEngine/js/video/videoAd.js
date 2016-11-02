@@ -13,7 +13,7 @@ define('ext.wikia.adEngine.video.videoAd', [
 	}
 
 	function onLibraryReady(callback) {
-		libraryStatus.done(callback);
+		libraryStatus.then(callback);
 	}
 
 	function setupIma(vastUrl, imageContainer, width, height) {

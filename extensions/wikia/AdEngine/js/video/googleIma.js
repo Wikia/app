@@ -2,9 +2,9 @@
 define('ext.wikia.adEngine.video.googleIma', [
 	'ext.wikia.adEngine.video.vastBuilder',
 	'wikia.lazyqueue',
-	'wikia.loader',
+	'ext.wikia.adEngine.utils.scriptLoader',
 	'wikia.log'
-], function (vastBuilder, lazyQueue, loader, log) {
+], function (vastBuilder, lazyQueue, scriptLoader, log) {
 	'use strict';
 	var adDisplayContainer,
 		adsLoader,
@@ -16,14 +16,15 @@ define('ext.wikia.adEngine.video.googleIma', [
 		videoMock = {currentTime: 0};
 
 	function initialize() {
-		return loader({
-			type: loader.JS,
-			resources: imaLibraryUrl
-		}).done(function () {
-			googleIma = google.ima;
-			log('ima library loaded correctly', log.levels.error, logGroup);
-		}).fail(function () {
-			log('ima library loading failed', log.levels.info, logGroup);
+
+
+		return new Promise(function (resolve, reject) {
+			scriptLoader.loadAsync(imaLibraryUrl, document.querySelector('div'))
+				.onload = function (event) {
+					resolve(); // TODO add here if
+					console.log(google.ima);
+					googleIma = google.ima;
+				};
 		});
 	}
 
