@@ -2273,16 +2273,18 @@ class WallHooksHelper {
 	}
 
 	/**
-	 * SUS-845: Lock down Thread namespace - only allow edits to users with proper permission or to people editing their own posts
+	 * SUS-845: Lock down Thread namespaces and Message Wall Greetings
+	 * For Thread namespaces, pnly allow edits to users with proper permission or to people editing their own posts
 	 * Everything else is disallowed.
+	 * For Wall greetings, only allow edits by owner or users with proper permission
 	 * @param Title $title
 	 * @param User $user
 	 * @param string $action
-	 * @param string|string[] $result string or array of strings - MediaWiki error message key(s) to be shown if error
+	 * @param bool|string|string[] $result true or string or array of strings (MediaWiki error message key(s) to be shown if error)
 	 * @return bool Whether the user is allowed to perform this action or true if this is not a Wall/Forum title
 	 */
 	public static function onGetUserPermissionsErrors( Title $title, User $user, string $action, &$result ): bool {
-		global $wgWallNS;
+		global $wgWallNS, $wgIsSafeWallTransaction;
 
 		// Wall or Forum threads
 		if ( in_array( MWNamespace::getSubject( $title->getNamespace() ), $wgWallNS ) ) {
@@ -2295,12 +2297,9 @@ class WallHooksHelper {
 					$result = $isActionAllowed ?? [ 'badaccess-group0' ];
 					break;
 				case 'create':
-					// hack - we can only allow creating a page in Thread namespace
-					// if it's coming from Wall Nirvana API, otherwise we end up with a broken page
-					$isNirvanaRequest = Transaction::getAttribute( Transaction::PARAM_ENTRY_POINT ) === Transaction::ENTRY_POINT_NIRVANA;
-					$isActionAllowed = $isNirvanaRequest && ( $isAuthor || $user->isAllowed( 'walledit' ) );
+					$isActionAllowed = $wgIsSafeWallTransaction && ( $isAuthor || $user->isAllowed( 'walledit' ) );
 					if ( !$isActionAllowed ) {
-						$result = [ !$isNirvanaRequest ? 'badtitle' : 'badaccess-group0' ];
+						$result = [ !$wgIsSafeWallTransaction ? 'badtitle' : 'badaccess-group0' ];
 					}
 					break;
 				case 'move':
