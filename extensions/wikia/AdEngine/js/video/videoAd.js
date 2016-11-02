@@ -16,42 +16,45 @@ define('ext.wikia.adEngine.video.videoAd', [
 		libraryStatus.then(callback);
 	}
 
-	function setupIma(vastUrl, imageContainer, width, height) {
-		return googleIma.setupIma(vastUrl, imageContainer, width, height);
-	}
-
-	function setupVideo(imageContainer, slotWidth, slotHeight,
-						adSlot, slotParams, onVideoEndedCallback) {
+	function create(imageContainer, slotWidth, slotHeight, adSlot, slotParams, onVideoEndedCallback) {
 		var vastUrl = vastUrlBuilder.build(slotWidth / slotHeight, slotParams),
-			videoAdContainer = setupIma(vastUrl, adSlot, slotWidth, slotHeight);
+			videoContainer = googleIma.setupIma(vastUrl, adSlot, slotWidth, slotHeight);
 
-		return function() {
-			googleIma.playVideo(slotWidth, slotHeight, function () {
-				toggle(videoAdContainer, imageContainer, true);
-				videoAdContainer = setupIma(vastUrl, adSlot, slotWidth, slotHeight);
-				if (onVideoEndedCallback) {
-					onVideoEndedCallback();
+		return {
+			imageContainer: imageContainer,
+			slotWidth: slotWidth,
+			slotHeight: slotHeight,
+			adSlot: adSlot,
+			slotParams: slotParams,
+			onVideoEndedCallback: onVideoEndedCallback,
+			videoContainer: videoContainer,
+			play: function () {
+				var self = this;
+				googleIma.playVideo(slotWidth, slotHeight, function () {
+					self.toggle(true);
+					self.videoContainer = googleIma.setupIma(vastUrl, adSlot, slotWidth, slotHeight);
+					if (onVideoEndedCallback) {
+						onVideoEndedCallback();
+					}
+				});
+
+				this.toggle(false);
+			},
+			toggle: function (showAd) {
+				if (showAd) {
+					DOMElementTweaker.hide(this.videoContainer, false);
+					DOMElementTweaker.removeClass(this.imageContainer, 'hidden');
+				} else {
+					DOMElementTweaker.hide(this.imageContainer, false);
+					DOMElementTweaker.removeClass(this.videoContainer, 'hidden');
 				}
-			});
-
-			toggle(videoAdContainer, imageContainer, false);
+			}
 		};
-	}
-
-	function toggle(videoContainer, imageContainer, showAd) {
-		if (showAd) {
-			DOMElementTweaker.hide(videoContainer, false);
-			DOMElementTweaker.removeClass(imageContainer, 'hidden');
-		} else {
-			DOMElementTweaker.hide(imageContainer, false);
-			DOMElementTweaker.removeClass(videoContainer, 'hidden');
-		}
 	}
 
 	return {
 		init: init,
 		onLibraryReady: onLibraryReady,
-		setupIma: setupIma,
-		setupVideo: setupVideo
+		create: create
 	};
 });

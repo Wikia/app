@@ -32,7 +32,7 @@ define('ext.wikia.adEngine.template.bfaaDesktop', [
 			'INCONTENT_BOXAD_1'
 		],
 		wrapper;
-
+	var video;
 
 	function updateNavBar(height) {
 		var position = win.scrollY || win.pageYOffset;
@@ -74,7 +74,7 @@ define('ext.wikia.adEngine.template.bfaaDesktop', [
 
 		if (videoEnabled(params)) {
 			videoAd.onLibraryReady(function () {
-				var playTrigger = videoAd.setupVideo(
+				video = videoAd.create(
 					adSlot.querySelector('div:last-of-type'),
 					document.body.clientWidth,
 					document.body.clientWidth / params.videoAspectRatio,
@@ -86,7 +86,7 @@ define('ext.wikia.adEngine.template.bfaaDesktop', [
 					}
 				);
 
-				params.videoTriggerElement.addEventListener('click', playTrigger);
+				params.videoTriggerElement.addEventListener('click', video.play.bind(video));
 			});
 		}
 	}
