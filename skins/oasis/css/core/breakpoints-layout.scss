@@ -5,17 +5,9 @@
 @if $widthType == 0 {
 	// consider using https://github.com/stowball/mqGenie for release
 	@media #{$breakpoint-small-only} {
-		$content-width: $page-width-small - 2 * $content-border-width;
-
 		.WikiaPage {
 			padding: 0 $padding-width-small;
-			width: $content-width;
-		}
-
-		.wds-global-footer {
-			margin-left: auto;
-			margin-right: auto;
-			width: $content-width + 2 * $padding-width-small;
+			width: $page-width-small - 2 * $content-border-width;
 		}
 	}
 
