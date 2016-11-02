@@ -38,6 +38,8 @@ class PageHeaderController extends WikiaController {
 
 		global $wgTitle, $wgUser, $wgRequest;
 
+		wfRunHooks( 'BeforePrepareActionButtons', [ $this, &$this->content_actions ] );
+
 		$isDiff = !is_null( $wgRequest->getVal( 'diff' ) );
 
 		// "Add topic" action
@@ -79,8 +81,8 @@ class PageHeaderController extends WikiaController {
 			$this->actionImage = MenuButtonController::ADD_ICON;
 			$this->actionName = 'addtopic';
 		} // "Edit with form" (SMW)
-		else if ( isset( $this->content_actions['form_edit'] ) ) {
-			$this->action = $this->content_actions['form_edit'];
+		else if ( isset( $this->content_actions['formedit'] ) ) {
+			$this->action = $this->content_actions['formedit'];
 			$this->actionImage = MenuButtonController::EDIT_ICON;
 			$this->actionName = 'form-edit';
 		} // ve-edit
@@ -225,6 +227,8 @@ class PageHeaderController extends WikiaController {
 			// number of pages on this wiki
 			$this->tallyMsg = wfMessage( 'oasis-total-articles-mainpage', SiteStats::articles() )->parse();
 
+		} elseif ( !empty( $this->wg->Title ) && $this->wg->Title->isDeleted() == 0 ) {
+			$this->comments = false;
 		}
 
 		// remove namespaces prefix from title
@@ -394,11 +398,6 @@ class PageHeaderController extends WikiaController {
 
 		// force AjaxLogin popup for "Add a page" button (moved from the template)
 		$this->loginClass = !empty( $this->wg->DisableAnonymousEditing ) ? ' require-login' : '';
-
-		// render monetization module
-		if ( !empty( $params['monetizationModules'] ) ) {
-			$this->monetizationModules = $params['monetizationModules'];
-		}
 
 		wfProfileOut( __METHOD__ );
 	}

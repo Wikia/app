@@ -1,23 +1,32 @@
 <?php
 
 class ARecoveryModule {
-	const ASSET_GROUP_ARECOVERY_LOCK = 'arecovery_lock_scss';
 
 	/**
 	 * Checks whether recovery is enabled (on current wiki)
 	 *
 	 * @return bool
 	 */
-	public static function isEnabled() {
-		global $wgEnableUsingSourcePointProxyForCSS;
+	public static function isDisabled() {
+		global $wgUser, $wgAdDriverEnableSourcePointRecovery;
 
-		$wgGlobalEnableSourcePoint = WikiFactory::getVarValueByName( 'wgGlobalEnableSourcePoint', Wikia::COMMUNITY_WIKI_ID );
+		if( $wgUser instanceof User && $wgUser->isLoggedIn() ) {
+			return false;
+		}
 
-		return !empty( $wgEnableUsingSourcePointProxyForCSS ) || !empty( $wgGlobalEnableSourcePoint );
+		return $wgAdDriverEnableSourcePointRecovery === false;
 	}
+	
+	public static function getSourcePointBootstrapCode() {
+		if ( static::isDisabled() ) {
+			return PHP_EOL . '<!-- Recovery disabled. -->' . PHP_EOL;
+		}
+		return F::app()->sendRequest( 'ARecoveryEngineApiController', 'getBootstrap' );
+	}
+	
 
 	public static function isLockEnabled() {
 		$user = F::app()->wg->User;
-		return self::isEnabled() && ( $user && !$user->isLoggedIn() );
+		return !self::isDisabled() && ( $user && !$user->isLoggedIn() );
 	}
 }

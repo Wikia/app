@@ -3,6 +3,7 @@
 class OasisController extends WikiaController {
 
 	private static $extraBodyClasses = [];
+	private static $extraHtmlClasses = [];
 	private static $bodyParametersArray = [];
 	private static $skinAssetGroups = [];
 
@@ -17,6 +18,19 @@ class OasisController extends WikiaController {
 
 		if(!in_array($className,self::$extraBodyClasses)) {
 			self::$extraBodyClasses[] = $className;
+			return true;
+		}
+		return false;
+	}
+
+	/**
+	 * Add extra CSS classes to <html> tag
+	 * @param $className string class name
+	 * @return bool - true if class name was added, false if class name was already present
+	 */
+	public static function addHtmlClass( $className ) {
+		if ( !in_array( $className, self::$extraHtmlClasses ) ) {
+			self::$extraHtmlClasses[] = $className;
 			return true;
 		}
 		return false;
@@ -45,10 +59,13 @@ class OasisController extends WikiaController {
 		$this->openXBidder = null;
 		$this->prebid = null;
 		$this->rubiconFastlane = null;
+		$this->rubiconVulcan = null;
+		$this->sourcePoint = null;
 		$this->dynamicYield = null;
 		$this->ivw2 = null;
 		$this->ivw3 = null;
 		$this->krux = null;
+		$this->ubisoft = null;
 
 		wfProfileOut(__METHOD__);
 	}
@@ -169,6 +186,7 @@ class OasisController extends WikiaController {
 
 		if(Wikia::isMainPage()) {
 			$bodyClasses[] = 'mainpage';
+			$wgOut->addScript( ( new InspectletService( InspectletService::MAIN_PAGE ) )->getInspectletCode() );
 		}
 
 		wfProfileIn(__METHOD__ . ' - skin Operations');
@@ -194,6 +212,7 @@ class OasisController extends WikiaController {
 		$bodyClasses[] = $skin->getBodyClassForCommunity();
 
 		$this->bodyClasses = $bodyClasses;
+		$this->htmlClasses = self::$extraHtmlClasses;
 
 		if (is_array($scssPackages)) {
 			foreach ($scssPackages as $package) {
@@ -239,10 +258,14 @@ class OasisController extends WikiaController {
 			$this->openXBidder = AnalyticsEngine::track('OpenXBidder', AnalyticsEngine::EVENT_PAGEVIEW);
 			$this->prebid = AnalyticsEngine::track('Prebid', AnalyticsEngine::EVENT_PAGEVIEW);
 			$this->rubiconFastlane = AnalyticsEngine::track('RubiconFastlane', AnalyticsEngine::EVENT_PAGEVIEW);
+			$this->rubiconVulcan = AnalyticsEngine::track('RubiconVulcan', AnalyticsEngine::EVENT_PAGEVIEW);
+			$this->sourcePoint = ARecoveryModule::getSourcePointBootstrapCode();
 			$this->dynamicYield = AnalyticsEngine::track('DynamicYield', AnalyticsEngine::EVENT_PAGEVIEW);
 			$this->ivw2 = AnalyticsEngine::track('IVW2', AnalyticsEngine::EVENT_PAGEVIEW);
 			$this->ivw3 = AnalyticsEngine::track('IVW3', AnalyticsEngine::EVENT_PAGEVIEW);
 			$this->krux = AnalyticsEngine::track('Krux', AnalyticsEngine::EVENT_PAGEVIEW);
+			$this->ubisoft = AnalyticsEngine::track('Ubisoft', AnalyticsEngine::EVENT_PAGEVIEW);
+			$this->netzathleten = AnalyticsEngine::track('NetzAthleten', AnalyticsEngine::EVENT_PAGEVIEW);
 		}
 
 		wfProfileOut(__METHOD__);

@@ -43,7 +43,8 @@ define('ext.wikia.adEngine.adContext', [
 	function setContext(newContext) {
 		var i,
 			len,
-			noExternals = w.wgNoExternals || isUrlParamSet('noexternals');
+			noExternals = w.wgNoExternals || isUrlParamSet('noexternals'),
+			taboolaConfig = instantGlobals.wgAdDriverTaboolaConfig || {};
 
 		// Note: consider copying the value, not the reference
 		context = newContext;
@@ -75,10 +76,11 @@ define('ext.wikia.adEngine.adContext', [
 				context.opts.pageFairDetection = true;
 			}
 		}
-
-		// SourcePoint disaster recovery
-		if (w.wikiaSourcePointStatus === false) {
-			context.opts.sourcePointRecovery = false;
+		// SourcePoint recovery
+		if (!noExternals && context.opts.sourcePointRecovery !== false) {
+			if (geo.isProperGeo(instantGlobals.wgAdDriverSourcePointRecoveryCountries)) {
+				context.opts.sourcePointRecovery = true;
+			}
 		}
 
 		// SourcePoint detection integration
@@ -89,10 +91,11 @@ define('ext.wikia.adEngine.adContext', [
 				geo.isProperGeo(instantGlobals.wgAdDriverSourcePointDetectionMobileCountries));
 		}
 
-		// Recoverable ads message
-		if (context.opts.sourcePointDetection && !context.opts.sourcePointRecovery && context.opts.showAds) {
-			context.opts.recoveredAdsMessage = isPageType('article') &&
-				geo.isProperGeo(instantGlobals.wgAdDriverAdsRecoveryMessageCountries);
+		// Taboola
+		if (!noExternals) {
+			if (shouldLoadTaboolaOnBlockingTraffic(taboolaConfig)) {
+				context.opts.loadTaboolaLibrary = true;
+			}
 		}
 
 		// Google Consumer Surveys
@@ -131,18 +134,7 @@ define('ext.wikia.adEngine.adContext', [
 			geo.isProperGeo(instantGlobals.wgAdDriverHighImpactSlotCountries)
 		) || isUrlParamSet('highimpactslot');
 
-		// INVISIBLE_HIGH_IMPACT_2 slot
-		context.slots.invisibleHighImpact2 = geo.isProperGeo(instantGlobals.wgAdDriverHighImpact2SlotCountries);
-
-		// INCONTENT_PLAYER slot
-		context.slots.incontentPlayer = geo.isProperGeo(instantGlobals.wgAdDriverIncontentPlayerSlotCountries) ||
-			isUrlParamSet('incontentplayer');
-
-		// INCONTENT_LEADERBOARD slot
-		context.slots.incontentLeaderboard =
-			geo.isProperGeo(instantGlobals.wgAdDriverIncontentLeaderboardSlotCountries);
-
-		context.slots.incontentLeaderboardAsOutOfPage =
+		context.opts.incontentLeaderboardAsOutOfPage =
 			geo.isProperGeo(instantGlobals.wgAdDriverIncontentLeaderboardOutOfPageSlotCountries);
 
 		context.opts.scrollHandlerConfig = instantGlobals.wgAdDriverScrollHandlerConfig;
@@ -190,6 +182,22 @@ define('ext.wikia.adEngine.adContext', [
 		for (i = 0, len = callbacks.length; i < len; i += 1) {
 			callbacks[i](context);
 		}
+	}
+
+	function shouldLoadTaboolaOnBlockingTraffic(taboolaConfig) {
+		var i = 0,
+			taboolaSlot;
+
+		for (taboolaSlot in taboolaConfig) {
+			if (taboolaConfig.hasOwnProperty(taboolaSlot) && taboolaConfig[taboolaSlot].recovery) {
+				for (i=0; i<taboolaConfig[taboolaSlot].recovery.length; i++) {
+					if (geo.isProperGeo(taboolaConfig[taboolaSlot].recovery[i])) {
+						return true;
+					}
+				}
+			}
+		}
+		return false;
 	}
 
 	function addCallback(callback) {

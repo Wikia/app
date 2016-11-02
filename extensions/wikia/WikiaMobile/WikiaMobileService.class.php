@@ -234,12 +234,6 @@ class WikiaMobileService extends WikiaService {
 		$this->response->setVal( 'toc', $toc );
 	}
 
-	private function handleWikiaWidgets() {
-		if ( $this->isArticleView() ) {
-			$this->jsExtensionPackages[] = 'wikiamobile_widget_iframe_unwrapper';
-		}
-	}
-
 	private function disableSiteCSS() {
 		global $wgUseSiteCss;
 		$wgUseSiteCss = false;
@@ -254,7 +248,6 @@ class WikiaMobileService extends WikiaService {
 		$this->handleContent();
 		$this->handleAds();
 		$this->handleToc();
-		$this->handleWikiaWidgets();
 		$this->handleAssets();
 		$this->handleTracking();
 
@@ -283,7 +276,6 @@ class WikiaMobileService extends WikiaService {
 		$this->handleMessages();
 		$this->handleToc();
 		$this->handleContent( $content );
-		$this->handleWikiaWidgets();
 		$this->handleAssets( 'preview' );
 
 		$this->response->setVal( 'jsClassScript', '<script>document.documentElement.className = "js";</script>' );

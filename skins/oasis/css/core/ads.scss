@@ -3,13 +3,13 @@
 @import 'responsive-variables';
 @import 'breakpoints-variables';
 @import 'skins/shared/mixins/clearfix';
+@import 'skins/shared/mixins/flexbox';
 @import 'skins/shared/mixins/gradient';
 @import 'skins/shared/mixins/transform';
 @import 'ads-floor';
 @import 'ads-in-content';
 @import 'ads-interstitial';
 @import 'ads-invisible-high-impact';
-@import 'extensions/wikia/GlobalNavigation/styles/GlobalNavigationVariables.scss';
 
 $wikia-top-ads-index: 2;
 $taboola-small-breakpoint: "#{$screen} and (max-width: 420px)";
@@ -49,14 +49,16 @@ $taboola-small-breakpoint: "#{$screen} and (max-width: 420px)";
 }
 
 .bfaa-template {
-	.WikiaTopAds {
-		margin-top: 0;
-		padding: 0 0 $global-navigation-height 0;
-		width: 100%;
+	&.WikiaSiteWrapper {
+		@include flexbox();
+		@include flex-direction(column);
+	}
 
-		&.bfaa-pinned-nav {
-			padding: 0;
-		}
+	.WikiaTopAds {
+		@include order(-1);
+		margin-top: 0;
+		padding: 0;
+		width: 100%;
 	}
 
 	.WikiaTopAdsInner {
@@ -77,6 +79,11 @@ $taboola-small-breakpoint: "#{$screen} and (max-width: 420px)";
 				width: 100%;
 				top: 0;
 			}
+		}
+
+		video {
+			height: auto;
+			width: 100%;
 		}
 	}
 }
@@ -441,95 +448,6 @@ body > a > img[src$="noad.gif"] {
 	}
 }
 
-// Recovered message
-.recovered-message {
-	margin: 0 auto;
-	position: relative;
-	text-align: center;
-	padding-top: 10px;
-
-	.message {
-		background: #fff;
-		color: #000;
-		padding: 10px 12px;
-		border: 2px solid #000;
-		font-size: 1.1em;
-		line-height: 1.4em;
-		position: relative;
-
-		h3 {
-			font-size: 1.2em;
-			font-weight: bold;
-		}
-
-		.action-accept {
-			color: #000;
-			cursor: pointer;
-			font-weight: bold;
-
-			&:hover {
-				text-decoration: underline;
-			}
-		}
-
-		.dialog-pointer {
-			width: 15px;
-			height: 15px;
-			border-top: 2px solid #000;
-			border-left: 2px solid #000;
-			position: absolute;
-			background: #fff;
-			top: -10px;
-			left: 110px;
-			@include transform-rotate(45deg);
-		}
-
-		.close-button {
-			width: 13px;
-			height: 13px;
-			background: url(/skins/oasis/images/icon_close.png) 1px 0 no-repeat #aaa; /* $wgCdnStylePath */
-			background-size: 12px 12px;
-			position: absolute;
-			top: 0;
-			right: 0;
-			cursor: pointer;
-
-			&:hover {
-				background-color: #444;
-			}
-		}
-	}
-
-	.icon {
-		width: 140px;
-		height: 100px;
-		margin: 0 auto -5px auto;
-		cursor: pointer;
-		background: url(/skins/oasis/images/recovered_message_icon.png) no-repeat; /* $wgCdnStylePath */
-	}
-
-	&.recovered-message-right-rail {
-		width: 300px;
-	}
-
-	&.recovered-message-top {
-		width: 600px;
-
-		.message {
-			max-width: 425px;
-			display: inline-block;
-
-			.dialog-pointer {
-				top: 60px;
-				left: auto;
-				right: -10px;
-				@include transform-rotate(135deg);
-			}
-		}
-
-		.icon {
-			margin: 0;
-			float: right;
-		}
-	}
+#WikiaArticleMsg {
+  display: none;
 }

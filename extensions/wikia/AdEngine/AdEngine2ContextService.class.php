@@ -18,16 +18,13 @@ class AdEngine2ContextService {
 			$wikiaPageType = new WikiaPageType();
 			$pageType = $wikiaPageType->getPageType();
 
-			$monetizationServiceAds = null;
-			if ( !empty( $wg->AdDriverUseMonetizationService ) && !empty( $wg->EnableMonetizationModuleExt ) ) {
-				$monetizationServiceAds = F::app()->sendRequest( 'MonetizationModule', 'index' )->getData()['data'];
-			}
-
 			$sourcePointDetectionKey = AdEngine2Resource::getKey('wikia.ext.adengine.sp.detection');
 			$sourcePointDetectionUrl = ResourceLoader::makeCustomURL( $wg->Out, [$sourcePointDetectionKey], 'scripts' );
 
 			$pageFairDetectionKey = AdEngine2Resource::getKey('wikia.ext.adengine.pf.detection');
 			$pageFairDetectionUrl = ResourceLoader::makeCustomURL( $wg->Out, [$pageFairDetectionKey], 'scripts' );
+
+			$prebidBidderUrl = AssetsManager::getInstance()->getURL( 'prebid_prod_js', $type );
 
 			$langCode = $title->getPageLanguage()->getCode();
 
@@ -40,7 +37,8 @@ class AdEngine2ContextService {
 
 			$yavliKey = AdEngine2Resource::getKey('wikia.ext.adengine.yavli');
 			$yavliUrl = ResourceLoader::makeCustomURL( $wg->Out, [$yavliKey], 'scripts' );
-			return [
+
+			$context = [
 				'opts' => $this->filterOutEmptyItems( [
 					'adsInContent' => $wg->EnableAdsInContent,
 					'delayBtf' => $wg->AdDriverDelayBelowTheFold,
@@ -50,9 +48,9 @@ class AdEngine2ContextService {
 					'showAds' => $adPageTypeService->areAdsShowableOnPage(),
 					'trackSlotState' => $wg->AdDriverTrackState,
 					'sourcePointDetectionUrl' => $sourcePointDetectionUrl,
-					'sourcePointRecovery' => $skinName === 'oasis' && ARecoveryModule::isEnabled(),
 					'yavliUrl' => $yavliUrl,
-					'pageFairDetectionUrl' => $pageFairDetectionUrl
+					'pageFairDetectionUrl' => $pageFairDetectionUrl,
+					'prebidBidderUrl' => $prebidBidderUrl
 				] ),
 				'targeting' => $this->filterOutEmptyItems( [
 					'enableKruxTargeting' => AnalyticsProviderKrux::isEnabled(),
@@ -76,8 +74,6 @@ class AdEngine2ContextService {
 				] ),
 				'providers' => $this->filterOutEmptyItems( [
 					'evolve2' => $wg->AdDriverUseEvolve2,
-					'monetizationService' => $wg->AdDriverUseMonetizationService,
-					'monetizationServiceAds' => $monetizationServiceAds,
 					'rubiconFastlane' => AnalyticsProviderRubiconFastlane::isEnabled(),
 					'taboola' => $wg->AdDriverUseTaboola && $pageType === 'article',
 				] ),
@@ -88,6 +84,14 @@ class AdEngine2ContextService {
 				] ),
 				'forcedProvider' => $wg->AdDriverForcedProvider
 			];
+
+			/**
+			 * $wgAdDriverEnableSourcePointRecovery === false; // disabled on wiki
+			 * $wgAdDriverEnableSourcePointRecovery === true; // enabled on wiki
+			 * $wgAdDriverEnableSourcePointRecovery === null; // don't care - depend on $wgAdDriverSourcePointRecoveryCountries
+			 */
+			$context['opts']['sourcePointRecovery'] = $skinName === 'oasis' ? $wg->AdDriverEnableSourcePointRecovery : false;
+			return $context;
 		} );
 	}
 

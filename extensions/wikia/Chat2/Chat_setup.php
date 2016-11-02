@@ -162,6 +162,10 @@ $wgResourceModules['ext.Chat2'] = [
 		'chat-ban-cannt-undo',
 		'chat-browser-is-notsupported',
 		'chat-message-was-too-long',
+		'chat-kick-cant-kick-moderator',
+		'chat-err-connected-from-another-browser',
+		'chat-kick-you-need-permission',
+		'chat-inlinealert-a-made-b-chatmod',
 		// Chat ban modal
 		'chat-ban-modal-heading',
 		'chat-ban-modal-change-ban-heading',

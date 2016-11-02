@@ -93,6 +93,9 @@ class Wikia {
 	const EDITNOTICE_INTERFACE_PREFIX = 'editnotice-';
 	const TAG_INTERFACE_PREFIX = 'tag-';
 
+	const DEFAULT_FAVICON_FILE = '/skins/common/images/favicon.ico';
+	const DEFAULT_WIKI_LOGO_FILE = '/skins/common/images/wiki.png';
+
 	private static $vars = array();
 	private static $cachedLinker;
 
@@ -146,26 +149,46 @@ class Wikia {
 			wfMemcKey( self::FAVICON_URL_CACHE_KEY ),
 			WikiaResponse::CACHE_STANDARD,
 			function () {
-				$faviconFilename = 'Favicon.ico';
+				$faviconFilename = ThemeSettings::FaviconImageName;
+				$localFavicon = wfFindFile( $faviconFilename );
 
-				$localFaviconTitle = Title::newFromText( $faviconFilename, NS_FILE );
-
-				#FIXME: Checking existance of Title in order to use File. #VID-1744
-				if ( $localFaviconTitle->exists() ) {
-					$localFavicon = wfFindFile( $faviconFilename );
-
-					if ( $localFavicon ) {
-						return $localFavicon->getURL();
-					}
+				if ( $localFavicon ) {
+					return $localFavicon->getUrl();
 				}
 
-				return GlobalFile::newFromText( $faviconFilename, self::COMMUNITY_WIKI_ID )->getURL();
+				// SUS-214: fallback to image in repo instead of Community Central
+				return F::app()->wg->ResourceBasePath . static::DEFAULT_FAVICON_FILE;
 			}
 		);
 	}
 
 	public static function invalidateFavicon() {
 		WikiaDataAccess::cachePurge( wfMemcKey( self::FAVICON_URL_CACHE_KEY ) );
+	}
+
+	/**
+	 * Return either a path to locally-uploaded Wiki.png file or a shared file taken from the code repo
+	 * (if there's no Wiki.png file uploaded on a wiki)
+	 *
+	 * @see SUS-1165
+	 *
+	 * @return mixed an array containing "url" and "size" keys
+	 */
+	public static function getWikiLogoMetadata() {
+		$localWikiLogo = wfLocalFile( 'Wiki.png' );
+
+		if ( $localWikiLogo->exists() ) {
+			return [
+				'url' => $localWikiLogo->getUrl(),
+				'size' => sprintf( '%dx%d', $localWikiLogo->getWidth(), $localWikiLogo->getHeight() )
+			];
+		}
+		else {
+			return [
+				'url' => F::app()->wg->ResourceBasePath . self::DEFAULT_WIKI_LOGO_FILE,
+				'size' => '155x155'
+			];
+		}
 	}
 
 	/**
@@ -298,6 +321,8 @@ class Wikia {
      * @return string fixed domain name
      */
 	static public function fixDomainName( $name, $language = false, $type = false ) {
+		global $wgWikiaBaseDomain;
+
 		if (empty( $name )) {
 			return $name;
 		}
@@ -313,15 +338,15 @@ class Wikia {
 					case "answers":
 						$domains = self::getAnswersDomains();
 						if ( $language && isset($domains[$language]) && !empty($domains[$language]) ) {
-							$name =  sprintf("%s.%s.%s", $name, $domains[$language], "wikia.com");
+							$name =  sprintf("%s.%s.%s", $name, $domains[$language], $wgWikiaBaseDomain);
 							$allowLang = false;
 						} else {
-							$name =  sprintf("%s.%s.%s", $name, $domains["default"], "wikia.com");
+							$name =  sprintf("%s.%s.%s", $name, $domains["default"], $wgWikiaBaseDomain);
 						}
 						break;
 
 					default:
-						$name = $name.".wikia.com";
+						$name = sprintf("%s.%s", $name, $wgWikiaBaseDomain);
 				}
 				if ( $language && $language != "en" && $allowLang ) {
 					$name = $language.".".$name;

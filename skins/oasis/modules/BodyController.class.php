@@ -421,20 +421,6 @@ class BodyController extends WikiaController {
 			$this->wg->SuppressPageHeader = true;
 		}
 
-		// MonetizationModule Extension
-		if ( !empty( $this->wg->EnableMonetizationModuleExt ) ) {
-			if ( empty( $this->wg->AdDriverUseMonetizationService ) ) {
-				$this->monetizationModules = $this->sendRequest( 'MonetizationModule', 'index' )->getData()['data'];
-				$this->headerModuleParams['monetizationModules'] = $this->monetizationModules;
-			} else {
-				$this->monetizationModules = [
-					MonetizationModuleHelper::SLOT_TYPE_IN_CONTENT     => $this->app->renderView( 'Ad', 'Index', [ 'slotName' => 'MON_IN_CONTENT' ] ),
-					MonetizationModuleHelper::SLOT_TYPE_BELOW_CATEGORY => $this->app->renderView( 'Ad', 'Index', [ 'slotName' => 'MON_BELOW_CATEGORY' ] ),
-				];
-			}
-			$this->bodytext = MonetizationModuleHelper::insertIncontentUnit( $this->bodytext, $this->monetizationModules );
-		}
-
 		$namespace = $this->wg->Title->getNamespace();
 		// extra logic for subpages (RT #74091)
 		if ( !empty( $this->subtitle ) ) {

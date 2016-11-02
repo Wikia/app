@@ -3,9 +3,6 @@
 class DiscussionsThreadModel {
 	const DISCUSSIONS_API_BASE = 'https://services.wikia.com/discussion/';
 	const DISCUSSIONS_API_BASE_DEV = 'https://services.wikia-dev.com/discussion/';
-	const DISCUSSIONS_API_SORT_KEY = 'trending';
-	const DISCUSSIONS_API_SORT_DIRECTION = 'descending';
-	const THREAD_CACHE_KEY = "embeddable_discussions_thread";
 	const SORT_TRENDING = 'trending';
 	const SORT_LATEST = 'creation_date';
 	const SORT_TRENDING_LINK = 'trending';
@@ -19,90 +16,126 @@ class DiscussionsThreadModel {
 		$this->cityId = $cityId;
 	}
 
-	// TODO: Refactor this to use Swagger, see JPN-631.
-	private function getRequestUrl( $showLatest, $limit ) {
-		global $wgDevelEnvironment;
-
-		$sortKey = $showLatest ? self::SORT_LATEST : self::SORT_TRENDING;
-
-		if ( empty( $wgDevelEnvironment ) ) {
-			return self::DISCUSSIONS_API_BASE . "$this->cityId/threads?sortKey=$sortKey&limit=$limit&viewableOnly=false";
-		}
-
-		return self::DISCUSSIONS_API_BASE_DEV . "$this->cityId/threads?sortKey=$sortKey&limit=$limit&viewableOnly=false";
-	}
-
-	private function getUpvoteRequestUrl( $id ) {
-		global $wgDevelEnvironment;
-
-		if ( empty( $wgDevelEnvironment ) ) {
-			return self::DISCUSSIONS_API_BASE . "$this->cityId/votes/post/$id";
-		}
-
-		return self::DISCUSSIONS_API_BASE_DEV . "$this->cityId/votes/post/$id";
-	}
-
+	// TODO: Consider changing this request to use Swagger when unblocked. See JPN-631
 	private function apiRequest( $url ) {
-		$data = Http::get( $url );
-		$obj = json_decode( $data, true );
-		return $obj;
+		return json_decode( Http::get( $url ), true );
 	}
 
-	private function buildPost( $rawPost, $index ) {
-		global $wgContLang;
-
-		$timeAgo = wfTimeFormatAgo( wfTimestamp( TS_ISO_8601, $rawPost['creationDate']['epochSecond'] ) );
-
-		return [
-			'author' => $rawPost['createdBy']['name'],
-			'authorAvatar' => $rawPost['createdBy']['avatarUrl'],
-			'commentCount' => $rawPost['postCount'],
-			'content' => $wgContLang->truncate( $rawPost['rawContent'], 120 ),
-			'createdAt' => $timeAgo,
-			'forumName' => wfMessage( 'embeddable-discussions-forum-name', $rawPost['forumName'] )->plain(),
-			'id' => $rawPost['id'],
-			'firstPostId' => $rawPost['firstPostId'],
-			'index' => $index,
-			'link' => '/d/p/' . $rawPost['id'],
-			'upvoteUrl' => $this->getUpvoteRequestUrl( $rawPost['firstPostId']),
-			'title' => $rawPost['title'],
-			'upvoteCount' => $rawPost['upvoteCount'],
-		];
-
-		return $post;
-	}
-
-	private function formatData( $rawData, $showLatest ) {
-		$rawThreads = $rawData['_embedded']['threads'];
-		$sortKey = $showLatest ? self::SORT_LATEST_LINK : self::SORT_TRENDING_LINK;
-
-		$data = [
-			'siteId' => $this->cityId,
-			'discussionsUrl' => "/d/f?sort=$sortKey",
-		];
-
-		if ( is_array( $rawThreads ) && count( $rawThreads ) > 0 ) {
-			foreach ( $rawThreads as $key => $value ) {
-				$data['threads'][] = $this->buildPost( $value, $key );
-			}
+	private function getCategoryRequestUrl() {
+		global $wgDevelEnvironment;
+		if ( empty( $wgDevelEnvironment ) ) {
+			return self::DISCUSSIONS_API_BASE . "$this->cityId/forums?responseGroup=small&viewableOnly=true";
 		}
-
-		return $data;
+		return self::DISCUSSIONS_API_BASE_DEV . "$this->cityId/forums?responseGroup=small&viewableOnly=true";
 	}
 
-	public function getData( $showLatest, $limit ) {
+	/**
+	 * Get category names for all requested categoryIds
+	 * @param $categoryIds requested category ids
+	 * @return array with name and id pairs for all valid requested categories
+	 */
+	public function getCategoryNames( $categoryIds ) {
 		$memcKey = wfMemcKey( __METHOD__, self::MCACHE_VER );
-
 		$rawData = WikiaDataAccess::cache(
 			$memcKey,
-			WikiaResponse::CACHE_VERY_SHORT,
-			function() use ( $showLatest, $limit ) {
-				return $this->apiRequest( $this->getRequestUrl( $showLatest, $limit ) );
+			WikiaResponse::CACHE_STANDARD,
+			function() {
+				return $this->apiRequest( $this->getCategoryRequestUrl() );
 			}
 		);
 
-		$data = $this->formatData( $rawData, $showLatest );
+		return $this->categoryNameLookup( $categoryIds, $rawData );
+	}
 
-		return $data;
+	/**
+	 * Helper function for matching category data from API with requested Ids
+	 * @param $categoryIds requested category ids
+	 * @param $rawData response from API
+	 * @return array
+	 */
+	private function categoryNameLookup( $categoryIds, $rawData ) {
+		$explodedIds = explode( ',', $categoryIds );
+		$ret = [];
+
+		$categories = $rawData['_embedded']['doc:forum'];
+		if ( is_array( $categories ) ) {
+			foreach ( $categories as $value ) {
+				if ( in_array( $value['id'], $explodedIds ) ) {
+					$ret[] = [
+						'id' => $value['id'],
+						'name' => $value['name'],
+					];
+				}
+			}
+		}
+
+		return $ret;
+	}
+
+	private function getRequestUrl( $showLatest, $limit, $categoryIds ) {
+		$sortKey = $showLatest ? self::SORT_LATEST : self::SORT_TRENDING;
+		$categoryKey = null;
+
+		if ( !empty( $categoryIds ) ) {
+			$allCategoryIds = explode( ',', $categoryIds );
+			$categoryKey = array_reduce( $allCategoryIds, function( $carry, $item ) {
+				return $carry . '&forumId=' . $item;
+			} );
+		}
+
+		return "/$this->cityId/threads?sortKey=$sortKey&limit=$limit&viewableOnly=false" . $categoryKey;
+	}
+
+	private function getUpvoteRequestUrl() {
+		return "/$this->cityId/votes/post/";
+	}
+
+	public function getData( $showLatest, $limit, $categoryIds ) {
+		$sortKey = $showLatest ? self::SORT_LATEST_LINK : self::SORT_TRENDING_LINK;
+		$invalidCategory = false;
+		$discussionsUrl = false;
+		$categoryName = false;
+		// This will be populated to only include verified valid category ids
+		$filteredCategoryIds = [];
+
+		if ( !empty( $categoryIds ) ) {
+			$categoryData = $this->getCategoryNames( $categoryIds );
+
+			if ( count ( $categoryData ) === 0 ) {
+				// No valid categories specified, show error message
+				$invalidCategory = true;
+			} elseif ( count ( $categoryData ) === 1 ) {
+				// A single category specified, use its name
+				$categoryName = $categoryData[0]['name'];
+				$discussionsUrl = "/d/f?sort=$sortKey&catId=$categoryIds";
+				$filteredCategoryIds[] = $categoryData[0]['id'];
+			} else {
+				// Multiple categories specified, don't use name
+				$categoryName = false;
+				$catIdUrl = '&catId=';
+				$separator = '';
+
+				foreach ( $categoryData as $category ) {
+					$catIdUrl .= $separator . $category['id'];
+					$separator = urlencode( ',' );
+
+					$filteredCategoryIds[] = $category['id'];
+				}
+
+				$discussionsUrl = "/d/f?sort=$sortKey$catIdUrl";
+			}
+		} else {
+			$discussionsUrl = "/d/f?sort=$sortKey";
+		}
+
+		return [
+			'siteId' => $this->cityId,
+			'discussionsUrl' => $discussionsUrl,
+			'requestUrl' => $this->getRequestUrl( $showLatest, $limit, $categoryIds ),
+			'upvoteRequestUrl' => $this->getUpvoteRequestUrl(),
+			'invalidCategory' => $invalidCategory,
+			'categoryName' => $categoryName,
+			'categoryIds' => $filteredCategoryIds,
+		];
 	}
 }

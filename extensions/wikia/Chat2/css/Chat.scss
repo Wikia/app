@@ -249,6 +249,7 @@ a {
 	}
 	.message {
 		white-space: pre-line;
+		word-wrap: break-word;
 	}
 	.me-message {
 		color: $color-chat-gray;
@@ -321,14 +322,14 @@ a {
 	top: 0;
 	width: 150px;
 	.User {
-		padding-left: 47px;
+		padding-left: 37px;
 		min-height: 22px;
 		&:hover {
 			background: $color-menu-highlight;
 			cursor: pointer;
 		}
 		img {
-			left: 20px;
+			left: 5px;
 		}
 	}
 	h1 {

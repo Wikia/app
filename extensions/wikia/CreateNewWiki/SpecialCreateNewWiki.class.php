@@ -6,7 +6,7 @@ class SpecialCreateNewWiki extends UnlistedSpecialPage {
 		parent::__construct('CreateNewWiki', 'createnewwiki');
 	}
 
-	public function execute() {
+	public function execute( $par ) {
 		global $wgUser, $wgOut;
 		wfProfileIn( __METHOD__ );
 
@@ -23,7 +23,8 @@ class SpecialCreateNewWiki extends UnlistedSpecialPage {
 		}
 
 		$wgOut->setPageTitle(wfMsg('cnw-title'));
-		$wgOut->addHtml(F::app()->renderView('CreateNewWiki', 'Index'));
+
+		$wgOut->addHtml( F::app()->renderView( 'CreateNewWiki', 'Index' ) );
 		Wikia::addAssetsToOutput( 'create_new_wiki_scss' );
 		Wikia::addAssetsToOutput( 'create_new_wiki_js' );
 

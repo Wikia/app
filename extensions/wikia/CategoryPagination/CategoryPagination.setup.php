@@ -7,4 +7,3 @@ $wgAutoloadClasses[ 'CategoryPaginationHooks' ] = __DIR__ . '/CategoryPagination
 
 // Hooks
 $wgHooks['ArticleFromTitle'][] = 'CategoryPaginationHooks::onArticleFromTitle';
-$wgHooks['CategoryViewerGetSectionPagingLinks'][] = 'CategoryPaginationHooks::onCategoryViewerGetSectionPagingLinks';

@@ -1,14 +1,13 @@
-/*global require*/
-require([
+define('ext.wikia.recirculation.discussions', [
 	'jquery',
 	'wikia.window',
 	'wikia.abTest',
 	'wikia.nirvana',
 	'ext.wikia.recirculation.tracker'
 ], function ($, w, abTest, nirvana, tracker) {
-	var experimentName = 'RECIRCULATION_DISCUSSIONS';
+	'use strict';
 
-	function injectDiscussions(done) {
+	function injectDiscussions(experimentName) {
 		nirvana.sendRequest({
 			controller: 'Recirculation',
 			method: 'discussions',
@@ -18,34 +17,31 @@ require([
 				cityId: w.wgCityId
 			},
 			callback: function (response) {
-				var $WikiaArticleFooter = $('#WikiaArticleFooter');
+				var $WikiaArticleFooter = $('#WikiaArticleFooter'),
+					$response = $(response);
 
 				if ($WikiaArticleFooter.length) {
-					$WikiaArticleFooter.before(response);
+					$WikiaArticleFooter.before($response);
 				} else {
-					$('#WikiaArticleBottomAd').before(response);
+					$('#WikiaArticleBottomAd').before($response);
 				}
 
-				done();
+				tracker.trackVerboseImpression(experimentName, 'discussions');
+				$response.find('.discussion-timestamp').timeago();
+
+				$response.find('.discussion-thread').click(function () {
+					var slot = $(this).index() + 1,
+						label = 'discussions-tile=slot-' + slot + '=discussions';
+					tracker.trackVerboseClick(experimentName, label);
+					w.location = $(this).data('link');
+				});
+
+				$response.find('.discussion-link').mousedown(function() {
+					tracker.trackVerboseClick(experimentName, 'discussions-link');
+				});
 			}
 		});
 	}
 
-	if (abTest.inGroup(experimentName, 'ARTICLE_FOOTER')) {
-		injectDiscussions(function () {
-			tracker.trackVerboseImpression(experimentName, 'discussions');
-			$('.discussion-timestamp').timeago();
-
-			$('.discussion-thread').click(function () {
-				var slot = $(this).index() + 1,
-					label = 'discussions-tile=slot-' + slot + '=discussions';
-				tracker.trackVerboseClick(experimentName, label);
-				window.location = $(this).data('link');
-			});
-
-			$('.discussion-link').mousedown(function() {
-				tracker.trackVerboseClick(experimentName, 'discussions-link');
-			});
-		});
-	}
+	return injectDiscussions;
 });

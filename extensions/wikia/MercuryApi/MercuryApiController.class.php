@@ -29,13 +29,6 @@ class MercuryApiController extends WikiaController {
 			$smartBannerConfig = $this->wg->WikiaMobileSmartBannerConfig;
 
 			unset( $smartBannerConfig[ 'author' ] );
-
-			if ( !empty( $smartBannerConfig[ 'icon' ] ) &&
-				 !isset( parse_url( $smartBannerConfig[ 'icon' ] )[ 'scheme' ] ) // it differs per wiki
-			) {
-				$smartBannerConfig[ 'icon' ] = $this->wg->extensionsPath . $smartBannerConfig[ 'icon' ];
-			}
-
 			$meta = $smartBannerConfig[ 'meta' ];
 			unset( $smartBannerConfig[ 'meta' ] );
 			$smartBannerConfig[ 'appId' ] = [
@@ -247,7 +240,7 @@ class MercuryApiController extends WikiaController {
 
 			$adContext = ( new AdEngine2ContextService() )->getContext( $title, 'mercury' );
 			$dimensions[3] = $adContext['targeting']['wikiVertical'];
-			$dimensions[14] = $adContext['opts']['showAds'] ? 'yes' : 'no';
+			$dimensions[14] = $adContext['opts']['showAds'] ? 'Yes' : 'No';
 			$dimensions[19] = WikiaPageType::getArticleType( $title );
 			$dimensions[25] = strval( $title->getNamespace() );
 		} catch ( Exception $ex ) {

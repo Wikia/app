@@ -1,13 +1,8 @@
 <?php
-/**
- * Internationalisation file for extension GlobalMessages.
- *
- * @file
- * @ingroup Extensions
- */
-$messages = array();
+/** Internationalization file for /extensions/GlobalMessages/GlobalMessagesJ extension. */
+$messages = [];
 
-$messages['en'] = array(
+$messages['en'] = [
 	'january' => 'January',
 	'june' => 'June',
 	'july' => 'July',
@@ -32,9 +27,9 @@ $messages['en'] = array(
 	'javascripttest-qunit-intro' => 'See [$1 testing documentation] on mediawiki.org.',
 	'javascripttest-qunit-heading' => 'MediaWiki JavaScript QUnit test suite',
 	'joinnow' => 'join now',
-);
+];
 
-$messages['qqq'] = array(
+$messages['qqq'] = [
 	'january' => 'The first month of the Gregorian calendar',
 	'june' => 'The sixth month of the Gregorian calendar',
 	'july' => 'The seventh month of the Gregorian calendar',
@@ -51,9 +46,9 @@ $messages['qqq'] = array(
 	'jumptosearch' => 'Part of the "jump to" navigation links. Hidden by default in monobook skin. The format is: [[MediaWiki:Jumpto/{{SUBPAGENAME}}|{{int:jumpto}}]] [[MediaWiki:Jumptonavigation/{{SUBPAGENAME}}|{{int:jumptonavigation}}]], {{int:jumptosearch}}.
 
 {{Identical|Search}}',
-);
+];
 
-$messages['ab'] = array(
+$messages['ab'] = [
 	'january' => 'ажьырныҳәа',
 	'june' => 'рашәара',
 	'july' => 'ҧхынгәы',
@@ -65,9 +60,9 @@ $messages['ab'] = array(
 	'jul' => 'ҧхг',
 	'jumptonavigation' => 'Анавигациа',
 	'jumptosearch' => 'Аҧшаара',
-);
+];
 
-$messages['ace'] = array(
+$messages['ace'] = [
 	'january' => 'Buleuën Sa',
 	'june' => 'Buleuën Nam',
 	'july' => 'Buleuën Tujôh',
@@ -80,9 +75,9 @@ $messages['ace'] = array(
 	'jumpto' => 'Langsông u:',
 	'jumptonavigation' => 'navigasi',
 	'jumptosearch' => 'mita',
-);
+];
 
-$messages['af'] = array(
+$messages['af'] = [
 	'january' => 'Januarie',
 	'june' => 'Junie',
 	'july' => 'Julie',
@@ -98,16 +93,16 @@ $messages['af'] = array(
 	'javascripttest' => 'JavaScript toetsing',
 	'javascripttest-disabled' => 'Die funksie is gedeaktiveer.',
 	'javascripttest-title' => 'Voer toetse uit vir $1',
-);
+];
 
-$messages['ak'] = array(
+$messages['ak'] = [
 	'january' => 'Ɔpɛpɔn',
 	'june' => 'Ayɛwohomumu',
 	'july' => 'Kutawonsa',
 	'jumptosearch' => 'hwehwɛ',
-);
+];
 
-$messages['aln'] = array(
+$messages['aln'] = [
 	'january' => 'kallnor',
 	'june' => 'qershor',
 	'july' => 'korrik',
@@ -120,9 +115,9 @@ $messages['aln'] = array(
 	'jumpto' => 'Kce te:',
 	'jumptonavigation' => 'navigim',
 	'jumptosearch' => 'kërko',
-);
+];
 
-$messages['als'] = array(
+$messages['als'] = [
 	'january' => 'kallnor',
 	'june' => 'qershor',
 	'july' => 'korrik',
@@ -135,9 +130,9 @@ $messages['als'] = array(
 	'jumpto' => 'Kce te:',
 	'jumptonavigation' => 'navigim',
 	'jumptosearch' => 'kërko',
-);
+];
 
-$messages['am'] = array(
+$messages['am'] = [
 	'january' => 'ጃንዩዌሪ',
 	'june' => 'ጁን',
 	'july' => 'ጁላይ',
@@ -150,9 +145,9 @@ $messages['am'] = array(
 	'jumpto' => 'ዘልለው ለመሔድ፦',
 	'jumptonavigation' => 'የማውጫ ቁልፎች',
 	'jumptosearch' => 'ፍለጋ',
-);
+];
 
-$messages['an'] = array(
+$messages['an'] = [
 	'january' => 'chinero',
 	'june' => 'chunio',
 	'july' => 'chulio',
@@ -170,13 +165,13 @@ $messages['an'] = array(
 	'javascripttest-title' => 'Fendo as prebas de $1',
 	'javascripttest-pagetext-noframework' => 'Ista pachina ye reservada ta fer as prebas de JavaScrip.',
 	'javascripttest-pagetext-unknownframework' => 'Bastida de prebas "$1" desconoixida.',
-	'javascripttest-pagetext-frameworks' => "Por favor, trigue una d'as siguients bastidas de prebas: $1",
+	'javascripttest-pagetext-frameworks' => 'Por favor, trigue una d\'as siguients bastidas de prebas: $1',
 	'javascripttest-pagetext-skins' => 'Trigue una apariencia ta fer as prebas con ella:',
 	'javascripttest-qunit-intro' => 'Mire-se [$1 a documentación de prebatinas] en mediawiki.org',
 	'javascripttest-qunit-heading' => 'Suite de prebas MediaWiki JavaScript QUnit',
-);
+];
 
-$messages['ang'] = array(
+$messages['ang'] = [
 	'january' => 'Æfterra Ȝēola',
 	'june' => 'Sēarmōnaþ',
 	'july' => 'Mǣdmōnaþ',
@@ -189,9 +184,9 @@ $messages['ang'] = array(
 	'jumpto' => 'Gā tō:',
 	'jumptonavigation' => 'þurhfōr',
 	'jumptosearch' => 'sēċan',
-);
+];
 
-$messages['anp'] = array(
+$messages['anp'] = [
 	'january' => 'जनवरी',
 	'june' => 'जून',
 	'july' => 'जुलाई',
@@ -204,9 +199,9 @@ $messages['anp'] = array(
 	'jumpto' => 'हिन्नॆ जा:',
 	'jumptonavigation' => 'भ्रमण करॊ',
 	'jumptosearch' => 'खोजै लॆ चलॊ',
-);
+];
 
-$messages['ar'] = array(
+$messages['ar'] = [
 	'january' => 'يناير',
 	'june' => 'يونيو',
 	'july' => 'يوليو',
@@ -221,9 +216,9 @@ $messages['ar'] = array(
 	'jumptosearch' => 'البحث',
 	'javascripttest' => 'اختبار جافاسكربت',
 	'joinnow' => 'اتّصل الآ',
-);
+];
 
-$messages['arc'] = array(
+$messages['arc'] = [
 	'january' => 'ܟܢܘܢ ܐܚܪܝ',
 	'june' => 'ܚܙܝܪܢ',
 	'july' => 'ܬܡܘܙ',
@@ -236,9 +231,9 @@ $messages['arc'] = array(
 	'jumpto' => 'ܫܘܪ ܠ:',
 	'jumptonavigation' => 'ܐܠܦܪܘܬܐ',
 	'jumptosearch' => 'ܒܨܝܐ',
-);
+];
 
-$messages['arn'] = array(
+$messages['arn'] = [
 	'january' => 'eneru küyeṉ',
 	'june' => 'kuniu küyeṉ',
 	'july' => 'kuliu küyeṉ',
@@ -251,9 +246,9 @@ $messages['arn'] = array(
 	'jumpto' => 'Amulün:',
 	'jumptonavigation' => 'miyawün',
 	'jumptosearch' => 'kintun',
-);
+];
 
-$messages['ary'] = array(
+$messages['ary'] = [
 	'january' => 'Yanayer',
 	'june' => 'Yonyo',
 	'july' => 'Yolyoz',
@@ -266,9 +261,9 @@ $messages['ary'] = array(
 	'jumpto' => 'Sir le:',
 	'jumptonavigation' => 'Navigasyon',
 	'jumptosearch' => 'Qelleb',
-);
+];
 
-$messages['arz'] = array(
+$messages['arz'] = [
 	'january' => 'يناير',
 	'june' => 'يونيه',
 	'july' => 'يوليه',
@@ -281,9 +276,9 @@ $messages['arz'] = array(
 	'jumpto' => 'نُط على:',
 	'jumptonavigation' => 'استكشاف',
 	'jumptosearch' => 'تدوير',
-);
+];
 
-$messages['as'] = array(
+$messages['as'] = [
 	'january' => 'জানুৱাৰী',
 	'june' => 'জুন',
 	'july' => 'জুলাই',
@@ -297,9 +292,9 @@ $messages['as'] = array(
 	'jumptonavigation' => 'দিকদৰ্শন',
 	'jumptosearch' => 'সন্ধানাৰ্থে',
 	'javascripttest' => 'জাভাস্ক্ৰিপ্ট পৰীক্ষা।',
-);
+];
 
-$messages['ast'] = array(
+$messages['ast'] = [
 	'january' => 'xineru',
 	'june' => 'xunu',
 	'july' => 'xunetu',
@@ -316,14 +311,14 @@ $messages['ast'] = array(
 	'javascripttest-disabled' => 'Esta función ta desactivada.',
 	'javascripttest-title' => 'Executando pruebes de $1',
 	'javascripttest-pagetext-noframework' => 'Esta páxina ta acutada pa executar pruebes de javascript.',
-	'javascripttest-pagetext-unknownframework' => "L'entornu de pruebes «$1» ye desconocíu.",
+	'javascripttest-pagetext-unknownframework' => 'L\'entornu de pruebes «$1» ye desconocíu.',
 	'javascripttest-pagetext-frameworks' => 'Escueyi un de los siguientes entornos de pruebes: $1',
 	'javascripttest-pagetext-skins' => 'Escueyi una apariencia pa executar les pruebes:',
 	'javascripttest-qunit-intro' => 'Ver la [$1 documentación de les pruebes] en mediawiki.org.',
 	'javascripttest-qunit-heading' => 'Conxuntu de pruebes JavaScript QUnit de MediaWiki',
-);
+];
 
-$messages['avk'] = array(
+$messages['avk'] = [
 	'january' => 'taneaksat',
 	'june' => 'teveaksat',
 	'july' => 'pereaksat',
@@ -336,9 +331,9 @@ $messages['avk'] = array(
 	'jumpto' => 'Grablé kal',
 	'jumptonavigation' => 'exulera',
 	'jumptosearch' => 'aneyara',
-);
+];
 
-$messages['ay'] = array(
+$messages['ay'] = [
 	'january' => 'chichu phaxsi',
 	'june' => 'juyphi phaxsi',
 	'july' => 'huillka kuti phaxsi',
@@ -350,9 +345,9 @@ $messages['ay'] = array(
 	'jul' => 'hui',
 	'jumptonavigation' => 'wampuña',
 	'jumptosearch' => 'thaqaña',
-);
+];
 
-$messages['az'] = array(
+$messages['az'] = [
 	'january' => 'yanvar',
 	'june' => 'iyun',
 	'july' => 'iyul',
@@ -365,9 +360,9 @@ $messages['az'] = array(
 	'jumpto' => 'Keçid et:',
 	'jumptonavigation' => 'naviqasiya',
 	'jumptosearch' => 'axtar',
-);
+];
 
-$messages['ba'] = array(
+$messages['ba'] = [
 	'january' => 'ғинуар',
 	'june' => 'июнь',
 	'july' => 'июль',
@@ -388,9 +383,9 @@ JavaScript тикшереү',
 	'javascripttest-pagetext-unknownframework' => 'Билдәһеҙ тикшеренеүҙәр мөхитнамәһе "$1".',
 	'javascripttest-pagetext-frameworks' => 'Зинһар өсөн киләһе тикшеренеүҙәр мөхитнамәһенең береһен һайлап алығыҙ: $1',
 	'javascripttest-qunit-intro' => 'mediawiki.org адресы буйынса ҡарағыҙ [$1 тест үткәреү документацияһы].',
-);
+];
 
-$messages['bar'] = array(
+$messages['bar'] = [
 	'january' => 'Jänner',
 	'june' => 'Juni',
 	'july' => 'Juli',
@@ -403,9 +398,9 @@ $messages['bar'] = array(
 	'jumpto' => 'Wexeln zua:',
 	'jumptonavigation' => 'Navigazión',
 	'jumptosearch' => 'Suach',
-);
+];
 
-$messages['bat-smg'] = array(
+$messages['bat-smg'] = [
 	'january' => 'Jänner',
 	'june' => 'Juni',
 	'july' => 'Juli',
@@ -418,9 +413,9 @@ $messages['bat-smg'] = array(
 	'jumpto' => 'Wexeln zua:',
 	'jumptonavigation' => 'Navigazión',
 	'jumptosearch' => 'Suach',
-);
+];
 
-$messages['bcc'] = array(
+$messages['bcc'] = [
 	'january' => 'ژانویه',
 	'june' => 'جون',
 	'july' => 'جولای',
@@ -433,9 +428,9 @@ $messages['bcc'] = array(
 	'jumpto' => 'کپ به:',
 	'jumptonavigation' => 'گردگ',
 	'jumptosearch' => 'گردگ',
-);
+];
 
-$messages['bcl'] = array(
+$messages['bcl'] = [
 	'january' => 'Enero',
 	'june' => 'Hunyo',
 	'july' => 'Hulyo',
@@ -448,9 +443,9 @@ $messages['bcl'] = array(
 	'jumpto' => 'Maglukso sa:',
 	'jumptonavigation' => 'paglibotlíbot',
 	'jumptosearch' => 'hanápon',
-);
+];
 
-$messages['be'] = array(
+$messages['be'] = [
 	'january' => 'Студзень',
 	'june' => 'Чэрвень',
 	'july' => 'Ліпень',
@@ -472,9 +467,9 @@ $messages['be'] = array(
 	'javascripttest-pagetext-skins' => 'Выберыце афармленне для тэставання:',
 	'javascripttest-qunit-intro' => 'Глядзіце [$1 дакументацыю па тэставанні] на mediawiki.org.',
 	'javascripttest-qunit-heading' => 'Набор QUnit-тэстаў для MediaWiki JavaScript',
-);
+];
 
-$messages['be-tarask'] = array(
+$messages['be-tarask'] = [
 	'january' => 'студзень',
 	'june' => 'чэрвень',
 	'july' => 'ліпень',
@@ -496,9 +491,9 @@ $messages['be-tarask'] = array(
 	'javascripttest-pagetext-skins' => 'Выберыце афармленьне для тэставаньня:',
 	'javascripttest-qunit-intro' => 'Глядзіце [$1 дакумэнтацыю па тэставаньні] на mediawiki.org.',
 	'javascripttest-qunit-heading' => 'Набор QUnit-тэстаў для MediaWiki JavaScript',
-);
+];
 
-$messages['be-x-old'] = array(
+$messages['be-x-old'] = [
 	'january' => 'студзень',
 	'june' => 'чэрвень',
 	'july' => 'ліпень',
@@ -520,9 +515,9 @@ $messages['be-x-old'] = array(
 	'javascripttest-pagetext-skins' => 'Выберыце афармленьне для тэставаньня:',
 	'javascripttest-qunit-intro' => 'Глядзіце [$1 дакумэнтацыю па тэставаньні] на mediawiki.org.',
 	'javascripttest-qunit-heading' => 'Набор QUnit-тэстаў для MediaWiki JavaScript',
-);
+];
 
-$messages['bg'] = array(
+$messages['bg'] = [
 	'january' => 'януари',
 	'june' => 'юни',
 	'july' => 'юли',
@@ -538,9 +533,9 @@ $messages['bg'] = array(
 	'javascripttest-disabled' => 'Тази функция е изключена.',
 	'javascripttest-pagetext-noframework' => 'Тази страница е запазена за изпълнение на Джаваскрипт тестове.',
 	'javascripttest-qunit-intro' => 'Вижте [$1 тестовата документация] на mediawiki.org.',
-);
+];
 
-$messages['bh'] = array(
+$messages['bh'] = [
 	'january' => 'януари',
 	'june' => 'юни',
 	'july' => 'юли',
@@ -556,9 +551,9 @@ $messages['bh'] = array(
 	'javascripttest-disabled' => 'Тази функция е изключена.',
 	'javascripttest-pagetext-noframework' => 'Тази страница е запазена за изпълнение на Джаваскрипт тестове.',
 	'javascripttest-qunit-intro' => 'Вижте [$1 тестовата документация] на mediawiki.org.',
-);
+];
 
-$messages['bho'] = array(
+$messages['bho'] = [
 	'january' => 'जनवरी',
 	'june' => 'जून',
 	'july' => 'जुलाई',
@@ -571,18 +566,18 @@ $messages['bho'] = array(
 	'jumpto' => 'अहिजा जाईं:',
 	'jumptonavigation' => 'परिभ्रमण',
 	'jumptosearch' => 'खोजीं',
-);
+];
 
-$messages['bi'] = array(
+$messages['bi'] = [
 	'january' => 'Januware',
 	'june' => 'Jun',
 	'july' => 'Julae',
 	'january-gen' => 'Januware',
 	'june-gen' => 'Jun',
 	'july-gen' => 'Julae',
-);
+];
 
-$messages['bjn'] = array(
+$messages['bjn'] = [
 	'january' => 'Januari',
 	'june' => 'Juni',
 	'july' => 'Juli',
@@ -595,13 +590,13 @@ $messages['bjn'] = array(
 	'jumpto' => 'Malacung ka',
 	'jumptonavigation' => 'napigasi',
 	'jumptosearch' => 'gagai',
-);
+];
 
-$messages['bm'] = array(
+$messages['bm'] = [
 	'jumptosearch' => 'Nyini',
-);
+];
 
-$messages['bn'] = array(
+$messages['bn'] = [
 	'january' => 'জানুয়ারি',
 	'june' => 'জুন',
 	'july' => 'জুলাই',
@@ -614,9 +609,9 @@ $messages['bn'] = array(
 	'jumpto' => 'ঝাঁপ দাও:',
 	'jumptonavigation' => 'পরিভ্রমণ',
 	'jumptosearch' => 'অনুসন্ধান',
-);
+];
 
-$messages['bo'] = array(
+$messages['bo'] = [
 	'january' => 'ཟླ་དང་པོ།',
 	'june' => 'ཟླ་དྲུག་པ།',
 	'july' => 'ཟླ་བདུན་པ།',
@@ -629,9 +624,9 @@ $messages['bo'] = array(
 	'jumpto' => 'གནས་སྤོ།',
 	'jumptonavigation' => 'ཕྱོགས་ཁྲིད།',
 	'jumptosearch' => 'འཚོལ།',
-);
+];
 
-$messages['bpy'] = array(
+$messages['bpy'] = [
 	'january' => 'জানুয়ারী',
 	'june' => 'জুন',
 	'july' => 'জুলাই',
@@ -644,9 +639,9 @@ $messages['bpy'] = array(
 	'jumpto' => 'চঙদে:',
 	'jumptonavigation' => 'দিশা ধরানি',
 	'jumptosearch' => 'বিসারা',
-);
+];
 
-$messages['bqi'] = array(
+$messages['bqi'] = [
 	'january' => 'ژانویه',
 	'june' => 'ژوئن',
 	'july' => 'ژوئیه',
@@ -659,9 +654,9 @@ $messages['bqi'] = array(
 	'jumpto' => 'پریدن به:',
 	'jumptonavigation' => 'راندن یا هدایت کردن',
 	'jumptosearch' => 'جستن',
-);
+];
 
-$messages['br'] = array(
+$messages['br'] = [
 	'january' => 'Genver',
 	'june' => 'Mezheven',
 	'july' => 'Gouere',
@@ -675,7 +670,7 @@ $messages['br'] = array(
 	'jumptonavigation' => 'merdeiñ',
 	'jumptosearch' => 'klask',
 	'javascripttest' => 'Amprouadenn JavaScript',
-	'javascripttest-disabled' => "Diweredekaet eo an arc'hwel-mañ.",
+	'javascripttest-disabled' => 'Diweredekaet eo an arc\'hwel-mañ.',
 	'javascripttest-title' => 'Emeur o seveniñ $1 amprouadenn',
 	'javascripttest-pagetext-noframework' => 'Miret eo ar bajenn-mañ evit amprouiñ JavaScript.',
 	'javascripttest-pagetext-unknownframework' => 'Framm amprouiñ "$1" dianav.',
@@ -683,9 +678,9 @@ $messages['br'] = array(
 	'javascripttest-pagetext-skins' => 'Diuzit ar gwiskadur da vezañ implijet evit an amprouadennoù :',
 	'javascripttest-qunit-intro' => 'Sellet ouzh [$1 an teulioù amprouiñ] e mediawiki.org.',
 	'javascripttest-qunit-heading' => 'Heuliad amprouadennoù QUnit eus JavaScript war MediaWiki',
-);
+];
 
-$messages['brh'] = array(
+$messages['brh'] = [
 	'january' => 'Janvarí',
 	'june' => 'Jún',
 	'july' => 'Jaoláí',
@@ -698,9 +693,9 @@ $messages['brh'] = array(
 	'jumpto' => 'Dáng drikka:',
 	'jumptonavigation' => 'kasarşoní',
 	'jumptosearch' => 'paŧŧopol',
-);
+];
 
-$messages['bs'] = array(
+$messages['bs'] = [
 	'january' => 'januar',
 	'june' => 'juni',
 	'july' => 'juli',
@@ -714,9 +709,9 @@ $messages['bs'] = array(
 	'jumptonavigation' => 'navigacija',
 	'jumptosearch' => 'traži',
 	'javascripttest-qunit-intro' => 'Pogledajte [$1 dokumentaciju za testiranje] na mediawiki.org.',
-);
+];
 
-$messages['bug'] = array(
+$messages['bug'] = [
 	'january' => 'Januari',
 	'june' => 'Juni',
 	'july' => 'Juli',
@@ -725,9 +720,9 @@ $messages['bug'] = array(
 	'july-gen' => 'Juli',
 	'jumpto' => 'Luppe lao:',
 	'jumptosearch' => 'sappa',
-);
+];
 
-$messages['ca'] = array(
+$messages['ca'] = [
 	'january' => 'gener',
 	'june' => 'juny',
 	'july' => 'juliol',
@@ -742,23 +737,23 @@ $messages['ca'] = array(
 	'jumptosearch' => 'cerca',
 	'javascripttest' => 'Proves de JavaScript',
 	'javascripttest-disabled' => 'La funció està inhabilitada.',
-	'javascripttest-title' => "S'estan executant $1 proves",
-	'javascripttest-pagetext-noframework' => "Es reserva la pàgina per a l'execució de tests amb JavaScript.",
-	'javascripttest-pagetext-unknownframework' => "L'entorn de proves «$1» és desconegut.",
+	'javascripttest-title' => 'S\'estan executant $1 proves',
+	'javascripttest-pagetext-noframework' => 'Es reserva la pàgina per a l\'execució de tests amb JavaScript.',
+	'javascripttest-pagetext-unknownframework' => 'L\'entorn de proves «$1» és desconegut.',
 	'javascripttest-pagetext-frameworks' => 'Trieu un dels següents entorns de prova: $1',
 	'javascripttest-pagetext-skins' => 'Trieu un tema on executar-hi els tests:',
 	'javascripttest-qunit-intro' => 'Consulteu la [documentació de tests de $1] a mediawiki.org.',
 	'javascripttest-qunit-heading' => 'Entorn de proves JavaScript QUnit per al MediaWiki',
 	'joinnow' => 'Registrat ara',
-);
+];
 
-$messages['cbk-zam'] = array(
+$messages['cbk-zam'] = [
 	'january' => 'Enero',
 	'june' => 'Junio',
 	'july' => 'Julio',
-);
+];
 
-$messages['cdo'] = array(
+$messages['cdo'] = [
 	'january' => 'Ék nguŏk',
 	'june' => 'Lĕ̤k nguŏk',
 	'july' => 'Chék nguŏk',
@@ -771,9 +766,9 @@ $messages['cdo'] = array(
 	'jumpto' => 'Tiéu gáu:',
 	'jumptonavigation' => 'īng-dô̤',
 	'jumptosearch' => 'sìng-tō̤',
-);
+];
 
-$messages['ce'] = array(
+$messages['ce'] = [
 	'january' => 'нажи бутт',
 	'june' => 'мангал бутт',
 	'july' => 'мятсел бутт',
@@ -786,9 +781,9 @@ $messages['ce'] = array(
 	'jumpto' => 'Дехьавала оцу:',
 	'jumptonavigation' => 'шавигар',
 	'jumptosearch' => 'лаха',
-);
+];
 
-$messages['ceb'] = array(
+$messages['ceb'] = [
 	'january' => 'Enero',
 	'june' => 'Hunyo',
 	'july' => 'Hulyo',
@@ -801,9 +796,9 @@ $messages['ceb'] = array(
 	'jumpto' => 'Ambak sa:',
 	'jumptonavigation' => 'tabok-tabok',
 	'jumptosearch' => 'pangita',
-);
+];
 
-$messages['ch'] = array(
+$messages['ch'] = [
 	'january' => 'Eneru',
 	'june' => 'Hunio',
 	'july' => 'Hulio',
@@ -813,18 +808,18 @@ $messages['ch'] = array(
 	'jan' => 'Ene',
 	'jun' => 'Hun',
 	'jul' => 'Hul',
-	'jumpto' => "Ta'yuki guatu:",
+	'jumpto' => 'Ta\'yuki guatu:',
 	'jumptonavigation' => 'nabegasion',
 	'jumptosearch' => 'aligao',
-);
+];
 
-$messages['chr'] = array(
+$messages['chr'] = [
 	'january' => 'UᏃᎸᏔᏂ',
 	'june' => 'DᎡᎭᎷᏱ',
 	'jumptosearch' => 'ᎡᏗt',
-);
+];
 
-$messages['ckb'] = array(
+$messages['ckb'] = [
 	'january' => 'کانوونی دووەم',
 	'june' => 'حوزەیران',
 	'july' => 'تەمموز',
@@ -837,9 +832,9 @@ $messages['ckb'] = array(
 	'jumpto' => 'باز بدە بۆ:',
 	'jumptonavigation' => 'ڕێدۆزی',
 	'jumptosearch' => 'گەڕان',
-);
+];
 
-$messages['co'] = array(
+$messages['co'] = [
 	'january' => 'ghjennaghju',
 	'june' => 'ghjugnu',
 	'july' => 'lugliu',
@@ -851,9 +846,9 @@ $messages['co'] = array(
 	'jul' => 'lug',
 	'jumptonavigation' => 'navigazione',
 	'jumptosearch' => 'ricerca',
-);
+];
 
-$messages['cps'] = array(
+$messages['cps'] = [
 	'january' => 'Enero',
 	'june' => 'Hunyo',
 	'july' => 'Hulyo',
@@ -866,9 +861,9 @@ $messages['cps'] = array(
 	'jumpto' => 'Tumbo sa:',
 	'jumptonavigation' => 'nabigayson',
 	'jumptosearch' => 'pagpangita',
-);
+];
 
-$messages['crh'] = array(
+$messages['crh'] = [
 	'january' => 'Enero',
 	'june' => 'Hunyo',
 	'july' => 'Hulyo',
@@ -881,9 +876,9 @@ $messages['crh'] = array(
 	'jumpto' => 'Tumbo sa:',
 	'jumptonavigation' => 'nabigayson',
 	'jumptosearch' => 'pagpangita',
-);
+];
 
-$messages['crh-cyrl'] = array(
+$messages['crh-cyrl'] = [
 	'january' => 'январь',
 	'june' => 'июнь',
 	'july' => 'июль',
@@ -896,9 +891,9 @@ $messages['crh-cyrl'] = array(
 	'jumpto' => 'Бунъа бар:',
 	'jumptonavigation' => 'къуллан',
 	'jumptosearch' => 'къыдыр',
-);
+];
 
-$messages['crh-latn'] = array(
+$messages['crh-latn'] = [
 	'january' => 'yanvar',
 	'june' => 'iyün',
 	'july' => 'iyül',
@@ -911,9 +906,9 @@ $messages['crh-latn'] = array(
 	'jumpto' => 'Buña bar:',
 	'jumptonavigation' => 'qullan',
 	'jumptosearch' => 'qıdır',
-);
+];
 
-$messages['cs'] = array(
+$messages['cs'] = [
 	'january' => 'leden',
 	'june' => 'červen',
 	'july' => 'červenec',
@@ -935,9 +930,9 @@ $messages['cs'] = array(
 	'javascripttest-pagetext-skins' => 'Zvolte vzhled, pod kterým se mají testy spustit:',
 	'javascripttest-qunit-intro' => 'Vizte [$1 dokumentaci testování] na mediawiki.org',
 	'javascripttest-qunit-heading' => 'Sada testů JavaScriptu v MediaWiki pomocí QUnit',
-);
+];
 
-$messages['csb'] = array(
+$messages['csb'] = [
 	'january' => 'stëcznik',
 	'june' => 'czerwińc',
 	'july' => 'lëpinc',
@@ -950,9 +945,9 @@ $messages['csb'] = array(
 	'jumpto' => 'Skòczë do:',
 	'jumptonavigation' => 'nawigacëji',
 	'jumptosearch' => 'szëkbë',
-);
+];
 
-$messages['cu'] = array(
+$messages['cu'] = [
 	'january' => 'їаноуарїи',
 	'june' => 'їоунїи',
 	'july' => 'їоулїи',
@@ -965,9 +960,9 @@ $messages['cu'] = array(
 	'jumpto' => 'прѣиди къ :',
 	'jumptonavigation' => 'плаваниѥ',
 	'jumptosearch' => 'исканиѥ',
-);
+];
 
-$messages['cv'] = array(
+$messages['cv'] = [
 	'january' => 'кăрлач',
 	'june' => 'çĕртме',
 	'july' => 'утă',
@@ -980,9 +975,9 @@ $messages['cv'] = array(
 	'jumpto' => 'Куçас:',
 	'jumptonavigation' => 'çӳрев',
 	'jumptosearch' => 'Шырав',
-);
+];
 
-$messages['cy'] = array(
+$messages['cy'] = [
 	'january' => 'Ionawr',
 	'june' => 'Mehefin',
 	'july' => 'Gorffennaf',
@@ -1000,12 +995,12 @@ $messages['cy'] = array(
 	'javascripttest-title' => 'Yn cynnal profion $1',
 	'javascripttest-pagetext-noframework' => 'Neilltuwyd y dudalen hon at gynnal profion JavaScript.',
 	'javascripttest-pagetext-unknownframework' => 'Ni nabyddwyd y fframwaith profi "$1".',
-	'javascripttest-pagetext-frameworks' => "Dewiswch un o'r fframweithiau profi canlynol: $1",
+	'javascripttest-pagetext-frameworks' => 'Dewiswch un o\'r fframweithiau profi canlynol: $1',
 	'javascripttest-pagetext-skins' => 'Dewiswch wedd i gynnal profion arni:',
 	'javascripttest-qunit-heading' => 'Cyfres brofi MediaWiki JavaScript QUnit',
-);
+];
 
-$messages['da'] = array(
+$messages['da'] = [
 	'january' => 'januar',
 	'june' => 'juni',
 	'july' => 'juli',
@@ -1027,9 +1022,9 @@ $messages['da'] = array(
 	'javascripttest-pagetext-skins' => 'Vælg et udseende, som testene skal køres med:',
 	'javascripttest-qunit-intro' => 'Se [$1 testdokumentationen] på mediawiki.org.',
 	'javascripttest-qunit-heading' => 'MediaWiki JavaScript QUnit testsuite',
-);
+];
 
-$messages['de'] = array(
+$messages['de'] = [
 	'january' => 'Januar',
 	'june' => 'Juni',
 	'july' => 'Juli',
@@ -1052,15 +1047,15 @@ $messages['de'] = array(
 	'javascripttest-qunit-intro' => 'Siehe die [$1 Dokumentation zu Tests] auf mediawiki.org',
 	'javascripttest-qunit-heading' => 'MediaWiki-JavaSkript-QUnit-Tester',
 	'joinnow' => 'Jetzt registrieren',
-);
+];
 
-$messages['de-at'] = array(
+$messages['de-at'] = [
 	'january' => 'Jänner',
 	'january-gen' => 'Jänners',
 	'jan' => 'Jän',
-);
+];
 
-$messages['de-weigsbrag'] = array(
+$messages['de-weigsbrag'] = [
 	'january' => 'Jän',
 	'june' => 'Jun',
 	'july' => 'Jul',
@@ -1073,9 +1068,9 @@ $messages['de-weigsbrag'] = array(
 	'jumpto' => 'Wegs su:',
 	'jumptonavigation' => 'Nawigasion',
 	'jumptosearch' => 'Sug',
-);
+];
 
-$messages['diq'] = array(
+$messages['diq'] = [
 	'january' => 'Çele',
 	'june' => 'Heziran',
 	'july' => 'Temuz',
@@ -1088,9 +1083,9 @@ $messages['diq'] = array(
 	'jumpto' => 'Şo be:',
 	'jumptonavigation' => 'pusula',
 	'jumptosearch' => 'cı geyre',
-);
+];
 
-$messages['dsb'] = array(
+$messages['dsb'] = [
 	'january' => 'januar',
 	'june' => 'junij',
 	'july' => ' julij',
@@ -1112,9 +1107,9 @@ $messages['dsb'] = array(
 	'javascripttest-pagetext-skins' => 'Wubjeŕ drastwu za pśewjeźenje testow:',
 	'javascripttest-qunit-intro' => 'Glědaj [$1 testowańsku dokumentaciju] na mediawiki.org.',
 	'javascripttest-qunit-heading' => 'MediaWiki JavaScript QUnit test suite',
-);
+];
 
-$messages['dtp'] = array(
+$messages['dtp'] = [
 	'january' => 'Tumilatok',
 	'june' => 'Tumahas',
 	'july' => 'Tumadas',
@@ -1127,9 +1122,9 @@ $messages['dtp'] = array(
 	'jumpto' => 'Tilombus hilo:',
 	'jumptonavigation' => 'popotunud',
 	'jumptosearch' => 'ihumo',
-);
+];
 
-$messages['dv'] = array(
+$messages['dv'] = [
 	'january' => 'ޖެނުއަރީ',
 	'june' => 'ޖޫން',
 	'july' => 'ޖުލައި',
@@ -1138,9 +1133,9 @@ $messages['dv'] = array(
 	'jun' => 'ޖޫން',
 	'jul' => 'ޖުލައި',
 	'jumptosearch' => 'ހޯއްދަވާ',
-);
+];
 
-$messages['dz'] = array(
+$messages['dz'] = [
 	'january' => 'སྤྱི་ཟླ་དང་པ།',
 	'june' => 'སྤྱི་ཟླ་དྲུག་པ།',
 	'july' => 'སྤྱི་ཟླ་བདུན་པ།',
@@ -1153,9 +1148,9 @@ $messages['dz'] = array(
 	'jumpto' => 'འཕྲོ་མཐུད་འགྱོ་:',
 	'jumptonavigation' => 'འཛུལ་འགྱོ་',
 	'jumptosearch' => 'འཚོལ་ཞིབ།',
-);
+];
 
-$messages['ee'] = array(
+$messages['ee'] = [
 	'january' => 'Dzove',
 	'june' => 'Masa',
 	'july' => 'Siamlɔm',
@@ -1168,9 +1163,9 @@ $messages['ee'] = array(
 	'jumpto' => 'Dzo yi:',
 	'jumptonavigation' => 'kuɖɔɖoɖo',
 	'jumptosearch' => 'dii',
-);
+];
 
-$messages['el'] = array(
+$messages['el'] = [
 	'january' => 'Ιανουάριος',
 	'june' => 'Ιούνιος',
 	'july' => 'Ιούλιος',
@@ -1184,16 +1179,16 @@ $messages['el'] = array(
 	'jumptonavigation' => 'πλοήγηση',
 	'jumptosearch' => 'αναζήτηση',
 	'joinnow' => 'εγγραφείτε τώρα',
-);
+];
 
-$messages['eml'] = array(
+$messages['eml'] = [
 	'january' => 'Znèr',
 	'june' => 'Zógn',
 	'july' => 'Lój',
 	'jumptosearch' => 'Zerca',
-);
+];
 
-$messages['eo'] = array(
+$messages['eo'] = [
 	'january' => 'Januaro',
 	'june' => 'Junio',
 	'july' => 'Julio',
@@ -1209,9 +1204,9 @@ $messages['eo'] = array(
 	'javascripttest' => 'Ĝavoskripta testado',
 	'javascripttest-disabled' => 'Ĉi tiu funkcio estas malŝaltita.',
 	'javascripttest-qunit-intro' => 'Vidu [$1 testa dokumentaro] en mediawiki.org.',
-);
+];
 
-$messages['es'] = array(
+$messages['es'] = [
 	'january' => 'enero',
 	'june' => 'junio',
 	'july' => 'julio',
@@ -1234,9 +1229,9 @@ $messages['es'] = array(
 	'javascripttest-qunit-intro' => 'Consulte la [$1 documentación sobre las pruebas] en mediawiki.org.',
 	'javascripttest-qunit-heading' => 'Conjunto de pruebas MediaWiki JavaScript QUnit',
 	'joinnow' => 'Registrarte ahora',
-);
+];
 
-$messages['et'] = array(
+$messages['et'] = [
 	'january' => 'jaanuar',
 	'june' => 'juuni',
 	'july' => 'juuli',
@@ -1258,9 +1253,9 @@ $messages['et'] = array(
 	'javascripttest-pagetext-skins' => 'Vali kujundus, millega katsetada:',
 	'javascripttest-qunit-intro' => 'Vaata [$1 katsetamise dokumentatsiooni] asukohas mediawiki.org.',
 	'javascripttest-qunit-heading' => 'MediaWiki JavaScripti QUnit-katsekomplekt',
-);
+];
 
-$messages['eu'] = array(
+$messages['eu'] = [
 	'january' => 'Urtarrila',
 	'june' => 'Ekaina',
 	'july' => 'Uztaila',
@@ -1273,9 +1268,9 @@ $messages['eu'] = array(
 	'jumpto' => 'Hona jo:',
 	'jumptonavigation' => 'nabigazioa',
 	'jumptosearch' => 'bilatu',
-);
+];
 
-$messages['ext'] = array(
+$messages['ext'] = [
 	'january' => 'Eneru',
 	'june' => 'Húniu',
 	'july' => 'Húliu',
@@ -1288,9 +1283,9 @@ $messages['ext'] = array(
 	'jumpto' => 'Sartal a:',
 	'jumptonavigation' => 'Güiquipeandu',
 	'jumptosearch' => 'Landeal',
-);
+];
 
-$messages['fa'] = array(
+$messages['fa'] = [
 	'january' => 'ژانویه',
 	'june' => 'ژوئن',
 	'july' => 'ژوئیه',
@@ -1312,13 +1307,14 @@ $messages['fa'] = array(
 	'javascripttest-pagetext-skins' => 'پوسته‌ای را برای اجرای آزمایش‌ها انتخاب کنید:',
 	'javascripttest-qunit-intro' => '[$1 مستندات آزمایش] را در mediawiki.org ببینید.',
 	'javascripttest-qunit-heading' => 'مجموعه آزمایش QUnit جاوااسکریپت برای مدیاویکی',
-);
+	'joinnow' => 'همکنون عضو شوید',
+];
 
-$messages['ff'] = array(
+$messages['ff'] = [
 	'jumptosearch' => 'Ɗaɓɓitugol',
-);
+];
 
-$messages['fi'] = array(
+$messages['fi'] = [
 	'january' => 'tammikuu',
 	'june' => 'kesäkuu',
 	'july' => 'heinäkuu',
@@ -1341,9 +1337,9 @@ $messages['fi'] = array(
 	'javascripttest-qunit-intro' => 'Katso [$1 testausohjeet] mediawiki.orgissa.',
 	'javascripttest-qunit-heading' => 'MediaWikin JavaScriptin QUnit-testikokoelma',
 	'joinnow' => 'Liity nyt',
-);
+];
 
-$messages['fiu-vro'] = array(
+$messages['fiu-vro'] = [
 	'january' => 'tammikuu',
 	'june' => 'kesäkuu',
 	'july' => 'heinäkuu',
@@ -1366,9 +1362,9 @@ $messages['fiu-vro'] = array(
 	'javascripttest-qunit-intro' => 'Katso [$1 testausohjeet] mediawiki.orgissa.',
 	'javascripttest-qunit-heading' => 'MediaWikin JavaScriptin QUnit-testikokoelma',
 	'joinnow' => 'Liity nyt',
-);
+];
 
-$messages['fj'] = array(
+$messages['fj'] = [
 	'january' => 'Janueri',
 	'july' => 'Jiulai',
 	'january-gen' => 'Janueri',
@@ -1378,9 +1374,9 @@ $messages['fj'] = array(
 	'jul' => 'Julai',
 	'jumptonavigation' => 'Vakatasosoko',
 	'jumptosearch' => 'Vaqaqara',
-);
+];
 
-$messages['fo'] = array(
+$messages['fo'] = [
 	'january' => 'januar',
 	'june' => 'juni',
 	'july' => 'juli',
@@ -1393,9 +1389,9 @@ $messages['fo'] = array(
 	'jumpto' => 'Far til:',
 	'jumptonavigation' => 'navigatión',
 	'jumptosearch' => 'leita',
-);
+];
 
-$messages['fr'] = array(
+$messages['fr'] = [
 	'january' => 'janvier',
 	'june' => 'juin',
 	'july' => 'juillet',
@@ -1411,16 +1407,16 @@ $messages['fr'] = array(
 	'javascripttest' => 'Test de JavaScript',
 	'javascripttest-disabled' => 'Cette fonction est désactivée.',
 	'javascripttest-title' => 'Exécution des tests $1',
-	'javascripttest-pagetext-noframework' => "Cette page est réservée pour l'exécution des tests JavaScript.",
+	'javascripttest-pagetext-noframework' => 'Cette page est réservée pour l\'exécution des tests JavaScript.',
 	'javascripttest-pagetext-unknownframework' => 'Structure "$1" inconnue.',
-	'javascripttest-pagetext-frameworks' => "Veuillez choisir l'une des structures de test suivantes : $1",
+	'javascripttest-pagetext-frameworks' => 'Veuillez choisir l\'une des structures de test suivantes : $1',
 	'javascripttest-pagetext-skins' => 'Choisissez un habillage avec lequel lancer les tests :',
 	'javascripttest-qunit-intro' => 'Voir [$1 la documentation de test] sur mediawiki.org.',
 	'javascripttest-qunit-heading' => 'Suite de test QUnit de JavaScript sur MediaWiki',
-	'joinnow' => "S'inscrire",
-);
+	'joinnow' => 'S\'inscrire',
+];
 
-$messages['frc'] = array(
+$messages['frc'] = [
 	'january' => 'de janvier',
 	'june' => 'de juin',
 	'july' => 'de juliette',
@@ -1432,9 +1428,9 @@ $messages['frc'] = array(
 	'jul' => 'jul',
 	'jumpto' => 'Aller à:',
 	'jumptosearch' => 'charcher',
-);
+];
 
-$messages['frp'] = array(
+$messages['frp'] = [
 	'january' => 'de janviér',
 	'june' => 'de jouen',
 	'july' => 'de julyèt',
@@ -1451,9 +1447,9 @@ $messages['frp'] = array(
 	'javascripttest-title' => 'Èprôves de $1 en cors',
 	'javascripttest-qunit-intro' => 'Vêde la [$1 documentacion de les èprôves] dessus mediawiki.org.',
 	'javascripttest-qunit-heading' => 'Suita d’èprôva QUnit de JavaScript dessus MediaWiki',
-);
+];
 
-$messages['frr'] = array(
+$messages['frr'] = [
 	'january' => 'Januar',
 	'june' => 'Juuni',
 	'july' => 'Juuli',
@@ -1466,9 +1462,9 @@ $messages['frr'] = array(
 	'jumpto' => 'Schaft tu:',
 	'jumptonavigation' => 'Navigasjoon',
 	'jumptosearch' => 'säk',
-);
+];
 
-$messages['fur'] = array(
+$messages['fur'] = [
 	'january' => 'Zenâr',
 	'june' => 'Jugn',
 	'july' => 'Lui',
@@ -1481,9 +1477,9 @@ $messages['fur'] = array(
 	'jumpto' => 'Va a:',
 	'jumptonavigation' => 'navigazion',
 	'jumptosearch' => 'ricercje',
-);
+];
 
-$messages['fy'] = array(
+$messages['fy'] = [
 	'january' => 'jannewaris',
 	'june' => 'juny',
 	'july' => 'july',
@@ -1496,9 +1492,9 @@ $messages['fy'] = array(
 	'jumpto' => 'Gean nei:',
 	'jumptonavigation' => 'navigaasje',
 	'jumptosearch' => 'sykje',
-);
+];
 
-$messages['ga'] = array(
+$messages['ga'] = [
 	'january' => 'Eanáir',
 	'june' => 'Meitheamh',
 	'july' => 'Iúil',
@@ -1511,9 +1507,9 @@ $messages['ga'] = array(
 	'jumpto' => 'Léim go:',
 	'jumptonavigation' => 'nascleanúint',
 	'jumptosearch' => 'cuardaigh',
-);
+];
 
-$messages['gag'] = array(
+$messages['gag'] = [
 	'january' => 'Büük ay',
 	'june' => 'Kirez ay',
 	'july' => 'Orak ay',
@@ -1526,9 +1522,9 @@ $messages['gag'] = array(
 	'jumpto' => 'Git hem:',
 	'jumptonavigation' => 'kullan',
 	'jumptosearch' => 'ara',
-);
+];
 
-$messages['gan-hans'] = array(
+$messages['gan-hans'] = [
 	'january' => '1月',
 	'june' => '6月',
 	'july' => '7月',
@@ -1541,9 +1537,9 @@ $messages['gan-hans'] = array(
 	'jumpto' => '跳到:',
 	'jumptonavigation' => '导航',
 	'jumptosearch' => '寻',
-);
+];
 
-$messages['gan-hant'] = array(
+$messages['gan-hant'] = [
 	'january' => '1月',
 	'june' => '6月',
 	'july' => '7月',
@@ -1556,9 +1552,9 @@ $messages['gan-hant'] = array(
 	'jumpto' => '跳到:',
 	'jumptonavigation' => '導航',
 	'jumptosearch' => '尋',
-);
+];
 
-$messages['gd'] = array(
+$messages['gd'] = [
 	'january' => 'dhen Fhaoilleach',
 	'june' => 'dhen Ògmhios',
 	'july' => 'dhen Iuchar',
@@ -1571,9 +1567,9 @@ $messages['gd'] = array(
 	'jumpto' => 'Gearr leum gu:',
 	'jumptonavigation' => 'seòladh',
 	'jumptosearch' => 'lorg',
-);
+];
 
-$messages['gl'] = array(
+$messages['gl'] = [
 	'january' => 'xaneiro',
 	'june' => 'xuño',
 	'july' => 'xullo',
@@ -1596,15 +1592,15 @@ $messages['gl'] = array(
 	'javascripttest-qunit-intro' => 'Bótelle unha ollada á [$1 documentación das probas] en mediawiki.org.',
 	'javascripttest-qunit-heading' => 'Conxunto de probas QUnit para o JavaScript de MediaWiki',
 	'joinnow' => 'Rexistrarse agora',
-);
+];
 
-$messages['glk'] = array(
+$messages['glk'] = [
 	'jumpto' => 'واز بکون به:',
 	'jumptonavigation' => 'گردسن',
 	'jumptosearch' => 'واموج',
-);
+];
 
-$messages['gn'] = array(
+$messages['gn'] = [
 	'january' => 'jasyteĩ',
 	'june' => 'jasypoteĩ',
 	'july' => 'jasypokői',
@@ -1617,9 +1613,9 @@ $messages['gn'] = array(
 	'jumpto' => 'Kundaharãme jeho',
 	'jumptonavigation' => 'kundaharã',
 	'jumptosearch' => 'Jeheka',
-);
+];
 
-$messages['got'] = array(
+$messages['got'] = [
 	'january' => '𐌰𐍆𐍄𐌿𐌼𐌰 𐌾𐌹𐌿𐌻𐌴𐌹𐍃',
 	'june' => '𐍅𐌰𐍂𐌼𐌼𐌴𐌽𐍉𐌸𐍃',
 	'july' => '𐌷𐌰𐍅𐌹𐌼𐌴𐌽𐍉𐌸𐍃',
@@ -1632,9 +1628,9 @@ $messages['got'] = array(
 	'jumpto' => 'Gaggan at:',
 	'jumptonavigation' => '𐍃𐌴𐌹𐌳𐍉𐌲𐌰𐍅𐌹𐍃𐍃',
 	'jumptosearch' => 'sokeiþ',
-);
+];
 
-$messages['grc'] = array(
+$messages['grc'] = [
 	'january' => 'Ἰανουάριος',
 	'june' => 'Ἰούνιος',
 	'july' => 'Ἰούλιος',
@@ -1647,9 +1643,9 @@ $messages['grc'] = array(
 	'jumpto' => 'Ἅλμα πρὸς:',
 	'jumptonavigation' => 'περιήγησις',
 	'jumptosearch' => 'ἐρευνᾶν',
-);
+];
 
-$messages['gsw'] = array(
+$messages['gsw'] = [
 	'january' => 'Jänner',
 	'june' => 'Juni',
 	'july' => 'Juli',
@@ -1662,9 +1658,9 @@ $messages['gsw'] = array(
 	'jumpto' => 'Gump zue:',
 	'jumptonavigation' => 'Navigation',
 	'jumptosearch' => 'Suech',
-);
+];
 
-$messages['gu'] = array(
+$messages['gu'] = [
 	'january' => 'જાન્યુઆરી',
 	'june' => 'જૂન',
 	'july' => 'જુલાઇ',
@@ -1686,9 +1682,9 @@ $messages['gu'] = array(
 	'javascripttest-pagetext-skins' => 'ચકાસણી કરવા માટેની સ્કીન પસંદ કરો',
 	'javascripttest-qunit-intro' => 'mediawiki.org પર  [$1 testing documentation] તપાસ માહિતી જુઓ',
 	'javascripttest-qunit-heading' => 'મિડિયા વિકી જાવા સ્ક્રીપ્ટ QUnit test suite',
-);
+];
 
-$messages['gv'] = array(
+$messages['gv'] = [
 	'january' => 'Jerrey Geuree',
 	'june' => 'Mean Souree',
 	'july' => 'Jerrey Souree',
@@ -1701,9 +1697,9 @@ $messages['gv'] = array(
 	'jumpto' => 'Gow gys:',
 	'jumptonavigation' => 'stiureydys',
 	'jumptosearch' => 'ronsaghey',
-);
+];
 
-$messages['ha'] = array(
+$messages['ha'] = [
 	'january' => 'Janairu',
 	'june' => 'Yuni',
 	'july' => 'Yuli',
@@ -1716,9 +1712,9 @@ $messages['ha'] = array(
 	'jumpto' => 'A tsallaka zuwa:',
 	'jumptonavigation' => 'Shawagi',
 	'jumptosearch' => 'nema',
-);
+];
 
-$messages['hak'] = array(
+$messages['hak'] = [
 	'january' => 'Yit-ngie̍t',
 	'june' => 'Liuk-ngie̍t',
 	'july' => 'Chhit-ngie̍t',
@@ -1731,9 +1727,9 @@ $messages['hak'] = array(
 	'jumpto' => 'Thiàu-chón to:',
 	'jumptonavigation' => 'thô-hòng',
 	'jumptosearch' => 'Chhìm-cháu',
-);
+];
 
-$messages['haw'] = array(
+$messages['haw'] = [
 	'january' => 'Ianuali',
 	'june' => 'Iune',
 	'july' => 'Iulai',
@@ -1746,16 +1742,16 @@ $messages['haw'] = array(
 	'jumpto' => 'Lele i:',
 	'jumptonavigation' => 'ka ho‘okele ‘ana',
 	'jumptosearch' => 'huli',
-);
+];
 
-$messages['he'] = array(
+$messages['he'] = [
 	'january' => 'ינואר',
 	'june' => 'יוני',
 	'july' => 'יולי',
 	'january-gen' => 'בינואר',
 	'june-gen' => 'ביוני',
 	'july-gen' => 'ביולי',
-	'jan' => "ינו'",
+	'jan' => 'ינו\'',
 	'jun' => 'יוני',
 	'jul' => 'יולי',
 	'jumpto' => 'קפיצה אל:',
@@ -1771,9 +1767,9 @@ $messages['he'] = array(
 	'javascripttest-qunit-intro' => 'ראו את [$1 תיעוד הבדיקות] באתר mediawiki.org.',
 	'javascripttest-qunit-heading' => 'מערך בדיקות QUnit ל־JavaScript של מדיה־ויקי',
 	'joinnow' => 'הצטרפו עכשיו',
-);
+];
 
-$messages['hi'] = array(
+$messages['hi'] = [
 	'january' => 'जनवरी',
 	'june' => 'जून',
 	'july' => 'जुलाई',
@@ -1786,9 +1782,9 @@ $messages['hi'] = array(
 	'jumpto' => 'यहाँ जाएँ:',
 	'jumptonavigation' => 'भ्रमण',
 	'jumptosearch' => 'खोज',
-);
+];
 
-$messages['hif'] = array(
+$messages['hif'] = [
 	'january' => 'जनवरी',
 	'june' => 'जून',
 	'july' => 'जुलाई',
@@ -1801,9 +1797,9 @@ $messages['hif'] = array(
 	'jumpto' => 'यहाँ जाएँ:',
 	'jumptonavigation' => 'भ्रमण',
 	'jumptosearch' => 'खोज',
-);
+];
 
-$messages['hif-latn'] = array(
+$messages['hif-latn'] = [
 	'january' => 'January',
 	'june' => 'June',
 	'july' => 'July',
@@ -1816,9 +1812,9 @@ $messages['hif-latn'] = array(
 	'jumpto' => 'Hian jaao:',
 	'jumptonavigation' => 'navigation',
 	'jumptosearch' => 'khojo',
-);
+];
 
-$messages['hil'] = array(
+$messages['hil'] = [
 	'january' => 'Enero',
 	'june' => 'Hunyo',
 	'july' => 'Hulyo',
@@ -1831,9 +1827,9 @@ $messages['hil'] = array(
 	'jumpto' => 'Lumpat sa:',
 	'jumptonavigation' => 'nabigayson',
 	'jumptosearch' => 'Pangita-a',
-);
+];
 
-$messages['hr'] = array(
+$messages['hr'] = [
 	'january' => 'siječnja',
 	'june' => 'lipnja',
 	'july' => 'srpnja',
@@ -1847,9 +1843,9 @@ $messages['hr'] = array(
 	'jumptonavigation' => 'orijentacija',
 	'jumptosearch' => 'traži',
 	'joinnow' => 'Pridruži se',
-);
+];
 
-$messages['hsb'] = array(
+$messages['hsb'] = [
 	'january' => 'januar',
 	'june' => 'junij',
 	'july' => 'julij',
@@ -1871,9 +1867,9 @@ $messages['hsb'] = array(
 	'javascripttest-pagetext-skins' => 'Wubjer drastu za přewjedźenje testow:',
 	'javascripttest-qunit-intro' => 'Hlej [$1 testowansku dokumentaciju] na mediawiki.org.',
 	'javascripttest-qunit-heading' => 'MediaWiki JavaScript QUnit Test Suite',
-);
+];
 
-$messages['ht'] = array(
+$messages['ht'] = [
 	'january' => 'janvye',
 	'june' => 'jen',
 	'july' => 'jiyè',
@@ -1886,9 +1882,9 @@ $messages['ht'] = array(
 	'jumpto' => 'Ale nan:',
 	'jumptonavigation' => 'Navigasyon',
 	'jumptosearch' => 'Fouye',
-);
+];
 
-$messages['hu'] = array(
+$messages['hu'] = [
 	'january' => 'január',
 	'june' => 'június',
 	'july' => 'július',
@@ -1910,9 +1906,9 @@ $messages['hu'] = array(
 	'javascripttest-pagetext-skins' => 'Válassz egy megjelenítő felületet, amin a tesztet futtatod:',
 	'javascripttest-qunit-intro' => 'Lásd a [$1 tesztelési dokumentációt]  a mediawiki.org helyen.',
 	'javascripttest-qunit-heading' => 'MediaWiki JavaScript QUnit tesztcsomag',
-);
+];
 
-$messages['hy'] = array(
+$messages['hy'] = [
 	'january' => 'Հունվար',
 	'june' => 'Հունիս',
 	'july' => 'Հուլիս',
@@ -1925,9 +1921,9 @@ $messages['hy'] = array(
 	'jumpto' => 'Անցնել՝',
 	'jumptonavigation' => 'նավարկություն',
 	'jumptosearch' => 'որոնում',
-);
+];
 
-$messages['ia'] = array(
+$messages['ia'] = [
 	'january' => 'januario',
 	'june' => 'junio',
 	'july' => 'julio',
@@ -1949,9 +1945,9 @@ $messages['ia'] = array(
 	'javascripttest-pagetext-skins' => 'Selige un apparentia con le qual executar le tests:',
 	'javascripttest-qunit-intro' => 'Vide [$1 documentation de tests] sur mediawiki.org.',
 	'javascripttest-qunit-heading' => 'Programmas de test QUnit de JavaScript de MediaWiki',
-);
+];
 
-$messages['id'] = array(
+$messages['id'] = [
 	'january' => 'Januari',
 	'june' => 'Juni',
 	'july' => 'Juli',
@@ -1964,9 +1960,9 @@ $messages['id'] = array(
 	'jumpto' => 'Langsung ke:',
 	'jumptonavigation' => 'navigasi',
 	'jumptosearch' => 'cari',
-);
+];
 
-$messages['ie'] = array(
+$messages['ie'] = [
 	'january' => 'januar',
 	'june' => 'junio',
 	'july' => 'julí',
@@ -1979,9 +1975,9 @@ $messages['ie'] = array(
 	'jumpto' => 'Saltar a:',
 	'jumptonavigation' => 'navigation',
 	'jumptosearch' => 'serchar',
-);
+];
 
-$messages['ig'] = array(
+$messages['ig'] = [
 	'january' => 'Önwa Mbú',
 	'june' => 'Önwa Isii',
 	'july' => 'Önwa Asaa',
@@ -1994,9 +1990,9 @@ $messages['ig'] = array(
 	'jumpto' => 'Wuá ébé:',
 	'jumptonavigation' => 'otú uzọr',
 	'jumptosearch' => 'chọwa',
-);
+];
 
-$messages['ike-cans'] = array(
+$messages['ike-cans'] = [
 	'january' => 'ᔭᓐᓄᐊᓕ',
 	'june' => 'ᔪᓂ',
 	'july' => 'ᔪᓚᐃ',
@@ -2008,9 +2004,9 @@ $messages['ike-cans'] = array(
 	'jul' => 'ᔪᓚᐃ',
 	'jumptonavigation' => 'ᒥᐊᓂᕆᕚ',
 	'jumptosearch' => 'ᐃᕚᖅᐳᖅ',
-);
+];
 
-$messages['ike-latn'] = array(
+$messages['ike-latn'] = [
 	'january' => 'januari',
 	'june' => 'juni',
 	'july' => 'julai',
@@ -2019,9 +2015,9 @@ $messages['ike-latn'] = array(
 	'july-gen' => 'julai',
 	'jumptonavigation' => 'mianirivaa',
 	'jumptosearch' => 'ivaaqpuq',
-);
+];
 
-$messages['ilo'] = array(
+$messages['ilo'] = [
 	'january' => 'Enero',
 	'june' => 'Hunio',
 	'july' => 'Hulio',
@@ -2043,9 +2039,9 @@ $messages['ilo'] = array(
 	'javascripttest-pagetext-skins' => 'Agpili ti kudil a pangipatarayan ti pagsubokan:',
 	'javascripttest-qunit-intro' => 'Kitaen [ $1 dukomentasion ti panagsubok] idiay mediawiki.org.',
 	'javascripttest-qunit-heading' => 'MediaWiki JavaScript QUnit test suite',
-);
+];
 
-$messages['inh'] = array(
+$messages['inh'] = [
 	'january' => 'Нажгамсхой',
 	'june' => 'Аьтинг',
 	'july' => 'КӀимарс',
@@ -2058,9 +2054,9 @@ $messages['inh'] = array(
 	'jumpto' => 'Укхаза дехьавала:',
 	'jumptonavigation' => 'никътахкар',
 	'jumptosearch' => 'леха',
-);
+];
 
-$messages['io'] = array(
+$messages['io'] = [
 	'january' => 'januaro',
 	'june' => 'junio',
 	'july' => 'julio',
@@ -2073,9 +2069,9 @@ $messages['io'] = array(
 	'jumpto' => 'Irez ad:',
 	'jumptonavigation' => 'pilotado',
 	'jumptosearch' => 'serchez',
-);
+];
 
-$messages['is'] = array(
+$messages['is'] = [
 	'january' => 'janúar',
 	'june' => 'júní',
 	'july' => 'júlí',
@@ -2090,9 +2086,9 @@ $messages['is'] = array(
 	'jumptosearch' => 'leita',
 	'javascripttest-pagetext-skins' => 'Veldu þema sem á að keyra prófanirnar á:',
 	'joinnow' => 'Taktu þátt',
-);
+];
 
-$messages['it'] = array(
+$messages['it'] = [
 	'january' => 'gennaio',
 	'june' => 'giugno',
 	'july' => 'luglio',
@@ -2108,15 +2104,15 @@ $messages['it'] = array(
 	'javascripttest' => 'Sperimentazione JavaScript',
 	'javascripttest-disabled' => 'Questa funzione è disabilitata.',
 	'javascripttest-title' => 'In esecuzione test per $1',
-	'javascripttest-pagetext-noframework' => "Questa pagina è riservata all'esecuzione di test di JavaScript.",
+	'javascripttest-pagetext-noframework' => 'Questa pagina è riservata all\'esecuzione di test di JavaScript.',
 	'javascripttest-pagetext-unknownframework' => 'Framework di test sconosciuto "$1".',
 	'javascripttest-pagetext-frameworks' => 'Per cortesia, scegli uno dei seguenti framework per i test: $1',
 	'javascripttest-pagetext-skins' => 'Scegli una skin con cui eseguire i test:',
 	'javascripttest-qunit-intro' => 'Vedi su mediawiki.org la [$1 documentazione riguardante i test].',
 	'javascripttest-qunit-heading' => 'Suite di test di JavaScript per QUnit in MediaWiki',
-);
+];
 
-$messages['iu'] = array(
+$messages['iu'] = [
 	'january' => 'gennaio',
 	'june' => 'giugno',
 	'july' => 'luglio',
@@ -2132,15 +2128,15 @@ $messages['iu'] = array(
 	'javascripttest' => 'Sperimentazione JavaScript',
 	'javascripttest-disabled' => 'Questa funzione è disabilitata.',
 	'javascripttest-title' => 'In esecuzione test per $1',
-	'javascripttest-pagetext-noframework' => "Questa pagina è riservata all'esecuzione di test di JavaScript.",
+	'javascripttest-pagetext-noframework' => 'Questa pagina è riservata all\'esecuzione di test di JavaScript.',
 	'javascripttest-pagetext-unknownframework' => 'Framework di test sconosciuto "$1".',
 	'javascripttest-pagetext-frameworks' => 'Per cortesia, scegli uno dei seguenti framework per i test: $1',
 	'javascripttest-pagetext-skins' => 'Scegli una skin con cui eseguire i test:',
 	'javascripttest-qunit-intro' => 'Vedi su mediawiki.org la [$1 documentazione riguardante i test].',
 	'javascripttest-qunit-heading' => 'Suite di test di JavaScript per QUnit in MediaWiki',
-);
+];
 
-$messages['ja'] = array(
+$messages['ja'] = [
 	'january' => '1月',
 	'june' => '6月',
 	'july' => '7月',
@@ -2154,9 +2150,9 @@ $messages['ja'] = array(
 	'jumptonavigation' => '案内',
 	'jumptosearch' => '検索',
 	'joinnow' => 'いますぐ会員になろう',
-);
+];
 
-$messages['jam'] = array(
+$messages['jam'] = [
 	'january' => 'Janiweri',
 	'june' => 'Juun',
 	'july' => 'Julai',
@@ -2169,9 +2165,9 @@ $messages['jam'] = array(
 	'jumpto' => 'Jomp go a:',
 	'jumptonavigation' => 'navigieshan',
 	'jumptosearch' => 'saach',
-);
+];
 
-$messages['jbo'] = array(
+$messages['jbo'] = [
 	'january' => 'ianvari',
 	'june' => 'djunio',
 	'july' => 'djulio',
@@ -2184,9 +2180,9 @@ $messages['jbo'] = array(
 	'jumpto' => 'plipe tyobu:',
 	'jumptonavigation' => 'ckupau',
 	'jumptosearch' => 'sisku',
-);
+];
 
-$messages['jut'] = array(
+$messages['jut'] = [
 	'january' => 'januar',
 	'june' => 'juni',
 	'july' => 'juli',
@@ -2199,9 +2195,9 @@ $messages['jut'] = array(
 	'jumpto' => 'Skeft til:',
 	'jumptonavigation' => 'navigasje',
 	'jumptosearch' => 'Søĝnenge',
-);
+];
 
-$messages['jv'] = array(
+$messages['jv'] = [
 	'january' => 'Januari',
 	'june' => 'Juni',
 	'july' => 'Juli',
@@ -2214,9 +2210,9 @@ $messages['jv'] = array(
 	'jumpto' => 'Langsung menyang:',
 	'jumptonavigation' => 'navigasi',
 	'jumptosearch' => 'golèk',
-);
+];
 
-$messages['ka'] = array(
+$messages['ka'] = [
 	'january' => 'იანვარი',
 	'june' => 'ივნისი',
 	'july' => 'ივლისი',
@@ -2229,24 +2225,24 @@ $messages['ka'] = array(
 	'jumpto' => 'გადასვლა:',
 	'jumptonavigation' => 'ნავიგაცია',
 	'jumptosearch' => 'ძიება',
-);
+];
 
-$messages['kaa'] = array(
+$messages['kaa'] = [
 	'january' => 'Yanvar',
 	'june' => 'İyun',
 	'july' => 'İyul',
-	'january-gen' => "yanvardın'",
-	'june-gen' => "iyunnin'",
-	'july-gen' => "iyuldin'",
+	'january-gen' => 'yanvardın\'',
+	'june-gen' => 'iyunnin\'',
+	'july-gen' => 'iyuldin\'',
 	'jan' => 'Yan',
 	'jun' => 'İun',
 	'jul' => 'İul',
-	'jumpto' => "Bug'an o'tiw:",
+	'jumpto' => 'Bug\'an o\'tiw:',
 	'jumptonavigation' => 'navigatsiya',
 	'jumptosearch' => 'izlew',
-);
+];
 
-$messages['kab'] = array(
+$messages['kab'] = [
 	'january' => 'Yennayer',
 	'june' => 'Yunyu',
 	'july' => 'Yulyu',
@@ -2259,9 +2255,9 @@ $messages['kab'] = array(
 	'jumpto' => 'Neggez ar:',
 	'jumptonavigation' => 'ẓer isebtar',
 	'jumptosearch' => 'anadi',
-);
+];
 
-$messages['kbd'] = array(
+$messages['kbd'] = [
 	'january' => 'Yennayer',
 	'june' => 'Yunyu',
 	'july' => 'Yulyu',
@@ -2274,9 +2270,9 @@ $messages['kbd'] = array(
 	'jumpto' => 'Neggez ar:',
 	'jumptonavigation' => 'ẓer isebtar',
 	'jumptosearch' => 'anadi',
-);
+];
 
-$messages['kbd-cyrl'] = array(
+$messages['kbd-cyrl'] = [
 	'january' => 'ЩӀышылэм и',
 	'june' => 'Мэкъуауэгъуэм и',
 	'july' => 'Бадзэуэгъуэм и',
@@ -2289,9 +2285,9 @@ $messages['kbd-cyrl'] = array(
 	'jumpto' => 'Мыбы кӀуэн:',
 	'jumptonavigation' => 'навигацэ',
 	'jumptosearch' => 'лъыхъуэн',
-);
+];
 
-$messages['kg'] = array(
+$messages['kg'] = [
 	'january' => 'ngônda ya ntete',
 	'june' => 'ngônda ya sambânu',
 	'july' => 'ngônda ya nsambwâdi',
@@ -2303,9 +2299,9 @@ $messages['kg'] = array(
 	'jul' => 'ng7',
 	'jumpto' => 'Pamuka na:',
 	'jumptosearch' => 'nsosa',
-);
+];
 
-$messages['khw'] = array(
+$messages['khw'] = [
 	'january' => 'جنوری',
 	'june' => 'جون',
 	'july' => 'جولائی',
@@ -2318,9 +2314,9 @@ $messages['khw'] = array(
 	'jumpto' => 'ھیہ ووشکی څروٹھاوے',
 	'jumptonavigation' => 'رہنمائی',
 	'jumptosearch' => 'تلاش',
-);
+];
 
-$messages['kiu'] = array(
+$messages['kiu'] = [
 	'january' => 'Çele',
 	'june' => 'Hezirane',
 	'july' => 'Temmuze',
@@ -2333,9 +2329,9 @@ $messages['kiu'] = array(
 	'jumpto' => 'So be:',
 	'jumptonavigation' => 'pusula',
 	'jumptosearch' => 'cı feteliye',
-);
+];
 
-$messages['kk-arab'] = array(
+$messages['kk-arab'] = [
 	'january' => 'قاڭتار',
 	'june' => 'ماۋسىم',
 	'july' => 'شىلدە',
@@ -2348,9 +2344,9 @@ $messages['kk-arab'] = array(
 	'jumpto' => 'مىندا ٴوتۋ:',
 	'jumptonavigation' => 'باعىتتاۋ',
 	'jumptosearch' => 'ىزدەۋ',
-);
+];
 
-$messages['kk-cn'] = array(
+$messages['kk-cn'] = [
 	'january' => 'قاڭتار',
 	'june' => 'ماۋسىم',
 	'july' => 'شىلدە',
@@ -2363,9 +2359,9 @@ $messages['kk-cn'] = array(
 	'jumpto' => 'مىندا ٴوتۋ:',
 	'jumptonavigation' => 'باعىتتاۋ',
 	'jumptosearch' => 'ىزدەۋ',
-);
+];
 
-$messages['kk-cyrl'] = array(
+$messages['kk-cyrl'] = [
 	'january' => 'қаңтар',
 	'june' => 'маусым',
 	'july' => 'шілде',
@@ -2378,9 +2374,9 @@ $messages['kk-cyrl'] = array(
 	'jumpto' => 'Мында өту:',
 	'jumptonavigation' => 'шарлау',
 	'jumptosearch' => 'іздеу',
-);
+];
 
-$messages['kk-kz'] = array(
+$messages['kk-kz'] = [
 	'january' => 'қаңтар',
 	'june' => 'маусым',
 	'july' => 'шілде',
@@ -2393,9 +2389,9 @@ $messages['kk-kz'] = array(
 	'jumpto' => 'Мында өту:',
 	'jumptonavigation' => 'шарлау',
 	'jumptosearch' => 'іздеу',
-);
+];
 
-$messages['kk-latn'] = array(
+$messages['kk-latn'] = [
 	'january' => 'qañtar',
 	'june' => 'mawsım',
 	'july' => 'şilde',
@@ -2408,9 +2404,9 @@ $messages['kk-latn'] = array(
 	'jumpto' => 'Mında ötw:',
 	'jumptonavigation' => 'şarlaw',
 	'jumptosearch' => 'izdew',
-);
+];
 
-$messages['kk-tr'] = array(
+$messages['kk-tr'] = [
 	'january' => 'qañtar',
 	'june' => 'mawsım',
 	'july' => 'şilde',
@@ -2423,9 +2419,9 @@ $messages['kk-tr'] = array(
 	'jumpto' => 'Mında ötw:',
 	'jumptonavigation' => 'şarlaw',
 	'jumptosearch' => 'izdew',
-);
+];
 
-$messages['kl'] = array(
+$messages['kl'] = [
 	'january' => 'Jannuaari',
 	'june' => 'Juuni',
 	'july' => 'Juuli',
@@ -2438,9 +2434,9 @@ $messages['kl'] = array(
 	'jumpto' => 'Uunngarit:',
 	'jumptonavigation' => 'sumiissusersiuut',
 	'jumptosearch' => 'ujarlerit',
-);
+];
 
-$messages['km'] = array(
+$messages['km'] = [
 	'january' => 'ខែមករា',
 	'june' => 'ខែមិថុនា',
 	'july' => 'ខែកក្កដា',
@@ -2453,9 +2449,9 @@ $messages['km'] = array(
 	'jumpto' => 'លោតទៅ៖',
 	'jumptonavigation' => 'ការណែនាំ',
 	'jumptosearch' => 'ស្វែងរក',
-);
+];
 
-$messages['kn'] = array(
+$messages['kn'] = [
 	'january' => 'ಜನವರಿ',
 	'june' => 'ಜೂನ್',
 	'july' => 'ಜುಲೈ',
@@ -2468,9 +2464,9 @@ $messages['kn'] = array(
 	'jumpto' => 'ಇಲ್ಲಿಗೆ ಹೋಗು:',
 	'jumptonavigation' => 'ಸಂಚರಣೆ',
 	'jumptosearch' => 'ಹುಡುಕು',
-);
+];
 
-$messages['ko'] = array(
+$messages['ko'] = [
 	'january' => '1월',
 	'june' => '6월',
 	'july' => '7월',
@@ -2492,9 +2488,9 @@ $messages['ko'] = array(
 	'javascripttest-pagetext-skins' => '실험할 스킨을 고르십시오:',
 	'javascripttest-qunit-intro' => 'mediawiki.org의 [$1 테스트 설명서]를 참고하십시오.',
 	'javascripttest-qunit-heading' => '미디어위키 자바스크립트 QUnit 실험군',
-);
+];
 
-$messages['ko-kp'] = array(
+$messages['ko-kp'] = [
 	'january' => '1월',
 	'june' => '6월',
 	'july' => '7월',
@@ -2516,9 +2512,9 @@ $messages['ko-kp'] = array(
 	'javascripttest-pagetext-skins' => '실험할 스킨을 고르십시오:',
 	'javascripttest-qunit-intro' => 'mediawiki.org의 [$1 테스트 설명서]를 참고하십시오.',
 	'javascripttest-qunit-heading' => '미디어위키 자바스크립트 QUnit 실험군',
-);
+];
 
-$messages['koi'] = array(
+$messages['koi'] = [
 	'january' => 'Январ',
 	'june' => 'Юнь',
 	'july' => 'Юль',
@@ -2531,9 +2527,9 @@ $messages['koi'] = array(
 	'jumpto' => 'Вешшыны татчö:',
 	'jumptonavigation' => 'уялöм',
 	'jumptosearch' => 'кошшан',
-);
+];
 
-$messages['krc'] = array(
+$messages['krc'] = [
 	'january' => 'январь',
 	'june' => 'июнь',
 	'july' => 'июль',
@@ -2546,9 +2542,9 @@ $messages['krc'] = array(
 	'jumpto' => 'Бери кёчерге:',
 	'jumptonavigation' => 'навигация',
 	'jumptosearch' => 'излеу',
-);
+];
 
-$messages['kri'] = array(
+$messages['kri'] = [
 	'january' => 'Janyuari',
 	'june' => 'Jun',
 	'july' => 'Julai',
@@ -2561,9 +2557,9 @@ $messages['kri'] = array(
 	'jumpto' => 'Jomp go:',
 	'jumptonavigation' => 'navigeshon',
 	'jumptosearch' => 'Luk fo',
-);
+];
 
-$messages['krj'] = array(
+$messages['krj'] = [
 	'january' => 'Enero',
 	'june' => 'Honyo',
 	'july' => 'Holyo',
@@ -2575,19 +2571,19 @@ $messages['krj'] = array(
 	'jul' => 'Hol',
 	'jumpto' => 'Lompat sa:',
 	'jumptosearch' => 'sagap',
-);
+];
 
-$messages['ks'] = array(
+$messages['ks'] = [
 	'june' => 'جوٗن',
 	'jumptosearch' => 'ژھارُن',
-);
+];
 
-$messages['ks-arab'] = array(
+$messages['ks-arab'] = [
 	'june' => 'جوٗن',
 	'jumptosearch' => 'ژھارُن',
-);
+];
 
-$messages['ksh'] = array(
+$messages['ksh'] = [
 	'january' => 'Janewar',
 	'june' => 'Juni',
 	'july' => 'Juli',
@@ -2603,9 +2599,9 @@ $messages['ksh'] = array(
 	'javascripttest-disabled' => 'Di Funxjon es ußjeschalldt.',
 	'javascripttest-title' => 'De Prööfunge „$1“ loufe.',
 	'javascripttest-pagetext-unknownframework' => 'Dä Prööfrahme „$1“ es onbikannt.',
-);
+];
 
-$messages['ku'] = array(
+$messages['ku'] = [
 	'january' => 'Janewar',
 	'june' => 'Juni',
 	'july' => 'Juli',
@@ -2621,13 +2617,13 @@ $messages['ku'] = array(
 	'javascripttest-disabled' => 'Di Funxjon es ußjeschalldt.',
 	'javascripttest-title' => 'De Prööfunge „$1“ loufe.',
 	'javascripttest-pagetext-unknownframework' => 'Dä Prööfrahme „$1“ es onbikannt.',
-);
+];
 
-$messages['ku-arab'] = array(
+$messages['ku-arab'] = [
 	'january' => 'کانوونی دووەم',
-);
+];
 
-$messages['ku-latn'] = array(
+$messages['ku-latn'] = [
 	'january' => 'rêbendan',
 	'june' => 'pûşper',
 	'july' => 'tîrmeh',
@@ -2640,9 +2636,9 @@ $messages['ku-latn'] = array(
 	'jumpto' => 'Here cem:',
 	'jumptonavigation' => 'navîgasyon',
 	'jumptosearch' => 'lêbigere',
-);
+];
 
-$messages['kv'] = array(
+$messages['kv'] = [
 	'january' => 'тӧв шӧр тӧлысь',
 	'june' => 'лӧддза-номъя тӧлысь',
 	'july' => 'сора тӧлысь',
@@ -2650,9 +2646,9 @@ $messages['kv'] = array(
 	'june-gen' => 'лӧддза-номъя',
 	'july-gen' => 'сора',
 	'jumptosearch' => 'корсьысьӧм',
-);
+];
 
-$messages['kw'] = array(
+$messages['kw'] = [
 	'january' => 'Genver',
 	'june' => 'Metheven',
 	'july' => 'Gortheren',
@@ -2665,9 +2661,9 @@ $messages['kw'] = array(
 	'jumpto' => 'Labma dhe:',
 	'jumptonavigation' => 'lewyans',
 	'jumptosearch' => 'whilans',
-);
+];
 
-$messages['ky'] = array(
+$messages['ky'] = [
 	'january' => 'Январь (Үчтүн айы)',
 	'june' => 'Июнь (Кулжа)',
 	'july' => 'Июль (Теке)',
@@ -2680,9 +2676,9 @@ $messages['ky'] = array(
 	'jumpto' => 'Атта:',
 	'jumptonavigation' => 'багыттоо',
 	'jumptosearch' => 'издөө',
-);
+];
 
-$messages['la'] = array(
+$messages['la'] = [
 	'january' => 'Ianuarius',
 	'june' => 'Iunius',
 	'july' => 'Iulius',
@@ -2695,9 +2691,9 @@ $messages['la'] = array(
 	'jumpto' => 'Salire ad:',
 	'jumptonavigation' => 'navigationem',
 	'jumptosearch' => 'quaerere',
-);
+];
 
-$messages['lad'] = array(
+$messages['lad'] = [
 	'january' => 'Enero',
 	'june' => 'Junio',
 	'july' => 'Jullo',
@@ -2710,9 +2706,9 @@ $messages['lad'] = array(
 	'jumpto' => 'Salta á:',
 	'jumptonavigation' => 'navigación',
 	'jumptosearch' => 'búsqueda',
-);
+];
 
-$messages['lb'] = array(
+$messages['lb'] = [
 	'january' => 'Januar',
 	'june' => 'Juni',
 	'july' => 'Juli',
@@ -2730,10 +2726,10 @@ $messages['lb'] = array(
 	'javascripttest-title' => '$1-Tester ginn elo gemaach',
 	'javascripttest-pagetext-noframework' => 'Dës Säit ass fir Java-Script-Tester reservéiert.',
 	'javascripttest-pagetext-unknownframework' => 'Onbekannten Test-Framework "$1".',
-	'javascripttest-qunit-intro' => "Kuckt d'[$1 Dokumentatioun vun den Tester] op mediawiki.org",
-);
+	'javascripttest-qunit-intro' => 'Kuckt d\'[$1 Dokumentatioun vun den Tester] op mediawiki.org',
+];
 
-$messages['lez'] = array(
+$messages['lez'] = [
 	'january' => 'ГЬер',
 	'june' => 'КЪамуг',
 	'july' => 'Чиле',
@@ -2746,9 +2742,9 @@ $messages['lez'] = array(
 	'jumpto' => 'ЭлячIун иниз:',
 	'jumptonavigation' => 'Навигация',
 	'jumptosearch' => 'Жугъурун',
-);
+];
 
-$messages['lfn'] = array(
+$messages['lfn'] = [
 	'january' => 'janero',
 	'june' => 'junio',
 	'july' => 'julio',
@@ -2761,9 +2757,9 @@ $messages['lfn'] = array(
 	'jumpto' => 'Salta a:',
 	'jumptonavigation' => 'naviga',
 	'jumptosearch' => 'xerca',
-);
+];
 
-$messages['lg'] = array(
+$messages['lg'] = [
 	'january' => 'Gusooka',
 	'june' => 'Gwamukaaga',
 	'july' => 'Gwamusanvu',
@@ -2776,9 +2772,9 @@ $messages['lg'] = array(
 	'jumpto' => 'Genda ku:',
 	'jumptonavigation' => 'Ndagiriro',
 	'jumptosearch' => 'kunoonya',
-);
+];
 
-$messages['li'] = array(
+$messages['li'] = [
 	'january' => 'jannewarie',
 	'june' => 'juni',
 	'july' => 'juli',
@@ -2794,15 +2790,15 @@ $messages['li'] = array(
 	'javascripttest' => 'Tes JavaScript',
 	'javascripttest-disabled' => 'Dees funksje steit oet.',
 	'javascripttest-title' => 'Veur tes oet veur $1',
-	'javascripttest-pagetext-noframework' => "Dees pagina is gerizzerveerd veur 't oetveure van JavaScriptteste.",
+	'javascripttest-pagetext-noframework' => 'Dees pagina is gerizzerveerd veur \'t oetveure van JavaScriptteste.',
 	'javascripttest-pagetext-unknownframework' => 'Ónbekèndje testframework "$1".',
 	'javascripttest-pagetext-frameworks' => 'Kees ein vanne volgende tesframeworks: $1',
-	'javascripttest-pagetext-skins' => "Kees 'n oeterlik óm de teste op te laote loupe:",
+	'javascripttest-pagetext-skins' => 'Kees \'n oeterlik óm de teste op te laote loupe:',
 	'javascripttest-qunit-intro' => 'Zuuch de [$1 tesdocumentatie] op mediawiki.org.',
 	'javascripttest-qunit-heading' => 'QUnit tessuite veur MediaWiki JavaScript',
-);
+];
 
-$messages['lij'] = array(
+$messages['lij'] = [
 	'january' => 'Zenâ',
 	'june' => 'Zûgno',
 	'july' => 'Lûggio',
@@ -2815,9 +2811,9 @@ $messages['lij'] = array(
 	'jumpto' => 'Vanni a:',
 	'jumptonavigation' => 'Navegaçión',
 	'jumptosearch' => 'çerca',
-);
+];
 
-$messages['liv'] = array(
+$messages['liv'] = [
 	'january' => 'janvār',
 	'june' => 'jūnij',
 	'july' => 'jūlij',
@@ -2830,9 +2826,9 @@ $messages['liv'] = array(
 	'jumpto' => 'Li:',
 	'jumptonavigation' => 'navigīerimiz kast',
 	'jumptosearch' => 'Vȯtšõgid',
-);
+];
 
-$messages['lmo'] = array(
+$messages['lmo'] = [
 	'january' => 'Genar',
 	'june' => 'Giügn',
 	'july' => 'Lüi',
@@ -2845,9 +2841,9 @@ $messages['lmo'] = array(
 	'jumpto' => 'Va a:',
 	'jumptonavigation' => 'Navigazión',
 	'jumptosearch' => 'cerca',
-);
+];
 
-$messages['ln'] = array(
+$messages['ln'] = [
 	'january' => 'sánzá ya yambo',
 	'june' => 'sánzá ya motóbá',
 	'july' => 'sánzá ya nsambo',
@@ -2860,9 +2856,9 @@ $messages['ln'] = array(
 	'jumpto' => 'Kokɛndɛ na:',
 	'jumptonavigation' => 'bolúki',
 	'jumptosearch' => 'boluki',
-);
+];
 
-$messages['lo'] = array(
+$messages['lo'] = [
 	'january' => 'ມັງກອນ',
 	'june' => 'ມີຖຸນາ',
 	'july' => 'ກໍລະກົດ',
@@ -2875,9 +2871,9 @@ $messages['lo'] = array(
 	'jumpto' => 'ໄປຫາ:',
 	'jumptonavigation' => 'ນຳທິດ',
 	'jumptosearch' => 'ຄົ້ນຫາ',
-);
+];
 
-$messages['loz'] = array(
+$messages['loz'] = [
 	'january' => 'Sopa',
 	'june' => 'Mbuwana',
 	'july' => 'Sikulu',
@@ -2890,9 +2886,9 @@ $messages['loz'] = array(
 	'jumpto' => 'Yezi:',
 	'jumptonavigation' => 'muya',
 	'jumptosearch' => 'fatukile',
-);
+];
 
-$messages['lt'] = array(
+$messages['lt'] = [
 	'january' => 'sausio',
 	'june' => 'birželio',
 	'july' => 'liepos',
@@ -2913,9 +2909,9 @@ $messages['lt'] = array(
 	'javascripttest-pagetext-frameworks' => 'Prašome pasirinkti vieną iš išvardintų testavimo struktūrų: $1',
 	'javascripttest-pagetext-skins' => 'Pasirinkite naudotojo sąsajos išvaizdą, kuriai atliksite testavimą:',
 	'javascripttest-qunit-intro' => 'Peržiūrėkite [$1 testavimo dokumentaciją]',
-);
+];
 
-$messages['ltg'] = array(
+$messages['ltg'] = [
 	'january' => 'Janvars / Jaunagods mieness',
 	'june' => 'Juņs / Vosorys mieness',
 	'july' => 'Juļs / Sīna mieness',
@@ -2928,9 +2924,9 @@ $messages['ltg'] = array(
 	'jumpto' => 'Puorlēkt da:',
 	'jumptonavigation' => 'navigaceja',
 	'jumptosearch' => 'meklēt',
-);
+];
 
-$messages['lv'] = array(
+$messages['lv'] = [
 	'january' => 'janvārī',
 	'june' => 'jūnijā',
 	'july' => 'jūlijā',
@@ -2943,9 +2939,9 @@ $messages['lv'] = array(
 	'jumpto' => 'Pārlēkt uz:',
 	'jumptonavigation' => 'navigācija',
 	'jumptosearch' => 'meklēt',
-);
+];
 
-$messages['lzh'] = array(
+$messages['lzh'] = [
 	'january' => '一月',
 	'june' => '六月',
 	'july' => '七月',
@@ -2958,9 +2954,9 @@ $messages['lzh'] = array(
 	'jumpto' => '往：',
 	'jumptonavigation' => '嚮',
 	'jumptosearch' => '尋',
-);
+];
 
-$messages['lzz'] = array(
+$messages['lzz'] = [
 	'january' => '3ʼanağani',
 	'june' => 'Mbuliştuta',
 	'july' => 'X3ala',
@@ -2973,9 +2969,9 @@ $messages['lzz'] = array(
 	'jumpto' => 'İdi do:',
 	'jumptonavigation' => 'ixmari',
 	'jumptosearch' => 'mgori',
-);
+];
 
-$messages['mai'] = array(
+$messages['mai'] = [
 	'january' => 'जनवरी',
 	'june' => 'जून',
 	'july' => 'जुलाइ',
@@ -2988,9 +2984,9 @@ $messages['mai'] = array(
 	'jumpto' => 'जाऊ:',
 	'jumptonavigation' => 'हेलू',
 	'jumptosearch' => 'ताकू',
-);
+];
 
-$messages['map-bms'] = array(
+$messages['map-bms'] = [
 	'january' => 'Januari',
 	'june' => 'Juni',
 	'july' => 'Juli',
@@ -3003,9 +2999,9 @@ $messages['map-bms'] = array(
 	'jumpto' => 'Mlumpat maring:',
 	'jumptonavigation' => 'navigasi',
 	'jumptosearch' => 'goleti',
-);
+];
 
-$messages['mdf'] = array(
+$messages['mdf'] = [
 	'january' => 'Кельмеков',
 	'june' => 'Лямбеков',
 	'july' => 'Псиков',
@@ -3018,9 +3014,9 @@ $messages['mdf'] = array(
 	'jumpto' => 'Юпадемс тязк:',
 	'jumptonavigation' => 'навигацие',
 	'jumptosearch' => 'вешендема',
-);
+];
 
-$messages['mg'] = array(
+$messages['mg'] = [
 	'january' => 'Janoary',
 	'june' => 'Jiona',
 	'july' => 'Jolay',
@@ -3033,9 +3029,9 @@ $messages['mg'] = array(
 	'jumpto' => 'Hanketo:',
 	'jumptonavigation' => 'Fikarohana',
 	'jumptosearch' => 'karohy',
-);
+];
 
-$messages['mhr'] = array(
+$messages['mhr'] = [
 	'january' => 'Шорыкйол',
 	'june' => 'Пеледыш',
 	'july' => 'Сӱрем',
@@ -3048,15 +3044,15 @@ $messages['mhr'] = array(
 	'jumpto' => 'Куснаш:',
 	'jumptonavigation' => 'навигацийыш',
 	'jumptosearch' => 'кычалмашшке',
-);
+];
 
-$messages['mi'] = array(
+$messages['mi'] = [
 	'january' => 'Kohi-tātea',
 	'june' => 'Pipiri',
 	'july' => 'Hōngongoi',
-);
+];
 
-$messages['min'] = array(
+$messages['min'] = [
 	'january' => 'Januari',
 	'june' => 'Juni',
 	'july' => 'Juli',
@@ -3069,9 +3065,9 @@ $messages['min'] = array(
 	'jumpto' => 'Lompek ka:',
 	'jumptonavigation' => 'navigasi',
 	'jumptosearch' => 'cari',
-);
+];
 
-$messages['mk'] = array(
+$messages['mk'] = [
 	'january' => 'јануари',
 	'june' => 'јуни',
 	'july' => 'јули',
@@ -3093,9 +3089,9 @@ $messages['mk'] = array(
 	'javascripttest-pagetext-skins' => 'Одберете со кое руво да ја направите пробата:',
 	'javascripttest-qunit-intro' => 'Вид. [$1 документација на испробувањето] на mediawiki.org.',
 	'javascripttest-qunit-heading' => 'JavaScript-програм за испробување на МедијаВики „QUnit“',
-);
+];
 
-$messages['ml'] = array(
+$messages['ml'] = [
 	'january' => 'ജനുവരി',
 	'june' => 'ജൂൺ',
 	'july' => 'ജൂലൈ',
@@ -3114,9 +3110,9 @@ $messages['ml'] = array(
 	'javascripttest-pagetext-noframework' => 'ഈ താൾ ജാവാസ്ക്രിപ്റ്റ് പരീക്ഷണങ്ങൾ നടത്താനായി മാറ്റിവെച്ചിരിക്കുന്നതാണ്.',
 	'javascripttest-pagetext-skins' => 'പരീക്ഷണങ്ങൾ നടത്താനുള്ള ദൃശ്യരൂപം തിരഞ്ഞെടുക്കുക:',
 	'javascripttest-qunit-heading' => 'മീഡിയവിക്കി ജാവാസ്ക്രിപ്റ്റ് ക്യൂയൂണിറ്റ് പരീക്ഷണോപാധി',
-);
+];
 
-$messages['mn'] = array(
+$messages['mn'] = [
 	'january' => 'Нэгдүгээр сар',
 	'june' => 'Зургаадугаар сар',
 	'july' => 'Долоодугаар сар',
@@ -3129,9 +3125,9 @@ $messages['mn'] = array(
 	'jumpto' => 'Шууд очих:',
 	'jumptonavigation' => 'залуурдлага',
 	'jumptosearch' => 'хайлт',
-);
+];
 
-$messages['mo'] = array(
+$messages['mo'] = [
 	'january' => 'януарие',
 	'june' => 'юние',
 	'july' => 'юлие',
@@ -3144,9 +3140,9 @@ $messages['mo'] = array(
 	'jumpto' => 'Салт ла:',
 	'jumptonavigation' => 'навигацие',
 	'jumptosearch' => 'кэутаре',
-);
+];
 
-$messages['mr'] = array(
+$messages['mr'] = [
 	'january' => 'जानेवारी',
 	'june' => 'जून',
 	'july' => 'जुलै',
@@ -3168,9 +3164,9 @@ $messages['mr'] = array(
 	'javascripttest-pagetext-skins' => 'टेस्ट करण्यासाठी योग्य ती स्कीन निवडावी',
 	'javascripttest-qunit-intro' => 'mediawiki.org वर [$1 testing documentation] पहा',
 	'javascripttest-qunit-heading' => 'मीडिया विकी जावा स्क्रिप्ट कयू यूनिट टेस्ट ची जागा',
-);
+];
 
-$messages['mrj'] = array(
+$messages['mrj'] = [
 	'january' => 'январь',
 	'june' => 'июнь',
 	'july' => 'июль',
@@ -3183,9 +3179,9 @@ $messages['mrj'] = array(
 	'jumpto' => 'Ванжаш:',
 	'jumptonavigation' => 'навигаци',
 	'jumptosearch' => 'кӹчӓлӓш',
-);
+];
 
-$messages['ms'] = array(
+$messages['ms'] = [
 	'january' => 'Januari',
 	'june' => 'Jun',
 	'july' => 'Julai',
@@ -3207,9 +3203,9 @@ $messages['ms'] = array(
 	'javascripttest-pagetext-skins' => 'Sila pilih satu kulit untuk menjalankan ujian:',
 	'javascripttest-qunit-intro' => 'Rujuk [$1 dokumentasi ujian] di mediawiki.org.',
 	'javascripttest-qunit-heading' => 'Suit ujian MediaWiki JavaScript QUnit',
-);
+];
 
-$messages['mt'] = array(
+$messages['mt'] = [
 	'january' => 'Jannar',
 	'june' => 'Ġunju',
 	'july' => 'Lulju',
@@ -3222,9 +3218,9 @@ $messages['mt'] = array(
 	'jumpto' => 'Aqbeż għal:',
 	'jumptonavigation' => 'navigazzjoni',
 	'jumptosearch' => 'fittex',
-);
+];
 
-$messages['mwl'] = array(
+$messages['mwl'] = [
 	'january' => 'Janeiro',
 	'june' => 'Junho',
 	'july' => 'Júlio',
@@ -3237,9 +3233,9 @@ $messages['mwl'] = array(
 	'jumpto' => 'Saltar pa:',
 	'jumptonavigation' => 'nabegaçon',
 	'jumptosearch' => 'percura',
-);
+];
 
-$messages['my'] = array(
+$messages['my'] = [
 	'january' => 'ဇန်​န​ဝါ​ရီ​',
 	'june' => 'ဇွန်​',
 	'july' => 'ဇူ​လိုင်​',
@@ -3252,9 +3248,9 @@ $messages['my'] = array(
 	'jumpto' => 'ဤနေရာသို့သွားရန် -',
 	'jumptonavigation' => 'အ​ညွှန်း​',
 	'jumptosearch' => 'ရှာ​ဖွေ​ရန်​',
-);
+];
 
-$messages['myv'] = array(
+$messages['myv'] = [
 	'january' => 'Якшамков',
 	'june' => 'Аштемков',
 	'july' => 'Медьков',
@@ -3267,9 +3263,9 @@ $messages['myv'] = array(
 	'jumpto' => 'Тёкадемс тей:',
 	'jumptonavigation' => 'Новигациясь-лездамось',
 	'jumptosearch' => 'вешнэме',
-);
+];
 
-$messages['mzn'] = array(
+$messages['mzn'] = [
 	'january' => 'جـانـویـه',
 	'june' => 'ژوئن',
 	'july' => 'جـولای',
@@ -3282,9 +3278,9 @@ $messages['mzn'] = array(
 	'jumpto' => 'کپّل بیّن به:',
 	'jumptonavigation' => 'بگردستن',
 	'jumptosearch' => 'بخوندستن',
-);
+];
 
-$messages['nah'] = array(
+$messages['nah'] = [
 	'january' => 'Àtemòstli',
 	'june' => 'Toxkatl',
 	'july' => 'Tèkòilwitl',
@@ -3297,9 +3293,9 @@ $messages['nah'] = array(
 	'jumpto' => 'Īhuīcpa ticholōz:',
 	'jumptonavigation' => 'nènemòwalistli',
 	'jumptosearch' => 'tlatēmoliztli',
-);
+];
 
-$messages['nan'] = array(
+$messages['nan'] = [
 	'january' => '1-goe̍h',
 	'june' => '6-goe̍h',
 	'july' => '7-goe̍h',
@@ -3312,9 +3308,9 @@ $messages['nan'] = array(
 	'jumpto' => 'Thiàu khì:',
 	'jumptonavigation' => 'Se̍h chām',
 	'jumptosearch' => 'chhiau-chhoē',
-);
+];
 
-$messages['nap'] = array(
+$messages['nap'] = [
 	'january' => 'jennaro',
 	'june' => 'giùgno',
 	'july' => 'luglio',
@@ -3327,9 +3323,9 @@ $messages['nap'] = array(
 	'jumpto' => 'Vaje a:',
 	'jumptonavigation' => 'navigazione',
 	'jumptosearch' => 'truova',
-);
+];
 
-$messages['nb'] = array(
+$messages['nb'] = [
 	'january' => 'januar',
 	'june' => 'juni',
 	'july' => 'juli',
@@ -3351,9 +3347,9 @@ $messages['nb'] = array(
 	'javascripttest-pagetext-skins' => 'Velg et utseende for testene:',
 	'javascripttest-qunit-intro' => 'Se [$1 testedokumentasjonen] på mediawiki.org.',
 	'javascripttest-qunit-heading' => 'MediaWiki JavaScript QUnit testsuite',
-);
+];
 
-$messages['nds'] = array(
+$messages['nds'] = [
 	'january' => 'Januar',
 	'june' => 'Juni',
 	'july' => 'Juli',
@@ -3366,9 +3362,9 @@ $messages['nds'] = array(
 	'jumpto' => 'Wesseln na:',
 	'jumptonavigation' => 'Navigatschoon',
 	'jumptosearch' => 'Söök',
-);
+];
 
-$messages['nds-nl'] = array(
+$messages['nds-nl'] = [
 	'january' => 'jannewaori',
 	'june' => 'juni',
 	'july' => 'juli',
@@ -3390,9 +3386,9 @@ $messages['nds-nl'] = array(
 	'javascripttest-pagetext-skins' => 'Kies n vormgeving um de tests mee uut te voeren:',
 	'javascripttest-qunit-intro' => 'Zie de [$1 testdokumentasie] op mediawiki.org.',
 	'javascripttest-qunit-heading' => 'QUnit testsuite veur MediaWiki JavaScript',
-);
+];
 
-$messages['ne'] = array(
+$messages['ne'] = [
 	'january' => 'जेनवरी',
 	'june' => 'जुन',
 	'july' => 'जुलाई',
@@ -3405,9 +3401,9 @@ $messages['ne'] = array(
 	'jumpto' => 'यसमा जानुहोस्:',
 	'jumptonavigation' => 'अन्वेषण',
 	'jumptosearch' => 'खोज्नुहोस्',
-);
+];
 
-$messages['new'] = array(
+$messages['new'] = [
 	'january' => 'ज्यानुवरी',
 	'june' => 'जुन',
 	'july' => 'जुलाइ',
@@ -3418,9 +3414,9 @@ $messages['new'] = array(
 	'jun' => 'जुन',
 	'jul' => 'जुल',
 	'jumptosearch' => 'मालादिसँ',
-);
+];
 
-$messages['niu'] = array(
+$messages['niu'] = [
 	'january' => 'Ianuali',
 	'june' => 'Iuni',
 	'july' => 'Iulai',
@@ -3429,9 +3425,9 @@ $messages['niu'] = array(
 	'july-gen' => 'Iulai',
 	'jumptonavigation' => 'navikati',
 	'jumptosearch' => 'kumi',
-);
+];
 
-$messages['nl'] = array(
+$messages['nl'] = [
 	'january' => 'januari',
 	'june' => 'juni',
 	'july' => 'juli',
@@ -3454,9 +3450,9 @@ $messages['nl'] = array(
 	'javascripttest-qunit-intro' => 'Zie de [$1 testdocumentatie] op mediawiki.org.',
 	'javascripttest-qunit-heading' => 'QUnit testsuite voor MediaWiki JavaScript',
 	'joinnow' => 'Doe nu mee',
-);
+];
 
-$messages['nn'] = array(
+$messages['nn'] = [
 	'january' => 'januar',
 	'june' => 'juni',
 	'july' => 'juli',
@@ -3469,9 +3465,9 @@ $messages['nn'] = array(
 	'jumpto' => 'Gå til:',
 	'jumptonavigation' => 'navigering',
 	'jumptosearch' => 'søk',
-);
+];
 
-$messages['no'] = array(
+$messages['no'] = [
 	'january' => 'januar',
 	'june' => 'juni',
 	'july' => 'juli',
@@ -3485,9 +3481,9 @@ $messages['no'] = array(
 	'jumptonavigation' => 'navigering',
 	'jumptosearch' => 'søk',
 	'joinnow' => 'Registrer deg nå',
-);
+];
 
-$messages['nov'] = array(
+$messages['nov'] = [
 	'january' => 'januare',
 	'june' => 'june',
 	'july' => 'julie',
@@ -3499,9 +3495,9 @@ $messages['nov'] = array(
 	'jul' => 'jul',
 	'jumptonavigation' => 'navigatione',
 	'jumptosearch' => 'sercha',
-);
+];
 
-$messages['nso'] = array(
+$messages['nso'] = [
 	'january' => 'Pherekgong',
 	'june' => 'Phupu',
 	'july' => 'Mosegamanye',
@@ -3514,9 +3510,9 @@ $messages['nso'] = array(
 	'jumpto' => 'Taboga go:',
 	'jumptonavigation' => 'Tšweletšo',
 	'jumptosearch' => 'fetleka',
-);
+];
 
-$messages['nv'] = array(
+$messages['nv'] = [
 	'january' => 'Yas Niłtʼees',
 	'june' => 'Yaʼiishjááshchilí',
 	'july' => 'Yaʼiishjáástsoh',
@@ -3526,9 +3522,9 @@ $messages['nv'] = array(
 	'jan' => 'Ynts',
 	'jun' => 'Yjsh',
 	'jul' => 'Yjts',
-);
+];
 
-$messages['oc'] = array(
+$messages['oc'] = [
 	'january' => 'de genièr',
 	'june' => 'de junh',
 	'july' => 'de julhet',
@@ -3541,15 +3537,15 @@ $messages['oc'] = array(
 	'jumpto' => 'Anar a :',
 	'jumptonavigation' => 'navigacion',
 	'jumptosearch' => 'Recercar',
-);
+];
 
-$messages['om'] = array(
+$messages['om'] = [
 	'january' => 'Amajjii',
 	'june' => 'Waxabajjii',
 	'july' => 'Adooleessa',
-);
+];
 
-$messages['or'] = array(
+$messages['or'] = [
 	'january' => 'ଜାନୁଆରୀ',
 	'june' => 'ଜୁନ',
 	'july' => 'ଜୁଲାଇ',
@@ -3562,9 +3558,9 @@ $messages['or'] = array(
 	'jumpto' => 'ଡେଇଁଯିବେ',
 	'jumptonavigation' => 'ଦିଗବାରେଣିକୁ',
 	'jumptosearch' => 'ଖୋଜିବେ',
-);
+];
 
-$messages['os'] = array(
+$messages['os'] = [
 	'january' => 'январь',
 	'june' => 'июнь',
 	'july' => 'июль',
@@ -3577,9 +3573,9 @@ $messages['os'] = array(
 	'jumpto' => 'Тагъд æрвитæнтæ:',
 	'jumptonavigation' => 'навигаци',
 	'jumptosearch' => 'агуырд',
-);
+];
 
-$messages['pa'] = array(
+$messages['pa'] = [
 	'january' => 'ਜਨਵਰੀ',
 	'june' => 'ਜੂਨ',
 	'july' => 'ਜੁਲਾਈ',
@@ -3592,13 +3588,13 @@ $messages['pa'] = array(
 	'jumpto' => 'ਜੰਪ ਕਰੋ:',
 	'jumptonavigation' => 'ਨੇਵੀਗੇਸ਼ਨ',
 	'jumptosearch' => 'ਖੋਜ',
-);
+];
 
-$messages['pag'] = array(
+$messages['pag'] = [
 	'jumptosearch' => 'anapen',
-);
+];
 
-$messages['pam'] = array(
+$messages['pam'] = [
 	'january' => 'Eneru',
 	'june' => 'Juniu',
 	'july' => 'Juliu',
@@ -3611,9 +3607,9 @@ $messages['pam'] = array(
 	'jumpto' => 'Lundag ka king:',
 	'jumptonavigation' => 'pamaglibut',
 	'jumptosearch' => 'paintunan',
-);
+];
 
-$messages['pap'] = array(
+$messages['pap'] = [
 	'january' => 'yanüari',
 	'june' => 'yüni',
 	'july' => 'yüli',
@@ -3623,9 +3619,9 @@ $messages['pap'] = array(
 	'jumpto' => 'Bai na:',
 	'jumptonavigation' => 'Nabegashon',
 	'jumptosearch' => 'Buska',
-);
+];
 
-$messages['pcd'] = array(
+$messages['pcd'] = [
 	'january' => 'ed Janvié',
 	'june' => 'ed Join',
 	'july' => 'ed Juillet',
@@ -3638,9 +3634,9 @@ $messages['pcd'] = array(
 	'jumpto' => 'Aler à:',
 	'jumptonavigation' => 'navigachon',
 	'jumptosearch' => 'tracher',
-);
+];
 
-$messages['pdc'] = array(
+$messages['pdc'] = [
 	'january' => 'Yenner',
 	'june' => 'Yuni',
 	'july' => 'Yuli',
@@ -3653,9 +3649,9 @@ $messages['pdc'] = array(
 	'jumpto' => 'Gang nooch:',
 	'jumptonavigation' => 'Faahre-Gnepp',
 	'jumptosearch' => 'guck uff',
-);
+];
 
-$messages['pdt'] = array(
+$messages['pdt'] = [
 	'january' => 'Jaunwoa',
 	'june' => 'Jüni',
 	'july' => 'Jüli',
@@ -3668,9 +3664,9 @@ $messages['pdt'] = array(
 	'jumpto' => 'Sprinj no:',
 	'jumptonavigation' => 'Navigatioon',
 	'jumptosearch' => 'Setje',
-);
+];
 
-$messages['pfl'] = array(
+$messages['pfl'] = [
 	'january' => 'Jänner',
 	'june' => 'Juni',
 	'july' => 'Juli',
@@ -3683,24 +3679,24 @@ $messages['pfl'] = array(
 	'jumpto' => 'Spring zu:',
 	'jumptonavigation' => 'Navigation',
 	'jumptosearch' => 'Suche',
-);
+];
 
-$messages['pi'] = array(
+$messages['pi'] = [
 	'january' => 'ज्यानुवरी',
 	'june' => 'जून',
 	'july' => 'जुलाई',
-);
+];
 
-$messages['pih'] = array(
+$messages['pih'] = [
 	'january' => 'Jaenyuweri',
 	'june' => 'Juun',
 	'july' => 'Juulai',
 	'january-gen' => 'Jaenyuweri',
 	'june-gen' => 'Juun',
 	'july-gen' => 'Juulai',
-);
+];
 
-$messages['pl'] = array(
+$messages['pl'] = [
 	'january' => 'styczeń',
 	'june' => 'czerwiec',
 	'july' => 'lipiec',
@@ -3723,9 +3719,9 @@ $messages['pl'] = array(
 	'javascripttest-qunit-intro' => 'Zobacz [$1 dokumentację testów] na mediawiki.org.',
 	'javascripttest-qunit-heading' => 'Pakiet testów JavaScriptu MediaWiki QUnit',
 	'joinnow' => 'Dołącz teraz',
-);
+];
 
-$messages['pms'] = array(
+$messages['pms'] = [
 	'january' => 'Gené',
 	'june' => 'Giugn',
 	'july' => 'Luj',
@@ -3739,17 +3735,17 @@ $messages['pms'] = array(
 	'jumptonavigation' => 'navigassion',
 	'jumptosearch' => 'arserca',
 	'javascripttest' => 'Preuva ëd JavaScript',
-	'javascripttest-disabled' => "Sta funsion-sì a l'é pa abilità.",
+	'javascripttest-disabled' => 'Sta funsion-sì a l\'é pa abilità.',
 	'javascripttest-title' => 'Fé dle preuve $1',
-	'javascripttest-pagetext-noframework' => "Costa pàgina a l'é arservà për fé dle preuve JavaScript.",
+	'javascripttest-pagetext-noframework' => 'Costa pàgina a l\'é arservà për fé dle preuve JavaScript.',
 	'javascripttest-pagetext-unknownframework' => 'Utiss ëd preuva pa conossù "$1".',
-	'javascripttest-pagetext-frameworks' => "Për piasì, ch'a serna un-a dle struture ëd test sì-dapress: $1",
-	'javascripttest-pagetext-skins' => "Ch'a serna na pel për fé le preuve:",
+	'javascripttest-pagetext-frameworks' => 'Për piasì, ch\'a serna un-a dle struture ëd test sì-dapress: $1',
+	'javascripttest-pagetext-skins' => 'Ch\'a serna na pel për fé le preuve:',
 	'javascripttest-qunit-intro' => 'Varda [$1 la documentassion dle preuve] dzora a mediawiki.org.',
 	'javascripttest-qunit-heading' => 'Sequensa ëd preuve QUnit ëd JavaScript su MediaWiki',
-);
+];
 
-$messages['pnb'] = array(
+$messages['pnb'] = [
 	'january' => 'جنوری',
 	'june' => 'جون',
 	'july' => 'جولائی',
@@ -3771,9 +3767,9 @@ $messages['pnb'] = array(
 	'javascripttest-pagetext-skins' => 'اپنی پسند دا کوئی نمونہ چنو جیدے تے ٹیسٹ چلن:',
 	'javascripttest-qunit-intro' => 'mediawiki.org تے [$1 ٹسٹنگ ڈوکومنٹیشن] ویکھو۔',
 	'javascripttest-qunit-heading' => 'MediaWiki JavaScript QUnit test suite',
-);
+];
 
-$messages['pnt'] = array(
+$messages['pnt'] = [
 	'january' => 'Καλαντάρτς',
 	'june' => 'Κερασινός',
 	'july' => 'Χορτοθέρτς',
@@ -3786,9 +3782,9 @@ $messages['pnt'] = array(
 	'jumpto' => 'Δέβα σο:',
 	'jumptonavigation' => 'Πορπάτεμαν',
 	'jumptosearch' => 'Αράεμαν',
-);
+];
 
-$messages['prg'] = array(
+$messages['prg'] = [
 	'january' => 'rags',
 	'june' => 'sīmenis',
 	'july' => 'līpa',
@@ -3801,9 +3797,9 @@ $messages['prg'] = array(
 	'jumpto' => 'Sākais en:',
 	'jumptonavigation' => 'nawigaciōni',
 	'jumptosearch' => 'laukīsna',
-);
+];
 
-$messages['ps'] = array(
+$messages['ps'] = [
 	'january' => 'جنوري',
 	'june' => 'جون',
 	'july' => 'جولای',
@@ -3816,9 +3812,9 @@ $messages['ps'] = array(
 	'jumpto' => 'ورټوپ کړه:',
 	'jumptonavigation' => 'ګرځښت',
 	'jumptosearch' => 'پلټل',
-);
+];
 
-$messages['pt'] = array(
+$messages['pt'] = [
 	'january' => 'Janeiro',
 	'june' => 'Junho',
 	'july' => 'Julho',
@@ -3840,9 +3836,9 @@ $messages['pt'] = array(
 	'javascripttest-pagetext-skins' => 'Escolher um tema para executar os testes com:',
 	'javascripttest-qunit-intro' => 'Consulte a [ $1 documentação de testes] no mediawiki.org.',
 	'joinnow' => 'Registre-se',
-);
+];
 
-$messages['pt-br'] = array(
+$messages['pt-br'] = [
 	'january' => 'janeiro',
 	'june' => 'junho',
 	'july' => 'julho',
@@ -3864,9 +3860,9 @@ $messages['pt-br'] = array(
 	'javascripttest-pagetext-skins' => 'Escolha o tema para executar os testes:',
 	'javascripttest-qunit-intro' => 'Veja a [$1 documentação de testes] no mediawiki.org.',
 	'javascripttest-qunit-heading' => 'Suíte de ferramentas de teste JavaScript QUnit para MediaWiki',
-);
+];
 
-$messages['qu'] = array(
+$messages['qu'] = [
 	'january' => 'iniru',
 	'june' => 'hunyu',
 	'july' => 'hulyu',
@@ -3877,20 +3873,20 @@ $messages['qu'] = array(
 	'jun' => 'hun',
 	'jul' => 'hul',
 	'jumpto' => 'Kayman riy:',
-	'jumptonavigation' => "wamp'una",
+	'jumptonavigation' => 'wamp\'una',
 	'jumptosearch' => 'maskana',
 	'javascripttest' => 'JavaScript llanchiy',
 	'javascripttest-disabled' => 'Kay ruranaqa kay wikipi manam atichisqachu.',
 	'javascripttest-title' => '$1 llanchiykunam richkan',
-	'javascripttest-pagetext-noframework' => "Kay p'anqaqa JavaScript llanchina purichinallapaqmi kachun.",
+	'javascripttest-pagetext-noframework' => 'Kay p\'anqaqa JavaScript llanchina purichinallapaqmi kachun.',
 	'javascripttest-pagetext-unknownframework' => 'Mana riqsisqa "$1" nisqa llanchina inchu ruray',
 	'javascripttest-pagetext-frameworks' => 'Ama hina kaspa, kay qatiq llanchina inchu ruraykunamanta hukta akllay: $1',
 	'javascripttest-pagetext-skins' => 'Qarata akllay llanchiykunata paywan purichinaykipaq:',
 	'javascripttest-qunit-intro' => 'Qhaway [$1 llanchina yachachinapi], mediawiki.org nisqapi kaq.',
 	'javascripttest-qunit-heading' => 'MediaWiki JavaScript QUnit llanchina',
-);
+];
 
-$messages['qug'] = array(
+$messages['qug'] = [
 	'january' => 'Kamay',
 	'june' => 'Inti',
 	'july' => 'Purun',
@@ -3903,9 +3899,9 @@ $messages['qug'] = array(
 	'jumpto' => 'Chayman rina',
 	'jumptonavigation' => 'Wampuna',
 	'jumptosearch' => 'Maskana',
-);
+];
 
-$messages['rgn'] = array(
+$messages['rgn'] = [
 	'january' => 'Znèr',
 	'june' => 'Zógn',
 	'july' => 'Lój',
@@ -3918,9 +3914,9 @@ $messages['rgn'] = array(
 	'jumpto' => 'Sbèlza a què:',
 	'jumptonavigation' => 'navgaziòn',
 	'jumptosearch' => 'zerca',
-);
+];
 
-$messages['rif'] = array(
+$messages['rif'] = [
 	'january' => 'Yennayer',
 	'june' => 'Yunyu',
 	'july' => 'Yulyuz',
@@ -3933,9 +3929,9 @@ $messages['rif'] = array(
 	'jumpto' => 'Nḍu ghar:',
 	'jumptonavigation' => 'tagriwa',
 	'jumptosearch' => 'tarezzut',
-);
+];
 
-$messages['rm'] = array(
+$messages['rm'] = [
 	'january' => 'schaner',
 	'june' => 'zercladur',
 	'july' => 'fanadur',
@@ -3948,9 +3944,9 @@ $messages['rm'] = array(
 	'jumpto' => 'Midar tar:',
 	'jumptonavigation' => 'navigaziun',
 	'jumptosearch' => 'tschertga',
-);
+];
 
-$messages['rmy'] = array(
+$messages['rmy'] = [
 	'january' => 'pervonai',
 	'june' => 'shovtonai',
 	'july' => 'eftatonai',
@@ -3960,9 +3956,9 @@ $messages['rmy'] = array(
 	'jumpto' => 'Ja kai:',
 	'jumptonavigation' => 'phiripen',
 	'jumptosearch' => 'rodipen',
-);
+];
 
-$messages['ro'] = array(
+$messages['ro'] = [
 	'january' => 'ianuarie',
 	'june' => 'iunie',
 	'july' => 'iulie',
@@ -3985,9 +3981,9 @@ $messages['ro'] = array(
 	'javascripttest-qunit-intro' => 'A se vedea [$1 documentația de testare] pe mediawiki.org.',
 	'javascripttest-qunit-heading' => 'Suita de test MediaWiki JavaScript QUnit',
 	'joinnow' => 'Înregistrează-te acum',
-);
+];
 
-$messages['roa-rup'] = array(
+$messages['roa-rup'] = [
 	'january' => 'Yinar',
 	'june' => 'Cirishar',
 	'july' => 'Alunar',
@@ -3996,9 +3992,9 @@ $messages['roa-rup'] = array(
 	'july-gen' => 'Alunar',
 	'jumptonavigation' => 'Navigatsia',
 	'jumptosearch' => 'Caftã',
-);
+];
 
-$messages['roa-tara'] = array(
+$messages['roa-tara'] = [
 	'january' => 'Scennáre',
 	'june' => 'Sciúgne',
 	'july' => 'Lùglie',
@@ -4014,9 +4010,9 @@ $messages['roa-tara'] = array(
 	'javascripttest' => 'Test de JavaScript',
 	'javascripttest-disabled' => 'Sta funzione jè disabbilitate.',
 	'javascripttest-title' => 'Stoche a esegue $1 test',
-);
+];
 
-$messages['ru'] = array(
+$messages['ru'] = [
 	'january' => 'январь',
 	'june' => 'июнь',
 	'july' => 'июль',
@@ -4039,9 +4035,9 @@ $messages['ru'] = array(
 	'javascripttest-qunit-intro' => 'См. [$1 документацию по тестированию] на mediawiki.org.',
 	'javascripttest-qunit-heading' => 'Набор тестов MediaWiki JavaScript QUnit',
 	'joinnow' => 'Регистрируйтесь прямо сейчас',
-);
+];
 
-$messages['rue'] = array(
+$messages['rue'] = [
 	'january' => 'януар',
 	'june' => 'юній',
 	'july' => 'юлій',
@@ -4054,9 +4050,9 @@ $messages['rue'] = array(
 	'jumpto' => 'Перейти до:',
 	'jumptonavigation' => 'навіґація',
 	'jumptosearch' => 'Найти',
-);
+];
 
-$messages['rup'] = array(
+$messages['rup'] = [
 	'january' => 'Yinar',
 	'june' => 'Cirishar',
 	'july' => 'Alunar',
@@ -4065,9 +4061,9 @@ $messages['rup'] = array(
 	'july-gen' => 'Alunar',
 	'jumptonavigation' => 'Navigatsia',
 	'jumptosearch' => 'Caftã',
-);
+];
 
-$messages['ruq'] = array(
+$messages['ruq'] = [
 	'january' => 'Yinar',
 	'june' => 'Cirishar',
 	'july' => 'Alunar',
@@ -4076,9 +4072,9 @@ $messages['ruq'] = array(
 	'july-gen' => 'Alunar',
 	'jumptonavigation' => 'Navigatsia',
 	'jumptosearch' => 'Caftã',
-);
+];
 
-$messages['ruq-cyrl'] = array(
+$messages['ruq-cyrl'] = [
 	'january' => 'јануари',
 	'june' => 'јуни',
 	'july' => 'јули',
@@ -4091,9 +4087,9 @@ $messages['ruq-cyrl'] = array(
 	'jumpto' => 'Лиа а:',
 	'jumptonavigation' => 'навигацион',
 	'jumptosearch' => 'каутај',
-);
+];
 
-$messages['ruq-latn'] = array(
+$messages['ruq-latn'] = [
 	'january' => 'januari',
 	'june' => 'juni',
 	'july' => 'juli',
@@ -4106,9 +4102,9 @@ $messages['ruq-latn'] = array(
 	'jumpto' => 'Lia a:',
 	'jumptonavigation' => 'navigacion',
 	'jumptosearch' => 'kaută',
-);
+];
 
-$messages['sa'] = array(
+$messages['sa'] = [
 	'january' => 'जनुवरि',
 	'june' => 'जून्',
 	'july' => 'जूलय्',
@@ -4121,9 +4117,9 @@ $messages['sa'] = array(
 	'jumpto' => 'गम्यताम् अत्र :',
 	'jumptonavigation' => 'पर्यटनम्',
 	'jumptosearch' => 'अन्वेषणम्',
-);
+];
 
-$messages['sah'] = array(
+$messages['sah'] = [
 	'january' => 'Тохсунньу',
 	'june' => 'Бэс ыйа',
 	'july' => 'От ыйа',
@@ -4145,9 +4141,9 @@ $messages['sah'] = array(
 	'javascripttest-pagetext-skins' => 'Тургутууну ыытарга тас көрүҥүн бастаан тал:',
 	'javascripttest-qunit-intro' => '[$1 тургутуу документациятын] манна mediawiki.org көр.',
 	'javascripttest-qunit-heading' => 'MediaWiki JavaScript QUnit test suite',
-);
+];
 
-$messages['sc'] = array(
+$messages['sc'] = [
 	'january' => 'Ghennàrgiu',
 	'june' => 'Làmpadas',
 	'july' => 'Trìulas',
@@ -4160,9 +4156,9 @@ $messages['sc'] = array(
 	'jumpto' => 'Bae a:',
 	'jumptonavigation' => 'navigadura',
 	'jumptosearch' => 'chirca',
-);
+];
 
-$messages['scn'] = array(
+$messages['scn'] = [
 	'january' => 'jinnaru',
 	'june' => 'Giugnu',
 	'july' => 'Giugnettu',
@@ -4172,12 +4168,12 @@ $messages['scn'] = array(
 	'jan' => 'jin',
 	'jun' => 'giu',
 	'jul' => 'giugn',
-	'jumpto' => "Va' a:",
+	'jumpto' => 'Va\' a:',
 	'jumptonavigation' => 'navigazzioni',
-	'jumptosearch' => "Va' cerca",
-);
+	'jumptosearch' => 'Va\' cerca',
+];
 
-$messages['sco'] = array(
+$messages['sco'] = [
 	'january' => 'Januar',
 	'june' => 'Juin',
 	'july' => 'Julie',
@@ -4190,9 +4186,9 @@ $messages['sco'] = array(
 	'jumpto' => 'Lowp tae:',
 	'jumptonavigation' => 'navigation',
 	'jumptosearch' => 'rake',
-);
+];
 
-$messages['sd'] = array(
+$messages['sd'] = [
 	'january' => 'جنوري',
 	'june' => 'جُونِ',
 	'july' => 'جُولاءِ',
@@ -4203,9 +4199,9 @@ $messages['sd'] = array(
 	'jun' => 'جُونِ',
 	'jul' => 'جُولاءِ',
 	'jumptosearch' => 'ڳولا',
-);
+];
 
-$messages['sdc'] = array(
+$messages['sdc'] = [
 	'january' => 'Ginnàggiu',
 	'june' => 'Làmpadda',
 	'july' => 'Trìura',
@@ -4218,9 +4214,9 @@ $messages['sdc'] = array(
 	'jumpto' => 'Vai a:',
 	'jumptonavigation' => 'nabiggazioni',
 	'jumptosearch' => 'zercha',
-);
+];
 
-$messages['se'] = array(
+$messages['se'] = [
 	'january' => 'ođđajagimánnu',
 	'june' => 'geassemánnu',
 	'july' => 'suoidnemánnu',
@@ -4233,9 +4229,9 @@ $messages['se'] = array(
 	'jumpto' => 'Njuike:',
 	'jumptonavigation' => 'navigašuvdnii',
 	'jumptosearch' => 'ohcamii',
-);
+];
 
-$messages['sei'] = array(
+$messages['sei'] = [
 	'january' => 'Tlacintöx',
 	'june' => 'Tlachicuaztöx',
 	'july' => 'Tlachiconintöx',
@@ -4248,9 +4244,9 @@ $messages['sei'] = array(
 	'jumpto' => 'Jumpöx:',
 	'jumptonavigation' => 'navigacion',
 	'jumptosearch' => 'Yahöx',
-);
+];
 
-$messages['sg'] = array(
+$messages['sg'] = [
 	'january' => 'Nyenye',
 	'june' => 'Föndo',
 	'july' => 'Lengua',
@@ -4263,9 +4259,9 @@ $messages['sg'] = array(
 	'jumpto' => 'Gue na:',
 	'jumptonavigation' => 'Simba',
 	'jumptosearch' => 'Gi',
-);
+];
 
-$messages['sgs'] = array(
+$messages['sgs'] = [
 	'january' => 'sausė',
 	'june' => 'bėrželė',
 	'july' => 'lėipas',
@@ -4278,9 +4274,9 @@ $messages['sgs'] = array(
 	'jumpto' => 'Paršuoktė i:',
 	'jumptonavigation' => 'navėgacėjė',
 	'jumptosearch' => 'paėiška',
-);
+];
 
-$messages['sh'] = array(
+$messages['sh'] = [
 	'january' => 'januar',
 	'june' => 'jun',
 	'july' => 'jul',
@@ -4302,9 +4298,9 @@ $messages['sh'] = array(
 	'javascripttest-pagetext-skins' => 'Izaberite s kojim skinom (interfejsom) želite da pokrenete probu:',
 	'javascripttest-qunit-intro' => 'Pogledajte [$1 dokumentaciju za testiranje] na mediawiki.org.',
 	'javascripttest-qunit-heading' => 'Medijavikijin paket za testiranje – QUnit',
-);
+];
 
-$messages['shi'] = array(
+$messages['shi'] = [
 	'january' => 'Innayr',
 	'june' => 'Yunyu',
 	'july' => 'Yulyu',
@@ -4317,9 +4313,9 @@ $messages['shi'] = array(
 	'jumpto' => 'Ftu s:',
 	'jumptonavigation' => 'Tunigen',
 	'jumptosearch' => 'Acnubc',
-);
+];
 
-$messages['si'] = array(
+$messages['si'] = [
 	'january' => 'ජනවාරි',
 	'june' => 'ජූනි',
 	'july' => 'ජූලි',
@@ -4335,9 +4331,9 @@ $messages['si'] = array(
 	'javascripttest' => 'ජාවාස්ක්‍රිප්ට් පරික්ෂාකරමින්',
 	'javascripttest-title' => '$1 පරික්ෂණ සිදුකරමින්',
 	'javascripttest-pagetext-noframework' => 'මෙම පිටුව ජාවාස්ක්‍රිප්ට් පරික්ෂණ සිදුකිරීම සඳහා වෙන්කර ඇත.',
-);
+];
 
-$messages['sk'] = array(
+$messages['sk'] = [
 	'january' => 'január',
 	'june' => 'jún',
 	'july' => 'júl',
@@ -4359,9 +4355,9 @@ $messages['sk'] = array(
 	'javascripttest-pagetext-skins' => 'Vyberte tému vzhľadu, na ktorej chcete spustiť testy:',
 	'javascripttest-qunit-intro' => 'Pozri [$1 dokumentácia testovania] na mediawiki.org.',
 	'javascripttest-qunit-heading' => 'Testovacia sada QUnit JavaScriptu MediaWiki',
-);
+];
 
-$messages['sl'] = array(
+$messages['sl'] = [
 	'january' => 'januar',
 	'june' => 'junij',
 	'july' => 'julij',
@@ -4384,9 +4380,9 @@ $messages['sl'] = array(
 	'javascripttest-qunit-intro' => 'Oglejte si [$1 dokumentacijo o preizkušanju] na mediawiki.org.',
 	'javascripttest-qunit-heading' => 'Preizkuševalni paket MediaWiki JavaScript QUnit',
 	'joinnow' => 'Pridruži se',
-);
+];
 
-$messages['sli'] = array(
+$messages['sli'] = [
 	'january' => 'Januar',
 	'june' => 'Juni',
 	'july' => 'Juli',
@@ -4399,9 +4395,9 @@ $messages['sli'] = array(
 	'jumpto' => 'Wechseln zu:',
 	'jumptonavigation' => 'Navigation',
 	'jumptosearch' => 'Suche',
-);
+];
 
-$messages['sm'] = array(
+$messages['sm'] = [
 	'january' => 'Ianuari',
 	'june' => 'Iuni',
 	'july' => 'Iulai',
@@ -4412,10 +4408,10 @@ $messages['sm'] = array(
 	'jun' => 'Iuni',
 	'jul' => 'Iulai',
 	'jumptonavigation' => 'Ulifolau',
-	'jumptosearch' => "Su'e",
-);
+	'jumptosearch' => 'Su\'e',
+];
 
-$messages['sma'] = array(
+$messages['sma'] = [
 	'january' => 'tsiengele',
 	'june' => 'Ruffie',
 	'july' => 'Snjaltje',
@@ -4428,18 +4424,18 @@ $messages['sma'] = array(
 	'jumpto' => 'Vaadtsa gåajkoe:',
 	'jumptonavigation' => 'navigasjovne',
 	'jumptosearch' => 'ohtsedh',
-);
+];
 
-$messages['sn'] = array(
+$messages['sn'] = [
 	'january' => 'Ndira',
 	'june' => 'Chikumi',
 	'july' => 'Chikunguru',
 	'january-gen' => 'Ndira',
 	'june-gen' => 'Chikumi',
 	'july-gen' => 'Chikunguru',
-);
+];
 
-$messages['so'] = array(
+$messages['so'] = [
 	'january' => 'Jannaayo',
 	'june' => 'Juun',
 	'july' => 'Luuliyo',
@@ -4449,9 +4445,9 @@ $messages['so'] = array(
 	'jul' => 'Luu',
 	'jumpto' => 'U bood:',
 	'jumptosearch' => 'raadi',
-);
+];
 
-$messages['sq'] = array(
+$messages['sq'] = [
 	'january' => 'janar',
 	'june' => 'qershor',
 	'july' => 'korrik',
@@ -4464,9 +4460,9 @@ $messages['sq'] = array(
 	'jumpto' => 'Shko tek:',
 	'jumptonavigation' => 'lundrim',
 	'jumptosearch' => 'kërko',
-);
+];
 
-$messages['sr'] = array(
+$messages['sr'] = [
 	'january' => 'janar',
 	'june' => 'qershor',
 	'july' => 'korrik',
@@ -4480,9 +4476,9 @@ $messages['sr'] = array(
 	'jumptonavigation' => 'lundrim',
 	'jumptosearch' => 'kërko',
 	'joinnow' => 'Pridružite se',
-);
+];
 
-$messages['sr-ec'] = array(
+$messages['sr-ec'] = [
 	'january' => 'јануар',
 	'june' => 'јун',
 	'july' => 'јул',
@@ -4504,9 +4500,9 @@ $messages['sr-ec'] = array(
 	'javascripttest-pagetext-skins' => 'Изаберите с којом темом желите да покренете пробу:',
 	'javascripttest-qunit-intro' => 'Погледајте [$1 документацију за тестирање] на mediawiki.org.',
 	'javascripttest-qunit-heading' => 'Медијавикијин пакет за тестирање – QUnit',
-);
+];
 
-$messages['sr-el'] = array(
+$messages['sr-el'] = [
 	'january' => 'januar',
 	'june' => 'jun',
 	'july' => 'jul',
@@ -4519,9 +4515,9 @@ $messages['sr-el'] = array(
 	'jumpto' => 'Skoči na:',
 	'jumptonavigation' => 'navigacija',
 	'jumptosearch' => 'pretraga',
-);
+];
 
-$messages['srn'] = array(
+$messages['srn'] = [
 	'january' => 'foswan mun',
 	'june' => 'fossiksi mun',
 	'july' => 'fosseybi mun',
@@ -4534,9 +4530,9 @@ $messages['srn'] = array(
 	'jumpto' => 'Go na:',
 	'jumptonavigation' => 'fenipresi',
 	'jumptosearch' => 'suku',
-);
+];
 
-$messages['ss'] = array(
+$messages['ss'] = [
 	'january' => 'Bhimbidvwane',
 	'june' => 'iNhlaba',
 	'july' => 'Kholwane',
@@ -4548,9 +4544,9 @@ $messages['ss'] = array(
 	'jul' => 'Kho',
 	'jumpto' => 'Zuba ku:',
 	'jumptosearch' => 'sesha',
-);
+];
 
-$messages['st'] = array(
+$messages['st'] = [
 	'january' => 'Pherekgong',
 	'june' => 'Phupjane',
 	'july' => 'Phupu',
@@ -4558,9 +4554,9 @@ $messages['st'] = array(
 	'jun' => 'Phupjane',
 	'jul' => 'Phupu',
 	'jumptosearch' => 'phuputso',
-);
+];
 
-$messages['stq'] = array(
+$messages['stq'] = [
 	'january' => 'Januoar',
 	'june' => 'Juni',
 	'july' => 'Juli',
@@ -4573,9 +4569,9 @@ $messages['stq'] = array(
 	'jumpto' => 'Wikselje tou:',
 	'jumptonavigation' => 'Navigation',
 	'jumptosearch' => 'Säike (08)',
-);
+];
 
-$messages['su'] = array(
+$messages['su'] = [
 	'january' => 'Januari',
 	'june' => 'Juni',
 	'july' => 'Juli',
@@ -4588,9 +4584,9 @@ $messages['su'] = array(
 	'jumpto' => 'Luncat ka:',
 	'jumptonavigation' => 'pituduh',
 	'jumptosearch' => 'sungsi',
-);
+];
 
-$messages['sv'] = array(
+$messages['sv'] = [
 	'january' => 'januari',
 	'june' => 'juni',
 	'july' => 'juli',
@@ -4613,9 +4609,9 @@ $messages['sv'] = array(
 	'javascripttest-qunit-intro' => 'Se [$1 testningsdokumentationen] på mediawiki.org.',
 	'javascripttest-qunit-heading' => 'MediaWiki JavaScript QUnit testsvit',
 	'joinnow' => 'Registrera dig nu',
-);
+];
 
-$messages['sw'] = array(
+$messages['sw'] = [
 	'january' => 'Januari',
 	'june' => 'Juni',
 	'july' => 'Julai',
@@ -4628,9 +4624,9 @@ $messages['sw'] = array(
 	'jumpto' => 'Rukia:',
 	'jumptonavigation' => 'urambazaji',
 	'jumptosearch' => 'tafuta',
-);
+];
 
-$messages['szl'] = array(
+$messages['szl'] = [
 	'january' => 'styczyń',
 	'june' => 'czyrwjyń',
 	'july' => 'lipjyń',
@@ -4643,9 +4639,9 @@ $messages['szl'] = array(
 	'jumpto' => 'Przyńdź do:',
 	'jumptonavigation' => 'nawigacyje',
 	'jumptosearch' => 'sznupańo',
-);
+];
 
-$messages['ta'] = array(
+$messages['ta'] = [
 	'january' => 'ஜனவரி',
 	'june' => 'ஜூன்',
 	'july' => 'ஜூலை',
@@ -4658,9 +4654,9 @@ $messages['ta'] = array(
 	'jumpto' => 'தாவிச் செல்ல:',
 	'jumptonavigation' => 'வழிசெலுத்தல்',
 	'jumptosearch' => 'தேடுக',
-);
+];
 
-$messages['tcy'] = array(
+$messages['tcy'] = [
 	'january' => 'ಜನವರಿ',
 	'june' => 'ಜೂನ್',
 	'july' => 'ಜುಲೈ',
@@ -4673,9 +4669,9 @@ $messages['tcy'] = array(
 	'jumpto' => 'ಇಡೆ ಪೋಲೆ:',
 	'jumptonavigation' => 'ಸಂಚಾರ',
 	'jumptosearch' => 'ನಾಡ್’ಲೆ',
-);
+];
 
-$messages['te'] = array(
+$messages['te'] = [
 	'january' => 'జనవరి',
 	'june' => 'జూన్',
 	'july' => 'జూలై',
@@ -4689,9 +4685,9 @@ $messages['te'] = array(
 	'jumptonavigation' => 'పేజీకి సంబంధించిన లింకులు',
 	'jumptosearch' => 'అన్వేషణ',
 	'javascripttest' => 'జావాస్క్రిప్ట్ పరీక్ష',
-);
+];
 
-$messages['tet'] = array(
+$messages['tet'] = [
 	'january' => 'Janeiru',
 	'june' => 'Juñu',
 	'july' => 'Jullu',
@@ -4704,9 +4700,9 @@ $messages['tet'] = array(
 	'jumpto' => 'Bá:',
 	'jumptonavigation' => 'hatudu-dalan',
 	'jumptosearch' => 'buka',
-);
+];
 
-$messages['tg'] = array(
+$messages['tg'] = [
 	'january' => 'Janeiru',
 	'june' => 'Juñu',
 	'july' => 'Jullu',
@@ -4719,9 +4715,9 @@ $messages['tg'] = array(
 	'jumpto' => 'Bá:',
 	'jumptonavigation' => 'hatudu-dalan',
 	'jumptosearch' => 'buka',
-);
+];
 
-$messages['tg-cyrl'] = array(
+$messages['tg-cyrl'] = [
 	'january' => 'Январ',
 	'june' => 'Июн',
 	'july' => 'Июл',
@@ -4734,9 +4730,9 @@ $messages['tg-cyrl'] = array(
 	'jumpto' => 'Ҷаҳиш ба:',
 	'jumptonavigation' => 'гаштан',
 	'jumptosearch' => 'Ҷустуҷӯи',
-);
+];
 
-$messages['tg-latn'] = array(
+$messages['tg-latn'] = [
 	'january' => 'Janvar',
 	'june' => 'Ijun',
 	'july' => 'Ijul',
@@ -4749,9 +4745,9 @@ $messages['tg-latn'] = array(
 	'jumpto' => 'Çahiş ba:',
 	'jumptonavigation' => 'gaştan',
 	'jumptosearch' => 'Çustuçūi',
-);
+];
 
-$messages['th'] = array(
+$messages['th'] = [
 	'january' => 'มกราคม',
 	'june' => 'มิถุนายน',
 	'july' => 'กรกฎาคม',
@@ -4766,18 +4762,18 @@ $messages['th'] = array(
 	'jumptosearch' => 'สืบค้น',
 	'javascripttest' => 'การทดสอบจาวาสคริปต์',
 	'javascripttest-disabled' => 'ฟังก์ชั่นการทำงานนี้ถูกปิดการใช้งานอยู่',
-);
+];
 
-$messages['ti'] = array(
+$messages['ti'] = [
 	'january' => 'ትሪ',
 	'june' => 'ሰነ',
 	'july' => 'ሓምለ',
 	'jan' => 'ጃንዩ',
 	'jun' => 'ጁን',
 	'jumptosearch' => 'ድሉይ',
-);
+];
 
-$messages['tk'] = array(
+$messages['tk'] = [
 	'january' => 'ýanwar',
 	'june' => 'iýun',
 	'july' => 'iýul',
@@ -4790,9 +4786,9 @@ $messages['tk'] = array(
 	'jumpto' => 'Git we:',
 	'jumptonavigation' => 'ulan',
 	'jumptosearch' => 'gözle',
-);
+];
 
-$messages['tl'] = array(
+$messages['tl'] = [
 	'january' => 'Enero',
 	'june' => 'Hunyo',
 	'july' => 'Hulyo',
@@ -4805,18 +4801,18 @@ $messages['tl'] = array(
 	'jumpto' => 'Tumalon sa:',
 	'jumptonavigation' => 'paglilibot (nabigasyon)',
 	'jumptosearch' => 'paghahanap',
-);
+];
 
-$messages['tn'] = array(
+$messages['tn'] = [
 	'january' => 'Firikgong',
 	'june' => 'Seetebosigo',
 	'july' => 'Phukwi',
 	'january-gen' => 'Firikgong',
 	'june-gen' => 'Seetebosigo',
 	'july-gen' => 'Phukwi',
-);
+];
 
-$messages['to'] = array(
+$messages['to'] = [
 	'january' => 'Sānuali',
 	'june' => 'Sune',
 	'july' => 'Siulai',
@@ -4829,15 +4825,15 @@ $messages['to'] = array(
 	'jumpto' => 'Hopo ki he:',
 	'jumptonavigation' => 'ʻai taumuʻa',
 	'jumptosearch' => 'kumi',
-);
+];
 
-$messages['tokipona'] = array(
+$messages['tokipona'] = [
 	'january' => 'tenpo mun pi nanpa wan',
 	'june' => 'tenpo mun pi nanpa luka wan',
 	'july' => 'tenpo mun pi nanpa luka tu',
-);
+];
 
-$messages['tpi'] = array(
+$messages['tpi'] = [
 	'january' => 'Janueri',
 	'june' => 'Jun',
 	'july' => 'Julai',
@@ -4850,9 +4846,9 @@ $messages['tpi'] = array(
 	'jumpto' => 'Go stret long:',
 	'jumptonavigation' => 'ol bikpela pes',
 	'jumptosearch' => 'painim',
-);
+];
 
-$messages['tr'] = array(
+$messages['tr'] = [
 	'january' => 'Ocak',
 	'june' => 'Haziran',
 	'july' => 'Temmuz',
@@ -4868,16 +4864,16 @@ $messages['tr'] = array(
 	'javascripttest' => 'JavaScript denemesi',
 	'javascripttest-disabled' => 'Bu işlev devre dışı bırakıldı.',
 	'joinnow' => 'Şimdi katılın',
-);
+];
 
-$messages['ts'] = array(
+$messages['ts'] = [
 	'january' => 'Sunguti',
 	'june' => 'Khotavuxika',
 	'july' => 'Mawuwani',
 	'jumptosearch' => 'Lava',
-);
+];
 
-$messages['tt-cyrl'] = array(
+$messages['tt-cyrl'] = [
 	'january' => 'гыйнвар',
 	'june' => 'июнь',
 	'july' => 'июль',
@@ -4890,9 +4886,9 @@ $messages['tt-cyrl'] = array(
 	'jumpto' => 'Моңа күчү:',
 	'jumptonavigation' => 'навигация',
 	'jumptosearch' => 'эзләү',
-);
+];
 
-$messages['tt-latn'] = array(
+$messages['tt-latn'] = [
 	'january' => 'ğinvar',
 	'june' => 'iün',
 	'july' => 'iül',
@@ -4905,9 +4901,9 @@ $messages['tt-latn'] = array(
 	'jumpto' => 'Moña küçü:',
 	'jumptonavigation' => 'navigatsiä',
 	'jumptosearch' => 'ezläw',
-);
+];
 
-$messages['ty'] = array(
+$messages['ty'] = [
 	'january' => 'nō tēnuare',
 	'june' => 'nō tiunu',
 	'july' => 'nō tiurai',
@@ -4919,9 +4915,9 @@ $messages['ty'] = array(
 	'jul' => 'nō tiurai',
 	'jumptonavigation' => 'arata’i',
 	'jumptosearch' => 'haere',
-);
+];
 
-$messages['tyv'] = array(
+$messages['tyv'] = [
 	'january' => 'Бир ай',
 	'june' => 'Алды ай',
 	'july' => 'Чеди ай',
@@ -4933,9 +4929,9 @@ $messages['tyv'] = array(
 	'jul' => '7.ай',
 	'jumptonavigation' => 'навигация',
 	'jumptosearch' => 'дилээри',
-);
+];
 
-$messages['udm'] = array(
+$messages['udm'] = [
 	'january' => 'толшор',
 	'june' => 'инвожо',
 	'july' => 'пӧсьтолэзь',
@@ -4947,9 +4943,9 @@ $messages['udm'] = array(
 	'jul' => 'пст',
 	'jumptonavigation' => 'навигация',
 	'jumptosearch' => 'утчан',
-);
+];
 
-$messages['ug'] = array(
+$messages['ug'] = [
 	'january' => 'толшор',
 	'june' => 'инвожо',
 	'july' => 'пӧсьтолэзь',
@@ -4961,9 +4957,9 @@ $messages['ug'] = array(
 	'jul' => 'пст',
 	'jumptonavigation' => 'навигация',
 	'jumptosearch' => 'утчан',
-);
+];
 
-$messages['ug-arab'] = array(
+$messages['ug-arab'] = [
 	'january' => 'قەھرىتان',
 	'june' => 'سەپەر',
 	'july' => 'چىللە',
@@ -4976,9 +4972,9 @@ $messages['ug-arab'] = array(
 	'jumpto' => 'ئاتلا:',
 	'jumptonavigation' => 'يولباشچى',
 	'jumptosearch' => 'ئىزدە',
-);
+];
 
-$messages['ug-latn'] = array(
+$messages['ug-latn'] = [
 	'january' => 'Yanwar',
 	'june' => 'Iyun',
 	'july' => 'Iyul',
@@ -4986,9 +4982,9 @@ $messages['ug-latn'] = array(
 	'jun' => '6-Ay',
 	'jul' => '7-Ay',
 	'jumptosearch' => 'izdash',
-);
+];
 
-$messages['uk'] = array(
+$messages['uk'] = [
 	'january' => 'січень',
 	'june' => 'червень',
 	'july' => 'липень',
@@ -5011,9 +5007,9 @@ $messages['uk'] = array(
 	'javascripttest-qunit-intro' => 'Переглянути [ $1  тестування документації] на mediawiki.org.',
 	'javascripttest-qunit-heading' => 'Набір тестів MediaWiki JavaScript QUnit',
 	'joinnow' => 'Приєднатися прямо зараз',
-);
+];
 
-$messages['ur'] = array(
+$messages['ur'] = [
 	'january' => 'جنوری',
 	'june' => 'جون',
 	'july' => 'جولائی',
@@ -5026,9 +5022,9 @@ $messages['ur'] = array(
 	'jumpto' => ':چھلانگ بطرف',
 	'jumptonavigation' => 'رہنمائی',
 	'jumptosearch' => 'تلاش',
-);
+];
 
-$messages['uz'] = array(
+$messages['uz'] = [
 	'january' => 'yanvar',
 	'june' => 'iyun',
 	'july' => 'iyul',
@@ -5041,9 +5037,9 @@ $messages['uz'] = array(
 	'jumpto' => 'Oʻtish:',
 	'jumptonavigation' => 'foydalanish',
 	'jumptosearch' => 'Qidir',
-);
+];
 
-$messages['val'] = array(
+$messages['val'] = [
 	'january' => 'giner',
 	'june' => 'juny',
 	'july' => 'juliol',
@@ -5056,9 +5052,9 @@ $messages['val'] = array(
 	'jumpto' => 'Direccions ràpides:',
 	'jumptonavigation' => 'navegació',
 	'jumptosearch' => 'Busca',
-);
+];
 
-$messages['vec'] = array(
+$messages['vec'] = [
 	'january' => 'zenaro',
 	'june' => 'giugno',
 	'july' => 'lujo',
@@ -5071,9 +5067,9 @@ $messages['vec'] = array(
 	'jumpto' => 'Va a:',
 	'jumptonavigation' => 'navigasion',
 	'jumptosearch' => 'serca',
-);
+];
 
-$messages['vep'] = array(
+$messages['vep'] = [
 	'january' => 'viluku',
 	'june' => 'kezaku',
 	'july' => 'heinku',
@@ -5088,9 +5084,9 @@ $messages['vep'] = array(
 	'jumptosearch' => 'Ecind',
 	'javascripttest' => 'JavaScriptan kodvmine',
 	'javascripttest-disabled' => 'Nece funkcii ei ole kävutamas.',
-);
+];
 
-$messages['vi'] = array(
+$messages['vi'] = [
 	'january' => 'tháng 1',
 	'june' => 'tháng 6',
 	'july' => 'tháng 7',
@@ -5112,9 +5108,9 @@ $messages['vi'] = array(
 	'javascripttest-pagetext-skins' => 'Hãy chọn một bề ngoài để sử dụng với các ca kiểm thử:',
 	'javascripttest-qunit-intro' => 'Xem [$1 tài liệu kiểm thử] tại mediawiki.org.',
 	'javascripttest-qunit-heading' => 'Tập kiểm thử QUnit JavaScript MediaWiki',
-);
+];
 
-$messages['vls'] = array(
+$messages['vls'] = [
 	'january' => 'januoari',
 	'june' => 'juni',
 	'july' => 'juli',
@@ -5124,9 +5120,9 @@ $messages['vls'] = array(
 	'jan' => 'jan',
 	'jun' => 'jun',
 	'jul' => 'jul',
-);
+];
 
-$messages['vmf'] = array(
+$messages['vmf'] = [
 	'january' => 'Januaar',
 	'june' => 'Juuni',
 	'july' => 'Juuli',
@@ -5139,9 +5135,9 @@ $messages['vmf'] = array(
 	'jumpto' => 'Wajdä mid:',
 	'jumptonavigation' => 'Wohii gea',
 	'jumptosearch' => 'Suchng',
-);
+];
 
-$messages['vo'] = array(
+$messages['vo'] = [
 	'january' => 'yanul',
 	'june' => 'yunul',
 	'july' => 'yulul',
@@ -5155,9 +5151,9 @@ $messages['vo'] = array(
 	'jumptonavigation' => 'nafam',
 	'jumptosearch' => 'suk',
 	'joinnow' => 'Registarolös oli',
-);
+];
 
-$messages['vot'] = array(
+$messages['vot'] = [
 	'january' => 'janvaari',
 	'june' => 'juńi',
 	'july' => 'juľi',
@@ -5170,9 +5166,9 @@ $messages['vot'] = array(
 	'jumpto' => 'Hüppä:',
 	'jumptonavigation' => 'valittsõmisiisõ',
 	'jumptosearch' => 'ettsüse',
-);
+];
 
-$messages['vro'] = array(
+$messages['vro'] = [
 	'january' => 'vahtsõaastakuu',
 	'june' => 'piimäkuu',
 	'july' => 'hainakuu',
@@ -5185,9 +5181,9 @@ $messages['vro'] = array(
 	'jumpto' => 'Mineq üle:',
 	'jumptonavigation' => 'juhtminõ',
 	'jumptosearch' => 'otsminõ',
-);
+];
 
-$messages['wa'] = array(
+$messages['wa'] = [
 	'january' => 'djanvî',
 	'june' => 'djun',
 	'july' => 'djulete',
@@ -5200,9 +5196,9 @@ $messages['wa'] = array(
 	'jumpto' => 'Potchî a:',
 	'jumptonavigation' => 'naiviaedje',
 	'jumptosearch' => 'cweri',
-);
+];
 
-$messages['war'] = array(
+$messages['war'] = [
 	'january' => 'Enero',
 	'june' => 'Hunyo',
 	'july' => 'Hulyo',
@@ -5215,9 +5211,9 @@ $messages['war'] = array(
 	'jumpto' => 'Laktaw ngadto ha:',
 	'jumptonavigation' => 'paglayag',
 	'jumptosearch' => 'bilnga',
-);
+];
 
-$messages['wo'] = array(
+$messages['wo'] = [
 	'january' => 'Semwiyee',
 	'june' => 'Suwe',
 	'july' => 'Sulet',
@@ -5230,9 +5226,9 @@ $messages['wo'] = array(
 	'jumpto' => 'Dem :',
 	'jumptonavigation' => 'Joowiin',
 	'jumptosearch' => 'Seet',
-);
+];
 
-$messages['wuu'] = array(
+$messages['wuu'] = [
 	'january' => '1月',
 	'june' => '6月',
 	'july' => '7月',
@@ -5245,9 +5241,9 @@ $messages['wuu'] = array(
 	'jumpto' => '跳转到：',
 	'jumptonavigation' => '导航',
 	'jumptosearch' => '搜寻',
-);
+];
 
-$messages['xal'] = array(
+$messages['xal'] = [
 	'january' => 'Туула сар',
 	'june' => 'Мөчн сар',
 	'july' => 'Така сар',
@@ -5260,18 +5256,18 @@ $messages['xal'] = array(
 	'jumpto' => 'Ирх тал:',
 	'jumptonavigation' => 'Һазр медлһн',
 	'jumptosearch' => 'хәәлһн',
-);
+];
 
-$messages['xh'] = array(
+$messages['xh'] = [
 	'january' => 'EyoMqungu',
 	'june' => 'EyeSilimela',
 	'july' => 'EyeKhala',
 	'january-gen' => 'EyoMqungu',
 	'june-gen' => 'Eyesilimela',
 	'july-gen' => 'Eye Khala',
-);
+];
 
-$messages['xmf'] = array(
+$messages['xmf'] = [
 	'january' => 'ღურთუთა',
 	'june' => 'მანგი',
 	'july' => 'კვირკვე',
@@ -5284,9 +5280,9 @@ $messages['xmf'] = array(
 	'jumpto' => 'გეგნორთი:',
 	'jumptonavigation' => 'ნავიგაცია',
 	'jumptosearch' => 'გორუა',
-);
+];
 
-$messages['yi'] = array(
+$messages['yi'] = [
 	'january' => 'יאַנואַר',
 	'june' => 'יוני',
 	'july' => 'יולי',
@@ -5299,9 +5295,9 @@ $messages['yi'] = array(
 	'jumpto' => 'שפּרינג צו:',
 	'jumptonavigation' => 'נאַוויגאַציע',
 	'jumptosearch' => 'זוכן',
-);
+];
 
-$messages['yo'] = array(
+$messages['yo'] = [
 	'january' => 'Oṣù Kínní',
 	'june' => 'Oṣù Kẹfà',
 	'july' => 'Oṣù Keje',
@@ -5314,9 +5310,9 @@ $messages['yo'] = array(
 	'jumpto' => 'Lọ sí:',
 	'jumptonavigation' => 'atọ́ka',
 	'jumptosearch' => 'àwárí',
-);
+];
 
-$messages['yue'] = array(
+$messages['yue'] = [
 	'january' => '1月',
 	'june' => '6月',
 	'july' => '7月',
@@ -5329,9 +5325,9 @@ $messages['yue'] = array(
 	'jumpto' => '跳去:',
 	'jumptonavigation' => '定向',
 	'jumptosearch' => '搵嘢',
-);
+];
 
-$messages['za'] = array(
+$messages['za'] = [
 	'january' => 'Nin Wtj',
 	'june' => 'Nin Loekj',
 	'july' => 'Nin Caet',
@@ -5344,9 +5340,9 @@ $messages['za'] = array(
 	'jumpto' => 'Diuq bae',
 	'jumptonavigation' => 'Dazzaeuh',
 	'jumptosearch' => 'Ra',
-);
+];
 
-$messages['zea'] = array(
+$messages['zea'] = [
 	'january' => 'januaori',
 	'june' => 'juni',
 	'july' => 'juli',
@@ -5359,9 +5355,9 @@ $messages['zea'] = array(
 	'jumpto' => 'Hi nae:',
 	'jumptonavigation' => 'navigaotie',
 	'jumptosearch' => 'zoeken',
-);
+];
 
-$messages['zh-hans'] = array(
+$messages['zh-hans'] = [
 	'january' => '1月',
 	'june' => '6月',
 	'july' => '7月',
@@ -5383,9 +5379,9 @@ $messages['zh-hans'] = array(
 	'javascripttest-pagetext-skins' => '选择外观来运行测试：',
 	'javascripttest-qunit-intro' => '请浏览mediawiki.org参阅[$1 测试文档]。',
 	'javascripttest-qunit-heading' => 'MediaWiki JavaScript QUnit 测试套件',
-);
+];
 
-$messages['zh-hant'] = array(
+$messages['zh-hant'] = [
 	'january' => '1月',
 	'june' => '6月',
 	'july' => '7月',
@@ -5407,41 +5403,41 @@ $messages['zh-hant'] = array(
 	'javascripttest-pagetext-skins' => '選擇運行測試的外觀：',
 	'javascripttest-qunit-intro' => '請看mediawiki.org的[$1 測試說明]',
 	'javascripttest-qunit-heading' => 'MediaWiki JavaScript QUnit 測試套件',
-);
+];
 
-$messages['zh-hk'] = array(
+$messages['zh-hk'] = [
 	'january' => '一月',
 	'june' => '六月',
 	'july' => '七月',
 	'jumpto' => '跳到：',
 	'jumptosearch' => '搜尋',
-);
+];
 
-$messages['zh-min-nan'] = array(
+$messages['zh-min-nan'] = [
 	'january' => '一月',
 	'june' => '六月',
 	'july' => '七月',
 	'jumpto' => '跳到：',
 	'jumptosearch' => '搜尋',
-);
+];
 
-$messages['zh-mo'] = array(
+$messages['zh-mo'] = [
 	'january' => '一月',
 	'june' => '六月',
 	'july' => '七月',
 	'jumpto' => '跳到：',
 	'jumptosearch' => '搜尋',
-);
+];
 
-$messages['zh-my'] = array(
+$messages['zh-my'] = [
 	'january' => '一月',
 	'june' => '六月',
 	'july' => '七月',
 	'jumpto' => '跳到：',
 	'jumptosearch' => '搜尋',
-);
+];
 
-$messages['zh-tw'] = array(
+$messages['zh-tw'] = [
 	'january' => '一月',
 	'june' => '六月',
 	'july' => '七月',
@@ -5453,9 +5449,9 @@ $messages['zh-tw'] = array(
 	'jul' => '7月',
 	'jumptosearch' => '搜尋',
 	'joinnow' => '立即加入',
-);
+];
 
-$messages['zh-yue'] = array(
+$messages['zh-yue'] = [
 	'january' => '一月',
 	'june' => '六月',
 	'july' => '七月',
@@ -5467,9 +5463,9 @@ $messages['zh-yue'] = array(
 	'jul' => '7月',
 	'jumptosearch' => '搜尋',
 	'joinnow' => '立即加入',
-);
+];
 
-$messages['zu'] = array(
+$messages['zu'] = [
 	'january' => 'uJanuwali',
 	'june' => 'uJuni',
 	'july' => 'uJulayi',
@@ -5479,5 +5475,5 @@ $messages['zu'] = array(
 	'jumpto' => 'Eqa e:',
 	'jumptonavigation' => 'Ukuqondiswa kwemikhumbi',
 	'jumptosearch' => 'Sesha',
-);
+];
 

@@ -1,6 +1,6 @@
 /*global WikiBuilderCfg, ThemeDesigner */
 
-define('ext.createNewWiki.builder', ['ext.createNewWiki.helper'], function (helper) {
+define('ext.createNewWiki.builder', ['ext.createNewWiki.helper', 'wikia.tracker'], function (helper, tracker) {
 	'use strict';
 
 	var wntimer = false,
@@ -40,7 +40,12 @@ define('ext.createNewWiki.builder', ['ext.createNewWiki.helper'], function (help
 		userAuth,
 		errorModalHeader,
 		errorModalMessage,
-		isUserLoggedIn = window.wgUserName !== null;
+		isUserLoggedIn = window.wgUserName !== null,
+		track = tracker.buildTrackingFunction({
+			action: tracker.ACTIONS.CLICK,
+			category: 'create-new-wiki',
+			trackingMethod: 'analytics'
+		});
 
 	function init() {
 		var pane;
@@ -104,9 +109,14 @@ define('ext.createNewWiki.builder', ['ext.createNewWiki.helper'], function (help
 		$('#Description').placeholder();
 		$themWikiWrapper.find('nav .next').click(onThemeNavNextClick);
 		wikiVertical.on('change', onWikiVerticalChange);
+		$descWikiWrapper.find('#all-ages-div input').bind('change', onIntendedForKidsCheckboxChange);
 	}
 
 	function onThemeNavNextClick() {
+		track({
+			action: tracker.ACTIONS.SUBMIT,
+			label: 'theme-selection-submitted'
+		});
 		saveState(ThemeDesigner.settings, function () {
 			gotoMainPage();
 		});
@@ -130,9 +140,22 @@ define('ext.createNewWiki.builder', ['ext.createNewWiki.helper'], function (help
 				callback: function (res) {
 					// check phalanx result
 					if (res.msgHeader) {
+						track({
+							action: tracker.ACTIONS.ERROR,
+							label: 'wiki-description-validation-error'
+						});
 						$.showModal(res.msgHeader, res.msgBody);
 						descWikiNext.attr('disabled', false);
 					} else {
+						var descriptionLabel = (descriptionVal === WikiBuilderCfg.descriptionplaceholder) ?
+							'wiki-description-submitted-empty' :
+							'wiki-description-submitted';
+
+						track({
+							action: tracker.ACTIONS.SUBMIT,
+							label: descriptionLabel
+						});
+
 						// call create wiki ajax
 						saveState({
 							wikiDescription: (descriptionVal === WikiBuilderCfg.descriptionplaceholder ?
@@ -145,6 +168,10 @@ define('ext.createNewWiki.builder', ['ext.createNewWiki.helper'], function (help
 				}
 			});
 		} else {
+			track({
+				action: tracker.ACTIONS.ERROR,
+				label: 'vertical-not-selected-error'
+			});
 			descWikiSubmitError
 				.show()
 				.html(WikiBuilderCfg['desc-wiki-submit-error'])
@@ -165,8 +192,14 @@ define('ext.createNewWiki.builder', ['ext.createNewWiki.helper'], function (help
 			duplicate;
 
 		if (selectedValue === '-1' /* yes, it is a string */ ) {
+			track({
+				label: 'vertical-unselected'
+			});
 			categoriesSets.hide();
 		} else {
+			track({
+				label: 'vertical-selected'
+			});
 			categoriesSets.show();
 
 			selectedOption = $this.find('option:selected');
@@ -191,10 +224,27 @@ define('ext.createNewWiki.builder', ['ext.createNewWiki.helper'], function (help
 				duplicate.attr('checked', false);
 				hiddenDuplicate = duplicate.parent().hide();
 			}
+			$descWikiWrapper.find('label input[type="checkbox"]').change(onCategorySelection);
 		}
 	}
 
+	function onCategorySelection() {
+		track({
+			label: 'category-checkbox-clicked'
+		});
+	}
+
+	function onIntendedForKidsCheckboxChange() {
+		track({
+			label: 'intended-for-kids-checkbox-clicked'
+		});
+	}
+
 	function onNavBackClick() {
+		track({
+			label: 'description-back-button-clicked'
+		});
+
 		var id = $(this).closest('.step').attr('id');
 
 		if (id === 'DescWiki') {
@@ -211,6 +261,9 @@ define('ext.createNewWiki.builder', ['ext.createNewWiki.helper'], function (help
 	}
 
 	function onChangeLangClick(e) {
+		track({
+			label: 'change-language-link-clicked'
+		});
 		e.preventDefault();
 		$nameWikiWrapper.find('.language-default').hide();
 		$nameWikiWrapper.find('.language-choice').show();
@@ -229,6 +282,9 @@ define('ext.createNewWiki.builder', ['ext.createNewWiki.helper'], function (help
 			allAgesDiv.show();
 		}
 
+		track({
+			label: 'language-changed'
+		});
 	}
 
 	function onWikiNameKeyUp() {
@@ -258,6 +314,10 @@ define('ext.createNewWiki.builder', ['ext.createNewWiki.helper'], function (help
 		var wikiNameVal, wikiDomainVal, wikiLanguageVal;
 
 		if (isNameWikiSubmitError()) {
+			track({
+				action: tracker.ACTIONS.ERROR,
+				label: 'wiki-name-submit-error'
+			});
 			nameWikiSubmitError
 				.show()
 				.html(WikiBuilderCfg['name-wiki-submit-error'])
@@ -277,8 +337,16 @@ define('ext.createNewWiki.builder', ['ext.createNewWiki.helper'], function (help
 			if (isUserLoggedIn) {
 				onAuthSuccess();
 			} else {
+				track({
+					action: tracker.ACTIONS.IMPRESSION,
+					label: 'login-modal-shown'
+				});
 				helper.login(onAuthSuccess, helper.getLoginRedirectURL(wikiNameVal, wikiDomainVal, wikiLanguageVal));
 			}
+			track({
+				action: tracker.ACTIONS.SUCCESS,
+				label: 'wiki-name-submitted'
+			});
 		}
 	}
 

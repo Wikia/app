@@ -82,11 +82,16 @@ class PhalanxSpecialController extends WikiaSpecialPageController {
 			$this->wg->Out->redirect($this->title->getFullURL());
 
 			wfProfileOut( __METHOD__ );
-			return;
+
+			// SUS-1078: Don't render template when handling a POST request (block save) to prevent warnings
+			// We will be redirected back to Special:Phalanx anyways
+			$this->skipRendering();
+			return false;
 		}
 
 		/* set pager */
 		$pager = new PhalanxPager();
+		$pager->setContext( $this->getContext() );
 		$listing  = $pager->getNavigationBar();
 		$listing .= $pager->getBody();
 		$listing .= $pager->getNavigationBar();
@@ -127,7 +132,6 @@ class PhalanxSpecialController extends WikiaSpecialPageController {
 		}
 
 		$this->setVal( 'expiries', $expiries );
-		$this->setVal( 'languages', $this->wg->PhalanxSupportedLanguages );
 		$this->setVal( 'listing', $listing );
 		$this->setVal( 'data',  $data);
 		$this->setVal( 'editMode',  $editMode);
@@ -136,6 +140,9 @@ class PhalanxSpecialController extends WikiaSpecialPageController {
 		$this->setVal( 'blockTypes', $blockTypes );
 		$this->setVal( 'type', $this->wg->Request->getInt('type') );
 		$this->setVal( 'typeSections', $typeSections);
+
+		// SUS-270: preload username into filter search box
+		$this->setVal( 'checkBlocker', $data['checkBlocker'] !== '' ? $data['checkBlocker'] : $data['text'] );
 
 		wfProfileOut( __METHOD__ );
 	}
@@ -159,20 +166,6 @@ class PhalanxSpecialController extends WikiaSpecialPageController {
 		if ($blockText !== '') {
 			$this->setVal( 'listing', $this->handleBlockTest($blockText) );
 		}
-	}
-
-	/**
-	 * Renders navigation tabs on special page
-	 */
-	public function tabs() {
-		if ( !$this->userCanExecute( $this->wg->User ) ) {
-			$this->displayRestrictionError();
-			return;
-		}
-
-		$this->setVal('currentTab', $this->getVal('currentTab'));
-		$this->setVal('phalanxMainTitle', $this->title);
-		$this->setVal('phalanxTestTitle', SpecialPage::getTitleFor('Phalanx', 'test'));
 	}
 
 	/**
@@ -231,7 +224,7 @@ class PhalanxSpecialController extends WikiaSpecialPageController {
 
 		$id = $this->wg->Request->getInt( 'id', 0 );
 		$isBlockUpdate = ($id !== 0);
-		$data = array(
+		$data = [
 			'id'         => $id,
 			'text'       => $this->wg->Request->getText( 'wpPhalanxFilter' ),
 			'exact'      => $this->wg->Request->getCheck( 'wpPhalanxFormatExact' ) ? 1 : 0,
@@ -241,11 +234,10 @@ class PhalanxSpecialController extends WikiaSpecialPageController {
 			'author_id'  => $this->wg->User->getId(),
 			'reason'     => $this->wg->Request->getText( 'wpPhalanxReason' ),
 			'comment'    => $this->wg->Request->getText( 'wpPhalanxComment' ),
-			'lang'       => $this->wg->Request->getVal( 'wpPhalanxLanguages', null ),
 			'type'       => $this->wg->Request->getArray( 'wpPhalanxType' ),
 			'multitext'  => $this->wg->Request->getText( 'wpPhalanxFilterBulk' ),
 			'expire'     => $expire
-		);
+		];
 		if ( !wfRunHooks( "EditPhalanxBlock", array( &$data ) ) ) {
 			$ret = self::RESULT_ERROR;
 		} else {
@@ -281,6 +273,7 @@ class PhalanxSpecialController extends WikiaSpecialPageController {
 			$noMatches = false;
 
 			$pager = new PhalanxBlockTestPager($blockType);
+			$pager->setContext( $this->getContext() );
 			$pager->setRows($res);
 			$listing .= $pager->getHeader();
 			$listing .= $pager->getBody();

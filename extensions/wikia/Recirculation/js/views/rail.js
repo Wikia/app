@@ -1,23 +1,20 @@
-/*global define*/
 define('ext.wikia.recirculation.views.rail', [
 	'jquery',
 	'wikia.window',
-	'wikia.log',
 	'wikia.abTest',
 	'ext.wikia.recirculation.tracker',
-	'ext.wikia.recirculation.utils'
-], function ($, w, log, abTest, tracker, utils) {
+	'ext.wikia.recirculation.utils',
+	'ext.wikia.recirculation.helpers.curatedContent'
+], function ($, w, abTest, tracker, utils, CuratedHelper) {
+	'use strict';
 
-	var logGroup = 'ext.wikia.recirculation.views.rail',
-		options = {
-			template: 'rail.mustache'
-		};
+	var options = {};
 
 	function render(data) {
-		data.titleHtml = options.formatTitle ? formatTitle(data.title) : data.title;
-		data.group = abTest.getGroup('RECIRCULATION_PLACEMENT');
+		var curated = new CuratedHelper();
 
-		return utils.renderTemplate(options.template, data)
+		return curated.injectContent(data)
+			.then(renderTemplate('rail.mustache'))
 			.then(utils.waitForRail)
 			.then(function($html) {
 				if (options.before) {
@@ -25,9 +22,17 @@ define('ext.wikia.recirculation.views.rail', [
 				}
 
 				$('#RECIRCULATION_RAIL').html($html);
+				curated.setupTracking($html);
 
 				return $html;
 			});
+	}
+
+	function renderTemplate(templateName) {
+		return function(data) {
+			data.items = data.items.slice(0, 5);
+			return utils.renderTemplate(templateName, data);
+		};
 	}
 
 	function setupTracking(experimentName) {
@@ -39,12 +44,7 @@ define('ext.wikia.recirculation.views.rail', [
 			});
 
 			return $html;
-		}
-	}
-
-	// Format title for E3
-	function formatTitle(title) {
-		return title;
+		};
 	}
 
 	return function(config) {
@@ -53,6 +53,6 @@ define('ext.wikia.recirculation.views.rail', [
 		return {
 			render: render,
 			setupTracking: setupTracking
-		}
-	}
+		};
+	};
 });

@@ -25,7 +25,6 @@ class WikisApiController extends WikiaApiController {
 	const CACHE_VERSION = 3;
 	const WORDMARK = 'Wiki-wordmark.png';
 	const MAX_WIKIS = 250;
-	private static $flagsBlacklist = array( 'blocked', 'promoted' );
 
 	private $keys;
 	private $service;
@@ -293,9 +292,9 @@ class WikisApiController extends WikiaApiController {
 
 	protected function getDetailsParams() {
 		return [
-			'imageWidth' => $this->request->getVal( 'width', null ),
+			'imageWidth'  => $this->request->getVal( 'width', null ),
 			'imageHeight' => $this->request->getVal( 'height', null ),
-			'length' => $this->request->getVal( 'snippet', static::DEFAULT_SNIPPET_LENGTH )
+			'length'      => $this->request->getVal( 'snippet', static::DEFAULT_SNIPPET_LENGTH ),
 		];
 	}
 

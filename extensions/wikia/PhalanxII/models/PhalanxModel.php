@@ -1,19 +1,21 @@
 <?php
 
 /**
- * @method setBlock
- * @method getBlock
- * @method setText
- * @method getText
- * @method getLang
- * @method setShouldLogInStats
- * @method getShouldLogInStats
+ * @method PhalanxModel setBlock( $block )
+ * @method object getBlock
+ * @method PhalanxModel setText( string $text )
+ * @method string getText
+ * @method PhalanxModel setShouldLogInStats( bool $shouldLogInStats )
+ * @method bool getShouldLogInStats
+ * @method User getUser
+ * @method PhalanxModel setUser( User $user )
  */
 abstract class PhalanxModel extends WikiaObject {
-	public $model = null;
+	/** @var string $text */
 	public $text = null;
+	/** @var null|object $block Information about the current block that was triggered */
 	public $block = null;
-	public $lang = null;
+
 	/* @var User */
 	public $user = null;
 	/* @var PhalanxService */
@@ -22,17 +24,10 @@ abstract class PhalanxModel extends WikiaObject {
 
 	protected $shouldLogInStats = true;
 
-	public function __construct( $model, $data = array() ) {
+	public function __construct() {
 		parent::__construct();
-		$this->model = $model;
 
 		$this->user = $this->wg->user;
-		if ( !empty( $data ) ) {
-			foreach ( $data as $key => $value ) {
-				$method = "set{$key}";
-				$this->$method( $value );
-			}
-		}
 		$this->service = new PhalanxService();
 		$this->ip = $this->wg->request->getIp();
 	}
@@ -156,7 +151,7 @@ abstract class PhalanxModel extends WikiaObject {
 			$result = $this->service
 				->setLimit(1)
 				->setUser( ( $this->getShouldLogInStats() && $this->user instanceof User ) ? $this->user : null )
-				->match( $type, $content, $this->getLang() );
+				->match( $type, $content );
 
 			if ( $result !== false ) {
 				# we have response from Phalanx service - check block
@@ -174,7 +169,7 @@ abstract class PhalanxModel extends WikiaObject {
 
 	public function check( $type ) {
 		# send request to service
-		$result = $this->service->check( $type, $this->getText(), $this->getLang() );
+		$result = $this->service->check( $type, $this->getText() );
 
 		if ( $result !== false ) {
 			# we have response from Phalanx service - 0/1

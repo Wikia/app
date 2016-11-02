@@ -1,5 +1,5 @@
 /* global Wall:true, Observable */
-(function ($) {
+(function ($, mw) {
 	'use strict';
 
 	Wall.BackendBridge = $.createClass(Observable, {
@@ -52,7 +52,7 @@
 					pagenamespace: page.namespace,
 					convertToFormat: convertToFormat,
 					relatedTopics: relatedTopics,
-					token: window.mw.user.tokens.get('editToken')
+					token: mw.user.tokens.get('editToken')
 				}
 			}).done(this.proxy(function (data) {
 				var newmsg = $(data.message);
@@ -85,7 +85,7 @@
 					pagenamespace: page.namespace,
 					convertToFormat: convertToFormat,
 					quotedFrom: quotedFrom || '',
-					token: window.mw.user.tokens.get('editToken')
+					token: mw.user.tokens.get('editToken')
 				}
 			}).done(this.proxy(function (data) {
 				var newMessage = $(data.message);
@@ -167,7 +167,7 @@
 					pagetitle: page.title,
 					pagenamespace: page.namespace,
 					convertToFormat: convertToFormat,
-					token: window.mw.user.tokens.get('editToken')
+					token: mw.user.tokens.get('editToken')
 				}
 			}).done(this.proxy(function (data) {
 				if ($.isFunction(successCallback)) {
@@ -194,7 +194,8 @@
 				type: 'POST',
 				data: {
 					isWatched: isWatched,
-					commentId: commentId
+					commentId: commentId,
+					token: mw.user.tokens.get('editToken')
 				},
 				callback: this.proxy(function (data) {
 					if ($.isFunction(callback)) {
@@ -217,7 +218,8 @@
 				type: 'POST',
 				data: {
 					msgid: msgid,
-					dir: dir
+					dir: dir,
+					token: mw.user.tokens.get('editToken')
 				},
 				callback: this.proxy(function (data) {
 					if ($.isFunction(callback)) {
@@ -240,7 +242,8 @@
 				type: 'POST',
 				data: {
 					msgid: msgid,
-					relatedTopics: relatedTopics
+					relatedTopics: relatedTopics,
+					token: mw.user.tokens.get('editToken')
 				},
 				callback: this.proxy(function (json) {
 					if ($.isFunction(callback)) {
@@ -251,4 +254,4 @@
 			});
 		}
 	});
-})(jQuery);
+})(jQuery, mediaWiki);
