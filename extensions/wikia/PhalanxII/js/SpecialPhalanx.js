@@ -1,9 +1,11 @@
-require(['jquery', 'mw', 'phalanx', 'BannerNotification', 'wikia.window'], function($, mw, phalanx, notification, w) {
+require(['jquery', 'mw', 'phalanx', 'BannerNotification'], function($, mw, phalanx, notification) {
 	// edit token is required by Phalanx API
 	phalanx.init(mw.user.tokens.get('editToken'));
 
-	var $filter = $('#wpPhalanxFilter'),
-		$bulkFilter = $('#wpPhalanxFilterBulk');
+	var filter = $('#wpPhalanxFilter'),
+		bulkFilter = $('#wpPhalanxFilterBulk'),
+		singleModeWrapper = $('#singlemode'),
+		bulkModeWrapper = $('#bulkmode');
 
 	$('body').
 		// handle blocks "unblocking" (i.e. removing blocks)
@@ -30,11 +32,8 @@ require(['jquery', 'mw', 'phalanx', 'BannerNotification', 'wikia.window'], funct
 
 		// handle "bulk mode" button
 		on('click', '#enterbulk', function(ev) {
-			var singleModeWrapper = $('#singlemode'),
-				bulkModeWrapper = $('#bulkmode');
-
 			// SUS-1191: preload single filter contents into bulk mode textbox
-			$bulkFilter.val($filter.val());
+			bulkFilter.val(filter.val());
 
 			singleModeWrapper.slideUp();
 			bulkModeWrapper.slideDown();
@@ -42,28 +41,25 @@ require(['jquery', 'mw', 'phalanx', 'BannerNotification', 'wikia.window'], funct
 			// hide validation message when switching modes
 			$('#validateMessage').hide();
 			// clear input field when switching modes, for validation purposes
-			$('#wpPhalanxFilter').val('');
+			filter.val('');
 			// SUS-1191: autofocus newly revealed input field
-			$bulkFilter.focus();
+			bulkFilter.focus();
 		}).
 
 		// handle "single mode" button
 		on('click', '#entersingle', function(ev) {
-			var singleModeWrapper = $('#singlemode'),
-				bulkModeWrapper = $('#bulkmode');
-
 			singleModeWrapper.slideDown();
 			bulkModeWrapper.slideUp();
 
 			// clear input field when switching modes, for validation purposes
-			$('#wpPhalanxFilterBulk').val('');
+			bulkFilter.val('');
 			// SUS-1191: autofocus newly revealed input field
-			$filter.focus();
+			filter.focus();
 		}).
 
 		// handle "validate regex" button
 		on('click', '#validate', function(ev) {
-			var regex = $filter.val(),
+			var regex = filter.val(),
 				buttonNode = $(this),
 				msgNode = $('#validateMessage').hide();
 
@@ -110,7 +106,7 @@ require(['jquery', 'mw', 'phalanx', 'BannerNotification', 'wikia.window'], funct
 		var validType = true;
 
 		// If the filter field is empty validation will fail
-		if ($('#wpPhalanxFilter').val() === '' || ($('#bulkmode').is(':visible') && $('#wpPhalanxFilterBulk').val() === '')) {
+		if ((singleModeWrapper.is(':visible') && filter.val() === '') || (bulkModeWrapper.is(':visible') && bulkFilter.val() === '')) {
 			validFilter = false;
 			$('#formValidateMessage-filter').show();
 		}
