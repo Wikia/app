@@ -1,6 +1,12 @@
 <?php
 
+use Wikia\Logger\WikiaLogger;
+use Wikia\Service\Helios\ClientException;
+use Wikia\Service\User\Auth\AuthServiceAccessor;
+
 class ExternalUser_Wikia extends ExternalUser {
+	use AuthServiceAccessor;
+
 	static private $recentlyUpdated = array();
 	private $mRow, $mDb, $mUser;
 	private $lastAuthenticationError;
@@ -204,15 +210,30 @@ class ExternalUser_Wikia extends ExternalUser {
 	}
 
 	public function authenticate( $password ) {
+		// Log to check whether this is used anymore (it shouldn't be), so we can clean
+		// this up.
+		// @todo remove after the new password hashing is implemented (PLATFORM-2526)
+		Wikia\Logger\WikiaLogger::instance()->debug(
+			'NEW_HASHING ExternalUser authenticate called',
+			[
+				'user_id' => $userId,
+				'caller' => wfGetCaller(),
+				'exception' => new Exception()
+			]
+		);
+
 		$this->lastAuthenticationError = null;
 
-		$result = null;
+		$result = false;
 		$errorMessageKey = null;
 
-		wfRunHooks( 'UserCheckPassword', [ $this->getId(), $this->getName(), $this->getPassword(), $password, &$result, &$errorMessageKey ] );
-		if ( $result === null ) {
-			$result = User::comparePasswords( $this->getPassword(), $password, $this->getId() );
+		try {
+			$authResult = $this->authenticationService()->authenticate( $this->getName(), $password );
+			$result = $authResult->success();
+		} catch ( ClientException $e ) {
+			$errorMessageKey = 'login-abort-service-unavailable';
 		}
+
 		if ( $errorMessageKey ) {
 			$this->lastAuthenticationError = $errorMessageKey;
 		}

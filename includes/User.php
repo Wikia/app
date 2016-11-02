@@ -24,11 +24,14 @@ use Email\Controller\EmailConfirmationController;
 use Wikia\DependencyInjection\Injector;
 use Wikia\Domain\User\Attribute;
 use Wikia\Logger\Loggable;
+use Wikia\Logger\WikiaLogger;
 use Wikia\Service\User\Attributes\UserAttributes;
 use Wikia\Service\User\Preferences\PreferenceService;
 use Wikia\Service\User\Permissions\PermissionsService;
 use Wikia\Util\Statistics\BernoulliTrial;
 use Wikia\Service\Helios\HeliosClient;
+use Wikia\Service\Helios\ClientException;
+use Wikia\Service\User\Auth\AuthServiceAccessor;
 use Wikia\Service\User\Auth\CookieHelper;
 use Wikia\Util\PerformanceProfilers\UsernameLookupProfiler;
 
@@ -77,6 +80,7 @@ class User {
 	 */
 	use PowerUserTrait;
 	use GlobalUserDataTrait;
+	use AuthServiceAccessor;
 	# WIKIA CHANGE END
 
 	use Loggable;
@@ -217,14 +221,12 @@ class User {
 		return $this->getName();
 	}
 
-
 	/**
 	 * @return HeliosClient
 	 */
-	private static function authenticationService() {
+	private static function heliosClient() {
 		return Injector::getInjector()->get( HeliosClient::class );
 	}
-
 
 	/**
 	 * @return CookieHelper
@@ -309,10 +311,6 @@ class User {
 				break;
 			case 'id':
 				$this->loadFromId();
-				break;
-			case 'session':
-				$this->loadFromSession();
-				wfRunHooks( 'UserLoadAfterLoadFromSession', array( $this ) );
 				break;
 			default:
 				throw new MWException( "Unrecognised value for User->mFrom: \"{$this->mFrom}\"" );
@@ -495,21 +493,6 @@ class User {
 	}
 
 	/**
-	 * Create a new user object using data from session or cookies. If the
-	 * login credentials are invalid, the result is an anonymous user.
-	 *
-	 * @param $request WebRequest object to use; $wgRequest will be used if
-	 *        ommited.
-	 * @return User object
-	 */
-	public static function newFromSession( WebRequest $request = null ) {
-		$user = new User;
-		$user->mFrom = 'session';
-		$user->mRequest = $request;
-		return $user;
-	}
-
-	/**
 	 * Creates a MediaWiki User object based on the token given in the HTTP request.
 	 *
 	 * @param \WebRequest $request the HTTP request data as an object
@@ -523,13 +506,13 @@ class User {
 		$token = $cookieHelper->getAccessToken( $request );
 
 		if ( !$token ) {
-			return null;
+			return new User;
 		}
 
 		try {
-			$tokenInfo = self::authenticationService()->info( $token );
+			$tokenInfo = self::heliosClient()->info( $token );
 			if ( empty( $tokenInfo->user_id ) ) {
-				return null;
+				return new User;
 			}
 			$user = self::newFromId( $tokenInfo->user_id );
 			$user->setGlobalAuthToken( $token );
@@ -538,7 +521,8 @@ class User {
 			// @see SERVICES-459
 			if ( (bool)$user->getGlobalFlag( 'disabled' ) ) {
 				$cookieHelper->clearAuthenticationCookie( $request->response() );
-				return null;
+				$user->loadDefaults();
+				return $user;
 			}
 
 			// start the session if there's none so far
@@ -560,11 +544,11 @@ class User {
 			}
 
 			return $user;
-		} catch ( Wikia\Service\Helios\ClientException $e ) {
+		} catch ( ClientException $e ) {
 			WikiaLogger::instance()->error( __METHOD__, [ 'exception' => $e ] );
 		}
 
-		return null;
+		return new User;
 	}
 
 	/**
@@ -1080,122 +1064,6 @@ class User {
 	private function setItemLoaded( $item ) {
 		if ( is_array( $this->mLoadedItems ) ) {
 			$this->mLoadedItems[$item] = true;
-		}
-	}
-
-	/**
-	 * Load user data from the session or login cookie. If there are no valid
-	 * credentials, initialises the user as an anonymous user.
-	 * @return Bool True if the user is logged in, false otherwise.
-	 */
-	private function loadFromSession() {
-		$result = null;
-		wfRunHooks( 'UserLoadFromSession', array( $this, &$result ) );
-		if ( $result !== null ) {
-			return $result;
-		}
-
-		$request = $this->getRequest();
-
-		$cookieId = $request->getCookie( 'UserID' );
-		$sessId = $request->getSessionData( 'wsUserID' );
-
-		if ( $cookieId !== null ) {
-			$sId = intval( $cookieId );
-			if( $sessId !== null && $cookieId != $sessId ) {
-				$this->loadDefaults(); // Possible collision!
-				wfDebugLog( 'loginSessions', "Session user ID ($sessId) and
-					cookie user ID ($sId) don't match!" );
-				return false;
-			}
-			$request->setSessionData( 'wsUserID', $sId );
-		} elseif ( $sessId !== null && $sessId != 0 ) {
-			$sId = $sessId;
-		} else {
-			$this->loadDefaults();
-			return false;
-		}
-
-		if ( $request->getSessionData( 'wsUserName' ) !== null ) {
-			$sName = $request->getSessionData( 'wsUserName' );
-		} elseif ( $request->getCookie( 'UserName' ) !== null ) {
-			$sName = $request->getCookie( 'UserName' );
-			$request->setSessionData( 'wsUserName', $sName );
-		} else {
-			$this->loadDefaults();
-			return false;
-		}
-
-		// Wikia change start
-		global $wgExternalAuthType;
-		if ( $wgExternalAuthType ) { // in other words: unless Uncyclopedia
-			$extUser = ExternalUser::newFromCookie();
-			if ( $extUser ) {
-					$extUser->linkToLocal( $sId );
-			}
-		}
-
-		$passwordCorrect = FALSE;
-		// wikia change end
-
-		$proposedUser = User::newFromId( $sId );
-		if ( !$proposedUser->isLoggedIn() ) {
-			# Not a valid ID
-			$this->loadDefaults();
-			return false;
-		}
-
-		global $wgBlockDisablesLogin;
-		if( $wgBlockDisablesLogin && $proposedUser->isBlocked() ) {
-			# User blocked and we've disabled blocked user logins
-			$this->loadDefaults();
-			return false;
-		}
-
-		if ( $request->getSessionData( 'wsToken' ) ) {
-			$passwordCorrect = $proposedUser->getToken( false ) === $request->getSessionData( 'wsToken' );
-			$from = 'session';
-		} elseif ( $request->getCookie( 'Token' ) ) {
-			# Get the token from DB/cache and clean it up to remove garbage padding.
-			# This deals with historical problems with bugs and the default column value.
-			$token = rtrim( $proposedUser->getToken( false ) ); // correct token
-			// Make comparison in constant time (bug 61346)
-			$passwordCorrect = strlen( $token ) && $this->compareSecrets( $token, $request->getCookie( 'Token' ) );
-			$from = 'cookie';
-		} else {
-			# No session or persistent login cookie
-			$this->loadDefaults();
-			return false;
-		}
-
-		if ( !$this->isUserAuthenticatedViaAuthenticationService() ) {
-			global $wgAuthForceLogoutOnFailedAuthSessionFallback;
-
-			/*
-			 * when failing over to Reston (readonly), users should be anonymous but their session
-			 * should resume without them having to do anything when we go back to r/w. See
-			 * SERVICES-1125
-			 */
-			if ( $wgAuthForceLogoutOnFailedAuthSessionFallback ) {
-				$this->logFallbackToMediaWikiSessionRejection( $from );
-				$this->logout();
-			}
-
-			$this->loadDefaults();
-			return false;
-		}
-
-		if ( ( $sName === $proposedUser->getName() ) && $passwordCorrect ) {
-			$this->loadFromUserObject( $proposedUser );
-			$request->setSessionData( 'wsToken', $this->mToken );
-			wfDebug( "User: logged in from $from\n" );
-			wfRunHooks( 'UserLoadFromSessionInfo', array( $this, $from ) );
-			return true;
-		} else {
-			# Invalid credentials
-			wfDebug( "User: can't log in from $from, invalid credentials\n" );
-			$this->loadDefaults();
-			return false;
 		}
 	}
 
@@ -2247,7 +2115,7 @@ class User {
 		$this->setInternalPassword( $str );
 
 		if ( $forceLogout ) {
-			self::authenticationService()->forceLogout( $this->getId() );
+			self::heliosClient()->forceLogout( $this->getId() );
 		}
 
 		return true;
@@ -3251,6 +3119,11 @@ class User {
 				$this->setCookie( $name, $value );
 			}
 		}
+
+		if ( !empty( $this->getGlobalAuthToken() ) ) {
+			// Set Helios token
+			self::authCookieHelper()->setAuthenticationCookieWithToken( $this->getGlobalAuthToken(), $request->response() );
+		}
 	}
 
 	/**
@@ -3269,7 +3142,7 @@ class User {
 	public function doLogout() {
 		$accessToken = self::authCookieHelper()->getAccessToken( $this->getRequest() );
 		if ( !empty( $accessToken ) ) {
-			self::authenticationService()->invalidateToken( $accessToken, $this->getId() );
+			self::heliosClient()->invalidateToken( $accessToken, $this->getId() );
 		}
 		self::authCookieHelper()->clearAuthenticationCookie( $this->getRequest()->response() );
 
@@ -3612,7 +3485,7 @@ class User {
 	 * @param $password String: user password.
 	 * @return Boolean: True if the given password is correct, otherwise False.
 	 */
-	public function checkPassword( $password, &$errorMessageKey = null ) {
+	public function checkPassword( $password, &$authResult = null, &$errorMessageKey = null ) {
 		global $wgAuth, $wgLegacyEncoding;
 		$this->load();
 
@@ -3625,38 +3498,21 @@ class User {
 			return false;
 		}
 
-		// Wikia change - begin - @author: wladek
+		// Wikia change - begin
 		// Helios integration
-		$result = null;
-		wfRunHooks( 'UserCheckPassword', [ $this->mId, $this->mName, $this->mPassword, $password, &$result, &$errorMessageKey ] );
-		if ( $result !== null ) {
-			return $result;
+		$result = false;
+		try {
+			$authResult = $this->authenticationService()->authenticate( $this->mName, $password );
+			$result = $authResult->success();
+			if ( $result && !$authResult->isResetPasswordAuth() ) {
+				$this->setGlobalAuthToken( $authResult->getAccessToken() );
+			}
+		} catch ( ClientException $e ) {
+			$errorMessageKey = 'login-abort-service-unavailable';
 		}
 		// Wikia change - end
 
-		if( $wgAuth->authenticate( $this->getName(), $password ) ) {
-			return true;
-		} elseif( $wgAuth->strict() ) {
-			/* Auth plugin doesn't allow local authentication */
-			return false;
-		} elseif( $wgAuth->strictUserAuth( $this->getName() ) ) {
-			/* Auth plugin doesn't allow local authentication for this user name */
-			return false;
-		}
-		if ( self::comparePasswords( $this->mPassword, $password, $this->mId ) ) {
-			return true;
-		} elseif ( $wgLegacyEncoding ) {
-			# Some wikis were converted from ISO 8859-1 to UTF-8, the passwords can't be converted
-			# Check for this with iconv
-			$cp1252Password = iconv( 'UTF-8', 'WINDOWS-1252//TRANSLIT', $password );
-			if ( $cp1252Password != $password &&
-				self::comparePasswords( $this->mPassword, $cp1252Password, $this->mId ) )
-			{
-				return true;
-			}
-		}
-
-		return false;
+		return $result;
 	}
 
 	/**
@@ -3757,7 +3613,7 @@ class User {
 			// Wikia change - begin
 			// @see MAIN-4660 log edit tokens mismatches
 			if ($val != '') {
-				Wikia\Logger\WikiaLogger::instance()->error(
+				WikiaLogger::instance()->error(
 					__METHOD__ . '::tokenMismatch',
 					[
 						'client_val'  => $val,
@@ -4273,7 +4129,7 @@ class User {
 		// Wikia change - begin
 		// @see PLATFORM-2502 comparing new passwords in PHP code.
 		// @todo mech remove after the new password hashing is implemented (PLATFORM-2530).
-		Wikia\Logger\WikiaLogger::instance()->debug(
+		WikiaLogger::instance()->debug(
 			'NEW_HASHING crypt called in PHP',
 			[
 				'wgPasswordSalt' => $wgPasswordSalt,
@@ -4311,7 +4167,7 @@ class User {
 		// Wikia change - begin
 		// @see PLATFORM-2502 comparing new passwords in PHP code.
 		// @todo mech remove after the new password hashing is implemented (PLATFORM-2526).
-		Wikia\Logger\WikiaLogger::instance()->debug(
+		WikiaLogger::instance()->debug(
 			'NEW_HASHING comparePasswords called in PHP',
 			[
 				'user_id' => $userId,
@@ -4662,7 +4518,7 @@ class User {
 			return false;
 		}
 
-		$tokenInfo = self::authenticationService()->info( $token );
+		$tokenInfo = self::heliosClient()->info( $token );
 		if ( !empty( $tokenInfo->user_id ) ) {
 			return ( $this->getId() > 0 ) && ( $tokenInfo->user_id == $this->getId() );
 		}
@@ -4674,7 +4530,7 @@ class User {
 	 * Log an attempt to fallback to the MW session that was rejected.
 	 */
 	protected function logFallbackToMediaWikiSessionRejection( $from ) {
-		Wikia\Logger\WikiaLogger::instance()->error(
+		WikiaLogger::instance()->error(
 			'AUTHENTICATION_FALLBACK_REJECTED',
 			[
 			'global_auth_token' => $this->getGlobalAuthToken(),
@@ -4965,7 +4821,7 @@ class User {
 			$profiler = UsernameLookupProfiler::create( $caller["class"], $callerFunction );
 			$dbName = static::whoIs( $userId );
 			if( $dbName !== $name ) {
-				\Wikia\Logger\WikiaLogger::instance()->debug( "Default name different than lookup", [
+				WikiaLogger::instance()->debug( "Default name different than lookup", [
 					"user_id" => $userId,
 					"username_db" => $dbName,
 					"username_default" => $name,

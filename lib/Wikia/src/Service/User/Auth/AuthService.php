@@ -4,6 +4,8 @@ namespace Wikia\Service\User\Auth;
 
 interface AuthService {
 
+	public function authenticate( $username, $password ): AuthResult;
+
 	/**
 	 * Given a username, determine if the user is blocked.
 	 *

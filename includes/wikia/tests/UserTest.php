@@ -2,6 +2,7 @@
 
 use Wikia\DependencyInjection\Injector;
 use Wikia\DependencyInjection\InjectorBuilder;
+use Wikia\Service\User\Permissions\PermissionsService;
 use Wikia\Service\User\Preferences\PreferenceService;
 use Wikia\Service\User\Attributes\UserAttributes;
 use Wikia\Service\User\Attributes\AttributeService;
@@ -9,6 +10,7 @@ use Wikia\Domain\User\Preferences\UserPreferences;
 use Wikia\Service\User\Preferences\Migration\PreferenceScopeService;
 use Wikia\Service\Helios\HeliosClient;
 use Wikia\Service\User\Auth\CookieHelper;
+use Wikia\Service\User\Auth\HeliosCookieHelper;
 
 class UserTest extends WikiaBaseTest {
 
@@ -21,6 +23,7 @@ class UserTest extends WikiaBaseTest {
 	protected $userPreferenceServiceMock;
 	protected $userAttributeServiceMock;
 	protected $userAttributesMock;
+	protected $userPermissionsMock;
 	protected $heliosClientMock;
 
 	/** @var User */
@@ -56,7 +59,10 @@ class UserTest extends WikiaBaseTest {
 			->disableOriginalConstructor()
 			->getMock();
 
-		$this->heliosClientMock = $this->getMock( HeliosClient::class, [ 'info' ] );
+		$this->userPermissionsMock = $this->getMock( PermissionsService::class );
+
+		$this->heliosClientMock = $this->getMock( HeliosClient::class,
+			[ 'login', 'forceLogout', 'invalidateToken', 'register', 'info', 'generateToken' ] );
 
 		$container = ( new InjectorBuilder() )
 			->bind( PreferenceService::class )->to( $this->userPreferenceServiceMock )
@@ -66,6 +72,7 @@ class UserTest extends WikiaBaseTest {
 			->bind( UserAttributes::class )->to( $this->userAttributesMock )
 			->bind( HeliosClient::class )->to( $this->heliosClientMock )
 			->bind( CookieHelper::class )->toClass( HeliosCookieHelper::class )
+			->bind( PermissionsService::class )->to( $this->userPermissionsMock )
 			->build();
 		Injector::setInjector( $container );
 	}
@@ -247,6 +254,6 @@ class UserTest extends WikiaBaseTest {
 			->with( 'qi8H8R7OM4xMUNMPuRAZxlY' )
 			->willReturn( $userInfo );
 
-		$this->assertNull( User::newFromToken( $webRequestMock ) );
+		$this->assertEquals( User::newFromToken( $webRequestMock ), new User );
 	}
 }
