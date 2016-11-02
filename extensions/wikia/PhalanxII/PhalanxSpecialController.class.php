@@ -132,7 +132,6 @@ class PhalanxSpecialController extends WikiaSpecialPageController {
 		}
 
 		$this->setVal( 'expiries', $expiries );
-		$this->setVal( 'languages', $this->wg->PhalanxSupportedLanguages );
 		$this->setVal( 'listing', $listing );
 		$this->setVal( 'data',  $data);
 		$this->setVal( 'editMode',  $editMode);
@@ -225,7 +224,7 @@ class PhalanxSpecialController extends WikiaSpecialPageController {
 
 		$id = $this->wg->Request->getInt( 'id', 0 );
 		$isBlockUpdate = ($id !== 0);
-		$data = array(
+		$data = [
 			'id'         => $id,
 			'text'       => $this->wg->Request->getText( 'wpPhalanxFilter' ),
 			'exact'      => $this->wg->Request->getCheck( 'wpPhalanxFormatExact' ) ? 1 : 0,
@@ -235,11 +234,10 @@ class PhalanxSpecialController extends WikiaSpecialPageController {
 			'author_id'  => $this->wg->User->getId(),
 			'reason'     => $this->wg->Request->getText( 'wpPhalanxReason' ),
 			'comment'    => $this->wg->Request->getText( 'wpPhalanxComment' ),
-			'lang'       => $this->wg->Request->getVal( 'wpPhalanxLanguages', null ),
 			'type'       => $this->wg->Request->getArray( 'wpPhalanxType' ),
 			'multitext'  => $this->wg->Request->getText( 'wpPhalanxFilterBulk' ),
 			'expire'     => $expire
-		);
+		];
 		if ( !wfRunHooks( "EditPhalanxBlock", array( &$data ) ) ) {
 			$ret = self::RESULT_ERROR;
 		} else {
