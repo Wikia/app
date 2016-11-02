@@ -65,6 +65,7 @@ class RobotsTxt {
 	// Private methods follow:
 
 	private function getAllowDisallowSection() {
+		global $wgRobotsNoindexBeforeDisallow;
 
 		$allowSection = array_map(
 			function ( $prefix ) {
@@ -88,6 +89,15 @@ class RobotsTxt {
 		);
 
 		if ( count( $allowSection ) || count( $disallowSection ) ) {
+			if ( !empty( $wgRobotsNoindexBeforeDisallow ) ) {
+				return array_merge(
+					[ 'User-agent: *' ],
+					$allowSection,
+					$noIndexSection,
+					$disallowSection,
+					[ '' ]
+				);
+			}
 			return array_merge(
 				[ 'User-agent: *' ],
 				$allowSection,
