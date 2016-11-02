@@ -240,6 +240,7 @@ class PhalanxSpecialController extends WikiaSpecialPageController {
 			'multitext'  => $this->wg->Request->getText( 'wpPhalanxFilterBulk' ),
 			'expire'     => $expire
 		);
+
 		if ( !wfRunHooks( "EditPhalanxBlock", array( &$data ) ) ) {
 			$ret = self::RESULT_ERROR;
 		} else {

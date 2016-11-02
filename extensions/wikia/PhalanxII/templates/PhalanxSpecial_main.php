@@ -29,6 +29,7 @@
 						</div>
 						<div>
 							<span id="validateMessage"></span>
+							<span id="formValidateMessage-filter"><?= wfMessage( 'phalanx-required-filter' )->escaped(); ?></span>
 						</div>
 						<!-- Format -->
 						<div class="clearfix">
@@ -101,6 +102,8 @@
 <?php
 						}
 ?>
+						</div>
+						<span id="formValidateMessage-type"><?= wfMessage( 'phalanx-required-type' )->escaped(); ?></span>
 					</div>
 					<!-- Reason -->
 					<div id="phalanx-block-optionals" class="clearfix">

@@ -1,4 +1,4 @@
-require(['jquery', 'mw', 'phalanx', 'BannerNotification'], function($, mw, phalanx, notification) {
+require(['jquery', 'mw', 'phalanx', 'BannerNotification', 'wikia.window'], function($, mw, phalanx, notification, w) {
 	// edit token is required by Phalanx API
 	phalanx.init(mw.user.tokens.get('editToken'));
 
@@ -32,6 +32,11 @@ require(['jquery', 'mw', 'phalanx', 'BannerNotification'], function($, mw, phala
 
 			singleModeWrapper.slideUp();
 			bulkModeWrapper.slideDown();
+
+			// hide validation message when switching modes
+			$('#validateMessage').hide();
+			// clear input field when switching modes, for validation purposes
+			$('#wpPhalanxFilter').val('');
 		}).
 
 		// handle "single mode" button
@@ -41,6 +46,9 @@ require(['jquery', 'mw', 'phalanx', 'BannerNotification'], function($, mw, phala
 
 			singleModeWrapper.slideDown();
 			bulkModeWrapper.slideUp();
+
+			// clear input field when switching modes, for validation purposes
+			$('#wpPhalanxFilterBulk').val('');
 		}).
 
 		// handle "validate regex" button
@@ -64,15 +72,55 @@ require(['jquery', 'mw', 'phalanx', 'BannerNotification'], function($, mw, phala
 				});
 		}).
 
-        // handle custom expire field
-        on('change', '#wpPhalanxExpire', function(ev) {
-            var customExpireField = $('#wpPhalanxExpireCustom'),
-                selectedOption = $(this).find(':selected');
+		// handle custom expire field
+		on('change', '#wpPhalanxExpire', function(ev) {
+			var customExpireField = $('#wpPhalanxExpireCustom'),
+				selectedOption = $(this).find(':selected');
 
-            if (selectedOption.data('is-custom')) {
-                customExpireField.show().focus();
-            } else {
-                customExpireField.hide();
-            }
-        });
+			if (selectedOption.data('is-custom')) {
+				customExpireField.show().focus();
+			} else {
+				customExpireField.hide();
+			}
+		});
+
+	$('#phalanx-block-texts').focusin(function() {
+		$("span[id*='formValidateMessage-filter']").hide();
+	});
+
+	$("input[name*='wpPhalanxType']").not("input[name*='Filter']").focus(function() {
+		$("span[id*='formValidateMessage-type']").hide();
+	});
+
+	$('#phalanx-block').bind('submit', function (e) {
+		// Disable the submit button while evaluating if the form should be submitted
+		$('#wpPhalanxSubmit').attr('disabled', true);
+
+		var validFilter = true;
+		var validType = true;
+
+		// If the filter field is empty validation will fail
+		if ($('#wpPhalanxFilter').val() === '' || ($('#bulkmode').is(':visible') && $('#wpPhalanxFilterBulk').val() === '')) {
+			validFilter = false;
+			$('#formValidateMessage-filter').show();
+		}
+
+		// If the type checkbox is not checked validation will fail
+		$("input[name*='wpPhalanxType']").not("input[name*='Filter']").each(function() {
+			validType = false;
+			if ($(this).prop('checked')) {
+				validType = true;
+				return false;
+			}
+		});
+
+		if (!validType) {
+			$('#formValidateMessage-type').show();
+		}
+
+		if (!(validFilter && validType)) {
+			e.preventDefault();
+			$('#wpPhalanxSubmit').attr('disabled', false);
+		}
+	});
 });
