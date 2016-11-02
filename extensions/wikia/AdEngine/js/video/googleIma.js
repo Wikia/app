@@ -8,7 +8,7 @@ define('ext.wikia.adEngine.video.googleIma', [
 	var adDisplayContainer,
 		adsLoader,
 		adsManager,
-		imaLibraryUrl = 'http://imasdk.googleapis.com/js/sdkloader/ima3.js',
+		imaLibraryUrl = '//imasdk.googleapis.com/js/sdkloader/ima3.js',
 		isAdsManagerLoaded = false,
 		videoMock = {currentTime: 0};
 
