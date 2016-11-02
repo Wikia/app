@@ -4,7 +4,7 @@ define('ext.wikia.adEngine.template.bfaaMobile', [
 	'ext.wikia.adEngine.context.uapContext',
 	'ext.wikia.adEngine.provider.btfBlocker',
 	'ext.wikia.adEngine.slotTweaker',
-	'ext.wikia.adEngine.video.videoAd',
+	'ext.wikia.adEngine.video.videoAdFactory',
 	'wikia.document',
 	'wikia.log',
 	'wikia.window',
@@ -14,7 +14,7 @@ define('ext.wikia.adEngine.template.bfaaMobile', [
 	uapContext,
 	btfBlocker,
 	slotTweaker,
-	videoAd,
+	videoAdFactory,
 	doc,
 	log,
 	win,
@@ -44,6 +44,11 @@ define('ext.wikia.adEngine.template.bfaaMobile', [
 			},
 			onResize = adHelper.throttle(adjustPadding, 100);
 
+		function onVideoEndedCallback() {
+			aspectRatio = params.aspectRatio;
+			onResize();
+		}
+
 		page.classList.add('bfaa-template');
 		adjustPadding();
 
@@ -57,9 +62,9 @@ define('ext.wikia.adEngine.template.bfaaMobile', [
 			});
 		}
 
-		if (videoEnabled(params)) {
-			videoAd.onLibraryReady(function () {
-				var playTrigger = videoAd.setupVideo(
+		if (params.videoTriggerElement && params.videoAspectRatio) {
+			videoAdFactory.init().then(function () {
+				var video = videoAdFactory.create(
 					adSlot.querySelector('div:last-of-type'),
 					document.body.clientWidth,
 					document.body.clientWidth / params.videoAspectRatio,
@@ -67,35 +72,25 @@ define('ext.wikia.adEngine.template.bfaaMobile', [
 					{
 						src: 'gpt',
 						slotName: params.slotName,
-						uap: params.uap
+						uap: params.uap,
+						passback: 'wikia'
 					},
-					function () {
-						aspectRatio = params.aspectRatio;
-						onResize();
-					}
+					onVideoEndedCallback
 				);
 
 				params.videoTriggerElement.addEventListener('click', function() {
-					playTrigger();
+					video.play();
 					aspectRatio = params.videoAspectRatio;
 					onResize();
-				});
+				}.bind(video));
 			});
 		}
-	}
-
-	function videoEnabled(params) {
-		return params.videoTriggerElement && params.videoAspectRatio;
 	}
 
 	function show(params) {
 		adSlot = doc.getElementById(params.slotName);
 		page = doc.getElementsByClassName('application-wrapper')[0];
 		wrapper = doc.getElementsByClassName('mobile-top-leaderboard')[0];
-
-		if (videoEnabled(params)) {
-			videoAd.init();
-		}
 
 		log(['show', page, wrapper, params], 'info', logGroup);
 

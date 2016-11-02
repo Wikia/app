@@ -4,7 +4,7 @@ define('ext.wikia.adEngine.template.bfaaDesktop', [
 	'ext.wikia.adEngine.context.uapContext',
 	'ext.wikia.adEngine.provider.btfBlocker',
 	'ext.wikia.adEngine.slotTweaker',
-	'ext.wikia.adEngine.video.videoAd',
+	'ext.wikia.adEngine.video.videoAdFactory',
 	'wikia.document',
 	'wikia.log',
 	'wikia.window',
@@ -14,7 +14,7 @@ define('ext.wikia.adEngine.template.bfaaDesktop', [
 	uapContext,
 	btfBlocker,
 	slotTweaker,
-	videoAd,
+	videoAdFactory,
 	doc,
 	log,
 	win,
@@ -32,7 +32,6 @@ define('ext.wikia.adEngine.template.bfaaDesktop', [
 			'INCONTENT_BOXAD_1'
 		],
 		wrapper;
-	var video;
 
 	function updateNavBar(height) {
 		var position = win.scrollY || win.pageYOffset;
@@ -72,9 +71,9 @@ define('ext.wikia.adEngine.template.bfaaDesktop', [
 			recoveryTweaker.tweakSlot(params.slotName, iframe);
 		}
 
-		if (videoEnabled(params)) {
-			videoAd.onLibraryReady(function () {
-				video = videoAd.create(
+		if (params.videoTriggerElement && params.videoAspectRatio) {
+			videoAdFactory.init().then(function () {
+				var video = videoAdFactory.create(
 					adSlot.querySelector('div:last-of-type'),
 					document.body.clientWidth,
 					document.body.clientWidth / params.videoAspectRatio,
@@ -82,7 +81,8 @@ define('ext.wikia.adEngine.template.bfaaDesktop', [
 					{
 						src: 'gpt',
 						slotName: params.slotName,
-						uap: params.uap
+						uap: params.uap,
+						passback: 'wikia'
 					}
 				);
 
@@ -91,19 +91,11 @@ define('ext.wikia.adEngine.template.bfaaDesktop', [
 		}
 	}
 
-	function videoEnabled(params) {
-		return params.videoTriggerElement && params.videoAspectRatio;
-	}
-
 	function show(params) {
 		adSlot = doc.getElementById(params.slotName);
 		nav = doc.getElementById('globalNavigation');
 		page = doc.getElementsByClassName('WikiaSiteWrapper')[0];
 		wrapper = doc.getElementById('WikiaTopAds');
-
-		if (videoEnabled(params)) {
-			videoAd.init();
-		}
 
 		log(['show', page, wrapper, params], 'info', logGroup);
 

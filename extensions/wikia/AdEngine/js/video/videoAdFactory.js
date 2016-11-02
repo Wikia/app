@@ -1,19 +1,13 @@
 /* global define */
-define('ext.wikia.adEngine.video.videoAd', [
+define('ext.wikia.adEngine.video.videoAdFactory', [
 	'ext.wikia.adEngine.domElementTweaker',
 	'ext.wikia.adEngine.video.googleIma',
 	'ext.wikia.adEngine.video.vastUrlBuilder'
 ], function (DOMElementTweaker, googleIma, vastUrlBuilder) {
 	'use strict';
 
-	var libraryStatus;
-
 	function init() {
-		libraryStatus = googleIma.initialize();
-	}
-
-	function onLibraryReady(callback) {
-		libraryStatus.then(callback);
+		return googleIma.initialize();
 	}
 
 	function create(imageContainer, slotWidth, slotHeight, adSlot, slotParams, onVideoEndedCallback) {
@@ -53,8 +47,7 @@ define('ext.wikia.adEngine.video.videoAd', [
 	}
 
 	return {
-		init: init,
-		onLibraryReady: onLibraryReady,
-		create: create
+		create: create,
+		init: init
 	};
 });

@@ -10,7 +10,7 @@ define('ext.wikia.adEngine.video.googleIma', [
 		adsManager,
 		imaLibraryUrl = '//imasdk.googleapis.com/js/sdkloader/ima3.js',
 		isAdsManagerLoaded = false,
-		videoMock = {currentTime: 0};
+		videoMock = document.createElement('video');
 
 	function initialize() {
 		return scriptLoader.loadScript(imaLibraryUrl);
@@ -28,8 +28,6 @@ define('ext.wikia.adEngine.video.googleIma', [
 		adsRequest.adTagUrl = vastUrl;
 		adsRequest.linearAdSlotWidth = width;
 		adsRequest.linearAdSlotHeight = height;
-		adsRequest.nonLinearAdSlotWidth = width;
-		adsRequest.nonLinearAdSlotHeight = height;
 
 		return adsRequest;
 	}
