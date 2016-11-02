@@ -110,6 +110,8 @@ class SpecialPromoteToCuratedContentMigrator extends Maintenance {
 		}
 		$this->output( "\n" );
 		$this->output( "Done\n" );
+
+		$this->output("{$wgDBname}: Special:Promote data has been migrated\n");
 	}
 
 	/**
