@@ -8,6 +8,7 @@ $color-borders: #CECECE;
 @import 'skins/oasis/css/core/layout';
 
 @import 'extensions/wikia/ThemeDesigner/css/ThemeTab';
+@import 'extensions/wikia/DesignSystem/bower_components/design-system/dist/scss/wds-variables/_colors.scss';
 
 .WikiaPage {
 	border: 0;
@@ -54,16 +55,26 @@ $color-borders: #CECECE;
 	}
 
 	nav {
-		bottom: 10px;
+		bottom: 6px;
 		position: absolute;
+
+		input[type=button] {
+			background: white;
+			border-radius: 0;
+			border: 0;
+			color: $wds-color-light-blue;
+			float: right;
+			font-size: 12px;
+			font-weight: bold;
+			height: 45px;
+			line-height: 1;
+			padding: 16px 20px;
+			text-transform: uppercase;
+		}
 
 		&.next-controls {
 			min-width: 150px;
-			right: 20px;
-
-			input {
-				float: right;
-			}
+			right: 6px;
 
 			// fix color change when selecting different themes
 			.wikiaThrobber {
