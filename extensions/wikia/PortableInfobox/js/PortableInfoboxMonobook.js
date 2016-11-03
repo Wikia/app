@@ -3,9 +3,7 @@
 
 	var ImageLink = {
 		init: function ($content) {
-			var $anchors = $content.find('.portable-infobox .pi-image > a.image');
-
-			$anchors.each(function () {
+			$content.find('.portable-infobox .pi-image > a.image').on('click', function () {
 				var $anchor = $(this),
 					fileName = $anchor.children('.pi-image-thumbnail').data('image-key');
 
