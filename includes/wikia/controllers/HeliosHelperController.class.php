@@ -1,29 +1,27 @@
 <?php
+
 namespace Wikia\Helios;
 
 use Email\Controller\EmailConfirmationController;
 use Wikia\DependencyInjection\Injector;
 use Wikia\Service\User\Auth\AuthService;
+use Wikia\Service\User\Auth\AuthServiceAccessor;
 
 /**
  * A helper controller to provide end points exposing MediaWiki functionality to Helios.
  */
-class HelperController extends \WikiaController
-{
+class HelperController extends \WikiaController {
+	use AuthServiceAccessor;
 
 	const SCHWARTZ_PARAM = 'secret';
 	const EXTERNAL_SCHWARTZ_PARAM = 'token';
-
-	protected $authService;
-
 
 	/**
 	 * AntiSpoof: verify whether the name is legal for a new account.
 	 *
 	 * @see extensions/AntiSpoof
 	 */
-	public function checkAntiSpoof()
-	{
+	public function checkAntiSpoof() {
 		$this->response->setFormat( 'json' );
 		$this->response->setCacheValidity( \WikiaResponse::CACHE_DISABLED );
 
@@ -52,8 +50,7 @@ class HelperController extends \WikiaController
 	 *
 	 * @see extensions/AntiSpoof
 	 */
-	public function updateAntiSpoof()
-	{
+	public function updateAntiSpoof() {
 		$this->response->setFormat( 'json' );
 		$this->response->setCacheValidity( \WikiaResponse::CACHE_DISABLED );
 		$this->response->setVal( 'success', false );
@@ -74,8 +71,7 @@ class HelperController extends \WikiaController
 	/**
 	 * UserLogin: send a confirmation email a new account has been created
 	 */
-	public function sendConfirmationEmail()
-	{
+	public function sendConfirmationEmail() {
 		$this->response->setFormat( 'json' );
 		$this->response->setCacheValidity( \WikiaResponse::CACHE_DISABLED );
 		$this->response->setVal( 'success', false );
@@ -84,7 +80,7 @@ class HelperController extends \WikiaController
 			return;
 		}
 
-		if ( ! $this->wg->EmailAuthentication ) {
+		if ( !$this->wg->EmailAuthentication ) {
 			$this->response->setVal( 'message', 'email authentication is not required' );
 			return;
 		}
@@ -94,12 +90,12 @@ class HelperController extends \WikiaController
 		wfWaitForSlaves( $this->wg->ExternalSharedDB );
 		$user = \User::newFromName( $username );
 
-		if ( ! $user instanceof \User ) {
+		if ( !$user instanceof \User ) {
 			$this->response->setVal( 'message', 'unable to create a \User object from name' );
 			return;
 		}
 
-		if ( ! $user->getId() ) {
+		if ( !$user->getId() ) {
 			$this->response->setVal( 'message', 'no such user' );
 			return;
 		}
@@ -200,7 +196,7 @@ class HelperController extends \WikiaController
 			return;
 		}
 
-		$blocked = $this->getAuthService()->isUsernameBlocked( $username );
+		$blocked = $this->authenticationService()->isUsernameBlocked( $username );
 		if ( $blocked === null ) {
 			$this->response->setVal( 'message', 'user not found' );
 			$this->response->setCode( \WikiaResponse::RESPONSE_CODE_NOT_FOUND );
@@ -210,7 +206,7 @@ class HelperController extends \WikiaController
 		$this->response->setData( array( 'blocked' => $blocked ) );
 	}
 
-	protected function getFieldFromRequest( $field, $failureMessage ) {
+	private function getFieldFromRequest( $field, $failureMessage ) {
 		$fieldValue = $this->getVal( $field, null );
 		if ( !isset( $fieldValue ) ) {
 			$this->response->setVal( 'message', $failureMessage );
@@ -220,7 +216,7 @@ class HelperController extends \WikiaController
 		return $fieldValue;
 	}
 
-	protected function authenticateViaTheSchwartz() {
+	private function authenticateViaTheSchwartz() {
 		// There is an inconsistency between the parameter used for the Schwartz
 		// token here and elsewhere in MediaWiki (e.g. LogEventsApi). Until we are
 		// able to consolidate on the EXTERNAL_SCHWARTZ_PARAM both in MW and in
@@ -233,24 +229,10 @@ class HelperController extends \WikiaController
 
 		if ( $ourSchwartzIsValid || $theirSchwartzIsValid ) {
 			return true;
-		} else {
-			$this->response->setVal( 'message', 'invalid secret' );
-			$this->response->setCode( \WikiaResponse::RESPONSE_CODE_FORBIDDEN );
-			return false;
 		}
 
+		$this->response->setVal( 'message', 'invalid secret' );
+		$this->response->setCode( \WikiaResponse::RESPONSE_CODE_FORBIDDEN );
+		return false;
 	}
-
-	public function setAuthService( AuthService $authService ) {
-		$this->authService = $authService;
-	}
-
-	public function getAuthService() {
-		if (!isset($this->authService)) {
-			$this->authService = Injector::getInjector()->get(AuthService::class);
-		}
-
-		return $this->authService;
-	}
-
 }
