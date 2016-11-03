@@ -2,8 +2,8 @@
 $messages = array();
 
 $messages['en'] = array(
-	'emailext-discussion-reply-with-title-subject' => 'There is a new reply to your post [$1 $2] on [$3 $4]',
-	'emailext-discussion-reply-subject' => 'There is a new reply to your post on [$1 $2]',
+	'emailext-discussion-reply-with-title-subject' => 'There is a new reply to [$1 $2] on [$3 $4]',
+	'emailext-discussion-reply-subject' => 'There is a new reply to a post you are following on [$1 $2]',
 	'emailext-discussion-button-text' => 'Full Discussion',
 	'emailext-discussion-all-discussions' => '[$1 All discussions on $2]',
 	'emailext-discussion-5-upvote-subject-with-title' => 'Your post $1 on $2 just reached 5 upvotes!',
