@@ -18,7 +18,7 @@ $color-borders: #CECECE;
 	border: 0;
 
 	.WikiaPageBackground {
-		background-color: $wds-color-off-white;
+		background: none;
 	}
 }
 
@@ -42,7 +42,7 @@ $color-borders: #CECECE;
 	font-size: 12px;
 	font-weight: normal;
 	margin: 4px auto 0;
-	padding: 21px 0 60px;
+	padding: 18px 0 60px;
 	position: relative;
 	width: $cnw-size;
 
