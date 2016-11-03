@@ -81,8 +81,8 @@
 
 					</select>
 				</div>
-				<nav class="next-controls">
-					<span class="submit-error error-msg"></span>
+				<span class="submit-error error-msg"></span>
+				<nav class="controls">
 					<input type="button" value="<?= wfMessage( 'cnw-next' )->escaped() ?>" class="next">
 				</nav>
 			</form>
@@ -163,11 +163,9 @@
 			?>
 				</div>
 
-				<nav class="back-controls">
-					<input type="button" value="<?= wfMessage( 'cnw-back' )->escaped() ?>" class="secondary back">
-				</nav>
-				<nav class="next-controls">
-					<span class="submit-error error-msg"></span>
+				<span class="submit-error error-msg"></span>
+				<nav class="controls">
+					<input type="button" value="<?= wfMessage( 'cnw-back' )->escaped() ?>" class="back">
 					<input type="button" value="<?= wfMessage( 'cnw-next' )->escaped() ?>" class="next">
 				</nav>
 			</form>
@@ -177,8 +175,8 @@
 			<p class="creative"><?= wfMessage( 'cnw-theme-creative' )->escaped() ?></p>
 			<?= F::app()->renderView( 'ThemeDesigner', 'ThemeTab' ) ?>
 			<p class="instruction creative"><?= wfMessage( 'cnw-theme-instruction' )->escaped() ?></p>
-			<nav class="next-controls">
-				<span class="submit-error finish-status"></span>
+			<span class="submit-error finish-status"></span>
+			<nav class="controls">
 				<input type="button" value="<?= wfMessage( 'cnw-next' )->escaped() ?>" class="next" disabled>
 			</nav>
 		</li>

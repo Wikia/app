@@ -3,7 +3,8 @@
 @import 'skins/shared/mixins/clearfix';
 @import 'skins/oasis/css/core/layout';
 @import 'extensions/wikia/ThemeDesigner/css/ThemeTab';
-@import 'extensions/wikia/DesignSystem/bower_components/design-system/dist/scss/wds-variables/_colors.scss';
+@import 'extensions/wikia/DesignSystem/bower_components/design-system/dist/scss/wds-variables/index.scss';
+@import 'extensions/wikia/DesignSystem/bower_components/design-system/dist/scss/wds-components/_buttons.scss';
 
 .skin-oasis.page-Special_CreateNewWiki {
 	background-color: $wds-color-off-white;
@@ -55,40 +56,27 @@
 	}
 
 	nav {
-		bottom: 6px;
+		bottom: 0;
+		display: flex;
 		position: absolute;
+		right: 0;
 
 		input[type=button] {
+			@extend .wds-button;
+			@extend .wds-is-text;
 			background: white;
-			border-radius: 0;
-			border: 0;
-			color: $wds-color-light-blue;
 			float: right;
-			font-size: 12px;
-			font-weight: bold;
-			height: 45px;
-			line-height: 1;
-			padding: 16px 20px;
-			text-transform: uppercase;
+			height: auto;
+			margin: 6px 0 6px 6px;
 		}
 
-		&.next-controls {
-			min-width: 150px;
-			right: 6px;
-
+		&.controls .wikiaThrobber {
 			// fix color change when selecting different themes
-			.wikiaThrobber {
-				background-color: #fff;
-			}
-
-			.error-msg {
-				float: left;
-				margin-right: 10px;
-			}
-		}
-
-		&.back-controls {
-			left: 20px;
+			background-color: $wds-color-white;
+			height: 60px;
+			order: -1;
+			position: relative;
+			width: 60px;
 		}
 	}
 
