@@ -222,10 +222,10 @@ class HelperController extends \WikiaController {
 		// able to consolidate on the EXTERNAL_SCHWARTZ_PARAM both in MW and in
 		// external clients, we need to support both.
 		$ourSchwartz          = $this->getVal( self::SCHWARTZ_PARAM );
-		$ourSchwartzIsValid   = $ourSchwartz == $this->wg->TheSchwartzSecretToken;
+		$ourSchwartzIsValid   = \hash_equals( $ourSchwartz, $this->wg->TheSchwartzSecretToken );
 
 		$theirSchwartz        = $this->getVal( self::EXTERNAL_SCHWARTZ_PARAM );
-		$theirSchwartzIsValid = $theirSchwartz == $this->wg->TheSchwartzSecretToken;
+		$theirSchwartzIsValid = \hash_equals( $theirSchwartz, $this->wg->TheSchwartzSecretToken );
 
 		if ( $ourSchwartzIsValid || $theirSchwartzIsValid ) {
 			return true;
