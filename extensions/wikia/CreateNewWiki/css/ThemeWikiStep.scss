@@ -1,0 +1,52 @@
+@import 'skins/oasis/css/core/layout';
+@import 'CreateNewWikiVariables';
+
+#ThemeWiki {
+	display: none;
+	width: $cnw-size;
+
+	.ThemeTab {
+		height: 150px;
+		left: 45px;
+		position: absolute;
+		top: 125px;
+
+		.slider {
+			height: 106px;
+			top: 0;
+			width: 608px;
+			@if ($responsive-or-breakpoints-layout-enabled) {
+				width: 500px;
+			}
+
+			ul {
+				list-style: none;
+				margin: 0;
+			}
+
+			li {
+				padding-bottom: 0;
+				padding-top: 0;
+			}
+
+			h3 {
+				display: none;
+			}
+		}
+
+		.chevron {
+			top: 37px;
+
+			&.next {
+				left: 645px;
+				@if ($responsive-or-breakpoints-layout-enabled) {
+					left: 540px;
+				}
+			}
+		}
+	}
+
+	.instruction {
+		margin-top: 175px;
+	}
+}
