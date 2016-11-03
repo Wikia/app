@@ -8,7 +8,7 @@ class PhalanxContentModel extends PhalanxModel {
 	/**
 	 * @param Title $title
 	 */
-	public function __construct( $title ) {
+	public function __construct( Title $title ) {
 		parent::__construct();
 		$this->title = $title;
 	}
