@@ -21,8 +21,8 @@ class CriterionOLLayer extends CriterionMapLayer {
 	 * 
 	 * @since 0.7
 	 */
-	public function __construct() {
-		parent::__construct( 'openlayers' );
+	public function __construct( $groupNameSeparator = ';' ) {
+		parent::__construct( $groupNameSeparator );
 	}	
 	
 	/**

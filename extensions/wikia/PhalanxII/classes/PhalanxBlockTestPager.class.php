@@ -36,7 +36,7 @@ class PhalanxBlockTestPager extends PhalanxPager {
 	 * @param stdClass $row Block data as returned by Phalanx service
 	 * @return string Formatted HTML output
 	 */
-	public function formatRow( $row ) {
+	public function formatRow( $row ): string {
 		$newRow = [
 			'p_regex' => $row->regex,
 			'p_expires' => $row->expires,
@@ -46,7 +46,6 @@ class PhalanxBlockTestPager extends PhalanxPager {
 			'p_exact' => $row->exact,
 			'p_case' => $row->caseSensitive,
 			'p_id' => $row->id,
-			'p_language' => $row->language,
 			'p_author_id' => $row->authorId,
 			'p_type' => $row->type
 		];
