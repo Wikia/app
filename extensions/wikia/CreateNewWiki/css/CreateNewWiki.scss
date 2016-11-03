@@ -1,18 +1,13 @@
-$color-borders: #CECECE;
-
 @import 'skins/shared/mixins/box-shadow';
 @import 'skins/shared/mixins/clearfix';
-@import 'skins/shared/mixins/columns';
-@import 'skins/shared/mixins/gradient';
-@import 'skins/shared/color';
 @import 'skins/oasis/css/core/layout';
 
 @import 'extensions/wikia/ThemeDesigner/css/ThemeTab';
 
 @import 'extensions/wikia/DesignSystem/bower_components/design-system/dist/scss/wds-variables/_colors.scss';
+@import 'CreateNewWikiVariables';
 
-$normal-spacing: 24px;
-$cnw-size: 700px;
+$color-borders: #CECECE;
 
 .skin-oasis.page-Special_CreateNewWiki {
 	background-color: $wds-color-off-white;
@@ -40,6 +35,7 @@ $cnw-size: 700px;
 
 #CreateNewWiki {
 	background: white;
+	box-sizing: border-box;
 	border: 1px solid $wds-color-faint-gray;
 	color: #747474;
 	font-size: 12px;
@@ -176,36 +172,6 @@ $cnw-size: 700px;
 	}
 }
 
-#NameWiki {
-	width: 500px;
-	@if ($responsive-or-breakpoints-layout-enabled) {
-		width: auto;
-	}
-
-	form {
-		font-size: 17px;
-
-		h3 {
-			display: block;
-			margin-top: 15px;
-		}
-
-		[type=text],
-		[type=password] {
-			width: 365px;
-		}
-
-		.language-default {
-			font-size: 12px;
-			margin-top: 20px;
-		}
-
-		.language-choice {
-			display: none;
-		}
-	}
-}
-
 #UserAuth {
 	@include clearfix;
 	display: none;
@@ -237,209 +203,6 @@ $cnw-size: 700px;
 
 	.keeploggedin {
 		display: none;
-	}
-}
-
-#DescWiki {
-	display: none;
-	width: 700px;
-	@if ($responsive-or-breakpoints-layout-enabled) {
-		width: auto;
-	}
-
-	ol {
-		margin: 0;
-		padding: 0;
-
-		@if (not $responsive-or-breakpoints-layout-enabled) {
-			left: 515px;
-			position: absolute;
-			right: 515px;
-			top: 100px;
-			width: 265px;
-		}
-
-		li {
-			@include linear-gradient(#0255a1, top, #0255a1, 50%, #2b84d6, 100%);
-			@include box-shadow(1px, 1px, 1px, #000);
-			border-radius: 10px;
-			color: #f6f2f3;
-			font-size: 15px;
-			font-weight: bold;
-			list-style: none;
-			margin-bottom: 10px;
-			padding: 10px;
-			@if ($responsive-or-breakpoints-layout-enabled) {
-				display: inline-block;
-				float: left;
-				margin-left: 1%;
-				width: 27%;
-			}
-
-			.tip-creative {
-				font-size: 14px;
-				font-weight: normal;
-			}
-		}
-	}
-
-	textarea {
-		display: block;
-		font-size: 17px;
-		height: 170px;
-		padding: 0;
-		resize: none;
-		width: 425px;
-		@if ($responsive-or-breakpoints-layout-enabled) {
-			width: 510px;
-		}
-
-		&.placeholder {
-			color: #aaa;
-		}
-	}
-
-	select {
-		margin-bottom: 15px;
-	}
-
-	h3 {
-		display: block;
-		margin-top: 10px;
-	}
-
-	.checkbox {
-		input {
-			vertical-align: middle;
-		}
-	}
-
-	.select-container {
-		max-width: 490px;
-		min-width: 210px;
-	}
-
-	.categories-sets {
-		display: none;
-	}
-
-	.categories-set {
-		@include column-count(4);
-		display: none;
-
-		label {
-			display: inline-block;
-			position: relative;
-			width: 100%;
-		}
-
-		input {
-			position: absolute;
-		}
-
-		span {
-			display: block;
-			margin-left: 1.75em;
-		}
-	}
-}
-
-#ThemeWiki {
-	display: none;
-	width: 650px;
-	@if ($responsive-or-breakpoints-layout-enabled) {
-		width: auto;
-	}
-
-	.ThemeTab {
-		height: 150px;
-		left: 45px;
-		position: absolute;
-		top: 125px;
-
-		.slider {
-			height: 106px;
-			top: 0;
-			width: 608px;
-			@if ($responsive-or-breakpoints-layout-enabled) {
-				width: 500px;
-			}
-
-			ul {
-				list-style: none;
-				margin: 0;
-			}
-
-			li {
-				padding-bottom: 0;
-				padding-top: 0;
-			}
-
-			h3 {
-				display: none;
-			}
-		}
-
-		.chevron {
-			top: 37px;
-
-			&.next {
-				left: 645px;
-				@if ($responsive-or-breakpoints-layout-enabled) {
-					left: 540px;
-				}
-			}
-		}
-	}
-
-	.instruction {
-		margin-top: 175px;
-	}
-}
-
-#UpgradeWiki {
-	display: none;
-	width: 625px;
-	@if ($responsive-or-breakpoints-layout-enabled) {
-		width: auto;
-	}
-
-	.marketing {
-		font-size: 17px;
-		position: relative;
-
-		.upgrade {
-			@include linear-gradient(#8ddd56, top, #8ddd56, 20%, #74af39, 100%);
-			border: 1px solid #74af39;
-			font-size: 18px;
-			height: auto;
-			left: 430px;
-			padding: 9px 12px;
-			position: absolute;
-			top: 40px;
-
-			&:hover {
-				@include linear-gradient(#7dbf43, top, #7dbf43, 20%, #74af39, 100%);
-			}
-
-			&:active {
-				@include linear-gradient(#74af39, top, #74af39, 20%, #8ddd56, 100%);
-			}
-		}
-	}
-
-	ul {
-		@include clearfix;
-		clear: both;
-		margin: 15px 50px;
-		width: 400px;
-
-		li {
-			float: left;
-			font-size: 15px;
-			line-height: 25px;
-			width: 200px;
-		}
 	}
 }
 
