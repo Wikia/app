@@ -32,7 +32,6 @@ class MediaWikiAuthServiceTest extends \WikiaBaseTest {
 	}
 
 	public function testAuthenticateAuthenticationImpossible() {
-		$this->setExpectedException( 'Wikia\Service\Helios\ClientException', 'test' );
 		$username = 'SomeName';
 		$password = 'Password';
 
@@ -41,7 +40,9 @@ class MediaWikiAuthServiceTest extends \WikiaBaseTest {
 			->with( $username, $password )
 			->will( $this->throwException( new ClientException( 'test' ) ) );
 
-		$this->authService->authenticate( $username, $password );
+		$resultData = $this->authService->authenticate( $username, $password );
+		$this->assertFalse( $resultData->success() );
+		$this->assertTrue( $resultData->checkStatus( \WikiaResponse::RESPONSE_CODE_SERVICE_UNAVAILABLE ) );
 	}
 
 	public function testAuthenticateAuthenticationSucceded() {

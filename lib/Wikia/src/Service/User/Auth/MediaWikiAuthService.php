@@ -52,7 +52,8 @@ class MediaWikiAuthService implements AuthService {
 				'HELIOS_LOGIN authentication_error',
 				[ 'exception' => $e, 'response' => $e->getResponse(), 'username' => $username, 'method' => __METHOD__ ]
 			);
-			throw $e;
+			$result = false;
+			$status = \WikiaResponse::RESPONSE_CODE_SERVICE_UNAVAILABLE;
 		}
 
 		return AuthResult::create( $result )

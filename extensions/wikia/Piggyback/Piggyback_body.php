@@ -53,7 +53,6 @@ class PBHooks {
 		 * piggyback form
 		 */
 		if ( get_class( $invoker ) == PBLoginForm::class &&
-			$authResult instanceof AuthResult &&
 			$authResult->checkStatus( WikiaResponse::RESPONSE_CODE_FORBIDDEN )
 		) {
 			$retVal = LoginForm::SUCCESS;
@@ -114,9 +113,8 @@ class PBLoginForm extends LoginForm {
 
 		$cu = User::newFromName( $this->mUsername );
 
-		$authResult = null;
-		if ( !$cu->checkPassword( $this->mPassword, $authResult ) &&
-			$authResult instanceof AuthResult &&
+		$authResult = $cu->checkPassword( $this->mPassword );
+		if ( !$authResult->success() &&
 			$authResult->checkStatus( WikiaResponse::RESPONSE_CODE_FORBIDDEN )
 		) {
 			if ( $retval = '' == $this->mPassword ) {

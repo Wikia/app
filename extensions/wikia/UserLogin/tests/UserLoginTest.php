@@ -1,5 +1,7 @@
 <?php
 
+use Wikia\Service\User\Auth\AuthResult;
+
 require_once __DIR__ . '/UserLoginBaseTest.php';
 
 /**
@@ -108,6 +110,7 @@ class UserLoginTest extends UserLoginBaseTest {
 
 	public function loginDataProvider() {
 		$testUserName = 'testUser';
+		$passwordSuccess = AuthResult::create( true )->build();
 
 		// submit request
 		// no username
@@ -202,7 +205,7 @@ class UserLoginTest extends UserLoginBaseTest {
 		$mockUserParams118 = array(
 			'load' => null,
 			'loadFromDatabase' => null,
-			'checkPassword' => true,
+			'checkPassword' => $passwordSuccess,
 			'params' => array(
 				'mId' => self::TEST_USERID,
 				'mName' => self::TEST_USERNAME,
@@ -440,6 +443,8 @@ class UserLoginTest extends UserLoginBaseTest {
 	}
 
 	public function changePasswordDataProvider() {
+		$passwordSuccess = AuthResult::create( true )->build();
+
 		// 1 do nothing -- GET
 		$params1 = array(
 			'username' => 'WikiaUser',
@@ -523,7 +528,7 @@ class UserLoginTest extends UserLoginBaseTest {
 			'load' => null,
 			'loadFromDatabase' => null,
 			'isAnon' => false,
-			'checkPassword' => true,
+			'checkPassword' => $passwordSuccess,
 			'getPasswordValidity' => 'passwordtooshort',
 		);
 		$expMsg12 = wfMsgExt( 'passwordtooshort', array( 'parsemag' ), F::app()->wg->MinimalPasswordLength );
@@ -533,7 +538,7 @@ class UserLoginTest extends UserLoginBaseTest {
 			'load' => null,
 			'loadFromDatabase' => null,
 			'isAnon' => false,
-			'checkPassword' => true,
+			'checkPassword' => $passwordSuccess,
 			'getPasswordValidity' => 'password-name-match',
 		);
 		$expMsg13 = wfMsgExt( 'password-name-match', array( 'parsemag' ), F::app()->wg->MinimalPasswordLength );
@@ -543,7 +548,7 @@ class UserLoginTest extends UserLoginBaseTest {
 			'load' => null,
 			'loadFromDatabase' => null,
 			'isAnon' => false,
-			'checkPassword' => true,
+			'checkPassword' => $passwordSuccess,
 			'getPasswordValidity' => 'securepasswords-invalid',
 		);
 		$expMsg14 = wfMsgExt( 'securepasswords-invalid', array( 'parsemag' ), F::app()->wg->MinimalPasswordLength );
@@ -553,7 +558,7 @@ class UserLoginTest extends UserLoginBaseTest {
 			'load' => null,
 			'loadFromDatabase' => null,
 			'isAnon' => false,
-			'checkPassword' => true,
+			'checkPassword' => $passwordSuccess,
 			'getPasswordValidity' => true,
 			'setPassword' => null,
 			'setCookies' => null,

@@ -31,6 +31,7 @@ use Wikia\Service\User\Permissions\PermissionsService;
 use Wikia\Util\Statistics\BernoulliTrial;
 use Wikia\Service\Helios\HeliosClient;
 use Wikia\Service\Helios\ClientException;
+use Wikia\Service\User\Auth\AuthResult;
 use Wikia\Service\User\Auth\AuthServiceAccessor;
 use Wikia\Service\User\Auth\CookieHelper;
 use Wikia\Util\PerformanceProfilers\UsernameLookupProfiler;
@@ -3485,8 +3486,7 @@ class User {
 	 * @param $password String: user password.
 	 * @return Boolean: True if the given password is correct, otherwise False.
 	 */
-	public function checkPassword( $password, &$authResult = null, &$errorMessageKey = null ) {
-		global $wgAuth, $wgLegacyEncoding;
+	public function checkPassword( $password, &$errorMessageKey = null ) {
 		$this->load();
 
 		// Even though we stop people from creating passwords that
@@ -3495,24 +3495,20 @@ class User {
 		// domain passwords in a mysql database, so we should
 		// check this (in case $wgAuth->strict() is false).
 		if( !$this->isValidPassword( $password ) ) {
-			return false;
+			return AuthResult::create( false )->build();
 		}
 
 		// Wikia change - begin
 		// Helios integration
-		$result = false;
-		try {
-			$authResult = $this->authenticationService()->authenticate( $this->mName, $password );
-			$result = $authResult->success();
-			if ( $result && !$authResult->isResetPasswordAuth() ) {
-				$this->setGlobalAuthToken( $authResult->getAccessToken() );
-			}
-		} catch ( ClientException $e ) {
+		$authResult = $this->authenticationService()->authenticate( $this->mName, $password );
+		if ( $authResult->success() && !$authResult->isResetPasswordAuth() ) {
+			$this->setGlobalAuthToken( $authResult->getAccessToken() );
+		} elseif ( $authResult->checkStatus( WikiaResponse::RESPONSE_CODE_SERVICE_UNAVAILABLE ) ) {
 			$errorMessageKey = 'login-abort-service-unavailable';
 		}
 		// Wikia change - end
 
-		return $result;
+		return $authResult;
 	}
 
 	/**

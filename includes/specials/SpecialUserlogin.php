@@ -675,8 +675,8 @@ class LoginForm extends SpecialPage {
 
 		global $wgBlockDisablesLogin;
 		$abortedMessageKey = null;
-		$authResult = null;
-		if ( !$u->checkPassword( $this->mPassword, $authResult, $abortedMessageKey ) ) {
+		$authResult = $u->checkPassword( $this->mPassword, $abortedMessageKey );
+		if ( !$authResult->success() ) {
 			if ( $abortedMessageKey ) {
 				$this->mAbortLoginErrorMsg = $abortedMessageKey;
 				return self::ABORTED;
