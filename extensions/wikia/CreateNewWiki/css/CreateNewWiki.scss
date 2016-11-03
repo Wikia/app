@@ -9,11 +9,20 @@ $color-borders: #CECECE;
 
 @import 'extensions/wikia/ThemeDesigner/css/ThemeTab';
 
+@import 'extensions/wikia/DesignSystem/bower_components/design-system/dist/scss/wds-variables/_colors.scss';
+
+$normal-spacing: 24px;
+$cnw-size: 700px;
+
+.skin-oasis.page-Special_CreateNewWiki {
+	background-color: $wds-color-off-white;
+}
+
 .WikiaPage {
 	border: 0;
 
 	.WikiaPageBackground {
-		@include linear-gradient(false, top, #01386e, 0%, #2185da, 25%, #fff, 60%);
+		background-color: $wds-color-off-white;
 	}
 }
 
@@ -31,14 +40,14 @@ $color-borders: #CECECE;
 
 #CreateNewWiki {
 	background: white;
-	border: 10px solid #8ac342;
+	border: 1px solid $wds-color-faint-gray;
 	color: #747474;
 	font-size: 12px;
 	font-weight: normal;
-	margin: 50px auto 0;
-	padding: 30px 30px 60px 75px;
+	margin: 4px auto 0;
+	padding: 21px 0 60px;
 	position: relative;
-	width: 500px;
+	width: $cnw-size;
 
 	h1 {
 		display: none;
@@ -121,9 +130,10 @@ $color-borders: #CECECE;
 	}
 
 	.steps {
+		border-bottom: 1px solid $wds-color-mist-gray;
 		list-style: none;
 		margin: 0;
-		padding: 0;
+		padding: 0 $normal-spacing;
 	}
 
 	.awesome-box {
