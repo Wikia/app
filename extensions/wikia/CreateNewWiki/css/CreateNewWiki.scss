@@ -1,14 +1,9 @@
+@import 'variables';
 @import 'skins/shared/mixins/box-shadow';
 @import 'skins/shared/mixins/clearfix';
 @import 'skins/oasis/css/core/layout';
-
 @import 'extensions/wikia/ThemeDesigner/css/ThemeTab';
 @import 'extensions/wikia/DesignSystem/bower_components/design-system/dist/scss/wds-variables/_colors.scss';
-
-@import 'extensions/wikia/DesignSystem/bower_components/design-system/dist/scss/wds-variables/_colors.scss';
-@import 'CreateNewWikiVariables';
-
-$color-borders: #CECECE;
 
 .skin-oasis.page-Special_CreateNewWiki {
 	background-color: $wds-color-off-white;
@@ -42,7 +37,7 @@ $color-borders: #CECECE;
 	font-size: 12px;
 	font-weight: normal;
 	margin: 4px auto 0;
-	padding: 18px 0 60px;
+	padding: $content-spacing-regular 0 60px;
 	position: relative;
 	width: $cnw-size;
 
@@ -140,7 +135,7 @@ $color-borders: #CECECE;
 		border-bottom: 1px solid $wds-color-mist-gray;
 		list-style: none;
 		margin: 0;
-		padding: 0 $normal-spacing;
+		padding: 0 $content-spacing-large;
 	}
 
 	.awesome-box {
