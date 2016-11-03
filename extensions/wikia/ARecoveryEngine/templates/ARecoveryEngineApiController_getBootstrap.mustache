@@ -1,43 +1,34 @@
 <!-- Begin recovery -->
 <script type="text/javascript">
-require([
-    "ext.wikia.adEngine.adContext"
-], function (adContext) {
 
-    var context = adContext.getContext();
-    if (context.opts.sourcePointRecovery === true) {
+    (function () {
         {{{code}}}
 
         window._sp_ = window._sp_ || {};
         window._sp_.config = window._sp_.config || {};
         window._sp_.config.account_id = 106;
-        window._sp_.config.publisher_base = '{{domain}}/{{cs_endpoint}}';
-        window._sp_.config.enable_rid = true;
-        window._sp_.config.content_control_callback = function() {
-            var logGroup = 'ext.wikia.aRecoveryEngine.recovery.bootstrap';
-            if (!window.wgUserName) {
-                document.getElementById('WikiaArticle').style.display = 'none';
-                document.getElementById('WikiaArticleMsg').style.display = 'block';
-                window.addEventListener('load', function(){
-                    require(['ext.wikia.aRecoveryEngine.recovery.helper'], function (helper) {
-                        'use strict';
-                        helper.track('callback');
-                    });
-                });
-            } else {
-                window.Wikia.log(['isContentControlEnabled', false], 'debug', logGroup);
-            }
+        window._sp_.config.content_control_callback = function () {
+            console.log('CONTENT LOCK');
         };
 
-        window._sp_.bootstrap('{{domain}}/api/v1/ARecoveryEngine/delivery');
+        window._sp_.config.mms_domain = 'mms.bre.wikia-dev.com';
+        window._sp_.mms = window._sp_.mms || {};
+        window._sp_.mms.cmd = window._sp_.mms.cmd || [];
+        window._sp_.config.mms_client_data_callback = function (o) {
+            console.log('mms_client_data_callback', o)
+        };
 
-        window.addEventListener('load', function(){
-            require(['ext.wikia.aRecoveryEngine.recovery.helper'], function (helper) {
-                'use strict';
-                helper.verifyContent();
-            });
+        window._sp_.mms.cmd.push(function () {
+            window._sp_.mms.setTargeting("x", "y");
         });
-    }
-});
+
+        window._sp_.mms.cmd.push(function () {
+            window._sp_.mms.startMsg();
+        });
+
+        window._sp_.bootstrap('{{domain}}/api/v1/ARecoveryEngine/SourcePointMessaging');
+        window._sp_.bootstrap('{{domain}}/api/v1/ARecoveryEngine/SourcePointMMSClient');
+    })();
+
 </script>
 <!-- End recovery -->

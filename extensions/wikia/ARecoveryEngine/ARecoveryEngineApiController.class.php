@@ -21,6 +21,26 @@ class ARecoveryEngineApiController extends WikiaController {
 		$this->response->setCacheValidity( WikiaResponse::CACHE_STANDARD, WikiaResponse::CACHE_DISABLED );
 	}
 
+	public function getSourcePointMessaging() {
+		$resourceLoader = new ResourceLoaderAdEngineSourcePointMessage();
+		$resourceLoaderContext = new ResourceLoaderContext( new ResourceLoader(), new FauxRequest() );
+		$source = $resourceLoader->getScript( $resourceLoaderContext );
+
+		$this->response->setContentType( 'text/javascript; charset=utf-8' );
+		$this->response->setBody( $source );
+		$this->response->setCacheValidity( WikiaResponse::CACHE_STANDARD );
+	}
+
+	public function getSourcePointMMSClient() {
+		$resourceLoader = new ResourceLoaderAdEngineSourcePointMMSClient();
+		$resourceLoaderContext = new ResourceLoaderContext( new ResourceLoader(), new FauxRequest() );
+		$source = $resourceLoader->getScript( $resourceLoaderContext );
+
+		$this->response->setContentType( 'text/javascript; charset=utf-8' );
+		$this->response->setBody( $source );
+		$this->response->setCacheValidity( WikiaResponse::CACHE_STANDARD );
+	}
+
 	public function getBootstrap() {
 		$resourceLoader = new ResourceLoaderAdEngineSourcePointCSBootstrap();
 		$resourceLoaderContext = new ResourceLoaderContext( new ResourceLoader(), new FauxRequest() );
