@@ -82,7 +82,7 @@ define('ext.wikia.adEngine.template.bfaaDesktop', [
 						src: 'gpt',
 						slotName: params.slotName,
 						uap: params.uap,
-						passback: 'wikia'
+						passback: 'vuap'
 					}
 				);
 

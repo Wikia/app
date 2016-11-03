@@ -73,7 +73,7 @@ define('ext.wikia.adEngine.template.bfaaMobile', [
 						src: 'gpt',
 						slotName: params.slotName,
 						uap: params.uap,
-						passback: 'wikia'
+						passback: 'vuap'
 					},
 					onVideoEndedCallback
 				);
