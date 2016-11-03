@@ -201,15 +201,17 @@ class RequestContext implements IContextSource {
 	 * @return User
 	 */
 	public function getUser() {
-		// Wikia change - begin
 		global $wgUserForceAnon;
+		// Wikia change - begin
 		if ( $this->user === null && $wgUserForceAnon ) {
 			$this->user = new User();
-			$authPath['force_anon'] = 'OK';
 		}
 
 		if ( $this->user === null ) {
 			$this->user = User::newFromToken( $this->getRequest() );
+			if ( $this->user->isLoggedIn() ) {
+				wfRunHooks( 'UserLoadFromHeliosToken', [ $this->user ] );
+			}
 		}
 		// Wikia change - end
 

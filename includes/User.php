@@ -3516,29 +3516,6 @@ class User {
 	}
 
 	/**
-	 * Check if the given clear-text password matches the temporary password
-	 * sent by e-mail for password reset operations.
-	 *
-	 * @param $plaintext string
-	 *
-	 * @return Boolean: True if matches, false otherwise
-	 */
-	public function checkTemporaryPassword( $plaintext ) {
-		global $wgNewPasswordExpiry;
-
-		$this->load();
-		if( self::comparePasswords( $this->mNewpassword, $plaintext, $this->getId() ) ) {
-			if ( is_null( $this->mNewpassTime ) ) {
-				return true;
-			}
-			$expiry = wfTimestamp( TS_UNIX, $this->mNewpassTime ) + $wgNewPasswordExpiry;
-			return ( time() < $expiry );
-		} else {
-			return false;
-		}
-	}
-
-	/**
 	 * Alias for getEditToken.
 	 * @deprecated since 1.19, use getEditToken instead.
 	 *
@@ -4151,53 +4128,6 @@ class User {
 		} else {
 			return ':A:' . md5( $password );
 		}
-	}
-
-	/**
-	 * Compare a password hash with a plain-text password. Requires the user
-	 * ID if there's a chance that the hash is an old-style hash.
-	 *
-	 * @param $hash String Password hash
-	 * @param $password String Plain-text password to compare
-	 * @param $userId String|bool User ID for old-style password salt
-	 *
-	 * @return Boolean
-	 */
-	public static function comparePasswords( $hash, $password, $userId = false ) {
-		// Wikia change - begin
-		// @see PLATFORM-2502 comparing new passwords in PHP code.
-		// @todo mech remove after the new password hashing is implemented (PLATFORM-2526).
-		WikiaLogger::instance()->debug(
-			'NEW_HASHING comparePasswords called in PHP',
-			[
-				'user_id' => $userId,
-				'caller' => wfGetCaller(),
-				'exception' => new Exception()
-			]
-		);
-		// Wikia change - end
-
-		$type = substr( $hash, 0, 3 );
-
-		$result = false;
-
-		if( !wfRunHooks( 'UserComparePasswords', array( &$hash, &$password, &$userId, &$result ) ) ) {
-			return $result;
-		}
-
-		if ( $type == ':A:' ) {
-			# Unsalted
-			$bCheck = md5( $password ) === substr( $hash, 3 );
-		} elseif ( $type == ':B:' ) {
-			# Salted
-			list( $salt, $realHash ) = explode( ':', substr( $hash, 3 ), 2 );
-			$bCheck = md5( $salt.'-'.md5( $password ) ) === $realHash;
-		} else {
-			# Old-style
-			$bCheck = self::oldCrypt( $password, $userId ) === $hash;
-		}
-
-		return $bCheck;
 	}
 
 	/**

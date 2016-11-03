@@ -203,7 +203,6 @@ class UserLoginTest extends UserLoginBaseTest {
 			'load' => null,
 			'loadFromDatabase' => null,
 			'checkPassword' => true,
-			'checkTemporaryPassword' => false,
 			'params' => array(
 				'mId' => self::TEST_USERID,
 				'mName' => self::TEST_USERNAME,
@@ -512,38 +511,11 @@ class UserLoginTest extends UserLoginBaseTest {
 		);
 		$expMsg9 = wfMessage( 'badretype' )->escaped();
 
-		// 10 error --  not match temporary password (checkTemporaryPassword = false)
 		$params10 = array(
 			'username' => 'WikiaUser',
 			'newpassword' => 'testPasword',
 			'retype' => 'testPasword',
 			'loginToken' => self::LOGIN_TOKEN,
-		);
-		$mockUserParams10 = array(
-			'load' => null,
-			'loadFromDatabase' => null,
-			'isAnon' => false,
-			'checkTemporaryPassword' => false,
-			'checkPassword' => true,
-		);
-		$expMsg10 = wfMessage( 'userlogin-error-wrongpassword' )->escaped();
-
-		// 11 error -- not correct password (checkPassword = false)
-		$mockUserParams11 = array(
-			'load' => null,
-			'loadFromDatabase' => null,
-			'isAnon' => false,
-			'checkTemporaryPassword' => true,
-			'checkPassword' => false,
-		);
-
-		// 1011 error -- [10] not match temporary password (checkTemporaryPassword = false) + [11] not correct password (checkPassword = false)
-		$mockUserParams1011 = array(
-			'load' => null,
-			'loadFromDatabase' => null,
-			'isAnon' => false,
-			'checkTemporaryPassword' => false,
-			'checkPassword' => false,
 		);
 
 		// 12 error -- not valid new password (passwordtooshort)
@@ -551,7 +523,6 @@ class UserLoginTest extends UserLoginBaseTest {
 			'load' => null,
 			'loadFromDatabase' => null,
 			'isAnon' => false,
-			'checkTemporaryPassword' => true,
 			'checkPassword' => true,
 			'getPasswordValidity' => 'passwordtooshort',
 		);
@@ -562,7 +533,6 @@ class UserLoginTest extends UserLoginBaseTest {
 			'load' => null,
 			'loadFromDatabase' => null,
 			'isAnon' => false,
-			'checkTemporaryPassword' => true,
 			'checkPassword' => true,
 			'getPasswordValidity' => 'password-name-match',
 		);
@@ -573,7 +543,6 @@ class UserLoginTest extends UserLoginBaseTest {
 			'load' => null,
 			'loadFromDatabase' => null,
 			'isAnon' => false,
-			'checkTemporaryPassword' => true,
 			'checkPassword' => true,
 			'getPasswordValidity' => 'securepasswords-invalid',
 		);
@@ -584,7 +553,6 @@ class UserLoginTest extends UserLoginBaseTest {
 			'load' => null,
 			'loadFromDatabase' => null,
 			'isAnon' => false,
-			'checkTemporaryPassword' => true,
 			'checkPassword' => true,
 			'getPasswordValidity' => true,
 			'setPassword' => null,
@@ -624,12 +592,6 @@ class UserLoginTest extends UserLoginBaseTest {
 			array( $params1, $mockWebRequest2, $mockWgUserParams7, $mockAuthParams6, $mockUserParams8, $mockHelperParams1, 'error', $expMsg7 ),
 			// 9 error -- retype != newpassword
 			array( $params9, $mockWebRequest2, $mockWgUserParams7, $mockAuthParams6, $mockUserParams9, $mockHelperParams1, 'error', $expMsg9 ),
-			// 10 error --  not match temporary password (checkTemporaryPassword = false)
-			// array( $params10, $mockWebRequest2, $mockWgUserParams7, $mockAuthParams6, $mockUserParams10, $mockHelperParams1, 'error', $expMsg10 ),
-			// 11 error -- not correct password (checkPassword = false)
-			// array( $params10, $mockWebRequest2, $mockWgUserParams7, $mockAuthParams6, $mockUserParams11, $mockHelperParams1, 'error', $expMsg10 ),
-			// 1011 error -- [10] not match temporary password (checkTemporaryPassword = false) + [11] not correct password (checkPassword = false)
-			array( $params10, $mockWebRequest2, $mockWgUserParams7, $mockAuthParams6, $mockUserParams1011, $mockHelperParams1, 'error', $expMsg10 ),
 			// 12 error -- not valid new password (passwordtooshort)
 			array( $params10, $mockWebRequest2, $mockWgUserParams7, $mockAuthParams6, $mockUserParams12, $mockHelperParams1, 'error', $expMsg12 ),
 			// 13 error -- not valid new password (password-name-match)
