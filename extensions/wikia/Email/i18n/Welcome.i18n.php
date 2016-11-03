@@ -76,7 +76,7 @@ $messages['es'] = array(
 	'emailext-welcome-footer-closing' => '¡Gracias por formar parte de Fandom!',
 	'emailext-welcome-summary-extended-tips' => 'Aquí hay 5 formas para sacar el máximo provecho de Fandom:',
 	'emailext-welcome-fandom-connect-header' => 'Conéctate con Fandom',
-	'emailext-welcome-fandom-connect-description' => 'Sigue @getfandom en tu red social favorita para conocer lo último en cultura pop, nuestro sitio y mucho más.',
+	'emailext-welcome-fandom-connect-description' => 'Sigue @es_fandom en tu red social favorita para conocer lo último en cultura pop, nuestro sitio y mucho más.',
 );
 
 $messages['fr'] = array(
@@ -156,23 +156,23 @@ $messages['ko'] = array(
 );
 
 $messages['nl'] = array(
-	'emailext-welcome-subject' => 'Welcome to Fandom, $1!',
-	'emailext-welcome-summary' => 'Welcome to Fandom! You are now part of the world’s largest collection of entertainment communities. Share your knowledge, discuss opinions, and discover great content.',
-	'emailext-welcome-summary-extended' => "So what's next?",
+	'emailext-welcome-subject' => 'Welcome to Wikia, $1!',
+	'emailext-welcome-summary' => 'Congrats, you’re a Wikian! You are now part of a universe created entirely for fans and authored by millions of other fans, just like you.',
+	'emailext-welcome-summary-extended' => 'So what’s next?',
 	'emailext-welcome-summary-extended-tips' => 'Here are 5 ways you can get the most out of Fandom:',
-	'emailext-welcome-profile-header' => 'Create your profile',
-	'emailext-welcome-profile-description' => 'Build your identity on Fandom. Connect with others, and share your fandoms.',
+	'emailext-welcome-profile-header' => 'Je profiel aanmaken',
+	'emailext-welcome-profile-description' => "Here's your chance to build your identity on Wikia, connect with others, and discover more about what you love.",
 	'emailext-welcome-fandom-connect-header' => 'Connect with Fandom',
 	'emailext-welcome-fandom-connect-description' => 'Follow @getfandom on your favorite social network for the latest in pop culture, our site and more.',
-	'emailext-welcome-mobile-header' => 'Take Fandom everywhere',
-	'emailext-welcome-mobile-description' => 'Download your favorite Fandom Community apps for [$1 iOS] or [$2 Android] and never, ever stop obsessing about your fandoms.',
-	'emailext-welcome-basics-url' => 'http://community.wikia.com/wiki/Wikia_University',
-	'emailext-welcome-basics-header' => 'Learn the basics',
-	'emailext-welcome-basics-description' => 'Need a quick guide on how to edit a page, start a discussion, or upload stuff? Check out [$1 these tutorials]!',
-	'emailext-welcome-fandom-header' => 'Find your favorite fandom',
-	'emailext-welcome-fandom-description' => 'Discover communities across movies, TV, games, and more. Leave a comment or follow your favorite discussion.',
-	'emailext-welcome-footer-community' => 'Want more information? Find additional advice, answers, and friendly faces at [http://community.wikia.com Fandom Community Central].',
-	'emailext-welcome-footer-closing' => 'Thanks for joining Fandom!',
+	'emailext-welcome-mobile-header' => 'Take Wikia everywhere',
+	'emailext-welcome-mobile-description' => 'Download your favorite Wikia fan apps for [$1 iOS] or [$2 Android] and never, ever stop obsessing about your fandoms.',
+	'emailext-welcome-basics-url' => 'http://community.wikia.com/wiki/Special:Videos',
+	'emailext-welcome-basics-header' => 'De basics leren',
+	'emailext-welcome-basics-description' => 'Nog een snelle gids nodig over hoe je een pagina bewerkt, een discussie begint of dingen uploadt? Bekijk [$1 deze tutorials]!',
+	'emailext-welcome-fandom-header' => 'Je favoriete fandom vinden',
+	'emailext-welcome-fandom-description' => 'Discover thousands of wikias across movies, TV, games, and more. Follow them so you never miss one moment.',
+	'emailext-welcome-footer-community' => 'Want more information? Find additional advice, answers, and friendly faces at [http://community.wikia.com Wikia Community Central].',
+	'emailext-welcome-footer-closing' => 'Thanks for joining the fan universe!',
 );
 
 $messages['pl'] = array(
@@ -292,6 +292,6 @@ $messages['zh-tw'] = array(
 	'emailext-welcome-footer-closing' => '謝謝你加入Fandom！',
 	'emailext-welcome-summary-extended-tips' => '有以下幾種方法可以讓您在Fandom有更多的收穫：',
 	'emailext-welcome-fandom-connect-header' => '與Fandom連結',
-	'emailext-welcome-fandom-connect-description' => '在你最喜愛的社交媒體上使用@getfandom以便獲得網站最新的流行文化内容。'
+	'emailext-welcome-fandom-connect-description' => '在你最喜愛的社交媒體上使用@getfandom以便獲得網站最新的流行文化内容。',
 );
 
