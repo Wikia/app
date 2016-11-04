@@ -79,7 +79,8 @@ class PhalanxContentBlock extends WikiaObject {
 			return [ $contentIsBlocked, $errorMessage ];
 		}
 
-		$title = RequestContext::getMain()->getTitle();
+		// SUS-1219: fallback to editpage title if wgTitle is null
+		$title = $editPage->getContextTitle() ?? $editPage->getTitle();
 
 		$phalanxModel = new PhalanxContentModel( $title );
 
