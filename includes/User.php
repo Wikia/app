@@ -2188,6 +2188,13 @@ class User
 		$this->load();
 		$this->setToken();
 
+		if( $str === null ) {
+			// Save an invalid hash...
+			$this->mPassword = '';
+		} else {
+			$this->mPassword = self::crypt( $str );
+		}
+
 		$this->mNewpassword = '';
 		$this->mNewpassTime = null;
 	}
