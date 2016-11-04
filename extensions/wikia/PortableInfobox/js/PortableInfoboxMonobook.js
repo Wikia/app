@@ -6,7 +6,7 @@
 			$content.find('.portable-infobox .pi-image > a.image').on('click', function () {
 				var $anchor = $(this),
 					fileName = $anchor.children('.pi-image-thumbnail').data('image-key'),
-					href = window.wgArticlePath.replace(/\$1/, 'File:' + encodeURIComponent(fileName));
+					href = window.wgArticlePath.replace(/\$1/, 'File:' + fileName);
 
 				$anchor.attr('href', href);
 			});
