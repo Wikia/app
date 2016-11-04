@@ -2151,7 +2151,7 @@ class User
 	 */
 	public function setPassword( $password, $forceLogout = true ) {
 		$heliosClient = self::heliosClient();
-		
+
 		$heliosPasswordChange = $heliosClient->setPassword( $this->getId(), $password );
 
 		if ( !$heliosPasswordChange ) {

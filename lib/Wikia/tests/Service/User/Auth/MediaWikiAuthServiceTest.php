@@ -13,7 +13,7 @@ class MediaWikiAuthServiceTest extends \WikiaBaseTest {
 		parent::setUp();
 
 		$this->heliosClientMock = $this->getMock( HeliosClient::class,
-			[ 'login', 'forceLogout', 'invalidateToken', 'register', 'info', 'generateToken' ] );
+			[ 'login', 'forceLogout', 'invalidateToken', 'register', 'info', 'generateToken' , 'setPassword', 'validatePassword' ] );
 
 		$this->authService = new MediaWikiAuthService( $this->heliosClientMock );
 	}
