@@ -1,11 +1,10 @@
 @import 'variables';
 @import 'skins/shared/mixins/box-shadow';
 @import 'skins/shared/mixins/clearfix';
-@import 'skins/oasis/css/core/layout';
 @import 'extensions/wikia/ThemeDesigner/css/ThemeTab';
 @import 'extensions/wikia/DesignSystem/bower_components/design-system/dist/scss/wds-variables/_colors.scss';
 
-.skin-oasis.page-Special_CreateNewWiki {
+.WikiaSiteWrapper {
 	background-color: $wds-color-off-white;
 }
 
@@ -172,10 +171,6 @@
 	@include clearfix;
 	display: none;
 	width: 600px;
-	@if ($responsive-or-breakpoints-layout-enabled) {
-		min-width: 590px;
-		width: auto;
-	}
 
 	.UserLoginModal {
 		border-right: 1px solid $color-borders;

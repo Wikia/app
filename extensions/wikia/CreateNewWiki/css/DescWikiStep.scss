@@ -2,7 +2,6 @@
 @import 'skins/shared/mixins/box-shadow';
 @import 'skins/shared/mixins/columns';
 @import 'skins/shared/mixins/gradient';
-@import 'skins/oasis/css/core/layout';
 
 #DescWiki {
 	display: none;
@@ -11,14 +10,11 @@
 	ol {
 		margin: 0;
 		padding: 0;
-
-		@if (not $responsive-or-breakpoints-layout-enabled) {
-			left: 515px;
-			position: absolute;
-			right: 515px;
-			top: 100px;
-			width: 265px;
-		}
+		left: 515px;
+		position: absolute;
+		right: 515px;
+		top: 100px;
+		width: 265px;
 
 		li {
 			@include linear-gradient(#0255a1, top, #0255a1, 50%, #2b84d6, 100%);
@@ -30,12 +26,6 @@
 			list-style: none;
 			margin-bottom: 10px;
 			padding: 10px;
-			@if ($responsive-or-breakpoints-layout-enabled) {
-				display: inline-block;
-				float: left;
-				margin-left: 1%;
-				width: 27%;
-			}
 
 			.tip-creative {
 				font-size: 14px;
@@ -51,9 +41,6 @@
 		padding: 0;
 		resize: none;
 		width: 425px;
-		@if ($responsive-or-breakpoints-layout-enabled) {
-			width: 510px;
-		}
 
 		&.placeholder {
 			color: #aaa;
