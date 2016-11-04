@@ -46,4 +46,14 @@ interface HeliosClient {
 	 * @return array - JSON string deserialized into an associative array
 	 */
 	public function generateToken( $userId );
+
+	/**
+	 * Generate a new password for user
+	 *
+	 * @param $userId
+	 * @param $password
+	 *
+	 * @return mixed
+	 */
+	public function setPassword( $userId );
 }

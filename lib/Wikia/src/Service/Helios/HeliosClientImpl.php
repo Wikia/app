@@ -241,4 +241,12 @@ class HeliosClientImpl implements HeliosClient
 			);
 	}
 
+	public function setPassword( $userId ) {
+		return $this->request(
+			"users/$userId/password",
+			[],
+			[],
+			[ 'method' => 'PUT' ]
+		);
+	}
 }

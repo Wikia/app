@@ -2090,12 +2090,12 @@ class User {
 	public function setPassword( $str, $forceLogout = true ) {
 		global $wgAuth;
 
-		if( $str !== null ) {
-			if( !$wgAuth->allowPasswordChange() ) {
+		if ( $str !== null ) {
+			if ( !$wgAuth->allowPasswordChange() ) {
 				throw new PasswordError( wfMsg( 'password-change-forbidden' ) );
 			}
 
-			if( !$this->isValidPassword( $str ) ) {
+			if ( !$this->isValidPassword( $str ) ) {
 				global $wgMinimalPasswordLength;
 				$valid = $this->getPasswordValidity( $str );
 				if ( is_array( $valid ) ) {
@@ -2103,13 +2103,16 @@ class User {
 					$params = $valid;
 				} else {
 					$message = $valid;
-					$params = array( $wgMinimalPasswordLength );
+					$params = [ $wgMinimalPasswordLength ];
 				}
-				throw new PasswordError( wfMsgExt( $message, array( 'parsemag' ), $params ) );
+				throw new PasswordError( wfMsgExt( $message, [ 'parsemag' ], $params ) );
 			}
 		}
 
-		if( !$wgAuth->setPassword( $this, $str ) ) {
+//		$return = self::heliosClient()->setPassword( $this->getId() );
+//		var_dump($return);die;
+
+		if ( !$wgAuth->setPassword( $this, $str ) ) {
 			throw new PasswordError( wfMsg( 'externaldberror' ) );
 		}
 
