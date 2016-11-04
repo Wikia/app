@@ -672,6 +672,7 @@ $messages['de'] = [
 	'cnw-error-unconfirmed-email-header' => 'Deine E-Mail-Adresse wurde nicht bestätigt',
 	'cnw-error-unconfirmed-email' => 'Deine E-Mail-Adresse muss zum Erstellen eines Wikis bestätigt werden.',
 	'cnw-name-wiki-language' => '',
+	'autocreatewiki-title-template' => '$1 Wiki',
 ];
 
 $messages['de-formal'] = [
@@ -783,6 +784,7 @@ $messages['es'] = [
 	'cnw-error-unconfirmed-email-header' => 'Tu correo electrónico no ha sido confirmado',
 	'cnw-error-unconfirmed-email' => 'Tu correo electrónico debe ser confirmado para crear una wikia.',
 	'cnw-name-wiki-language' => '',
+	'autocreatewiki-title-template' => '$1 Wiki',
 ];
 
 $messages['eu'] = [
@@ -997,6 +999,7 @@ $messages['fr'] = [
 	'cnw-error-unconfirmed-email-header' => 'Votre adresse e-mail n\'a pas été confirmée',
 	'cnw-error-unconfirmed-email' => 'Votre adresse e-mail doit être confirmée pour créer un wikia.',
 	'cnw-name-wiki-language' => '',
+	'autocreatewiki-title-template' => '$1 Wiki',
 ];
 
 $messages['fy'] = [
@@ -1397,6 +1400,7 @@ $messages['it'] = [
 	'cnw-desc-all-ages' => 'Questa comunità è destinata ai bambini?',
 	'cnw-desc-tip-all-ages' => 'Riguarda un tema d\'interesse per il pubblico infantile? In osservanza delle leggi degli Stati Uniti, monitoriamo le comunità che riguardano tematiche che attirano direttamente bambini di età fino ai 12 anni.',
 	'cnw-error-anon-user' => 'La creazione di wikia da parte di utenti anonimi è stata disattivata.  [[Special:UserLogin|Accedi]] e riprova.',
+	'autocreatewiki-title-template' => '$1 Wiki',
 ];
 
 $messages['ja'] = [
@@ -1466,6 +1470,7 @@ $messages['ja'] = [
 	'cnw-error-torblock' => 'Torネットワーク経由でWikiaコミュニティを作成することはできません。',
 	'cnw-error-bot' => 'ボットの可能性が検出されました。ボットでない場合には、誤ってボットと検出された旨を下記のお問い合わせからお知らせください。その後、Wikiaコミュニティの作成をサポートさせていただきます：[http://www.wikia.com/Special:Contact/general お問い合わせ]',
 	'cnw-error-unconfirmed-email-header' => 'メールの認証が完了していません',
+	'autocreatewiki-title-template' => '$1 Wiki',
 ];
 
 $messages['km'] = [
@@ -2129,6 +2134,7 @@ $messages['nl'] = [
 	'cnw-error-unconfirmed-email-header' => 'Uw e-mailadres is niet bevestigd',
 	'cnw-error-unconfirmed-email' => 'Uw e-mailadres moet bevestigd zijn om een wiki te kunnen aanmaken.',
 	'cnw-name-wiki-language' => '',
+	'autocreatewiki-title-template' => '$1 Wiki',
 ];
 
 $messages['nl-informal'] = [
@@ -2265,6 +2271,7 @@ $messages['pl'] = [
 	'cnw-error-unconfirmed-email-header' => 'Twój e-mail nie został potwierdzony',
 	'cnw-error-unconfirmed-email' => 'Musisz mieć potwierdzony adres e-mail aby stworzyć wiki.',
 	'cnw-name-wiki-language' => '',
+	'autocreatewiki-title-template' => '$1 Wiki',
 ];
 
 $messages['pms'] = [
@@ -2430,6 +2437,7 @@ $messages['pt'] = [
 	'cnw-name-wiki-language' => '',
 	'cnw-desc-select-vertical' => 'Selecione uma categoria de hub',
 	'cnw-desc-select-categories' => 'Selecione categorias adicionais',
+	'autocreatewiki-title-template' => '$1 Wiki',
 ];
 
 $messages['pt-br'] = [
@@ -2633,6 +2641,7 @@ $messages['ru'] = [
 	'cnw-error-unconfirmed-email-header' => 'Адрес электронной почты не был подтверждён',
 	'cnw-error-unconfirmed-email' => 'Чтобы создать Вики, необходимо подтвердить адрес электронной почты.',
 	'cnw-name-wiki-language' => '',
+	'autocreatewiki-title-template' => '$1 Wiki',
 ];
 
 $messages['sa'] = [
@@ -3378,6 +3387,7 @@ $messages['zh-hans'] = [
 	'cnw-error-unconfirmed-email-header' => '您的电子邮件尚未验证。',
 	'cnw-error-unconfirmed-email' => '您需要先验证邮件才能创建维基。',
 	'cnw-name-wiki-language' => '',
+	'autocreatewiki-title-template' => '$1 Wiki',
 ];
 
 $messages['zh-hant'] = [
@@ -3440,6 +3450,7 @@ $messages['zh-hant'] = [
 	'cnw-error-torblock' => '不允許透過 Tor 網路建立 wiki 。',
 	'cnw-error-bot' => '我們檢測到您可能是個機器人。如果我們搞錯了，請聯絡並告訴我們，您已經被誤以為是一個機器人，我們將協助您建立您的 wiki: [HTTP://www.wikia.com/Special:Contact/聯絡我們]',
 	'cnw-error-bot-header' => '你已被檢測到是機器人',
+	'autocreatewiki-title-template' => '$1 Wiki',
 ];
 
 $messages['zh-tw'] = [
