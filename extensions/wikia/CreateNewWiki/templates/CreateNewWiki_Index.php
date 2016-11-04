@@ -181,18 +181,6 @@
 			</nav>
 		</li>
 	</ol>
-	<ul id="StepsIndicator">
-		<?php
-			$createNewWikiSteps = 4;
-			$currentStep = empty( $currentStep ) ? 1 : 3;
-			for( $i = 0; $i < $createNewWikiSteps; $i++ ) {
-		?>
-			<li class="step<?= $currentStep > 0 ? ' active' : '' ?>"></li>
-		<?php
-				$currentStep--;
-			}
-		?>
-	</ul>
 </section>
 <script>
 	window.WikiBuilderCfg = <?= json_encode( $wikiBuilderCfg ) ?>;
