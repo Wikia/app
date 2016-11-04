@@ -2397,9 +2397,7 @@ $config['njord_js'] = [
 		'//resources/jquery.ui/jquery.ui.mouse.js',
 		'//resources/jquery.ui/jquery.ui.draggable.js',
 		'//resources/jquery.ui/jquery.ui.droppable.js',
-		'//extensions/wikia/NjordPrototype/scripts/jquery.caret.js',
-		'//extensions/wikia/NjordPrototype/scripts/Njord.js',
-	],
+	]
 ];
 
 $config['upload_photos_dialog_js'] = [
