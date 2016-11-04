@@ -580,9 +580,8 @@ define('ext.createNewWiki.builder', ['ext.createNewWiki.helper', 'wikia.tracker'
 						res.finishCreateUrl);
 
 					// unblock "Next" button (BugId:51519)
-					$themWikiWrapper.find('.next-controls input').
-					attr('disabled', false).
-					addClass('enabled'); // for QA with love
+					// for QA with love
+					$themWikiWrapper.find('.controls input').attr('disabled', false).addClass('enabled');
 				},
 				onErrorCallback: generateAjaxErrorMsg
 			});
