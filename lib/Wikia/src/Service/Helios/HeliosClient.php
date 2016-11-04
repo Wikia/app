@@ -62,9 +62,9 @@ interface HeliosClient
 	 * Ask Helios if password is valid
 	 *
 	 * @param $password string
-	 * @param $name string
+	 * @param $name     string
 	 *
 	 * @return mixed
 	 */
-	public function validatePassword ($password, $name);
+	public function validatePassword( $password, $name );
 }

@@ -250,12 +250,6 @@ class HeliosClientImpl implements HeliosClient
 		);
 	}
 
-	/**
-	 * @param string $password
-	 * @param string $name
-	 *
-	 * @return bool|string
-	 */
 	public function validatePassword( $password, $name ) {
 		// @todo create new endpoint in Helios
 		global $wgMinimalPasswordLength, $wgContLang;
