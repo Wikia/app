@@ -1,6 +1,5 @@
 <?php
 use Wikia\Service\Gateway\ConsulUrlProvider;
-use \Wikia\Tracer\WikiaTracer;
 
 /**
  * @method PhalanxService setLimit( int $limit )
@@ -158,11 +157,7 @@ class PhalanxService extends Service {
 	 * @return integer|mixed data of blocks applied or numeric value (0 - block applied, 1 - no block applied)
 	 */
 	private function sendToPhalanxDaemon( $action, $parameters ) {
-		$tracingHeaders = WikiaTracer::instance()->getInternalHeaders();
 		$options = F::app()->wg->PhalanxServiceOptions;
-		$options[ 'headers' ] = empty( $options[ 'headers' ]) ?
-			$tracingHeaders :
-			array_merge($options[ 'headers' ], $tracingHeaders);
 
 		$url = $this->getPhalanxUrl( $action );
 		$requestTime = 0;
