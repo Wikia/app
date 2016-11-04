@@ -2161,7 +2161,7 @@ class User
 			throw new PasswordError( wfMsg( 'externaldberror' ) );
 		}
 
-		if ( !empty($heliosPasswordChange->errors) ) {
+		if ( !empty( $heliosPasswordChange->errors ) ) {
 			WikiaLogger::instance()->error( 'Failed to communicate with Helios for password set', [
 				'userId' => $this->getId(),
 				'err'    => $heliosPasswordChange,
@@ -2188,7 +2188,7 @@ class User
 		$this->load();
 		$this->setToken();
 
-		if( $str === null ) {
+		if ( $str === null ) {
 			// Save an invalid hash...
 			$this->mPassword = '';
 		} else {
@@ -2223,13 +2223,10 @@ class User
 	 * @param $token String|bool If specified, set the token to this value
 	 */
 	public function setToken( $token = false ) {
-		global $wgSecretKey, $wgProxyKey;
 		$this->load();
-		if ( !$token ) {
-			$this->mToken = MWCryptRand::generateHex( USER_TOKEN_LENGTH );
-		} else {
-			$this->mToken = $token;
-		}
+		$this->mToken = $token
+			? $token
+			: MWCryptRand::generateHex( USER_TOKEN_LENGTH );
 	}
 
 	/**
