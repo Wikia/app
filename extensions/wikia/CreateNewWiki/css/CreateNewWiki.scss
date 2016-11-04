@@ -38,7 +38,7 @@
 	font-size: 12px;
 	font-weight: normal;
 	margin: 4px auto 0;
-	padding: $content-spacing-regular 0 60px;
+	padding: $content-spacing-regular 0 $cnw-bottom-bar-size;
 	position: relative;
 	width: $cnw-size;
 
@@ -73,10 +73,10 @@
 		&.controls .wikiaThrobber {
 			// fix color change when selecting different themes
 			background-color: $wds-color-white;
-			height: 60px;
+			height: $cnw-bottom-bar-size;
 			order: -1;
 			position: relative;
-			width: 60px;
+			width: $cnw-bottom-bar-size;
 		}
 	}
 
