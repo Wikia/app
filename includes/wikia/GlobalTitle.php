@@ -800,7 +800,7 @@ class GlobalTitle extends Title {
 				$this->mLang = "en";
 			}
 		}
-		$this->mContLang = Language::factory( $this->mLang );
+		$this->mContLang = Language::factory( $this->mLang, $this->mCityId );
 
 		return $this->mContLang;
 	}
@@ -822,18 +822,22 @@ class GlobalTitle extends Title {
 			return $this->mNamespaceNames;
 		}
 
+		// $wgMetaNamespace is calculated per wiki and cached in Language singleton per language,
+		// so we have to override it manually in this method
 		$metaNamespace = WikiFactory::getVarValueByName( "wgMetaNamespace", $this->mCityId );
+		$metaNamespaceTalk = WikiFactory::getVarValueByName( "wgMetaNamespaceTalk", $this->mCityId );
 
 		if ( $metaNamespace === false ) {
-			$sitename = WikiFactory::getVarValueByName( "wgSitename", $this->mCityId );
-			$metaNamespace = str_replace( ' ', '_', $sitename );
+			$wiki = WikiFactory::getWikiByID( $this->mCityId );
+			$metaNamespace = str_replace( ' ', '_', $wiki->city_title );
 		}
 
 		// $wgExtraNamespaces is calculated at MW init in context language.
 		// We have to override them to get correctly localized namespaces registered by extensions.
 		$globalStateWrapper = new Wikia\Util\GlobalStateWrapper( [
 			'wgExtraNamespaces' => $this->getExtraExtensionNamespaces(),
-			'wgMetaNamespace' => $metaNamespace
+			'wgMetaNamespace' => $metaNamespace,
+			'wgMetaNamespaceTalk' => $metaNamespaceTalk
 		] );
 		$langNamespaces = $globalStateWrapper->wrap( function () {
 			return $this->mContLang->getNamespaces();
