@@ -152,7 +152,7 @@ class Language {
 		if ( !isset( self::$mLangObjCache[$code][$cityId] ) ) {
 			if ( count( self::$mLangObjCache ) > 10 ) {
 				// Don't keep a billion objects around, that's stupid.
-				self::$mLangObjCache = array();
+				self::$mLangObjCache = [];
 			}
 			if ( !isset( self::$mLangObjCache[$code] ) ) {
 				self::$mLangObjCache[$code] = [];
