@@ -3013,12 +3013,12 @@
     },
     {
         "name": "mediawiki/semantic-media-wiki",
-        "version": "2.4.2.1",
-        "version_normalized": "2.4.2.1",
+        "version": "2.4.2.2",
+        "version_normalized": "2.4.2.2",
         "source": {
             "type": "git",
             "url": "https://github.com/Wikia/SemanticMediaWiki",
-            "reference": "51276a377845f2d0c6dabc49a8d15c17c141cef9"
+            "reference": "f4cbb50989b8692ac99014ef2cdfdca1f9f42ae6"
         },
         "require": {
             "composer/installers": "1.*,>=1.0.1",
@@ -3045,7 +3045,7 @@
             "mediawiki/semantic-forms": "Easy creation of forms to add semantic data",
             "mediawiki/semantic-result-formats": "Additional result formats for SMW queries"
         },
-        "time": "2016-09-28 09:52:34",
+        "time": "2016-11-04 19:11:03",
         "type": "mediawiki-extension",
         "extra": {
             "branch-alias": {
