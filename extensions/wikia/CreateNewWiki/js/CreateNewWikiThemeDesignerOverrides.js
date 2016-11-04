@@ -28,8 +28,6 @@
 	 * @returns {void}
 	 */
 	ThemeDesigner.set = function (setting, newValue) {
-		var sassUrl;
-
 		// The newValue is either the name of a theme or a single setting.
 		// The latter should be handled as it is in the original method
 		// or the theme settings will be overwritten (CE-456)
@@ -38,16 +36,6 @@
 		} else {
 			ThemeDesigner.settings = themes[newValue];
 		}
-
-		sassUrl = $.getSassCommonURL(
-			'/skins/oasis/css/oasis.scss',
-			$.extend(ThemeDesigner.settings, window.applicationThemeSettings)
-		);
-
-		$.getCSS(sassUrl, function (link) {
-			$(ThemeDesigner.link).remove();
-			ThemeDesigner.link = link;
-		});
 	};
 
 	/**
