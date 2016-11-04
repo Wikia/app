@@ -11,7 +11,10 @@
             console.log('CONTENT LOCK');
         };
 
-        window._sp_.config.mms_domain = 'mms.bre.wikia-dev.com';
+        var mmsDomain = 'mms.bre.' + window.location.host.split('.').slice(-2).join('.');
+        console.log('MMSDOMAIN: ', mmsDomain);
+
+        window._sp_.config.mms_domain = mmsDomain;
         window._sp_.mms = window._sp_.mms || {};
         window._sp_.mms.cmd = window._sp_.mms.cmd || [];
         window._sp_.config.mms_client_data_callback = function (o) {
