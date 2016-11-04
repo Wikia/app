@@ -822,10 +822,18 @@ class GlobalTitle extends Title {
 			return $this->mNamespaceNames;
 		}
 
+		$metaNamespace = WikiFactory::getVarValueByName( "wgMetaNamespace", $this->mCityId );
+
+		if ( $metaNamespace === false ) {
+			$sitename = WikiFactory::getVarValueByName( "wgSitename", $this->mCityId );
+			$metaNamespace = str_replace( ' ', '_', $sitename );
+		}
+
 		// $wgExtraNamespaces is calculated at MW init in context language.
 		// We have to override them to get correctly localized namespaces registered by extensions.
 		$globalStateWrapper = new Wikia\Util\GlobalStateWrapper( [
-			'wgExtraNamespaces' => $this->getExtraExtensionNamespaces()
+			'wgExtraNamespaces' => $this->getExtraExtensionNamespaces(),
+			'wgMetaNamespace' => $metaNamespace
 		] );
 		$langNamespaces = $globalStateWrapper->wrap( function () {
 			return $this->mContLang->getNamespaces();
