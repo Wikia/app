@@ -467,12 +467,13 @@ define('ext.createNewWiki.builder', ['ext.createNewWiki.helper', 'wikia.tracker'
 		var f = $('#' + from),
 			t = (next ? f.next() : f.prev()),
 			op = t.css('position'),
+			stepsWrapper = wb.find('.steps'),
 			th;
 
 		t.css('position', 'absolute');
 		th = t.height() + wb.outerHeight(true) - wb.height();
 		t.css('position', op);
-		wb.find('.steps').css({'border-bottom-style': 'none'});
+		stepsWrapper.css({'border-bottom-style': 'none'});
 
 		wb.animate({
 			height: th
@@ -484,7 +485,7 @@ define('ext.createNewWiki.builder', ['ext.createNewWiki.helper', 'wikia.tracker'
 				duration: 250
 			});
 			wb.height('auto');
-			wb.find('.steps').css({'border-bottom-style': 'solid'});
+			stepsWrapper.css({'border-bottom-style': 'solid'});
 		});
 		f.animate({
 			'opacity': 'hide'
