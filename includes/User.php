@@ -2150,7 +2150,9 @@ class User
 	 * @throws PasswordError on failure
 	 */
 	public function setPassword( $password, $forceLogout = true ) {
-		$heliosPasswordChange = self::heliosClient()->setPassword( $this->getId(), $password );
+		$heliosClient = self::heliosClient();
+		
+		$heliosPasswordChange = $heliosClient->setPassword( $this->getId(), $password );
 
 		if ( !$heliosPasswordChange ) {
 			WikiaLogger::instance()->error( 'Failed to communicate with Helios for password set', [
@@ -2173,7 +2175,7 @@ class User
 		$this->setInternalPassword( $password );
 
 		if ( $forceLogout ) {
-			self::heliosClient()->forceLogout( $this->getId() );
+			$heliosClient->forceLogout( $this->getId() );
 		}
 
 		return true;
@@ -2188,6 +2190,8 @@ class User
 		$this->load();
 		$this->setToken();
 
+		// @deprecated
+		// @todo remove local storing of password
 		if ( $str === null ) {
 			// Save an invalid hash...
 			$this->mPassword = '';
