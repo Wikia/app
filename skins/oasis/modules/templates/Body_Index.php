@@ -33,6 +33,13 @@
 	<div class="WikiaPageContentWrapper">
 		<?= $app->renderView( 'BannerNotifications', 'Confirmation' ) ?>
 		<?php
+			$runNjord = ( !empty( $wg->EnableNjordExt ) && WikiaPageType::isMainPage() );
+
+			if ( $runNjord ) {
+				echo $app->renderView( 'Njord', 'Index' );
+
+			}
+
 			if ( empty( $wg->SuppressWikiHeader ) ) {
 				echo $app->renderView( 'WikiHeader', 'Index' );
 			}
@@ -63,6 +70,11 @@
 		?>
 
 		<article id="WikiaMainContent" class="WikiaMainContent<?= !empty( $isGridLayoutEnabled ) ? $railModulesExist ? ' grid-4' : ' grid-6' : '' ?>">
+			<?php
+			if ( !empty( $wg->EnableMomModulesExt ) && WikiaPageType::isMainPage() ) {
+				echo $app->renderView( 'Njord', 'mom' );
+			}
+			?>
 			<div id="WikiaMainContentContainer" class="WikiaMainContentContainer">
 				<?php
 					if ( !empty( $wg->EnableForumExt ) && ForumHelper::isForum() ) {
@@ -78,6 +90,10 @@
 							} else {
 								// Show just the edit button
 								echo $app->renderView( 'UserProfilePage', 'renderActionButton', array() );
+							}
+						} else {
+							if ( !$runNjord ) {
+								echo $app->renderView( $headerModuleName, $headerModuleAction, $headerModuleParams );
 							}
 						}
 					}
@@ -107,6 +123,13 @@
 						}
 					?>
 					</div>
+					<?php
+					if ( $runNjord ) {
+						echo $app->renderView( 'Njord', 'Summary' );
+						echo $app->renderView( $headerModuleName, $headerModuleAction, $headerModuleParams );
+
+					}
+					?>
 					<?php
 					// for InfoBox-Testing
 					if ( $wg->EnableInfoBoxTest ) {
