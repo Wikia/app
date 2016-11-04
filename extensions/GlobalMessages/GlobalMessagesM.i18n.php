@@ -366,7 +366,7 @@ Forum:Help_desk|User Support Forums',
 	'most_emailed' => 'Most emailed',
 	'manage_widgets' => 'Manage widgets',
 	'magicfooterlinks' => '<b>Featured pages</b>',
-	'masthead-anonymous-user' => 'A Wikia contributor',
+	'masthead-anonymous-user' => 'A Fandom user',
 	'mobile-show' => 'Show',
 	'mobile-hide' => 'Hide',
 ];
