@@ -540,7 +540,7 @@ define('ext.createNewWiki.builder', ['ext.createNewWiki.helper', 'wikia.tracker'
 	}
 
 	function createWiki() {
-		var throbberWrapper = $themWikiWrapper.find('.next-controls'),
+		var throbberWrapper = $themWikiWrapper.find('.controls'),
 			verticalOption = wikiVertical.find('option:selected'),
 			categories = [];
 
