@@ -172,7 +172,7 @@ class PhalanxPager extends ReverseChronologicalPager {
 		if ( isset( $row->p_timestamp ) ) {
 			$html .= ' &bull; ';
 			$html .= $this->msg( 'phalanx-display-row-created' )
-					->params( $authorName, $this->getLanguage()->timeanddate( wfTimestamp( TS_MW, $row->p_timestamp ), true ) )
+					->params( $authorName, $this->getLanguage()->timeanddate( $row->p_timestamp, true ) )
 					->parse();
 		}
 
