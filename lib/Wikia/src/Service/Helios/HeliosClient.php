@@ -2,7 +2,8 @@
 
 namespace Wikia\Service\Helios;
 
-interface HeliosClient {
+interface HeliosClient
+{
 
 	/**
 	 * A shortcut method for login requests.
@@ -22,7 +23,7 @@ interface HeliosClient {
 	/**
 	 * A shortcut method for token invalidation requests.
 	 *
-	 * @param $token string - a token to be invalidated
+	 * @param $token  string - a token to be invalidated
 	 * @param $userId integer - the current user id
 	 *
 	 * @return string - json encoded response
@@ -55,5 +56,15 @@ interface HeliosClient {
 	 *
 	 * @return mixed
 	 */
-	public function setPassword( $userId );
+	public function setPassword( $userId, $password );
+
+	/**
+	 * Ask Helios if password is valid
+	 *
+	 * @param $password string
+	 * @param $name string
+	 *
+	 * @return mixed
+	 */
+	public function validatePassword ($password, $name);
 }
