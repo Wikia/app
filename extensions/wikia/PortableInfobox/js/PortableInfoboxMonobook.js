@@ -5,10 +5,12 @@
 		init: function ($content) {
 			$content.find('.portable-infobox .pi-image > a.image').on('click', function () {
 				var $anchor = $(this),
-					fileName = $anchor.children('.pi-image-thumbnail').data('image-key'),
-					href = window.wgArticlePath.replace(/\$1/, 'File:' + fileName);
+					fileName = $anchor.find('img[data-image-key]').data('image-key');
 
-				$anchor.attr('href', href);
+				// If users create markup manually and there is no data-image-key then cancel the change
+				if (fileName) {
+					$anchor.attr('href', window.wgArticlePath.replace(/\$1/, 'File:' + fileName));
+				}
 			});
 		}
 	};
