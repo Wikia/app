@@ -17,7 +17,6 @@ define('ext.createNewWiki.builder', ['ext.createNewWiki.helper', 'wikia.tracker'
 		$descWikiWrapper,
 		$authWrapper,
 		$themWikiWrapper,
-		$progress,
 		steps,
 		wikiName,
 		wikiNameStatus,
@@ -78,7 +77,6 @@ define('ext.createNewWiki.builder', ['ext.createNewWiki.helper', 'wikia.tracker'
 		$descWikiWrapper = $('#DescWiki');
 		$authWrapper = $('#UserAuth');
 		$themWikiWrapper = $('#ThemeWiki');
-		$progress = $('#StepsIndicator');
 		steps = wb.find('.steps .step');
 		wikiName = $nameWikiWrapper.find('input[name=wiki-name]');
 		wikiNameStatus = $nameWikiWrapper.find('.wiki-name-status-icon');
@@ -162,7 +160,7 @@ define('ext.createNewWiki.builder', ['ext.createNewWiki.helper', 'wikia.tracker'
 								'' : descriptionVal)
 						}, function () {
 							createWiki();
-							transition('DescWiki', true, '+');
+							transition('DescWiki', true);
 						});
 					}
 				}
@@ -248,7 +246,7 @@ define('ext.createNewWiki.builder', ['ext.createNewWiki.helper', 'wikia.tracker'
 		var id = $(this).closest('.step').attr('id');
 
 		if (id === 'DescWiki') {
-			transition('DescWiki', false, '-');
+			transition('DescWiki', false);
 			if ($authWrapper.length) {
 				userAuth.loginAjaxForm.retrieveLoginToken({
 					clearCache: true
@@ -256,7 +254,7 @@ define('ext.createNewWiki.builder', ['ext.createNewWiki.helper', 'wikia.tracker'
 				userAuth.loginAjaxForm.submitButton.removeAttr('disabled');
 			}
 		} else {
-			transition(id, false, '-');
+			transition(id, false);
 		}
 	}
 
@@ -352,7 +350,7 @@ define('ext.createNewWiki.builder', ['ext.createNewWiki.helper', 'wikia.tracker'
 
 	function onAuthSuccess() {
 		isUserLoggedIn = true;
-		transition('NameWiki', true, '+');
+		transition('NameWiki', true);
 	}
 
 	function checkWikiName () {
@@ -465,7 +463,7 @@ define('ext.createNewWiki.builder', ['ext.createNewWiki.helper', 'wikia.tracker'
 		}
 	}
 
-	function transition(from, next, dot) {
+	function transition(from, next) {
 		var f = $('#' + from),
 			t = (next ? f.next() : f.prev()),
 			op = t.css('position'),
@@ -486,13 +484,6 @@ define('ext.createNewWiki.builder', ['ext.createNewWiki.helper', 'wikia.tracker'
 				queue: false,
 				duration: 250
 			});
-			if (dot) {
-				if (dot === '+') {
-					$progress.find('.step.active').last().next().addClass('active');
-				} else if (dot === '-') {
-					$progress.find('.step.active').last().removeClass('active');
-				}
-			}
 			wb.height('auto');
 		});
 		f.animate({
