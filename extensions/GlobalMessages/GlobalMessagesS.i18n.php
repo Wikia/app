@@ -311,7 +311,6 @@ If you think this is wrong, please contact us [[w:c:vstf:Report:Spam filter prob
 * pt-br
 ** Macherie ana
 * ru
-** Kuzura
 ** vlazovskiy
 * vi
 ** KhangND

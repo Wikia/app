@@ -7,6 +7,9 @@
 		]
 	},
 	"specialpages-group-sf_group": "Semantesch Formulairen",
+	"apihelp-sfautocomplete-param-limit": "Eng Limite fir d'Zuel vun de Resultater déi zeréckgi gëtt",
+	"apihelp-sfautoedit-param-target": "Den Numm vun der Säit déi ugeluecht oder geännert gi soll",
+	"apihelp-sfautoedit-param-preload": "Den Numm vun enger Säit, déi am viraus an der Formulaire geluede gi soll",
 	"sf_createproperty_propname": "Numm vun der Eegeschaft:",
 	"sf_createproperty_proptype": "Typ:",
 	"templates": "Schablounen",
@@ -91,7 +94,7 @@
 	"sf_formedit_saveandcontinueediting": "Späicheren a virufueren",
 	"sf_formedit_tooltip_saveandcontinueediting": "Date späicheren a mam Ännere virufueren",
 	"sf_autoedit_anoneditwarning": "Opgepasst: Dir sidd net ageloggt. Dowéinst gëtt amplaz vun engem Benotzernumm Är IP Adress am Historique vun dëser Säit gespäichert.",
-	"sf_autoedit_success": "[[$1]] gouf mat Hëllef vum Formulaire $2 geännert",
+	"sf_autoedit_success": "[[$1]] gouf mam Formulaire $2 geännert",
 	"sf_autoedit_fail": "D'Ännere vu(n) [[$1]] huet net funktionéiert.",
 	"sf_autoedit_notargetspecified": "Keng Zilsäit spezifizéiert.",
 	"sf_autoedit_invalidform": "'''$1''' ass kee valabele Formulaire.",
@@ -110,6 +113,7 @@
 	"sf_bad_email_error": "muss e valabelen E-Mailadresse-Format hunn",
 	"sf_bad_number_error": "muss eng valabel Zuel sinn",
 	"sf_bad_date_error": "muss e gëltegen Datum sinn",
+	"sf_pipe_error": "\"|\" ass net erlaabt, ausser an {{...}} oder [[...]]",
 	"uploadwindow": "Fënster fir eropzelueden",
 	"sf_deletionlog": "Logbuch vum Läschen",
 	"sf-preview-note": "Sou gesäit de Formulaire aus wann e benotzt gëtt:",
@@ -128,5 +132,14 @@
 	"sf-select2-input-too-short": "Gitt w.e.g. $1 oder méi Zeechen an",
 	"sf-select2-selection-too-big": "An dësem Feld kënnen net méi wéi {{PLURAL:$1|ee Wäert|$1 Wäerter}} sinn.",
 	"sf-maps-lookupcoordinates": "Koordinaten nokucken",
-	"sf-adminlinks-datastructure": "Datestruktur"
+	"sf-adminlinks-datastructure": "Datestruktur",
+	"sf-datepicker-close": "Zoumaachen",
+	"sf-datepicker-prev": "Vireg",
+	"sf-datepicker-next": "Nächst",
+	"sf-datepicker-today": "Haut",
+	"sf-datepicker-weekstart": "Den éischten Dag vun der Woch (0 - Sonndeg, 1 - Méindeg, ...).",
+	"sf-datepicker-firstdate": "Den éischten Datum deen erausgesicht ka ginn (am Format JJJJ/MM/DD)",
+	"sf-datepicker-lastdate": "De leschten Datum deen erausgesicht ka ginn (am Format JJJJ/MM/DD)",
+	"sf-datepicker-disabledaysofweek": "Eng Lëscht vun Deeg déi net erausgesicht kënne ginn (z. Bsp. Weekend:6, 0).",
+	"sf-regexp-wrongformat": "Falsche Format."
 }

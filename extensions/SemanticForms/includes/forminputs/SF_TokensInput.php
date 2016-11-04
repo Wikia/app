@@ -82,7 +82,7 @@ class SFTokensInput extends SFFormInput {
 				$sfgEDSettings[$name]['title'] = $other_args['values from external data'];
 			}
 			if ( array_key_exists( 'image', $other_args ) ) {
-				$image_param =  $other_args['image'];
+				$image_param = $other_args['image'];
 				$sfgEDSettings[$name]['image'] = $image_param;
 				global $edgValues;
 				for ($i = 0; $i < count($edgValues[$image_param]); $i++) {
@@ -150,6 +150,10 @@ class SFTokensInput extends SFFormInput {
 		if ( array_key_exists( 'max values', $other_args ) ) {
 			$inputAttrs['maxvalues'] = $other_args['max values'];
 		}
+ 		if ( array_key_exists( 'namespace', $other_args ) ) {
+ 			$inputAttrs['data-namespace'] = $other_args['namespace'];
+ 		}
+
 		$text = "\n\t" . Html::input( $input_name, $cur_value, 'text', $inputAttrs ) . "\n";
 
 		$spanClass = 'inputSpan';

@@ -43,7 +43,8 @@ define('ext.wikia.adEngine.adContext', [
 	function setContext(newContext) {
 		var i,
 			len,
-			noExternals = w.wgNoExternals || isUrlParamSet('noexternals');
+			noExternals = w.wgNoExternals || isUrlParamSet('noexternals'),
+			taboolaConfig = instantGlobals.wgAdDriverTaboolaConfig || {};
 
 		// Note: consider copying the value, not the reference
 		context = newContext;
@@ -75,6 +76,12 @@ define('ext.wikia.adEngine.adContext', [
 				context.opts.pageFairDetection = true;
 			}
 		}
+		// SourcePoint recovery
+		if (!noExternals && context.opts.sourcePointRecovery !== false) {
+			if (geo.isProperGeo(instantGlobals.wgAdDriverSourcePointRecoveryCountries)) {
+				context.opts.sourcePointRecovery = true;
+			}
+		}
 
 		// SourcePoint detection integration
 		if (!noExternals && context.opts.sourcePointDetectionUrl) {
@@ -82,6 +89,13 @@ define('ext.wikia.adEngine.adContext', [
 				geo.isProperGeo(instantGlobals.wgAdDriverSourcePointDetectionCountries));
 			context.opts.sourcePointDetectionMobile = (context.targeting.skin === 'mercury' &&
 				geo.isProperGeo(instantGlobals.wgAdDriverSourcePointDetectionMobileCountries));
+		}
+
+		// Taboola
+		if (!noExternals) {
+			if (shouldLoadTaboolaOnBlockingTraffic(taboolaConfig)) {
+				context.opts.loadTaboolaLibrary = true;
+			}
 		}
 
 		// Google Consumer Surveys
@@ -168,6 +182,22 @@ define('ext.wikia.adEngine.adContext', [
 		for (i = 0, len = callbacks.length; i < len; i += 1) {
 			callbacks[i](context);
 		}
+	}
+
+	function shouldLoadTaboolaOnBlockingTraffic(taboolaConfig) {
+		var i = 0,
+			taboolaSlot;
+
+		for (taboolaSlot in taboolaConfig) {
+			if (taboolaConfig.hasOwnProperty(taboolaSlot) && taboolaConfig[taboolaSlot].recovery) {
+				for (i=0; i<taboolaConfig[taboolaSlot].recovery.length; i++) {
+					if (geo.isProperGeo(taboolaConfig[taboolaSlot].recovery[i])) {
+						return true;
+					}
+				}
+			}
+		}
+		return false;
 	}
 
 	function addCallback(callback) {

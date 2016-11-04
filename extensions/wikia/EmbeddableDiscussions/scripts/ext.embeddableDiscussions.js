@@ -64,22 +64,30 @@ require([
 			i,
 			thread,
 			userData,
-			date;
+			date,
+			content;
 
 		for (i in threads) {
 			thread = threads[i];
 			userData = thread._embedded.userData[0];
 			date = new Date(thread.creationDate.epochSecond * 1000);
+			content = thread.rawContent;
+
+			if (shouldUseTruncationHack()) {
+				content = truncate(content, 148);
+			}
 
 			ret.push({
 				author: thread.createdBy.name,
 				authorAvatar: thread.createdBy.avatarUrl,
 				commentCount: thread.postCount,
-				content: thread.rawContent,
+				content: content,
 				createdAt: $.timeago(date),
 				timestamp: date.toLocaleString([mw.config.get('wgContentLanguage')]),
 				forumName: $.msg( 'embeddable-discussions-forum-name', thread.forumName),
 				id: thread.id,
+				isDeleted: thread.isDeleted ? 'is-deleted' : '',
+				isReported: thread.isReported ? 'is-reported' : '',
 				firstPostId: thread.firstPostId,
 				index: i,
 				link: '/d/p/' + thread.id,
@@ -141,6 +149,42 @@ require([
 		$.each($threads, function() {
 			performRequest($(this));
 		});
+	}
+
+	/**
+	 * Truncates text to maxLength characters
+	 * @param {String} text
+	 * @param {Number} maxLength
+	 * @returns {string}
+	 */
+	function truncate(text, maxLength) {
+		var ellipsisCharacter = '\u2026',
+			truncatedString,
+			lastWhiteSpacePos;
+
+		if (text.length <= maxLength) {
+			return text;
+		}
+
+		truncatedString = text.substr(0, maxLength);
+		lastWhiteSpacePos = truncatedString.search(/\s[^\s]*$/);
+
+		if (lastWhiteSpacePos === maxLength || lastWhiteSpacePos < 0) {
+			return truncatedString + ellipsisCharacter;
+		}
+
+		return truncatedString.substr(0, lastWhiteSpacePos) + ellipsisCharacter;
+	}
+
+	/**
+	 * @desc Provides information about whether it is need to use truncation hack as a cover for
+	 * the line-clamp css property. Method returns true only in Firefox and in IE, because in othe
+	 * browsers 'line-clamp' css property works.
+	 *
+	 * @returns {Boolean}
+	 */
+	function shouldUseTruncationHack() {
+		return (/Firefox|Trident|Edge/).test(navigator.userAgent);
 	}
 
 	$(function () {

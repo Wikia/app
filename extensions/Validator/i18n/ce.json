@@ -1,0 +1,37 @@
+{
+	"@metadata": {
+		"authors": [
+			"Умар"
+		]
+	},
+	"validator-warning": "Тергам: $1",
+	"validator-error": "ГӀалат: $1",
+	"validator-fatal-error": "Кхераме гӀалат: $1",
+	"validator-warning-adittional-errors": "… и {{PLURAL:$1|1=кхин цхьа бала|кхин маситта баланаш}}.",
+	"validator-type-string": "йоза",
+	"validator-type-integer": "дуьззина терахь",
+	"validator-type-float": "терахь",
+	"validator-type-boolean": "хӀаъ/хӀахӀа",
+	"validator-type-char": "символ",
+	"validator-type-title": "цӀе",
+	"validator-type-string-list": "йозанийн могӀам",
+	"validator-type-integer-list": "дуьззина терхьийн могӀам",
+	"validator-type-float-list": "терхьийн могӀам",
+	"validator-type-boolean-list": "могӀам хӀаъ/хӀахӀа",
+	"validator-type-char-list": "символийн могӀам",
+	"validator-type-title-list": "цӀерийн могӀам",
+	"validator-listerrors-errors": "ГӀалаташ",
+	"validator-listerrors-minor": "Ладамбоцу",
+	"validator-listerrors-low": "Лахара",
+	"validator-listerrors-normal": "ЛартӀахь",
+	"validator-listerrors-high": "Лаккхара",
+	"validator-listerrors-fatal": "Фаталан",
+	"validator-describe-descriptionmsg": "'''Цуьнах лаьцна''': $1",
+	"validator-describe-par-language": "Яздаран йолу интерфейсан мотт",
+	"validator-describe-required": "оьшу",
+	"validator-describe-header-type": "Тайпа",
+	"validator-describe-header-default": "Iад йитарца",
+	"validator-describe-header-description": "Цуьнах лаьцна",
+	"validator-describe-parameters": "Параметраш",
+	"validator-describe-syntax": "Синтаксис"
+}

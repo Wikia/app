@@ -114,7 +114,7 @@ class EditTaggingHooks {
 	 */
 	protected static function AddRevisionTag( $revisionId, $tag ) {
 		if ( !ChangeTags::addTags( $tag, null, $revisionId ) ) {
-			\Wikia\Logger\WikiaLogger::instance()->error( 'Failed to add tag to revision', [ 'revisionId' => $revisionId, 'tag' => $tag ] );
+			\Wikia\Logger\WikiaLogger::instance()->info( 'EditTagging - No tag change', [ 'revisionId' => $revisionId, 'tag' => $tag ] );
 		}
 	}
 

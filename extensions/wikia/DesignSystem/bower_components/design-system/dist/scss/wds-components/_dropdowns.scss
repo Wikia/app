@@ -1,6 +1,6 @@
-$dropdown-content-z-index: 1;
-
 .wds-dropdown {
+	$content-z-index: 1;
+
 	display: inline-block;
 	position: relative;
 
@@ -8,7 +8,7 @@ $dropdown-content-z-index: 1;
 		cursor: pointer;
 		position: relative;
 		// dropdown content has shadow that should be hidden below the toggle
-		z-index: $dropdown-content-z-index + 1;
+		z-index: $content-z-index + 1;
 	}
 
 	&__toggle-chevron {
@@ -16,16 +16,16 @@ $dropdown-content-z-index: 1;
 	}
 
 	&__content {
-		background-color: $color-white;
-		box-shadow: 0 0 10px 0 rgba($color-black, .2);
+		background-color: $wds-color-white;
+		box-shadow: 0 0 10px 0 rgba($wds-color-black, .2);
 		display: none;
 		left: 0;
 		position: absolute;
 		top: 100%;
-		z-index: $dropdown-content-z-index;
+		z-index: $content-z-index;
 
 		&.wds-is-dark {
-			box-shadow: 0 0 20px 0 rgba($color-black, .3);
+			box-shadow: 0 0 20px 0 rgba($wds-color-black, .3);
 		}
 
 		&.wds-is-right-aligned {

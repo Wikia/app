@@ -65,7 +65,6 @@ class PhalanxStatsSpecialController extends WikiaSpecialPageController {
 		$data['regex'] = $data['regex'] ? 'Yes' : 'No';
 		$data['case']  = $data['case']  ? 'Yes' : 'No';
 		$data['exact'] = $data['exact'] ? 'Yes' : 'No';
-		$data['lang'] = empty( $data['lang'] ) ? 'All' : $data['lang'];
 
 		if ( $data['type'] & Phalanx::TYPE_EMAIL && !$this->getUser()->isAllowed( 'phalanxemailblock' ) ) {
 			/* hide email from non-privildged users */
@@ -73,6 +72,7 @@ class PhalanxStatsSpecialController extends WikiaSpecialPageController {
 		}
 
 		$data['type'] = implode( ', ', Phalanx::getTypeNames( $data['type'] ) );
+
 
 		/* pull these out of the array, so they dont get used in the top rows */
 		$row = $data->toArray();

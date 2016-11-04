@@ -83,6 +83,7 @@ class DesignSystemSharedLinks {
 			'fandom-university' => 'http://community.wikia.com/wiki/Fandom_University',
 			'user-signin' => 'https://www.wikia.com/signin',
 			'user-register' => 'https://www.wikia.com/register',
+			'wikia-org-logo' => 'https://www.wikia.org',
 		],
 		'de' => [
 			'explore-wikis' => 'http://fandom.wikia.com/explore-de',

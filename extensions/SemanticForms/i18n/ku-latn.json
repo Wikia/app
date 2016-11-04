@@ -9,8 +9,10 @@
 	"sf_createtemplate_namelabel": "Navê şablonê:",
 	"sf_createtemplate_standardformat": "Tablo",
 	"sf_createtemplate_deletefield": "Jê bibe",
+	"sf_forminputs_checkboxes_select_all": "Hemûyan hilbijêre",
 	"sf_createform_template": "Şablon:",
 	"sf_createform_add": "Lê zêde bike",
 	"sf_createcategory_name": "Navê kategorîyê:",
-	"sf-autoedit-wait": "Bisekine..."
+	"sf-autoedit-wait": "Bisekine...",
+	"sf-datepicker-today": "Îro"
 }
