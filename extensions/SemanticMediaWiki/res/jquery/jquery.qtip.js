@@ -18,10 +18,7 @@
 // Uses AMD or browser globals to create a jQuery plugin.
 (function( factory ) {
 	"use strict";
-	if(typeof define === 'function' && define.amd) {
-		define(['jquery'], factory);
-	}
-	else if(jQuery && !jQuery.fn.qtip) {
+	if(jQuery && !jQuery.fn.qtip) {
 		factory(jQuery);
 	}
 }
