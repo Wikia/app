@@ -1,3 +1,5 @@
+@import 'skins/shared/color';
+
 /*!
  * Diff rendering
  */
@@ -76,6 +78,40 @@ td.diff-deletedline .diffchange {
 	border-radius: 0.33em;
 	padding: 0.25em 0;
 }
+
+
+td.diff-context {
+	background-color: $color-diff-context;
+	border-color: $color-diff-context-border;
+	color: $color-diff-text;
+}
+
+td.diff-addedline {
+	border-color: $color-diff-addedline-border;
+	color: $color-diff-text;
+}
+
+td.diff-addedline .diffchange {
+	background: $color-diff-addedline-diffchange;
+}
+
+td.diff-deletedline {
+	border-color: $color-diff-deletedline-border;
+	color: $color-diff-text;
+}
+
+td.diff-deletedline .diffchange {
+	background: $color-diff-deletedline-diffchange;
+}
+
+.diffchange-inline {
+	color: $color-diffchange-text;
+}
+
+table.diff, td.diff-otitle, td.diff-ntitle {
+	background-color: $color-page;
+}
+
 
 /* Correct user & content directionality when viewing a diff */
 .diff-currentversion-title,
