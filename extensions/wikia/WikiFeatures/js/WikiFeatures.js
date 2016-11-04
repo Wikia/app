@@ -4,8 +4,9 @@
 	'use strict';
 
 	var lockedFeatures = {},
-		// provided as a list of WF variable strings, i.e. wgEnableFeatureExt
-	    fadingFeatures = [];
+	    fadingFeatures = [
+		'wgEnableNjordExt'
+	    ];
 
 	function init() {
 		var $wikifeatures = $('#WikiFeatures'),
