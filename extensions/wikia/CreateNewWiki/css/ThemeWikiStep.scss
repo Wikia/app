@@ -1,5 +1,4 @@
 @import 'variables';
-@import 'skins/oasis/css/core/layout';
 
 #ThemeWiki {
 	display: none;
@@ -15,9 +14,6 @@
 			height: 106px;
 			top: 0;
 			width: 608px;
-			@if ($responsive-or-breakpoints-layout-enabled) {
-				width: 500px;
-			}
 
 			ul {
 				list-style: none;
@@ -39,9 +35,6 @@
 
 			&.next {
 				left: 645px;
-				@if ($responsive-or-breakpoints-layout-enabled) {
-					left: 540px;
-				}
 			}
 		}
 	}

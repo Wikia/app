@@ -6,7 +6,7 @@
 @import 'extensions/wikia/DesignSystem/bower_components/design-system/dist/scss/wds-variables/index.scss';
 @import 'extensions/wikia/DesignSystem/bower_components/design-system/dist/scss/wds-components/_buttons.scss';
 
-.skin-oasis.page-Special_CreateNewWiki {
+.WikiaSiteWrapper {
 	background-color: $wds-color-off-white;
 }
 
@@ -170,10 +170,6 @@
 	@include clearfix;
 	display: none;
 	width: 600px;
-	@if ($responsive-or-breakpoints-layout-enabled) {
-		min-width: 590px;
-		width: auto;
-	}
 
 	.UserLoginModal {
 		border-right: 1px solid $color-borders;
