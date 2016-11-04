@@ -1,8 +1,10 @@
 @import 'variables';
 @import 'skins/shared/mixins/box-shadow';
 @import 'skins/shared/mixins/clearfix';
+@import 'skins/oasis/css/core/layout';
 @import 'extensions/wikia/ThemeDesigner/css/ThemeTab';
-@import 'extensions/wikia/DesignSystem/bower_components/design-system/dist/scss/wds-variables/_colors.scss';
+@import 'extensions/wikia/DesignSystem/bower_components/design-system/dist/scss/wds-variables/index.scss';
+@import 'extensions/wikia/DesignSystem/bower_components/design-system/dist/scss/wds-components/_buttons.scss';
 
 .WikiaSiteWrapper {
 	background-color: $wds-color-off-white;
@@ -36,7 +38,7 @@
 	font-size: 12px;
 	font-weight: normal;
 	margin: 4px auto 0;
-	padding: $content-spacing-regular 0 60px;
+	padding: $content-spacing-regular 0 $cnw-bottom-bar-size;
 	position: relative;
 	width: $cnw-size;
 
@@ -54,30 +56,27 @@
 	}
 
 	nav {
-		bottom: 10px;
+		bottom: 0;
+		display: flex;
 		position: absolute;
+		right: 0;
 
-		&.next-controls {
-			min-width: 150px;
-			right: 20px;
-
-			input {
-				float: right;
-			}
-
-			// fix color change when selecting different themes
-			.wikiaThrobber {
-				background-color: #fff;
-			}
-
-			.error-msg {
-				float: left;
-				margin-right: 10px;
-			}
+		input[type=button] {
+			@extend .wds-button;
+			@extend .wds-is-text;
+			background: $wds-color-white;
+			float: right;
+			height: auto;
+			margin: $content-spacing-xxsmall 0 $content-spacing-xxsmall $content-spacing-xxsmall;
 		}
 
-		&.back-controls {
-			left: 20px;
+		&.controls .wikiaThrobber {
+			// fix color change when selecting different themes
+			background-color: $wds-color-white;
+			height: $cnw-bottom-bar-size;
+			order: -1;
+			position: relative;
+			width: $cnw-bottom-bar-size;
 		}
 	}
 

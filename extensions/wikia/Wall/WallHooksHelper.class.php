@@ -1426,38 +1426,6 @@ class WallHooksHelper {
 	}
 
 	/**
-	 * getUserPermissionsErrors -  control access to articles in the namespace NS_USER_WALL_MESSAGE_GREETING
-	 *
-	 * @param Title $title
-	 * @param User $user
-	 * @param $action
-	 * @param $result
-	 * @return bool
-	 *
-	 * @author Tomek Odrobny
-	 *
-	 * @access public
-	 */
-	static public function onGetUserPermissionsErrors( &$title, &$user, $action, &$result ) {
-
-		if ( $title->getNamespace() == NS_USER_WALL_MESSAGE_GREETING ) {
-			$result = [ ];
-
-			$wm = new WallMessage( $title );
-
-			if ( $user->isAllowed( 'walledit' ) || $wm->isWallOwner( $user ) || $action === 'read' || $action === 'history' ) {
-				$result = null;
-				return true;
-			} else {
-				$result = [ 'badaccess-group0' ];
-				return false;
-			}
-		}
-		$result = null;
-		return true;
-	}
-
-	/**
 	 * @param Article $article
 	 * @param User $user
 	 * @param $text
@@ -2299,6 +2267,73 @@ class WallHooksHelper {
 			&& $title->getNamespace() == NS_USER
 		) {
 			$talkPageTitle = Title::makeTitle( NS_USER_WALL, $title->getDBkey() );
+		}
+
+		return true;
+	}
+
+	/**
+	 * SUS-845: Lock down Thread namespaces and Message Wall Greetings
+	 * For Thread namespaces, pnly allow edits to users with proper permission or to people editing their own posts
+	 * Everything else is disallowed.
+	 * For Wall greetings, only allow edits by owner or users with proper permission
+	 * @param Title $title
+	 * @param User $user
+	 * @param string $action
+	 * @param bool|string|string[] $result true or string or array of strings (MediaWiki error message key(s) to be shown if error)
+	 * @return bool Whether the user is allowed to perform this action or true if this is not a Wall/Forum title
+	 */
+	public static function onGetUserPermissionsErrors( Title $title, User $user, string $action, &$result ): bool {
+		global $wgWallNS, $wgIsSafeWallTransaction;
+
+		// Wall or Forum threads
+		if ( in_array( MWNamespace::getSubject( $title->getNamespace() ), $wgWallNS ) ) {
+			$wallMessage = new WallMessage( $title );
+			$isAuthor = $wallMessage instanceof WallMessage && $wallMessage->isAuthor( $user );
+			$isActionAllowed = true;
+			switch ( $action ) {
+				case 'edit':
+					$isActionAllowed = $isAuthor || $user->isAllowed( 'walledit' );
+					$result = $isActionAllowed ?? [ 'badaccess-group0' ];
+					break;
+				case 'create':
+					$isActionAllowed = $wgIsSafeWallTransaction && ( $isAuthor || $user->isAllowed( 'walledit' ) );
+					if ( !$isActionAllowed ) {
+						$result = [ !$wgIsSafeWallTransaction ? 'badtitle' : 'badaccess-group0' ];
+					}
+					break;
+				case 'move':
+				case 'move-target':
+					// you don't want to do this, ever
+					$isActionAllowed = false;
+					$result = [ 'badtitle' ];
+					break;
+			}
+
+			return $isActionAllowed;
+		}
+
+		// Message Wall Greeting
+		if ( $title->inNamespace( NS_USER_WALL_MESSAGE_GREETING ) ) {
+			$wallMessage = new WallMessage( $title );
+			$isWallOwner = $wallMessage instanceof WallMessage && $wallMessage->isWallOwner( $user );
+			$isActionAllowed = true;
+
+			switch ( $action ) {
+				case 'edit':
+				case 'create':
+					$isActionAllowed = $isWallOwner || $user->isAllowed( 'walledit' );
+					$result = $isActionAllowed ?? [ 'badaccess-group0' ];
+					break;
+				case 'move':
+				case 'move-target':
+					// you don't want to do this, ever
+					$isActionAllowed = false;
+					$result = [ 'badtitle' ];
+					break;
+			}
+
+			return $isActionAllowed;
 		}
 
 		return true;
