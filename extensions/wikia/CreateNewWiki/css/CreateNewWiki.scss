@@ -64,10 +64,10 @@
 		input[type=button] {
 			@extend .wds-button;
 			@extend .wds-is-text;
-			background: white;
+			background: $wds-color-white;
 			float: right;
 			height: auto;
-			margin: 6px 0 6px 6px;
+			margin: $content-spacing-xxsmall 0 $content-spacing-xxsmall $content-spacing-xxsmall;
 		}
 
 		&.controls .wikiaThrobber {
