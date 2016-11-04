@@ -829,6 +829,7 @@ class GlobalTitle extends Title {
 
 		if ( $metaNamespace === false ) {
 			$wiki = WikiFactory::getWikiByID( $this->mCityId );
+			// Copied from Setup.php - Namespaces can't use spaces
 			$metaNamespace = str_replace( ' ', '_', $wiki->city_title );
 		}
 
