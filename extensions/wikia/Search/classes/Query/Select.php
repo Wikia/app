@@ -69,7 +69,7 @@ class Select
 	 */
 	public function getSanitizedQuery() {
 		if ( $this->sanitizedQuery == null ) {
-			$this->sanitizedQuery = html_entity_decode( (new Sanitizer)->StripAllTags( $this->rawQuery ), \ENT_COMPAT, 'UTF-8');
+			$this->sanitizedQuery = html_entity_decode( Sanitizer::stripAllTags( $this->rawQuery ), \ENT_COMPAT, 'UTF-8');
 		}
 		return $this->sanitizedQuery;
 	}
@@ -153,7 +153,14 @@ class Select
 	 */
 	protected function initializeNamespaceData() {
 		$query = $this->getSanitizedQuery();
-		if ( (! $this->namespaceChecked ) && ( $this->namespacePrefix === null ) && strpos( $query, ':' ) !== false ) {
+		// SUS-1219: check if this is not just a string that ends with a colon
+		$colonPosition = strpos( $query, ':' );
+		if (
+			(! $this->namespaceChecked ) &&
+			( $this->namespacePrefix === null ) &&
+			$colonPosition !== false &&
+			$colonPosition !== strlen( $query ) - 1
+		) {
 			$colonSploded = explode( ':', $query );
 			$queryNamespace = $this->getService()->getNamespaceIdForString( $colonSploded[0] );
 			if ( is_int( $queryNamespace ) && $queryNamespace > 0 ) {
