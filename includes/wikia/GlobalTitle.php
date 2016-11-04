@@ -824,8 +824,8 @@ class GlobalTitle extends Title {
 
 		// $wgMetaNamespace is calculated per wiki and cached in Language singleton per language,
 		// so we have to override it manually in this method
-		$metaNamespace = WikiFactory::getVarValueByName( "wgMetaNamespace", $this->mCityId );
-		$metaNamespaceTalk = WikiFactory::getVarValueByName( "wgMetaNamespaceTalk", $this->mCityId );
+		$metaNamespace = WikiFactory::getVarValueByName( 'wgMetaNamespace', $this->mCityId );
+		$metaNamespaceTalk = WikiFactory::getVarValueByName( 'wgMetaNamespaceTalk', $this->mCityId );
 
 		if ( $metaNamespace === false ) {
 			$wiki = WikiFactory::getWikiByID( $this->mCityId );
@@ -847,7 +847,7 @@ class GlobalTitle extends Title {
 		 * get extra namespaces for city_id, they have to be defined in
 		 * $wgExtraNamespacesLocal variable
 		 */
-		$namespaces = WikiFactory::getVarValueByName( "wgExtraNamespacesLocal", $this->mCityId, false, [] );
+		$namespaces = WikiFactory::getVarValueByName( 'wgExtraNamespacesLocal', $this->mCityId, false, [] );
 		if ( !is_array( $namespaces ) ) {
 			$namespaces = [];
 		}
