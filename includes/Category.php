@@ -308,4 +308,16 @@ class Category {
 
 		return $ret;
 	}
+
+	/**
+	 * Check if the category has members (Wikia change)
+	 * @return bool
+	 */
+	public function hasMembers() {
+		if ( empty( $this->getPageCount() ) && empty( $this->getSubcatCount() ) && empty( $this->getFileCount() ) ) {
+			return false;
+		}
+
+		return true;
+	}
 }
