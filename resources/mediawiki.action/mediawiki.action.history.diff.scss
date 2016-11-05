@@ -39,6 +39,12 @@ td.diff-ntitle {
 	text-align: center;
 }
 
+table.diff,
+td.diff-otitle,
+td.diff-ntitle {
+	background-color: $color-page;
+}
+
 td.diff-lineno {
 	font-weight: bold;
 }
@@ -63,14 +69,29 @@ td.diff-context {
 	border-radius: 0.33em;
 }
 
+td.diff-addedline {
+	border-color: $color-diff-addedline-border;
+	color: $color-diff-text;
+}
+
+td.diff-deletedline {
+	border-color: $color-diff-deletedline-border;
+	color: $color-diff-text;
+}
+
 td.diff-context {
-	background: #f9f9f9;
-	color: #333;
+	background-color: $color-diff-context;
+	border-color: $color-diff-context-border;
+	color: $color-diff-text;
 }
 
 .diffchange {
 	font-weight: bold;
 	text-decoration: none;
+}
+
+.diffchange-inline {
+	color: $color-diffchange-text;
 }
 
 td.diff-addedline .diffchange,
@@ -79,39 +100,13 @@ td.diff-deletedline .diffchange {
 	padding: 0.25em 0;
 }
 
-
-td.diff-context {
-	background-color: $color-diff-context;
-	border-color: $color-diff-context-border;
-	color: $color-diff-text;
-}
-
-td.diff-addedline {
-	border-color: $color-diff-addedline-border;
-	color: $color-diff-text;
-}
-
 td.diff-addedline .diffchange {
 	background: $color-diff-addedline-diffchange;
-}
-
-td.diff-deletedline {
-	border-color: $color-diff-deletedline-border;
-	color: $color-diff-text;
 }
 
 td.diff-deletedline .diffchange {
 	background: $color-diff-deletedline-diffchange;
 }
-
-.diffchange-inline {
-	color: $color-diffchange-text;
-}
-
-table.diff, td.diff-otitle, td.diff-ntitle {
-	background-color: $color-page;
-}
-
 
 /* Correct user & content directionality when viewing a diff */
 .diff-currentversion-title,
