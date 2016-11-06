@@ -34,7 +34,9 @@
 <a href="<?= Sanitizer::encodeAttribute( $editUrl ); ?>" class="modify"><?= wfMessage( 'phalanx-link-modify' )->escaped(); ?></a> &#183;
 <a href="#" class="unblock" data-id="<?= Sanitizer::encodeAttribute( $blockId ); ?>"><?= $wg->Lang->lcfirst( wfMessage( 'phalanx-link-unblock' )->escaped() ); ?></a>
 
+<? if ( isset( $statsPager ) ) : ?>
 <fieldset>
 	<legend><?= wfMessage( 'phalanx-stats-results' )->escaped(); ?></legend>
 <?= $statsPager ?>
 </fieldset>
+<? endif ?>
