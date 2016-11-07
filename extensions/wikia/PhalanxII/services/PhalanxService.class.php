@@ -313,9 +313,15 @@ class PhalanxService extends Service {
 	}
 
 	private function getPhalanxUrl( $action ) {
-		global $wgConsulUrl, $wgConsulServiceTag;
-		
-		$baseurl = ( new ConsulUrlProvider( $wgConsulUrl, $wgConsulServiceTag ) )->getUrl( 'phalanx' );
+		global $wgConsulUrl, $wgConsulServiceTag, $wgPhalanxServiceUrl;
+
+		if ( !empty( $wgPhalanxServiceUrl ) ) {
+			$baseurl = $wgPhalanxServiceUrl;  // e.g. "localhost:4666"
+		}
+		else {
+			$baseurl = ( new ConsulUrlProvider( $wgConsulUrl, $wgConsulServiceTag ) )->getUrl( 'phalanx' );
+		}
+
 		return sprintf( "http://%s/%s", $baseurl, $action != "status" ? $action : "" );
 	}
 
