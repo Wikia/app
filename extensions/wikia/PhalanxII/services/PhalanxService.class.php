@@ -319,7 +319,7 @@ class PhalanxService extends Service {
 			$baseurl = $wgPhalanxServiceUrl;  // e.g. "localhost:4666"
 		}
 		else {
-			$baseurl = (new ConsulUrlProvider($wgConsulUrl, $wgConsulServiceTag))->getUrl('phalanx');
+			$baseurl = ( new ConsulUrlProvider( $wgConsulUrl, $wgConsulServiceTag ) )->getUrl( 'phalanx' );
 		}
 
 		return sprintf( "http://%s/%s", $baseurl, $action != "status" ? $action : "" );
