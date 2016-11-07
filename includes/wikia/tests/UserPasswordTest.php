@@ -3,10 +3,9 @@
 use Wikia\Service\Helios\ClientException;
 use Wikia\DependencyInjection\Injector;
 
-class UserPasswordTest extends WikiaBaseTest
-{
+class UserPasswordTest extends WikiaBaseTest {
 
-	const TEST_USER_ID = 5;
+	const TEST_USER_ID = 4;
 
 	/** @var User */
 	protected $testUser;
@@ -27,29 +26,35 @@ class UserPasswordTest extends WikiaBaseTest
 	}
 
 	public function testShouldSetNewPassword() {
-		$this->assertTrue( $this->testUser->setPassword( "ok" ) );
+		$this->assertTrue( $this->testUser->setPassword( 'goodpassword123' ) );
 	}
 
 	/**
 	 * @expectedException PasswordError
-	 * @expectedExceptionMessage There was either an authentication database error or you are not allowed to update your external account.
+	 * @expectedExceptionMessage Passwords must be at least $1 characters.
 	 */
 	public function testShouldNotSetEmptyPassword() {
-		$this->assertTrue( $this->testUser->setPassword( "" ) );
+		$this->assertTrue( $this->testUser->setPassword( '' ) );
 	}
 
 	/**
 	 * @expectedException PasswordError
-	 * @expectedExceptionMessage There was either an authentication database error or you are not allowed to update your external account.
+	 * @expectedExceptionMessage Your password must be different from your username.
 	 */
 	public function testShouldNotSetNewPasswordEqualToUsername() {
 		$this->assertTrue( $this->testUser->setPassword( $this->testUser->getName() ) );
 	}
 
-	public function testShouldNotSetNewPasswordForBlockedUser() {
-		$nameBkp = $this->testUser->getName();
-		$this->testUser->setName( "Useruser" );
-		$this->assertEquals( "password-login-forbidden", $this->testUser->getPasswordValidity( "Passpass" )->errors[0]->description );
-		$this->testUser->setName( $nameBkp );
+	public function testShouldReturnPasswordIsTooShort(){
+		$this->assertEquals('passwordtooshort', $this->testUser->getPasswordValidity(''));
+	}
+
+	public function testShouldReturnOkay(){
+		$this->assertTrue($this->testUser->getPasswordValidity('abc'));
+	}
+
+	public function testRefuseToSetPasswordLikeUsername(){
+		$this->testUser->setName('johnkrasinsky');
+		$this->assertEquals('password-name-match', $this->testUser->getPasswordValidity('johnKRasinsky'));
 	}
 }

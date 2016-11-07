@@ -446,14 +446,13 @@ class User {
 		$name = self::getCanonicalName( $name, $validate );
 		if ( $name === false ) {
 			return false;
-		} else {
-			# Create unloaded user object
-			$u = new User;
-			$u->mName = $name;
-			$u->mFrom = 'name';
-			$u->setItemLoaded( 'name' );
-			return $u;
 		}
+		# Create unloaded user object
+		$u = new User;
+		$u->mName = $name;
+		$u->mFrom = 'name';
+		$u->setItemLoaded( 'name' );
+		return $u;
 	}
 
 	/**
@@ -822,37 +821,17 @@ class User {
 	 * @return mixed: true on success, string or array of error message on failure
 	 */
 	public function getPasswordValidity( $password ) {
-		global $wgMinimalPasswordLength, $wgContLang;
+		$result = self::heliosClient()->validatePassword( $password, $this->getName() );
 
-		static $blockedLogins = array(
-			'Useruser' => 'Passpass', 'Useruser1' => 'Passpass1', # r75589
-			'Apitestsysop' => 'testpass', 'Apitestuser' => 'testpass' # r75605
-		);
-
-		$result = false; //init $result to false for the internal checks
-
-		if( !wfRunHooks( 'isValidPassword', array( $password, &$result, $this ) ) )
-			return $result;
-
-		if ( $result === false ) {
-			if( strlen( $password ) < $wgMinimalPasswordLength ) {
-				return 'passwordtooshort';
-			} elseif ( $wgContLang->lc( $password ) == $wgContLang->lc( $this->mName ) ) {
-				return 'password-name-match';
-			} elseif ( isset( $blockedLogins[ $this->getName() ] ) && $password == $blockedLogins[ $this->getName() ] ) {
-				return 'password-login-forbidden';
-			} else {
-				//it seems weird returning true here, but this is because of the
-				//initialization of $result to false above. If the hook is never run or it
-				//doesn't modify $result, then we will likely get down into this if with
-				//a valid password.
-				return true;
-			}
-		} elseif( $result === true ) {
+		if ( !empty( $result->success ) && $result->success == true ) {
 			return true;
-		} else {
-			return $result; //the isValidPassword hook set a string $result and returned true
 		}
+
+		if ( !empty( $result->errors ) ) {
+			return $result->errors[0]->description;
+		}
+
+		return false;
 	}
 
 	/**
@@ -2087,6 +2066,7 @@ class User {
 	 *
 	 * @return bool on failure
 	 *
+	 * @throws Exception
 	 * @throws PasswordError on failure
 	 */
 	public function setPassword( $password, $forceLogout = true ) {
@@ -2095,6 +2075,9 @@ class User {
 
 		try {
 			$heliosPasswordChange = $heliosClient->setPassword( $this->getId(), $password );
+			if ( !$heliosPasswordChange ) {
+				throw new PasswordError( wfMessage( 'externaldberror' )->text() );
+			}
 		} catch ( \Exception $e ) {
 			WikiaLogger::instance()->error( 'Failed to communicate with Helios for password set', [
 				'userId' => $this->getId(),
@@ -2102,25 +2085,15 @@ class User {
 			] );
 		}
 
-		if ( !$heliosPasswordChange ) {
-			WikiaLogger::instance()->error( 'Failed to communicate with Helios for password set', [
-				'userId' => $this->getId(),
-				'err'    => $heliosPasswordChange,
-			] );
-
-			throw new PasswordError( wfMsg( 'externaldberror' ) );
-		}
-
 		if ( !empty( $heliosPasswordChange->errors ) ) {
-			WikiaLogger::instance()->error( 'Failed to communicate with Helios for password set', [
+			WikiaLogger::instance()->error( 'Helios password set failed', [
 				'userId' => $this->getId(),
 				'err'    => $heliosPasswordChange,
 			] );
-
-			throw new PasswordError( wfMsg( $heliosPasswordChange->errors[0]->description ) );
+			throw new PasswordError( wfMessage( $heliosPasswordChange->errors[0]->description )->text() );
 		}
 
-		$this->setInternalPassword( $password );
+		$this->resetNewPasswordAndSetToken();
 
 		if ( $forceLogout ) {
 			$heliosClient->forceLogout( $this->getId() );
@@ -2131,28 +2104,17 @@ class User {
 
 	/**
 	 * Set the password and reset the random token unconditionally.
-	 *
-	 * @param $str String New password to set
 	 */
-	public function setInternalPassword( $str ) {
-		$this->load();
+	public function resetNewPasswordAndSetToken() {
 		$this->setToken();
 
-		// @deprecated
-		// @todo remove local storing of password
-		if ( $str === null ) {
-			// Save an invalid hash...
-			$this->mPassword = '';
-		} else {
-			$this->mPassword = self::crypt( $str );
-		}
 		$this->mNewpassword = '';
 		$this->mNewpassTime = null;
 	}
 
 	/**
 	 * Get the user's current token.
-	 * @param $forceCreation Force the generation of a new token if the user doesn't have one (default=true for backwards compatibility)
+	 * @param boolean $forceCreation Force the generation of a new token if the user doesn't have one (default=true for backwards compatibility)
 	 * @return String Token
 	 */
 	public function getToken( $forceCreation = true ) {
@@ -2170,23 +2132,12 @@ class User {
 	 * @param $token String|bool If specified, set the token to this value
 	 */
 	public function setToken( $token = false ) {
-		global $wgSecretKey, $wgProxyKey;
 		$this->load();
 		if ( !$token ) {
 			$this->mToken = MWCryptRand::generateHex( USER_TOKEN_LENGTH );
 		} else {
 			$this->mToken = $token;
 		}
-	}
-
-	/**
-	 * Set the cookie password
-	 *
-	 * @param $str String New cookie password
-	 */
-	private function setCookiePassword( $str ) {
-		$this->load();
-		$this->mCookiePassword = md5( $str );
 	}
 
 	/**
@@ -2197,6 +2148,7 @@ class User {
 	 */
 	public function setNewpassword( $str, $throttle = true ) {
 		$this->load();
+
 		$this->mNewpassword = self::crypt( $str );
 		if ( $throttle ) {
 			$this->mNewpassTime = wfTimestampNow();
@@ -2624,7 +2576,6 @@ class User {
 		} else {
 			$this->setOptionHelper( $attribute, $value );
 		}
-
 	}
 
 	/**
@@ -2673,6 +2624,8 @@ class User {
 	 * Set a global user flag.
 	 *
 	 * @param string $flag
+	 * @param        $value
+	 *
 	 * @return bool
 	 * @see getGlobalFlag for more documentation about flags
 	 */
@@ -2828,10 +2781,8 @@ class User {
 			$userStatsService = new UserStatsService( $this->mId );
 			return $userStatsService->getEditCountWiki();
 
-		} else {
-			/* nil */
-			return null;
 		}
+		return null;
 	}
 
 	/**
@@ -2889,10 +2840,9 @@ class User {
 	public function getRequest() {
 		if ( $this->mRequest ) {
 			return $this->mRequest;
-		} else {
-			global $wgRequest;
-			return $wgRequest;
 		}
+		global $wgRequest;
+		return $wgRequest;
 	}
 
 	/**
@@ -3182,15 +3132,11 @@ class User {
 	 * @todo Only rarely do all these fields need to be set!
 	 */
 	public function saveSettings() {
-		global $wgAuth;
 		$this->load();
 		if ( wfReadOnly() ) { return; }
 		if ( 0 == $this->mId ) { return; }
 
 		$this->mTouched = self::newTouchedTimestamp();
-		if ( !$wgAuth->allowSetLocalPassword() ) {
-			$this->mPassword = '';
-		}
 
 		wfRunHooks( 'BeforeUserSaveSettings', array( $this ) );
 
@@ -3198,7 +3144,6 @@ class User {
 		$dbw->update( 'user',
 			array( /* SET */
 				   'user_name' => $this->mName,
-				   'user_password' => $this->mPassword,
 				   'user_newpassword' => $this->mNewpassword,
 				   'user_newpass_time' => $dbw->timestampOrNull( $this->mNewpassTime ),
 				   'user_real_name' => $this->mRealName,
@@ -3276,7 +3221,6 @@ class User {
 		$fields = array(
 			'user_id' => $seqVal,
 			'user_name' => $name,
-			'user_password' => $user->mPassword,
 			'user_newpassword' => $user->mNewpassword,
 			'user_newpass_time' => $dbw->timestampOrNull( $user->mNewpassTime ),
 			'user_email' => $user->mEmail,
@@ -3317,7 +3261,6 @@ class User {
 			array(
 				'user_id' => $seqVal,
 				'user_name' => $this->mName,
-				'user_password' => $this->mPassword,
 				'user_newpassword' => $this->mNewpassword,
 				'user_newpass_time' => $dbw->timestampOrNull( $this->mNewpassTime ),
 				'user_email' => $this->mEmail,
@@ -3563,16 +3506,6 @@ class User {
 			}
 			return md5( $token . $salt ) . EDIT_TOKEN_SUFFIX;
 		}
-	}
-
-	/**
-	 * Generate a looking random token for various uses.
-	 *
-	 * @param $salt String Optional salt value
-	 * @return String The new random token
-	 */
-	public static function generateToken( $salt = '' ) {
-		return MWCryptRand::generateHex( 32 );
 	}
 
 	/**
@@ -3897,7 +3830,7 @@ class User {
 	protected function getTokenUrl( $page, $token ) {
 		// Hack to bypass localization of 'Special:'
 		$title = Title::makeTitle( NS_MAIN, "Special:$page/$token" );
-		return $title->getCanonicalUrl();
+		return $title->getCanonicalURL();
 	}
 
 	/**
@@ -3976,7 +3909,7 @@ class User {
 		global $wgEmailAuthentication;
 		$this->load();
 		$confirmed = true;
-		if( wfRunHooks( 'EmailConfirmed', array( &$this, &$confirmed ) ) ) {
+		if( ! wfRunHooks( 'EmailConfirmed', array( &$this, &$confirmed ) ) ) {
 			if( $this->isAnon() ) {
 				return false;
 			}
@@ -3987,9 +3920,8 @@ class User {
 				return false;
 			}
 			return true;
-		} else {
-			return $confirmed;
 		}
+		return $confirmed;
 	}
 
 	/**
@@ -4082,22 +4014,6 @@ class User {
 	}
 
 	/**
-	 * Make an old-style password hash
-	 *
-	 * @param $password String Plain-text password
-	 * @param $userId String User ID
-	 * @return String Password hash
-	 */
-	public static function oldCrypt( $password, $userId ) {
-		global $wgPasswordSalt;
-		if ( $wgPasswordSalt ) {
-			return md5( $userId . '-' . md5( $password ) );
-		} else {
-			return md5( $password );
-		}
-	}
-
-	/**
 	 * Make a new-style password hash
 	 *
 	 * @param $password String Plain-text password
@@ -4105,6 +4021,7 @@ class User {
 
 	 *                     If unspecified or false, will generate one automatically
 	 * @return String Password hash
+	 * @deprecated use HeliosClient
 	 */
 	public static function crypt( $password, $salt = false ) {
 		global $wgPasswordSalt;
@@ -4462,22 +4379,6 @@ class User {
 	}
 
 	/**
-	 * Log an attempt to fallback to the MW session that was rejected.
-	 */
-	protected function logFallbackToMediaWikiSessionRejection( $from ) {
-		WikiaLogger::instance()->error(
-			'AUTHENTICATION_FALLBACK_REJECTED',
-			[
-				'global_auth_token' => $this->getGlobalAuthToken(),
-				'from'              => $from,
-				'ip'                => $this->getRequest()->getIP(),
-				'session_id'        => session_id(),
-				'user_id'           => $this->getId(),
-				'user_name'         => $this->getName(),
-			]);
-	}
-
-	/**
 	 * Get the list of explicit group memberships this user has.
 	 * The implicit * and user groups are not included.
 	 * @return Array of String internal group names
@@ -4700,9 +4601,8 @@ class User {
 		$title = self::getGroupPage( $group );
 		if( $title ) {
 			return Linker::link( $title, htmlspecialchars( $text ) );
-		} else {
-			return $text;
 		}
+		return $text;
 	}
 
 	/**
