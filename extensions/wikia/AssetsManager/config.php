@@ -56,7 +56,6 @@ $config['adengine2_desktop_js'] = [
 		'//extensions/wikia/AdEngine/js/context/uapContext.js',
 		'//extensions/wikia/AdEngine/js/DartUrl.js',
 		'//extensions/wikia/AdEngine/js/DOMElementTweaker.js',
-		'//extensions/wikia/AdEngine/js/EventDispatcher.js',
 		'//extensions/wikia/AdEngine/js/lookup/services.js',
 		'//extensions/wikia/AdEngine/js/MessageListener.js',
 		'//extensions/wikia/AdEngine/js/SlotTracker.js',
@@ -816,7 +815,6 @@ $config['mobile_base_ads_js'] = [
 		'//extensions/wikia/AdEngine/js/utils/timeBuckets.js',
 		'//extensions/wikia/AdEngine/js/DartUrl.js',
 		'//extensions/wikia/AdEngine/js/DOMElementTweaker.js',
-		'//extensions/wikia/AdEngine/js/EventDispatcher.js',
 		'//extensions/wikia/AdEngine/js/MessageListener.js',
 		'//extensions/wikia/AdEngine/js/SlotTracker.js',
 		'//extensions/wikia/AdEngine/js/SlotTweaker.js',
@@ -2465,6 +2463,14 @@ $config['portable_infobox_js'] = [
 	'type' => AssetsManager::TYPE_JS,
 	'assets' => [
 		'//extensions/wikia/PortableInfobox/js/PortableInfobox.js',
+	],
+];
+
+$config['portable_infobox_monobook_js'] = [
+	'type' => AssetsManager::TYPE_JS,
+	'skin' => [ 'monobook' ],
+	'assets' => [
+		'//extensions/wikia/PortableInfobox/js/PortableInfoboxMonobook.js',
 	],
 ];
 

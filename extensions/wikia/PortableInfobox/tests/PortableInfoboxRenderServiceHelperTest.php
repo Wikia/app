@@ -363,14 +363,16 @@ class PortableInfoboxRenderServiceHelperTest extends WikiaBaseTest {
 	 * @param $preferredWidth
 	 * @param $resultDimensions
 	 * @param $thumbnailDimensions
+	 * @param $thumbnail2xDimensions
 	 * @param $originalDimension
 	 * @dataProvider customWidthProvider
 	 */
-	public function testCustomWidthLogic( $customWidth, $preferredWidth, $resultDimensions, $thumbnailDimensions, $originalDimension ) {
+	public function testCustomWidthLogic( $customWidth, $preferredWidth, $resultDimensions, $thumbnailDimensions, $thumbnail2xDimensions, $originalDimension ) {
 		$expected = [
 			'name' => 'test',
 			'ref' => null,
 			'thumbnail' => null,
+			'thumbnail2x' => null,
 			'key' => '',
 			'media-type' => 'image',
 			'mercuryComponentAttrs' => '{"itemContext":"portable-infobox","ref":null}',
@@ -391,7 +393,7 @@ class PortableInfoboxRenderServiceHelperTest extends WikiaBaseTest {
 
 		$file->expects( $this->any() )
 			->method( 'transform' )
-			->with( $this->equalTo( $thumbnailDimensions ) )
+			->with( $this->logicalOr ( $this->equalTo( $thumbnailDimensions ), $this->equalTo( $thumbnail2xDimensions ) ) )
 			->will( $this->returnValue( $thumb ) );
 		$this->mockStaticMethod( 'WikiaFileHelper', 'getFileFromTitle', $file );
 		$this->mockGlobalFunction( 'wfRunHooks', true );
@@ -415,6 +417,7 @@ class PortableInfoboxRenderServiceHelperTest extends WikiaBaseTest {
 				'preferred' => 300,
 				'result' => [ 'width' => 300, 'height' => 200 ],
 				'thumbnail' => [ 'width' => 300, 'height' => 200 ],
+				'thumbnail2x' => [ 'width' => 600, 'height' => 400 ],
 				'original' => [ 'width' => 300, 'height' => 200 ]
 			],
 			[
@@ -422,6 +425,7 @@ class PortableInfoboxRenderServiceHelperTest extends WikiaBaseTest {
 				'preferred' => 300,
 				'result' => [ 'width' => 300, 'height' => 200 ],
 				'thumbnail' => [ 'width' => 300, 'height' => 200 ],
+				'thumbnail2x' => [ 'width' => 600, 'height' => 400 ],
 				'original' => [ 'width' => 300, 'height' => 200 ]
 			],
 			[
@@ -429,6 +433,7 @@ class PortableInfoboxRenderServiceHelperTest extends WikiaBaseTest {
 				'preferred' => 300,
 				'result' => [ 'width' => 300, 'height' => 180 ],
 				'thumbnail' => [ 'width' => 400, 'height' => 240 ],
+				'thumbnail2x' => [ 'width' => 800, 'height' => 480 ],
 				'original' => [ 'width' => 500, 'height' => 300 ]
 			],
 			[
@@ -436,6 +441,7 @@ class PortableInfoboxRenderServiceHelperTest extends WikiaBaseTest {
 				'preferred' => 300,
 				'result' => [ 'width' => 300, 'height' => 500 ],
 				'thumbnail' => [ 'width' => 300, 'height' => 500 ],
+				'thumbnail2x' => [ 'width' => 600, 'height' => 1000 ],
 				'original' => [ 'width' => 300, 'height' => 500 ]
 			],
 			[
@@ -443,6 +449,7 @@ class PortableInfoboxRenderServiceHelperTest extends WikiaBaseTest {
 				'preferred' => 300,
 				'result' => [ 'width' => 188, 'height' => 500 ],
 				'thumbnail' => [ 'width' => 188, 'height' => 500 ],
+				'thumbnail2x' => [ 'width' => 376, 'height' => 1000 ],
 				'original' => [ 'width' => 300, 'height' => 800 ]
 			],
 			[
@@ -450,6 +457,7 @@ class PortableInfoboxRenderServiceHelperTest extends WikiaBaseTest {
 				'preferred' => 300,
 				'result' => [ 'width' => 300, 'height' => 375 ],
 				'thumbnail' => [ 'width' => 600, 'height' => 750 ],
+				'thumbnail2x' => [ 'width' => 1200, 'height' => 1500 ],
 				'original' => [ 'width' => 1200, 'height' => 1500 ]
 			],
 		];

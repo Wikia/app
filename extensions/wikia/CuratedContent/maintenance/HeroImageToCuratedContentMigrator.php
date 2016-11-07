@@ -14,7 +14,7 @@ class HeroImageToCuratedContentMigrator extends Maintenance {
 	}
 
 	function execute() {
-		global $wgCityId;
+		global $wgCityId, $wgDBname;
 		$dryRun = $this->hasOption('dry-run');
 
 		$commData = new CommunityDataService($wgCityId);
@@ -43,6 +43,7 @@ class HeroImageToCuratedContentMigrator extends Maintenance {
 			$this->output("\ncurated content after migration:\n".json_encode($curatedData)."\n");
 		} else {
 			$commData->setCuratedContent($curatedData, "migrating data from Hero Module");
+			$this->output("{$wgDBname}: hero image data has been migrated\n");
 		}
 	}
 }

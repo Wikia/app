@@ -1,8 +1,6 @@
-@import 'variables';
 @import 'skins/shared/color';
 @import 'skins/shared/mixins/flexbox';
 @import 'variables';
-@import 'extensions/wikia/DesignSystem/bower_components/design-system/base/typography';
 
 $card-background-color: mix($color-page, #fff, 91%);
 $card-header-size: 84px;
@@ -30,7 +28,7 @@ $card-footer-size: 48px;
 	.community-page-card-module-description {
 		@include flex-grow(1);
 
-		font-size: $typescale-size-base;
+		font-size: $wds-typescale-size-base;
 		padding: 0 $content-spacing-regular;
 	}
 
@@ -41,9 +39,9 @@ $card-footer-size: 48px;
 	.community-page-card-module-full-list-link {
 		color: $color-buttons;
 		display: inline-block;
-		font-size: $typescale-size-minus-2;
+		font-size: $wds-typescale-size-minus-2;
 		font-weight: bold;
-		line-height: $line-height;
+		line-height: $wds-line-height;
 		margin: $content-spacing-xxsmall;
 		padding: $content-spacing-small $content-spacing-regular;
 		text-transform: uppercase;
@@ -64,9 +62,9 @@ $card-footer-size: 48px;
 		padding: 0 $content-spacing-regular;
 
 		span {
-			font-size: $typescale-size-minus-1;
+			font-size: $wds-typescale-size-minus-1;
 			font-weight: bold;
-			line-height: $typescale-size-base;
+			line-height: $wds-typescale-size-base;
 			max-width: 70%;
 			text-transform: uppercase;
 		}
@@ -91,7 +89,7 @@ $card-footer-size: 48px;
 	.community-page-card-module-list {
 		@include flex-grow(1);
 
-		font-size: $typescale-size-base;
+		font-size: $wds-typescale-size-base;
 		margin: 0;
 		padding: 0 $content-spacing-regular;
 	}

@@ -22,6 +22,7 @@
 	"sf_createtemplate_outputformat": "ទ្រ់ង់ទ្រាយ​ទិន្នផល:",
 	"sf_createtemplate_standardformat": "តារាង",
 	"sf_createtemplate_infoboxformat": "ប្រអប់​ព័ត៌មាន​ចំហៀង",
+	"sf_createtemplate_plainformat": "អក្សរសុទ្ធ",
 	"sf_createtemplate_addfield": "បន្ថែម​វាល",
 	"sf_createtemplate_deletefield": "លុបចេញ",
 	"forms": "បែបបទ",
@@ -73,5 +74,9 @@
 	"sf_form_freetextlabel": "អត្ថបទ​សេរី​",
 	"sf_category_hasdefaultform": "ចំណាត់ក្រុមនេះ ប្រើប្រាស់បែបបទ $1 ។",
 	"sf_category_desc": "នេះ​គឺជា​ចំណាត់ថ្នាក់ក្រុម $1 ។",
-	"sf_blank_namespace": "ចម្បង​"
+	"sf_blank_namespace": "ចម្បង​",
+	"sf-datepicker-close": "បិទ",
+	"sf-datepicker-prev": "មុន",
+	"sf-datepicker-next": "បន្ទាប់",
+	"sf-datepicker-today": "ថ្ងៃនេះ"
 }
