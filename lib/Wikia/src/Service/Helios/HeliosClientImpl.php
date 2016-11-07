@@ -109,7 +109,7 @@ class HeliosClientImpl implements HeliosClient
 
 		$response = $request->getContent();
 		$output = json_decode( $response );
-var_dump($response);
+
 		if ( !$output ) {
 			$data = [];
 			$data["response"] = $response;
@@ -260,7 +260,7 @@ var_dump($response);
 			"password/validation",
 			[],
 			$postData,
-			[ 'method' => 'POST']
+			[ 'method' => 'POST' ]
 		);
 	}
 }

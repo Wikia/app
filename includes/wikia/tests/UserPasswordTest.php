@@ -1,5 +1,6 @@
 <?php
 
+use Wikia\Service\Helios\ClientException;
 use Wikia\DependencyInjection\Injector;
 
 class UserPasswordTest extends WikiaBaseTest
@@ -31,7 +32,7 @@ class UserPasswordTest extends WikiaBaseTest
 
 	/**
 	 * @expectedException PasswordError
-	 * @expectedExceptionMessage password_empty
+	 * @expectedExceptionMessage There was either an authentication database error or you are not allowed to update your external account.
 	 */
 	public function testShouldNotSetEmptyPassword() {
 		$this->assertTrue( $this->testUser->setPassword( "" ) );
@@ -39,7 +40,7 @@ class UserPasswordTest extends WikiaBaseTest
 
 	/**
 	 * @expectedException PasswordError
-	 * @expectedExceptionMessage password_equal_name
+	 * @expectedExceptionMessage There was either an authentication database error or you are not allowed to update your external account.
 	 */
 	public function testShouldNotSetNewPasswordEqualToUsername() {
 		$this->assertTrue( $this->testUser->setPassword( $this->testUser->getName() ) );
@@ -48,7 +49,7 @@ class UserPasswordTest extends WikiaBaseTest
 	public function testShouldNotSetNewPasswordForBlockedUser() {
 		$nameBkp = $this->testUser->getName();
 		$this->testUser->setName( "Useruser" );
-		$this->assertEquals( "password-login-forbidden", $this->testUser->getPasswordValidity( "Passpass" ) );
+		$this->assertEquals( "password-login-forbidden", $this->testUser->getPasswordValidity( "Passpass" )->errors[0]->description );
 		$this->testUser->setName( $nameBkp );
 	}
 }

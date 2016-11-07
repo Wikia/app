@@ -2151,8 +2151,16 @@ class User
 	 */
 	public function setPassword( $password, $forceLogout = true ) {
 		$heliosClient = self::heliosClient();
+		$heliosPasswordChange = null;
 
-		$heliosPasswordChange = $heliosClient->setPassword( $this->getId(), $password );
+		try {
+			$heliosPasswordChange = $heliosClient->setPassword( $this->getId(), $password );
+		} catch ( \Exception $e ) {
+			WikiaLogger::instance()->error( 'Failed to communicate with Helios for password set', [
+				'userId' => $this->getId(),
+				'err'    => $e,
+			] );
+		}
 
 		if ( !$heliosPasswordChange ) {
 			WikiaLogger::instance()->error( 'Failed to communicate with Helios for password set', [
