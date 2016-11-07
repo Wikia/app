@@ -36,14 +36,14 @@
 	}
 
 	&.wds-is-secondary {
-		background-color: $wds-color-white;
+		background-color: transparent;
 		color: $wds-color-link;
 
 		&:focus:not(:disabled),
 		&:hover:not(:disabled),
 		&:active,
 		&.wds-is-active {
-			background-color: $wds-color-white;
+			background-color: transparent;
 			color: $active-color;
 		}
 	}
@@ -63,7 +63,7 @@
 	}
 
 	&.wds-is-text {
-		background-color: $wds-color-white;
+		background-color: transparent;
 		border: 0;
 		color: $wds-color-link;
 
@@ -71,7 +71,7 @@
 		&:hover:not(:disabled),
 		&:active,
 		&.wds-is-active {
-			background-color: $wds-color-white;
+			background-color: transparent;
 			color: $active-color;
 		}
 	}
