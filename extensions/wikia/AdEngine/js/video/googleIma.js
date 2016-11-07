@@ -1,9 +1,7 @@
 /*global define, google*/
 define('ext.wikia.adEngine.video.googleIma', [
-	'ext.wikia.adEngine.video.vastBuilder',
-	'wikia.lazyqueue',
 	'ext.wikia.adEngine.utils.scriptLoader'
-], function (vastBuilder, lazyQueue, scriptLoader) {
+], function (scriptLoader) {
 	'use strict';
 	var adDisplayContainer,
 		adsLoader,
@@ -58,11 +56,11 @@ define('ext.wikia.adEngine.video.googleIma', [
 		});
 	}
 
-	function runWhenAdsManagerLoaded(cb) {
+	function runWhenAdsManagerLoaded(callback) {
 		if (isAdsManagerLoaded) {
-			cb();
+			callback();
 		} else {
-			adsLoader.addEventListener(google.ima.AdsManagerLoadedEvent.Type.ADS_MANAGER_LOADED, cb, false);
+			adsLoader.addEventListener(google.ima.AdsManagerLoadedEvent.Type.ADS_MANAGER_LOADED, callback, false);
 		}
 	}
 

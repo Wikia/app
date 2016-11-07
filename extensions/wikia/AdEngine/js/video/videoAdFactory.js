@@ -13,27 +13,29 @@ define('ext.wikia.adEngine.video.videoAdFactory', [
 		return googleIma.init();
 	}
 
-	function create(imageContainer, getSlotWidth, getSlotHeight, adSlot, slotParams, onVideoEndedCallback) {
-		var vastUrl = vastUrlBuilder.build(getSlotWidth() / getSlotHeight(), slotParams);
+	function create(imageContainer, slotSize, adSlot, slotParams) {
+		var vastUrl = vastUrlBuilder.build(slotSize.width / slotSize.height, slotParams);
 		log(['VAST URL: ', vastUrl], log.levels.info, logGroup);
 
 		return {
 			adSlot: adSlot,
+			events: {
+				onVideoEnded: null
+			},
 			imageContainer: imageContainer,
-			onVideoEndedCallback: onVideoEndedCallback,
+			slotSize: slotSize,
 			slotParams: slotParams,
-			videoContainer: googleIma.setupIma(vastUrl, adSlot, getSlotWidth(), getSlotHeight()),
+			videoContainer: googleIma.setupIma(vastUrl, adSlot, slotSize.width, slotSize.height),
 			play: function () {
-				var slotHeight = getSlotHeight(),
-					slotWidth = getSlotWidth(),
-					self = this;
-
-				googleIma.playVideo(slotWidth, slotHeight, function () {
+				var self = this;
+				googleIma.playVideo(self.slotSize.width, self.slotSize.height, function () {
 					self.toggle(true);
-					self.videoContainer = googleIma.setupIma(vastUrl, adSlot, slotWidth, slotHeight);
-					if (onVideoEndedCallback) {
-						onVideoEndedCallback();
-						log('On video ended callback is executed', log.levels.info, logGroup);
+					self.videoContainer =
+						googleIma.setupIma(vastUrl, adSlot, self.slotSize.width, self.slotSize.height);
+
+					if (self.events.onVideoEnded) {
+						self.events.onVideoEnded();
+ 						log('On video ended callback is executed', log.levels.info, logGroup);
 					}
 				});
 
@@ -49,6 +51,9 @@ define('ext.wikia.adEngine.video.videoAdFactory', [
 					DOMElementTweaker.hide(this.imageContainer, false);
 					DOMElementTweaker.removeClass(this.videoContainer, 'hidden');
 				}
+			},
+			updateSize: function (slotSize) {
+				this.slotSize = slotSize;
 			}
 		};
 	}

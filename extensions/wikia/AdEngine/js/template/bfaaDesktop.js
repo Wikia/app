@@ -36,7 +36,7 @@ define('ext.wikia.adEngine.template.bfaaDesktop', [
 	function updateNavBar(height) {
 		var position = win.scrollY || win.pageYOffset;
 
-		log(['updateNavBar', height, position], 'info', logGroup);
+		log(['updateNavBar', height, position], log.levels.info, logGroup);
 
 		if (doc.body.offsetWidth <= breakPointWidthNotSupported || position <= height) {
 			nav.classList.add('bfaa-pinned');
@@ -51,7 +51,7 @@ define('ext.wikia.adEngine.template.bfaaDesktop', [
 		nav.style.top = '';
 		page.classList.add('bfaa-template');
 
-		log('desktopHandler::show', 'info', logGroup);
+		log('desktopHandler::show', log.levels.info, logGroup);
 
 		updateNavBar(adSlot.offsetHeight);
 		doc.addEventListener('scroll', adHelper.throttle(function () {
@@ -72,32 +72,43 @@ define('ext.wikia.adEngine.template.bfaaDesktop', [
 		}
 
 		if (params.videoTriggerElement && params.videoAspectRatio) {
-			videoAdFactory.init().then(function () {
-				try {
-					var video = videoAdFactory.create(
-						adSlot.querySelector('div:last-of-type'),
-						function () {
-							return document.body.clientWidth;
-						},
-						function () {
-							return document.body.clientWidth / params.videoAspectRatio;
-						},
-						adSlot,
-						{
-							src: 'gpt',
-							slotName: params.slotName,
-							uap: params.uap,
-							passback: 'vuap'
-						}
-					);
-
-					params.videoTriggerElement.addEventListener('click', video.play.bind(video));
-
-				} catch (error) {
-					log(['Video can\'t be loaded correctly', error.message], log.levels.warning, logGroup);
-				}
-			});
+			videoAdFactory.init()
+				.then(loadVideoAd(params));
 		}
+	}
+
+	function getSlotSize(params) {
+		return {
+			width: document.body.clientWidth,
+			height: document.body.clientWidth / params.videoAspectRatio
+		};
+	}
+
+	function loadVideoAd(params) {
+		return function () {
+			try {
+				var video = videoAdFactory.create(
+					adSlot.querySelector('div:last-of-type'),
+					getSlotSize(params),
+					adSlot,
+					{
+						src: 'gpt',
+						slotName: params.slotName,
+						uap: params.uap,
+						passback: 'vuap'
+					}
+				);
+
+				window.addEventListener('resize', function () {
+					video.updateSize(getSlotSize(params));
+				});
+
+				params.videoTriggerElement.addEventListener('click', video.play.bind(video));
+
+			} catch (error) {
+				log(['Video can\'t be loaded correctly', error.message], log.levels.warning, logGroup);
+			}
+		};
 	}
 
 	function show(params) {
@@ -106,7 +117,7 @@ define('ext.wikia.adEngine.template.bfaaDesktop', [
 		page = doc.getElementsByClassName('WikiaSiteWrapper')[0];
 		wrapper = doc.getElementById('WikiaTopAds');
 
-		log(['show', page, wrapper, params], 'info', logGroup);
+		log(['show', page, wrapper, params], log.levels.info, logGroup);
 
 		wrapper.style.opacity = '0';
 		slotTweaker.makeResponsive(params.slotName, params.aspectRatio);
@@ -115,7 +126,7 @@ define('ext.wikia.adEngine.template.bfaaDesktop', [
 			wrapper.style.opacity = '';
 		});
 
-		log(['show', params.uap], 'info', logGroup);
+		log(['show', params.uap], log.levels.info, logGroup);
 
 		uapContext.setUapId(params.uap);
 		unblockedSlots.forEach(btfBlocker.unblock);

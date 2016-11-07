@@ -23,6 +23,7 @@ define('ext.wikia.adEngine.template.bfaaMobile', [
 	'use strict';
 
 	var adSlot,
+		adsModule,
 		logGroup = 'ext.wikia.adEngine.template.bfaaMobile',
 		page,
 		unblockedSlots = [
@@ -32,27 +33,31 @@ define('ext.wikia.adEngine.template.bfaaMobile', [
 		],
 		wrapper;
 
+	function getSlotSize(params) {
+		return {
+			width: document.body.clientWidth,
+			height: document.body.clientWidth / params.videoAspectRatio
+		};
+	}
+
+	function adjustPadding(iframe, aspectRatio) {
+		var viewPortWidth = Math.max(doc.documentElement.clientWidth, win.innerWidth || 0),
+			height = aspectRatio ? viewPortWidth / aspectRatio : iframe.contentWindow.document.body.offsetHeight;
+
+		page.style.paddingTop = height + 'px';
+		adsModule.setSiteHeadOffset(height);
+	}
+
 	function runOnReady(iframe, params) {
-		var aspectRatio = params.aspectRatio,
-			adsModule = win.Mercury.Modules.Ads.getInstance(),
-			adjustPadding = function () {
-				var viewPortWidth = Math.max(doc.documentElement.clientWidth, win.innerWidth || 0),
-					height = aspectRatio ?
-						viewPortWidth / aspectRatio : iframe.contentWindow.document.body.offsetHeight;
-				page.style.paddingTop = height + 'px';
-				adsModule.setSiteHeadOffset(height);
-			},
-			onResize = adHelper.throttle(adjustPadding, 100);
+		var onResize = function (aspectRatio) {
+				adjustPadding(iframe, aspectRatio);
+			};
 
-		function onVideoEndedCallback() {
-			aspectRatio = params.aspectRatio;
-			onResize();
-		}
-
+		adsModule = win.Mercury.Modules.Ads.getInstance();
 		page.classList.add('bfaa-template');
-		adjustPadding();
+		adjustPadding(iframe, params.aspectRatio);
+		win.addEventListener('resize', onResize.bind(null, params.aspectRatio));
 
-		win.addEventListener('resize', onResize);
 		if (mercuryListener) {
 			mercuryListener.onPageChange(function () {
 				page.classList.remove('bfaa-template');
@@ -67,26 +72,25 @@ define('ext.wikia.adEngine.template.bfaaMobile', [
 				try {
 					var video = videoAdFactory.create(
 						adSlot.querySelector('div:last-of-type'),
-						function () {
-							return document.body.clientWidth;
-						},
-						function () {
-							return document.body.clientWidth / params.videoAspectRatio;
-						},
+						getSlotSize(params),
 						adSlot,
 						{
 							src: 'gpt',
 							slotName: params.slotName,
 							uap: params.uap,
 							passback: 'vuap'
-						},
-						onVideoEndedCallback
+						}
 					);
+
+					video.events.onVideoEnded = onResize.bind(null, params.aspectRatio);
+
+					window.addEventListener('resize', function () {
+						video.updateSize(getSlotSize(params));
+					});
 
 					params.videoTriggerElement.addEventListener('click', function () {
 						video.play();
-						aspectRatio = params.videoAspectRatio;
-						onResize();
+						onResize(params.videoAspectRatio);
 					}.bind(video));
 
 				} catch (error) {
@@ -101,7 +105,7 @@ define('ext.wikia.adEngine.template.bfaaMobile', [
 		page = doc.getElementsByClassName('application-wrapper')[0];
 		wrapper = doc.getElementsByClassName('mobile-top-leaderboard')[0];
 
-		log(['show', page, wrapper, params], 'info', logGroup);
+		log(['show', page, wrapper, params], log.levels.info, logGroup);
 
 		wrapper.style.opacity = '0';
 		slotTweaker.makeResponsive(params.slotName, params.aspectRatio);
@@ -110,7 +114,7 @@ define('ext.wikia.adEngine.template.bfaaMobile', [
 			wrapper.style.opacity = '';
 		});
 
-		log(['show', params.uap], 'info', logGroup);
+		log(['show', params.uap], log.levels.info, logGroup);
 
 		uapContext.setUapId(params.uap);
 		unblockedSlots.forEach(btfBlocker.unblock);
