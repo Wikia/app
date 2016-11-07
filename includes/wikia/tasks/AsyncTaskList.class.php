@@ -402,19 +402,7 @@ class AsyncTaskList {
 	 * @return Queue queue this task list will go into
 	 */
 	protected function getQueue() {
-		if ( $this->queue == null ) {
-			global $wgEnableSemanticMediaWikiExt;
-
-			if ( $wgEnableSemanticMediaWikiExt ) {
-				$queue = new SMWQueue();
-			} else {
-				$queue = new Queue();
-			}
-		} else {
-			$queue = $this->queue;
-		}
-
-		return $queue;
+		return $this->queue == null ? new Queue() : $this->queue;
 	}
 
 	private function generateId() {
