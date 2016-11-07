@@ -73,20 +73,24 @@ define('ext.wikia.adEngine.template.bfaaDesktop', [
 
 		if (params.videoTriggerElement && params.videoAspectRatio) {
 			videoAdFactory.init().then(function () {
-				var video = videoAdFactory.create(
-					adSlot.querySelector('div:last-of-type'),
-					document.body.clientWidth,
-					document.body.clientWidth / params.videoAspectRatio,
-					adSlot,
-					{
-						src: 'gpt',
-						slotName: params.slotName,
-						uap: params.uap,
-						passback: 'vuap'
-					}
-				);
+				try {
+					var video = videoAdFactory.create(
+						adSlot.querySelector('div:last-of-type'),
+						document.body.clientWidth,
+						document.body.clientWidth / params.videoAspectRatio,
+						adSlot,
+						{
+							src: 'gpt',
+							slotName: params.slotName,
+							uap: params.uap,
+							passback: 'vuap'
+						}
+					);
 
-				params.videoTriggerElement.addEventListener('click', video.play.bind(video));
+					params.videoTriggerElement.addEventListener('click', video.play.bind(video));
+				} catch (error) {
+					log(['Video can\'t be loaded correctly', error.message], log.levels.warning, logGroup);
+				}
 			});
 		}
 	}

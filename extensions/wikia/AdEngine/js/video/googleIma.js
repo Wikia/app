@@ -12,7 +12,7 @@ define('ext.wikia.adEngine.video.googleIma', [
 		isAdsManagerLoaded = false,
 		videoMock = document.createElement('video');
 
-	function initialize() {
+	function init() {
 		return scriptLoader.loadScript(imaLibraryUrl);
 	}
 
@@ -67,7 +67,7 @@ define('ext.wikia.adEngine.video.googleIma', [
 	}
 
 	return {
-		initialize: initialize,
+		init: init,
 		playVideo: playVideo,
 		setupIma: setupIma
 	};

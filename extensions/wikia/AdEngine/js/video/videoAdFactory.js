@@ -2,17 +2,32 @@
 define('ext.wikia.adEngine.video.videoAdFactory', [
 	'ext.wikia.adEngine.domElementTweaker',
 	'ext.wikia.adEngine.video.googleIma',
-	'ext.wikia.adEngine.video.vastUrlBuilder'
-], function (DOMElementTweaker, googleIma, vastUrlBuilder) {
+	'ext.wikia.adEngine.video.vastUrlBuilder',
+	'wikia.log'
+], function (DOMElementTweaker, googleIma, vastUrlBuilder, log) {
 	'use strict';
 
+	var logGroup = 'ext.wikia.adEngine.video.videoAdFactory';
+
 	function init() {
-		return googleIma.initialize();
+		return googleIma.init();
+	}
+
+	function itCanBeCreated(slotWidth, slotHeight) {
+		return slotWidth > 0 && slotHeight > 0;
 	}
 
 	function create(imageContainer, slotWidth, slotHeight, adSlot, slotParams, onVideoEndedCallback) {
-		var vastUrl = vastUrlBuilder.build(slotWidth / slotHeight, slotParams),
-			videoContainer = googleIma.setupIma(vastUrl, adSlot, slotWidth, slotHeight);
+		var vastUrl,
+			videoContainer;
+
+		if (!itCanBeCreated(slotWidth, slotHeight)) {
+			log(['Video can\'t be created', 'size not correct:', slotWidth, slotHeight], log.levels.error, logGroup);
+			throw new Error('Size of video slot is not correct');
+		}
+
+		vastUrl = vastUrlBuilder.build(slotWidth / slotHeight, slotParams);
+		videoContainer = googleIma.setupIma(vastUrl, adSlot, slotWidth, slotHeight);
 
 		return {
 			imageContainer: imageContainer,
