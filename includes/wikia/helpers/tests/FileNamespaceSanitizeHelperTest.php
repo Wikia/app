@@ -240,7 +240,7 @@ class FileNamespaceSanitizeHelperTest extends WikiaBaseTest {
 				'[[Tập tin:Naruto-Opening01_222.jpg|200px]]',
 				'vi',
 				null,
-				'Naruto-Opening01_222.jpg',
+				'Tập tin:Naruto-Opening01_222.jpg',
 				'File namespace that include a space'
 			],
 			[
