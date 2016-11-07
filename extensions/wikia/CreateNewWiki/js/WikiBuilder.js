@@ -19,13 +19,12 @@ define('ext.createNewWiki.builder', ['ext.createNewWiki.helper', 'wikia.tracker'
 		$themWikiWrapper,
 		steps,
 		wikiName,
-		wikiNameStatus,
+		wikiNameLabel,
 		wikiNameError,
 		wikiDomain,
+		wikiDomainLabel,
 		wikiDomainError,
-		wikiDomainStatus,
 		wikiDomainCountry,
-		nameWikiSubmitError,
 		wikiLanguage,
 		wikiVertical,
 		wikiAllAges,
@@ -79,13 +78,12 @@ define('ext.createNewWiki.builder', ['ext.createNewWiki.helper', 'wikia.tracker'
 		$themWikiWrapper = $('#ThemeWiki');
 		steps = wb.find('.steps .step');
 		wikiName = $nameWikiWrapper.find('input[name=wiki-name]');
-		wikiNameStatus = $nameWikiWrapper.find('.wiki-name-status-icon');
+		wikiNameLabel = $nameWikiWrapper.find('label[for=wiki-name]');
 		wikiNameError = $nameWikiWrapper.find('.wiki-name-error');
 		wikiDomain = $nameWikiWrapper.find('input[name=wiki-domain]');
+		wikiDomainLabel = $nameWikiWrapper.find('label[for=wiki-domain]');
 		wikiDomainError = $nameWikiWrapper.find('.wiki-domain-error');
-		wikiDomainStatus = $nameWikiWrapper.find('.domain-status-icon');
 		wikiDomainCountry = $nameWikiWrapper.find('.domain-country');
-		nameWikiSubmitError = $nameWikiWrapper.find('.submit-error');
 		wikiLanguage = $nameWikiWrapper.find('select[name=wiki-language]');
 		wikiVertical = $descWikiWrapper.find('select[name=wiki-vertical]');
 		wikiAllAges = $descWikiWrapper.find('input[name=all-ages]');
@@ -100,6 +98,10 @@ define('ext.createNewWiki.builder', ['ext.createNewWiki.helper', 'wikia.tracker'
 		$nameWikiWrapper.find('input.next').click(onNameWikiWrapperClick);
 		wikiDomain.keyup(onWikiDomainKeyUp);
 		wikiName.keyup(onWikiNameKeyUp);
+		wikiName.on('focus', onWikiNameFocus);
+		wikiName.on('blur', onWikiNameBlur);
+		wikiDomain.on('focus', onWikiDomainFocus);
+		wikiDomain.on('blur', onWikiDomainBlur);
 		wikiLanguage.bind('change', onWikiLanguageChange);
 		$('#ChangeLang').click(onChangeLangClick);
 		wb.find('nav .back').bind('click', onNavBackClick);
@@ -291,12 +293,28 @@ define('ext.createNewWiki.builder', ['ext.createNewWiki.helper', 'wikia.tracker'
 		nameAjax = true;
 		checkNextButtonStep1();
 		name = helper.sanitizeWikiName($(this).val());
+		if (name) {
+			wikiDomainLabel.addClass('active');
+		} else {
+			wikiDomainLabel.removeClass('active');
+		}
 
 		wikiDomain.val(name.toLowerCase()).trigger('keyup');
 		if (wntimer) {
 			clearTimeout(wntimer);
 		}
 		wntimer = setTimeout(checkWikiName, 500);
+	}
+
+	function onWikiNameFocus() {
+		wikiNameLabel.addClass('active');
+	}
+
+	function onWikiNameBlur(e) {
+		if (e.target.value.trim().length === 0) {
+			wikiNameLabel.removeClass('active');
+			wikiDomainLabel.removeClass('active');
+		}
 	}
 
 	function onWikiDomainKeyUp() {
@@ -308,22 +326,33 @@ define('ext.createNewWiki.builder', ['ext.createNewWiki.helper', 'wikia.tracker'
 		wdtimer = setTimeout(checkDomain, 500);
 	}
 
+	function onWikiDomainFocus() {
+		wikiDomainLabel.addClass('active');
+	}
+
+	function onWikiDomainBlur(e) {
+		if (e.target.value.trim().length === 0) {
+			wikiDomainLabel.removeClass('active');
+		}
+	}
+
 	function onNameWikiWrapperClick () {
-		var wikiNameVal, wikiDomainVal, wikiLanguageVal;
+		var wikiNameVal = wikiName.val(),
+			wikiDomainVal = wikiDomain.val(),
+			wikiLanguageVal;
 
 		if (isNameWikiSubmitError()) {
 			track({
 				action: tracker.ACTIONS.ERROR,
 				label: 'wiki-name-submit-error'
 			});
-			nameWikiSubmitError
-				.show()
-				.html(WikiBuilderCfg['name-wiki-submit-error'])
-				.delay(3000)
-				.fadeOut();
+			if (wikiNameVal.length === 0) {
+				addWikiNameError(WikiBuilderCfg['name-wiki-submit-error']);
+			}
+			if (wikiDomainVal.length === 0) {
+				addWikiDomainError(WikiBuilderCfg['name-wiki-submit-error']);
+			}
 		} else {
-			wikiNameVal = wikiName.val();
-			wikiDomainVal = wikiDomain.val();
 			wikiLanguageVal = wikiLanguage.find('option:selected').val();
 
 			saveState({
@@ -371,9 +400,9 @@ define('ext.createNewWiki.builder', ['ext.createNewWiki.helper', 'wikia.tracker'
 					if (res) {
 						var response = res.res;
 						if (response) {
-							wikiNameError.html(response);
+							addWikiNameError(response);
 						} else {
-							wikiNameError.html('');
+							removeWikiNameError();
 						}
 						nameAjax = false;
 						checkNextButtonStep1();
@@ -381,8 +410,7 @@ define('ext.createNewWiki.builder', ['ext.createNewWiki.helper', 'wikia.tracker'
 				}
 			});
 		} else {
-			showIcon(wikiNameStatus, '');
-			wikiNameError.html('');
+			removeWikiNameError();
 		}
 	}
 
@@ -393,7 +421,6 @@ define('ext.createNewWiki.builder', ['ext.createNewWiki.helper', 'wikia.tracker'
 		if (wd) {
 			wd = wd.toLowerCase();
 			wikiDomain.val(wd);
-			showIcon(wikiDomainStatus, 'spinner');
 			domainAjax = true;
 			checkNextButtonStep1();
 
@@ -409,11 +436,9 @@ define('ext.createNewWiki.builder', ['ext.createNewWiki.helper', 'wikia.tracker'
 						var response = res.res;
 
 						if (response) {
-							wikiDomainError.html(response);
-							showIcon(wikiDomainStatus, '');
+							addWikiDomainError(response);
 						} else {
-							wikiDomainError.html('');
-							showIcon(wikiDomainStatus, 'ok');
+							removeWikiDomainError();
 						}
 
 						domainAjax = false;
@@ -422,8 +447,7 @@ define('ext.createNewWiki.builder', ['ext.createNewWiki.helper', 'wikia.tracker'
 				}
 			});
 		} else {
-			wikiDomainError.html('');
-			showIcon(wikiDomainStatus, '');
+			removeWikiDomainError();
 		}
 	}
 
@@ -448,19 +472,8 @@ define('ext.createNewWiki.builder', ['ext.createNewWiki.helper', 'wikia.tracker'
 		isNameWikiSubmitError() ? nextButton.removeClass('enabled') : nextButton.addClass('enabled');
 	}
 
-	function showIcon(el, art) {
-		if (art) {
-			var markup = '<img src="';
-			if (art === 'spinner') {
-				markup += window.stylepath + '/common/images/ajax.gif';
-			} else if (art === 'ok') {
-				markup += window.wgExtensionsPath + '/wikia/CreateNewWiki/images/check.png';
-			}
-			markup += '">';
-			$(el).html(markup);
-		} else {
-			$(el).html('');
-		}
+	function showSpinnerIcon(el) {
+		$(el).html('<img src="' + window.stylepath + '/common/images/ajax.gif' + '">');
 	}
 
 	function transition(from, next) {
@@ -524,7 +537,7 @@ define('ext.createNewWiki.builder', ['ext.createNewWiki.helper', 'wikia.tracker'
 		} else if (retryGoto < 300) {
 			if (!finishSpinner.data('spinning')) {
 				finishSpinner.data('spinning', 'true');
-				showIcon(finishSpinner, 'spinner');
+				showSpinnerIcon(finishSpinner);
 			}
 			retryGoto++;
 			setTimeout(gotoMainPage, 200);
@@ -603,6 +616,30 @@ define('ext.createNewWiki.builder', ['ext.createNewWiki.helper', 'wikia.tracker'
 		}
 
 		$.showModal(errorModalHeader, errorModalMessage);
+	}
+
+	function addWikiNameError(message) {
+		wikiName.addClass('input-error');
+		wikiNameLabel.addClass('label-error');
+		wikiNameError.html(message);
+	}
+
+	function removeWikiNameError() {
+		wikiName.removeClass('input-error');
+		wikiNameLabel.removeClass('label-error');
+		wikiNameError.html('');
+	}
+
+	function addWikiDomainError(message) {
+		wikiDomain.addClass('input-error');
+		wikiDomainLabel.addClass('label-error');
+		wikiDomainError.html(message);
+	}
+
+	function removeWikiDomainError() {
+		wikiDomain.removeClass('input-error');
+		wikiDomainLabel.removeClass('label-error');
+		wikiDomainError.html('');
 	}
 
 	return {
