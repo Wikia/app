@@ -371,8 +371,10 @@ define('ext.createNewWiki.builder', ['ext.createNewWiki.helper', 'wikia.tracker'
 					if (res) {
 						var response = res.res;
 						if (response) {
+							wikiName.addClass('input-error');
 							wikiNameError.html(response);
 						} else {
+							wikiName.removeClass('input-error');
 							wikiNameError.html('');
 						}
 						nameAjax = false;
@@ -381,7 +383,7 @@ define('ext.createNewWiki.builder', ['ext.createNewWiki.helper', 'wikia.tracker'
 				}
 			});
 		} else {
-			showIcon(wikiNameStatus, '');
+			wikiName.removeClass('input-error');
 			wikiNameError.html('');
 		}
 	}
@@ -393,7 +395,6 @@ define('ext.createNewWiki.builder', ['ext.createNewWiki.helper', 'wikia.tracker'
 		if (wd) {
 			wd = wd.toLowerCase();
 			wikiDomain.val(wd);
-			showIcon(wikiDomainStatus, 'spinner');
 			domainAjax = true;
 			checkNextButtonStep1();
 
@@ -409,11 +410,11 @@ define('ext.createNewWiki.builder', ['ext.createNewWiki.helper', 'wikia.tracker'
 						var response = res.res;
 
 						if (response) {
+							wikiDomain.addClass('input-error');
 							wikiDomainError.html(response);
-							showIcon(wikiDomainStatus, '');
 						} else {
+							wikiDomain.removeClass('input-error');
 							wikiDomainError.html('');
-							showIcon(wikiDomainStatus, 'ok');
 						}
 
 						domainAjax = false;
@@ -422,8 +423,8 @@ define('ext.createNewWiki.builder', ['ext.createNewWiki.helper', 'wikia.tracker'
 				}
 			});
 		} else {
+			wikiDomain.removeClass('input-error');
 			wikiDomainError.html('');
-			showIcon(wikiDomainStatus, '');
 		}
 	}
 
@@ -448,19 +449,10 @@ define('ext.createNewWiki.builder', ['ext.createNewWiki.helper', 'wikia.tracker'
 		isNameWikiSubmitError() ? nextButton.removeClass('enabled') : nextButton.addClass('enabled');
 	}
 
-	function showIcon(el, art) {
-		if (art) {
-			var markup = '<img src="';
-			if (art === 'spinner') {
-				markup += window.stylepath + '/common/images/ajax.gif';
-			} else if (art === 'ok') {
-				markup += window.wgExtensionsPath + '/wikia/CreateNewWiki/images/check.png';
-			}
-			markup += '">';
-			$(el).html(markup);
-		} else {
-			$(el).html('');
-		}
+	function showSpinnerIcon(el) {
+		var markup = new Image();
+		markup.src = window.stylepath + '/common/images/ajax.gif';
+		$(el).html(markup);
 	}
 
 	function transition(from, next) {
@@ -523,7 +515,7 @@ define('ext.createNewWiki.builder', ['ext.createNewWiki.helper', 'wikia.tracker'
 		} else if (retryGoto < 300) {
 			if (!finishSpinner.data('spinning')) {
 				finishSpinner.data('spinning', 'true');
-				showIcon(finishSpinner, 'spinner');
+				showSpinnerIcon(finishSpinner);
 			}
 			retryGoto++;
 			setTimeout(gotoMainPage, 200);

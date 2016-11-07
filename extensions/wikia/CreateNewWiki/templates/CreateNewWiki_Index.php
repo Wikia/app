@@ -10,7 +10,8 @@
 			<p class="creative"><?= wfMessage( 'cnw-name-wiki-creative' )->escaped() ?></p>
 
 			<form name="label-wiki-form">
-				<?=
+				<div class="wiki-name-container">
+					<?=
 					wfMessage('autocreatewiki-title-template')->rawParams(
 						Xml::element('input', [
 							'type' => 'text',
@@ -19,8 +20,9 @@
 							'value' => $params['wikiName'],
 						])
 					)->escaped()
-				?>
-				<div class="wiki-name-error error-msg"></div>
+					?>
+					<div class="wiki-name-error error-msg"></div>
+				</div>
 				<div class="wiki-domain-container">
 					<span class="domain-country">
 						<?= ( empty( $selectedLang ) || $selectedLang === 'en' ) ? '' : Sanitizer::escapeHtmlAllowEntities( $selectedLang ) . '.' ?>
@@ -29,8 +31,8 @@
 					<input type="text" name="wiki-domain" placeholder="<?= wfMessage( 'cnw-name-wiki-domain-label' )->escaped() ?>"
 						   value="<?= Sanitizer::encodeAttribute( $params['wikiDomain'] ) ?>">
 					.<?= htmlspecialchars( $wikiaBaseDomain ) ?>
+					<div class="wiki-domain-error error-msg"></div>
 				</div>
-				<div class="wiki-domain-error error-msg"></div>
 
 				<div class="language-choice">
 					<h3><?= wfMessage( 'cnw-desc-lang' )->escaped() ?></h3>

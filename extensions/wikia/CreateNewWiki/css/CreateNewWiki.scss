@@ -97,6 +97,18 @@
 		font-size: inherit;
 	}
 
+	input[type=text] {
+		border: none;
+		border-bottom: 1px solid $wds-color-mist-gray;
+		line-height: $wds-line-height;
+		outline: none;
+		width: 235px;
+
+		&.input-error {
+			border-color: $wds-color-alert;
+		}
+	}
+
 	.desc-block {
 		display: flex;
 
@@ -148,9 +160,9 @@
 	}
 
 	.error-msg {
-		color: red;
-		font-size: 12px;
-		font-style: italic;
+		color: $wds-color-alert;
+		float: left;
+		font-size: $wds-typescale-size-minus-2;
 	}
 
 	.categories-sets {
