@@ -142,7 +142,7 @@ class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
 				'output' => '<aside class="portable-infobox pi-background">
 								<figure class="pi-item pi-image">
 									<a href="http://image.jpg" class="image image-thumbnail" title="image alt">
-										<img src="http://thumbnail.jpg" class="pi-image-thumbnail" alt="image alt"
+										<img src="http://thumbnail.jpg" srcset="http://thumbnail.jpg 1x, http://thumbnail2x.jpg 2x" class="pi-image-thumbnail" alt="image alt"
 										width="400" height="200" data-image-key="image" data-image-name="image"/>
 									</a>
 									<figcaption class="pi-item-spacing pi-caption">Lorem ipsum dolor</figcaption>
@@ -159,6 +159,7 @@ class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
 						'width' => '400',
 						'height' => '200',
 						'thumbnail' => 'http://thumbnail.jpg',
+						'thumbnail2x' => 'http://thumbnail2x.jpg',
 						'media-type' => 'image',
 						'isVideo' => false
 					]
@@ -186,7 +187,7 @@ class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
 									<a href="http://image.jpg"
 									class="image image-thumbnail video video-thumbnail small"
 									title="image alt">
-										<img src="http://thumbnail.jpg" class="pi-image-thumbnail"
+										<img src="http://thumbnail.jpg" srcset="http://thumbnail.jpg 1x, http://thumbnail2x.jpg 2x" class="pi-image-thumbnail"
 										alt="image alt" width="400" height="200" data-video-key="image"
 										data-video-name="image"/>
 										<span class="duration" itemprop="duration">1:20</span>
@@ -206,6 +207,7 @@ class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
 						'width' => '400',
 						'height' => '200',
 						'thumbnail' => 'http://thumbnail.jpg',
+						'thumbnail2x' => 'http://thumbnail2x.jpg',
 						'media-type' => 'video',
 						'isVideo' => true,
 						'duration' => '1:20'
@@ -276,7 +278,7 @@ class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
 								<h2 class="pi-item pi-item-spacing pi-title">Test Title</h2>
 								<figure class="pi-item pi-image">
 									<a href="http://image.jpg" class="image image-thumbnail" title="image alt">
-										<img src="http://thumbnail.jpg" class="pi-image-thumbnail" alt="image alt"
+										<img src="http://thumbnail.jpg" srcset="http://thumbnail.jpg 1x, http://thumbnail2x.jpg 2x" class="pi-image-thumbnail" alt="image alt"
 										width="400" height="200" data-image-key="image" data-image-name="image"/>
 									</a>
 								</figure>
@@ -295,6 +297,7 @@ class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
 						'width' => '400',
 						'height' => '200',
 						'thumbnail' => 'http://thumbnail.jpg',
+						'thumbnail2x' => 'http://thumbnail2x.jpg',
 						'media-type' => 'image',
 						'isVideo' => false
 					]
@@ -569,6 +572,7 @@ class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
 						'width' => '400',
 						'height' => '200',
 						'thumbnail' => 'http://image.jpg',
+						'thumbnail2x' => 'http://image2x.jpg',
 						'media-type' => 'image',
 						'isVideo' => false
 					]
@@ -615,6 +619,7 @@ class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
 						'width' => '400',
 						'height' => '200',
 						'thumbnail' => 'thumbnail.jpg',
+						'thumbnail2x' => 'thumbnail2x.jpg',
 						'isVideo' => false,
 						'media-type' => 'image'
 					]
@@ -661,6 +666,7 @@ class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
 						'width' => '400',
 						'height' => '200',
 						'thumbnail' => 'http://image.jpg',
+						'thumbnail2x' => 'http://image2x.jpg',
 						'media-type' => 'image',
 						'isVideo' => false,
 						'mercuryComponentAttrs' => json_encode( [
@@ -718,6 +724,7 @@ class PortableInfoboxRenderServiceTest extends WikiaBaseTest {
 						'width' => '400',
 						'height' => '200',
 						'thumbnail' => 'thumbnail.jpg',
+						'thumbnail2x' => 'thumbnail2x.jpg',
 						'isVideo' => false,
 						'media-type' => 'image',
 						'mercuryComponentAttrs' => json_encode( [

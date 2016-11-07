@@ -133,10 +133,6 @@ class PhalanxHooks extends WikiaObject {
 
 		$phalanx['type'] = $typemask;
 
-		if ( $phalanx['lang'] == 'all' ) {
-			$phalanx['lang'] = null;
-		}
-
 		if ( $phalanx['expire'] === '' || is_null( $phalanx['expire'] ) ) {
 			// don't change expire
 			unset($phalanx['expire']);

@@ -2,7 +2,6 @@
 @import 'skins/shared/mixins/clearfix';
 @import 'skins/shared/mixins/flexbox';
 @import 'variables';
-@import 'extensions/wikia/DesignSystem/bower_components/design-system/base/typography';
 
 // Styles for the contributors module in-page and modal version
 .contributors-module {
@@ -57,12 +56,12 @@
 		}
 
 		small {
-			font-size: $typescale-size-minus-2;
+			font-size: $wds-typescale-size-minus-2;
 		}
 
 		span {
 			display: block;
-			font-size: $typescale-size-base;
+			font-size: $wds-typescale-size-base;
 			height: $module-default-line-height;
 			text-align: center;
 		}
@@ -73,8 +72,8 @@
 
 		.community-page-subtle {
 			color: $color-alternate-text;
-			font-size: $typescale-size-minus-3;
-			line-height: $line-height;
+			font-size: $wds-typescale-size-minus-3;
+			line-height: $wds-line-height;
 			text-transform: uppercase;
 		}
 	}
