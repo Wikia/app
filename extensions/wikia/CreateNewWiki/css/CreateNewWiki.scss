@@ -123,12 +123,10 @@
 
 	.wiki-domain-container {
 		position: relative;
+	}
 
-		img {
-			bottom: 4px;
-			left: -40px;
-			position: absolute;
-		}
+	.wiki-name-container {
+		position: relative;
 	}
 
 	.language-choice {
@@ -219,6 +217,25 @@
 
 			&.next {
 				left: 645px;
+			}
+		}
+	}
+
+	.floating-label {
+		color: $wds-color-light-gray;
+		left: 0;
+		pointer-events: none;
+		position: absolute;
+		top: 0;
+		-webkit-transition: font-size ease-in 0.1s,top ease-in 0.1s;
+		transition: font-size ease-in 0.1s,top ease-in 0.1s;
+
+		&.active {
+			font-size: $wds-typescale-size-minus-2;
+			top: -$content-spacing-regular;
+
+			&.label-error {
+				color: $wds-color-alert;
 			}
 		}
 	}

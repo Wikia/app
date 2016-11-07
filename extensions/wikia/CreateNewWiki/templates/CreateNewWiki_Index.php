@@ -16,11 +16,13 @@
 						Xml::element('input', [
 							'type' => 'text',
 							'name' => 'wiki-name',
-							'placeholder' => wfMessage( 'cnw-name-wiki-label' )->escaped(),
 							'value' => $params['wikiName'],
 						])
 					)->escaped()
 					?>
+					<label class="floating-label" for="wiki-name">
+						<?= wfMessage( 'cnw-name-wiki-label' )->escaped() ?>
+					</label>
 					<div class="wiki-name-error error-msg"></div>
 				</div>
 				<div class="wiki-domain-container">
@@ -28,9 +30,9 @@
 						<?= ( empty( $selectedLang ) || $selectedLang === 'en' ) ? '' : Sanitizer::escapeHtmlAllowEntities( $selectedLang ) . '.' ?>
 					</span>
 					<?= wfMessage( 'cnw-name-wiki-language' )->escaped() ?>
-					<input type="text" name="wiki-domain" placeholder="<?= wfMessage( 'cnw-name-wiki-domain-label' )->escaped() ?>"
-						   value="<?= Sanitizer::encodeAttribute( $params['wikiDomain'] ) ?>">
+					<input type="text" name="wiki-domain" value="<?= Sanitizer::encodeAttribute( $params['wikiDomain'] ) ?>">
 					.<?= htmlspecialchars( $wikiaBaseDomain ) ?>
+					<label for="wiki-domain" class="floating-label"><?= wfMessage( 'cnw-name-wiki-domain-label' )->escaped() ?></label>
 					<div class="wiki-domain-error error-msg"></div>
 				</div>
 
