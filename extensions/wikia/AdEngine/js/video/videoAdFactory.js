@@ -13,37 +13,27 @@ define('ext.wikia.adEngine.video.videoAdFactory', [
 		return googleIma.init();
 	}
 
-	function itCanBeCreated(slotWidth, slotHeight) {
-		return slotWidth > 0 && slotHeight > 0;
-	}
-
-	function create(imageContainer, slotWidth, slotHeight, adSlot, slotParams, onVideoEndedCallback) {
-		var vastUrl,
-			videoContainer;
-
-		if (!itCanBeCreated(slotWidth, slotHeight)) {
-			log(['Video can\'t be created', 'size not correct:', slotWidth, slotHeight], log.levels.error, logGroup);
-			throw new Error('Size of video slot is not correct');
-		}
-
-		vastUrl = vastUrlBuilder.build(slotWidth / slotHeight, slotParams);
-		videoContainer = googleIma.setupIma(vastUrl, adSlot, slotWidth, slotHeight);
+	function create(imageContainer, getSlotWidth, getSlotHeight, adSlot, slotParams, onVideoEndedCallback) {
+		var vastUrl = vastUrlBuilder.build(getSlotWidth() / getSlotHeight(), slotParams);
+		log(['VAST URL: ', vastUrl], log.levels.info, logGroup);
 
 		return {
-			imageContainer: imageContainer,
-			slotWidth: slotWidth,
-			slotHeight: slotHeight,
 			adSlot: adSlot,
-			slotParams: slotParams,
+			imageContainer: imageContainer,
 			onVideoEndedCallback: onVideoEndedCallback,
-			videoContainer: videoContainer,
+			slotParams: slotParams,
+			videoContainer: googleIma.setupIma(vastUrl, adSlot, getSlotWidth(), getSlotHeight()),
 			play: function () {
-				var self = this;
+				var slotHeight = getSlotHeight(),
+					slotWidth = getSlotWidth(),
+					self = this;
+
 				googleIma.playVideo(slotWidth, slotHeight, function () {
 					self.toggle(true);
 					self.videoContainer = googleIma.setupIma(vastUrl, adSlot, slotWidth, slotHeight);
 					if (onVideoEndedCallback) {
 						onVideoEndedCallback();
+						log('On video ended callback is executed', log.levels.info, logGroup);
 					}
 				});
 
@@ -51,9 +41,11 @@ define('ext.wikia.adEngine.video.videoAdFactory', [
 			},
 			toggle: function (showAd) {
 				if (showAd) {
+					log('Hide vided ad/show image ad', log.levels.info, logGroup);
 					DOMElementTweaker.hide(this.videoContainer, false);
 					DOMElementTweaker.removeClass(this.imageContainer, 'hidden');
 				} else {
+					log('Hide image ad/show video ad', log.levels.info, logGroup);
 					DOMElementTweaker.hide(this.imageContainer, false);
 					DOMElementTweaker.removeClass(this.videoContainer, 'hidden');
 				}

@@ -76,8 +76,12 @@ define('ext.wikia.adEngine.template.bfaaDesktop', [
 				try {
 					var video = videoAdFactory.create(
 						adSlot.querySelector('div:last-of-type'),
-						document.body.clientWidth,
-						document.body.clientWidth / params.videoAspectRatio,
+						function () {
+							return document.body.clientWidth;
+						},
+						function () {
+							return document.body.clientWidth / params.videoAspectRatio;
+						},
 						adSlot,
 						{
 							src: 'gpt',
@@ -88,6 +92,7 @@ define('ext.wikia.adEngine.template.bfaaDesktop', [
 					);
 
 					params.videoTriggerElement.addEventListener('click', video.play.bind(video));
+
 				} catch (error) {
 					log(['Video can\'t be loaded correctly', error.message], log.levels.warning, logGroup);
 				}

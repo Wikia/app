@@ -67,8 +67,12 @@ define('ext.wikia.adEngine.template.bfaaMobile', [
 				try {
 					var video = videoAdFactory.create(
 						adSlot.querySelector('div:last-of-type'),
-						document.body.clientWidth,
-						document.body.clientWidth / params.videoAspectRatio,
+						function () {
+							return document.body.clientWidth;
+						},
+						function () {
+							return document.body.clientWidth / params.videoAspectRatio;
+						},
 						adSlot,
 						{
 							src: 'gpt',
@@ -84,6 +88,7 @@ define('ext.wikia.adEngine.template.bfaaMobile', [
 						aspectRatio = params.videoAspectRatio;
 						onResize();
 					}.bind(video));
+
 				} catch (error) {
 					log(['Video can\'t be loaded correctly', error.message], log.levels.warning, logGroup);
 				}
