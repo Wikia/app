@@ -2,6 +2,7 @@
 @import 'skins/shared/mixins/box-shadow';
 @import 'skins/shared/mixins/clearfix';
 @import 'skins/shared/mixins/placeholder';
+@import 'skins/shared/mixins/transition';
 @import 'skins/oasis/css/core/layout';
 @import 'skins/shared/mixins/columns';
 @import 'extensions/wikia/ThemeDesigner/css/ThemeTab';
@@ -123,11 +124,7 @@
 		}
 	}
 
-	.wiki-domain-container {
-		position: relative;
-	}
-
-	.wiki-name-container {
+	.wiki-domain-container, .wiki-name-container {
 		position: relative;
 	}
 
@@ -216,13 +213,13 @@
 	}
 
 	.floating-label {
+		@include transition(font-size top, 0.1s, ease-in, 0);
+
 		color: $wds-color-light-gray;
 		left: 0;
 		pointer-events: none;
 		position: absolute;
 		top: 0;
-		transition: font-size ease-in 0.1s,top ease-in 0.1s;
-		-webkit-transition: font-size ease-in 0.1s,top ease-in 0.1s;
 
 		&.active {
 			font-size: $wds-typescale-size-minus-2;
