@@ -104,7 +104,7 @@
 		border-bottom: 1px solid $wds-color-mist-gray;
 		line-height: $wds-line-height;
 		outline: none;
-		width: 235px;
+		width: $cnw-input-width;
 
 		&.input-error {
 			border-color: $wds-color-alert;
@@ -221,8 +221,8 @@
 		pointer-events: none;
 		position: absolute;
 		top: 0;
-		-webkit-transition: font-size ease-in 0.1s,top ease-in 0.1s;
 		transition: font-size ease-in 0.1s,top ease-in 0.1s;
+		-webkit-transition: font-size ease-in 0.1s,top ease-in 0.1s;
 
 		&.active {
 			font-size: $wds-typescale-size-minus-2;

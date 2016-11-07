@@ -20,12 +20,10 @@ define('ext.createNewWiki.builder', ['ext.createNewWiki.helper', 'wikia.tracker'
 		steps,
 		wikiName,
 		wikiNameLabel,
-		wikiNameStatus,
 		wikiNameError,
 		wikiDomain,
 		wikiDomainLabel,
 		wikiDomainError,
-		wikiDomainStatus,
 		wikiDomainCountry,
 		wikiLanguage,
 		wikiVertical,
@@ -81,12 +79,10 @@ define('ext.createNewWiki.builder', ['ext.createNewWiki.helper', 'wikia.tracker'
 		steps = wb.find('.steps .step');
 		wikiName = $nameWikiWrapper.find('input[name=wiki-name]');
 		wikiNameLabel = $nameWikiWrapper.find('label[for=wiki-name]');
-		wikiNameStatus = $nameWikiWrapper.find('.wiki-name-status-icon');
 		wikiNameError = $nameWikiWrapper.find('.wiki-name-error');
 		wikiDomain = $nameWikiWrapper.find('input[name=wiki-domain]');
 		wikiDomainLabel = $nameWikiWrapper.find('label[for=wiki-domain]');
 		wikiDomainError = $nameWikiWrapper.find('.wiki-domain-error');
-		wikiDomainStatus = $nameWikiWrapper.find('.domain-status-icon');
 		wikiDomainCountry = $nameWikiWrapper.find('.domain-country');
 		wikiLanguage = $nameWikiWrapper.find('select[name=wiki-language]');
 		wikiVertical = $descWikiWrapper.find('select[name=wiki-vertical]');
