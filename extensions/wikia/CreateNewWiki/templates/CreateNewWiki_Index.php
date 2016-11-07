@@ -35,12 +35,6 @@
 				</div>
 				<div class="wiki-domain-error error-msg"></div>
 
-				<div class="language-default">
-					<?= wfMessage( 'cnw-desc-default-lang', $wg->Lang->getLanguageName( $selectedLang ) )->escaped() ?>
-					-
-					<a href="#" id="ChangeLang"><?= wfMessage( 'cnw-desc-change-lang' )->escaped() ?></a>
-				</div>
-
 				<div class="language-choice">
 					<h3><?= wfMessage( 'cnw-desc-lang' )->escaped() ?></h3>
 					<select name="wiki-language">

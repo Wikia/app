@@ -101,7 +101,6 @@ define('ext.createNewWiki.builder', ['ext.createNewWiki.helper', 'wikia.tracker'
 		wikiDomain.keyup(onWikiDomainKeyUp);
 		wikiName.keyup(onWikiNameKeyUp);
 		wikiLanguage.bind('change', onWikiLanguageChange);
-		$('#ChangeLang').click(onChangeLangClick);
 		wb.find('nav .back').bind('click', onNavBackClick);
 		descWikiNext.click(onDescWikiNextClick);
 		$('#Description').placeholder();
@@ -256,15 +255,6 @@ define('ext.createNewWiki.builder', ['ext.createNewWiki.helper', 'wikia.tracker'
 		} else {
 			transition(id, false);
 		}
-	}
-
-	function onChangeLangClick(e) {
-		track({
-			label: 'change-language-link-clicked'
-		});
-		e.preventDefault();
-		$nameWikiWrapper.find('.language-default').hide();
-		$nameWikiWrapper.find('.language-choice').show();
 	}
 
 	function onWikiLanguageChange() {
