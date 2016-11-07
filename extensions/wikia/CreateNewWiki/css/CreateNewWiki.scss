@@ -99,6 +99,14 @@
 
 	.desc-block {
 		display: flex;
+
+		textarea {
+			width: 320px;
+		}
+
+		.checkbox {
+			margin-left: $content-spacing-xxlarge;
+		}
 	}
 
 	.wiki-domain-container {
@@ -109,6 +117,22 @@
 			left: -40px;
 			position: absolute;
 		}
+	}
+
+	.language-choice {
+		margin: $content-spacing-xxlarge 0;
+	}
+
+	.select-container {
+		margin: $content-spacing-xxlarge 0;
+	}
+
+	.wiki-domain-container {
+		margin: $content-spacing-xxlarge 0;
+	}
+
+	.instruction {
+		margin-bottom: $content-spacing-xxlarge;
 	}
 
 	.step {
@@ -150,6 +174,40 @@
 		span {
 			display: block;
 			margin-left: 1.75em;
+		}
+	}
+
+	.ThemeTab {
+		height: 125px;
+		margin-left: -$content-spacing-regular;
+		position: relative;
+
+		.slider {
+			height: 125px;
+			top: 0;
+			width: 608px;
+
+			ul {
+				list-style: none;
+				margin: 0;
+			}
+
+			li {
+				padding-bottom: 0;
+				padding-top: 0;
+			}
+
+			h3 {
+				display: none;
+			}
+		}
+
+		.chevron {
+			top: 37px;
+
+			&.next {
+				left: 645px;
+			}
 		}
 	}
 }

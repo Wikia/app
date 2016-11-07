@@ -2979,7 +2979,6 @@ $config['create_new_wiki_scss'] = [
 	'type' => AssetsManager::TYPE_SCSS,
 	'assets' => [
 		'//extensions/wikia/CreateNewWiki/css/CreateNewWiki.scss',
-		'//extensions/wikia/CreateNewWiki/css/ThemeWikiStep.scss',
 	],
 ];
 
