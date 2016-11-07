@@ -1,7 +1,9 @@
 @import 'variables';
 @import 'skins/shared/mixins/box-shadow';
 @import 'skins/shared/mixins/clearfix';
+@import 'skins/shared/mixins/placeholder';
 @import 'skins/oasis/css/core/layout';
+@import 'skins/shared/mixins/columns';
 @import 'extensions/wikia/ThemeDesigner/css/ThemeTab';
 @import 'extensions/wikia/DesignSystem/bower_components/design-system/dist/scss/wds-variables/index.scss';
 @import 'extensions/wikia/DesignSystem/bower_components/design-system/dist/scss/wds-components/_buttons.scss';
@@ -31,28 +33,40 @@
 }
 
 #CreateNewWiki {
-	background: white;
+	background: $wds-color-white;
 	box-sizing: border-box;
 	border: 1px solid $wds-color-faint-gray;
-	color: #747474;
-	font-size: 12px;
-	font-weight: normal;
+	color: $wds-color-dark-gray;
+	font-size: $wds-typescale-size-base;
+	line-height: $wds-line-height;
 	margin: 4px auto 0;
 	padding: $content-spacing-regular 0 $cnw-bottom-bar-size;
 	position: relative;
 	width: $cnw-size;
+
+	@include placeholder {
+		color: $wds-color-light-gray;
+	}
 
 	h1 {
 		display: none;
 	}
 
 	h2 {
-		border: 0;
-		color: #2c85d6;
-		font-size: 23px;
+		border: none;
+		font-size: $wds-typescale-size-plus-2;
 		font-weight: bold;
-		line-height: 26px;
-		margin: 0 0 14px;
+		margin: 0 0 $content-spacing-regular 0;
+		padding: 0;
+	}
+
+	h3 {
+		font-weight: bold;
+		margin: $content-spacing-xxlarge 0 $content-spacing-small;
+	}
+
+	p {
+		margin: $content-spacing-regular 0 $content-spacing-large;
 	}
 
 	nav {
@@ -80,33 +94,20 @@
 		}
 	}
 
-	[type=text],
-	[type=password] {
-		background: #e2f1fe;
-		border: 1px solid #dbdbdb;
-		font-size: 17px;
-		outline: 0;
-		padding: .3em;
-
-		&:focus {
-			@include box-shadow(0, 0, 6px, #2b5e94);
-		}
+	textarea, input {
+		font-size: inherit;
 	}
 
-	h3 {
-		/* following !important is used because the existing template has inline styles */
-		font-size: 17px !important;
-		font-weight: normal !important;
-		line-height: 23px;
+	.desc-block {
+		display: flex;
 
-		&[for=wpRemember],
-		&[for=wpMarketingOptIn] {
-			font-size: 12px !important;
+		textarea {
+			width: 320px;
 		}
-	}
 
-	.creative {
-		font-size: 17px;
+		.checkbox {
+			margin-left: $content-spacing-xxlarge;
+		}
 	}
 
 	.wiki-domain-container {
@@ -119,6 +120,19 @@
 		}
 	}
 
+	.language-choice, .select-container, .wiki-domain-container {
+		margin: $content-spacing-xxlarge 0;
+	}
+
+	.instruction {
+		margin-bottom: $content-spacing-xxlarge;
+	}
+
+	.step {
+		line-height: inherit;
+		margin: 0;
+	}
+
 	.steps {
 		border-bottom: 1px solid $wds-color-mist-gray;
 		list-style: none;
@@ -126,17 +140,73 @@
 		padding: 0 $content-spacing-large;
 	}
 
-	.awesome-box {
-		left: -122px;
-		position: absolute;
-		top: -127px;
-	}
-
 	.error-msg {
 		color: red;
 		font-size: 12px;
 		font-style: italic;
 	}
+
+	.categories-sets {
+		display: none;
+	}
+
+	.categories-set {
+		@include column-count(4);
+		display: none;
+
+		label {
+			display: inline-block;
+			position: relative;
+			width: 100%;
+		}
+
+		input {
+			position: absolute;
+		}
+
+		span {
+			display: block;
+			margin-left: 1.75em;
+		}
+	}
+
+	.ThemeTab {
+		height: 125px;
+		margin-left: -$content-spacing-regular;
+		position: relative;
+
+		.slider {
+			height: 125px;
+			top: 0;
+			width: 608px;
+
+			ul {
+				list-style: none;
+				margin: 0;
+			}
+
+			li {
+				padding-bottom: 0;
+				padding-top: 0;
+			}
+
+			h3 {
+				display: none;
+			}
+		}
+
+		.chevron {
+			top: 37px;
+
+			&.next {
+				left: 645px;
+			}
+		}
+	}
+}
+
+#DescWiki, #ThemeWiki {
+	display: none;
 }
 
 #UserAuth {

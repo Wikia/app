@@ -10,36 +10,27 @@
 			<p class="creative"><?= wfMessage( 'cnw-name-wiki-creative' )->escaped() ?></p>
 
 			<form name="label-wiki-form">
-				<h3><?= wfMessage( 'cnw-name-wiki-label' )->escaped() ?></h3>
-				<span class="wiki-name-status-icon status-icon"></span>
 				<?=
 					wfMessage('autocreatewiki-title-template')->rawParams(
 						Xml::element('input', [
 							'type' => 'text',
 							'name' => 'wiki-name',
+							'placeholder' => wfMessage( 'cnw-name-wiki-label' )->plain(),
 							'value' => $params['wikiName'],
 						])
 					)->escaped()
 				?>
 				<div class="wiki-name-error error-msg"></div>
-				<h3 dir="ltr"><?= wfMessage( 'cnw-name-wiki-domain-label' )->escaped() ?></h3>
-
 				<div class="wiki-domain-container">
-					<span class="domain-status-icon status-icon"></span>
 					<span class="domain-country">
 						<?= ( empty( $selectedLang ) || $selectedLang === 'en' ) ? '' : Sanitizer::escapeHtmlAllowEntities( $selectedLang ) . '.' ?>
 					</span>
 					<?= wfMessage( 'cnw-name-wiki-language' )->escaped() ?>
-					<input type="text" name="wiki-domain" value="<?= Sanitizer::encodeAttribute( $params['wikiDomain'] ) ?>">
+					<input type="text" name="wiki-domain" placeholder="<?= wfMessage( 'cnw-name-wiki-domain-label' )->escaped() ?>"
+						   value="<?= Sanitizer::encodeAttribute( $params['wikiDomain'] ) ?>">
 					.<?= htmlspecialchars( $wikiaBaseDomain ) ?>
 				</div>
 				<div class="wiki-domain-error error-msg"></div>
-
-				<div class="language-default">
-					<?= wfMessage( 'cnw-desc-default-lang', $wg->Lang->getLanguageName( $selectedLang ) )->escaped() ?>
-					-
-					<a href="#" id="ChangeLang"><?= wfMessage( 'cnw-desc-change-lang' )->escaped() ?></a>
-				</div>
 
 				<div class="language-choice">
 					<h3><?= wfMessage( 'cnw-desc-lang' )->escaped() ?></h3>
@@ -91,30 +82,21 @@
 			<h2><?= wfMessage( 'cnw-desc-headline' ) ?></h2>
 			<p class="creative"><?= wfMessage( 'cnw-desc-creative' )->escaped() ?></p>
 			<form name="desc-form" class="clearfix">
-				<textarea id="Description" placeholder="<?= wfMessage( 'cnw-desc-placeholder' )->escaped() ?>"></textarea>
-				<ol>
-					<li>
-						<?= wfMessage( 'cnw-desc-tip1' )->escaped() ?>
-						<div class="tip-creative"><?= wfMessage( 'cnw-desc-tip1-creative' )->escaped() ?></div>
-					</li>
-					<li>
-						<?= wfMessage( 'cnw-desc-tip2' )->escaped() ?>
-						<div class="tip-creative"><?= wfMessage( 'cnw-desc-tip2-creative' )->escaped() ?></div>
-					</li>
-				</ol>
-
-		        <div class="checkbox" id="all-ages-div"
-					<?= (empty( $selectedLang ) || $selectedLang === $params['LangAllAgesOpt']) ? '' : 'style="display: none"' ?>>
-					<input type="checkbox" name="all-ages" value="1">
-					<?= $app->renderView(
-						'WikiaStyleGuideTooltipIcon',
-						'index',
-						[
-							'text' => wfMessage( 'cnw-desc-all-ages' )->escaped(),
-							'tooltipIconTitle' => wfMessage( 'cnw-desc-tip-all-ages' )->plain(),
-						]
-					 );
-					?>
+				<div class="desc-block">
+					<textarea id="Description" placeholder="<?= wfMessage( 'cnw-desc-placeholder' )->escaped() ?>"></textarea>
+					<div class="checkbox" id="all-ages-div"
+						<?= (empty( $selectedLang ) || $selectedLang === $params['LangAllAgesOpt']) ? '' : 'style="display: none"' ?>>
+						<input type="checkbox" name="all-ages" value="1">
+						<?= $app->renderView(
+							'WikiaStyleGuideTooltipIcon',
+							'index',
+							[
+								'text' => wfMessage( 'cnw-desc-all-ages' )->escaped(),
+								'tooltipIconTitle' => wfMessage( 'cnw-desc-tip-all-ages' )->plain(),
+							]
+						 );
+						?>
+					</div>
 				</div>
 
 				<!-- Hub Category / Vertical -->
