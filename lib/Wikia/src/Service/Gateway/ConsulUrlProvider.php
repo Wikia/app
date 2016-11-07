@@ -4,6 +4,7 @@ namespace Wikia\Service\Gateway;
 
 
 use Http;
+use Wikia\Logger\WikiaLogger;
 
 class ConsulUrlProvider implements UrlProvider {
 	const BASE_URL = "consul_url_provider_base_url";
@@ -59,6 +60,7 @@ class ConsulUrlProvider implements UrlProvider {
 		}
 
 		if (empty($this->cache[$serviceName])) {
+			WikiaLogger::instance()->warning(__METHOD__ . " Empty URL returned from ConsulUrlProvider", ["service_name" => $serviceName, "service_tag" => $this->serviceTag]);
 			return "";
 		}
 

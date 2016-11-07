@@ -648,7 +648,6 @@ class WikiaSearchController extends WikiaSpecialPageController {
 		global $wgLang, $wgEnableFandomStoriesOnSearchResultPage;
 
 		$isMonobook = $this->response->getVal( 'isMonobook' );
-		$query = $searchConfig->getQuery()->getSanitizedQuery();
 		$this->response->setValues( [
 			'fandomStories' => [],
 			'topWikiArticles' => [],
@@ -658,7 +657,11 @@ class WikiaSearchController extends WikiaSpecialPageController {
 			return;
 		}
 
-		if ( $wgEnableFandomStoriesOnSearchResultPage && $wgLang->getCode() === 'en' && !empty( $query ) ) {
+		// SUS-1219: Use proper sanity check to handle space-only queries correctly
+		$hasTerms = $searchConfig->getQuery()->hasTerms();
+		if ( $wgEnableFandomStoriesOnSearchResultPage && $wgLang->getCode() === 'en' && $hasTerms ) {
+			$query = $searchConfig->getQuery()->getSanitizedQuery();
+
 			$fandomStories = \WikiaDataAccess::cache(
 				wfSharedMemcKey( static::FANDOM_STORIES_MEMC_KEY, $query ),
 				\WikiaResponse::CACHE_STANDARD,

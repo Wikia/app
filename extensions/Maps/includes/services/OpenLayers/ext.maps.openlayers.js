@@ -24,9 +24,10 @@
 		// OpenLayers.Lang.setCode( params.langCode );
 
 		$( '.maps-openlayers' ).each( function() {
-			var $this = $( this );
+			var $this = $( this),
+				mapData = $.parseJSON( $this.find( 'div').text() );
 
-			$this.openlayers( $this.attr( 'id' ), $.parseJSON( $this.find( 'div').text() ) );
+			$this.openlayers( $this.attr( 'id' ), mapData );
 		} );
 
 	} );

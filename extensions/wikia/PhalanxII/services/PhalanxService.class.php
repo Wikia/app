@@ -1,4 +1,5 @@
 <?php
+use Wikia\Service\Gateway\ConsulUrlProvider;
 
 /**
  * @method PhalanxService setLimit( int $limit )
@@ -70,31 +71,35 @@ class PhalanxService extends Service {
 	/**
 	 * service for check function
 	 *
-	 * @param string $type     one of: content, summary, title, user, question_title, recent_questions, wiki_creation, cookie, email
-	 * @param string $content  text to be checked
-	 * @param string $lang     language code (eg. en, de, ru, pl). "en" will be assumed if this is missing
+	 * @param string $type one of: content, summary, title, user, question_title, recent_questions, wiki_creation, cookie, email
+	 * @param string $content text to be checked
+	 * @return mixed
 	 */
-	public function check( $type, $content, $lang = "" ) {
-		wfProfileIn( __METHOD__  );
-		$result =  $this->sendToPhalanxDaemon( "check", array( "type" => $type, "content" => $content, "lang" => $lang ) );
-		wfProfileOut( __METHOD__  );
+	public function check( string $type, string $content ) {
+		wfProfileIn( __METHOD__ );
+
+		$result = $this->sendToPhalanxDaemon( 'check', [ 'type' => $type, 'content' => $content ] );
+
+		wfProfileOut( __METHOD__ );
 		return $result;
 	}
 
 	/**
 	 * service for match function
 	 *
-	 * @param string $type     one of: content, summary, title, user, question_title, recent_questions, wiki_creation, cookie, email
-	 * @param string/Array $content  text to be checked
-	 * @param string $lang     language code (eg. en, de, ru, pl). "en" will be assumed if this is missing
+	 * @param string $type one of: content, summary, title, user, question_title, recent_questions, wiki_creation, cookie, email
+	 * @param string|array $content text to be checked
+	 * @return mixed
 	 */
-	public function match( $type, $content, $lang = "" ) {
-		wfProfileIn( __METHOD__  );
-		if (is_array($content)) {
-			$content = array_unique($content);
+	public function match( string $type, $content ) {
+		wfProfileIn( __METHOD__ );
+		if ( is_array( $content ) ) {
+			$content = array_unique( $content );
 		}
-		$result =  $this->sendToPhalanxDaemon( "match", array( "type" => $type, "content" => $content, "lang" => $lang ) );
-		wfProfileOut( __METHOD__  );
+		
+		$result = $this->sendToPhalanxDaemon( 'match', [ 'type' => $type, 'content' => $content ] );
+		
+		wfProfileOut( __METHOD__ );
 		return $result;
 	}
 
@@ -152,10 +157,9 @@ class PhalanxService extends Service {
 	 * @return integer|mixed data of blocks applied or numeric value (0 - block applied, 1 - no block applied)
 	 */
 	private function sendToPhalanxDaemon( $action, $parameters ) {
-		$baseurl = F::app()->wg->PhalanxServiceUrl;
 		$options = F::app()->wg->PhalanxServiceOptions;
 
-		$url = sprintf( "%s/%s", $baseurl, $action != "status" ? $action : "" );
+		$url = $this->getPhalanxUrl( $action );
 		$requestTime = 0;
 		$loggerPostParams = [];
 		$tries = 1;
@@ -226,6 +230,7 @@ class PhalanxService extends Service {
 			// BAC-1332 - some of the phalanx service calls are breaking and we're not sure why
 			// it's better to do the retry than maintain the PHP fallback for that
 			while ( $tries <= self::PHALANX_SERVICE_TRIES_LIMIT ) {
+				$url = $this->getPhalanxUrl( $action );
 				$response = Http::post( $url, $options );
 				if ( false !== $response) {
 					break;
@@ -306,4 +311,12 @@ class PhalanxService extends Service {
 		}
 		return $res;
 	}
+
+	private function getPhalanxUrl( $action ) {
+		global $wgConsulUrl, $wgConsulServiceTag;
+		
+		$baseurl = ( new ConsulUrlProvider( $wgConsulUrl, $wgConsulServiceTag ) )->getUrl( 'phalanx' );
+		return sprintf( "http://%s/%s", $baseurl, $action != "status" ? $action : "" );
+	}
+
 };

@@ -2,6 +2,7 @@
 @import 'skins/shared/color';
 
 @import 'avatar';
+@import 'clamp';
 @import 'ShareModal';
 
 $reply-icon: '/extensions/wikia/EmbeddableDiscussions/images/reply.svg';
@@ -27,6 +28,11 @@ $plus-icon-size: 34px;
 $font-size-small: 12px;
 $font-size-regular: 14px;
 $font-size-large: 16px;
+
+$post-mark-icon-size: 12px;
+$discussion-deleted-mark-color: #ed1c24;
+$discussion-reported-mark-color: #f08a24;
+$discussion-deleted-actions-opacity: .5;
 
 .embeddable-discussions-module {
 	@include flexbox();
@@ -72,6 +78,10 @@ $font-size-large: 16px;
 		z-index: 1;
 	}
 
+	.clamp {
+		@include clamp(3);
+	}
+
 	.embeddable-discussions-default-avatar {
 		background: url($default-avatar-icon) no-repeat;
 		height: $avatar-size;
@@ -86,6 +96,10 @@ $font-size-large: 16px;
 
 	.embeddable-discussions-content {
 		font-size: $font-size-regular;
+
+		&.is-deleted {
+			opacity: $discussion-deleted-actions-opacity;
+		}
 	}
 
 	.embeddable-discussions-header-container {
@@ -123,6 +137,10 @@ $font-size-large: 16px;
 		color: $gray;
 		cursor: pointer;
 		text-align: center;
+
+		&.is-deleted {
+			opacity: 0;
+		}
 	}
 
 	.embeddable-discussions-post-actions a {
@@ -147,6 +165,32 @@ $font-size-large: 16px;
 		border: 1px solid $card-border-color;
 		margin: 0 0 20px;
 		padding: 20px 0 0;
+		position: relative;
+
+		&.is-deleted,
+		&.is-reported {
+			&::before {
+				border-color: transparent;
+				border-style: solid;
+				border-width: $post-mark-icon-size $post-mark-icon-size 0 0;
+				content: '';
+				left: 0;
+				position: absolute;
+				top: 0;
+			}
+		}
+
+		&.is-deleted {
+			&::before {
+				border-top-color: $discussion-deleted-mark-color;
+			}
+		}
+
+		&.is-reported {
+			&::before {
+				border-top-color: $discussion-reported-mark-color;
+			}
+		}
 	}
 
 	.embeddable-discussions-post-detail-columns {
@@ -210,6 +254,10 @@ $font-size-large: 16px;
 		font-size: $font-size-regular;
 		font-weight: bold;
 		min-height: 22px;
+
+		&.is-deleted {
+			opacity: $discussion-deleted-actions-opacity;
+		}
 	}
 
 	.embeddable-discussions-upvote-icon {

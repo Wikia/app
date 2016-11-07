@@ -1008,7 +1008,7 @@ class UserProfilePageController extends WikiaController {
 			if ( $avUser->getId() !== 0 ) {
 				$avatar = Masthead::newFromUser( $avUser );
 				if ( $avatar->removeFile( true ) ) {
-					$this->clearAttributeCache( $avUser->getId() );
+					$this->clearCaches( $avUser );
 					$this->setVal( 'status', 'ok' );
 					wfProfileOut( __METHOD__ );
 					return true;
@@ -1020,6 +1020,33 @@ class UserProfilePageController extends WikiaController {
 
 		wfProfileOut( __METHOD__ );
 		return true;
+	}
+
+	private function clearCaches( User $user ) {
+		$this->clearAttributeCache( $user->getId() );
+		$this->bustETagsForUserPage( $user );
+		$this->bustETagsForAllPagesIfNecessary( $user );
+	}
+
+	/**
+	 *
+	 * @param User $user
+	 */
+	private function bustETagsForUserPage( User $user ) {
+		$user->getUserPage()->invalidateCache();
+	}
+
+	/**
+	 * Call invalidateCache for the current user if the user is removing their own avatar. This is necessary
+	 * because the global header (which contains the avatar) is cached along with the page, so any article page
+	 * the user has in browser cache will contain their stale avatar value. invalidateCache updates the
+	 * user's last_touched value which is used when validating ETags, effectively busting all pages the user
+	 * has in their browser cache.
+	 */
+	private function bustETagsForAllPagesIfNecessary( User $user ) {
+		if ( $this->wg->User->getId() == $user->getId() ) {
+			$user->invalidateCache();
+		}
 	}
 
 	/**
@@ -1051,6 +1078,7 @@ class UserProfilePageController extends WikiaController {
 		if ( $targetUser && $targetUser->getId() !== 0 ) {
 			$userIdentityBox = new UserIdentityBox( $targetUser );
 			$userIdentityBox->clearMastheadContents();
+			$this->clearCaches( $targetUser );
 
 			$this->response->setVal( 'success', wfMessage( 'user-identity-box-clear-success' )->escaped() );
 			BannerNotificationsController::addConfirmation( wfMessage( 'user-identity-box-clear-success' )->escaped() );
