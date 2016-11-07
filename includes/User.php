@@ -496,9 +496,10 @@ class User {
 	/**
 	 * Creates a MediaWiki User object based on the token given in the HTTP request.
 	 *
-	 * @param \WebRequest $request the HTTP request data as an object
+	 * @param  WebRequest $request The HTTP request data as an object
 	 *
-	 * @return \User on successful authentication
+	 * @return User                A logged in User object on successful authentication,
+	 *                             or an anonymous User object on failure
 	 */
 	public static function newFromToken( \WebRequest $request ) {
 		global $wgMemc;
@@ -518,7 +519,7 @@ class User {
 			$user = self::newFromId( $tokenInfo->user_id );
 			$user->setGlobalAuthToken( $token );
 
-			// Dont' return the user object if it's disabled
+			// Don't return the user object if it's disabled
 			// @see SERVICES-459
 			if ( (bool)$user->getGlobalFlag( 'disabled' ) ) {
 				$cookieHelper->clearAuthenticationCookie( $request->response() );
