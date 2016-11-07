@@ -1,6 +1,7 @@
 @import 'variables';
 @import 'skins/shared/mixins/box-shadow';
 @import 'skins/shared/mixins/clearfix';
+@import 'skins/shared/mixins/placeholder';
 @import 'skins/oasis/css/core/layout';
 @import 'skins/shared/mixins/columns';
 @import 'extensions/wikia/ThemeDesigner/css/ThemeTab';
@@ -44,7 +45,7 @@
 	position: relative;
 	width: $cnw-size;
 
-	::-webkit-input-placeholder, :-moz-placeholder, ::-moz-placeholder, :-ms-input-placeholder {
+	@include placeholder {
 		color: $wds-color-light-gray;
 	}
 
@@ -130,15 +131,7 @@
 		position: relative;
 	}
 
-	.language-choice {
-		margin: $content-spacing-xxlarge 0;
-	}
-
-	.select-container {
-		margin: $content-spacing-xxlarge 0;
-	}
-
-	.wiki-domain-container {
+	.language-choice, .select-container, .wiki-domain-container {
 		margin: $content-spacing-xxlarge 0;
 	}
 
