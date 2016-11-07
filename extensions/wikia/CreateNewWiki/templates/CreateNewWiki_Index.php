@@ -15,7 +15,7 @@
 						Xml::element('input', [
 							'type' => 'text',
 							'name' => 'wiki-name',
-							'placeholder' => wfMessage( 'cnw-name-wiki-label' )->escaped(),
+							'placeholder' => wfMessage( 'cnw-name-wiki-label' )->plain(),
 							'value' => $params['wikiName'],
 						])
 					)->escaped()
