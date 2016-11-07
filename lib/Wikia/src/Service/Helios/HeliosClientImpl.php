@@ -109,7 +109,7 @@ class HeliosClientImpl implements HeliosClient
 
 		$response = $request->getContent();
 		$output = json_decode( $response );
-
+var_dump($response);
 		if ( !$output ) {
 			$data = [];
 			$data["response"] = $response;
@@ -251,26 +251,16 @@ class HeliosClientImpl implements HeliosClient
 	}
 
 	public function validatePassword( $password, $name ) {
-		// @todo create new endpoint in Helios
-		global $wgMinimalPasswordLength, $wgContLang;
+		$postData = http_build_query( [
+			'password' => $password,
+			'username' => $name,
+		] );
 
-		$blockedLogins = [
-			'Useruser'     => 'Passpass', 'Useruser1' => 'Passpass1', # r75589
-			'Apitestsysop' => 'testpass', 'Apitestuser' => 'testpass' # r75605
-		];
-
-		if ( strlen( $password ) < $wgMinimalPasswordLength ) {
-			return 'passwordtooshort';
-		}
-
-		if ( $wgContLang->lc( $password ) == $wgContLang->lc( $name ) ) {
-			return 'password-name-match';
-		}
-
-		if ( isset( $blockedLogins[ $name ] ) && $password == $blockedLogins[ $name ] ) {
-			return 'password-login-forbidden';
-		}
-
-		return true;
+		return $this->request(
+			"password/validation",
+			[],
+			$postData,
+			[ 'method' => 'POST']
+		);
 	}
 }
