@@ -11,6 +11,7 @@
 @import "skins/oasis/css/core/reset";
 @import "skins/oasis/css/core/typography";
 @import "extensions/wikia/WikiaStyleGuide/css/Form";
+@import "extensions/wikia/DesignSystem/bower_components/design-system/dist/scss/wds-variables/index";
 
 @import "ChatColor";
 @import "ChatModal";
@@ -20,7 +21,7 @@
 body {
 	background: $color-body;
 	color: $color-text;
-	font-family: Helvetica, Arial, sans-serif;
+	font-family: $wds-font-family;
 	font-size: 13px;
 	height: 100%;
 	margin: 0;
