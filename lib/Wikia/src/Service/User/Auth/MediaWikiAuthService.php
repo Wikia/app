@@ -62,23 +62,4 @@ class MediaWikiAuthService implements AuthService {
 			->accessToken( $result ? $loginInfo->access_token : '' )
 			->build();
 	}
-
-	/**
-	 * @see AuthService
-	 */
-	public function isUsernameBlocked( $username ) {
-		$user = \User::newFromName( $username );
-
-		if ( !$user ) {
-			return null;
-		}
-
-		$user->load();
-		if ( $user->getId() == 0 ) {
-			return null;
-		}
-
-		return $user->isBlocked();
-	}
-
 }

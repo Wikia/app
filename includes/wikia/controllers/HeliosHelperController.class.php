@@ -5,14 +5,11 @@ namespace Wikia\Helios;
 use Email\Controller\EmailConfirmationController;
 use Wikia\DependencyInjection\Injector;
 use Wikia\Service\User\Auth\AuthService;
-use Wikia\Service\User\Auth\AuthServiceAccessor;
 
 /**
  * A helper controller to provide end points exposing MediaWiki functionality to Helios.
  */
 class HelperController extends \WikiaController {
-	use AuthServiceAccessor;
-
 	const SCHWARTZ_PARAM = 'secret';
 	const EXTERNAL_SCHWARTZ_PARAM = 'token';
 
@@ -196,14 +193,17 @@ class HelperController extends \WikiaController {
 			return;
 		}
 
-		$blocked = $this->authenticationService()->isUsernameBlocked( $username );
-		if ( $blocked === null ) {
+		$user = \User::newFromName( $username );
+		if (
+			!$user instanceof User ||
+			$user->getId() == 0
+		) {
 			$this->response->setVal( 'message', 'user not found' );
 			$this->response->setCode( \WikiaResponse::RESPONSE_CODE_NOT_FOUND );
 			return;
 		}
 
-		$this->response->setData( array( 'blocked' => $blocked ) );
+		$this->response->setData( [ 'blocked' => $user->isBlocked() ] );
 	}
 
 	private function getFieldFromRequest( $field, $failureMessage ) {
