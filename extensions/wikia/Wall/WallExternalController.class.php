@@ -16,13 +16,6 @@ class WallExternalController extends WikiaController {
 	protected $helper;
 
 	public function init() {
-		global $wgIsSafeWallTransaction;
-
-		// SUS-845: Mark that it is safe to edit Wall namespace pages
-		// in the context of this transaction.
-		// This check is necessary because editing Wall namespace pages normally via API or edit page
-		// would result in a broken page
-		$wgIsSafeWallTransaction = true;
 		$this->helper = new WallHelper();
 	}
 	/*
