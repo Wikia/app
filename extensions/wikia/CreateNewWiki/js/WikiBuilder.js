@@ -317,7 +317,9 @@ define('ext.createNewWiki.builder', ['ext.createNewWiki.helper', 'wikia.tracker'
 	function onWikiNameBlur(e) {
 		if (e.target.value.trim().length === 0) {
 			wikiNameLabel.removeClass('active');
-			wikiDomainLabel.removeClass('active').css('left', wikiDomain.position().left);
+			if (!wikiDomain.val().trim().length) {
+				wikiDomainLabel.removeClass('active').css('left', wikiDomain.position().left);
+			}
 		}
 	}
 
