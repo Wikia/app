@@ -99,7 +99,7 @@ class LocalisationCache {
 	 */
 	static public $mergeableMapKeys = array( 'messages', 'namespaceNames', 'mathNames',
 		'dateFormats', 'defaultUserOptionOverrides', 'imageFiles',
-		'preloadedMessages',
+		'preloadedMessages', 'namespaceAliases',
 	);
 
 	/**
@@ -601,7 +601,7 @@ class LocalisationCache {
 			if ( $coreData['fallbackSequence'][$len - 1] !== 'en' ) {
 				$coreData['fallbackSequence'][] = 'en';
 			}
-			
+
 			# Load the fallback localisation item by item and merge it
 			foreach ( $coreData['fallbackSequence'] as $fbCode ) {
 				# Load the secondary localisation from the source file to
@@ -616,7 +616,7 @@ class LocalisationCache {
 				$fbData = $this->readPHPFile( $fbFilename, 'core' );
 
 				wfDebug( __METHOD__.": got fallback localisation for $fbCode from source\n" );
-                        
+
 				foreach ( self::$allKeys as $key ) {
 					if ( !isset( $fbData[$key] ) ) {
 						continue;
