@@ -287,9 +287,12 @@ define('ext.createNewWiki.builder', ['ext.createNewWiki.helper', 'wikia.tracker'
 	}
 
 	function onWikiLanguageListClick(e) {
-		$nameWikiWrapper.find('.wds-dropdown').removeClass('wds-is-active');
-		$nameWikiWrapper.find('input[name=wiki-language]').val($(e.target).attr('id')).change();
-		$nameWikiWrapper.find('.chosen-lang').text($(e.target).text().split(':')[1]);
+		var li = $(e.target);
+		if (!li.hasClass('spacer')) {
+			$nameWikiWrapper.find('.wds-dropdown').removeClass('wds-is-active');
+			$nameWikiWrapper.find('input[name=wiki-language]').val(li.attr('id')).change();
+			$nameWikiWrapper.find('.chosen-lang').text(li.text().split(':')[1]);
+		}
 	}
 
 	function onWikiNameKeyUp() {
