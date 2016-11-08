@@ -113,7 +113,8 @@
 
 	textarea {
 		height: 2 * $wds-line-height;
-		overflow: hidden;
+		overflow-x: hidden;
+		overflow-y: auto;
 		resize: none;
 		transition: height 250ms;
 		width: $cnw-textarea-width;
