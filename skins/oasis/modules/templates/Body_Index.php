@@ -79,6 +79,8 @@
 								// Show just the edit button
 								echo $app->renderView( 'UserProfilePage', 'renderActionButton', array() );
 							}
+						} else {
+							echo $app->renderView( $headerModuleName, $headerModuleAction, $headerModuleParams );
 						}
 					}
 				?>
