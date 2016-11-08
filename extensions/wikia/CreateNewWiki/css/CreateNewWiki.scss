@@ -112,9 +112,15 @@
 	}
 
 	textarea {
+		height: 2 * $wds-line-height;
 		overflow: hidden;
 		resize: none;
+		transition: height 250ms;
 		width: $cnw-textarea-width;
+
+		&.active {
+			height: 8 * $wds-line-height;
+		}
 	}
 
 	.desc-block {

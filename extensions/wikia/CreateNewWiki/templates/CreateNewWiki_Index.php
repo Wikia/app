@@ -88,7 +88,7 @@
 			<p class="creative"><?= wfMessage( 'cnw-desc-creative' )->escaped() ?></p>
 			<form name="desc-form" class="clearfix">
 				<div class="desc-block">
-					<textarea id="Description" class="input" rows="2" placeholder="<?= wfMessage( 'cnw-desc-placeholder' )->escaped() ?>"></textarea>
+					<textarea id="Description" class="input" placeholder="<?= wfMessage( 'cnw-desc-placeholder' )->escaped() ?>"></textarea>
 					<div class="checkbox" id="all-ages-div"
 						<?= (empty( $selectedLang ) || $selectedLang === $params['LangAllAgesOpt']) ? '' : 'style="display: none"' ?>>
 						<input type="checkbox" name="all-ages" value="1">

@@ -107,6 +107,7 @@ define('ext.createNewWiki.builder', ['ext.createNewWiki.helper', 'wikia.tracker'
 		wb.find('nav .back').bind('click', onNavBackClick);
 		descWikiNext.click(onDescWikiNextClick);
 		$('#Description').placeholder();
+		$('#Description').on('click', onWikiDescriptionClick);
 		$themWikiWrapper.find('nav .next').click(onThemeNavNextClick);
 		wikiVertical.on('change', onWikiVerticalChange);
 		$descWikiWrapper.find('#all-ages-div input').bind('change', onIntendedForKidsCheckboxChange);
@@ -180,6 +181,10 @@ define('ext.createNewWiki.builder', ['ext.createNewWiki.helper', 'wikia.tracker'
 
 			descWikiNext.attr('disabled', false);
 		}
+	}
+
+	function onWikiDescriptionClick(e) {
+		e.target.classList.add('active');
 	}
 
 	function onWikiVerticalChange () {
