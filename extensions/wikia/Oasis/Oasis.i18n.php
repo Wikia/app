@@ -285,6 +285,7 @@ Example output: deleted by Avatar 3 hours ago',
 	'oasis-social-facebook-link' => 'Missing documentation',
 	'oasis-social-twitter-link' => 'Missing documentation',
 	'oasis-spotlights-footer-title' => 'Missing documentation',
+	'oasis-button-add-new-page' => 'Label for Add New Page button',
 ];
 
 $messages['af'] = [
