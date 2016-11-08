@@ -72,6 +72,7 @@ $messages['en'] = [
 	'oasis-button-contribute-tooltip' => 'Contribute',
 	'oasis-button-add-video' => 'Add video',
 	'oasis-button-create-page' => 'Add page',
+	'oasis-button-add-new-page' => 'Add New Page',
 	'oasis-button-add-photo' => 'Add image',
 	'oasis-button-edit-wikia-local-menu' => 'Edit local community menu',
 	'oasis-button-edit-wikia-global-menu' => 'Edit global Fandom menu',
