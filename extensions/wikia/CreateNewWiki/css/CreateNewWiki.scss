@@ -150,8 +150,9 @@
 
 	.error-msg {
 		color: $wds-color-alert;
-		float: left;
 		font-size: $wds-typescale-size-minus-2;
+		position: absolute;
+		top: 100%;
 	}
 
 	.categories-sets {
