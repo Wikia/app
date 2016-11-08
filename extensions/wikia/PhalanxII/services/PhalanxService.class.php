@@ -1,4 +1,5 @@
 <?php
+
 use Wikia\Service\Gateway\ConsulUrlProvider;
 
 /**
