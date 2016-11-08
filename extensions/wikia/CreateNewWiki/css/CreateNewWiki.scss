@@ -178,6 +178,18 @@
 		}
 	}
 
+	.cnw-tooltip-icon {
+		fill: $wds-color-dark-c6;
+	}
+
+	.cnw-tooltip-text {
+		visibility: hidden;
+	}
+
+	svg:hover + .cnw-tooltip-text {
+		visibility: visible;
+	}
+
 	.ThemeTab {
 		height: 125px;
 		margin-left: -$content-spacing-regular;

@@ -91,15 +91,11 @@
 					<div class="checkbox" id="all-ages-div"
 						<?= (empty( $selectedLang ) || $selectedLang === $params['LangAllAgesOpt']) ? '' : 'style="display: none"' ?>>
 						<input type="checkbox" name="all-ages" value="1">
-						<?= $app->renderView(
-							'WikiaStyleGuideTooltipIcon',
-							'index',
-							[
-								'text' => wfMessage( 'cnw-desc-all-ages' )->escaped(),
-								'tooltipIconTitle' => wfMessage( 'cnw-desc-tip-all-ages' )->plain(),
-							]
-						 );
-						?>
+						<span><?= wfMessage( 'cnw-desc-all-ages' )->escaped(); ?></span>
+						<div class="cnw-tooltip">
+							<?=DesignSystemHelper::renderSvg( 'wds-icons-question', 'cnw-tooltip-icon', 'tooltip' );?>
+							<span class="cnw-tooltip-text"><?= wfMessage( 'cnw-desc-tip-all-ages' )->plain() ?></span>
+						</div>
 					</div>
 				</div>
 
