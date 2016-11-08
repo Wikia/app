@@ -80,7 +80,7 @@ class PhalanxContentBlock extends WikiaObject {
 		}
 
 		// SUS-1219: fallback to editpage title if wgTitle is null
-		$title = $editPage->getContextTitle() ? ? $editPage->getTitle();
+		$title = $editPage->getContextTitle() ?? $editPage->getTitle();
 
 		$phalanxModel = new PhalanxContentModel( $title );
 
