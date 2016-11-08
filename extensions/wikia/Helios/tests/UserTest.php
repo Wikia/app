@@ -18,8 +18,6 @@ class UserTest extends \WikiaBaseTest {
 		$this->setupFile = __DIR__ . '/../Helios.setup.php';
 		parent::setUp();
 		$this->webRequestMock = $this->getMock( '\WebRequest', [ 'getHeader', 'getCookie' ], [ ], '', false );
-		$this->mockGlobalVariable( 'wgHeliosLoginSamplingRate', 100 );
-		$this->mockGlobalVariable( 'wgHeliosLoginShadowMode', false );
 		User::purgeAuthenticationCache();
 
 		$this->container = ( new InjectorBuilder() )
