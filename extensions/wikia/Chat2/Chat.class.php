@@ -87,7 +87,9 @@ class Chat {
 	 *
 	 * @return true|string Returns true on success, returns an error message as a string on failure.
 	 */
-	public static function banUser( $subjectUserName, User $adminUser, $time, $reason ) {
+	public static function banUser( string $subjectUserName, User $adminUser, int $time, string $reason ) {
+		global $wgCityId;
+
 		self::info( __METHOD__ . ': Method called', [
 			'subjectUserName' => $subjectUserName,
 			'adminUser' => $adminUser,
@@ -97,19 +99,22 @@ class Chat {
 
 		$subjectUser = User::newFromName( $subjectUserName );
 
+		// SUS-1257: don't allow blocked users to issue bans
+		if ( $adminUser->isBlocked() ) {
+			return wfMessage( 'actionthrottled' )->text();
+		}
+
 		// Make sure user doing the kick/ban has permission to do so
 		if ( !( $subjectUser instanceof User ) || !$adminUser->isAllowed( self::CHAT_MODERATOR ) ) {
-			return wfMessage( 'chat-ban-you-need-permission', self::CHAT_MODERATOR )
-				->inContentLanguage()->text() . "\n";
+			return wfMessage( 'chat-ban-you-need-permission', self::CHAT_MODERATOR )->text() . "\n";
 		}
 
 		// Make sure we aren't trying to kick/ban someone who shouldn't be kick/banned
 		// Chat moderators can be kicked/banned only by staff members and admins
 		if ( !self::canBan( $subjectUser, $adminUser ) ) {
-			return wfMessage( 'chat-ban-cant-ban-moderator' )->inContentLanguage()->text() . "\n";
+			return wfMessage( 'chat-ban-cant-ban-moderator' )->text() . "\n";
 		}
 
-		$cityId = F::app()->wg->CityId;
 		$action = $time != 0 ? self::BAN_ADD : self::BAN_REMOVE;
 
 		$subjectChatUser = new ChatUser( $subjectUser );
@@ -129,7 +134,7 @@ class Chat {
 		}
 
 		self::info( __METHOD__ . ': Method called', [
-			'cityId' => $cityId,
+			'cityId' => $wgCityId,
 			'subjectUser' => $subjectUser->getId(),
 			'adminUser' => $adminUser->getId(),
 			'time' => $time,
