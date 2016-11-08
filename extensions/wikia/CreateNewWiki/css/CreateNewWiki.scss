@@ -95,7 +95,8 @@
 		}
 	}
 
-	.input {
+	textarea,
+	input[type=text] {
 		border: none;
 		border-bottom: 1px solid $wds-color-mist-gray;
 		font-size: inherit;
