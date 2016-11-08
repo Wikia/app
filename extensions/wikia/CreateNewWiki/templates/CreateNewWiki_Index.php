@@ -35,7 +35,7 @@
 				</div>
 				<div class="wiki-domain-error error-msg"></div>
 
-				<div class="language-choice">
+				<div class="language-choice" style="display: none;">
 					<h3><?= wfMessage( 'cnw-desc-lang' )->escaped() ?></h3>
 					<select name="wiki-language">
 
@@ -75,6 +75,53 @@
 
 					</select>
 				</div>
+
+				<div class="language-choice">
+					<h3 id="language-choice__header"><?= wfMessage( 'cnw-desc-lang' )->escaped() ?></h3>
+					<div class="wds-dropdown">
+						<div class="wds-dropdown__toggle">
+							<span class="chosen-lang">English</span>
+							<?= DesignSystemHelper::renderSvg( 'wds-icons-dropdown-tiny' ); ?>
+						</div>
+						<div class="wds-dropdown__content">
+							<ul class="wds-list">
+								<? $isSelected = false ?>
+								<? if ( !empty( $aTopLanguages ) && is_array( $aTopLanguages ) ) : ?>
+									<li class="spacer"><?= wfMessage( 'autocreatewiki-language-top', count( $aTopLanguages ) )->escaped() ?></li>
+
+									<? foreach ( $aTopLanguages as $sLang ) :
+										$selected = '';
+										if ( empty( $isSelected ) && $sLang == $selectedLang ) {
+											$isSelected = true;
+											$selected = ' selected="selected"';
+										}
+										?>
+										<li value="<?= Sanitizer::encodeAttribute( $sLang ) ?>" <?= $selected ?>>
+											<?= Sanitizer::escapeHtmlAllowEntities( $sLang ) ?>: <?= Sanitizer::escapeHtmlAllowEntities( $aLanguages[$sLang] ) ?>
+										</li>
+									<? endforeach ?>
+								<? endif ?>
+
+								<? if ( !empty( $aLanguages ) && is_array( $aLanguages ) ) : ?>
+									<li class="spacer"><?= wfMessage( 'autocreatewiki-language-all' )->escaped() ?></li>
+									<? ksort( $aLanguages );
+									foreach ( $aLanguages as $sLang => $sLangName ) :
+										$selected = "";
+										if ( empty( $isSelected ) && ( $sLang == $selectedLang ) ) :
+											$isSelected = true;
+											$selected = ' selected="selected"';
+										endif ?>
+										<li value="<?= Sanitizer::encodeAttribute( $sLang ) ?>" <?=$selected?>>
+											<?= Sanitizer::escapeHtmlAllowEntities( $sLang ) ?>: <?= Sanitizer::escapeHtmlAllowEntities( $sLangName ) ?>
+										</li>
+									<? endforeach ?>
+								<? endif ?>
+							</ul>
+						</div>
+					</div>
+					<input type="hidden" name="wiki-language" value="<?= $selectedLang ?>">
+				</div>
+
 				<span class="submit-error error-msg"></span>
 				<nav class="controls">
 					<input type="button" value="<?= wfMessage( 'cnw-next' )->escaped() ?>" class="next">

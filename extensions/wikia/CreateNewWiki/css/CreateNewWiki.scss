@@ -5,6 +5,7 @@
 @import 'extensions/wikia/ThemeDesigner/css/ThemeTab';
 @import 'extensions/wikia/DesignSystem/bower_components/design-system/dist/scss/wds-variables/index.scss';
 @import 'extensions/wikia/DesignSystem/bower_components/design-system/dist/scss/wds-components/_buttons.scss';
+@import 'extensions/wikia/DesignSystem/bower_components/design-system/dist/scss/wds-components/_dropdowns.scss';
 
 .WikiaSiteWrapper {
 	background-color: $wds-color-off-white;
@@ -171,4 +172,80 @@
 
 .hidden {
 	display: none;
+}
+
+#WikiaArticle {
+	overflow: visible;
+}
+
+.language-choice {
+	margin: 48px 0 48px 0;
+
+	#language-choice__header {
+		color: $wds-color-dark-gray;
+		font-size: 16px !important;
+		font-weight: bold !important;
+		line-height: 1.5 !important;
+		margin: 0 0 10px 0;
+	}
+
+	.wds-dropdown {
+		border-bottom: 1px solid $wds-color-mist-gray;
+		width: 324px;
+
+		.chosen-lang {
+			line-height: 1.5;
+		}
+
+		svg {
+			fill: $wds-color-light-gray;
+			float: right;
+			margin-top: 4px;
+		}
+
+		&.wds-is-active {
+			svg {
+				-webkit-transform: rotate(180deg);
+				-ms-transform: rotate(180deg);
+				transform: rotate(180deg);
+			}
+		}
+
+		.wds-dropdown__content {
+			max-height: 324px;
+			overflow: auto;
+			width: 324px;
+
+			.wds-list {
+				cursor: pointer;
+				margin: 0;
+				list-style-type: none;
+				padding: 0;
+
+				.spacer {
+					color: $wds-color-dark-gray;
+					font-size: 16px;
+					font-weight: bold;
+					line-height: 0.9;
+				}
+
+				li {
+					padding: 14px 18px 14px 18px;
+				}
+
+				li.spacer {
+					cursor: default;
+					padding: 18px;
+				}
+
+				li:not(.spacer) {
+					&:hover {
+						color: $wds-color-white;
+						background: $wds-color-mist-gray;
+					}
+				}
+
+			}
+		}
+	}
 }
