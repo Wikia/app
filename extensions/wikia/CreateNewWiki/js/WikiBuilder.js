@@ -282,6 +282,10 @@ define('ext.createNewWiki.builder', ['ext.createNewWiki.helper', 'wikia.tracker'
 			allAgesDiv.show();
 		}
 
+		if (!wikiDomainLabel.hasClass('active')) {
+			wikiDomainLabel.css('left', wikiDomain.position().left);
+		}
+
 		track({
 			label: 'language-changed'
 		});
@@ -294,9 +298,9 @@ define('ext.createNewWiki.builder', ['ext.createNewWiki.helper', 'wikia.tracker'
 		checkNextButtonStep1();
 		name = helper.sanitizeWikiName($(this).val());
 		if (name) {
-			wikiDomainLabel.addClass('active');
+			wikiDomainLabel.addClass('active').css('left', 0);
 		} else {
-			wikiDomainLabel.removeClass('active');
+			wikiDomainLabel.removeClass('active').css('left', wikiDomain.position().left);
 		}
 
 		wikiDomain.val(name.toLowerCase()).trigger('keyup');
@@ -314,7 +318,7 @@ define('ext.createNewWiki.builder', ['ext.createNewWiki.helper', 'wikia.tracker'
 		if (e.target.value.trim().length === 0) {
 			wikiNameLabel.removeClass('active');
 			if (!wikiDomain.val().trim().length) {
-				wikiDomainLabel.removeClass('active');
+				wikiDomainLabel.removeClass('active').css('left', wikiDomain.position().left);
 			}
 		}
 	}
@@ -329,12 +333,12 @@ define('ext.createNewWiki.builder', ['ext.createNewWiki.helper', 'wikia.tracker'
 	}
 
 	function onWikiDomainFocus() {
-		wikiDomainLabel.addClass('active');
+		wikiDomainLabel.addClass('active').css('left', 0);
 	}
 
 	function onWikiDomainBlur(e) {
 		if (e.target.value.trim().length === 0) {
-			wikiDomainLabel.removeClass('active');
+			wikiDomainLabel.removeClass('active').css('left', wikiDomain.position().left);
 		}
 	}
 
