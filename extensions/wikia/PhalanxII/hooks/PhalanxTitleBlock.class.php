@@ -6,7 +6,7 @@
  * This filter prevents a page from being created,
  * if its title matches any of the blacklisted phrases.
  * It does not prevent a pre-existing page from being edited.
- * 
+ *
  * @author Piotr Molski <moli@wikia-inc.com>
  * @date 2013-01-25
  */
@@ -23,15 +23,15 @@ class PhalanxTitleBlock extends WikiaObject {
 		wfProfileIn( __METHOD__ );
 
 		$title = $editPage->getTitle();
-		/* 
+		/*
 		 * Hook is called for both page creations and edits. We should only check
 		 * if the page is created = page does not exist (RT#61104)
 		 */
-		if( $title->exists() ) {
+		if ( $title->exists() ) {
 			wfProfileOut( __METHOD__ );
 			return true;
 		}
-		
+
 		/**
 		 * pass to check title method
 		 */
@@ -60,11 +60,11 @@ class PhalanxTitleBlock extends WikiaObject {
 
 		$phalanxModel = new PhalanxContentModel( $title );
 		$ret = $phalanxModel->match_title();
-		
+
 		if ( $ret === false && $displayBlock ) {
 			$phalanxModel->displayBlock();
 		}
-		
+
 		wfProfileOut( __METHOD__ );
 		return $ret;
 	}
@@ -84,7 +84,7 @@ class PhalanxTitleBlock extends WikiaObject {
 		wfProfileOut( __METHOD__ );
 		return $isTitleSafe;
 	}
-	
+
 	/**
 	 * handler for pageTitleFilter hook
 	 *
@@ -100,11 +100,11 @@ class PhalanxTitleBlock extends WikiaObject {
 
 		$phalanxModel = new PhalanxContentModel( $title );
 		$ret = $phalanxModel->match_title();
-		
+
 		if ( $ret === false ) {
 			$error_msg = $phalanxModel->contentBlock();
 		}
-		
+
 		wfProfileOut( __METHOD__ );
 		return $ret;
 	}
