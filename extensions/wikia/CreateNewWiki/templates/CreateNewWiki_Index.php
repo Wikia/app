@@ -16,6 +16,7 @@
 						Xml::element('input', [
 							'type' => 'text',
 							'name' => 'wiki-name',
+							'class' => 'input',
 							'value' => $params['wikiName'],
 						])
 					)->escaped()
@@ -30,7 +31,7 @@
 						<?= ( empty( $selectedLang ) || $selectedLang === 'en' ) ? '' : Sanitizer::escapeHtmlAllowEntities( $selectedLang ) . '.' ?>
 					</span>
 					<?= wfMessage( 'cnw-name-wiki-language' )->escaped() ?>
-					<input type="text" name="wiki-domain" value="<?= Sanitizer::encodeAttribute( $params['wikiDomain'] ) ?>">
+					<input type="text" name="wiki-domain" class="input" value="<?= Sanitizer::encodeAttribute( $params['wikiDomain'] ) ?>">
 					.<?= htmlspecialchars( $wikiaBaseDomain ) ?>
 					<label for="wiki-domain" class="floating-label"><?= wfMessage( 'cnw-name-wiki-domain-label' )->escaped() ?></label>
 					<div class="wiki-domain-error error-msg"></div>
@@ -87,7 +88,7 @@
 			<p class="creative"><?= wfMessage( 'cnw-desc-creative' )->escaped() ?></p>
 			<form name="desc-form" class="clearfix">
 				<div class="desc-block">
-					<textarea id="Description" placeholder="<?= wfMessage( 'cnw-desc-placeholder' )->escaped() ?>"></textarea>
+					<textarea id="Description" class="input" rows="2" placeholder="<?= wfMessage( 'cnw-desc-placeholder' )->escaped() ?>"></textarea>
 					<div class="checkbox" id="all-ages-div"
 						<?= (empty( $selectedLang ) || $selectedLang === $params['LangAllAgesOpt']) ? '' : 'style="display: none"' ?>>
 						<input type="checkbox" name="all-ages" value="1">

@@ -95,15 +95,15 @@
 		}
 	}
 
-	textarea, input {
+	.input {
+		border: none;
+		border-bottom: 1px solid $wds-color-mist-gray;
 		font-size: inherit;
+		line-height: $wds-line-height;
+		outline: none;
 	}
 
 	input[type=text] {
-		border: none;
-		border-bottom: 1px solid $wds-color-mist-gray;
-		line-height: $wds-line-height;
-		outline: none;
 		width: $cnw-input-width;
 
 		&.input-error {
@@ -111,12 +111,14 @@
 		}
 	}
 
+	textarea {
+		overflow: hidden;
+		resize: none;
+		width: $cnw-textarea-width;
+	}
+
 	.desc-block {
 		display: flex;
-
-		textarea {
-			width: 320px;
-		}
 
 		.checkbox {
 			margin-left: $content-spacing-xxlarge;
