@@ -27,6 +27,7 @@ define('ext.createNewWiki.builder', ['ext.createNewWiki.helper', 'wikia.tracker'
 		wikiDomainCountry,
 		nameWikiSubmitError,
 		wikiLanguage,
+		wikiLanguageList,
 		wikiVertical,
 		wikiAllAges,
 		allAgesDiv,
@@ -86,7 +87,8 @@ define('ext.createNewWiki.builder', ['ext.createNewWiki.helper', 'wikia.tracker'
 		wikiDomainStatus = $nameWikiWrapper.find('.domain-status-icon');
 		wikiDomainCountry = $nameWikiWrapper.find('.domain-country');
 		nameWikiSubmitError = $nameWikiWrapper.find('.submit-error');
-		wikiLanguage = $nameWikiWrapper.find('select[name=wiki-language]');
+		wikiLanguage = $nameWikiWrapper.find('input[name=wiki-language]');
+		wikiLanguageList = $nameWikiWrapper.find('.wds-dropdown__wiki-language');
 		wikiVertical = $descWikiWrapper.find('select[name=wiki-vertical]');
 		wikiAllAges = $descWikiWrapper.find('input[name=all-ages]');
 		allAgesDiv = $('#all-ages-div');
@@ -101,6 +103,7 @@ define('ext.createNewWiki.builder', ['ext.createNewWiki.helper', 'wikia.tracker'
 		wikiDomain.keyup(onWikiDomainKeyUp);
 		wikiName.keyup(onWikiNameKeyUp);
 		wikiLanguage.bind('change', onWikiLanguageChange);
+		wikiLanguageList.bind('click', onWikiLanguageListClick);
 		wb.find('nav .back').bind('click', onNavBackClick);
 		descWikiNext.click(onDescWikiNextClick);
 		$('#Description').placeholder();
@@ -260,7 +263,7 @@ define('ext.createNewWiki.builder', ['ext.createNewWiki.helper', 'wikia.tracker'
 	function onWikiLanguageChange() {
 		checkWikiName();
 		checkDomain();
-		var selected = wikiLanguage.find('option:selected').val();
+		var selected = $(this).val();
 
 		if (selected && selected !== window.wgLangAllAgesOpt) {
 			wikiDomainCountry.html(selected + '.');
@@ -273,6 +276,12 @@ define('ext.createNewWiki.builder', ['ext.createNewWiki.helper', 'wikia.tracker'
 		track({
 			label: 'language-changed'
 		});
+	}
+
+	function onWikiLanguageListClick(e) {
+		$nameWikiWrapper.find('.wds-dropdown').removeClass('wds-is-active');
+		$nameWikiWrapper.find('input[name=wiki-language]').val($(e.target).attr('id')).change();
+		$nameWikiWrapper.find('.chosen-lang').text($(e.target).text().split(':')[1]);
 	}
 
 	function onWikiNameKeyUp() {

@@ -35,47 +35,6 @@
 				</div>
 				<div class="wiki-domain-error error-msg"></div>
 
-				<div class="language-choice" style="display: none;">
-					<h3><?= wfMessage( 'cnw-desc-lang' )->escaped() ?></h3>
-					<select name="wiki-language">
-
-					<? $isSelected = false ?>
-					<? if ( !empty( $aTopLanguages ) && is_array( $aTopLanguages ) ) : ?>
-						<optgroup label="<?= wfMessage( 'autocreatewiki-language-top', count( $aTopLanguages ) )->escaped() ?>">
-
-							<? foreach ( $aTopLanguages as $sLang ) :
-								$selected = '';
-								if ( empty( $isSelected ) && $sLang == $selectedLang ) {
-									$isSelected = true;
-									$selected = ' selected="selected"';
-								}
-							?>
-								<option value="<?= Sanitizer::encodeAttribute( $sLang ) ?>" <?= $selected ?>>
-									<?= Sanitizer::escapeHtmlAllowEntities( $sLang ) ?>: <?= Sanitizer::escapeHtmlAllowEntities( $aLanguages[$sLang] ) ?>
-								</option>
-							<? endforeach ?>
-						</optgroup>
-					<? endif ?>
-
-					<? if ( !empty( $aLanguages ) && is_array( $aLanguages ) ) : ?>
-						<optgroup label="<?= wfMessage( 'autocreatewiki-language-all' )->escaped() ?>">
-						<? ksort( $aLanguages );
-						foreach ( $aLanguages as $sLang => $sLangName ) :
-							$selected = "";
-							if ( empty( $isSelected ) && ( $sLang == $selectedLang ) ) :
-								$isSelected = true;
-								$selected = ' selected="selected"';
-							endif ?>
-							<option value="<?= Sanitizer::encodeAttribute( $sLang ) ?>" <?=$selected?>>
-								<?= Sanitizer::escapeHtmlAllowEntities( $sLang ) ?>: <?= Sanitizer::escapeHtmlAllowEntities( $sLangName ) ?>
-							</option>
-						<? endforeach ?>
-						</optgroup>
-					<? endif ?>
-
-					</select>
-				</div>
-
 				<div class="language-choice">
 					<h3 id="language-choice__header"><?= wfMessage( 'cnw-desc-lang' )->escaped() ?></h3>
 					<div class="wds-dropdown">
@@ -83,20 +42,12 @@
 							<span class="chosen-lang">English</span>
 							<?= DesignSystemHelper::renderSvg( 'wds-icons-dropdown-tiny' ); ?>
 						</div>
-						<div class="wds-dropdown__content">
+						<div class="wds-dropdown__content wds-dropdown__wiki-language">
 							<ul class="wds-list">
-								<? $isSelected = false ?>
 								<? if ( !empty( $aTopLanguages ) && is_array( $aTopLanguages ) ) : ?>
 									<li class="spacer"><?= wfMessage( 'autocreatewiki-language-top', count( $aTopLanguages ) )->escaped() ?></li>
-
-									<? foreach ( $aTopLanguages as $sLang ) :
-										$selected = '';
-										if ( empty( $isSelected ) && $sLang == $selectedLang ) {
-											$isSelected = true;
-											$selected = ' selected="selected"';
-										}
-										?>
-										<li value="<?= Sanitizer::encodeAttribute( $sLang ) ?>" <?= $selected ?>>
+									<? foreach ( $aTopLanguages as $sLang ) : ?>
+										<li id="<?= Sanitizer::encodeAttribute( $sLang ) ?>">
 											<?= Sanitizer::escapeHtmlAllowEntities( $sLang ) ?>: <?= Sanitizer::escapeHtmlAllowEntities( $aLanguages[$sLang] ) ?>
 										</li>
 									<? endforeach ?>
@@ -105,13 +56,8 @@
 								<? if ( !empty( $aLanguages ) && is_array( $aLanguages ) ) : ?>
 									<li class="spacer"><?= wfMessage( 'autocreatewiki-language-all' )->escaped() ?></li>
 									<? ksort( $aLanguages );
-									foreach ( $aLanguages as $sLang => $sLangName ) :
-										$selected = "";
-										if ( empty( $isSelected ) && ( $sLang == $selectedLang ) ) :
-											$isSelected = true;
-											$selected = ' selected="selected"';
-										endif ?>
-										<li value="<?= Sanitizer::encodeAttribute( $sLang ) ?>" <?=$selected?>>
+									foreach ( $aLanguages as $sLang => $sLangName ) : ?>
+										<li id="<?= Sanitizer::encodeAttribute( $sLang ) ?>">
 											<?= Sanitizer::escapeHtmlAllowEntities( $sLang ) ?>: <?= Sanitizer::escapeHtmlAllowEntities( $sLangName ) ?>
 										</li>
 									<? endforeach ?>
