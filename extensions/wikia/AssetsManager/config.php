@@ -2387,19 +2387,6 @@ $config['delayed_hover_js'] = [
 	],
 ];
 
-$config['njord_js'] = [
-	'type' => AssetsManager::TYPE_JS,
-	'skin' => [ 'oasis' ],
-	'assets' => [
-		'//resources/jquery.ui/jquery.ui.core.js',
-		'//resources/jquery.ui/jquery.ui.widget.js',
-		'//resources/jquery.ui/jquery.ui.position.js',
-		'//resources/jquery.ui/jquery.ui.mouse.js',
-		'//resources/jquery.ui/jquery.ui.draggable.js',
-		'//resources/jquery.ui/jquery.ui.droppable.js',
-	]
-];
-
 $config['upload_photos_dialog_js'] = [
 	'type' => AssetsManager::TYPE_JS,
 	'skin' => [ 'oasis' ],
