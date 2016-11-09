@@ -117,6 +117,14 @@ define('ext.createNewWiki.builder', ['ext.createNewWiki.helper', 'wikia.tracker'
 	function initFloatingLabelsPosition() {
 		wikiNameLabel.css('left', wikiName.position().left);
 		wikiDomainLabel.css('left', wikiDomain.position().left);
+
+		if (wikiName.val()) {
+			wikiNameLabel.addClass('active').css('left', 0);
+		}
+
+		if (wikiDomain.val()) {
+			wikiDomainLabel.addClass('active').css('left', 0);
+		}
 	}
 
 	function onThemeNavNextClick() {
