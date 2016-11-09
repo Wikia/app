@@ -97,15 +97,15 @@
 	}
 
 	textarea,
-	input {
-		font-size: inherit;
-	}
-
 	input[type=text] {
 		border: none;
 		border-bottom: 1px solid $wds-color-mist-gray;
+		font-size: inherit;
 		line-height: $wds-line-height;
 		outline: none;
+	}
+
+	input[type=text] {
 		width: $cnw-input-width;
 
 		&.input-error {
@@ -113,12 +113,21 @@
 		}
 	}
 
+	textarea {
+		height: 2 * $wds-line-height;
+		overflow-x: hidden;
+		overflow-y: auto;
+		resize: none;
+		transition: height 250ms;
+		width: $cnw-textarea-width;
+
+		&.active {
+			height: 8 * $wds-line-height;
+		}
+	}
+
 	.desc-block {
 		display: flex;
-
-		textarea {
-			width: 320px;
-		}
 
 		.checkbox {
 			margin-left: $content-spacing-xxlarge;
