@@ -131,19 +131,20 @@
 					<h3><?= wfMessage( 'cnw-desc-select-categories' )->escaped() ?></h3>
 			<?php
 				foreach ( $categoriesSets as $setId => $categoriesSet ) {
+					$setId = Sanitizer::encodeAttribute( $setId );
 			?>
 
-					<div class="categories-set" id="categories-set-<?= Sanitizer::encodeAttribute( $setId ) ?>">
+					<div class="categories-set" id="categories-set-<?= $setId ?>">
 				<?php
 					foreach ( $categoriesSet as $category ) {
 				?>
 						<label>
 							<div class="checkbox-styled">
 								<? $categoryShort = Sanitizer::encodeAttribute( $category['short'] ); ?>
-								<input id="<?= $categoryShort ?>" type="checkbox"
+								<input id="<?= $categoryShort ?>-<?= $setId ?>" type="checkbox"
 								value="<?= Sanitizer::encodeAttribute( $category['id'] ) ?>"
 								data-short="<?= $categoryShort ?>">
-								<label for="<?= $categoryShort ?>"></label>
+								<label for="<?= $categoryShort ?>-<?= $setId ?>"></label>
 							</div>
 							<span><?= Sanitizer::escapeHtmlAllowEntities( $category['name'] ) ?></span>
 						</label>
