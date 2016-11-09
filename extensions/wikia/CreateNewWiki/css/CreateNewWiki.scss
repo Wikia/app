@@ -96,7 +96,8 @@
 		}
 	}
 
-	textarea, input {
+	textarea,
+	input {
 		font-size: inherit;
 	}
 
@@ -129,7 +130,10 @@
 		position: relative;
 	}
 
-	.language-choice, .select-container, .wiki-name-container, .wiki-domain-container {
+	.language-choice,
+	.select-container,
+	.wiki-name-container,
+	.wiki-domain-container {
 		margin: $content-spacing-regular 0;
 	}
 
@@ -233,7 +237,8 @@
 	}
 }
 
-#DescWiki, #ThemeWiki {
+#DescWiki,
+#ThemeWiki {
 	display: none;
 }
 
