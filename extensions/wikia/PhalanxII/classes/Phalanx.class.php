@@ -104,7 +104,7 @@ class Phalanx extends WikiaModel implements ArrayAccess {
 		$row = $dbr->selectRow( $this->db_table, '*', array( 'p_id' => $this->blockId ), __METHOD__ );
 
 		if ( is_object( $row ) ) {
-			$this->data = array(
+			$this->data = [
 				'id'        => $row->p_id,
 				'author_id' => $row->p_author_id,
 				'text'      => $row->p_text,
@@ -117,10 +117,42 @@ class Phalanx extends WikiaModel implements ArrayAccess {
 				'reason'    => $row->p_reason,
 				'comment'   => $row->p_comment,
 				'ip_hex'    => $row->p_ip_hex
-			);
+			];
 		}
 
 		wfProfileOut( __METHOD__ );
+	}
+
+	public function isTypeContent() {
+		return $this->data['type'] & self::TYPE_CONTENT;
+	}
+
+	public function isTypeSummary() {
+		return $this->data['type'] & self::TYPE_SUMMARY;
+	}
+
+	public function isTypeTitle() {
+		return $this->data['type'] & self::TYPE_TITLE;
+	}
+
+	public function isTypeUser() {
+		return $this->data['type'] & self::TYPE_USER;
+	}
+
+	public function isTypeQuestionTitle() {
+		return $this->data['type'] & self::TYPE_ANSWERS_QUESTION_TITLE;
+	}
+
+	public function isTypeRecentQuestions() {
+		return $this->data['type'] & self::TYPE_ANSWERS_RECENT_QUESTIONS;
+	}
+
+	public function isTypeWikiCreation() {
+		return $this->data['type'] & self::TYPE_WIKI_CREATION;
+	}
+
+	public function isTypeEmail() {
+		return $this->data['type'] & self::TYPE_EMAIL;
 	}
 
 	public function save() {
@@ -191,15 +223,12 @@ class Phalanx extends WikiaModel implements ArrayAccess {
 		return array_combine( self::$expiry_text, explode( ",", wfMsg( self::$expiry_values ) ) );
 	}
 
-	/*
-	 * @author tor <tor@wikia-inc.com>
-	 * @author Marooned <marooned at wikia-inc.com>
-	 *
-	 * @param $typemask bit mask of types
-	 * @return Array of strings with human-readable names
+	/**
+	 * @param int $typemask bit mask of types
+	 * @return array strings with human-readable names
 	 */
 	public static function getTypeNames( $typemask ) {
-		$types = array();
+		$types = [];
 
 		/* iterate for each module for which block is saved */
 		for ( $bit = $typemask & 1, $type = 1; $typemask; $typemask >>= 1, $bit = $typemask & 1, $type <<= 1 ) {
@@ -210,12 +239,20 @@ class Phalanx extends WikiaModel implements ArrayAccess {
 		return $types;
 	}
 
-	/* get all phalanx types */
+	/**
+	 * Get all phalanx types
+	 *
+	 * @return array
+	 */
 	public static function getAllTypeNames() {
 		return self::$typeNames;
 	}
 
-	/* map array keys to fields in phalanx table */
+	/**
+	 * Mmap array keys to fields in phalanx table
+	 *
+	 * @return array
+	 */
 	private function mapToDB() {
 		$fields = array();
 		foreach ( $this->data as $key => $field  ) {
