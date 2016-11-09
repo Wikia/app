@@ -25,7 +25,6 @@ define('ext.createNewWiki.builder', ['ext.createNewWiki.helper', 'wikia.tracker'
 		wikiDomainLabel,
 		wikiDomainError,
 		wikiDomainCountry,
-		nameWikiSubmitError,
 		wikiLanguage,
 		wikiLanguageList,
 		wikiVertical,
@@ -71,6 +70,9 @@ define('ext.createNewWiki.builder', ['ext.createNewWiki.helper', 'wikia.tracker'
 			checkDomain();
 			checkWikiName();
 		}
+
+		// added like this, instead of in stylesheet, so it won't override overflow property globally
+		$('#WikiaArticle').css('overflow', 'visible');
 	}
 
 	function cacheSelectors() {
@@ -87,7 +89,6 @@ define('ext.createNewWiki.builder', ['ext.createNewWiki.helper', 'wikia.tracker'
 		wikiDomainLabel = $nameWikiWrapper.find('label[for=wiki-domain]');
 		wikiDomainError = $nameWikiWrapper.find('.wiki-domain-error');
 		wikiDomainCountry = $nameWikiWrapper.find('.domain-country');
-		nameWikiSubmitError = $nameWikiWrapper.find('.submit-error');
 		wikiLanguage = $nameWikiWrapper.find('input[name=wiki-language]');
 		wikiLanguageList = $nameWikiWrapper.find('.wds-dropdown__wiki-language');
 		wikiVertical = $descWikiWrapper.find('input[name=wiki-vertical]');

@@ -5,10 +5,10 @@
 @import 'skins/shared/mixins/transition';
 @import 'skins/oasis/css/core/layout';
 @import 'skins/shared/mixins/columns';
+@import 'skins/shared/mixins/transform';
 @import 'extensions/wikia/ThemeDesigner/css/ThemeTab';
 @import 'extensions/wikia/DesignSystem/bower_components/design-system/dist/scss/wds-variables/index.scss';
 @import 'extensions/wikia/DesignSystem/bower_components/design-system/dist/scss/wds-components/_buttons.scss';
-@import 'extensions/wikia/DesignSystem/bower_components/design-system/dist/scss/wds-components/_dropdowns.scss';
 
 .WikiaSiteWrapper {
 	background-color: $wds-color-off-white;
@@ -271,27 +271,15 @@
 	display: none;
 }
 
-#WikiaArticle {
-	overflow: visible;
-}
-
 .cnw-select {
-	margin: 48px 0 48px 0;
-
-	#cnw-select__header {
-		color: $wds-color-dark-gray;
-		font-size: 16px !important;
-		font-weight: bold !important;
-		line-height: 1.5 !important;
-		margin: 0 0 10px 0;
-	}
+	margin: $content-spacing-xxlarge 0;
 
 	.wds-dropdown {
 		border-bottom: 1px solid $wds-color-mist-gray;
-		width: 324px;
+		width: $cnw-select-width;
 
 		.default-value {
-			line-height: 1.5;
+			line-height: $wds-line-height;
 		}
 
 		svg {
@@ -302,44 +290,49 @@
 
 		&.wds-is-active {
 			svg {
-				-webkit-transform: rotate(180deg);
-				-ms-transform: rotate(180deg);
-				transform: rotate(180deg);
+				@include transform-rotate(180deg);
 			}
 		}
 
 		.wds-dropdown__content {
-			max-height: 324px;
+
 			overflow: auto;
-			width: 324px;
+			width: $cnw-select-width;
+
+			&.wds-dropdown__wiki-language {
+				max-height: $cnw-dropdown-spacer-height + ($cnw-dropdown-elements - 1) * $cnw-dropdown-item-height;
+			}
+
+			&.wds-dropdown__wiki-vertical {
+				max-height: $cnw-dropdown-elements * $cnw-dropdown-item-height;
+			}
 
 			.wds-list {
 				cursor: pointer;
-				margin: 0;
 				list-style-type: none;
+				margin: 0;
 				padding: 0;
 
 				.spacer {
 					color: $wds-color-dark-gray;
-					font-size: 16px;
+					font-size: $wds-typescale-size-base;
 					font-weight: bold;
-					line-height: 0.9;
+					line-height: .9;
 				}
 
 				li {
-					padding: 14px 18px 14px 18px;
+					margin: 0;
+					padding: $content-spacing-small-plus $content-spacing-regular;
 				}
 
 				li.spacer {
 					cursor: default;
-					padding: 18px;
+					padding: $content-spacing-regular;
 				}
 
-				li:not(.spacer) {
-					&:hover {
-						color: $wds-color-white;
-						background: $wds-color-mist-gray;
-					}
+				li:not(.spacer):hover {
+					color: $wds-color-white;
+					background: $wds-color-mist-gray;
 				}
 
 			}

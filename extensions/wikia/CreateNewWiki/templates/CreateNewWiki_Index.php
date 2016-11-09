@@ -37,10 +37,14 @@
 				</div>
 
 				<div class="cnw-select">
-					<h3 id="cnw-select__header"><?= wfMessage( 'cnw-desc-lang' )->escaped() ?></h3>
+					<h3><?= wfMessage( 'cnw-desc-lang' )->escaped() ?></h3>
 					<div class="wds-dropdown">
 						<div class="wds-dropdown__toggle">
-							<span class="default-value">English</span>
+							<? if ( !empty( $aLanguages ) && is_array( $aLanguages ) ) : ?>
+								<span class="default-value">
+									 <?= Sanitizer::escapeHtmlAllowEntities( $aLanguages[$selectedLang] ) ?>
+								</span>
+							<? endif ?>
 							<?= DesignSystemHelper::renderSvg( 'wds-icons-dropdown-tiny' ); ?>
 						</div>
 						<div class="wds-dropdown__content wds-dropdown__wiki-language">
@@ -98,7 +102,7 @@
 
 				<!-- Hub Category / Vertical -->
 				<div class="cnw-select">
-					<h3 id="cnw-select__header"><?= wfMessage( 'cnw-desc-select-vertical' )->escaped() ?></h3>
+					<h3><?= wfMessage( 'cnw-desc-select-vertical' )->escaped() ?></h3>
 					<div class="wds-dropdown">
 						<div class="wds-dropdown__toggle">
 							<span class="default-value"><?= wfMessage( 'cnw-desc-select-one' )->escaped() ?></span>
