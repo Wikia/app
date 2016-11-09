@@ -247,7 +247,7 @@ define('ext.createNewWiki.builder', ['ext.createNewWiki.helper', 'wikia.tracker'
 				.find('[data-short="' + selectedShort + '"]');
 			if (duplicate) {
 				duplicate.attr('checked', false);
-				hiddenDuplicate = duplicate.parent().hide();
+				hiddenDuplicate = duplicate.closest('label').hide();
 			}
 			$descWikiWrapper.find('label input[type="checkbox"]').change(onCategorySelection);
 		}
