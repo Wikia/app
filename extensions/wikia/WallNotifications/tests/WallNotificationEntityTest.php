@@ -577,7 +577,7 @@ class WallNotificationEntityTest extends WikiaBaseTest {
 			'wgCityId' => '125951',
 		];
 
-		return [
+		return [ 
 			[ $anonTopic ],
 			[ $anonReply ],
 			[ $userTopic ],
