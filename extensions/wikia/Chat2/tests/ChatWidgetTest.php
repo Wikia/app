@@ -95,7 +95,7 @@ class ChatWidgetTest extends WikiaBaseTest {
 		// static method mocks
 		$this->mockStaticMethod( 'ChatWidget', 'getUsersInfo', $chatUsersInfo );
 		$this->mockStaticMethod( 'AvatarService', 'getAvatarUrl', 'www.image.com' );
-		$this->mockStaticMethod( 'DesignSystemHelper', 'getSvg', '<svg></svg>' );
+		$this->mockStaticMethod( 'DesignSystemHelper', 'renderSvg', '<svg></svg>' );
 
 		$vars = ChatWidget::getTemplateVars( $fromParserTag );
 
