@@ -9,7 +9,7 @@
 				<span><?= DesignSystemHelper::renderText( $model['header']['title'] ) ?></span>
 			<?php elseif ( $model['header']['type'] === 'avatar' ): ?>
 				<?= Html::element( 'img', [
-					'class' => 'wds-avatar wds-is-circle',
+					'class' => 'wds-avatar',
 					'src' => $model['header']['url'],
 					'alt' => $model['header']['username']['value']
 				] ); ?>

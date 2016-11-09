@@ -2468,6 +2468,14 @@ $config['portable_infobox_js'] = [
 	],
 ];
 
+$config['portable_infobox_monobook_js'] = [
+	'type' => AssetsManager::TYPE_JS,
+	'skin' => [ 'monobook' ],
+	'assets' => [
+		'//extensions/wikia/PortableInfobox/js/PortableInfoboxMonobook.js',
+	],
+];
+
 $config['portable_infobox_scss'] = [
 	'type' => AssetsManager::TYPE_SCSS,
 	'skin' => [ 'oasis' ],

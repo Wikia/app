@@ -7,13 +7,13 @@ class PhalanxStatsSpecialController extends WikiaSpecialPageController {
 	function __construct( ) {
 		parent::__construct( 'PhalanxStats', 'phalanx', false );
 
-		$this->title = SpecialPage::getTitleFor('PhalanxStats');
-		$this->phalanxTitle = SpecialPage::getTitleFor('Phalanx');
+		$this->title = SpecialPage::getTitleFor( 'PhalanxStats' );
+		$this->phalanxTitle = SpecialPage::getTitleFor( 'Phalanx' );
 	}
 
 	public function index() {
 		wfProfileIn( __METHOD__ );
-		$this->wg->Out->setPageTitle( wfMsg('phalanx-stats-title') );
+		$this->wg->Out->setPageTitle( wfMsg( 'phalanx-stats-title' ) );
 		$this->wg->Out->addBacklinkSubtitle( $this->phalanxTitle );
 
 		if ( !$this->userCanExecute( $this->wg->User ) ) {
@@ -26,34 +26,34 @@ class PhalanxStatsSpecialController extends WikiaSpecialPageController {
 		if ( strpos( $par, 'wiki' ) === 0 ) {
 			// show per-wiki stats
 			list ( , $wikiId ) = explode( "/", $par, 2 );
-			$this->blockWikia($wikiId);
+			$this->blockWikia( $wikiId );
 		} else {
-			$blockId = $this->wg->Request->getInt('blockId', intval($par));
+			$blockId = $this->wg->Request->getInt( 'blockId', intval( $par ) );
 			if ( !empty( $blockId ) ) {
 				// show block stats
-				$this->blockStats($blockId);
+				$this->blockStats( $blockId );
 			} else {
 				// show help page
-				$this->forward('PhalanxStatsSpecial', 'help');
+				$this->forward( 'PhalanxStatsSpecial', 'help' );
 			}
 		}
 
 		wfProfileOut( __METHOD__ );
 	}
 
-	private function blockStats($blockId) {
+	private function blockStats( $blockId ) {
 		$out = $this->getOutput();
 		$out->setPageTitle( $this->msg( 'phalanx-stats-title' )->text() . "#$blockId" );
 		$out->addBacklinkSubtitle( $this->title );
 
-		$data = Phalanx::newFromId($blockId);
+		$data = Phalanx::newFromId( $blockId );
 
 		if ( !isset( $data["id"] ) ) {
 			$out->addWikiMsg( 'phalanx-stats-block-notfound', $blockId );
 			return false; // skip rendering
 		}
 
-		$data['author_id'] = User::newFromId($data['author_id'])->getName();
+		$data['author_id'] = User::newFromId( $data['author_id'] )->getName();
 		$data['timestamp'] = $this->getLanguage()->timeanddate( $data['timestamp'] );
 
 		if ( $data['expire'] == null ) {
@@ -65,7 +65,6 @@ class PhalanxStatsSpecialController extends WikiaSpecialPageController {
 		$data['regex'] = $data['regex'] ? 'Yes' : 'No';
 		$data['case']  = $data['case']  ? 'Yes' : 'No';
 		$data['exact'] = $data['exact'] ? 'Yes' : 'No';
-		$data['lang'] = empty( $data['lang'] ) ? 'All' : $data['lang'];
 
 		if ( $data['type'] & Phalanx::TYPE_EMAIL && !$this->getUser()->isAllowed( 'phalanxemailblock' ) ) {
 			/* hide email from non-privildged users */
@@ -74,24 +73,25 @@ class PhalanxStatsSpecialController extends WikiaSpecialPageController {
 
 		$data['type'] = implode( ', ', Phalanx::getTypeNames( $data['type'] ) );
 
+
 		/* pull these out of the array, so they dont get used in the top rows */
 		$row = $data->toArray();
-		unset($row['text']);
-		unset($row['reason']);
-		unset($row['comment']);
-		unset($row['ip_hex']);
+		unset( $row['text'] );
+		unset( $row['reason'] );
+		unset( $row['comment'] );
+		unset( $row['ip_hex'] );
 
 		// parse block reason and comment
 		$parserOptions = ParserOptions::newFromContext( $this->getContext() );
 		$parser = ParserPool::get();
 
-		if ($data['reason'] != '') {
+		if ( $data['reason'] != '' ) {
 			$reason = $parser->parse( $data['reason'], $this->getTitle(), $parserOptions )->getText();
 		} else {
 			$reason = '';
 		}
 
-		if ($data['comment'] != '') {
+		if ( $data['comment'] != '' ) {
 			$comment = $parser->parse( $data['comment'], $this->getTitle(), $parserOptions )->getText();
 		} else {
 			$comment = '';
@@ -111,7 +111,7 @@ class PhalanxStatsSpecialController extends WikiaSpecialPageController {
 		/* match statistics */
 		$pager = new PhalanxStatsPager( $blockId );
 		$pager->setContext( $this->getContext() );
-		$this->setVal('statsPager',
+		$this->setVal( 'statsPager',
 			$pager->getNavigationBar() .
 			$pager->getBody() .
 			$pager->getNavigationBar()
@@ -121,9 +121,9 @@ class PhalanxStatsSpecialController extends WikiaSpecialPageController {
 		$out->addModules( 'ext.wikia.Phalanx' );
 	}
 
-	private function blockWikia($wikiId) {
+	private function blockWikia( $wikiId ) {
 		$oWiki = WikiFactory::getWikiById( $wikiId );
-		if ( !is_object($oWiki) ) {
+		if ( !is_object( $oWiki ) ) {
 			return false;
 		}
 
@@ -140,10 +140,10 @@ class PhalanxStatsSpecialController extends WikiaSpecialPageController {
 		$this->wg->Out->addBacklinkSubtitle( $this->title );
 
 		$headers = array(
-			wfMsg('phalanx-stats-table-wiki-id'),
-			wfMsg('phalanx-stats-table-wiki-name'),
-			wfMsg('phalanx-stats-table-wiki-url'),
-			wfMsg('phalanx-stats-table-wiki-last-edited'),
+			wfMsg( 'phalanx-stats-table-wiki-id' ),
+			wfMsg( 'phalanx-stats-table-wiki-name' ),
+			wfMsg( 'phalanx-stats-table-wiki-url' ),
+			wfMsg( 'phalanx-stats-table-wiki-last-edited' ),
 		);
 
 		$tableAttribs = array(
@@ -153,10 +153,10 @@ class PhalanxStatsSpecialController extends WikiaSpecialPageController {
 		);
 
 		$table = Xml::buildTable( array( $data ), $tableAttribs, $headers );
-		$this->setVal('table', $table);
-		
+		$this->setVal( 'table', $table );
+
 		$pager = new PhalanxStatsWikiaPager( $wikiId );
-		$this->setVal('statsPager',
+		$this->setVal( 'statsPager',
 			$pager->getNavigationBar() .
 			$pager->getBody() .
 			$pager->getNavigationBar()

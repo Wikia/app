@@ -71,12 +71,3 @@ define('ext.wikia.adEngine.video.vastUrlBuilder', [
 		build: build
 	};
 });
-
-// TODO: ADEN-4128 - remove me
-// ext.wikia.adEngine.video.vastBuilder is used in Mercury
-define('ext.wikia.adEngine.video.vastBuilder', [
-	'ext.wikia.adEngine.video.vastUrlBuilder'
-], function (vastUrlBuilder) {
-	'use strict';
-	return vastUrlBuilder;
-});

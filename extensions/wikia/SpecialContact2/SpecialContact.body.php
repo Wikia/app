@@ -5,7 +5,7 @@
  * @subpackage SpecialPage
  */
 class ContactForm extends SpecialPage {
-	const WIKIA_SUPPORT_EMAIL = 'support@wikia-inc.com';
+	const WIKIA_SUPPORT_EMAIL = 'support@fandom.com';
 
 	var $mUserName, $mPassword, $mRetype, $mReturnto, $mCookieCheck;
 	var $mAction, $mCreateaccount, $mCreateaccountMail, $mMailmypassword;
@@ -252,7 +252,7 @@ class ContactForm extends SpecialPage {
 		global $wgLanguageCode, $wgServer;
 
 		// If not configured, fall back to a default just in case.
-		$wgSpecialContactEmail = ( empty( $wgSpecialContactEmail ) ? "community@wikia.com" : $wgSpecialContactEmail );
+		$wgSpecialContactEmail = ( empty( $wgSpecialContactEmail ) ? "community@fandom.com" : $wgSpecialContactEmail );
 
 		$user = $this->getUser();
 		$output = $this->getOutput();

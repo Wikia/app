@@ -1,0 +1,479 @@
+{
+	"@Note": "When updating this file please also update SemanticForms.php with the same changes.",
+	"load_composer_autoloader": true,
+	"name": "Semantic Forms",
+	"version": "3.7",
+	"author": [
+		"Yaron Koren",
+		"Stephan Gambke",
+		"..."
+	],
+	"url": "https://www.mediawiki.org/wiki/Extension:Semantic_Forms",
+	"descriptionmsg": "semanticforms-desc",
+	"license-name": "GPL-2.0+",
+	"type": "specialpage",
+	"callback": "SFHooks::registerExtension",
+	"ExtensionFunctions": [
+		"SFHooks::initialize"
+	],
+	"require": {
+		"MediaWiki": ">= 1.28.0"
+	},
+	"GroupPermissions": {
+		"*": {
+			"viewedittab": true
+		},
+		"sysop": {
+			"editrestrictedfields": true
+		},
+		"user": {
+			"createclass": true
+		}
+	},
+	"AvailableRights": [
+		"viewedittab",
+		"editrestrictedfields",
+		"createclass"
+	],
+	"Actions": {
+		"formedit": "SFFormEditAction",
+		"formcreate": "SFHelperFormAction"
+	},
+	"SpecialPages": {
+		"Forms": "SFForms",
+		"CreateForm": "SFCreateForm",
+		"Templates": "SFTemplates",
+		"CreateTemplate": "SFCreateTemplate",
+		"CreateClass": "SFCreateClass",
+		"CreateCategory": "SFCreateCategory",
+		"FormStart": "SFFormStart",
+		"FormEdit": "SFFormEdit",
+		"RunQuery": "SFRunQuery",
+		"UploadWindow": "SFUploadWindow"
+	},
+	"JobClasses": {
+		"createPage": "SFCreatePageJob"
+	},
+	"APIModules": {
+		"sfautocomplete": "SFAutocompleteAPI",
+		"sfautoedit": "SFAutoeditAPI"
+	},
+	"MessagesDirs": {
+		"SemanticForms": [
+			"i18n"
+		]
+	},
+	"ExtensionMessagesFiles": {
+		"SemanticFormsAlias": "languages/SF_Aliases.php",
+		"SemanticFormsMagic": "languages/SF_Magic.php",
+		"SemanticFormsNS": "languages/SF_Namespaces.php"
+	},
+	"AutoloadClasses": {
+		"SFForms": "specials/SF_Forms.php",
+		"SFCreateForm": "specials/SF_CreateForm.php",
+		"SFTemplates": "specials/SF_Templates.php",
+		"SFCreateTemplate": "specials/SF_CreateTemplate.php",
+		"SFCreateClass": "specials/SF_CreateClass.php",
+		"SFCreateCategory": "specials/SF_CreateCategory.php",
+		"SFFormStart": "specials/SF_FormStart.php",
+		"SFFormEdit": "specials/SF_FormEdit.php",
+		"SFRunQuery": "specials/SF_RunQuery.php",
+		"SFUploadForm": "specials/SF_UploadWindow.php",
+		"SFUploadSourceField": "specials/SF_UploadWindow.php",
+		"SFUploadWindow": "specials/SF_UploadWindow.php",
+		"SFTemplateField": "includes/SF_TemplateField.php",
+		"TemplatesPage": "specials/SF_Templates.php",
+		"FormsPage": "specials/SF_Forms.php",
+		"SFForm": "includes/SF_Form.php",
+		"SFTemplate": "includes/SF_Template.php",
+		"SFTemplateInForm": "includes/SF_TemplateInForm.php",
+		"SFFormField": "includes/SF_FormField.php",
+		"SFFormPrinter": "includes/SF_FormPrinter.php",
+		"SFFormUtils": "includes/SF_FormUtils.php",
+		"SFUtils": "includes/SF_Utils.php",
+		"SFValuesUtils": "includes/SF_ValuesUtils.php",
+		"SFHooks": "includes/SF_Hooks.php",
+		"SFFormLinker": "includes/SF_FormLinker.php",
+		"SFPageSchemas": "includes/SF_PageSchemas.php",
+		"SFParserFunctions": "includes/SF_ParserFunctions.php",
+		"SFAutocompleteAPI": "includes/SF_AutocompleteAPI.php",
+		"SFAutoeditAPI": "includes/SF_AutoeditAPI.php",
+		"SFFormEditAction": "includes/SF_FormEditAction.php",
+		"SFHelperFormAction": "includes/SF_HelperFormAction.php",
+		"SFPageSection": "includes/SF_PageSection.php",
+		"SFFormInput": "includes/forminputs/SF_FormInput.php",
+		"SFTextInput": "includes/forminputs/SF_TextInput.php",
+		"SFTextWithAutocompleteInput": "includes/forminputs/SF_TextWithAutocompleteInput.php",
+		"SFTextAreaInput": "includes/forminputs/SF_TextAreaInput.php",
+		"SFTextAreaWithAutocompleteInput": "includes/forminputs/SF_TextAreaWithAutocompleteInput.php",
+		"SFEnumInput": "includes/forminputs/SF_EnumInput.php",
+		"SFMultiEnumInput": "includes/forminputs/SF_MultiEnumInput.php",
+		"SFCheckboxInput": "includes/forminputs/SF_CheckboxInput.php",
+		"SFCheckboxesInput": "includes/forminputs/SF_CheckboxesInput.php",
+		"SFRadioButtonInput": "includes/forminputs/SF_RadioButtonInput.php",
+		"SFDropdownInput": "includes/forminputs/SF_DropdownInput.php",
+		"SFListBoxInput": "includes/forminputs/SF_ListBoxInput.php",
+		"SFComboBoxInput": "includes/forminputs/SF_ComboBoxInput.php",
+		"SFDateInput": "includes/forminputs/SF_DateInput.php",
+		"SFDatePickerInput": "includes/forminputs/SF_DatePickerInput.php",
+		"SFDateTimeInput": "includes/forminputs/SF_DateTimeInput.php",
+		"SFYearInput": "includes/forminputs/SF_YearInput.php",
+		"SFTreeInput": "includes/forminputs/SF_TreeInput.php",
+		"SFTree": "includes/forminputs/SF_TreeInput.php",
+		"SFCategoryInput": "includes/forminputs/SF_CategoryInput.php",
+		"SFCategoriesInput": "includes/forminputs/SF_CategoriesInput.php",
+		"SFTokensInput": "includes/forminputs/SF_TokensInput.php",
+		"SFGoogleMapsInput": "includes/forminputs/SF_GoogleMapsInput.php",
+		"SFOpenLayersInput": "includes/forminputs/SF_OpenLayersInput.php",
+		"SFRegExpInput": "includes/forminputs/SF_RegExpInput.php",
+		"SFWikiPage": "includes/wikipage/SF_WikiPage.php",
+		"SFWikiPageTemplate": "includes/wikipage/SF_WikiPageTemplate.php",
+		"SFWikiPageTemplateParam": "includes/wikipage/SF_WikiPageTemplateParam.php",
+		"SFWikiPageSection": "includes/wikipage/SF_WikiPageSection.php",
+		"SFWikiPageFreeText": "includes/wikipage/SF_WikiPageFreeText.php",
+		"SFCreatePageJob": "includes/SF_CreatePageJob.php",
+		"SF_Language": "languages/SF_Language.php"
+	},
+	"ResourceModules": {
+		"ext.semanticforms.main": {
+			"scripts": [
+				"libs/SemanticForms.js",
+				"libs/SF_preview.js"
+			],
+			"styles": [
+				"skins/SemanticForms.css",
+				"skins/SF_jquery_ui_overrides.css"
+			],
+			"dependencies": [
+				"jquery.ui.core",
+				"jquery.ui.autocomplete",
+				"jquery.ui.button",
+				"jquery.ui.sortable",
+				"jquery.ui.widget",
+				"ext.semanticforms.fancybox",
+				"ext.semanticforms.autogrow",
+				"mediawiki.util",
+				"ext.semanticforms.select2"
+			],
+			"messages": [
+				"sf_formerrors_header",
+				"sf_too_few_instances_error",
+				"sf_too_many_instances_error",
+				"sf_blank_error",
+				"sf_not_unique_error",
+				"sf_bad_url_error",
+				"sf_bad_email_error",
+				"sf_bad_number_error",
+				"sf_bad_date_error",
+				"sf_pipe_error"
+			]
+		},
+		"ext.semanticforms.browser": {
+			"scripts": [
+				"libs/jquery.browser.js"
+			]
+		},
+		"ext.semanticforms.fancybox": {
+			"scripts": "libs/jquery.fancybox.js",
+			"styles": "skins/jquery.fancybox.css",
+			"dependencies": [
+				"ext.semanticforms.browser"
+			]
+		},
+		"ext.semanticforms.dynatree": {
+			"dependencies": [
+				"jquery.ui.widget"
+			],
+			"scripts": [
+				"libs/jquery.dynatree.js",
+				"libs/SF_dynatree.js"
+			],
+			"styles": "skins/ui.dynatree.css"
+		},
+		"ext.semanticforms.autogrow": {
+			"scripts": [
+				"libs/SF_autogrow.js"
+			]
+		},
+		"ext.semanticforms.popupformedit": {
+			"scripts": "libs/SF_popupform.js",
+			"styles": "skins/SF_popupform.css",
+			"dependencies": [
+				"ext.semanticforms.browser"
+			]
+		},
+		"ext.semanticforms.autoedit": {
+			"scripts": "libs/SF_autoedit.js",
+			"styles": "skins/SF_autoedit.css",
+			"messages": [
+				"sf-autoedit-wait",
+				"sf_autoedit_anoneditwarning"
+			]
+		},
+		"ext.semanticforms.submit": {
+			"scripts": [
+				"libs/SF_submit.js"
+			],
+			"styles": [
+				"skins/SF_submit.css"
+			],
+			"messages": [
+				"sf_formedit_saveandcontinue_summary",
+				"sf_formedit_saveandcontinueediting"
+			]
+		},
+		"ext.semanticforms.collapsible": {
+			"scripts": [
+				"libs/SF_collapsible.js"
+			],
+			"styles": [
+				"skins/SF_collapsible.css"
+			]
+		},
+		"ext.semanticforms.imagepreview": {
+			"scripts": [
+				"libs/SF_imagePreview.js"
+			]
+		},
+		"ext.semanticforms.checkboxes": {
+			"scripts": [
+				"libs/SF_checkboxes.js"
+			],
+			"styles": [
+				"skins/SF_checkboxes.css"
+			],
+			"messages": [
+				"sf_forminputs_checkboxes_select_all",
+				"sf_forminputs_checkboxes_select_none"
+			]
+		},
+		"ext.semanticforms.datepicker": {
+			"scripts": [
+				"libs/SF_datepicker.js"
+			],
+			"dependencies": [
+				"jquery.ui.datepicker",
+				"ext.semanticforms.main"
+			]
+		},
+		"ext.semanticforms.regexp": {
+			"scripts": "libs/SF_regexp.js",
+			"dependencies": [
+				"ext.semanticforms.main"
+			]
+		},
+		"ext.semanticforms.select2": {
+			"scripts": [
+				"libs/select2.js",
+				"libs/ext.sf.select2.base.js",
+				"libs/ext.sf.select2.combobox.js",
+				"libs/ext.sf.select2.tokens.js"
+			],
+			"styles": [
+				"skins/select2/select2.css",
+				"skins/select2/select2-bootstrap.css",
+				"skins/ext.sf.select2.css"
+			],
+			"dependencies": [
+				"ext.semanticforms",
+				"mediawiki.jqueryMsg"
+			],
+			"messages": [
+				"sf-select2-no-matches",
+				"sf-select2-searching",
+				"sf-select2-input-too-short",
+				"sf-select2-selection-too-big"
+			]
+		},
+		"ext.semanticforms.jsgrid": {
+			"scripts": [
+				"libs/jsgrid.js",
+				"libs/SF_jsGrid.js"
+			],
+			"styles": [
+				"skins/jsgrid/jsgrid.css",
+				"skins/jsgrid/theme.css"
+			],
+			"dependencies": [
+				"jquery.ui.sortable"
+			],
+			"messages": [
+				"htmlform-yes",
+				"htmlform-no"
+			]
+		},
+		"ext.semanticforms": {
+			"scripts": [
+				"libs/ext.sf.js"
+			]
+		},
+		"ext.semanticforms.SF_CreateProperty": {
+			"scripts": [
+				"libs/SF_CreateProperty.js"
+			]
+		},
+		"ext.semanticforms.SF_PageSchemas": {
+			"scripts": [
+				"libs/SF_PageSchemas.js"
+			]
+		},
+		"ext.semanticforms.SF_CreateTemplate": {
+			"scripts": [
+				"libs/SF_CreateTemplate.js"
+			],
+			"messages": [
+				"sf_blank_error"
+			]
+		},
+		"ext.semanticforms.SF_CreateClass": {
+			"scripts": [
+				"libs/SF_CreateClass.js"
+			]
+		},
+		"ext.semanticforms.SF_CreateForm": {
+			"scripts": [
+				"libs/SF_CreateForm.js"
+			],
+			"messages": [
+				"sf_blank_error"
+			]
+		}
+	},
+	"ResourceFileModulePaths": {
+		"localBasePath": "",
+		"remoteExtPath": "SemanticForms"
+	},
+	"Hooks": {
+		"LinkEnd": [
+			"SFFormLinker::setBrokenLink"
+		],
+		"SkinTemplateTabs": [
+			"SFFormEditAction::displayTab",
+			"SFHelperFormAction::displayTab"
+		],
+		"SkinTemplateNavigation": [
+			"SFFormEditAction::displayTab2",
+			"SFHelperFormAction::displayTab2"
+		],
+		"smwInitProperties": [
+			"SFHooks::initProperties"
+		],
+		"ArticlePurge": [
+			"SFFormUtils::purgeCache"
+		],
+		"ParserFirstCallInit": [
+			"SFHooks::registerFunctions"
+		],
+		"MakeGlobalVariablesScript": [
+			"SFHooks::setGlobalJSVariables"
+		],
+		"PageSchemasRegisterHandlers": [
+			"SFPageSchemas::registerClass"
+		],
+		"EditPage::importFormData": [
+			"SFHooks::showFormPreview"
+		],
+		"CanonicalNamespaces": [
+			"SFHooks::registerNamespaces"
+		],
+		"UnitTestsList": [
+			"SFHooks::onUnitTestsList"
+		],
+		"ResourceLoaderRegisterModules": [
+			"SFHooks::registerModules"
+		]
+	},
+	"config": {
+		"sfgMaxAutocompleteValues": {
+			"value": 1000
+		},
+		"sfgMaxLocalAutocompleteValues": {
+			"value": 100
+		},
+		"sfgAutocompleteOnAllChars": {
+			"value": false
+		},
+		"sfgCacheAutocompleteValues": {
+			"value": false
+		},
+		"sfgAutocompleteCacheTimeout": {
+			"value": null
+		},
+		"sfgRenameEditTabs": {
+			"value": false
+		},
+		"sfgRenameMainEditTab": {
+			"value": false
+		},
+		"sfgListSeparator": {
+			"value": ","
+		},
+		"sfg24HourTime": {
+			"value": false
+		},
+		"sfgCacheFormDefinitions": {
+			"value": false
+		},
+		"sfgFormCacheType": {
+			"value": null
+		},
+		"sfgLinkAllRedLinksToForms": {
+			"value": false
+		},
+		"sfgRedLinksCheckOnlyLocalProps": {
+			"value": false
+		},
+		"sfgShowTabsForAllHelperForms": {
+			"value": true
+		},
+		"sfgRunQueryFormAtTop": {
+			"value": false
+		},
+		"sfgGoogleMapsKey": {
+			"value": null
+		},
+		"sfgShowOnSelect": {
+			"value": []
+		},
+		"sfgAutocompleteValues": {
+			"value": []
+		},
+		"sfgGridValues": {
+			"value": []
+		},
+		"sfgGridParams": {
+			"value": []
+		},
+		"sfgFieldProperties": {
+			"value": []
+		},
+		"sfgCargoFields": {
+			"value": []
+		},
+		"sfgDependentFields": {
+			"value": []
+		},
+		"sfgCheckboxesSelectAllMinimum": {
+			"value": 10
+		},
+		"sfgDatePickerSettings": {
+			"value": {
+				"@note": "See SF_DefaultInputSettings.php for allowed values",
+				"FirstDate": null,
+				"LastDate": null,
+				"DateFormat": "SHORT",
+				"WeekStart": null,
+				"ShowWeekNumbers": false,
+				"DisableInputField": false,
+				"ShowResetButton": false,
+				"DisabledDaysOfWeek": null,
+				"HighlightedDaysOfWeek": null,
+				"DisabledDates": null,
+				"HighlightedDates": null
+			},
+			"merge_strategy": "array_plus"
+		}
+	},
+	"config_prefix": "",
+	"manifest_version": 2
+}
