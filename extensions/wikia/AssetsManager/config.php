@@ -3059,3 +3059,48 @@ $config['storieslink_tag_js'] = [
 		'//extensions/wikia/StoriesLinkTag/scripts/StoriesLinkTag.js',
 	],
 ];
+
+$config['oasislight_top_js'] = [
+	'type' => AssetsManager::TYPE_JS,
+	'skin' => [ 'oasislight' ],
+	'assets' => [
+		'//resources/wikia/libraries/modil/modil.js',
+		'//resources/wikia/modules/lazyqueue.js',
+		'//extensions/wikia/OasisLight/scripts/jquery-3.1.1.slim.min.js',
+		'//extensions/wikia/OasisLight/scripts/jquery-extra.js',
+	],
+];
+
+$config['oasislight_bottom_js'] = [
+	'type' => AssetsManager::TYPE_JS,
+	'skin' => [ 'oasislight' ],
+	'assets' => [
+		# WikiHeader
+		'//skins/oasis/js/isTouchScreen.js',
+		'//skins/oasis/js/WikiHeader.js',
+
+		# ImageLazyLoad
+		'//resources/wikia/libraries/jquery/throttle-debounce/jquery.throttle-debounce.js',
+		'//resources/wikia/modules/browserDetect.js',
+		'//resources/wikia/modules/location.js',
+		'//resources/wikia/modules/log.js',
+		'//resources/wikia/modules/querystring.js',
+		'//resources/wikia/modules/thumbnailer.js',
+		'//resources/wikia/modules/window.js',
+		'//extensions/wikia/ImageLazyLoad/js/ImgLzy.module.js',
+		'//extensions/wikia/ImageLazyLoad/js/ImageLazyLoad.js',
+
+		# Header, Footer
+		'//resources/wikia/modules/history.js',
+		'#group_tracker_js',
+		'#group_design_system_js',
+
+		# TOC
+		'//resources/jquery/jquery.cookie.js',
+		'//extensions/wikia/TOC/js/modules/toc.mustache.js',
+		'#group_toc_js',
+
+		# Lightbox
+		'//extensions/wikia/OasisLight/scripts/heavybox.js',
+	],
+];
