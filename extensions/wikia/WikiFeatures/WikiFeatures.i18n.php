@@ -515,7 +515,6 @@ $messages['fr'] = [
 	'wikifeatures-feature-description-wgEnableForumExt' => 'Restez informé de chaque discussion sur votre wikia en utilisant le nouveau [[w:fr:Aide:Forum|forum]] de Wikia. Amenez de nouvelles personnes à prendre part aux conversations à propos du contenu du wikia et assurez-vous que les contributeurs participant sur le wikia restent efficaces et aient connaissance des sujets en cours.',
 	'wikifeatures-feature-heading-wgGameGuidesContentForAdmins' => 'Contenu Game Guides',
 	'wikifeatures-feature-description-wgGameGuidesContentForAdmins' => 'Utilisez la page [[{{#special:GameGuidesContent}}]] de votre wikia pour gérer les catégories affichées dans l\'application mobile [[w:fr:Aide:Game_Guides|Game Guides]] et élargir votre public !',
-	'wikifeatures-feature-description-wgEnableNjordExt' => 'Rendez votre wikia plus attractif en important une image pour le représenter sur sa page d\'accueil !',
 	'wikifeatures-feature-heading-wgEnableCuratedContentExt' => 'Contenu de l\'application mobile',
 	'wikifeatures-feature-description-wgEnableCuratedContentExt' => 'Utilisez la page [[{{#special:CuratedContent}}]] de votre wikia pour gérer le contenu affiché dans l\'application mobile et élargir votre public !',
 	'action-wikifeaturesview' => 'afficher Composants de wiki',
@@ -703,7 +702,6 @@ $messages['it'] = [
 	'wikifeatures-feature-description-wgGameGuidesContentForAdmins' => 'Usa la pagina Special:GameGuidesContent della tua wiki per decidere quali categorie 
 far apparire nell\'applicazione per dispositivi mobili Game Guides.
 Amplia il tuo potenziale pubblico!',
-	'wikifeatures-feature-description-wgEnableNjordExt' => 'Rendi la tua wiki più attraente caricando un\'immagine rappresentativa nella tua pagina principale!',
 	'wikifeatures-feature-heading-wgEnableCuratedContentExt' => 'Contenuti Curati',
 	'wikifeatures-feature-description-wgEnableCuratedContentExt' => 'Usa la pagina Speciale:CuratedContent della tua wiki per organizzare i contenuti che appaiono nell\'app per il mobile. Espandi il tuo pubblico!',
 	'wikifeatures-log-name' => 'Registro delle Wiki Funzioni',
