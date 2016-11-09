@@ -27,9 +27,10 @@ if ( $runNjord ) {
 			<div class="header-column header-tally">
 				<? if ( !is_null( $tallyMsg ) ): ?>
 					<div class="tally"><?= $tallyMsg ?></div>
-					<a href="/wiki/Special:CreatePage?flow=create-page-contribute-button" class="wikia-button createpage" data-id="createpage">
-						<?= wfMessage( 'oasis-button-add-new-page' )->escaped(); ?>
-					</a>
+					<?= F::app()->renderView(
+						'PageHeader',
+						'AddNewPageButton'
+					); ?>
 				<? endif; ?>
 			</div>
 		</div>

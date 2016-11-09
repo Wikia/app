@@ -198,7 +198,7 @@ class PageHeaderController extends WikiaController {
 		/** end of wikia changes */
 
 		// for not existing pages page header is a bit different
-		$this->pageExists = !empty( $this->wg->Title ) && $this->wg->Title->exists();
+		$this->pageExists = $this->getPageExists();
 
 		// default title "settings" (RT #145371), don't touch special pages
 		if ( $ns != NS_SPECIAL ) {
@@ -603,6 +603,24 @@ class PageHeaderController extends WikiaController {
 		}
 
 		wfProfileOut( __METHOD__ );
+	}
+
+	public function executeAddNewPageButton() {
+		$this->shouldDisplay = false;
+
+		// That's when we show the number of pages on a wiki
+		if ( $this->getPageExists() && !$this->wg->Title->isSpecial( 'Videos' ) ) {
+			$this->shouldDisplay = true;
+			$href = SpecialPage::getTitleFor( 'CreatePage' )->getLocalURL();
+
+			wfRunHooks( 'PageHeaderAfterAddNewPageButton', [ &$href ]);
+
+			$this->href = $href;
+		}
+	}
+
+	private function getPageExists() {
+		return !empty( $this->wg->Title ) && $this->wg->Title->exists();
 	}
 
 	static function onArticleSaveComplete( &$article, &$user, $text, $summary,
