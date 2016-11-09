@@ -124,7 +124,7 @@ class HeliosClientImpl implements HeliosClient
 			 * to receive an HTTP response from Helios.
 			 */
 
-			if ( $retry_cnt < self::HELIOS_REQUEST_TRIES ||
+			if ( $retry_cnt >= self::HELIOS_REQUEST_TRIES ||
 				( !$request->status->hasMessage( 'http-timed-out' ) &&
 				  !$request->status->hasMessage( 'http-curl-error' ) ) ) {
 				break;
