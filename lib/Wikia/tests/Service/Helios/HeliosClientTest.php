@@ -34,6 +34,8 @@ class HeliosClientTest extends \WikiaBaseTest {
 			->method( 'getContent' )
 			->willReturn( null );
 
+		$requestMock->status = $this->getMock( 'stdClass', [ 'isOK', 'getErrorsArray' ]);
+
 		$this->mockStaticMethod( '\Http', 'request', $requestMock );
 
 		$client = new HeliosClientImpl( 'http://example.com', 'id', 'secret' );
