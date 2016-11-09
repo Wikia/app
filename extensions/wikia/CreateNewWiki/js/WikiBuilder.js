@@ -51,6 +51,7 @@ define('ext.createNewWiki.builder', ['ext.createNewWiki.helper', 'wikia.tracker'
 		cacheSelectors();
 		checkNextButtonStep1();
 		bindEventHandlers();
+		initFloatingLabelsPosition();
 
 		// Set current step on page load
 		if (WikiBuilderCfg.currentstep) {
@@ -111,6 +112,11 @@ define('ext.createNewWiki.builder', ['ext.createNewWiki.helper', 'wikia.tracker'
 		$themWikiWrapper.find('nav .next').click(onThemeNavNextClick);
 		wikiVertical.on('change', onWikiVerticalChange);
 		$descWikiWrapper.find('#all-ages-div input').bind('change', onIntendedForKidsCheckboxChange);
+	}
+
+	function initFloatingLabelsPosition() {
+		wikiNameLabel.css('left', wikiName.position().left);
+		wikiDomainLabel.css('left', wikiDomain.position().left);
 	}
 
 	function onThemeNavNextClick() {
@@ -316,12 +322,12 @@ define('ext.createNewWiki.builder', ['ext.createNewWiki.helper', 'wikia.tracker'
 	}
 
 	function onWikiNameFocus() {
-		wikiNameLabel.addClass('active');
+		wikiNameLabel.addClass('active').css('left', 0);
 	}
 
 	function onWikiNameBlur(e) {
 		if (e.target.value.trim().length === 0) {
-			wikiNameLabel.removeClass('active');
+			wikiNameLabel.removeClass('active').css('left', wikiName.position().left);
 			if (!wikiDomain.val().trim().length) {
 				wikiDomainLabel.removeClass('active').css('left', wikiDomain.position().left);
 			}
