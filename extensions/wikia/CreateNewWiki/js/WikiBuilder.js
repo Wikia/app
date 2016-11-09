@@ -317,12 +317,12 @@ define('ext.createNewWiki.builder', ['ext.createNewWiki.helper', 'wikia.tracker'
 	}
 
 	function onWikiNameFocus() {
-		wikiNameLabel.addClass('active');
+		wikiNameLabel.addClass('active').css('left', 0);
 	}
 
 	function onWikiNameBlur(e) {
 		if (e.target.value.trim().length === 0) {
-			wikiNameLabel.removeClass('active');
+			wikiNameLabel.removeClass('active').css('left', wikiName.position().left);
 			if (!wikiDomain.val().trim().length) {
 				wikiDomainLabel.removeClass('active').css('left', wikiDomain.position().left);
 			}
