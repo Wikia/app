@@ -52,7 +52,7 @@ class ChatWidget {
 		$vars = [
 			'blankImgUrl' => $wgBlankImgUrl,
 			'buttonText' => wfMessage($buttonMessage)->text(),
-			'buttonIcon' => DesignSystemHelper::getSvg( 'wds-icons-reply-tiny' ),
+			'buttonIcon' => DesignSystemHelper::renderSvg( 'wds-icons-reply-tiny' ),
 			'guidelinesText' => $guidelinesText->exists() ? $guidelinesText->parse() : null,
 			'fromParserTag' => $fromParserTag,
 			'joinChatText' => $joinChatMessage->exists() ? $joinChatMessage->text() : null,
@@ -204,8 +204,8 @@ class ChatWidget {
 						$chatter['profileType'] = 'message-wall';
 						$chatter['profileTypeMsg'] = 'chat-user-menu-message-wall';
 					}
-					$chatter['profileIcon'] = DesignSystemHelper::getSvg( 'wds-icons-reply-small', 'wds-icon wds-icon-small' );
-					$chatter['contribIcon'] = DesignSystemHelper::getSvg( 'wds-icons-pencil-small', 'wds-icon wds-icon-small' );
+					$chatter['profileIcon'] = DesignSystemHelper::renderSvg( 'wds-icons-reply-small', 'wds-icon wds-icon-small' );
+					$chatter['contribIcon'] = DesignSystemHelper::renderSvg( 'wds-icons-pencil-small', 'wds-icon wds-icon-small' );
 				}
 
 				return $chatter;
