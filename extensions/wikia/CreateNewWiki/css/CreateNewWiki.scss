@@ -134,12 +134,16 @@
 		}
 	}
 
-	.wiki-domain-container, .wiki-name-container {
+	.wiki-domain-container,
+	.wiki-name-container {
 		position: relative;
 	}
 
-	.language-choice, .select-container, .wiki-domain-container {
-		margin: $content-spacing-xxlarge 0;
+	.language-choice,
+	.select-container,
+	.wiki-name-container,
+	.wiki-domain-container {
+		margin: $content-spacing-regular 0;
 	}
 
 	.instruction {
@@ -160,8 +164,8 @@
 
 	.error-msg {
 		color: $wds-color-alert;
-		float: left;
 		font-size: $wds-typescale-size-minus-2;
+		min-height: $wds-line-height * 4 / 3;
 	}
 
 	.categories-sets {
@@ -242,7 +246,8 @@
 	}
 }
 
-#DescWiki, #ThemeWiki {
+#DescWiki,
+#ThemeWiki {
 	display: none;
 }
 
