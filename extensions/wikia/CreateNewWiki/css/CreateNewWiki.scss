@@ -97,15 +97,16 @@
 		}
 	}
 
-	textarea, input {
-		font-size: inherit;
-	}
-
+	textarea,
 	input[type=text] {
 		border: none;
 		border-bottom: 1px solid $wds-color-mist-gray;
+		font-size: inherit;
 		line-height: $wds-line-height;
 		outline: none;
+	}
+
+	input[type=text] {
 		width: $cnw-input-width;
 
 		&.input-error {
@@ -113,24 +114,37 @@
 		}
 	}
 
+	textarea {
+		height: 2 * $wds-line-height;
+		overflow-x: hidden;
+		overflow-y: auto;
+		resize: none;
+		transition: height 250ms;
+		width: $cnw-input-width-large;
+
+		&.active {
+			height: 8 * $wds-line-height;
+		}
+	}
+
 	.desc-block {
 		display: flex;
-
-		textarea {
-			width: 320px;
-		}
 
 		.checkbox {
 			margin-left: $content-spacing-xxlarge;
 		}
 	}
 
-	.wiki-domain-container, .wiki-name-container {
+	.wiki-domain-container,
+	.wiki-name-container {
 		position: relative;
 	}
 
-	.language-choice, .select-container, .wiki-domain-container {
-		margin: $content-spacing-xxlarge 0;
+	.language-choice,
+	.select-container,
+	.wiki-name-container,
+	.wiki-domain-container {
+		margin: $content-spacing-regular 0;
 	}
 
 	.instruction {
@@ -151,8 +165,8 @@
 
 	.error-msg {
 		color: $wds-color-alert;
-		float: left;
 		font-size: $wds-typescale-size-minus-2;
+		min-height: $wds-line-height * 4 / 3;
 	}
 
 	.categories-sets {
@@ -233,7 +247,8 @@
 	}
 }
 
-#DescWiki, #ThemeWiki {
+#DescWiki,
+#ThemeWiki {
 	display: none;
 }
 
@@ -276,7 +291,7 @@
 
 	.wds-dropdown {
 		border-bottom: 1px solid $wds-color-mist-gray;
-		width: $cnw-select-width;
+		width: $cnw-input-width-large;
 
 		.default-value {
 			line-height: $wds-line-height;
@@ -297,7 +312,7 @@
 		.wds-dropdown__content {
 
 			overflow: auto;
-			width: $cnw-select-width;
+			width: $cnw-input-width-large;
 
 			&.wds-dropdown__wiki-language {
 				max-height: $cnw-dropdown-spacer-height + ($cnw-dropdown-elements - 1) * $cnw-dropdown-item-height;

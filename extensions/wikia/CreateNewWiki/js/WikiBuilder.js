@@ -53,6 +53,7 @@ define('ext.createNewWiki.builder', ['ext.createNewWiki.helper', 'wikia.tracker'
 		cacheSelectors();
 		checkNextButtonStep1();
 		bindEventHandlers();
+		initFloatingLabelsPosition();
 
 		// Set current step on page load
 		if (WikiBuilderCfg.currentstep) {
@@ -114,10 +115,24 @@ define('ext.createNewWiki.builder', ['ext.createNewWiki.helper', 'wikia.tracker'
 		wb.find('nav .back').bind('click', onNavBackClick);
 		descWikiNext.click(onDescWikiNextClick);
 		$('#Description').placeholder();
+		$('#Description').on('click', onWikiDescriptionClick);
 		$themWikiWrapper.find('nav .next').click(onThemeNavNextClick);
 		wikiVertical.on('change', onWikiVerticalChange);
 		wikiVerticalList.bind('click', onWikiVerticalListClick);
 		$descWikiWrapper.find('#all-ages-div input').bind('change', onIntendedForKidsCheckboxChange);
+	}
+
+	function initFloatingLabelsPosition() {
+		wikiNameLabel.css('left', wikiName.position().left);
+		wikiDomainLabel.css('left', wikiDomain.position().left);
+
+		if (wikiName.val()) {
+			wikiNameLabel.addClass('active').css('left', 0);
+		}
+
+		if (wikiDomain.val()) {
+			wikiDomainLabel.addClass('active').css('left', 0);
+		}
 	}
 
 	function onThemeNavNextClick() {
@@ -188,6 +203,10 @@ define('ext.createNewWiki.builder', ['ext.createNewWiki.helper', 'wikia.tracker'
 
 			descWikiNext.attr('disabled', false);
 		}
+	}
+
+	function onWikiDescriptionClick(e) {
+		e.target.classList.add('active');
 	}
 
 	function onWikiVerticalChange () {
@@ -328,12 +347,12 @@ define('ext.createNewWiki.builder', ['ext.createNewWiki.helper', 'wikia.tracker'
 	}
 
 	function onWikiNameFocus() {
-		wikiNameLabel.addClass('active');
+		wikiNameLabel.addClass('active').css('left', 0);
 	}
 
 	function onWikiNameBlur(e) {
 		if (e.target.value.trim().length === 0) {
-			wikiNameLabel.removeClass('active');
+			wikiNameLabel.removeClass('active').css('left', wikiName.position().left);
 			if (!wikiDomain.val().trim().length) {
 				wikiDomainLabel.removeClass('active').css('left', wikiDomain.position().left);
 			}
