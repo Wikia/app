@@ -29,6 +29,7 @@ define('ext.createNewWiki.builder', ['ext.createNewWiki.helper', 'wikia.tracker'
 		wikiLanguage,
 		wikiLanguageList,
 		wikiVertical,
+		wikiVerticalList,
 		wikiAllAges,
 		allAgesDiv,
 		descWikiSubmitError,
@@ -89,7 +90,8 @@ define('ext.createNewWiki.builder', ['ext.createNewWiki.helper', 'wikia.tracker'
 		nameWikiSubmitError = $nameWikiWrapper.find('.submit-error');
 		wikiLanguage = $nameWikiWrapper.find('input[name=wiki-language]');
 		wikiLanguageList = $nameWikiWrapper.find('.wds-dropdown__wiki-language');
-		wikiVertical = $descWikiWrapper.find('select[name=wiki-vertical]');
+		wikiVertical = $descWikiWrapper.find('input[name=wiki-vertical]');
+		wikiVerticalList = $descWikiWrapper.find('.wds-dropdown__wiki-vertical');
 		wikiAllAges = $descWikiWrapper.find('input[name=all-ages]');
 		allAgesDiv = $('#all-ages-div');
 		descWikiSubmitError = $descWikiWrapper.find('.submit-error');
@@ -113,6 +115,7 @@ define('ext.createNewWiki.builder', ['ext.createNewWiki.helper', 'wikia.tracker'
 		$('#Description').placeholder();
 		$themWikiWrapper.find('nav .next').click(onThemeNavNextClick);
 		wikiVertical.on('change', onWikiVerticalChange);
+		wikiVerticalList.bind('click', onWikiVerticalListClick);
 		$descWikiWrapper.find('#all-ages-div input').bind('change', onIntendedForKidsCheckboxChange);
 	}
 
@@ -187,9 +190,8 @@ define('ext.createNewWiki.builder', ['ext.createNewWiki.helper', 'wikia.tracker'
 	}
 
 	function onWikiVerticalChange () {
-		var $this = $(this),
-			selectedValue = $this.val(),
-			selectedOption,
+		var selectedOption = $(this),
+			selectedValue = selectedOption.val(),
 			selectedShort,
 			categoriesSets = $('.categories-sets'),
 			newCategoriesSetId,
@@ -206,7 +208,6 @@ define('ext.createNewWiki.builder', ['ext.createNewWiki.helper', 'wikia.tracker'
 			});
 			categoriesSets.show();
 
-			selectedOption = $this.find('option:selected');
 			selectedShort = selectedOption.data('short');
 			newCategoriesSetId = selectedOption.data('categoriesset');
 
@@ -230,6 +231,17 @@ define('ext.createNewWiki.builder', ['ext.createNewWiki.helper', 'wikia.tracker'
 			}
 			$descWikiWrapper.find('label input[type="checkbox"]').change(onCategorySelection);
 		}
+	}
+
+	function onWikiVerticalListClick(e) {
+		var li = $(e.target),
+			input = $descWikiWrapper.find('input[name=wiki-vertical]');
+
+		$descWikiWrapper.find('.wds-dropdown').removeClass('wds-is-active');
+		input.data('short', li.data('short'));
+		input.data('categoriesset', li.data('categoriesset'));
+		input.val(li.attr('id')).change();
+		$descWikiWrapper.find('.default-value').text(li.text());
 	}
 
 	function onCategorySelection() {
@@ -291,7 +303,7 @@ define('ext.createNewWiki.builder', ['ext.createNewWiki.helper', 'wikia.tracker'
 		if (!li.hasClass('spacer')) {
 			$nameWikiWrapper.find('.wds-dropdown').removeClass('wds-is-active');
 			$nameWikiWrapper.find('input[name=wiki-language]').val(li.attr('id')).change();
-			$nameWikiWrapper.find('.chosen-lang').text(li.text().split(':')[1]);
+			$nameWikiWrapper.find('.default-value').text(li.text().split(':')[1]);
 		}
 	}
 

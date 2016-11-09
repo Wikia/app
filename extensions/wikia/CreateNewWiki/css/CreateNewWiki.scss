@@ -275,10 +275,10 @@
 	overflow: visible;
 }
 
-.language-choice {
+.cnw-select {
 	margin: 48px 0 48px 0;
 
-	#language-choice__header {
+	#cnw-select__header {
 		color: $wds-color-dark-gray;
 		font-size: 16px !important;
 		font-weight: bold !important;
@@ -290,7 +290,7 @@
 		border-bottom: 1px solid $wds-color-mist-gray;
 		width: 324px;
 
-		.chosen-lang {
+		.default-value {
 			line-height: 1.5;
 		}
 

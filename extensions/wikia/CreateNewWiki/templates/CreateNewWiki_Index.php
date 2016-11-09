@@ -36,11 +36,11 @@
 					<div class="wiki-domain-error error-msg"></div>
 				</div>
 
-				<div class="language-choice">
-					<h3 id="language-choice__header"><?= wfMessage( 'cnw-desc-lang' )->escaped() ?></h3>
+				<div class="cnw-select">
+					<h3 id="cnw-select__header"><?= wfMessage( 'cnw-desc-lang' )->escaped() ?></h3>
 					<div class="wds-dropdown">
 						<div class="wds-dropdown__toggle">
-							<span class="chosen-lang">English</span>
+							<span class="default-value">English</span>
 							<?= DesignSystemHelper::renderSvg( 'wds-icons-dropdown-tiny' ); ?>
 						</div>
 						<div class="wds-dropdown__content wds-dropdown__wiki-language">
@@ -97,23 +97,32 @@
 				</div>
 
 				<!-- Hub Category / Vertical -->
-				<div class="select-container">
-					<h3><?= wfMessage( 'cnw-desc-select-vertical' )->escaped() ?></h3>
-					<select name="wiki-vertical">
-						<option value="-1"><?= wfMessage( 'cnw-desc-select-one' )->escaped() ?></option>
-				<?php
-					foreach ( $verticals as $vertical ) {
-				?>
-						<option
-							value="<?= Sanitizer::encodeAttribute( $vertical['id'] ) ?>"
-							data-short="<?= Sanitizer::encodeAttribute( $vertical['short'] ) ?>"
-							data-categoriesset="<?= Sanitizer::encodeAttribute( $vertical['categoriesSet'] ) ?>">
-							<?= Sanitizer::escapeHtmlAllowEntities( $vertical['name'] ) ?>
-						</option>
-				<?php
-					}
-				?>
-					</select>
+				<div class="cnw-select">
+					<h3 id="cnw-select__header"><?= wfMessage( 'cnw-desc-select-vertical' )->escaped() ?></h3>
+					<div class="wds-dropdown">
+						<div class="wds-dropdown__toggle">
+							<span class="default-value"><?= wfMessage( 'cnw-desc-select-one' )->escaped() ?></span>
+							<?= DesignSystemHelper::renderSvg( 'wds-icons-dropdown-tiny' ); ?>
+						</div>
+						<div class="wds-dropdown__content wds-dropdown__wiki-vertical">
+							<ul class="wds-list">
+								<li id="-1"><?= wfMessage( 'cnw-desc-select-one' )->escaped() ?></li>
+								<?php
+									foreach ( $verticals as $vertical ) {
+								?>
+									<li
+										id="<?= Sanitizer::encodeAttribute( $vertical['id'] ) ?>"
+										data-short="<?= Sanitizer::encodeAttribute( $vertical['short'] ) ?>"
+										data-categoriesset="<?= Sanitizer::encodeAttribute( $vertical['categoriesSet'] ) ?>">
+										<?= Sanitizer::escapeHtmlAllowEntities( $vertical['name'] ) ?>
+									</li>
+								<?php
+									}
+								?>
+							</ul>
+						</div>
+					</div>
+					<input type="hidden" name="wiki-vertical" value="-1">
 				</div>
 
 				<!-- Additional Categories -->
