@@ -47,7 +47,7 @@
 							<? endif ?>
 							<?= DesignSystemHelper::renderSvg( 'wds-icons-dropdown-tiny' ); ?>
 						</div>
-						<div class="wds-dropdown__content wds-dropdown__wiki-language">
+						<div class="wds-dropdown__content wiki-language-dropdown">
 							<ul class="wds-list">
 								<? if ( !empty( $aTopLanguages ) && is_array( $aTopLanguages ) ) : ?>
 									<li class="spacer"><?= wfMessage( 'autocreatewiki-language-top', count( $aTopLanguages ) )->escaped() ?></li>
@@ -108,7 +108,7 @@
 							<span class="default-value"><?= wfMessage( 'cnw-desc-select-one' )->escaped() ?></span>
 							<?= DesignSystemHelper::renderSvg( 'wds-icons-dropdown-tiny' ); ?>
 						</div>
-						<div class="wds-dropdown__content wds-dropdown__wiki-vertical">
+						<div class="wds-dropdown__content wiki-vertical-dropdown">
 							<ul class="wds-list">
 								<li id="-1"><?= wfMessage( 'cnw-desc-select-one' )->escaped() ?></li>
 								<?php

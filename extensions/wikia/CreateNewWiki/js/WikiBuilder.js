@@ -91,9 +91,9 @@ define('ext.createNewWiki.builder', ['ext.createNewWiki.helper', 'wikia.tracker'
 		wikiDomainError = $nameWikiWrapper.find('.wiki-domain-error');
 		wikiDomainCountry = $nameWikiWrapper.find('.domain-country');
 		wikiLanguage = $nameWikiWrapper.find('input[name=wiki-language]');
-		wikiLanguageList = $nameWikiWrapper.find('.wds-dropdown__wiki-language');
+		wikiLanguageList = $nameWikiWrapper.find('.wiki-language-dropdown');
 		wikiVertical = $descWikiWrapper.find('input[name=wiki-vertical]');
-		wikiVerticalList = $descWikiWrapper.find('.wds-dropdown__wiki-vertical');
+		wikiVerticalList = $descWikiWrapper.find('.wiki-vertical-dropdown');
 		wikiAllAges = $descWikiWrapper.find('input[name=all-ages]');
 		allAgesDiv = $('#all-ages-div');
 		descWikiSubmitError = $descWikiWrapper.find('.submit-error');
@@ -258,8 +258,7 @@ define('ext.createNewWiki.builder', ['ext.createNewWiki.helper', 'wikia.tracker'
 			input = $descWikiWrapper.find('input[name=wiki-vertical]');
 
 		$descWikiWrapper.find('.wds-dropdown').removeClass('wds-is-active');
-		input.data('short', li.data('short'));
-		input.data('categoriesset', li.data('categoriesset'));
+		input.data({ short: li.data('short'), categoriesset: li.data('categoriesset') });
 		input.val(li.attr('id')).change();
 		$descWikiWrapper.find('.default-value').text(li.text());
 	}

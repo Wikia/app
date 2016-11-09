@@ -310,15 +310,14 @@
 		}
 
 		.wds-dropdown__content {
-
 			overflow: auto;
 			width: $cnw-input-width-large;
 
-			&.wds-dropdown__wiki-language {
+			&.wiki-language-dropdown {
 				max-height: $cnw-dropdown-spacer-height + ($cnw-dropdown-elements - 1) * $cnw-dropdown-item-height;
 			}
 
-			&.wds-dropdown__wiki-vertical {
+			&.wiki-vertical-dropdown {
 				max-height: $cnw-dropdown-elements * $cnw-dropdown-item-height;
 			}
 
