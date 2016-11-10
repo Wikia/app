@@ -11,6 +11,7 @@ class Phalanx extends WikiaModel implements ArrayAccess {
 	const TYPE_ANSWERS_RECENT_QUESTIONS = 32;
 	const TYPE_WIKI_CREATION = 64;
 	const TYPE_EMAIL = 256;
+	const MAX_TYPE_VALUE = self::TYPE_EMAIL;
 
 	const SCRIBE_KEY = 'log_phalanx';
 	const LAST_UPDATE_KEY = 'phalanx:last-update';
@@ -224,16 +225,28 @@ class Phalanx extends WikiaModel implements ArrayAccess {
 	}
 
 	/**
-	 * @param int $typemask bit mask of types
+	 * Convert a bit field in an int to an array of type names.
+	 *
+	 * @param int $typeField bit field of types
 	 * @return array strings with human-readable names
 	 */
-	public static function getTypeNames( $typemask ) {
+	public static function getTypeNames( $typeField ) {
 		$types = [];
 
-		/* iterate for each module for which block is saved */
-		for ( $bit = $typemask & 1, $type = 1; $typemask; $typemask >>= 1, $bit = $typemask & 1, $type <<= 1 ) {
-			if ( !$bit ) continue;
-			$types[$type] = self::$typeNames[$type];
+		// Start with the largest type bit mask we have
+		$bitMask = self::MAX_TYPE_VALUE;
+
+		while ( $bitMask ) {
+			// If the current bit given by $bitMask is set in $typeField AND we have a
+			// type name for it, save it in $types.  Otherwise skip.
+			if ( $typeField & $bitMask && !empty( self::$typeNames[$bitMask] ) ) {
+				$types[$bitMask] = self::$typeNames[$bitMask];
+			}
+			$bitMask >>= 1;
+		}
+
+		if ( count( $types ) == 0 ) {
+			$types[0] = 'unknown';
 		}
 
 		return $types;
