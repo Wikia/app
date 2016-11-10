@@ -2090,6 +2090,7 @@ ___________________________________________
 	'oasis-social-facebook' => 'Facebook',
 	'oasis-social-twitter' => 'Twitter',
 	'oasis-social-youtube' => 'YouTube',
+	'oasis-button-add-new-page' => 'Crea nuova pagina',
 ];
 
 $messages['ja'] = [
