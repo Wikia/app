@@ -169,13 +169,8 @@
 		width: $cnw-textarea-width;
 	}
 
-	.desc-block {
-		display: flex;
-		flex-direction: column;
-
-		.checkbox {
-			margin-top: $content-spacing-small;
-		}
+	.desc-block .checkbox {
+		margin-top: $content-spacing-small;
 	}
 
 	.wiki-domain-container,
