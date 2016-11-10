@@ -145,7 +145,8 @@ abstract class JobBase extends Job {
 			$tasks[] = $task;
 		}
 
-		\Wikia\Tasks\Tasks\BaseTask::batch( $tasks );
+		// SUS-1250 - add SMW-specific tasks to a separate queue with a smaller concurency
+		\Wikia\Tasks\Tasks\BaseTask::batch( $tasks, \Wikia\Tasks\Queues\SMWQueue::NAME );
 		return true;
 		// Wikia change - end
 /**

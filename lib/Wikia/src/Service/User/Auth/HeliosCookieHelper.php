@@ -3,11 +3,13 @@
 namespace Wikia\Service\User\Auth;
 
 use Wikia\HTTP\Response;
+use Wikia\Interfaces\IRequest;
 use Wikia\Service\Helios\HeliosClient;
 
 class HeliosCookieHelper implements CookieHelper {
 
 	const ACCESS_TOKEN_COOKIE_NAME = 'access_token';
+	const ACCESS_TOKEN_HEADER_NAME = 'X-Wikia-AccessToken';
 	// This is set to 6 months,(365/2)*24*60*60 = 15768000
 	const ACCESS_TOKEN_COOKIE_TTL = 15768000;
 	const COOKIE_PREFIX = '';
@@ -29,6 +31,18 @@ class HeliosCookieHelper implements CookieHelper {
 		$this->heliosClient = $client;
 	}
 
+	public function getAccessToken( \WebRequest $request ) {
+		$token = $request->getCookie( self::ACCESS_TOKEN_COOKIE_NAME, '' );
+		if ( !$token ) {
+			$token = $request->getHeader( self::ACCESS_TOKEN_HEADER_NAME );
+		}
+
+		if ( empty( $token ) ) {
+			return null;
+		}
+
+		return $token;
+	}
 
 	/**
 	 * Set the authentication cookie using the user id. This method will retrieve a new

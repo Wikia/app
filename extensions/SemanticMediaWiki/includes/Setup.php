@@ -180,7 +180,8 @@ final class Setup {
 		$this->globalVars['wgExtensionMessagesFiles']['SemanticMediaWiki'] = $smwgIP . 'languages/SMW_Messages.php';
 		$this->globalVars['wgExtensionMessagesFiles']['SemanticMediaWikiAlias'] = $smwgIP . 'languages/SMW_Aliases.php';
 		$this->globalVars['wgExtensionMessagesFiles']['SemanticMediaWikiMagic'] = $smwgIP . 'languages/SMW_Magic.php';
-		$this->globalVars['wgExtensionMessagesFiles']['SemanticMediaWikiNamespaces'] = $smwgIP . 'languages/SemanticMediaWiki.namespaces.php';
+		$this->globalVars['wgExtensionNamespacesFiles']['SemanticMediaWiki'] = $smwgIP . 'languages/SemanticMediaWikiNamespaces.php';
+		wfLoadExtensionNamespaces( 'SemanticMediaWiki', [ SMW_NS_PROPERTY, SMW_NS_PROPERTY_TALK, SMW_NS_TYPE, SMW_NS_TYPE_TALK, SMW_NS_CONCEPT, SMW_NS_CONCEPT_TALK ] );
 	}
 
 	/**

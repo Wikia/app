@@ -72,7 +72,11 @@ class PortableInfoboxRenderServiceHelper {
 			'width' => round( $dimensions[ 'width' ] * $ratio ),
 			'height' => round( $dimensions[ 'height' ] * $ratio )
 		] );
-		if ( !$thumbnail || $thumbnail->isError() ) {
+		$thumbnail2x = $file->transform( [
+			'width' => round( $dimensions[ 'width' ] * $ratio * 2 ),
+			'height' => round( $dimensions[ 'height' ] * $ratio * 2 )
+		] );
+		if ( !$thumbnail || $thumbnail->isError() || !$thumbnail2x || $thumbnail2x->isError() ) {
 			return false;
 		}
 		$ref = null;
@@ -84,6 +88,7 @@ class PortableInfoboxRenderServiceHelper {
 			'height' => $dimensions[ 'height' ],
 			'width' => $dimensions[ 'width' ],
 			'thumbnail' => $thumbnail->getUrl(),
+			'thumbnail2x' => $thumbnail2x->getUrl(),
 			'key' => urlencode( $data[ 'key' ] ),
 			'media-type' => $data[ 'isVideo' ] ? 'video' : 'image',
 			'mercuryComponentAttrs' => json_encode( [
