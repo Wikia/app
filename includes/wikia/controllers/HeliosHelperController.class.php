@@ -221,11 +221,11 @@ class HelperController extends \WikiaController {
 		// token here and elsewhere in MediaWiki (e.g. LogEventsApi). Until we are
 		// able to consolidate on the EXTERNAL_SCHWARTZ_PARAM both in MW and in
 		// external clients, we need to support both.
-		$ourSchwartz          = $this->getVal( self::SCHWARTZ_PARAM );
-		$ourSchwartzIsValid   = \hash_equals( $ourSchwartz, $this->wg->TheSchwartzSecretToken );
+		$ourSchwartz          = $this->getVal( self::SCHWARTZ_PARAM, '' );
+		$ourSchwartzIsValid   = \hash_equals( $this->wg->TheSchwartzSecretToken, $ourSchwartz );
 
-		$theirSchwartz        = $this->getVal( self::EXTERNAL_SCHWARTZ_PARAM );
-		$theirSchwartzIsValid = \hash_equals( $theirSchwartz, $this->wg->TheSchwartzSecretToken );
+		$theirSchwartz        = $this->getVal( self::EXTERNAL_SCHWARTZ_PARAM, '' );
+		$theirSchwartzIsValid = \hash_equals( $this->wg->TheSchwartzSecretToken, $theirSchwartz );
 
 		if ( $ourSchwartzIsValid || $theirSchwartzIsValid ) {
 			return true;
