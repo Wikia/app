@@ -119,7 +119,7 @@ $overlay-color: #000;
 		@include flexbox();
 		@include align-items(center);
 		@include align-self(center);
-		@include justify-content(center);
+		@include justify-content(flex-start);
 
 		border-top: 1px solid mix($overlay-color, $color-page, 25%);
 		font-size: $font-size-small;
@@ -128,12 +128,16 @@ $overlay-color: #000;
 		list-style: none;
 		margin: 0;
 		max-width: none;
+		padding: 0 15px;
 	}
 
 	.embeddable-discussions-post-actions li {
 		color: mix($overlay-color, $color-text, 15%);
 		cursor: pointer;
-		text-align: center;
+		overflow: hidden;
+		text-align: left;
+		text-overflow: ellipsis;
+		white-space: nowrap;
 
 		&.is-deleted {
 			opacity: 0;
@@ -300,5 +304,11 @@ $overlay-color: #000;
 
 	.embeddable-discussions-zero-text {
 		font-size: $font-size-large;
+	}
+
+	.embeddable-action-gap {
+		flex-grow: 1;
+		max-width: 50px;
+		min-width: 20px;
 	}
 }
