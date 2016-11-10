@@ -161,23 +161,20 @@
 	}
 
 	textarea {
-		height: 2 * $wds-line-height;
+		height: 4 * $wds-line-height;
 		overflow-x: hidden;
 		overflow-y: auto;
 		resize: none;
 		transition: height 250ms;
 		width: $cnw-textarea-width;
-
-		&.active {
-			height: 8 * $wds-line-height;
-		}
 	}
 
 	.desc-block {
 		display: flex;
+		flex-direction: column;
 
 		.checkbox {
-			margin-left: $content-spacing-xxlarge;
+			margin-top: $content-spacing-small;
 		}
 	}
 
