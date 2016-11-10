@@ -161,7 +161,7 @@ class Chat {
 	 * @return bool
 	 * @throws DBUnexpectedError
 	 */
-	public static function blockPrivate( $subjectUserName, $dir = self::PRIVATE_BLOCK_ADD, $requestingUser ) {
+	public static function blockPrivate( string $subjectUserName, string $dir, User $requestingUser ): bool {
 		self::info( __METHOD__ . ': Method called', [
 			'subjectUserName' => $subjectUserName,
 			'dir' => $dir,
