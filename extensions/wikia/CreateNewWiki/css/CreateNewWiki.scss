@@ -111,15 +111,16 @@
 		}
 	}
 
-	textarea, input {
-		font-size: inherit;
-	}
-
+	textarea,
 	input[type=text] {
 		border: none;
 		border-bottom: 1px solid $wds-color-mist-gray;
+		font-size: inherit;
 		line-height: $wds-line-height;
 		outline: none;
+	}
+
+	input[type=text] {
 		width: $cnw-input-width;
 
 		&.input-error {
@@ -127,24 +128,84 @@
 		}
 	}
 
+	.checkbox-styled {
+		float: left;
+		position: relative;
+		width: $cnw-checkbox-size;
+
+		label {
+			border: 1px solid $wds-color-light-gray;
+			border-radius: 1px;
+			height: $cnw-checkbox-size;
+			left: 0;
+			position: absolute;
+			top: 0;
+			width: $cnw-checkbox-size;
+
+			&::after {
+				background-color: transparent;
+				border: 2px solid $wds-color-white;
+				border-right: 0;
+				border-top: 0;
+				content: '';
+				height: 4px;
+				left: 4px;
+				opacity: 0;
+				position: absolute;
+				top: 4px;
+				transform: rotate(-45deg) translate3d(0, 0, 0);
+				width: 8px;
+			}
+
+			&:hover::after {
+				opacity: .3;
+			}
+		}
+
+		input[type=checkbox] {
+			visibility: hidden;
+
+			&:checked + label {
+				background-color: $wds-color-light-blue;
+			}
+
+			&:checked + label::after {
+				opacity: 1;
+			}
+		}
+	}
+
+	textarea {
+		height: 2 * $wds-line-height;
+		overflow-x: hidden;
+		overflow-y: auto;
+		resize: none;
+		transition: height 250ms;
+		width: $cnw-textarea-width;
+
+		&.active {
+			height: 8 * $wds-line-height;
+		}
+	}
+
 	.desc-block {
 		display: flex;
-
-		textarea {
-			width: 320px;
-		}
 
 		.checkbox {
 			margin-left: $content-spacing-xxlarge;
 		}
 	}
 
-	.wiki-domain-container, .wiki-name-container {
+	.wiki-domain-container,
+	.wiki-name-container {
 		position: relative;
 	}
 
-	.language-choice, .select-container, .wiki-domain-container {
-		margin: $content-spacing-xxlarge 0;
+	.language-choice,
+	.select-container,
+	.wiki-name-container,
+	.wiki-domain-container {
+		margin: $content-spacing-regular 0;
 	}
 
 	.instruction {
@@ -165,8 +226,8 @@
 
 	.error-msg {
 		color: $wds-color-alert;
-		float: left;
 		font-size: $wds-typescale-size-minus-2;
+		min-height: $wds-line-height * 4 / 3;
 	}
 
 	.categories-sets {
@@ -177,19 +238,9 @@
 		@include column-count(4);
 		display: none;
 
-		label {
-			display: inline-block;
-			position: relative;
-			width: 100%;
-		}
-
-		input {
-			position: absolute;
-		}
-
 		span {
 			display: block;
-			margin-left: 1.75em;
+			margin-left: $cnw-checkbox-size + $content-spacing-small-plus;
 		}
 	}
 
@@ -255,7 +306,8 @@
 	}
 }
 
-#DescWiki, #ThemeWiki {
+#DescWiki,
+#ThemeWiki {
 	display: none;
 }
 

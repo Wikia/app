@@ -90,7 +90,10 @@
 					<textarea id="Description" placeholder="<?= wfMessage( 'cnw-desc-placeholder' )->escaped() ?>"></textarea>
 					<div class="checkbox" id="all-ages-div"
 						<?= (empty( $selectedLang ) || $selectedLang === $params['LangAllAgesOpt']) ? '' : 'style="display: none"' ?>>
-						<input type="checkbox" name="all-ages" value="1">
+						<div class="checkbox-styled">
+							<input id="allAges" type="checkbox" name="all-ages" value="1">
+							<label for="allAges"></label>
+						</div>
 						<span><?= wfMessage( 'cnw-desc-all-ages' )->escaped(); ?></span>
 						<div class="cnw-tooltip" title="<?= wfMessage( 'cnw-desc-tip-all-ages' )->escaped() ?>">
 							<?=DesignSystemHelper::renderSvg( 'wds-icons-question', 'cnw-tooltip-icon', 'tooltip' );?>
@@ -123,16 +126,21 @@
 					<h3><?= wfMessage( 'cnw-desc-select-categories' )->escaped() ?></h3>
 			<?php
 				foreach ( $categoriesSets as $setId => $categoriesSet ) {
+					$setId = Sanitizer::encodeAttribute( $setId );
 			?>
 
-					<div class="categories-set" id="categories-set-<?= Sanitizer::encodeAttribute( $setId ) ?>">
+					<div class="categories-set" id="categories-set-<?= $setId ?>">
 				<?php
 					foreach ( $categoriesSet as $category ) {
 				?>
 						<label>
-							<input type="checkbox"
+							<div class="checkbox-styled">
+								<? $categoryShort = Sanitizer::encodeAttribute( $category['short'] ); ?>
+								<input id="<?= $categoryShort ?>-<?= $setId ?>" type="checkbox"
 								value="<?= Sanitizer::encodeAttribute( $category['id'] ) ?>"
-								data-short="<?= Sanitizer::encodeAttribute( $category['short'] ) ?>">
+								data-short="<?= $categoryShort ?>">
+								<label for="<?= $categoryShort ?>-<?= $setId ?>"></label>
+							</div>
 							<span><?= Sanitizer::escapeHtmlAllowEntities( $category['name'] ) ?></span>
 						</label>
 				<?php
