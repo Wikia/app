@@ -2299,7 +2299,7 @@ class WallHooksHelper {
 				case 'create':
 					// Pages in Thread or Board Thread namespaces should only be created via Nirvana API
 					// Manually creating one results in a broken page and broken RC entry
-					$isActionAllowed = $wgIsSafeWallTransaction;
+					$isActionAllowed = $wgIsSafeWallTransaction ?? false;
 					if ( !$isActionAllowed ) {
 						$result = [ 'badtitle' ];
 					}
