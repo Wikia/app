@@ -120,7 +120,7 @@ class HeliosClientImpl implements HeliosClient
 			/*
 			 * $request->getStatus returns 200 when we failed to make http connection, so
 			 * we use the internal status object to check for http connection errors.
-			 * The general idea here is that we will make extra requests when if fail
+			 * The general idea here is that we will make extra requests if we fail
 			 * to receive an HTTP response from Helios.
 			 */
 
