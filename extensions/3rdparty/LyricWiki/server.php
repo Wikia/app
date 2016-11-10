@@ -2360,7 +2360,7 @@ function login($username, $password) {
 			}
 		} else {
 			$u->loadFromDatabase();
-			if (!$u->checkPassword($password)) {
+			if ( !$u->checkPassword( $password )->success() ) {
 				$err .= ($password==""?"Please enter a password.\n":"Incorrect password.\n");
 			} else {
 				# We've verified now, update the real record
@@ -2477,7 +2477,7 @@ function requestStarted($funcName, $requestData){
 	if( !wfReadOnly() ) {
 		if(defined('TRACK_REQUEST_RUNTIMES') && TRACK_REQUEST_RUNTIMES) {
 			$requestData = str_replace("'", "[&apos;]", $requestData);
-			
+
 			$dbw = wfGetDB( DB_MASTER );
 			$dbw->insert(
 				'apiRequests',

@@ -1,7 +1,7 @@
 <?php
 
 use Wikia\DependencyInjection\Injector;
-use Wikia\Helios\User as HeliosUser;
+use Wikia\Service\User\Auth\AuthResult;
 use Wikia\Service\User\Auth\CookieHelper;
 
 class Piggyback extends SpecialPage {
@@ -45,8 +45,7 @@ class Piggyback extends SpecialPage {
 }
 
 class PBHooks {
-	public static function onLoginFormAuthenticateModifyRetval( $invoker, $username, $password, &$retVal ) {
-		global $wgEnableHeliosExt;
+	public static function onLoginFormAuthenticateModifyRetval( $invoker, $username, $password, &$retVal, $authResult ) {
 		/**
 		 * status of forbidden from authentication means that the credentials are correct, but the
 		 * user is unable to log in with those credentials (because security). In this case we should
@@ -54,9 +53,8 @@ class PBHooks {
 		 * piggyback form
 		 */
 		if ( get_class( $invoker ) == PBLoginForm::class &&
-				$wgEnableHeliosExt &&
-				HeliosUser::checkAuthenticationStatus( $username, $password, WikiaResponse::RESPONSE_CODE_FORBIDDEN ) ) {
-
+			$authResult->checkStatus( WikiaResponse::RESPONSE_CODE_FORBIDDEN )
+		) {
 			$retVal = LoginForm::SUCCESS;
 		}
 
@@ -115,9 +113,10 @@ class PBLoginForm extends LoginForm {
 
 		$cu = User::newFromName( $this->mUsername );
 
-		if ( !$cu->checkPassword( $this->mPassword ) &&
-				!HeliosUser::checkAuthenticationStatus( $cu->getName(), $this->mPassword, WikiaResponse::RESPONSE_CODE_FORBIDDEN )) {
-
+		$authResult = $cu->checkPassword( $this->mPassword );
+		if ( !$authResult->success() &&
+			$authResult->checkStatus( WikiaResponse::RESPONSE_CODE_FORBIDDEN )
+		) {
 			if ( $retval = '' == $this->mPassword ) {
 				$this->mainLoginForm( wfMessage( 'wrongpasswordempty' )->escaped() );
 			} else {
