@@ -2327,7 +2327,9 @@ class WallHooksHelper {
 				case 'edit':
 				case 'create':
 					$isActionAllowed = $isWallOwner || $user->isAllowed( 'walledit' );
-					$result = $isActionAllowed ?? [ 'badaccess-group0' ];
+					if ( !$isActionAllowed ) {
+						$result = [ 'badaccess-group0' ];
+					}
 					break;
 				case 'move':
 				case 'move-target':
