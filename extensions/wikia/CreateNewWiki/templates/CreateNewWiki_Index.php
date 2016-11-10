@@ -92,9 +92,8 @@
 						<?= (empty( $selectedLang ) || $selectedLang === $params['LangAllAgesOpt']) ? '' : 'style="display: none"' ?>>
 						<input type="checkbox" name="all-ages" value="1">
 						<span><?= wfMessage( 'cnw-desc-all-ages' )->escaped(); ?></span>
-						<div class="cnw-tooltip">
+						<div class="cnw-tooltip" title="<?= wfMessage( 'cnw-desc-tip-all-ages' )->escaped() ?>">
 							<?=DesignSystemHelper::renderSvg( 'wds-icons-question', 'cnw-tooltip-icon', 'tooltip' );?>
-							<span class="cnw-tooltip-text"><?= wfMessage( 'cnw-desc-tip-all-ages' )->plain() ?></span>
 						</div>
 					</div>
 				</div>

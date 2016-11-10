@@ -33,6 +33,21 @@
 	display: none;
 }
 
+.tooltip-inner {
+	border: 0;
+	border-radius: 2px;
+	box-shadow: 0 0 10px 0 rgba(26, 26, 26, .2);
+	text-align: left;
+}
+
+.tooltip.top .tooltip-arrow {
+	border-left-width: 10px;
+	border-right-width: 10px;
+	border-top-width: 10px;
+	bottom: -5px;
+	left: calc(50% - 5px);
+}
+
 #CreateNewWiki {
 	background: $wds-color-white;
 	box-sizing: border-box;
@@ -178,16 +193,12 @@
 		}
 	}
 
+	.cnw-tooltip {
+		display: inline-block;
+	}
+
 	.cnw-tooltip-icon {
 		fill: $wds-color-dark-c6;
-	}
-
-	.cnw-tooltip-text {
-		visibility: hidden;
-	}
-
-	svg:hover + .cnw-tooltip-text {
-		visibility: visible;
 	}
 
 	.ThemeTab {

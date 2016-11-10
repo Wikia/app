@@ -60,7 +60,7 @@ define('ext.createNewWiki.builder', ['ext.createNewWiki.helper', 'wikia.tracker'
 			pane.show();
 		}
 
-		$('.tooltip-icon').tooltip();
+		$('.cnw-tooltip').tooltip();
 
 		// onload stuff
 		wikiName.focus();
