@@ -31,7 +31,7 @@ class HeliosClientTest extends \WikiaBaseTest {
 			->method( 'getContent' )
 			->willReturn( null );
 
-		$requestMock->status = $this->getMock( 'staClass', [ 'isOK', 'getErrorsArray', 'hasMessage' ] );
+		$requestMock->status = $this->getMock( '\Status', [ 'isOK', 'getErrorsArray', 'hasMessage' ] );
 
 		$this->mockStaticMethod( '\Http', 'request', $requestMock );
 
@@ -47,7 +47,7 @@ class HeliosClientTest extends \WikiaBaseTest {
 			->method( 'getContent' )
 			->willReturn( '{}' );
 
-		$requestMock->status = $this->getMock( 'stdClass', [ 'isOK', 'getErrorsArray', 'hasMessage' ] );
+		$requestMock->status = $this->getMock( '\Status', [ 'isOK', 'getErrorsArray', 'hasMessage' ] );
 		$requestMock->status->expects( $this->any() )->method( 'hasMessage' )->willReturn( false );
 
 		// With no error message, we expect no retries, hence \Http::request should be called only once.
@@ -70,7 +70,7 @@ class HeliosClientTest extends \WikiaBaseTest {
 			->method( 'getContent' )
 			->willReturn( '{}' );
 
-		$requestMock->status = $this->getMock( 'stdClass', [ 'isOK', 'getErrorsArray', 'hasMessage' ] );
+		$requestMock->status = $this->getMock( '\Status', [ 'isOK', 'getErrorsArray', 'hasMessage' ] );
 		$requestMock->status->expects( $this->any() )->method( 'hasMessage' )->willReturn( true );
 
 		// Retries are base on status->hasMessage value, so we expect two calls to \Http::request here.
