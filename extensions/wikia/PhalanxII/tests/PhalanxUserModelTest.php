@@ -17,10 +17,10 @@ class PhalanxUserModelTest extends WikiaBaseTest {
 	public function testGetText() {
 		$user = $this->mockClassWithMethods( 'User', [
 			'getName' => self::USER_NAME
-		]);
+		] );
 		$this->mockGlobalVariable( 'wgRequest', $this->mockClassWithMethods( 'WebRequest', [
 			'getIp' => self::IP
-		]) );
+		] ) );
 
 		$model = new PhalanxUserModel( $user );
 		$this->assertEquals( [ self::USER_NAME, self::IP ], $model->getText(), 'IP address should be passed to Phalanx' );

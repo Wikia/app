@@ -1,4 +1,7 @@
 <?php
+
+use \Wikia\DependencyInjection\Injector;
+use \Wikia\Service\User\Auth\CookieHelper;
 use \Wikia\Service\User\Auth\HeliosCookieHelper;
 
 class ApiService extends Service {
@@ -114,12 +117,12 @@ class ApiService extends Service {
 	 * @return array $options
 	 */
 	public static function loginAsUser() {
-		$app = F::app();
+		global $wgCookiePrefix;
+		$context = RequestContext::getMain();
 
 		$options = array();
-		if ( $app->wg->User->isLoggedIn() ) {
-			$user = $app->wg->User;
-		} else {
+		$user = $context->getUser();
+		if ( !$user->isLoggedIn() ) {
 			return $options;
 		}
 
@@ -131,14 +134,12 @@ class ApiService extends Service {
 
 		$cookie = '';
 		foreach ( $params as $key => $value ) {
-			$cookie .= $app->wg->CookiePrefix.$key.'='.$value.';';
+			$cookie .= $wgCookiePrefix . $key . '=' . $value . ';';
 		}
 
-		if ( $app->wg->EnableHeliosExt ) {
-			$token = \Wikia\Helios\User::getAccessToken( $app->wg->Request );
-			if ( !empty( $token ) ) {
-				$cookie .= HeliosCookieHelper::ACCESS_TOKEN_COOKIE_NAME . "=" . $token . ";";
-			}
+		$token = Injector::getInjector()->get( CookieHelper::class )->getAccessToken( $context->getRequest() );
+		if ( !empty( $token ) ) {
+			$cookie .= HeliosCookieHelper::ACCESS_TOKEN_COOKIE_NAME . '=' . $token . ';';
 		}
 		$options['curlOptions'] = array( CURLOPT_COOKIE => $cookie );
 
