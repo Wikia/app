@@ -53,12 +53,10 @@ class ThemingCheck extends Maintenance {
 		global $wgCityId;
 		if ( !empty( $output ) ) {
 			foreach ( $output as $data ) {
-				$this->output( $wgCityId . ":" . $data[ 'title' ] . " uses multiword themes"
+				$this->output( $wgCityId . ":" . $data[ 'title' ] . " uses themes "
 					. "with [theme] = " . $data[ 'theme' ] . " and [theme-source] = "
 					. $data[ 'theme-source' ] ."\n" );
 			}
-		} else {
-			$this->output( $wgCityId . ": No themes with spaces found\n" );
 		}
 	}
 }
