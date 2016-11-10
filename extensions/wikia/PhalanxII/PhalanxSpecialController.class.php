@@ -58,7 +58,7 @@ class PhalanxSpecialController extends WikiaSpecialPageController {
 		if ( !$this->userCanExecute( $this->wg->User ) ) {
 			wfProfileOut( __METHOD__ );
 			$this->displayRestrictionError();
-			return;
+			return false;
 		}
 
 		// creating / editing a block
@@ -89,7 +89,7 @@ class PhalanxSpecialController extends WikiaSpecialPageController {
 			return false;
 		}
 
-		/* set pager */
+		// set pager
 		$pager = new PhalanxPager();
 		$pager->setContext( $this->getContext() );
 		$listing  = $pager->getNavigationBar();
