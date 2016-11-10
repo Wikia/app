@@ -70,7 +70,7 @@ $messages['pl'] = array(
 	'portable-infobox-builder-title' => 'Kreator infoboksów',
 	'portable-infobox-builder-documentation-example-usage' => 'Przykład użycia:',
 	'portable-infobox-builder-documentation-example-param' => 'Przykład',
-	'portable-infobox-builder-move-message' => 'Kreator infoboksów: zmienono nazwę szablonu',
+	'portable-infobox-builder-move-message' => 'Kreator infoboksów: zmieniono nazwę szablonu',
 );
 
 $messages['pt'] = array(
