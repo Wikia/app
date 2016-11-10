@@ -49,7 +49,9 @@
 			ThemeDesigner.link = link;
 		});
 
-		// unset the background color of Special:CreateNewWiki to alow preview of theme background
+		// allow preview of theme background when chosen
+		$('.WikiaPage').css('border', 0);
+		$('.WikiaPageBackground').css('background', 'unset');
 		$('.WikiaSiteWrapper').css('background-color', 'unset');
 	};
 
