@@ -94,15 +94,10 @@
 							<input id="allAges" type="checkbox" name="all-ages" value="1">
 							<label for="allAges"></label>
 						</div>
-						<?= $app->renderView(
-							'WikiaStyleGuideTooltipIcon',
-							'index',
-							[
-								'text' => wfMessage( 'cnw-desc-all-ages' )->escaped(),
-								'tooltipIconTitle' => wfMessage( 'cnw-desc-tip-all-ages' )->plain(),
-							]
-						 );
-						?>
+						<span><?= wfMessage( 'cnw-desc-all-ages' )->escaped(); ?></span>
+						<div class="cnw-tooltip" title="<?= wfMessage( 'cnw-desc-tip-all-ages' )->escaped() ?>">
+							<?=DesignSystemHelper::renderSvg( 'wds-icons-question', 'cnw-tooltip-icon', 'tooltip' );?>
+						</div>
 					</div>
 				</div>
 

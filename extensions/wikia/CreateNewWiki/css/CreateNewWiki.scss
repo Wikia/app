@@ -33,6 +33,19 @@
 	display: none;
 }
 
+.tooltip-inner {
+	border: 0;
+	border-radius: 2px;
+	box-shadow: 0 0 10px 0 rgba(26, 26, 26, .2);
+	text-align: left;
+}
+
+.tooltip.top .tooltip-arrow {
+	border-width: 10px 10px 0;
+	bottom: -5px;
+	left: calc(50% - 5px);
+}
+
 #CreateNewWiki {
 	background: $wds-color-white;
 	box-sizing: border-box;
@@ -169,7 +182,12 @@
 	}
 
 	.desc-block .checkbox {
+		display: flex;
 		margin-top: $content-spacing-small;
+
+		span {
+			margin: 0 $content-spacing-small;
+		}
 	}
 
 	.wiki-domain-container,
@@ -218,6 +236,14 @@
 			display: block;
 			margin-left: $cnw-checkbox-size + $content-spacing-small-plus;
 		}
+	}
+
+	.cnw-tooltip {
+		display: inline-block;
+	}
+
+	.cnw-tooltip-icon {
+		fill: $wds-color-dark-c6;
 	}
 
 	.ThemeTab {
