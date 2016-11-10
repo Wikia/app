@@ -7,15 +7,13 @@ use Wikia\Service\Helios\HeliosClientImpl;
 
 class HeliosClientTest extends \WikiaBaseTest {
 
-	public function setUp()
-	{
+	public function setUp() {
 
 		parent::setUp();
 	}
 
-	public function testCannotMakeRequests()
-	{
-		$this->setExpectedException('Wikia\Util\AssertionException');
+	public function testCannotMakeRequests() {
+		$this->setExpectedException( 'Wikia\Util\AssertionException' );
 
 		$this->mockStaticMethod( '\MWHttpRequest', 'canMakeRequests', false );
 
@@ -23,9 +21,8 @@ class HeliosClientTest extends \WikiaBaseTest {
 		$client->request( 'resource', [], [], [] );
 	}
 
-	public function testInvalidResponse()
-	{
-		$this->setExpectedException('Wikia\Service\Helios\ClientException','Invalid Helios response.');
+	public function testInvalidResponse() {
+		$this->setExpectedException( 'Wikia\Service\Helios\ClientException', 'Invalid Helios response.' );
 
 		$this->mockStaticMethod( '\MWHttpRequest', 'canMakeRequests', true );
 
@@ -34,7 +31,7 @@ class HeliosClientTest extends \WikiaBaseTest {
 			->method( 'getContent' )
 			->willReturn( null );
 
-		$requestMock->status = $this->getMock( 'stdClass', [ 'isOK', 'getErrorsArray', 'hasMessage' ]);
+		$requestMock->status = $this->getMock( 'staClass', [ 'isOK', 'getErrorsArray', 'hasMessage' ] );
 
 		$this->mockStaticMethod( '\Http', 'request', $requestMock );
 
@@ -42,8 +39,7 @@ class HeliosClientTest extends \WikiaBaseTest {
 		$client->request( 'resource', [], [], [] );
 	}
 
-	public function testSuccess()
-	{
+	public function testSuccess() {
 		$this->mockStaticMethod( '\MWHttpRequest', 'canMakeRequests', true );
 
 		$requestMock = $this->getMock( '\CurlHttpRequest', [ 'execute', 'getContent' ], [ 'http://example.com' ], '', false );
@@ -51,7 +47,7 @@ class HeliosClientTest extends \WikiaBaseTest {
 			->method( 'getContent' )
 			->willReturn( '{}' );
 
-		$requestMock->status = $this->getMock( 'stdClass', [ 'isOK', 'getErrorsArray', 'hasMessage' ]);
+		$requestMock->status = $this->getMock( 'stdClass', [ 'isOK', 'getErrorsArray', 'hasMessage' ] );
 		$requestMock->status->expects( $this->any() )->method( 'hasMessage' )->willReturn( false );
 
 		// With no error message, we expect no retries, hence \Http::request should be called only once.
@@ -63,10 +59,9 @@ class HeliosClientTest extends \WikiaBaseTest {
 		$this->assertInternalType( 'object', $client->request( 'resource', [], [], [] ) );
 	}
 
-	public function testRetry()
-	{
+	public function testRetry() {
 		// To reduce the unit test time, mock the 'sleep' method called between retries.
-		$this->mockGlobalFunction( 'sleep', null);
+		$this->mockGlobalFunction( 'sleep', null );
 
 		$this->mockStaticMethod( '\MWHttpRequest', 'canMakeRequests', true );
 
@@ -75,7 +70,7 @@ class HeliosClientTest extends \WikiaBaseTest {
 			->method( 'getContent' )
 			->willReturn( '{}' );
 
-		$requestMock->status = $this->getMock( 'stdClass', [ 'isOK', 'getErrorsArray', 'hasMessage' ]);
+		$requestMock->status = $this->getMock( 'stdClass', [ 'isOK', 'getErrorsArray', 'hasMessage' ] );
 		$requestMock->status->expects( $this->any() )->method( 'hasMessage' )->willReturn( true );
 
 		// Retries are base on status->hasMessage value, so we expect two calls to \Http::request here.

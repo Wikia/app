@@ -108,12 +108,12 @@ class HeliosClientImpl implements HeliosClient
 		 * using Consul at the beginning of the request, so the retry will hit the same
 		 * Helios instance.
 		 */
-		$retry_cnt = 1;
-		while( true ) {
+		$retryCnt = 1;
+		while ( true ) {
 
 			// Request execution.
 			/** @var \MWHttpRequest $request */
-			$request = $wrapper->wrap( function() use ( $options, $uri ) {
+			$request = $wrapper->wrap( function () use ( $options, $uri ) {
 				return \Http::request( $options['method'], $uri, $options );
 			} );
 
@@ -124,16 +124,18 @@ class HeliosClientImpl implements HeliosClient
 			 * to receive an HTTP response from Helios.
 			 */
 
-			if ( $retry_cnt >= self::HELIOS_REQUEST_TRIES ||
+			if ( $retryCnt >= self::HELIOS_REQUEST_TRIES ||
 				( !$request->status->hasMessage( 'http-timed-out' ) &&
-				  !$request->status->hasMessage( 'http-curl-error' ) ) ) {
+					!$request->status->hasMessage( 'http-curl-error' ) )
+			) {
 				break;
 			}
-			$retry_cnt += 1;
+			$retryCnt += 1;
 			sleep( self::HELIOS_REQUEST_RETRY_DELAY_SEC );
 		}
 
 		$this->status = $request->getStatus();
+
 		return $this->processResponseOutput( $request );
 	}
 
@@ -147,10 +149,10 @@ class HeliosClientImpl implements HeliosClient
 
 		if ( !$output ) {
 			$data = [];
-			$data[ 'response' ] = $response;
-			$data[ 'status_code' ] = $request->getStatus();
+			$data['response'] = $response;
+			$data['status_code'] = $request->getStatus();
 			if ( !$request->status->isOK() ) {
-				$data[ 'status_errors' ] = $request->status->getErrorsArray();
+				$data['status_errors'] = $request->status->getErrorsArray();
 			}
 			throw new ClientException ( 'Invalid Helios response.', 0, null, $data );
 		}
