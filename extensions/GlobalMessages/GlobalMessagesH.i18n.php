@@ -91,10 +91,12 @@ Try [[Special:Search|searching on the wiki]] for relevant new pages.',
 	'htmlform-float-invalid' => 'The value you specified is not a number.',
 	'htmlform-int-toolow' => 'The value you specified is below the minimum of $1',
 	'htmlform-int-toohigh' => 'The value you specified is above the maximum of $1',
+	'htmlform-no' => 'No',
 	'htmlform-required' => 'This value is required',
 	'htmlform-submit' => 'Submit',
 	'htmlform-reset' => 'Undo changes',
 	'htmlform-selectorother-other' => 'Other',
+	'htmlform-yes' => 'Yes',
 	'hidesome' => 'Hide Some',
 	'hidebots' => 'Hide bots',
 	'hubs' => 'Hubs',
@@ -244,6 +246,7 @@ Name of month in Hebrew calender.',
 Name of month in Hebrew calender.',
 	'hebrew-calendar-m12-gen' => '{{optional}}
 Name of month in Hebrew calender.',
+	'htmlform-no' => 'Used in form, such as with radio buttons, for generic yes / no questions',
 	'htmlform-submit' => '{{Identical|Submit}}',
 	'htmlform-reset' => '{{Identical|Undo}}',
 	'htmlform-selectorother-other' => 'Used in drop-down boxes in [[Special:Preferences]] as follows:
@@ -251,6 +254,7 @@ Name of month in Hebrew calender.',
 * stub threshold (appearance tab)
 
 {{Identical|Other}}',
+	'htmlform-yes' => 'Used in form, such as with radio buttons, for generic yes / no questions',
 	'hub-Wikia' => 'Missing documentation',
 ];
 
