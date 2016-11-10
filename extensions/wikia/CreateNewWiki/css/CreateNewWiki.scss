@@ -192,7 +192,11 @@
 		display: flex;
 
 		.checkbox {
-			margin-left: $content-spacing-xxlarge;
+			display: flex;
+
+			span {
+				margin: 0 $content-spacing-small;
+			}
 		}
 	}
 
